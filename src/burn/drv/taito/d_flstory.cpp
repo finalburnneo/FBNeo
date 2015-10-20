@@ -1,3 +1,5 @@
+// Todo: add rumba map & mcu sim
+
 #include "tiles_generic.h"
 #include "taito_m68705.h"
 #include "z80_intf.h"
@@ -50,6 +52,11 @@ static UINT8 *soundlatch;
 
 static INT32 select_game;
 
+INT32 m_vol_ctrl[16];
+static UINT8 m_snd_ctrl0;
+static UINT8 m_snd_ctrl1;
+static UINT8 m_snd_ctrl2;
+
 static struct BurnInputInfo FlstoryInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -74,6 +81,142 @@ static struct BurnInputInfo FlstoryInputList[] = {
 };
 
 STDINPUTINFO(Flstory)
+
+#if 0
+static struct BurnInputInfo RumbaInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Rumba)
+
+static struct BurnDIPInfo RumbaDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xfc, NULL		},
+	{0x14, 0xff, 0xff, 0x00, NULL		},
+	{0x15, 0xff, 0xff, 0xe3, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x13, 0x01, 0x03, 0x00, "20000 50000"		},
+	{0x13, 0x01, 0x03, 0x01, "10000 60000"		},
+	{0x13, 0x01, 0x03, 0x02, "10000 40000"		},
+	{0x13, 0x01, 0x03, 0x03, "10000 20000"		},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"		},
+	{0x13, 0x01, 0x04, 0x04, "Off"		},
+	{0x13, 0x01, 0x04, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x13, 0x01, 0x18, 0x18, "3"		},
+	{0x13, 0x01, 0x18, 0x10, "4"		},
+	{0x13, 0x01, 0x18, 0x08, "5"		},
+	{0x13, 0x01, 0x18, 0x00, "6"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x13, 0x01, 0x20, 0x20, "Off"		},
+	{0x13, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x13, 0x01, 0x40, 0x40, "Off"		},
+	{0x13, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x13, 0x01, 0x80, 0x00, "Upright"		},
+	{0x13, 0x01, 0x80, 0x80, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0x14, 0x01, 0x0f, 0x0f, "9 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x0e, "8 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x0d, "7 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x0c, "6 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x0b, "5 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x0a, "4 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x09, "3 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x08, "2 Coins 1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x00, "1 Coin  1 Credits"		},
+	{0x14, 0x01, 0x0f, 0x01, "1 Coin  2 Credits"		},
+	{0x14, 0x01, 0x0f, 0x02, "1 Coin  3 Credits"		},
+	{0x14, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"		},
+	{0x14, 0x01, 0x0f, 0x04, "1 Coin  5 Credits"		},
+	{0x14, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"		},
+	{0x14, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"		},
+	{0x14, 0x01, 0x0f, 0x07, "1 Coin  8 Credits"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0x14, 0x01, 0xf0, 0xf0, "9 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0xe0, "8 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0xd0, "7 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0xc0, "6 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0xb0, "5 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0xa0, "4 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0x90, "3 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0x80, "2 Coins 1 Credits"		},
+	{0x14, 0x01, 0xf0, 0x00, "1 Coin  1 Credits"		},
+	{0x14, 0x01, 0xf0, 0x10, "1 Coin  2 Credits"		},
+	{0x14, 0x01, 0xf0, 0x20, "1 Coin  3 Credits"		},
+	{0x14, 0x01, 0xf0, 0x30, "1 Coin  4 Credits"		},
+	{0x14, 0x01, 0xf0, 0x40, "1 Coin  5 Credits"		},
+	{0x14, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
+	{0x14, 0x01, 0xf0, 0x60, "1 Coin  7 Credits"		},
+	{0x14, 0x01, 0xf0, 0x70, "1 Coin  8 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Training Stage"		},
+	{0x15, 0x01, 0x01, 0x00, "Off"		},
+	{0x15, 0x01, 0x01, 0x01, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x15, 0x01, 0x02, 0x02, "Off"		},
+	{0x15, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Language"		},
+	{0x15, 0x01, 0x04, 0x04, "Japanese"		},
+	{0x15, 0x01, 0x04, 0x00, "English"		},
+
+	{0   , 0xfe, 0   ,    2, "Attract Sound"		},
+	{0x15, 0x01, 0x08, 0x08, "Off"		},
+	{0x15, 0x01, 0x08, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Coinage Display"		},
+	{0x15, 0x01, 0x10, 0x10, "Off"		},
+	{0x15, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Copyright String"		},
+	{0x15, 0x01, 0x20, 0x20, "Taito Corp. MCMLXXXIV"		},
+	{0x15, 0x01, 0x20, 0x00, "Taito Corporation"		},
+
+	{0   , 0xfe, 0   ,    2, "Infinite Lives"		},
+	{0x15, 0x01, 0x40, 0x40, "Off"		},
+	{0x15, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x15, 0x01, 0x80, 0x80, "Off"		},
+	{0x15, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Rumba)
+#endif
 
 static struct BurnDIPInfo FlstoryDIPList[]=
 {
@@ -610,6 +753,59 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 	return 0;
 }
 
+static void ta7630_init()
+{
+	int i;
+
+	double db           = 0.0;
+	double db_step      = 1.50; /* 1.50 dB step (at least, maybe more) */
+	double db_step_inc  = 0.125;
+	for (i = 0; i < 16; i++)
+	{
+		double max = 100.0 / pow(10.0, db/20.0 );
+		m_vol_ctrl[15 - i] = max;
+
+		db += db_step;
+		db_step += db_step_inc;
+	}
+/*
+  channels 0-2 AY#0
+  channels 3,4 MSM5232 group1,group2
+*/
+}
+
+static void sound_control_0_w(UINT8 data)
+{
+	double vol;
+	m_snd_ctrl0 = data & 0xff;
+
+	vol = m_vol_ctrl[(m_snd_ctrl0 >> 4) & 15] / 100.0;
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_0);
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_1);
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_2);
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_3);
+}
+
+static void sound_control_1_w(UINT8 data)
+{
+	double vol;
+	m_snd_ctrl1 = data & 0xff;
+
+	vol = m_vol_ctrl[(m_snd_ctrl1 >> 4) & 15] / 100.0;
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_4);
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_5);
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_6);
+	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_7);
+}
+
+static void AY_ayportA_write(UINT32 addr, UINT32 data)
+{
+	if (data == 0xff) return; // ignore ay-init
+	m_snd_ctrl2 = data & 0xff;
+
+	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / 2000.0, BURN_SND_ROUTE_BOTH);
+}
+
 void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -635,6 +831,14 @@ void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 		case 0xca0d:
 			MSM5232Write(address, data);
 		return;
+
+		case 0xcc00:
+			sound_control_0_w(data);
+			break;
+
+		case 0xce00:
+			sound_control_1_w(data);
+			break;
 
 		case 0xd800:
 			snd_data = data;
@@ -689,6 +893,7 @@ static INT32 DrvDoReset()
 
 	m67805_taito_reset();
 
+	ta7630_init();
 	AY8910Reset(0);
 	MSM5232Reset();
 
@@ -876,8 +1081,8 @@ static INT32 DrvInit()
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, AY_ayportA_write, NULL);
+	AY8910SetAllRoutes(0, 0.05, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
 	MSM5232SetCapacitors(1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6);
@@ -900,7 +1105,7 @@ static INT32 DrvInit()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -908,7 +1113,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -928,6 +1133,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(pending_nmi);
 		SCAN_VAR(char_bank);
 		SCAN_VAR(mcu_select);
+		SCAN_VAR(m_snd_ctrl0);
+		SCAN_VAR(m_snd_ctrl1);
+		SCAN_VAR(m_snd_ctrl2);
 
 		DrvRecalc = 1;
 	}
@@ -952,7 +1160,7 @@ static INT32 DrvExit()
 }
 
 static void draw_background_layer(INT32 type, INT32 priority)
-{
+{                    //fg      bg      fg      bg
 	INT32 masks[4] = { 0x3fff, 0xc000, 0x8000, 0x7fff };
 	INT32 mask = masks[type];
 
@@ -974,7 +1182,7 @@ static void draw_background_layer(INT32 type, INT32 priority)
 		INT32 prio  = (attr & 0x20) >> 5;
 		if (priority && !prio) continue;
 
-		if (type == 0) {
+		if (type == 1) { // first background layer
 			if (flipy) {
 				if (flipx) {
 					Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color >> 4, 4, 0, DrvGfxROM0);
@@ -989,7 +1197,7 @@ static void draw_background_layer(INT32 type, INT32 priority)
 				}
 			}
 		}
-		else if (type == 2) {
+		else if (type == 6) { // not used (for now)
 			if (flipy) {
 				if (flipx) {
 					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color >> 4, 4, 15, 0, DrvGfxROM0);
@@ -1144,19 +1352,19 @@ static inline void DrvRecalcPalette()
 		DrvPalette[i] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
 	}
 }
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
 	}
+	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_background_layer(0, 0);
-	if (nBurnLayer & 2) draw_background_layer(1, 0);
-	if (nBurnLayer & 4) draw_background_layer(2, 1);
-	if (nBurnLayer & 8) draw_background_layer(3, 1);
-	draw_sprites(0x00, 0);
-	draw_sprites(0x80, 0);
+	if (nBurnLayer & 1) draw_background_layer(1, 0);
+	if (nBurnLayer & 2) draw_background_layer(3, 1);
+	if (nSpriteEnable & 1) draw_sprites(0x00, 0);
+	if (nBurnLayer & 4) draw_background_layer(0, 0);
+	if (nSpriteEnable & 2) draw_sprites(0x80, 0);
+	if (nBurnLayer & 8) draw_background_layer(2, 1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1229,7 +1437,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
-		MSM5232Update(pBurnSoundOut, nBurnSoundLen);			
+		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1460,3 +1668,45 @@ struct BurnDriverD BurnDrvVictnine = {
 	256, 224, 4, 3
 };
 
+#if 0
+static INT32 rumbaInit()
+{
+	select_game = 3;
+
+	INT32 nRet = DrvInit();
+
+	return nRet;
+}
+
+// Rumba Lumber
+
+static struct BurnRomInfo rumbaRomDesc[] = {
+	{ "a23_01-1.bin",	0x4000, 0x4bea6e18, 1 }, //  0 maincpu
+	{ "a23_02-1.bin",	0x4000, 0x08f98c6f, 1 }, //  1
+	{ "a23_03-1.bin",	0x4000, 0xab595427, 1 }, //  2
+
+	{ "a23_08-1.bin",	0x2000, 0xa18eae00, 2 }, //  3 audiocpu
+	{ "a23_09.bin",		0x2000, 0xd0a101d3, 2 }, //  4
+	{ "a23_10.bin",		0x2000, 0xf9447bd4, 2 }, //  5
+
+	{ "a23-11.mc68705p5s",	0x0800, 0x00000000, 3 | BRF_NODUMP }, //  6 mcu
+
+	{ "a23_07.bin",		0x2000, 0xc98fbea6, 4 }, //  7 gfx1
+	{ "a23_06.bin",		0x2000, 0xbf1e3a7f, 4 }, //  8
+	{ "a23_05.bin",		0x2000, 0xb40db231, 4 }, //  9
+	{ "a23_04.bin",		0x2000, 0x1d4f001f, 4 }, // 10
+};
+
+STD_ROM_PICK(rumba)
+STD_ROM_FN(rumba)
+
+struct BurnDriverX BurnDrvRumba = {
+	"rumba", NULL, NULL, NULL, "1984",
+	"Rumba Lumber\0", NULL, "Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	NULL, rumbaRomInfo, rumbaRomName, NULL, NULL, RumbaInputInfo, RumbaDIPInfo,
+	rumbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+#endif

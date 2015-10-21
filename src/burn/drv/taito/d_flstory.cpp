@@ -26,7 +26,7 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvMcuRAM;
 
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static INT16 *pAY8910Buffer[3];
@@ -36,6 +36,7 @@ static UINT8 snd_flag;
 static INT32 nmi_enable;
 static INT32 pending_nmi;
 static INT32 char_bank = 0;
+static UINT8 m_gfxctrl;
 static INT32 mcu_select;
 
 static UINT8  DrvJoy1[8];
@@ -52,10 +53,19 @@ static UINT8 *soundlatch;
 
 static INT32 select_game;
 
-INT32 m_vol_ctrl[16];
+static INT32 m_vol_ctrl[16];
 static UINT8 m_snd_ctrl0;
 static UINT8 m_snd_ctrl1;
 static UINT8 m_snd_ctrl2;
+static UINT8 m_mcu_cmd;
+static UINT8 m_mcu_counter;
+static UINT8 m_mcu_b4_cmd;
+static UINT8 m_mcu_param;
+static UINT8 m_mcu_b2_res;
+static UINT8 m_mcu_b1_res;
+static UINT8 m_mcu_bb_res;
+static UINT8 m_mcu_b5_res;
+static UINT8 m_mcu_b6_res;
 
 static struct BurnInputInfo FlstoryInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
@@ -82,7 +92,6 @@ static struct BurnInputInfo FlstoryInputList[] = {
 
 STDINPUTINFO(Flstory)
 
-#if 0
 static struct BurnInputInfo RumbaInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
@@ -216,7 +225,6 @@ static struct BurnDIPInfo RumbaDIPList[]=
 };
 
 STDDIPINFO(Rumba)
-#endif
 
 static struct BurnDIPInfo FlstoryDIPList[]=
 {
@@ -548,7 +556,7 @@ STDDIPINFO(Victnine)
 
 static void gfxctrl_write(INT32 data)
 {
-	char_bank = (data & 0x10) >> 4;
+	m_gfxctrl = data;
 
 	INT32 bank = (data & 0x20) << 3;
 
@@ -557,7 +565,194 @@ static void gfxctrl_write(INT32 data)
 	ZetMapArea(0xde00, 0xdeff, 0, DrvPalRAM + 0x200 + bank);
 	ZetMapArea(0xde00, 0xdeff, 1, DrvPalRAM + 0x200 + bank);
 
+	if (select_game == 3) {
+		char_bank = 0;
+		return;
+	}
+
+	char_bank = (data & 0x10) >> 4;
+
 	if (data & 4) *flipscreen = (~data & 0x01);
+}
+
+static UINT8 rumba_mcu_read()
+{
+	//printf("PC=%04x R %02x\n",space.device().safe_pc(),m_mcu_cmd);
+
+	if((m_mcu_cmd & 0xf0) == 0x00) // end packet cmd, value returned is meaningless (probably used for main <-> mcu comms syncronization)
+		return 0;
+
+	switch(m_mcu_cmd)
+	{
+		case 0x73: return 0xa4; //initial MCU check
+		case 0x33: return m_mcu_b2_res; //0xb2 result
+		case 0x31: return m_mcu_b1_res; //0xb1 result
+
+		case 0x35: m_mcu_b5_res = 1; m_mcu_b6_res = 1; return 0;
+		case 0x36: return m_mcu_b4_cmd; //0xb4 command, extra protection for lives (first play only), otherwise game gives one extra life at start-up (!)
+		case 0x37: return m_mcu_b5_res; //0xb4 / 0xb5 / 0xb6 result y value
+		case 0x38: return m_mcu_b6_res; //x value
+
+		case 0x3b: return m_mcu_bb_res; //0xbb result
+		case 0x40: return 0;
+		case 0x41: return 0;
+		case 0x42:
+		{
+			/* TODO: subtle behaviour for transitioning from level 16 to level 17 (loop clear?). Command is:
+			0xc0 -> param -> 0xc1 -> param -> ... 0xc7 -> param -> 0x0e (end of packet) then reads at 0x40 -> 0x41 and 0x42
+
+			Params written doesn't make any sense, they are copies from RAM addresses at 0xe450-7 and they looks like ... garbage.
+			It's possible that all of this it just increments by one an internal RAM address in the MCU and then it sends a six when this counter
+			has bits 0-3 == 0 (BCD operation?), but then the question is ... how it determines game over?
+
+			According to a PCB test, game should roll back to level 1 layout but level counter should say "17" instead of current "11". Some of these ports also appears to control
+			game-play speed and who is playing between player 1 and 2.
+			*/
+			//static UINT8 level_val;
+
+			//level_val = read_byte(0xe247);
+
+			//popmessage("%02x",level_val);
+
+			//if((level_val & 0x0f) == 0x00)
+			//  return 0; //6
+
+			return 0;
+		}
+		//case 0x42: return 0x06;
+		//default:  printf("PC=%04x R %02x\n",space.device().safe_pc(),m_mcu_cmd); break;
+	}
+
+	return 0;
+}
+
+static void rumba_mcu_write(UINT8 data)
+{
+	bprintf(0, _T("mcu w(%X);\n"), data);
+	//if((m_mcu_cmd & 0xf0) == 0xc0)
+	//  printf("%02x ",data);
+
+	//if(m_mcu_cmd == 0x42)
+	//  printf("\n");
+
+	if(m_mcu_param)
+	{
+		m_mcu_param = 0; // clear param
+
+		//printf("%02x %02x\n",m_mcu_cmd,data);
+
+		switch(m_mcu_cmd)
+		{
+			case 0xb0: // counter, used by command 0xb1 (and something else?
+			{
+				/*
+				sends 0xb0 -> param then 0xb1 -> param -> 0x01 (end of cmd packet?) finally 0x31 for reply
+				*/
+
+				m_mcu_counter = data;
+
+				break;
+			}
+			case 0xb1: // player death sequence, controls X position
+			{
+				m_mcu_b1_res = data;
+
+				/* TODO: this is pretty hard to simulate ... */
+				if(m_mcu_counter >= 0x10)
+					m_mcu_b1_res++; // left
+				else if(m_mcu_counter >= 0x08)
+					m_mcu_b1_res--; // right
+				else
+					m_mcu_b1_res++; // left again
+
+				break;
+			}
+			case 0xb2: // player sprite hook-up param when he throws the wheel
+			{
+				/*
+				sends 0xb2 -> param -> 0x02 (end of cmd packet?) then 0x33 for reply
+				*/
+
+				switch(data)
+				{
+					case 1: m_mcu_b2_res = 0xaa; break; //left
+					case 2: m_mcu_b2_res = 0xaa; break; //right
+					case 4: m_mcu_b2_res = 0xab; break; //down
+					case 8: m_mcu_b2_res = 0xa9; break; //up
+				}
+				break;
+			}
+			case 0xbb: // when you start a level, lives
+			{
+				/*
+				sends 0xbb -> param -> 0x04 (end of cmd packet?) then 0x3b for reply
+				*/
+
+				m_mcu_bb_res = data;
+				//printf("PC=%04x W %02x -> %02x\n",space.device().safe_pc(),m_mcu_cmd,data);
+				break;
+			}
+			case 0xb4: // when the bird touches the top / bottom / left / right of the screen, for correct repositioning
+			{
+				m_mcu_b4_cmd = data;
+
+				//popmessage("%02x",m_mcu_b4_cmd);
+
+				/*
+				sends 0xb4 -> param -> 0xb5 -> param (bird X coord) -> 0xb6 -> param (bird Y coord) ->
+				*/
+
+				#if 0
+				switch(data)
+				{
+					case 1: break; // from up to down
+					case 2: break; // from left to right
+					case 3: break; // from right to left
+					case 4: break; // from down to up
+				}
+				#endif
+				break;
+			}
+			case 0xb5: // bird X coord
+			{
+				/* TODO: values might be off by one */
+				m_mcu_b5_res = data;
+
+				if(m_mcu_b4_cmd == 3) // from right to left
+					m_mcu_b5_res = 0x0d;
+
+				if(m_mcu_b4_cmd == 2) // from left to right
+					m_mcu_b5_res = 0xe4;
+
+				break;
+			}
+			case 0xb6: // bird Y coord
+			{
+				m_mcu_b6_res = data;
+
+				if(m_mcu_b4_cmd == 1) // from up to down
+					m_mcu_b6_res = 0x04;
+
+				if(m_mcu_b4_cmd == 4) // from down to up
+					m_mcu_b6_res = 0xdc;
+
+				break;
+			}
+		}
+
+		//if((m_mcu_cmd & 0xf0) == 0xc0)
+		//  printf("%02x ",data);
+
+		//if(m_mcu_cmd == 0xc7)
+		//  printf("\n");
+
+		return;
+	}
+
+	m_mcu_cmd = data;
+
+	if(((data & 0xf0) == 0xb0 || (data & 0xf0) == 0xc0) && m_mcu_param == 0)
+		m_mcu_param = 1;
 }
 
 static void onna34ro_mcu_write(INT32 data)
@@ -662,8 +857,8 @@ void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 	if ((address & 0xff00) == 0xdc00) {
 		DrvSprRAM[address & 0xff] = data;
 
-		if (select_game == 2 && address == 0xdce0) {
-			gfxctrl_write((data ^ 1) & ~0x10);
+		if (((select_game == 2) || (select_game == 3)) && address == 0xdce0) {
+			gfxctrl_write(data);
 		}
 
 		return;
@@ -672,9 +867,11 @@ void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 2) {
+			if (select_game == 3) {
+				rumba_mcu_write(data);
+			} else if (select_game == 2) {
 				victnine_mcu_write(data);
-			} if (select_game == 1) {
+			} else if (select_game == 1) {
 				onna34ro_mcu_write(data);
 			} else {
 				standard_taito_mcu_write(data);
@@ -698,7 +895,7 @@ void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xdf03:
-			if (select_game != 2) gfxctrl_write(data | 0x04);
+			if ((select_game != 2) && (select_game != 3)) gfxctrl_write(data | 0x04);
 		return;
 	}
 }
@@ -708,7 +905,9 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 2) {
+			if (select_game == 3) {
+				return rumba_mcu_read();
+			} else if (select_game == 2) {
 				return from_mcu - ZetReadByte(0xe685);
 			} else {
 				return standard_taito_mcu_read();
@@ -726,8 +925,11 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 		case 0xd802:
 			return DrvDips[address & 3];
 
-		case 0xd803:
+		case 0xd803: if (select_game != 3) {
 			return DrvInputs[0] & 0x3f;
+		} else {
+			return DrvInputs[0] ^ 0x30;
+		}
 
 		case 0xd804:
 			return DrvInputs[1];
@@ -739,6 +941,7 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 			if (mcu_sent) res |= 0x02;
 
 			if (select_game == 2) res |= DrvInputs[3];
+			if (select_game == 3) res = 0x03;
 
 			return res;
 		}
@@ -748,6 +951,8 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 
 		case 0xd807:
 			return DrvInputs[4];
+		case 0xdce0:
+			return m_gfxctrl;
 	}
 
 	return 0;
@@ -906,6 +1111,17 @@ static INT32 DrvDoReset()
 	char_bank = 0;
 	mcu_select = 0;
 
+	// below for Rumba mcu sim
+	m_mcu_cmd = 0;
+	m_mcu_counter = 0;
+	m_mcu_b4_cmd = 0;
+	m_mcu_param = 0;
+	m_mcu_b2_res = 0;
+	m_mcu_b1_res = 0;
+	m_mcu_bb_res = 0;
+	m_mcu_b5_res = 0;
+	m_mcu_b6_res = 0;
+
 	return 0;
 }
 
@@ -949,7 +1165,7 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[4]  = { 0x80000, 0x80004, 0x00000, 0x00004 };
+	INT32 Plane[4]  = { RGN_FRAC(((select_game == 3) ? 0x8000 : 0x20000), 1, 2)+0, RGN_FRAC(((select_game == 3) ? 0x8000 : 0x20000), 1, 2)+4, 0x00000, 0x00004 };
 	INT32 XOffs[16] = { 3, 2, 1, 0, 8+3, 8+2, 8+1, 8+0, 16*8+3, 16*8+2, 16*8+1, 16*8+0, 16*8+8+3, 16*8+8+2, 16*8+8+1, 16*8+8+0 };
 	INT32 YOffs[16] = { 0*16, 1*16, 2*16, 3*16, 4*16, 5*16, 6*16, 7*16, 16*16, 17*16, 18*16, 19*16, 20*16, 21*16, 22*16, 23*16 };
 
@@ -1038,6 +1254,19 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x12000, 17, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x14000, 18, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x16000, 19, 1)) return 1;
+		} else if (select_game == 3) {
+			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
+
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x02000,  4, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x04000,  5, 1)) return 1;
+			// 6 == undumped mcu
+			if (BurnLoadRom(DrvGfxROM0 + 0x02000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x06000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x04000, 10, 1)) return 1;
 		}
 
 		DrvGfxDecode();
@@ -1178,6 +1407,9 @@ static void draw_background_layer(INT32 type, INT32 priority)
 
 		INT32 flipy =  attr & 0x10;
 		INT32 flipx =  attr & 0x08;
+		if (select_game == 3) {
+			flipx = 0; flipy = 0; // no flipping in rumba
+		}
 		INT32 color = (attr & 0x0f) << 4;
 		INT32 prio  = (attr & 0x20) >> 5;
 		if (priority && !prio) continue;
@@ -1361,9 +1593,9 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) draw_background_layer(1, 0);
 	if (nBurnLayer & 2) draw_background_layer(3, 1);
-	if (nSpriteEnable & 1) draw_sprites(0x00, 0);
+	if (nSpriteEnable & 1) draw_sprites(0x00, (select_game == 3));
 	if (nBurnLayer & 4) draw_background_layer(0, 0);
-	if (nSpriteEnable & 2) draw_sprites(0x80, 0);
+	if (nSpriteEnable & 2) draw_sprites(0x80, (select_game == 3));
 	if (nBurnLayer & 8) draw_background_layer(2, 1);
 
 	BurnTransferCopy(DrvPalette);
@@ -1668,7 +1900,6 @@ struct BurnDriverD BurnDrvVictnine = {
 	256, 224, 4, 3
 };
 
-#if 0
 static INT32 rumbaInit()
 {
 	select_game = 3;
@@ -1700,13 +1931,12 @@ static struct BurnRomInfo rumbaRomDesc[] = {
 STD_ROM_PICK(rumba)
 STD_ROM_FN(rumba)
 
-struct BurnDriverX BurnDrvRumba = {
+struct BurnDriver BurnDrvRumba = {
 	"rumba", NULL, NULL, NULL, "1984",
 	"Rumba Lumber\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, rumbaRomInfo, rumbaRomName, NULL, NULL, RumbaInputInfo, RumbaDIPInfo,
 	rumbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	256, 224, 4, 3
+	224, 256, 3, 4
 };
-#endif

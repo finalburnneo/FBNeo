@@ -1365,6 +1365,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m_snd_ctrl0);
 		SCAN_VAR(m_snd_ctrl1);
 		SCAN_VAR(m_snd_ctrl2);
+		// below for Rumba mcu sim
+		SCAN_VAR(m_mcu_cmd);
+		SCAN_VAR(m_mcu_counter);
+		SCAN_VAR(m_mcu_b4_cmd);
+		SCAN_VAR(m_mcu_param);
+		SCAN_VAR(m_mcu_b2_res);
+		SCAN_VAR(m_mcu_b1_res);
+		SCAN_VAR(m_mcu_bb_res);
+		SCAN_VAR(m_mcu_b5_res);
+		SCAN_VAR(m_mcu_b6_res);
 
 		DrvRecalc = 1;
 	}
@@ -1409,7 +1419,9 @@ static void draw_background_layer(INT32 type, INT32 priority)
 		INT32 flipx =  attr & 0x08;
 		if (select_game == 3) {
 			flipx = 0; flipy = 0; // no flipping in rumba
+			code &= 0x3ff; // mask code to max_rumba_chars-1
 		}
+
 		INT32 color = (attr & 0x0f) << 4;
 		INT32 prio  = (attr & 0x20) >> 5;
 		if (priority && !prio) continue;

@@ -577,8 +577,6 @@ static void gfxctrl_write(INT32 data)
 
 static UINT8 rumba_mcu_read()
 {
-	//printf("PC=%04x R %02x\n",space.device().safe_pc(),m_mcu_cmd);
-
 	if((m_mcu_cmd & 0xf0) == 0x00) // end packet cmd, value returned is meaningless (probably used for main <-> mcu comms syncronization)
 		return 0;
 
@@ -598,29 +596,8 @@ static UINT8 rumba_mcu_read()
 		case 0x41: return 0;
 		case 0x42:
 		{
-			/* TODO: subtle behaviour for transitioning from level 16 to level 17 (loop clear?). Command is:
-			0xc0 -> param -> 0xc1 -> param -> ... 0xc7 -> param -> 0x0e (end of packet) then reads at 0x40 -> 0x41 and 0x42
-
-			Params written doesn't make any sense, they are copies from RAM addresses at 0xe450-7 and they looks like ... garbage.
-			It's possible that all of this it just increments by one an internal RAM address in the MCU and then it sends a six when this counter
-			has bits 0-3 == 0 (BCD operation?), but then the question is ... how it determines game over?
-
-			According to a PCB test, game should roll back to level 1 layout but level counter should say "17" instead of current "11". Some of these ports also appears to control
-			game-play speed and who is playing between player 1 and 2.
-			*/
-			//static UINT8 level_val;
-
-			//level_val = read_byte(0xe247);
-
-			//popmessage("%02x",level_val);
-
-			//if((level_val & 0x0f) == 0x00)
-			//  return 0; //6
-
 			return 0;
 		}
-		//case 0x42: return 0x06;
-		//default:  printf("PC=%04x R %02x\n",space.device().safe_pc(),m_mcu_cmd); break;
 	}
 
 	return 0;
@@ -628,29 +605,15 @@ static UINT8 rumba_mcu_read()
 
 static void rumba_mcu_write(UINT8 data)
 {
-	bprintf(0, _T("mcu w(%X);\n"), data);
-	//if((m_mcu_cmd & 0xf0) == 0xc0)
-	//  printf("%02x ",data);
-
-	//if(m_mcu_cmd == 0x42)
-	//  printf("\n");
-
 	if(m_mcu_param)
 	{
 		m_mcu_param = 0; // clear param
-
-		//printf("%02x %02x\n",m_mcu_cmd,data);
 
 		switch(m_mcu_cmd)
 		{
 			case 0xb0: // counter, used by command 0xb1 (and something else?
 			{
-				/*
-				sends 0xb0 -> param then 0xb1 -> param -> 0x01 (end of cmd packet?) finally 0x31 for reply
-				*/
-
 				m_mcu_counter = data;
-
 				break;
 			}
 			case 0xb1: // player death sequence, controls X position
@@ -669,10 +632,6 @@ static void rumba_mcu_write(UINT8 data)
 			}
 			case 0xb2: // player sprite hook-up param when he throws the wheel
 			{
-				/*
-				sends 0xb2 -> param -> 0x02 (end of cmd packet?) then 0x33 for reply
-				*/
-
 				switch(data)
 				{
 					case 1: m_mcu_b2_res = 0xaa; break; //left
@@ -684,38 +643,16 @@ static void rumba_mcu_write(UINT8 data)
 			}
 			case 0xbb: // when you start a level, lives
 			{
-				/*
-				sends 0xbb -> param -> 0x04 (end of cmd packet?) then 0x3b for reply
-				*/
-
 				m_mcu_bb_res = data;
-				//printf("PC=%04x W %02x -> %02x\n",space.device().safe_pc(),m_mcu_cmd,data);
 				break;
 			}
 			case 0xb4: // when the bird touches the top / bottom / left / right of the screen, for correct repositioning
 			{
 				m_mcu_b4_cmd = data;
-
-				//popmessage("%02x",m_mcu_b4_cmd);
-
-				/*
-				sends 0xb4 -> param -> 0xb5 -> param (bird X coord) -> 0xb6 -> param (bird Y coord) ->
-				*/
-
-				#if 0
-				switch(data)
-				{
-					case 1: break; // from up to down
-					case 2: break; // from left to right
-					case 3: break; // from right to left
-					case 4: break; // from down to up
-				}
-				#endif
 				break;
 			}
 			case 0xb5: // bird X coord
 			{
-				/* TODO: values might be off by one */
 				m_mcu_b5_res = data;
 
 				if(m_mcu_b4_cmd == 3) // from right to left
@@ -739,12 +676,6 @@ static void rumba_mcu_write(UINT8 data)
 				break;
 			}
 		}
-
-		//if((m_mcu_cmd & 0xf0) == 0xc0)
-		//  printf("%02x ",data);
-
-		//if(m_mcu_cmd == 0xc7)
-		//  printf("\n");
 
 		return;
 	}

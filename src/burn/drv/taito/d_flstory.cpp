@@ -1,4 +1,4 @@
-// Todo: add rumba map & mcu sim
+// Todo: victnine
 
 #include "tiles_generic.h"
 #include "taito_m68705.h"
@@ -350,35 +350,39 @@ STDINPUTINFO(Onna34ro)
 
 static struct BurnDIPInfo Onna34roDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xe0, NULL				},
-	{0x14, 0xff, 0xff, 0x00, NULL				},
-	{0x15, 0xff, 0xff, 0x80, NULL				},
+	{0x13, 0xff, 0xff, 0xc0, NULL		},
+	{0x14, 0xff, 0xff, 0x00, NULL		},
+	{0x15, 0xff, 0xff, 0x80, NULL		},
 
-	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
 	{0x13, 0x01, 0x03, 0x00, "200000 200000"		},
 	{0x13, 0x01, 0x03, 0x01, "200000 300000"		},
 	{0x13, 0x01, 0x03, 0x02, "100000 200000"		},
 	{0x13, 0x01, 0x03, 0x03, "200000 100000"		},
 
-	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x13, 0x01, 0x04, 0x00, "Off"				},
-	{0x13, 0x01, 0x04, 0x04, "On"				},
+	{0   , 0xfe, 0   ,    2, "Free Play"		},
+	{0x13, 0x01, 0x04, 0x00, "Off"		},
+	{0x13, 0x01, 0x04, 0x04, "On"		},
 
-	{0   , 0xfe, 0   ,    4, "Lives"			},
-	{0x13, 0x01, 0x18, 0x10, "1"				},
-	{0x13, 0x01, 0x18, 0x08, "2"				},
-	{0x13, 0x01, 0x18, 0x00, "3"				},
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x13, 0x01, 0x18, 0x10, "1"		},
+	{0x13, 0x01, 0x18, 0x08, "2"		},
+	{0x13, 0x01, 0x18, 0x00, "3"		},
 	{0x13, 0x01, 0x18, 0x18, "Endless (Cheat)"		},
-	
-	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x13, 0x01, 0x40, 0x40, "Off"				},
-	{0x13, 0x01, 0x40, 0x00, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"			},
-	{0x13, 0x01, 0x80, 0x80, "Upright"			},
-	{0x13, 0x01, 0x80, 0x00, "Cocktail"			},
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x13, 0x01, 0x20, 0x20, "Off"		},
+	{0x13, 0x01, 0x20, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,   16, "Coin A"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x13, 0x01, 0x40, 0x40, "Off"		},
+	{0x13, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x13, 0x01, 0x80, 0x80, "Upright"		},
+	{0x13, 0x01, 0x80, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin A"		},
 	{0x14, 0x01, 0x0f, 0x0f, "9 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0e, "8 Coins 1 Credits"		},
 	{0x14, 0x01, 0x0f, 0x0d, "7 Coins 1 Credits"		},
@@ -396,7 +400,7 @@ static struct BurnDIPInfo Onna34roDIPList[]=
 	{0x14, 0x01, 0x0f, 0x06, "1 Coin  7 Credits"		},
 	{0x14, 0x01, 0x0f, 0x07, "1 Coin  8 Credits"		},
 
-	{0   , 0xfe, 0   ,   16, "Coin B"			},
+	{0   , 0xfe, 0   ,    16, "Coin B"		},
 	{0x14, 0x01, 0xf0, 0xf0, "9 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0xe0, "8 Coins 1 Credits"		},
 	{0x14, 0x01, 0xf0, 0xd0, "7 Coins 1 Credits"		},
@@ -414,31 +418,35 @@ static struct BurnDIPInfo Onna34roDIPList[]=
 	{0x14, 0x01, 0xf0, 0x60, "1 Coin  7 Credits"		},
 	{0x14, 0x01, 0xf0, 0x70, "1 Coin  8 Credits"		},
 
-	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"},
-	{0x15, 0x01, 0x01, 0x00, "Off"				},
-	{0x15, 0x01, 0x01, 0x01, "On"				},
+	{0   , 0xfe, 0   ,    2, "Invulnerability (Cheat)"		},
+	{0x15, 0x01, 0x01, 0x00, "Off"		},
+	{0x15, 0x01, 0x01, 0x01, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Rack Test"			},
-	{0x15, 0x01, 0x02, 0x00, "Off"				},
-	{0x15, 0x01, 0x02, 0x02, "On"				},
+	{0   , 0xfe, 0   ,    2, "Rack Test"		},
+	{0x15, 0x01, 0x02, 0x00, "Off"		},
+	{0x15, 0x01, 0x02, 0x02, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"			},
-	{0x15, 0x01, 0x08, 0x00, "Off"				},
-	{0x15, 0x01, 0x08, 0x08, "On"				},
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x15, 0x01, 0x04, 0x04, "Off"		},
+	{0x15, 0x01, 0x04, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"		},
+	{0x15, 0x01, 0x08, 0x00, "Off"		},
+	{0x15, 0x01, 0x08, 0x08, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Coinage Display"		},
-	{0x15, 0x01, 0x10, 0x10, "Off"				},
-	{0x15, 0x01, 0x10, 0x00, "On"				},
+	{0x15, 0x01, 0x10, 0x10, "Off"		},
+	{0x15, 0x01, 0x10, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x15, 0x01, 0x60, 0x20, "Easy"				},
-	{0x15, 0x01, 0x60, 0x00, "Normal"			},
-	{0x15, 0x01, 0x60, 0x40, "Difficult"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x15, 0x01, 0x60, 0x20, "Easy"		},
+	{0x15, 0x01, 0x60, 0x00, "Normal"		},
+	{0x15, 0x01, 0x60, 0x40, "Difficult"		},
 	{0x15, 0x01, 0x60, 0x60, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Coinage"			},
-	{0x15, 0x01, 0x80, 0x80, "A and B"			},
-	{0x15, 0x01, 0x80, 0x00, "A only"			},
+	{0   , 0xfe, 0   ,    2, "Coinage"		},
+	{0x15, 0x01, 0x80, 0x80, "A and B"		},
+	{0x15, 0x01, 0x80, 0x00, "A only"		},
 };
 
 STDDIPINFO(Onna34ro)
@@ -688,7 +696,7 @@ static void rumba_mcu_write(UINT8 data)
 
 static void onna34ro_mcu_write(INT32 data)
 {
-	INT32 score_adr = (ZetReadByte(0xe29e) << 8) | ZetReadByte(0xe29d);
+	INT32 score_adr = (ZetReadByte(0xe29e) << 8) + ZetReadByte(0xe29d);
 
 	mcu_sent = 1;
 
@@ -702,15 +710,15 @@ static void onna34ro_mcu_write(INT32 data)
 			from_mcu = 0x6a;
 			break;
 
-		case 0x40:
+		case 0x40: if(score_adr >= 0xe000 && score_adr < 0xe800)
 			from_mcu = ZetReadByte(score_adr);
 			break;
 
-		case 0x41:
+		case 0x41: if(score_adr >= 0xe000 && score_adr < 0xe800)
 			from_mcu = ZetReadByte(score_adr+1);
 			break;
 
-		case 0x42:
+		case 0x42: if(score_adr >= 0xe000 && score_adr < 0xe800)
 			from_mcu = ZetReadByte(score_adr+2) & 0x0f;
 			break;
 
@@ -836,7 +844,9 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 3) {
+			if (select_game == 1) {
+				return from_mcu; }
+			else if (select_game == 3) {
 				return rumba_mcu_read();
 			} else if (select_game == 2) {
 				return from_mcu - ZetReadByte(0xe685);
@@ -872,8 +882,7 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 			if (mcu_sent) res |= 0x02;
 
 			if (select_game == 2) res |= DrvInputs[3];
-			if (select_game == 3) res = 0x03;
-
+			if (select_game == 3 || select_game == 1) res = 0x03; // rumba and onna always returns 3
 			return res;
 		}
 
@@ -939,7 +948,7 @@ static void AY_ayportA_write(UINT32 addr, UINT32 data)
 	if (data == 0xff) return; // ignore ay-init
 	m_snd_ctrl2 = data & 0xff;
 
-	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / 2000.0, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ((select_game == 3) ? 1600.0 : 2000.0), BURN_SND_ROUTE_BOTH);
 }
 
 void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
@@ -1243,6 +1252,9 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, AY_ayportA_write, NULL);
 	AY8910SetAllRoutes(0, 0.05, BURN_SND_ROUTE_BOTH);
+	if (select_game == 3) {
+		AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	}
 
 	MSM5232Init(2000000, 1);
 	MSM5232SetCapacitors(1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6, 1.0e-6);
@@ -1582,7 +1594,9 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 100;
 	INT32 nCyclesTotal[3] = { 5366500 / 60, 4000000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[3]  = { 0, 0, 0 };
-	if (select_game == 2) nCyclesTotal[0] = nCyclesTotal[1];
+
+	if (select_game == 2 || select_game == 3)
+		nCyclesTotal[0] = 4000000 / 60;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -1629,23 +1643,23 @@ static INT32 DrvFrame()
 // The FairyLand Story
 
 static struct BurnRomInfo flstoryRomDesc[] = {
-	{ "cpu-a45.15",		0x4000, 0xf03fc969, 1 }, //  0 maincpu
-	{ "cpu-a45.16",		0x4000, 0x311aa82e, 1 }, //  1
-	{ "cpu-a45.17",		0x4000, 0xa2b5d17d, 1 }, //  2
+	{ "cpu-a45.15",		0x4000, 0xf03fc969, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "cpu-a45.16",		0x4000, 0x311aa82e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cpu-a45.17",		0x4000, 0xa2b5d17d, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "snd.22",		0x2000, 0xd58b201d, 2 }, //  3 audiocpu
-	{ "snd.23",		0x2000, 0x25e7fd9d, 2 }, //  4
+	{ "snd.22",		    0x2000, 0xd58b201d, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "snd.23",		    0x2000, 0x25e7fd9d, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "vid-a45.18",		0x4000, 0x6f08f69e, 3 }, //  5 gfx1
-	{ "vid-a45.06",		0x4000, 0xdc856a75, 3 }, //  6
-	{ "vid-a45.08",		0x4000, 0xd0b028ca, 3 }, //  7
-	{ "vid-a45.20",		0x4000, 0x1b0edf34, 3 }, //  8
-	{ "vid-a45.19",		0x4000, 0x2b572dc9, 3 }, //  9
-	{ "vid-a45.07",		0x4000, 0xaa4b0762, 3 }, // 10
-	{ "vid-a45.09",		0x4000, 0x8336be58, 3 }, // 11
-	{ "vid-a45.21",		0x4000, 0xfc382bd1, 3 }, // 12
+	{ "vid-a45.18",		0x4000, 0x6f08f69e, 3 | BRF_GRA }, //  5 gfx1
+	{ "vid-a45.06",		0x4000, 0xdc856a75, 3 | BRF_GRA }, //  6
+	{ "vid-a45.08",		0x4000, 0xd0b028ca, 3 | BRF_GRA }, //  7
+	{ "vid-a45.20",		0x4000, 0x1b0edf34, 3 | BRF_GRA }, //  8
+	{ "vid-a45.19",		0x4000, 0x2b572dc9, 3 | BRF_GRA }, //  9
+	{ "vid-a45.07",		0x4000, 0xaa4b0762, 3 | BRF_GRA }, // 10
+	{ "vid-a45.09",		0x4000, 0x8336be58, 3 | BRF_GRA }, // 11
+	{ "vid-a45.21",		0x4000, 0xfc382bd1, 3 | BRF_GRA }, // 12
 
-	{ "a45.mcu",		0x0800, 0x5378253c, 4 }, // 13 mcu
+	{ "a45.mcu",		0x0800, 0x5378253c, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
 };
 
 STD_ROM_PICK(flstory)
@@ -1672,23 +1686,23 @@ struct BurnDriver BurnDrvFlstory = {
 // The FairyLand Story (Japan)
 
 static struct BurnRomInfo flstoryjRomDesc[] = {
-	{ "cpu-a45.15",		0x4000, 0xf03fc969, 1 }, //  0 maincpu
-	{ "cpu-a45.16",		0x4000, 0x311aa82e, 1 }, //  1
-	{ "cpu-a45.17",		0x4000, 0xa2b5d17d, 1 }, //  2
+	{ "cpu-a45.15",		0x4000, 0xf03fc969, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "cpu-a45.16",		0x4000, 0x311aa82e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cpu-a45.17",		0x4000, 0xa2b5d17d, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "a45_12.8",		0x2000, 0xd6f593fb, 2 }, //  3 audiocpu
-	{ "a45_13.9",		0x2000, 0x451f92f9, 2 }, //  4
+	{ "a45_12.8",		0x2000, 0xd6f593fb, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "a45_13.9",		0x2000, 0x451f92f9, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "vid-a45.18",		0x4000, 0x6f08f69e, 3 }, //  5 gfx1
-	{ "vid-a45.06",		0x4000, 0xdc856a75, 3 }, //  6
-	{ "vid-a45.08",		0x4000, 0xd0b028ca, 3 }, //  7
-	{ "vid-a45.20",		0x4000, 0x1b0edf34, 3 }, //  8
-	{ "vid-a45.19",		0x4000, 0x2b572dc9, 3 }, //  9
-	{ "vid-a45.07",		0x4000, 0xaa4b0762, 3 }, // 10
-	{ "vid-a45.09",		0x4000, 0x8336be58, 3 }, // 11
-	{ "vid-a45.21",		0x4000, 0xfc382bd1, 3 }, // 12
+	{ "vid-a45.18",		0x4000, 0x6f08f69e, 3 | BRF_GRA }, //  5 gfx1
+	{ "vid-a45.06",		0x4000, 0xdc856a75, 3 | BRF_GRA }, //  6
+	{ "vid-a45.08",		0x4000, 0xd0b028ca, 3 | BRF_GRA }, //  7
+	{ "vid-a45.20",		0x4000, 0x1b0edf34, 3 | BRF_GRA }, //  8
+	{ "vid-a45.19",		0x4000, 0x2b572dc9, 3 | BRF_GRA }, //  9
+	{ "vid-a45.07",		0x4000, 0xaa4b0762, 3 | BRF_GRA }, // 10
+	{ "vid-a45.09",		0x4000, 0x8336be58, 3 | BRF_GRA }, // 11
+	{ "vid-a45.21",		0x4000, 0xfc382bd1, 3 | BRF_GRA }, // 12
 
-	{ "a45.mcu",		0x0800, 0x5378253c, 4 }, // 13 mcu
+	{ "a45.mcu",		0x0800, 0x5378253c, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
 };
 
 STD_ROM_PICK(flstoryj)
@@ -1708,24 +1722,24 @@ struct BurnDriver BurnDrvFlstoryj = {
 // Onna Sansirou - Typhoon Gal (set 1)
 
 static struct BurnRomInfo onna34roRomDesc[] = {
-	{ "a52-01-1.40c",	0x4000, 0xffddcb02, 1 }, //  0 maincpu
-	{ "a52-02-1.41c",	0x4000, 0xda97150d, 1 }, //  1
-	{ "a52-03-1.42c",	0x4000, 0xb9749a53, 1 }, //  2
+	{ "a52-01-1.40c",	0x4000, 0xffddcb02, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "a52-02-1.41c",	0x4000, 0xda97150d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a52-03-1.42c",	0x4000, 0xb9749a53, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "a52-12.08s",		0x2000, 0x28f48096, 2 }, //  3 audiocpu
-	{ "a52-13.09s",		0x2000, 0x4d3b16f3, 2 }, //  4
-	{ "a52-14.10s",		0x2000, 0x90a6f4e8, 2 }, //  5
-	{ "a52-15.37s",		0x2000, 0x5afc21d0, 2 }, //  6
-	{ "a52-16.38s",		0x2000, 0xccf42aee, 2 }, //  7
+	{ "a52-12.08s",		0x2000, 0x28f48096, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "a52-13.09s",		0x2000, 0x4d3b16f3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "a52-14.10s",		0x2000, 0x90a6f4e8, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "a52-15.37s",		0x2000, 0x5afc21d0, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "a52-16.38s",		0x2000, 0xccf42aee, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "a52-04.11v",		0x4000, 0x5b126294, 3 }, //  8 gfx1
-	{ "a52-06.10v",		0x4000, 0x78114721, 3 }, //  9
-	{ "a52-08.09v",		0x4000, 0x4a293745, 3 }, // 10
-	{ "a52-10.08v",		0x4000, 0x8be7b4db, 3 }, // 11
-	{ "a52-05.35v",		0x4000, 0xa1a99588, 3 }, // 12
-	{ "a52-07.34v",		0x4000, 0x0bf420f2, 3 }, // 13
-	{ "a52-09.33v",		0x4000, 0x39c543b5, 3 }, // 14
-	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 }, // 15
+	{ "a52-04.11v",		0x4000, 0x5b126294, 3 | BRF_GRA }, //  8 gfx1
+	{ "a52-06.10v",		0x4000, 0x78114721, 3 | BRF_GRA }, //  9
+	{ "a52-08.09v",		0x4000, 0x4a293745, 3 | BRF_GRA }, // 10
+	{ "a52-10.08v",		0x4000, 0x8be7b4db, 3 | BRF_GRA }, // 11
+	{ "a52-05.35v",		0x4000, 0xa1a99588, 3 | BRF_GRA }, // 12
+	{ "a52-07.34v",		0x4000, 0x0bf420f2, 3 | BRF_GRA }, // 13
+	{ "a52-09.33v",		0x4000, 0x39c543b5, 3 | BRF_GRA }, // 14
+	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 | BRF_GRA }, // 15
 
 	{ "a52-17.54c",		0x0800, 0x00000000, 4 | BRF_NODUMP }, // 16 cpu2
 };
@@ -1754,24 +1768,24 @@ struct BurnDriver BurnDrvOnna34ro = {
 // Onna Sansirou - Typhoon Gal (set 2)
 
 static struct BurnRomInfo onna34raRomDesc[] = {
-	{ "ry-08.rom",		0x4000, 0xe4587b85, 1 }, //  0 maincpu
-	{ "ry-07.rom",		0x4000, 0x6ffda515, 1 }, //  1
-	{ "ry-06.rom",		0x4000, 0x6fefcda8, 1 }, //  2
+	{ "ry-08.rom",		0x4000, 0xe4587b85, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "ry-07.rom",		0x4000, 0x6ffda515, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ry-06.rom",		0x4000, 0x6fefcda8, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "a52-12.08s",		0x2000, 0x28f48096, 2 }, //  3 audiocpu
-	{ "a52-13.09s",		0x2000, 0x4d3b16f3, 2 }, //  4
-	{ "a52-14.10s",		0x2000, 0x90a6f4e8, 2 }, //  5
-	{ "a52-15.37s",		0x2000, 0x5afc21d0, 2 }, //  6
-	{ "a52-16.38s",		0x2000, 0xccf42aee, 2 }, //  7
+	{ "a52-12.08s",		0x2000, 0x28f48096, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "a52-13.09s",		0x2000, 0x4d3b16f3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "a52-14.10s",		0x2000, 0x90a6f4e8, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "a52-15.37s",		0x2000, 0x5afc21d0, 2 | BRF_PRG | BRF_ESS }, //  6
+	{ "a52-16.38s",		0x2000, 0xccf42aee, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "a52-04.11v",		0x4000, 0x5b126294, 3 }, //  8 gfx1
-	{ "a52-06.10v",		0x4000, 0x78114721, 3 }, //  9
-	{ "a52-08.09v",		0x4000, 0x4a293745, 3 }, // 10
-	{ "a52-10.08v",		0x4000, 0x8be7b4db, 3 }, // 11
-	{ "a52-05.35v",		0x4000, 0xa1a99588, 3 }, // 12
-	{ "a52-07.34v",		0x4000, 0x0bf420f2, 3 }, // 13
-	{ "a52-09.33v",		0x4000, 0x39c543b5, 3 }, // 14
-	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 }, // 15
+	{ "a52-04.11v",		0x4000, 0x5b126294, 3 | BRF_GRA }, //  8 gfx1
+	{ "a52-06.10v",		0x4000, 0x78114721, 3 | BRF_GRA }, //  9
+	{ "a52-08.09v",		0x4000, 0x4a293745, 3 | BRF_GRA }, // 10
+	{ "a52-10.08v",		0x4000, 0x8be7b4db, 3 | BRF_GRA }, // 11
+	{ "a52-05.35v",		0x4000, 0xa1a99588, 3 | BRF_GRA }, // 12
+	{ "a52-07.34v",		0x4000, 0x0bf420f2, 3 | BRF_GRA }, // 13
+	{ "a52-09.33v",		0x4000, 0x39c543b5, 3 | BRF_GRA }, // 14
+	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 | BRF_GRA }, // 15
 
 	{ "a52-17.54c",		0x0800, 0x00000000, 4 | BRF_NODUMP }, // 16 cpu2
 };
@@ -1793,28 +1807,28 @@ struct BurnDriver BurnDrvOnna34ra = {
 // Victorious Nine
 
 static struct BurnRomInfo victnineRomDesc[] = {
-	{ "a16-19.1",		0x2000, 0xdeb7c439, 1 }, //  0 maincpu
-	{ "a16-20.2",		0x2000, 0x60cdb6ae, 1 }, //  1
-	{ "a16-21.3",		0x2000, 0x121bea03, 1 }, //  2
-	{ "a16-22.4",		0x2000, 0xb20e3027, 1 }, //  3
-	{ "a16-23.5",		0x2000, 0x95fe9cb7, 1 }, //  4
-	{ "a16-24.6",		0x2000, 0x32b5c155, 1 }, //  5
+	{ "a16-19.1",		0x2000, 0xdeb7c439, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "a16-20.2",		0x2000, 0x60cdb6ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a16-21.3",		0x2000, 0x121bea03, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a16-22.4",		0x2000, 0xb20e3027, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "a16-23.5",		0x2000, 0x95fe9cb7, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "a16-24.6",		0x2000, 0x32b5c155, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "a16-12.8",		0x2000, 0x4b9bff43, 2 }, //  6 audiocpu
-	{ "a16-13.9",		0x2000, 0x355121b9, 2 }, //  7
-	{ "a16-14.10",		0x2000, 0x0f33ef4d, 2 }, //  8
-	{ "a16-15.37",		0x2000, 0xf91d63dc, 2 }, //  9
-	{ "a16-16.38",		0x2000, 0x9395351b, 2 }, // 10
-	{ "a16-17.39",		0x2000, 0x872270b3, 2 }, // 11
+	{ "a16-12.8",		0x2000, 0x4b9bff43, 2 | BRF_PRG | BRF_ESS }, //  6 audiocpu
+	{ "a16-13.9",		0x2000, 0x355121b9, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "a16-14.10",		0x2000, 0x0f33ef4d, 2 | BRF_PRG | BRF_ESS }, //  8
+	{ "a16-15.37",		0x2000, 0xf91d63dc, 2 | BRF_PRG | BRF_ESS }, //  9
+	{ "a16-16.38",		0x2000, 0x9395351b, 2 | BRF_PRG | BRF_ESS }, // 10
+	{ "a16-17.39",		0x2000, 0x872270b3, 2 | BRF_PRG | BRF_ESS }, // 11
 
-	{ "a16-06-1.7",		0x2000, 0xb708134d, 3 }, // 12 gfx1
-	{ "a16-07-2.8",		0x2000, 0xcdaf7f83, 3 }, // 13
-	{ "a16-10.90",		0x2000, 0xe8e42454, 3 }, // 14
-	{ "a16-11-1.91",	0x2000, 0x1f766661, 3 }, // 15
-	{ "a16-04.5",		0x2000, 0xb2fae99f, 3 }, // 16
-	{ "a16-05-1.6",		0x2000, 0x85dfbb6e, 3 }, // 17
-	{ "a16-08.88",		0x2000, 0x1ddb6466, 3 }, // 18
-	{ "a16-09-1.89",	0x2000, 0x23d4c43c, 3 }, // 19
+	{ "a16-06-1.7",		0x2000, 0xb708134d, 3 | BRF_GRA }, // 12 gfx1
+	{ "a16-07-2.8",		0x2000, 0xcdaf7f83, 3 | BRF_GRA }, // 13
+	{ "a16-10.90",		0x2000, 0xe8e42454, 3 | BRF_GRA }, // 14
+	{ "a16-11-1.91",	0x2000, 0x1f766661, 3 | BRF_GRA }, // 15
+	{ "a16-04.5",		0x2000, 0xb2fae99f, 3 | BRF_GRA }, // 16
+	{ "a16-05-1.6",		0x2000, 0x85dfbb6e, 3 | BRF_GRA }, // 17
+	{ "a16-08.88",		0x2000, 0x1ddb6466, 3 | BRF_GRA }, // 18
+	{ "a16-09-1.89",	0x2000, 0x23d4c43c, 3 | BRF_GRA }, // 19
 
 	{ "a16-18.mcu",		0x0800, 0x00000000, 4 | BRF_NODUMP }, // 20 cpu2
 };
@@ -1855,20 +1869,20 @@ static INT32 rumbaInit()
 // Rumba Lumber
 
 static struct BurnRomInfo rumbaRomDesc[] = {
-	{ "a23_01-1.bin",	0x4000, 0x4bea6e18, 1 }, //  0 maincpu
-	{ "a23_02-1.bin",	0x4000, 0x08f98c6f, 1 }, //  1
-	{ "a23_03-1.bin",	0x4000, 0xab595427, 1 }, //  2
+	{ "a23_01-1.bin",	0x4000, 0x4bea6e18, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "a23_02-1.bin",	0x4000, 0x08f98c6f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a23_03-1.bin",	0x4000, 0xab595427, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "a23_08-1.bin",	0x2000, 0xa18eae00, 2 }, //  3 audiocpu
-	{ "a23_09.bin",		0x2000, 0xd0a101d3, 2 }, //  4
-	{ "a23_10.bin",		0x2000, 0xf9447bd4, 2 }, //  5
+	{ "a23_08-1.bin",	0x2000, 0xa18eae00, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+	{ "a23_09.bin",		0x2000, 0xd0a101d3, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "a23_10.bin",		0x2000, 0xf9447bd4, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "a23-11.mc68705p5s",	0x0800, 0x00000000, 3 | BRF_NODUMP }, //  6 mcu
 
-	{ "a23_07.bin",		0x2000, 0xc98fbea6, 4 }, //  7 gfx1
-	{ "a23_06.bin",		0x2000, 0xbf1e3a7f, 4 }, //  8
-	{ "a23_05.bin",		0x2000, 0xb40db231, 4 }, //  9
-	{ "a23_04.bin",		0x2000, 0x1d4f001f, 4 }, // 10
+	{ "a23_07.bin",		0x2000, 0xc98fbea6, 4 | BRF_GRA }, //  7 gfx1
+	{ "a23_06.bin",		0x2000, 0xbf1e3a7f, 4 | BRF_GRA }, //  8
+	{ "a23_05.bin",		0x2000, 0xb40db231, 4 | BRF_GRA }, //  9
+	{ "a23_04.bin",		0x2000, 0x1d4f001f, 4 | BRF_GRA }, // 10
 };
 
 STD_ROM_PICK(rumba)

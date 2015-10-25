@@ -2,8 +2,7 @@
 // Based on MAME driver by Kenneth Lin
 
 // Todo:
-//  1) add other romsets
-//  2) hook-up rotation code (re: d_dec0: heavy barrell / midnight resistance code)
+//  1) hook-up rotation code (re: d_dec0: heavy barrell / midnight resistance code)
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -46,6 +45,8 @@ static UINT8 DrvReset;
 static INT32 watchdog;
 static INT32 layer_offset_x = 8;
 static INT32 layer_offset_y = 16;
+
+static INT32 bootleg = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -379,7 +380,8 @@ static INT32 DrvInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	{
+	if (!bootleg) {
+		// Jackal
 		if (BurnLoadRom(DrvM6809ROM0 + 0x10000,   0, 1)) return 1;
 		if (BurnLoadRom(DrvM6809ROM0 + 0x0c000,   1, 1)) return 1;
 
@@ -392,10 +394,38 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvColPROM   + 0x00000,   7, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM   + 0x00100,   8, 1)) return 1;
+	} else {
+		// Bootleg
+		if (BurnLoadRom(DrvM6809ROM0 + 0x10000,   0, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0x18000,   1, 1)) return 1;
+		if (BurnLoadRom(DrvM6809ROM0 + 0x0c000,   2, 1)) return 1;
 
-		DrvGfxDecode();
-		DrvPaletteInit();
+		if (BurnLoadRom(DrvM6809ROM1 + 0x08000,   3, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM2   + 0x00000,   4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x08000,   5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x10000,   6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x18000,   7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x20000,   8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x28000,   9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x30000,  10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x38000,  11, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x40000,  12, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x48000,  13, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x50000,  14, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x58000,  15, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x60000,  16, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x68000,  17, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x70000,  18, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2   + 0x78000,  19, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM   + 0x00000,  20, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM   + 0x00100,  21, 1)) return 1;
+		BurnByteswap(DrvGfxROM2, 0x80000);
 	}
+
+	DrvGfxDecode();
+	DrvPaletteInit();
 
 	M6809Init(2);
 	M6809Open(0);
@@ -435,6 +465,8 @@ static INT32 DrvExit()
 	GenericTilesExit();
 	
 	BurnFree(AllMem);
+
+	bootleg = 0;
 
 	return 0;
 }
@@ -753,7 +785,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-
 // Jackal (World, 8-way Joystick)
 
 static struct BurnRomInfo jackalRomDesc[] = {
@@ -774,6 +805,106 @@ static struct BurnRomInfo jackalRomDesc[] = {
 STD_ROM_PICK(jackal)
 STD_ROM_FN(jackal)
 
+// Jackal (World, Rotary Joystick)
+
+static struct BurnRomInfo jackalrRomDesc[] = {
+	{ "631_q02.15d",	0x10000, 0xed2a7d66, 0 | BRF_PRG | BRF_ESS }, // 0 - M6809 #0 Code
+	{ "631_q03.16d",	0x04000, 0xb9d34836, 0 | BRF_PRG | BRF_ESS }, // 1
+
+	{ "631_q01.11d",	0x08000, 0x54aa2d29, 1 | BRF_PRG | BRF_ESS }, // 2 - M6809 #1 Code
+
+	{ "631t04.7h",		0x20000, 0x457f42f0, 2 | BRF_GRA },           // 3 - Graphics Tiles
+	{ "631t05.8h",		0x20000, 0x732b3fc1, 2 | BRF_GRA },           // 4
+	{ "631t06.12h",		0x20000, 0x2d10e56e, 2 | BRF_GRA },           // 5
+	{ "631t07.13h",		0x20000, 0x4961c397, 2 | BRF_GRA },           // 6
+
+	{ "631r08.9h",		0x00100, 0x7553a172, 3 | BRF_GRA },           // 7 - Color PROMs
+	{ "631r09.14h",		0x00100, 0xa74dd86c, 3 | BRF_GRA },           // 7 - Color PROMs
+};
+
+STD_ROM_PICK(jackalr)
+STD_ROM_FN(jackalr)
+
+// Tokushu Butai Jackal (Japan, 8-way Joystick)
+
+static struct BurnRomInfo jackaljRomDesc[] = {
+	{ "631_t02.15d",	0x10000, 0x14db6b1a, 0 | BRF_PRG | BRF_ESS }, // 0 - M6809 #0 Code
+	{ "631_t03.16d",	0x04000, 0xfd5f9624, 0 | BRF_PRG | BRF_ESS }, // 1
+
+	{ "631_t01.11d",	0x08000, 0xb189af6a, 1 | BRF_PRG | BRF_ESS }, // 2 - M6809 #1 Code
+
+	{ "631t04.7h",  	0x20000, 0x457f42f0, 2 | BRF_GRA },           // 3 - Graphics Tiles
+	{ "631t05.8h",		0x20000, 0x732b3fc1, 2 | BRF_GRA },           // 4
+	{ "631t06.12h",		0x20000, 0x2d10e56e, 2 | BRF_GRA },           // 5
+	{ "631t07.13h",		0x20000, 0x4961c397, 2 | BRF_GRA },           // 6
+
+	{ "631r08.9h",		0x00100, 0x7553a172, 3 | BRF_GRA },           // 7 - Color PROMs
+	{ "631r09.14h",		0x00100, 0xa74dd86c, 3 | BRF_GRA },           // 8
+};
+
+STD_ROM_PICK(jackalj)
+STD_ROM_FN(jackalj)
+
+// Top Gunner (US, 8-way Joystick)
+
+static struct BurnRomInfo topgunrRomDesc[] = {
+	{ "631_u02.15d",	0x10000, 0xf7e28426, 0 | BRF_PRG | BRF_ESS }, // 0 - M6809 #0 Code
+	{ "631_u03.16d",	0x04000, 0xc086844e, 0 | BRF_PRG | BRF_ESS }, // 1
+
+	{ "631_t01.11d",	0x08000, 0xb189af6a, 1 | BRF_PRG | BRF_ESS }, // 2 - M6809 #1 Code
+
+	{ "631u04.7h",		0x20000, 0x50122a12, 2 | BRF_GRA },           // 3 - Graphics Tiles
+	{ "631u05.8h",		0x20000, 0x6943b1a4, 2 | BRF_GRA },           // 4
+	{ "631u06.12h",		0x20000, 0x37dbbdb0, 2 | BRF_GRA },           // 5
+	{ "631u07.13h",		0x20000, 0x22effcc8, 2 | BRF_GRA },           // 6
+
+	{ "631r08.9h",		0x00100, 0x7553a172, 3 | BRF_GRA },           // 7 - Color PROMs
+	{ "631r09.14h",		0x00100, 0xa74dd86c, 3 | BRF_GRA },           // 8
+};
+
+STD_ROM_PICK(topgunr)
+STD_ROM_FN(topgunr)
+
+// Top Gunner (bootleg, Rotary Joystick)
+
+static struct BurnRomInfo topgunblRomDesc[] = {
+	{ "t-3.c5",	    0x8000, 0x7826ad38, 0 | BRF_PRG | BRF_ESS }, // 0 - M6809 #0 Code
+	{ "t-4.c4",	    0x8000, 0x976c8431, 0 | BRF_PRG | BRF_ESS }, // 1
+	{ "t-2.c6",	    0x4000, 0xd53172e5, 0 | BRF_PRG | BRF_ESS }, // 2
+
+	{ "t-1.c14",	0x8000, 0x54aa2d29, 1 | BRF_PRG | BRF_ESS }, // 3 - M6809 #1 Code
+
+	{ "t-17.n12",	0x8000, 0xe8875110, 2 | BRF_GRA },           // 4 - Graphics Tiles
+	{ "t-18.n13",	0x8000, 0xcf14471d, 2 | BRF_GRA },           // 5
+	{ "t-19.n14",	0x8000, 0x46ee5dd2, 2 | BRF_GRA },           // 6
+	{ "t-20.n15",	0x8000, 0x3f472344, 2 | BRF_GRA },           // 7
+	{ "t-6.n1",	    0x8000, 0x539cc48c, 2 | BRF_GRA },           // 8
+	{ "t-5.m1",	    0x8000, 0xdbc26afe, 2 | BRF_GRA },           // 9
+	{ "t-7.n2",	    0x8000, 0x0ecd31b1, 2 | BRF_GRA },           // 10
+	{ "t-8.n3",	    0x8000, 0xf946ada7, 2 | BRF_GRA },           // 11
+	{ "t-13.n8",	0x8000, 0x5d669abb, 2 | BRF_GRA },           // 12
+	{ "t-14.n9",	0x8000, 0xf349369b, 2 | BRF_GRA },           // 13
+	{ "t-15.n10",	0x8000, 0x7c5a91dd, 2 | BRF_GRA },           // 14
+	{ "t-16.n11",	0x8000, 0x5ec46d8e, 2 | BRF_GRA },           // 15
+	{ "t-9.n4",	    0x8000, 0x8269caca, 2 | BRF_GRA },           // 16
+	{ "t-10.n5",	0x8000, 0x25393e4f, 2 | BRF_GRA },           // 17
+	{ "t-11.n6",	0x8000, 0x7895c22d, 2 | BRF_GRA },           // 18
+	{ "t-12.n7",	0x8000, 0x15606dfc, 2 | BRF_GRA },           // 19
+
+	{ "631r08.bpr",	0x0100, 0x7553a172, 3 | BRF_GRA },           // 20 - Color PROMs
+	{ "631r09.bpr",	0x0100, 0xa74dd86c, 3 | BRF_GRA },           // 21
+};
+
+STD_ROM_PICK(topgunbl)
+STD_ROM_FN(topgunbl)
+
+INT32 DrvInitbl()
+{
+	bootleg = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvJackal = {
 	"jackal", NULL, NULL, NULL, "1986",
 	"Jackal (World, 8-way Joystick)\0", NULL, "Konami", "Miscellaneous",
@@ -781,5 +912,45 @@ struct BurnDriver BurnDrvJackal = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, jackalRomInfo, jackalRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 240, 3, 4
+};
+
+struct BurnDriver BurnDrvJackalr = {
+	"jackalr", "jackal", NULL, NULL, "1986",
+	"Jackal (World, Rotary Joystick)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, jackalrRomInfo, jackalrRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 240, 3, 4
+};
+
+struct BurnDriver BurnDrvJackalj = {
+	"jackalj", "jackal", NULL, NULL, "1986",
+	"Tokushu Butai Jackal (Japan, 8-way Joystick)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, jackaljRomInfo, jackaljRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 240, 3, 4
+};
+
+struct BurnDriver BurnDrvTopgunr = {
+	"topgunr", "jackal", NULL, NULL, "1986",
+	"Top Gunner (US, 8-way Joystick)\0", NULL, "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, topgunrRomInfo, topgunrRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 240, 3, 4
+};
+
+struct BurnDriver BurnDrvTopgunbl = {
+	"topgunbl", "jackal", NULL, NULL, "1986",
+	"Top Gunner (bootleg, Rotary Joystick)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, topgunblRomInfo, topgunblRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInitbl, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };

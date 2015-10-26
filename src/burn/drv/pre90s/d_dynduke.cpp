@@ -46,7 +46,7 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
 
-static const INT32 nInterleave = 60;
+static const INT32 nInterleave = 256;
 static const INT32 nCyclesTotal[3] = { 8000000 / 60, 8000000 / 60, 3579545 / 60 };
 static INT32 nCyclesDone[3]  = { 0, 0, 0 };
 
@@ -142,16 +142,6 @@ static struct BurnDIPInfo DyndukeDIPList[]=
 
 STDDIPINFO(Dynduke)
 
-static void sync_sound_cpu()
-{
-	UINT32 cycles = (nCyclesTotal[2] * VezTotalCycles()) / (nCyclesTotal[0] / nInterleave);
-
-	if ((cycles - ZetTotalCycles()) > 0) {
-		nCyclesDone[2] += cycles - ZetTotalCycles();
-		BurnTimerUpdateYM3812(cycles);
-	}
-}
-
 void __fastcall master_write(UINT32 address, UINT8 data)
 {
 	switch (address)
@@ -175,7 +165,6 @@ void __fastcall master_write(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffff0) == 0x0d000 || (address & 0xffff0) == 0x09000) {
-		sync_sound_cpu();
 		seibu_main_word_write(address, data);
 		return;
 	}
@@ -203,7 +192,6 @@ UINT8 __fastcall master_read(UINT32 address)
 	}
 
 	if ((address & 0xffff0) == 0x0d000 || (address & 0xffff0) == 0x09000) {
-		sync_sound_cpu();
 		return seibu_main_word_read(address);
 	}
 
@@ -536,6 +524,8 @@ static void draw_sprites(INT32 pri)
 			flipy = !flipy;
 		}
 
+		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
+
 		if (flipy) {
 			if (flipx) {
 				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0, DrvGfxROM3);
@@ -643,7 +633,7 @@ static void draw_fg_layer()
 
 static void draw_tx_layer()
 {
-	UINT16 *vram = (UINT16*)DrvTxtRAM;	
+	UINT16 *vram = (UINT16*)DrvTxtRAM;
 
 	for (INT32 offs = (32 * 2); offs < (32 * 32) - (32 * 2); offs++)
 	{
@@ -653,6 +643,7 @@ static void draw_tx_layer()
 		INT32 code = vram[offs];
 		INT32 color = (code >> 8) & 0x0f;
 		code = (code & 0x00ff) | ((code & 0xc000) >> 6);
+		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 15, 0x500, DrvGfxROM0);
 	}
@@ -714,18 +705,18 @@ static INT32 DrvFrame()
 
 		VezOpen(0);
 		nCyclesDone[0] += VezRun(nSegment);
-		if (i == (nInterleave-1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
+		if (i == 240) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 
 		VezClose();
 
 		VezOpen(1);
 		nCyclesDone[1] += VezRun(nSegment);
-		if (i == (nInterleave-1)) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
+		if (i == 240) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
-		nSegment = nCyclesTotal[2] / nInterleave;
-		nCyclesDone[2] += nSegment;
-		BurnTimerUpdateYM3812(nSegment * (i+1));
+		//nSegment = nCyclesTotal[2] / nInterleave;
+		//nCyclesDone[2] += nSegment;
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
@@ -745,6 +736,33 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {
+		*pnMin = 0x029719;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+
+		VezScan(nAction);
+		ZetScan(nAction);
+		seibu_sound_scan(pnMin, nAction);
+
+		DrvRecalc = 1;
+	}
+
+	return 0;
+}
 
 
 
@@ -802,7 +820,7 @@ struct BurnDriver BurnDrvDynduke = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukeRomInfo, dyndukeRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
-	dyndukeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -856,7 +874,7 @@ struct BurnDriver BurnDrvDyndukea = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukeaRomInfo, dyndukeaRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
-	dyndukeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -910,7 +928,7 @@ struct BurnDriver BurnDrvDyndukej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukejRomInfo, dyndukejRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
-	dyndukeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -964,7 +982,7 @@ struct BurnDriver BurnDrvDyndukeu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukeuRomInfo, dyndukeuRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
-	dyndukeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -1023,7 +1041,7 @@ struct BurnDriver BurnDrvDbldynj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dbldynjRomInfo, dbldynjRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
-	dbldynjInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	dbldynjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
@@ -1077,6 +1095,6 @@ struct BurnDriver BurnDrvDbldynu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dbldynuRomInfo, dbldynuRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
-	dyndukeInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };

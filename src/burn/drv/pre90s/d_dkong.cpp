@@ -2227,11 +2227,11 @@ STD_ROM_FN(dkong)
 
 static struct BurnSampleInfo DkongSampleDesc[] = {
 #if !defined (ROM_VERIFY)
-	{ "run01.wav",   SAMPLE_NOLOOP },
-	{ "run02.wav",   SAMPLE_NOLOOP },
-	{ "run03.wav",   SAMPLE_NOLOOP },
-	{ "jump.wav",    SAMPLE_NOLOOP },
-	{ "dkstomp.wav", SAMPLE_NOLOOP },
+	{ "run01",   SAMPLE_NOLOOP },
+	{ "run02",   SAMPLE_NOLOOP },
+	{ "run03",   SAMPLE_NOLOOP },
+	{ "jump",    SAMPLE_NOLOOP },
+	{ "dkstomp", SAMPLE_NOLOOP },
 #endif
 	{ "",            0             }
 };
@@ -2696,18 +2696,18 @@ STD_ROM_FN(dkongjr)
 
 static struct BurnSampleInfo DkongjrSampleDesc[] = {
 #if !defined (ROM_VERIFY)
-	{ "jump.wav", SAMPLE_NOLOOP },
-	{ "land.wav", SAMPLE_NOLOOP },
-	{ "roar.wav", SAMPLE_NOLOOP },
-	{ "climb0.wav", SAMPLE_NOLOOP },
-	{ "climb1.wav", SAMPLE_NOLOOP },
-	{ "climb2.wav", SAMPLE_NOLOOP },
-	{ "death.wav", SAMPLE_NOLOOP },
-	{ "drop.wav", SAMPLE_NOLOOP },
-  	{ "walk0.wav", SAMPLE_NOLOOP },
- 	{ "walk1.wav", SAMPLE_NOLOOP },
-	{ "walk2.wav", SAMPLE_NOLOOP },
-	{ "snapjaw.wav", SAMPLE_NOLOOP },
+	{ "jump", SAMPLE_NOLOOP },
+	{ "land", SAMPLE_NOLOOP },
+	{ "roar", SAMPLE_NOLOOP },
+	{ "climb0", SAMPLE_NOLOOP },
+	{ "climb1", SAMPLE_NOLOOP },
+	{ "climb2", SAMPLE_NOLOOP },
+	{ "death", SAMPLE_NOLOOP },
+	{ "drop", SAMPLE_NOLOOP },
+  	{ "walk0", SAMPLE_NOLOOP },
+ 	{ "walk1", SAMPLE_NOLOOP },
+	{ "walk2", SAMPLE_NOLOOP },
+	{ "snapjaw", SAMPLE_NOLOOP },
 #endif
 	{ "", 0 }
 };

@@ -424,11 +424,11 @@ static void DrvPaletteInit()
 
 static struct BurnSampleInfo MarioSampleDesc[] = {
 #if !defined (ROM_VERIFY)
-	{ "ice.wav",		SAMPLE_NOLOOP },
-	{ "coin.wav",		SAMPLE_NOLOOP },
-	{ "skid.wav",		SAMPLE_NOLOOP },
-	{ "run.wav",		SAMPLE_NOLOOP },
-	{ "luigirun.wav",	SAMPLE_NOLOOP },
+	{ "ice",		SAMPLE_NOLOOP },
+	{ "coin",		SAMPLE_NOLOOP },
+	{ "skid",		SAMPLE_NOLOOP },
+	{ "run",		SAMPLE_NOLOOP },
+	{ "luigirun",	SAMPLE_NOLOOP },
 #endif
 	{ "", 0 }
 };

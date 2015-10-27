@@ -854,20 +854,20 @@ STD_ROM_FN(donpachihk)
 static struct BurnSampleInfo DonpachiSampleDesc[] = {
 #ifdef USE_SAMPLE_HACK
 #if !defined ROM_VERIFY
-	{ "02 - Sortie Instruction.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "03 - Silent Outpost Base.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "04 - Gale Force.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "05 - God of Destruction.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "06 - Advance Through the Sky.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "07 - The Battle Intensifies.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "08 - An Equal Match.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "09 - It's All Up To Me!!.wav", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "10 - Chief's Congratulations.wav", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "11 - Breakthrough.wav", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
-	{ "12 - Pressure.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "13 - My Duty is Done.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "14 - Eternal Soldier.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
-	{ "15 - Chase in the Dark.wav", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "02 - Sortie Instruction", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "03 - Silent Outpost Base", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "04 - Gale Force", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "05 - God of Destruction", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "06 - Advance Through the Sky", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "07 - The Battle Intensifies", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "08 - An Equal Match", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "09 - It's All Up To Me!!", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "10 - Chief's Congratulations", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "11 - Breakthrough", SAMPLE_NOLOOP | SAMPLE_NOSTORE },
+	{ "12 - Pressure", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "13 - My Duty is Done", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "14 - Eternal Soldier", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
+	{ "15 - Chase in the Dark", SAMPLE_AUTOLOOP | SAMPLE_NOSTORE },
 #endif
 #endif
 	{ "", 0 }

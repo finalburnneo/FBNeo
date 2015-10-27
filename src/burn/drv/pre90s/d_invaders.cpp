@@ -403,16 +403,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static struct BurnSampleInfo InvadersSampleDesc[] = {
 #if !defined (ROM_VERIFY)
-	{ "1.wav", SAMPLE_NOLOOP },	// Shot/Missle
-	{ "2.wav", SAMPLE_NOLOOP },	// Base Hit/Explosion
-	{ "3.wav", SAMPLE_NOLOOP },	// Invader Hit
-	{ "4.wav", SAMPLE_NOLOOP },	// Fleet move 1
-	{ "5.wav", SAMPLE_NOLOOP },	// Fleet move 2
-	{ "6.wav", SAMPLE_NOLOOP },	// Fleet move 3
-	{ "7.wav", SAMPLE_NOLOOP },	// Fleet move 4
-	{ "8.wav", SAMPLE_NOLOOP },	// UFO/Saucer Hit
-	{ "9.wav", SAMPLE_NOLOOP },	// Bonus Base
-	{ "18.wav",SAMPLE_NOLOOP },	// UFO Sound
+	{ "1", SAMPLE_NOLOOP },	// Shot/Missle
+	{ "2", SAMPLE_NOLOOP },	// Base Hit/Explosion
+	{ "3", SAMPLE_NOLOOP },	// Invader Hit
+	{ "4", SAMPLE_NOLOOP },	// Fleet move 1
+	{ "5", SAMPLE_NOLOOP },	// Fleet move 2
+	{ "6", SAMPLE_NOLOOP },	// Fleet move 3
+	{ "7", SAMPLE_NOLOOP },	// Fleet move 4
+	{ "8", SAMPLE_NOLOOP },	// UFO/Saucer Hit
+	{ "9", SAMPLE_NOLOOP },	// Bonus Base
+	{ "18",SAMPLE_NOLOOP },	// UFO Sound
 #endif
 	{ "", 0 }
 };

@@ -345,11 +345,7 @@ STD_ROM_PICK(Jungler)
 STD_ROM_FN(Jungler)
 
 static struct BurnSampleInfo RallyxSampleDesc[] = {
-#if !defined (ROM_VERIFY)
-   { "bang.wav", SAMPLE_NOLOOP },
-#else
 	{ "bang", SAMPLE_NOLOOP },
-#endif
    { "", 0 }
 };
 

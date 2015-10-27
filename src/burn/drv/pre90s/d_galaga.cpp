@@ -519,8 +519,8 @@ STD_ROM_FN(digdug)
 
 static struct BurnSampleInfo GalagaSampleDesc[] = {
 #if !defined (ROM_VERIFY)
-   { "bang.wav", SAMPLE_NOLOOP },
-   { "init.wav", SAMPLE_NOLOOP },
+   { "bang", SAMPLE_NOLOOP },
+   { "init", SAMPLE_NOLOOP },
 #endif
   { "", 0 }
 };

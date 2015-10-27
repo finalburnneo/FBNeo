@@ -302,6 +302,12 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 		char *szSampleName = NULL;
 		BurnDrvGetSampleName(&szSampleName, i, 0);
 		sample_ptr = &samples[i];
+		
+		// append .wav to filename
+		szSampleName[strlen(szSampleName)] = '.';
+		szSampleName[strlen(szSampleName)] = 'w';
+		szSampleName[strlen(szSampleName)] = 'a';
+		szSampleName[strlen(szSampleName)] = 'v';
 
 		if (si.nFlags == 0) break;
 
@@ -380,6 +386,12 @@ void BurnSampleInitOne(INT32 sample)
 	char *szSampleName = NULL;
 	BurnDrvGetSampleName(&szSampleName, sample, 0);
 	sample_ptr = &samples[sample];
+	
+	// append .wav to filename
+	szSampleName[strlen(szSampleName)] = '.';
+	szSampleName[strlen(szSampleName)] = 'w';
+	szSampleName[strlen(szSampleName)] = 'a';
+	szSampleName[strlen(szSampleName)] = 'v';
 
 	if (sample_ptr->playing || sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
 		return;

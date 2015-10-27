@@ -4938,13 +4938,13 @@ static INT32 M62Scan(INT32 nAction, INT32 *pnMin)
 static struct BurnSampleInfo M62SampleDesc[] = {
 #ifdef USE_SAMPLE_HACK
 #if !defined ROM_VERIFY
-	{ "TR606 - Hat.wav", SAMPLE_NOLOOP },
-	{ "TR606 - Snare.wav", SAMPLE_NOLOOP },
-	{ "TR606 - Kick.wav", SAMPLE_NOLOOP },
-	{ "TR606 - Open Hat.wav", SAMPLE_NOLOOP },
-	{ "TR606 - High Tom.wav", SAMPLE_NOLOOP },
-	{ "TR606 - Low Tom.wav", SAMPLE_NOLOOP },
-	{ "TR606 - Cymbal.wav", SAMPLE_NOLOOP },
+	{ "TR606 - Hat", SAMPLE_NOLOOP },
+	{ "TR606 - Snare", SAMPLE_NOLOOP },
+	{ "TR606 - Kick", SAMPLE_NOLOOP },
+	{ "TR606 - Open Hat", SAMPLE_NOLOOP },
+	{ "TR606 - High Tom", SAMPLE_NOLOOP },
+	{ "TR606 - Low Tom", SAMPLE_NOLOOP },
+	{ "TR606 - Cymbal", SAMPLE_NOLOOP },
 #endif
 #endif
 	{ "", 0 }

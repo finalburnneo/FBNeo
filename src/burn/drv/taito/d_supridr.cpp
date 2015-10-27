@@ -572,7 +572,7 @@ static INT32 DrvFrame()
 		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
 		if (LP1 && LP2) {
 			LP1->Filter(pBurnSoundOut, nBurnSoundLen);  // Left
-			LP2->Filter(pBurnSoundOut+1, nBurnSoundLen) // Right
+			LP2->Filter(pBurnSoundOut+1, nBurnSoundLen); // Right
 		}
 	}
 

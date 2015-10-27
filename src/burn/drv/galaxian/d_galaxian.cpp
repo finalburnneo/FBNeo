@@ -20767,11 +20767,11 @@ static void BilliardPostLoad()
 		if (Bits[2] ^ ( Bits[3] &  Bits[6])) XorMask ^= 0x01;
 		if (Bits[4] ^ ( Bits[5] &  Bits[7])) XorMask ^= 0x02;
 		if (Bits[0] ^ ( Bits[7] & !Bits[3])) XorMask ^= 0x04;
-		if (Bits[3] ^ (!Bits[0] &  Bits[2])) XorMask ^= 0x08;
-		if (Bits[5] ^ (!Bits[4] &  Bits[1])) XorMask ^= 0x10;
-		if (Bits[6] ^ (!Bits[2] & !Bits[5])) XorMask ^= 0x20;
-		if (Bits[1] ^ (!Bits[6] & !Bits[4])) XorMask ^= 0x40;
-		if (Bits[7] ^ (!Bits[1] &  Bits[0])) XorMask ^= 0x80;
+		if (Bits[3] ^ ((!Bits[0]) &  Bits[2])) XorMask ^= 0x08;
+		if (Bits[5] ^ ((!Bits[4]) &  Bits[1])) XorMask ^= 0x10;
+		if (Bits[6] ^ ((!Bits[2]) & !Bits[5])) XorMask ^= 0x20;
+		if (Bits[1] ^ ((!Bits[6]) & !Bits[4])) XorMask ^= 0x40;
+		if (Bits[7] ^ ((!Bits[1]) &  Bits[0])) XorMask ^= 0x80;
 
 		GalZ80Rom1[Offset] ^= XorMask;
 		GalZ80Rom1[Offset] = BITSWAP08(GalZ80Rom1[Offset], 6, 1, 2, 5, 4, 3, 0, 7);

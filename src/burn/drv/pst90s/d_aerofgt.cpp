@@ -2338,7 +2338,7 @@ static void turbofrc_drawsprites(INT32 chip, INT32 turbofrc_layer, INT32 paloffs
 		if (!(BURN_ENDIAN_SWAP_INT16(RamSpr3[attr_start + 2]) & 0x0080)) continue;
 		pri = BURN_ENDIAN_SWAP_INT16(RamSpr3[attr_start + 2]) & 0x0010;
 		if ( chip_disabled_pri & !pri) continue;
-		if (!chip_disabled_pri & (pri>>4)) continue;
+		if ((!chip_disabled_pri) & (pri>>4)) continue;
 		ox = BURN_ENDIAN_SWAP_INT16(RamSpr3[attr_start + 1]) & 0x01ff;
 		xsize = (BURN_ENDIAN_SWAP_INT16(RamSpr3[attr_start + 2]) & 0x0700) >> 8;
 		zoomx = (BURN_ENDIAN_SWAP_INT16(RamSpr3[attr_start + 1]) & 0xf000) >> 12;

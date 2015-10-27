@@ -434,13 +434,13 @@ static void DrvPaletteInit()
 		INT32 planea = (az | ar | ag | ab) & ena;
 
 		INT32 rhi = planea ? ar : enb ? bz : 0;
-		INT32 rlo = planea ? ((!arhf & az) ? 0 : ar) : enb ? br : 0;
+		INT32 rlo = planea ? (((!arhf) & az) ? 0 : ar) : enb ? br : 0;
 
 		INT32 ghi = planea ? ag : enb ? bb : 0;
-		INT32 glo = planea ? ((!aghf & az) ? 0 : ag) : enb ? bg : 0;
+		INT32 glo = planea ? (((!aghf) & az) ? 0 : ag) : enb ? bg : 0;
 
 		INT32 bhi = ab;
-		INT32 bbase = (!abhf & az) ? 0 : ab;
+		INT32 bbase = ((!abhf) & az) ? 0 : ab;
 
 		INT32 t = (rhi << 5) | (rlo << 4) | (ghi << 3) | (glo << 2) | (bhi << 1) | bbase;
 

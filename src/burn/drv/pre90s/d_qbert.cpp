@@ -323,7 +323,7 @@ static void __fastcall main_write(UINT32 address, UINT8 data)
 	if ((address & 0xffe0) == 0x57e0) address &= ~0x7e0;
 	if ((address & 0xffff) == 0x5ff8) address &= ~0x7f8;
 
-	if (address >= 0x0000 && address <= 0x0fff) {
+	if (/*address >= 0x0000 &&*/ address <= 0x0fff) {
 		DrvNVRAM[address - 0x0000] = data;
 		return;
 	}
@@ -375,7 +375,7 @@ static UINT8 __fastcall main_read(UINT32 address)
 		return DrvV20ROM[address - 0x6000];
 	}
 
-	if (address >= 0x0000 && address <= 0x0fff) {
+	if (/*address >= 0x0000 &&*/ address <= 0x0fff) {
 		return DrvNVRAM[address - 0x0000];
 	}
 
@@ -424,7 +424,7 @@ static void qbert_knocker(UINT8 knock)
 	*knocker_prev = knock;
 }
 
-static void gottlieb_sh_w(UINT16 offset, UINT8 data)
+static void gottlieb_sh_w(UINT16 /*offset*/, UINT8 data)
 {
 	static INT32 random_offset=0;
 	data &= 0x3f;
@@ -490,7 +490,7 @@ static void blank_queue()
 
 static void add_to_queue(UINT8 data)
 {
-	if (*vtqueuepos > 0x20-1 || GetCurrentFrame() > *vtqueuetime+2)
+	if (*vtqueuepos > 0x20-1 || (UINT32)GetCurrentFrame() > *vtqueuetime+2)
 		blank_queue();
 	vtqueue[(*vtqueuepos)++] = data;
 }
@@ -514,7 +514,7 @@ static void audio_write(UINT16 address, UINT8 data)
 		Drv6502ROM[address - 0x7000] = data;
 	}
 
-	if (address >= 0x0000 && address <= 0x01ff) {
+	if (/*address >= 0x0000 &&*/ address <= 0x01ff) {
 		riot_ram[address & 0x7f] = data;
 	}
 
@@ -551,7 +551,7 @@ static UINT8 audio_read(UINT16 address)
 		return Drv6502ROM[address - 0x7000];
 	}
 
-	if (address >= 0x0000 && address <= 0x01ff) {
+	if (/*address >= 0x0000 &&*/ address <= 0x01ff) {
 		return riot_ram[address&0x7f];
 	}
 
@@ -757,7 +757,7 @@ static INT32 DrvExit()
 }
 
 
-static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 mode, UINT8 *gfxrom)
+static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 /*mode*/, UINT8 *gfxrom)
 {
 	UINT16 *dest = pTransDraw;
 	UINT8 *gfx = gfxrom;

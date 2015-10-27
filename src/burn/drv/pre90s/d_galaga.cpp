@@ -561,7 +561,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static UINT8 earom_read(UINT16 address)
+static UINT8 earom_read(UINT16 /*address*/)
 {
 	return (earom_data);
 }
@@ -572,7 +572,7 @@ static void earom_write(UINT16 offset, UINT8 data)
 	earom_data = data;
 }
 
-static void earom_ctrl_write(UINT16 offset, UINT8 data)
+static void earom_ctrl_write(UINT16 /*offset*/, UINT8 data)
 {
 	/*
 		0x01 = clock

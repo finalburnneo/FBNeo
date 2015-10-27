@@ -477,7 +477,7 @@ static void warpwarp_music2_w(UINT8 data)
 	}
 }
 
-static void warpwarp_timer_tiktiktik(INT32 ticks)
+static void warpwarp_timer_tiktiktik(INT32 /*ticks*/)
 {// warpwarp_timer_tiktiktik(); must be called 256 times per frame
 	switch (music_volume_timer) {
 		case 1: music_volume_decay();  // no breaks!
@@ -747,7 +747,7 @@ static void warpwarp_palette_init()
 		DrvPalette[(i * 2) + 1] = BurnHighCol(r, g, b, 0);;
 	}
 
-	DrvPalette[0x200] = BurnHighCol(weight_ball[0], weight_ball[0], weight_ball[0], 0);
+	DrvPalette[0x200] = BurnHighCol((INT32)weight_ball[0], (INT32)weight_ball[0], (INT32)weight_ball[0], 0);
 }
 
 static UINT32 geebee_palette[3];
@@ -921,7 +921,7 @@ static UINT8 warpwarp_dsw1_r(UINT8 offset)
 	return (DrvDip[0] >> (offset & 7)) & 1;
 }
 
-static UINT8 warpwarp_vol_r(UINT8 offset)
+static UINT8 warpwarp_vol_r(UINT8 /*offset*/)
 {
 	INT32 res;
 

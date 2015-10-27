@@ -908,7 +908,7 @@ static void ta7630_init()
 	for (i = 0; i < 16; i++)
 	{
 		double max = 100.0 / pow(10.0, db/20.0 );
-		m_vol_ctrl[15 - i] = max;
+		m_vol_ctrl[15 - i] = (INT32)max;
 
 		db += db_step;
 		db_step += db_step_inc;
@@ -943,7 +943,7 @@ static void sound_control_1_w(UINT8 data)
 	MSM5232SetRoute(vol, BURN_SND_MSM5232_ROUTE_7);
 }
 
-static void AY_ayportA_write(UINT32 addr, UINT32 data)
+static void AY_ayportA_write(UINT32 /*addr*/, UINT32 data)
 {
 	if (data == 0xff) return; // ignore ay-init
 	m_snd_ctrl2 = data & 0xff;

@@ -47,13 +47,13 @@ void __fastcall writemem_mapper_msx(UINT16 offset, UINT8 data)
 		return;
 	}
 
-	if (offset >= 0xc000 && offset <= 0xffff)
+	if (offset >= 0xc000 /*&& offset <= 0xffff*/)
 		sms.wram[offset & 0x1fff] = data;
 }
 
 void __fastcall writemem_mapper_none(UINT16 offset, UINT8 data)
 {
-	if (offset >= 0xc000 && offset <= 0xffff)
+	if (offset >= 0xc000 /*&& offset <= 0xffff*/)
 		sms.wram[offset & 0x1fff] = data;
 }
 
@@ -100,7 +100,7 @@ void __fastcall writemem_mapper_xin1(UINT16 offset, UINT8 data)
 
 UINT8 __fastcall readmem_mapper_xin1(UINT16 offset) // HiCom Xin1
 {
-	if(offset >= 0xc000 && offset <= 0xffff)
+	if(offset >= 0xc000 /*&& offset <= 0xffff*/)
 		return sms.wram[offset & 0x1fff];
 	else
 	if (offset >= 0x8000) {
@@ -149,10 +149,10 @@ UINT8 __fastcall readmem_mapper_korea8k(UINT16 offset) // aka Janggun
 {
 	UINT8 data = 0;
 
-	if(offset >= 0xc000 && offset <= 0xffff)
+	if(offset >= 0xc000 /*&& offset <= 0xffff*/)
 		data = sms.wram[offset & 0x1fff];
 	else
-	if(offset >= 0x0000 && offset <= 0x3fff)
+	if(/*offset >= 0x0000 &&*/ offset <= 0x3fff)
 		data = cart.rom[offset];
 	else
 	if(offset >= 0x4000 && offset <= 0x5fff)

@@ -448,7 +448,7 @@ static UINT8 __fastcall raiders5_sub_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall raiders5_in(UINT16 address)
+UINT8 __fastcall raiders5_in(UINT16 /*address*/)
 {
 	return 0; // NOP
 }
@@ -732,12 +732,12 @@ static UINT8 pkunwar_port_3(UINT32)
 	return DrvDips[0];
 }
 
-void nova2001_scroll_x_w(UINT32 offset,UINT32 data)
+void nova2001_scroll_x_w(UINT32 /*offset*/,UINT32 data)
 {
 	xscroll = data;
 }
 
-void nova2001_scroll_y_w(UINT32 offset,UINT32 data)
+void nova2001_scroll_y_w(UINT32 /*offset*/,UINT32 data)
 {
 	yscroll = data;
 }

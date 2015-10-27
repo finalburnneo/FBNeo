@@ -328,8 +328,8 @@ static UINT8 *rand17;
 		pokey[chip].samplepos_fract &= 0x000000ff;						\
 	}																	\
 	/* store sum of output signals into the buffer */					\
-	nLeftSample  = buffer[0] + (sum * pokey_mastervol);                 \
-	nRightSample = buffer[1] + (sum * pokey_mastervol);                 \
+	nLeftSample  = buffer[0] + (INT32)(sum * pokey_mastervol);          \
+	nRightSample = buffer[1] + (INT32)(sum * pokey_mastervol);          \
 	buffer[0] = BURN_SND_CLIP(nLeftSample);                             \
 	buffer[1] = BURN_SND_CLIP(nRightSample);                            \
 	buffer++; buffer++;                                                 \
@@ -493,28 +493,28 @@ void (*update[MAXPOKEYS])(int,INT16*,int) =
     while( length > 0 )                                                 \
 	{																	\
 		UINT32 event = pokey[chip].samplepos_whole; 					\
-		UINT32 channel = SAMPLE;										\
-		if( pokey[chip].counter[CHAN1] < event )						\
+		UINT32 channel = (UINT32)SAMPLE;								\
+		if( pokey[chip].counter[CHAN1] < (INT32)event )					\
         {                                                               \
 			event = pokey[chip].counter[CHAN1]; 						\
 			channel = CHAN1;											\
 		}																\
-		if( pokey[chip].counter[CHAN2] < event )						\
+		if( pokey[chip].counter[CHAN2] < (INT32)event )					\
         {                                                               \
 			event = pokey[chip].counter[CHAN2]; 						\
 			channel = CHAN2;											\
         }                                                               \
-		if( pokey[chip].counter[CHAN3] < event )						\
+		if( pokey[chip].counter[CHAN3] < (INT32)event )					\
         {                                                               \
 			event = pokey[chip].counter[CHAN3]; 						\
 			channel = CHAN3;											\
         }                                                               \
-		if( pokey[chip].counter[CHAN4] < event )						\
+		if( pokey[chip].counter[CHAN4] < (INT32)event )					\
         {                                                               \
 			event = pokey[chip].counter[CHAN4]; 						\
 			channel = CHAN4;											\
         }                                                               \
-        if( channel == SAMPLE )                                         \
+        if( channel == (UINT32)SAMPLE )                                 \
 		{																\
             PROCESS_SAMPLE(chip);                                       \
         }                                                               \
@@ -1246,7 +1246,7 @@ void pokey_register_w(int chip, int offs, int data)
 		p->audible[CHAN1] = !(
 			(p->AUDC[CHAN1] & VOLUME_ONLY) ||
 			(p->AUDC[CHAN1] & VOLUME_MASK) == 0 ||
-			((p->AUDC[CHAN1] & PURE) && new_val < (p->samplerate_24_8 >> 8)));
+			((p->AUDC[CHAN1] & PURE) && new_val < ((INT32)p->samplerate_24_8 >> 8)));
 		if( !p->audible[CHAN1] )
 		{
 			p->output[CHAN1] = 1;
@@ -1282,7 +1282,7 @@ void pokey_register_w(int chip, int offs, int data)
 		p->audible[CHAN2] = !(
 			(p->AUDC[CHAN2] & VOLUME_ONLY) ||
 			(p->AUDC[CHAN2] & VOLUME_MASK) == 0 ||
-			((p->AUDC[CHAN2] & PURE) && new_val < (p->samplerate_24_8 >> 8)));
+			((p->AUDC[CHAN2] & PURE) && new_val < ((INT32)p->samplerate_24_8 >> 8)));
 		if( !p->audible[CHAN2] )
 		{
 			p->output[CHAN2] = 1;
@@ -1310,7 +1310,7 @@ void pokey_register_w(int chip, int offs, int data)
 		p->audible[CHAN3] = !(
 			(p->AUDC[CHAN3] & VOLUME_ONLY) ||
 			(p->AUDC[CHAN3] & VOLUME_MASK) == 0 ||
-			((p->AUDC[CHAN3] & PURE) && new_val < (p->samplerate_24_8 >> 8))) ||
+			((p->AUDC[CHAN3] & PURE) && new_val < ((INT32)p->samplerate_24_8 >> 8))) ||
 			(p->AUDCTL & CH1_FILTER);
 		if( !p->audible[CHAN3] )
 		{
@@ -1347,7 +1347,7 @@ void pokey_register_w(int chip, int offs, int data)
 		p->audible[CHAN4] = !(
 			(p->AUDC[CHAN4] & VOLUME_ONLY) ||
 			(p->AUDC[CHAN4] & VOLUME_MASK) == 0 ||
-			((p->AUDC[CHAN4] & PURE) && new_val < (p->samplerate_24_8 >> 8))) ||
+			((p->AUDC[CHAN4] & PURE) && new_val < ((INT32)p->samplerate_24_8 >> 8))) ||
 			(p->AUDCTL & CH2_FILTER);
 		if( !p->audible[CHAN4] )
 		{
@@ -1388,22 +1388,22 @@ void quad_pokey_w (int offset,int data)
     pokey_register_w(pokey_num, pokey_reg, data);
 }
 
-void pokey1_serin_ready(int after)
+void pokey1_serin_ready(int /*after*/)
 {
 	//timer_set(1.0 * after / intf.baseclock, 0, pokey_serin_ready);
 }
 
-void pokey2_serin_ready(int after)
+void pokey2_serin_ready(int /*after*/)
 {
 	//timer_set(1.0 * after / intf.baseclock, 1, pokey_serin_ready);
 }
 
-void pokey3_serin_ready(int after)
+void pokey3_serin_ready(int /*after*/)
 {
 	//timer_set(1.0 * after / intf.baseclock, 2, pokey_serin_ready);
 }
 
-void pokey4_serin_ready(int after)
+void pokey4_serin_ready(int /*after*/)
 {
 	//timer_set(1.0 * after / intf.baseclock, 3, pokey_serin_ready);
 }

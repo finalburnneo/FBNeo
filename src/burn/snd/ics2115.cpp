@@ -802,13 +802,13 @@ void ics2115_recalc_irq()
 		m_irq_cb(irq ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-void ics2115_timer_cb_0(INT32 param)
+void ics2115_timer_cb_0(INT32 /*param*/)
 {
 	m_irq_pending |= 1 << 0;
 	ics2115_recalc_irq();
 }
 
-void ics2115_timer_cb_1(INT32 param)
+void ics2115_timer_cb_1(INT32 /*param*/)
 {
 	m_irq_pending |= 1 << 1;
 	ics2115_recalc_irq();

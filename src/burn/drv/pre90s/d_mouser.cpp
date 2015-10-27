@@ -207,7 +207,7 @@ static UINT8 __fastcall mouser_sub_read(UINT16 address)
 	return 0;
 }
 
-static void __fastcall mouser_sub_write(UINT16 address, UINT8 data)
+static void __fastcall mouser_sub_write(UINT16 address, UINT8 /*data*/)
 {
 	if(address == 0x4000)
 		ZetSetIRQLine(Z80_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);

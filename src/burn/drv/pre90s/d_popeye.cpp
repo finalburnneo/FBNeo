@@ -511,7 +511,7 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 	}
 }
 
-static void popeye_ayportB_write(UINT32 addr, UINT32 data)
+static void popeye_ayportB_write(UINT32 /*addr*/, UINT32 data)
 {
 	/* bit 0 flips screen */
 	//flip_screen_set(data & 1);
@@ -520,7 +520,7 @@ static void popeye_ayportB_write(UINT32 addr, UINT32 data)
 	m_dswbit = (data & 0x0e) >> 1;
 }
 
-static UINT8 popeye_ayportA_read(UINT32 addr)
+static UINT8 popeye_ayportA_read(UINT32 /*addr*/)
 {
 	return (DrvDip[0] & 0x7f) | ((DrvDip[1] << (7-m_dswbit)) & 0x80);
 }

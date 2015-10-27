@@ -704,7 +704,7 @@ static void namcos86_cpu0_write(UINT16 address, UINT8 data)
 	}
 }
 
-static void hopmappy_cpu1_write(UINT16 address, UINT8 data)
+static void hopmappy_cpu1_write(UINT16 address, UINT8 /*data*/)
 {
 	switch (address)
 	{
@@ -978,7 +978,7 @@ static UINT8 namcos86_mcu_read(UINT16 address)
 	return 0;
 }
 
-static void namcos86_mcu_write_port(UINT16 port, UINT8 data)
+static void namcos86_mcu_write_port(UINT16 port, UINT8 /*data*/)
 {
 	switch (port & 0x1ff)
 	{

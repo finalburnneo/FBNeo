@@ -1714,7 +1714,7 @@ static UINT8 __fastcall citybomb_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static void nemesis_filter_w(UINT16 offset)
+static void nemesis_filter_w(UINT16 /*offset*/)
 {
 #if 0
 	// not used right now..

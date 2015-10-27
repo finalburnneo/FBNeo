@@ -4208,7 +4208,7 @@ INT32 MegadriveFrame()
 	INT32 done_z80 = 0;
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 total_68k_cycles, total_z80_cycles;
-	INT32 vcnt_wrap;
+	INT32 vcnt_wrap = 0;
 
 	if( Hardware & 0x40 ) {
 		lines  = 313;

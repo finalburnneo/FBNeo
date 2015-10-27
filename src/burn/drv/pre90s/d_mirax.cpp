@@ -412,7 +412,7 @@ void draw_tiles(UINT8 draw_flag)
 	}
 }
 
-static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 mode, UINT8 *gfxrom)
+static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 /*mode*/, UINT8 *gfxrom)
 {
 	UINT16 *dest = pTransDraw;
 	UINT8 *gfx = gfxrom;

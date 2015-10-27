@@ -530,7 +530,9 @@ static int AppInit()
 	_CrtSetDbgFlag(_CRTDBG_LEAK_CHECK_DF);				//
 #endif
 
+#if defined (FBA_DEBUG)
 	OpenDebugLog();
+#endif
 
 	// Create a handle to the main thread of execution
 	DuplicateHandle(GetCurrentProcess(), GetCurrentThread(), GetCurrentProcess(), &hMainThread, 0, false, DUPLICATE_SAME_ACCESS);

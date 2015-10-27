@@ -182,7 +182,11 @@ static cpu_core_config konamiCheatCpuConfig =
 	0
 };
 
+#if defined FBA_DEBUG
 void konamiInit(INT32 nCpu) // only 1 cpu (No examples exist of multi-cpu konami games)
+#else
+void konamiInit(INT32 /*nCpu*/) // only 1 cpu (No examples exist of multi-cpu konami games)
+#endif
 {
 	DebugCPU_KonamiInitted = 1;
 

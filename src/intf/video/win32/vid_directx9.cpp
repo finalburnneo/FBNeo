@@ -88,7 +88,7 @@ static int nImageWidth, nImageHeight/*, nImageZoom*/;
 static RECT Dest;
 
 // ----------------------------------------------------------------------------
-
+#ifdef PRINT_DEBUG_INFO
 static TCHAR* TextureFormatString(D3DFORMAT nFormat)
 {
 	switch (nFormat) {
@@ -110,7 +110,7 @@ static TCHAR* TextureFormatString(D3DFORMAT nFormat)
 
 	return _T("unknown format");
 }
-
+#endif
 // ----------------------------------------------------------------------------
 
 static int GetTextureSize(int nSize)

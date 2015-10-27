@@ -1,5 +1,8 @@
 // FB Alpha Super Rider driver module
 // Based on MAME driver by Aaron Giles
+//
+// Notes: Added a lowpass filter effect to get rid of the headache-inducing
+// high pitched hissing noise.
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -7,6 +10,7 @@
 extern "C" {
 #include "ay8910.h"
 }
+#include "lowpass2.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -45,6 +49,15 @@ static UINT8 fgscrolly;
 static UINT8 bgscrolly;
 
 static INT32 watchdog;
+
+static class LowPass2 *LP1 = NULL, *LP2 = NULL;
+#define SampleFreq 44100.0
+#define CutFreq 1000.0
+#define Q 0.4
+#define Gain 1.0
+#define CutFreq2 1000.0
+#define Q2 0.3
+#define Gain2 1.475
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -398,6 +411,11 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(1, 0.05, BURN_SND_ROUTE_BOTH);
 	GenericTilesInit();
 
+	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
+					   CutFreq2, Q2, Gain2);
+	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
+					   CutFreq2, Q2, Gain2);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -412,6 +430,11 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 
 	BurnFree (AllMem);
+
+	delete LP1;
+	delete LP2;
+	LP1 = NULL;
+	LP2 = NULL;
 
 	return 0;
 }
@@ -547,6 +570,10 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		if (LP1 && LP2) {
+			LP1->Filter(pBurnSoundOut, nBurnSoundLen);  // Left
+			LP2->Filter(pBurnSoundOut+1, nBurnSoundLen) // Right
+		}
 	}
 
 	if (pBurnDraw) {
@@ -582,7 +609,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(fgscrolly);
 		SCAN_VAR(bgscrolly);
 		SCAN_VAR(fgdisable);
-	
 	}
 
 	return 0;

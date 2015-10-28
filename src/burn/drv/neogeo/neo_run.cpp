@@ -403,11 +403,11 @@ static INT32 NeoLoad68KBIOS(INT32 nNewBIOS)
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) == HARDWARE_SNK_TRACKBALL) {
-		nNewBIOS = 26;
+		nNewBIOS = 27;
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_DEDICATED_PCB) {
-		nNewBIOS = 27;
+		nNewBIOS = 28;
 	}
 
 	// The most recent MVS models doesn't have a Z80 BIOS
@@ -4086,7 +4086,7 @@ INT32 NeoInit()
 	}
 
 	if (nNeoSystemType & NEO_SYS_PCB) {
-		BurnLoadRom(Neo68KBIOS, 0x00080 +     27, 1);
+		BurnLoadRom(Neo68KBIOS, 0x00080 +     28, 1);
 	}
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {

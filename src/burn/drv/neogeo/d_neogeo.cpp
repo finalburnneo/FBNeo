@@ -1029,8 +1029,8 @@ static struct BurnRomInfo neotrackballRomDesc[] = {
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 23
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 24
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 25
-	{ "236-bios.sp1",      0x20000, 0x853e6b96, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 26 Trackball BIOS
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 27
+	{ "",                  0x00000, 0x00000000, 0                                                   }, // 26
+	{ "236-bios.sp1",      0x20000, 0x853e6b96, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 27 Trackball BIOS
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 28
 
 
@@ -1068,9 +1068,9 @@ static struct BurnRomInfo ms5pcbBIOSRomDesc[] = {
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 24
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 25
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 26
-	{ "sp-4x.sp1",         0x80000, 0xb4590283, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 27 PCB BIOS
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 28
-
+	{ "",                  0x00000, 0x00000000, 0                                                   }, // 27
+	{ "sp-4x.sp1",         0x80000, 0xb4590283, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 28 PCB BIOS
+	
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 29 Z80 BIOS
 	{ "sfix.sfix",         0x20000, 0xc2ea0cfd, BRF_GRA | BRF_BIOS                                  }, // 30 Text layer tiles
 	{ "000-lo.lo",         0x20000, 0x5a86cff2, BRF_ESS | BRF_BIOS                                  }, // 31 Zoom table
@@ -1104,9 +1104,9 @@ static struct BurnRomInfo svcpcbBIOSRomDesc[] = {
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 24
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 25
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 26
-	{ "sp-4x.sp1",         0x80000, 0xb4590283, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 27 PCB BIOS
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 28
-
+	{ "",                  0x00000, 0x00000000, 0                                                   }, // 27
+	{ "sp-4x.sp1",         0x80000, 0xb4590283, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 28 PCB BIOS
+	
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 29 Z80 BIOS
 	{ "sfix.sfix",         0x20000, 0xc2ea0cfd, BRF_GRA | BRF_BIOS                                  }, // 30 Text layer tiles
 	{ "000-lo.lo",         0x20000, 0x5a86cff2, BRF_ESS | BRF_BIOS                                  }, // 31 Zoom table
@@ -1140,9 +1140,9 @@ static struct BurnRomInfo kf2k3pcbBIOSRomDesc[] = {
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 24
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 25
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 26
-	{ "spj.sp1",           0x80000, 0x148dd727, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 27 PCB BIOS
-	{ "",                  0x00000, 0x00000000, 0                                                   }, // 29
-
+	{ "",                  0x00000, 0x00000000, 0                                                   }, // 27
+	{ "spj.sp1",           0x80000, 0x148dd727, BRF_ESS | BRF_PRG | BRF_BIOS                        }, // 28 PCB BIOS
+	
 	{ "",                  0x00000, 0x00000000, 0                                                   }, // 29 Z80 BIOS
 	{ "sfix.sfix",         0x20000, 0xc2ea0cfd, BRF_GRA | BRF_BIOS                                  }, // 30 Text layer tiles
 	{ "000-lo.lo",         0x20000, 0x5a86cff2, BRF_ESS | BRF_BIOS                                  }, // 31 Zoom table

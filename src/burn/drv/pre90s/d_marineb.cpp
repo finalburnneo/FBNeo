@@ -2006,18 +2006,18 @@ struct BurnDriver BurnDrvWanted = {
 // Battle Cruiser M-12
 
 static struct BurnRomInfo bcruzm12RomDesc[] = {
-	{ "d-84_3.bin",		0x2000, 0x132baa3d, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
-	{ "d-84_2.bin",		0x2000, 0x1a788d1f, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "d-84_1.bin",		0x2000, 0x9d5b3017, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "d-84_3.12c",		0x2000, 0x132baa3d, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
+	{ "d-84_2.12b",		0x2000, 0x1a788d1f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "d-84_1.12ab",	0x2000, 0x9d5b3017, 1 | BRF_ESS | BRF_PRG }, //  2
 
-	{ "d-84_5.bin",		0x2000, 0x2e963f6a, 2 | BRF_GRA }, //  3 gfx1
-	{ "d-84_4.bin",		0x2000, 0xfe186459, 2 | BRF_GRA }, //  4
+	{ "d-84_5.17f",		0x2000, 0x2e963f6a, 2 | BRF_GRA }, //  3 gfx1
+	{ "d-84_4.17ef",	0x2000, 0xfe186459, 2 | BRF_GRA }, //  4
 
-	{ "d-84_7.bin",		0x2000, 0xa5be90ef, 3 | BRF_GRA }, //  5 gfx2
-	{ "d-84_6.bin",		0x2000, 0x1337dc01, 3 | BRF_GRA }, //  6
+	{ "d-84_7.17h",		0x2000, 0xa5be90ef, 3 | BRF_GRA }, //  5 gfx2
+	{ "d-84_6.17fh",	0x2000, 0x1337dc01, 3 | BRF_GRA }, //  6
 
-	{ "bcm12col.k7",	0x0100, 0xbf4f2671, 4 | BRF_GRA }, //  7 proms
-	{ "bcm12col.k6",	0x0100, 0x59f955f6, 4 | BRF_GRA }, //  8
+	{ "bcm12col.7k",	0x0100, 0xbf4f2671, 4 | BRF_GRA }, //  7 proms
+	{ "bcm12col.6k",	0x0100, 0x59f955f6, 4 | BRF_GRA }, //  8
 };
 
 STD_ROM_PICK(bcruzm12)

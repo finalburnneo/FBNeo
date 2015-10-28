@@ -288,7 +288,7 @@ static struct BurnRomInfo OthunderRomDesc[] = {
 	
 	{ "b67-07.ic44",           0x80000, 0x4f834357, BRF_SND | TAITO_YM2610B },
 	
-	{ "93c46_eeprom-othunder.ic33",   0x00080, 0x3729b844, BRF_PRG | TAITO_DEFAULT_EEPROM },
+	{ "93c46_eeprom-othunder.ic86",   0x00080, 0x3729b844, BRF_PRG | TAITO_DEFAULT_EEPROM },
 	
 	{ "plhs18p8b-b67-09.ic15", 0x00149, 0x62035487, BRF_OPT },
 	{ "pal16l8a-b67-11.ic36",  0x00104, 0x3177fb06, BRF_OPT },

@@ -2514,20 +2514,20 @@ struct BurnDriver BurnDrvDkongf = {
 
 static struct BurnRomInfo dkongpeRomDesc[] = {
 	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
-	{ "c_5ct_g.bin",	0x1000, 0x45af403e, 1 }, //  1
-	{ "c_5bt_g.bin",	0x1000, 0x3a9783b7, 1 }, //  2
-	{ "c_5at_g.bin",	0x1000, 0x32bc20ff, 1 }, //  3
+	{ "c_5ct_gp.bin",	0x1000, 0x45af403e, 1 }, //  1
+	{ "c_5bt_gp.bin",	0x1000, 0x3a9783b7, 1 }, //  2
+	{ "c_5at_gp.bin",	0x1000, 0x32bc20ff, 1 }, //  3
 
 	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
 	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
 
-	{ "v_5h_b.bin",		0x0800, 0x007aa348, 3 }, //  6 gfx1
-	{ "v_3pt.bin",		0x0800, 0xa967aff0, 3 }, //  7
+	{ "v_5h_bp.bin",	0x0800, 0x007aa348, 3 }, //  6 gfx1
+	{ "v_3ptp.bin",		0x0800, 0xa967aff0, 3 }, //  7
 
-	{ "l_4m_b.bin",		0x0800, 0x766ae006, 4 }, //  8 gfx2
-	{ "l_4n_b.bin",		0x0800, 0x39e7ca4b, 4 }, //  9
-	{ "l_4r_b.bin",		0x0800, 0x012f2f25, 4 }, // 10
-	{ "l_4s_b.bin",		0x0800, 0x84eb5bfb, 4 }, // 11
+	{ "l_4m_bp.bin",	0x0800, 0x766ae006, 4 }, //  8 gfx2
+	{ "l_4n_bp.bin",	0x0800, 0x39e7ca4b, 4 }, //  9
+	{ "l_4r_bp.bin",	0x0800, 0x012f2f25, 4 }, // 10
+	{ "l_4s_bp.bin",	0x0800, 0x84eb5bfb, 4 }, // 11
 
 	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13

@@ -4253,7 +4253,7 @@ static struct BurnRomInfo ketRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
@@ -4282,9 +4282,9 @@ struct BurnDriver BurnDrvKet = {
 
 // Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)
 
-static struct BurnRomInfo ketaltRomDesc[] = {
+static struct BurnRomInfo ket1RomDesc[] = {
 	// alt version with 0xff fill in the unused area after 0x1443bc rather than random data, there are no code changes.
-	{ "ketsui_v100_alt.u38",	0x200000, 0xe140f8a4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ketsui_v100_alt_fill.u38",	0x200000, 0xe140f8a4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 	
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
 
@@ -4295,20 +4295,20 @@ static struct BurnRomInfo ketaltRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
 
-STDROMPICKEXT(ketalt, ketalt, ketsuiBios) // custom bios
-STD_ROM_FN(ketalt)
+STDROMPICKEXT(ket1, ket1, ketsuiBios) // custom bios
+STD_ROM_FN(ket1)
 
-struct BurnDriver BurnDrvKetalt = {
-	"ketalt", "ket", NULL, NULL, "2002",
+struct BurnDriver BurnDrvKet1 = {
+	"ket1", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (Revision 2? alt, Japan)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Revision 2? alt, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketaltRomInfo, ketaltRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ket1RomInfo, ket1RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4328,7 +4328,7 @@ static struct BurnRomInfo ketaRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
@@ -4361,7 +4361,7 @@ static struct BurnRomInfo ketbRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },					//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },					//  7 NV RAM
 };
@@ -4383,7 +4383,7 @@ struct BurnDriver BurnDrvKetb = {
 // Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)
 
 static struct BurnRomInfo ketarrRomDesc[] = {
-	{ "ketarr_v100.u38",		0x200000, 0xd4c7a8ab, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ketarr17_v100.u38",		0x200000, 0x2cb80b89, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4394,7 +4394,7 @@ static struct BurnRomInfo ketarrRomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
@@ -4427,7 +4427,7 @@ static struct BurnRomInfo ketarr15RomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
@@ -4460,7 +4460,7 @@ static struct BurnRomInfo ketarr151RomDesc[] = {
 
 	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
@@ -4514,8 +4514,8 @@ struct BurnDriver BurnDrvketarr17 = {
 
 // Ketsui Kizuna Jigoku Tachi (MR. Stoic version, hack by Trap15)
 
-static struct BurnRomInfo ketstoicuRomDesc[] = {
-	{ "ketstoicu_v100.u38",		0x200000, 0x35c984e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+static struct BurnRomInfo ketarrs151RomDesc[] = {
+	{ "ketarrs151_v100.u38",	0x200000, 0x35c984e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
 
@@ -4531,15 +4531,15 @@ static struct BurnRomInfo ketstoicuRomDesc[] = {
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
 
-STDROMPICKEXT(ketstoicu, ketstoicu, ketsuiBios) // custom bios
-STD_ROM_FN(ketstoicu)
+STDROMPICKEXT(ketarrs151, ketarrs151, ketsuiBios) // custom bios
+STD_ROM_FN(ketarrs151)
 
 struct BurnDriver BurnDrvketstoicu = {
-	"ketstoicu", "ket", NULL, NULL, "2002",
+	"ketarrs151", "ket", NULL, NULL, "2002",
 	"Ketsui Kizuna Jigoku Tachi (MR. Stoic version, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (MR. Stoic version, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketstoicuRomInfo, ketstoicuRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketarrs151RomInfo, ketarrs151RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };

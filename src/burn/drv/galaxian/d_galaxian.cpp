@@ -9207,7 +9207,7 @@ struct BurnDriver BurnDrvDevilfsg = {
 };
 
 // Sound hardware replaced with AY8910
-static struct BurnRomInfo ZigzagRomDesc[] = {
+static struct BurnRomInfo ZigzagbRomDesc[] = {
 	{ "zz_d1.7l",      0x01000, 0x8cc08d81, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "zz_d2.7k",      0x01000, 0x326d8d45, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "zz_d4.7f",      0x01000, 0xa94ed92a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9219,10 +9219,10 @@ static struct BurnRomInfo ZigzagRomDesc[] = {
 	{ "zzbpr_e9.bin",  0x00020, 0xaa486dd0, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Zigzag)
-STD_ROM_FN(Zigzag)
+STD_ROM_PICK(Zigzagb)
+STD_ROM_FN(Zigzagb)
 
-static struct BurnRomInfo Zigzag2RomDesc[] = {
+static struct BurnRomInfo Zigzagb2RomDesc[] = {
 	{ "z1.7l",         0x01000, 0x4c28349a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "zz_d2.7k",      0x01000, 0x326d8d45, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "zz_d4.7f",      0x01000, 0xa94ed92a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9234,8 +9234,8 @@ static struct BurnRomInfo Zigzag2RomDesc[] = {
 	{ "zzbpr_e9.bin",  0x00020, 0xaa486dd0, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Zigzag2)
-STD_ROM_FN(Zigzag2)
+STD_ROM_PICK(Zigzagb2)
+STD_ROM_FN(Zigzagb2)
 
 static struct BurnRomInfo Ozon1RomDesc[] = {
 	{ "rom1.bin",      0x01000, 0x54899e8b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -9506,22 +9506,22 @@ static INT32 Ozon1Init()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvZigzag = {
-	"zigzag", NULL, NULL, NULL, "1982",
+struct BurnDriver BurnDrvZigzagb = {
+	"zigzagb", NULL, NULL, NULL, "1982",
 	"Zig Zag (Galaxian hardware, set 1)\0", NULL, "LAX", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
-	NULL, ZigzagRomInfo, ZigzagRomName, NULL, NULL, ZigzagInputInfo, ZigzagDIPInfo,
+	NULL, ZigzagbRomInfo, ZigzagbRomName, NULL, NULL, ZigzagInputInfo, ZigzagDIPInfo,
 	ZigzagInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvZigzag2 = {
-	"zigzag2", "zigzag", NULL, NULL, "1982",
+struct BurnDriver BurnDrvZigzagb2 = {
+	"zigzagb2", "zigzagb", NULL, NULL, "1982",
 	"Zig Zag (Galaxian hardware, set 2)\0", NULL, "LAX", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
-	NULL, Zigzag2RomInfo, Zigzag2RomName, NULL, NULL, ZigzagInputInfo, ZigzagDIPInfo,
+	NULL, Zigzagb2RomInfo, Zigzagb2RomName, NULL, NULL, ZigzagInputInfo, ZigzagDIPInfo,
 	ZigzagInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

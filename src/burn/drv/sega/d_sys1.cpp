@@ -5374,6 +5374,9 @@ static INT32 System1Exit()
 	
 	SN76496Exit();
 
+	if (System1Draw == WbmlRender)
+		ppi8255_exit();
+
 	GenericTilesExit();
 	
 	BurnFree(Mem);

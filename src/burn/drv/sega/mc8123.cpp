@@ -298,10 +298,10 @@ static UINT8 mc8123_decrypt(INT32 addr,UINT8 val,const UINT8 *key,INT32 opcode)
 	return decrypt(val,key[tbl_num + (opcode ? 0 : 0x1000)],opcode);
 }
 
-void mc8123_decrypt_rom(INT32 /*banknum*/, INT32 numbanks, UINT8 *pRom, UINT8 *pFetch, UINT8 *pKey)
+void mc8123_decrypt_rom(INT32 banknum, INT32 numbanks, UINT8 *pRom, UINT8 *pFetch, UINT8 *pKey)
 {
 	UINT8 *decrypted1 = pFetch;
-//	UINT8 *decrypted2 = numbanks > 1 ? auto_malloc(0x4000 * numbanks) : decrypted1 + 0x8000;
+	UINT8 *decrypted2 = numbanks > 1 ? decrypted1 + 0x10000 : decrypted1 + 0x8000;
 	UINT8 *rom = pRom;
 	UINT8 *key = pKey;
 	INT32 A, bank;
@@ -324,7 +324,7 @@ void mc8123_decrypt_rom(INT32 /*banknum*/, INT32 numbanks, UINT8 *pRom, UINT8 *p
 			UINT8 src = rom[0x8000 + 0x4000*bank + A];
 
 			/* decode the opcodes */
-//			decrypted2[0x4000 * bank + (A-0x8000)] = mc8123_decrypt(A,src,key,1);
+			decrypted2[0x4000 * bank + (A-0x8000)] = mc8123_decrypt(A,src,key,1);
 
 			/* decode the data */
 			rom[0x8000 + 0x4000*bank + A] = mc8123_decrypt(A,src,key,0);

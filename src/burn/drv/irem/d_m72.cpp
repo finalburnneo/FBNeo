@@ -1730,6 +1730,10 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 			video_offsets[1] = -6;
 			m72_video_type = 1; // rtype
 		break;
+		case 6: // airduel m82
+			video_offsets[0] = video_offsets[1] = -6;
+			m72_video_type = 1; // rtype
+		break;
 	}
 
 	BurnYM2151Init(3579545);
@@ -2987,15 +2991,10 @@ static struct BurnRomInfo airduelRomDesc[] = {
 	{ "AD_(M82)_A-C2-D.IC57",	0x20000, 0x6a94c1b9, 0x03 | BRF_GRA },           // 11
 	{ "AD_(M82)_A-C3-D.IC56",	0x20000, 0x6637c349, 0x03 | BRF_GRA },           // 12
 
-	{ "AD_(M82)_A-C0-D.IC49",	0x20000, 0xce134b47, 0x04 | BRF_GRA },           // 13 Background Tiles
-	{ "AD_(M82)_A-C1-D.IC48",	0x20000, 0x097fd853, 0x04 | BRF_GRA },           // 14
-	{ "AD_(M82)_A-C2-D.IC57",	0x20000, 0x6a94c1b9, 0x04 | BRF_GRA },           // 15
-	{ "AD_(M82)_A-C3-D.IC56",	0x20000, 0x6637c349, 0x04 | BRF_GRA },           // 16
-	
-	{ "mt_f0.bin",				0x20000, 0x2d5e05d5, 0x04 | BRF_GRA },           // 17 Sprites 2
-	{ "mt_f1.bin",				0x20000, 0xc68cd65f, 0x04 | BRF_GRA },           // 18
-	{ "mt_f2.bin",				0x20000, 0xa71feb2d, 0x04 | BRF_GRA },           // 19
-	{ "mt_f3.bin",				0x20000, 0x179f7562, 0x04 | BRF_GRA },           // 20
+	{ "mt_f0.bin",				0x20000, 0x2d5e05d5, 0x0e | BRF_GRA },           // 17 Sprites 2
+	{ "mt_f1.bin",				0x20000, 0xc68cd65f, 0x0e | BRF_GRA },           // 18
+	{ "mt_f2.bin",				0x20000, 0xa71feb2d, 0x0e | BRF_GRA },           // 19
+	{ "mt_f3.bin",				0x20000, 0x179f7562, 0x0e | BRF_GRA },           // 20
 
 	{ "AD_(M82)_A-V0-D.IC12",	0x20000, 0x339f474d, 0x05 | BRF_SND },           // 21 DAC Samples
 };
@@ -3005,7 +3004,7 @@ STD_ROM_FN(airduel)
 
 static INT32 airduelInit()
 {
-	return 0;
+	return DrvInit(majtitle_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 6);
 }
 
 struct BurnDriver BurnDrvAirduel = {

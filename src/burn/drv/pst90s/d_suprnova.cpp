@@ -2558,7 +2558,10 @@ static struct BurnRomInfo galpansuRomDesc[] = {
 	{ "7",			0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
 
 	{ "4",			0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
-        { "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS | BRF_OPT},      //  10 Korea Bios
+
+#if !defined (ROM_VERIFY)
+	{ "bios.u10",		0x80000, 0x161fb79e, BRF_BIOS | BRF_OPT},      //  10 Korea Bios
+#endif
 };
 
 STDROMPICKEXT(galpansu, galpansu, skns)

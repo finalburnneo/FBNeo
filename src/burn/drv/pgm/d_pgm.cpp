@@ -1293,7 +1293,10 @@ static struct BurnRomInfo oldsRomDesc[] = {
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },	        // 18 Samples
 
 	{ "sp_v101.u6",	   		0x010000, 0x097046bc, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
-
+	
+#if defined (ROM_VERIFY)
+	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
+#endif
 };
 
 STDROMPICKEXT(olds, olds, pgm)
@@ -1345,6 +1348,10 @@ static struct BurnRomInfo olds100RomDesc[] = {
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },			// 18 Samples
 
 	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 19 Protection Rom
+	
+#if defined (ROM_VERIFY)
+	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
+#endif
 };
 
 STDROMPICKEXT(olds100, olds100, pgm)
@@ -1384,7 +1391,11 @@ static struct BurnRomInfo olds100aRomDesc[] = {
 
 	{ "m0500.rom",	   		0x200000, 0x37928cdd, 5 | BRF_SND },			// 14 Samples
 	
+#if !defined (ROM_VERIFY)
 	{ "kd-u6.512",	   		0x010000, 0xe7613dda, 9 | BRF_PRG | BRF_ESS },  // 15 Protection Rom
+#else
+	{ "ram_dump",	   		0x040000, 0x280cfb4e, 0 | BRF_OPT },
+#endif
 };
 
 STDROMPICKEXT(olds100a, olds100a, pgm)

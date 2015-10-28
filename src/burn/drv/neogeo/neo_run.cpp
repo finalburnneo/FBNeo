@@ -4091,7 +4091,7 @@ INT32 NeoInit()
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SNK_MVS) {
 		BurnLoadRom(NeoZ80BIOS,		0x00000 + 30, 1);
-		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 32, 1);
+		BurnLoadRom(NeoTextROMBIOS,	0x00000 + 31, 1);
 		BurnLoadRom(NeoZoomROM,		0x00000 + 32, 1);
 	} else {
 

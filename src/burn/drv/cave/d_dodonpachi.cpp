@@ -583,20 +583,20 @@ static INT32 DrvInit()
 
 // Rom information
 static struct BurnRomInfo ddonpachRomDesc[] = {
-	{ "b1.u27",       0x080000, 0xB5CDC8D3, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "b2.u26",       0x080000, 0x6BBB063A, BRF_ESS | BRF_PRG }, //  1
+	{ "b1.u27",       0x080000, 0xb5cdc8d3, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "b2.u26",       0x080000, 0x6bbb063a, BRF_ESS | BRF_PRG }, //  1
 
-	{ "u50.bin",      0x200000, 0x14B260EC, BRF_GRA },			 //  2 Sprite data
-	{ "u51.bin",      0x200000, 0xE7BA8CCE, BRF_GRA },			 //  3
-	{ "u52.bin",      0x200000, 0x02492EE0, BRF_GRA },			 //  4
-	{ "u53.bin",      0x200000, 0xCB4C10F0, BRF_GRA },			 //  5
+	{ "u50.bin",      0x200000, 0x14b260ec, BRF_GRA },			 //  2 Sprite data
+	{ "u51.bin",      0x200000, 0xe7ba8cce, BRF_GRA },			 //  3
+	{ "u52.bin",      0x200000, 0x02492ee0, BRF_GRA },			 //  4
+	{ "u53.bin",      0x200000, 0xcb4c10f0, BRF_GRA },			 //  5
 
-	{ "u60.bin",      0x200000, 0x903096A7, BRF_GRA },			 //  6 Layer 0 Tile data
-	{ "u61.bin",      0x200000, 0xD89B7631, BRF_GRA },			 //  7 Layer 1 Tile data
-	{ "u62.bin",      0x200000, 0x292BFB6B, BRF_GRA },			 //  8 Layer 2 Tile data
+	{ "u60.bin",      0x200000, 0x903096a7, BRF_GRA },			 //  6 Layer 0 Tile data
+	{ "u61.bin",      0x200000, 0xd89b7631, BRF_GRA },			 //  7 Layer 1 Tile data
+	{ "u62.bin",      0x200000, 0x292bfb6b, BRF_GRA },			 //  8 Layer 2 Tile data
 
-	{ "u6.bin",       0x200000, 0x9DFDAFAF, BRF_SND },			 //  9 YMZ280B (AD)PCM data
-	{ "u7.bin",       0x200000, 0x795B17D5, BRF_SND },			 // 10
+	{ "u6.bin",       0x200000, 0x9dfdafaf, BRF_SND },			 //  9 YMZ280B (AD)PCM data
+	{ "u7.bin",       0x200000, 0x795b17d5, BRF_SND },			 // 10
 	
 	{ "eeprom-ddonpach.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 };
@@ -608,20 +608,20 @@ STD_ROM_FN(ddonpach)
 
 // Rom information
 static struct BurnRomInfo ddonpachjRomDesc[] = {
-	{ "u27.bin",      0x080000, 0x2432FF9B, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "u26.bin",      0x080000, 0x4F3A914A, BRF_ESS | BRF_PRG }, //  1
+	{ "u27.bin",      0x080000, 0x2432ff9b, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "u26.bin",      0x080000, 0x4f3a914a, BRF_ESS | BRF_PRG }, //  1
 
-	{ "u50.bin",      0x200000, 0x14B260EC, BRF_GRA },			 //  2 Sprite data
-	{ "u51.bin",      0x200000, 0xE7BA8CCE, BRF_GRA },			 //  3
-	{ "u52.bin",      0x200000, 0x02492EE0, BRF_GRA },			 //  4
-	{ "u53.bin",      0x200000, 0xCB4C10F0, BRF_GRA },			 //  5
+	{ "u50.bin",      0x200000, 0x14b260ec, BRF_GRA },			 //  2 Sprite data
+	{ "u51.bin",      0x200000, 0xe7ba8cce, BRF_GRA },			 //  3
+	{ "u52.bin",      0x200000, 0x02492ee0, BRF_GRA },			 //  4
+	{ "u53.bin",      0x200000, 0xcb4c10f0, BRF_GRA },			 //  5
 
-	{ "u60.bin",      0x200000, 0x903096A7, BRF_GRA },			 //  6 Layer 0 Tile data
-	{ "u61.bin",      0x200000, 0xD89B7631, BRF_GRA },			 //  7 Layer 1 Tile data
-	{ "u62.bin",      0x200000, 0x292BFB6B, BRF_GRA },			 //  8 Layer 2 Tile data
+	{ "u60.bin",      0x200000, 0x903096a7, BRF_GRA },			 //  6 Layer 0 Tile data
+	{ "u61.bin",      0x200000, 0xd89b7631, BRF_GRA },			 //  7 Layer 1 Tile data
+	{ "u62.bin",      0x200000, 0x292bfb6b, BRF_GRA },			 //  8 Layer 2 Tile data
 
-	{ "u6.bin",       0x200000, 0x9DFDAFAF, BRF_SND },			 //  9 YMZ280B (AD)PCM data
-	{ "u7.bin",       0x200000, 0x795B17D5, BRF_SND },			 // 10
+	{ "u6.bin",       0x200000, 0x9dfdafaf, BRF_SND },			 //  9 YMZ280B (AD)PCM data
+	{ "u7.bin",       0x200000, 0x795b17d5, BRF_SND },			 // 10
 	
 	{ "eeprom-ddonpach.bin", 0x0080, 0x315fb546, BRF_ESS | BRF_PRG },
 };
@@ -632,22 +632,22 @@ STD_ROM_FN(ddonpachj)
 
 
 static struct BurnRomInfo ddonpachaRomDesc[] = {
-	{ "arrange_u27.bin",     0x080000, 0x44B899AE, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "arrange_u26.bin",     0x080000, 0x727A09A8, BRF_ESS | BRF_PRG }, //  1
+	{ "arrange_u27.bin",     0x080000, 0x44b899ae, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "arrange_u26.bin",     0x080000, 0x727a09a8, BRF_ESS | BRF_PRG }, //  1
 
-	{ "u50.bin",             0x200000, 0x14B260EC, BRF_GRA },			 //  2 Sprite data
-	{ "arrange_u51.bin",     0x200000, 0x0F3E5148, BRF_GRA },			 //  3
-	{ "u52.bin",             0x200000, 0x02492EE0, BRF_GRA },			 //  4
-	{ "u53.bin",             0x200000, 0xCB4C10F0, BRF_GRA },			 //  5
+	{ "u50.bin",             0x200000, 0x14b260ec, BRF_GRA },			 //  2 Sprite data
+	{ "arrange_u51.bin",     0x200000, 0x0f3e5148, BRF_GRA },			 //  3
+	{ "u52.bin",             0x200000, 0x02492ee0, BRF_GRA },			 //  4
+	{ "u53.bin",             0x200000, 0xcb4c10f0, BRF_GRA },			 //  5
 
-	{ "u60.bin",             0x200000, 0x903096A7, BRF_GRA },			 //  6 Layer 0 Tile data
-	{ "u61.bin",             0x200000, 0xD89B7631, BRF_GRA },			 //  7 Layer 1 Tile data
-	{ "arrange_u62.bin",     0x200000, 0x42E4C6C5, BRF_GRA },			 //  8 Layer 2 Tile data
+	{ "u60.bin",             0x200000, 0x903096a7, BRF_GRA },			 //  6 Layer 0 Tile data
+	{ "u61.bin",             0x200000, 0xd89b7631, BRF_GRA },			 //  7 Layer 1 Tile data
+	{ "arrange_u62.bin",     0x200000, 0x42e4c6c5, BRF_GRA },			 //  8 Layer 2 Tile data
 
-	{ "u6.bin",              0x200000, 0x9DFDAFAF, BRF_SND },			 //  9 YMZ280B (AD)PCM data
-	{ "u7.bin",              0x200000, 0x795B17D5, BRF_SND },			 // 10
+	{ "u6.bin",              0x200000, 0x9dfdafaf, BRF_SND },			 //  9 YMZ280B (AD)PCM data
+	{ "u7.bin",              0x200000, 0x795b17d5, BRF_SND },			 // 10
 	
-	{ "eeprom-ddonpach.bin", 0x0080, 0x2DF16438, BRF_ESS | BRF_PRG },
+	{ "eeprom-ddonpach.bin", 0x0080, 0x2df16438, BRF_ESS | BRF_PRG },
 };
 
 
@@ -676,7 +676,7 @@ struct BurnDriver BurnDrvDoDonpachiJ = {
 };
 
 struct BurnDriver BurnDrvDoDonpachia = {
-	"ddonpacha", "ddonpach", NULL, NULL, "1997",
+	"ddonpacha", "ddonpach", NULL, NULL, "2012",
 	"DoDonPachi (Arrange Mode version 1.1, hack by Trap15)\0", NULL, "hack / Trap15", "Cave",
 	L"\u6012\u9996\u9818\u8702 DoDonPachi (Arrange Mode version 1.1, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAVE_68K_ONLY, GBF_VERSHOOT, 0,

@@ -4055,16 +4055,16 @@ struct BurnDriverD BurnDrvSvgtw = {
 // DoDonPachi Dai-Ou-Jou (V101, Japan)
 
 static struct BurnRomInfo ddp3RomDesc[] = {
-	{ "ddp3_v101.u36",		0x200000, 0x195b5c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ddp3_v101.u36",			0x200000, 0x195b5c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04401w064.u7",		0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04402w064.u8",		0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",		0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04401b032.u17",		0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
 	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
@@ -4098,14 +4098,14 @@ struct BurnDriver BurnDrvDdp3 = {
 static struct BurnRomInfo ddp3aRomDesc[] = {
 	{ "ddp3_d_d_1_0.u36",		0x200000, 0x5D3F85BA, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04401w064.u7",		0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04402w064.u8",		0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",		0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04401b032.u17",		0x400000, 0x5a0dbd76, 5 | BRF_SND },	 		//  5 Samples
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },	 		//  5 Samples
 
 	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
@@ -4129,16 +4129,16 @@ struct BurnDriver BurnDrvDdp3a = {
 // DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)
 
 static struct BurnRomInfo ddp3bRomDesc[] = {
-	{ "dd v100.bin",		0x200000, 0x7da0c1e4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "dd v100.bin",			0x200000, 0x7da0c1e4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
-	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04401w064.u7",		0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04402w064.u8",		0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",		0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04401b032.u17",		0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
 	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 	
@@ -4162,20 +4162,20 @@ struct BurnDriver BurnDrvDdp3b = {
 // DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07.Black Ver), Japan)
 
 static struct BurnRomInfo ddp3blkRomDesc[] = {
-	{ "ddb_1dot.u45",		0x200000, 0x265f26cd, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ddb_1dot.u45",			0x200000, 0x265f26cd, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04401w064.u7",		0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04402w064.u8",		0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",		0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04401b032.u17",		0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
 	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 
-	{ "ddp3blk_defaults.nv",	0x020000, 0xa1651904, 0 | BRF_OPT },		//  7 NV RAM (patch below instead)
+	{ "ddp3blk_defaults.nv",	0x020000, 0xa1651904, 0 | BRF_OPT },			//  7 NV RAM (patch below instead)
 };
 
 STDROMPICKEXT(ddp3blk, ddp3blk, ddp3Bios) // custom bios
@@ -4220,20 +4220,20 @@ struct BurnDriver BurnDrvDdp3blk = {
 // DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Black Ver), Japan)
 
 static struct BurnRomInfo ddp3blkaRomDesc[] = {
-	{ "ddb10.u45",			0x200000, 0x72b35510, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ddb10.u45",				0x200000, 0x72b35510, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04401w064.u19",		0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04401w064.u7",		0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04402w064.u8",		0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
 
-	{ "b04401w064.u1",		0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04401b032.u17",		0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
 
 	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
 
-	{ "ddp3blk_defaults.nv",	0x020000, 0xa1651904, 0 | BRF_OPT },		//  7 NV RAM (patch below instead)
+	{ "ddp3blk_defaults.nv",	0x020000, 0xa1651904, 0 | BRF_OPT },			//  7 NV RAM (patch below instead)
 };
 
 STDROMPICKEXT(ddp3blka, ddp3blka, ddp3Bios) // custom bios
@@ -4257,12 +4257,12 @@ static struct BurnRomInfo ketRomDesc[] = {
 	
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
 	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
@@ -4299,14 +4299,14 @@ static struct BurnRomInfo ket1RomDesc[] = {
 	
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  	//  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
@@ -4328,18 +4328,18 @@ struct BurnDriver BurnDrvKet1 = {
 // Ketsui Kizuna Jigoku Tachi (Revision 1?, Japan)
 
 static struct BurnRomInfo ketaRomDesc[] = {
-	{ "ketsui_prg_revised.bin",	0x200000, 0x69fcf5eb, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ketsui_prg_revised.bin",	0x200000, 0x69fcf5eb, 1 | BRF_PRG | BRF_ESS },		//  0 68K Code
 
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  	//  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
@@ -4363,18 +4363,18 @@ struct BurnDriver BurnDrvKeta = {
 static struct BurnRomInfo ketbRomDesc[] = {
 	{ "ketsui_prg_original.bin",	0x200000, 0xcca5e153, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },					//  1 Tile data
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },					//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },					//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },					//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },					//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },					//  7 NV RAM
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
 };
 
 STDROMPICKEXT(ketb, ketb, ketsuiBios) // custom bios
@@ -4391,19 +4391,19 @@ struct BurnDriver BurnDrvKetb = {
 };
 
 
-// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)
+// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.7, hack by Trap15)
 
 static struct BurnRomInfo ketarrRomDesc[] = {
 	{ "ketarr17_v100.u38",		0x200000, 0x2cb80b89, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
 	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 	
@@ -4414,11 +4414,44 @@ STDROMPICKEXT(ketarr, ketarr, ketsuiBios) // custom bios
 STD_ROM_FN(ketarr)
 
 struct BurnDriver BurnDrvketarr = {
-	"ketarr", "ket", NULL, NULL, "2002",
+	"ketarr", "ket", NULL, NULL, "2014",
+	"Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.7, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Arrange Mode version 1.7, hack by Trap15)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketarrRomInfo, ketarrRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)
+
+static struct BurnRomInfo ketarr10RomDesc[] = {
+	{ "ketarr_v100.u38",		0x200000, 0xd4c7a8ab, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+};
+
+STDROMPICKEXT(ketarr10, ketarr10, ketsuiBios) // custom bios
+STD_ROM_FN(ketarr10)
+
+struct BurnDriver BurnDrvketarr10 = {
+	"ketarr10", "ket", NULL, NULL, "2012",
 	"Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.0, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Arrange Mode version 1.0, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketarrRomInfo, ketarrRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketarr10RomInfo, ketarr10RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4431,14 +4464,14 @@ static struct BurnRomInfo ketarr15RomDesc[] = {
 
 	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
 	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
@@ -4447,7 +4480,7 @@ STDROMPICKEXT(ketarr15, ketarr15, ketsuiBios) // custom bios
 STD_ROM_FN(ketarr15)
 
 struct BurnDriver BurnDrvketarr15 = {
-	"ketarr15", "ket", NULL, NULL, "2002",
+	"ketarr15", "ket", NULL, NULL, "2012",
 	"Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.5, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Arrange Mode version 1.5, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
@@ -4462,25 +4495,25 @@ struct BurnDriver BurnDrvketarr15 = {
 static struct BurnRomInfo ketarr151RomDesc[] = {
 	{ "ketarr151_v100.u38",		0x200000, 0x2b7c030d, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
-	{ "ket_igs027a.bin",		0x004000, 0xab54d286, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarr151, ketarr151, ketsuiBios) // custom bios
 STD_ROM_FN(ketarr151)
 
 struct BurnDriver BurnDrvketarr151 = {
-	"ketarr151", "ket", NULL, NULL, "2002",
+	"ketarr151", "ket", NULL, NULL, "2012",
 	"Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.51, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Arrange Mode version 1.51, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
@@ -4490,67 +4523,100 @@ struct BurnDriver BurnDrvketarr151 = {
 };
 
 
-// Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.7, hack by Trap15)
+// Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.5, hack by Trap15)
 
-static struct BurnRomInfo ketarr17RomDesc[] = {
-	{ "ketarr17_v100.u38",		0x200000, 0x2cb80b89, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+static struct BurnRomInfo ketarrs15RomDesc[] = {
+	{ "ketarrs15_v100.u38",		0x200000, 0xa95e71e0, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
 	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
 
-STDROMPICKEXT(ketarr17, ketarr17, ketsuiBios) // custom bios
-STD_ROM_FN(ketarr17)
+STDROMPICKEXT(ketarrs15, ketarrs15, ketsuiBios) // custom bios
+STD_ROM_FN(ketarrs15)
 
-struct BurnDriver BurnDrvketarr17 = {
-	"ketarr17", "ket", NULL, NULL, "2002",
-	"Ketsui Kizuna Jigoku Tachi (Arrange Mode version 1.7, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
-	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Arrange Mode version 1.7, hack by Trap15)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvketarrs15 = {
+	"ketarrs15", "ket", NULL, NULL, "2012",
+	"Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.5, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (MR. Stoic version 1.5, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
-	NULL, ketarr17RomInfo, ketarr17RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ketarrs15RomInfo, ketarrs15RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
 
 
-// Ketsui Kizuna Jigoku Tachi (MR. Stoic version, hack by Trap15)
+// Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.51, hack by Trap15)
 
 static struct BurnRomInfo ketarrs151RomDesc[] = {
 	{ "ketarrs151_v100.u38",	0x200000, 0x35c984e4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
-	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },				//  1 Tile data
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
 
-	{ "a04701w064.u7", 		0x800000, 0x5ef1b94b, 3 | BRF_GRA },				//  2 Sprite Color Data
-	{ "a04702w064.u8", 		0x800000, 0x26d6da7f, 3 | BRF_GRA },				//  3
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
 
-	{ "b04701w064.u1",		0x800000, 0x1bec008d, 4 | BRF_GRA },				//  4 Sprite Masks & Color Indexes
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
 
-	{ "m04701b032.u17",		0x400000, 0xb46e22d1, 5 | BRF_SND },				//  5 Samples
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
 
 	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
 	
-	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },				//  7 NV RAM
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
 };
 
 STDROMPICKEXT(ketarrs151, ketarrs151, ketsuiBios) // custom bios
 STD_ROM_FN(ketarrs151)
 
-struct BurnDriver BurnDrvketstoicu = {
-	"ketarrs151", "ket", NULL, NULL, "2002",
-	"Ketsui Kizuna Jigoku Tachi (MR. Stoic version, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
-	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (MR. Stoic version, hack by Trap15)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvketarrs151 = {
+	"ketarrs151", "ket", NULL, NULL, "2012",
+	"Ketsui Kizuna Jigoku Tachi (MR. Stoic version 1.51, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (MR. Stoic version 1.51, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
 	NULL, ketarrs151RomInfo, ketarrs151RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Ketsui Kizuna Jigoku Tachi (Fast version, hack by Trap15)
+
+static struct BurnRomInfo ketarrfRomDesc[] = {
+	{ "ketarrf_v100.u38",		0x200000, 0x6ad17aa4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+
+	{ "ket_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  6 Internal ARM7 Rom
+	
+	{ "ket_defaults.nv",		0x020000, 0x3ca892d8, 0 | BRF_OPT },			//  7 NV RAM
+};
+
+STDROMPICKEXT(ketarrf, ketarrf, ketsuiBios) // custom bios
+STD_ROM_FN(ketarrf)
+
+struct BurnDriver BurnDrvketarrf = {
+	"ketarrf", "ket", NULL, NULL, "2012",
+	"Ketsui Kizuna Jigoku Tachi (Fast version, hack by Trap15)\0", NULL, "hack / Trap15", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (Fast version, hack by Trap15)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HACK, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_VERSHOOT, 0,
+	NULL, ketarrfRomInfo, ketarrfRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ketsuiInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };

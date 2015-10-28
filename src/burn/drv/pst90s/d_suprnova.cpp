@@ -1727,6 +1727,10 @@ static struct BurnRomInfo sknsRomDesc[] = {
 	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
 	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
 	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea
+	
+#if defined (ROM_VERIFY)
+	{ "supernova_modbios.u10", 0x080000, 0xb8d3190c, BRF_OPT },
+#endif
 };
 
 STD_ROM_PICK(skns)

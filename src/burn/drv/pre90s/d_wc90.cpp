@@ -183,7 +183,11 @@ static struct BurnRomInfo emptyRomDesc[] = {
 };
 
 static struct BurnRomInfo Ym2608RomDesc[] = {
+#if !defined (ROM_VERIFY)
 	{ "ym2608_adpcm_rom.bin",  0x002000, 0x23c9e0d8, BRF_ESS | BRF_PRG | BRF_BIOS },
+#else
+	{ "",  0x000000, 0x00000000, BRF_ESS | BRF_PRG | BRF_BIOS },
+#endif
 };
 
 STD_ROM_PICK(Ym2608)

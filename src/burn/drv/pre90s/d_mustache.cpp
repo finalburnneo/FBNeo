@@ -631,7 +631,11 @@ static struct BurnRomInfo mustacheRomDesc[] = {
 	{ "mustache.h18",	0x8000, 0x123bd9b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "mustache.h16",	0x4000, 0x62552beb, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "t5182.rom",		0x2000, 0xd354c8fc, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80) Code
+#if !defined (ROM_VERIFY)
+	{ "t5182.rom",		0x2000, 0xd354c8fc, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80 #1) Code
+#else
+	{ "",				0x0000, 0x00000000, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80 #1) Code
+#endif
 	{ "mustache.e5",	0x8000, 0xefbb1943, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "mustache.a13",	0x4000, 0x9baee4a7, 3 | BRF_GRA },           //  4 Background Tiles

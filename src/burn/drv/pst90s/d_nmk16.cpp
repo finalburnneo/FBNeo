@@ -5999,7 +5999,11 @@ static struct BurnRomInfo emptyRomDesc[] = {
 // NMK004 Internal ROM
 
 static struct BurnRomInfo nmk004RomDesc[] = {
+#if !defined (ROM_VERIFY)
 	{ "nmk004.bin", 		0x002000, 0x83b6f611, BRF_PRG | BRF_BIOS },	// 0x80 tlcs90 internal rom
+#else
+	{ "", 		0x000000, 0x00000000, BRF_PRG | BRF_BIOS },	// 0x80 tlcs90 internal rom
+#endif
 };
 
 STD_ROM_PICK(nmk004)

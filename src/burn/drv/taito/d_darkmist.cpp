@@ -848,7 +848,12 @@ static struct BurnRomInfo darkmistRomDesc[] = {
 	{ "dm_15.rom",		0x08000, 0x21e6503c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "dm_16.rom",		0x08000, 0x094579d9, 1 | BRF_PRG | BRF_ESS }, //  1
 
+#if !defined (ROM_VERIFY)
 	{ "t5182.rom",		0x02000, 0xd354c8fc, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80 #1) Code
+#else
+	{ "",				0x00000, 0x00000000, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80 #1) Code
+#endif
+
 	{ "dm_17.rom",		0x08000, 0x7723dcae, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "dm_13.rom",		0x02000, 0x38bb38d9, 3 | BRF_GRA },           //  4 Characters

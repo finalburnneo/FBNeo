@@ -2967,9 +2967,61 @@ struct BurnDriver BurnDrvImgfightj = {
 };
 
 
-// Air Duel (Japan)
+// Air Duel (World, M82-A-A + M82-B-A)
 
 static struct BurnRomInfo airduelRomDesc[] = {
+	{ "AD_(M82)_A-H0-D.IC52",	0x20000, 0xdbecc726, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "AD_(M82)_A-L0-D.IC60",	0x20000, 0x6a9fcf59, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "AD_(M82)_A-H1-D.IC51",	0x20000, 0xbafc152a, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "AD_(M82)_A-L1-D.IC59",	0x20000, 0x9e2b1ae7, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	
+	{ "AD_(M82)_A-SP-D.IC15",	0x10000, 0x16a858a3, 0x06 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "AD_(M82)_B-N0-D.IC44",	0x20000, 0x2f0d599b, 0x02 | BRF_GRA },           //  5 Sprites
+	{ "AD_(M82)_B-N1-D.IC45",	0x20000, 0x9865856b, 0x02 | BRF_GRA },           //  6
+	{ "AD_(M82)_B-N2-D.IC46",	0x20000, 0xd392aef2, 0x02 | BRF_GRA },           //  7
+	{ "AD_(M82)_B-N3-D.IC36",	0x20000, 0x923240c3, 0x02 | BRF_GRA },           //  8
+
+	{ "AD_(M82)_A-C0-D.IC49",	0x20000, 0xce134b47, 0x03 | BRF_GRA },           //  9 Foreground Tiles
+	{ "AD_(M82)_A-C1-D.IC48",	0x20000, 0x097fd853, 0x03 | BRF_GRA },           // 10
+	{ "AD_(M82)_A-C2-D.IC57",	0x20000, 0x6a94c1b9, 0x03 | BRF_GRA },           // 11
+	{ "AD_(M82)_A-C3-D.IC56",	0x20000, 0x6637c349, 0x03 | BRF_GRA },           // 12
+
+	{ "AD_(M82)_A-C0-D.IC49",	0x20000, 0xce134b47, 0x04 | BRF_GRA },           // 13 Background Tiles
+	{ "AD_(M82)_A-C1-D.IC48",	0x20000, 0x097fd853, 0x04 | BRF_GRA },           // 14
+	{ "AD_(M82)_A-C2-D.IC57",	0x20000, 0x6a94c1b9, 0x04 | BRF_GRA },           // 15
+	{ "AD_(M82)_A-C3-D.IC56",	0x20000, 0x6637c349, 0x04 | BRF_GRA },           // 16
+	
+	{ "mt_f0.bin",				0x20000, 0x2d5e05d5, 0x04 | BRF_GRA },           // 17 Sprites 2
+	{ "mt_f1.bin",				0x20000, 0xc68cd65f, 0x04 | BRF_GRA },           // 18
+	{ "mt_f2.bin",				0x20000, 0xa71feb2d, 0x04 | BRF_GRA },           // 19
+	{ "mt_f3.bin",				0x20000, 0x179f7562, 0x04 | BRF_GRA },           // 20
+
+	{ "AD_(M82)_A-V0-D.IC12",	0x20000, 0x339f474d, 0x05 | BRF_SND },           // 21 DAC Samples
+};
+
+STD_ROM_PICK(airduel)
+STD_ROM_FN(airduel)
+
+static INT32 airduelInit()
+{
+	return 0;
+}
+
+struct BurnDriver BurnDrvAirduel = {
+	"airduel", NULL, NULL, NULL, "1990",
+	"Air Duel (World, M82-A-A + M82-B-A)\0", NULL, "Irem", "M82",
+	NULL, NULL, NULL, NULL,
+	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
+	NULL, airduelRomInfo, airduelRomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
+	airduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 384, 3, 4
+};
+
+
+// Air Duel (Japan, M72)
+
+static struct BurnRomInfo airduelm72RomDesc[] = {
 	{ "ad-c-h0.bin",	0x20000, 0x12140276, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
 	{ "ad-c-l0.bin",	0x20000, 0x4ac0b91d, 0x01 | BRF_PRG | BRF_ESS }, //  1
 	{ "ad-c-h3.bin",	0x20000, 0x9f7cfca3, 0x01 | BRF_PRG | BRF_ESS }, //  2
@@ -2995,23 +3047,23 @@ static struct BurnRomInfo airduelRomDesc[] = {
 	{ "airduel_i8751.mcu",	0x10000, 0x00000000, 0x00 | BRF_OPT | BRF_NODUMP }, // 17 i8751 Code
 };
 
-STD_ROM_PICK(airduel)
-STD_ROM_FN(airduel)
+STD_ROM_PICK(airduelm72)
+STD_ROM_FN(airduelm72)
 
-static INT32 airduelInit()
+static INT32 airduelm72Init()
 {
 	install_protection(airduel);
 
 	return DrvInit(common_080000_0a0000, sound_ram_map, NULL, Z80_FAKE_NMI, 0);
 }
 
-struct BurnDriver BurnDrvAirduel = {
-	"airduel", NULL, NULL, NULL, "1990",
-	"Air Duel (Japan)\0", NULL, "Irem", "M72",
+struct BurnDriver BurnDrvAirduelm72 = {
+	"airduelm72", "airduel", NULL, NULL, "1990",
+	"Air Duel (Japan, M72)\0", NULL, "Irem", "M72",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
-	NULL, airduelRomInfo, airduelRomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
-	airduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
+	NULL, airduelm72RomInfo, airduelm72RomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
+	airduelm72Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4
 };
 

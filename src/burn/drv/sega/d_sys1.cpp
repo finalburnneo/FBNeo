@@ -4214,6 +4214,20 @@ UINT8 __fastcall NoboranbZ801PortRead(UINT16 a)
 
 void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 {
+	if (DecodeFunction == regulus_decode) {
+		a &= 0x1f;
+		switch (a)
+		{
+			case 0x14:
+			case 0x15:
+			case 0x16:
+			case 0x17:
+				ppi8255_w(0, a & 3, d);
+				return;
+		}
+		return;
+	}
+
 	a &= 0xff;
 	
 	switch (a) {
@@ -4463,6 +4477,20 @@ void __fastcall System1Z802ProgWrite(UINT16 a, UINT8 d)
 	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\n"), a, d);
 }
 
+static void PPI0WriteA(UINT8 data)
+{
+	system1_soundport_w(data);
+}
+
+static void PPI0WriteC(UINT8 data)
+{
+	ZetClose();
+	ZetOpen(1);
+	ZetSetIRQLine(0x20, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
+	ZetClose();
+	ZetOpen(0);
+}
+
 /*==============================================================================================
 Driver Inits
 ===============================================================================================*/
@@ -4478,7 +4506,7 @@ static void CalcPenUsage()
 		Usage = 0;
 		for (y = 0; y < 8; y++) {
 			for (x = 0; x < 8; x++) {
-				Usage |= 1 << dp[x];					
+				Usage |= 1 << dp[x];
 			}
 			
 			dp += 8;
@@ -4669,6 +4697,12 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	SN76489AInit(1, 4000000, 1);
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+
+	if (DecodeFunction == regulus_decode) {
+		ppi8255_init(1);
+		PPI0PortWriteA = PPI0WriteA;
+		PPI0PortWriteC = PPI0WriteC;
+	}
 	
 	GenericTilesInit();
 	
@@ -5231,7 +5265,8 @@ static void WbmlPPI0WriteC(UINT8 data)
 	ZetClose();
 	ZetOpen(0);
 
-	wbml_videoram_bank_latch_w(data);
+	if (DecodeFunction != regulus_decode)
+		wbml_videoram_bank_latch_w(data);
 }
 
 static INT32 WbmlInit()
@@ -5279,7 +5314,6 @@ static INT32 WbmlInit()
 
 	System1Draw = WbmlRender;
 	memset(System1VideoRam,0x00,0x4000);
-	//	WbmlDoReset();
 
 	return nRet;
 }
@@ -5363,7 +5397,6 @@ static int WbmljbInit()
 
 	System1Draw = WbmlRender;
 	memset(System1VideoRam,0x00,0x4000);
-	//WbmlDoReset();
 
 	return nRet;
 }
@@ -5374,7 +5407,7 @@ static INT32 System1Exit()
 	
 	SN76496Exit();
 
-	if (System1Draw == WbmlRender)
+	if (System1Draw == WbmlRender || DecodeFunction == regulus_decode)
 		ppi8255_exit();
 
 	GenericTilesExit();

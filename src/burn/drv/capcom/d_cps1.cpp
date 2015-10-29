@@ -5748,6 +5748,51 @@ STD_ROM_PICK(Fcrash)
 STD_ROM_FN(Fcrash)
 
 static struct BurnRomInfo ForgottnRomDesc[] = {
+	{ "lw40.12f",      0x020000, 0x73e920b7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, /* Higher program numbers indicates a later revision */
+	{ "lw41.12h",      0x020000, 0x58210b9e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP }, /* 1 byte difference: 0x66D4 == 0x0C versus 0x04 in lw15.12h below */
+	{ "lw42.13f",      0x020000, 0xbea45994, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "lw43.13h",      0x020000, 0x539b2339, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "lw-07.10g",     0x080000, 0xfd252a26, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP }, 
+
+	{ "lw_2.2b",       0x020000, 0x4bd75fee, BRF_GRA | CPS1_TILES },
+	{ "lw_1.2a",       0x020000, 0x65f41485, BRF_GRA | CPS1_TILES },
+	{ "lw-08.9b",      0x080000, 0x25a8e43c, BRF_GRA | CPS1_TILES },
+	{ "lw-18.5e",      0x020000, 0xb4b6241b, BRF_GRA | CPS1_TILES },
+	{ "lw_17.5c",      0x020000, 0xc5eea115, BRF_GRA | CPS1_TILES },
+	{ "lw_30.8h",      0x020000, 0xb385954e, BRF_GRA | CPS1_TILES },
+	{ "lw_29.8f",      0x020000, 0x7bda1ac6, BRF_GRA | CPS1_TILES },
+	{ "lw_4.3b",       0x020000, 0x50cf757f, BRF_GRA | CPS1_TILES },
+	{ "lw_3.3a",       0x020000, 0xc03ef278, BRF_GRA | CPS1_TILES },
+	{ "lw_20.7e",      0x020000, 0xdf1a3665, BRF_GRA | CPS1_TILES },
+	{ "lw_19.7c",      0x020000, 0x15af8440, BRF_GRA | CPS1_TILES },
+	{ "lw_32.9h",      0x020000, 0x30967a15, BRF_GRA | CPS1_TILES },
+	{ "lw_31.9f",      0x020000, 0xc49d37fb, BRF_GRA | CPS1_TILES },
+	{ "lw-02.6b",      0x080000, 0x43e6c5c8, BRF_GRA | CPS1_TILES },
+	{ "lw_14.10b",     0x020000, 0x82862cce, BRF_GRA | CPS1_TILES },
+	{ "lw_13.10a",     0x020000, 0xb81c0e96, BRF_GRA | CPS1_TILES },
+	{ "lw-06.9d",      0x080000, 0x5b9edffc, BRF_GRA | CPS1_TILES },
+	{ "lw_26.10e",     0x020000, 0x57bcd032, BRF_GRA | CPS1_TILES },
+	{ "lw_25.10c",     0x020000, 0xbac91554, BRF_GRA | CPS1_TILES },	
+	{ "lw_16.11b",     0x020000, 0x40b26554, BRF_GRA | CPS1_TILES },
+	{ "lw_15.11a",     0x020000, 0x1b7d2e07, BRF_GRA | CPS1_TILES },
+	{ "lw_28.11e",     0x020000, 0xa805ad30, BRF_GRA | CPS1_TILES },
+	{ "lw_27.11c",     0x020000, 0x103c1bd2, BRF_GRA | CPS1_TILES },
+	
+	{ "lw_37.13c",     0x010000, 0x59df2a63, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "lw-03u.12e",    0x020000, 0x807d051f, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "lw-04u.13e",    0x020000, 0xe6cd098e, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "lw621.1a",      0x000117, 0x5eec6ce9, BRF_OPT },	// b-board PLDs
+	{ "lwio.12b",      0x000117, 0xad52b90c, BRF_OPT },
+};
+
+STD_ROM_PICK(Forgottn)
+STD_ROM_FN(Forgottn)
+
+static struct BurnRomInfo ForgottnaRomDesc[] = {
 	{ "lw11.12f",      0x020000, 0x73e920b7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "lw15.12h",      0x020000, 0x50d7012d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "lw10.13f",      0x020000, 0xbea45994, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -5786,8 +5831,8 @@ static struct BurnRomInfo ForgottnRomDesc[] = {
 	{ "lwio.12b",      0x000117, 0xad52b90c, BRF_OPT },
 };
 
-STD_ROM_PICK(Forgottn)
-STD_ROM_FN(Forgottn)
+STD_ROM_PICK(Forgottna)
+STD_ROM_FN(Forgottna)
 
 static struct BurnRomInfo ForgottnuRomDesc[] = {
 	{ "lw11c.12f",     0x020000, 0xe62742b6, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -12635,6 +12680,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "ffightbla"   , HACK_B_5    , mapper_S224B , 0, NULL                },
 	{ "fcrash"      , HACK_B_5    , mapper_S224B , 0, NULL                }, // doesn't really have an ID, but this used to give the relevant values to our rendering functions
 	{ "forgottn"    , CPS_B_01    , mapper_LW621 , 1, NULL                },
+	{ "forgottna"   , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu"   , CPS_B_01    , mapper_LW621 , 1, NULL                },
 	{ "forgottnu1"  , CPS_B_01    , mapper_LWCHR , 1, NULL                },
 	{ "forgottnua"  , CPS_B_01    , mapper_LWCHR , 1, NULL                },
@@ -13824,6 +13870,22 @@ static INT32 FcrashInit()
 	return nRet;
 }
 
+static INT32 ForgottnNewerInit()
+{
+	INT32 nRet = 0;
+	
+	Forgottn = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottn;
+	
+	nRet = DrvInit();
+	
+	CpsStar = CpsGfx + nCpsGfxLen - 0x2000;
+	
+	CpsLoadStarsForgottnAlt(CpsStar, 18);
+	
+	return nRet;
+}
+
 static INT32 ForgottnInit()
 {
 	INT32 nRet = 0;
@@ -13844,7 +13906,7 @@ static INT32 ForgottnAltGfxInit()
 	INT32 nRet = 0;
 	
 	Forgottn = 1;
-	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottn;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesForgottna;
 	
 	nRet = DrvInit();
 	
@@ -17501,10 +17563,20 @@ struct BurnDriver BurnDrvCpsFcrash = {
 
 struct BurnDriver BurnDrvCpsForgottn = {
 	"forgottn", NULL, NULL, NULL, "1988",
-	"Forgotten Worlds (World)\0", NULL, "Capcom", "CPS1",
+	"Forgotten Worlds (World, newer)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
 	NULL, ForgottnRomInfo, ForgottnRomName, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
+	ForgottnNewerInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsForgottna = {
+	"forgottna", "forgottn", NULL, NULL, "1988",
+	"Forgotten Worlds (World)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1_GENERIC, GBF_HORSHOOT, 0,
+	NULL, ForgottnaRomInfo, ForgottnaRomName, NULL, NULL, ForgottnInputInfo, ForgottnDIPInfo,
 	ForgottnAltGfxInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

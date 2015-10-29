@@ -36,6 +36,7 @@ INT32 CpsExit();
 INT32 CpsLoadTiles(UINT8 *Tile,INT32 nStart);
 INT32 CpsLoadTilesByte(UINT8 *Tile,INT32 nStart);
 INT32 CpsLoadTilesForgottn(INT32 nStart);
+INT32 CpsLoadTilesForgottna(INT32 nStart);
 INT32 CpsLoadTilesForgottnu(INT32 nStart);
 INT32 CpsLoadTilesPang(UINT8 *Tile,INT32 nStart);
 INT32 CpsLoadTilesSf2ebbl(UINT8 *Tile, INT32 nStart);

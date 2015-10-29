@@ -18,7 +18,6 @@ static UINT8 *Mem                    = NULL;
 static UINT8 *MemEnd                 = NULL;
 static UINT8 *RamStart               = NULL;
 static UINT8 *RamEnd                 = NULL;
-//static UINT8 *DrvZ80Code          = NULL;
 
 static UINT8 *System1Rom1            = NULL;
 static UINT8 *System1Rom2            = NULL;
@@ -31,7 +30,6 @@ static UINT8 *System1SpriteRam       = NULL;
 static UINT8 *System1PaletteRam      = NULL;
 static UINT8 *System1BgRam           = NULL;
 static UINT8 *System1VideoRam        = NULL;
-//static UINT8 *System1PagedVideoRam   = NULL;
 static UINT8 *System1ScrollXRam      = NULL;
 static UINT8 *System1BgCollisionRam  = NULL;
 static UINT8 *System1SprCollisionRam = NULL;
@@ -4049,24 +4047,20 @@ static void System1BankRom()
 
 	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
 
-	if (DecodeFunction)
-	{
+	if (DecodeFunction)	{
 		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + BankAddress, System1Rom1 + BankAddress);
 	}
 	else
 	{
-
-if (System1BankedRom==2)
-		{
+		if (System1BankedRom==2) {
 			BankAddress = (System1RomBank * 0x8000) + 0x20000;
 			ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
 			ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + BankAddress, System1Rom1 + BankAddress);
 		}
-
-//	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM1 + 0x10000, DrvZ80ROM1);
-else
-
-		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
+		else
+		{
+			ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
+		}
 	}
 }
 
@@ -4669,7 +4663,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0xf800, 0xfbff, 2, System1SprCollisionRam);
 	ZetMapArea(0xfc00, 0xffff, 0, System1fcRam);
 	ZetMapArea(0xfc00, 0xffff, 1, System1fcRam);
-	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);	
+	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);
 	ZetClose();
 
 	ZetInit(1);
@@ -5154,10 +5148,8 @@ static int ChplftbInit()
 	return nRet;
 }
 
-UINT8 __fastcall WbmlZ801PortRead(unsigned short a)
+UINT8 __fastcall WbmlZ801PortRead(UINT16 a)
 {
-//	bprintf(PRINT_NORMAL, _T("WbmlZ801PortRead %x\n"), a);
-
 	a &= 0x1f;
 	switch (a) 
 	{
@@ -5178,9 +5170,8 @@ UINT8 __fastcall WbmlZ801PortRead(unsigned short a)
 	return 0;
 }
 
-inline void wbml_videoram_bank_latch_w (UINT8 d)
+inline void wbml_videoram_bank_latch_w(UINT8 d)
 {
-//	wbml_videoram_bank_latch = data;
 	System1BgBankLatch = d;
 	System1BgBank = (d >> 1) & 0x03;	/* Select 4 banks of 4k, bit 2,1 */
 
@@ -5188,10 +5179,8 @@ inline void wbml_videoram_bank_latch_w (UINT8 d)
 	ZetMapMemory(System1VideoRam + System1BgBank * 0x1000, 0xe000, 0xefff, MAP_RAM);
 }
 
-void __fastcall WbmlZ801PortWrite(unsigned short a, UINT8 d)
+void __fastcall WbmlZ801PortWrite(UINT16 a, UINT8 d)
 {
-//	bprintf(PRINT_NORMAL, _T("WbmlZ801PortWrite %x, %x\n"), a & 0xFF, d);
-
 	a &= 0x1f;
 	switch (a) 
 	{
@@ -5210,25 +5199,16 @@ void __fastcall WbmlZ801PortWrite(unsigned short a, UINT8 d)
 
 void __fastcall WbmlZ801ProgWrite(UINT16 a, UINT8 d)
 {
-//	bprintf(PRINT_NORMAL, _T("WbmlZ801ProgWrite Write %x, %x\n"), a, d);
-/*
-ok	AM_RANGE(0xd800, 0xddff) AM_WRITE(system1_paletteram_w) AM_BASE(&paletteram)
-ok	AM_RANGE(0xe000, 0xefff) AM_WRITE(wbml_paged_videoram_w)
-ok	AM_RANGE(0xf000, 0xf3ff) AM_WRITE(system1_background_collisionram_w) AM_BASE(&system1_background_collisionram)
-ok	AM_RANGE(0xf800, 0xfbff) AM_WRITE(system1_sprites_collisionram_w) AM_BASE(&system1_sprites_collisionram)
-*/
 	if (a >= 0xf000 && a <= 0xf3ff) { System1BgCollisionRam[a - 0xf000] = 0x7e; return; }
 	if (a >= 0xf800 && a <= 0xfbff) { System1SprCollisionRam[a - 0xf800] = 0x7e; return; }
-	if (a >= 0xe000 && a <= 0xefff) 
-	{ 
-		System1VideoRam[(0x1000*System1BgBank) + (a & 0xfff)] = d;	
-		return;	
+	if (a >= 0xe000 && a <= 0xefff)
+	{
+		System1VideoRam[(0x1000*System1BgBank) + (a & 0xfff)] = d;
+		return;
 	}
-	
-//	//bprintf(PRINT_NORMAL, _T("WbmlZ801ProgWrite Write %x, %x\n"), a, d);
 }
 
-UINT8 __fastcall WbmlZ801ProgRead(unsigned short a)
+UINT8 __fastcall WbmlZ801ProgRead(UINT16 a)
 {
 	if (a >= 0xe000 && a <= 0xefff) 
 	{ 
@@ -5244,17 +5224,7 @@ static void WbmlPPI0WriteA(UINT8 data)
 
 static void WbmlPPI0WriteB(UINT8 data)
 {
-	/* handle any custom banking or other stuff */
-	//if (m_videomode_custom != NULL)
-	//	(this->*m_videomode_custom)(data, m_videomode_prev);
-
 	chplft_bankswitch_w(data);
-
-	/* bit 0 is for the coin counters */
-//	coin_counter_w(machine(), 0, data & 1);
-
-	/* remaining signals are video-related */
-//	system1_videomode_w(space, 0, data);
 }
 
 static void WbmlPPI0WriteC(UINT8 data)
@@ -5386,7 +5356,7 @@ static int WbmljbInit()
 	ZetSetReadHandler(WbmlZ801ProgRead);
 	ZetSetWriteHandler(WbmlZ801ProgWrite);
 
-	ZetSetInHandler   (WbmlZ801PortRead);
+	ZetSetInHandler(WbmlZ801PortRead);
 	ZetSetOutHandler(WbmlZ801PortWrite);
 	ZetClose();
 
@@ -5757,7 +5727,7 @@ static void wbml_draw_bg(INT32 trasp)
 	page = 0;
 	for (page=0; page < 4; page++)
 	{
-//		if ((nSpriteEnable & (1 << page)) == 0) continue;
+		//if ((nSpriteEnable & (1 << page)) == 0) continue;
 
 		UINT8 *source = System1VideoRam + (System1VideoRam[0x0740 + page*2] & 0x07)*0x800;
 

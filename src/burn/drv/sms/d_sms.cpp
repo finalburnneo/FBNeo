@@ -27568,6 +27568,25 @@ struct BurnDriver BurnDrvsms_lostraider101 = {
 	256, 192, 4, 3
 };
 
+// Moggy Master (Version 1.00)
+
+static struct BurnRomInfo sms_moggym100RomDesc[] = {
+	{ "mojon-twins--moggy-master.sms",	0x10000, 0x039539df, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_moggym100)
+STD_ROM_FN(sms_moggym100)
+
+struct BurnDriver BurnDrvsms_moggym100 = {
+	"sms_moggym100", NULL, NULL, NULL, "2015",
+	"Moggy Master (Version 1.00)\0", NULL, "Mojon Twins", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_moggym100RomInfo, sms_moggym100RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
 // Bruce Lee (Version 1.0)
 
 static struct BurnRomInfo sms_bruceleeRomDesc[] = {

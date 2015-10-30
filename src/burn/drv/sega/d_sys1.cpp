@@ -6513,7 +6513,7 @@ struct BurnDriver BurnDrvWbml = {
 	"wbml", NULL, NULL, NULL, "1987",
 	"Wonder Boy in Monster Land (Japan New Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmlRomInfo, wbmlRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmlInit, System1Exit, System1Frame, NULL, System1Scan, 
 	NULL, 0x600, 256, 224, 4, 3
@@ -6523,7 +6523,7 @@ struct BurnDriver BurnDrvWbmljb = {
 	"wbmljb", "wbml", NULL, NULL, "1987",
 	"Wonder Boy in Monster Land (Japan not encrypted)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljbRomInfo, wbmljbRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, NULL, System1Scan, 
 	NULL, 0x600, 256, 224, 4, 3
@@ -6535,7 +6535,7 @@ struct BurnDriver BurnDrvWbmljo = {
 	"wbmljo", "wbml", NULL, NULL, "1987",
 	"Wonder Boy in Monster Land (Japan Old Ver., MC-8123, 317-0043)\0", NULL, "Sega / Westone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, wbmljoRomInfo, wbmljoRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmlInit, System1Exit, System1Frame, NULL, System1Scan, 
 	NULL, 0x600, 256, 224, 4, 3

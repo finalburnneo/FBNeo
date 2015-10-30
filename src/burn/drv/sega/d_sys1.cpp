@@ -5,8 +5,6 @@
 #include "mc8123.h"
 #include "8255ppi.h"
 
-void fake8123_decrypt_rom(INT32 banknum, INT32 numbanks, UINT8 *pRom, UINT8 *pFetch, UINT8 *pKey);
-
 static UINT8 System1InputPort0[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 System1InputPort1[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 System1InputPort2[8]    = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -1221,6 +1219,49 @@ static struct BurnDIPInfo TeddybbDIPList[]=
 };
 
 STDDIPINFO(Teddybb)
+
+static struct BurnDIPInfo TokisensDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                     },
+	{0x14, 0xff, 0xff, 0xfe, NULL                     },
+
+	// Dip 1
+	SYSTEM1_COINAGE(0x13)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x14, 0x01, 0x01, 0x00, "Upright"                },
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"          },
+	{0x14, 0x01, 0x02, 0x00, "Off"          },
+	{0x14, 0x01, 0x02, 0x02, "On"           },
+
+	{0   , 0xfe, 0   ,    4, "Lives"                },
+	{0x14, 0x01, 0x0c, 0x00, "1"            },
+	{0x14, 0x01, 0x0c, 0x08, "2"            },
+	{0x14, 0x01, 0x0c, 0x0c, "3"            },
+	{0x14, 0x01, 0x0c, 0x04, "4"            },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x10, 0x10, "Off"          },
+	{0x04, 0x01, 0x10, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x20, 0x20, "Off"          },
+	{0x14, 0x01, 0x20, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x40, 0x40, "Off"          },
+	{0x14, 0x01, 0x40, 0x00, "On"           },
+
+	{0   , 0xfe, 0   ,    2, "Unknown"              },
+	{0x14, 0x01, 0x80, 0x80, "Off"          },
+	{0x14, 0x01, 0x80, 0x00, "On"           },
+};
+
+STDDIPINFO(Tokisens)
 
 static struct BurnDIPInfo UpndownDIPList[]=
 {
@@ -2700,6 +2741,32 @@ static struct BurnRomInfo TeddybboblRomDesc[] = {
 STD_ROM_PICK(Teddybbobl)
 STD_ROM_FN(Teddybbobl)
 
+static struct BurnRomInfo tokisensRomDesc[] = {
+	{ "epr10961.90",        0x8000, 0x1466b61d, 1 }, //  0 maincpu
+	{ "epr10962.91",        0x8000, 0xa8479f91, 1 }, //  1
+	{ "epr10963.92",        0x8000, 0xb7193b39, 1 }, //  2
+
+	{ "epr10967.126",       0x8000, 0x97966bf2, 2 }, //  3 soundcpu
+
+	{ "epr10964.4",         0x8000, 0x9013b85c, 3 }, //  4 tiles
+	{ "epr10965.5",         0x8000, 0xe4755cc6, 3 }, //  5
+	{ "epr10966.6",         0x8000, 0x5bbfbdcc, 3 }, //  6
+
+	{ "epr10958.87",        0x8000, 0xfc2bcbd7, 4 }, //  7 sprites
+	{ "epr10957.86",        0x8000, 0x4ec56860, 4 }, //  8
+	{ "epr10960.89",        0x8000, 0x880e0d44, 4 }, //  9
+	{ "epr10959.88",        0x8000, 0x4deda48f, 4 }, // 10
+
+	{ "bprom.20",           0x0100, 0x8eee0f72, 5 }, // 11 palette
+	{ "bprom.14",           0x0100, 0x3e7babd7, 5 }, // 12
+	{ "bprom.8",            0x0100, 0x371c44a6, 5 }, // 13
+
+	{ "bprom.28",           0x0100, 0x648350b8, 6 }, // 14 proms
+};
+ 
+STD_ROM_PICK(tokisens)
+STD_ROM_FN(tokisens)
+
 static struct BurnRomInfo UpndownRomDesc[] = {
 	{ "epr5516a.129",      0x002000, 0x038c82da, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epr5517a.130",      0x002000, 0x6930e1de, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -3194,6 +3261,34 @@ static struct BurnRomInfo wbmljoRomDesc[] = {
 
 STD_ROM_PICK(wbmljo)
 STD_ROM_FN(wbmljo)
+
+// Wonder Boy in Monster Land (English bootleg set 1)
+
+static struct BurnRomInfo wbmlbRomDesc[] = {
+	{ "wbml.01",		0x10000, 0x66482638, 1 }, //  0 maincpu
+	{ "wbml.02",		0x10000, 0x48746bb6, 1 }, //  1
+	{ "wbml.03",		0x10000, 0xd57ba8aa, 1 }, //  2
+
+	{ "epr11037.126",	0x08000, 0x7a4ee585, 2 }, //  3 soundcpu
+
+	{ "wbml.08",		0x08000, 0xbbea6afe, 3 }, //  4 gfx1
+	{ "wbml.09",		0x08000, 0x77567d41, 3 }, //  5
+	{ "wbml.10",		0x08000, 0xa52ffbdd, 3 }, //  6
+
+	{ "epr11028.87",	0x08000, 0xaf0b3972, 4 }, //  7 gfx2
+	{ "epr11027.86",	0x08000, 0x277d8f1d, 4 }, //  8
+	{ "epr11030.89",	0x08000, 0xf05ffc76, 4 }, //  9
+	{ "epr11029.88",	0x08000, 0xcedc9c61, 4 }, // 10
+
+	{ "pr11026.20",		0x00100, 0x27057298, 5 }, // 11 proms
+	{ "pr11025.14",		0x00100, 0x41e4d86b, 5 }, // 12
+	{ "pr11024.8",		0x00100, 0x08d71954, 5 }, // 13
+
+	{ "pr5317.37",		0x00100, 0x648350b8, 6 }, // 14
+};
+
+STD_ROM_PICK(wbmlb)
+STD_ROM_FN(wbmlb)
 
 /*==============================================================================================
 Decode Functions
@@ -3923,15 +4018,13 @@ static void blockgal_decode()
 
 static void wbml_decode()
 {
-	mc8123_decrypt_rom(1, 4, System1Rom1, System1Fetch1, System1MC8123Key);
+	mc8123_decrypt_rom(1, 4, System1Rom1, System1Rom1 + 0x20000, System1MC8123Key);
 }
 
-#if 0
 static void wbmljb_decode()
 {
-	fake8123_decrypt_rom(1, 4, System1Rom1, System1Fetch1, System1MC8123Key);
+	return; // fake decode function
 }
-#endif
 
 static void myherok_tile_decode()
 {
@@ -4055,20 +4148,13 @@ static void System2BankRom()
 
 	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
 
-	if (DecodeFunction)	{
-		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + BankAddress, System1Rom1 + BankAddress);
+	if (DecodeFunction)
+	{
+		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress + 0x20000, System1Rom1 + BankAddress);
 	}
 	else
 	{
-		if (System1BankedRom==2) {
-			BankAddress = (System1RomBank * 0x8000) + 0x20000;
-			ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
-			ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + BankAddress, System1Rom1 + BankAddress);
-		}
-		else
-		{
-			ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
-		}
+		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
 	}
 }
 
@@ -4698,33 +4784,25 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	for (i = 0; i < nZ80Rom1Num; i++) {
 		nRet = BurnLoadRom(System1Rom1 + (i * nZ80Rom1Size), i + RomOffset, 1); if (nRet != 0) return 1;
 	}
-	
-	if (System1BankedRom==1) {
-		memcpy(System1TempRom, System1Rom1, 0x20000);
-		memset(System1Rom1, 0, 0x20000);
-		memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
-		memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
-	//	memcpy(System1Rom1 + 0x08000, System1TempRom + 0x08000, 0x8000);
-		memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
-	}
 
-	if (System1BankedRom==2) { // here!
+	if (System1BankedRom) 
+	{
 		memcpy(System1TempRom, System1Rom1, 0x40000);
 		memset(System1Rom1, 0, 0x40000);
+		memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
+		memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
+		memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
 
-		memcpy (System1Fetch1 + 0x20000, System1TempRom + 0x00000, 0x10000);// fetch
-		memcpy (System1Rom1 + 0x20000, System1TempRom + 0x08000, 0x10000);
-		memcpy (System1Rom1 + 0x00000, System1TempRom + 0x08000, 0x8000);
-
-		memcpy (System1Fetch1 + 0x30000, System1TempRom + 0x10000, 0x10000);//fetch
-		memcpy (System1Rom1 + 0x30000, System1TempRom + 0x10000, 0x10000);//fetch
-		memcpy (System1Rom1 + 0x10000, System1TempRom + 0x18000, 0x8000);
-		
-		memcpy (System1Fetch1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
-		memcpy (System1Rom1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
-		memcpy (System1Rom1 + 0x18000, System1TempRom + 0x28000, 0x8000);
+		if (System1BankedRom==2) 
+		{ // here!
+			memcpy (System1Rom1 + 0x20000, System1TempRom + 0x00000, 0x8000);
+			memcpy (System1Rom1 + 0x00000, System1TempRom + 0x08000, 0x8000);
+			memcpy (System1Rom1 + 0x30000, System1TempRom + 0x10000, 0x8000);//fetch
+			memcpy (System1Rom1 + 0x10000, System1TempRom + 0x18000, 0x8000);
+			memcpy (System1Rom1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
+			memcpy (System1Rom1 + 0x18000, System1TempRom + 0x28000, 0x8000);
+		}
 	}
-	
 
 	memset(System1Rom2, 0, 0x10000);
 
@@ -4777,18 +4855,13 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0x0000, 0x7fff, 0, System1Rom1);
 	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + 0x8000);
 	if (DecodeFunction) {
-		ZetMapArea(0x0000, 0x7fff, 2, System1Fetch1, System1Rom1);
-		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + 0x10000, System1Rom1 + 0x10000);
+//before		ZetMapArea(0x0000, 0x7fff, 2, System1Fetch1, System1Rom1);
+		ZetMapArea(0x0000, 0x7fff, 2, System1Rom1 + 0x20000, System1Rom1);
+// before		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + 0x10000, System1Rom1 + 0x10000);
+		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x30000, System1Rom1 + 0x10000);  // 30 fetch et 10 pour code ?
 	} else {
 		ZetMapArea(0x0000, 0x7fff, 2, System1Rom1);
-		if (System1BankedRom==2)
-		{
-			ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + 0x10000);
-			ZetMapArea(0x0000, 0x7fff, 2, System1Fetch1, System1Rom1);
-			ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + 0x20000, System1Rom1 + 0x20000);
-		}
-		else
-			ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x8000);
+		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x8000);
 	}
 	ZetMapArea(0xc000, 0xcfff, 0, System1Ram1);
 	ZetMapArea(0xc000, 0xcfff, 1, System1Ram1);
@@ -5451,41 +5524,6 @@ static INT32 WbmlInit()
 	return nRet;
 }
 
-
-void fake8123_decrypt_rom(INT32 banknum, INT32 numbanks, UINT8 *pRom, UINT8 *pFetch, UINT8 *pKey)
-{
-	UINT8 *decrypted1 = pFetch;
-	UINT8 *decrypted2 = numbanks > 1 ? decrypted1 + 0x10000 : decrypted1 + 0x8000;
-	UINT8 *rom = pRom;
-	//UINT8 *key = pKey;
-	INT32 A, bank;
-
-	for (A = 0x0000;A < 0x8000;A++)
-	{
-		UINT8 src = rom[A];
-
-		/* decode the opcodes */
-		decrypted1[A] = src;//mc8123_decrypt(A,src,key,1);
-
-		/* decode the data */
-//		rom[A] = mc8123_decrypt(A,src,key,0);
-	}
-
-	for (bank = 0; bank < numbanks; ++bank)
-	{
-		for (A = 0x8000;A < 0xc000;A++)
-		{
-			UINT8 src = rom[0x8000 + 0x4000*bank + A];
-
-			/* decode the opcodes */
-			decrypted2[0x4000 * bank + (A-0x8000)] = src;//mc8123_decrypt(A,src,key,1);
-
-			/* decode the data */
-			rom[0x8000 + 0x4000*bank + A] = src; //mc8123_decrypt(A,src,key,0);
-		}
-	}
-}
-
 static int WbmljbInit()
 {
 	INT32 nRet;
@@ -5493,7 +5531,7 @@ static int WbmljbInit()
 	System1ColourProms = 1;
 	System1BankedRom = 2; // 2
 
-	DecodeFunction = NULL; //wbmljb_decode;
+	DecodeFunction = wbmljb_decode;
 	System1Draw = WbmlRender;
 
 	nRet = System2Init(3, 0x10000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
@@ -5501,13 +5539,60 @@ static int WbmljbInit()
 //	memcpy(System1Rom1,System1Fetch1,0x40000);
 
 	System1BgRam = NULL; //&System1VideoRam[0x800]; // pour drawpixel
+	System1ScrollXRam = NULL;
 	System1SpriteRam = &System1Ram1[0x1000];
 	System1PaletteRam = &System1Ram1[0x1800];
 	System1SpriteXOffset = 15;
 
 	ZetOpen(0);
-	ZetMapArea(0xc000, 0xdfff, 1, System1Ram1);
+	ZetMapArea(0xc000, 0xddff, 1, System1Ram1);
 //	ZetMapArea(0xc000, 0xdfff, 2, System1Ram1); // ajout, à supprimer ?
+
+	ZetMemCallback(0xe000, 0xefff, 0);
+	ZetMemCallback(0xe000, 0xefff, 1);
+	ZetMemCallback(0xe000, 0xefff, 2);
+
+	ZetMemCallback(0xf000, 0xf3ff, 1);
+	ZetMemCallback(0xf800, 0xfbff, 1);
+
+	ZetSetReadHandler(WbmlZ801ProgRead);
+	ZetSetWriteHandler(WbmlZ801ProgWrite);
+
+	ZetSetInHandler(WbmlZ801PortRead);
+	ZetSetOutHandler(WbmlZ801PortWrite);
+	ZetClose();
+
+	ppi8255_init(1);
+	PPI0PortWriteA = WbmlPPI0WriteA;
+	PPI0PortWriteB = WbmlPPI0WriteB;
+	PPI0PortWriteC = WbmlPPI0WriteC;
+
+	System1Draw = WbmlRender;
+	memset(System1VideoRam,0x00,0x4000);
+
+	return nRet;
+}
+
+static int TokisensInit()
+{
+	int nRet;
+
+	System1ColourProms = 1;
+	System1BankedRom = 1;
+
+	DecodeFunction = NULL;
+	System1Draw = WbmlRender;
+
+	nRet = System2Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
+
+	System1BgRam = NULL;
+	System1ScrollXRam = NULL;
+	System1SpriteRam = &System1Ram1[0x1000];
+	System1PaletteRam = &System1Ram1[0x1800];
+	System1SpriteXOffset = 15;
+
+	ZetOpen(0);
+	ZetMapArea(0xc000, 0xddff, 1, System1Ram1);
 
 	ZetMemCallback(0xe000, 0xefff, 0);
 	ZetMemCallback(0xe000, 0xefff, 1);
@@ -6528,6 +6613,16 @@ struct BurnDriver BurnDrvTeddybbobl = {
 	NULL, 0x600, 256, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvTokisens = {
+	"tokisens", NULL, NULL, NULL, "1987",
+	"Toki no Senshi - Chrono Soldier\0", NULL, "Sega", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, tokisensRomInfo, tokisensRomName, NULL, NULL, MyheroInputInfo, TokisensDIPInfo,
+	TokisensInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 224, 256, 4, 3
+};
+
 struct BurnDriver BurnDrvUpndown = {
 	"upndown", NULL, NULL, NULL, "1983",
 	"Up'n Down (315-5030)\0", NULL, "Sega", "System 1",
@@ -6710,6 +6805,16 @@ struct BurnDriver BurnDrvWbmljo = {
 	NULL, 0x600, 256, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvWbmlb = {
+	"wbmlb", "wbml", NULL, NULL, "1987",
+	"Wonder Boy in Monster Land (English bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, wbmlbRomInfo, wbmlbRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	WbmljbInit, System1Exit, System1Frame, NULL, System1Scan, 
+	NULL, 0x600, 256, 224, 4, 3
+};
+
 // System1RomBank = 1
 // System1BankRom()
 // shtngmst and clones
@@ -6721,4 +6826,4 @@ struct BurnDriver BurnDrvWbmljo = {
 // dakkochn
 // ufosensi
 
-// pour derek :  ufosensi, tokisens
+// pour derek :  ufosensi

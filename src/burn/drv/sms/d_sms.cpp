@@ -40,8 +40,7 @@ static struct BurnDIPInfo GGDIPList[]=
 STDDIPINFO(GG)
 
 static struct BurnInputInfo SMSInputList[] = {
-	{"P1 Start",		BIT_DIGITAL,	SMSJoy1 + 1,	"p1 start"	},
-	{"P1 Select",		BIT_DIGITAL,	SMSJoy1 + 2,	"p1 select"	},
+	{"P1 Start(GG)/Pause(SMS)",		BIT_DIGITAL,	SMSJoy1 + 1,	"p1 start"	},
 	{"P1 Up",		    BIT_DIGITAL,	SMSJoy1 + 3,	"p1 up"		},
 	{"P1 Down",		    BIT_DIGITAL,	SMSJoy1 + 4,	"p1 down"	},
 	{"P1 Left",		    BIT_DIGITAL,	SMSJoy1 + 5,	"p1 left"	},
@@ -49,8 +48,6 @@ static struct BurnInputInfo SMSInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	SMSJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	SMSJoy1 + 8,	"p1 fire 2"	},
 
-	{"P2 Start",		BIT_DIGITAL,	SMSJoy2 + 1,	"p2 start"	},
-	{"P2 Select",		BIT_DIGITAL,	SMSJoy2 + 2,	"p2 select"	},
 	{"P2 Up",		    BIT_DIGITAL,	SMSJoy2 + 3,	"p2 up"		},
 	{"P2 Down",		    BIT_DIGITAL,	SMSJoy2 + 4,	"p2 down"	},
 	{"P2 Left",		    BIT_DIGITAL,	SMSJoy2 + 5,	"p2 left"	},
@@ -27548,6 +27545,25 @@ struct BurnDriver BurnDrvsms_darc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_darcRomInfo, sms_darcRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+// Lost Raider (Version 1.01)
+
+static struct BurnRomInfo sms_lostraider101RomDesc[] = {
+	{ "LostRaider-SMS-1.01.sms",	0x20000, 0x2553b745, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_lostraider101)
+STD_ROM_FN(sms_lostraider101)
+
+struct BurnDriver BurnDrvsms_lostraider101 = {
+	"sms_lostraider101", NULL, NULL, NULL, "2015",
+	"Lost Raider (Version 1.01)\0", NULL, "Vingazole & Ichigobankai", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_lostraider101RomInfo, sms_lostraider101RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };

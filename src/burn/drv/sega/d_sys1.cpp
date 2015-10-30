@@ -70,6 +70,7 @@ static INT32 System1NumTiles;
 static INT32 System1SpriteXOffset;
 static INT32 System1ColourProms = 0;
 static INT32 System1BankedRom = 0;
+static INT32 IsSystem2 = 0;
 
 typedef void (*Decode)();
 static Decode DecodeFunction;
@@ -86,6 +87,7 @@ static MakeInputs MakeInputsFunction;
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
 static void System1BankRom();
+static void System2BankRom();
 /*==============================================================================================
 Input Definitions
 ===============================================================================================*/
@@ -4040,8 +4042,14 @@ static INT32 System1DoReset()
 /*==============================================================================================
 Memory Handlers
 ===============================================================================================*/
-
 static void System1BankRom()
+{
+	INT32 BankAddress = (System1RomBank * 0x4000) + 0x10000;
+	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
+	ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
+}
+
+static void System2BankRom()
 {
 	INT32 BankAddress = (System1RomBank * 0x4000) + 0x10000;
 
@@ -4260,10 +4268,10 @@ inline void __fastcall system1_soundport_w(UINT8 d)
 	return;
 }
 
-inline void chplft_bankswitch_w (UINT8 d)
+inline void chplft_bankswitch_w(UINT8 d)
 {
 	System1RomBank = (((d & 0x0c)>>2) );
-	System1BankRom();
+	System2BankRom();
 	System1BankSwitch = d;
 }
 
@@ -4519,6 +4527,159 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 {
 	INT32 nRet = 0, nLen, i, RomOffset;
 	
+	System1NumTiles = (nTileRomNum * nTileRomSize) / 24;
+	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
+	
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	System1TempRom = (UINT8*)BurnMalloc(0x18000);
+		
+	// Load Z80 #1 Program roms
+	RomOffset = 0;
+	for (i = 0; i < nZ80Rom1Num; i++) {
+		nRet = BurnLoadRom(System1Rom1 + (i * nZ80Rom1Size), i + RomOffset, 1); if (nRet != 0) return 1;
+	}
+	
+	if (System1BankedRom) {
+		memcpy(System1TempRom, System1Rom1, 0x18000);
+		memset(System1Rom1, 0, 0x18000);
+		memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
+		memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
+		memcpy(System1Rom1 + 0x08000, System1TempRom + 0x08000, 0x8000);
+		memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
+	}
+	
+	if (DecodeFunction) DecodeFunction();
+	
+	// Load Z80 #2 Program roms
+	RomOffset += nZ80Rom1Num;
+	for (i = 0; i < nZ80Rom2Num; i++) {
+		nRet = BurnLoadRom(System1Rom2 + (i * nZ80Rom2Size), i + RomOffset, 1); if (nRet != 0) return 1;
+	}
+	
+	// Load and decode tiles
+	memset(System1TempRom, 0, 0x18000);
+	RomOffset += nZ80Rom2Num;
+	for (i = 0; i < nTileRomNum; i++) {
+		nRet = BurnLoadRom(System1TempRom + (i * nTileRomSize), i + RomOffset, 1);
+	}
+	if (TileDecodeFunction) TileDecodeFunction();
+	if (System1NumTiles > 0x800) {
+		GfxDecode(System1NumTiles, 3, 8, 8, NoboranbTilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	} else {
+		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+	}
+	CalcPenUsage();
+	BurnFree(System1TempRom);
+	
+	// Load Sprite roms
+	RomOffset += nTileRomNum;
+	for (i = 0; i < nSpriteRomNum; i++) {
+		nRet = BurnLoadRom(System1Sprites + (i * nSpriteRomSize), i + RomOffset, 1);
+	}
+	
+	// Load Colour proms
+	if (System1ColourProms) {
+		RomOffset += nSpriteRomNum;
+		nRet = BurnLoadRom(System1PromRed, 0 + RomOffset, 1);
+		nRet = BurnLoadRom(System1PromGreen, 1 + RomOffset, 1);
+		nRet = BurnLoadRom(System1PromBlue, 2 + RomOffset, 1);
+	}
+	
+	// Setup the Z80 emulation
+	ZetInit(0);
+	ZetOpen(0);
+	ZetSetWriteHandler(System1Z801ProgWrite);
+	ZetSetInHandler(System1Z801PortRead);
+	ZetSetOutHandler(System1Z801PortWrite);
+	ZetMapArea(0x0000, 0x7fff, 0, System1Rom1);
+	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + 0x8000);
+	if (DecodeFunction) {
+		ZetMapArea(0x0000, 0x7fff, 2, System1Fetch1, System1Rom1);
+		ZetMapArea(0x8000, 0xbfff, 2, System1Fetch1 + 0x8000, System1Rom1 + 0x8000);
+	} else {
+		ZetMapArea(0x0000, 0x7fff, 2, System1Rom1);
+		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + 0x8000);
+	}
+	ZetMapArea(0xc000, 0xcfff, 0, System1Ram1);
+	ZetMapArea(0xc000, 0xcfff, 1, System1Ram1);
+	ZetMapArea(0xc000, 0xcfff, 2, System1Ram1);
+	ZetMapArea(0xd000, 0xd1ff, 0, System1SpriteRam);
+	ZetMapArea(0xd000, 0xd1ff, 1, System1SpriteRam);
+	ZetMapArea(0xd000, 0xd1ff, 2, System1SpriteRam);
+	ZetMapArea(0xd200, 0xd7ff, 0, System1Ram1 + 0x1000);
+	ZetMapArea(0xd200, 0xd7ff, 1, System1Ram1 + 0x1000);
+	ZetMapArea(0xd200, 0xd7ff, 2, System1Ram1 + 0x1000);
+	ZetMapArea(0xd800, 0xddff, 0, System1PaletteRam);
+	ZetMapArea(0xd800, 0xddff, 1, System1PaletteRam);
+	ZetMapArea(0xd800, 0xddff, 2, System1PaletteRam);
+	ZetMapArea(0xde00, 0xdfff, 0, System1deRam);
+	ZetMapArea(0xde00, 0xdfff, 1, System1deRam);
+	ZetMapArea(0xde00, 0xdfff, 2, System1deRam);
+	ZetMapArea(0xe000, 0xe7ff, 0, System1BgRam);
+	ZetMapArea(0xe000, 0xe7ff, 1, System1BgRam);
+	ZetMapArea(0xe000, 0xe7ff, 2, System1BgRam);
+	ZetMapArea(0xe800, 0xeeff, 0, System1VideoRam);
+	ZetMapArea(0xe800, 0xeeff, 1, System1VideoRam);
+	ZetMapArea(0xe800, 0xeeff, 2, System1VideoRam);
+	ZetMapArea(0xef00, 0xefff, 0, System1efRam);
+	ZetMapArea(0xef00, 0xefff, 2, System1efRam);
+	ZetMapArea(0xf000, 0xf3ff, 0, System1BgCollisionRam);
+	ZetMapArea(0xf000, 0xf3ff, 2, System1BgCollisionRam);
+	ZetMapArea(0xf400, 0xf7ff, 0, System1f4Ram);
+	ZetMapArea(0xf400, 0xf7ff, 1, System1f4Ram);
+	ZetMapArea(0xf400, 0xf7ff, 2, System1f4Ram);
+	ZetMapArea(0xf800, 0xfbff, 0, System1SprCollisionRam);
+	ZetMapArea(0xf800, 0xfbff, 2, System1SprCollisionRam);
+	ZetMapArea(0xfc00, 0xffff, 0, System1fcRam);
+	ZetMapArea(0xfc00, 0xffff, 1, System1fcRam);
+	ZetMapArea(0xfc00, 0xffff, 2, System1fcRam);	
+	ZetClose();
+
+	ZetInit(1);
+	ZetOpen(1);
+	ZetSetReadHandler(System1Z802ProgRead);
+	ZetSetWriteHandler(System1Z802ProgWrite);
+	ZetMapArea(0x0000, 0x7fff, 0, System1Rom2);
+	ZetMapArea(0x0000, 0x7fff, 2, System1Rom2);
+	ZetMapArea(0x8000, 0x87ff, 0, System1Ram2);
+	ZetMapArea(0x8000, 0x87ff, 1, System1Ram2);
+	ZetMapArea(0x8000, 0x87ff, 2, System1Ram2);
+	ZetClose();
+	
+	memset(SpriteOnScreenMap, 255, 256 * 256);
+	
+	System1SpriteXOffset = 1;
+	
+	nCyclesTotal[0] = 4000000 / 60;
+	nCyclesTotal[1] = 4000000 / 60;
+
+	SN76489AInit(0, 2000000, 0);
+	SN76489AInit(1, 4000000, 1);
+	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+	
+	GenericTilesInit();
+	
+	MakeInputsFunction = System1MakeInputs;
+	System1Draw = System1Render;
+	
+	// Reset the driver
+	if (bReset) System1DoReset();
+	
+	return 0;
+}
+
+static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
+{
+	INT32 nRet = 0, nLen, i, RomOffset;
+	
 	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
 	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
 	
@@ -4705,7 +4866,9 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	
 	// Reset the driver
 	if (bReset) System1DoReset();
-	
+
+	IsSystem2 = 1; // for banking etc.
+
 	return 0;
 }
 
@@ -5250,7 +5413,7 @@ static INT32 WbmlInit()
 	System1MC8123Key = (UINT8*)malloc(0x2000);
 	BurnLoadRom(System1MC8123Key, 15, 1);
 
-	nRet = System1Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
+	nRet = System2Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
 	free(System1MC8123Key);
 	System1MC8123Key = NULL;
 
@@ -5333,7 +5496,7 @@ static int WbmljbInit()
 	DecodeFunction = NULL; //wbmljb_decode;
 	System1Draw = WbmlRender;
 
-	nRet = System1Init(3, 0x10000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
+	nRet = System2Init(3, 0x10000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
 
 //	memcpy(System1Rom1,System1Fetch1,0x40000);
 
@@ -5407,6 +5570,8 @@ static INT32 System1Exit()
 	TileDecodeFunction = NULL;
 	MakeInputsFunction = NULL;
 	System1Draw = NULL;
+	choplifter_scroll_x_on = 0;
+	IsSystem2 = 0;
 	
 	return 0;
 }
@@ -5568,7 +5733,7 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 				sx = (Offs >> 1) % 32;
 				sy = (Offs >> 1) / 32;
 
-                                if(choplifter_scroll_x_on)
+				if(choplifter_scroll_x_on)
 					System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
 
 				sx = 8 * sx + System1BgScrollX;
@@ -5896,7 +6061,11 @@ static INT32 System1Scan(INT32 nAction,INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			if (System1BankedRom) {
 				ZetOpen(0);
-				System1BankRom();
+				if (IsSystem2) {
+					System2BankRom();
+				} else {
+					System1BankRom();
+				}
 				ZetClose();
 			}
 		}

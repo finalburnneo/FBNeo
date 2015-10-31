@@ -12862,7 +12862,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab5"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab6"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab7"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
-	{ "sf2ceuab8"   , HACK_B_2    , mapper_S9263B, 0, NULL                },
+	{ "sf2ceuab8"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceucbl"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2sl73a"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hf"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -16078,11 +16078,42 @@ static INT32 Sf2ceuab7Init()
 	return nRet;
 }
 
+static UINT16 Sf2ceuab8E00000Value = 0;
+static UINT16 Sf2ceuab8E00004Value = 0;
+
+UINT16 __fastcall Sf2ceuab8ReadWord(UINT32 a)
+{
+	if (a == 0xe00000) return Sf2ceuab8E00000Value;
+	if (a == 0xe00004) return Sf2ceuab8E00004Value;
+	
+	return 0;
+}
+
+void __fastcall Sf2ceuab8WriteWord(UINT32 a, UINT16 d)
+{
+	if (a == 0xe00000) Sf2ceuab8E00000Value = d;
+	if (a == 0xe00004) Sf2ceuab8E00004Value = d;
+}
+
 static INT32 Sf2ceuab8Init()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
+	CpsDrawSpritesInReverse = 1;
+	CpsLayer1XOffs = -0x10;
+	CpsLayer2XOffs = 0xffc0;
+	CpsLayer3XOffs = -0x10;
 	
-	return Sf2ceuablInit();
+	INT32 nRet = Sf2ceInit();
+	
+	SekOpen(0);
+	SekMapHandler(1, 0xe00000, 0xe0ffff, MAP_READ | MAP_WRITE);
+	SekSetReadWordHandler(1, Sf2ceuab8ReadWord);
+	SekSetWriteWordHandler(1, Sf2ceuab8WriteWord);
+	SekMapMemory(CpsRamFF, 0xef0000, 0xefffff, MAP_RAM);	
+	SekMapMemory(CpsRamFF, 0xfe0000, 0xfeffff, MAP_RAM);	
+	SekClose();
+	
+	return nRet;
 }
 
 static void Sf2ceucblCallback()
@@ -19173,7 +19204,7 @@ struct BurnDriverD BurnDrvCpsSf2ceuab8 = {
 	"Street Fighter II' - Champion Edition (920313 USA bootleg set 8)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2ceuab8RomInfo, Sf2ceuab8RomName, NULL, NULL, Sf2ceuablInputInfo, Sf2DIPInfo,
+	NULL, Sf2ceuab8RomInfo, Sf2ceuab8RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
 	Sf2ceuab8Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

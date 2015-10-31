@@ -1546,7 +1546,7 @@ INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite)
 	INT32 nFileVersion = 0;
 	UINT32 i;
 
-	nAnalogSpeed = 0x0100;
+	//nAnalogSpeed = 0x0100; /* this clobbers the setting read at the beginning of the file. */
 	
 	FILE* h = _tfopen(lpszFile, _T("rt"));
 	if (h == NULL) {

@@ -182,6 +182,7 @@ extern CpsMemScanCallback CpsMemScanCallbackFunction;
 // cps_run.cpp
 extern UINT8 CpsReset;
 extern UINT8 Cpi01A, Cpi01C, Cpi01E;
+extern UINT8 fFakeDip;
 extern INT32 nIrqLine50, nIrqLine52;								// The scanlines at which the interrupts are triggered
 extern INT32 nCpsNumScanlines;
 extern INT32 Cps1VBlankIRQLine;

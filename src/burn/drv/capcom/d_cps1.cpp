@@ -349,6 +349,7 @@ static struct BurnInputInfo ForgottnInputList[] =
 	{"Dip A"            , BIT_DIPSWITCH,  &Cpi01A    , "dip"      },
 	{"Dip B"            , BIT_DIPSWITCH,  &Cpi01C    , "dip"      },
 	{"Dip C"            , BIT_DIPSWITCH,  &Cpi01E    , "dip"      },
+	{"Dip D"            , BIT_DIPSWITCH,  &fFakeDip  , "dip"      },
 };
 
 #undef A
@@ -2033,6 +2034,7 @@ static struct BurnDIPInfo ForgottnDIPList[]=
 	{0x12, 0xff, 0xff, 0x00, NULL                     },
 	{0x13, 0xff, 0xff, 0x03, NULL                     },
 	{0x14, 0xff, 0xff, 0x00, NULL                     },
+	{0x15, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip A
 	CPS1_COINAGE_1(0x12)
@@ -2055,6 +2057,11 @@ static struct BurnDIPInfo ForgottnDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
 	{0x13, 0x01, 0x80, 0x00, "Off"                    },
 	{0x13, 0x01, 0x80, 0x80, "On"                     },
+
+	// Fake dip for "turn"-input inversion
+	{0   , 0xfe, 0   , 2   , "Invert \"Turn\" inputs" },
+	{0x15, 0x01, 0x80, 0x00, "Off"                    },
+	{0x15, 0x01, 0x80, 0x80, "On"                     },
 };
 
 STDDIPINFO(Forgottn)

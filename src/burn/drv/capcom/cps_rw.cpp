@@ -21,6 +21,7 @@ INT32 CpsPaddle2Value = 0;
 INT32 CpsPaddle1 = 0;
 INT32 CpsPaddle2 = 0;
 static INT32 nDial055, nDial05d;
+UINT8 fFakeDip = 0;
 
 INT32 PangEEP = 0;
 INT32 Forgottn = 0;
@@ -529,8 +530,13 @@ INT32 CpsRwGetInp()
 
 	if (Forgottn) {
 		// Handle analog controls
-		nDial055 += (INT32)((INT16)CpsInp055);
-		nDial05d += (INT32)((INT16)CpsInp05d);
+		if (fFakeDip & 0x80) {
+			nDial055 -= (INT32)((INT16)CpsInp055);
+			nDial05d -= (INT32)((INT16)CpsInp05d);
+		} else {
+			nDial055 += (INT32)((INT16)CpsInp055);
+			nDial05d += (INT32)((INT16)CpsInp05d);
+		}
 	}
 	
 	if (Pzloop2) {

@@ -1989,6 +1989,31 @@ static struct BurnRomInfo GardiabRomDesc[] = {
 STD_ROM_PICK(Gardiab)
 STD_ROM_FN(Gardiab)
 
+static struct BurnRomInfo GardiajRomDesc[] = {
+	{ "epr-10250.ic90",     0x8000, 0xc97943a7, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "epr-10251.ic91",     0x8000, 0xb2ed05dc, BRF_ESS | BRF_PRG }, //  1
+	{ "epr-10252.ic92",     0x8000, 0x0a490588, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr-10243.ic126",    0x4000, 0x87220660, BRF_ESS | BRF_PRG }, //  Z80 #2 Program Code
+
+	{ "epr-10240.ic4",      0x8000, 0x998ce090, BRF_GRA }, //  4 Tiles
+	{ "epr-10241.ic5",      0x8000, 0x81ab0b07, BRF_GRA }, //  5
+	{ "epr-10242.ic6",      0x8000, 0x2dc4c4c7, BRF_GRA }, //  6
+
+	{ "epr-10234.ic87",     0x8000, 0x8a6aed33, BRF_GRA }, //  7 Sprites
+	{ "epr-10233.ic86",     0x8000, 0xc52784d3, BRF_GRA }, //  8
+	{ "epr-10236.ic89",     0x8000, 0xb35ab227, BRF_GRA }, //  9
+	{ "epr-10235.ic88",     0x8000, 0x006a3151, BRF_GRA }, // 10
+
+	{ "pr-7345.ic20",       0x0100, 0x8eee0f72, BRF_GRA }, // 11 Palette
+	{ "pr-7344.ic14",       0x0100, 0x3e7babd7, BRF_GRA }, // 12
+	{ "pr-7343.ic8",        0x0100, 0x371c44a6, BRF_GRA }, // 13
+	{ "pr5317.ic28",        0x0100, 0x648350b8, BRF_OPT }, // 14 Timing proms
+};
+
+STD_ROM_PICK(Gardiaj)
+STD_ROM_FN(Gardiaj)
+
 static struct BurnRomInfo HvymetalRomDesc[] = {
 	{ "epra6790.1",        0x008000, 0x59195bb9, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "epra6789.2",        0x008000, 0x83e1d18a, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
@@ -4789,16 +4814,15 @@ static void CalcPenUsage()
 	}
 }
 
-static INT32 TilePlaneOffsets[3]  = { 0, 0x20000, 0x40000 };
-static INT32 NoboranbTilePlaneOffsets[3]  = { 0, 0x40000, 0x80000 };
 static INT32 TileXOffsets[8]      = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 TileYOffsets[8]      = { 0, 8, 16, 24, 32, 40, 48, 56 };
 
 static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
 {
+	INT32 TilePlaneOffsets[3]  = { RGN_FRAC((nTileRomSize * nTileRomNum), 0, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 1, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 2, 3) };
 	INT32 nRet = 0, nLen, i, RomOffset;
 	
-	System1NumTiles = (nTileRomNum * nTileRomSize) / 24;
+	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
 	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
 	
 	// Allocate and Blank all required memory
@@ -4841,11 +4865,9 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 		nRet = BurnLoadRom(System1TempRom + (i * nTileRomSize), i + RomOffset, 1);
 	}
 	if (TileDecodeFunction) TileDecodeFunction();
-	if (System1NumTiles > 0x800) {
-		GfxDecode(System1NumTiles, 3, 8, 8, NoboranbTilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
-	} else {
-		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
-	}
+
+	GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
+
 	CalcPenUsage();
 	BurnFree(System1TempRom);
 	
@@ -4949,6 +4971,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 
 static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Num, INT32 nZ80Rom2Size, INT32 nTileRomNum, INT32 nTileRomSize, INT32 nSpriteRomNum, INT32 nSpriteRomSize, bool bReset)
 {
+	INT32 TilePlaneOffsets[3]  = { RGN_FRAC((nTileRomSize * nTileRomNum), 0, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 1, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 2, 3) };
 	INT32 nRet = 0, nLen, i, RomOffset;
 	
 	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
@@ -5008,11 +5031,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 
 	if (TileDecodeFunction) TileDecodeFunction();
 
-	if (System1NumTiles > 0x800) {
-		GfxDecode(System1NumTiles, 3, 8, 8, NoboranbTilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
-	} else {
-		GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
-	}
+	GfxDecode(System1NumTiles, 3, 8, 8, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x40, System1TempRom, System1Tiles);
 
 	CalcPenUsage();
 	BurnFree(System1TempRom);
@@ -5249,6 +5268,26 @@ static INT32 GardiabInit()
 	DecodeFunction = gardiab_decode;
 	
 	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x4000, 4, 0x8000, 0);
+	
+	ZetOpen(0);
+	ZetSetOutHandler(BrainZ801PortWrite);
+	ZetClose();
+		
+	System1DoReset();
+	
+	return nRet;
+}
+
+static INT32 GardiajInit()
+{
+	INT32 nRet;
+	
+	System1ColourProms = 1;
+	System1BankedRom = 1;
+	
+	DecodeFunction = gardia_decode;
+	
+	nRet = System1Init(3, 0x8000, 1, 0x4000, 3, 0x8000, 4, 0x8000, 0);
 	
 	ZetOpen(0);
 	ZetSetOutHandler(BrainZ801PortWrite);
@@ -5783,11 +5822,11 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 	
 	System1BgScrollX = ((System1ScrollX[0] >> 1) + ((System1ScrollX[1] & 1) << 7) + 14) & 0xff;
 	System1BgScrollY = (-System1ScrollY & 0xff);
-	
+
 	if (PriorityDraw == -1) {
 		for (Offs = 0; Offs < 0x800; Offs += 2) {
 			INT32 Code, Colour;
-		
+
 			Code = (System1BgRam[Offs + 1] << 8) | System1BgRam[Offs + 0];
 			Code = ((Code >> 4) & 0x800) | (Code & 0x7ff);
 			Colour = ((Code >> 5) & 0x3f);
@@ -6298,6 +6337,16 @@ struct BurnDriverD BurnDrvGardiab = {
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
 	NULL, GardiabRomInfo, GardiabRomName, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
 	GardiabInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x800, 224, 256, 3, 4
+};
+
+struct BurnDriverD BurnDrvGardiaj = {
+	"gardiaj", "gardia", NULL, NULL, "1986",
+	"Gardia (Japan, 317-0006)\0", NULL, "Sega / Coreland", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM1, GBF_VERSHOOT, 0,
+	NULL, GardiajRomInfo, GardiajRomName, NULL, NULL, MyheroInputInfo, GardiaDIPInfo,
+	GardiajInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x800, 224, 256, 3, 4
 };
 

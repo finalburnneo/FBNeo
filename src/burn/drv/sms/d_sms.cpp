@@ -27505,7 +27505,7 @@ struct BurnDriver BurnDrvgg_wildsnake = {
 	"gg_wildsnake", NULL, NULL, NULL, "1994",
 	"WildSnake (Prototype / Unreleased)\0", NULL, "Spectrum HoloByte", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_wildsnakeRomInfo, gg_wildsnakeRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -27524,7 +27524,7 @@ struct BurnDriver BurnDrvsms_hongkildong = {
 	"sms_hongkildong", NULL, NULL, NULL, "1991",
 	"Hong Kil Dong (Kor)\0", NULL, "Clover", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_hongkildongRomInfo, sms_hongkildongRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -27543,7 +27543,7 @@ struct BurnDriver BurnDrvsms_darc = {
 	"sms_darc10", NULL, NULL, NULL, "2015",
 	"DARC (Version 1.0)\0", "Turn ON 'FM Emulation' in Dips for music/sfx!", "Zipper", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_darcRomInfo, sms_darcRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -27562,7 +27562,7 @@ struct BurnDriver BurnDrvsms_lostraider101 = {
 	"sms_lostraider101", NULL, NULL, NULL, "2015",
 	"Lost Raider (Version 1.01)\0", NULL, "Vingazole & Ichigobankai", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_lostraider101RomInfo, sms_lostraider101RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -27581,8 +27581,27 @@ struct BurnDriver BurnDrvsms_moggym100 = {
 	"sms_moggym100", NULL, NULL, NULL, "2015",
 	"Moggy Master (Version 1.00)\0", NULL, "Mojon Twins", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_moggym100RomInfo, sms_moggym100RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+// Geki Oko PunPun Maru (Version 20151031b)
+
+static struct BurnRomInfo sms_punpunRomDesc[] = {
+	{ "punpun_20151031b.sms",	0x40000, 0xb35ebcdf, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_punpun)
+STD_ROM_FN(sms_punpun)
+
+struct BurnDriver BurnDrvsms_punpun = {
+	"sms_punpun", NULL, NULL, NULL, "2013",
+	"Geki Oko PunPun Maru (Version 20151031b?)\0", NULL, "Future Driver", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_JAPANESE, GBF_MISC, 0,
+	SMSGetZipName, sms_punpunRomInfo, sms_punpunRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
@@ -27600,7 +27619,7 @@ struct BurnDriver BurnDrvsms_brucelee = {
 	"sms_brucelee10", NULL, NULL, NULL, "2015",
 	"Bruce Lee (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
 	SMSGetZipName, sms_bruceleeRomInfo, sms_bruceleeRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -27619,7 +27638,7 @@ struct BurnDriver BurnDrvsms_lambo = {
 	"sms_lambo", NULL, NULL, NULL, "2015",
 	"Lambo (Demo)\0", NULL, "Genesis Project", "Sega Master System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_lamboRomInfo, sms_lamboRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3

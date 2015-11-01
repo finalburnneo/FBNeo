@@ -44,24 +44,24 @@ static UINT8 *System1Fetch1          = NULL;
 static UINT8 *System1MC8123Key       = NULL;
 static UINT32 *System1TilesPenUsage  = NULL;
 // for vbt's choplifter driver
-static UINT8 choplifter_scroll_x_on  = 0;
-static INT32  System1BankSwitch;
-static UINT8  System1BgBankLatch;
-static UINT8  System1BgBank = 0;
+static UINT8 System1RowScroll = 0;
+static INT32 System1BankSwitch;
+static UINT8 System1BgBankLatch;
+static UINT8 System1BgBank = 0;
 // end choplifter
-static UINT8  System1ScrollX[2];
-static UINT8  System1ScrollY;
-static INT32  System1BgScrollX;
-static INT32  System1BgScrollY;
-static INT32  System1VideoMode;
-static INT32  System1FlipScreen;
-static INT32  System1SoundLatch;
-static INT32  System1RomBank;
-static INT32  NoboranbInp16Step;
-static INT32  NoboranbInp17Step;
-static INT32  NoboranbInp23Step;
-static UINT8  BlockgalDial1;
-static UINT8  BlockgalDial2;
+static UINT8 System1ScrollX[2];
+static UINT8 System1ScrollY;
+static INT32 System1BgScrollX;
+static INT32 System1BgScrollY;
+static INT32 System1VideoMode;
+static INT32 System1FlipScreen;
+static INT32 System1SoundLatch;
+static INT32 System1RomBank;
+static INT32 NoboranbInp16Step;
+static INT32 NoboranbInp17Step;
+static INT32 NoboranbInp23Step;
+static UINT8 BlockgalDial1;
+static UINT8 BlockgalDial2;
 
 static INT32 System1SpriteRomSize;
 static INT32 System1NumTiles;
@@ -84,8 +84,6 @@ static MakeInputs MakeInputsFunction;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
-static void System1BankRom();
-static void System2BankRom();
 /*==============================================================================================
 Input Definitions
 ===============================================================================================*/
@@ -360,7 +358,7 @@ static inline void System1MakeInputs()
 	System1Input[0] = System1Input[1] = System1Input[2] = 0x00;
 
 	// Compile Digital Inputs
-	for (int i = 0; i < 8; i++) {
+	for (INT32 i = 0; i < 8; i++) {
 		System1Input[0] |= (System1InputPort0[i] & 1) << i;
 		System1Input[1] |= (System1InputPort1[i] & 1) << i;
 		System1Input[2] |= (System1InputPort2[i] & 1) << i;
@@ -375,7 +373,7 @@ static inline void BlockgalMakeInputs()
 {
 	System1Input[2] = 0x00;
 	
-	for (int i = 0; i < 8; i++) {
+	for (INT32 i = 0; i < 8; i++) {
 		System1Input[2] |= (System1InputPort2[i] & 1) << i;
 	}
 	
@@ -4253,20 +4251,14 @@ static INT32 System1DoReset()
 /*==============================================================================================
 Memory Handlers
 ===============================================================================================*/
+
 static void System1BankRom()
 {
 	INT32 BankAddress = (System1RomBank * 0x4000) + 0x10000;
-	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
-	ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
-}
-
-static void System2BankRom()
-{
-	INT32 BankAddress = (System1RomBank * 0x4000) + 0x10000;
 
 	ZetMapArea(0x8000, 0xbfff, 0, System1Rom1 + BankAddress);
 
-	if (DecodeFunction)
+	if (DecodeFunction && IsSystem2)
 	{
 		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress + 0x20000, System1Rom1 + BankAddress);
 	}
@@ -4274,6 +4266,34 @@ static void System2BankRom()
 	{
 		ZetMapArea(0x8000, 0xbfff, 2, System1Rom1 + BankAddress);
 	}
+}
+
+static inline void System2_bankswitch_w(UINT8 d)
+{
+	System1RomBank = (d & 0x0c) >> 2;
+	System1BankRom();
+	System1BankSwitch = d;
+}
+
+static inline void System2_videoram_bank_latch_w(UINT8 d)
+{
+	System1BgBankLatch = d;
+	System1BgBank = (d >> 1) & 0x03;	/* Select 4 banks of 4k, bit 2,1 */
+
+	// iq_132
+	ZetMapMemory(System1VideoRam + System1BgBank * 0x1000, 0xe000, 0xefff, MAP_RAM);
+}
+
+static inline void __fastcall System1SoundLatchWrite(UINT8 d)
+{
+	System1SoundLatch = d;
+
+	ZetClose();
+	ZetOpen(1);
+	ZetNmi();
+	ZetClose();
+	ZetOpen(0);
+	return;
 }
 
 static UINT8 __fastcall System1Z801PortRead(UINT16 a)
@@ -4438,18 +4458,11 @@ static void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x14:
-		case 0x18: {
-			System1SoundLatch = d;
-			
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+		case 0x18:
+			System1SoundLatchWrite(d);
 			return;
-		}
-		
-		case 0x15:		
+
+		case 0x15:
 		case 0x19: {
 			System1VideoMode = d;
 			System1FlipScreen = d & 0x80;
@@ -4461,31 +4474,12 @@ static void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 	//bprintf(PRINT_NORMAL, _T("IO Write %x, %x\n"), a, d);
 }
 
-static inline void __fastcall System1_soundport_w(UINT8 d)
-{
-	System1SoundLatch = d;
-
-	ZetClose();
-	ZetOpen(1);
-	ZetNmi();
-	ZetClose();
-	ZetOpen(0);
-	return;
-}
-
-static inline void System2_bankswitch_w(UINT8 d)
-{
-	System1RomBank = (((d & 0x0c)>>2) );
-	System2BankRom();
-	System1BankSwitch = d;
-}
-
 static void __fastcall ChplftZ801PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	switch (a)
 	{
-		case 0x14: { System1_soundport_w(d);    return; }
+		case 0x14: { System1SoundLatchWrite(d);    return; }
 		case 0x15: { System2_bankswitch_w(d);   return; }
 	}
 }
@@ -4514,16 +4508,9 @@ static void __fastcall BrainZ801PortWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x14:
-		case 0x18: {
-			System1SoundLatch = d;
-
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+		case 0x18:
+			System1SoundLatchWrite(d);
 			return;
-		}
 
 		case 0x15:
 		case 0x19: {
@@ -4545,17 +4532,10 @@ static void __fastcall NoboranbZ801PortWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x14:
-		case 0x18: {
-			System1SoundLatch = d;
-			
-			ZetClose();
-			ZetOpen(1);
-			ZetNmi();
-			ZetClose();
-			ZetOpen(0);
+		case 0x18:
+			System1SoundLatchWrite(d);
 			return;
-		}
-		
+
 		case 0x15: {
 			System1VideoMode = d;
 			System1FlipScreen = d & 0x80;
@@ -4684,18 +4664,26 @@ static void __fastcall System1Z802ProgWrite(UINT16 a, UINT8 d)
 	bprintf(PRINT_NORMAL, _T("Z80 2 Prog Write %x, %x\n"), a, d);
 }
 
-static void PPI0WriteA(UINT8 data)
+static void System2PPI0WriteA(UINT8 data)
 {
-	System1_soundport_w(data);
+	System1SoundLatchWrite(data);
 }
 
-static void PPI0WriteC(UINT8 data)
+static void System2PPI0WriteB(UINT8 data)
+{
+	System2_bankswitch_w(data);
+}
+
+static void System2PPI0WriteC(UINT8 data)
 {
 	ZetClose();
 	ZetOpen(1);
 	ZetSetIRQLine(0x20, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 	ZetClose();
 	ZetOpen(0);
+
+	if (DecodeFunction != regulus_decode)
+		System2_videoram_bank_latch_w(data);
 }
 
 static UINT8 __fastcall System2Z801PortRead(UINT16 a)
@@ -4720,15 +4708,6 @@ static UINT8 __fastcall System2Z801PortRead(UINT16 a)
 	return 0;
 }
 
-static inline void System2_videoram_bank_latch_w(UINT8 d)
-{
-	System1BgBankLatch = d;
-	System1BgBank = (d >> 1) & 0x03;	/* Select 4 banks of 4k, bit 2,1 */
-
-	// iq_132
-	ZetMapMemory(System1VideoRam + System1BgBank * 0x1000, 0xe000, 0xefff, MAP_RAM);
-}
-
 static void __fastcall System2Z801PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0x1f;
@@ -4741,7 +4720,7 @@ static void __fastcall System2Z801PortWrite(UINT16 a, UINT8 d)
 			ppi8255_w(0, a & 3, d);
 		return;
 
-		//case 0x14: {System1_soundport_w(d);		return;}
+		//case 0x14: {System1SoundLatchWrite(d);		return;}
 		//case 0x15: {System2_bankswitch_w(d);		return;}
 		//case 0x16: {System2_videoram_bank_latch_w(d);	return;}
 	}
@@ -4765,28 +4744,6 @@ static UINT8 __fastcall System2Z801ProgRead(UINT16 a)
 		return System1VideoRam[(0x1000*System1BgBank) + (a & 0xfff)];
 	}
 	return 0;
-}
-
-static void System2PPI0WriteA(UINT8 data)
-{
-	System1_soundport_w(data);
-}
-
-static void System2PPI0WriteB(UINT8 data)
-{
-	System2_bankswitch_w(data);
-}
-
-static void System2PPI0WriteC(UINT8 data)
-{
-	ZetClose();
-	ZetOpen(1);
-	ZetSetIRQLine(0x20, (data & 0x80) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
-	ZetClose();
-	ZetOpen(0);
-
-	if (DecodeFunction != regulus_decode)
-		System2_videoram_bank_latch_w(data);
 }
 
 /*==============================================================================================
@@ -4945,6 +4902,12 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0x8000, 0x87ff, 1, System1Ram2);
 	ZetMapArea(0x8000, 0x87ff, 2, System1Ram2);
 	ZetClose();
+
+	if (DecodeFunction == regulus_decode) { // Regulus uses the PPI for sound
+		ppi8255_init(1);
+		PPI0PortWriteA = System2PPI0WriteA;
+		PPI0PortWriteC = System2PPI0WriteC;
+	}
 	
 	memset(SpriteOnScreenMap, 255, 256 * 256);
 	
@@ -5114,12 +5077,6 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
-	if (DecodeFunction == regulus_decode) {
-		ppi8255_init(1);
-		PPI0PortWriteA = PPI0WriteA;
-		PPI0PortWriteC = PPI0WriteC;
-	}
-	
 	GenericTilesInit();
 	
 	MakeInputsFunction = System1MakeInputs;
@@ -5581,11 +5538,11 @@ static INT32 WmatchInit()
 
 static INT32 ChplftbInit()
 {
-	int nRet;
+	INT32 nRet;
 	System1ColourProms = 1;
 	System1BankedRom = 1;
 	nRet = System1Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
-	choplifter_scroll_x_on = 1;
+	System1RowScroll = 1;
 	ZetOpen(0);
 
 	ZetMapArea(0xe7c0, 0xe7ff, 0, System1ScrollXRam);
@@ -5610,7 +5567,7 @@ static INT32 ChplftbInit()
 
 static INT32 WbmlInit()
 {
-	int nRet;
+	INT32 nRet;
 	System1ColourProms = 1;
 	System1BankedRom = 1;
 
@@ -5644,7 +5601,7 @@ static INT32 WbmljbInit()
 
 static INT32 TokisensInit()
 {
-	int nRet;
+	INT32 nRet;
 
 	System1ColourProms = 1;
 	System1BankedRom = 1;
@@ -5660,7 +5617,7 @@ static INT32 TokisensInit()
 
 static INT32 UfosensiInit()
 {
-	choplifter_scroll_x_on = 1;
+	System1RowScroll = 1;
 
 	return WbmlInit();
 }
@@ -5704,7 +5661,7 @@ static INT32 System1Exit()
 	TileDecodeFunction = NULL;
 	MakeInputsFunction = NULL;
 	System1Draw = NULL;
-	choplifter_scroll_x_on = 0;
+	System1RowScroll = 0;
 	IsSystem2 = 0;
 	
 	return 0;
@@ -5834,7 +5791,7 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 			sx = (Offs >> 1) % 32;
 			sy = (Offs >> 1) / 32;
 			
-			if (choplifter_scroll_x_on)
+			if (System1RowScroll)
 				System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
 			sx = 8 * sx + System1BgScrollX;
 			sy = 8 * sy + System1BgScrollY;
@@ -5867,7 +5824,7 @@ static void System1DrawBgLayer(INT32 PriorityDraw)
 				sx = (Offs >> 1) % 32;
 				sy = (Offs >> 1) / 32;
 
-				if(choplifter_scroll_x_on)
+				if(System1RowScroll)
 					System1BgScrollX = (System1ScrollXRam[(Offs/32) & ~1] >> 1) + ((System1ScrollXRam[(Offs/32) | 1] & 1) << 7) ;
 
 				sx = 8 * sx + System1BgScrollX;
@@ -5997,18 +5954,16 @@ static void System1Render()
 
 static void System2DrawFgLayer()
 {
-	int offs;
-
-	for (offs = 0;offs < 0x700;offs += 2)
+	for (INT32 offs = 0; offs < 0x700; offs += 2)
 	{
-		int sx,sy,code;
+		INT32 sx, sy, code;
 
-		sx = (offs/2) % 32;
-		sy = (offs/2) / 32;
-		code = System1VideoRam[offs] | (System1VideoRam[offs+1] << 8);
+		sx = (offs / 2) % 32;
+		sy = (offs / 2) / 32;
+		code = System1VideoRam[offs] | (System1VideoRam[offs + 1] << 8);
 		code = ((code >> 4) & 0x800) | (code & 0x7ff);
-		sx*=8;
-		sy*=8;
+		sx *= 8;
+		sy *= 8;
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx      , sy      , ((code >> 5) & 0x3f), 3, 0, 512, System1Tiles);
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx - 256, sy      , ((code >> 5) & 0x3f), 3, 0, 512, System1Tiles);
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx      , sy - 256, ((code >> 5) & 0x3f), 3, 0, 512, System1Tiles);
@@ -6018,28 +5973,26 @@ static void System2DrawFgLayer()
 
 static void System2DrawBgLayer(INT32 trasp)
 {
-	INT32 page;
-
 	INT32 xscroll = (System1VideoRam[0x7c0] >> 1) + ((System1VideoRam[0x7c1] & 1) << 7) - 256 + 5;
 	INT32 yscroll = -System1VideoRam[0x7ba];
 
-	for (page = 0; page < 4; page++)
+	for (INT32 page = 0; page < 4; page++)
 	{
 		if ((nSpriteEnable & (1 << page)) == 0) continue;
 
-		UINT8 *source = System1VideoRam + (System1VideoRam[0x0740 + page*2] & 0x07)*0x800;
+		UINT8 *source = System1VideoRam + (System1VideoRam[0x0740 + page * 2] & 0x07) * 0x800;
 
-		INT32 startx = (page&1)*256+xscroll;
-		INT32 starty = (page>>1)*256+yscroll;
-		INT32 row,col;
+		INT32 startx = (page & 1) * 256 + xscroll;
+		INT32 starty = (page >> 1) * 256 + yscroll;
+		INT32 row, col;
 
 		INT32 offs = 0;
-		for(row=0; row<32*8; row+=8)
+		for(row = 0; row < 32 * 8; row += 8)
 		{
-			for(col=0; col<32*8; col+=8)
+			for(col = 0; col < 32 * 8; col += 8)
 			{
-				INT32 x = (startx+col) & 0x1ff;
-				INT32 y = (starty+row) & 0x1ff;
+				INT32 x = (startx + col) & 0x1ff;
+				INT32 y = (starty + row) & 0x1ff;
 
 				if (x > 256) x -= 512;
 				if (y > 224) y -= 512;
@@ -6152,7 +6105,7 @@ INT32 System1Frame()
 Scan Driver
 ===============================================================================================*/
 
-static INT32 System1Scan(INT32 nAction,INT32 *pnMin)
+static INT32 System1Scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -6193,11 +6146,7 @@ static INT32 System1Scan(INT32 nAction,INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			if (System1BankedRom) {
 				ZetOpen(0);
-				if (IsSystem2) {
-					System2BankRom();
-				} else {
-					System1BankRom();
-				}
+				System1BankRom();
 				ZetClose();
 			}
 		}

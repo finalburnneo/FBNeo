@@ -2933,7 +2933,7 @@ struct BurnDriver BurnDrvSonicwi = {
 };
 
 
-// Karate Blazers (World?)
+// Karate Blazers (World, set 1)
 
 static struct BurnRomInfo karatblzRomDesc[] = {
 	{ "rom2v3",    	  0x040000, 0x01f772e1, BRF_ESS | BRF_PRG }, // 68000 code swapped
@@ -2961,7 +2961,7 @@ STD_ROM_FN(karatblz)
 
 struct BurnDriver BurnDrvKaratblz = {
 	"karatblz", NULL, NULL, NULL, "1991",
-	"Karate Blazers (World?)\0", NULL, "Video System Co.", "Video System",
+	"Karate Blazers (World, set 1)\0", NULL, "Video System Co.", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatblzRomInfo, karatblzRomName, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
@@ -2970,7 +2970,42 @@ struct BurnDriver BurnDrvKaratblz = {
 };
 
 
-// Karate Blazers (US)
+// Karate Blazers (World, set 2)
+
+static struct BurnRomInfo karatblaRomDesc[] = {
+	{ "v2.u14",    	  0x040000, 0x7a78976e, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "v1.u15",    	  0x040000, 0x47e410fe, BRF_ESS | BRF_PRG },
+
+	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
+	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
+	
+	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
+	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
+	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	
+	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
+	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
+
+	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	
+	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
+	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
+};
+
+STD_ROM_PICK(karatbla)
+STD_ROM_FN(karatbla)
+
+struct BurnDriver BurnDrvKaratbla = {
+	"karatblza", "karatblz", NULL, NULL, "1991",
+	"Karate Blazers (World, set 2)\0", NULL, "Video System Co.", "Video System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, karatblaRomInfo, karatblaRomName, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
+	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
+	352,240,4,3
+};
+
 
 static struct BurnRomInfo karatbluRomDesc[] = {
 	{ "2.u14",    	  0x040000, 0x202e6220, BRF_ESS | BRF_PRG }, // 68000 code swapped

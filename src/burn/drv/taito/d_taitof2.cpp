@@ -10530,7 +10530,7 @@ static void YuyugogoDraw()
 
 static INT32 TaitoF2Frame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 40;
 
 	if (TaitoReset) TaitoF2DoReset();
 
@@ -10557,9 +10557,9 @@ static INT32 TaitoF2Frame()
 		SekOpen(0);
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-		if (i == 9) nTaitoCyclesSegment -= 500;
+		if (i == (nInterleave - 1)) nTaitoCyclesSegment -= 500;
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 9) {
+		if (i == (nInterleave - 1)) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(500);
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
@@ -10568,7 +10568,7 @@ static INT32 TaitoF2Frame()
 		
 		nCurrentCPU = 1;
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	

@@ -3395,6 +3395,33 @@ static struct BurnRomInfo wbmlbRomDesc[] = {
 STD_ROM_PICK(wbmlb)
 STD_ROM_FN(wbmlb)
 
+// Wonder Boy in Monster Land (English, Virtual Console)
+
+static struct BurnRomInfo wbmlvcRomDesc[] = {
+	{ "vc.ic90",		0x10000, 0x093c4852, BRF_ESS | BRF_PRG }, //  0 Z80 #1 Program Code
+	{ "vc.ic91",		0x10000, 0x7e973ece, BRF_ESS | BRF_PRG }, //  1
+	{ "vc.ic92",		0x08000, 0x32661e7e, BRF_ESS | BRF_PRG }, //  2
+
+	{ "epr11037.126",	0x08000, 0x7a4ee585, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
+
+	{ "vc.ic4",		    0x08000, 0x820bee59, BRF_GRA }, //  4 Tiles
+	{ "vc.ic6",		    0x08000, 0xa9a1447e, BRF_GRA }, //  5
+	{ "vc.ic5",		    0x08000, 0x359026a0, BRF_GRA }, //  6
+
+	{ "epr11028.87",	0x08000, 0xaf0b3972, BRF_GRA }, //  7 Sprites
+	{ "epr11027.86",	0x08000, 0x277d8f1d, BRF_GRA }, //  8
+	{ "epr11030.89",	0x08000, 0xf05ffc76, BRF_GRA }, //  9
+	{ "epr11029.88",	0x08000, 0xcedc9c61, BRF_GRA }, // 10
+
+	{ "pr11026.20",		0x00100, 0x27057298, BRF_GRA }, // 11 Red PROM
+	{ "pr11025.14",		0x00100, 0x41e4d86b, BRF_GRA }, // 12 Blue
+	{ "pr11024.8",		0x00100, 0x08d71954, BRF_GRA }, // 13 Green
+	{ "pr5317.37",		0x00100, 0x648350b8, BRF_GRA }, // 14 Timing PROM
+};
+
+STD_ROM_PICK(wbmlvc)
+STD_ROM_FN(wbmlvc)
+
 /*==============================================================================================
 Decode Functions
 ===============================================================================================*/
@@ -4936,7 +4963,8 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 {
 	INT32 TilePlaneOffsets[3]  = { RGN_FRAC((nTileRomSize * nTileRomNum), 0, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 1, 3), RGN_FRAC((nTileRomSize * nTileRomNum), 2, 3) };
 	INT32 nRet = 0, nLen, i, RomOffset;
-	
+	struct BurnRomInfo ri;
+
 	System1NumTiles = (((nTileRomNum * nTileRomSize) / 3) * 8) / (8 * 8);
 	System1SpriteRomSize = nSpriteRomNum * nSpriteRomSize;
 	
@@ -4954,24 +4982,34 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	RomOffset = 0;
 	for (i = 0; i < nZ80Rom1Num; i++) {
 		nRet = BurnLoadRom(System1Rom1 + (i * nZ80Rom1Size), i + RomOffset, 1); if (nRet != 0) return 1;
+		BurnDrvGetRomInfo(&ri, i);
 	}
 
-	if (System1BankedRom) 
+	if (System1BankedRom)
 	{
 		memcpy(System1TempRom, System1Rom1, 0x40000);
 		memset(System1Rom1, 0, 0x40000);
-		memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
-		memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
-		memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
+
+		if (System1BankedRom == 1)
+		{ // Encrypted, banked
+			memcpy(System1Rom1 + 0x00000, System1TempRom + 0x00000, 0x8000);
+			memcpy(System1Rom1 + 0x10000, System1TempRom + 0x08000, 0x8000);
+			memcpy(System1Rom1 + 0x18000, System1TempRom + 0x10000, 0x8000);
+		}
 
 		if (System1BankedRom == 2)
-		{ // here!
-			memcpy (System1Rom1 + 0x20000, System1TempRom + 0x00000, 0x8000);
-			memcpy (System1Rom1 + 0x00000, System1TempRom + 0x08000, 0x8000);
-			memcpy (System1Rom1 + 0x30000, System1TempRom + 0x10000, 0x8000);//fetch
-			memcpy (System1Rom1 + 0x10000, System1TempRom + 0x18000, 0x8000);
-			memcpy (System1Rom1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
-			memcpy (System1Rom1 + 0x18000, System1TempRom + 0x28000, 0x8000);
+		{ // Unencrypted, banked
+			memcpy(System1Rom1 + 0x20000, System1TempRom + 0x00000, 0x8000);
+			memcpy(System1Rom1 + 0x00000, System1TempRom + 0x08000, 0x8000);
+			memcpy(System1Rom1 + 0x30000, System1TempRom + 0x10000, 0x8000);//fetch
+			memcpy(System1Rom1 + 0x10000, System1TempRom + 0x18000, 0x8000);
+			memcpy(System1Rom1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
+			memcpy(System1Rom1 + 0x18000, System1TempRom + 0x28000, 0x8000);
+
+			if (nZ80Rom1Size == (ri.nLen * 2))
+			{ // last rom half the size, reload it into the last slot
+				memcpy (System1Rom1 + 0x18000, System1TempRom + 0x20000, 0x8000);
+			}
 		}
 	}
 
@@ -6827,6 +6865,16 @@ struct BurnDriver BurnDrvWbmlb = {
 	NULL, wbmlbRomInfo, wbmlbRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
 	WbmljbInit, System1Exit, System1Frame, NULL, System1Scan, 
 	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvWbmlvc = {
+	"wbmlvc", "wbml", NULL, NULL, "2009",
+	"Wonder Boy in Monster Land (English, Virtual Console)\0", NULL, "Sega", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, wbmlvcRomInfo, wbmlvcRomName, NULL, NULL, MyheroInputInfo, WbmlDIPInfo,
+	WbmljbInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x600, 256, 224, 4, 3
 };
 
 // shtngmst and clones

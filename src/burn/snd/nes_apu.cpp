@@ -660,42 +660,54 @@ static inline void apu_update(struct nesapu_info *info)
 }
 
 /* READ VALUES FROM REGISTERS */
-UINT8 nesapuRead(INT32 chip,INT32 address)
+UINT8 nesapuRead(INT32 chip, INT32 address)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuRead called without init\n"));
 #endif
 
-  struct nesapu_info *info = &nesapu_chips[chip];
-  if (address == 0x0f) /*FIXED* Address $4015 has different behaviour*/
-  	{
-  	INT32 readval = 0;
-  		if ( info->APU.dpcm.enabled == TRUE )
-  			{
-  				readval |= 0x10;
-  			}
+	struct nesapu_info *info = &nesapu_chips[chip];
+	if (address == 0x0f) /*FIXED* Address $4015 has different behaviour*/
+	{
+		INT32 readval = 0;
+		if (info->APU.squ[0].vbl_length > 0)
+			readval |= 0x01;
 
-  		if ( info->APU.dpcm.irq_occurred == TRUE )
-  			{
-  				readval |= 0x80;
-  			}
-  		return readval;
-  		}
-  else
-  return info->APU.regs[address];
+		if (info->APU.squ[1].vbl_length > 0)
+			readval |= 0x02;
+
+		if (info->APU.tri.vbl_length > 0)
+			readval |= 0x04;
+
+		if (info->APU.noi.vbl_length > 0)
+			readval |= 0x08;
+
+		if (info->APU.dpcm.enabled == TRUE)
+			readval |= 0x10;
+
+		if (info->APU.dpcm.irq_occurred == TRUE)
+			readval |= 0x80;
+
+		return readval;
+	} else {
+		return info->APU.regs[address];
+	}
 }
 
 /* WRITE VALUE TO TEMP REGISTRY AND QUEUE EVENT */
-void nesapuWrite(INT32 chip,INT32 address, UINT8 value)
+void nesapuWrite(INT32 chip, INT32 address, UINT8 value)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuWrite called without init\n"));
 #endif
 
-  struct nesapu_info *info = &nesapu_chips[chip]; //sndti_token(SOUND_NES, chip);
-   info->APU.regs[address]=value;
-   apu_update(info);
-   apu_regwrite(info,address,value);
+	struct nesapu_info *info = &nesapu_chips[chip]; //sndti_token(SOUND_NES, chip);
+
+	if (address > 0x17) return;
+
+	info->APU.regs[address]=value;
+	apu_update(info);
+	apu_regwrite(info,address,value);
 }
 
 /* EXTERNAL INTERFACE FUNCTIONS */

@@ -764,9 +764,6 @@ void __fastcall dkong3_main_write(UINT16 address, UINT8 data)
 		case 0x7d80:
 			if (data & 1) {
 				sound_cpu_in_reset = 0;
-			} else {
-				sound_cpu_in_reset = 1;
-
 				M6502Open(0);
 				M6502Reset();
 				M6502Close();
@@ -774,6 +771,8 @@ void __fastcall dkong3_main_write(UINT16 address, UINT8 data)
 				M6502Open(1);
 				M6502Reset();
 				M6502Close();
+			} else {
+				sound_cpu_in_reset = 1;
 			}
 		return;
 
@@ -1150,41 +1149,60 @@ static void __fastcall i8039_sound_write_port(UINT32 port, UINT8 data)
 
 static void dkong3_sound0_write(UINT16 a, UINT8 d)
 {
-//bprintf (0, _T("s0: %4.4x, %2.2x, %d\n"), a, d, M6502GetActive());
-	if ((a & 0xffe0) == 0x4000) {
-		nesapuWrite(0, a & 0x1f, d);
+	if (a >= 0x0000 && a <= 0x1ff) {
+		DrvSndRAM0[a] = d;
+		return;
+	}
+
+	if (a >= 0x4000 && a <= 0x4017) {
+		nesapuWrite(0, a - 0x4000, d);
 		return;
 	}
 }
 
 static UINT8 dkong3_sound0_read(UINT16 a)
 {
-	if ((a & 0xffe0) == 0x4000) {
-		if ((a & 0xfffe) == 0x4016) {
-			return soundlatch[a & 1];
-		}
-
-		return nesapuRead(0, a & 0x1f);
+	if (a >= 0x0000 && a <= 0x1ff) {
+		return DrvSndRAM0[a];
+	}
+	if (a >= 0xe000 && a <= 0xffff) {
+		return DrvSndROM0[a - 0xe000];
+	}
+	switch (a) {
+		case 0x4016: return soundlatch[0];
+		case 0x4017: return soundlatch[1];
+	}
+	if (a >= 0x4000 && a <= 0x4015) {
+		return nesapuRead(0, a - 0x4000);
 	}
 
 	return 0;
 }
 
-static void dkong3_sound1_write(UINT16 a, UINT8 /*d*/)
+static void dkong3_sound1_write(UINT16 a, UINT8 d)
 {
-//bprintf (0, _T("s1: %4.4x, %2.2x, %d\n"), a, d, M6502GetActive());
-	if ((a & 0xffe0) == 0x4000) {
-	//	nesapuWrite(1, a & 0x1f, d);
+	if (a >= 0x0000 && a <= 0x1ff) {
+		DrvSndRAM1[a] = d;
+		return;
+	}
+	if (a >= 0x4000 && a <= 0x4017) {
+		nesapuWrite(1, a - 0x4000, d);
 		return;
 	}
 }
 
 static UINT8 dkong3_sound1_read(UINT16 a)
 {
-	if ((a & 0xffe0) == 0x4000) {
+	if (a >= 0x0000 && a <= 0x1ff) {
+		return DrvSndRAM1[a];
+	}
+	if (a >= 0xe000 && a <= 0xffff) {
+		return DrvSndROM1[a - 0xe000];
+	}
+	if (a >= 0x4000 && a <= 0x4017) {
 		if (a == 0x4016) return soundlatch[2];
 
-		return nesapuRead(1, a & 0x1f);
+		return nesapuRead(1, a - 0x4000);
 	}
 
 	return 0;
@@ -1255,7 +1273,7 @@ static INT32 MemIndex()
 	DrvSndRAM0		= Next; Next += 0x000200;
 	DrvSndRAM1		= Next; Next += 0x000200;
 
-	soundlatch		= Next; Next += 0x000003;
+	soundlatch		= Next; Next += 0x000005;
 	gfx_bank		= Next; Next += 0x000001;
 	sprite_bank		= Next; Next += 0x000001;
 	palette_bank		= Next; Next += 0x000001;
@@ -1465,7 +1483,7 @@ static INT32 Dkong3DoReset()
 	M6502Reset();
 	M6502Close();
 
-//	nesapuReset(); // necessary?
+	nesapuReset(); // necessary?
 
 	sound_cpu_in_reset = 0;
 
@@ -1539,21 +1557,29 @@ static INT32 Dkong3Init()
 
 	M6502Init(0, TYPE_N2A03);
 	M6502Open(0);
-	M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, MAP_RAM);
-	M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, MAP_ROM);
+	//M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, MAP_RAM); // handled below
+	//M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, MAP_ROM);
+	M6502SetWriteMemIndexHandler(dkong3_sound0_write);
+	M6502SetReadMemIndexHandler(dkong3_sound0_read);
+	M6502SetReadOpArgHandler(dkong3_sound0_read);
+	M6502SetReadOpHandler(dkong3_sound0_read);
 	M6502SetWriteHandler(dkong3_sound0_write);
 	M6502SetReadHandler(dkong3_sound0_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_N2A03);
 	M6502Open(1);
-	M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, MAP_RAM);
-	M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, MAP_ROM);
+	//M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, MAP_RAM); // handled below
+	//M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, MAP_ROM);
+	M6502SetWriteMemIndexHandler(dkong3_sound1_write);
+	M6502SetReadMemIndexHandler(dkong3_sound1_read);
+	M6502SetReadOpArgHandler(dkong3_sound1_read);
+	M6502SetReadOpHandler(dkong3_sound1_read);
 	M6502SetWriteHandler(dkong3_sound1_write);
 	M6502SetReadHandler(dkong3_sound1_read);
 	M6502Close();
 
-	nesapuInit(0, 1789773, dkong3_nesapu_sync, 1);
+	nesapuInit(0, 1789773, dkong3_nesapu_sync, 0);
 	nesapuSetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	nesapuInit(1, 1789773, dkong3_nesapu_sync, 1);
@@ -1908,37 +1934,26 @@ static INT32 Dkong3Frame()
 		}
 	}
 
-	INT32 nInterleave = 100; // ?
+	INT32 nInterleave = 400; // ?
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
 		ZetRun(4000000 / 60 / nInterleave);
-		if (i == (nInterleave - 10) && *nmi_mask) ZetNmi();
+		if (i == (nInterleave - 1) && *nmi_mask) ZetNmi();
 		ZetClose();
 
 		M6502Open(0);
-		if (sound_cpu_in_reset)
-		{
-			M6502Idle(1789773 / 60 / nInterleave);
-		} else {
-			M6502Run(1789773 / 60 / nInterleave);
-			if (i == (nInterleave - 10)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
-		}
+		M6502Run(1789773 / 60 / nInterleave);
+		if (i == (nInterleave - 1)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		M6502Close();
 
 		M6502Open(1);
-		if (sound_cpu_in_reset)
-		{
-			M6502Idle(1789773 / 60 / nInterleave);
-		} else {
-			M6502Run(1789773 / 60 / nInterleave);
-			if (i == (nInterleave - 10)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
-		}
+		M6502Run(1789773 / 60 / nInterleave);
+		if (i == (nInterleave - 1)) M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 		M6502Close();
 	}
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut,0,nBurnSoundLen*4);
 		nesapuUpdate(0, pBurnSoundOut, nBurnSoundLen);
 		nesapuUpdate(1, pBurnSoundOut, nBurnSoundLen);
 	}

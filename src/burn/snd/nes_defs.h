@@ -150,7 +150,7 @@ typedef struct apu
    dpcm_t     dpcm;
 
    /* APU registers */
-   UINT8 regs[0x17];
+   UINT8 regs[0x18];
 
    /* Sound pointers */
    void *buffer;

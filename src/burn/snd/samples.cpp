@@ -181,7 +181,7 @@ void BurnSampleSetLoop(INT32 sample, bool dothis)
 
 	sample_ptr = &samples[sample];
 
-	if (sample_ptr->flags & SAMPLE_NOLOOP) return;
+	//if (sample_ptr->flags & SAMPLE_NOLOOP) return;
 
 	sample_ptr->loop = (dothis ? 1 : 0);
 }

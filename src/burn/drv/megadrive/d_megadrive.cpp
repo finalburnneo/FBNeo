@@ -41173,3 +41173,21 @@ struct BurnDriver BurnDrvmd_ohmummy = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
+
+// Fix it Felix JR
+static struct BurnRomInfo md_fixitfelixRomDesc[] = {
+	{ "FixItFelixJr_AirwalkStudios.bin", 0x92f0e, 0x424ff451, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fixitfelix)
+STD_ROM_FN(md_fixitfelix)
+
+struct BurnDriver BurnDrvmd_fixitfelix = {
+	"md_fixitfelixjr", NULL, NULL, NULL, "2014",
+	"Fix It Felix Jr.\0", NULL, "2014 TOBIKOMI / Airwalkstudios", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_fixitfelixRomInfo, md_fixitfelixRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
+};

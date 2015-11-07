@@ -7,6 +7,9 @@ extern UINT8 *SeibuZ80DecROM;
 extern UINT8 *SeibuZ80ROM;
 extern UINT8 *SeibuZ80RAM;
 
+extern UINT8 *SeibuADPCMData[2];
+extern INT32 SeibuADPCMDataLen[2];
+
 extern INT32 seibu_coin_input;
 
 unsigned char seibu_main_word_read(INT32 offset);
@@ -18,11 +21,15 @@ void seibu_sound_reset();
 void seibu_sound_update(INT16 *pbuf, INT32 nLen);
 
 /*
+	type & 3
+
 	Type 0 - YM3812
 	Type 1 - YM2151
 	Type 2 - YM2203
 
-	all init a single oki6295
+	type & 8 - adpcm (disable oki6295)
+
+	otherwise add a single oki6295
 	add 4 to init a second oki6295
 */
 

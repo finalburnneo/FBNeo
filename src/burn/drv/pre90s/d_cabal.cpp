@@ -656,6 +656,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nTotalCycles[2] = { 10000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -671,10 +672,21 @@ static INT32 DrvFrame()
 		if (i == 240)
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			seibu_sound_update(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
+
 	}
 
 	if (pBurnSoundOut) {
-		seibu_sound_update(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength > 0) {
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	ZetClose();

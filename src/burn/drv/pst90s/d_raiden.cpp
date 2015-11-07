@@ -626,9 +626,6 @@ static INT32 DrvInit(INT32 drv_select)
 
 static INT32 DrvExit()
 {
-	MSM6295Exit(0);
-	BurnYM3812Exit();
-
 	VezExit();
 
 	seibu_sound_exit();

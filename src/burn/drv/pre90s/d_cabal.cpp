@@ -132,8 +132,8 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x14, 0x01, 0x30, 0x00, "Very Hard"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x14, 0x01, 0x80, 0x80, "Off"			},
-	{0x14, 0x01, 0x80, 0x00, "On"			},
+	{0x14, 0x01, 0x80, 0x80, "On"			},
+	{0x14, 0x01, 0x80, 0x00, "Off"			},
 };
 
 STDDIPINFO(Drv)
@@ -157,8 +157,8 @@ static void __fastcall cabal_main_write_word(UINT32 address, UINT16 data)
 			flipscreen = data & 0x20;
 		return;
 
-		case 0x0e8008:// irq_trigger_word_w
-		case 0x0e8009:// irq_trigger_word_w
+		case 0x0e8008:
+		case 0x0e8009:
 			cabal_audiocpu_irq_trigger(); // no break!
 		case 0x0e8000:
 		case 0x0e8001:
@@ -195,8 +195,8 @@ static void __fastcall cabal_main_write_byte(UINT32 address, UINT8 data)
 			flipscreen = data & 0x20;
 		return;
 
-		case 0x0e8008:// irq_trigger_word_w
-		case 0x0e8009:// irq_trigger_word_w
+		case 0x0e8008:
+		case 0x0e8009:
 			cabal_audiocpu_irq_trigger(); // no break!
 		case 0x0e8000:
 		case 0x0e8001:
@@ -254,8 +254,6 @@ static UINT16 __fastcall cabal_main_read_word(UINT32 address)
 		case 0x0a0011:
 			return DrvInputs[4];
 
-		case 0x0e8008:// irq_trigger_word_w
-		case 0x0e8009:// irq_trigger_word_w
 		case 0x0e8000:
 		case 0x0e8001:
 		case 0x0e8002:
@@ -264,6 +262,8 @@ static UINT16 __fastcall cabal_main_read_word(UINT32 address)
 		case 0x0e8005:
 		case 0x0e8006:
 		case 0x0e8007:
+		case 0x0e8008:
+		case 0x0e8009:
 		case 0x0e800a:
 		case 0x0e800b:
 		case 0x0e800c:
@@ -295,8 +295,6 @@ static UINT8 __fastcall cabal_main_read_byte(UINT32 address)
 		case 0x0a0011:
 			return DrvInputs[4] >> ((~address & 1) * 8);
 
-		case 0x0e8008:// irq_trigger_word_w
-		case 0x0e8009:// irq_trigger_word_w
 		case 0x0e8000:
 		case 0x0e8001:
 		case 0x0e8002:
@@ -305,10 +303,12 @@ static UINT8 __fastcall cabal_main_read_byte(UINT32 address)
 		case 0x0e8005:
 		case 0x0e8006:
 		case 0x0e8007:
+		case 0x0e8008:
+		case 0x0e8009:
 		case 0x0e800a:
 		case 0x0e800b:
 		case 0x0e800c:
-		case 0x0e800d:	// seibu_ word_r
+		case 0x0e800d:
 			return seibu_main_word_read(address & 0xf);
 	}
 	return 0;
@@ -404,7 +404,7 @@ static INT32 DrvGfxDecode()
 
 static void adpcm_decode(UINT8 *rom)
 {
-	for (INT32 i = 0; i < 0x1000; i++) {
+	for (INT32 i = 0; i < 0x10000; i++) {
 		rom[i] = BITSWAP08(rom[i], 7, 5, 3, 1, 6, 4, 2, 0);
 	}
 }
@@ -685,8 +685,9 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength > 0) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			seibu_sound_update(pSoundBuf, nSegmentLength);
 		}
+		seibu_sound_update_cabal(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

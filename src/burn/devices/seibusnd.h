@@ -19,6 +19,7 @@ void seibu_sound_mustb_write_word(INT32 offset, UINT16 data);
 void seibu_sound_reset();
 
 void seibu_sound_update(INT16 *pbuf, INT32 nLen);
+void seibu_sound_update_cabal(INT16 *pbuf, INT32 nLen);
 
 /*
 	type & 3

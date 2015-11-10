@@ -520,10 +520,9 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices)
 	
 	chip = (struct namco_sound*)malloc(sizeof(*chip));
 	memset(chip, 0, sizeof(*chip));
-	
+
 	namco_soundregs = (UINT8*)malloc(0x40);
 	memset(namco_soundregs, 0, 0x40);
-
 
 	chip->num_voices = num_voices;
 	chip->last_channel = chip->channel_list + chip->num_voices;
@@ -593,8 +592,8 @@ void NamcoSoundExit()
 		free(namco_soundregs);
 		namco_soundregs = NULL;
 
-		free (namco_wavedata);
-		namco_wavedata = NULL;
+		//free (namco_wavedata); hmmm -dink
+		//namco_wavedata = NULL;
 	}
 
 	if (enable_ram) {
@@ -609,7 +608,7 @@ void NamcoSoundExit()
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
-	char szName[18];
+	char szName[20];
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;

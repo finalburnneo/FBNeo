@@ -1063,7 +1063,8 @@ void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 		case 0xa004:
 		case 0xa005:
 		case 0xa006: {
-			DrvStarControl[a - 0xa000] = d & 0x01;
+			if (a != 0xa006)
+				DrvStarControl[a - 0xa000] = d & 0x01;
 			digdug_pf_latch_w(a - 0xa000, d);
 			return;
 		}
@@ -1913,6 +1914,9 @@ static void DrvRenderSprites()
 				INT32 xPos = sx + 16 * x;
 				INT32 yPos = sy + 16 * y;
 
+				if (xPos >= nScreenWidth || yPos >= nScreenHeight) continue;
+				if (xPos < -15 || yPos < -15) continue; // crash preventer
+
 				if (xPos > 16 && xPos < 272 && yPos > 16 && yPos < 208) {
 					if (xFlip) {
 						if (yFlip) {
@@ -1986,6 +1990,7 @@ static void digdug_Sprites()
 
 				if (xPos < 8) xPos += 0x100; // that's a wrap!
 				if (xPos >= nScreenWidth || yPos >= nScreenHeight) continue;
+				if (xPos < -15 || yPos < -15) continue; // crash preventer
 
 				if (xPos > 0 && xPos < 288-16 && yPos > 0 && yPos < 224-16) {
 					if (xFlip) {
@@ -2096,7 +2101,7 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 4000;
+	INT32 nInterleave = 400;
 	INT32 nCyclesTotal[3];
 
 	nCyclesTotal[0] = (18432000 / 6) / 60;
@@ -2104,17 +2109,17 @@ static INT32 DrvFrame()
 	nCyclesTotal[2] = (18432000 / 6) / 60;
 	
 	ZetNewFrame();
-	
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU;
 		
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
 		ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
-		if (i == (nInterleave-1 /* * 248 / 256*/) && DrvCPU1FireIRQ) {
+		if (i == (nInterleave-1) && DrvCPU1FireIRQ) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		if ((i % 100==99) && IOChipCPU1FireIRQ) {
+		if ((i % 10==9) && IOChipCPU1FireIRQ) {
 			ZetNmi();
 		}
 		ZetClose();
@@ -2123,7 +2128,7 @@ static INT32 DrvFrame()
 			nCurrentCPU = 1;
 			ZetOpen(nCurrentCPU);
 			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
-			if (i == (nInterleave-1 /* * 248 / 256*/) && DrvCPU2FireIRQ) {
+			if (i == (nInterleave-1) && DrvCPU2FireIRQ) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 			ZetClose();
@@ -2133,12 +2138,12 @@ static INT32 DrvFrame()
 			nCurrentCPU = 2;
 			ZetOpen(nCurrentCPU);
 			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
-			if ((i == (nInterleave / 2)-25 || i == (nInterleave-1-25)) && DrvCPU3FireIRQ) {
+			if ((i == (nInterleave / 2)-3 || i == (nInterleave-1-3)) && DrvCPU3FireIRQ) {
 				ZetNmi();
 			}
 			ZetClose();
 		}
-		
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -2301,7 +2306,7 @@ struct BurnDriver BurnDrvDigdug = {
 	"digdug", NULL, NULL, NULL, "1982",
 	"Dig Dug (rev 2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
     NULL, digdugRomInfo, digdugRomName, NULL, NULL, DigdugInputInfo, DigdugDIPInfo,
 	DrvDigdugInit, DrvExit, DrvFrame, DrvDigdugDraw, DrvScan, NULL, 0x300,
 	224, 288, 3, 4

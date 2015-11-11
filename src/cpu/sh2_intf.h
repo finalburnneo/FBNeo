@@ -12,6 +12,8 @@ typedef unsigned int (__fastcall *pSh2ReadLongHandler)(unsigned int a);
 typedef void (__fastcall *pSh2WriteLongHandler)(unsigned int a, unsigned int d);
 
 extern int has_sh2;
+extern INT32 cps3speedhack;
+
 void __fastcall Sh2WriteByte(unsigned int a, unsigned char d);
 unsigned char __fastcall Sh2ReadByte(unsigned int a);
 

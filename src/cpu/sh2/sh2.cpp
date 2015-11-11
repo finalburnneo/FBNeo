@@ -40,6 +40,7 @@
 //extern int (__cdecl *bprintf) (int nStatus, TCHAR* szFormat, ...);
 
 int has_sh2;
+INT32 cps3speedhack; // must be set _after_ Sh2Init();
 
 /*typedef signed char INT8;
 typedef unsigned char UINT8;
@@ -493,6 +494,7 @@ int Sh2Init(int nCount)
 	DebugCPU_SH2Initted = 1;
 
 	has_sh2 = 1;
+	cps3speedhack = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
 	if (Sh2Ext == NULL) {
@@ -3318,45 +3320,49 @@ int Sh2Run(int cycles)
 
 	sh2->sh2_icount = cycles;
 	sh2->sh2_cycles_to_run = cycles;
-	
+
 	do
 	{
+		if ( pSh2Ext->suspend && cps3speedhack ) {
+			sh2->sh2_total_cycles += cycles;
+			sh2->sh2_icount = 0;
+			break;
+		}
+
 		if (!pSh2Ext->suspend) {
 			UINT16 opcode;
 
-		if (sh2->delay) {
-			//opcode = cpu_readop16(WORD_XOR_BE((UINT32)(sh2->delay & AM)));
-			opcode = cpu_readop16(sh2->delay & AM);
-			change_pc(sh2->pc & AM);
-			sh2->delay = 0;
-		} else {
-			//opcode = cpu_readop16(WORD_XOR_BE((UINT32)(sh2->pc & AM)));
-			opcode = cpu_readop16(sh2->pc & AM);
-			sh2->pc += 2;
-		}
+			if (sh2->delay) {
+				opcode = cpu_readop16(sh2->delay & AM);
+				change_pc(sh2->pc & AM);
+				sh2->delay = 0;
+			} else {
+				opcode = cpu_readop16(sh2->pc & AM);
+				sh2->pc += 2;
+			}
 
-		sh2->ppc = sh2->pc;
+			sh2->ppc = sh2->pc;
 
-		switch (opcode & ( 15 << 12))
-		{
-		case  0<<12: op0000(opcode); break;
-		case  1<<12: op0001(opcode); break;
-		case  2<<12: op0010(opcode); break;
-		case  3<<12: op0011(opcode); break;
-		case  4<<12: op0100(opcode); break;
-		case  5<<12: op0101(opcode); break;
-		case  6<<12: op0110(opcode); break;
-		case  7<<12: op0111(opcode); break;
-		case  8<<12: op1000(opcode); break;
-		case  9<<12: op1001(opcode); break;
-		case 10<<12: op1010(opcode); break;
-		case 11<<12: op1011(opcode); break;
-		case 12<<12: op1100(opcode); break;
-		case 13<<12: op1101(opcode); break;
-		case 14<<12: op1110(opcode); break;
-		default: op1111(opcode); break;
+			switch (opcode & ( 15 << 12))
+			{
+				case  0<<12: op0000(opcode); break;
+				case  1<<12: op0001(opcode); break;
+				case  2<<12: op0010(opcode); break;
+				case  3<<12: op0011(opcode); break;
+				case  4<<12: op0100(opcode); break;
+				case  5<<12: op0101(opcode); break;
+				case  6<<12: op0110(opcode); break;
+				case  7<<12: op0111(opcode); break;
+				case  8<<12: op1000(opcode); break;
+				case  9<<12: op1001(opcode); break;
+				case 10<<12: op1010(opcode); break;
+				case 11<<12: op1011(opcode); break;
+				case 12<<12: op1100(opcode); break;
+				case 13<<12: op1101(opcode); break;
+				case 14<<12: op1110(opcode); break;
+			default: op1111(opcode); break;
+			}
 		}
-            }
 #endif
 
 		if(sh2->test_irq && !sh2->delay)

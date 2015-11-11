@@ -1,5 +1,7 @@
 // FB Alpha The Speed Rumbler driver module
 // Based on MAME driver by Paul Leaman
+// Note: main cpu oc'd otherwise there is terrible slowdown, I wonder if our
+// m6809 is cycle accurate or not? (I tried several different timing/irq methods) -dink
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -26,6 +28,7 @@ static UINT8 *DrvZ80RAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
+static UINT8 DrvPalRAMWrite;
 
 static UINT8 *DrvBank;
 static UINT8 *DrvScroll;
@@ -141,6 +144,12 @@ static void bankswitch(INT32 data)
 
 void srumbler_main_write(UINT16 address, UINT8 data)
 {
+	if (address >= 0x7000 && address <= 0x73ff) {
+		DrvPalRAM[address - 0x7000] = data;
+		//bprintf(0, _T("%X,"), address);
+		DrvPalRAMWrite = 1;
+		DrvRecalc = 1;
+	}
 	switch (address)
 	{
 		case 0x4008:
@@ -222,9 +231,20 @@ inline static double DrvGetTime()
 	return (double)ZetTotalCycles() / 3000000;
 }
 
+static void DrvPaletteInit()
+{
+	for (INT32 i = 0; i < 0x200; i++) {
+		UINT8 r = ((i & 1) ? 0xff : 0);
+		UINT8 g = ((i & 2) ? 0xff : 0);
+		UINT8 b = ((i & 4) ? 0xff : 0);
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
+	}
+}
+
 static INT32 DrvDoReset()
 {
 	DrvReset = 0;
+	DrvPalRAMWrite = 0;
 
 	memset (AllRam, 0, RamEnd - AllRam);
 
@@ -237,7 +257,11 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	DrvPaletteInit();
+
 	BurnYM2203Reset();
+
+	HiscoreReset();
 
 	return 0;
 }
@@ -376,7 +400,7 @@ static INT32 DrvInit()
 	M6809MapMemory(DrvSprRAM,		0x1e00, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvBgRAM,		0x2000, 0x3fff, MAP_RAM);
 	M6809MapMemory(DrvFgRAM,		0x5000, 0x5fff, MAP_WRITE);
-	M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, MAP_WRITE);
+	//M6809MapMemory(DrvPalRAM,		0x7000, 0x73ff, MAP_WRITE);
 	M6809SetReadHandler(srumbler_main_read);
 	M6809SetWriteHandler(srumbler_main_write);
 	M6809Close();
@@ -563,28 +587,34 @@ static void draw_sprites()
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		UINT8 r,g,b;
-		for (INT32 i = 0; i < 0x400; i+=2) {
-			INT32 d = DrvPalRAM[i + 1] | (DrvPalRAM[i + 0] << 8);
+		if (DrvPalRAMWrite) {
+			UINT8 r,g,b;
+			for (INT32 i = 0; i < 0x400; i+=2) {
+				INT32 d = DrvPalRAM[i + 1] | (DrvPalRAM[i + 0] << 8);
 
-			r = (d >> 12);
-			g = (d >>  8) & 0x0f;
-			b = (d >>  4) & 0x0f;
+				r = (d >> 12);
+				g = (d >>  8) & 0x0f;
+				b = (d >>  4) & 0x0f;
 
-			DrvPalette[i >> 1] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
+				DrvPalette[i >> 1] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
+			}
+		} else {
+			DrvPaletteInit();
 		}
+		DrvRecalc = 0;
 	}
 
 	if (nSpriteEnable & 1) draw_background_layer(1); // opaque
 	else BurnTransferClear();
 
-	if (nBurnLayer & 2) draw_background_layer(3);
-	if (nBurnLayer & 4) draw_foreground_layer(0);
+	if (nBurnLayer & 2) draw_background_layer(0);
 
 	draw_sprites();
 
-	if (nBurnLayer & 1) draw_background_layer(2);
-	if (nBurnLayer & 8) draw_foreground_layer(1);
+	if (nSpriteEnable & 2) draw_background_layer(3);
+	if (nSpriteEnable & 4) draw_background_layer(2);
+	if (nBurnLayer & 8) draw_foreground_layer(0);
+	if (nBurnLayer & 4) draw_foreground_layer(1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -608,8 +638,8 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 4;
-	INT32 nCyclesTotal[2] = { 1500000 / 60, 3000000 / 60 };
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);
@@ -617,11 +647,17 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave / 2) - 1) M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave / 2) - 1) {
+			M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
+			memcpy (DrvSprBuf, DrvSprRAM, 0x200);
+		}
 		if (i == (nInterleave / 1) - 1) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		if (i % (nInterleave/4) == (nInterleave/4) - 1) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -634,8 +670,6 @@ static INT32 DrvFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
-
-	memcpy (DrvSprBuf, DrvSprRAM, 0x200);
 
 	return 0;
 }
@@ -720,7 +754,7 @@ struct BurnDriver BurnDrvSrumbler = {
 	"srumbler", NULL, NULL, NULL, "1986",
 	"The Speed Rumbler (set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
 	NULL, srumblerRomInfo, srumblerRomName, NULL, NULL, SrumblerInputInfo, SrumblerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x200, 240, 352, 3, 4
@@ -774,7 +808,7 @@ struct BurnDriver BurnDrvSrumblr2 = {
 	"srumbler2", "srumbler", NULL, NULL, "1986",
 	"The Speed Rumbler (set 2)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
 	NULL, srumblr2RomInfo, srumblr2RomName, NULL, NULL, SrumblerInputInfo, SrumblerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x200, 240, 352, 3, 4
@@ -828,7 +862,7 @@ struct BurnDriver BurnDrvSrumblr3 = {
 	"srumbler3", "srumbler", NULL, NULL, "1986",
 	"The Speed Rumbler (set 3)\0", NULL, "Capcom (Tecfri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
 	NULL, srumblr3RomInfo, srumblr3RomName, NULL, NULL, SrumblerInputInfo, SrumblerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x200, 240, 352, 3, 4
@@ -882,7 +916,7 @@ struct BurnDriver BurnDrvRushcrsh = {
 	"rushcrsh", "srumbler", NULL, NULL, "1986",
 	"Rush & Crash (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_SHOOT, 0,
 	NULL, rushcrshRomInfo, rushcrshRomName, NULL, NULL, SrumblerInputInfo, SrumblerDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x200, 240, 352, 3, 4

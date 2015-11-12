@@ -166,32 +166,6 @@ STDDIPINFO(shadfrce)
 
 // Rom information
 static struct BurnRomInfo shadfrceRomDesc[] = {
-	{ "32a12-01.34",  0x040000, 0x04501198, BRF_ESS | BRF_PRG },	// 68000 code 
-	{ "32a13-01.26",  0x040000, 0xb8f8a05c, BRF_ESS | BRF_PRG }, 
-	{ "32a14-0.33",   0x040000, 0x08279be9, BRF_ESS | BRF_PRG }, 
-	{ "32a15-0.14",	  0x040000, 0xbfcadfea, BRF_ESS | BRF_PRG }, 
-	
-	{ "32j10-0.42",   0x010000, 0x65daf475, BRF_ESS | BRF_PRG },	// Z80 code
-	
-	{ "32a11-0.55",	  0x020000, 0xcfaf5e77, BRF_GRA }, 				// gfx 1 chars
-	
-	{ "32j4-0.12", 	  0x200000, 0x1ebea5b6, BRF_GRA }, 				// gfx 2 sprite
-	{ "32j5-0.13",	  0x200000, 0x600026b5, BRF_GRA }, 
-	{ "32j6-0.24", 	  0x200000, 0x6cde8ebe, BRF_GRA }, 
-	{ "32j7-0.25",	  0x200000, 0xbcb37922, BRF_GRA }, 
-	{ "32j8-0.32",	  0x200000, 0x201bebf6, BRF_GRA }, 
-
-	{ "32j1-0.4",     0x100000, 0xf1cca740, BRF_GRA },				// gfx 3 bg
-	{ "32j2-0.5",     0x100000, 0x5fac3e01, BRF_GRA },			
-	{ "32j3-0.6",     0x100000, 0xd297925e, BRF_GRA },
-	
-	{ "32j9-0.76",    0x080000, 0x16001e81, BRF_SND },				// PCM
-};
-
-STD_ROM_PICK(shadfrce)
-STD_ROM_FN(shadfrce)
-
-static struct BurnRomInfo shadfrcjRomDesc[] = {
 	{ "32a12-011.34", 0x040000, 0x0c041e08, BRF_ESS | BRF_PRG },	// 68000 code 
 	{ "32a13-010.26", 0x040000, 0x00985361, BRF_ESS | BRF_PRG }, 
 	{ "32a14-010.33", 0x040000, 0xea03ca25, BRF_ESS | BRF_PRG }, 
@@ -214,10 +188,36 @@ static struct BurnRomInfo shadfrcjRomDesc[] = {
 	{ "32j9-0.76",    0x080000, 0x16001e81, BRF_SND },				// PCM
 };
 
-STD_ROM_PICK(shadfrcj)
-STD_ROM_FN(shadfrcj)
+STD_ROM_PICK(shadfrce)
+STD_ROM_FN(shadfrce)
 
-static struct BurnRomInfo shadfrcjv2RomDesc[] = {
+static struct BurnRomInfo shadfrceuRomDesc[] = {
+	{ "32a12-01.34",  0x040000, 0x04501198, BRF_ESS | BRF_PRG },	// 68000 code 
+	{ "32a13-01.26",  0x040000, 0xb8f8a05c, BRF_ESS | BRF_PRG }, 
+	{ "32a14-0.33",   0x040000, 0x08279be9, BRF_ESS | BRF_PRG }, 
+	{ "32a15-0.14",	  0x040000, 0xbfcadfea, BRF_ESS | BRF_PRG }, 
+	
+	{ "32j10-0.42",   0x010000, 0x65daf475, BRF_ESS | BRF_PRG },	// Z80 code
+	
+	{ "32a11-0.55",	  0x020000, 0xcfaf5e77, BRF_GRA }, 				// gfx 1 chars
+	
+	{ "32j4-0.12", 	  0x200000, 0x1ebea5b6, BRF_GRA }, 				// gfx 2 sprite
+	{ "32j5-0.13",	  0x200000, 0x600026b5, BRF_GRA }, 
+	{ "32j6-0.24", 	  0x200000, 0x6cde8ebe, BRF_GRA }, 
+	{ "32j7-0.25",	  0x200000, 0xbcb37922, BRF_GRA }, 
+	{ "32j8-0.32",	  0x200000, 0x201bebf6, BRF_GRA }, 
+
+	{ "32j1-0.4",     0x100000, 0xf1cca740, BRF_GRA },				// gfx 3 bg
+	{ "32j2-0.5",     0x100000, 0x5fac3e01, BRF_GRA },			
+	{ "32j3-0.6",     0x100000, 0xd297925e, BRF_GRA },
+	
+	{ "32j9-0.76",    0x080000, 0x16001e81, BRF_SND },				// PCM
+};
+
+STD_ROM_PICK(shadfrceu)
+STD_ROM_FN(shadfrceu)
+
+static struct BurnRomInfo shadfrcejRomDesc[] = {
 	{ "32j12-01.34",  0x040000, 0x38fdbe1d, BRF_ESS | BRF_PRG },	// 68000 code 
 	{ "32j13-01.26",  0x040000, 0x6e1df6f1, BRF_ESS | BRF_PRG }, 
 	{ "32j14-01.33",  0x040000, 0x89e3fb60, BRF_ESS | BRF_PRG }, 
@@ -240,8 +240,8 @@ static struct BurnRomInfo shadfrcjv2RomDesc[] = {
 	{ "32j9-0.76",    0x080000, 0x16001e81, BRF_SND },				// PCM
 };
 
-STD_ROM_PICK(shadfrcjv2)
-STD_ROM_FN(shadfrcjv2)
+STD_ROM_PICK(shadfrcej)
+STD_ROM_FN(shadfrcej)
 
 static INT32 MemIndex()
 {
@@ -1575,7 +1575,7 @@ static INT32 shadfrceScan(INT32 nAction,INT32 *pnMin)
 
 struct BurnDriver BurnDrvShadfrce = {
 	"shadfrce", NULL, NULL, NULL, "1993",
-	"Shadow Force (US Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
+	"Shadow Force (World, Version 3)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, shadfrceRomInfo, shadfrceRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
@@ -1583,22 +1583,22 @@ struct BurnDriver BurnDrvShadfrce = {
 	320, 256, 4, 3
 };
 
-struct BurnDriver BurnDrvShadfrcj = {
-	"shadfrcej", "shadfrce", NULL, NULL, "1993",
-	"Shadow Force (Japan Version 3)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvShadfrceu = {
+	"shadfrceu", "shadfrce", NULL, NULL, "1993",
+	"Shadow Force (US, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, shadfrcjRomInfo, shadfrcjRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
+	NULL, shadfrceuRomInfo, shadfrceuRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, NULL, shadfrceScan, &bRecalcPalette, 0x8000,
 	320, 256, 4, 3
 };
 
-struct BurnDriver BurnDrvShadfrcjv2 = {
-	"shadfrcejv2", "shadfrce", NULL, NULL, "1993",
-	"Shadow Force (Japan Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvShadfrcej = {
+	"shadfrcej", "shadfrce", NULL, NULL, "1993",
+	"Shadow Force (Japan, Version 2)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
-	NULL, shadfrcjv2RomInfo, shadfrcjv2RomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
+	NULL, shadfrcejRomInfo, shadfrcejRomName, NULL, NULL, shadfrceInputInfo, shadfrceDIPInfo,
 	shadfrceInit, shadfrceExit, shadfrceFrame, NULL, shadfrceScan, &bRecalcPalette, 0x8000,
 	320, 256, 4, 3
 };

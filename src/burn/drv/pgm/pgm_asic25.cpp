@@ -1016,19 +1016,21 @@ static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 
 	mode &= 0x0f;
 
-	switch (mode)
+	bprintf (0, _T("SRC: %4.4x, DST: %4.4x, SIZE: %4.4x, PARAM: %2.2x, MODE: %x\n"), src, dst*2, size*2, param, mode);
+
+	switch (mode & 0x7)
 	{
-		case 0x00: // This mode copies code later on in the game! Encrypted somehow?
-		// src:2fc8, dst: 045a, size: 025e, mode: 0000
-		// jumps from 12beb4 in unprotected set
-		// jumps from 1313e0 in protected set
-		case 0x01: // swap bytes and nibbles
+		case 0x00: // -= encryption
+		case 0x01: // swap nibbles
 		case 0x02: // ^= encryption
-		case 0x05: // copy
+		case 0x03: // unused?
+		case 0x04: // unused?
+		case 0x05: // swap bytes
 		case 0x06: // += encryption (correct?)
+		case 0x07: // unused?
 		{
 			UINT8 extraoffset = param & 0xff;
-			UINT8 *dectable = (UINT8 *)(PROTROM + (0x100 / 2));
+			UINT8 *dectable = PGMUSER0 + 0x10100;
 
 			for (INT32 x = 0; x < size; x++)
 			{
@@ -1037,17 +1039,30 @@ static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 				int taboff = ((x*2)+extraoffset) & 0xff; // must allow for overflow in instances of odd offsets
 				unsigned short extraxor = ((dectable[taboff + 0]) << 0) | (dectable[taboff + 1] << 8);
 
-				if (mode==0) dat2 = 0x4e75; // hack
-				if (mode==1) dat2  = ((dat2 & 0xf000) >> 12) | ((dat2 & 0x0f00) >> 4) | ((dat2 & 0x00f0) << 4) | ((dat2 & 0x000f) << 12);
-				if (mode==2) dat2 ^= extraxor;
-				//if (mode==5) dat2  = dat2;
-				if (mode==6) dat2 += extraxor;
+				if (mode==0) dat2 -= extraxor;
+				else if (mode==1) dat2  = ((dat2 & 0xf0f0) >> 4)|((dat2 & 0x0f0f) << 4);
+				else if (mode==2) dat2 ^= extraxor;
+				else if (mode==5) dat2  = ((dat2 &0x00ff) << 8) | ((dat2 &0xff00) >> 8);
+				else if (mode==6) dat2 += extraxor;
+				else
+				{
+					UINT16 extraxor2 = 0;
+					if ((x & 0x003) == 0x000) extraxor2 |= 0x0049; // 'I'
+					if ((x & 0x003) == 0x001) extraxor2 |= 0x0047; // 'G'
+					if ((x & 0x003) == 0x002) extraxor2 |= 0x0053; // 'S'
+					if ((x & 0x003) == 0x003) extraxor2 |= 0x0020; // ' '
+					if ((x & 0x300) == 0x000) extraxor2 |= 0x4900; // 'I'
+					if ((x & 0x300) == 0x100) extraxor2 |= 0x4700; // 'G'
+					if ((x & 0x300) == 0x200) extraxor2 |= 0x5300; // 'S'
+					if ((x & 0x300) == 0x300) extraxor2 |= 0x2000; // ' '
 
-				if (mode==2 || mode==6) dat2 = (dat2<<8)|(dat2>>8);
+					dat2 = 0x4e75; // hack
+				}
 
-				sharedprotram[dst + x] = (dat2 << 8) | (dat2 >> 8);
+				sharedprotram[dst + x] = dat2;
 			}
 		}
+		break;
 	}
 }
 
@@ -1075,7 +1090,7 @@ static void olds_protection_calculate_hilo() // calculated in routine $12dbc2 in
 		m_olds_prot_hilo_select = 0;
 	}
 
-	source = source_data[PgmInput[7] - 1][m_olds_prot_hilo_select];
+	source = source_data[PgmInput[7]][m_olds_prot_hilo_select];
 
 	if (m_olds_prot_hilo_select & 1)    // $8178fa
 	{
@@ -1292,6 +1307,19 @@ static INT32 oldsScan(INT32 nAction, INT32 *)
 	return 0;
 }
 
+// hack...
+static UINT16 __fastcall olds_mainram_read_word(UINT32 address)
+{
+	if (SekGetPC(-1) >= 0x100000 && address != 0x8178d8) SekWriteWord(0x8178f4, SekReadWord(0x8178D8));
+
+	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(PGM68KRAM + (address & 0x1fffe))));
+}
+
+static UINT8 __fastcall olds_mainram_read_byte(UINT32 address)
+{
+	return PGM68KRAM[(address & 0x1ffff)^1];
+}
+
 void install_protection_asic25_asic28_olds()
 {
 	pPgmScanCallback = oldsScan;
@@ -1313,6 +1341,10 @@ void install_protection_asic25_asic28_olds()
 	SekMapHandler(4,		0xdcb400, 0xdcb403, MAP_READ | MAP_WRITE);
 	SekSetReadWordHandler(4,	olds_protection_r);
 	SekSetWriteWordHandler(4,	olds_protection_w);
+
+	SekMapHandler(5,	0x8178f4, 0x8178f5, MAP_ROM);
+	SekSetReadWordHandler(5, olds_mainram_read_word);
+	SekSetReadByteHandler(5, olds_mainram_read_byte);
 
 	SekClose();
 }

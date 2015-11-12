@@ -1016,7 +1016,7 @@ static void IGS028_do_dma(UINT16 src, UINT16 dst, UINT16 size, UINT16 mode)
 
 	mode &= 0x0f;
 
-	bprintf (0, _T("SRC: %4.4x, DST: %4.4x, SIZE: %4.4x, PARAM: %2.2x, MODE: %x\n"), src, dst*2, size*2, param, mode);
+//	bprintf (0, _T("SRC: %4.4x, DST: %4.4x, SIZE: %4.4x, PARAM: %2.2x, MODE: %x\n"), src, dst*2, size*2, param, mode);
 
 	switch (mode & 0x7)
 	{

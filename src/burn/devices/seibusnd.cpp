@@ -141,7 +141,7 @@ void seibu_main_word_write(INT32 offset, UINT8 data)
 			break;
 
 		case 4:
-			if (is_sdgndmps) update_irq_lines(RST10_ASSERT);
+			//if (is_sdgndmps) update_irq_lines(RST10_ASSERT);
 			update_irq_lines(RST18_ASSERT);
 			break;
 
@@ -189,7 +189,8 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x4001:
-			update_irq_lines(VECTOR_INIT);
+			if (!is_sdgndmps)
+				update_irq_lines(VECTOR_INIT);
 		return;
 
 		case 0x4002:

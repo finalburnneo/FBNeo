@@ -42,6 +42,8 @@ static UINT8 backgroundpage = 0;
 static UINT8 screen_flipy = 0;
 static UINT8 screen_flipx = 0;
 
+static UINT8 set2 = 0;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -185,7 +187,7 @@ static void __fastcall rollrace_main_write(UINT16 address, UINT8 data)
 
 		case 0xf802:
 			backgroundpage = data & 0x1f;
-			backgroundflip = data & 0x80;
+			backgroundflip = (data & 0x80) >> 7;
 		return;
 
 		case 0xf803:
@@ -209,7 +211,7 @@ static void __fastcall rollrace_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xfc06:
-			spritebank = data & 1;
+			spritebank = data;
 		return;
 	}
 }
@@ -388,35 +390,37 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x06000,  3, 1)) return 1;
+		if (set2)
+			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  4, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x02000,  5, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x04000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  4 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x02000,  5 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x04000,  6 + set2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  7, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x02000,  8, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x04000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  7 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x02000,  8 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x04000,  9 + set2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 10, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x06000, 11, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x0c000, 12, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x02000, 13, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 14, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x0e000, 15, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 16, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x0a000, 17, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 18, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 10 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x06000, 11 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x0c000, 12 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x02000, 13 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x08000, 14 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x0e000, 15 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 16 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x0a000, 17 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 18 + set2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM3 + 0x00000, 19, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x02000, 20, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x04000, 21, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x06000, 22, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x00000, 19 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x02000, 20 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x04000, 21 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x06000, 22 + set2, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM + 0x00000, 23, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00100, 24, 1)) return 1;
-		if (BurnLoadRom(DrvColPROM + 0x00200, 25, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00000, 23 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00100, 24 + set2, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x00200, 25 + set2, 1)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 26, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 26 + set2, 1)) return 1;
 
 		DrvGfxDecode();
 	}
@@ -466,6 +470,8 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	set2 = 0;
+
 	return 0;
 }
 
@@ -496,7 +502,10 @@ static void draw_road()
 		sx = 8 * sx;
 		sy = 8 * sy;
 
-		sx -= 16; // offset
+		if (!set2) {
+			sx -= 16; // offset
+			sy -= 16;
+		}
 
 		INT32 code = DrvGfxROM3[offs + ( backgroundpage * 1024 )]
 				+ ((( DrvGfxROM3[offs + 0x4000 + ( backgroundpage * 1024 )] & 0xc0 ) >> 6 ) * 256 );
@@ -567,7 +576,8 @@ static void draw_text()
 		if (!screen_flipy) sy = (248 - sy) & 0xff;
 		if ( screen_flipx) sx = 31 - sx;
 
-		sx -= 2; // offset
+		if (!set2)
+			sx -= 2; // offset
 		sy -= 2*8; // offset
 
 		if (screen_flipy) {
@@ -596,7 +606,10 @@ static void draw_sprites()
 		INT32 color = DrvSprRAM[offs+2] & 0x1f;
 		INT32 sy = DrvSprRAM[offs] - 16;
 		INT32 sx = DrvSprRAM[offs+3] - 16;
-		sx += 16; //offset
+		if (!set2) {
+			sx += 16; //offset
+			sy -= 16;
+		}
 
 		if (sx && sy)
 		{
@@ -605,7 +618,7 @@ static void draw_sprites()
 
 			if (attr & 0x80) flipy ^= 1;
 
-			INT32 bank = (attr >> 6) & 1;
+			INT32 bank = ((attr & 0x40) >> 6) & 1;
 			if (bank) bank += spritebank;
 
 			INT32 code = (attr & 0x3f) + (bank * 0x40);
@@ -693,7 +706,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -701,7 +714,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -774,8 +787,122 @@ struct BurnDriver BurnDrvFightrol = {
 	"fightrol", NULL, NULL, NULL, "1983",
 	"Fighting Roller\0", NULL, "Kaneko (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, fightrolRomInfo, fightrolRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 240, 3, 4
 };
+
+//  Roller Aces (set 1)
+
+static struct BurnRomInfo RollaceRomDesc[] = {
+
+	{ "w1.8k", 0x2000, 0xc0bd3cf3, BRF_ESS | BRF_PRG },           //  0 Z80 #0 Code
+	{ "w2.8h", 0x2000, 0xc1900a75, BRF_ESS | BRF_PRG },           //  1
+	{ "w3.8f", 0x2000, 0x16ceced6, BRF_ESS | BRF_PRG },           //  2
+	{ "w4.8d", 0x2000, 0xae826a96, BRF_ESS | BRF_PRG },           //  3
+
+	{ "w3.7m", 0x2000, 0xf9970aae, BRF_GRA },                     //  4 Text Tiles
+	{ "w2.8m", 0x2000, 0x80573091, BRF_GRA },                     //  5
+	{ "w1.9m", 0x2000, 0xb37effd8, BRF_GRA },                     //  6
+
+	{ "6.20k", 0x2000, 0x003d7515, BRF_GRA },                     //  7 Road Tiles
+	{ "7.18k", 0x2000, 0x27843afa, BRF_GRA },                     //  8
+	{ "5.20f", 0x2000, 0x51dd0108, BRF_GRA },                     //  9
+
+	{ "w8.17m", 0x2000, 0xe2afe3a3, BRF_GRA },                    //  10 Sprites
+	{ "w9.17p", 0x2000, 0x8a8e6b62, BRF_GRA },                    //  11
+	{ "w10.17t", 0x2000, 0x70bf7b23, BRF_GRA },                   //  12
+	{ "11.18m", 0x2000, 0x06a5d849, BRF_GRA },                    //  13
+	{ "12.18r", 0x2000, 0x569815ef, BRF_GRA },                    //  14
+	{ "13.18t", 0x2000, 0x4f8af872, BRF_GRA },                    //  15
+	{ "14.19m", 0x2000, 0x93f3c649, BRF_GRA },                    //  16
+	{ "15.19r", 0x2000, 0x5b3d87e4, BRF_GRA },                    //  17
+	{ "16.19u", 0x2000, 0xa2c24b64, BRF_GRA },                    //  18
+
+	{ "1.17a", 0x2000, 0xf0fa72fc, BRF_GRA },                     //  19 Road Map
+	{ "3.18b", 0x2000, 0x954268f7, BRF_GRA },                     //  20
+	{ "2.17d", 0x2000, 0x2e38bb0e, BRF_GRA },                     //  21
+	{ "4.18d", 0x2000, 0x3d9e16ab, BRF_GRA },                     //  22
+
+	{ "tbp24s10.7u", 0x100, 0x9d199d33, BRF_GRA },                //  23 Color PROMs
+	{ "tbp24s10.7t", 0x100, 0xc0426582, BRF_GRA },                //  24
+	{ "tbp24s10.6t", 0x100, 0xc096e05c, BRF_GRA },                //  25
+
+	{ "8.6f", 0x1000, 0x6ec3c545, BRF_ESS | BRF_PRG },            //  26 Z80 #1 Code
+};
+
+STD_ROM_PICK(Rollace)
+STD_ROM_FN(Rollace)
+
+struct BurnDriver BurnDrvRollace = {
+	"rollace", "fightrol", NULL, NULL, "1983",
+	"Roller Aces (set 1)\0", NULL, "Kaneko (Williams license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE  | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	NULL, RollaceRomInfo, RollaceRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 240, 3, 4
+};
+
+INT32 Rollace2DrvInit()
+{
+	set2 = 1;
+
+	return DrvInit();
+}
+
+//  Roller Aces (set 2)
+
+static struct BurnRomInfo Rollace2RomDesc[] = {
+
+	{ "8k.764", 0x2000, 0xa7abff82, BRF_ESS | BRF_PRG },         //  0 Z80 #0 Code
+	{ "8h.764", 0x2000, 0x9716ba03, BRF_ESS | BRF_PRG },         //  1
+	{ "8f.764", 0x2000, 0x3eadb0e8, BRF_ESS | BRF_PRG },         //  2
+	{ "8d.764", 0x2000, 0xbaac14db, BRF_ESS | BRF_PRG },         //  3
+	{ "8c.764", 0x2000, 0xb418ce84, BRF_ESS | BRF_PRG },         //  4
+
+	{ "7m.764", 0x2000, 0x8b9b27af, BRF_GRA },                   //  5 Text Tiles
+	{ "8m.764", 0x2000, 0x2dfc38f2, BRF_GRA },                   //  6
+	{ "9m.764", 0x2000, 0x2e3a825b, BRF_GRA },                   //  7
+
+	{ "6.20k", 0x2000, 0x003d7515, BRF_GRA },                    //  8 Road Tiles
+	{ "7.18k", 0x2000, 0x27843afa, BRF_GRA },                    //  9
+	{ "5.20f", 0x2000, 0x51dd0108, BRF_GRA },                    //  10
+
+	{ "17n.764", 0x2000, 0x3365703c, BRF_GRA },                  //  11 Sprites
+	{ "9.17r", 0x2000, 0x69b23461, BRF_GRA },                    //  12
+	{ "17t.764", 0x2000, 0x5e84cc9b, BRF_GRA },                  //  13
+	{ "11.18m", 0x2000, 0x06a5d849, BRF_GRA },                   //  14
+	{ "12.18r", 0x2000, 0x569815ef, BRF_GRA },                   //  15
+	{ "13.18t", 0x2000, 0x4f8af872, BRF_GRA },                   //  16
+	{ "14.19m", 0x2000, 0x93f3c649, BRF_GRA },                   //  17
+	{ "15.19r", 0x2000, 0x5b3d87e4, BRF_GRA },                   //  18
+	{ "16.19u", 0x2000, 0xa2c24b64, BRF_GRA },                   //  19
+
+	{ "1.17a", 0x2000, 0xf0fa72fc, BRF_GRA },                    //  20 Road Map
+	{ "3.18b", 0x2000, 0x954268f7, BRF_GRA },                    //  21
+	{ "17d.764", 0x2000, 0x32e69320, BRF_GRA },                  //  22
+	{ "4.18d", 0x2000, 0x3d9e16ab, BRF_GRA },                    //  23
+
+	{ "tbp24s10.7u", 0x100, 0x9d199d33, BRF_GRA },               //  24 Color PROMs
+	{ "tbp24s10.7t", 0x100, 0xc0426582, BRF_GRA },               //  25
+	{ "tbp24s10.6t", 0x100, 0xc096e05c, BRF_GRA },               //  26
+
+	{ "8.6f", 0x1000, 0x6ec3c545, BRF_ESS | BRF_PRG },           //  27 Z80 #1 Code
+};
+
+STD_ROM_PICK(Rollace2)
+STD_ROM_FN(Rollace2)
+
+struct BurnDriver BurnDrvRollace2 = {
+	"rollace2", "fightrol", NULL, NULL, "1983",
+	"Roller Aces (set 2)\0", NULL, "Kaneko (Williams license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_16BIT_ONLY, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	NULL, Rollace2RomInfo, Rollace2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	Rollace2DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 240, 3, 4
+};
+
+

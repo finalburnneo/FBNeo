@@ -1962,31 +1962,26 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(bVBlank);
 
-                // March 29, 2014 - sound desync fix -> Burn[CHIP]Scan(); depending on hardware - dink
-                switch (PsikyoHardwareVersion) {
-                        case PSIKYO_HW_SAMURAIA:
-                        case PSIKYO_HW_GUNBIRD: {
-                            BurnYM2610Scan(nAction, pnMin);
-                            break;
-                        }
-                        case PSIKYO_HW_S1945:
-                        case PSIKYO_HW_TENGAI: {
-                            BurnYMF278BScan(nAction, pnMin);
-                            break;
-                        }
-                }
+		switch (PsikyoHardwareVersion) {
+			case PSIKYO_HW_SAMURAIA:
+				case PSIKYO_HW_GUNBIRD: {
+					BurnYM2610Scan(nAction, pnMin);
+					break;
+				}
+				case PSIKYO_HW_S1945:
+				case PSIKYO_HW_TENGAI: {
+					BurnYMF278BScan(nAction, pnMin);
+					break;
+				}
+		}
 
 		SCAN_VAR(nSoundlatch); SCAN_VAR(nSoundlatchAck);
 
 		SCAN_VAR(nPsikyoZ80Bank);
 
-                //TengaiMCUScan(nAction, pnMin);
-                // no! only call this if the game uses the TengaiMCU otherwise
-                // it'll change the tile banks to some strange value
-                // March 30, 2014: Fix for corrupted tiles after loading savestate in Samurai Aces - dink
-                if (PsikyoHardwareVersion == PSIKYO_HW_TENGAI || PsikyoHardwareVersion == PSIKYO_HW_S1945) {
-                    TengaiMCUScan(nAction, pnMin);
-                }
+		if (PsikyoHardwareVersion == PSIKYO_HW_TENGAI || PsikyoHardwareVersion == PSIKYO_HW_S1945) {
+			TengaiMCUScan(nAction, pnMin);
+		}
 
 		if (nAction & ACB_WRITE) {
 			int nBank = nPsikyoZ80Bank;

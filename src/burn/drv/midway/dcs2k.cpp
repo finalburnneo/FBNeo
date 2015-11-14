@@ -308,6 +308,8 @@ static void SetupMemory()
     Adsp2100MapDataHandler(6, 0x3FE0, 0x3FFF, MAP_READ | MAP_WRITE);
 }
 
+
+
 void Dcs2kMapSoundROM(void *ptr, int size)
 {
     pSoundROM = (UINT8*)ptr;
@@ -484,6 +486,11 @@ int Dcs2kDataRead()
 {
     dcs_log("data_r %x\n", nLatchControl);
     return nLatchControl;
+}
+
+int Dcs2kOutputData()
+{
+    return nOutputData;
 }
 
 

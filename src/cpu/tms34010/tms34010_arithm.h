@@ -521,9 +521,9 @@ void subxy_rs_rd(cpu_state *cpu, word opcode)
     if (_rsx == _rdx)
         _st |= ST_N;
     if (_rsy > _rdy)
-        _st |= ST_Z;
-    if (_rsy == _rdy)
         _st |= ST_C;
+    if (_rsy == _rdy)
+        _st |= ST_Z;
     if (_rsx > _rdx)
         _st |= ST_V;
 

@@ -27606,6 +27606,25 @@ struct BurnDriver BurnDrvsms_punpun = {
 	256, 192, 4, 3
 };
 
+// Waimanu: Scary Monsters Saga
+
+static struct BurnRomInfo sms_waimanuRomDesc[] = {
+	{ "WaimanuSMS.sms",	0x20000, 0x195c3f78, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_waimanu)
+STD_ROM_FN(sms_waimanu)
+
+struct BurnDriver BurnDrvsms_waimanu = {
+	"sms_WaimanuSMS", NULL, NULL, NULL, "2015",
+	"Waimanu: Scary Monsters Saga\0", NULL, "Disjointed Studio", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_waimanuRomInfo, sms_waimanuRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
 // Bruce Lee (Version 1.0)
 
 static struct BurnRomInfo sms_bruceleeRomDesc[] = {

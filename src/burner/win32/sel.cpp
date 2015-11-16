@@ -2,6 +2,10 @@
 // TreeView Version by HyperYagami
 #include "burner.h"
 
+// reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco)
+// don't reduce for these as we display them in the list (neogeo, neocdz)
+#define REDUCE_TOTAL_SETS_BIOS		7
+
 UINT_PTR nTimer					= 0;
 UINT_PTR nInitPreviewTimer		= 0;
 int nDialogSelect				= -1;										// The driver which this dialog selected
@@ -683,7 +687,7 @@ static int SelListMake()
 	// Update the status info
 	TCHAR szRomsAvailableInfo[128] = _T("");
 	
-	_stprintf(szRomsAvailableInfo, FBALoadStringEx(hAppInst, IDS_SEL_SETSTATUS, true), nTmpDrvCount, nBurnDrvCount - 3, nMissingDrvCount);
+	_stprintf(szRomsAvailableInfo, FBALoadStringEx(hAppInst, IDS_SEL_SETSTATUS, true), nTmpDrvCount, nBurnDrvCount - REDUCE_TOTAL_SETS_BIOS, nMissingDrvCount);
 	SendDlgItemMessage(hSelDlg, IDC_DRVCOUNT, WM_SETTEXT, 0, (LPARAM)(LPCTSTR)szRomsAvailableInfo);
 
 	return 0;

@@ -521,37 +521,43 @@ int VidSScaleImage(RECT* pRect, int nGameWidth, int nGameHeight, bool bVertScanl
 			}
 		}
 	} else {
-		if (bVidCorrectAspect) {					// Correct aspect ratio
-			int nWidthScratch;
-			nWidthScratch = nHeight * nVidScrnAspectY * nGameAspectX * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectY);
-			if (nWidthScratch > nWidth) {			// The image is too wide
-				if (nGameWidth < nGameHeight) {		// Vertical games
-					nHeight = nWidth * nVidScrnAspectY * nGameAspectY * nScrnWidth / (nScrnHeight * nVidScrnAspectX * nGameAspectX);
-				} else {							// Horizontal games
-					nHeight = nWidth * nVidScrnAspectX * nGameAspectY * nScrnHeight / (nScrnWidth * nVidScrnAspectY * nGameAspectX);
-				}
-			} else {
+		if (bVidCorrectAspect && !bVidScanlines) {					// Correct aspect ratio (integer)
+			nWidth = (float) ym * nGameHeight * nGameAspectX / nGameAspectY; // ym comes from int div, then always ym * nGameHeight =< nHeight
+			nHeight = (float) xm * nGameWidth * nGameAspectY / nGameAspectX; // xm comes from int div, then always xm * nGameWidth =< nWidth			
+			
+		} 
+		if (bVidCorrectAspectStretch) {    // Correct aspect ratio stretched
+			int nWidthScratch, nHeightScratch;
+			nWidthScratch = (float) nHeight * nGameAspectX / nGameAspectY;
+			nHeightScratch = (float) nWidth * nGameAspectY / nGameAspectX;			
+			
+			if (nWidthScratch > nWidth) { // Image too wide
+				nHeight = nHeightScratch;
+			} else {                      // Image too tall
 				nWidth = nWidthScratch;
 			}
-		} else {
-			if (xm && ym) {							// Don't correct aspect ratio
-				if (xm > ym) {
-					xm = ym;
+		} else {                           // Normal stretch
+			if (!bVidCorrectAspect) {
+				if (xm && ym) {
+					if (xm > ym) {
+						xm = ym;
+					} else {
+						ym = xm;
+					}
+					nWidth = nGameWidth * xm;
+					nHeight = nGameHeight * ym;
 				} else {
-					ym = xm;
-				}
-				nWidth = nGameWidth * xm;
-				nHeight = nGameHeight * ym;
-			} else {
-				if (xm) {
-					nWidth = nGameWidth * xm * nHeight / nGameHeight;
-				} else {
-					if (ym) {
-						nHeight = nGameHeight * ym * nWidth / nGameWidth;
+					if (xm) {
+						nWidth = nGameWidth * xm * nHeight / nGameHeight;
+					} else {
+						if (ym) {
+							nHeight = nGameHeight * ym * nWidth / nGameWidth;
+						}
 					}
 				}
 			}
 		}
+		
 	}
 
 	pRect->left = (pRect->right + pRect->left) / 2;

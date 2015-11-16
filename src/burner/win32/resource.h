@@ -432,6 +432,7 @@
 #define MENU_NOSTRETCH                  	10110
 #define MENU_STRETCH                    	10111
 #define MENU_ASPECT                     	10112
+#define MENU_ASPECT_STRETCH                	10113
 #define MENU_BLITTER_1						10121
 #define MENU_BLITTER_2						10122
 #define MENU_BLITTER_3						10123

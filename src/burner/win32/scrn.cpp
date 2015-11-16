@@ -1167,6 +1167,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_NOSTRETCH:
 			bVidCorrectAspect = 0;
 			bVidFullStretch = 0;
+			bVidCorrectAspectStretch = 0;
 			POST_INITIALISE_MESSAGE;
 			break;
 
@@ -1174,6 +1175,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bVidFullStretch = true;
 			if (bVidFullStretch) {
 				bVidCorrectAspect = 0;
+				bVidCorrectAspectStretch = 0;
 			}
 			POST_INITIALISE_MESSAGE;
 			break;
@@ -1182,6 +1184,16 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bVidCorrectAspect = true;
 			if (bVidCorrectAspect) {
 				bVidFullStretch = 0;
+				bVidCorrectAspectStretch = 0;
+			}
+			POST_INITIALISE_MESSAGE;
+			break;
+			
+		case MENU_ASPECT_STRETCH:
+			bVidCorrectAspectStretch = true;
+			if (bVidCorrectAspectStretch) {
+				bVidFullStretch = 0;
+				bVidCorrectAspect = 0;
 			}
 			POST_INITIALISE_MESSAGE;
 			break;

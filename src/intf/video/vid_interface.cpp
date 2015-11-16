@@ -57,6 +57,7 @@ INT32 nVidVerWidth	= 640, nVidVerHeight	= 480;	// Default Vertical oriented reso
 INT32 nVidFullscreen = 0;
 INT32 bVidFullStretch = 0;						// 1 = stretch to fill the entire window/screen
 INT32 bVidCorrectAspect = 1;						// 1 = stretch to fill the window/screen while maintaining the correct aspect ratio
+INT32 bVidCorrectAspectStretch = 0;					   // 1 = stretch to fill the window/screen while maintaining the correct aspect ratio
 INT32 bVidVSync = 0;								// 1 = sync blits/pageflips/presents to the screen
 INT32 bVidTripleBuffer = 0;						// 1 = use triple buffering
 INT32 bVidBilinear = 1;							// 1 = enable bi-linear filtering (D3D blitter)

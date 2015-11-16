@@ -102,7 +102,7 @@ int ConfigAppLoad()
 		FLT(nGamma);
 		VAR(bVidFullStretch);
 		VAR(bVidCorrectAspect);
-		
+		VAR(bVidCorrectAspectStretch);
 		VAR(bVidAutoSwitchFull);
 
 		VAR(bVidTripleBuffer);
@@ -381,8 +381,10 @@ int ConfigAppSave()
 	VAR(bVidAutoSwitchFull);
 	_ftprintf(h, _T("\n// If non-zero, allow stretching of the image to any size\n"));
 	VAR(bVidFullStretch);
-	_ftprintf(h, _T("\n// If non-zero, stretch the image to the largest size preserving aspect ratio\n"));
+	_ftprintf(h, _T("\n// If non-zero, stretch the image to the largest (integer) size preserving aspect ratio\n"));
 	VAR(bVidCorrectAspect);
+	_ftprintf(h, _T("\n// If non-zero, stretch the image to the largest size preserving aspect ratio\n"));
+	VAR(bVidCorrectAspectStretch);
 	_ftprintf(h, _T("\n// If non-zero, try to use a triple buffer in fullscreen\n"));
 	VAR(bVidTripleBuffer);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise blits with the display\n"));

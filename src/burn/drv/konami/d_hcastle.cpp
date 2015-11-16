@@ -1,5 +1,7 @@
 // FB Alpha Haunted Castle / Akuma-Jou Dracula driver module
 // Based on MAME driver by Bryan McPhail
+//
+// Todo: figure out crash on game-exit when refresh rate is set @ 59 in DrvInit()
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -208,9 +210,9 @@ void hcastle_write(UINT16 address, UINT8 data)
 
 		case 0x0408:
 		{
-			float t = konamiTotalCycles() * 1.19318167;
-			t -= ZetTotalCycles();
-			if (t > 1) ZetRun((INT32)t);
+//			float t = konamiTotalCycles() * 1.19318167;
+//			t -= ZetTotalCycles();
+//			if (t > 1) ZetRun((INT32)t);
 
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
@@ -509,6 +511,8 @@ static INT32 DrvInit()
 	K051649Init(3579545/2);
 	K051649SetRoute(0.45, BURN_SND_ROUTE_BOTH);
 
+	//BurnSetRefreshRate(59);  Causes crash-on-exit.  weird? hmm.
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -567,21 +571,28 @@ static void draw_layer(UINT8 *ram, UINT8 *ctrl, UINT8 *gfx, INT32 colbase, INT32
 		INT32 bank  = ((attr & 0x80) >> 7) | ((attr >> bit0) & 0x02) | ((attr >> bit1) & 0x04) | ((attr >> bit2) & 0x08) | ((attr >> bit3) & 0x10);
 
 		code += (bank << 8) + base;
+		sy -= 16; //offset
 
 		if (tilemap_flip) {
 			sx = 0xf8 - sx;
 			sy = 0xf8 - sy;
 
+			if (sx < -7 || sx >= nScreenWidth) continue;
+			if (sy < -7 || sy >= nScreenHeight) continue;
+
 			if (t) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy-16, color, 4, 0, 0, gfx);
+				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, gfx);
 			} else {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy-16, color, 4, 0, gfx);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, gfx);
 			}
 		} else {
+			if (sx < -7 || sx >= nScreenWidth) continue;
+			if (sy < -7 || sy >= nScreenHeight) continue;
+
 			if (t) {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy-16, color, 4, 0, 0, gfx);
+				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, gfx);
 			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy-16, color, 4, 0, gfx);
+				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, gfx);
 			}
 		}
 	}
@@ -630,6 +641,7 @@ static void draw_sprites(INT32 bank, UINT8 *source, UINT8 *ctrl, UINT8 *gfx, INT
 		{
 			INT32 yy = sy + y * 8;
 			INT32 ey = yflip ? (height-1-y) : y;
+			yy -= 16; //offset
 
 			for (INT32 x = 0; x < width; x++)
 			{
@@ -637,33 +649,35 @@ static void draw_sprites(INT32 bank, UINT8 *source, UINT8 *ctrl, UINT8 *gfx, INT
 				INT32 xx = sx + x * 8;
 
 				INT32 code = number + x_offset[ex] + y_offset[ey];
+				if (xx < -7 || xx >= nScreenWidth) continue;
+				if (yy < -7 || yy >= nScreenHeight) continue;
 
 				if (flipscreen) {
 					if (yflip ^ 0x20) {
 						if (xflip ^ 0x10) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 248-xx, (248-yy)-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
 						} else {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, 248-xx, (248-yy)-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
 						}
 					} else {
 						if (xflip ^ 0x10) {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, 248-xx, (248-yy)-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
 						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, code, 248-xx, (248-yy)-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_Clip(pTransDraw, code, 248-xx, (248-yy), color, 4, 0, 0, gfx);
 						}
 					}
 				} else {
 					if (yflip) {
 						if (xflip) {
-							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, xx, yy-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
 						} else {
-							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, xx, yy-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
 						}
 					} else {
 						if (xflip) {
-							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, xx, yy-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
 						} else {
-							Render8x8Tile_Mask_Clip(pTransDraw, code, xx, yy-16, color, 4, 0, 0, gfx);
+							Render8x8Tile_Mask_Clip(pTransDraw, code, xx, yy, color, 4, 0, 0, gfx);
 						}
 					}
 				}
@@ -747,15 +761,18 @@ static INT32 DrvFrame()
 
 	konamiNewFrame();
 	ZetNewFrame();
-
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
+	// soundcpu needs a small boost for the music to play at the correct speed.
+	INT32 nCyclesTotal[2] = { 3000000 / 60, (3579545+1000000) / 60 };
+	INT32 nInterleave = 30;
 
 	ZetOpen(0);
 	konamiOpen(0);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		konamiRun(nCyclesTotal[0] / nInterleave);
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+	}
 
-	konamiRun(nCyclesTotal[0]);
 	konamiSetIrqLine(KONAMI_IRQ_LINE, CPU_IRQSTATUS_AUTO);
-
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {

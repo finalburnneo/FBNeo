@@ -39,8 +39,8 @@ INCLUDE_AVI_RECORDING = 1
 # Include Toaplan sound sample hacks for games without MCU dumps
 TOAPLAN_SOUND_SAMPLES_HACK = 1
 
-# Include Killer Instinct driver (and associated files) - requires C++11 support
-#INCLUDE_KILLER_INSTINCT = 1
+# Include Files that require C++11 (Killer Instinct, Midway Mortal Kombat style drivers, and associated files) - requires C++11 support
+INCLUDE_CPLUSPLUS11_FILES = 1
 
 # Include symbols and other debug information in the executable
 #SYMBOL = 1

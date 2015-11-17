@@ -81,8 +81,8 @@ void kaneko_view2_draw_layer(INT32 chip, INT32 layer, INT32 priority)
 				INT32 flipy = (attr & 0x0001) ? 0xf0 : 0;
 				INT32 group = (attr & 0x0700) >> 8;
 
-				if (kaneko_view2_gfx_trans) {
-					if (kaneko_view2_gfx_trans[code]) continue;
+				if (kaneko_view2_gfx_trans[chip]) {
+					if (kaneko_view2_gfx_trans[chip][code]) continue;
 				}
 
 				if (group != priority) continue;
@@ -124,8 +124,8 @@ void kaneko_view2_draw_layer(INT32 chip, INT32 layer, INT32 priority)
 			INT32 flipy = (attr & 0x0001);
 			INT32 group = (attr & 0x0700) >> 8;
 
-			if (kaneko_view2_gfx_trans) {
-				if (kaneko_view2_gfx_trans[code]) continue;
+			if (kaneko_view2_gfx_trans[chip]) {
+				if (kaneko_view2_gfx_trans[chip][code]) continue;
 			}
 
 			if (tmflipy) {

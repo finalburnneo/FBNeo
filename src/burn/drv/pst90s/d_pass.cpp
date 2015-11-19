@@ -276,6 +276,7 @@ static INT32 DrvInit()
 	BurnYM2203Init(1, 3579545, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetPSGVolume(0, 0.10);
 
 	MSM6295Init(0, 792000 / 132, 1);
 	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
@@ -431,10 +432,10 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nSegment);
 
 		nSegment = nTotalCycles[1] / nInterleave;
-		BurnTimerUpdate(i * nSegment);
+		BurnTimerUpdate((i + 1) * nSegment);
 	}
+	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	BurnTimerEndFrame(nTotalCycles[1]);
 	
 	if (pBurnSoundOut) {

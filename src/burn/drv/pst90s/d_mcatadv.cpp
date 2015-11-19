@@ -871,6 +871,8 @@ static INT32 DrvFrame()
 	nCyclesTotal[1] = 4000000 / 60;
 	nCyclesDone[1 ] = 0;
 
+	INT32 nInterleave = 30;
+
 	SekNewFrame();
 	ZetNewFrame();
 	
@@ -884,7 +886,10 @@ static INT32 DrvFrame()
 		watchdog = 0;
 	}
 
-	SekRun(nCyclesTotal[0]);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		SekRun(nCyclesTotal[0] / nInterleave);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+	}
 	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrame(nCyclesTotal[1]);

@@ -3,7 +3,7 @@
 
 // to do:
 //	fix rambo alt sets inputs
-//	master of weapon title screen is incorrect
+//	master of weapon title screen is incorrect (only w/ffwd)
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -1523,6 +1523,8 @@ static const eeprom_interface taitob_eeprom_intf =
 
 static void bankswitch(UINT32, UINT32 data)
 {
+	if (ZetGetActive() == -1) return; // let's not crash
+
 	TaitoZ80Bank = data & 0x03;
 
 	ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
@@ -2059,7 +2061,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -2067,7 +2069,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029708;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = TaitoRamStart;
@@ -2083,7 +2085,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (sound_config == 0) {
 			BurnYM2610Scan(nAction, pnMin);
 		} else {
+			ZetOpen(0); // because of bankswitch() port callback.
 			BurnYM2203Scan(nAction, pnMin);
+			ZetClose();
 			MSM6295Scan(0, nAction);
 		}
 

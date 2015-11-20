@@ -3460,7 +3460,7 @@ static INT32 TetristInit()
 
 struct BurnDriver BurnDrvTetrist = {
 	"tetrist", "tetris", NULL, NULL, "1989",
-	"Tetris (Japan, B-System, YM2610)\0", NULL, "Sega", "Taito B System",
+	"Tetris (Japan, B-System, YM2610)\0", "buggy - use parent!", "Sega", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_PUZZLE, 0,
 	NULL, tetristRomInfo, tetristRomName, NULL, NULL, CommonInputInfo, TetristDIPInfo,

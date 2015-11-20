@@ -26,6 +26,7 @@ static UINT8 *RomZ80;
 static UINT8 *RomGfx01;
 static UINT8 *RomGfx02;
 static UINT8 *RomGfx03;
+static UINT8 *DrvOkiROM;
 
 static UINT8 *Ram68K;
 static UINT16 *RamBg00;
@@ -251,7 +252,8 @@ static INT32 MemIndex()
 	RomGfx01	= Next; Next += 0x020000 / 4 * 8;	// fg 8x8x4
 	RomGfx02	= Next; Next += 0xA00000 / 5 * 8;	// spr 16x16x5 sprite
 	RomGfx03	= Next; Next += 0x300000 / 6 * 8;	// bg 16x16x6 tile
-	MSM6295ROM	= Next; Next += 0x080000;
+	MSM6295ROM	= Next;
+	DrvOkiROM   = Next; Next += 0x080000;
 	
 	RamStart	= Next;
 	RamBg00		= (UINT16 *) Next; Next += 0x001000 * sizeof(UINT16);
@@ -434,6 +436,7 @@ void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
 		break;
 	case 0xE800:	// oki_bankswitch_w
 		bprintf(PRINT_NORMAL, _T("oki_bankswitch_w(%02X)\n"), d);
+		MSM6295ROM = DrvOkiROM + (d & 1) * 0x40000;
 		break;
 //	default:
 //		bprintf(PRINT_NORMAL, _T("Z80 address %04X -> %02X.\n"), a, d);
@@ -660,7 +663,7 @@ static INT32 shadfrceInit()
 	loadDecodeGfx02();
 	loadDecodeGfx03();
 
-	BurnLoadRom(MSM6295ROM, 14, 1);	
+	BurnLoadRom(DrvOkiROM, 14, 1);
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000

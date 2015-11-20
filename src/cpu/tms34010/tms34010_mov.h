@@ -23,6 +23,7 @@ void movb_rs_ird(cpu_state *cpu, word opcode)
 void movb_irs_rd(cpu_state *cpu, word opcode)
 {
     _rd = rdfield_8_sx(_rs);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(3);
@@ -50,6 +51,7 @@ void movb_irso_rd(cpu_state *cpu, word opcode)
 {
     _rd = rdfield_8_sx(_rs + wsign_ext(mem_read(_pc)));
     _pc += 16;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(5);
@@ -80,6 +82,7 @@ void movb_addr_rd(cpu_state *cpu, word opcode)
 {
     _rd = rdfield_8_sx(mem_read_d(_pc));
     _pc += 32;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(5);
@@ -101,6 +104,7 @@ void movb_saddr_daddr(cpu_state *cpu, word opcode)
 void move_rs_rd(cpu_state *cpu, word opcode)
 {
     _rd = _rs;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(1);
@@ -110,6 +114,7 @@ void move_rs_rd(cpu_state *cpu, word opcode)
 void move_rs_rd_a(cpu_state *cpu, word opcode)
 {
     cpu->b[RD_n].value = cpu->a[RS_n].value;
+    _st &= ~ST_V;
     update_zn(cpu->b[RD_n].value);
 
     CONSUME_CYCLES(1);
@@ -119,6 +124,7 @@ void move_rs_rd_a(cpu_state *cpu, word opcode)
 void move_rs_rd_b(cpu_state *cpu, word opcode)
 {
     cpu->a[RD_n].value = cpu->b[RS_n].value;
+    _st &= ~ST_V;
     update_zn(cpu->a[RD_n].value);
 
     CONSUME_CYCLES(1);
@@ -180,6 +186,7 @@ void move_rs_irdp_1(cpu_state *cpu, word opcode)
 void move_irs_rd_0(cpu_state *cpu, word opcode)
 {
     _rd = rdfield0(_rs);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(3);
@@ -189,6 +196,7 @@ void move_irs_rd_0(cpu_state *cpu, word opcode)
 void move_irs_rd_1(cpu_state *cpu, word opcode)
 {
     _rd = rdfield1(_rs);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(3);
@@ -200,6 +208,7 @@ void move_mirs_rd_0(cpu_state *cpu, word opcode)
 {
     _rs -= FW0;
     _rd = rdfield0(_rs);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(4);
@@ -210,6 +219,7 @@ void move_mirs_rd_1(cpu_state *cpu, word opcode)
 {
     _rs -= FW1;
     _rd = rdfield1(_rs);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(4);
@@ -218,8 +228,10 @@ void move_mirs_rd_1(cpu_state *cpu, word opcode)
 // MOVE *RS+, RD, 0
 void move_irsp_rd_0(cpu_state *cpu, word opcode)
 {
-    _rd = rdfield0(_rs);
+    dword data = rdfield0(_rs);
     _rs += FW0;
+    _rd = data;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(3);
@@ -229,8 +241,10 @@ void move_irsp_rd_0(cpu_state *cpu, word opcode)
 // MOVE *RS+, RD, 1
 void move_irsp_rd_1(cpu_state *cpu, word opcode)
 {
-    _rd = rdfield1(_rs);
+    dword data = rdfield1(_rs);
     _rs += FW1;
+    _rd = data;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(3);
@@ -256,8 +270,9 @@ void move_irs_ird_1(cpu_state *cpu, word opcode)
 void move_mirs_mird_0(cpu_state *cpu, word opcode)
 {
     _rs -= FW0;
+    sdword data = rdfield0(_rs);
     _rd -= FW0;
-    wrfield0(_rd, rdfield0(_rs));
+    wrfield0(_rd, data);
 
     CONSUME_CYCLES(4);
 }
@@ -267,8 +282,9 @@ void move_mirs_mird_0(cpu_state *cpu, word opcode)
 void move_mirs_mird_1(cpu_state *cpu, word opcode)
 {
     _rs -= FW1;
+    sdword data = rdfield1(_rs);
     _rd -= FW1;
-    wrfield1(_rd, rdfield1(_rs));
+    wrfield1(_rd, data);
 
     CONSUME_CYCLES(4);
 }
@@ -277,8 +293,8 @@ void move_mirs_mird_1(cpu_state *cpu, word opcode)
 void move_irsp_irdp_0(cpu_state *cpu, word opcode)
 {
     dword value = rdfield0(_rs);
-    wrfield0(_rd, value);
     _rs += FW0;
+    wrfield0(_rd, value);
     _rd += FW0;
 
     CONSUME_CYCLES(4);
@@ -288,8 +304,8 @@ void move_irsp_irdp_0(cpu_state *cpu, word opcode)
 void move_irsp_irdp_1(cpu_state *cpu, word opcode)
 {
     dword value = rdfield1(_rs);
-    wrfield1(_rd, value);
     _rs += FW1;
+    wrfield1(_rd, value);
     _rd += FW1;
 
     CONSUME_CYCLES(4);
@@ -318,6 +334,7 @@ void move_irso_rd_0(cpu_state *cpu, word opcode)
 {
     _rd = rdfield0(_rs + wsign_ext(mem_read(_pc)));
     _pc += 16;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(5);
@@ -328,6 +345,7 @@ void move_irso_rd_1(cpu_state *cpu, word opcode)
 {
     _rd = rdfield1(_rs + wsign_ext(mem_read(_pc)));
     _pc += 16;
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(5);
@@ -401,6 +419,7 @@ void move_saddr_rd_0(cpu_state *cpu, word opcode)
     dword addr = mem_read_d(_pc);
     _pc += 32;
     _rd = rdfield0(addr);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(5);
@@ -412,6 +431,7 @@ void move_saddr_rd_1(cpu_state *cpu, word opcode)
     dword addr = mem_read_d(_pc);
     _pc += 32;
     _rd = rdfield1(addr);
+    _st &= ~ST_V;
     update_zn(_rd);
 
     CONSUME_CYCLES(5);
@@ -490,7 +510,6 @@ void movi_il_rd(cpu_state *cpu, word opcode)
 void movx_rs_rd(cpu_state *cpu, word opcode)
 {
     _rdx = _rsx;
-
     CONSUME_CYCLES(1);
 }
 
@@ -498,7 +517,6 @@ void movx_rs_rd(cpu_state *cpu, word opcode)
 void movy_rs_rd(cpu_state *cpu, word opcode)
 {
     _rdy = _rsy;
-
     CONSUME_CYCLES(1);
 }
 
@@ -506,7 +524,6 @@ void movy_rs_rd(cpu_state *cpu, word opcode)
 void movk_k_rd(cpu_state *cpu, word opcode)
 {
     _rd = fw_lut[K];
-
     CONSUME_CYCLES(1);
 }
 

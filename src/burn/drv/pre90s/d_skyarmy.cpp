@@ -518,13 +518,13 @@ static void draw_sprites()
 		INT32 pal = BITSWAP08(DrvSprRAM[offs+2], 7, 6, 5, 4, 3, 0, 1, 2) & 7; // color (this particular setup is unusual)
 
 		INT32 sx    = DrvSprRAM[offs+3];		        // horizontal position -> start x
-		INT32 sy    = 240-DrvSprRAM[offs] - 8;		// vertical position -> start y
+		INT32 sy    = 240-(DrvSprRAM[offs] + 1) - 8;		// vertical position -> start y
 		INT32 flipy = (DrvSprRAM[offs+1]&0x80)>>7;	// flip tile vertically?
 		INT32 flipx = (DrvSprRAM[offs+1]&0x40)>>6;	// flip tile horizontally?
 		INT32 code  = DrvSprRAM[offs + 1] & 0x3f;		// which tile are we drawing?
 		if (sy < -7) sy += 256; // (256 = 32 * 8), -7 or the screen shows garbage at the sides
-		if (sx < -7) sx += 256; // (256 = 32 * 8), -7 or the screen shows garbage at the sides
-
+		if (sx < -7) sx += 256; // same as above, but do sx too.  this handles sprite/tile wrapping.
+		if (sy > 240) sy -= 256; // this kind of wrapping isn't as common or used in every game, but it's used here to fix the missing bridge heli when arriving at home base. -dink
 #if 0
 		drawgfx_transpen(bitmap,cliprect,screen->machine->gfx[1],
 			spriteram[offs+1]&0x3f, /* code! */

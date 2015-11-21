@@ -141,7 +141,7 @@ STDDIPINFO(Kbash2)
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
-static UINT8 *Ram01, *RamPal;
+static UINT8 *Ram01, *RamPal, *RamSnd;
 static UINT8 *RomSnd;
 
 static INT32 nColCount = 0x0800;
@@ -158,6 +158,7 @@ static INT32 MemIndex()
 	RamStart	= Next;
 	Ram01		= Next; Next += 0x004000;		// CPU #0 work RAM
 	RamPal		= Next; Next += 0x001000;		// palette
+	RamSnd		= Next; Next += 0x000100;		// sound work-ram
 	GP9001RAM[0]= Next; Next += 0x004000;
 	GP9001Reg[0]= (UINT16*)Next; Next += 0x0100 * sizeof(UINT16);
 	RamEnd		= Next;
@@ -165,6 +166,15 @@ static INT32 MemIndex()
 	MemEnd		= Next;
 
 	return 0;
+}
+
+static void oki_set_bank(INT32 bank)
+{
+	bank &= 1;
+	if (nPreviousOkiBank != bank) {
+		nPreviousOkiBank = bank;
+		memcpy (RomSnd + 0x000000, RomSnd + 0x40000 + (bank * 0x40000), 0x40000);
+	}
 }
 
 // Scan ram
@@ -177,7 +187,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	}
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd-RamStart;
 		ba.szName	= "All Ram";
 		BurnAcb(&ba);
@@ -193,7 +203,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		memcpy (RomSnd, RomSnd + 0x40000 + (nPreviousOkiBank * 0x40000), 0x40000);
+		INT32 nBank = nPreviousOkiBank;
+		nPreviousOkiBank = -1;
+		oki_set_bank(nBank);
 	}
 
 	return 0;
@@ -213,16 +225,7 @@ static INT32 LoadRoms()
 	return 0;
 }
 
-static void oki_set_bank(INT32 bank)
-{
-	bank &= 1;
-	if (nPreviousOkiBank != bank) {
-		nPreviousOkiBank = bank;
-		memcpy (RomSnd + 0x000000, RomSnd + 0x40000 + (bank * 0x40000), 0x40000);
-	}
-}
-
-UINT8 __fastcall kbash2ReadByte(UINT32 sekAddress)
+static UINT8 __fastcall kbash2ReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 
@@ -259,7 +262,7 @@ UINT8 __fastcall kbash2ReadByte(UINT32 sekAddress)
 	return 0;
 }
 
-UINT16 __fastcall kbash2ReadWord(UINT32 sekAddress)
+static UINT16 __fastcall kbash2ReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 
@@ -301,7 +304,7 @@ UINT16 __fastcall kbash2ReadWord(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall kbash2WriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall kbash2WriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 		case 0x200021:
@@ -321,7 +324,7 @@ void __fastcall kbash2WriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall kbash2WriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall kbash2WriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
 		case 0x300000:								// Set GP9001 VRAM address-pointer
@@ -357,8 +360,8 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 	MSM6295Reset(1);
 
-	nPreviousOkiBank = 0;
-	memcpy (RomSnd, RomSnd + 0x40000, 0x40000);//?
+	nPreviousOkiBank = -1;
+	oki_set_bank(0);
 
 	return 0;
 }
@@ -393,6 +396,7 @@ static INT32 DrvInit()
 		SekOpen(0);
 		SekMapMemory(Rom01,		0x000000, 0x07FFFF, MAP_ROM);
 		SekMapMemory(Ram01,		0x100000, 0x103FFF, MAP_RAM);
+		SekMapMemory(RamSnd,	0x104000, 0x1040FF, MAP_RAM);
 		SekMapMemory(RamPal,		0x400000, 0x400FFF, MAP_RAM);
 		SekSetReadWordHandler(0, 	kbash2ReadWord);
 		SekSetReadByteHandler(0, 	kbash2ReadByte);

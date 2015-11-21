@@ -3011,7 +3011,7 @@ struct BurnDriver BurnDrvAirduel = {
 	"airduel", NULL, NULL, NULL, "1990",
 	"Air Duel (World, M82-A-A + M82-B-A)\0", NULL, "Irem", "M82",
 	NULL, NULL, NULL, NULL,
-	BDF_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, airduelRomInfo, airduelRomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
 	airduelInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 384, 3, 4

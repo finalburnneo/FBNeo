@@ -285,6 +285,58 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 STD_ROM_PICK(Drvu)
 STD_ROM_FN(Drvu)
 
+static struct BurnRomInfo DrvuaRomDesc[] = {
+	{ "bmu01.12d",     0x08000, 0x793cf15f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "bmu02.13d",     0x10000, 0x6f1353d5, BRF_ESS | BRF_PRG }, //	 1
+	{ "bmu03.14d",     0x10000, 0x9e7c07f7, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+
+	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	
+	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
+	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
+	{ "bm17.12f",      0x08000, 0x46bcdd07, BRF_GRA },	     	 //  7
+	{ "bm18.14f",      0x08000, 0xe6ae7ba0, BRF_GRA },	     	 //  8
+	{ "bm19.10j",      0x08000, 0x868ababc, BRF_GRA },	     	 //  9
+	{ "bm20.11j",      0x08000, 0x0917e5d4, BRF_GRA },	     	 //  10
+	{ "bm21.12j",      0x08000, 0x9bfb0d89, BRF_GRA },	     	 //  11
+	{ "bm22.14j",      0x08000, 0x04f3c274, BRF_GRA },	     	 //  12
+	
+	{ "bm24.14k",      0x08000, 0x11134036, BRF_GRA },	     	 //  13	BG2 Tiles
+	{ "bm25.14l",      0x08000, 0x092cf9c1, BRF_GRA },	     	 //  14
+	
+	{ "bm06.10a",      0x08000, 0x97acc8af, BRF_GRA },	     	 //  15	Sprites
+	{ "bm07.11a",      0x08000, 0xd78f7197, BRF_GRA },	     	 //  16
+	{ "bm08.12a",      0x08000, 0x1a626608, BRF_GRA },	     	 //  17
+	{ "bm09.14a",      0x08000, 0x92408400, BRF_GRA },	     	 //  18
+	{ "bm10.10c",      0x08000, 0x8438a44a, BRF_GRA },	     	 //  19
+	{ "bm11.11c",      0x08000, 0x6c69351d, BRF_GRA },	     	 //  20
+	{ "bm12.12c",      0x08000, 0x5e7efdb7, BRF_GRA },	     	 //  21
+	{ "bm13.14c",      0x08000, 0x1143829a, BRF_GRA },	     	 //  22
+		
+	{ "bm14.5f",       0x08000, 0x4d3c6401, BRF_GRA },	     	 //  23	Tilemaps
+	{ "bm23.8k",       0x08000, 0xa52aecbd, BRF_GRA },	     	 //  24
+	
+	{ "bm1.12a",       0x00100, 0x74421f18, BRF_GRA },	     	 //  25	PROMs
+	{ "bm2.13a",       0x00100, 0xac27541f, BRF_GRA },	     	 //  26
+	{ "bm3.14a",       0x00100, 0x251fb6ff, BRF_GRA },	     	 //  27
+	{ "bm5.7f",        0x00100, 0x206713d0, BRF_GRA },	     	 //  28
+	{ "bm10.7l",       0x00100, 0x33c2491c, BRF_GRA },	     	 //  29
+	{ "bm9.6l",        0x00100, 0xaeea4af7, BRF_GRA },	     	 //  30
+	{ "bm12.12m",      0x00100, 0xc18aa136, BRF_GRA },	     	 //  31
+	{ "bm11.12l",      0x00100, 0x405aae37, BRF_GRA },	     	 //  32
+	{ "bm8.8c",        0x00100, 0xc2010a9e, BRF_GRA },	     	 //  33
+	{ "bm7.7c",        0x00100, 0xb56f30c3, BRF_GRA },	     	 //  34
+	{ "bm4.12c",       0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
+	{ "bm6.4b",        0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
+	
+	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+};
+
+STD_ROM_PICK(Drvua)
+STD_ROM_FN(Drvua)
+
 static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "bm01b.12d",     0x08000, 0x363f9f3d, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "bm02b.13d",     0x10000, 0x7f0d7edc, BRF_ESS | BRF_PRG }, //	 1
@@ -1738,10 +1790,20 @@ struct BurnDriver BurnDrvNineteen43 = {
 
 struct BurnDriver BurnDrvNineteen43u = {
 	"1943u", "1943", NULL, NULL, "1987",
-	"1943: The Battle of Midway (US)\0", NULL, "Capcom", "Miscellaneous",
+	"1943: The Battle of Midway (US, Rev C)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x380, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvNineteen43ua = {
+	"1943ua", "1943", NULL, NULL, "1987",
+	"1943: The Battle of Midway (US)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x380, 224, 256, 3, 4
 };

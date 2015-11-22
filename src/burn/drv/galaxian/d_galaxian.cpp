@@ -9342,7 +9342,8 @@ void __fastcall ZigzagZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
+			if (!(a >= 0x5400 && a <= 0x70ff))
+				bprintf(PRINT_NORMAL, _T("Z80 #1 Write => %04X, %02X\n"), a, d);
 		}
 	}
 }
@@ -9459,6 +9460,7 @@ static INT32 ZigzagInit()
 	BurnFree(GalTempRom);
 	BurnFree(TempRom);
 	
+	GalRenderFrameFunction = ZigZagRenderFrame;
 	GalDrawBulletsFunction = NULL;
 	
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);

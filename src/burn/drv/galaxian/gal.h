@@ -175,6 +175,7 @@ void DambustrRenderFrame();
 void FantastcRenderFrame();
 void TimefgtrRenderFrame();
 void ScramblerRenderFrame();
+void ZigZagRenderFrame();
 
 // gal_run.cpp
 extern UINT8 GalInputPort0[8];

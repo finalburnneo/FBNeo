@@ -1228,6 +1228,18 @@ void GalDraw()
 	}
 }
 
+void ZigZagRenderFrame()
+{
+	BurnTransferClear();
+	GalCalcPaletteFunction();
+	if (GalRenderBackgroundFunction) GalRenderBackgroundFunction();
+	GalRenderBgLayer(GalVideoRam);
+	GalRenderSprites(&GalSpriteRam[0x40]);
+	GalRenderSprites(&GalSpriteRam[0x40 + 0x20]);
+	//if (GalDrawBulletsFunction) GalDrawBullets(&GalSpriteRam[0x60]);
+	BurnTransferCopy(GalPalette);
+}
+
 void DkongjrmRenderFrame()
 {
 	BurnTransferClear();

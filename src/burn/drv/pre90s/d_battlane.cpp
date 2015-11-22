@@ -493,9 +493,9 @@ static void draw_bg_layer()
 		INT32 sy = (offs / 0x20) * 16;
 
 		sx -= (scrollx + 8) & 0x1ff;
-		if (sx < -15) sx += 512;
+		if (sx < -7) sx += 512;
 		sy -= scrolly;
-		if (sy < -15) sy += 512;
+		if (sy < -7) sy += 512;
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 

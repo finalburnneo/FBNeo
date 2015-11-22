@@ -645,14 +645,10 @@ void MenuUpdate()
 		if (bVidCorrectAspect) {
 			var = MENU_ASPECT;
 		} else {
-			if (bVidCorrectAspectStretch) {
-				var = MENU_ASPECT_STRETCH;
-			} else {
-				var = MENU_NOSTRETCH;
-			}
+			var = MENU_NOSTRETCH;
 		}
 	}
-	CheckMenuRadioItem(hMenu, MENU_NOSTRETCH, MENU_ASPECT_STRETCH, var, MF_BYCOMMAND);
+	CheckMenuRadioItem(hMenu, MENU_NOSTRETCH, MENU_ASPECT, var, MF_BYCOMMAND);
 	CheckMenuItem(hMenu, MENU_STRETCH, bVidFullStretch ? MF_CHECKED : MF_UNCHECKED);
 
 	CheckMenuItem(hMenu, MENU_TRIPLE, bVidTripleBuffer ? MF_CHECKED : MF_UNCHECKED);

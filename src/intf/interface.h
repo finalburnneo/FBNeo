@@ -191,7 +191,6 @@ extern INT32 bVidScanDelay;
 extern INT32 nVidFeedbackIntensity;
 extern INT32 nVidFeedbackOverSaturation;
 extern INT32 bVidCorrectAspect;
-extern INT32 bVidCorrectAspectStretch;
 extern INT32 bVidArcaderes;
 
 extern INT32 bVidArcaderesHor;

@@ -840,14 +840,16 @@ static INT32 DrvDraw()
 	}
 		
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x1000;
+		pTransDraw[i] = 0x3f0;
 		DrvPrioBitmap[i] = 0;
 	}
 
 	for (INT32 i = 0; i < 4; i++)
 	{
-		draw_background(DrvVidRAM0, DrvGfxROM1, DrvScrollRAM0, i|0x8, 0x3000);
-		draw_background(DrvVidRAM1, DrvGfxROM2, DrvScrollRAM1, i|0x8, 0x5000);
+		if (!(DrvScrollRAM0[2] & 0x10))
+			draw_background(DrvVidRAM0, DrvGfxROM1, DrvScrollRAM0, i|0x8, 0x3000);
+		if (!(DrvScrollRAM1[2] & 0x10))
+			draw_background(DrvVidRAM1, DrvGfxROM2, DrvScrollRAM1, i|0x8, 0x5000);
 	}
 
 	draw_sprites();

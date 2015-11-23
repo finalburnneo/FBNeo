@@ -524,6 +524,8 @@ static INT32 DrvDoReset()
 
 	watchdog = 0;
 
+	HiscoreReset();
+
 	return 0;
 }
 
@@ -631,10 +633,10 @@ static INT32 DrvExit()
 
 static void draw_sprites()
 {
-	UINT16 *source = (UINT16*)DrvSprBuf;
+	UINT16 *finish = (UINT16*)DrvSprBuf;
+	UINT16 *source = finish + 0x2000-4;
 	UINT16 *vidregram = DrvVidRegs;
 	UINT16 *vidregbuf = DrvVidRegBuf;
-	UINT16 *finish = source + 0x2000-4;
 	UINT8 *prio = DrvPrioBitmap;
 	INT32 global_x = vidregram[0]-0x184;
 	INT32 global_y = vidregram[1]-0x1f1;
@@ -650,10 +652,13 @@ static void draw_sprites()
 		finish += 0x2000;
 	}
 
-	while (source < finish)
+	while (source >= finish)
 	{
 		INT32 attr   = BURN_ENDIAN_SWAP_INT16(source[0]);
 		INT32 pri    = attr >> 14;
+
+		pri |= 0x8;
+
 		INT32 pen    = (attr & 0x3f00) >> 4;
 		INT32 tileno =  BURN_ENDIAN_SWAP_INT16(source[1]);
 		INT32 x      =  BURN_ENDIAN_SWAP_INT16(source[2]) & 0x03ff;
@@ -692,14 +697,20 @@ static void draw_sprites()
 						drawxpos = x+xcnt-global_x;
 
 						if (drawxpos >= 0 && drawxpos < 320) {
-							if (prio[drawxpos] < pri) {
+							if (!(prio[drawxpos] & 0x10)) { // if we haven't already drawn a sprite pixel here (sprite masking)
+
 								if (offset >= 0xa00000) offset = 0;
 								pix = sprdata[offset >> 1];
 
 								if (offset & 1)  pix >>= 4;
 								pix &= 0x0f;
 
-								if (pix && drawxpos >= 0 && drawxpos < 320) destline[drawxpos] = pix | pen;
+								if (pix && drawxpos >= 0 && drawxpos < 320) {
+									if ((prio[drawxpos] < pri))
+										destline[drawxpos] = pix | pen;
+
+									prio[drawxpos] |= 0x10;
+								}
 							}
 						}
 						
@@ -710,7 +721,7 @@ static void draw_sprites()
 				}
 			}
 		}
-		source+=4;
+		source-=4;
 	}
 
 	return;
@@ -738,8 +749,9 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 				if (sy < -15 || sx < -15 || sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
 				INT32 offs = (((yscroll+y)&0x1f0) << 2) | (((xscroll+x)&0x1f0)>>3);
-
-				if ((BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 14) != priority) continue;
+				INT32 pri = BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 14;
+				pri |= 0x8;
+				if (pri != priority) continue;
 
 				INT32 code  = BURN_ENDIAN_SWAP_INT16(vidram[offs | 1]);
 				if (!code || code >= max_tile) continue;
@@ -788,13 +800,14 @@ static void draw_background(UINT8 *vidramsrc, UINT8 *gfxbase, UINT16 *scroll, IN
 		if (scroll[0] & 0x4000)	scrollx += BURN_ENDIAN_SWAP_INT16(vidram[0x0800 + (scrolly * 2) + 0]);
 
 		INT32 srcy = (scrolly & 0x1ff) >> 4;
-		INT32 srcx = (scrollx & 0x1ff) >> 4;	
+		INT32 srcx = (scrollx & 0x1ff) >> 4;
 
 		for (INT32 x = 0; x < 336; x+=16)
 		{
 			INT32 offs = ((srcy << 5) | ((srcx + (x >> 4)) & 0x1f)) << 1;
-
-			if ((BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 14) != priority) continue;
+			INT32 pri = BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 14;
+			pri |= 0x8;
+			if (pri != priority) continue;
 
 			INT32 code  = BURN_ENDIAN_SWAP_INT16(vidram[offs | 1]);
 			if (!code || code >= max_tile) continue;
@@ -833,8 +846,8 @@ static INT32 DrvDraw()
 
 	for (INT32 i = 0; i < 4; i++)
 	{
-		draw_background(DrvVidRAM0, DrvGfxROM1, DrvScrollRAM0, i, 0x3000);
-		draw_background(DrvVidRAM1, DrvGfxROM2, DrvScrollRAM1, i, 0x5000);
+		draw_background(DrvVidRAM0, DrvGfxROM1, DrvScrollRAM0, i|0x8, 0x3000);
+		draw_background(DrvVidRAM1, DrvGfxROM2, DrvScrollRAM1, i|0x8, 0x5000);
 	}
 
 	draw_sprites();
@@ -975,7 +988,7 @@ struct BurnDriver BurnDrvMcatadv = {
 	"mcatadv", NULL, NULL, NULL, "1993",
 	"Magical Cat Adventure\0", NULL, "Wintechno", "LINDA",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, mcatadvRomInfo, mcatadvRomName, NULL, NULL, McatadvInputInfo, McatadvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	320, 224, 4, 3
@@ -1013,7 +1026,7 @@ struct BurnDriver BurnDrvMcatadvj = {
 	"mcatadvj", "mcatadv", NULL, NULL, "1993",
 	"Magical Cat Adventure (Japan)\0", NULL, "Wintechno", "LINDA",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, mcatadvjRomInfo, mcatadvjRomName, NULL, NULL, McatadvInputInfo, McatadvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	320, 224, 4, 3
@@ -1054,7 +1067,7 @@ struct BurnDriver BurnDrvCatt = {
 	"catt", "mcatadv", NULL, NULL, "1993",
 	"Catt (Japan)\0", NULL, "Wintechno", "LINDA",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, cattRomInfo, cattRomName, NULL, NULL, McatadvInputInfo, McatadvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	320, 224, 4, 3
@@ -1110,7 +1123,7 @@ struct BurnDriver BurnDrvNost = {
 	"nost", NULL, NULL, NULL, "1993",
 	"Nostradamus\0", NULL, "Face", "LINDA",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nostRomInfo, nostRomName, NULL, NULL, NostInputInfo, NostDIPInfo,
 	NostInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	224, 320, 3, 4
@@ -1148,7 +1161,7 @@ struct BurnDriver BurnDrvNostj = {
 	"nostj", "nost", NULL, NULL, "1993",
 	"Nostradamus (Japan)\0", NULL, "Face", "LINDA",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nostjRomInfo, nostjRomName, NULL, NULL, NostInputInfo, NostDIPInfo,
 	NostInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	224, 320, 3, 4
@@ -1186,7 +1199,7 @@ struct BurnDriver BurnDrvNostk = {
 	"nostk", "nost", NULL, NULL, "1993",
 	"Nostradamus (Korea)\0", NULL, "Face", "LINDA",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, nostkRomInfo, nostkRomName, NULL, NULL, NostInputInfo, NostDIPInfo,
 	NostInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1001,
 	224, 320, 3, 4

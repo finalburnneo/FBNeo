@@ -443,6 +443,50 @@ static struct BurnRomInfo OutrunraRomDesc[] = {
 STD_ROM_PICK(Outrunra)
 STD_ROM_FN(Outrunra)
 
+static struct BurnRomInfo OutrunehRomDesc[] = {
+	{ "enhanced_110_epr-10380b.133",   0x10000, 0x30d6ab84, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_110_epr-10382b.118",   0x10000, 0x62041a21, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_110_epr-10381b.132",   0x10000, 0xa3cc8db5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_110_epr-10383b.117",   0x10000, 0x21ab78a0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10327a.76",    0x10000, 0xe28a5baf, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10329a.58",    0x10000, 0xda131c81, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328a.75",    0x10000, 0xd5ec5e5d, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330a.57",    0x10000, 0xba9ec82a, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-10268.99",     0x08000, 0x95344b04, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10232.102",    0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10267.100",    0x08000, 0xa85bb823, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10231.103",    0x08000, 0x8908bcbf, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10266.101",    0x08000, 0x9f6f1a74, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10230.104",    0x08000, 0x686f5e50, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-10371.9",      0x20000, 0x7cc86208, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10373.10",     0x20000, 0xb0d26ac9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10375.11",     0x20000, 0x59b60bd7, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10377.12",     0x20000, 0x17a1b04a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10372.13",     0x20000, 0xb557078c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10374.14",     0x20000, 0x8051e517, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10376.15",     0x20000, 0xf3b8f318, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10378.16",     0x20000, 0xa1062984, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-10186.47",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+	{ "opr-10185.11",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "epr-10187.88",     0x08000, 0xa10abaa9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-10193.66",     0x08000, 0xbcd10dde, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10192.67",     0x08000, 0x770f1270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10191.68",     0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10190.69",     0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10189.70",     0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "enhanced_103_opr-10188.71",     0x08000, 0x37598616, SYS16_ROM_PCMDATA | BRF_SND }, // unofficial replacement for factory defective opr-10188
+};
+
+
+STD_ROM_PICK(Outruneh)
+STD_ROM_FN(Outruneh)
+
 static struct BurnRomInfo OutrundxRomDesc[] = {
 	{ "epr-10380.133",    0x10000, 0xe339e87a, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10382.118",    0x10000, 0x65248dd5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -633,6 +677,74 @@ static struct BurnRomInfo OutrundxaRomDesc[] = {
 
 STD_ROM_PICK(Outrundxa)
 STD_ROM_FN(Outrundxa)
+
+static struct BurnRomInfo OutrundxehRomDesc[] = {
+	{ "enhanced_103_epr-10380.133",    0x10000, 0x0e7db21f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_103_epr-10382.118",    0x10000, 0x4e1ded90, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_103_epr-10381.132",    0x10000, 0x5f8ef718, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "enhanced_103_epr-10383.117",    0x10000, 0x9794985b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-10327.76",     0x10000, 0xda99d855, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10329.58",     0x10000, 0xfe0fa5e2, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328.75",     0x10000, 0x3c0e9a7f, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330.57",     0x10000, 0x59786e99, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "opr-10268.99",     0x08000, 0x95344b04, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10232.102",    0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10267.100",    0x08000, 0xa85bb823, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10231.103",    0x08000, 0x8908bcbf, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10266.101",    0x08000, 0x9f6f1a74, SYS16_ROM_TILES | BRF_GRA },
+	{ "opr-10230.104",    0x08000, 0x686f5e50, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "epr-10194.26",     0x08000, 0xf0eda3bd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10203.38",     0x08000, 0x8445a622, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10212.52",     0x08000, 0xdee7e731, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10221.66",     0x08000, 0x43431387, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10195.27",     0x08000, 0x0de75cdd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10204.39",     0x08000, 0x5f4b5abb, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10213.53",     0x08000, 0x1d1b22f0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10222.67",     0x08000, 0xa254c706, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10196.28",     0x08000, 0x8688bb59, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10205.40",     0x08000, 0x74bd93ca, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10214.54",     0x08000, 0x57527e18, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10223.68",     0x08000, 0x3850690e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10197.29",     0x08000, 0x009165a6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10206.41",     0x08000, 0x954542c5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10215.55",     0x08000, 0x69be5a6c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10224.69",     0x08000, 0x5cffc346, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10198.30",     0x08000, 0xd894992e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10207.42",     0x08000, 0xca61cea4, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10216.56",     0x08000, 0xd394134d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10225.70",     0x08000, 0x0a5d1f2b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10199.31",     0x08000, 0x86376af6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10208.43",     0x08000, 0x6830b7fa, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10217.57",     0x08000, 0xbf2c9b76, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10226.71",     0x08000, 0x5a452474, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10200.32",     0x08000, 0x1e5d4f73, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10209.44",     0x08000, 0x5c15419e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10218.58",     0x08000, 0xdb4bdb39, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10227.72",     0x08000, 0xc7def392, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10201.33",     0x08000, 0x1d9d4b9c, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10210.45",     0x08000, 0x39422931, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10219.59",     0x08000, 0xe73b9224, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-10228.73",     0x08000, 0x25803978, SYS16_ROM_SPRITES | BRF_GRA },
+	
+	{ "opr-10186.47",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+	{ "opr-10185.11",     0x08000, 0x22794426, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "epr-10187.88",     0x08000, 0xa10abaa9, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "opr-10193.66",     0x08000, 0xbcd10dde, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10192.67",     0x08000, 0x770f1270, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10191.68",     0x08000, 0x20a284ab, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10190.69",     0x08000, 0x7cab70e2, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "opr-10189.70",     0x08000, 0x01366b54, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "enhanced_103_opr-10188.71",     0x08000, 0x37598616, SYS16_ROM_PCMDATA | BRF_SND }, // unofficial replacement for factory defective opr-10188
+};
+
+
+STD_ROM_PICK(Outrundxeh)
+STD_ROM_FN(Outrundxeh)
 
 static struct BurnRomInfo OutrunbRomDesc[] = {
 	{ "a-10.bin",         0x10000, 0xcddceea2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2079,6 +2191,16 @@ struct BurnDriver BurnDrvOutrunra = {
 	NULL, 0x3000, 320, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvOutruneh = {
+	"outruneh", "outrun", NULL, NULL, "2014",
+	"Out Run (sitdown/upright, Rev B) (Enhanced Edition v1.1.0)\0", NULL, "hack (Chris White)", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, OutrunehRomInfo, OutrunehRomName, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
+	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvOutrundx = {
 	"outrundx", "outrun", NULL, NULL, "1986",
 	"Out Run (deluxe sitdown)\0", NULL, "Sega", "Out Run",
@@ -2104,6 +2226,16 @@ struct BurnDriver BurnDrvOutrundxa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
 	NULL, OutrundxaRomInfo, OutrundxaRomName, NULL, NULL, OutrunInputInfo, OutrundxDIPInfo,
+	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
+	NULL, 0x3000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvOutrundxeh = {
+	"outrundxeh", "outrun", NULL, NULL, "2013",
+	"Out Run (deluxe sitdown) (Enhanced Edition v1.0.3)\0", NULL, "hack (Chris White)", "Out Run",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
+	NULL, OutrundxehRomInfo, OutrundxehRomName, NULL, NULL, OutrunInputInfo, OutrundxDIPInfo,
 	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

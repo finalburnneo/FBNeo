@@ -5805,7 +5805,7 @@ static struct BurnRomInfo ForgottnRomDesc[] = {
 	{ "lw_2.2b",       0x020000, 0x4bd75fee, BRF_GRA | CPS1_TILES },
 	{ "lw_1.2a",       0x020000, 0x65f41485, BRF_GRA | CPS1_TILES },
 	{ "lw-08.9b",      0x080000, 0x25a8e43c, BRF_GRA | CPS1_TILES },
-	{ "lw-18.5e",      0x020000, 0xb4b6241b, BRF_GRA | CPS1_TILES },
+	{ "lw_18.5e",      0x020000, 0xb4b6241b, BRF_GRA | CPS1_TILES },
 	{ "lw_17.5c",      0x020000, 0xc5eea115, BRF_GRA | CPS1_TILES },
 	{ "lw_30.8h",      0x020000, 0xb385954e, BRF_GRA | CPS1_TILES },
 	{ "lw_29.8f",      0x020000, 0x7bda1ac6, BRF_GRA | CPS1_TILES },

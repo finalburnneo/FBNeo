@@ -886,33 +886,33 @@ struct BurnDriver BurnDrvUmk3r10 = {
 // 2 On 2 Open Ice Challenge (rev 1.21)
 
 static struct BurnRomInfo openiceRomDesc[] = {
-	{ "oiceu54.bin",	0x080000, 0xe4225284, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "oiceu63.bin",	0x080000, 0x97d308a3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "open_ice_l1.21.u54",	0x080000, 0xe4225284, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "open_ice_l1.21.u63",	0x080000, 0x97d308a3, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "oiceu2.bin",		0x100000, 0x8adb5aab, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
-	{ "oiceu3.bin",		0x100000, 0x11c61ad6, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "oiceu4.bin",		0x100000, 0x04279290, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "oiceu5.bin",		0x100000, 0xe90ad61f, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "open_ice_l1.2.u2",	0x100000, 0x8adb5aab, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "open_ice_l1.u3",		0x100000, 0x11c61ad6, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "open_ice_l1.u4",		0x100000, 0x04279290, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "open_ice_l1.u5",		0x100000, 0xe90ad61f, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "oiceu133.bin",	0x100000, 0x8a81605c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
-	{ "oiceu132.bin",	0x100000, 0xcfdd6702, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
-	{ "oiceu131.bin",	0x100000, 0xcc428eb7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
-	{ "oiceu130.bin",	0x100000, 0x74c2d50c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+	{ "open_ice_l1.2.u133",	0x100000, 0x8a81605c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "open_ice_l1.2.u132",	0x100000, 0xcfdd6702, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "open_ice_l1.2.u131",	0x100000, 0xcc428eb7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "open_ice_l1.2.u130",	0x100000, 0x74c2d50c, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
 
-	{ "oiceu129.bin",	0x100000, 0x9e2ff012, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
-	{ "oiceu128.bin",	0x100000, 0x35d2e610, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
-	{ "oiceu127.bin",	0x100000, 0xbcbf19fe, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
-	{ "oiceu126.bin",	0x100000, 0x8e3106ae, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+	{ "open_ice_l1.2.u129",	0x100000, 0x9e2ff012, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "open_ice_l1.2.u128",	0x100000, 0x35d2e610, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "open_ice_l1.2.u127",	0x100000, 0xbcbf19fe, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "open_ice_l1.2.u126",	0x100000, 0x8e3106ae, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
 
-	{ "oiceu125.bin",	0x100000, 0xa7b54550, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
-	{ "oiceu124.bin",	0x100000, 0x7c02cb50, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
-	{ "oiceu123.bin",	0x100000, 0xd543bd9d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
-	{ "oiceu122.bin",	0x100000, 0x3744d291, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+	{ "open_ice_l1.u125",	0x100000, 0xa7b54550, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "open_ice_l1.u124",	0x100000, 0x7c02cb50, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "open_ice_l1.u123",	0x100000, 0xd543bd9d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "open_ice_l1.u122",	0x100000, 0x3744d291, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
-	{ "oiceu121.bin",	0x100000, 0xacd2f7c7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
-	{ "oiceu120.bin",	0x100000, 0x4295686a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
-	{ "oiceu119.bin",	0x100000, 0x948b9b27, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
-	{ "oiceu118.bin",	0x100000, 0x9eaaf93e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	{ "open_ice_l1.2.u121",	0x100000, 0xacd2f7c7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "open_ice_l1.2.u120",	0x100000, 0x4295686a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "open_ice_l1.2.u119",	0x100000, 0x948b9b27, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "open_ice_l1.2.u118",	0x100000, 0x9eaaf93e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 };
 
 STD_ROM_PICK(openice)
@@ -1177,33 +1177,33 @@ struct BurnDriver BurnDrvRmpgwt11 = {
 // WWF: Wrestlemania (rev 1.30 08/10/95)
 
 static struct BurnRomInfo wwfmaniaRomDesc[] = {
-	{ "wwf.54",	0x080000, 0xeeb7bf58, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "wwf.63",	0x080000, 0x09759529, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wwf_game_rom_l1.30.u54",	0x080000, 0xeeb7bf58, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "wwf_game_rom_l1.30.u63",	0x080000, 0x09759529, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "wwf.2",	0x100000, 0xa9acb250, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
-	{ "wwf.3",	0x100000, 0x9442b6c9, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "wwf.4",	0x100000, 0xcee78fac, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "wwf.5",	0x100000, 0x5b31fd40, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "wwf_music-spch_l1.u2",	0x100000, 0xa9acb250, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "wwf_music-spch_l1.u3",	0x100000, 0x9442b6c9, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "wwf_music-spch_l1.u4",	0x100000, 0xcee78fac, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "wwf_music-spch_l1.u5",	0x100000, 0x5b31fd40, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "wwf.133",	0x100000, 0x5e1b1e3d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
-	{ "wwf.132",	0x100000, 0x5943b3b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
-	{ "wwf.131",	0x100000, 0x0815db22, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
-	{ "wwf.130",	0x100000, 0x9ee9a145, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+	{ "wwf_image_rom_l1.u133",	0x100000, 0x5e1b1e3d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "wwf_image_rom_l1.u132",	0x100000, 0x5943b3b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "wwf_image_rom_l1.u131",	0x100000, 0x0815db22, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "wwf_image_rom_l1.u130",	0x100000, 0x9ee9a145, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
 
-	{ "wwf.129",	0x100000, 0xc644c2f4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
-	{ "wwf.128",	0x100000, 0xfcda4e9a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
-	{ "wwf.127",	0x100000, 0x45be7428, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
-	{ "wwf.126",	0x100000, 0xeaa276a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+	{ "wwf_image_rom_l1.u129",	0x100000, 0xc644c2f4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "wwf_image_rom_l1.u128",	0x100000, 0xfcda4e9a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "wwf_image_rom_l1.u127",	0x100000, 0x45be7428, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "wwf_image_rom_l1.u126",	0x100000, 0xeaa276a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
 
-	{ "wwf.125",	0x100000, 0xa19ebeed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
-	{ "wwf.124",	0x100000, 0xdc7d3dbb, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
-	{ "wwf.123",	0x100000, 0xe0ade56f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
-	{ "wwf.122",	0x100000, 0x2800c78d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+	{ "wwf_image_rom_l1.u125",	0x100000, 0xa19ebeed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "wwf_image_rom_l1.u124",	0x100000, 0xdc7d3dbb, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "wwf_image_rom_l1.u123",	0x100000, 0xe0ade56f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "wwf_image_rom_l1.u122",	0x100000, 0x2800c78d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
-	{ "wwf.121",	0x100000, 0xa28ffcba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
-	{ "wwf.120",	0x100000, 0x3a05d371, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
-	{ "wwf.119",	0x100000, 0x97ffa659, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
-	{ "wwf.118",	0x100000, 0x46668e97, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	{ "wwf_image_rom_l1.u121",	0x100000, 0xa28ffcba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "wwf_image_rom_l1.u120",	0x100000, 0x3a05d371, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "wwf_image_rom_l1.u119",	0x100000, 0x97ffa659, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "wwf_image_rom_l1.u118",	0x100000, 0x46668e97, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 };
 
 STD_ROM_PICK(wwfmania)
@@ -1223,33 +1223,33 @@ struct BurnDriver BurnDrvWwfmania = {
 // WWF: Wrestlemania (rev 1.20 08/02/95)
 
 static struct BurnRomInfo wwfmaniabRomDesc[] = {
-	{ "u54.bin",	0x080000, 0x1b2dce48, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "u63.bin",	0x080000, 0x1262f0bb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "wwf_game_rom_l1.20.u54",	0x080000, 0x1b2dce48, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "wwf_game_rom_l1.20.u63",	0x080000, 0x1262f0bb, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "wwf.2",	0x100000, 0xa9acb250, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
-	{ "wwf.3",	0x100000, 0x9442b6c9, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "wwf.4",	0x100000, 0xcee78fac, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "wwf.5",	0x100000, 0x5b31fd40, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "wwf_music-spch_l1.u2",	0x100000, 0xa9acb250, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "wwf_music-spch_l1.u3",	0x100000, 0x9442b6c9, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "wwf_music-spch_l1.u4",	0x100000, 0xcee78fac, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "wwf_music-spch_l1.u5",	0x100000, 0x5b31fd40, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "wwf.133",	0x100000, 0x5e1b1e3d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
-	{ "wwf.132",	0x100000, 0x5943b3b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
-	{ "wwf.131",	0x100000, 0x0815db22, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
-	{ "wwf.130",	0x100000, 0x9ee9a145, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+	{ "wwf_image_rom_l1.u133",	0x100000, 0x5e1b1e3d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "wwf_image_rom_l1.u132",	0x100000, 0x5943b3b2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "wwf_image_rom_l1.u131",	0x100000, 0x0815db22, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "wwf_image_rom_l1.u130",	0x100000, 0x9ee9a145, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
 
-	{ "wwf.129",	0x100000, 0xc644c2f4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
-	{ "wwf.128",	0x100000, 0xfcda4e9a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
-	{ "wwf.127",	0x100000, 0x45be7428, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
-	{ "wwf.126",	0x100000, 0xeaa276a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+	{ "wwf_image_rom_l1.u129",	0x100000, 0xc644c2f4, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "wwf_image_rom_l1.u128",	0x100000, 0xfcda4e9a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "wwf_image_rom_l1.u127",	0x100000, 0x45be7428, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "wwf_image_rom_l1.u126",	0x100000, 0xeaa276a8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
 
-	{ "wwf.125",	0x100000, 0xa19ebeed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
-	{ "wwf.124",	0x100000, 0xdc7d3dbb, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
-	{ "wwf.123",	0x100000, 0xe0ade56f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
-	{ "wwf.122",	0x100000, 0x2800c78d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+	{ "wwf_image_rom_l1.u125",	0x100000, 0xa19ebeed, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "wwf_image_rom_l1.u124",	0x100000, 0xdc7d3dbb, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "wwf_image_rom_l1.u123",	0x100000, 0xe0ade56f, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "wwf_image_rom_l1.u122",	0x100000, 0x2800c78d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
-	{ "wwf.121",	0x100000, 0xa28ffcba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
-	{ "wwf.120",	0x100000, 0x3a05d371, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
-	{ "wwf.119",	0x100000, 0x97ffa659, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
-	{ "wwf.118",	0x100000, 0x46668e97, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	{ "wwf_image_rom_l1.u121",	0x100000, 0xa28ffcba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "wwf_image_rom_l1.u120",	0x100000, 0x3a05d371, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "wwf_image_rom_l1.u119",	0x100000, 0x97ffa659, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "wwf_image_rom_l1.u118",	0x100000, 0x46668e97, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 };
 
 STD_ROM_PICK(wwfmaniab)

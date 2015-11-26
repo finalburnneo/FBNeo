@@ -2356,6 +2356,8 @@ static struct BurnRomInfo robokidRomDesc[] = {
 	{ "robokid.16a",	0x10000, 0x4e340815, 7 | BRF_GRA },           // 28
 	{ "robokid.17a",	0x10000, 0xf0863106, 7 | BRF_GRA },           // 29
 	{ "robokid.18a",	0x10000, 0xfdff7441, 7 | BRF_GRA },           // 30
+	
+	{ "prom82s129.cpu",	0x00100, 0x4dd96f67, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(robokid)
@@ -2412,6 +2414,8 @@ static struct BurnRomInfo robokidjRomDesc[] = {
 	{ "robokid.16a",	0x10000, 0x4e340815, 7 | BRF_GRA },           // 28
 	{ "robokid.17a",	0x10000, 0xf0863106, 7 | BRF_GRA },           // 29
 	{ "robokid.18a",	0x10000, 0xfdff7441, 7 | BRF_GRA },           // 30
+	
+	{ "prom82s129.cpu",	0x00100, 0x4dd96f67, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(robokidj)
@@ -2468,6 +2472,8 @@ static struct BurnRomInfo robokidj2RomDesc[] = {
 	{ "robokid.16a",	0x10000, 0x4e340815, 7 | BRF_GRA },           // 28
 	{ "robokid.17a",	0x10000, 0xf0863106, 7 | BRF_GRA },           // 29
 	{ "robokid.18a",	0x10000, 0xfdff7441, 7 | BRF_GRA },           // 30
+	
+	{ "prom82s129.cpu",	0x00100, 0x4dd96f67, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(robokidj2)

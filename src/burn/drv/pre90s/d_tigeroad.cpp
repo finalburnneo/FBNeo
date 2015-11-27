@@ -866,8 +866,8 @@ static void draw_background(INT32 priority)
 	{
 		for (INT32 x = 0; x < 8+1; x++)
 		{
-			INT32 sx = x + (scrollx >> 5);
-			INT32 sy = y + (scrolly >> 5);
+			INT32 sx = (x + (scrollx >> 5)) & 0x7f;
+			INT32 sy = (y + (scrolly >> 5)) & 0x7f;
 
 			INT32 ofst = ((sx & 7) << 1) + (((127 - sy) & 7) << 4) + ((sx >> 3) << 7) + (((127 - sy) >> 3) << 11);
 

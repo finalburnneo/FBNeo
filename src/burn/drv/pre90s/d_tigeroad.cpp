@@ -730,8 +730,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "f1dream")) { // all versions
+	if (!toramich) { // toramich has a low psg volume by default
 		BurnYM2203SetPSGVolume(0, 0.11);
 		BurnYM2203SetPSGVolume(1, 0.11);
 	}
@@ -959,8 +958,8 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x240 * 2; i+=2) {
 			palette_write(i);
-                }
-                DrvRecalc = 0;
+		}
+		DrvRecalc = 0;
 	}
 
 	memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
@@ -1085,9 +1084,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
-                if (toramich) {
-                    MSM5205Scan(nAction, pnMin);
-                }
+		if (toramich) {
+			MSM5205Scan(nAction, pnMin);
+		}
 	}
 
 	return 0;

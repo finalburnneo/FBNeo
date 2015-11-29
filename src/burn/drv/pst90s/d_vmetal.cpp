@@ -1,8 +1,5 @@
 // FB Alpha Varia Metal driver module
-// Based on MAME driver by 
-
-// There is a bug in the background scrolling of some levels
-// Also a bug in sprite drawing, flipped case? (see special shot)
+// Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -351,7 +348,7 @@ static INT32 DrvInit()
 	es8712SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1320000 / 132, 1);
-	MSM6295SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -415,7 +412,7 @@ static void draw_layer_16x16(UINT8 *ram, INT32 layer)
 		INT32 sy = (offs >> 8) << 4;
 
 		sx -= xscroll;
-		if (sx < -15) sx += 0x10000;
+		if (sx < -15) sx += 0x1000;
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
@@ -549,7 +546,6 @@ static void draw_sprites() // (metro)
 
 			INT32 width  = (((attr >> 11) & 0x7) + 1) * 8;
 			INT32 height = (((attr >>  8) & 0x7) + 1) * 8;
-
 			INT32 zoom = zoomtable[(y & 0xfc00) >> 10] << 8;
 
 			x = (x & 0x07ff)-64;
@@ -690,7 +686,7 @@ STD_ROM_FN(vmetal)
 
 struct BurnDriver BurnDrvVmetal = {
 	"vmetal", NULL, NULL, NULL, "1995",
-	"Varia Metal\0", "Imperfect graphics", "Excellent System", "Miscellaneous",
+	"Varia Metal\0", NULL, "Excellent System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, vmetalRomInfo, vmetalRomName, NULL, NULL, vmetalInputInfo, vmetalDIPInfo,
@@ -720,7 +716,7 @@ STD_ROM_FN(vmetaln)
 
 struct BurnDriver BurnDrvVmetaln = {
 	"vmetaln", "vmetal", NULL, NULL, "1995",
-	"Varia Metal (New Ways Trading Co.)\0", "Imperfect graphics", "Excellent System (New Ways Trading Co. license)", "Miscellaneous",
+	"Varia Metal (New Ways Trading Co.)\0", NULL, "Excellent System (New Ways Trading Co. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, vmetalnRomInfo, vmetalnRomName, NULL, NULL, vmetalInputInfo, vmetalDIPInfo,

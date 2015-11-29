@@ -332,7 +332,7 @@ static INT32 DrvInit()
 	SekMapMemory(DrvTXTRAM,		0x100000, 0x11ffff, MAP_RAM);
 	SekMapMemory(DrvMD1RAM,		0x120000, 0x13ffff, MAP_RAM);
 	SekMapMemory(DrvMD2RAM,		0x140000, 0x15ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x170000, 0x173fff, MAP_RAM); 
+	SekMapMemory(DrvPalRAM,		0x170000, 0x173fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,		0x174000, 0x177fff, MAP_RAM);
 	SekMapMemory(DrvTLUTRAM,	0x178000, 0x1787ff, MAP_RAM);
 	SekMapMemory(DrvVidRegs,	0x178800, 0x1797ff, MAP_RAM);
@@ -402,23 +402,24 @@ static void draw_layer_8x8()
 	}
 }
 
-static void draw_layer_16x16(UINT8 *ram, INT32 scrolloff)
+static void draw_layer_16x16(UINT8 *ram, INT32 layer)
 {
 	UINT16 *vram = (UINT16*)ram;
 	UINT16 *vlut = (UINT16*)DrvTLUTRAM;
-	UINT16 *scrl = (UINT16*)(DrvVidRegs + 0x6a + scrolloff);
+	UINT16 *scrl = (UINT16*)(DrvVidRegs + 0x70);
+	UINT16 xscroll = BURN_ENDIAN_SWAP_INT16(scrl[layer * 2 + 1]) & 0xfff;
 
 	for (INT32 offs = 0; offs < 256 * 256; offs++)
 	{
 		INT32 sx = (offs & 0xff) << 4;
 		INT32 sy = (offs >> 8) << 4;
 
-		sx -= BURN_ENDIAN_SWAP_INT16(scrl[0]) & 0xfff;
-		if (sx < -15) sx += 0x1000;
+		sx -= xscroll;
+		if (sx < -15) sx += 0x10000;
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 data  = BURN_ENDIAN_SWAP_INT16(vram[offs]);
+		INT32 data = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		if (data & 0x8000) continue;
 
 		INT32 index = (data & 0x7ff0) >> 3;
@@ -434,16 +435,16 @@ static void draw_layer_16x16(UINT8 *ram, INT32 scrolloff)
 
 static void RenderZoomedPriorityTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, INT32 prio)
 {
-	INT32 h = ((zoomy << 4) + 0x8000) >> 16;
-	INT32 w = ((zoomx << 4) + 0x8000) >> 16;
+	INT32 h = ((zoomy * 16) + 0x8000) / 0x10000;
+	INT32 w = ((zoomx * 16) + 0x8000) / 0x10000;
 
 	if (!h || !w || sx + w < 0 || sy + h < 0 || sx >= nScreenWidth || sy >= nScreenHeight) return;
 
-	if (fy) fy  = (height-1)*width;
-	if (fx) fy |= (width-1);
+	if (fy) fy = (height - 1);
+	if (fx) fx = (width - 1);
 
-	INT32 hz = (height << 12) / h;
-	INT32 wz = (width << 12) / w;
+	INT32 hz = (height * 0x1000) / h;
+	INT32 wz = (width * 0x1000) / w;
 
 	INT32 starty = 0, startx = 0, endy = h, endx = w;
 	if (sy < 0) starty = 0 - sy;
@@ -457,11 +458,16 @@ static void RenderZoomedPriorityTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32
 
 	for (INT32 y = starty; y < endy; y++)
 	{
-		INT32 zy = ((y * hz) >> 12) * width;
+		INT32 zy = (y * hz) / 0x1000;
+		if (fy) zy = fy - zy;
+		zy *= width;
 
 		for (INT32 x = startx; x < endx; x++)
 		{
-			INT32 pxl = src[(zy + ((x * wz) >> 12)) ^ fy];
+			INT32 zx = (x * wz) / 0x1000;
+			if (fx) zx = fx - zx;
+
+			INT32 pxl = src[zy + zx];
 
 			if (pxl != t) {
 				if ((pri[x] & prio) == 0) {
@@ -476,7 +482,7 @@ static void RenderZoomedPriorityTile(UINT16 *dest, UINT8 *gfx, INT32 code, INT32
 	}
 }
 
-static void draw_sprites() // metro_draw_sprites
+static void draw_sprites() // (metro)
 {
 	UINT16 *videoregs = (UINT16*)(DrvVidRegs + 0xf00);
 	UINT16 *spriteram = (UINT16*)DrvSprRAM;
@@ -570,15 +576,25 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	UINT16 *vregs = (UINT16*)(DrvVidRegs + 0xf00);
+	blackpen = BURN_ENDIAN_SWAP_INT16(vregs[0x12 / 2]);
+
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = blackpen;
 		DrvPriBmp[i] = 0;
 	}
 
-	draw_layer_16x16(DrvMD1RAM, 0x10);
-	draw_layer_16x16(DrvMD2RAM, 0x00); 
-	draw_sprites();
-	draw_layer_8x8();
+	UINT16 order = BURN_ENDIAN_SWAP_INT16(vregs[0x10 / 2]);
+
+	if (order == 0x24) {
+		if (nBurnLayer & 2) draw_layer_16x16(DrvMD2RAM, 2);
+		if (nBurnLayer & 1) draw_layer_16x16(DrvMD1RAM, 1);
+	} else {
+		if (nBurnLayer & 1) draw_layer_16x16(DrvMD1RAM, 1);
+		if (nBurnLayer & 2) draw_layer_16x16(DrvMD2RAM, 2);
+	}
+	if (nBurnLayer & 4) draw_sprites();
+	if (nBurnLayer & 8) draw_layer_8x8();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -598,12 +614,16 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
-
+	INT32 nInterleave = 256;
 	INT32 nTotalCycles = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 
 	SekOpen(0);
-	SekRun(nTotalCycles);
-	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+	for (INT32 i = 0; i < nInterleave; i++) {
+		SekRun(nTotalCycles / nInterleave);
+
+		if (i == (nInterleave - 1))
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+	}
 	SekClose();
 
 	if (pBurnSoundOut) {

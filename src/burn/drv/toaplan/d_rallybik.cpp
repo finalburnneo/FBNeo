@@ -73,6 +73,10 @@ static struct BurnDIPInfo RallybikDIPList[]=
 	{0x13, 0x01, 0x02, 0x00, "Off"				},
 	{0x13, 0x01, 0x02, 0x02, "On"				},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"     },
+	{0x13, 0x01, 0x04, 0x00, "Off"	            },
+	{0x13, 0x01, 0x04, 0x04, "On"		        },
+
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x13, 0x01, 0x08, 0x08, "Off"				},
 	{0x13, 0x01, 0x08, 0x00, "On"				},
@@ -607,8 +611,8 @@ STD_ROM_FN(rallybik)
 struct BurnDriver BurnDrvRallybik = {
 	"rallybik", NULL, NULL, NULL, "1988",
 	"Rally Bike / Dash Yarou\0", NULL, "[Toaplan] Taito Corporation", "Toaplan BCU-2 / FCU-2 based",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
+	L"Rally Bike\0\u30C0\u30C3\u30B7\u30E5\u91CE\u90CE\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW, 2, HARDWARE_TOAPLAN_RAIZING, GBF_RACING, 0,
 	NULL, rallybikRomInfo, rallybikRomName, NULL, NULL, RallybikInputInfo, RallybikDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4

@@ -83,6 +83,10 @@ static struct BurnDIPInfo SamesameDIPList[]=
 	{0x13, 0x01, 0x02, 0x00, "Off"			},
 	{0x13, 0x01, 0x02, 0x02, "On"			},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x13, 0x01, 0x04, 0x00, "Off"	},
+	{0x13, 0x01, 0x04, 0x04, "On"		},
+
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x13, 0x01, 0x08, 0x08, "Off"			},
 	{0x13, 0x01, 0x08, 0x00, "On"			},
@@ -129,6 +133,10 @@ static struct BurnDIPInfo Samesam2DIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x13, 0x01, 0x02, 0x00, "Off"			},
 	{0x13, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x13, 0x01, 0x04, 0x00, "Off"	},
+	{0x13, 0x01, 0x04, 0x04, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x13, 0x01, 0x08, 0x08, "Off"			},
@@ -180,6 +188,10 @@ static struct BurnDIPInfo FireshrkDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x13, 0x01, 0x02, 0x00, "Off"			},
 	{0x13, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x13, 0x01, 0x04, 0x00, "Off"	},
+	{0x13, 0x01, 0x04, 0x04, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x13, 0x01, 0x08, 0x08, "Off"			},
@@ -245,6 +257,10 @@ static struct BurnDIPInfo FireshrkaDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x13, 0x01, 0x02, 0x00, "Off"			},
 	{0x13, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x13, 0x01, 0x04, 0x00, "Off"	},
+	{0x13, 0x01, 0x04, 0x04, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x13, 0x01, 0x08, 0x08, "Off"			},
@@ -977,7 +993,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 	}
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= AllRam;
+		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -998,11 +1014,11 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(Start2);
 #endif
 
-                SCAN_VAR(nCyclesDone);
+		SCAN_VAR(nCyclesDone);
 		ToaScanBCU2(nAction, pnMin);
 
-                ToaRecalcPalette = 1;
-                bDrawScreen = true; // get background back ?
+		ToaRecalcPalette = 1;
+		bDrawScreen = true; // get background back ?
 	}
 
 	return 0;

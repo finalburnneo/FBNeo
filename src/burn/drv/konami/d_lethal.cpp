@@ -784,16 +784,16 @@ static struct BurnRomInfo lethalenRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethalenue.nv",	0x000080, 0x6e7224e6, 6 | BRF_OPT },           // 10 eeprom data
 };
@@ -819,16 +819,16 @@ static struct BurnRomInfo lethalenubRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethalenub.nv",	0x000080, 0x14c6c6e5, 6 | BRF_OPT },           // 10 eeprom data
 };
@@ -854,16 +854,16 @@ static struct BurnRomInfo lethalenuaRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethalenua.nv",	0x000080, 0xf71ad1c3, 6 | BRF_OPT },           // 10 eeprom data
 };
@@ -889,16 +889,16 @@ static struct BurnRomInfo lethalenuxRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethalenux.nv",	0x000080, 0x5d69c39d, 6 | BRF_OPT },           // 10 eeprom data
 };
@@ -917,6 +917,41 @@ struct BurnDriver BurnDrvLethalenux = {
 };
 
 
+// Lethal Enforcers (ver EAA, 09/09/92 09:44)
+
+static struct BurnRomInfo lethaleneaaRomDesc[] = {
+	{ "191_a01.u4",		0x040000, 0xc6f4d712, 1 | BRF_PRG | BRF_ESS }, //  0 HD6309 Code
+
+	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+
+	{ "lethaleneaa.nv",	0x000080, 0xa85d64ee, 6 | BRF_OPT },           // 10 eeprom data
+};
+
+STD_ROM_PICK(lethaleneaa)
+STD_ROM_FN(lethaleneaa)
+
+struct BurnDriver BurnDrvLethaleneaa = {
+	"lethaleneaa", "lethalen", NULL, NULL, "1992",
+	"Lethal Enforcers (ver EAA, 09/09/92 09:44)\0", NULL, "Konami", "GX191",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	NULL, lethaleneaaRomInfo, lethaleneaaRomName, NULL, NULL, LethalenInputInfo, LethalenDIPInfo,
+	LethalenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
 // Lethal Enforcers (ver EAB, 10/14/92 19:53)
 
 static struct BurnRomInfo lethaleneabRomDesc[] = {
@@ -924,16 +959,16 @@ static struct BurnRomInfo lethaleneabRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethaleneab.nv",	0x000080, 0x4e9bb34d, 6 | BRF_OPT },           // 10 eeprom data
 };
@@ -959,16 +994,16 @@ static struct BurnRomInfo lethaleneaeRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethaleneae.nv",	0x000080, 0xeb369a67, 6 | BRF_OPT },           // 10 eeprom data
 };
@@ -994,16 +1029,16 @@ static struct BurnRomInfo lethalenjRomDesc[] = {
 
 	{ "191a02.f4",		0x010000, 0x72b843cc, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "191a08",		0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
-	{ "191a10",		0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
-	{ "191a07",		0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
-	{ "191a09",		0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
+	{ "191a08",			0x100000, 0x555bd4db, 3 | BRF_GRA },           //  2 K056832 Characters
+	{ "191a10",			0x100000, 0x2fa9bf51, 3 | BRF_GRA },           //  3
+	{ "191a07",			0x100000, 0x1dad184c, 3 | BRF_GRA },           //  4
+	{ "191a09",			0x100000, 0xe2028531, 3 | BRF_GRA },           //  5
 
-	{ "191a05",		0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
-	{ "191a04",		0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
-	{ "191a06",		0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
+	{ "191a05",			0x100000, 0xf2e3b58b, 4 | BRF_GRA },           //  6 K053244 Sprites
+	{ "191a04",			0x100000, 0x5c3eeb2b, 4 | BRF_GRA },           //  7
+	{ "191a06",			0x100000, 0xee11fc08, 4 | BRF_GRA },           //  8
 
-	{ "191a03",		0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
+	{ "191a03",			0x200000, 0x9b13fbe8, 5 | BRF_SND },           //  9 K054539 Samples
 
 	{ "lethalenj.nv",	0x000080, 0x20b28f2f, 6 | BRF_OPT },           // 10 eeprom data
 };

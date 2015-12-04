@@ -8651,7 +8651,13 @@ static INT32 AcrobatmLoadCallback()
 
 static INT32 AcrobatmInit()
 {
-	return NMK004Init(AcrobatmLoadCallback, 10000000);
+	INT32 rc = NMK004Init(AcrobatmLoadCallback, 10000000);
+
+	if (!rc) {
+		MSM6295SetRoute(1, 0.18, BURN_SND_ROUTE_BOTH);
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvAcrobatm = {

@@ -26,6 +26,7 @@ static UINT8 *DrvTxRAM;
 static UINT8 *DrvFgRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvScrollRAM;
+static UINT8 *DrvPriBuf;
 static UINT32 *DrvPalette;
 
 static UINT8 DrvRecalc;
@@ -424,7 +425,7 @@ void __fastcall bloodbro_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
 		seibu_main_word_write(address, data);
-		return;	
+		return;
 	}
 }
 
@@ -432,19 +433,19 @@ void __fastcall bloodbro_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
 		seibu_main_word_write(address, data);
-		return;	
+		return;
 	}
 
 	if ((address & 0xfffff80) == 0xc0000) {
 		*((UINT16*)(DrvScrollRAM + (address & 0x7e))) = BURN_ENDIAN_SWAP_INT16(data);
-		return;	
+		return;
 	}
 }
 
 UINT8 __fastcall bloodbro_read_byte(UINT32 address)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
-		return seibu_main_word_read(address);	
+		return seibu_main_word_read(address);
 	}
 
 	return 0;
@@ -543,7 +544,7 @@ static INT32 MemIndex()
 
 	Drv68KRAM	= Next; Next += 0x00b800;
 	Drv68KRAM1	= Next; Next += 0x009000;
-	
+
 	DrvPalRAM	= Next; Next += 0x001000;
 	DrvSprRAM	= Next; Next += 0x001000;
 	DrvBgRAM	= Next; Next += 0x001000;
@@ -554,6 +555,8 @@ static INT32 MemIndex()
 
 	SeibuZ80RAM	= Next;
 	DrvZ80RAM	= Next; Next += 0x000800;
+
+	DrvPriBuf   = Next; Next += 256*256;
 
 	RamEnd		= Next;
 
@@ -579,11 +582,11 @@ static INT32 DrvInit()
 			if (BurnLoadRom(Drv68KROM + 0x000001, 1, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM + 0x040000, 2, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM + 0x040001, 3, 2)) return 1;
-	
+
 			if (BurnLoadRom(DrvZ80ROM + 0x000000, 4, 1)) return 1;
 			memcpy (DrvZ80ROM + 0x10000, DrvZ80ROM + 0x8000, 0x8000);
 			memcpy (DrvZ80ROM + 0x18000, DrvZ80ROM + 0x8000, 0x8000);
-	
+
 			UINT8 *pTemp = (UINT8*)BurnMalloc(0x10000);
 			if (BurnLoadRom(pTemp      + 0x00000, 5, 1)) return 1;
 			memcpy(DrvGfxROM0 + 0x00000, pTemp + 0x8000, 0x8000);
@@ -594,7 +597,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(pTemp      + 0x00000, 8, 1)) return 1;
 			memcpy(DrvGfxROM0 + 0x18000, pTemp + 0x8000, 0x8000);
 			BurnFree(pTemp);
-	
+
 			if (BurnLoadRom(DrvGfxROM1 + 0x20000, 9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1 + 0x60000,10, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1 + 0xa0000,11, 1)) return 1;
@@ -603,7 +606,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM1 + 0x40000,14, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1 + 0x80000,15, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM1 + 0xc0000,16, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM2 + 0x00000,17, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x20000,18, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x40000,19, 1)) return 1;
@@ -612,7 +615,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM2 + 0xa0000,22, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0xc0000,23, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0xe0000,24, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvSndROM + 0x000000,25, 1)) return 1;
 
 			DrvGfxDecode();
@@ -628,7 +631,7 @@ static INT32 DrvInit()
 		SekMapMemory(DrvTxRAM,			0x08d800, 0x08ffff, MAP_RAM);
 		SekMapMemory(Drv68KRAM  + 0xb000,       0x0c1000, 0x0c17ff, MAP_RAM);
 		SekMapMemory(Drv68KRAM1 + 0x0000,	0x120000, 0x127fff, MAP_RAM);
-		SekMapMemory(DrvPalRAM,			0x128000, 0x1287ff, MAP_RAM); 
+		SekMapMemory(DrvPalRAM,			0x128000, 0x1287ff, MAP_RAM);
 		SekMapMemory(Drv68KRAM1 + 0x8800,	0x128800, 0x128fff, MAP_RAM);
 		SekClose();
 
@@ -641,18 +644,18 @@ static INT32 DrvInit()
 			if (BurnLoadRom(Drv68KROM + 0x000001, 1, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM + 0x040000, 2, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM + 0x040001, 3, 2)) return 1;
-	
+
 			if (BurnLoadRom(DrvZ80ROM + 0x000000, 4, 1)) return 1;
 			memcpy (DrvZ80ROM + 0x10000, DrvZ80ROM + 0x8000, 0x8000);
 			memcpy (DrvZ80ROM + 0x18000, DrvZ80ROM + 0x8000, 0x8000);
-	
+
 			if (BurnLoadRom(DrvGfxROM0 + 0x00000, 5, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x10000, 6, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM1 + 0x00000, 7, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM2 + 0x00000, 8, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvSndROM + 0x000000, 9, 1)) return 1;
 
 			DrvGfxDecode();
@@ -701,6 +704,60 @@ static INT32 DrvExit()
 	return 0;
 }
 
+static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height)
+{
+	INT32 flip = 0;
+	if (flipy) flip |= (height - 1) * width;
+	if (flipx) flip |= width - 1;
+
+	gfx += code * width * height;
+
+	for (INT32 y = 0; y < height; y++, sy++) {
+		if (sy < 0 || sy >= nScreenHeight) continue;
+
+		for (INT32 x = 0; x < width; x++, sx++) {
+			if (sx < 0 || sx >= nScreenWidth) continue;
+
+			INT32 pxl = gfx[((y * width) + x) ^ flip];
+
+			if (pxl == trans_col) continue;
+
+			dest[sy * nScreenWidth + sx] = pxl | color;
+			DrvPriBuf[sy * nScreenWidth + sx] = 2;
+		}
+
+		sx -= width;
+	}
+}
+
+static void RenderSpritePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 prio)
+{
+	INT32 flip = 0;
+	if (flipy) flip |= (height - 1) * width;
+	if (flipx) flip |= width - 1;
+
+	gfx += code * width * height;
+
+	for (INT32 y = 0; y < height; y++, sy++) {
+		if (sy < 0 || sy >= nScreenHeight) continue;
+
+		for (INT32 x = 0; x < width; x++, sx++) {
+			if (sx < 0 || sx >= nScreenWidth) continue;
+
+			INT32 pxl = gfx[((y * width) + x) ^ flip];
+
+			if (pxl == trans_col) continue;
+
+			if ((DrvPriBuf[sy * nScreenWidth + sx] & (0x05 | prio)) == 0) {
+				dest[sy * nScreenWidth + sx] = pxl | color;
+				DrvPriBuf[sy * nScreenWidth + sx] |= (1 << prio);
+			}
+		}
+
+		sx -= width;
+	}
+}
+
 static void draw_layer(UINT8 *src, INT32 palette_offset, INT32 transp, INT32 scrollx, INT32 scrolly)
 {
 	UINT16 *vram = (UINT16*)src;
@@ -721,8 +778,10 @@ static void draw_layer(UINT8 *src, INT32 palette_offset, INT32 transp, INT32 scr
 		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12;
 
 		if (transp) {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, palette_offset, DrvGfxROM1);
+			//Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, palette_offset, DrvGfxROM1);
+			RenderTilePrio(pTransDraw, DrvGfxROM1, code, (color << 4) | palette_offset, 15, sx, sy, 0, 0, 16, 16);
 		} else {
+			// First (Opaque) BG layer - doesn't write to the Priority bitmap
 			Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, palette_offset, DrvGfxROM1);
 		}
 	}
@@ -749,11 +808,12 @@ static void draw_sprites(INT32 priority)
 {
 	UINT16 *ram = (UINT16*)DrvSprRAM;
 
-	for (INT32 offs = 0x800-4; offs >= 0; offs -= 4)
+	for (INT32 offs = 0; offs < 0x800; offs += 4)
 	{
 		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
-		INT32 prio = (attr & 0x0800) >> 11;
-		if (attr & 0x8000 || prio != priority) continue;
+		INT32 prio = (attr & 0x0800) ? 2 : 0;
+
+		if (attr & 0x8000) continue;
 
 		INT32 width   = (attr >> 7) & 7;
 		INT32 height  = (attr >> 4) & 7;
@@ -772,19 +832,10 @@ static void draw_sprites(INT32 priority)
 		{
 			for (INT32 y = 0; y <= height; y++)
 			{
-				if (flipy) {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx + 16*(width-x), sy + 16*(height-y), color, 4, 15, 0, DrvGfxROM2);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx + 16*x, sy + 16*(height-y), color, 4, 15, 0, DrvGfxROM2);
-					}
-				} else {
-					if (flipx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx + 16*(width-x), sy + 16*y, color, 4, 15, 0, DrvGfxROM2);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx + 16*x, sy + 16*y, color, 4, 15, 0, DrvGfxROM2);
-					}
-				}
+				INT32 syy = sy + 16 * ((flipy) ? (height - y) : y);
+				INT32 sxx = sx + 16 * ((flipx) ? (width - x) : x);
+
+				RenderSpritePrio(pTransDraw, DrvGfxROM2, code, (color << 4), 15, sxx, syy, flipx, flipy, 16, 16, prio);
 
 				code++;
 				code &= 0x1fff;
@@ -823,15 +874,16 @@ static INT32 DrvDraw()
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 	scroll += 0x10 >> (nGameSelect & 1); // skysmash
 
-	draw_layer(DrvBgRAM, 0x400, 0, BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0x0ff);
+	memset(DrvPriBuf, 0, 256 * 256);
 
-	draw_sprites(1);
+	BurnTransferClear();
+	if (nBurnLayer & 1) draw_layer(DrvBgRAM, 0x400, 0, BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0x0ff);
 
-	draw_layer(DrvFgRAM, 0x500, 1, BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0x0ff);
+	if (nBurnLayer & 2) draw_layer(DrvFgRAM, 0x500, 1, BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0x0ff);
 
-	draw_sprites(0);
+	if (nBurnLayer & 4) draw_sprites(0);
 
-	draw_text_layer();
+	if (nBurnLayer & 8) draw_text_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -859,7 +911,7 @@ static INT32 DrvFrame()
 			ram[0] = (DrvDips[1] << 8) | (DrvDips[0]);
 			ram[1] = DrvInputs[1];
 			ram[2] = DrvInputs[2];
-		} 
+		}
 
 		seibu_coin_input = (DrvJoy1[1] << 1) | DrvJoy1[0];
 	}
@@ -903,7 +955,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029706;
 	}

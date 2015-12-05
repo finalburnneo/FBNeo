@@ -521,7 +521,7 @@ static INT32 DrvInit()
 	AY8910Init(0, 1536000, nBurnSoundRate, &ay8910_0_read_port_A, &ay8910_0_read_port_B, NULL, NULL);
 	AY8910Init(1, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -620,7 +620,7 @@ static void draw_bitmap()
 	for (INT32 offs = 0+(16*32); offs < 0x2000-(16*32); offs++)
 	{
 		INT32 x = ((offs & 0x1f) << 3) + 7;
-		INT32 y = (offs >> 5) - 16;
+		INT32 y = (offs >> 5) + 16;
 
 		if (!gfxflip[0]) x = 255 - x;
 		if (!gfxflip[1]) y = 255 - y;
@@ -652,9 +652,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
-	draw_sprites();
-	draw_bitmap();
+	BurnTransferClear();
+	if (nBurnLayer & 1) draw_layer();
+	if (nBurnLayer & 2) draw_sprites();
+	if (nBurnLayer & 4) draw_bitmap();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -700,7 +701,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

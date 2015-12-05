@@ -610,7 +610,7 @@ static INT32 DrvDraw()
 {
 	*flipscreen = (*video_control & 0x80) ^ ((DrvDips[0] & 0x20) << 2);
 
-	if (1){//DrvRecalc) {
+	if (DrvRecalc) {
 		DrvPaletteUpdate(DrvColPROM, 0x20);
 		DrvRecalc = 0;
 	}

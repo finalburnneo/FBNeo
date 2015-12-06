@@ -859,6 +859,46 @@ struct BurnDriver BurnDrvXexex = {
 };
 
 
+// Orius (ver UAA)
+
+static struct BurnRomInfo oriusRomDesc[] = {
+	{ "067uaa01.16d",	0x040000, 0xf1263d3e, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "067uaa02.16f",	0x040000, 0x77709f64, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "067b03.13d",		0x040000, 0x97833086, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "067b04.13f",		0x040000, 0x26ec5dc8, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "067uaa05.4e",	0x020000, 0x0e33d6ec, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "067b14.1n",		0x100000, 0x02a44bfa, 3 | BRF_GRA },           //  5 K056832 Characters
+	{ "067b13.2n",		0x100000, 0x633c8eb5, 3 | BRF_GRA },           //  6
+
+	{ "067b12.17n",		0x100000, 0x08d611b0, 4 | BRF_GRA },           //  7 K056832 Sprites
+	{ "067b11.19n",		0x100000, 0xa26f7507, 4 | BRF_GRA },           //  8
+	{ "067b10.20n",		0x100000, 0xee31db8d, 4 | BRF_GRA },           //  9
+	{ "067b09.22n",		0x100000, 0x88f072ef, 4 | BRF_GRA },           // 10
+
+	{ "067b08.22f",		0x080000, 0xca816b7b, 5 | BRF_GRA },           // 11 K053250 Tiles
+
+	{ "067b06.3e",		0x200000, 0x3b12fce4, 6 | BRF_SND },           // 12 K054539 Samples
+	{ "067b07.1e",		0x100000, 0xec87fe1b, 6 | BRF_SND },           // 13
+
+	{ "er5911.19b",		0x000080, 0x547ee4e4, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
+};
+
+STD_ROM_PICK(orius)
+STD_ROM_FN(orius)
+
+struct BurnDriver BurnDrvOrius = {
+	"orius", "xexex", NULL, NULL, "1991",
+	"Orius (ver UAA)\0", NULL, "Konami", "GX067",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	NULL, oriusRomInfo, oriusRomName, NULL, NULL, XexexInputInfo, XexexDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	384, 256, 4, 3
+};
+
+
 // Xexex (ver AAA)
 
 static struct BurnRomInfo xexexaRomDesc[] = {
@@ -882,7 +922,7 @@ static struct BurnRomInfo xexexaRomDesc[] = {
 	{ "067b06.3e",		0x200000, 0x3b12fce4, 6 | BRF_SND },           // 12 K054539 Samples
 	{ "067b07.1e",		0x100000, 0xec87fe1b, 6 | BRF_SND },           // 13
 
-	{ "er5911.19b",	0x000080, 0x051c14c6, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
+	{ "er5911.19b",		0x000080, 0x051c14c6, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
 };
 
 STD_ROM_PICK(xexexa)
@@ -922,7 +962,7 @@ static struct BurnRomInfo xexexjRomDesc[] = {
 	{ "067b06.3e",		0x200000, 0x3b12fce4, 6 | BRF_SND },           // 12 K054539 Samples
 	{ "067b07.1e",		0x100000, 0xec87fe1b, 6 | BRF_SND },           // 13
 
-	{ "er5911.19b",	0x000080, 0x79a79c7b, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
+	{ "er5911.19b",		0x000080, 0x79a79c7b, 7 | BRF_PRG | BRF_ESS }, // 14 eeprom data
 };
 
 STD_ROM_PICK(xexexj)

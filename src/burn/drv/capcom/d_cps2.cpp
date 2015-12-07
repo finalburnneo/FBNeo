@@ -6454,6 +6454,38 @@ static struct BurnRomInfo Ssf2taRomDesc[] = {
 STD_ROM_PICK(Ssf2ta)
 STD_ROM_FN(Ssf2ta)
 
+static struct BurnRomInfo Ssf2thRomDesc[] = {
+	{ "sfxh.03c",      0x080000, 0xfbe80dfe, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxh.04a",      0x080000, 0xef9dd4b1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxh.05",       0x080000, 0x09e56ecc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxh.06a",      0x080000, 0xe6f210be, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxh.07",       0x080000, 0x900ba1a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxh.08",       0x080000, 0xc15f0424, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "sfxh.09",       0x080000, 0x5b92b3f9, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "sfx.13m",       0x200000, 0xcf94d275, CPS2_GFX | BRF_GRA },
+	{ "sfx.15m",       0x200000, 0x5eb703af, CPS2_GFX | BRF_GRA },
+	{ "sfx.17m",       0x200000, 0xffa60e0f, CPS2_GFX | BRF_GRA },
+	{ "sfx.19m",       0x200000, 0x34e825c5, CPS2_GFX | BRF_GRA },
+	{ "sfx.14m",       0x100000, 0xb7cc32e7, CPS2_GFX | BRF_GRA },
+	{ "sfx.16m",       0x100000, 0x8376ad18, CPS2_GFX | BRF_GRA },
+	{ "sfx.18m",       0x100000, 0xf5b1b336, CPS2_GFX | BRF_GRA },
+	{ "sfx.20m",       0x100000, 0x459d5c6b, CPS2_GFX | BRF_GRA },
+	{ "sfx.21m",       0x100000, 0xe32854af, CPS2_GFX | BRF_GRA },
+	{ "sfx.23m",       0x100000, 0x760f2927, CPS2_GFX | BRF_GRA },
+	{ "sfx.25m",       0x100000, 0x1ee90208, CPS2_GFX | BRF_GRA },
+	{ "sfx.27m",       0x100000, 0xf814400f, CPS2_GFX | BRF_GRA },
+
+	{ "sfx.01",        0x020000, 0xb47b8835, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "sfx.02",        0x020000, 0x0022633f, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
+	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Ssf2th)
+STD_ROM_FN(Ssf2th)
+
 static struct BurnRomInfo Ssf2tuRomDesc[] = {
 	{ "sfxu.03e",      0x080000, 0xd6ff689e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "sfxu.04a",      0x080000, 0x532b5ffd, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9778,6 +9810,16 @@ struct BurnDriver BurnDrvCpsSsf2t = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Ssf2tRomInfo, Ssf2tRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSsf2th = {
+	"ssf2th", "ssf2t", NULL, NULL, "1994",
+	"Super Street Fighter II Turbo (super street fighter 2 X 940223 Hispanic)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Ssf2thRomInfo, Ssf2thRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

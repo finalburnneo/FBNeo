@@ -503,6 +503,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(54.25);
 	GenericTilesInit();
 
 	AllMem = NULL;
@@ -704,7 +705,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 120;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
+	INT32 nCyclesTotal[2] = { (16000000 * 100) / 5425, (8000000 * 100) / 5425 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -731,13 +732,14 @@ static INT32 DrvFrame()
 			} 
 		}
 
-		if (i == ((nInterleave/2)-1) && control_data & 0x0800) {
-			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-
+		if (i == ((nInterleave/2)-1)) {
 			if (K053246_is_IRQ_enabled()) {
 				xexex_objdma();
-				irq5_timer = 10; // guess
+				irq5_timer = 5; // guess
 			}
+
+			if (control_data & 0x0800)
+				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;

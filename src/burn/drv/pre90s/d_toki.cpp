@@ -1379,25 +1379,25 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Toki (World set 1)
 
 static struct BurnRomInfo tokiRomDesc[] = {
-	{ "l10_6.bin",			0x20000, 0x94015d91, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "k10_4e.bin",			0x20000, 0x531bd3ef, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tokijp.005",			0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6e.m10",				0x20000, 0x94015d91, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4e.k10",				0x20000, 0x531bd3ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.m12",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.k12",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tokijp.008",			0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
-	{ "tokijp.007",			0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.m3",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7.m7",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tokijp.001",			0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
-	{ "tokijp.002",			0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "1.c5",				0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
+	{ "2.c3",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
-	{ "toki.ob1",			0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "toki.ob2",			0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
+	{ "toki_obj1.c20",		0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "toki.obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
 
-	{ "toki.bk1",			0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
+	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
 
-	{ "toki.bk2",			0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
+	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
-	{ "tokijp.009",			0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
+	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
 };
 
 STD_ROM_PICK(toki)
@@ -1417,25 +1417,25 @@ struct BurnDriver BurnDrvToki = {
 // Toki (World set 2)
 
 static struct BurnRomInfo tokiaRomDesc[] = {
-	{ "tokijp.006",			0x20000, 0x03d726b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "4c.10k",			0x20000, 0xb2c345c5, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tokijp.005",			0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6.m10",				0x20000, 0x03d726b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4c.k10",				0x20000, 0xb2c345c5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.m12",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.k12",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tokijp.008",			0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
-	{ "tokijp.007",			0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.m3",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7.m7",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tokijp.001",			0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
-	{ "tokijp.002",			0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "1.c5",				0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
+	{ "2.c3",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
-	{ "toki.ob1",			0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "toki.ob2",			0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
+	{ "toki_obj1.c20",		0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "toki_obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
 
-	{ "toki.bk1",			0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
+	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
 
-	{ "toki.bk2",			0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
+	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
-	{ "tokijp.009",			0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
+	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
 };
 
 STD_ROM_PICK(tokia)
@@ -1455,25 +1455,25 @@ struct BurnDriver BurnDrvTokia = {
 // Toki (US, set 1)
 
 static struct BurnRomInfo tokiuRomDesc[] = {
-	{ "6b.10m",			0x20000, 0x3674d9fe, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "14.10k",			0x20000, 0xbfdd48af, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tokijp.005",			0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6b.10m",				0x20000, 0x3674d9fe, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "14.10k",				0x20000, 0xbfdd48af, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.m12",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.k12",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tokijp.008",			0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
-	{ "tokijp.007",			0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.m3",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7.m7",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tokijp.001",			0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
-	{ "tokijp.002",			0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "1.c5",				0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
+	{ "2.c3",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
-	{ "toki.ob1",			0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "toki.ob2",			0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
+	{ "toki_obj1.c20",		0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "toki_obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
 
-	{ "toki.bk1",			0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
+	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
 
-	{ "toki.bk2",			0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
+	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
-	{ "tokijp.009",			0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
+	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
 };
 
 STD_ROM_PICK(tokiu)
@@ -1493,25 +1493,25 @@ struct BurnDriver BurnDrvTokiu = {
 // Toki (US, set 2)
 
 static struct BurnRomInfo tokiuaRomDesc[] = {
-	{ "tokijp.006",		    	0x20000, 0x03d726b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "4u.k10",			0x20000, 0xca2f50d9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tokijp.005",			0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6.m10",		    	0x20000, 0x03d726b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4u.k10",				0x20000, 0xca2f50d9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.m12",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.k12",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tokijp.008",			0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
-	{ "tokijp.007",			0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.m3",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7.m7",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tokijp.001",			0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
-	{ "tokijp.002",			0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "1.c5",				0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
+	{ "2.c3",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
-	{ "toki.ob1",			0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "toki.ob2",			0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
+	{ "toki_obj1.c20",		0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "toki_obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
 
-	{ "toki.bk1",			0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
+	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
 
-	{ "toki.bk2",			0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
+	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
-	{ "tokijp.009",			0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
+	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
 };
 
 STD_ROM_PICK(tokiua)
@@ -1531,25 +1531,25 @@ struct BurnDriver BurnDrvTokiua = {
 // JuJu Densetsu (Japan)
 
 static struct BurnRomInfo jujuRomDesc[] = {
-	{ "tokijp.006",			0x20000, 0x03d726b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tokijp.004",			0x20000, 0x54a45e12, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tokijp.005",			0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6.m10",				0x20000, 0x03d726b1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4.k10",				0x20000, 0x54a45e12, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.m12",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.k12",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tokijp.008",			0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
-	{ "tokijp.007",			0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.m3",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7.m7",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "tokijp.001",			0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
-	{ "tokijp.002",			0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "1.c5",				0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  6 Characters
+	{ "2.c3",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
-	{ "toki.ob1",			0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "toki.ob2",			0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
+	{ "toki_obj1.c20",		0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "toki_obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
 
-	{ "toki.bk1",			0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
+	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
 
-	{ "toki.bk2",			0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
+	{ "toki_bk2.ef8",		0x80000, 0xd86ac664, 6 | BRF_GRA },           // 11 Sprites
 
-	{ "tokijp.009",			0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
+	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
 };
 
 STD_ROM_PICK(juju)
@@ -1569,8 +1569,8 @@ struct BurnDriver BurnDrvJuju = {
 // JuJu Densetsu (Playmark bootleg)
 
 static struct BurnRomInfo jujubRomDesc[] = {
-	{ "jujub_playmark.e3",		0x20000, 0xb50c73ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "jujub_playmark.e5",		0x20000, 0xb2812942, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jujub_playmark.e3",	0x20000, 0xb50c73ec, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "jujub_playmark.e5",	0x20000, 0xb2812942, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "tokijp.005",			0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "tokijp.003",			0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
@@ -1626,48 +1626,48 @@ struct BurnDriver BurnDrvJujub = {
 // JuJu Densetsu (Japan, bootleg)
 
 static struct BurnRomInfo jujubaRomDesc[] = {
-	{ "8.19g",			0x10000, 0x208fb08a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "5.19e",			0x10000, 0x722e5183, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "9.20g",			0x10000, 0xcb82cc33, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "6.20e",			0x10000, 0x826ab39d, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "10.21g",			0x10000, 0x6c7a3ffe, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "7.21e",			0x10000, 0xb0628230, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "8.19g",				0x10000, 0x208fb08a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "5.19e",				0x10000, 0x722e5183, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9.20g",				0x10000, 0xcb82cc33, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "6.20e",				0x10000, 0x826ab39d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "10.21g",				0x10000, 0x6c7a3ffe, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "7.21e",				0x10000, 0xb0628230, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "3.9c",			0x08000, 0x808f5e44, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code (encrypted)
-	{ "4.11c",			0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  7
+	{ "3.9c",				0x08000, 0x808f5e44, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 Code (encrypted)
+	{ "4.11c",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "5.19h",			0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  8 Characters
-	{ "6.20h",			0x10000, 0x86e87e48, 3 | BRF_GRA },           //  9
+	{ "5.19h",				0x10000, 0x8aa964a2, 3 | BRF_GRA },           //  8 Characters
+	{ "6.20h",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  9
 
-	{ "1.17d",			0x20000, 0xa027bd8e, 4 | BRF_GRA },           // 10 Background Tiles
-	{ "27.17b",			0x20000, 0x43a767ea, 4 | BRF_GRA },           // 11
-	{ "2.18d",			0x20000, 0x1aecc9d8, 4 | BRF_GRA },           // 12
-	{ "28.18b",			0x20000, 0xd65c0c6d, 4 | BRF_GRA },           // 13
-	{ "3.20d",			0x20000, 0xcedaccaf, 4 | BRF_GRA },           // 14
-	{ "29.20b",			0x20000, 0x013f539b, 4 | BRF_GRA },           // 15
-	{ "4.21d",			0x20000, 0x6a8e6e22, 4 | BRF_GRA },           // 16
-	{ "30.21b",			0x20000, 0x25d9a16c, 4 | BRF_GRA },           // 17
+	{ "1.17d",				0x20000, 0xa027bd8e, 4 | BRF_GRA },           // 10 Background Tiles
+	{ "27.17b",				0x20000, 0x43a767ea, 4 | BRF_GRA },           // 11
+	{ "2.18d",				0x20000, 0x1aecc9d8, 4 | BRF_GRA },           // 12
+	{ "28.18b",				0x20000, 0xd65c0c6d, 4 | BRF_GRA },           // 13
+	{ "3.20d",				0x20000, 0xcedaccaf, 4 | BRF_GRA },           // 14
+	{ "29.20b",				0x20000, 0x013f539b, 4 | BRF_GRA },           // 15
+	{ "4.21d",				0x20000, 0x6a8e6e22, 4 | BRF_GRA },           // 16
+	{ "30.21b",				0x20000, 0x25d9a16c, 4 | BRF_GRA },           // 17
 
-	{ "11.1j",			0x10000, 0x6ad15560, 5 | BRF_GRA },           // 18 Foreground Tiles
-	{ "12.2j",			0x10000, 0x68534844, 5 | BRF_GRA },           // 19
-	{ "13.4j",			0x10000, 0xf271be5a, 5 | BRF_GRA },           // 20
-	{ "14.5j",			0x10000, 0x5d4c187a, 5 | BRF_GRA },           // 21
-	{ "19.1l",			0x10000, 0x10afdf03, 5 | BRF_GRA },           // 22
-	{ "20.2l",			0x10000, 0x2dc54f41, 5 | BRF_GRA },           // 23
-	{ "21.4l",			0x10000, 0x946862a3, 5 | BRF_GRA },           // 24
-	{ "22.5l",			0x10000, 0xb45f5608, 5 | BRF_GRA },           // 25
+	{ "11.1j",				0x10000, 0x6ad15560, 5 | BRF_GRA },           // 18 Foreground Tiles
+	{ "12.2j",				0x10000, 0x68534844, 5 | BRF_GRA },           // 19
+	{ "13.4j",				0x10000, 0xf271be5a, 5 | BRF_GRA },           // 20
+	{ "14.5j",				0x10000, 0x5d4c187a, 5 | BRF_GRA },           // 21
+	{ "19.1l",				0x10000, 0x10afdf03, 5 | BRF_GRA },           // 22
+	{ "20.2l",				0x10000, 0x2dc54f41, 5 | BRF_GRA },           // 23
+	{ "21.4l",				0x10000, 0x946862a3, 5 | BRF_GRA },           // 24
+	{ "22.5l",				0x10000, 0xb45f5608, 5 | BRF_GRA },           // 25
 
-	{ "15.18j",			0x10000, 0xcb8b1d31, 6 | BRF_GRA },           // 26 Sprites
-	{ "16.19j",			0x10000, 0x81594e0a, 6 | BRF_GRA },           // 27
-	{ "17.20j",			0x10000, 0x4acd44ce, 6 | BRF_GRA },           // 28
-	{ "18.21j",			0x10000, 0x25cfe9c3, 6 | BRF_GRA },           // 29
-	{ "23.18l",			0x10000, 0x06c8d622, 6 | BRF_GRA },           // 30
-	{ "24.19l",			0x10000, 0x362a0506, 6 | BRF_GRA },           // 31
-	{ "25.20l",			0x10000, 0xbe064c4b, 6 | BRF_GRA },           // 32
-	{ "26.21l",			0x10000, 0xf8b5b38d, 6 | BRF_GRA },           // 33
+	{ "15.18j",				0x10000, 0xcb8b1d31, 6 | BRF_GRA },           // 26 Sprites
+	{ "16.19j",				0x10000, 0x81594e0a, 6 | BRF_GRA },           // 27
+	{ "17.20j",				0x10000, 0x4acd44ce, 6 | BRF_GRA },           // 28
+	{ "18.21j",				0x10000, 0x25cfe9c3, 6 | BRF_GRA },           // 29
+	{ "23.18l",				0x10000, 0x06c8d622, 6 | BRF_GRA },           // 30
+	{ "24.19l",				0x10000, 0x362a0506, 6 | BRF_GRA },           // 31
+	{ "25.20l",				0x10000, 0xbe064c4b, 6 | BRF_GRA },           // 32
+	{ "26.21l",				0x10000, 0xf8b5b38d, 6 | BRF_GRA },           // 33
 
-	{ "1.6a",			0x10000, 0x377153ad, 7 | BRF_SND },           // 34 oki
-	{ "2.7a",			0x10000, 0x093ca15d, 7 | BRF_SND },           // 35
+	{ "1.6a",				0x10000, 0x377153ad, 7 | BRF_SND },           // 34 oki
+	{ "2.7a",				0x10000, 0x093ca15d, 7 | BRF_SND },           // 35
 };
 
 STD_ROM_PICK(jujuba)

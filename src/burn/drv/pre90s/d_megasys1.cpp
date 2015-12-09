@@ -2755,8 +2755,11 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			SekMapMemory(DrvVidRegs,		0x0c0000, 0x0cffff, MAP_ROM /*MAP_WRITE*/);
 			SekMapMemory(DrvObjRAM,			0x0d2000, 0x0d3fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[0],		0x0e0000, 0x0e3fff, MAP_RAM);
+			SekMapMemory(DrvScrRAM[0],		0x0e4000, 0x0e7fff, MAP_RAM); // mirror
 			SekMapMemory(DrvScrRAM[1],		0x0e8000, 0x0ebfff, MAP_RAM);
+			SekMapMemory(DrvScrRAM[1],		0x0ec000, 0x0effff, MAP_RAM); // mirror
 			SekMapMemory(DrvScrRAM[2],		0x0f0000, 0x0f3fff, MAP_RAM);
+			SekMapMemory(DrvScrRAM[2],		0x0f4000, 0x0f7fff, MAP_RAM); // mirror
 			SekMapMemory(DrvPalRAM,			0x0f8000, 0x0f87ff, MAP_ROM /*MAP_WRITE*/);
 			SekMapMemory(Drv68KRAM0,		0x1c0000, 0x1cffff, MAP_RAM);
 			SekMapMemory(Drv68KRAM0,		0x1d0000, 0x1dffff, MAP_RAM);

@@ -2167,6 +2167,45 @@ struct BurnDriver BurnDrvNinjakd2b = {
 };
 
 
+// Ninja-Kid II / NinjaKun Ashura no Shou (set 4)
+// close to set 3
+
+static struct BurnRomInfo ninjakd2cRomDesc[] = {
+	{ "1.3U",			0x08000, 0x06096412, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.3T",			0x08000, 0x9ed9a994, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "nk2_03.rom",		0x08000, 0xad275654, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "nk2_04.rom",		0x08000, 0xe7692a77, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.3M",			0x08000, 0x800d4951, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "nk2_06.rom",		0x10000, 0xd3a18a79, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code (mc8123 encrypted)
+
+	{ "nk2_12.rom",		0x08000, 0xdb5657a9, 3 | BRF_GRA },           //  6 Foreground Tiles
+
+	{ "nk2_08.rom",		0x10000, 0x1b79c50a, 4 | BRF_GRA },           //  7 Sprite Tiles
+	{ "nk2_07.rom",		0x10000, 0x0be5cd13, 4 | BRF_GRA },           //  8
+
+	{ "nk2_11.rom",		0x10000, 0x41a714b3, 5 | BRF_GRA },           //  9 Background Tiles
+	{ "nk2_10.rom",		0x10000, 0xc913c4ab, 5 | BRF_GRA },           // 10
+
+	{ "nk2_09.rom",		0x10000, 0xc1d2d170, 6 | BRF_GRA },           // 11 Samples (8 bit unsigned)
+	
+	{ "ninjakd2.key",	0x02000, 0xec25318f, 7 | BRF_PRG | BRF_ESS }, // 12 mc8123 key
+};
+
+STD_ROM_PICK(ninjakd2c)
+STD_ROM_FN(ninjakd2c)
+
+struct BurnDriver BurnDrvNinjakd2c = {
+	"ninjakd2c", "ninjakd2", NULL, NULL, "1987",
+	"Ninja-Kid II / NinjaKun Ashura no Shou (set 4)\0", NULL, "UPL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, ninjakd2cRomInfo, ninjakd2cRomName, NULL, NULL, DrvInputInfo, RdactionDIPInfo,
+	Ninjakd2Init, DrvExit, DrvFrame, Ninjakd2Draw, DrvScan, &DrvRecalc, 0x300,
+	256, 192, 4, 3
+};
+
+
 // Rad Action / NinjaKun Ashura no Shou
 
 static struct BurnRomInfo rdactionRomDesc[] = {

@@ -1483,6 +1483,19 @@ static inline void megasys_palette_write(INT32 offset)
 	DrvPalette[(offset & 0x7fe)/2] = BurnHighCol(r,g,b,0);
 }
 
+#define RAM_WRITE_BYTE_MIRRORED(mask)				\
+	{                                   			\
+		Drv68KRAM0[(address & mask) | 0] = data;	\
+		Drv68KRAM0[(address & mask) | 1] = data;	\
+		return;						                \
+	}							                    \
+
+#define RAM_WRITE_WORD(mask)						\
+	{					                            \
+		*((UINT16*)(Drv68KRAM0 + (address & mask))) = BURN_ENDIAN_SWAP_INT16(data);	\
+		return;								        \
+	}									            \
+
 static void __fastcall megasys_palette_write_word(UINT32 address, UINT16 data)
 {
 	*((UINT16*)(DrvPalRAM + (address & 0x7fe))) = data;
@@ -1743,8 +1756,13 @@ static UINT16 __fastcall megasys1A_main_read_word(UINT32 address)
 
 static void __fastcall megasys1A_main_write_byte(UINT32 address, UINT8 data)
 {
+	if (address >= 0xf0000 && address <= 0xfffff) {
+		RAM_WRITE_BYTE_MIRRORED(0xffff)
+		return;
+	}
+
 	if (address & 0xfff00000) {
-		return SekWriteByte(address & 0xfffff, data);
+		SekWriteByte(address & 0xfffff, data);
 		return;
 	}
 
@@ -1757,8 +1775,13 @@ static void __fastcall megasys1A_main_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall megasys1A_main_write_word(UINT32 address, UINT16 data)
 {
+	if (address >= 0xf0000 && address <= 0xfffff) {
+		RAM_WRITE_WORD(0xffff)
+		return;
+	}
+
 	if (address & 0xfff00000) {
-		return SekWriteWord(address & 0xfffff, data);
+		SekWriteWord(address & 0xfffff, data);
 		return;
 	}
 
@@ -1825,6 +1848,11 @@ static UINT16 __fastcall megasys1B_main_read_word(UINT32 address)
 
 static void __fastcall megasys1B_main_write_byte(UINT32 address, UINT8 data)
 {
+	if (address >= 0x60000 && address <= 0x7ffff) {
+		RAM_WRITE_BYTE_MIRRORED(0x1ffff)
+		return;
+	}
+
 	if (address & 0xf00000) {
 		SekWriteByte(address & 0xfffff, data);
 		return;
@@ -1853,6 +1881,11 @@ static void __fastcall megasys1B_main_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall megasys1B_main_write_word(UINT32 address, UINT16 data)
 {
+	if (address >= 0x60000 && address <= 0x7ffff) {
+		RAM_WRITE_WORD(0x1ffff)
+		return;
+	}
+
 	if (address & 0xf00000) {
 		SekWriteWord(address & 0xfffff, data);
 		return;
@@ -1913,8 +1946,13 @@ static UINT16 __fastcall megasys1C_main_read_word(UINT32 address)
 
 static void __fastcall megasys1C_main_write_byte(UINT32 address, UINT8 data)
 {
+	if (address >= 0x1c0000 && address <= 0x1fffff) {
+		RAM_WRITE_BYTE_MIRRORED(0xffff)
+		return;
+	}
+
 	if (address & 0xffe00000) {
-		return SekWriteByte(address & 0x1fffff, data);
+		SekWriteByte(address & 0x1fffff, data);
 		return;
 	}
 
@@ -1936,8 +1974,13 @@ static void __fastcall megasys1C_main_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall megasys1C_main_write_word(UINT32 address, UINT16 data)
 {
+	if (address >= 0x1c0000 && address <= 0x1fffff) {
+		RAM_WRITE_WORD(0xffff)
+		return;
+	}
+
 	if (address & 0xffe00000) {
-		return SekWriteWord(address & 0x1fffff, data);
+		SekWriteWord(address & 0x1fffff, data);
 		return;
 	}
 
@@ -2708,7 +2751,7 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			SekMapMemory(DrvScrRAM[0],		0x090000, 0x093fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[1],		0x094000, 0x097fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[2],		0x098000, 0x09bfff, MAP_RAM);
-			SekMapMemory(Drv68KRAM0,		0x0f0000, 0x0fffff, MAP_RAM);
+			SekMapMemory(Drv68KRAM0,		0x0f0000, 0x0fffff, MAP_ROM); // writes handled in write handlers (mirrored bytes)
 			SekSetReadWordHandler(0,		megasys1A_main_read_word);
 			SekSetReadByteHandler(0,		megasys1A_main_read_byte);
 			SekSetWriteWordHandler(0,		megasys1A_main_write_word);
@@ -2732,7 +2775,7 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			SekMapMemory(DrvScrRAM[0],		0x050000, 0x053fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[1],		0x054000, 0x057fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[2],		0x058000, 0x05bfff, MAP_RAM);
-			SekMapMemory(Drv68KRAM0,		0x060000, 0x07ffff, MAP_RAM);
+			SekMapMemory(Drv68KRAM0,		0x060000, 0x07ffff, MAP_ROM); // writes handled in write handlers (mirrored bytes)
 			SekMapMemory(Drv68KROM0 + 0x40000,	0x080000, 0x0bffff, MAP_ROM);
 			SekSetReadWordHandler(0,		megasys1B_main_read_word);
 			SekSetReadByteHandler(0,		megasys1B_main_read_byte);
@@ -2761,10 +2804,10 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 			SekMapMemory(DrvScrRAM[2],		0x0f0000, 0x0f3fff, MAP_RAM);
 			SekMapMemory(DrvScrRAM[2],		0x0f4000, 0x0f7fff, MAP_RAM); // mirror
 			SekMapMemory(DrvPalRAM,			0x0f8000, 0x0f87ff, MAP_ROM /*MAP_WRITE*/);
-			SekMapMemory(Drv68KRAM0,		0x1c0000, 0x1cffff, MAP_RAM);
-			SekMapMemory(Drv68KRAM0,		0x1d0000, 0x1dffff, MAP_RAM);
-			SekMapMemory(Drv68KRAM0,		0x1e0000, 0x1effff, MAP_RAM);
-			SekMapMemory(Drv68KRAM0,		0x1f0000, 0x1fffff, MAP_RAM);
+			SekMapMemory(Drv68KRAM0,		0x1c0000, 0x1cffff, MAP_ROM); // writes handled in write handlers (mirrored bytes)
+			SekMapMemory(Drv68KRAM0,		0x1d0000, 0x1dffff, MAP_ROM);
+			SekMapMemory(Drv68KRAM0,		0x1e0000, 0x1effff, MAP_ROM);
+			SekMapMemory(Drv68KRAM0,		0x1f0000, 0x1fffff, MAP_ROM);
 			SekSetReadWordHandler(0,		megasys1C_main_read_word);
 			SekSetReadByteHandler(0,		megasys1C_main_read_byte);
 			SekSetWriteWordHandler(0,		megasys1C_main_write_word);

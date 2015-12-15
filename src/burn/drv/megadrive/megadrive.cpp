@@ -841,8 +841,6 @@ const UINT8 hcounts_32[] = {
 	0x08,0x08,0x08,0x09,0x09,0x09,0x0a,0x0a,0x0a,0x0b,0x0b,0x0b,0x0c,0x0c,0x0c,0x0d,
 };
 
-static UINT32 line_base_cycles = 0;
-
 UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 {
 	//bprintf(PRINT_NORMAL, _T("Video Attempt to read word value of location %x\n"), sekAddress);
@@ -874,7 +872,7 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 	
 	case 0x08: 	// H-counter info
 		{
-			/*UINT32 hc = 50;
+			UINT32 hc = 50;
 	
 			INT32 lineCycles = (cycles_68k - m68k_ICount) & 0x1ff;
 			res = Scanline; // V-Counter
@@ -901,17 +899,6 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 			res &= 0xff; 
 			res <<= 8;
 			res |= hc;
-			*/
-			UINT32 d;
-
-			d = (cycles_68k - m68k_ICount) & 0x1ff;
-			if (RamVReg->reg[12]&1)
-				d = hcounts_40[d];
-			else d = hcounts_32[d];
-
-			//elprintf(EL_HVCNT, "hv: %02x %02x (%i) @ %06x", d, Pico.video.v_counter, SekCyclesDone(), SekPc);
-			return d | (RamVReg->v_counter << 8);
-
 		}
 		break;
 		
@@ -4208,8 +4195,7 @@ INT32 MegadriveFrame()
 	INT32 done_z80 = 0;
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 total_68k_cycles, total_z80_cycles;
-	INT32 vcnt_wrap = 0;
-
+	
 	if( Hardware & 0x40 ) {
 		lines  = 313;
 		line_sample = 68;
@@ -4227,32 +4213,12 @@ INT32 MegadriveFrame()
 	cycles_z80 = total_z80_cycles / lines;
 
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
-	RamVReg->v_counter = 0;
 
 	BurnTimerUpdate(CYCLES_M68K_ASD); // needed for Double Dragon II
 
 	for (INT32 y=0; y<lines; y++) {
 
 		Scanline = y;
-
-		if (y < lines_vis) {
-			RamVReg->v_counter = y;
-			if ((RamVReg->reg[12]&6) == 6) { // interlace mode 2
-				RamVReg->v_counter <<= 1;
-				RamVReg->v_counter |= RamVReg->v_counter >> 8;
-				RamVReg->v_counter &= 0xff;
-			}
-		} else if (y == lines_vis) {
-			vcnt_wrap = (Hardware & 0x40) ? 0x103 : 0xEB; // based on Gens, TODO: verify
-		} else if (y > lines_vis) {
-			RamVReg->v_counter = y;
-			if (y >= vcnt_wrap)
-				RamVReg->v_counter -= (Hardware & 0x40) ? 56 : 6;
-			if ((RamVReg->reg[12]&6) == 6)
-				RamVReg->v_counter = (RamVReg->v_counter << 1) | 1;
-			RamVReg->v_counter &= 0xff;
-		}
-
 
 		/*if(PicoOpt&0x20)*/ {
 			// pad delay (for 6 button pads)
@@ -4264,7 +4230,7 @@ INT32 MegadriveFrame()
 		if((y <= lines_vis) && (--hint < 0)) { // y <= lines_vis: Comix Zone, Golden Axe
 			//dprintf("rhint:old @ %06x", SekPc);
 			hint = RamVReg->reg[10]; // Reload H-Int counter
-			RamVReg->pending_ints = 0x10;
+			RamVReg->pending_ints |= 0x10;
 			if (RamVReg->reg[0] & 0x10) {
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
@@ -4275,23 +4241,26 @@ INT32 MegadriveFrame()
 			//dprintf("vint: @ %06x [%i|%i]", SekPc, y, SekCycleCnt);
 			RamVReg->status |= 0x88; // V-Int happened, go into vblank
 			
-			line_base_cycles = SekTotalCycles();
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
-			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG + DMABURN() - cycles_68k);
+			SekIdle(DMABURN());
+			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG - cycles_68k);
 
-			RamVReg->pending_ints = 0x20;
+			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
 				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			}
 		}
 
 		// decide if we draw this line
-		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) /*&& y<240*/))
+		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240))
 			PicoLine(y);
 
-		line_base_cycles = SekTotalCycles();
 		// Run scanline
-		BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG + DMABURN());
+		if (y == lines_vis) {
+			BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
+		} else {
+			BurnTimerUpdate((y + 1) * cycles_68k);
+		}
 
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);

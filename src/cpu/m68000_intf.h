@@ -134,6 +134,7 @@ void SekSetCyclesScanline(INT32 nCycles);
 void SekClose();
 void SekOpen(const INT32 i);
 INT32 SekGetActive();
+INT32 SekShouldInterrupt(void);
 
 #define SEK_IRQSTATUS_NONE (0x0000)
 #define SEK_IRQSTATUS_AUTO (0x2000)

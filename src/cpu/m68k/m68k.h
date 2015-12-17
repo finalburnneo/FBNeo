@@ -327,6 +327,9 @@ void m68k_set_irq(unsigned int int_level);
 void m68k_set_virq(unsigned int level, unsigned int active);
 unsigned int m68k_get_virq(unsigned int level);
 
+/* For Megadrive -dink */
+int m68k_check_shouldinterrupt(void);
+
 /* Halt the CPU as if you pulsed the HALT pin. */
 void m68k_pulse_halt(void);
 

@@ -116,6 +116,7 @@ static bool bVidRecalcPalette;
 
 static UINT8* pVidTransImage = NULL;
 static UINT32* pVidTransPalette = NULL;
+static INT32 bSkipNextFrame = 0;
 
 static UINT32 __cdecl HighCol15(INT32 r, INT32 g, INT32 b, INT32  /* i */)
 {
@@ -307,6 +308,12 @@ static INT32 VidDoFrame(bool bRedraw)
 
 		nRet = pVidOut[nVidActive]->Frame(bRedraw);
 
+		if (bSkipNextFrame) {
+			// if ReInitialise(); is called from the machine's reset function, it will crash below.  This prevents that from happening. (Megadrive)
+			bSkipNextFrame = 0;
+			return 0;
+		}
+
 		pBurnDraw = NULL;
 		nBurnPitch = 0;
 
@@ -351,7 +358,8 @@ INT32 VidReInitialise()
 		pVidTransImage = NULL;
 	}
 	pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
-	
+	bSkipNextFrame = 1;
+
 	return 0;
 }
 

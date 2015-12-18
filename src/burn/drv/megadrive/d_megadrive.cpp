@@ -240,7 +240,7 @@ struct BurnDriver BurnDrvmd_jb007 = {
 
 // James Pond - Underwater Agent (Euro, USA)
 static struct BurnRomInfo md_jpondRomDesc[] = {
-	{ "james_pond_u1_jam03", 0x080000, 0xd0e7b466, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
+	{ "james_pond_u1_jam03", 0x080000, 0xd0e7b466, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_jpond)
@@ -250,7 +250,7 @@ struct BurnDriver BurnDrvmd_jpond = {
 	"md_jpond", NULL, NULL, NULL, "1993",
 	"James Pond - Underwater Agent (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_jpondRomInfo, md_jpondRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -5898,7 +5898,7 @@ struct BurnDriver BurnDrvmd_buckrog = {
 	"md_buckrog", NULL, NULL, NULL, "1991",
 	"Buck Rogers - Countdown to Doomsday (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_04000, GBF_MISC, 0,
 	MegadriveGetZipName, md_buckrogRomInfo, md_buckrogRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -9974,7 +9974,7 @@ struct BurnDriver BurnDrvmd_dbzf = {
 
 // Dragon Slayer - Eiyuu Densetsu (Jpn)
 static struct BurnRomInfo md_dslayedRomDesc[] = {
-	{ "dragon slayer - eiyuu densetsu (jpn).bin", 0x200000, 0x01bc1604, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon slayer - eiyuu densetsu (jpn).bin", 0x200000, 0x01bc1604, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dslayed)
@@ -9992,7 +9992,7 @@ struct BurnDriverD BurnDrvmd_dslayed = {
 
 // Dragon Slayer - Eiyuu Densetsu II (Jpn)
 static struct BurnRomInfo md_dslayed2RomDesc[] = {
-	{ "dragon slayer - eiyuu densetsu ii (jpn).bin", 0x200000, 0x46924dc3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon slayer - eiyuu densetsu ii (jpn).bin", 0x200000, 0x46924dc3, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dslayed2)
@@ -12055,7 +12055,7 @@ struct BurnDriver BurnDrvmd_fatalrew = {
 	"Fatal Rewind (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_fatalrewRomInfo, md_fatalrewRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_fatalrewRomInfo, md_fatalrewRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
@@ -12108,7 +12108,7 @@ struct BurnDriver BurnDrvmd_fengshen = {
 	"md_fengshen", NULL, NULL, NULL, "1996",
 	"Feng Shen Ying Jie Chuan (Chi)\0", NULL, "Chuanpu Technologies", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_fengshenRomInfo, md_fengshenRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16429,7 +16429,7 @@ struct BurnDriver BurnDrvmd_klax = {
 	"Klax (Euro, USA)\0", NULL, "Tengen", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_klaxRomInfo, md_klaxRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_klaxRomInfo, md_klaxRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
@@ -17742,7 +17742,7 @@ struct BurnDriver BurnDrvmd_manover = {
 	"md_manover", NULL, NULL, NULL, "1994",
 	"S.S. Lucifer - Man Overboard! (Euro)\0", NULL, "Codemasters", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_manoverRomInfo, md_manoverRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -38446,7 +38446,7 @@ struct BurnDriver BurnDrvmd_earthdef = {
 	"md_earthdef", NULL, NULL, NULL, "1995",
 	"The Earth Defense (USA)\0", NULL, "Realtec", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_REALTEC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_REALTEC, GBF_MISC, 0,
 	MegadriveGetZipName, md_earthdefRomInfo, md_earthdefRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -40624,8 +40624,8 @@ struct BurnDriver BurnDrvmd_smbbc = {
 	"md_smbbc", NULL, NULL, NULL, "199?",
 	"Super Mario Bros. + Battle City (Rus)\0", NULL, "<unlicensed>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_smbbcRomInfo, md_smbbcRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_04000, GBF_MISC, 0,
+	MegadriveGetZipName, md_smbbcRomInfo, md_smbbcRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };

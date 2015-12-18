@@ -159,7 +159,8 @@ static INT32 MegadriveZ80Reset = 0;
 static INT32 RomNoByteswap;
 
 static UINT8 Hardware;
-static UINT8 DrvSECAM = 0;	// NTSC 
+static UINT8 DrvSECAM = 0;	// NTSC
+static UINT8 battlesqmode = 0;
 
 void MegadriveCheckHardware()
 {
@@ -841,6 +842,8 @@ const UINT8 hcounts_32[] = {
 	0x08,0x08,0x08,0x09,0x09,0x09,0x0a,0x0a,0x0a,0x0b,0x0b,0x0b,0x0c,0x0c,0x0c,0x0d,
 };
 
+static UINT32 line_base_cycles = 0;
+
 UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 {
 	//bprintf(PRINT_NORMAL, _T("Video Attempt to read word value of location %x\n"), sekAddress);
@@ -872,7 +875,7 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 	
 	case 0x08: 	// H-counter info
 		{
-			UINT32 hc = 50;
+			/*UINT32 hc = 50;
 	
 			INT32 lineCycles = (cycles_68k - m68k_ICount) & 0x1ff;
 			res = Scanline; // V-Counter
@@ -899,6 +902,17 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 			res &= 0xff; 
 			res <<= 8;
 			res |= hc;
+			*/
+			UINT32 d;
+
+			d = (cycles_68k - m68k_ICount) & 0x1ff;
+			if (RamVReg->reg[12]&1)
+				d = hcounts_40[d];
+			else d = hcounts_32[d];
+
+			//elprintf(EL_HVCNT, "hv: %02x %02x (%i) @ %06x", d, Pico.video.v_counter, SekCyclesDone(), SekPc);
+			return d | (RamVReg->v_counter << 8);
+
 		}
 		break;
 		
@@ -974,7 +988,7 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 				// update IRQ level (Lemmings, Wiz 'n' Liz intro, ... )
 				// may break if done improperly:
 				// International Superstar Soccer Deluxe (crash), Street Racer (logos), Burning Force (gfx), Fatal Rewind (hang), Sesame Street Counting Cafe
-				if(num < 2) {
+				if(num < 2 && !SekShouldInterrupt()) {
 					
 					INT32 lines = (RamVReg->reg[1] & 0x20) | (RamVReg->reg[0] & 0x10);
 					INT32 pints = (RamVReg->pending_ints & lines);
@@ -2788,6 +2802,7 @@ static void MegadriveSetupSRAM()
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) RamMisc->SRamEnd = 0x203fff;
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000) RamMisc->SRamEnd = 0x20ffff;
 		
+		bprintf(PRINT_IMPORTANT, _T("SRAM Settings: start %06x - end %06x\n"), RamMisc->SRamStart, RamMisc->SRamEnd);
 		RamMisc->SRamDetected = 1;
 		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
 		
@@ -2964,11 +2979,15 @@ INT32 MegadriveInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	        SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(RomMain,		0x000000, 0x3FFFFF, MAP_ROM);	// 68000 ROM
-		SekMapMemory(Ram68K,		0xFF0000, 0xFFFFFF, MAP_RAM);	// 68000 RAM
+
+		// RAM and it's mirrors (Fix Xaio Monv: Magic Girl)
+		for (INT32 a = 0xe00000; a < 0x1000000; a += 0x010000) {
+			SekMapMemory(Ram68K, a, a + 0xFFFF, MAP_RAM);	        // 68000 RAM
+		}
 		
 		SekMapHandler(1,			0xC00000, 0xC0001F, MAP_RAM);	// Video Port
 		SekMapHandler(2,			0xA00000, 0xA01FFF, MAP_RAM);	// Z80 Ram
@@ -3050,6 +3069,10 @@ INT32 MegadriveInit()
 		bprintf(0, _T("Puggsy protection fix activated!\n"));
 		RamMisc->SRamActive = 0;
 	}
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "battlesq")) {
+		bprintf(0, _T("Battle Squadron fix activated!\n"));
+		battlesqmode = 1;
+	}
 
 	return 0;
 }
@@ -3079,6 +3102,7 @@ INT32 MegadriveExit()
 	Hardware = 0;
 	DrvSECAM = 0;
 	HighCol = NULL;
+	battlesqmode = 0;
 	
 	return 0;
 }
@@ -4195,7 +4219,8 @@ INT32 MegadriveFrame()
 	INT32 done_z80 = 0;
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 total_68k_cycles, total_z80_cycles;
-	
+	INT32 vcnt_wrap = 0;
+
 	if( Hardware & 0x40 ) {
 		lines  = 313;
 		line_sample = 68;
@@ -4208,17 +4233,39 @@ INT32 MegadriveFrame()
 		total_68k_cycles = (INT32)(INT64)(TOTAL_68K_CYCLES * nBurnCPUSpeedAdjust / 0x100);
 		total_z80_cycles = (INT32)TOTAL_Z80_CYCLES;
 	}
-	
+
+	if (battlesqmode) line_sample = lines_vis;
+
 	cycles_68k = total_68k_cycles / lines;
 	cycles_z80 = total_z80_cycles / lines;
 
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
+	RamVReg->v_counter = 0;
 
 	BurnTimerUpdate(CYCLES_M68K_ASD); // needed for Double Dragon II
 
 	for (INT32 y=0; y<lines; y++) {
 
 		Scanline = y;
+
+		if (y < lines_vis) {
+			RamVReg->v_counter = y;
+			if ((RamVReg->reg[12]&6) == 6) { // interlace mode 2
+				RamVReg->v_counter <<= 1;
+				RamVReg->v_counter |= RamVReg->v_counter >> 8;
+				RamVReg->v_counter &= 0xff;
+			}
+		} else if (y == lines_vis) {
+			vcnt_wrap = (Hardware & 0x40) ? 0x103 : 0xEB; // based on Gens, TODO: verify
+		} else if (y > lines_vis) {
+			RamVReg->v_counter = y;
+			if (y >= vcnt_wrap)
+				RamVReg->v_counter -= (Hardware & 0x40) ? 56 : 6;
+			if ((RamVReg->reg[12]&6) == 6)
+				RamVReg->v_counter = (RamVReg->v_counter << 1) | 1;
+			RamVReg->v_counter &= 0xff;
+		}
+
 
 		/*if(PicoOpt&0x20)*/ {
 			// pad delay (for 6 button pads)
@@ -4241,6 +4288,7 @@ INT32 MegadriveFrame()
 			//dprintf("vint: @ %06x [%i|%i]", SekPc, y, SekCycleCnt);
 			RamVReg->status |= 0x88; // V-Int happened, go into vblank
 			
+			line_base_cycles = SekTotalCycles();
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
 			SekIdle(DMABURN());
 			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG - cycles_68k);
@@ -4255,6 +4303,7 @@ INT32 MegadriveFrame()
 		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240))
 			PicoLine(y);
 
+		line_base_cycles = SekTotalCycles();
 		// Run scanline
 		if (y == lines_vis) {
 			BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
@@ -4264,6 +4313,8 @@ INT32 MegadriveFrame()
 
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
+			//if (y == lines_vis) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			//if (y == lines_vis + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			if (y == line_sample) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			if (y == line_sample + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		}
@@ -4283,7 +4334,7 @@ INT32 MegadriveFrame()
 		BurnYM2612Update(pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
-	
+
 	SekClose();
 	ZetClose();
 	

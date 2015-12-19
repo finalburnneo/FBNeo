@@ -2048,11 +2048,6 @@ INLINE void m68ki_check_interrupts(void)
 		m68ki_exception_interrupt(CPU_INT_LEVEL>>8);
 }
 
-int m68k_check_shouldinterrupt(void)
-{
-	return (CPU_INT_LEVEL > FLAG_INT_MASK);
-}
-
 /* ======================================================================== */
 /* ============================== END OF FILE ============================= */
 /* ======================================================================== */

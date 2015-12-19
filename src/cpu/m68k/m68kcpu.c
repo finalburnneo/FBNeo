@@ -779,6 +779,11 @@ void m68k_set_cpu_type(unsigned int cpu_type)
 	}
 }
 
+int m68k_check_shouldinterrupt(void)
+{
+	return (CPU_INT_LEVEL > FLAG_INT_MASK);
+}
+
 /* Execute some instructions until we use up num_cycles clock cycles */
 /* ASG: removed per-instruction interrupt checks */
 int m68k_execute(int num_cycles)

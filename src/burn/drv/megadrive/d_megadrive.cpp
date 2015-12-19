@@ -5898,7 +5898,7 @@ struct BurnDriver BurnDrvmd_buckrog = {
 	"md_buckrog", NULL, NULL, NULL, "1991",
 	"Buck Rogers - Countdown to Doomsday (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_04000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_04000, GBF_MISC, 0,
 	MegadriveGetZipName, md_buckrogRomInfo, md_buckrogRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -9974,7 +9974,7 @@ struct BurnDriver BurnDrvmd_dbzf = {
 
 // Dragon Slayer - Eiyuu Densetsu (Jpn)
 static struct BurnRomInfo md_dslayedRomDesc[] = {
-	{ "dragon slayer - eiyuu densetsu (jpn).bin", 0x200000, 0x01bc1604, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon slayer - eiyuu densetsu (jpn).bin", 0x200000, 0x01bc1604, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dslayed)
@@ -9984,7 +9984,7 @@ struct BurnDriverD BurnDrvmd_dslayed = {
 	"md_dslayed", NULL, NULL, NULL, "1994",
 	"Dragon Slayer - Eiyuu Densetsu (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_dslayedRomInfo, md_dslayedRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -9992,7 +9992,7 @@ struct BurnDriverD BurnDrvmd_dslayed = {
 
 // Dragon Slayer - Eiyuu Densetsu II (Jpn)
 static struct BurnRomInfo md_dslayed2RomDesc[] = {
-	{ "dragon slayer - eiyuu densetsu ii (jpn).bin", 0x200000, 0x46924dc3, BRF_PRG | SEGA_MD_ROM_LOAD_NORMAL | SEGA_MD_ROM_OFFS_000000  },
+	{ "dragon slayer - eiyuu densetsu ii (jpn).bin", 0x200000, 0x46924dc3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
 STD_ROM_PICK(md_dslayed2)
@@ -10002,7 +10002,7 @@ struct BurnDriverD BurnDrvmd_dslayed2 = {
 	"md_dslayed2", NULL, NULL, NULL, "1995",
 	"Dragon Slayer - Eiyuu Densetsu II (Jpn)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_dslayed2RomInfo, md_dslayed2RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
@@ -16465,7 +16465,7 @@ struct BurnDriver BurnDrvmd_krusty = {
 	"Krusty's Super Fun House (Euro, USA, v1.1)\0", NULL, "Flying Edge", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_krustyRomInfo, md_krustyRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_krustyRomInfo, md_krustyRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };
@@ -16483,7 +16483,7 @@ struct BurnDriver BurnDrvmd_krusty1 = {
 	"Krusty's Super Fun House (Euro, USA)\0", NULL, "Flying Edge", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_krusty1RomInfo, md_krusty1RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_krusty1RomInfo, md_krusty1RomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };

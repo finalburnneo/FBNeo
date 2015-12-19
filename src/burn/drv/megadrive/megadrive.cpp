@@ -17,7 +17,7 @@
 
  tofix:
  Burning Force - background doesn't scroll
- Battle Squadron - loses sound after weapon upgrade [x] pickup
+ Battle Squadron - loses sound after weapon upgrade [x] pickup *fixed with hack*
 
  ********************************************************************************
  Port by OopsWare
@@ -316,11 +316,12 @@ static INT32 MemIndex()
 	RamPal		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16);
 	RamSVid		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16);	// VSRam
 	RamVid		= (UINT16 *) Next; Next += 0x008000 * sizeof(UINT16);	// Video Ram
-	
 	RamVReg		= (struct PicoVideo *)Next; Next += sizeof(struct PicoVideo);
-	RamMisc		= (struct PicoMisc *)Next; Next += sizeof(struct PicoMisc);
 	
 	RamEnd		= Next;
+
+	// Keep RamMisc out of the Ram section to keep from getting cleared on reset.
+	RamMisc		= (struct PicoMisc *)Next; Next += sizeof(struct PicoMisc);
 
 	MegadriveCurPal		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16) * 4;
 	
@@ -1238,7 +1239,7 @@ static INT32 MegadriveResetDo()
 	}
 
 	// other reset
-	//memset(RamMisc, 0, sizeof(struct PicoMisc)); // do not clear because Mappers are set up in here when the driver inits
+	//memset(RamMisc, 0, sizeof(struct PicoMisc)); // do not clear because Mappers/SRam are set up in here when the driver inits
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	
 	// default VDP register values (based on Fusion)
@@ -2573,7 +2574,7 @@ void __fastcall MegadriveSRAMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 static void InstallSRAMHandlers(bool MaskAddr)
 {
 	UINT32 Mask = MaskAddr ? 0x3fffff : 0xffffff;
-	
+
 	memset(SRam, 0xff, MAX_SRAM_SIZE);
 	memcpy((UINT8*)MegadriveBackupRam, SRam, RamMisc->SRamEnd - RamMisc->SRamStart + 1);
 	
@@ -2801,7 +2802,7 @@ static void MegadriveSetupSRAM()
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) RamMisc->SRamEnd = 0x200fff;
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) RamMisc->SRamEnd = 0x203fff;
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000) RamMisc->SRamEnd = 0x20ffff;
-		
+
 		bprintf(PRINT_IMPORTANT, _T("SRAM Settings: start %06x - end %06x\n"), RamMisc->SRamStart, RamMisc->SRamEnd);
 		RamMisc->SRamDetected = 1;
 		MegadriveBackupRam = (UINT16*)RomMain + RamMisc->SRamStart;
@@ -4189,6 +4190,7 @@ INT32 MegadriveFrame()
 	if (MegadriveReset) {
 		MegadriveResetDo();
 		MegadriveReset = 0;
+		return 0xdead; // prevent crash because of a call to Reinitialise() in MegadriveResetDo();
 	}
 
 	if (bMegadriveRecalcPalette) {

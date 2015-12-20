@@ -156,7 +156,7 @@ AS	= nasm
 LDFLAGS	= -static
 
 CFLAGS	 = -pipe \
-	   -std=gnu++11 -O1 \
+	   -std=gnu99 -O1 \
 	   -mwindows \
 	   -fforce-addr -finline-limit=1200 -fthread-jumps \
 	   -fexpensive-optimizations \

@@ -16,8 +16,8 @@
  draw_no_32col_border, external_ym2612
 
  tofix:
- Burning Force - background doesn't scroll
- Battle Squadron - loses sound after weapon upgrade [x] pickup *fixed with hack*
+ Z80 IRQ stuff: notice the hung notes when Sonic jumps out of the water? (Sonic & Knuckles & Sonic 3)
+ Battle Squadron - loses sound after weapon upgrade [x] pickup *fixed with hack* related to above.
 
  ********************************************************************************
  Port by OopsWare
@@ -130,6 +130,7 @@ static UINT16 *MegadriveBackupRam;
 
 static UINT8 *HighCol;
 static UINT8 *HighColFull;
+static UINT16 *LineBuf;
 
 static INT32 *HighCacheA;
 static INT32 *HighCacheB;
@@ -325,7 +326,9 @@ static INT32 MemIndex()
 
 	MegadriveCurPal		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16) * 4;
 	
-	HighColFull	= Next; Next += (8 + 320 + 8) * 240;
+	HighColFull	= Next; Next += (8 + 320 + 8) * 240 + 1;
+
+	LineBuf     = (UINT16 *) Next; Next += 320 * 320 * sizeof(UINT16); // palete-processed line-buffer (dink / for sonic mode)
 	
 	HighCacheA	= (INT32 *) Next; Next += (41+1) * sizeof(INT32);	// caches for high layers
 	HighCacheB	= (INT32 *) Next; Next += (41+1) * sizeof(INT32);
@@ -1250,6 +1253,9 @@ static INT32 MegadriveResetDo()
 	RamVReg->reg[0x0f] = 0x02;
 	
 	RamVReg->status = 0x3408 | ((MegadriveDIP[0] & 0x40) >> 6);
+
+	RamMisc->Bank68k = 0;
+
 	video_status = 0;
 	dma_xfers = 0;
 	Scanline = 0;
@@ -4110,6 +4116,12 @@ static void PicoFrameStart()
 	rendstatus = 0x80 >> 5;							// accurate sprites
 	RamVReg->status &= ~0x0020;
 	if((RamVReg->reg[12]&6) == 6) rendstatus |= 8;	// interlace mode
+	Scanline = 0;
+
+	INT32 offset = 0;
+	if (!(RamVReg->reg[1] & 8)) offset = 8;
+	HighCol = HighColFull + ( (offset + Scanline) * (8 + 320 + 8) );  // the FIRST line.
+
 	//if(Pico.m.dirtyPal) Pico.m.dirtyPal = 2; 		// reset dirty if needed
 	PrepareSprites(1);
 }
@@ -4123,9 +4135,18 @@ static INT32 PicoLine(INT32 /*scan*/)
 		DrawDisplay(sh);
 	
 	{
-		INT32 num = Scanline + 1;
-		if (!(RamVReg->reg[1] & 8)) num += 8;
-		HighCol = HighColFull + ( num * (8 + 320 + 8) );
+		INT32 offset = 0;
+		if (!(RamVReg->reg[1] & 8)) offset = 8;
+		HighCol = HighColFull + ( (offset + Scanline + 1) * (8 + 320 + 8) ); // re: PicoFrameStart(); above: the SECOND line and following.. hence + 1
+
+		{ // render current line to linebuf, for mid-screen palette changes (referred to as SONIC rendering mode, for water & etc.)
+			UINT16 *pDest = LineBuf + (Scanline * 320);
+			UINT8 *pSrc = HighColFull + (Scanline + offset)*(8+320+8) + 8;
+
+			for (INT32 i = 0; i < 320; i++)
+				pDest[i] = MegadriveCurPal[pSrc[i]];
+
+		}
 	};
 
 	return 0;
@@ -4133,29 +4154,29 @@ static INT32 PicoLine(INT32 /*scan*/)
 
 static void MegadriveDraw()
 {
-	UINT16 * pDest = (UINT16 *)pBurnDraw;
+	UINT16 *pDest = (UINT16 *)pBurnDraw;
 
 	if ((RamVReg->reg[12]&1) || !(MegadriveDIP[1] & 0x03)) {
 	
 		for (INT32 j=0; j<223; j++) {
-			UINT8 * pSrc = HighColFull + (j+9)*(8+320+8) + 8;
-			for (INT32 i=0;i<320;i++)
-				pDest[i] = MegadriveCurPal[ pSrc[i] ];
+			UINT16 *pSrc = LineBuf + (j * 320);
+			for (INT32 i = 0; i < 320; i++)
+				pDest[i] = pSrc[i];
 			pDest += 320;
 		}
 	
-	} else {  
+	} else {
 		
 		if (( MegadriveDIP[1] & 0x03 ) == 0x01 ) {
 			// Center 
 			pDest += 32;
-			for (INT32 j=0; j<223; j++) {
-				UINT8 * pSrc = HighColFull + (j+9)*(8+320+8) + 8;
+			for (INT32 j = 0; j < 223; j++) {
+				UINT16 *pSrc = LineBuf + (j * 320);
 
 				memset((UINT8 *)pDest -  32*2, 0, 64);
 				
-				for (INT32 i=0;i<256;i++)
-					pDest[i] = MegadriveCurPal[ pSrc[i] ];
+				for (INT32 i = 0; i < 256; i++)
+					pDest[i] = pSrc[i];
 				
 				memset((UINT8 *)pDest + 256*2, 0, 64);
 				
@@ -4163,11 +4184,11 @@ static void MegadriveDraw()
 			}
 		} else {
 			// Zoom
-			for (INT32 j=0; j<223; j++) {
-				UINT8 * pSrc = HighColFull + (j+9)*(8+320+8) + 8;
+			for (INT32 j = 0; j < 223; j++) {
+				UINT16 *pSrc = LineBuf + (j * 320);
 				UINT32 delta = 0;
-				for (INT32 i=0;i<320;i++) {
-					pDest[i] = MegadriveCurPal[ pSrc[ delta >> 16 ] ];
+				for (INT32 i = 0; i < 320; i++) {
+					pDest[i] = pSrc[delta >> 16];
 					delta += 0xCCCC;
 				}
 				pDest += 320;
@@ -4175,6 +4196,7 @@ static void MegadriveDraw()
 		}
 		
 	}
+	memset(LineBuf, 0, 320 * 320 * sizeof(UINT16));
 }
 
 #define TOTAL_68K_CYCLES	((double)OSC_NTSC / 7) / 60
@@ -4214,7 +4236,7 @@ INT32 MegadriveFrame()
 	SekOpen(0);
 	ZetOpen(0);
 	
-	HighCol = HighColFull;
+	//HighCol = HighColFull;
 	PicoFrameStart();
 
 	INT32 lines,lines_vis = 224,line_sample;
@@ -4301,10 +4323,6 @@ INT32 MegadriveFrame()
 			}
 		}
 
-		// decide if we draw this line
-		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240))
-			PicoLine(y);
-
 		line_base_cycles = SekTotalCycles();
 		// Run scanline
 		if (y == lines_vis) {
@@ -4313,9 +4331,13 @@ INT32 MegadriveFrame()
 			BurnTimerUpdate((y + 1) * cycles_68k);
 		}
 
+		// decide if we draw this line
+		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240))
+			PicoLine(y);
+
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
-			//if (y == lines_vis) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			//if (y == lines_vis) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK); // neither way is right.
 			//if (y == lines_vis + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			if (y == line_sample) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			if (y == line_sample + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -4356,6 +4378,12 @@ INT32 MegadriveScan(INT32 nAction, INT32 * pnMin)
 		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
+		BurnAcb(&ba);
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= RamMisc;
+		ba.nLen		= sizeof(struct PicoMisc);
+		ba.szName	= "RAMMisc";
 		BurnAcb(&ba);
 
 		SekScan(nAction);

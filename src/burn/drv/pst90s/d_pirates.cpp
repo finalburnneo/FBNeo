@@ -391,7 +391,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pirates")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "pirates") || !strcmp(BurnDrvGetTextA(DRV_NAME), "piratesb")) {
 		*((UINT16*)(Drv68KROM + 0x62c0)) = 0x6006; // bypass protection
 	} else {
 		is_genix = 1;
@@ -627,7 +627,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Pirates
+// Pirates (set 1)
 
 static struct BurnRomInfo piratesRomDesc[] = {
 	{ "r_449b.bin",		0x80000, 0x224aeeda, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -651,10 +651,44 @@ STD_ROM_FN(pirates)
 
 struct BurnDriver BurnDrvPirates = {
 	"pirates", NULL, NULL, NULL, "1994",
-	"Pirates\0", NULL, "NIX", "Miscellaneous",
+	"Pirates (set 1)\0", NULL, "NIX", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, piratesRomInfo, piratesRomName, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
+// Pirates (set 2)
+// shows 'Copyright 1995' instead of (c)1994 Nix, but isn't unprotected, various changes to the names in the credis + a few other minor alterations
+
+static struct BurnRomInfo piratesbRomDesc[] = {
+	{ "U15",			0x80000, 0x0cfd6415, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "U16",			0x80000, 0x98cece02, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "U34",			0x80000, 0x89fda216, 2 | BRF_GRA },           //  2 Tiles
+	{ "U35",			0x80000, 0x40e069b4, 2 | BRF_GRA },           //  3
+	{ "U48",			0x80000, 0x26d78518, 2 | BRF_GRA },           //  4
+	{ "U49",			0x80000, 0xf31696ea, 2 | BRF_GRA },           //  5
+
+	{ "U69",			0x80000, 0xc78a276f, 3 | BRF_GRA },           //  6 Sprites
+	{ "U70",			0x80000, 0x9f0bad96, 3 | BRF_GRA },           //  7
+	{ "U71",			0x80000, 0x0bb7c816, 3 | BRF_GRA },           //  8
+	{ "U72",			0x80000, 0x1c41bd2c, 3 | BRF_GRA },           //  9
+
+	{ "U31",			0x80000, 0x63a739ec, 4 | BRF_SND },           // 10 Oki Samples
+};
+
+STD_ROM_PICK(piratesb)
+STD_ROM_FN(piratesb)
+
+struct BurnDriver BurnDrvPiratesb = {
+	"piratesb", "pirates", NULL, NULL, "1995",
+	"Pirates (set 2)\0", NULL, "NIX", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, piratesbRomInfo, piratesbRomName, NULL, NULL, PiratesInputInfo, PiratesDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

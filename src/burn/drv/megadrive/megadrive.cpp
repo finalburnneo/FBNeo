@@ -4317,7 +4317,7 @@ INT32 MegadriveFrame()
 			SekIdle(DMABURN());
 			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG - cycles_68k);
 
-			RamVReg->pending_ints |= 0x20;
+			RamVReg->pending_ints = 0x20;
 			if(RamVReg->reg[1] & 0x20) {
 				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			}

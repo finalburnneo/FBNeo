@@ -125,6 +125,10 @@ static struct BurnDIPInfo PALRegionDIPList[] = {
 	{0x19,	0xff,  0xff,	0xe0,   NULL},
 };
 
+static struct BurnDIPInfo JNTSCRegionDIPList[] = {
+	{0x19,	0xff,  0xff,	0x20,   NULL},
+};
+
 static struct BurnDIPInfo Megadrive4pDIPList[] = {
 	{0x32,	0xff, 0xff, 0x01,  NULL               },
 
@@ -151,6 +155,7 @@ static struct BurnDIPInfo AutoDetectRegion4pDIPList[] = {
 
 STDDIPINFOEXT(Megadrive, AutoDetectRegion, Megadrive)
 STDDIPINFOEXT(MegadrivePAL, PALRegion, Megadrive)
+STDDIPINFOEXT(MegadriveJNTSC, JNTSCRegion, Megadrive)
 STDDIPINFOEXT(Megadrive4p, AutoDetectRegion4p, Megadrive4p)
 
 INT32 MegadriveGetZipName(char** pszName, UINT32 i)
@@ -19813,7 +19818,7 @@ struct BurnDriver BurnDrvmd_ondal = {
 	"On Dal Jang Goon (Kor)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_ondalRomInfo, md_ondalRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_ondalRomInfo, md_ondalRomName, NULL, NULL, MegadriveInputInfo, MegadriveJNTSCDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3
 };

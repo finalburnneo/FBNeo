@@ -158,6 +158,8 @@ static INT32 Scanline = 0;
 static INT32 Z80HasBus = 0;
 static INT32 MegadriveZ80Reset = 0;
 static INT32 RomNoByteswap;
+static UINT32 Z80BankPartial = 0;
+static UINT32 Z80BankPos = 0;
 
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
@@ -1245,6 +1247,8 @@ static INT32 MegadriveResetDo()
 	RamVReg->status = 0x3408 | ((MegadriveDIP[0] & 0x40) >> 6); // 'always set' bits | vblank | collision | pal
 
 	RamMisc->Bank68k = 0;
+	Z80BankPartial = 0;
+	Z80BankPos = 0;
 
 	dma_xfers = rand() & 0x1fff;
 	Scanline = 0;
@@ -1322,9 +1326,6 @@ UINT8 __fastcall MegadriveZ80ProgRead(UINT16 a)
 	
 	return 0;
 }
-
-UINT32 Z80BankPartial = 0;
-UINT32 Z80BankPos = 0;
 
 void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d)
 {

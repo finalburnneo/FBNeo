@@ -1278,10 +1278,11 @@ struct BurnDriverD BurnDrvXsleenab = {
 };
 
 
-// Xain'd Sleena (bootleg, bugfix version)
+// Xain'd Sleena (bootleg, bugfixed)
+// newer bootleg, fixes some of the issues with the other one
 // f205v id 1016
 
-static struct BurnRomInfo xsleenab2RomDesc[] = {
+static struct BurnRomInfo xsleenabaRomDesc[] = {
 	{ "xs87b-10.7d",	0x8000, 0x3d5f9fb4, 1 | BRF_PRG | BRF_ESS }, //  0 Master M6809 Code
 	{ "xs87b-11.7c",	0x8000, 0x81c80d54, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -1320,15 +1321,15 @@ static struct BurnRomInfo xsleenab2RomDesc[] = {
 	{ "pt-0.ic59",		0x0100, 0xfed32888, 8 | BRF_GRA | BRF_OPT }, // 28 Priority Prom
 };
 
-STD_ROM_PICK(xsleenab2)
-STD_ROM_FN(xsleenab2)
+STD_ROM_PICK(xsleenaba)
+STD_ROM_FN(xsleenaba)
 
-struct BurnDriverD BurnDrvXsleenab2 = {
-	"xsleenab2", "xsleena", NULL, NULL, "1987",
-	"Xain'd Sleena (bootleg, bugfix version)\0", NULL, "bootleg", "Miscellaneous",
+struct BurnDriverD BurnDrvXsleenaba = {
+	"xsleenaba", "xsleena", NULL, NULL, "1987",
+	"Xain'd Sleena (bootleg, bugfixed)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_HORSHOOT, 0,
-	NULL, xsleenab2RomInfo, xsleenab2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, xsleenabaRomInfo, xsleenabaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 240, 4, 3
 };

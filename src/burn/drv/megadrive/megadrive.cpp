@@ -971,6 +971,11 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		} else {
 			if((wordValue & 0xc000) == 0x8000) {
 				INT32 num = (wordValue >> 8) & 0x1f;
+				RamVReg->type = 0; // register writes clear command (else no Sega logo in Golden Axe II)
+				if (num > 0x0a && !(RamVReg->reg[1] & 4)) {
+					//bprintf(0, _T("%02x written to reg %02x in SMS mode @ %06x"), d, num, SekGetPC(-1));
+					return;
+				}
 				RamVReg->reg[num] = wordValue & 0xff;
 				
 				// update IRQ level (Lemmings, Wiz 'n' Liz intro, ... )
@@ -984,18 +989,17 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 					if (pints & 0x20) irq = 6;
 					else if (pints & 0x10) irq = 4;
 
-					SekRunAdjust(0-4);
-					SekIdle(4);
-
-					if (pints)
+					if (pints) {
 						SekSetIRQLine(irq, CPU_IRQSTATUS_ACK);
-					else
+						SekRunAdjust(0-4);   // delay irq, fixes Sesame Street
+						SekIdle(4);
+					} else {
 						SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
+					}
 				}
 
 				if (num == 5) rendstatus |= 1;
 //				else if(num == 0xc) Pico.m.dirtyPal = 2; // renderers should update their palettes if sh/hi mode is changed
-				RamVReg->type = 0; // register writes clear command (else no Sega logo in Golden Axe II)
 			} else {
 				// High word of command:
 				RamVReg->command &= 0x0000ffff;
@@ -1250,7 +1254,7 @@ static INT32 MegadriveResetDo()
 	Z80BankPartial = 0;
 	Z80BankPos = 0;
 
-	dma_xfers = rand() & 0x1fff;
+	dma_xfers = rand() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
 	Scanline = 0;
 	rendstatus = 0;
 	bMegadriveRecalcPalette = 1;
@@ -4315,7 +4319,7 @@ INT32 MegadriveFrame()
 			line_base_cycles = SekTotalCycles();
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
 			SekIdle(DMABURN());
-			BurnTimerUpdate(((y + 1) * CYCLES_M68K_LINE) + CYCLES_M68K_VINT_LAG - CYCLES_M68K_LINE);
+			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG - cycles_68k);
 
 			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
@@ -4330,11 +4334,11 @@ INT32 MegadriveFrame()
 
 		// Run scanline
 		if (y == lines_vis) {
-			BurnTimerUpdate(((y + 1) * CYCLES_M68K_LINE) - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
+			BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
 		} else {
 			line_base_cycles = SekTotalCycles();
 			SekIdle(DMABURN());
-			BurnTimerUpdate(((y + 1) * CYCLES_M68K_LINE));
+			BurnTimerUpdate((y + 1) * cycles_68k);
 		}
 
 		if (Z80HasBus && !MegadriveZ80Reset) {

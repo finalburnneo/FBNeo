@@ -71,6 +71,7 @@ extern unsigned char Z80Vector;
 
 extern int z80_ICount;
 extern UINT32 EA;
+extern int z80_hold_hack;
 
 typedef unsigned char (__fastcall *Z80ReadIoHandler)(unsigned int a);
 typedef void (__fastcall *Z80WriteIoHandler)(unsigned int a, unsigned char v);

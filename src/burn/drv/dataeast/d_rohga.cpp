@@ -680,7 +680,7 @@ static INT32 MemIndex()
 	DrvGfxROM4	= Next; Next += 0x800000;
 
 	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x140000;
+	DrvSndROM0	= Next; Next += 0x100000;
 	DrvSndROM1	= Next; Next += 0x0c0000;
 
 	tempdraw[0]	= (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16);
@@ -865,6 +865,8 @@ static INT32 WizdfireInit()
 		if (BurnLoadRom(DrvGfxROM4 + 0x000001, 18, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM0 + 0x040000, 19, 1)) return 1;
+		// DrvSndROM0 leaks into DrvSndROM1 by 0x40000, but that's ok, as DrvSndROM1 loads in below
+		// DrvSndROM0's size must be 0x100000 for banking to work correctly. (internal to msm6295)
 		if (DrvIsWizdfireEnglish == 1) {
 			memcpy(DrvSndROM0 + 0x040000, DrvSndROM0 + 0x0c0000, 0x80000);
 		}

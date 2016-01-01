@@ -16,11 +16,11 @@
  draw_no_32col_border, external_ym2612
 
  tofix:
- Z80 IRQ stuff: notice the hung notes when Sonic jumps out of the water? (Sonic & Knuckles & Sonic 3)
- Battle Squadron - loses sound after weapon upgrade [x] pickup *fixed with hack* related to above.
+ .) Notice the hung notes when Sonic jumps out of the water? (Sonic & Knuckles & Sonic 3). [probably not related to irq handling]
+ .) FIXED Dec. 31 2015: Battle Squadron - loses sound after weapon upgrade [x] pickup
 
  ********************************************************************************
- Port by OopsWare
+ Port by OopsWare overhaul by dink
  ********************************************************************************/
 
 #include "burnint.h"
@@ -38,7 +38,7 @@
 #define MAX_CARTRIDGE_SIZE	0xc00000
 #define MAX_SRAM_SIZE		0x010000
 
-static INT32 cycles_68k, cycles_z80, dma_xfers=0;
+static INT32 dma_xfers = 0;
 
 typedef void (*MegadriveCb)();
 static MegadriveCb MegadriveCallback;
@@ -160,10 +160,10 @@ static INT32 MegadriveZ80Reset = 0;
 static INT32 RomNoByteswap;
 static UINT32 Z80BankPartial = 0;
 static UINT32 Z80BankPos = 0;
+static INT32 Z80CyclesPrev = 0;
 
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
-static UINT8 battlesqmode = 0;
 
 void MegadriveCheckHardware()
 {
@@ -1253,6 +1253,7 @@ static INT32 MegadriveResetDo()
 	RamMisc->Bank68k = 0;
 	Z80BankPartial = 0;
 	Z80BankPos = 0;
+	Z80CyclesPrev = 0;
 
 	dma_xfers = rand() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
 	Scanline = 0;
@@ -3071,10 +3072,6 @@ INT32 MegadriveInit()
 		bprintf(0, _T("Puggsy protection fix activated!\n"));
 		RamMisc->SRamActive = 0;
 	}
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "battlesq")) {
-		bprintf(0, _T("Battle Squadron fix activated!\n"));
-		battlesqmode = 1;
-	}
 
 	return 0;
 }
@@ -3091,8 +3088,6 @@ INT32 MegadriveExit()
 	BurnFree(OriginalRom);
 	
 	MegadriveCallback = NULL;
-	cycles_68k = 0;
-	cycles_z80 = 0;
 	RomNoByteswap = 0;
 	MegadriveReset = 0;
 	RomSize = 0;
@@ -3104,7 +3099,6 @@ INT32 MegadriveExit()
 	Hardware = 0;
 	DrvSECAM = 0;
 	HighCol = NULL;
-	battlesqmode = 0;
 
 	return 0;
 }
@@ -4233,7 +4227,7 @@ INT32 MegadriveFrame()
 
 	PicoFrameStart();
 
-	INT32 lines,lines_vis = 224,line_sample;
+	INT32 lines, lines_vis = 224, line_sample;
 	INT32 done_z80 = 0;
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 total_68k_cycles, total_z80_cycles;
@@ -4252,10 +4246,8 @@ INT32 MegadriveFrame()
 		total_z80_cycles = (INT32)TOTAL_Z80_CYCLES;
 	}
 
-	if (battlesqmode) line_sample = lines_vis;
-
-	cycles_68k = total_68k_cycles / lines;
-	cycles_z80 = total_z80_cycles / lines;
+	INT32 cycles_68k = total_68k_cycles / lines;
+	INT32 cycles_z80 = total_z80_cycles / lines;
 
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
 	RamVReg->v_counter = 0;
@@ -4342,24 +4334,27 @@ INT32 MegadriveFrame()
 		}
 
 		if (Z80HasBus && !MegadriveZ80Reset) {
-			done_z80 += ZetRun(((y + 1) * cycles_z80) - done_z80);
-			if (y == line_sample) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			if (y == line_sample + 1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			INT32 nSegment = ((y + 1) * cycles_z80) - done_z80;
+			done_z80 += ZetRun(nSegment + Z80CyclesPrev);
+			Z80CyclesPrev = 0;
+
+			if (y == line_sample) {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			}
 		}
 	}
 	
 	if (pBurnDraw) MegadriveDraw();
 
-	//UINT32 derp1 = SekTotalCycles();
 	BurnTimerEndFrame(total_68k_cycles);
-	//UINT32 derp2 = SekTotalCycles();
-	//if (derp1 != derp2)
-	//	bprintf(0, _T("before %d after %d.\n"), derp1, derp2);
 	
 	if (Z80HasBus && !MegadriveZ80Reset) {
 		if (done_z80 < total_z80_cycles) {
-			ZetRun(total_z80_cycles - done_z80);
+			done_z80 += ZetRun(total_z80_cycles - done_z80);
 		}
+		Z80CyclesPrev = total_z80_cycles - done_z80; // Sync Z80 cycles between frames
+	} else {
+		Z80CyclesPrev = 0;
 	}
 
 	if (pBurnSoundOut) {
@@ -4377,7 +4372,7 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 {
 
 	if (pnMin) {						// Return minimum compatible version
-		*pnMin = 0x029730;
+		*pnMin = 0x029738;
 	}
 
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
@@ -4398,8 +4393,9 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		BurnYM2612Scan(nAction, pnMin);
 		SN76496Scan(nAction, pnMin);
-		SCAN_VAR(cycles_68k);
-		SCAN_VAR(cycles_z80);
+
+		SCAN_VAR(Scanline); //
+		SCAN_VAR(Scanline); // Yes, let's scan Scanline 3x. (maintain compatibility with earlier savestates)
 		SCAN_VAR(Scanline);
 		SCAN_VAR(Z80HasBus);
 		SCAN_VAR(MegadriveZ80Reset);

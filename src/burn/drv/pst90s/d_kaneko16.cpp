@@ -1093,6 +1093,29 @@ static struct BurnRomInfo BlazeonRomDesc[] = {
 STD_ROM_PICK(Blazeon)
 STD_ROM_FN(Blazeon)
 
+static struct BurnRomInfo WingfrceRomDesc[] = {
+	{ "E_2.24.U80",       	0x080000, 0x837e0726, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "O_2.24.U81",       	0x080000, 0xb6983437, BRF_ESS | BRF_PRG }, //  1
+	
+	{ "SP0M.U1",        	0x080000, 0x8be26a05, BRF_GRA },	   	   //  2 Sprites
+	{ "SP1M.U1",        	0x080000, 0xad8c5b68, BRF_GRA },	   	   //  3
+
+	{ "SP2M.U20",        	0x080000, 0xb5994bda, BRF_GRA },	   	   //  4 Sprites
+	{ "SP3M.U20",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  5
+	
+	{ "BG0AM.U2",	        0x080000, 0xf4276860, BRF_GRA },	   	   //  6 Tiles (scrambled)
+	{ "BG0BM.U2",	        0x080000, 0x9df92283, BRF_GRA },	   	   //  7 Tiles (scrambled)
+	{ "BG1AM.U3",	        0x080000, 0xa44fdebb, BRF_GRA },	   	   //  8 Tiles (scrambled)
+	{ "BG1BM.U3",	        0x080000, 0xa9b9fc5d, BRF_GRA },	   	   //  9 Tiles (scrambled)
+	
+	{ "S-DRV_2.22.U45",     0x010000, 0xccdc2758, BRF_ESS | BRF_PRG }, // 10 Z80 Program Code
+	{ "PCM.u5",      	    0x080000, 0x233569fd, BRF_SND }, 		   // 11 Samples
+};
+
+
+STD_ROM_PICK(Wingfrce)
+STD_ROM_FN(Wingfrce)
+
 static struct BurnRomInfo BloodwarRomDesc[] = {
 	{ "ofp0f3.514",        	0x080000, 0x0c93da15, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "ofp1f3.513",        	0x080000, 0x894ecbe5, BRF_ESS | BRF_PRG }, //  1	
@@ -1816,8 +1839,11 @@ static INT32 BlazeonMemIndex()
 {
 	UINT8 *Next; Next = Mem;
 
-	Kaneko16Rom           = Next; Next += 0x080000;
+	Kaneko16Rom           = Next; Next += 0x180000;
 	Kaneko16Z80Rom        = Next; Next += 0x020000;
+
+	MSM6295ROM            = Next; Next += 0x040000;
+	MSM6295ROMData        = Next; Next += 0x100000;
 
 	RamStart = Next;
 
@@ -4510,6 +4536,104 @@ static INT32 BlazeonInit()
 	return 0;
 }
 
+static INT32 WingfrceInit()
+{
+	INT32 nRet = 0, nLen;
+	
+	Kaneko16NumSprites = 0x4000;
+	Kaneko16NumTiles = 0x2000 * 2;
+	Kaneko16NumTiles2 = 0;
+	
+	Kaneko16VideoInit();
+	Kaneko16SpriteRamSize = 0x1000;
+	Kaneko16SpriteXOffset = 0x10000 - 0x680;
+	
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	BlazeonMemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	BlazeonMemIndex();
+
+	Kaneko16TempGfx = (UINT8*)BurnMalloc(0x400000);
+	
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	
+	// Load and Decode Sprite Roms
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,  2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0180000,  5, 1); if (nRet != 0) return 1;
+	GfxDecode(Kaneko16NumSprites, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Sprites);
+	
+	// Load and Decode Tile Roms
+	memset(Kaneko16TempGfx, 0, 0x400000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000, 6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000, 7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000, 8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0180000, 9, 1); if (nRet != 0) return 1;
+	UnscrambleTiles(0x200000);
+	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
+	
+	BurnFree(Kaneko16TempGfx);
+	
+	// Load Z80 Rom
+	nRet = BurnLoadRom(Kaneko16Z80Rom, 10, 1); if (nRet != 0) return 1;
+
+	// Load Sample Rom
+	nRet = BurnLoadRom(MSM6295ROMData, 11, 1); if (nRet != 0) return 1;
+	ExpandSampleBanks();
+	
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Kaneko16Rom          , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Kaneko16Ram          , 0x300000, 0x30ffff, MAP_RAM);
+	SekMapMemory(Kaneko16PaletteRam   , 0x500000, 0x500fff, MAP_RAM);
+	SekMapMemory(Kaneko16Video1Ram    , 0x600000, 0x600fff, MAP_RAM);
+	SekMapMemory(Kaneko16Video0Ram    , 0x601000, 0x601fff, MAP_RAM);
+	SekMapMemory(Kaneko16VScrl1Ram    , 0x602000, 0x602fff, MAP_RAM);
+	SekMapMemory(Kaneko16VScrl0Ram    , 0x603000, 0x603fff, MAP_RAM);
+	SekMapMemory(Kaneko16SpriteRam    , 0x700000, 0x700fff, MAP_RAM);
+	SekMapMemory((UINT8*)Kaneko16Layer0Regs    , 0x800000, 0x80000f, MAP_WRITE);
+	SekMapMemory((UINT8*)Kaneko16SpriteRegs + 2, 0x900002, 0x90001f, MAP_WRITE);
+	SekSetReadByteHandler(0, BlazeonReadByte);
+	SekSetReadWordHandler(0, BlazeonReadWord);
+	SekSetWriteByteHandler(0, BlazeonWriteByte);
+	SekSetWriteWordHandler(0, BlazeonWriteWord);
+	SekClose();
+	
+	// Setup the Z80 emulation
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapArea(0x0000, 0x7fff, 0, Kaneko16Z80Rom         );
+	ZetMapArea(0x0000, 0x7fff, 2, Kaneko16Z80Rom         );
+	ZetMapArea(0xc000, 0xdfff, 0, Kaneko16Z80Ram         );
+	ZetMapArea(0xc000, 0xdfff, 1, Kaneko16Z80Ram         );
+	ZetMapArea(0xc000, 0xdfff, 2, Kaneko16Z80Ram         );
+	ZetSetInHandler(Kaneko16Z80PortRead);
+	ZetSetOutHandler(Kaneko16Z80PortWrite);
+	ZetClose();
+	
+	// Setup the YM2151 emulation
+	BurnYM2151Init(4000000);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+
+	// Setup the OKIM6295 emulation
+	MSM6295Init(0, (12000000 / 6) / 132, 1);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	
+	Kaneko16FrameRender = BlazeonFrameRender;
+	
+	// Reset the driver
+	BlazeonDoReset();
+	
+	return 0;
+}
+
 static INT32 BloodwarInit()
 {
 	INT32 nRet = 0, nLen;
@@ -6471,6 +6595,7 @@ static INT32 BlazeonFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			ZetClose();
 		}
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 
 	}
 
@@ -6763,6 +6888,16 @@ struct BurnDriver BurnDrvBlazeon = {
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, BlazeonRomInfo, BlazeonRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
 	BlazeonInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
+	NULL, 0x1000, 320, 232, 4, 3
+};
+
+struct BurnDriver BurnDrvWingfrce = {
+	"wingfrce", NULL, NULL, NULL, "1993",
+	"Wing Force (Japan)\0", NULL, "Atlus", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	NULL, WingfrceRomInfo, WingfrceRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
+	WingfrceInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
 	NULL, 0x1000, 320, 232, 4, 3
 };
 

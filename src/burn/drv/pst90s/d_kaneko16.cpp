@@ -3950,6 +3950,10 @@ UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 		case 0x06: {
 			return Kaneko16SoundLatch;
 		}
+
+		case 0x0a: {
+			return MSM6295ReadStatus(0);
+		}
 	}
 
 	return 0;
@@ -3964,9 +3968,17 @@ void __fastcall Kaneko16Z80PortWrite(UINT16 a, UINT8 d)
 			BurnYM2151SelectRegister(d);
 			return;
 		}
-		
 		case 0x03: {
 			BurnYM2151WriteRegister(d);
+			return;
+		}
+		case 0x0a: {
+			MSM6295Command(0, d);
+			return;
+		}
+		case 0x0c: {
+			MSM6295Bank0 = d & 0x7;
+			memcpy(MSM6295ROM + 0x0000000, MSM6295ROMData + (0x40000 * (d & 0x07)), 0x40000);
 			return;
 		}
 	}
@@ -4572,9 +4584,9 @@ static INT32 WingfrceInit()
 	// Load and Decode Tile Roms
 	memset(Kaneko16TempGfx, 0, 0x400000);
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000, 6, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000, 7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000001, 7, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000, 8, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0180000, 9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100001, 9, 1); if (nRet != 0) return 1;
 	UnscrambleTiles(0x200000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 	
@@ -4586,10 +4598,10 @@ static INT32 WingfrceInit()
 	// Load Sample Rom
 	nRet = BurnLoadRom(MSM6295ROMData, 11, 1); if (nRet != 0) return 1;
 	ExpandSampleBanks();
-	
+
 	SekInit(0, 0x68000);
 	SekOpen(0);
-	SekMapMemory(Kaneko16Rom          , 0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(Kaneko16Rom          , 0x000000, 0x0fffff, MAP_ROM);
 	SekMapMemory(Kaneko16Ram          , 0x300000, 0x30ffff, MAP_RAM);
 	SekMapMemory(Kaneko16PaletteRam   , 0x500000, 0x500fff, MAP_RAM);
 	SekMapMemory(Kaneko16Video1Ram    , 0x600000, 0x600fff, MAP_RAM);
@@ -4608,8 +4620,8 @@ static INT32 WingfrceInit()
 	// Setup the Z80 emulation
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, Kaneko16Z80Rom         );
-	ZetMapArea(0x0000, 0x7fff, 2, Kaneko16Z80Rom         );
+	ZetMapArea(0x0000, 0xbfff, 0, Kaneko16Z80Rom         );
+	ZetMapArea(0x0000, 0xbfff, 2, Kaneko16Z80Rom         );
 	ZetMapArea(0xc000, 0xdfff, 0, Kaneko16Z80Ram         );
 	ZetMapArea(0xc000, 0xdfff, 1, Kaneko16Z80Ram         );
 	ZetMapArea(0xc000, 0xdfff, 2, Kaneko16Z80Ram         );
@@ -6895,10 +6907,10 @@ struct BurnDriver BurnDrvWingfrce = {
 	"wingfrce", NULL, NULL, NULL, "1993",
 	"Wing Force (Japan)\0", NULL, "Atlus", "Kaneko16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingfrceRomInfo, WingfrceRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
 	WingfrceInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
-	NULL, 0x1000, 320, 232, 4, 3
+	NULL, 0x1000, 232, 320, 3, 4
 };
 
 struct BurnDriver BurnDrvBloodwar = {

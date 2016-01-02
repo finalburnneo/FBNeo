@@ -755,10 +755,10 @@ static INT32 shadfrceExit()
 	if (d[x]) { p[15-x]=pal[d[x]|c]; pp[15-x]=2; }
 
 #define	TILE_BG0_E(z)			\
-	if (d[z]&&(x+z)>=0 && (x+z)<320) { p[z]=pal[d[z]|c]; pp[z]=2; }
+	if ((x+z)>=0 && (x+z)<320 && (pp - RamPri<0x14000)) if (d[z]) { p[z]=pal[d[z]|c]; pp[z]=2; }
 
 #define	TILE_BG0_FLIPX_E(z)		\
-	if (d[z]&&(x+15-z)>=0&&(x+15-z)<320) { p[15-z]=pal[d[z]|c]; pp[15-z]=2; }
+	if ((x+15-z)>=0&&(x+15-z)<320 && (pp - RamPri<0x14000)) if (d[z]) { p[15-z]=pal[d[z]|c]; pp[15-z]=2; }
 
 #define	TILE_BG0_LINE			\
 	TILE_BG0( 0)				\

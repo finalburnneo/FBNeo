@@ -40737,7 +40737,7 @@ struct BurnDriver BurnDrvmd_ttoon3 = {
 	"md_ttoon3", NULL, NULL, NULL, "199?",
 	"Tiny Toon Adventures 3 (Tw, Cracked)\0", NULL, "Gamtec?", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SQUIRRELK, GBF_MISC, 0,
 	MegadriveGetZipName, md_ttoon3RomInfo, md_ttoon3RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 223, 4, 3

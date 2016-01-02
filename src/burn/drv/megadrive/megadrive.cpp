@@ -164,6 +164,7 @@ static INT32 Z80CyclesPrev = 0;
 
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
+static UINT8 bNoDebug = 0;
 
 void MegadriveCheckHardware()
 {
@@ -468,8 +469,9 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 //		}
 			
 		default: {
-			bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
-		}		
+			if (!bNoDebug)
+				bprintf(PRINT_NORMAL, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
+		}
 	}
 }
 
@@ -500,7 +502,8 @@ void __fastcall MegadriveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
+			if (!bNoDebug)
+				bprintf(PRINT_NORMAL, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
 		}
 	}
 }
@@ -2339,6 +2342,7 @@ static void SetupCustomCartridgeMappers()
 		SekSetWriteByteHandler(7, SquirrelKingExtraWriteByte);
 		SekSetWriteWordHandler(7, SquirrelKingExtraWriteWord);
 		SekClose();
+		bNoDebug = 1; // Games make a lot of unmapped word-writes
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE) {
@@ -3050,6 +3054,7 @@ INT32 MegadriveInit()
 	// OSC_NTSC / 7
 	BurnSetRefreshRate(60.0);
 
+	bNoDebug = 0;
 	DrvSECAM = 0;
 	BurnYM2612Init(1, OSC_NTSC / 7, NULL, MegadriveSynchroniseStream, MegadriveGetTime, 0);
 	BurnTimerAttachSek(OSC_NTSC / 7);
@@ -3099,6 +3104,7 @@ INT32 MegadriveExit()
 	Hardware = 0;
 	DrvSECAM = 0;
 	HighCol = NULL;
+	bNoDebug = 0;
 
 	return 0;
 }

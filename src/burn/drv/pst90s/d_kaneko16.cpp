@@ -1093,7 +1093,7 @@ static struct BurnRomInfo BlazeonRomDesc[] = {
 STD_ROM_PICK(Blazeon)
 STD_ROM_FN(Blazeon)
 
-static struct BurnRomInfo WingfrceRomDesc[] = {
+static struct BurnRomInfo WingforcRomDesc[] = {
 	{ "E_2.24.U80",       	0x080000, 0x837e0726, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "O_2.24.U81",       	0x080000, 0xb6983437, BRF_ESS | BRF_PRG }, //  1
 	
@@ -1113,8 +1113,8 @@ static struct BurnRomInfo WingfrceRomDesc[] = {
 };
 
 
-STD_ROM_PICK(Wingfrce)
-STD_ROM_FN(Wingfrce)
+STD_ROM_PICK(Wingforc)
+STD_ROM_FN(Wingforc)
 
 static struct BurnRomInfo BloodwarRomDesc[] = {
 	{ "ofp0f3.514",        	0x080000, 0x0c93da15, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
@@ -4548,7 +4548,7 @@ static INT32 BlazeonInit()
 	return 0;
 }
 
-static INT32 WingfrceInit()
+static INT32 WingforcInit()
 {
 	INT32 nRet = 0, nLen;
 	
@@ -4583,10 +4583,10 @@ static INT32 WingfrceInit()
 	
 	// Load and Decode Tile Roms
 	memset(Kaneko16TempGfx, 0, 0x400000);
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000, 6, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000001, 7, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000, 8, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100001, 9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000, 6, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000001, 7, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000, 8, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100001, 9, 2); if (nRet != 0) return 1;
 	UnscrambleTiles(0x200000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 	
@@ -6903,13 +6903,13 @@ struct BurnDriver BurnDrvBlazeon = {
 	NULL, 0x1000, 320, 232, 4, 3
 };
 
-struct BurnDriver BurnDrvWingfrce = {
-	"wingfrce", NULL, NULL, NULL, "1993",
+struct BurnDriver BurnDrvWingforc = {
+	"wingforc", NULL, NULL, NULL, "1993",
 	"Wing Force (Japan)\0", NULL, "Atlus", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
-	NULL, WingfrceRomInfo, WingfrceRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
-	WingfrceInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
+	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
+	WingforcInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
 	NULL, 0x1000, 232, 320, 3, 4
 };
 

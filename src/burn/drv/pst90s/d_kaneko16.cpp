@@ -1843,7 +1843,7 @@ static INT32 BlazeonMemIndex()
 	Kaneko16Z80Rom        = Next; Next += 0x020000;
 
 	MSM6295ROM            = Next; Next += 0x040000;
-	MSM6295ROMData        = Next; Next += 0x100000;
+	MSM6295ROMData        = Next; Next += 0x400000;
 
 	RamStart = Next;
 

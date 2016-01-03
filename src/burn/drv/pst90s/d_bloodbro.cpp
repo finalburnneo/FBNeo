@@ -804,7 +804,7 @@ static void draw_text_layer()
 	}
 }
 
-static void draw_sprites(INT32 priority)
+static void draw_sprites()
 {
 	UINT16 *ram = (UINT16*)DrvSprRAM;
 
@@ -881,7 +881,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 2) draw_layer(DrvFgRAM, 0x500, 1, BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0x0ff);
 
-	if (nBurnLayer & 4) draw_sprites(0);
+	if (nBurnLayer & 4) draw_sprites();
 
 	if (nBurnLayer & 8) draw_text_layer();
 

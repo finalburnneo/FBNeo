@@ -1149,7 +1149,7 @@ static void __fastcall i8039_sound_write_port(UINT32 port, UINT8 data)
 
 static void dkong3_sound0_write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x0000 && a <= 0x1ff) {
+	if (a <= 0x1ff) {
 		DrvSndRAM0[a] = d;
 		return;
 	}
@@ -1162,10 +1162,10 @@ static void dkong3_sound0_write(UINT16 a, UINT8 d)
 
 static UINT8 dkong3_sound0_read(UINT16 a)
 {
-	if (a >= 0x0000 && a <= 0x1ff) {
+	if (a <= 0x1ff) {
 		return DrvSndRAM0[a];
 	}
-	if (a >= 0xe000 && a <= 0xffff) {
+	if (a >= 0xe000) {
 		return DrvSndROM0[a - 0xe000];
 	}
 	switch (a) {
@@ -1181,7 +1181,7 @@ static UINT8 dkong3_sound0_read(UINT16 a)
 
 static void dkong3_sound1_write(UINT16 a, UINT8 d)
 {
-	if (a >= 0x0000 && a <= 0x1ff) {
+	if (a <= 0x1ff) {
 		DrvSndRAM1[a] = d;
 		return;
 	}
@@ -1193,10 +1193,10 @@ static void dkong3_sound1_write(UINT16 a, UINT8 d)
 
 static UINT8 dkong3_sound1_read(UINT16 a)
 {
-	if (a >= 0x0000 && a <= 0x1ff) {
+	if (a <= 0x1ff) {
 		return DrvSndRAM1[a];
 	}
-	if (a >= 0xe000 && a <= 0xffff) {
+	if (a >= 0xe000) {
 		return DrvSndROM1[a - 0xe000];
 	}
 	if (a >= 0x4000 && a <= 0x4017) {

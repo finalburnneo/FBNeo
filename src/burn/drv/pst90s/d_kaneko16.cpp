@@ -1,3 +1,7 @@
+// Todo's for dink:
+// after implementing new prios from trap15 or luca elia, hook up WingforcScan
+// and change the value in Blazeonmemindex()  (will break testing-savestates if I do it now)
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -109,6 +113,7 @@ typedef void (*FrameRender)();
 FrameRender Kaneko16FrameRender;
 static void BerlwallFrameRender();
 static void BlazeonFrameRender();
+static void WingforcFrameRender();
 static void BloodwarFrameRender();
 static void ExplbrkrFrameRender();
 static void GtmrFrameRender();
@@ -1851,7 +1856,7 @@ static INT32 BlazeonMemIndex()
 	Kaneko16Z80Ram        = Next; Next += 0x002000;
 	Kaneko16PaletteRam    = Next; Next += 0x001000;
 	Kaneko16SpriteRam     = Next; Next += Kaneko16SpriteRamSize;
-	Kaneko16Video0Ram     = Next; Next += 0x001000;
+	Kaneko16Video0Ram     = Next; Next += 0x004000; // change this back to 0x1000 after wingforc sprite prio fix
 	Kaneko16Video1Ram     = Next; Next += 0x001000;
 	Kaneko16VScrl0Ram     = Next; Next += 0x001000;
 	Kaneko16VScrl1Ram     = Next; Next += 0x001000;
@@ -4553,7 +4558,7 @@ static INT32 WingforcInit()
 	INT32 nRet = 0, nLen;
 	
 	Kaneko16NumSprites = 0x4000;
-	Kaneko16NumTiles = 0x2000 * 2;
+	Kaneko16NumTiles = 0x4000;
 	Kaneko16NumTiles2 = 0;
 	
 	Kaneko16VideoInit();
@@ -4589,7 +4594,7 @@ static INT32 WingforcInit()
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100001, 9, 2); if (nRet != 0) return 1;
 	UnscrambleTiles(0x200000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
-	
+
 	BurnFree(Kaneko16TempGfx);
 	
 	// Load Z80 Rom
@@ -4631,14 +4636,14 @@ static INT32 WingforcInit()
 	
 	// Setup the YM2151 emulation
 	BurnYM2151Init(4000000);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 
 	// Setup the OKIM6295 emulation
-	MSM6295Init(0, (12000000 / 6) / 132, 1);
-	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	MSM6295Init(0, (16000000 / 16) / 132, 1);
+	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
-	Kaneko16FrameRender = BlazeonFrameRender;
+	Kaneko16FrameRender = WingforcFrameRender;
 	
 	// Reset the driver
 	BlazeonDoReset();
@@ -5515,6 +5520,15 @@ static INT32 BlazeonExit()
 	return Kaneko16Exit();
 }
 
+static INT32 WingforcExit()
+{
+	ZetExit();
+	BurnYM2151Exit();
+	MSM6295Exit(0);
+	
+	return Kaneko16Exit();
+}
+
 static INT32 GtmrMachineExit()
 {
 	MSM6295Exit(0);
@@ -5909,8 +5923,7 @@ static void Kaneko16QueueTilesLayer(INT32 Layer)
 			
 			TileIndex = ((my * 32) + mx) * 2;
 			
-			Code = VRAM[TileIndex + 1];
-			Code &= numTiles-1;
+			Code = VRAM[TileIndex + 1] & (numTiles - 1);
 			Attr = VRAM[TileIndex + 0];
 			Priority = (Attr >> 8) & 7;
 			Colour = (Attr >> 2) & 0x3f;
@@ -5954,7 +5967,7 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 	INT32 yScrollReg = 0;
 	INT32 xOffs = 0;
 	INT32 numTiles = 0;
-	
+
 	switch (Layer) {
 		case 0: {
 			VRAM = (UINT16*)Kaneko16Video0Ram;
@@ -5999,10 +6012,7 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
-			Code = VRAM[TileIndex + 1];
-
-			Code &= numTiles-1;
-			
+			Code = VRAM[TileIndex + 1] & (numTiles - 1);
 			Attr = VRAM[TileIndex + 0];
 			Colour = (Attr >> 2) & 0x3f;
 			Flip = Attr & 3;
@@ -6183,6 +6193,45 @@ static void BerlwallFrameRender()
 		if (i == 7) Kaneko16RenderSprites(3);
 	}
 	
+	BurnTransferCopy(Kaneko16Palette);
+}
+
+static void WingforcFrameRender()
+{
+	INT32 i;
+	INT32 Layer0Enabled = 0;
+	INT32 Layer1Enabled = 0;
+	
+	INT32 vScroll0Enabled = 0;
+	INT32 vScroll1Enabled = 0;
+	
+	INT32 xScroll0 = Kaneko16Layer0Regs[2];
+	INT32 xScroll1 = Kaneko16Layer0Regs[0];
+
+	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
+	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
+	
+	BurnTransferClear();
+	Kaneko16CalcPalette(0x0800);
+	
+	if (Kaneko16Layer0Regs[4] & 0x800) {
+		HANDLE_VSCROLL(0)
+	}
+	
+	if (Kaneko16Layer0Regs[4] & 0x008) {
+		HANDLE_VSCROLL(1)
+	}
+
+	for (i = 0; i < 8; i++) {
+		if (nBurnLayer & 1) if (Layer0Enabled) { if (vScroll0Enabled) { Kaneko16RenderLayerQueue(0, i); } else { Kaneko16RenderTileLayer(0, i, xScroll0); }}
+		if (nBurnLayer & 2) if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
+
+		if (nSpriteEnable & 1) if (i == 1) Kaneko16RenderSprites(0);
+		if (nSpriteEnable & 2) if (i == 2) Kaneko16RenderSprites(1);
+		if (nSpriteEnable & 4) if (i == 4) Kaneko16RenderSprites(2);
+		if (nSpriteEnable & 8) if (i == 6) Kaneko16RenderSprites(3);
+	}
+
 	BurnTransferCopy(Kaneko16Palette);
 }
 
@@ -6607,8 +6656,70 @@ static INT32 BlazeonFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			ZetClose();
 		}
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+	}
 
+	if (pBurnDraw) Kaneko16FrameRender();
+	
+	return 0;
+}
+
+static INT32 WingforcFrame()
+{
+	INT32 nInterleave = 256;
+	nSoundBufferPos = 0;
+		
+	if (Kaneko16Reset) BlazeonDoReset();
+
+	Kaneko16MakeInputs();
+	
+	nCyclesTotal[0] = 16000000 / 60;
+	nCyclesTotal[1] = 4000000 / 60;
+	nCyclesDone[0] = nCyclesDone[1] = 0;
+	
+	for (INT32 i = 0; i < nInterleave; i++) {
+		INT32 nCurrentCPU, nNext;
+
+		nCurrentCPU = 0;
+		SekOpen(nCurrentCPU);
+		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		SekClose();
+		
+		// Run Z80
+		nCurrentCPU = 1;
+		ZetOpen(0);
+		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesSegment = ZetRun(nCyclesSegment);
+		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		ZetClose();
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			ZetOpen(0);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			ZetClose();
+			nSoundBufferPos += nSegmentLength;
+		}
+	}
+	
+	// Make sure the buffer is entirely filled.
+	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			ZetOpen(0);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			ZetClose();
+		}
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) Kaneko16FrameRender();
@@ -6764,6 +6875,30 @@ static INT32 BlazeonScan(INT32 nAction,INT32 *pnMin)
 	return Kaneko16Scan(nAction, pnMin);;
 }
 
+#if 0
+static INT32 WingforcScan(INT32 nAction,INT32 *pnMin) // hook this up after sprite issue is fixed, because savestate is in blazeon format
+{
+	if (pnMin != NULL) {
+		*pnMin =  0x029672;
+	}
+	
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);
+		BurnYM2151Scan(nAction);
+		MSM6295Scan(0, nAction);
+		
+		SCAN_VAR(nSoundBufferPos);
+		SCAN_VAR(MSM6295Bank0);
+	}
+
+	if (nAction & ACB_WRITE) {
+		memcpy(MSM6295ROM + 0x0000000, MSM6295ROMData  + (0x40000 * MSM6295Bank0),0x40000);
+	}
+	
+	return Kaneko16Scan(nAction, pnMin);;
+}
+#endif
+
 static INT32 ExplbrkrScan(INT32 nAction,INT32 *pnMin)
 {
 	if (pnMin != NULL) {
@@ -6909,8 +7044,8 @@ struct BurnDriver BurnDrvWingforc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
-	WingforcInit, BlazeonExit, BlazeonFrame, NULL, BlazeonScan,
-	NULL, 0x1000, 232, 320, 3, 4
+	WingforcInit, WingforcExit, WingforcFrame, NULL, BlazeonScan,
+	NULL, 0x1000, 224, 320, 3, 4
 };
 
 struct BurnDriver BurnDrvBloodwar = {

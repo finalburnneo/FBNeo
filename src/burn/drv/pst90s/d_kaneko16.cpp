@@ -5910,7 +5910,7 @@ static void Kaneko16QueueTilesLayer(INT32 Layer)
 			TileIndex = ((my * 32) + mx) * 2;
 			
 			Code = VRAM[TileIndex + 1];
-			if (Code >= numTiles) continue;
+			Code &= numTiles-1;
 			Attr = VRAM[TileIndex + 0];
 			Priority = (Attr >> 8) & 7;
 			Colour = (Attr >> 2) & 0x3f;
@@ -6000,8 +6000,8 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
 			Code = VRAM[TileIndex + 1];
-						
-			if (Code >= numTiles) continue;
+
+			Code &= numTiles-1;
 			
 			Attr = VRAM[TileIndex + 0];
 			Colour = (Attr >> 2) & 0x3f;

@@ -82,7 +82,7 @@ enum {
 #endif
 
 /* 680x registers */
-static m6800_Regs m6800 = {0};
+static m6800_Regs m6800;
 
 #define m6801   m6800
 #define m6802   m6800

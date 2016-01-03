@@ -5006,7 +5006,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 			memcpy(System1Rom1 + 0x38000, System1TempRom + 0x20000, 0x8000);//fetch
 			memcpy(System1Rom1 + 0x18000, System1TempRom + 0x28000, 0x8000);
 
-			if (nZ80Rom1Size == (ri.nLen * 2))
+			if ((UINT32)nZ80Rom1Size == (ri.nLen * 2))
 			{ // last rom half the size, reload it into the last slot
 				memcpy (System1Rom1 + 0x18000, System1TempRom + 0x20000, 0x8000);
 			}

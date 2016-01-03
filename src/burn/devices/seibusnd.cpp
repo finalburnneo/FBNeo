@@ -633,7 +633,7 @@ static void adpcm_update(INT32 chip, INT16 *pbuf, INT32 samples)
 				adpcmplaying[chip] = 0;
 		}
 
-		samp = ((adpcm_clock(chip, val) << 4) * 1.00);
+		samp = ((adpcm_clock(chip, val) << 4));
 
 		for (i = 0; (i < 6) && (samples > 0); i++) { // slow it down
 			*pbuf = BURN_SND_CLIP(*pbuf + samp);

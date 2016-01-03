@@ -423,7 +423,7 @@ static void WRITE_EA_FPE(int ea, fp_reg fpr)
 			UINT32 ea;
 			REG_A[reg] -= 12;
 			ea = REG_A[reg];
-			m68ki_write_32(ea+0, (UINT32)(fpr.i >> 32));
+			m68ki_write_32(ea+0, (UINT32)((UINT64)fpr.i >> 32));
 			m68ki_write_32(ea+4, (UINT32)(fpr.i));
 			m68ki_write_32(ea+8, 0);
 			break;

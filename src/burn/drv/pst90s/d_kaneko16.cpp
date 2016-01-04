@@ -110,7 +110,6 @@ typedef void (*FrameRender)();
 FrameRender Kaneko16FrameRender;
 static void BerlwallFrameRender();
 static void BlazeonFrameRender();
-static void WingforcFrameRender();
 static void BloodwarFrameRender();
 static void ExplbrkrFrameRender();
 static void GtmrFrameRender();
@@ -1698,6 +1697,16 @@ static void Kaneko16DecodeBg15Bitmaps()
 	}
 }
 
+INT32 spritepriomask[4] = { 2, 3, 5, 7 }; // Default for Wingforc
+
+static void Kaneko16SpritePrio(INT32 pri0, INT32 pri1, INT32 pri2, INT32 pri3)
+{
+	spritepriomask[0] = pri0;
+	spritepriomask[1] = pri1;
+	spritepriomask[2] = pri2;
+	spritepriomask[3] = pri3;
+}
+
 /*==============================================================================================
 Unscramble Tile/Sound ROM Functions
 ===============================================================================================*/
@@ -1846,7 +1855,7 @@ static INT32 BlazeonMemIndex()
 
 	MSM6295ROM            = Next; Next += 0x040000;
 	MSM6295ROMData        = Next; Next += 0x400000;
-	DrvPrioBitmap         = Next; Next += 320 * 224;
+	DrvPrioBitmap         = Next; Next += 320 * 256;
 
 	RamStart = Next;
 
@@ -1854,7 +1863,7 @@ static INT32 BlazeonMemIndex()
 	Kaneko16Z80Ram        = Next; Next += 0x002000;
 	Kaneko16PaletteRam    = Next; Next += 0x001000;
 	Kaneko16SpriteRam     = Next; Next += Kaneko16SpriteRamSize;
-	Kaneko16Video0Ram     = Next; Next += 0x004000; // change this back to 0x1000 after wingforc sprite prio fix
+	Kaneko16Video0Ram     = Next; Next += 0x001000;
 	Kaneko16Video1Ram     = Next; Next += 0x001000;
 	Kaneko16VScrl0Ram     = Next; Next += 0x001000;
 	Kaneko16VScrl1Ram     = Next; Next += 0x001000;
@@ -4477,7 +4486,8 @@ static INT32 BlazeonInit()
 	Kaneko16VideoInit();
 	Kaneko16SpriteRamSize = 0x1000;
 	Kaneko16SpriteXOffset = 0x10000 - 0x680;
-	
+	Kaneko16SpritePrio(1, 2, 8, 8);
+
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	BlazeonMemIndex();
@@ -4562,6 +4572,7 @@ static INT32 WingforcInit()
 	Kaneko16VideoInit();
 	Kaneko16SpriteRamSize = 0x1000;
 	Kaneko16SpriteXOffset = 0x10000 - 0x680;
+	Kaneko16SpritePrio(2, 3, 5, 7);
 	
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -4634,14 +4645,14 @@ static INT32 WingforcInit()
 	
 	// Setup the YM2151 emulation
 	BurnYM2151Init(4000000);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.40, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.40, BURN_SND_ROUTE_RIGHT);
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (16000000 / 16) / 132, 1);
-	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 	
-	Kaneko16FrameRender = WingforcFrameRender;
+	Kaneko16FrameRender = BlazeonFrameRender;
 	
 	// Reset the driver
 	BlazeonDoReset();
@@ -5894,7 +5905,6 @@ static void Kaneko16RenderSprite_Wingforc(UINT32 Code, UINT32 Colour, INT32 Flip
 static void Kaneko16RenderSprites_Wingforc()
 {
 	struct tempsprite *s = spritelist.first_sprite;
-	INT32 spritepriomask[4] = { 2, 3, 5, 7 }; // for Wingforc
 	
 	INT32 i = 0;
 	INT32 x = 0;
@@ -6412,7 +6422,7 @@ static void BerlwallFrameRender()
 	BurnTransferCopy(Kaneko16Palette);
 }
 
-static void WingforcFrameRender()
+static void BlazeonFrameRender() // and Wingforc
 {
 	INT32 i;
 	INT32 Layer0Enabled = 0;
@@ -6429,43 +6439,7 @@ static void WingforcFrameRender()
 	
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x0800);
-	memset(DrvPrioBitmap, 0, 320 * 224);
-
-	if (Kaneko16Layer0Regs[4] & 0x800) {
-		HANDLE_VSCROLL(0)
-	}
-
-	if (Kaneko16Layer0Regs[4] & 0x008) {
-		HANDLE_VSCROLL(1)
-	}
-
-	for (i = 0; i < 8; i++) {
-		if (nBurnLayer & 1) if (Layer0Enabled) { if (vScroll0Enabled) { Kaneko16RenderLayerQueue(0, i); } else { Kaneko16RenderTileLayer(0, i, xScroll0); }}
-		if (nBurnLayer & 2) if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
-	}
-
-	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
-
-	BurnTransferCopy(Kaneko16Palette);
-}
-
-static void BlazeonFrameRender()
-{
-	INT32 i;
-	INT32 Layer0Enabled = 0;
-	INT32 Layer1Enabled = 0;
-	
-	INT32 vScroll0Enabled = 0;
-	INT32 vScroll1Enabled = 0;
-	
-	INT32 xScroll0 = Kaneko16Layer0Regs[2];
-	INT32 xScroll1 = Kaneko16Layer0Regs[0];
-
-	if (~Kaneko16Layer0Regs[4] & 0x1000) Layer0Enabled = 1;
-	if (~Kaneko16Layer0Regs[4] & 0x0010) Layer1Enabled = 1;
-	
-	BurnTransferClear();
-	Kaneko16CalcPalette(0x0800);
+	memset(DrvPrioBitmap, 0, 320 * 232);
 	
 	if (Kaneko16Layer0Regs[4] & 0x800) {
 		HANDLE_VSCROLL(0)
@@ -6478,12 +6452,9 @@ static void BlazeonFrameRender()
 	for (i = 0; i < 8; i++) {
 		if (Layer0Enabled) { if (vScroll0Enabled) { Kaneko16RenderLayerQueue(0, i); } else { Kaneko16RenderTileLayer(0, i, xScroll0); }}
 		if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
-	
-		if (i == 0) Kaneko16RenderSprites(0);
-		if (i == 1) Kaneko16RenderSprites(1);
-		if (i == 7) Kaneko16RenderSprites(2);
-		if (i == 7) Kaneko16RenderSprites(3);
 	}
+
+	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
 	
 	BurnTransferCopy(Kaneko16Palette);
 }
@@ -7089,8 +7060,7 @@ static INT32 BlazeonScan(INT32 nAction,INT32 *pnMin)
 	return Kaneko16Scan(nAction, pnMin);;
 }
 
-#if 0
-static INT32 WingforcScan(INT32 nAction,INT32 *pnMin) // hook this up after sprite issue is fixed, because savestate is in blazeon format
+static INT32 WingforcScan(INT32 nAction,INT32 *pnMin)
 {
 	if (pnMin != NULL) {
 		*pnMin =  0x029672;
@@ -7111,7 +7081,6 @@ static INT32 WingforcScan(INT32 nAction,INT32 *pnMin) // hook this up after spri
 	
 	return Kaneko16Scan(nAction, pnMin);;
 }
-#endif
 
 static INT32 ExplbrkrScan(INT32 nAction,INT32 *pnMin)
 {
@@ -7258,7 +7227,7 @@ struct BurnDriver BurnDrvWingforc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,
-	WingforcInit, WingforcExit, WingforcFrame, NULL, BlazeonScan,
+	WingforcInit, WingforcExit, WingforcFrame, NULL, WingforcScan,
 	NULL, 0x1000, 224, 320, 3, 4
 };
 

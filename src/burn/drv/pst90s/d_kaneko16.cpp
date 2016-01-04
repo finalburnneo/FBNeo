@@ -1,7 +1,3 @@
-// Todo's for dink:
-// after implementing new prios from trap15 or luca elia, hook up WingforcScan
-// and change the value in Blazeonmemindex()  (will break testing-savestates if I do it now)
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -56,6 +52,7 @@ static UINT8 *Kaneko16Tiles        = NULL;
 static UINT8 *Kaneko16Tiles2       = NULL;
 static UINT8 *Kaneko16Sprites      = NULL;
 static UINT8 *Kaneko16TempGfx      = NULL;
+static UINT8 *DrvPrioBitmap        = NULL; // Wing Force
 
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
@@ -1849,6 +1846,7 @@ static INT32 BlazeonMemIndex()
 
 	MSM6295ROM            = Next; Next += 0x040000;
 	MSM6295ROMData        = Next; Next += 0x400000;
+	DrvPrioBitmap         = Next; Next += 320 * 224;
 
 	RamStart = Next;
 
@@ -4641,7 +4639,7 @@ static INT32 WingforcInit()
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (16000000 / 16) / 132, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = WingforcFrameRender;
 	
@@ -5801,6 +5799,181 @@ static void Kaneko16RenderSprites(INT32 PriorityDraw)
 	}
 }
 
+static void Kaneko16RenderSprite_Wingforc(UINT32 Code, UINT32 Colour, INT32 FlipX, INT32 FlipY, INT32 sx, INT32 sy, INT32 priority)
+{
+	UINT8 *SourceBase = Kaneko16Sprites + ((Code % Kaneko16NumSprites) * 256);
+	
+	INT32 SpriteScreenHeight = ((1 << 16) * 16 + 0x8000) >> 16;
+	INT32 SpriteScreenWidth = ((1 << 16) * 16 + 0x8000) >> 16;
+	
+	if (Kaneko168BppSprites) {
+		Colour = 0x100 * (Colour % 0x40);
+	} else {
+		Colour = 0x10 * (Colour % 0x40);
+	}
+	
+	if (SpriteScreenHeight && SpriteScreenWidth) {
+		INT32 dx = (16 << 16) / SpriteScreenWidth;
+		INT32 dy = (16 << 16) / SpriteScreenHeight;
+		
+		INT32 ex = sx + SpriteScreenWidth;
+		INT32 ey = sy + SpriteScreenHeight;
+		
+		INT32 xIndexBase;
+		INT32 yIndex;
+		
+		if (FlipX) {
+			xIndexBase = (SpriteScreenWidth - 1) * dx;
+			dx = -dx;
+		} else {
+			xIndexBase = 0;
+		}
+		
+		if (FlipY) {
+			yIndex = (SpriteScreenHeight - 1) * dy;
+			dy = -dy;
+		} else {
+			yIndex = 0;
+		}
+		
+		if (sx < 0) {
+			INT32 Pixels = 0 - sx;
+			sx += Pixels;
+			xIndexBase += Pixels * dx;
+		}
+		
+		if (sy < 0) {
+			INT32 Pixels = 0 - sy;
+			sy += Pixels;
+			yIndex += Pixels * dy;
+		}
+		
+		if (ex > nScreenWidth + 1) {
+			INT32 Pixels = ex - nScreenWidth - 1;
+			ex -= Pixels;
+		}
+		
+		if (ey > nScreenHeight + 1) {
+			INT32 Pixels = ey - nScreenHeight - 1;
+			ey -= Pixels;	
+		}
+		
+		if (ex > sx) {
+			INT32 y;
+			
+			for (y = sy; y < ey; y++) {
+				UINT8 *Source = SourceBase + ((yIndex >> 16) * 16);
+				UINT16* pPixel = pTransDraw + (y * nScreenWidth);
+				UINT8 *pri = DrvPrioBitmap + (y * nScreenWidth);
+
+				if (y < 0 || y > (nScreenHeight - 1)) continue;
+				
+				INT32 x, xIndex = xIndexBase;
+				for (x = sx; x <ex; x++) {
+					INT32 c = Source[xIndex >> 16];
+					if (c != 0) {
+						// If we haven't drawn a sprite here yet, do so.
+						if (!(pri[x] & 0x10))
+						{
+							if (pri[x] < priority) {
+								if (x >= 0 && x < nScreenWidth) pPixel[x] = (c | Colour | Kaneko16SpritesColourOffset) & Kaneko16SpritesColourMask;
+							}
+							// Mark that we (tried to) draw a sprite.
+							pri[x] |= 0x10;
+						}
+					}
+					xIndex += dx;
+				}
+				
+				yIndex += dy;
+			}
+		}
+	}
+}
+
+static void Kaneko16RenderSprites_Wingforc()
+{
+	struct tempsprite *s = spritelist.first_sprite;
+	INT32 spritepriomask[4] = { 2, 3, 5, 7 }; // for Wingforc
+	
+	INT32 i = 0;
+	INT32 x = 0;
+	INT32 y = 0;
+	INT32 Colour = 0;
+	INT32 Code = 0;
+	INT32 Priority = 0;
+	INT32 xOffs = 0;
+	INT32 yOffs = 0;
+	INT32 FlipX = 0;
+	INT32 FlipY = 0;
+	
+	while (1) {
+		INT32 Flags;
+		
+		Flags = Kaneko16ParseSprite(i, s);
+		
+		if (Flags == -1) break;
+		
+		if (Flags & USE_LATCHED_CODE) {
+			s->code = ++Code;
+		} else {
+			Code = s->code;
+		}
+		
+		if (Flags & USE_LATCHED_COLOUR) {
+			s->color = Colour;
+			s->priority = Priority;
+			s->xoffs = xOffs;
+			s->yoffs = yOffs;
+			if (Kaneko16SpriteFlipType == 0) {
+				s->flipx = FlipX;
+				s->flipy = FlipY;
+			}
+		} else {
+			Colour = s->color;
+			Priority = s->priority;
+			xOffs = s->xoffs;
+			yOffs = s->yoffs;
+			if (Kaneko16SpriteFlipType == 0) {
+				FlipX = s->flipx;
+				FlipY = s->flipy;
+			}
+		}
+
+		if (Kaneko16SpriteFlipType == 1) {
+			FlipX = s->flipx;
+			FlipY = s->flipy;
+		}
+
+		if (Flags & USE_LATCHED_XY)
+		{
+			s->x += x;
+			s->y += y;
+		}
+		
+		x = s->x;
+		y = s->y;
+		
+		s->x = s->xoffs + s->x;
+		s->y = s->yoffs + s->y;
+		
+		s->x += Kaneko16SpriteXOffset;
+				
+		s->x = ((s->x & 0x7fc0) - (s->x & 0x8000)) / 0x40;
+		s->y = ((s->y & 0x7fc0) - (s->y & 0x8000)) / 0x40;
+		
+		i++;
+		s++;
+	}
+	
+	for (s--; s >= spritelist.first_sprite; s--) {
+		INT32 curr_pri = s->priority;
+
+		UINT32 primask = spritepriomask[curr_pri];
+		Kaneko16RenderSprite_Wingforc(s->code, s->color, s->flipx, s->flipy, s->x, s->y, primask);
+	}
+}
+
 #undef USE_LATCHED_XY
 #undef USE_LATCHED_CODE
 #undef USE_LATCHED_COLOUR
@@ -5951,9 +6124,46 @@ static void Kaneko16RenderLayerQueue(INT32 Layer, INT32 Priority)
 {
 	for (INT32 i = 0; i < LayerQueueSize[Layer]; i++) {
 		if (LayerQueuePriority[Layer][i] == Priority) {
-			UINT16* pPixel = pTransDraw + ((LayerQueueXY[Layer][i] >> 9) * nScreenWidth) + (LayerQueueXY[Layer][i] & 0x1ff);
+			INT32 x = (LayerQueueXY[Layer][i] & 0x1ff);
+			INT32 y = (LayerQueueXY[Layer][i] >> 9);
+			UINT16* pPixel = pTransDraw + (y * nScreenWidth) + x;
 			pPixel[0] = LayerQueueColour[Layer][i] | Kaneko16LayersColourOffset;
+
+			if (DrvPrioBitmap) {
+				UINT8 *pri = DrvPrioBitmap + (y * nScreenWidth);
+				pri[x] = Priority;
+			}
 		}
+	}
+}
+
+static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 priority, UINT8 *gfx)
+{
+	UINT16 *dest = pTransDraw;
+
+	INT32 flip = 0;
+	if (flipy) flip |= (height - 1) * width;
+	if (flipx) flip |= width - 1;
+
+	gfx += code * width * height;
+
+	for (INT32 y = 0; y < height; y++, sy++) {
+		if (sy < 0 || sy >= nScreenHeight) continue;
+
+		for (INT32 x = 0; x < width; x++, sx++) {
+			if (sx < 0 || sx >= nScreenWidth) continue;
+
+			INT32 pxl = gfx[((y * width) + x) ^ flip];
+			if (!pxl) continue; // transparency
+
+			dest[sy * nScreenWidth + sx] = pxl | (color << 4) | offset;
+
+			if (DrvPrioBitmap) {
+				UINT8 *pri = DrvPrioBitmap + (sy * nScreenWidth);
+				pri[sx] = priority;
+			}
+		}
+		sx -= width;
 	}
 }
 
@@ -6031,6 +6241,11 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 				x -= Kaneko16TilesXOffset + xOffs;
 				y += Kaneko16TilesYOffset;
 							
+				if (Flip == 0) RenderTileCPMP(Code, Colour, x, y, 0, 0, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
+				if (Flip == 1) RenderTileCPMP(Code, Colour, x, y, 1, 0, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
+				if (Flip == 2) RenderTileCPMP(Code, Colour, x, y, 0, 1, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
+				if (Flip == 3) RenderTileCPMP(Code, Colour, x, y, 1, 1, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
+#if 0
 				if (x > 0 && x < (nScreenWidth - 16) && y > 0 && y < (nScreenHeight - 16)) {
 					if (Flip == 0) Render16x16Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, Kaneko16LayersColourOffset, TILEDATA);
 					if (Flip == 1) Render16x16Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, Kaneko16LayersColourOffset, TILEDATA);
@@ -6042,6 +6257,7 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 					if (Flip == 2) Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, Kaneko16LayersColourOffset, TILEDATA);
 					if (Flip == 3) Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, Kaneko16LayersColourOffset, TILEDATA);
 				}
+#endif
 			}
 			
 			TileIndex += 2;
@@ -6213,11 +6429,12 @@ static void WingforcFrameRender()
 	
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x0800);
-	
+	memset(DrvPrioBitmap, 0, 320 * 224);
+
 	if (Kaneko16Layer0Regs[4] & 0x800) {
 		HANDLE_VSCROLL(0)
 	}
-	
+
 	if (Kaneko16Layer0Regs[4] & 0x008) {
 		HANDLE_VSCROLL(1)
 	}
@@ -6225,12 +6442,9 @@ static void WingforcFrameRender()
 	for (i = 0; i < 8; i++) {
 		if (nBurnLayer & 1) if (Layer0Enabled) { if (vScroll0Enabled) { Kaneko16RenderLayerQueue(0, i); } else { Kaneko16RenderTileLayer(0, i, xScroll0); }}
 		if (nBurnLayer & 2) if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
-
-		if (nSpriteEnable & 1) if (i == 1) Kaneko16RenderSprites(0);
-		if (nSpriteEnable & 2) if (i == 2) Kaneko16RenderSprites(1);
-		if (nSpriteEnable & 4) if (i == 4) Kaneko16RenderSprites(2);
-		if (nSpriteEnable & 8) if (i == 6) Kaneko16RenderSprites(3);
 	}
+
+	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
 
 	BurnTransferCopy(Kaneko16Palette);
 }

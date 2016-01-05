@@ -1095,22 +1095,30 @@ STD_ROM_PICK(Blazeon)
 STD_ROM_FN(Blazeon)
 
 static struct BurnRomInfo WingforcRomDesc[] = {
-	{ "E_2.24.U80",       	0x080000, 0x837e0726, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "O_2.24.U81",       	0x080000, 0xb6983437, BRF_ESS | BRF_PRG }, //  1
+	{ "e_2.24.u80",       	0x080000, 0x837e0726, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "o_2.24.u81",       	0x080000, 0xb6983437, BRF_ESS | BRF_PRG }, //  1
 	
-	{ "SP0M.U1",        	0x080000, 0x8be26a05, BRF_GRA },	   	   //  2 Sprites
-	{ "SP1M.U1",        	0x080000, 0xad8c5b68, BRF_GRA },	   	   //  3
+	// two sprite chips, roms are doubled
+	{ "sp0m.u69",        	0x080000, 0x8be26a05, BRF_GRA },	   	   //  2 Sprites
+	{ "sp0m.u1",        	0x080000, 0x8be26a05, BRF_GRA },	   	   //  3 
+	
+	{ "sp1m.u1",        	0x080000, 0xad8c5b68, BRF_GRA },	   	   //  4
+	{ "sp1m.u69",        	0x080000, 0xad8c5b68, BRF_GRA },	   	   //  5
 
-	{ "SP2M.U20",        	0x080000, 0xb5994bda, BRF_GRA },	   	   //  4 Sprites
-	{ "SP3M.U20",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  5
+	{ "sp2m.u20",        	0x080000, 0xb5994bda, BRF_GRA },	   	   //  6 
+	{ "sp2m.u68",        	0x080000, 0xb5994bda, BRF_GRA },	   	   //  7
 	
-	{ "BG0AM.U2",	        0x080000, 0xf4276860, BRF_GRA },	   	   //  6 Tiles (scrambled)
-	{ "BG0BM.U2",	        0x080000, 0x9df92283, BRF_GRA },	   	   //  7 Tiles (scrambled)
-	{ "BG1AM.U3",	        0x080000, 0xa44fdebb, BRF_GRA },	   	   //  8 Tiles (scrambled)
-	{ "BG1BM.U3",	        0x080000, 0xa9b9fc5d, BRF_GRA },	   	   //  9 Tiles (scrambled)
+	{ "sp3m.u20",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  8
+	{ "sp3m.u68",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  8
 	
-	{ "S-DRV_2.22.U45",     0x010000, 0xccdc2758, BRF_ESS | BRF_PRG }, // 10 Z80 Program Code
-	{ "PCM.u5",      	    0x080000, 0x233569fd, BRF_SND }, 		   // 11 Samples
+	{ "bg0am.u2",	        0x080000, 0xf4276860, BRF_GRA },	   	   //  6 Tiles (scrambled)
+	{ "bg0bm.u2",	        0x080000, 0x9df92283, BRF_GRA },	   	   //  7 Tiles (scrambled)
+	{ "bg1am.u3",	        0x080000, 0xa44fdebb, BRF_GRA },	   	   //  8 Tiles (scrambled)
+	{ "bg1bm.u3",	        0x080000, 0xa9b9fc5d, BRF_GRA },	   	   //  9 Tiles (scrambled)
+	
+	{ "s-drv_2.22.u45",     0x010000, 0xccdc2758, BRF_ESS | BRF_PRG }, // 10 Z80 Program Code
+	
+	{ "pcm.u5",      	    0x080000, 0x233569fd, BRF_SND }, 		   // 11 Samples
 };
 
 
@@ -4590,27 +4598,31 @@ static INT32 WingforcInit()
 	
 	// Load and Decode Sprite Roms
 	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,  2, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000,  3, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  4, 1); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0180000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,  3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000,  4, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0080000,  5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,  7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0180000,  8, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0180000,  9, 1); if (nRet != 0) return 1;
 	GfxDecode(Kaneko16NumSprites, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Sprites);
 	
 	// Load and Decode Tile Roms
 	memset(Kaneko16TempGfx, 0, 0x400000);
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000, 6, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000001, 7, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000, 8, 2); if (nRet != 0) return 1;
-	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100001, 9, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000000,10, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0000001,11, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100000,12, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x0100001,13, 2); if (nRet != 0) return 1;
 	UnscrambleTiles(0x200000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 
 	BurnFree(Kaneko16TempGfx);
 	
 	// Load Z80 Rom
-	nRet = BurnLoadRom(Kaneko16Z80Rom, 10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16Z80Rom, 14, 1); if (nRet != 0) return 1;
 
 	// Load Sample Rom
-	nRet = BurnLoadRom(MSM6295ROMData, 11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(MSM6295ROMData, 15, 1); if (nRet != 0) return 1;
 	ExpandSampleBanks();
 
 	SekInit(0, 0x68000);
@@ -7223,7 +7235,7 @@ struct BurnDriver BurnDrvBlazeon = {
 
 struct BurnDriver BurnDrvWingforc = {
 	"wingforc", NULL, NULL, NULL, "1993",
-	"Wing Force (Japan)\0", NULL, "Atlus", "Kaneko16",
+	"Wing Force (Japan, prototype)\0", NULL, "Atlus", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_KANEKO16, GBF_HORSHOOT, 0,
 	NULL, WingforcRomInfo, WingforcRomName, NULL, NULL, BlazeonInputInfo, BlazeonDIPInfo,

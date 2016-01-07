@@ -80,8 +80,9 @@
 
 #define TAVI_DIRECTORY ".\\avi\\"
 
-INT32 nAviStatus = 0; // 1 (recording started), 0 (recording stopped)
-INT32 nAviIntAudio = 1; // 1 (interleave audio), 0 (do not interleave)
+INT32 nAviStatus = 0;       // 1 (recording started), 0 (recording stopped)
+INT32 nAviIntAudio = 1;     // 1 (interleave audio aka audio enabled), 0 (do not interleave aka disable audio)
+INT32 nAvi3x = 0;           // set to !0 for 3x pixel expansion
 
 static INT32 nAviFlags = 0;
 
@@ -262,7 +263,7 @@ static INT MakeSSBitmap()
 	return 0; // success!
 }
 
-#define aviBPP 4
+#define aviBPP 4 // BYTES per pixel
 
 // Flips the image the way the encoder expects it to be
 static INT32 MakeBitmapFlippedForEncoder()
@@ -290,7 +291,7 @@ static INT32 MakeBitmapFlippedForEncoder()
 }
 
 // Doubles the pixels on an already converted buffer
-static INT32 MakeBitmapDoubled()
+static INT32 MakeBitmap2x()
 {
 	INT32 nWidth = FBAvi.nWidth;
 	INT32 nHeight = FBAvi.nHeight;
@@ -322,6 +323,51 @@ static INT32 MakeBitmapDoubled()
 	return 0;
 }
 
+// Doubles the pixels on an already converted buffer
+static INT32 MakeBitmap3x()
+{
+	INT32 nWidth = FBAvi.nWidth;
+	INT32 nHeight = FBAvi.nHeight;
+	UINT8 *pSrc = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf2 : FBAvi.pBitmapBuf1;
+	UINT8 *pDest = (FBAvi.nLastDest == 2) ? FBAvi.pBitmapBuf1 : FBAvi.pBitmapBuf2;
+	UINT8 *pDestL2, *pDestL3;
+	FBAvi.pBitmap = pDest;
+	INT32 lctr = 0;
+
+	for (INT32 i = 0; i < nHeight * nWidth; i++) {
+		pDestL2 = pDest + (nWidth * (aviBPP * 3)); // next line down, aviBPP * x = # pixels expanding
+		pDestL3 = pDest + ((nWidth * (aviBPP * 3)) * 2); // next line down + 1
+		memcpy(pDest, pSrc, aviBPP);
+		pDest += aviBPP;
+		memcpy(pDest, pSrc, aviBPP);
+		pDest += aviBPP;
+		memcpy(pDest, pSrc, aviBPP);
+		pDest += aviBPP;
+		memcpy(pDestL2, pSrc, aviBPP);
+		pDestL2 += aviBPP;
+		memcpy(pDestL2, pSrc, aviBPP);
+		pDestL2 += aviBPP;
+		memcpy(pDestL2, pSrc, aviBPP);
+
+		memcpy(pDestL3, pSrc, aviBPP);
+		pDestL3 += aviBPP;
+		memcpy(pDestL3, pSrc, aviBPP);
+		pDestL3 += aviBPP;
+		memcpy(pDestL3, pSrc, aviBPP);
+		lctr++;
+		if(lctr >= nWidth) { // end of line 1
+			lctr = 0;
+			pDest += nWidth*(aviBPP * 3); // line 2
+			pDest += nWidth*(aviBPP * 3); // line 3
+		}
+		pSrc += aviBPP;             // source a new pixel
+	}
+
+	FBAvi.nLastDest = (FBAvi.pBitmap == FBAvi.pBitmapBuf1) ? 1 : 2;
+
+	return 0;
+}
+
 // Sets the format for video stream.
 static void AviSetVidFormat()
 {
@@ -331,15 +377,15 @@ static void AviSetVidFormat()
 
 	//INT32 ww,hh;
 	BurnDrvGetVisibleSize(&FBAvi.nWidth, &FBAvi.nHeight);
-	FBAvi.bih.biWidth = FBAvi.nWidth * 2;
-	FBAvi.bih.biHeight = FBAvi.nHeight * 2;
+	FBAvi.bih.biWidth = FBAvi.nWidth * ((nAvi3x) ? 3 : 2);
+	FBAvi.bih.biHeight = FBAvi.nHeight * ((nAvi3x) ? 3 : 2);
 
 	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
 	FBAvi.bih.biPlanes = 1;
 	FBAvi.bih.biBitCount = 32;
 	FBAvi.bih.biCompression = BI_RGB;           // uncompressed RGB
-	FBAvi.bih.biSizeImage = 4 * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
+	FBAvi.bih.biSizeImage = ((nAvi3x) ? 9 : 4) * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
 }
 
 // Sets the format for the audio stream.
@@ -564,8 +610,13 @@ INT32 AviRecordFrame(INT32 bDraw)
 			return 1;
 		}
 
-		MakeBitmapFlippedForEncoder();  // Mandatory.
-		MakeBitmapDoubled();            // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
+		MakeBitmapFlippedForEncoder();  // Mandatory, encoder needs image data to be flipped.
+
+		if (nAvi3x) {
+			MakeBitmap3x();            // Triple the pixels, for 720p/60hz* yt videos (yay!) *) if * 3 >= 720 && hz >= 60
+		} else {
+			MakeBitmap2x();            // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
+		}
 
 		// compress the bitmap and write to AVI output stream
 		hRet = AVIStreamWrite(

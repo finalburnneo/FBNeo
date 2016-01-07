@@ -11629,6 +11629,34 @@ static struct BurnRomInfo StrideruaRomDesc[] = {
 STD_ROM_PICK(Striderua)
 STD_ROM_FN(Striderua)
 
+static struct BurnRomInfo StriderucRomDesc[] = {
+	{ "34.8f",    	   0x080000, 0xe0fb5657, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "33.6f",    	   0x080000, 0x9b3cfc08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "6.8a",          0x080000, 0x4eee9aea, BRF_GRA | CPS1_TILES },
+	{ "8.10a",     	   0x080000, 0x2d7f21e4, BRF_GRA | CPS1_TILES },
+	{ "5.7a",          0x080000, 0x7705aa46, BRF_GRA | CPS1_TILES },
+	{ "7.9a",          0x080000, 0x5b18b722, BRF_GRA | CPS1_TILES },
+	{ "15.8c",         0x080000, 0x005f000b, BRF_GRA | CPS1_TILES },
+	{ "17.10c",        0x080000, 0xb9441519, BRF_GRA | CPS1_TILES },
+	{ "14.7c",         0x080000, 0xb7d04e8b, BRF_GRA | CPS1_TILES },
+	{ "16.9c",         0x080000, 0x6b4713b4, BRF_GRA | CPS1_TILES },
+
+	{ "09.12a", 	   0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM }, 
+
+	{ "18.11c",        0x020000, 0x4386bc80, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19.12c",        0x020000, 0x444536d7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	A_BOARD_PLDS
+	
+	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
+};
+
+STD_ROM_PICK(Strideruc)
+STD_ROM_FN(Strideruc)
+
 static struct BurnRomInfo StriderjrRomDesc[] = {
 	{ "sthj_23.8f",    0x080000, 0x046e7b12, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "sthj_22.7f",    0x080000, 0x9b3cfc08, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -12365,6 +12393,48 @@ static struct BurnRomInfo WofchRomDesc[] = {
 STD_ROM_PICK(Wofch)
 STD_ROM_FN(Wofch)
 
+static struct BurnRomInfo WofchdxRomDesc[] = {
+	{ "tk2(ch)dx_23.8f", 0x080000, 0x29389b7d, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "tk2(ch)dx_22.7f", 0x080000, 0xa959df0c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "tk2-1m.3a",     0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "tk2-3m.5a",     0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "tk2-2m.4a",     0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "tk2-4m.6a",     0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "tk2(ch)_05.7a", 0x080000, 0xe4a44d53, BRF_GRA | CPS1_TILES },
+	{ "tk2(ch)_06.8a", 0x080000, 0x58066ba8, BRF_GRA | CPS1_TILES },
+	{ "tk2(ch)_07.9a", 0x080000, 0xcc9006c9, BRF_GRA | CPS1_TILES }, // 1 byte different from wofj, pcb verified
+	{ "tk2(ch)_08.10a",0x080000, 0xd4a19a02, BRF_GRA | CPS1_TILES },
+	
+	{ "tk2_qa.5k",     0x020000, 0xc9183a0d, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "tk2-q1.1k",     0x080000, 0x611268cf, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q2.2k",     0x080000, 0x20f55ca9, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q3.3k",     0x080000, 0xbfcf6f52, BRF_SND | CPS1_QSOUND_SAMPLES },
+	{ "tk2-q4.4k",     0x080000, 0x36642e88, BRF_SND | CPS1_QSOUND_SAMPLES },
+	
+	{ "buf1",          0x000117, 0xeb122de7, BRF_OPT }, // a-board PLDs
+	{ "ioa1",          0x000117, 0x59c7ee3b, BRF_OPT },
+	{ "prg2",          0x000117, 0x4386879a, BRF_OPT },
+	{ "rom1",          0x000117, 0x41dc73b9, BRF_OPT },
+	{ "sou1",          0x000117, 0x84f4b2fe, BRF_OPT },
+	
+	{ "tk263b.1a",     0x000117, 0xc4b0349b, BRF_OPT },	// b-board PLDs
+	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
+	
+	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+	
+	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs
+	{ "d8l1.8l",       0x000117, 0x539fc7da, BRF_OPT },
+	{ "d9k1.9k",       0x000117, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "d10f1.10f",     0x000117, 0x6619c494, BRF_OPT },
+};
+
+STD_ROM_PICK(Wofchdx)
+STD_ROM_FN(Wofchdx)
+
 static struct BurnRomInfo WofhfhRomDesc[] = {
 	{ "23",            0x080000, 0x6ae4b312, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	{ "22",            0x080000, 0x94e8d01a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -12964,6 +13034,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "slampic"     , CPS_B_21_QS4, mapper_MB63B , 0, NULL                },
 	{ "strider"     , CPS_B_01    , mapper_ST24M1, 1, NULL                },
 	{ "striderua"   , CPS_B_01    , mapper_ST24M1, 1, NULL                },
+	{ "strideruc"   , CPS_B_17    , mapper_ST24M1, 1, NULL                },
 	{ "striderjr"   , CPS_B_21_DEF, mapper_ST24M1, 1, NULL                },
 	{ "striderj"    , CPS_B_01    , mapper_ST22B , 1, NULL                },
 	{ "unsquad"     , CPS_B_11    , mapper_AR24B , 0, NULL                },
@@ -13002,6 +13073,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofahb"      , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
 	{ "sfzch"       , CPS_B_21_DEF, mapper_sfzch , 0, NULL                },
 	{ "wofch"       , CPS_B_21_DEF, mapper_sfzch , 0, wof_decode          },
+	{ "wofchdx"     , CPS_B_21_DEF, mapper_sfzch , 0, wof_decode          },
 	{ "cps1demo"    , CPS_B_04    , mapper_sfzch , 0, NULL                },
 	{ "cps1frog"    , CPS_B_04    , mapper_frog  , 0, NULL                },
 	
@@ -17377,7 +17449,7 @@ struct BurnDriver BurnDrvCpsCworld2j = {
 struct BurnDriver BurnDrvCpsCworld2ja = {
 	"cworld2ja", "cworld2j", NULL, NULL, "1992",
 	"Adventure Quiz Capcom World 2 (Japan 920611, B-Board 90629B-3, no battery)\0", NULL, "Capcom", "CPS1",
-	L"Adevnture Quiz Capcom World 2 (\u30AF\u30A4\u30BA\uFF15 \u3042\u3069\u3079\u3093\u3061\u3083\u30FC\u304F\u3044\u305A \u304B\u3077\u3053\u3093\u308F\u30FC\u308B\u3069\uFF12 Japan 920611, B-Board 90629B-3, no battery)\0", NULL, NULL, NULL,
+	L"Adventure Quiz Capcom World 2 (\u30AF\u30A4\u30BA\uFF15 \u3042\u3069\u3079\u3093\u3061\u3083\u30FC\u304F\u3044\u305A \u304B\u3077\u3053\u3093\u308F\u30FC\u308B\u3069\uFF12 Japan 920611, B-Board 90629B-3, no battery)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
 	NULL, Cworld2jaRomInfo, Cworld2jaRomName, NULL, NULL, Cworld2jInputInfo, Cworld2jDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -17387,7 +17459,7 @@ struct BurnDriver BurnDrvCpsCworld2ja = {
 struct BurnDriver BurnDrvCpsCworld2jb = {
 	"cworld2jb", "cworld2j", NULL, NULL, "1992",
 	"Adventure Quiz Capcom World 2 (Japan 920611, B-Board 91634B-2)\0", NULL, "Capcom", "CPS1",
-	L"Adevnture Quiz Capcom World 2 (\u30AF\u30A4\u30BA\uFF15 \u3042\u3069\u3079\u3093\u3061\u3083\u30FC\u304F\u3044\u305A \u304B\u3077\u3053\u3093\u308F\u30FC\u308B\u3069\uFF12 Japan 920611, B-Board 91634B-2)\0", NULL, NULL, NULL,
+	L"Adventure Quiz Capcom World 2 (\u30AF\u30A4\u30BA\uFF15 \u3042\u3069\u3079\u3093\u3061\u3083\u30FC\u304F\u3044\u305A \u304B\u3077\u3053\u3093\u308F\u30FC\u308B\u3069\uFF12 Japan 920611, B-Board 91634B-2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
 	NULL, Cworld2jbRomInfo, Cworld2jbRomName, NULL, NULL, Cworld2jInputInfo, Cworld2jDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19454,6 +19526,16 @@ struct BurnDriver BurnDrvCpsStriderua = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvCpsStrideruc = {
+	"strideruc", "strider", NULL, NULL, "1989",
+	"Strider (US, Street Fighter II conversion)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE,2,HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
+	NULL, StriderucRomInfo, StriderucRomName, NULL, NULL, StriderInputInfo, StrideruaDIPInfo,
+	StriderInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvCpsStriderjr = {
 	"striderjr", "strider", NULL, NULL, "1989",
 	"Strider Hiryu (Japan Resale Ver.)\0", NULL, "Capcom", "CPS1",
@@ -19637,7 +19719,7 @@ struct BurnDriver BurnDrvCpsWofu = {
 struct BurnDriver BurnDrvCpsWofj = {
 	"wofj", "wof", NULL, NULL, "1992",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)\0", NULL, "Capcom", "CPS1 / QSound",
-	L"\u5929\u5730\u3092\u55B0\u3089\u3046II - \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)\0", NULL, NULL, NULL,
+	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II - \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II - Sekiheki no Tatakai (921031 Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjRomInfo, WofjRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19647,7 +19729,7 @@ struct BurnDriver BurnDrvCpsWofj = {
 struct BurnDriver BurnDrvCpsWofa = {
 	"wofa", "wof", NULL, NULL, "1992",
 	"Sangokushi II (921005 Asia)\0", NULL, "Capcom", "CPS1 / QSound",
-	L"\u4E09\u56FD\u5FD7II\0Sangokushi II (921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofaRomInfo, WofaRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19657,9 +19739,19 @@ struct BurnDriver BurnDrvCpsWofa = {
 struct BurnDriver BurnDrvCpsWofch = {
 	"wofch", NULL, NULL, NULL, "1992",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)\0", NULL, "Capcom", "CPS Changer",
-	L"\u5929\u5730\u3092\u55B0\u3089\u3046II - \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)\0", NULL, NULL, NULL,
+	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II - \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II - Sekiheki no Tatakai (CPS Changer, 921031 Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
 	NULL, WofchRomInfo, WofchRomName, NULL, NULL, WofchInputInfo, NULL,
+	WofchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsWofchdx = {
+	"wofchdx", "wofch", NULL, NULL, "2010",
+	"Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, "Capcom", "CPS Changer",
+	L"\u4E09\u56FD\u5FD7 III \u5916\u4F20: \u590F\u4FAF\u6069\u7684\u590D\u4EC7\0Sangokushi III Gaiden: Kakou-On's Revenge DX (hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPSCHANGER, GBF_SCRFIGHT, 0,
+	NULL, WofchdxRomInfo, WofchdxRomName, NULL, NULL, WofInputInfo, NULL,
 	WofchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
@@ -19667,7 +19759,7 @@ struct BurnDriver BurnDrvCpsWofch = {
 struct BurnDriver BurnDrvCpsWofhfh = {
 	"wofhfh", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Huo Fenghuang (Chinese bootleg, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u706B\u9CF3\u51F0\0Sangokushi II: Huo Feng Huang (Chinese bootleg, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u706B\u9CF3\u51F0\0Sangokushi II: Huo Feng Huang (Chinese bootleg, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhfhRomInfo, WofhfhRomName, NULL, NULL, WofhfhInputInfo, WofhfhDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19677,7 +19769,7 @@ struct BurnDriver BurnDrvCpsWofhfh = {
 struct BurnDriver BurnDrvCpsWofh = {
 	"wofh", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhRomInfo, WofhRomName, NULL, NULL, WofhInputInfo, WofhDIPInfo,
 	WofhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19687,7 +19779,7 @@ struct BurnDriver BurnDrvCpsWofh = {
 struct BurnDriver BurnDrvCpsWofha = {
 	"wofha", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofhaRomInfo, WofhaRomName, NULL, NULL, WofhInputInfo, WofhDIPInfo,
 	WofhInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19697,7 +19789,7 @@ struct BurnDriver BurnDrvCpsWofha = {
 struct BurnDriver BurnDrvCpsSgyxz = {
 	"sgyxz", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sanguo Yingxiong Zhuan (Chinese bootleg set 3, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u570B\u82F1\u96C4\u50B3\0Sangokushi II: Sanguo YingXiongZhuan (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, SgyxzRomInfo, SgyxzRomName, NULL, NULL, WofhInputInfo, WofhDIPInfo,
 	SgyxzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19707,7 +19799,7 @@ struct BurnDriver BurnDrvCpsSgyxz = {
 struct BurnDriver BurnDrvCpsWof3js = {
 	"wof3js", "wof", NULL, NULL, "1992",
 	"Sangokushi II: San Jian Sheng (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3jsRomInfo, Wof3jsRomName, NULL, NULL, Wof3jsInputInfo, Wof3jsDIPInfo,
 	Wof3jsInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19717,7 +19809,7 @@ struct BurnDriver BurnDrvCpsWof3js = {
 struct BurnDriver BurnDrvCpsWof3jsa = {
 	"wof3jsa", "wof", NULL, NULL, "1992",
 	"Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u528D\u8056\0Sangokushi II: San Jian Sheng (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3jsaRomInfo, Wof3jsaRomName, NULL, NULL, Wof3jsInputInfo, Wof3jsaDIPInfo,
 	Wof3jsaInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19727,7 +19819,7 @@ struct BurnDriver BurnDrvCpsWof3jsa = {
 struct BurnDriver BurnDrvCpsWof3sj = {
 	"wof3sj", "wof", NULL, NULL, "1992",
 	"Sangokushi II: San Sheng Jian (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3sjRomInfo, Wof3sjRomName, NULL, NULL, WofhInputInfo, Wof3sjDIPInfo,
 	Wof3sjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19737,7 +19829,7 @@ struct BurnDriver BurnDrvCpsWof3sj = {
 struct BurnDriver BurnDrvCpsWof3sja = {
 	"wof3sja", "wof", NULL, NULL, "1992",
 	"Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u4E09\u5723\u5251\0Sangokushi II: San Sheng Jian (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Wof3sjaRomInfo, Wof3sjaRomName, NULL, NULL, WofhInputInfo, Wof3sjDIPInfo,
 	Wof3sjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19747,7 +19839,7 @@ struct BurnDriver BurnDrvCpsWof3sja = {
 struct BurnDriver BurnDrvCpsWofsj = {
 	"wofsj", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 1, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofsjRomInfo, WofsjRomName, NULL, NULL, WofhInputInfo, Wof3sjDIPInfo,
 	WofsjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19757,7 +19849,7 @@ struct BurnDriver BurnDrvCpsWofsj = {
 struct BurnDriver BurnDrvCpsWofsja = {
 	"wofsja", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofsjaRomInfo, WofsjaRomName, NULL, NULL, WofhInputInfo, Wof3sjDIPInfo,
 	WofsjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19767,7 +19859,7 @@ struct BurnDriver BurnDrvCpsWofsja = {
 struct BurnDriver BurnDrvCpsWofsjb = {
 	"wofsjb", "wof", NULL, NULL, "1992",
 	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", "No sound", "bootleg", "CPS1",
-	L"\u4E09\u56FD\u5FD7II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 3, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, WofsjbInputInfo, NULL,
 	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19787,7 +19879,7 @@ struct BurnDriver BurnDrvCpsWofb = {
 struct BurnDriver BurnDrvCpsWofjh = {
 	"wofjh", "wof", NULL, NULL, "1992",
 	"Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)\0", NULL, "hack", "CPS1 / QSound",
-	L"\u5929\u5730\u3092\u55B0\u3089\u3046II - \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)\0", NULL, NULL, NULL,
+	L"\u5929\u5730\u3092\u55B0\u3089\u3046 II - \u8D64\u58C1\u306E\u6226\u3044\0Tenchi wo Kurau II - Sekiheki no Tatakai (hack, 921031 Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofjhRomInfo, WofjhRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19797,7 +19889,7 @@ struct BurnDriver BurnDrvCpsWofjh = {
 struct BurnDriver BurnDrvCpsWofah = {
 	"wofah", "wof", NULL, NULL, "1992",
 	"Sangokushi II (hack set 1, 921005 Asia)\0", NULL, "hack", "CPS1 / QSound",
-	L"\u4E09\u56FD\u5FD7II\0Sangokushi II (hack set 1, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (hack set 1, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofahRomInfo, WofahRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19807,7 +19899,7 @@ struct BurnDriver BurnDrvCpsWofah = {
 struct BurnDriver BurnDrvCpsWofaha = {
 	"wofaha", "wof", NULL, NULL, "1992",
 	"Sangokushi II (hack set 2, 921005 Asia)\0", NULL, "hack", "CPS1 / QSound",
-	L"\u4E09\u56FD\u5FD7II\0Sangokushi II (hack set 2, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (hack set 2, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofahaRomInfo, WofahaRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
@@ -19817,7 +19909,7 @@ struct BurnDriver BurnDrvCpsWofaha = {
 struct BurnDriver BurnDrvCpsWofahb = {
 	"wofahb", "wof", NULL, NULL, "1992",
 	"Sangokushi II (hack set 3, 921005 Asia)\0", NULL, "hack", "CPS1 / QSound",
-	L"\u4E09\u56FD\u5FD7II\0Sangokushi II (hack set 3, 921005 Asia)\0", NULL, NULL, NULL,
+	L"\u4E09\u56FD\u5FD7 II\0Sangokushi II (hack set 3, 921005 Asia)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 3, HARDWARE_CAPCOM_CPS1_QSOUND, GBF_SCRFIGHT, 0,
 	NULL, WofahbRomInfo, WofahbRomName, NULL, NULL, WofInputInfo, WofDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,

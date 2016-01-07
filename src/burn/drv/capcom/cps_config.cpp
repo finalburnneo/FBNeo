@@ -1149,7 +1149,7 @@ void SetCpsBId(INT32 CpsBId, INT32 bStars)
 			nCpsPalCtrlReg = 0x4a;
   			
 			CpsLayEn[1] = 0x08;
-			CpsLayEn[2] = 0x10;
+			CpsLayEn[2] = 0x14;
 			CpsLayEn[3] = 0x02;
 			if (bStars) {
 				CpsLayEn[4] = 0x00;

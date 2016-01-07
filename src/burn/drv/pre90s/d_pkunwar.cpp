@@ -1729,15 +1729,15 @@ struct BurnDriver BurnDrvpkunwarj = {
 // Nova 2001 (Japan)
 
 static struct BurnRomInfo nova2001RomDesc[] = {
-	{ "1.6c",		0x2000, 0x368cffc0, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{ "1.6c",			0x2000, 0x368cffc0, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
 	{ "2.6d",	        0x2000, 0xbc4e442b, 1 | BRF_PRG | BRF_ESS}, //  1
-	{ "3.6f",		0x2000, 0xb2849038, 1 | BRF_PRG | BRF_ESS}, //  2
+	{ "3.6f",			0x2000, 0xb2849038, 1 | BRF_PRG | BRF_ESS}, //  2
 	{ "4.6g",	        0x1000, 0x6b5bb12d, 1 | BRF_PRG | BRF_ESS}, //  3
 
-	{ "5.12s",		0x2000, 0x54198941, 2 | BRF_GRA },          //  4 Graphics
-	{ "6.12p",		0x2000, 0xcbd90dca, 2 | BRF_GRA },          //  5
-	{ "7.12n",		0x2000, 0x9ebd8806, 2 | BRF_GRA },          //  6
-	{ "8.12l",		0x2000, 0xd1b18389, 2 | BRF_GRA },          //  7
+	{ "5.12s",			0x2000, 0x54198941, 2 | BRF_GRA },          //  4 Graphics
+	{ "6.12p",			0x2000, 0xcbd90dca, 2 | BRF_GRA },          //  5
+	{ "7.12n",			0x2000, 0x9ebd8806, 2 | BRF_GRA },          //  6
+	{ "8.12l",			0x2000, 0xd1b18389, 2 | BRF_GRA },          //  7
 
 	{ "nova2001.clr",	0x0020, 0xa2fac5cd, 3 | BRF_GRA },          //  8 Color Prom
 };
@@ -1756,18 +1756,50 @@ struct BurnDriver BurnDrvNova2001 = {
 };
 
 
+// Nova 2001 (Japan, hack?)
+
+static struct BurnRomInfo nova2001hRomDesc[] = {
+	// roms 1 and 2 had green stickers, but looks like an unofficial mod, bytes have been added in empty space to fix game checksum after mods were made to code.
+	// one of the mods fixes the game resetting if the coin input is held down for too short / long of a period, the purpose of the other is unknown.
+	{ "1(green).6c",	0x2000, 0x1a8731b3, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
+	{ "2(green).6d",	0x2000, 0xbc4e442b, 1 | BRF_PRG | BRF_ESS}, //  1
+	{ "3.6f",			0x2000, 0xb2849038, 1 | BRF_PRG | BRF_ESS}, //  2
+	{ "4.6g",	        0x1000, 0x6b5bb12d, 1 | BRF_PRG | BRF_ESS}, //  3
+
+	{ "5.12s",			0x2000, 0x54198941, 2 | BRF_GRA },          //  4 Graphics
+	{ "6.12p",			0x2000, 0xcbd90dca, 2 | BRF_GRA },          //  5
+	{ "7.12n",			0x2000, 0x9ebd8806, 2 | BRF_GRA },          //  6
+	{ "8.12l",			0x2000, 0xd1b18389, 2 | BRF_GRA },          //  7
+
+	{ "nova2001.clr",	0x0020, 0xa2fac5cd, 3 | BRF_GRA },          //  8 Color Prom
+};
+
+STD_ROM_PICK(nova2001h)
+STD_ROM_FN(nova2001h)
+
+struct BurnDriver BurnDrvNova2001h = {
+	"nova2001h", "nova2001", NULL, NULL, "1983",
+	"Nova 2001 (Japan, hack?)\0", NULL, "UPL", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, nova2001hRomInfo, nova2001hRomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
+	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 192, 4, 3
+};
+
+
 // Nova 2001 (US)
 
 static struct BurnRomInfo nova2001uRomDesc[] = {
 	{ "nova2001.1",		0x2000, 0xb79461bd, 1 | BRF_PRG | BRF_ESS}, //  0 Z80 Code
-	{ "nova2001.2",	        0x2000, 0xfab87144, 1 | BRF_PRG | BRF_ESS}, //  1
-	{ "3.6f",		0x2000, 0xb2849038, 1 | BRF_PRG | BRF_ESS}, //  2
+	{ "nova2001.2",	    0x2000, 0xfab87144, 1 | BRF_PRG | BRF_ESS}, //  1
+	{ "3.6f",			0x2000, 0xb2849038, 1 | BRF_PRG | BRF_ESS}, //  2
 	{ "4.6g",	        0x1000, 0x6b5bb12d, 1 | BRF_PRG | BRF_ESS}, //  3
 
 	{ "nova2001.5",		0x2000, 0x8ea576e8, 2 | BRF_GRA },          //  4 Graphics
 	{ "nova2001.6",		0x2000, 0x0c61656c, 2 | BRF_GRA },          //  5
-	{ "7.12n",		0x2000, 0x9ebd8806, 2 | BRF_GRA },          //  6
-	{ "8.12l",		0x2000, 0xd1b18389, 2 | BRF_GRA },          //  7
+	{ "7.12n",			0x2000, 0x9ebd8806, 2 | BRF_GRA },          //  6
+	{ "8.12l",			0x2000, 0xd1b18389, 2 | BRF_GRA },          //  7
 
 	{ "nova2001.clr",	0x0020, 0xa2fac5cd, 3 | BRF_GRA },          //  8 Color Prom
 };

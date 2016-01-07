@@ -52,7 +52,7 @@ static UINT8 *Kaneko16Tiles        = NULL;
 static UINT8 *Kaneko16Tiles2       = NULL;
 static UINT8 *Kaneko16Sprites      = NULL;
 static UINT8 *Kaneko16TempGfx      = NULL;
-static UINT8 *DrvPrioBitmap        = NULL; // Wing Force
+static UINT8 *DrvPrioBitmap        = NULL; // Wing Force & BlaZeon
 
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
@@ -1109,16 +1109,16 @@ static struct BurnRomInfo WingforcRomDesc[] = {
 	{ "sp2m.u68",        	0x080000, 0xb5994bda, BRF_GRA },	   	   //  7
 	
 	{ "sp3m.u20",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  8
-	{ "sp3m.u68",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  8
+	{ "sp3m.u68",        	0x080000, 0x889ddf72, BRF_GRA },	   	   //  9
 	
-	{ "bg0am.u2",	        0x080000, 0xf4276860, BRF_GRA },	   	   //  6 Tiles (scrambled)
-	{ "bg0bm.u2",	        0x080000, 0x9df92283, BRF_GRA },	   	   //  7 Tiles (scrambled)
-	{ "bg1am.u3",	        0x080000, 0xa44fdebb, BRF_GRA },	   	   //  8 Tiles (scrambled)
-	{ "bg1bm.u3",	        0x080000, 0xa9b9fc5d, BRF_GRA },	   	   //  9 Tiles (scrambled)
+	{ "bg0am.u2",	        0x080000, 0xf4276860, BRF_GRA },	   	   // 10 Tiles (scrambled)
+	{ "bg0bm.u2",	        0x080000, 0x9df92283, BRF_GRA },	   	   // 11 Tiles (scrambled)
+	{ "bg1am.u3",	        0x080000, 0xa44fdebb, BRF_GRA },	   	   // 12 Tiles (scrambled)
+	{ "bg1bm.u3",	        0x080000, 0xa9b9fc5d, BRF_GRA },	   	   // 13 Tiles (scrambled)
 	
-	{ "s-drv_2.22.u45",     0x010000, 0xccdc2758, BRF_ESS | BRF_PRG }, // 10 Z80 Program Code
+	{ "s-drv_2.22.u45",     0x010000, 0xccdc2758, BRF_ESS | BRF_PRG }, // 14 Z80 Program Code
 	
-	{ "pcm.u5",      	    0x080000, 0x233569fd, BRF_SND }, 		   // 11 Samples
+	{ "pcm.u5",      	    0x080000, 0x233569fd, BRF_SND }, 		   // 15 Samples
 };
 
 
@@ -4616,15 +4616,23 @@ static INT32 WingforcInit()
 	UnscrambleTiles(0x200000);
 	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
 
-	BurnFree(Kaneko16TempGfx);
 	
 	// Load Z80 Rom
 	nRet = BurnLoadRom(Kaneko16Z80Rom, 14, 1); if (nRet != 0) return 1;
 
-	// Load Sample Rom
-	nRet = BurnLoadRom(MSM6295ROMData, 15, 1); if (nRet != 0) return 1;
-	ExpandSampleBanks();
+	// Load & un-derange Sample Rom
+	memset(Kaneko16TempGfx, 0, 0x80000);
+	nRet = BurnLoadRom(Kaneko16TempGfx, 15, 1); if (nRet != 0) return 1;
 
+	memcpy(MSM6295ROMData + 0x00000, Kaneko16TempGfx + 0x00000, 0x20000);
+	memcpy(MSM6295ROMData + 0x20000, Kaneko16TempGfx + 0x20000, 0x20000);
+	memcpy(MSM6295ROMData + 0x40000, Kaneko16TempGfx + 0x00000, 0x20000);
+	memcpy(MSM6295ROMData + 0x60000, Kaneko16TempGfx + 0x40000, 0x20000);
+	memcpy(MSM6295ROMData + 0x80000, Kaneko16TempGfx + 0x00000, 0x20000);
+	memcpy(MSM6295ROMData + 0xa0000, Kaneko16TempGfx + 0x60000, 0x20000);
+	BurnFree(Kaneko16TempGfx);
+
+	// Setup 68k emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Kaneko16Rom          , 0x000000, 0x0fffff, MAP_ROM);

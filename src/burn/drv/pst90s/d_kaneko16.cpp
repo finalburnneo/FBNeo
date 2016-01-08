@@ -6272,8 +6272,8 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 				y += Kaneko16TilesYOffset;
 							
 				if (Flip == 0) RenderTileCPMP(Code, Colour, x, y, 0, 0, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
-				if (Flip == 1) RenderTileCPMP(Code, Colour, x, y, 1, 0, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
-				if (Flip == 2) RenderTileCPMP(Code, Colour, x, y, 0, 1, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
+				if (Flip == 1) RenderTileCPMP(Code, Colour, x, y, 0, 1, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
+				if (Flip == 2) RenderTileCPMP(Code, Colour, x, y, 1, 0, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
 				if (Flip == 3) RenderTileCPMP(Code, Colour, x, y, 1, 1, 16, 16, Kaneko16LayersColourOffset, Priority, TILEDATA);
 #if 0
 				if (x > 0 && x < (nScreenWidth - 16) && y > 0 && y < (nScreenHeight - 16)) {
@@ -6563,15 +6563,15 @@ static void BloodwarFrameRender()
 	}
 	
 	for (i = 0; i < 8; i++) {
-		if (Layer0Enabled) { if (vScroll0Enabled) { Kaneko16RenderLayerQueue(0, i); } else { Kaneko16RenderTileLayer(0, i, xScroll0); }}
-		if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
-		if (Layer2Enabled) { if (vScroll2Enabled) { Kaneko16RenderLayerQueue(2, i); } else { Kaneko16RenderTileLayer(2, i, xScroll2); }}
-		if (Layer3Enabled) { if (vScroll3Enabled) { Kaneko16RenderLayerQueue(3, i); } else { Kaneko16RenderTileLayer(3, i, xScroll3); }}
+		if (nBurnLayer & 1) if (Layer0Enabled) { if (vScroll0Enabled) { Kaneko16RenderLayerQueue(0, i); } else { Kaneko16RenderTileLayer(0, i, xScroll0); }}
+		if (nBurnLayer & 2) if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
+		if (nBurnLayer & 4) if (Layer2Enabled) { if (vScroll2Enabled) { Kaneko16RenderLayerQueue(2, i); } else { Kaneko16RenderTileLayer(2, i, xScroll2); }}
+		if (nBurnLayer & 8) if (Layer3Enabled) { if (vScroll3Enabled) { Kaneko16RenderLayerQueue(3, i); } else { Kaneko16RenderTileLayer(3, i, xScroll3); }}
 	
-		if (i == 1) Kaneko16RenderSprites(0);
-		if (i == 2) Kaneko16RenderSprites(1);
-		if (i == 4) Kaneko16RenderSprites(2);
-		if (i == 6) Kaneko16RenderSprites(3);
+		if (nSpriteEnable & 1) if (i == 1) Kaneko16RenderSprites(0);
+		if (nSpriteEnable & 2) if (i == 2) Kaneko16RenderSprites(1);
+		if (nSpriteEnable & 4) if (i == 4) Kaneko16RenderSprites(2);
+		if (nSpriteEnable & 8) if (i == 6) Kaneko16RenderSprites(3);
 	}
 	
 	BurnTransferCopy(Kaneko16Palette);

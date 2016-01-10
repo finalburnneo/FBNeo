@@ -1858,11 +1858,11 @@ static INT32 BlazeonMemIndex()
 {
 	UINT8 *Next; Next = Mem;
 
-	Kaneko16Rom           = Next; Next += 0x180000;
+	Kaneko16Rom           = Next; Next += 0x100000;
 	Kaneko16Z80Rom        = Next; Next += 0x020000;
 
 	MSM6295ROM            = Next; Next += 0x040000;
-	MSM6295ROMData        = Next; Next += 0x400000;
+	MSM6295ROMData        = Next; Next += 0x0c0000;
 	DrvPrioBitmap         = Next; Next += 320 * 256;
 
 	RamStart = Next;
@@ -3027,6 +3027,24 @@ static INT32 BlazeonDoReset()
 	ZetClose();
 	
 	BurnYM2151Reset();
+	
+	Kaneko16SoundLatch = 0;
+	
+	return nRet;
+}
+
+static INT32 WingforcDoReset()
+{
+	INT32 nRet = Kaneko16DoReset();
+	
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+	
+	BurnYM2151Reset();
+
+	MSM6295Reset(0);
+	MSM6295Bank0 = 0;
 	
 	Kaneko16SoundLatch = 0;
 	
@@ -4662,7 +4680,9 @@ static INT32 WingforcInit()
 	ZetSetInHandler(Kaneko16Z80PortRead);
 	ZetSetOutHandler(Kaneko16Z80PortWrite);
 	ZetClose();
-	
+
+	BurnSetRefreshRate(59.1854);
+
 	// Setup the YM2151 emulation
 	BurnYM2151Init(4000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.40, BURN_SND_ROUTE_LEFT);
@@ -4675,7 +4695,7 @@ static INT32 WingforcInit()
 	Kaneko16FrameRender = BlazeonFrameRender;
 	
 	// Reset the driver
-	BlazeonDoReset();
+	WingforcDoReset();
 	
 	return 0;
 }
@@ -6873,14 +6893,14 @@ static INT32 WingforcFrame()
 	INT32 nInterleave = 256;
 	nSoundBufferPos = 0;
 		
-	if (Kaneko16Reset) BlazeonDoReset();
+	if (Kaneko16Reset) WingforcDoReset();
 
 	Kaneko16MakeInputs();
-	
-	nCyclesTotal[0] = 16000000 / 60;
-	nCyclesTotal[1] = 4000000 / 60;
+
+	nCyclesTotal[0] = ((UINT64)16000000 * (UINT64)10000) / 591854;
+	nCyclesTotal[1] = ((UINT64)4000000 * (UINT64)10000) / 591854;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
@@ -7033,7 +7053,7 @@ static INT32 Kaneko16Scan(INT32 nAction,INT32 *pnMin)
 	
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = RamStart;
+		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
@@ -7042,10 +7062,6 @@ static INT32 Kaneko16Scan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 				
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
-		SCAN_VAR(Kaneko16Dip);
-		SCAN_VAR(Kaneko16Input);
 		SCAN_VAR(Kaneko16SoundLatch);
 		SCAN_VAR(Kaneko16SpriteFlipX);
 		SCAN_VAR(Kaneko16SpriteFlipY);
@@ -7073,8 +7089,6 @@ static INT32 BlazeonScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		BurnYM2151Scan(nAction);
-		
-		SCAN_VAR(nSoundBufferPos);
 	}
 	
 	return Kaneko16Scan(nAction, pnMin);;
@@ -7091,7 +7105,6 @@ static INT32 WingforcScan(INT32 nAction,INT32 *pnMin)
 		BurnYM2151Scan(nAction);
 		MSM6295Scan(0, nAction);
 		
-		SCAN_VAR(nSoundBufferPos);
 		SCAN_VAR(MSM6295Bank0);
 	}
 
@@ -7112,7 +7125,6 @@ static INT32 ExplbrkrScan(INT32 nAction,INT32 *pnMin)
 		AY8910Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 		SCAN_VAR(MSM6295Bank0);
-		SCAN_VAR(nSoundBufferPos);
 	}
 	
 	if (nAction & ACB_WRITE) {
@@ -7154,13 +7166,13 @@ static INT32 ShogwarrScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = &m_calc3;
+		ba.Data	  = &m_calc3;
 		ba.nLen	  = sizeof (m_calc3);
 		ba.szName = "Calc3 Data";
 		BurnAcb(&ba);
 
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = &m_hit3;
+		ba.Data	  = &m_hit3;
 		ba.nLen	  = sizeof (m_hit3);
 		ba.szName = "Hit2 Data";
 		BurnAcb(&ba);

@@ -4681,7 +4681,7 @@ static INT32 WingforcInit()
 	ZetSetOutHandler(Kaneko16Z80PortWrite);
 	ZetClose();
 
-	BurnSetRefreshRate(59.1854);
+//	BurnSetRefreshRate(59.1854); // hmm, this causes clicks in audio. let's just give it the cycles/per frame it wants instead. (see WingforcFrame())
 
 	// Setup the YM2151 emulation
 	BurnYM2151Init(4000000);
@@ -4690,7 +4690,7 @@ static INT32 WingforcInit()
 
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (16000000 / 16) / 132, 1);
-	MSM6295SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.55, BURN_SND_ROUTE_BOTH);
 	
 	Kaneko16FrameRender = BlazeonFrameRender;
 	

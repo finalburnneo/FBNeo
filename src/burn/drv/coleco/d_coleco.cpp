@@ -26,6 +26,8 @@ static UINT8 DrvJoy4[16];
 static UINT8 DrvDips[2] = { 0, 0 };
 static UINT16 DrvInputs[4];
 static UINT8 DrvReset;
+static UINT32 MegaCart;
+static UINT32 MegaCartBank;
 
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
@@ -299,6 +301,35 @@ static INT32 DrvDoReset()
 	memset (DrvZ80RAM, 0xff, 0x400); // ram initialized to 0xff
 
 	last_state = 0; // irq state...
+	MegaCartBank = 0;
+
+	return 0;
+}
+
+#if 0
+static void __fastcall main_write(UINT16 address, UINT8 data)
+{
+	// maybe we should support bankswitching on writes too?
+	//bprintf(0, _T("mw %X,"), address);
+}
+#endif
+
+static UINT8 __fastcall main_read(UINT16 address)
+{
+	if (address >= 0xffc0 && address <= 0xffff) {
+		UINT32 MegaCartBanks = MegaCart / 0x4000;
+
+		MegaCartBank = (0xffff - address) & (MegaCartBanks - 1);
+
+		MegaCartBank = (MegaCartBanks - MegaCartBank) - 1;
+
+		return 0;
+	}
+
+	if (address >= 0xc000 && address <= 0xffbf)
+		return DrvCartROM[(MegaCartBank * 0x4000) + (address - 0xc000)];
+
+	//bprintf(0, _T("mr %X,"), address);
 
 	return 0;
 }
@@ -308,7 +339,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80BIOS		= Next; Next += 0x004000;
-	DrvCartROM		= Next; Next += 0x008000;
+	DrvCartROM		= Next; Next += 0x100000;
 
 	AllRam			= Next;
 
@@ -331,6 +362,8 @@ static INT32 DrvInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
+	MegaCart = 0;
+
 	{
 		char* pRomName;
 		struct BurnRomInfo ri;
@@ -342,10 +375,11 @@ static INT32 DrvInit()
 
 			if ((ri.nType & BRF_PRG) && (ri.nLen == 0x2000 || ri.nLen == 0x1000) && (i<10)) {
 				BurnLoadRom(DrvCartROM+(i * 0x2000), i, 1);
-				//bprintf(0, _T("cv romload #%d\n"), i);
+				bprintf(0, _T("ColecoVision romload #%d\n"), i);
 			} else if ((ri.nType & BRF_PRG) && (i<10)) { // Load rom thats not in 0x2000 (8k) chunks
-				//bprintf(0, _T("load rom: %d len: %X"), i, ri.nLen);
+				bprintf(0, _T("ColecoVision romload (unsegmented) #%d size: %X\n"), i, ri.nLen);
 				BurnLoadRom(DrvCartROM, i, 1);
+				if (ri.nLen >= 0x20000) MegaCart = ri.nLen;
 			}
 		}
 	}
@@ -361,8 +395,22 @@ static INT32 DrvInit()
 		ZetMapArea(i + 0x0000, i + 0x03ff, 2, DrvZ80RAM);
 	}
 
-	ZetMapArea(0x8000, 0xffff, 0, DrvCartROM);
-	ZetMapArea(0x8000, 0xffff, 2, DrvCartROM);
+	if (MegaCart) {
+		// MegaCart
+		UINT32 MegaCartBanks = MegaCart / 0x4000;
+		UINT32 lastbank = (MegaCartBanks - 1) * 0x4000;
+		bprintf(0, _T("ColecoVision MegaCart: mapping cartrom[%X] to 0x8000 - 0xbfff.\n"), lastbank);
+		ZetMapArea(0x8000, 0xbfff, 0, DrvCartROM + lastbank);
+		ZetMapArea(0x8000, 0xbfff, 2, DrvCartROM + lastbank);
+		ZetSetReadHandler(main_read);
+		//ZetSetWriteHandler(main_write);
+	} else {
+		// Regular CV Cart
+		ZetMapArea(0x8000, 0xffff, 0, DrvCartROM);
+		ZetMapArea(0x8000, 0xffff, 2, DrvCartROM);
+	}
+
+
 	ZetSetOutHandler(coleco_write_port);
 	ZetSetInHandler(coleco_read_port);
 	ZetClose();
@@ -395,7 +443,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 4 * sizeof(short));
+		memset (DrvInputs, 0xff, 4 * sizeof(UINT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -520,6 +568,57 @@ struct BurnDriver BurnDrvcv_Coleco = {
 };
 
 // Homebrew games
+
+static struct BurnRomInfo cv_diggerRomDesc[] = {
+	{ "digger_cv.rom",	0x06000, 0x77088cab, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_digger, cv_digger, cv_coleco)
+STD_ROM_FN(cv_digger)
+
+struct BurnDriver BurnDrvcv_digger = {
+	"cv_digger", NULL, "cv_coleco", NULL, "2012",
+	"Digger\0", NULL, "Coleco*Windmill Software", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_diggerRomInfo, cv_diggerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	285, 243, 4, 3
+};
+
+static struct BurnRomInfo cv_questgcRomDesc[] = {
+	{ "quest_golden_chalice_colecovision.rom",	0x08000, 0x6da37da8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_questgc, cv_questgc, cv_coleco)
+STD_ROM_FN(cv_questgc)
+
+struct BurnDriver BurnDrvcv_questgc = {
+	"cv_questgc", NULL, "cv_coleco", NULL, "2012",
+	"Quest for the Golden Chalice\0", NULL, "Coleco*Team Pixelboy", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_questgcRomInfo, cv_questgcRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	285, 243, 4, 3
+};
+
+static struct BurnRomInfo cv_princessquestRomDesc[] = {
+	{ "princess_quest_colecovision.rom",	0x40000, 0xa59eaa2b, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(cv_princessquest, cv_princessquest, cv_coleco)
+STD_ROM_FN(cv_princessquest)
+
+struct BurnDriver BurnDrvcv_princessquest = {
+	"cv_pquest", NULL, "cv_coleco", NULL, "2012",
+	"Princess Quest\0", NULL, "Coleco*Nanochess", "ColecoVision",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
+	CVGetZipName, cv_princessquestRomInfo, cv_princessquestRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	285, 243, 4, 3
+};
 
 static struct BurnRomInfo cv_danslitherRomDesc[] = {
 	{ "danslither.rom",	0x0402a, 0x92624cff, BRF_PRG | BRF_ESS },

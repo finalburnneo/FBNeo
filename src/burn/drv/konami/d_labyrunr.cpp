@@ -697,7 +697,7 @@ static INT32 DrvDraw()
 		pTransDraw[i] = 0x800;
 	}
 
-	INT32 c3 = ~K007121CtrlRAM[3] & 0x20;
+	INT32 c3 = K007121CtrlRAM[3] & 0x40;
 
 	if (nBurnLayer & 1) draw_layer(0);
 	if (nSpriteEnable & 1 &&  c3) k007121_sprites_draw(DrvGfxROM, DrvPalette, DrvSprRAM, (K007121CtrlRAM[6] & 0x30) * 2, 40,0, (K007121CtrlRAM[3] & 0x40) >> 5);

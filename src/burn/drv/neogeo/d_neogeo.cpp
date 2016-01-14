@@ -687,7 +687,7 @@ static struct BurnDIPInfo neogeoDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,	0xFD, 0,	27,   "BIOS"                     	         },
+	{0,	0xFD, 0,	28,   "BIOS"                     	         },
 	{0x02,	0x01, 0x1f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"  },
 	{0x02,	0x01, 0x1f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"  },
 	{0x02,	0x01, 0x1f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"  },
@@ -786,7 +786,7 @@ static struct BurnDIPInfo neoFakeDIPList[] = {
 
 	// Fake DIPs
 	// BIOS
-	{0,	0xFD, 0,	27,   "BIOS"                     	         },
+	{0,	0xFD, 0,	28,   "BIOS"                     	         },
 	{0x02,	0x01, 0x1f,	0x00, "MVS Asia/Europe ver. 6 (1 slot)"  },
 	{0x02,	0x01, 0x1f,	0x01, "MVS Asia/Europe ver. 5 (1 slot)"  },
 	{0x02,	0x01, 0x1f,	0x02, "MVS Asia/Europe ver. 3 (4 slot)"  },
@@ -14296,10 +14296,10 @@ struct BurnDriver BurnDrvkof98ae = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2015/09/10 version */
+/* Ivex hack - 2016/01/03 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0xc1d18857, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.p2", 	0x400000, 0x903927ae, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0x7549069f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.p2", 	0x400000, 0xc53f8c35, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 

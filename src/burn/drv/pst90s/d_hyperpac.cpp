@@ -730,8 +730,8 @@ STD_ROM_PICK(Hyperpacb)
 STD_ROM_FN(Hyperpacb)
 
 static struct BurnRomInfo Cookbib2RomDesc[] = {
-	{ "cookbib2.02",   0x40000, 0xb2909460, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "cookbib2.01",   0x40000, 0x65aafde2, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "cookbib2.02",   0x40000, 0xb2909460, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "cookbib2.01",   0x40000, 0x65aafde2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "cookbib2.05",   0x80000, 0x89fb38ce, BRF_GRA },			 //  2	Sprites
 	{ "cookbib2.04",   0x80000, 0xf240111f, BRF_GRA },			 //  3	Sprites
@@ -743,7 +743,7 @@ static struct BurnRomInfo Cookbib2RomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0xae6d8ed5, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -751,8 +751,8 @@ STD_ROM_PICK(Cookbib2)
 STD_ROM_FN(Cookbib2)
 
 static struct BurnRomInfo Cookbib3RomDesc[] = {
-	{ "u52.bin",       0x40000, 0x65134893, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "u74.bin",       0x40000, 0xc4ab8435, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "u52.bin",       0x40000, 0x65134893, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u74.bin",       0x40000, 0xc4ab8435, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "u75.bin",       0x80000, 0xcbe4d9c8, BRF_GRA },			 //  2	Sprites
 	{ "u76.bin",       0x80000, 0x1be17b57, BRF_GRA },			 //  3	Sprites
@@ -764,7 +764,7 @@ static struct BurnRomInfo Cookbib3RomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0xc819b9a8, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0xc819b9a8, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -772,8 +772,8 @@ STD_ROM_PICK(Cookbib3)
 STD_ROM_FN(Cookbib3)
 
 static struct BurnRomInfo MoremoreRomDesc[] = {
-	{ "u52.bin",       0x40000, 0xcea4b246, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "u74.bin",       0x40000, 0x2acdcb88, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "u52.bin",       0x40000, 0xcea4b246, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u74.bin",       0x40000, 0x2acdcb88, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "u75.bin",       0x80000, 0xd671815c, BRF_GRA },			 //  2	Sprites
 	{ "u76.bin",       0x80000, 0xe0d479e8, BRF_GRA },			 //  3	Sprites
@@ -786,7 +786,7 @@ static struct BurnRomInfo MoremoreRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0x782dd2aa, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0x782dd2aa, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -794,8 +794,8 @@ STD_ROM_PICK(Moremore)
 STD_ROM_FN(Moremore)
 
 static struct BurnRomInfo MoremorpRomDesc[] = {
-	{ "mmp_u52.bin",   0x40000, 0x66baf9b2, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "mmp_u74.bin",   0x40000, 0x7c6fede5, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "mmp_u52.bin",   0x40000, 0x66baf9b2, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "mmp_u74.bin",   0x40000, 0x7c6fede5, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "mmp_u75.bin",   0x80000, 0xaf9e824e, BRF_GRA },			 //  2	Sprites
 	{ "mmp_u76.bin",   0x80000, 0xc42af064, BRF_GRA },			 //  3	Sprites
@@ -808,7 +808,7 @@ static struct BurnRomInfo MoremorpRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0x782dd2aa, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0x782dd2aa, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -816,8 +816,8 @@ STD_ROM_PICK(Moremorp)
 STD_ROM_FN(Moremorp)
 
 static struct BurnRomInfo ToppyrapRomDesc[] = {
-	{ "uh12.bin",      0x40000, 0x6f5ad699, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "ui12.bin",      0x40000, 0xcaf5a7e1, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "uh12.bin",      0x40000, 0x6f5ad699, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12.bin",      0x40000, 0xcaf5a7e1, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "ua4.bin",       0x80000, 0xa9577bcf, BRF_GRA },			 //  2	Sprites
 	{ "ua5.bin",       0x80000, 0x7179d32d, BRF_GRA },			 //  3	Sprites
@@ -830,7 +830,7 @@ static struct BurnRomInfo ToppyrapRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0x0704e6c7, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0x0704e6c7, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -838,8 +838,8 @@ STD_ROM_PICK(Toppyrap)
 STD_ROM_FN(Toppyrap)
 
 static struct BurnRomInfo Threein1semiRomDesc[] = {
-	{ "u52",           0x40000, 0xb0e4a0f7, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "u74",           0x40000, 0x266862c4, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "u52",           0x40000, 0xb0e4a0f7, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u74",           0x40000, 0x266862c4, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "u75",           0x80000, 0xb66a0db6, BRF_GRA },			 //  2	Sprites
 	{ "u76",           0x80000, 0x5f4b48ea, BRF_GRA },			 //  3	Sprites
@@ -852,7 +852,7 @@ static struct BurnRomInfo Threein1semiRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0x85deba7c, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0x85deba7c, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -860,8 +860,8 @@ STD_ROM_PICK(Threein1semi)
 STD_ROM_FN(Threein1semi)
 
 static struct BurnRomInfo TwinkleRomDesc[] = {
-	{ "uh12.bin",      0x20000, 0xa99626fe, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "ui12.bin",      0x20000, 0x5af73684, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "uh12.bin",      0x20000, 0xa99626fe, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12.bin",      0x20000, 0x5af73684, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "ua4.bin",       0x80000, 0x6b64bb09, BRF_GRA },			 //  2	Sprites
 
@@ -871,7 +871,7 @@ static struct BurnRomInfo TwinkleRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0x00d3e4b4, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0x00d3e4b4, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -879,8 +879,8 @@ STD_ROM_PICK(Twinkle)
 STD_ROM_FN(Twinkle)
 
 static struct BurnRomInfo PzlbreakRomDesc[] = {
-	{ "4.uh12",        0x20000, 0xb3f04f80, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "5.ui12",        0x20000, 0x13c298a0, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "4.uh12",        0x20000, 0xb3f04f80, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "5.ui12",        0x20000, 0x13c298a0, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "2.ua4",         0x80000, 0xd211705a, BRF_GRA },			 //  2	Sprites
 	{ "3.ua5",         0x80000, 0x6cdb73e9, BRF_GRA },			 //  3
@@ -891,7 +891,7 @@ static struct BurnRomInfo PzlbreakRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0x092cb794, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0x092cb794, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -899,8 +899,8 @@ STD_ROM_PICK(Pzlbreak)
 STD_ROM_FN(Pzlbreak)
 
 static struct BurnRomInfo Fourin1bootRomDesc[] = {
-	{ "u52",           0x80000, 0x71815878, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "u74",           0x80000, 0xe22d3fa2, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "u52",           0x80000, 0x71815878, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u74",           0x80000, 0xe22d3fa2, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "u78",           0x200000,0x6c1fbc9c, BRF_GRA },			 //  2	Sprites
 
@@ -914,8 +914,8 @@ STD_ROM_PICK(Fourin1boot)
 STD_ROM_FN(Fourin1boot)
 
 static struct BurnRomInfo FinalttrRomDesc[] = {
-	{ "10.7o",         0x20000, 0xeecc83e5, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "9.5o",          0x20000, 0x58d3640e, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "10.7o",         0x20000, 0xeecc83e5, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "9.5o",          0x20000, 0x58d3640e, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "5.1d",          0x40000, 0x64a450f3, BRF_GRA },			 //  2	Sprites
 	{ "6.1f",          0x40000, 0x7281a3cc, BRF_GRA },			 //  3	Sprites
@@ -928,7 +928,7 @@ static struct BurnRomInfo FinalttrRomDesc[] = {
 	
 	{ "87c52.mcu",     0x10000, 0x00000000, BRF_NODUMP },
 	
-	{ "protdata.bin",  0x00200, 0xd5bbb006, BRF_ESS | BRF_PRG },		 // Data from shared RAM
+	{ "protdata.bin",  0x00200, 0xd5bbb006, BRF_ESS | BRF_PRG }, //  Data from shared RAM
 };
 
 
@@ -936,8 +936,8 @@ STD_ROM_PICK(Finalttr)
 STD_ROM_FN(Finalttr)
 
 static struct BurnRomInfo TwinadvRomDesc[] = {
-	{ "13.uh12",       0x20000, 0x9f70a39b, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "12.ui12",       0x20000, 0xd8776495, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "13.uh12",       0x20000, 0x9f70a39b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "12.ui12",       0x20000, 0xd8776495, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "16.ua4",        0x80000, 0xf491e171, BRF_GRA },			 //  2	Sprites
 	{ "15.ua5",        0x80000, 0x79a08b8d, BRF_GRA },			 //  3	Sprites
@@ -954,8 +954,8 @@ STD_ROM_PICK(Twinadv)
 STD_ROM_FN(Twinadv)
 
 static struct BurnRomInfo TwinadvkRomDesc[] = {
-	{ "uh12",          0x20000, 0xe0bcc738, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "ui12",          0x20000, 0xa3ee6451, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "uh12",          0x20000, 0xe0bcc738, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12",          0x20000, 0xa3ee6451, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "ua4",           0x80000, 0xa5aff49b, BRF_GRA },			 //  2	Sprites
 	{ "ua5",           0x80000, 0xf83b3b97, BRF_GRA },			 //  3	Sprites
@@ -971,9 +971,27 @@ static struct BurnRomInfo TwinadvkRomDesc[] = {
 STD_ROM_PICK(Twinadvk)
 STD_ROM_FN(Twinadvk)
 
+static struct BurnRomInfo Multi96RomDesc[] = {
+	{ "uh12",          0x20000, 0xe912ea4e, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12",          0x20000, 0xac99e837, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "ua4",           0x80000, 0x66cae586, BRF_GRA },			 //  2	Sprites
+	{ "ua5",           0x80000, 0x0bd9f6bb, BRF_GRA },			 //  3	Sprites
+	{ "ua6",           0x80000, 0x0e90b26c, BRF_GRA },			 //  4	Sprites
+
+	{ "uh15.bin",      0x08000, 0x3d5acd08, BRF_SND },			 //  5	Z80 Program Code
+
+	{ "sra.bin",       0x40000, 0x82f452c4, BRF_SND },			 //  6	Samples
+	{ "srb.bin",       0x40000, 0x109e51e6, BRF_SND },			 //  7	Samples
+};
+
+
+STD_ROM_PICK(Multi96)
+STD_ROM_FN(Multi96)
+
 static struct BurnRomInfo HoneydolRomDesc[] = {
-	{ "d-16.uh12",     0x20000, 0xcee1a2e3, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "d-17.ui12",     0x20000, 0xcac44154, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "d-16.uh12",     0x20000, 0xcee1a2e3, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "d-17.ui12",     0x20000, 0xcac44154, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 
 	{ "d-13.1",        0x80000, 0xff6a57fb, BRF_GRA },			 //  2	4bpp Sprites
 	
@@ -1114,17 +1132,17 @@ STD_ROM_PICK(Snowbroswb)
 STD_ROM_FN(Snowbroswb)
 
 static struct BurnRomInfo Snowbro3RomDesc[] = {
-	{ "ur4",           0x020000, 0x19c13ffd, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "ur3",           0x020000, 0x3f32fa15, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "ur4",           0x020000, 0x19c13ffd, BRF_ESS | BRF_PRG }, 	 //  0	68000 Program Code
+	{ "ur3",           0x020000, 0x3f32fa15, BRF_ESS | BRF_PRG }, 	 //  1	68000 Program Code
 
-	{ "ua5",           0x080000, 0x0604e385, BRF_GRA },			 //  2	4bpp Sprites
+	{ "ua5",           0x080000, 0x0604e385, BRF_GRA },			 	 //  2	4bpp Sprites
 	
-	{ "un7",           0x200000, 0x4a79da4c, BRF_GRA },			 //  3	8bpp Sprites
-	{ "un8",           0x200000, 0x7a4561a4, BRF_GRA },			 //  4	8bpp Sprites
+	{ "un7",           0x200000, 0x4a79da4c, BRF_GRA },			 	 //  3	8bpp Sprites
+	{ "un8",           0x200000, 0x7a4561a4, BRF_GRA },			 	 //  4	8bpp Sprites
 
-	{ "us5",           0x080000, 0x7c6368ef, BRF_SND },			 //  5	Samples
+	{ "us5",           0x080000, 0x7c6368ef, BRF_SND },			 	 //  5	Samples
 	
-	{ "sound.mcu",     0x010000, 0x00000000, BRF_PRG | BRF_NODUMP },	 //  6	Sound MCU
+	{ "sound.mcu",     0x010000, 0x00000000, BRF_PRG | BRF_NODUMP }, //  6	Sound MCU
 };
 
 
@@ -1132,17 +1150,17 @@ STD_ROM_PICK(Snowbro3)
 STD_ROM_FN(Snowbro3)
 
 static struct BurnRomInfo BallboyRomDesc[] = {
-	{ "27c010.ur4",    0x020000, 0x5fb51b99, BRF_ESS | BRF_PRG }, 		 //  0	68000 Program Code
-	{ "27c010.ur3",    0x020000, 0xa9c1fdda, BRF_ESS | BRF_PRG }, 		 //  1	68000 Program Code
+	{ "27c010.ur4",    0x020000, 0x5fb51b99, BRF_ESS | BRF_PRG }, 	 //  0	68000 Program Code
+	{ "27c010.ur3",    0x020000, 0xa9c1fdda, BRF_ESS | BRF_PRG }, 	 //  1	68000 Program Code
 
-	{ "27c040.ua5",    0x080000, 0x0604e385, BRF_GRA },			 //  2	4bpp Sprites
+	{ "27c040.ua5",    0x080000, 0x0604e385, BRF_GRA },			 	 //  2	4bpp Sprites
 	
-	{ "27c160.un7",    0x200000, 0x4a79da4c, BRF_GRA },			 //  3	8bpp Sprites
-	{ "27c160.un8",    0x200000, 0xbfef8c44, BRF_GRA },			 //  4	8bpp Sprites
+	{ "27c160.un7",    0x200000, 0x4a79da4c, BRF_GRA },			 	 //  3	8bpp Sprites
+	{ "27c160.un8",    0x200000, 0xbfef8c44, BRF_GRA },			 	 //  4	8bpp Sprites
 
-	{ "27c040.us5",    0x080000, 0x7c6368ef, BRF_SND },			 //  5	Samples
+	{ "27c040.us5",    0x080000, 0x7c6368ef, BRF_SND },			 	 //  5	Samples
 	
-	{ "sound.mcu",     0x010000, 0x00000000, BRF_PRG | BRF_NODUMP },	 //  6	Sound MCU
+	{ "sound.mcu",     0x010000, 0x00000000, BRF_PRG | BRF_NODUMP }, //  6	Sound MCU
 };
 
 
@@ -4131,6 +4149,16 @@ struct BurnDriver BurnDrvTwinadvk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, TwinadvkRomInfo, TwinadvkRomName, NULL, NULL, HyperpacInputInfo, TwinadvDIPInfo,
+	TwinadvInit, HyperpacExit, TwinadvFrame, NULL, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMulti96 = {
+	"multi96", "twinadv", NULL, NULL, "1996",
+	"Multi Game '96 (Italy)\0", NULL, "Barko Corp", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, Multi96RomInfo, Multi96RomName, NULL, NULL, HyperpacInputInfo, TwinadvDIPInfo,
 	TwinadvInit, HyperpacExit, TwinadvFrame, NULL, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

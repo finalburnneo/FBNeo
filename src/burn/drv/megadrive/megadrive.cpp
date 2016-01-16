@@ -4153,7 +4153,7 @@ static void MegadriveDraw()
 
 	if ((RamVReg->reg[12]&1) || !(MegadriveDIP[1] & 0x03)) {
 	
-		for (INT32 j=0; j<223; j++) {
+		for (INT32 j=0; j < 224; j++) {
 			UINT16 *pSrc = LineBuf + (j * 320);
 			for (INT32 i = 0; i < 320; i++)
 				pDest[i] = pSrc[i];
@@ -4165,7 +4165,7 @@ static void MegadriveDraw()
 		if (( MegadriveDIP[1] & 0x03 ) == 0x01 ) {
 			// Center 
 			pDest += 32;
-			for (INT32 j = 0; j < 223; j++) {
+			for (INT32 j = 0; j < 224; j++) {
 				UINT16 *pSrc = LineBuf + (j * 320);
 
 				memset((UINT8 *)pDest -  32*2, 0, 64);
@@ -4179,7 +4179,7 @@ static void MegadriveDraw()
 			}
 		} else {
 			// Zoom
-			for (INT32 j = 0; j < 223; j++) {
+			for (INT32 j = 0; j < 224; j++) {
 				UINT16 *pSrc = LineBuf + (j * 320);
 				UINT32 delta = 0;
 				for (INT32 i = 0; i < 320; i++) {

@@ -3502,6 +3502,8 @@ void Z80Reset()
 	Z80.nmi_pending = FALSE;
 	Z80.irq_state = Z80_CLEAR_LINE;
 	Z80.after_ei = FALSE;
+	IFF1 = 0;
+	IFF2 = 0;
 
 	Z80Vector = 0xff;
 

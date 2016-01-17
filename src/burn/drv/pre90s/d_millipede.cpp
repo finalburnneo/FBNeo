@@ -865,7 +865,7 @@ static void draw_bg()
 	}
 }
 
-void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height)
+static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height)
 {
 	UINT16 *dest = pTransDraw;
 	UINT8 *gfx = DrvSpriteGFX;

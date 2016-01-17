@@ -2,6 +2,7 @@
 //
 // Todo:
 //   fix DrvDip[0]
+//   figure out why CPU_IRQSTATUS_HOLD screws up the timing in Do! Run Run
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -975,12 +976,20 @@ static INT32 DrvFrame()
 			ZetRun((nCyclesTotal[0] / nInterleave) + nIdleCycles);
 			nIdleCycles = 0;
 		}
-		if (i == ( nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == ( nInterleave - 1)) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		}
 		ZetClose();
 
 		ZetOpen(1);
 		ZetRun(nCyclesTotal[1] / nInterleave);
-		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetRun(100);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		}
 		ZetClose();
 
 #if 0

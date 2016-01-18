@@ -12181,6 +12181,35 @@ struct BurnDriver BurnDrvCpsProgearjbl = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
+// Halfway To Hell: Progear Red Label (2016-1-17 Red label ver)
+static struct BurnRomInfo HalfwayRomDesc[] = {
+	{ "halfway.03",    0x080000, 0x55ce8d4a, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, 
+	{ "tohell.04",     0x080000, 0x71060b9e, CPS2_PRG_68K | BRF_ESS | BRF_PRG }, 
+
+	{ "redlabel.13m",  0x400000, 0x5194c198,  CPS2_GFX | BRF_GRA },
+	{ "redlabel.15m",  0x400000, 0xb794e83f,  CPS2_GFX | BRF_GRA },
+	{ "redlabel.17m",  0x400000, 0x87f22918,  CPS2_GFX | BRF_GRA },
+	{ "redlabel.19m",  0x400000, 0x65ffb45b,  CPS2_GFX | BRF_GRA },
+
+	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "redlabel.11m",  0x400000, 0x33ebf625, CPS2_QSND | BRF_SND },
+	{ "redlabel.12m",  0x400000, 0x47f25cf4, CPS2_QSND | BRF_SND },	
+};
+
+STD_ROM_PICK(Halfway)
+STD_ROM_FN(Halfway)
+
+struct BurnDriver BurnDrvCpsHalfway = {
+	"halfway", "progear", NULL, NULL, "2016",
+	"Halfway To Hell: Progear Red Label (2016-1-17 Red label ver)\0", NULL, "The Halfway House", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS2 | HARDWARE_CAPCOM_CPS2_SIMM, GBF_HORSHOOT, 0,
+	NULL, HalfwayRomInfo, HalfwayRomName, NULL, NULL, ProgearInputInfo, NULL,
+	PhoenixInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
 // Gigaman 2: The Power Fighters (bootleg of Megaman 2)
 static struct BurnRomInfo Gigaman2RomDesc[] = {
 	{ "sys_rom1.bin",  0x400000, 0x2eaa5e10, BRF_ESS | BRF_PRG },

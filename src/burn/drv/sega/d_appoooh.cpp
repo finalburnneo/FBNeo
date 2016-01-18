@@ -25,7 +25,6 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvRAM0;
 static UINT8 *DrvRAM1;
-//static UINT8 *DrvRAM2;
 static UINT8 *DrvFgVidRAM;
 static UINT8 *DrvBgVidRAM;
 static UINT8 *DrvSprRAM0;
@@ -187,7 +186,7 @@ static void DrvRobowresPaletteInit()
 {
 	for (INT32 i = 0; i < 0x220; i++)
 	{
-		int bit0, bit1, bit2, r, g, b;
+		INT32 bit0, bit1, bit2, r, g, b;
 
 
 		UINT8 pen = DrvColPROM[0x020 + i] & 0x0f;
@@ -223,21 +222,21 @@ static INT32 MemIndex()
 
 	DrvMainROM	 	= Next; Next += 0x40000;
 
-	AllRam				= DrvMainROM + 0xe000;
+	AllRam			= DrvMainROM + 0xe000;
 
 	DrvRAM0			= DrvMainROM + 0xe000;
 	DrvRAM1			= DrvMainROM + 0xe800;
 	DrvSprRAM0	 	= DrvMainROM + 0xf000;
-	DrvFgVidRAM	= DrvMainROM + 0xf020;
-	DrvFgColRAM	= DrvMainROM + 0xf420;
+	DrvFgVidRAM	    = DrvMainROM + 0xf020;
+	DrvFgColRAM	    = DrvMainROM + 0xf420;
 	DrvSprRAM1	 	= DrvMainROM + 0xf800;
-	DrvBgVidRAM	= DrvMainROM + 0xf820;
-	DrvBgColRAM	= DrvMainROM + 0xfc20;
+	DrvBgVidRAM	    = DrvMainROM + 0xf820;
+	DrvBgColRAM	    = DrvMainROM + 0xfc20;
 	RamEnd			= DrvMainROM + 0x10000;
 
 	DrvColPROM		= Next; Next += 0x00220;
-	DrvSoundROM	= Next; Next += 0x0a000;
-	DrvPalette			= (UINT32*)Next; Next += 0x00220 * sizeof(UINT32);
+	DrvSoundROM	    = Next; Next += 0x0a000;
+	DrvPalette      = (UINT32*)Next; Next += 0x00220 * sizeof(UINT32);
 	DrvGfxTMP0		= Next; Next += 0x0c000;
 	DrvGfxTMP1		= Next; Next += 0x0c000;
 	DrvGfxROM0		= Next; Next += 0x0c000*8;
@@ -522,11 +521,11 @@ static void DrawSprites(UINT8 *sprite, UINT8 *gfx, UINT32 offset)
 
 	for (offs = 0x20 - 4; offs >= 0; offs -= 4)
 	{
-		int sy    = 240 - sprite[offs + 0];
-		int code  = (sprite[offs + 1] >> 2) + ((sprite[offs + 2] >> 5) & 0x07) * 0x40;
-		int color = sprite[offs + 2] & 0x0f;    /* TODO: bit 4 toggles continuously, what is it? */
-		int sx    = sprite[offs + 3];
-		int flipx = sprite[offs + 1] & 0x01;
+		INT32 sy    = 240 - sprite[offs + 0];
+		INT32 code  = (sprite[offs + 1] >> 2) + ((sprite[offs + 2] >> 5) & 0x07) * 0x40;
+		INT32 color = sprite[offs + 2] & 0x0f;    /* TODO: bit 4 toggles continuously, what is it? */
+		INT32 sx    = sprite[offs + 3];
+		INT32 flipx = sprite[offs + 1] & 0x01;
 
 		if(sx >= 248)
 			sx -= 256;
@@ -557,17 +556,14 @@ static void DrawSprites(UINT8 *sprite, UINT8 *gfx, UINT32 offset)
 
 static INT32 DrawBgTiles()
 {
-	int offs;
-	int scroll;
-
-	/* for every character in the Video RAM, check if it has been modified */
-	/* since last time and update it accordingly. */
+	INT32 offs;
+	INT32 scroll;
 
 	for (offs = 0x3e0 - 1;offs >= 0;offs--)
 	{
 		/* char set #2 */
 		{
-			int sx,sy,code,color,flipx;
+			INT32 sx,sy,code,color,flipx;
 
 			sx = offs % 32;
 			sy = offs / 32;
@@ -585,15 +581,7 @@ static INT32 DrawBgTiles()
 				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx*8, sy*8, color, 3, 0x100, DrvGfxROM1);
 			else
 				Render8x8Tile_Clip(pTransDraw, code, sx*8, sy*8, color, 3, 0x100, DrvGfxROM1);
-//			Render8x8Tile_Clip(pTransDraw, offs, sx*8, sy*8, color, 3, 0, DrvGfxROM1);
-
-/*			drawgfx(tmpbitmap2,Machine->gfx[1],
-					code,
-					appoooh_colorram2[offs]&0x0f,
-					flipx,flipscreen,
-					8*sx,8*sy,
-					&Machine->visible_area,TRANSPARENCY_NONE,0);*/
-		}	 
+		}
 	}
 
 	scroll = -scroll_x;
@@ -604,17 +592,14 @@ static INT32 DrawBgTiles()
 
 static INT32 DrawFgTiles()
 {
-	int offs;
-	int scroll;
-
-	/* for every character in the Video RAM, check if it has been modified */
-	/* since last time and update it accordingly. */
+	INT32 offs;
+	INT32 scroll;
 
 	for (offs = 0x3e0 - 1;offs >= 0;offs--)
 	{
 		/* char set #1 */
 		{
-			int sx,sy,code,color,flipx;
+			INT32 sx,sy,code,color,flipx;
 
 			sx = offs % 32;
 			sy = offs / 32;
@@ -628,20 +613,10 @@ static INT32 DrawFgTiles()
 				sy = 31 - sy;
 				flipx = !flipx;
 			}
-//			Render8x8Tile_Clip(pTransDraw, code, sx*8, sy*8, color, 3, 0, DrvGfxROM0);
 			if(flipx)
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx*8, sy*8, color, 3, 0, DrvGfxROM0);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx*8, sy*8, color, 3, 0, 0, DrvGfxROM0);
 			else
 				Render8x8Tile_Mask_Clip(pTransDraw, code, sx*8, sy*8, color, 3, 0, 0, DrvGfxROM0);
-
-//			Render8x8Tile_Clip(pTransDraw, offs, sx*8, sy*8, color, 3, 0, DrvGfxROM0);
-
-/*			drawgfx(tmpbitmap,Machine->gfx[0],
-					code,
-					colorram[offs]&0x0f,
-					flipx,flipscreen,
-					8*sx,8*sy,
-					0,TRANSPARENCY_NONE,0);	  */
 		}
 	}
 
@@ -655,43 +630,31 @@ static INT32 DrawFgTiles()
 
 static INT32 DrvDraw()
 {
-//	bprintf (0, _T("DrvDraw\n"));
-	if (DrvRecalc)
-	{
+	if (DrvRecalc) {
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
+
 	DrawBgTiles();
 
-//	if (state->priority == 0)       /* fg behind sprites */
-//	tilemap_draw(bitmap, cliprect, state->fg_tilemap, 0, 0);
 	if(priority == 0)
 		DrawFgTiles();
 
 	/* draw sprites */
-//	if (state->priority == 1)
-	if(priority == 1)
-	{
-	/* sprite set #1 */
+	if(priority) {
+		/* sprite set #1 */
 		DrawSprites(DrvSprRAM0,DrvGfxROM2, 0);
-//	appoooh_draw_sprites(bitmap, cliprect, screen->machine->gfx[2], state->spriteram);
-	/* sprite set #2 */
+		/* sprite set #2 */
 		DrawSprites(DrvSprRAM1,DrvGfxROM3, 0x100);
-//	appoooh_draw_sprites(bitmap, cliprect, screen->machine->gfx[3], state->spriteram_2);
 	}
 	else
 	{
-	/* sprite set #2 */
+		/* sprite set #2 */
 		DrawSprites(DrvSprRAM1,DrvGfxROM3, 0x100);
-//	appoooh_draw_sprites(bitmap, cliprect, screen->machine->gfx[3], state->spriteram_2);
-	/* sprite set #1 */
+		/* sprite set #1 */
 		DrawSprites(DrvSprRAM0,DrvGfxROM2, 0);
-//	appoooh_draw_sprites(bitmap, cliprect, screen->machine->gfx[2], state->spriteram);
 	}
 
-
-//	if (state->priority != 0)       /* fg in front of sprites */
-//	tilemap_draw(bitmap, cliprect, state->fg_tilemap, 0, 0);
 	if(priority != 0)
 		DrawFgTiles();
 
@@ -709,7 +672,7 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
-//	bankswitch(DrvZ80Bank0);
+	bankswitch(0);
 	ZetClose();
 
 	return 0;

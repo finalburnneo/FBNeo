@@ -41196,3 +41196,57 @@ struct BurnDriver BurnDrvmd_fixitfelix = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// TGUN II
+static struct BurnRomInfo md_tguniiRomDesc[] = {
+	{ "TGUNII05302015_FINALDRAFT002.bin", 0xc0000, 0xc842b4d4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tgunii)
+STD_ROM_FN(md_tgunii)
+
+struct BurnDriver BurnDrvmd_tgunii = {
+	"md_tgunii", NULL, NULL, NULL, "2015",
+	"T*GUN II\0", NULL, "2015 TooManyGames ", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tguniiRomInfo, md_tguniiRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Papi CommandoMD
+static struct BurnRomInfo md_papiRomDesc[] = {
+	{ "PapiCommandoMD.bin", 0x34e564, 0xec16d540, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_papi)
+STD_ROM_FN(md_papi)
+
+struct BurnDriver BurnDrvmd_papi = {
+	"md_papicommandomd", NULL, NULL, NULL, "2015",
+	"Papi Commando MD\0", NULL, "2015 Vetea", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_papiRomInfo, md_papiRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Chase
+static struct BurnRomInfo md_chaseRomDesc[] = {
+	{ "Chase (v2.00).bin", 0x60000, 0x0b3426ed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_chase)
+STD_ROM_FN(md_chase)
+
+struct BurnDriver BurnDrvmd_chase = {
+	"md_chase", NULL, NULL, NULL, "2014",
+	"Chase\0", NULL, "2014 Jack Nolddor & Davidian", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_chaseRomInfo, md_chaseRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

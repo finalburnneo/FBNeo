@@ -63,8 +63,8 @@ static struct BurnInputInfo AlighuntInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
 
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -92,8 +92,8 @@ static struct BurnInputInfo ManiacsqInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
 
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -472,7 +472,7 @@ static INT32 DrvDoReset()
 
 	EEPROMReset();
 
-	// sound
+	gaelcosnd_reset();
 
 	snowboar_latch = 0;
 
@@ -1048,7 +1048,7 @@ static struct BurnRomInfo aligatorunRomDesc[] = {
 STD_ROM_PICK(aligatorun)
 STD_ROM_FN(aligatorun)
 
-struct BurnDriver BurnDrvAligatorrun = {
+struct BurnDriver BurnDrvAligatorun = {
 	"aligatorun", "aligator", NULL, NULL, "1994",
 	"Alligator Hunt (unprotected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

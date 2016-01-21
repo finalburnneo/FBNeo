@@ -72,8 +72,6 @@ static void gaelco_set_bank_offsets(INT32 offs1, INT32 offs2, INT32 offs3, INT32
 
 void gaelcosnd_update(INT16 *outputs, INT32 samples)
 {
-	INT32 j, ch;
-
 	memset(outputs, 0, samples * sizeof(UINT16) * 2);
 
 	/* fill all data needed */
@@ -82,7 +80,7 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 		INT32 output_l = 0, output_r = 0;
 
 		/* for each channel */
-		for (ch = 0; ch < GAELCO_NUM_CHANNELS; ch ++){
+		for (INT32 ch = 0; ch < GAELCO_NUM_CHANNELS; ch ++){
 			INT32 ch_data_l = 0, ch_data_r = 0;
 			gaelco_sound_channel *channel = &m_channel[ch];
 
@@ -189,7 +187,7 @@ void gaelcosnd_w(INT32 offset, UINT16 data)
 					channel->active = 1;
 					channel->chunkNum = 0;
 					channel->loop = 0;
-					bprintf(0, _T("(GAE1) Playing sample channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n"), offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data);
+					//bprintf(0, _T("(GAE1) Playing sample channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n"), offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data);
 				}
 			} else {
 				channel->active = 0;
@@ -199,7 +197,7 @@ void gaelcosnd_w(INT32 offset, UINT16 data)
 
 		case 0x07: /* enable/disable looping */
 			if ((m_sndregs[offset - 1] != 0) && (data != 0)){
-				bprintf(0, _T("(GAE1) Looping in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n"), offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data);
+				//bprintf(0, _T("(GAE1) Looping in channel: %02d, type: %02x, bank: %02x, end: %08x, Length: %04x\n"), offset >> 3, (m_sndregs[offset - 2] >> 4) & 0x0f, m_sndregs[offset - 2] & 0x03, m_sndregs[offset - 1] << 8, data);
 				channel->loop = 1;
 			} else {
 				channel->loop = 0;
@@ -217,9 +215,6 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 {
 	m_snd_data = soundrom;
 
-	memset(&m_channel, 0, sizeof(m_channel));
-	memset(&m_sndregs, 0, sizeof(m_sndregs));
-
 	gaelco_set_bank_offsets(offs1, offs2, offs3, offs4);
 
 	/* init volume table */
@@ -228,6 +223,8 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 			m_volume_table[vol][(j ^ 0x80) & 0xff] = (vol*j*256)/(GAELCO_VOLUME_LEVELS - 1);
 		}
 	}
+
+	gaelcosnd_reset();
 }
 
 void gaelcosnd_exit()
@@ -239,4 +236,10 @@ void gaelcosnd_scan()
 {
 	SCAN_VAR(m_channel);
 	SCAN_VAR(m_sndregs);
+}
+
+void gaelcosnd_reset()
+{
+	memset(&m_channel, 0, sizeof(m_channel));
+	memset(&m_sndregs, 0, sizeof(m_sndregs));
 }

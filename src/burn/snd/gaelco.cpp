@@ -149,7 +149,7 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 			output_r += ch_data_r;
 		}
 
-		for (INT32 i = 0; (i < 7) && (samples > 0); i++) { // simple scaling
+		for (INT32 i = 0; (i < 6) && (samples > 0); i++) { // simple scaling
 			outputs[0] = BURN_SND_CLIP(output_l);
 			outputs[1] = BURN_SND_CLIP(output_r);
 			outputs += 2;

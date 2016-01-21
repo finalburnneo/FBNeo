@@ -391,7 +391,7 @@ static UINT8 __fastcall gaelco2_sound_read_byte(UINT32 address)
 	if (address >= 0x202890 && address <= 0x2028ff) {
 		// not used.
 	}
-	return 0;
+	return DrvSprRAM[(address & 0xffff) ^ 1];
 }
 
 static UINT16 __fastcall gaelco2_sound_read_word(UINT32 address)
@@ -399,7 +399,7 @@ static UINT16 __fastcall gaelco2_sound_read_word(UINT32 address)
 	if (address >= 0x202890 && address <= 0x2028ff) {
 		return gaelcosnd_r((address - 0x202890) >> 1);
 	}
-	return 0;
+	return *((UINT16*)(DrvSprRAM + (address & 0xfffe)));
 }
 
 static void palette_update(INT32 offset)

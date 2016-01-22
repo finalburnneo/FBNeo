@@ -405,14 +405,12 @@ static UINT16 __fastcall gaelco2_sound_read_word(UINT32 address)
 static void palette_update(INT32 offset)
 {
 	static const int pen_color_adjust[16] = {
-		0, -8, -16, -24, -32, -40, -48, -56, 64, 56,48, 40, 32, 24, 16, 8
+		0, -8, -16, -24, -32, -40, -48, -56, 64, 56, 48, 40, 32, 24, 16, 8
 	};
 
 	offset = (offset & 0x1ffe);
 
 	UINT16 color = *((UINT16*)(DrvPalRAM + offset));
-
-	//int i, auxr, auxg, auxb;
 
 	INT32 r = (color >> 10) & 0x1f;
 	INT32 g = (color >>  5) & 0x1f;
@@ -471,6 +469,8 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	EEPROMReset();
+
+	HiscoreReset();
 
 	gaelcosnd_reset();
 
@@ -684,23 +684,23 @@ static void draw_layer(INT32 layer)
 		{
 			INT32 sx = (offs & 0x3f) * 16;
 			INT32 sy = (offs / 0x40) * 16;
-	
+
 			sx -= scrollx;
 			if (sx < -15) sx += 1024;
 			sy -= scrolly;
 			if (sy < -15) sy += 512;
 
 			if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-	
+
 			INT32 attr0 = ram[offset + (offs * 2) + 0];
 			INT32 attr1 = ram[offset + (offs * 2) + 1];
-	
+
 			INT32 code  = (attr1 + ((attr0 & 0x07) << 16)) & gfxmask;
-	
+
 			INT32 color = (attr0 & 0xfe00) >> 9;
 			INT32 flipx = (attr0 & 0x0080) ? 0xf : 0;
 			INT32 flipy = (attr0 & 0x0040) ? 0xf : 0;
-	
+
 			if (flipy) {
 				if (flipx) {
 					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 5, 0, 0, DrvGfxROM);
@@ -721,7 +721,7 @@ static void draw_layer(INT32 layer)
 		for (INT32 sy = 0; sy < nScreenHeight; sy++)
 		{
 			INT32 yy = (sy + scrolly) & 0x1ff;
-	
+
 			INT32 scrollx = (ram[(0x2802 + (layer * 4))/2] + 0x10 + (layer ? 0 : 4)) & 0x3ff;
 			if (DrvVidRegs[layer] & 0x8000) {
 				if (layer) {
@@ -730,27 +730,27 @@ static void draw_layer(INT32 layer)
 					scrollx = (ram[(0x2000/2) + sy] + 0x14) & 0x3ff;
 				}
 			}
-	
+
 			UINT16 *dst = pTransDraw + sy * nScreenWidth;
-	
+
 			for (INT32 sx = 0; sx < nScreenWidth + 16; sx += 16)
 			{
 				INT32 sxx = (sx + scrollx) & 0x3ff;
 				INT32 xx = sx - (scrollx & 0xf);
-	
+
 				INT32 index = ((sxx / 16) + ((yy / 16) * 64)) * 2;
-	
+
 				INT32 attr0 = ram[offset + index + 0];
 				INT32 attr1 = ram[offset + index + 1];
-	
+
 				INT32 code  = (attr1 + ((attr0 & 0x07) << 16)) & gfxmask;
-	
+
 				INT32 color = ((attr0 >> 9) & 0x7f) * 0x20;
 				INT32 flipx = (attr0 & 0x80) ? 0xf : 0;
 				INT32 flipy = (attr0 & 0x40) ? 0xf : 0;
-	
+
 				UINT8 *gfx = DrvGfxROM + (code * 256) + (((yy & 0x0f) ^ flipy) * 16);
-	
+
 				for (INT32 x = 0; x < 16; x++, xx++)
 				{
 					if (xx >= 0 && xx < nScreenWidth) {
@@ -902,7 +902,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { (nCPUClockSpeed * 10) / 591 }; // ?? MHZ @ 59.1 HZ
 	INT32 nCyclesDone[1] = { 0 };
-	INT32 /*nSoundBufferPos = 0,*/ nSegment = 0;
+	INT32 nSegment = 0;
 
 	SekOpen(0);
 
@@ -913,19 +913,8 @@ static INT32 DrvFrame()
 
 		pIRQCallback(i);
 
-		/*if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen / nInterleave;
-			gaelcosnd_update(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-			nSoundBufferPos += nSegment;
-		}*/
 	}
 
-	/*if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			gaelcosnd_update(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
-	}*/
 	if (pBurnSoundOut) {
 		gaelcosnd_update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1052,7 +1041,7 @@ struct BurnDriver BurnDrvAligatorun = {
 	"aligatorun", "aligator", NULL, NULL, "1994",
 	"Alligator Hunt (unprotected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunRomInfo, aligatorunRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3

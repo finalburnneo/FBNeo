@@ -53,6 +53,8 @@ static INT32 m_banks[4];                                         /* start of eac
 static gaelco_sound_channel m_channel[GAELCO_NUM_CHANNELS];    /* 7 stereo channels */
 static UINT16 m_sndregs[0x38];
 
+static INT16 sample_buffer[((8000 / 60)+1) * 2];
+
 // Table for converting from 8 to 16 bits with volume control
 static INT16 m_volume_table[GAELCO_VOLUME_LEVELS][256];
 
@@ -72,11 +74,13 @@ static void gaelco_set_bank_offsets(INT32 offs1, INT32 offs2, INT32 offs3, INT32
 
 void gaelcosnd_update(INT16 *outputs, INT32 samples)
 {
-	memset(outputs, 0, samples * sizeof(UINT16) * 2);
+	INT32 samples_mod = ((((8000000 / nBurnFPS) * samples) / nBurnSoundLen) + 5) / 10; // + 5 to round
 
 	/* fill all data needed */
-	//for(j = 0; j < samples; j++){
-	while (samples > 0) {
+	for(INT32 j = 0; j < samples_mod; j++){
+		sample_buffer[j*2+0] = 0;
+		sample_buffer[j*2+1] = 0;
+
 		INT32 output_l = 0, output_r = 0;
 
 		/* for each channel */
@@ -149,12 +153,17 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 			output_r += ch_data_r;
 		}
 
-		for (INT32 i = 0; (i < 7) && (samples > 0); i++) { // simple scaling
-			outputs[0] = BURN_SND_CLIP(output_l);
-			outputs[1] = BURN_SND_CLIP(output_r);
-			outputs += 2;
-			samples--;
-		}
+		sample_buffer[j*2+0] = BURN_SND_CLIP(output_l);
+		sample_buffer[j*2+1] = BURN_SND_CLIP(output_r);
+	}
+
+	for (INT32 j = 0; j < samples; j++)
+	{
+		INT32 k = ((((8000000 / nBurnFPS) * j) / nBurnSoundLen) + 5) / 10;
+
+		outputs[0] = sample_buffer[k*2+0];
+		outputs[1] = sample_buffer[k*2+1];
+		outputs += 2;
 	}
 }
 

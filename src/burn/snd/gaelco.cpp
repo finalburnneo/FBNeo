@@ -53,7 +53,7 @@ static INT32 m_banks[4];                                         /* start of eac
 static gaelco_sound_channel m_channel[GAELCO_NUM_CHANNELS];    /* 7 stereo channels */
 static UINT16 m_sndregs[0x38];
 
-static INT16 sample_buffer[((8000 / 60)+1) * 2];
+static INT16 *sample_buffer;
 
 // Table for converting from 8 to 16 bits with volume control
 static INT16 m_volume_table[GAELCO_VOLUME_LEVELS][256];
@@ -74,13 +74,10 @@ static void gaelco_set_bank_offsets(INT32 offs1, INT32 offs2, INT32 offs3, INT32
 
 void gaelcosnd_update(INT16 *outputs, INT32 samples)
 {
-	INT32 samples_mod = ((((8000000 / nBurnFPS) * samples) / nBurnSoundLen) + 5) / 10; // + 5 to round
+	INT32 samples_mod = ((((8000000 / nBurnFPS) * samples) / nBurnSoundLen)) / 10; // + 5 to round
 
 	/* fill all data needed */
 	for(INT32 j = 0; j < samples_mod; j++){
-		sample_buffer[j*2+0] = 0;
-		sample_buffer[j*2+1] = 0;
-
 		INT32 output_l = 0, output_r = 0;
 
 		/* for each channel */
@@ -159,7 +156,7 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 
 	for (INT32 j = 0; j < samples; j++)
 	{
-		INT32 k = ((((8000000 / nBurnFPS) * j) / nBurnSoundLen) + 5) / 10;
+		INT32 k = ((((8000000 / nBurnFPS) * (j & ~2)) / nBurnSoundLen)) / 10;
 
 		outputs[0] = sample_buffer[k*2+0];
 		outputs[1] = sample_buffer[k*2+1];
@@ -224,6 +221,7 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 {
 	m_snd_data = soundrom;
 
+	sample_buffer = (INT16 *)BurnMalloc(((8000 / 60)+1) * 4);
 	gaelco_set_bank_offsets(offs1, offs2, offs3, offs4);
 
 	/* init volume table */
@@ -238,6 +236,8 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 
 void gaelcosnd_exit()
 {
+	BurnFree(sample_buffer);
+	sample_buffer = NULL;
 	m_snd_data = NULL;
 }
 

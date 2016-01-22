@@ -146,8 +146,8 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 			}
 
 			/* add the contribution of this channel to the current data output */
-			output_l += ch_data_l;
-			output_r += ch_data_r;
+			output_l = BURN_SND_CLIP(output_l + ch_data_l);
+			output_r = BURN_SND_CLIP(output_r + ch_data_r);
 		}
 
 		sample_buffer[j*2+0] = BURN_SND_CLIP(output_l);

@@ -2102,31 +2102,69 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+
+		if (s2650_protection) {
+			s2650Scan(nAction);
+		} else {
+			ZetScan(nAction);
+		}
+		i8257Scan();
+		I8039Scan(nAction, pnMin);
+		BurnSampleScan(nAction, pnMin);
+		DACScan(nAction, pnMin);
+
+		SCAN_VAR(vblank);
+		SCAN_VAR(s2650_protection);
+		SCAN_VAR(dkongjr_walk);
+		SCAN_VAR(page);
+		SCAN_VAR(mcustatus);
+		SCAN_VAR(p);
+		SCAN_VAR(t);
+
+		DrvRecalc = 1;
+
+		if (nAction & ACB_WRITE) {
+		}
+	}
+
+	return 0;
+}
+
+static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029719;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
 
-            if (s2650_protection) {
-                s2650Scan(nAction);
-            } else {
-                ZetScan(nAction);
-            }
-            i8257Scan();
-            I8039Scan(nAction, pnMin);
-            BurnSampleScan(nAction, pnMin);
-            DACScan(nAction, pnMin);
+		ZetScan(nAction);
+		M6502Scan(nAction);
 
-            SCAN_VAR(vblank);
-            SCAN_VAR(s2650_protection);
-            SCAN_VAR(dkongjr_walk);
-            SCAN_VAR(page);
-            SCAN_VAR(mcustatus);
-            SCAN_VAR(p);
-            SCAN_VAR(t);
+		SCAN_VAR(vblank);
+		SCAN_VAR(s2650_protection);
+		SCAN_VAR(dkongjr_walk);
+		SCAN_VAR(page);
+		SCAN_VAR(mcustatus);
+		SCAN_VAR(p);
+		SCAN_VAR(t);
 
-            DrvRecalc = 1;
+		DrvRecalc = 1;
 
-            if (nAction & ACB_WRITE) {
-            }
+		if (nAction & ACB_WRITE) {
+		}
 	}
 
 	return 0;
@@ -3189,7 +3227,7 @@ struct BurnDriver BurnDrvDkong3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkong3RomInfo, dkong3RomName, NULL, NULL, Dkong3InputInfo, Dkong3DIPInfo,
-	Dkong3Init, Dkong3Exit, Dkong3Frame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	Dkong3Init, Dkong3Exit, Dkong3Frame, dkongDraw, Dkong3Scan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 
@@ -3230,7 +3268,7 @@ struct BurnDriver BurnDrvDkong3j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkong3jRomInfo, dkong3jRomName, NULL, NULL, Dkong3InputInfo, Dkong3DIPInfo,
-	Dkong3Init, Dkong3Exit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	Dkong3Init, Dkong3Exit, DrvFrame, dkongDraw, Dkong3Scan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

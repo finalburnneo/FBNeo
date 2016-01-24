@@ -349,7 +349,8 @@ static void draw_layer(INT32 priority)
 		INT32 code  = DrvVidRAM[offs] | ((attr & 0x60) << 3);
 		INT32 color = (attr & 0x0f) | *color_bank;
 
-		sy = (sy + (DrvScrRAM[sx >> 3] ^ 0xff)) & 0xff;
+		sy = (sy + (~DrvScrRAM[(sx >> 3) + 0x80])) & 0xff;
+		sy -= 16;
 
 		INT32 flip = 0;
 
@@ -397,6 +398,7 @@ static void draw_sprites()
 			flipy = !flipy;
 			sy -= 16;
 		}
+		sy += 16; // O.o .. this actually functions as -= 16, because of the calculation below ..
 
 		if (DrvSprRAM[offs + 2] & 0x80)
 		{

@@ -975,6 +975,10 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_CREATEDIRS, bAlwaysCreateSupportFolders ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_SAVEHISCORES, EnableHiscores ? MF_CHECKED : MF_UNCHECKED);
 	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);
+	
+#ifdef INCLUDE_AVI_RECORDING
+	CheckMenuItem(hMenu, MENU_AVI3X, nAvi3x ? MF_CHECKED : MF_UNCHECKED);
+#endif
 
 	if (nAppThreadPriority == THREAD_PRIORITY_TIME_CRITICAL) {
 		var = MENU_PRIORITY_REALTIME;
@@ -1353,9 +1357,11 @@ void MenuEnableItems()
 		if (nAviStatus) {
 			EnableMenuItem(hMenu, MENU_AVISTART,	        MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AVI3X,		        MF_GRAYED | MF_BYCOMMAND);
 		} else {
 			EnableMenuItem(hMenu, MENU_AVISTART,	        MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AVI3X,		        MF_ENABLED | MF_BYCOMMAND);
 		}
 #endif
 	} else {

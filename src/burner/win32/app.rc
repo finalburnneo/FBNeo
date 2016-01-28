@@ -985,6 +985,9 @@ BEGIN
            MENUITEM SEPARATOR
            MENUITEM "Save High Scores when supported",				MENU_SAVEHISCORES
 		   MENUITEM "Use alpha blend effects when supported",		MENU_USEBLEND
+#ifdef INCLUDE_AVI_RECORDING
+		   MENUITEM "AVI Writer Ouput 3x Pixels",					MENU_AVI3X
+#endif
 		END
         MENUITEM SEPARATOR
         POPUP    "Generate dat file"

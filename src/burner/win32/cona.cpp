@@ -240,6 +240,10 @@ int ConfigAppLoad()
 		VAR(EnableHiscores);
 		VAR(bBurnUseBlend);
 		
+#ifdef INCLUDE_AVI_RECORDING
+		VAR(nAvi3x);
+#endif
+		
 		VAR(nIpsSelectedLanguage);
 		
 		VAR(bEnableIcons);
@@ -615,6 +619,11 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// If non-zero, enable alpha blending support.\n"));
 	VAR(bBurnUseBlend);
+	
+#ifdef INCLUDE_AVI_RECORDING
+	_ftprintf(h, _T("\n// If non-zero, enable 3x pixel output for the AVI writer.\n"));
+	VAR(nAvi3x);
+#endif
 	
 	_ftprintf(h, _T("\n// The language index to use for the IPS Patch Manager dialog.\n"));
 	VAR(nIpsSelectedLanguage);

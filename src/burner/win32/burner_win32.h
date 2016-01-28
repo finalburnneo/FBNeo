@@ -474,4 +474,5 @@ INT32 AviStart();
 INT32 AviRecordFrame(INT32 bDraw);
 void AviStop();
 extern INT32 nAviStatus;
+extern INT32 nAvi3x;
 #endif

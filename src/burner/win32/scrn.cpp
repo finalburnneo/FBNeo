@@ -1842,6 +1842,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			bBurnUseBlend = !bBurnUseBlend;
 			break;
 			
+#ifdef INCLUDE_AVI_RECORDING
+		case MENU_AVI3X:
+			nAvi3x = !nAvi3x;
+			break;
+#endif
+			
 		case MENU_ROMDIRS:
 			RomsDirCreate(hScrnWnd);
 			break;

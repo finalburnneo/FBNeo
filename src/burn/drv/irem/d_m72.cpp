@@ -3519,7 +3519,11 @@ static INT32 cosmccopInit()
 {
 	Clock_16mhz = 1;
 
-	return DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 2);
+	INT32 rc = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 2);
+
+	m72_irq_base = 0x60; // Cosmic Cop doesn't write to port 0x42, set it manually.
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvCosmccop = {

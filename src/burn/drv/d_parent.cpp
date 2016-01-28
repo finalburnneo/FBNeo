@@ -260,29 +260,6 @@ struct BurnDriver BurnDrvHuncholy = {
 	NULL, 0, 224, 256, 3, 4
 };
 
-static struct BurnRomInfo ManiacsqRomDesc[] = {
-	{ "d8-d15.1m",          0x20000, 0x9121d1b6, BRF_ESS | BRF_PRG },
-	{ "d0-d7.1m",           0x20000, 0xa95cfd2a, BRF_ESS | BRF_PRG },
-	
-	{ "d0-d7.4m",           0x80000, 0xd8551b2f, BRF_GRA },
-	{ "d8-d15.4m",          0x80000, 0xb269c427, BRF_GRA },
-	{ "d16-d23.1m",         0x20000, 0xaf4ea5e7, BRF_GRA },
-	{ "d24-d31.1m",         0x20000, 0x578c3588, BRF_GRA },
-};
-
-STD_ROM_PICK(Maniacsq)
-STD_ROM_FN(Maniacsq)
-
-struct BurnDriver BurnDrvManiacsq = {
-	"maniacsq", NULL, NULL, NULL, "1996",
-	"Maniac Square (unprotected)\0", "Parent set for working drivers", "Gaelco", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, ManiacsqRomInfo, ManiacsqRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 256, 224, 4, 3
-};
-
 static struct BurnRomInfo PhoenixRomDesc[] = {
 	{ "ic45",               0x00800, 0x9f68086b, BRF_ESS | BRF_PRG },
 	{ "ic46",               0x00800, 0x273a4a82, BRF_ESS | BRF_PRG },

@@ -1338,7 +1338,7 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75-11.ic16",  0x8000, 0xeafd7191, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14", 0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -1350,7 +1350,7 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	
 	{ "arkanoid1_68705p3.ic14", 0x0800, 0x1b68e2d8, 0 | BRF_PRG | BRF_OPT },  //  9 Decapped roms
 	{ "arkanoid_mcu.ic14",      0x0800, 0x4e44b50a, 0 | BRF_PRG | BRF_OPT },  // 10
-	{ "arkanoid_68705p5.ic14",  0x0800, 0x0be83647, 0 | BRF_PRG | BRF_OPT },  // 11
+	{ "a75-06__bootleg_68705.ic14",  0x0800, 0x515d77b6, 0 | BRF_PRG | BRF_OPT },  // 12
 };
 
 STD_ROM_PICK(arkanoid)
@@ -1405,7 +1405,7 @@ static struct BurnRomInfo arkanoiduoRomDesc[] = {
 	{ "a75__01-1.ic17",	0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75__10.ic16",  	0x8000, 0xa1769e15, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75__06.ic14",  	0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14",  	0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75__03.ic64",  	0x8000, 0x038b74ba, 3 | BRF_GRA },	         //  3 Graphics
 	{ "a75__04.ic63",  	0x8000, 0x71fae199, 3 | BRF_GRA },	         //  4
@@ -1414,6 +1414,8 @@ static struct BurnRomInfo arkanoiduoRomDesc[] = {
 	{ "a75-07.ic24",  	0x0200, 0x0af8b289, 4 | BRF_GRA },	         //  6 Color Proms
 	{ "a75-08.ic23",  	0x0200, 0xabb002fb, 4 | BRF_GRA },	         //  7
 	{ "a75-09.ic22",  	0x0200, 0xa7c6c277, 4 | BRF_GRA },	         //  8
+	
+	{ "a75__03(alternate).ic64", 0x80000, 0x983d4485, 0 | BRF_PRG | BRF_OPT },  //  10
 };
 
 STD_ROM_PICK(arkanoiduo)
@@ -1530,7 +1532,7 @@ static struct BurnRomInfo arkanoidjbRomDesc[] = {
 	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75-02.ic16",  0x8000, 0xbbc33ceb, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14", 0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -1561,7 +1563,7 @@ static struct BurnRomInfo arkanoidjblRomDesc[] = {
 	{ "e1.6d",        0x8000, 0xdd4f2b72, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "e2.6f",        0x8000, 0xbbc33ceb, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "68705p3.6i",   0x0800, 0x389a8cfb, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.rom",   0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.rom",   0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -1594,7 +1596,7 @@ static struct BurnRomInfo arkanoidjbl2RomDesc[] = {
 	{ "1.ic81",       0x8000, 0x9ff93dc2, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "2.ic82",       0x8000, 0xbbc33ceb, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75-06__bootleg_68705.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -1659,7 +1661,7 @@ static struct BurnRomInfo ark1ballRomDesc[] = {
 	{ "a-1.7d",       0x8000, 0xdd4f2b72, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "2palline.7f",  0x8000, 0xed6b62ab, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75-06__bootleg_68705.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a-3.3a",       0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a-4.3d",       0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4

@@ -2190,7 +2190,7 @@ static struct BurnRomInfo radarscp1RomDesc[] = {
 	{ "trs01_5h",		0x1000, 0x51b8263d, 1 }, //  2
 	{ "trs01_5k",		0x1000, 0x1f0101f7, 1 }, //  3
 
-	{ "trs015aa.bin",	0x0800, 0x5166554c, 2 }, //  4 soundcpu
+	{ "trs-s__5a.5a",	0x0800, 0x5166554c, 2 }, //  4 soundcpu
 
 	{ "trs01v3f",		0x0800, 0xf095330e, 4 }, //  5 gfx1
 	{ "trs01v3g",		0x0800, 0x15a316f0, 4 }, //  6
@@ -2208,7 +2208,7 @@ static struct BurnRomInfo radarscp1RomDesc[] = {
 
 	{ "trs01e3k.bin",	0x0100, 0x6c6f989c, 7 }, // 15 gfx4
 
-	{ "trs014ha.bin",	0x0800, 0xd1f1b48c, 3 }, // 16 m58819 speech
+	{ "trs-s__4h.4h",	0x0800, 0xd1f1b48c, 3 }, // 16 m58819 speech
 
 	{ "trs01v1d.bin",	0x0100, 0x1b828315, 8 }, // 17 unused proms
 };

@@ -1001,6 +1001,8 @@ static struct BurnRomInfo aligatorRomDesc[] = {
 	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
 	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
 	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+	
+	{ "aligator_ds5002fp.bin", 0x080000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(aligator)

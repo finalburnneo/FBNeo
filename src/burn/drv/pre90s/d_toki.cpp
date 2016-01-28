@@ -1391,7 +1391,7 @@ static struct BurnRomInfo tokiRomDesc[] = {
 	{ "2.c3",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
 	{ "toki_obj1.c20",		0x80000, 0xa27a80ba, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "toki.obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
+	{ "toki_obj2.c22",		0x80000, 0xfa687718, 4 | BRF_GRA },           //  9
 
 	{ "toki_bk1.cd8",		0x80000, 0xfdaa5f4b, 5 | BRF_GRA },           // 10 Foreground Tiles
 

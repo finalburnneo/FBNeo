@@ -1039,8 +1039,7 @@ static struct BurnRomInfo Drgninjab2RomDesc[] = {
 	{ "a12.2e",             0x10000, 0x2b81faf7, BRF_ESS | BRF_PRG },	//  2
 	{ "a9.2b",              0x10000, 0xc52c2e9d, BRF_ESS | BRF_PRG },	//  3
 	
-//	{ "a15.7b",             0x08000, 0x82007af2, BRF_ESS | BRF_PRG },	//  4	6502 Program (ADPCM sounds are wrong with this, see above, 1st half identical to orginal, 2nd half 99.225%)
-	{ "eg07.8a",            0x08000, 0x001d2f51, BRF_ESS | BRF_PRG },	//  4	6502 Program 
+	{ "a15.7b",             0x08000, 0x82007af2, BRF_ESS | BRF_PRG },	//  4	6502 Program (ADPCM sounds are wrong with this, see above, 1st half identical to orginal, 2nd half 99.225%)
 	
 	{ "a22.9m",             0x08000, 0x6791bc20, BRF_GRA },			//  5	Characters
 	{ "a23.9n",             0x08000, 0x5d75fc8f, BRF_GRA },			//  6
@@ -1066,7 +1065,13 @@ static struct BurnRomInfo Drgninjab2RomDesc[] = {
 	
 	{ "a30.10b",            0x10000, 0xf6806826, BRF_SND },			// 23	Samples
 	
-	{ "i8751",              0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 24	I8751
+	{ "mc68705r3p",         0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 24	I8751
+	
+	{ "n82s129an.12c",		0x00100, 0x78994fdb, BRF_OPT },
+	{ "n82s131n.5q",		0x00200, 0x86e775f8, BRF_OPT },
+	{ "n82s129an.3p",		0x00100, 0x9f6aa3e5, BRF_OPT },
+	{ "n82s137n.8u",		0x00400, 0xa5cda23e, BRF_OPT },
+	{ "n82s129an.2q",		0x00100, 0xaf46d1ee, BRF_OPT },
 };
 
 STD_ROM_PICK(Drgninjab2)

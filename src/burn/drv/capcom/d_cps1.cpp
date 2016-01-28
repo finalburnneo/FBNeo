@@ -11642,16 +11642,10 @@ static struct BurnRomInfo StriderucRomDesc[] = {
 	{ "14.7c",         0x080000, 0xb7d04e8b, BRF_GRA | CPS1_TILES },
 	{ "16.9c",         0x080000, 0x6b4713b4, BRF_GRA | CPS1_TILES },
 
-	{ "09.12a", 	   0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM }, 
+	{ "9.12a",  	   0x010000, 0x08d63519, BRF_PRG | CPS1_Z80_PROGRAM }, 
 
 	{ "18.11c",        0x020000, 0x4386bc80, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "19.12c",        0x020000, 0x444536d7, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	
-	A_BOARD_PLDS
-	
-	{ "stf29.1a",      0x000117, 0x043309c5, BRF_OPT },	// b-board PLDs
-	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
-	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },	// c-board PLDs
 };
 
 STD_ROM_PICK(Strideruc)

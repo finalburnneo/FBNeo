@@ -758,6 +758,8 @@ static struct BurnRomInfo Drv2bRomDesc[] = {
 	{ "9",    			0x10000, 0x0c15dec9, BRF_GRA },	     	  // 24
 	{ "8",    			0x10000, 0x151b22b4, BRF_GRA },	     	  // 25
 	{ "10",   			0x10000, 0xae2fc028, BRF_GRA },	     	  // 26
+	
+	{ "prom.16",       	0x00200, 0x46339529, BRF_GRA },	     	  // 27	PROMs
 };
 
 STD_ROM_PICK(Drv2b)

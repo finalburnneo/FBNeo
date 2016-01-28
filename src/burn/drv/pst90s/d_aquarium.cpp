@@ -735,10 +735,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Aquarium (Japan)
+// Aquarium (US)
 
 static struct BurnRomInfo aquariumRomDesc[] = {
-	{ "aquar3",	0x080000, 0x344509a1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "aquar3.bin",	0x080000, 0xf197991e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 
 	{ "aquar5",	0x040000, 0xfa555be1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
@@ -760,10 +760,44 @@ STD_ROM_FN(aquarium)
 
 struct BurnDriver BurnDrvAquarium = {
 	"aquarium", NULL, NULL, NULL, "1996",
-	"Aquarium (Japan)\0", NULL, "Excellent System", "Miscellaneous",
+	"Aquarium (US)\0", NULL, "Excellent System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, aquariumRomInfo, aquariumRomName, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+
+
+// Aquarium (Japan)
+
+static struct BurnRomInfo aquariumjRomDesc[] = {
+	{ "aquar3",	0x080000, 0x344509a1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+
+	{ "aquar5",	0x040000, 0xfa555be1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+
+	{ "aquar1",	0x080000, 0x575df6ac, 3 | BRF_GRA },           //  2 Midground Tiles
+	{ "aquar6",	0x020000, 0x9065b146, 3 | BRF_GRA },           //  3
+
+	{ "aquar2",	0x020000, 0xaa071b05, 4 | BRF_GRA },           //  6 Foreground Tiles
+
+	{ "aquarf1",	0x100000, 0x14758b3c, 5 | BRF_GRA },           //  7 Sprites
+
+	{ "aquar8",	0x080000, 0x915520c4, 6 | BRF_GRA },           //  4 Background Tiles
+	{ "aquar7",	0x020000, 0xb96b2b82, 6 | BRF_GRA },           //  5
+
+	{ "aquar4",	0x080000, 0x9a4af531, 7 | BRF_SND },           //  8 MSM6295 Samples
+};
+
+STD_ROM_PICK(aquariumj)
+STD_ROM_FN(aquariumj)
+
+struct BurnDriver BurnDrvAquariumj = {
+	"aquariumj", "aquarium", NULL, NULL, "1996",
+	"Aquarium (Japan)\0", NULL, "Excellent System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, aquariumjRomInfo, aquariumjRomName, NULL, NULL, AquariumInputInfo, AquariumDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };

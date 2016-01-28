@@ -951,7 +951,7 @@ static struct BurnRomInfo robowresRomDesc[] = {
 	{ "pr7572.7f",		0x0100, 0x2b083d0c, 4 }, // 10
 	{ "pr7573.7g",	0x0100, 0x2b083d0c, 4 }, // 11
 
-	{ "epr-7543",		0x8000, 0x4d108c49, 5 }, // 18 adpcm
+	{ "epr-7543.12b",	0x8000, 0x4d108c49, 5 }, // 18 adpcm
 };
 
 STD_ROM_PICK(robowres)

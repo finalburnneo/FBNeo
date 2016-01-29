@@ -28,6 +28,7 @@ typedef struct
 	UINT8	irq_state;			/* irq line state */
 	UINT8	after_ei;			/* are we in the EI shadow? */
 	INT32 cycles_left;
+	INT32 z80_hold_hack;
 	const struct z80_irq_daisy_chain *daisy;
 	int		(*irq_callback)(int irqline);
 } Z80_Regs;
@@ -71,7 +72,6 @@ extern unsigned char Z80Vector;
 
 extern int z80_ICount;
 extern UINT32 EA;
-extern int z80_hold_hack;
 
 typedef unsigned char (__fastcall *Z80ReadIoHandler)(unsigned int a);
 typedef void (__fastcall *Z80WriteIoHandler)(unsigned int a, unsigned char v);
@@ -93,6 +93,7 @@ int ActiveZ80GetDE();
 int ActiveZ80GetHL();
 int ActiveZ80GetI();
 int ActiveZ80GetPrevPC();
+void ActiveZ80SetIRQHold();
 
 #endif
 

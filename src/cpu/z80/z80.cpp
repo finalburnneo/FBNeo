@@ -193,7 +193,6 @@ unsigned char Z80Vector = 0xff;
 int z80_ICount;
 static Z80_Regs Z80;
 UINT32 EA;
-int z80_hold_hack;
 
 static UINT8 SZ[256];		/* zero and sign flags */
 static UINT8 SZ_BIT[256];	/* zero, sign and parity/overflow (=zero) flags for BIT opcode */
@@ -3325,8 +3324,8 @@ static void take_interrupt(void)
 //	else
 //		irq_vector = (*Z80.irq_callback)(0);
 
-	if (z80_hold_hack) {
-		z80_hold_hack = 0;
+	if (Z80.z80_hold_hack) {
+		Z80.z80_hold_hack = 0;
 		Z80.irq_state = 0;
 	}
 
@@ -3479,7 +3478,7 @@ void Z80Init()
 
 	/* Reset registers to their initial values */
 	memset(&Z80, 0, sizeof(Z80));
-	z80_hold_hack = 0;
+	Z80.z80_hold_hack = 0;
 //	Z80.daisy = config;
 //	Z80.irq_callback = irqcallback;
 	IX = IY = 0xffff; /* IX and IY are FFFF after a reset! */
@@ -3492,7 +3491,7 @@ void Z80Reset()
 	//int (*irq_callback)(int irqline);
 
 	memset(&Z80, 0, sizeof(Z80));
-	z80_hold_hack = 0;
+	Z80.z80_hold_hack = 0;
 
 	PC = 0x0000;
 	I = 0;
@@ -3680,6 +3679,11 @@ int ActiveZ80GetI()
 int ActiveZ80GetPrevPC()
 {
 	return Z80.prvpc.d;
+}
+
+void ActiveZ80SetIRQHold()
+{
+	Z80.z80_hold_hack = 1;
 }
 
 #if 0

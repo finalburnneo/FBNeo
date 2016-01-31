@@ -2691,10 +2691,12 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	
 	INT32 nCyclesTotal = (18432000 / 6) / 60;
+	INT32 nCyclesDone = 0, nSegment = 0;
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		ZetRun(nCyclesTotal / nInterleave);
-		
+		nSegment = (nCyclesTotal - nCyclesDone) / (nInterleave - i);
+		nCyclesDone += ZetRun(nSegment);
+
 		if (game_select == BIGBUCKS) {
 			INT32 nInterleaveIRQFire = nInterleave / 20;
 			for (INT32 j = 0; j < 20; j++) {

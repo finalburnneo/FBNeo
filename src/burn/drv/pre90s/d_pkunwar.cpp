@@ -1622,7 +1622,7 @@ static INT32 NinjakunFrame()
 
 		ZetOpen(1);
 		ZetRun(sync_cycles - ZetTotalCycles());
-		if (i == 63 || i == 127 || i == 195 || i == 255) {
+		if (i == 58 || i == 122 || i == 190 || i == 250) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();

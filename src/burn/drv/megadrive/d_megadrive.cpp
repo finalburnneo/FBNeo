@@ -41107,6 +41107,8 @@ struct BurnDriver BurnDrvmd_sks3 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// -- Homebrew additions below --
+
 // Uwol Quest for Money
 static struct BurnRomInfo md_uwolRomDesc[] = {
 	{ "uwol.bin", 0x010000, 0x6fa88172, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41250,3 +41252,60 @@ struct BurnDriver BurnDrvmd_chase = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// -- Prototype/Hack additions below --
+
+// Thunderbolt II
+static struct BurnRomInfo md_tbolt2RomDesc[] = {
+	{ "thunderbolt ii.bin", 0x80000, 0xd5fcc49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tbolt2)
+STD_ROM_FN(md_tbolt2)
+
+struct BurnDriver BurnDrvmd_tbolt2 = {
+	"md_tbolt2", NULL, NULL, NULL, "1995",
+	"Thunderbolt II (Prototype)\0", NULL, "1995 SUN GREEN", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tbolt2RomInfo, md_tbolt2RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunderbolt II
+static struct BurnRomInfo md_tbolt2aRomDesc[] = {
+	{ "Thunderbolt II (Unl) [f1].bin", 0x80000, 0xa2ef16de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tbolt2a)
+STD_ROM_FN(md_tbolt2a)
+
+struct BurnDriver BurnDrvmd_tbolt2a = {
+	"md_tbolt2a", NULL, NULL, NULL, "1995",
+	"Thunderbolt II (Unprotected, Prototype)\0", NULL, "1995 SUN GREEN", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tbolt2aRomInfo, md_tbolt2aRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Big's Fishing Derby
+static struct BurnRomInfo md_bigfdRomDesc[] = {
+	{ "bigfd.bin", 0x100000, 0xe1448457, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bigfd)
+STD_ROM_FN(md_bigfd)
+
+struct BurnDriver BurnDrvmd_bigfd = {
+	"md_bigfd", NULL, NULL, NULL, "2014",
+	"Big's Fishing Derby\0", NULL, "2014 flamewing", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_bigfdRomInfo, md_bigfdRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+

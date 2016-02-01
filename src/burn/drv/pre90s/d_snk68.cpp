@@ -569,7 +569,8 @@ void __fastcall pow_write_byte(UINT32 address, UINT8 data)
 
 UINT16 __fastcall pow_read_word(UINT32 address)
 {
-	bprintf (PRINT_NORMAL, _T("read %x, w\n"), address);
+	if (address != 0xe0000)
+		bprintf (PRINT_NORMAL, _T("read %x, w\n"), address);
 
 	return 0;
 }

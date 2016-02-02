@@ -405,7 +405,7 @@ static void draw_sprites()
 			sx -= 8;
 			sy -= 31; // sy is offset by 1 pixel from the bg/fg
 
-			if (sx < 0 || sy < -7 || sx > nScreenWidth || sy > nScreenHeight) continue;
+			if (sx < 0 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 			if (flipy) {
 				if (flipx) {
@@ -431,22 +431,22 @@ static void draw_8x8_tiles(UINT8 *vram, UINT8 *gfx_base, INT32 scrollx, INT32 sc
 		INT32 sx = (offs & 0x1f) << 3;
 		INT32 sy = (offs >> 2) & 0xf8; 
 
-		INT32 code = vram[0x400 + offs] | ((vram[offs] & 0x80) << 1);
+		INT32 code = (vram[0x400 + offs] | ((vram[offs] & 0x80) << 1)) & 0x1ff;
 		INT32 color = vram[offs] & 0x3f;
 		INT32 forcelayer0 = vram[offs] & 0x40;
 
-		sx = (UINT8)(sx - scrollx);
-		sy = (UINT8)(sy - scrolly);
+		sx = (sx - scrollx) & 0xff;
+		sy = (sy - scrolly) & 0xff;
 
 		sx -= 8;
 		sy -= 32;
 
-		if (sx < 0 || sy < -7 || sx > nScreenWidth || sy > nScreenHeight) continue;
+		if (sx < 0 || sy < -7 || sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 		if (forcelayer0) {
-			Render8x8Tile(pTransDraw, code, sx, sy, color, 2, 0, gfx_base);
+			Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 2, 0, gfx_base);
 		} else {
-			Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 2, 0, 0, gfx_base);
+			Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, gfx_base);
 		}
 	}
 }

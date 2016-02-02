@@ -299,15 +299,16 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnDrvGetSampleInfo(&si, i);
-		char *szSampleName = NULL;
-		BurnDrvGetSampleName(&szSampleName, i, 0);
+		char *szSampleNameTmp = NULL;
+		BurnDrvGetSampleName(&szSampleNameTmp, i, 0);
+
 		sample_ptr = &samples[i];
 		
 		// append .wav to filename
-		szSampleName[strlen(szSampleName)] = '.';
-		szSampleName[strlen(szSampleName)] = 'w';
-		szSampleName[strlen(szSampleName)] = 'a';
-		szSampleName[strlen(szSampleName)] = 'v';
+		char szSampleName[1024];
+		memset(&szSampleName, 0, sizeof(szSampleName));
+		strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5); // leave space for ".wav" + null, just incase!
+		strcat(&szSampleName[0], ".wav");
 
 		if (si.nFlags == 0) break;
 
@@ -383,15 +384,16 @@ void BurnSampleInitOne(INT32 sample)
 
 	struct BurnSampleInfo si;
 	BurnDrvGetSampleInfo(&si, sample);
-	char *szSampleName = NULL;
-	BurnDrvGetSampleName(&szSampleName, sample, 0);
+	char *szSampleNameTmp = NULL;
+	BurnDrvGetSampleName(&szSampleNameTmp, sample, 0);
+
 	sample_ptr = &samples[sample];
-	
+
 	// append .wav to filename
-	szSampleName[strlen(szSampleName)] = '.';
-	szSampleName[strlen(szSampleName)] = 'w';
-	szSampleName[strlen(szSampleName)] = 'a';
-	szSampleName[strlen(szSampleName)] = 'v';
+	char szSampleName[1024];
+	memset(&szSampleName, 0, sizeof(szSampleName));
+	strncpy(&szSampleName[0], szSampleNameTmp, sizeof(szSampleName) - 5); // leave space for ".wav" + null, just incase!
+	strcat(&szSampleName[0], ".wav");
 
 	if (sample_ptr->playing || sample_ptr->data != NULL || sample_ptr->flags == SAMPLE_IGNORE) {
 		return;

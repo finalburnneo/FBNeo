@@ -1297,7 +1297,7 @@ struct BurnDriver BurnDrvMultchmp = {
 };
 
 
-// Multi Champ (Korea)
+// Multi Champ (Korea, older)
 
 static struct BurnRomInfo multchmkRomDesc[] = {
 	{ "multchmp.u02", 0x040000, 0x7da8c0df, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
@@ -1328,10 +1328,50 @@ STD_ROM_FN(multchmk)
 
 struct BurnDriver BurnDrvMultchmk = {
 	"multchmpk", "multchmp", NULL, NULL, "1999",
-	"Multi Champ (Korea)\0", NULL, "ESD", "Miscellaneous",
+	"Multi Champ (Korea, older)\0", NULL, "ESD", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
 	NULL, multchmkRomInfo, multchmkRomName, NULL, NULL, MultchmpInputInfo, MultchmpDIPInfo,
+	MultchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Multi Champ (World, older)
+
+static struct BurnRomInfo multchmaRomDesc[] = {
+	{ "esd2.cu02", 	  0x040000, 0xbfd39198, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03", 	  0x040000, 0xcd769077, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su01",	  0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "esd14.ju03",   0x040000, 0xd8f06fa8, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd15.ju04",   0x040000, 0xb1ae7f08, 3 | BRF_GRA },			//  4
+	{ "esd16.ju05",   0x040000, 0x88e252e8, 3 | BRF_GRA },			//  5
+	{ "esd17.ju06",   0x040000, 0x51f01067, 3 | BRF_GRA },			//  6
+	{ "esd13.ju07",   0x040000, 0x9d1590a6, 3 | BRF_GRA },			//  7
+
+	{ "esd5.fu27",    0x080000, 0xed5b4e58, 4 | BRF_GRA },			//  8 - Tiles
+	{ "esd6.fu32",    0x080000, 0x97fde7b1, 4 | BRF_GRA },			//  9
+	{ "esd11.fu29",   0x080000, 0xd3c1855e, 4 | BRF_GRA },			// 10
+	{ "esd12.fu33",   0x080000, 0xa68848a8, 4 | BRF_GRA },			// 11 
+	{ "esd7.fu26",    0x080000, 0x042d59ff, 4 | BRF_GRA },			// 12 
+	{ "esd8.fu30",    0x080000, 0xfa8cd2d3, 4 | BRF_GRA },			// 13
+	{ "esd9.fu28",    0x080000, 0xa3cfe895, 4 | BRF_GRA },			// 14
+	{ "esd10.fu31",   0x080000, 0x396d77b6, 4 | BRF_GRA },			// 15 
+
+	{ "esd4.su08",	  0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
+};
+
+STD_ROM_PICK(multchma)
+STD_ROM_FN(multchma)
+
+struct BurnDriver BurnDrvMultchma = {
+	"multchmpa", "multchmp", NULL, NULL, "1999",
+	"Multi Champ (World, older)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MINIGAMES, 0,
+	NULL, multchmaRomInfo, multchmaRomName, NULL, NULL, MultchmpInputInfo, MultchmpDIPInfo,
 	MultchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

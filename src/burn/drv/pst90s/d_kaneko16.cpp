@@ -1273,6 +1273,7 @@ STD_ROM_PICK(Bakubrkr)
 STD_ROM_FN(Bakubrkr)
 
 static struct BurnRomInfo GtmrRomDesc[] = {
+	// this set shows 'PCB by Jinwei Co Ltd. ROC'
 	{ "u2.bin",            	0x080000, 0x031799f7, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "u1.bin",            	0x080000, 0x6238790a, BRF_ESS | BRF_PRG }, //  1	
 	
@@ -1315,6 +1316,54 @@ static struct BurnRomInfo GtmraRomDesc[] = {
 
 STD_ROM_PICK(Gtmra)
 STD_ROM_FN(Gtmra)
+
+static struct BurnRomInfo GtmrbRomDesc[] = {
+	{ "mmp0x1.u514",   		0x080000, 0x6c163f12, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "mmp1x1.u513",   		0x080000, 0x424dc7e1, BRF_ESS | BRF_PRG }, //  1	
+	
+	{ "mmd0x1.u124",   		0x020000, 0x3d7cb329, BRF_PRG | BRF_OPT }, //  2 MCU Code // == mmd0x2
+
+	{ "mm-200-402-s0.bin", 	0x200000, 0xc0ab3efc, BRF_GRA },	   	   //  3 Sprites
+	{ "mm-201-403-s1.bin", 	0x200000, 0xcf6b23dc, BRF_GRA },	 	   //  4	
+	{ "mm-202-404-s2.bin", 	0x200000, 0x8f27f5d3, BRF_GRA },	       //  5	
+	{ "mm-203-405-s3.bin", 	0x080000, 0xe9747c8c, BRF_GRA },	       //  6	
+	{ "mms1x1.u30",    		0x020000, 0x9463825c, BRF_GRA },	       //  7	
+	{ "mms0x1.u29",    		0x020000, 0xbd22b7d2, BRF_GRA },	       //  8 		  // == mms0x2	
+	
+	{ "mm-300-406-a0.bin", 	0x200000, 0xb15f6b7f, BRF_GRA },	       //  9 Tiles (scrambled)
+
+	{ "mm-100-401-e0.bin", 	0x100000, 0xb9cbfbee, BRF_SND },		   // 10 Samples
+};
+
+
+STD_ROM_PICK(Gtmrb)
+STD_ROM_FN(Gtmrb)
+
+static struct BurnRomInfo GtmroRomDesc[] = {
+	// possible prototype
+	{ "u514.bin",   		0x080000, 0x2e857685, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "u513.bin",   		0x080000, 0xd5003870, BRF_ESS | BRF_PRG }, //  1	
+	
+	{ "mmd0x0.u124.bin",   	0x020000, 0xe1f6159e, BRF_PRG | BRF_OPT }, //  2 MCU Code
+
+	{ "mm200-e.bin", 		0x100000, 0xeb104408, BRF_GRA },	   	   //  3 Sprites
+	{ "mm200-o.bin", 		0x100000, 0xb6d04e7c, BRF_GRA },	 	   //  4
+	{ "mm201-e.bin", 		0x100000, 0xb8c64e14, BRF_GRA },	 	   //  5
+	{ "mm201-o.bin", 		0x100000, 0x3ecd6c0a, BRF_GRA },	 	   //  6
+	{ "mm202-e.bin", 		0x100000, 0xf0fd5688, BRF_GRA },	       //  7	
+	{ "mm202-o.bin", 		0x100000, 0xe0fe1b2b, BRF_GRA },	       //  8	
+	{ "mm203-e.bin",    	0x100000, 0xb9001f28, BRF_GRA },	       //  9	
+	{ "mm203-o.bin",    	0x100000, 0x2ed6227d, BRF_GRA },	       // 10	
+	
+	{ "mm-300-e.u53", 		0x100000, 0xf9ee708d, BRF_GRA },	       // 11 Tiles (scrambled)
+	{ "mm-300-o.u54", 		0x100000, 0x76299353, BRF_GRA },	       // 12 
+
+	{ "mm-100-401-e0.bin", 	0x100000, 0xb9cbfbee, BRF_SND },		   // 13 Samples
+};
+
+
+STD_ROM_PICK(Gtmro)
+STD_ROM_FN(Gtmro)
 
 static struct BurnRomInfo GtmreRomDesc[] = {
 	{ "gmmu2.bin",         	0x080000, 0x36dc4aa9, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
@@ -5010,6 +5059,68 @@ static INT32 GtmrInit()
 	return 0;
 }
 
+static INT32 GtmroInit()
+{
+	INT32 nRet = 0, nLen;
+	
+	Gtmr = 1;
+	
+	Kaneko16NumSprites = 0x8400;
+	Kaneko16NumTiles = 0x4000;
+	Kaneko16NumTiles2 = 0x4000;
+	
+	Kaneko16VideoInit();
+	Kaneko16ParseSprite = Kaneko16ParseSpriteType1;
+	
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	GtmrMemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	GtmrMemIndex();
+
+	Kaneko16TempGfx = (UINT8*)BurnMalloc(0x840000);
+	
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16Rom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	
+	// Load and Decode Sprite Roms
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000,  3, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000001,  4, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x200000,  5, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x200001,  6, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x400000,  7, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x400001,  8, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x600000,  9, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x600001, 10, 2); if (nRet != 0) return 1;
+	GfxDecode(Kaneko16NumSprites, 8, 16, 16, EightBppPlaneOffsets, EightBppXOffsets, EightBppYOffsets, 0x800, Kaneko16TempGfx, Kaneko16Sprites);
+	
+	// Load and Decode Tile Roms
+	memset(Kaneko16TempGfx, 0, 0x800000);
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000000, 11, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(Kaneko16TempGfx + 0x000001, 12, 2); if (nRet != 0) return 1;
+	UnscrambleTiles(0x200000);
+	GfxDecode(Kaneko16NumTiles, 4, 16, 16, FourBppPlaneOffsets, FourBppXOffsets, FourBppYOffsets, 0x400, Kaneko16TempGfx, Kaneko16Tiles);
+	BurnFree(Kaneko16TempGfx);
+	memcpy(Kaneko16Tiles2, Kaneko16Tiles, Kaneko16NumTiles * 16 * 16);
+
+	// Load Sample Rom
+	nRet = BurnLoadRom(MSM6295ROMData, 13, 1); if (nRet != 0) return 1;
+	ExpandSampleBanks();
+	
+	ToyboxMCURun = GtmrMCURun;
+	Kaneko16FrameRender = GtmrFrameRender;
+		
+	nRet = GtmrMachineInit(); if (nRet != 0) return 1;
+
+	// Reset the driver
+	GtmrDoReset();
+
+	return 0;
+}
+
 static INT32 GtmrevoInit()
 {
 	INT32 nRet = 0, nLen;
@@ -7330,6 +7441,26 @@ struct BurnDriver BurnDrvGtmra = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
 	NULL, GtmraRomInfo, GtmraRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
 	GtmrInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
+	NULL, 0x10000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvGtmrb = {
+	"gtmrb", "gtmr", NULL, NULL, "1994",
+	"1000 Miglia: Great 1000 Miles Rally (94/05/26)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
+	NULL, GtmrbRomInfo, GtmrbRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
+	GtmrInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
+	NULL, 0x10000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvGtmro = {
+	"gtmro", "gtmr", NULL, NULL, "1994",
+	"1000 Miglia: Great 1000 Miles Rally (94/05/10)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO16, GBF_RACING, 0,
+	NULL, GtmroRomInfo, GtmroRomName, NULL, NULL, GtmrInputInfo, GtmrDIPInfo,
+	GtmroInit, GtmrMachineExit, GtmrFrame, NULL, GtmrScan,
 	NULL, 0x10000, 320, 240, 4, 3
 };
 

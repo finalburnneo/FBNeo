@@ -1,5 +1,8 @@
 // FB Alpha XX Mission driver module
 // Based on MAME driver by Uki
+// Todo:
+//   Figure out why the scrolling "hiccups" when something blows up running @
+//   3mhz.  Tried every variation of timing I could think of. grr! -dink feb. 3 2016
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -166,7 +169,7 @@ static void __fastcall xxmission_main_write(UINT16 address, UINT8 data)
 					ZetClose();
 					ZetOpen(1);
 					ZetSetVector(0x10);
-					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 					ZetClose();
 					ZetOpen(0);
 				}
@@ -226,7 +229,7 @@ static void __fastcall xxmission_sub_write(UINT16 address, UINT8 data)
 					ZetClose();
 					ZetOpen(0);
 					ZetSetVector(0x10);
-					ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+					ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 					ZetClose();
 					ZetOpen(1);
 				}
@@ -260,7 +263,7 @@ static UINT8 __fastcall xxmission_read(UINT16 address)
 			return DrvInputs[address & 1];
 
 		case 0xa002:
-			return (cpu_status & 0xfd) | ((vblank) ? 0x02 : 0x00); // status!
+			return (cpu_status & 0xfd) | ((vblank) ? 0x00 : 0x02); // status!
 	}
 
 	return 0;
@@ -572,7 +575,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
+	INT32 nCyclesTotal[2] = { 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	vblank = 0;
@@ -582,20 +585,21 @@ static INT32 DrvFrame()
 		INT32 nSegment = (nCyclesTotal[0] / nInterleave);
 
 		ZetOpen(0);
+		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
 		nCyclesDone[0] += ZetRun(nSegment);
-		nSegment = ZetTotalCycles();
-		if (i == 241) {
+
+		if (i == 235) { // not smoothe-scrolling in fs unless 235? -dink
 			vblank = 1;
 			cpu_status &= ~0x20;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdate(nSegment);
-		if (i == ((nInterleave / 2) - 1) || i == (nInterleave - 1)) { // 120hz
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
+		if (i == ((nInterleave / 2) - 2) || i == (nInterleave - 2)) { // 120hz
 			cpu_status &= ~0x10;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}

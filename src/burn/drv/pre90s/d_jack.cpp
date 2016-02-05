@@ -13,7 +13,7 @@ extern "C" {
 static UINT8 *Mem, *Rom0, *Rom1, *Gfx, *Prom, *User;
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvJoy3[8], DrvJoy4[8], DrvReset, DrvDips[2];
 static INT16 *pAY8910Buffer[3], *pFMBuffer = NULL;
-static INT32 tri_fix = 0, joinem = 0, loverb = 0, suprtriv = 0, unclepoo = 0, zzyzzyxx = 0;
+static INT32 tri_fix = 0, joinem = 0, loverb = 0, suprtriv = 0, unclepoo = 0, zzyzzyxx = 0, freeze = 0;
 static INT32 timer_rate, flip_screen;
 static UINT32 *Palette, *DrvPal;
 static UINT8 DrvCalcPal;
@@ -1121,7 +1121,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &soundlatch_r, &timer_r, NULL, NULL);
 	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
-	if (loverb || joinem || zzyzzyxx) {
+	if (loverb || joinem || zzyzzyxx || freeze) {
 		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -1152,6 +1152,7 @@ static INT32 DrvExit()
 	suprtriv = 0;
 	unclepoo = 0;
 	zzyzzyxx = 0;
+	freeze = 0;
 
 	memset(joinem_scroll_w, 0, sizeof(joinem_scroll_w));
 
@@ -1679,6 +1680,13 @@ struct BurnDriver BurnDrvbrix = {
 	224, 256, 3, 4
 };
 
+INT32 freezeInit()
+{
+	freeze = 1;
+	timer_rate = 256;
+
+	return DrvInit();
+}
 
 // Freeze
 
@@ -1709,7 +1717,7 @@ struct BurnDriver BurnDrvfreeze = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, freezeRomInfo, freezeRomName, NULL, NULL, FreezeInputInfo, FreezeDIPInfo,
-	jackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
+	freezeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
 	224, 256, 3, 4
 };
 

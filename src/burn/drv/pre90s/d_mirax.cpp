@@ -223,6 +223,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	AY8910Reset(0);
+	AY8910Reset(1);
 	*nAyCtrl = 0x00;
 	HiscoreReset();
 

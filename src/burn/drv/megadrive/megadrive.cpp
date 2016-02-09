@@ -165,6 +165,7 @@ static INT32 Z80CyclesPrev = 0;
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
 static UINT8 bNoDebug = 0;
+static INT32 bForce3Button = 0;
 
 void MegadriveCheckHardware()
 {
@@ -1068,8 +1069,25 @@ void __fastcall MegadriveZ80RamWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 // -- I/O Read Write ------------------------------------------
 
+static INT32 PadRead3btn(INT32 i)
+{
+  INT32 pad = ~(JoyPad->pad[i]); // Get inverse of pad MXYZ SACB RLDU
+  INT32 value;
+
+  if (RamIO[i+1] & 0x40) // TH
+    value = pad & 0x3f;                      // ?1CB RLDU
+  else
+    value = ((pad & 0xc0) >> 2) | (pad & 3); // ?0SA 00DU
+
+  value |= RamIO[i+1] & 0x40;
+  return value;
+}
+
 static INT32 PadRead(INT32 i)
 {
+	if (bForce3Button) return // get that out of the way... (Forgotten Worlds...)
+		PadRead3btn(i);
+
 	INT32 pad=0,value=0,TH;
 	pad = ~(JoyPad->pad[i]);					// Get inverse of pad MXYZ SACB RLDU
 	TH = RamIO[i+1] & 0x40;
@@ -3078,6 +3096,11 @@ INT32 MegadriveInit()
 		RamMisc->SRamActive = 0;
 	}
 
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "forgottn")) {
+		bprintf(0, _T("Forced 3-button mode for Forgotten Worlds!\n"));
+		bForce3Button = 1;
+	}
+
 	return 0;
 }
 
@@ -3105,6 +3128,7 @@ INT32 MegadriveExit()
 	DrvSECAM = 0;
 	HighCol = NULL;
 	bNoDebug = 0;
+	bForce3Button = 0;
 
 	return 0;
 }

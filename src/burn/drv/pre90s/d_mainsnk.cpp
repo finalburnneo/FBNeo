@@ -602,10 +602,10 @@ static void draw_layer_bg()
 
 static void draw_sprites()
 {
-	for (INT32 offs = 0; offs < 24*4; offs+=4)
+	for (INT32 offs = 0; offs < 25*4; offs+=4)
 	{
 		INT32 attr = DrvSprRAM[offs+3];
-		INT32 code = DrvSprRAM[offs+1];// | ((attr & 0x30) << 4);
+		INT32 code = DrvSprRAM[offs+1];
 		code |= attr << 4 & 0x300;
 		INT32 sy = DrvSprRAM[offs+0];
 		INT32 sx = 288-16-DrvSprRAM[offs+2];
@@ -614,7 +614,6 @@ static void draw_sprites()
 		INT32 flipy = 0;
 
 		if (sy > 240) sy -= 256;
-		//sy += 8;
 
 		if (flipscreen)
 		{

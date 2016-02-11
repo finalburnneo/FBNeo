@@ -25,6 +25,8 @@ static UINT16 *scrollx;
 static UINT16 *scrolly;
 static UINT8 *m6295bank;
 
+static INT32 nGameSelect = 0;
+
 static UINT8 DrvReset;
 static UINT8 DrvButton[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
 static UINT8 DrvJoy1[8]   = { 0, 0, 0, 0, 0, 0, 0, 0 };
@@ -61,6 +63,24 @@ static struct BurnInputInfo _1945kiiiInputList[] = {
 };
 
 STDINPUTINFO(_1945kiii)
+
+static struct BurnInputInfo FlagrallInputList[] = {
+	{"P1 Coin 1",		BIT_DIGITAL,	DrvButton + 0,	"p1 coin"	},
+	{"P1 Coin 2",		BIT_DIGITAL,	DrvButton + 1,	"p2 coin"	},
+
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 4,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
+};
+
+STDINPUTINFO(Flagrall)
 
 static struct BurnDIPInfo _1945kiiiDIPList[] = {
 	{0x14, 0xFF, 0xFF, 0xef, NULL			},
@@ -99,6 +119,52 @@ static struct BurnDIPInfo _1945kiiiDIPList[] = {
 
 STDDIPINFO(_1945kiii)
 
+static struct BurnDIPInfo FlagrallDIPList[]=
+{
+	{0x09, 0xff, 0xff, 0xa3, NULL		},
+	{0x0a, 0xff, 0xff, 0xb7, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x09, 0x01, 0x03, 0x00, "3 Coins 1 Credits"		},
+	{0x09, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
+	{0x09, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
+	{0x09, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x09, 0x01, 0x10, 0x10, "Off"		},
+	{0x09, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Dip Control"		},
+	{0x09, 0x01, 0x20, 0x20, "Off"		},
+	{0x09, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Picture Test"		},
+	{0x09, 0x01, 0x80, 0x80, "Off"		},
+	{0x09, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0a, 0x01, 0x03, 0x02, "1"		},
+	{0x0a, 0x01, 0x03, 0x01, "2"		},
+	{0x0a, 0x01, 0x03, 0x03, "3"		},
+	{0x0a, 0x01, 0x03, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Type"		},
+	{0x0a, 0x01, 0x04, 0x04, "0"		},
+	{0x0a, 0x01, 0x04, 0x00, "1"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x0a, 0x01, 0x30, 0x00, "Very Hard"		},
+	{0x0a, 0x01, 0x30, 0x10, "Hard"		},
+	{0x0a, 0x01, 0x30, 0x20, "Easy"		},
+	{0x0a, 0x01, 0x30, 0x30, "Normal"		},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"		},
+	{0x0a, 0x01, 0x80, 0x80, "Off"		},
+	{0x0a, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Flagrall)
+
 inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
@@ -123,7 +189,7 @@ static void sndSetBank(UINT8 bank0, UINT8 bank1)
 		}
 	}
 
-	if (bank1 != m6295bank[1]) {
+	if (bank1 != m6295bank[1] && nGameSelect == 0) { //1945kiii only
 		m6295bank[1] = bank1;
 		for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
 			MSM6295SampleInfo[1][nChannel] = MSM6295ROM + 0x080000 + 0x040000 * bank1 + (nChannel << 8);
@@ -160,11 +226,19 @@ void __fastcall k1945iiiWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	switch (sekAddress)
 	{
 		case 0x4C0000:
+		case 0x4C0001: // flagrall
 			MSM6295Command(0, byteValue);
 		return;
 
 		case 0x500000:
 			MSM6295Command(1, byteValue);
+		return;
+
+		case 0x9ce:
+		case 0x9cf:
+		case 0x9d0:
+		case 0x9d1:
+		case 0x9d2: // nop
 		return;
 	}
 }
@@ -181,9 +255,17 @@ void __fastcall k1945iiiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			scrolly[0] = wordValue;
 		return;
 
-		case 0x3C0000:
-			sndSetBank((wordValue & 2) >> 1, (wordValue & 4) >> 2);
-		return;			
+		case 0x3C0000: {
+			if (nGameSelect) //flagrall
+				sndSetBank((wordValue & 6) >> 1, 0);
+			else
+				sndSetBank((wordValue & 2) >> 1, (wordValue & 4) >> 2);
+		}
+		return;
+
+		case 0x4C0000: // flagrall
+			MSM6295Command(0, wordValue);
+		return;
 	}
 }
 
@@ -251,7 +333,7 @@ static void decode_sprites() // Pixel order - 0,2,1,3 -> 0,1,2,3
 	}
 }
 
-static INT32 DrvInit()
+static INT32 DrvInit(INT32 game_select)
 {
 	Mem = NULL;
 	MemIndex();
@@ -260,32 +342,58 @@ static INT32 DrvInit()
 	memset(Mem, 0, nLen);
 	MemIndex();	
 
-	{
-		if (BurnLoadRom(Rom68K     + 0x00000, 0, 2)) return 1;
-		if (BurnLoadRom(Rom68K     + 0x00001, 1, 2)) return 1;
+	nGameSelect = game_select;
 
-		if (BurnLoadRom(RomSpr     + 0x00000, 2, 2)) return 1;
-		if (BurnLoadRom(RomSpr     + 0x00001, 3, 2)) return 1;
+	if (nGameSelect == 0)
+	{   // 1945kiii
+		if (BurnLoadRom(Rom68K     + 0x000000,  0, 2)) return 1;
+		if (BurnLoadRom(Rom68K     + 0x000001,  1, 2)) return 1;
 
-		if (BurnLoadRom(RomBg      + 0x00000, 4, 1)) return 1;
+		// this puts lines through all the sprites
+		//if (BurnLoadRomExt(RomSpr  + 0x000000,  2, 4, LD_GROUP(2))) return 1;
+		//if (BurnLoadRomExt(RomSpr  + 0x000001,  3, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000000,  2, 2)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000001,  3, 2)) return 1;
 
-		if (BurnLoadRom(MSM6295ROM + 0x00000, 5, 1)) return 1;
-		if (BurnLoadRom(MSM6295ROM + 0x80000, 6, 1)) return 1;
+		if (BurnLoadRom(RomBg      + 0x000000,  4, 1)) return 1;
+
+		if (BurnLoadRom(MSM6295ROM + 0x000000,  5, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x080000,  6, 1)) return 1;
 
 		decode_sprites();
+	}
+	else 
+	{   // flagrall
+		if (BurnLoadRom(Rom68K     + 0x000000,  0, 2)) return 1;
+		if (BurnLoadRom(Rom68K     + 0x000001,  1, 2)) return 1;
+
+		if (BurnLoadRom(RomSpr     + 0x000000,  2, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000001,  3, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000002,  4, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000003,  5, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200000,  6, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200001,  7, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200002,  8, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200003,  9, 4)) return 1;
+
+		if (BurnLoadRom(RomBg      + 0x000000, 10, 1)) return 1;
+		if (BurnLoadRom(RomBg      + 0x080000, 11, 1)) return 1;
+
+		if (BurnLoadRom(MSM6295ROM + 0x000000, 12, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x080000, 13, 1)) return 1;
 	}
 
 	{
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(Rom68K,			0x000000, 0x0FFFFF, MAP_ROM);
-		SekMapMemory(Ram68K,			0x100000, 0x10FFFF, MAP_RAM);
+		SekMapMemory(Rom68K,		0x000000, 0x0FFFFF, MAP_ROM);
+		SekMapMemory(Ram68K,		0x100000, 0x10FFFF, MAP_RAM);
 		SekMapMemory((UINT8 *)RamPal,	0x200000, 0x200FFF, MAP_ROM);
-		SekMapHandler(1,			0x200000, 0x200FFF, MAP_WRITE);	// palette write
+		SekMapHandler(1,		0x200000, 0x200FFF, MAP_WRITE);	// palette write
 		SekMapMemory((UINT8 *)RamSpr0,	0x240000, 0x240FFF, MAP_RAM);
 		SekMapMemory((UINT8 *)RamSpr1,	0x280000, 0x280FFF, MAP_RAM);
 		SekMapMemory((UINT8 *)RamBg,	0x2C0000, 0x2C0FFF, MAP_RAM);
-		SekMapMemory(Ram68K + 0x10000,		0x8C0000, 0x8CFFFF, MAP_RAM);
+		SekMapMemory(Ram68K + 0x10000,	0x8C0000, 0x8CFFFF, MAP_RAM);
 
 		SekSetReadWordHandler(0, k1945iiiReadWord);
 //		SekSetReadByteHandler(0, k1945iiiReadByte);
@@ -299,8 +407,13 @@ static INT32 DrvInit()
 	
 	MSM6295Init(0, 7500, 1);
 	MSM6295Init(1, 7500, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	if (nGameSelect == 0) { // 1945kiii
+		MSM6295SetRoute(0, 2.50, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(1, 2.50, BURN_SND_ROUTE_BOTH);
+	} else {                // flagrall
+		MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	}
 
 	GenericTilesInit();
 
@@ -317,7 +430,9 @@ static INT32 DrvExit()
 	
 	MSM6295Exit(0);
 	MSM6295Exit(1);
-	
+
+	nGameSelect = 0;
+
 	BurnFree(Mem);
 
 	return 0;
@@ -325,19 +440,19 @@ static INT32 DrvExit()
 
 static void DrawBackground()
 {
-	for (INT32 offs = 0; offs < 64*32; offs++)
+	for (INT32 offs = 0; offs < 32*32; offs++)
 	{
-		INT32 sx = ((offs & 0x1f) * 16) - scrollx[0];
+		INT32 sx = ((offs & 0x1f) * 16) - (scrollx[0] & 0x1ff);
 		if (sx <= -192) sx += 512;
-		
-		INT32 sy = ((offs / 0x20) * 16) - scrolly[0];
-//		if (sy <= -288) sy += 512;
-		
+
+		INT32 sy = ((offs / 0x20) * 16) - (scrolly[0] & 0x1ff);
+		if (sy <= -192) sy += 512;
+
 		if (sx <= -16 || sx >= 320 || sy <= -16 || sy >= 224)
 			continue;
 
 		INT32 code = BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0x1fff;
-		
+
 		if (sx >= 0 && sx <= 304 && sy >= 0 && sy <= 208) {
 			Render16x16Tile(pTransDraw, code, sx, sy, 0, 8, 0, RomBg);
 		} else {
@@ -350,8 +465,8 @@ static void DrawSprites()
 {
 	for (INT32 i = 0; i < 0x1000/2; i++)
 	{
-		INT32 sx		 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) >> 8;
-		INT32 sy		 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) & 0xff;
+		INT32 sx	 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) >> 8;
+		INT32 sy	 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) & 0xff;
 		INT32 code	 = (BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) & 0x7ffe) >> 1;
 		sx 		|= (BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) & 0x0001) << 8;
 
@@ -375,6 +490,8 @@ static INT32 DrvDraw()
 
 		bRecalcPalette = 0;	
 	}
+
+	BurnTransferClear();
 
 	DrawBackground();
 	DrawSprites();
@@ -427,7 +544,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_MEMORY_RAM) {	
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = RamStart;
+		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd - RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
@@ -459,8 +576,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // 1945k III
 
 static struct BurnRomInfo _1945kiiiRomDesc[] = {
-	{ "prg-1.u51",	0x080000, 0x6b345f27, 1 | BRF_ESS | BRF_PRG },	// 0 68000 code 
-	{ "prg-2.u52", 	0x080000, 0xce09b98c, 1 | BRF_ESS | BRF_PRG }, 	// 1
+	{ "prg-1.u51",	0x080000, 0x6b345f27, BRF_ESS | BRF_PRG },	// 0 68000 code 
+	{ "prg-2.u52", 	0x080000, 0xce09b98c, BRF_ESS | BRF_PRG }, 	// 1
 	
 	{ "m16m-1.u62",	0x200000, 0x0b9a6474, BRF_GRA }, 		// 2 Sprites
 	{ "m16m-2.u63",	0x200000, 0x368a8c2e, BRF_GRA },		// 3 
@@ -475,12 +592,58 @@ static struct BurnRomInfo _1945kiiiRomDesc[] = {
 STD_ROM_PICK(_1945kiii)
 STD_ROM_FN(_1945kiii)
 
+static INT32 _1945kiiiInit()
+{
+	return DrvInit(0);
+}
+
 struct BurnDriver BurnDrv1945kiii = {
 	"1945kiii", NULL, NULL, NULL, "2000",
 	"1945k III\0", NULL, "Oriental", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, _1945kiiiRomInfo, _1945kiiiRomName, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
+	_1945kiiiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
 	224, 320, 3, 4
+};
+
+
+// '96 Flag Rally
+
+static struct BurnRomInfo flagrallRomDesc[] = {
+	{ "11_u34.bin",	0x040000, 0x24dd439d, BRF_ESS | BRF_PRG },	//  0 68000 code
+	{ "12_u35.bin",	0x040000, 0x373b71a5, BRF_ESS | BRF_PRG },	//  1
+
+	{ "1_u5.bin",	0x080000, 0x9377704b, BRF_GRA }, 		//  2 Sprites
+	{ "5_u6.bin",	0x080000, 0x1ac0bd0c, BRF_GRA }, 		//  3 
+	{ "2_u7.bin",	0x080000, 0x5f6db2b3, BRF_GRA }, 		//  4
+	{ "6_u8.bin",	0x080000, 0x79e4643c, BRF_GRA }, 		//  5
+	{ "3_u58.bin",	0x040000, 0xc913df7d, BRF_GRA }, 		//  6
+	{ "4_u59.bin",	0x040000, 0xcb192384, BRF_GRA }, 		//  7
+	{ "7_u60.bin",	0x040000, 0xf187a7bf, BRF_GRA }, 		//  8
+	{ "8_u61.bin",	0x040000, 0xb73fa441, BRF_GRA }, 		//  9
+
+	{ "10_u102.bin",0x080000, 0xb1fd3279, BRF_GRA }, 		// 10 Background Layer
+	{ "9_u103.bin",	0x080000, 0x01e6d654, BRF_GRA }, 		// 11
+
+	{ "13_su4.bin",	0x080000, 0x7b0630b3, BRF_SND }, 		// 12 MSM #0 Samples
+	{ "14_su6.bin",	0x040000, 0x593b038f, BRF_SND }, 		// 13
+};
+
+STD_ROM_PICK(flagrall)
+STD_ROM_FN(flagrall)
+
+static INT32 flagrallInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrvFlagrall = {
+	"flagrall", NULL, NULL, NULL, "1996",
+	"'96 Flag Rally\0", NULL, "unknown", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, flagrallRomInfo, flagrallRomName, NULL, NULL, FlagrallInputInfo, FlagrallDIPInfo,
+	flagrallInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
+	320, 224, 4, 3
 };

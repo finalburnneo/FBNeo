@@ -3,6 +3,8 @@
 #include "eeprom.h"
 #include "gaelco.h"
 
+// Tofix: snowboard champ service mode won't work
+
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -105,8 +107,9 @@ static struct BurnDIPInfo SnowboarDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x04, NULL		},
 
-	{0   , 0xfe, 0   ,    1, "Service Mode (No Toggle)"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode (No Toggle)"		},
 	{0x14, 0x01, 0x04, 0x04, "Off"		},
+	{0x14, 0x01, 0x04, 0x00, "On"		},
 };
 
 STDDIPINFO(Snowboar)
@@ -258,7 +261,7 @@ static struct BurnDIPInfo ManiacsqDIPList[]=
 
 STDDIPINFO(Maniacsq)
 
-// Snowboard protection
+// Snowboard protection sim. engineered by Samuel Neves & Peter Wilhelmsen
 
 static UINT32 rol(UINT32 x, UINT32 c)
 {
@@ -329,16 +332,11 @@ static UINT16 snowboar_protection_r()
 	UINT16 ret  = mangle(snowboar_latch);
 	ret = ((ret & 0xff00) >> 8) | ((ret & 0x00ff) << 8);
 	return ret;
-
 }
 
 static void snowboar_protection_w(UINT16 offset, UINT16 data)
 {
-	//COMBINE_DATA(&m_snowboar_protection[offset]);
-
 	snowboar_latch = (snowboar_latch << 16) | data;
-
-	//logerror("%06x: protection write %04x to %04x\n", space.device().safe_pc(), data, offset*2);
 }
 
 static void __fastcall gaelco2_main_write_byte(UINT32 address, UINT8 data)
@@ -607,8 +605,8 @@ static INT32 MemIndex()
 
 	Drv68KROM	= Next; Next += 0x0100000;
 
-	DrvGfxROM0	= Next; Next += 0x1400000;
-	DrvGfxROM	= Next; Next += 0x2000000;
+	DrvGfxROM0	= Next; Next += 0x3400000;
+	DrvGfxROM	= Next; Next += 0x3000000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x10000 * sizeof(UINT32);
 
@@ -725,15 +723,56 @@ static INT32 DrvInit(INT32 game_select)
 			if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
 			if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
 
-			if (BurnLoadRom(DrvGfxROM + 0x1000000, 2, 1)) return 1;
-
-			if (BurnLoadRom(DrvGfxROM0 + 0x000000, 3, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM0 + 0x400000, 4, 1)) return 1;
-			if (BurnLoadRom(DrvGfxROM0 + 0x800000, 5, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x000000, 3, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x400000, 4, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM + 0x800000, 5, 1)) return 1;
 
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0000000, 0x0400000, 0x0000000, 0x0400000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0400000, 0x0400000, 0x0200000, 0x0600000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0800000, 0x0400000, 0x0800000, 0x0c00000);
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x1000000, 2, 1)) return 1;
+
+			DrvGfxDecode(0x1400000);
+
+			nCPUClockSpeed = 15000000;
+			pIRQCallback = pIRQLine6Callback;
+
+			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 0, 0);
+		}
+		break;
+
+		case 3:	// snowboar
+		{
+			if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
+			if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x0000000, 2, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0080000, 3, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0100000, 4, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0180000, 5, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0200000, 6, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0280000, 7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0400000, 8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0480000, 9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0500000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0580000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0600000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0680000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0800000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0880000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0900000, 16, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0980000, 17, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0c00000, 18, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0c80000, 19, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0d00000, 20, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0d80000, 21, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x1000000, 22, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x1080000, 23, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x1100000, 24, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x1180000, 25, 1)) return 1;
+
+			// no split needed for this set.
 
 			DrvGfxDecode(0x1400000);
 
@@ -751,7 +790,7 @@ static INT32 DrvInit(INT32 game_select)
 	SekMapMemory(DrvSprRAM,		0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x210000, 0x211fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0xfe0000, 0xffffff, MAP_RAM);
-	if (game_select == 2) // snowboard
+	if (game_select == 2 || game_select == 3) // snowboard
 		SekMapMemory(Drv68KRAM2, 0x212000, 0x213fff, MAP_RAM); // ??? -dink
 
 	SekSetWriteWordHandler(0,	gaelco2_main_write_word);
@@ -1198,12 +1237,63 @@ static INT32 snowboaraInit()
 }
 
 struct BurnDriver BurnDrvSnowboara = {
-	"snowboara", NULL, NULL, NULL, "1994",
+	"snowboara", "snowboar", NULL, NULL, "1994",
 	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, SnowboarInputInfo, SnowboarDIPInfo,
 	snowboaraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
-	320, 240, 4, 3
+	384, 240, 4, 3
+};
+
+
+// Snow Board Championship (Version 2.1)
+
+static struct BurnRomInfo snowboarRomDesc[] = {
+	{ "sb.53",	0x80000, 0x4742749e, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sb.55",	0x80000, 0x6ddc431f, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sb.a0",	0x80000, 0xaa476e44, 1 | BRF_GRA }, //  2 Graphics & Samples
+	{ "sb.a1",	0x80000, 0x6bc99195, 1 | BRF_GRA }, //  3
+	{ "sb.a2",	0x80000, 0xfae2ebba, 1 | BRF_GRA }, //  4
+	{ "sb.a3",	0x80000, 0x17ed9cf8, 1 | BRF_GRA }, //  5
+	{ "sb.a4",	0x80000, 0x2ba3a5c8, 1 | BRF_GRA }, //  6
+	{ "sb.a5",	0x80000, 0xae011eb3, 1 | BRF_GRA }, //  7
+	{ "sb.b0",	0x80000, 0x96c714cd, 1 | BRF_GRA }, //  8
+	{ "sb.b1",	0x80000, 0x39a4c30c, 1 | BRF_GRA }, //  9
+	{ "sb.b2",	0x80000, 0xb58fcdd6, 1 | BRF_GRA }, // 10
+	{ "sb.b3",	0x80000, 0x96afdebf, 1 | BRF_GRA }, // 11
+	{ "sb.b4",	0x80000, 0xe62cf8df, 1 | BRF_GRA }, // 12
+	{ "sb.b5",	0x80000, 0xcaa90856, 1 | BRF_GRA }, // 13
+	{ "sb.c0",	0x80000, 0xc9d57a71, 1 | BRF_GRA }, // 14
+	{ "sb.c1",	0x80000, 0x1d14a3d4, 1 | BRF_GRA }, // 15
+	{ "sb.c2",	0x80000, 0x55026352, 1 | BRF_GRA }, // 16
+	{ "sb.c3",	0x80000, 0xd9b62dee, 1 | BRF_GRA }, // 17
+	{ "sb.d0",	0x80000, 0x7434c1ae, 1 | BRF_GRA }, // 18
+	{ "sb.d1",	0x80000, 0xf00cc6c8, 1 | BRF_GRA }, // 19
+	{ "sb.d2",	0x80000, 0x019f9aec, 1 | BRF_GRA }, // 20
+	{ "sb.d3",	0x80000, 0xd05bd286, 1 | BRF_GRA }, // 21
+	{ "sb.e0",	0x80000, 0xe6195323, 1 | BRF_GRA }, // 22
+	{ "sb.e1",	0x80000, 0x9f38910b, 1 | BRF_GRA }, // 23
+	{ "sb.e2",	0x80000, 0xf5948c6c, 1 | BRF_GRA }, // 24
+	{ "sb.e3",	0x80000, 0x4baa678f, 1 | BRF_GRA }, // 25
+};
+
+STD_ROM_PICK(snowboar)
+STD_ROM_FN(snowboar)
+
+static INT32 snowboarInit()
+{
+	return DrvInit(3);
+}
+
+struct BurnDriver BurnDrvSnowboar = {
+	"snowboar", NULL, NULL, NULL, "1994",
+	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, SnowboarInputInfo, SnowboarDIPInfo,
+	snowboarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	384, 240, 4, 3
 };
 

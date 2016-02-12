@@ -14,6 +14,7 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvPalRAM;
 static UINT8 *Drv68KRAM;
+static UINT8 *Drv68KRAM2;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -71,6 +72,44 @@ static struct BurnInputInfo AlighuntInputList[] = {
 };
 
 STDINPUTINFO(Alighunt)
+
+static struct BurnInputInfo SnowboarInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+};
+
+STDINPUTINFO(Snowboar)
+
+static struct BurnDIPInfo SnowboarDIPList[]=
+{
+	{0x14, 0xff, 0xff, 0x04, NULL		},
+
+	{0   , 0xfe, 0   ,    1, "Service Mode (No Toggle)"		},
+	{0x14, 0x01, 0x04, 0x04, "Off"		},
+};
+
+STDDIPINFO(Snowboar)
 
 static struct BurnInputInfo ManiacsqInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -219,6 +258,89 @@ static struct BurnDIPInfo ManiacsqDIPList[]=
 
 STDDIPINFO(Maniacsq)
 
+// Snowboard protection
+
+static UINT32 rol(UINT32 x, UINT32 c)
+{
+	return (x << c) | (x >> (32 - c));
+}
+ 
+static UINT16 get_lo(UINT32 x)
+{
+	return ((x & 0x00000010) <<  1) |
+			((x & 0x00000800) <<  3) |
+			((x & 0x40000000) >> 27) |
+			((x & 0x00000005) <<  6) |
+			((x & 0x00000008) <<  8) |
+			rol(x & 0x00800040, 9)   |
+			((x & 0x04000000) >> 16) |
+			((x & 0x00008000) >> 14) |
+			((x & 0x00002000) >> 11) |
+			((x & 0x00020000) >> 10) |
+			((x & 0x00100000) >>  8) |
+			((x & 0x00044000) >>  5) |
+			((x & 0x00000020) >>  1);
+}
+ 
+static UINT16 get_hi(UINT32 x)
+{
+	return ((x & 0x00001400) >>  0) |
+			((x & 0x10000000) >> 26) |
+			((x & 0x02000000) >> 24) |
+			((x & 0x08000000) >> 21) |
+			((x & 0x00000002) << 12) |
+			((x & 0x01000000) >> 19) |
+			((x & 0x20000000) >> 18) |
+			((x & 0x80000000) >> 16) |
+			((x & 0x00200000) >> 13) |
+			((x & 0x00010000) >> 12) |
+			((x & 0x00080000) >> 10) |
+			((x & 0x00000200) >>  9) |
+			((x & 0x00400000) >>  8) |
+			((x & 0x00000080) >>  4) |
+			((x & 0x00000100) >>  1);
+}
+ 
+static UINT16 get_out(UINT16 x)
+{
+	return ((x & 0xc840) <<  0) |
+			((x & 0x0080) <<  2) |
+			((x & 0x0004) <<  3) |
+			((x & 0x0008) <<  5) |
+			((x & 0x0010) <<  8) |
+			((x & 0x0002) <<  9) |
+			((x & 0x0001) << 13) |
+			((x & 0x0200) >>  9) |
+			((x & 0x1400) >>  8) |
+			((x & 0x0100) >>  7) |
+			((x & 0x2000) >>  6) |
+			((x & 0x0020) >>  2);
+}
+ 
+static UINT16 mangle(UINT32 x)
+{
+	UINT16 a = get_lo(x);
+	UINT16 b = get_hi(x);
+	return get_out(((a ^ 0x0010) - (b ^ 0x0024)) ^ 0x5496);
+}
+
+static UINT16 snowboar_protection_r()
+{
+	UINT16 ret  = mangle(snowboar_latch);
+	ret = ((ret & 0xff00) >> 8) | ((ret & 0x00ff) << 8);
+	return ret;
+
+}
+
+static void snowboar_protection_w(UINT16 offset, UINT16 data)
+{
+	//COMBINE_DATA(&m_snowboar_protection[offset]);
+
+	snowboar_latch = (snowboar_latch << 16) | data;
+
+	//logerror("%06x: protection write %04x to %04x\n", space.device().safe_pc(), data, offset*2);
+}
+
 static void __fastcall gaelco2_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
@@ -267,7 +389,7 @@ static void __fastcall gaelco2_main_write_byte(UINT32 address, UINT8 data)
 static void __fastcall gaelco2_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xff0000) == 0x310000) {
-		snowboar_latch = (snowboar_latch << 16) | data;
+		snowboar_protection_w(address - 0x310000, data);
 		return;
 	}
 
@@ -341,7 +463,7 @@ static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)
 static UINT16 __fastcall gaelco2_main_read_word(UINT32 address)
 {
 	if ((address & 0xff0000) == 0x310000) {
-		return snowboar_latch; // not really :(
+		return snowboar_protection_r();
 	}
 
 	switch (address)
@@ -496,6 +618,7 @@ static INT32 MemIndex()
 	DrvSprBuf	= Next; Next += 0x0010000;
 	DrvPalRAM	= Next; Next += 0x0002000;
 	Drv68KRAM	= Next; Next += 0x0020000;
+	Drv68KRAM2	= Next; Next += 0x0020000;
 
 	DrvVidRegs	= (UINT16*)Next; Next += 0x00003 * sizeof(UINT16);
 
@@ -628,6 +751,9 @@ static INT32 DrvInit(INT32 game_select)
 	SekMapMemory(DrvSprRAM,		0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x210000, 0x211fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0xfe0000, 0xffffff, MAP_RAM);
+	if (game_select == 2) // snowboard
+		SekMapMemory(Drv68KRAM2, 0x212000, 0x213fff, MAP_RAM); // ??? -dink
+
 	SekSetWriteWordHandler(0,	gaelco2_main_write_word);
 	SekSetWriteByteHandler(0,	gaelco2_main_write_byte);
 	SekSetReadWordHandler(0,	gaelco2_main_read_word);
@@ -1075,8 +1201,8 @@ struct BurnDriver BurnDrvSnowboara = {
 	"snowboara", NULL, NULL, NULL, "1994",
 	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
-	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, SnowboarInputInfo, SnowboarDIPInfo,
 	snowboaraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };

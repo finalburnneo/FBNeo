@@ -3,7 +3,7 @@
 #include "eeprom.h"
 #include "gaelco.h"
 
-// Tofix: snowboard champ service mode won't work
+// Todo/tofix: EEPROM save doesn't seem to work in Snowboard
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -32,7 +32,6 @@ static UINT32 gfxmask = ~0;
 
 static INT32 nCPUClockSpeed = 0;
 
-//static INT32 global_x_offset = 0;
 static INT32 global_y_offset = -16;
 
 static UINT8 DrvJoy1[16];
@@ -97,22 +96,12 @@ static struct BurnInputInfo SnowboarInputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service Mode",BIT_DIGITAL,	DrvJoy3 + 2,	"service"},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+//	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(Snowboar)
-
-static struct BurnDIPInfo SnowboarDIPList[]=
-{
-	{0x14, 0xff, 0xff, 0x04, NULL		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode (No Toggle)"		},
-	{0x14, 0x01, 0x04, 0x04, "Off"		},
-	{0x14, 0x01, 0x04, 0x00, "On"		},
-};
-
-STDDIPINFO(Snowboar)
 
 static struct BurnInputInfo ManiacsqInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -452,7 +441,7 @@ static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)
 		case 0x300021:
 		case 0x320000:
 		case 0x320001:
-			return DrvInputs[2] >> ((~address & 1) * 8);
+			return ((DrvInputs[2] & ~0x40) | (EEPROMRead() ? 0x40 : 0)) >> ((~address & 1) * 8);
 	}
 
 	return 0;
@@ -605,8 +594,8 @@ static INT32 MemIndex()
 
 	Drv68KROM	= Next; Next += 0x0100000;
 
-	DrvGfxROM0	= Next; Next += 0x3400000;
-	DrvGfxROM	= Next; Next += 0x3000000;
+	DrvGfxROM0	= Next; Next += 0x1400000;
+	DrvGfxROM	= Next; Next += 0x2000000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x10000 * sizeof(UINT32);
 
@@ -616,7 +605,7 @@ static INT32 MemIndex()
 	DrvSprBuf	= Next; Next += 0x0010000;
 	DrvPalRAM	= Next; Next += 0x0002000;
 	Drv68KRAM	= Next; Next += 0x0020000;
-	Drv68KRAM2	= Next; Next += 0x0020000;
+	Drv68KRAM2	= Next; Next += 0x0002000;
 
 	DrvVidRegs	= (UINT16*)Next; Next += 0x00003 * sizeof(UINT16);
 
@@ -790,8 +779,8 @@ static INT32 DrvInit(INT32 game_select)
 	SekMapMemory(DrvSprRAM,		0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x210000, 0x211fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0xfe0000, 0xffffff, MAP_RAM);
-	if (game_select == 2 || game_select == 3) // snowboard
-		SekMapMemory(Drv68KRAM2, 0x212000, 0x213fff, MAP_RAM); // ??? -dink
+	if (game_select == 2 || game_select == 3) // snowboard champ. extra ram
+		SekMapMemory(Drv68KRAM2, 0x212000, 0x213fff, MAP_RAM);
 
 	SekSetWriteWordHandler(0,	gaelco2_main_write_word);
 	SekSetWriteByteHandler(0,	gaelco2_main_write_byte);
@@ -1241,7 +1230,7 @@ struct BurnDriver BurnDrvSnowboara = {
 	"Snow Board Championship (Version 2.0)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, SnowboarInputInfo, SnowboarDIPInfo,
+	NULL, snowboaraRomInfo, snowboaraRomName, NULL, NULL, SnowboarInputInfo, NULL,
 	snowboaraInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	384, 240, 4, 3
 };
@@ -1292,7 +1281,7 @@ struct BurnDriver BurnDrvSnowboar = {
 	"Snow Board Championship (Version 2.1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
-	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, SnowboarInputInfo, SnowboarDIPInfo,
+	NULL, snowboarRomInfo, snowboarRomName, NULL, NULL, SnowboarInputInfo, NULL,
 	snowboarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	384, 240, 4, 3
 };

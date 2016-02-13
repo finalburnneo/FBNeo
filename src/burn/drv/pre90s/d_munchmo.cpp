@@ -588,7 +588,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-				extern int counter;
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {

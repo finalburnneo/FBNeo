@@ -794,7 +794,7 @@ static void draw_layer(UINT8 *rambase, UINT8 *gfx, INT32 color_offset, INT32 tra
 	INT32 scrollx = scr[0] & ((wide * 16)-1);
 	INT32 scrolly = (scr[1] + 16) & 0x1ff;
 
-	for (INT32 offs = 0; offs < width * 32; offs++)
+	for (INT32 offs = 0; offs < (width * 2) * 32; offs++)
 	{
 		INT32 sx = (offs / 0x20) * 16;
 		INT32 sy = (offs & 0x1f) * 16;

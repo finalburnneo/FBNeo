@@ -113,6 +113,27 @@ static struct BurnDIPInfo SitvDIPList[]=
 
 STDDIPINFO(Sitv)
 
+static struct BurnDIPInfo OzmawarsDIPList[]=
+{
+	{0x0b, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Energy"		},
+	{0x0b, 0x01, 0x03, 0x00, "15000"		},
+	{0x0b, 0x01, 0x03, 0x01, "20000"		},
+	{0x0b, 0x01, 0x03, 0x02, "25000"		},
+	{0x0b, 0x01, 0x03, 0x03, "35000"		},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Energy"		},
+	{0x0b, 0x01, 0x08, 0x00, "15000"		},
+	{0x0b, 0x01, 0x08, 0x08, "10000"		},
+
+	{0   , 0xfe, 0   ,    2, "Coinage"		},
+	{0x0b, 0x01, 0x80, 0x00, "1 Coin  1 Credits"	},
+	{0x0b, 0x01, 0x80, 0x80, "1 Coin  2 Credits"	},
+};
+
+STDDIPINFO(Ozmawars)
+
 static void invaders_sh_1_write(UINT8 data, UINT8 *last)
 {
 	if ( data & 0x01 && ~*last & 0x01) BurnSamplePlay(9);	// Ufo Sound
@@ -601,5 +622,80 @@ struct BurnDriver BurnDrvSitv = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, sitvRomInfo, sitvRomName, InvadersSampleInfo, InvadersSampleName, SitvInputInfo, SitvDIPInfo,
 	Sitv1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
+	224, 260, 3, 4
+};
+
+
+// Ozma Wars (set 1)
+
+static struct BurnRomInfo ozmawarsRomDesc[] = {
+	{ "mw01",		0x0800, 0x31f4397d, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 Code
+	{ "mw02",		0x0800, 0xd8e77c62, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "mw03",		0x0800, 0x3bfa418f, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "mw04",		0x0800, 0xe190ce6c, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "mw05",		0x0800, 0x3bc7d4c7, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "mw06",		0x0800, 0x99ca2eae, 1 | BRF_ESS | BRF_PRG }, //  5
+};
+
+STD_ROM_PICK(ozmawars)
+STD_ROM_FN(ozmawars)
+
+static INT32 OzmawarsInit()
+{
+	return DrvInit(0x800, 6, 0x000000);
+}
+
+struct BurnDriver BurnDrvOzmawars = {
+	"ozmawars", NULL, NULL, NULL, "1979",
+	"Ozma Wars (set 1)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, ozmawarsRomInfo, ozmawarsRomName, NULL, NULL, InvadersInputInfo, OzmawarsDIPInfo,
+	OzmawarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
+	224, 260, 3, 4
+};
+
+
+// Ozma Wars (set 2)
+
+static struct BurnRomInfo ozmawars2RomDesc[] = {
+	{ "mw01",		0x0800, 0x31f4397d, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 Code
+	{ "mw02",		0x0800, 0xd8e77c62, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "oz5",		0x0400, 0x5597bf52, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "oz6",		0x0400, 0x19b43578, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "oz7",		0x0400, 0xa285bfde, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "oz8",		0x0400, 0xae59a629, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "mw05",		0x0800, 0x3bc7d4c7, 1 | BRF_ESS | BRF_PRG }, //  6
+	{ "oz11",		0x0400, 0x660e934c, 1 | BRF_ESS | BRF_PRG }, //  7
+	{ "oz12",		0x0400, 0x8b969f61, 1 | BRF_ESS | BRF_PRG }, //  8
+};
+
+STD_ROM_PICK(ozmawars2)
+STD_ROM_FN(ozmawars2)
+
+static INT32 Ozmawars2Init()
+{
+	INT32 nRet = DrvInit(0x800, 2, 0x000000);
+
+	if (nRet == 0) {
+		if (BurnLoadRom(DrvI8080ROM + 0x1000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvI8080ROM + 0x1400, 3, 1)) return 1;
+		if (BurnLoadRom(DrvI8080ROM + 0x1800, 4, 1)) return 1;
+		if (BurnLoadRom(DrvI8080ROM + 0x1c00, 5, 1)) return 1;
+		if (BurnLoadRom(DrvI8080ROM + 0x4000, 6, 1)) return 1;
+		if (BurnLoadRom(DrvI8080ROM + 0x4800, 7, 1)) return 1;
+		if (BurnLoadRom(DrvI8080ROM + 0x4c00, 8, 1)) return 1;
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvOzmawars2 = {
+	"ozmawars2", "ozmawars", NULL, NULL, "1979",
+	"Ozma Wars (set 2)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, ozmawars2RomInfo, ozmawars2RomName, NULL, NULL, InvadersInputInfo, OzmawarsDIPInfo,
+	Ozmawars2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
 };

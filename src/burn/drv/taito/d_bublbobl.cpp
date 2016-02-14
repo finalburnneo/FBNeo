@@ -815,6 +815,34 @@ static struct BurnRomInfo SboblboblcRomDesc[] = {
 STD_ROM_PICK(Sboblboblc)
 STD_ROM_FN(Sboblboblc)
 
+static struct BurnRomInfo SboblbobldRomDesc[] = {
+	{ "3.bin",     			0x08000, 0x524cdc4f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "5.bin",           	0x08000, 0x13118eb1, BRF_ESS | BRF_PRG }, //  1
+	{ "4.bin",     			0x08000, 0x13fe9baa, BRF_ESS | BRF_PRG }, //  2
+	
+	{ "1.bin",     			0x08000, 0xae11a07b, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	
+	{ "2.bin",     			0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  4	Z80 #3 Program 
+	
+	{ "12",     			0x08000, 0x20358c22, BRF_GRA },	     	  //  5	Tiles
+	{ "13",     			0x08000, 0x930168a9, BRF_GRA },	     	  //  6
+	{ "14",     			0x08000, 0x9773e512, BRF_GRA },	     	  //  7
+	{ "15",     			0x08000, 0xd045549b, BRF_GRA },	     	  //  8
+	{ "16",     			0x08000, 0xd0af35c5, BRF_GRA },	     	  //  9
+	{ "17",     			0x08000, 0x7b5369a8, BRF_GRA },	     	  // 10
+	{ "6",     				0x08000, 0x6b61a413, BRF_GRA },	     	  // 11
+	{ "7",     				0x08000, 0xb5492d97, BRF_GRA },	     	  // 12
+	{ "8",     				0x08000, 0xd69762d5, BRF_GRA },	     	  // 13
+	{ "9",     				0x08000, 0x9f243b68, BRF_GRA },	     	  // 14
+	{ "10",     			0x08000, 0x66e9438c, BRF_GRA },	     	  // 15
+	{ "11",     			0x08000, 0x9ef863ad, BRF_GRA },	     	  // 16
+	
+	{ "a71-25.41",     		0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
+};
+
+STD_ROM_PICK(Sboblbobld)
+STD_ROM_FN(Sboblbobld)
+
 static struct BurnRomInfo Bub68705RomDesc[] = {
 	{ "2.bin",         		0x08000, 0x32c8305b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "3-1.bin",       		0x08000, 0x980c2615, BRF_ESS | BRF_PRG }, //  1
@@ -2916,6 +2944,16 @@ struct BurnDriver BurnDrvSboblboblc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, SboblboblcRomInfo, SboblboblcRomName, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
+	BoblboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSboblbobld = {
+	"sboblbobld", "bublbobl", NULL, NULL, "1986",
+	"Super Bobble Bobble (bootleg, set 4)\0", NULL, "bootleg", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, SboblbobldRomInfo, SboblbobldRomName, NULL, NULL, BoblboblInputInfo, SboblbobDIPInfo,
 	BoblboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

@@ -320,12 +320,12 @@ static void __fastcall bbusters_main_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall bbusters_main_write_byte(UINT32 address, UINT8 data)
 {
-	bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
+	//bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
 }
 
 static UINT16 __fastcall mechatt_main_read_word(UINT32 address)
 {
-	bprintf (0, _T("MRW: %5.5x\n"), address);
+	//bprintf (0, _T("MRW: %5.5x\n"), address);
 
 	switch (address)
 	{
@@ -348,7 +348,7 @@ static UINT16 __fastcall mechatt_main_read_word(UINT32 address)
 
 static UINT8 __fastcall mechatt_main_read_byte(UINT32 address)
 {
-	bprintf (0, _T("MRB: %5.5x\n"), address);
+	//bprintf (0, _T("MRB: %5.5x\n"), address);
 
 	return 0;
 }
@@ -383,7 +383,7 @@ static void __fastcall mechatt_main_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall mechatt_main_write_byte(UINT32 address, UINT8 data)
 {
-	bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
+	//bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
 }
 
 static void __fastcall bbusters_sound_write(UINT16 address, UINT8 data)
@@ -724,9 +724,9 @@ static INT32 MechattInit()
 	INT32 nSndROMLen = 0x20000;
 	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM0, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(4000000);
-	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   0.25, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

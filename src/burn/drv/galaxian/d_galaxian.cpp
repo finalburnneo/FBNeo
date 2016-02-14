@@ -14262,6 +14262,24 @@ static struct BurnRomInfo Froggers2RomDesc[] = {
 STD_ROM_PICK(Froggers2)
 STD_ROM_FN(Froggers2)
 
+static struct BurnRomInfo Froggers3RomDesc[] = {
+	{ "29",    		   0x01000, 0xa58e43a7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "30",    		   0x01000, 0x119bbedb, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "31",    		   0x01000, 0x405595e9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "epr-608.ic32",  0x00800, 0xe8ab0256, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "epr-609.ic33",  0x00800, 0x7380a48f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "epr-610.ic34",  0x00800, 0x31d7eb27, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	
+	{ "epr-607.ic101", 0x00800, 0x05f7d883, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "epr-606.ic102", 0x00800, 0xf524ee30, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "pr-91.6l",      0x00020, 0x413703bf, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Froggers3)
+STD_ROM_FN(Froggers3)
+
 static struct BurnRomInfo FroggermcRomDesc[] = {
 	{ "epr-1031.15",   0x01000, 0x4b7c8d11, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "epr-1032.16",   0x01000, 0xac00b9d9, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -14712,6 +14730,16 @@ struct BurnDriver BurnDrvFroggers2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MISC, 0,
 	NULL, Froggers2RomInfo, Froggers2RomName, NULL, NULL, FroggerInputInfo, FroggerDIPInfo,
+	FroggerEncGfxInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvFroggers3 = {
+	"froggers3", "frogger", NULL, NULL, "1981",
+	"Frogger (Sega set 3)\0", NULL, "Konami (Sega license)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MISC, 0,
+	NULL, Froggers3RomInfo, Froggers3RomName, NULL, NULL, FroggerInputInfo, FroggerDIPInfo,
 	FroggerEncGfxInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -204,7 +204,7 @@ static struct BurnDIPInfo MechattDIPList[]=
 	{0x0f, 0x01, 0x0c, 0x04, "Infinite Energy (Cheat)"	},
 	{0x0f, 0x01, 0x0c, 0x00, "Freeze"			},
 
-	{0   , 0xfe, 0   ,    0, "Service Mode"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x0f, 0x01, 0x80, 0x80, "Off"				},
 	{0x0f, 0x01, 0x80, 0x00, "On"				},
 };
@@ -693,6 +693,8 @@ static INT32 MechattInit()
 		if (BurnLoadRom(DrvZoomTab + 0x000000, 13, 1)) return 1;
 	//	if (BurnLoadRom(DrvZoomTab + 0x000000, 14, 1)) return 1;
 
+		if (BurnLoadRom(DrvSndROM1,		0x80, 1)) return 1; // ym2608 rom
+
 		DrvGfxDecode();
 	}
 
@@ -722,7 +724,7 @@ static INT32 MechattInit()
 	ZetClose();
 
 	INT32 nSndROMLen = 0x20000;
-	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM0, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
@@ -1157,6 +1159,18 @@ struct BurnDriver BurnDrvBbusters = {
 	256, 224, 4, 3
 };
 
+// YM2608 ROM for Mechanized Attack
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "",                    0,          0, 0 },
+};
+
+static struct BurnRomInfo Ym2608RomDesc[] = {
+#if !defined (ROM_VERIFY)
+	{ "ym2608_adpcm_rom.bin",  0x002000, 0x23c9e0d8, BRF_ESS | BRF_PRG | BRF_BIOS },
+#else
+	{ "",  0x000000, 0x00000000, BRF_ESS | BRF_PRG | BRF_BIOS },
+#endif
+};
 
 // Mechanized Attack (World)
 
@@ -1185,11 +1199,11 @@ static struct BurnRomInfo mechattRomDesc[] = {
 	{ "ma_9.f12",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 14
 };
 
-STD_ROM_PICK(mechatt)
+STDROMPICKEXT(mechatt, mechatt, Ym2608)
 STD_ROM_FN(mechatt)
 
 struct BurnDriver BurnDrvMechatt = {
-	"mechatt", NULL, NULL, NULL, "1989",
+	"mechatt", NULL, "ym2608", NULL, "1989",
 	"Mechanized Attack (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,

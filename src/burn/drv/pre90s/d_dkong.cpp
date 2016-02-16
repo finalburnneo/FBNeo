@@ -2563,7 +2563,7 @@ struct BurnDriver BurnDrvDkongf = {
 
 
 // Donkey Kong - Pauline Edition (hack, rev 5)
-// "Pauline Edition" hack, by Clay Cowgill based on Mike Mika's NES version
+// "Pauline Edition" hack (rev 5, 4-22-2013), by Clay Cowgill based on Mike Mika's NES version
 
 static struct BurnRomInfo dkongpeRomDesc[] = {
 	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
@@ -2591,11 +2591,50 @@ STD_ROM_PICK(dkongpe)
 STD_ROM_FN(dkongpe)
 
 struct BurnDriver BurnDrvDkongpe = {
-	"dkongpe", "dkong", NULL, "dkong", "2004",
+	"dkongpe", "dkong", NULL, "dkong", "2013",
 	"Donkey Kong - Pauline Edition (hack, rev 5)\0", NULL, "hack (Clay Cowgill)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dkongpeRomInfo, dkongpeRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
+	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Donkey Kong - Arcade Rainbow (hack)
+// 6-29-2015 John Kowalski
+
+static struct BurnRomInfo dkrainbowRomDesc[] = {
+	{ "c_5et_g.bin",	0x1000, 0xba70b88b, 1 }, //  0 maincpu
+	{ "c_5ct_g.bin",	0x1000, 0x5ec461ec, 1 }, //  1
+	{ "c_5bt_g.bin",	0x1000, 0x1c97d324, 1 }, //  2
+	{ "c_5at_g.bin",	0x1000, 0xb9005ac0, 1 }, //  3
+
+	{ "s_3i_b.bin",		0x0800, 0x45a4ed06, 2 }, //  4 soundcpu
+	{ "s_3j_b.bin",		0x0800, 0x4743fe92, 2 }, //  5
+
+	{ "v_5h_b.bin",		0x0800, 0x12c8c95d, 3 }, //  6 gfx1
+	{ "v_3pt.bin",		0x0800, 0x15e9c5e9, 3 }, //  7
+
+	{ "l_4m_b.bin",		0x0800, 0x59f8054d, 4 }, //  8 gfx2
+	{ "l_4n_b.bin",		0x0800, 0x672e4714, 4 }, //  9
+	{ "l_4r_b.bin",		0x0800, 0xfeaa59ee, 4 }, // 10
+	{ "l_4s_b.bin",		0x0800, 0x20f2ef7e, 4 }, // 11
+
+	{ "dkr_c-2k.bpr",	0x0100, 0xc0dce2f5, 5 }, // 12 proms
+	{ "dkr_c-2j.bpr",	0x0100, 0x03c3153f, 5 }, // 13
+	{ "dkr_v-5e.bpr",	0x0100, 0xd9f3005a, 5 }, // 14
+};
+
+STD_ROM_PICK(dkrainbow)
+STD_ROM_FN(dkrainbow)
+
+struct BurnDriver BurnDrvDkrainbow = {
+	"dkrainbow", "dkong", NULL, "dkong", "2015",
+	"Donkey Kong - Arcade Rainbow (hack)\0", NULL, "hack (john Kowalski)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, dkrainbowRomInfo, dkrainbowRomName, DkongSampleInfo, DkongSampleName, DkongInputInfo, DkongfDIPInfo,
 	dkongInit, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

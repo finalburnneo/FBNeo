@@ -1,4 +1,4 @@
-// FB Alpha Appoooh driver module
+// FB Alpha Mr. Jong driver module
 // Based on MAME driver by Takahiro Nogi (nogi@kt.rim.or.jp) 2000/03/20
 
 #include "tiles_generic.h"
@@ -500,11 +500,27 @@ static struct BurnRomInfo crazyblkRomDesc[] = {
 STD_ROM_PICK(crazyblk)
 STD_ROM_FN(crazyblk)
 
+static struct BurnRomInfo blkbustrRomDesc[] = {
+	{ "6a.bin",	0x2000, 0x9e4b426c, 1 }, //  0 maincpu
+	{ "c2.a7",	0x2000, 0x75070978, 1 }, //  1
+	{ "8a.bin",	0x2000, 0x0e803777, 1 }, //  2
+	{ "c4.a8",	0x2000, 0xc7f5a247, 1 }, //  3
+
+	{ "4h.bin",	0x1000, 0x67dd6c19, 2 }, //  4 gfx1
+	{ "5h.bin",	0x1000, 0x50fba1d4, 2 }, //  5
+
+	{ "clr.j7",	0x0020, 0xee1cf1d5, 3 }, //  6 proms
+	{ "clr.g5",	0x0100, 0xbcb1e2e3, 3 }, //  7
+};
+
+STD_ROM_PICK(blkbustr)
+STD_ROM_FN(blkbustr)
+
 struct BurnDriver BurnDrvMrjong = {
 	"mrjong", NULL, NULL, NULL, "1983",
 	"Mr. Jong (Japan)\0", NULL, "Kiwako", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mrjongRomInfo, mrjongRomName, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 512,
 	224, 240, 3, 4
@@ -514,8 +530,18 @@ struct BurnDriver BurnDrvCrazyblk = {
 	"crazyblk", NULL, NULL, NULL, "1983",
 	"Crazy Blocks\0", NULL, "Kiwako (ECI license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, crazyblkRomInfo, crazyblkRomName, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 512,
+	224, 240, 3, 4
+};
+
+struct BurnDriver BurnDrvBlkbustr = {
+	"blkbustr", "mrjong", NULL, NULL, "1983",
+	"BlockBuster\0", NULL, "Kiwako (ECI license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, blkbustrRomInfo, blkbustrRomName, NULL, NULL, MrjongInputInfo, MrjongDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 512,
 	224, 240, 3, 4
 };

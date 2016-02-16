@@ -230,7 +230,7 @@ static UINT16 mechatt_gun_r(UINT16 offset)
 	INT32 x = BurnGunReturnX((offset) ? 1 : 0) + 0x18;
 	INT32 y = BurnGunReturnY((offset) ? 1 : 0);
 
-	if (x > 0xff) x = 0xff;
+	//if (x > 0xff) x = 0xff;
 	if (y > 0xef) y = 0xef;
 
 	return x | (y << 8);
@@ -444,7 +444,20 @@ static UINT8 __fastcall bbusters_sound_read_port(UINT16 port)
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
+	// Sometimes loading a savestate needs to kick off an irq, but since this
+	// happens outside of DrvScan(), we have to handle opening of the cpu here.
+	INT32 fromFMPostLoad = (ZetGetActive() == -1);
+
+	if (fromFMPostLoad) {
+		bprintf(0, _T("FM-PostLoad kicking irq!!! %X\n"), nStatus);
+		ZetOpen(0);
+	}
+
 	ZetSetIRQLine(0, (nStatus) ?  CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+
+	if (fromFMPostLoad)
+		ZetClose();
+
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -645,7 +658,7 @@ static INT32 DrvInit()
 	BurnTimerAttachZet(4000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 2.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 2.00, BURN_SND_ROUTE_RIGHT);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.28, BURN_SND_ROUTE_BOTH);
+	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1091,11 +1104,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 		BurnGunScan();
+
+		ZetOpen(0);
 		if (game_select) {
-			BurnYM2608Scan(nAction, pnMin);	
+			BurnYM2608Scan(nAction, pnMin);
 		} else {
 			BurnYM2610Scan(nAction, pnMin);
 		}
+		ZetClose();
 
 		SCAN_VAR(sound_status);
 		SCAN_VAR(soundlatch);

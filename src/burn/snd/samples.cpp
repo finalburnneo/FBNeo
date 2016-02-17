@@ -66,11 +66,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 
 	sample_ptr->data = (UINT8*)malloc(converted_len * 4);
 
-//	if (sample_rate == nBurnSoundRate) // copy!
-//	{
-//		memcpy (sample_ptr->data, ptr, converted_len * 4);
-//	}
-//	else	// up/down sample everything and convert to raw 16 bit stereo
+//	up/down sample everything and convert to raw 16 bit stereo
 	{
 		INT16 *data = (INT16*)sample_ptr->data;
 		INT16 *poin = (INT16*)ptr;
@@ -181,8 +177,6 @@ void BurnSampleSetLoop(INT32 sample, bool dothis)
 
 	sample_ptr = &samples[sample];
 
-	//if (sample_ptr->flags & SAMPLE_NOLOOP) return;
-
 	sample_ptr->loop = (dothis ? 1 : 0);
 }
 
@@ -230,6 +224,11 @@ void BurnSampleReset()
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		BurnSampleStop(i);
+
+		if (sample_ptr->flags & SAMPLE_AUTOLOOP) {
+			bprintf(0, _T("set loop #%X\n"), i);
+			BurnSampleSetLoop(i, true); // this sets the loop flag, from the driver.
+		}
 	}
 }
 
@@ -479,11 +478,11 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	if (pBurnSoundOut == NULL) return;
 
 	INT32 nFirstSample = 0;
-        UINT32 *dest = (UINT32*)pDest;
+	UINT32 *dest = (UINT32*)pDest;
 
-        if (bAddToStream == 0) {
-            memset(dest, 0, pLen * 4); // clear buffer to get rid of unwanted noise at end of short samples - dink
-        }
+	if (bAddToStream == 0) {
+		memset(dest, 0, pLen * 4); // clear buffer
+	}
 
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
@@ -562,10 +561,10 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 
 			if (length <= 0) {
 				if (loop == 0) {
-                                       sample_ptr->playing = 0;
-                                       continue;
+					sample_ptr->playing = 0;
+					continue;
 				}
-                        }
+			}
 
 			data += position;
 			if (playlen > length) playlen = length;

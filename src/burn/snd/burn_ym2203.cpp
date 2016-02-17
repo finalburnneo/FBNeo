@@ -619,6 +619,9 @@ INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback
 			nBurnYM2203SoundRate >>= 1;
 		}
 
+		if (nBurnYM2203SoundRate < nBurnSoundRate)
+			nBurnYM2203SoundRate = nBurnSoundRate;
+
 		BurnYM2203Update = YM2203UpdateResample;
 		nSampleSize = (UINT32)nBurnYM2203SoundRate * (1 << 16) / nBurnSoundRate;
 

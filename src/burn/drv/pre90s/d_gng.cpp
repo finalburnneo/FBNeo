@@ -798,8 +798,10 @@ void DrvGngM6809WriteByte(UINT16 Address, UINT8 Data)
 			return;
 		}
 		
-		case 0x3d01: {
-			// ???
+		case 0x3d01:
+		case 0x3d02:
+		case 0x3d03: {
+			// reset sound cpu, coin counter...
 			return;
 		}
 		

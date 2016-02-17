@@ -806,10 +806,10 @@ static void draw_layer(UINT8 *rambase, UINT8 *gfx, INT32 color_offset, INT32 tra
 
 	INT32 width = (wide) ? 256 : 128;
 
-	INT32 scrollx = scr[0] & ((wide * 16)-1);
+	INT32 scrollx = scr[0] & ((width * 16)-1);
 	INT32 scrolly = (scr[1] + 16) & 0x1ff;
 
-	for (INT32 offs = 0; offs < (width * 2) * 32; offs++)
+	for (INT32 offs = 0; offs < width * 32; offs++)
 	{
 		INT32 sx = (offs / 0x20) * 16;
 		INT32 sy = (offs & 0x1f) * 16;
@@ -1010,8 +1010,8 @@ static INT32 MechattDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_layer(DrvPfRAM1, DrvGfxROM4, 0x300, 0, DrvPfScroll1, 0);
-	if (nBurnLayer & 2) draw_layer(DrvPfRAM0, DrvGfxROM3, 0x200, 1, DrvPfScroll0, 0);
+	if (nBurnLayer & 1) draw_layer(DrvPfRAM1, DrvGfxROM4, 0x300, 0, DrvPfScroll1, 1);
+	if (nBurnLayer & 2) draw_layer(DrvPfRAM0, DrvGfxROM3, 0x200, 1, DrvPfScroll0, 1);
 	if (nSpriteEnable & 2) draw_sprites(DrvSprBuf + 0x0000, 1, 0, 0);
 	if (nBurnLayer & 4) draw_text_layer();
 

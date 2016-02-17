@@ -954,61 +954,80 @@ STD_ROM_PICK(Qsangoku)
 STD_ROM_FN(Qsangoku)
 
 static struct BurnRomInfo BlockRomDesc[] = {
-	{ "ble_05.rom",    0x08000, 0xc12e7f4c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "ble_06.rom",    0x20000, 0xcdb13d55, BRF_ESS | BRF_PRG }, //	 1
-	{ "ble_07.rom",    0x20000, 0x1d114f13, BRF_ESS | BRF_PRG }, //	 2
+	{ "ble_05b.14f",   0x08000, 0xfcdb7885, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "ble_06b.15f",   0x20000, 0xe114ebde, BRF_ESS | BRF_PRG }, //	 1
+	{ "ble_07b.16f",   0x20000, 0x61bef077, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bl_08.rom",     0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
-	{ "bl_09.rom",     0x20000, 0x6fa8c186, BRF_GRA },	     //  4
-	{ "bl_18.rom",     0x20000, 0xc0acafaf, BRF_GRA },	     //  5
-	{ "bl_19.rom",     0x20000, 0x1ae942f5, BRF_GRA },	     //  6
+	{ "bl_08.8h",      0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
+	{ "bl_09.9h",      0x20000, 0x6fa8c186, BRF_GRA },	     //  4
+	{ "bl_18.8j",      0x20000, 0xc0acafaf, BRF_GRA },	     //  5
+	{ "bl_19.9j",      0x20000, 0x1ae942f5, BRF_GRA },	     //  6
 	
-	{ "bl_16.rom",     0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
-	{ "bl_17.rom",     0x20000, 0x5f8cab42, BRF_GRA },	     //  8
+	{ "bl_16.2j",      0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
+	{ "bl_17.3j",      0x20000, 0x5f8cab42, BRF_GRA },	     //  8
 	
-	{ "bl_01.rom",     0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
+	{ "bl_01.2d",      0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
 };
 
 STD_ROM_PICK(Block)
 STD_ROM_FN(Block)
 
+static struct BurnRomInfo Blockr1RomDesc[] = {
+	{ "ble_05a.14f",   0x08000, 0xfa2a4536, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "ble_06a.15f",   0x20000, 0xe114ebde, BRF_ESS | BRF_PRG }, //	 1
+	{ "ble_07a.16f",   0x20000, 0x1d114f13, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "bl_08.8h",      0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
+	{ "bl_09.9h",      0x20000, 0x6fa8c186, BRF_GRA },	     //  4
+	{ "bl_18.8j",      0x20000, 0xc0acafaf, BRF_GRA },	     //  5
+	{ "bl_19.9j",      0x20000, 0x1ae942f5, BRF_GRA },	     //  6
+	
+	{ "bl_16.2j",      0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
+	{ "bl_17.3j",      0x20000, 0x5f8cab42, BRF_GRA },	     //  8
+	
+	{ "bl_01.2d",      0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
+};
+
+STD_ROM_PICK(Blockr1)
+STD_ROM_FN(Blockr1)
+
+static struct BurnRomInfo Blockr2RomDesc[] = {
+	{ "ble_05.14f",    0x08000, 0xc12e7f4c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "ble_06.15f",    0x20000, 0xcdb13d55, BRF_ESS | BRF_PRG }, //	 1
+	{ "ble_07.16f",    0x20000, 0x1d114f13, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "bl_08.8h",      0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
+	{ "bl_09.9h",      0x20000, 0x6fa8c186, BRF_GRA },	     //  4
+	{ "bl_18.8j",      0x20000, 0xc0acafaf, BRF_GRA },	     //  5
+	{ "bl_19.9j",      0x20000, 0x1ae942f5, BRF_GRA },	     //  6
+	
+	{ "bl_16.2j",      0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
+	{ "bl_17.3j",      0x20000, 0x5f8cab42, BRF_GRA },	     //  8
+	
+	{ "bl_01.2d",      0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
+};
+
+STD_ROM_PICK(Blockr2)
+STD_ROM_FN(Blockr2)
+
 static struct BurnRomInfo BlockjRomDesc[] = {
-	{ "blj_05.rom",    0x08000, 0x3b55969a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "ble_06.rom",    0x20000, 0xcdb13d55, BRF_ESS | BRF_PRG }, //	 1
-	{ "blj_07.rom",    0x20000, 0x1723883c, BRF_ESS | BRF_PRG }, //	 2
+	{ "blj_05.14f",    0x08000, 0x3b55969a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "ble_06.15f",    0x20000, 0xcdb13d55, BRF_ESS | BRF_PRG }, //	 1
+	{ "blj_07.16f",    0x20000, 0x1723883c, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bl_08.rom",     0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
-	{ "bl_09.rom",     0x20000, 0x6fa8c186, BRF_GRA },	     //  4
-	{ "bl_18.rom",     0x20000, 0xc0acafaf, BRF_GRA },	     //  5
-	{ "bl_19.rom",     0x20000, 0x1ae942f5, BRF_GRA },	     //  6
+	{ "bl_08.8h",      0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
+	{ "bl_09.9h",      0x20000, 0x6fa8c186, BRF_GRA },	     //  4
+	{ "bl_18.8j",      0x20000, 0xc0acafaf, BRF_GRA },	     //  5
+	{ "bl_19.9j",      0x20000, 0x1ae942f5, BRF_GRA },	     //  6
 	
-	{ "bl_16.rom",     0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
-	{ "bl_17.rom",     0x20000, 0x5f8cab42, BRF_GRA },	     //  8
+	{ "bl_16.2j",      0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
+	{ "bl_17.3j",      0x20000, 0x5f8cab42, BRF_GRA },	     //  8
 	
-	{ "bl_01.rom",     0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
+	{ "bl_01.2d",      0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
 };
 
 STD_ROM_PICK(Blockj)
 STD_ROM_FN(Blockj)
-
-static struct BurnRomInfo BlockjoyRomDesc[] = {
-	{ "ble_05.bin",    0x08000, 0xfa2a4536, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "blf_06.bin",    0x20000, 0xe114ebde, BRF_ESS | BRF_PRG }, //	 1
-	{ "ble_07.rom",    0x20000, 0x1d114f13, BRF_ESS | BRF_PRG }, //	 2
-	
-	{ "bl_08.rom",     0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
-	{ "bl_09.rom",     0x20000, 0x6fa8c186, BRF_GRA },	     //  4
-	{ "bl_18.rom",     0x20000, 0xc0acafaf, BRF_GRA },	     //  5
-	{ "bl_19.rom",     0x20000, 0x1ae942f5, BRF_GRA },	     //  6
-	
-	{ "bl_16.rom",     0x20000, 0xfadcaff7, BRF_GRA },	     //  7	Sprites
-	{ "bl_17.rom",     0x20000, 0x5f8cab42, BRF_GRA },	     //  8
-	
-	{ "bl_01.rom",     0x20000, 0xc2ec2abb, BRF_SND },	     //  9	Samples
-};
-
-STD_ROM_PICK(Blockjoy)
-STD_ROM_FN(Blockjoy)
 
 static struct BurnRomInfo BlockblRomDesc[] = {
 	{ "m7.l6",         0x10000, 0x3b576fd9, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -3355,10 +3374,30 @@ struct BurnDriver BurnDrvQsangoku = {
 
 struct BurnDriver BurnDrvBlock = {
 	"block", NULL, NULL, NULL, "1991",
-	"Block Block (World 910910)\0", NULL, "Capcom", "Miscellaneous",
+	"Block Block (World 911219 Joystick)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, BlockRomInfo, BlockRomName, NULL, NULL, BlockInputInfo, NULL,
+	NULL, BlockRomInfo, BlockRomName, NULL, NULL, BlockjoyInputInfo, NULL,
+	BlockjoyInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x800, 240, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvBlockr1 = {
+	"blockr1", "block", NULL, NULL, "1991",
+	"Block Block (World 911106 Joystick)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, Blockr1RomInfo, Blockr1RomName, NULL, NULL, BlockjoyInputInfo, NULL,
+	BlockjoyInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x800, 240, 384, 3, 4
+};
+
+struct BurnDriver BurnDrvBlockr2 = {
+	"blockr2", "block", NULL, NULL, "1991",
+	"Block Block (World 910910)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
+	NULL, Blockr2RomInfo, Blockr2RomName, NULL, NULL, BlockInputInfo, NULL,
 	BlockInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
@@ -3370,16 +3409,6 @@ struct BurnDriver BurnDrvBlockj = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, BlockjRomInfo, BlockjRomName, NULL, NULL, BlockInputInfo, NULL,
 	BlockInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x800, 240, 384, 3, 4
-};
-
-struct BurnDriver BurnDrvBlockjoy = {
-	"blockjoy", "block", NULL, NULL, "1991",
-	"Block Block (World 911116 Joystick)\0", NULL, "Capcom", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
-	NULL, BlockjoyRomInfo, BlockjoyRomName, NULL, NULL, BlockjoyInputInfo, NULL,
-	BlockjoyInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 

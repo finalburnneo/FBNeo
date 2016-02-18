@@ -962,6 +962,7 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask
 			}
 			break;
 			case 2: { // 64 by 64 block (2 x 2) x 2
+				if (y&0x200) y=-(0x100-(y&0xff)); // wrapping-fix for the really big ending sprite in bbusters, only here because it causes issues for the other sprite sizes -dink
 				scale=source[offs+0]&0x1f;
 				const UINT8 *scale_table_ptr = scale_table+0xa07f+(0x80*scale);
 				INT32 scale_line_count = 0x40-scale;

@@ -583,6 +583,8 @@ static INT32 DrvInit()
 {
 	game_select = 0;
 
+	BurnSetRefreshRate(56.00);
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -1049,7 +1051,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 30;
-	INT32 nCyclesTotal[2] = { 12000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] = { 12000000 / 56, 4000000 / 56 };
 
 	SekOpen(0);
 	ZetOpen(0);

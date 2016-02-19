@@ -213,13 +213,28 @@ STDDIPINFO(Mechatt)
 
 static UINT16 control_3_r()
 {
-	UINT16 retdata;
+	UINT16 retdata = 0;
 	// Dink's method of maddness for dealing with the creepage AKA. the farther the crosshair 
 	// goes in a + direction, the more it creeps away from the crosshair.
-	if (gun_select & 1) {
-		retdata = (BurnGunReturnX(gun_select >> 1) + 0xa0) + (BurnGunReturnX(gun_select >> 1) >> 4);
-	} else {
-		retdata = (BurnGunReturnY(gun_select >> 1) + 0x60) - (BurnGunReturnY(gun_select >> 1) >> 5);
+	// NOTE: each gun needs different offsets _and_ has different creepage. odd?
+	if (gun_select >> 1 == 0) {
+		if (gun_select & 1) { // Player 1
+			retdata = (BurnGunReturnX(gun_select >> 1) + 0xa0) + (BurnGunReturnX(gun_select >> 1) >> 4);
+		} else {
+			retdata = (BurnGunReturnY(gun_select >> 1) + 0x60+0x1a) - (BurnGunReturnY(gun_select >> 1) >> 2);
+		}
+	} else if (gun_select >> 1 == 1) {
+		if (gun_select & 1) { // Player 2
+			retdata = (BurnGunReturnX(gun_select >> 1) + 0xa0-0x1a) - (BurnGunReturnX(gun_select >> 1) >> 3);
+		} else {
+			retdata = (BurnGunReturnY(gun_select >> 1) + 0x60) + (0x40 - (BurnGunReturnY(gun_select >> 1) >> 2));
+		}
+	} else if (gun_select >> 1 == 2) {
+		if (gun_select & 1) { // Player 3
+			retdata = (BurnGunReturnX(gun_select >> 1) + 0xa0-0x8) - (BurnGunReturnX(gun_select >> 1) >> 5);
+		} else {
+			retdata = (BurnGunReturnY(gun_select >> 1) + 0x60+0x1a) + (0x40 - (BurnGunReturnY(gun_select >> 1) >> 2));
+		}
 	}
 
 	return retdata >> 1;
@@ -929,12 +944,15 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask
 		INT32 sprite=source[offs+1];
 		INT32 colour=source[offs+0];
 
-		if (colour==0xf7 && (sprite==0x3fff || sprite==0xffff))
+		if ((colour==0xf7 || colour==0xffff) && (sprite==0x3fff || sprite==0xffff))
 			continue;
 
-		INT32 y=source[offs+3];
-		INT32 x=source[offs+2];
+		INT16 y=source[offs+3];
+		INT16 x=source[offs+2];
 		if (x&0x200) x=-(0x100-(x&0xff));
+
+		if (y > 320) y&=0xff; // fix for ending
+		if (y < -256) y&=0xff; // fix for Zing! attract-mode fullscreen zombie
 
 		colour>>=12;
 		INT32 block=(source[offs+0]>>8)&0x3;
@@ -962,7 +980,6 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask
 			}
 			break;
 			case 2: { // 64 by 64 block (2 x 2) x 2
-				if (y&0x200) y=-(0x100-(y&0xff)); // wrapping-fix for the really big ending sprite in bbusters, only here because it causes issues for the other sprite sizes -dink
 				scale=source[offs+0]&0x1f;
 				const UINT8 *scale_table_ptr = scale_table+0xa07f+(0x80*scale);
 				INT32 scale_line_count = 0x40-scale;

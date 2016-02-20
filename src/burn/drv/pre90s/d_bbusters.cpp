@@ -947,12 +947,15 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask
 		if ((colour==0xf7 || colour==0xffff) && (sprite==0x3fff || sprite==0xffff))
 			continue;
 
-		INT16 y=source[offs+3];
-		INT16 x=source[offs+2];
+		INT32 y=source[offs+3];
+		INT32 x=source[offs+2];
+
 		if (x&0x200) x=-(0x100-(x&0xff));
 
-		if (y > 320) y&=0xff; // fix for ending
-		if (y < -256) y&=0xff; // fix for Zing! attract-mode fullscreen zombie
+		if (bank == 2) { // only act on bbusters second sprite chip, causes issues in mechatt
+			y=(INT16)source[offs+3]; // needs to be casted from an INT16, otherwise the negative values aren't transfered to the INT32 from the UINT16 source
+		    if (y > 320 || y < -256) y&=0xff; // fix for ending & Zing! attract-mode fullscreen zombie
+		}
 
 		colour>>=12;
 		INT32 block=(source[offs+0]>>8)&0x3;

@@ -2021,8 +2021,9 @@ static void RotateLeft(INT32 *v) {
 
 static int dialRotation(INT32 playernum) {
     // p1 = 0, p2 = 1
-    UINT8 player[2] = { 0, 0 };
-                                       // playernum == 0 player 1 playernum == 8 player 2
+	UINT8 player[2] = { 0, 0 };
+	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
+
     if ((playernum != 0) && (playernum != 1)) {
         bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
         return 0;
@@ -2034,18 +2035,21 @@ static int dialRotation(INT32 playernum) {
         player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
     }
 
-    if (player[0] && (RotationTimer() > nRotateTime[playernum]+5)) {
+    if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
         RotateLeft(&nRotate[playernum]);
-        bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
+        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
         nRotateTime[playernum] = RotationTimer();
 
     }
-    if (player[1] && (RotationTimer() > nRotateTime[playernum]+5)) {
+    if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
         RotateRight(&nRotate[playernum]);
-        bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
         nRotateTime[playernum] = RotationTimer();
 
-    }
+	}
+	lastplayer[playernum][0] = player[0];
+	lastplayer[playernum][1] = player[1];
+
     return (nRotate[playernum]);
 }
 
@@ -6396,15 +6400,40 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 
-		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 4)
+		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 4 || game_select == 6)
 			BurnYM3526Scan(nAction, pnMin);
 
-		if (game_select == 1 || game_select == 2 || game_select == 3)
+		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 6)
 			BurnY8950Scan(nAction, pnMin);
 
 		if (game_select == 5)
 			AY8910Scan(nAction, pnMin);
 
+		SCAN_VAR(nRotate);
+		SCAN_VAR(gwar_rot_last);
+		SCAN_VAR(gwar_rot_cnt);
+		SCAN_VAR(sp16_scrolly);
+		SCAN_VAR(sp16_scrollx);
+		SCAN_VAR(sp32_scrolly);
+		SCAN_VAR(sp32_scrollx);
+		SCAN_VAR(bg_scrollx);
+		SCAN_VAR(bg_scrolly);
+		SCAN_VAR(fg_scrollx);
+		SCAN_VAR(fg_scrolly);
+		SCAN_VAR(txt_palette_offset);
+		SCAN_VAR(txt_tile_offset);
+		SCAN_VAR(bg_tile_offset);
+		SCAN_VAR(bg_palette_offset);
+		SCAN_VAR(fg_palette_offset);
+		SCAN_VAR(sprite_split_point);
+		SCAN_VAR(tc16_posy);
+		SCAN_VAR(tc16_posx);
+		SCAN_VAR(tc32_posy);
+		SCAN_VAR(tc32_posx);
+
+		if (nAction & ACB_WRITE) {
+			nRotateTime[0] = nRotateTime[1] = 0;
+		}
 	}
 
 	return 0;

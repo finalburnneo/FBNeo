@@ -15,17 +15,17 @@ static INT32 v25_reset = 0;
 
 // Rom information
 static struct BurnRomInfo batsugunRomDesc[] = {
-	{ "tp030_1a.bin", 0x080000, 0xcb1d4554, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "tp030_1a.bin", 	0x080000, 0xcb1d4554, BRF_ESS | BRF_PRG },  //  0 CPU #0 code
 
-	{ "tp030_3l.bin", 0x100000, 0x3024B793, BRF_GRA },			 //  1 GP9001 #1 Tile data
-	{ "tp030_3h.bin", 0x100000, 0xED75730B, BRF_GRA },			 //  2
-	{ "tp030_4l.bin", 0x100000, 0xFEDB9861, BRF_GRA },			 //  3
-	{ "tp030_4h.bin", 0x100000, 0xD482948B, BRF_GRA },			 //  4
+	{ "tp030_3l.bin", 	0x100000, 0x3024b793, BRF_GRA },			//  1 GP9001 #1 Tile data
+	{ "tp030_3h.bin", 	0x100000, 0xed75730b, BRF_GRA },			//  2
+	{ "tp030_4l.bin", 	0x100000, 0xfedb9861, BRF_GRA },			//  3
+	{ "tp030_4h.bin", 	0x100000, 0xd482948b, BRF_GRA },			//  4
 
-	{ "tp030_5.bin",  0x100000, 0xBCF5BA05, BRF_GRA },			 //  5
-	{ "tp030_6.bin",  0x100000, 0x0666FECD, BRF_GRA },			 //  6
+	{ "tp030_5.bin",  	0x100000, 0xbcf5ba05, BRF_GRA },			//  5
+	{ "tp030_6.bin",  	0x100000, 0x0666fecd, BRF_GRA },			//  6
 
-	{ "tp030_2.bin",  0x040000, 0x276146F5, BRF_SND },			 //  7 ADPCM data
+	{ "tp030_2.bin",  	0x040000, 0x276146f5, BRF_SND },			//  7 ADPCM data
 	
 	{ "tp030_u19_gal16v8b-15.bin", 0x000117, 0xf71669e8, BRF_OPT }, // 8 Logic for mixing output of both GP9001 GFX controllers
 // 	{ "tp030_u19_gal16v8b-15.jed", 0x000991, 0x31be54a2, BRF_OPT },
@@ -35,17 +35,17 @@ STD_ROM_PICK(batsugun)
 STD_ROM_FN(batsugun)
 
 static struct BurnRomInfo batsugnaRomDesc[] = {
-	{ "tp030_01.bin", 0x080000, 0x3873D7DD, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "tp030_01.bin", 	0x080000, 0x3873d7dd, BRF_ESS | BRF_PRG },  //  0 CPU #0 code
 
-	{ "tp030_3l.bin", 0x100000, 0x3024B793, BRF_GRA },			 //  1 GP9001 #1 Tile data
-	{ "tp030_3h.bin", 0x100000, 0xED75730B, BRF_GRA },			 //  2
-	{ "tp030_4l.bin", 0x100000, 0xFEDB9861, BRF_GRA },			 //  3
-	{ "tp030_4h.bin", 0x100000, 0xD482948B, BRF_GRA },			 //  4
+	{ "tp030_3l.bin", 	0x100000, 0x3024b793, BRF_GRA },			//  1 GP9001 #1 Tile data
+	{ "tp030_3h.bin", 	0x100000, 0xed75730b, BRF_GRA },			//  2
+	{ "tp030_4l.bin", 	0x100000, 0xfedb9861, BRF_GRA },			//  3
+	{ "tp030_4h.bin", 	0x100000, 0xd482948b, BRF_GRA },			//  4
 
-	{ "tp030_5.bin",  0x100000, 0xBCF5BA05, BRF_GRA },			 //  5
-	{ "tp030_6.bin",  0x100000, 0x0666FECD, BRF_GRA },			 //  6
+	{ "tp030_5.bin",  	0x100000, 0xbcf5ba05, BRF_GRA },			//  5
+	{ "tp030_6.bin",  	0x100000, 0x0666fecd, BRF_GRA },			//  6
 
-	{ "tp030_2.bin",  0x040000, 0x276146F5, BRF_SND },			 //  7 ADPCM data
+	{ "tp030_2.bin",  	0x040000, 0x276146f5, BRF_SND },			//  7 ADPCM data
 	
 	{ "tp030_u19_gal16v8b-15.bin", 0x000117, 0xf71669e8, BRF_OPT }, // 8 Logic for mixing output of both GP9001 GFX controllers
 };
@@ -54,17 +54,17 @@ STD_ROM_PICK(batsugna)
 STD_ROM_FN(batsugna)
 
 static struct BurnRomInfo batugnspRomDesc[] = {
-	{ "tp030-sp.u69", 0x080000, 0x8072A0CD, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "tp030-sp.u69", 	0x080000, 0x8072a0cd, BRF_ESS | BRF_PRG },  //  0 CPU #0 code
 
-	{ "tp030_3l.bin", 0x100000, 0x3024B793, BRF_GRA },			 //  1 GP9001 #1 Tile data
-	{ "tp030_3h.bin", 0x100000, 0xED75730B, BRF_GRA },			 //  2
-	{ "tp030_4l.bin", 0x100000, 0xFEDB9861, BRF_GRA },			 //  3
-	{ "tp030_4h.bin", 0x100000, 0xD482948B, BRF_GRA },			 //  4
+	{ "tp030_3l.bin", 	0x100000, 0x3024b793, BRF_GRA },			//  1 GP9001 #1 Tile data
+	{ "tp030_3h.bin", 	0x100000, 0xed75730b, BRF_GRA },			//  2
+	{ "tp030_4l.bin", 	0x100000, 0xfedb9861, BRF_GRA },			//  3
+	{ "tp030_4h.bin", 	0x100000, 0xd482948b, BRF_GRA },			//  4
 
-	{ "tp030_5.bin",  0x100000, 0xBCF5BA05, BRF_GRA },			 //  5
-	{ "tp030_6.bin",  0x100000, 0x0666FECD, BRF_GRA },			 //  6
+	{ "tp030_5.bin",  	0x100000, 0xbcf5ba05, BRF_GRA },			//  5
+	{ "tp030_6.bin",  	0x100000, 0x0666fecd, BRF_GRA },			//  6
 
-	{ "tp030_2.bin",  0x040000, 0x276146F5, BRF_SND },			 //  7 ADPCM data
+	{ "tp030_2.bin",  	0x040000, 0x276146f5, BRF_SND },			//  7 ADPCM data
 	
 	{ "tp030_u19_gal16v8b-15.bin", 0x000117, 0xf71669e8, BRF_OPT }, // 8 Logic for mixing output of both GP9001 GFX controllers
 };

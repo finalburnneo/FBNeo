@@ -489,6 +489,22 @@ INLINE void YM_DELTAT_synthesis_from_external_memory(YM_DELTAT *DELTAT)
 			if ( DELTAT->now_addr == (DELTAT->limit<<1) )
 				DELTAT->now_addr = 0;
 
+			if ( DELTAT->now_addr >= (DELTAT->memory_size<<1) ) {
+				/* 2-26-2016 DINK@FBAlpha: solution for crash in gwar when loading a savestate as player death sample is playing. */
+				/* set EOS bit in status register */
+				if(DELTAT->status_set_handler)
+					if(DELTAT->status_change_EOS_bit)
+						(DELTAT->status_set_handler)(DELTAT->status_change_which_chip, DELTAT->status_change_EOS_bit);
+
+				/* clear PCM BUSY bit (reflected in status register) */
+				DELTAT->PCM_BSY = 0;
+
+				DELTAT->portstate = 0;
+				DELTAT->adpcml = 0;
+				DELTAT->prev_acc = 0;
+				return;
+			}
+
 			if ( DELTAT->now_addr == (DELTAT->end<<1) ) {	/* 12-06-2001 JB: corrected comparison. Was > instead of == */
 				if( DELTAT->portstate&0x10 ){
 					/* repeat start */

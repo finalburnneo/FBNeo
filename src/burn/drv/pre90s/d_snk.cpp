@@ -2076,7 +2076,6 @@ static int dialRotation(INT32 playernum) {
 
     if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
 		RotateLeft(&nRotate[playernum]);
-		nRotateTarget[playernum] = nRotate[playernum];
         //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
 		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
@@ -2084,7 +2083,6 @@ static int dialRotation(INT32 playernum) {
 
 	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
         RotateRight(&nRotate[playernum]);
-		nRotateTarget[playernum] = nRotate[playernum];
         //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
         nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
@@ -4224,11 +4222,11 @@ static INT32 BermudatInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3526(4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
 	BurnTimerAttachZetY8950(4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
@@ -4286,11 +4284,11 @@ static INT32 GwarInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3526(4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
 	BurnTimerAttachZetY8950(4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
@@ -4348,11 +4346,11 @@ static INT32 GwaraInit()
 	ZetSetReadHandler(ym3526_y8950_sound_read);
 	ZetClose();
 
-	BurnYM3526Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3526(4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
-	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler, &DrvSynchroniseStream, 1);
+	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
 	BurnTimerAttachZetY8950(4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
@@ -6216,7 +6214,7 @@ static INT32 GwarFrame()
 		}
 	}
 
-	INT32 nInterleave = 800;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	INT32 nSegment = 0;
@@ -6226,19 +6224,17 @@ static INT32 GwarFrame()
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		nSegment = ZetTotalCycles();
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240/*(nInterleave - 1)*/) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateYM3526(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		BurnTimerUpdateYM3526((i + 1) * nCyclesTotal[1] / nInterleave);//nSegment);
+		if (i == 240/*(nInterleave - 1)*/) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		if ((i&7)==7) { // update 100x per frame
-			ZetOpen(2);
-			BurnTimerUpdateY8950(nSegment);
-			ZetClose();
-		}
+		ZetOpen(2);
+		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[2] / nInterleave);//nSegment);
+		ZetClose();
 	}
 
 	ZetOpen(1);
@@ -6578,9 +6574,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 5)
 			AY8910Scan(nAction, pnMin);
 
-		SCAN_VAR(nRotate);
-		SCAN_VAR(gwar_rot_last);
-		SCAN_VAR(gwar_rot_cnt);
 		SCAN_VAR(sp16_scrolly);
 		SCAN_VAR(sp16_scrollx);
 		SCAN_VAR(sp32_scrolly);
@@ -6599,6 +6592,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tc16_posx);
 		SCAN_VAR(tc32_posy);
 		SCAN_VAR(tc32_posx);
+
+		SCAN_VAR(nRotate);
+		SCAN_VAR(nRotateTarget);
+		SCAN_VAR(nRotateTry);
+		SCAN_VAR(gwar_rot_last);
+		SCAN_VAR(gwar_rot_cnt);
 
 		if (nAction & ACB_WRITE) {
 			nRotateTime[0] = nRotateTime[1] = 0;

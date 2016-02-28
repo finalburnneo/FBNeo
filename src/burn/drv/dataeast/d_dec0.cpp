@@ -85,11 +85,6 @@ static void SlyspySetProtectionMap(UINT8 Type);
 static INT32 DrvCharPalOffset = 0;
 static INT32 DrvSpritePalOffset = 256;
 
-/*static UINT8 DrvMidresFakeInput[4]  = {0, 0, 0, 0};
-//static UINT8 DrvMidresAnalogInput[2];
-static int HbarrelRotate[2]         = {0, 0};
-static UINT32 HbarrelRotateTime[2]  = {0, 0}; */
-
 // Rotation stuff! -dink
 static UINT8  DrvFakeInput[6] = {0, 0, 0, 0, 0, 0};
 static INT32  nRotate[2]      = {0, 0};
@@ -97,7 +92,6 @@ static INT32  nRotateTarget[2]      = {0, 0};
 static INT32  nRotateTry[2]      = {0, 0};
 static UINT32 nRotateTime[2]  = {0, 0};
 static UINT8  game_rotates = 0;
-
 
 static INT32 HbarrelI8751_Level=0, HbarrelI8751_State=0;
 
@@ -111,30 +105,29 @@ static INT32 Dec0Game = 0;
 
 static struct BurnInputInfo Dec0InputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 start"  },
-
-	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
-	{"Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
-	{"Fire 4"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 fire 4" },
-	{"Fire 5"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 fire 5" },
+	{"P1 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
+	{"P1 Start"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
+	{"P1 Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"P1 Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"P1 Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
+	{"P1 Fire 4"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 fire 4" },
+	{"P1 Fire 5"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 fire 5" },
 	
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
-	{"Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
-	{"Fire 4 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 fire 4" },
-	{"Fire 5 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 fire 5" },
+	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 coin"   },
+	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 start"  },
+	{"P2 Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"P2 Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
+	{"P2 Fire 4 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 fire 4" },
+	{"P2 Fire 5 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 fire 5" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 6, "service"   },
@@ -146,26 +139,25 @@ STDINPUTINFO(Dec0)
 
 static struct BurnInputInfo Dec1InputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
-
-	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
-	{"Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
+	{"P1 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
+	{"P1 Start"             , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
+	{"P1 Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"P1 Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"P1 Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
 	
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
-	{"Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
+	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
+	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
+	{"P2 Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"P2 Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 2, "service"   },
@@ -177,41 +169,29 @@ STDINPUTINFO(Dec1)
 
 static struct BurnInputInfo HbarrelInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 start"  },
-
-	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
-//	{"Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
-//	{"Fire 4"            , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 fire 4" },
-//2	{"Rotate Left"       , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 rotate left" },
-//2	{"Rotate Right"      , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 rotate right" },
-//2	{"Fire 5"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 fire 5" },
-	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
-	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
-	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 4, "p1 coin"   },
+	{"P1 Start"             , BIT_DIGITAL  , DrvInputPort2 + 2, "p1 start"  },
+	{"P1 Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"P1 Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0,  "p1 rotate left" },
+	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1,  "p1 rotate right" },
+	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 	
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
-//	{"Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
-//	{"Fire 4 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 fire 4" },
-//	{"Fire 5 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 fire 5" },
-//2	{"Rotate Left (Cocktail)", BIT_DIGITAL  , DrvInputPort1 + 6, "p2 rotate left" },
-//2	{"Rotate Right (Cocktail)", BIT_DIGITAL  , DrvInputPort1 + 7, "p2 rotate right" },
-//2	{"Fire 5 (Cocktail)" , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 fire 5" },
-	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
-	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
-	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 5, "p2 coin"   },
+	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort2 + 3, "p2 start"  },
+	{"P2 Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"P2 Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 2,  "p2 rotate left" },
+	{"P2 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 3,  "p2 rotate right" },
+	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 6, "service"   },
@@ -223,36 +203,31 @@ STDINPUTINFO(Hbarrel)
 
 static struct BurnInputInfo MidresInputList[] =
 {
-	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
-	{"Start 1"           , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
-	{"Coin 2"            , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
-	{"Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
-
-	{"Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
-	{"Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
-	{"Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
-	{"Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
-	{"Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
-	{"Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
-	{"Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
-//2	{"Rotate Left"       , BIT_DIGITAL  , DrvMidresFakeInput + 0, "p1 rotate left" },
-//2	{"Rotate Right"      , BIT_DIGITAL  , DrvMidresFakeInput + 1, "p1 rotate right" },
-	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0, "p1 rotate left" },
-	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1, "p1 rotate right" },
-	{"P1 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 4, "p1 fire 3" },
+	{"P1 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
+	{"P1 Start"             , BIT_DIGITAL  , DrvInputPort0 + 7, "p1 start"  },
+	{"P1 Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{"P1 Down"              , BIT_DIGITAL  , DrvInputPort0 + 1, "p1 down"   },
+	{"P1 Left"              , BIT_DIGITAL  , DrvInputPort0 + 2, "p1 left"   },
+	{"P1 Right"             , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 right"  },
+	{"P1 Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 fire 1" },
+	{"P1 Fire 2"            , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 fire 2" },
+	{"P1 Fire 3"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 fire 3" },
+	{"P1 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 0,  "p1 rotate left" },
+	{"P1 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 1,  "p1 rotate right" },
+	{"P1 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 4,  "p1 fire 3" },
 	
-	{"Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
-	{"Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
-	{"Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
-	{"Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
-	{"Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
-	{"Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
-	{"Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
-//2	{"Rotate Left (Cocktail)"  , BIT_DIGITAL  , DrvMidresFakeInput + 2, "p2 rotate left" },
-//2	{"Rotate Right (Cocktail)" , BIT_DIGITAL  , DrvMidresFakeInput + 3, "p2 rotate right" },
-	{"P2 Rotate Left"  , BIT_DIGITAL  , DrvFakeInput + 2, "p2 rotate left" },
-	{"P2 Rotate Right" , BIT_DIGITAL  , DrvFakeInput + 3, "p2 rotate right" },
-	{"P2 Button 3 (rotate)"      , BIT_DIGITAL  , DrvFakeInput + 5, "p2 fire 3" },
+	{"P2 Coin"              , BIT_DIGITAL  , DrvInputPort2 + 1, "p2 coin"   },
+	{"P2 Start"             , BIT_DIGITAL  , DrvInputPort1 + 7, "p2 start"  },
+	{"P2 Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{"P2 Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
+	{"P2 Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 2, "p2 left"   },
+	{"P2 Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 3, "p2 right"  },
+	{"P2 Fire 1 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 fire 1" },
+	{"P2 Fire 2 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 fire 2" },
+	{"P2 Fire 3 (Cocktail)" , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 fire 3" },
+	{"P2 Rotate Left"       , BIT_DIGITAL  , DrvFakeInput + 2,  "p2 rotate left" },
+	{"P2 Rotate Right"      , BIT_DIGITAL  , DrvFakeInput + 3,  "p2 rotate right" },
+	{"P2 Button 3 (rotate)" , BIT_DIGITAL  , DrvFakeInput + 5,  "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL  , DrvInputPort2 + 2, "service"   },
@@ -1922,11 +1897,6 @@ static INT32 DrvDoReset()
 	BurnYM2203Reset();
 	MSM6295Reset(0);
 
-//  HbarrelRotate[0] = HbarrelRotate[1] = 0; // start out pointing straight in Heavy Barrel (0=up)
-//  if (strstr(BurnDrvGetTextA(DRV_NAME), "midres"))
-//  	HbarrelRotate[0] = HbarrelRotate[1] = 2; // start out pointing straight in Midnight Resistance (2=right)
-//  HbarrelRotateTime[0] = HbarrelRotateTime[1] = 0;
-
 	HbarrelI8751_State=0; HbarrelI8751_Level=0;
 
 	i8751RetVal = 0;
@@ -1935,7 +1905,6 @@ static INT32 DrvDoReset()
 	DrvFlipScreen = 0;
 	DrvPriority = 0;
 	memset(DrvTileRamBank, 0, 3);
-//	DrvMidresAnalogInput[0] = DrvMidresAnalogInput[1] = 0x0b;
 
 	RotateReset();
 	
@@ -2192,83 +2161,6 @@ static void deco_bac06_pf_data_w(INT32 Layer, UINT16 *RAM, INT32 Offset, UINT16 
 	RAM[Offset] += Data;
 }
 
-#if 0
-static UINT32 RotationTimer(void) {
-    return nCurrentFrame;
-}
-
-static void RotateRight(int *v) {
-    (*v)--;
-    if (*v < 0) *v = 11;
-}
-
-static void RotateLeft(int *v) {
-    (*v)++;
-    if (*v > 11) *v = 0;
-}
-
-static int HbarrelRotation(int addy) { // 0 - 11 (12 rotation points)
-    UINT8 player[2] = { 0, 0 };
-                                       // addy == 0 player 1 addy == 8 player 2
-    if ((addy != 0) && (addy != 8)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), addy);
-        return 0;
-    }
-    if (addy == 0) {
-        player[0] = DrvInputPort0[6]; player[1] = DrvInputPort0[7];
-    }
-    if (addy == 8) {
-        player[0] = DrvInputPort1[6]; player[1] = DrvInputPort1[7];
-        addy=1;
-    }
-
-    if (player[0] && (RotationTimer() > HbarrelRotateTime[addy]+5)) {
-        RotateLeft(&HbarrelRotate[addy]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), addy+1, HbarrelRotate[addy]);
-        HbarrelRotateTime[addy] = RotationTimer();
-
-    }
-    if (player[1] && (RotationTimer() > HbarrelRotateTime[addy]+5)) {
-        RotateRight(&HbarrelRotate[addy]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), addy+1, HbarrelRotate[addy]);
-        HbarrelRotateTime[addy] = RotationTimer();
-
-    }
-    return ~(1 << HbarrelRotate[addy]);
-}
-
-static int MidresRotation(int addy) {
-    // p1 == 4 p2 == 6
-    UINT8 player[2] = { 0, 0 };
-                                       // addy == 0 player 1 addy == 8 player 2
-    if ((addy != 4) && (addy != 6)) {
-        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), addy);
-        return 0;
-    }
-    if (addy == 4) {
-        addy=0;
-        player[0] = DrvMidresFakeInput[0]; player[1] = DrvMidresFakeInput[1];
-    }
-    if (addy == 6) {
-        player[0] = DrvMidresFakeInput[2]; player[1] = DrvMidresFakeInput[3];
-        addy=1;
-    }
-
-    if (player[0] && (RotationTimer() > HbarrelRotateTime[addy]+5)) {
-        RotateLeft(&HbarrelRotate[addy]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), addy+1, HbarrelRotate[addy]);
-        HbarrelRotateTime[addy] = RotationTimer();
-
-    }
-    if (player[1] && (RotationTimer() > HbarrelRotateTime[addy]+5)) {
-        RotateRight(&HbarrelRotate[addy]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), addy+1, HbarrelRotate[addy]);
-        HbarrelRotateTime[addy] = RotationTimer();
-
-    }
-    return ~(1 << HbarrelRotate[addy]);
-}
-#endif
 // Rotation-handler code
 
 static void RotateReset() {
@@ -2343,7 +2235,6 @@ static int dialRotation(INT32 playernum) {
 	lastplayer[playernum][0] = player[0];
 	lastplayer[playernum][1] = player[1];
 
-	//return (nRotate[playernum]);
 	return ~(1 << nRotate[playernum]);
 }
 
@@ -2395,8 +2286,6 @@ static INT32 get_distance(INT32 from, INT32 to) {
 static void RotateDoTick() {
 	// since the game only allows for 1 rotation every other frame, we have to
 	// do this.
-	//bprintf(0, _T("target %X mempos %X nRotate %X.\n"), nRotateTarget[0], *rotate_gunpos[0] & 0xff, nRotate[0]);
-
 	if (nCurrentFrame&1) return;
 
 	for (INT32 i = 0; i < 2; i++) {
@@ -2425,8 +2314,6 @@ static void SuperJoy2Rotate() {
 			DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
 			nRotateTry[i] = 0;
 		}
-
-		//DrvInputs[1 + i] = (DrvInputs[1 + i] & 0x0f) + (dialRotation(i) << 4);
 	}
 
 	RotateDoTick();
@@ -2459,9 +2346,6 @@ UINT8 __fastcall Dec068KReadByte(UINT32 a)
 	
 	if (a >= 0x300000 && a <= 0x30001f) {
 		dialRotation((a - 0x300000) / 8);
-			//return HbarrelRotation(a - 0x300000);
-			// rotary_r
-			//return 0;
 	}
 	
 	switch (a) {
@@ -2563,10 +2447,7 @@ UINT16 __fastcall Dec068KReadWord(UINT32 a)
 	}
 	
 	if (a >= 0x300000 && a <= 0x30001f) {
-		//return HbarrelRotation(a - 0x300000);
 		return dialRotation((a - 0x300000) / 8);
-		// rotary_r
-		//return 0;
 	}
 	
 	switch (a) {
@@ -3492,16 +3373,10 @@ UINT16 __fastcall Midres68KReadWord(UINT32 a)
 		
 		case 0x180004: {
 			return dialRotation(0);
-			//return MidresRotation(a - 0x180000);
-			//UINT8 Temp = DrvMidresAnalogInput[0] >> 4;
-			//return ~(1 << Temp);
 		}
 		
 		case 0x180006: {
 			return dialRotation(1);
-			//return MidresRotation(a - 0x180000);
-			//UINT8 Temp = DrvMidresAnalogInput[1] >> 4;
-			//return ~(1 << Temp);
 		}
 		
 		case 0x180008: {
@@ -3746,7 +3621,7 @@ static INT32 Dec0MachineInit()
 {
 	INT32 nLen;
 	
-	BurnSetRefreshRate(57.392103);
+	BurnSetRefreshRate(57.41);
 	
 	Mem = NULL;
 	MemIndex();
@@ -4243,7 +4118,7 @@ static INT32 SlyspyDrvInit()
 {
 	INT32 nLen;
 	
-	BurnSetRefreshRate(57.392103);
+	BurnSetRefreshRate(57.41);
 
 	Mem = NULL;
 	MemIndex();
@@ -4417,7 +4292,7 @@ static INT32 MidresInit()
 {
 	INT32 nRet = 0, nLen;
 	
-	BurnSetRefreshRate(57.392103);
+	BurnSetRefreshRate(57.41);
 
 	Mem = NULL;
 	MemIndex();
@@ -5295,7 +5170,7 @@ static void SlyspyDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 264;
+	INT32 nInterleave = 272;
 
 	if (DrvReset) BaddudesDoReset();
 
@@ -5305,8 +5180,8 @@ static INT32 DrvFrame()
 		SuperJoy2Rotate();
 	}
 
-	nCyclesTotal[0] = (INT32)((double)10000000 / 57.392103);
-	nCyclesTotal[1] = (INT32)((double)1500000 / 57.392103);
+	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
+	nCyclesTotal[1] = (INT32)((double)1500000 / 57.41);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	SekNewFrame();
@@ -5319,7 +5194,7 @@ static INT32 DrvFrame()
 		INT32 nCurrentCPU;
 
 		nCurrentCPU = 0;
-		BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
@@ -5327,7 +5202,7 @@ static INT32 DrvFrame()
 		}
 
 		nCurrentCPU = 1;
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -5355,9 +5230,9 @@ static INT32 RobocopFrame()
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = (INT32)((double)10000000 / 57.392103);
-	nCyclesTotal[1] = (INT32)((double)1500000 / 57.392103);
-	nCyclesTotal[2] = (INT32)((double)1342329 / 57.392103);
+	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
+	nCyclesTotal[1] = (INT32)((double)1500000 / 57.41);
+	nCyclesTotal[2] = (INT32)((double)1342329 / 57.41);
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 	
 	SekNewFrame();
@@ -5371,7 +5246,7 @@ static INT32 RobocopFrame()
 		INT32 nCurrentCPU, nNext, nCyclesSegment;
 
 		nCurrentCPU = 0;
-		BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
@@ -5385,7 +5260,7 @@ static INT32 RobocopFrame()
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 
 		nCurrentCPU = 1;
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -5408,7 +5283,7 @@ static INT32 RobocopFrame()
 
 static INT32 Dec1Frame()
 {
-	INT32 nInterleave = 264;
+	INT32 nInterleave = 272;
 
 	if (DrvReset) SlyspyDoReset();
 
@@ -5418,8 +5293,8 @@ static INT32 Dec1Frame()
 		SuperJoy2Rotate();
 	}
 
-	nCyclesTotal[0] = (INT32)((double)10000000 / 57.392103);
-	nCyclesTotal[1] = (INT32)((double)2000000 / 57.392103);
+	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
+	nCyclesTotal[1] = (INT32)((double)2000000 / 57.41);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	SekNewFrame();
@@ -5432,7 +5307,7 @@ static INT32 Dec1Frame()
 		INT32 nCurrentCPU;
 
 		nCurrentCPU = 0;
-		BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
@@ -5440,7 +5315,7 @@ static INT32 Dec1Frame()
 		}
 
 		nCurrentCPU = 1;
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 	}
 	
 	BurnTimerEndFrame(nCyclesTotal[0]);

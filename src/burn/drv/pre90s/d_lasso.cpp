@@ -1018,6 +1018,8 @@ static UINT32 color_calculate(UINT8 d)
 
 static void wwjgtinPaletteUpdate()
 {
+	if (game_select != 2) return; // only for wwjgtin!
+
 	DrvPalette[0x3d] = color_calculate(last_colors[0]);
 	DrvPalette[0x3e] = color_calculate(last_colors[1]);
 	DrvPalette[0x3f] = color_calculate(last_colors[2]);
@@ -1042,7 +1044,7 @@ static void LassoPaletteInit()
 		DrvPalette[i] = color_calculate(DrvColPROM[i]);
 	}
 
-	if (game_select != 2) // wwjgtin
+	if (game_select == 2) // wwjgtin
 		wwjgtinPaletteUpdate();
 }
 

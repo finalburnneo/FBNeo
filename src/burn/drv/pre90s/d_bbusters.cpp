@@ -502,6 +502,8 @@ static INT32 DrvDoReset()
 	}
 	ZetClose();
 
+	HiscoreReset();
+
 	sound_status = 0;
 	soundlatch = 0;
 	gun_select = 0;
@@ -1192,7 +1194,7 @@ struct BurnDriver BurnDrvBbusters = {
 	"bbusters", NULL, NULL, NULL, "1989",
 	"Beast Busters (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bbustersRomInfo, bbustersRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
@@ -1245,7 +1247,7 @@ struct BurnDriver BurnDrvMechatt = {
 	"mechatt", NULL, "ym2608", NULL, "1989",
 	"Mechanized Attack (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattRomInfo, mechattRomName, NULL, NULL, MechattInputInfo, MechattDIPInfo,
 	MechattInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3

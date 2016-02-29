@@ -274,6 +274,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 
+	HiscoreReset();
+
 	flipscreen = 0;
 	nmi_enable = 0;
 	soundlatch = 0;
@@ -698,7 +700,7 @@ struct BurnDriver BurnDrvJoyfulr = {
 	"joyfulr", NULL, NULL, NULL, "1983",
 	"Joyful Road (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, joyfulrRomInfo, joyfulrRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 320, 3, 4
@@ -735,7 +737,7 @@ struct BurnDriver BurnDrvMnchmobl = {
 	"mnchmobl", "joyfulr", NULL, NULL, "1983",
 	"Munch Mobile (US)\0", NULL, "SNK (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 4, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, mnchmoblRomInfo, mnchmoblRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	240, 320, 3, 4

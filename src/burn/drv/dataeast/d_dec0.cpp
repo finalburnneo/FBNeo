@@ -86,11 +86,12 @@ static INT32 DrvCharPalOffset = 0;
 static INT32 DrvSpritePalOffset = 256;
 
 // Rotation stuff! -dink
-static UINT8  DrvFakeInput[6] = {0, 0, 0, 0, 0, 0};
-static INT32  nRotate[2]      = {0, 0};
+static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
+static UINT8  nRotateHoldInput[2]   = {0, 0};
+static INT32  nRotate[2]            = {0, 0};
 static INT32  nRotateTarget[2]      = {0, 0};
-static INT32  nRotateTry[2]      = {0, 0};
-static UINT32 nRotateTime[2]  = {0, 0};
+static INT32  nRotateTry[2]         = {0, 0};
+static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
 static INT32 HbarrelI8751_Level=0, HbarrelI8751_State=0;
@@ -102,6 +103,7 @@ static INT32 Dec0Game = 0;
 #define DEC0_GAME_BADDUDES	1
 #define DEC0_GAME_HBARREL	2
 #define DEC0_GAME_BIRDTRY	3
+#define DEC1_GAME_MIDRES    4
 
 static struct BurnInputInfo Dec0InputList[] =
 {
@@ -1837,7 +1839,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
 
-	Drv68KRom              = Next; Next += 0x60000;
+	Drv68KRom              = Next; Next += 0x80000;
 	DrvM6502Rom            = Next; Next += 0x08000;
 	DrvH6280Rom            = Next; Next += 0x10000;
 	MSM6295ROM             = Next; Next += 0x40000;
@@ -1850,17 +1852,17 @@ static INT32 MemIndex()
 	DrvCharRam             = Next; Next += 0x04000;
 	DrvCharCtrl0Ram        = Next; Next += 0x00008;
 	DrvCharCtrl1Ram        = Next; Next += 0x00008;
-	DrvCharColScrollRam    = Next; Next += 0x00080;
+	DrvCharColScrollRam    = Next; Next += 0x000ff;
 	DrvCharRowScrollRam    = Next; Next += 0x00400;
 	DrvVideo1Ram           = Next; Next += 0x04000;
 	DrvVideo1Ctrl0Ram      = Next; Next += 0x00008;
 	DrvVideo1Ctrl1Ram      = Next; Next += 0x00008;
-	DrvVideo1ColScrollRam  = Next; Next += 0x00080;
+	DrvVideo1ColScrollRam  = Next; Next += 0x000ff;
 	DrvVideo1RowScrollRam  = Next; Next += 0x00400;
 	DrvVideo2Ram           = Next; Next += 0x04000;
 	DrvVideo2Ctrl0Ram      = Next; Next += 0x00008;
 	DrvVideo2Ctrl1Ram      = Next; Next += 0x00008;
-	DrvVideo2ColScrollRam  = Next; Next += 0x00080;
+	DrvVideo2ColScrollRam  = Next; Next += 0x000ff;
 	DrvVideo2RowScrollRam  = Next; Next += 0x00400;
 	DrvPaletteRam          = Next; Next += 0x00800;
 	DrvPalette2Ram         = Next; Next += 0x00800;
@@ -2172,6 +2174,7 @@ static void RotateReset() {
 			nRotate[0] = nRotate[1] = 2; // start out pointing straight in Midnight Resistance (2=right)
 		nRotateTarget[playernum] = -1;
 		nRotateTime[playernum] = 0;
+		nRotateHoldInput[0] = nRotateHoldInput[1] = 0;
 	}
 }
 
@@ -2313,8 +2316,13 @@ static void SuperJoy2Rotate() {
 			if (rot != 0xff) {
 				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
 			}
-			DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
+			//DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
+			DrvInput[i] = (DrvInput[i] & ~0xf) | (nRotateHoldInput[i] & 0xf); // for midnight resistance! be able to duck + change direction of gun.
 			nRotateTry[i] = 0;
+		} else { // cache joystick UDLR if the rotate button isn't pressed.
+			// This feature is for Midnight Resistance, if you are crawling on the
+			// ground and need to rotate your gun WITHOUT getting up.
+			nRotateHoldInput[i] = DrvInput[i];
 		}
 	}
 
@@ -2326,7 +2334,7 @@ static void SuperJoy2Rotate() {
 
 // Normal hardware cpu memory handlers
 
-UINT8 __fastcall Dec068KReadByte(UINT32 a)
+static UINT8 __fastcall Dec068KReadByte(UINT32 a)
 {
 	if (a >= 0x244000 && a <= 0x245fff) {
 		INT32 Offset = a - 0x244000;
@@ -2379,7 +2387,7 @@ UINT8 __fastcall Dec068KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x244000 && a <= 0x245fff) {
 		INT32 Offset = a - 0x244000;
@@ -2425,7 +2433,7 @@ void __fastcall Dec068KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Dec068KReadWord(UINT32 a)
+static UINT16 __fastcall Dec068KReadWord(UINT32 a)
 {
 	if (a >= 0x244000 && a <= 0x245fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
@@ -2477,7 +2485,7 @@ UINT16 __fastcall Dec068KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x244000 && a <= 0x245fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
@@ -2622,7 +2630,7 @@ void __fastcall Dec068KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 Dec0SoundReadByte(UINT16 a)
+static UINT8 Dec0SoundReadByte(UINT16 a)
 {
 	switch (a) {
 		case 0x3000: {
@@ -2641,7 +2649,7 @@ UINT8 Dec0SoundReadByte(UINT16 a)
 	return 0;
 }
 
-void Dec0SoundWriteByte(UINT16 a, UINT8 d)
+static void Dec0SoundWriteByte(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0x0800: {
@@ -2677,31 +2685,31 @@ void Dec0SoundWriteByte(UINT16 a, UINT8 d)
 
 // Hippodrome hardware cpu memory handlers
 
-UINT8 __fastcall HippodrmShared68KReadByte(UINT32 a)
+static UINT8 __fastcall HippodrmShared68KReadByte(UINT32 a)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	return DrvSharedRam[Offset];
 }
 
-void __fastcall HippodrmShared68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall HippodrmShared68KWriteByte(UINT32 a, UINT8 d)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d;
 }
 
-UINT16 __fastcall HippodrmShared68KReadWord(UINT32 a)
+static UINT16 __fastcall HippodrmShared68KReadWord(UINT32 a)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	return DrvSharedRam[Offset];
 }
 
-void __fastcall HippodrmShared68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall HippodrmShared68KWriteWord(UINT32 a, UINT16 d)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d & 0xff;
 }
 
-UINT8 HippodrmH6280ReadProg(UINT32 Address)
+static UINT8 HippodrmH6280ReadProg(UINT32 Address)
 {
 	if (Address >= 0x1a1000 && Address <= 0x1a17ff) {
 		INT32 Offset = (Address - 0x1a1000) ^ 1;
@@ -2723,7 +2731,7 @@ UINT8 HippodrmH6280ReadProg(UINT32 Address)
 	return 0;
 }
 
-void HippodrmH6280WriteProg(UINT32 Address, UINT8 Data)
+static void HippodrmH6280WriteProg(UINT32 Address, UINT8 Data)
 {
 	if (Address >= 0x1a0000 && Address <= 0x1a0007) {
 		INT32 Offset = Address - 0x1a0000;
@@ -2774,13 +2782,13 @@ void HippodrmH6280WriteProg(UINT32 Address, UINT8 Data)
 
 // Robocop hardware cpu memory handlers
 
-UINT8 __fastcall RobocopShared68KReadByte(UINT32 a)
+static UINT8 __fastcall RobocopShared68KReadByte(UINT32 a)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	return DrvSharedRam[Offset];
 }
 
-void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d;
@@ -2789,13 +2797,13 @@ void __fastcall RobocopShared68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall RobocopShared68KReadWord(UINT32 a)
+static UINT16 __fastcall RobocopShared68KReadWord(UINT32 a)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	return DrvSharedRam[Offset];
 }
 
-void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
 {
 	INT32 Offset = (a - 0x180000) >> 1;
 	DrvSharedRam[Offset] = d & 0xff;
@@ -2804,14 +2812,14 @@ void __fastcall RobocopShared68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 RobocopH6280ReadProg(UINT32 Address)
+static UINT8 RobocopH6280ReadProg(UINT32 Address)
 {
 	bprintf(PRINT_NORMAL, _T("H6280 Read Prog %x\n"), Address);
 	
 	return 0;
 }
 
-void RobocopH6280WriteProg(UINT32 Address, UINT8 Data)
+static void RobocopH6280WriteProg(UINT32 Address, UINT8 Data)
 {
 	if (Address >= 0x1ff400 && Address <= 0x1ff403) {
 		h6280_irq_status_w(Address - 0x1ff400, Data);
@@ -2823,7 +2831,7 @@ void RobocopH6280WriteProg(UINT32 Address, UINT8 Data)
 
 // Sly Spy hardware cpu memory handlers
 
-UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
+static UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 {
 	if (a >= 0x31c000 && a <= 0x31c00f) {
 		INT32 Offset = (a - 0x31c000) >> 1;
@@ -2867,7 +2875,7 @@ UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x300000:
@@ -2915,7 +2923,7 @@ void __fastcall Slyspy68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
+static UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
 {
 	if (a >= 0x31c000 && a <= 0x31c00f) {
 		INT32 Offset = (a - 0x31c000) >> 1;
@@ -2958,7 +2966,7 @@ UINT16 __fastcall Slyspy68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x31c000 && a <= 0x31c00f) {
 		// nop
@@ -3011,7 +3019,7 @@ void __fastcall Slyspy68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x240000:
@@ -3076,7 +3084,7 @@ void __fastcall SlyspyProt68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall SlyspyProt68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x240000:
@@ -3188,7 +3196,7 @@ static void SlyspySetProtectionMap(UINT8 Type)
 
 }
 
-UINT8 SlyspyH6280ReadProg(UINT32 Address)
+static UINT8 SlyspyH6280ReadProg(UINT32 Address)
 {
 	switch (Address) {
 		case 0x0a0000: {
@@ -3210,7 +3218,7 @@ UINT8 SlyspyH6280ReadProg(UINT32 Address)
 	return 0;
 }
 
-void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
+static void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 {
 	switch (Address) {
 		case 0x090000: {
@@ -3249,8 +3257,9 @@ void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 
 // Midnight Resistance hardware cpu memory handlers
 
-UINT8 __fastcall Midres68KReadByte(UINT32 a)
+static UINT8 __fastcall Midres68KReadByte(UINT32 a)
 {
+#if 0
 	if (a >= 0x220000 && a <= 0x2207ff) {
 		INT32 Offset = a - 0x220000;
 		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
@@ -3275,22 +3284,23 @@ UINT8 __fastcall Midres68KReadByte(UINT32 a)
 		if (DrvTileRamBank[0] & 0x01) Offset += 0x2000;
 		return DrvCharRam[Offset ^ 1];
 	}
-	
+#endif
 	switch (a) {
 		case 0x180009: {
 			return (0xf7 - DrvInput[2]) | ((DrvVBlank) ? 0x08 : 0x00);
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("68K Read byte => %06X\n"), a);
+			bprintf(PRINT_NORMAL, _T("68K Read byte => %06X PC: %X\n"), a, SekGetPC(-1));
 		}
 	}
 	
 	return 0;
 }
 
-void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
 {
+#if 0
 	if (a >= 0x220000 && a <= 0x2207ff) {
 		INT32 Offset = a - 0x220000;
 		if (DrvTileRamBank[1] & 0x01) Offset += 0x2000;
@@ -3319,7 +3329,7 @@ void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
 		DrvCharRam[Offset ^ 1] = d;
 		return;
 	}
-	
+#endif
 	switch (a) {
 		case 0x1a0001: {
 			DrvSoundLatch = d;
@@ -3328,17 +3338,18 @@ void __fastcall Midres68KWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("68K Write byte => %06X, %02X\n"), a, d);
+			bprintf(PRINT_NORMAL, _T("68K Write byte => %06X, %02X PC: %X\n"), a, d, SekGetPC(-1));
 		}
 	}
 }
 
-UINT16 __fastcall Midres68KReadWord(UINT32 a)
+static UINT16 __fastcall Midres68KReadWord(UINT32 a)
 {
+#if 0
 	if (a >= 0x220000 && a <= 0x2207ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220000) >> 1;
-		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
@@ -3346,24 +3357,24 @@ UINT16 __fastcall Midres68KReadWord(UINT32 a)
 		// mirror
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220800) >> 1;
-		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x2a0000 && a <= 0x2a07ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
 		INT32 Offset = (a - 0x2a0000) >> 1;
-		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[2] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x320000 && a <= 0x321fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
 		INT32 Offset = (a - 0x320000) >> 1;
-		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[0] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
-	
+#endif
 	switch (a) {
 		case 0x180000: {
 			return ((0xff - DrvInput[1]) << 8) | (0xff - DrvInput[0]);
@@ -3391,19 +3402,20 @@ UINT16 __fastcall Midres68KReadWord(UINT32 a)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("68K Read word => %06X\n"), a);
+			bprintf(PRINT_NORMAL, _T("68K Read word => %06X PC: %X\n"), a, SekGetPC(-1));
 		}
 	}
 	
 	return 0;
 }
 
-void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 {
+#if 0
 	if (a >= 0x220000 && a <= 0x2207ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220000) >> 1;
-		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3412,7 +3424,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		// mirror
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220800) >> 1;
-		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3420,7 +3432,7 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x2a0000 && a <= 0x2a07ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
 		INT32 Offset = (a - 0x2a0000) >> 1;
-		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[2] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3428,11 +3440,11 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x320000 && a <= 0x321fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
 		INT32 Offset = (a - 0x320000) >> 1;
-		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
+		if (DrvTileRamBank[0] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
-	
+#endif
 	switch (a) {
 		case 0x160000: {
 			DrvPriority = d;
@@ -3442,6 +3454,13 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		case 0x18000a:
 		case 0x18000c: {
 			// nop?
+			return;
+		}
+
+		case 0x1a0000: { // midres ending sequence writes here after the credits, it brings the music volume down quite a bit making the drums quite prominent during hiscore name entry.
+			DrvSoundLatch = d & 0xff;
+			//bprintf(0, _T("word write to soundlatch: %X\n"), d & 0xff);
+			h6280SetIRQLine(H6280_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
 		
@@ -3512,12 +3531,12 @@ void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("68K Write word => %06X, %04X\n"), a, d);
+			bprintf(PRINT_NORMAL, _T("68K Write word => %06X, %04X PC: %X\n"), a, d, SekGetPC(-1));
 		}
 	}
 }
 
-UINT8 MidresH6280ReadProg(UINT32 Address)
+static UINT8 MidresH6280ReadProg(UINT32 Address)
 {
 	switch (Address) {
 		case 0x130000: {
@@ -3534,7 +3553,7 @@ UINT8 MidresH6280ReadProg(UINT32 Address)
 	return 0;
 }
 
-void MidresH6280WriteProg(UINT32 Address, UINT8 Data)
+static void MidresH6280WriteProg(UINT32 Address, UINT8 Data)
 {
 	switch (Address) {
 		case 0x0108000: {
@@ -4349,18 +4368,24 @@ static INT32 MidresInit()
 	SekMapMemory(Drv68KRam               , 0x100000, 0x103fff, MAP_RAM);
 	SekMapMemory(DrvSpriteRam            , 0x120000, 0x1207ff, MAP_RAM);
 	SekMapMemory(DrvPaletteRam           , 0x140000, 0x1407ff, MAP_RAM);
-	SekMapMemory(DrvVideo1ColScrollRam   , 0x240000, 0x24007f, MAP_RAM);
-	SekMapMemory(DrvVideo1RowScrollRam   , 0x240400, 0x2407ff, MAP_RAM);	
-	SekMapMemory(DrvVideo2ColScrollRam   , 0x2c0000, 0x2c007f, MAP_RAM);
-	SekMapMemory(DrvVideo2RowScrollRam   , 0x2c0400, 0x2c07ff, MAP_RAM);	
-	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x34007f, MAP_RAM);
-	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, MAP_RAM);	
+	SekMapMemory(DrvVideo1ColScrollRam   , 0x240000, 0x2400ff, MAP_RAM);
+	SekMapMemory(DrvVideo1RowScrollRam   , 0x240400, 0x2407ff, MAP_RAM);
+	SekMapMemory(DrvVideo2ColScrollRam   , 0x2c0000, 0x2c00ff, MAP_RAM);
+	SekMapMemory(DrvVideo2RowScrollRam   , 0x2c0400, 0x2c07ff, MAP_RAM);
+	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x3400ff, MAP_RAM);
+	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, MAP_RAM);
+	//  moved from Midres68KRead/WriteByte/Word
+	SekMapMemory(DrvVideo1Ram, 0x220000, 0x2207ff, MAP_RAM);
+	SekMapMemory(DrvVideo1Ram, 0x220800, 0x220fff, MAP_RAM); // mirror
+	SekMapMemory(DrvVideo2Ram, 0x2a0000, 0x2a07ff, MAP_RAM);
+	SekMapMemory(DrvCharRam, 0x320000, 0x321fff, MAP_RAM);
+	//
 	SekSetReadByteHandler(0, Midres68KReadByte);
 	SekSetWriteByteHandler(0, Midres68KWriteByte);
 	SekSetReadWordHandler(0, Midres68KReadWord);
-	SekSetWriteWordHandler(0, Midres68KWriteWord);	
+	SekSetWriteWordHandler(0, Midres68KWriteWord);
 	SekClose();
-	
+
 	h6280Init(0);
 	h6280Open(0);
 	h6280MapMemory(DrvH6280Rom , 0x000000, 0x00ffff, MAP_ROM);
@@ -4393,7 +4418,9 @@ static INT32 MidresInit()
 
 	RotateSetGunPosRAM(Drv68KRam + (0x21bc+1), Drv68KRam + (0x2238+1), 4);
 	game_rotates = 1;
-	
+
+	Dec0Game = DEC1_GAME_MIDRES;
+
 	SlyspyDoReset();
 
 	return 0;
@@ -5296,6 +5323,8 @@ static INT32 Dec1Frame()
 	}
 
 	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
+	if (Dec0Game == DEC1_GAME_MIDRES)
+		nCyclesTotal[0] = (INT32)((double)14000000 / 57.41);
 	nCyclesTotal[1] = (INT32)((double)2000000 / 57.41);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	

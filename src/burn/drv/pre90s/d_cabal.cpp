@@ -857,9 +857,9 @@ static INT32 CabalukInit()
 
 struct BurnDriver BurnDrvCabaluk = {
 	"cabaluk", "cabal", NULL, NULL, "1988",
-	"Cabal (UK, Trackball)\0", "Needs Trackball Inputs", "TAD Corporation (Electrocoin license)", "Miscellaneous",
+	"Cabal (UK, Trackball)\0", "Needs Trackball Support", "TAD Corporation (Electrocoin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalukRomInfo, cabalukRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalukInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 256, 4, 3
@@ -901,9 +901,9 @@ static INT32 CabalusInit()
 
 struct BurnDriver BurnDrvCabalus = {
 	"cabalus", "cabal", NULL, NULL, "1988",
-	"Cabal (US set 1, Trackball)\0", "Needs Trackball Inputs", "TAD Corporation (Fabtek license)", "Miscellaneous",
+	"Cabal (US set 1, Trackball)\0", "Needs Trackball Support", "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalusRomInfo, cabalusRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	CabalusInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 256, 4, 3
@@ -945,9 +945,9 @@ static INT32 Cabalus2Init()
 
 struct BurnDriver BurnDrvCabalus2 = {
 	"cabalus2", "cabal", NULL, NULL, "1988",
-	"Cabal (US set 2, Trackball)\0", "Needs Trackball Inputs", "TAD Corporation (Fabtek license)", "Miscellaneous",
+	"Cabal (US set 2, Trackball)\0", "Needs Trackball Support", "TAD Corporation (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, cabalus2RomInfo, cabalus2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Cabalus2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 256, 4, 3

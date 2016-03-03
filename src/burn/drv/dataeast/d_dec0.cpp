@@ -3349,7 +3349,7 @@ static UINT16 __fastcall Midres68KReadWord(UINT32 a)
 	if (a >= 0x220000 && a <= 0x2207ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220000) >> 1;
-		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
@@ -3357,21 +3357,21 @@ static UINT16 __fastcall Midres68KReadWord(UINT32 a)
 		// mirror
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220800) >> 1;
-		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x2a0000 && a <= 0x2a07ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
 		INT32 Offset = (a - 0x2a0000) >> 1;
-		if (DrvTileRamBank[2] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 	
 	if (a >= 0x320000 && a <= 0x321fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
 		INT32 Offset = (a - 0x320000) >> 1;
-		if (DrvTileRamBank[0] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
 		return BURN_ENDIAN_SWAP_INT16(RAM[Offset]);
 	}
 #endif
@@ -3415,7 +3415,7 @@ static void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x220000 && a <= 0x2207ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220000) >> 1;
-		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3424,7 +3424,7 @@ static void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 		// mirror
 		UINT16 *RAM = (UINT16*)DrvVideo1Ram;
 		INT32 Offset = (a - 0x220800) >> 1;
-		if (DrvTileRamBank[1] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[1] & 0x01) Offset += 0x1000;
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3432,7 +3432,7 @@ static void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x2a0000 && a <= 0x2a07ff) {
 		UINT16 *RAM = (UINT16*)DrvVideo2Ram;
 		INT32 Offset = (a - 0x2a0000) >> 1;
-		if (DrvTileRamBank[2] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[2] & 0x01) Offset += 0x1000;
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3440,7 +3440,7 @@ static void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 	if (a >= 0x320000 && a <= 0x321fff) {
 		UINT16 *RAM = (UINT16*)DrvCharRam;
 		INT32 Offset = (a - 0x320000) >> 1;
-		if (DrvTileRamBank[0] & 0x01) { bprintf(0, _T("weird offset.")); Offset += 0x1000;}
+		if (DrvTileRamBank[0] & 0x01) Offset += 0x1000;
 		RAM[Offset] = BURN_ENDIAN_SWAP_INT16(d);
 		return;
 	}
@@ -3459,7 +3459,6 @@ static void __fastcall Midres68KWriteWord(UINT32 a, UINT16 d)
 
 		case 0x1a0000: { // midres ending sequence writes here after the credits, it brings the music volume down quite a bit making the drums quite prominent during hiscore name entry.
 			DrvSoundLatch = d & 0xff;
-			//bprintf(0, _T("word write to soundlatch: %X\n"), d & 0xff);
 			h6280SetIRQLine(H6280_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
 			return;
 		}
@@ -4375,10 +4374,10 @@ static INT32 MidresInit()
 	SekMapMemory(DrvCharColScrollRam     , 0x340000, 0x3400ff, MAP_RAM);
 	SekMapMemory(DrvCharRowScrollRam     , 0x340400, 0x3407ff, MAP_RAM);
 	//  moved from Midres68KRead/WriteByte/Word
-	SekMapMemory(DrvVideo1Ram, 0x220000, 0x2207ff, MAP_RAM);
-	SekMapMemory(DrvVideo1Ram, 0x220800, 0x220fff, MAP_RAM); // mirror
-	SekMapMemory(DrvVideo2Ram, 0x2a0000, 0x2a07ff, MAP_RAM);
-	SekMapMemory(DrvCharRam, 0x320000, 0x321fff, MAP_RAM);
+	SekMapMemory(DrvVideo1Ram            , 0x220000, 0x2207ff, MAP_RAM);
+	SekMapMemory(DrvVideo1Ram            , 0x220800, 0x220fff, MAP_RAM); // mirror
+	SekMapMemory(DrvVideo2Ram            , 0x2a0000, 0x2a07ff, MAP_RAM);
+	SekMapMemory(DrvCharRam              , 0x320000, 0x321fff, MAP_RAM);
 	//
 	SekSetReadByteHandler(0, Midres68KReadByte);
 	SekSetWriteByteHandler(0, Midres68KWriteByte);

@@ -545,8 +545,6 @@ static INT32 DrvGfxDecode()
 	INT32 YOffs[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
 			64*8+0*32, 64*8+1*32, 64*8+2*32, 64*8+3*32, 64*8+4*32, 64*8+5*32, 64*8+6*32, 64*8+7*32 };
 
-	konami_rom_deinterleave_2(DrvGfxROM1, 0x200000);
-
 	GfxDecode(0x04000, 4, 16, 16, Plane, XOffs, YOffs, 0x400, DrvGfxROM1, DrvGfxROMExp1);
 
 	return 0;
@@ -578,29 +576,16 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x000000, 10, 1)) return 1;
 
-#if 0
-		// this is bugged somehow - hit ffwd in the attract sequence and watch for broken sprites etc
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000, 11, 4, LD_GROUP(2))) return 1;
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002, 12, 4, LD_GROUP(2))) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 12, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x100001, 13, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x100002, 14, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM1 + 0x100003, 15, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 13, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100001, 14, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100002, 15, 4)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100003, 16, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x180000, 17, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x180001, 18, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x180002, 19, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x180003, 20, 4)) return 1;
-#endif
-        if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 1)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x080000, 12, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x080001, 13, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 14, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x0c0001, 15, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x100000, 16, 1)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x180000, 17, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x180001, 18, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x1c0000, 19, 2)) return 1;
-        if (BurnLoadRom(DrvGfxROM1 + 0x1c0001, 20, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 21, 1)) return 1;
 		if (BurnLoadRom(DrvSndROM  + 0x040000, 22, 1)) return 1;

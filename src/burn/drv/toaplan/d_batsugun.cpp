@@ -72,6 +72,32 @@ static struct BurnRomInfo batugnspRomDesc[] = {
 STD_ROM_PICK(batugnsp)
 STD_ROM_FN(batugnsp)
 
+
+static struct BurnRomInfo batsugunbRomDesc[] = {
+	{ "large_rom1.bin",	0x80000, 0xc9de8ed8, 1 | BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+
+	{ "rom12.bin",		0x80000, 0xd25affc6, 2 | BRF_GRA },           //  1 GP9001 #1 Tile data
+	{ "rom6.bin",		0x80000, 0xddd6df60, 2 | BRF_GRA },           //  2
+	{ "rom11.bin",		0x80000, 0xed72fe3e, 2 | BRF_GRA },           //  3
+	{ "rom5.bin",		0x80000, 0xfd44b33b, 2 | BRF_GRA },           //  4
+	{ "rom10.bin",		0x80000, 0x86b2c6a9, 2 | BRF_GRA },           //  5
+	{ "rom4.bin",		0x80000, 0xe7c1c623, 2 | BRF_GRA },           //  6
+	{ "rom9.bin",		0x80000, 0xfda8ee00, 2 | BRF_GRA },           //  7
+	{ "rom3.bin",		0x80000, 0xa7c4dee8, 2 | BRF_GRA },           //  8
+
+	{ "rom8.bin",		0x80000, 0xa2c6a170, 3 | BRF_GRA },           //  9
+	{ "rom2.bin",		0x80000, 0xa457e202, 3 | BRF_GRA },           // 10
+	{ "rom7.bin",		0x80000, 0x8644518f, 3 | BRF_GRA },           // 11
+	{ "rom1.bin",		0x80000, 0x8e339897, 3 | BRF_GRA },           // 12
+
+	{ "rom13.bin",		0x40000, 0x276146f5, 4 | BRF_SND },           // 13 ADPCM data
+
+	{ "tp030_u19_gal16v8b-15.bin",	0x00117, 0xf71669e8, 5 | BRF_OPT },   // 14 Logic for mixing output of both GP9001 GFX controllers
+};
+
+STD_ROM_PICK(batsugunb)
+STD_ROM_FN(batsugunb)
+
 static struct BurnInputInfo batsugunInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
 	{"P1 Start",	BIT_DIGITAL,	DrvButton + 5,	"p1 start"},
@@ -267,7 +293,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-static INT32 LoadRoms()
+static INT32 NormalLoadRoms()
 {
 	// Load 68000 ROM
 	BurnLoadRom(Rom01, 0, 1);
@@ -277,6 +303,60 @@ static INT32 LoadRoms()
 	ToaLoadGP9001Tiles(GP9001ROM[1], 5, 2, nGP9001ROMSize[1]);
 
 	BurnLoadRom(MSM6295ROM, 7, 1);
+
+	return 0;
+}
+
+static void DecodeTiles(UINT8 *pDest, INT32 nROMSize, INT32 nSwap)
+{
+	UINT8* pTile;
+
+	for (pTile = pDest; pTile < (pDest + nROMSize); pTile += 4) {
+		UINT8 data[4];
+		for (INT32 n = 0; n < 4; n++) {
+			INT32 m = 7 - (n << 1);
+			UINT8 nPixels = ((pTile[0 ^ nSwap] >> m) & 1) << 0;
+			nPixels |= ((pTile[2 ^ nSwap] >> m) & 1) << 1;
+			nPixels |= ((pTile[1 ^ nSwap] >> m) & 1) << 2;
+			nPixels |= ((pTile[3 ^ nSwap] >> m) & 1) << 3;
+			nPixels |= ((pTile[0 ^ nSwap] >> (m - 1)) & 1) << 4;
+			nPixels |= ((pTile[2 ^ nSwap] >> (m - 1)) & 1) << 5;
+			nPixels |= ((pTile[1 ^ nSwap] >> (m - 1)) & 1) << 6;
+			nPixels |= ((pTile[3 ^ nSwap] >> (m - 1)) & 1) << 7;
+
+			data[n] = nPixels;
+		}
+
+		for (INT32 n = 0; n < 4; n++) {
+			pTile[n] = data[n];
+		}
+	}
+}
+
+static INT32 KoreaLoadRoms()
+{
+	BurnLoadRom(Rom01, 0, 1);
+
+	BurnLoadRom(GP9001ROM[0] + 0x000000,  1, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x000002,  2, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x200000,  3, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x200002,  4, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x000001,  5, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x000003,  6, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x200001,  7, 4);
+	BurnLoadRom(GP9001ROM[0] + 0x200003,  8, 4);
+
+	BurnLoadRom(GP9001ROM[1] + 0x000000,  9, 4);
+	BurnLoadRom(GP9001ROM[1] + 0x000002, 10, 4);
+	BurnLoadRom(GP9001ROM[1] + 0x000001, 11, 4);
+	BurnLoadRom(GP9001ROM[1] + 0x000003, 12, 4);
+
+	BurnUpdateProgress(0.0, _T("Decoding graphics..."), 0);
+
+	DecodeTiles(GP9001ROM[0], nGP9001ROMSize[0], 0);
+	DecodeTiles(GP9001ROM[1], nGP9001ROMSize[1], 0);
+
+	BurnLoadRom(MSM6295ROM, 13, 1);
 
 	return 0;
 }
@@ -477,7 +557,7 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-static INT32 DrvInit()
+static INT32 DrvInit(INT32 (*pRomLoad)())
 {
 	INT32 nLen;
 
@@ -499,7 +579,7 @@ static INT32 DrvInit()
 	MemIndex();													// Index the allocated memory
 
 	// Load the roms into memory
-	if (LoadRoms()) {
+	if (pRomLoad()) {
 		return 1;
 	}
 
@@ -550,6 +630,16 @@ static INT32 DrvInit()
 	DrvDoReset(); // Reset machine
 
 	return 0;
+}
+
+static INT32 BatsugunInit()
+{
+	return DrvInit(NormalLoadRoms);
+}
+
+static INT32 BatsugunbInit()
+{
+	return DrvInit(KoreaLoadRoms);
 }
 
 static INT32 DrvExit()
@@ -702,7 +792,7 @@ struct BurnDriver BurnDrvBatsugun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugunRomInfo, batsugunRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
 
@@ -712,7 +802,7 @@ struct BurnDriver BurnDrvBatsugunSP = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batugnspRomInfo, batugnspRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
 
@@ -722,6 +812,16 @@ struct BurnDriver BurnDrvBatsugna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugnaRomInfo, batsugnaRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	BatsugunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	240, 320, 3, 4
+};
+
+struct BurnDriver BurnDrvBatsugunb = {
+	"batsugunb", "batsugun", NULL, NULL, "1993",
+	"Batsugun (Korean PCB)\0", NULL, "Dual Toaplan", "Toaplan GP9001 based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
+	NULL, batsugunbRomInfo, batsugunbRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
+	BatsugunbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

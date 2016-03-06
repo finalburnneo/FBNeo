@@ -873,7 +873,7 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		nCycleSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
 		nCyclesDone[0] += SekRun(nCycleSegment - nCyclesDone[0]);
-		if (i == nInterleave - 1 && irqA_enable) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 240 && irqA_enable) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (gradius3_cpub_enable) {
@@ -895,7 +895,6 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			//K007232Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -907,9 +906,8 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			//K007232Update(0, pSoundBuf, nSegmentLength);
 		}
-		K007232Update(0, pBurnSoundOut, nBurnSoundLen);
+		K007232Update(0, pBurnSoundOut, nBurnSoundLen); // only update K007232 once per frame
 	}
 
 	ZetClose();

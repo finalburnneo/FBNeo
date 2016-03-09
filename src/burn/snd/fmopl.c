@@ -2611,7 +2611,20 @@ void FMOPLScan(INT32 nType, INT32 which, INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(OPL->status);
 		SCAN_VAR(OPL->statusmask);
 		SCAN_VAR(OPL->mode);
-		
+
+#if BUILD_Y8950
+		if ((OPL->type & OPL_TYPE_ADPCM) && (OPL->deltat)) {
+			YM_DELTAT *DELTAT = OPL->deltat;
+			SCAN_VAR(DELTAT->portstate);
+			SCAN_VAR(DELTAT->now_addr);
+			SCAN_VAR(DELTAT->now_step);
+			SCAN_VAR(DELTAT->acc);
+			SCAN_VAR(DELTAT->prev_acc);
+			SCAN_VAR(DELTAT->adpcmd);
+			SCAN_VAR(DELTAT->adpcml);
+		}
+#endif
+
 		if (nAction & ACB_WRITE) {
 			INT32 ch;
 			INT32 slot;

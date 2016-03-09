@@ -70,27 +70,55 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 
 	cheat_ptr = &cpus[0]; // first cpu...
 	cheat_subptr = cheat_ptr->cpuconfig;
+	bprintf(0, _T("cheatenable: cht#: %d option: %d.\n"), nCheat, nOption);
 
 	while (pCurrentCheat && nCurrentCheat <= nCheat) {
 		if (nCurrentCheat == nCheat) {
+			INT32 deactivate = 0;
 
-			if (nOption == -1) {
+			if (nOption == -1 || nOption == 0) {
 				nOption = pCurrentCheat->nDefault;
+				deactivate = 1;
 			}
 
-			if (pCurrentCheat->nType != 1) {
+			if (deactivate) {
+				if (pCurrentCheat->nType != 1) {
 
-				// Return OK if the cheat is already active with the same option
-				if (pCurrentCheat->nCurrent == nOption) {
-					return 0;
+					// Return OK if the cheat is already active with the same option
+					if (pCurrentCheat->nCurrent == nOption) {
+						return 0;
+					}
+
+					nOption = 1; // Set to the first option as there is no addressinfo associated with default. -dink
+
+					// Deactivate old option (if any)
+					pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;
+
+					while (pAddressInfo->nAddress) {
+						if (pAddressInfo->nCPU != nOpenCPU) {
+
+							if (nOpenCPU != -1) {
+								cheat_subptr->close();
+							}
+
+							nOpenCPU = pAddressInfo->nCPU;
+							cheat_ptr = &cpus[nOpenCPU];
+							cheat_subptr = cheat_ptr->cpuconfig;
+							cheat_subptr->open(cheat_ptr->nCPU);
+						}
+
+						// Write back original values to memory
+						bprintf(0, _T("undo cheat @ %X byte: %X\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
+						cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
+						pAddressInfo++;
+					}
+					nOption = 0; // Set to the first option as there is no addressinfo associated with default. -dink
 				}
-
-				// Deactivate old option (if any)
+			} else { // activate!! -dink
+				// Activate new option
 				pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;
 				while (pAddressInfo->nAddress) {
-
 					if (pAddressInfo->nCPU != nOpenCPU) {
-
 						if (nOpenCPU != -1) {
 							cheat_subptr->close();
 						}
@@ -101,47 +129,29 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 						cheat_subptr->open(cheat_ptr->nCPU);
 					}
 
-					// Write back original values to memory
-					cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
+					// Copy the original values
+					pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
+
+					bprintf(0, _T("apply cheat addr %X val %X undo-val %X."), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
+
+					if (pCurrentCheat->nType != 0) {
+						if (pAddressInfo->nCPU != nOpenCPU) {
+							if (nOpenCPU != -1) {
+								cheat_subptr->close();
+							}
+
+							nOpenCPU = pAddressInfo->nCPU;
+							cheat_ptr = &cpus[nOpenCPU];
+							cheat_subptr = cheat_ptr->cpuconfig;
+							cheat_subptr->open(cheat_ptr->nCPU);
+						}
+
+						// Activate the cheat
+						cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+					}
+
 					pAddressInfo++;
 				}
-			}
-
-			// Activate new option
-			pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;
-			while (pAddressInfo->nAddress) {
-
-				if (pAddressInfo->nCPU != nOpenCPU) {
-					if (nOpenCPU != -1) {
-						cheat_subptr->close();
-					}
-
-					nOpenCPU = pAddressInfo->nCPU;
-					cheat_ptr = &cpus[nOpenCPU];
-					cheat_subptr = cheat_ptr->cpuconfig;
-					cheat_subptr->open(cheat_ptr->nCPU);
-				}
-
-				// Copy the original values
-				pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
-
-				if (pCurrentCheat->nType != 0) {
-					if (pAddressInfo->nCPU != nOpenCPU) {
-						if (nOpenCPU != -1) {
-							cheat_subptr->close();
-						}
-
-						nOpenCPU = pAddressInfo->nCPU;
-						cheat_ptr = &cpus[nOpenCPU];
-						cheat_subptr = cheat_ptr->cpuconfig;
-						cheat_subptr->open(cheat_ptr->nCPU);
-					}
-
-					// Activate the cheat
-					cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
-				}
-
-				pAddressInfo++;
 			}
 
 			// Set cheat status and active option

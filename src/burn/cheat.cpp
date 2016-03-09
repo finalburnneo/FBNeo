@@ -70,10 +70,9 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 
 	cheat_ptr = &cpus[0]; // first cpu...
 	cheat_subptr = cheat_ptr->cpuconfig;
-	bprintf(0, _T("cheatenable: cht#: %d option: %d.\n"), nCheat, nOption);
 
 	while (pCurrentCheat && nCurrentCheat <= nCheat) {
-		if (nCurrentCheat == nCheat) {
+		if (nCurrentCheat == nCheat) { // Cheat found, let's process it.
 			INT32 deactivate = 0;
 
 			if (nOption == -1 || nOption == 0) {
@@ -81,15 +80,14 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 				deactivate = 1;
 			}
 
-			if (deactivate) {
+			// Return OK if the cheat is already active with the same option
+			if (pCurrentCheat->nCurrent == nOption) {
+				return 0;
+			}
+
+			if (deactivate) { // disable cheat option
 				if (pCurrentCheat->nType != 1) {
-
-					// Return OK if the cheat is already active with the same option
-					if (pCurrentCheat->nCurrent == nOption) {
-						return 0;
-					}
-
-					nOption = 1; // Set to the first option as there is no addressinfo associated with default. -dink
+					nOption = 1; // Set to the first option as there is no addressinfo associated with default (disabled) cheat entry. -dink
 
 					// Deactivate old option (if any)
 					pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;
@@ -108,14 +106,14 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 						}
 
 						// Write back original values to memory
-						bprintf(0, _T("undo cheat @ %X byte: %X\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
+						bprintf(0, _T("Cheat: # %d, option: %d. action: "), nCheat, nOption);
+						bprintf(0, _T("Undo cheat @ %X -> %X\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						pAddressInfo++;
 					}
-					nOption = 0; // Set to the first option as there is no addressinfo associated with default. -dink
+					nOption = 0; // Set back to 0 (see above line: nOption = 1;)
 				}
-			} else { // activate!! -dink
-				// Activate new option
+			} else { // activate cheat option
 				pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;
 				while (pAddressInfo->nAddress) {
 					if (pAddressInfo->nCPU != nOpenCPU) {
@@ -132,7 +130,8 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 					// Copy the original values
 					pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
 
-					bprintf(0, _T("apply cheat addr %X val %X undo-val %X."), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
+					bprintf(0, _T("Cheat: # %d, option: %d. action: "), nCheat, nOption);
+					bprintf(0, _T("Apply cheat @ %X -> %X. (Undo %X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
 
 					if (pCurrentCheat->nType != 0) {
 						if (pAddressInfo->nCPU != nOpenCPU) {

@@ -5151,11 +5151,11 @@ static INT32 Chopper1Init()
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
-	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
 	BurnTimerAttachZetY8950(4000000);
-	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
+	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -5210,11 +5210,11 @@ static INT32 ChopperaInit()
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
 	BurnTimerAttachZetYM3812(4000000);
-	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
 	BurnTimerAttachZetY8950(4000000);
-	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
+	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -6500,28 +6500,25 @@ static INT32 ChopperFrame()
 		}
 	}
 
-	INT32 nInterleave = 800;
-	INT32 nCyclesTotal[3] = { 3350000 / 60, 3350000 / 60, 4000000 / 60 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 4000000 / 60, 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		INT32 nSegment = ZetTotalCycles();
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		BurnTimerUpdateY8950(nSegment);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		BurnTimerUpdateY8950((i + 1) * nCyclesTotal[1] / nInterleave);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		if ((i&7)==7) { // update 100x per frame
-			ZetOpen(2);
-			BurnTimerUpdateYM3812(nSegment);
-			ZetClose();
-		}
+		ZetOpen(2);
+		BurnTimerUpdateYM3812((i + 1) * nCyclesTotal[2] / nInterleave);
+		ZetClose();
 	}
 
 	ZetOpen(1);
@@ -6570,8 +6567,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 4 || game_select == 6)
 			BurnYM3526Scan(nAction, pnMin);
 
-		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 6)
+		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 6 || game_select == 9)
 			BurnY8950Scan(nAction, pnMin);
+
+		if (game_select == 9)
+			BurnYM3812Scan(nAction, pnMin);
 
 		if (game_select == 5)
 			AY8910Scan(nAction, pnMin);

@@ -106,8 +106,8 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 						}
 
 						// Write back original values to memory
-						bprintf(0, _T("Cheat: # %d, option: %d. action: "), nCheat, nOption);
-						bprintf(0, _T("Undo cheat @ %X -> %X\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
+						bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
+						bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
 						pAddressInfo++;
 					}
@@ -130,8 +130,8 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption)
 					// Copy the original values
 					pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
 
-					bprintf(0, _T("Cheat: # %d, option: %d. action: "), nCheat, nOption);
-					bprintf(0, _T("Apply cheat @ %X -> %X. (Undo %X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
+					bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
+					bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Undo 0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
 
 					if (pCurrentCheat->nType != 0) {
 						if (pAddressInfo->nCPU != nOpenCPU) {

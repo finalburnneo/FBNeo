@@ -1927,6 +1927,7 @@ struct BurnDriver BurnDrvAlpham2 = {
 
 // Alpha Mission II / ASO II - Last Guardian (prototype)
 /* early prototype - all roms were hand labeled with CRCs, dumps verified against them */
+/* AES VERSION */
 
 static struct BurnRomInfo alpham2pRomDesc[] = {
 	{ "proto_007-p1.p1",   0x080000, 0xc763e52a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -2279,6 +2280,7 @@ struct BurnDriver BurnDrvBurningfh = {
 
 // Burning Fight (prototype)
 /* early prototype - all roms were hand labeled with CRCs, dumps verified against them */
+/* AES VERSION */
 
 static struct BurnRomInfo burningfpRomDesc[] = {
 	{ "proto_018-p1.p1",   0x080000, 0x5b4032e7, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
@@ -2545,6 +2547,59 @@ struct BurnDriver BurnDrvLresort = {
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
 	NULL, lresortRomInfo, lresortRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Last Resort (prototype)
+/* early prototype - all roms were hand labeled with CRCs, dumps verified against them */
+/* MVS VERSION */
+
+static struct BurnRomInfo lresortpRomDesc[] = {
+	{ "024_p1_5937.podd",  0x080000, 0x8e6008ee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "024_p2_8d37.peven", 0x080000, 0x6d9ee90f, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "024_s1_22fe.s1",    0x020000, 0x5cef5cc6, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "024_c1_b764.c1",    0x080000, 0x677749ec, 3 | BRF_GRA },           //  3 Sprite data
+	{ "024_c2_1951.c2",    0x080000, 0x104d7b59, 3 | BRF_GRA },           //  4
+	{ "024_c3_0f63.c3",    0x080000, 0xb0965a74, 3 | BRF_GRA },           //  5
+	{ "024_c4_c5b5.c4",    0x080000, 0xdcfc3860, 3 | BRF_GRA },           //  6
+	{ "024_c5_dd03.c5",    0x080000, 0x50322397, 3 | BRF_GRA },           //  7
+	{ "024_c6_c81a.c6",    0x080000, 0xc3c93894, 3 | BRF_GRA },           //  8
+	{ "024_c7_5edc.c7",    0x080000, 0x21faf72b, 3 | BRF_GRA },           //  9
+	{ "024_c8_0850.c8",    0x080000, 0xfb57217b, 3 | BRF_GRA },           //  10	
+
+	{ "024_m1_fc7a.m1",    0x020000, 0x22122875, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "024_v11_b085.v11",  0x080000, 0x0722da38, 5 | BRF_SND },           //  12 Sound data
+	{ "024_v12_d3b7.v12",  0x080000, 0x670ce3ec, 5 | BRF_SND },           //  13
+	{ "024_v13_a31e.v13",  0x080000, 0x2e39462b, 5 | BRF_SND },           //  14
+	{ "024_v24_2f0f.v24",  0x080000, 0x7944754f, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(lresortp, lresortp, neogeo)
+STD_ROM_FN(lresortp)
+
+static void LresortpCallback()
+{
+	BurnLoadRom(Neo68KROMActive + 0x000000, 0, 2);
+	BurnLoadRom(Neo68KROMActive + 0x000001, 1, 2);
+}
+
+static INT32 LresortpInit()
+{
+	NeoCallbackActive->pInitialise = LresortpCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvLresortp = {
+	"lresortp", "lresort", "neogeo", NULL, "1992",
+	"Last Resort (prototype)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_SCRFIGHT, 0,
+	NULL, lresortpRomInfo, lresortpRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	LresortpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

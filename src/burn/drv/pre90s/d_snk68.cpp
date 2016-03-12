@@ -4,8 +4,10 @@
 #include "burn_ym3812.h"
 #include "upd7759.h"
 
-// To Do:
-// 	Analog Inputs
+// Notes:
+//   March 11, 2016: hooked up rotational code to SAR and Ikari 3, left in old
+//   analogue rotational code (see #if 0's) just incase we need to base
+//   something else off of it in the future.
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -483,6 +485,12 @@ static void RotateReset() {
 		nRotateTarget[playernum] = -1;
 		nRotateTime[playernum] = 0;
 		nRotateHoldInput[0] = nRotateHoldInput[1] = 0;
+	}
+}
+
+static void RotateStateload() {
+	for (INT32 playernum = 0; playernum < 2; playernum++) {
+		nRotateTarget[playernum] = -1;
 	}
 }
 
@@ -1159,7 +1167,7 @@ static INT32 DrvInit(INT32 game)
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSnd0);
-	UPD7759SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	UPD7759SetRoute(0, ((game_select == 1) ? 1.50 : 0.50), BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 
@@ -1570,8 +1578,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Rotary2);
 		SCAN_VAR(Rotary2OldVal);
 		SCAN_VAR(nRotate);
-		SCAN_VAR(nRotateTarget);
 		SCAN_VAR(nRotateTry);
+
+		if (nAction & ACB_WRITE) {
+			RotateStateload();
+		}
 	}
 
 	return 0;

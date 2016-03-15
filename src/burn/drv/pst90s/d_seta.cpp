@@ -4297,7 +4297,7 @@ UINT16 __fastcall kamenrid_read_word(UINT32 address)
 		case 0x500002:
 			return DrvInputs[1];
 
-		case 0x500009:
+		case 0x500008:
 			return DrvInputs[2]^0xff^DrvDips[2];
 
 		case 0x50000c:
@@ -4321,8 +4321,8 @@ UINT8 __fastcall kamenrid_read_byte(UINT32 address)
 		case 0x500003:
 			return DrvInputs[1];
 
+		case 0x500008:
 		case 0x500009:
-		case 0x50000a:
 			return DrvInputs[2]^0xff^DrvDips[2];
 
 		case 0x50000c:

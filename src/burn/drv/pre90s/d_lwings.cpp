@@ -63,6 +63,7 @@ static INT32 irq_counter = 0;
 static INT32 fball = 0;
 static INT32 avengers = 0;
 static INT32 MSM5205InUse = 0;
+static INT32 spritelen = 0;
 
 static INT32 nCyclesTotal[3];
 
@@ -525,7 +526,7 @@ static INT32 MemIndex()
 	DrvGfxMask	= Next; Next += 0x000020;
 
 	MSM6295ROM	= Next;
-	DrvSampleROM	= Next; Next += 0x100000;
+	DrvSampleROM	= Next; Next += 0x200000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
@@ -849,6 +850,7 @@ UINT8 __fastcall lwings_sound_read(UINT16 address)
 static void oki_bank(INT32 data)
 {
 	DrvSampleBank = data;
+
 	INT32 bank = (DrvSampleBank & 0x0e) * 0x10000;
 
 	memcpy (DrvSampleROM + 0x20000, DrvSampleROM + 0x40000 + bank, 0x20000);
@@ -957,7 +959,7 @@ static INT32 DrvDoReset()
 static INT32 DrvGfxDecode()
 {
 	INT32 Plane0[2]  = { 0x000000, 0x000004 };
-	INT32 Plane1[4]  = { 0x080004, 0x080000, 0x000004, 0x000000 };
+	INT32 Plane1[4]  = { RGN_FRAC(spritelen, 1, 2)+4, RGN_FRAC(spritelen, 1, 2)+0, 4, 0 };//0x080004, 0x080000, 0x000004, 0x000000 };
 	INT32 Plane1a[4] = { 0x100004, 0x100000, 0x000004, 0x000000 };
 	INT32 Plane2[4]  = { 0x180000, 0x100000, 0x080000, 0x000000 };
 	INT32 Plane3[4]  = { 0x040000, 0x040004, 0x000000, 0x000004 };
@@ -1103,6 +1105,8 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM2 + i * 0x8000, i + 13, 1)) return 1;
 		}
 
+		spritelen = 0x20000;
+
 		DrvGfxDecode();
 	}
 
@@ -1147,6 +1151,7 @@ static INT32 TrojanInit()
 			if (BurnLoadRom(DrvGfxROM1 + i * 0x8000, i + 6, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + i * 0x8000, i + 14, 1)) return 1;
 		}
+		spritelen = 0x40000;
 
 		if (BurnLoadRom(DrvGfxROM3 + 0x0000, 22, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x8000, 23, 1)) return 1;
@@ -1221,6 +1226,7 @@ static INT32 FballInit()
 
 		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 7, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x20000, 8, 1)) return 1;
+		spritelen = 0x40000;
 
 		if (BurnLoadRom(DrvSampleROM + 0x00000, 9, 1)) return 1;
 		if (BurnLoadRom(DrvSampleROM + 0x40000, 9, 1)) return 1;
@@ -1241,7 +1247,7 @@ static INT32 FballInit()
 	ZetSetReadHandler(fball_sound_read);
 	ZetClose();
 
-	MSM6295Init(0, 1000000 / 132, 1);
+	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -2595,10 +2601,10 @@ STD_ROM_FN(fball)
 
 struct BurnDriver BurnDrvFball = {
 	"fball", NULL, NULL, NULL, "1992",
-	"Fire Ball (FM Work)\0", NULL, "FM Work", "Miscellaneous",
+	"Fire Ball (FM Work)\0", "Black Bar on the left side is normal.", "FM Work", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARWARE_CAPCOM_MISC, GBF_MISC, 0,
 	NULL, fballRomInfo, fballRomName, NULL, NULL, FballInputInfo, FballDIPInfo,
 	FballInit, DrvExit, FballFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
-	256, 256, 4, 3
+	256, 240, 4, 3
 };

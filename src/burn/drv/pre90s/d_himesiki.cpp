@@ -384,7 +384,7 @@ static INT32 MemIndex()
 static INT32 DrvGfxDecode()
 {
 	INT32 Planes[4]  = { STEP4(0,1) };
-	INT32 XOffs[32]  = { 4,0,12,8,20,16,28,24,36,32,44,40,52,48,60,56, 68,64,76,72,84,80,92,88,100,96,108,104,116,112,124,120 };
+	INT32 XOffs[32]  = { 4,0,12,8,20,16,28,24,36,32,44,40,52,48,60,56,68,64,76,72,84,80,92,88,100,96,108,104,116,112,124,120 };
 	INT32 YOffs0[8]  = { STEP8(0,32) };
 	INT32 YOffs1[16] = { STEP16(0,64) };
 	INT32 YOffs2[32] = { STEP32(0,128) };
@@ -497,7 +497,7 @@ static INT32 DrvInit(INT32 nGame)
 	PPI1PortReadB = ppi8255_1_portB_r;
 	PPI1PortWriteC = ppi8255_1_portC_w;
 
-	BurnYM2203Init(1, 2000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.05);
@@ -678,7 +678,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 256*2;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	
@@ -691,13 +691,13 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 239) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 239*2) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		ZetClose();
 	}
 

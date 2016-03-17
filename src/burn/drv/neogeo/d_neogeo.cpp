@@ -1944,11 +1944,11 @@ static struct BurnRomInfo alpham2pRomDesc[] = {
 	{ "007_s1_36f1.s1",    0x020000, 0xefc9ae2e, 2 | BRF_GRA },           //  2 Text layer tiles
 
 	{ "007_c1_210e.c11",   0x080000, 0x24841639, 3 | BRF_GRA },           //  3 Sprite data
-	{ "007-c2_29ae.c12",   0x080000, 0x912763ab, 3 | BRF_GRA },           //  4 
+	{ "007_c2_29ae.c12",   0x080000, 0x912763ab, 3 | BRF_GRA },           //  4 
 	{ "007_c3_c873.c13",   0x080000, 0x0743bde2, 3 | BRF_GRA },           //  5
 	{ "007_c4_2462.c14",   0x080000, 0x61240212, 3 | BRF_GRA },           //  6 
 	{ "007_c5_5f16.c15",   0x080000, 0xcf9f4c53, 3 | BRF_GRA },           //  7 
-	{ "007-c6_8abc.c16",   0x080000, 0x3d903b19, 3 | BRF_GRA },           //  8 
+	{ "007_c6_8abc.c16",   0x080000, 0x3d903b19, 3 | BRF_GRA },           //  8 
 	{ "007_c7_c983.c17",   0x080000, 0xe41e3875, 3 | BRF_GRA },           //  9 
 	{ "007_c8_b599.c18",   0x080000, 0x4483e2cf, 3 | BRF_GRA },           //  10 
 	

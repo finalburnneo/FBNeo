@@ -7640,7 +7640,7 @@ struct BurnDriver BurnDrvTnk3 = {
 // T.A.N.K (Japan)
 
 static struct BurnRomInfo tnk3jRomDesc[] = {
-	{ "tnk3-p1.bin",	0x04000, 0x0d2a8ca9, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "p1.4e",			0x04000, 0x03aca147, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 	{ "tnk3-p2.bin",	0x04000, 0x0ae0a483, 1 | BRF_ESS | BRF_PRG }, //  1
 	{ "tnk3-p3.bin",	0x04000, 0xd16dd4db, 1 | BRF_ESS | BRF_PRG }, //  2
 
@@ -7953,21 +7953,21 @@ static struct BurnRomInfo fitegolf2RomDesc[] = {
 	{ "fg_ver2_4.2g",	0x04000, 0x90c1fb09, 2 | BRF_ESS | BRF_PRG }, //  4
 	{ "fg_ver2_5.2h",	0x04000, 0x0ffbdbb8, 2 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "gu3",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
-	{ "gu4",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  7
+	{ "fg_2.3e",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  6 Z80 #2 Code
+	{ "fg_1.2e",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  7
 
-	{ "82s137.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  8 Color Data
-	{ "82s137.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  9
-	{ "82s137.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      // 10
+	{ "gl1.5f",			0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  8 Color Data
+	{ "gl2.5g",			0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  9
+	{ "gl3.5h",			0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      // 10
 
 	{ "fg_12.1e",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      // 11 Text Characters
 
 	{ "fg_14.3d",		0x04000, 0x29393a19, 6 | BRF_GRA },	      // 12 Background Characters
 	{ "fg_ver2_13.3c",	0x04000, 0x5cd57c93, 6 | BRF_GRA },	      // 13
 
-	{ "gu9",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      // 14 Sprites
-	{ "gu10",		0x08000, 0xb3acdac2, 9 | BRF_GRA },	      // 15
-	{ "gu11",		0x08000, 0xb99cf73b, 9 | BRF_GRA },	      // 16
+	{ "fg_ver2_11.7h",	0x08000, 0xd4957ec5, 9 | BRF_GRA },	      // 14 Sprites
+	{ "fg_ver2_10.7g",	0x08000, 0xb3acdac2, 9 | BRF_GRA },	      // 15
+	{ "fg_ver2_9.7e",	0x08000, 0xb99cf73b, 9 | BRF_GRA },	      // 16
 
 	{ "pal16r6a.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      // 17 PLDs
 	{ "pal16l8a.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      // 18
@@ -8019,10 +8019,10 @@ STD_ROM_PICK(countryc)
 STD_ROM_FN(countryc)
 
 struct BurnDriver BurnDrvCountryc = {
-	"countryc", "fitegolf", NULL, NULL, "1988",
+	"countryc", NULL, NULL, NULL, "1988",
 	"Country Club\0", "bad inputs, use fitegolf instead!", "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, countrycRomInfo, countrycRomName, NULL, NULL, FitegolfInputInfo, FitegolfDIPInfo, // wrong
 	FitegolfInit, DrvExit, FitegolfFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -8552,10 +8552,10 @@ static struct BurnRomInfo chopperaRomDesc[] = {
 	{ "12a.rom",		0x10000, 0xde96b331, 6 | BRF_GRA },           //  9
 	{ "kk_13.rom",		0x10000, 0x2756817d, 6 | BRF_GRA },           // 10
 
-	{ "chpri-9.bin",	0x08000, 0x106c2dcc, 7 | BRF_GRA },           // 11 16x16 Sprites
-	{ "chpri-8.bin",	0x08000, 0xd4f88f62, 7 | BRF_GRA },           // 12
-	{ "chpri-7.bin",	0x08000, 0x28ae39f9, 7 | BRF_GRA },           // 13
-	{ "chpri-6.bin",	0x08000, 0x16774a36, 7 | BRF_GRA },           // 14
+	{ "9a.rom",			0x08000, 0x106c2dcc, 7 | BRF_GRA },           // 11 16x16 Sprites
+	{ "8a.rom",			0x08000, 0xd4f88f62, 7 | BRF_GRA },           // 12
+	{ "7a.rom",			0x08000, 0x28ae39f9, 7 | BRF_GRA },           // 13
+	{ "6a.rom",			0x08000, 0x16774a36, 7 | BRF_GRA },           // 14
 
 	{ "kk_18.rom",		0x10000, 0x6abbff36, 8 | BRF_GRA },           // 15 32x32 Sprites
 	{ "kk_19.rom",		0x10000, 0x5283b4d3, 8 | BRF_GRA },           // 16
@@ -8755,7 +8755,7 @@ static struct BurnRomInfo tdfeverjRomDesc[] = {
 	{ "td15.8d",		0x10000, 0xad6e0927, 6 | BRF_GRA },           //  7 Background Tiles
 	{ "td16.8e",		0x10000, 0x181db036, 6 | BRF_GRA },           //  8
 	{ "td17.8f",		0x10000, 0xc5decca3, 6 | BRF_GRA },           //  9
-	{ "td18-ver2u.8g",	0x10000, 0x3924da37, 6 | BRF_GRA },           // 10
+	{ "up01.8g",		0x10000, 0x4512cdfb, 6 | BRF_GRA },           // 10
 	{ "td19.8j",		0x10000, 0xbc17ea7f, 6 | BRF_GRA },           // 11
 
 	{ "td13.2t",		0x10000, 0x88e2e819, 8 | BRF_GRA },           // 12 32x32 Sprites

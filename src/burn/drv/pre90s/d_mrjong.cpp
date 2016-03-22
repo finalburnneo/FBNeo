@@ -485,16 +485,16 @@ STD_ROM_FN(mrjong)
 
 
 static struct BurnRomInfo crazyblkRomDesc[] = {
-	{ "c1.a6",	0x2000, 0xd211aed3, 1 }, //  0 maincpu
-	{ "c2.a7",	0x2000, 0x49a9ca7e, 1 }, //  1
-	{ "c3.a7",	0x2000, 0x4b50ae6a, 1 }, //  2
-	{ "c4.a8",	0x2000, 0x2c375a17, 1 }, //  3
+	{ "c1.a6",	0x2000, 0xe2a211a2, 1 }, //  0 maincpu
+	{ "c2.a7",	0x2000, 0x75070978, 1 }, //  1
+	{ "c3.a7",	0x2000, 0x696ca502, 1 }, //  2
+	{ "c4.a8",	0x2000, 0xc7f5a247, 1 }, //  3
 
-	{ "c6.h5",	0x1000, 0x1ea99dab, 2 }, //  4 gfx1
-	{ "c5.h4",	0x1000, 0x7eb1d381, 2 }, //  5
+	{ "c6.h5",	0x1000, 0x2b2af794, 2 }, //  4 gfx1
+	{ "c5.h4",	0x1000, 0x98d13915, 2 }, //  5
 
-	{ "clr.j7",	0x0020, 0xa85e9b27, 3 }, //  6 proms
-	{ "clr.g5",	0x0100, 0xdd2b304f, 3 }, //  7
+	{ "clr.j7",	0x0020, 0xee1cf1d5, 3 }, //  6 proms
+	{ "clr.g5",	0x0100, 0xbcb1e2e3, 3 }, //  7
 };
 
 STD_ROM_PICK(crazyblk)

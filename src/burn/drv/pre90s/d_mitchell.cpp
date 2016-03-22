@@ -975,7 +975,7 @@ STD_ROM_FN(Block)
 static struct BurnRomInfo Blockr1RomDesc[] = {
 	{ "ble_05a.14f",   0x08000, 0xfa2a4536, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "ble_06a.15f",   0x20000, 0xe114ebde, BRF_ESS | BRF_PRG }, //	 1
-	{ "ble_07a.16f",   0x20000, 0x1d114f13, BRF_ESS | BRF_PRG }, //	 2
+	{ "ble_07.16f",    0x20000, 0x1d114f13, BRF_ESS | BRF_PRG }, //	 2
 	
 	{ "bl_08.8h",      0x20000, 0xaa0f4ff1, BRF_GRA },	     //  3	Characters
 	{ "bl_09.9h",      0x20000, 0x6fa8c186, BRF_GRA },	     //  4

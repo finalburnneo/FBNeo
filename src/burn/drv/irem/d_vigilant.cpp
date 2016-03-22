@@ -504,6 +504,8 @@ static struct BurnRomInfo DrvRomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 13	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 14
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 15
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 16	Video Timing PROM
 };
 
 STD_ROM_PICK(Drv)
@@ -531,6 +533,8 @@ static struct BurnRomInfo Drv1RomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 13
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 14
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
 };
 
 STD_ROM_PICK(Drv1)
@@ -558,6 +562,8 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 13
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 14
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
 };
 
 STD_ROM_PICK(Drvu)
@@ -586,6 +592,8 @@ static struct BurnRomInfo Drvu2RomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 13	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 14
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 15
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 16	Video Timing PROM
 };
 
 STD_ROM_PICK(Drvu2)
@@ -613,6 +621,8 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 13
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 14
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
 };
 
 STD_ROM_PICK(Drvj)
@@ -672,6 +682,8 @@ static struct BurnRomInfo VigilantaRomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 13
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 14
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
 };
 
 STD_ROM_PICK(Vigilanta)
@@ -699,6 +711,8 @@ static struct BurnRomInfo VigilantbRomDesc[] = {
 	{ "VG_B-8R.ic90",  	  0x00117, 0xdf368a7a, BRF_GRA },			// 12	PALs
 	{ "VG_B-4M.ic38",     0x00117, 0xdbca4204, BRF_GRA },			// 13
 	{ "VG_B-1B.ic1",      0x00117, 0x922e5167, BRF_GRA },			// 14
+	
+	{ "tbp24s10_7a.ic52", 0x00100, 0xc324835e, BRF_OPT },			// 15	Video Timing PROM
 };
 
 STD_ROM_PICK(Vigilantb)
@@ -713,7 +727,7 @@ static struct BurnRomInfo BuccanrsRomDesc[] = {
 	{ "BC-003_K-0161.U212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
 	{ "BC-004_K-0161.U189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
 	
-	{ "BC-005_K-161.U113",      0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
+	{ "BC-005_K-0161.U113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
 	{ "BC-006_K-161.U80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
 	{ "BC-008_K-161.U52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
 	{ "BC-007_K-161.U70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
@@ -745,7 +759,7 @@ static struct BurnRomInfo BuccanrsaRomDesc[] = {
 	{ "BC-003_K-0161.U212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
 	{ "BC-004_K-0161.U189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
 	
-	{ "BC-005_K-161.U113",      0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
+	{ "BC-005_K-0161.U113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
 	{ "BC-006_K-161.U80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
 	{ "BC-008_K-161.U52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
 	{ "BC-007_K-161.U70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
@@ -773,7 +787,7 @@ static struct BurnRomInfo BuccanrsbRomDesc[] = {
 	{ "BC-003_K-0161.U212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
 	{ "BC-004_K-0161.U189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
 	
-	{ "BC-005_K-161.U113",      0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
+	{ "BC-005_K-0161.U113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
 	{ "BC-006_K-161.U80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
 	{ "BC-008_K-161.U52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
 	{ "BC-007_K-161.U70",       0x10000, 0xf650fa90, BRF_GRA },				//  8

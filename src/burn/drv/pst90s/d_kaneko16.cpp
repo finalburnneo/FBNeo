@@ -1344,7 +1344,7 @@ static struct BurnRomInfo GtmroRomDesc[] = {
 	{ "u514.bin",   		0x080000, 0x2e857685, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "u513.bin",   		0x080000, 0xd5003870, BRF_ESS | BRF_PRG }, //  1	
 	
-	{ "mmd0x0.u124.bin",   	0x020000, 0xe1f6159e, BRF_PRG | BRF_OPT }, //  2 MCU Code
+	{ "mmd0x0.u124", 	  	0x020000, 0xe1f6159e, BRF_PRG | BRF_OPT }, //  2 MCU Code
 
 	{ "mm200-e.bin", 		0x100000, 0xeb104408, BRF_GRA },	   	   //  3 Sprites
 	{ "mm200-o.bin", 		0x100000, 0xb6d04e7c, BRF_GRA },	 	   //  4
@@ -1355,8 +1355,8 @@ static struct BurnRomInfo GtmroRomDesc[] = {
 	{ "mm203-e.bin",    	0x100000, 0xb9001f28, BRF_GRA },	       //  9	
 	{ "mm203-o.bin",    	0x100000, 0x2ed6227d, BRF_GRA },	       // 10	
 	
-	{ "mm-300-e.u53", 		0x100000, 0xf9ee708d, BRF_GRA },	       // 11 Tiles (scrambled)
-	{ "mm-300-o.u54", 		0x100000, 0x76299353, BRF_GRA },	       // 12 
+	{ "mm300-e.u53", 		0x100000, 0xf9ee708d, BRF_GRA },	       // 11 Tiles (scrambled)
+	{ "mm300-o.u54", 		0x100000, 0x76299353, BRF_GRA },	       // 12 
 
 	{ "mm-100-401-e0.bin", 	0x100000, 0xb9cbfbee, BRF_SND },		   // 13 Samples
 };

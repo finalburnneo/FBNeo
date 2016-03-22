@@ -2568,30 +2568,30 @@ STD_ROM_PICK(tigerhb3)
 STD_ROM_FN(tigerhb3)
 
 static struct BurnRomInfo getstarRomDesc[] = {
-	{ "a68_00-1",     0x004000, 0x6a8bdc6c, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "a68_01-1",     0x004000, 0xebe8db3c, BRF_ESS | BRF_PRG }, //  1
-	{ "a68_02-1",     0x008000, 0x343e8415, BRF_ESS | BRF_PRG }, //  2
+	{ "a68_00-1.8p",  0x004000, 0x6a8bdc6c, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "a68_01-1.8n",  0x004000, 0xebe8db3c, BRF_ESS | BRF_PRG }, //  1
+	{ "a68_02-1.8k",  0x008000, 0x343e8415, BRF_ESS | BRF_PRG }, //  2
 
-	{ "a68-13",       0x008000, 0x643fb282, BRF_GRA },			 //  3 Sprite data
-	{ "a68-12",       0x008000, 0x11f74e32, BRF_GRA },			 //  4
-	{ "a68-11",       0x008000, 0xf24158cf, BRF_GRA },			 //  5
-	{ "a68-10",       0x008000, 0x83161ed0, BRF_GRA },			 //  6
+	{ "a68-13.8j",    0x008000, 0x643fb282, BRF_GRA },			 //  3 Sprite data
+	{ "a68-12.6j",    0x008000, 0x11f74e32, BRF_GRA },			 //  4
+	{ "a68-11.8h",    0x008000, 0xf24158cf, BRF_GRA },			 //  5
+	{ "a68-10.6h",    0x008000, 0x83161ed0, BRF_GRA },			 //  6
 
-	{ "a68_05-1",     0x002000, 0x06f60107, BRF_GRA },			 //  7 Text layer
-	{ "a68_04-1",     0x002000, 0x1fc8f277, BRF_GRA },			 //  8
+	{ "a68_05-1.6f",  0x002000, 0x06f60107, BRF_GRA },			 //  7 Text layer
+	{ "a68_04-1.6g",  0x002000, 0x1fc8f277, BRF_GRA },			 //  8
 
-	{ "a68_09",       0x008000, 0xa293cc2e, BRF_GRA },			 //  9 Background layer
-	{ "a68_08",       0x008000, 0x37662375, BRF_GRA },			 // 10
-	{ "a68_07",       0x008000, 0xcf1a964c, BRF_GRA },			 // 11
-	{ "a68_06",       0x008000, 0x05f9eb9a, BRF_GRA },			 // 12
+	{ "a68_09.4m",    0x008000, 0xa293cc2e, BRF_GRA },			 //  9 Background layer
+	{ "a68_08.6m",    0x008000, 0x37662375, BRF_GRA },			 // 10
+	{ "a68_07.6n",    0x008000, 0xcf1a964c, BRF_GRA },			 // 11
+	{ "a68_06.6p",    0x008000, 0x05f9eb9a, BRF_GRA },			 // 12
 
-	{ "rom21",        0x000100, 0xd6360b4d, BRF_GRA },			 // 13
-	{ "rom20",        0x000100, 0x4ca01887, BRF_GRA },			 // 14
-	{ "rom19",        0x000100, 0x513224f0, BRF_GRA },			 // 15
+	{ "rom21.12q",    0x000100, 0xd6360b4d, BRF_GRA },			 // 13
+	{ "rom20.12m",    0x000100, 0x4ca01887, BRF_GRA },			 // 14
+	{ "rom19.12p",    0x000100, 0x513224f0, BRF_GRA },			 // 15
 
-	{ "a68-03",       0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
+	{ "a68-03.12d",   0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
 
-	{ "a68_14",       0x000800, 0x00000000, BRF_NODUMP | BRF_OPT | BRF_PRG }, // 17 MCU ROM
+	{ "a68_14.6a",    0x000800, 0x00000000, BRF_NODUMP | BRF_OPT | BRF_PRG }, // 17 MCU ROM
 };
 
 
@@ -2599,30 +2599,30 @@ STD_ROM_PICK(getstar)
 STD_ROM_FN(getstar)
 
 static struct BurnRomInfo getstarjRomDesc[] = {
-	{ "a68_00.bin",   0x004000, 0xad1a0143, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "a68_01.bin",   0x004000, 0x3426eb7c, BRF_ESS | BRF_PRG }, //  1
-	{ "a68_02.bin",   0x008000, 0x3567da17, BRF_ESS | BRF_PRG }, //  2
+	{ "a68_00.8p",    0x004000, 0xad1a0143, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "a68_01.8n",    0x004000, 0x3426eb7c, BRF_ESS | BRF_PRG }, //  1
+	{ "a68_02.8k",    0x008000, 0x3567da17, BRF_ESS | BRF_PRG }, //  2
 
-	{ "a68-13",       0x008000, 0x643fb282, BRF_GRA },			 //  3 Sprite data
-	{ "a68-12",       0x008000, 0x11f74e32, BRF_GRA },			 //  4
-	{ "a68-11",       0x008000, 0xf24158cf, BRF_GRA },			 //  5
-	{ "a68-10",       0x008000, 0x83161ed0, BRF_GRA },			 //  6
+	{ "a68-13.8j",    0x008000, 0x643fb282, BRF_GRA },			 //  3 Sprite data
+	{ "a68-12.6j",    0x008000, 0x11f74e32, BRF_GRA },			 //  4
+	{ "a68-11.8h",    0x008000, 0xf24158cf, BRF_GRA },			 //  5
+	{ "a68-10.6h",    0x008000, 0x83161ed0, BRF_GRA },			 //  6
 	
-	{ "a68_05.bin",   0x002000, 0xe3d409e7, BRF_GRA },			 //  7 Text layer
-	{ "a68_04.bin",   0x002000, 0x6e5ac9d4, BRF_GRA },			 //  8
+	{ "a68_05.6f",    0x002000, 0xe3d409e7, BRF_GRA },			 //  7 Text layer
+	{ "a68_04.6g",    0x002000, 0x6e5ac9d4, BRF_GRA },			 //  8
 
-	{ "a68_09",       0x008000, 0xa293cc2e, BRF_GRA },			 //  9 Background layer
-	{ "a68_08",       0x008000, 0x37662375, BRF_GRA },			 // 10
-	{ "a68_07",       0x008000, 0xcf1a964c, BRF_GRA },			 // 11
-	{ "a68_06",       0x008000, 0x05f9eb9a, BRF_GRA },			 // 12
+	{ "a68_09.4m",    0x008000, 0xa293cc2e, BRF_GRA },			 //  9 Background layer
+	{ "a68_08.6m",    0x008000, 0x37662375, BRF_GRA },			 // 10
+	{ "a68_07.6n",    0x008000, 0xcf1a964c, BRF_GRA },			 // 11
+	{ "a68_06.6p",    0x008000, 0x05f9eb9a, BRF_GRA },			 // 12
 
-	{ "rom21",        0x000100, 0xd6360b4d, BRF_GRA },			 // 13
-	{ "rom20",        0x000100, 0x4ca01887, BRF_GRA },			 // 14
-	{ "rom19",        0x000100, 0x513224f0, BRF_GRA },			 // 15
+	{ "rom21.12q",    0x000100, 0xd6360b4d, BRF_GRA },			 // 13
+	{ "rom20.12m",    0x000100, 0x4ca01887, BRF_GRA },			 // 14
+	{ "rom19.12p",    0x000100, 0x513224f0, BRF_GRA },			 // 15
 
-	{ "a68-03",       0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
+	{ "a68-03.12d",   0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
 
-	{ "68705.bin",    0x000800, 0x00000000, BRF_NODUMP | BRF_OPT | BRF_PRG }, // 17 MCU ROM
+	{ "68705.6a",     0x000800, 0x00000000, BRF_NODUMP | BRF_OPT | BRF_PRG }, // 17 MCU ROM
 };
 
 

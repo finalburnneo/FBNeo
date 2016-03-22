@@ -1604,7 +1604,7 @@ static struct BurnRomInfo arkanoidjbl2RomDesc[] = {
 
 	{ "a75-07.ic24",  0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  6 Color Proms
 	{ "a75-08.ic23",  0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  7
-	{ "a75-09.ic23",  0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
+	{ "a75-09.ic22",  0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  8
 };
 
 STD_ROM_PICK(arkanoidjbl2)
@@ -1865,12 +1865,12 @@ struct BurnDriver BurnDrvarkbloc2 = {
 // Arkanoid (bootleg on Block hardware)
 
 static struct BurnRomInfo arkgcblRomDesc[] = {
-	{ "16.6e",        0x8000, 0xb0f73900, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "17.6f",        0x8000, 0x9827f297, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "electric__16.6e",   0x8000, 0xb0f73900, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
+	{ "electric__17.6f",   0x8000, 0x9827f297, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-03.rom",   0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  2 Graphics
-	{ "a75-04.rom",   0x8000, 0x71fae199, 3 | BRF_GRA },	       //  3
-	{ "a75-05.rom",   0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  4
+	{ "electric__18.3a",   0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  2 Graphics
+	{ "electric__19.3c",   0x8000, 0x71fae199, 3 | BRF_GRA },	       //  3
+	{ "electric__20.3d",   0x8000, 0xc76374e2, 3 | BRF_GRA },	       //  4
 	
 	{ "82s129.5k",    0x0100, 0xfa70b64d, 4 | BRF_GRA },	       //  5 Color Proms
 	{ "82s129.5jk",   0x0100, 0xcca69884, 4 | BRF_GRA },	       //  6

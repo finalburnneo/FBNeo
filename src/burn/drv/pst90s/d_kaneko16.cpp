@@ -3016,6 +3016,45 @@ static void GtmrevoMCURun()
 	}
 }
 
+static void GtmroMCURun()
+{
+	UINT16 *MCURam = (UINT16*)Kaneko16MCURam;
+	UINT16 *NVRam = (UINT16*)Kaneko16NVRam;
+
+	UINT16 MCUCommand = MCURam[0x10/2];
+	UINT16 MCUOffset = MCURam[0x12/2] >> 1;
+	
+	switch (MCUCommand >> 8) {
+		case 0x02: {
+			memcpy(MCURam + MCUOffset, NVRam, 128);
+			return;
+		}
+		
+		case 0x03: {
+			MCURam[MCUOffset + 0] = 0xff00 - (Kaneko16Dip[0] << 8);
+			return;
+		}
+		
+		case 0x04: {
+			/* MCU writes the string 'TOYBOX1994-" ú[GS]žW' to shared ram  - [GS] = ASCII Group Separator */
+			MCURam[MCUOffset + 0] = 0x544f;
+			MCURam[MCUOffset + 1] = 0x5942;
+			MCURam[MCUOffset + 2] = 0x4f58;
+			MCURam[MCUOffset + 3] = 0x3139;
+			MCURam[MCUOffset + 4] = 0x3934;
+			MCURam[MCUOffset + 5] = 0x9300;
+			MCURam[MCUOffset + 6] = 0xfa1d;
+			MCURam[MCUOffset + 7] = 0x9e57;
+			return;
+		}
+		
+		case 0x42: {
+			memcpy(NVRam, MCURam + MCUOffset, 128);
+			return;
+		}
+	}
+}
+
 static void ToyboxMCUComWrite(INT32 which, UINT16 data)
 {
 	ToyboxMCUCom[which] = data;
@@ -5110,7 +5149,7 @@ static INT32 GtmroInit()
 	nRet = BurnLoadRom(MSM6295ROMData, 13, 1); if (nRet != 0) return 1;
 	ExpandSampleBanks();
 	
-	ToyboxMCURun = GtmrMCURun;
+	ToyboxMCURun = GtmroMCURun;
 	Kaneko16FrameRender = GtmrFrameRender;
 		
 	nRet = GtmrMachineInit(); if (nRet != 0) return 1;

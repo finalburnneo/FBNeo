@@ -715,6 +715,42 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin) {
+		*pnMin = 0x029702;
+	}
+
+	if (nAction & ACB_VOLATILE) {
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+
+		ZetScan(nAction);
+
+		BurnYM2203Scan(nAction, pnMin);
+
+		ppi8255_scan();
+
+		SCAN_VAR(nDrvZ80Bank);
+		SCAN_VAR(scrolly);
+		SCAN_VAR(scrollx);
+
+		if (nAction & ACB_WRITE) {
+			ZetOpen(0);
+			ppi8255_1_portC_w(nDrvZ80Bank);
+			ZetClose();
+		}
+	}
+
+	return 0;
+}
+
 
 // Himeshikibu (Japan)
 
@@ -754,7 +790,7 @@ struct BurnDriver BurnDrvHimesiki = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAHJONG, 0,
 	NULL, himesikiRomInfo, himesikiRomName, NULL, NULL, HimesikiInputInfo, HimesikiDIPInfo,
-	himesikiInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	himesikiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };
 
@@ -788,6 +824,6 @@ struct BurnDriver BurnDrvAndroidp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, androidpRomInfo, androidpRomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
-	androidpInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	androidpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };

@@ -1267,7 +1267,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 	if (fball) {
-
+		MSM6295Exit(0);
 	} else {
 		BurnYM2203Exit();
 	}

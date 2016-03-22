@@ -156,6 +156,35 @@ static struct BurnInputInfo GwarInputList[] = {
 
 STDINPUTINFO(Gwar)
 
+static struct BurnInputInfo GwarbInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 1,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 2,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+};
+
+STDINPUTINFO(Gwarb)
+
 static struct BurnInputInfo MarvinsInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
@@ -976,6 +1005,60 @@ static struct BurnDIPInfo GwarDIPList[]=
 };
 
 STDDIPINFO(Gwar)
+
+static struct BurnDIPInfo GwarbDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0x3b, NULL		},
+	{0x14, 0xff, 0xff, 0x0a, NULL		},
+	{0x15, 0xff, 0xff, 0x30, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x13, 0x01, 0x01, 0x00, "No"		},
+	{0x13, 0x01, 0x01, 0x01, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x13, 0x01, 0x02, 0x02, "Off"		},
+	{0x13, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x13, 0x01, 0x08, 0x08, "3"		},
+	{0x13, 0x01, 0x08, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x13, 0x01, 0x30, 0x00, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x30, 0x10, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x30, 0x20, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x13, 0x01, 0xc0, 0x00, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0xc0, 0x80, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0xc0, 0xc0, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x14, 0x01, 0x03, 0x03, "Easy"		},
+	{0x14, 0x01, 0x03, 0x02, "Normal"		},
+	{0x14, 0x01, 0x03, 0x01, "Hard"		},
+	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Game Mode"		},
+	{0x14, 0x01, 0x0c, 0x0c, "Demo Sounds Off"		},
+	{0x14, 0x01, 0x0c, 0x08, "Demo Sounds On"		},
+	{0x14, 0x01, 0x0c, 0x00, "Freeze"		},
+	{0x14, 0x01, 0x0c, 0x04, "Infinite Lives (Cheat)"		},
+
+	{0   , 0xfe, 0   ,    0, "Bonus Life"		},
+	{0x15, 0x01, 0x34, 0x30, "30k 60k 60k+"		},
+	{0x15, 0x01, 0x34, 0x20, "40k 80k 80k+"		},
+	{0x15, 0x01, 0x34, 0x10, "50k 100k 100k+"		},
+	{0x15, 0x01, 0x34, 0x34, "30k 60k"		},
+	{0x15, 0x01, 0x34, 0x24, "40k 80k"		},
+	{0x15, 0x01, 0x34, 0x14, "50k 100k"		},
+	{0x15, 0x01, 0x34, 0x00, "None"		},
+};
+
+STDDIPINFO(Gwarb)
 
 static struct BurnDIPInfo MarvinsDIPList[]=
 {
@@ -4307,6 +4390,15 @@ static INT32 GwarInit()
 	return 0;
 }
 
+static INT32 GwarbInit()
+{
+	INT32 rc = GwarInit();
+
+	game_rotates = 0;
+
+	return rc;
+}
+
 static INT32 GwaraInit()
 {
 	AllMem = NULL;
@@ -6213,6 +6305,12 @@ static INT32 GwarFrame()
 				DrvInputs[1] = (DrvInputs[1] & 0x0f) + (dialRotation(0) << 4);
 				DrvInputs[2] = (DrvInputs[2] & 0x0f) + (dialRotation(1) << 4);
 			}
+		} else {
+			if (game_select == 3) {
+				// gwarb
+				DrvInputs[1] = (DrvInputs[1] & 0x0f) + 0xf0;
+				DrvInputs[2] = (DrvInputs[2] & 0x0f) + 0xf0;
+			}
 		}
 	}
 
@@ -7437,8 +7535,8 @@ struct BurnDriver BurnDrvGwarb = {
 	"Guerrilla War (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, gwarbRomInfo, gwarbRomName, NULL, NULL, GwarInputInfo, GwarDIPInfo,
-	GwarInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
+	NULL, gwarbRomInfo, gwarbRomName, NULL, NULL, GwarbInputInfo, GwarbDIPInfo,
+	GwarbInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
 };
 

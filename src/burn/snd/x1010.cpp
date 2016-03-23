@@ -149,10 +149,9 @@ void x1010_sound_update()
 					INT32 vol;
 					delta = env_offs>>ENV_BASE_BITS;
 	 				// Envelope one shot mode
-					if( (reg->status&4) != 0 || delta >= 0x80 ) {
+					if( (reg->status&4) != 0 && delta >= 0x80 ) {
 						reg->status &= 0xfe;					// Key off
-                                                //bprintf(0, _T("--super debug!-- smp ended delta[%X]\n"), delta);
-                                                break;
+						break;
 					}
 
 					vol = *(env + (delta & 0x7f));

@@ -10330,6 +10330,28 @@ static struct BurnRomInfo SmooncrsRomDesc[] = {
 STD_ROM_PICK(Smooncrs)
 STD_ROM_FN(Smooncrs)
 
+static struct BurnRomInfo MooncrstsoRomDesc[] = {
+	{ "1.BIN",         0x00800, 0x0357ab1a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2.BIN",         0x00800, 0xcf6e78f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3.BIN",         0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4.BIN",         0x00800, 0xcea864f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.BIN",         0x00800, 0x32cd9adc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.BIN",         0x00800, 0xf0230048, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7.BIN",         0x00800, 0x73783cee, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8.BIN",         0x00800, 0x1644965a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	// missing, assuming 'super moon cresta' gfx
+	{ "epr203",        0x00800, 0xbe26b561, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_d",         0x00800, 0x13932a15, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "epr202",        0x00800, 0x26c7e800, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "mcs_c",         0x00800, 0x24cfd145, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "mmi6331.6l",    0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mooncrstso)
+STD_ROM_FN(Mooncrstso)
+
 static struct BurnRomInfo MooncptcRomDesc[] = {
 	{ "mc1.bin",       0x00800, 0x16f17cd5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "mc2.bin",       0x00800, 0xe2128805, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -11151,6 +11173,16 @@ struct BurnDriver BurnDrvSmooncrs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, SmooncrsRomInfo, SmooncrsRomName, NULL, NULL, SmooncrsInputInfo, SmooncrsDIPInfo,
+	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMooncrstso = {
+	"mooncrstso", "mooncrst", NULL, NULL, "1980",
+	"Moon Cresta (SegaSA / Sonic)\0", NULL, "Nichibutsu (Sonic license)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MooncrstsoRomInfo, MooncrstsoRomName, NULL, NULL, OmegaInputInfo, MooncptcDIPInfo,
 	MooncrstInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

@@ -2810,13 +2810,13 @@ struct BurnDriver BurnDrvGunhohki = {
 // Mystic Riders (bootleg?)
 
 static struct BurnRomInfo mysticribRomDesc[] = {
-	{ "h0",			0x040000, 0xe38c1f56, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "l0",			0x040000, 0x77846e48, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "h1",			0x010000, 0x4dcb085b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "l1",			0x010000, 0x88df4f70, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "h0",				0x040000, 0xe38c1f56, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "l0",				0x040000, 0x77846e48, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "h1",				0x010000, 0x4dcb085b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "l1",				0x010000, 0x88df4f70, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "sh0",		0x010000, 0xfc7221ee, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "sl0",		0x010000, 0x65c809e6, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "sh0",			0x010000, 0xfc7221ee, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "sl0",			0x010000, 0x65c809e6, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "mr-c0.bin",		0x040000, 0x872a8fad, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "mr-c1.bin",		0x040000, 0xd2ffb27a, 3 | BRF_GRA },           //  7
@@ -3597,22 +3597,22 @@ static struct BurnRomInfo majtitl2RomDesc[] = {
 	{ "is-h1.5l",		0x040000, 0x9ba8e1f2, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "is-l1.5j",		0x040000, 0xe4e00626, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "mt2sh0",		0x010000, 0x1ecbea43, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "mt2sl0",		0x010000, 0x8fd5b531, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "mt2sh0",			0x010000, 0x1ecbea43, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "mt2sl0",			0x010000, 0x8fd5b531, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "c0",			0x040000, 0x7e61e4b5, 3 | BRF_GRA },           //  6 Background Tiles
-	{ "c1",			0x040000, 0x0a667564, 3 | BRF_GRA },           //  7
-	{ "c2",			0x040000, 0x5eb44312, 3 | BRF_GRA },           //  8
-	{ "c3",			0x040000, 0xf2866294, 3 | BRF_GRA },           //  9
+	{ "c0",				0x040000, 0x7e61e4b5, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "c1",				0x040000, 0x0a667564, 3 | BRF_GRA },           //  7
+	{ "c2",				0x040000, 0x5eb44312, 3 | BRF_GRA },           //  8
+	{ "c3",				0x040000, 0xf2866294, 3 | BRF_GRA },           //  9
 
-	{ "k30",		0x100000, 0x8c9a2678, 4 | BRF_GRA },           // 10 Sprites
-	{ "k31",		0x100000, 0x5455df78, 4 | BRF_GRA },           // 11
-	{ "k32",		0x100000, 0x3a258c41, 4 | BRF_GRA },           // 12
-	{ "k33",		0x100000, 0xc1e91a14, 4 | BRF_GRA },           // 13
+	{ "k30",			0x100000, 0x8c9a2678, 4 | BRF_GRA },           // 10 Sprites
+	{ "k31",			0x100000, 0x5455df78, 4 | BRF_GRA },           // 11
+	{ "k32",			0x100000, 0x3a258c41, 4 | BRF_GRA },           // 12
+	{ "k33",			0x100000, 0xc1e91a14, 4 | BRF_GRA },           // 13
 
-	{ "da",			0x080000, 0x713b9e9f, 5 | BRF_SND },           // 14 Irem GA20 Samples
+	{ "da",				0x080000, 0x713b9e9f, 5 | BRF_SND },           // 14 Irem GA20 Samples
 
-	{ "mt2eep",		0x000800, 0x208af971, 6 | BRF_PRG | BRF_ESS }, // 15 EEPROM data
+	{ "mt2eep",			0x000800, 0x208af971, 6 | BRF_PRG | BRF_ESS }, // 15 EEPROM data
 
 	{ "pal16l8-m92-a-3m.ic11",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 16 plds
 	{ "pal16l8-m92-a-7j.ic41",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 17
@@ -3646,13 +3646,65 @@ struct BurnDriver BurnDrvMajtitl2 = {
 };
 
 
+// Major Title 2 (World, alt sound CPU)
+
+static struct BurnRomInfo majtitl2aRomDesc[] = {
+	{ "mt2-h0-.5m",		0x040000, 0xb163b12e, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "mt2-l0-.5f",		0x040000, 0x6f3b5d9d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "mt2-h1-.5l",		0x040000, 0x9ba8e1f2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mt2-l1-.5j",		0x040000, 0xe4e00626, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "mt2sh0-a",		0x010000, 0x50f076e5, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "mt2sl0-a",		0x010000, 0xf4ecd7b5, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "c0",				0x040000, 0x7e61e4b5, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "c1",				0x040000, 0x0a667564, 3 | BRF_GRA },           //  7
+	{ "c2",				0x040000, 0x5eb44312, 3 | BRF_GRA },           //  8
+	{ "c3",				0x040000, 0xf2866294, 3 | BRF_GRA },           //  9
+
+	{ "k30",			0x100000, 0x8c9a2678, 4 | BRF_GRA },           // 10 Sprites
+	{ "k31",			0x100000, 0x5455df78, 4 | BRF_GRA },           // 11
+	{ "k32",			0x100000, 0x3a258c41, 4 | BRF_GRA },           // 12
+	{ "k33",			0x100000, 0xc1e91a14, 4 | BRF_GRA },           // 13
+
+	{ "da",				0x080000, 0x713b9e9f, 5 | BRF_SND },           // 14 Irem GA20 Samples
+
+	{ "mt2eep",			0x000800, 0x208af971, 6 | BRF_PRG | BRF_ESS }, // 15 EEPROM data
+
+	{ "pal16l8-m92-a-3m.ic11",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 16 plds
+	{ "pal16l8-m92-a-7j.ic41",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 17
+	{ "pal16l8-m92-a-9j.ic51",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 18
+	{ "pal16l8-m92-b-2l.ic7",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 19
+	{ "pal16l8-m92-b-7h.ic47",	0x000104, 0x00000000, 7 | BRF_NODUMP }, // 20
+};
+
+STD_ROM_PICK(majtitl2a)
+STD_ROM_FN(majtitl2a)
+
+static INT32 majtitl2aInit()
+{
+	m92_kludge = 2;
+	return DrvInit(majtitl2RomLoad, mysticri_decryption_table, 1, 0x100000, 0x400000);
+}
+
+struct BurnDriver BurnDrvMajtitl2a = {
+	"majtitl2a", "majtitl2", NULL, NULL, "1992",
+	"Major Title 2 (World, alt sound CPU)\0", NULL, "Irem", "M92",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M92, GBF_SPORTSMISC, 0,
+	NULL, majtitl2aRomInfo, majtitl2aRomName, NULL, NULL, p4CommonInputInfo, Majtitl2DIPInfo,
+	majtitl2aInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+
 // Major Title 2 (Japan)
 
 static struct BurnRomInfo majtitl2jRomDesc[] = {
 	{ "mt2-h0",		0x040000, 0x8a8d71ad, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
 	{ "mt2-l1",		0x040000, 0xdd4fff51, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "is-h1.5l",		0x040000, 0x9ba8e1f2, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "is-l1.5j",		0x040000, 0xe4e00626, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "is-h1.5l",	0x040000, 0x9ba8e1f2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "is-l1.5j",	0x040000, 0xe4e00626, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "mt2sh0",		0x010000, 0x1ecbea43, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
 	{ "mt2sl0",		0x010000, 0x8fd5b531, 2 | BRF_PRG | BRF_ESS }, //  5

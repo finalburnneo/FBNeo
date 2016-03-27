@@ -2219,7 +2219,7 @@ static struct BurnRomInfo MyheroblRomDesc[] = {
 	{ "6.E10",      	   0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
 	{ "B13.R10",           0x004000, 0x9a4861b1, BRF_GRA },		  //  4 Tiles
-	{ "B11.R7",            0x004000, 0xcf68b4a2, BRF_GRA },		  //  5 Tiles
+	{ "B11.R7",            0x004000, 0x0d6f248a, BRF_GRA },		  //  5 Tiles
 	{ "x.R8",              0x004000, 0x24537709, BRF_GRA },		  //  6 Tiles
 	
 	{ "4.f4",      		   0x004000, 0xf19e05a1, BRF_GRA },		  //  7 Sprites
@@ -6468,9 +6468,9 @@ struct BurnDriver BurnDrvSscandal = {
 
 struct BurnDriver BurnDrvMyherobl = {
 	"myherobl", "myhero", NULL, NULL, "1985",
-	"My Hero (bootleg, 315-5132 encryption)\0", "needs proper tiles decode function", "bootleg", "System 1",
+	"My Hero (bootleg, 315-5132 encryption)\0", NULL, "bootleg", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, MyheroblRomInfo, MyheroblRomName, NULL, NULL, MyheroInputInfo, MyheroDIPInfo,
 	MyheroblInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3

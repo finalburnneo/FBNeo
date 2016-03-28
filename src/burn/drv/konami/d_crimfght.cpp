@@ -40,6 +40,37 @@ static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo CrimfghtInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"service"},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+};
+
+STDINPUTINFO(Crimfght)
+
+static struct BurnInputInfo CrimfghtuInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
@@ -82,103 +113,9 @@ static struct BurnInputInfo CrimfghtInputList[] = {
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Crimfght)
-
-static struct BurnInputInfo CrimfgtjInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"service"},
-	{"Service 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"service2"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
-};
-
-STDINPUTINFO(Crimfgtj)
+STDINPUTINFO(Crimfghtu)
 
 static struct BurnDIPInfo CrimfghtDIPList[]=
-{
-	{0x21, 0xff, 0xff, 0xff, NULL			},
-	{0x22, 0xff, 0xff, 0x5f, NULL			},
-	{0x23, 0xff, 0xff, 0xfb, NULL			},
-
-	{0   , 0xfe, 0   ,   16, "Coinage"		},
-	{0x21, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"   },
-	{0x21, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"   },
-	{0x21, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"   },
-	{0x21, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
-	{0x21, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"   },
-	{0x21, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
-	{0x21, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
-	{0x21, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
-	{0x21, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
-	{0x21, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
-	{0x21, 0x01, 0x0f, 0x00, "1 Coin 99 Credits"	},
-
-/*	{0   , 0xfe, 0   ,    16, "Coin B"		},
-	{0x21, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"  },
-	{0x21, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"  },
-	{0x21, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"  },
-	{0x21, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
-	{0x21, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
-	{0x21, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"  },
-	{0x21, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
-	{0x21, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
-	{0x21, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
-	{0x21, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
-	{0x21, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
-	{0x21, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
-	{0x21, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
-	{0x21, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
-	{0x21, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
-	{0x21, 0x01, 0xf0, 0x00, "No Coin B"		},*/
-
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x22, 0x01, 0x60, 0x60, "Easy"			},
-	{0x22, 0x01, 0x60, 0x40, "Normal"		},
-	{0x22, 0x01, 0x60, 0x20, "Difficult"		},
-	{0x22, 0x01, 0x60, 0x00, "Very difficult"	},
-
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x22, 0x01, 0x80, 0x80, "Off"			},
-	{0x22, 0x01, 0x80, 0x00, "On"			},
-
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x23, 0x01, 0x01, 0x01, "Off"			},
-//	{0x23, 0x01, 0x01, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x23, 0x01, 0x04, 0x00, "Off"			},
-	{0x23, 0x01, 0x04, 0x04, "On"			},
-};
-
-STDDIPINFO(Crimfght)
-
-static struct BurnDIPInfo CrimfgtjDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xff, NULL			},
 	{0x16, 0xff, 0xff, 0x5f, NULL			},
@@ -245,7 +182,70 @@ static struct BurnDIPInfo CrimfgtjDIPList[]=
 	{0x17, 0x01, 0x04, 0x04, "On"			},
 };
 
-STDDIPINFO(Crimfgtj)
+STDDIPINFO(Crimfght)
+
+static struct BurnDIPInfo CrimfghtuDIPList[]=
+{
+	{0x21, 0xff, 0xff, 0xff, NULL			},
+	{0x22, 0xff, 0xff, 0x5f, NULL			},
+	{0x23, 0xff, 0xff, 0xfb, NULL			},
+
+	{0   , 0xfe, 0   ,   16, "Coinage"		},
+	{0x21, 0x01, 0x0f, 0x02, "4 Coins 1 Credit"   },
+	{0x21, 0x01, 0x0f, 0x05, "3 Coins 1 Credit"   },
+	{0x21, 0x01, 0x0f, 0x08, "2 Coins 1 Credit"   },
+	{0x21, 0x01, 0x0f, 0x04, "3 Coins 2 Credits"	},
+	{0x21, 0x01, 0x0f, 0x01, "4 Coins 3 Credits"	},
+	{0x21, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"   },
+	{0x21, 0x01, 0x0f, 0x03, "3 Coins 4 Credits"	},
+	{0x21, 0x01, 0x0f, 0x07, "2 Coins 3 Credits"	},
+	{0x21, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"	},
+	{0x21, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"	},
+	{0x21, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"	},
+	{0x21, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"	},
+	{0x21, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"	},
+	{0x21, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"	},
+	{0x21, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"	},
+	{0x21, 0x01, 0x0f, 0x00, "1 Coin 99 Credits"	},
+
+/*	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0x21, 0x01, 0xf0, 0x20, "4 Coins 1 Credit"  },
+	{0x21, 0x01, 0xf0, 0x50, "3 Coins 1 Credit"  },
+	{0x21, 0x01, 0xf0, 0x80, "2 Coins 1 Credit"  },
+	{0x21, 0x01, 0xf0, 0x40, "3 Coins 2 Credits"	},
+	{0x21, 0x01, 0xf0, 0x10, "4 Coins 3 Credits"	},
+	{0x21, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"  },
+	{0x21, 0x01, 0xf0, 0x30, "3 Coins 4 Credits"	},
+	{0x21, 0x01, 0xf0, 0x70, "2 Coins 3 Credits"	},
+	{0x21, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"	},
+	{0x21, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"	},
+	{0x21, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"	},
+	{0x21, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"	},
+	{0x21, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"	},
+	{0x21, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"	},
+	{0x21, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"	},
+	{0x21, 0x01, 0xf0, 0x00, "No Coin B"		},*/
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x22, 0x01, 0x60, 0x60, "Easy"			},
+	{0x22, 0x01, 0x60, 0x40, "Normal"		},
+	{0x22, 0x01, 0x60, 0x20, "Difficult"		},
+	{0x22, 0x01, 0x60, 0x00, "Very difficult"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x22, 0x01, 0x80, 0x80, "Off"			},
+	{0x22, 0x01, 0x80, 0x00, "On"			},
+
+//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+//	{0x23, 0x01, 0x01, 0x01, "Off"			},
+//	{0x23, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x23, 0x01, 0x04, 0x00, "Off"			},
+	{0x23, 0x01, 0x04, 0x04, "On"			},
+};
+
+STDDIPINFO(Crimfghtu)
 
 static void set_ram_bank(INT32 data)
 {
@@ -686,8 +686,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Crime Fighters (US 4 players)
 
 static struct BurnRomInfo crimfghtRomDesc[] = {
-	{ "821l02.f24",	0x20000, 0x588e7da6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
-
+	{ "821r02.f24",	0x20000, 0x4ecdd923, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
+	
 	{ "821l01.h4",	0x08000, 0x0faca89e, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
 	{ "821k06.k13",	0x40000, 0xa1eadb24, 3 | BRF_GRA },           //  2 Background Tiles
@@ -706,7 +706,7 @@ STD_ROM_FN(crimfght)
 
 struct BurnDriver BurnDrvCrimfght = {
 	"crimfght", NULL, NULL, NULL, "1989",
-	"Crime Fighters (US 4 players)\0", NULL, "Konami", "GX821",
+	"Crime Fighters (World 2 players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, crimfghtRomInfo, crimfghtRomName, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
@@ -717,7 +717,7 @@ struct BurnDriver BurnDrvCrimfght = {
 
 // Crime Fighters (Japan 2 Players)
 
-static struct BurnRomInfo crimfgtjRomDesc[] = {
+static struct BurnRomInfo crimfghtjRomDesc[] = {
 	{ "821p02.f24",	0x20000, 0xf33fa2e1, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
 
 	{ "821l01.h4",	0x08000, 0x0faca89e, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
@@ -733,24 +733,24 @@ static struct BurnRomInfo crimfgtjRomDesc[] = {
 	{ "821a08.i15",	0x00100, 0x7da55800, 6 | BRF_OPT },           //  7 Proms
 };
 
-STD_ROM_PICK(crimfgtj)
-STD_ROM_FN(crimfgtj)
+STD_ROM_PICK(crimfghtj)
+STD_ROM_FN(crimfghtj)
 
-struct BurnDriver BurnDrvCrimfgtj = {
+struct BurnDriver BurnDrvCrimfghtj = {
 	"crimfghtj", "crimfght", NULL, NULL, "1989",
 	"Crime Fighters (Japan 2 Players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, crimfgtjRomInfo, crimfgtjRomName, NULL, NULL, CrimfgtjInputInfo, CrimfgtjDIPInfo,
+	NULL, crimfghtjRomInfo, crimfghtjRomName, NULL, NULL, CrimfghtInputInfo, CrimfghtDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
 };
 
 
-// Crime Fighters (World 2 Players)
+// Crime Fighters (US 4 Players)
 
-static struct BurnRomInfo crimfgt2RomDesc[] = {
-	{ "821r02.f24",	0x20000, 0x4ecdd923, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
+static struct BurnRomInfo crimfghtuRomDesc[] = {
+	{ "821l02.f24",	0x20000, 0x588e7da6, 1 | BRF_PRG | BRF_ESS }, //  0 Konami CPU Code
 
 	{ "821l01.h4",	0x08000, 0x0faca89e, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
@@ -765,15 +765,15 @@ static struct BurnRomInfo crimfgt2RomDesc[] = {
 	{ "821a08.i15",	0x00100, 0x7da55800, 6 | BRF_OPT },           //  7 Proms
 };
 
-STD_ROM_PICK(crimfgt2)
-STD_ROM_FN(crimfgt2)
+STD_ROM_PICK(crimfghtu)
+STD_ROM_FN(crimfghtu)
 
-struct BurnDriver BurnDrvCrimfgt2 = {
-	"crimfght2", "crimfght", NULL, NULL, "1989",
-	"Crime Fighters (World 2 Players)\0", NULL, "Konami", "GX821",
+struct BurnDriver BurnDrvCrimfghtu = {
+	"crimfghtu", "crimfght", NULL, NULL, "1989",
+	"Crime Fighters (US 4 Players)\0", NULL, "Konami", "GX821",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, crimfgt2RomInfo, crimfgt2RomName, NULL, NULL, CrimfgtjInputInfo, CrimfgtjDIPInfo,
+	NULL, crimfghtuRomInfo, crimfghtuRomName, NULL, NULL, CrimfghtuInputInfo, CrimfghtuDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 224, 4, 3
 };

@@ -709,11 +709,11 @@ struct BurnDriver BurnDrvSbishi = {
 };
 
 
-// Super Bishi Bashi Championship (ver KAA, 3 Players)
+// Super Bishi Bashi Championship (ver KAB, 3 Players)
 
 static struct BurnRomInfo sbishikRomDesc[] = {
-	{ "675kaa05.12e",	0x80000, 0x23600e1d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "675kaa06.15e",	0x80000, 0xbd1091f5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "kab05.12e",		0x80000, 0x749063ca, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "kab06.15e",		0x80000, 0x089e0f37, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "675kaa07.14n",	0x80000, 0x1177c1f8, 2 | BRF_GRA },           //  2 K056832 Characters
 	{ "675kaa08.17n",	0x80000, 0x7117e9cd, 2 | BRF_GRA },           //  3
@@ -731,10 +731,41 @@ STD_ROM_FN(sbishik)
 
 struct BurnDriver BurnDrvSbishik = {
 	"sbishik", "sbishi", NULL, NULL, "1998",
-	"Super Bishi Bashi Championship (ver KAA, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
+	"Super Bishi Bashi Championship (ver KAB, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
 	NULL, sbishikRomInfo, sbishikRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
+// Super Bishi Bashi Championship (ver KAA, 3 Players)
+
+static struct BurnRomInfo sbishikaRomDesc[] = {
+	{ "675kaa05.12e",	0x80000, 0x23600e1d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "675kaa06.15e",	0x80000, 0xbd1091f5, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "675kaa07.14n",	0x80000, 0x1177c1f8, 2 | BRF_GRA },           //  2 K056832 Characters
+	{ "675kaa08.17n",	0x80000, 0x7117e9cd, 2 | BRF_GRA },           //  3
+	{ "675kaa09.19n",	0x80000, 0x8d49c765, 2 | BRF_GRA },           //  4
+	{ "675kaa10.22n",	0x80000, 0xc16acf32, 2 | BRF_GRA },           //  5
+
+	{ "675kaa01.2f",	0x80000, 0x73ac6ae6, 3 | BRF_SND },           //  6 YMZ280b Samples
+	{ "675kaa02.4f",	0x80000, 0x4c341e7c, 3 | BRF_SND },           //  7
+	{ "675kaa03.6f",	0x80000, 0x83f91beb, 3 | BRF_SND },           //  8
+	{ "675kaa04.8f",	0x80000, 0xebcbd813, 3 | BRF_SND },           //  9
+};
+
+STD_ROM_PICK(sbishika)
+STD_ROM_FN(sbishika)
+
+struct BurnDriver BurnDrvSbishika = {
+	"sbishika", "sbishi", NULL, NULL, "1998",
+	"Super Bishi Bashi Championship (ver KAA, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	NULL, sbishikaRomInfo, sbishikaRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };

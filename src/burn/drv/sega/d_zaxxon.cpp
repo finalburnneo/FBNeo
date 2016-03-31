@@ -1284,7 +1284,7 @@ static void draw_sprites(UINT16 flipxmask, UINT16 flipymask)
 
 		sx = (240 - sx) - 16;
 		if (sx < -15) sx += 256;
-		sy = (240 - sy) - 30;
+		sy = (240 - sy) - 32;
 		if (sy < -15) sy += 256;
 
 		if (flipy) {

@@ -1275,7 +1275,7 @@ static void DrvRenderBgLayer()
 	}
 }
 
-static void DrvRenderFgLayer()
+static void DrvRenderFgLayerSide()
 {
 	INT32 mx, my, Code, Colour, x, y, TileIndex, Flip, xFlip, yFlip;
 
@@ -1327,6 +1327,45 @@ static void DrvRenderFgLayer()
 						Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
 					}
 				}
+			}
+		}
+	}
+}
+
+static void DrvRenderFgLayerMiddle()
+{
+	INT32 sx, sy, Code, Colour, x, y, xFlip, yFlip;
+
+	for (INT32 offs = 0x3ff; offs >= 0; offs--) {
+		Code   = DrvVideoRam[0x400 + offs];
+		Colour = DrvVideoRam[0xc00 + offs];
+		if (!(Colour & 0x20)) continue; // nope!
+
+		sx = offs % 32;
+		sy = offs / 32;
+		xFlip = ~Colour & 0x40;
+		yFlip = Colour & 0x80;
+		Colour &= 0x3f;
+
+		x = 8 * sx;
+		y = 8 * sy;
+		y -= 16;
+
+		if (xFlip) {
+			if (yFlip) {
+				Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			} else {
+				Render8x8Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_FlipX_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			}
+		} else {
+			if (yFlip) {
+				Render8x8Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_FlipY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			} else {
+				Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
 			}
 		}
 	}
@@ -1425,10 +1464,15 @@ static void DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
-	DrvRenderBgLayer();
-	DrvRenderSprites(1);
-	DrvRenderFgLayer();
-	DrvRenderBullets();
+	if (nBurnLayer & 1) DrvRenderBgLayer();
+	if (nBurnLayer & 2) DrvRenderSprites(1);
+	// this middle layer is important, its opaque and clears the attract mode
+	// sprites from the screen. (coin up when a car is on the screen to test)
+	// somehow mame does the middle and side layer at the same time, but I
+	// can't figure it out.  so hackity hack hack. -dink
+	if (nBurnLayer & 4) DrvRenderFgLayerMiddle();
+	if (nBurnLayer & 4) DrvRenderFgLayerSide();
+	if (nBurnLayer & 8) DrvRenderBullets();
 	BurnTransferCopy(DrvPalette);
 }
 
@@ -1574,7 +1618,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvRallyx = {
 	"rallyx", NULL, NULL, "rallyx", "1980",
-	"Rally X (32k Ver.?))\0", NULL, "Namco", "Miscellaneous",
+	"Rally X (32k Ver.?)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxRomInfo, RallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,

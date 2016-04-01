@@ -1,6 +1,12 @@
+// FinalBurn Alpha driver module for Rally-X, based on the MAME driver by Nicola Salmoria.
+// Emulates Rally-X variants & Jungler, other games TBA
+// Oddities: Jungler has flipped-mode on by default, but it only affects sprites
+//           and bullets.
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "namco_snd.h"
+#include "timeplt_snd.h"
 #include "samples.h"
 
 static UINT8 DrvInputPort0[8]     = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -30,11 +36,18 @@ static UINT8 *DrvDots             = NULL;
 static UINT8 *DrvTempRom          = NULL;
 static UINT32 *DrvPalette         = NULL;
 
+static INT16 *pAY8910Buffer[6];
+
 static UINT8 DrvCPUFireIRQ;
+static UINT8 last_sound_irq;
 static UINT8 DrvCPUIRQVector;
 static UINT8 xScroll;
 static UINT8 yScroll;
 static UINT8 DrvLastBang;
+static INT32 rallyx = 0;
+static INT32 junglermode = 0;
+static INT32 junglerflip = 0;
+static INT32 locomotnmode = 0;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
@@ -73,13 +86,13 @@ static struct BurnInputInfo JunglerInputList[] =
 	{ "Coin 2"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p2 coin"   },
 	{ "Start 2"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p2 start"  },
 
-	{ "Up"                , BIT_DIGITAL  , DrvInputPort0 + 0, "p1 up"     },
+	{ "Up"                , BIT_DIGITAL  , DrvInputPort1 + 0, "p1 up"     },
 	{ "Down"              , BIT_DIGITAL  , DrvInputPort2 + 7, "p1 down"   },
-	{ "Left"              , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 left"   },
-	{ "Right"             , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 right"  },
+	{ "Left"              , BIT_DIGITAL  , DrvInputPort0 + 4, "p1 left"   },
+	{ "Right"             , BIT_DIGITAL  , DrvInputPort0 + 5, "p1 right"  },
 	{ "Fire 1"            , BIT_DIGITAL  , DrvInputPort0 + 3, "p1 fire 1" },
 	
-	{ "Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort1 + 0, "p2 up"     },
+	{ "Up (Cocktail)"     , BIT_DIGITAL  , DrvInputPort0 + 0, "p2 up"     },
 	{ "Down (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 1, "p2 down"   },
 	{ "Left (Cocktail)"   , BIT_DIGITAL  , DrvInputPort1 + 5, "p2 left"   },
 	{ "Right (Cocktail)"  , BIT_DIGITAL  , DrvInputPort1 + 4, "p2 right"  },
@@ -116,7 +129,7 @@ static inline void JunglerMakeInputs()
 	for (INT32 i = 0; i < 8; i++) {
 		DrvInput[0] -= (DrvInputPort0[i] & 1) << i;
 		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] -= (DrvInputPort1[i] & 1) << i;
+		DrvInput[2] -= (DrvInputPort2[i] & 1) << i;
 	}
 }
 
@@ -406,6 +419,13 @@ static INT32 JunglerMemIndex()
 	DrvDots                = Next; Next += 0x008 * 4 * 4;
 	DrvPalette             = (UINT32*)Next; Next += 324 * sizeof(UINT32);
 
+	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+
 	MemEnd                 = Next;
 
 	return 0;
@@ -439,11 +459,14 @@ static INT32 JunglerDoReset()
 	ZetClose();
 	
 	DrvCPUFireIRQ = 0;
+	last_sound_irq = 0;
 	DrvCPUIRQVector = 0;
 	xScroll = 0;
 	yScroll = 0;
+	junglerflip = 0;
 
 	HiscoreReset();
+	TimepltSndReset();
 
 	return 0;
 }
@@ -473,8 +496,11 @@ UINT8 __fastcall RallyxZ80ProgRead(UINT16 a)
 
 void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 {
-	if (a >= 0xa100 && a <= 0xa11f) { NamcoSoundWrite(a - 0xa100, d); return; }
-	
+	if (a >= 0xa100 && a <= 0xa11f) {
+		NamcoSoundWrite(a - 0xa100, d);
+		return;
+	}
+
 	switch (a) {
 		case 0xa000:
 		case 0xa001:
@@ -538,6 +564,7 @@ void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 		
 		case 0xa183: {
 			// flip screen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+			bprintf(0, _T("Flipmode %X\n"), d);
 			return;
 		}
 		
@@ -628,6 +655,10 @@ UINT8 __fastcall JunglerZ80ProgRead1(UINT16 a)
 void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 {
 	switch (a) {
+		case 0xa100: {
+			TimepltSndSoundlatch(d);
+			return;
+		}
 		case 0xa030:
 		case 0xa031:
 		case 0xa032:
@@ -679,8 +710,27 @@ void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 			return;
 		}
 		
+		case 0xa180: {
+			if (last_sound_irq == 0 && d) {
+				ZetClose();
+				ZetOpen(1);
+				ZetSetVector(0xff);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				ZetClose();
+				ZetOpen(0);
+			}
+			last_sound_irq = d;
+			return;
+		}
+
 		case 0xa181: {
 			DrvCPUFireIRQ = d & 0x01;
+			return;
+		}
+
+		case 0xa183: {
+			bprintf(0, _T("Flipmode %X\n"), d);
+			junglerflip = d;
 			return;
 		}
 		
@@ -817,8 +867,7 @@ static void JunglerMachineInit()
 	ZetMapArea(0x9800, 0x9fff, 2, DrvZ80Ram1);
 	ZetClose();
 
-	ZetInit(1);
-	// not used?
+	LocomotnSndInit(DrvZ80Rom2, DrvZ80Ram2, 1);
 	
 	GenericTilesInit();
 
@@ -863,7 +912,9 @@ static INT32 DrvInit()
 	nRet = BurnLoadRom(NamcoSoundProm,       10, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
-	
+
+	rallyx = 1;
+
 	MachineInit();
 
 	return 0;
@@ -913,6 +964,8 @@ static INT32 DrvaInit()
 	
 	BurnFree(DrvTempRom);
 	
+	rallyx = 1;
+
 	MachineInit();
 
 	return 0;
@@ -967,6 +1020,8 @@ static INT32 NrallyxInit()
 	
 	BurnFree(DrvTempRom);
 	
+	rallyx = 1;
+
 	MachineInit();
 
 	return 0;
@@ -1013,7 +1068,9 @@ static INT32 JunglerInit()
 	nRet = BurnLoadRom(DrvPromVidTiming,     11, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
-	
+
+	junglermode = 1; // for locomotn(timeplt) sound driver
+
 	JunglerMachineInit();
 
 	return 0;
@@ -1022,8 +1079,13 @@ static INT32 JunglerInit()
 static INT32 DrvExit()
 {
 	GenericTilesExit();
-	NamcoSoundExit();
-	BurnSampleExit();
+	if (junglermode) {
+		TimepltSndExit(); // konami
+	} else {
+		NamcoSoundExit(); // rallyx
+		BurnSampleExit();
+	}
+
 	ZetExit();
 	
 	BurnFree(Mem);
@@ -1033,7 +1095,12 @@ static INT32 DrvExit()
 	xScroll = 0;
 	yScroll = 0;
 	DrvLastBang = 0;
-	
+	junglermode = 0;
+	junglerflip = 0;
+
+	locomotnmode = 0;
+	rallyx = 0;
+
 	return 0;
 }
 
@@ -1212,17 +1279,81 @@ static void DrvCalcPalette()
 #undef Combine2Weights
 #undef Combine3Weights
 
-static void DrvRenderBgLayer()
+static void DrvRenderBgLayer(INT32 priority)
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0, Flip, xFlip, yFlip;
+	INT32 sx, sy, Code, Colour, x, y, xFlip, yFlip;
+
+	INT32 Displacement = (rallyx) ? 1 : 0;
+	INT32 scrollx = -(xScroll - 3 * Displacement);
+	INT32 scrolly = -(yScroll + 16);
+
+	for (INT32 offs = 0x3ff; offs >= 0; offs--) {
+		Code   = DrvVideoRam[0x400 + offs];
+		Colour = DrvVideoRam[0xc00 + offs];
+
+		if (((Colour & 0x20) >> 5) != priority) continue;
+
+		sx = offs % 32;
+		sy = offs / 32;
+		xFlip = ~Colour & 0x40;
+		yFlip = Colour & 0x80;
+		Colour &= 0x3f;
+
+		/*if (junglerflip) {
+			sx = 31 - sx;
+			sy = 31 - sy;
+			xFlip = !xFlip;
+			yFlip = !yFlip;
+		}*/
+
+		x = 8 * sx;
+		y = 8 * sy;
+
+		x += scrollx;//xScroll;
+		y += scrolly;//yScroll;
+
+		if (x < -7) x += 256;
+		if (y < -7) y += 256;
+		//y -= 16;
+		//if (junglermode)
+		//	x +=3; // dink
+
+		if (xFlip) {
+			if (yFlip) {
+				Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			} else {
+				Render8x8Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_FlipX_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			}
+		} else {
+			if (yFlip) {
+				Render8x8Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_FlipY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			} else {
+				Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+				Render8x8Tile_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+			}
+		}
+	}
+}
+#if 0
+static void DrvRenderBgLayer(INT32 priority)
+{
+	INT32 mx, my, Code, Colour, x, y, TileIndex = 0, xFlip, yFlip;
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
 			Code   = DrvVideoRam[TileIndex + 0x400 + 0x000];
 			Colour = DrvVideoRam[TileIndex + 0x400 + 0x800];
-			Flip = ((Colour >> 6) & 0x03) ^ 1;
-			xFlip = Flip & 0x01;
-			yFlip = Flip & 0x02;
+			//Flip = ((Colour >> 6) & 0x03) ^ 1;
+			//xFlip = Flip & 0x01;
+			//yFlip = Flip & 0x02;
+			xFlip = ~Colour & 0x40;
+			yFlip = Colour & 0x80;
+
+			if (((Colour & 0x20) >> 5) != priority) continue;
+
 			Colour &= 0x3f;
 
 			x = 8 * mx;
@@ -1234,48 +1365,35 @@ static void DrvRenderBgLayer()
 			x += 3;
 			y -= 16;
 				
-			if (x < -8) x += 256;
-			if (x > 247) x -= 256;
-			if (y < -8) y += 256;
-			
-			if (x < 224) {
-				if (x > 8 && x < 280 && y > 8 && y < 216) {
-					if (xFlip) {
-						if (yFlip) {
-							Render8x8Tile_FlipXY(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						} else {
-							Render8x8Tile_FlipX(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						}
-					} else {
-						if (yFlip) {
-							Render8x8Tile_FlipY(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						} else {
-							Render8x8Tile(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						}
-					}
+			if (x < -7) x += 256;
+			if (y < -7) y += 256;
+
+			if (xFlip) {
+				if (yFlip) {
+					Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+					Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
 				} else {
-					if (xFlip) {
-						if (yFlip) {
-							Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						} else {
-							Render8x8Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						}
-					} else {
-						if (yFlip) {
-							Render8x8Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						} else {
-							Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-						}
-					}
-				}				
+					Render8x8Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+					Render8x8Tile_FlipX_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+				}
+			} else {
+				if (yFlip) {
+					Render8x8Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+					Render8x8Tile_FlipY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+				} else {
+					Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
+					Render8x8Tile_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
+				}
 			}
-			
+
+
 			TileIndex++;
 		}
 	}
 }
+#endif
 
-static void DrvRenderFgLayerSide()
+static void DrvRender8x32Layer()
 {
 	INT32 mx, my, Code, Colour, x, y, TileIndex, Flip, xFlip, yFlip;
 
@@ -1298,7 +1416,7 @@ static void DrvRenderFgLayerSide()
 			if (x < 0) x += 64;
 			
 			x += 224;
-						
+
 			if (x > 8 && x < 280 && y > 8 && y < 216) {
 				if (xFlip) {
 					if (yFlip) {
@@ -1332,61 +1450,34 @@ static void DrvRenderFgLayerSide()
 	}
 }
 
-static void DrvRenderFgLayerMiddle()
-{
-	INT32 sx, sy, Code, Colour, x, y, xFlip, yFlip;
-
-	for (INT32 offs = 0x3ff; offs >= 0; offs--) {
-		Code   = DrvVideoRam[0x400 + offs];
-		Colour = DrvVideoRam[0xc00 + offs];
-		if (!(Colour & 0x20)) continue; // nope!
-
-		sx = offs % 32;
-		sy = offs / 32;
-		xFlip = ~Colour & 0x40;
-		yFlip = Colour & 0x80;
-		Colour &= 0x3f;
-
-		x = 8 * sx;
-		y = 8 * sy;
-		y -= 16;
-
-		if (xFlip) {
-			if (yFlip) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-				Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-			} else {
-				Render8x8Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-				Render8x8Tile_FlipX_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-			}
-		} else {
-			if (yFlip) {
-				Render8x8Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-				Render8x8Tile_FlipY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-			} else {
-				Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-				Render8x8Tile_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-			}
-		}
-	}
-}
-
-static void DrvRenderSprites(INT32 Displacement)
+static void DrvRenderSprites()
 {
 	UINT32 SpriteRamBase = 0x14;
 	UINT8 *SpriteRam = DrvVideoRam;
 	UINT8 *SpriteRam2 = DrvVideoRam + 0x800;
-	
+	INT32 Displacement = (rallyx || junglermode) ? 1 : 0;
+
 	for (UINT32 Offs = 0x20 - 2; Offs >= SpriteRamBase; Offs -= 2) {
 		INT32 sx = SpriteRam[Offs + 1] + ((SpriteRam2[Offs + 1] & 0x80) << 1) - Displacement;
 		INT32 sy = 241 - SpriteRam2[Offs] - Displacement;
 		INT32 Colour = SpriteRam2[Offs + 1] & 0x3f;
+
 		INT32 xFlip = SpriteRam[Offs] & 1;
 		INT32 yFlip = SpriteRam[Offs] & 2;
 		INT32 Code = (SpriteRam[Offs] & 0xfc) >> 2;
 
+		if (locomotnmode) {
+			xFlip = yFlip;
+			Code = ((SpriteRam[Offs] & 0x7c) >> 2) + 0x20*(SpriteRam[Offs] & 0x01) + ((SpriteRam[Offs] & 0x80) >> 1);
+		}
 //		if (flip_screen_get(machine))
 //			sx -= 2 * displacement;
+		if (junglerflip) {
+			sx = (272-1) - sx;
+			sy = SpriteRam2[Offs] - Displacement;
+			xFlip = !xFlip;
+			yFlip = !yFlip;
+		}
 
 
 		sy -= 16;
@@ -1432,10 +1523,20 @@ static void DrvRenderBullets()
 	for (UINT32 Offs = SpriteRamBase; Offs < 0x20; Offs++) {
 		INT32 x, y, Code;
 
+		Code = ((DrvRadarAttrRam[Offs & 0x0f] & 0x0e) >> 1) ^ 0x07;
 		x = RadarX[Offs] + ((~DrvRadarAttrRam[Offs & 0x0f] & 0x01) << 8);
 		y = 253 - RadarY[Offs];
-		Code = ((DrvRadarAttrRam[Offs & 0x0f] & 0x0e) >> 1) ^ 0x07;
-		
+
+		if (junglermode) {
+			Code = (DrvRadarAttrRam[Offs & 0x0f] & 0x07) ^ 0x07;
+			x = RadarX[Offs] + ((~DrvRadarAttrRam[Offs & 0x0f] & 0x08) << 5);
+
+			if (junglerflip) {
+				x = (288-3) - x;
+				y = RadarY[Offs] - 1;
+			}
+		}
+
 		y -= 16;
 		
 //		if (flip_screen_get(machine))
@@ -1464,14 +1565,22 @@ static void DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
-	if (nBurnLayer & 1) DrvRenderBgLayer();
-	if (nBurnLayer & 2) DrvRenderSprites(1);
-	// this middle layer is important, its opaque and clears the attract mode
-	// sprites from the screen. (coin up when a car is on the screen to test)
-	// somehow mame does the middle and side layer at the same time, but I
-	// can't figure it out.  so hackity hack hack. -dink
-	if (nBurnLayer & 4) DrvRenderFgLayerMiddle();
-	if (nBurnLayer & 4) DrvRenderFgLayerSide();
+	if (nBurnLayer & 1) DrvRenderBgLayer(0);
+	if (nBurnLayer & 2) DrvRenderSprites();
+	if (nBurnLayer & 4) DrvRenderBgLayer(1);
+	if (nBurnLayer & 8) DrvRender8x32Layer();
+	if (nBurnLayer & 8) DrvRenderBullets();
+	BurnTransferCopy(DrvPalette);
+}
+
+static void DrvDrawJungler()
+{
+	BurnTransferClear();
+	DrvCalcPalette();
+	if (nBurnLayer & 1) DrvRenderBgLayer(0);
+	if (nBurnLayer & 4) DrvRenderBgLayer(1);
+	if (nBurnLayer & 8) DrvRender8x32Layer();
+	if (nBurnLayer & 2) DrvRenderSprites();
 	if (nBurnLayer & 8) DrvRenderBullets();
 	BurnTransferCopy(DrvPalette);
 }
@@ -1542,7 +1651,7 @@ static INT32 JunglerFrame()
 
 	JunglerMakeInputs();
 	
-//	INT32 nSoundBufferPos = 0;
+	INT32 nSoundBufferPos = 0;
 
 	nCyclesTotal[0] = (18432000 / 6) / 60;
 	nCyclesTotal[1] = (14318180 / 8) / 60;
@@ -1564,30 +1673,28 @@ static INT32 JunglerFrame()
 			ZetNmi();
 		}
 		ZetClose();
-		
-/*		if (pBurnSoundOut) {
+
+		ZetOpen(1);
+		ZetRun(nCyclesTotal[1] / nInterleave);
+		ZetClose();
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			
-			if (nSegmentLength) {
-				NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-				BurnSampleRender(pSoundBuf, nSegmentLength);
-			}
+			TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
-		}*/
+		}
 	}
 	
-/*	if (pBurnSoundOut) {
+	// Make sure the buffer is entirely filled.
+	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
+	}
 
-		if (nSegmentLength) {
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
-	}*/
-
-	if (pBurnDraw) DrvDraw();
+	if (pBurnDraw) DrvDrawJungler();
 
 	return 0;
 }
@@ -1609,8 +1716,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		ZetScan(nAction);			// Scan Z80
-		NamcoSoundScan(nAction, pnMin);
+		ZetScan(nAction);
+
+		if (junglermode) {
+			TimepltSndScan(nAction, pnMin);
+			SCAN_VAR(last_sound_irq);
+		}
+
+		if (rallyx) {
+			NamcoSoundScan(nAction, pnMin);
+		}
 	}
 	
 	return 0;
@@ -1670,7 +1785,7 @@ struct BurnDriverD BurnDrvJungler = {
 	"jungler", NULL, NULL, NULL, "1981",
 	"Jungler\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, JunglerRomInfo, JunglerRomName, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
 	JunglerInit, DrvExit, JunglerFrame, NULL, DrvScan,
 	NULL, 324, 224, 288, 3, 4

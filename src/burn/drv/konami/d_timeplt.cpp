@@ -9,7 +9,7 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "../konami/timeplt_snd.h"
+#include "timeplt_snd.h"
 //#include "tc8830f.h"
 
 static UINT8 *AllMem;

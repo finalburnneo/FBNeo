@@ -50,6 +50,7 @@ static INT32 junglermode = 0; // jungler, locomtn, tactician, commsega use this
 static INT32 junglerinputs = 0; // jungler has different dips than the others.
 static INT32 junglerflip = 0;
 static INT32 locomotnmode = 0; // locomotn, tactician, etc use this.
+static INT32 commsegamode = 0;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
@@ -180,8 +181,8 @@ STDINPUTINFO(Locomotn)
 
 static struct BurnDIPInfo LocomotnDIPList[]=
 {
-	{0x10, 0xff, 0xff, 0x30, NULL		},
-	{0x11, 0xff, 0xff, 0x00, NULL		},
+	{0x10, 0xff, 0xff, 0x36, NULL		},
+	{0x11, 0xff, 0xff, 0xff, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x10, 0x01, 0x30, 0x30, "3"		},
@@ -367,8 +368,8 @@ STDINPUTINFO(Commsega)
 
 static struct BurnDIPInfo CommsegaDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x20, NULL		},
-	{0x12, 0xff, 0xff, 0x10, NULL		},
+	{0x11, 0xff, 0xff, 0x3f, NULL		},
+	{0x12, 0xff, 0xff, 0x7f, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"		},
 	{0x11, 0x01, 0x20, 0x20, "Off"		},
@@ -1479,6 +1480,7 @@ static INT32 DrvExit()
 
 	locomotnmode = 0;
 	rallyx = 0;
+	commsegamode = 0;
 
 	return 0;
 }
@@ -1933,12 +1935,12 @@ static void DrvRender8x32Layer()
 
 static void DrvRenderSprites()
 {
-	UINT32 SpriteRamBase = 0x14;
+	INT32 SpriteRamBase = (commsegamode) ? 0x00 : 0x14;
 	UINT8 *SpriteRam = DrvVideoRam;
 	UINT8 *SpriteRam2 = DrvVideoRam + 0x800;
 	INT32 Displacement = (rallyx || junglermode) ? 1 : 0;
 
-	for (UINT32 Offs = 0x20 - 2; Offs >= SpriteRamBase; Offs -= 2) {
+	for (INT32 Offs = 0x20 - 2; Offs >= SpriteRamBase; Offs -= 2) {
 		INT32 sx = SpriteRam[Offs + 1] + ((SpriteRam2[Offs + 1] & 0x80) << 1) - Displacement;
 		INT32 sy = 241 - SpriteRam2[Offs] - Displacement;
 		INT32 Colour = SpriteRam2[Offs + 1] & 0x3f;
@@ -1954,7 +1956,7 @@ static void DrvRenderSprites()
 //		if (flip_screen_get(machine))
 //			sx -= 2 * displacement;
 		if (junglerflip) {
-			sx = (272-1) - sx;
+			sx = (nScreenWidth-16-1) - sx;
 			sy = SpriteRam2[Offs] - Displacement;
 			xFlip = !xFlip;
 			yFlip = !yFlip;
@@ -1999,24 +2001,26 @@ static void DrvRenderSprites()
 
 static void DrvRenderBullets()
 {
-	UINT32 SpriteRamBase = 0x14;
+	INT32 SpriteRamBase = (commsegamode) ? 0x00 : 0x14;
 	UINT8 *RadarX = DrvVideoRam + 0x020;
 	UINT8 *RadarY = DrvVideoRam + 0x820;
 	
-	for (UINT32 Offs = SpriteRamBase; Offs < 0x20; Offs++) {
-		INT32 x, y, Code;
+	for (INT32 Offs = SpriteRamBase; Offs < 0x20; Offs++) {
+		INT32 x, y, Code, Flip;
 
 		Code = ((DrvRadarAttrRam[Offs & 0x0f] & 0x0e) >> 1) ^ 0x07;
 		x = RadarX[Offs] + ((~DrvRadarAttrRam[Offs & 0x0f] & 0x01) << 8);
 		y = 253 - RadarY[Offs];
+		Flip = 0;
 
 		if (junglermode) {
 			Code = (DrvRadarAttrRam[Offs & 0x0f] & 0x07) ^ 0x07;
 			x = RadarX[Offs] + ((~DrvRadarAttrRam[Offs & 0x0f] & 0x08) << 5);
 
 			if (junglerflip) {
-				x = (288-3) - x;
+				x = (nScreenWidth-3) - x;
 				y = RadarY[Offs] - 1;
+				Flip = 1;
 			}
 		}
 
@@ -2041,8 +2045,11 @@ static void DrvRenderBullets()
 //					0,0,
 //					x,y,
 ///					state->drawmode_table,machine->shadow_table);
-
-		RenderCustomTile_Mask_Clip(pTransDraw, 4, 4, Code, x, y, 0, 2, 3, 0x100, DrvDots);
+		if (Flip) {
+			RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 4, 4, Code, x, y, 0, 2, 3, 0x100, DrvDots);
+		} else {
+			RenderCustomTile_Mask_Clip(pTransDraw, 4, 4, Code, x, y, 0, 2, 3, 0x100, DrvDots);
+		}
 	}
 }
 
@@ -2061,10 +2068,9 @@ void plot_star(INT32 x, INT32 y, INT32 color)
 
 void draw_stars()
 {
-	for (INT32 offs = 0; offs < total_stars; offs++)
-	{
-		int x = j_stars[offs].x;
-		int y = j_stars[offs].y;
+	for (INT32 offs = 0; offs < total_stars; offs++) {
+		INT32 x = j_stars[offs].x;
+		INT32 y = j_stars[offs].y;
 
 		if ((y & 0x01) ^ ((x >> 3) & 0x01))
 			plot_star(x, y, j_stars[offs].color);
@@ -2092,8 +2098,8 @@ static void DrvDrawJungler()
 	if (nBurnLayer & 1) DrvRenderBgLayer(0);
 	if (nBurnLayer & 4) DrvRenderBgLayer(1);
 	if (nBurnLayer & 8) DrvRender8x32Layer();
-	if (nBurnLayer & 2) DrvRenderSprites();
-	if (nBurnLayer & 8) DrvRenderBullets();
+	if (nSpriteEnable & 1) DrvRenderSprites();
+	if (nBurnLayer & 2) DrvRenderBullets();
 
 	if (stars_enable)
 		draw_stars();
@@ -2379,7 +2385,7 @@ struct BurnDriver BurnDrvTactcian2 = {
 	"tactcian2", "tactcian", NULL, NULL, "1981",
 	"Tactician (set 2)\0", NULL, "Konami (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, tactcian2RomInfo, tactcian2RomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
 	TactcianDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
 	NULL, 324, 224, 288, 3, 4
@@ -2419,10 +2425,10 @@ struct BurnDriver BurnDrvLocomotn = {
 	"locomotn", NULL, NULL, NULL, "1982",
 	"Loco-Motion\0", NULL, "Konami (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, locomotnRomInfo, locomotnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	LocomotnDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
-	NULL, 324, 224, 288, 3, 4
+	NULL, 324, 224, 256, 3, 4
 };
 
 INT32 GutangtnDrvInit()
@@ -2459,10 +2465,10 @@ struct BurnDriver BurnDrvGutangtn = {
 	"gutangtn", "locomotn", NULL, NULL, "1982",
 	"Guttang Gottong\0", NULL, "Konami (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, gutangtnRomInfo, gutangtnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	GutangtnDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
-	NULL, 324, 224, 288, 3, 4
+	NULL, 324, 224, 256, 3, 4
 };
 
 INT32 CottongDrvInit()
@@ -2500,10 +2506,10 @@ struct BurnDriver BurnDrvCottong = {
 	"cottong", "locomotn", NULL, NULL, "1982",
 	"Cotocoto Cottong\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, cottongRomInfo, cottongRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	CottongDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
-	NULL, 324, 224, 288, 3, 4
+	NULL, 324, 224, 256, 3, 4
 };
 
 INT32 LocobootDrvInit()
@@ -2540,15 +2546,16 @@ struct BurnDriver BurnDrvLocoboot = {
 	"locoboot", "locomotn", NULL, NULL, "1982",
 	"Loco-Motion (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, locobootRomInfo, locobootRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
 	LocobootDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
-	NULL, 324, 224, 288, 3, 4
+	NULL, 324, 224, 256, 3, 4
 };
 
 
 INT32 CommsegaDrvInit()
 {
+	commsegamode = 1;
 	return LococommonDrvInit(5, 1);
 }
 
@@ -2581,10 +2588,10 @@ struct BurnDriver BurnDrvCommsega = {
 	"commsega", NULL, NULL, NULL, "1983",
 	"Commando (Sega)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, commsegaRomInfo, commsegaRomName, NULL, NULL, CommsegaInputInfo, CommsegaDIPInfo,
 	CommsegaDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
-	NULL, 324, 224, 288, 3, 4
+	NULL, 324, 224, 256, 3, 4
 };
 
 

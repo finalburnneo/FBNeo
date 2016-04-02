@@ -23,6 +23,7 @@ static UINT8 *RamEnd              = NULL;
 static UINT8 *DrvZ80Rom1          = NULL;
 static UINT8 *DrvZ80Rom2          = NULL;
 static UINT8 *DrvZ80Ram1          = NULL;
+static UINT8 *DrvZ80Ram1_weird    = NULL;
 static UINT8 *DrvZ80Ram2          = NULL;
 static UINT8 *DrvVideoRam         = NULL;
 static UINT8 *DrvRadarAttrRam     = NULL;
@@ -45,12 +46,58 @@ static UINT8 xScroll;
 static UINT8 yScroll;
 static UINT8 DrvLastBang;
 static INT32 rallyx = 0;
-static INT32 junglermode = 0;
+static INT32 junglermode = 0; // jungler, locomtn, tactician, commsega use this
+static INT32 junglerinputs = 0; // jungler has different dips than the others.
 static INT32 junglerflip = 0;
-static INT32 locomotnmode = 0;
+static INT32 locomotnmode = 0; // locomotn, tactician, etc use this.
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
+
+struct jungler_star {
+	int x, y, color;
+};
+
+#define JUNGLER_MAX_STARS 1000
+
+INT32 stars_enable;
+INT32 total_stars;
+struct jungler_star j_stars[JUNGLER_MAX_STARS];
+
+void calculate_star_field()
+{
+	INT32 generator;
+
+	total_stars = 0;
+	generator = 0;
+	memset(&j_stars, 0, sizeof(j_stars));
+
+	for (INT32 y = 0; y < 256; y++) {
+		for (INT32 x = 0; x < 288; x++) {
+			INT32 bit1, bit2;
+
+			generator <<= 1;
+			bit1 = (~generator >> 17) & 1;
+			bit2 = (generator >> 5) & 1;
+
+			if (bit1 ^ bit2)
+				generator |= 1;
+
+			if (((~generator >> 16) & 1) && (generator & 0xfe) == 0xfe) {
+				INT32 color = (~(generator >> 8)) & 0x3f;
+
+				if (color && total_stars < JUNGLER_MAX_STARS)
+				{
+					j_stars[total_stars].x = x;
+					j_stars[total_stars].y = y;
+					j_stars[total_stars].color = color;
+
+					total_stars++;
+				}
+			}
+		}
+	}
+}
 
 static struct BurnInputInfo DrvInputList[] =
 {
@@ -105,6 +152,277 @@ static struct BurnInputInfo JunglerInputList[] =
 
 STDINPUTINFO(Jungler)
 
+static struct BurnInputInfo LocomotnInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 7,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvInputPort0 + 5,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 fire 1"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 2,	"service"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+};
+
+STDINPUTINFO(Locomotn)
+
+
+static struct BurnDIPInfo LocomotnDIPList[]=
+{
+	{0x10, 0xff, 0xff, 0x30, NULL		},
+	{0x11, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x10, 0x01, 0x30, 0x30, "3"		},
+	{0x10, 0x01, 0x30, 0x20, "4"		},
+	{0x10, 0x01, 0x30, 0x10, "5"		},
+	{0x10, 0x01, 0x30, 0x00, "255"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x10, 0x01, 0x08, 0x00, "Upright"		},
+	{0x10, 0x01, 0x08, 0x08, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x10, 0x01, 0x04, 0x04, "Off"		},
+	{0x10, 0x01, 0x04, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Intermissions"		},
+	{0x10, 0x01, 0x02, 0x00, "Off"		},
+	{0x10, 0x01, 0x02, 0x02, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x10, 0x01, 0x01, 0x01, "Off"		},
+	{0x10, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0x11, 0x01, 0x0f, 0x04, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0a, "3 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x01, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x02, "3 Coins 2 Credits"		},
+	{0x11, 0x01, 0x0f, 0x08, "4 Coins 3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0c, "3 Coins 4 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0e, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x07, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x0f, 0x06, "2 Coins 5 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0b, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0d, "1 Coin  5 Credits"		},
+	{0x11, 0x01, 0x0f, 0x05, "1 Coin  6 Credits"		},
+	{0x11, 0x01, 0x0f, 0x09, "1 Coin  7 Credits"		},
+	{0x11, 0x01, 0x0f, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0x11, 0x01, 0xf0, 0x40, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0xa0, "3 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0x10, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0x20, "3 Coins 2 Credits"		},
+	{0x11, 0x01, 0xf0, 0x80, "4 Coins 3 Credits"		},
+	{0x11, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0xf0, 0xc0, "3 Coins 4 Credits"		},
+	{0x11, 0x01, 0xf0, 0xe0, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0xf0, 0x60, "2 Coins 5 Credits"		},
+	{0x11, 0x01, 0xf0, 0xb0, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0xf0, 0x30, "1 Coin  4 Credits"		},
+	{0x11, 0x01, 0xf0, 0xd0, "1 Coin  5 Credits"		},
+	{0x11, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"		},
+	{0x11, 0x01, 0xf0, 0x90, "1 Coin  7 Credits"		},
+	{0x11, 0x01, 0xf0, 0x00, "No Coin B"		},
+};
+
+STDDIPINFO(Locomotn)
+
+static struct BurnInputInfo TactcianInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 7,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvInputPort0 + 5,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 2,	"service"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+};
+
+STDINPUTINFO(Tactcian)
+
+
+static struct BurnDIPInfo TactcianDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0x00, NULL		},
+	{0x13, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x12, 0x01, 0x30, 0x00, "3"		},
+	{0x12, 0x01, 0x30, 0x10, "4"		},
+	{0x12, 0x01, 0x30, 0x20, "5"		},
+	{0x12, 0x01, 0x30, 0x30, "255"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x12, 0x01, 0x08, 0x00, "Upright"		},
+	{0x12, 0x01, 0x08, 0x08, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x12, 0x01, 0x06, 0x06, "4 Coins 1 Credits"		},
+	{0x12, 0x01, 0x06, 0x02, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x06, 0x00, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x06, 0x04, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x12, 0x01, 0x06, 0x02, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x06, 0x04, "A 2C/1C  B 1C/3C"		},
+	{0x12, 0x01, 0x06, 0x00, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x06, 0x06, "A 1C/1C  B 1C/6C"		},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x12, 0x01, 0x01, 0x00, "10k, 80k then every 100k"		},
+	{0x12, 0x01, 0x01, 0x01, "20k, 80k then every 100k"		},
+
+	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
+	{0x13, 0x01, 0x01, 0x00, "Mode 1"		},
+	{0x13, 0x01, 0x01, 0x01, "Mode 2"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x02, 0x00, "Off"		},
+	{0x13, 0x01, 0x02, 0x02, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x04, 0x00, "Off"		},
+	{0x13, 0x01, 0x04, 0x04, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x08, 0x00, "Off"		},
+	{0x13, 0x01, 0x08, 0x08, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x10, 0x00, "Off"		},
+	{0x13, 0x01, 0x10, 0x10, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x20, 0x00, "Off"		},
+	{0x13, 0x01, 0x20, 0x20, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x40, 0x00, "Off"		},
+	{0x13, 0x01, 0x40, 0x40, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x13, 0x01, 0x80, 0x00, "Off"		},
+	{0x13, 0x01, 0x80, 0x80, "On"		},
+};
+
+STDDIPINFO(Tactcian)
+
+static struct BurnInputInfo CommsegaInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 7,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvInputPort0 + 5,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort2 + 6,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+};
+
+STDINPUTINFO(Commsega)
+
+
+static struct BurnDIPInfo CommsegaDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0x20, NULL		},
+	{0x12, 0xff, 0xff, 0x10, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x11, 0x01, 0x20, 0x20, "Off"		},
+	{0x11, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x11, 0x01, 0x10, 0x10, "Off"		},
+	{0x11, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x11, 0x01, 0x08, 0x08, "Off"		},
+	{0x11, 0x01, 0x08, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x11, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0x07, 0x05, "3 Coins 1 Credits"		},
+	{0x11, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x07, 0x01, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x07, 0x02, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0x07, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x12, 0x01, 0x03, 0x03, "3"		},
+	{0x12, 0x01, 0x03, 0x02, "4"		},
+	{0x12, 0x01, 0x03, 0x01, "5"		},
+	{0x12, 0x01, 0x03, 0x00, "6"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x12, 0x01, 0x1c, 0x10, "4 Coins 1 Credits"		},
+	{0x12, 0x01, 0x1c, 0x14, "3 Coins 1 Credits"		},
+	{0x12, 0x01, 0x1c, 0x18, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x1c, 0x04, "2 Coins 3 Credits"		},
+	{0x12, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"		},
+	{0x12, 0x01, 0x1c, 0x08, "1 Coin  3 Credits"		},
+	{0x12, 0x01, 0x1c, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Unused"		},
+	{0x12, 0x01, 0x20, 0x20, "Off"		},
+	{0x12, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x12, 0x01, 0x40, 0x40, "Easy"		},
+	{0x12, 0x01, 0x40, 0x00, "Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x12, 0x01, 0x80, 0x00, "Upright"		},
+	{0x12, 0x01, 0x80, 0x80, "Cocktail"		},
+};
+
+STDDIPINFO(Commsega)
+
 static inline void DrvMakeInputs()
 {
 	// Reset Inputs
@@ -113,8 +431,8 @@ static inline void DrvMakeInputs()
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] -= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
+		DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
+		DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
 	}
 }
 
@@ -127,9 +445,9 @@ static inline void JunglerMakeInputs()
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] -= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] -= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] -= (DrvInputPort2[i] & 1) << i;
+		DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
+		DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
+		DrvInput[2] ^= (DrvInputPort2[i] & 1) << i;
 	}
 }
 
@@ -332,9 +650,6 @@ static struct BurnRomInfo NrallyxRomDesc[] = {
 STD_ROM_PICK(Nrallyx)
 STD_ROM_FN(Nrallyx)
 
-
-
-
 static struct BurnRomInfo JunglerRomDesc[] = {
 	{ "jungr1",        0x01000, 0x5bd6ad15, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code #1
 	{ "jungr2",        0x01000, 0xdc99f1e3, BRF_ESS | BRF_PRG }, //  1
@@ -408,15 +723,16 @@ static INT32 JunglerMemIndex()
 	RamStart               = Next;
 
 	DrvZ80Ram1             = Next; Next += 0x00800;	
+	DrvZ80Ram1_weird       = Next; Next += 0x00800;
 	DrvZ80Ram2             = Next; Next += 0x00400;	
 	DrvVideoRam            = Next; Next += 0x01000;
 	DrvRadarAttrRam        = Next; Next += 0x00010;
 	
 	RamEnd                 = Next;
 
-	DrvChars               = Next; Next += 0x100 * 8 * 8;
-	DrvSprites             = Next; Next += 0x040 * 16 * 16;
-	DrvDots                = Next; Next += 0x008 * 4 * 4;
+	DrvChars               = Next; Next += 0x400 * 8 * 8;
+	DrvSprites             = Next; Next += 0x180 * 16 * 16;
+	DrvDots                = Next; Next += 0x018 * 4 * 4;
 	DrvPalette             = (UINT32*)Next; Next += 324 * sizeof(UINT32);
 
 	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
@@ -464,6 +780,9 @@ static INT32 JunglerDoReset()
 	xScroll = 0;
 	yScroll = 0;
 	junglerflip = 0;
+	stars_enable = 0;
+
+	calculate_star_field();
 
 	HiscoreReset();
 	TimepltSndReset();
@@ -564,7 +883,7 @@ void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 		
 		case 0xa183: {
 			// flip screen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-			bprintf(0, _T("Flipmode %X\n"), d);
+			//bprintf(0, _T("Flipmode %X\n"), d);
 			return;
 		}
 		
@@ -637,11 +956,17 @@ UINT8 __fastcall JunglerZ80ProgRead1(UINT16 a)
 		}
 		
 		case 0xa100: {
-			return DrvInput[2];
+			if (junglerinputs)
+				return DrvInput[2];
+
+			return (DrvInput[2] & 0xc0) | DrvDip[0];
 		}
 		
 		case 0xa180: {
-			return DrvDip[0];
+			if (junglerinputs)
+				return DrvDip[0];
+
+			return DrvDip[1];
 		}
 		
 		default: {
@@ -729,8 +1054,14 @@ void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 		}
 
 		case 0xa183: {
-			bprintf(0, _T("Flipmode %X\n"), d);
+			//bprintf(0, _T("Flipmode %X\n"), d);
 			junglerflip = d;
+			return;
+		}
+
+		case 0xa187: {
+			stars_enable = d & 1;
+			bprintf(0, _T("STARS %X\n"), stars_enable);
 			return;
 		}
 		
@@ -829,14 +1160,9 @@ static void MachineInit()
 	ZetSetWriteHandler(RallyxZ80ProgWrite);
 	ZetSetInHandler(RallyxZ80PortRead);
 	ZetSetOutHandler(RallyxZ80PortWrite);
-	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80Rom1);
-	ZetMapArea(0x0000, 0x3fff, 2, DrvZ80Rom1);
-	ZetMapArea(0x8000, 0x8fff, 0, DrvVideoRam);
-	ZetMapArea(0x8000, 0x8fff, 1, DrvVideoRam);
-	ZetMapArea(0x8000, 0x8fff, 2, DrvVideoRam);
-	ZetMapArea(0x9800, 0x9fff, 0, DrvZ80Ram1);
-	ZetMapArea(0x9800, 0x9fff, 1, DrvZ80Ram1);
-	ZetMapArea(0x9800, 0x9fff, 2, DrvZ80Ram1);
+	ZetMapMemory(DrvZ80Rom1      , 0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvVideoRam     , 0x8000, 0x8fff, MAP_RAM);
+	ZetMapMemory(DrvZ80Ram1      , 0x9800, 0x9fff, MAP_RAM);
 	ZetClose();
 	
 	NamcoSoundInit(18432000 / 6 / 32, 3);
@@ -857,14 +1183,10 @@ static void JunglerMachineInit()
 	ZetSetWriteHandler(JunglerZ80ProgWrite1);
 	ZetSetInHandler(JunglerZ80PortRead1);
 	ZetSetOutHandler(JunglerZ80PortWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1);
-	ZetMapArea(0x8000, 0x8fff, 0, DrvVideoRam);
-	ZetMapArea(0x8000, 0x8fff, 1, DrvVideoRam);
-	ZetMapArea(0x8000, 0x8fff, 2, DrvVideoRam);
-	ZetMapArea(0x9800, 0x9fff, 0, DrvZ80Ram1);
-	ZetMapArea(0x9800, 0x9fff, 1, DrvZ80Ram1);
-	ZetMapArea(0x9800, 0x9fff, 2, DrvZ80Ram1);
+	ZetMapMemory(DrvZ80Rom1      , 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvVideoRam     , 0x8000, 0x8fff, MAP_RAM);
+	ZetMapMemory(DrvZ80Ram1_weird, 0x9000, 0x93ff, MAP_RAM); // checked at boot
+	ZetMapMemory(DrvZ80Ram1      , 0x9800, 0x9fff, MAP_RAM);
 	ZetClose();
 
 	LocomotnSndInit(DrvZ80Rom2, DrvZ80Ram2, 1);
@@ -1070,6 +1392,62 @@ static INT32 JunglerInit()
 	BurnFree(DrvTempRom);
 
 	junglermode = 1; // for locomotn(timeplt) sound driver
+	junglerinputs = 1;
+
+	JunglerMachineInit();
+
+	return 0;
+}
+
+static INT32 LococommonDrvInit(INT32 prgroms, INT32 soundroms)
+{
+	INT32 nRet = 0, nLen;
+
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	JunglerMemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	JunglerMemIndex();
+
+	DrvTempRom = (UINT8 *)BurnMalloc(0x04000);
+
+	// Load Z80 Program Roms
+	for (INT32 i = 0; i < prgroms; i++) {
+		nRet = BurnLoadRom(DrvZ80Rom1 + (i * 0x01000),  i, 1); if (nRet != 0) return 1;
+		bprintf(0, _T("loaded prg: %d\n"), i);
+	}
+	
+	// Load Z80 Sound Program Roms
+	for (INT32 i = 0; i < soundroms; i++) {
+		nRet = BurnLoadRom(DrvZ80Rom2 + (i * 0x01000),  i + prgroms, 1); if (nRet != 0) return 1;
+		bprintf(0, _T("loaded snd: %d\n"), i + prgroms);
+	}
+
+	INT32 rompos = (prgroms) + (soundroms);
+	bprintf(0, _T("nextpos %d\n"), rompos);
+
+	// Load and decode the chars and sprites
+	nRet = BurnLoadRom(DrvTempRom + 0x00000,  0 + rompos, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvTempRom + 0x01000,  1 + rompos, 1); if (nRet != 0) return 1;
+	GfxDecode(0x200, 2, 8, 8, JunglerCharPlaneOffsets, CharXOffsets, CharYOffsets, 0x80, DrvTempRom, DrvChars);
+	GfxDecode(0x80, 2, 16, 16, JunglerSpritePlaneOffsets, JunglerSpriteXOffsets, SpriteYOffsets, 0x200, DrvTempRom, DrvSprites);
+	
+	// Load and decode the dots
+	memset(DrvTempRom, 0, 0x1000);
+	nRet = BurnLoadRom(DrvTempRom,           2 + rompos, 1); if (nRet != 0) return 1;
+	GfxDecode(0x08, 2, 4, 4, DotPlaneOffsets, DotXOffsets, DotYOffsets, 0x80, DrvTempRom, DrvDots);
+
+	// Load the PROMs
+	nRet = BurnLoadRom(DrvPromPalette,       3 + rompos, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvPromLookup,        4 + rompos, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(DrvPromVidLayout,     5 + rompos, 1); if (nRet != 0) return 1;
+
+	BurnFree(DrvTempRom);
+
+	junglermode = 1; // for locomotn(timeplt) sound driver
+	locomotnmode = 1;
 
 	JunglerMachineInit();
 
@@ -1097,6 +1475,7 @@ static INT32 DrvExit()
 	DrvLastBang = 0;
 	junglermode = 0;
 	junglerflip = 0;
+	junglerinputs = 0;
 
 	locomotnmode = 0;
 	rallyx = 0;
@@ -1274,6 +1653,86 @@ static void DrvCalcPalette()
 	}
 }
 
+static void DrvCalcPaletteJungler()
+{
+	static const INT32 ResistancesRG[3] =   { 1000, 470, 220 };
+	static const INT32 ResistancesB[2] =    { 470, 220 };
+	static const INT32 ResistancesSTAR[2] = { 150, 100 };
+	double rWeights[3], gWeights[3], bWeights[2];
+	double rWeightsSTAR[3], gWeightsSTAR[3], bWeightsSTAR[2];
+	UINT32 Palette[0x60];
+	UINT32 i;
+	
+	double scale =
+		ComputeResistorWeights(0, 255, -1.0,
+							   2, &ResistancesSTAR[0], rWeightsSTAR, 0, 0,
+							   2, &ResistancesSTAR[0], gWeightsSTAR, 0, 0,
+							   2, &ResistancesSTAR[0], bWeightsSTAR, 0, 0);
+
+	ComputeResistorWeights(0, 255, scale,
+						   3, &ResistancesRG[0], rWeights, 1000, 0,
+						   3, &ResistancesRG[0], gWeights, 1000, 0,
+						   2, &ResistancesB[0],  bWeights, 1000, 0);
+	
+	for (i = 0; i < 0x20; i++) { // create palette
+		INT32 Bit0, Bit1, Bit2;
+		INT32 r, g, b;
+
+		Bit0 = (DrvPromPalette[i] >> 0) & 0x01;
+		Bit1 = (DrvPromPalette[i] >> 1) & 0x01;
+		Bit2 = (DrvPromPalette[i] >> 2) & 0x01;
+		r = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+
+		/* green component */
+		Bit0 = (DrvPromPalette[i] >> 3) & 0x01;
+		Bit1 = (DrvPromPalette[i] >> 4) & 0x01;
+		Bit2 = (DrvPromPalette[i] >> 5) & 0x01;
+		g = Combine3Weights(gWeights, Bit0, Bit1, Bit2);
+
+		/* blue component */
+		Bit0 = (DrvPromPalette[i] >> 6) & 0x01;
+		Bit1 = (DrvPromPalette[i] >> 7) & 0x01;
+		b = Combine2Weights(bWeights, Bit0, Bit1);
+
+		Palette[i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (i = 0x20; i < 0x60; i++) { // stars
+		INT32 bit0, bit1;
+		INT32 r, g, b;
+
+		/* red component */
+		bit0 = ((i - 0x20) >> 0) & 0x01;
+		bit1 = ((i - 0x20) >> 1) & 0x01;
+		r = Combine2Weights(rWeightsSTAR, bit0, bit1);
+
+		/* green component */
+		bit0 = ((i - 0x20) >> 2) & 0x01;
+		bit1 = ((i - 0x20) >> 3) & 0x01;
+		g = Combine2Weights(gWeightsSTAR, bit0, bit1);
+
+		/* blue component */
+		bit0 = ((i - 0x20) >> 4) & 0x01;
+		bit1 = ((i - 0x20) >> 5) & 0x01;
+		b = Combine2Weights(bWeightsSTAR, bit0, bit1);
+
+		Palette[i] = BurnHighCol(r, g, b, 0);
+	}
+
+	for (i = 0x000; i < 0x100; i++)	{ // char&sprites
+		UINT8 PaletteEntry = DrvPromLookup[i] & 0x0f;
+		DrvPalette[i] = Palette[PaletteEntry];
+	}
+
+	for (i = 0x100; i < 0x104; i++) { // bullets
+		DrvPalette[i] = Palette[(i - 0x100) | 0x10];
+	}
+
+	for (i = 0x104; i < 0x144; i++) { // stars
+		DrvPalette[i] = Palette[(i - 0x104) + 0x20];
+	}
+}
+
 #undef MAX_NETS
 #undef MAX_RES_PER_NET
 #undef Combine2Weights
@@ -1291,12 +1750,21 @@ static void DrvRenderBgLayer(INT32 priority)
 		Code   = DrvVideoRam[0x400 + offs];
 		Colour = DrvVideoRam[0xc00 + offs];
 
+		if (locomotnmode) {
+			Code = (Code & 0x7f) + 2 * (Colour & 0x40) + 2 * (Code & 0x80);
+		}
+
 		if (((Colour & 0x20) >> 5) != priority) continue;
 
 		sx = offs % 32;
 		sy = offs / 32;
 		xFlip = ~Colour & 0x40;
 		yFlip = Colour & 0x80;
+
+		if (locomotnmode) {
+			xFlip = yFlip;
+		}
+
 		Colour &= 0x3f;
 
 		/*if (junglerflip) {
@@ -1317,6 +1785,8 @@ static void DrvRenderBgLayer(INT32 priority)
 		//y -= 16;
 		//if (junglermode)
 		//	x +=3; // dink
+
+		if (x >= nScreenWidth || y >= nScreenHeight) continue;
 
 		if (xFlip) {
 			if (yFlip) {
@@ -1368,6 +1838,8 @@ static void DrvRenderBgLayer(INT32 priority)
 			if (x < -7) x += 256;
 			if (y < -7) y += 256;
 
+			if (x >= nScreenWidth || y >= nScreenHeight) continue;
+
 			if (xFlip) {
 				if (yFlip) {
 					Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
@@ -1402,9 +1874,16 @@ static void DrvRender8x32Layer()
 			TileIndex = mx + (my << 5);
 			Code   = DrvVideoRam[TileIndex + 0x000 + 0x000];
 			Colour = DrvVideoRam[TileIndex + 0x000 + 0x800];
+
 			Flip = ((Colour >> 6) & 0x03) ^ 1;
 			xFlip = Flip & 0x01;
 			yFlip = Flip & 0x02;
+
+			if (locomotnmode) {
+				Code = (Code & 0x7f) + 2 * (Colour & 0x40) + 2 * (Code & 0x80);
+				xFlip = yFlip = Colour & 0x80;
+			}
+
 			Colour &= 0x3f;
 
 			x = 8 * mx;
@@ -1416,6 +1895,8 @@ static void DrvRender8x32Layer()
 			if (x < 0) x += 64;
 			
 			x += 224;
+
+			if (x >= nScreenWidth || y >= nScreenHeight) continue;
 
 			if (x > 8 && x < 280 && y > 8 && y < 216) {
 				if (xFlip) {
@@ -1481,6 +1962,8 @@ static void DrvRenderSprites()
 
 
 		sy -= 16;
+
+		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 		
 		if (sx > 16 && sx < 272 && sy > 16 && sy < 208) {
 			if (xFlip) {
@@ -1538,6 +2021,8 @@ static void DrvRenderBullets()
 		}
 
 		y -= 16;
+
+		if (x >= nScreenWidth || y >= nScreenHeight) continue;
 		
 //		if (flip_screen_get(machine))
 //			x -= 3;
@@ -1561,6 +2046,31 @@ static void DrvRenderBullets()
 	}
 }
 
+void plot_star(INT32 x, INT32 y, INT32 color)
+{
+	if (junglerflip) {
+		x = 255 - x;
+		y = 255 - y;
+	}
+
+	if ((x >= 0 && x < nScreenWidth) && (y >= 0 && y < nScreenHeight)) {
+		if (pTransDraw[(y * nScreenWidth) + x] == 0x1c || pTransDraw[(y * nScreenWidth) + x] == 0x00) ///*% 0x144*/ == 0)
+			pTransDraw[(y * nScreenWidth) + x] = 0x104 + color;
+	}
+}
+
+void draw_stars()
+{
+	for (INT32 offs = 0; offs < total_stars; offs++)
+	{
+		int x = j_stars[offs].x;
+		int y = j_stars[offs].y;
+
+		if ((y & 0x01) ^ ((x >> 3) & 0x01))
+			plot_star(x, y, j_stars[offs].color);
+	}
+}
+
 static void DrvDraw()
 {
 	BurnTransferClear();
@@ -1573,15 +2083,21 @@ static void DrvDraw()
 	BurnTransferCopy(DrvPalette);
 }
 
+extern int counter;   int funk = 0;
+
 static void DrvDrawJungler()
 {
 	BurnTransferClear();
-	DrvCalcPalette();
+	DrvCalcPaletteJungler();
 	if (nBurnLayer & 1) DrvRenderBgLayer(0);
 	if (nBurnLayer & 4) DrvRenderBgLayer(1);
 	if (nBurnLayer & 8) DrvRender8x32Layer();
 	if (nBurnLayer & 2) DrvRenderSprites();
 	if (nBurnLayer & 8) DrvRenderBullets();
+
+	if (stars_enable)
+		draw_stars();
+
 	BurnTransferCopy(DrvPalette);
 }
 
@@ -1790,3 +2306,285 @@ struct BurnDriverD BurnDrvJungler = {
 	JunglerInit, DrvExit, JunglerFrame, NULL, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
+
+INT32 TactcianDrvInit()
+{
+	return LococommonDrvInit(6, 2);
+}
+
+// Tactician (set 1)
+
+static struct BurnRomInfo tactcianRomDesc[] = {
+	{ "tacticia.001",	0x1000, 0x99163e39, 1 }, //  0 maincpu
+	{ "tacticia.002",	0x1000, 0x6d3e8a69, 1 }, //  1
+	{ "tacticia.003",	0x1000, 0x0f71d0fa, 1 }, //  2
+	{ "tacticia.004",	0x1000, 0x5e15f3b3, 1 }, //  3
+	{ "tacticia.005",	0x1000, 0x76456106, 1 }, //  4
+	{ "tacticia.006",	0x1000, 0xb33ca9ea, 1 }, //  5
+
+	{ "tacticia.s2",	0x1000, 0x97d145a7, 2 }, //  6 tpsound
+	{ "tacticia.s1",	0x1000, 0x067f781b, 2 }, //  7
+
+	{ "tacticia.c1",	0x1000, 0x5d3ee965, 3 }, //  8 gfx1
+	{ "tacticia.c2",	0x1000, 0xe8c59c4f, 3 }, //  9
+
+	{ "tact6301.004",	0x0100, 0x88b0b511, 4 }, // 10 gfx2
+
+	{ "tact6331.002",	0x0020, 0xb7ef83b7, 5 }, // 11 proms
+	{ "tact6301.003",	0x0100, 0xa92796f2, 5 }, // 12
+	{ "tact6331.001",	0x0020, 0x8f574815, 5 }, // 13
+};
+
+STD_ROM_PICK(tactcian)
+STD_ROM_FN(tactcian)
+
+struct BurnDriver BurnDrvTactcian = {
+	"tactcian", NULL, NULL, NULL, "1982",
+	"Tactician (set 1)\0", NULL, "Konami (Sega license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, tactcianRomInfo, tactcianRomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
+	TactcianDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+
+// Tactician (set 2)
+
+static struct BurnRomInfo tactcian2RomDesc[] = {
+	{ "tan1",		0x1000, 0xddf38b75, 1 }, //  0 maincpu
+	{ "tan2",		0x1000, 0xf065ee2e, 1 }, //  1
+	{ "tan3",		0x1000, 0x2dba64fe, 1 }, //  2
+	{ "tan4",		0x1000, 0x2ba07847, 1 }, //  3
+	{ "tan5",		0x1000, 0x1dae4c61, 1 }, //  4
+	{ "tan6",		0x1000, 0x2b36a18d, 1 }, //  5
+
+	{ "tacticia.s2",	0x1000, 0x97d145a7, 2 }, //  6 tpsound
+	{ "tacticia.s1",	0x1000, 0x067f781b, 2 }, //  7
+
+	{ "c1",			0x1000, 0x5399471f, 3 }, //  8 gfx1
+	{ "c2",			0x1000, 0x8e8861e8, 3 }, //  9
+
+	{ "tact6301.004",	0x0100, 0x88b0b511, 4 }, // 10 gfx2
+
+	{ "tact6331.002",	0x0020, 0xb7ef83b7, 5 }, // 11 proms
+	{ "tact6301.003",	0x0100, 0xa92796f2, 5 }, // 12
+	{ "tact6331.001",	0x0020, 0x8f574815, 5 }, // 13
+};
+
+STD_ROM_PICK(tactcian2)
+STD_ROM_FN(tactcian2)
+
+struct BurnDriver BurnDrvTactcian2 = {
+	"tactcian2", "tactcian", NULL, NULL, "1981",
+	"Tactician (set 2)\0", NULL, "Konami (Sega license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, tactcian2RomInfo, tactcian2RomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
+	TactcianDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+INT32 LocomotnDrvInit()
+{
+	return LococommonDrvInit(5, 1);
+}
+
+// Loco-Motion
+
+static struct BurnRomInfo locomotnRomDesc[] = {
+	{ "1a.cpu",	0x1000, 0xb43e689a, 1 }, //  0 maincpu
+	{ "2a.cpu",	0x1000, 0x529c823d, 1 }, //  1
+	{ "3.cpu",	0x1000, 0xc9dbfbd1, 1 }, //  2
+	{ "4.cpu",	0x1000, 0xcaf6431c, 1 }, //  3
+	{ "5.cpu",	0x1000, 0x64cf8dd6, 1 }, //  4
+
+	{ "1b_s1.bin",	0x1000, 0xa1105714, 2 }, //  5 tpsound
+
+	{ "5l_c1.bin",	0x1000, 0x5732eda9, 3 }, //  6 gfx1
+	{ "c2.cpu",	0x1000, 0xc3035300, 3 }, //  7
+
+	{ "10g.bpr",	0x0100, 0x2ef89356, 4 }, //  8 gfx2
+
+	{ "8b.bpr",	0x0020, 0x75b05da0, 5 }, //  9 proms
+	{ "9d.bpr",	0x0100, 0xaa6cf063, 5 }, // 10
+	{ "7a.bpr",	0x0020, 0x48c8f094, 5 }, // 11
+	{ "10a.bpr",	0x0020, 0xb8861096, 5 }, // 12
+};
+
+STD_ROM_PICK(locomotn)
+STD_ROM_FN(locomotn)
+
+struct BurnDriver BurnDrvLocomotn = {
+	"locomotn", NULL, NULL, NULL, "1982",
+	"Loco-Motion\0", NULL, "Konami (Centuri license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, locomotnRomInfo, locomotnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	LocomotnDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+INT32 GutangtnDrvInit()
+{
+	return LococommonDrvInit(5, 1);
+}
+
+// Guttang Gottong
+
+static struct BurnRomInfo gutangtnRomDesc[] = {
+	{ "3d_1.bin",	0x1000, 0xe9757395, 1 }, //  0 maincpu
+	{ "3e_2.bin",	0x1000, 0x11d21d2e, 1 }, //  1
+	{ "3f_3.bin",	0x1000, 0x4d80f895, 1 }, //  2
+	{ "3h_4.bin",	0x1000, 0xaa258ddf, 1 }, //  3
+	{ "3j_5.bin",	0x1000, 0x52aec87e, 1 }, //  4
+
+	{ "1b_s1.bin",	0x1000, 0xa1105714, 2 }, //  5 tpsound
+
+	{ "5l_c1.bin",	0x1000, 0x5732eda9, 3 }, //  6 gfx1
+	{ "5m_c2.bin",	0x1000, 0x51c542fd, 3 }, //  7
+
+	{ "10g.bpr",	0x0100, 0x2ef89356, 4 }, //  8 gfx2
+
+	{ "8b.bpr",	0x0020, 0x75b05da0, 5 }, //  9 proms
+	{ "9d.bpr",	0x0100, 0xaa6cf063, 5 }, // 10
+	{ "7a.bpr",	0x0020, 0x48c8f094, 5 }, // 11
+	{ "10a.bpr",	0x0020, 0xb8861096, 5 }, // 12
+};
+
+STD_ROM_PICK(gutangtn)
+STD_ROM_FN(gutangtn)
+
+struct BurnDriver BurnDrvGutangtn = {
+	"gutangtn", "locomotn", NULL, NULL, "1982",
+	"Guttang Gottong\0", NULL, "Konami (Sega license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, gutangtnRomInfo, gutangtnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	GutangtnDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+INT32 CottongDrvInit()
+{
+	return LococommonDrvInit(4, 2);
+}
+
+
+// Cotocoto Cottong
+
+static struct BurnRomInfo cottongRomDesc[] = {
+	{ "c1",		0x1000, 0x2c256fe6, 1 }, //  0 maincpu
+	{ "c2",		0x1000, 0x1de5e6a0, 1 }, //  1
+	{ "c3",		0x1000, 0x01f909fe, 1 }, //  2
+	{ "c4",		0x1000, 0xa89eb3e3, 1 }, //  3
+
+	{ "c7",		0x1000, 0x3d83f6d3, 2 }, //  4 tpsound
+	{ "c8",		0x1000, 0x323e1937, 2 }, //  5
+
+	{ "c5",		0x1000, 0x992d079c, 3 }, //  6 gfx1
+	{ "c6",		0x1000, 0x0149ef46, 3 }, //  7
+
+	{ "5.bpr",	0x0100, 0x21fb583f, 4 }, //  8 gfx2
+
+	{ "2.bpr",	0x0020, 0x26f42e6f, 5 }, //  9 proms
+	{ "3.bpr",	0x0100, 0x4aecc0c8, 5 }, // 10
+	{ "7a.bpr",	0x0020, 0x48c8f094, 5 }, // 11
+	{ "10a.bpr",	0x0020, 0xb8861096, 5 }, // 12
+};
+
+STD_ROM_PICK(cottong)
+STD_ROM_FN(cottong)
+
+struct BurnDriver BurnDrvCottong = {
+	"cottong", "locomotn", NULL, NULL, "1982",
+	"Cotocoto Cottong\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, cottongRomInfo, cottongRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	CottongDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+INT32 LocobootDrvInit()
+{
+	return LococommonDrvInit(4, 2);
+}
+
+// Loco-Motion (bootleg)
+
+static struct BurnRomInfo locobootRomDesc[] = {
+	{ "g.116",	0x1000, 0x1248799c, 1 }, //  0 maincpu
+	{ "g.117",	0x1000, 0x5b5b5753, 1 }, //  1
+	{ "g.118",	0x1000, 0x6bc269e1, 1 }, //  2
+	{ "g.119",	0x1000, 0x3feb762e, 1 }, //  3
+
+	{ "c7",		0x1000, 0x3d83f6d3, 2 }, //  4 tpsound
+	{ "c8",		0x1000, 0x323e1937, 2 }, //  5
+
+	{ "c5",		0x1000, 0x992d079c, 3 }, //  6 gfx1
+	{ "c6",		0x1000, 0x0149ef46, 3 }, //  7
+
+	{ "5.bpr",	0x0100, 0x21fb583f, 4 }, //  8 gfx2
+
+	{ "2.bpr",	0x0020, 0x26f42e6f, 5 }, //  9 proms
+	{ "3.bpr",	0x0100, 0x4aecc0c8, 5 }, // 10
+	{ "7a.bpr",	0x0020, 0x48c8f094, 5 }, // 11
+	{ "10a.bpr",	0x0020, 0xb8861096, 5 }, // 12
+};
+
+STD_ROM_PICK(locoboot)
+STD_ROM_FN(locoboot)
+
+struct BurnDriver BurnDrvLocoboot = {
+	"locoboot", "locomotn", NULL, NULL, "1982",
+	"Loco-Motion (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, locobootRomInfo, locobootRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
+	LocobootDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+
+INT32 CommsegaDrvInit()
+{
+	return LococommonDrvInit(5, 1);
+}
+
+// Commando (Sega)
+
+static struct BurnRomInfo commsegaRomDesc[] = {
+	{ "csega1",	0x1000, 0x92de3405, 1 }, //  0 maincpu
+	{ "csega2",	0x1000, 0xf14e2f9a, 1 }, //  1
+	{ "csega3",	0x1000, 0x941dbf48, 1 }, //  2
+	{ "csega4",	0x1000, 0xe0ac69b4, 1 }, //  3
+	{ "csega5",	0x1000, 0xbc56ebd0, 1 }, //  4
+
+	{ "csega8",	0x1000, 0x588b4210, 2 }, //  5 tpsound
+
+	{ "csega7",	0x1000, 0xe8e374f9, 3 }, //  6 gfx1
+	{ "csega6",	0x1000, 0xcf07fd5e, 3 }, //  7
+
+	{ "gg3.bpr",	0x0100, 0xae7fd962, 4 }, //  8 gfx2
+
+	{ "gg1.bpr",	0x0020, 0xf69e585a, 5 }, //  9 proms
+	{ "gg2.bpr",	0x0100, 0x0b756e30, 5 }, // 10
+	{ "gg0.bpr",	0x0020, 0x48c8f094, 5 }, // 11
+	{ "tt3.bpr",	0x0020, 0xb8861096, 5 }, // 12
+};
+
+STD_ROM_PICK(commsega)
+STD_ROM_FN(commsega)
+
+struct BurnDriver BurnDrvCommsega = {
+	"commsega", NULL, NULL, NULL, "1983",
+	"Commando (Sega)\0", NULL, "Sega", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, commsegaRomInfo, commsegaRomName, NULL, NULL, CommsegaInputInfo, CommsegaDIPInfo,
+	CommsegaDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	NULL, 324, 224, 288, 3, 4
+};
+
+

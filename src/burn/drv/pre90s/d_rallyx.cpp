@@ -52,53 +52,13 @@ static INT32 junglerflip = 0;
 static INT32 locomotnmode = 0; // locomotn, tactician, etc use this.
 static INT32 commsegamode = 0;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
-
 struct jungler_star {
 	int x, y, color;
 };
 
-#define JUNGLER_MAX_STARS 1000
-
-INT32 stars_enable;
-INT32 total_stars;
-struct jungler_star j_stars[JUNGLER_MAX_STARS];
-
-void calculate_star_field()
-{
-	INT32 generator;
-
-	total_stars = 0;
-	generator = 0;
-	memset(&j_stars, 0, sizeof(j_stars));
-
-	for (INT32 y = 0; y < 256; y++) {
-		for (INT32 x = 0; x < 288; x++) {
-			INT32 bit1, bit2;
-
-			generator <<= 1;
-			bit1 = (~generator >> 17) & 1;
-			bit2 = (generator >> 5) & 1;
-
-			if (bit1 ^ bit2)
-				generator |= 1;
-
-			if (((~generator >> 16) & 1) && (generator & 0xfe) == 0xfe) {
-				INT32 color = (~(generator >> 8)) & 0x3f;
-
-				if (color && total_stars < JUNGLER_MAX_STARS)
-				{
-					j_stars[total_stars].x = x;
-					j_stars[total_stars].y = y;
-					j_stars[total_stars].color = color;
-
-					total_stars++;
-				}
-			}
-		}
-	}
-}
+static INT32 stars_enable;
+static INT32 total_stars;
+static struct jungler_star j_stars[1000];
 
 static struct BurnInputInfo DrvInputList[] =
 {
@@ -154,26 +114,26 @@ static struct BurnInputInfo JunglerInputList[] =
 STDINPUTINFO(Jungler)
 
 static struct BurnInputInfo LocomotnInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort0 + 5,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 fire 1"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p2 fire 1"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		    BIT_DIGITAL,	DrvInputPort0 + 2,	"service"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
 };
 
 STDINPUTINFO(Locomotn)
@@ -246,28 +206,28 @@ static struct BurnDIPInfo LocomotnDIPList[]=
 STDDIPINFO(Locomotn)
 
 static struct BurnInputInfo TactcianInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvInputPort0 + 7,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvInputPort1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvInputPort1 + 0,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvInputPort2 + 7,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvInputPort0 + 4,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvInputPort0 + 5,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvInputPort0 + 3,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvInputPort0 + 1,	"p1 fire 2"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvInputPort0 + 6,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvInputPort1 + 6,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvInputPort0 + 0,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvInputPort1 + 1,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvInputPort1 + 5,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvInputPort1 + 4,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvInputPort1 + 3,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvInputPort1 + 2,	"p2 fire 2"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service",		BIT_DIGITAL,	DrvInputPort0 + 2,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		    BIT_DIGITAL,	DrvInputPort0 + 2,	"service"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
 };
 
 STDINPUTINFO(Tactcian)
@@ -768,6 +728,8 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
+void calculate_star_field(); // forward..
+
 static INT32 JunglerDoReset()
 {
 	memset (RamStart, 0, RamEnd - RamStart);
@@ -883,7 +845,6 @@ void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0xa183: {
-			// flip screen !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 			//bprintf(0, _T("Flipmode %X\n"), d);
 			return;
 		}
@@ -1060,9 +1021,14 @@ void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 			return;
 		}
 
+		case 0xa182:
+		case 0xa184:
+		case 0xa186: { // nop for now
+			return;
+		}
+
 		case 0xa187: {
 			stars_enable = d & 1;
-			bprintf(0, _T("STARS %X\n"), stars_enable);
 			return;
 		}
 		
@@ -1191,7 +1157,8 @@ static void JunglerMachineInit()
 	ZetClose();
 
 	LocomotnSndInit(DrvZ80Rom2, DrvZ80Ram2, 1);
-	
+	TimepltSndVol(0.55, 0.55);
+
 	GenericTilesInit();
 
 	JunglerDoReset();
@@ -1417,17 +1384,14 @@ static INT32 LococommonDrvInit(INT32 prgroms, INT32 soundroms)
 	// Load Z80 Program Roms
 	for (INT32 i = 0; i < prgroms; i++) {
 		nRet = BurnLoadRom(DrvZ80Rom1 + (i * 0x01000),  i, 1); if (nRet != 0) return 1;
-		bprintf(0, _T("loaded prg: %d\n"), i);
 	}
 	
 	// Load Z80 Sound Program Roms
 	for (INT32 i = 0; i < soundroms; i++) {
 		nRet = BurnLoadRom(DrvZ80Rom2 + (i * 0x01000),  i + prgroms, 1); if (nRet != 0) return 1;
-		bprintf(0, _T("loaded snd: %d\n"), i + prgroms);
 	}
 
 	INT32 rompos = (prgroms) + (soundroms);
-	bprintf(0, _T("nextpos %d\n"), rompos);
 
 	// Load and decode the chars and sprites
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  0 + rompos, 1); if (nRet != 0) return 1;
@@ -1474,6 +1438,10 @@ static INT32 DrvExit()
 	xScroll = 0;
 	yScroll = 0;
 	DrvLastBang = 0;
+
+	stars_enable = 0;
+	total_stars = 0;
+
 	junglermode = 0;
 	junglerflip = 0;
 	junglerinputs = 0;
@@ -1769,24 +1737,14 @@ static void DrvRenderBgLayer(INT32 priority)
 
 		Colour &= 0x3f;
 
-		/*if (junglerflip) {
-			sx = 31 - sx;
-			sy = 31 - sy;
-			xFlip = !xFlip;
-			yFlip = !yFlip;
-		}*/
-
 		x = 8 * sx;
 		y = 8 * sy;
 
-		x += scrollx;//xScroll;
-		y += scrolly;//yScroll;
+		x += scrollx;
+		y += scrolly;
 
 		if (x < -7) x += 256;
 		if (y < -7) y += 256;
-		//y -= 16;
-		//if (junglermode)
-		//	x +=3; // dink
 
 		if (x >= nScreenWidth || y >= nScreenHeight) continue;
 
@@ -1809,63 +1767,6 @@ static void DrvRenderBgLayer(INT32 priority)
 		}
 	}
 }
-#if 0
-static void DrvRenderBgLayer(INT32 priority)
-{
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0, xFlip, yFlip;
-
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Code   = DrvVideoRam[TileIndex + 0x400 + 0x000];
-			Colour = DrvVideoRam[TileIndex + 0x400 + 0x800];
-			//Flip = ((Colour >> 6) & 0x03) ^ 1;
-			//xFlip = Flip & 0x01;
-			//yFlip = Flip & 0x02;
-			xFlip = ~Colour & 0x40;
-			yFlip = Colour & 0x80;
-
-			if (((Colour & 0x20) >> 5) != priority) continue;
-
-			Colour &= 0x3f;
-
-			x = 8 * mx;
-			y = 8 * my;
-			
-			x -= xScroll;
-			y -= yScroll;
-			
-			x += 3;
-			y -= 16;
-				
-			if (x < -7) x += 256;
-			if (y < -7) y += 256;
-
-			if (x >= nScreenWidth || y >= nScreenHeight) continue;
-
-			if (xFlip) {
-				if (yFlip) {
-					Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-					Render8x8Tile_FlipXY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-				} else {
-					Render8x8Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-					Render8x8Tile_FlipX_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-				}
-			} else {
-				if (yFlip) {
-					Render8x8Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-					Render8x8Tile_FlipY_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-				} else {
-					Render8x8Tile_Clip(pTransDraw, Code, x, y, Colour, 2, 0, DrvChars);
-					Render8x8Tile_Clip(pTransDraw, Code, x-256, y, Colour, 2, 0, DrvChars);
-				}
-			}
-
-
-			TileIndex++;
-		}
-	}
-}
-#endif
 
 static void DrvRender8x32Layer()
 {
@@ -1953,8 +1854,7 @@ static void DrvRenderSprites()
 			xFlip = yFlip;
 			Code = ((SpriteRam[Offs] & 0x7c) >> 2) + 0x20*(SpriteRam[Offs] & 0x01) + ((SpriteRam[Offs] & 0x80) >> 1);
 		}
-//		if (flip_screen_get(machine))
-//			sx -= 2 * displacement;
+
 		if (junglerflip) {
 			sx = (nScreenWidth-16-1) - sx;
 			sy = SpriteRam2[Offs] - Displacement;
@@ -2010,7 +1910,7 @@ static void DrvRenderBullets()
 
 		Code = ((DrvRadarAttrRam[Offs & 0x0f] & 0x0e) >> 1) ^ 0x07;
 		x = RadarX[Offs] + ((~DrvRadarAttrRam[Offs & 0x0f] & 0x01) << 8);
-		y = 253 - RadarY[Offs];
+		y = ((locomotnmode) ? 252 : 253) - RadarY[Offs];
 		Flip = 0;
 
 		if (junglermode) {
@@ -2018,7 +1918,7 @@ static void DrvRenderBullets()
 			x = RadarX[Offs] + ((~DrvRadarAttrRam[Offs & 0x0f] & 0x08) << 5);
 
 			if (junglerflip) {
-				x = (nScreenWidth-3) - x;
+				x = (nScreenWidth-4) - x;
 				y = RadarY[Offs] - 1;
 				Flip = 1;
 			}
@@ -2049,6 +1949,41 @@ static void DrvRenderBullets()
 			RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 4, 4, Code, x, y, 0, 2, 3, 0x100, DrvDots);
 		} else {
 			RenderCustomTile_Mask_Clip(pTransDraw, 4, 4, Code, x, y, 0, 2, 3, 0x100, DrvDots);
+		}
+	}
+}
+
+void calculate_star_field()
+{
+	INT32 generator;
+
+	total_stars = 0;
+	generator = 0;
+	memset(&j_stars, 0, sizeof(j_stars));
+
+	for (INT32 y = 0; y < 256; y++) {
+		for (INT32 x = 0; x < 288; x++) {
+			INT32 bit1, bit2;
+
+			generator <<= 1;
+			bit1 = (~generator >> 17) & 1;
+			bit2 = (generator >> 5) & 1;
+
+			if (bit1 ^ bit2)
+				generator |= 1;
+
+			if (((~generator >> 16) & 1) && (generator & 0xfe) == 0xfe) {
+				INT32 color = (~(generator >> 8)) & 0x3f;
+
+				if (color && total_stars < 1000)
+				{
+					j_stars[total_stars].x = x;
+					j_stars[total_stars].y = y;
+					j_stars[total_stars].color = color;
+
+					total_stars++;
+				}
+			}
 		}
 	}
 }
@@ -2116,22 +2051,21 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 	
 	INT32 nSoundBufferPos = 0;
-
-	nCyclesTotal[0] = (18432000 / 6) / 60;
-	nCyclesDone[0] = 0;
+	INT32 nCyclesTotal = { (18432000 / 6) / 60 };
+	INT32 nCyclesDone = 0;
+	INT32 nCyclesSegment;
 	
 	ZetNewFrame();
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
+		INT32 nNext;
 		
 		// Run Z80 #1
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		ZetOpen(0);
+		nNext = (i + 1) * nCyclesTotal / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone;
 		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		nCyclesDone += nCyclesSegment;
 		if (i == (nInterleave - 1) && DrvCPUFireIRQ) {
 			ZetSetVector(DrvCPUIRQVector);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -2167,7 +2101,7 @@ static INT32 DrvFrame()
 
 static INT32 JunglerFrame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	
 	if (DrvReset) JunglerDoReset();
 
@@ -2175,9 +2109,9 @@ static INT32 JunglerFrame()
 	
 	INT32 nSoundBufferPos = 0;
 
-	nCyclesTotal[0] = (18432000 / 6) / 60;
-	nCyclesTotal[1] = (14318180 / 8) / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesTotal[2] = { (18432000 / 6) / 60, (14318180 / 8) / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesSegment;
 	
 	ZetNewFrame();
 	
@@ -2197,7 +2131,8 @@ static INT32 JunglerFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		ZetRun(nCyclesTotal[1] / nInterleave);
+		nNext = (nCyclesTotal[1] * i) / nInterleave;
+		nCyclesDone[1] += ZetRun(nNext - nCyclesDone[1]);
 		ZetClose();
 
 		// Render Sound Segment

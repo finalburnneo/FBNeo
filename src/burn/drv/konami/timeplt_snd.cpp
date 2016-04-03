@@ -186,6 +186,16 @@ void LocomotnSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 	locomotnmode = 1;
 }
 
+void TimepltSndVol(double vol0, double vol1)
+{
+	filter_rc_set_route(0, vol0, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(1, vol0, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(2, vol0, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(3, vol1, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(4, vol1, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(5, vol1, BURN_SND_ROUTE_BOTH);
+}
+
 void TimepltSndExit()
 {
 	if (z80_select == 0) ZetExit();

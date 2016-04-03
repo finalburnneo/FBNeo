@@ -49,6 +49,7 @@ static UINT8 soundlatch2;
 static UINT8 flipscreen;
 static UINT8 DrvZ80Bank;
 static UINT8 DrvSampleBank;
+static UINT8 DrvSpriteBank;
 
 static UINT8 avengers_param[4];
 static UINT32 avengers_palette_pen;
@@ -792,12 +793,15 @@ void __fastcall lwings_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case (0xf80e + 0x10):
-		case 0xf80e:
+		case 0xf80e: {
 			lwings_bankswitch_w(data);
 
 			flipscreen = ~data & 0x01;
 
+			DrvSpriteBank = (data & 0x10) >> 4;
+
 			interrupt_enable = data & 0x08;
+		}
 		return;
 
 		case (0xf809 + 0x10):
@@ -852,6 +856,7 @@ static void oki_bank(INT32 data)
 	DrvSampleBank = data;
 
 	INT32 bank = (DrvSampleBank & 0x0e) * 0x10000;
+	if (bank >= 0xc0000) bank -= 0xc0000;
 
 	memcpy (DrvSampleROM + 0x20000, DrvSampleROM + 0x40000 + bank, 0x20000);
 }
@@ -944,6 +949,7 @@ static INT32 DrvDoReset()
 	avengers_soundlatch2 = 0;
 	avengers_soundstate = 0;
 
+	DrvSpriteBank = 0;
 	DrvZ80Bank = 0;
 	flipscreen = 0;
 	interrupt_enable = 0;
@@ -1223,6 +1229,7 @@ static INT32 FballInit()
 		if (BurnLoadRom(DrvGfxROM1 + 0x10000, 4, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x20000, 3, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x30000, 6, 1)) return 1;
+		memset (DrvGfxROM1 + 0x40000, 0, 0x50000);
 
 		if (BurnLoadRom(DrvGfxROM2 + 0x00000, 7, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x20000, 8, 1)) return 1;
@@ -1595,7 +1602,7 @@ static void trojan_draw_sprites()
 			if (sy > 0xf8) sy-=0x100;
 
 			INT32 color = DrvSprBuf[offs + 1];
-			INT32 code  = DrvSprBuf[offs] | ((color & 0x20) << 4) | ((color & 0x40) << 2) | ((color & 0x80) << 3);
+			INT32 code  = DrvSprBuf[offs] | ((color & 0x20) << 4) | ((color & 0x40) << 2) | ((color & 0x80) << 3) | (DrvSpriteBank << 10);
 
 			if (avengers)
 			{
@@ -1865,6 +1872,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch2);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(DrvZ80Bank);
+		SCAN_VAR(DrvSpriteBank);
 		SCAN_VAR(irq_counter);
 
 		SCAN_VAR(avengers_param);

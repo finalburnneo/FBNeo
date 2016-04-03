@@ -1,5 +1,5 @@
 // FinalBurn Alpha driver module for Rally-X, based on the MAME driver by Nicola Salmoria.
-// Emulates Rally-X variants & Jungler, other games TBA
+// Emulates Rally-X variants, Jungler, Tactician, Loco-Motion & Commando (Sega)
 // Oddities: Jungler has flipped-mode on by default, but it only affects sprites
 //           and bullets.
 
@@ -1996,8 +1996,9 @@ void plot_star(INT32 x, INT32 y, INT32 color)
 	}
 
 	if ((x >= 0 && x < nScreenWidth) && (y >= 0 && y < nScreenHeight)) {
-		if (pTransDraw[(y * nScreenWidth) + x] == 0x1c || pTransDraw[(y * nScreenWidth) + x] == 0x00) ///*% 0x144*/ == 0)
-			pTransDraw[(y * nScreenWidth) + x] = 0x104 + color;
+		UINT16 *pxl = &pTransDraw[(y * nScreenWidth) + x];
+		if (*pxl == 0x1c || *pxl == 0x6c || *pxl == 0x00)
+			*pxl = 0x104 + color;
 	}
 }
 
@@ -2035,6 +2036,13 @@ static void DrvDrawJungler()
 	if (nBurnLayer & 8) DrvRender8x32Layer();
 	if (nSpriteEnable & 1) DrvRenderSprites();
 	if (nBurnLayer & 2) DrvRenderBullets();
+
+#if 0
+	// for debugging tactician stars. grrr!
+	FILE * f = fopen("c:\\transdraw.bin", "wb+");
+	fwrite(pTransDraw, 1, nScreenWidth * nScreenHeight * 2, f);
+	fclose(f);
+#endif
 
 	if (stars_enable)
 		draw_stars();

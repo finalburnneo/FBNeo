@@ -444,7 +444,7 @@ static INT32 DrvInit(INT32 nGame)
 		if (BurnLoadRom(DrvGfxROM2 + 0x40001, 14, 2)) return 1;
 		memset (DrvGfxROM1 + 0x60000, 0xff, 0x20000);
 	}
-	else // android
+	else if (nGame == 1) // androidp
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  1, 1)) return 1;
@@ -463,6 +463,25 @@ static INT32 DrvInit(INT32 nGame)
 		if (BurnLoadRom(DrvGfxROM1 + 0x00001,  6, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x20000,  5, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x20001,  6, 2)) return 1;
+
+		memset (DrvGfxROM2, 0xff, 0x80000); // not present
+	} else if (nGame == 2) // androidp2
+	{
+		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  1, 1)) return 1;
+		memcpy (DrvZ80ROM0 + 0x10000, DrvZ80ROM1 + 0x00000, 0x04000);
+		memcpy (DrvZ80ROM0 + 0x18000, DrvZ80ROM1 + 0x04000, 0x04000);
+
+		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x10000,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  4, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x00001,  5, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x20000,  4, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x20001,  5, 2)) return 1;
 
 		memset (DrvGfxROM2, 0xff, 0x80000); // not present
 	}
@@ -815,7 +834,7 @@ STD_ROM_FN(androidp)
 
 static INT32 androidpInit()
 {
-	return DrvInit(1);
+	return DrvInit(2);
 }
 
 struct BurnDriver BurnDrvAndroidp = {
@@ -825,5 +844,33 @@ struct BurnDriver BurnDrvAndroidp = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, androidpRomInfo, androidpRomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
 	androidpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	192, 256, 3, 4
+};
+
+// Android (later build?)
+
+static struct BurnRomInfo androidp2RomDesc[] = {
+	{ "ANDR1.BIN", 0x08000, 0xfff04130, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "ANDR3.BIN", 0x08000, 0x112d5123, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ANDR4.BIN", 0x08000, 0x65f5e98b, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 #1 Code
+   
+	{ "ANDR5.BIN", 0x10000, 0x0a0b44c0, 3 | BRF_GRA },           //  3 - Background Tiles
+   
+	{ "ANDR6.BIN", 0x10000, 0x122b7dd1, 4 | BRF_GRA },           //  4 - 16x16 Sprites
+	{ "ANDR7.BIN", 0x10000, 0xfc0f9234, 4 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(androidp2)
+STD_ROM_FN(androidp2)
+
+
+struct BurnDriver BurnDrvAndroidp2 = {
+	"androidp2", "androidp", NULL, NULL, "198?",
+	"Android (later build?)\0", NULL, "Nasco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, androidp2RomInfo, androidp2RomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
+	androidpInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };

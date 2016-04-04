@@ -2246,7 +2246,7 @@ struct BurnDriver BurnDrvNrallyx = {
 	NULL, 260, 288, 224, 4, 3
 };
 
-struct BurnDriverD BurnDrvJungler = {
+struct BurnDriver BurnDrvJungler = {
 	"jungler", NULL, NULL, NULL, "1981",
 	"Jungler\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

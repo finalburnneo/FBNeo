@@ -167,7 +167,7 @@ static struct BurnDIPInfo HimesikiDIPList[]=
 
 STDDIPINFO(Himesiki)
 
-static struct BurnDIPInfo AndroidpDIPList[]=
+static struct BurnDIPInfo AndroidpoDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xfb, NULL		},
 	{0x15, 0xff, 0xff, 0xfc, NULL		},
@@ -179,14 +179,50 @@ static struct BurnDIPInfo AndroidpDIPList[]=
 	{0x14, 0x01, 0x0c, 0x00, "4"		},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x15, 0x01, 0x07, 0x00, "6 Coins 1 Credits"		},
-	{0x15, 0x01, 0x07, 0x01, "5 Coins 1 Credits"		},
-	{0x15, 0x01, 0x07, 0x02, "4 Coins 1 Credits"		},
-	{0x15, 0x01, 0x07, 0x04, "1 Coin  1 Credits"		},
+	{0x15, 0x01, 0x07, 0x00, "6 Coins 1 Credit"		},
+	{0x15, 0x01, 0x07, 0x01, "5 Coins 1 Credit"		},
+	{0x15, 0x01, 0x07, 0x02, "4 Coins 1 Credit"		},
+	{0x15, 0x01, 0x07, 0x04, "1 Coin  1 Credit"		},
 	{0x15, 0x01, 0x07, 0x05, "1 Coin  2 Credits"		},
 	{0x15, 0x01, 0x07, 0x06, "1 Coin  3 Credits"		},
 	{0x15, 0x01, 0x07, 0x07, "1 Coin  4 Credits"		},
 	{0x15, 0x01, 0x07, 0x03, "Invalid"		},
+};
+
+STDDIPINFO(Androidpo)
+
+static struct BurnDIPInfo AndroidpDIPList[]=
+{
+	{0x14, 0xff, 0xff, 0xf6, NULL		},
+	{0x15, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x14, 0x01, 0x01, 0x01, "Cocktail"		},
+	{0x14, 0x01, 0x01, 0x00, "Upright"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x14, 0x01, 0x0c, 0x08, "1"		},
+	{0x14, 0x01, 0x0c, 0x0c, "2"		},
+	{0x14, 0x01, 0x0c, 0x04, "3"		},
+	{0x14, 0x01, 0x0c, 0x00, "4"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x14, 0x01, 0x40, 0x00, "No"		},
+	{0x14, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x14, 0x01, 0x80, 0x00, "Off"		},
+	{0x14, 0x01, 0x80, 0x80, "On"		},
+
+	{0   , 0xfe, 0   ,    8, "Coinage"		},
+	{0x15, 0x01, 0x07, 0x00, "4 Coins 1 Credit"		},
+	{0x15, 0x01, 0x07, 0x01, "3 Coins 1 Credit"		},
+	{0x15, 0x01, 0x07, 0x02, "2 Coins 1 Credit"		},
+	{0x15, 0x01, 0x07, 0x07, "1 Coin  1 Credit"		},
+	{0x15, 0x01, 0x07, 0x03, "2 Coins 3 Credits"		},
+	{0x15, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x15, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x15, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
 };
 
 STDDIPINFO(Androidp)
@@ -444,7 +480,7 @@ static INT32 DrvInit(INT32 nGame)
 		if (BurnLoadRom(DrvGfxROM2 + 0x40001, 14, 2)) return 1;
 		memset (DrvGfxROM1 + 0x60000, 0xff, 0x20000);
 	}
-	else if (nGame == 1) // androidp
+	else if (nGame == 1) // androidpo
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  1, 1)) return 1;
@@ -465,7 +501,7 @@ static INT32 DrvInit(INT32 nGame)
 		if (BurnLoadRom(DrvGfxROM1 + 0x20001,  6, 2)) return 1;
 
 		memset (DrvGfxROM2, 0xff, 0x80000); // not present
-	} else if (nGame == 2) // androidp2
+	} else if (nGame == 2) // androidp
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 
@@ -568,16 +604,16 @@ static void draw_sprites()
 
 	for (INT32 offs = 0x00; offs < 0x60; offs += 4)
 	{
-		int attr = spriteram[offs + 1];
-		int code = spriteram[offs + 0] | (attr & 3) << 8;
+		INT32 attr = spriteram[offs + 1];
+		INT32 code = spriteram[offs + 0] | (attr & 3) << 8;
 		code &= 0x2ff;
-		int x = spriteram[offs + 3] | (attr & 8) << 5;
-		int y = spriteram[offs + 2];
+		INT32 x = spriteram[offs + 3] | (attr & 8) << 5;
+		INT32 y = spriteram[offs + 2];
 
-		int color = (attr & 0xf0) >> 4;
+		INT32 color = (attr & 0xf0) >> 4;
 		color &= 0x3ff;
-		int fx = attr & 4;
-		int fy = 0;
+		INT32 fx = attr & 4;
+		INT32 fy = 0;
 
 		if (x > 0x1e0)
 			x -= 0x200;
@@ -621,13 +657,13 @@ static void draw_sprites()
 		    (spriteram[offs + 3] == 0x00))
 		 	 continue;
 
-		int attr = spriteram[offs + 1];
-		int code = spriteram[offs + 0] | (attr & 7) << 8;
-		int x = spriteram[offs + 3] | (attr & 8) << 5;
-		int y = spriteram[offs + 2];
+		INT32 attr = spriteram[offs + 1];
+		INT32 code = spriteram[offs + 0] | (attr & 7) << 8;
+		INT32 x = spriteram[offs + 3] | (attr & 8) << 5;
+		INT32 y = spriteram[offs + 2];
 
-		int color = (attr & 0xf0) >> 4;
-		int f = 0;
+		INT32 color = (attr & 0xf0) >> 4;
+		INT32 f = 0;
 
 		if (x > 0x1e0)
 			x -= 0x200;
@@ -816,7 +852,7 @@ struct BurnDriver BurnDrvHimesiki = {
 
 // Android (early build?)
 
-static struct BurnRomInfo androidpRomDesc[] = {
+static struct BurnRomInfo androidpoRomDesc[] = {
 	{ "MITSUBISHI_A01.toppcb.m5l27256k.k1.BIN",	0x08000, 0x25ab85eb, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
 	{ "MITSUBISHI_A03.toppcb.m5l27256k.G1.BIN",	0x08000, 0x6cf5f48a, 1 | BRF_PRG | BRF_ESS }, //  1 
 	{ "MITSUBISHI_A02.toppcb.m5l27256k.J1.BIN",	0x08000, 0xe41426be, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -829,27 +865,27 @@ static struct BurnRomInfo androidpRomDesc[] = {
 	{ "MITSUBISHI_A07.botpcb.m5l27512k.9B.BIN",	0x10000, 0x611ff400, 4 | BRF_GRA },           //  6
 };
 
-STD_ROM_PICK(androidp)
-STD_ROM_FN(androidp)
+STD_ROM_PICK(androidpo)
+STD_ROM_FN(androidpo)
 
-static INT32 androidpInit()
+static INT32 androidpoInit()
 {
-	return DrvInit(2);
+	return DrvInit(1);
 }
 
-struct BurnDriver BurnDrvAndroidp = {
-	"androidp", NULL, NULL, NULL, "198?",
-	"Android (early build?)\0", NULL, "Nasco", "Miscellaneous",
+struct BurnDriver BurnDrvAndroidpo = {
+	"androidpo", "androidp", NULL, NULL, "198?",
+	"Android (prototype, early build)\0", NULL, "Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, androidpRomInfo, androidpRomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
-	androidpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, androidpoRomInfo, androidpoRomName, NULL, NULL, AndroidpInputInfo, AndroidpoDIPInfo,
+	androidpoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };
 
 // Android (later build?)
 
-static struct BurnRomInfo androidp2RomDesc[] = {
+static struct BurnRomInfo androidpRomDesc[] = {
 	{ "ANDR1.BIN", 0x08000, 0xfff04130, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
 	{ "ANDR3.BIN", 0x08000, 0x112d5123, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -861,16 +897,20 @@ static struct BurnRomInfo androidp2RomDesc[] = {
 	{ "ANDR7.BIN", 0x10000, 0xfc0f9234, 4 | BRF_GRA },           //  5
 };
 
-STD_ROM_PICK(androidp2)
-STD_ROM_FN(androidp2)
+STD_ROM_PICK(androidp)
+STD_ROM_FN(androidp)
 
+static INT32 androidpInit()
+{
+	return DrvInit(2);
+}
 
-struct BurnDriver BurnDrvAndroidp2 = {
-	"androidp2", "androidp", NULL, NULL, "198?",
-	"Android (later build?)\0", NULL, "Nasco", "Miscellaneous",
+struct BurnDriver BurnDrvAndroidp = {
+	"androidp", NULL, NULL, NULL, "198?",
+	"Android (prototype, later build)\0", NULL, "Nasco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, androidp2RomInfo, androidp2RomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
-	androidpInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x400,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, androidpRomInfo, androidpRomName, NULL, NULL, AndroidpInputInfo, AndroidpDIPInfo,
+	androidpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	192, 256, 3, 4
 };

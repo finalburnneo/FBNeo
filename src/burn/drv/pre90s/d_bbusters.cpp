@@ -933,7 +933,7 @@ static void draw_block(const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32
 		scale_table_ptr--;
 		scale_line_count--;
 	}
-}                 extern int counter;
+}
 
 static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask)
 {

@@ -933,7 +933,7 @@ static void draw_block(const UINT8 *scale_table_ptr,INT32 scale_line_count,INT32
 		scale_table_ptr--;
 		scale_line_count--;
 	}
-}
+}                 extern int counter;
 
 static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask)
 {
@@ -946,18 +946,15 @@ static void draw_sprites(UINT8 *source8, INT32 bank, INT32 colval, INT32 colmask
 		INT32 sprite=source[offs+1];
 		INT32 colour=source[offs+0];
 
-		if ((colour==0xf7 || colour==0xffff) && (sprite==0x3fff || sprite==0xffff))
-			continue;
+		if ((colour==0xf7 || colour==0xffff || colour == 0x43f9) && (sprite==0x3fff || sprite==0xffff || sprite==0x0001))
+			continue; // sprite 1, color 0x43f9 is the dead sprite in the top-right of the screen in Mechanized Attack's High Score table.
 
-		INT32 y=source[offs+3];
+		INT16 y=source[offs+3];
 		INT32 x=source[offs+2];
 
 		if (x&0x200) x=-(0x100-(x&0xff));
 
-		if (bank == 2) { // only act on bbusters second sprite chip, causes issues in mechatt
-			y=(INT16)source[offs+3]; // needs to be casted from an INT16, otherwise the negative values aren't transfered to the INT32 from the UINT16 source
-		    if (y > 320 || y < -256) y&=0xff; // fix for ending & Zing! attract-mode fullscreen zombie
-		}
+		if (y > 320 || y < -256) y &= 0x1ff; // fix for bbusters ending & "Zing!" attract-mode fullscreen zombie & Helicopter on the 3rd rotation of the attractmode sequence
 
 		colour>>=12;
 		INT32 block=(source[offs+0]>>8)&0x3;

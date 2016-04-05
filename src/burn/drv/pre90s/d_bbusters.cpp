@@ -211,6 +211,56 @@ static struct BurnDIPInfo MechattDIPList[]=
 
 STDDIPINFO(Mechatt)
 
+static struct BurnDIPInfo MechattuDIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0xff, NULL				},
+	{0x0f, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
+	{0x0e, 0x01, 0x01, 0x01, "Common"			},
+	{0x0e, 0x01, 0x01, 0x00, "Individual"			},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x0e, 0x01, 0x02, 0x00, "No"				},
+	{0x0e, 0x01, 0x02, 0x02, "Yes"				},
+
+	{0   , 0xfe, 0   ,    4, "Magazine / Grenade"		},
+	{0x0e, 0x01, 0x0c, 0x08, "5 / 2"			},
+	{0x0e, 0x01, 0x0c, 0x0c, "6 / 3"			},
+	{0x0e, 0x01, 0x0c, 0x04, "7 / 4"			},
+	{0x0e, 0x01, 0x0c, 0x00, "8 / 5"			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"			},
+	{0x0e, 0x01, 0x30, 0x00, "Free_Play"				},
+	{0x0e, 0x01, 0x30, 0x10, "1 Coin/2 Credits first, then 1 Coin/1 Credit"		},
+	{0x0e, 0x01, 0x30, 0x20, "2 Coins/1 Credit first, then 1 Coin/1 Credit"		},
+	{0x0e, 0x01, 0x30, 0x30, "1 Coin  1 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"			},
+	{0x0e, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0xc0, 0x00, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x0f, 0x01, 0x03, 0x02, "Easy"				},
+	{0x0f, 0x01, 0x03, 0x03, "Normal"			},
+	{0x0f, 0x01, 0x03, 0x01, "Hard"				},
+	{0x0f, 0x01, 0x03, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    4, "Game Mode"			},
+	{0x0f, 0x01, 0x0c, 0x08, "Demo Sounds Off"		},
+	{0x0f, 0x01, 0x0c, 0x0c, "Demo Sounds On"		},
+	{0x0f, 0x01, 0x0c, 0x04, "Infinite Energy (Cheat)"	},
+	{0x0f, 0x01, 0x0c, 0x00, "Freeze"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0f, 0x01, 0x80, 0x80, "Off"				},
+	{0x0f, 0x01, 0x80, 0x00, "On"				},
+};
+
+STDDIPINFO(Mechattu)
+
 static UINT16 control_3_r()
 {
 	UINT16 retdata = 0;
@@ -771,6 +821,107 @@ static INT32 MechattInit()
 	return 0;
 }
 
+static INT32 MechattjInit()
+{
+	game_select = 1;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x040001,  2, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x040000,  3, 2)) return 1;
+
+		if (BurnLoadRom(DrvZ80ROM  + 0x000000,  4, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  5, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  6, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x000001,  7, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x040000,  8, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x040001,  9, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080000, 10, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x080001, 11, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x0c0000, 12, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x0c0001, 13, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000, 14, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100001, 15, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x140000, 16, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x140001, 17, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x180000, 18, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x180001, 19, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x1c0000, 20, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x1c0001, 21, 2)) return 1;
+
+		memset (DrvGfxROM2, 0xff, 0x200000);
+
+		if (BurnLoadRom(DrvGfxROM3 + 0x000000, 22, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x020000, 23, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x040000, 24, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x060000, 25, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM4 + 0x000000, 26, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM4 + 0x020000, 27, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM4 + 0x040000, 28, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM4 + 0x060000, 29, 1)) return 1;
+
+		if (BurnLoadRom(DrvSndROM0 + 0x000000, 30, 1)) return 1;
+
+		if (BurnLoadRom(DrvZoomTab + 0x000000, 31, 1)) return 1;
+	//	if (BurnLoadRom(DrvZoomTab + 0x000000, 32, 1)) return 1;
+
+		if (BurnLoadRom(DrvSndROM1,		0x80, 1)) return 1; // ym2608 rom
+
+		DrvGfxDecode();
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x06ffff, MAP_ROM);
+	SekMapMemory(Drv68KRAM,		0x070000, 0x07ffff, MAP_RAM);
+	SekMapMemory(DrvVidRAM,		0x090000, 0x090fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x0a0000, 0x0a0fff, MAP_RAM);
+	SekMapMemory(DrvPfRAM0,		0x0b0000, 0x0b3fff, MAP_RAM);
+	SekMapMemory(DrvPfRAM1,		0x0c0000, 0x0c3fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x0d0000, 0x0d07ff, MAP_RAM);
+	SekSetWriteWordHandler(0,	mechatt_main_write_word);
+	SekSetWriteByteHandler(0,	mechatt_main_write_byte);
+	SekSetReadWordHandler(0,	mechatt_main_read_word);
+	SekSetReadByteHandler(0,	mechatt_main_read_byte);
+	SekClose();
+
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0xf000, 0xf7ff, MAP_RAM);
+	ZetSetWriteHandler(bbusters_sound_write);
+	ZetSetReadHandler(bbusters_sound_read);
+	ZetSetOutHandler(bbusters_sound_write_port);
+	ZetSetInHandler(bbusters_sound_read_port);
+	ZetClose();
+
+	INT32 nSndROMLen = 0x20000;
+	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnTimerAttachZet(4000000);
+	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   0.15, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
+
+	BurnGunInit(3, true);
+
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -1149,37 +1300,37 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Beast Busters (World)
 
 static struct BurnRomInfo bbustersRomDesc[] = {
-	{ "bb-3.k10",		0x20000, 0x04da1820, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bb-5.k12",		0x20000, 0x777e0611, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb-2.k8",		0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb-4.k11",		0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "bb-3.k10",			0x20000, 0x04da1820, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb-5.k12",			0x20000, 0x777e0611, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "bb-1.e6",		0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+	
+	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
 
-	{ "bb-10.l9",		0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
+	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
+	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
+	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
+	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
 
-	{ "bb-f11.m16",		0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
-	{ "bb-f12.m13",		0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
-	{ "bb-f13.m12",		0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
-	{ "bb-f14.m11",		0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
+	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
+	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
+	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
+	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
 
-	{ "bb-f21.l10",		0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
-	{ "bb-f22.l12",		0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
-	{ "bb-f23.l13",		0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
-	{ "bb-f24.l15",		0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
+	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
 
-	{ "bb-back1.m4",	0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
+	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
 
-	{ "bb-back2.m6",	0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
+	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
+	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
+	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
+	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
 
-	{ "bb-6.e7",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
-	{ "bb-7.h7",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
-	{ "bb-8.a14",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
-	{ "bb-9.c14",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
 
-	{ "bb-pcma.l5",		0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
-
-	{ "bb-pcmb.l3",		0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
 
 	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
 };
@@ -1193,6 +1344,159 @@ struct BurnDriver BurnDrvBbusters = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bbustersRomInfo, bbustersRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
+	256, 224, 4, 3
+};
+
+// Beast Busters (US, Version 3)
+
+static struct BurnRomInfo bbustersuRomDesc[] = {
+	{ "bb-ver3-u3.k10",		0x20000, 0xc80ec3bc, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb-ver3-u5.k12",		0x20000, 0x5ded86d1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
+	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
+	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
+	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
+
+	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
+	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
+	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
+	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
+
+	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
+
+	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
+
+	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
+	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
+	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
+	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+
+	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
+};
+
+STD_ROM_PICK(bbustersu)
+STD_ROM_FN(bbustersu)
+
+struct BurnDriver BurnDrvBbustersu = {
+	"bbustersu", "bbusters", NULL, NULL, "1989",
+	"Beast Busters (US, Version 3)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bbustersuRomInfo, bbustersuRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
+	256, 224, 4, 3
+};
+
+// Beast Busters (Japan, Version 2)
+
+static struct BurnRomInfo bbustersjRomDesc[] = {
+	{ "bb3-ver2-j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb5-ver2-j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
+	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
+	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
+	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
+
+	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
+	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
+	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
+	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
+
+	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
+
+	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
+
+	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
+	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
+	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
+	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
+
+	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+
+	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
+};
+
+STD_ROM_PICK(bbustersj)
+STD_ROM_FN(bbustersj)
+
+struct BurnDriver BurnDrvBbustersj = {
+	"bbustersj", "bbusters", NULL, NULL, "1989",
+	"Beast Busters (Japan, Version 2)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
+	256, 224, 4, 3
+};
+
+// Beast Busters (US, Version 2)
+
+static struct BurnRomInfo bbustersuaRomDesc[] = {
+	{ "bb-ver2-u3.k10",		0x20000, 0x6930088b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb-ver2-u5.k12",		0x20000, 0xcfdb2c6c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
+	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
+	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
+	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
+
+	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
+	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
+	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
+	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
+
+	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
+
+	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
+
+	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
+	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
+	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
+	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+
+	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
+};
+
+STD_ROM_PICK(bbustersua)
+STD_ROM_FN(bbustersua)
+
+struct BurnDriver BurnDrvBbustersua = {
+	"bbustersua", "bbusters", NULL, NULL, "1989",
+	"Beast Busters (US, Version 2)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bbustersuaRomInfo, bbustersuaRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };
@@ -1213,28 +1517,28 @@ static struct BurnRomInfo Ym2608RomDesc[] = {
 // Mechanized Attack (World)
 
 static struct BurnRomInfo mechattRomDesc[] = {
-	{ "ma5-e.n12",		0x20000, 0x9bbb852a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ma4.l12",		0x20000, 0x0d414918, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ma7.n13",		0x20000, 0x61d85e1b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ma6-f.l13",		0x20000, 0x4055fe8d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ma5-e.n12",			0x20000, 0x9bbb852a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ma4.l12",			0x20000, 0x0d414918, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ma7.n13",			0x20000, 0x61d85e1b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ma6-f.l13",			0x20000, 0x4055fe8d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ma_3.e13",		0x10000, 0xc06cc8e1, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "ma_3.e13",			0x10000, 0xc06cc8e1, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "ma_1.l2",		0x10000, 0x24766917, 3 | BRF_GRA },           //  5 Characters
+	{ "ma_1.l2",			0x10000, 0x24766917, 3 | BRF_GRA },           //  5 Characters
 
-	{ "mao89p13.bin",	0x80000, 0x8bcb16cf, 4 | BRF_GRA },           //  6 Sprites
-	{ "ma189p15.bin",	0x80000, 0xb84d9658, 4 | BRF_GRA },           //  7
-	{ "ma289p17.bin",	0x80000, 0x6cbe08ac, 4 | BRF_GRA },           //  8
-	{ "ma389m15.bin",	0x80000, 0x34d4585e, 4 | BRF_GRA },           //  9
+	{ "mao89p13.bin",		0x80000, 0x8bcb16cf, 4 | BRF_GRA },           //  6 Sprites
+	{ "ma189p15.bin",		0x80000, 0xb84d9658, 4 | BRF_GRA },           //  7
+	{ "ma289p17.bin",		0x80000, 0x6cbe08ac, 4 | BRF_GRA },           //  8
+	{ "ma389m15.bin",		0x80000, 0x34d4585e, 4 | BRF_GRA },           //  9
 
-	{ "mab189a2.bin",	0x80000, 0xe1c8b4d0, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "mab189a2.bin",		0x80000, 0xe1c8b4d0, 5 | BRF_GRA },           // 10 Background Tiles
 
-	{ "mab289c2.bin",	0x80000, 0x14f97ceb, 6 | BRF_GRA },           // 11 Foreground Tiles
+	{ "mab289c2.bin",		0x80000, 0x14f97ceb, 6 | BRF_GRA },           // 11 Foreground Tiles
 
-	{ "ma_2.d10",		0x20000, 0xea4cc30d, 7 | BRF_GRA },           // 12 YM2608 Samples
+	{ "ma_2.d10",			0x20000, 0xea4cc30d, 7 | BRF_GRA },           // 12 YM2608 Samples
 
-	{ "ma_8.f10",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 13 Zoom Tables
-	{ "ma_9.f12",		0x10000, 0x61f3de03, 8 | BRF_GRA },           // 14
+	{ "ma_8.f10",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 13 Zoom Tables
+	{ "ma_9.f12",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 14
 };
 
 STDROMPICKEXT(mechatt, mechatt, Ym2608)
@@ -1247,5 +1551,161 @@ struct BurnDriver BurnDrvMechatt = {
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mechattRomInfo, mechattRomName, NULL, NULL, MechattInputInfo, MechattDIPInfo,
 	MechattInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+// Mechanized Attack (Japan)
+
+static struct BurnRomInfo mechattjRomDesc[] = {
+	{ "ma5j.n12",			0x20000, 0xe6bb5952, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ma4j.l12",			0x20000, 0xc78baa62, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ma7j.n13",			0x20000, 0x12a68fc2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ma6j.l13",			0x20000, 0x332b2f54, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "ma_3.e13",			0x10000, 0xc06cc8e1, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "ma_1.l2",			0x10000, 0x24766917, 3 | BRF_GRA },           //  5 Characters
+
+	{ "s_9.a1",				0x20000, 0x6e8e194c, 4 | BRF_GRA },           //  6 Sprites
+	{ "s_1.b1",				0x20000, 0xfd9161ed, 4 | BRF_GRA },           //  7
+	{ "s_10.a2",			0x20000, 0xfad6a1ab, 4 | BRF_GRA },           //  8
+	{ "s_2.b2",				0x20000, 0x549056f0, 4 | BRF_GRA },           //  9
+	{ "s_11.a3",			0x20000, 0x3887a382, 4 | BRF_GRA },           // 10
+	{ "s_3.b3",				0x20000, 0xcb99f565, 4 | BRF_GRA },           // 11
+	{ "s_12.a4",			0x20000, 0x63417b49, 4 | BRF_GRA },           // 12
+	{ "s_4.b4",				0x20000, 0xd739d48a, 4 | BRF_GRA },           // 13
+	{ "s_13.a5",			0x20000, 0xeccd47b6, 4 | BRF_GRA },           // 14
+	{ "s_5.b5",				0x20000, 0xe15244da, 4 | BRF_GRA },           // 15
+	{ "s_14.a6",			0x20000, 0xbbbf0461, 4 | BRF_GRA },           // 16
+	{ "s_6.b6",				0x20000, 0x4ee89f75, 4 | BRF_GRA },           // 17
+	{ "s_15.a7",			0x20000, 0xcde29bad, 4 | BRF_GRA },           // 18
+	{ "s_7.b7",				0x20000, 0x065ed221, 4 | BRF_GRA },           // 19
+	{ "s_16.a8",			0x20000, 0x70f28040, 4 | BRF_GRA },           // 20
+	{ "s_8.b8",				0x20000, 0xa6f8574f, 4 | BRF_GRA },           // 21
+
+	{ "s_21.b3",			0x20000, 0x701a0072, 5 | BRF_GRA },           // 22 Background Tiles
+	{ "s_22.b4",			0x20000, 0x34e6225c, 5 | BRF_GRA },           // 23
+	{ "s_23.b5",			0x20000, 0x9a7399d3, 5 | BRF_GRA },           // 24
+	{ "s_24.b6",			0x20000, 0xf097459d, 5 | BRF_GRA },           // 25
+
+	{ "s_17.a3",			0x20000, 0xcc47c4a3, 6 | BRF_GRA },           // 26 Foreground Tiles
+	{ "s_18.a4",			0x20000, 0xa04377e8, 6 | BRF_GRA },           // 27
+	{ "s_19.a5",			0x20000, 0xb07f5289, 6 | BRF_GRA },           // 28
+	{ "s_20.a6",			0x20000, 0xa9bb4fa9, 6 | BRF_GRA },           // 29
+
+	{ "ma_2.d10",			0x20000, 0xea4cc30d, 7 | BRF_GRA },           // 30 YM2608 Samples
+
+	{ "ma_8.f10",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 31 Zoom Tables
+	{ "ma_9.f12",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 32
+};
+
+STDROMPICKEXT(mechattj, mechattj, Ym2608)
+STD_ROM_FN(mechattj)
+
+struct BurnDriver BurnDrvMechattj = {
+	"mechattj", "mechatt", "ym2608", NULL, "1989",
+	"Mechanized Attack (Japan)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, mechattjRomInfo, mechattjRomName, NULL, NULL, MechattInputInfo, MechattDIPInfo,
+	MechattjInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+// Mechanized Attack (US)
+
+static struct BurnRomInfo mechattuRomDesc[] = {
+	{ "ma5u.n12",			0x20000, 0x485ea606, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ma4u.l12",			0x20000, 0x09fa31ec, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ma7u.n13",			0x20000, 0xf45b2c70, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ma6u.l13",			0x20000, 0xd5d68ce6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "ma_3.e13",			0x10000, 0xc06cc8e1, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "ma_1.l2",			0x10000, 0x24766917, 3 | BRF_GRA },           //  5 Characters
+
+	{ "mao89p13.bin",		0x80000, 0x8bcb16cf, 4 | BRF_GRA },           //  6 Sprites
+	{ "ma189p15.bin",		0x80000, 0xb84d9658, 4 | BRF_GRA },           //  7
+	{ "ma289p17.bin",		0x80000, 0x6cbe08ac, 4 | BRF_GRA },           //  8
+	{ "ma389m15.bin",		0x80000, 0x34d4585e, 4 | BRF_GRA },           //  9
+
+	{ "mab189a2.bin",		0x80000, 0xe1c8b4d0, 5 | BRF_GRA },           // 10 Background Tiles
+
+	{ "mab289c2.bin",		0x80000, 0x14f97ceb, 6 | BRF_GRA },           // 11 Foreground Tiles
+
+	{ "ma_2.d10",			0x20000, 0xea4cc30d, 7 | BRF_GRA },           // 12 YM2608 Samples
+
+	{ "ma_8.f10",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 13 Zoom Tables
+	{ "ma_9.f12",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 14
+};
+
+STDROMPICKEXT(mechattu, mechattu, Ym2608)
+STD_ROM_FN(mechattu)
+
+struct BurnDriver BurnDrvMechattu = {
+	"mechattu", "mechatt", "ym2608", NULL, "1989",
+	"Mechanized Attack (US)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, mechattuRomInfo, mechattuRomName, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
+	MechattInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+// Mechanized Attack (US, Version 1, Single Player)
+
+static struct BurnRomInfo mechattu1RomDesc[] = {
+	{ "ma_ver1_5u.n12",		0x20000, 0xdcd2e971, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ma_ver1_4u.l12",		0x20000, 0x69c8a85b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ma7u.n13",			0x20000, 0xf45b2c70, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ma6u.l13",			0x20000, 0xd5d68ce6, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "ma_3.e13",			0x10000, 0xc06cc8e1, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "ma_1.l2",			0x10000, 0x24766917, 3 | BRF_GRA },           //  5 Characters
+
+	{ "s_9.a1",				0x20000, 0x6e8e194c, 4 | BRF_GRA },           //  6 Sprites
+	{ "s_1.b1",				0x20000, 0xfd9161ed, 4 | BRF_GRA },           //  7
+	{ "s_10.a2",			0x20000, 0xfad6a1ab, 4 | BRF_GRA },           //  8
+	{ "s_2.b2",				0x20000, 0x549056f0, 4 | BRF_GRA },           //  9
+	{ "s_11.a3",			0x20000, 0x3887a382, 4 | BRF_GRA },           // 10
+	{ "s_3.b3",				0x20000, 0xcb99f565, 4 | BRF_GRA },           // 11
+	{ "s_12.a4",			0x20000, 0x63417b49, 4 | BRF_GRA },           // 12
+	{ "s_4.b4",				0x20000, 0xd739d48a, 4 | BRF_GRA },           // 13
+	{ "s_13.a5",			0x20000, 0xeccd47b6, 4 | BRF_GRA },           // 14
+	{ "s_5.b5",				0x20000, 0xe15244da, 4 | BRF_GRA },           // 15
+	{ "s_14.a6",			0x20000, 0xbbbf0461, 4 | BRF_GRA },           // 16
+	{ "s_6.b6",				0x20000, 0x4ee89f75, 4 | BRF_GRA },           // 17
+	{ "s_15.a7",			0x20000, 0xcde29bad, 4 | BRF_GRA },           // 18
+	{ "s_7.b7",				0x20000, 0x065ed221, 4 | BRF_GRA },           // 19
+	{ "s_16.a8",			0x20000, 0x70f28040, 4 | BRF_GRA },           // 20
+	{ "s_8.b8",				0x20000, 0xa6f8574f, 4 | BRF_GRA },           // 21
+
+	{ "s_21.b3",			0x20000, 0x701a0072, 5 | BRF_GRA },           // 22 Background Tiles
+	{ "s_22.b4",			0x20000, 0x34e6225c, 5 | BRF_GRA },           // 23
+	{ "s_23.b5",			0x20000, 0x9a7399d3, 5 | BRF_GRA },           // 24
+	{ "s_24.b6",			0x20000, 0xf097459d, 5 | BRF_GRA },           // 25
+
+	{ "s_17.a3",			0x20000, 0xcc47c4a3, 6 | BRF_GRA },           // 26 Foreground Tiles
+	{ "s_18.a4",			0x20000, 0xa04377e8, 6 | BRF_GRA },           // 27
+	{ "s_19.a5",			0x20000, 0xb07f5289, 6 | BRF_GRA },           // 28
+	{ "s_20.a6",			0x20000, 0xa9bb4fa9, 6 | BRF_GRA },           // 29
+
+	{ "ma_2.d10",			0x20000, 0xea4cc30d, 7 | BRF_GRA },           // 30 YM2608 Samples
+
+	{ "ma_8.f10",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 31 Zoom Tables
+	{ "ma_9.f12",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 32
+};
+
+STDROMPICKEXT(mechattu1, mechattu1, Ym2608)
+STD_ROM_FN(mechattu1)
+
+struct BurnDriver BurnDrvMechattu1 = {
+	"mechattu1", "mechatt", "ym2608", NULL, "1989",
+	"Mechanized Attack (US, Version 1, Single Player)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, mechattu1RomInfo, mechattu1RomName, NULL, NULL, MechattInputInfo, MechattuDIPInfo,
+	MechattjInit, DrvExit, DrvFrame, MechattDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

@@ -798,7 +798,7 @@ struct BurnDriver BurnDrvBatsugun = {
 
 struct BurnDriver BurnDrvBatsugunSP = {
 	"batsugunsp", "batsugun", NULL, NULL, "1993",
-	"Batsugun (Special Ver.)\0", NULL, "Dual Toaplan", "Toaplan GP9001 based",
+	"Batsugun (Special Ver.)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batugnspRomInfo, batugnspRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
@@ -808,7 +808,7 @@ struct BurnDriver BurnDrvBatsugunSP = {
 
 struct BurnDriver BurnDrvBatsugna = {
 	"batsuguna", "batsugun", NULL, NULL, "1993",
-	"Batsugun (set 2)\0", NULL, "Dual Toaplan", "Toaplan GP9001 based",
+	"Batsugun (set 2)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugnaRomInfo, batsugnaRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,
@@ -818,7 +818,7 @@ struct BurnDriver BurnDrvBatsugna = {
 
 struct BurnDriver BurnDrvBatsugunb = {
 	"batsugunb", "batsugun", NULL, NULL, "1993",
-	"Batsugun (Korean PCB)\0", NULL, "Dual Toaplan", "Toaplan GP9001 based",
+	"Batsugun (Korean PCB)\0", NULL, "Toaplan", "Dual Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_VERSHOOT, 0,
 	NULL, batsugunbRomInfo, batsugunbRomName, NULL, NULL, batsugunInputInfo, batsugunDIPInfo,

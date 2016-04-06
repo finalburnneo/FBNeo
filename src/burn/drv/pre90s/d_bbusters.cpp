@@ -87,6 +87,29 @@ static struct BurnInputInfo BbustersInputList[] = {
 
 STDINPUTINFO(Bbusters)
 
+static struct BurnInputInfo Bbusters2pInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+	A("P1 Gun X",    	BIT_ANALOG_REL, &LethalGun0,    "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &LethalGun1,    "mouse y-axis"	),
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 2"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &LethalGun2,    "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &LethalGun3,    "p2 y-axis"	),
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Bbusters2p)
+
 static struct BurnInputInfo MechattInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"	},
@@ -160,6 +183,56 @@ static struct BurnDIPInfo BbustersDIPList[]=
 };
 
 STDDIPINFO(Bbusters)
+
+static struct BurnDIPInfo Bbusters2pDIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0xf9, NULL				},
+	{0x0f, 0xff, 0xff, 0x8f, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x0e, 0x01, 0x01, 0x00, "No"				},
+	{0x0e, 0x01, 0x01, 0x01, "Yes"				},
+
+	{0   , 0xfe, 0   ,    4, "Magazine / Grenade"		},
+	{0x0e, 0x01, 0x06, 0x04, "5 / 2"			},
+	{0x0e, 0x01, 0x06, 0x06, "7 / 3"			},
+	{0x0e, 0x01, 0x06, 0x02, "9 / 4"			},
+	{0x0e, 0x01, 0x06, 0x00, "12 / 5"			},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"			},
+	{0x0e, 0x01, 0x18, 0x00, "4 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x18, 0x08, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x18, 0x10, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x18, 0x18, "1 Coin  1 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"			},
+	{0x0e, 0x01, 0x60, 0x60, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0x60, 0x40, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0x60, 0x20, "1 Coin  4 Credits"		},
+	{0x0e, 0x01, 0x60, 0x00, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Coin Slots"			},
+	{0x0e, 0x01, 0x80, 0x80, "Common"			},
+	{0x0e, 0x01, 0x80, 0x00, "Individual"			},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x0f, 0x01, 0x03, 0x02, "Easy"				},
+	{0x0f, 0x01, 0x03, 0x03, "Normal"			},
+	{0x0f, 0x01, 0x03, 0x01, "Hard"				},
+	{0x0f, 0x01, 0x03, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    4, "Game Mode"			},
+	{0x0f, 0x01, 0x0c, 0x08, "Demo Sounds Off"		},
+	{0x0f, 0x01, 0x0c, 0x0c, "Demo Sounds On"		},
+	{0x0f, 0x01, 0x0c, 0x04, "Infinite Energy (Cheat)"	},
+	{0x0f, 0x01, 0x0c, 0x00, "Freeze"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0f, 0x01, 0x80, 0x80, "Off"				},
+	{0x0f, 0x01, 0x80, 0x00, "On"				},
+};
+
+STDDIPINFO(Bbusters2p)
 
 static struct BurnDIPInfo MechattDIPList[]=
 {
@@ -1445,7 +1518,7 @@ struct BurnDriver BurnDrvBbustersj = {
 	"Beast Busters (Japan, Version 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };

@@ -1475,8 +1475,8 @@ struct BurnDriver BurnDrvBbustersu = {
 // Beast Busters (Japan, Version 2)
 
 static struct BurnRomInfo bbustersjRomDesc[] = {
-	{ "bb3-ver2-j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bb5-ver2-j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb3_ver2_j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb5_ver2_j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
 

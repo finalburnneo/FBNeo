@@ -11298,17 +11298,17 @@ struct BurnDriver BurnDrvMoonqsr = {
 };
 
 struct BurnDriver BurnDrvMoonal2 = {
-	"moonal2", "galaxian", NULL, NULL, "1980",
+	"moonal2", NULL, NULL, NULL, "1980",
 	"Moon Alien Part 2\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Moonal2RomInfo, Moonal2RomName, NULL, NULL, GalaxianInputInfo, Moonal2DIPInfo,
 	Moonal2Init, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvMoonal2b = {
-	"moonal2b", "galaxian", NULL, NULL, "1980",
+	"moonal2b", "moonal2", NULL, NULL, "1980",
 	"Moon Alien Part 2 (older version)\0", NULL, "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,

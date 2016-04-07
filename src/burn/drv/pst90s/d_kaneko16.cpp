@@ -1530,18 +1530,18 @@ STD_ROM_PICK(Mgcrystlo)
 STD_ROM_FN(Mgcrystlo)
 
 static struct BurnRomInfo MgcrystljRomDesc[] = { 
-	{ "mc100j02.u18",      	0x020000, 0xafe5882d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100J/U18-02 */
-	{ "mc101j02.u19",      	0x040000, 0x60da5492, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101J/U19-02 */
+	{ "kaneko__mc100-u18j-02.u18",		0x020000, 0xafe5882d, BRF_ESS | BRF_PRG }, //  0 68000 Program Code /* Labeled as MC100J/U18-02 */
+	{ "kaneko__mc101-u19j-02.u19",		0x040000, 0x60da5492, BRF_ESS | BRF_PRG }, //  1 					/* Labeled as MC101J/U19-02 */
 	
-	{ "mc000.u38",         	0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites			
-	{ "mc001.u37",         	0x080000, 0x005bc43d, BRF_GRA },		   //  3 
-	{ "mc002e02.u36",      	0x020000, 0x27ac1056, BRF_GRA },		   //  4 					/* Labeled as MC002J/U36-02, but same as MC002E/U36-02 */
+	{ "kaneko__mc-000_0001.u38",		0x100000, 0x28acf6f4, BRF_GRA },		   //  2 Sprites			
+	{ "kaneko__mc-001_0002_r44.u37",	0x080000, 0x005bc43d, BRF_GRA },		   //  3 
+	{ "kaneko__mc002j-u36-02.u36",		0x020000, 0x27ac1056, BRF_GRA },		   //  4 					/* Labeled as MC002J/U36-02, but same as MC002E/U36-02 */
 	
-	{ "mc010.u04",         	0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles (scrambled)
+	{ "kaneko__mc-010_0003.u04",		0x100000, 0x85072772, BRF_GRA },		   //  5 Tiles (scrambled)
 	
-	{ "mc020.u34",         	0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
+	{ "kaneko__mc-020_0004.u34",		0x100000, 0x1ea92ff1, BRF_GRA },		   //  6 Tiles (scrambled) (Layers 2 & 3)
 
-	{ "mc030.u32",         	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
+	{ "kaneko__mc-030_0005_t99.u32",	0x040000, 0xc165962e, BRF_SND },		   //  7 Samples
 };
 
 

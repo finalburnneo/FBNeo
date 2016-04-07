@@ -1617,7 +1617,7 @@ static struct BurnRomInfo tokipRomDesc[] = {
 	{ "7 7-M",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "1 5-C",				0x10000, 0xfd0ff303, 3 | BRF_GRA },           //  6 Characters
-	{ "2 3-c",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "2 3-C",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
 	{ "OBJ 1-0.ROM10",		0x20000, 0xa027bd8e, 4 | BRF_GRA },           //  8 Background Tiles
 	{ "OBJ 1-1.ROM9",		0x20000, 0x43a767ea, 4 | BRF_GRA },           //  9

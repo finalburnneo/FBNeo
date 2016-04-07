@@ -3057,9 +3057,50 @@ struct BurnDriver BurnDrvMystwarrj = {
 };
 
 
-// Mystic Warriors (ver AAA)
+// Mystic Warriors (ver AAB)
 
 static struct BurnRomInfo mystwarraRomDesc[] = {
+	{ "128aab01.20f",	0x040000, 0x3dc89153, 1 }, //  0 maincpu
+	{ "128aab02.20g",	0x040000, 0x8fe92ad2, 1 }, //  1
+	{ "128a03.19f",		0x080000, 0xe98094f3, 1 }, //  2
+	{ "128a04.19g",		0x080000, 0x88c6a3e4, 1 }, //  3
+
+	{ "128a05.6b",		0x020000, 0x0e5194e0, 2 }, //  4 soundcpu
+
+	{ "128a08.1h",		0x100000, 0x63d6cfa0, 3 }, //  5 gfx1
+	{ "128a09.1k",		0x100000, 0x573a7725, 3 }, //  6
+	{ "128a10.3h",		0x080000, 0x558e545a, 3 }, //  7
+
+	{ "128a16.22k",		0x100000, 0x459b6407, 4 }, //  8 gfx2
+	{ "128a15.20k",		0x100000, 0x6bbfedf4, 4 }, //  9
+	{ "128a14.19k",		0x100000, 0xf7bd89dd, 4 }, // 10
+	{ "128a13.17k",		0x100000, 0xe89b66a2, 4 }, // 11
+	{ "128a12.12k",		0x080000, 0x63de93e2, 4 }, // 12
+	{ "128a11.10k",		0x080000, 0x4eac941a, 4 }, // 13
+
+	{ "128a06.2d",		0x200000, 0x88ed598c, 5 }, // 14 shared
+	{ "128a07.1d",		0x200000, 0xdb79a66e, 5 }, // 15
+
+	{ "eeprom",			0x000080, 0xfd6a25b4, 6 }, // 16 eeprom
+};
+
+STD_ROM_PICK(mystwarra)
+STD_ROM_FN(mystwarra)
+
+struct BurnDriver BurnDrvMystwarra = {
+	"mystwarra", "mystwarr", NULL, NULL, "1993",
+	"Mystic Warriors (ver AAB)\0", NULL, "Konami", "GX128",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, mystwarraRomInfo, mystwarraRomName, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
+	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
+	288, 224, 4, 3
+};
+
+
+// Mystic Warriors (ver AAA)
+
+static struct BurnRomInfo mystwarraaRomDesc[] = {
 	{ "128aaa01.20f",	0x040000, 0x633ead86, 1 }, //  0 maincpu
 	{ "128aaa02.20g",	0x040000, 0x69ab81a2, 1 }, //  1
 	{ "128a03.19f",		0x080000, 0xe98094f3, 1 }, //  2
@@ -3084,15 +3125,15 @@ static struct BurnRomInfo mystwarraRomDesc[] = {
 	{ "mystwarra.nv",	0x000080, 0x38951263, 6 }, // 16 eeprom
 };
 
-STD_ROM_PICK(mystwarra)
-STD_ROM_FN(mystwarra)
+STD_ROM_PICK(mystwarraa)
+STD_ROM_FN(mystwarraa)
 
-struct BurnDriver BurnDrvMystwarra = {
-	"mystwarra", "mystwarr", NULL, NULL, "1993",
+struct BurnDriver BurnDrvMystwarraa = {
+	"mystwarraa", "mystwarr", NULL, NULL, "1993",
 	"Mystic Warriors (ver AAA)\0", NULL, "Konami", "GX128",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, mystwarraRomInfo, mystwarraRomName, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
+	NULL, mystwarraaRomInfo, mystwarraaRomName, NULL, NULL, MystwarrInputInfo, MystwarrDIPInfo,
 	MystwarrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
 	288, 224, 4, 3
 };

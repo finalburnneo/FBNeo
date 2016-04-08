@@ -14361,13 +14361,13 @@ struct BurnDriver BurnDrvkof98ae = {
 // The King of Fighters '98 (Anniversary Edition 2016, EGHT hack)
 
 static struct BurnRomInfo kof98ae2016RomDesc[] = {
-	{ "242ae-p1.bin", 0x100000, 0xa5380898, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242ae-p2.bin", 0x600000, 0x00624b89, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242ae-p1.bin", 0x100000, 0xc7fddbd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242ae-p2.bin", 0x600000, 0xd84dbe5b, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "242ae-s1.bin", 0x020000, 0x8cf95ed7, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242ae-s1.bin", 0x040000, 0x345c20b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242ae-c1.bin", 0x800000, 0x32e94f7a, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242ae-c2.bin", 0x800000, 0x430d30b3, 3 | BRF_GRA },           //  4 
+	{ "242ae-c1.bin", 0x800000, 0x086ec060, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242ae-c2.bin", 0x800000, 0x16b9a9a2, 3 | BRF_GRA },           //  4 
 	{ "242-c3.bin",   0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
 	{ "242-c4.bin",   0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
 	{ "242ae-c5.bin", 0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
@@ -14376,8 +14376,8 @@ static struct BurnRomInfo kof98ae2016RomDesc[] = {
 	{ "242ae-c8.bin", 0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
 	{ "242ae-c9.bin", 0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
 	{ "242ae-c91.bin",0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
-	{ "242ae-c92.bin",0x800000, 0xbf7d8fbe, 3 | BRF_GRA },           // 13
-	{ "242ae-c93.bin",0x800000, 0x91618377, 3 | BRF_GRA },           // 14
+	{ "242ae-c92.bin",0x800000, 0x56d361cb, 3 | BRF_GRA },           // 13
+	{ "242ae-c93.bin",0x800000, 0xf8cb115b, 3 | BRF_GRA },           // 14
 
 	{ "242ae-m1.bin", 0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
@@ -14392,7 +14392,7 @@ STDROMPICKEXT(kof98ae2016, kof98ae2016, neogeo)
 STD_ROM_FN(kof98ae2016)
 
 struct BurnDriver BurnDrvkof98ae2016 = {
-	"kof98ae2016", "kof98", "neogeo", NULL, "2007",
+	"kof98ae2016", "kof98", "neogeo", NULL, "2016",
 	"The King of Fighters '98 (Anniversary Edition 2016, EGHT hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
@@ -14402,10 +14402,10 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2016/01/28 version */
+/* Ivex hack - 2016/03/21 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x659f5b8c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.p2", 	0x400000, 0xc0c0692b, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0x30cb443a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.p2", 	0x400000, 0x29bc9d71, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 

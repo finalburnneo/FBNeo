@@ -27663,3 +27663,41 @@ struct BurnDriver BurnDrvsms_lambo = {
 	256, 192, 4, 3
 };
 
+// Bara Buruu (Version 1.0)
+
+static struct BurnRomInfo sms_baraburuRomDesc[] = {
+	{ "BaraBuruu-SMS-1.00.sms",	0x20000, 0x43e39aa4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_baraburu)
+STD_ROM_FN(sms_baraburu)
+
+struct BurnDriver BurnDrvsms_baraburu = {
+	"sms_baraburu10", NULL, NULL, NULL, "2016",
+	"Bara Buruu (Version 1.0)\0", NULL, "Kagesan", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_baraburuRomInfo, sms_baraburuRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+// Data Storm (Version 1.0)
+
+static struct BurnRomInfo sms_datastormRomDesc[] = {
+	{ "datastorm.sms",	0x8000, 0x37b775d6, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_datastorm)
+STD_ROM_FN(sms_datastorm)
+
+struct BurnDriver BurnDrvsms_datastorm = {
+	"sms_datastorm10", NULL, NULL, NULL, "2016",
+	"Data Storm (Version 1.0)\0", NULL, "haroldoop", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_datastormRomInfo, sms_datastormRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+

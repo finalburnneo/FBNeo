@@ -1174,7 +1174,7 @@ static void lasso_draw_bitmap()
 		if (flipscreeny) y = ~y;
 		if (flipscreenx) x = ~x;
 
-		if ((y < 0) || (y >= nScreenHeight) || (x < 0) || (x >= nScreenWidth))
+		if (/*(y < 0) ||*/ (y >= nScreenHeight) || /*(x < 0) ||*/ (x >= nScreenWidth))
 			continue;
 
 		UINT8 data = DrvBitmapRAM[offs];

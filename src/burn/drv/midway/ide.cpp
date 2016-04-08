@@ -310,7 +310,9 @@ unsigned ide_disk::read(unsigned offset)
     case REG_DRIVE_HEAD:
         return m_drive_head;
     }
-
+	
+	// shouldn't happen
+	return 0;
 }
 
 unsigned ide_disk::read_alternate(unsigned offset)

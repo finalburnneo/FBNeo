@@ -323,7 +323,7 @@ static UINT16 snowboar_protection_r()
 	return ret;
 }
 
-static void snowboar_protection_w(UINT16 offset, UINT16 data)
+static void snowboar_protection_w(UINT16 /*offset*/, UINT16 data)
 {
 	snowboar_latch = (snowboar_latch << 16) | data;
 }

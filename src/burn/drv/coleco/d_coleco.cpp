@@ -316,7 +316,7 @@ static void __fastcall main_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall main_read(UINT16 address)
 {
-	if (address >= 0xffc0 && address <= 0xffff) {
+	if (address >= 0xffc0/* && address <= 0xffff*/) {
 		UINT32 MegaCartBanks = MegaCart / 0x4000;
 
 		MegaCartBank = (0xffff - address) & (MegaCartBanks - 1);

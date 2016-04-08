@@ -309,7 +309,7 @@ void adsp21xx_data_write_word_16le(UINT32 address, UINT16 data)
     pMemMap->dataWriteWord[(uintptr_t)pr](address, data);
 }
 
-static UINT32 last_pc = 0xFFFFFFFF;
+//static UINT32 last_pc = 0xFFFFFFFF;
 extern int adsp21xx_dasm(char *buffer, UINT8 *oprom);
 UINT32 adsp21xx_read_dword_32le(UINT32 address)
 {

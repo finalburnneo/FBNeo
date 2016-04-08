@@ -104,7 +104,7 @@ static INT32 MemIndex()
 static void GenerateColorLUT()
 {
     for (int i = 0; i < 0x8000; i++) {
-        UINT16 x = i;
+        //UINT16 x = i;
         DrvColorLUT[i] = RGB888_2_565(RGB555_2_888(i));
     }
 }

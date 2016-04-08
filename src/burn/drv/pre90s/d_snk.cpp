@@ -4116,7 +4116,7 @@ static INT32 DrvGfxDecode(INT32 gfx, INT32 nType, UINT8 *src, INT32 nLen)
 	BurnFree(tmp);
 
 	for (UINT32 i = 1; i <= 0x1000000; i<<=1) {
-		if (i >= DrvGfxMask[gfx]) {
+		if (i >= (UINT32)DrvGfxMask[gfx]) {
 			DrvGfxMask[gfx] = i-1;
 			break;
 		}

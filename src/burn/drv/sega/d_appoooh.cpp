@@ -316,7 +316,7 @@ static void __fastcall appoooh_write(unsigned short address, unsigned char data)
 		return;
 	}
 
-	if(address >= 0xfc20 && address <= 0xffff)
+	if(address >= 0xfc20/* && address <= 0xffff*/)
 	{
 		DrvBgColRAM[address-0xfc20] = data;
 		return;
@@ -352,7 +352,7 @@ static unsigned char __fastcall appoooh_read(unsigned short address)
 		return DrvBgVidRAM[address-0xf820];
 	}
 
-	if(address >= 0xfc20 && address <= 0xffff)
+	if(address >= 0xfc20/* && address <= 0xffff*/)
 	{
 		return DrvBgColRAM[address-0xfc20];
 	}
@@ -406,7 +406,7 @@ static void DrvMSM5205Int()
 			MSM5205DataWrite(0, adpcm_data & 0x0f);
 			MSM5205VCLKWrite(0, 1);
 			MSM5205VCLKWrite(0, 0);
-			adpcm_data = -1;
+			adpcm_data = (UINT32)-1;
 		}
 	}
 }
@@ -714,7 +714,7 @@ static INT32 DrvCommonInit()
 	return 0;
 }
 
-static void sega_decode_2(UINT8 *pDest, UINT8 *pDestDec, const UINT8 xor_table[128],const int swap_table[128])
+static void sega_decode_2(UINT8 */*pDest*/, UINT8 */*pDestDec*/, const UINT8 xor_table[128],const int swap_table[128])
 {
 	int A;
 	UINT8 swaptable[24][4] =

@@ -456,7 +456,7 @@ static void __fastcall bbusters_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static void __fastcall bbusters_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall bbusters_main_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
 	//bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
 }
@@ -484,7 +484,7 @@ static UINT16 __fastcall mechatt_main_read_word(UINT32 address)
 	return 0;
 }
 
-static UINT8 __fastcall mechatt_main_read_byte(UINT32 address)
+static UINT8 __fastcall mechatt_main_read_byte(UINT32 /*address*/)
 {
 	//bprintf (0, _T("MRB: %5.5x\n"), address);
 
@@ -519,7 +519,7 @@ static void __fastcall mechatt_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static void __fastcall mechatt_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall mechatt_main_write_byte(UINT32 /*address*/, UINT8 /*data*/)
 {
 	//bprintf (0, _T("MWB: %5.5x, %2.2x\n"), address, data);
 }

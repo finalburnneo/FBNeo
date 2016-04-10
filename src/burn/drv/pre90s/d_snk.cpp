@@ -2502,7 +2502,7 @@ static INT32 turbofront_check8(int small, int num)
 		(turbofront_check(small, num + 7) << 7);
 }
 
-static __fastcall UINT8 bermudat_main_read(UINT16 address)
+static UINT8 __fastcall bermudat_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
@@ -2531,7 +2531,7 @@ static void __fastcall bermudat_sub_write(UINT16 address, UINT8 data)
 }
 
 
-static __fastcall UINT8 bermudat_sub_read(UINT16 address)
+static UINT8 __fastcall bermudat_sub_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
@@ -2724,21 +2724,21 @@ static void __fastcall tnk3_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static __fastcall UINT8 tnk3_main_read(UINT16 address)
+static UINT8 __fastcall tnk3_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
 	return common_read(0xc000, address, 0x20, 0x04, 1);
 }
 
-static __fastcall UINT8 fitegolf_main_read(UINT16 address)
+static UINT8 __fastcall fitegolf_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
 	return common_read(0xc000, address, 0x01, 0x04, 1);
 }
 
-static __fastcall UINT8 hal21_main_read(UINT16 address)
+static UINT8 __fastcall hal21_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
@@ -2746,7 +2746,7 @@ static __fastcall UINT8 hal21_main_read(UINT16 address)
 }
 
 
-static __fastcall UINT8 athena_main_read(UINT16 address)
+static UINT8 __fastcall athena_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
@@ -2768,7 +2768,7 @@ static void __fastcall tnk3_sub_write(UINT16 address, UINT8 /*data*/)
 }
 
 
-static __fastcall UINT8 tnk3_sub_read(UINT16 address)
+static UINT8 __fastcall tnk3_sub_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
@@ -3331,7 +3331,7 @@ static void __fastcall ikari_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static __fastcall UINT8 ikari_main_read(UINT16 address)
+static UINT8 __fastcall ikari_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 
@@ -3362,7 +3362,7 @@ static __fastcall UINT8 ikari_main_read(UINT16 address)
 	return common_read(0xc000, address, 0x01, 0x04, 1);
 }
 
-static __fastcall UINT8 ikaria_main_read(UINT16 address)
+static UINT8 __fastcall ikaria_main_read(UINT16 address)
 {
 //	bprintf (0, _T("%d R: %4.4x\n"), ZetGetActive(), address);
 

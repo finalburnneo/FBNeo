@@ -12029,6 +12029,49 @@ struct BurnDriver BurnDrvsdodgeb = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Unknown Neo-Geo Vs. Fighter (prototype)
+// same ID code as Voltage Fighter Gowkaizer so probably by Technos
+
+static struct BurnRomInfo unkneoRomDesc[] = {
+	{ "EP1.bin",      0x080000,  0xf353448c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "EP2.bin",      0x080000,  0xf25c71ad, 1 | BRF_ESS | BRF_PRG }, //  1 		
+
+	{ "s1.s1",    	  0x020000,  0x706477a7, 2 | BRF_GRA },           //  1 Text layer tiles 
+
+	{ "no3.bin",      0x1000000, 0x81821826, 3 | BRF_GRA },           //  2 Sprite data		
+	{ "no4.bin",      0x1000000, 0x3601d568, 3 | BRF_GRA },           //  3
+
+	{ "sm1.sm1",      0x020000,  0x94416d67, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code			
+
+	{ "sram.v1",      0x200000,  0x00000000, 5 | BRF_SND | BRF_NODUMP }, //  7 Sound data		
+};
+
+STDROMPICKEXT(unkneo, unkneo, neogeo)
+STD_ROM_FN(unkneo)
+
+static void UnkneoCallback()
+{
+	BurnLoadRom(Neo68KROMActive + 0x000000, 0, 2);
+	BurnLoadRom(Neo68KROMActive + 0x000001, 1, 2);
+}
+
+static INT32 UnkneoInit()
+{
+	NeoCallbackActive->pInitialise = UnkneoCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvunkneo = {
+	"unkneo", NULL, "neogeo", NULL, "1996",
+	"Unknown Neo-Geo Vs. Fighter (prototype)\0", NULL, "Technos Japan?", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
+	NULL, unkneoRomInfo, unkneoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	UnkneoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Tecmo World Soccer '96
 /* MVS ONLY RELEASE */
 

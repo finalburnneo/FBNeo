@@ -1,4 +1,4 @@
-// Raiden                          (c) 1990 Seibu Kaihatsu
+// Raiden(c) 1990 Seibu Kaihatsu
 // driver by Oliver Bergmann, Bryan McPhail, Randy Mongenel
 
 // port to FB Alpha by OopsWare
@@ -926,21 +926,21 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 static struct BurnRomInfo raidenRomDesc[] = {
 	{ "1.u0253",        0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
 	{ "2.u0252",        0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
-	{ "3.u022",     0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
+	{ "3.u022",     	0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
 	{ "4j.u023",        0x020000, 0x505c4c5d, BRF_ESS | BRF_PRG },
 
-	{ "5.u042",     0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6.u043",     0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
+	{ "5.u042",     	0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6.u043",     	0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
 
-	{ "8.u212",     0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
+	{ "8.u212",     	0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
+	{ "9",          	0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         	0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     	0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     	0x080000, 0xac1f57ac, BRF_GRA },
 	{ "sei440",         0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.u203",     0x010000, 0x8f927822, BRF_SND },        // Sound
+	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
 };
 
 STD_ROM_PICK(raiden)
@@ -966,21 +966,21 @@ struct BurnDriver BurnDrvRaiden = {
 static struct BurnRomInfo raidenaRomDesc[] = {
 	{ "1.u0253",        0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
 	{ "2.u0252",        0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
-	{ "3.u022",     0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
-	{ "4.u023",     0x020000, 0x6bdfd416, BRF_ESS | BRF_PRG },
+	{ "3.u022",     	0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
+	{ "4.u023",     	0x020000, 0x6bdfd416, BRF_ESS | BRF_PRG },
 
-	{ "5.u042",     0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6.u043",     0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
+	{ "5.u042",     	0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6.u043",     	0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
 
-	{ "8.u212",     0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
+	{ "8.u212",     	0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
-	{ "sei440",     0x080000, 0x946d7bde, BRF_GRA },
+	{ "9",          	0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         	0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     	0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     	0x080000, 0xac1f57ac, BRF_GRA },
+	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.u203",     0x010000, 0x8f927822, BRF_SND },        // Sound
+	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
 };
 
 STD_ROM_PICK(raidena)
@@ -1002,21 +1002,21 @@ struct BurnDriver BurnDrvRaidena = {
 static struct BurnRomInfo raidentRomDesc[] = {
 	{ "1.u0253",        0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
 	{ "2.u0252",        0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
-	{ "3.u022",     0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
+	{ "3.u022",     	0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
 	{ "4t.u023",        0x020000, 0x61eefab1, BRF_ESS | BRF_PRG },
 
-	{ "5.u042",     0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6.u043",     0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
+	{ "5.u042",     	0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6.u043",     	0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
 
-	{ "8.u212",     0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
+	{ "8.u212",     	0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
-	{ "sei440",     0x080000, 0x946d7bde, BRF_GRA },
+	{ "9",          	0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         	0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     	0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     	0x080000, 0xac1f57ac, BRF_GRA },
+	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.u203",     0x010000, 0x8f927822, BRF_SND },        // Sound
+	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
 };
 
 STD_ROM_PICK(raident)
@@ -1041,18 +1041,18 @@ static struct BurnRomInfo raidenuRomDesc[] = {
 	{ "3a.u022",        0x020000, 0xa8fadbdd, BRF_ESS | BRF_PRG },
 	{ "4a.u023",        0x020000, 0xbafb268d, BRF_ESS | BRF_PRG },
 
-	{ "5.u042",     0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6.u043",     0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
+	{ "5.u042",     	0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6.u043",     	0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
 
-	{ "8.u212",     0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
+	{ "8.u212",     	0x010000, 0xcbe055c7, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
-	{ "sei440",     0x080000, 0x946d7bde, BRF_GRA },
+	{ "9",          	0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         	0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     	0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     	0x080000, 0xac1f57ac, BRF_GRA },
+	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.u203",     0x010000, 0x8f927822, BRF_SND },        // Sound
+	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
 };
 
 STD_ROM_PICK(raidenu)
@@ -1074,21 +1074,21 @@ struct BurnDriver BurnDrvRaidenu = {
 static struct BurnRomInfo raidenkRomDesc[] = {
 	{ "1.u0253",        0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
 	{ "2.u0252",        0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
-	{ "3.u022",     0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
+	{ "3.u022",     	0x020000, 0xf6af09d0, BRF_ESS | BRF_PRG },
 	{ "4k.u023",        0x020000, 0xfddf24da, BRF_ESS | BRF_PRG },
 
-	{ "5.u042",     0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6.u043",     0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
+	{ "5.u042",     	0x020000, 0xed03562e, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6.u043",     	0x020000, 0xa19d5b5d, BRF_ESS | BRF_PRG },
 
 	{ "8b.u212",        0x010000, 0x99ee7505, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
-	{ "sei440",     0x080000, 0x946d7bde, BRF_GRA },
+	{ "9",          	0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         	0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     	0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     	0x080000, 0xac1f57ac, BRF_GRA },
+	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.u203",     0x010000, 0x8f927822, BRF_SND },        // Sound
+	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
 };
 
 STD_ROM_PICK(raidenk)
@@ -1112,26 +1112,26 @@ struct BurnDriver BurnDrvRaidenk = {
 // Raiden (set 3, Alternate hardware)
 
 static struct BurnRomInfo raidenbRomDesc[] = {
-	{ "1.u0253",        0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
-	{ "2.u0252",        0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
+	{ "1.u0253",        	0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
+	{ "2.u0252",        	0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
 	{ "3__(raidenb).u022",  0x020000, 0x9d735bf5, BRF_ESS | BRF_PRG },
 	{ "4__(raidenb).u023",  0x020000, 0x8d184b99, BRF_ESS | BRF_PRG },
 
 	{ "5__(raidenb).u042",  0x020000, 0x7aca6d61, BRF_ESS | BRF_PRG },  // CPU 1, V30
 	{ "6__(raidenb).u043",  0x020000, 0xe3d35cc2, BRF_ESS | BRF_PRG },
 
-	{ "rai6.u212",      0x010000, 0x723a483b, BRF_ESS | BRF_PRG },  // CPU 2, Z80
+	{ "rai6.u212",      	0x010000, 0x723a483b, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
-	{ "sei440",     0x080000, 0x946d7bde, BRF_GRA },
+	{ "9",          		0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         		0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     		0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     		0x080000, 0xac1f57ac, BRF_GRA },
+	{ "sei440",     		0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.u203",     0x010000, 0x8f927822, BRF_SND },        // Sound
+	{ "7.u203",     		0x010000, 0x8f927822, BRF_SND },        	// Sound
 
-	{ "ep910pc-1.bin",  0x000884, 0x00000000, BRF_NODUMP },
-	{ "ep910pc-2.bin",  0x000884, 0x00000000, BRF_NODUMP },
+	{ "ep910pc-1.bin",  	0x000884, 0x00000000, BRF_NODUMP },
+	{ "ep910pc-2.bin",  	0x000884, 0x00000000, BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenb)
@@ -1155,23 +1155,23 @@ struct BurnDriver BurnDrvRaidenb = {
 // Raiden (US, set 2, SEI8904 + SEI9008 PCBs)
 
 static struct BurnRomInfo raidenuaRomDesc[] = {
-	{ "1.c8",       0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
-	{ "2.c7",       0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
-	{ "3dd.e8",     0x020000, 0xb6f3bad2, BRF_ESS | BRF_PRG },
-	{ "4dd.e7",     0x020000, 0xd294dfc1, BRF_ESS | BRF_PRG },
+	{ "1.c8",       	0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
+	{ "2.c7",       	0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
+	{ "3dd.e8",     	0x020000, 0xb6f3bad2, BRF_ESS | BRF_PRG },
+	{ "4dd.e7",     	0x020000, 0xd294dfc1, BRF_ESS | BRF_PRG },
 
-	{ "5.p8",       0x020000, 0x15c1cf45, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6.p7",       0x020000, 0x261c381b, BRF_ESS | BRF_PRG },
+	{ "5.p8",       	0x020000, 0x15c1cf45, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6.p7",       	0x020000, 0x261c381b, BRF_ESS | BRF_PRG },
 
-	{ "8.w8",       0x010000, 0x105b9c11, BRF_ESS | BRF_PRG },  // CPU 2, Z80
+	{ "8.w8",       	0x010000, 0x105b9c11, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 
-	{ "9",          0x008000, 0x1922b25e, BRF_GRA },        // Tiles
-	{ "10",         0x008000, 0x5f90786a, BRF_GRA },
-	{ "sei420",     0x080000, 0xda151f0b, BRF_GRA },
-	{ "sei430",     0x080000, 0xac1f57ac, BRF_GRA },
-	{ "sei440",     0x080000, 0x946d7bde, BRF_GRA },
+	{ "9",          	0x008000, 0x1922b25e, BRF_GRA },        	// Tiles
+	{ "10",         	0x008000, 0x5f90786a, BRF_GRA },
+	{ "sei420",     	0x080000, 0xda151f0b, BRF_GRA },
+	{ "sei430",     	0x080000, 0xac1f57ac, BRF_GRA },
+	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
-	{ "7.x10",      0x010000, 0x2051263e, BRF_SND },        // Sound
+	{ "7.x10",      	0x010000, 0x2051263e, BRF_SND },        	// Sound
 };
 
 STD_ROM_PICK(raidenua)

@@ -14483,10 +14483,10 @@ struct BurnDriver BurnDrvkof98cb = {
 };
 
 // The King of Fighters '99 (15th Anniversary Edition)
-/* Yashional hack - 2015/08/25 version */
+/* Yashional hack - 2016/04/11 Last Ver. 1*/
 static struct BurnRomInfo kof99aeRomDesc[] = {
-	{ "199-p1.bin",   	   0x100000, 0xe611fd19, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "199-p2.bin",        0x800000, 0x9342a3e8, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "199-p1.bin",   	   0x100000, 0x5cbb24fd, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "199-p2.bin",        0x800000, 0x55418995, 1 | BRF_ESS | BRF_PRG }, //  1
 	
 	{ "199-s1.bin",        0x020000, 0x3c31ee43, 2 | BRF_GRA },           //  2 Text layer tiles
 

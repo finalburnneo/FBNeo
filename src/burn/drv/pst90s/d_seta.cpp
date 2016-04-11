@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
+#include "m6502_intf.h"
 #include "burn_ym2612.h"
 #include "burn_ym3812.h"
 #include "burn_gun.h"
@@ -37,6 +38,7 @@ static UINT8 *DrvColPROM	= NULL;
 static UINT8 *DrvSndROM		= NULL;
 static UINT8 *Drv68KRAM		= NULL;
 static UINT8 *Drv68KRAM2	= NULL;
+static UINT8 *Drv68KRAM3	= NULL;
 static UINT8 *DrvSubRAM		= NULL;
 static UINT8 *DrvShareRAM	= NULL;
 static UINT8 *DrvNVRAM		= NULL;
@@ -54,6 +56,7 @@ static UINT32 *DrvPalette	= NULL;
 static UINT8 DrvRecalc;
 
 static UINT8 *soundlatch	= NULL;
+static UINT8 *soundlatch2	= NULL;
 static UINT8 *tilebank		= NULL;
 static UINT32  *tile_offset	= NULL;
 
@@ -84,6 +87,7 @@ static INT32 flipflop = 0;
 static INT32 watchdog_enable = 0;
 static INT32 watchdog = 0;
 static INT32 flipscreen;
+static INT32 m65c02_mode = 0;
 
 static INT32 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
@@ -3897,6 +3901,22 @@ static void __fastcall setaSoundRegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
+static void __fastcall setaSoundRegWriteByte8bit(UINT32 sekAddress, UINT8 byteValue)
+{
+	UINT32 offset = (sekAddress & 0x00003fff);
+	INT32 channel, reg;
+	//bprintf(0, _T("8bit addy %X offset %X byte %X. "), x1_010_chip->address, offset, byteValue);
+	offset  ^= x1_010_chip->address;
+	channel  = offset / sizeof(X1_010_CHANNEL);
+	reg      = offset % sizeof(X1_010_CHANNEL);
+
+	if (channel < SETA_NUM_CHANNELS && reg == 0 && (x1_010_chip->reg[offset] & 1) == 0 && (byteValue&1) != 0) {
+		x1_010_chip->smp_offset[channel] = 0;
+		x1_010_chip->env_offset[channel] = 0;
+	}
+	x1_010_chip->reg[offset] = byteValue;
+}
+
 void x1010Reset()
 {
 	x1_010_chip->sound_enable = 1; // enabled by default?
@@ -3922,7 +3942,7 @@ static void set_pcm_bank(INT32 data)
 //		bprintf(0, _T("seta_samples_bank[%X] new_bank[%X]\n"), seta_samples_bank, new_bank);
 		seta_samples_bank = new_bank;
 
-		if (samples_len == 0x240000 || samples_len == 0x1c0000) // eightfrc, blandia
+		if (samples_len == 0x240000 || samples_len == 0x1c0000 || samples_len == 0x80000) // eightfrc, blandia
 		{
 			INT32 addr = 0x40000 * new_bank;
 			if (new_bank >= 3) addr += 0x40000;
@@ -5048,6 +5068,7 @@ static UINT16 calibr50_input_read(INT32 offset)
 
 UINT16 __fastcall calibr50_read_word(UINT32 address)
 {
+	if ((address & 0xb00000)==0xb00000) bprintf(0, _T("crw. a[%X]"), address);
 	switch (address)
 	{
 		case 0x400000:
@@ -5076,9 +5097,11 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 
 		case 0xb00000:
 		case 0xb00001:
-			static INT32 ret;	// fake read from sound cpu
-			ret ^= 0x80;
-			return ret;
+			{
+				//static INT32 ret;	// fake read from sound cpu
+				//ret ^= 0x80;
+				return *soundlatch2;
+			}
 	}
 
 	if ((address & 0xfffffe0) == 0xa00000) {
@@ -5090,24 +5113,37 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 	return 0;
 }
 
+static INT32 irqcyc = 10;
+
 void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 {
 	SetaVidRAMCtrlWriteWord(0, 0x800000)
 
 	if ((address & ~1) == 0xb00000) {
 		*soundlatch = data;
+		M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
+
+		M6502Run(irqcyc); // guess..? -dink
+
 		return;
 	}
+	//bprintf(0, _T("ww %X %X. "), address, data);
 }
 
 void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
-	if ((address & ~1) == 0xb00000) {
+	if ((address & ~1) == 0xb00001) {
 		*soundlatch = data;
+		bprintf(0, _T("cwb."));
+
+		M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
+		M6502Run(irqcyc); // guess? -dink
+
 		return;
 	}
+	//bprintf(0, _T("wb %X %X. "), address, data);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -6378,12 +6414,62 @@ static void usclssic68kInit()
 	// m65c02 sound...
 }
 
+static void sub_bankswitch(UINT8 d)
+{
+	INT32 bank = d >> 4;
+	M6502MapMemory(DrvSubROM + (bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+}
+
+static void calibr50_sub_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x0000 && address <= 0x1fff) { // x1_010
+		setaSoundRegWriteByte8bit(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x4000: sub_bankswitch(data);
+		return;
+
+		case 0xc000:
+			{
+				*soundlatch2 = data;
+				SekRun(irqcyc*4);
+				return;
+			}
+	}
+
+	bprintf(0, _T("sw %X,"), address);
+}
+
+static UINT8 calibr50_sub_read(UINT16 address)
+{
+	if (address >= 0x0000 && address <= 0x1fff) { // x1_010
+		return x1010_sound_read(address);
+	}
+
+	if (address >= 0xc000 && address <= 0xffff) { // ROM
+		return DrvSubROM[address - 0xc000];
+	}
+
+	switch (address)
+	{
+		case 0x4000: return *soundlatch;
+	}
+
+	bprintf(0, _T("sr %X,"), address);
+
+	return 0;
+}
+
 static void calibr5068kInit()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM, 		0x000000, 0x09ffff, MAP_ROM);
 	SekMapMemory(Drv68KRAM2,		0x200000, 0x200fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM3,		0xc00000, 0xc000ff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,			0x700000, 0x7003ff, MAP_RAM);
 	SekMapMemory(DrvVidRAM0,		0x900000, 0x904fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM0,		0xd00000, 0xd00607 | 0x7ff, MAP_RAM);
@@ -6396,6 +6482,18 @@ static void calibr5068kInit()
 	SekClose();
 
 	// m65c02 sound...
+	M6502Init(0, TYPE_M65C02);
+	M6502Open(0);
+	//M6502MapMemory(DrvSubROM,	0xC000, 0xffff, MAP_ROM); // in handler
+
+	M6502SetWriteHandler(calibr50_sub_write);
+	M6502SetReadHandler(calibr50_sub_read);
+	M6502SetWriteMemIndexHandler(calibr50_sub_write);
+	M6502SetReadMemIndexHandler(calibr50_sub_read);
+	M6502SetReadOpArgHandler(calibr50_sub_read);
+	M6502SetReadOpHandler(calibr50_sub_read);
+	M6502Close();
+	m65c02_mode = 1;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -6603,6 +6701,14 @@ static INT32 DrvDoReset(INT32 ram)
 	ZetReset();
 	ZetClose();
 
+	if (m65c02_mode) {
+		M6502Open(0);
+		M6502Reset();
+		sub_bankswitch(0);
+		bprintf(0, _T("65c02 reset.\n"));
+		M6502Close();
+	}
+
 	x1010Reset();
 	MSM6295Reset(0);
 	BurnYM3438Reset();
@@ -6641,7 +6747,8 @@ static INT32 MemIndex()
 
 	Drv68KRAM		= Next; Next += 0x100000;
 	Drv68KRAM2		= Next; Next += 0x020000;
-	DrvSubRAM		= Next; Next += 0x001000;
+	Drv68KRAM3		= Next; Next += 0x000fff;
+	DrvSubRAM		= Next; Next += 0x004000;
 	DrvPalRAM		= Next; Next += 0x001000;
 	DrvSprRAM0		= Next; Next += 0x000800;
 	DrvSprRAM1		= Next; Next += 0x014000;
@@ -6655,6 +6762,7 @@ static INT32 MemIndex()
 	DrvVideoRegs		= Next; Next += 0x000008;
 
 	soundlatch		= Next; Next += 0x000001;
+	soundlatch2		= Next; Next += 0x000001;
 	tilebank		= Next; Next += 0x000004;
 	tile_offset		= (UINT32*)Next; Next += 0x000001 * sizeof(UINT32);
 
@@ -6783,7 +6891,12 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	irqtype = irq_type;
 	buffer_sprites = spr_buffer;
 
-	x1010_sound_init(16000000, 0x0000);
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "calibr50")) {
+		bprintf(0, _T("calibr50-x1_010 address 0x1000 mode\n"));
+		x1010_sound_init(16000000, 0x1000);
+	} else {
+		x1010_sound_init(16000000, 0x0000);
+	}
 	x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	x1010_set_route(BURN_SND_X1010_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 
@@ -6832,6 +6945,11 @@ static INT32 DrvExit()
 
 	SekExit();
 	ZetExit();
+
+	if (m65c02_mode) {
+		M6502Exit();
+		m65c02_mode = 0;
+	}
 
 	BurnGunExit();
 
@@ -7387,6 +7505,43 @@ static INT32 DrvFrame()
 	return DrvCommonFrame(Drv68kNoSubFrameCallback);
 }
 
+static void Drv68k_Calibr50_FrameCallback()
+{
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
+	INT32 nCyclesDone[2]  = { 0, 0 };
+	INT32 nNext, nCyclesSegment;
+
+	SekOpen(0);
+	M6502Open(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+
+		if (i == 248) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i%(63) == 0) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[1];
+		nCyclesDone[1] += M6502Run(nCyclesSegment);
+
+		if (i%(63) == 0) {
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			M6502Run(15);
+			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		}
+
+	}
+
+	SekClose();
+	M6502Close();
+
+	if (pBurnSoundOut) {
+		x1010_sound_update();
+	}
+}
+
 static void Drv68k_5IRQ_FrameCallback()
 {
 	INT32 nInterleave = 10;
@@ -7442,6 +7597,11 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 static INT32 DrvKMFrame()
 {
 	return DrvCommonFrame(Drv68k_KM_FrameCallback);
+}
+
+static INT32 DrvCalibr50Frame()
+{
+	return DrvCommonFrame(Drv68k_Calibr50_FrameCallback);
 }
 
 static INT32 Drv5IRQFrame()
@@ -10432,7 +10592,7 @@ static INT32 calibr50Init()
 
 	INT32 nRet = DrvInit(calibr5068kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 	
-	x1010_set_all_routes(0.50, BURN_SND_ROUTE_LEFT);
+	//x1010_set_all_routes(0.50, BURN_SND_ROUTE_LEFT);
 	
 	return nRet;
 }
@@ -10443,7 +10603,7 @@ struct BurnDriver BurnDrvCalibr50 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, calibr50RomInfo, calibr50RomName, NULL, NULL, Calibr50InputInfo, Calibr50DIPInfo,
-	calibr50Init, DrvExit, Drv5IRQFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
+	calibr50Init, DrvExit, DrvCalibr50Frame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 384, 3, 4
 };
 

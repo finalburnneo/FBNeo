@@ -5112,7 +5112,7 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 
 	return 0;
 }
-
+   extern int counter;
 static INT32 irqcyc = 10;
 
 void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
@@ -5121,7 +5121,7 @@ void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 
 	if ((address & ~1) == 0xb00000) {
 		*soundlatch = data;
-		M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
+		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
 		M6502Run(irqcyc); // guess..? -dink
 
@@ -5134,12 +5134,12 @@ void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
-	if ((address & ~1) == 0xb00001) {
+	if ((address & ~1) == 0xb00000) {
 		*soundlatch = data;
 		bprintf(0, _T("cwb."));
 
-		M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
-		M6502Run(irqcyc); // guess? -dink
+		M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+//		M6502Run(irqcyc+counter); // guess? -dink
 
 		return;
 	}
@@ -6435,7 +6435,7 @@ static void calibr50_sub_write(UINT16 address, UINT8 data)
 		case 0xc000:
 			{
 				*soundlatch2 = data;
-				SekRun(irqcyc*4);
+				SekRun((irqcyc+counter)*4);
 				return;
 			}
 	}
@@ -6455,7 +6455,11 @@ static UINT8 calibr50_sub_read(UINT16 address)
 
 	switch (address)
 	{
-		case 0x4000: return *soundlatch;
+		case 0x4000: {
+			M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE); //nmi
+
+			return *soundlatch;
+		}
 	}
 
 	bprintf(0, _T("sr %X,"), address);
@@ -6484,7 +6488,7 @@ static void calibr5068kInit()
 	// m65c02 sound...
 	M6502Init(0, TYPE_M65C02);
 	M6502Open(0);
-	//M6502MapMemory(DrvSubROM,	0xC000, 0xffff, MAP_ROM); // in handler
+	M6502MapMemory(DrvSubROM,	0xC000, 0xffff, MAP_ROM); // in handler
 
 	M6502SetWriteHandler(calibr50_sub_write);
 	M6502SetReadHandler(calibr50_sub_read);
@@ -7520,16 +7524,14 @@ static void Drv68k_Calibr50_FrameCallback()
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
 		if (i == 248) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i%(63) == 0) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i%64 == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[1];
 		nCyclesDone[1] += M6502Run(nCyclesSegment);
 
-		if (i%(63) == 0) {
-			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			M6502Run(15);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i%64 == 63) {
+			M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
 	}

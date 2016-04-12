@@ -7439,7 +7439,7 @@ struct BurnDriver BurnDrvGwar = {
 // Guevara (Japan)
 
 static struct BurnRomInfo gwarjRomDesc[] = {
-	{ "7y3047",		0x10000, 0x7f8a880c, 2 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "7y3047",		0x10000, 0x7f8a880c, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
 
 	{ "g02",		0x10000, 0x86d931bf, 2 | BRF_ESS | BRF_PRG }, //  1 Z80 #1 Code
 
@@ -8022,7 +8022,7 @@ struct BurnDriver BurnDrvCountryc = {
 	"countryc", NULL, NULL, NULL, "1988",
 	"Country Club\0", "bad inputs, use fitegolf instead!", "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, countrycRomInfo, countrycRomName, NULL, NULL, FitegolfInputInfo, FitegolfDIPInfo, // wrong
 	FitegolfInit, DrvExit, FitegolfFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3
@@ -8730,7 +8730,7 @@ struct BurnDriver BurnDrvTdfever = {
 	"tdfever", NULL, NULL, NULL, "1987",
 	"TouchDown Fever (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tdfeverRomInfo, tdfeverRomName, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //TdfeverInputInfo, TdfeverDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, TdfeverDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -8778,7 +8778,7 @@ struct BurnDriver BurnDrvTdfeverj = {
 	"tdfeverj", "tdfever", NULL, NULL, "1987",
 	"TouchDown Fever (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0 | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tdfeverjRomInfo, tdfeverjRomName, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //TdfeverInputInfo, TdfeverDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, TdfeverDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -8829,7 +8829,7 @@ struct BurnDriver BurnDrvTdfever2 = {
 	"tdfever2", "tdfever", NULL, NULL, "1988",
 	"TouchDown Fever 2\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0 | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tdfever2RomInfo, tdfever2RomName, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //TdfeverInputInfo, TdfeverDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, TdfeverDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -8873,7 +8873,7 @@ struct BurnDriver BurnDrvFsoccer = {
 	"fsoccer", NULL, NULL, NULL, "1988",
 	"Fighting Soccer (version 4)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/0, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerRomInfo, fsoccerRomName, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3
@@ -8917,7 +8917,7 @@ struct BurnDriver BurnDrvFsoccerj = {
 	"fsoccerj", "fsoccer", NULL, NULL, "1988",
 	"Fighting Soccer (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	/*BDF_GAME_WORKING |*/ BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, fsoccerjRomInfo, fsoccerjRomName, NULL, NULL, ChopperInputInfo, ChopperDIPInfo, //FsoccerInputInfo, FsoccerDIPInfo,
 	TdfeverInit, DrvExit, GwarFrame, FsoccerDraw, DrvScan, &DrvRecalc, 0x400,
 	400, 224, 4, 3

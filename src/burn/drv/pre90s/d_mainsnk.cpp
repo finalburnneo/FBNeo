@@ -51,10 +51,10 @@ static struct BurnInputInfo MainsnkInputList[] = {
 	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
 	{"P1 Left Left",	BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
 	{"P1 Left Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
-	{"P1 Right Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 up"		},
-	{"P1 Right Down",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 down"	},
-	{"P1 Right Left",	BIT_DIGITAL,	DrvJoy2 + 6,	"p2 left"	},
-	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy2 + 7,	"p2 right"	},
+	{"P1 Right Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 up"		},
+	{"P1 Right Down",	BIT_DIGITAL,	DrvJoy2 + 5,	"p3 down"	},
+	{"P1 Right Left",	BIT_DIGITAL,	DrvJoy2 + 6,	"p3 left"	},
+	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy2 + 7,	"p3 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy4 + 2,	"p1 fire 3"},
@@ -62,14 +62,14 @@ static struct BurnInputInfo MainsnkInputList[] = {
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
-	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 up"		},
-	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p1 down"	},
-	{"P1 Left Left",	BIT_DIGITAL,	DrvJoy3 + 2,	"p1 left"	},
-	{"P1 Left Right",	BIT_DIGITAL,	DrvJoy3 + 3,	"p1 right"	},
-	{"P1 Right Up",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 up"		},
-	{"P1 Right Down",	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 down"	},
-	{"P1 Right Left",	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 left"	},
-	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy3 + 7,	"p2 right"	},
+	{"P2 Left Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Left Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left Left",	BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Left Right",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
+	{"P2 Right Up",		BIT_DIGITAL,	DrvJoy3 + 4,	"p4 up"		},
+	{"P2 Right Down",	BIT_DIGITAL,	DrvJoy3 + 5,	"p4 down"	},
+	{"P2 Right Left",	BIT_DIGITAL,	DrvJoy3 + 6,	"p4 left"	},
+	{"P2 Right Right",	BIT_DIGITAL,	DrvJoy3 + 7,	"p4 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
@@ -86,66 +86,66 @@ STDINPUTINFO(Mainsnk)
 
 static struct BurnDIPInfo MainsnkDIPList[]=
 {
-	{0x0e, 0xff, 0xff, 0xff, NULL		},
-	{0x0f, 0xff, 0xff, 0xbf, NULL		},
+	{0x1e, 0xff, 0xff, 0xff, NULL		},
+	{0x1f, 0xff, 0xff, 0xbf, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x01, 0x01, "Off"		},
-	{0x0e, 0x01, 0x01, 0x00, "On"		},
+	{0x1e, 0x01, 0x01, 0x01, "Off"		},
+	{0x1e, 0x01, 0x01, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x02, 0x02, "Off"		},
-	{0x0e, 0x01, 0x02, 0x00, "On"		},
+	{0x1e, 0x01, 0x02, 0x02, "Off"		},
+	{0x1e, 0x01, 0x02, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x04, 0x04, "Off"		},
-	{0x0e, 0x01, 0x04, 0x00, "On"		},
+	{0x1e, 0x01, 0x04, 0x04, "Off"		},
+	{0x1e, 0x01, 0x04, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x08, 0x08, "Off"		},
-	{0x0e, 0x01, 0x08, 0x00, "On"		},
+	{0x1e, 0x01, 0x08, 0x08, "Off"		},
+	{0x1e, 0x01, 0x08, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x10, 0x10, "Off"		},
-	{0x0e, 0x01, 0x10, 0x00, "On"		},
+	{0x1e, 0x01, 0x10, 0x10, "Off"		},
+	{0x1e, 0x01, 0x10, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x20, 0x20, "Off"		},
-	{0x0e, 0x01, 0x20, 0x00, "On"		},
+	{0x1e, 0x01, 0x20, 0x20, "Off"		},
+	{0x1e, 0x01, 0x20, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x40, 0x40, "Off"		},
-	{0x0e, 0x01, 0x40, 0x00, "On"		},
+	{0x1e, 0x01, 0x40, 0x40, "Off"		},
+	{0x1e, 0x01, 0x40, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x80, 0x80, "Off"		},
-	{0x0e, 0x01, 0x80, 0x00, "On"		},
+	{0x1e, 0x01, 0x80, 0x80, "Off"		},
+	{0x1e, 0x01, 0x80, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    6, "Coinage"		},
-	{0x0f, 0x01, 0x07, 0x01, "3 Coins 1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
-	{0x0f, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
-	{0x0f, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
-	{0x0f, 0x01, 0x07, 0x00, "Free Play"		},
+	{0x1f, 0x01, 0x07, 0x01, "3 Coins 1 Credits"		},
+	{0x1f, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
+	{0x1f, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x1f, 0x01, 0x07, 0x03, "1 Coin  2 Credits"		},
+	{0x1f, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x1f, 0x01, 0x07, 0x00, "Free Play"		},
 
 	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x0f, 0x01, 0x08, 0x08, "Easy"		},
-	{0x0f, 0x01, 0x08, 0x00, "Hard"		},
+	{0x1f, 0x01, 0x08, 0x08, "Easy"		},
+	{0x1f, 0x01, 0x08, 0x00, "Hard"		},
 
 	{0   , 0xfe, 0   ,    2, "Round Time"		},
-	{0x0f, 0x01, 0x10, 0x10, "Normal"		},
-	{0x0f, 0x01, 0x10, 0x00, "Short"		},
+	{0x1f, 0x01, 0x10, 0x10, "Normal"		},
+	{0x1f, 0x01, 0x10, 0x00, "Short"		},
 
 	{0   , 0xfe, 0   ,    4, "Game mode"		},
-	{0x0f, 0x01, 0x60, 0x60, "Demo Sounds Off"		},
-	{0x0f, 0x01, 0x60, 0x20, "Demo Sounds On"		},
-	{0x0f, 0x01, 0x60, 0x00, "Freeze"		},
-	{0x0f, 0x01, 0x60, 0x40, "Endless Game (Cheat)"		},
+	{0x1f, 0x01, 0x60, 0x60, "Demo Sounds Off"		},
+	{0x1f, 0x01, 0x60, 0x20, "Demo Sounds On"		},
+	{0x1f, 0x01, 0x60, 0x00, "Freeze"		},
+	{0x1f, 0x01, 0x60, 0x40, "Endless Game (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    2, "2 Players Game"		},
-	{0x0f, 0x01, 0x80, 0x80, "1 Credit"		},
-	{0x0f, 0x01, 0x80, 0x00, "2 Credits"		},
+	{0x1f, 0x01, 0x80, 0x80, "1 Credit"		},
+	{0x1f, 0x01, 0x80, 0x00, "2 Credits"		},
 };
 
 STDDIPINFO(Mainsnk)
@@ -745,33 +745,33 @@ INT32 DrvInitcanvas()
 // Main Event (1984)
 
 static struct BurnRomInfo mainsnkRomDesc[] = {
-	{ "snk.p01",	0x2000, 0x00db1ca2, 1 }, //  0 maincpu
-	{ "snk.p02",	0x2000, 0xdf5c86b5, 1 }, //  1
-	{ "snk.p03",	0x2000, 0x5c2b7bca, 1 }, //  2
-	{ "snk.p04",	0x2000, 0x68b4b2a1, 1 }, //  3
-	{ "snk.p05",	0x2000, 0x580a29b4, 1 }, //  4
-	{ "snk.p06",	0x2000, 0x5f8a60a2, 1 }, //  5
+	{ "snk.p01",	0x2000, 0x00db1ca2, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
+	{ "snk.p02",	0x2000, 0xdf5c86b5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "snk.p03",	0x2000, 0x5c2b7bca, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "snk.p04",	0x2000, 0x68b4b2a1, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "snk.p05",	0x2000, 0x580a29b4, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "snk.p06",	0x2000, 0x5f8a60a2, 1 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "snk.p07",	0x4000, 0x4208391e, 2 }, //  6 audiocpu
+	{ "snk.p07",	0x4000, 0x4208391e, 2 | BRF_ESS | BRF_PRG }, //  6 audiocpu
 
-	{ "snk.p12",	0x2000, 0xecf87eb7, 3 }, //  7 gfx1
-	{ "snk.p11",	0x2000, 0x3f6bc5ba, 3 }, //  8
-	{ "snk.p10",	0x2000, 0xb5147a96, 3 }, //  9
-	{ "snk.p09",	0x2000, 0x0ebcf837, 3 }, // 10
+	{ "snk.p12",	0x2000, 0xecf87eb7, 3 | BRF_GRA }, //  7 gfx1
+	{ "snk.p11",	0x2000, 0x3f6bc5ba, 3 | BRF_GRA }, //  8
+	{ "snk.p10",	0x2000, 0xb5147a96, 3 | BRF_GRA }, //  9
+	{ "snk.p09",	0x2000, 0x0ebcf837, 3 | BRF_GRA }, // 10
 
-	{ "snk.p13",	0x2000, 0x2eb624a4, 4 }, // 11 gfx2
-	{ "snk.p16",	0x2000, 0xdc502869, 4 }, // 12
-	{ "snk.p19",	0x2000, 0x58d566a1, 4 }, // 13
-	{ "snk.p14",	0x2000, 0xbb927d82, 4 }, // 14
-	{ "snk.p17",	0x2000, 0x66f60c32, 4 }, // 15
-	{ "snk.p20",	0x2000, 0xd12c6333, 4 }, // 16
-	{ "snk.p15",	0x2000, 0xd242486d, 4 }, // 17
-	{ "snk.p18",	0x2000, 0x838b12a3, 4 }, // 18
-	{ "snk.p21",	0x2000, 0x8961a51e, 4 }, // 19
+	{ "snk.p13",	0x2000, 0x2eb624a4, 4 | BRF_GRA }, // 11 gfx2
+	{ "snk.p16",	0x2000, 0xdc502869, 4 | BRF_GRA }, // 12
+	{ "snk.p19",	0x2000, 0x58d566a1, 4 | BRF_GRA }, // 13
+	{ "snk.p14",	0x2000, 0xbb927d82, 4 | BRF_GRA }, // 14
+	{ "snk.p17",	0x2000, 0x66f60c32, 4 | BRF_GRA }, // 15
+	{ "snk.p20",	0x2000, 0xd12c6333, 4 | BRF_GRA }, // 16
+	{ "snk.p15",	0x2000, 0xd242486d, 4 | BRF_GRA }, // 17
+	{ "snk.p18",	0x2000, 0x838b12a3, 4 | BRF_GRA }, // 18
+	{ "snk.p21",	0x2000, 0x8961a51e, 4 | BRF_GRA }, // 19
 
-	{ "main3.bin",	0x0800, 0x78b29dde, 5 }, // 20 proms
-	{ "main2.bin",	0x0800, 0x7c314c93, 5 }, // 21
-	{ "main1.bin",	0x0800, 0xdeb895c4, 5 }, // 22
+	{ "main3.bin",	0x0800, 0x78b29dde, 5 | BRF_GRA }, // 20 proms
+	{ "main2.bin",	0x0800, 0x7c314c93, 5 | BRF_GRA }, // 21
+	{ "main1.bin",	0x0800, 0xdeb895c4, 5 | BRF_GRA }, // 22
 };
 
 STD_ROM_PICK(mainsnk)
@@ -791,27 +791,27 @@ struct BurnDriver BurnDrvMainsnk = {
 // Canvas Croquis
 
 static struct BurnRomInfo canvasRomDesc[] = {
-	{ "cc_p1.a2",		0x2000, 0xfa7109e1, 1 }, //  0 maincpu
-	{ "cc_p2.a3",		0x2000, 0x8b8beb34, 1 }, //  1
-	{ "cc_p3.a4",		0x2000, 0xea342f87, 1 }, //  2
-	{ "cc_p4.a5",		0x2000, 0x9cf35d98, 1 }, //  3
-	{ "cc_p5.a7",		0x2000, 0xc5ef1eda, 1 }, //  4
-	{ "cc_p6.a8",		0x2000, 0x7b1dd7fc, 1 }, //  5
+	{ "cc_p1.a2",		0x2000, 0xfa7109e1, 1 | BRF_ESS | BRF_PRG }, //  0 maincpu
+	{ "cc_p2.a3",		0x2000, 0x8b8beb34, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "cc_p3.a4",		0x2000, 0xea342f87, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "cc_p4.a5",		0x2000, 0x9cf35d98, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "cc_p5.a7",		0x2000, 0xc5ef1eda, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "cc_p6.a8",		0x2000, 0x7b1dd7fc, 1 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "cc_p7.h2",		0x4000, 0x029b5ea0, 2 }, //  6 audiocpu
-	{ "cc_p8.f2",		0x2000, 0x0f0368ce, 2 }, //  7
+	{ "cc_p7.h2",		0x4000, 0x029b5ea0, 2 | BRF_ESS | BRF_PRG }, //  6 audiocpu
+	{ "cc_p8.f2",		0x2000, 0x0f0368ce, 2 | BRF_ESS | BRF_PRG }, //  7
 
-	{ "cc_p11.c2",		0x4000, 0x4c8c2156, 3 }, //  8 gfx1
-	{ "cc_p10.b2",		0x4000, 0x3c0a4eeb, 3 }, //  9
-	{ "cc_p9.a2",		0x4000, 0xb58c5f24, 3 }, // 10
+	{ "cc_p11.c2",		0x4000, 0x4c8c2156, 3 | BRF_GRA }, //  8 gfx1
+	{ "cc_p10.b2",		0x4000, 0x3c0a4eeb, 3 | BRF_GRA }, //  9
+	{ "cc_p9.a2",		0x4000, 0xb58c5f24, 3 | BRF_GRA }, // 10
 
-	{ "cc_p12.j8",		0x2000, 0x9003a979, 4 }, // 11 gfx2
-	{ "cc_p13.j5",		0x2000, 0xa52cd549, 4 }, // 12
-	{ "cc_p14.j2",		0x2000, 0xedc6a1e8, 4 }, // 13
+	{ "cc_p12.j8",		0x2000, 0x9003a979, 4 | BRF_GRA }, // 11 gfx2
+	{ "cc_p13.j5",		0x2000, 0xa52cd549, 4 | BRF_GRA }, // 12
+	{ "cc_p14.j2",		0x2000, 0xedc6a1e8, 4 | BRF_GRA }, // 13
 
-	{ "cc_bprom3.j8",	0x0400, 0x21f72498, 5 }, // 14 proms
-	{ "cc_bprom2.j9",	0x0400, 0x19efe7df, 5 }, // 15
-	{ "cc_bprom1.j10",	0x0400, 0xfbbbf911, 5 }, // 16
+	{ "cc_bprom3.j8",	0x0400, 0x21f72498, 5 | BRF_GRA }, // 14 proms
+	{ "cc_bprom2.j9",	0x0400, 0x19efe7df, 5 | BRF_GRA }, // 15
+	{ "cc_bprom1.j10",	0x0400, 0xfbbbf911, 5 | BRF_GRA }, // 16
 };
 
 STD_ROM_PICK(canvas)

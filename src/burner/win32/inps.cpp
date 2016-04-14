@@ -114,14 +114,28 @@ static int SetInput(int nCode)
 					pgi->Input.MouseAxis.nAxis = (nCode & 0x0F) >> 1;
 				}
 			}
+
+			if (nCode == 0) {                                           // Clear Input button pressed (for Analogue/Mouse)
+				pgi->nInput = 0;
+				pgi->Input.JoyAxis.nJoy = 0;
+				pgi->Input.JoyAxis.nAxis = 0;
+				pgi->Input.MouseAxis.nMouse = 0;
+				pgi->Input.MouseAxis.nAxis = 0;
+
+				if (bClearLock) { // If ClearLock is checked, morph the analogue/mouse input to a switch (switch w/nCode of 0 == ClearLock)
+					pgi->nInput = GIT_SWITCH;
+					pgi->Input.Switch.nCode = (unsigned short)nCode;
+				}
+			}
+
 		} else {
 			pgi->nInput = GIT_SWITCH;
-			if (nCode == 0 && !bClearLock) pgi->nInput = 0;				// Clear Input button pressed
+			if (nCode == 0 && !bClearLock) pgi->nInput = 0;				// Clear Input button pressed (for buttons)
 			pgi->Input.Switch.nCode = (unsigned short)nCode;
 		}
 	} else {
 		pgi->Macro.nMode = 0x01;										// Mark macro as in use
-		if (nCode == 0 && !bClearLock) pgi->Macro.nMode = 0;			// Clear Input button pressed
+		if (nCode == 0 && !bClearLock) pgi->Macro.nMode = 0;			// Clear Input button pressed (for Macros)
 		pgi->Macro.Switch.nCode = (unsigned short)nCode;				// Assign switch
 	}
 

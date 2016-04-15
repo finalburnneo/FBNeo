@@ -981,8 +981,10 @@ BEGIN
               MENUITEM "Low",						MENU_PRIORITY_LOW
            END
            MENUITEM SEPARATOR
-           MENUITEM "Use assembly MC68000 core",				MENU_ASSEMBLYCORE
+#ifdef FBA_DEBUG
+           MENUITEM "Use assembly MC68000 core (this session only)",				MENU_ASSEMBLYCORE
            MENUITEM SEPARATOR
+#endif
            MENUITEM "Save High Scores when supported",				MENU_SAVEHISCORES
 		   MENUITEM "Use alpha blend effects when supported",		MENU_USEBLEND
 #ifdef INCLUDE_AVI_RECORDING

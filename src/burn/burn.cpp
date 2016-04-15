@@ -588,6 +588,9 @@ extern "C" INT32 BurnDrvInit()
 
 		bprintf(PRINT_IMPORTANT, _T("*** Starting emulation of %s - %s.\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_FULLNAME));
 
+		if (bBurnUseASMCPUEmulation)
+			bprintf(PRINT_ERROR, _T("*** WARNING: Assembly MC68000 core is enabled for this session!\n"));
+
 		// Then print the alternative titles
 
 		if (nName > 1) {

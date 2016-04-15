@@ -332,6 +332,8 @@ int ConfigAppSave()
 	_ftprintf(h, _T("// --- emulation --------------------------------------------------------------\n"));
 
 	_ftprintf(h, _T("\n// If non-zero, use A68K for MC68000 emulation\n"));
+
+	bBurnUseASMCPUEmulation = 0; // Assembly MC68000 emulation only availble on a per-session basis.  Causes too many problems in a non-debug setting.
 	VAR(bBurnUseASMCPUEmulation);
 
 	_ftprintf(h, _T("\n\n\n"));

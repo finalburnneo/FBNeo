@@ -99,11 +99,6 @@ void K052109AdjustScroll(INT32 x, INT32 y)
 
 void K052109RenderLayerLineScroll(INT32 nLayer, INT32 Flags, INT32 Priority)
 {
-	if (nBurnLayer & 1) {
-	} else {
-		return;
-	}
-
 	INT32 Category = Flags & 0xff;
 	INT32 Opaque = (Flags >> 16) & 1;
 

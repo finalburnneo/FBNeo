@@ -573,7 +573,7 @@ BEGIN
     CONTROL         "D",IDC_GFX_VIEWER_HORI_14,"Static",0,211,3,8,8
     CONTROL         "E",IDC_GFX_VIEWER_HORI_15,"Static",0,226,3,8,8
     CONTROL         "F",IDC_GFX_VIEWER_HORI_16,"Static",0,240,3,8,8
-    LTEXT           "Selected colour: ",IDC_GFX_VIEWER_SEL_COL,3,226,80,8,NOT WS_GROUP
+    LTEXT           "Selected colour: ",IDC_GFX_VIEWER_SEL_COL,3,226,180,8,NOT WS_GROUP
     DEFPUSHBUTTON   "Close",IDCANCEL,256,206,60,14
     CONTROL         "Previous...",IDC_GFX_VIEWER_PREV,"Button",WS_TABSTOP,256,13,60,14
     CONTROL         "Next...",IDC_GFX_VIEWER_NEXT,"Button",WS_TABSTOP,256,33,60,14

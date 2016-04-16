@@ -18,9 +18,26 @@ static void CalcBrushes(int nStartColour)
 		
 		if (i + nStartColour < nPaletteEntries) {
 			Colour = pBurnDrvPalette[i + nStartColour];
-			r = (Colour & 0x7c00) >> 7;
-			g = (Colour & 0x3e0) >> 2;
-			b = (Colour & 0x1f) << 3;
+
+			if (nVidImageDepth < 16) {
+				// 15-bit
+				r = (Colour & 0x7c00) >> 7;
+				g = (Colour & 0x03e0) >> 2;
+				b = (Colour & 0x001f) << 3;
+			} else
+			if (nVidImageDepth == 16) {
+				// 16-bit
+				r = (Colour & 0xf800) >> 8;
+				g = (Colour & 0x07e0) >> 3;
+				b = (Colour & 0x001f) << 3;
+
+			} else {
+				// 24/32-bit
+				r = (Colour & 0xff0000) >> 16;
+				g = (Colour & 0x00ff00) >> 8;
+				b = (Colour & 0x0000ff);
+			}
+
 			PaletteBrush[i] = CreateSolidBrush(RGB(r, g, b));
 		}
 	}
@@ -101,20 +118,35 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		int Notify = HIWORD(wParam);
 		
 		if (Notify == STN_CLICKED) {
-			TCHAR szText[50];
+			TCHAR szText[100];
 			
 			for (int i = 0; i < 256; i++) {
 				if ((HWND)lParam == PaletteControl[i]) {
 					int Colour, r, g, b;
 					
 					Colour = pBurnDrvPalette[i + nPalettePosition];
-					r = (Colour & 0x7c00) >> 7;
-					g = (Colour & 0x3e0) >> 2;
-					b = (Colour & 0x1f) << 3;
-					
+
+					if (nVidImageDepth < 16) {
+						// 15-bit
+						r = (Colour & 0x7c00) >> 7;
+						g = (Colour & 0x03e0) >> 2;
+						b = (Colour & 0x001f) << 3;
+					} else
+					if (nVidImageDepth == 16) {
+						// 16-bit
+						r = (Colour & 0xf800) >> 8;
+						g = (Colour & 0x07e0) >> 3;
+						b = (Colour & 0x001f) << 3;
+					} else {
+						// 24/32-bit
+						r = (Colour & 0xff0000) >> 16;
+						g = (Colour & 0x00ff00) >> 8;
+						b = (Colour & 0x0000ff);
+					}
+
 					szText[0] = _T('\0');
-					_stprintf(szText, _T("Selected colour: #%05X RGB #%02X%02X%02X"), i + nPalettePosition, r, g, b);
-					SendMessage(GetDlgItem(hPaletteViewerDlg, IDC_GFX_VIEWER_SEL_COL), WM_SETTEXT, (WPARAM)0, (LPARAM)szText);					
+					_stprintf(szText, _T("Selected colour: #%X  RGB #%02X%02X%02X"), i + nPalettePosition, r, g, b);
+					SendMessage(GetDlgItem(hPaletteViewerDlg, IDC_GFX_VIEWER_SEL_COL), WM_SETTEXT, (WPARAM)0, (LPARAM)szText);
 					return 0;
 				}
 			}

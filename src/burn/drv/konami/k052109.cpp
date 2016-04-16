@@ -33,107 +33,60 @@ static INT32 K052109ScrollCols[3][64];
 
 static INT32 has_extra_video_ram = 0; // xmen kludge
 
+static void update_scroll_one(INT32 nLayer, INT32 control, INT32 ram_offset)
+{
+	K052109EnableLine[nLayer] = 0;
+	K052109EnableRows[nLayer] = 1;
+	K052109EnableCols[nLayer] = 1;
+
+	UINT8 *sourceram = K052109Ram + ram_offset;
+
+	if ((control & 0x03) == 0x02 || (control & 0x03) == 0x03)
+	{
+		K052109EnableLine[nLayer] = 1;
+		K052109EnableRows[nLayer] = 256;
+
+		INT32 andval = ((control & 0x03) == 0x02) ? 0xfff8 : 0xffff;
+		UINT8 *scrollram = &sourceram[0x1a00];
+		INT32 yscroll = sourceram[0x180c];
+
+		for (INT32 offs = 0; offs < 256; offs++)
+		{
+			INT32 xscroll = scrollram[2 * (offs & andval) + 0] + 256 * scrollram[2 * (offs & andval) + 1];
+			K052109ScrollRows[nLayer][(offs + yscroll)&0xff] = xscroll - 6;
+		}
+
+		K052109EnableCols[nLayer] = 1;
+		K052109ScrollCols[nLayer][0] = yscroll;
+	}
+	else if ((control & 0x04) == 0x04)
+	{
+		K052109EnableLine[nLayer] = 1;
+
+		UINT8 *scrollram = &sourceram[0x1800];
+		INT32 xscroll = (sourceram[0x1a00] + 256 * sourceram[0x1a01]) - 6;
+
+		K052109EnableCols[nLayer] = 64;
+		for (INT32 offs = 0; offs < 512/8; offs++)
+		{
+			K052109ScrollCols[nLayer][(((offs*8)+xscroll)&0x1ff)/8] = scrollram[offs];
+		}
+
+		K052109EnableRows[nLayer] = 1;
+		K052109ScrollRows[nLayer][0] = xscroll;
+	}
+	else
+	{
+		K052109EnableRows[nLayer] = K052109EnableCols[nLayer] = 1;
+		K052109ScrollX[nLayer] = (sourceram[0x1a00] + 256 * sourceram[0x1a01]) - 6;
+		K052109ScrollY[nLayer] = sourceram[0x180c];
+	}
+}
+
 void K052109UpdateScroll()
 {
-	K052109EnableLine[2] = K052109EnableLine[1] = 0;
-	K052109EnableRows[2] = K052109EnableRows[1] = 0;
-	K052109EnableCols[2] = K052109EnableCols[1] = 0;
-
-	if ((K052109ScrollCtrl & 0x03) == 0x02) // row scroll
-	{
-		UINT8 *scrollram = &K052109Ram[0x1a00];
-
-		K052109ScrollY[1] = K052109Ram[0x180c];
-		K052109EnableRows[1] = 1;
-
-		K052109ScrollX[1] = 0;
-
-		for (INT32 offs = 0;offs < 32;offs++)
-		{
-			INT32 xscroll = scrollram[2*(offs * 8)+0] + 256 * scrollram[2*(offs*8)+1];
-			xscroll -= 6;
-			K052109ScrollRows[1][offs] = xscroll & 0x1ff;
-		}
-	} else {
-		if ((K052109ScrollCtrl & 0x03) == 0x03) { // line scroll
-			UINT8 *scrollram = &K052109Ram[0x1a00];
-
-			K052109ScrollY[1] = K052109Ram[0x180c];
-			K052109ScrollX[1] = 0;
-
-			K052109EnableLine[1] = 1;
-	
-			for (INT32 offs = 0;offs < 256;offs++)
-			{
-				INT32 xscroll = scrollram[2*offs+0] + 256 * scrollram[2*offs+1];
-				xscroll -= 6;
-				K052109ScrollRows[1][offs] = xscroll & 0x1ff;
-			}
-		} else {
-			if ((K052109ScrollCtrl & 0x04) == 0x04) { // column scroll
-				UINT8 *scrollram = &K052109Ram[0x1800];
-
-				K052109ScrollX[1] = ((K052109Ram[0x1a00] | (K052109Ram[0x1a01] << 8)) - 6) & 0x1ff;
-				K052109ScrollY[1] = 0;
-				K052109EnableCols[1] = 1;
-
-				for (INT32 offs = 0; offs < 512; offs++) {
-					K052109ScrollCols[1][((offs+K052109ScrollX[1]) & 0x1ff) / 8] = scrollram[offs/8];
-				}
-
-
-			} else { // scroll
-				K052109ScrollX[1] = (K052109Ram[0x1a00] + (K052109Ram[0x1a01] << 8) - 6) & 0x1ff;
-				K052109ScrollY[1] = K052109Ram[0x180c];
-			}
-		}
-	}
-	
-	if ((K052109ScrollCtrl & 0x18) == 0x10) {
-		UINT8 *scrollram = &K052109Ram[0x3a00];
-
-		K052109ScrollY[2] = K052109Ram[0x380c];
-		K052109ScrollX[2] = 0;
-
-		K052109EnableRows[2] = 1;
-
-		for (INT32 offs = 0;offs < 32;offs++)
-		{
-			INT32 xscroll = scrollram[2*(offs * 8)+0] + 256 * scrollram[2*(offs * 8)+1];
-			xscroll -= 6;
-			K052109ScrollRows[2][offs] = xscroll & 0x1ff;
-		}
-	} else {
-		if ((K052109ScrollCtrl & 0x18) == 0x18) { // line scroll 
-			UINT8 *scrollram = &K052109Ram[0x3a00];
-
-			K052109ScrollY[2] = K052109Ram[0x380c];
-			K052109ScrollX[2] = 0;
-
-			K052109EnableLine[2] = 1;
-	
-			for (INT32 offs = 0;offs < 256;offs++)
-			{
-				K052109ScrollRows[2][offs] = ((scrollram[2*offs+0] + (scrollram[2*offs+1] << 8)) - 6) & 0x1ff;
-			}
-		} else {
-			if ((K052109ScrollCtrl & 0x20) == 0x20) { // column scroll
-				UINT8 *scrollram = &K052109Ram[0x3800];
-
-				K052109ScrollX[2] = ((K052109Ram[0x3a00] | (K052109Ram[0x3a01] << 8)) - 6) & 0x1ff;
-				K052109ScrollY[2] = 0;
-				K052109EnableCols[2] = 1;
-
-				for (INT32 offs = 0; offs < 512; offs++) {
-					K052109ScrollCols[2][((offs+K052109ScrollX[2]) & 0x1ff) / 8] = scrollram[offs/8];
-				}
-
-			} else { // scroll
-				K052109ScrollX[2] = (K052109Ram[0x3a00] + (K052109Ram[0x3a01] << 8) - 6) & 0x1ff;
-				K052109ScrollY[2] = K052109Ram[0x380c];
-			}
-		}
-	}		
+	update_scroll_one(1, K052109ScrollCtrl >> 0, 0x0000);
+	update_scroll_one(2, K052109ScrollCtrl >> 3, 0x2000);
 }
 
 void K052109AdjustScroll(INT32 x, INT32 y)
@@ -146,42 +99,42 @@ void K052109AdjustScroll(INT32 x, INT32 y)
 
 void K052109RenderLayerLineScroll(INT32 nLayer, INT32 Flags, INT32 Priority)
 {
-	UINT32 *dst = konami_bitmap32;
-	UINT8 *pdst = konami_priority_bitmap;
+	if (nBurnLayer & 1) {
+	} else {
+		return;
+	}
 
 	INT32 Category = Flags & 0xff;
 	INT32 Opaque = (Flags >> 16) & 1;
 
-	for (INT32 my = 0; my < 256; my++) {
+	UINT32 *dst = konami_bitmap32;
+	UINT8 *pdst = konami_priority_bitmap;
 
-		INT32 y2 = (my - (K052109ScrollYOff[nLayer] + 16)) & 0xff;
-		if (y2 < 0 || y2 >= nScreenHeight) continue;
+	INT32 ram_offset = nLayer * 0x800;
 
-		for (INT32 mx = 0; mx < 64; mx++) {
-			INT32 TileIndex = ((my >> 3) << 6) | mx;
+	INT32 rowdiv = 256 / K052109EnableRows[nLayer];
+	INT32 coldiv = 64 / K052109EnableCols[nLayer];
 
-			INT32 Colour = K052109Ram[TileIndex + 0x0000];
-			INT32 Code = K052109Ram[TileIndex + 0x2000] + (K052109Ram[TileIndex + 0x4000] << 8);
-			
-			if (nLayer == 1) {
-				Colour = K052109Ram[TileIndex + 0x0800];
-				Code = K052109Ram[TileIndex + 0x2800] + (K052109Ram[TileIndex + 0x4800] << 8);
-			}
-			
-			if (nLayer == 2) {
-				Colour = K052109Ram[TileIndex + 0x1000];
-				Code = K052109Ram[TileIndex + 0x3000] + (K052109Ram[TileIndex + 0x5000] << 8);
-			}
-			
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		for (INT32 x = 0; x < nScreenWidth + 8; x+=8)
+		{
+			INT32 yy = (y + (K052109ScrollCols[nLayer][(x/8)/coldiv] + K052109ScrollYOff[nLayer] + 16)) & 0xff;
+			INT32 xx = (x + (K052109ScrollRows[nLayer][yy/rowdiv] + K052109ScrollXOff[nLayer] + 104)) & 0x1ff;
+
+			INT32 TileIndex = (xx/8) + ((yy/8)*64);
+
+			INT32 Colour = K052109Ram[TileIndex + ram_offset];
+			INT32 Code = K052109Ram[TileIndex + 0x2000 + ram_offset] + (K052109Ram[TileIndex + 0x4000 + ram_offset] << 8);
+
 			INT32 Bank = K052109CharRomBank[(Colour & 0x0c) >> 2];
-			if (has_extra_video_ram) Bank = (Colour & 0x0c) >> 2;	/* kludge for X-Men */
+			if (has_extra_video_ram) Bank = (Colour & 0x0c) >> 2;	// kludge for X-Men
 
 			Colour = (Colour & 0xf3) | ((Bank & 0x03) << 2);
 			Bank >>= 2;
-			
+
 			INT32 yFlip = Colour & 0x02;
 			INT32 xFlip = 0;
-
 			INT32 Prio = 0;
 
 			K052109Callback(nLayer, Bank, &Code, &Colour, &xFlip, &Prio);
@@ -191,32 +144,22 @@ void K052109RenderLayerLineScroll(INT32 nLayer, INT32 Flags, INT32 Priority)
 			if (xFlip && !(K052109FlipEnable & 1)) xFlip = 0;
 			if (yFlip && !(K052109FlipEnable & 2)) yFlip = 0;
 
-			INT32 x = 8 * mx;
-			INT32 y = my;
-
-			y -= (K052109ScrollY[nLayer] + K052109ScrollYOff[nLayer] + 16) & 0xff;
-			if (K052109EnableLine[nLayer]) x -= (104 + K052109ScrollRows[nLayer][my] + K052109ScrollXOff[nLayer]) & 0x1ff;
-
-			if (x < -7) x += 512;
-			if (y < -7) y += 256;
-
-			if (x >= nScreenWidth) continue;
-
-			UINT8 *src = K052109RomExp + ((Code & K052109RomExpMask) * 0x40);
-			src += (yFlip ? (~my & 7) : (my & 7)) * 8;
+			UINT8 *src = K052109RomExp + ((Code & K052109RomExpMask) * 0x40) + ((yFlip ? (~yy & 7) : (yy & 7)) * 8);
+			UINT32 *pal = konami_palette32 + (Colour * 16);
 
 			if (xFlip) xFlip = 0x07;
 
-			UINT32 *pal = konami_palette32 + (Colour * 16);
+			INT32 xv = xx & 0x07;
 
-			for (INT32 xx = 0; xx < 8; xx++, x++) {
-				if (x < 0 || x >= nScreenWidth) continue;
+			for (INT32 dx = 0; dx < 8; dx++)
+			{
+				if ((x+dx-xv) < 0 || (x+dx-xv) >= nScreenWidth) continue;
 
-				INT32 pxl = src[xx ^ xFlip];
+				INT32 pxl = src[dx^xFlip];
 				if (!Opaque && !pxl) continue;
 
-				dst[x] = pal[pxl];
-				pdst[x] = Priority;
+				dst[x+dx-xv] = pal[pxl];
+				pdst[x+dx-xv] = Priority;
 			}
 		}
 
@@ -229,6 +172,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 {
 	nLayer &= 0x03;
 
+	// Row, column, and line scroll.
 	if (K052109EnableLine[nLayer]) {
 		K052109RenderLayerLineScroll(nLayer, Flags, Priority);
 		return;
@@ -279,9 +223,6 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 
 			INT32 scrollx = K052109ScrollX[nLayer] + K052109ScrollXOff[nLayer];
 			INT32 scrolly = K052109ScrollY[nLayer] + K052109ScrollYOff[nLayer];
-
-			if (K052109EnableRows[nLayer]) scrollx += K052109ScrollRows[nLayer][(((my << 3) - scrolly) &  0xff) >> 3];
-			if (K052109EnableCols[nLayer]) scrolly += K052109ScrollCols[nLayer][mx];
 
 			x -= (scrollx + 104) & 0x1ff;
 			y -= (scrolly +  16) & 0xff;

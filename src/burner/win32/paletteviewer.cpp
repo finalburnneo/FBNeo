@@ -181,7 +181,10 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 int PaletteViewerDialogCreate(HWND hParentWND)
 {
-	if (pBurnDrvPalette == NULL) return 1;
+	if (pBurnDrvPalette == NULL) {
+		bprintf(PRINT_IMPORTANT, _T("No DrvPalette associated with this game.\n"));
+		return 1;
+	}
 	
 	hParent = hParentWND;
 	FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_PALETTEVIEWER), hParent, (DLGPROC)DialogProc);

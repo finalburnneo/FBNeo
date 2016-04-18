@@ -189,7 +189,7 @@ static void sndSetBank(UINT8 bank0, UINT8 bank1)
 		}
 	}
 
-	if (bank1 != m6295bank[1] && nGameSelect == 0) { //1945kiii only
+	if (bank1 != m6295bank[1] && nGameSelect < 2) { //1945kiii only
 		m6295bank[1] = bank1;
 		for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
 			MSM6295SampleInfo[1][nChannel] = MSM6295ROM + 0x080000 + 0x040000 * bank1 + (nChannel << 8);
@@ -256,7 +256,7 @@ void __fastcall k1945iiiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		return;
 
 		case 0x3C0000: {
-			if (nGameSelect) //flagrall
+			if (nGameSelect == 2) //flagrall
 				sndSetBank((wordValue & 6) >> 1, 0);
 			else
 				sndSetBank((wordValue & 2) >> 1, (wordValue & 4) >> 2);
@@ -350,7 +350,30 @@ static INT32 DrvInit(INT32 game_select)
 
 		//decode_sprites();
 	}
-	else    // flagrall
+	else if (nGameSelect == 1) // 1945kiiio
+	{
+		if (BurnLoadRom(Rom68K     + 0x000000,  0, 2)) return 1;
+		if (BurnLoadRom(Rom68K     + 0x000001,  1, 2)) return 1;
+
+		if (BurnLoadRom(RomSpr     + 0x000000,  2, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000001,  3, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000002,  4, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x000003,  5, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200000,  6, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200001,  7, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200002,  8, 4)) return 1;
+		if (BurnLoadRom(RomSpr     + 0x200003,  9, 4)) return 1;
+
+		if (BurnLoadRom(RomBg      + 0x000000, 10, 4)) return 1;
+		if (BurnLoadRom(RomBg      + 0x000001, 11, 4)) return 1;
+		if (BurnLoadRom(RomBg      + 0x000002, 12, 4)) return 1;
+		if (BurnLoadRom(RomBg      + 0x000003, 13, 4)) return 1;
+
+		if (BurnLoadRom(MSM6295ROM + 0x000000, 14, 1)) return 1;
+		if (BurnLoadRom(MSM6295ROM + 0x080000, 15, 1)) return 1;
+
+	}
+	else if (nGameSelect == 2)    // flagrall
 	{
 		if (BurnLoadRom(Rom68K     + 0x000000,  0, 2)) return 1;
 		if (BurnLoadRom(Rom68K     + 0x000001,  1, 2)) return 1;
@@ -395,7 +418,7 @@ static INT32 DrvInit(INT32 game_select)
 	
 	MSM6295Init(0, 7500, 1);
 	MSM6295Init(1, 7500, 1);
-	if (nGameSelect == 0) { // 1945kiii
+	if (nGameSelect < 2) { // 1945kiii
 		MSM6295SetRoute(0, 2.50, BURN_SND_ROUTE_BOTH);
 		MSM6295SetRoute(1, 2.50, BURN_SND_ROUTE_BOTH);
 	} else {                // flagrall
@@ -561,7 +584,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// 1945k III
+// 1945k III (newer, OPCX2 PCB)
 
 static struct BurnRomInfo _1945kiiiRomDesc[] = {
 	{ "prg-1.u51",	0x080000, 0x6b345f27, BRF_ESS | BRF_PRG },	// 0 68000 code 
@@ -587,11 +610,56 @@ static INT32 _1945kiiiInit()
 
 struct BurnDriver BurnDrv1945kiii = {
 	"1945kiii", NULL, NULL, NULL, "2000",
-	"1945k III\0", NULL, "Oriental", "Miscellaneous",
+	"1945k III (newer, OPCX2 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, _1945kiiiRomInfo, _1945kiiiRomName, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
 	_1945kiiiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
+	224, 320, 3, 4
+};
+
+
+
+// 1945k III (older, OPCX1 PCB)
+
+static struct BurnRomInfo _1945kiiioRomDesc[] = {
+	{ "3.U34",	0x80000, 0x5515baa0, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
+	{ "4.U35",	0x80000, 0xfd177664, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "9.U5",	0x80000, 0xbe0f432e, 2 | BRF_GRA },           //  2 Sprites
+	{ "10.U6",	0x80000, 0xcf9127b2, 2 | BRF_GRA },           //  3
+	{ "11.U7",	0x80000, 0x644ee8cc, 2 | BRF_GRA },           //  4
+	{ "12.U8",	0x80000, 0x0900c208, 2 | BRF_GRA },           //  5
+	{ "13.U58",	0x80000, 0x8ea9c6be, 2 | BRF_GRA },           //  6
+	{ "14.U59",	0x80000, 0x10c18fb4, 2 | BRF_GRA },           //  7
+	{ "15.U60",	0x80000, 0x86ab6c7c, 2 | BRF_GRA },           //  8
+	{ "16.U61",	0x80000, 0xff419080, 2 | BRF_GRA },           //  9
+
+	{ "5.U102",	0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
+	{ "6.U103",	0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
+	{ "7.U104",	0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
+	{ "8.U105",	0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
+
+	{ "S13.SU4",	0x80000, 0xd45aec3b, 4 | BRF_SND },           // 14 MSM #0 Samples
+
+	{ "S21.SU5",	0x80000, 0x9d96fd55, 5 | BRF_SND },           // 15 MSM #1 Samples
+};
+
+STD_ROM_PICK(_1945kiiio)
+STD_ROM_FN(_1945kiiio)
+
+static INT32 _1945kiiioInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrv1945kiiio = {
+	"1945kiiio", "1945kiii", NULL, NULL, "1999",
+	"1945k III (older, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, _1945kiiioRomInfo, _1945kiiioRomName, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
+	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
 	224, 320, 3, 4
 };
 
@@ -623,7 +691,7 @@ STD_ROM_FN(flagrall)
 
 static INT32 flagrallInit()
 {
-	return DrvInit(1);
+	return DrvInit(2);
 }
 
 struct BurnDriver BurnDrvFlagrall = {

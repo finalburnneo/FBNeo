@@ -19,7 +19,7 @@ export
 UNICODE = 1
 
 # Build A68K ASM 68000 core
-BUILD_A68K = 1
+#BUILD_A68K = 1
 
 # Include x86 Assembly routines
 BUILD_X86_ASM = 1

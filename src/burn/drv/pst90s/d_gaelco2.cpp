@@ -132,6 +132,128 @@ static struct BurnInputInfo ManiacsqInputList[] = {
 
 STDINPUTINFO(Maniacsq)
 
+static struct BurnInputInfo TouchgoInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 8,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
+
+	{"P3 Coin",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p3 start"	},
+	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
+	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
+	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 left"	},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 right"	},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 fire 1"	},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 fire 2"	},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p3 fire 3"	},
+
+	{"P4 Coin",		BIT_DIGITAL,	DrvJoy3 + 11,	"p4 coin"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 start"	},
+	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 up"		},
+	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 1,	"p4 down"	},
+	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 left"	},
+	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 right"	},
+	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 fire 1"	},
+	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 fire 2"	},
+	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy4 + 8,	"service"	},
+	{"Service",		BIT_DIGITAL,	DrvJoy4 + 10,	"service"	},
+	{"Service",		BIT_DIGITAL,	DrvJoy4 + 9,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Touchgo)
+
+static struct BurnDIPInfo TouchgoDIPList[]=
+{
+	{0x28, 0xff, 0xff, 0xff, NULL				},
+	{0x29, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x28, 0x01, 0x03, 0x02, "Easy"				},
+	{0x28, 0x01, 0x03, 0x03, "Normal"			},
+	{0x28, 0x01, 0x03, 0x01, "Hard"				},
+	{0x28, 0x01, 0x03, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Credit configuration"		},
+	{0x28, 0x01, 0x04, 0x04, "1 Credit Start/1 Credit Continue"		},
+	{0x28, 0x01, 0x04, 0x00, "2 Credits Start/1 Credit Continue"		},
+
+	{0   , 0xfe, 0   ,    2, "Coin Slot"			},
+	{0x28, 0x01, 0x08, 0x08, "Independent"			},
+	{0x28, 0x01, 0x08, 0x00, "Common"			},
+	
+	{0   , 0xfe, 0   ,    3, "Monitor Type"			},
+	{0x28, 0x01, 0x30, 0x00, "Double monitor, 4 players"	},
+	{0x28, 0x01, 0x30, 0x20, "Single monitor, 4 players"	},
+	{0x28, 0x01, 0x30, 0x30, "Single monitor, 2 players"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x28, 0x01, 0x40, 0x00, "Off"				},
+	{0x28, 0x01, 0x40, 0x40, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x28, 0x01, 0x80, 0x80, "Off"				},
+	{0x28, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,   16, "Coin A"			},
+	{0x29, 0x01, 0x0f, 0x00, "Disabled/Free Play (if Coin B)"},
+	{0x29, 0x01, 0x0f, 0x03, "4 Coins 1 Credits"		},
+	{0x29, 0x01, 0x0f, 0x06, "3 Coins 1 Credits"		},
+	{0x29, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"		},
+	{0x29, 0x01, 0x0f, 0x05, "3 Coins 2 Credits"		},
+	{0x29, 0x01, 0x0f, 0x02, "4 Coins 3 Credits"		},
+	{0x29, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x29, 0x01, 0x0f, 0x01, "4 Coins 5 Credits"		},
+	{0x29, 0x01, 0x0f, 0x04, "3 Coins 4 Credits"		},
+	{0x29, 0x01, 0x0f, 0x08, "2 Coins 3 Credits"		},
+	{0x29, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
+	{0x29, 0x01, 0x0f, 0x07, "2 Coins 5 Credits"		},
+	{0x29, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"		},
+	{0x29, 0x01, 0x0f, 0x0c, "1 Coin  4 Credits"		},
+	{0x29, 0x01, 0x0f, 0x0b, "1 Coin  5 Credits"		},
+	{0x29, 0x01, 0x0f, 0x0a, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,   16, "Coin B"			},
+	{0x29, 0x01, 0xf0, 0x00, "Disabled/Free Play (if Coin A)"},
+	{0x29, 0x01, 0xf0, 0x30, "4 Coins 1 Credits"		},
+	{0x29, 0x01, 0xf0, 0x60, "3 Coins 1 Credits"		},
+	{0x29, 0x01, 0xf0, 0x90, "2 Coins 1 Credits"		},
+	{0x29, 0x01, 0xf0, 0x50, "3 Coins 2 Credits"		},
+	{0x29, 0x01, 0xf0, 0x20, "4 Coins 3 Credits"		},
+	{0x29, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x29, 0x01, 0xf0, 0x10, "4 Coins 5 Credits"		},
+	{0x29, 0x01, 0xf0, 0x40, "3 Coins 4 Credits"		},
+	{0x29, 0x01, 0xf0, 0x80, "2 Coins 3 Credits"		},
+	{0x29, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"		},
+	{0x29, 0x01, 0xf0, 0x70, "2 Coins 5 Credits"		},
+	{0x29, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"		},
+	{0x29, 0x01, 0xf0, 0xc0, "1 Coin  4 Credits"		},
+	{0x29, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"		},
+	{0x29, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
+};
+
+STDDIPINFO(Touchgo)
+
 static struct BurnDIPInfo AlighuntDIPList[]=
 {
 	{0x15, 0xff, 0xff, 0xff, NULL				},
@@ -436,6 +558,13 @@ static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)
 		case 0x300011:
 			return DrvInputs[1] >> ((~address & 1) * 8);
 
+		case 0x300004:
+		case 0x300005:
+			return DrvInputs[2] >> ((~address & 1) * 8);
+
+		case 0x300006:
+		case 0x300007:
+			return DrvInputs[3] >> ((~address & 1) * 8);
 
 		case 0x300020:
 		case 0x300021:
@@ -465,6 +594,12 @@ static UINT16 __fastcall gaelco2_main_read_word(UINT32 address)
 
 		case 0x300002:
 		case 0x300010:
+			return DrvInputs[1];
+
+		case 0x300004:
+			return DrvInputs[0];
+
+		case 0x300006:
 			return DrvInputs[1];
 
 		case 0x320000:
@@ -766,6 +901,30 @@ static INT32 DrvInit(INT32 game_select)
 			DrvGfxDecode(0x1400000);
 
 			nCPUClockSpeed = 15000000;
+			pIRQCallback = pIRQLine6Callback;
+
+			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 0, 0);
+		}
+		break;
+
+		case 4: // touchgo
+		{
+			if (BurnLoadRom(Drv68KROM  + 0x0000001, 0, 2)) return 1;
+			if (BurnLoadRom(Drv68KROM  + 0x0000000, 1, 2)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x1000000, 2, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM  + 0x0000000, 3, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM  + 0x0400000, 4, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM  + 0x0800000, 5, 1)) return 1;
+
+			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0000000, 0x0400000, 0x0000000, 0x0400000);
+			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0400000, 0x0200000, 0x0200000, 0x0600000);
+			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0800000, 0x0400000, 0x0800000, 0x0c00000);
+
+			DrvGfxDecode(0x1400000);
+
+			nCPUClockSpeed = 16000000;
 			pIRQCallback = pIRQLine6Callback;
 
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 0, 0);
@@ -1285,4 +1444,121 @@ struct BurnDriver BurnDrvSnowboar = {
 	snowboarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	384, 240, 4, 3
 };
+
+
+
+// Touch & Go (World)
+
+static struct BurnRomInfo touchgoRomDesc[] = {
+	{ "tg_56",		0x080000, 0x8ab065f3, 1 | BRF_PRG | BRF_ESS }, //  0  68k Code
+	{ "tg_57",		0x080000, 0x0dfd3f65, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic69",		0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ic65",		0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp.bin",	0x008000, 0x00000000, 4 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  6 mcu
+};
+
+STD_ROM_PICK(touchgo)
+STD_ROM_FN(touchgo)
+
+static INT32 touchgoInit()
+{
+	return DrvInit(4);
+}
+
+struct BurnDriver BurnDrvTouchgo = {
+	"touchgo", NULL, NULL, NULL, "1995",
+	"Touch & Go (World)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	0, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x10000,
+	480, 224, 4, 3
+};
+
+
+// Touch & Go (Non North America)
+
+static struct BurnRomInfo touchgonRomDesc[] = {
+	{ "tg56.bin",		0x080000, 0xfd3b4642, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tg57.bin",		0x080000, 0xee891835, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic69",		0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ic65",		0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp.bin",	0x008000, 0x00000000, 4 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  6 mcu
+};
+
+STD_ROM_PICK(touchgon)
+STD_ROM_FN(touchgon)
+
+struct BurnDriver BurnDrvTouchgon = {
+	"touchgon", "touchgo", NULL, NULL, "1995",
+	"Touch & Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x10000,
+	480, 224, 4, 3
+};
+
+
+// Touch & Go (earlier revision)
+
+static struct BurnRomInfo touchgoeRomDesc[] = {
+	{ "tg56",		0x080000, 0x6d0f5c65, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tg57",		0x080000, 0x845787b5, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic69",		0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ic65",		0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+
+	{ "touchgo_ds5002fp.bin",	0x008000, 0x00000000, 4 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  6 mcu
+};
+
+STD_ROM_PICK(touchgoe)
+STD_ROM_FN(touchgoe)
+
+struct BurnDriver BurnDrvTouchgoe = {
+	"touchgoe", "touchgo", NULL, NULL, "1995",
+	"Touch & Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x10000,
+	480, 224, 4, 3
+};
+
+
+// Touch & Go (Korea, unprotected)
+
+static struct BurnRomInfo touchgokRomDesc[] = {
+	{ "56.IC56",	0x080000, 0xcbb87505, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "57.IC57",	0x080000, 0x36bcc7e7, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
+	{ "ic66",	0x200000, 0x52682953, 2 | BRF_GRA },           //  4
+	{ "ic67",	0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(touchgok)
+STD_ROM_FN(touchgok)
+
+struct BurnDriver BurnDrvTouchgok = {
+	"touchgok", "touchgo", NULL, NULL, "1995",
+	"Touch & Go (Korea, unprotected)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, touchgokRomInfo, touchgokRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
+	touchgoInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x10000,
+	480, 224, 4, 3
+};
+
 

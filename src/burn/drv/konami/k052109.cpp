@@ -44,6 +44,7 @@ static void update_scroll_one(INT32 nLayer, INT32 control, INT32 ram_offset)
 	if ((control & 0x03) == 0x02 || (control & 0x03) == 0x03)
 	{
 		K052109EnableLine[nLayer] = 1;
+
 		K052109EnableRows[nLayer] = 256;
 
 		INT32 andval = ((control & 0x03) == 0x02) ? 0xfff8 : 0xffff;
@@ -61,7 +62,7 @@ static void update_scroll_one(INT32 nLayer, INT32 control, INT32 ram_offset)
 	}
 	else if ((control & 0x04) == 0x04)
 	{
-		K052109EnableLine[nLayer] = 1;
+	//	K052109EnableLine[nLayer] = 1;
 
 		UINT8 *scrollram = &sourceram[0x1800];
 		INT32 xscroll = (sourceram[0x1a00] + 256 * sourceram[0x1a01]) - 6;
@@ -69,11 +70,11 @@ static void update_scroll_one(INT32 nLayer, INT32 control, INT32 ram_offset)
 		K052109EnableCols[nLayer] = 64;
 		for (INT32 offs = 0; offs < 512/8; offs++)
 		{
-			K052109ScrollCols[nLayer][(((offs*8)+xscroll)&0x1ff)/8] = scrollram[offs];
+			K052109ScrollCols[nLayer][(((offs*8)+xscroll)&0x1f8)/8] = scrollram[offs];
 		}
 
 		K052109EnableRows[nLayer] = 1;
-		K052109ScrollRows[nLayer][0] = xscroll;
+		K052109ScrollRows[nLayer][0] = K052109ScrollX[nLayer] = xscroll;
 	}
 	else
 	{
@@ -108,13 +109,12 @@ void K052109RenderLayerLineScroll(INT32 nLayer, INT32 Flags, INT32 Priority)
 	INT32 ram_offset = nLayer * 0x800;
 
 	INT32 rowdiv = 256 / K052109EnableRows[nLayer];
-	INT32 coldiv = 64 / K052109EnableCols[nLayer];
 
 	for (INT32 y = 0; y < nScreenHeight; y++)
 	{
 		for (INT32 x = 0; x < nScreenWidth + 8; x+=8)
 		{
-			INT32 yy = (y + (K052109ScrollCols[nLayer][(x/8)/coldiv] + K052109ScrollYOff[nLayer] + 16)) & 0xff;
+			INT32 yy = (y + (K052109ScrollCols[nLayer][0] + K052109ScrollYOff[nLayer] + 16)) & 0xff;
 			INT32 xx = (x + (K052109ScrollRows[nLayer][yy/rowdiv] + K052109ScrollXOff[nLayer] + 104)) & 0x1ff;
 
 			INT32 TileIndex = (xx/8) + ((yy/8)*64);
@@ -167,7 +167,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 {
 	nLayer &= 0x03;
 
-	// Row, column, and line scroll.
+	// Row and line scroll.
 	if (K052109EnableLine[nLayer]) {
 		K052109RenderLayerLineScroll(nLayer, Flags, Priority);
 		return;
@@ -176,6 +176,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 	INT32 EnableCategory = Flags & 0x100;
 	INT32 Category = Flags & 0xff;
 	INT32 Opaque = (Flags >> 16) & 1;
+	INT32 ram_offset = nLayer * 0x800;
 
 	INT32 mx, my, Bank, Code, Colour, x, y, xFlip = 0, yFlip, TileIndex = 0;
 
@@ -183,21 +184,11 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 		for (mx = 0; mx < 64; mx++) {
 			TileIndex = (my << 6) | mx;
 
-			Colour = K052109Ram[TileIndex + 0x0000];
-			Code = K052109Ram[TileIndex + 0x2000] + (K052109Ram[TileIndex + 0x4000] << 8);
-			
-			if (nLayer == 1) {
-				Colour = K052109Ram[TileIndex + 0x0800];
-				Code = K052109Ram[TileIndex + 0x2800] + (K052109Ram[TileIndex + 0x4800] << 8);
-			}
-			
-			if (nLayer == 2) {
-				Colour = K052109Ram[TileIndex + 0x1000];
-				Code = K052109Ram[TileIndex + 0x3000] + (K052109Ram[TileIndex + 0x5000] << 8);
-			}
-			
+			Colour = K052109Ram[TileIndex + ram_offset];
+			Code = K052109Ram[TileIndex + 0x2000 + ram_offset] + (K052109Ram[TileIndex + 0x4000 + ram_offset] << 8);
+
 			Bank = K052109CharRomBank[(Colour & 0x0c) >> 2];
-			if (has_extra_video_ram) Bank = (Colour & 0x0c) >> 2;	/* kludge for X-Men */
+			if (has_extra_video_ram) Bank = (Colour & 0x0c) >> 2;	// kludge for X-Men
 		
 			Colour = (Colour & 0xf3) | ((Bank & 0x03) << 2);
 			Bank >>= 2;
@@ -217,12 +208,18 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 			y = 8 * my;
 
 			INT32 scrollx = K052109ScrollX[nLayer] + K052109ScrollXOff[nLayer];
-			INT32 scrolly = K052109ScrollY[nLayer] + K052109ScrollYOff[nLayer];
+			INT32 scrolly = K052109ScrollYOff[nLayer];
 
 			x -= (scrollx + 104) & 0x1ff;
-			y -= (scrolly +  16) & 0xff;
-
 			if (x < -7) x += 512;
+
+			if (K052109EnableCols[nLayer] == 64) {
+				scrolly += K052109ScrollCols[nLayer][((mx*8)&0x1ff)/8];
+			} else {
+				scrolly += K052109ScrollY[nLayer];
+			}
+
+			y -= (scrolly + 16) & 0xff;
 			if (y < -7) y += 256;
 
 			if (x >= nScreenWidth || y >= nScreenHeight) continue;

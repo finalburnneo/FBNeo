@@ -1,8 +1,9 @@
 
 #include "tiles_generic.h"
-//#define USE_Z80
+#define USE_Z80
 
 #ifdef USE_Z80
+
 #include "z80_intf.h"
 
 #define i8085Init		ZetInit
@@ -17,7 +18,9 @@
 #define i8080Scan		ZetScan
 
 #else
+
 #include "i8080.h"
+
 #endif
 
 // no sound

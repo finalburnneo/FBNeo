@@ -330,12 +330,12 @@ int ConfigAppSave()
 	// We can't use the macros for this!
 	_ftprintf(h, _T("nIniVersion 0x%06X"), nBurnVer);
 
+#ifdef BUILD_A68K
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- emulation --------------------------------------------------------------\n"));
 
 	_ftprintf(h, _T("\n// If non-zero, use A68K for MC68000 emulation\n"));
 
-#ifdef BUILD_A68K
 	bBurnUseASMCPUEmulation = 0; // Assembly MC68000 emulation only availble on a per-session basis.  Causes too many problems in a non-debug setting.
 	VAR(bBurnUseASMCPUEmulation);
 #endif

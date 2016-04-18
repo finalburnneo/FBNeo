@@ -260,38 +260,6 @@ struct BurnDriver BurnDrvHuncholy = {
 	NULL, 0, 224, 256, 3, 4
 };
 
-static struct BurnRomInfo PhoenixRomDesc[] = {
-	{ "ic45",               0x00800, 0x9f68086b, BRF_ESS | BRF_PRG },
-	{ "ic46",               0x00800, 0x273a4a82, BRF_ESS | BRF_PRG },
-	{ "ic47",               0x00800, 0x3d4284b9, BRF_ESS | BRF_PRG },
-	{ "ic48",               0x00800, 0xcb5d9915, BRF_ESS | BRF_PRG },
-	{ "h5-ic49.5a",         0x00800, 0xa105e4e7, BRF_ESS | BRF_PRG },
-	{ "h6-ic50.6a",         0x00800, 0xac5e9ec1, BRF_ESS | BRF_PRG },
-	{ "h7-ic51.7a",         0x00800, 0x2eab35b4, BRF_ESS | BRF_PRG },
-	{ "h8-ic52.8a",         0x00800, 0xaff8e9c5, BRF_ESS | BRF_PRG },
-	
-	{ "ic23.3d",            0x00800, 0x3c7e623f, BRF_GRA },
-	{ "ic24.4d",            0x00800, 0x59916d3b, BRF_GRA },
-	{ "b1-ic39.3b",         0x00800, 0x53413e8f, BRF_GRA },
-	{ "b2-ic40.4b",         0x00800, 0x0be2ba91, BRF_GRA },
-	
-	{ "mmi6301.ic40",       0x00100, 0x79350b25, BRF_GRA },
-	{ "mmi6301.ic41",       0x00100, 0xe176b768, BRF_GRA },
-};
-
-STD_ROM_PICK(Phoenix)
-STD_ROM_FN(Phoenix)
-
-struct BurnDriver BurnDrvPhoenix = {
-	"phoenix", NULL, NULL, NULL, "1980",
-	"Phoenix (Amstar)\0", "Parent set for working drivers", "Amstar", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, PhoenixRomInfo, PhoenixRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 208, 256, 3, 4
-};
-
 static struct BurnRomInfo ThepitRomDesc[] = {
 	{ "pit1.bin",           0x01000, 0x71affecc, BRF_ESS | BRF_PRG },
 	{ "pit2.bin",           0x01000, 0x894063cd, BRF_ESS | BRF_PRG },

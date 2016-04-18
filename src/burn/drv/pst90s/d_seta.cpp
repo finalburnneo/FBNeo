@@ -5112,7 +5112,11 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 
 	return 0;
 }
+#ifdef FBA_DEBUG
    extern int counter;
+#else
+	int counter = 0;
+#endif
 static INT32 irqcyc = 10;
 
 void __fastcall calibr50_write_word(UINT32 address, UINT16 data)

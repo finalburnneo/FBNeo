@@ -587,17 +587,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // 1945k III (newer, OPCX2 PCB)
 
 static struct BurnRomInfo _1945kiiiRomDesc[] = {
-	{ "prg-1.u51",	0x080000, 0x6b345f27, BRF_ESS | BRF_PRG },	// 0 68000 code 
-	{ "prg-2.u52", 	0x080000, 0xce09b98c, BRF_ESS | BRF_PRG }, 	// 1
+	{ "prg-1.u51",	0x080000, 0x6b345f27, BRF_ESS | BRF_PRG },	//  0 68000 code 
+	{ "prg-2.u52", 	0x080000, 0xce09b98c, BRF_ESS | BRF_PRG }, 	//  1
 	
-	{ "m16m-1.u62",	0x200000, 0x0b9a6474, BRF_GRA }, 		// 2 Sprites
-	{ "m16m-2.u63",	0x200000, 0x368a8c2e, BRF_GRA },		// 3 
+	{ "m16m-1.u62",	0x200000, 0x0b9a6474, BRF_GRA }, 			//  2 Sprites
+	{ "m16m-2.u63",	0x200000, 0x368a8c2e, BRF_GRA },			//  3 
 	
-	{ "m16m-3.u61",	0x200000, 0x32fc80dd, BRF_GRA }, 		// 4 Background Layer
+	{ "m16m-3.u61",	0x200000, 0x32fc80dd, BRF_GRA }, 			//  4 Background Layer
 	
-	{ "snd-1.su7",	0x080000, 0xbbb7f0ff, BRF_SND }, 		// 5 MSM #0 Samples
+	{ "snd-1.su7",	0x080000, 0xbbb7f0ff, BRF_SND }, 			//  5 MSM #0 Samples
 
-	{ "snd-2.su4",	0x080000, 0x47e3952e, BRF_SND }, 		// 6 MSM #1 Samples
+	{ "snd-2.su4",	0x080000, 0x47e3952e, BRF_SND }, 			//  6 MSM #1 Samples
 };
 
 STD_ROM_PICK(_1945kiii)
@@ -623,22 +623,22 @@ struct BurnDriver BurnDrv1945kiii = {
 // 1945k III (older, OPCX1 PCB)
 
 static struct BurnRomInfo _1945kiiioRomDesc[] = {
-	{ "3.U34",	0x80000, 0x5515baa0, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
-	{ "4.U35",	0x80000, 0xfd177664, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.U34",		0x80000, 0x5515baa0, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
+	{ "4.U35",		0x80000, 0xfd177664, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "9.U5",	0x80000, 0xbe0f432e, 2 | BRF_GRA },           //  2 Sprites
-	{ "10.U6",	0x80000, 0xcf9127b2, 2 | BRF_GRA },           //  3
-	{ "11.U7",	0x80000, 0x644ee8cc, 2 | BRF_GRA },           //  4
-	{ "12.U8",	0x80000, 0x0900c208, 2 | BRF_GRA },           //  5
-	{ "13.U58",	0x80000, 0x8ea9c6be, 2 | BRF_GRA },           //  6
-	{ "14.U59",	0x80000, 0x10c18fb4, 2 | BRF_GRA },           //  7
-	{ "15.U60",	0x80000, 0x86ab6c7c, 2 | BRF_GRA },           //  8
-	{ "16.U61",	0x80000, 0xff419080, 2 | BRF_GRA },           //  9
+	{ "9.U5",		0x80000, 0xbe0f432e, 2 | BRF_GRA },           //  2 Sprites
+	{ "10.U6",		0x80000, 0xcf9127b2, 2 | BRF_GRA },           //  3
+	{ "11.U7",		0x80000, 0x644ee8cc, 2 | BRF_GRA },           //  4
+	{ "12.U8",		0x80000, 0x0900c208, 2 | BRF_GRA },           //  5
+	{ "13.U58",		0x80000, 0x8ea9c6be, 2 | BRF_GRA },           //  6
+	{ "14.U59",		0x80000, 0x10c18fb4, 2 | BRF_GRA },           //  7
+	{ "15.U60",		0x80000, 0x86ab6c7c, 2 | BRF_GRA },           //  8
+	{ "16.U61",		0x80000, 0xff419080, 2 | BRF_GRA },           //  9
 
-	{ "5.U102",	0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
-	{ "6.U103",	0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
-	{ "7.U104",	0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
-	{ "8.U105",	0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
+	{ "5.U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
+	{ "6.U103",		0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
+	{ "7.U104",		0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
+	{ "8.U105",		0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
 
 	{ "S13.SU4",	0x80000, 0xd45aec3b, 4 | BRF_SND },           // 14 MSM #0 Samples
 
@@ -670,20 +670,20 @@ static struct BurnRomInfo flagrallRomDesc[] = {
 	{ "11_u34.bin",	0x040000, 0x24dd439d, BRF_ESS | BRF_PRG },	//  0 68000 code
 	{ "12_u35.bin",	0x040000, 0x373b71a5, BRF_ESS | BRF_PRG },	//  1
 
-	{ "1_u5.bin",	0x080000, 0x9377704b, BRF_GRA }, 		//  2 Sprites
-	{ "5_u6.bin",	0x080000, 0x1ac0bd0c, BRF_GRA }, 		//  3 
-	{ "2_u7.bin",	0x080000, 0x5f6db2b3, BRF_GRA }, 		//  4
-	{ "6_u8.bin",	0x080000, 0x79e4643c, BRF_GRA }, 		//  5
-	{ "3_u58.bin",	0x040000, 0xc913df7d, BRF_GRA }, 		//  6
-	{ "4_u59.bin",	0x040000, 0xcb192384, BRF_GRA }, 		//  7
-	{ "7_u60.bin",	0x040000, 0xf187a7bf, BRF_GRA }, 		//  8
-	{ "8_u61.bin",	0x040000, 0xb73fa441, BRF_GRA }, 		//  9
+	{ "1_u5.bin",	0x080000, 0x9377704b, BRF_GRA }, 			//  2 Sprites
+	{ "5_u6.bin",	0x080000, 0x1ac0bd0c, BRF_GRA }, 			//  3 
+	{ "2_u7.bin",	0x080000, 0x5f6db2b3, BRF_GRA }, 			//  4
+	{ "6_u8.bin",	0x080000, 0x79e4643c, BRF_GRA }, 			//  5
+	{ "3_u58.bin",	0x040000, 0xc913df7d, BRF_GRA }, 			//  6
+	{ "4_u59.bin",	0x040000, 0xcb192384, BRF_GRA }, 			//  7
+	{ "7_u60.bin",	0x040000, 0xf187a7bf, BRF_GRA }, 			//  8
+	{ "8_u61.bin",	0x040000, 0xb73fa441, BRF_GRA }, 			//  9
 
-	{ "10_u102.bin",0x080000, 0xb1fd3279, BRF_GRA }, 		// 10 Background Layer
-	{ "9_u103.bin",	0x080000, 0x01e6d654, BRF_GRA }, 		// 11
+	{ "10_u102.bin",0x080000, 0xb1fd3279, BRF_GRA }, 			// 10 Background Layer
+	{ "9_u103.bin",	0x080000, 0x01e6d654, BRF_GRA }, 			// 11
 
-	{ "13_su4.bin",	0x080000, 0x7b0630b3, BRF_SND }, 		// 12 MSM #0 Samples
-	{ "14_su6.bin",	0x040000, 0x593b038f, BRF_SND }, 		// 13
+	{ "13_su4.bin",	0x080000, 0x7b0630b3, BRF_SND }, 			// 12 MSM #0 Samples
+	{ "14_su6.bin",	0x040000, 0x593b038f, BRF_SND }, 			// 13
 };
 
 STD_ROM_PICK(flagrall)

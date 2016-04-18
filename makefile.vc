@@ -28,6 +28,10 @@ undefine BUILD_X86_ASM
 endif
 endif
 
+ifndef DEBUG
+undefine BUILD_A68K
+endif
+
 ifndef	CPUTYPE
 	CPUTYPE	= i686
 endif

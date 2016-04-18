@@ -204,7 +204,9 @@ struct BurnDIPInfo {
 // ---------------------------------------------------------------------------
 
 extern bool bBurnUseMMX;
+#ifdef BUILD_A68K
 extern bool bBurnUseASMCPUEmulation;
+#endif
 
 extern UINT32 nFramesEmulated;
 extern UINT32 nFramesRendered;

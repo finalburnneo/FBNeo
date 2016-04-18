@@ -20,8 +20,6 @@ UINT32 nBurnDrvSelect[8] = { ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U, ~0U }; // Which 
 									
 bool bBurnUseMMX;
 #if defined BUILD_A68K
-bool bBurnUseASMCPUEmulation = true;
-#else
 bool bBurnUseASMCPUEmulation = false;
 #endif
 
@@ -588,8 +586,10 @@ extern "C" INT32 BurnDrvInit()
 
 		bprintf(PRINT_IMPORTANT, _T("*** Starting emulation of %s - %s.\n"), BurnDrvGetText(DRV_NAME), BurnDrvGetText(DRV_FULLNAME));
 
+#ifdef BUILD_A68K
 		if (bBurnUseASMCPUEmulation)
 			bprintf(PRINT_ERROR, _T("*** WARNING: Assembly MC68000 core is enabled for this session!\n"));
+#endif
 
 		// Then print the alternative titles
 

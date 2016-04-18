@@ -1011,11 +1011,8 @@ void MenuUpdate()
 	if (nAutoFireRate == 22) var = MENU_INPUT_AUTOFIRE_RATE_1;
 	CheckMenuRadioItem(hMenu, MENU_INPUT_AUTOFIRE_RATE_1, MENU_INPUT_AUTOFIRE_RATE_4, var, MF_BYCOMMAND);
 
-#if defined BUILD_A68K
+#ifdef BUILD_A68K
 	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, bBurnUseASMCPUEmulation ? MF_CHECKED : MF_UNCHECKED);
-#else
-	CheckMenuItem(hMenu, MENU_ASSEMBLYCORE, MF_UNCHECKED);
-	EnableMenuItem(hMenu, MENU_ASSEMBLYCORE, MF_GRAYED  | MF_BYCOMMAND);
 #endif
 
 	var = MENU_ICONS_SIZE_16;
@@ -1240,7 +1237,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_FRAMES,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_SAVESNAP,			MF_ENABLED | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_SAVEGAMEINPUTNOW,	MF_ENABLED | MF_BYCOMMAND);
+#ifdef BUILD_A68K
 		EnableMenuItem(hMenu, MENU_ASSEMBLYCORE,		MF_GRAYED  | MF_BYCOMMAND);
+#endif
 		EnableMenuItem(hMenu, MENU_SAVEHISCORES,		MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_USEBLEND,			MF_GRAYED  | MF_BYCOMMAND);
 		
@@ -1386,7 +1385,9 @@ void MenuEnableItems()
 		EnableMenuItem(hMenu, MENU_DIPSW,				MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_ENABLECHEAT,			MF_GRAYED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_DEBUG,				MF_GRAYED  | MF_BYCOMMAND);
+#ifdef BUILD_A68K
 		EnableMenuItem(hMenu, MENU_ASSEMBLYCORE,		MF_ENABLED | MF_BYCOMMAND);
+#endif
 		EnableMenuItem(hMenu, MENU_SAVEHISCORES,		MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_USEBLEND,			MF_ENABLED  | MF_BYCOMMAND);
 		EnableMenuItem(hMenu, MENU_STATE_LOAD_SLOT,		MF_GRAYED  | MF_BYCOMMAND);

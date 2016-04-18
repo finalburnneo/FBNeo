@@ -28,7 +28,9 @@ static bool bVBlank;
 
 static bool bEnableInterrupts;
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 static INT32 demonwld_hack;
 
 static struct BurnInputInfo DemonwldInputList[] = {
@@ -428,10 +430,12 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
+#ifdef BUILD_A68K
 	if (bBurnUseASMCPUEmulation) {
 		bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
 		bBurnUseASMCPUEmulation = false;
 	}
+#endif
 
 	INT32 nLen;
 
@@ -536,10 +540,12 @@ static INT32 DrvDraw()
 	ToaPalUpdate();	
 	ToaPal2Update();
 
+#ifdef BUILD_A68K
 	if (bUseAsm68KCoreOldValue) {
 		bUseAsm68KCoreOldValue = false;
 		bBurnUseASMCPUEmulation = true;
 	}
+#endif
 
 	return 0;
 }

@@ -12,7 +12,9 @@ static void SlapshotDraw();
 static void Opwolf3Draw();
 static TaitoF2SpriteBufferUpdate TaitoF2SpriteBufferFunction;
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
@@ -478,6 +480,7 @@ static INT32 SpriteXOffsets[16]           = { 4, 0, 12, 8, 20, 16, 28, 24, 36, 3
 static INT32 SpriteYOffsets[16]           = { 0, 64, 128, 192, 256, 320, 384, 448, 512, 576, 640, 704, 768, 832, 896, 960 };
 static INT32 Opwolf3SpritePlaneOffsets[6] = { 0x2000000, 0x2000001, 0, 1, 2, 3 };
 
+#ifdef BUILD_A68K
 static void SwitchToMusashi()
 {
 	if (bBurnUseASMCPUEmulation) {
@@ -488,6 +491,7 @@ static void SwitchToMusashi()
 		bBurnUseASMCPUEmulation = false;
 	}
 }
+#endif
 
 static INT32 MachineInit()
 {
@@ -517,7 +521,9 @@ static INT32 MachineInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -698,6 +704,7 @@ static INT32 SlapshotExit()
 {
 	TaitoExit();
 	
+#ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
 #if 1 && defined FBA_DEBUG
@@ -706,6 +713,7 @@ static INT32 SlapshotExit()
 		bUseAsm68KCoreOldValue = false;
 		bBurnUseASMCPUEmulation = true;
 	}
+#endif
 	
 	TimeKeeperExit();
 	

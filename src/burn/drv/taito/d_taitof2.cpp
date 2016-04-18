@@ -39,7 +39,9 @@ static void SsiDraw();
 static void ThundfoxDraw();
 static void YuyugogoDraw();
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
@@ -7481,6 +7483,7 @@ static void TaitoF2SoundInit()
 	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 }
 
+#ifdef BUILD_A68K
 static void SwitchToMusashi()
 {
 	if (bBurnUseASMCPUEmulation) {
@@ -7491,6 +7494,7 @@ static void SwitchToMusashi()
 		bBurnUseASMCPUEmulation = false;
 	}
 }
+#endif
 
 static void TaitoF2Init()
 {
@@ -7570,7 +7574,9 @@ static INT32 CameltryInit()
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 		
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -7637,7 +7643,9 @@ static INT32 CamltryaInit()
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 		
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -7732,7 +7740,9 @@ static INT32 DeadconxInit()
 	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -7785,7 +7795,9 @@ static INT32 DinorexInit()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -7849,7 +7861,9 @@ static INT32 DondokodInit()
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 		
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -7912,7 +7926,9 @@ static INT32 DriftoutInit()
 	TC0430GRWInit(-16, 0, TaitoCharsPivot);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 			
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -7991,7 +8007,9 @@ static INT32 DriveoutInit()
 	TC0430GRWInit(-16, 0, TaitoCharsPivot);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 			
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8095,7 +8113,9 @@ static INT32 FinalbInit()
 	GfxDecode(TaitoNumSpriteA, TaitoSpriteANumPlanes, TaitoSpriteAWidth, TaitoSpriteAHeight, FinalbSpritePlaneOffsets, FinalbSpriteXOffsets, FinalbSpriteYOffsets, TaitoSpriteAModulo, TempRom, TaitoSpritesA);
 	BurnFree(TempRom);
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8168,7 +8188,9 @@ static INT32 FootchmpInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8221,7 +8243,9 @@ static INT32 GrowlInit()
 	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8273,7 +8297,9 @@ static INT32 GunfrontInit()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8325,7 +8351,9 @@ static INT32 KoshienInit()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8377,7 +8405,9 @@ static INT32 LiquidkInit()
 	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8429,7 +8459,9 @@ static INT32 MegablstInit()
 	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8493,7 +8525,9 @@ static INT32 MetalbInit()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8559,7 +8593,9 @@ static INT32 MjnquestInit()
 	TC0100SCNSetGfxMask(0, 0x7fff);
 	TC0140SYTInit(0);
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8609,7 +8645,9 @@ static INT32 NinjakInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, TaitoPriorityMap);
 	TC0140SYTInit(0);
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8669,7 +8707,9 @@ static INT32 PulirulaInit()
 	TC0430GRWInit(-10, 0, TaitoCharsPivot);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 		
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8725,7 +8765,9 @@ static INT32 QcrayonInit()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8780,7 +8822,9 @@ static INT32 Qcrayon2Init()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8835,7 +8879,9 @@ static INT32 QjinseiInit()
 	TC0360PRIInit();
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8889,7 +8935,9 @@ static INT32 QtorimonInit()
 	TC0140SYTInit(0);
 	TC0220IOCInit();	
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8944,7 +8992,9 @@ static INT32 QuizhqInit()
 	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
 	TC0140SYTInit(0);
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -8995,7 +9045,9 @@ static INT32 QzchikyuInit()
 	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9048,7 +9100,9 @@ static INT32 QzquestInit()
 	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9101,7 +9155,9 @@ static INT32 SolfigtrInit()
 	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9151,7 +9207,9 @@ static INT32 SsiInit()
 	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9218,7 +9276,9 @@ static INT32 ThundfoxInit()
 	TC0220IOCInit();
 	TC0360PRIInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 		
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9279,7 +9339,9 @@ static INT32 YesnojInit()
 	TC0100SCNInit(0, TaitoNumChar, 3, 8, 0, NULL);
 	TC0140SYTInit(0);
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9339,7 +9401,9 @@ static INT32 YuyugogoInit()
 	TC0140SYTInit(0);
 	TC0510NIOInit();
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -9387,6 +9451,7 @@ static INT32 TaitoF2Exit()
 	
 	TaitoF2SpriteBufferFunction = NULL;
 	
+#ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
 #if 1 && defined FBA_DEBUG
@@ -9395,7 +9460,7 @@ static INT32 TaitoF2Exit()
 		bUseAsm68KCoreOldValue = false;
 		bBurnUseASMCPUEmulation = true;
 	}
-
+#endif
 	
 	return 0;
 }

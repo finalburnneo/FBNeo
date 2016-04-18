@@ -25,7 +25,9 @@ static void RacingbDraw();
 static void SciDraw();
 static void SpacegunDraw();
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
@@ -4791,6 +4793,7 @@ static void TaitoZZ80Init()
 	TaitoNumZ80s = 1;
 }
 
+#ifdef BUILD_A68K
 static void SwitchToMusashi()
 {
 	if (bBurnUseASMCPUEmulation) {
@@ -4801,6 +4804,7 @@ static void SwitchToMusashi()
 		bBurnUseASMCPUEmulation = false;
 	}
 }
+#endif
 
 static INT32 AquajackInit()
 {
@@ -4848,7 +4852,9 @@ static INT32 AquajackInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -4943,7 +4949,9 @@ static INT32 BsharkInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5045,7 +5053,9 @@ static INT32 ChasehqInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5140,7 +5150,9 @@ static INT32 ContcircInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5234,7 +5246,9 @@ static INT32 DblaxleInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5333,8 +5347,10 @@ static INT32 EnforceInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
-	
+#endif
+
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -5440,7 +5456,9 @@ static INT32 NightstrInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5534,7 +5552,9 @@ static INT32 RacingbInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 	
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5633,7 +5653,9 @@ static INT32 SciInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5725,7 +5747,9 @@ static INT32 SpacegunInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -5787,6 +5811,7 @@ static INT32 TaitoZExit()
 	Sci = 0;
 	TaitoZINT6timer = 0;
 	
+#ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
 #if 1 && defined FBA_DEBUG
@@ -5795,6 +5820,7 @@ static INT32 TaitoZExit()
 		bUseAsm68KCoreOldValue = false;
 		bBurnUseASMCPUEmulation = true;
 	}
+#endif
 
 	return 0;
 }

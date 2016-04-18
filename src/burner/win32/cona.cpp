@@ -70,7 +70,9 @@ int ConfigAppLoad()
 		VAR(nIniVersion);
 
 		// Emulation
+#ifdef BUILD_A68K
 		VAR(bBurnUseASMCPUEmulation);
+#endif
 
 		// Video
 		VAR(nVidDepth); VAR(nVidRefresh);
@@ -333,8 +335,10 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n// If non-zero, use A68K for MC68000 emulation\n"));
 
+#ifdef BUILD_A68K
 	bBurnUseASMCPUEmulation = 0; // Assembly MC68000 emulation only availble on a per-session basis.  Causes too many problems in a non-debug setting.
 	VAR(bBurnUseASMCPUEmulation);
+#endif
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Video ------------------------------------------------------------------\n"));

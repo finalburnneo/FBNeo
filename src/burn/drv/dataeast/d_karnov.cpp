@@ -46,7 +46,9 @@ static UINT16 DrvInput[3];
 static UINT8 DrvDip[2];
 static UINT8 DrvReset;
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 enum { KARNOV=0, KARNOVJ, CHELNOV, CHELNOVJ, CHELNOVW, WNDRPLNT };
 static INT32 microcontroller_id;
@@ -883,12 +885,14 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
+#ifdef BUILD_A68K
 	// These games really don't like the ASM core, so disable it for now
 	// and restore it on exit.
 	if (bBurnUseASMCPUEmulation) {
 		bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
 		bBurnUseASMCPUEmulation = false;
 	}
+#endif
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -939,9 +943,11 @@ static INT32 DrvExit()
 
 	BurnFree (AllMem);
 
+#ifdef BUILD_A68K
 	if (bUseAsm68KCoreOldValue) {
 		bBurnUseASMCPUEmulation = true;
 	}
+#endif
 
 	return 0;
 }

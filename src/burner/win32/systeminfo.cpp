@@ -616,12 +616,16 @@ int PrintFBAInfo()
 	AddLine(_T(""));
 
 	AddLine(_T("MMX optimisations %s."), bBurnUseMMX ? _T("enabled") : _T("disabled"));
+#ifdef BUILD_A68K
 	if (bBurnUseASMCPUEmulation) {
 		AddLine(_T("A68K emulation core enabled for MC68000 emulation."));
 		AddLine(_T("Musashi emulation core enabled for MC68010/MC68EC020 emulation."));
 	} else {
 		AddLine(_T("Musashi emulation core enabled for MC680x0 family emulation."));
 	}
+#else
+	AddLine(_T("Musashi emulation core enabled for MC680x0 family emulation."));
+#endif
 	AddLine(_T(""));
 
 	if (bDrvOkay) {

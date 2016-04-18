@@ -14,7 +14,9 @@ static double OthunderYM2610Route1MasterVol;
 static double OthunderYM2610Route2MasterVol;
 static UINT8 *OthunderPan;
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
@@ -753,6 +755,7 @@ static INT32 SpritePlaneOffsets[4] = { 0, 8, 16, 24 };
 static INT32 SpriteXOffsets[16]    = { 32, 33, 34, 35, 36, 37, 38, 39, 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 SpriteYOffsets[8]     = { 0, 64, 128, 192, 256, 320, 384, 448 };
 
+#ifdef BUILD_A68K
 static void SwitchToMusashi()
 {
 	if (bBurnUseASMCPUEmulation) {
@@ -763,6 +766,7 @@ static void SwitchToMusashi()
 		bBurnUseASMCPUEmulation = false;
 	}
 }
+#endif
 
 static INT32 OthunderInit()
 {
@@ -810,7 +814,9 @@ static INT32 OthunderInit()
 	
 	if (TaitoLoadRoms(1)) return 1;
 
+#ifdef BUILD_A68K
 	SwitchToMusashi();
+#endif
 	
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -869,6 +875,7 @@ static INT32 OthunderExit()
 {
 	TaitoExit();
 	
+#ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
 #if 1 && defined FBA_DEBUG
@@ -877,6 +884,7 @@ static INT32 OthunderExit()
 		bUseAsm68KCoreOldValue = false;
 		bBurnUseASMCPUEmulation = true;
 	}
+#endif
 	
 	return 0;
 }

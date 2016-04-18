@@ -918,11 +918,13 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				MessageBox(hScrnWnd, FBALoadStringEx(hAppInst, IDS_ERR_NO_NETPLAYDLL, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 				break;
 			}
+#ifdef BUILD_A68K
 			if (bBurnUseASMCPUEmulation) {
 				FBAPopupAddText(PUF_TEXT_DEFAULT, _T("Please uncheck \"Misc -> Options -> Use Assembly MC68000 Core\" before starting a netgame!"));
 				FBAPopupDisplay(PUF_TYPE_ERROR);
 				break;
 			}
+#endif
 			if (!kNetGame) {
 				InputSetCooperativeLevel(false, bAlwaysProcessKeyboardInput);
 				AudBlankSound();
@@ -2066,9 +2068,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		}
 
+#ifdef BUILD_A68K
 		case MENU_ASSEMBLYCORE:
 			bBurnUseASMCPUEmulation = !bBurnUseASMCPUEmulation;
 			break;
+#endif
 
 		case MENU_SAVESNAP: {
 			if (bDrvOkay) {

@@ -138,7 +138,9 @@ UINT32 System16ClockSpeed = 0;
 
 INT32 System16YM2413IRQInterval;
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 static UINT8 N7751Command;
 static UINT32 N7751RomAddress;
@@ -1834,6 +1836,7 @@ INT32 System16Init()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC_CPU2)) {
+#ifdef BUILD_A68K
 		// Make sure we use Musashi
 		if (bBurnUseASMCPUEmulation) {
 #if 1 && defined FBA_DEBUG
@@ -1842,6 +1845,7 @@ INT32 System16Init()
 			bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
 			bBurnUseASMCPUEmulation = false;
 		}
+#endif
 		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC) fd1094_driver_init(0);
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC_CPU2) fd1094_driver_init(1);
@@ -2611,6 +2615,7 @@ INT32 System16Exit()
  	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC_CPU2)) {
 		fd1094_exit();
 		
+#ifdef BUILD_A68K
 		// Switch back CPU core if needed
 		if (bUseAsm68KCoreOldValue) {
 #if 1 && defined FBA_DEBUG
@@ -2619,6 +2624,7 @@ INT32 System16Exit()
 			bUseAsm68KCoreOldValue = false;
 			bBurnUseASMCPUEmulation = true;
 		}
+#endif
 	}
 	
 	return 0;

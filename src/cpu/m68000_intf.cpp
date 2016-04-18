@@ -882,9 +882,9 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	
 	struct SekExt* ps = NULL;
 
-#if !defined BUILD_A68K
+/*#if !defined BUILD_A68K
 	bBurnUseASMCPUEmulation = false;
-#endif
+#endif*/
 
 	if (nSekActive >= 0) {
 		SekClose();

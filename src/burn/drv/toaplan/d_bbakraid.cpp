@@ -31,7 +31,9 @@ static INT32 nCycles68KSync;
 
 static INT32 nTextROMStatus;
 
+#ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
+#endif
 
 // Rom information
 static struct BurnRomInfo bkraiduRomDesc[] = {
@@ -827,6 +829,7 @@ static INT32 bbakraidInit()
 
 	EEPROMInit(&eeprom_interface_93C66);
 
+#ifdef BUILD_A68K
 		// Make sure we use Musashi
 		if (bBurnUseASMCPUEmulation) {
 #if 1 && defined FBA_DEBUG
@@ -835,6 +838,7 @@ static INT32 bbakraidInit()
 			bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
 			bBurnUseASMCPUEmulation = false;
 		}
+#endif
 
 //	if (strcmp("bbakraid", BurnDrvGetTextA(DRV_NAME)) == 0 || strcmp("bbakraidj", BurnDrvGetTextA(DRV_NAME)) == 0) {
 //		if (!EEPROMAvailable()) EEPROMFill(bbakraid_unlimited_nvram, 0, sizeof(bbakraid_unlimited_nvram));
@@ -913,6 +917,7 @@ static INT32 DrvExit()
 
 	EEPROMExit();
 
+#ifdef BUILD_A68K
 		if (bUseAsm68KCoreOldValue) {
 #if 1 && defined FBA_DEBUG
 			bprintf(PRINT_NORMAL, _T("Switching back to A68K core\n"));
@@ -920,6 +925,7 @@ static INT32 DrvExit()
 			bUseAsm68KCoreOldValue = false;
 			bBurnUseASMCPUEmulation = true;
 		}
+#endif
 
 	BurnFree(Mem);
 

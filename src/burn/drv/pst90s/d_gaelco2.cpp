@@ -183,8 +183,8 @@ static struct BurnInputInfo TouchgoInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy4 + 8,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 10,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy4 + 9,	"service"	},
+	{"Service1",		BIT_DIGITAL,	DrvJoy4 + 10,	"service"	},
+	{"Service2",		BIT_DIGITAL,	DrvJoy4 + 9,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -1123,7 +1123,9 @@ static void draw_layer(INT32 layer)
 	}
 	else
 	{
-		scrolly += 32; // for touch n go
+		if (game_select == 4)
+			scrolly += 32; // for touch n go alignment
+
 		for (INT32 sy = 0; sy < nScreenHeight; sy++)
 		{
 			INT32 yy = (sy + scrolly) & 0x1ff;

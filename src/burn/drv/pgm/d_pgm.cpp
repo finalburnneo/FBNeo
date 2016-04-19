@@ -423,8 +423,8 @@ static struct BurnDIPInfo svgDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
-	{0x2E,  0x01, 0x07,     0x06, "World"				},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
 };
 
 static struct BurnDIPInfo svgtwDIPList[] = {
@@ -436,9 +436,9 @@ static struct BurnDIPInfo svgtwDIPList[] = {
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},
 	{0x2E,	0x01, 0x07,	0x03, "Korea"				},
 	{0x2E,	0x01, 0x07,	0x04, "Hong Kong"			},
-	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"		},
-	{0x2E,  0x01, 0x07,     0x06, "World"				},
-	{0x2E,  0x01, 0x07,     0xff, "Don't Change"			},
+	{0x2E,	0x01, 0x07,	0x05, "Spanish Territories"	},
+	{0x2E,  0x01, 0x07, 0x06, "World"				},
+	{0x2E,  0x01, 0x07, 0xff, "Don't Change"		},
 };
 
 STDDIPINFOEXT(orlegend,		pgm,	orlegend		)
@@ -5454,7 +5454,7 @@ struct BurnDriverD BurnDrvkovlsqhd = {
 // Knights of Valour: Luan Shi Quan Huang / Sangoku Senki: Luan Shi Quan Huang II (ver. 200CN, alt)
 
 static struct BurnRomInfo kovlsqh2dRomDesc[] = {
-	{ "p0600kof2.rom",  		0x400000, 0x6c61f80f, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "p0600kof2.rom",  	0x400000, 0x6c61f80f, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t0600.rom",     		0x800000, 0x4acc1ad6, 2 | BRF_GRA },			//  1 Tile data
 
@@ -5482,4 +5482,36 @@ struct BurnDriverD BurnDrvkovlsqh2d = {
 	NULL, kovlsqh2dRomInfo, kovlsqh2dRomName, NULL, NULL, pgmInputInfo, kovDIPInfo,
 	kovshxasInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
+};
+
+
+// DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)
+
+static struct BurnRomInfo ddpdojblkblRomDesc[] = {
+	// bootleg on a converted KOVSH cart
+	{ "ddp_doj_u1.bin",			0x400000, 0xeb4ab06a, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
+
+	{ "kovsh_v100_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
+};
+
+STDROMPICKEXT(ddpdojblkbl, ddpdojblkbl, ddp3Bios) // custom bios
+STD_ROM_FN(ddpdojblkbl)
+
+struct BurnDriver BurnDrvDdpdojblkbl = {
+	"ddpdojblkbl", "ddpdoj", NULL, NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ddpdojblkblRomInfo, ddpdojblkblRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
 };

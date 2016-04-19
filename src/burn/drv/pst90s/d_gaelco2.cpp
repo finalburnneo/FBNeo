@@ -6,6 +6,7 @@
 
 // Todo/tofix:
 //	EEPROM save doesn't seem to work in Snowboard
+//  Touch n Go (k) has linescroll/alignment issues during the game
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

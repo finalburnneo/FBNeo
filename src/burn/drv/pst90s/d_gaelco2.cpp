@@ -6,7 +6,6 @@
 
 // Todo/tofix:
 //	EEPROM save doesn't seem to work in Snowboard
-//	analog inputs for bang
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -206,7 +205,7 @@ static struct BurnInputInfo BangInputList[] = {
 	A("P2 Gun Y",    	BIT_ANALOG_REL, &LethalGun3,    "p2 y-axis"	),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"	},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -496,6 +495,11 @@ static void __fastcall gaelco2_main_write_byte(UINT32 address, UINT8 data)
 		case 0x30004b:
 		return; // NOP - maniacsq
 
+		case 0x310000:
+		case 0x310001:
+			gun_interrupt = 1;
+		return;
+
 		case 0x500006:
 		case 0x500007:
 		return; // NOP - alligator
@@ -504,7 +508,7 @@ static void __fastcall gaelco2_main_write_byte(UINT32 address, UINT8 data)
 
 static void __fastcall gaelco2_main_write_word(UINT32 address, UINT16 data)
 {
-	if ((address & 0xff0000) == 0x310000) {
+	if ((game_select == 2 || game_select == 3) && (address & 0xff0000) == 0x310000) {
 		snowboar_latch = (snowboar_latch << 16) | data;
 		return;
 	}
@@ -533,6 +537,10 @@ static void __fastcall gaelco2_main_write_word(UINT32 address, UINT16 data)
 			EEPROMSetCSLine(data & 0x01);
 		return;
 
+		case 0x310000:
+			gun_interrupt = 1;
+		return;
+
 		case 0x30004a:
 		return; // NOP - maniacsq
 
@@ -552,12 +560,16 @@ static UINT16 bang_analog_read(INT32 port)
 	switch (port & 3)
 	{
 		case 0: analog_value = BurnGunReturnX(0);// input 0, x
+		        break;
 		case 1: analog_value = BurnGunReturnX(1);// input 1, x
+		        break;
 		case 2: analog_value = BurnGunReturnY(0);// input 0, y
+		        break;
 		case 3: analog_value = BurnGunReturnY(1);// input 1, y
+		        break;
 	}
 
-	return ((analog_value * adjust[port/2]) / 256) + adjust[(port/2)+2];
+	return ((analog_value * adjust[port]) / 256) + adjust[(port)+2];
 }
 
 static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)
@@ -614,7 +626,7 @@ static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)
 
 static UINT16 __fastcall gaelco2_main_read_word(UINT32 address)
 {
-	if ((address & 0xff0000) == 0x310000) {
+	if ((game_select == 2 || game_select == 3) && (address & 0xff0000) == 0x310000) {
 		UINT16 ret = get_out(((get_lo(snowboar_latch) ^ 0x0010) - (get_hi(snowboar_latch) ^ 0x0024)) ^ 0x5496);
 		return (ret >> 8) | (ret << 8);
 	}
@@ -745,11 +757,11 @@ static void pBangIRQLineCallback(INT32 line)
 	line++;
 
 	if (line == 256) {
-		SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		gun_interrupt = 0;
 	}
 
-	if ((line & 0x3f) == 0 && gun_interrupt) {
+	if ((line % 64) == 0 && gun_interrupt) {
 		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	}
 }

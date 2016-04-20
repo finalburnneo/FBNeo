@@ -400,6 +400,12 @@ static void tms36xx_reset_counters()
 	memset(tms->counter, 0, sizeof(tms->counter));
 }
 
+void tms36xx_reset()
+{
+	tms36xx_reset_counters();
+	tms->tune_num = 0;
+}
+
 void mm6221aa_tune_w(int tune)
 {
     /* which tune? */

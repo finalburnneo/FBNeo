@@ -24,4 +24,5 @@ void tms3617_enable(int enable);
 //void tms36xx_init(int clock, int subtype, double decay[6], double speed);
 void tms36xx_init(int clock, int subtype, double *decay, double speed);
 void tms36xx_deinit();
+void tms36xx_reset();
 void tms36xx_sound_update(INT16 *buffer, INT32 length);

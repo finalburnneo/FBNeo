@@ -48,15 +48,13 @@
 static int sound_latch_a;
 static int sound_latch_b;
 
-//static int channel;
-
 static int tone1_vco1_cap;
 static int tone1_level;
 static int tone2_level;
 
 static UINT32 *poly18 = NULL;
 
-int tone1_vco1(int samplerate)
+static int tone1_vco1(int samplerate)
 {
     static int output, counter, level;
 	/*
@@ -72,16 +70,16 @@ int tone1_vco1(int samplerate)
 	#define R41 	100000
     static int rate[2][4] = {
 		{
-			VMAX*2/3/(0.693*(R40+R41)*C18a),
-			VMAX*2/3/(0.693*(R40+R41)*C18b),
-			VMAX*2/3/(0.693*(R40+R41)*C18c),
-			VMAX*2/3/(0.693*(R40+R41)*C18d)
+			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18a)),
+			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18b)),
+			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18c)),
+			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18d))
 		},
 		{
-			VMAX*2/3/(0.693*R41*C18a),
-			VMAX*2/3/(0.693*R41*C18b),
-			VMAX*2/3/(0.693*R41*C18c),
-			VMAX*2/3/(0.693*R41*C18d)
+			(int)(double)(VMAX*2/3/(0.693*R41*C18a)),
+			(int)(double)(VMAX*2/3/(0.693*R41*C18b)),
+			(int)(double)(VMAX*2/3/(0.693*R41*C18c)),
+			(int)(double)(VMAX*2/3/(0.693*R41*C18d))
         }
 	};
 	if( output )
@@ -121,7 +119,7 @@ int tone1_vco1(int samplerate)
 	return output;
 }
 
-int tone1_vco2(int samplerate)
+static int tone1_vco2(int samplerate)
 {
 	static int output, counter, level;
 
@@ -172,7 +170,7 @@ int tone1_vco2(int samplerate)
 	return output;
 }
 
-int tone1_vco(int samplerate, int vco1, int vco2)
+static int tone1_vco(int samplerate, int vco1, int vco2)
 {
 	static int counter, level, rate, charge;
 	int voltage;
@@ -287,7 +285,7 @@ int tone1_vco(int samplerate, int vco1, int vco2)
 	return 24000*1/3 + 24000*2/3 * voltage / 32768;
 }
 
-int tone1(int samplerate)
+static int tone1(int samplerate)
 {
 	static int counter, divisor, output;
 	int vco1 = tone1_vco1(samplerate);
@@ -311,7 +309,7 @@ int tone1(int samplerate)
 	return output ? tone1_level : -tone1_level;
 }
 
-int tone2_vco(int samplerate)
+static int tone2_vco(int samplerate)
 {
 	static int counter, level;
 
@@ -383,7 +381,7 @@ int tone2_vco(int samplerate)
 	return 10212 * level / 32768;
 }
 
-int tone2(int samplerate)
+static int tone2(int samplerate)
 {
 	static int counter, divisor, output;
 	int frequency = tone2_vco(samplerate);
@@ -404,7 +402,7 @@ int tone2(int samplerate)
 	return output ? tone2_level : -tone2_level;
 }
 
-int update_c24(int samplerate)
+static int update_c24(int samplerate)
 {
 	static int counter, level;
 	/*
@@ -448,7 +446,7 @@ int update_c24(int samplerate)
 	return VMAX - level;
 }
 
-int update_c25(int samplerate)
+static int update_c25(int samplerate)
 {
 	static int counter, level;
 	/*
@@ -493,7 +491,7 @@ int update_c25(int samplerate)
 }
 
 
-int noise(int samplerate)
+static int noise(int samplerate)
 {
 	static int counter, polyoffs, polybit, lowpass_counter, lowpass_polybit;
 	int vc24 = update_c24(samplerate);
@@ -595,6 +593,15 @@ void phoenix_sound_control_b_w(INT32 address, UINT8 data)
 	mm6221aa_tune_w(sound_latch_b >> 6);
 }
 
+void phoenix_sound_reset()
+{
+	sound_latch_a = sound_latch_b = 0;
+	tone1_vco1_cap = 0;
+	tone1_level = VMAX;
+	tone2_level = VMAX;
+	tms36xx_reset();
+}
+
 void phoenix_sound_init()
 {
 	int i, j;
@@ -619,10 +626,11 @@ void phoenix_sound_init()
 		}
 		poly18[i] = bits;
 	}
-	sound_latch_a = sound_latch_b = 0;
 
 	double decays[6] = {0.50,0,0,1.05,0,0};
 	tms36xx_init(372, MM6221AA, &decays[0], 0.21);
+
+	phoenix_sound_reset();
 }
 
 void phoenix_sound_deinit()

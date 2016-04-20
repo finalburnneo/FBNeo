@@ -23,7 +23,7 @@
 
 #endif
 
-// no sound
+#include "phoenixsound.h"
 
 static UINT8 *DrvI8085ROM;
 static UINT8 *DrvGfxROM0;
@@ -48,6 +48,7 @@ static INT32 vblank;
 
 static INT32 pleiads = 0;
 static INT32 condor = 0;
+static INT32 phoenixmode = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -507,7 +508,11 @@ static void phoenix_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x6000: // control a
+			phoenix_sound_control_a_w(address, data);
+			return;
 		case 0x6800: // control b
+			phoenix_sound_control_b_w(address, data);
+			return;
 //			no sound
 		return;
 	}
@@ -676,7 +681,12 @@ static INT32 DrvInit(INT32 single_prom)
 
 static INT32 PhoenixInit()
 {
-	return DrvInit(0);
+	INT32 rc = DrvInit(0);
+
+	phoenixmode = 1;
+	phoenix_sound_init();
+
+	return rc;
 }
 
 static INT32 CondorInit()
@@ -703,9 +713,12 @@ static INT32 DrvExit()
 	i8080Exit();
 
 	// no sound
+	if (phoenixmode)
+		phoenix_sound_deinit();
 
 	condor = 0;
 	pleiads = 0;
+	phoenixmode = 0;
 
 	BurnFree (AllMem);
 
@@ -807,7 +820,8 @@ static INT32 DrvFrame()
 	i8080Close();
 
 	if (pBurnSoundOut) {
-		
+		if (phoenixmode)
+			phoenix_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

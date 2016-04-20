@@ -1141,13 +1141,14 @@ static void draw_layer(INT32 layer)
 		for (INT32 sy = 0; sy < nScreenHeight; sy++)
 		{
 			INT32 yy = (sy + scrolly) & 0x1ff;
+			INT32 yy2 = (game_select == 4) ? yy : sy;
 
 			INT32 scrollx = (ram[(0x2802 + (layer * 4))/2] + 0x10 + (layer ? 0 : 4)) & 0x3ff;
 			if (DrvVidRegs[layer] & 0x8000) {
 				if (layer) {
-					scrollx = (ram[(0x2400/2) + yy] + 0x10) & 0x3ff;
+					scrollx = (ram[(0x2400/2) + yy2] + 0x10) & 0x3ff;
 				} else {
-					scrollx = (ram[(0x2000/2) + yy] + 0x14) & 0x3ff;
+					scrollx = (ram[(0x2000/2) + yy2] + 0x14) & 0x3ff;
 				}
 			}
 

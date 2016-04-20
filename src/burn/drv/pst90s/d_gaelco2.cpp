@@ -6,7 +6,6 @@
 
 // Todo/tofix:
 //	EEPROM save doesn't seem to work in Snowboard
-//  Touch n Go (k) has linescroll/alignment issues during the game
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -1146,9 +1145,9 @@ static void draw_layer(INT32 layer)
 			INT32 scrollx = (ram[(0x2802 + (layer * 4))/2] + 0x10 + (layer ? 0 : 4)) & 0x3ff;
 			if (DrvVidRegs[layer] & 0x8000) {
 				if (layer) {
-					scrollx = (ram[(0x2400/2) + sy] + 0x10) & 0x3ff;
+					scrollx = (ram[(0x2400/2) + yy] + 0x10) & 0x3ff;
 				} else {
-					scrollx = (ram[(0x2000/2) + sy] + 0x14) & 0x3ff;
+					scrollx = (ram[(0x2000/2) + yy] + 0x14) & 0x3ff;
 				}
 			}
 

@@ -3649,7 +3649,7 @@ struct BurnDriver BurnDrvsms_excdizzy = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	SMSGetZipName, sms_excdizzyRomInfo, sms_excdizzyRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -12212,166 +12212,6 @@ struct BurnDriver BurnDrvgg_advbatmr = {
 };
 
 
-// The Adventures of Batman and Robin (Prototype, 19950427)
-
-static struct BurnRomInfo gg_advbatmrp8RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - apr 27,  1995).bin",	0x7fff6, 0xacce0d15, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp8)
-STD_ROM_FN(gg_advbatmrp8)
-
-struct BurnDriver BurnDrvgg_advbatmrp8 = {
-	"gg_advbatmrp8", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950427)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp8RomInfo, gg_advbatmrp8RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950429-A)
-
-static struct BurnRomInfo gg_advbatmrp7RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - apr 29,  1995 - a).bin",	0x7fbdc, 0x14867057, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp7)
-STD_ROM_FN(gg_advbatmrp7)
-
-struct BurnDriver BurnDrvgg_advbatmrp7 = {
-	"gg_advbatmrp7", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950429-A)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp7RomInfo, gg_advbatmrp7RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950430)
-
-static struct BurnRomInfo gg_advbatmrp6RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - apr 30,  1995).bin",	0x7fbdc, 0x50376471, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp6)
-STD_ROM_FN(gg_advbatmrp6)
-
-struct BurnDriver BurnDrvgg_advbatmrp6 = {
-	"gg_advbatmrp6", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950430)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp6RomInfo, gg_advbatmrp6RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950502)
-
-static struct BurnRomInfo gg_advbatmrp5RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - may 02,  1995).bin",	0x7fbdc, 0xe57566f3, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp5)
-STD_ROM_FN(gg_advbatmrp5)
-
-struct BurnDriver BurnDrvgg_advbatmrp5 = {
-	"gg_advbatmrp5", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950502)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp5RomInfo, gg_advbatmrp5RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950504)
-
-static struct BurnRomInfo gg_advbatmrp4RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - may 04,  1995).bin",	0x7fbdc, 0xa9cf66ed, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp4)
-STD_ROM_FN(gg_advbatmrp4)
-
-struct BurnDriver BurnDrvgg_advbatmrp4 = {
-	"gg_advbatmrp4", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950504)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp4RomInfo, gg_advbatmrp4RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950506-B)
-
-static struct BurnRomInfo gg_advbatmrp3RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - may 06,  1995 - b).bin",	0x7fffa, 0x50c2f1ad, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp3)
-STD_ROM_FN(gg_advbatmrp3)
-
-struct BurnDriver BurnDrvgg_advbatmrp3 = {
-	"gg_advbatmrp3", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950506-B)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp3RomInfo, gg_advbatmrp3RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950506)
-
-static struct BurnRomInfo gg_advbatmrp2RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - may 06,  1995).bin",	0x7fffa, 0xc403264a, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp2)
-STD_ROM_FN(gg_advbatmrp2)
-
-struct BurnDriver BurnDrvgg_advbatmrp2 = {
-	"gg_advbatmrp2", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950506)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp2RomInfo, gg_advbatmrp2RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// The Adventures of Batman and Robin (Prototype, 19950507)
-
-static struct BurnRomInfo gg_advbatmrp1RomDesc[] = {
-	{ "adventures of batman and robin, the (prototype - may 07,  1995).bin",	0x7fffa, 0xfc916fd7, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_advbatmrp1)
-STD_ROM_FN(gg_advbatmrp1)
-
-struct BurnDriver BurnDrvgg_advbatmrp1 = {
-	"gg_advbatmrp1", "gg_advbatmr", NULL, NULL, "1995",
-	"The Adventures of Batman and Robin (Prototype, 19950507)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_advbatmrp1RomInfo, gg_advbatmrp1RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
 // Aerial Assault (Jpn, v1)
 
 static struct BurnRomInfo gg_aerialasjRomDesc[] = {
@@ -15945,10 +15785,10 @@ struct BurnDriver BurnDrvgg_excdizzy = {
 	"gg_excdizzy", NULL, NULL, NULL, "1995",
 	"The Excellent Dizzy Collection (Euro, SMS Mode)\0", NULL, "Codemasters", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	GGGetZipName, gg_excdizzyRomInfo, gg_excdizzyRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -15965,10 +15805,10 @@ struct BurnDriver BurnDrvgg_excdizzyp = {
 	"gg_excdizzyp", "gg_excdizzy", NULL, NULL, "1995",
 	"The Excellent Dizzy Collection (Prototype, SMS Mode)\0", NULL, "Codemasters", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_DISPLAY_PAL, GBF_MISC, 0,
 	GGGetZipName, gg_excdizzypRomInfo, gg_excdizzypRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -20842,10 +20682,10 @@ STD_ROM_PICK(gg_nomowsb)
 STD_ROM_FN(gg_nomowsb)
 
 struct BurnDriver BurnDrvgg_nomowsb = {
-	"gg_nomowsb", "gg_wsb95", NULL, NULL, "1995",
+	"gg_nomowsb", NULL, NULL, NULL, "1995",
 	"Nomo's World Series Baseball (Jpn)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_nomowsbRomInfo, gg_nomowsbRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -24805,7 +24645,7 @@ struct BurnDriver BurnDrvgg_shero = {
 	"gg_shero", NULL, NULL, NULL, "1993",
 	"Street Hero (USA, Prototype, SMS Mode)\0", NULL, "Innovation Tech", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_GG_SMS_MODE, GBF_MISC, 0,
 	GGGetZipName, gg_sheroRomInfo, gg_sheroRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -24825,7 +24665,7 @@ struct BurnDriver BurnDrvgg_sheroa = {
 	"gg_sheroa", "gg_shero", NULL, NULL, "1993",
 	"Street Hero (USA, Prototype Alt, SMS Mode)\0", NULL, "Innovation Tech", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_MAPPER_CODIES | HARDWARE_SMS_GG_SMS_MODE, GBF_MISC, 0,
 	GGGetZipName, gg_sheroaRomInfo, gg_sheroaRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -25305,7 +25145,7 @@ struct BurnDriver BurnDrvgg_stetris = {
 	"gg_stetris", NULL, NULL, NULL, "199?",
 	"Super Tetris (Kor, SMS Mode?)\0", NULL, "Unknown", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR | HARDWARE_SMS_GG_SMS_MODE | HARDWARE_SMS_JAPANESE, GBF_MISC, 0,
 	GGGetZipName, gg_stetrisRomInfo, gg_stetrisRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
@@ -26827,186 +26667,6 @@ struct BurnDriver BurnDrvgg_wderby = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_wderbyRomInfo, gg_wderbyRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (USA)
-
-static struct BurnRomInfo gg_wsb95RomDesc[] = {
-	{ "world series baseball '95 (usa).bin",	0x80000, 0x578a8a38, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95)
-STD_ROM_FN(gg_wsb95)
-
-struct BurnDriver BurnDrvgg_wsb95 = {
-	"gg_wsb95", NULL, NULL, NULL, "1994",
-	"World Series Baseball '95 (USA)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95RomInfo, gg_wsb95RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (Prototype, 19940709)
-
-static struct BurnRomInfo gg_wsb95p5RomDesc[] = {
-	{ "world series baseball '95 (prototype - jul 09,  1994).bin",	0x80000, 0x410f1ca0, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95p5)
-STD_ROM_FN(gg_wsb95p5)
-
-struct BurnDriver BurnDrvgg_wsb95p5 = {
-	"gg_wsb95p5", "gg_wsb95", NULL, NULL, "1994",
-	"World Series Baseball '95 (Prototype, 19940709)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95p5RomInfo, gg_wsb95p5RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (Prototype, 19940719)
-
-static struct BurnRomInfo gg_wsb95p4RomDesc[] = {
-	{ "world series baseball '95 (prototype - jul 19,  1994).bin",	0x80000, 0x5f7cca5f, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95p4)
-STD_ROM_FN(gg_wsb95p4)
-
-struct BurnDriver BurnDrvgg_wsb95p4 = {
-	"gg_wsb95p4", "gg_wsb95", NULL, NULL, "1994",
-	"World Series Baseball '95 (Prototype, 19940719)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95p4RomInfo, gg_wsb95p4RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (Prototype, 19940722)
-
-static struct BurnRomInfo gg_wsb95p3RomDesc[] = {
-	{ "world series baseball '95 (prototype - jul 22,  1994).bin",	0x80000, 0x6073cd59, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95p3)
-STD_ROM_FN(gg_wsb95p3)
-
-struct BurnDriver BurnDrvgg_wsb95p3 = {
-	"gg_wsb95p3", "gg_wsb95", NULL, NULL, "1994",
-	"World Series Baseball '95 (Prototype, 19940722)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95p3RomInfo, gg_wsb95p3RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (Prototype, 19940728)
-
-static struct BurnRomInfo gg_wsb95p2RomDesc[] = {
-	{ "world series baseball '95 (prototype - jul 28,  1994).bin",	0x80000, 0x4190ad97, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95p2)
-STD_ROM_FN(gg_wsb95p2)
-
-struct BurnDriver BurnDrvgg_wsb95p2 = {
-	"gg_wsb95p2", "gg_wsb95", NULL, NULL, "1994",
-	"World Series Baseball '95 (Prototype, 19940728)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95p2RomInfo, gg_wsb95p2RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (Prototype, 19940729)
-
-static struct BurnRomInfo gg_wsb95p1RomDesc[] = {
-	{ "world series baseball '95 (prototype - jul 29,  1994).bin",	0x80000, 0xf1987de6, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95p1)
-STD_ROM_FN(gg_wsb95p1)
-
-struct BurnDriver BurnDrvgg_wsb95p1 = {
-	"gg_wsb95p1", "gg_wsb95", NULL, NULL, "1994",
-	"World Series Baseball '95 (Prototype, 19940729)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95p1RomInfo, gg_wsb95p1RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball '95 (Prototype, 19940629)
-
-static struct BurnRomInfo gg_wsb95p6RomDesc[] = {
-	{ "world series baseball '95 (prototype - jun 29,  1994).bin",	0x80000, 0x496515a6, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb95p6)
-STD_ROM_FN(gg_wsb95p6)
-
-struct BurnDriver BurnDrvgg_wsb95p6 = {
-	"gg_wsb95p6", "gg_wsb95", NULL, NULL, "1994",
-	"World Series Baseball '95 (Prototype, 19940629)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb95p6RomInfo, gg_wsb95p6RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball (USA, v1)
-
-static struct BurnRomInfo gg_wsbRomDesc[] = {
-	{ "world series baseball (usa) (v1.1).bin",	0x40000, 0xbb38cfd7, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb)
-STD_ROM_FN(gg_wsb)
-
-struct BurnDriver BurnDrvgg_wsb = {
-	"gg_wsb", NULL, NULL, NULL, "1993",
-	"World Series Baseball (USA, v1)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsbRomInfo, gg_wsbRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
-	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
-	256, 192, 4, 3
-};
-
-
-// World Series Baseball (USA, v0)
-
-static struct BurnRomInfo gg_wsb1RomDesc[] = {
-	{ "world series baseball (usa).bin",	0x40000, 0x3d8d0dd6, BRF_PRG | BRF_ESS },
-};
-
-STD_ROM_PICK(gg_wsb1)
-STD_ROM_FN(gg_wsb1)
-
-struct BurnDriver BurnDrvgg_wsb1 = {
-	"gg_wsb1", "gg_wsb", NULL, NULL, "1993",
-	"World Series Baseball (USA, v0)\0", NULL, "Sega", "Sega Game Gear",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
-	GGGetZipName, gg_wsb1RomInfo, gg_wsb1RomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };

@@ -551,9 +551,8 @@ void phoenix_sound_update(INT16 *buffer, int length)
 
 	while( length-- > 0 )
 	{
-		int sum = 0;
-		sum = (tone1(samplerate) + tone2(samplerate) + noise(samplerate)) / 4;
-		INT16 sam = sum < 32768 ? sum > -32768 ? sum : -32768 : 32767;
+		INT32 sum = (tone1(samplerate) + tone2(samplerate) + noise(samplerate)) / 4;
+		INT16 sam = BURN_SND_CLIP(sum * 0.60);
 		*buffer++ = sam; //r
 		*buffer++ = sam; //l
 	}
@@ -566,7 +565,6 @@ void phoenix_sound_control_a_w(INT32 address, UINT8 data)
 	if( data == sound_latch_a )
 		return;
 
-	//stream_update(channel,0);
 	sound_latch_a = data;
 
 	tone1_vco1_cap = (sound_latch_a >> 4) & 3;
@@ -581,7 +579,6 @@ void phoenix_sound_control_b_w(INT32 address, UINT8 data)
 	if( data == sound_latch_b )
 		return;
 
-	//stream_update(channel,0);
 	sound_latch_b = data;
 
 	if( sound_latch_b & 0x20 )

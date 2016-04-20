@@ -762,13 +762,14 @@ static void DrvPaletteInit()
 
 static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 transparent, INT32 xscroll)
 {
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
+	for (INT32 offs = 0; offs < 32 * 26; offs++)
 	{
-		INT32 sx = (offs & 0x1f) * 8;
-		INT32 sy = (offs / 0x20) * 8;
+		INT32 sx = (offs % 32) * 8;
+		INT32 sy = (offs / 32) * 8;
 
 		sx -= xscroll;
-		if (sx < -7) sx += 256;
+
+		if (sx < 0) sx += 256; // no shit. weird, eh? - dink (fixes background scrolling @ the bottom of the screen)
 
 		if (cocktail_mode) {
 			sx = 208 - sx;
@@ -777,6 +778,8 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 transpa
 
 		INT32 code = ram[offs];
 		INT32 color = ((code & 0xe0) >> 5) + color_offset + (palette_bank << 4);
+
+		if (sx > nScreenWidth || sy > nScreenHeight) continue;
 
 		if (transparent) {
 			Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, gfx);
@@ -793,8 +796,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer(DrvI8085RAM + 0x800 + (ram_bank*0x1000), DrvGfxROM0, 0, 0, scrollx);
-	draw_layer(DrvI8085RAM + 0x000 + (ram_bank*0x1000), DrvGfxROM1, 8, 1, 0);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer(DrvI8085RAM + 0x800 + (ram_bank*0x1000), DrvGfxROM0, 0, 0, scrollx);
+	if (nBurnLayer & 2) draw_layer(DrvI8085RAM + 0x000 + (ram_bank*0x1000), DrvGfxROM1, 8, 1, 0);
 
 	BurnTransferCopy(DrvPalette);
 

@@ -76,6 +76,9 @@ static UINT32 m_layers_order[0x10];
 static INT32 scroll_factor_8x8[3] = { 1, 1, 1 };
 static INT32 tshingen = 0;
 static INT32 monkelf = 0;
+#ifdef BUILD_A68K
+static INT32 oldasmemulation = 0;
+#endif
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -2919,6 +2922,15 @@ static INT32 DrvExit()
 
 	SekExit();
 
+#ifdef BUILD_A68K
+	if (tshingen) {
+		if (!oldasmemulation)
+			bprintf(0, _T("Switching back to Musashi 68K core\n"));
+		bBurnUseASMCPUEmulation = oldasmemulation;
+		oldasmemulation = 0;
+	}
+#endif
+
 	ignore_oki_status_hack = 1;
 	system_select = 0;
 
@@ -3857,6 +3869,15 @@ STD_ROM_FN(tshingen)
 static INT32 tshingenInit()
 {
 	tshingen = 1;
+
+#ifdef BUILD_A68K
+	oldasmemulation = bBurnUseASMCPUEmulation;
+	if (!bBurnUseASMCPUEmulation) {
+		bprintf(0, _T("Switching to A68K for Takeda Shingen / Shingen Samurai-Fighter.\n"));
+		bBurnUseASMCPUEmulation = true;
+	}
+#endif
+
 	return SystemInit(0xA, phantasm_rom_decode);
 }
 

@@ -1,3 +1,5 @@
+// FB Alpha Phoenix driver module
+// Based on MAME driver by Richard Davies
 
 #include "tiles_generic.h"
 #define USE_Z80
@@ -565,6 +567,8 @@ static INT32 DrvDoReset()
 	i8080Close();
 
 //	no sound
+	if (phoenixmode)
+		phoenix_sound_reset();
 
 	pleiads_protection_question = 0;
 	scrollx = 0;
@@ -758,7 +762,7 @@ static void DrvPaletteInit()
 
 static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 color_offset, INT32 transparent, INT32 xscroll)
 {
-	for (INT32 offs = 0; offs < 32 * 26; offs++)
+	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
@@ -814,9 +818,9 @@ static INT32 DrvFrame()
 
 	i8080Open(0);
 	vblank = 1;
-	i8080Run(((2750000 / 60)*208)/256);
+	i8080Run(((2750000 / 60)*250)/256);
 	vblank = 0;
-	i8080Run(((2750000 / 60)* 48)/256);
+	i8080Run(((2750000 / 60)*  6)/256);
 	i8080Close();
 
 	if (pBurnSoundOut) {

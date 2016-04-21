@@ -519,7 +519,6 @@ static void phoenix_main_write(UINT16 address, UINT8 data)
 			if (phoenixmode) phoenix_sound_control_b_w(address, data);
 			if (pleiads) pleiads_sound_control_b_w(address, data);
 			return;
-//			no sound
 		return;
 	}
 }
@@ -570,7 +569,6 @@ static INT32 DrvDoReset()
 	bankswitch(0);
 	i8080Close();
 
-//	no sound
 	if (phoenixmode)
 		phoenix_sound_reset();
 
@@ -681,8 +679,6 @@ static INT32 DrvInit(INT32 single_prom)
 	i8080SetReadHandler(phoenix_main_read);
 	i8080Close();
 
-//	no sound
-
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -700,12 +696,18 @@ static INT32 PhoenixInit()
 
 static INT32 CondorInit()
 {
+	phoenixmode = 1;
+	phoenix_sound_init();
+
 	condor = 1;
 	return DrvInit(0);
 }
 
 static INT32 SinglePromInit()
 {
+	phoenixmode = 1;
+	phoenix_sound_init();
+
 	return DrvInit(1);
 }
 
@@ -723,7 +725,6 @@ static INT32 DrvExit()
 
 	i8080Exit();
 
-	// no sound
 	if (phoenixmode)
 		phoenix_sound_deinit();
 
@@ -914,7 +915,7 @@ STD_ROM_FN(phoenix)
 
 struct BurnDriver BurnDrvPhoenix = {
 	"phoenix", NULL, NULL, NULL, "1980",
-	"Phoenix (Amstar)\0", "No sound (not emulated yet)", "Amstar", "Miscellaneous",
+	"Phoenix (Amstar)\0", NULL, "Amstar", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixRomInfo, phoenixRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
@@ -949,7 +950,7 @@ STD_ROM_FN(phoenixa)
 
 struct BurnDriver BurnDrvPhoenixa = {
 	"phoenixa", "phoenix", NULL, NULL, "1980",
-	"Phoenix (Centuri, set 1)\0", "No sound (not emulated yet)", "Amstar (Centuri license)", "Miscellaneous",
+	"Phoenix (Centuri, set 1)\0", NULL, "Amstar (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixaRomInfo, phoenixaRomName, NULL, NULL, PhoenixInputInfo, PhoenixaDIPInfo,
@@ -985,7 +986,7 @@ STD_ROM_FN(phoenixb)
 
 struct BurnDriver BurnDrvPhoenixb = {
 	"phoenixb", "phoenix", NULL, NULL, "1980",
-	"Phoenix (Centuri, set 2)\0", "No sound (not emulated yet)", "Amstar (Centuri license)", "Miscellaneous",
+	"Phoenix (Centuri, set 2)\0", NULL, "Amstar (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixbRomInfo, phoenixbRomName, NULL, NULL, PhoenixInputInfo, PhoenixaDIPInfo,
@@ -1021,7 +1022,7 @@ STD_ROM_FN(phoenixdal)
 
 struct BurnDriver BurnDrvPhoenixdal = {
 	"phoenixdal", "phoenix", NULL, NULL, "1980",
-	"Phoenix (D&L bootleg)\0", "No sound (not emulated yet)", "bootleg (D&L)", "Miscellaneous",
+	"Phoenix (D&L bootleg)\0", NULL, "bootleg (D&L)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixdalRomInfo, phoenixdalRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1057,7 +1058,7 @@ STD_ROM_FN(phoenixt)
 
 struct BurnDriver BurnDrvPhoenixt = {
 	"phoenixt", "phoenix", NULL, NULL, "1980",
-	"Phoenix (Taito)\0", "No sound (not emulated yet)", "Amstar (Taito license)", "Miscellaneous",
+	"Phoenix (Taito)\0", NULL, "Amstar (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixtRomInfo, phoenixtRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1093,7 +1094,7 @@ STD_ROM_FN(phoenixj)
 
 struct BurnDriver BurnDrvPhoenixj = {
 	"phoenixj", "phoenix", NULL, NULL, "1980",
-	"Phoenix (Taito Japan)\0", "No sound (not emulated yet)", "Amstar (Taito Japan license)", "Miscellaneous",
+	"Phoenix (Taito Japan)\0", NULL, "Amstar (Taito Japan license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixjRomInfo, phoenixjRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1129,7 +1130,7 @@ STD_ROM_FN(phoenix3)
 
 struct BurnDriver BurnDrvPhoenix3 = {
 	"phoenix3", "phoenix", NULL, NULL, "1980",
-	"Phoenix (T.P.N. bootleg)\0", "No sound (not emulated yet)", "bootleg (T.P.N.)", "Miscellaneous",
+	"Phoenix (T.P.N. bootleg)\0", NULL, "bootleg (T.P.N.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenix3RomInfo, phoenix3RomName, NULL, NULL, Phoenix3InputInfo, Phoenix3DIPInfo,
@@ -1165,7 +1166,7 @@ STD_ROM_FN(phoenixc)
 
 struct BurnDriver BurnDrvPhoenixc = {
 	"phoenixc", "phoenix", NULL, NULL, "1981",
-	"Phoenix (Irecsa / G.G.I Corp, set 1)\0", "No sound (not emulated yet)", "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
+	"Phoenix (Irecsa / G.G.I Corp, set 1)\0", NULL, "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixcRomInfo, phoenixcRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1205,7 +1206,7 @@ STD_ROM_FN(phoenixc2)
 
 struct BurnDriver BurnDrvPhoenixc2 = {
 	"phoenixc2", "phoenix", NULL, NULL, "1981",
-	"Phoenix (Irecsa / G.G.I Corp, set 2)\0", "No sound (not emulated yet)", "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
+	"Phoenix (Irecsa / G.G.I Corp, set 2)\0", NULL, "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixc2RomInfo, phoenixc2RomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1241,7 +1242,7 @@ STD_ROM_FN(phoenixc3)
 
 struct BurnDriver BurnDrvPhoenixc3 = {
 	"phoenixc3", "phoenix", NULL, NULL, "1981",
-	"Phoenix (Irecsa / G.G.I Corp, set 3)\0", "No sound (not emulated yet)", "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
+	"Phoenix (Irecsa / G.G.I Corp, set 3)\0", NULL, "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixc3RomInfo, phoenixc3RomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1276,7 +1277,7 @@ STD_ROM_FN(phoenixc4)
 
 struct BurnDriver BurnDrvPhoenixc4 = {
 	"phoenixc4", "phoenix", NULL, NULL, "1981",
-	"Phoenix (Irecsa / G.G.I Corp, set 4)\0", "No sound (not emulated yet)", "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
+	"Phoenix (Irecsa / G.G.I Corp, set 4)\0", NULL, "bootleg? (Irecsa / G.G.I Corp)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixc4RomInfo, phoenixc4RomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1312,7 +1313,7 @@ STD_ROM_FN(condor)
 
 struct BurnDriver BurnDrvCondor = {
 	"condor", "phoenix", NULL, NULL, "1981",
-	"Condor (bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Condor (bootleg of Phoenix)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, condorRomInfo, condorRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
@@ -1348,7 +1349,7 @@ STD_ROM_FN(falcon)
 
 struct BurnDriver BurnDrvFalcon = {
 	"falcon", "phoenix", NULL, NULL, "1980",
-	"Falcon (bootleg of Phoenix) (8085A CPU)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Falcon (bootleg of Phoenix) (8085A CPU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, falconRomInfo, falconRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1384,7 +1385,7 @@ STD_ROM_FN(vautour)
 
 struct BurnDriver BurnDrvVautour = {
 	"vautour", "phoenix", NULL, NULL, "1980",
-	"Vautour (bootleg of Phoenix) (8085A CPU)\0", "No sound (not emulated yet)", "bootleg (Jeutel)", "Miscellaneous",
+	"Vautour (bootleg of Phoenix) (8085A CPU)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, vautourRomInfo, vautourRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1419,7 +1420,7 @@ STD_ROM_FN(vautourza)
 
 struct BurnDriver BurnDrvVautourza = {
 	"vautourza", "phoenix", NULL, NULL, "1980",
-	"Vautour (bootleg of Phoenix) (Z80 CPU, single PROM)\0", "No sound (not emulated yet)", "bootleg (Jeutel)", "Miscellaneous",
+	"Vautour (bootleg of Phoenix) (Z80 CPU, single PROM)\0", NULL, "bootleg (Jeutel)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, vautourzaRomInfo, vautourzaRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1455,7 +1456,7 @@ STD_ROM_FN(falconz)
 
 struct BurnDriver BurnDrvFalconz = {
 	"falconz", "phoenix", NULL, NULL, "1980",
-	"Falcon (bootleg of Phoenix) (Z80 CPU)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Falcon (bootleg of Phoenix) (Z80 CPU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, falconzRomInfo, falconzRomName, NULL, NULL, PhoenixInputInfo, FalconzDIPInfo,
@@ -1491,7 +1492,7 @@ STD_ROM_FN(vautourz)
 
 struct BurnDriver BurnDrvVautourz = {
 	"vautourz", "phoenix", NULL, NULL, "1980",
-	"Vautour (bootleg of Phoenix) (Z80 CPU)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Vautour (bootleg of Phoenix) (Z80 CPU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, vautourzRomInfo, vautourzRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
@@ -1527,7 +1528,7 @@ STD_ROM_FN(fenix)
 
 struct BurnDriver BurnDrvFenix = {
 	"fenix", "phoenix", NULL, NULL, "1980",
-	"Fenix (bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Fenix (bootleg of Phoenix)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, fenixRomInfo, fenixRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
@@ -1563,7 +1564,7 @@ STD_ROM_FN(avefenix)
 
 struct BurnDriver BurnDrvAvefenix = {
 	"avefenix", "phoenix", NULL, NULL, "1980",
-	"Ave Fenix (Electrogame, Spanish bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg (Video Game)", "Miscellaneous",
+	"Ave Fenix (Electrogame, Spanish bootleg of Phoenix)\0", NULL, "bootleg (Video Game)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, avefenixRomInfo, avefenixRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
@@ -1599,7 +1600,7 @@ STD_ROM_FN(avefenixrf)
 
 struct BurnDriver BurnDrvAvefenixrf = {
 	"avefenixrf", "phoenix", NULL, NULL, "1980",
-	"Ave Fenix (Recreativos Franco, Spanish bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg (Recreativos Franco S.A.)", "Miscellaneous",
+	"Ave Fenix (Recreativos Franco, Spanish bootleg of Phoenix)\0", NULL, "bootleg (Recreativos Franco S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, avefenixrfRomInfo, avefenixrfRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
@@ -1635,7 +1636,7 @@ STD_ROM_FN(avefenixl)
 
 struct BurnDriver BurnDrvAvefenixl = {
 	"avefenixl", "phoenix", NULL, NULL, "1980",
-	"Ave Fenix (Laguna, Spanish bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Ave Fenix (Laguna, Spanish bootleg of Phoenix)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, avefenixlRomInfo, avefenixlRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
@@ -1671,7 +1672,7 @@ STD_ROM_FN(griffon)
 
 struct BurnDriver BurnDrvGriffon = {
 	"griffon", "phoenix", NULL, NULL, "1980",
-	"Griffon (bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg (Videotron)", "Miscellaneous",
+	"Griffon (bootleg of Phoenix)\0", NULL, "bootleg (Videotron)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, griffonRomInfo, griffonRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
@@ -1707,7 +1708,7 @@ STD_ROM_FN(nextfase)
 
 struct BurnDriver BurnDrvNextfase = {
 	"nextfase", "phoenix", NULL, NULL, "1980",
-	"Next Fase (bootleg of Phoenix)\0", "No sound (not emulated yet)", "bootleg (Petaco S.A.)", "Miscellaneous",
+	"Next Fase (bootleg of Phoenix)\0", NULL, "bootleg (Petaco S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, nextfaseRomInfo, nextfaseRomName, NULL, NULL, PhoenixInputInfo, NextfaseDIPInfo,
@@ -1744,7 +1745,7 @@ STD_ROM_FN(phoenixs)
 
 struct BurnDriver BurnDrvPhoenixs = {
 	"phoenixs", "phoenix", NULL, NULL, "1981",
-	"Phoenix (Sonic, Spanish bootleg)\0", "No sound (not emulated yet)", "bootleg (Sonic)", "Miscellaneous",
+	"Phoenix (Sonic, Spanish bootleg)\0", NULL, "bootleg (Sonic)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixsRomInfo, phoenixsRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
@@ -1780,7 +1781,7 @@ STD_ROM_FN(phoenixass)
 
 struct BurnDriver BurnDrvPhoenixass = {
 	"phoenixass", "phoenix", NULL, NULL, "1981",
-	"Phoenix (Assa, Spanish bootleg)\0", "No sound (not emulated yet)", "bootleg (Assa)", "Miscellaneous",
+	"Phoenix (Assa, Spanish bootleg)\0", NULL, "bootleg (Assa)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixassRomInfo, phoenixassRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
@@ -1816,7 +1817,7 @@ STD_ROM_FN(pleiads)
 
 struct BurnDriver BurnDrvPleiads = {
 	"pleiads", NULL, NULL, NULL, "1981",
-	"Pleiads (Tehkan)\0", "No sound (not emulated yet)", "Tehkan", "Miscellaneous",
+	"Pleiads (Tehkan)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadsRomInfo, pleiadsRomName, NULL, NULL, PleiadsInputInfo, PleiadsDIPInfo,
@@ -1852,7 +1853,7 @@ STD_ROM_FN(pleiadsb2)
 
 struct BurnDriver BurnDrvPleiadsb2 = {
 	"pleiadsb2", "pleiads", NULL, NULL, "1981",
-	"Pleiads (bootleg set 2)\0", "No sound (not emulated yet)", "bootleg (ESG)", "Miscellaneous",
+	"Pleiads (bootleg set 2)\0", NULL, "bootleg (ESG)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadsb2RomInfo, pleiadsb2RomName, NULL, NULL, PleiadsInputInfo, PleiadsDIPInfo,
@@ -1888,7 +1889,7 @@ STD_ROM_FN(pleiadbl)
 
 struct BurnDriver BurnDrvPleiadbl = {
 	"pleiadbl", "pleiads", NULL, NULL, "1981",
-	"Pleiads (bootleg set 1)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Pleiads (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadblRomInfo, pleiadblRomName, NULL, NULL, PhoenixInputInfo, PleiadblDIPInfo,
@@ -1924,7 +1925,7 @@ STD_ROM_FN(pleiadce)
 
 struct BurnDriver BurnDrvPleiadce = {
 	"pleiadce", "pleiads", NULL, NULL, "1981",
-	"Pleiads (Centuri)\0", "No sound (not emulated yet)", "Tehkan (Centuri license)", "Miscellaneous",
+	"Pleiads (Centuri)\0", NULL, "Tehkan (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadceRomInfo, pleiadceRomName, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
@@ -1960,7 +1961,7 @@ STD_ROM_FN(pleiadsi)
 
 struct BurnDriver BurnDrvPleiadsi = {
 	"pleiadsi", "pleiads", NULL, NULL, "1981",
-	"Pleiads (Irecsa)\0", "No sound (not emulated yet)", "bootleg? (Irecsa)", "Miscellaneous",
+	"Pleiads (Irecsa)\0", NULL, "bootleg? (Irecsa)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadsiRomInfo, pleiadsiRomName, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
@@ -1996,7 +1997,7 @@ STD_ROM_FN(pleiadsn)
 
 struct BurnDriver BurnDrvPleiadsn = {
 	"pleiadsn", "pleiads", NULL, NULL, "1981",
-	"Pleiads (Niemer S.A.)\0", "No sound (not emulated yet)", "Niemer S.A.", "Miscellaneous",
+	"Pleiads (Niemer S.A.)\0", NULL, "Niemer S.A.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadsnRomInfo, pleiadsnRomName, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
@@ -2032,7 +2033,7 @@ STD_ROM_FN(pleiadss)
 
 struct BurnDriver BurnDrvPleiadss = {
 	"pleiadss", "pleiads", NULL, NULL, "1981",
-	"Pleiads (Spanish bootleg)\0", "No sound (not emulated yet)", "bootleg", "Miscellaneous",
+	"Pleiads (Spanish bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, pleiadssRomInfo, pleiadssRomName, NULL, NULL, PhoenixInputInfo, PleiadceDIPInfo,
@@ -2068,7 +2069,7 @@ STD_ROM_FN(capitol)
 
 struct BurnDriver BurnDrvCapitol = {
 	"capitol", "pleiads", NULL, NULL, "1981",
-	"Capitol\0", "No sound (not emulated yet)", "bootleg? (Universal Video Spiel)", "Miscellaneous",
+	"Capitol\0", NULL, "bootleg? (Universal Video Spiel)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, capitolRomInfo, capitolRomName, NULL, NULL, PleiadsInputInfo, PleiadsDIPInfo,

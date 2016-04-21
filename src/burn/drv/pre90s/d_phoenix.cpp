@@ -26,6 +26,7 @@
 #endif
 
 #include "phoenixsound.h"
+#include "pleiadssound.h"
 
 static UINT8 *DrvI8085ROM;
 static UINT8 *DrvGfxROM0;
@@ -501,6 +502,7 @@ static void phoenix_main_write(UINT16 address, UINT8 data)
 			if (pleiads) {
 				palette_bank |= (data & 0x04) >> 1;
 				pleiads_protection_question = data & 0xfc;
+				pleiads_sound_control_c_w(address - 0x5000, data);
 			}
 		}
 		return;
@@ -510,10 +512,12 @@ static void phoenix_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x6000: // control a
-			phoenix_sound_control_a_w(address, data);
+			if (phoenixmode) phoenix_sound_control_a_w(address, data);
+			if (pleiads) pleiads_sound_control_a_w(address, data);
 			return;
 		case 0x6800: // control b
-			phoenix_sound_control_b_w(address, data);
+			if (phoenixmode) phoenix_sound_control_b_w(address, data);
+			if (pleiads) pleiads_sound_control_b_w(address, data);
 			return;
 //			no sound
 		return;
@@ -569,6 +573,9 @@ static INT32 DrvDoReset()
 //	no sound
 	if (phoenixmode)
 		phoenix_sound_reset();
+
+	if (pleiads)
+		pleiads_sound_reset();
 
 	pleiads_protection_question = 0;
 	scrollx = 0;
@@ -685,12 +692,10 @@ static INT32 DrvInit(INT32 single_prom)
 
 static INT32 PhoenixInit()
 {
-	INT32 rc = DrvInit(0);
-
 	phoenixmode = 1;
 	phoenix_sound_init();
 
-	return rc;
+	return DrvInit(0);
 }
 
 static INT32 CondorInit()
@@ -707,6 +712,8 @@ static INT32 SinglePromInit()
 static INT32 PleiadsInit()
 {
 	pleiads = 1;
+	pleiads_sound_init();
+
 	return DrvInit(0);
 }
 
@@ -719,6 +726,9 @@ static INT32 DrvExit()
 	// no sound
 	if (phoenixmode)
 		phoenix_sound_deinit();
+
+	if (pleiads)
+		pleiads_sound_deinit();
 
 	condor = 0;
 	pleiads = 0;
@@ -831,6 +841,9 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		if (phoenixmode)
 			phoenix_sound_update(pBurnSoundOut, nBurnSoundLen);
+
+		if (pleiads)
+			pleiads_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

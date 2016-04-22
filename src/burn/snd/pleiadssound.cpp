@@ -20,6 +20,7 @@ static int sound_latch_c;	/* part of the videoreg_w latch */
 
 static UINT32 *poly18 = NULL;
 static int polybit;
+static double custom_volume = 1.00;
 
 /* fixed 8kHz clock */
 #define TONE1_CLOCK  8000
@@ -405,7 +406,7 @@ void pleiads_sound_update(INT16 *buffer, int length)
 	while( length-- > 0 )
 	{
 		INT32 sum = tone1(rate)/2 + tone23(rate)/2 + tone4(rate) + noise(rate);
-		INT16 sam = BURN_SND_CLIP(sum * 0.60);
+		INT16 sam = BURN_SND_CLIP(sum * custom_volume);
 		*buffer++ = sam; //r
 		*buffer++ = sam; //l
 	}
@@ -457,7 +458,7 @@ void pleiads_sound_control_c_w(INT32 address, UINT8 data)
 	sound_latch_c = data;
 }
 
-void pleiads_sound_init()
+void pleiads_sound_init(int naughtybpopflamer)
 {
 	UINT32 shiftreg;
 
@@ -481,8 +482,13 @@ void pleiads_sound_init()
 		poly18[i] = bits;
 	}
 
-	double decays[6] = {0.33,0.33,0,0.33,0,0.33};
-	tms36xx_init(247, TMS3615, &decays[0], 0.00);
+	if (naughtybpopflamer) {
+		double decays[6] = {0.15, 0.20, 0, 0, 0, 0};
+		tms36xx_init(350, TMS3615, &decays[0], 0.00);
+	} else {
+		double decays[6] = {0.33,0.33,0,0.33,0,0.33};
+		tms36xx_init(247, TMS3615, &decays[0], 0.00);
+	}
 
 }
 
@@ -560,6 +566,8 @@ void pleiads_sound_reset()
 	  freq = 1.44 / ((100000+2*1000) * 0.01e-6) = approx. 1412 Hz */
 	noise_freq = 1412;	/* higher noise rate than popflame/naughtyb??? */
 
+	custom_volume = 0.60;
+
 	internal_reset();
 	//return common_sh_start(msound, "Custom (Pleiads)");
 }
@@ -618,6 +626,8 @@ void naughtyb_sound_reset()
 	  freq = 1.44 / ((200000+2*1000) * 0.01e-6) = approx. 713 Hz */
 	noise_freq = 713;
 
+	custom_volume = 0.40;
+
 	internal_reset();
 //	return common_sh_start(msound, "Custom (Naughty Boy)");
 }
@@ -675,6 +685,8 @@ void popflame_sound_reset()
 	/* lower 556 lower half: Ra=200k, Rb=1k, C=0.01uF
 	  freq = 1.44 / ((200000+2*1000) * 0.01e-6) = approx. 713 Hz */
 	noise_freq = 713;
+
+	custom_volume = 0.40;
 
 	internal_reset();
 }

@@ -2949,9 +2949,6 @@ static struct BurnDIPInfo PokonyanDIPList[]=
 	{0x15, 0xff, 0xff, 0x04, NULL                     },
 	{0x16, 0xff, 0xff, 0x00, NULL                     },
 	
-	// Dip A
-	CPS1_COINAGE_1(0x14)
-
 	{0   , 0xfe, 0   , 4   , "Coinage"                },
 	{0x14, 0x01, 0x03, 0x03, "4 Coins 1 Credit"       },
 	{0x14, 0x01, 0x03, 0x02, "3 Coins 1 Credit"       },

@@ -746,6 +746,37 @@ static struct BurnInputInfo PnickjInputList[] =
 
 STDINPUTINFO(Pnickj)
 
+static struct BurnInputInfo PokonyanInputList[] =
+{
+ 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
+ 	{"P1 Start"         , BIT_DIGITAL  , CpsInp018+4, "p1 start"  },
+ 	{"P1 Up"            , BIT_DIGITAL  , CpsInp001+3, "p1 up"     },
+ 	{"P1 Down"          , BIT_DIGITAL  , CpsInp001+2, "p1 down"   },
+ 	{"P1 Left"          , BIT_DIGITAL  , CpsInp001+1, "p1 left"   },
+ 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
+ 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
+ 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
+ 	{"P1 Fire 3"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
+
+ 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp018+1, "p2 coin"   },
+ 	{"P2 Start"         , BIT_DIGITAL  , CpsInp018+5, "p2 start"  },
+ 	{"P2 Up"            , BIT_DIGITAL  , CpsInp000+3, "p2 up"     },
+ 	{"P2 Down"          , BIT_DIGITAL  , CpsInp000+2, "p2 down"   },
+ 	{"P2 Left"          , BIT_DIGITAL  , CpsInp000+1, "p2 left"   },
+ 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
+ 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
+ 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
+ 	{"P2 Fire 3"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
+
+ 	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
+ 	{"Service"          , BIT_DIGITAL  , CpsInp018+2, "service"   },
+ 	{"Dip A"            , BIT_DIPSWITCH, &Cpi01A    , "dip"       },
+ 	{"Dip B"            , BIT_DIPSWITCH, &Cpi01C    , "dip"       },
+ 	{"Dip C"            , BIT_DIPSWITCH, &Cpi01E    , "dip"       },
+};
+
+STDINPUTINFO(Pokonyan)
+
 static struct BurnInputInfo PunisherInputList[] =
 {
 	{"P1 Coin"          , BIT_DIGITAL  , CpsInp018+0, "p1 coin"   },
@@ -2910,6 +2941,69 @@ static struct BurnDIPInfo PnickjDIPList[]=
 };
 
 STDDIPINFO(Pnickj)
+
+static struct BurnDIPInfo PokonyanDIPList[]=
+{
+	// Defaults
+	{0x14, 0xff, 0xff, 0x01, NULL                     },
+	{0x15, 0xff, 0xff, 0x04, NULL                     },
+	{0x16, 0xff, 0xff, 0x00, NULL                     },
+	
+	// Dip A
+	CPS1_COINAGE_1(0x14)
+
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0x14, 0x01, 0x03, 0x03, "4 Coins 1 Credit"       },
+	{0x14, 0x01, 0x03, 0x02, "3 Coins 1 Credit"       },
+	{0x14, 0x01, 0x03, 0x00, "2 Coins 1 Credit"       },
+	{0x14, 0x01, 0x03, 0x01, "1 Coin  1 Credit"       },
+	
+	// Dip B
+	{0   , 0xfe, 0   , 3   , "Demo Sounds"            },
+	{0x15, 0x01, 0x03, 0x03, "Off"                    },
+	{0x15, 0x01, 0x03, 0x02, "Every 4"                },
+	{0x15, 0x01, 0x03, 0x01, "Every 2"                },
+	{0x15, 0x01, 0x03, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Prize Mode"             },
+	{0x15, 0x01, 0x04, 0x04, "Not Used"               },
+	{0x15, 0x01, 0x04, 0x00, "Used"                   },
+	
+	{0   , 0xfe, 0   , 2   , "Credit Mode"            },
+	{0x15, 0x01, 0x08, 0x00, "Off"                    },
+	{0x15, 0x01, 0x08, 0x08, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Max Stage"              },
+	{0x15, 0x01, 0x10, 0x10, "2"                      },
+	{0x15, 0x01, 0x10, 0x00, "3"                      },
+	
+	{0   , 0xfe, 0   , 2   , "Card Check"             },
+	{0x15, 0x01, 0x20, 0x00, "Off"                    },
+	{0x15, 0x01, 0x20, 0x20, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Unknown"                },
+	{0x15, 0x01, 0x80, 0x80, "1.0 sec"                },
+	{0x15, 0x01, 0x80, 0x00, "1.2 sec"                },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Body Check"             },
+	{0x16, 0x01, 0x02, 0x00, "Off"                    },
+	{0x16, 0x01, 0x02, 0x02, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Screen Stop"            },
+	{0x16, 0x01, 0x08, 0x00, "Off"                    },
+	{0x16, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip"                   },
+	{0x16, 0x01, 0x10, 0x00, "Off"                    },
+	{0x16, 0x01, 0x10, 0x10, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x16, 0x01, 0x80, 0x00, "Game"                   },
+	{0x16, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Pokonyan)
 
 static struct BurnDIPInfo PunisherDIPList[]=
 {
@@ -7633,6 +7727,38 @@ static struct BurnRomInfo PnickjRomDesc[] = {
 
 STD_ROM_PICK(Pnickj)
 STD_ROM_FN(Pnickj)
+
+static struct BurnRomInfo PokonyanRomDesc[] = {
+	{ "xmqq-12f.bin",  0x020000, 0x196297bf, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "xmqq-12h.bin",  0x020000, 0x2d7ee2e9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "xmqq-13f.bin",  0x020000, 0x8f6abf26, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "xmqq-13h.bin",  0x020000, 0x3fefe432, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "xmqq-4b.bin",   0x020000, 0x933ab76d, BRF_GRA | CPS1_TILES },
+	{ "xmqq-4a.bin",   0x020000, 0xb098e7a9, BRF_GRA | CPS1_TILES },
+	{ "xmqq-9b.bin",   0x020000, 0xb66d62d4, BRF_GRA | CPS1_TILES },
+	{ "xmqq-9a.bin",   0x020000, 0x9c23e40b, BRF_GRA | CPS1_TILES },
+	{ "xmqq-5e.bin",   0x020000, 0x63d06d6f, BRF_GRA | CPS1_TILES },
+	{ "xmqq-5c.bin",   0x020000, 0xe2169bb5, BRF_GRA | CPS1_TILES },
+	{ "xmqq-8h.bin",   0x020000, 0x113121f5, BRF_GRA | CPS1_TILES },
+	{ "xmqq-8f.bin",   0x020000, 0xbeb00e07, BRF_GRA | CPS1_TILES },
+	{ "xmqq-5b.bin",   0x020000, 0x05354905, BRF_GRA | CPS1_TILES },
+	{ "xmqq-5a.bin",   0x020000, 0xbd40215e, BRF_GRA | CPS1_TILES },
+	{ "xmqq-10b.bin",  0x020000, 0x9fa773ef, BRF_GRA | CPS1_TILES },
+	{ "xmqq-10a.bin",  0x020000, 0x638d4bc7, BRF_GRA | CPS1_TILES },
+	{ "xmqq-7e.bin",   0x020000, 0x72c45858, BRF_GRA | CPS1_TILES },
+	{ "xmqq-7c.bin",   0x020000, 0xd91cda18, BRF_GRA | CPS1_TILES },
+	{ "xmqq-9h.bin",   0x020000, 0x3cd8594b, BRF_GRA | CPS1_TILES },
+	{ "xmqq-9f.bin",   0x020000, 0x1ec10bed, BRF_GRA | CPS1_TILES },
+
+	{ "mqq-13b.bin",   0x010000, 0x4e8b81a8, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "xmqq-12c.bin",  0x020000, 0x71ac69ad, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "xmqq-13c.bin",  0x020000, 0x71e29699, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Pokonyan)
+STD_ROM_FN(Pokonyan)
 
 static struct BurnRomInfo PunisherRomDesc[] = {
 	{ "pse_26.11e",    0x020000, 0x389a99d2, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -13052,6 +13178,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "pang3b3"     , CPS_B_04    , mapper_pang3 , 0, NULL                }, // hacked to run on Final Fight C-Board
 	{ "pang3j"      , CPS_B_21_DEF, mapper_pang3 , 0, NULL                },
 	{ "pnickj"      , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },
+	{ "pokonyan"    , CPS_B_21_DEF, mapper_pokon , 0, NULL                },
 	{ "punisher"    , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisheru"   , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
 	{ "punisherj"   , CPS_B_21_QS3, mapper_PS63B , 0, punisher_decode     },
@@ -18512,6 +18639,16 @@ struct BurnDriver BurnDrvCpsPnickj = {
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_PUZZLE, 0,
 	NULL, PnickjRomInfo, PnickjRomName, NULL, NULL, PnickjInputInfo, PnickjDIPInfo,
 	TwelveMhzInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPokonyan = {
+	"pokonyan", NULL, NULL, NULL, "1994",
+	"Pokonyan (Japan 940322)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_MISC, 0,
+	NULL, PokonyanRomInfo, PokonyanRomName, NULL, NULL, PokonyanInputInfo, PokonyanDIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

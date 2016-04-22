@@ -383,6 +383,14 @@ static const struct GfxRange mapper_pang3_table[] = {
 	{ 0              ,                        0,      0, 0 }
 };
 
+static const struct GfxRange mapper_pokonyan_table[] = {
+	{ GFXTYPE_SPRITES, 0x0000, 0x2fff, 0 },
+	{ GFXTYPE_SCROLL1, 0x7000, 0x7fff, 0 },
+	{ GFXTYPE_SCROLL3, 0x3000, 0x3fff, 0 },
+	{ GFXTYPE_SCROLL2, 0x4000, 0x6fff, 0 },
+	{ 0              ,      0,      0, 0 }
+};
+
 static const struct GfxRange mapper_sfzch_table[] = {
 	{ GFXTYPE_SPRITES | GFXTYPE_SCROLL1 | GFXTYPE_SCROLL2 | GFXTYPE_SCROLL3, 0x00000, 0x1ffff, 0 },
 	{ 0                                                                    ,       0,       0, 0 }
@@ -750,6 +758,15 @@ void SetGfxMapper(INT32 MapperId)
 			GfxBankSizes[2] = 0x0000;
 			GfxBankSizes[3] = 0x0000;
 			GfxBankMapper = mapper_pang3_table;
+			return;
+		}
+		
+		case mapper_pokon: {
+			GfxBankSizes[0] = 0x8000;
+			GfxBankSizes[1] = 0x8000;
+			GfxBankSizes[2] = 0x8000;
+			GfxBankSizes[3] = 0x0000;
+			GfxBankMapper = mapper_pokonyan_table;
 			return;
 		}
 		

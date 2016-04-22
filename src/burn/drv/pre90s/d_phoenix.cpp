@@ -714,7 +714,7 @@ static INT32 SinglePromInit()
 static INT32 PleiadsInit()
 {
 	pleiads = 1;
-	pleiads_sound_init();
+	pleiads_sound_init(0);
 
 	return DrvInit(0);
 }

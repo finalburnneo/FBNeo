@@ -5540,13 +5540,33 @@ static struct BurnRomInfo ketblRomDesc[] = {
 STDROMPICKEXT(ketbl, ketbl, ketsuiBios) // custom bios
 STD_ROM_FN(ketbl)
 
-struct BurnDriverD BurnDrvKetbl = {
+static void ketblCallback()
+{
+	memcpy (PGM68KROM, PGM68KROM + 0x200000, 0x200000);
+}
+
+static INT32 ketblInit()
+{
+	pPgmInitCallback = pgm_decrypt_ddp2;
+	pPgmProtCallback = install_protection_asic27a_martmast;
+	pPgmInitCallback = ketblCallback;
+
+//	nPgmAsicRegionHackAddress = 0x2882; // 2883?
+
+	INT32 nRet = pgmInit();
+
+	Arm7SetIdleLoopAddress(0x8010998);
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvKetbl = {
 	"ketbl", "ket", NULL, NULL, "2003",
 	"Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver., bootleg cartridge conversion)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
 	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (2003/01/01. Master Ver., bootleg cartridge conversion)\0", NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ketblRomInfo, ketblRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
-	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	ketblInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
 

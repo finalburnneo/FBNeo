@@ -5508,10 +5508,78 @@ STD_ROM_FN(ddpdojblkbl)
 
 struct BurnDriver BurnDrvDdpdojblkbl = {
 	"ddpdojblkbl", "ddpdoj", NULL, NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	"DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, "bootleg", "PolyGameMaster",
 	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
 	NULL, ddpdojblkblRomInfo, ddpdojblkblRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	kovshInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Ketsui: Kizuna Jigoku Tachi (2003/01/01. Master Ver., bootleg cartridge conversion)
+
+static struct BurnRomInfo ketblRomDesc[] = {
+	// this assumes a Dodonpachi 2 Bee Storm cart was used
+	{ "ketsui_u1.bin",		    0x400000, 0x391767b4, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	
+	{ "t04701w064.u19", 		0x800000, 0x2665b041, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a04701w064.u7", 			0x800000, 0x5ef1b94b, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04702w064.u8", 			0x800000, 0x26d6da7f, 3 | BRF_GRA },			//  3
+
+	{ "b04701w064.u1",			0x800000, 0x1bec008d, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "m04701b032.u17",			0x400000, 0xb46e22d1, 5 | BRF_SND },			//  5 Samples
+
+	{ "ddp2_igs027a_japan.bin",	0x004000, 0x742d34d2, 7 | BRF_PRG | BRF_ESS },	//  6 Internal ARM7 Rom
+	
+	{ "v100.u23", 	   			0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(ketbl, ketbl, ketsuiBios) // custom bios
+STD_ROM_FN(ketbl)
+
+struct BurnDriverD BurnDrvKetbl = {
+	"ketbl", "ket", NULL, NULL, "2003",
+	"Ketsui Kizuna Jigoku Tachi (2003/01/01. Master Ver., bootleg cartridge conversion)\0", NULL, "CAVE / AMI", "PolyGameMaster based",
+	L"Ketsui Kizuna Jigoku Tachi\0\u30B1\u30C4\u30A4~\u7D46\u5730\u7344\u305F\u3061 (2003/01/01. Master Ver., bootleg cartridge conversion)\0", NULL, NULL, NULL,
+	BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, ketblRomInfo, ketblRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// Espgaluda (2003/10/15 Master Ver, bootleg cartridge conversion)
+
+static struct BurnRomInfo espgalblRomDesc[] = {
+	// this assumes a Dodonpachi 2 Bee Storm cart was used
+	{ "espgaluda_u8.bin",		0x400000, 0x6a92dd52, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t04801w064.u19",	   		0x800000, 0x6021c79e, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a04801w064.u7",			0x800000, 0x26dd4932, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04802w064.u8",	   		0x800000, 0x0e6bf7a9, 3 | BRF_GRA },			//  3
+
+	{ "b04801w064.u1",	 		0x800000, 0x98dce13a, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "w04801b032.u17",			0x400000, 0x60298536, 5 | BRF_SND },			//  5 Samples
+
+	{ "ddp2_igs027a_japan.bin",	0x004000, 0x742d34d2, 7 | BRF_PRG | BRF_ESS },	//  6 Internal ARM7 Rom
+	
+	{ "v100.u23", 	   			0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
+};
+
+STDROMPICKEXT(espgalbl, espgalbl, espgalBios) // custom bios
+STD_ROM_FN(espgalbl)
+
+struct BurnDriver BurnDrvEspgalbl = {
+	"espgalbl", "espgal", NULL, NULL, "2003",
+	"Espgaluda (2003/10/15 Master Ver, bootleg cartridge conversion)\0", NULL, "bootleg", "PolyGameMaster based",
+	L"Espgaluda\0\u30A8\u30B9\u30D7\u30AC\u30EB\u30FC\u30C0 (2003/10/15 Master Ver, bootleg cartridge conversion)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_JAMMAPCB | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,
+	NULL, espgalblRomInfo, espgalblRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ddp2Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };

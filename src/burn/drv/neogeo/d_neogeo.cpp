@@ -12029,10 +12029,10 @@ struct BurnDriver BurnDrvsdodgeb = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Unknown Neo-Geo Vs. Fighter (prototype)
-// same ID code as Voltage Fighter Gowkaizer so probably by Technos
+// Dragon's Heaven (development board)
+// same ID code as Voltage Fighter Gowkaizer, developed by ex-Technos staff
 
-static struct BurnRomInfo unkneoRomDesc[] = {
+static struct BurnRomInfo dragonshRomDesc[] = {
 	{ "EP1.bin",      0x080000,  0xf353448c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "EP2.bin",      0x080000,  0xf25c71ad, 1 | BRF_ESS | BRF_PRG }, //  1 		
 
@@ -12046,29 +12046,29 @@ static struct BurnRomInfo unkneoRomDesc[] = {
 	{ "sram.v1",      0x200000,  0x00000000, 5 | BRF_SND | BRF_NODUMP }, //  7 Sound data		
 };
 
-STDROMPICKEXT(unkneo, unkneo, neogeo)
-STD_ROM_FN(unkneo)
+STDROMPICKEXT(dragonsh, dragonsh, neogeo)
+STD_ROM_FN(dragonsh)
 
-static void UnkneoCallback()
+static void DragonshCallback()
 {
 	BurnLoadRom(Neo68KROMActive + 0x000000, 0, 2);
 	BurnLoadRom(Neo68KROMActive + 0x000001, 1, 2);
 }
 
-static INT32 UnkneoInit()
+static INT32 DragonshInit()
 {
-	NeoCallbackActive->pInitialise = UnkneoCallback;
+	NeoCallbackActive->pInitialise = DragonshCallback;
 	
 	return NeoInit();
 }
 
-struct BurnDriver BurnDrvunkneo = {
-	"unkneo", NULL, "neogeo", NULL, "1996",
-	"Unknown Neo-Geo Vs. Fighter (prototype)\0", NULL, "Technos Japan?", "Neo Geo MVS",
+struct BurnDriver BurnDrvdragonsh = {
+	"dragonsh", NULL, "neogeo", NULL, "1996",
+	"Dragon's Heaven (development board)\0", NULL, "Face", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_SPORTSMISC, 0,
-	NULL, unkneoRomInfo, unkneoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	UnkneoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, dragonshRomInfo, dragonshRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	DragonshInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
 

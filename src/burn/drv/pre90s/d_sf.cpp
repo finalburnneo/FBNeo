@@ -1344,58 +1344,58 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Street Fighter (US set 1)
 
 static struct BurnRomInfo sfRomDesc[] = {
-	{ "sfd-19",     0x10000, 0xfaaf6255, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "sfd-22",     0x10000, 0xe1fe3519, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfd-20",     0x10000, 0x44b915bd, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfd-23",     0x10000, 0x79c43ff8, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sfd-21",     0x10000, 0xe8db799b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sfd-24",     0x10000, 0x466a3440, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sfd-19",     	0x10000, 0xfaaf6255, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sfd-22",     	0x10000, 0xe1fe3519, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfd-20",     	0x10000, 0x44b915bd, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfd-23",     	0x10000, 0x79c43ff8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfd-21",     	0x10000, 0xe8db799b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sfd-24",     	0x10000, 0x466a3440, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "sf-02.bin",  0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+	{ "sf-02.bin",  	0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
 
-	{ "sfu-00",     0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
-	{ "sf-01.bin",  0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "sfu-00",     	0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.bin",  	0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "sf-39.bin",  0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "sf-38.bin",  0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
-	{ "sf-41.bin",  0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
-	{ "sf-40.bin",  0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
+	{ "sf-39.bin",  	0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "sf-38.bin",  	0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
+	{ "sf-41.bin",  	0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
+	{ "sf-40.bin",  	0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
 
-	{ "sf-25.bin",  0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
-	{ "sf-28.bin",  0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
-	{ "sf-30.bin",  0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
-	{ "sf-34.bin",  0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
-	{ "sf-26.bin",  0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
-	{ "sf-29.bin",  0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
-	{ "sf-31.bin",  0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
-	{ "sf-35.bin",  0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
+	{ "sf-25.bin",  	0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
+	{ "sf-28.bin",  	0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
+	{ "sf-30.bin",  	0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
+	{ "sf-34.bin",  	0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
+	{ "sf-26.bin",  	0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
+	{ "sf-29.bin",  	0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
+	{ "sf-31.bin",  	0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
+	{ "sf-35.bin",  	0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
 
-	{ "sf-15.bin",  0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
-	{ "sf-16.bin",  0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
-	{ "sf-11.bin",  0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
-	{ "sf-12.bin",  0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
-	{ "sf-07.bin",  0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
-	{ "sf-08.bin",  0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
-	{ "sf-03.bin",  0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
-	{ "sf-17.bin",  0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
-	{ "sf-18.bin",  0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
-	{ "sf-13.bin",  0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
-	{ "sf-14.bin",  0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
-	{ "sf-09.bin",  0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
-	{ "sf-10.bin",  0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
-	{ "sf-05.bin",  0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
+	{ "sf-15.bin",  	0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
+	{ "sf-16.bin",  	0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
+	{ "sf-11.bin",  	0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
+	{ "sf-12.bin",  	0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
+	{ "sf-07.bin",  	0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
+	{ "sf-08.bin",  	0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
+	{ "sf-03.bin",  	0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
+	{ "sf-17.bin",  	0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
+	{ "sf-18.bin",  	0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
+	{ "sf-13.bin",  	0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
+	{ "sf-14.bin",  	0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
+	{ "sf-09.bin",  	0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
+	{ "sf-10.bin",  	0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
+	{ "sf-05.bin",  	0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
 
-	{ "sf-27.bin",  0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
+	{ "sf-27.bin",  	0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
 
-	{ "sf-37.bin",  0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
-	{ "sf-36.bin",  0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
-	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
-	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
+	{ "sf-37.bin",  	0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
+	{ "sf-36.bin",  	0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
+	{ "sf-32.bin",  	0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
+	{ "sf-33.bin",  	0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
 
-	{ "mb7114h.12k", 0x0100, 0x75af3553, 0 | BRF_OPT },           // 40 Proms
-	{ "mb7114h.11h", 0x0100, 0xc0e56586, 0 | BRF_OPT },           // 41
-	{ "mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
-	{ "mmi-7603.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
+	{ "mb7114h.12k", 	0x0100, 0x75af3553, 0 | BRF_OPT },            // 40 Proms
+	{ "mb7114h.11h", 	0x0100, 0xc0e56586, 0 | BRF_OPT },            // 41
+	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
+	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 };
 
 STD_ROM_PICK(sf)
@@ -1420,58 +1420,58 @@ struct BurnDriver BurnDrvsf = {
 // Street Fighter (World, pneumatic buttons)
 
 static struct BurnRomInfo sfanRomDesc[] = {
-	{ "sfe-19",     0x10000, 0x8346c3ca, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "sfe-22",     0x10000, 0x3a4bfaa8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfe-20",     0x10000, 0xb40e67ee, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfe-23",     0x10000, 0x477c3d5b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sfe-21",     0x10000, 0x2547192b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sfe-24",     0x10000, 0x79680f4e, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sfe-19",     	0x10000, 0x8346c3ca, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sfe-22",     	0x10000, 0x3a4bfaa8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfe-20",     	0x10000, 0xb40e67ee, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfe-23",     	0x10000, 0x477c3d5b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfe-21",     	0x10000, 0x2547192b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sfe-24",     	0x10000, 0x79680f4e, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "sf-02.bin",  0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+	{ "sf-02.bin",  	0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
 
-	{ "sfu-00",     0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
-	{ "sf-01.bin",  0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "sfu-00",     	0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.bin",  	0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "sf-39.bin",  0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "sf-38.bin",  0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
-	{ "sf-41.bin",  0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
-	{ "sf-40.bin",  0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
+	{ "sf-39.bin",  	0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "sf-38.bin",  	0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
+	{ "sf-41.bin",  	0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
+	{ "sf-40.bin",  	0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
 
-	{ "sf-25.bin",  0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 More tiles?
-	{ "sf-28.bin",  0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
-	{ "sf-30.bin",  0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
-	{ "sf-34.bin",  0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
-	{ "sf-26.bin",  0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
-	{ "sf-29.bin",  0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
-	{ "sf-31.bin",  0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
-	{ "sf-35.bin",  0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
+	{ "sf-25.bin",  	0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 More tiles?
+	{ "sf-28.bin",  	0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
+	{ "sf-30.bin",  	0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
+	{ "sf-34.bin",  	0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
+	{ "sf-26.bin",  	0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
+	{ "sf-29.bin",  	0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
+	{ "sf-31.bin",  	0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
+	{ "sf-35.bin",  	0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
 
-	{ "sf-15.bin",  0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
-	{ "sf-16.bin",  0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
-	{ "sf-11.bin",  0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
-	{ "sf-12.bin",  0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
-	{ "sf-07.bin",  0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
-	{ "sf-08.bin",  0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
-	{ "sf-03.bin",  0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
-	{ "sf-17.bin",  0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
-	{ "sf-18.bin",  0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
-	{ "sf-13.bin",  0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
-	{ "sf-14.bin",  0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
-	{ "sf-09.bin",  0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
-	{ "sf-10.bin",  0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
-	{ "sf-05.bin",  0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
+	{ "sf-15.bin",  	0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
+	{ "sf-16.bin",  	0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
+	{ "sf-11.bin",  	0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
+	{ "sf-12.bin",  	0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
+	{ "sf-07.bin",  	0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
+	{ "sf-08.bin",  	0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
+	{ "sf-03.bin",  	0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
+	{ "sf-17.bin",  	0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
+	{ "sf-18.bin",  	0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
+	{ "sf-13.bin",  	0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
+	{ "sf-14.bin",  	0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
+	{ "sf-09.bin",  	0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
+	{ "sf-10.bin",  	0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
+	{ "sf-05.bin",  	0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
 
-	{ "sf-27.bin",  0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
+	{ "sf-27.bin",  	0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
 
-	{ "sf-37.bin",  0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
-	{ "sf-36.bin",  0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
-	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
-	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
+	{ "sf-37.bin",  	0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
+	{ "sf-36.bin",  	0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
+	{ "sf-32.bin",  	0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
+	{ "sf-33.bin",  	0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
 
-	{ "sfb05.mb7114h.12k", 0x0100, 0x75af3553, 0 | BRF_OPT },           // 40 Proms
-	{ "sfb10.mb7114h.11h", 0x0100, 0xc0e56586, 0 | BRF_OPT },           // 41
-	{ "sfb04.mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
-	{ "sfb00.mb7051.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
+	{ "sfb05.mb7114h.12k", 	0x0100, 0x75af3553, 0 | BRF_OPT },        // 40 Proms
+	{ "sfb10.mb7114h.11h", 	0x0100, 0xc0e56586, 0 | BRF_OPT },        // 41
+	{ "sfb04.mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },        // 42
+	{ "sfb00.mb7051.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },        // 43
 };
 
 STD_ROM_PICK(sfan)
@@ -1496,60 +1496,60 @@ struct BurnDriver BurnDrvsfan = {
 // Street Fighter (US set 2)
 
 static struct BurnRomInfo sfuaRomDesc[] = {
-	{ "sfs19u.1a",  0x10000, 0xc8e41c49, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "sfs22u.1b",  0x10000, 0x667e9309, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sfs20u.2a",  0x10000, 0x303065bf, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sfs23u.2b",  0x10000, 0xde6927a3, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sfs21u.3a",  0x10000, 0x004a418b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sfs24u.3b",  0x10000, 0x2b4545ff, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sfs19u.1a",  	0x10000, 0xc8e41c49, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sfs22u.1b",  	0x10000, 0x667e9309, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sfs20u.2a",  	0x10000, 0x303065bf, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sfs23u.2b",  	0x10000, 0xde6927a3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sfs21u.3a",  	0x10000, 0x004a418b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sfs24u.3b",  	0x10000, 0x2b4545ff, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "sf-02.bin",  0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+	{ "sf-02.bin",  	0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
 
-	{ "sfu-00",     0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
-	{ "sf-01.bin",  0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "sfu-00",     	0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.bin",  	0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "sf-39.bin",  0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "sf-38.bin",  0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
-	{ "sf-41.bin",  0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
-	{ "sf-40.bin",  0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
+	{ "sf-39.bin",  	0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "sf-38.bin",  	0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
+	{ "sf-41.bin",  	0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
+	{ "sf-40.bin",  	0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
 
-	{ "sf-25.bin",  0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
-	{ "sf-28.bin",  0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
-	{ "sf-30.bin",  0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
-	{ "sf-34.bin",  0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
-	{ "sf-26.bin",  0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
-	{ "sf-29.bin",  0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
-	{ "sf-31.bin",  0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
-	{ "sf-35.bin",  0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
+	{ "sf-25.bin",  	0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
+	{ "sf-28.bin",  	0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
+	{ "sf-30.bin",  	0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
+	{ "sf-34.bin",  	0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
+	{ "sf-26.bin",  	0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
+	{ "sf-29.bin",  	0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
+	{ "sf-31.bin",  	0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
+	{ "sf-35.bin",  	0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
 
-	{ "sf-15.bin",  0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
-	{ "sf-16.bin",  0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
-	{ "sf-11.bin",  0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
-	{ "sf-12.bin",  0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
-	{ "sf-07.bin",  0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
-	{ "sf-08.bin",  0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
-	{ "sf-03.bin",  0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
-	{ "sf-17.bin",  0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
-	{ "sf-18.bin",  0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
-	{ "sf-13.bin",  0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
-	{ "sf-14.bin",  0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
-	{ "sf-09.bin",  0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
-	{ "sf-10.bin",  0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
-	{ "sf-05.bin",  0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
+	{ "sf-15.bin",  	0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
+	{ "sf-16.bin",  	0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
+	{ "sf-11.bin",  	0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
+	{ "sf-12.bin",  	0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
+	{ "sf-07.bin",  	0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
+	{ "sf-08.bin",  	0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
+	{ "sf-03.bin",  	0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
+	{ "sf-17.bin",  	0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
+	{ "sf-18.bin",  	0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
+	{ "sf-13.bin",  	0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
+	{ "sf-14.bin",  	0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
+	{ "sf-09.bin",  	0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
+	{ "sf-10.bin",  	0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
+	{ "sf-05.bin",  	0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
 
-	{ "sf-27.bin",  0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
+	{ "sf-27.bin",  	0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
 
-	{ "sf-37.bin",  0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
-	{ "sf-36.bin",  0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
-	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
-	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
+	{ "sf-37.bin",  	0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
+	{ "sf-36.bin",  	0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
+	{ "sf-32.bin",  	0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
+	{ "sf-33.bin",  	0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
 
-	{ "sfb05.bin",   0x0100, 0x864199ad, 0 | BRF_OPT },           // 40 Proms
-	{ "sfb00.bin",   0x0100, 0xbd3f8c5d, 0 | BRF_OPT },           // 41
-	{ "mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
-	{ "mmi-7603.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
+	{ "sfb05.bin",   	0x0100, 0x864199ad, 0 | BRF_OPT },            // 40 Proms
+	{ "sfb00.bin",   	0x0100, 0xbd3f8c5d, 0 | BRF_OPT },            // 41
+	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
+	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 	
-	{ "i8751.bin",  0x00800, 0x00000000, 0 | BRF_NODUMP },
+	{ "i8751.bin",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
 };
 
 STD_ROM_PICK(sfua)
@@ -1574,60 +1574,60 @@ struct BurnDriver BurnDrvsfua = {
 // Street Fighter (Japan)
 
 static struct BurnRomInfo sfjpRomDesc[] = {
-	{ "sf-19.bin",  0x10000, 0x116027d7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "sf-22.bin",  0x10000, 0xd3cbd09e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sf-20.bin",  0x10000, 0xfe07e83f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sf-23.bin",  0x10000, 0x1e435d33, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sf-21.bin",  0x10000, 0xe086bc4c, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "sf-24.bin",  0x10000, 0x13a6696b, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "sf-19.bin",  	0x10000, 0x116027d7, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sf-22.bin",  	0x10000, 0xd3cbd09e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sf-20.bin",  	0x10000, 0xfe07e83f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sf-23.bin",  	0x10000, 0x1e435d33, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sf-21.bin",  	0x10000, 0xe086bc4c, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "sf-24.bin",  	0x10000, 0x13a6696b, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "sf-02.bin",  0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
+	{ "sf-02.bin",  	0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
 
-	{ "sf-00.bin",  0x20000, 0x4b733845, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
-	{ "sf-01.bin",  0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "sf-00.bin",  	0x20000, 0x4b733845, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.bin",  	0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
 
-	{ "sf-39.bin",  0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "sf-38.bin",  0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
-	{ "sf-41.bin",  0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
-	{ "sf-40.bin",  0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
+	{ "sf-39.bin",  	0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "sf-38.bin",  	0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10
+	{ "sf-41.bin",  	0x20000, 0xe0280495, 4 | BRF_GRA },           // 11
+	{ "sf-40.bin",  	0x20000, 0xc70b30de, 4 | BRF_GRA },           // 12
 
-	{ "sf-25.bin",  0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
-	{ "sf-28.bin",  0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
-	{ "sf-30.bin",  0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
-	{ "sf-34.bin",  0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
-	{ "sf-26.bin",  0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
-	{ "sf-29.bin",  0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
-	{ "sf-31.bin",  0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
-	{ "sf-35.bin",  0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
+	{ "sf-25.bin",  	0x20000, 0x7f23042e, 5 | BRF_GRA },           // 13 Foreground Tiles
+	{ "sf-28.bin",  	0x20000, 0x92f8b91c, 5 | BRF_GRA },           // 14
+	{ "sf-30.bin",  	0x20000, 0xb1399856, 5 | BRF_GRA },           // 15
+	{ "sf-34.bin",  	0x20000, 0x96b6ae2e, 5 | BRF_GRA },           // 16
+	{ "sf-26.bin",  	0x20000, 0x54ede9f5, 5 | BRF_GRA },           // 17
+	{ "sf-29.bin",  	0x20000, 0xf0649a67, 5 | BRF_GRA },           // 18
+	{ "sf-31.bin",  	0x20000, 0x8f4dd71a, 5 | BRF_GRA },           // 19
+	{ "sf-35.bin",  	0x20000, 0x70c00fb4, 5 | BRF_GRA },           // 20
 
-	{ "sf-15.bin",  0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
-	{ "sf-16.bin",  0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
-	{ "sf-11.bin",  0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
-	{ "sf-12.bin",  0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
-	{ "sf-07.bin",  0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
-	{ "sf-08.bin",  0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
-	{ "sf-03.bin",  0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
-	{ "sf-17.bin",  0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
-	{ "sf-18.bin",  0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
-	{ "sf-13.bin",  0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
-	{ "sf-14.bin",  0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
-	{ "sf-09.bin",  0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
-	{ "sf-10.bin",  0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
-	{ "sf-05.bin",  0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
+	{ "sf-15.bin",  	0x20000, 0xfc0113db, 6 | BRF_GRA },           // 21 Sprites
+	{ "sf-16.bin",  	0x20000, 0x82e4a6d3, 6 | BRF_GRA },           // 22
+	{ "sf-11.bin",  	0x20000, 0xe112df1b, 6 | BRF_GRA },           // 23
+	{ "sf-12.bin",  	0x20000, 0x42d52299, 6 | BRF_GRA },           // 24
+	{ "sf-07.bin",  	0x20000, 0x49f340d9, 6 | BRF_GRA },           // 25
+	{ "sf-08.bin",  	0x20000, 0x95ece9b1, 6 | BRF_GRA },           // 26
+	{ "sf-03.bin",  	0x20000, 0x5ca05781, 6 | BRF_GRA },           // 27
+	{ "sf-17.bin",  	0x20000, 0x69fac48e, 6 | BRF_GRA },           // 28
+	{ "sf-18.bin",  	0x20000, 0x71cfd18d, 6 | BRF_GRA },           // 29
+	{ "sf-13.bin",  	0x20000, 0xfa2eb24b, 6 | BRF_GRA },           // 30
+	{ "sf-14.bin",  	0x20000, 0xad955c95, 6 | BRF_GRA },           // 31
+	{ "sf-09.bin",  	0x20000, 0x41b73a31, 6 | BRF_GRA },           // 32
+	{ "sf-10.bin",  	0x20000, 0x91c41c50, 6 | BRF_GRA },           // 33
+	{ "sf-05.bin",  	0x20000, 0x538c7cbe, 6 | BRF_GRA },           // 34
 
-	{ "sf-27.bin",  0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
+	{ "sf-27.bin",  	0x04000, 0x2b09b36d, 7 | BRF_GRA },           // 35 Characters
 
-	{ "sf-37.bin",  0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
-	{ "sf-36.bin",  0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
-	{ "sf-32.bin",  0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
-	{ "sf-33.bin",  0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
+	{ "sf-37.bin",  	0x10000, 0x23d09d3d, 8 | BRF_GRA },           // 36 Tilemaps
+	{ "sf-36.bin",  	0x10000, 0xea16df6c, 8 | BRF_GRA },           // 37
+	{ "sf-32.bin",  	0x10000, 0x72df2bd9, 8 | BRF_GRA },           // 38
+	{ "sf-33.bin",  	0x10000, 0x3e99d3d5, 8 | BRF_GRA },           // 39
 
-	{ "sfb05.bin",   0x0100, 0x864199ad, 0 | BRF_OPT },           // 40 Proms
-	{ "sfb00.bin",   0x0100, 0xbd3f8c5d, 0 | BRF_OPT },           // 41
-	{ "mb7114h.12j", 0x0100, 0x4c734b64, 0 | BRF_OPT },           // 42
-	{ "mmi-7603.13h",0x0020, 0x06bcda53, 0 | BRF_OPT },           // 43
+	{ "sfb05.bin",   	0x0100, 0x864199ad, 0 | BRF_OPT },            // 40 Proms
+	{ "sfb00.bin",   	0x0100, 0xbd3f8c5d, 0 | BRF_OPT },            // 41
+	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
+	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 	
-	{ "68705.bin",  0x00800, 0x00000000, 0 | BRF_NODUMP },
+	{ "i8751.bin",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
 };
 
 STD_ROM_PICK(sfjp)
@@ -1652,51 +1652,51 @@ struct BurnDriver BurnDrvsfjp = {
 // Street Fighter (Prototype)
 
 static struct BurnRomInfo sfpRomDesc[] = {
-	{ "prg8.2a",     0x20000, 0xd48d06a3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "prg0.2c",     0x20000, 0xe8606c1a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "prg8.2a",     	0x20000, 0xd48d06a3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "prg0.2c",     	0x20000, 0xe8606c1a, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "sound.9j",    0x08000, 0x43cd32ae, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #0 Code
+	{ "sound.9j",    	0x08000, 0x43cd32ae, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #0 Code
 
-	{ "voice.1g",    0x10000, 0x3f23c180, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "voice.1g",    	0x10000, 0x3f23c180, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "bkchr.2k",    0x20000, 0xe4d47aca, 4 | BRF_GRA },           //  4 Background Tiles
-	{ "bkchr.1k",    0x20000, 0x5a1cbc1b, 4 | BRF_GRA },           //  5
-	{ "bkchr.4k",    0x20000, 0xc351bd48, 4 | BRF_GRA },           //  6
-	{ "bkchr.3k",    0x20000, 0x6bb2b050, 4 | BRF_GRA },           //  7
+	{ "bkchr.2k",    	0x20000, 0xe4d47aca, 4 | BRF_GRA },           //  4 Background Tiles
+	{ "bkchr.1k",    	0x20000, 0x5a1cbc1b, 4 | BRF_GRA },           //  5
+	{ "bkchr.4k",    	0x20000, 0xc351bd48, 4 | BRF_GRA },           //  6
+	{ "bkchr.3k",    	0x20000, 0x6bb2b050, 4 | BRF_GRA },           //  7
 
-	{ "mchr.1d",     0x20000, 0xab06a60b, 5 | BRF_GRA },           //  8 Foreground Tiles
-	{ "mchr.1e",     0x20000, 0xd221387d, 5 | BRF_GRA },           //  9
-	{ "mchr.1g",     0x20000, 0x1e4c1712, 5 | BRF_GRA },           // 10
-	{ "mchr.1h",     0x20000, 0xa381f529, 5 | BRF_GRA },           // 11
-	{ "mchr.2d",     0x20000, 0xe52303c4, 5 | BRF_GRA },           // 12
-	{ "mchr.2e",     0x20000, 0x23b9a6a1, 5 | BRF_GRA },           // 13
-	{ "mchr.2g",     0x20000, 0x1283ac09, 5 | BRF_GRA },           // 14
-	{ "mchr.2h",     0x20000, 0xcc6bf05c, 5 | BRF_GRA },           // 15
+	{ "mchr.1d",     	0x20000, 0xab06a60b, 5 | BRF_GRA },           //  8 Foreground Tiles
+	{ "mchr.1e",     	0x20000, 0xd221387d, 5 | BRF_GRA },           //  9
+	{ "mchr.1g",     	0x20000, 0x1e4c1712, 5 | BRF_GRA },           // 10
+	{ "mchr.1h",     	0x20000, 0xa381f529, 5 | BRF_GRA },           // 11
+	{ "mchr.2d",     	0x20000, 0xe52303c4, 5 | BRF_GRA },           // 12
+	{ "mchr.2e",     	0x20000, 0x23b9a6a1, 5 | BRF_GRA },           // 13
+	{ "mchr.2g",     	0x20000, 0x1283ac09, 5 | BRF_GRA },           // 14
+	{ "mchr.2h",     	0x20000, 0xcc6bf05c, 5 | BRF_GRA },           // 15
 
-	{ "b1m.bin",     0x10000, 0x64758232, 6 | BRF_GRA },           // 16 Sprites
-	{ "b2m.bin",     0x10000, 0xd958f5ad, 6 | BRF_GRA },           // 17
-	{ "b1k.bin",     0x10000, 0xe766f5fe, 6 | BRF_GRA },           // 18
-	{ "b2k.bin",     0x10000, 0xe71572d3, 6 | BRF_GRA },           // 19
-	{ "b1h.bin",     0x10000, 0x8494f38c, 6 | BRF_GRA },           // 20
-	{ "b2h.bin",     0x10000, 0x1fc5f049, 6 | BRF_GRA },           // 21
-	{ "b3m.bin",     0x10000, 0xd136802e, 6 | BRF_GRA },           // 22
-	{ "b4m.bin",     0x10000, 0xb4fa85d3, 6 | BRF_GRA },           // 23
-	{ "b3k.bin",     0x10000, 0x40e11cc8, 6 | BRF_GRA },           // 24
-	{ "b4k.bin",     0x10000, 0x5ca9716e, 6 | BRF_GRA },           // 25
-	{ "b3h.bin",     0x10000, 0x8c3d9173, 6 | BRF_GRA },           // 26
-	{ "b4h.bin",     0x10000, 0xa2df66f8, 6 | BRF_GRA },           // 27
+	{ "b1m.bin",     	0x10000, 0x64758232, 6 | BRF_GRA },           // 16 Sprites
+	{ "b2m.bin",     	0x10000, 0xd958f5ad, 6 | BRF_GRA },           // 17
+	{ "b1k.bin",     	0x10000, 0xe766f5fe, 6 | BRF_GRA },           // 18
+	{ "b2k.bin",     	0x10000, 0xe71572d3, 6 | BRF_GRA },           // 19
+	{ "b1h.bin",     	0x10000, 0x8494f38c, 6 | BRF_GRA },           // 20
+	{ "b2h.bin",     	0x10000, 0x1fc5f049, 6 | BRF_GRA },           // 21
+	{ "b3m.bin",     	0x10000, 0xd136802e, 6 | BRF_GRA },           // 22
+	{ "b4m.bin",     	0x10000, 0xb4fa85d3, 6 | BRF_GRA },           // 23
+	{ "b3k.bin",     	0x10000, 0x40e11cc8, 6 | BRF_GRA },           // 24
+	{ "b4k.bin",     	0x10000, 0x5ca9716e, 6 | BRF_GRA },           // 25
+	{ "b3h.bin",     	0x10000, 0x8c3d9173, 6 | BRF_GRA },           // 26
+	{ "b4h.bin",     	0x10000, 0xa2df66f8, 6 | BRF_GRA },           // 27
 
-	{ "vram.4d",     0x04000, 0xbfadfb32, 7 | BRF_GRA },           // 28 Characters
+	{ "vram.4d",     	0x04000, 0xbfadfb32, 7 | BRF_GRA },           // 28 Characters
 
-	{ "bks1j10.5h",  0x10000, 0x4934aacd, 8 | BRF_GRA },           // 29 Tilemaps
-	{ "bks1j18.3h",  0x10000, 0x551ffc88, 8 | BRF_GRA },           // 30
-	{ "ms1j10.3g",   0x10000, 0xf92958b8, 8 | BRF_GRA },           // 31
-	{ "ms1j18.5g",   0x10000, 0x89e35dc1, 8 | BRF_GRA },           // 32
+	{ "bks1j10.5h",  	0x10000, 0x4934aacd, 8 | BRF_GRA },           // 29 Tilemaps
+	{ "bks1j18.3h",  	0x10000, 0x551ffc88, 8 | BRF_GRA },           // 30
+	{ "ms1j10.3g",   	0x10000, 0xf92958b8, 8 | BRF_GRA },           // 31
+	{ "ms1j18.5g",   	0x10000, 0x89e35dc1, 8 | BRF_GRA },           // 32
 
-	{ "sfb05.bin",    0x0100, 0x864199ad, 0 | BRF_OPT },           // 33 Proms
-	{ "sfb00.bin",    0x0100, 0xbd3f8c5d, 0 | BRF_OPT },           // 34
-	{ "mb7114h.12j",  0x0100, 0x4c734b64, 0 | BRF_OPT },           // 35
-	{ "mmi-7603.13h", 0x0020, 0x06bcda53, 0 | BRF_OPT },           // 36
+	{ "sfb05.bin",    	0x0100, 0x864199ad, 0 | BRF_OPT },            // 33 Proms
+	{ "sfb00.bin",    	0x0100, 0xbd3f8c5d, 0 | BRF_OPT },            // 34
+	{ "mb7114h.12j",  	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 35
+	{ "mmi-7603.13h", 	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 36
 };
 
 STD_ROM_PICK(sfp)

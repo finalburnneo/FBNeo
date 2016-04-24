@@ -369,7 +369,7 @@ static INT32 DrvInit(INT32 game, INT32 swap)
 	s2650SetInHandler(s2650games_read_port);
 	s2650Close();
 
-	SN76496Init(0, 307200, 0);
+	SN76496Init(0, 3072000, 0);
 	SN76496SetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

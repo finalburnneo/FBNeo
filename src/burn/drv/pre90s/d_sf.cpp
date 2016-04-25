@@ -1549,7 +1549,7 @@ static struct BurnRomInfo sfuaRomDesc[] = {
 	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
 	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 	
-	{ "i8751.bin",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
+	{ "sf_s.id8751h-8.14f",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
 };
 
 STD_ROM_PICK(sfua)
@@ -1627,7 +1627,7 @@ static struct BurnRomInfo sfjpRomDesc[] = {
 	{ "mb7114h.12j", 	0x0100, 0x4c734b64, 0 | BRF_OPT },            // 42
 	{ "mmi-7603.13h",	0x0020, 0x06bcda53, 0 | BRF_OPT },            // 43
 	
-	{ "i8751.bin",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
+	{ "sf_s.id8751h-8.14f",  	0x00800, 0x00000000, 0 | BRF_NODUMP },		  // i8751 MCU
 };
 
 STD_ROM_PICK(sfjp)

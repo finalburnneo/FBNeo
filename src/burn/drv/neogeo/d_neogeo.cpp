@@ -14596,6 +14596,39 @@ struct BurnDriver BurnDrvlhcdb = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Last Hope (bootleg AES to MVS conversion, no coin support)
+// wasn't actually released on MVS but bootleg carts have been sold, this doesn't accept coins, runs like a console game
+ 
+static struct BurnRomInfo lasthopeRomDesc[] = {
+	{ "NGDT-300-P1.bin", 0x100000, 0x3776a88f, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
+
+	{ "NGDT-300-S1.bin", 0x010000, 0x0c0ff9e6, 2 | BRF_GRA },		 	//  1 Text data
+
+	{ "NGDT-300-C1.bin", 0x400000, 0x53ef41b5, 3 | BRF_GRA },		 	//  2 Sprite data
+	{ "NGDT-300-C2.bin", 0x400000, 0xf9b15ab3, 3 | BRF_GRA },		 	//  3
+	{ "NGDT-300-C3.bin", 0x400000, 0x50cc21cf, 3 | BRF_GRA },		 	//  4	
+	{ "NGDT-300-C4.bin", 0x400000, 0x8486ad9e, 3 | BRF_GRA },		 	//  5	
+
+	{ "NGDT-300-M1.bin", 0x020000, 0x113c870f, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+
+	{ "NGDT-300-V1.bin", 0x200000, 0xb765bafe, 5 | BRF_SND },		 	//  7 Sound data
+	{ "NGDT-300-V2.bin", 0x200000, 0x9fd0d559, 5 | BRF_SND },		 	//  8
+	{ "NGDT-300-V3.bin", 0x200000, 0x6d5107e2, 5 | BRF_SND },		 	//  9
+};
+
+STDROMPICKEXT(lasthope, lasthope, neogeo)
+STD_ROM_FN(lasthope)
+
+struct BurnDriver BurnDrvlasthope = {
+	"lasthope", NULL, "neogeo", NULL, "2005",
+	"Last Hope (bootleg AES to MVS conversion, no coin support)\0", NULL, "NG:Dev.Team", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_HORSHOOT, 0,
+	NULL, lasthopeRomInfo, lasthopeRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // Metal Slug 2 - Super Vehicle-001/II Turbo (NGM-9410) (slowdown/fix hack by Trap15)
 /* MVS VERSION */
 

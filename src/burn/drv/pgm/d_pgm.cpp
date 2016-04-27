@@ -5503,7 +5503,7 @@ static struct BurnRomInfo ddpdojblkblRomDesc[] = {
 	{ "kovsh_v100_china.asic",	0x004000, 0x0f09a5c1, 7 | BRF_PRG | BRF_ESS },  //  6 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(ddpdojblkbl, ddpdojblkbl, ddp3Bios) // custom bios
+STDROMPICKEXT(ddpdojblkbl, ddpdojblkbl, pgm) // custom bios
 STD_ROM_FN(ddpdojblkbl)
 
 struct BurnDriver BurnDrvDdpdojblkbl = {
@@ -5537,7 +5537,7 @@ static struct BurnRomInfo ketblRomDesc[] = {
 	{ "v100.u23", 	   			0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
 };
 
-STDROMPICKEXT(ketbl, ketbl, ketsuiBios) // custom bios
+STDROMPICKEXT(ketbl, ketbl, pgm) // custom bios
 STD_ROM_FN(ketbl)
 
 static void ketblCallback()
@@ -5591,7 +5591,7 @@ static struct BurnRomInfo espgalblRomDesc[] = {
 	{ "v100.u23", 	   			0x020000, 0x06c3dd29, 8 | BRF_PRG | BRF_ESS },  //  7 External ARM7 Rom
 };
 
-STDROMPICKEXT(espgalbl, espgalbl, espgalBios) // custom bios
+STDROMPICKEXT(espgalbl, espgalbl, pgm) // custom bios
 STD_ROM_FN(espgalbl)
 
 struct BurnDriver BurnDrvEspgalbl = {

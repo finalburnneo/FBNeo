@@ -197,21 +197,8 @@ static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 			popflame_protection_write(data);
 		return;
 
-		//case 0xc000: // this doesn't work -dink
-		//	question_offset = ~(0xff << ((address & 3) << 3)) | (data << ((address & 3) << 3));
-		//return;
-	}
-
-	switch (address)
-	{
 		case 0xc000:
-			question_offset = (question_offset & 0xffff00) | data;
-		return;
-		case 0xc001:
-			question_offset = (question_offset & 0xff00ff) | (data << 8);
-		return;
-		case 0xc002:
-			question_offset = (question_offset & 0x00ffff) | (data << 16);
+			question_offset = (question_offset & ~(0xff << ((address & 3) << 3))) | (data << ((address & 3) << 3));
 		return;
 	}
 }

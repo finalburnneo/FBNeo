@@ -7748,7 +7748,7 @@ static struct BurnRomInfo PokonyanRomDesc[] = {
 	{ "xmqq-9h.bin",   0x020000, 0x3cd8594b, BRF_GRA | CPS1_TILES },
 	{ "xmqq-9f.bin",   0x020000, 0x1ec10bed, BRF_GRA | CPS1_TILES },
 
-	{ "mqq-13b.bin",   0x010000, 0x4e8b81a8, BRF_PRG | CPS1_Z80_PROGRAM },
+	{ "xmqq-13b.bin",  0x010000, 0x4e8b81a8, BRF_PRG | CPS1_Z80_PROGRAM },
 
 	{ "xmqq-12c.bin",  0x020000, 0x71ac69ad, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	{ "xmqq-13c.bin",  0x020000, 0x71e29699, BRF_SND | CPS1_OKIM6295_SAMPLES },

@@ -2945,7 +2945,7 @@ STDDIPINFO(Pnickj)
 static struct BurnDIPInfo PokonyanDIPList[]=
 {
 	// Defaults
-	{0x14, 0xff, 0xff, 0x01, NULL                     },
+	{0x14, 0xff, 0xff, 0x41, NULL                     },
 	{0x15, 0xff, 0xff, 0x04, NULL                     },
 	{0x16, 0xff, 0xff, 0x00, NULL                     },
 	
@@ -2954,6 +2954,10 @@ static struct BurnDIPInfo PokonyanDIPList[]=
 	{0x14, 0x01, 0x03, 0x02, "3 Coins 1 Credit"       },
 	{0x14, 0x01, 0x03, 0x00, "2 Coins 1 Credit"       },
 	{0x14, 0x01, 0x03, 0x01, "1 Coin  1 Credit"       },
+	
+	{0   , 0xfe, 0   , 3   , "Controls"               },
+	{0x14, 0x01, 0x40, 0x40, "Digital"                },
+	{0x14, 0x01, 0x40, 0x00, "Wheel"                  }, // I assume this enables the wheel as the directions don't work (and the left/right input check just flashes) - not worked out to hook the wheel up yet though
 	
 	// Dip B
 	{0   , 0xfe, 0   , 3   , "Demo Sounds"            },

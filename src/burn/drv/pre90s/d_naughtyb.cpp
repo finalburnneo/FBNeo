@@ -1,9 +1,6 @@
 // FB Alpha Naughty Boy driver module
 // Based on MAME driver by Brad Oliver, Sal and John Bugliarisi, Paul Priest
 
-// Todo:
-//   Trivia Master needs tweaks/fixes/testing/etc
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "pleiadssound.h"
@@ -200,8 +197,21 @@ static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 			popflame_protection_write(data);
 		return;
 
+		//case 0xc000: // this doesn't work -dink
+		//	question_offset = ~(0xff << ((address & 3) << 3)) | (data << ((address & 3) << 3));
+		//return;
+	}
+
+	switch (address)
+	{
 		case 0xc000:
-			question_offset = ~(0xff << ((address & 3) << 3)) | (data << ((address & 3) << 3));
+			question_offset = (question_offset & 0xffff00) | data;
+		return;
+		case 0xc001:
+			question_offset = (question_offset & 0xff00ff) | (data << 8);
+		return;
+		case 0xc002:
+			question_offset = (question_offset & 0x00ffff) | (data << 16);
 		return;
 	}
 }
@@ -265,7 +275,8 @@ static INT32 MemIndex(INT32 select)
 	DrvZ80ROM		= Next; Next += 0x004000;
 
 	DrvQuestion		= Next;
-	if (select == 2)		Next += 0x020000;
+	if (select == 2 || select == 3)
+		                    Next += 0x020000;
 
 	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x008000;
@@ -323,7 +334,7 @@ static INT32 DrvInit(INT32 select)
 	game_select = select;
 
 	if (game_select == 0)
-	{
+	{ // naughty boy
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x0800,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  2, 1)) return 1;
@@ -347,7 +358,7 @@ static INT32 DrvInit(INT32 select)
 		if (BurnLoadRom(DrvColPROM + 0x0100, 17, 1)) return 1;
 	}
 	else if (game_select == 1)
-	{
+	{ // pop flamer
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  2, 1)) return 1;
@@ -363,7 +374,30 @@ static INT32 DrvInit(INT32 select)
 		if (BurnLoadRom(DrvColPROM + 0x0100,  9, 1)) return 1;
 	}
 	else if (game_select == 2)
-	{
+	{ // trivia master
+		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  2, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  4, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x0000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x1000,  6, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM + 0x0000,  7, 1)) return 1;
+
+		if (BurnLoadRom(DrvQuestion + 0x00000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x04000,  9, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x08000, 10, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x0c000, 11, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x10000, 12, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x14000, 13, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x18000, 14, 1)) return 1;
+		if (BurnLoadRom(DrvQuestion + 0x1c000, 15, 1)) return 1;
+	}
+	else if (game_select == 3)
+	{ // trivia genius
 		if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x1000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x2000,  2, 1)) return 1;
@@ -385,6 +419,7 @@ static INT32 DrvInit(INT32 select)
 		if (BurnLoadRom(DrvQuestion + 0x14000, 14, 1)) return 1;
 		if (BurnLoadRom(DrvQuestion + 0x18000, 15, 1)) return 1;
 		if (BurnLoadRom(DrvQuestion + 0x1c000, 16, 1)) return 1;
+		game_select = 2;
 	}
 
 	DrvGfxDecode();
@@ -455,13 +490,11 @@ static void draw_last_little_bit()
 		INT32 sx = (offs & 3) * 8;
 		INT32 sy = (offs / 4) * 8;
 
-#if 1
 		if ((offs&3) >= 2) {
 			sx -= 16;
 		} else {
 			sx += (34 * 8);
 		}
-#endif
 
 		if (nBurnLayer & 4) Render8x8Tile_Clip(pTransDraw, code0, sx, sy, color0, 2, 0x80, DrvGfxROM1);
 	}
@@ -512,7 +545,7 @@ static void draw_layer(INT32 layer)
 				sx = (offs & 0x3f) * 8;
 				sy = (offs / 64) * 8;
 
-				sx -= (scrx + 0);
+				sx -= scrx;
 				if (sx < -7) sx += 512;
 
 			} else continue;
@@ -621,6 +654,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cocktail);
 		SCAN_VAR(palettereg);
 		SCAN_VAR(bankreg);
+		SCAN_VAR(scrollreg);
 		SCAN_VAR(prot_count);
 		SCAN_VAR(prot_seed);
 		SCAN_VAR(prot_index);
@@ -936,7 +970,7 @@ struct BurnDriver BurnDrvTrvmstr = {
 	"trvmstr", NULL, NULL, NULL, "1985",
 	"Trivia Master (set 1)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvmstrRomInfo, trvmstrRomName, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
 	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -975,7 +1009,7 @@ struct BurnDriver BurnDrvTrvmstra = {
 	"trvmstra", "trvmstr", NULL, NULL, "1985",
 	"Trivia Master (set 2)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvmstraRomInfo, trvmstraRomName, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
 	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -1014,7 +1048,7 @@ struct BurnDriver BurnDrvTrvmstrb = {
 	"trvmstrb", "trvmstr", NULL, NULL, "1985",
 	"Trivia Master (set 3)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvmstrbRomInfo, trvmstrbRomName, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
 	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -1053,7 +1087,7 @@ struct BurnDriver BurnDrvTrvmstrc = {
 	"trvmstrc", "trvmstr", NULL, NULL, "1985",
 	"Trivia Master (set 4)\0", NULL, "Enerdyne Technologies Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvmstrcRomInfo, trvmstrcRomName, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
 	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -1089,13 +1123,18 @@ static struct BurnRomInfo trvgnsRomDesc[] = {
 STD_ROM_PICK(trvgns)
 STD_ROM_FN(trvgns)
 
+static INT32 trvgnsInit()
+{
+	return DrvInit(3);
+}
+
 struct BurnDriver BurnDrvTrvgns = {
 	"trvgns", "trvmstr", NULL, NULL, "1985",
 	"Trivia Genius\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, trvgnsRomInfo, trvgnsRomName, NULL, NULL, TrvmstrInputInfo, TrvmstrDIPInfo,
-	trvmstrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	trvgnsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
 };
 

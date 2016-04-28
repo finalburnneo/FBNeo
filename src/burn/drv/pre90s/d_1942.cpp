@@ -353,11 +353,11 @@ STD_ROM_PICK(Drvw)
 STD_ROM_FN(Drvw)
 
 static struct BurnRomInfo DrvhRomDesc[] = {
-	{ "42-3.bin",      0x04000, 0xec70785f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "42-4.bin",      0x04000, 0xcc11355f, BRF_ESS | BRF_PRG }, //	 1
-	{ "42-5.bin",      0x04000, 0x42746d75, BRF_ESS | BRF_PRG }, //	 2
-	{ "srb-06.m6",     0x02000, 0x466f8248, BRF_ESS | BRF_PRG }, //	 3
-	{ "srb-07.m7",     0x04000, 0x0d31038c, BRF_ESS | BRF_PRG }, //	 4
+	{ "Supercharger_1942_#3.m3", 0x04000, 0xec70785f, BRF_ESS | BRF_PRG }, //  0  Z80 #1 Program Code
+	{ "Supercharger_1942_#4.m4", 0x04000, 0xcc11355f, BRF_ESS | BRF_PRG }, //  1
+	{ "Supercharger_1942_#5.m5", 0x04000, 0x42746d75, BRF_ESS | BRF_PRG }, //  2
+	{ "srb-06.m6",     			 0x02000, 0x466f8248, BRF_ESS | BRF_PRG }, //  3
+	{ "srb-07.m7",     			 0x04000, 0x0d31038c, BRF_ESS | BRF_PRG }, //  4
 	
 	{ "sr-01.c11",     0x04000, 0xbd87f06b, BRF_ESS | BRF_PRG }, //  5	Z80 #2 Program 
 	
@@ -1099,8 +1099,8 @@ struct BurnDriver BurnDrvNineteen42w = {
 };
 
 struct BurnDriver BurnDrvNineteen42h = {
-	"1942h", "1942", NULL, NULL, "1984",
-	"42 (Screamware bootleg, hack)\0", NULL, "Capcom", "Miscellaneous",
+	"1942h", "1942", NULL, NULL, "1991",
+	"Supercharger 1942\0", NULL, "hack (Two Bit Score)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvhRomInfo, DrvhRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

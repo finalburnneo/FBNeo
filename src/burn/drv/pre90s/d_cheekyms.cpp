@@ -293,7 +293,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	DACInit(0, 0, 0, DrvSyncDAC);
-	DACSetRoute(0, 1.0, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -429,8 +429,8 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_tiles();
 	if (nBurnLayer & 2) draw_sprites();
+	if (nBurnLayer & 1) draw_tiles();
 
 	BurnTransferCopy(Palette);
 

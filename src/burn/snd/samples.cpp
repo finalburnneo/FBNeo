@@ -226,7 +226,7 @@ void BurnSampleReset()
 		BurnSampleStop(i);
 
 		if (sample_ptr->flags & SAMPLE_AUTOLOOP) {
-			bprintf(0, _T("set loop #%X\n"), i);
+			//bprintf(0, _T("set loop #%X\n"), i);
 			BurnSampleSetLoop(i, true); // this sets the loop flag, from the driver.
 		}
 	}

@@ -56,6 +56,7 @@ typedef struct
 	UINT8	nmi_state;
 	UINT8	irq_state;
 	UINT8   so_state;
+	UINT8   hold_irq;
 	int 	(*irq_callback)(int irqline);	/* IRQ callback */
 //	read8_machine_func rdmem_id;					/* readmem callback for indexed instructions */
 //	write8_machine_func wrmem_id;				/* writemem callback for indexed instructions */
@@ -131,6 +132,7 @@ void m6502_get_context (void *dst);
 void m6502_set_context (void *src);
 int m6502_execute(int cycles);
 void m6502_set_irq_line(int irqline, int state);
+void m6502_set_irq_hold();
 UINT32 m6502_get_pc();
 
 void m65c02_init();

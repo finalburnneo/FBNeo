@@ -267,6 +267,11 @@ void M6502SetIRQLine(INT32 vector, INT32 status)
 		pCurrentCPU->set_irq_line(vector, 0);
 		pCurrentCPU->execute(0);
 	}
+
+	if (status == CPU_IRQSTATUS_HOLD) {
+		m6502_set_irq_hold();
+		pCurrentCPU->set_irq_line(vector, 1);
+	}
 }
 
 INT32 M6502Run(INT32 cycles)

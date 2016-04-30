@@ -1993,7 +1993,7 @@ struct BurnDriver BurnDrvExtrmatn = {
 };
 
 
-// Extermination (US)
+// Extermination (US, set 1)
 
 static struct BurnRomInfo extrmatuRomDesc[] = {
 	{ "b06-20.11c",		0x10000, 0x04e3fc1f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2017,10 +2017,43 @@ STD_ROM_FN(extrmatu)
 
 struct BurnDriver BurnDrvExtrmatu = {
 	"extrmatnu", "extrmatn", NULL, NULL, "1987",
-	"Extermination (US)\0", NULL, "[Taito] World Games", "Miscellaneous",
+	"Extermination (US, set 1)\0", NULL, "Taito (World Games license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, extrmatuRomInfo, extrmatuRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
+	ExtrmatnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Extermination (US, set 2)
+
+static struct BurnRomInfo extrmatuaRomDesc[] = {
+	{ "b06-15.11c",		0x10000, 0x4b3ee597, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b06-16.9c",		0x10000, 0x86175ea4, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b06-17.4e",		0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "extr8742.4f",	0x00800, 0x00000000, 3 | BRF_NODUMP }, 	      //  3 I8742 MCU
+
+	{ "b06-01.13a",		0x20000, 0xd2afbf7e, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "b06-02.10a",		0x20000, 0xe0c2757a, 4 | BRF_GRA },	      	  //  5
+	{ "b06-03.7a",		0x20000, 0xee80ab9d, 4 | BRF_GRA },	      	  //  6
+	{ "b06-04.4a",		0x20000, 0x3697ace4, 4 | BRF_GRA },	      	  //  7
+
+	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
+	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
+};
+
+STD_ROM_PICK(extrmatua)
+STD_ROM_FN(extrmatua)
+
+struct BurnDriver BurnDrvExtrmatua = {
+	"extrmatnua", "extrmatn", NULL, NULL, "1987",
+	"Extermination (US, set 2)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, extrmatuaRomInfo, extrmatuaRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
 	ExtrmatnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

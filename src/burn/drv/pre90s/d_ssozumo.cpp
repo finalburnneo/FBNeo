@@ -564,12 +564,13 @@ static void draw_bg_layer()
 
 		sy -= bgscrolly;
 		sy -= 8; //offset
+
 		if (sy < -15) sy += 512;
 
 		INT32 attr  = DrvColRAM0[offs];
-		INT32 code  = DrvVidRAM0[offs] + ((attr & 0x08) << 5); // only 256 tiles
-		INT32 color = (attr & 0x30) >> 4; //>> 4) & 3;
-		INT32 flipy = (offs % 32) >= 16; //attr & 0x10;
+		INT32 code  = DrvVidRAM0[offs] + ((attr & 0x08) << 5);
+		INT32 color = (attr & 0x30) >> 4;
+		INT32 flipy = (offs % 32) >= 16;
 		code &= 0x4ff;
 
 		if (flipy)
@@ -590,7 +591,7 @@ static void draw_fg_layer()
 		INT32 sx = 239-((offs / 0x20) * 8);
 		INT32 sy = (offs & 0x1f) * 8;
 
-		sx += 8; //offsets
+		sx += 9; //offsets (8 + 1 to give the screen a 3d-effect)
 		sy -= 8;
 
 		INT32 color  = (DrvColRAM1[offs] & 0x30) >> 4;

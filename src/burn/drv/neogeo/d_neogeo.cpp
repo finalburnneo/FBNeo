@@ -10238,7 +10238,7 @@ struct BurnDriver BurnDrvwhp = {
 
 // Syougi No Tatsujin - Master of Syougi
 
-static struct BurnRomInfo mosyougiRomDesc[] = {
+static struct BurnRomInfo moshougiRomDesc[] = {
 	{ "203-p1.p1",    0x100000, 0x7ba70e2d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ TC538200
 
 	{ "203-s1.s1",    0x020000, 0xbfdc8309, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
@@ -10251,15 +10251,15 @@ static struct BurnRomInfo mosyougiRomDesc[] = {
 	{ "203-v1.v1",    0x200000, 0xbaa2b9a5, 5 | BRF_SND },           //  5 Sound data		/ TC5316200
 };
 
-STDROMPICKEXT(mosyougi, mosyougi, neogeo)
-STD_ROM_FN(mosyougi)
+STDROMPICKEXT(moshougi, moshougi, neogeo)
+STD_ROM_FN(moshougi)
 
-struct BurnDriver BurnDrvmosyougi = {
-	"mosyougi", NULL, "neogeo", NULL, "1995",
-	"Syougi No Tatsujin - Master of Syougi\0", NULL, "ADK / SNK", "Neo Geo MVS",
-	L"\u5C06\u68CB\u306E\u9054\u4EBA\0Master of Syougi\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvmoshougi = {
+	"moshougi", NULL, "neogeo", NULL, "1995",
+	"Syougi No Tatsujin - Master of Shougi\0", NULL, "ADK / SNK", "Neo Geo MVS",
+	L"\u5C06\u68CB\u306E\u9054\u4EBA\0Master of Shougi\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PUZZLE, 0,
-	NULL, mosyougiRomInfo, mosyougiRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, moshougiRomInfo, moshougiRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -12906,10 +12906,6 @@ struct BurnDriver BurnDrvrotd = {
 // Rage of the Dragons (NGH-2640)
 /* Encrypted Set */ /* AES VERSION */
 
-/* ID-0264
-  . NGH-2640
-  NEO-AEG PROGBK2 (NEO-PCM2 SNK) / NEO-AEG CHAFIO (1999.8.10) (NEO-CMC 7050)
-
  static struct BurnRomInfo rotdhRomDesc[] = {
 	{ "264-pk1.p1",   0x100000, 0xff2fa719, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
 	{ "264-pk2.sp2",  0x200000, 0x0df2e112, 1 | BRF_ESS | BRF_PRG }, //  1 				/ mask rom TC5316200
@@ -12933,7 +12929,7 @@ STDROMPICKEXT(rotdh, rotdh, neogeo)
 STD_ROM_FN(rotdh)
 
 struct BurnDriver BurnDrvrotdh = {
-	"rotdh", NULL, "neogeo", NULL, "2002",
+	"rotdh", "rotd", "neogeo", NULL, "2002",
 	"Rage of the Dragons (NGH-2640)\0", NULL, "Evoga / Playmore", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, 0,
@@ -12941,7 +12937,7 @@ struct BurnDriver BurnDrvrotdh = {
 	rotdInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	320, 224, 4, 3
 };
-*/
+
 
 // Matrimelee / Shin Gouketsuji Ichizoku Toukon (NGM-2660) (NGH-2660)
 /* Encrypted Set */ /* MVS AND AES VERSION */
@@ -13430,6 +13426,34 @@ struct BurnDriver BurnDrvFatfury3a = {
 	NULL, fatfury3aRomInfo, fatfury3aRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
+};
+
+// Crossed Swords 2 (bootleg CD to cartridge conversion)
+
+static struct BurnRomInfo crswd2blRomDesc[] = {
+	{ "054-p1.p1",    0x200000, 0x64836147, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		
+
+	{ "054-s1.s1",    0x020000, 0x22e02ddd, 2 | BRF_GRA },           //  1 Text layer tiles 
+
+	{ "054-c1.c1",    0x400000, 0x8221b712, 3 | BRF_GRA },           //  2 Sprite data 		
+	{ "054-c2.c2",    0x400000, 0xd6c6183d, 3 | BRF_GRA },           //  3 					
+	
+	{ "054-m1.m1",    0x020000, 0x63e28343, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code 		
+
+	{ "054-v1.v1",    0x200000, 0x22d4b93b, 5 | BRF_SND },           //  5 Sound data 		
+};
+
+STDROMPICKEXT(crswd2bl, crswd2bl, neogeo)
+STD_ROM_FN(crswd2bl)
+
+struct BurnDriver BurnDrvcrswd2bl = {
+	"crswd2bl", NULL, "neogeo", NULL, "1991",
+	"Crossed Swords 2 (bootleg CD to cartridge conversion)\0", NULL, "bootleg (Razoola)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_MISC, 0,
+	NULL, crswd2blRomInfo, crswd2blRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
 };
 
 // Crouching Tiger Hidden Dragon 2003 (The King of Fighters 2001 bootleg set 2)
@@ -16000,33 +16024,6 @@ struct BurnDriver BurnDrvcphd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, cphdRomInfo, cphdRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000,	304, 224, 4, 3
-};
-
-// Crossed Swords 2 (bootleg CD to cartridge conversion)
-static struct BurnRomInfo crsword2RomDesc[] = {
-	{ "054-p1.p1", 0x200000, 0x64836147, 1 | BRF_ESS | BRF_PRG },       //  0 68K Code
-
-	{ "054-s1.s1", 0x020000, 0x22e02ddd, 2 | BRF_GRA },		 	        //  1 Text data
-
-	{ "054-c1.c1", 0x400000, 0x8221b712, 3 | BRF_GRA },		 	        //  2 Sprite data
-	{ "054-c2.c2", 0x400000, 0xd6c6183d, 3 | BRF_GRA },		 	        //  3
-
-	{ "054-m1.m1", 0x020000, 0x63e28343, 4 | BRF_ESS | BRF_PRG },       //  4 Z80 code
-
-	{ "054-v1.v1", 0x200000, 0x22d4b93b, 5 | BRF_SND },		 	        //  5 Sound data
-};
-
-STDROMPICKEXT(crsword2, crsword2, neogeo)
-STD_ROM_FN(crsword2)
-
-struct BurnDriver BurnDrvcrsword2 = {
-	"crsword2", NULL, "neogeo", NULL, "1996",
-	"Crossed Swords 2 (bootleg CD to cartridge conversion)\0", NULL, "bootleg (Razoola)", "Neo Geo MVS",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_HORSHOOT, 0,
-	NULL, crsword2RomInfo, crsword2RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

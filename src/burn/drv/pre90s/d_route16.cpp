@@ -8,6 +8,7 @@
 extern "C" {
 #include "ay8910.h"
 }
+#include "sn76477.h"
 
 //------------------------------------------------------------------------------------------------
 
@@ -405,8 +406,22 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-void stratvox_sn76477_write(UINT32, UINT32)
+void stratvox_sn76477_write(UINT32, UINT32 data)
 {
+
+	SN76477_enable_w(0, (data >> 0) & 1);
+	SN76477_vco_w(0, (data >> 1) & 1);
+	SN76477_envelope_1_w(0, (data >> 2) & 1);
+	SN76477_envelope_2_w(0, (data >> 3) & 1);
+	SN76477_mixer_a_w(0, (data >> 4) & 1);
+	SN76477_mixer_b_w(0, (data >> 5) & 1);
+	SN76477_mixer_c_w(0, (data >> 6) & 1);
+#if 0
+	SN76477_mixer_w(0,(data >> 4) & 7);
+	SN76477_envelope_w(0,(data >> 2) & 3);
+    SN76477_vco_w(0,(data >> 1) & 1);
+    SN76477_enable_w(0,data & 1);
+#endif
 
 }
 
@@ -460,6 +475,28 @@ static INT32 DrvInit()
 	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
 	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
 
+	SN76477_init(0);
+	SN76477_set_noise_res(0, RES_K(47));
+	SN76477_set_filter_res(0, RES_K(150));
+	SN76477_set_filter_cap(0, CAP_U(0.001));
+	SN76477_set_decay_res(0, RES_M(3.3));
+	SN76477_set_attack_decay_cap(0, CAP_U(1.0));
+	SN76477_set_attack_res(0, RES_K(4.7));
+	SN76477_set_amplitude_res(0, RES_K(200));
+	SN76477_set_feedback_res(0, RES_K(55));
+	SN76477_set_oneshot_res(0, RES_K(4.7));
+	SN76477_set_oneshot_cap(0, CAP_U(2.2));
+	SN76477_set_pitch_voltage(0, 5.0);
+	SN76477_set_slf_res(0, RES_K(75));
+	SN76477_set_slf_cap(0, CAP_U(1.0));
+	SN76477_set_vco_res(0, RES_K(100));
+	SN76477_set_vco_cap(0, CAP_U(0.022));
+	SN76477_set_vco_voltage(0, 5.0*2/(2+10));
+	SN76477_mixer_w(0, 0);
+	SN76477_envelope_w(0, 0);
+
+	SN76477_set_mastervol(0, 1.00);
+
 	AY8910Init(0, 1250000, nBurnSoundRate, NULL, NULL, &stratvox_sn76477_write, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
@@ -477,6 +514,7 @@ static INT32 DrvExit()
 	DACExit();
 	ZetExit();
 	AY8910Exit(0);
+	SN76477_exit(0);
 
 	BurnFree (Mem);
 	BurnFree (pFMBuffer);
@@ -621,7 +659,7 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
-			
+			SN76477_sound_update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -632,6 +670,7 @@ static INT32 DrvFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			SN76477_sound_update(0, pSoundBuf, nSegmentLength);
 		}
 		
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);

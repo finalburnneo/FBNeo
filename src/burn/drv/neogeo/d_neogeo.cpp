@@ -16003,3 +16003,30 @@ struct BurnDriver BurnDrvcphd = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// Crossed Swords 2 (bootleg CD to cartridge conversion)
+static struct BurnRomInfo crsword2RomDesc[] = {
+	{ "054-p1.p1", 0x200000, 0x64836147, 1 | BRF_ESS | BRF_PRG },       //  0 68K Code
+
+	{ "054-s1.s1", 0x020000, 0x22e02ddd, 2 | BRF_GRA },		 	        //  1 Text data
+
+	{ "054-c1.c1", 0x400000, 0x8221b712, 3 | BRF_GRA },		 	        //  2 Sprite data
+	{ "054-c2.c2", 0x400000, 0xd6c6183d, 3 | BRF_GRA },		 	        //  3
+
+	{ "054-m1.m1", 0x020000, 0x63e28343, 4 | BRF_ESS | BRF_PRG },       //  4 Z80 code
+
+	{ "054-v1.v1", 0x200000, 0x22d4b93b, 5 | BRF_SND },		 	        //  5 Sound data
+};
+
+STDROMPICKEXT(crsword2, crsword2, neogeo)
+STD_ROM_FN(crsword2)
+
+struct BurnDriver BurnDrvcrsword2 = {
+	"crsword2", NULL, "neogeo", NULL, "1996",
+	"Crossed Swords 2 (bootleg CD to cartridge conversion)\0", NULL, "bootleg (Razoola)", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_HORSHOOT, 0,
+	NULL, crsword2RomInfo, crsword2RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

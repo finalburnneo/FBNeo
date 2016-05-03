@@ -172,6 +172,12 @@ static void popflame_protection_write(UINT8 data)
 
 static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 {
+	if (game_select == 1) { // PopFlamer protection..
+		if (address >= 0xb000 && address <= 0xb0ff)	{
+			return popflame_protection_write(data);
+		}
+	}
+
 	switch (address & ~0x07ff)
 	{
 		case 0x9000:
@@ -194,7 +200,6 @@ static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 
 		case 0xa800:
 			pleiads_sound_control_b_w(address, data); // sound - control b  and popflame protection writes
-			popflame_protection_write(data);
 		return;
 
 		case 0xc000:
@@ -205,11 +210,13 @@ static void __fastcall naughtyb_main_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall naughtyb_main_read(UINT16 address)
 {
+	if (game_select == 1) { // PopFlamer protection..
+		if (address == 0x9000 || address == 0x9090)
+			return popflame_protection_read();
+	}
+
 	switch (address & ~0x07ff)
 	{
-		case 0x9000:
-			return popflame_protection_read();
-
 		case 0xb000:
 			return (DrvInputs[0] & 0x03) | (DrvInputs[cocktail] & 0xfc);
 
@@ -467,12 +474,15 @@ static void DrvPaletteInit()
 	}
 }
 
-static void draw_last_little_bit()
+static void draw_last_little_bit(INT32 layer)
 {
 	for (INT32 offs = 0x100 - 1; offs >= 0; offs--)
 	{
 		INT32 code0  = (DrvVidRAM0[offs + 0x700] + (bankreg << 8)) & 0x1ff;
 		INT32 color0 = ((DrvVidRAM0[offs + 0x700] >> 5) + (palettereg << 3)) & 0xff;
+
+		INT32 code1  = (DrvVidRAM1[offs + 0x700] + (bankreg << 8)) & 0x1ff;
+		INT32 color1 = ((DrvVidRAM1[offs + 0x700] >> 5) + (palettereg << 3)) & 0xff;
 
 		INT32 sx = (offs & 3) * 8;
 		INT32 sy = (offs / 4) * 8;
@@ -483,7 +493,10 @@ static void draw_last_little_bit()
 			sx += (34 * 8);
 		}
 
-		if (nBurnLayer & 4) Render8x8Tile_Clip(pTransDraw, code0, sx, sy, color0, 2, 0x80, DrvGfxROM1);
+		//if (nBurnLayer & 4) Render8x8Tile_Clip(pTransDraw, code0, sx, sy, color0, 2, 0x80, DrvGfxROM1);
+		//if (nBurnLayer & 8) Render8x8Tile_Mask_Clip(pTransDraw, code0, sx, sy, color0, 2, transp, 0x80, DrvGfxROM1);
+		if (nBurnLayer & 1 && layer == 0) Render8x8Tile_Clip(pTransDraw, code1, sx, sy, color1, 2, 0, DrvGfxROM0);
+		if (nBurnLayer & 2 && layer == 1) Render8x8Tile_Mask_Clip(pTransDraw, code0, sx, sy, color0, 2, 0, 0x80, DrvGfxROM1);
 	}
 }
 
@@ -560,7 +573,8 @@ static INT32 DrvDraw()
 
 	draw_layer(0);
 	draw_layer(1);
-	draw_last_little_bit();
+	draw_last_little_bit(0);
+	draw_last_little_bit(1);
 
 	BurnTransferCopy(DrvPalette);
 

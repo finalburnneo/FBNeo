@@ -38,8 +38,8 @@ static UINT8 bgpalette;
 static UINT8 fgbank;
 static UINT8 bgbank;
 static UINT8 bgcolor;
-static UINT8 bgscrolly;
 static UINT8 bgscrollx;
+static UINT16 bgscrolly;
 static UINT8 flipscreen;
 
 static UINT8 DrvJoy1[8];
@@ -147,7 +147,7 @@ static void __fastcall pturn_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf400:
-			bgscrollx = (data>>5)*32*8;
+			bgscrolly = (data>>5)*32*8;
 			bgpalette = (data & 0x1f);
 		return;
 
@@ -159,7 +159,7 @@ static void __fastcall pturn_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf803:
-			bgscrolly = data; // (actually x on unflipped screen)
+			bgscrollx = data;
 		return;
 
 		case 0xfc00:
@@ -228,7 +228,7 @@ static void __fastcall pturn_sound_write(UINT16 address, UINT8 data)
 			nmi_sub_enable = data;
 		return;
 
-		case 0x4000: // is this even used????
+		case 0x4000:
 			sub_4000_data = data;
 		return;
 
@@ -248,7 +248,7 @@ static UINT8 __fastcall pturn_sound_read(UINT16 address)
 		case 0x3000:
 			return soundlatch;
 
-		case 0x4000: // is this even used????
+		case 0x4000:
 			return sub_4000_data;
 	}
 
@@ -353,18 +353,6 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-/*static void DrvPaletteInit() // correct?
-{
-	for (INT32 i = 0; i < 0x100; i++)
-	{
-		INT32 r = DrvColPROM[i] & 0xf;
-		INT32 g = DrvColPROM[i + 0x100] & 0xf;
-		INT32 b = DrvColPROM[i + 0x200] & 0xf;
-
-		DrvPalette[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
-	}
-}*/
-
 static void DrvPaletteInit()
 {
 	const UINT8 tab[16] = {
@@ -441,10 +429,8 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-
-//	sound_bit = sbit;
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -483,21 +469,20 @@ static void draw_fg_layer()
 
 static void draw_bg_layer()
 {
-	//bprintf(0, _T("bg scx %X scy %X.\n"), bgscrollx, bgscrolly);
 	INT32 color = ((bgpalette == 1) ? 25 : bgpalette);
 
-	for (INT32 offs = 0; offs < 32 * 32/*(32*8)*/; offs++)
+	for (INT32 offs = 0; offs < 32 * (32 * 8); offs++)
 	{
 		INT32 sx = (offs % 0x20) * 8;
 		INT32 sy = (offs / 0x20) * 8;
 
-		sx -= bgscrolly;  // this makes it scroll right....
+		sx -= bgscrollx;
 		if (sx < -7) sx += 256;
 
 		sy -= 16; //offset
 		if (sy < -7) sy += 256;
 
-		INT32 code = DrvMapROM[offs/*bgscrolly(no workie)*/] + (bgbank * 256);
+		INT32 code = DrvMapROM[offs + ( bgscrolly * 4 )] + (bgbank * 256);
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
 	}
@@ -515,7 +500,7 @@ static void draw_sprites()
 		INT32 code  = attr & 0x3f;
 		INT32 color = DrvSprRAM[offs + 2] & 0x1f;
 
-		sy -= 16; // fba offsets
+		sy -= 16; // offset
 
 		if (flipscreen)
 		{

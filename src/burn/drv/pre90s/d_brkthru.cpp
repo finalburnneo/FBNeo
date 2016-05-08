@@ -470,8 +470,8 @@ static INT32 DrvInit()
 		memcpy (DrvGfxROM1 + 0x0e000, DrvGfxROM2 + 0x13000, 0x1000);
 		memcpy (DrvGfxROM1 + 0x14000, DrvGfxROM2 + 0x14000, 0x1000);
 		memcpy (DrvGfxROM1 + 0x16000, DrvGfxROM2 + 0x15000, 0x1000);
-		memcpy (DrvGfxROM1 + 0x18000, DrvGfxROM2 + 0x16000, 0x1000);
-		memcpy (DrvGfxROM1 + 0x1c000, DrvGfxROM2 + 0x17000, 0x1000);
+		memcpy (DrvGfxROM1 + 0x1c000, DrvGfxROM2 + 0x16000, 0x1000);
+		memcpy (DrvGfxROM1 + 0x1e000, DrvGfxROM2 + 0x17000, 0x1000);
 
 		if (BurnLoadRom(DrvGfxROM2   + 0x00000,  9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2   + 0x08000, 10, 1)) return 1;

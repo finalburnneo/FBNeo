@@ -1983,6 +1983,38 @@ struct BurnDriver BurnDrvloverboy = {
 };
 
 
+// Triki Triki (Lover Boy bootleg)
+
+static struct BurnRomInfo trikitriRomDesc[] = {
+	{ "1.bin",     0x2000, 0x248f2f12, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.bin",     0x2000, 0x04052262, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",     0x2000, 0x979c17c1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",     0x1000, 0x839d79b7, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "snd.bin",   0x1000, 0x1589c4a9, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+
+	{ "5.bin",     0x2000, 0x8cb6ec1c, 3 | BRF_GRA },	    //  5 Graphics
+	{ "6.bin",     0x2000, 0xa7bed0c1, 3 | BRF_GRA },	    //  6
+	{ "7.bin",     0x2000, 0xb473ce14, 3 | BRF_GRA },	    //  7
+
+	{ "prom2.bin", 0x0100, 0xed5cec15, 4 | BRF_GRA },	    //  8 Color Proms
+	{ "prom1.bin", 0x0100, 0x79632c67, 4 | BRF_GRA },	    //  9
+};
+
+STD_ROM_PICK(trikitri)
+STD_ROM_FN(trikitri)
+
+struct BurnDriver BurnDrvtrikitri = {
+	"trikitri", "loverboy", NULL, NULL, "1983",
+	"Triki Triki (Lover Boy bootleg)\0", NULL, "DTT Enterprise Inc", "Jack the Giantkiller",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, trikitriRomInfo, trikitriRomName, NULL, NULL, LoverboyInputInfo, LoverboyDIPInfo,
+	loverboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvCalcPal, 0x100,
+	224, 240, 3, 4
+};
+
+
 // Super Triv
 
 static struct BurnRomInfo strivRomDesc[] = {

@@ -761,8 +761,8 @@ static INT32 DrvFrame()
 
 	konamiNewFrame();
 	ZetNewFrame();
-	// soundcpu needs a small boost for the music to play at the correct speed.
-	INT32 nCyclesTotal[2] = { 3000000 / 60, (3579545+1000000) / 60 };
+
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nInterleave = 30;
 
 	ZetOpen(0);

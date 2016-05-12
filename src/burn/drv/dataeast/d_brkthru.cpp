@@ -749,10 +749,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6809Scan(nAction);
 
 		M6809Open(0);
-		BurnYM3526Scan(nAction, pnMin);
+		BurnYM2203Scan(nAction, pnMin);
 		M6809Close();
 		M6809Open(1);
-		BurnYM2203Scan(nAction, pnMin);
+		BurnYM3526Scan(nAction, pnMin);
 		M6809Close();
 
 		SCAN_VAR(flipscreen);

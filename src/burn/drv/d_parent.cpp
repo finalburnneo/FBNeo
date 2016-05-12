@@ -55,42 +55,6 @@ struct BurnDriver BurnDrvBagman = {
 	NULL, 0, 224, 256, 3, 4
 };
 
-static struct BurnRomInfo CkongRomDesc[] = {
-	{ "falcon7",            0x01000, 0x2171cac3, BRF_ESS | BRF_PRG },
-	{ "falcon8",            0x01000, 0x88b83ff7, BRF_ESS | BRF_PRG },
-	{ "falcon9",            0x01000, 0xcff2af47, BRF_ESS | BRF_PRG },
-	{ "falcon10",           0x01000, 0x6b2ecf23, BRF_ESS | BRF_PRG },
-	{ "falcon11",           0x01000, 0x327dcadf, BRF_ESS | BRF_PRG },
-	
-	{ "falcon6",            0x01000, 0xa8916dc8, BRF_GRA },
-	{ "falcon5",            0x01000, 0xcd3b5dde, BRF_GRA },
-	{ "falcon4",            0x01000, 0xb62a0367, BRF_GRA },
-	{ "falcon3",            0x01000, 0x61122c5e, BRF_GRA },
-	
-	{ "falcon2",            0x00800, 0xf67c80f1, BRF_GRA },
-	{ "falcon1",            0x00800, 0x80eb517d, BRF_GRA },
-	
-	{ "ck6v.bin",           0x00020, 0x751c3325, BRF_GRA },
-	{ "ck6u.bin",           0x00020, 0xab1940fa, BRF_GRA },
-	{ "ck6t.bin",           0x00020, 0xb4e827a5, BRF_GRA },
-	
-	{ "falcon13",           0x01000, 0x5f0bcdfb, BRF_SND },
-	{ "falcon12",           0x01000, 0x9003ffbd, BRF_SND },
-};
-
-STD_ROM_PICK(Ckong)
-STD_ROM_FN(Ckong)
-
-struct BurnDriver BurnDrvCkong = {
-	"ckong", NULL, NULL, NULL, "1981",
-	"Crazy Kong Part II (set 1)\0", "Parent set for working drivers", "Falcon", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, CkongRomInfo, CkongRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 224, 256, 3, 4
-};
-
 static struct BurnRomInfo DockmanRomDesc[] = {
 	{ "pe1.19",             0x01000, 0xeef2ec54, BRF_ESS | BRF_PRG },
 	{ "pe2.18",             0x01000, 0xbc48d16b, BRF_ESS | BRF_PRG },

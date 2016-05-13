@@ -614,7 +614,7 @@ static void draw_sprites(INT32 prio)
 		{
 			INT32 sx = 240 - DrvSprRAM[offs + 3];
 			sx -= 8;
-			if (sx < -7) sx += 256;
+			if (sx < -15) sx += 256;
 
 			INT32 sy = 240 - DrvSprRAM[offs + 2];
 			sy -= 8;
@@ -629,7 +629,7 @@ static void draw_sprites(INT32 prio)
 
 			if (DrvSprRAM[offs] & 0x10)
 			{
-				draw_single_sprite(code & ~1, sx, flipscreen ? sy + 16 : sy - 16, color);
+				draw_single_sprite(code & ~1, sx, (flipscreen ? sy + 16 : sy - 16), color);
 				draw_single_sprite(code |  1, sx, sy, color);
 
 				draw_single_sprite(code & ~1, sx, (flipscreen ? sy + 16 : sy - 16) + 256, color);

@@ -1882,11 +1882,9 @@ void __fastcall pacman_write(UINT16 a, UINT8 d)
 		case VANVAN:
 		{
 			if (a == 0x5001) {
-				for (INT32 i = 0; i < 0x100; i++) {
-					if (DrvColPROM[0x100 + i] == 0) {
-						Palette[i] = (d & 1) ? BurnHighCol(0xaa, 0xaa, 0xaa, 0) : 0;
-					}
-				}
+				//Palette[0] = (d & 1) ? BurnHighCol(0xaa, 0xaa, 0xaa, 0) : 0;
+				//bprintf(0, _T("vanvan bgcolor data %x.\n"), d);
+				// This isn't supposed to be here.
 				return;
 			}
 		}
@@ -2632,6 +2630,9 @@ static void DrawBackground()
 
 		INT32 ofst;
 
+		if (game_select == VANVAN)
+			sx -= 2;
+
 		if (col & 0x20)
 			ofst = row + ((col & 0x1f) << 5);
 		else
@@ -2659,6 +2660,9 @@ static void DrawSprites()
 		INT32 sy     = DrvSprRAM2[offs];
 		INT32 flipx  = DrvSprRAM [offs] & 1;
 		INT32 flipy  = DrvSprRAM [offs] & 2;
+
+		if (game_select == VANVAN)
+			sx += 2*8;
 		
 		if (*flipscreen) {
 			sy = (240 - sy) - 8;
@@ -5994,7 +5998,7 @@ struct BurnDriver BurnDrvvanvan = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, vanvanRomInfo, vanvanRomName, NULL, NULL, vanvanInputInfo, vanvanDIPInfo,
 	vanvanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
+	224, 256, 3, 4
 };
 
 
@@ -6024,7 +6028,7 @@ struct BurnDriver BurnDrvvanvank = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, vanvankRomInfo, vanvankRomName, NULL, NULL, vanvankInputInfo, vanvanDIPInfo,
 	vanvanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
+	224, 256, 3, 4
 };
 
 
@@ -6054,7 +6058,7 @@ struct BurnDriver BurnDrvvanvanb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, vanvanbRomInfo, vanvanbRomName, NULL, NULL, vanvankInputInfo, vanvanDIPInfo,
 	vanvanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
+	224, 256, 3, 4
 };
 
 

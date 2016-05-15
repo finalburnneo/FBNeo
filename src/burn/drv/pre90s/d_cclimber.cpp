@@ -1110,7 +1110,6 @@ static void cclimber_draw_bigsprite()
 	}
 }
 
-					   extern int counter;
 static void draw_playfield()
 {
 	INT32 bits = (game_select == 6) ? 3 : 2;

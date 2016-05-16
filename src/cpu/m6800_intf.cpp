@@ -121,6 +121,22 @@ static cpu_core_config M6803CheatCpuConfig =
 	0
 };
 
+static cpu_core_config NSC8105CheatCpuConfig =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	NSC8105Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	1<<16,
+	0
+};
+
 INT32 M6800CoreInit(INT32 num, INT32 type)
 {
 	DebugCPU_M6800Initted = 1;
@@ -180,6 +196,13 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 			CpuCheatRegister(i, &M6803CheatCpuConfig);
 	}
 
+	if (type == CPU_TYPE_NSC8105) {
+		nsc8105_init();
+
+		for (INT32 i = 0; i < num; i++)
+			CpuCheatRegister(i, &NSC8105CheatCpuConfig);
+	}
+
 	return 0;
 }
 
@@ -201,6 +224,11 @@ INT32 M6803Init(INT32 num)
 INT32 M6801Init(INT32 num)
 {
 	return M6800CoreInit(num, CPU_TYPE_M6801);
+}
+
+INT32 NSC8105Init(INT32 num)
+{
+	return M6800CoreInit(num, CPU_TYPE_NSC8105);
 }
 
 void M6800Exit()
@@ -312,6 +340,29 @@ void M6801SetIRQLine(INT32 vector, INT32 status)
 	}
 }
 
+void NSC8105SetIRQLine(INT32 vector, INT32 status)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called without init\n"));
+	if (nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("NSC8105SetIRQLine called with invalid CPU Type\n"));
+#endif
+
+	if (status == CPU_IRQSTATUS_NONE) {
+		m6800_set_irq_line(vector, 0);
+	}
+	
+	if (status == CPU_IRQSTATUS_ACK) {
+		m6800_set_irq_line(vector, 1);
+	}
+	
+	if (status == CPU_IRQSTATUS_AUTO) {
+		m6800_set_irq_line(vector, 1);
+		nsc8105_execute(0);
+		m6800_set_irq_line(vector, 0);
+		nsc8105_execute(0);
+	}
+}
+
 INT32 M6800Run(INT32 cycles)
 {
 #if defined FBA_DEBUG
@@ -348,6 +399,20 @@ INT32 M6803Run(INT32 cycles)
 #endif
 
 	cycles = m6803_execute(cycles);
+	
+	nM6800CyclesTotal += cycles;
+	
+	return cycles;
+}
+
+INT32 NSC8105Run(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6803Run called without init\n"));
+	if (nCpuType != CPU_TYPE_M6803 && nCpuType != CPU_TYPE_M6801) bprintf(PRINT_ERROR, _T("M6803Run called with invalid CPU Type\n"));
+#endif
+
+	cycles = nsc8105_execute(cycles);
 	
 	nM6800CyclesTotal += cycles;
 	

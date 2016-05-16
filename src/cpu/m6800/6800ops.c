@@ -1949,7 +1949,6 @@ M6800_INLINE void ldd_ix( void )
 	SET_NZ16(D);
 }
 
-#if 0
 /* $ec ADCX immediate -****    NSC8105 only.  Flags are a guess - copied from addb_im() */
 M6800_INLINE void adcx_im( void )
 {
@@ -1958,7 +1957,6 @@ M6800_INLINE void adcx_im( void )
 	CLR_HNZVC; SET_FLAGS8(X,t,r); SET_H(X,t,r);
 	X = r;
 }
-#endif
 
 /* $ed STD indexed -**0- */
 M6800_INLINE void std_ix( void )

@@ -8,7 +8,7 @@ M6800_INLINE void adcb_di(void);
 M6800_INLINE void adcb_ex(void);
 M6800_INLINE void adcb_im(void);
 M6800_INLINE void adcb_ix(void);
-//M6800_INLINE void adcx_im(void);
+M6800_INLINE void adcx_im(void);
 M6800_INLINE void adda_di(void);
 M6800_INLINE void adda_ex(void);
 M6800_INLINE void adda_im(void);

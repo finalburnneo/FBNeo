@@ -1622,17 +1622,17 @@ void hd63701_trap_pc(void)
  * is at least one new opcode ($fc)
  ****************************************************************************/
 #if (HAS_NSC8105)
-static void nsc8105_init(int index, int clock, const void *config, int (*irqcallback)(int))
+void nsc8105_init()
 {
 //  m6800.subtype = SUBTYPE_NSC8105;
 	m6800.insn = nsc8105_insn;
 	m6800.cycles = cycles_nsc8105;
-	state_register("nsc8105", index);
+	//state_register("nsc8105", index);
 }
 /****************************************************************************
  * Execute cycles CPU cycles. Return number of cycles really executed
  ****************************************************************************/
-static int nsc8105_execute(int cycles)
+int nsc8105_execute(int cycles)
 {
 	UINT8 ireg;
 	m6800_ICount = cycles;
@@ -1650,7 +1650,7 @@ static int nsc8105_execute(int cycles)
 		else
 		{
 			pPPC = pPC;
-			CALL_MAME_DEBUG;
+			//CALL_MAME_DEBUG;
 			ireg=M_RDOP(PCD);
 			PC++;
 

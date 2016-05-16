@@ -5,7 +5,7 @@
 #define HAS_M6803		1
 #define HAS_M6808		0
 #define HAS_HD63701		1
-#define HAS_NSC8105		0
+#define HAS_NSC8105     1
 
 #ifndef _M6800_H
 #define _M6800_H
@@ -81,6 +81,8 @@ void m6800_init();
 void hd63701_init();
 void m6803_init();
 void m6801_init();
+void nsc8105_init();
+
 void m6800_reset(void);
 int m6800_get_pc();
 void m6800_get_context(void *dst);
@@ -88,6 +90,8 @@ void m6800_set_context(void *src);
 int m6800_execute(int cycles);
 int m6803_execute(int cycles);
 int hd63701_execute(int cycles);
+int nsc8105_execute(int cycles);
+
 void m6800_set_irq_line(int irqline, int state);
 
 void m6803_internal_registers_w(unsigned short offset, unsigned char data);
@@ -248,7 +252,7 @@ void hd63701_trap_pc(void);
 #define NSC8105_IRQ_LINE			 M6800_IRQ_LINE
 #define NSC8105_TIN_LINE			 M6800_TIN_LINE
 
-extern void nsc8105_get_info(UINT32 state, cpuinfo *info);
+//extern void nsc8105_get_info(UINT32 state, cpuinfo *info);
 #endif
 
 /****************************************************************************/

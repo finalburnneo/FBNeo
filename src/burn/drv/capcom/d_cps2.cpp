@@ -3021,8 +3021,8 @@ STD_ROM_PICK(Hsf2a)
 STD_ROM_FN(Hsf2a)
 
 static struct BurnRomInfo Hsf2jRomDesc[] = {
-	{ "hs2j.03",       0x080000, 0x00738f73, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
-	{ "hs2j.04",       0x080000, 0x40072c4a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.03c",      0x080000, 0x6efe661f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.04b",      0x080000, 0x93f2500a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -3043,6 +3043,30 @@ static struct BurnRomInfo Hsf2jRomDesc[] = {
 
 STD_ROM_PICK(Hsf2j)
 STD_ROM_FN(Hsf2j)
+
+static struct BurnRomInfo Hsf2jr1RomDesc[] = {
+	{ "hs2j.03",       0x080000, 0x00738f73, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2j.04",       0x080000, 0x40072c4a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.06",        0x080000, 0xf4e56dda, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.07",        0x080000, 0xee4420fc, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.08",        0x080000, 0xc9441533, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.09",        0x080000, 0x3fc638a8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "hs2.10",        0x080000, 0x20d0f9e4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "hs2.13m" ,      0x800000, 0xa6ecab17, CPS2_GFX | BRF_GRA },
+	{ "hs2.15m",       0x800000, 0x10a0ae4d, CPS2_GFX | BRF_GRA },
+	{ "hs2.17m",       0x800000, 0xadfa7726, CPS2_GFX | BRF_GRA },
+	{ "hs2.19m",       0x800000, 0xbb3ae322, CPS2_GFX | BRF_GRA },
+
+	{ "hs2.01",        0x020000, 0xc1a13786, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+};
+
+STD_ROM_PICK(Hsf2jr1)
+STD_ROM_FN(Hsf2jr1)
 
 static struct BurnRomInfo JyangokuRomDesc[] = {
 	{ "majj.03",       0x080000, 0x4614a3b2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8605,10 +8629,20 @@ struct BurnDriver BurnDrvCpsHsf2a = {
 
 struct BurnDriver BurnDrvCpsHsf2j = {
 	"hsf2j", "hsf2", NULL, NULL, "2004",
-	"Hyper Street Fighter II: The Anniversary Edition (031222 Japan)\0", NULL, "Capcom", "CPS2",
+	"Hyper Street Fighter II: The Anniversary Edition (040202 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
 	NULL, Hsf2jRomInfo, Hsf2jRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsHsf2jr1 = {
+	"hsf2jr1", "hsf2", NULL, NULL, "2004",
+	"Hyper Street Fighter II: The Anniversary Edition (031222 Japan)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
+	NULL, Hsf2jr1RomInfo, Hsf2jr1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

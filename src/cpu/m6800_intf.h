@@ -57,7 +57,7 @@ void M6800Reset();
 #define HD63701Reset		M6800Reset
 #define M6803Reset		M6800Reset
 #define M6801Reset		M6800Reset
-#define NSC8105         M6800Reset
+#define NSC8105Reset         M6800Reset
 
 void M6800NewFrame();
 #define HD63701NewFrame		M6800NewFrame

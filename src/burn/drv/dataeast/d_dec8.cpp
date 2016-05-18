@@ -4693,7 +4693,8 @@ static INT32 LastmissInit()
 			if (BurnLoadRom(DrvMainROM  + 0x20000,  2, 1)) return 1;
 			if (BurnLoadRom(DrvMainROM  + 0x30000,  3, 1)) return 1;
 			if (BurnLoadRom(DrvMainROM  + 0x40000,  4, 1)) return 1;
-
+			if (BurnLoadRom(DrvMainROM  + 0x48000,  4, 1)) return 1; // reload
+											
 			if (BurnLoadRom(DrvSubROM   + 0x00000,  5, 1)) return 1;
 	
 			if (BurnLoadRom(DrvM6502ROM + 0x08000,  6, 1)) return 1;

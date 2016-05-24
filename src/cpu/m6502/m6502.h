@@ -134,6 +134,7 @@ int m6502_execute(int cycles);
 void m6502_set_irq_line(int irqline, int state);
 void m6502_set_irq_hold();
 UINT32 m6502_get_pc();
+UINT32 m6502_get_prev_pc();
 
 void m65c02_init();
 void m65c02_reset();

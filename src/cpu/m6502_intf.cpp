@@ -558,6 +558,16 @@ UINT32 M6502GetPC(INT32)
 	return m6502_get_pc();
 }
 
+UINT32 M6502GetPrevPC(INT32)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502GetPrevPC called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502GetPrevPC called with no CPU open\n"));
+#endif
+
+	return m6502_get_prev_pc();
+}
+
 INT32 M6502Scan(INT32 nAction)
 {
 #if defined FBA_DEBUG

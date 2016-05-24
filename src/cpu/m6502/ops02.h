@@ -77,6 +77,7 @@
  ***************************************************************/
 //#define RDOP() cpu_readop(PCW++); m6502_ICount -= 1
 #define RDOP() M6502ReadOp(PCW++); m6502_ICount -= 1
+#define PEEKOP() M6502ReadOp(PCW)
 
 /***************************************************************
  *  RDOPARG read an opcode argument
@@ -446,7 +447,9 @@
  ***************************************************************/
 #define CLI 													\
 	if ((m6502.irq_state != M6502_CLEAR_LINE) && (P & F_I)) { 		\
-		m6502.after_cli = 1;									\
+		/* kludge for now until IRQ rewrite: ignore if RTI follows */ \
+		if (PEEKOP() != 0x40) \
+    		m6502.after_cli = 1;									\
 	}															\
 	P &= ~F_I
 

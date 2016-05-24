@@ -74,6 +74,7 @@ void M6502SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6502Scan(INT32 nAction);
 
 UINT32 M6502GetPC(INT32);
+UINT32 M6502GetPrevPC(INT32);
 
 void M6502WriteRom(UINT32 Address, UINT8 Data);
 

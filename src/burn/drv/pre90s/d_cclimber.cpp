@@ -1040,6 +1040,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 	AY8910Exit(0);
+	AY8910Exit(1);
 
 	free (AllMem);
 	AllMem = NULL;

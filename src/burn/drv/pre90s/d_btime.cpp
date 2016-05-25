@@ -155,7 +155,7 @@ STDDIPINFO(Btime)
 #define RB(a1,a2,dest) if (address >= a1 && address <= a2) \
 		return dest[address - a1];
 
-void btimepalettewrite(int offset, int data)
+static void btimepalettewrite(int offset, int data)
 {
 	INT32 bit0, bit1, bit2;
 
@@ -218,7 +218,7 @@ static UINT8 btime_main_read(UINT16 address)
 	return 0;
 }
 
-void btime_decrypt()
+static void btime_decrypt()
 {
 	// d-
 	UINT16 A = M6502GetPC(0);
@@ -339,7 +339,8 @@ static void btime_sound_write(UINT16 address, UINT8 data)
 }
 
 static void ay8910_0_portA_write(UINT32, UINT32 data)
-{   //bprintf(0, _T("portA_w(): %X\n"), data);
+{
+	if (data == 0xff) return; // init/reset. (usually)
 
 	if (audio_nmi_type == AUDIO_ENABLE_AY8910)
 	{
@@ -527,7 +528,7 @@ static INT32 BtimeInit()
 	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
 
 	// second ay, apply a slight bit of lpf to match
-	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
+	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x15), 1);
 	filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
 	filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
 
@@ -771,19 +772,19 @@ static INT32 BtimeFrame()
 		prevcoin = DrvInputs[2] & 0xc0;
 	}
 
-	INT32 nInterleave = 273;
+	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[2] = { 1500000 / 60, 500000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
-	vblank = 0x0;
+	vblank = 0x80;
 
 #if 0
-	if (counter != lastctr) {
+	if (counter != lastctr) { // save this for tweaking filters etc.
 		lastctr = counter;
 
 		//LP1->SetParam(CutFreq + (counter * 500), SampleFreq, Q, Gain, CutFreq2+ (counter * 500), Q2, Gain2);
 		//LP2->SetParam(CutFreq + (counter * 500), SampleFreq, Q, Gain, CutFreq2+ (counter * 500), Q2, Gain2);
-		filter_rc_set_RC(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10));
+		filter_rc_set_RC(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10+ (counter * 50)));
 		filter_rc_set_RC(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10));
 		filter_rc_set_RC(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10));
 	}
@@ -796,8 +797,8 @@ static INT32 BtimeFrame()
 		nCyclesDone[0] += M6502Run(nSegment);
 		M6502Close();
 
-		if (i == 240) vblank = 0x80;
-		if (i == 272) vblank = 0x0;
+		if (i == 248) vblank = 0x80;
+		if (i == 8) vblank = 0x00;
 
 		M6502Open(1);
 		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
@@ -933,10 +934,10 @@ struct BurnDriver BurnDrvBtime2 = {
 	"btime2", "btime", NULL, NULL, "1982",
 	"Burger Time (Data East set 2)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, btime2RomInfo, btime2RomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	BtimeInit, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
-	256, 256, 4, 3
+	240, 242, 3, 4
 };
 
 INT32 Btime3Init()
@@ -977,8 +978,8 @@ struct BurnDriver BurnDrvBtime3 = {
 	"btime3", "btime", NULL, NULL, "1982",
 	"Burger Time (Data East USA)\0", NULL, "Data East USA Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, btime3RomInfo, btime3RomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	Btime3Init, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
-	256, 256, 4, 3
+	240, 242, 3, 4
 };

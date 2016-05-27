@@ -301,14 +301,26 @@ static void DrvProgDecrypt()
 {
 	for (INT32 A = 0; A < 0x8000; A++)
 	{
-		if ((A & 0x028) == 0x020) DrvZ80ROMDec[A] ^= 0x40;
-		if ((A & 0x608) == 0x408) DrvZ80ROMDec[A] ^= 0x20;
-		if ((A & 0x602) == 0x402) DrvZ80ROMDec[A] ^= 0x02;
-		if ((A & 0x602) == 0x202) DrvZ80ROMDec[A] ^= 0x02;
-		if ((A & 0x228) == 0x208) DrvZ80ROMDec[A]  = BITSWAP08(DrvZ80ROMDec[A],7,6,1,4,3,2,5,0);
+		DrvZ80ROMDec[A] = DrvZ80ROM[A];
 
-		if ((A & 0x020) == 0x020) DrvZ80ROM[A] ^= 0x40;
-		if ((A & 0x220) == 0x200) DrvZ80ROM[A]  = BITSWAP08(DrvZ80ROM[A],7,6,1,4,3,2,5,0);
+		if (BIT(A,5) && !BIT(A,3))
+			DrvZ80ROMDec[A] ^= 0x40;
+
+		if (BIT(A,10) && !BIT(A,9) && BIT(A,3))
+			DrvZ80ROMDec[A] ^= 0x20;
+
+		if ((BIT(A,10) ^ BIT(A,9)) && BIT(A,1))
+			DrvZ80ROMDec[A] ^= 0x02;
+
+		if (BIT(A,9) || !BIT(A,5) || BIT(A,3))
+			DrvZ80ROMDec[A] = BITSWAP08(DrvZ80ROMDec[A],7,6,1,4,3,2,5,0);
+
+		/* decode the data */
+		if (BIT(A,5))
+			DrvZ80ROM[A] ^= 0x40;
+
+		if (BIT(A,9) || !BIT(A,5))
+			DrvZ80ROM[A] = BITSWAP08(DrvZ80ROM[A],7,6,1,4,3,2,5,0);
 	}
 }
 
@@ -324,7 +336,6 @@ static INT32 DrvInit()
 	{
 		if (BurnLoadRom(DrvZ80ROM  + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0x10000,  1, 1)) return 1;
-		memcpy (DrvZ80ROM + 0x08000, DrvZ80ROM, 0x8000);
 
 		if (BurnLoadRom(t5182ROM   + 0x00000,  2, 1)) return 1;
 		if (BurnLoadRom(t5182ROM   + 0x08000,  3, 1)) return 1;

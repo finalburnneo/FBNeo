@@ -1,5 +1,9 @@
 // BurgerTime emu-layer for FB Alpha by dink & iq_132, based on the MAME driver by Zsolt Vasvari.
 
+// Todo:
+// Zoar - Sound and Input issues, after coining-up it starts automatically.
+//        Also missing sounds in some places...
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"
@@ -26,6 +30,7 @@ static UINT8 *DrvBGRAM;
 static UINT8 *DrvColRAM;
 static UINT8 *DrvCharRAM; // disco
 static UINT8 *DrvSpriteRAM; // disco
+static UINT8 *DrvScrollRAM;
 static UINT8 *DrvSoundRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -70,7 +75,7 @@ static UINT8 btime3mode = 0;
 static UINT8 brubbermode = 0;
 static UINT8 discomode = 0;
 static UINT8 lncmode = 0;
-static UINT8 coinactivelow = 0;
+static UINT8 zoarmode = 0;
 
 static UINT8 bnjskew = 0;
 
@@ -460,6 +465,81 @@ static struct BurnDIPInfo LncDIPList[]=
 
 STDDIPINFO(Lnc)
 
+static struct BurnInputInfo ZoarInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 fire 3"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 3"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Zoar)
+
+
+static struct BurnDIPInfo ZoarDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0x2f, NULL		},
+	{0x14, 0xff, 0xff, 0x1f, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x13, 0x01, 0x03, 0x00, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x03, 0x01, "1 Coin  3 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x13, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x13, 0x01, 0x20, 0x20, "Off"		},
+	{0x13, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Control Panel"		},
+	{0x13, 0x01, 0x40, 0x00, "Upright"		},
+	{0x13, 0x01, 0x40, 0x40, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x14, 0x01, 0x01, 0x01, "3"		},
+	{0x14, 0x01, 0x01, 0x00, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x06, 0x06, "5000"		},
+	{0x14, 0x01, 0x06, 0x04, "10000"		},
+	{0x14, 0x01, 0x06, 0x02, "15000"		},
+	{0x14, 0x01, 0x06, 0x00, "20000"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x14, 0x01, 0x08, 0x08, "Easy"		},
+	{0x14, 0x01, 0x08, 0x00, "Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Weapon Select"		},
+	{0x14, 0x01, 0x10, 0x00, "Manual"		},
+	{0x14, 0x01, 0x10, 0x10, "Auto"		},
+};
+
+STDDIPINFO(Zoar)
+
 
 #define WB(a1,a2,dest) if (address >= a1 && address <= a2) { \
 		dest[address - a1] = data; \
@@ -591,7 +671,7 @@ static void discopaletteupdate()
 {
 	const UINT8 *color_prom = DrvColPROM;
 
-	for (INT32 i = 0; i < 0x20; i++)
+	for (INT32 i = 0; i < 0x40; i++)
 	{
 		INT32 bit0, bit1, bit2, r, g, b;
 
@@ -730,6 +810,43 @@ static UINT8 bnj_main_read(UINT16 address)
 	return 0;
 }
 
+static UINT8 zoar_main_read(UINT16 address)
+{
+	RB(0x0000, 0x07ff, DrvMainRAM);
+	RB(0x8000, 0x83ff, DrvVidRAM);
+	RB(0x8400, 0x87ff, DrvColRAM);
+
+	if (address >= 0xd000 && address <= 0xffff) {
+		return DrvMainROMdec[address];
+	}
+
+	if (address >= 0x8800 && address <= 0x8bff) {
+		INT32 offset = address & 0x3ff;
+		return DrvVidRAM[(((offset % 32) * 32) + (offset / 32))];
+	}
+
+	if (address >= 0x8c00 && address <= 0x8fff) {
+		INT32 offset = address & 0x3ff;
+		return DrvColRAM[(((offset % 32) * 32) + (offset / 32))];
+	}
+
+	switch (address)
+	{
+		case 0x9800:
+			return ((vblank) ? 0x00 : 0x80) | (DrvDips[0] & 0x7f);
+
+		case 0x9801:
+			return DrvDips[1];
+
+		case 0x9802:
+			return DrvInputs[0];
+
+		case 0x9803:
+			return DrvInputs[1];
+	}
+	return 0;
+}
+
 static UINT8 disco_main_read(UINT16 address)
 {
 	RB(0x0000, 0x07ff, DrvMainRAM);
@@ -849,6 +966,24 @@ static void disco_decrypt()
 	}
 }
 
+static void zoar_decrypt()
+{
+	// d-
+	UINT16 A = M6502GetPC(0);
+	UINT16 A1 = M6502GetPrevPC(0);
+
+	if (DrvMainROMdec[A1] == 0x20)	/* JSR $xxxx */
+		A = zoar_main_read(A1+1) + 256 * zoar_main_read(A1+2);
+
+	/* If the address of the next instruction is xxxx xxx1 xxxx x1xx, decode it. */
+	if ((A & 0x0104) == 0x0104)
+	{
+		/* 76543210 -> 65342710 bit rotation */
+		DrvMainROMdec[A] = (DrvMainROM[A] & 0x13) | ((DrvMainROM[A] & 0x80) >> 5) | ((DrvMainROM[A] & 0x64) << 1)
+			   | ((DrvMainROM[A] & 0x08) << 2);
+	}
+}
+
 static void mmonkey_main_write(UINT16 address, UINT8 data)
 {
 	DrvMainRAM[address] = data;
@@ -939,6 +1074,52 @@ static void btime_main_write(UINT16 address, UINT8 data)
 
 		case 0x4004:
 			bnj_scroll1 = data;
+		return;
+	}
+}
+
+static void zoar_main_write(UINT16 address, UINT8 data)
+{
+	zoar_decrypt();
+
+	WB(0x0000, 0x07ff, DrvMainRAM);
+	WB(0x8000, 0x83ff, DrvVidRAM);
+	WB(0x8400, 0x87ff, DrvColRAM);
+	WB(0x9800, 0x9803, DrvScrollRAM);
+
+	if (address >= 0x8800 && address <= 0x8bff) {
+		INT32 offset = address & 0x3ff;
+		DrvVidRAM[(((offset % 32) * 32) + (offset / 32))] = data;
+		return;
+	}
+
+	if (address >= 0x8c00 && address <= 0x8fff) {
+		INT32 offset = address & 0x3ff;
+		DrvColRAM[(((offset % 32) * 32) + (offset / 32))] = data;
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x9804:
+			bnj_scroll2 = data;
+		return;
+
+		case 0x9805:
+			bnj_scroll1 = data;
+		return;
+
+		case 0x9000:
+			btime_palette = (data & 0x30) >> 3;
+		return;
+
+		case 0x9806:
+			soundlatch = data;
+			M6502Close();
+			M6502Open(1);
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			M6502Close();
+			M6502Open(0);
 		return;
 	}
 }
@@ -1148,6 +1329,7 @@ static INT32 MemIndex()
 	DrvColRAM	= Next; Next += 0x001000;
 	DrvCharRAM  = Next; Next += 0x008000;
 	DrvSpriteRAM= Next; Next += 0x001000;
+	DrvScrollRAM= Next; Next += 0x000100;
 	DrvSoundRAM	= Next; Next += 0x001000;
 
 	RamEnd		= Next;
@@ -1271,6 +1453,40 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
+static INT32 ZoarGfxDecode()
+{
+	INT32 Plane_t8[3] = { RGN_FRAC(gfx0len, 2,3), RGN_FRAC(gfx0len, 1,3), RGN_FRAC(gfx0len, 0,3) };
+	INT32 Plane_t16spr[3] = { RGN_FRAC(0x3000, 2,3), RGN_FRAC(0x3000, 1,3), RGN_FRAC(0x3000, 0,3) };
+	INT32 Plane_t16[3] = { RGN_FRAC(gfx1len, 2,3), RGN_FRAC(gfx1len, 1,3), RGN_FRAC(gfx1len, 0,3) };
+
+	INT32 t8XOffs[8] = { STEP8(0,1) };
+	INT32 t8YOffs[8] = { STEP8(0,8) };
+
+	INT32 t16XOffs[16] = { STEP8(16*8,1), STEP8(0,1) };
+	INT32 t16YOffs[16] = { STEP16(0,8) };
+
+	UINT8 *tmp = (UINT8*)malloc(gfx0len + gfx1len + 0x3000); // more = more happy-fun. yay!
+	if (tmp == NULL) {
+		return 1;
+	}
+
+	memcpy (tmp, DrvGfxROM0, gfx0len);
+
+	GfxDecode(0x0400, 3, 8, 8, Plane_t8, t8XOffs, t8YOffs, 0x40, tmp, DrvGfxROM0);
+
+	memcpy (tmp, DrvGfxROM1, 0x3000);
+
+	GfxDecode(0x0080, 3, 16, 16, Plane_t16spr, t16XOffs, t16YOffs, 0x100, tmp, DrvGfxROM1);
+
+	memcpy (tmp, DrvGfxROM2, gfx1len);
+
+	GfxDecode(0x0040, 3, 16, 16, Plane_t16, t16XOffs, t16YOffs, 0x100, tmp, DrvGfxROM2);
+
+	free (tmp);
+
+	return 0;
+}
+
 static INT32 MmonkeyInit() // and lnc
 {
 	AllMem = NULL;
@@ -1338,7 +1554,6 @@ static INT32 MmonkeyInit() // and lnc
 	M6502Close();
 
 	audio_nmi_type = AUDIO_ENABLE_AY8910;
-	coinactivelow = 0xc0;
 
 	GenericTilesInit();
 
@@ -1538,7 +1753,6 @@ static INT32 BnjInit()
 	audio_nmi_type = AUDIO_ENABLE_DIRECT;
 
 	bnjskew = 1;
-	coinactivelow = 0xc0;
 
 	GenericTilesInit();
 
@@ -1669,6 +1883,110 @@ static INT32 BtimeInit()
 	return 0;
 }
 
+static INT32 ZoarInit()
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(DrvMainROM + 0x0d000,  0, 1)) return 1;
+		if (BurnLoadRom(DrvMainROM + 0x0e000,  1, 1)) return 1;
+		if (BurnLoadRom(DrvMainROM + 0x0f000,  2, 1)) return 1;
+
+		memset(&DrvMainROM[0xd50a], 0xea, 8); // patch bad rom with nops (othewise freezes @ boot)
+
+		if (BurnLoadRom(DrvSoundROM + 0x0000,  3, 1)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x001000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x002000,  6, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x003000,  7, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x004000,  8, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x005000,  9, 1)) return 1;
+		gfx0len = 0x6000;
+
+		if (BurnLoadRom(DrvGfxROM2 + 0x000000,  10, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x000800,  11, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM2 + 0x001000,  12, 1)) return 1;
+		gfx1len = 0x1800;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  13, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x001000,  14, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x002000,  15, 1)) return 1;
+
+		if (BurnLoadRom(DrvBgMapROM + 0x00000,  16, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM + 0x000000,  17, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x000020,  18, 1)) return 1;
+		if (BurnLoadRom(DrvColPROM + 0x000040,  19, 1)) return 1;
+
+		ZoarGfxDecode();
+
+	}
+
+	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
+
+	M6502Init(0, TYPE_M6502);
+	M6502Open(0);
+	M6502SetWriteHandler(zoar_main_write);
+	M6502SetReadHandler(zoar_main_read);
+	M6502SetWriteMemIndexHandler(zoar_main_write);
+	M6502SetReadMemIndexHandler(zoar_main_read);
+	M6502SetReadOpArgHandler(zoar_main_read);
+	M6502SetReadOpHandler(zoar_main_read);
+	M6502Close();
+
+	M6502Init(1, TYPE_M6502);
+	M6502Open(1);
+	M6502SetWriteHandler(btime_sound_write);
+	M6502SetReadHandler(btime_sound_read);
+	M6502SetWriteMemIndexHandler(btime_sound_write);
+	M6502SetReadMemIndexHandler(btime_sound_read);
+	M6502SetReadOpArgHandler(btime_sound_read);
+	M6502SetReadOpHandler(btime_sound_read);
+	M6502Close();
+
+	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, &ay8910_0_portA_write, NULL);
+	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+
+	audio_nmi_type = AUDIO_ENABLE_AY8910;
+	zoarmode = 1;
+
+	GenericTilesInit();
+
+	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // these 2 filters are used to get
+					   CutFreq2, Q2, Gain2);         // rid of the bg hissing noise on the first ay
+	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // they work a lot better than flt_rc, so they are used instead.
+					   CutFreq2, Q2, Gain2);
+
+	// first ay, pass-thru mixer only (CAP_P(0) = passthru)
+	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
+	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+
+	// second ay, apply a slight bit of lpf to match
+	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x15), 1);
+	filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
+	filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
+
+	filter_rc_set_route(0, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(1, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(2, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(3, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(4, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(5, 0.25, BURN_SND_ROUTE_BOTH);
+
+	DrvDoReset();
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	GenericTilesExit();
@@ -1687,7 +2005,7 @@ static INT32 DrvExit()
 	brubbermode = 0;
 	discomode = 0;
 	lncmode = 0;
-	coinactivelow = 0;
+	zoarmode = 0;
 	bnjskew = 0;
 
 	audio_nmi_type = AUDIO_ENABLE_NONE;
@@ -1707,24 +2025,10 @@ static void BtimePaletteRecalc()
 	}
 }
 
-static void draw_background(INT32 color)
+static void draw_background(UINT8 *tmap, INT32 color)
 {
 	const UINT8 *gfx = DrvBgMapROM;
 	int scroll = -(bnj_scroll2 | ((bnj_scroll1 & 0x03) << 8));
-
-	INT32 start = 0;
-	UINT8 tmap[5];
-
-	if (flipscreen)
-		start = 0;
-	else
-		start = 1;
-
-	for (INT32 i = 0; i < 4; i++)
-	{
-		tmap[i] = start | (bnj_scroll1 & 0x04);
-		start = (start + 1) & 0x03;
-	}
 
 	for (INT32 i = 0; i < 5; i++, scroll += 256)
 	{
@@ -1751,7 +2055,7 @@ static void draw_background(INT32 color)
 
 			INT32 code = gfx[tileoffset + offs];
 
-			Render16x16Tile_Clip(pTransDraw, code, x, y, color, 3, 8, DrvGfxROM2);
+			Render16x16Tile_Clip(pTransDraw, code, x, y, color, 3, (zoarmode) ? 0 : 8, DrvGfxROM2);
 		}
 	}
 }
@@ -1859,13 +2163,51 @@ static INT32 BtimeDraw()
 	BurnTransferClear();
 
 	if (bnj_scroll1 & 0x10) {
-		if (nBurnLayer & 1) draw_background(0);
+		INT32 start = 0;
+		UINT8 tmap[5];
+
+		if (flipscreen)
+			start = 0;
+		else
+			start = 1;
+
+		for (INT32 i = 0; i < 4; i++)
+		{
+			tmap[i] = start | (bnj_scroll1 & 0x04);
+			start = (start + 1) & 0x03;
+		}
+
+		if (nBurnLayer & 1) draw_background(&tmap[0], 0);
 		if (nBurnLayer & 2) draw_chars(1, 0, -1);
 	} else {
 		if (nBurnLayer & 2) draw_chars(0, 0, -1);
 	}
 
 	if (nBurnLayer & 4) draw_sprites(0, 1, 0, DrvVidRAM, 0x20);
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
+static INT32 ZoarDraw()
+{
+	if (DrvRecalc) {
+		discopaletteupdate();
+		DrvRecalc = 0;
+	}
+
+	BurnTransferClear();
+
+	if (bnj_scroll1 & 0x04) {
+		if (nBurnLayer & 1) draw_background(DrvScrollRAM, btime_palette);
+		if (nBurnLayer & 2) draw_chars(1, btime_palette + 1, -1);
+	} else {
+		if (nBurnLayer & 2) draw_chars(0, btime_palette + 1, -1);
+	}
+
+	if (nBurnLayer & 4) draw_sprites(btime_palette + 1, 1, 2, DrvVidRAM + 0x1f, 0x20);
+	if (nBurnLayer & 8) draw_sprites(btime_palette + 1, 1, 2, DrvVidRAM, 0x20);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2034,7 +2376,7 @@ static INT32 BtimeFrame()
 
 		if (thiscoin && (prevcoin != thiscoin)) {
 			M6502Open(0);
-			if (discomode)
+			if (discomode || zoarmode)
 				M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			else
 				M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
@@ -2042,6 +2384,8 @@ static INT32 BtimeFrame()
 		}
 		prevcoin = thiscoin;
 	}
+
+	//bprintf(0, _T("inp: %X %X %X.   "), DrvInputs[0],DrvInputs[1],DrvInputs[2]);
 
 	INT32 nInterleave = 272;
 	INT32 nCyclesTotal[2] = { ((discomode) ? 750000 : 1500000) / 60, 500000 / 60 };
@@ -2070,7 +2414,7 @@ static INT32 BtimeFrame()
 		nCyclesDone[0] += M6502Run(nSegment);
 		M6502Close();
 
-		if (i == 240) vblank = 0x80;
+		if (i == 248) vblank = 0x80;
 		if (i == 8) {
 			vblank = 0x00;
 
@@ -2084,8 +2428,9 @@ static INT32 BtimeFrame()
 		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
 		nCyclesDone[1] += M6502Run(nSegment);
 
-		audio_nmi_state = i & 8;
+		audio_nmi_state = (i + 1) & 8;
 		M6502SetIRQLine(0x20, (audio_nmi_enable && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+
 		M6502Close();
 
 		if (pBurnSoundOut) {
@@ -2481,3 +2826,48 @@ struct BurnDriver BurnDrvLnc = {
 	LncInit, DrvExit, BtimeFrame, LncDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
+
+// Zoar
+
+static struct BurnRomInfo zoarRomDesc[] = {
+	{ "z15.12b",	0x1000, 0x1f0cfdb7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "z16.13b",	0x1000, 0x7685999c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "z17.15b",	0x1000, 0x619ea867, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "z09.13c",	0x1000, 0x18d96ff1, 2 | BRF_PRG | BRF_ESS }, //  3 audiocpu
+
+	{ "z00.3l",	0x1000, 0xfd2dcb64, 3 | BRF_GRA },           //  4 gfx1
+	{ "z01.5l",	0x1000, 0x74d3ca48, 3 | BRF_GRA },           //  5
+	{ "z03.8l",	0x1000, 0x77b7df14, 3 | BRF_GRA },           //  6
+	{ "z04.9l",	0x1000, 0x9be786de, 3 | BRF_GRA },           //  7
+	{ "z06.12l",	0x1000, 0x07638c71, 3 | BRF_GRA },           //  8
+	{ "z07.14l",	0x1000, 0xf4710f25, 3 | BRF_GRA },           //  9
+
+	{ "z10.1b",	0x0800, 0xaa8bcab8, 4 | BRF_GRA },           // 10 gfx2
+	{ "z11.3b",	0x0800, 0xdcdad357, 4 | BRF_GRA },           // 11
+	{ "z12.4b",	0x0800, 0xed317e40, 4 | BRF_GRA },           // 12
+
+	{ "z02.6l",	0x1000, 0xd8c3c122, 5 | BRF_GRA },           // 13 gfx3
+	{ "z05.14l",	0x1000, 0x05dc6b09, 5 | BRF_GRA },           // 14
+	{ "z08.15l",	0x1000, 0x9a148551, 5 | BRF_GRA },           // 15
+
+	{ "z13.6b",	0x1000, 0x8fefa960, 6 | BRF_GRA },           // 16 bg_map
+
+	{ "z20.1l",	0x0020, 0xa63f0a07, 7 | BRF_GRA },           // 17 proms
+	{ "z21.2l",	0x0020, 0x5e1e5788, 7 | BRF_GRA },           // 18
+	{ "z19.7b",	0x0020, 0x03ee3a96, 7 | BRF_GRA },           // 19
+};
+
+STD_ROM_PICK(zoar)
+STD_ROM_FN(zoar)
+
+struct BurnDriver BurnDrvZoar = {
+	"zoar", NULL, NULL, NULL, "1982",
+	"Zoar\0", "Sound & Input issues..", "Data East USA", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	/*BDF_GAME_WORKING*/ 0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, zoarRomInfo, zoarRomName, NULL, NULL, ZoarInputInfo, ZoarDIPInfo,
+	ZoarInit, DrvExit, BtimeFrame, ZoarDraw, DrvScan, &DrvRecalc, 64,
+	240, 256, 3, 4
+};
+

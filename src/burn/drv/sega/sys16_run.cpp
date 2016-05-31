@@ -3073,7 +3073,7 @@ INT32 OutrunFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 2 || i == 6 || i == 8) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 20 || i == 60 || i == 80) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 #2

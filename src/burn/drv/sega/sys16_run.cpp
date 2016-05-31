@@ -2181,6 +2181,7 @@ INT32 System16Init()
 		SekMapMemory(System16PaletteRam    , 0x120000, 0x121fff, MAP_RAM);
 		SekMapMemory(System16SpriteRam     , 0x130000, 0x130fff, MAP_RAM);
 		SekMapMemory(System16Rom2          , 0x200000, 0x23ffff, MAP_READ);
+		SekMapMemory(System16Rom2          , 0x200000, 0x23ffff, MAP_FETCH);
 		SekMapMemory(System16Ram           , 0x260000, 0x267fff, MAP_RAM);
 		SekMapMemory(System16RoadRam       , 0x280000, 0x280fff, MAP_RAM);
 		SekSetResetCallback(OutrunResetCallback);
@@ -3043,7 +3044,7 @@ INT32 HangonYM2203Frame()
 
 INT32 OutrunFrame()
 {
-	INT32 nInterleave = 10, i;
+	INT32 nInterleave = 100, i;
 
 	if (System16Reset) System16DoReset();
 

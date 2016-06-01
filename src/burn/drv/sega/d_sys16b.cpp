@@ -2394,30 +2394,30 @@ static struct BurnRomInfo Altbeastbl2RomDesc[] = {
 	{ "3.bin",          0x10000, 0x40b0afec, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "5.bin",          0x10000, 0x2a9ef382, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
-	{ "16.bin",         0x10000, 0xa4967d10, SYS16_ROM_TILES | BRF_GRA }, // 16
-	{ "15.bin",         0x10000, 0xe091ae2c, SYS16_ROM_TILES | BRF_GRA }, // 15
-	{ "14.bin",         0x10000, 0x1a26cf3f, SYS16_ROM_TILES | BRF_GRA }, // 14
-	{ "13.bin",         0x10000, 0x277ef086, SYS16_ROM_TILES | BRF_GRA }, // 13
-	{ "12.bin",         0x10000, 0x661225af, SYS16_ROM_TILES | BRF_GRA }, // 12
-	{ "11.bin",         0x10000, 0xd7019da7, SYS16_ROM_TILES | BRF_GRA }, // 11
+	{ "16.bin",         0x10000, 0xa4967d10, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "15.bin",         0x10000, 0xe091ae2c, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "14.bin",         0x10000, 0x1a26cf3f, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "13.bin",         0x10000, 0x277ef086, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "12.bin",         0x10000, 0x661225af, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "11.bin",         0x10000, 0xd7019da7, SYS16_ROM_TILES | BRF_GRA }, 
 	
-	{ "20.bin",         0x10000, 0xf8b3684e, SYS16_ROM_SPRITES | BRF_GRA }, // 20
-	{ "10.bin",         0x10000, 0xae3c2793, SYS16_ROM_SPRITES | BRF_GRA }, // 10
-	{ "19.bin",         0x10000, 0x3cce5419, SYS16_ROM_SPRITES | BRF_GRA }, // 19
-	{ "9.bin",          0x10000, 0x3af62b55, SYS16_ROM_SPRITES | BRF_GRA }, // 9
-	{ "18.bin",         0x10000, 0xb0390078, SYS16_ROM_SPRITES | BRF_GRA }, // 18
-	{ "8.bin",          0x10000, 0x2a87744a, SYS16_ROM_SPRITES | BRF_GRA }, // 8
-	{ "17.bin",         0x10000, 0xf3a43fd8, SYS16_ROM_SPRITES | BRF_GRA }, // 17
-	{ "7.bin",          0x10000, 0x2fb3e355, SYS16_ROM_SPRITES | BRF_GRA }, // 7
-	{ "22.bin",         0x10000, 0x676be0cb, SYS16_ROM_SPRITES | BRF_GRA }, // 22
-	{ "25.bin",         0x10000, 0x802cac94, SYS16_ROM_SPRITES | BRF_GRA }, // 25
-	{ "23.bin",         0x10000, 0x882864c2, SYS16_ROM_SPRITES | BRF_GRA }, // 23
-	{ "26.bin",         0x10000, 0x76c704d2, SYS16_ROM_SPRITES | BRF_GRA }, // 26
-	{ "21.bin",         0x10000, 0x339987f7, SYS16_ROM_SPRITES | BRF_GRA }, // 21
-	{ "24.bin",         0x10000, 0x4fe406aa, SYS16_ROM_SPRITES | BRF_GRA }, // 24
+	{ "20.bin",         0x10000, 0xf8b3684e, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "10.bin",         0x10000, 0xae3c2793, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "19.bin",         0x10000, 0x3cce5419, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "9.bin",          0x10000, 0x3af62b55, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "18.bin",         0x10000, 0xb0390078, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "8.bin",          0x10000, 0x2a87744a, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "17.bin",         0x10000, 0xf3a43fd8, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "7.bin",          0x10000, 0x2fb3e355, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "22.bin",         0x10000, 0x676be0cb, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "25.bin",         0x10000, 0x802cac94, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "23.bin",         0x10000, 0x882864c2, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "26.bin",         0x10000, 0x76c704d2, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "21.bin",         0x10000, 0x339987f7, SYS16_ROM_SPRITES | BRF_GRA }, 
+	{ "24.bin",         0x10000, 0x4fe406aa, SYS16_ROM_SPRITES | BRF_GRA }, 
 
-	{ "1.bin",          0x10000, 0x67e09da3, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // 1
-	{ "2.bin",          0x10000, 0x7c653d8b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, // 2
+	{ "1.bin",          0x10000, 0x67e09da3, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, 
+	{ "2.bin",          0x10000, 0x7c653d8b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG }, 
 };
 
 

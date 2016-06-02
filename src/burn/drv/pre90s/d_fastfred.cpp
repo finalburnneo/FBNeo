@@ -14,9 +14,11 @@ static UINT8 *RamEnd;
 static UINT8 *DrvMainRAM;
 static UINT8 *DrvSubRAM;
 static UINT8 *DrvVidRAM;
+static UINT8 *DrvFGVidRAM;
 static UINT8 *DrvAttrRAM;
 
-static UINT8 *Rom0, *Rom1, *Gfx0, *Gfx1, *Gfx2, *Gfx3, *Prom;
+static UINT8 *Rom0, *Rom1;
+static UINT8 *Gfx0, *Gfx1, *Gfx2, *Gfx3, *GfxImagoSprites, *Prom;
 
 static UINT8 DrvJoy1[8], DrvJoy2[8], DrvDips[1], DrvInput[2], DrvReset;
 
@@ -27,6 +29,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 flyboymode;
 static UINT8 boggy84mode;
+static UINT8 imagomode;
 
 static INT32 fastfred_hardware_type = 0;
 
@@ -40,6 +43,10 @@ static INT32 fastfred_flipscreeny = 0;
 static INT32 fastfred_soundlatch = 0;
 static INT32 fastfred_scroll[32];
 static INT32 fastfred_color_select[32];
+
+static UINT8 imago_sprites[0x800*3];
+static UINT16 imago_sprites_address;
+static UINT8 imago_sprites_bank;
 
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
@@ -63,6 +70,23 @@ static struct BurnInputInfo CommonInputList[] = {
 };
 
 STDINPUTINFO(Common)
+
+static struct BurnInputInfo ImagoInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
+	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 1"},
+
+	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+};
+
+STDINPUTINFO(Imago)
 
 static struct BurnInputInfo TwoBtnInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
@@ -290,35 +314,35 @@ STDDIPINFO(Redrobin)
 
 static struct BurnDIPInfo ImagoDIPList[]=
 {
-	{0x02, 0xff, 0xff, 0x01, NULL		},
+	{0x09, 0xff, 0xff, 0x01, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x02, 0x01, 0x03, 0x00, "2"		},
-	{0x02, 0x01, 0x03, 0x01, "3"		},
-	{0x02, 0x01, 0x03, 0x02, "4"		},
-	{0x02, 0x01, 0x03, 0x03, "5"		},
+	{0x09, 0x01, 0x03, 0x00, "2"		},
+	{0x09, 0x01, 0x03, 0x01, "3"		},
+	{0x09, 0x01, 0x03, 0x02, "4"		},
+	{0x09, 0x01, 0x03, 0x03, "5"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x02, 0x01, 0x04, 0x04, "Off"		},
-	{0x02, 0x01, 0x04, 0x00, "On"		},
+	{0x09, 0x01, 0x04, 0x04, "Off"		},
+	{0x09, 0x01, 0x04, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"		},
-	{0x02, 0x01, 0x38, 0x38, "5 Coins 1 Credits"		},
-	{0x02, 0x01, 0x38, 0x18, "4 Coins 1 Credits"		},
-	{0x02, 0x01, 0x38, 0x28, "3 Coins 1 Credits"		},
-	{0x02, 0x01, 0x38, 0x08, "2 Coins 1 Credits"		},
-	{0x02, 0x01, 0x38, 0x00, "1 Coin  1 Credits"		},
-	{0x02, 0x01, 0x38, 0x20, "1 Coin  2 Credits"		},
-	{0x02, 0x01, 0x38, 0x10, "1 Coin  3 Credits"		},
-	{0x02, 0x01, 0x38, 0x30, "1 Coin  4 Credits"		},
+	{0x09, 0x01, 0x38, 0x38, "5 Coins 1 Credits"		},
+	{0x09, 0x01, 0x38, 0x18, "4 Coins 1 Credits"		},
+	{0x09, 0x01, 0x38, 0x28, "3 Coins 1 Credits"		},
+	{0x09, 0x01, 0x38, 0x08, "2 Coins 1 Credits"		},
+	{0x09, 0x01, 0x38, 0x00, "1 Coin  1 Credits"		},
+	{0x09, 0x01, 0x38, 0x20, "1 Coin  2 Credits"		},
+	{0x09, 0x01, 0x38, 0x10, "1 Coin  3 Credits"		},
+	{0x09, 0x01, 0x38, 0x30, "1 Coin  4 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x02, 0x01, 0x40, 0x40, "Off"		},
-	{0x02, 0x01, 0x40, 0x00, "On"		},
+	{0x09, 0x01, 0x40, 0x40, "Off"		},
+	{0x09, 0x01, 0x40, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x02, 0x01, 0x80, 0x80, "Off"		},
-	{0x02, 0x01, 0x80, 0x00, "On"		},
+	{0x09, 0x01, 0x80, 0x80, "Off"		},
+	{0x09, 0x01, 0x80, 0x00, "On"		},
 };
 
 STDDIPINFO(Imago)
@@ -411,6 +435,17 @@ static UINT8 fastfred_custom_io_r(INT32 offset)
 	return 0x00;
 }
 
+static INT32 ImagoSpritesDecode() // for sprite dma in 0_w
+{
+	INT32 spriteplanes[3] = { 0x800*8*2, 0x800*8*1, 0x800*8*0 };
+	INT32 spritexoffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
+	INT32 spriteyoffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
+
+	GfxDecode(0x40, 3,  16,  16, spriteplanes, spritexoffs, spriteyoffs, 0x100, &imago_sprites[0], GfxImagoSprites);
+
+	return 0;
+}
+
 
 static void __fastcall fastfred_cpu0_write(UINT16 address, UINT8 data)
 {
@@ -443,6 +478,27 @@ static void __fastcall fastfred_cpu0_write(UINT16 address, UINT8 data)
 		}
 	}
 
+	if (imagomode && address >= 0xb800 && address <= 0xbfff) {
+		UINT8 *rom = Gfx1;
+		UINT8 sprites_data;
+		UINT32 offset = address - 0xb800;
+
+		sprites_data = rom[imago_sprites_address + 0x2000*0 + imago_sprites_bank * 0x1000];
+		imago_sprites[offset + 0x800*0] = sprites_data;
+
+		sprites_data = rom[imago_sprites_address + 0x2000*1 + imago_sprites_bank * 0x1000];
+		imago_sprites[offset + 0x800*1] = sprites_data;
+
+		sprites_data = rom[imago_sprites_address + 0x2000*2 + imago_sprites_bank * 0x1000];
+		imago_sprites[offset + 0x800*2] = sprites_data;
+
+		if ((offset & 0xf) == 0xf && (offset & 0xff) >= 0x7f)
+		{ // end-of-dma always ends on a 0x007f or greater offset (if we decode every time, it causes some lag)
+			ImagoSpritesDecode(); // decode the dma'd sprites.
+		}
+		return;
+	}
+
 	switch (address)
 	{
 		case 0xe000:
@@ -462,11 +518,19 @@ static void __fastcall fastfred_cpu0_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf004:
-			fastfred_charbank = (fastfred_charbank & 0x0200) | ((data & 1) << 8);
+			if (imagomode) {
+				ZetSetIRQLine(0, (data & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+			} else {
+				fastfred_charbank = (fastfred_charbank & 0x0200) | ((data & 1) << 8);
+			}
 		return;
 
 		case 0xf005:
-			fastfred_charbank = (fastfred_charbank & 0x0100) | ((data & 1) << 9);
+			if (imagomode) {
+				fastfred_charbank = data;
+			} else {
+				fastfred_charbank = (fastfred_charbank & 0x0100) | ((data & 1) << 9);
+			}
 		return;
 
 		case 0xf006:
@@ -477,6 +541,10 @@ static void __fastcall fastfred_cpu0_write(UINT16 address, UINT8 data)
 		case 0xf007:
 		case 0xf117:
 			fastfred_flipscreeny = data & 1;
+		return;
+
+		case 0xf401:
+			imago_sprites_bank = (data & 2) >> 1;
 		return;
 
 		case 0xf800:
@@ -497,6 +565,11 @@ static void __fastcall fastfred_cpu0_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall fastfred_cpu0_read(UINT16 address)
 {
+
+	if (imagomode && address >= 0x1000 && address <= 0x1fff) {
+		imago_sprites_address = address & 0xfff;
+		return 0xff;
+	}
 
 	switch (address)
 	{
@@ -586,8 +659,12 @@ static INT32 DrvDoReset()
 	fastfred_flipscreenx = 0;
 	fastfred_flipscreeny = 0;
 	fastfred_soundlatch = 0;
-	memset (fastfred_scroll, 0, sizeof(fastfred_scroll));
-	memset (fastfred_color_select, 0, sizeof(fastfred_color_select));
+	memset(fastfred_scroll, 0, sizeof(fastfred_scroll));
+	memset(fastfred_color_select, 0, sizeof(fastfred_color_select));
+
+	memset(&imago_sprites, 0, sizeof(imago_sprites));
+	imago_sprites_address = 0;
+	imago_sprites_bank = 0;
 
 	DrvReset = 0;
 
@@ -630,6 +707,11 @@ static INT32 DrvPaletteInit()
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
 
+	if (imagomode) {
+		DrvPalette[0x100+0x40+0] = BurnHighCol(0x15, 0x00, 0x00, 0);
+		DrvPalette[0x100+0x40+1] = BurnHighCol(0x00, 0x00, 0x00, 0);
+	}
+
 	return 0;
 }
 
@@ -648,11 +730,9 @@ static INT32 GraphicsDecode()
 	}
 
 	memcpy (tmp, Gfx0, 0x06000);
-
 	GfxDecode(0x400, 3,  8,  8, TilePlanes, SharXOffs, SharYOffs, 0x040, tmp, Gfx0);
 
 	memcpy (tmp, Gfx1, 0x03000);
-
 	GfxDecode(0x080, 3, 16, 16, SpriPlanes, SharXOffs, SharYOffs, 0x100, tmp, Gfx1);
 
 	free (tmp);
@@ -662,12 +742,13 @@ static INT32 GraphicsDecode()
 
 static INT32 ImagoGraphicsDecode()
 {
-	static INT32 TilePlanes[3] = { 0x10000, 0x08000, 0x00000 };
-	static INT32 SpriPlanes[3] = { 0x20000, 0x10000, 0x00000 };
-	static INT32 SharXOffs[16] = { 0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
-				     0x40, 0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0x47 };
-	static INT32 SharYOffs[16] = { 0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
-				     0x80, 0x88, 0x90, 0x98, 0xa0, 0xa8, 0xb0, 0xb8 };
+	INT32 charplanes[3] = { RGN_FRAC(0x3000, 2,3), RGN_FRAC(0x3000, 1,3), RGN_FRAC(0x3000, 0,3) };
+	INT32 charxoffs[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+	INT32 charyoffs[8] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 };
+
+	INT32 imago1bppplanes[1] = { 0 };
+	INT32 imago1bppxoffs[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+	INT32 imago1bppyoffs[8] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 };
 
 	UINT8 *tmp = (UINT8*)malloc(0x6000);
 	if (tmp == NULL) {
@@ -675,16 +756,13 @@ static INT32 ImagoGraphicsDecode()
 	}
 
 	memcpy (tmp, Gfx0, 0x03000);
+	GfxDecode(0x200, 3,  8,  8, charplanes, charxoffs, charyoffs, 0x040, tmp, Gfx0);
 
-	GfxDecode(0x400, 3,  8,  8, TilePlanes, SharXOffs, SharYOffs, 0x040, tmp, Gfx0);
+	memcpy (tmp, Gfx2, 0x03000);
+	GfxDecode(0x200, 3,  8,  8, charplanes, charxoffs, charyoffs, 0x040, tmp, Gfx2);
 
-	memcpy (tmp, Gfx1, 0x06000);
-
-	GfxDecode(0x080, 3, 16, 16, SpriPlanes, SharXOffs, SharYOffs, 0x100, tmp, Gfx1);
-
-	memcpy (tmp, Gfx2, 0x01000);
-
-	GfxDecode(0x400, 3,  8,  8, TilePlanes, SharXOffs, SharYOffs, 0x040, tmp, Gfx0);
+	memcpy (tmp, Gfx3, 0x01000);
+	GfxDecode(0x200, 1,  8,  8, imago1bppplanes, imago1bppxoffs, imago1bppyoffs, 0x040, tmp, Gfx3);
 
 	free (tmp);
 
@@ -700,6 +778,8 @@ static INT32 DrvLoadRoms()
 	UINT8 *Rom1Load = Rom1;
 	UINT8 *Gfx0Load = Gfx0;
 	UINT8 *Gfx1Load = Gfx1;
+	UINT8 *Gfx2Load = Gfx2;
+	UINT8 *Gfx3Load = Gfx3;
 	UINT8 *PromLoad = Prom;
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
@@ -741,6 +821,20 @@ static INT32 DrvLoadRoms()
 
 			continue;
 		}
+
+		if ((ri.nType & 7) == 6) {
+			if (BurnLoadRom(Gfx2Load, i, 1)) return 1;
+			Gfx2Load += ri.nLen;
+
+			continue;
+		}
+
+		if ((ri.nType & 7) == 7) {
+			if (BurnLoadRom(Gfx3Load, i, 1)) return 1;
+			Gfx3Load += ri.nLen;
+
+			continue;
+		}
 	}
 
 	if (!gfx1_loaded) {
@@ -763,15 +857,17 @@ static INT32 MemIndex()
 	Gfx1           = Next; Next += 0x20000;
 	Gfx2           = Next; Next += 0x20000;
 	Gfx3           = Next; Next += 0x20000;
+	GfxImagoSprites= Next; Next += 0x20000;
 
 	Prom           = Next; Next += 0x00300;
 
-	DrvPalette     = (UINT32*)Next; Next += 0x00100 * sizeof(UINT32);
+	DrvPalette     = (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 
 	AllRam			= Next;
 
 	DrvMainRAM      = Next; Next += 0x10000;
 	DrvVidRAM       = Next; Next += 0x10000;
+	DrvFGVidRAM     = Next; Next += 0x10000;
 	DrvAttrRAM      = Next; Next += 0x10000;
 	DrvSubRAM       = Next; Next += 0x10000;
 
@@ -815,12 +911,11 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvMainRAM, 0xc000, 0xc7ff, MAP_RAM);
 
 	if (fastfred_hardware_type == 3) {
-		ZetMapMemory(DrvAttrRAM, 0xc800, 0xcfff, MAP_READ);
-		ZetMapArea(0xc800, 0xcfff, 0, Rom0 + 0xc800);
-		ZetMapArea(0xc800, 0xcfff, 1, Rom0 + 0xc800);
+		ZetUnmapMemory(0x1000, 0x1fff, MAP_ROM); // sprites dma addy
+		ZetMapMemory(DrvFGVidRAM, 0xc800, 0xcfff, MAP_RAM);
 	}
 
-	if (fastfred_hardware_type & 1) { // Fast Freddie, Fly Boy
+	if (fastfred_hardware_type & 1) { // Fast Freddie, Fly Boy & Imago
 		ZetMapMemory(DrvVidRAM, 0xd000, 0xd3ff, MAP_RAM); // video ram
 		ZetMapMemory(DrvVidRAM, 0xd400, 0xd7ff, MAP_RAM); // mirror @ +0x400
 		ZetMapMemory(DrvAttrRAM, 0xd800, 0xdbff, MAP_READ);
@@ -866,6 +961,7 @@ static INT32 DrvExit()
 	fastfred_hardware_type = 0;
 	flyboymode = 0;
 	boggy84mode = 0;
+	imagomode = 0;
 
 	return 0;
 }
@@ -885,19 +981,7 @@ static void draw_sprites()
 		if (fastfred_hardware_type == 3)
 		{
 			// Imago
-
-			//fastfred_spriteram[offs + 2] & 0xf8 get only set at startup
-			//the code is greater than 0x3f only at startup
-
-			/* TODO: find correct sprites banking */
-
-			code  = (fastfred_spriteram[offs + 1]) & 0x1f;
-
-			code |= fastfred_spriteram[offs + 2]<<5;
-
-			if(fastfred_spriteram[offs + 1] & 0x20)
-				code ^= 0xff;
-			code &= 0x1ff;
+			code  = (fastfred_spriteram[offs + 1]) & 0x3f;
 
 			flipx = 0;
 			flipy = 0;
@@ -943,18 +1027,145 @@ static void draw_sprites()
 
 		if (flipy) {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx1);
+				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
 			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx1);
+				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
 			}
 		} else {
 			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx1);
+				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx1);
+				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, (imagomode) ? GfxImagoSprites : Gfx1);
 			}
 		}
 	}
+}
+
+static void draw_chars()
+{ // draw chars
+	for (INT32 offs = 0; offs < 0x400; offs++)
+	{
+		INT32 sx = offs & 0x1f;
+		INT32 sy = (offs >> 2) & 0xf8;
+
+		INT32 code = fastfred_charbank | DrvVidRAM[offs];
+		INT32 color = fastfred_colorbank | fastfred_color_select[sx];
+
+		if (imagomode) {// for bg
+			UINT8 x = offs & 0x1f;
+
+			code = fastfred_charbank * 0x100 + DrvVidRAM[offs];
+			color = fastfred_colorbank | (DrvAttrRAM[2 * x + 1] & 0x07);
+		}
+
+		sy -= 16;
+
+		sy -= fastfred_scroll[sx];
+		if (sy < -15) sy += 0x100;
+
+		sx <<= 3;
+
+		if (fastfred_flipscreeny) {
+			if (fastfred_flipscreenx) {
+				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
+			} else {
+				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
+			}
+		} else {
+			if (fastfred_flipscreenx) {
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
+			} else {
+				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
+			}
+		}
+	}
+}
+
+static void draw_web()
+{ // imago
+	for (INT32 offs = 0; offs < 0x400; offs++)
+	{
+		INT32 sx = (offs & 0x1f) << 3;
+		INT32 sy = (offs >> 5) << 3;
+
+		INT32 code = offs & 0x1ff;
+		INT32 color = 0;
+
+		sy -= 16;
+
+		if (sy < -7) sy += 256;
+		if (sx < -7) sx += 256;
+
+		if (fastfred_flipscreeny) {
+			if (fastfred_flipscreenx) {
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
+			} else {
+				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
+			}
+		} else {
+			if (fastfred_flipscreenx) {
+				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
+			} else {
+				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 1, 0x140, Gfx3);
+			}
+		}
+	}
+}
+
+static void draw_imagofg()
+{ // imago
+	for (INT32 offs = 0; offs < 0x400; offs++)
+	{
+		INT32 sx = (offs & 0x1f) << 3;
+		INT32 sy = (offs >> 5) << 3;
+
+		INT32 code = DrvFGVidRAM[offs];
+		INT32 color = 2;
+
+		sy -= 16;
+
+		if (sy < -7) sy += 256;
+		if (sx < -7) sx += 256;
+
+		if (fastfred_flipscreeny) {
+			if (fastfred_flipscreenx) {
+				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
+			} else {
+				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
+			}
+		} else {
+			if (fastfred_flipscreenx) {
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
+			} else {
+				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx2);
+			}
+		}
+	}
+}
+
+
+static INT32 ImagoDraw()
+{
+	if (DrvRecalc) {
+		DrvPaletteInit();
+		DrvRecalc = 0;
+	}
+
+	{ // fill background
+		for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {
+			pTransDraw[offs] = fastfred_background_color;
+		}
+	}
+
+	if (nBurnLayer & 1) draw_web();
+	// draw_stars();
+	if (nBurnLayer & 2) draw_chars(); // imago's bg
+	if (nBurnLayer & 4) draw_sprites();
+	if (nBurnLayer & 8) draw_imagofg();
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvDraw()
@@ -970,37 +1181,7 @@ static INT32 DrvDraw()
 		}
 	}
 
-	{ // draw chars
-		for (INT32 offs = 0; offs < 0x400; offs++)
-		{
-			INT32 sx = offs & 0x1f;
-			INT32 sy = (offs >> 2) & 0xf8;
-
-			INT32 code = fastfred_charbank | DrvVidRAM[offs];
-			INT32 color = fastfred_colorbank | fastfred_color_select[sx];
-
-			sy -= 16;
-
-			sy -= fastfred_scroll[sx];
-			if (sy < -15) sy += 0x100;
-
-			sx <<= 3;
-
-			if (fastfred_flipscreeny) {
-				if (fastfred_flipscreenx) {
-					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-				} else {
-					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-				}
-			} else {
-				if (fastfred_flipscreenx) {
-					Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, Gfx0);
-				}
-			}
-		}
-	}
+	draw_chars();
 
 	draw_sprites();
 
@@ -1031,7 +1212,7 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 128;
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nCyclesTotal[2] = { 3108000 / 60, 1536000 / 60 };
 
@@ -1059,7 +1240,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -1517,6 +1698,7 @@ struct BurnDriver BurnDrvRedrobin = {
 static INT32 imagoInit()
 {
 	fastfred_hardware_type = 3;
+	imagomode = 1;
 
 	INT32 nRet = DrvInit();
 	if (!nRet) {
@@ -1548,25 +1730,25 @@ static struct BurnRomInfo imagoRomDesc[] = {
 	{ "imago09.64",		0x1000, 0x9efb806d, 4 | BRF_GRA },           // 11
 	{ "imago10.65",		0x1000, 0x801a18d3, 4 | BRF_GRA },           // 12
 
-	{ "imago14.170",	0x1000, 0xeded37f6, 5 | BRF_GRA },           // 13 gfx3
+	{ "imago14.170",	0x1000, 0xeded37f6, 6 | BRF_GRA },           // 13 gfx3
 
-	{ "imago15.191",	0x1000, 0x85fcc195, 6 | BRF_GRA },           // 14 gfx4
+	{ "imago15.191",	0x1000, 0x85fcc195, 7 | BRF_GRA },           // 14 gfx4
 
-	{ "imago.96",		0x0100, 0x5ba81edc, 7 | BRF_GRA },           // 15 proms
-	{ "imago.95",		0x0100, 0xe2b7aa09, 7 | BRF_GRA },           // 16
-	{ "imago.97",		0x0100, 0xe28a7f00, 7 | BRF_GRA },           // 17
+	{ "imago.96",		0x0100, 0x5ba81edc, 5 | BRF_GRA },           // 15 proms
+	{ "imago.95",		0x0100, 0xe2b7aa09, 5 | BRF_GRA },           // 16
+	{ "imago.97",		0x0100, 0xe28a7f00, 5 | BRF_GRA },           // 17
 };
 
 STD_ROM_PICK(imago)
 STD_ROM_FN(imago)
 
-struct BurnDriverD BurnDrvImago = {
+struct BurnDriver BurnDrvImago = {
 	"imago", NULL, NULL, NULL, "1984",
 	"Imago (cocktail set)\0", NULL, "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, imagoRomInfo, imagoRomName, NULL, NULL, CommonInputInfo, ImagoDIPInfo,
-	imagoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, imagoRomInfo, imagoRomName, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
+	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
@@ -1591,26 +1773,26 @@ static struct BurnRomInfo imagoaRomDesc[] = {
 	{ "imago09.64",		0x1000, 0x9efb806d, 4 | BRF_GRA },           // 11
 	{ "imago10.65",		0x1000, 0x801a18d3, 4 | BRF_GRA },           // 12
 
-	{ "imago.96",		0x0100, 0x5ba81edc, 7 | BRF_GRA },           // 15 proms
-	{ "imago.95",		0x0100, 0xe2b7aa09, 7 | BRF_GRA },           // 16
-	{ "imago.97",		0x0100, 0xe28a7f00, 7 | BRF_GRA },           // 17
+	{ "imago.96",		0x0100, 0x5ba81edc, 5 | BRF_GRA },           // 15 proms
+	{ "imago.95",		0x0100, 0xe2b7aa09, 5 | BRF_GRA },           // 16
+	{ "imago.97",		0x0100, 0xe28a7f00, 5 | BRF_GRA },           // 17
 
-	{ "imago14.170",	0x1000, 0xeded37f6, 5 | BRF_GRA },           // 13 gfx3
+	{ "imago14.170",	0x1000, 0xeded37f6, 6 | BRF_GRA },           // 13 gfx3
 
-	{ "imago15.191",	0x1000, 0x85fcc195, 6 | BRF_GRA },           // 14 gfx4
+	{ "imago15.191",	0x1000, 0x85fcc195, 7 | BRF_GRA },           // 14 gfx4
 
 };
 
 STD_ROM_PICK(imagoa)
 STD_ROM_FN(imagoa)
 
-struct BurnDriverD BurnDrvImagoa = {
+struct BurnDriver BurnDrvImagoa = {
 	"imagoa", "imago", NULL, NULL, "1983",
 	"Imago (no cocktail set)\0", NULL, "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, imagoaRomInfo, imagoaRomName, NULL, NULL, CommonInputInfo, ImagoDIPInfo,
-	imagoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, imagoaRomInfo, imagoaRomName, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
+	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 

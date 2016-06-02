@@ -609,7 +609,7 @@ static INT32 DrvFrame()
 		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		nCyclesDone[3] += mermaidRun(nSegment - nCyclesDone[3]);
+		nCyclesDone[2] += mermaidRun(nSegment - nCyclesDone[2]);
 
 		if (i == 239)
 			pandora_buffer_sprites();

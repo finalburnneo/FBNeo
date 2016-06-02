@@ -2388,7 +2388,7 @@ static struct BurnRomInfo AltbeastblRomDesc[] = {
 STD_ROM_PICK(Altbeastbl)
 STD_ROM_FN(Altbeastbl)
 
-static struct BurnRomInfo Altbeastbl2RomDesc[] = {
+static struct BurnRomInfo MutantwarrRomDesc[] = {
 	{ "4.bin",          0x10000, 0x1bed3505, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "6.bin",          0x10000, 0x8bfb70e4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "3.bin",          0x10000, 0x40b0afec, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -2421,8 +2421,8 @@ static struct BurnRomInfo Altbeastbl2RomDesc[] = {
 };
 
 
-STD_ROM_PICK(Altbeastbl2)
-STD_ROM_FN(Altbeastbl2)
+STD_ROM_PICK(Mutantwarr)
+STD_ROM_FN(Mutantwarr)
 
 static struct BurnRomInfo AtomicpRomDesc[] = {
 	{ "ap-t2.bin",      0x10000, 0x97421047, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -9689,12 +9689,12 @@ struct BurnDriver BurnDrvAltbeastbl = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvAltbeastbl2 = {
-	"altbeastbl2", "altbeast", NULL, NULL, "1988",
-	"Mutant Warrior (Altered Beast Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
+struct BurnDriver BurnDrvMutantwarr = {
+	"mutantwarr", "altbeast", NULL, NULL, "1988",
+	"Mutant Warrior (Altered Beast - Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
-	NULL, Altbeastbl2RomInfo, Altbeastbl2RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
+	NULL, MutantwarrRomInfo, MutantwarrRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastblInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

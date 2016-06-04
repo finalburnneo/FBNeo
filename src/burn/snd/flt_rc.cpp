@@ -4,7 +4,7 @@
 
 #include <math.h>
 
-#define FLT_RC_NUM      8
+#define FLT_RC_NUM      16
 
 struct flt_rc_info
 {
@@ -22,6 +22,7 @@ struct flt_rc_info
 	
 	double src_gain;
 	double gain;
+	INT32 src_stereo;
 	INT32 output_dir;
 	INT32 add_signal;
 };
@@ -52,7 +53,9 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 				} else {
 					memory += (((INT32)((*src++ * ptr->src_gain)) - memory) * ptr->state.k) / 0x10000; // enabled
 				}
-				
+
+				if (ptr->src_stereo) src++;
+
 				INT32 nLeftSample = 0, nRightSample = 0;
 				
 				if ((ptr->output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
@@ -121,6 +124,7 @@ void filter_rc_update(INT32 num, INT16 *src, INT16 *pSoundBuf, INT32 length)
 				}
 				pSoundBuf += 2;
 				memory += (((INT32)(*src++ * ptr->src_gain) - memory) * ptr->state.k) / 0x10000;
+				if (ptr->src_stereo) src++;
 			}
 			break;
 		}
@@ -198,6 +202,7 @@ void filter_rc_init(INT32 num, INT32 type, double R1, double R2, double R3, doub
 	ptr = &flt_rc_table[num];
 	
 	ptr->src_gain = 1.00;
+	ptr->src_stereo = 0; // mostly used with ay8910 mono input, so default to off for stereo
 	ptr->gain = 1.00;
 	ptr->output_dir = BURN_SND_ROUTE_BOTH;
 	ptr->add_signal = add_signal;
@@ -215,6 +220,20 @@ void filter_rc_set_src_gain(INT32 num, double gain)
 	ptr = &flt_rc_table[num];
 	
 	ptr->src_gain = gain;
+}
+
+void filter_rc_set_src_stereo(INT32 num)
+{ // allows for processing a mono (but stereo) stream
+#if defined FBA_DEBUG
+	if (!DebugSnd_FilterRCInitted) bprintf(PRINT_ERROR, _T("filter_rc_set_src_stereo called without init\n"));
+	if (num > num_filters) bprintf(PRINT_ERROR, _T("filter_rc_set_src_stereo called with invalid num %i\n"), num);
+#endif
+
+	struct flt_rc_info *ptr;
+
+	ptr = &flt_rc_table[num];
+	
+	ptr->src_stereo = 1;
 }
 
 void filter_rc_set_route(INT32 num, double nVolume, INT32 nRouteDir)

@@ -12,7 +12,6 @@
 extern "C" {
     #include "ay8910.h"
 }
-#include "lowpass2.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -45,6 +44,7 @@ static INT32 gfx0len;
 static INT32 gfx1len;
 
 static INT16 *pAY8910Buffer[6];
+static INT16 *hpfiltbuffer;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -85,15 +85,6 @@ enum
 	AUDIO_ENABLE_DIRECT,        /* via direct address in memory map */
 	AUDIO_ENABLE_AY8910         /* via ay-8910 port A */
 };
-
-static class LowPass2 *LP1 = NULL, *LP2 = NULL;
-#define SampleFreq 44100.0
-#define CutFreq (3000.0-4440)
-#define Q 0.4
-#define Gain 0.8
-#define CutFreq2 (3000.0-1880)
-#define Q2 0.3
-#define Gain2 1.05
 
 
 static struct BurnInputInfo BtimeInputList[] = {
@@ -1557,11 +1548,6 @@ static INT32 MmonkeyInit() // and lnc
 
 	GenericTilesInit();
 
-	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // these 2 filters are used to get
-					   CutFreq2, Q2, Gain2);         // rid of the bg hissing noise on the first ay
-	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // they work a lot better than flt_rc, so they are used instead.
-					   CutFreq2, Q2, Gain2);
-
 	// first ay, pass-thru mixer only (CAP_P(0) = passthru)
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
@@ -1644,11 +1630,6 @@ static INT32 DiscoInit()
 	discomode = 1;
 
 	GenericTilesInit();
-
-	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // these 2 filters are used to get
-					   CutFreq2, Q2, Gain2);         // rid of the bg hissing noise on the first ay
-	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // they work a lot better than flt_rc, so they are used instead.
-					   CutFreq2, Q2, Gain2);
 
 	// first ay, pass-thru mixer only (CAP_P(0) = passthru)
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
@@ -1756,11 +1737,6 @@ static INT32 BnjInit()
 
 	GenericTilesInit();
 
-	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // these 2 filters are used to get
-					   CutFreq2, Q2, Gain2);         // rid of the bg hissing noise on the first ay
-	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // they work a lot better than flt_rc, so they are used instead.
-					   CutFreq2, Q2, Gain2);
-
 	// first ay, pass-thru mixer only (CAP_P(0) = passthru)
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
@@ -1856,27 +1832,33 @@ static INT32 BtimeInit()
 
 	GenericTilesInit();
 
-	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // these 2 filters are used to get
-					   CutFreq2, Q2, Gain2);         // rid of the bg hissing noise on the first ay
-	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // they work a lot better than flt_rc, so they are used instead.
-					   CutFreq2, Q2, Gain2);
-
 	// first ay, pass-thru mixer only (CAP_P(0) = passthru)
-	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
-	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
-	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
+	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x730), 0);
+	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x730), 1);
+	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x730), 1);
 
 	// second ay, apply a slight bit of lpf to match
 	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x15), 1);
 	filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
 	filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
 
-	filter_rc_set_route(0, 0.25, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(1, 0.25, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(2, 0.25, BURN_SND_ROUTE_BOTH);
+	// #6 takes mixed #0,1,2 and highpasses it a little to get rid of the dc offset
+	filter_rc_init(6, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310), 0);
+	filter_rc_set_src_stereo(6);
+
+	// #7 - remove more hiss. yeah.
+	filter_rc_init(7, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x50), 0);
+	filter_rc_set_src_stereo(7);
+
+	filter_rc_set_route(0, 0.55, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(1, 0.55, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(2, 0.55, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(3, 0.15, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(4, 0.15, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(5, 0.15, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(6, 1.15, BURN_SND_ROUTE_BOTH);
+
+	hpfiltbuffer = (INT16*)BurnMalloc(nBurnSoundLen*8);
 
 	DrvDoReset();
 
@@ -1960,11 +1942,6 @@ static INT32 ZoarInit()
 
 	GenericTilesInit();
 
-	LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // these 2 filters are used to get
-					   CutFreq2, Q2, Gain2);         // rid of the bg hissing noise on the first ay
-	LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain, // they work a lot better than flt_rc, so they are used instead.
-					   CutFreq2, Q2, Gain2);
-
 	// first ay, pass-thru mixer only (CAP_P(0) = passthru)
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
@@ -2000,6 +1977,9 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	if (btimemode)
+		BurnFree(hpfiltbuffer);
+
 	btimemode = 0;
 	btime3mode = 0;
 	brubbermode = 0;
@@ -2009,11 +1989,6 @@ static INT32 DrvExit()
 	bnjskew = 0;
 
 	audio_nmi_type = AUDIO_ENABLE_NONE;
-
-	delete LP1;
-	delete LP2;
-	LP1 = NULL;
-	LP2 = NULL;
 
 	return 0;
 }
@@ -2338,7 +2313,7 @@ static INT32 DiscoDraw()
 	return 0;
 }
 
-#if 0
+#if 1
 extern int counter; // save for later debugging/tweaking. -dink
 int lastctr = 0;
 #endif
@@ -2394,16 +2369,14 @@ static INT32 BtimeFrame()
 
 	vblank = 0x80;
 
-#if 0
+#if 1
 	if (counter != lastctr) { // save this block for tweaking filters etc. -dink
 		lastctr = counter;
 
 		//btimepalettewrite(3, 0x3f);
-		LP1->SetParam(CutFreq + (counter * 100), SampleFreq, Q, Gain, CutFreq2+ (counter * 100), Q2, Gain2);
-		LP2->SetParam(CutFreq + (counter * 100), SampleFreq, Q, Gain, CutFreq2+ (counter * 100), Q2, Gain2);
-		//filter_rc_set_RC(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10+ (counter * 50)));
-		//filter_rc_set_RC(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10));
-		//filter_rc_set_RC(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10));
+		//filter_rc_set_RC(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x4a0 + (counter * 0x10)));
+		filter_rc_set_RC(7, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x10 + (counter * 0x10)));
+		//filter_rc_set_RC(7, FLT_RC_LOWPASS, 3846, 0, 0, CAP_N(0x310 + (counter * 0x10)));
 	}
 #endif
 
@@ -2442,10 +2415,14 @@ static INT32 BtimeFrame()
 			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
 			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
 
-			if (btimemode && LP1 && LP2) {
-				LP1->Filter(pSoundBuf, nSegmentLength);  // Left
-				LP2->Filter(pSoundBuf+1, nSegmentLength); // Right
+			if (btimemode) {
+				filter_rc_update(6, pSoundBuf, hpfiltbuffer, nSegmentLength);
+				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
+
+				filter_rc_update(7, pSoundBuf, hpfiltbuffer, nSegmentLength);
+				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
 			}
+
 			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
 			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
 			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
@@ -2458,19 +2435,23 @@ static INT32 BtimeFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
-		}
 
-		filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
-		filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
-		filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
+			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
+			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
+			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);
 
-		if (btimemode && LP1 && LP2) {
-			LP1->Filter(pSoundBuf, nSegmentLength);  // Left
-			LP2->Filter(pSoundBuf+1, nSegmentLength); // Right
+			if (btimemode) {
+				filter_rc_update(6, pSoundBuf, hpfiltbuffer, nSegmentLength);
+				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
+
+				filter_rc_update(7, pSoundBuf, hpfiltbuffer, nSegmentLength);
+				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
+			}
+
+			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
+			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
+			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
 		}
-		filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
-		filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
-		filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
 	}
 
 	return 0;
@@ -2495,6 +2476,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 
 		M6502Scan(nAction);
+
+		AY8910Scan(nAction, pnMin);
 
 		SCAN_VAR(vblank);
 		SCAN_VAR(soundlatch);

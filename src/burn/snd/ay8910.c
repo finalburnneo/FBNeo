@@ -8,6 +8,10 @@
   Based on various code snippets by Ville Hallik, Michael Cuddy,
   Tatsuyuki Satoh, Fabrice Frances, Nicola Salmoria.
 
+  June 07, 2016 - Added Burgertime Mode                              [dink]
+                  This feature eliminates the horrible hissing noise
+				  present in the game.
+
 ***************************************************************************/
 
 #include "driver.h"
@@ -40,6 +44,8 @@ static INT32 num = 0, ym_num = 0;
 
 static double AY8910Volumes[3 * 6];
 static INT32 AY8910RouteDirs[3 * 6];
+
+INT32 ay8910burgertime_mode = 0;
 
 struct AY8910
 {
@@ -166,16 +172,19 @@ static void _AYWriteReg(INT32 n, INT32 r, INT32 v)
 		PSG->Regs[AY_AVOL] &= 0x1f;
 		PSG->EnvelopeA = PSG->Regs[AY_AVOL] & 0x10;
 		PSG->VolA = PSG->EnvelopeA ? PSG->VolE : PSG->VolTable[PSG->Regs[AY_AVOL] ? PSG->Regs[AY_AVOL]*2+1 : 0];
+		if (ay8910burgertime_mode && PSG->PeriodA == PSG->UpdateStep && n == 0) PSG->VolA = 0;
 		break;
 	case AY_BVOL:
 		PSG->Regs[AY_BVOL] &= 0x1f;
 		PSG->EnvelopeB = PSG->Regs[AY_BVOL] & 0x10;
 		PSG->VolB = PSG->EnvelopeB ? PSG->VolE : PSG->VolTable[PSG->Regs[AY_BVOL] ? PSG->Regs[AY_BVOL]*2+1 : 0];
+		if (ay8910burgertime_mode && PSG->PeriodB == PSG->UpdateStep && n == 0) PSG->VolB = 0;
 		break;
 	case AY_CVOL:
 		PSG->Regs[AY_CVOL] &= 0x1f;
 		PSG->EnvelopeC = PSG->Regs[AY_CVOL] & 0x10;
 		PSG->VolC = PSG->EnvelopeC ? PSG->VolE : PSG->VolTable[PSG->Regs[AY_CVOL] ? PSG->Regs[AY_CVOL]*2+1 : 0];
+		if (ay8910burgertime_mode && PSG->PeriodC == PSG->UpdateStep && n == 0) PSG->VolC = 0;
 		break;
 	case AY_EFINE:
 	case AY_ECOARSE:

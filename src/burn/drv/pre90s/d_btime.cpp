@@ -1209,6 +1209,60 @@ static UINT8 btime_sound_read(UINT16 address)
 	return 0;
 }
 
+/*
+ dink's notes on the horrible migraine-inducing high-pitched hissing noise
+ for a note-off, burgertime's audiocpu sends a command with fine/coarse tuning
+ set to 0 to each channel.  Right after this, it sends a volume command for
+ that channel.  The ay8910 soundcore (old and recent) treats a tuning command
+ of 0 as a very high pitched noise.  theres also a funny bug in the 8910
+ emulator: if you remove the check for a 0 fine/coarse tuning - to actually
+ allow for a tune of 0 - it will actually lock up while rendering the samples.
+ see: if (PSG->PeriodA == 0) PSG->PeriodA = PSG->UpdateStep;
+
+ what I do to get around making any changes to the ay8910 core is look for the
+ fine/coarse tuning value of 0 being sent to each of the first ay's 3 channels
+ and set the volume down to 0. The next command is always a volume, so we just
+ change the next data command to 0.
+
+0x02: 0. 0x01: 0. AF: 0 AC: 0.
+0x02: 1. 0x01: 0. AF: 0 AC: 0.
+
+0x02: 2. 0x01: 0. BF: 0 BC: 0.
+0x02: 3. 0x01: 0. BF: 0 BC: 0.
+
+0x02: 4. 0x01: 0. CF: 0 CC: 0.
+0x02: 5. 0x01: 0. CF: 0 CC: 0.
+*/
+
+static UINT8 last01[3] = {0xff,0xff};
+static UINT8 last02[3] = {0xff,0xff};
+static UINT8 ignext = 0;
+
+static void checkhiss_add02(UINT8 data)
+{
+	last02[1] = last02[0];
+	last02[0] = data;
+}
+
+static void checkhiss_and_add01(UINT8 data)
+{
+	last01[1] = last01[0];
+	last01[0] = data;
+
+	if (last01[0] == 0 && last02[0] == 1 && last01[1] == 0 && last02[1] == 0)
+	{
+		ignext = 1; // next command will be VolA
+	}
+	if (last01[0] == 0 && last02[0] == 3 && last01[1] == 0 && last02[1] == 2)
+	{
+		ignext = 1; // next command will be VolB
+	}
+	if (last01[0] == 0 && last02[0] == 5 && last01[1] == 0 && last02[1] == 4)
+	{
+		ignext = 1; // next command will be VolC
+	}
+}
+
 static void btime_sound_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x0000 && address <= 0x1fff) {
@@ -1217,10 +1271,18 @@ static void btime_sound_write(UINT16 address, UINT8 data)
 	switch (address >> 13)
 	{
 		case 0x01:
+			//bprintf(0, _T("0x01: %X. "), data);
+			if (ignext) {
+				data = 0; // set volume to 0
+				ignext = 0;
+			}
 			AY8910Write(0, ~((address>>13)-1) & 1, data);
+			checkhiss_and_add01(data);
 			return;
 		case 0x02:
+			//bprintf(0, _T("0x02: %X. "), data);
 			AY8910Write(0, ~((address>>13)-1) & 1, data);
+			checkhiss_add02(data);
 			return;
 		case 0x03:
 			AY8910Write(1, ~((address>>13)-1) & 1, data);
@@ -1831,8 +1893,6 @@ static INT32 BtimeInit()
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
-	ay8910burgertime_mode = 1;
-
 	audio_nmi_type = AUDIO_ENABLE_DIRECT;
 
 	GenericTilesInit();
@@ -1972,8 +2032,6 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	M6502Exit();
-
-	ay8910burgertime_mode = 0;
 
 	AY8910Exit(0);
 	AY8910Exit(1);
@@ -2320,7 +2378,7 @@ static INT32 DiscoDraw()
 	return 0;
 }
 
-#define FILTERDEBUG 1
+#define FILTERDEBUG 0
 
 #if FILTERDEBUG
 extern int counter; // save for later debugging/tweaking. -dink

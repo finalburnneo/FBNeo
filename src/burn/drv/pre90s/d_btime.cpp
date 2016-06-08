@@ -9,6 +9,7 @@
 #include "bitswap.h"
 #include "driver.h"
 #include "flt_rc.h"
+
 extern "C" {
     #include "ay8910.h"
 }
@@ -1291,7 +1292,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvMainROM	= Next; Next += 0x010000;
-	DrvMainROMdec	= Next; Next += 0x010000;
+	DrvMainROMdec	= Next; Next += 0x010000; // this is needed for savestates, as the rom is decoded on-the-fly
 	DrvSoundROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x020000;
@@ -1829,48 +1830,38 @@ static INT32 BtimeInit()
 	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
+
+	ay8910burgertime_mode = 1;
+
 	audio_nmi_type = AUDIO_ENABLE_DIRECT;
 
 	GenericTilesInit();
 
 	// first ay, lots of lowpass hiss-killer.
-	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x630), 0);
-	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x630), 1);
-	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x630), 1);
+	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x330), 0);
+	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x330), 1);
+	filter_rc_init(2, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x330), 1);
 	filter_rc_set_src_gain(0, 0.55);
 	filter_rc_set_src_gain(1, 0.55);
 	filter_rc_set_src_gain(2, 0.55);
 
 	// second ay, apply a slight bit of lpf to match
-	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x15), 1);
+	filter_rc_init(3, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x25), 1);
 	filter_rc_init(4, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
 	filter_rc_init(5, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(10*0x10), 1);
-
-	filter_rc_set_src_gain(0, 0.20);
-	filter_rc_set_src_gain(1, 0.20);
-	filter_rc_set_src_gain(2, 0.20);
 
 	// #6 takes mixed #0,1,2 and highpasses it a little to get rid of the dc offset
 	filter_rc_init(6, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310), 0);
 	filter_rc_set_src_stereo(6);
 
-	// #7 - remove more hiss. yeah.
-	filter_rc_init(7, FLT_RC_HIGHPASS, 1000, 5100, 0, CAP_N(0x50), 0);
-	filter_rc_set_src_stereo(7);
-
-	// #8 - do it even more.
-	filter_rc_init(8, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x50), 0);
-	filter_rc_set_src_stereo(8);
+	hpfiltbuffer = (INT16*)BurnMalloc(nBurnSoundLen*8); // for #6
 
 	filter_rc_set_route(0, 1.00, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(1, 1.00, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(2, 1.00, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(3, 0.15, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(3, 0.35, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(4, 0.15, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(5, 0.15, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(6, 4.15, BURN_SND_ROUTE_BOTH);
-
-	hpfiltbuffer = (INT16*)BurnMalloc(nBurnSoundLen*8);
 
 	DrvDoReset();
 
@@ -1982,6 +1973,8 @@ static INT32 DrvExit()
 
 	M6502Exit();
 
+	ay8910burgertime_mode = 0;
+
 	AY8910Exit(0);
 	AY8910Exit(1);
 
@@ -1989,8 +1982,10 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
-	if (btimemode)
+	if (btimemode) {
 		BurnFree(hpfiltbuffer);
+		hpfiltbuffer = NULL;
+	}
 
 	btimemode = 0;
 	btime3mode = 0;
@@ -2325,7 +2320,7 @@ static INT32 DiscoDraw()
 	return 0;
 }
 
-#define FILTERDEBUG 0
+#define FILTERDEBUG 1
 
 #if FILTERDEBUG
 extern int counter; // save for later debugging/tweaking. -dink
@@ -2390,8 +2385,7 @@ static INT32 BtimeFrame()
 		//btimepalettewrite(3, 0x3f);
 		//filter_rc_set_RC(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_N(0x4a0 + (counter * 0x10)));
 		//filter_rc_set_RC(7, FLT_RC_LOWPASS, 1000+counter*100, 5100, 0, CAP_N(0x310/* + (counter * 0x10)*/ ));
-		filter_rc_set_RC(6, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310+counter*0x10));
-
+		//filter_rc_set_RC(6, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310+counter*0x10));
 		//filter_rc_set_RC(7, FLT_RC_LOWPASS, 3846, 0, 0, CAP_N(0x310 + (counter * 0x10)));
 	}
 #endif
@@ -2434,12 +2428,6 @@ static INT32 BtimeFrame()
 			if (btimemode) {
 				filter_rc_update(6, pSoundBuf, hpfiltbuffer, nSegmentLength);
 				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
-
-				filter_rc_update(7, pSoundBuf, hpfiltbuffer, nSegmentLength);
-				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
-
-				filter_rc_update(8, pSoundBuf, hpfiltbuffer, nSegmentLength);
-				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
 			}
 
 			filter_rc_update(3, pAY8910Buffer[3], pSoundBuf, nSegmentLength);
@@ -2461,12 +2449,6 @@ static INT32 BtimeFrame()
 
 			if (btimemode) {
 				filter_rc_update(6, pSoundBuf, hpfiltbuffer, nSegmentLength);
-				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
-
-				filter_rc_update(7, pSoundBuf, hpfiltbuffer, nSegmentLength);
-				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
-
-				filter_rc_update(8, pSoundBuf, hpfiltbuffer, nSegmentLength);
 				memmove(pSoundBuf, hpfiltbuffer, nSegmentLength*4);
 			}
 
@@ -2492,6 +2474,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd-AllRam;
 		ba.szName = "All Ram";
+		BurnAcb(&ba);
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = DrvMainROMdec;
+		ba.nLen	  = 0x10000;
+		ba.szName = "Decoded ROM";
 		BurnAcb(&ba);
 	}
 	

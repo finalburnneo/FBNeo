@@ -247,7 +247,7 @@ STDDIPINFO(Ninjemak)
 static void bankswitch(INT32 data)
 {
 	bankdata = data;
-	bprintf(0, _T("bank %X\n"), data);
+
 	ZetMapMemory(DrvZ80ROM0 + 0x10000 + data * 0x2000, 0xc000, 0xdfff, MAP_ROM);
 }
 
@@ -464,6 +464,31 @@ static void DrvNibbleExpand(UINT8 *rom, INT32 len)
 		rom[i+0] = rom[i/2] & 0xf;
 	}
 }
+#if 0
+// this doesn't work -dink
+static INT32 DrvEmakiGfxDecode()
+{
+	INT32 Plane_spr[4] = { 0, 1, 2, 3 };
+
+	INT32 t16XOffs[16] = { 1*4, 0*4, RGN_FRAC(0x20000,1,2)+1*4, RGN_FRAC(0x20000,1,2)+0*4, 3*4, 2*4, RGN_FRAC(0x20000,1,2)+3*4, RGN_FRAC(0x20000,1,2)+2*4,
+			5*4, 4*4, RGN_FRAC(0x20000,1,2)+5*4, RGN_FRAC(0x20000,1,2)+4*4, 7*4, 6*4, RGN_FRAC(0x20000,1,2)+7*4, RGN_FRAC(0x20000,1,2)+6*4 };
+	INT32 t16YOffs[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
+			8*32, 9*32, 10*32, 11*32, 12*32, 13*32, 14*32, 15*32 };
+
+	UINT8 *tmp = (UINT8*)malloc(0x20000);
+	if (tmp == NULL) {
+		return 1;
+	}
+
+	memcpy (tmp, DrvGfxROM2, 0x20000);
+
+	GfxDecode(0x0400, 4, 16, 16, Plane_spr, t16XOffs, t16YOffs, 0x200, tmp, DrvGfxROM2);
+
+	free (tmp);
+
+	return 0;
+}
+#endif
 
 static INT32 DrvInit(INT32 game)
 {
@@ -528,6 +553,8 @@ static INT32 DrvInit(INT32 game)
 		if (BurnLoadRom(DrvGfxROM2 + 0x00001, 11, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x10000, 12, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x10001, 13, 2)) return 1;
+
+		//DrvEmakiGfxDecode(); no workie either
 
 		if (BurnLoadRom(DrvMapROM  + 0x00000, 14, 1)) return 1;
 		if (BurnLoadRom(DrvMapROM  + 0x04000, 15, 1)) return 1;

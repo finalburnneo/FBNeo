@@ -39,6 +39,7 @@ static UINT8 display_disable;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
+static UINT8 DrvDip[2]; // for ninjemak service mode
 static UINT8 DrvInputs[6] = { 0xff, 0xff, 0xff, 0xff, 0xff, 0xff };
 static UINT8 DrvReset;
 
@@ -69,14 +70,46 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvJoy3 + 5,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
+
+static struct BurnInputInfo ninjemakInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvInputs + 3,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvInputs + 4,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"		},
+};
+
+STDINPUTINFO(ninjemak)
 
 static struct BurnDIPInfo GalivanDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xdf, NULL			},
 	{0x15, 0xff, 0xff, 0xff, NULL			},
+	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x14, 0x01, 0x03, 0x03, "3"			},
@@ -125,6 +158,10 @@ static struct BurnDIPInfo GalivanDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x15, 0x01, 0x20, 0x20, "Off"			},
 	{0x15, 0x01, 0x20, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x16, 0x01, 0x01, 0x00, "Off"			},
+	{0x16, 0x01, 0x01, 0x01, "On (reset after turning off)"			},
 };
 
 STDDIPINFO(Galivan)
@@ -133,6 +170,7 @@ static struct BurnDIPInfo DangarDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0x9f, NULL			},
 	{0x15, 0xff, 0xff, 0x7f, NULL			},
+	{0x16, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x14, 0x01, 0x03, 0x03, "3"			},
@@ -183,6 +221,10 @@ static struct BurnDIPInfo DangarDIPList[]=
 	{0x15, 0x01, 0xc0, 0x80, "3 Times"		},
 	{0x15, 0x01, 0xc0, 0x40, "5 Times"		},
 	{0x15, 0x01, 0xc0, 0x00, "99 Times"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x16, 0x01, 0x01, 0x00, "Off"			},
+	{0x16, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Dangar)
@@ -191,6 +233,7 @@ static struct BurnDIPInfo NinjemakDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 	{0x15, 0xff, 0xff, 0x7c, NULL			},
+	{0x16, 0xff, 0xff, 0x02, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x14, 0x01, 0x03, 0x03, "3"			},
@@ -228,15 +271,19 @@ static struct BurnDIPInfo NinjemakDIPList[]=
 	{0x15, 0x01, 0x04, 0x04, "Easy"			},
 	{0x15, 0x01, 0x04, 0x00, "Hard"			},
 
-	{0   , 0xfe, 0   ,    0, "Flip Screen"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x15, 0x01, 0x20, 0x20, "Off"			},
 	{0x15, 0x01, 0x20, 0x00, "On"			},
 
-	{0   , 0xfe, 0   ,    0, "Allow Continue"	},
+	{0   , 0xfe, 0   ,    4, "Allow Continue"	},
 	{0x15, 0x01, 0xc0, 0xc0, "No"			},
 	{0x15, 0x01, 0xc0, 0x80, "3 Times"		},
 	{0x15, 0x01, 0xc0, 0x40, "5 Times"		},
 	{0x15, 0x01, 0xc0, 0x00, "99 Times"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x16, 0x01, 0x02, 0x02, "Off"			},
+	{0x16, 0x01, 0x02, 0x00, "On"			},
 };
 
 STDDIPINFO(Ninjemak)
@@ -309,7 +356,7 @@ static void __fastcall galivan_main_write_port(UINT16 port, UINT8 data)
 
 static UINT8 __fastcall galivan_main_read_port(UINT16 port)
 {
-	switch (port & 0x7f)
+	switch (port & 0xff)
 	{
 		case 0x00:
 		case 0x01:
@@ -319,8 +366,21 @@ static UINT8 __fastcall galivan_main_read_port(UINT16 port)
 		case 0x05:
 			return DrvInputs[port & 7];
 
-		case 0x40: // 0xc0
+		case 0xc0: // dangar
 			return 0x58;
+
+		// ninja emaki (ninjemak)
+		case 0x80:
+		case 0x81:
+		case 0x82:
+			return DrvInputs[port & 7];
+
+		case 0x84:
+		case 0x85:
+			return DrvInputs[(port & 7)-1];
+
+		case 0x83:
+			return (DrvDip[0] & 0x02);
 
 	}
 
@@ -1239,7 +1299,7 @@ struct BurnDriver BurnDrvNinjemak = {
 	"Ninja Emaki (US)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, ninjemakRomInfo, ninjemakRomName, NULL, NULL, DrvInputInfo, NinjemakDIPInfo,
+	NULL, ninjemakRomInfo, ninjemakRomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1288,7 +1348,7 @@ struct BurnDriver BurnDrvYouma = {
 	"Youma Ninpou Chou (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, youmaRomInfo, youmaRomName, NULL, NULL, DrvInputInfo, NinjemakDIPInfo,
+	NULL, youmaRomInfo, youmaRomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1337,7 +1397,7 @@ struct BurnDriver BurnDrvYouma2 = {
 	"Youma Ninpou Chou (Japan, alt)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, youma2RomInfo, youma2RomName, NULL, NULL, DrvInputInfo, NinjemakDIPInfo,
+	NULL, youma2RomInfo, youma2RomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1384,7 +1444,7 @@ struct BurnDriver BurnDrvYoumab = {
 	"Youma Ninpou Chou (Game Electronics bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, youmabRomInfo, youmabRomName, NULL, NULL, DrvInputInfo, NinjemakDIPInfo,
+	NULL, youmabRomInfo, youmabRomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };
@@ -1431,7 +1491,7 @@ struct BurnDriver BurnDrvYoumab2 = {
 	"Youma Ninpou Chou (Game Electronics bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, youmab2RomInfo, youmab2RomName, NULL, NULL, DrvInputInfo, NinjemakDIPInfo,
+	NULL, youmab2RomInfo, youmab2RomName, NULL, NULL, ninjemakInputInfo, NinjemakDIPInfo,
 	ninjemakInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1180,
 	224, 256, 3, 4
 };

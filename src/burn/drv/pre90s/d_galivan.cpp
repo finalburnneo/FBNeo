@@ -5,6 +5,7 @@
 #include "z80_intf.h"
 #include "dac.h"
 #include "burn_ym3526.h"
+#include "flt_rc.h"
 #include "nb1414m4_8bit.h"
 
 static UINT8 *AllMem;
@@ -27,6 +28,8 @@ static UINT8 *DrvSprBuf;
 
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
+
+static INT16 *hpfiltbuffer;
 
 static UINT8 sprite_priority;
 static UINT16 scrollx;
@@ -596,7 +599,7 @@ static INT32 DrvInit(INT32 game)
 
 		if (BurnLoadRom(DrvSprPal  + 0x00000, 20, 1)) return 1;
 
-		if (BurnLoadRom(nb1414_blit_data8b,     21, 1)) return 1;
+		if (BurnLoadRom(nb1414_blit_data8b,   21, 1)) return 1;
 	}
 
 	DrvNibbleExpand(DrvGfxROM0, 0x08000);
@@ -621,14 +624,21 @@ static INT32 DrvInit(INT32 game)
 	ZetSetInHandler(galivan_sound_read_port);
 	ZetClose();
 
-	BurnYM3526Init(4000000, NULL, &DrvYM3526SynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
-	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	// dac0 -> dac1 -> dc-offset removal (hp filter) -> ym3526 -> OUT
 
-	DACInit(0, 0, 1, DrvSyncDAC);
-	DACInit(1, 0, 1, DrvSyncDAC);
+	BurnYM3526Init(4000000, NULL, &DrvYM3526SynchroniseStream, 1);
+	BurnTimerAttachZetYM3526(4000000);
+	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.85, BURN_SND_ROUTE_BOTH);
+
+	DACInit(0, 0, 0, DrvSyncDAC);
+	DACInit(1, 0, 0, DrvSyncDAC);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
+
+	// #0 takes dac #0,1 and highpasses it a little to get rid of the dc offset.
+	filter_rc_init(0, FLT_RC_HIGHPASS, 3846, 0, 0, CAP_N(0x310), 0);
+	filter_rc_set_src_stereo(0);
+	hpfiltbuffer = (INT16*)BurnMalloc(nBurnSoundLen*8); // for #0
 
 	GenericTilesInit();
 
@@ -645,8 +655,12 @@ static INT32 DrvExit()
 
 	BurnYM3526Exit();
 	DACExit();
+	filter_rc_exit();
 
 	BurnFree(AllMem);
+
+	BurnFree(hpfiltbuffer);
+	hpfiltbuffer = NULL;
 
 	nb1414_blit_data8b = NULL;
 
@@ -830,8 +844,13 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		ZetOpen(1);
-		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		filter_rc_update(0, pBurnSoundOut, hpfiltbuffer, nBurnSoundLen);
+		memmove(pBurnSoundOut, hpfiltbuffer, nBurnSoundLen*4);
+
+		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
+
 		ZetClose();
 	}
 

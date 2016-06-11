@@ -276,11 +276,16 @@ static void nichibutsu_1414m4_0e00(UINT16 mcu_cmd,UINT8 *vram)
 	}
 }
 
-void nb_1414m4_exec8b(UINT16 mcu_cmd,UINT8 *vram,UINT16 *scrollx,UINT16 *scrolly)
+void nb_1414m4_exec8b(UINT16 mcu_cmd,UINT8 *vram,UINT16 *scrollx,UINT16 *scrolly,INT32 emakimode)
 {
 	/* latch fg scroll values */
 	*scrollx = (vram[0x0d] & 0xff) | ((vram[0x0e] & 0xff) << 8);
 	*scrolly = (vram[0x0b] & 0xff) | ((vram[0x0c] & 0xff) << 8);
+
+	if (emakimode && mcu_cmd == 0x286) {
+		memset(vram, 0x00, 0x3f0);
+		return;
+	}
 
 	/* process the command */
 	switch(mcu_cmd & 0xff00)

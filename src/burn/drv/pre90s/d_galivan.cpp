@@ -346,7 +346,7 @@ static void __fastcall galivan_main_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x86: {
-			nb_1414m4_exec8b((DrvVidRAM[0] << 8) | (DrvVidRAM[1] & 0xff), DrvVidRAM,&scrollx,&scrolly);
+			nb_1414m4_exec8b((DrvVidRAM[0] << 8) | (DrvVidRAM[1] & 0xff), DrvVidRAM,&scrollx,&scrolly,game_mode);
 		}
 		return;
 

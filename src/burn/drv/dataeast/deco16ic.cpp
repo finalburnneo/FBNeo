@@ -1,13 +1,8 @@
 /*
 TO DO!
 
-// why is mutant fight's scrolling off in title?
-// caveman ninja and joe & mac returns is also, in the ending. (savestate attachments in dev thread)
-// side effect: if I get the rowscroll working right, it breaks the ending-text in caveman ninja. o.O
-
 1   Double Wings                MBE     102     52              141             104
 */
-
 
 
 #include "tiles_generic.h"
@@ -26,8 +21,8 @@ static INT32 deco16_pf_bank[4];
 
 static INT32 deco16_pf_gfx_bank[4]; // (1/2) 8x8, 16x16, (2/3) 8x8, 16x16
 
-static UINT16 deco16_scroll_x[4][ 512]; // 512
-static UINT16 deco16_scroll_y[4][1024]; // 1024
+static UINT16 deco16_scroll_x[4][ 512]; // 512  (rowscroll)
+static UINT16 deco16_scroll_y[4][1024]; // 1024 (colscroll)
 
 static INT32 deco16_scroll_rows[4];
 static INT32 deco16_scroll_cols[4];
@@ -37,6 +32,9 @@ static INT32 deco16_enable_colscroll[4];
 
 static INT32 deco16_global_x_offset = 0;
 static INT32 deco16_global_y_offset = 0;
+
+static INT32 deco16_yscroll[4]; // scroll y register
+static INT32 deco16_xscroll[4]; // scroll x register
 
 static INT32 deco16_scroll_offset[4][2][2]; // tmap, size, x, y
 
@@ -272,7 +270,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 	for (INT32 y = draw_start; y < draw_end; y++)
 	{
-		INT32 xoff = deco16_scroll_x[tmap][((y-deco16_global_y_offset)&0x1ff)/deco16_scroll_rows[tmap]] & wmask;
+		INT32 xoff = deco16_scroll_x[tmap][((y + deco16_yscroll[tmap] + deco16_global_y_offset)&0x1ff)/deco16_scroll_rows[tmap]] & wmask;
 
 		for (INT32 x = 0; x < nScreenWidth + size; x+=size)
 		{
@@ -556,6 +554,9 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 	deco16_enable_rowscroll[tmap] = 0;
 	deco16_enable_colscroll[tmap] = 0;
+
+	deco16_yscroll[tmap] = scrolly;
+	deco16_xscroll[tmap] = scrollx;
 
 	if ((control1 & 0x40) == 0x40 && rowscroll != NULL) // row scroll
 	{

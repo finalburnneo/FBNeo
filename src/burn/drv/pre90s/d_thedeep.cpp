@@ -30,7 +30,7 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 rom_bank;
-static UINT8 nmi_enable;	
+static UINT8 nmi_enable;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 protection_data;
@@ -42,7 +42,10 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[5];
+static UINT8 DrvInput4;
 static UINT8 DrvReset;
+
+static INT32 hold_coin[4];
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -278,6 +281,9 @@ static INT32 DrvDoReset()
 	protection_command = 0;
 	protection_index = -1;
 	protection_irq = 0;
+
+	memset (hold_coin, 0, 4 * sizeof(INT32));
+	DrvInput4 = 0;
 
 	return 0;
 }
@@ -614,7 +620,7 @@ static void interrupt_handler(INT32 param)
 	{
 		if (protection_command != 0x59)
 		{
-			int coins = DrvInputs[4];
+			int coins = DrvInput4;
 			if      (coins & 1) protection_data = 1;
 			else if (coins & 2) protection_data = 2;
 			else if (coins & 4) protection_data = 3;
@@ -635,6 +641,8 @@ static void interrupt_handler(INT32 param)
 	}
 }
 
+static INT32 previous_coin = 0;
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -647,12 +655,31 @@ static INT32 DrvFrame()
 	{
 		DrvInputs[0] = 0xff;
 		DrvInputs[1] = 0xff;
-		DrvInputs[4] = 0;
+		DrvInputs[4] = 0; // real inputs #4
+		DrvInput4 = 0;    // hold coin for 1 single frame-processed.
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		for (INT32 i = 0; i < 4; i++) {
+			if ((previous_coin != (DrvInputs[4]&7)) && DrvJoy3[i] && !hold_coin[i]) {
+				hold_coin[i] = 2; // frames to hold coin + 1
+			}
+
+			if (hold_coin[i]) {
+				hold_coin[i]--;
+				DrvInput4 |= 1<<i;
+			}
+			if (!hold_coin[i]) {
+				if (DrvInput4 & 1<<i)
+					DrvInput4 ^= 1<<i;
+			}
+		}
+
+		previous_coin = DrvInputs[4] & 7;
 	}
 
 	INT32 nInterleave = 256;

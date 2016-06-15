@@ -688,7 +688,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -696,7 +696,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -710,7 +710,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 
 		SCAN_VAR(rom_bank);
-		SCAN_VAR(nmi_enable);	
+		SCAN_VAR(nmi_enable);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(protection_data);
@@ -763,10 +763,10 @@ struct BurnDriver BurnDrvThedeep = {
 	"thedeep", NULL, NULL, NULL, "1987",
 	"The Deep (Japan)\0", NULL, "Wood Place Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, thedeepRomInfo, thedeepRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
-	256, 248, 4, 3
+	248, 256, 3, 4
 };
 
 
@@ -804,8 +804,8 @@ struct BurnDriver BurnDrvRundeep = {
 	"rundeep", "thedeep", NULL, NULL, "1988",
 	"Run Deep\0", NULL, "bootleg (Cream)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, rundeepRomInfo, rundeepRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x201,
-	256, 248, 4, 3
+	248, 256, 3, 4
 };

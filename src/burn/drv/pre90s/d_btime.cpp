@@ -65,6 +65,12 @@ static UINT8 bnj_scroll2;
 static UINT8 lnc_charbank;
 static UINT8 btime_palette; // disco, zoar
 
+// feature: speed up the sound processor init, since it takes several seconds
+// after the game boots. with this, it inits instantly by overclocking the sound
+// processor for 10 frames.
+#define ZIPPYSOUNDFRAMES 10
+static UINT8 zippysoundinit;
+
 // mmonkey protection stuff
 INT32 protection_command;
 INT32 protection_status;
@@ -1423,6 +1429,8 @@ static INT32 DrvDoReset()
 	protection_value = 0;
 	protection_ret = 0;
 
+	zippysoundinit = ZIPPYSOUNDFRAMES;
+
 	return 0;
 }
 
@@ -2052,6 +2060,7 @@ static INT32 DrvExit()
 	lncmode = 0;
 	zoarmode = 0;
 	bnjskew = 0;
+	zippysoundinit = 0;
 
 	audio_nmi_type = AUDIO_ENABLE_NONE;
 
@@ -2430,9 +2439,12 @@ static INT32 BtimeFrame()
 	//bprintf(0, _T("inp: %X %X %X.   "), DrvInputs[0],DrvInputs[1],DrvInputs[2]);
 
 	INT32 nInterleave = 272;
-	INT32 nCyclesTotal[2] = { ((discomode) ? 750000 : 1500000) / 60, 500000 / 60 };
+
+	INT32 nCyclesTotal[2] = { ((discomode) ? 750000 : 1500000) / 60, ((zippysoundinit) ? 6500000 : 500000) / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 	INT32 nSoundBufferPos = 0;
+
+	if (zippysoundinit) zippysoundinit--;
 
 	vblank = 0x80;
 

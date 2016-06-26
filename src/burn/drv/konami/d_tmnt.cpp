@@ -1988,6 +1988,30 @@ static struct BurnRomInfo tmht22peRomDesc[] = {
 STD_ROM_PICK(tmht22pe)
 STD_ROM_FN(tmht22pe)
 
+static struct BurnRomInfo tmht24peRomDesc[] = {
+	{ "063eaa02.8e",	0x020000, 0x665a68de, BRF_ESS | BRF_PRG }, //  0 	68000 Program Code
+	{ "063eaa03.8g",	0x020000, 0x7b7fb3af, BRF_ESS | BRF_PRG }, //  1
+	{ "063eaa04.10e",	0x020000, 0x69f38e1d, BRF_ESS | BRF_PRG }, //  2
+	{ "063eaa05.10g",	0x020000, 0x818032af, BRF_ESS | BRF_PRG }, //  3
+
+	{ "063b01.2f",		0x010000, 0x364f548a, BRF_ESS | BRF_PRG }, //  4 	Z80 Code
+
+	{ "063b12.16k",		0x080000, 0xd3283d19, BRF_GRA },           //  5	Tiles
+	{ "063b11.12k",		0x080000, 0x6ebc0c15, BRF_GRA },           //  6
+
+	{ "063b09.7l",		0x100000, 0x2d7a9d2a, BRF_GRA },           //  7	Sprites
+	{ "063b10.7k",		0x080000, 0xf2dd296e, BRF_GRA },           //  8
+	{ "063b07.3l",		0x100000, 0xd9bee7bf, BRF_GRA },           //  9
+	{ "063b08.3k",		0x080000, 0x3b1ae36f, BRF_GRA },           // 10
+
+	{ "063b06.1d",		0x200000, 0x1e510aa5, BRF_SND },           // 11	K053260 Samples
+
+	{ "tmnt2_eaa.nv",  	0x000080, 0x124af18f, BRF_OPT },
+};
+
+STD_ROM_PICK(tmht24pe)
+STD_ROM_FN(tmht24pe)
+
 static struct BurnRomInfo tmnt2aRomDesc[] = {
 	{ "063ada02.8e",	0x020000, 0x4f11b587, BRF_ESS | BRF_PRG }, //  0 	68000 Program Code
 	{ "063ada03.8g",	0x020000, 0x82a1b9ac, BRF_ESS | BRF_PRG }, //  1
@@ -6732,6 +6756,16 @@ struct BurnDriver BurnDrvTmht22pe = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, tmht22peRomInfo, tmht22peRomName, NULL, NULL, SsridersInputInfo, NULL,
+	Tmnt2Init, BlswhstlExit, Tmnt2Frame, NULL, SsridersScan,
+	NULL, 0x800, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTmht24pe = {
+	"tmht24pe", "tmnt2", NULL, NULL, "1991",
+	"Teenage Mutant Hero Turtles - Turtles in Time (4 Players ver. EAA)\0", NULL, "Konami", "GX063",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, tmht24peRomInfo, tmht24peRomName, NULL, NULL, SsridersInputInfo, NULL,
 	Tmnt2Init, BlswhstlExit, Tmnt2Frame, NULL, SsridersScan,
 	NULL, 0x800, 288, 224, 4, 3
 };

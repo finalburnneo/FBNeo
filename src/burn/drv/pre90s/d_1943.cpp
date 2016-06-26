@@ -186,9 +186,9 @@ static struct BurnRomInfo DrvRomDesc[] = {
 	{ "bme02.13d",     0x10000, 0x073fc57c, BRF_ESS | BRF_PRG }, //	 1
 	{ "bme03.14d",     0x10000, 0x835822c2, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
@@ -238,9 +238,9 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 	{ "bmu02c.13d",    0x10000, 0xd8880a41, BRF_ESS | BRF_PRG }, //	 1
 	{ "bmu03c.14d",    0x10000, 0x3f0ee26c, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
@@ -290,9 +290,9 @@ static struct BurnRomInfo DrvuaRomDesc[] = {
 	{ "bmu02.13d",     0x10000, 0x6f1353d5, BRF_ESS | BRF_PRG }, //	 1
 	{ "bmu03.14d",     0x10000, 0x9e7c07f7, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
@@ -342,9 +342,9 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "bm02b.13d",     0x10000, 0x7f0d7edc, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03b.14d",     0x10000, 0x7093da2a, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
@@ -394,9 +394,9 @@ static struct BurnRomInfo DrvjaRomDesc[] = {
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
@@ -446,7 +446,7 @@ static struct BurnRomInfo Drvja2RomDesc[] = {
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program
 
 	{ "4.5h",          0x08000, 0x0aba2096, BRF_GRA },	     	 //  4	Characters
 	
@@ -498,7 +498,7 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
 	{ "4.5h",          0x08000, 0x0aba2096, BRF_GRA },	     	 //  4	Characters
 	
@@ -588,9 +588,9 @@ static struct BurnRomInfo DrvbjRomDesc[] = {
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bm04.5h",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bm05.4k",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "mkb12.12f",     0x10000, 0x075e9a7f, BRF_GRA },	     	 //  5	BG Tiles
 	{ "mkb11.14f",     0x10000, 0x05aca09a, BRF_GRA },	     	 //  6
@@ -634,9 +634,9 @@ static struct BurnRomInfo DrvkaiRomDesc[] = {
 	{ "bmk02.13d",     0x10000, 0x2ebbc8c5, BRF_ESS | BRF_PRG }, //	 1
 	{ "bmk03.14d",     0x10000, 0x475a6ac5, BRF_ESS | BRF_PRG }, //	 2
 	
-	{ "bmk04.5h",      0x08000, 0x25f37957, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "bmk05.4k",      0x08000, 0x25f37957, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
 
-	{ "bmk05.4k",      0x08000, 0x884a8692, BRF_GRA },	     	 //  4	Characters
+	{ "bmk04.5h",      0x08000, 0x884a8692, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bmk16.11f",     0x08000, 0x9416fe0d, BRF_GRA },	     	 //  6
@@ -680,6 +680,62 @@ static struct BurnRomInfo DrvkaiRomDesc[] = {
 
 STD_ROM_PICK(Drvkai)
 STD_ROM_FN(Drvkai)
+
+static struct BurnRomInfo DrvmiiRomDesc[] = {
+	/* Prototype, location test or limited release? - PCB had genuine CAPCOM labels on the roms */
+	{ "01.12d",        0x08000, 0x8ba22485, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "02.13d",        0x10000, 0x659a5455, BRF_ESS | BRF_PRG }, //	 1
+	{ "03.14d",        0x10000, 0x159ea771, BRF_ESS | BRF_PRG }, //	 2
+	
+	{ "05.4k",         0x08000, 0x25f37957, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+
+	{ "04.5h",         0x08000, 0x8190e092, BRF_GRA },	     	 //  4	Characters
+	
+	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
+	{ "bmk16.11f",     0x08000, 0x9416fe0d, BRF_GRA },	     	 //  6
+	{ "17.12f",        0x08000, 0x3d5acab9, BRF_GRA },	     	 //  7
+	{ "18.14f",        0x08000, 0x7b62da1d, BRF_GRA },	     	 //  8
+	{ "bm19.10j",      0x08000, 0x868ababc, BRF_GRA },	     	 //  9
+	{ "bm20.11j",      0x08000, 0x0917e5d4, BRF_GRA },	     	 //  10
+	{ "21.12j",        0x08000, 0x8c7fe74a, BRF_GRA },	     	 //  11
+	{ "22.14j",        0x08000, 0xd5ef8a0e, BRF_GRA },	     	 //  12
+	
+	{ "24.14k",        0x08000, 0xa0074c68, BRF_GRA },	     	 //  13	BG2 Tiles
+	{ "25.14l",        0x08000, 0xf979b2f2, BRF_GRA },	     	 //  14
+	
+	{ "06.10a",        0x08000, 0xb261d5d7, BRF_GRA },	     	 //  15	Sprites
+	{ "07.11a",        0x08000, 0x2af8a6f2, BRF_GRA },	     	 //  16
+	{ "08.12a",        0x08000, 0x159d51bd, BRF_GRA },	     	 //  17
+	{ "09.14a",        0x08000, 0x70d9f9a7, BRF_GRA },	     	 //  18
+	{ "10.10c",        0x08000, 0xde539920, BRF_GRA },	     	 //  19
+	{ "11.11c",        0x08000, 0xa6abf183, BRF_GRA },	     	 //  20
+	{ "12.12c",        0x08000, 0x0f50c001, BRF_GRA },	     	 //  21
+	{ "13.14c",        0x08000, 0xf065f619, BRF_GRA },	     	 //  22
+		
+	{ "14.5f",         0x08000, 0x02a899f1, BRF_GRA },	     	 //  23	Tilemaps
+	{ "23.8k",         0x08000, 0xb6dfdf85, BRF_GRA },	     	 //  24
+	
+	//  PCB had standard BM0x for bproms 1 through 3, but clearly these should use the Kai BPROMs for correct colors
+    //  BPROMs 4 through 8 macth the Kai set - labels were a non descript yellow dot with prom number
+    //  BPROMs 9 through 12 are unique - labels were a non descript yellow dot with prom number
+	{ "bmk1.12a",      0x00100, 0xe001ea33, BRF_GRA },	     	 //  25	PROMs
+	{ "bmk2.13a",      0x00100, 0xaf34d91a, BRF_GRA },	     	 //  26
+	{ "bmk3.14a",      0x00100, 0x43e9f6ef, BRF_GRA },	     	 //  27
+	{ "5.7f",          0x00100, 0x41878934, BRF_GRA },	     	 //  28
+	{ "10.7l",         0x00100, 0xdb53adf0, BRF_GRA },	     	 //  29
+	{ "9.6l",          0x00100, 0x75d5cc90, BRF_GRA },	     	 //  30
+	{ "12.12m",        0x00100, 0x784bdf33, BRF_GRA },	     	 //  31
+	{ "11.12l",        0x00100, 0x6fb2e170, BRF_GRA },	     	 //  32
+	{ "8.8c",          0x00100, 0xdad17e2d, BRF_GRA },	     	 //  33
+	{ "7.7c",          0x00100, 0x76307f8d, BRF_GRA },	     	 //  34
+	{ "4.12c",         0x00100, 0x91a8a2e1, BRF_GRA },	     	 //  35
+	{ "6.4b",          0x00100, 0x0eaf5158, BRF_GRA },	     	 //  36
+	
+	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
+};
+
+STD_ROM_PICK(Drvmii)
+STD_ROM_FN(Drvmii)
 
 static INT32 MemIndex()
 {
@@ -2076,6 +2132,16 @@ struct BurnDriver BurnDrvNineteen43kai = {
 	L"1943 \u6539: \u30DF\u30C3\u30C9\u30A6\u30A7\u30A4\u6D77\u6226 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvkaiRomInfo, DrvkaiRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x380, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvNineteen43mii = {
+	"1943mii", NULL, NULL, NULL, "1988",
+	"1943: The Battle of Midway Mark II (US)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, DrvmiiRomInfo, DrvmiiRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x380, 224, 256, 3, 4
 };

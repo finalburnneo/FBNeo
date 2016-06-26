@@ -59,7 +59,7 @@ static UINT8 bg_bank = 0;
 static UINT8 fg_bank = 0;
 static UINT8 tx_bank = 0;
 
-static INT32 game_select = 0; // 0 raiden2, 1 raidendx, 2 zeroteam, 3 xsedae, 4 = r2dx
+static INT32 game_select = 0; // 0 raiden2, 1 raidendx, 2 zeroteam, 3 xsedae, 4 = r2dx, 5 nzeroteam, 6 zerotm2k
 
 static struct BurnInputInfo Raiden2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -439,77 +439,77 @@ STDDIPINFO(Zeroteam)
 
 static struct BurnDIPInfo Rdx_v33DIPList[]=
 {
-	{0x15, 0xff, 0xff, 0xc0, NULL		},
+	{0x15, 0xff, 0xff, 0xc0, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x15, 0x01, 0x40, 0x40, "Off"		},
-	{0x15, 0x01, 0x40, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x15, 0x01, 0x40, 0x40, "Off"			},
+	{0x15, 0x01, 0x40, 0x00, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
-	{0x15, 0x01, 0x80, 0x80, "Off"		},
-	{0x15, 0x01, 0x80, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x15, 0x01, 0x80, 0x80, "Off"			},
+	{0x15, 0x01, 0x80, 0x00, "On"			},
 };
 
 STDDIPINFO(Rdx_v33)
 
 static struct BurnDIPInfo NzeroteaDIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xff, NULL		},
-	{0x15, 0xff, 0xff, 0xff, NULL		},
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x14, 0x01, 0x07, 0x00, "4 Coins 1 Credits"		},
-	{0x14, 0x01, 0x07, 0x01, "3 Coins 1 Credits"		},
-	{0x14, 0x01, 0x07, 0x02, "2 Coins 1 Credits"		},
-	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
-	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
-	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
-	{0x14, 0x01, 0x07, 0x03, "1 Coin  4 Credits"		},
-	{0x14, 0x01, 0x07, 0x04, "1 Coin  6 Credits"		},
+	{0x14, 0x01, 0x07, 0x00, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x01, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x02, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x07, 0x04, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x14, 0x01, 0x38, 0x00, "4 Coins 1 Credits"		},
-	{0x14, 0x01, 0x38, 0x08, "3 Coins 1 Credits"		},
-	{0x14, 0x01, 0x38, 0x10, "2 Coins 1 Credits"		},
-	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
-	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
-	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
-	{0x14, 0x01, 0x38, 0x18, "1 Coin  4 Credits"		},
-	{0x14, 0x01, 0x38, 0x20, "1 Coin  6 Credits"		},
+	{0x14, 0x01, 0x38, 0x00, "4 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x08, "3 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
+	{0x14, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x14, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x14, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x14, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
+	{0x14, 0x01, 0x38, 0x20, "1 Coin  6 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Starting Coin"		},
+	{0   , 0xfe, 0   ,    2, "Starting Coin"	},
 	{0x14, 0x01, 0x40, 0x40, "Normal"		},
-	{0x14, 0x01, 0x40, 0x00, "X 2"		},
+	{0x14, 0x01, 0x40, 0x00, "X 2"			},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x80, 0x80, "Off"		},
-	{0x14, 0x01, 0x80, 0x00, "On"		},
+	{0x14, 0x01, 0x80, 0x80, "Off"			},
+	{0x14, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
 	{0x15, 0x01, 0x03, 0x03, "Normal"		},
-	{0x15, 0x01, 0x03, 0x02, "Hard"		},
-	{0x15, 0x01, 0x03, 0x01, "Easy"		},
+	{0x15, 0x01, 0x03, 0x02, "Hard"			},
+	{0x15, 0x01, 0x03, 0x01, "Easy"			},
 	{0x15, 0x01, 0x03, 0x00, "Very Hard"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x15, 0x01, 0x0c, 0x0c, "2"		},
-	{0x15, 0x01, 0x0c, 0x08, "4"		},
-	{0x15, 0x01, 0x0c, 0x04, "3"		},
-	{0x15, 0x01, 0x0c, 0x00, "1"		},
+	{0x15, 0x01, 0x0c, 0x0c, "2"			},
+	{0x15, 0x01, 0x0c, 0x08, "4"			},
+	{0x15, 0x01, 0x0c, 0x04, "3"			},
+	{0x15, 0x01, 0x0c, 0x00, "1"			},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
 	{0x15, 0x01, 0x30, 0x30, "1000000"		},
 	{0x15, 0x01, 0x30, 0x20, "2000000"		},
-	{0x15, 0x01, 0x30, 0x10, "Every 1000000"		},
+	{0x15, 0x01, 0x30, 0x10, "Every 1000000"	},
 	{0x15, 0x01, 0x30, 0x00, "No Extend"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sound"		},
-	{0x15, 0x01, 0x40, 0x00, "Off"		},
-	{0x15, 0x01, 0x40, 0x40, "On"		},
+	{0x15, 0x01, 0x40, 0x00, "Off"			},
+	{0x15, 0x01, 0x40, 0x40, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x80, 0x80, "Off"		},
-	{0x15, 0x01, 0x80, 0x00, "On"		},
+	{0x15, 0x01, 0x80, 0x80, "Off"			},
+	{0x15, 0x01, 0x80, 0x00, "On"			},
 };
 
 STDDIPINFO(Nzerotea)
@@ -1743,8 +1743,203 @@ static UINT8 __fastcall nzeroteam_main_read(UINT32 address)
 			return DrvInputs[1] >> 8; 
 	}
 
-
 	return 0;
+}
+
+static void __fastcall zerotm2k_main_write(UINT32 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x748:
+			EEPROMWrite((data & 0x02), (data & 0x01), (data >> 2) & 1);
+		return;
+
+		case 0x749:
+		return;
+	}
+
+	nzeroteam_main_write(address, data);
+}
+
+static UINT8 __fastcall zerotm2k_main_read(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x740:
+			return DrvInputs[1];
+
+		case 0x741:
+			return DrvInputs[1] >> 8;
+
+		case 0x744:
+			return DrvInputs[0];
+
+		case 0x745:
+			return ((DrvInputs[0] >> 8) & 0x7f) | (EEPROMRead() ? 0x80 : 0);
+
+		case 0x74c:
+			return DrvInputs[2];
+
+		case 0x74d:
+			return DrvInputs[2] >> 8;
+	}
+
+	return nzeroteam_main_read(address);
+}
+
+
+
+static void r2dx_bankswitch(INT32 set_bank, INT32 set_main)
+{
+	INT32 bank0 = (set_main * 0x200000) + 0x030000;
+	INT32 bank1 = (set_main * 0x200000) + 0x100000 + (set_bank * 0x10000);
+
+	VezMapArea(0x20000, 0x2ffff, 0, DrvMainROM + bank1);
+	VezMapArea(0x20000, 0x2ffff, 2, DrvMainROM + bank1);
+	VezMapArea(0x30000, 0xfffff, 0, DrvMainROM + bank0);
+	VezMapArea(0x30000, 0xfffff, 2, DrvMainROM + bank0);
+}
+
+static void __fastcall r2dx_main_write(UINT32 address, UINT8 data)
+{
+	UINT16 *copram = (UINT16*)DrvMainRAM;
+	UINT16 dataword = copram[(address & 0x7fe)/2];
+
+	switch (address)
+	{
+		case 0x400: // tilemap dma
+	//	case 0x401:
+			tilemap_dma();
+		return;
+
+		case 0x402: // paldma
+	//	case 0x403:
+			palettedma();
+		return;
+
+		case 0x404: // rom_bank_w
+			if (game_select == 5) return;
+			prg_bank = data & 0x0f;
+			r2dx_bankswitch(prg_bank, r2dx_gameselect);
+		return;
+
+		case 0x405:
+		return;
+
+		case 0x406: // tile_bank_w
+			if (game_select == 5) return;
+			bg_bank = ((data >> 4) & 1) + 0;
+			mg_bank = ((data >> 5) & 1) + 2;
+			fg_bank = ((data >> 0) & 3) + 4;
+		return;
+
+		case 0x407:
+		return;
+
+		case 0x6c0: // sprite_prot_off_w
+		case 0x6c1:
+			cop_spr_off = dataword;
+		return;
+
+		case 0x6c2: // sprite_prot_src_seg_w
+		case 0x6c3:
+			sprite_prot_src_addr[0] = dataword;
+		return;
+
+		case 0x6c6: // sprite_prot_dst1_w
+		case 0x6c7:
+			dst1 = dataword;
+		return;
+
+		case 0x6d8: // sprite_prot_x_W
+		case 0x6d9:
+			sprite_prot_x = dataword;
+		return;
+
+		case 0x6da: // sprite_prot_y_w
+		case 0x6db:
+			sprite_prot_y = dataword;
+		return;
+
+		case 0x6dc: // sprite_prot_maxx_W
+		case 0x6dd:
+			cop_spr_maxx = dataword;
+		return;
+
+		case 0x6de: // sprite_prot_src_w
+		case 0x6df:
+			sprite_prot_src_write(dataword);
+		return;
+
+		case 0x700: // v33_eeprom_w
+		{
+			EEPROMWrite((data & 0x10), (data & 0x08), ((data & 0x20) >> 5));
+
+			r2dx_gameselect = tx_bank = (data >> 2) & 1;
+
+			r2dx_bankswitch(prg_bank, r2dx_gameselect);
+
+			memcpy (DrvSndROM0, DrvSndROM1 + (data & 3) * 0x40000, 0x40000);
+		}
+		return;
+
+		case 0x780: // oki write
+			MSM6295Command(0, data);
+		return;
+	}
+
+	nzeroteam_main_write(address, data);
+}
+
+static UINT8 __fastcall r2dx_main_read(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x6c0:
+			return cop_spr_off >> 0;
+
+		case 0x6c1:
+			return cop_spr_off >> 8;
+
+		case 0x6c2:
+			return sprite_prot_src_addr[0] >> 0;
+
+		case 0x6c3:
+			return sprite_prot_src_addr[0] >> 8;
+
+		case 0x6dc:
+			return cop_spr_maxx >> 0;
+
+		case 0x6dd:
+			return cop_spr_maxx >> 8;
+
+		case 0x740:
+		case 0x741:
+			return 0xff; // debug_r
+
+		case 0x744:
+			return DrvInputs[0];
+
+		case 0x745:
+			return DrvInputs[0] >> 8;
+
+		case 0x74c:
+			return (DrvInputs[1] & 0xef) | (EEPROMRead() ? 0x10 : 0); // system input
+
+		case 0x74d:
+			return DrvInputs[1] >> 8; // system input
+
+		case 0x762:
+			return dst1 >> 0;
+
+		case 0x763:
+			return dst1 >> 8;
+
+		case 0x780:
+			return MSM6295ReadStatus(0);
+	}
+
+	return nzeroteam_main_read(address);
 }
 
 static INT32 DrvDoReset()
@@ -1770,15 +1965,19 @@ static INT32 DrvDoReset()
 		}
 	}
 
+	if (game_select == 6)
+	{
+		EEPROMReset();
+	}
+
 	prg_bank = 0;
 	layer_enable = 0;
 	bg_bank = 0;
-	fg_bank = (game_select == 2 || game_select == 3 || game_select == 4 || game_select == 5) ? 2 : 6;
+	fg_bank = (game_select >= 2) ? 2 : 6;
 	mg_bank = 1;
 	tx_bank = 0;
 
 	SeibuCopReset();
-
 
 	if (game_select >= 4) sprites_cur_start = 0x1000 - 8; // or no sprites in newzeroteam
 
@@ -2602,46 +2801,18 @@ static INT32 R2dxInit()
 	VezOpen(0);
 //	VezMapArea(0x00000, 0x007ff, 0, DrvMainRAM);
 //	VezMapArea(0x00000, 0x007ff, 1, DrvMainRAM); // handler
-//	VezMapArea(0x00000, 0x0bfff, 2, DrvMainRAM); // fetch (map shift is 11 bits (800))
-//	VezMapArea(0x00800, 0x0bfff, 0, DrvMainRAM + 0x00800);
-//	VezMapArea(0x00800, 0x0bfff, 1, DrvMainRAM + 0x00800);
-//	VezMapArea(0x00800, 0x0bfff, 2, DrvMainRAM + 0x00800);
-
+	VezMapArea(0x00000, 0x1ffff, 2, DrvMainRAM + 0x00000);
 	VezMapArea(0x00800, 0x1ffff, 0, DrvMainRAM + 0x00800);
 	VezMapArea(0x00800, 0x1ffff, 1, DrvMainRAM + 0x00800);
-	VezMapArea(0x00000, 0x1ffff, 2, DrvMainRAM + 0x00000);
-
-	DrvSprRAM = DrvMainRAM + 0xc000;
-
-#if 0
 	VezMapArea(0x0c000, 0x0cfff, 0, DrvSprRAM);
 	VezMapArea(0x0c000, 0x0cfff, 1, DrvSprRAM);
 	VezMapArea(0x0c000, 0x0cfff, 2, DrvSprRAM);
-	VezMapArea(0x0d000, 0x0d7ff, 0, DrvBgRAM);
-	VezMapArea(0x0d000, 0x0d7ff, 1, DrvBgRAM);
-	VezMapArea(0x0d000, 0x0d7ff, 2, DrvBgRAM);
-	VezMapArea(0x0d800, 0x0dfff, 0, DrvFgRAM);
-	VezMapArea(0x0d800, 0x0dfff, 1, DrvFgRAM);
-	VezMapArea(0x0d800, 0x0dfff, 2, DrvFgRAM);
-	VezMapArea(0x0e000, 0x0e7ff, 0, DrvMgRAM);
-	VezMapArea(0x0e000, 0x0e7ff, 1, DrvMgRAM);
-	VezMapArea(0x0e000, 0x0e7ff, 2, DrvMgRAM);
-	VezMapArea(0x0e800, 0x0f7ff, 0, DrvTxRAM);
-	VezMapArea(0x0e800, 0x0f7ff, 1, DrvTxRAM);
-	VezMapArea(0x0e800, 0x0f7ff, 2, DrvTxRAM);
-	VezMapArea(0x0f800, 0x1efff, 0, DrvMainRAM + 0x0f800);
-	VezMapArea(0x0f800, 0x1efff, 1, DrvMainRAM + 0x0f800);
-	VezMapArea(0x0f800, 0x1efff, 2, DrvMainRAM + 0x0f800);
-	VezMapArea(0x1f000, 0x1ffff, 0, DrvPalRAM);
-	VezMapArea(0x1f000, 0x1ffff, 1, DrvPalRAM);
-	VezMapArea(0x1f000, 0x1ffff, 2, DrvPalRAM);
-#endif
 	VezMapArea(0x20000, 0x2ffff, 0, DrvMainROM + 0x100000);
 	VezMapArea(0x20000, 0x2ffff, 2, DrvMainROM + 0x100000);
 	VezMapArea(0x30000, 0xfffff, 0, DrvMainROM + 0x030000);
 	VezMapArea(0x30000, 0xfffff, 2, DrvMainROM + 0x030000);
-//	VezSetWriteHandler(r2dx_main_write);					// iq_132 fix me!!
-//	VezSetReadHandler(r2dx_main_read);
+	VezSetWriteHandler(r2dx_main_write);
+	VezSetReadHandler(r2dx_main_read);
 	VezClose();
 
 	MSM6295Init(0, 1022727 / 132, 0);
@@ -2715,6 +2886,89 @@ static INT32 NzeroteamInit()
 
 	seibu_sound_init(0, 0, 3579545, 3579545, 1320000 / 132);
 
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static void zerotm2kGfxDescramble()
+{
+	UINT8 tmp[0x80];
+
+	for (INT32 i = 0x100000; i < 0x180000; i+=0x80)
+	{
+		for (INT32 j = 0; j < 0x80; j++)
+		{
+			INT32 k = (j & 0x1f) | ((j&0x20)<<1) | ((j&0x40)>>1);
+
+			tmp[j] = DrvGfxROM1[i+k];
+		}
+
+		memcpy (DrvGfxROM1 + i, tmp, 0x80);
+	}
+}
+
+static INT32 Zerotm2kInit()
+{
+	game_select = 6;
+
+	BurnSetRefreshRate(55.47);
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(DrvMainROM + 0x000000,  0, 1)) return 1;
+
+		if (BurnLoadRom(DrvCopxROM + 0x000000,  1, 1)) return 1;
+
+		if (BurnLoadRom(SeibuZ80ROM + 0x00000,  2, 1)) return 1;
+		memcpy (SeibuZ80ROM + 0x10000, SeibuZ80ROM + 0x08000, 0x08000);
+		memcpy (SeibuZ80ROM + 0x18000, SeibuZ80ROM + 0x00000, 0x08000);
+		memset (SeibuZ80ROM + 0x08000, 0xff, 0x08000);
+
+		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 2)) return 1;
+		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  4, 2)) return 1;
+
+		if (BurnLoadRom(DrvGfxROM1 + 0x000000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM1 + 0x100000,  6, 1)) return 1;
+
+		if (BurnLoadRomExt(DrvGfxROM2 + 0x000,  7, 4, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM2 + 0x002,  8, 4, LD_GROUP(2))) return 1;
+
+		if (BurnLoadRom(DrvSndROM0 + 0x000000,  9, 1)) return 1;
+
+		zerotm2kGfxDescramble();
+		//zeroteam_decrypt_sprites();
+		DrvGfxDecode();
+		DrvCreateTransTab();
+		DrvCreateAlphaTable(1);
+	}
+
+	VezInit(0, V33_TYPE);
+	VezOpen(0);
+//	VezMapArea(0x00000, 0x007ff, 0, DrvMainRAM);
+//	VezMapArea(0x00000, 0x007ff, 1, DrvMainRAM); // handler
+	VezMapArea(0x00000, 0x1ffff, 2, DrvMainRAM + 0x00000);
+	VezMapArea(0x00800, 0x1ffff, 0, DrvMainRAM + 0x00800);
+	VezMapArea(0x00800, 0x1ffff, 1, DrvMainRAM + 0x00800);
+	VezMapArea(0x0c000, 0x0cfff, 0, DrvSprRAM);
+	VezMapArea(0x0c000, 0x0cfff, 1, DrvSprRAM);
+	VezMapArea(0x0c000, 0x0cfff, 2, DrvSprRAM);
+	VezMapArea(0x20000, 0xfffff, 0, DrvMainROM + 0x020000);
+	VezMapArea(0x20000, 0xfffff, 2, DrvMainROM + 0x020000);
+	VezSetWriteHandler(zerotm2k_main_write);
+	VezSetReadHandler(zerotm2k_main_read);
+	VezClose();
+
+	seibu_sound_init(0, 0, 3579545, 3579545, 1320000 / 132);
+
 	EEPROMInit(&eeprom_interface_93C46);
 
 	GenericTilesInit();
@@ -2732,10 +2986,11 @@ static INT32 DrvExit()
 
 	if (game_select != 4) {
 		seibu_sound_exit();
+	} else {
+		MSM6295Exit(0);
 	}
 
-	if (game_select == 4) {
-		MSM6295Exit(0);
+	if (game_select == 4 || game_select == 6) {
 		EEPROMExit();
 	}
 
@@ -4071,28 +4326,28 @@ struct BurnDriver BurnDrvRaidendxg = {
 // Raiden DX (Holland)
 
 static struct BurnRomInfo raidendxnlRomDesc[] = {
-	{ "u1210_4n.bin",		0x080000, 0xc589019a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "u1211_4p.bin",		0x080000, 0xb2222254, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "u129_6n.bin",		0x080000, 0x60f04634, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "u1212_6p.bin",		0x080000, 0x21ec37cc, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "u1210_4n.bin",			0x080000, 0xc589019a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "u1211_4p.bin",			0x080000, 0xb2222254, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u129_6n.bin",			0x080000, 0x60f04634, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "u1212_6p.bin",			0x080000, 0x21ec37cc, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
-	{ "u1110_5b.bin",		0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "u1110_5b.bin",			0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "seibu_7b_u724.bin",	0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
+	{ "seibu_7b_u724.bin",			0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
 
-	{ "dx_back-1.u075",		0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
-	{ "dx_back-2.u0714",	0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
+	{ "dx_back-1.u075",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
+	{ "dx_back-2.u0714",			0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
 
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },   //  9 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },   // 10
-	{ "dx_obj-3.u0837",		0x200000, 0xba381227, 6 | BRF_GRA },           // 11
-	{ "dx_obj-4.u0836",		0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
+	{ "raiden_2_seibu_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
+	{ "dx_obj-3.u0837",			0x200000, 0xba381227, 6 | BRF_GRA },           // 11
+	{ "dx_obj-4.u0836",			0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
 
-	{ "seibu_6_u1017.bin",	0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
+	{ "seibu_6_u1017.bin",			0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
 
-	{ "pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+	{ "pcm.u1018",				0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 };
 
 STD_ROM_PICK(raidendxnl)
@@ -4112,28 +4367,28 @@ struct BurnDriver BurnDrvRaidendxnl = {
 // Raiden DX (Japan)
 
 static struct BurnRomInfo raidendxjRomDesc[] = {
-	{ "rdxj_1.u1211",		0x080000, 0x5af382e1, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "rdxj_2.u0212",		0x080000, 0x899966fc, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rdxj_3.u129",		0x080000, 0xe7f08013, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rdxj_4.u1212",		0x080000, 0x78037e1f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rdxj_1.u1211",			0x080000, 0x5af382e1, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "rdxj_2.u0212",			0x080000, 0x899966fc, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rdxj_3.u129",			0x080000, 0xe7f08013, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rdxj_4.u1212",			0x080000, 0x78037e1f, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
-	{ "rdxj_5.u1110",		0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "rdxj_5.u1110",			0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "rdxj_7.u0724",		0x020000, 0xec31fa10, 4 | BRF_GRA },           //  6 Characters
+	{ "rdxj_7.u0724",			0x020000, 0xec31fa10, 4 | BRF_GRA },           //  6 Characters
 
-	{ "dx_back-1.u075",		0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
-	{ "dx_back-2.u0714",	0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
+	{ "dx_back-1.u075",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
+	{ "dx_back-2.u0714",			0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
 
-	{ "raiden_2_seibu_obj-1.u0811",	0x200000, 0xff08ef0b, 6 | BRF_GRA },   //  9 Sprites (Encrypted)
-	{ "raiden_2_seibu_obj-2.u082",	0x200000, 0x638eb771, 6 | BRF_GRA },   // 10
-	{ "dx_obj-3.u0837",		0x200000, 0xba381227, 6 | BRF_GRA },           // 11
-	{ "dx_obj-4.u0836",		0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
+	{ "raiden_2_seibu_obj-1.u0811",		0x200000, 0xff08ef0b, 6 | BRF_GRA },           //  9 Sprites (Encrypted)
+	{ "raiden_2_seibu_obj-2.u082",		0x200000, 0x638eb771, 6 | BRF_GRA },           // 10
+	{ "dx_obj-3.u0837",			0x200000, 0xba381227, 6 | BRF_GRA },           // 11
+	{ "dx_obj-4.u0836",			0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
 
-	{ "rdxj_6.u1017",		0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
+	{ "rdxj_6.u1017",			0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
 
-	{ "pcm.u1018",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+	{ "pcm.u1018",				0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 };
 
 STD_ROM_PICK(raidendxj)
@@ -4153,29 +4408,29 @@ struct BurnDriver BurnDrvRaidendxj = {
 // Raiden DX (China)
 
 static struct BurnRomInfo raidendxchRomDesc[] = {
-	{ "rdxc_1.u1210",		0x080000, 0x2154c6ae, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "rdxc_2.u1211",		0x080000, 0x73bb74b7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "rdxc_3.u129",		0x080000, 0x50f0a6aa, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "rdxc_4.u1212",		0x080000, 0x00071e70, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rdxc_1.u1210",			0x080000, 0x2154c6ae, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "rdxc_2.u1211",			0x080000, 0x73bb74b7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rdxc_3.u129",			0x080000, 0x50f0a6aa, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rdxc_4.u1212",			0x080000, 0x00071e70, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	// no other roms present with this set, so the ones below could be wrong
-	{ "copx-d2.6s",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.6s",				0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
-	{ "dx_5.5b",			0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "dx_5.5b",				0x010000, 0x8c46857a, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "dx_7.4s",			0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
+	{ "dx_7.4s",				0x020000, 0xc73986d4, 4 | BRF_GRA },           //  6 Characters
 
-	{ "dx_back1.1s",		0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
-	{ "dx_back2.2s",		0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
+	{ "dx_back1.1s",			0x200000, 0x90970355, 5 | BRF_GRA },           //  7 Tiles
+	{ "dx_back2.2s",			0x200000, 0x5799af3e, 5 | BRF_GRA },           //  8
 
-	{ "obj1",				0x200000, 0xff08ef0b, 6 | BRF_GRA },   		   //  9 Sprites (Encrypted)
+	{ "obj1",				0x200000, 0xff08ef0b, 6 | BRF_GRA },   	       //  9 Sprites (Encrypted)
 	{ "obj2",				0x200000, 0x638eb771, 6 | BRF_GRA },   	       // 10
-	{ "dx_obj3.4k",			0x200000, 0xba381227, 6 | BRF_GRA },           // 11
-	{ "dx_obj4.6k",			0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
+	{ "dx_obj3.4k",				0x200000, 0xba381227, 6 | BRF_GRA },           // 11
+	{ "dx_obj4.6k",				0x200000, 0x65e50d19, 6 | BRF_GRA },           // 12
 
-	{ "dx_6.3b",			0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
+	{ "dx_6.3b",				0x040000, 0x9a9196da, 7 | BRF_SND },           // 13 OKI #0 Samples
 
-	{ "dx_pcm.3a",			0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
+	{ "dx_pcm.3a",				0x040000, 0x8cf0d17e, 8 | BRF_SND },           // 14 OKI #1 Samples
 };
 
 STD_ROM_PICK(raidendxch)
@@ -4195,30 +4450,30 @@ struct BurnDriver BurnDrvRaidendxch = {
 // Zero Team USA (set 1, US, Fabtek license)
 
 static struct BurnRomInfo zeroteamRomDesc[] = {
-	{ "seibu__1.u024.5k",		0x040000, 0x25aa5ba4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "seibu__3.u023.6k",		0x040000, 0xec79a12b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "seibu__2.u025.6l",		0x040000, 0x54f3d359, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "seibu__4.u026.5l",		0x040000, 0xa017b8d0, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "seibu__1.u024.5k",			0x040000, 0x25aa5ba4, 1 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "seibu__3.u023.6k",			0x040000, 0xec79a12b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "seibu__2.u025.6l",			0x040000, 0x54f3d359, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "seibu__4.u026.5l",			0x040000, 0xa017b8d0, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
-	{ "seibu__5.u1110.5b", 		0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "seibu__5.u1110.5b", 			0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "seibu__7.u072.5s",		0x010000, 0x9f6aa0f0, 4 | BRF_GRA },           //  6 Characters
-	{ "seibu__8.u077.5r",		0x010000, 0x68f7dddc, 4 | BRF_GRA },           //  7
+	{ "seibu__7.u072.5s",			0x010000, 0x9f6aa0f0, 4 | BRF_GRA },           //  6 Characters
+	{ "seibu__8.u077.5r",			0x010000, 0x68f7dddc, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",   0x100000, 0x8b7f9219, 5 | BRF_GRA },       //  8 Tiles
-	{ "musha_back-2.u0714.2s",  0x080000, 0xce61c952, 5 | BRF_GRA },       //  9
+	{ "musha_back-1.u075.4s",  		 0x100000, 0x8b7f9219, 5 | BRF_GRA },          //  8 Tiles
+	{ "musha_back-2.u0714.2s",  		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
-	{ "seibu__6.u105.4a",		0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 OKI Samples
+	{ "seibu__6.u105.4a",			0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 OKI Samples
 
-	{ "v3c001.pal.u0310.jed", 	     	 0x288, 0,        0 | BRF_OPT },	       // 13 Pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",  0x288, 0,        0 | BRF_OPT },	       // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",   0x288, 0,        0 | BRF_OPT },	       // 15
-	{ "v3c004x.ami18cv8pc-25.u0310.jed", 0x288, 0,        0 | BRF_OPT },	       // 16
+	{ "v3c001.pal.u0310.jed", 	     	0x000288, 0x00000000, 0 | BRF_OPT },	       // 13 Pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",  	0x000288, 0x00000000, 0 | BRF_OPT },	       // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",  	0x000288, 0x00000000, 0 | BRF_OPT },	       // 15
+	{ "v3c004x.ami18cv8pc-25.u0310.jed", 	0x000288, 0x00000000, 0 | BRF_OPT },	       // 16
 };
 
 STD_ROM_PICK(zeroteam)
@@ -4243,25 +4498,25 @@ static struct BurnRomInfo zeroteamaRomDesc[] = {
 	{ "2.u025.6l",				0x040000, 0x0580b7e8, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "4.u026.5l",				0x040000, 0xcc666385, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
 	{ "5.a.u1110.5b",			0x010000, 0xefc484ca, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 	
 	{ "7.a.u072.5s",			0x010000, 0xeb10467f, 4 | BRF_GRA },           //  6 Characters
 	{ "8.a.u077.5r",			0x010000, 0xa0b2a09a, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",	0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
-	{ "musha_back-2.u0714.2s",	0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+	{ "musha_back-1.u075.4s",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
 	{ "6.u105.4a",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 OKI Samples
 
-	{ "v3c001.pal.u0310.jed",				0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
-	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 16
+	{ "v3c001.pal.u0310.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP },       // 13 pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP },       // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP },       // 15
+	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP },       // 16
 };
 
 STD_ROM_PICK(zeroteama)
@@ -4286,24 +4541,24 @@ static struct BurnRomInfo zeroteambRomDesc[] = {
 	{ "2b.u025.6l",				0x040000, 0x21d68f62, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "4b.u026.5l",				0x040000, 0xce8fe6c2, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
 	{ "5.u1110.5b",				0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
 	{ "7.u072.5s",				0x010000, 0x9f6aa0f0, 4 | BRF_GRA },           //  6 Characters
 	{ "8.u077.5r",				0x010000, 0x68f7dddc, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",	0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
-	{ "musha_back-2.u0714.2s",	0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+	{ "musha_back-1.u075.4s",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
 	{ "6.u105.4a",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 OKI Samples
 
-	{ "v3c001.pal.u0310.jed",				0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
+	{ "v3c001.pal.u0310.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
 	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 16
 };
 
@@ -4329,24 +4584,24 @@ static struct BurnRomInfo zeroteamcRomDesc[] = {
 	{ "b2.u025.6l",				0x040000, 0x5176015e, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "b4.u026.5l",				0x040000, 0xc79925cb, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
 	{ "5.c.u1110.5b",			0x010000, 0xefc484ca, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
 	{ "b7.u072.5s",				0x010000, 0x30ec0241, 4 | BRF_GRA },           //  6 Characters
 	{ "b8.u077.5r",				0x010000, 0xe18b3a75, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",	0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
-	{ "musha_back-2.u0714.2s",	0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+	{ "musha_back-1.u075.4s",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
 	{ "6.c.u105.4a",			0x040000, 0xb4a6e899, 7 | BRF_SND },           // 12 OKI Samples
 
-	{ "v3c001.pal.u0310.jed",				0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
+	{ "v3c001.pal.u0310.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
 	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 16
 };
 
@@ -4372,24 +4627,24 @@ static struct BurnRomInfo zeroteamdRomDesc[] = {
 	{ "4.d.u025.6l",			0x040000, 0x08813ebb, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "2.d.u026.5l",			0x040000, 0x9236129d, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
 	{ "512kb.u1110.5b",			0x010000, 0xefc484ca, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
 	{ "512kb.u072.5s",			0x010000, 0x30ec0241, 4 | BRF_GRA },           //  6 Characters
 	{ "512kb.u077.5r",			0x010000, 0xe18b3a75, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",	0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
-	{ "musha_back-2.u0714.2s",	0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+	{ "musha_back-1.u075.4s",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
 	{ "8.u105.4a",				0x040000, 0xb4a6e899, 7 | BRF_SND },           // 12 OKI Samples
 
-	{ "v3c001.pal.u0310.jed",				0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
+	{ "v3c001.pal.u0310.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
 	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 16
 };
 
@@ -4415,24 +4670,24 @@ static struct BurnRomInfo zeroteamsRomDesc[] = {
 	{ "2_sel.bin",				0x040000, 0x4e114e74, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "4_sel.bin",				0x040000, 0x0df8ba94, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
 	{ "5_sel.bin",				0x010000, 0xed91046c, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
 	{ "7.u072.5s",				0x010000, 0x9f6aa0f0, 4 | BRF_GRA },           //  6 Characters
 	{ "8.u077.5r",				0x010000, 0x68f7dddc, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",	0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
-	{ "musha_back-2.u0714.2s",	0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+	{ "musha_back-1.u075.4s",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
 	{ "6.u105.4a",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 oki
 
-	{ "v3c001.pal.u0310.jed",				0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
+	{ "v3c001.pal.u0310.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
 	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 16
 };
 
@@ -4458,24 +4713,24 @@ static struct BurnRomInfo zeroteamsrRomDesc[] = {
 	{ "zteam2.u25",				0x040000, 0xb7234b93, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "zteam4.u26",				0x040000, 0xc2d26708, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "copx-d2.u0313.6n",		0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
+	{ "copx-d2.u0313.6n",			0x040000, 0xa6732ff9, 2 | BRF_PRG | BRF_OPT }, //  4 COPX MCU data
 
-	{ "5.5c",					0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "5.5c",				0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
 	{ "7.u072.5s",				0x010000, 0x9f6aa0f0, 4 | BRF_GRA },           //  6 Characters
 	{ "8.u077.5r",				0x010000, 0x68f7dddc, 4 | BRF_GRA },           //  7
 
-	{ "musha_back-1.u075.4s",	0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
-	{ "musha_back-2.u0714.2s",	0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
+	{ "musha_back-1.u075.4s",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  8 Tiles
+	{ "musha_back-2.u0714.2s",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  9
 
-	{ "musha_obj-1.u0811.6f",	0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
-	{ "musha_obj-2.u082.5f",	0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
+	{ "musha_obj-1.u0811.6f",		0x200000, 0x45be8029, 6 | BRF_GRA },           // 10 Sprites (Encrypted)
+	{ "musha_obj-2.u082.5f",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           // 11
 
 	{ "6.u105.4a",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 12 OKI Samples
 
-	{ "v3c001.pal.u0310.jed",				0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
-	{ "v3c002.tibpal16l8-25.u0322.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
-	{ "v3c003.ami18cv8p-15.u0619.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
+	{ "v3c001.pal.u0310.jed",		0x000288, 0x00000000, 8 | BRF_NODUMP }, // 13 pals
+	{ "v3c002.tibpal16l8-25.u0322.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 14
+	{ "v3c003.ami18cv8p-15.u0619.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 15
 	{ "v3c004x.ami18cv8pc-25.u0310.jed",	0x000288, 0x00000000, 8 | BRF_NODUMP }, // 16
 };
 
@@ -4501,18 +4756,18 @@ static struct BurnRomInfo xsedaeRomDesc[] = {
 	{ "3.u023",				0x040000, 0x293fd6c1, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "4.u026",				0x040000, 0x5adf20bf, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "8.u1110", 			0x020000, 0x2dc2f81a, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "8.u1110", 				0x020000, 0x2dc2f81a, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
-	{ "6.u072.5s",			0x010000, 0xa788402d, 4 | BRF_GRA },           //  5 Characters
-	{ "5.u077.5r",			0x010000, 0x478deced, 4 | BRF_GRA },           //  6
+	{ "6.u072.5s",				0x010000, 0xa788402d, 4 | BRF_GRA },           //  5 Characters
+	{ "5.u077.5r",				0x010000, 0x478deced, 4 | BRF_GRA },           //  6
 
-	{ "bg-1.u075",			0x100000, 0xac087560, 5 | BRF_GRA },           //  7 Tiles
-	{ "7.u0714",			0x080000, 0x296105dc, 5 | BRF_GRA },           //  8
+	{ "bg-1.u075",				0x100000, 0xac087560, 5 | BRF_GRA },           //  7 Tiles
+	{ "7.u0714",				0x080000, 0x296105dc, 5 | BRF_GRA },           //  8
 
-	{ "obj-1.u0811",		0x200000, 0x6ae993eb, 6 | BRF_GRA },           //  9 Sprites
-	{ "obj-2.u082",			0x200000, 0x26c806ee, 6 | BRF_GRA },           // 10
+	{ "obj-1.u0811",			0x200000, 0x6ae993eb, 6 | BRF_GRA },           //  9 Sprites
+	{ "obj-2.u082",				0x200000, 0x26c806ee, 6 | BRF_GRA },           // 10
 
-	{ "9.u105.4a",			0x040000, 0xa7a0c5f9, 7 | BRF_SND },           // 11 OKI Samples
+	{ "9.u105.4a",				0x040000, 0xa7a0c5f9, 7 | BRF_SND },           // 11 OKI Samples
 };
 
 STD_ROM_PICK(xsedae)
@@ -4529,24 +4784,23 @@ struct BurnDriverD BurnDrvXsedae = {
 };
 
 
-
 // Raiden II New / Raiden DX (newer V33 PCB) (Raiden DX EEPROM)
 
 static struct BurnRomInfo r2dx_v33RomDesc[] = {
-	{ "prg.223",			0x400000, 0xb3dbcf98, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "prg.223",				0x400000, 0xb3dbcf98, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 
-	{ "fix.613",			0x040000, 0x3da27e39, 2 | BRF_GRA },           //  1 gfx1
+	{ "fix.613",				0x040000, 0x3da27e39, 2 | BRF_GRA },           //  1 gfx1
 
-	{ "bg.612",			0x400000, 0x162c61e9, 3 | BRF_GRA },           //  2 gfx2
+	{ "bg.612",				0x400000, 0x162c61e9, 3 | BRF_GRA },           //  2 gfx2
 
-	{ "obj1.724",			0x400000, 0x7d218985, 4 | BRF_GRA },           //  3 gfx3
-	{ "obj2.725",			0x400000, 0x891b24d6, 4 | BRF_GRA },           //  4
+	{ "obj1.724",				0x400000, 0x7d218985, 4 | BRF_GRA },           //  3 gfx3
+	{ "obj2.725",				0x400000, 0x891b24d6, 4 | BRF_GRA },           //  4
 
-	{ "pcm.099",			0x100000, 0x97ca2907, 5 | BRF_SND },           //  5 oki
+	{ "pcm.099",				0x100000, 0x97ca2907, 5 | BRF_SND },           //  5 oki
 
-	{ "copx_d3.357",		0x020000, 0xfa2cf3ad, 6 | BRF_GRA },           //  6 math
+	{ "copx_d3.357",			0x020000, 0xfa2cf3ad, 6 | BRF_GRA },           //  6 math
 
-	{ "raidendx_eeprom-r2dx_v33.bin", 0x0080, 0x0b34c0ca, 7 | BRF_PRG | BRF_ESS }, //  7 eeprom
+	{ "raidendx_eeprom-r2dx_v33.bin", 	0x000080, 0x0b34c0ca, 7 | BRF_PRG | BRF_ESS }, //  7 eeprom
 };
 
 STD_ROM_PICK(r2dx_v33)
@@ -4566,20 +4820,20 @@ struct BurnDriver BurnDrvR2dx_v33 = {
 // Raiden II New / Raiden DX (newer V33 PCB) (Raiden II EEPROM)
 
 static struct BurnRomInfo r2dx_v33_r2RomDesc[] = {
-	{ "prg.223",			0x400000, 0xb3dbcf98, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "prg.223",				0x400000, 0xb3dbcf98, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 
-	{ "fix.613",			0x040000, 0x3da27e39, 2 | BRF_GRA },           //  1 gfx1
+	{ "fix.613",				0x040000, 0x3da27e39, 2 | BRF_GRA },           //  1 gfx1
 
-	{ "bg.612",			0x400000, 0x162c61e9, 3 | BRF_GRA },           //  2 gfx2
+	{ "bg.612",				0x400000, 0x162c61e9, 3 | BRF_GRA },           //  2 gfx2
 
-	{ "obj1.724",			0x400000, 0x7d218985, 4 | BRF_GRA },           //  3 gfx3
-	{ "obj2.725",			0x400000, 0x891b24d6, 4 | BRF_GRA },           //  4
+	{ "obj1.724",				0x400000, 0x7d218985, 4 | BRF_GRA },           //  3 gfx3
+	{ "obj2.725",				0x400000, 0x891b24d6, 4 | BRF_GRA },           //  4
 
-	{ "pcm.099",			0x100000, 0x97ca2907, 5 | BRF_SND },           //  5 oki
+	{ "pcm.099",				0x100000, 0x97ca2907, 5 | BRF_SND },           //  5 oki
 
-	{ "copx_d3.357",		0x020000, 0xfa2cf3ad, 6 | BRF_GRA },           //  6 math
+	{ "copx_d3.357",			0x020000, 0xfa2cf3ad, 6 | BRF_GRA },           //  6 math
 
-	{ "raidenii_eeprom-r2dx_v33.bin", 0x0080, 0xba454777, 7 | BRF_PRG | BRF_ESS }, //  7 eeprom
+	{ "raidenii_eeprom-r2dx_v33.bin", 	0x000080, 0xba454777, 7 | BRF_PRG | BRF_ESS }, //  7 eeprom
 };
 
 STD_ROM_PICK(r2dx_v33_r2)
@@ -4599,23 +4853,23 @@ struct BurnDriver BurnDrvR2dx_v33_r2 = {
 // New Zero Team (V33 SYSTEM TYPE_B hardware)
 
 static struct BurnRomInfo nzeroteamRomDesc[] = {
-	{ "prg1",		0x080000, 0x3c7d9410, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "prg2",		0x080000, 0x6cba032d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "prg1",				0x080000, 0x3c7d9410, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "prg2",				0x080000, 0x6cba032d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "copx-d3.bin",	0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  2 Copx data
+	{ "copx-d3.bin",			0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  2 Copx data
 
-	{ "sound",		0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "sound",				0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "fix1",		0x010000, 0x0c4895b0, 4 | BRF_GRA },           //  4 Characters
-	{ "fix2",		0x010000, 0x07d8e387, 4 | BRF_GRA },           //  5
+	{ "fix1",				0x010000, 0x0c4895b0, 4 | BRF_GRA },           //  4 Characters
+	{ "fix2",				0x010000, 0x07d8e387, 4 | BRF_GRA },           //  5
 
-	{ "back-1",		0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  6 Background / Foreground Tiles
-	{ "back-2",		0x080000, 0xce61c952, 5 | BRF_GRA },           //  7
+	{ "back-1",				0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  6 Background / Foreground Tiles
+	{ "back-2",				0x080000, 0xce61c952, 5 | BRF_GRA },           //  7
 
-	{ "obj-1",		0x200000, 0x45be8029, 6 | BRF_GRA },           //  8 Sprites
-	{ "obj-2",		0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
+	{ "obj-1",				0x200000, 0x45be8029, 6 | BRF_GRA },           //  8 Sprites
+	{ "obj-2",				0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
 
-	{ "6.pcm",		0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 MSM6295 #0 Samples
+	{ "6.pcm",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 MSM6295 #0 Samples
 };
 
 STD_ROM_PICK(nzeroteam)
@@ -4630,3 +4884,39 @@ struct BurnDriver BurnDrvNzeroteam = {
 	NzeroteamInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };
+
+
+// Zero Team 2000
+
+static struct BurnRomInfo zerotm2kRomDesc[] = {
+	{ "mt28f800b1.u0230",			0x100000, 0x6ab49d8c, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+
+	{ "mx27c1000mc.u0366",			0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  1 Copx data
+
+	{ "syz-02.u019",			0x010000, 0x55371073, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "syz-04.u0616",			0x010000, 0x3515a45f, 4 | BRF_GRA },           //  3 Characters
+	{ "syz-03.u0617",			0x010000, 0x02fbf9d7, 4 | BRF_GRA },           //  4
+
+	{ "szy-05.u0614",			0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  5 Background / Foreground Tiles
+	{ "mt28f400b1.u0619",			0x080000, 0x266acee6, 5 | BRF_GRA },           //  6
+
+	{ "musha_obj-1a.u0729",			0x200000, 0x9b2cf68c, 6 | BRF_GRA },           //  7 Sprites
+	{ "musha_obj-2a.u0730",			0x200000, 0xfcabee05, 6 | BRF_GRA },           //  8
+
+	{ "szy-01.u099",			0x040000, 0x48be32b1, 7 | BRF_SND },           //  9 MSM6295 #0 Samples
+};
+
+STD_ROM_PICK(zerotm2k)
+STD_ROM_FN(zerotm2k)
+
+struct BurnDriver BurnDrvZerotm2k = {
+	"zerotm2k", "zeroteam", NULL, NULL, "2000",
+	"Zero Team 2000\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, zerotm2kRomInfo, zerotm2kRomName, NULL, NULL, ZeroteamInputInfo, NULL,
+	Zerotm2kInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 256, 4, 3
+};
+

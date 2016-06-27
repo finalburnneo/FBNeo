@@ -2137,7 +2137,7 @@ struct BurnDriver BurnDrvNineteen43kai = {
 };
 
 struct BurnDriver BurnDrvNineteen43mii = {
-	"1943mii", "1943kai", NULL, NULL, "1988",
+	"1943mii", NULL, NULL, NULL, "1988",
 	"1943: The Battle of Midway Mark II (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,

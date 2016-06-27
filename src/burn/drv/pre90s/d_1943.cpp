@@ -692,7 +692,7 @@ static struct BurnRomInfo DrvmiiRomDesc[] = {
 	{ "04.5h",         0x08000, 0x8190e092, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
-	{ "bmk16.11f",     0x08000, 0x9416fe0d, BRF_GRA },	     	 //  6
+	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6
 	{ "17.12f",        0x08000, 0x3d5acab9, BRF_GRA },	     	 //  7
 	{ "18.14f",        0x08000, 0x7b62da1d, BRF_GRA },	     	 //  8
 	{ "bm19.10j",      0x08000, 0x868ababc, BRF_GRA },	     	 //  9
@@ -2137,7 +2137,7 @@ struct BurnDriver BurnDrvNineteen43kai = {
 };
 
 struct BurnDriver BurnDrvNineteen43mii = {
-	"1943mii", NULL, NULL, NULL, "1988",
+	"1943mii", "1943kai", NULL, NULL, "1988",
 	"1943: The Battle of Midway Mark II (US)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,

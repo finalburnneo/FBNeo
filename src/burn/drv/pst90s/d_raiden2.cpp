@@ -192,7 +192,7 @@ static struct BurnInputInfo Rdx_v33InputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
+	{"Service 1",	BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -549,6 +549,7 @@ static UINT16 r2dx_i_dy;
 static UINT16 r2dx_i_angle;
 static UINT32 r2dx_i_sdist;
 static INT32  r2dx_gameselect;
+static INT32  r2dx_okibank;
 
 static void SeibuCopReset()
 {
@@ -603,50 +604,6 @@ static void SeibuCopReset()
 static void SeibuCopScan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-/*		struct BurnArea ba;
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = cop_regs;
-		ba.nLen   = 8 * sizeof(UINT32);
-		ba.szName = "cop_regs";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = cop_dma_src;
-		ba.nLen   = 0x200 * sizeof(INT16);
-		ba.szName = "cop_dma_src";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = cop_dma_dst;
-		ba.nLen   = 0x200 * sizeof(INT16);
-		ba.szName = "cop_dma_dst";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = cop_dma_size;
-		ba.nLen   = 0x200 * sizeof(INT16);
-		ba.szName = "cop_dma_size";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = cop_itoa_digits;
-		ba.nLen   = 10;
-		ba.szName = "cop_itoa_digits";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = sprite_prot_src_addr;
-		ba.nLen   = 2 * sizeof(INT16);
-		ba.szName = "sprite_prot_src_addr";
-		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data   = &cop_collision_info;
-		ba.nLen   = 2 * sizeof(cop_collision_info[0]);
-		ba.szName = "cop_collision_info";
-		BurnAcb(&ba);
-*/
 		SCAN_VAR(cop_regs);
 		SCAN_VAR(cop_itoa);
 		SCAN_VAR(cop_status);
@@ -677,7 +634,7 @@ static void SeibuCopScan(INT32 nAction)
 		SCAN_VAR(cop_hit_status);
 		SCAN_VAR(cop_hit_baseadr);
 		SCAN_VAR(cop_hit_val);
-        	SCAN_VAR(cop_hit_val_stat);
+		SCAN_VAR(cop_hit_val_stat);
 		SCAN_VAR(cop_sort_ram_addr);
 		SCAN_VAR(cop_sort_lookup);
 		SCAN_VAR(cop_sort_param);
@@ -1799,6 +1756,11 @@ static void r2dx_bankswitch(INT32 set_bank, INT32 set_main)
 	VezMapArea(0x30000, 0xfffff, 2, DrvMainROM + 0x030000 + bank0);
 }
 
+static void r2dx_okibankswitch()
+{
+	memcpy (DrvSndROM0, DrvSndROM1 + r2dx_okibank * 0x40000, 0x40000);
+}
+
 static void __fastcall r2dx_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xff800) == 0x00000) {
@@ -1894,7 +1856,8 @@ static void __fastcall r2dx_main_write(UINT32 address, UINT8 data)
 
 			r2dx_bankswitch(prg_bank, r2dx_gameselect);
 
-			memcpy (DrvSndROM0, DrvSndROM1 + (dataword & 3) * 0x40000, 0x40000);
+			r2dx_okibank = dataword & 3;
+			r2dx_okibankswitch();
 		}
 		return;
 
@@ -2014,6 +1977,7 @@ static INT32 DrvDoReset()
 	fg_bank = (game_select >= 2) ? 2 : 6;
 	mg_bank = 1;
 	tx_bank = 0;
+	r2dx_okibank = 0;
 
 	SeibuCopReset();
 
@@ -2030,16 +1994,16 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x400000*2;
+	DrvMainROM		= Next; Next += 0x400000;
 
-	SeibuZ80ROM		= Next; Next += 0x020000*2;
+	SeibuZ80ROM		= Next; Next += 0x020000;
 
 	DrvEeprom		= Next; Next += 0x000080;
 
-	DrvCopxROM		= Next; Next += 0x020000*2;
+	DrvCopxROM		= Next; Next += 0x020000;
 
-	DrvGfxROM0		= Next; Next += 0x080000*2;
-	DrvGfxROM1		= Next; Next += 0x800000*2;
+	DrvGfxROM0		= Next; Next += 0x080000;
+	DrvGfxROM1		= Next; Next += 0x800000;
 	DrvGfxROM2		= Next; Next += 0x1000000;
 
 	DrvTransTab		= Next; Next += 0x800000 / 0x100;
@@ -3503,16 +3467,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_WRITE) {
-		VezOpen(0);
-		if (game_select == 0) raiden2_bankswitch(prg_bank);
-		if (game_select == 1) raidendx_bankswitch(prg_bank);
-		if (game_select == 4) r2dx_bankswitch(prg_bank, r2dx_gameselect);
-		VezClose();
-
-		DrvRecalc = 1;
-	}
-
 	if (nAction & ACB_DRIVER_DATA) {
 		VezScan(nAction);
 
@@ -3529,8 +3483,22 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(bg_bank);
 		SCAN_VAR(fg_bank);
 		SCAN_VAR(r2dx_gameselect);
+		SCAN_VAR(r2dx_okibank);
 
 		SeibuCopScan(nAction);
+	}
+
+	if (nAction & ACB_WRITE) {
+		VezOpen(0);
+		if (game_select == 0) raiden2_bankswitch(prg_bank);
+		if (game_select == 1) raidendx_bankswitch(prg_bank);
+		if (game_select == 4) {
+			r2dx_bankswitch(prg_bank, r2dx_gameselect);
+			r2dx_okibankswitch();
+		}
+		VezClose();
+
+		DrvRecalc = 1;
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -4867,11 +4835,11 @@ STD_ROM_FN(r2dx_v33)
 
 struct BurnDriver BurnDrvR2dx_v33 = {
 	"r2dx_v33", NULL, NULL, NULL, "1996",
-	"Raiden II New / Raiden DX (newer V33 PCB) (Raiden DX EEPROM)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II New / Raiden DX (newer V33 PCB) (Raiden DX EEPROM)\0", "Terrible sound quality is normal for this game, use Raiden DX instead!", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, r2dx_v33RomInfo, r2dx_v33RomName, NULL, NULL, Rdx_v33InputInfo, Rdx_v33DIPInfo,
-	R2dxInit, DrvExit, R2dxFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	R2dxInit, DrvExit, R2dxFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
 
@@ -4900,11 +4868,11 @@ STD_ROM_FN(r2dx_v33_r2)
 
 struct BurnDriver BurnDrvR2dx_v33_r2 = {
 	"r2dx_v33_r2", "r2dx_v33", NULL, NULL, "1996",
-	"Raiden II New / Raiden DX (newer V33 PCB) (Raiden II EEPROM)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Raiden II New / Raiden DX (newer V33 PCB) (Raiden II EEPROM)\0", "Terrible sound quality is normal for this game, use Raiden II instead!", "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, r2dx_v33_r2RomInfo, r2dx_v33_r2RomName, NULL, NULL, Rdx_v33InputInfo, Rdx_v33DIPInfo,
-	R2dxInit, DrvExit, R2dxFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
+	R2dxInit, DrvExit, R2dxFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
 

@@ -44,19 +44,25 @@ static INT32 nDrvRamBank;
 static INT32 nBackgroundBrightness;
 static INT32 k051316_readroms;
 static INT32 analog_ctrl;
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static UINT8 m_accel;
+static UINT8 m_wheel;
 
 static INT32 watchdog;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
 static struct BurnInputInfo ChqflagInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 
 	// These are placeholders for analog inputs
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 5"	},
+	A("Wheel",          BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+	A("Accelerator",    BIT_ANALOG_REL, &DrvAnalogPort1 , "P1 Fire 1"),
 
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
@@ -230,10 +236,17 @@ static inline UINT8 analog_port_read()
 {
 	switch (analog_ctrl)
 	{
-//		case 0x00: return (m_accel = ioport("IN3")->read());    // accelerator
-//		case 0x01: return (m_wheel = ioport("IN4")->read());    // steering
-//		case 0x02: return m_accel;                      	// accelerator (previous?)
-//		case 0x03: return m_wheel;                     		// steering (previous?)
+		case 0x00: {
+			m_accel = DrvAnalogPort1;
+			return m_accel;    // accelerator
+		}
+		case 0x01: {
+			m_wheel = DrvAnalogPort0;
+			bprintf(0, _T("%X"), m_wheel);
+			return m_wheel;    // steering
+		}
+		case 0x02: return m_accel;                      	// accelerator (previous?)
+		case 0x03: return m_wheel;                     		// steering (previous?)
 	}
 
 	return 0xff;
@@ -294,7 +307,7 @@ static UINT8 chqflag_main_read(UINT16 address)
 		case 0x3701:
 			return DrvInputs[1] & 0x0f;
 
-		case 0x3702:
+		case 0x3702:  bprintf(0, _T("3702"));
 			return analog_port_read();
 	}
 
@@ -677,7 +690,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -685,7 +698,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

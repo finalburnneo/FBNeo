@@ -5,6 +5,7 @@ static UINT16 *K051316TileMap[3];
 static void (*K051316Callback[3])(INT32 *code,INT32 *color,INT32 *flags);
 static INT32 K051316Depth[3];
 static INT32 K051316TransColor[3];
+static UINT32 K051316TransMask[3];
 static UINT8 *K051316Gfx[3];
 static UINT8 *K051316GfxExp[3];
 static INT32 K051316Mask[3];
@@ -47,7 +48,13 @@ void K051316Init(INT32 chip, UINT8 *gfx, UINT8 *gfxexp, INT32 mask, void (*callb
 
 	K051316Offs[chip][0] = K051316Offs[chip][1] = 0;
 
-	K051316TransColor[chip] = transp;
+	K051316TransMask[chip] = 0;
+	K051316TransColor[chip] = transp & 0xff;
+
+	if (transp & 0x200) {
+		K051316TransMask[chip] = transp & 0xff;
+		K051316TransColor[chip] = 0;
+	}
 }
 
 void K051316Reset()
@@ -126,6 +133,8 @@ static inline void K051316_write_tile(INT32 offset, INT32 chip)
 	if (flipx) flipx = 0x0f;
 	if (flipy) flipy = 0x0f;
 
+	INT32 tmask = K051316TransMask[chip];
+
 	for (INT32 y = 0; y < 16; y++, sy++)
 	{
 		dst = K051316TileMap[chip] + ((sy << 9) + sx);
@@ -134,10 +143,18 @@ static inline void K051316_write_tile(INT32 offset, INT32 chip)
 		{
 			INT32 pxl = src[((y^flipy) << 4) | (x ^ flipx)];
 
-			if (pxl != K051316TransColor[chip]) {
-				dst[x] = color | pxl;
+			if (tmask) {
+				if ((pxl & tmask) == tmask) {
+					dst[x] = color | pxl;
+				} else {
+					dst[x] = 0x8000 | color | pxl;
+				}
 			} else {
-				dst[x] = 0x8000 | color | pxl;
+				if (pxl != K051316TransColor[chip]) {
+					dst[x] = color | pxl;
+				} else {
+					dst[x] = 0x8000 | color | pxl;
+				}
 			}
 		}
 	}
@@ -163,6 +180,8 @@ static inline void copy_roz(INT32 chip, UINT32 startx, UINT32 starty, INT32 incx
 {
 	UINT32 hshift = 512 << 16;
 	UINT32 wshift = 512 << 16;
+
+	if (flags & 0x200) transp = 0; // force opaque
 
 	INT32 priority = flags & 0xff;
 
@@ -290,7 +309,9 @@ void K051316_zoom_draw(INT32 chip, INT32 flags)
 	startx -= (89 + K051316Offs[chip][0]) * incxx;
 	starty -= (89 + K051316Offs[chip][0]) * incxy;
 
-	copy_roz(chip, startx << 5,starty << 5,incxx << 5,incxy << 5,incyx << 5,incyy << 5, K051316Wrap[chip], K051316TransColor[chip]+1, flags); // transp..
+	INT32 transp = K051316TransColor[chip] + 1;
+
+	copy_roz(chip, startx << 5,starty << 5,incxx << 5,incxy << 5,incyx << 5,incyy << 5, K051316Wrap[chip], transp, flags); // transp..
 }
 
 void K051316RedrawTiles(INT32 chip)

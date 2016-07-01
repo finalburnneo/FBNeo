@@ -3044,7 +3044,7 @@ static struct BurnRomInfo Hsf2jRomDesc[] = {
 STD_ROM_PICK(Hsf2j)
 STD_ROM_FN(Hsf2j)
 
-static struct BurnRomInfo Hsf2jr1RomDesc[] = {
+static struct BurnRomInfo Hsf2j1RomDesc[] = {
 	{ "hs2j.03",       0x080000, 0x00738f73, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "hs2j.04",       0x080000, 0x40072c4a, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "hs2.05",        0x080000, 0xdde34a35, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -3065,8 +3065,8 @@ static struct BurnRomInfo Hsf2jr1RomDesc[] = {
 	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
 };
 
-STD_ROM_PICK(Hsf2jr1)
-STD_ROM_FN(Hsf2jr1)
+STD_ROM_PICK(Hsf2j1)
+STD_ROM_FN(Hsf2j1)
 
 static struct BurnRomInfo JyangokuRomDesc[] = {
 	{ "majj.03",       0x080000, 0x4614a3b2, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -8668,12 +8668,12 @@ struct BurnDriver BurnDrvCpsHsf2j = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsHsf2jr1 = {
-	"hsf2jr1", "hsf2", NULL, NULL, "2004",
+struct BurnDriver BurnDrvCpsHsf2j1 = {
+	"hsf2j1", "hsf2", NULL, NULL, "2004",
 	"Hyper Street Fighter II: The Anniversary Edition (031222 Japan)\0", NULL, "Capcom", "CPS2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, FBF_SF,
-	NULL, Hsf2jr1RomInfo, Hsf2jr1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	NULL, Hsf2j1RomInfo, Hsf2j1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Ssf2tInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

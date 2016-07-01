@@ -853,16 +853,19 @@ struct BurnDriver BurnDrvHimesiki = {
 // Android (early build?)
 
 static struct BurnRomInfo androidpoRomDesc[] = {
-	{ "MITSUBISHI_A01.toppcb.m5l27256k.k1.BIN",	0x08000, 0x25ab85eb, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
-	{ "MITSUBISHI_A03.toppcb.m5l27256k.G1.BIN",	0x08000, 0x6cf5f48a, 1 | BRF_PRG | BRF_ESS }, //  1 
-	{ "MITSUBISHI_A02.toppcb.m5l27256k.J1.BIN",	0x08000, 0xe41426be, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "MITSUBISHI__AD1__M5L27256K.toppcb.k1",		0x08000, 0x25ab85eb, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "MITSUBISHI__AD-3__M5L27256K.toppcb.g1",		0x08000, 0x6cf5f48a, 1 | BRF_PRG | BRF_ESS }, //  1 
+	{ "MITSUBISHI__AD2__M5L27256K.toppcb.j1",		0x08000, 0xe41426be, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "MITSUBISHI_A04.toppcb.m5l27256k.N6.BIN",	0x08000, 0x13c38fe4, 2 | BRF_PRG | BRF_ESS }, //  3 - Z80 #1 Code
+	{ "MITSUBISHI__AD-4__M5L27256K.toppcb.n6",		0x08000, 0x13c38fe4, 2 | BRF_PRG | BRF_ESS }, //  3 - Z80 #1 Code
 
-	{ "MITSUBISHI_A05.toppcb.m5l27512k.F5.BIN",	0x10000, 0x4c72a930, 3 | BRF_GRA },           //  4 - Background Tiles	
+	{ "MITSUBISHI__AD-5__M5L27512K.toppcb.f5",		0x10000, 0x4c72a930, 3 | BRF_GRA },           //  4 - Background Tiles	
 
-	{ "MITSUBISHI_A06.botpcb.m5l27512k.9E.BIN",	0x10000, 0x5e42984e, 4 | BRF_GRA },           //  5 - 16x16 Sprites
-	{ "MITSUBISHI_A07.botpcb.m5l27512k.9B.BIN",	0x10000, 0x611ff400, 4 | BRF_GRA },           //  6
+	{ "MITSUBISHI__AD-6__M5L27512K.botpcb.def9",	0x10000, 0x5e42984e, 4 | BRF_GRA },           //  5 - 16x16 Sprites
+	{ "MITSUBISHI__AD-7__M5L27512K.botpcb.bc9",		0x10000, 0x611ff400, 4 | BRF_GRA },           //  6
+	
+	{ "RICOH_7A2_19__EPL10P8BP_JAPAN_M.j3.jed",		0x00473, 0x807d1553, 0 | BRF_OPT },           //  7
+	{ "RICOH_7A2_19__EPL10P8BP_JAPAN_I.f1.jed",		0x00473, 0xc5e51ea2, 0 | BRF_OPT },           //  8
 };
 
 STD_ROM_PICK(androidpo)

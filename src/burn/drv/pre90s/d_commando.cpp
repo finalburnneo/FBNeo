@@ -446,11 +446,11 @@ static struct BurnRomInfo MercenarioRomDesc[] = {
 	{ "vt16.10a",      0x04000, 0x14178237, BRF_GRA },	     //  9          // 16c.10a
 	
 	{ "vt05.7e",       0x04000, 0x79f16e3d, BRF_GRA },	     //  10	Sprites // 5c.7e
-	{ "vt06.e8",       0x04000, 0x26fee521, BRF_GRA },	     //  11         // 6c.8e
-	{ "vt07.e9",       0x04000, 0xca88bdfd, BRF_GRA },	     //  12         // 7c.9e
+	{ "vt06.8e",       0x04000, 0x26fee521, BRF_GRA },	     //  11         // 6c.8e
+	{ "vt07.9e",       0x04000, 0xca88bdfd, BRF_GRA },	     //  12         // 7c.9e
 	{ "vt08.7h",       0x04000, 0x2019c883, BRF_GRA },	     //  13         // 8c.7h
-	{ "vt09.h8",       0x04000, 0x98703982, BRF_GRA },	     //  14         // 9c.8h
-	{ "vt10.h9",       0x04000, 0xf069d2f8, BRF_GRA },	     //  15         // 10c.9h
+	{ "vt09.8h",       0x04000, 0x98703982, BRF_GRA },	     //  14         // 9c.8h
+	{ "vt10.9h",       0x04000, 0xf069d2f8, BRF_GRA },	     //  15         // 10c.9h
 	
 	{ "vtb1.1d",       0x00100, 0x3aba15a1, BRF_GRA },	     //  16	PROMs
 	{ "vtb2.2d",       0x00100, 0x88865754, BRF_GRA },	     //  17

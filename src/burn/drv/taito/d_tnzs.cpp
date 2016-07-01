@@ -2026,13 +2026,13 @@ struct BurnDriver BurnDrvExtrmatu = {
 };
 
 
-// Extermination (US, set 2)
+// Extermination (US, Romstar)
 
-static struct BurnRomInfo extrmatuaRomDesc[] = {
-	{ "b06-15.11c",		0x10000, 0x4b3ee597, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "b06-16.9c",		0x10000, 0x86175ea4, 1 | BRF_PRG | BRF_ESS }, //  1
+static struct BurnRomInfo extrmaturRomDesc[] = {
+	{ "b06_15",			0x10000, 0x4b3ee597, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b06_16",			0x10000, 0x86175ea4, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b06-17.4e",		0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "b06_17",			0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "extr8742.4f",	0x00800, 0x00000000, 3 | BRF_NODUMP }, 	      //  3 I8742 MCU
 
@@ -2045,15 +2045,15 @@ static struct BurnRomInfo extrmatuaRomDesc[] = {
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
 };
 
-STD_ROM_PICK(extrmatua)
-STD_ROM_FN(extrmatua)
+STD_ROM_PICK(extrmatur)
+STD_ROM_FN(extrmatur)
 
-struct BurnDriver BurnDrvExtrmatua = {
-	"extrmatnua", "extrmatn", NULL, NULL, "1987",
-	"Extermination (US, set 2)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
+struct BurnDriver BurnDrvExtrmatur = {
+	"extrmatnur", "extrmatn", NULL, NULL, "1987",
+	"Extermination (US, Romstar)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, extrmatuaRomInfo, extrmatuaRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
+	NULL, extrmaturRomInfo, extrmaturRomName, NULL, NULL, CommonInputInfo, ExtrmatnDIPInfo,
 	ExtrmatnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

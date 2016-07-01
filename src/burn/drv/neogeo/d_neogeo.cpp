@@ -13541,28 +13541,28 @@ struct BurnDriver BurnDrvcthd2k3a = {
 
 // Idol Mahjong - final romance 2 (Neo CD Conversion)
 
-static struct BurnRomInfo fr2chRomDesc[] = {
-	{ "098-p1ch.bin", 0x080000, 0x09675541, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+static struct BurnRomInfo froman2bRomDesc[] = {
+	{ "098.p1", 0x080000, 0x09675541, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
-	{ "098-s1ch.bin", 0x020000, 0x0e6a7c73, 2 | BRF_GRA },           //  1 Text layer tiles
+	{ "098.s1", 0x020000, 0x0e6a7c73, 2 | BRF_GRA },           //  1 Text layer tiles
 
-	{ "098-c1ch.bin", 0x400000, 0x29148bf7, 3 | BRF_GRA },           //  2 Sprite data
-	{ "098-c2ch.bin", 0x400000, 0x226b1263, 3 | BRF_GRA },           //  3 
+	{ "098.c1", 0x400000, 0x29148bf7, 3 | BRF_GRA },           //  2 Sprite data
+	{ "098.c2", 0x400000, 0x226b1263, 3 | BRF_GRA },           //  3 
 
-	{ "098-m1ch.bin", 0x020000, 0xda4878cf, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "098.m1", 0x020000, 0xda4878cf, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
 
-	{ "098-v1ch.bin", 0x100000, 0x6f8ccddc, 5 | BRF_SND },           //  9 Sound data
+	{ "098.v1", 0x100000, 0x6f8ccddc, 5 | BRF_SND },           //  9 Sound data
 };
 
-STDROMPICKEXT(fr2ch, fr2ch, neogeo)
-STD_ROM_FN(fr2ch)
+STDROMPICKEXT(froman2b, froman2b, neogeo)
+STD_ROM_FN(froman2b)
 
-struct BurnDriver BurnDrvfr2ch = {
-	"fr2ch", NULL, "neogeo", NULL, "1995",
+struct BurnDriver BurnDrvfroman2b = {
+	"froman2b", NULL, "neogeo", NULL, "1995",
 	"Idol Mahjong - final romance 2 (Neo CD Conversion)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HACK, 2, HARDWARE_SNK_NEOGEO, GBF_MAHJONG, 0,
-	NULL, fr2chRomInfo, fr2chRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, froman2bRomInfo, froman2bRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
@@ -14625,20 +14625,20 @@ struct BurnDriver BurnDrvlhcdb = {
 // wasn't actually released on MVS but bootleg carts have been sold, this doesn't accept coins, runs like a console game
  
 static struct BurnRomInfo lasthopeRomDesc[] = {
-	{ "NGDT-300-P1.bin", 0x100000, 0x3776a88f, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
+	{ "ngdt-300-p1.bin", 0x100000, 0x3776a88f, 1 | BRF_ESS | BRF_PRG }, //  0 68K Code
 
-	{ "NGDT-300-S1.bin", 0x010000, 0x0c0ff9e6, 2 | BRF_GRA },		 	//  1 Text data
+	{ "ngdt-300-s1.bin", 0x010000, 0x0c0ff9e6, 2 | BRF_GRA },		 	//  1 Text data
 
-	{ "NGDT-300-C1.bin", 0x400000, 0x53ef41b5, 3 | BRF_GRA },		 	//  2 Sprite data
-	{ "NGDT-300-C2.bin", 0x400000, 0xf9b15ab3, 3 | BRF_GRA },		 	//  3
-	{ "NGDT-300-C3.bin", 0x400000, 0x50cc21cf, 3 | BRF_GRA },		 	//  4	
-	{ "NGDT-300-C4.bin", 0x400000, 0x8486ad9e, 3 | BRF_GRA },		 	//  5	
+	{ "ngdt-300-c1.bin", 0x400000, 0x53ef41b5, 3 | BRF_GRA },		 	//  2 Sprite data
+	{ "ngdt-300-c2.bin", 0x400000, 0xf9b15ab3, 3 | BRF_GRA },		 	//  3
+	{ "ngdt-300-c3.bin", 0x400000, 0x50cc21cf, 3 | BRF_GRA },		 	//  4	
+	{ "ngdt-300-c4.bin", 0x400000, 0x8486ad9e, 3 | BRF_GRA },		 	//  5	
 
-	{ "NGDT-300-M1.bin", 0x020000, 0x113c870f, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "ngdt-300-m1.bin", 0x020000, 0x113c870f, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
 
-	{ "NGDT-300-V1.bin", 0x200000, 0xb765bafe, 5 | BRF_SND },		 	//  7 Sound data
-	{ "NGDT-300-V2.bin", 0x200000, 0x9fd0d559, 5 | BRF_SND },		 	//  8
-	{ "NGDT-300-V3.bin", 0x200000, 0x6d5107e2, 5 | BRF_SND },		 	//  9
+	{ "ngdt-300-v1.bin", 0x200000, 0xb765bafe, 5 | BRF_SND },		 	//  7 Sound data
+	{ "ngdt-300-v2.bin", 0x200000, 0x9fd0d559, 5 | BRF_SND },		 	//  8
+	{ "ngdt-300-v3.bin", 0x200000, 0x6d5107e2, 5 | BRF_SND },		 	//  9
 };
 
 STDROMPICKEXT(lasthope, lasthope, neogeo)

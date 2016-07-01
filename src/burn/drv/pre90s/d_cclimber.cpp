@@ -1490,38 +1490,77 @@ static INT32 ckongInit()
 // Crazy Kong Part II (set 1)
 
 static struct BurnRomInfo ckongpt2RomDesc[] = {
-	{ "d05-07.bin",	0x1000, 0xb27df032, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "f05-08.bin",	0x1000, 0x5dc1aaba, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "h05-09.bin",	0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "k05-10.bin",	0x1000, 0x069c4797, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "l05-11.bin",	0x1000, 0xae159192, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "n05-12.bin",	0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7.5d",		0x1000, 0xb27df032, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.5e",		0x1000, 0x5dc1aaba, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "9.5h",		0x1000, 0xc9054c94, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.5k",		0x1000, 0x069c4797, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "11.5l",		0x1000, 0xae159192, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "12.5n",		0x1000, 0x966bc9ab, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "n11-06.bin",	0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
-	{ "l11-05.bin",	0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
-	{ "k11-04.bin",	0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
-	{ "h11-03.bin",	0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
+	{ "6.11n",		0x1000, 0x2dcedd12, 2 | BRF_GRA }, //  6 gfx1
+	{ "5.11l",		0x1000, 0xfa7cbd91, 2 | BRF_GRA }, //  7
+	{ "4.11k",		0x1000, 0x3375b3bd, 2 | BRF_GRA }, //  8
+	{ "3.11h",		0x1000, 0x5655cc11, 2 | BRF_GRA }, //  9
 
-	{ "c11-02.bin",	0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
-	{ "a11-01.bin",	0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
+	{ "2.11c",		0x0800, 0xd1352c31, 3 | BRF_GRA }, // 10 gfx2
+	{ "1.11a",		0x0800, 0xa7a2fdbd, 3 | BRF_GRA }, // 11
 
 	{ "prom.v6",	0x0020, 0xb3fc1505, 6 | BRF_GRA }, // 12 proms
 	{ "prom.u6",	0x0020, 0x26aada9e, 6 | BRF_GRA }, // 13
 	{ "prom.t6",	0x0020, 0x676b3166, 6 | BRF_GRA }, // 14
 
-	{ "cc13j.bin",	0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
-	{ "cc12j.bin",	0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+	{ "14.5s",		0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "13.5p",		0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
 };
 
 STD_ROM_PICK(ckongpt2)
 STD_ROM_FN(ckongpt2)
 
-struct BurnDriverD BurnDrvCkong = {
+struct BurnDriverD BurnDrvCkongpt2 = {
 	"ckongpt2", NULL, NULL, NULL, "1981",
 	"Crazy Kong Part II (set 1)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	/*BDF_GAME_WORKING*/ 0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2RomInfo, ckongpt2RomName, NULL, NULL, CkongInputInfo, CkongDIPInfo,
+	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	224, 256, 3, 4
+};
+
+
+// Crazy Kong (not working but needed as parent)
+
+static struct BurnRomInfo ckongRomDesc[] = {
+	{ "falcon7",	0x1000, 0x2171cac3, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "falcon8",	0x1000, 0x88b83ff7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "falcon9",	0x1000, 0xcff2af47, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "falcon10",	0x1000, 0x6b2ecf23, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "falcon11",	0x1000, 0x327dcadf, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "falcon6",	0x1000, 0xa8916dc8, 2 | BRF_GRA }, //  6 gfx1
+	{ "falcon5",	0x1000, 0xcd3b5dde, 2 | BRF_GRA }, //  7
+	{ "falcon4",	0x1000, 0xb62a0367, 2 | BRF_GRA }, //  8
+	{ "falcon3",	0x1000, 0x61122c5e, 2 | BRF_GRA }, //  9
+
+	{ "falcon2",	0x0800, 0xf67c80f1, 3 | BRF_GRA }, // 10 gfx2
+	{ "falcon1",	0x0800, 0x80eb517d, 3 | BRF_GRA }, // 11
+
+	{ "ck6v.bin",	0x0020, 0x751c3325, 6 | BRF_GRA }, // 12 proms
+	{ "ck6u.bin",	0x0020, 0xab1940fa, 6 | BRF_GRA }, // 13
+	{ "ck6t.bin",	0x0020, 0xb4e827a5, 6 | BRF_GRA }, // 14
+
+	{ "falcon13",	0x1000, 0x5f0bcdfb, 7 | BRF_GRA }, // 15 samples
+	{ "falcon12",	0x1000, 0x9003ffbd, 7 | BRF_GRA }, // 16
+};
+
+STD_ROM_PICK(ckong)
+STD_ROM_FN(ckong)
+
+struct BurnDriver BurnDrvCkong = {
+	"ckong", NULL, NULL, NULL, "1981",
+	"Crazy Kong\0", NULL, "Kyoei / Falcon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	/*BDF_GAME_WORKING*/ 0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, ckongRomInfo, ckongRomName, NULL, NULL, CkongInputInfo, CkongDIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };

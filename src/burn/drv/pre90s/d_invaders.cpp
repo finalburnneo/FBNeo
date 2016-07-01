@@ -442,6 +442,23 @@ STD_SAMPLE_PICK(Invaders)
 STD_SAMPLE_FN(Invaders)
 
 
+static struct BurnSampleInfo OzmawarsSampleDesc[] = {
+	{ "1", SAMPLE_NOLOOP },	// Shot/Missle
+	{ "2", SAMPLE_NOLOOP },	// Base Hit/Explosion
+	{ "3", SAMPLE_NOLOOP },	// Invader Hit
+	{ "4", SAMPLE_NOLOOP },	// Fleet move 1
+	{ "5", SAMPLE_NOLOOP },	// Fleet move 2
+	{ "6", SAMPLE_NOLOOP },	// Fleet move 3
+	{ "7", SAMPLE_NOLOOP },	// Fleet move 4
+	{ "8", SAMPLE_NOLOOP },	// UFO/Saucer Hit
+	{ "9", SAMPLE_NOLOOP },	// Bonus Base
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(Ozmawars)
+STD_SAMPLE_FN(Ozmawars)
+
+
 // Space Invaders / Space Invaders M
 
 static struct BurnRomInfo invadersRomDesc[] = {
@@ -635,6 +652,9 @@ static struct BurnRomInfo ozmawarsRomDesc[] = {
 	{ "mw04",		0x0800, 0xe190ce6c, 1 | BRF_ESS | BRF_PRG }, //  3
 	{ "mw05",		0x0800, 0x3bc7d4c7, 1 | BRF_ESS | BRF_PRG }, //  4
 	{ "mw06",		0x0800, 0x99ca2eae, 1 | BRF_ESS | BRF_PRG }, //  5
+	
+	{ "01.1",		0x0400, 0xaac24f34, 0 | BRF_OPT },
+	{ "02.2",		0x0400, 0x2bdf83a0, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(ozmawars)
@@ -646,11 +666,11 @@ static INT32 OzmawarsInit()
 }
 
 struct BurnDriver BurnDrvOzmawars = {
-	"ozmawars", NULL, NULL, NULL, "1979",
+	"ozmawars", NULL, NULL, "invaders", "1979",
 	"Ozma Wars (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, ozmawarsRomInfo, ozmawarsRomName, NULL, NULL, InvadersInputInfo, OzmawarsDIPInfo,
+	NULL, ozmawarsRomInfo, ozmawarsRomName, OzmawarsSampleInfo, OzmawarsSampleName, InvadersInputInfo, OzmawarsDIPInfo,
 	OzmawarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
 };
@@ -659,15 +679,21 @@ struct BurnDriver BurnDrvOzmawars = {
 // Ozma Wars (set 2)
 
 static struct BurnRomInfo ozmawars2RomDesc[] = {
-	{ "mw01",		0x0800, 0x31f4397d, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 Code
-	{ "mw02",		0x0800, 0xd8e77c62, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "oz5",		0x0400, 0x5597bf52, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "oz6",		0x0400, 0x19b43578, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "oz7",		0x0400, 0xa285bfde, 1 | BRF_ESS | BRF_PRG }, //  4
-	{ "oz8",		0x0400, 0xae59a629, 1 | BRF_ESS | BRF_PRG }, //  5
-	{ "mw05",		0x0800, 0x3bc7d4c7, 1 | BRF_ESS | BRF_PRG }, //  6
-	{ "oz11",		0x0400, 0x660e934c, 1 | BRF_ESS | BRF_PRG }, //  7
-	{ "oz12",		0x0400, 0x8b969f61, 1 | BRF_ESS | BRF_PRG }, //  8
+	{ "oz1",		0x0400, 0x9300830e, 1 | BRF_ESS | BRF_PRG }, //  0 i8080 Code
+	{ "oz2",		0x0400, 0x957fc661, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "oz3",		0x0400, 0xcf8f4d6c, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "oz4",		0x0400, 0xf51544a5, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "oz5",		0x0400, 0x5597bf52, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "oz6",		0x0400, 0x19b43578, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "oz7",		0x0400, 0xa285bfde, 1 | BRF_ESS | BRF_PRG }, //  6
+	{ "oz8",		0x0400, 0xae59a629, 1 | BRF_ESS | BRF_PRG }, //  7
+	{ "oz9",		0x0400, 0xdf0cc633, 1 | BRF_ESS | BRF_PRG }, //  8
+	{ "oz10",		0x0400, 0x31b7692e, 1 | BRF_ESS | BRF_PRG }, //  9
+	{ "oz11",		0x0400, 0x660e934c, 1 | BRF_ESS | BRF_PRG }, //  10
+	{ "oz12",		0x0400, 0x8b969f61, 1 | BRF_ESS | BRF_PRG }, //  11
+	
+	{ "01.1",		0x0400, 0xaac24f34, 0 | BRF_OPT },
+	{ "02.2",		0x0400, 0x2bdf83a0, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(ozmawars2)
@@ -675,27 +701,17 @@ STD_ROM_FN(ozmawars2)
 
 static INT32 Ozmawars2Init()
 {
-	INT32 nRet = DrvInit(0x800, 2, 0x000000);
-
-	if (nRet == 0) {
-		if (BurnLoadRom(DrvI8080ROM + 0x1000, 2, 1)) return 1;
-		if (BurnLoadRom(DrvI8080ROM + 0x1400, 3, 1)) return 1;
-		if (BurnLoadRom(DrvI8080ROM + 0x1800, 4, 1)) return 1;
-		if (BurnLoadRom(DrvI8080ROM + 0x1c00, 5, 1)) return 1;
-		if (BurnLoadRom(DrvI8080ROM + 0x4000, 6, 1)) return 1;
-		if (BurnLoadRom(DrvI8080ROM + 0x4800, 7, 1)) return 1;
-		if (BurnLoadRom(DrvI8080ROM + 0x4c00, 8, 1)) return 1;
-	}
+	INT32 nRet = DrvInit(0x400, 12, 0x000000);
 
 	return nRet;
 }
 
 struct BurnDriver BurnDrvOzmawars2 = {
-	"ozmawars2", "ozmawars", NULL, NULL, "1979",
+	"ozmawars2", "ozmawars", NULL, "invaders", "1979",
 	"Ozma Wars (set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, ozmawars2RomInfo, ozmawars2RomName, NULL, NULL, InvadersInputInfo, OzmawarsDIPInfo,
+	NULL, ozmawars2RomInfo, ozmawars2RomName, OzmawarsSampleInfo, OzmawarsSampleName, InvadersInputInfo, OzmawarsDIPInfo,
 	Ozmawars2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 2,
 	224, 260, 3, 4
 };

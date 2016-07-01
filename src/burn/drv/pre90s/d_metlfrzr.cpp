@@ -580,7 +580,9 @@ static struct BurnRomInfo metlfrzrRomDesc[] = {
 	{ "1.15j",		0x08000, 0xf59b5fa2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "2.14j",		0x10000, 0x21ecc248, 1 | BRF_PRG | BRF_ESS }, //  1
 
+#if !defined (ROM_VERIFY)
 	{ "t5182.rom",		0x02000, 0xd354c8fc, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 Code (Z80)
+#endif
 	{ "3.4h",		0x08000, 0x36f88e54, 2 | BRF_GRA },           //  3 t5182 External
 
 	{ "10.5a",		0x10000, 0x3313e74a, 3 | BRF_GRA },           //  4 Background Tiles

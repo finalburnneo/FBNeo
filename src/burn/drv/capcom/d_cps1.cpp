@@ -12265,9 +12265,12 @@ static struct BurnRomInfo VarthbRomDesc[] = {
 
 	{ "5",             0x040000, 0x1547e595, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
-	A_BOARD_PLDS
-	
 	{ "varth1.bin",    0x000157, 0x4c6a0d99, BRF_OPT },	// unknown
+	{ "varth2.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "varth3.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "varth4.bin",    0x000157, 0x53317bf6, BRF_OPT },	// unknown
+	{ "varth5.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "varth6.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Varthb)

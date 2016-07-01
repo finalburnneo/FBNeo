@@ -48,7 +48,7 @@ static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static UINT8 gearshifter;
 static UINT8 accelerator;
-static UINT8 swheel;
+static UINT8 steeringwheel;
 
 static INT32 watchdog;
 
@@ -57,7 +57,6 @@ static struct BurnInputInfo ChqflagInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 
-	// These are placeholders for analog inputs
 	A("Wheel",          BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
 	A("Accelerator",    BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 1"),
 
@@ -241,14 +240,14 @@ static inline UINT8 analog_port_read()
 	{
 		case 0x00: {
 			accelerator = DrvAnalogPort1;
-			return accelerator;    // accelerator
+			return accelerator;
 		}
 		case 0x01: {
-			swheel = 0x7f + (DrvAnalogPort0 >> 4);
-			return swheel;    // steering
+			steeringwheel = 0x7f + (DrvAnalogPort0 >> 4);
+			return steeringwheel;
 		}
-		case 0x02: return accelerator;                      	// accelerator (previous?)
-		case 0x03: return swheel;                     		// steering (previous?)
+		case 0x02: return accelerator; // 0x02,0x03: previous reads
+		case 0x03: return steeringwheel;
 	}
 
 	return 0xff;
@@ -739,7 +738,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nBackgroundBrightness);
 		SCAN_VAR(gearshifter);
 		SCAN_VAR(accelerator);
-		SCAN_VAR(swheel);
+		SCAN_VAR(steeringwheel);
 	}
 
 	if (nAction & ACB_WRITE) {

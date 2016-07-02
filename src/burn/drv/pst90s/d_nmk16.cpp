@@ -5840,7 +5840,7 @@ static INT32 NMK004Frame()
 
 		nCyclesDone[0] += SekRun(nSegment);
 
-		if (i == 238) { // 241 in MAME (see i == 235 comment)
+		if (i == 237) { // 241 in MAME (see i == 235 comment)
 			if (Strahlmode) {
 				memcpy (DrvSprBuf2, Drv68KRAM + 0xf000, 0x1000);
 			} else {

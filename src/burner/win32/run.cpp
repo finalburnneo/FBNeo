@@ -219,7 +219,17 @@ static int RunGetNextSound(int bDraw)
 
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
+#ifdef INCLUDE_AVI_RECORDING
+			if (nAviStatus) {
+				// Render frame with sound
+				pBurnSoundOut = nAudNextSound;
+				RunFrame(bDraw, 0);
+			} else {
+				RunFrame(0, 0);
+			}
+#else
 			RunFrame(0, 0);
+#endif
 		}
 	}
 
@@ -293,7 +303,17 @@ int RunIdle()
 
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
+#ifdef INCLUDE_AVI_RECORDING
+			if (nAviStatus) {
+				// Render frame with sound
+				pBurnSoundOut = nAudNextSound;
+				RunFrame(1, 0);
+			} else {
+				RunFrame(0, 0);
+			}
+#else
 			RunFrame(0, 0);
+#endif
 		}
 	}
 

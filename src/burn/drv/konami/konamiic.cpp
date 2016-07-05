@@ -16,6 +16,8 @@ UINT32 *konami_bitmap32 = NULL;
 UINT8  *konami_priority_bitmap = NULL;
 UINT32 *konami_palette32;
 
+static INT32 highlight_mode;
+
 void konami_sortlayers3( int *layer, int *pri )
 {
 #define SWAP(a,b) \
@@ -125,6 +127,8 @@ void KonamiRecalcPalette(UINT8 *src, UINT32 *dst, INT32 len)
 
 void KonamiICReset()
 {
+	highlight_mode = 1;
+
 	if (KonamiIC_K051960InUse) K051960Reset();
 	if (KonamiIC_K052109InUse) K052109Reset();
 	if (KonamiIC_K051316InUse) K051316Reset();
@@ -190,6 +194,8 @@ void KonamiICScan(INT32 nAction)
 	if (KonamiIC_K054338InUse) K054338Scan(nAction);
 	if (KonamiIC_K056832InUse) K056832Scan(nAction);
 
+//	SCAN_VAR(highlight_mode);
+
 	K053251Scan(nAction);
 	K054000Scan(nAction);
 	K051733Scan(nAction);
@@ -226,6 +232,7 @@ void KonamiBlendCopy(UINT32 *pPalette)
 	UINT32 *bmp = konami_bitmap32;
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		
 		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol(bmp[i]>>16, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
 	}
 }
@@ -271,12 +278,12 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 co
 				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 				{
 					if (x >= 0 && x < nScreenWidth) {
-						if ((priority & (1 << prio[x]))==0 && (prio[x]&0x80)==0) {
+						if ((priority & (1 << (prio[x]&0x1f)))==0) {
 							INT32 pxl = src[x_index>>16];
 
 							if (pxl != t) {
 								dst[x] = pal[pxl];
-								prio[x] |= 0x80;
+								prio[x] |= 0x1f;
 							}
 						}
 					}
@@ -368,9 +375,9 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 co
 					INT32 pxl = gfx[((y*16)+x)^flip];
 
 					if (pxl) {
-						if ((priority & (1 << pri[x]))==0 && (pri[x]&0x80)==0) {
+						if ((priority & (1 << (pri[x]&0x1f)))==0) {
 							dst[x] = pal[pxl];
-							pri[x] |= 0x80;
+							pri[x] |= 0x1f;
 						}
 					}
 				}
@@ -414,20 +421,22 @@ void konami_draw_16x16_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, 
 	}
 }
 
+void konami_set_highlight_mode(INT32 mode)
+{
+	highlight_mode = mode;
+}
+
 static inline UINT32 shadow_blend(UINT32 d)
 {
 	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
 }
 
-/*
-// Correct?
 static inline UINT32 highlight_blend(UINT32 d)
 {
 	return (((0xA857A857 + ((d & 0xff00ff) * 0x56)) & 0xff00ff00) + ((0x00A85700 + ((d & 0x00ff00) * 0x56)) & 0x00ff0000)) / 0x100;
 }
-*/
 
-void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 /*highlight*/)
+void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT32 priority, INT32 highlight)
 {
 	// Based on MAME sources for tile zooming
 	UINT8 *gfx_base = gfxbase + (code * width * height);
@@ -437,6 +446,8 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 	INT32 shadow_color = (1 << bpp) - 1;
 
 	UINT32 *pal = konami_palette32 + (color << bpp);
+
+	highlight_mode = 1;
 
 	if (dw && dh)
 	{
@@ -473,7 +484,7 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 	
 							if (pxl) {
 								if (pxl == shadow_color) {
-									dst[x] = shadow_blend(dst[x]);
+									dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
 								} else {
 									dst[x] = pal[pxl];
 								}
@@ -505,13 +516,13 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 							if (pxl) {
 								if (pxl == shadow_color) {
 									if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
-										dst[x] = shadow_blend(dst[x]);
-										pri[x] |= 0x80;
+										dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
+										pri[x] = 0x80;
 									}
 								} else {
 									if ((priority & (1 << (pri[x]&0x1f)))==0) {
 										dst[x] = pal[pxl];
-										pri[x] = 0x1f;
+										pri[x] = (pri[x]&0x80)|0x1f;
 									}
 								}
 							}

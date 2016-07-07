@@ -16,8 +16,8 @@ UINT32 *konami_bitmap32 = NULL;
 UINT8  *konami_priority_bitmap = NULL;
 UINT32 *konami_palette32;
 
-static INT32 highlight_mode = 0;
-static INT32 highlight_over_sprites_mode = 0;
+static INT32 highlight_mode = 0;  // set in driver init.
+static INT32 highlight_over_sprites_mode = 0; // ""
 
 void konami_sortlayers3( int *layer, int *pri )
 {
@@ -196,8 +196,6 @@ void KonamiICScan(INT32 nAction)
 	if (KonamiIC_K054338InUse) K054338Scan(nAction);
 	if (KonamiIC_K056832InUse) K056832Scan(nAction);
 
-//	SCAN_VAR(highlight_mode);
-
 	K053251Scan(nAction);
 	K054000Scan(nAction);
 	K051733Scan(nAction);
@@ -369,7 +367,7 @@ static inline UINT32 shadow_blend(UINT32 d)
 
 static inline UINT32 highlight_blend(UINT32 d)
 {
-	return (((0x75247524 + ((d & 0xff00ff) * 0x56)) & 0xff00ff00) + ((0x00752400 + ((d & 0x00ff00) * 0x56)) & 0x00ff0000)) / 0x100;
+	return (d & 0xff) + 0x22 + (d & 0xff00) + (0x22 << 8) + (d & 0xff0000) + (0x22 << 16);
 }
 
 void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority)

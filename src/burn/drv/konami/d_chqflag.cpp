@@ -555,6 +555,9 @@ static INT32 DrvInit()
 	K051316Init(1, DrvGfxROM2, DrvGfxROM2, 0xfffff, K051316Callback1, 8, 0xc0 | 0x200);
 	K051316SetOffset(1, -96, -16);
 
+	konami_set_highlight_over_sprites_mode(1);
+	konami_set_highlight_mode(1);
+
 	DrvDoReset(1);
 
 	return 0;

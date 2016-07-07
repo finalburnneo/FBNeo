@@ -4919,6 +4919,9 @@ static INT32 SsridersInit()
 	// Reset the driver
 	SsridersDoReset();
 
+	konami_set_highlight_over_sprites_mode(1);
+	konami_set_highlight_mode(1);
+
 	return 0;
 }
 

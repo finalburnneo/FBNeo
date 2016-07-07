@@ -703,7 +703,7 @@ STDDIPINFO(Dariusj)
 static struct BurnDIPInfo OpwolfDIPList[]=
 {
 	// Default Values
-	{0x0a, 0xff, 0xff, 0xff, NULL                             },
+	{0x0a, 0xff, 0xff, 0xfd, NULL                             },
 	{0x0b, 0xff, 0xff, 0x7f, NULL                             },
 	
 	// Dip 1
@@ -754,7 +754,7 @@ STDDIPINFO(Opwolf)
 static struct BurnDIPInfo OpwolfuDIPList[]=
 {
 	// Default Values
-	{0x0a, 0xff, 0xff, 0xff, NULL                             },
+	{0x0a, 0xff, 0xff, 0xfd, NULL                             },
 	{0x0b, 0xff, 0xff, 0x7f, NULL                             },
 	
 	// Dip 1
@@ -805,7 +805,7 @@ STDDIPINFO(Opwolfu)
 static struct BurnDIPInfo OpwolfbDIPList[]=
 {
 	// Default Values
-	{0x0a, 0xff, 0xff, 0xff, NULL                             },
+	{0x0a, 0xff, 0xff, 0xfd, NULL                             },
 	{0x0b, 0xff, 0xff, 0x7f, NULL                             },
 	
 	// Dip 1

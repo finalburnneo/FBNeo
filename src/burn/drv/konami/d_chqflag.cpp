@@ -217,7 +217,7 @@ static void chqflag_main_write(UINT16 address, UINT8 data)
 		{
 			nBackgroundBrightness = (data & 0x80) ? 60 : 100;
 
-			// MORE PALETTE EFFECTS!
+			konami_set_highlight_mode((data & 0x08) ? 1 : 0);
 
 			k051316_readroms = data & 0x10;
 		}
@@ -554,9 +554,6 @@ static INT32 DrvInit()
 
 	K051316Init(1, DrvGfxROM2, DrvGfxROM2, 0xfffff, K051316Callback1, 8, 0xc0 | 0x200);
 	K051316SetOffset(1, -96, -16);
-
-	konami_set_highlight_over_sprites_mode(1);
-	konami_set_highlight_mode(1);
 
 	DrvDoReset(1);
 

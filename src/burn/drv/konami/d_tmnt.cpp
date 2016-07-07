@@ -4919,9 +4919,6 @@ static INT32 SsridersInit()
 	// Reset the driver
 	SsridersDoReset();
 
-	konami_set_highlight_over_sprites_mode(1);
-	konami_set_highlight_mode(1);
-
 	return 0;
 }
 
@@ -5512,6 +5509,15 @@ static void PaletteDim(INT32 dimslayer)
 
 		for (i = ce; i < 2048; i++)
 			BlswhstlCalcPaletteWithContrast(i, brt);
+
+		if (~dim_c & 0x10) {
+			konami_set_highlight_over_sprites_mode(1);
+			konami_set_highlight_mode(1);
+		} else {
+			konami_set_highlight_over_sprites_mode(0);
+			konami_set_highlight_mode(0);
+		}
+
 	} else {
 		BlswhstlCalcPalette();
 	}

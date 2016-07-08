@@ -249,7 +249,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 								if (pxl != trans)
 								{
 									dst[xx] = pal[pxl];
-									pri[xx] = Priority;
+									pri[xx] = (EnableCategory) ? Category : Priority;
 								}
 							}
 						}

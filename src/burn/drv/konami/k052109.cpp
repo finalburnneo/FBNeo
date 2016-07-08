@@ -175,6 +175,9 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 
 	INT32 EnableCategory = Flags & 0x100;
 	INT32 Category = Flags & 0xff;
+
+	Priority = (EnableCategory) ? Category : Priority;
+
 	INT32 Opaque = (Flags >> 16) & 1;
 	INT32 ram_offset = nLayer * 0x800;
 
@@ -249,7 +252,7 @@ void K052109RenderLayer(INT32 nLayer, INT32 Flags, INT32 Priority)
 								if (pxl != trans)
 								{
 									dst[xx] = pal[pxl];
-									pri[xx] = (EnableCategory) ? Category : Priority;
+									pri[xx] = Priority;
 								}
 							}
 						}

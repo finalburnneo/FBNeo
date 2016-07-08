@@ -1,7 +1,9 @@
 // FB Alpha The Main Event / Devastators driver module
 // Based on MAME driver by Bryan McPhail
 
-// Why is The Main Event messed up? Very strange...
+// Priority issue with Main Event's ropes.  nBurnLayer & 4 vs. sprites.
+// The sprite engine draws the ropes ontop of the player sprite, but the
+// ropes from the tile engine (see: nBurnLayer & 4) have a higher priority?
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -581,7 +583,7 @@ UINT8 __fastcall mainevt_sound_read(UINT16 address)
 	return 0;
 }
 
-static void K052109Callback(INT32 layer, INT32 , INT32 *code, INT32 *color, INT32 *flipx, INT32 *priority)
+static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32 *flipx, INT32 *priority)
 {
 	INT32 colorbase[3] = { 0, 8, 4 };
 
@@ -625,6 +627,7 @@ static INT32 DrvDoReset()
 
 	HD6309Open(0);
 	HD6309Reset();
+	bankswitch(0);
 	HD6309Close();
 
 	ZetOpen(0);
@@ -707,8 +710,8 @@ static INT32 DrvInit(INT32 type)
 		if (BurnLoadRom(DrvSndROM1 + 0x020000,  9, 1)) return 1;
 		memcpy (DrvSndROM1, DrvSndROM1 + 0x20000, 0x20000);
 
-		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x040000);
-		K051960GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x080000);
+		K052109GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x020000 << nGame);
+		K051960GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x100000);
 	}
 
 	HD6309Init(0);

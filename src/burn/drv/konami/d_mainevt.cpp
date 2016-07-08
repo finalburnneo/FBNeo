@@ -2,8 +2,9 @@
 // Based on MAME driver by Bryan McPhail
 
 // Priority issue with Main Event's ropes.  nBurnLayer & 4 vs. sprites.
-// The sprite engine draws the ropes ontop of the player sprite, but the
-// ropes from the tile engine (see: nBurnLayer & 4) have a higher priority?
+// The sprite engine draws the ropes ontop of the player sprite properly, but the
+// ropes from the tile engine (see: nBurnLayer & 4) have a higher priority causing an issue.
+// (see game.)
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

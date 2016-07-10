@@ -177,12 +177,7 @@ UINT8 __fastcall egghunt_main_read_port(UINT16 port)
 
 static void set_oki_bank(INT32 data)
 {
-	MSM6295ROM = DrvSndROM0 + ((data & 0x10) >> 4) * 0x40000;
-
-	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
-		MSM6295SampleInfo[0][nChannel] = MSM6295ROM + (nChannel << 8);
-		MSM6295SampleData[0][nChannel] = MSM6295ROM + (nChannel << 16);
-	}
+	MSM6295SetBank(0, DrvSndROM0 + ((data & 0x10) >> 4) * 0x40000, 0x00000, 0x3ffff);
 }
 
 void __fastcall egghunt_sound_write(UINT16 address, UINT8 data)

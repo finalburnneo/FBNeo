@@ -183,18 +183,12 @@ static void sndSetBank(UINT8 bank0, UINT8 bank1)
 {
 	if (bank0 != m6295bank[0]) {
 		m6295bank[0] = bank0;
-		for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
-			MSM6295SampleInfo[0][nChannel] = MSM6295ROM + 0x000000 + 0x040000 * bank0 + (nChannel << 8);
-			MSM6295SampleData[0][nChannel] = MSM6295ROM + 0x000000 + 0x040000 * bank0 + (nChannel << 16);
-		}
+		MSM6295SetBank(0, MSM6295ROM + 0x00000 + 0x040000 * bank0, 0x00000, 0x3ffff);
 	}
 
 	if (bank1 != m6295bank[1] && nGameSelect < 2) { //1945kiii only
 		m6295bank[1] = bank1;
-		for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
-			MSM6295SampleInfo[1][nChannel] = MSM6295ROM + 0x080000 + 0x040000 * bank1 + (nChannel << 8);
-			MSM6295SampleData[1][nChannel] = MSM6295ROM + 0x080000 + 0x040000 * bank1 + (nChannel << 16);
-		}
+		MSM6295SetBank(1, MSM6295ROM + 0x80000 + 0x040000 * bank1, 0x00000, 0x3ffff);
 	}
 }
 
@@ -418,6 +412,8 @@ static INT32 DrvInit(INT32 game_select)
 	
 	MSM6295Init(0, 7500, 1);
 	MSM6295Init(1, 7500, 1);
+	MSM6295SetBank(0, MSM6295ROM + 0x000000, 0, 0x3ffff);
+	MSM6295SetBank(1, MSM6295ROM + 0x080000, 0, 0x3ffff);
 	if (nGameSelect < 2) { // 1945kiii
 		MSM6295SetRoute(0, 2.50, BURN_SND_ROUTE_BOTH);
 		MSM6295SetRoute(1, 2.50, BURN_SND_ROUTE_BOTH);

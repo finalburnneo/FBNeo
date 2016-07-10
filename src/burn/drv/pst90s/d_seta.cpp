@@ -6426,7 +6426,7 @@ static void sub_bankswitch(UINT8 d)
 
 static void calibr50_sub_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0x0000 && address <= 0x1fff) { // x1_010
+	if (address <= 0x1fff) { // x1_010
 		setaSoundRegWriteByte8bit(address, data);
 		return;
 	}
@@ -6449,11 +6449,11 @@ static void calibr50_sub_write(UINT16 address, UINT8 data)
 
 static UINT8 calibr50_sub_read(UINT16 address)
 {
-	if (address >= 0x0000 && address <= 0x1fff) { // x1_010
+	if (address <= 0x1fff) { // x1_010
 		return x1010_sound_read(address);
 	}
 
-	if (address >= 0xc000 && address <= 0xffff) { // ROM
+	if (address >= 0xc000) { // ROM
 		return DrvSubROM[address - 0xc000];
 	}
 

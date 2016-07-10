@@ -179,6 +179,14 @@ void __fastcall silkroad_write_byte(UINT32 address, UINT8 data)
 		case 0xc00031:
 			MSM6295Command(1, data);
 		return;
+
+		case 0xc00034:
+		case 0xc00035:
+		case 0xc00036:
+		case 0xc00037:
+			if ((data & 0x03) < 2)
+				MSM6295SetBank(0, DrvSndROM0 + ((data & 0x01) * 0x40000), 0, 0x3ffff);
+		return;
 	}
 }
 
@@ -318,14 +326,6 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 	MSM6295Reset(1);
 
-	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
-		MSM6295SampleInfo[0][nChannel] = DrvSndROM0 + (nChannel << 8);
-		MSM6295SampleData[0][nChannel] = DrvSndROM0 + (nChannel << 16);
-
-		MSM6295SampleInfo[1][nChannel] = DrvSndROM1 + (nChannel << 8);
-		MSM6295SampleData[1][nChannel] = DrvSndROM1 + (nChannel << 16);
-	}
-
 	return 0;
 }
 
@@ -406,6 +406,8 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295Init(1, 2112000 / 132, 1);
+	MSM6295SetBank(0, DrvSndROM0, 0, 0x3ffff);
+	MSM6295SetBank(1, DrvSndROM1, 0, 0x3ffff);
 	MSM6295SetRoute(0, 0.45, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.45, BURN_SND_ROUTE_BOTH);
 

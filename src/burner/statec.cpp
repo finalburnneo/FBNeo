@@ -40,7 +40,7 @@ static INT32 CompGo(INT32 bFinish)
 
 		bRetry = false;
 
-		// PoINT32 to the remainder of out buffer
+		// Point to the remainder of out buffer
 		Zstr.next_out = Comp + nCompFill;
 		nAvailOut = nCompLen - nCompFill;
 		if (nAvailOut < 0) {

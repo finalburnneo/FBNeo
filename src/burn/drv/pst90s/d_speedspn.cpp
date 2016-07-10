@@ -244,12 +244,7 @@ static void oki_bankswitch(INT32 data)
 {
 	banks[2] = data & 3;
 
-	MSM6295ROM = DrvSndROM + (banks[2] * 0x40000);
-
-	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
-		MSM6295SampleInfo[0][nChannel] = MSM6295ROM + (nChannel << 8);
-		MSM6295SampleData[0][nChannel] = MSM6295ROM + (nChannel << 16);
-	}
+	MSM6295SetBank(0, DrvSndROM + (data & 3) * 0x20000, 0x20000, 0x3ffff);
 }
 
 void __fastcall speedspn_sound_write(UINT16 address, UINT8 data)
@@ -311,7 +306,7 @@ static INT32 MemIndex()
 	DrvGfxROM0	= Next; Next += 0x100000;
 	DrvGfxROM1	= Next; Next += 0x080000;
 
-	DrvSndROM	= Next; Next += 0x100000;
+	DrvSndROM	= Next; Next += 0x080000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x400 * sizeof(UINT32);
 
@@ -380,15 +375,7 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x000000,  1, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 1)) return 1;
-		memcpy (DrvSndROM + 0x000000, DrvGfxROM0 + 0x000000, 0x020000);
-		memcpy (DrvSndROM + 0x040000, DrvGfxROM0 + 0x000000, 0x020000);
-		memcpy (DrvSndROM + 0x080000, DrvGfxROM0 + 0x000000, 0x020000);
-		memcpy (DrvSndROM + 0x0c0000, DrvGfxROM0 + 0x000000, 0x020000);
-		memcpy (DrvSndROM + 0x020000, DrvGfxROM0 + 0x000000, 0x020000);
-		memcpy (DrvSndROM + 0x060000, DrvGfxROM0 + 0x020000, 0x020000);
-		memcpy (DrvSndROM + 0x0a0000, DrvGfxROM0 + 0x040000, 0x020000);
-		memcpy (DrvSndROM + 0x0e0000, DrvGfxROM0 + 0x060000, 0x020000);
+		if (BurnLoadRom(DrvSndROM  + 0x000000,  2, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x020000,  4, 1)) return 1;

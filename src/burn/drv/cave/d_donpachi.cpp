@@ -1,6 +1,7 @@
 // Donpachi
 #include "cave.h"
 #include "msm6295.h"
+#include "nmk112.h"
 
 #define USE_SAMPLE_HACK // allow use of high quality music samples.
 
@@ -24,8 +25,6 @@ static UINT8 *DefaultEEPROM = NULL;
 static UINT8 DrvReset = 0;
 static UINT8 bDrawScreen;
 static bool bVBlank;
-
-static INT32 nBankSize[2] = {0x200000, 0x300000};
 
 static INT8 nVideoIRQ;
 static INT8 nSoundIRQ;
@@ -216,25 +215,7 @@ void __fastcall donpachiWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xB0002D:
 		case 0xB0002E:
 		case 0xB0002F: {
-			INT32 nBank = (sekAddress >> 1) & 3;
-			INT32 nChip = (sekAddress >> 3) & 1;
-			INT32 nAddress = byteValue << 16;
-			while (nAddress > nBankSize[nChip]) {
-				nAddress -= nBankSize[nChip];
-			}
-
-			if (nChip == 1) {
-				MSM6295SampleData[1][nBank] = MSM6295ROM + nAddress;
-				MSM6295SampleInfo[1][nBank] = MSM6295ROM + nAddress + (nBank << 8);
-			} else {
-				MSM6295SampleData[0][nBank] = MSM6295ROM + 0x100000 + nAddress;
-				if (nBank == 0) {
-					MSM6295SampleInfo[0][0] = MSM6295ROM + 0x100000 + nAddress + 0x0000;
-					MSM6295SampleInfo[0][1] = MSM6295ROM + 0x100000 + nAddress + 0x0100;
-					MSM6295SampleInfo[0][2] = MSM6295ROM + 0x100000 + nAddress + 0x0200;
-					MSM6295SampleInfo[0][3] = MSM6295ROM + 0x100000 + nAddress + 0x0300;
-				}
-			}
+			NMK112_okibank_write((sekAddress / 2) & 0x1f, byteValue);
 			break;
 		}
 
@@ -359,26 +340,7 @@ void __fastcall donpachiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		case 0xB0002D:
 		case 0xB0002E:
 		case 0xB0002F: {
-			INT32 nBank = (sekAddress >> 1) & 3;
-			INT32 nChip = (sekAddress >> 3) & 1;
-			INT32 nAddress = wordValue << 16;
-
-			while (nAddress > nBankSize[nChip]) {
-				nAddress -= nBankSize[nChip];
-			}
-
-			if (nChip == 1) {
-				MSM6295SampleData[1][nBank] = MSM6295ROM + nAddress;
-				MSM6295SampleInfo[1][nBank] = MSM6295ROM + nAddress + (nBank << 8);
-			} else {
-				MSM6295SampleData[0][nBank] = MSM6295ROM + 0x100000 + nAddress;
-				if (nBank == 0) {
-					MSM6295SampleInfo[0][0] = MSM6295ROM + 0x100000 + nAddress + 0x0000;
-					MSM6295SampleInfo[0][1] = MSM6295ROM + 0x100000 + nAddress + 0x0100;
-					MSM6295SampleInfo[0][2] = MSM6295ROM + 0x100000 + nAddress + 0x0200;
-					MSM6295SampleInfo[0][3] = MSM6295ROM + 0x100000 + nAddress + 0x0300;
-				}
-			}
+			NMK112_okibank_write((sekAddress / 2) & 0x1f, wordValue & 0xff);
 			break;
 		}
 
@@ -406,7 +368,7 @@ static INT32 DrvExit()
 
 	CaveTileExit();
 	CaveSpriteExit();
-    CavePalExit();
+	CavePalExit();
 
 	SekExit();				// Deallocate 68000s
 
@@ -431,6 +393,7 @@ static INT32 DrvDoReset()
 
 	MSM6295Reset(0);
 	MSM6295Reset(1);
+	NMK112Reset();
 #ifdef USE_SAMPLE_HACK
 	DrvSampleReset();
 	memset (previous_sound_write, 0, 3);
@@ -618,8 +581,8 @@ static INT32 LoadRoms()
 	NibbleSwap2(CaveTileROM[2], 0x040000);
 
 	// Load MSM6295 ADPCM data
-	BurnLoadRom(MSM6295ROM, 6, 1);
-	BurnLoadRom(MSM6295ROM + 0x100000, 7, 1);
+	BurnLoadRom(MSM6295ROM + 0x000000, 6, 1); // OKI #1 ONLY
+	BurnLoadRom(MSM6295ROM + 0x100000, 7, 1); // OKI #0 & #1
 	
 	BurnLoadRom(DefaultEEPROM, 8, 1);
 
@@ -640,7 +603,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 
 		memset(&ba, 0, sizeof(ba));
-    	ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -649,6 +612,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
+		NMK112_Scan(nAction);
 
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
@@ -697,7 +661,7 @@ static INT32 DrvInit()
 
 	{
 		SekInit(0, 0x68000);													// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom01,						0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM
@@ -733,14 +697,8 @@ static INT32 DrvInit()
 #endif
 	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 
-	MSM6295SampleData[0][0] = MSM6295ROM + 0x100000;
-	MSM6295SampleInfo[0][0] = MSM6295ROM + 0x100000 + 0x0000;
-	MSM6295SampleData[0][1] = MSM6295ROM + 0x100000;
-	MSM6295SampleInfo[0][1] = MSM6295ROM + 0x100000 + 0x0100;
-	MSM6295SampleData[0][2] = MSM6295ROM + 0x100000;
-	MSM6295SampleInfo[0][2] = MSM6295ROM + 0x100000 + 0x0200;
-	MSM6295SampleData[0][3] = MSM6295ROM + 0x100000;
-	MSM6295SampleInfo[0][3] = MSM6295ROM + 0x100000 + 0x0300;
+	NMK112_init(1 << 0, MSM6295ROM + 0x100000, MSM6295ROM, 0x200000, 0x300000);
+
 
 #ifdef USE_SAMPLE_HACK
 	BurnUpdateProgress(0.0, _T("Loading samples..."), 0);

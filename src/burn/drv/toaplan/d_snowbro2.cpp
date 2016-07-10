@@ -293,15 +293,7 @@ void __fastcall snowbro2WriteWord(UINT32 sekAddress, UINT16 wordValue)
 			MSM6295Command(0, wordValue & 0xFF);
 			break;
 		case 0x700030: {
-			INT32 nBankOffset = (wordValue & 0x01) << 18;
-			MSM6295SampleInfo[0][0] = MSM6295ROM + nBankOffset;
-			MSM6295SampleData[0][0] = MSM6295ROM + nBankOffset;
-			MSM6295SampleInfo[0][1] = MSM6295ROM + nBankOffset + 0x0100;
-			MSM6295SampleData[0][1] = MSM6295ROM + nBankOffset + 0x10000;
-			MSM6295SampleInfo[0][2] = MSM6295ROM + nBankOffset + 0x0200;
-			MSM6295SampleData[0][2] = MSM6295ROM + nBankOffset + 0x20000;
-			MSM6295SampleInfo[0][3] = MSM6295ROM + nBankOffset + 0x0300;
-			MSM6295SampleData[0][3] = MSM6295ROM + nBankOffset + 0x30000;
+			MSM6295SetBank(0, MSM6295ROM + ((wordValue & 0x01) << 18), 0x00000, 0x3ffff);
 			break;
 		}
 
@@ -557,7 +549,7 @@ static INT32 DrvInit()
 
 	{
 		SekInit(0, 0x68000);										// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom01,		0x000000, 0x07FFFF, MAP_ROM);	// CPU 0 ROM

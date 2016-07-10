@@ -1,4 +1,5 @@
 #include "toaplan.h"
+#include "nmk112.h"
 // Batrider
 
 static UINT8 drvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -427,28 +428,11 @@ void __fastcall batriderZOut(UINT16 nAddress, UINT8 nValue)
 			break;
 
 		case 0xC0:
-			MSM6295SampleInfo[0][0] = MSM6295ROM + ((nValue & 0x0F) << 16);
-			MSM6295SampleData[0][0] = MSM6295ROM + ((nValue & 0x0F) << 16);
-			MSM6295SampleInfo[0][1] = MSM6295ROM + ((nValue & 0xF0) << 12) + 0x0100;
-			MSM6295SampleData[0][1] = MSM6295ROM + ((nValue & 0xF0) << 12);
-			break;
 		case 0xC2:
-			MSM6295SampleInfo[0][2] = MSM6295ROM + ((nValue & 0x0F) << 16) + 0x0200;
-			MSM6295SampleData[0][2] = MSM6295ROM + ((nValue & 0x0F) << 16);
-			MSM6295SampleInfo[0][3] = MSM6295ROM + ((nValue & 0xF0) << 12) + 0x0300;
-			MSM6295SampleData[0][3] = MSM6295ROM + ((nValue & 0xF0) << 12);
-			break;
 		case 0xC4:
-			MSM6295SampleInfo[1][0] = MSM6295ROM + 0x0100000 + ((nValue & 0x0F) << 16);
-			MSM6295SampleData[1][0] = MSM6295ROM + 0x0100000 + ((nValue & 0x0F) << 16);
-			MSM6295SampleInfo[1][1] = MSM6295ROM + 0x0100000 + ((nValue & 0xF0) << 12) + 0x0100;
-			MSM6295SampleData[1][1] = MSM6295ROM + 0x0100000 + ((nValue & 0xF0) << 12);
-			break;
 		case 0xC6:
-			MSM6295SampleInfo[1][2] = MSM6295ROM + 0x0100000 + ((nValue & 0x0F) << 16) + 0x0200;
-			MSM6295SampleData[1][2] = MSM6295ROM + 0x0100000 + ((nValue & 0x0F) << 16);
-			MSM6295SampleInfo[1][3] = MSM6295ROM + 0x0100000 + ((nValue & 0xF0) << 12) + 0x0300;
-			MSM6295SampleData[1][3] = MSM6295ROM + 0x0100000 + ((nValue & 0xF0) << 12);
+			NMK112_okibank_write((nAddress & 6) + 0, nValue & 0xf);
+			NMK112_okibank_write((nAddress & 6) + 1, nValue >> 4);
 			break;
 		}
 	}
@@ -493,7 +477,7 @@ UINT8 __fastcall batriderReadByte(UINT32 sekAddress)
 			return drvInput[5];
 		case 0x500003:								// Other inputs
 			return drvInput[2];
-        case 0x500004:								// Dipswitch 2
+		case 0x500004:								// Dipswitch 2
 			return drvInput[4];
 		case 0x500005:								// Dipswitch 1
 			return drvInput[3];
@@ -684,14 +668,15 @@ static INT32 drvDoReset()
 {
 	// Insert region code into 68K ROM, code by BisonSAS
 	UINT8 nRegion = drvRegion & 0x1F;
-  if (nRegion<=25) {
-  	Rom01[0x00000^1]=(UINT8)(nRegion<<13) | (drvRegion & 0x1F);
-  }
+
+	if (nRegion<=25) {
+  		Rom01[0x00000^1]=(UINT8)(nRegion<<13) | (drvRegion & 0x1F);
+  	}
 
 	SekOpen(0);
 
 	nIRQPending = 0;
-  SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
+	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 
 	Map68KTextROM(true);
 
@@ -705,6 +690,7 @@ static INT32 drvDoReset()
 	MSM6295Reset(0);
 	MSM6295Reset(1);
 	BurnYM2151Reset();
+	NMK112Reset();
 
 	HiscoreReset();
 
@@ -737,7 +723,7 @@ static INT32 drvInit()
 
 	{
 		SekInit(0, 0x68000);									// Allocate 68000
-	    SekOpen(0);
+		SekOpen(0);
 
 		// Map 68000 memory:
 		SekMapMemory(Rom01, 0x000000, 0x1FFFFF, MAP_ROM);		// CPU 0 ROM
@@ -783,6 +769,8 @@ static INT32 drvInit()
 	MSM6295Init(1, 32000000 / 10 / 165, 1);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+
+	NMK112_init(0, MSM6295ROM, MSM6295ROM + 0x100000, 0x100000, 0x100000);
 
 	nToaPalLen = nColCount;
 	ToaPalSrc = RamPal;

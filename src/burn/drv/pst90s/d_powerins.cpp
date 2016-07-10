@@ -10,6 +10,7 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "msm6295.h"
+#include "nmk112.h"
 #include "burn_ym2203.h"
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
@@ -339,15 +340,6 @@ static struct BurnRomInfo powerinbRomDesc[] = {
 STD_ROM_PICK(powerinb)
 STD_ROM_FN(powerinb)
 
-static void sndSetBank(UINT8 offset, UINT8 data)
-{
-	INT32 chip = (offset & 4) >> 2;
-	INT32 bank = offset & 3;
-
-	MSM6295SampleInfo[chip][bank] = MSM6295ROM + 0x200000 * chip + 0x010000 * data + (bank << 8);
-	MSM6295SampleData[chip][bank] = MSM6295ROM + 0x200000 * chip + 0x010000 * data;
-}
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -419,7 +411,7 @@ void __fastcall powerinsWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			// powerins_okibank
 			if (oki_bank != (byteValue & 7)) {
 				oki_bank = byteValue & 7;
-				memcpy(&MSM6295ROM[0x30000],&MSM6295ROM[0x40000 + 0x10000*oki_bank],0x10000);
+				MSM6295SetBank(0, MSM6295ROM + 0x40000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
 			}
 			break;
 
@@ -561,14 +553,16 @@ void __fastcall powerinsZ80Out(UINT16 p, UINT8 v)
 			MSM6295Command(1, v);
 			break;
 
-		case 0x90: sndSetBank(0, v); break;
-		case 0x91: sndSetBank(1, v); break;
-		case 0x92: sndSetBank(2, v); break;
-		case 0x93: sndSetBank(3, v); break;
-		case 0x94: sndSetBank(4, v); break;
-		case 0x95: sndSetBank(5, v); break;
-		case 0x96: sndSetBank(6, v); break;
-		case 0x97: sndSetBank(7, v); break;
+		case 0x90:
+		case 0x91:
+		case 0x92:
+		case 0x93:
+		case 0x94:
+		case 0x95:
+		case 0x96:
+		case 0x97:
+			NMK112_okibank_write(p & 7, v);
+			break;
 
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Z80 Attempt to write %02x to port %04x\n"), v, p);
@@ -613,7 +607,8 @@ static INT32 DrvDoReset()
 		if (game_drv == GAME_POWERINS) BurnYM2203Reset();
 
 		MSM6295Reset(1);
-		
+
+		NMK112Reset();		
 	}
 
 	return 0;
@@ -863,6 +858,8 @@ static INT32 powerinsInit()
 		MSM6295Init(1, 4000000 / 165, 1);
 		MSM6295SetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
 		MSM6295SetRoute(1, 0.15, BURN_SND_ROUTE_BOTH);
+
+		NMK112_init(0, MSM6295ROM, MSM6295ROM + 0x200000, 0x200000, 0x200000);
 	}
 
 	if (game_drv == GAME_POWERINB ) {
@@ -870,6 +867,8 @@ static INT32 powerinsInit()
 		MSM6295Init(1, 4000000 / 165, 1);
 		MSM6295SetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
 		MSM6295SetRoute(1, 0.15, BURN_SND_ROUTE_BOTH);
+
+		NMK112_init(0, MSM6295ROM, MSM6295ROM + 0x200000, 0x200000, 0x200000);
 	}
 
 	GenericTilesInit();

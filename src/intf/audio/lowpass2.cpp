@@ -37,6 +37,19 @@ LowPass2::LowPass2(double Freq, double SampleRate, double Q, double Gain,
   SetParam(Freq, SampleRate, Q, Gain, Freq2, Q2, Gain2);
 }
 
+void LowPass2::Reset()
+{
+	i0 = 0;
+	i1 = 0;
+	i2 = 0;
+	o0 = 0;
+	o1 = 0;
+	o2 = 0;
+	o0b = 0;
+	o1b = 0;
+	o2b = 0;
+
+}
 
 void LowPass2::Filter(INT16 *Buff, INT32 Tam)
 {
@@ -46,10 +59,10 @@ void LowPass2::Filter(INT16 *Buff, INT32 Tam)
   for (a = 0; a < Tam*2; a += 2)
     {
       Tmp = (b0*Buff[a] + b1*i1 + b2*i2
-	- a1*o1 - a2*o2) / (1 << FixBits);
+			 - a1*o1 - a2*o2) / (1 << FixBits);
 
       Tmp2 = (b0b*Buff[a] + b1b*i1 + b2b*i2
-	- a1b*o1b - a2b*o2b) / (1 << FixBits);
+			  - a1b*o1b - a2b*o2b) / (1 << FixBits);
 
       i2 = i1;
       i1 = Buff[a];

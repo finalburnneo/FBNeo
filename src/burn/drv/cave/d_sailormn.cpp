@@ -96,7 +96,7 @@ static void drvYM2151IRQHandler(INT32 nStatus)
 	}
 }
 
-UINT8 __fastcall sailormnZIn(UINT16 nAddress)
+static UINT8 __fastcall sailormnZIn(UINT16 nAddress)
 {
 	nAddress &= 0xFF;
 
@@ -134,7 +134,7 @@ UINT8 __fastcall sailormnZIn(UINT16 nAddress)
 	return 0;
 }
 
-void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
+static void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
 {
 	nAddress &= 0xFF;
 
@@ -168,29 +168,16 @@ void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
 			MSM6295Command(0, nValue);
 			break;
 		case 0x70:
-			MSM6295SampleInfo[0][0] = MSM6295ROM + ((nValue & 0x0F) << 17);
-			MSM6295SampleInfo[0][1] = MSM6295ROM + ((nValue & 0x0F) << 17) + 0x0100;
-			MSM6295SampleInfo[0][2] = MSM6295ROM + ((nValue & 0x0F) << 17) + 0x0200;
-			MSM6295SampleInfo[0][3] = MSM6295ROM + ((nValue & 0x0F) << 17) + 0x0300;
-			MSM6295SampleData[0][0] = MSM6295ROM + ((nValue & 0x0F) << 17);
-			MSM6295SampleData[0][1] = MSM6295ROM + ((nValue & 0x0F) << 17) + 0x010000;
-			MSM6295SampleData[0][2] = MSM6295ROM + ((nValue & 0xF0) << 13);
-			MSM6295SampleData[0][3] = MSM6295ROM + ((nValue & 0xF0) << 13) + 0x010000;
+			MSM6295SetBank(0, MSM6295ROM + 0x000000 + (nValue & 0x0f) * 0x20000, 0x00000, 0x1ffff);
+			MSM6295SetBank(0, MSM6295ROM + 0x000000 + (nValue & 0xf0) * 0x02000, 0x20000, 0x3ffff);
 			break;
-
 		case 0x80:
 //			bprintf(PRINT_NORMAL, "MSM6295 #1 command sent.\n");
 			MSM6295Command(1, nValue);
 			break;
 		case 0xC0:
-			MSM6295SampleInfo[1][0] = MSM6295ROM + 0x0200000 + ((nValue & 0x0F) << 17);
-			MSM6295SampleInfo[1][1] = MSM6295ROM + 0x0200000 + ((nValue & 0x0F) << 17) + 0x0100;
-			MSM6295SampleInfo[1][2] = MSM6295ROM + 0x0200000 + ((nValue & 0x0F) << 17) + 0x0200;
-			MSM6295SampleInfo[1][3] = MSM6295ROM + 0x0200000 + ((nValue & 0x0F) << 17) + 0x0300;
-			MSM6295SampleData[1][0] = MSM6295ROM + 0x0200000 + ((nValue & 0x0F) << 17);
-			MSM6295SampleData[1][1] = MSM6295ROM + 0x0200000 + ((nValue & 0x0F) << 17) + 0x010000;
-			MSM6295SampleData[1][2] = MSM6295ROM + 0x0200000 + ((nValue & 0xF0) << 13);
-			MSM6295SampleData[1][3] = MSM6295ROM + 0x0200000 + ((nValue & 0xF0) << 13) + 0x010000;
+			MSM6295SetBank(1, MSM6295ROM + 0x200000 + (nValue & 0x0f) * 0x20000, 0x00000, 0x1ffff);
+			MSM6295SetBank(1, MSM6295ROM + 0x200000 + (nValue & 0xf0) * 0x02000, 0x20000, 0x3ffff);
 			break;
 	}
 }
@@ -223,7 +210,7 @@ static INT32 drvZInit()
 	return 0;
 }
 
-UINT8 __fastcall sailormnReadByte(UINT32 sekAddress)
+static UINT8 __fastcall sailormnReadByte(UINT32 sekAddress)
 {
 //	bprintf(PRINT_NORMAL, "Attempt to read byte value of location %x\n", sekAddress);
 
@@ -283,7 +270,7 @@ UINT8 __fastcall sailormnReadByte(UINT32 sekAddress)
 	return 0;
 }
 
-UINT16 __fastcall sailormnReadWord(UINT32 sekAddress)
+static UINT16 __fastcall sailormnReadWord(UINT32 sekAddress)
 {
 //	bprintf(PRINT_NORMAL, "Attempt to read word value of location %x\n", sekAddress);
 
@@ -343,7 +330,7 @@ UINT16 __fastcall sailormnReadWord(UINT32 sekAddress)
 	return 0;
 }
 
-void __fastcall sailormnWriteByte(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall sailormnWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 //	bprintf(PRINT_NORMAL, "Attempt to write byte value %x to location %x\n", byteValue, sekAddress);
 
@@ -368,7 +355,7 @@ void __fastcall sailormnWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	}
 }
 
-void __fastcall sailormnWriteWord(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall sailormnWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 //	bprintf(PRINT_NORMAL, "Attempt to write word value %x to location %x\n", wordValue, sekAddress);
 
@@ -437,12 +424,12 @@ void __fastcall sailormnWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	}
 }
 
-void __fastcall sailormnWriteBytePalette(UINT32 sekAddress, UINT8 byteValue)
+static void __fastcall sailormnWriteBytePalette(UINT32 sekAddress, UINT8 byteValue)
 {
 	CavePalWriteByte(sekAddress & 0xFFFF, byteValue);
 }
 
-void __fastcall sailormnWriteWordPalette(UINT32 sekAddress, UINT16 wordValue)
+static void __fastcall sailormnWriteWordPalette(UINT32 sekAddress, UINT16 wordValue)
 {
 	CavePalWriteWord(sekAddress & 0xFFFF, wordValue);
 }
@@ -457,7 +444,7 @@ static INT32 DrvExit()
 
 	CaveTileExit();
 	CaveSpriteExit();
-    CavePalExit();
+	CavePalExit();
 
 	ZetExit();
 
@@ -842,6 +829,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
 		BurnYM2151Scan(nAction);
+		NMK112_Scan(nAction);
 
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);
@@ -951,6 +939,8 @@ static INT32 gameInit()
 
 	MSM6295Init(0, 16000, 1);
 	MSM6295Init(1, 16000, 1);
+	MSM6295SetBank(0, MSM6295ROM + 0x000000, 0, 0x3ffff);
+	MSM6295SetBank(1, MSM6295ROM + 0x200000, 0, 0x3ffff);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
 	

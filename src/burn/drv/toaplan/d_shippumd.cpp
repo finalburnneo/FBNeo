@@ -376,20 +376,7 @@ void __fastcall shippumdWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 		case 0x21C01D: {
-			INT32 nBankOffset;
-			if (byteValue & 0x10) {
-				nBankOffset = 0x40000;
-			} else {
-				nBankOffset = 0x00000;
-			}
-			MSM6295SampleInfo[0][0] = MSM6295ROM + nBankOffset;
-			MSM6295SampleData[0][0] = MSM6295ROM + nBankOffset;
-			MSM6295SampleInfo[0][1] = MSM6295ROM + nBankOffset + 0x0100;
-			MSM6295SampleData[0][1] = MSM6295ROM + nBankOffset + 0x10000;
-			MSM6295SampleInfo[0][2] = MSM6295ROM + nBankOffset + 0x0200;
-			MSM6295SampleData[0][2] = MSM6295ROM + nBankOffset + 0x20000;
-			MSM6295SampleInfo[0][3] = MSM6295ROM + nBankOffset + 0x0300;
-			MSM6295SampleData[0][3] = MSM6295ROM + nBankOffset + 0x30000;
+			MSM6295SetBank(0, MSM6295ROM + ((byteValue & 0x10) << 14), 0x00000, 0x3ffff);
 			break;
 		}
 
@@ -408,20 +395,7 @@ void __fastcall shippumdWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	switch (sekAddress) {
 
 		case 0x21C01C: {
-			INT32 nBankOffset;
-			if (wordValue & 0x10) {
-				nBankOffset = 0x40000;
-			} else {
-				nBankOffset = 0x00000;
-			}
-			MSM6295SampleInfo[0][0] = MSM6295ROM + nBankOffset;
-			MSM6295SampleData[0][0] = MSM6295ROM + nBankOffset;
-			MSM6295SampleInfo[0][1] = MSM6295ROM + nBankOffset + 0x0100;
-			MSM6295SampleData[0][1] = MSM6295ROM + nBankOffset + 0x10000;
-			MSM6295SampleInfo[0][2] = MSM6295ROM + nBankOffset + 0x0200;
-			MSM6295SampleData[0][2] = MSM6295ROM + nBankOffset + 0x20000;
-			MSM6295SampleInfo[0][3] = MSM6295ROM + nBankOffset + 0x0300;
-			MSM6295SampleData[0][3] = MSM6295ROM + nBankOffset + 0x30000;
+			MSM6295SetBank(0, MSM6295ROM + ((wordValue & 0x10) << 14), 0x00000, 0x3ffff);
 			break;
 		}
 
@@ -500,10 +474,10 @@ static INT32 DrvInit()
 	    SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(Rom01,			0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
-		SekMapMemory(Ram01,			0x100000, 0x10FFFF, MAP_RAM);
+		SekMapMemory(Rom01,		0x000000, 0x0FFFFF, MAP_ROM);	// CPU 0 ROM
+		SekMapMemory(Ram01,		0x100000, 0x10FFFF, MAP_RAM);
 		SekMapMemory(RamPal,		0x400000, 0x400FFF, MAP_RAM);	// Palette RAM
-		SekMapMemory(Ram02,			0x401000, 0x4017FF, MAP_RAM);	// Unused
+		SekMapMemory(Ram02,		0x401000, 0x4017FF, MAP_RAM);	// Unused
 		SekMapMemory(ExtraTRAM,		0x500000, 0x502FFF, MAP_RAM);
 		SekMapMemory(ExtraTSelect,	0x502000, 0x502FFF, MAP_RAM);	// 0x502000 - Scroll; 0x502200 - RAM
 		SekMapMemory(ExtraTScroll,	0x503000, 0x503FFF, MAP_RAM);	// 0x203000 - Offset; 0x503200 - RAM

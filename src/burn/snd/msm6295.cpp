@@ -4,8 +4,6 @@
 #include "burn_sound.h"
 
 UINT8* MSM6295ROM;
-UINT8* MSM6295SampleInfo[MAX_MSM6295][4];
-UINT8* MSM6295SampleData[MAX_MSM6295][4];
 
 UINT32 nMSM6295Status[MAX_MSM6295];
 
@@ -39,6 +37,45 @@ static struct {
 
 } MSM6295[MAX_MSM6295];
 
+static UINT8 *pBankPointer[MAX_MSM6295][0x40000/0x100];
+INT32 nLastMSM6295Chip;
+
+void MSM6295SetBank(INT32 nChip, UINT8 *pRomData, INT32 nStart, INT32 nEnd)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295SetBank called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295SetBank called with invalid chip number %x\n"), nChip);
+	if (nStart >= nEnd || nStart < 0 || nStart >= 0x40000) bprintf(PRINT_ERROR, _T("MSM6295SetBank (Chip %d) called with invalid nStart %x\n"), nChip, nStart);
+	if (nStart >= nEnd || nEnd < 0 || nEnd >= 0x40000) bprintf(PRINT_ERROR, _T("MSM6295SetBank (Chip %d) called with invalid nEnd %x\n"), nChip, nEnd);
+#endif
+
+	if (pRomData == NULL) return;
+
+//	if (nEnd >= nStart) return;
+//	if (nEnd >= 0x40000) nEnd = 0x40000;
+
+	for (INT32 i = 0; i < ((nEnd - nStart) >> 8) + 1; i++)
+	{
+		pBankPointer[nChip][(nStart >> 8) + i] = pRomData + (i << 8);
+	}
+}
+
+#if defined FBA_DEBUG
+static inline UINT8 MSM6295ReadData(INT32 nChip, UINT32 nAddress)
+{
+	nAddress &= 0x3ffff;
+
+	if (pBankPointer[nChip][(nAddress >> 8)]) {
+		return pBankPointer[nChip][(nAddress >> 8)][(nAddress & 0xff)];
+	} else {
+		return 0;
+	}
+}
+#else
+#define MSM6295ReadData(chip, addr)	\
+	pBankPointer[chip][((addr) >> 8) & 0x3ff][((addr) & 0xff)]
+#endif
+
 static UINT32 MSM6295VolumeTable[16];
 static INT32 MSM6295DeltaTable[49 * 16];
 static INT32 MSM6295StepShift[8] = {-1, -1, -1, -1, 2, 4, 6, 8};
@@ -47,7 +84,6 @@ static INT32* MSM6295ChannelData[MAX_MSM6295][4];
 
 static INT32* pLeftBuffer = NULL;
 static INT32* pRightBuffer = NULL;
-INT32 nLastMSM6295Chip;
 
 static bool bAdd;
 
@@ -65,17 +101,17 @@ void MSM6295Reset(INT32 nChip)
 
 	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
 		MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
-
-		// Set initial bank information
-		MSM6295SampleInfo[nChip][nChannel] = MSM6295ROM + (nChip * 0x0100000) + (nChannel << 8);
-		MSM6295SampleData[nChip][nChannel] = MSM6295ROM + (nChip * 0x0100000) + (nChannel << 16);
-
 		memset(MSM6295ChannelData[nChip][nChannel], 0, 0x1000 * sizeof(INT32));
 		MSM6295[nChip].ChannelInfo[nChannel].nBufPos = 4;
 	}
+
+	// set bank data only if DataPointer has not already been set
+	if (pBankPointer[nChip][0] == NULL) {
+		MSM6295SetBank(nChip, MSM6295ROM + (nChip * 0x0100000), 0, 0x3ffff); // set initial bank (compatibility)
+	}
 }
 
-INT32 MSM6295Scan(INT32 nChip, INT32 /*nAction*/)
+INT32 MSM6295Scan(INT32 nChip, INT32 )
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Scan called without init\n"));
@@ -90,14 +126,6 @@ INT32 MSM6295Scan(INT32 nChip, INT32 /*nAction*/)
 
 	for (INT32 i = 0; i < 4; i++) {
 		SCAN_VAR(MSM6295[nChip].ChannelInfo[i].nPlaying);
-
-		MSM6295SampleInfo[nChip][i] -= (uintptr_t)MSM6295ROM;
-		SCAN_VAR(MSM6295SampleInfo[nChip][i]);
-		MSM6295SampleInfo[nChip][i] += (uintptr_t)MSM6295ROM;
-
-		MSM6295SampleData[nChip][i] -= (uintptr_t)MSM6295ROM;
-		SCAN_VAR(MSM6295SampleData[nChip][i]);
-		MSM6295SampleData[nChip][i] += (uintptr_t)MSM6295ROM;
 	}
 
 	return 0;
@@ -135,7 +163,7 @@ static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf,
 						if (pChannelInfo->nPosition & 1) {
 							nDelta = pChannelInfo->nDelta & 0x0F;
 						} else {
-							pChannelInfo->nDelta = MSM6295SampleData[nChip][(pChannelInfo->nPosition >> 17) & 3][(pChannelInfo->nPosition >> 1) & 0xFFFF];
+							pChannelInfo->nDelta = MSM6295ReadData(nChip, (pChannelInfo->nPosition >> 1) & 0x3ffff);
 							nDelta = pChannelInfo->nDelta >> 4;
 						}
 
@@ -228,7 +256,7 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, 
 						if (pChannelInfo->nPosition & 1) {
 							nDelta = pChannelInfo->nDelta & 0x0F;
 						} else {
-							pChannelInfo->nDelta = MSM6295SampleData[nChip][pChannelInfo->nPosition >> 17 & 3][(pChannelInfo->nPosition >> 1) & 0xFFFF];
+							pChannelInfo->nDelta = MSM6295ReadData(nChip, (pChannelInfo->nPosition >> 1) & 0x3ffff);
 							nDelta = pChannelInfo->nDelta >> 4;
 						}
 
@@ -365,22 +393,16 @@ void MSM6295Command(INT32 nChip, UINT8 nCommand)
 			if (nCommand & (0x01 << nChannel)) {
 				if (MSM6295[nChip].ChannelInfo[nChannel].nPlaying == 0) {
 
-					INT32 nBank = (MSM6295[nChip].nSampleInfo & 0x0300) >> 8;
+					nSampleStart  = MSM6295ReadData(nChip, (MSM6295[nChip].nSampleInfo & 0x03ff) + 0) << 17;
+					nSampleStart |= MSM6295ReadData(nChip, (MSM6295[nChip].nSampleInfo & 0x03ff) + 1) <<  9;
+					nSampleStart |= MSM6295ReadData(nChip, (MSM6295[nChip].nSampleInfo & 0x03ff) + 2) <<  1;
+
+					nSampleCount  = MSM6295ReadData(nChip, (MSM6295[nChip].nSampleInfo & 0x03ff) + 3) << 17;
+					nSampleCount |= MSM6295ReadData(nChip, (MSM6295[nChip].nSampleInfo & 0x03ff) + 4) <<  9;
+					nSampleCount |= MSM6295ReadData(nChip, (MSM6295[nChip].nSampleInfo & 0x03ff) + 5) <<  1;
+
 					MSM6295[nChip].nSampleInfo &= 0xFF;
 
-					nSampleStart = MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 0];
-					nSampleStart <<= 8;
-					nSampleStart |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 1];
-					nSampleStart <<= 8;
-					nSampleStart |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 2];
-					nSampleStart <<= 1;
-
-					nSampleCount = MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 3];
-					nSampleCount <<= 8;
-					nSampleCount |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 4];
-					nSampleCount <<= 8;
-					nSampleCount |= MSM6295SampleInfo[nChip][nBank][MSM6295[nChip].nSampleInfo + 5];
-					nSampleCount <<= 1;
 					nSampleCount -= nSampleStart;
 					
 					if (nSampleCount < 0x80000) {
@@ -527,6 +549,8 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 	}
 	
 	MSM6295[nChip].nOutputDir = BURN_SND_ROUTE_BOTH;
+
+	memset (pBankPointer[nChip], 0, 0x40000/0x100);
 
 	MSM6295Reset(nChip);
 

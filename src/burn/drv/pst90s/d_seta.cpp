@@ -10492,7 +10492,7 @@ static INT32 twineaglInit()
 
 struct BurnDriver BurnDrvTwineagl = {
 	"twineagl", NULL, NULL, NULL, "1988",
-	"Twin Eagle - Revenge Joe's Brother\0", "Imperfect inputs", "Seta (Taito license)", "Seta",
+	"Twin Eagle - Revenge Joe's Brother\0", "Imperfect inputs, Sound issues", "Seta (Taito license)", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, twineaglRomInfo, twineaglRomName, NULL, NULL, TwineaglInputInfo, TwineaglDIPInfo,

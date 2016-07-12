@@ -108,9 +108,9 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 	memset(szForName, 0, sizeof(szForName));
 	fread(szForName, 1, 32, fp);
 
-//	if (nBurnVer < nFileMin) {							// Error - emulator is too old to load this state
-//		return -5;
-//	}
+	if (nBurnVer < nFileMin) {							// Error - emulator is too old to load this state
+		return -5;
+	}
 
 	// Check the game the savestate is for, and load it if needed.
 	{
@@ -153,9 +153,9 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 	}
 
 	// Check if the save state is okay
-//	if (nFileVer < nMin) {								// Error - this state is too old and cannot be loaded.
-//		return -4;
-//	}
+	if (nFileVer < nMin) {								// Error - this state is too old and cannot be loaded.
+		return -4;
+	}
 
 	fseek(fp, nChunkData + 0x30, SEEK_SET);				// Read current frame
 	fread(&nReplayCurrentFrame, 1, 4, fp);
@@ -419,38 +419,32 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 	if (nLen <= 0) {									// No data, so exit without creating a savestate
 		return 0;										// Don't return an error code
 	}
-	/*
-         Save State backups - used in conjunction with BurnStateUNDO();
-         derp.fs -> derp.fs.backup
-         derp.fs.backup -> derp.fs.backup1
-         derp.fs.backup1 -> derpfs.backup2
-         derp.fs.backup3 -> derpfs.backup4
-		 */
-#ifdef BUILD_WIN32
-        if (_tcsstr(szName, _T(" slot "))) {
-            for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
-                TCHAR szBackupNameTo[1024] = _T("");
-                TCHAR szBackupNameFrom[1024] = _T("");
 
-                _stprintf(szBackupNameTo, _T("%s.backup%d"), szName, i + 1);
-                _stprintf(szBackupNameFrom, _T("%s.backup%d"), szName, i);
-                if (i == MAX_STATEBACKUPS) {
-                    DeleteFileW(szBackupNameFrom); // make sure there is only MAX_STATEBACKUPS :)
-                } else {
-                    MoveFileW(szBackupNameFrom, szBackupNameTo); //derp.fs.backup0 -> derp.fs.backup1
-                    if (i == 0) {
-                        MoveFileW(szName, szBackupNameFrom); //derp.fs -> derp.fs.backup0
-                    }
-                }
-            }
-        }
-/* - old method, only 1 savestate backup -
-        TCHAR szBackupName[1024] = _T("");
-        // backup last savestate just incase - dink
-        _stprintf(szBackupName, _T("%s.backup"), szName);
-        DeleteFileW(szBackupName);
-        MoveFileW(szName, szBackupName);
-*/
+#ifdef BUILD_WIN32
+	/*
+	 Save State backups - used in conjunction with BurnStateUNDO();
+	 derp.fs -> derp.fs.backup
+	 derp.fs.backup -> derp.fs.backup1
+	 derp.fs.backup1 -> derpfs.backup2
+	 derp.fs.backup3 -> derpfs.backup4
+	*/
+	if (_tcsstr(szName, _T(" slot "))) {
+		for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
+			TCHAR szBackupNameTo[1024] = _T("");
+			TCHAR szBackupNameFrom[1024] = _T("");
+
+			_stprintf(szBackupNameTo, _T("%s.backup%d"), szName, i + 1);
+			_stprintf(szBackupNameFrom, _T("%s.backup%d"), szName, i);
+			if (i == MAX_STATEBACKUPS) {
+				DeleteFileW(szBackupNameFrom); // make sure there is only MAX_STATEBACKUPS :)
+			} else {
+				MoveFileW(szBackupNameFrom, szBackupNameTo); //derp.fs.backup0 -> derp.fs.backup1
+				if (i == 0) {
+					MoveFileW(szName, szBackupNameFrom); //derp.fs -> derp.fs.backup0
+				}
+			}
+		}
+	}
 #endif
 
 	FILE* fp = _tfopen(szName, _T("wb"));

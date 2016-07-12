@@ -829,7 +829,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 						if (lIndex != CB_ERR) {
 							if (lIndex == lCount - 1) {
 								MakeOfn(szFilter);
-								ofn.lpstrTitle = L"Replay Input from File";
+								ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_REPLAY, true);
 								ofn.Flags &= ~OFN_HIDEREADONLY;
 
 								INT32 nRet = GetOpenFileName(&ofn);
@@ -939,7 +939,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					{
 						_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
 						MakeOfn(szFilter);
-						ofn.lpstrTitle = L"Record Input to File";
+						ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_RECORD, true);
 						ofn.Flags |= OFN_OVERWRITEPROMPT;
 						INT32 nRet = GetSaveFileName(&ofn);
 						if (nRet != 0) {

@@ -24,7 +24,7 @@ static void MakeOfn(TCHAR* pszFilter)
 // The automatic save
 int StatedAuto(int bSave)
 {
-	static TCHAR szName[32] = _T("");
+	static TCHAR szName[MAX_PATH] = _T("");
 	int nRet;
 
 	_stprintf(szName, _T("config\\games\\%s.fs"), BurnDrvGetText(DRV_NAME));

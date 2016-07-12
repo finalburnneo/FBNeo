@@ -1,6 +1,7 @@
 // State dialog module
 #include "burner.h"
 
+extern bool bReplayDontClose;
 int bDrvSaveAll = 0;
 
 static void MakeOfn(TCHAR* pszFilter)
@@ -26,7 +27,7 @@ int StatedAuto(int bSave)
 	static TCHAR szName[32] = _T("");
 	int nRet;
 
-	_stprintf(szName, _T("config/games/%s.fs"), BurnDrvGetText(DRV_NAME));
+	_stprintf(szName, _T("config\\games\\%s.fs"), BurnDrvGetText(DRV_NAME));
 
 	if (bSave == 0) {
 		nRet = BurnStateLoad(szName, bDrvSaveAll, NULL);		// Load ram
@@ -42,7 +43,7 @@ int StatedAuto(int bSave)
 
 static void CreateStateName(int nSlot)
 {
-	_stprintf(szChoice, _T("./savestates/%s slot %02x.fs"), BurnDrvGetText(DRV_NAME), nSlot);
+	_stprintf(szChoice, _T(".\\savestates\\%s slot %02x.fs"), BurnDrvGetText(DRV_NAME), nSlot);
 }
 
 int StatedUNDO(int nSlot)
@@ -59,6 +60,21 @@ int StatedLoad(int nSlot)
 	TCHAR szFilter[1024];
 	int nRet;
 	int bOldPause;
+
+	//if(!bDrvOkay && nReplayStatus) return 1; //don't load unless there's a ROM open...
+
+	// if rewinding during playback, and readonly is not set,
+	// then transition from decoding to encoding
+	if(!bReplayReadOnly && nReplayStatus == 2)
+	{
+		nReplayStatus = 1;
+	}
+	if(bReplayReadOnly && nReplayStatus == 1)
+	{
+		bReplayDontClose = 1;
+		StopReplay();
+		nReplayStatus = 2;
+	}
 
 	if (nSlot) {
 		CreateStateName(nSlot);
@@ -82,6 +98,10 @@ int StatedLoad(int nSlot)
 	}
 
 	nRet = BurnStateLoad(szChoice, 1, &DrvInitCallback);
+
+	//VidSNewShortMsg(L"state loaded");
+	//VidRedraw();
+	//VidPaint(0);
 
 	if (nSlot) {
 		return nRet;
@@ -150,6 +170,10 @@ int StatedSave(int nSlot)
 		FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_DISK_STATE));
 		FBAPopupDisplay(PUF_TYPE_ERROR);
 	}
+
+	//VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVED, true));
+	//VidRedraw();
+	//VidPaint(0);
 
 	return nRet;
 }

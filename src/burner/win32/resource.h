@@ -59,6 +59,9 @@
 #define IDR_MENU_AUD_PLUGIN_2				131
 #define IDR_ACCELERATOR                 	150
 
+#define IDD_REPLAYINP                   233
+#define IDD_RECORDINP                   234
+
 #define MENU_MENU_0							2000
 #define MENU_MENU_1							2001
 #define MENU_MENU_2							2002
@@ -188,6 +191,15 @@
 #define IDC_LAYER3							20204
 #define IDC_LAYER4							20205
 #define IDC_SHOW							20206
+
+#define IDC_LENGTH                      20255
+#define IDC_FRAMES                      20256
+#define IDC_UNDO                        20257
+#define IDC_METADATA                    20258
+#define IDC_READONLY                    20259
+#define IDC_FILENAME                    20260
+#define IDC_BROWSE                      20261
+#define IDC_REPLAYRESET                 20262
 
 #define IDC_STATIC_SYS                  	20300
 #define IDC_STATIC_OPT                  	20301

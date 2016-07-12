@@ -83,8 +83,9 @@ static int list_idx = MAX_LIST_LEN-1;
 
 // data sets for compressed buffer and compressed file I/O
 static FILE   *cFile = NULL;
-static UINT32  c_buffer[MAX_BUFFER_LEN]={0,};
+static UINT32 *c_buffer = NULL;
 static int     c_buffer_idx = 0;
+static int     c_buffer_size = 0;
 int end_of_buffer = 0;
 static int code_length = 0;
 
@@ -100,7 +101,6 @@ static int embed_offset = 0;
 // flags used to determine when to stop decoding
 static unsigned int code_count = 0;
 static int    code_reset_count = 0;
-static int  buffer_reset_count = 0;
 
 // for saving compression result
 static unsigned int nCompressedFileSize; // flag
@@ -109,9 +109,18 @@ static int          nCodeResetCount;     // flag
 static int          nBufferIdx;
 static int          nBufferResetCount;   // flag
 
+// for decompressing
+static struct DecodeStatus
+{
+	UINT32 code_slice;  // slice of a buffer element
+	int bit_counter;    // if 32, get a new slice
+	unsigned int nCode; // how many codes has been decoded so far
+	int nCodeReset;     // how many times the data counter has been reset
+} dcs;
+
 // function prototypes
-static void ResetBufferC();
-static void ReloadBufferC();
+static void AllocBufferC(int size);
+static void GrowBufferC();
 static void ResetBufferD();
 static void ReloadBufferD();
 static void SaveResult();
@@ -347,10 +356,8 @@ static void DestroyDHT()
 	// and reset the node list
 	while(list_idx < MAX_LIST_LEN-3)
 	{
-		if (node_list[list_idx]) {
-			free(node_list[list_idx]);
-			node_list[list_idx] = NULL;
-		}
+		free(node_list[list_idx]);
+		node_list[list_idx] = NULL;
 		++list_idx;
 	}
 	node_list[MAX_LIST_LEN-2]=NULL;
@@ -537,7 +544,6 @@ int Decompress(char *c_file_name, char *d_file_name)
 // take a data and encode it into c_buffer
 void EncodeBuffer(unsigned char data)
 {
-	static int remainder = 32; // how many bits are left in current buffer element
 	UINT32 code      = 0;     // code that is ready to put into the buffer
 	UINT32 code_temp = 0;     // used to break the code into two parts
 	UINT32 code_reverse;
@@ -547,14 +553,17 @@ void EncodeBuffer(unsigned char data)
 	// also fill 0s for the headers (coude_count, code_reset_count, buffer_reset_count)
 	if(!DHTroot.freq)
 	{
-		remainder = 32;
+		dcs.bit_counter  = 32;
 		code_count       = 0;
 		code_reset_count = 0;
 		c_buffer_idx       = 0;
-		buffer_reset_count = 0;
 
 		// leave space for the 4 flags
 		fwrite(&code_count,sizeof(int),4,cFile);
+
+		// init code buffer
+		AllocBufferC(MAX_BUFFER_LEN);
+		c_buffer[0] = 0;
 	}
 
 	// generate reverse code for the data
@@ -576,22 +585,22 @@ void EncodeBuffer(unsigned char data)
 	}
 
 	// calculate how many bits would remain in current buffer element after putting the code
-	remainder -= code_length;
+	dcs.bit_counter -= code_length;
 
 	// if enough bits left to put the code, just put the code
-	if(remainder > 0)
+	if(dcs.bit_counter > 0)
 	{
-		code <<= remainder;
+		code <<= dcs.bit_counter;
 		c_buffer[c_buffer_idx] |= code;
 	}
 	// if it will fit in perfectly, put the code, and increment buffer index
-	else if(remainder == 0)
+	else if(dcs.bit_counter == 0)
 	{
 		c_buffer[c_buffer_idx] |= code;
-		remainder = 32;
+		dcs.bit_counter = 32;
 
 		// prevent buffer overflow
-		if(++c_buffer_idx == MAX_BUFFER_LEN) {++buffer_reset_count; ResetBufferC();}
+		if(++c_buffer_idx == c_buffer_size) GrowBufferC();
 
 		// get next buffer element ready
 		c_buffer[c_buffer_idx] = 0;
@@ -600,7 +609,7 @@ void EncodeBuffer(unsigned char data)
 	else
 	{
 		// retrieve part of the code
-		for(i=0;i>remainder;i--)
+		for(i=0;i>dcs.bit_counter;i--)
 		{
 			code_temp <<= 1;
 			code_temp |= code&1;
@@ -610,16 +619,16 @@ void EncodeBuffer(unsigned char data)
 		c_buffer[c_buffer_idx] |= code;
 
 		// retrieve rest of the code
-		for(i=0;i>remainder;i--)
+		for(i=0;i>dcs.bit_counter;i--)
 		{
 			code <<= 1;
 			code |= code_temp&1;
 			code_temp >>= 1;
 		}
-		remainder += 32;
-		code <<= remainder;
+		dcs.bit_counter += 32;
+		code <<= dcs.bit_counter;
 		// prevent buffer overflow
-		if(++c_buffer_idx == MAX_BUFFER_LEN) {++buffer_reset_count; ResetBufferC();}
+		if(++c_buffer_idx == c_buffer_size) GrowBufferC();
 
 		// put the rest of the code in the next buffer element
 		c_buffer[c_buffer_idx] = code;
@@ -630,11 +639,6 @@ void EncodeBuffer(unsigned char data)
 unsigned char DecodeBuffer()
 {
 	struct DHTNode *node_ptr = &DHTroot; // start with the root node
-	static UINT32 code_slice  = 0; // slice of a buffer element
-	static int bit_counter    = 0; // if 32, get a new slice
-	static unsigned int nCode = 0; // how many codes has been decoded so far
-	static int nCodeReset     = 0; // how many times the data counter has been reset
-	static int nBuffer        = 0; // how many times the buffer has been reset
 	unsigned char data        = 0; // decoded data
 	int isData = 0;
 	int i;
@@ -646,14 +650,13 @@ unsigned char DecodeBuffer()
 		c_buffer_idx  = 0;
 		end_of_buffer = 0;
 
-		code_slice = c_buffer[c_buffer_idx];
-		data = (unsigned char)(code_slice>>24);
-		code_slice <<= 8;
+		dcs.code_slice = c_buffer[c_buffer_idx];
+		data = (unsigned char)(dcs.code_slice>>24);
+		dcs.code_slice <<= 8;
 
-		nCodeReset    = 0;
-		nBuffer       = 0;
-		nCode         = 0;
-		bit_counter   = 8;
+		dcs.nCodeReset    = 0;
+		dcs.nCode         = 0;
+		dcs.bit_counter   = 8;
 	}
 	else
 	{
@@ -662,22 +665,20 @@ unsigned char DecodeBuffer()
 			isData = 0;
 
 			// if it's the end of the code slice, get the next slice
-			if(bit_counter==32)
+			if(dcs.bit_counter==32)
 			{
-				// prevent buffer overflow
-				if(++c_buffer_idx == MAX_BUFFER_LEN) { ++nBuffer; ReloadBufferC(); }
 
-				code_slice=c_buffer[c_buffer_idx];
-				bit_counter=0;
+				dcs.code_slice=c_buffer[++c_buffer_idx];
+				dcs.bit_counter=0;
 			}
 
 			// if next bit is 1, go to right. if it is 0, goto left
-			if(code_slice&0x80000000)
+			if(dcs.code_slice&0x80000000)
 				node_ptr = node_ptr->right;
 			else
 				node_ptr = node_ptr->left;
-			code_slice <<= 1;
-			++bit_counter;
+			dcs.code_slice <<= 1;
+			++dcs.bit_counter;
 
 			// if it is a data node, just copy the data from that node
 			if(node_ptr && !node_ptr->right)
@@ -692,18 +693,16 @@ unsigned char DecodeBuffer()
 				for(i=0;i<8;i++)
 				{
 					// if it's the end of the code slice, get the next slice.
-					if(bit_counter==32)
+					if(dcs.bit_counter==32)
 					{
-						// prevent buffer overflow
-						if(++c_buffer_idx == MAX_BUFFER_LEN) { ++nBuffer; ReloadBufferC(); }
 
-						code_slice = c_buffer[c_buffer_idx];
-						bit_counter = 0;
+						dcs.code_slice = c_buffer[++c_buffer_idx];
+						dcs.bit_counter = 0;
 					}
 					data <<= 1;
-					data |= code_slice>>31;
-					code_slice <<= 1;
-					++bit_counter;
+					data |= dcs.code_slice>>31;
+					dcs.code_slice <<= 1;
+					++dcs.bit_counter;
 				}
 				isData = 1;
 			} // end of 'else if(node_ptr==NULL)'
@@ -713,11 +712,11 @@ unsigned char DecodeBuffer()
 	BuildDHT(data);
 
 	// prevent code count overflow
-	if(nCode+1 > MAX_FREQ) { nCode = DHTroot.freq; ++nCodeReset; }
-	else ++nCode;
+	if(dcs.nCode+1 > MAX_FREQ) { dcs.nCode = DHTroot.freq; ++dcs.nCodeReset; }
+	else ++dcs.nCode;
 
 	// if everything has been decoded, set end_of_buffer flag
-	if(nBuffer == buffer_reset_count && nCodeReset == code_reset_count && nCode == code_count)
+	if(dcs.nCodeReset == code_reset_count && dcs.nCode == code_count)
 	{
 		end_of_buffer=1;
 	}
@@ -725,18 +724,18 @@ unsigned char DecodeBuffer()
 	return data;  // return the decoded data
 }
 
-// prevent c_buffer overflow while encoding
-static void ResetBufferC()
+static void AllocBufferC(int size)
 {
-	fwrite(c_buffer,4,MAX_BUFFER_LEN,cFile); // write buffer to the file
-	c_buffer_idx = 0;                        // restart the buffer
+	c_buffer_size = size;
+	c_buffer = (UINT32*)realloc(c_buffer, c_buffer_size*4);
 }
 
-// prevent c_buffer overflow while decoding
-static void ReloadBufferC()
+// prevent c_buffer overflow while encoding
+static void GrowBufferC()
 {
-	fread(c_buffer,4,MAX_BUFFER_LEN,cFile);  // read max allowed bytes into buffer
-	c_buffer_idx = 0;                        // restart the buffer
+	// flush to disk periodically
+	fwrite(c_buffer+c_buffer_size-MAX_BUFFER_LEN,4,MAX_BUFFER_LEN,cFile);
+	AllocBufferC(c_buffer_size + MAX_BUFFER_LEN);
 }
 
 // prevent d_buffer foverflow while encoding
@@ -804,6 +803,7 @@ int OpenDecompressedFile(char *file_name, char *mode)
 void LoadCompressedFile()
 {
 	int byte_count;
+	int buffer_reset_count;
 
 	// load the flags
 	fread(&byte_count,sizeof(int),1,cFile);
@@ -811,12 +811,28 @@ void LoadCompressedFile()
 	fread(&code_reset_count,sizeof(int),1,cFile);
 	fread(&buffer_reset_count,sizeof(int),1,cFile);
 
-	// if buffer is smaller than the file, load max allowed bytes
-	// into the buffer, otherwise, load everything into the buffer
-	if(byte_count*4 > MAX_BUFFER_LEN)
-		fread(c_buffer,4,MAX_BUFFER_LEN,cFile);
-	else
-		fread(c_buffer,1,byte_count,cFile);
+	// load everything into the buffer
+	AllocBufferC((buffer_reset_count+1)*MAX_BUFFER_LEN);
+	fread(c_buffer,1,byte_count-16,cFile);		// note:  byte_count includes the size of the headers
+}
+
+// this method is used when unfreezing the compression status
+// it flushes the contents of the compressed file to disk
+static void DoWriteCompressedFile()
+{
+	// save file size, code count, etc
+	SaveResult();
+
+	// handle file embedding
+	fseek(cFile,embed_offset,SEEK_SET);
+
+	fwrite(&nCompressedFileSize,sizeof(int),1,cFile);
+	fwrite(&nCodeCount,sizeof(int),1,cFile);
+	fwrite(&nCodeResetCount,sizeof(int),1,cFile);
+	fwrite(&nBufferResetCount,sizeof(int),1,cFile);
+
+	// flush entire contents of compress buffer
+	fwrite(c_buffer,4,c_buffer_idx+1,cFile);
 }
 
 // write whatever is left in the c_buffer to the
@@ -826,20 +842,7 @@ void WriteCompressedFile()
 {
 	if(cFile)
 	{
-		// write what's left in the buffer to the file
-		fwrite(c_buffer,4,c_buffer_idx+1,cFile);
-
-		// save file size, code count, etc
-		SaveResult();
-
-		// handle file embedding
-		fseek(cFile,embed_offset,SEEK_SET);
-
-		fwrite(&nCompressedFileSize,sizeof(int),1,cFile);
-		fwrite(&nCodeCount,sizeof(int),1,cFile);
-		fwrite(&nCodeResetCount,sizeof(int),1,cFile);
-		fwrite(&nBufferResetCount,sizeof(int),1,cFile);
-
+		DoWriteCompressedFile();
 		CloseCompressedFile();
 	}
 }
@@ -892,6 +895,10 @@ void CloseCompressedFile()
 #endif
 
 		DestroyDHT();
+
+		free(c_buffer);
+		c_buffer = NULL;
+		c_buffer_size = 0;
 	}
 }
 
@@ -987,11 +994,12 @@ void PrintBuffer()
 // save compression result
 static void SaveResult()
 {
-	nCompressedFileSize = buffer_reset_count*MAX_BUFFER_LEN*4 + (c_buffer_idx+1+4)*4; // convert to Bytes
+	nCompressedFileSize = 16+(c_buffer_idx+1)*4; // convert to Bytes
 	nCodeCount = code_count;
 	nCodeResetCount = code_reset_count;
 	nBufferIdx = c_buffer_idx;
-	nBufferResetCount = buffer_reset_count;
+	// nBufferResetCount is retained for backwards compatability
+	nBufferResetCount = c_buffer_idx/MAX_BUFFER_LEN;
 }
 
 // print file size, how many codes, etc
@@ -1005,4 +1013,318 @@ void PrintResult()
 	printf("    max buffer index = %d\n", MAX_BUFFER_LEN);
 	printf("current buffer index = %u\n", nBufferIdx);
 	printf("    # buffer re-used = %d\n\n",nBufferResetCount);
+}
+
+//#
+//#             Compression Status Freezing
+//#
+//##############################################################################
+
+static inline void Write32(unsigned char*& ptr, const unsigned long v)
+{
+	*ptr++ = (unsigned char)(v&0xff);
+	*ptr++ = (unsigned char)((v>>8)&0xff);
+	*ptr++ = (unsigned char)((v>>16)&0xff);
+	*ptr++ = (unsigned char)((v>>24)&0xff);
+}
+
+static inline unsigned long Read32(const unsigned char*& ptr)
+{
+	unsigned long v;
+	v = (unsigned long)(*ptr++);
+	v |= (unsigned long)((*ptr++)<<8);
+	v |= (unsigned long)((*ptr++)<<16);
+	v |= (unsigned long)((*ptr++)<<24);
+	return v;
+}
+
+static inline void Write16(unsigned char*& ptr, const unsigned short v)
+{
+	*ptr++ = (unsigned char)(v&0xff);
+	*ptr++ = (unsigned char)((v>>8)&0xff);
+}
+
+static inline unsigned short Read16(const unsigned char*& ptr)
+{
+	unsigned short v;
+	v = (unsigned short)(*ptr++);
+	v |= (unsigned short)((*ptr++)<<8);
+	return v;
+}
+
+/*
+struct DHTFreezeStruct
+{
+	struct DHTFreezeStatus header;
+	struct DHTFreezeNode
+	{
+		unsigned int freq;
+		unsigned char val;
+		short left, right, parent
+	} node_list[n_nodes]
+}
+*/
+
+struct DHTFreezeStatus
+{
+	int           n_nodes;
+	unsigned long null_node_p;
+	int           bit_counter;
+	unsigned int  code_count;
+	int           code_reset_count;
+	int           c_buffer_idx;
+};
+
+static const int DHTFreezeStatusSize = 6*4;
+static const int DHTNodeSize = 12;
+
+static inline int IndexForNode(const DHTNode* node)
+{
+	if(!node)			return 0xffff;
+	return				node->l_index;
+}
+
+static inline DHTNode* NodeForIndex(int idx)
+{
+	switch(idx)
+	{
+	case 0xffff:
+		return NULL;
+	default:
+		return node_list[idx];
+	}
+}
+
+static void WriteNode(unsigned char*& ptr, const DHTNode* node)
+{
+	Write32(ptr, node->freq);
+	Write16(ptr, node->value);
+	Write16(ptr, IndexForNode(node->left));
+	Write16(ptr, IndexForNode(node->right));
+	Write16(ptr, IndexForNode(node->parent));
+}
+
+static void ReadNode(const unsigned char*& ptr, DHTNode* node)
+{
+	node->freq = Read32(ptr);
+	node->value = Read16(ptr);
+	node->left=NodeForIndex(Read16(ptr));
+	node->right=NodeForIndex(Read16(ptr));
+	node->parent=NodeForIndex(Read16(ptr));
+}
+
+static void FreezeDHT(const struct DHTFreezeStatus& status, unsigned char*& ptr)
+{
+	Write32(ptr, status.n_nodes);
+	Write32(ptr, status.null_node_p);
+	Write32(ptr, status.bit_counter);
+	Write32(ptr, status.code_count);
+	Write32(ptr, status.code_reset_count);
+	Write32(ptr, status.c_buffer_idx);
+
+	int n_nodes=status.n_nodes;
+	while(n_nodes)
+	{
+		WriteNode(ptr, node_list[MAX_LIST_LEN-1-n_nodes]);
+		--n_nodes;
+	}
+}
+
+static int UnfreezeDHT(struct DHTFreezeStatus* status, const unsigned char*& ptr, const int buf_size)
+{
+	if(buf_size < DHTFreezeStatusSize)
+	{
+		return 1;
+	}
+
+	status->n_nodes            = Read32(ptr);
+	status->null_node_p        = Read32(ptr);
+	status->bit_counter        = Read32(ptr);
+	status->code_count         = Read32(ptr);
+	status->code_reset_count   = Read32(ptr);
+	status->c_buffer_idx       = Read32(ptr);
+
+	if(buf_size < (DHTFreezeStatusSize + status->n_nodes*DHTNodeSize))
+	{
+		return 1;
+	}
+
+	DestroyDHT();
+
+	int n=status->n_nodes;
+	if(n)
+	{
+		node_list[--list_idx]=&DHTroot;
+		--n;
+	}
+	while(n)
+	{
+		node_list[--list_idx]=(struct DHTNode *)malloc(sizeof(struct DHTNode));
+		--n;
+	}
+
+	n=status->n_nodes;
+	while(n)
+	{
+		int idx=MAX_LIST_LEN-1-n;
+		ReadNode(ptr, node_list[idx]);
+		node_list[idx]->l_index=idx;
+		if(!node_list[idx]->right)
+		{
+			look_up_table[node_list[idx]->value]=node_list[idx];
+		}
+		--n;
+	}
+
+	null_node_ptr = (status->null_node_p == 0xffffffff) ? &DHTroot : node_list[status->null_node_p];
+
+	return 0;
+}
+
+int FreezeDecode(unsigned char **buf, int *size)
+{
+	// compute the size required for the buffer
+	int n_nodes = MAX_LIST_LEN-1 - list_idx;
+	int dht_size = DHTFreezeStatusSize + n_nodes*DHTNodeSize;
+	int buf_size = 4 + dht_size + (c_buffer_idx+1)*4;
+
+	*buf = (unsigned char*)malloc(buf_size);
+	*size = buf_size;
+
+	if(!(*buf))
+	{
+		return 1;
+	}
+
+	DHTFreezeStatus status;
+	status.n_nodes            = n_nodes;
+	status.null_node_p        = (null_node_ptr == &DHTroot) ? 0xffffffff : null_node_ptr->l_index;
+	status.bit_counter        = dcs.bit_counter;
+	status.code_count         = dcs.nCode;
+	status.code_reset_count   = dcs.nCodeReset;
+	status.c_buffer_idx       = c_buffer_idx;
+
+	unsigned char* ptr = *buf;
+	Write32(ptr, dht_size);							// write DHT status size
+	FreezeDHT(status, ptr);							// write DHT status
+	memcpy(ptr, c_buffer, (c_buffer_idx+1)*4);		// write code buffer
+
+	return 0;
+}
+
+int UnfreezeDecode(const unsigned char* buf, int size)
+{
+	if(size < 4)
+	{
+		return 1;
+	}
+
+	const unsigned char* ptr = buf;
+	int dht_size = (int)Read32(ptr);				// read DHT status size
+
+	DHTFreezeStatus status;
+	if(UnfreezeDHT(&status, ptr, dht_size))			// read DHT status
+	{
+		return 1;
+	}
+
+	// NOTE:
+	// UnfreezeDecode is a special case.  In order to
+	// implement "rewind" functionality, it's necessary
+	// to restore the state of the decode, but leave
+	// the contents of the code buffer intact
+
+#if 0
+	// restore code buffer
+	int n_buffers   = status.c_buffer_idx/MAX_BUFFER_LEN;
+	AllocBufferC((n_buffers+1)*MAX_BUFFER_LEN);
+	memcpy(c_buffer, ptr, (status.c_buffer_idx+1)*4);	// read code buffer
+#endif
+
+	// Here we make a weak check against attempting to
+	// seek past the end of the code buffer
+	if(status.c_buffer_idx >= c_buffer_size)
+	{
+		return 1;
+	}
+
+	dcs.bit_counter = status.bit_counter;
+	dcs.nCode       = status.code_count;
+	dcs.nCodeReset  = status.code_reset_count;
+
+	c_buffer_idx    = status.c_buffer_idx;
+	dcs.code_slice  = c_buffer[c_buffer_idx] << dcs.bit_counter;
+
+	return 0;
+}
+
+int FreezeEncode(unsigned char **buf, int *size)
+{
+	// compute the size required for the buffer
+	int n_nodes = MAX_LIST_LEN-1 - list_idx;
+	int dht_size = DHTFreezeStatusSize + n_nodes*DHTNodeSize;
+	int buf_size = 4 + dht_size + (c_buffer_idx+1)*4;
+
+	*buf = (unsigned char*)malloc(buf_size);
+	*size = buf_size;
+
+	if(!(*buf))
+	{
+		return 1;
+	}
+
+	DHTFreezeStatus status;
+	status.n_nodes            = n_nodes;
+	status.null_node_p        = (null_node_ptr == &DHTroot) ? 0xffffffff : null_node_ptr->l_index;
+	status.bit_counter        = 32 - dcs.bit_counter;  // while encoding, bit_counter equals bits remaining in slice
+	status.code_count         = code_count;
+	status.code_reset_count   = code_reset_count;
+	status.c_buffer_idx       = c_buffer_idx;
+
+	unsigned char* ptr = *buf;
+	Write32(ptr, dht_size);							// write DHT status size
+	FreezeDHT(status, ptr);							// write DHT status
+	memcpy(ptr, c_buffer, (c_buffer_idx+1)*4);		// write code buffer
+
+	return 0;
+}
+
+int UnfreezeEncode(const unsigned char* buf, int size)
+{
+	if(size < 4)
+	{
+		return 1;
+	}
+
+	const unsigned char* ptr = buf;
+	int dht_size = (int)Read32(ptr);				// read DHT status size
+
+	DHTFreezeStatus status;
+	if(UnfreezeDHT(&status, ptr, dht_size))			// read DHT status
+	{
+		return 1;
+	}
+
+	int buf_size = 4 + dht_size + (status.c_buffer_idx+1)*4;
+	if(buf_size > size)
+	{
+		return 1;
+	}
+
+	dcs.bit_counter    = 32 - status.bit_counter;   // while encoding, bit_counter equals bits remaining in slice
+	code_count         = status.code_count;
+	code_reset_count   = status.code_reset_count;
+	c_buffer_idx       = status.c_buffer_idx;
+
+	int n_buffers = status.c_buffer_idx/MAX_BUFFER_LEN;
+	AllocBufferC((n_buffers+1)*MAX_BUFFER_LEN);
+	memcpy(c_buffer, ptr, (status.c_buffer_idx+1)*4);	// read code buffer
+	DoWriteCompressedFile();							// flush to disk
+	fseek(cFile,embed_offset+16+(n_buffers*MAX_BUFFER_LEN)*4,SEEK_SET);		// position write ptr for periodic flush
+
+	// mask off the unread bits from the current code
+	// this should be unneccessary, but it doesn't hurt
+	c_buffer[c_buffer_idx] &= (0xffffffff << dcs.bit_counter);
+
+	return 0;
 }

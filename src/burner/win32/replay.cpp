@@ -3,22 +3,52 @@
 #include "dynhuff.h"
 #include <commdlg.h>
 
-int nReplayStatus = 0;
+#include <io.h>
 
-static unsigned int nStartFrame;
-static unsigned int nEndFrame;
+#ifndef W_OK
+#define W_OK 4
+#endif
+
+#define MAX_METADATA 1024
+wchar_t wszMetadata[MAX_METADATA];
+
+INT32 nReplayStatus = 0; // 1 record, 2 replay, 0 nothing
+bool bReplayReadOnly = false;
+bool bReplayDontClose = false;
+INT32 nReplayUndoCount = 0;
+bool bReplayFrameCounterDisplay = 1;
+TCHAR szFilter[1024];
+INT32 movieFlags = 0;
+bool bStartFromReset = true;
+TCHAR szCurrentMovieFilename[MAX_PATH] = _T("");
+UINT32 nTotalFrames = 0;
+UINT32 nReplayCurrentFrame;
+
+#define MOVIE_FLAG_FROM_POWERON (1<<1)
+
+const UINT8 nMovieVersion = 0x01;
+UINT32 nStartFrame;
+static UINT32 nEndFrame;
 
 static FILE* fp = NULL;
-static int nSizeOffset;
+static INT32 nSizeOffset;
 
 static short nPrevInputs[0x0100];
 
-int RecordInput()
+static INT32 ReplayDialog();
+static INT32 RecordDialog();
+
+INT32 StartFromReset()
+{
+	return 0; // record from power-on not implemented yet.
+}
+
+INT32 RecordInput()
 {
 	struct BurnInputInfo bii;
 	memset(&bii, 0, sizeof(bii));
 
-	for (unsigned int i = 0; i < nGameInpCount; i++) {
+	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		BurnDrvGetInputInfo(&bii, i);
 		if (bii.pVal) {
 			if (bii.nType & BIT_GROUP_ANALOG) {
@@ -39,17 +69,24 @@ int RecordInput()
 	}
 
 	EncodeBuffer(0xFF);
+
+	if (bReplayFrameCounterDisplay) {
+		wchar_t framestring[15];
+		swprintf(framestring, L"%d", GetCurrentFrame() - nStartFrame);
+		VidSNewTinyMsg(framestring);
+	}
+
 	return 0;
 }
 
-int ReplayInput()
+INT32 ReplayInput()
 {
-	unsigned char n;
+	UINT8 n;
 	struct BurnInputInfo bii;
 	memset(&bii, 0, sizeof(bii));
 
 	// Just to be safe, restore the inputs to the known correct settings
-	for (unsigned int i = 0; i < nGameInpCount; i++) {
+	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		BurnDrvGetInputInfo(&bii, i);
 		if (bii.pVal) {
 			if (bii.nType & BIT_GROUP_ANALOG) {
@@ -73,6 +110,14 @@ int ReplayInput()
 			DecodeBuffer();
 		}
 	}
+
+	if (bReplayFrameCounterDisplay) {
+		wchar_t framestring[15];
+		swprintf(framestring, L"%d / %d", GetCurrentFrame() - nStartFrame,nTotalFrames);
+		VidSNewTinyMsg(framestring);
+	}
+	if ( (GetCurrentFrame()-nStartFrame) == (nTotalFrames-1) )
+		bRunPause=1;
 
 	if (end_of_buffer) {
 		StopReplay();
@@ -100,42 +145,46 @@ static void MakeOfn(TCHAR* pszFilter)
 	return;
 }
 
-int StartRecord()
+INT32 StartRecord()
 {
-	TCHAR szFilter[1024];
-
-	int nRet;
-	int bOldPause;
+	INT32 nRet;
+	INT32 bOldPause;
 
 	fp = NULL;
-
-	_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
-	MakeOfn(szFilter);
-	ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_RECORD, true);
-	ofn.Flags |= OFN_OVERWRITEPROMPT;
+	movieFlags = 0;
 
 	bOldPause = bRunPause;
 	bRunPause = 1;
-	nRet = GetSaveFileName(&ofn);
+	nRet = RecordDialog();
 	bRunPause = bOldPause;
 
 	if (nRet == 0) {
 		return 1;
 	}
 
+	bReplayReadOnly = false;
+	if (bStartFromReset) {
+		if(!StartFromReset()) return 1;
+		movieFlags |= MOVIE_FLAG_FROM_POWERON;
+	}
 	{
 		const char szFileHeader[] = "FB1 ";				// File identifier
-		fp = _tfopen(szChoice, _T("wb"));
+		fp = _tfopen(szChoice, _T("w+b"));
+		_tcscpy(szCurrentMovieFilename, szChoice);
 
 		nRet = 0;
 		if (fp == NULL) {
 			nRet = 1;
 		} else {
 			fwrite(&szFileHeader, 1, 4, fp);
+			fwrite(&movieFlags, 1, 1, fp);
+			if (bStartFromReset)
+				nRet = 1;
+			else
 			nRet = BurnStateSaveEmbed(fp, -1, 1);
 			if (nRet >= 0) {
 				const char szChunkHeader[] = "FR1 ";	// Chunk identifier
-				int nZero = 0;
+				INT32 nZero = 0;
 
 				fwrite(&szChunkHeader, 1, 4, fp);		// Write chunk identifier
 
@@ -145,8 +194,8 @@ int StartRecord()
 
 				fwrite(&nZero, 1, 4, fp);				// reserve space for number of frames
 
+				fwrite(&nZero, 1, 4, fp);				// undo count
 				fwrite(&nZero, 1, 4, fp);				// reserved
-				fwrite(&nZero, 1, 4, fp);				//
 				fwrite(&nZero, 1, 4, fp);				//
 
 				nRet = EmbedCompressedFile(fp, -1);
@@ -172,9 +221,10 @@ int StartRecord()
 		MenuEnableItems();
 
 		nStartFrame = GetCurrentFrame();
+		nReplayUndoCount = 0;
 
 		// Create a baseline so we can just record the deltas afterwards
-		for (unsigned int i = 0; i < nGameInpCount; i++) {
+		for (UINT32 i = 0; i < nGameInpCount; i++) {
 			BurnDrvGetInputInfo(&bii, i);
 			if (bii.pVal) {
 				if (bii.nType & BIT_GROUP_ANALOG) {
@@ -198,39 +248,34 @@ int StartRecord()
 	}
 }
 
-int StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
+INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 {
-	TCHAR szFilter[1024];
-	int nRet;
-	int bOldPause;
+	INT32 nRet;
+	INT32 bOldPause;
 
 	fp = NULL;
 
 	if (szFileName) {
 		_tcscpy(szChoice, szFileName);
 	} else {
-		if (bDrvOkay) {
-			_stprintf(szChoice, _T("%s*.fr"), BurnDrvGetText(DRV_NAME));
-		} else {
-			_stprintf(szChoice, _T("recording"));
-		}
-		MakeOfn(szFilter);
-		ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_REPLAY, true);
-
 		bOldPause = bRunPause;
 		bRunPause = 1;
-		nRet = GetOpenFileName(&ofn);
+		nRet = ReplayDialog();
 		bRunPause = bOldPause;
 
 		if (nRet == 0) {
 			return 1;
 		}
-	}
 
+	}
+	_tcscpy(szCurrentMovieFilename, szChoice);
+
+	// init metadata
+	wszMetadata[0] = L'\0';
 	{
 		const char szFileHeader[] = "FB1 ";					// File identifier
 		char ReadHeader[] = "    ";
-		fp = _tfopen(szChoice, _T("rb"));
+		fp = _tfopen(szChoice, _T("r+b"));
 		memset(ReadHeader, 0, 4);
 		fread(ReadHeader, 1, 4, fp);						// Read identifier
 		if (memcmp(ReadHeader, szFileHeader, 4)) {			// Not the right file type
@@ -238,8 +283,18 @@ int StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 			fp = NULL;
 			nRet = 2;
 		} else {
-			// First load the savestate associated with the recording
+			memset(ReadHeader, 0, 4);
+			fread(&movieFlags, 1, 1, fp); // Read movie flags
+			if (movieFlags&MOVIE_FLAG_FROM_POWERON) { // Starts from reset
+				bStartFromReset = 1;
+				if (!bReplayDontClose)
+					if(!StartFromReset()) return 0;
+				nRet = 0;
+			}
+			else {// Load the savestate associated with the recording
+				bStartFromReset = 0;
 			nRet = BurnStateLoadEmbed(fp, -1, 1, &DrvInitCallback);
+			}
 			if (nRet == 0) {
 				const char szChunkHeader[] = "FR1 ";		// Chunk identifier
 				fread(ReadHeader, 1, 4, fp);				// Read identifier
@@ -248,12 +303,45 @@ int StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 					fp = NULL;
 					nRet = 2;
 				} else {
+					INT32 nChunkSize = 0;
 					// Open the recording itself
-					fseek(fp, 0x04, SEEK_CUR);				// Skip chunk size
+					nSizeOffset = ftell(fp);				// Save chunk size offset in case the file is re-recorded
+					fread(&nChunkSize, 1, 0x04, fp);		// Read chunk size
+					INT32 nChunkPosition = ftell(fp);			// For seeking to the metadata
 					fread(&nEndFrame, 1, 4, fp);			// Read framecount
+					nTotalFrames = nEndFrame;
+
 					nStartFrame = GetCurrentFrame();
+					bReplayDontClose = 0; // we don't need it anymore from this point
 					nEndFrame += nStartFrame;
-					fseek(fp, 0x0C, SEEK_CUR);				// Skip rest of header
+					fread(&nReplayUndoCount, 1, 4, fp);
+					fseek(fp, 0x08, SEEK_CUR);				// Skip rest of header
+					INT32 nEmbedPosition = ftell(fp);
+
+					// Read metadata
+					const char szMetadataHeader[] = "FRM1";
+					fseek(fp, nChunkPosition + nChunkSize, SEEK_SET);
+					memset(ReadHeader, 0, 4);
+					fread(ReadHeader, 1, 4, fp);
+					if(memcmp(ReadHeader, szMetadataHeader, 4) == 0) {
+						INT32 nMetaSize;
+						fread(&nMetaSize, 1, 4, fp);
+						INT32 nMetaLen = nMetaSize >> 1;
+						if(nMetaLen >= MAX_METADATA) {
+							nMetaLen = MAX_METADATA-1;
+						}
+						INT32 i;
+						for(i=0; i<nMetaLen; ++i) {
+							wchar_t c = 0;
+							c |= fgetc(fp) & 0xff;
+							c |= (fgetc(fp) & 0xff) << 8;
+							wszMetadata[i] = c;
+						}
+						wszMetadata[i] = L'\0';
+					}
+
+					// Seek back to the beginning of compressed data
+					fseek(fp, nEmbedPosition, SEEK_SET);
 					nRet = EmbedCompressedFile(fp, -1);
 
 				}
@@ -303,7 +391,7 @@ int StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 		LoadCompressedFile();
 
 		// Get the baseline
-		for (unsigned int i = 0; i < nGameInpCount; i++) {
+		for (UINT32 i = 0; i < nGameInpCount; i++) {
 			BurnDrvGetInputInfo(&bii, i);
 			if (bii.pVal) {
 				if (bii.nType & BIT_GROUP_ANALOG) {
@@ -327,26 +415,54 @@ int StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 
 static void CloseRecord()
 {
-	int nFrames = GetCurrentFrame() - nStartFrame;
+	INT32 nFrames = GetCurrentFrame() - nStartFrame;
 
 	WriteCompressedFile();
 
 	fseek(fp, 0, SEEK_END);
-	int nChunkSize = ftell(fp) - 4 - nSizeOffset;		// Fill in chunk size and no of recorded frames
+	INT32 nMetadataOffset = ftell(fp);
+	INT32 nChunkSize = ftell(fp) - 4 - nSizeOffset;		// Fill in chunk size and no of recorded frames
 	fseek(fp, nSizeOffset, SEEK_SET);
 	fwrite(&nChunkSize, 1, 4, fp);
 	fwrite(&nFrames, 1, 4, fp);
+	fwrite(&nReplayUndoCount, 1, 4, fp);
+
+	// NOTE: chunk should be aligned here, since the compressed
+	// file code writes 4 bytes at a time
+
+	// write metadata
+	INT32 nMetaLen = wcslen(wszMetadata);
+	if(nMetaLen > 0) {
+		fseek(fp, nMetadataOffset, SEEK_SET);
+		const char szChunkHeader[] = "FRM1";
+		fwrite(szChunkHeader, 1, 4, fp);
+		INT32 nMetaSize = nMetaLen * 2;
+		fwrite(&nMetaSize, 1, 4, fp);
+		UINT8* metabuf = (UINT8*)malloc(nMetaSize);
+		INT32 i;
+		for(i=0; i<nMetaLen; ++i) {
+			metabuf[i*2 + 0] = wszMetadata[i] & 0xff;
+			metabuf[i*2 + 1] = (wszMetadata[i] >> 8) & 0xff;
+		}
+		fwrite(metabuf, 1, nMetaSize, fp);
+		free(metabuf);
+	}
 
 	fclose(fp);
 	fp = NULL;
+	if (bReplayDontClose) {
+		if(!StartReplay(szCurrentMovieFilename)) return;
+	}
 }
 
 static void CloseReplay()
 {
 	CloseCompressedFile();
 
-	fclose(fp);
-	fp = NULL;
+	if(fp) {
+		fclose(fp);
+		fp = NULL;
+	}
 }
 
 void StopReplay()
@@ -373,3 +489,489 @@ void StopReplay()
 	}
 }
 
+
+//#
+//#             Input Status Freezing
+//#
+//##############################################################################
+
+static inline void Write32(UINT8*& ptr, const unsigned long v)
+{
+	*ptr++ = (UINT8)(v&0xff);
+	*ptr++ = (UINT8)((v>>8)&0xff);
+	*ptr++ = (UINT8)((v>>16)&0xff);
+	*ptr++ = (UINT8)((v>>24)&0xff);
+}
+
+static inline unsigned long Read32(const UINT8*& ptr)
+{
+	unsigned long v;
+	v = (unsigned long)(*ptr++);
+	v |= (unsigned long)((*ptr++)<<8);
+	v |= (unsigned long)((*ptr++)<<16);
+	v |= (unsigned long)((*ptr++)<<24);
+	return v;
+}
+
+static inline void Write16(UINT8*& ptr, const UINT16 v)
+{
+	*ptr++ = (UINT8)(v&0xff);
+	*ptr++ = (UINT8)((v>>8)&0xff);
+}
+
+static inline UINT16 Read16(const UINT8*& ptr)
+{
+	UINT16 v;
+	v = (UINT16)(*ptr++);
+	v |= (UINT16)((*ptr++)<<8);
+	return v;
+}
+
+INT32 FreezeInput(UINT8** buf, int* size)
+{
+	*size = 4 + 2*nGameInpCount;
+	*buf = (UINT8*)malloc(*size);
+	if(!*buf)
+	{
+		return -1;
+	}
+
+	UINT8* ptr=*buf;
+	Write32(ptr, nGameInpCount);
+
+	for (UINT32 i = 0; i < nGameInpCount; i++)
+	{
+		Write16(ptr, nPrevInputs[i]);
+	}
+
+	return 0;
+}
+
+INT32 UnfreezeInput(const UINT8* buf, INT32 size)
+{
+	UINT32 n=Read32(buf);
+	if(n>0x100 || (unsigned)size < (4 + 2*n))
+	{
+		return -1;
+	}
+
+	for (UINT32 i = 0; i < n; i++)
+	{
+		nPrevInputs[i]=Read16(buf);
+	}
+
+	return 0;
+}
+
+//------------------------------------------------------
+
+static void GetRecordingPath(wchar_t* szPath)
+{
+	wchar_t szDrive[MAX_PATH];
+	wchar_t szDirectory[MAX_PATH];
+	wchar_t szFilename[MAX_PATH];
+	wchar_t szExt[MAX_PATH];
+	szDrive[0] = '\0';
+	szDirectory[0] = '\0';
+	szFilename[0] = '\0';
+	szExt[0] = '\0';
+	_wsplitpath(szPath, szDrive, szDirectory, szFilename, szExt);
+	if (szDrive[0] == '\0' && szDirectory[0] == '\0') {
+		wchar_t szTmpPath[MAX_PATH];
+		wcscpy(szTmpPath, L"recordings\\");
+		wcsncpy(szTmpPath + wcslen(szTmpPath), szPath, MAX_PATH - wcslen(szTmpPath));
+		szTmpPath[MAX_PATH-1] = '\0';
+		wcscpy(szPath, szTmpPath);
+	}
+}
+
+static void DisplayReplayProperties(HWND hDlg, bool bClear)
+{
+	// save status of read only checkbox
+	static bool bReadOnlyStatus = true;
+	if (IsWindowEnabled(GetDlgItem(hDlg, IDC_READONLY))) {
+		bReadOnlyStatus = (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_READONLY, BM_GETCHECK, 0, 0));
+	}
+
+	// set default values
+	SetDlgItemTextA(hDlg, IDC_LENGTH, "");
+	SetDlgItemTextA(hDlg, IDC_FRAMES, "");
+	SetDlgItemTextA(hDlg, IDC_UNDO, "");
+	SetDlgItemTextA(hDlg, IDC_METADATA, "");
+	SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "");
+	EnableWindow(GetDlgItem(hDlg, IDC_READONLY), FALSE);
+	SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
+	EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
+	if(bClear) {
+		return;
+	}
+
+	long lCount = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCOUNT, 0, 0);
+	long lIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCURSEL, 0, 0);
+	if (lIndex == CB_ERR) {
+		return;
+	}
+
+	if (lIndex == lCount - 1) {							// Last item is "Browse..."
+		EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);		// Browse is selectable
+		return;
+	}
+
+	long lStringLength = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETLBTEXTLEN, (WPARAM)lIndex, 0);
+	if(lStringLength + 1 > MAX_PATH) {
+		return;
+	}
+
+	SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETLBTEXT, (WPARAM)lIndex, (LPARAM)szChoice);
+
+	// check relative path
+	GetRecordingPath(szChoice);
+
+	const char szFileHeader[] = "FB1 ";					// File identifier
+	const char szSavestateHeader[] = "FS1 ";			// Chunk identifier
+	const char szRecordingHeader[] = "FR1 ";			// Chunk identifier
+	const char szMetadataHeader[] = "FRM1";				// Chunk identifier
+	char ReadHeader[4];
+	INT32 nChunkSize = 0;
+	INT32 nChunkDataPosition = 0;
+	INT32 nFileVer = 0;
+	INT32 nFileMin = 0;
+	INT32 t1 = 0, t2 = 0;
+	INT32 nFrames = 0;
+	INT32 nUndoCount = 0;
+	wchar_t* local_metadata = NULL;
+
+	FILE* fd = _wfopen(szChoice, L"r+b");
+	if (!fd) {
+		return;
+	}
+
+	if (_waccess(szChoice, W_OK)) {
+		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
+	} else {
+		EnableWindow(GetDlgItem(hDlg, IDC_READONLY), TRUE);
+		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0); //read-only by default
+	}
+
+
+	memset(ReadHeader, 0, 4);
+	fread(ReadHeader, 1, 4, fd);						// Read identifier
+	if (memcmp(ReadHeader, szFileHeader, 4)) {			// Not the right file type
+		fclose(fd);
+		return;
+	}
+
+	fread(&movieFlags, 1, 1, fd);						// Read identifier
+	if (movieFlags&MOVIE_FLAG_FROM_POWERON)			// starts from reset
+		bStartFromReset = 1;
+	else
+		bStartFromReset = 0;
+	if (!bStartFromReset) {
+	memset(ReadHeader, 0, 4);
+	fread(ReadHeader, 1, 4, fd);						// Read identifier
+	if (memcmp(ReadHeader, szSavestateHeader, 4)) {		// Not the chunk type
+		fclose(fd);
+		return;
+	}
+
+	fread(&nChunkSize, 1, 4, fd);
+	if (nChunkSize <= 0x40) {							// Not big enough
+		fclose(fd);
+		return;
+	}
+
+	nChunkDataPosition = ftell(fd);
+
+	fread(&nFileVer, 1, 4, fd);							// Version of FB that this file was saved from
+
+	fread(&t1, 1, 4, fd);								// Min version of FB that NV  data will work with
+	fread(&t2, 1, 4, fd);								// Min version of FB that All data will work with
+
+	nFileMin = t2;										// Replays require a full state
+
+//		if (nBurnVer < nFileMin) {							// Error - emulator is too old to load this state
+//			fclose(fd);
+//			return;
+//		}
+
+	fseek(fd, nChunkDataPosition + nChunkSize, SEEK_SET);
+	}
+
+	memset(ReadHeader, 0, 4);
+	fread(ReadHeader, 1, 4, fd);						// Read identifier
+	if (memcmp(ReadHeader, szRecordingHeader, 4)) {		// Not the chunk type
+		fclose(fd);
+		return;
+	}
+
+	nChunkSize = 0;
+	fread(&nChunkSize, 1, 4, fd);
+	if (nChunkSize <= 0x10) {							// Not big enough
+		fclose(fd);
+		return;
+	}
+
+	nChunkDataPosition = ftell(fd);
+	fread(&nFrames, 1, 4, fd);
+	fread(&nUndoCount, 1, 4, fd);
+
+	// read metadata
+	fseek(fd, nChunkDataPosition + nChunkSize, SEEK_SET);
+	memset(ReadHeader, 0, 4);
+	fread(ReadHeader, 1, 4, fd);						// Read identifier
+	if (memcmp(ReadHeader, szMetadataHeader, 4) == 0) {
+		nChunkSize = 0;
+		fread(&nChunkSize, 1, 4, fd);
+		INT32 nMetaLen = nChunkSize >> 1;
+		if(nMetaLen >= MAX_METADATA) {
+			nMetaLen = MAX_METADATA-1;
+		}
+		local_metadata = (wchar_t*)malloc((nMetaLen+1)*sizeof(wchar_t));
+		INT32 i;
+		for(i=0; i<nMetaLen; ++i) {
+			wchar_t c = 0;
+			c |= fgetc(fd) & 0xff;
+			c |= (fgetc(fd) & 0xff) << 8;
+			local_metadata[i] = c;
+		}
+		local_metadata[i] = L'\0';
+	}
+
+	// done reading file
+	fclose(fd);
+
+	// file exists and is the correct format,
+	// so enable the "Ok" button
+	EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
+
+	// turn nFrames into a length string
+	INT32 nSeconds = (nFrames * 100 + (nBurnFPS>>1)) / nBurnFPS;
+	INT32 nMinutes = nSeconds / 60;
+	INT32 nHours = nSeconds / 3600;
+
+	// write strings to dialog
+	char szFramesString[32];
+	char szLengthString[32];
+	char szUndoCountString[32];
+	sprintf(szFramesString, "%d", nFrames);
+	sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
+	sprintf(szUndoCountString, "%d", nUndoCount);
+
+	SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
+	SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);
+	SetDlgItemTextA(hDlg, IDC_UNDO, szUndoCountString);
+	SetDlgItemTextW(hDlg, IDC_METADATA, local_metadata);
+	if (bStartFromReset)
+		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Power-On");
+	else
+		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Savestate");
+	free(local_metadata);
+}
+
+static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
+{
+	if (Msg == WM_INITDIALOG) {
+		wchar_t szFindPath[32] = L"recordings\\*.fr";
+		WIN32_FIND_DATA wfd;
+		HANDLE hFind;
+		INT32 i = 0;
+
+		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
+
+		memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
+		if (bDrvOkay) {
+			_stprintf(szFindPath, _T("recordings\\%s*.fr"), BurnDrvGetText(DRV_NAME));
+		}
+
+		hFind = FindFirstFile(szFindPath, &wfd);
+		if (hFind != INVALID_HANDLE_VALUE) {
+			do {
+				if(!(wfd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY))
+					SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_INSERTSTRING, i++, (LPARAM)wfd.cFileName);
+			} while(FindNextFile(hFind, &wfd));
+			FindClose(hFind);
+		}
+		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_INSERTSTRING, i, (LPARAM)_T("Browse..."));
+		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, i, 0);
+
+		if (i>=1) {
+			DisplayReplayProperties(hDlg, false);
+			SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, i, 0);
+		}
+
+		SetFocus(GetDlgItem(hDlg, IDC_CHOOSE_LIST));
+		return FALSE;
+	}
+
+	if (Msg == WM_COMMAND) {
+		if (HIWORD(wParam) == CBN_SELCHANGE) {
+			LONG lCount = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCOUNT, 0, 0);
+			LONG lIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCURSEL, 0, 0);
+			if (lIndex != CB_ERR) {
+				DisplayReplayProperties(hDlg, (lIndex == lCount - 1));		// Selecting "Browse..." will clear the replay properties display
+			}
+		} else if (HIWORD(wParam) == CBN_CLOSEUP) {
+			LONG lCount = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCOUNT, 0, 0);
+			LONG lIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCURSEL, 0, 0);
+			if (lIndex != CB_ERR) {
+				if (lIndex == lCount - 1) {
+					// send an OK notification to open the file browser
+					SendMessage(hDlg, WM_COMMAND, (WPARAM)IDOK, 0);
+				}
+			}
+		} else {
+			INT32 wID = LOWORD(wParam);
+			switch (wID) {
+				case IDOK:
+					{
+						LONG lCount = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCOUNT, 0, 0);
+						LONG lIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCURSEL, 0, 0);
+						if (lIndex != CB_ERR) {
+							if (lIndex == lCount - 1) {
+								MakeOfn(szFilter);
+								ofn.lpstrTitle = L"Replay Input from File";
+								ofn.Flags &= ~OFN_HIDEREADONLY;
+
+								INT32 nRet = GetOpenFileName(&ofn);
+								if (nRet != 0) {
+									LONG lOtherIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_FINDSTRING, (WPARAM)-1, (LPARAM)szChoice);
+									if (lOtherIndex != CB_ERR) {
+										// select already existing string
+										SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, lOtherIndex, 0);
+									} else {
+										SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_INSERTSTRING, lIndex, (LPARAM)szChoice);
+										SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, lIndex, 0);
+									}
+									// restore focus to the dialog
+									SetFocus(GetDlgItem(hDlg, IDC_CHOOSE_LIST));
+									DisplayReplayProperties(hDlg, false);
+									if (ofn.Flags & OFN_READONLY) {
+										SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
+									} else {
+										SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
+									}
+								}
+							} else {
+								// get readonly status
+								bReplayReadOnly = false;
+								if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_READONLY, BM_GETCHECK, 0, 0)) {
+									bReplayReadOnly = true;
+								}
+								EndDialog(hDlg, 1);					// only allow OK if a valid selection was made
+							}
+						}
+					}
+					return TRUE;
+				case IDCANCEL:
+					szChoice[0] = '\0';
+					EndDialog(hDlg, 0);
+					return FALSE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+static INT32 ReplayDialog()
+{
+	return DialogBox(hAppInst, MAKEINTRESOURCE(IDD_REPLAYINP), hScrnWnd, ReplayDialogProc);
+}
+
+static INT32 VerifyRecordingAccessMode(wchar_t* szFilename, INT32 mode)
+{
+	GetRecordingPath(szFilename);
+	if(_waccess(szFilename, mode)) {
+		return 0;							// not writeable, return failure
+	}
+
+	return 1;
+}
+
+static void VerifyRecordingFilename(HWND hDlg)
+{
+	wchar_t szFilename[MAX_PATH];
+	GetDlgItemText(hDlg, IDC_FILENAME, szFilename, MAX_PATH);
+
+	// if filename null, or, file exists and is not writeable
+	// then disable the dialog controls
+	if(szFilename[0] == '\0' ||
+		(VerifyRecordingAccessMode(szFilename, 0) != 0 && VerifyRecordingAccessMode(szFilename, W_OK) == 0)) {
+		EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_METADATA), FALSE);
+	} else {
+		EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
+		EnableWindow(GetDlgItem(hDlg, IDC_METADATA), TRUE);
+	}
+}
+
+static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
+{
+	if (Msg == WM_INITDIALOG) {
+		// come up with a unique name
+		wchar_t szPath[MAX_PATH];
+		wchar_t szFilename[MAX_PATH];
+		INT32 i = 0;
+		_stprintf(szFilename, _T("%s.fr"), BurnDrvGetText(DRV_NAME));
+		wcscpy(szPath, szFilename);
+		while(VerifyRecordingAccessMode(szPath, 0) == 1) {
+			_stprintf(szFilename, _T("%s-%d.fr"), BurnDrvGetText(DRV_NAME), ++i);
+			wcscpy(szPath, szFilename);
+		}
+
+		SetDlgItemText(hDlg, IDC_FILENAME, szFilename);
+		SetDlgItemTextW(hDlg, IDC_METADATA, L"");
+		CheckDlgButton(hDlg, IDC_REPLAYRESET, BST_CHECKED);
+
+		VerifyRecordingFilename(hDlg);
+
+		SetFocus(GetDlgItem(hDlg, IDC_METADATA));
+		return FALSE;
+	}
+
+	if (Msg == WM_COMMAND) {
+		if (HIWORD(wParam) == EN_CHANGE) {
+			VerifyRecordingFilename(hDlg);
+		} else {
+			INT32 wID = LOWORD(wParam);
+			switch (wID) {
+				case IDC_BROWSE:
+					{
+						_stprintf(szChoice, _T("%s"), BurnDrvGetText(DRV_NAME));
+						MakeOfn(szFilter);
+						ofn.lpstrTitle = L"Record Input to File";
+						ofn.Flags |= OFN_OVERWRITEPROMPT;
+						INT32 nRet = GetSaveFileName(&ofn);
+						if (nRet != 0) {
+							// this should trigger an EN_CHANGE message
+							SetDlgItemText(hDlg, IDC_FILENAME, szChoice);
+						}
+					}
+					return TRUE;
+				case IDOK:
+					GetDlgItemText(hDlg, IDC_FILENAME, szChoice, MAX_PATH);
+					GetDlgItemTextW(hDlg, IDC_METADATA, wszMetadata, MAX_METADATA);
+					bStartFromReset = false;
+					if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_REPLAYRESET, BM_GETCHECK, 0, 0)) {
+						bStartFromReset = true;
+					}
+					wszMetadata[MAX_METADATA-1] = L'\0';
+					// ensure a relative path has the "recordings\" path in prepended to it
+					GetRecordingPath(szChoice);
+					EndDialog(hDlg, 1);
+					return TRUE;
+				case IDCANCEL:
+					szChoice[0] = '\0';
+					EndDialog(hDlg, 0);
+					return FALSE;
+			}
+		}
+	}
+
+	return FALSE;
+}
+
+static INT32 RecordDialog()
+{
+	return DialogBox(hAppInst, MAKEINTRESOURCE(IDD_RECORDINP), hScrnWnd, RecordDialogProc);
+}

@@ -1,6 +1,22 @@
 // Driver Save State module
 #include "burner.h"
 
+// from dynhuff.cpp
+INT32 FreezeDecode(UINT8 **buffer, INT32 *size);
+INT32 UnfreezeDecode(const UINT8* buffer, INT32 size);
+INT32 FreezeEncode(UINT8 **buffer, INT32 *size);
+INT32 UnfreezeEncode(const UINT8* buffer, INT32 size);
+
+// from replay.cpp
+INT32 FreezeInput(UINT8** buf, int* size);
+INT32 UnfreezeInput(const UINT8* buf, INT32 size);
+
+extern INT32 nReplayStatus;
+extern bool bReplayReadOnly;
+extern INT32 nReplayUndoCount;
+extern UINT32 nReplayCurrentFrame;
+extern UINT32 nStartFrame;
+
 // If bAll=0 save/load all non-volatile ram to .fs
 // If bAll=1 save/load all ram to .fs
 
@@ -14,7 +30,7 @@ static INT32 __cdecl StateLenAcb(struct BurnArea* pba)
 	return 0;
 }
 
-static INT32 StateInfo(INT32* pnLen, INT32* pnMinVer, INT32 bAll)
+static INT32 StateInfo(int* pnLen, int* pnMinVer, INT32 bAll)
 {
 	INT32 nMin = 0;
 	nTotalLen = 0;
@@ -92,9 +108,9 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 	memset(szForName, 0, sizeof(szForName));
 	fread(szForName, 1, 32, fp);
 
-	if (nBurnVer < nFileMin) {							// Error - emulator is too old to load this state
-		return -5;
-	}
+//	if (nBurnVer < nFileMin) {							// Error - emulator is too old to load this state
+//		return -5;
+//	}
 
 	// Check the game the savestate is for, and load it if needed.
 	{
@@ -137,12 +153,13 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 	}
 
 	// Check if the save state is okay
-	if (nFileVer < nMin) {								// Error - this state is too old and cannot be loaded.
-		return -4;
-	}
+//	if (nFileVer < nMin) {								// Error - this state is too old and cannot be loaded.
+//		return -4;
+//	}
 
 	fseek(fp, nChunkData + 0x30, SEEK_SET);				// Read current frame
-	fread(&nCurrentFrame, 1, 4, fp);					//
+	fread(&nReplayCurrentFrame, 1, 4, fp);
+	nCurrentFrame = nStartFrame + nReplayCurrentFrame;
 
 	fseek(fp, 0x0C, SEEK_CUR);							// Move file pointer to the start of the compressed block
 	Def = (UINT8*)malloc(nDefLen);
@@ -153,10 +170,7 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 	fread(Def, 1, nDefLen, fp);							// Read in deflated block
 
 	nRet = BurnStateDecompress(Def, nDefLen, bAll);		// Decompress block into driver
-	if (Def) {
-		free(Def);											// free deflated block
-		Def = NULL;
-	}
+	free(Def);											// free deflated block
 
 	fseek(fp, nChunkData + nChunkSize, SEEK_SET);
 
@@ -183,11 +197,62 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 	if (memcmp(szReadHeader, szHeader, 4) == 0) {		// Check filetype
 		nRet = BurnStateLoadEmbed(fp, -1, bAll, pLoadGame);
 	}
-	fclose(fp);
 
-	if (nRet == 0) { // Force the palette to recalculate on state load
-		BurnRecalcPal();
+	// load movie extra info
+	if(nReplayStatus)
+	{
+		const char szMovieExtra[] = "MOV ";
+		const char szDecodeChunk[] = "HUFF";
+		const char szInputChunk[] = "INP ";
+
+		INT32 nChunkSize;
+		UINT8* buf=NULL;
+
+		do
+		{
+			fread(szReadHeader, 1, 4, fp);
+			if(memcmp(szReadHeader, szMovieExtra, 4))           { nRet = -1;  break; }
+			fread(&nChunkSize, 1, 4, fp);
+
+			fread(szReadHeader, 1, 4, fp);
+			if(memcmp(szReadHeader, szDecodeChunk, 4))          { nRet = -1;  break; }
+			fread(&nChunkSize, 1, 4, fp);
+
+			if((buf=(UINT8*)malloc(nChunkSize))==NULL)  { nRet = -1;  break; }
+			fread(buf, 1, nChunkSize, fp);
+
+			INT32 ret=-1;
+			if(nReplayStatus == 1)
+			{
+				ret = UnfreezeEncode(buf, nChunkSize);
+				++nReplayUndoCount;
+			}
+			else if(nReplayStatus == 2)
+			{
+				ret = UnfreezeDecode(buf, nChunkSize);
+			}
+			if(ret)                                             { nRet = -1;  break; }
+
+			free(buf);
+			buf = NULL;
+
+			fread(szReadHeader, 1, 4, fp);
+			if(memcmp(szReadHeader, szInputChunk, 4))           { nRet = -1;  break; }
+			fread(&nChunkSize, 1, 4, fp);
+
+			if((buf=(UINT8*)malloc(nChunkSize))==NULL)  { nRet = -1;  break; }
+			fread(buf, 1, nChunkSize, fp);
+			if(UnfreezeInput(buf, nChunkSize))                  { nRet = -1;  break; }
+
+			free(buf);
+			buf = NULL;
+		}
+		while(false);
+
+		if(buf) free(buf);
 	}
+
+	fclose(fp);
 
 	if (nRet < 0) {
 		return -nRet;
@@ -250,7 +315,8 @@ INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll)
 	sprintf(szGame, "%.32s", BurnDrvGetTextA(DRV_NAME));			//
 	fwrite(szGame, 1, 32, fp);							//
 
-	fwrite(&nCurrentFrame, 1, 4, fp);					// Current frame
+	nReplayCurrentFrame = GetCurrentFrame() - nStartFrame;
+	fwrite(&nReplayCurrentFrame, 1, 4, fp);					// Current frame
 
 	fwrite(&nZero, 1, 4, fp);							// Reserved
 	fwrite(&nZero, 1, 4, fp);							//
@@ -262,10 +328,7 @@ INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll)
 	}
 
 	nRet = fwrite(Def, 1, nDefLen, fp);					// Write block to disk
-	if (Def) {
-		free(Def);											// free deflated block and close file
-		Def = NULL;
-	}
+	free(Def);											// free deflated block and close file
 
 	if (nRet != nDefLen) {								// error writing block to disk
 		return -1;
@@ -289,7 +352,7 @@ INT32 BurnStateSaveEmbed(FILE* fp, INT32 nOffset, INT32 bAll)
 }
 
 #ifdef BUILD_WIN32
-int FileExists(const TCHAR *fileName)
+INT32 FileExists(const TCHAR *fileName)
 {
     DWORD dwAttrib = GetFileAttributes(fileName);
     return (dwAttrib != INVALID_FILE_ATTRIBUTES &&
@@ -346,7 +409,7 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 {
 	const char szHeader[] = "FB1 ";						// File identifier
 	INT32 nLen = 0, nVer = 0;
-        INT32 nRet = 0;
+	INT32 nRet = 0;
 
 	if (bAll) {											// Get amount of data
 		StateInfo(&nLen, &nVer, 1);
@@ -355,14 +418,14 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 	}
 	if (nLen <= 0) {									// No data, so exit without creating a savestate
 		return 0;										// Don't return an error code
-        }
-        /*
+	}
+	/*
          Save State backups - used in conjunction with BurnStateUNDO();
          derp.fs -> derp.fs.backup
          derp.fs.backup -> derp.fs.backup1
          derp.fs.backup1 -> derpfs.backup2
          derp.fs.backup3 -> derpfs.backup4
-         */
+		 */
 #ifdef BUILD_WIN32
         if (_tcsstr(szName, _T(" slot "))) {
             for (INT32 i=MAX_STATEBACKUPS;i>=0;i--) {
@@ -397,7 +460,78 @@ INT32 BurnStateSave(TCHAR* szName, INT32 bAll)
 
 	fwrite(&szHeader, 1, 4, fp);
 	nRet = BurnStateSaveEmbed(fp, -1, bAll);
-    fclose(fp);
+
+	// save movie extra info
+	if(nReplayStatus)
+	{
+		UINT8* huff_buf = NULL;
+		INT32 huff_size;
+		UINT8* input_buf = NULL;
+		INT32 input_size;
+		INT32 ret=-1;
+
+		if(nReplayStatus == 1)
+		{
+			ret = FreezeEncode(&huff_buf, &huff_size);
+		}
+		else if(nReplayStatus == 2)
+		{
+			ret = FreezeDecode(&huff_buf, &huff_size);
+		}
+
+		if(!ret &&
+			!FreezeInput(&input_buf, &input_size))
+		{
+			const char szMovieExtra[] = "MOV ";
+			const char szDecodeChunk[] = "HUFF";
+			const char szInputChunk[] = "INP ";
+
+			INT32 nZero = 0;
+			INT32 nAlign = 0;
+			INT32 nChkLen = 0;
+			INT32 nMovChunkLen = 0;
+
+			fwrite(szMovieExtra, 1, 4, fp);
+			INT32 nSizeOffset = ftell(fp);
+			fwrite(&nZero, 1, 4, fp);						// Leave room for the chunk size
+			nMovChunkLen = 0;
+
+			// write Decode block
+			nAlign = (huff_size&3) ? (4 - (huff_size&3)) : 0;
+			nChkLen = huff_size + nAlign;
+
+			fwrite(szDecodeChunk, 1, 4, fp);
+			fwrite(&nChkLen, 1, 4, fp);
+			fwrite(huff_buf, 1, huff_size, fp);
+			if(nAlign)
+			{
+				fwrite(&nZero, 1, nAlign, fp);
+			}
+			nMovChunkLen += nChkLen + 8;
+
+			// write Input block
+			nAlign = (input_size&3) ? (4 - (input_size&3)) : 0;
+			nChkLen = input_size + nAlign;
+
+			fwrite(szInputChunk, 1, 4, fp);
+			fwrite(&nChkLen, 1, 4, fp);
+			fwrite(input_buf, 1, input_size, fp);
+			if(nAlign)
+			{
+				fwrite(&nZero, 1, nAlign, fp);
+			}
+			nMovChunkLen += nChkLen + 8;
+
+			fseek(fp, nSizeOffset, SEEK_SET);
+			fwrite(&nMovChunkLen, 1, 4, fp);
+			fseek(fp, nMovChunkLen, SEEK_CUR);
+		}
+
+		if(huff_buf)    free(huff_buf);
+		if(input_buf)   free(input_buf);
+	}
+
+	fclose(fp);
 
 	if (nRet < 0) {
 		return 1;

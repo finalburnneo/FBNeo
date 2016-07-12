@@ -134,4 +134,31 @@ void PrintTree(); // use this before DestroyDHT() happens
 // print compression result
 void PrintResult(); // use this after finish encoding
 
+//#
+//#             Compression Status Freezing
+//#
+//##############################################################################
+
+// freeze the status of decoding
+// returns a malloc()'d buffer in *buffer
+// the length of the buffer is returned in *size
+// returns 0 always
+int FreezeDecode(unsigned char **buffer, int *size);
+
+// unfreeze the status of decoding from the given buffer
+// the length of the buffer is passed in size
+// returns 0 if successful, 1 otherwise
+int UnfreezeDecode(const unsigned char* buffer, int size);
+
+// freeze the status of encoding
+// returns a malloc()'d buffer in *buffer
+// the length of the buffer is returned in *size
+// returns 0 always
+int FreezeEncode(unsigned char **buffer, int *size);
+
+// unfreeze the status of encoding from the given buffer
+// the length of the buffer is passed in size
+// returns 0 if successful, 1 otherwise
+int UnfreezeEncode(const unsigned char* buffer, int size);
+
 #endif // end of '#ifndef _DYNHUFF_H_'

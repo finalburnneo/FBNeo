@@ -397,6 +397,8 @@ static INT32 DrvInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 0.55, 1006875, 1.00, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
 
+	deco16_music_tempofix = 1;
+
 	GenericTilesInit();
 
 	DrvDoReset();
@@ -651,7 +653,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 
 		if (i ==   7) vblank = 0;
 		if (i == 206) vblank = 8;
@@ -681,7 +683,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	h6280Close();	
+	h6280Close();
 	SekClose();
 
 	if (pBurnDraw) {

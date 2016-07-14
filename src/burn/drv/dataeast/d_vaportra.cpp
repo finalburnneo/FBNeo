@@ -388,8 +388,10 @@ static INT32 DrvInit(INT32 type)
 	SekSetReadByteHandler(0,		vaportra_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000 / 3, 1, NULL, 0.60, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, NULL, 0.60, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
+
+	deco16_music_tempofix = 1;
 
 	GenericTilesInit();
 
@@ -541,7 +543,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 232;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 3 / 58 };
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();
@@ -554,7 +556,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 
 		if (i == 206) {
 			deco16_vblank = 0x08;

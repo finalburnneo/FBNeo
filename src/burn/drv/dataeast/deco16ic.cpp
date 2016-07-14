@@ -55,6 +55,8 @@ UINT8 *deco16_sprite_prio_map; // boogwing
 
 INT32 deco16_vblank;
 
+INT32 deco16_music_tempofix; // set after deco16SoundInit(), fixes tempo issues in darkseal, vaportrail, and cbuster
+
 void deco16ProtScan();
 void deco16ProtReset();
 
@@ -794,6 +796,8 @@ static void deco16_sound_write(UINT32 address, UINT8 data)
 		case 0x1fec00:
 		case 0x1fec01:
 #ifdef ENABLE_HUC6280
+			if (deco16_music_tempofix) return;
+
 			h6280_timer_w(address & 1, data);
 #endif
 		return;
@@ -910,6 +914,8 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 		MSM6295Init(1, msmclk1 / 132, 1);
 		MSM6295SetRoute(1, msmvol1, BURN_SND_ROUTE_BOTH);
 	}
+
+	deco16_music_tempofix = 0;
 }
 
 void deco16SoundExit()
@@ -931,6 +937,7 @@ void deco16SoundExit()
 	deco16_sound_enable[3] = 0;
 
 	deco16_sound_cpuclock = 0;
+	deco16_music_tempofix = 0;
 }
 
 void deco16SoundUpdate(INT16 *buf, INT32 len)

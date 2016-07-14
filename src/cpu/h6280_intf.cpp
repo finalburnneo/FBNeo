@@ -19,7 +19,6 @@ struct h6280_handler
 	UINT8 (*h6280Read)(UINT32 address);
 	void (*h6280Write)(UINT32 address, UINT8 data);
 	void (*h6280WriteIO)(UINT8 port, UINT8 data);
-	INT32 (*irqcallback)(INT32);
 	UINT8 *mem[3][PAGE_COUNT];
 
 	h6280_Regs *h6280;
@@ -63,7 +62,7 @@ void h6280SetIrqCallbackHandler(INT32 (*callback)(INT32))
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280SetIrqCallbackHandler called with no CPU open\n"));
 #endif
 
-	sPointer->irqcallback = callback;
+	h6280_irqcallback(callback);
 }
 
 void h6280SetWriteHandler(void (*write)(UINT32, UINT8))

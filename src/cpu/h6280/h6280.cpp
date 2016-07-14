@@ -174,6 +174,11 @@ static void h6280_init(int index, int clock, const void *config, int (*irqcallba
 }
 #endif
 
+void h6280_irqcallback(int (*irqcallback)(int))
+{
+	h6280.irq_callback = irqcallback;
+}
+
 void h6280Reset(void)
 {
 #if defined FBA_DEBUG

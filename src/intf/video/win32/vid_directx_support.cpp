@@ -573,6 +573,7 @@ static HFONT ShortMsgFont = NULL;
 
 static unsigned char nStatusSymbols[4] = {0x3B, 0xC2, 0x3D, 0x34}; //"pause", "record", "kaillera" and "play" in font Webdings, respectivelly
 static HFONT StatusFont = NULL;
+static HFONT StatusFontTiny = NULL;
 
 #define CHAT_SIZE 11
 
@@ -699,6 +700,11 @@ static void VidSExitStatus()
 	if (StatusFont) {
 		DeleteObject(StatusFont);
 		StatusFont = NULL;
+	}
+
+	if (StatusFontTiny) {
+		DeleteObject(StatusFontTiny);
+		StatusFontTiny = NULL;
 	}
 
 	RELEASE(pStatusSurf);
@@ -837,6 +843,7 @@ static int VidSInitStatus(int nFlags)
 	nStatusFlags = nFlags;
 
 	StatusFont = CreateFont(48, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
+	StatusFontTiny = CreateFont(20, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, DEFAULT_CHARSET, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Webdings"));
 	nPrevStatus = -1;
 
 	// create surface to display the text
@@ -1178,7 +1185,7 @@ static void VidSDisplayStatus(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 			pStatusSurf->GetDC(&hDC);
 			SetBkMode(hDC, TRANSPARENT);
-			hFont = (HFONT)SelectObject(hDC, StatusFont);
+			hFont = (HFONT)SelectObject(hDC, (nReplayStatus == 1) ? StatusFontTiny : StatusFont);
 			SetTextAlign(hDC, TA_TOP | TA_RIGHT);
 
 			MyTextOut(hDC, 192 - 2, 0, szStatus, _tcslen(szStatus), 2, RGB(0xFF, 0x3F, 0x3F));

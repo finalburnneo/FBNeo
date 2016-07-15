@@ -112,12 +112,17 @@ INT32 ReplayInput()
 	}
 
 	if (bReplayFrameCounterDisplay) {
-		wchar_t framestring[15];
+		wchar_t framestring[32];
 		swprintf(framestring, L"%d / %d", GetCurrentFrame() - nStartFrame,nTotalFrames);
 		VidSNewTinyMsg(framestring);
 	}
-	if ( (GetCurrentFrame()-nStartFrame) == (nTotalFrames-1) )
-		bRunPause=1;
+
+#if 0
+	if ( (GetCurrentFrame()-nStartFrame) == (nTotalFrames-1) ) {
+		//bRunPause = 1; // not needed, but reenable if problems -dink.
+		//bprintf(0, _T("testing. things.\n"));
+	}
+#endif
 
 	if (end_of_buffer) {
 		StopReplay();
@@ -771,7 +776,7 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 {
 	if (Msg == WM_INITDIALOG) {
-		wchar_t szFindPath[32] = L"recordings\\*.fr";
+		wchar_t szFindPath[MAX_PATH] = L"recordings\\*.fr";
 		WIN32_FIND_DATA wfd;
 		HANDLE hFind;
 		INT32 i = 0;

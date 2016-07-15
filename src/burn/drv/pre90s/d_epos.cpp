@@ -509,7 +509,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	AY8910Init(0, 2750000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

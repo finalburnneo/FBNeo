@@ -363,6 +363,7 @@ static INT32 MemIndex()
 	GP9001ROM[0]= Next; Next += nGP9001ROMSize[0];	// GP9001 tile data
 	YMZ280BROM	= Next;	Next += 0xC00000;
 	DefaultEEPROM = Next; Next += 0x000200;
+
 	RamStart	= Next;
 	ExtraTROM	= Next; Next += 0x008000;			// Extra Text layer tile data
 	ExtraTRAM	= Next; Next += 0x002000;			// Extra tile layer
@@ -373,46 +374,12 @@ static INT32 MemIndex()
 	GP9001RAM[0]= Next; Next += 0x004000;
 	GP9001Reg[0]= (UINT16*)Next; Next += 0x0100 * sizeof(UINT16);
 	RamEnd		= Next;
+
 	ToaPalette	= (UINT32 *)Next; Next += nColCount * sizeof(UINT32);
 	MemEnd		= Next;
 
  	ExtraTSelect= Ram01;							// Extra text layer scroll
 	ExtraTScroll= Ram01 + 0x000200;					// Extra text layer offset
-	return 0;
-}
-
-// Scan ram
-static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
-{
-	struct BurnArea ba;
-
-	if (pnMin) {						// Return minimum compatible version
-		*pnMin =  0x029521;
-	}
-
-	EEPROMScan(nAction, pnMin);			// Scan EEPROM
-
-	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
-		memset(&ba, 0, sizeof(ba));
-    ba.Data		= RamStart;
-		ba.nLen		= RamEnd - RamStart;
-		ba.szName	= "RAM";
-		BurnAcb(&ba);
-
-		SekScan(nAction);				// scan 68000 states
-		ZetScan(nAction);				// Scan Z80
-
-		YMZ280BScan();
-		BurnTimerScan(nAction, pnMin);
-
-		ToaScanGP9001(nAction, pnMin);
-
-		SCAN_VAR(DrvInput);
-		SCAN_VAR(nSoundData);
-		SCAN_VAR(Z80BusRQ);
-		SCAN_VAR(nIRQPending);
-	}
-
 	return 0;
 }
 
@@ -1064,6 +1031,52 @@ static INT32 DrvFrame()
 	}
 	
 	ZetClose();
+
+	return 0;
+}
+
+// Scan ram
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin) {						// Return minimum compatible version
+		*pnMin =  0x029521;
+	}
+
+	EEPROMScan(nAction, pnMin);			// Scan EEPROM
+
+	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= RamStart;
+		ba.nLen		= RamEnd - RamStart;
+		ba.szName	= "RAM";
+		BurnAcb(&ba);
+
+		SekScan(nAction);				// scan 68000 states
+		ZetScan(nAction);				// Scan Z80
+
+		YMZ280BScan();
+		BurnTimerScan(nAction, pnMin);
+
+		ToaScanGP9001(nAction, pnMin);
+
+		SCAN_VAR(DrvInput);
+		SCAN_VAR(nSoundData);
+		SCAN_VAR(nSoundlatchAck);
+		SCAN_VAR(nCyclesDone);
+		SCAN_VAR(Z80BusRQ);
+		SCAN_VAR(nIRQPending);
+		SCAN_VAR(nTextROMStatus);
+
+		if (nAction & ACB_WRITE) {
+			INT32 n = nTextROMStatus;
+			nTextROMStatus = -1;
+			SekOpen(0);
+			Map68KTextROM(n);
+			SekClose();
+		}
+	}
 
 	return 0;
 }

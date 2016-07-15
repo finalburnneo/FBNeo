@@ -105,8 +105,10 @@ INT32 ToaScanBCU2(INT32 nAction, INT32* pnMin);
 inline static void ToaGP9001SetRAMPointer(UINT32 wordValue, const INT32 nController = 0)
 {
 	extern UINT8* GP9001Pointer[2];
+	extern UINT32 GP9001PointerCfg[2];
 
 	wordValue &= 0x1FFF;
+	GP9001PointerCfg[nController] = wordValue; // for reconfig @ state load
 	GP9001Pointer[nController] = GP9001RAM[nController] + (wordValue << 1);
 }
 

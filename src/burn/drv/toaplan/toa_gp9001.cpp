@@ -31,6 +31,7 @@ UINT8* GP9001RAM[2];
 UINT16* GP9001Reg[2];
 
 UINT8* GP9001Pointer[2];
+UINT32 GP9001PointerCfg[2];
 INT32 GP9001Regnum[2];
 
 static UINT32* pTileQueue[32];
@@ -602,9 +603,14 @@ INT32 ToaScanGP9001(INT32 nAction, INT32* pnMin)
 
 		SCAN_VAR(nSpriteBuffer);
 
-		SCAN_VAR(GP9001Pointer);
+		SCAN_VAR(GP9001PointerCfg);
 		SCAN_VAR(GP9001Regnum);
 		SCAN_VAR(GP9001TileBank);
+		if (nAction & ACB_WRITE) {
+			for (INT32 i = 0; i < nControllers; i++) {
+				ToaGP9001SetRAMPointer(GP9001PointerCfg[i]);
+			}
+		}
 	}
 
 	return 0;

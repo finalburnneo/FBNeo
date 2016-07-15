@@ -447,17 +447,17 @@ static void drvZ80Bankswitch(INT32 nBank)
 }
 
 // Scan ram
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
 	if (pnMin) {						// Return minimum compatible version
 		*pnMin = 0x029497;
 	}
-	if (nAction & ACB_VOLATILE) {		// Scan volatile data
 
+	if (nAction & ACB_VOLATILE) {		// Scan volatile data
 		memset(&ba, 0, sizeof(ba));
-    	ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd-RamStart;
 		ba.szName	= "All Ram";
 		BurnAcb(&ba);
@@ -478,7 +478,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (nAction & ACB_WRITE) {
 			INT32 nBank = nCurrentBank;
 			nCurrentBank = -1;
-                        ZetOpen(0);               // March 28, 2014: Fix for crash on savestate load - dink
+			ZetOpen(0);
 			drvZ80Bankswitch(nBank);
 			ZetClose();
 		}

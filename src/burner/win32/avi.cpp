@@ -84,6 +84,10 @@ INT32 nAviStatus = 0;       // 1 (recording started), 0 (recording stopped)
 INT32 nAviIntAudio = 1;     // 1 (interleave audio aka audio enabled), 0 (do not interleave aka disable audio)
 INT32 nAvi3x = 0;           // set to !0 for 3x pixel expansion
 
+INT32 nAviSplit; // number of the split (@2gig) video
+COMPVARS compvarsave;        // compression options, for split
+char szAviFileName[MAX_PATH];
+
 static INT32 nAviFlags = 0;
 
 static struct FBAVI {
@@ -104,6 +108,7 @@ static struct FBAVI {
 	AVICOMPRESSOPTIONS opts; // compression options
 	// other 
 	UINT32 nFrameNum; // frame number for each compressed frame
+	LONG nAviSize;    // current bytes written, used to break up the avi @ the 2gig mark
 	INT32 nWidth;
 	INT32 nHeight;
 	UINT8 nLastDest; // number of the last pBitmapBuf# written to - for chaining effects
@@ -125,8 +130,15 @@ static INT32 AviCreateFile()
 	// Get the time
 	time(&currentTime);
     tmTime = localtime(&currentTime);
+
 	// construct our filename -> "romname-mm-dd-hms.avi"
-    sprintf(szFilePath, "%s%s-%.2d-%.2d-%.2d%.2d%.2d.avi", TAVI_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+
+	if (nAviSplit == 0) { // Create the filename @ the first file in our set
+		sprintf(szAviFileName, "%s%s-%.2d-%.2d-%.2d%.2d%.2d", TAVI_DIRECTORY, BurnDrvGetTextA(DRV_NAME), tmTime->tm_mon + 1, tmTime->tm_mday, tmTime->tm_hour, tmTime->tm_min, tmTime->tm_sec);
+	}
+
+	// add the set# and extension to our file.
+	sprintf(szFilePath, "%s_%X.avi", szAviFileName, nAviSplit);
 
 	hRet = AVIFileOpenA(
 				&FBAvi.pFile,           // returned file pointer
@@ -430,20 +442,24 @@ static INT32 AviCreateVidStream()
 	FBAvi.compvar.fccHandler = 0; // default compressor = uncompressed full frames
 	FBAvi.compvar.lQ = ICQUALITY_DEFAULT;
 
-	// let user choose the compressor and compression options
-	nRet = ICCompressorChoose(
-		hScrnWnd,
-		ICMF_CHOOSE_DATARATE | ICMF_CHOOSE_KEYFRAME,
-		(LPVOID) &FBAvi.bih, // uncompressed data input format
-		NULL,                // no preview window
-		&FBAvi.compvar,      // returned info
-		"Set video compression option");
-	if (!nRet) {
+	if (nAviSplit>0) { // next 2gig chunk, don't ask user for video type.
+		memmove(&FBAvi.compvar, &compvarsave, sizeof(COMPVARS));
+	} else {// let user choose the compressor and compression options
+		nRet = ICCompressorChoose(
+								  hScrnWnd,
+								  ICMF_CHOOSE_DATARATE | ICMF_CHOOSE_KEYFRAME,
+								  (LPVOID) &FBAvi.bih, // uncompressed data input format
+								  NULL,                // no preview window
+								  &FBAvi.compvar,      // returned info
+								  "Set video compression option");
+		if (!nRet) {
 #ifdef AVI_DEBUG
-		bprintf(0, _T("    AVI Error: ICCompressorChoose() failed.\n"));
-		ICCompressorFree(&FBAvi.compvar);
+			bprintf(0, _T("    AVI Error: ICCompressorChoose() failed.\n"));
+			ICCompressorFree(&FBAvi.compvar);
 #endif
-		return 1;
+			return 1;
+		}
+		memmove(&compvarsave, &FBAvi.compvar, sizeof(COMPVARS));
 	}
 
 	nAviFlags |= FBAVI_VID_SET; // flag |= video compression option is set
@@ -589,12 +605,15 @@ static INT32 AviCreateAudStream()
 	return 0;
 }
 
+INT32 AviStart_INT();
+void AviStop_INT();
 
 // Records 1 frame worth of data to the output stream
 // Returns: 0 (successful), 1 (failed)
 INT32 AviRecordFrame(INT32 bDraw)
 {
 	HRESULT hRet;
+	LONG wrote;
 	/*
 	When FBA is frame skipping (bDraw == 0), we don't
 	need to	build a new bitmap, nor encode video frame.
@@ -618,6 +637,8 @@ INT32 AviRecordFrame(INT32 bDraw)
 			MakeBitmap2x();            // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
 		}
 
+		wrote = 0;
+
 		// compress the bitmap and write to AVI output stream
 		hRet = AVIStreamWrite(
 			FBAvi.psVidCompressed,      // stream pointer
@@ -627,17 +648,21 @@ INT32 AviRecordFrame(INT32 bDraw)
 			FBAvi.bih.biSizeImage,      // size of this frame
 			AVIIF_KEYFRAME,             // flags
 			NULL,
-			NULL);
+			&wrote);
 		if (hRet != AVIERR_OK) {
 #ifdef AVI_DEBUG
 			bprintf(0, _T("    AVI Error: AVIStreamWrite() failed.\n"));
 #endif
 			return 1;
 		}
+
+		FBAvi.nAviSize += wrote;
 	}
 
 	// interleave audio
 	if (nAviIntAudio) {
+		wrote = 0;
+
 		// write the PCM audio data to AVI output stream
 		hRet = AVIStreamWrite(
 			FBAvi.psAud,                // stream pointer
@@ -647,16 +672,25 @@ INT32 AviRecordFrame(INT32 bDraw)
 			nBurnSoundLen<<2,           // size of data
 			AVIIF_KEYFRAME,             // flags
 			NULL,
-			NULL);
+			&wrote);
 		if (hRet != AVIERR_OK) {
 #ifdef AVI_DEBUG
 			bprintf(0, _T("    AVI Error: AVIStreamWrite() failed.\n"));
 #endif
 			return 1;
 		}
+		FBAvi.nAviSize += wrote;
 	}
 
 	FBAvi.nFrameNum++;
+
+	if (FBAvi.nAviSize >= 0x79000000) {
+		nAviSplit++;
+		bprintf(0, _T("    AVI Writer Split-Point 0x%X reached, creating new file.\n"), nAviSplit);
+		AviStop_INT();
+		AviStart_INT();
+	}
+
 	return 0;
 }
 
@@ -675,7 +709,7 @@ static void FreeBMP()
 }
 
 // Stops AVI recording.
-void AviStop()
+void AviStop_INT()
 {
 	if (nAviFlags & FBAVI_VFW_INIT) {
 		if (FBAvi.psAud) {
@@ -695,7 +729,8 @@ void AviStop()
 		}
 
 		if (nAviFlags & FBAVI_VID_SET) {
-			ICCompressorFree(&FBAvi.compvar);
+			if (nAviSplit == -1)
+				ICCompressorFree(&FBAvi.compvar);
 		}
 
 		AVIFileExit();
@@ -716,9 +751,16 @@ void AviStop()
 	}
 }
 
+void AviStop()
+{
+	nAviSplit = -1;
+	AviStop_INT();
+}
+
+
 // Starts AVI recording.
 // Returns: 0 (successful), 1 (failed)
-INT32 AviStart()
+INT32 AviStart_INT()
 {
 	// initialize local variables
 	memset (&FBAvi, 0, sizeof(FBAVI));
@@ -778,3 +820,11 @@ INT32 AviStart()
 	MenuEnableItems();
 	return 0;
 }
+
+INT32 AviStart()
+{
+	nAviSplit = 0;
+
+	return AviStart_INT();
+}
+

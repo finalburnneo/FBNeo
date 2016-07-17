@@ -1,10 +1,12 @@
 #include "burnint.h"
 
 static UINT8 K051733Ram[0x20];
+static UINT8 K051733RNG;
 
 void K051733Reset()
 {
 	memset (K051733Ram, 0, 0x20);
+	K051733RNG = 0;
 }
 
 void K051733Write(INT32 offset, INT32 data)
@@ -66,29 +68,30 @@ UINT8 K051733Read(INT32 offset)
 			return int_sqrt(op3<<16) & 0xff;
 
 		case 0x06:
-			return K051733Ram[0x13];
+			K051733RNG += K051733Ram[0x13];
+			return K051733RNG;
 
-		case 0x07:{
+		case 0x07: {
 			if (xobj1c + rad < xobj2c)
-				return 0x80;
+				return 0xff;
 
 			if (xobj2c + rad < xobj1c)
-				return 0x80;
+				return 0xff;
 
 			if (yobj1c + rad < yobj2c)
-				return 0x80;
+				return 0xff;
 
 			if (yobj2c + rad < yobj1c)
-				return 0x80;
+				return 0xff;
 
 			return 0;
 		}
 
 		case 0x0e:
-			return ~K051733Ram[offset];
+		    return (xobj2c - xobj1c) >> 8;
 
 		case 0x0f:
-			return ~K051733Ram[offset];
+			return (xobj2c - xobj1c) & 0xff;
 
 		default:
 			return K051733Ram[offset];
@@ -107,5 +110,7 @@ void K051733Scan(INT32 nAction)
 		ba.nLen	  = 0x20;
 		ba.szName = "K051733 Ram";
 		BurnAcb(&ba);
+
+		SCAN_VAR(K051733RNG);
 	}
 }

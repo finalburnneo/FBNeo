@@ -315,9 +315,8 @@ INT32 Cps1Frame()
 	nDisplayEnd = (nCpsCycles * (nFirstLine + 224)) / nCpsNumScanlines;	// Account for VBlank
 
 	SekOpen(0);
-	SekIdle(nCpsCyclesExtra);
 
-	SekRun(nCpsCycles * nFirstLine / nCpsNumScanlines);					// run 68K for the first few lines
+	SekRun((nCpsCycles * nFirstLine / nCpsNumScanlines) + nCpsCyclesExtra);					// run 68K for the first few lines
 
 	CpsObjGet();											// Get objects
 
@@ -338,12 +337,8 @@ INT32 Cps1Frame()
 		}
 
 		SekRun(nNext - SekTotalCycles());						// run 68K
-		
-//		if (pBurnDraw) {
-//			CpsDraw();										// Draw frame
-//		}
 	}
-	
+
 	if (pBurnDraw) {
 		CpsDraw();										// Draw frame
 	}

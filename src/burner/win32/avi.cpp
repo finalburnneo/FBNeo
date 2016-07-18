@@ -382,9 +382,7 @@ static INT32 MakeBitmap3x()
 
 // Sets the format for video stream.
 static void AviSetVidFormat()
-{                                 //   1x        1x        2x        3x
-	static UINT8 ExpansionScale[4] = { 1*aviBPP, 1*aviBPP, 4*aviBPP, 9*aviBPP };
-
+{
 	// set the format of bitmap
 	memset(&FBAvi.bih,0,sizeof(BITMAPINFOHEADER));
 	FBAvi.bih.biSize = sizeof(BITMAPINFOHEADER);
@@ -398,7 +396,7 @@ static void AviSetVidFormat()
 	FBAvi.bih.biPlanes = 1;
 	FBAvi.bih.biBitCount = 32;
 	FBAvi.bih.biCompression = BI_RGB;           // uncompressed RGB source
-	FBAvi.bih.biSizeImage = ExpansionScale[nAvi3x] * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
+	FBAvi.bih.biSizeImage = aviBPP * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
 }
 
 // Sets the format for the audio stream.

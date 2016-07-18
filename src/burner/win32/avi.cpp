@@ -11,7 +11,7 @@
 //
 //  - Supported bitdepths are 15, 16, 24, and 32.
 //
-//  - Avi will be recorded at original game resolution w/double pixels.
+//  - Avi will be recorded at original game resolution w/1x, 2x, 3x pixels.
 //
 //  - Video effects will not be recorded.
 //    (i.e. stretch, scanline, 3D effects, software effects)
@@ -21,6 +21,11 @@
 //---------------------------------------------------------------------------
 //
 // Version History:
+//
+// 0.9 - Added 1x, 2x, 3x (selectable w/nAvi3x) pixel recording. -dink
+//
+// 0.8 - Automatically split the video before the 2gig mark, to prevent
+//       corruption of the video. -dink
 //
 // 0.7 - completely re-worked the image-conversion process, using
 //       burner/sshot.cpp as an example. as a result of this:
@@ -114,7 +119,7 @@ static struct FBAVI {
 	UINT8 nLastDest; // number of the last pBitmapBuf# written to - for chaining effects
 	UINT8 *pBitmap; // pointer for buffer for bitmap
 	UINT8 *pBitmapBuf1; // buffer #1
-	UINT8 *pBitmapBuf2; // buffer #2 (flippy)
+	UINT8 *pBitmapBuf2; // buffer #2 (flippy, pBitmapBufX points to one of these depending on last effect used)
 } FBAvi;
 
 // Opens an avi file for writing.
@@ -813,8 +818,8 @@ INT32 AviStart_INT()
 		}
 	}
 
-	// record the first frame
-	if(AviRecordFrame(1)) {
+	// record the first frame (at init only, not on splits init)
+	if(nAviSplit == 0 && AviRecordFrame(1)) {
 		return 1;
 	}
 

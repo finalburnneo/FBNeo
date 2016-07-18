@@ -183,6 +183,7 @@
 #define IDC_CHECKUNAVAILABLE              	20137
 #define IDC_SYSINFO_LOG_SAVE                20138
 #define IDC_LOCAL_DOWNLOAD_LANG				20139
+#define IDC_SEL_SEARCHTIMER                 20140
 
 #define IDC_DRVCOUNT						20200
 #define IDC_TREE2							20201

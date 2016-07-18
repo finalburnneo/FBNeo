@@ -977,7 +977,19 @@ void MenuUpdate()
 	CheckMenuItem(hMenu, MENU_USEBLEND, bBurnUseBlend ? MF_CHECKED : MF_UNCHECKED);
 	
 #ifdef INCLUDE_AVI_RECORDING
-	CheckMenuItem(hMenu, MENU_AVI3X, nAvi3x ? MF_CHECKED : MF_UNCHECKED);
+	if (nAvi3x <= 1) {
+		nAvi3x = 1;
+		var = MENU_AVI1X;
+	}
+	if (nAvi3x == 2) {
+		var = MENU_AVI2X;
+	}
+	if (nAvi3x >= 3) {
+		nAvi3x = 3;
+		var = MENU_AVI3X;
+	}
+
+	CheckMenuRadioItem(hMenu, MENU_AVI1X, MENU_AVI3X, var, MF_BYCOMMAND);
 #endif
 
 	if (nAppThreadPriority == THREAD_PRIORITY_TIME_CRITICAL) {
@@ -1357,10 +1369,14 @@ void MenuEnableItems()
 		if (nAviStatus) {
 			EnableMenuItem(hMenu, MENU_AVISTART,	        MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AVI1X,		        MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AVI2X,		        MF_GRAYED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AVI3X,		        MF_GRAYED | MF_BYCOMMAND);
 		} else {
 			EnableMenuItem(hMenu, MENU_AVISTART,	        MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AVISTOP,		        MF_GRAYED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AVI1X,		        MF_ENABLED | MF_BYCOMMAND);
+			EnableMenuItem(hMenu, MENU_AVI2X,		        MF_ENABLED | MF_BYCOMMAND);
 			EnableMenuItem(hMenu, MENU_AVI3X,		        MF_ENABLED | MF_BYCOMMAND);
 		}
 #endif

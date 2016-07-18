@@ -82,7 +82,7 @@
 
 INT32 nAviStatus = 0;       // 1 (recording started), 0 (recording stopped)
 INT32 nAviIntAudio = 1;     // 1 (interleave audio aka audio enabled), 0 (do not interleave aka disable audio)
-INT32 nAvi3x = 0;           // set to !0 for 3x pixel expansion
+INT32 nAvi3x = 0;           // set 1 - 3 for 1x - 3x pixel expansion
 
 INT32 nAviSplit; // number of the split (@2gig) video
 COMPVARS compvarsave;        // compression options, for split
@@ -382,22 +382,23 @@ static INT32 MakeBitmap3x()
 
 // Sets the format for video stream.
 static void AviSetVidFormat()
-{
+{                                 //   1x        1x        2x        3x
+	static UINT8 ExpansionScale[4] = { 1*aviBPP, 1*aviBPP, 4*aviBPP, 9*aviBPP };
+
 	// set the format of bitmap
 	memset(&FBAvi.bih,0,sizeof(BITMAPINFOHEADER));
 	FBAvi.bih.biSize = sizeof(BITMAPINFOHEADER);
 
-	//INT32 ww,hh;
 	BurnDrvGetVisibleSize(&FBAvi.nWidth, &FBAvi.nHeight);
-	FBAvi.bih.biWidth = FBAvi.nWidth * ((nAvi3x) ? 3 : 2);
-	FBAvi.bih.biHeight = FBAvi.nHeight * ((nAvi3x) ? 3 : 2);
+	FBAvi.bih.biWidth = FBAvi.nWidth * nAvi3x;
+	FBAvi.bih.biHeight = FBAvi.nHeight * nAvi3x;
 
 	FBAvi.pBitmap = FBAvi.pBitmapBuf1;
 
 	FBAvi.bih.biPlanes = 1;
 	FBAvi.bih.biBitCount = 32;
-	FBAvi.bih.biCompression = BI_RGB;           // uncompressed RGB
-	FBAvi.bih.biSizeImage = ((nAvi3x) ? 9 : 4) * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
+	FBAvi.bih.biCompression = BI_RGB;           // uncompressed RGB source
+	FBAvi.bih.biSizeImage = ExpansionScale[nAvi3x] * FBAvi.bih.biWidth * FBAvi.bih.biHeight;
 }
 
 // Sets the format for the audio stream.
@@ -631,10 +632,9 @@ INT32 AviRecordFrame(INT32 bDraw)
 
 		MakeBitmapFlippedForEncoder();  // Mandatory, encoder needs image data to be flipped.
 
-		if (nAvi3x) {
-			MakeBitmap3x();            // Triple the pixels, for 720p/60hz* yt videos (yay!) *) if * 3 >= 720 && hz >= 60
-		} else {
-			MakeBitmap2x();            // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
+		switch (nAvi3x) {
+			case 2: MakeBitmap2x(); break; // Double the pixels, this must always happen otherwise the compression size and video quality - especially when uploaded to yt - will suck. -dink
+			case 3: MakeBitmap3x(); break; // Triple the pixels, for 720p/60hz* yt videos (yay!) *) if * 3 >= 720 && hz >= 60
 		}
 
 		wrote = 0;
@@ -770,6 +770,10 @@ INT32 AviStart_INT()
 	if (HIWORD(VideoForWindowsVersion()) < 0x010a){
 		// VFW verison is too old, disable AVI recording
 		return 1;
+	}
+
+	if (nAvi3x < 1 || nAvi3x > 3) {
+		nAvi3x = 2; // bad value, default to 2x pixels
 	}
 
 	AVIFileInit();

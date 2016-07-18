@@ -1026,12 +1026,17 @@ BEGIN
            MENUITEM "Use assembly MC68000 core (this session only)",				MENU_ASSEMBLYCORE
            MENUITEM SEPARATOR
 #endif
-           MENUITEM "Save High Scores when supported",				MENU_SAVEHISCORES
-		   MENUITEM "Use alpha blend effects when supported",		MENU_USEBLEND
+           MENUITEM "Save High Scores when supported",			MENU_SAVEHISCORES
+	   MENUITEM "Use alpha blend effects when supported",		MENU_USEBLEND
 #ifdef INCLUDE_AVI_RECORDING
-		   MENUITEM "AVI Writer Ouput 3x Pixels",					MENU_AVI3X
+	   POPUP "AVI Writer Output size"
+       	   BEGIN
+	      MENUITEM "1x",						MENU_AVI1X
+	      MENUITEM "2x",						MENU_AVI2X
+	      MENUITEM "3x",						MENU_AVI3X
+	   END
 #endif
-		END
+	END
         MENUITEM SEPARATOR
         POPUP    "Generate dat file"
         BEGIN

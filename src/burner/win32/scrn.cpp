@@ -1845,8 +1845,16 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 			
 #ifdef INCLUDE_AVI_RECORDING
+		case MENU_AVI1X:
+			nAvi3x = 1;
+			break;
+
+		case MENU_AVI2X:
+			nAvi3x = 2;
+			break;
+
 		case MENU_AVI3X:
-			nAvi3x = !nAvi3x;
+			nAvi3x = 3;
 			break;
 #endif
 			

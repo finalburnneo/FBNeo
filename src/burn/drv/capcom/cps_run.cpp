@@ -421,10 +421,9 @@ INT32 Cps2Frame()
 	}
 	ScheduleIRQ();
 
-	SekIdle(nCpsCyclesExtra);
-
 	if (nIrqCycles < nCpsCycles * nFirstLine / nCpsNumScanlines) {
-		SekRun(nIrqCycles);
+		SekRun(nIrqCycles + nCpsCyclesExtra);
+		nCpsCyclesExtra = 0;
 		DoIRQ();
 	}
 	nNext = nCpsCycles * nFirstLine / nCpsNumScanlines;

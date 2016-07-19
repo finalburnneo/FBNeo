@@ -962,6 +962,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			break;
 		case MENU_STOPREPLAY:
 			StopReplay();
+			SetPauseMode(1);
 			break;
 
 #ifdef INCLUDE_AVI_RECORDING

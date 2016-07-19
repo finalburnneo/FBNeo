@@ -148,10 +148,7 @@ static int RunFrame(int bDraw, int bPause)
 			if (nReplayStatus == 2) {
 				GetInput(false);				// Update burner inputs, but not game inputs
 				if (ReplayInput()) {			// Read input from file
-					bAltPause = 1;
-					bRunPause = 1;
-					// clear audio buffer here. -dink
-					AudBlankSound();
+					SetPauseMode(1);            // Replay has finished
 					MenuEnableItems();
 					InputSetCooperativeLevel(false, false);
 					return 0;

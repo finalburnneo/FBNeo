@@ -137,6 +137,12 @@ INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)
 				nBurnDrvActive = nCurrentGame;
 				return -3;
 			} else {
+				if (nCurrentGame != nBurnDrvActive) {
+					INT32 nOldActive = nBurnDrvActive;  // Exit current game if loading a state from another game
+					nBurnDrvActive = nCurrentGame;
+					DrvExit();
+					nBurnDrvActive = nOldActive;
+				}
 				if (pLoadGame == NULL) {
 					return -1;
 				}

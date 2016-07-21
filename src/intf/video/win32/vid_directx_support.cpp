@@ -821,7 +821,8 @@ static int VidSInitJoystickMsg(int /*nFlags*/)
 
 	VidSExitJoystickMsg();
 
-	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
+	//JoystickMsgFont = CreateFont(12, 0, 0, 0, FW_DEMIBOLD, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
+	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, OUT_OUTLINE_PRECIS, 0, 0, NONANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
 	VidSJoystickMsg.nTimer = 0;
 
 	// create surface to display the text
@@ -1698,13 +1699,7 @@ int VidSNewJoystickMsg(const TCHAR* pText, int nRGB, int nDuration, int nLineNo)
 		hFont = (HFONT)SelectObject(hDC, JoystickMsgFont);
 		SetTextAlign(hDC, TA_TOP | TA_LEFT);
 
-		// Print a black shadow
-		SetTextColor(hDC, 0);
-		TextOut(hDC, 40, 10+(nLineNo*8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText));
-
-		// Print the text on top
-		SetTextColor(hDC, VidSJoystickMsg.nColour);
-		TextOut(hDC, 40, 10+(nLineNo*8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText));
+		MyTextOut(hDC, 40, 7+(nLineNo*8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText), 0, VidSJoystickMsg.nColour);
 
 		// Clean up
 		SelectObject(hDC, hFont);

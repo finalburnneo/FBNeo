@@ -599,11 +599,15 @@ static int nEditShadowOffset;
 static struct { TCHAR pMsgText[64]; COLORREF nColour; int nPriority; unsigned int nTimer; } VidSTinyMsg = {_T(""), 0, 0, 0};
 static HFONT TinyMsgFont = NULL;
 
+static struct { TCHAR pMsgText[64]; COLORREF nColour; int nLineNo; unsigned int nTimer; } VidSJoystickMsg = {_T(""), 0, 0, 0};
+static HFONT JoystickMsgFont = NULL;
+
 static IDirectDrawSurface7* pShortMsgSurf = NULL;
 static IDirectDrawSurface7* pStatusSurf = NULL;
 static IDirectDrawSurface7* pChatSurf = NULL;
 static IDirectDrawSurface7* pEditSurf = NULL;
 static IDirectDrawSurface7* pTinyMsgSurf = NULL;
+static IDirectDrawSurface7* pJoystickMsgSurf = NULL;
 
 static unsigned int nKeyColour = 0x000001;
 
@@ -683,6 +687,18 @@ static void VidSExitTinyMsg()
 	RELEASE(pTinyMsgSurf);
 }
 
+static void VidSExitJoystickMsg()
+{
+	VidSJoystickMsg.nTimer = 0;
+
+	if (JoystickMsgFont) {
+		DeleteObject(JoystickMsgFont);
+		JoystickMsgFont = NULL;
+	}
+
+	RELEASE(pJoystickMsgSurf);
+}
+
 static void VidSExitShortMsg()
 {
 	VidSShortMsg.nTimer = 0;
@@ -756,6 +772,7 @@ static void VidSExitEdit()
 void VidSExitOSD()
 {
 	VidSExitTinyMsg();
+	VidSExitJoystickMsg();
 	if (kNetGame) {
 		VidSExitEdit();
 	}
@@ -794,6 +811,40 @@ static int VidSInitTinyMsg(int /*nFlags*/)
 	}
 
 	VidSClearSurface(pTinyMsgSurf, nKeyColour, NULL);
+
+	return 0;
+}
+
+static int VidSInitJoystickMsg(int /*nFlags*/)
+{
+	DDSURFACEDESC2 ddsd;
+
+	VidSExitJoystickMsg();
+
+	JoystickMsgFont = CreateFont(8, 0, 0, 0, FW_THIN, 0, 0, 0, 0, 0, 0, ANTIALIASED_QUALITY, FF_SWISS, _T("Courier New"));
+	VidSJoystickMsg.nTimer = 0;
+
+	// create surface to display the text
+	memset(&ddsd, 0, sizeof(ddsd));
+	ddsd.dwSize = sizeof(ddsd);
+	ddsd.dwFlags = DDSD_CAPS | DDSD_WIDTH | DDSD_HEIGHT | DDSD_CKSRCBLT;
+
+	ddsd.ddsCaps.dwCaps = DDSCAPS_OFFSCREENPLAIN | DDSCAPS_VIDEOMEMORY;
+
+	ddsd.dwWidth = 300;
+	ddsd.dwHeight = 60;
+
+	ddsd.ddckCKSrcBlt.dwColorSpaceLowValue = nKeyColour;
+	ddsd.ddckCKSrcBlt.dwColorSpaceHighValue = nKeyColour;
+
+	if (FAILED(pDD->CreateSurface(&ddsd, &pJoystickMsgSurf, NULL))) {
+#ifdef PRINT_DEBUG_INFO
+		printf("  * Error: Couldn't create OSD texture.\n");
+#endif
+		return 1;
+	}
+
+	VidSClearSurface(pJoystickMsgSurf, nKeyColour, NULL);
 
 	return 0;
 }
@@ -1006,6 +1057,9 @@ int VidSInitOSD(int nFlags)
 	if (VidSInitTinyMsg(nFlags)) {
 		return 1;
 	}
+	if (VidSInitJoystickMsg(nFlags)) {
+		return 1;
+	}
 
 	return 0;
 }
@@ -1031,6 +1085,17 @@ int VidSRestoreOSD()
 			VidSClearSurface(pTinyMsgSurf, nKeyColour, NULL);
 
 			VidSTinyMsg.nTimer = 0;
+		}
+	}
+
+	if (pJoystickMsgSurf) {
+		if (FAILED(pJoystickMsgSurf->IsLost())) {
+		if (FAILED(pJoystickMsgSurf->Restore())) {
+				return 1;
+			}
+			VidSClearSurface(pJoystickMsgSurf, nKeyColour, NULL);
+
+			VidSJoystickMsg.nTimer = 0;
 		}
 	}
 
@@ -1096,6 +1161,37 @@ static void VidSDisplayTinyMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 
 		// Blit the message to the surface using a colourkey
 		pSurf->Blt(&dest, pTinyMsgSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
+	}
+}
+
+static void VidSDisplayJoystickMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
+{
+	if (VidSJoystickMsg.nTimer) {
+		RECT src = { 0, 0, 300, 60 }; // left top right bottom
+		RECT dest = { 0, pRect->bottom - 60, 300, pRect->bottom };
+
+		// Switch off message display when the message has been displayed long enough
+		if (nFramesEmulated > VidSJoystickMsg.nTimer) {
+			VidSJoystickMsg.nTimer = 0;
+		}
+
+		if (dest.left < pRect->left) {
+			src.left = pRect->left - dest.left;
+			dest.left = pRect->left;
+		}
+
+		if (nZoom & 2) {
+			dest.top <<= 1;
+			dest.bottom <<= 1;
+		}
+
+		if (nZoom & 1) {
+			dest.left <<= 1;
+			dest.right <<= 1;
+		}
+
+		// Blit the message to the surface using a colourkey
+		pSurf->Blt(&dest, pJoystickMsgSurf, &src, DDBLT_ASYNC | DDBLT_KEYSRC, NULL);
 	}
 }
 
@@ -1492,6 +1588,7 @@ void VidSDisplayOSD(IDirectDrawSurface7* pSurf, RECT* pRect, int nFlags)
 
 	VidSDisplayStatus(pSurf, pRect);
 	VidSDisplayTinyMsg(pSurf, pRect);
+	VidSDisplayJoystickMsg(pSurf, pRect);
 	VidSDisplayShortMsg(pSurf, pRect);
 	VidSDisplayChat(pSurf, pRect);
 	if (kNetGame) {
@@ -1557,7 +1654,65 @@ int VidSNewTinyMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	/
 	}
 
 	return 0;
- }
+}
+
+int VidSNewJoystickMsg(const TCHAR* pText, int nRGB, int nDuration, int nLineNo)	// int nRGB = 0, int nDuration = 0, int nLineNo = 0
+{
+	if (!pText) { // NULL passed, clear surface
+		VidSClearSurface(pJoystickMsgSurf, nKeyColour, NULL);
+		return 0;
+	}
+
+	int nSize = _tcslen(pText);
+	if (nSize > 63) {
+		nSize = 63;
+	}
+	_tcsncpy(VidSJoystickMsg.pMsgText, pText, nSize);
+	VidSJoystickMsg.pMsgText[nSize] = 0;
+
+	if (nRGB) {
+		// Convert RGB value to COLORREF
+		VidSJoystickMsg.nColour = RGB((nRGB >> 16), ((nRGB >> 8) & 0xFF), (nRGB & 0xFF));
+	} else {
+		// Default message colour (yellow)
+		VidSJoystickMsg.nColour = RGB(0xFF, 0xFF, 0x7F);
+	}
+	if (nDuration) {
+		VidSJoystickMsg.nTimer = nFramesEmulated + nDuration;
+	} else {
+		VidSJoystickMsg.nTimer = nFramesEmulated + 120;
+	}
+	VidSJoystickMsg.nLineNo = nLineNo;
+
+	{
+		if (pJoystickMsgSurf == NULL) {
+			return 1;
+		}
+
+		// Print the message
+		HDC hDC;
+		HFONT hFont;
+
+		pJoystickMsgSurf->GetDC(&hDC);
+		SetBkMode(hDC, TRANSPARENT);
+		hFont = (HFONT)SelectObject(hDC, JoystickMsgFont);
+		SetTextAlign(hDC, TA_TOP | TA_LEFT);
+
+		// Print a black shadow
+		SetTextColor(hDC, 0);
+		TextOut(hDC, 40, 10+(nLineNo*8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText));
+
+		// Print the text on top
+		SetTextColor(hDC, VidSJoystickMsg.nColour);
+		TextOut(hDC, 40, 10+(nLineNo*8), VidSJoystickMsg.pMsgText, _tcslen(VidSJoystickMsg.pMsgText));
+
+		// Clean up
+		SelectObject(hDC, hFont);
+		pJoystickMsgSurf->ReleaseDC(hDC);
+	}
+
+	return 0;
+}
 
 int VidSNewShortMsg(const TCHAR* pText, int nRGB, int nDuration, int nPriority)	// int nRGB = 0, int nDuration = 0, int nPriority = 5
 {
@@ -1625,6 +1780,11 @@ void VidSKillShortMsg()
 }
 
 void VidSKillTinyMsg()
+{
+	VidSTinyMsg.nTimer = 0;
+}
+
+void VidSKillJoystickMsg()
 {
 	VidSTinyMsg.nTimer = 0;
 }

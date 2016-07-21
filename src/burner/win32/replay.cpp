@@ -14,6 +14,7 @@ wchar_t wszMetadata[MAX_METADATA];
 
 INT32 nReplayStatus = 0; // 1 record, 2 replay, 0 nothing
 bool bReplayReadOnly = false;
+bool bReplayShowMovement = false;
 bool bReplayDontClose = false;
 INT32 nReplayUndoCount = 0;
 bool bReplayFrameCounterDisplay = 1;
@@ -79,6 +80,78 @@ INT32 RecordInput()
 	return 0;
 }
 
+static void PrintInputs()
+{
+	struct BurnInputInfo bii;
+
+	UINT8 UDLR[2][4]; // P1 & P2 joystick movements
+	UINT8 BUTTONS[2][6]; // P1 and P2 buttons
+	UINT8 OFFBUTTONS[2][6]; // P1 and P2 buttons
+
+	wchar_t lines[3][64];
+
+	memset(&lines, 0, sizeof(lines));
+	memset(UDLR, 0, sizeof(UDLR));
+	memset(BUTTONS, ' ', sizeof(BUTTONS));
+	memset(OFFBUTTONS, ' ', sizeof(OFFBUTTONS));
+
+	for (UINT32 i = 0; i < nGameInpCount; i++) {
+		memset(&bii, 0, sizeof(bii));
+		BurnDrvGetInputInfo(&bii, i);
+		if (bii.pVal) {
+			if (!(bii.nType & BIT_GROUP_ANALOG) && *bii.pVal && bii.szInfo) {
+				if (stricmp(bii.szInfo+2, " Up")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
+						UDLR[(bii.szInfo[1] - '1')][0] = 1;
+				}
+				if (stricmp(bii.szInfo+2, " Down")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
+						UDLR[(bii.szInfo[1] - '1')][1] = 1;
+				}
+				if (stricmp(bii.szInfo+2, " Left")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
+						UDLR[(bii.szInfo[1] - '1')][2] = 1;
+				}
+				if (stricmp(bii.szInfo+2, " Right")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
+						UDLR[(bii.szInfo[1] - '1')][3] = 1;
+				}
+				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						BUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
+					}
+				}
+			} else if (bii.szInfo) { // get "off" buttons
+				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						OFFBUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
+					}
+				}
+			}
+		}
+	}
+
+	VidSNewJoystickMsg(NULL); // Clear surface.
+	swprintf(lines[0], L"  ^   %c%c  ", OFFBUTTONS[0][0], OFFBUTTONS[0][1]);
+	swprintf(lines[1], L" < >  %c%c  ", OFFBUTTONS[0][2], OFFBUTTONS[0][3]);
+	swprintf(lines[2], L"  v   %c%c  ", OFFBUTTONS[0][4], OFFBUTTONS[0][5]);
+	VidSNewJoystickMsg(lines[0], 0x404040, 120, 0); // Draw shadows
+	VidSNewJoystickMsg(lines[1], 0x404040, 120, 1);
+	VidSNewJoystickMsg(lines[2], 0x404040, 120, 2);
+
+	INT32 nLen = 0;
+	for (INT32 i = 0; i < 2; i++) {
+		if (i == 1) nLen = _tcslen(lines[0]); // Create the textual mini-joystick icons
+		swprintf(lines[0] + nLen, L"  %c   %c%c", UDLR[i][0] ? '^' : ' ', BUTTONS[i][0], BUTTONS[i][1]);
+		swprintf(lines[1] + nLen, L" %c %c  %c%c", UDLR[i][2] ? '<' : ' ', UDLR[i][3] ? '>' : ' ', BUTTONS[i][2], BUTTONS[0][3]);
+		swprintf(lines[2] + nLen, L"  %c  %c%c", UDLR[i][1] ? 'v' : ' ', BUTTONS[i][4], BUTTONS[i][5]);
+	}
+
+	VidSNewJoystickMsg(lines[0], 0xffffff, 120, 0); // Draw them
+	VidSNewJoystickMsg(lines[1], 0xffffff, 120, 1);
+	VidSNewJoystickMsg(lines[2], 0xffffff, 120, 2);
+}
+
 INT32 ReplayInput()
 {
 	UINT8 n;
@@ -115,6 +188,10 @@ INT32 ReplayInput()
 		wchar_t framestring[32];
 		swprintf(framestring, L"%d / %d", GetCurrentFrame() - nStartFrame,nTotalFrames);
 		VidSNewTinyMsg(framestring);
+	}
+
+	if (bReplayShowMovement) {
+		PrintInputs();
 	}
 
 #if 0
@@ -168,6 +245,8 @@ INT32 StartRecord()
 	}
 
 	bReplayReadOnly = false;
+	bReplayShowMovement = false;
+
 	if (bStartFromReset) {
 		if(!StartFromReset()) return 1;
 		movieFlags |= MOVIE_FLAG_FROM_POWERON;
@@ -606,7 +685,12 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 	SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "");
 	EnableWindow(GetDlgItem(hDlg, IDC_READONLY), FALSE);
 	SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
+
+	EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), FALSE);
+	SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, BST_UNCHECKED, 0);
+
 	EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
+
 	if(bClear) {
 		return;
 	}
@@ -656,6 +740,11 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 	} else {
 		EnableWindow(GetDlgItem(hDlg, IDC_READONLY), TRUE);
 		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0); //read-only by default
+	}
+
+	EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), TRUE);
+	if (bReplayShowMovement) {
+		SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, BST_CHECKED, 0);
 	}
 
 
@@ -835,7 +924,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 							if (lIndex == lCount - 1) {
 								MakeOfn(szFilter);
 								ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_REPLAY, true);
-								ofn.Flags &= ~OFN_HIDEREADONLY;
+								//ofn.Flags &= ~OFN_HIDEREADONLY;
 
 								INT32 nRet = GetOpenFileName(&ofn);
 								if (nRet != 0) {
@@ -862,6 +951,13 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 								if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_READONLY, BM_GETCHECK, 0, 0)) {
 									bReplayReadOnly = true;
 								}
+
+								// get show movements status
+								bReplayShowMovement = false;
+								if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_GETCHECK, 0, 0)) {
+									bReplayShowMovement = true;
+								}
+
 								EndDialog(hDlg, 1);					// only allow OK if a valid selection was made
 							}
 						}

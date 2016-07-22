@@ -1169,7 +1169,7 @@ static void VidSDisplayJoystickMsg(IDirectDrawSurface7* pSurf, RECT* pRect)
 {
 	if (VidSJoystickMsg.nTimer) {
 		RECT src = { 0, 0, 300, 60 }; // left top right bottom
-		RECT dest = { 0, pRect->bottom - 60, 300, pRect->bottom };
+		RECT dest = { pRect->left, pRect->bottom - 60, pRect->left + 300, pRect->bottom };
 
 		// Switch off message display when the message has been displayed long enough
 		if (nFramesEmulated > VidSJoystickMsg.nTimer) {

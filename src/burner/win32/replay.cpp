@@ -87,13 +87,18 @@ static void PrintInputsReset()
 	nPrintInputsActive[0] = nPrintInputsActive[1] = -(60 * 5);
 }
 
+static inline void PrintInputsSetActive(UINT8 plyrnum)
+{
+	nPrintInputsActive[plyrnum] = GetCurrentFrame();
+}
+
 static void PrintInputs()
 {
 	struct BurnInputInfo bii;
 
 	UINT8 UDLR[2][4]; // P1 & P2 joystick movements
-	UINT8 BUTTONS[2][6]; // P1 and P2 buttons
-	UINT8 OFFBUTTONS[2][6]; // P1 and P2 buttons
+	UINT8 BUTTONS[2][8]; // P1 and P2 buttons
+	UINT8 OFFBUTTONS[2][8]; // P1 and P2 buttons
 	wchar_t lines[3][64];
 
 	memset(&lines, 0, sizeof(lines));
@@ -104,36 +109,45 @@ static void PrintInputs()
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		memset(&bii, 0, sizeof(bii));
 		BurnDrvGetInputInfo(&bii, i);
-		if (bii.pVal) {
-			if (!(bii.nType & BIT_GROUP_ANALOG) && *bii.pVal && bii.szInfo) {
-				if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
-					nPrintInputsActive[(bii.szInfo[1] - '1')] = GetCurrentFrame();
-				}
+		if (bii.pVal && !(bii.nType & BIT_GROUP_ANALOG) && bii.szInfo && bii.szInfo[0]) {
+			if (*bii.pVal) { // Button pressed
 				if (stricmp(bii.szInfo+2, " Up")==0) {
-					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
-						UDLR[(bii.szInfo[1] - '1')][0] = 1;
-				}
-				if (stricmp(bii.szInfo+2, " Down")==0) {
-					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
-						UDLR[(bii.szInfo[1] - '1')][1] = 1;
-				}
-				if (stricmp(bii.szInfo+2, " Left")==0) {
-					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
-						UDLR[(bii.szInfo[1] - '1')][2] = 1;
-				}
-				if (stricmp(bii.szInfo+2, " Right")==0) {
-					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')
-						UDLR[(bii.szInfo[1] - '1')][3] = 1;
-				}
-				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
-						BUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
+						UDLR[(bii.szInfo[1] - '1')][0] = 1;
+						PrintInputsSetActive(bii.szInfo[1] - '1');
 					}
 				}
-			} else if (bii.szInfo) { // get "off" buttons
+				if (stricmp(bii.szInfo+2, " Down")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						UDLR[(bii.szInfo[1] - '1')][1] = 1;
+						PrintInputsSetActive(bii.szInfo[1] - '1');
+					}
+				}
+				if (stricmp(bii.szInfo+2, " Left")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						UDLR[(bii.szInfo[1] - '1')][2] = 1;
+						PrintInputsSetActive(bii.szInfo[1] - '1');
+					}
+				}
+				if (stricmp(bii.szInfo+2, " Right")==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2')  {
+						UDLR[(bii.szInfo[1] - '1')][3] = 1;
+						PrintInputsSetActive(bii.szInfo[1] - '1');
+					}
+				}
 				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
-						OFFBUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
+						if (bii.szInfo[8] - '1' < 6) { // avoid overflow
+							BUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
+							PrintInputsSetActive(bii.szInfo[1] - '1');
+						}
+					}
+				}
+			} else { // get "off" buttons
+				if (strnicmp(bii.szInfo+2, " fire ", 6)==0) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						if (bii.szInfo[8] - '1' < 6) // avoid overflow
+							OFFBUTTONS[(bii.szInfo[1] - '1')][bii.szInfo[8] - '1'] = bii.szInfo[8];
 					}
 				}
 			}
@@ -165,7 +179,7 @@ static void PrintInputs()
 	for (INT32 i = 0; i < 2; i++) {
 		if (i == 1) nLen = _tcslen(lines[0]); // Create the textual mini-joystick icons
 		swprintf(lines[0] + nLen, L"  %c   %c%c  ", UDLR[i][0] ? '^' : ' ', BUTTONS[i][0], BUTTONS[i][1]);
-		swprintf(lines[1] + nLen, L" %c %c  %c%c  ", UDLR[i][2] ? '<' : ' ', UDLR[i][3] ? '>' : ' ', BUTTONS[i][2], BUTTONS[0][3]);
+		swprintf(lines[1] + nLen, L" %c %c  %c%c  ", UDLR[i][2] ? '<' : ' ', UDLR[i][3] ? '>' : ' ', BUTTONS[i][2], BUTTONS[i][3]);
 		swprintf(lines[2] + nLen, L"  %c  %c%c  ", UDLR[i][1] ? 'v' : ' ', BUTTONS[i][4], BUTTONS[i][5]);
 	}
 	VidSNewJoystickMsg(lines[0], 0xffffff, 20, 0); // Draw them
@@ -700,6 +714,15 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 		bReadOnlyStatus = (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_READONLY, BM_GETCHECK, 0, 0));
 	}
 
+	//bReplayShowMovement = false;
+	if (IsWindowEnabled(GetDlgItem(hDlg, IDC_SHOWMOVEMENT))) {
+		if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_GETCHECK, 0, 0)) {
+			bReplayShowMovement = true;
+		}
+	}
+
+	bReplayReadOnly = bReadOnlyStatus;
+
 	// set default values
 	SetDlgItemTextA(hDlg, IDC_LENGTH, "");
 	SetDlgItemTextA(hDlg, IDC_FRAMES, "");
@@ -762,14 +785,11 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
 	} else {
 		EnableWindow(GetDlgItem(hDlg, IDC_READONLY), TRUE);
-		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0); //read-only by default
+		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, (bReplayReadOnly) ? BST_CHECKED : BST_UNCHECKED, 0); //read-only by default
 	}
 
 	EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), TRUE);
-	if (bReplayShowMovement) {
-		SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, BST_CHECKED, 0);
-	}
-
+	SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, (bReplayShowMovement) ? BST_CHECKED : BST_UNCHECKED, 0);
 
 	memset(ReadHeader, 0, 4);
 	fread(ReadHeader, 1, 4, fd);						// Read identifier
@@ -893,7 +913,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 		HANDLE hFind;
 		INT32 i = 0;
 
-		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
+		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
 
 		memset(&wfd, 0, sizeof(WIN32_FIND_DATA));
 		if (bDrvOkay) {
@@ -949,7 +969,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 								ofn.lpstrTitle = FBALoadStringEx(hAppInst, IDS_REPLAY_REPLAY, true);
 								//ofn.Flags &= ~OFN_HIDEREADONLY;
 
-								INT32 nRet = GetOpenFileName(&ofn);
+								INT32 nRet = GetOpenFileName(&ofn); // Browse...
 								if (nRet != 0) {
 									LONG lOtherIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_FINDSTRING, (WPARAM)-1, (LPARAM)szChoice);
 									if (lOtherIndex != CB_ERR) {
@@ -962,7 +982,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 									// restore focus to the dialog
 									SetFocus(GetDlgItem(hDlg, IDC_CHOOSE_LIST));
 									DisplayReplayProperties(hDlg, false);
-									if (ofn.Flags & OFN_READONLY) {
+									if (ofn.Flags & OFN_READONLY || bReplayReadOnly) {
 										SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
 									} else {
 										SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);

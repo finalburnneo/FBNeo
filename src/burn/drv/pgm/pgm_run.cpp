@@ -10,7 +10,7 @@ UINT8 PgmJoy3[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmJoy4[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmBtn1[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmBtn2[8] = {0,0,0,0,0,0,0,0};
-UINT8 PgmInput[9] = {0,0,0,0,0,0,0,0, 0};
+UINT8 PgmInput[9] = {0,0,0,0,0,0,0,0,0};
 UINT8 PgmReset = 0;
 
 INT32 nPGM68KROMLen = 0;
@@ -61,13 +61,14 @@ UINT32 nPgmAsicRegionHackAddress = 0;
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 #define Z80_CYCS_PER_FRAME	(( 8468000 * 100) / nBurnFPS)
 
-#define	PGM_INTER_LEAVE	100
+#define	PGM_INTER_LEAVE	200
 
 #define M68K_CYCS_PER_INTER	(M68K_CYCS_PER_FRAME / PGM_INTER_LEAVE)
 #define ARM7_CYCS_PER_INTER	(ARM7_CYCS_PER_FRAME / PGM_INTER_LEAVE)
 #define Z80_CYCS_PER_INTER	(Z80_CYCS_PER_FRAME  / PGM_INTER_LEAVE)
 
 static INT32 nCyclesDone[3];
+static INT32 nExtraCycles;
 
 static INT32 pgmMemIndex()
 {
@@ -488,6 +489,7 @@ INT32 PgmDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
+	nExtraCycles = 0;
 
 	if (nEnableArm7) {
 		Arm7Open(0);
@@ -860,7 +862,9 @@ INT32 pgmFrame()
 
 		INT32 cycles = M68K_CYCS_PER_INTER;
 
-		nCyclesDone[0] += SekRun(cycles);
+		INT32 nSegmentS = (M68K_CYCS_PER_FRAME - nCyclesDone[0]) / (PGM_INTER_LEAVE - i);
+		nCyclesDone[0] += SekRun(nSegmentS + nExtraCycles);
+		nExtraCycles = 0;
 
 		if (nEnableArm7) {
 			cycles = SekTotalCycles() - Arm7TotalCycles();
@@ -893,6 +897,9 @@ INT32 pgmFrame()
 	ics2115_update(pBurnSoundOut, nBurnSoundLen);
 
 	if (nEnableArm7) Arm7Close();
+
+	nExtraCycles = SekTotalCycles() - M68K_CYCS_PER_FRAME;
+
 	ZetClose();
 	SekClose();
 

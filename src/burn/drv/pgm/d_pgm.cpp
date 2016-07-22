@@ -3,6 +3,7 @@
 // Based on information from ElSemi, Haze (David Haywood), and XingXing
 
 #include "pgm.h"
+#include "ics2115.h"
 
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "", 0, 0, 0 },
@@ -2673,7 +2674,11 @@ static INT32 ddp2Init()
 
 	INT32 nRet = pgmInit();
 
-	Arm7SetIdleLoopAddress(0x8010998);
+	if (!nRet) {
+		ICS2115_ddp2beestormmode = 1; // hack to fix volume fadeouts in ddp2 bee storm
+
+		Arm7SetIdleLoopAddress(0x8010998);
+	}
 
 	return nRet;
 }

@@ -18,6 +18,8 @@ static void (*m_irq_cb)(INT32) = NULL; // cpu irq callback
 static INT32 sound_cpu_clock = 0;
 static INT16 *stream = NULL;
 
+INT32 ICS2115_ddp2beestormmode = 0; // hack to fix volume fadeouts in ddp2 bee storm
+
 struct ics2115_voice {
 	struct {
 		INT32 left;
@@ -158,6 +160,7 @@ void ics2115_exit()
 	m_rom_len = 0;
 	m_irq_cb= NULL;
 	sound_cpu_clock = 0;
+	ICS2115_ddp2beestormmode = 0;
 
 	DebugSnd_ICS2115Initted = 0;
 }
@@ -209,6 +212,7 @@ void ics2115_reset()
 int ics2115_voice::update_volume_envelope()
 {
 	int ret = 0;
+
 	if(vol_ctrl.bitflags.done || vol_ctrl.bitflags.stop)
 		return ret;
 
@@ -377,8 +381,10 @@ static int ics2115_fill_output(ics2115_voice& voice, INT16 *outputs, int samples
 		if (voice.playing()) {
 			if (voice.update_oscillator())
 				irq_invalid = true;
-			if (voice.update_volume_envelope())
-				irq_invalid = true;
+			if (ICS2115_ddp2beestormmode == 0) {
+				if (voice.update_volume_envelope())
+					irq_invalid = true;
+			}
 		}
 	}
 	return irq_invalid;

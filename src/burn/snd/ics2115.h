@@ -6,3 +6,5 @@ void ics2115_adjust_timer(INT32 ticks);
 void ics2115_update(INT16 *outputs, int samples);
 void ics2115_exit();
 void ics2115_scan(INT32 nAction,INT32 * /*pnMin*/);
+
+extern INT32 ICS2115_ddp2beestormmode; // hack to fix volume fadeouts in ddp2 bee storm

@@ -894,7 +894,9 @@ INT32 pgmFrame()
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-	ics2115_update(pBurnSoundOut, nBurnSoundLen);
+	if (pBurnSoundOut) {
+		ics2115_update(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (nEnableArm7) Arm7Close();
 

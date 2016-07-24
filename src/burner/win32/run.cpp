@@ -26,6 +26,7 @@ static int nNormalFrac = 0;					// Extra fraction we did
 
 static bool bAppDoStep = 0;
 static bool bAppDoFast = 0;
+static bool bAppDoFasttoggled = 0;
 static int nFastSpeed = 6;
 
 // For System Macros (below)
@@ -422,10 +423,11 @@ int RunMessageLoop()
 							
               				// 'Silence' & 'Sound Restored' Code (added by CaptainCPS-X) 
 							case 'S': {
-								TCHAR buffer[15];
+								TCHAR buffer[60];
 								bMute = !bMute;
 
 								if (bMute) {
+									nOldAudVolume = nAudVolume;
 									nAudVolume = 0;// mute sound
 									_stprintf(buffer, FBALoadStringEx(hAppInst, IDS_SOUND_MUTE, true), nAudVolume / 100);
 								} else {
@@ -443,7 +445,7 @@ int RunMessageLoop()
 							case VK_OEM_PLUS: {
 								if (bMute) break; // if mute, not do this
 								nOldAudVolume = nAudVolume;
-								TCHAR buffer[15];
+								TCHAR buffer[60];
 
 								nAudVolume += 100;
 								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
@@ -464,7 +466,7 @@ int RunMessageLoop()
 							case VK_OEM_MINUS: {
 								if (bMute) break; // if mute, not do this
 							  	nOldAudVolume = nAudVolume;
-								TCHAR buffer[15];
+								TCHAR buffer[60];
 
 								nAudVolume -= 100;
 								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
@@ -551,6 +553,11 @@ int RunMessageLoop()
 										bAppDoFast = 1;
 									}
 								}
+
+								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL)) { // Shift-F1: toggles FFWD state
+									bAppDoFast = !bAppDoFast;
+									bAppDoFasttoggled = bAppDoFast;
+								}
 								break;
 							}
 							case VK_BACK: {
@@ -579,7 +586,9 @@ int RunMessageLoop()
 							case VK_MENU:
 								continue;
 							case VK_F1:
-								bAppDoFast = 0;
+								if (!bAppDoFasttoggled)
+									bAppDoFast = 0;
+								bAppDoFasttoggled = 0;
 								break;
 						}
 					}

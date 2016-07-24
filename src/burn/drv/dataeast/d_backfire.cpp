@@ -1,6 +1,9 @@
 // FB Alpha Backfire! driver module
 // Based on MAME driver by David Haywood
 
+// Notes:
+//   1 / 2 screen autodetect disabled until it can be made to not crash.
+
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "ymz280b.h"
@@ -499,7 +502,9 @@ static void draw_sprites(UINT16 *dest, UINT8 *ram, UINT8 *gfx, INT32 coloff)
 
 static INT32 DrvDraw()
 {
+	/*
 	if ((ArmReadByte(0x170784) & 0x20) && !nPreviousDip) { // single screen
+		bprintf(0, _T("single.\n"));
 		DrvTmpBitmap0 = pTransDraw;
 		BurnDrvSetVisibleSize(320, 240);
 		BurnDrvSetAspect(4, 3);
@@ -508,6 +513,7 @@ static INT32 DrvDraw()
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 	} else if (!(ArmReadByte(0x170784) & 0x20) && nPreviousDip) { // two screens
+		bprintf(0, _T("double.\n"));
 		DrvTmpBitmap0 = DrvTmpBitmap_p;
 		BurnDrvSetVisibleSize(640, 240);
 		BurnDrvSetAspect(8, 3);
@@ -515,7 +521,7 @@ static INT32 DrvDraw()
 
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	}
+	}*/
 	nPreviousDip = (ArmReadByte(0x170784) & 0x20);
 
 	simpl156_palette_recalc();

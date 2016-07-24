@@ -1518,7 +1518,7 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 		// starts the 'WARNING' sequences for the boss.
 		else if (CChipRam[0x1b] == 0x2)
 		{
-			if (triggeredLevel2==0)
+			if (triggeredLevel2==0 && CChipRam[0x5f]==0)
 			{
 				CChipRam[0x5f] = 4; // 0xBE at 68K side
 				triggeredLevel2=1;
@@ -1530,6 +1530,7 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 			{
 				// Signal end of level
 				CChipRam[0x32] = 1;
+				CChipRam[0x5d] = 0; // acknowledge 68K command
 			}
 		}
 		else if (CChipRam[0x1b] == 0x4)
@@ -1537,10 +1538,11 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 			CChipRam[0x32] = 1;
 
 			// When level 4 (powder magazine) is complete the c-chip triggers an explosion animation.
-			if (triggeredLevel4==0)
+			if (triggeredLevel4==0 && CChipRam[0x5f]==0)
+			{
 				CChipRam[0x5f]=10;
-
-			triggeredLevel4=1;
+				triggeredLevel4=1;
+			}
 		}
 		else
 		{
@@ -1556,21 +1558,21 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 	if (CChipRam[0x1c] == 0 && CChipRam[0x1d] == 0)
 	{
 		// Compare code at 0x96DC in prototype with 0xC3A2 in protected version
-		if (CChipRam[0x1b] == 0x1 && triggeredLevel1b==0)
+		if (CChipRam[0x1b] == 0x1 && triggeredLevel1b==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 		{
 			CChipRam[0x5f]=7;
 			triggeredLevel1b=1;
 		}
 
 		// Compare code at 0x96BC in prototype with 0xC3B2 in protected version
-		if (CChipRam[0x1b] == 0x3 && triggeredLevel3b==0)
+		if (CChipRam[0x1b] == 0x3 && triggeredLevel3b==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 		{
 			CChipRam[0x5f]=8;
 			triggeredLevel3b=1;
 		}
 
 		// Compare code at 0x96BC in prototype with 0xC3C8 in protected version
-		if ((CChipRam[0x1b] != 0x1 && CChipRam[0x1b] != 0x3) && triggeredLevel13b==0)
+		if ((CChipRam[0x1b] != 0x1 && CChipRam[0x1b] != 0x3) && triggeredLevel13b==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 		{
 			CChipRam[0x5f]=9;
 			triggeredLevel13b=1;
@@ -1585,14 +1587,15 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 	if (CChipRam[0x1b] == 0x2)
 	{
 		// (Note:  it's correct that 25 decimal is represented as 0x25 in hex here).
-		if (((CChipRam[0x1d]<<8) + CChipRam[0x1c])<0x25 && triggeredLevel2b==1 && triggeredLevel2c==0)
+		int numMen=(CChipRam[0x1d]<<8) + CChipRam[0x1c];
+		if (numMen<0x25 && triggeredLevel2b==1 && triggeredLevel2c==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 		{
 			CChipRam[0x5f]=6;
 			triggeredLevel2c=1;
 		}
 
 		// (Note:  it's correct that 45 decimal is represented as 0x45 in hex here).
-		if (((CChipRam[0x1d]<<8) + CChipRam[0x1c])<0x45 && triggeredLevel2b==0)
+		if (numMen<0x45 && triggeredLevel2b==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 		{
 			CChipRam[0x5f]=5;
 			triggeredLevel2b=1;
@@ -1683,7 +1686,7 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 
 	//-------------------------------------------------------------------------------------------------
 	// Start of level 7 - should trigger '1' in level thread table (compare 0xC164 in protected to 0x9468 in unprotected)
-	if (CChipRam[0x1b] == 0x7 && triggeredLevel7==0)
+	if (CChipRam[0x1b] == 0x7 && triggeredLevel7==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 	{
 		triggeredLevel7 = 1;
 		CChipRam[0x5f] = 1;
@@ -1692,7 +1695,7 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 	//-------------------------------------------------------------------------------------------------
 	// Start of level 8 - should trigger '2' in level thread table (compare 0xC18E in protected to 0x9358 in unprotected)
 	// This controls the 'zoom in helicopters' enemy
-	if (CChipRam[0x1b] == 0x8 && triggeredLevel8==0)
+	if (CChipRam[0x1b] == 0x8 && triggeredLevel8==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 	{
 		triggeredLevel8 = 1;
 		CChipRam[0x5f] = 2;
@@ -1701,7 +1704,7 @@ void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2)
 	//-------------------------------------------------------------------------------------------------
 	// Start of level 9 - should trigger '3' in level thread table (compare 0xC1B0 in protected to 0x9500 in unprotected)
 	// This controls the 'zoom in helicopters' enemy
-	if (CChipRam[0x1b] == 0x9 && triggeredLevel9==0)
+	if (CChipRam[0x1b] == 0x9 && triggeredLevel9==0 && CChipRam[0x5f]==0) // Don't write unless 68K is ready (0 at 0x5f))
 	{
 		triggeredLevel9 = 1;
 		CChipRam[0x5f] = 3;

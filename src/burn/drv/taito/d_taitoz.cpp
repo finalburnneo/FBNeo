@@ -12,6 +12,8 @@ static INT32 OldSteer; // Hack to centre the steering in SCI
 static INT32 SciSpriteFrame;
 static INT32 TaitoZINT6timer = 0;
 
+static UINT8 gearshifter; // contcirc shifter toggle
+
 static double TaitoZYM2610Route1MasterVol;
 static double TaitoZYM2610Route2MasterVol;
 
@@ -363,6 +365,17 @@ static void ChasehqMakeInputs()
 
 static void ContcircMakeInputs()
 {
+	{ // gear shifter stuff
+		static UINT8 prevshift = 0;
+
+		if (prevshift != TC0220IOCInputPort1[4] && TC0220IOCInputPort1[4]) {
+			gearshifter = !gearshifter;
+		}
+
+		prevshift = TC0220IOCInputPort1[4];
+	}
+
+
 	// Reset Inputs
 	TC0220IOCInput[0] = 0x13;
 	TC0220IOCInput[1] = 0x0f;
@@ -381,7 +394,7 @@ static void ContcircMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	if (TC0220IOCInputPort1[4]) TC0220IOCInput[1] |= 0x10;
+	TC0220IOCInput[1] |= (gearshifter) ? 0x00 : 0x10; // gear shift toggle
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] |= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] |= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] |= 0x80;
@@ -3294,6 +3307,8 @@ static INT32 TaitoZDoReset()
 
 	SciSpriteFrame = 0;
 	OldSteer = 0;
+
+	gearshifter = 0;
 	
 	return 0;
 }
@@ -5182,8 +5197,8 @@ static INT32 ContcircInit()
 	
 	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &TaitoZFMIRQHandler, TaitoZSynchroniseStream, TaitoZGetTime, 0);
 	BurnTimerAttachZet(16000000 / 4);
-	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
-	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.20);
+	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.18);
+	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.18);
 	TaitoZYM2610Route1MasterVol = 2.00;
 	TaitoZYM2610Route2MasterVol = 2.00;
 	bYM2610UseSeperateVolumes = 1;
@@ -6865,7 +6880,7 @@ struct BurnDriver BurnDrvContcircu = {
 
 struct BurnDriver BurnDrvContcircua = {
 	"contcircua", "contcirc", NULL, NULL, "1987",
-	"Continental Circus (US set 2)\0", NULL, "Taito America Corporation", "Taito-Z",
+	"Continental Circus (US set 2)\0", "3D Effect cannot be disabled, use US Set 1 instead!", "Taito America Corporation", "Taito-Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircuaRomInfo, ContcircuaRomName, NULL, NULL, ContcircInputInfo, ContcircjDIPInfo,
@@ -6875,7 +6890,7 @@ struct BurnDriver BurnDrvContcircua = {
 
 struct BurnDriver BurnDrvContcircj = {
 	"contcircj", "contcirc", NULL, NULL, "1987",
-	"Continental Circus (Japan)\0", NULL, "Taito Corporation", "Taito-Z",
+	"Continental Circus (Japan)\0", "3D Effect cannot be disabled, use World romset instead!", "Taito Corporation", "Taito-Z",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircjRomInfo, ContcircjRomName, NULL, NULL, ContcircInputInfo, ContcircjDIPInfo,

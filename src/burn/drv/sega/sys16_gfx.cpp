@@ -1630,7 +1630,7 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 		if (sprpri != 1 && sprpri != 2 && sprpri != 4 && sprpri != 8) bprintf(PRINT_IMPORTANT, _T("Unknown Sprite Priority - %x\n"), sprpri);
 #endif
 		
-		if (sprpri != Priority) continue;
+		if (Priority && sprpri != Priority) continue;
 		
 		INT32 bottom  = BURN_ENDIAN_SWAP_INT16(data[0]) >> 8;
 		INT32 top     = BURN_ENDIAN_SWAP_INT16(data[0]) & 0xff;
@@ -3269,15 +3269,16 @@ void ShangonRender()
 	
 	System16CalcPalette();
 	OutrunRenderRoadBackgroundLayer();
-	System16BRenderSpriteLayer(1);
+	//System16BRenderSpriteLayer(1);
 	System16BRenderTileLayer(1, 0, 1);
-	System16BRenderSpriteLayer(2);
+	//System16BRenderSpriteLayer(2);
 	System16BRenderTileLayer(1, 1, 1);
 	System16BRenderTileLayer(0, 0, 1);
-	System16BRenderSpriteLayer(4);
+	//System16BRenderSpriteLayer(4);
 	System16BRenderTileLayer(0, 1, 1);
 	OutrunRenderRoadForegroundLayer();
-	System16BRenderSpriteLayer(8);
+	//System16BRenderSpriteLayer(8);
+	System16BRenderSpriteLayer(0);
 	System16BAltRenderTextLayer(0);
 	System16BAltRenderTextLayer(1);
 	BurnTransferCopy(System16Palette);

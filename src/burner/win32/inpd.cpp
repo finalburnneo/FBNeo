@@ -429,6 +429,7 @@ static int ListItemActivate()
 	struct BurnInputInfo bii;
 	LVITEM LvItem;
 
+	memset(&LvItem, 0, sizeof(LvItem));
 	int nSel = SendMessage(hInpdList, LVM_GETNEXTITEM, (WPARAM)-1, LVNI_SELECTED);
 	if (nSel < 0) {
 		return 1;
@@ -445,11 +446,12 @@ static int ListItemActivate()
 		return 1;
 	}
 
+	memset(&bii, 0, sizeof(bii));
 	bii.nType = 0;
 	BurnDrvGetInputInfo(&bii, nSel);
-	if (bii.pVal == NULL) {
-		return 1;
-	}
+	//if (bii.pVal == NULL) { // it will return NULL if its a macro or system macro. -dink
+	//	return 1;
+	//}
 
 	DestroyWindow(hInpsDlg);							// Make sure any existing dialogs are gone
 	DestroyWindow(hInpcDlg);							//

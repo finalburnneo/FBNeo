@@ -448,10 +448,10 @@ static int ListItemActivate()
 
 	memset(&bii, 0, sizeof(bii));
 	bii.nType = 0;
-	BurnDrvGetInputInfo(&bii, nSel);
-	//if (bii.pVal == NULL) { // it will return NULL if its a macro or system macro. -dink
-	//	return 1;
-	//}
+	int rc = BurnDrvGetInputInfo(&bii, nSel);
+	if (bii.pVal == NULL && rc != 1) {                  // rc == 1 for a macro or system macro.
+		return 1;
+	}
 
 	DestroyWindow(hInpsDlg);							// Make sure any existing dialogs are gone
 	DestroyWindow(hInpcDlg);							//

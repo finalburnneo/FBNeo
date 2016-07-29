@@ -1566,7 +1566,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	if (Msg == WM_COMMAND) {
 		if (HIWORD(wParam) == EN_CHANGE && LOWORD(wParam) == IDC_SEL_SEARCH) {
 			KillTimer(hDlg, IDC_SEL_SEARCHTIMER);
-			SetTimer(hDlg, IDC_SEL_SEARCHTIMER, 200, (TIMERPROC)NULL);
+			SetTimer(hDlg, IDC_SEL_SEARCHTIMER, 300, (TIMERPROC)NULL);
 		}
 
 		if (HIWORD(wParam) == BN_CLICKED) {

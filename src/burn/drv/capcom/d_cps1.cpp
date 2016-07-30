@@ -12268,7 +12268,7 @@ static struct BurnRomInfo VarthbRomDesc[] = {
 	{ "varth1.bin",    0x000157, 0x4c6a0d99, BRF_OPT },	// unknown
 	{ "varth2.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "varth3.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
-	{ "varth4.bin",    0x000157, 0x53317bf6, BRF_OPT },	// unknown
+	{ "varth4.bin",    0x000117, 0x53317bf6, BRF_OPT },	// unknown
 	{ "varth5.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "varth6.bin",    0x000157, 0x00000000, BRF_OPT | BRF_NODUMP },
 };

@@ -1203,6 +1203,44 @@ STD_ROM_PICK(Hippodrm)
 STD_ROM_FN(Hippodrm)
 
 static struct BurnRomInfo FfantasyRomDesc[] = {
+	{ "ex02-3.4b",          0x10000, 0xdf0d7dc6, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "ex01-3.3b",          0x10000, 0xc0fb4fe5, BRF_ESS | BRF_PRG },	//  1
+	{ "ex05-.4c",           0x10000, 0xc76d65ec, BRF_ESS | BRF_PRG },	//  2
+	{ "ex00-.1b",           0x10000, 0xe9b427a6, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "ex04-.1c",           0x08000, 0x9871b98d, BRF_ESS | BRF_PRG },	//  4	6502 Program 
+	
+	{ "ew08",               0x10000, 0x53010534, BRF_ESS | BRF_PRG },	//  5	HuC6280 Program
+	
+	{ "ev14",               0x10000, 0x686f72c1, BRF_GRA },			//  6	Characters
+	{ "ev13",               0x10000, 0xb787dcc9, BRF_GRA },			//  7
+
+	{ "ew19",               0x08000, 0x6b80d7a3, BRF_GRA },			//  8	Tiles 1
+	{ "ew18",               0x08000, 0x78d3d764, BRF_GRA },			//  9
+	{ "ew20",               0x08000, 0xce9f5de3, BRF_GRA },			// 10
+	{ "ew21",               0x08000, 0x487a7ba2, BRF_GRA },			// 11
+	
+	{ "ew24",               0x08000, 0x4e1bc2a4, BRF_GRA },			// 12	Tiles 2
+	{ "ew25",               0x08000, 0x9eb47dfb, BRF_GRA },			// 13
+	{ "ew23",               0x08000, 0x9ecf479e, BRF_GRA },			// 14
+	{ "ew22",               0x08000, 0xe55669aa, BRF_GRA },			// 15
+	
+	{ "ev15",               0x10000, 0x1d80f797, BRF_GRA },			// 16	Sprites
+	{ "ew16",               0x10000, 0x96233177, BRF_GRA },			// 17
+	{ "ev10",               0x10000, 0xc4e7116b, BRF_GRA },			// 18
+	{ "ew11",               0x10000, 0xf2e007fc, BRF_GRA },			// 19
+	{ "ev06",               0x10000, 0x6c794f1a, BRF_GRA },			// 20
+	{ "ew07",               0x10000, 0x470b6989, BRF_GRA },			// 21
+	{ "ev17",               0x10000, 0x045509d4, BRF_GRA },			// 22
+	{ "ew12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
+	
+	{ "ew03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+};
+
+STD_ROM_PICK(Ffantasy)
+STD_ROM_FN(Ffantasy)
+
+static struct BurnRomInfo FfantasyjRomDesc[] = {
 	{ "ff-02-2.bin",        0x10000, 0x29fc22a7, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "ff-01-2.bin",        0x10000, 0x9f617cb4, BRF_ESS | BRF_PRG },	//  1
 	{ "ew05",               0x10000, 0xc76d65ec, BRF_ESS | BRF_PRG },	//  2
@@ -1237,8 +1275,8 @@ static struct BurnRomInfo FfantasyRomDesc[] = {
 	{ "ew03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
 };
 
-STD_ROM_PICK(Ffantasy)
-STD_ROM_FN(Ffantasy)
+STD_ROM_PICK(Ffantasyj)
+STD_ROM_FN(Ffantasyj)
 
 static struct BurnRomInfo FfantasyaRomDesc[] = {
 	{ "ev02",               0x10000, 0x797a7860, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
@@ -5534,10 +5572,20 @@ struct BurnDriver BurnDrvHippodrm = {
 
 struct BurnDriver BurnDrvFfantasy = {
 	"ffantasy", "hippodrm", NULL, NULL, "1989",
-	"Fighting Fantasy (Japan revision 2)\0", NULL, "Data East Corpotation", "DEC0",
+	"Fighting Fantasy (World revision 3)\0", NULL, "Data East Corpotation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyRomInfo, FfantasyRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
+	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvFfantasyj = {
+	"ffantasyj", "hippodrm", NULL, NULL, "1989",
+	"Fighting Fantasy (Japan revision 2)\0", NULL, "Data East Corpotation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, FfantasyjRomInfo, FfantasyjRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

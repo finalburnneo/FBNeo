@@ -337,16 +337,16 @@ static void BsharkMakeInputs()
 	if (TC0220IOCInputPort2[7]) TC0220IOCInput[2] -= 0x80;
 }
 
-static UINT8 shift_update() // chasehq, contcirc, sci
+static UINT8 shift_update(UINT8 shifter_input) // chasehq, contcirc, sci
 {
 	{ // gear shifter stuff
 		static UINT8 prevshift = 0;
 
-		if (prevshift != TC0220IOCInputPort1[4] && TC0220IOCInputPort1[4]) {
+		if (prevshift != shifter_input && shifter_input) {
 			gearshifter = !gearshifter;
 		}
 
-		prevshift = TC0220IOCInputPort1[4];
+		prevshift = shifter_input;
 	}
 	return (gearshifter) ? 0x00 : 0x10;
 }
@@ -371,7 +371,7 @@ static void ChasehqMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= shift_update();
+	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
@@ -397,13 +397,13 @@ static void ContcircMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= shift_update();
+	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] |= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] |= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] |= 0x80;
 }
 
-static void DblaxleMakeInputs()
+static void DblaxleMakeInputs() // and racingb
 {
 	// Reset Inputs
 	TC0510NIOInput[0] = 0xff;
@@ -411,7 +411,7 @@ static void DblaxleMakeInputs()
 	TC0510NIOInput[2] = 0xff;
 
 	if (TC0510NIOInputPort0[0]) TC0510NIOInput[0] -= 0x01;
-	if (TC0510NIOInputPort0[1]) TC0510NIOInput[0] -= 0x02;
+	TC0510NIOInput[0] -= shift_update(TC0510NIOInputPort0[1]) ? 0x02 : 0x00;
 	if (TC0510NIOInputPort0[2]) TC0510NIOInput[0] -= 0x04;
 	if (TC0510NIOInputPort0[3]) TC0510NIOInput[0] -= 0x08;
 	if (TC0510NIOInputPort0[4]) TC0510NIOInput[0] -= 0x10;
@@ -501,7 +501,7 @@ static void SciMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= shift_update();
+	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;

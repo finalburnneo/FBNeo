@@ -600,13 +600,13 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 		if (i == (nInterleave - 1))
 		{
-			if (disable_irq == 0)
+			if (disable_irq == 0 || i & 1)
 			{
 				M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			}
 			else
 			{
-				disable_irq--;
+				disable_irq = 0;
 			}
 		}
 		M6809Close();
@@ -628,7 +628,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -636,7 +636,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;

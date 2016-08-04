@@ -6737,6 +6737,7 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoRoadPalBank);
 		SCAN_VAR(nTaitoCyclesDone);
 		SCAN_VAR(nTaitoCyclesSegment);
+		SCAN_VAR(gearshifter);
 	}
 	
 	if (nAction & ACB_WRITE) {

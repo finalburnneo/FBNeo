@@ -1,4 +1,7 @@
 // PC080SN & PC090OJ based games
+// Tofix:
+//   Sprites from the game screen appear on the map screen after a game over.
+//   "Blip!" noise at beginning of game
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -39,6 +42,9 @@ static UINT16 VolfiedVidMask;
 static INT32 RainbowCChipVer = 0;
 
 static UINT8 gearshifter; // Topspeed & clones
+static UINT8 z80ctc_load;
+static UINT8 z80ctc_constant;
+static INT32 z80ctc_ctr;
 
 static UINT16 *pTopspeedTempDraw = NULL;
 
@@ -2461,10 +2467,13 @@ static INT32 VolfiedDoReset()
 	return 0;
 }
 
+static void z80ctc_reset();
+
 static INT32 TopspeedDoReset()
 {
 	TaitoDoReset();
-	
+
+	z80ctc_reset();
 	RastanADPCMPos = 0;
 	RastanADPCMData = -1;
 	TopspeedADPCMPos = 0;
@@ -3729,20 +3738,51 @@ void __fastcall DariusZ802WritePort(UINT16 a, UINT8 d)
 	}
 }
 
-static UINT8 z80ctc_load = 0;
-static UINT8 z80ctc_constant = 0;
-static INT32 z80ctc_ctr = 0;
+static void z80ctc_reset()
+{
+	z80ctc_load = 0;
+	z80ctc_constant = 0;
+	z80ctc_ctr = 0;
+}
+
+static void z80ctc_scan()
+{
+	SCAN_VAR(z80ctc_load);
+	SCAN_VAR(z80ctc_constant);
+	SCAN_VAR(z80ctc_ctr);
+}
+
+static void z80ctc_write(UINT8 data)
+{
+	if (z80ctc_load) {
+		z80ctc_constant = data;
+		z80ctc_load = 0;
+	}
+
+	if (data == 5) z80ctc_load = 1;
+}
+
+static void TopspeedMSM5205Vck2();
+
+static void z80ctc_execute(INT32 i, INT32 intlv)
+{
+	// mini-z80ctc emulation
+
+	if (z80ctc_ctr <= 0) {
+		z80ctc_ctr = z80ctc_constant;
+		TopspeedMSM5205Vck2();
+	}
+	z80ctc_ctr -= (z80ctc_constant>>4)+5;
+
+	if (i == (intlv-1))
+		ZetNmi();
+}
 
 void __fastcall TopspeedZ80WritePort(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	if (a==0) {
-		if (z80ctc_load) {
-			z80ctc_constant = d;
-			z80ctc_load = 0;
-			//bprintf(0, _T("CONST:%X, "), d);
-		}
-		if (d == 5) z80ctc_load = 1;
+		z80ctc_write(d);
 	}
 }
 
@@ -4270,34 +4310,28 @@ static void TopspeedMSM5205Vck()
 
 static void TopspeedMSM5205Vck2()
 {
-	static UINT8 vck = 0;
+	MSM5205VCLKWrite(1, 1);
+	UINT16 oldpos = TopspeedADPCMPos;
 
-	if (vck) {
-		MSM5205VCLKWrite(1, 1);
-	} else {
-		UINT16 oldpos = TopspeedADPCMPos;
-
-		if (!TopspeedADPCMInReset) {
-			if (TopspeedADPCMData != -1) {
-				MSM5205DataWrite(1, TopspeedADPCMData & 0x0f);
-				TopspeedADPCMData = -1;
-			} else {
-				TopspeedADPCMData = TaitoMSM5205Rom[0x10000 + TopspeedADPCMPos];
-				TopspeedADPCMPos = (TopspeedADPCMPos + 1) & 0xffff;
-				MSM5205DataWrite(1, (TopspeedADPCMData >> 4) & 0x0f);
-			}
-		}
-
-		if ((oldpos >> 8) == 0x0f && ((TopspeedADPCMPos >> 8) == 0x10))	{
-			TopspeedADPCMPos = 0;
-			MSM5205ResetWrite(1, 1);
-			MSM5205VCLKWrite(1, 0);
-			MSM5205ResetWrite(1, 0);
+	if (!TopspeedADPCMInReset) {
+		if (TopspeedADPCMData != -1) {
+			MSM5205DataWrite(1, TopspeedADPCMData & 0x0f);
+			TopspeedADPCMData = -1;
 		} else {
-			MSM5205VCLKWrite(1, 0);
+			TopspeedADPCMData = TaitoMSM5205Rom[0x10000 + TopspeedADPCMPos];
+			TopspeedADPCMPos = (TopspeedADPCMPos + 1) & 0xffff;
+			MSM5205DataWrite(1, (TopspeedADPCMData >> 4) & 0x0f);
 		}
 	}
-	vck ^= 1;
+
+	if ((oldpos >> 8) == 0x0f && ((TopspeedADPCMPos >> 8) == 0x10))	{
+		TopspeedADPCMPos = 0;
+		MSM5205ResetWrite(1, 1);
+		MSM5205VCLKWrite(1, 0);
+		MSM5205ResetWrite(1, 0);
+	} else {
+		MSM5205VCLKWrite(1, 0);
+	}
 }
 
 static UINT8 VolfiedDip1Read(UINT32)
@@ -5740,12 +5774,12 @@ static void TopspeedDraw()
 {
 	BurnTransferClear();
 	TaitoMiscCalcPalette();
-	PC080SNDrawFgLayer(1, 1, TaitoChars, pTransDraw);
-	TopspeedDrawSprites(1);
-	TopspeedDrawBgLayer(1, TaitoChars, pTopspeedTempDraw, (UINT16*)Taito68KRam1);
-	TopspeedDrawFgLayer(0, TaitoChars, pTopspeedTempDraw, (UINT16*)(Taito68KRam1 + 0x200));
-	TopspeedDrawSprites(0);
-	PC080SNDrawBgLayer(0, 0, TaitoChars, pTransDraw);	
+	if (nBurnLayer & 1) PC080SNDrawFgLayer(1, 1, TaitoChars, pTransDraw);
+	if (nSpriteEnable & 1) TopspeedDrawSprites(1);
+	if (nBurnLayer & 2) TopspeedDrawBgLayer(1, TaitoChars, pTopspeedTempDraw, (UINT16*)Taito68KRam1);
+	if (nBurnLayer & 4) TopspeedDrawFgLayer(0, TaitoChars, pTopspeedTempDraw, (UINT16*)(Taito68KRam1 + 0x200));
+	if (nSpriteEnable & 2) TopspeedDrawSprites(0);
+	if (nBurnLayer & 8) PC080SNDrawBgLayer(0, 0, TaitoChars, pTransDraw);
 	BurnTransferCopy(TaitoPalette);
 }
 
@@ -6017,19 +6051,11 @@ static INT32 TopspeedFrame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
-			if (i == (nInterleave-1))
-				ZetNmi(); // I think the ctc generates this.
 			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
-			// mini-z80ctc emulation
-			{
-				if (z80ctc_ctr <= 0) {
-					z80ctc_ctr = z80ctc_constant / 8;
-					TopspeedMSM5205Vck2();
-				}
-				z80ctc_ctr--;
-			}
-			//
-			if (TaitoNumMSM5205) MSM5205Update(); // 266 / 2 (MSM5205CalcInterleave(0, 4000000) == 133)
+
+			z80ctc_execute(i, nInterleave);
+
+			if (TaitoNumMSM5205 && i&1) MSM5205Update(); // 266 / 2 (MSM5205CalcInterleave(0, 4000000) == 133, we need twice this for the z80ctc)
 			ZetClose();
 		}
 		
@@ -6114,6 +6140,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DariusCoinWord);
 		SCAN_VAR(PC090OJSpriteCtrl);	// for jumping
 		SCAN_VAR(gearshifter);
+		z80ctc_scan();
 	}
 	
 	if (nAction & ACB_WRITE && TaitoZ80Bank) {

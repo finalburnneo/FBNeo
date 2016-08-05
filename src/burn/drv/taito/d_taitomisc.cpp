@@ -6146,6 +6146,9 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(OpwolfADPCMPos);
 		SCAN_VAR(OpwolfADPCMEnd);;
 		SCAN_VAR(OpwolfADPCMData);
+		SCAN_VAR(TopspeedADPCMPos);
+		SCAN_VAR(TopspeedADPCMData);
+		SCAN_VAR(TopspeedADPCMInReset);
 		SCAN_VAR(nTaitoCyclesDone);
 		SCAN_VAR(nTaitoCyclesSegment);
 		SCAN_VAR(DariusADPCMCommand);

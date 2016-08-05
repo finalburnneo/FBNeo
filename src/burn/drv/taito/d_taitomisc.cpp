@@ -3766,7 +3766,7 @@ static void z80ctc_write(UINT8 data)
 
 static void TopspeedMSM5205Vck2();
 
-static void z80ctc_execute(INT32 i, INT32 intlv)
+static void z80ctc_execute()
 {
 	// mini-z80ctc emulation
 
@@ -3775,9 +3775,6 @@ static void z80ctc_execute(INT32 i, INT32 intlv)
 		TopspeedMSM5205Vck2();
 	}
 	z80ctc_ctr -= (z80ctc_constant>>4)+5;
-
-	if (i == (intlv-1))
-		ZetNmi();
 }
 
 void __fastcall TopspeedZ80WritePort(UINT16 a, UINT8 d)
@@ -6033,7 +6030,7 @@ static INT32 TopspeedFrame()
 
 	SekNewFrame();
 	ZetNewFrame();
-		
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
@@ -6068,7 +6065,7 @@ static INT32 TopspeedFrame()
 			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
 			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
 
-			z80ctc_execute(i, nInterleave);
+			z80ctc_execute();
 
 			if (TaitoNumMSM5205 && i&1) MSM5205Update(); // 266 / 2 (MSM5205CalcInterleave(0, 4000000) == 133, we need interleave twice this for the z80ctc)
 			ZetClose();
@@ -6084,7 +6081,7 @@ static INT32 TopspeedFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-	
+
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

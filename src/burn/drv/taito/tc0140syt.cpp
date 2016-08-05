@@ -26,10 +26,9 @@ static struct TC0140SYT tc0140syt;
 
 static void InterruptController(void)
 {
-	if (tc0140syt.NmiReq && tc0140syt.NmiEnabled ) {
-		ZetNmi();
-		tc0140syt.NmiReq = 0;
-	}
+	tc0140syt.NmiReq = tc0140syt.Status & (TC0140SYT_PORT23_FULL | TC0140SYT_PORT01_FULL);
+
+	ZetSetIRQLine(0x20, (tc0140syt.NmiReq && tc0140syt.NmiEnabled) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 void TC0140SYTPortWrite(UINT8 Data)
@@ -81,7 +80,9 @@ void TC0140SYTCommWrite(UINT8 Data)
 		case 0x01: {
 			tc0140syt.SlaveData[tc0140syt.MainMode++] = Data;
 			tc0140syt.Status |= TC0140SYT_PORT01_FULL;
-			tc0140syt.NmiReq = 1;
+			ZetOpen(TC0140SYT_Z80_SELECT);
+			InterruptController();
+			ZetClose();
 			return;
 		}
 		
@@ -93,7 +94,9 @@ void TC0140SYTCommWrite(UINT8 Data)
 		case 0x03: {
 			tc0140syt.SlaveData[tc0140syt.MainMode++] = Data;
 			tc0140syt.Status |= TC0140SYT_PORT23_FULL;
-			tc0140syt.NmiReq = 1;
+			ZetOpen(TC0140SYT_Z80_SELECT);
+			InterruptController();
+			ZetClose();
 			return;
 		}
 		
@@ -127,6 +130,7 @@ UINT8 TC0140SYTSlaveCommRead()
 		case 0x01: {
 			tc0140syt.Status &= ~TC0140SYT_PORT01_FULL;
 			nRet = tc0140syt.SlaveData[tc0140syt.SubMode++];
+			InterruptController();
 			break;
 		}
 		
@@ -138,6 +142,7 @@ UINT8 TC0140SYTSlaveCommRead()
 		case 0x03: {
 			tc0140syt.Status &= ~TC0140SYT_PORT23_FULL;
 			nRet = tc0140syt.SlaveData[tc0140syt.SubMode++];
+			InterruptController();
 			break;
 		}
 				
@@ -146,8 +151,6 @@ UINT8 TC0140SYTSlaveCommRead()
 			break;
 		}
 	}
-	
-	InterruptController();	
 	
 	return nRet;
 }
@@ -181,16 +184,16 @@ void TC0140SYTSlaveCommWrite(UINT8 Data)
 				
 		case 0x05: {
 			tc0140syt.NmiEnabled = 0;
+			InterruptController();
 			break;
 		}
 		
 		case 0x06: {
 			tc0140syt.NmiEnabled = 1;
+			InterruptController();
 			break;
 		}
 	}
-	
-	InterruptController();
 }
 
 void TC0140SYTReset()

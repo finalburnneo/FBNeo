@@ -1,7 +1,4 @@
 // PC080SN & PC090OJ based games
-// Tofix:
-//   Sprites from the game screen appear on the map screen after a game over.
-//   "Blip!" noise at beginning of game
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -25,6 +22,7 @@ static UINT32 OpwolfADPCMEnd[2];
 static INT32 OpwolfADPCMData[2];
 static INT32 OpWolfGunXOffset;
 static INT32 OpWolfGunYOffset;
+static INT32 bUseGuns = 0;
 
 static UINT8 DariusADPCMCommand;
 static INT32 DariusNmiEnable;
@@ -47,6 +45,7 @@ static UINT8 z80ctc_constant;
 static INT32 z80ctc_ctr;
 
 static UINT16 *pTopspeedTempDraw = NULL;
+static UINT16 *DrvPriBmp	= NULL;
 
 static void DariusDraw();
 static void OpwolfDraw();
@@ -2367,6 +2366,8 @@ static int MemIndex()
 	TaitoSpritesA                       = Next; Next += TaitoNumSpriteA * TaitoSpriteAWidth * TaitoSpriteAHeight;
 	TaitoPalette                        = (UINT32*)Next; Next += 0x04000 * sizeof(UINT32);
 
+	DrvPriBmp                           = (UINT16*)Next; Next += 512 * 512;
+
 	TaitoMemEnd                         = Next;
 
 	return 0;
@@ -2479,6 +2480,7 @@ static INT32 TopspeedDoReset()
 	TopspeedADPCMPos = 0;
 	TopspeedADPCMData = -1;
 	TopspeedADPCMInReset = 1;
+	MSM5205SetRoute(0, 0.00, BURN_SND_ROUTE_BOTH); // set by audiocpu
 	MSM5205SetRoute(1, 0.00, BURN_SND_ROUTE_BOTH); // set by audiocpu
 
 	return 0;
@@ -4094,6 +4096,11 @@ void __fastcall TopspeedZ80Write(UINT16 a, UINT8 d)
 			return;
 		}
 
+		case 0xd000: {
+			MSM5205SetRoute(0, (double)((double)d / 256), BURN_SND_ROUTE_BOTH);
+			return;
+		}
+
 		case 0xd200: {
 			MSM5205SetRoute(1, (double)((double)d / 256)-0.20, BURN_SND_ROUTE_BOTH);
 			return;
@@ -4101,8 +4108,6 @@ void __fastcall TopspeedZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xb400:
 		case 0xcc00:
-		case 0xd000:
-		//case 0xd200:
 		case 0xd400:
 		case 0xd600: {
 			// ???
@@ -4658,7 +4663,8 @@ static INT32 OpwolfInit()
 	GenericTilesInit();
 	
 	BurnGunInit(1, true);
-	
+	bUseGuns = 1;
+
 	TaitoDrawFunction = OpwolfDraw;
 	TaitoMakeInputsFunction = OpwolfMakeInputs;
 	TaitoIrqLine = 5;
@@ -4776,6 +4782,7 @@ static INT32 OpwolfbInit()
 	GenericTilesInit();
 	
 	BurnGunInit(1, true);
+	bUseGuns = 1;
 	
 	TaitoDrawFunction = OpwolfDraw;
 	TaitoMakeInputsFunction = OpwolfbMakeInputs;
@@ -5176,9 +5183,9 @@ static INT32 TopspeedInit()
 	BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 	
 	MSM5205Init(0, TaitoSynchroniseStream, 384000, TopspeedMSM5205Vck, MSM5205_S48_4B, 1);
-	MSM5205SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(0, 0.00, BURN_SND_ROUTE_BOTH);
 	MSM5205Init(1, TaitoSynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
-	MSM5205SetRoute(1, 0.40, BURN_SND_ROUTE_BOTH);
+	MSM5205SetRoute(1, 0.00, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -5307,6 +5314,7 @@ static INT32 TaitoMiscExit()
 	VolfiedVidMask = 0;
 	
 	RainbowCChipVer = 0;
+	bUseGuns = 0;
 	
 	BurnFree(pTopspeedTempDraw);
 	
@@ -5568,13 +5576,15 @@ static void JumpingDrawSprites()
 	}
 }
 
-static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32 xFlip, INT32 yFlip, INT32 xScale, INT32 yScale, UINT8* pSource)
+static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32 xFlip, INT32 yFlip, INT32 xScale, INT32 yScale, UINT8* pSource, UINT8 priority)
 {
 	UINT8 *SourceBase = pSource + ((Code % TaitoNumSpriteA) * TaitoSpriteAWidth * TaitoSpriteAHeight);
 	
 	INT32 SpriteScreenHeight = (yScale * TaitoSpriteAHeight + 0x8000) >> 16;
 	INT32 SpriteScreenWidth = (xScale * TaitoSpriteAWidth + 0x8000) >> 16;
-	
+	static const INT32 primasks[2] = { 0xff00, 0xfffc };  /* Sprites are over bottom layer or under top layer */
+	INT32 primask = primasks[priority];
+
 	Colour = 0x10 * (Colour % 0x100);
 	
 	if (TaitoFlipScreenX) {
@@ -5633,13 +5643,15 @@ static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32
 			
 			for (y = sy; y < ey; y++) {
 				UINT8 *Source = SourceBase + ((yIndex >> 16) * TaitoSpriteAWidth);
-				UINT16* pPixel = pTransDraw + (y * nScreenWidth);
-				
+				UINT16*pPixel = pTransDraw + (y * nScreenWidth);
+				UINT16*pri = DrvPriBmp + (y * nScreenWidth);
+
 				INT32 x, xIndex = xIndexBase;
 				for (x = sx; x < ex; x++) {
 					INT32 c = Source[xIndex >> 16];
-					if (c != 0) {
+					if (c != 0 && (pri[x] & primask)==0) {
 						pPixel[x] = c | Colour;
+						pri[x] = primask;
 					}
 					xIndex += dx;
 				}
@@ -5659,7 +5671,8 @@ static void TopspeedDrawSprites(INT32 PriorityDraw)
 	UINT8 xFlip, yFlip, Priority, BadChunks;
 	UINT8 j, k, px, py, zx, zy, xZoom, yZoom;
 
-	for (Offset = (0x2c0 / 2) - 4; Offset >= 0; Offset -= 4) {
+	//for (Offset = (0x2c0 / 2) - 4; Offset >= 0; Offset -= 4) {
+	for (Offset = 0; Offset < (0x2c0 / 2) - 4; Offset += 4) {
 		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
 
 		TileNum = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]) & 0xff;
@@ -5672,7 +5685,7 @@ static void TopspeedDrawSprites(INT32 PriorityDraw)
 		yZoom = (BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset]) & 0xfe00) >> 9;
 		Priority = (Data & 0x8000) >> 15;
 		
-		if (Priority != PriorityDraw) continue;
+		//if (Priority != PriorityDraw) continue;
 
 		if (y == 0x180)	continue;
 
@@ -5708,7 +5721,7 @@ static void TopspeedDrawSprites(INT32 PriorityDraw)
 			zx = x + (((k + 1) * xZoom) / 8) - xCur;
 			zy = y + (((j + 1) * yZoom) / 16) - yCur;
 			
-			RenderSpriteZoom(Code, xCur, yCur - 16, Colour, xFlip, yFlip, zx << 12, zy << 13, TaitoSpritesA);
+			RenderSpriteZoom(Code, xCur, yCur - 16, Colour, xFlip, yFlip, zx << 12, zy << 13, TaitoSpritesA, Priority);
 		}
 	}
 }
@@ -5774,12 +5787,14 @@ static void TopspeedDraw()
 {
 	BurnTransferClear();
 	TaitoMiscCalcPalette();
-	if (nBurnLayer & 1) PC080SNDrawFgLayer(1, 1, TaitoChars, pTransDraw);
-	if (nSpriteEnable & 1) TopspeedDrawSprites(1);
-	if (nBurnLayer & 2) TopspeedDrawBgLayer(1, TaitoChars, pTopspeedTempDraw, (UINT16*)Taito68KRam1);
-	if (nBurnLayer & 4) TopspeedDrawFgLayer(0, TaitoChars, pTopspeedTempDraw, (UINT16*)(Taito68KRam1 + 0x200));
+
+	memset(DrvPriBmp, 0, 512*512);
+
+	if (nBurnLayer & 1) PC080SNDrawFgLayerPrio(1, 1, TaitoChars, pTransDraw, DrvPriBmp, 1);
+	if (nBurnLayer & 2) TopspeedDrawBgLayer(1, TaitoChars, pTopspeedTempDraw, (UINT16*)Taito68KRam1, DrvPriBmp, 4);
+	if (nBurnLayer & 4) TopspeedDrawFgLayer(0, TaitoChars, pTopspeedTempDraw, (UINT16*)(Taito68KRam1 + 0x200), DrvPriBmp, 4);
 	if (nSpriteEnable & 2) TopspeedDrawSprites(0);
-	if (nBurnLayer & 8) PC080SNDrawBgLayer(0, 0, TaitoChars, pTransDraw);
+	if (nBurnLayer & 8) PC080SNDrawBgLayerPrio(0, 0, TaitoChars, pTransDraw, DrvPriBmp, 8);
 	BurnTransferCopy(TaitoPalette);
 }
 
@@ -6028,8 +6043,7 @@ static INT32 TopspeedFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == (nInterleave / 2) && (GetCurrentFrame > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-		if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 26)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 # 2
@@ -6039,8 +6053,7 @@ static INT32 TopspeedFrame()
 			nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-			if (i == (nInterleave / 2) && (GetCurrentFrame > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-			if (i == (nInterleave - 1)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+			if (i == (nInterleave - 26)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
@@ -6055,7 +6068,7 @@ static INT32 TopspeedFrame()
 
 			z80ctc_execute(i, nInterleave);
 
-			if (TaitoNumMSM5205 && i&1) MSM5205Update(); // 266 / 2 (MSM5205CalcInterleave(0, 4000000) == 133, we need twice this for the z80ctc)
+			if (TaitoNumMSM5205 && i&1) MSM5205Update(); // 266 / 2 (MSM5205CalcInterleave(0, 4000000) == 133, we need interleave twice this for the z80ctc)
 			ZetClose();
 		}
 		
@@ -6119,7 +6132,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumYM2203) BurnYM2203Scan(nAction, pnMin);
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
 		
-		BurnGunScan();
+		if (bUseGuns) BurnGunScan();
 				
 		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoAnalogPort0);

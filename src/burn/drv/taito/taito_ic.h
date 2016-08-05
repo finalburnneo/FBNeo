@@ -87,6 +87,8 @@ extern UINT8 *PC080SNRam[PC080SN_MAX_CHIPS];
 
 void PC080SNDrawBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest);
 void PC080SNDrawFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest);
+void PC080SNDrawBgLayerPrio(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest, UINT16 *PriBuf, UINT16 Prio);
+void PC080SNDrawFgLayerPrio(INT32 Chip, INT32 Opaque, UINT8 *pSrc, UINT16 *pDest, UINT16 *PriBuf, UINT16 Prio);
 void PC080SNSetScrollX(INT32 Chip, UINT32 Offset, UINT16 Data);
 void PC080SNSetScrollY(INT32 Chip, UINT32 Offset, UINT16 Data);
 void PC080SNCtrlWrite(INT32 Chip, UINT32 Offset, UINT16 Data);
@@ -96,8 +98,8 @@ void PC080SNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT3
 void PC080SNSetFgTransparentPen(INT32 Chip, INT32 Pen);
 void PC080SNExit();
 void PC080SNScan(INT32 nAction);
-void TopspeedDrawBgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourCtrlRam);
-void TopspeedDrawFgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourCtrlRam);
+void TopspeedDrawBgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourCtrlRam, UINT16 *PriBuf, UINT16 Prio);
+void TopspeedDrawFgLayer(INT32 Chip, UINT8 *pSrc, UINT16 *pDest, UINT16 *ColourCtrlRam, UINT16 *PriBuf, UINT16 Prio);
 
 // PC090OJ
 extern UINT8 *PC090OJRam;

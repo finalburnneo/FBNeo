@@ -6070,8 +6070,8 @@ static void System2DrawFgLayer()
 
 static void System2DrawBgLayer(INT32 trasp)
 {
-	INT32 xscroll = (System1VideoRam[0x7c0] >> 1) + ((System1VideoRam[0x7c1] & 1) << 7) - 256 + 5;
-	INT32 yscroll = -System1VideoRam[0x7ba];
+	INT32 scrollx = (System1VideoRam[0x7c0] >> 1) + ((System1VideoRam[0x7c1] & 1) << 7) - 256 + 5;
+	INT32 scrolly = -System1VideoRam[0x7ba];
 
 	for (INT32 page = 0; page < 4; page++)
 	{
@@ -6079,17 +6079,21 @@ static void System2DrawBgLayer(INT32 trasp)
 
 		UINT8 *source = System1VideoRam + (System1VideoRam[0x0740 + page * 2] & 0x07) * 0x800;
 
-		INT32 startx = (page & 1) * 256 + xscroll;
-		INT32 starty = (page >> 1) * 256 + yscroll;
-		INT32 row, col;
+		INT32 startx = (page & 1) * 256 + scrollx;
+		INT32 starty = (page >> 1) * 256 + scrolly;
 
 		INT32 offs = 0;
-		for(row = 0; row < 32 * 8; row += 8)
+		for (INT32 row = 0; row < 32 * 8; row += 8)
 		{
-			for(col = 0; col < 32 * 8; col += 8)
+			for (INT32 col = 0; col < 32 * 8; col += 8)
 			{
 				INT32 x = (startx + col) & 0x1ff;
 				INT32 y = (starty + row) & 0x1ff;
+
+				if (System1RowScroll) {
+					System1BgScrollX = (System1ScrollXRam[((row/8) * 2) & ~1] >> 1) + ((System1ScrollXRam[((row/8) * 2) | 1] & 1) << 7);
+					x += System1BgScrollX;
+				}
 
 				if (x > 256) x -= 512;
 				if (y > 224) y -= 512;

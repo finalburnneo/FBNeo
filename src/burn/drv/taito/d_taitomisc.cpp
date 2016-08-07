@@ -41,7 +41,7 @@ static INT32 RainbowCChipVer = 0;
 
 static UINT8 gearshifter; // Topspeed & clones
 static UINT8 z80ctc_load;
-static UINT8 z80ctc_constant;
+static INT32 z80ctc_constant;
 static INT32 z80ctc_ctr;
 
 static UINT16 *pTopspeedTempDraw = NULL;
@@ -3766,15 +3766,21 @@ static void z80ctc_write(UINT8 data)
 
 static void TopspeedMSM5205Vck2();
 
-static void z80ctc_execute()
+static void z80ctc_execute(INT32 cyc)
 {
+	if (z80ctc_constant == 0) return;
 	// mini-z80ctc emulation
 
-	if (z80ctc_ctr <= 0) {
-		z80ctc_ctr = z80ctc_constant;
+	while (z80ctc_ctr <= 0) {
+		INT32 remainder = 0;
+		if (z80ctc_ctr < 0)
+			remainder = -z80ctc_ctr;
+
+		z80ctc_ctr = 4000000/16/60; // 4mhz, 16 prescale, 1 frame
+		z80ctc_ctr -= remainder;
 		TopspeedMSM5205Vck2();
 	}
-	z80ctc_ctr -= (z80ctc_constant>>4)+5;
+	z80ctc_ctr -= (cyc * (0xb0 - z80ctc_constant));
 }
 
 void __fastcall TopspeedZ80WritePort(UINT16 a, UINT8 d)
@@ -4071,13 +4077,16 @@ void __fastcall TopspeedZ80Write(UINT16 a, UINT8 d)
 			MSM5205ResetWrite(0, 0);
 			return;
 		}
+
 		case 0xc000: {
 			TopspeedADPCMPos = d << 8;
 			return;
 		}
+
 		case 0xc400: {
 			MSM5205ResetWrite(1, 0);
 			TopspeedADPCMInReset = 0;
+			return;
 		}
 		
 		case 0xb800: {
@@ -4102,7 +4111,7 @@ void __fastcall TopspeedZ80Write(UINT16 a, UINT8 d)
 			MSM5205SetRoute(1, (double)((double)d / 256)-0.20, BURN_SND_ROUTE_BOTH);
 			return;
 		}
-		
+
 		case 0xb400:
 		case 0xcc00:
 		case 0xd400:
@@ -6018,8 +6027,8 @@ static INT32 JumpingFrame()
 
 static INT32 TopspeedFrame()
 {
-	INT32 nInterleave = 266;
-	//if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 4000000);
+	INT32 nInterleave = 133;
+	if (TaitoNumMSM5205) nInterleave = MSM5205CalcInterleave(0, 4000000);
 	INT32 nSoundBufferPos = 0;
 	
 	if (TaitoReset) TaitoResetFunction();
@@ -6041,7 +6050,7 @@ static INT32 TopspeedFrame()
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 		if (i == (nInterleave - 1) && (GetCurrentFrame > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-		if (i == (nInterleave - 6)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave - 3)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
 		// Run 68000 # 2
@@ -6052,7 +6061,7 @@ static INT32 TopspeedFrame()
 			nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 			nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
 			if (i == (nInterleave - 1) && (GetCurrentFrame > 0)) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-			if (i == (nInterleave - 6)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
+			if (i == (nInterleave - 3)) SekSetIRQLine(TaitoIrqLine, CPU_IRQSTATUS_AUTO);
 			SekClose();
 		}
 		
@@ -6065,9 +6074,9 @@ static INT32 TopspeedFrame()
 			nTaitoCyclesSegment = ZetRun(nTaitoCyclesSegment);
 			nTaitoCyclesDone[nCurrentCPU] += nTaitoCyclesSegment;
 
-			z80ctc_execute();
+			z80ctc_execute(4000000/16/60/nInterleave);
 
-			if (TaitoNumMSM5205 && i&1) MSM5205Update(); // 266 / 2 (MSM5205CalcInterleave(0, 4000000) == 133, we need interleave twice this for the z80ctc)
+			if (TaitoNumMSM5205) MSM5205Update();
 			ZetClose();
 		}
 		

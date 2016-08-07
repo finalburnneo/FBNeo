@@ -12,6 +12,7 @@
 
 static UINT32 RastanADPCMPos;
 static INT32 RastanADPCMData;
+static INT32 RastanADPCMInReset;
 static UINT32 TopspeedADPCMPos;
 static INT32 TopspeedADPCMData;
 static INT32 TopspeedADPCMInReset;
@@ -2477,6 +2478,7 @@ static INT32 TopspeedDoReset()
 	z80ctc_reset();
 	RastanADPCMPos = 0;
 	RastanADPCMData = -1;
+	RastanADPCMInReset = 1;
 	TopspeedADPCMPos = 0;
 	TopspeedADPCMData = -1;
 	TopspeedADPCMInReset = 1;
@@ -3757,7 +3759,7 @@ static void z80ctc_scan()
 static void z80ctc_write(UINT8 data)
 {
 	if (z80ctc_load) {
-		z80ctc_constant = data;
+		z80ctc_constant = 0xb0 - data;
 		z80ctc_load = 0;
 	}
 
@@ -3780,7 +3782,7 @@ static void z80ctc_execute(INT32 cyc)
 		z80ctc_ctr -= remainder;
 		TopspeedMSM5205Vck2();
 	}
-	z80ctc_ctr -= (cyc * (0xb0 - z80ctc_constant));
+	z80ctc_ctr -= (cyc * z80ctc_constant);
 }
 
 void __fastcall TopspeedZ80WritePort(UINT16 a, UINT8 d)
@@ -4072,30 +4074,36 @@ void __fastcall TopspeedZ80Write(UINT16 a, UINT8 d)
 			return;
 		}
 		
-		case 0xb000: {
-			RastanADPCMPos = (RastanADPCMPos & 0x00ff) | (d << 8);
-			MSM5205ResetWrite(0, 0);
+		case 0xb000: { // load
+			RastanADPCMPos = d << 8;
 			return;
 		}
 
-		case 0xc000: {
+		case 0xb400: { // play
+			MSM5205ResetWrite(0, 0);
+			RastanADPCMInReset = 0;
+			return;
+		}
+
+		case 0xb800: { // stop
+			MSM5205ResetWrite(0, 1);
+			RastanADPCMData = -1;
+			RastanADPCMInReset = 1;
+			return;
+		}
+
+		case 0xc000: { // load
 			TopspeedADPCMPos = d << 8;
 			return;
 		}
 
-		case 0xc400: {
+		case 0xc400: { // play
 			MSM5205ResetWrite(1, 0);
 			TopspeedADPCMInReset = 0;
 			return;
 		}
 		
-		case 0xb800: {
-			MSM5205ResetWrite(0, 1);
-			RastanADPCMPos &= 0xff00;
-			return;
-		}
-
-		case 0xc800: {
+		case 0xc800: { // stop
 			MSM5205ResetWrite(1, 1);
 			TopspeedADPCMData = -1;
 			TopspeedADPCMInReset = 1;
@@ -4112,7 +4120,6 @@ void __fastcall TopspeedZ80Write(UINT16 a, UINT8 d)
 			return;
 		}
 
-		case 0xb400:
 		case 0xcc00:
 		case 0xd400:
 		case 0xd600: {
@@ -4309,13 +4316,15 @@ static void TopspeedBankSwitch(UINT32 port, UINT32 Data)
 
 static void TopspeedMSM5205Vck()
 {
-	if (RastanADPCMData != -1) {
-		MSM5205DataWrite(0, RastanADPCMData & 0x0f);
-		RastanADPCMData = -1;
-	} else {
-		RastanADPCMData = TaitoMSM5205Rom[RastanADPCMPos];
-		RastanADPCMPos = (RastanADPCMPos + 1) & 0xffff;
-		MSM5205DataWrite(0, RastanADPCMData >> 4);
+	if (!RastanADPCMInReset) {
+		if (RastanADPCMData != -1) {
+			MSM5205DataWrite(0, RastanADPCMData & 0x0f);
+			RastanADPCMData = -1;
+		} else {
+			RastanADPCMData = TaitoMSM5205Rom[RastanADPCMPos];
+			RastanADPCMPos = (RastanADPCMPos + 1) & 0xffff;
+			MSM5205DataWrite(0, RastanADPCMData >> 4);
+		}
 	}
 }
 
@@ -6149,6 +6158,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoSoundLatch);
 		SCAN_VAR(RastanADPCMPos);
 		SCAN_VAR(RastanADPCMData);
+		SCAN_VAR(RastanADPCMInReset);
 		SCAN_VAR(OpwolfADPCM_B);
 		SCAN_VAR(OpwolfADPCM_C);
 		SCAN_VAR(OpwolfADPCMPos);

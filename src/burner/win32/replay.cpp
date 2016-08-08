@@ -109,7 +109,28 @@ static void PrintInputs()
 	for (UINT32 i = 0; i < nGameInpCount; i++) {
 		memset(&bii, 0, sizeof(bii));
 		BurnDrvGetInputInfo(&bii, i);
-		if (bii.pVal && !(bii.nType & BIT_GROUP_ANALOG) && bii.szInfo && bii.szInfo[0]) {
+		if (bii.pVal && bii.szInfo && bii.szInfo[0]) {
+			// Translate X/Y axis to UDLR, TODO: (maybe) support mouse axis/buttons
+			if ((bii.nType & BIT_GROUP_ANALOG) && bii.pShortVal && *bii.pShortVal) {
+				if (stricmp(bii.szInfo+2, " x-axis")==0 && bii.nType == BIT_GROUP_ANALOG) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						if ((INT16)*bii.pShortVal > 0x80)
+							UDLR[(bii.szInfo[1] - '1')][3] = 1;  // Right
+						if ((INT16)*bii.pShortVal < -0x80)
+							UDLR[(bii.szInfo[1] - '1')][2] = 1;  // Left
+						PrintInputsSetActive(bii.szInfo[1] - '1');
+					}
+				}
+				if (stricmp(bii.szInfo+2, " y-axis")==0 && bii.nType == BIT_GROUP_ANALOG) {
+					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {
+						if ((INT16)*bii.pShortVal > 0x80)
+							UDLR[(bii.szInfo[1] - '1')][1] = 1;  // Down
+						if ((INT16)*bii.pShortVal < -0x80)
+							UDLR[(bii.szInfo[1] - '1')][0] = 1;  // Up
+						PrintInputsSetActive(bii.szInfo[1] - '1');
+					}
+				}
+			}
 			if (*bii.pVal) { // Button pressed
 				if (stricmp(bii.szInfo+2, " Up")==0) {
 					if (bii.szInfo[1] == '1' || bii.szInfo[1] == '2') {

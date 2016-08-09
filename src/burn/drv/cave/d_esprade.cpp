@@ -29,6 +29,7 @@ static INT32 nCurrentCPU;
 static INT32 nCyclesDone[2];
 static INT32 nCyclesTotal[2];
 static INT32 nCyclesSegment;
+static INT32 nCyclesExtra;
 
 static struct BurnInputInfo espradeInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
@@ -299,6 +300,8 @@ static INT32 DrvDoReset()
 
 	YMZ280BReset();
 
+	nCyclesExtra = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -378,7 +381,8 @@ static INT32 DrvFrame()
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
 				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
+					nCyclesExtra = 0;
 				} else {
 					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
 				}
@@ -414,6 +418,7 @@ static INT32 DrvFrame()
 		}
 	}
 
+	nCyclesExtra = SekTotalCycles() - nCyclesTotal[0];
 	SekClose();
 
 	return 0;

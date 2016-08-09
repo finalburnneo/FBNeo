@@ -14,6 +14,15 @@
 #include "state.h"
 #include "ym2151.h"
 
+#if defined FBA_DEBUG
+#ifdef __GNUC__ 
+	// MSVC doesn't like this - this module only supports debug tracking with GCC only
+	#include <tchar.h>
+	extern UINT8 DebugSnd_AY8910Initted;
+	extern INT32 (__cdecl *bprintf) (INT32 nStatus, TCHAR* szFormat, ...);
+	#define PRINT_ERROR		(3)
+#endif
+#endif
 
 /* undef this to not use MAME timer system */
 // #define USE_MAME_TIMERS
@@ -508,32 +517,6 @@ static FILE *sample[9];
 	#undef PI
 #endif
 #define PI 3.14159265358979323846
-
-/* // save for later debugging
-void dinklogerror(char* szFormat, ...)
-{
-	static char szLogMessage[1024];
-
-	va_list vaFormat;
-	va_start(vaFormat, szFormat);
-
-	_vsnprintf(szLogMessage, 1024, szFormat, vaFormat);
-
-	va_end(vaFormat);
-
-        //bprintf(PRINT_ERROR, _T("[%hs]!!!"), szLogMessage);
-        {
-            FILE *fp;
-            fp = fopen("damage.txt", "a");
-            if (fp) {
-                fputs(szLogMessage, fp);
-                fclose(fp);
-            }
-        }
-
-	return;
-} */
-
 
 static void init_tables(void)
 {
@@ -1193,6 +1176,7 @@ void YM2151WriteReg(int n, int r, int v)
 		break;
 
 	case 0x20:
+//		bprintf(0, _T("%X: %X %X.\n"), n, r, v);
 		op = &chip->oper[ (r&7) * 4 ];
 		switch(r & 0x18){
 		case 0x00:	/* RL enable, Feedback, Connection */
@@ -1567,13 +1551,16 @@ void BurnYM2151Scan_int(INT32 nAction)
 		SCAN_VAR(YMPSG[i].pan);
 
 		SCAN_VAR(YMPSG[i].eg_cnt);
-		SCAN_VAR(YMPSG[i].eg_timer);
-		SCAN_VAR(YMPSG[i].eg_timer_add);
+		//SCAN_VAR(YMPSG[i].eg_timer);
+		YMPSG[i].eg_timer = 0;
+		//SCAN_VAR(YMPSG[i].eg_timer_add);
 		SCAN_VAR(YMPSG[i].eg_timer_overflow);
 
-		SCAN_VAR(YMPSG[i].lfo_phase);
-		SCAN_VAR(YMPSG[i].lfo_timer);
-		SCAN_VAR(YMPSG[i].lfo_timer_add);
+		//SCAN_VAR(YMPSG[i].lfo_phase);
+		//SCAN_VAR(YMPSG[i].lfo_timer);
+		YMPSG[i].lfo_timer = 0;
+		YMPSG[i].lfo_phase = 0;
+		//SCAN_VAR(YMPSG[i].lfo_timer_add);
 		SCAN_VAR(YMPSG[i].lfo_overflow);
 		SCAN_VAR(YMPSG[i].lfo_counter);
 		SCAN_VAR(YMPSG[i].lfo_counter_add);
@@ -1603,20 +1590,31 @@ void BurnYM2151Scan_int(INT32 nAction)
 		SCAN_VAR(YMPSG[i].connect);
 		SCAN_VAR(YMPSG[i].tim_A);
 		SCAN_VAR(YMPSG[i].tim_B);
-		SCAN_VAR(YMPSG[i].tim_A_val);
+		/*SCAN_VAR(YMPSG[i].tim_A_val);
 		SCAN_VAR(YMPSG[i].tim_B_val);
 		SCAN_VAR(YMPSG[i].tim_A_tab);
 		SCAN_VAR(YMPSG[i].tim_B_tab);
 		SCAN_VAR(YMPSG[i].freq);
 		SCAN_VAR(YMPSG[i].dt1_freq);
-		SCAN_VAR(YMPSG[i].noise_tab);
+		SCAN_VAR(YMPSG[i].noise_tab);*/
+		if (nAction & ACB_WRITE) {
+			if (YMPSG[i].tim_B) {
+				YMPSG[i].tim_B_val = YMPSG[i].tim_B_tab[ YMPSG[i].timer_B_index ];
+			}
+			if (YMPSG[i].tim_A) {
+				YMPSG[i].tim_A_val = YMPSG[i].tim_A_tab[ YMPSG[i].timer_A_index ];
+			}
+			//init_chip_tables( &YMPSG[i] );
+
+		}
 	}
+#if 0
 	SCAN_VAR(chanout);
 	SCAN_VAR(m2);
 	SCAN_VAR(c1);
 	SCAN_VAR(c2); /* Phase Modulation input for operators 2,3,4 */
 	SCAN_VAR(mem);		/* one sample delay memory */
-
+#endif
 	if (nAction & ACB_WRITE) {
 		// state_save_register_func_postload(ym2151_postload_refresh);
 		ym2151_postload_refresh();

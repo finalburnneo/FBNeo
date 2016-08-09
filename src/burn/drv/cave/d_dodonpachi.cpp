@@ -310,8 +310,6 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-//	bprintf(PRINT_NORMAL, "\n");
-
 	// Compile digital inputs
 	DrvInput[0] = 0x0000;  												// Player 1
 	DrvInput[1] = 0x0000;  												// Player 2
@@ -356,8 +354,7 @@ static INT32 DrvFrame()
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
 				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
-					nCyclesExtra = 0;
+					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 				} else {
 					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
 				}
@@ -374,7 +371,8 @@ static INT32 DrvFrame()
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
+			nCyclesExtra = 0;
 		} else {
 			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
 		}

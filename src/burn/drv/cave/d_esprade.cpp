@@ -381,8 +381,7 @@ static INT32 DrvFrame()
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
 				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
-					nCyclesExtra = 0;
+					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 				} else {
 					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
 				}
@@ -399,7 +398,8 @@ static INT32 DrvFrame()
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
+			nCyclesExtra = 0;
 		} else {
 			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
 		}

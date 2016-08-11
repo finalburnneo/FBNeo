@@ -239,10 +239,6 @@ static struct BurnDIPInfo CyvernDIPList[]=
 
 STDDIPINFO(Cyvern)
 
-
-//#define DEBUG_PRINT
-
-
 static void hit_calc_orig(UINT16 p, UINT16 s, UINT16 org, UINT16 *l, UINT16 *r)
 {
 	switch(org & 3) {
@@ -536,7 +532,7 @@ static UINT16 __fastcall suprnova_read_word(UINT32 address)
 	}
 
 	if ((address & 0xffffff00) == 0x02f00000) {
-		return skns_hit_r(address) >> ((~address & 2) << 3); // skns_hit_r
+		return skns_hit_r(address) >> ((~address & 2) << 3);
 	}
 
 	switch (address)
@@ -859,13 +855,13 @@ static INT32 MemIndex(INT32 gfxlen0)
 
 	DrvTmpScreenBuf		= Next; Next += 0x10000;
 
-	DrvTmpScreenA		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(short);
-	DrvTmpScreenB		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(short);
-	DrvTmpScreenC		= (UINT16*)Next; Next += 320 * 240 * sizeof(short);
-	DrvTmpScreenA2		= (UINT16*)Next; Next += 320 * 240 * sizeof(short);
-	DrvTmpScreenB2		= (UINT16*)Next; Next += 320 * 240 * sizeof(short);
+	DrvTmpScreenA		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(INT16);
+	DrvTmpScreenB		= (UINT16*)Next; Next += 1024 * 1024 * sizeof(INT16);
+	DrvTmpScreenC		= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
+	DrvTmpScreenA2		= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
+	DrvTmpScreenB2		= (UINT16*)Next; Next += 320 * 240 * sizeof(INT16);
 	pDrvTmpDraw		= (UINT32*)Next;
-	DrvTmpDraw		= (UINT32*)Next; Next += 320 * 240 * sizeof(int);
+	DrvTmpDraw		= (UINT32*)Next; Next += 320 * 240 * sizeof(INT32);
 
 	DrvTmpFlagA		= Next; Next += 1024 * 1024;
 	DrvTmpFlagB		= Next; Next += 1024 * 1024;
@@ -873,7 +869,7 @@ static INT32 MemIndex(INT32 gfxlen0)
 	DrvTmpFlagA2		= Next; Next += 320 * 240;
 	DrvTmpFlagB2		= Next; Next += 320 * 240;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x10000 * sizeof(int);
+	DrvPalette		= (UINT32*)Next; Next += 0x10000 * sizeof(INT32);
 
 	MemEnd			= Next;
 
@@ -1054,7 +1050,7 @@ static INT32 DrvExit()
 	Vblokbrk = 0;
 
 	speedhack_address = ~0;
-	memset (speedhack_pc, 0, 2 * sizeof(int));
+	memset (speedhack_pc, 0, 2 * sizeof(INT32));
 
 	return 0;
 }
@@ -1506,7 +1502,10 @@ static INT32 DrvDraw()
 
 	memset (DrvTmpScreenA2, 0, nScreenWidth * nScreenHeight * 2);
 	memset (DrvTmpScreenB2, 0, nScreenWidth * nScreenHeight * 2);
-
+	if (nRedrawTiles) {
+		memset(DrvTmpScreenA, 0, 1024 * 1024 * sizeof(INT16));
+		memset(DrvTmpScreenB, 0, 1024 * 1024 * sizeof(INT16));
+	}
 	copy_layers();
 	memset (DrvTmpScreenC,  0, nScreenWidth * nScreenHeight * 2);
 	if (nBurnLayer & 4) skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs, 0);
@@ -1616,6 +1615,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nAddress = 0;
 		ba.szName	= "All RAM";
 		BurnAcb(&ba);
+
+		ba.Data		= DrvGfxROM2;
+		ba.nLen		= 0x40000;
+		ba.nAddress = 0;
+		ba.szName	= "RAM Tiles";
+		BurnAcb(&ba);
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
@@ -1632,7 +1637,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-
+		nRedrawTiles = 1;
 	}
 
 	return 0;

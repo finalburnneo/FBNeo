@@ -6,11 +6,6 @@
 #include "sknsspr.h"
 #include "sh2_intf.h"
 
-// I'm using an older FBA base atm.
-#ifndef HARDWARE_KANEKO_SKNS
-#define HARDWARE_KANEKO_SKNS	HARDWARE_KANEKO_MISC
-#endif
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -76,7 +71,6 @@ static INT32 nRedrawTiles = 0;
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
 static UINT8 m_region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
-static UINT32 draw_layer_speedhack = 0;
 static UINT32 Vblokbrk = 0;
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
@@ -380,7 +374,7 @@ static UINT32 skns_hit_r(UINT32 adr)
 	switch(adr & 0xfc) {
 	case 0x28:
 	case 0x2a:
-		return (Sh2TotalCycles() ^ (Sh2TotalCycles() >> 16)) & 0xffff; //mame_rand(space->machine);
+		return (Sh2TotalCycles() ^ (Sh2TotalCycles() >> 16)) & 0xffff;
 	case 0x00:
 	case 0x10:
 		return (UINT16)hit.x_in;
@@ -495,10 +489,6 @@ static UINT8 __fastcall suprnova_read_byte(UINT32 address)
 {
 	address &= 0xc7ffffff;
 
-//#ifdef DEBUG_PRINT
-//        bprintf (0, _T("%8.8x, rb:"), address);
-//#endif
-
 	if ((address & 0xfffffff0) == 0x01000000) {
 		return skns_msm6242_r(address) >> ((~address & 3) << 3);
 	}
@@ -534,20 +524,12 @@ static UINT8 __fastcall suprnova_read_byte(UINT32 address)
 			return YMZ280BReadStatus();
 	}
 
-//#ifdef DEBUG_PRINT
-//	bprintf (0, _T("%8.8x, rb\n"), address);
-//#endif
-
 	return 0;
 }
 
 static UINT16 __fastcall suprnova_read_word(UINT32 address)
 {
 	address &= 0xc7fffffe;
-
-//#ifdef DEBUG_PRINT
-//        bprintf (0, _T("%8.8x, rw\n"), address);
-//#endif
 
 	if ((address & 0xfffffff0) == 0x01000000) {
 		return skns_msm6242_r(address) >> ((~address & 2) << 3);
@@ -584,10 +566,6 @@ static UINT16 __fastcall suprnova_read_word(UINT32 address)
 			return DrvInputs[2]; // 40000c
 	}
 
-//#ifdef DEBUG_PRINT
-//	bprintf (0, _T("%8.8x, rw\n"), address);
-//#endif
-
 	return 0;
 }
 
@@ -595,16 +573,12 @@ static UINT32 __fastcall suprnova_read_long(UINT32 address)
 {
 	address &= 0xc7fffffc;
 
-//#ifdef DEBUG_PRINT
-//	bprintf (0, _T("%8.8x, rl\n"), address);
-//#endif
-
 	if ((address & 0xfffffff0) == 0x01000000) {
 		return skns_msm6242_r(address);
 	}
 
 	if ((address & 0xffffff00) == 0x02f00000) {
-		return skns_hit_r(address); // skns_hit_r
+		return skns_hit_r(address);
 	}
 
 	switch (address)
@@ -618,10 +592,6 @@ static UINT32 __fastcall suprnova_read_long(UINT32 address)
 		case 0x0040000c:
 			return DrvInputs[2];
 	}
-
-//#ifdef DEBUG_PRINT
-//	bprintf (0, _T("%8.8x, rl\n"), address);
-//#endif
 
 	return 0;
 }
@@ -645,8 +615,6 @@ static void skns_pal_regs_w(UINT32 offset)
 {
 	UINT32 data = *((UINT32*)(DrvPalRegs + (offset & 0x1c)));
 	offset = (offset >> 2) & 7;
-
-//bprintf (0, _T("%8.8x palreg write\n"), data);
 
 	switch ( offset )
 	{
@@ -716,10 +684,6 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 
 	} //04800000, 0x0483ffff
 
-#ifdef DEBUG_PRINT
-	bprintf (0, _T("%8.8x, %8.8x wb\n"), address, data);
-#endif
-
 	switch (address)
 	{
 		case 0x00c00000:
@@ -758,7 +722,6 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
                             hit.disconnect= 0;
                             break;
                         }
-                        //bprintf(0, _T("finish:hit.disconnect=[%X]"), hit.disconnect);
                     }
 		return;
 	}
@@ -772,12 +735,13 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 	// skns_msm6242_w -- not used
 	if ((address & ~0x0f)  == 0x1000000) return;
 
-	// skns io -- not used 
-	if ((address & ~0x0f) == 0x00400000) return;
-
-//#ifdef DEBUG_PRINT
-//	bprintf (0, _T("%8.8x, %8.8x wb\n"), address, data);
-//#endif
+	// skns io -- not used
+	if ((address & ~0x0f) == 0x00400000) {
+		if ((Sh2GetPC(0) == 0x04013B42 + 2) && Vblokbrk) { // speedhack for Vblokbrk / Saru Kani
+			Sh2BurnUntilInt(0);
+		}
+		return;
+	}
 }
 
 static void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
@@ -790,19 +754,11 @@ static void __fastcall suprnova_write_word(UINT32 address, UINT16 data)
 		return;
 
 	} //04800000, 0x0483ffff
-
-#ifdef DEBUG_PRINT
-	bprintf (0, _T("%8.8x, %8.8x ww\n"), address, data);
-#endif
 }
 
 static void __fastcall suprnova_write_long(UINT32 address, UINT32 data)
 {
 	address &= 0xc7fffffc;
-
-#ifdef DEBUG_PRINT
-	bprintf (0, _T("%8.8x, %8.8x wl\n"), address, data);
-#endif
 
 	if ((address & 0xfffc0000) == 0x4800000) {
 		*((UINT32*)(DrvGfxRAM + (address & 0x3fffc))) = data;
@@ -831,10 +787,7 @@ static inline void suprnova_speedhack(UINT32 a)
 	UINT32 pc = Sh2GetPC(0);
 
         if (b == speedhack_address) {
-           // bprintf(0, _T("ad=[%X] pc=[%X]"), a, b);
-           // bprintf(0, _T("pc[%X] shpc[%X]"), pc, speedhack_pc[0]);
             if (pc == speedhack_pc[0]) {
-                //bprintf(0, _T("S")); // handy debug code, keep
                 Sh2BurnUntilInt(0);
             }
 	}
@@ -935,7 +888,6 @@ static INT32 DrvDoReset()
 	Sh2Open(0);
 	if (Vblokbrk) {
 		Sh2Reset(); // VS Block Breaker / Saru Kani must run through the Super Kaneko BIOS for nvram to work!
-		draw_layer_speedhack = 0; // this gets enabled after the BIOS runs through its intro.
 	} else { // Run everything else directly, bypassing the bios.
 		Sh2Reset( *(UINT32 *)(DrvSh2ROM + 0), *(UINT32 *)(DrvSh2ROM + 4) );
 		if (sprite_kludge_y == -272) // sengekistriker
@@ -1075,13 +1027,6 @@ static INT32 DrvInit(INT32 bios)
 
 	YMZ280BInit(16666666, NULL);
 
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "pan") || strstr(BurnDrvGetTextA(DRV_NAME), "saruk") || strstr(BurnDrvGetTextA(DRV_NAME), "vblok")) {
-		// Disable draw_layer() speed hack for Panic Street & Gals Panic 2,3,4etc
-		draw_layer_speedhack = 0;
-	} else {
-		draw_layer_speedhack = 1;
-	}
-
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
 
@@ -1126,8 +1071,8 @@ static void draw_layer(UINT8 *source, UINT8 *previous, UINT16 *dest, UINT8 *prid
 
 	for (INT32 offs = 0; offs < 64 * 64; offs++)
 	{
-	//	speed hack, disabled for gals panic* & panic street
-		if (vram[offs] == prev[offs] && draw_layer_speedhack) {
+	//	speed hack
+		if (!nRedrawTiles && vram[offs] == prev[offs]) {
 			continue;
 		}
 		prev[offs] = vram[offs];
@@ -1566,18 +1511,12 @@ static INT32 DrvDraw()
 	memset (DrvTmpScreenC,  0, nScreenWidth * nScreenHeight * 2);
 	if (nBurnLayer & 4) skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs, 0);
 
-	//if (nBurnBpp == 4) {
-	//	DrvTmpDraw = (UINT32*)pBurnDraw;
-	//} else {
-		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 			INT32 d = DrvTmpDraw[i];
 			PutPix(pBurnDraw + i * nBurnBpp, BurnHighCol(d>>16, d>>8, d, 0));
-		}
+	}
 
-		//DrvTmpDraw = pDrvTmpDraw;
-	//}
-
-	//BurnTransferCopy(DrvPalette);
+	nRedrawTiles = 0;
 
 	return 0;
 }
@@ -1596,8 +1535,8 @@ static UINT8 Paddle_incdec(UINT32 PaddlePortnum) {
 	if (Temp > 0xfe) Temp = 0xfe;
 	Temp = scalerange_skns(Temp, 0x3f, 0xbe, 0x01, 0xfe);
 	if (Temp > 0x90) Paddle_X-=15;
-	if (Temp < 0x70) Paddle_X+=15;//maybe try incremental instead of relative value?
-	return Paddle_X;//~Temp;
+	if (Temp < 0x70) Paddle_X+=15;
+	return Paddle_X;
 }
 
 static INT32 DrvFrame()
@@ -1612,18 +1551,11 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
-		//DrvInputs[1] = 0xffffff00 | DrvDips[0];
 		DrvInputs[1] = 0x0000ff00 | DrvDips[0];
 		DrvInputs[1] |= Paddle_incdec(DrvAnalogPort0) << 24;
-		//DrvInputs[1] |= Paddle_incdec(DrvAnalogPort1) << 16;
-		DrvInputs[2] = 0xffffffff; 
+		DrvInputs[2] = 0xffffffff;
 	}
 
-	if (Vblokbrk && Sh2TotalCycles() >= 398084698) {
-		draw_layer_speedhack = 1; // Turn on the speedhack after the SKNS Bios is done with its intro
-	}
-
-	//INT32 nSoundBufferPos = 0;
 	INT32 nTotalCycles = 28638000 / 60;
 	INT32 nInterleave = 262;
 
@@ -1631,48 +1563,36 @@ static INT32 DrvFrame()
 		INT32 segment = nTotalCycles / nInterleave;
 
 		Sh2Run(segment);
-		// irqs
+
 		if (i == 1) {
-			Sh2SetIRQLine(1, CPU_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(1, CPU_IRQSTATUS_ACK);
 			Sh2Run(0);
 			Sh2SetIRQLine(1, CPU_IRQSTATUS_NONE);
 		} else if (i == 240) {
-			Sh2SetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(5, CPU_IRQSTATUS_ACK);
 			Sh2Run(0);
 			Sh2SetIRQLine(5, CPU_IRQSTATUS_NONE);
 		}
 		{ // fire irq9 every interleave iteration.
-			Sh2SetIRQLine(9, CPU_IRQSTATUS_AUTO);
+			Sh2SetIRQLine(9, CPU_IRQSTATUS_ACK);
 			Sh2Run(0);
 			Sh2SetIRQLine(9, CPU_IRQSTATUS_NONE);
 			if (i%125==0 && i!=0) { //125 = every 8 ms (per 261 interleave)
-				Sh2SetIRQLine(11, CPU_IRQSTATUS_AUTO);
+				Sh2SetIRQLine(11, CPU_IRQSTATUS_ACK);
 				Sh2Run(0);
 				Sh2SetIRQLine(11, CPU_IRQSTATUS_NONE);
 			}
 			if (i%31==0 && i!=0) { //31=every 2 ms
-				Sh2SetIRQLine(15, CPU_IRQSTATUS_AUTO);
+				Sh2SetIRQLine(15, CPU_IRQSTATUS_ACK);
 				Sh2Run(0);
 				Sh2SetIRQLine(15, CPU_IRQSTATUS_NONE);
 			}
 		}
-
-		/*if (pBurnSoundOut && (i & 1)) {
-			INT32 nSegmentEnd = nBurnSoundLen * i / nInterleave;
-			short* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			YMZ280BRender(pSoundBuf, nSegmentEnd - nSoundBufferPos);
-			nSoundBufferPos = nSegmentEnd;
-		}*/
 	}
 
 	if (pBurnSoundOut) {
-		/*INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		short* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			YMZ280BRender(pSoundBuf, nSegmentLength);
-                        }*/
-            	YMZ280BRender(pBurnSoundOut, nBurnSoundLen); // reduce clicks this way
-	}                                                    // keep above just in-case!
+		YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		DrvDraw();

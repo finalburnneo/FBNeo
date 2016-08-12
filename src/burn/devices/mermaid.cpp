@@ -154,7 +154,7 @@ INT32 mermaidRun(INT32 cycles)
 	return cycles;
 }
 
-INT32 mermaidScan(INT32)
+INT32 mermaidScan(INT32 nAction)
 {
 	SCAN_VAR(mermaid_sub_z80_reset);
 	SCAN_VAR(data_to_mermaid);
@@ -162,6 +162,7 @@ INT32 mermaidScan(INT32)
 	SCAN_VAR(z80_to_mermaid_full);
 	SCAN_VAR(mermaid_to_z80_full);
 	SCAN_VAR(mermaid_int0);
+	i8051_scan(nAction);
 
 	return 0;
 }

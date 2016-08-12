@@ -229,6 +229,8 @@ typedef struct {
 	//Internal Ram
 	UINT8	IntRam[0xff+1];	//Max 256 Bytes of Internal RAM (8031/51 have 128, 8032/52 have 256)
 
+	UINT8   pointer_block_divider; // Used to calculate the context-size (savestates etc)
+
 	//Interrupt Callback
 	int 	(*irq_callback)(int irqline);
 
@@ -1373,7 +1375,19 @@ INT32 i8051Run(int cycles)
 	return cycles - i8051_icount;
 }
 
-/* Get registers, return context size */
+void i8051_scan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = &i8051;
+		ba.nLen	  = (int)&i8051.pointer_block_divider - (int)&i8051;
+		ba.szName = "i8051 Regs";
+		BurnAcb(&ba);
+	}
+}
+
+/* Get registers */
 void i8051_get_context(void *dst)
 {
 	if( dst )

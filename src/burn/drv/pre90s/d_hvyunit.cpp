@@ -654,14 +654,14 @@ static INT32 DrvFrame()
 			ZetIdle(nSegment);
 		} else {
 			nCyclesDone[1] += ZetRun(nSegment);
-			if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(2);
 		BurnTimerUpdate(nSegment);
-		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		nCyclesDone[3] += mermaidRun(nSegment - nCyclesDone[3]);
@@ -812,7 +812,7 @@ struct BurnDriver BurnDrvHvyunitj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
 	NULL, hvyunitjRomInfo, hvyunitjRomName, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunitjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -849,7 +849,7 @@ struct BurnDriver BurnDrvHvyunitjo = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
 	NULL, hvyunitjoRomInfo, hvyunitjoRomName, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunitInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };
 
 
@@ -888,5 +888,5 @@ struct BurnDriver BurnDrvHvyunitu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_VERSHOOT, 0,
 	NULL, hvyunituRomInfo, hvyunituRomName, NULL, NULL, HvyunitInputInfo, HvyunitjDIPInfo,
 	hvyunituInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	256, 256, 4, 3
+	256, 224, 4, 3
 };

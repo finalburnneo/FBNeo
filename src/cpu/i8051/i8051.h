@@ -158,5 +158,6 @@ UINT8 i8752_internal_r(INT32 offset);
 
 void i8051_set_write_port_handler(void (*pointer)(INT32,UINT8));
 void i8051_set_read_port_handler(UINT8 (*pointer)(INT32));
+void i8051_scan(INT32 nAction);
 extern UINT8 *i8051_program_data;
 

@@ -2596,20 +2596,20 @@ struct BurnDriver BurnDrvChukataj = {
 // The NewZealand Story (World, newer)
 
 static struct BurnRomInfo tnzsRomDesc[] = {
-	{ "b53-24.1",   	0x20000, 0xd66824c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b53-24.u1",   	0x20000, 0xd66824c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b53-25.3",   	0x10000, 0xd6ac4e71, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b53-25.u3",   	0x10000, 0xd6ac4e71, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-26.34", 		0x10000, 0xcfd5649c, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "b53-26.u34", 	0x10000, 0xcfd5649c, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "b53-16.8",		0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b53-17.7",		0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
-	{ "b53-18.6",		0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
-	{ "b53-19.5",		0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
-	{ "b53-22.4",		0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
-	{ "b53-23.3",		0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
-	{ "b53-20.2",		0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
-	{ "b53-21.1",		0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	{ "b53-16.ic7",		0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-17.ic8",		0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-18.ic9",		0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-19.ic10",	0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-22.ic11",	0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-23.ic13",	0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-20.ic12",	0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-21.ic14",	0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
 	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
 };
@@ -2631,20 +2631,20 @@ struct BurnDriver BurnDrvtnzs = {
 // The NewZealand Story (Japan, newer)
 
 static struct BurnRomInfo tnzsjRomDesc[] = {
-	{ "b53-24.1",  		0x20000, 0xd66824c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b53-24.u1",  	0x20000, 0xd66824c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
 	{ "b53-27.u3",  	0x10000, 0xb3415fc3, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-26.34",  	0x10000, 0xcfd5649c, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "b53-26.u34", 	0x10000, 0xcfd5649c, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "b53-16.8",		0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b53-17.7",		0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
-	{ "b53-18.6",		0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
-	{ "b53-19.5",		0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
-	{ "b53-22.4",		0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
-	{ "b53-23.3",		0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
-	{ "b53-20.2",		0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
-	{ "b53-21.1",		0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	{ "b53-16.ic7",		0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-17.ic8",		0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-18.ic9",		0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-19.ic10",	0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-22.ic11",	0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-23.ic13",	0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-20.ic12",	0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-21.ic14",	0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
 	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
 };
@@ -2666,25 +2666,26 @@ struct BurnDriver BurnDrvtnzsj = {
 // The NewZealand Story (Japan, old version) (older PCB)
 
 static struct BurnRomInfo tnzsjoRomDesc[] = {
-	{ "b53-10.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b53-10.27c1001d.u32",	0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b53-11.u38",		0x10000, 0x9784d443, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b53-11.27c512.u38",		0x10000, 0x9784d443, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-09.u46",		0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b53-09.u46",				0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "b53-08.8",		0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b53-07.7",		0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
-	{ "b53-06.6",		0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
-	{ "b53-05.5",		0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
-	{ "b53-04.4",		0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
-	{ "b53-03.3",		0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
-	{ "b53-02.2",		0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
-	{ "b53-01.1",		0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	{ "b53-08.u8",				0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-07.u7",				0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-06.u6",				0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-05.u5",				0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-04.u4",				0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-03.u3",				0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-02.u2",				0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-01.u1",				0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
-	/* these are marked b06 and so are probably shared with extermination */
-	{ "b06-12.pal16l8a.ic26.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.ic25.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b06-14.pal16x8a.icxx.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // does this chip exist?
+	/* these are probably shared with extermination except for u35 */
+	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
 };
 
 STD_ROM_PICK(tnzsjo)
@@ -2706,29 +2707,69 @@ struct BurnDriver BurnDrvTnzsjo = {
 };
 
 
+// The NewZealand Story (US, old version) (older PCB)
+
+static struct BurnRomInfo tnzsuoRomDesc[] = {
+	{ "b53-10.27c1001d.u32",	0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "b53-13.27c512.u38",		0x10000, 0xc09f4d28, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "b53-09.u46",				0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+
+	{ "b53-08.u8",				0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-07.u7",				0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-06.u6",				0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-05.u5",				0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-04.u4",				0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-03.u3",				0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-02.u2",				0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-01.u1",				0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	
+	/* these are probably shared with extermination except for u35 */
+	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
+};
+
+STD_ROM_PICK(tnzsuo)
+STD_ROM_FN(tnzsuo)
+
+struct BurnDriver BurnDrvTnzsuo = {
+	"tnzsuo", "tnzs", NULL, NULL, "1988",
+	"The NewZealand Story (US, old version) (older PCB)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, tnzsuoRomInfo, tnzsuoRomName, NULL, NULL, CommonInputInfo, TnzsjoDIPInfo,
+	TnzsoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
 // The NewZealand Story (World, old version) (older PCB)
 
 static struct BurnRomInfo tnzsoRomDesc[] = {
-	{ "u32",			0x20000, 0xedf3b39e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b53-unknown.27c1001d.u32",	0x20000, 0xedf3b39e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "u38",			0x10000, 0x60340d63, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b53-unknown.27c512.u38",		0x10000, 0x60340d63, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-09.u46",		0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b53-09.u46",					0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "b53-08.8",		0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b53-07.7",		0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
-	{ "b53-06.6",		0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
-	{ "b53-05.5",		0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
-	{ "b53-04.4",		0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
-	{ "b53-03.3",		0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
-	{ "b53-02.2",		0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
-	{ "b53-01.1",		0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	{ "b53-08.u8",					0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-07.u7",					0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-06.u6",					0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-05.u5",					0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-04.u4",					0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
 	/* PALS not directly observed on this board but assumed to exist */
-	/* these are marked b06 and so are probably shared with extermination */
-	{ "b06-12.pal16l8a.ic26.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.ic25.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b06-14.pal16x8a.icxx.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // does this chip exist?
+	/* these are probably shared with extermination except for u35 */
+	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
 };
 
 STD_ROM_PICK(tnzso)
@@ -2748,26 +2789,27 @@ struct BurnDriver BurnDrvTnzso = {
 // The NewZealand Story (World, prototype?) (older PCB)
 
 static struct BurnRomInfo tnzsopRomDesc[] = {
-	{ "ns_c-11.rom",	0x20000, 0x3c1dae7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "ns_c-11.27c1001d.u32",	0x20000, 0x3c1dae7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "ns_e-3.rom",		0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "ns_e-3.27c512.u38",		0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-09.u46",		0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b53-09.u46",				0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "ns_a13.rom",		0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      //  3 Graphics
-	{ "ns_a12.rom",		0x20000, 0x95880726, 4 | BRF_GRA },	      //  4
-	{ "ns_a10.rom",		0x20000, 0x2bc4c053, 4 | BRF_GRA },	      //  5
-	{ "ns_a08.rom",		0x20000, 0x8ff8d88c, 4 | BRF_GRA },	      //  6
-	{ "ns_a07.rom",		0x20000, 0x291bcaca, 4 | BRF_GRA },	      //  7
-	{ "ns_a05.rom",		0x20000, 0x6e762e20, 4 | BRF_GRA },	      //  8
-	{ "ns_a04.rom",		0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      //  9
-	{ "ns_a02.rom",		0x20000, 0x2ab06bda, 4 | BRF_GRA },	      // 10
+	{ "ns_a13.rom.u8",			0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      //  3 Graphics
+	{ "ns_a12.rom.u7",			0x20000, 0x95880726, 4 | BRF_GRA },	      //  4
+	{ "ns_a10.rom.u6",			0x20000, 0x2bc4c053, 4 | BRF_GRA },	      //  5
+	{ "ns_a08.rom.u5",			0x20000, 0x8ff8d88c, 4 | BRF_GRA },	      //  6
+	{ "ns_a07.rom.u4",			0x20000, 0x291bcaca, 4 | BRF_GRA },	      //  7
+	{ "ns_a05.rom.u3",			0x20000, 0x6e762e20, 4 | BRF_GRA },	      //  8
+	{ "ns_a04.rom.u2",			0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      //  9
+	{ "ns_a02.rom.u1",			0x20000, 0x2ab06bda, 4 | BRF_GRA },	      // 10
 	
 	/* PALS not directly observed on this board but assumed to exist */
-	/* these are marked b06 and so are probably shared with extermination */
-	{ "b06-12.pal16l8a.ic26.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.ic25.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b06-14.pal16x8a.icxx.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // does this chip exist?
+	/* these are probably shared with extermination except for u35 */
+	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // likely has a different name on the proto pcb...
+	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
 
 STD_ROM_PICK(tnzsop)

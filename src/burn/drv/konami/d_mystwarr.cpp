@@ -3434,7 +3434,7 @@ struct BurnDriver BurnDrvMetamrph = {
 // Metamorphic Force (ver EAA - alternate)
 /* alternate set - possibly a bugfix version. Only 2 adjusted bytes causing a swap in commands */
 
-static struct BurnRomInfo metamrphaRomDesc[] = {
+static struct BurnRomInfo metamrpheRomDesc[] = {
 	{ "3.15h",			0x040000, 0x8b9f1ba3, 1 }, //  0 maincpu
 	{ "224eaa02.15f",	0x040000, 0xe314330a, 1 }, //  1
 	{ "224a03",			0x080000, 0xa5bedb01, 1 }, //  2
@@ -3458,12 +3458,53 @@ static struct BurnRomInfo metamrphaRomDesc[] = {
 	{ "metamrph.nv",	0x000080, 0x2c51229a, 7 }, // 14 eeprom
 };
 
+STD_ROM_PICK(metamrphe)
+STD_ROM_FN(metamrphe)
+
+struct BurnDriver BurnDrvMetamrphe = {
+	"metamrphe", "metamrph", NULL, NULL, "1993",
+	"Metamorphic Force (ver EAA - alternate)\0", NULL, "Konami", "GX224",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, metamrpheRomInfo, metamrpheRomName, NULL, NULL, MetamrphInputInfo, MetamrphDIPInfo,
+	MetamrphInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x0800,
+	288, 224, 4, 3
+};
+
+
+// Metamorphic Force (ver AAA)
+
+static struct BurnRomInfo metamrphaRomDesc[] = {
+	{ "224aaa01.15h",	0x040000, 0x12515518, 1 }, //  0 maincpu
+	{ "224aaa02.15f",	0x040000, 0x04ed41df, 1 }, //  1
+	{ "224a03",			0x080000, 0xa5bedb01, 1 }, //  2
+	{ "224a04",			0x080000, 0xada53ba4, 1 }, //  3
+
+	{ "224a05",			0x040000, 0x4b4c985c, 2 }, //  4 soundcpu
+
+	{ "224a09",			0x100000, 0x1931afce, 3 }, //  5 gfx1
+	{ "224a08",			0x100000, 0xdc94d53a, 3 }, //  6
+
+	{ "224a10",			0x200000, 0x161287f0, 4 }, //  7 gfx2
+	{ "224a11",			0x200000, 0xdf5960e1, 4 }, //  8
+	{ "224a12",			0x200000, 0xca72a4b3, 4 }, //  9
+	{ "224a13",			0x200000, 0x86b58feb, 4 }, // 10
+
+	{ "224a14",			0x040000, 0x3c79b404, 5 }, // 11 k053250_1
+
+	{ "224a06",			0x200000, 0x972f6abe, 6 }, // 12 shared
+	{ "224a07",			0x100000, 0x61b2f97a, 6 }, // 13
+
+	// default eeprom to prevent game booting upside down with error
+	{ "metamrpha.nv",	0x000080, 0x6d34a4f2, 7 }, // 14 eeprom
+};
+
 STD_ROM_PICK(metamrpha)
 STD_ROM_FN(metamrpha)
 
 struct BurnDriver BurnDrvMetamrpha = {
 	"metamrpha", "metamrph", NULL, NULL, "1993",
-	"Metamorphic Force (ver EAA - alternate)\0", NULL, "Konami", "GX224",
+	"Metamorphic Force (ver AAA)\0", NULL, "Konami", "GX224",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, metamrphaRomInfo, metamrphaRomName, NULL, NULL, MetamrphInputInfo, MetamrphDIPInfo,

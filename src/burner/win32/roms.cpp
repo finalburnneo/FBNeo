@@ -366,14 +366,17 @@ static unsigned __stdcall AnalyzingRoms(void*)
 	return 0;
 }
 
-static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)		// LPARAM lParam
+//Add these two static variables
+static int xClick;
+static int yClick;
+
+static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lParam)		// LPARAM lParam
 {
 	switch (Msg) {
-		case WM_INITDIALOG:
+		case WM_INITDIALOG: {
 			hRomsDlg = hDlg;
 			nOldSelect = nBurnDrvActive;
-			//memset(gameAv, 0, sizeof(gameAv)); // sizeof(gameAv) is 4!! -dink
-			memset(gameAv, 0, nBurnDrvCount);
+			memset(gameAv, 0, nBurnDrvCount); // clear game list
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETRANGE, 0, MAKELPARAM(0, nBurnDrvCount));
 			SendDlgItemMessage(hDlg, IDC_WAIT_PROG, PBM_SETSTEP, (WPARAM)1, 0);
 
@@ -405,19 +408,49 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)		//
 			}
 
 			break;
+		}
 
-		case WM_COMMAND:
+		case WM_LBUTTONDOWN: {
+			SetCapture(hDlg);
+
+			xClick = GET_X_LPARAM(lParam);
+			yClick = GET_Y_LPARAM(lParam);
+			break;
+		}
+
+		case WM_LBUTTONUP: {
+			ReleaseCapture();
+			break;
+		}
+
+		case WM_MOUSEMOVE: {
+			if (GetCapture() == hDlg) {
+				RECT rcWindow;
+				GetWindowRect(hDlg,&rcWindow);
+
+				int xMouse = GET_X_LPARAM(lParam);
+				int yMouse = GET_Y_LPARAM(lParam);
+				int xWindow = rcWindow.left + xMouse - xClick;
+				int yWindow = rcWindow.top + yMouse - yClick;
+
+				SetWindowPos(hDlg,NULL,xWindow,yWindow,0,0,SWP_NOSIZE|SWP_NOZORDER);
+			}
+			break;
+		}
+
+		case WM_COMMAND: {
 			if (LOWORD(wParam) == IDCANCEL) {
 				PostMessage(hDlg, WM_CLOSE, 0, 0);
 			}
 			break;
+		}
 
-		case WM_CLOSE:
+		case WM_CLOSE: {
 			QuitRomsScan();
 			EndDialog(hDlg, 0);
 			hRomsDlg = NULL;
 			hParent = NULL;
-
+		}
 	}
 
 	return 0;

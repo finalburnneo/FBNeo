@@ -819,7 +819,8 @@ static const struct game_keys keys_table[] =
 	{ "ssf2tu",     { 0x94fa8902,0x4c77143f }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
 	{ "ssf2tur1",   { 0x94fa8902,0x4c77143f }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
 	{ "ssf2xj",     { 0x942a5702,0x05ac140e }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
-	{ "ssf2xjr",    { 0x943c2b02,0x7acd1422 }, 0x400000 },  // 0838 0007 2000  btst    #7,$2000 // curious, not the usual Japan key on the rent version
+	{ "ssf2xjr1",   { 0x942a5702,0x05ac140e }, 0x400000 },	// 0838 0007 2000  btst    #7,$2000
+	{ "ssf2xjr1r",  { 0x943c2b02,0x7acd1422 }, 0x400000 },  // 0838 0007 2000  btst    #7,$2000 // curious, not the usual Japan key on the rent version
 	{ "xmcota",     { 0x3bc6eda4,0x97f80251 }, 0x100000 },	// 0C80 1972 0301  cmpi.l  #$19720301,D0
 	{ "xmcotar1",   { 0x3bc6eda4,0x97f80251 }, 0x100000 },	// 0C80 1972 0301  cmpi.l  #$19720301,D0
 	{ "xmcotau",    { 0x32a57ecd,0x98016f4b }, 0x100000 },	// 0C80 1972 0301  cmpi.l  #$19720301,D0

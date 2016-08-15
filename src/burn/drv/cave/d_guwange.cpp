@@ -483,7 +483,10 @@ static INT32 LoadRoms()
 	BurnLoadRom(CaveSpriteROM + 0x1000001, 5, 2);
 	NibbleSwap3(CaveSpriteROM, 0xC00000);
 
-#if 1
+#if 0
+	// I don't think this is needed anymore, dink aug 14 2016.
+	// note: if enabled-this causes the screen fade-in effect after starting
+	// a game @ the character selection screen to display garbage sprite data.
 	for (INT32 i = 0; i < 0x100000; i++) {
 		UINT16 nValue = rand() & 0x0101;
 		if (nValue & 0x0001) {

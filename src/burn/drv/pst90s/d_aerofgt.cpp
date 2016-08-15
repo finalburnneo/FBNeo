@@ -5,7 +5,7 @@
  * http://oopsware.ys168.com
  *
  *
- * 12.08.2014
+ * 12.08.2014, 8.13.2016 - revisited.
  *   Add sprite priority bitmap for Turbo Force - see notes in turbofrcDraw();
  *
  * 6.04.2014
@@ -2296,19 +2296,9 @@ void RenderZoomedTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT
 						INT32 pxl = src[x_index>>16];
 						
 						// new!
-						// notes: the first layer is going to load the bitmap
-						// - the second layer is going to use it
-
-						if (turbofrc_layer == 1) {
+						if ((prio & (1 << pri[y * nScreenWidth + x])) == 0/* && pri[y * nScreenWidth + x] < 0x80 */) {
 							if (pxl != t) {
-								pri[y * nScreenWidth + x] |= 0x80;
 								dst[x] = pxl + color;
-							}
-						} else {
-							if ((prio & (1 << pri[y * nScreenWidth + x])) == 0 && pri[y * nScreenWidth + x] < 0x80) {
-								if (pxl != t) {
-									dst[x] = pxl + color;
-								}
 							}
 						}
 						// !new
@@ -2378,7 +2368,7 @@ static void turbofrc_drawsprites(INT32 chip, INT32 turbofrc_layer, INT32 paloffs
 				else			code = BURN_ENDIAN_SWAP_INT16(RamSpr2[map_start & RamSpr2SizeMask]) & RomSpr2SizeMask;
 
 				if (turbofrc_layer)
-					RenderZoomedTilePrio(pTransDraw, gfxbase, code, color, 0xf, sx, sy, flipx, flipy, 16, 16, zoomx<<11, zoomy<<11, RamPrioBitmap, pri, turbofrc_layer);
+					RenderZoomedTilePrio(pTransDraw, gfxbase, code, color, 0xf, sx, sy, flipx, flipy, 16, 16, zoomx<<11, zoomy<<11, RamPrioBitmap, (pri) ? 0 : 2, turbofrc_layer);
 				else
 					RenderZoomedTile(pTransDraw, gfxbase, code, color, 0xf, sx, sy, flipx, flipy, 16, 16, zoomx<<11, zoomy<<11);
 
@@ -2390,6 +2380,64 @@ static void turbofrc_drawsprites(INT32 chip, INT32 turbofrc_layer, INT32 paloffs
 			if (xsize == 4) map_start += 3;
 			if (xsize == 5) map_start += 2;
 			if (xsize == 6) map_start += 1;
+		}
+	}
+}
+
+static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *pribmp, UINT8 prio)
+{
+	INT32 flip = 0;
+	if (flipy) flip |= (height - 1) * width;
+	if (flipx) flip |= width - 1;
+
+	gfx += code * width * height;
+
+	for (INT32 y = 0; y < height; y++, sy++) {
+		if (sy < 0 || sy >= nScreenHeight) continue;
+
+		for (INT32 x = 0; x < width; x++, sx++) {
+			if (sx < 0 || sx >= nScreenWidth) continue;
+
+			INT32 pxl = gfx[((y * width) + x) ^ flip];
+			if (pxl == trans_col) continue;
+
+			pribmp[sy * nScreenWidth + sx] = prio;
+			dest[sy * nScreenWidth + sx] = pxl | color;
+		}
+
+		sx -= width;
+	}
+}
+
+static void TileBackgroundPrio(UINT16 *bgram, UINT8 *gfx, INT32 transp, UINT16 pal, INT32 scrollx, INT32 scrolly, UINT8 *bankbase)
+{
+	scrollx &= 0x1ff;
+	scrolly &= 0x1ff;
+
+	for (INT32 offs = 0; offs < 64 * 64; offs++)
+	{
+		INT32 sx = (offs & 0x3f) * 8;
+		INT32 sy = (offs / 0x40) * 8;
+
+		sx -= scrollx;
+		if (sx < -7) sx += 512;
+		sy -= scrolly;
+		if (sy < -7) sy += 512;
+
+		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
+
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(bgram[offs]);
+		INT32 code  = (attr & 0x07FF) + ((bankbase[((attr & 0x1800) >> 11)] & 0xf) << 11);
+ 		INT32 color = attr >> 13;
+
+		if (transp) { // only this layer does prio
+			RenderTilePrio(pTransDraw, gfx, code, (color << 4) | pal, 0x0f, sx, sy, 0, 0, 8, 8, RamPrioBitmap, 1);
+		} else {
+			if (sx >= 0 && sx < (nScreenWidth - 7) && sy >= 0 && sy < (nScreenHeight - 7)) {
+				Render8x8Tile(pTransDraw, code, sx, sy, color, 4, pal, gfx);
+			} else {
+				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, pal, gfx);
+			}
 		}
 	}
 }
@@ -2568,16 +2616,16 @@ static INT32 turbofrcDraw()
 	INT32 scrollx0 = BURN_ENDIAN_SWAP_INT16(RamRaster[7]) - 11;
 	INT32 scrollx1 = bg2scrollx;
 
-	TileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, scrollx0, bg1scrolly, RamGfxBank + 0);
-	TileBackground(RamBg2V, DeRomBg + 0x140000, 1, 0x100, scrollx1, bg2scrolly, RamGfxBank + 4);
-
+	if (nBurnLayer & 1) TileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, scrollx0, bg1scrolly, RamGfxBank + 0);
 	memset(RamPrioBitmap, 0, 352 * 240); // clear priority
+	if (nBurnLayer & 2) TileBackgroundPrio(RamBg2V, DeRomBg + 0x140000, 1, 0x100, scrollx1, bg2scrolly, RamGfxBank + 4);
+
 	// sprite priority-bitmap is only used between the first 2 calls to turbofrc_drawsprites()
 	// it probably could have been implemented better, but it works. -dink
-	turbofrc_drawsprites(0, 1, 512,  0); // big alien (level 3)
- 	turbofrc_drawsprites(0, 2, 512, -1); // enemies
-	turbofrc_drawsprites(1, 0, 768,  0); // nothing?
-	turbofrc_drawsprites(1, 0, 768, -1); // player
+	if (nBurnLayer & 4) turbofrc_drawsprites(0, 2, 512,  0); // big alien (level 3)
+ 	if (nBurnLayer & 8) turbofrc_drawsprites(0, 0, 512, -1); // enemies
+	if (nSpriteEnable & 1) turbofrc_drawsprites(1, 0, 768,  0); // nothing?
+	if (nSpriteEnable & 2) turbofrc_drawsprites(1, 0, 768, -1); // player
 
 	BurnTransferCopy(RamCurPal);
 

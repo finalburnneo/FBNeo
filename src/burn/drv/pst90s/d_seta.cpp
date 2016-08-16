@@ -17,6 +17,9 @@
 		calibr50, usclassc, krazybowl, downtown need analog inputs hooked up...
 		flipscreen support
 		jockeyc needs work...
+
+		msgundam: missing the drumroll and glockenspeil samples in the intro music!?
+		.. but, why?
 */
 
 #define NOIRQ2				0x80
@@ -7486,6 +7489,32 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 	return 0;
 }
 
+static void Drv68kmsgundam()
+{
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
+	INT32 nCyclesDone[1]  = { 0 };
+
+	SekOpen(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+
+		if (i == 4 && nCurrentFrame & 2)
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		if (i == (nInterleave - 1))
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+	}
+
+	SekClose();
+
+	if (pBurnSoundOut) {
+		x1010_sound_update();
+	}
+}
+
 static void Drv68kNoSubFrameCallback()
 {
 	INT32 nInterleave = 10;
@@ -7511,6 +7540,11 @@ static void Drv68kNoSubFrameCallback()
 static INT32 DrvFrame()
 {
 	return DrvCommonFrame(Drv68kNoSubFrameCallback);
+}
+
+static INT32 DrvFrameMsgundam()
+{
+	return DrvCommonFrame(Drv68kmsgundam);
 }
 
 static void Drv68k_Calibr50_FrameCallback()
@@ -8603,7 +8637,7 @@ struct BurnDriver BurnDrvMsgundam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA1, GBF_VSFIGHT, 0,
 	NULL, msgundamRomInfo, msgundamRomName, NULL, NULL, MsgundamInputInfo, MsgundamDIPInfo,
-	msgundamInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
+	msgundamInit, DrvExit, DrvFrameMsgundam, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	384, 240, 4, 3
 };
 
@@ -8633,7 +8667,7 @@ struct BurnDriver BurnDrvMsgundam1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA1, GBF_VSFIGHT, 0,
 	NULL, msgundam1RomInfo, msgundam1RomName, NULL, NULL, MsgundamInputInfo, Msgunda1DIPInfo,
-	msgundamInit, DrvExit, DrvFrame, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
+	msgundamInit, DrvExit, DrvFrameMsgundam, seta2layerDraw, DrvScan, &DrvRecalc, 0x600,
 	384, 240, 4, 3
 };
 

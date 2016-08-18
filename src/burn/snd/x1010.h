@@ -2,13 +2,12 @@
 #define SETA_NUM_BANKS 		(0x100000 / 0x20000)
 
 #define FREQ_BASE_BITS		8					// Frequency fixed decimal shift bits
-#define ENV_BASE_BITS		 16					// wave form envelope fixed decimal shift bits
+#define ENV_BASE_BITS		16					// wave form envelope fixed decimal shift bits
 #define	VOL_BASE	(2 * 32 * 256 / 30)			// Volume base
 
 struct x1_010_info
 {
 	INT32	rate;									// Output sampling rate (Hz)
-	//sound_stream *	stream;					// Stream handle
 	INT32	address;								// address eor data
 	INT32	sound_enable;							// sound output enable/disable
 	UINT8 reg[0x2000];					// X1-010 Register & wave form area
@@ -24,10 +23,10 @@ struct x1_010_info
 typedef struct {
 	UINT8	status;
 	UINT8	volume;					// volume / wave form no.
-	UINT8	frequency;			// frequency / pitch lo
+	UINT8	frequency;		        // frequency / pitch lo
 	UINT8	pitch_hi;				// reserved / pitch hi
 	UINT8	start;					// start address / envelope time
-	UINT8	end;						// end address / envelope no.
+	UINT8	end;					// end address / envelope no.
 	UINT8	reserve[2];
 } X1_010_CHANNEL;
 

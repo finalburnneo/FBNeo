@@ -76,21 +76,21 @@ void x1010_sound_update()
 				volR     = ((reg->volume >> 0) & 0xf) * VOL_BASE;
 				smp_offs = x1_010_chip->smp_offset[ch];
 				freq     = reg->frequency & 0x1f;
+				if (!volL) volL = volR;       // dink aug.17,2016: fix missing samples in ms gundam
+				if (!volR) volR = volL;
 				// Meta Fox does not write the frequency register. Ever
 				if( freq == 0 ) freq = 4;
 				// Special handling for Arbalester -dink
 				if( X1010_Arbalester_Mode && ch==0x0f && reg->start != 0xc0 && reg->start != 0xc8 )
 					freq = 8;
 
-				//smp_step = (unsigned int)((float)x1_010->base_clock / 8192.0
-				//			* freq * (1 << FREQ_BASE_BITS) / (float)x1_010->rate );
 				smp_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 8.0 * freq * (1 << FREQ_BASE_BITS) );
-
-//				if( smp_offs == 0 ) {
-//					bprintf(PRINT_ERROR, _T("Play sample %06X - %06X, channel %X volume %d freq %X step %X offset %X\n"),
-//							reg->start, reg->end, ch, volL, freq, smp_step, smp_offs);
-//				}
-
+#if 0
+				if( smp_offs == 0 ) {
+					bprintf(PRINT_ERROR, _T("Play sample %06X - %06X, channel %X volumeL %d volumeR %d freq %X step %X offset %X\n"),
+							reg->start, reg->end, ch, volL, volR, freq, smp_step, smp_offs);
+				}
+#endif
 				for( i = 0; i < nBurnSoundLen; i++ ) {
 					delta = smp_offs >> FREQ_BASE_BITS;
 					// sample ended?
@@ -119,8 +119,6 @@ void x1010_sound_update()
 					nLeftSample = BURN_SND_CLIP(nLeftSample);
 					nRightSample = BURN_SND_CLIP(nRightSample);
 					
-					//*bufL += nLeftSample; bufL += 2;;
-					//*bufR += nRightSample; bufR += 2;
 					*bufL = BURN_SND_CLIP(*bufL + nLeftSample); bufL += 2;;
 					*bufR = BURN_SND_CLIP(*bufR + nRightSample); bufR += 2;
 
@@ -132,19 +130,17 @@ void x1010_sound_update()
 				start    = (INT8*) & (x1_010_chip->reg[reg->volume * 128 + 0x1000]);
 				smp_offs = x1_010_chip->smp_offset[ch];
 				freq     = (reg->pitch_hi << 8) + reg->frequency;
-				//smp_step = (unsigned int)((float)x1_010->base_clock / 128.0 / 1024.0 / 4.0 * freq * (1 << FREQ_BASE_BITS) / (float)x1_010->rate);
 				smp_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 128.0 / 4.0 * freq * (1 << FREQ_BASE_BITS) );
 
 				env      = (UINT8*) & (x1_010_chip->reg[reg->end * 128]);
 				env_offs = x1_010_chip->env_offset[ch];
-				//env_step = (unsigned int)((float)x1_010->base_clock / 128.0 / 1024.0 / 4.0 * reg->start * (1 << ENV_BASE_BITS) / (float)x1_010->rate);
 				env_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 128.0 / 4.0 * reg->start * (1 << ENV_BASE_BITS) );
-
-//				if( smp_offs == 0 ) {
-//					bprintf(PRINT_ERROR, _T("Play waveform %X, channel %X volume %X freq %4X step %X offset %X dlta %X\n"),
-//       						reg->volume, ch, reg->end, freq, smp_step, smp_offs, env_offs>>ENV_BASE_BITS );
-//				}
-
+#if 0
+				if( smp_offs == 0 ) {
+					bprintf(PRINT_ERROR, _T("Play waveform %X, channel %X volume %X freq %4X step %X offset %X dlta %X\n"),
+       						reg->volume, ch, reg->end, freq, smp_step, smp_offs, env_offs>>ENV_BASE_BITS );
+				}
+#endif
 				for( i = 0; i < nBurnSoundLen; i++ ) {
 					INT32 vol;
 					delta = env_offs>>ENV_BASE_BITS;
@@ -178,15 +174,13 @@ void x1010_sound_update()
 					nLeftSample = BURN_SND_CLIP(nLeftSample);
 					nRightSample = BURN_SND_CLIP(nRightSample);
 					
-					//*bufL += nLeftSample; bufL += 2;;
-					//*bufR += nRightSample; bufR += 2;
 					*bufL = BURN_SND_CLIP(*bufL + nLeftSample); bufL += 2;;
 					*bufR = BURN_SND_CLIP(*bufR + nRightSample); bufR += 2;
 
 					smp_offs += smp_step;
 					env_offs += env_step;
 				}
-                                //bprintf(0, _T("smp ended i[%X]\n"), i);
+
 				x1_010_chip->smp_offset[ch] = smp_offs;
 				x1_010_chip->env_offset[ch] = env_offs;
 			}

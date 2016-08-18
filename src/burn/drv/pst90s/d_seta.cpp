@@ -17,9 +17,6 @@
 		calibr50, usclassc, krazybowl, downtown need analog inputs hooked up...
 		flipscreen support
 		jockeyc needs work...
-
-		msgundam: missing the drumroll and glockenspeil samples in the intro music!?
-		.. but, why?
 */
 
 #define NOIRQ2				0x80
@@ -91,6 +88,7 @@ static INT32 watchdog_enable = 0;
 static INT32 watchdog = 0;
 static INT32 flipscreen;
 static INT32 m65c02_mode = 0;
+static INT32 m65c02_bank = 0;
 
 static INT32 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
@@ -1445,7 +1443,7 @@ static struct BurnDIPInfo Calibr50DIPList[]=
 
 	{0   , 0xfe, 0   ,    2, "Licensed To"		},
 	{0x16, 0x01, 0x40, 0x40, "Taito America"	},
-	{0x16, 0x01, 0x40, 0x40, "Taito"		},
+	{0x16, 0x01, 0x40, 0x00, "Taito"		},
 };
 
 STDDIPINFO(Calibr50)
@@ -5100,7 +5098,7 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 
 		case 0xb00000:
 		case 0xb00001:
-			{
+			{   //bprintf(0, _T("68krb %X. "), address);
 				//static INT32 ret;	// fake read from sound cpu
 				//ret ^= 0x80;
 				return *soundlatch2;
@@ -5115,12 +5113,6 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 
 	return 0;
 }
-#ifdef FBA_DEBUG
-   extern int counter;
-#else
-	int counter = 0;
-#endif
-static INT32 irqcyc = 10;
 
 void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 {
@@ -5130,7 +5122,7 @@ void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 		*soundlatch = data;
 		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		M6502Run(irqcyc); // guess..? -dink
+		M6502Run(100); // guess..? -dink
 
 		return;
 	}
@@ -5141,15 +5133,16 @@ void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
-	if ((address & ~1) == 0xb00000) {
-		*soundlatch = data;
-		bprintf(0, _T("cwb."));
+		if ((address & ~1) == 0xb00000) {
+			//bprintf(0, _T("a %X. "), address);
+			*soundlatch = data;
+			bprintf(0, _T("cwb."));
 
-		M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-//		M6502Run(irqcyc+counter); // guess? -dink
+			M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+			M6502Run(100); // guess? -dink
 
-		return;
-	}
+			return;
+		}
 	//bprintf(0, _T("wb %X %X. "), address, data);
 }
 
@@ -6423,9 +6416,14 @@ static void usclssic68kInit()
 
 static void sub_bankswitch(UINT8 d)
 {
-	INT32 bank = d >> 4;
-	M6502MapMemory(DrvSubROM + (bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+	//INT32 bank = d >> 4;
+
+	m65c02_bank = d >> 4;
+	//bprintf(0, _T("banksw %X\n"), bank);
+	//M6502MapMemory(DrvSubROM + (bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
+
+int m6502_releaseslice();
 
 static void calibr50_sub_write(UINT16 address, UINT8 data)
 {
@@ -6442,7 +6440,8 @@ static void calibr50_sub_write(UINT16 address, UINT8 data)
 		case 0xc000:
 			{
 				*soundlatch2 = data;
-				SekRun((irqcyc+counter)*4);
+				m6502_releaseslice();
+
 				return;
 			}
 	}
@@ -6459,11 +6458,14 @@ static UINT8 calibr50_sub_read(UINT16 address)
 	if (address >= 0xc000) { // ROM
 		return DrvSubROM[address - 0xc000];
 	}
+	if (address >= 0x8000 && address <= 0xbfff) {
+		return DrvSubROM[m65c02_bank * 0x4000 + (address & 0x3fff)];
+	}
 
 	switch (address)
 	{
 		case 0x4000: {
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE); //nmi
+			M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 
 			return *soundlatch;
 		}
@@ -6495,8 +6497,9 @@ static void calibr5068kInit()
 	// m65c02 sound...
 	M6502Init(0, TYPE_M65C02);
 	M6502Open(0);
-	M6502MapMemory(DrvSubROM,	0xC000, 0xffff, MAP_ROM); // in handler
-
+	//M6502MapMemory(DrvSubROM,	0xC000, 0xffff, MAP_ROM); // in handler
+	//M6502MapMemory(DrvSubROM+0x4000,	0x8000, 0xbfff, MAP_ROM); // in handler
+	BurnLoadRom(DrvSubROM + 0x0000000, 4, 1);
 	M6502SetWriteHandler(calibr50_sub_write);
 	M6502SetReadHandler(calibr50_sub_read);
 	M6502SetWriteMemIndexHandler(calibr50_sub_write);
@@ -6715,9 +6718,10 @@ static INT32 DrvDoReset(INT32 ram)
 	if (m65c02_mode) {
 		M6502Open(0);
 		M6502Reset();
-		sub_bankswitch(0);
-		bprintf(0, _T("65c02 reset.\n"));
+		m65c02_bank = 0;
 		M6502Close();
+		*soundlatch = 0xff;
+		*soundlatch2 = 0xff;
 	}
 
 	x1010Reset();
@@ -7549,10 +7553,9 @@ static INT32 DrvFrameMsgundam()
 
 static void Drv68k_Calibr50_FrameCallback()
 {
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
+	INT32 nInterleave = 4;
+	INT32 nCyclesTotal[2] = { 8000000 / 60, 2000000 / 60}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
 	INT32 nCyclesDone[2]  = { 0, 0 };
-	INT32 nNext, nCyclesSegment;
 
 	SekOpen(0);
 	M6502Open(0);
@@ -7561,17 +7564,11 @@ static void Drv68k_Calibr50_FrameCallback()
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
-		if (i == 248) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i%64 == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 2) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesDone[1] += M6502Run(nCyclesSegment);
-
-		if (i%64 == 63) {
-			M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		}
-
+		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
+		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();

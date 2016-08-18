@@ -212,6 +212,13 @@ M6502_INLINE void m6502_take_irq(void)
 	m6502.pending_irq = 0;
 }
 
+int m6502_releaseslice()
+{
+	m6502_ICount = 0;
+
+	return 0;
+}
+
 int m6502_execute(int cycles)
 {
 	m6502_ICount = cycles;

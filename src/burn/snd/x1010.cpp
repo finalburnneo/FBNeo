@@ -59,18 +59,20 @@ void x1010_sound_update()
 	memset(pSoundBuf, 0, nBurnSoundLen * sizeof(INT16) * 2);
 
 	X1_010_CHANNEL	*reg;
-	int		ch, i, volL, volR, freq;
-	register INT8 *start, *end, data;
-	register UINT8 *env;
-	register UINT32 smp_offs, smp_step, env_offs, env_step, delta;
+	INT32 ch, i, volL, volR, freq, mempos;
+	INT8 *start, *end, data;
+	UINT8 *env;
+	UINT32 smp_offs, smp_step, env_offs, env_step, delta;
 
 	for( ch = 0; ch < SETA_NUM_CHANNELS; ch++ ) {
 		reg = (X1_010_CHANNEL *) & (x1_010_chip->reg[ch * sizeof(X1_010_CHANNEL)]);
 		if( reg->status & 1 ) {	// Key On
 			INT16 *bufL = pSoundBuf + 0;
 			INT16 *bufR = pSoundBuf + 1;
+
 			if( (reg->status & 2) == 0 ) { // PCM sampling
 				start    = (INT8*)( reg->start * 0x1000 + X1010SNDROM );
+				mempos   = reg->start * 0x1000; // used only for bounds checking
 				end      = (INT8*)((0x100 - reg->end) * 0x1000 + X1010SNDROM );
 				volL     = ((reg->volume >> 4) & 0xf) * VOL_BASE;
 				volR     = ((reg->volume >> 0) & 0xf) * VOL_BASE;
@@ -94,10 +96,17 @@ void x1010_sound_update()
 				for( i = 0; i < nBurnSoundLen; i++ ) {
 					delta = smp_offs >> FREQ_BASE_BITS;
 					// sample ended?
-					if( start + delta >= end ) {
+					if( start + delta >= end) {
 						reg->status &= 0xfe;					// Key off
 						break;
 					}
+
+					if (mempos + delta >= 0xfffff) {            // bounds checking
+						reg->status &= 0xfe;					// Key off
+						bprintf(0, _T("X1-010: Overflow detected (PCM)!\n"));
+						break;
+					}
+
 					data = *(start + delta);
 					
 					INT32 nLeftSample = 0, nRightSample = 0;
@@ -128,6 +137,7 @@ void x1010_sound_update()
 
 			} else { // Wave form
 				start    = (INT8*) & (x1_010_chip->reg[reg->volume * 128 + 0x1000]);
+				mempos   = reg->volume * 128 + 0x1000; // used only for bounds checking
 				smp_offs = x1_010_chip->smp_offset[ch];
 				freq     = (reg->pitch_hi << 8) + reg->frequency;
 				smp_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 128.0 / 4.0 * freq * (1 << FREQ_BASE_BITS) );
@@ -141,6 +151,12 @@ void x1010_sound_update()
        						reg->volume, ch, reg->end, freq, smp_step, smp_offs, env_offs>>ENV_BASE_BITS );
 				}
 #endif
+				if (mempos > 0x2000 - 0x80) {            // bounds checking
+					reg->status &= 0xfe;					// Key off
+					bprintf(0, _T("X1-010: Overflow detected (Waveform)!\n"));
+					break;
+				}
+
 				for( i = 0; i < nBurnSoundLen; i++ ) {
 					INT32 vol;
 					delta = env_offs>>ENV_BASE_BITS;
@@ -193,7 +209,9 @@ void x1010_sound_init(UINT32 base_clock, INT32 address)
 	DebugSnd_X1010Initted = 1;
 	
 	x1_010_chip = (struct x1_010_info *) malloc( sizeof(struct x1_010_info) );
-	
+
+	memset(x1_010_chip, 0, sizeof(struct x1_010_info));
+
 	x1_010_chip->base_clock = base_clock;
 	x1_010_chip->rate = x1_010_chip->base_clock / 1024;
 	x1_010_chip->address = address;

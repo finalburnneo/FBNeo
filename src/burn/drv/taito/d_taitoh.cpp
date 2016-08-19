@@ -1203,7 +1203,7 @@ static void update_layer(INT32 layer)
 
 	for (INT32 offs = 0; offs < 64 * 64; offs++)
 	{
-		if (TaitoDirtyTile[offs] == 0) continue;
+		if (TaitoDirtyTile[offs + (layer * 0x1000)] == 0) continue;
 
 		INT32 code  = ram[offs] & 0x7fff;
 

@@ -1797,7 +1797,7 @@ struct BurnDriver BurnDrvAirGalletau = {
 	L"Air Gallet\0\u30A2\u30EF\u30A6\u30AE\u30E3\u30EC\u30C3\u30C8 (older, USA)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, agalletauRomInfo, agalletauRomName, NULL, NULL, sailormnInputInfo, NULL,
-	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
 
@@ -1817,7 +1817,7 @@ struct BurnDriver BurnDrvAirGalletaj = {
 	L"Akuu Gallet\0\u30A2\u30EF\u30A6\u30AE\u30E3\u30EC\u30C3\u30C8 (older, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, agalletajRomInfo, agalletajRomName, NULL, NULL, sailormnInputInfo, NULL,
-	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
 
@@ -1837,7 +1837,7 @@ struct BurnDriver BurnDrvAirGalletak = {
 	L"Air Gallet\0\u30A2\u30EF\u30A6\u30AE\u30E3\u30EC\u30C3\u30C8 (older, Korea)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, agalletakRomInfo, agalletakRomName, NULL, NULL, sailormnInputInfo, NULL,
-	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
 
@@ -1857,7 +1857,7 @@ struct BurnDriver BurnDrvAirGalletat = {
 	L"Air Gallet\0\u30A2\u30EF\u30A6\u30AE\u30E3\u30EC\u30C3\u30C8 (older, Taiwan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, agalletatRomInfo, agalletatRomName, NULL, NULL, sailormnInputInfo, NULL,
-	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
 
@@ -1877,7 +1877,7 @@ struct BurnDriver BurnDrvAirGalletah = {
 	L"Air Gallet\0\u30A2\u30EF\u30A6\u30AE\u30E3\u30EC\u30C3\u30C8 (older, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, agalletahRomInfo, agalletahRomName, NULL, NULL, sailormnInputInfo, NULL,
-	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
 

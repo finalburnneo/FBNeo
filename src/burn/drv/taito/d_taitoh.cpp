@@ -1,7 +1,5 @@
-/*
-	Note that tilemap system is under-emulated. 
-	Missing line scroll, zoom, and rotation functions
-*/
+// FB Alpha Taito System H driver module
+// Based on MAME driver by Yochizo and Nicola Salmoria
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -10,6 +8,8 @@
 #include "taito_ic.h"
 #include "burn_ym2610.h"
 
+static UINT8 *TaitoDirtyTile;
+static UINT16 *TaitoTempBitmap[2];
 static INT32 address_xor;
 static UINT8 *transparent_tile_lut;
 static INT32 screen_y_adjust;
@@ -26,17 +26,18 @@ static INT32 DrvAnalogPort2 = 0;
 static INT32 DrvAnalogPort3 = 0;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+
 static struct BurnInputInfo SyvalionInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 start"	},
-   A("P1 Paddle X",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
-   A("P1 Paddle Y",     BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+	A("P1 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort0,		"p1 x-axis"     ),
+	A("P1 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort1,		"p1 y-axis"     ),
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p2 start"	},
-   A("P2 Paddle X",     BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
-   A("P2 Paddle Y",     BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
+	 A("P2 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort2,		"p2 x-axis"     ),
+	A("P2 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort3,		"p2 y-axis"     ),
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
@@ -633,10 +634,20 @@ static inline void taitob_single_char_update(INT32 offset)
 static void __fastcall taitoh_video_write_word(UINT32 address, UINT16 data)
 {
 	if (address >= 0x400000 && address <= 0x420fff) {
-		*((UINT16*)(TaitoVideoRam + (address & 0x3fffe))) = data;
+		INT32 offset = (address & 0x3fffe) / 2;
+		UINT16 *ram = (UINT16*)TaitoVideoRam;
+		UINT16 old = ram[offset];
+		ram[offset] = data;
+
+		if ((address & 0xfec000) == 0x40c000) {
+			if (old != data) {
+				TaitoDirtyTile[offset & 0x1fff] = 1;
+			}
+		}
 
 		if ((address & 0xfef000) == 0x400000) {
 			taitob_single_char_update(address & 0xffe);
+			return;
 		}
 
 		return;
@@ -646,7 +657,15 @@ static void __fastcall taitoh_video_write_word(UINT32 address, UINT16 data)
 static void __fastcall taitoh_video_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= 0x400000 && address <= 0x420fff) {
-		TaitoVideoRam[(address & 0x3ffff) ^ 1] = data;
+		INT32 offset = (address & 0x3ffff) ^ 1;
+		UINT8 old = TaitoVideoRam[offset];
+		TaitoVideoRam[offset] = data;
+
+		if ((address & 0xfec000) == 0x40c000) {
+			if (old != data) {
+				TaitoDirtyTile[offset & 0x1fff] = 1;
+			}
+		}
 
 		if ((address & 0xfef000) == 0x400000) {
 			taitob_single_char_update(address & 0xffe);
@@ -739,6 +758,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 	}
 
+	memset (TaitoDirtyTile, 1, 0x2000);
+
 	SekOpen(0);
 	SekReset();
 	SekClose();
@@ -769,6 +790,11 @@ static INT32 MemIndex()
 	transparent_tile_lut		= Next; Next += 0x800000 / 0x100;
 
 	TaitoPalette			= (UINT32*)Next; Next += 0x0220 * sizeof(UINT32);
+
+	TaitoDirtyTile			= Next; Next += 0x002000;
+
+	TaitoTempBitmap[0]		= (UINT16*)Next; Next += 1024 * 1024 * 2;
+	TaitoTempBitmap[1]		= (UINT16*)Next; Next += 1024 * 1024 * 2;
 
 	TaitoRamStart			= Next;
 
@@ -850,8 +876,8 @@ static INT32 CommonInit()
 	SekOpen(0);
 	SekMapMemory(Taito68KRom1,	0x000000, 0x07ffff, MAP_ROM);
 	SekMapMemory(Taito68KRam1,	0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(Taito68KRam1,	0x110000, 0x11ffff, MAP_RAM); // mirror
-	SekMapMemory(TaitoVideoRam,	0x400000, 0x420fff, MAP_RAM); // video, sprite, etc
+	SekMapMemory(Taito68KRam1,	0x110000, 0x11ffff, MAP_RAM);
+	SekMapMemory(TaitoVideoRam,	0x400000, 0x420fff, MAP_RAM);
 	SekMapMemory(TaitoPaletteRam,	0x500800, 0x500fff, MAP_RAM);
 	SekSetWriteWordHandler(0,	syvalion_main_write_word);
 	SekSetWriteByteHandler(0,	syvalion_main_write_byte);
@@ -964,49 +990,225 @@ static void DrvPaletteUpdate()
 	}
 }
 
-static void expand_tiles()
+// Copy layer and apply zooming
+static void copy_zoom(INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy)
 {
-	for (INT32 i = 0; i < 0x1000; i+=2)
+	UINT16 *dst = pTransDraw;
+	UINT16 *src = TaitoTempBitmap[1];
+
+	for (INT32 sy = miny; sy < maxy; sy++, starty+=incyy)
 	{
-		for (INT32 j = 0; j < 8; j++)
+		UINT32 cy = ((starty >> 16)) & 0x3ff;
+		if (cy >= 0x400) continue;
+
+		for (INT32 x = minx; x < maxx; x++, startx+=incxx, dst++)
 		{
-			INT32 pxl;
+			INT32 xx = startx >> 16;
+			if (xx >= 0x400 || xx < 0) continue;
 
-			pxl  = ((TaitoVideoRam[(i+0x00000)] >> j) & 1) << 0;
-			pxl |= ((TaitoVideoRam[(i+0x00001)] >> j) & 1) << 1;
-			pxl |= ((TaitoVideoRam[(i+0x10000)] >> j) & 1) << 2;
+			INT32 pxl = src[(cy * 0x400) + xx];
 
-			TaitoCharsB[(i << 2) + j] = pxl; 	
+			if (pxl & 0xf)
+			{
+				*dst = pxl;
+			}
 		}
 	}
 }
 
-static void draw_layer(INT32 layer, INT32 opaque)
+// Copy layer without zooming
+static void copy_layer(INT32 layer, INT32 transp)
 {
-	INT32 ram_offset = (layer) ? 0xe000 : 0xc000; 	// bg0 = 0xc000, bg1 = 0xe000
+	UINT16 *src = TaitoTempBitmap[layer];
+	UINT16 *dst = pTransDraw;
 
+	transp = transp ? 0 : 0xff;
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
-
-	UINT16 *ram = base_ram + (ram_offset / 2);
 
 	INT32 scrollx = (~base_ram[(0x20802/2) + layer] + screen_x_adjust) & 0x3ff;
 	INT32 scrolly = (base_ram[(0x20806/2) + layer] + screen_y_adjust) & 0x3ff;
 
-	opaque *= 0xff;
+	for (INT32 sy = 0; sy < nScreenHeight; sy++)
+	{
+		UINT32 yy = ((sy + scrolly) & 0x3ff) * 0x400;
+
+		for (INT32 sx = 0; sx < nScreenWidth; sx++)
+		{
+			INT32 xx = (sx + scrollx) & 0x3ff;
+
+			INT32 pxl = src[yy+xx];
+
+			if ((pxl & 0xf) != transp)
+			{
+				dst[sx] = pxl;
+			}
+		}
+
+		dst += nScreenWidth;
+	}
+}
+
+// Foreground layer w/zoom y
+static void bg1_tilemap_draw()
+{
+	UINT16 *scroll_ram = (UINT16*)(TaitoVideoRam + 0x20800);
+
+	INT32 zoomx = scroll_ram[7] >> 8;
+	INT32 zoomy = scroll_ram[7] & 0x00ff;
+
+	if (zoomx == 0x3f && zoomy == 0x7f)
+	{
+		copy_layer(1, 1);
+	}
+	else 
+	{
+		INT32 zx, zy, dx, dy, ex, ey, sx,sy;
+
+		INT32 min_x = screen_x_adjust;
+		INT32 max_x = screen_x_adjust + (nScreenWidth) - 1;
+		INT32 min_y = screen_y_adjust;
+		INT32 max_y = screen_y_adjust + (nScreenHeight) - 1;
+
+		if (zoomx < 63)
+		{
+			dx = 16 - (zoomx + 2) / 8;
+			ex = (zoomx + 2) & 7;
+			zx = ((dx << 3) - ex) << 10;
+		}
+		else
+		{
+			zx = 0x10000 - ((zoomx - 0x3f) * 256);
+		}
+
+		if (zoomy < 127)
+		{
+			dy = 16 - (zoomy + 2) / 16;
+			ey = (zoomy + 2) & 0xf;
+			zy = ((dy * 16) - ey) << 9;
+		}
+		else
+		{
+			zy = 0x10000 - ((zoomy - 0x7f) * 512);
+		}
+
+		if (!flipscreen)
+		{
+			sx = (-scroll_ram[2] - 1) << 16;
+			sy = ( scroll_ram[4] - 1) << 16;
+		}
+		else
+		{
+			sx =  (( 0x200 + scroll_ram[2]) << 16) - (max_x + min_x) * (zx - 0x10000);
+			sy =  (( 0x3fe - scroll_ram[4]) << 16) - (max_y + min_y) * (zy - 0x10000);
+		}
+
+		copy_zoom(min_x, max_x, min_y, max_y, sx, sy, zx, zy);
+	}
+}
+
+// Background layer w/zoom x
+static void bg0_tilemap_draw()
+{
+	UINT16 *scroll_ram = (UINT16*)(TaitoVideoRam + 0x20800);
+	UINT16 *bgscroll_ram = (UINT16*)(TaitoVideoRam + 0x20000);
+
+	INT32 zx = (scroll_ram[6] & 0xff00) >> 8;
+	INT32 zy = scroll_ram[6] & 0x00ff;
+
+	if (zx == 0x3f && zy == 0x7f)
+	{
+		copy_layer(0, 0);
+	}
+	else
+	{
+		INT32 sx, zoomx, zoomy, dx, ex, dy, ey, y_index;
+	
+		INT32 min_x = screen_x_adjust;
+		INT32 max_x = screen_x_adjust + (nScreenWidth) - 1;
+		INT32 min_y = screen_y_adjust;
+		INT32 max_y = screen_y_adjust + (nScreenHeight) - 1;
+		INT32 screen_width = max_x + 1;
+
+		if (zx < 63)
+		{
+			dx = 16 - (zx + 2) / 8;
+			ex = (zx + 2) % 8;
+			zoomx = ((dx << 3) - ex) << 10;
+		}
+		else
+		{
+			zoomx = 0x10000 - ((zx - 0x3f) * 256);
+		}
+
+		if (zy < 127)
+		{
+			dy = 16 - (zy + 2) / 16;
+			ey = (zy + 2) % 16;
+			zoomy = ((dy << 4) - ey) << 9;
+		}
+		else
+		{
+			zoomy = 0x10000 - ((zy - 0x7f) * 512);
+		}
+
+		if (!flipscreen)
+		{
+			sx = (-scroll_ram[1] - 1) << 16;
+			y_index = (( scroll_ram[3] - 1) << 16) + min_y * zoomy;
+		}
+		else
+		{
+			sx =  (( 0x200 + scroll_ram[1]) << 16) - (max_x + min_x) * (zoomx - 0x10000);
+			y_index = ((-scroll_ram[3] - 2) << 16) + min_y * zoomy - (max_y + min_y) * (zoomy - 0x10000);
+		}
+
+		for (int y = min_y; y <= max_y; y++)
+		{
+			INT32 src_y_index = (y_index >> 16) & 0x3ff;
+
+			INT32 row_index = (src_y_index & 0x1ff);
+
+			if (flipscreen)
+				row_index = 0x1ff - row_index;
+
+			INT32 x_index = sx - ((bgscroll_ram[row_index] << 16));
+
+			UINT16 *src16 = TaitoTempBitmap[0] + (src_y_index & 0x3ff) * 1024;
+
+			INT32 x_step = zoomx;
+
+			{
+				UINT16 *dst = pTransDraw + (y - min_y) * nScreenWidth;
+
+				int clip0 = screen_x_adjust;
+				int clip1 = screen_x_adjust + (nScreenWidth);
+
+				for (int i = 0; i < screen_width; i++)
+				{
+					if (i >= clip0 && i < clip1)
+						dst[i - clip0] = src16[(x_index >> 16) & 0x3ff];
+					x_index += x_step;
+				}
+			}
+
+			y_index += zoomy;
+		}
+	}
+}
+
+// Check to see if a tile has changed, if it has changed, update the tilemap
+static void update_layer(INT32 layer)
+{
+	UINT16 *ram = (UINT16*)(TaitoVideoRam + 0xc000 + (layer * 0x2000));
 
 	for (INT32 offs = 0; offs < 64 * 64; offs++)
 	{
+		if (TaitoDirtyTile[offs] == 0) continue;
+
 		INT32 code  = ram[offs] & 0x7fff;
-		if (opaque == 0 && transparent_tile_lut[code]) continue;
 
 		INT32 sx = (offs & 0x3f) * 16;
 		INT32 sy = (offs / 0x40) * 16;
-
-		sx -= scrollx;
-		sy -= scrolly;
-		if (sx < -15) sx += 1024;
-		if (sy < -15) sy += 1024;
-		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
 		INT32 attr  = ram[offs + (0x10000 / 2)];
 		INT32 color = attr & 0x1f;
@@ -1014,20 +1216,28 @@ static void draw_layer(INT32 layer, INT32 opaque)
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x80;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, opaque, 0, TaitoChars);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, opaque, 0, TaitoChars);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, opaque, 0, TaitoChars);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, opaque, 0, TaitoChars);
+		{
+			UINT8 *gfx = TaitoChars + (code * 0x100);
+
+			INT32 flip = (flipx ? 0xf : 0) | (flipy ? 0xf0 : 0);
+
+			color <<= 4;
+
+			UINT16 *dst = TaitoTempBitmap[layer] + sy * 1024 + sx;
+
+			for (INT32 y = 0; y < 16; y++)
+			{
+				for (INT32 x = 0; x < 16; x++)
+				{
+					dst[x] = gfx[((y*16)+x)^flip] + color;					
+				}
+
+				dst += 1024;
 			}
 		}
 	}
+
+	memset (TaitoDirtyTile + layer * 0x1000, 0, 0x1000);
 }
 
 static void draw_tx_layer()
@@ -1048,14 +1258,14 @@ static void draw_tx_layer()
 }
 
 static const INT32 zoomy_conv_table[0x80] = {
-	0x00,0x01,0x01,0x02,0x02,0x03,0x04,0x05, 0x06,0x06,0x07,0x08,0x09,0x0a,0x0a,0x0b,
-	0x0b,0x0c,0x0c,0x0d,0x0e,0x0e,0x0f,0x10, 0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x16,
-	0x17,0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e, 0x1f,0x20,0x21,0x22,0x24,0x25,0x26,0x27,
-	0x28,0x2a,0x2b,0x2c,0x2e,0x30,0x31,0x32, 0x34,0x36,0x37,0x38,0x3a,0x3c,0x3e,0x3f,
-	0x40,0x41,0x42,0x42,0x43,0x43,0x44,0x44, 0x45,0x45,0x46,0x46,0x47,0x47,0x48,0x49, 
-	0x4a,0x4a,0x4b,0x4b,0x4c,0x4d,0x4e,0x4f, 0x4f,0x50,0x51,0x51,0x52,0x53,0x54,0x55,
-	0x56,0x57,0x58,0x59,0x5a,0x5b,0x5c,0x5d, 0x5e,0x5f,0x60,0x61,0x62,0x63,0x64,0x66,
-	0x67,0x68,0x6a,0x6b,0x6c,0x6e,0x6f,0x71, 0x72,0x74,0x76,0x78,0x80,0x7b,0x7d,0x7f
+	0x00,0x01,0x01,0x02,0x02,0x03,0x04,0x05,0x06,0x06,0x07,0x08,0x09,0x0a,0x0a,0x0b,
+	0x0b,0x0c,0x0c,0x0d,0x0e,0x0e,0x0f,0x10,0x10,0x11,0x12,0x13,0x14,0x15,0x16,0x16,
+	0x17,0x18,0x19,0x1a,0x1b,0x1c,0x1d,0x1e,0x1f,0x20,0x21,0x22,0x24,0x25,0x26,0x27,
+	0x28,0x2a,0x2b,0x2c,0x2e,0x30,0x31,0x32,0x34,0x36,0x37,0x38,0x3a,0x3c,0x3e,0x3f,
+	0x40,0x41,0x42,0x42,0x43,0x43,0x44,0x44,0x45,0x45,0x46,0x46,0x47,0x47,0x48,0x49, 
+	0x4a,0x4a,0x4b,0x4b,0x4c,0x4d,0x4e,0x4f,0x4f,0x50,0x51,0x51,0x52,0x53,0x54,0x55,
+	0x56,0x57,0x58,0x59,0x5a,0x5b,0x5c,0x5d,0x5e,0x5f,0x60,0x61,0x62,0x63,0x64,0x66,
+	0x67,0x68,0x6a,0x6b,0x6c,0x6e,0x6f,0x71,0x72,0x74,0x76,0x78,0x80,0x7b,0x7d,0x7f
 };
 
 static void syvalion_draw_sprites()
@@ -1334,6 +1544,9 @@ static INT32 SyvalionDraw()
 	screen_y_adjust = 32;
 	screen_x_adjust = 0;
 
+	update_layer(0);
+	update_layer(1);
+
 	DrvPaletteUpdate();
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
@@ -1342,8 +1555,8 @@ static INT32 SyvalionDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_layer(0, 1);
-	if (nBurnLayer & 2) draw_layer(1, 0);
+	if (nBurnLayer & 1) bg0_tilemap_draw();
+	if (nBurnLayer & 2) bg1_tilemap_draw();
 
 	syvalion_draw_sprites();
 
@@ -1359,6 +1572,9 @@ static INT32 RecordbrDraw()
 	screen_y_adjust = 32;
 	screen_x_adjust = 16;
 
+	update_layer(0);
+	update_layer(1);
+
 	DrvPaletteUpdate();
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
@@ -1367,11 +1583,11 @@ static INT32 RecordbrDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_layer(0, 1);
+	if (nBurnLayer & 1) bg0_tilemap_draw();
 
 	recordbr_draw_sprites(0);
 
-	if (nBurnLayer & 2) draw_layer(1, 0);
+	if (nBurnLayer & 2) bg1_tilemap_draw();
 
 	recordbr_draw_sprites(1);
 
@@ -1387,6 +1603,9 @@ static INT32 DleagueDraw()
 	screen_y_adjust = 32;
 	screen_x_adjust = 16;
 
+	update_layer(0);
+	update_layer(1);
+
 	DrvPaletteUpdate();
 
 	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
@@ -1395,11 +1614,11 @@ static INT32 DleagueDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_layer(0, 1);
+	if (nBurnLayer & 1) bg0_tilemap_draw();
 
 	dleague_draw_sprites(0);
 
-	if (nBurnLayer & 2) draw_layer(1, 0);
+	if (nBurnLayer & 2) bg1_tilemap_draw();
 
 	dleague_draw_sprites(1);
 
@@ -1473,6 +1692,23 @@ static INT32 DrvFrame()
 	}
 
 	return 0;
+}
+
+static void expand_tiles()
+{
+	for (INT32 i = 0; i < 0x1000; i+=2)
+	{
+		for (INT32 j = 0; j < 8; j++)
+		{
+			INT32 pxl;
+
+			pxl  = ((TaitoVideoRam[(i+0x00000)] >> j) & 1) << 0;
+			pxl |= ((TaitoVideoRam[(i+0x00001)] >> j) & 1) << 1;
+			pxl |= ((TaitoVideoRam[(i+0x10000)] >> j) & 1) << 2;
+
+			TaitoCharsB[(i << 2) + j] = pxl; 	
+		}
+	}
 }
 
 static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
@@ -1549,7 +1785,7 @@ STD_ROM_FN(syvalion)
 
 struct BurnDriver BurnDrvSyvalion = {
 	"syvalion", NULL, NULL, NULL, "1988",
-	"Syvalion (Japan)\0", NULL, "Taito Corporation", "B System",
+	"Syvalion (Japan)\0", NULL, "Taito Corporation", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionRomInfo, syvalionRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -1611,7 +1847,7 @@ static INT32 SyvalionpInit()
 
 struct BurnDriver BurnDrvSyvalionp = {
 	"syvalionp", "syvalion", NULL, NULL, "1988",
-	"Syvalion (World, prototype)\0", NULL, "Taito Corporation", "B System",
+	"Syvalion (World, prototype)\0", NULL, "Taito Corporation", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionpRomInfo, syvalionpRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -1651,7 +1887,7 @@ STD_ROM_FN(recordbr)
 
 struct BurnDriver BurnDrvRecordbr = {
 	"recordbr", NULL, NULL, NULL, "1988",
-	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "B System",
+	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, recordbrRomInfo, recordbrRomName, NULL, NULL, RecordbrInputInfo, RecordbrDIPInfo,
@@ -1691,7 +1927,7 @@ STD_ROM_FN(gogold)
 
 struct BurnDriver BurnDrvGogold = {
 	"gogold", "recordbr", NULL, NULL, "1988",
-	"Go For The Gold (Japan)\0", NULL, "Taito Corporation", "B System",
+	"Go For The Gold (Japan)\0", NULL, "Taito Corporation", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, gogoldRomInfo, gogoldRomName, NULL, NULL, RecordbrInputInfo, GogoldDIPInfo,
@@ -1729,7 +1965,7 @@ STD_ROM_FN(tetristh)
 
 struct BurnDriver BurnDrvTetristh = {
 	"tetristh", "tetris", NULL, NULL, "1988",
-	"Tetris (Japan, Taito H-System)\0", NULL, "Sega", "B System",
+	"Tetris (Japan, Taito H-System)\0", NULL, "Sega", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, tetristhRomInfo, tetristhRomName, NULL, NULL, TetristhInputInfo, TetristhDIPInfo,
@@ -1742,14 +1978,14 @@ struct BurnDriver BurnDrvTetristh = {
 // Dynamite League (US)
 
 static struct BurnRomInfo dleagueRomDesc[] = {
-	{ "c02-xx.33",		0x20000, 0xeda870a7, TAITO_68KROM1_BYTESWAP }, //  0 maincpu
+	{ "c02-xx.33",		0x20000, 0xeda870a7, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
 	{ "c02-xx.36",		0x20000, 0xf52114af, TAITO_68KROM1_BYTESWAP }, //  1
 	{ "c02-20.34",		0x10000, 0xcdf593f3, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "c02-xx.37",		0x10000, 0x820a8241, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c02-23.40",		0x10000, 0x5632ee49, TAITO_Z80ROM1 },          //  4 audiocpu
+	{ "c02-23.40",		0x10000, 0x5632ee49, TAITO_Z80ROM1 },          //  4 Z80 Code
 
-	{ "c02-02.15",		0x80000, 0xb273f854, TAITO_CHARS },            //  5 gfx1
+	{ "c02-02.15",		0x80000, 0xb273f854, TAITO_CHARS },            //  5 Background Tiles & Sprites
 	{ "c02-06.6",		0x20000, 0xb8473c7b, TAITO_CHARS_BYTESWAP },   //  6
 	{ "c02-10.14",		0x20000, 0x50c02f0f, TAITO_CHARS_BYTESWAP },   //  7
 	{ "c02-03.17",		0x80000, 0xc3fd0dcd, TAITO_CHARS },            //  8
@@ -1762,7 +1998,7 @@ static struct BurnRomInfo dleagueRomDesc[] = {
 	{ "c02-09.9",		0x20000, 0xa614d234, TAITO_CHARS_BYTESWAP },   // 15
 	{ "c02-13.20",		0x20000, 0x8eb3194d, TAITO_CHARS_BYTESWAP },   // 16
 
-	{ "c02-01.31",		0x80000, 0xd5a3d1aa, TAITO_YM2610A },          // 17 ymsnd
+	{ "c02-01.31",		0x80000, 0xd5a3d1aa, TAITO_YM2610A },          // 17 YM2610 Samples
 
 	{ "c02-18.22",		0x02000, 0xc88f0bbe, 0 },                      // 18 ?
 };
@@ -1772,7 +2008,7 @@ STD_ROM_FN(dleague)
 
 struct BurnDriver BurnDrvDleague = {
 	"dleague", NULL, NULL, NULL, "1990",
-	"Dynamite League (US)\0", NULL, "Taito America Corporation", "B System",
+	"Dynamite League (US)\0", NULL, "Taito America Corporation", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleagueRomInfo, dleagueRomName, NULL, NULL, DleagueInputInfo, DleagueDIPInfo,
@@ -1784,14 +2020,14 @@ struct BurnDriver BurnDrvDleague = {
 // Dynamite League (Japan)
 
 static struct BurnRomInfo dleaguejRomDesc[] = {
-	{ "c02-19a.33",		0x20000, 0x7e904e45, TAITO_68KROM1_BYTESWAP }, //  0 maincpu
+	{ "c02-19a.33",		0x20000, 0x7e904e45, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
 	{ "c02-21a.36",		0x20000, 0x18c8a32b, TAITO_68KROM1_BYTESWAP }, //  1
 	{ "c02-20.34",		0x10000, 0xcdf593f3, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "c02-22.37",		0x10000, 0xf50db2d7, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c02-23.40",		0x10000, 0x5632ee49, TAITO_Z80ROM1 },          //  4 audiocpu
+	{ "c02-23.40",		0x10000, 0x5632ee49, TAITO_Z80ROM1 },          //  4 Z80 Code
 
-	{ "c02-02.15",		0x80000, 0xb273f854, TAITO_CHARS },            //  5 gfx1
+	{ "c02-02.15",		0x80000, 0xb273f854, TAITO_CHARS },            //  5 Background Tiles & Sprites
 	{ "c02-06.6",		0x20000, 0xb8473c7b, TAITO_CHARS_BYTESWAP },   //  6
 	{ "c02-10.14",		0x20000, 0x50c02f0f, TAITO_CHARS_BYTESWAP },   //  7
 	{ "c02-03.17",		0x80000, 0xc3fd0dcd, TAITO_CHARS },            //  8
@@ -1804,7 +2040,7 @@ static struct BurnRomInfo dleaguejRomDesc[] = {
 	{ "c02-09.9",		0x20000, 0xa614d234, TAITO_CHARS_BYTESWAP },   // 15
 	{ "c02-13.20",		0x20000, 0x8eb3194d, TAITO_CHARS_BYTESWAP },   // 16
 
-	{ "c02-01.31",		0x80000, 0xd5a3d1aa, TAITO_YM2610A },          // 17 ymsnd
+	{ "c02-01.31",		0x80000, 0xd5a3d1aa, TAITO_YM2610A },          // 17 YM2610 Samples
 
 	{ "c02-18.22",		0x02000, 0xc88f0bbe, 0 },                      // 18 ?
 };
@@ -1814,7 +2050,7 @@ STD_ROM_FN(dleaguej)
 
 struct BurnDriver BurnDrvDleaguej = {
 	"dleaguej", "dleague", NULL, NULL, "1990",
-	"Dynamite League (Japan)\0", NULL, "Taito Corporation", "B System",
+	"Dynamite League (Japan)\0", NULL, "Taito Corporation", "H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleaguejRomInfo, dleaguejRomName, NULL, NULL, DleagueInputInfo, DleaguejDIPInfo,

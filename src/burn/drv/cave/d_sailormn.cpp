@@ -37,8 +37,10 @@ static INT8 nUnknownIRQ;
 
 static INT32 nCaveCyclesDone[2];
 
-INT32 nWhichGame;			// 0 - sailormn/sailormno
+static INT32 agalletamode = 0;
+static INT32 nWhichGame;	// 0 - sailormn/sailormno
 							// 1 - agallet
+
 
 static struct BurnInputInfo sailormnInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
@@ -451,6 +453,7 @@ static INT32 DrvExit()
 	SekExit();				// Deallocate 68000s
 
 	BurnFree(Mem);
+	agalletamode = 0;
 
 	return 0;
 }
@@ -460,6 +463,11 @@ static INT32 DrvDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
+
+	memset (RamStart, 0, RamEnd - RamStart);
+
+	if (agalletamode)
+		agalletamode = 0x2002;
 
 	nCurrentBank = -1;
 	
@@ -621,6 +629,13 @@ static INT32 DrvFrame()
 			}
 		}
 
+	}
+
+	if (agalletamode&0xff) { // "agalleta" watchdog boot kludge
+		agalletamode = 0x2000 | ((agalletamode&0xff) - 1);
+		if ((agalletamode&0xff) == 0) {
+			SekReset();
+		}
 	}
 
 	SekClose();
@@ -914,6 +929,7 @@ static INT32 gameInit()
 	drvZInit();
 
 	nCaveExtraXOffset = -1;
+	CaveSpriteVisibleXOffset = -1;
 	nCaveRowModeOffset = 2;
 
 	CavePalInit(0x8000);
@@ -962,6 +978,14 @@ static INT32 sailormnInit()
 static INT32 agalletInit()
 {
 	nWhichGame = 1;
+	return gameInit();
+}
+
+static INT32 agalletaInit()
+{
+	nWhichGame = 1;
+	agalletamode = 0x2002;
+
 	return gameInit();
 }
 
@@ -1753,7 +1777,7 @@ struct BurnDriver BurnDrvAirGalleta = {
 	L"Air Gallet\0\u30A2\u30EF\u30A6\u30AE\u30E3\u30EC\u30C3\u30C8 (older, Europe)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_CAVE_68K_Z80, GBF_VERSHOOT, 0,
 	NULL, agalletaRomInfo, agalletaRomName, NULL, NULL, sailormnInputInfo, NULL,
-	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	agalletaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
 
@@ -1856,3 +1880,4 @@ struct BurnDriver BurnDrvAirGalletah = {
 	agalletInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&CaveRecalcPalette, 0x8000, 240, 320, 3, 4
 };
+

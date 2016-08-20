@@ -1706,12 +1706,12 @@ static void expand_tiles()
 			pxl |= ((TaitoVideoRam[(i+0x00001)] >> j) & 1) << 1;
 			pxl |= ((TaitoVideoRam[(i+0x10000)] >> j) & 1) << 2;
 
-			TaitoCharsB[(i << 2) + j] = pxl; 	
+			TaitoCharsB[(i << 2) + j] = pxl;
 		}
 	}
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1725,7 +1725,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.nLen	  = TaitoRamEnd-TaitoRamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
-	
+
 		SekScan(nAction);
 		ZetScan(nAction);
 
@@ -1740,6 +1740,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetClose();
 
 		expand_tiles();
+
+		memset (TaitoDirtyTile, 1, 0x2000);
 	}
 
  	return 0;

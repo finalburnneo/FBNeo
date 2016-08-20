@@ -1335,7 +1335,7 @@ static void syvalion_draw_sprites()
 						}
 
 						if (transparent_tile_lut[tile] == 0)
-							RenderZoomedTile(pTransDraw, TaitoChars, tile, color*16, 0, x - screen_x_adjust, y - screen_y_adjust, flipx, flipy, 16, 16, zx, zx);
+							RenderZoomedTile(pTransDraw, TaitoChars, tile, color*16, 0, x - screen_x_adjust, y - screen_y_adjust - 16, flipx, flipy, 16, 16, zx, zx);
 					}
 
 					tile_offs ++;
@@ -1558,7 +1558,7 @@ static INT32 SyvalionDraw()
 	if (nBurnLayer & 1) bg0_tilemap_draw();
 	if (nBurnLayer & 2) bg1_tilemap_draw();
 
-	syvalion_draw_sprites();
+	if (nSpriteEnable & 1) syvalion_draw_sprites();
 
 	if (nBurnLayer & 4) draw_tx_layer();
 

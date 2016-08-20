@@ -29,9 +29,10 @@ static INT16 *pAY8910Buffer[6];
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 flyboymode;
-static UINT8 boggy84mode;
-static UINT8 imagomode;
+static UINT8 flyboymode = 0;
+static UINT8 boggy84mode = 0;
+static UINT8 boggy84bmode = 0;
+static UINT8 imagomode = 0;
 
 static INT32 fastfred_hardware_type = 0;
 
@@ -402,6 +403,7 @@ static UINT8 fastfred_custom_io_r(INT32 offset)
 {
 	if (~fastfred_hardware_type & 1) {
 		if (offset == 0x100) {
+			if (boggy84bmode) return 0x63;
 			return (boggy84mode) ? 0x6a : 0x63;
 		} else {
 			return 0;
@@ -974,6 +976,7 @@ static INT32 DrvExit()
 	fastfred_hardware_type = 0;
 	flyboymode = 0;
 	boggy84mode = 0;
+	boggy84bmode = 0;
 	imagomode = 0;
 
 	return 0;
@@ -1626,6 +1629,15 @@ static INT32 boggy84Init()
 	return DrvInit();
 }
 
+static INT32 boggy84bInit()
+{
+	fastfred_hardware_type = 2;
+	boggy84mode = 1;
+	boggy84bmode = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvBoggy84 = {
 	"boggy84", NULL, NULL, NULL, "1983",
 	"Boggy '84\0", NULL, "Kaneko", "Miscellaneous",
@@ -1662,7 +1674,7 @@ struct BurnDriver BurnDrvBoggy84b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, boggy84bRomInfo, boggy84bRomName, NULL, NULL, TwoBtnInputInfo, Boggy84DIPInfo,
-	boggy84Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	boggy84bInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };
 

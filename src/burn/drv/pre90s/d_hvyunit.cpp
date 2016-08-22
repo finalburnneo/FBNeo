@@ -802,7 +802,7 @@ STD_ROM_FN(hvyunitj)
 
 static INT32 hvyunitjInit()
 {
-	return DrvInit(0);
+	return DrvInit(1);
 }
 
 struct BurnDriver BurnDrvHvyunitj = {

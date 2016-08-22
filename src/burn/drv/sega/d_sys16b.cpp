@@ -10463,7 +10463,7 @@ struct BurnDriverD BurnDrvPassshtb = {
 	"passshtb", "passsht", NULL, NULL, "1988",
 	"Passing Shot (bootleg, 2 Players)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	0 | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtbRomInfo, PassshtbRomName, NULL, NULL, PassshtInputInfo, PassshtDIPInfo,
 	PassshtbInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4

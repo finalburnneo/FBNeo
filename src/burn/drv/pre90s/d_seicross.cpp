@@ -906,7 +906,7 @@ static INT32 friskytbInit()
 
 struct BurnDriver BurnDrvFriskytb = {
 	"friskytb", "friskyt", NULL, NULL, "1981",
-	"Frisky Tom (set 3, encrypted)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Frisky Tom (set 3, encrypted)\0", "Broken, please use parent romset!", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, friskytbRomInfo, friskytbRomName, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,

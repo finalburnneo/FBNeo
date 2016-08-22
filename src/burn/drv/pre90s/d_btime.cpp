@@ -1848,8 +1848,9 @@ static INT32 BtimeInit()
 		if (BurnLoadRom(DrvMainROM + base + 0x02000,  2, 1)) return 1;
 		if (BurnLoadRom(DrvMainROM + base + 0x03000,  3, 1)) return 1;
 
-		if (btime3mode)
+		if (btime3mode) {
 			if (BurnLoadRom(DrvMainROM + base + 0x04000,  4, 1)) return 1; // btime3mode
+		}
 
 		if (BurnLoadRom(DrvSoundROM + 0x0000,  4+btime3mode, 1)) return 1;
 
@@ -2102,7 +2103,7 @@ static void draw_background(UINT8 *tmap, INT32 color)
 
 			if (x < -15 || x >= 256 || y < -15 || y >= 256) continue;
 
-			INT32 code = gfx[tileoffset + offs];
+			INT32 code = gfx[tileoffset + offs] & 0x7f;
 
 			Render16x16Tile_Clip(pTransDraw, code, x, y, color, 3, (zoarmode) ? 0 : 8, DrvGfxROM2);
 		}
@@ -2427,7 +2428,7 @@ static INT32 BtimeFrame()
 
 		if (thiscoin && (prevcoin != thiscoin)) {
 			M6502Open(0);
-			if (discomode || zoarmode)
+			if (discomode || zoarmode || btime3mode)
 				M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			else
 				M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
@@ -2682,13 +2683,52 @@ STD_ROM_FN(btime3)
 
 struct BurnDriver BurnDrvBtime3 = {
 	"btime3", "btime", NULL, NULL, "1982",
-	"Burger Time (Data East USA)\0", NULL, "Data East USA Inc.", "Miscellaneous",
+	"Burger Time (Data East USA)\0", "graphics issues, use parent romset!", "Data East USA Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, btime3RomInfo, btime3RomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
 	Btime3Init, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
 };
+
+// Burger Time (Midway)
+
+static struct BurnRomInfo btimemRomDesc[] = {
+	{ "ab05a1.12b",	0x1000, 0x0a98b230, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "ab04.9b",	0x1000, 0x797e5f75, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ab06.13b",	0x1000, 0xc77f3f64, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ab05.10b",	0x1000, 0xb0d3640f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ab07.15b",	0x1000, 0xa142f862, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "ab14.12h",	0x1000, 0xf55e5211, 2 | BRF_PRG | BRF_ESS }, //  5 audiocpu
+
+	{ "ab12.7k",	0x1000, 0x6c79f79f, 3 | BRF_GRA },           //  6 gfx1
+	{ "ab13.9k",	0x1000, 0xac01042f, 3 | BRF_GRA },           //  7
+	{ "ab10.10k",	0x1000, 0x854a872a, 3 | BRF_GRA },           //  8
+	{ "ab11.12k",	0x1000, 0xd4848014, 3 | BRF_GRA },           //  9
+	{ "ab8.13k",	0x1000, 0x70b35bbe, 3 | BRF_GRA },           // 10
+	{ "ab9.15k",	0x1000, 0x8dec15e6, 3 | BRF_GRA },           // 11
+
+	{ "ab00.1b",	0x0800, 0xc7a14485, 4 | BRF_GRA },           // 12 gfx2
+	{ "ab01.3b",	0x0800, 0x25b49078, 4 | BRF_GRA },           // 13
+	{ "ab02.4b",	0x0800, 0xb8ef56c3, 4 | BRF_GRA },           // 14
+
+	{ "ab03.6b",	0x0800, 0xd26bc1f3, 5 | BRF_GRA },           // 15 bg_map
+};
+
+STD_ROM_PICK(btimem)
+STD_ROM_FN(btimem)
+
+struct BurnDriver BurnDrvBtimem = {
+	"btimem", "btime", NULL, NULL, "1982",
+	"Burger Time (Midway)\0", NULL, "Data East (Bally Midway license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, btimemRomInfo, btimemRomName, NULL, NULL, BtimeInputInfo, BtimeDIPInfo,
+	Btime3Init, DrvExit, BtimeFrame, BtimeDraw, DrvScan, &DrvRecalc, 16,
+	240, 242, 3, 4
+};
+
 
 // Minky Monkey
 

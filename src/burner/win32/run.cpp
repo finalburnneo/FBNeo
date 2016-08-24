@@ -355,6 +355,10 @@ static int RunExit()
 	nNormalLast = 0;
 	// Stop sound if it was playing
 	AudSoundStop();
+
+	bAppDoFast = 0;
+	bAppDoFasttoggled = 0;
+
 	return 0;
 }
 

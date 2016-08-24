@@ -82,6 +82,14 @@ INT32 RecordInput()
 	return 0;
 }
 
+static void CheckRedraw()
+{
+	if (bRunPause) {
+		VidRedraw();                                // Redraw screen so status doesn't get clobbered
+		VidPaint(0);                                // ""
+	}
+}
+
 static void PrintInputsReset()
 {
 	nPrintInputsActive[0] = nPrintInputsActive[1] = -(60 * 5);
@@ -524,6 +532,8 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 	}
 
 	nReplayStatus = 2;							// Set replay status
+	CheckRedraw();
+
 	MenuEnableItems();
 
 	{
@@ -627,6 +637,7 @@ void StopReplay()
 			CloseReplay();
 		}
 		nReplayStatus = 0;
+		CheckRedraw();
 		MenuEnableItems();
 	}
 }

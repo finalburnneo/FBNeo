@@ -3,6 +3,7 @@
 
 // To fix / Oddities:
 //   Watchdog timer doesn't get reset by Mastkin
+//   Wizz Quiz needs some work.
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -835,7 +836,7 @@ static INT32 MemIndex()
 
 	DrvZ80ROM0		= Next;
 	DrvM6809ROM		= Next; Next += 0x010000;
-	DrvM6809ROMDec		= Next; Next += 0x010000;
+	DrvM6809ROMDec	= Next; Next += 0x010000;
 
 	DrvQuizROM		= Next; Next += 0x040000;
 
@@ -850,17 +851,16 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
-	DrvNVRAM		= Next; Next += 0x000800;
-
 	AllRam			= Next;
 
-	DrvM6800RAM		= Next; Next += 0x000100*2;
-	DrvSprRAM0		= Next; Next += 0x000400*2;
-	DrvSprRAM1		= Next; Next += 0x000400*2;
-	DrvColRAM		= Next; Next += 0x000800*2;
-	DrvVidRAM		= Next; Next += 0x000800*2;
-	DrvZ80RAM0		= Next; Next += 0x001c00*2;
-	DrvZ80RAM1		= Next; Next += 0x002400*2;
+	DrvNVRAM		= Next; Next += 0x000800;
+	DrvM6800RAM		= Next; Next += 0x000100;
+	DrvSprRAM0		= Next; Next += 0x000400;
+	DrvSprRAM1		= Next; Next += 0x000400;
+	DrvColRAM		= Next; Next += 0x000800;
+	DrvVidRAM		= Next; Next += 0x000800;
+	DrvZ80RAM0		= Next; Next += 0x000c00;
+	DrvZ80RAM1		= Next; Next += 0x000400;
 
 	RamEnd			= Next;
 
@@ -1132,15 +1132,6 @@ static INT32 YieartfInit()
 	return 0;
 }
 
-static void __fastcall reaktor_write_port(UINT16 port, UINT8 data)
-{
-}
-
-static UINT8 __fastcall reaktor_read_port(UINT16 port)
-{
-	return 0;
-}
-
 static INT32 ReaktorInit()
 {
 	game_select = 3;
@@ -1195,8 +1186,6 @@ static INT32 ReaktorInit()
 	ZetMapMemory(DrvColRAM,		0xb800, 0xbfff, MAP_RAM);
 	ZetSetWriteHandler(reaktor_main_write);
 	ZetSetReadHandler(reaktor_main_read);
-	ZetSetOutHandler(reaktor_write_port);
-	ZetSetInHandler(reaktor_read_port);
 	ZetClose();
 
 	CommonSoundInit();
@@ -1761,6 +1750,43 @@ static INT32 WizzquizFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+
+	if (pnMin) {
+		*pnMin = 0x029705;
+	}
+
+	if (nAction & ACB_VOLATILE) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+
+		if (game_select == 4) M6800Scan(nAction);
+		if (game_select == 1 || game_select == 2) M6809Scan(nAction);
+		if (game_select == 1 || game_select == 3) ZetScan(nAction);
+		if (game_select == 1 || game_select == 3) DACScan(nAction, pnMin);
+
+		SN76496Scan(nAction, pnMin);
+		vlm5030Scan(nAction);
+
+		SCAN_VAR(watchdog);
+		SCAN_VAR(bg_bank);
+		SCAN_VAR(soundlatch);
+		SCAN_VAR(flipscreen);
+		SCAN_VAR(irq_mask);
+		SCAN_VAR(nmi_mask);
+		SCAN_VAR(last_addr);
+		SCAN_VAR(last_sound_irq);
+		SCAN_VAR(SN76496_latch);
+	}
+
+	return 0;
+}
+
 
 // Track & Field
 
@@ -1798,7 +1824,7 @@ struct BurnDriver BurnDrvTrackfld = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, trackfldRomInfo, trackfldRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1839,7 +1865,7 @@ struct BurnDriver BurnDrvTrackfldc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, trackfldcRomInfo, trackfldcRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1880,7 +1906,7 @@ struct BurnDriver BurnDrvHyprolym = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, hyprolymRomInfo, hyprolymRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1921,7 +1947,7 @@ struct BurnDriver BurnDrvTrackfldnz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, trackfldnzRomInfo, trackfldnzRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	TrackfldnzInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	TrackfldnzInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -1973,7 +1999,7 @@ struct BurnDriver BurnDrvHyprolymb = {
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, hyprolymbRomInfo, hyprolymbRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	bootInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -2020,7 +2046,7 @@ struct BurnDriver BurnDrvHyprolymba = {
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, hyprolymbaRomInfo, hyprolymbaRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	bootInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -2067,7 +2093,7 @@ struct BurnDriver BurnDrvHipoly = {
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, hipolyRomInfo, hipolyRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
-	bootInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -2100,7 +2126,7 @@ struct BurnDriver BurnDrvAtlantol = {
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, atlantolRomInfo, atlantolRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo, //AtlantolInputInfo, AtlantolDIPInfo,
-	bootInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0,
+	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
 	256, 224, 4, 3
 };
 
@@ -2137,7 +2163,7 @@ struct BurnDriver BurnDrvYieartf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, yieartfRomInfo, yieartfRomName, NULL, NULL, YieartfInputInfo, YieartfDIPInfo,
-	YieartfInit, DrvExit, YieartfFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	YieartfInit, DrvExit, YieartfFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -2174,7 +2200,7 @@ struct BurnDriver BurnDrvReaktor = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, reaktorRomInfo, reaktorRomName, NULL, NULL, ReaktorInputInfo, ReaktorDIPInfo,
-	ReaktorInit, DrvExit, ReaktorFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	ReaktorInit, DrvExit, ReaktorFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
 
@@ -2214,9 +2240,9 @@ struct BurnDriver BurnDrvWizzquiz = {
 	"wizzquiz", NULL, NULL, NULL, "1985",
 	"Wizz Quiz (Konami version)\0", NULL, "Zilec-Zenitone (Konami license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	0, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, wizzquizRomInfo, wizzquizRomName, NULL, NULL, WizzquizInputInfo, WizzquizDIPInfo,
-	WizzquizInit, DrvExit, WizzquizFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	WizzquizInit, DrvExit, WizzquizFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 256, 4, 3
 };
 
@@ -2256,9 +2282,9 @@ struct BurnDriver BurnDrvWizzquiza = {
 	"wizzquiza", "wizzquiz", NULL, NULL, "1985",
 	"Wizz Quiz (version 4)\0", NULL, "Zilec-Zenitone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	0 | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
 	NULL, wizzquizaRomInfo, wizzquizaRomName, NULL, NULL, WizzquizInputInfo, WizzquizDIPInfo,
-	WizzquizInit, DrvExit, WizzquizFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	WizzquizInit, DrvExit, WizzquizFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 256, 4, 3
 };
 
@@ -2293,10 +2319,10 @@ STD_ROM_FN(mastkin)
 
 struct BurnDriver BurnDrvMastkin = {
 	"mastkin", NULL, NULL, NULL, "1988",
-	"The Masters of Kin\0", NULL, "Du Tech", "Miscellaneous",
+	"The Masters of Kin\0", "Colors are wrong", "Du Tech", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, mastkinRomInfo, mastkinRomName, NULL, NULL, MastkinInputInfo, MastkinDIPInfo,
-	MastkinInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	MastkinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

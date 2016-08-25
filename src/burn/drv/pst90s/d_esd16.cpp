@@ -1214,27 +1214,27 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Multi Champ (World)
 
 static struct BurnRomInfo multchmpRomDesc[] = {
-	{ "esd2.cu02",	0x040000, 0x2d1b098a, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
-	{ "esd1.cu03",	0x040000, 0x10974063, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "esd2.cu02",		0x040000, 0x2d1b098a, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03",		0x040000, 0x10974063, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su06",	0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+	{ "esd3.su06",		0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "esd14.ju03",	0x040000, 0xa6122225, 3 | BRF_GRA },		//  3 - Sprites
-	{ "esd15.ju04",	0x040000, 0x88b7a97c, 3 | BRF_GRA },		//  4
-	{ "esd16.ju05",	0x040000, 0xe670a6da, 3 | BRF_GRA },		//  5
-	{ "esd17.ju06",	0x040000, 0xa69d4399, 3 | BRF_GRA },		//  6
-	{ "esd13.ju07",	0x040000, 0x22071594, 3 | BRF_GRA },		//  7
+	{ "esd14.ju03",		0x040000, 0xa6122225, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd15.ju04",		0x040000, 0x88b7a97c, 3 | BRF_GRA },			//  4
+	{ "esd16.ju05",		0x040000, 0xe670a6da, 3 | BRF_GRA },			//  5
+	{ "esd17.ju06",		0x040000, 0xa69d4399, 3 | BRF_GRA },			//  6
+	{ "esd13.ju07",		0x040000, 0x22071594, 3 | BRF_GRA },			//  7
 
-	{ "esd5.fu27",	0x080000, 0x299f32c2, 4 | BRF_GRA },		//  8 - Tiles
-	{ "esd6.fu32",	0x080000, 0xe2689bb2, 4 | BRF_GRA },		//  9
-	{ "esd11.fu29",	0x080000, 0x9bafd8ee, 4 | BRF_GRA },		// 10
-	{ "esd12.fu33",	0x080000, 0xc6b86001, 4 | BRF_GRA },		// 11
-	{ "esd7.fu26", 	0x080000, 0xa783a003, 4 | BRF_GRA },		// 12
-	{ "esd8.fu30",	0x080000, 0x22861af2, 4 | BRF_GRA },		// 13
-	{ "esd9.fu28",	0x080000, 0x6652c04a, 4 | BRF_GRA },		// 14
-	{ "esd10.fu31",	0x080000, 0xd815974b, 4 | BRF_GRA },		// 15
+	{ "esd5.fu27",		0x080000, 0x299f32c2, 4 | BRF_GRA },			//  8 - Tiles
+	{ "esd6.fu32",		0x080000, 0xe2689bb2, 4 | BRF_GRA },			//  9
+	{ "esd11.fu29",		0x080000, 0x9bafd8ee, 4 | BRF_GRA },			// 10
+	{ "esd12.fu33",		0x080000, 0xc6b86001, 4 | BRF_GRA },			// 11
+	{ "esd7.fu26", 		0x080000, 0xa783a003, 4 | BRF_GRA },			// 12
+	{ "esd8.fu30",		0x080000, 0x22861af2, 4 | BRF_GRA },			// 13
+	{ "esd9.fu28",		0x080000, 0x6652c04a, 4 | BRF_GRA },			// 14
+	{ "esd10.fu31",		0x080000, 0xd815974b, 4 | BRF_GRA },			// 15
 
-	{ "esd4.su10",	0x020000, 0x6e741fcd, 5 | BRF_SND },		// 16 - OKI Samples
+	{ "esd4.su10",		0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
 };
 
 STD_ROM_PICK(multchmp)
@@ -1300,27 +1300,27 @@ struct BurnDriver BurnDrvMultchmp = {
 // Multi Champ (Korea, older)
 
 static struct BurnRomInfo multchmkRomDesc[] = {
-	{ "multchmp.u02", 0x040000, 0x7da8c0df, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
-	{ "multchmp.u03", 0x040000, 0x5dc62799, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "multchmp.u02", 	0x040000, 0x7da8c0df, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "multchmp.u03", 	0x040000, 0x5dc62799, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su06",	  0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+	{ "esd3.su06",	  	0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "multchmp.u36", 0x040000, 0xd8f06fa8, 3 | BRF_GRA },			//  3 - Sprites
-	{ "multchmp.u37", 0x040000, 0xb1ae7f08, 3 | BRF_GRA },			//  4
-	{ "multchmp.u38", 0x040000, 0x88e252e8, 3 | BRF_GRA },			//  5
-	{ "multchmp.u39", 0x040000, 0x51f01067, 3 | BRF_GRA },			//  6
-	{ "multchmp.u35", 0x040000, 0x9d1590a6, 3 | BRF_GRA },			//  7
+	{ "multchmp.u36", 	0x040000, 0xd8f06fa8, 3 | BRF_GRA },			//  3 - Sprites
+	{ "multchmp.u37", 	0x040000, 0xb1ae7f08, 3 | BRF_GRA },			//  4
+	{ "multchmp.u38", 	0x040000, 0x88e252e8, 3 | BRF_GRA },			//  5
+	{ "multchmp.u39", 	0x040000, 0x51f01067, 3 | BRF_GRA },			//  6
+	{ "multchmp.u35", 	0x040000, 0x9d1590a6, 3 | BRF_GRA },			//  7
 
-	{ "multchmp.u27", 0x080000, 0xdc42704e, 4 | BRF_GRA },			//  8 - Tiles
-	{ "multchmp.u28", 0x080000, 0x449991fa, 4 | BRF_GRA },			//  9
-	{ "multchmp.u33", 0x080000, 0xe4c0ec96, 4 | BRF_GRA },			// 10
-	{ "multchmp.u34", 0x080000, 0xbffaaccc, 4 | BRF_GRA },			// 11 
-	{ "multchmp.u29", 0x080000, 0x01bd1399, 4 | BRF_GRA },			// 12 
-	{ "multchmp.u30", 0x080000, 0xc6b4cc18, 4 | BRF_GRA },			// 13
-	{ "multchmp.u31", 0x080000, 0xb1e4e9e3, 4 | BRF_GRA },			// 14
-	{ "multchmp.u32", 0x080000, 0xf05cb5b4, 4 | BRF_GRA },			// 15 
+	{ "multchmp.u27", 	0x080000, 0xdc42704e, 4 | BRF_GRA },			//  8 - Tiles
+	{ "multchmp.u28", 	0x080000, 0x449991fa, 4 | BRF_GRA },			//  9
+	{ "multchmp.u33", 	0x080000, 0xe4c0ec96, 4 | BRF_GRA },			// 10
+	{ "multchmp.u34", 	0x080000, 0xbffaaccc, 4 | BRF_GRA },			// 11 
+	{ "multchmp.u29", 	0x080000, 0x01bd1399, 4 | BRF_GRA },			// 12 
+	{ "multchmp.u30", 	0x080000, 0xc6b4cc18, 4 | BRF_GRA },			// 13
+	{ "multchmp.u31", 	0x080000, 0xb1e4e9e3, 4 | BRF_GRA },			// 14
+	{ "multchmp.u32", 	0x080000, 0xf05cb5b4, 4 | BRF_GRA },			// 15 
 
-	{ "esd4.su10",	  0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
+	{ "esd4.su10",	  	0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
 };
 
 STD_ROM_PICK(multchmk)
@@ -1340,27 +1340,27 @@ struct BurnDriver BurnDrvMultchmk = {
 // Multi Champ (World, older)
 
 static struct BurnRomInfo multchmaRomDesc[] = {
-	{ "esd2.cu02", 	  0x040000, 0xbfd39198, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
-	{ "esd1.cu03", 	  0x040000, 0xcd769077, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "esd2.cu02", 	  	0x040000, 0xbfd39198, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03", 	  	0x040000, 0xcd769077, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su01",	  0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+	{ "esd3.su01",	  	0x020000, 0x7c178bd7, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "esd14.ju03",   0x040000, 0xd8f06fa8, 3 | BRF_GRA },			//  3 - Sprites
-	{ "esd15.ju04",   0x040000, 0xb1ae7f08, 3 | BRF_GRA },			//  4
-	{ "esd16.ju05",   0x040000, 0x88e252e8, 3 | BRF_GRA },			//  5
-	{ "esd17.ju06",   0x040000, 0x51f01067, 3 | BRF_GRA },			//  6
-	{ "esd13.ju07",   0x040000, 0x9d1590a6, 3 | BRF_GRA },			//  7
+	{ "esd14.ju03",   	0x040000, 0xd8f06fa8, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd15.ju04",   	0x040000, 0xb1ae7f08, 3 | BRF_GRA },			//  4
+	{ "esd16.ju05",   	0x040000, 0x88e252e8, 3 | BRF_GRA },			//  5
+	{ "esd17.ju06",   	0x040000, 0x51f01067, 3 | BRF_GRA },			//  6
+	{ "esd13.ju07",   	0x040000, 0x9d1590a6, 3 | BRF_GRA },			//  7
 
-	{ "esd5.fu27",    0x080000, 0xed5b4e58, 4 | BRF_GRA },			//  8 - Tiles
-	{ "esd6.fu32",    0x080000, 0x97fde7b1, 4 | BRF_GRA },			//  9
-	{ "esd11.fu29",   0x080000, 0xd3c1855e, 4 | BRF_GRA },			// 10
-	{ "esd12.fu33",   0x080000, 0xa68848a8, 4 | BRF_GRA },			// 11 
-	{ "esd7.fu26",    0x080000, 0x042d59ff, 4 | BRF_GRA },			// 12 
-	{ "esd8.fu30",    0x080000, 0xfa8cd2d3, 4 | BRF_GRA },			// 13
-	{ "esd9.fu28",    0x080000, 0xa3cfe895, 4 | BRF_GRA },			// 14
-	{ "esd10.fu31",   0x080000, 0x396d77b6, 4 | BRF_GRA },			// 15 
+	{ "esd5.fu27",    	0x080000, 0xed5b4e58, 4 | BRF_GRA },			//  8 - Tiles
+	{ "esd6.fu32",    	0x080000, 0x97fde7b1, 4 | BRF_GRA },			//  9
+	{ "esd11.fu29",   	0x080000, 0xd3c1855e, 4 | BRF_GRA },			// 10
+	{ "esd12.fu33",   	0x080000, 0xa68848a8, 4 | BRF_GRA },			// 11 
+	{ "esd7.fu26",    	0x080000, 0x042d59ff, 4 | BRF_GRA },			// 12 
+	{ "esd8.fu30",    	0x080000, 0xfa8cd2d3, 4 | BRF_GRA },			// 13
+	{ "esd9.fu28",    	0x080000, 0xa3cfe895, 4 | BRF_GRA },			// 14
+	{ "esd10.fu31",   	0x080000, 0x396d77b6, 4 | BRF_GRA },			// 15 
 
-	{ "esd4.su08",	  0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
+	{ "esd4.su08",	  	0x020000, 0x6e741fcd, 5 | BRF_SND },			// 16 - OKI Samples
 };
 
 STD_ROM_PICK(multchma)
@@ -1380,21 +1380,21 @@ struct BurnDriver BurnDrvMultchma = {
 // Head Panic (ver. 0117, 17/01/2000)
 
 static struct BurnRomInfo hedpanicRomDesc[] = {
-	{ "esd2.cu03",	0x040000, 0x7c7be3bb, 1 | BRF_PRG | BRF_ESS },		//  0 - 68k Code
-	{ "esd1.cu02",	0x040000, 0x42405e9d, 1 | BRF_PRG | BRF_ESS },		//  1
+	{ "esd2.cu03",		0x040000, 0x7c7be3bb, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu02",		0x040000, 0x42405e9d, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su06",	0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },		//  2 - Z80 Code
+	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "esd7.ju02",	0x200000, 0x055d525f, 3 | BRF_GRA },			//  3 - Sprites
-	{ "esd6.ju01",	0x200000, 0x5858372c, 3 | BRF_GRA },			//  4
-	{ "esd5.ju07",	0x080000, 0xbd785921, 3 | BRF_GRA },			//  5
+	{ "esd7.ju02",		0x200000, 0x055d525f, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd6.ju01",		0x200000, 0x5858372c, 3 | BRF_GRA },			//  4
+	{ "esd5.ju07",		0x080000, 0xbd785921, 3 | BRF_GRA },			//  5
 
-	{ "esd8.fu35",	0x200000, 0x23aceb4f, 4 | BRF_GRA },			//  6 - Tiles
-	{ "esd9.fu34",	0x200000, 0x76b46cd2, 4 | BRF_GRA },			//  7
+	{ "esd8.fu35",		0x200000, 0x23aceb4f, 4 | BRF_GRA },			//  6 - Tiles
+	{ "esd9.fu34",		0x200000, 0x76b46cd2, 4 | BRF_GRA },			//  7
 
-	{ "esd4.su10",	0x020000, 0x3c11c590, 5 | BRF_SND },			//  8 - OKI Samples
+	{ "esd4.su10",		0x020000, 0x3c11c590, 5 | BRF_SND },			//  8 - OKI Samples
 	
-	{ "hedpanic.nv",0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
+	{ "hedpanic.nv",	0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
 };
 
 STD_ROM_PICK(hedpanic)
@@ -1460,21 +1460,21 @@ struct BurnDriver BurnDrvHedpanic = {
 // Head Panic (ver. 0315, 15/03/2000)
 
 static struct BurnRomInfo hedpanifRomDesc[] = {
-	{ "esd2",	0x040000, 0x8cccc691, 1 | BRF_PRG | BRF_ESS },		//  0 - 68k Code
-	{ "esd1", 	0x040000, 0xd8574925, 1 | BRF_PRG | BRF_ESS },		//  1
+	{ "esd2",			0x040000, 0x8cccc691, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1", 			0x040000, 0xd8574925, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su06",	0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },		//  2 - Z80 Code
+	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "esd7.ju02",	0x200000, 0x055d525f, 3 | BRF_GRA },			//  3 - Sprites
-	{ "esd6.ju01",	0x200000, 0x5858372c, 3 | BRF_GRA },			//  4
-	{ "esd5.ju07",	0x080000, 0xbd785921, 3 | BRF_GRA },			//  5
+	{ "esd7.ju02",		0x200000, 0x055d525f, 3 | BRF_GRA },			//  3 - Sprites
+	{ "esd6.ju01",		0x200000, 0x5858372c, 3 | BRF_GRA },			//  4
+	{ "esd5.ju07",		0x080000, 0xbd785921, 3 | BRF_GRA },			//  5
 
-	{ "esd8.fu35",	0x200000, 0x23aceb4f, 4 | BRF_GRA },			//  6 - Tiles
-	{ "esd9.fu34",	0x200000, 0x76b46cd2, 4 | BRF_GRA },			//  7
+	{ "esd8.fu35",		0x200000, 0x23aceb4f, 4 | BRF_GRA },			//  6 - Tiles
+	{ "esd9.fu34",		0x200000, 0x76b46cd2, 4 | BRF_GRA },			//  7
 
-	{ "esd4.su10",	0x020000, 0x3c11c590, 5 | BRF_SND },			//  8 - OKI Samples
+	{ "esd4.su10",		0x020000, 0x3c11c590, 5 | BRF_SND },			//  8 - OKI Samples
 	
-	{ "hedpanic.nv",0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
+	{ "hedpanic.nv",	0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
 };
 
 STD_ROM_PICK(hedpanif)
@@ -1497,16 +1497,16 @@ static struct BurnRomInfo mchampdxRomDesc[] = {
 	{ "ver0106_esd2.cu02",	0x040000, 0xea98b3fd, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
 	{ "ver0106_esd1.cu03",	0x040000, 0xc6e4546b, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "esd3.su06",		0x040000, 0x1b22568c, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+	{ "esd3.su06",			0x040000, 0x1b22568c, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "ver0106_ju02.bin",	0x200000, 0xb27a4977, 3 | BRF_GRA },		//  3 - Sprites
-	{ "ver0106_ju01.bin",	0x200000, 0x55841d90, 3 | BRF_GRA },		//  4
-	{ "ver0106_esd5.ju07",  0x040000, 0x7a3ac887, 3 | BRF_GRA },		//  5
+	{ "ver0106_ju02.bin",	0x200000, 0xb27a4977, 3 | BRF_GRA },			//  3 - Sprites
+	{ "ver0106_ju01.bin",	0x200000, 0x55841d90, 3 | BRF_GRA },			//  4
+	{ "ver0106_esd5.ju07",  0x040000, 0x7a3ac887, 3 | BRF_GRA },			//  5
 
-	{ "rom.fu35",		0x200000, 0xba46f3dc, 4 | BRF_GRA },		//  6 - Tiles
-	{ "rom.fu34",		0x200000, 0x2895cf09, 4 | BRF_GRA },		//  7
+	{ "rom.fu35",			0x200000, 0xba46f3dc, 4 | BRF_GRA },			//  6 - Tiles
+	{ "rom.fu34",			0x200000, 0x2895cf09, 4 | BRF_GRA },			//  7
 
-	{ "ver0106_esd4.su10", 	0x040000, 0xac8ae009, 5 | BRF_SND },		//  8 - OKI Samples
+	{ "ver0106_esd4.su10", 	0x040000, 0xac8ae009, 5 | BRF_SND },			//  8 - OKI Samples
 };
 
 STD_ROM_PICK(mchampdx)
@@ -1676,6 +1676,142 @@ struct BurnDriver BurnDrvTangtang = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, tangtangRomInfo, tangtangRomName, NULL, NULL, HedpanicInputInfo, NULL,
+	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Deluxe 5 (ver. 0107, 07/01/2000, set 1)
+
+static struct BurnRomInfo deluxe5RomDesc[] = {
+	{ "esd2.cu02",		0x040000, 0xd077dc13, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03",		0x040000, 0x15d6644f, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
+
+	{ "fu35",			0x200000, 0xae10242a, 4 | BRF_GRA },		//  8 - Tiles
+	{ "fu34",			0x200000, 0x248b8c05, 4 | BRF_GRA },		//  9
+
+	{ "esd4.su10",		0x020000, 0x23f2b7d9, 5 | BRF_SND },		// 10 - OKI Samples
+};
+
+STD_ROM_PICK(deluxe5)
+STD_ROM_FN(deluxe5)
+
+struct BurnDriver BurnDrvDeluxe5 = {
+	"deluxe5", NULL, NULL, NULL, "2000",
+	"Deluxe 5 (ver. 0107, 07/01/2000, set 1)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, deluxe5RomInfo, deluxe5RomName, NULL, NULL, HedpanicInputInfo, NULL,
+	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Deluxe 5 (ver. 0107, 07/01/2000, set 2)
+
+static struct BurnRomInfo deluxe5aRomDesc[] = {
+	{ "esd2.cu02",		0x040000, 0xc67bf757, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03",		0x040000, 0x24f4d7b9, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
+
+	{ "fu35",			0x200000, 0xae10242a, 4 | BRF_GRA },		//  8 - Tiles
+	{ "fu34",			0x200000, 0x248b8c05, 4 | BRF_GRA },		//  9
+
+	{ "esd4.su10",		0x020000, 0x23f2b7d9, 5 | BRF_SND },		// 10 - OKI Samples
+};
+
+STD_ROM_PICK(deluxe5a)
+STD_ROM_FN(deluxe5a)
+
+struct BurnDriver BurnDrvDeluxe5a = {
+	"deluxe5a", "deluxe5", NULL, NULL, "2000",
+	"Deluxe 5 (ver. 0107, 07/01/2000, set 2)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, deluxe5aRomInfo, deluxe5aRomName, NULL, NULL, HedpanicInputInfo, NULL,
+	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Deluxe 5 (ver. 0107, 07/01/2000, set 3)
+
+static struct BurnRomInfo deluxe5bRomDesc[] = {
+	{ "esd2.cu02",		0x040000, 0x72a67495, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd1.cu03",		0x040000, 0x7cc119c8, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
+
+	{ "fu35",			0x200000, 0xae10242a, 4 | BRF_GRA },		//  8 - Tiles
+	{ "fu34",			0x200000, 0x248b8c05, 4 | BRF_GRA },		//  9
+
+	{ "esd4.su10",		0x020000, 0x23f2b7d9, 5 | BRF_SND },		// 10 - OKI Samples
+};
+
+STD_ROM_PICK(deluxe5b)
+STD_ROM_FN(deluxe5b)
+
+struct BurnDriver BurnDrvDeluxe5b = {
+	"deluxe5b", "deluxe5", NULL, NULL, "2000",
+	"Deluxe 5 (ver. 0107, 07/01/2000, set 3)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, deluxe5bRomInfo, deluxe5bRomName, NULL, NULL, HedpanicInputInfo, NULL,
+	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
+// Deluxe 4 U (ver. 0107, 07/01/2000)
+
+static struct BurnRomInfo deluxe4uRomDesc[] = {
+	{ "2.cu02",			0x040000, 0xdb213e1f, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "1.cu03",			0x040000, 0xfbf14d74, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "3.su06",			0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "ju06",			0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
+	{ "ju05",			0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
+	{ "ju04",			0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
+	{ "ju03",			0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "ju07",			0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
+
+	{ "fu35",			0x200000, 0x6df14570, 4 | BRF_GRA },		//  8 - Tiles
+	{ "fu34",			0x200000, 0x93175d6d, 4 | BRF_GRA },		//  9
+
+	{ "su10",			0x020000, 0x23f2b7d9, 5 | BRF_SND },		// 10 - OKI Samples
+};
+
+STD_ROM_PICK(deluxe4u)
+STD_ROM_FN(deluxe4u)
+
+struct BurnDriver BurnDrvDeluxe4u = {
+	"deluxe4u", "deluxe5", NULL, NULL, "2000",
+	"Deluxe 4 U (ver. 0107, 07/01/2000)\0", NULL, "ESD", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, deluxe4uRomInfo, deluxe4uRomName, NULL, NULL, HedpanicInputInfo, NULL,
 	TangtangInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3
 };

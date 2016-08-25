@@ -366,6 +366,7 @@ INT32 StartRecord()
 		memset(&bii, 0, sizeof(bii));
 
 		nReplayStatus = 1;								// Set record status
+		CheckRedraw();
 		MenuEnableItems();
 
 		nStartFrame = GetCurrentFrame();

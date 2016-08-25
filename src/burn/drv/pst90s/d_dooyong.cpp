@@ -3426,6 +3426,49 @@ struct BurnDriver BurnDrvGulfstrmm = {
 };
 
 
+// Gulf Storm (Korea)
+
+static struct BurnRomInfo gulfstrmkRomDesc[] = {
+	{ "18.4L",	0x20000, 0x02bcf56d, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
+
+	{ "3.c5",	0x10000, 0xc029b015, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
+
+	{ "2.bin",	0x10000, 0xcb555d96, 3 | BRF_GRA },           //  2 Characters
+
+	{ "14.b1",	0x20000, 0x67bdf73d, 4 | BRF_GRA },           //  3 Sprites
+	{ "16.c1",	0x20000, 0x7770a76f, 4 | BRF_GRA },           //  4
+	{ "15.b1",	0x20000, 0x84803f7e, 4 | BRF_GRA },           //  5
+	{ "17.e1",	0x20000, 0x94706500, 4 | BRF_GRA },           //  6
+
+	{ "4.d8",	0x20000, 0x858fdbb6, 5 | BRF_GRA },           //  7 Tiles
+	{ "5.b9",	0x20000, 0xc0a552e8, 5 | BRF_GRA },           //  8
+	{ "6.d8",	0x20000, 0x20eedda3, 5 | BRF_GRA },           //  9
+	{ "7.d9",	0x20000, 0x294f8c40, 5 | BRF_GRA },           // 10
+
+	{ "12.bin",	0x20000, 0x3e3d3b57, 6 | BRF_GRA },           // 11 Tiles
+	{ "13.bin",	0x20000, 0x66fcce80, 6 | BRF_GRA },           // 12
+
+	{ "8.e8",	0x10000, 0x8d7f4693, 7 | BRF_GRA },           // 13 Tiles
+	{ "9.e9",	0x10000, 0x34d440c4, 7 | BRF_GRA },           // 14
+
+	{ "10.bin",	0x10000, 0x08149140, 8 | BRF_GRA },           // 15 Tiles
+	{ "11.bin",	0x10000, 0x2ed7545b, 8 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(gulfstrmk)
+STD_ROM_FN(gulfstrmk)
+
+struct BurnDriver BurnDrvGulfstrmk = {
+	"gulfstrmk", "gulfstrm", NULL, NULL, "1991",
+	"Gulf Storm (Korea)\0", NULL, "Dooyong", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, gulfstrmkRomInfo, gulfstrmkRomName, NULL, NULL, GulfstrmInputInfo, GulfstrmDIPInfo,
+	GulfstrmInit, Z80YM2203Exit, LastdayFrame, GulfstrmDraw, Z80YM2203Scan, &DrvRecalc, 0x400,
+	240, 384, 3, 4
+};
+
+
 // Pollux (set 1)
 
 static struct BurnRomInfo polluxRomDesc[] = {

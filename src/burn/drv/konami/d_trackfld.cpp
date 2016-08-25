@@ -1553,7 +1553,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 240 && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1) && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 	}

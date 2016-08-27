@@ -76,6 +76,8 @@ static INT32 Strahlmode = 0;
 static INT32 Tdragon2mode = 0; // use draw_sprites_tdragon2()
 static INT32 GunnailMode = 0;
 
+static INT32 mustang_bg_xscroll = 0;
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
@@ -2599,6 +2601,19 @@ void __fastcall afega_main_write_word(UINT32 address, UINT16 data)
 			*soundlatch = data & 0xff;
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
+
+		case 0x08c000: { // for twin action twinactn background scroll
+			switch (data & 0xff00) {
+				case 0x0000:
+					mustang_bg_xscroll = (mustang_bg_xscroll & 0x00ff) | ((data & 0x00ff)<<8);
+					break;
+
+				case 0x0100:
+					mustang_bg_xscroll = (mustang_bg_xscroll & 0xff00) | (data & 0x00ff);
+					break;
+			}
+			return;
+		}
 	}
 }
 
@@ -2980,6 +2995,19 @@ void __fastcall mustang_main_write_word(UINT32 address, UINT16 data)
 			sync_nmk004();
 			NMK004Write(0, data);
 		return;
+
+		case 0x08c000: {
+			switch (data & 0xff00) {
+				case 0x0000:
+					mustang_bg_xscroll = (mustang_bg_xscroll & 0x00ff) | ((data & 0x00ff)<<8);
+					break;
+
+				case 0x0100:
+					mustang_bg_xscroll = (mustang_bg_xscroll & 0xff00) | (data & 0x00ff);
+					break;
+			}
+			return;
+		}
 	}
 }
 
@@ -4599,6 +4627,7 @@ static INT32 NMK004Exit()
 	no_z80 = 0;
 	NMK004_enabled = 0;
 	GunnailMode = 0;
+	mustang_bg_xscroll = 0;
 
 	return CommonExit();
 }
@@ -4648,7 +4677,7 @@ static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 
 			INT32 delta = 16;
 
-			if (pri != priority)
+			if (priority != -1 && pri != priority)
 				continue;
 
 			if (*flipscreen)
@@ -4976,17 +5005,21 @@ static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscroll
 {
 	DrvPaletteRecalc();
 
-	draw_macross_background(DrvBgRAM0, bgscrollx, bgscrolly, 0, 0);
+	if (nBurnLayer & 1) draw_macross_background(DrvBgRAM0, bgscrollx, bgscrolly, 0, 0);
 
-	draw_sprites(spriteflip, 0x100, 0x0f, 3);
-	draw_sprites(spriteflip, 0x100, 0x0f, 2);
-	draw_sprites(spriteflip, 0x100, 0x0f, 1);
-	draw_sprites(spriteflip, 0x100, 0x0f, 0);
+	if (spriteflip == -1) {
+		if (nSpriteEnable & 1) draw_sprites(0, 0x100, 0x0f, -1); // order-based
+	} else { // priority-based
+		if (nSpriteEnable & 1) draw_sprites(spriteflip, 0x100, 0x0f, 3);
+		if (nSpriteEnable & 2) draw_sprites(spriteflip, 0x100, 0x0f, 2);
+		if (nSpriteEnable & 4) draw_sprites(spriteflip, 0x100, 0x0f, 1);
+		if (nSpriteEnable & 8) draw_sprites(spriteflip, 0x100, 0x0f, 0);
+	}
 
 	if (Tharriermode || Macrossmode) { // Tharrier and Macross 1
-		draw_tharriermacross1_text_layer(txscrollx, txscrolly, wide, tx_coloff);
+		if (nBurnLayer & 2) draw_tharriermacross1_text_layer(txscrollx, txscrolly, wide, tx_coloff);
 	} else { // Macross 2 and all the rest...
-		draw_macross_text_layer(txscrollx, txscrolly, wide, tx_coloff);
+		if (nBurnLayer & 2) draw_macross_text_layer(txscrollx, txscrolly, wide, tx_coloff);
 	}
 
 	draw_screen_yflip();
@@ -5020,6 +5053,17 @@ static INT32 MacrossDraw()
 	INT32 scrolly = ((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
 
 	common_draw(0, scrollx, scrolly, 0, 0, 0x200, 0);
+
+	return 0;
+}
+
+static INT32 MustangDraw()
+{
+	//UINT16 *scroll = (UINT16*)DrvScrollRAM;
+	INT32 scrollx = mustang_bg_xscroll; //((BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x0f) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0xff);
+	INT32 scrolly = 0; //((BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x01) << 8) | (BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0xff);
+
+	common_draw(-1, scrollx, scrolly, 0, 0, 0x200, 1);
 
 	return 0;
 }
@@ -7641,7 +7685,7 @@ static void Twinactn68kInit()
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
 	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_RAM);
-	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, MAP_WRITE);
+	//SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, MAP_WRITE);
 	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_ROM);
@@ -7700,7 +7744,7 @@ struct BurnDriver BurnDrvTwinactn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, twinactnRomInfo, twinactnRomName, NULL, NULL, CommonInputInfo, TwinactnDIPInfo,
-	TwinactnInit, MSM6295x1Exit, SsmissinFrame, MacrossDraw, DrvScan, NULL, 0x400,
+	TwinactnInit, MSM6295x1Exit, SsmissinFrame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -8140,7 +8184,7 @@ static INT32 MustangLoadCallback()
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
 	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_RAM);
-	SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, MAP_WRITE);
+	//SekMapMemory(DrvScrollRAM,	0x08c000, 0x08c3ff, MAP_WRITE);
 	SekMapMemory(DrvBgRAM0,		0x090000, 0x093fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x09c000, 0x09c7ff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,		0x0f0000, 0x0fffff, MAP_ROM);
@@ -8164,7 +8208,7 @@ struct BurnDriver BurnDrvMustang = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangRomInfo, mustangRomName, NULL, NULL, CommonInputInfo, MustangDIPInfo,
-	MustangInit, NMK004Exit, NMK004Frame, MacrossDraw, DrvScan, NULL, 0x400,
+	MustangInit, NMK004Exit, NMK004Frame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -8201,7 +8245,7 @@ struct BurnDriver BurnDrvMustangs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangsRomInfo, mustangsRomName, NULL, NULL, CommonInputInfo, MustangDIPInfo,
-	MustangInit, NMK004Exit, NMK004Frame, MacrossDraw, DrvScan, NULL, 0x400,
+	MustangInit, NMK004Exit, NMK004Frame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -8261,7 +8305,7 @@ struct BurnDriver BurnDrvMustangb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangbRomInfo, mustangbRomName, NULL, NULL, CommonInputInfo, MustangDIPInfo,
-	MustangbInit, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
+	MustangbInit, SeibuSoundExit, SeibuSoundFrame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 
@@ -8339,7 +8383,7 @@ struct BurnDriver BurnDrvMustangb2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, mustangb2RomInfo, mustangb2RomName, NULL, NULL, CommonInputInfo, MustangDIPInfo,
-	Mustangb2Init, SeibuSoundExit, SeibuSoundFrame, MacrossDraw, DrvScan, NULL, 0x400,
+	Mustangb2Init, SeibuSoundExit, SeibuSoundFrame, MustangDraw, DrvScan, NULL, 0x400,
 	256, 224, 4, 3
 };
 

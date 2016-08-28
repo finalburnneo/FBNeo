@@ -1051,10 +1051,16 @@ static INT32 LoadRoms()
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "countrunb") || 
 		!strcmp(BurnDrvGetTextA(DRV_NAME), "freekick") ||
+		!strcmp(BurnDrvGetTextA(DRV_NAME), "freekicka") ||
+		!strcmp(BurnDrvGetTextA(DRV_NAME), "freekickb1") ||
+		!strcmp(BurnDrvGetTextA(DRV_NAME), "freekickb2") ||
 		!strcmp(BurnDrvGetTextA(DRV_NAME), "freekickb3") 
 	) 
 	{
 		if (BurnLoadRom(DrvMainROM,  rom_number++, 1)) return 1;
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "freekickb3")) {
+			if (BurnLoadRom(DrvMainROM + 0x08000,  rom_number++, 1)) return 1;
+		}
 		if (BurnLoadRom(DrvSndROM,   rom_number++, 1)) return 1;	// sound rom
 	}
 
@@ -1478,6 +1484,82 @@ struct BurnDriver BurnDrvFreekick = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, freekickRomInfo, freekickRomName, NULL, NULL, FreekckInputInfo, FreekckDIPInfo,
+	DrvFreeKickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+// Free Kick (NS6201-A 1987.9)
+
+static struct BurnRomInfo freekickaRomDesc[] = {
+	{ "ns6201-a_1987.9_free_kick.cpu",	0xd000, 0xacc0a278, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+
+	{ "11.1e",		0x8000, 0xa6030ba9, 2 | BRF_GRA },           //  1 user1
+
+	{ "12.1h",		0x4000, 0xfb82e486, 3 | BRF_GRA },           //  2 gfx1
+	{ "13.1j",		0x4000, 0x3ad78ee2, 3 | BRF_GRA },           //  3
+	{ "14.1l",		0x4000, 0x0185695f, 3 | BRF_GRA },           //  4
+
+	{ "15.1m",		0x4000, 0x0fa7c13c, 4 | BRF_GRA },           //  5 gfx2
+	{ "16.1p",		0x4000, 0x2b996e89, 4 | BRF_GRA },           //  6
+	{ "17.1r",		0x4000, 0xe7894def, 4 | BRF_GRA },           //  7
+
+	{ "24s10n.8j",		0x0100, 0x53a6bc21, 5 | BRF_GRA },           //  8 proms
+	{ "24s10n.7j",		0x0100, 0x38dd97d8, 5 | BRF_GRA },           //  9
+	{ "24s10n.8k",		0x0100, 0x18e66087, 5 | BRF_GRA },           // 10
+	{ "24s10n.7k",		0x0100, 0xbc21797a, 5 | BRF_GRA },           // 11
+	{ "24s10n.8h",		0x0100, 0x8aac5fd0, 5 | BRF_GRA },           // 12
+	{ "24s10n.7h",		0x0100, 0xa507f941, 5 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(freekicka)
+STD_ROM_FN(freekicka)
+
+struct BurnDriver BurnDrvFreekicka = {
+	"freekicka", "freekick", NULL, NULL, "1987",
+	"Free Kick (NS6201-A 1987.9)\0", NULL, "Nihon System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	NULL, freekickaRomInfo, freekickaRomName, NULL, NULL, FreekckInputInfo, FreekckDIPInfo,
+	DrvFreeKickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+// Free Kick (bootleg set 1)
+
+static struct BurnRomInfo freekickb1RomDesc[] = {
+	{ "freekbl8.q7",	0x10000, 0x4208cfe5, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+
+	{ "11.1e",		0x08000, 0xa6030ba9, 2 | BRF_GRA },           //  1 user1
+
+	{ "12.1h",		0x04000, 0xfb82e486, 3 | BRF_GRA },           //  2 gfx1
+	{ "13.1j",		0x04000, 0x3ad78ee2, 3 | BRF_GRA },           //  3
+	{ "14.1l",		0x04000, 0x0185695f, 3 | BRF_GRA },           //  4
+
+	{ "15.1m",		0x04000, 0x0fa7c13c, 4 | BRF_GRA },           //  5 gfx2
+	{ "16.1p",		0x04000, 0x2b996e89, 4 | BRF_GRA },           //  6
+	{ "17.1r",		0x04000, 0xe7894def, 4 | BRF_GRA },           //  7
+
+	{ "24s10n.8j",		0x00100, 0x53a6bc21, 5 | BRF_GRA },           //  8 proms
+	{ "24s10n.7j",		0x00100, 0x38dd97d8, 5 | BRF_GRA },           //  9
+	{ "24s10n.8k",		0x00100, 0x18e66087, 5 | BRF_GRA },           // 10
+	{ "24s10n.7k",		0x00100, 0xbc21797a, 5 | BRF_GRA },           // 11
+	{ "24s10n.8h",		0x00100, 0x8aac5fd0, 5 | BRF_GRA },           // 12
+	{ "24s10n.7h",		0x00100, 0xa507f941, 5 | BRF_GRA },           // 13
+
+	{ "pal16l8.q10.bin",	0x00001, 0x00000000, 6 | BRF_NODUMP | BRF_GRA },           // 14 pals
+	{ "pal16l8.r1.bin",	0x00001, 0x00000000, 6 | BRF_NODUMP | BRF_GRA },           // 15
+	{ "pal16l8.s1.bin",	0x00001, 0x00000000, 6 | BRF_NODUMP | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(freekickb1)
+STD_ROM_FN(freekickb1)
+
+struct BurnDriver BurnDrvFreekickb1 = {
+	"freekickb1", "freekick", NULL, NULL, "1987",
+	"Free Kick (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	NULL, freekickb1RomInfo, freekickb1RomName, NULL, NULL, FreekckInputInfo, FreekckDIPInfo,
 	DrvFreeKickInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

@@ -72,7 +72,6 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
 static INT32 DrvAnalogPort0 = 0;
 static INT16 DrvDial1;
-static INT16 DrvDial2;
 
 static INT32 ay8910_enable = 0;
 static INT32 ym2151_enable = 0;
@@ -2160,7 +2159,6 @@ static INT32 DrvDoReset()
 	selected_ip = 0;
 	gearshifter = 0;
 	DrvDial1 = 0x3f;
-	DrvDial2 = 0;
 
 	return 0;
 }
@@ -3671,6 +3669,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (vlm5030_enable) vlm5030Scan(nAction);
 
 		SCAN_VAR(selected_ip);
+		SCAN_VAR(DrvDial1);
+		SCAN_VAR(gearshifter);
 	}
 
 	if (nAction & ACB_WRITE) {

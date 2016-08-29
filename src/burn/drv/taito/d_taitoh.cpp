@@ -18,6 +18,8 @@ static UINT8 flipscreen;
 static INT32 irq_config;
 static UINT8 TaitoInputConfig;
 
+static UINT8 DrvJoy1[8]; // Syvalion synthesized digital inputs
+
 static INT32 syvalionpmode = 0;
 
 static INT32 DrvAnalogPort0 = 0;
@@ -32,12 +34,20 @@ static struct BurnInputInfo SyvalionInputList[] = {
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 start"	},
 	A("P1 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort0,		"p1 x-axis"     ),
 	A("P1 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort1,		"p1 y-axis"     ),
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p2 start"	},
 	 A("P2 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort2,		"p2 x-axis"     ),
 	A("P2 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort3,		"p2 y-axis"     ),
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
@@ -128,58 +138,58 @@ STDINPUTINFO(Dleague)
 
 static struct BurnDIPInfo SyvalionDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0xfe, NULL			},
-	{0x0e, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xfe, NULL			},
+	{0x16, 0xff, 0xff, 0xff, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x0d, 0x01, 0x01, 0x00, "Upright"		},
-	{0x0d, 0x01, 0x01, 0x01, "Cocktail"		},
+	{0   , 0xfe, 0   ,    1, "Cabinet"		},
+	{0x15, 0x01, 0x01, 0x00, "Upright"		},
+	//{0x15, 0x01, 0x01, 0x01, "Cocktail"		}, //needs screen flipping for this to work
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x0d, 0x01, 0x02, 0x02, "Off"			},
-	{0x0d, 0x01, 0x02, 0x00, "On"			},
+	{0x15, 0x01, 0x02, 0x02, "Off"			},
+	{0x15, 0x01, 0x02, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0d, 0x01, 0x04, 0x04, "Off"			},
-	{0x0d, 0x01, 0x04, 0x00, "On"			},
+	{0x15, 0x01, 0x04, 0x04, "Off"			},
+	{0x15, 0x01, 0x04, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0d, 0x01, 0x08, 0x00, "Off"			},
-	{0x0d, 0x01, 0x08, 0x08, "On"			},
+	{0x15, 0x01, 0x08, 0x00, "Off"			},
+	{0x15, 0x01, 0x08, 0x08, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x0d, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
-	{0x0d, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
-	{0x0d, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
-	{0x0d, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
+	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
+	{0x15, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
+	{0x15, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
+	{0x15, 0x01, 0x30, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x0d, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
-	{0x0d, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
-	{0x0d, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
-	{0x0d, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
+	{0x15, 0x01, 0xc0, 0x40, "2 Coins 1 Credits"	},
+	{0x15, 0x01, 0xc0, 0xc0, "1 Coin  1 Credits"	},
+	{0x15, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
+	{0x15, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x0e, 0x01, 0x03, 0x02, "Easy"			},
-	{0x0e, 0x01, 0x03, 0x03, "Medium"		},
-	{0x0e, 0x01, 0x03, 0x01, "Hard"			},
-	{0x0e, 0x01, 0x03, 0x00, "Hardest"		},
+	{0x16, 0x01, 0x03, 0x02, "Easy"			},
+	{0x16, 0x01, 0x03, 0x03, "Medium"		},
+	{0x16, 0x01, 0x03, 0x01, "Hard"			},
+	{0x16, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0e, 0x01, 0x0c, 0x08, "1000k"		},
-	{0x0e, 0x01, 0x0c, 0x0c, "1500k"		},
-	{0x0e, 0x01, 0x0c, 0x04, "2000k"		},
-	{0x0e, 0x01, 0x0c, 0x00, "None"			},
+	{0x16, 0x01, 0x0c, 0x08, "1000k"		},
+	{0x16, 0x01, 0x0c, 0x0c, "1500k"		},
+	{0x16, 0x01, 0x0c, 0x04, "2000k"		},
+	{0x16, 0x01, 0x0c, 0x00, "None"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0e, 0x01, 0x30, 0x00, "2"			},
-	{0x0e, 0x01, 0x30, 0x30, "3"			},
-	{0x0e, 0x01, 0x30, 0x20, "4"			},
-	{0x0e, 0x01, 0x30, 0x10, "5"			},
+	{0x16, 0x01, 0x30, 0x00, "2"			},
+	{0x16, 0x01, 0x30, 0x30, "3"			},
+	{0x16, 0x01, 0x30, 0x20, "4"			},
+	{0x16, 0x01, 0x30, 0x10, "5"			},
 
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x0e, 0x01, 0x40, 0x40, "Off"			},
-	{0x0e, 0x01, 0x40, 0x00, "On"			},
+	{0x16, 0x01, 0x40, 0x40, "Off"			},
+	{0x16, 0x01, 0x40, 0x00, "On"			},
 };
 
 STDDIPINFO(Syvalion)
@@ -444,6 +454,8 @@ static INT32 Paddle_incdec(INT32 PaddlePortnum, INT32 *Paddle_X) {
 	}
 }
 
+extern int counter;
+
 static UINT8 syvalion_extended_read()
 {
 	UINT8 port = TC0220IOCPortRead();
@@ -451,41 +463,74 @@ static UINT8 syvalion_extended_read()
 	UINT8 ret = 0;
 
 	INT32 AnalogPorts[4] = { DrvAnalogPort0, DrvAnalogPort1, DrvAnalogPort2, DrvAnalogPort3 };
+	INT32 DigitalPortsp1[4] = { DrvJoy1[0], DrvJoy1[1], DrvJoy1[3], DrvJoy1[2] };
+	INT32 DigitalPortsp2[4] = { DrvJoy1[4], DrvJoy1[5], DrvJoy1[7], DrvJoy1[6] };
 
 	if (syvalionpmode) {
 		AnalogPorts[0] = DrvAnalogPort1;
 		AnalogPorts[1] = 0-DrvAnalogPort0;
 		AnalogPorts[2] = DrvAnalogPort3;
 		AnalogPorts[3] = 0-DrvAnalogPort2;
+
+		DigitalPortsp1[0] = DrvJoy1[3];
+		DigitalPortsp1[1] = DrvJoy1[2];
+		DigitalPortsp1[2] = DrvJoy1[1];
+		DigitalPortsp1[3] = DrvJoy1[0];
+
+		DigitalPortsp2[0] = DrvJoy1[5];
+		DigitalPortsp2[1] = DrvJoy1[4];
+		DigitalPortsp2[2] = DrvJoy1[7];
+		DigitalPortsp2[3] = DrvJoy1[6];
+
 	}
 
 	if (port < 8) ret = TC0220IOCRead(port);
 
 	switch (port)
 	{
-		case 0x08: ret = PaddleY2[1]&0xff; PaddleY2[1] = 0; break;
-		case 0x09: {
+		case 0x08: if (DigitalPortsp2[0]) return 0xff;
+		    else {
+			ret = PaddleY2[1]&0xff; PaddleY2[1] = 0;
+			break;
+		}
+		case 0x09: if (DigitalPortsp2[1]) return 0xff;
+		    else {
 			PaddleY2[1] = 0-Paddle_incdec(AnalogPorts[3], &PaddleY[1]);
 			//bprintf(0, _T("Y %X."), PaddleY2[0]);
 			ret = (PaddleY2[1] & 0x3000) ? 0xff : 0x00;
 			break;
 		}
-		case 0x0a: ret = PaddleX2[1]&0xff; PaddleX2[1] = 0; break;
-		case 0x0b: {
+		case 0x0a: if (DigitalPortsp2[2]) return 0xff;
+		    else {
+			ret = PaddleX2[1]&0xff; PaddleX2[1] = 0;
+			break;
+		}
+		case 0x0b: if (DigitalPortsp2[3]) return 0xff;
+		    else {
 			PaddleX2[1] = Paddle_incdec(AnalogPorts[2], &PaddleX[1]);
 			//bprintf(0, _T("X %X."), PaddleX2[0]);
 			ret = (PaddleX2[1] & 0x3000) ? 0xff : 0x00;
 			break;
 		}
-		case 0x0c: ret = PaddleY2[0]&0xff; PaddleY2[0] = 0; break;
-		case 0x0d: {
+		case 0x0c: if (DigitalPortsp1[0]) return 0xff;
+		    else {
+			ret = PaddleY2[0]&0xff; PaddleY2[0] = 0;
+			break;
+		}
+		case 0x0d: if (DigitalPortsp1[1]) return 0xff;
+		    else {
 			PaddleY2[0] = 0-Paddle_incdec(AnalogPorts[1], &PaddleY[0]);
 			//bprintf(0, _T("Y %X."), PaddleY2[0]);
 			ret = (PaddleY2[0] & 0x3000) ? 0xff : 0x00;
 			break;
 		}
-		case 0x0e: ret = PaddleX2[0]&0xff; PaddleX2[0] = 0; break;
-		case 0x0f: {
+		case 0x0e: if (DigitalPortsp1[2]) return 0xff;
+		    else {
+			ret = PaddleX2[0]&0xff; PaddleX2[0] = 0;
+			break;
+		}
+		case 0x0f: if (DigitalPortsp1[3]) return 0xff;
+		    else {
 			PaddleX2[0] = Paddle_incdec(AnalogPorts[0], &PaddleX[0]);
 			//bprintf(0, _T("X %X."), PaddleX2[0]);
 			ret = (PaddleX2[0] & 0x3000) ? 0xff : 0x00;

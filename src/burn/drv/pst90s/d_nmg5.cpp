@@ -1901,8 +1901,8 @@ struct BurnDriver BurnDrvWondstck = {
 // Wonder Stick (set 2, censored)
 
 static struct BurnRomInfo wondstckaRomDesc[] = {
-	{ "4.u2",		0x20000, 0x0b28ab9d, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
-	{ "3.u7",		0x20000, 0x5f1337d8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.u7",		0x20000, 0x5f1337d8, 1 | BRF_PRG | BRF_ESS }, //  0 - 68k Code
+	{ "4.u2",		0x20000, 0x0b28ab9d, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "1.u128",		0x10000, 0x86dba085, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
 

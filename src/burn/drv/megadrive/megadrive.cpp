@@ -2520,7 +2520,7 @@ static void SetupCustomCartridgeMappers()
 	}
 	
 	if ((BurnDrvGetHardwareCode() & 0xff) == HARDWARE_SEGA_MEGADRIVE_PCB_MC_12IN1) {
-		OriginalRom = (UINT8*)BurnMalloc(RomSize);
+		OriginalRom = (UINT8*)BurnMalloc(RomSize * 2); // add a little buffer on the end so memcpy @ the last bank doesn't crash
 		memcpy(OriginalRom, RomMain, RomSize);
 		
 		memcpy(RomMain + 0x000000, OriginalRom + 0x000000, 0x200000);

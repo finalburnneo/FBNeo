@@ -119,7 +119,7 @@ STDINPUTINFO(Hexa)
 
 static struct BurnDIPInfo arkanoidDIPList[]=
 {
-	{0x0b, 0xff, 0xff, 0xff, NULL                     },
+	{0x0b, 0xff, 0xff, 0xfe, NULL                     },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
 	{0x0b, 0x01, 0x01, 0x01, "No"       		  },
@@ -1338,7 +1338,9 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75-11.ic16",  0x8000, 0xeafd7191, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75__06.ic14", 0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	// if a75-06.ic14 0x515d77b6 gets replaced with 0x0be83647, the game will boot into a "BAD HARDWARE" message -dink aug29, 2016
+
+	{ "a75-06.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -1350,7 +1352,7 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	
 	{ "arkanoid1_68705p3.ic14", 0x0800, 0x1b68e2d8, 0 | BRF_PRG | BRF_OPT },  //  9 Decapped roms
 	{ "arkanoid_mcu.ic14",      0x0800, 0x4e44b50a, 0 | BRF_PRG | BRF_OPT },  // 10
-	{ "a75-06__bootleg_68705.ic14",  0x0800, 0x515d77b6, 0 | BRF_PRG | BRF_OPT },  // 12
+	{ "arkanoid_68705p5.ic14",  0x0800, 0x0be83647, 0 | BRF_PRG | BRF_OPT },  // 11
 };
 
 STD_ROM_PICK(arkanoid)

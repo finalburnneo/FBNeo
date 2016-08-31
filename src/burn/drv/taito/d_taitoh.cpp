@@ -32,23 +32,23 @@ static INT32 DrvAnalogPort3 = 0;
 static struct BurnInputInfo SyvalionInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 6,	"p1 start"	},
-	A("P1 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort0,		"p1 x-axis"     ),
-	A("P1 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort1,		"p1 y-axis"     ),
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 4,	"p1 fire 1"	},
+	A("P1 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort0,		"p1 x-axis"     ),
+	A("P1 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort1,		"p1 y-axis"     ),
 
 	{"P2 Coin",		BIT_DIGITAL,	TC0220IOCInputPort0 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	TC0220IOCInputPort0 + 7,	"p2 start"	},
-	 A("P2 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort2,		"p2 x-axis"     ),
-	A("P2 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort3,		"p2 y-axis"     ),
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TC0220IOCInputPort1 + 0,	"p2 fire 1"	},
+	A("P2 Paddle X",	BIT_ANALOG_REL, &DrvAnalogPort2,		"p2 x-axis"     ),
+	A("P2 Paddle Y",	BIT_ANALOG_REL, &DrvAnalogPort3,		"p2 y-axis"     ),
 
 	{"Reset",		BIT_DIGITAL,	&TaitoReset,			"reset"		},
 	{"Service",		BIT_DIGITAL,	TC0220IOCInputPort0 + 4,	"service"	},
@@ -454,10 +454,15 @@ static INT32 Paddle_incdec(INT32 PaddlePortnum, INT32 *Paddle_X) {
 	}
 }
 
-extern int counter;
-
 static UINT8 syvalion_extended_read()
 {
+	static UINT8 DOWN_LATCH = 0;
+	static UINT8 DOWN_LATCH2 = 0;
+	// Simulating digital inputs in Syvalion notes - dink aug.2016
+	//  when down is pressed, the body goes "down" but the head points "up".
+	//  this is solved by latching the down button(s) and returning 0xf2 in
+	//  the next read of the "up" port. (then, of course, clearing the latch)
+
 	UINT8 port = TC0220IOCPortRead();
 
 	UINT8 ret = 0;
@@ -488,51 +493,58 @@ static UINT8 syvalion_extended_read()
 
 	switch (port)
 	{
-		case 0x08: if (DigitalPortsp2[0]) return 0xff;
-		    else {
+		// P2 UP
+		case 0x08: if (DigitalPortsp2[0]) return 0x10;
+		    else if (DOWN_LATCH2) { DOWN_LATCH2=0; return 0xf2; }
+    		else {
 			ret = PaddleY2[1]&0xff; PaddleY2[1] = 0;
 			break;
 		}
-		case 0x09: if (DigitalPortsp2[1]) return 0xff;
+		// P2 DOWN
+		case 0x09: if (DigitalPortsp2[1]) { DOWN_LATCH2 = 1; return 0xff; }
 		    else {
 			PaddleY2[1] = 0-Paddle_incdec(AnalogPorts[3], &PaddleY[1]);
-			//bprintf(0, _T("Y %X."), PaddleY2[0]);
 			ret = (PaddleY2[1] & 0x3000) ? 0xff : 0x00;
 			break;
 		}
-		case 0x0a: if (DigitalPortsp2[2]) return 0xff;
+		// P2 RIGHT
+		case 0x0a: if (DigitalPortsp2[2]) return 0x10;
 		    else {
 			ret = PaddleX2[1]&0xff; PaddleX2[1] = 0;
 			break;
 		}
+		// P2 LEFT
 		case 0x0b: if (DigitalPortsp2[3]) return 0xff;
 		    else {
 			PaddleX2[1] = Paddle_incdec(AnalogPorts[2], &PaddleX[1]);
-			//bprintf(0, _T("X %X."), PaddleX2[0]);
 			ret = (PaddleX2[1] & 0x3000) ? 0xff : 0x00;
 			break;
 		}
-		case 0x0c: if (DigitalPortsp1[0]) return 0xff;
+
+		// P1 UP
+		case 0x0c: if (DigitalPortsp1[0]) return 0x10;
+		else if (DOWN_LATCH) { DOWN_LATCH=0; return 0xf2; }
 		    else {
 			ret = PaddleY2[0]&0xff; PaddleY2[0] = 0;
 			break;
 		}
-		case 0x0d: if (DigitalPortsp1[1]) return 0xff;
+		// P1 DOWN
+		case 0x0d: if (DigitalPortsp1[1]) { DOWN_LATCH = 1; return 0xff; }
 		    else {
 			PaddleY2[0] = 0-Paddle_incdec(AnalogPorts[1], &PaddleY[0]);
-			//bprintf(0, _T("Y %X."), PaddleY2[0]);
 			ret = (PaddleY2[0] & 0x3000) ? 0xff : 0x00;
 			break;
 		}
-		case 0x0e: if (DigitalPortsp1[2]) return 0xff;
+		// P1 RIGHT
+		case 0x0e: if (DigitalPortsp1[2]) return 0x10;
 		    else {
 			ret = PaddleX2[0]&0xff; PaddleX2[0] = 0;
 			break;
 		}
+		// P1 LEFT
 		case 0x0f: if (DigitalPortsp1[3]) return 0xff;
 		    else {
 			PaddleX2[0] = Paddle_incdec(AnalogPorts[0], &PaddleX[0]);
-			//bprintf(0, _T("X %X."), PaddleX2[0]);
 			ret = (PaddleX2[0] & 0x3000) ? 0xff : 0x00;
 			break;
 		}

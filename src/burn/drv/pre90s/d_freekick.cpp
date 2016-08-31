@@ -1631,7 +1631,7 @@ STD_ROM_FN(countrun)
 
 struct BurnDriver BurnDrvCountrun = {
 	"countrun", NULL, NULL, NULL, "1988",
-	"Counter Run (NS6201-A 1988.3)\0", "Please use countrunb insetad!", "Nihon System (Sega license)", "Miscellaneous",
+	"Counter Run (NS6201-A 1988.3)\0", "Please use countrunb instead!", "Nihon System (Sega license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, countrunRomInfo, countrunRomName, NULL, NULL, CountrunInputInfo, CountrunDIPInfo,
@@ -1774,7 +1774,7 @@ STD_ROM_FN(gigas)
 
 struct BurnDriver BurnDrvGigas = {
 	"gigas", NULL, NULL, NULL, "1986",
-	"Gigas (MC-8123, 317-5002)\0", "Please use gigasb insetad!", "SEGA", "Miscellaneous",
+	"Gigas (MC-8123, 317-5002)\0", "Please use gigasb instead!", "SEGA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0 | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasRomInfo, gigasRomName, NULL, NULL, GigasInputInfo, GigasDIPInfo,

@@ -1049,29 +1049,60 @@ static void DrvPaletteUpdate()
 	}
 }
 
-// Copy layer and apply zooming
-static void copy_zoom(INT32 minx, INT32 maxx, INT32 miny, INT32 maxy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy)
+static void copy_zoom(INT32 min_x, INT32 /*max_x*/, INT32 min_y, INT32 max_y, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy)
 {
-	UINT16 *dst = pTransDraw;
-	UINT16 *src = TaitoTempBitmap[1];
+	startx += min_x * incxx; 
+	starty += min_y * incyy; 
+       
+	UINT32 numblocks = (max_y - min_y) / 4;            
+	UINT32 leftovers = (max_y - min_y) - 4 * numblocks;
 
-	for (INT32 sy = miny; sy < maxy; sy++, starty+=incyy)
-	{
-		UINT32 cy = ((starty >> 16)) & 0x3ff;
-		if (cy >= 0x400) continue;
+	for (INT32 cury = min_y; cury <= max_y; cury++)     
+	{         
+		UINT16 *destptr = pTransDraw + ((cury - min_y) * nScreenWidth);
+		INT32 srcx = startx;
+		INT32 srcy = starty;
 
-		for (INT32 x = minx; x < maxx; x++, startx+=incxx, dst++)
-		{
-			INT32 xx = startx >> 16;
-			if (xx >= 0x400 || xx < 0) continue;
+		starty += incyy;    
+   
+		if ((UINT32)srcy < 0x4000000) 
+		{     
+			UINT16 *srcptr = TaitoTempBitmap[1] + (((srcy >> 16) & 0x3ff) * 0x400);
+ 
+			for (INT32 curx = 0; curx < numblocks; curx++)   
+			{ 
+				if ((UINT32)srcx < 0x4000000)
+					if (srcptr[srcx >> 16]) destptr[0] = srcptr[srcx >> 16];
 
-			INT32 pxl = src[(cy * 0x400) + xx];
+				srcx += incxx;           
 
-			if (pxl & 0xf)
-			{
-				*dst = pxl;
+				if ((UINT32)srcx < 0x4000000)
+					if (srcptr[srcx >> 16]) destptr[1] = srcptr[srcx >> 16];
+
+				srcx += incxx;           
+
+				if ((UINT32)srcx < 0x4000000)
+					if (srcptr[srcx >> 16]) destptr[2] = srcptr[srcx >> 16];
+
+				srcx += incxx;           
+
+				if ((UINT32)srcx < 0x4000000)
+					if (srcptr[srcx >> 16]) destptr[3] = srcptr[srcx >> 16];
+
+				srcx += incxx;           
+
+				destptr += 4;              
 			}
-		}
+      
+			for (INT32 curx = 0; curx < leftovers; curx++)   
+			{ 
+				if ((UINT32)srcx < 0x4000000)
+					if (srcptr[srcx >> 16]) destptr[0] = srcptr[srcx >> 16];
+
+				srcx += incxx;           
+				destptr++;      
+			} 
+		}     
 	}
 }
 

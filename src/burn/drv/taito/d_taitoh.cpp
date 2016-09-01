@@ -445,7 +445,7 @@ static INT32 PaddleY[2] = { 0, 0 };
 static INT32 PaddleX2[2] = { 0, 0 };
 static INT32 PaddleY2[2] = { 0, 0 };
 
-static INT32 Paddle_incdec(INT32 PaddlePortnum, INT32 *Paddle_X) {
+static INT32 Paddle_read(INT32 PaddlePortnum, INT32 *Paddle_X) {
 	if (PaddlePortnum != *Paddle_X) {
 		*Paddle_X = PaddlePortnum;
 		return PaddlePortnum / 4;
@@ -456,8 +456,7 @@ static INT32 Paddle_incdec(INT32 PaddlePortnum, INT32 *Paddle_X) {
 
 static UINT8 syvalion_extended_read()
 {
-	static UINT8 DOWN_LATCH = 0;
-	static UINT8 DOWN_LATCH2 = 0;
+	static UINT8 DOWN_LATCH[2] = { 0, 0 };
 	// Simulating digital inputs in Syvalion notes - dink aug.2016
 	//  when down is pressed, the body goes "down" but the head points "up".
 	//  this is solved by latching the down button(s) and returning 0xf2 in
@@ -467,89 +466,92 @@ static UINT8 syvalion_extended_read()
 
 	UINT8 ret = 0;
 
-	INT32 AnalogPorts[4] = { DrvAnalogPort0, DrvAnalogPort1, DrvAnalogPort2, DrvAnalogPort3 };
-	INT32 DigitalPortsp1[4] = { DrvJoy1[0], DrvJoy1[1], DrvJoy1[3], DrvJoy1[2] };
-	INT32 DigitalPortsp2[4] = { DrvJoy1[4], DrvJoy1[5], DrvJoy1[7], DrvJoy1[6] };
+	INT32 AnalogPorts[2][2] = {{ DrvAnalogPort0, DrvAnalogPort1 }, { DrvAnalogPort2, DrvAnalogPort3 }};
+	INT32 DigitalPorts[2][4] = {{ DrvJoy1[0], DrvJoy1[1], DrvJoy1[3], DrvJoy1[2] }, { DrvJoy1[4], DrvJoy1[5], DrvJoy1[7], DrvJoy1[6] }};
 
 	if (syvalionpmode) {
-		AnalogPorts[0] = DrvAnalogPort1;
-		AnalogPorts[1] = 0-DrvAnalogPort0;
-		AnalogPorts[2] = DrvAnalogPort3;
-		AnalogPorts[3] = 0-DrvAnalogPort2;
+		AnalogPorts[0][0] = DrvAnalogPort1;
+		AnalogPorts[0][1] = 0-DrvAnalogPort0;
+		AnalogPorts[1][0] = DrvAnalogPort3;
+		AnalogPorts[1][1] = 0-DrvAnalogPort2;
 
-		DigitalPortsp1[0] = DrvJoy1[3];
-		DigitalPortsp1[1] = DrvJoy1[2];
-		DigitalPortsp1[2] = DrvJoy1[1];
-		DigitalPortsp1[3] = DrvJoy1[0];
+		DigitalPorts[0][0] = DrvJoy1[3]; // p1
+		DigitalPorts[0][1] = DrvJoy1[2];
+		DigitalPorts[0][2] = DrvJoy1[1];
+		DigitalPorts[0][3] = DrvJoy1[0];
 
-		DigitalPortsp2[0] = DrvJoy1[5];
-		DigitalPortsp2[1] = DrvJoy1[4];
-		DigitalPortsp2[2] = DrvJoy1[7];
-		DigitalPortsp2[3] = DrvJoy1[6];
-
+		DigitalPorts[1][0] = DrvJoy1[5]; // p2
+		DigitalPorts[1][1] = DrvJoy1[4];
+		DigitalPorts[1][2] = DrvJoy1[7];
+		DigitalPorts[1][3] = DrvJoy1[6];
 	}
 
 	if (port < 8) ret = TC0220IOCRead(port);
 
-	switch (port)
-	{
-		// P2 UP
-		case 0x08: if (DigitalPortsp2[0]) return 0x10;
-		    else if (DOWN_LATCH2) { DOWN_LATCH2=0; return 0xf2; }
-    		else {
-			ret = PaddleY2[1]&0xff; PaddleY2[1] = 0;
-			break;
+	UINT8 plrnum = ((port & 4) >> 2) ^ 1;
+	if (!syvalionpmode) {
+		switch (port & ~4) // [syvalion] Syvalion (Japan)
+		{
+			// P2 UP
+			case 0x08: if (DigitalPorts[plrnum][0]) return 0x10;
+			else if (DOWN_LATCH[plrnum]) { DOWN_LATCH[plrnum] = 0; return 0xf2; }
+			else {
+				ret = PaddleY2[plrnum]&0xff; PaddleY2[plrnum] = 0;
+				break;
+			}
+			// P2 DOWN
+			case 0x09: if (DigitalPorts[plrnum][1]) { DOWN_LATCH[plrnum] = 1; return 0xff; }
+			else {
+				PaddleY2[plrnum] = 0-Paddle_read(AnalogPorts[plrnum][1], &PaddleY[plrnum]);
+				ret = (PaddleY2[plrnum] & 0x3000) ? 0xff : 0x00;
+				break;
+			}
+			// P2 RIGHT
+			case 0x0a: if (DigitalPorts[plrnum][2]) return 0x10;
+			else {
+				ret = PaddleX2[plrnum]&0xff; PaddleX2[plrnum] = 0;
+				break;
+			}
+			// P2 LEFT
+			case 0x0b: if (DigitalPorts[plrnum][3]) return 0xff;
+			else {
+				PaddleX2[plrnum] = Paddle_read(AnalogPorts[plrnum][0], &PaddleX[plrnum]);
+				ret = (PaddleX2[plrnum] & 0x3000) ? 0xff : 0x00;
+				break;
+			}
 		}
-		// P2 DOWN
-		case 0x09: if (DigitalPortsp2[1]) { DOWN_LATCH2 = 1; return 0xff; }
-		    else {
-			PaddleY2[1] = 0-Paddle_incdec(AnalogPorts[3], &PaddleY[1]);
-			ret = (PaddleY2[1] & 0x3000) ? 0xff : 0x00;
-			break;
-		}
-		// P2 RIGHT
-		case 0x0a: if (DigitalPortsp2[2]) return 0x10;
-		    else {
-			ret = PaddleX2[1]&0xff; PaddleX2[1] = 0;
-			break;
-		}
-		// P2 LEFT
-		case 0x0b: if (DigitalPortsp2[3]) return 0xff;
-		    else {
-			PaddleX2[1] = Paddle_incdec(AnalogPorts[2], &PaddleX[1]);
-			ret = (PaddleX2[1] & 0x3000) ? 0xff : 0x00;
-			break;
-		}
-
-		// P1 UP
-		case 0x0c: if (DigitalPortsp1[0]) return 0x10;
-		else if (DOWN_LATCH) { DOWN_LATCH=0; return 0xf2; }
-		    else {
-			ret = PaddleY2[0]&0xff; PaddleY2[0] = 0;
-			break;
-		}
-		// P1 DOWN
-		case 0x0d: if (DigitalPortsp1[1]) { DOWN_LATCH = 1; return 0xff; }
-		    else {
-			PaddleY2[0] = 0-Paddle_incdec(AnalogPorts[1], &PaddleY[0]);
-			ret = (PaddleY2[0] & 0x3000) ? 0xff : 0x00;
-			break;
-		}
-		// P1 RIGHT
-		case 0x0e: if (DigitalPortsp1[2]) return 0x10;
-		    else {
-			ret = PaddleX2[0]&0xff; PaddleX2[0] = 0;
-			break;
-		}
-		// P1 LEFT
-		case 0x0f: if (DigitalPortsp1[3]) return 0xff;
-		    else {
-			PaddleX2[0] = Paddle_incdec(AnalogPorts[0], &PaddleX[0]);
-			ret = (PaddleX2[0] & 0x3000) ? 0xff : 0x00;
-			break;
+	} else {
+		switch (port & ~4) // [syvalionp] Syvalion (World, prototype)
+		{
+			// P1 RIGHT
+			case 0x08: if (DigitalPorts[plrnum][0]) return 0x10;
+			else {
+				ret = PaddleY2[plrnum]&0xff; PaddleY2[plrnum] = 0;
+				break;
+			}
+			// P1 LEFT
+			case 0x09: if (DigitalPorts[plrnum][1]) return 0xff;
+			else {
+				PaddleY2[plrnum] = 0-Paddle_read(AnalogPorts[plrnum][1], &PaddleY[plrnum]);
+				ret = (PaddleY2[plrnum] & 0x3000) ? 0xff : 0x00;
+				break;
+			}
+			// P1 DOWN
+			case 0x0a: if (DigitalPorts[plrnum][2]) return 0x10;
+			else if (DOWN_LATCH[plrnum]) { DOWN_LATCH[plrnum] = 0; return 0xf2; }
+			else {
+				ret = PaddleX2[plrnum]&0xff; PaddleX2[plrnum] = 0;
+				break;
+			}
+			// P1 UP
+			case 0x0b: if (DigitalPorts[plrnum][3]) { DOWN_LATCH[plrnum] = 1; return 0xff; }
+			else {
+				PaddleX2[plrnum] = Paddle_read(AnalogPorts[plrnum][0], &PaddleX[plrnum]);
+				ret = (PaddleX2[plrnum] & 0x3000) ? 0xff : 0x00;
+				break;
+			}
 		}
 	}
-
 	return ret;
 }
 

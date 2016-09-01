@@ -1049,13 +1049,12 @@ static void DrvPaletteUpdate()
 	}
 }
 
-static void copy_zoom(INT32 min_x, INT32 /*max_x*/, INT32 min_y, INT32 max_y, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy)
+static void copy_zoom(INT32 min_x, INT32 max_x, INT32 min_y, INT32 max_y, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy)
 {
 	startx += min_x * incxx; 
 	starty += min_y * incyy; 
        
-	UINT32 numblocks = (max_y - min_y) / 4;            
-	UINT32 leftovers = (max_y - min_y) - 4 * numblocks;
+	UINT32 numblocks = (max_x - min_x) / 4;            
 
 	for (INT32 cury = min_y; cury <= max_y; cury++)     
 	{         
@@ -1093,15 +1092,6 @@ static void copy_zoom(INT32 min_x, INT32 /*max_x*/, INT32 min_y, INT32 max_y, UI
 
 				destptr += 4;              
 			}
-      
-			for (INT32 curx = 0; curx < leftovers; curx++)   
-			{ 
-				if ((UINT32)srcx < 0x4000000)
-					if (srcptr[srcx >> 16]) destptr[0] = srcptr[srcx >> 16];
-
-				srcx += incxx;           
-				destptr++;      
-			} 
 		}     
 	}
 }

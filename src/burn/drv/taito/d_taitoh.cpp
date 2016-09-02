@@ -1,6 +1,10 @@
 // FB Alpha Taito System H driver module
 // Based on MAME driver by Yochizo and Nicola Salmoria
 
+// Weirdness:
+// DLeagueJ's sprites get covered up on the right side of the screen, see temp.
+//   fix in DleagueJDraw();
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -1709,6 +1713,36 @@ static INT32 DleagueDraw()
 	return 0;
 }
 
+static INT32 DleagueJDraw() /* kludge */
+{
+	screen_y_adjust = 32;
+	screen_x_adjust = 16;
+
+	update_layer(0);
+	update_layer(1);
+
+	DrvPaletteUpdate();
+
+	UINT16 *base_ram = (UINT16*)TaitoVideoRam;
+
+	flipscreen = base_ram[0x20800/2] & 0x0c00;
+
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) bg0_tilemap_draw();
+
+	if (nBurnLayer & 2) bg1_tilemap_draw();
+
+	dleague_draw_sprites(0);
+	dleague_draw_sprites(1);
+
+	if (nBurnLayer & 4) draw_tx_layer();
+
+	BurnTransferCopy(TaitoPalette);
+
+	return 0;
+}
+
 static INT32 DrvFrame()
 {
 	TaitoWatchdog++;
@@ -2136,6 +2170,6 @@ struct BurnDriver BurnDrvDleaguej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleaguejRomInfo, dleaguejRomName, NULL, NULL, DleagueInputInfo, DleaguejDIPInfo,
-	DleagueInit, DrvExit, DrvFrame, DleagueDraw, NULL, NULL, 0x210,
+	DleagueInit, DrvExit, DrvFrame, DleagueJDraw, NULL, NULL, 0x210,
 	320, 240, 4, 3
 };

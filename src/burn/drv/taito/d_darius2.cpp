@@ -1,3 +1,5 @@
+// tofix: darius2d's offsets and y screen size is wrong - it should be 232 and everything moved down 8px
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -1749,7 +1751,7 @@ static void Darius2dRenderSprites(INT32 PriorityDraw)
 		
 		if (Priority != PriorityDraw) continue;
 
-		y -= 16;
+		y -= (Warriorb) ? 8 : 16;
 
 		if (x > 0x3c0) x -= 0x400;
 		if (y > 0x180) y -= 0x200;
@@ -1828,23 +1830,23 @@ static void Darius2dDraw()
 	BurnTransferClear();
 	
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoChars);
-		Darius2dRenderSprites(1);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoChars);
+		if (nBurnLayer & 2) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2) if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoChars);
+		if (nSpriteEnable & 1) Darius2dRenderSprites(1);
+		if (nBurnLayer & 1) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1) if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoChars);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoChars);
-		Darius2dRenderSprites(1);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoChars);
+		if (nBurnLayer & 1) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1) if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoChars);
+		if (nSpriteEnable & 1) Darius2dRenderSprites(1);
+		if (nBurnLayer & 2) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2) if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoChars);
 	}
 	
-	Darius2dRenderSprites(0);
+	if (nSpriteEnable & 2) Darius2dRenderSprites(0);
 	
-	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
-	if (!(Disable2 & 0x04)) TC0100SCNRenderCharLayer(1);
+	if (nBurnLayer & 4) if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+	if (nBurnLayer & 8) if (!(Disable2 & 0x04)) TC0100SCNRenderCharLayer(1);
 	BurnTransferCopy(TC0110PCRPalette);
 }
 
@@ -1856,23 +1858,23 @@ static void WarriorbDraw()
 	BurnTransferClear();
 
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoCharsB);
-		Darius2dRenderSprites(1);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoCharsB);
+		if (nBurnLayer & 2) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2) if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoCharsB);
+		if (nSpriteEnable & 1) Darius2dRenderSprites(1);
+		if (nBurnLayer & 1) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1) if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoCharsB);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoCharsB);
-		Darius2dRenderSprites(1);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
-		if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoCharsB);
+		if (nBurnLayer & 1) if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 1) if (!(Disable2 & 0x01)) TC0100SCNRenderBgLayer(1, 0, TaitoCharsB);
+		if (nSpriteEnable & 1) Darius2dRenderSprites(1);
+		if (nBurnLayer & 2) if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (nBurnLayer & 2) if (!(Disable2 & 0x02)) TC0100SCNRenderFgLayer(1, 0, TaitoCharsB);
 	}
 	
-	Darius2dRenderSprites(0);
+	if (nSpriteEnable & 2) Darius2dRenderSprites(0);
 	
-	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
-	if (!(Disable2 & 0x04)) TC0100SCNRenderCharLayer(1);
+	if (nBurnLayer & 4) if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+	if (nBurnLayer & 8) if (!(Disable2 & 0x04)) TC0100SCNRenderCharLayer(1);
 	BurnTransferCopy(TC0110PCRPalette);
 }
 

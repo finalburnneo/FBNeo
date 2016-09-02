@@ -4,16 +4,17 @@
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
 #include "m6809_intf.h"
+#include "hd6309_intf.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
+static UINT8 *DrvHD6309ROM0;
 static UINT8 *DrvM6809ROM0;
-static UINT8 *DrvM6809ROM1;
+static UINT8 *DrvHD6309RAM0;
+static UINT8 *DrvHD6309RAM1;
 static UINT8 *DrvM6809RAM0;
-static UINT8 *DrvM6809RAM1;
-static UINT8 *DrvM6809RAM2;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvPROMs;
@@ -26,8 +27,8 @@ static UINT8 *DrvTxVRAM;
 static UINT8 *DrvBgCRAM;
 static UINT8 *DrvBgVRAM;
 static UINT8 *DrvSprRAM;
-static UINT32  *DrvPalette;
-static UINT32  *Palette;
+static UINT32 *DrvPalette;
+static UINT32 *Palette;
 static UINT8  DrvRecalc;
 static UINT8 *pDrvSprRAM0;
 static UINT8 *pDrvSprRAM1;
@@ -38,8 +39,6 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[3];
 static UINT8 DrvDip[3];
 static UINT8 DrvReset;
-
-static UINT8 trigger_sound_irq;
 
 static UINT8 soundlatch;
 static UINT8 nBankData;
@@ -195,9 +194,9 @@ static void contra_K007121_ctrl_1_w(INT32 offset, INT32 data)
 	if (offset == 3)
 	{
 		if (data&0x8)
-			memcpy(pDrvSprRAM1, DrvM6809RAM1 + 0x0800, 0x800);
+			memcpy(pDrvSprRAM1, DrvHD6309RAM1 + 0x0800, 0x800);
 		else
-			memcpy(pDrvSprRAM1, DrvM6809RAM1 + 0x1000, 0x800);
+			memcpy(pDrvSprRAM1, DrvHD6309RAM1 + 0x1000, 0x800);
 	}
 
 	K007121_ctrl_w(1,offset,data);
@@ -209,10 +208,10 @@ void contra_bankswitch_w(INT32 data)
 	INT32 bankaddress = 0x10000 + nBankData * 0x2000;
 
 	if (bankaddress < 0x28000)
-		M6809MapMemory(DrvM6809ROM0 + bankaddress, 0x6000, 0x7fff, MAP_ROM);
+		HD6309MapMemory(DrvHD6309ROM0 + bankaddress, 0x6000, 0x7fff, MAP_ROM);
 }
 
-UINT8 DrvContraM6809ReadByte(UINT16 address)
+UINT8 DrvContraHD6309ReadByte(UINT16 address)
 {
 	switch (address)
 	{
@@ -230,7 +229,7 @@ UINT8 DrvContraM6809ReadByte(UINT16 address)
 	return 0;
 }
 
-void DrvContraM6809WriteByte(UINT16 address, UINT8 data)
+void DrvContraHD6309WriteByte(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff00) == 0x0c00) {
 		INT32 offset = address & 0xff;
@@ -276,7 +275,7 @@ void DrvContraM6809WriteByte(UINT16 address, UINT8 data)
 		return;
 
 		case 0x001a:
-			trigger_sound_irq = 1;
+			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		return;
 
 		case 0x001c:
@@ -332,8 +331,8 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0	= Next; Next += 0x030000;
-	DrvM6809ROM1	= Next; Next += 0x010000;
+	DrvHD6309ROM0	= Next; Next += 0x030000;
+	DrvM6809ROM0	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x100000;
 	DrvGfxROM1	= Next; Next += 0x100000;
@@ -346,9 +345,9 @@ static INT32 MemIndex()
 
 	AllRam		= Next;
 
-	DrvM6809RAM0	= Next; Next += 0x001000;
-	DrvM6809RAM1	= Next; Next += 0x001800;
-	DrvM6809RAM2	= Next; Next += 0x000800;
+	DrvHD6309RAM0	= Next; Next += 0x001000;
+	DrvHD6309RAM1	= Next; Next += 0x001800;
+	DrvM6809RAM0	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x000100;
 	DrvFgCRAM	= Next; Next += 0x000400;
 	DrvFgVRAM	= Next; Next += 0x000400;
@@ -409,30 +408,24 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	memset (K007121_ctrlram, 0, 2 * 8);
-	memset (K007121_flipscreen, 0, 2 * sizeof(INT32));
+	memset (K007121_ctrlram, 0, sizeof(K007121_ctrlram));
+	memset (K007121_flipscreen, 0, sizeof(K007121_flipscreen));
+
+	HD6309Open(0);
+	HD6309Reset();
+	HD6309Close();
 
 	M6809Open(0);
-	M6809Reset();
-	M6809Close();
-
-	M6809Open(1);
 	M6809Reset();
 	BurnYM2151Reset();
 	M6809Close();
 
-	trigger_sound_irq = 0;
 	soundlatch = 0;
 	nBankData = 0;
 
 	HiscoreReset();
 
 	return 0;
-}
-
-static void DrvYM2151IrqHandler(INT32 Irq)
-{
-	M6809SetIRQLine(M6809_FIRQ_LINE, ((Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
 static INT32 CommonInit(INT32 (*pRomLoad)())
@@ -455,33 +448,33 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 		DrvColorTableInit();
 	}
 
-	M6809Init(2);
-	M6809Open(0);
-	M6809MapMemory(DrvPalRAM,		0x0c00, 0x0cff, MAP_ROM);
-	M6809MapMemory(DrvM6809RAM0,		0x1000, 0x1fff, MAP_RAM);
-	M6809MapMemory(DrvFgCRAM,		0x2000, 0x23ff, MAP_RAM);
-	M6809MapMemory(DrvFgVRAM,		0x2400, 0x27ff, MAP_RAM);
-	M6809MapMemory(DrvTxCRAM,		0x2800, 0x2bff, MAP_RAM);
-	M6809MapMemory(DrvTxVRAM,		0x2c00, 0x2fff, MAP_RAM);
-	M6809MapMemory(DrvSprRAM,		0x3000, 0x3fff, MAP_RAM);
-	M6809MapMemory(DrvBgCRAM,		0x4000, 0x43ff, MAP_RAM);
-	M6809MapMemory(DrvBgVRAM,		0x4400, 0x47ff, MAP_RAM);
-	M6809MapMemory(DrvM6809RAM1,		0x4800, 0x5fff, MAP_RAM);
-//	M6809MapMemory(DrvM6809ROM0 + 0x10000, 	0x6000, 0x7fff, MAP_ROM);
-	M6809MapMemory(DrvM6809ROM0 + 0x08000,	0x8000, 0xffff, MAP_ROM);
-	M6809SetReadHandler(DrvContraM6809ReadByte);
-	M6809SetWriteHandler(DrvContraM6809WriteByte);
-	M6809Close();
+	HD6309Init(0);
+	HD6309Open(0);
+	HD6309MapMemory(DrvPalRAM,		0x0c00, 0x0cff, MAP_ROM);
+	HD6309MapMemory(DrvHD6309RAM0,		0x1000, 0x1fff, MAP_RAM);
+	HD6309MapMemory(DrvFgCRAM,		0x2000, 0x23ff, MAP_RAM);
+	HD6309MapMemory(DrvFgVRAM,		0x2400, 0x27ff, MAP_RAM);
+	HD6309MapMemory(DrvTxCRAM,		0x2800, 0x2bff, MAP_RAM);
+	HD6309MapMemory(DrvTxVRAM,		0x2c00, 0x2fff, MAP_RAM);
+	HD6309MapMemory(DrvSprRAM,		0x3000, 0x3fff, MAP_RAM);
+	HD6309MapMemory(DrvBgCRAM,		0x4000, 0x43ff, MAP_RAM);
+	HD6309MapMemory(DrvBgVRAM,		0x4400, 0x47ff, MAP_RAM);
+	HD6309MapMemory(DrvHD6309RAM1,		0x4800, 0x5fff, MAP_RAM);
+//	HD6309MapMemory(DrvHD6309ROM0 + 0x10000, 	0x6000, 0x7fff, MAP_ROM);
+	HD6309MapMemory(DrvHD6309ROM0 + 0x08000,	0x8000, 0xffff, MAP_ROM);
+	HD6309SetReadHandler(DrvContraHD6309ReadByte);
+	HD6309SetWriteHandler(DrvContraHD6309WriteByte);
+	HD6309Close();
 
-	M6809Open(1);
-	M6809MapMemory(DrvM6809RAM2, 		0x6000, 0x67ff, MAP_RAM);
-	M6809MapMemory(DrvM6809ROM1 + 0x08000,	0x8000, 0xffff, MAP_ROM);
+	M6809Init(1);
+	M6809Open(0);
+	M6809MapMemory(DrvM6809RAM0, 		0x6000, 0x67ff, MAP_RAM);
+	M6809MapMemory(DrvM6809ROM0 + 0x08000,	0x8000, 0xffff, MAP_ROM);
 	M6809SetReadHandler(DrvContraM6809SoundReadByte);
 	M6809SetWriteHandler(DrvContraM6809SoundWriteByte);
 	M6809Close();
 
 	BurnYM2151Init(3579545);
-	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
@@ -494,11 +487,11 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 
 static INT32 CommonRomLoad()
 {
-	if (BurnLoadRom(DrvM6809ROM0 + 0x00000,  0, 1)) return 1;
-	memcpy (DrvM6809ROM0 + 0x20000, DrvM6809ROM0, 0x08000);
-	if (BurnLoadRom(DrvM6809ROM0 + 0x10000,  1, 1)) return 1;
+	if (BurnLoadRom(DrvHD6309ROM0 + 0x20000,  0, 1)) return 1;
+	memcpy (DrvHD6309ROM0 + 0x08000, DrvHD6309ROM0 + 0x28000, 0x08000);
+	if (BurnLoadRom(DrvHD6309ROM0 + 0x10000,  1, 1)) return 1;
 
-	if (BurnLoadRom(DrvM6809ROM1 + 0x08000,  2, 1)) return 1;
+	if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0 + 0x000000,   3, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM0 + 0x000001,   4, 2)) return 1;
@@ -516,11 +509,11 @@ static INT32 CommonRomLoad()
 
 static INT32 BootlegRomLoad()
 {
-	if (BurnLoadRom(DrvM6809ROM0 + 0x00000,  0, 1)) return 1;
-	memcpy (DrvM6809ROM0 + 0x20000, DrvM6809ROM0, 0x08000);
-	if (BurnLoadRom(DrvM6809ROM0 + 0x10000,  1, 1)) return 1;
+	if (BurnLoadRom(DrvHD6309ROM0 + 0x20000,  0, 1)) return 1;
+	memcpy (DrvHD6309ROM0 + 0x08000, DrvHD6309ROM0 + 0x28000, 0x08000);
+	if (BurnLoadRom(DrvHD6309ROM0 + 0x10000,  1, 1)) return 1;
 
-	if (BurnLoadRom(DrvM6809ROM1 + 0x08000,  2, 1)) return 1;
+	if (BurnLoadRom(DrvM6809ROM0 + 0x08000,  2, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0   + 0x00000,  3, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM0   + 0x10000,  4, 1)) return 1;
@@ -550,11 +543,11 @@ static INT32 BootlegRomLoad()
 
 static INT32 ContraeRomLoad()
 {
-	if (BurnLoadRom(DrvM6809ROM0 + 0x00000, 0, 1)) return 1;
-	memcpy (DrvM6809ROM0 + 0x20000, DrvM6809ROM0, 0x08000);
-	if (BurnLoadRom(DrvM6809ROM0 + 0x10000, 1, 1)) return 1;
+	if (BurnLoadRom(DrvHD6309ROM0 + 0x20000,  0, 1)) return 1;
+	memcpy (DrvHD6309ROM0 + 0x08000, DrvHD6309ROM0 + 0x28000, 0x08000);
+	if (BurnLoadRom(DrvHD6309ROM0 + 0x10000,  1, 1)) return 1;
 
-	if (BurnLoadRom(DrvM6809ROM1 + 0x08000, 2, 1)) return 1;
+	if (BurnLoadRom(DrvM6809ROM0 + 0x08000, 2, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 2)) return 1;
 	if (BurnLoadRom(DrvGfxROM0 + 0x020000,  4, 2)) return 1;
@@ -590,6 +583,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
+	HD6309Exit();
 	M6809Exit();
 	BurnYM2151Exit();
 
@@ -890,7 +884,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 20;
+	INT32 nInterleave = 256;
 	
 	if (DrvReset) {
 		DrvDoReset();
@@ -914,29 +908,24 @@ static INT32 DrvFrame()
 
 	INT32 nCyclesSegment = 0;
 	INT32 nSoundBufferPos = 0;
-//	INT32 nCyclesTotal[2] =  { 1500000 / 60, 2000000 / 60 };
 	INT32 nCyclesTotal[2] =  { 12000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
+
+	HD6309Open(0);
+	M6809Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 		
 		nCurrentCPU = 0;
-		M6809Open(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
-		if (i == (nInterleave - 1)) {
-			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[nCurrentCPU] += HD6309Run(nCyclesSegment);
+		if (i == 240 && (K007121_ctrlram[0][7] & 0x02)) {
+			HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
-		M6809Close();
 
 		nCurrentCPU = 1;
-		M6809Open(nCurrentCPU);
-		if (trigger_sound_irq) {
-			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-			trigger_sound_irq = 0;
-		}
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
@@ -947,16 +936,17 @@ static INT32 DrvFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
-
-		M6809Close();
 	}
-	
+
+	M6809Close();
+	HD6309Close();
+
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
-			M6809Open(1);
+			M6809Open(0);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			M6809Close();
 		}
@@ -969,7 +959,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -986,26 +976,26 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = K007121_ctrlram;
-		ba.nLen	  = 2 * 8;
+		ba.nLen	  = sizeof(K007121_ctrlram);
 		ba.szName = "K007121 Control RAM";
 		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
+		HD6309Scan(nAction);
 		M6809Scan(nAction);
 
 		BurnYM2151Scan(nAction);
 
-		SCAN_VAR(K007121_flipscreen[0]);
-		SCAN_VAR(K007121_flipscreen[1]);
+		SCAN_VAR(K007121_flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(nBankData);
 
 		if (nAction & ACB_WRITE) {
-			M6809Open(0);
+			HD6309Open(0);
 			contra_bankswitch_w(nBankData);
-                        M6809Close();
-                        DrvRecalc = 1;
+			HD6309Close();
+			DrvRecalc = 1;
 		}
 	}
 

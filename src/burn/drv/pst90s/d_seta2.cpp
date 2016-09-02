@@ -44,7 +44,7 @@ static UINT8 bRecalcPalette = 0;
 static UINT32 gfx_code_mask;
 //static UINT8 bMahjong = 0;
 static UINT8 Mahjong_keyboard = 0;
-static UINT8 HasNVRam;
+static UINT8 HasNVRam = 0;
 
 static INT32 yoffset;
 static INT32 sva_x;
@@ -534,7 +534,7 @@ static struct BurnDIPInfo GundamexDIPList[]=
 	{0x16, 0x01, 0x06, 0x02, "Hard"		},
 	{0x16, 0x01, 0x06, 0x00, "Hardest"		},
 
-	{0   , 0xfe, 0   ,    0, "Flip Screen"		},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
 	{0x16, 0x01, 0x10, 0x10, "Off"		},
 	{0x16, 0x01, 0x10, 0x00, "On"		},
 
@@ -550,7 +550,7 @@ static struct BurnDIPInfo GundamexDIPList[]=
 	{0x16, 0x01, 0x80, 0x80, "Off"		},
 	{0x16, 0x01, 0x80, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Coin A"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
 	{0x17, 0x01, 0x07, 0x00, "4 Coins 1 Credits "		},
 	{0x17, 0x01, 0x07, 0x01, "3 Coins 1 Credits "		},
 	{0x17, 0x01, 0x07, 0x02, "2 Coins 1 Credits "		},
@@ -570,7 +570,7 @@ static struct BurnDIPInfo GundamexDIPList[]=
 	{0x17, 0x01, 0x38, 0x18, "1 Coin 4 Credits "		},
 	{0x17, 0x01, 0x38, 0x20, "1 Coin 5 Credits "		},
 
-	{0   , 0xfe, 0   ,    8, "Debug Mode"		},
+	{0   , 0xfe, 0   ,    2, "Debug Mode"		},
 	{0x17, 0x01, 0x40, 0x40, "Off"		},
 	{0x17, 0x01, 0x40, 0x00, "On"		},
 
@@ -792,15 +792,15 @@ static struct BurnDIPInfo WschampDIPList[]=
 	{0x12, 0x01, 0x0f, 0x01, "1 Coin 6 Credits, 1 Credit Start & Continue"		},
 	{0x12, 0x01, 0x0f, 0x00, "Free Play"		},
 
-	{0   , 0xfe, 0   ,    0, "Service Mode"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x12, 0x01, 0x80, 0x80, "Off"		},
 	{0x12, 0x01, 0x80, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    0, "Vert. Flip Screen"		},
+	{0   , 0xfe, 0   ,    2, "Vert. Flip Screen"		},
 	{0x13, 0x01, 0x01, 0x01, "Off"		},
 	{0x13, 0x01, 0x01, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    0, "Horiz. Flip Screen"		},
+	{0   , 0xfe, 0   ,    2, "Horiz. Flip Screen"		},
 	{0x13, 0x01, 0x02, 0x02, "Off"		},
 	{0x13, 0x01, 0x02, 0x00, "On"		},
 
@@ -808,7 +808,7 @@ static struct BurnDIPInfo WschampDIPList[]=
 	{0x13, 0x01, 0x04, 0x00, "Off"		},
 	{0x13, 0x01, 0x04, 0x04, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
 	{0x13, 0x01, 0x18, 0x10, "Easy"		},
 	{0x13, 0x01, 0x18, 0x18, "Normal"		},
 	{0x13, 0x01, 0x18, 0x08, "Hard"		},
@@ -848,15 +848,15 @@ static struct BurnDIPInfo TrophyhDIPList[]=
 	{0x12, 0x01, 0x0f, 0x01, "1 Coin 6 Credits, 1 Credit Start & Continue"		},
 	{0x12, 0x01, 0x0f, 0x00, "Free Play"		},
 
-	{0   , 0xfe, 0   ,    0, "Service Mode"		},
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x12, 0x01, 0x80, 0x80, "Off"		},
 	{0x12, 0x01, 0x80, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    0, "Vert. Flip Screen"		},
+	{0   , 0xfe, 0   ,    2, "Vert. Flip Screen"		},
 	{0x13, 0x01, 0x01, 0x01, "Off"		},
 	{0x13, 0x01, 0x01, 0x00, "On"		},
 
-	{0   , 0xfe, 0   ,    0, "Horiz. Flip Screen"		},
+	{0   , 0xfe, 0   ,    2, "Horiz. Flip Screen"		},
 	{0x13, 0x01, 0x02, 0x02, "Off"		},
 	{0x13, 0x01, 0x02, 0x00, "On"		},
 
@@ -864,7 +864,7 @@ static struct BurnDIPInfo TrophyhDIPList[]=
 	{0x13, 0x01, 0x04, 0x00, "Off"		},
 	{0x13, 0x01, 0x04, 0x04, "On"		},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
 	{0x13, 0x01, 0x18, 0x10, "Easy"		},
 	{0x13, 0x01, 0x18, 0x18, "Normal"		},
 	{0x13, 0x01, 0x18, 0x08, "Hard"		},
@@ -3257,17 +3257,14 @@ static INT32 grdiansScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
-#if 0
-	// This is causing crashes
-	if (nAction & ACB_NVRAM && HasNVRam) {
+
+	if (nAction & ACB_NVRAM && HasNVRam && RamNV) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data = RamNV;
 		ba.nLen = 0x10000;
-		ba.szName = "Backup Ram";
+		ba.szName = "SetaNVRam";
 		BurnAcb(&ba);
 	}
-#endif
 
 	if (nAction & ACB_DRIVER_DATA) {
 

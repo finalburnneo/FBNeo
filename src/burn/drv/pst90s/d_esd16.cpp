@@ -1066,7 +1066,7 @@ static INT32 DrvDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x800; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+			DrvPalette[i] = BurnHighCol(rgb >> 16&0xff, rgb >> 8&0xff, rgb&0xff, 0);
 		}
 	}
 
@@ -1076,7 +1076,7 @@ static INT32 DrvDraw()
 		draw_background_8x8(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
 	}
 
-	esd16_draw_sprites(1);
+	if (nSpriteEnable & 1) esd16_draw_sprites(1);
 
 	if (head_layersize & 0x0002) {
 		draw_background_16x16(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
@@ -1084,7 +1084,7 @@ static INT32 DrvDraw()
 		draw_background_8x8(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
 	}
 
-	esd16_draw_sprites(0);
+	if (nSpriteEnable & 2) esd16_draw_sprites(0);
 
 	if (flipscreen) {
 		INT32 screensize = nScreenWidth * nScreenHeight;
@@ -1689,10 +1689,10 @@ static struct BurnRomInfo deluxe5RomDesc[] = {
 
 	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
-	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
-	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
-	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  6
 	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
 
 	{ "fu35",			0x200000, 0xae10242a, 4 | BRF_GRA },		//  8 - Tiles
@@ -1723,10 +1723,10 @@ static struct BurnRomInfo deluxe5aRomDesc[] = {
 
 	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
-	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
-	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
-	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  6
 	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
 
 	{ "fu35",			0x200000, 0xae10242a, 4 | BRF_GRA },		//  8 - Tiles
@@ -1757,10 +1757,10 @@ static struct BurnRomInfo deluxe5bRomDesc[] = {
 
 	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
-	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
-	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
-	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  6
 	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
 
 	{ "fu35",			0x200000, 0xae10242a, 4 | BRF_GRA },		//  8 - Tiles
@@ -1791,10 +1791,10 @@ static struct BurnRomInfo deluxe4uRomDesc[] = {
 
 	{ "3.su06",			0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "ju06",			0x040000, 0x8b853bce, 3 | BRF_GRA },		//  3 - Sprites
-	{ "ju05",			0x040000, 0xbbe81779, 3 | BRF_GRA },		//  4
-	{ "ju04",			0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  5
-	{ "ju03",			0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  6
+	{ "ju03",			0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  3 - Sprites
+	{ "ju04",			0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  4
+	{ "ju05",			0x040000, 0xbbe81779, 3 | BRF_GRA },		//  5
+	{ "ju06",			0x040000, 0x8b853bce, 3 | BRF_GRA },		//  6
 	{ "ju07",			0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
 
 	{ "fu35",			0x200000, 0x6df14570, 4 | BRF_GRA },		//  8 - Tiles

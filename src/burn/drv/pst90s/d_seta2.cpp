@@ -3469,7 +3469,7 @@ struct BurnDriver BurnDrvWschampb = {
 
 struct BurnDriver BurnDrvTrophyh = {
 	"trophyh", NULL, NULL, NULL, "2002",
-	"Trophy Hunting - Bear & Moose V1.0\0", NULL, "Sammy USA Corporation", "Newer Seta",
+	"Trophy Hunting - Bear & Moose V1.0\0", "Hangs are normal, just wait it out.", "Sammy USA Corporation", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, trophyhRomInfo, trophyhRomName, NULL, NULL, WschampInputInfo, TrophyhDIPInfo,

@@ -1978,7 +1978,7 @@ static INT32 MystwarrInit()
 	K056832SetLayerOffsets(2,  2-4, 0);
 	K056832SetLayerOffsets(3,  3-4, 0);
 
-	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, mystwarr_sprite_callback, 1);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, mystwarr_sprite_callback, 3);
 	K053247SetSpriteOffset(-24-48, -16-24);
 	K053247SetBpp(5);
 
@@ -2451,7 +2451,7 @@ static INT32 GaiapolisInit()
 	K056832SetLayerOffsets(3,  3, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, gaiapolis_sprite_callback, 1);
-	K053247SetSpriteOffset(-24-79, -16-24);
+	K053247SetSpriteOffset(7+(-24-79), -16-24);
 
 	konamigx_mixer_init(0);
 	K054338_invert_alpha(0); // otherwise alpha blended roz is too light

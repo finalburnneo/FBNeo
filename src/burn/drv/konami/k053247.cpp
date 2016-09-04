@@ -580,7 +580,8 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 	INT32 dst_skipx, dst_skipy, dst_x, dst_y, dst_lastx, dst_lasty;
 	INT32 src_pitch, dst_pitch;
 
-	INT32 highlight_enable = drawmode >> 4;// for fba
+	INT32 highlight_enable = (drawmode >> 4) && (K053247Flags & 2);// for fba
+	//INT32 highlight_enable = drawmode >> 4;// for fba
 	drawmode &= 0xf;
 
 	// cull illegal and transparent objects

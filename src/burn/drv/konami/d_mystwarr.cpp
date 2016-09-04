@@ -2454,7 +2454,7 @@ static INT32 GaiapolisInit()
 	K053247SetSpriteOffset(7+(-24-79), -16-24);
 
 	konamigx_mixer_init(0);
-	K054338_invert_alpha(0); // otherwise alpha blended roz is too light
+//	K054338_invert_alpha(0); // otherwise alpha blended roz is too light - sept.2.2016 - this breaks the "elevator/going down" level
 
 	SekInit(0, 0x68000);
 	SekOpen(0);

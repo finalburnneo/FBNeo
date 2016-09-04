@@ -2448,7 +2448,7 @@ static INT32 GaiapolisInit()
 	K056832SetLayerOffsets(0, -2, 0);
 	K056832SetLayerOffsets(1,  0, 0);
 	K056832SetLayerOffsets(2,  2, 0);
-	K056832SetLayerOffsets(3,  3, 0);
+	K056832SetLayerOffsets(3,  2, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, gaiapolis_sprite_callback, 1);
 	K053247SetSpriteOffset(7+(-24-79), -16-24);

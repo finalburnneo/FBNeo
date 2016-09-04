@@ -114,8 +114,8 @@ static void gx_wipezbuf(INT32 noshadow)
 {
 #define GX_ZBUFW	512
 
-	INT32 w = (nScreenWidth - 1);
-	INT32 h = (nScreenHeight - 1);
+	INT32 w = (nScreenWidth); // - 1);  - sept.2.2016, fixes lines of pixels
+	INT32 h = (nScreenHeight); // - 1); -  around gaiapolis's intro  - dink
 
 	UINT8 *zptr = gx_objzbuf;
 	INT32 ecx = h;

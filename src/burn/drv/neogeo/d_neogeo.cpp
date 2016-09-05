@@ -14458,34 +14458,38 @@ struct BurnDriver BurnDrvkof98ae = {
 	0x1000,	304, 224, 4, 3
 };
 
-// The King of Fighters '98 (Anniversary Edition 2016, EGHT hack)
+// The King of Fighters '98 (Anniversary Edition build 1.2.0827, EGCG 2016)
+// [2016.08.27] version
+// Update team : GSC2007 [program], Dream [graphics], Bing Yan Dream [Color]
 
 static struct BurnRomInfo kof98ae2016RomDesc[] = {
-	{ "242ae-p1.bin", 0x100000, 0xc7fddbd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242ae-p2.bin", 0x600000, 0xd84dbe5b, 1 | BRF_ESS | BRF_PRG }, //  1 
+//	{ "242ae-p1.bin", 0x100000, 0xc7fddbd8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242ae-p1.p1",  0x100000, 0xd69ecaa9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+//	{ "242ae-p2.bin", 0x600000, 0xd84dbe5b, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242ae-p2.sp2", 0x600000, 0xac1e9e79, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "242ae-s1.bin", 0x040000, 0x345c20b0, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "242ae-s1.s1",  0x040000, 0x345c20b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "242ae-c1.bin", 0x800000, 0x086ec060, 3 | BRF_GRA },           //  3 Sprite data
-	{ "242ae-c2.bin", 0x800000, 0x16b9a9a2, 3 | BRF_GRA },           //  4 
-	{ "242-c3.bin",   0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
-	{ "242-c4.bin",   0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
-	{ "242ae-c5.bin", 0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
-	{ "242ae-c6.bin", 0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8 
-	{ "242ae-c7.bin", 0x800000, 0x8d495552, 3 | BRF_GRA },           //  9 
-	{ "242ae-c8.bin", 0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
-	{ "242ae-c9.bin", 0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
-	{ "242ae-c91.bin",0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
-	{ "242ae-c92.bin",0x800000, 0x56d361cb, 3 | BRF_GRA },           // 13
-	{ "242ae-c93.bin",0x800000, 0xf8cb115b, 3 | BRF_GRA },           // 14
+	{ "242ae-c1.c1",  0x800000, 0x086ec060, 3 | BRF_GRA },           //  3 Sprite data
+	{ "242ae-c2.c2",  0x800000, 0x16b9a9a2, 3 | BRF_GRA },           //  4 
+	{ "242-c3.c3",    0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5 
+	{ "242-c4.c4",    0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6 
+	{ "242ae-c5.c5",  0x800000, 0x71641718, 3 | BRF_GRA },           //  7 
+	{ "242ae-c6.c6",  0x800000, 0x982ba2b3, 3 | BRF_GRA },           //  8 
+	{ "242ae-c7.c7",  0x800000, 0x8d495552, 3 | BRF_GRA },           //  9 
+	{ "242ae-c8.c8",  0x800000, 0x8bfc3417, 3 | BRF_GRA },           // 10 
+	{ "242ae-c9.c9",  0x800000, 0x128256d1, 3 | BRF_GRA },           // 11
+	{ "242ae-c10.c10",0x800000, 0x4bd8412d, 3 | BRF_GRA },           // 12
+	{ "242ae-c11.c11",0x800000, 0x56d361cb, 3 | BRF_GRA },           // 13
+	{ "242ae-c12.c12",0x800000, 0xf8cb115b, 3 | BRF_GRA },           // 14
 
-	{ "242ae-m1.bin", 0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
+	{ "242ae-m1.m1",  0x040000, 0x9ade0528, 4 | BRF_ESS | BRF_PRG }, // 15 Z80 code
 
-	{ "242-v1.bin",   0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
-	{ "242-v2.bin",   0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
-	{ "242-v3.bin",   0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
-	{ "242-v4.bin",   0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
-	{ "242ae-v5.bin", 0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
+	{ "242-v1.v1",    0x400000, 0xb9ea8051, 5 | BRF_SND },           // 16 Sound data
+	{ "242-v2.v2",    0x400000, 0xcc11106e, 5 | BRF_SND },           // 17 
+	{ "242-v3.v3",    0x400000, 0x044ea4e1, 5 | BRF_SND },           // 18 
+	{ "242-v4.v4",    0x400000, 0x7985ea30, 5 | BRF_SND },           // 19 
+	{ "242ae-v5.v5",  0x400000, 0xafdd9660, 5 | BRF_SND },           // 20
 };
 
 STDROMPICKEXT(kof98ae2016, kof98ae2016, neogeo)
@@ -14493,7 +14497,7 @@ STD_ROM_FN(kof98ae2016)
 
 struct BurnDriver BurnDrvkof98ae2016 = {
 	"kof98ae2016", "kof98", "neogeo", NULL, "2016",
-	"The King of Fighters '98 (Anniversary Edition 2016, EGHT hack)\0", NULL, "hack", "Neo Geo MVS",
+	"The King of Fighters '98 (Anniversary Edition build 1.2.0827)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98ae2016RomInfo, kof98ae2016RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

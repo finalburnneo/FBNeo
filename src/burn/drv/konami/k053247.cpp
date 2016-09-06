@@ -588,7 +588,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 	if (!scalex || !scaley) return;
 
 	// find shadow pens and cull invisible shadows
-	granularity = shdpen = ((1 << nBpp) - 1);
+	granularity = shdpen = ((1 << nBpp) /*- 1*/);
 	shdpen--;
 
 	if (zcode >= 0)

@@ -1145,7 +1145,7 @@ void k053247_draw_single_sprite_gxcore(UINT8 *gx_objzbuf, UINT8 *gx_shdzbuf, INT
 		if (mirrorx) flipx = 0; // only applies to x mirror, proven
 		mirrory = temp & 0x8000;
 
-		INT32 objset1 = K053247ReadRegs(5);
+		INT32 objset1 = K053246ReadRegs(5);
 		// for Escape Kids (GX975)
 		if ( objset1 & 8 ) // Check only "Bit #3 is '1'?"
 		{

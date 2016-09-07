@@ -51,7 +51,7 @@ void K054338WriteWord(INT32 offset, UINT16 data)
 
 void K054338WriteByte(INT32 offset, UINT8 data)
 {
-	UINT8 *regs = (UINT8*)k54338_regs;
+	UINT8 *regs = (UINT8*)&k54338_regs;
 
 	regs[(offset & 0x1f)^1] = data;
 }

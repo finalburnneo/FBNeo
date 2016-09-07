@@ -158,7 +158,7 @@ void K053247Write(INT32 offset, INT32 data)
 
 void K053247WriteRegsByte(INT32 offset, UINT8 data)
 {
-	UINT8 *regs = (UINT8*)K053247Regs;
+	UINT8 *regs = (UINT8*)&K053247Regs;
 
 	regs[(offset & 0x1f)^1] = data;
 }

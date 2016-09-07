@@ -907,7 +907,7 @@ static void __fastcall metamrph_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffffc0) == 0x25c000) {
-		UINT8 *prot = (UINT8*)prot_data;
+		UINT8 *prot = (UINT8*)&prot_data;
 		prot[(address & 0x3f) ^ 1] = data;
 		K055550_word_write(address, data, 0xff << ((address & 1) * 8));
 		return;
@@ -1227,7 +1227,7 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffffc0) == 0x40e000) {
-		UINT8 *prot = (UINT8*)prot_data;
+		UINT8 *prot = (UINT8*)&prot_data;
 		prot[(address & 0x3f) ^ 1] = data;
 		K053990_word_write(address, data, 0xff << ((address & 1) * 8));
 		return;
@@ -1503,7 +1503,7 @@ static void __fastcall dadandrn_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xffffc0) == 0x680000) {
-		UINT8 *prot = (UINT8*)prot_data;
+		UINT8 *prot = (UINT8*)&prot_data;
 		prot[(address & 0x3f) ^ 1] = data;
 		K055550_word_write(address, data, 0xff << ((address & 1) * 8));
 		return;

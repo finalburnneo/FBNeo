@@ -310,7 +310,7 @@ void K056832WordWrite(INT32 offset, UINT16 data)
 
 void K056832ByteWrite(INT32 offset, UINT8 data)
 {
-	UINT8 *regs = (UINT8*)k056832Regs;
+	UINT8 *regs = (UINT8*)&k056832Regs;
 	regs[(offset & 0x3f) ^ 1] = data;
 
 	k056832_word_write_update(offset);
@@ -390,7 +390,7 @@ void K056832WritebRegsWord(INT32 offset, UINT16 data)
 
 void K056832WritebRegsByte(INT32 offset, UINT8 data)
 {
-	UINT8 *regs = (UINT8*)k056832Regsb;
+	UINT8 *regs = (UINT8*)&k056832Regsb;
 
 	regs[(offset & 0x1f)^1] = data;
 }

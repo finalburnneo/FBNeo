@@ -170,12 +170,12 @@ void K053247WriteRegsWord(INT32 offset, UINT16 data)
 
 UINT16 K053247ReadRegs(INT32 offset)
 {
-	return K053247Regs[offset & 7];
+	return K053247Regs[offset & 0xf];
 }
 
 UINT16 K053246ReadRegs(INT32 offset)
 {
-	return K053246Regs[offset & 0xf];
+	return K053246Regs[offset & 7];
 }
 
 UINT8 K053246Read(INT32 offset)

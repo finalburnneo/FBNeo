@@ -8,7 +8,9 @@
 			background in lava level is too fast. (irq?)
 
 		martial champ
-			why are the sprite positions messed up? protection?
+    		1: missing graphics in intro, on blank screens disable layer#2 to
+			see what it should look like.
+			2: missing some sounds, probably no big deal.
 
 	unkown bugs.
 		probably a lot! go ahead and fix it!
@@ -2296,8 +2298,8 @@ static INT32 MartchmpInit()
 	K056832SetLayerOffsets(2,  2-4, 0);
 	K056832SetLayerOffsets(3,  3-4, 0);
 
-	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, martchmp_sprite_callback, 1);
-	K053247SetSpriteOffset(-23-58, -16-23);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, martchmp_sprite_callback, 3);
+	K053247SetSpriteOffset((-23-58-9), (-16-23-14));
 	K053247SetBpp(5);
 
 	konamigx_mixer_init(0);
@@ -2327,7 +2329,6 @@ static INT32 MartchmpInit()
 
 	K054539Init(0, 48000, DrvSndROM, 0x400000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 	K054539_set_gain(0, 0, 1.40);
 	K054539_set_gain(0, 1, 1.40);
@@ -2790,7 +2791,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 60; //nBurnSoundLen / 4;
+	INT32 nInterleave = 60;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -2837,7 +2838,7 @@ static INT32 DrvFrame()
 				if (i == ((nInterleave *  23) / 256))
 					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
-				if (i == ((nInterleave * 247) / 256) && K053246_is_IRQ_enabled())
+				if (i == ((nInterleave *  47) / 256) && K053246_is_IRQ_enabled())
 					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			}
 		}
@@ -2854,7 +2855,7 @@ static INT32 DrvFrame()
 		nCyclesDone[1] += nCyclesSegment;
 
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {// && sound_nmi_enable && sound_control) { // iq_132
-			ZetNmi(); //ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+			ZetNmi();
 		}
 
 		if (pBurnSoundOut) {
@@ -3623,11 +3624,11 @@ static struct BurnRomInfo mtlchampRomDesc[] = {
 STD_ROM_PICK(mtlchamp)
 STD_ROM_FN(mtlchamp)
 
-struct BurnDriverD BurnDrvMtlchamp = {
+struct BurnDriver BurnDrvMtlchamp = {
 	"mtlchamp", NULL, NULL, NULL, "1993",
 	"Martial Champion (ver EAB)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampRomInfo, mtlchampRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3664,11 +3665,11 @@ static struct BurnRomInfo mtlchamp1RomDesc[] = {
 STD_ROM_PICK(mtlchamp1)
 STD_ROM_FN(mtlchamp1)
 
-struct BurnDriverD BurnDrvMtlchamp1 = {
+struct BurnDriver BurnDrvMtlchamp1 = {
 	"mtlchamp1", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver EAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchamp1RomInfo, mtlchamp1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3705,11 +3706,11 @@ static struct BurnRomInfo mtlchampaRomDesc[] = {
 STD_ROM_PICK(mtlchampa)
 STD_ROM_FN(mtlchampa)
 
-struct BurnDriverD BurnDrvMtlchampa = {
+struct BurnDriver BurnDrvMtlchampa = {
 	"mtlchampa", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver AAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampaRomInfo, mtlchampaRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3746,11 +3747,11 @@ static struct BurnRomInfo mtlchampjRomDesc[] = {
 STD_ROM_PICK(mtlchampj)
 STD_ROM_FN(mtlchampj)
 
-struct BurnDriverD BurnDrvMtlchampj = {
+struct BurnDriver BurnDrvMtlchampj = {
 	"mtlchampj", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver JAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampjRomInfo, mtlchampjRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3787,11 +3788,11 @@ static struct BurnRomInfo mtlchampuRomDesc[] = {
 STD_ROM_PICK(mtlchampu)
 STD_ROM_FN(mtlchampu)
 
-struct BurnDriverD BurnDrvMtlchampu = {
+struct BurnDriver BurnDrvMtlchampu = {
 	"mtlchampu", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver UAE)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampuRomInfo, mtlchampuRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3
@@ -3828,11 +3829,11 @@ static struct BurnRomInfo mtlchampu1RomDesc[] = {
 STD_ROM_PICK(mtlchampu1)
 STD_ROM_FN(mtlchampu1)
 
-struct BurnDriverD BurnDrvMtlchampu1 = {
+struct BurnDriver BurnDrvMtlchampu1 = {
 	"mtlchampu1", "mtlchamp", NULL, NULL, "1993",
 	"Martial Champion (ver UAD)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampu1RomInfo, mtlchampu1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
 	MartchmpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3

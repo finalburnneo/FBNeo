@@ -67,6 +67,7 @@ STDINPUTINFO(_1945kiii)
 static struct BurnInputInfo FlagrallInputList[] = {
 	{"P1 Coin 1",		BIT_DIGITAL,	DrvButton + 0,	"p1 coin"	},
 	{"P1 Coin 2",		BIT_DIGITAL,	DrvButton + 1,	"p2 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvButton + 2,	"p1 start"	},
 
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
@@ -455,7 +456,7 @@ static void DrawBackground()
 		INT32 sy = ((offs / 0x20) * 16) - (scrolly[0] & 0x1ff);
 		if (sy <= -192) sy += 512;
 
-		if (sx <= -16 || sx >= 320 || sy <= -16 || sy >= 224)
+		if (sx <= -16 || sx >= nScreenWidth || sy <= -16 || sy >= nScreenHeight)
 			continue;
 
 		INT32 code = BURN_ENDIAN_SWAP_INT16(RamBg[offs]) & 0x1fff;
@@ -482,7 +483,7 @@ static void DrawSprites()
 			
 		if (sx >= 0 && sx <= 304 && sy > 0 && sy <= 208) {
 			Render16x16Tile_Mask(pTransDraw, code, sx, sy, 0, 8, 0, 0x100, RomSpr);
-		} else if (sx >= -16 && sx < 320 && sy >= -16 && sy < 224) {
+		} else if (sx >= -16 && sx < nScreenWidth && sy >= -16 && sy < nScreenHeight) {
 			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, 0, 8, 0, 0x100, RomSpr);
 		}
 	}
@@ -697,5 +698,5 @@ struct BurnDriver BurnDrvFlagrall = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, flagrallRomInfo, flagrallRomName, NULL, NULL, FlagrallInputInfo, FlagrallDIPInfo,
 	flagrallInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
-	320, 224, 4, 3
+	320, 240, 4, 3
 };

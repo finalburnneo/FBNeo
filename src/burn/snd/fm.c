@@ -2823,11 +2823,25 @@ static void FM_ADPCMAWrite(YM2610 *F2610,int r,int v)
 		case 0x10:
 		case 0x18:
 			adpcm[c].start  = ( (F2610->adpcmreg[0x18 + c]*0x0100 | F2610->adpcmreg[0x10 + c]) << ADPCMA_ADDRESS_SHIFT);
+			if ( pcmsizeA > 0x1000000 )         // KOF98AE sample banking support
+			{
+				if ( F2610->adpcmreg[0x08 + c] >= 0xf0 )
+				{
+					adpcm[c].start += 0x1000000;
+				}
+			}
 			break;
 		case 0x20:
 		case 0x28:
 			adpcm[c].end    = ( (F2610->adpcmreg[0x28 + c]*0x0100 | F2610->adpcmreg[0x20 + c]) << ADPCMA_ADDRESS_SHIFT);
 			adpcm[c].end   += (1<<ADPCMA_ADDRESS_SHIFT) - 1;
+			if ( pcmsizeA > 0x1000000 )         // KOF98AE sample banking support
+			{
+				if ( F2610->adpcmreg[0x08 + c] >= 0xf0 )
+				{
+					adpcm[c].end += 0x1000000;
+				}
+			}
 			break;
 		}
 	}

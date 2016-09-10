@@ -856,6 +856,8 @@ static void draw_bullets()
 			sy = 255 - sy;
 		if (!flipscreen && percuss_hardware) sx = 255 - sx;
 
+		if (sx >= nScreenWidth || sx < 0 || sy >= nScreenHeight || sy < 0) continue;
+
 		pTransDraw[(sy * nScreenWidth) + sx] = 0x31;
 	}
 }

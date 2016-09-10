@@ -520,9 +520,11 @@ static INT32 ConfigParseMAMEFile()
 			}
 
 			// Fill in defaults
-			pCurrentCheat->nType = 0;							// Default to cheat type 0 (apply each frame)
+			pCurrentCheat->nType = 0;							    // Default to cheat type 0 (apply each frame)
 			pCurrentCheat->nStatus = -1;							// Disable cheat
 			pCurrentCheat->nDefault = 0;							// Set default option
+			pCurrentCheat->bOneShot = 0;							// Set default option (off)
+			pCurrentCheat->bWatchMode = 0;							// Set default option (off)
 
 			_tcsncpy (pCurrentCheat->szCheatName, tmp, QUOTE_MAX);
 
@@ -536,7 +538,14 @@ static INT32 ConfigParseMAMEFile()
 			if (nAddress) {
 				n++;
 
-				OptionName(tmp);	
+				if (flags & 0x1) {
+					pCurrentCheat->bOneShot = 1; // apply once and stop
+				}
+				if (flags & 0x6) {
+					pCurrentCheat->bWatchMode = 1; // display value @ address
+				}
+
+				OptionName(tmp);
 				AddressInfo();
 			} else {
 				menu = 1;
@@ -548,6 +557,13 @@ static INT32 ConfigParseMAMEFile()
 		if ( flags & 0x00010000 && menu) {
 			n++;
 			nCurrentAddress = 0;
+
+			if (flags & 0x1) {
+				pCurrentCheat->bOneShot = 1; // apply once and stop
+			}
+			if (flags & 0x6) {
+				pCurrentCheat->bWatchMode = 1; // display value @ address
+			}
 
 			OptionName(tmp);
 			AddressInfo();

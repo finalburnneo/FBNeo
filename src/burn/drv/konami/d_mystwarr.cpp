@@ -8,9 +8,9 @@
 			background in lava level is too fast. (irq?)
 
 		martial champ
-    		1: missing graphics in intro, on blank screens disable layer#2 to
-			see what it should look like.
-			2: missing some sounds, probably no big deal.
+		1: missing graphics in intro & title screens. On blank screens
+		   disable layer#2 to see what it should look like.
+		2: missing some sounds. (watch the first attract mode)
 
 	unkown bugs.
 		probably a lot! go ahead and fix it!
@@ -3626,7 +3626,7 @@ STD_ROM_FN(mtlchamp)
 
 struct BurnDriver BurnDrvMtlchamp = {
 	"mtlchamp", NULL, NULL, NULL, "1993",
-	"Martial Champion (ver EAB)\0", NULL, "Konami", "GX234",
+	"Martial Champion (ver EAB)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampRomInfo, mtlchampRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3667,7 +3667,7 @@ STD_ROM_FN(mtlchamp1)
 
 struct BurnDriver BurnDrvMtlchamp1 = {
 	"mtlchamp1", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver EAA)\0", NULL, "Konami", "GX234",
+	"Martial Champion (ver EAA)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchamp1RomInfo, mtlchamp1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3708,7 +3708,7 @@ STD_ROM_FN(mtlchampa)
 
 struct BurnDriver BurnDrvMtlchampa = {
 	"mtlchampa", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver AAA)\0", NULL, "Konami", "GX234",
+	"Martial Champion (ver AAA)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampaRomInfo, mtlchampaRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3749,7 +3749,7 @@ STD_ROM_FN(mtlchampj)
 
 struct BurnDriver BurnDrvMtlchampj = {
 	"mtlchampj", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver JAA)\0", NULL, "Konami", "GX234",
+	"Martial Champion (ver JAA)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampjRomInfo, mtlchampjRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3790,7 +3790,7 @@ STD_ROM_FN(mtlchampu)
 
 struct BurnDriver BurnDrvMtlchampu = {
 	"mtlchampu", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver UAE)\0", NULL, "Konami", "GX234",
+	"Martial Champion (ver UAE)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampuRomInfo, mtlchampuRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3831,7 +3831,7 @@ STD_ROM_FN(mtlchampu1)
 
 struct BurnDriver BurnDrvMtlchampu1 = {
 	"mtlchampu1", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver UAD)\0", NULL, "Konami", "GX234",
+	"Martial Champion (ver UAD)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampu1RomInfo, mtlchampu1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,

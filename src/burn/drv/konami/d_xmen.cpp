@@ -458,7 +458,7 @@ static INT32 DrvInit()
 	K052109AdjustScroll(8, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, XmenK053247Callback, 1);
-	K053247SetSpriteOffset(510, -158);
+	K053247SetSpriteOffset(514, -158);
 
 	BurnYM2151Init(4000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.20, BURN_SND_ROUTE_LEFT);

@@ -25,6 +25,8 @@ struct CheatInfo {
 	INT32 nDefault;								// Default option
 	INT32 bOneShot;                             // For one-shot cheats, also acts as a frame counter for them.
 	INT32 bWatchMode;                           // Display value on screen
+	INT32 bWaitForModification;                 // Wait for Modification before changing
+	INT32 bModified;                            // Wrote cheat?
 	TCHAR szCheatName[CHEAT_MAX_NAME];
 	struct CheatOption* pOption[CHEAT_MAX_OPTIONS];
 };

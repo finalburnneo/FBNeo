@@ -59,7 +59,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 	CheatInfo* pCurrentCheat = pCheatInfo;
 	CheatAddressInfo* pAddressInfo;
 	INT32 nOpenCPU = -1;
-	INT32 dontwriteback = 0;
+	INT32 no_undo = 0;
 
 	if (!bCheatsAllowed) {
 		return 1;
@@ -77,7 +77,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 			INT32 deactivate = 0;
 
 			if (nOption == -1 || nOption == 0 || nOption == -2) { // -2 = dont write back previous
-				if (nOption == -2) dontwriteback = 1;
+				if (nOption == -2) no_undo = 1;
 				nOption = pCurrentCheat->nDefault;
 				deactivate = 1;
 			}
@@ -107,7 +107,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (!dontwriteback) {
+						if (!no_undo) {
 							// Write back original values to memory
 							bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
 							bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
@@ -119,6 +119,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 				}
 			} else { // activate cheat option
 				pAddressInfo = pCurrentCheat->pOption[nOption]->AddressInfo;
+
 				while (pAddressInfo->nAddress) {
 					if (pAddressInfo->nCPU != nOpenCPU) {
 						if (nOpenCPU != -1) {
@@ -130,6 +131,8 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 						cheat_subptr = cheat_ptr->cpuconfig;
 						cheat_subptr->open(cheat_ptr->nCPU);
 					}
+
+					pCurrentCheat->bModified = 0;
 
 					// Copy the original values
 					pAddressInfo->nOriginalValue = cheat_subptr->read(pAddressInfo->nAddress);
@@ -144,6 +147,8 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 					} else {
 						bprintf(0, _T("Apply cheat @ 0x%X -> 0x%X. (Undo 0x%X)\n"), pAddressInfo->nAddress, pAddressInfo->nValue, pAddressInfo->nOriginalValue);
 					}
+					if (pCurrentCheat->bWaitForModification)
+						bprintf(0, _T(" - Triggered by: Waiting for modification!\n"));
 
 					if (pCurrentCheat->nType != 0) {
 						if (pAddressInfo->nCPU != nOpenCPU) {
@@ -157,7 +162,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable, -2 disable &
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (!pCurrentCheat->bWatchMode) {
+						if (!pCurrentCheat->bWatchMode && !pCurrentCheat->bWaitForModification) {
 							// Activate the cheat
 							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
 						}
@@ -215,6 +220,7 @@ INT32 CheatApply()
 	while (pCurrentCheat) {
 		if (pCurrentCheat->nStatus > 1) {
 			pAddressInfo = pCurrentCheat->pOption[pCurrentCheat->nCurrent]->AddressInfo;
+
 			while (pAddressInfo->nAddress) {
 
 				if (pAddressInfo->nCPU != nOpenCPU) {
@@ -238,19 +244,33 @@ INT32 CheatApply()
 #endif
 				} else {
 					// update the cheat
-					cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+					if (pCurrentCheat->bWaitForModification) {
+						UINT32 nValNow = cheat_subptr->read(pAddressInfo->nAddress);
+						if (nValNow != pAddressInfo->nOriginalValue) {
+							bprintf(0, _T(" - Address modified! old = %X new = %X\n"),pAddressInfo->nOriginalValue, nValNow);
+							cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+							pCurrentCheat->bModified = 1;
+							pAddressInfo->nOriginalValue = pAddressInfo->nValue;
+						}
+					} else {
+						// Write the value.
+						cheat_subptr->write(pAddressInfo->nAddress, pAddressInfo->nValue);
+						pCurrentCheat->bModified = 1;
+					}
 				}
 				pAddressInfo++;
 			}
-			if (pCurrentCheat->bOneShot == 2) {
-				if (nOpenCPU != -1) {
-					cheat_subptr->close();
-					nOpenCPU = -1;
+			if (pCurrentCheat->bModified) {
+				if (pCurrentCheat->bOneShot == 2) {
+					if (nOpenCPU != -1) {
+						cheat_subptr->close();
+						nOpenCPU = -1;
+					}
+					bprintf(0, _T("One-Shot cheat #%d ends.\n"), nCurrentCheat);
+					CheatEnable(nCurrentCheat, -2);
 				}
-				bprintf(0, _T("One-Shot cheat #%d ends.\n"), nCurrentCheat);
-				CheatEnable(nCurrentCheat, -2);
+				if (pCurrentCheat->bOneShot > 1) pCurrentCheat->bOneShot--;
 			}
-			if (pCurrentCheat->bOneShot > 1) pCurrentCheat->bOneShot--;
 		}
 		pCurrentCheat = pCurrentCheat->pNext;
 		nCurrentCheat++;

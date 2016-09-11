@@ -440,6 +440,7 @@ static INT32 ConfigParseMAMEFile()
 	}
 
 	TCHAR tmp[256];
+	TCHAR tmp2[256];
 	TCHAR gName[64];
 	TCHAR szLine[1024];
 
@@ -451,6 +452,7 @@ static INT32 ConfigParseMAMEFile()
 	UINT32 flags = 0;
 	UINT32 nAddress = 0;
 	UINT32 nValue = 0;
+	UINT32 nAttrib = 0;
 
 	CheatInfo* pCurrentCheat = NULL;
 	_stprintf(gName, _T(":%s:"), BurnDrvGetText(DRV_NAME));
@@ -485,13 +487,12 @@ static INT32 ConfigParseMAMEFile()
 		tmpcpy(3);						// cheat value
 		_stscanf (tmp, _T("%x"), &nValue);
 
+		tmpcpy(4);						// cheat attribute
+		_stscanf (tmp, _T("%x"), &nAttrib);
+
 		tmpcpy(5);						// cheat name
-
-		if (flags & 0x80007f00) continue;			// skip various cheats
-
-		// controls how many bytes we're going to patch (only allow single bytes for now)
-	//	if (flags & 0x00300000) continue;
-	//	nValue &= 0x000000ff;			// only use a single byte
+				   //was x7f00
+		if (flags & 0x80007c00) continue;			// skip various cheats (unhandled methods at this time)
 
 		if ( flags & 0x00008000 || (flags & 0x0001000 && !menu)) {
 			if (nCurrentAddress < CHEAT_MAX_ADDRESS) {
@@ -536,17 +537,32 @@ static INT32 ConfigParseMAMEFile()
 			OptionName(_T("Disabled"));
 
 			if (nAddress) {
-				n++;
-
 				if (flags & 0x1) {
 					pCurrentCheat->bOneShot = 1; // apply once and stop
 				}
-				if (flags & 0x6) {
+				if (flags & 0x2) {
+					pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
+				}
+				if ((flags & 0x6) == 0x6) {
 					pCurrentCheat->bWatchMode = 1; // display value @ address
 				}
+				if (flags & 0x100) { // add options
+					INT32 nTotal = nValue + 1;
+					INT32 nPlus1 = (flags & 0x300) ? 1 : 0; // displayed value +1?
 
-				OptionName(tmp);
-				AddressInfo();
+					//bprintf(0, _T("adding .. %X. options\n"), nTotal);
+					for (nValue = 0; nValue < nTotal; nValue++) {
+						swprintf(tmp2, L"# %d.", nValue + nPlus1);
+						n++;
+						nCurrentAddress = 0;
+						OptionName(tmp2);
+						AddressInfo();
+					}
+				} else {
+					n++;
+					OptionName(tmp);
+					AddressInfo();
+				}
 			} else {
 				menu = 1;
 			}
@@ -561,7 +577,10 @@ static INT32 ConfigParseMAMEFile()
 			if (flags & 0x1) {
 				pCurrentCheat->bOneShot = 1; // apply once and stop
 			}
-			if (flags & 0x6) {
+			if (flags & 0x2) {
+				pCurrentCheat->bWaitForModification = 1; // wait for modification before changing
+			}
+			if ((flags & 0x6) == 0x6) {
 				pCurrentCheat->bWatchMode = 1; // display value @ address
 			}
 

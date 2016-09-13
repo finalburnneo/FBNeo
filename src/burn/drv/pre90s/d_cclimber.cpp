@@ -57,6 +57,7 @@ static UINT8 DrvDips[2];
 
 // per-game constants
 static INT32 game_select;
+static INT32 silvland = 0;
 static INT32 uses_sub;
 static UINT8 bigsprite_index;
 
@@ -124,6 +125,59 @@ static struct BurnDIPInfo CclimberDIPList[]=
 };
 
 STDDIPINFO(Cclimber)
+
+static struct BurnInputInfo RpatrolInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"},
+
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+};
+
+STDINPUTINFO(Rpatrol)
+
+static struct BurnDIPInfo RpatrolDIPList[]=
+{
+	{0x0a, 0xff, 0xff, 0x90, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x0a, 0x01, 0x03, 0x02, "2 Coins 1 Credits"		},
+	{0x0a, 0x01, 0x03, 0x00, "1 Coin  1 Credits"		},
+	{0x0a, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
+	{0x0a, 0x01, 0x03, 0x03, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0a, 0x01, 0x0c, 0x00, "3"		},
+	{0x0a, 0x01, 0x0c, 0x04, "4"		},
+	{0x0a, 0x01, 0x0c, 0x08, "5"		},
+	{0x0a, 0x01, 0x0c, 0x0c, "6"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0a, 0x01, 0x10, 0x10, "Upright"		},
+	{0x0a, 0x01, 0x10, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown 1"		},
+	{0x0a, 0x01, 0x20, 0x00, "Off"		},
+	{0x0a, 0x01, 0x20, 0x20, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown 2"		},
+	{0x0a, 0x01, 0x40, 0x00, "Off"		},
+	{0x0a, 0x01, 0x40, 0x40, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Memory Test"		},
+	{0x0a, 0x01, 0x80, 0x00, "Retry on Error"		},
+	{0x0a, 0x01, 0x80, 0x80, "Stop on Error"		},
+};
+
+STDDIPINFO(Rpatrol)
 
 static struct BurnInputInfo CkongInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"},
@@ -699,6 +753,10 @@ static void DrvPaletteInit()
 
 		DrvPalette[i] = BurnHighCol(r, g, b, 0);
 	}
+	if (silvland) {
+		bprintf(0, _T("silvlandpalette"));
+		DrvPalette[0x42] = BurnHighCol(0xff, 0xce, 0xce, 0);
+	}
 }
 
 static void YamatoPaletteInit()
@@ -1047,6 +1105,7 @@ static INT32 DrvExit()
 
 	game_select = 0;
 	uses_sub = 0;
+	silvland = 0;
 
 	return 0;
 }
@@ -1842,6 +1901,135 @@ struct BurnDriver BurnDrvSwimmer = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, swimmerRomInfo, swimmerRomName, NULL, NULL, SwimmerInputInfo, SwimmerDIPInfo,
-	guzzlerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	guzzlerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+static INT32 rpatrolInit()
+{
+	game_select = 1;
+	uses_sub = 0;
+
+	INT32 rc = DrvInit();
+
+	return rc;
+}
+
+static INT32 silvlandInit()
+{
+	game_select = 1;
+	uses_sub = 0;
+	silvland = 1;
+
+	INT32 rc = DrvInit();
+
+	return rc;
+}
+
+// River Patrol (Orca)
+
+static struct BurnRomInfo rpatrolRomDesc[] = {
+	{ "sci1.bin",	0x1000, 0x33b01c90, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "sci2.bin",	0x1000, 0x03f53340, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sci3.bin",	0x1000, 0x8fa300df, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "sci4.bin",	0x1000, 0x74a8f1f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "sci5.bin",	0x1000, 0xd7ef6c87, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "rp6.6n",	0x0800, 0x19f18e9e, 2 | BRF_GRA },           //  5 gfx1
+	{ "rp7.6l",	0x0800, 0x07f2070d, 2 | BRF_GRA },           //  6
+	{ "rp8.6k",	0x0800, 0x008738c7, 2 | BRF_GRA },           //  7
+	{ "rp9.6h",	0x0800, 0xea5aafca, 2 | BRF_GRA },           //  8
+
+	{ "rp11.6c",	0x0800, 0x065651a5, 3 | BRF_GRA },           //  9 gfx2
+	{ "rp10.6a",	0x0800, 0x59747c31, 3 | BRF_GRA },           // 10
+
+	{ "bprom1.9n",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           // 11 proms
+	{ "bprom2.9p",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 12
+	{ "bprom3.9c",	0x0020, 0xee03bc96, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(rpatrol)
+STD_ROM_FN(rpatrol)
+
+struct BurnDriver BurnDrvRpatrol = {
+	"rpatrol", NULL, NULL, NULL, "1981",
+	"River Patrol (Orca)\0", NULL, "Orca", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	NULL, rpatrolRomInfo, rpatrolRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// River Patrol (bootleg)
+
+static struct BurnRomInfo rpatrolbRomDesc[] = {
+	{ "rp1.4l",	0x1000, 0xbfd7ae7a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "rp2.4j",	0x1000, 0x03f53340, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rp3.4f",	0x1000, 0x8fa300df, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rp4.4e",	0x1000, 0x74a8f1f4, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rp5.4c",	0x1000, 0xd7ef6c87, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "rp6.6n",	0x0800, 0x19f18e9e, 2 | BRF_GRA },           //  5 gfx1
+	{ "rp7.6l",	0x0800, 0x07f2070d, 2 | BRF_GRA },           //  6
+	{ "rp8.6k",	0x0800, 0x008738c7, 2 | BRF_GRA },           //  7
+	{ "rp9.6h",	0x0800, 0xea5aafca, 2 | BRF_GRA },           //  8
+
+	{ "rp11.6c",	0x0800, 0x065651a5, 3 | BRF_GRA },           //  9 gfx2
+	{ "rp10.6a",	0x0800, 0x59747c31, 3 | BRF_GRA },           // 10
+
+	{ "bprom1.9n",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           // 11 proms
+	{ "bprom2.9p",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 12
+	{ "bprom3.9c",	0x0020, 0xee03bc96, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(rpatrolb)
+STD_ROM_FN(rpatrolb)
+
+struct BurnDriver BurnDrvRpatrolb = {
+	"rpatrolb", "rpatrol", NULL, NULL, "1981",
+	"River Patrol (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, rpatrolbRomInfo, rpatrolbRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// Silver Land
+
+static struct BurnRomInfo silvlandRomDesc[] = {
+	{ "7.2r",	0x1000, 0x57e6be62, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.1n",	0x1000, 0xbbb2b287, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rp3.4f",	0x1000, 0x8fa300df, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.2n",	0x1000, 0x5536a65d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "11.1r",	0x1000, 0x6f23f66f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "12.2k",	0x1000, 0x26f1537c, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "6.6n",	0x0800, 0xaffb804f, 2 | BRF_GRA },           //  6 gfx1
+	{ "5.6l",	0x0800, 0xad4642e5, 2 | BRF_GRA },           //  7
+	{ "4.6k",	0x0800, 0xe487579d, 2 | BRF_GRA },           //  8
+	{ "3.6h",	0x0800, 0x59125a1a, 2 | BRF_GRA },           //  9
+
+	{ "2.6c",	0x0800, 0xc8d32b8e, 3 | BRF_GRA },           // 10 gfx2
+	{ "1.6a",	0x0800, 0xee333daf, 3 | BRF_GRA },           // 11
+
+	{ "mb7051.1v",	0x0020, 0x1d2343b1, 6 | BRF_GRA },           // 12 proms
+	{ "mb7051.1u",	0x0020, 0xc174753c, 6 | BRF_GRA },           // 13
+	{ "mb7051.1t",	0x0020, 0x04a1be01, 6 | BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(silvland)
+STD_ROM_FN(silvland)
+
+struct BurnDriver BurnDrvSilvland = {
+	"silvland", "rpatrol", NULL, NULL, "1981",
+	"Silver Land\0", NULL, "Falcon", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, silvlandRomInfo, silvlandRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
+	silvlandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

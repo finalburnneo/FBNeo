@@ -341,6 +341,25 @@ INT32 SG1KGetZipName(char** pszName, UINT32 i)
 	return 0;
 }
 
+// Super UWOL SG-1000
+
+static struct BurnRomInfo sg1k_superuwolRomDesc[] = {
+	{ "mojon-twins--super-uwol.sg",	0x0c000, 0xaa8ea6eb, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sg1k_superuwol)
+STD_ROM_FN(sg1k_superuwol)
+
+struct BurnDriver BurnDrvsg1k_superuwol = {
+	"sg1k_superuwol", NULL, NULL, NULL, "2016",
+	"Super UWOL! SG-1000\0", NULL, "Mojon Twins", "Sega SG-1000",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	SG1KGetZipName, sg1k_superuwolRomInfo, sg1k_superuwolRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
+	285, 243, 4, 3
+};
+
 // End of driver, the following driver info. has been synthesized from hash/sg1000.xml of MESS
 
 // San-nin Mahjong (Jpn, OMV)

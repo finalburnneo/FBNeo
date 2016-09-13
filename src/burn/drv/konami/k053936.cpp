@@ -68,6 +68,46 @@ void K053936Exit()
 	}
 }
 
+void K053936PredrawTiles3(INT32 chip, UINT8 *gfx)
+{
+	UINT16 *ram = (UINT16*)ramptr[chip];
+	UINT16 *buf = (UINT16*)rambuf[chip];	
+
+	INT32 width = nWidth[chip];
+	INT32 wide_mod = width / 8;
+	INT32 high_mod = nHeight[chip] / 8;
+
+	for (INT32 i = 0; i < wide_mod * high_mod; i++)
+	{
+		if (ram[i] != buf[i]) 
+		{
+			INT32 sx = (i % wide_mod) * 8;
+			INT32 sy = (i / wide_mod) * 8;
+			INT32 code = 0;
+			INT32 color = 0;
+			INT32 flipx = 0;
+			INT32 flipy = 0;
+
+			pTileCallback0(i, ram, &code, &color, &sx, &sy, &flipx, &flipy);
+
+			// draw tile
+			{
+				UINT8 *src = gfx + (code * 0x40);
+				UINT16 *dst = tscreen[chip] + (sy * width) + sx;
+	
+				for (INT32 y = 0; y < 8; y++) {
+					for (INT32 x = 0; x < 8; x++) {
+						dst[x] = src[((y * 8) | x)] + color;
+					}
+					dst += width;
+				}
+			}
+
+			buf[i] = ram[i];
+		}
+	}
+}
+
 void K053936PredrawTiles2(INT32 chip, UINT8 *gfx)
 {
 	UINT16 *ram = (UINT16*)ramptr[chip];

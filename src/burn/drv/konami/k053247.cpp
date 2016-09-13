@@ -541,7 +541,15 @@ static inline UINT32 shadow_blend(UINT32 d)
 
 static inline UINT32 highlight_blend(UINT32 d)
 {
-	return (((0xA857A857 + ((d & 0xff00ff) * 0x56)) & 0xff00ff00) + ((0x00A85700 + ((d & 0x00ff00) * 0x56)) & 0x00ff0000)) / 0x100;
+	INT32 r = ((d&0xff0000)+0x220000);
+	if (r > 0xff0000) r = 0xff0000;
+
+	INT32 g = ((d&0x00ff00)+0x002200);
+	if (g > 0x00ff00) g = 0x00ff00;
+
+	INT32 b = ((d&0x0000ff)+0x000022);
+	if (b > 0x0000ff) b = 0x0000ff;
+	return r|g|b;
 }
 
 #define GX_ZBUFW     512

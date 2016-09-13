@@ -367,7 +367,15 @@ static inline UINT32 shadow_blend(UINT32 d)
 
 static inline UINT32 highlight_blend(UINT32 d)
 {
-	return (d & 0xff) + 0x22 + (d & 0xff00) + (0x22 << 8) + (d & 0xff0000) + (0x22 << 16);
+	INT32 r = ((d&0xff0000)+0x220000);
+	if (r > 0xff0000) r = 0xff0000;
+
+	INT32 g = ((d&0x00ff00)+0x002200);
+	if (g > 0x00ff00) g = 0x00ff00;
+
+	INT32 b = ((d&0x0000ff)+0x000022);
+	if (b > 0x0000ff) b = 0x0000ff;
+	return r|g|b;
 }
 
 void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, UINT32 priority)

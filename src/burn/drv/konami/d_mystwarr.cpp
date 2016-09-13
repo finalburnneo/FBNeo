@@ -2195,7 +2195,7 @@ static INT32 ViostormInit()
 	K056832SetLayerOffsets(2,  2+1, 0);
 	K056832SetLayerOffsets(3,  3+1, 0);
 
-	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, metamrph_sprite_callback, 1);
+	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, metamrph_sprite_callback, 3);
 	K053247SetSpriteOffset(-62-40, -23-16);
 
 	K053250Init(0, DrvGfxROM2, DrvGfxROMExp2, 1); // doesn't exist on this hardware

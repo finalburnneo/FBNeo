@@ -1,8 +1,6 @@
 // FB Alpha Lethal Enforcers driver module
 // Based on MAME driver by R. Belmont and Nicola Salmoria
 // Notes:
-//   Weird vertical black lines in certain places
-//   The glass windows should be transparent, but they're opaque
 //   japan version needs sprites fixed (x flipped not y flipped)
 //
 
@@ -501,9 +499,6 @@ static INT32 DrvInit(INT32 flipy)
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  3, 4, 2)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x200002,  4, 4, 2)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM0 + 0x200000,  5, 4, 2)) return 1;
-#if 0
-		BurnByteswap(DrvGfxROM0, 0x400000);
-#endif
 
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  6, 4, 2)) return 1;
 		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  7, 4, 2)) return 1;
@@ -540,7 +535,7 @@ static INT32 DrvInit(INT32 flipy)
 	K056832SetExtLinescroll();
 
 	K053245Init(0, DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, lethal_sprite_callback);
-	K053245SetSpriteOffset(0, (flipy) ? (-216+95) : (-224-105), -16);
+	K053245SetSpriteOffset(0, (flipy) ? (-216+96) : (-224-105), -15);
 	K053245SetBpp(0, 6);
 
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
@@ -549,7 +544,7 @@ static INT32 DrvInit(INT32 flipy)
 
 	DrvDoReset();
 
-	BurnGunInit(2, true);	
+	BurnGunInit(2, true);
 
 	return 0;
 }
@@ -617,7 +612,7 @@ static INT32 DrvDraw()
 		K056832SetLayerOffsets(0, 188, 0);
 		K056832SetLayerOffsets(1, 190, 0);
 		K056832SetLayerOffsets(2, 192, 0);
-		K056832SetLayerOffsets(3, 192, 0);
+		K056832SetLayerOffsets(3, 194, 0);
 	}
 
 	KonamiClearBitmaps(DrvPalette[0x1c00]);
@@ -745,7 +740,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -771,6 +766,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SCAN_VAR(current_4800_bank);
 		SCAN_VAR(sound_nmi_enable);
+		SCAN_VAR(layer_colorbase);
+		SCAN_VAR(sprite_colorbase);
 	}
 
 	return 0;

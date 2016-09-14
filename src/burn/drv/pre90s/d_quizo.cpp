@@ -1,189 +1,114 @@
 // FB Alpha  Quiz Olympic driver module
 // Based on MAME driver by Tomasz Slanina
 
-#include "burnint.h"
+#include "tiles_generic.h"
 #include "z80_intf.h"
-
 #include "driver.h"
 extern "C" {
 #include "ay8910.h"
 }
-#include "bitswap.h"
 
-static UINT8 *Mem, *Rom, *Prom, *RomBank, *VideoRam, *framebuffer;
-static UINT8 DrvJoy[8], DrvDips, DrvReset;
-static UINT32 *Palette;
-static UINT8 port60 = 0, port70 = 0, dirty = 0;
+static UINT8 *AllMem;
+static UINT8 *MemEnd;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+static UINT8 *DrvZ80ROM;
+static UINT8 *DrvColPROM;
+static UINT8 *DrvZ80RAM;
+static UINT8 *DrvVidRAM;
 
-static INT16* pAY8910Buffer[3];
-static INT16 *pFMBuffer = NULL;
+static UINT32 *DrvPalette;
+static UINT8 DrvRecalc;
 
-static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1",		BIT_DIGITAL,	DrvJoy + 0,	"p1 coin"   },
-	{"Coin 2",		BIT_DIGITAL,	DrvJoy + 1,	"p1 coin2"  },
-	{"Start 1",		BIT_DIGITAL,	DrvJoy + 2,     "p1 start"  },
+static INT16 *pAY8910Buffer[3];
 
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy + 3,	"p1 fire 1" },
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy + 4,	"p1 fire 2" },
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy + 5,	"p1 fire 3" },
+static UINT8 port60;
+static UINT8 port70;
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"     },
-	{"Tilt",		BIT_DIGITAL,	DrvJoy + 6,	"tilt"      },
-	{"Dip Switches",	BIT_DIPSWITCH,	&DrvDips,	"dip"      },
+static UINT8  DrvJoy1[8];
+static UINT8  DrvJoy2[8];
+static UINT8  DrvDips[1];
+static UINT8  DrvInputs[2];
+static UINT8  DrvReset;
+
+static struct BurnInputInfo QuizoInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
-STDINPUTINFO(Drv)
+STDINPUTINFO(Quizo)
 
-static struct BurnDIPInfo DrvDIPList[] =
+static struct BurnDIPInfo QuizoDIPList[]=
 {
-	// Defaults
-	{0x08, 0xFF, 0xFF, 0x40, NULL},
+	{0x07, 0xff, 0xff, 0x40, NULL			},
 
-	{0,    0xFE, 0,	   2,	 "Test mode"},
-	{0x08, 0x01, 0x08, 0x00, "Off"},
-	{0x08, 0x01, 0x08, 0x08, "On"},
-	{0,    0xFE, 0,	   2,	 "Show the answer"}, // look the star
-	{0x08, 0x01, 0x10, 0x00, "Off"},
-	{0x08, 0x01, 0x10, 0x10, "On"},
-	{0,    0xFE, 0,	   2,	 "Coin A"},
-	{0x08, 0x01, 0x40, 0x00, "2 coins 1 credit"},
-	{0x08, 0x01, 0x40, 0x40, "1 coin 1 credit"},
+	{0   , 0xfe, 0   ,    2, "Test Mode"		},
+	{0x07, 0x01, 0x08, 0x00, "Off"			},
+	{0x07, 0x01, 0x08, 0x08, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Coin A"		},
+	{0x07, 0x01, 0x40, 0x00, "2 Coins 1 Credits"	},
+	{0x07, 0x01, 0x40, 0x40, "1 Coin  1 Credits"	},
 };
 
-STDDIPINFO(Drv)
+STDDIPINFO(Quizo)
 
-
-static void quizo_palette_init()
+static void set_rom_bank(UINT8 data)
 {
-	INT32 i;	UINT8 *color_prom = Prom;
-
-	for (i = 0;i < 16;i++)
-	{
-		INT32 bit0,bit1,bit2,r,g,b;
-
-		bit0 = 0;
-		bit1 = (*color_prom >> 0) & 0x01;
-		bit2 = (*color_prom >> 1) & 0x01;
-		b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-
-		bit0 = (*color_prom >> 2) & 0x01;
-		bit1 = (*color_prom >> 3) & 0x01;
-		bit2 = (*color_prom >> 4) & 0x01;
-		g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-
-		bit0 = (*color_prom >> 5) & 0x01;
-		bit1 = (*color_prom >> 6) & 0x01;
-		bit2 = (*color_prom >> 7) & 0x01;
-		r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
-
-		Palette[i] = (r << 16) | (g << 8) | b;
-		color_prom++;
-	}
-}
-
-
-static INT32 DrvDraw()
-{
-	INT32 x,y;
-	UINT32 *src = (UINT32 *)framebuffer;
-
-	if(dirty)
-	{
-		for(y=0;y<200;y++)
-		{
-			for(x=0;x<80;x++)
-			{
-				INT32 data=VideoRam[y*80+x];
-				INT32 data1=VideoRam[y*80+x+0x4000];
-				INT32 pix;
-
-				pix=(data&1)|(((data>>4)&1)<<1)|((data1&1)<<2)|(((data1>>4)&1)<<3);
-				src[((x*4+3) + (y * 320))] = Palette[pix&15];
-				data>>=1;
-				data1>>=1;
-				pix=(data&1)|(((data>>4)&1)<<1)|((data1&1)<<2)|(((data1>>4)&1)<<3);
-				src[((x*4+2) + (y * 320))] = Palette[pix&15];
-				data>>=1;
-				data1>>=1;
-				pix=(data&1)|(((data>>4)&1)<<1)|((data1&1)<<2)|(((data1>>4)&1)<<3);
-				src[((x*4+1) + (y * 320))] = Palette[pix&15];
-				data>>=1;
-				data1>>=1;
-				pix=(data&1)|(((data>>4)&1)<<1)|((data1&1)<<2)|(((data1>>4)&1)<<3);
-				src[((x*4+0) + (y * 320))] = Palette[pix&15];
-			}
-		}
-	}
-	dirty = 0;
-
-	for (x = 0; x < 320 * 200; x++) {
-		UINT32 pxl = src[x];
-		PutPix(pBurnDraw + x * nBurnBpp, BurnHighCol((pxl >> 16)&0xff, (pxl >> 8)&0xff, pxl&0xff, 0));
-	}
-
-	return 0;
-}
-
-
-void port60_w(UINT16, UINT8 data)
-{
-	static const UINT8 rombankLookup[]={ 2, 3, 4, 4, 4, 4, 4, 5, 0, 1};
-
-	if (data > 9)
-	{
-		data=0;
-	}
-
+	INT32 lut[10] = { 2, 3, 4, 4, 4, 4, 4, 5, 0, 1};
+	if (data > 9) data = 0;
 	port60 = data;
 
-	ZetMapArea(0x8000, 0xbfff, 0, RomBank + rombankLookup[data] * 0x4000);
-	ZetMapArea(0x8000, 0xbfff, 2, RomBank + rombankLookup[data] * 0x4000);
+	ZetMapMemory(DrvZ80ROM + 0x4000 + lut[data] * 0x4000, 0x8000, 0xbfff, MAP_ROM);
 }
 
-void __fastcall quizo_write(UINT16 a, UINT8 data)
+static void set_ram_bank(UINT8 data)
 {
-	if (a >= 0xc000) {
-		INT32 bank = (port70 & 8) ? 1 : 0;
-		VideoRam[(a & 0x3fff) + bank * 0x4000] = data;
-		dirty=1;
-		return;
-	}
+	port70 = data;
+	ZetMapMemory(DrvVidRAM + ((data & 8) ? 0x4000 : 0), 0xc000, 0xffff, MAP_RAM);
 }
 
-void __fastcall quizo_out_port(UINT16 a, UINT8 d)
+static void __fastcall quizo_write_port(UINT16 port, UINT8 data)
 {
-	switch (a & 0xff)
+	switch (port & 0xff)
 	{
 		case 0x50:
-			AY8910Write(0, 0, d);
+			AY8910Write(0, 0, data);
 		break;
 
 		case 0x51:
-			AY8910Write(0, 1, d);
+			AY8910Write(0, 1, data);
 		break;
 
 		case 0x60:
-			port60_w(0, d);
+			set_rom_bank(data);
 		break;
 
 		case 0x70:
-			port70 = d;
+			set_ram_bank(data);
 		break;
 	}
 }
 
-UINT8 __fastcall quizo_in_port(UINT16 a)
+static UINT8 __fastcall quizo_read_port(UINT16 port)
 {
-	switch (a & 0xff)
+	switch (port & 0xff)
 	{
-		case 0x00:	// input port 0
-			return (DrvJoy[0] | (DrvJoy[1] << 2) | (DrvJoy[6] << 3) | (DrvJoy[2] << 4)) ^ 0x18;
+		case 0x00:
+			return DrvInputs[0];
 
-		case 0x10:	// input port 1
-			return (DrvJoy[3] | (DrvJoy[4] << 1) | (DrvJoy[5] << 2)) ^ 0xff;
+		case 0x10:
+			return DrvInputs[1];
 
-		case 0x40:	// input port 2
-			return DrvDips;	
+		case 0x40:
+			return DrvDips[0];
 	}
 
 	return 0;
@@ -191,82 +116,179 @@ UINT8 __fastcall quizo_in_port(UINT16 a)
 
 static INT32 DrvDoReset()
 {
-	dirty = 1;
-	port70 = port60 = 0;
-
-	DrvReset = 0;
+	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
 	ZetReset();
+	set_rom_bank(0);
+	set_ram_bank(0);
 	ZetClose();
 
 	AY8910Reset(0);
 
-	memset (Rom + 0x4000, 0, 0x0400);
-	memset (VideoRam, 0, 0x8000);
-	memset (framebuffer, 0, 320 * 200 * 4);
+	return 0;
+}
+
+static INT32 MemIndex()
+{
+	UINT8 *Next; 		Next = AllMem;
+
+	DrvZ80ROM		= Next; Next += 0x01c000;
+
+	DrvColPROM		= Next; Next += 0x000020;
+
+	DrvPalette		= (UINT32*)Next; Next += 0x0010 * sizeof(UINT32);
+
+	AllRam			= Next;
+
+	DrvZ80RAM		= Next; Next += 0x000800;
+	DrvVidRAM		= Next; Next += 0x008000;
+
+	RamEnd			= Next;
+
+	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+
+	MemEnd			= Next;
 
 	return 0;
 }
 
-
-static INT32 DrvInit()
+static INT32 DrvInit(INT32 select)
 {
-	Mem = (UINT8*)BurnMalloc(0x30000 + 0x20 + (0x10 * sizeof(INT32)) + 0x3e800);
-	if (Mem == NULL) {
-		return 1;
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	if (select == 0)
+	{
+		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
+		memcpy (DrvZ80ROM + 0x0000, DrvZ80ROM + 0x4000, 0x4000);
+
+		if (BurnLoadRom(DrvZ80ROM + 0x04000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x0c000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x14000, 3, 1)) return 1;
+
+		if (BurnLoadRom(DrvColPROM         , 4, 1)) return 1;
 	}
+	else if (select == 1)
+	{
+		if (BurnLoadRom(DrvZ80ROM + 0x00000, 0, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x04000, 1, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x08000, 2, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x0c000, 3, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x10000, 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x14000, 5, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM + 0x18000, 6, 1)) return 1;
 
-	pFMBuffer = (INT16 *)BurnMalloc (nBurnSoundLen * 3 * sizeof(INT16));
-	if (pFMBuffer == NULL) {
-		return 1;
+		if (BurnLoadRom(DrvColPROM         , 7, 1)) return 1;
 	}
-
-	Rom      = Mem + 0x00000;
-	RomBank  = Mem + 0x10000;
-	VideoRam = Mem + 0x28000;
-	Prom     = Mem + 0x30000;
-	Palette  = (UINT32*)(Mem + 0x30020);
-	framebuffer = Mem + 0x30060;
-
-	if (BurnLoadRom(Rom, 0, 1)) return 1;
-	memcpy (Rom, Rom + 0x4000, 0x4000);
-
-	if (BurnLoadRom(RomBank + 0x00000, 1, 1)) return 1;
-	if (BurnLoadRom(RomBank + 0x08000, 2, 1)) return 1;
-	if (BurnLoadRom(RomBank + 0x10000, 3, 1)) return 1;
-
-	if (BurnLoadRom(Prom, 4, 1)) return 1;
-
-	quizo_palette_init();
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetSetWriteHandler(quizo_write);
-	ZetSetInHandler(quizo_in_port);
-	ZetSetOutHandler(quizo_out_port);
-	ZetMapArea(0x0000, 0x3fff, 0, Rom + 0x0000);
-	ZetMapArea(0x0000, 0x3fff, 2, Rom + 0x0000);
-	ZetMapArea(0x4000, 0x47ff, 0, Rom + 0x4000);
-	ZetMapArea(0x4000, 0x47ff, 1, Rom + 0x4000);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0x4000, 0x47ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,		0xc000, 0xffff, MAP_RAM);
+	ZetSetOutHandler(quizo_write_port);
+	ZetSetInHandler(quizo_read_port);
 	ZetClose();
-
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
 
 	AY8910Init(0, 1342329, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
 
 	DrvDoReset();
 
 	return 0;
 }
 
+static INT32 DrvExit()
+{
+	GenericTilesExit();
+	ZetExit();
+	AY8910Exit(0);
+
+	BurnFree(AllMem);
+
+	return 0;
+}
+
+static void DrvPaletteInit()
+{
+	for (INT32 i = 0; i < 0x10; i++)
+	{
+		INT32 bit0 = 0;
+		INT32 bit1 = (DrvColPROM[i] >> 0) & 0x01;
+		INT32 bit2 = (DrvColPROM[i] >> 1) & 0x01;
+		INT32 b = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
+		bit0 = (DrvColPROM[i] >> 2) & 0x01;
+		bit1 = (DrvColPROM[i] >> 3) & 0x01;
+		bit2 = (DrvColPROM[i] >> 4) & 0x01;
+		INT32 g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
+		bit0 = (DrvColPROM[i] >> 5) & 0x01;
+		bit1 = (DrvColPROM[i] >> 6) & 0x01;
+		bit2 = (DrvColPROM[i] >> 7) & 0x01;
+		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
+
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
+	}
+}
+
+static void draw_layer()
+{
+	for (INT32 y = 0; y < 200; y++)
+	{
+		UINT16 *dst = pTransDraw + y * 320;
+
+		for (INT32 x = 0; x < 320; x+=4)
+		{
+			INT32 a = DrvVidRAM[y * 80 + x/4];
+			INT32 b = DrvVidRAM[y * 80 + 0x4000 + x/4];
+
+			dst[x+3] = ((a & 1) >> 0) | ((a >> 3) & 2) | ((b & 1) << 2) | ((b >> 1) & 8);
+			dst[x+2] = ((a & 2) >> 1) | ((a >> 4) & 2) | ((b & 2) << 1) | ((b >> 2) & 8);
+			dst[x+1] = ((a & 4) >> 2) | ((a >> 5) & 2) | ((b & 4) << 0) | ((b >> 3) & 8);
+			dst[x+0] = ((a & 8) >> 3) | ((a >> 6) & 2) | ((b & 8) >> 1) | ((b >> 4) & 8);
+		}
+	}
+}
+
+static INT32 DrvDraw()
+{
+	//if (DrvRecalc) {
+		DrvPaletteInit();
+		DrvRecalc = 0;
+	//}
+
+	draw_layer();
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
 
 static INT32 DrvFrame()
 {
-	if (DrvReset) DrvDoReset();
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	{
+		DrvInputs[0] = 0x18;
+		DrvInputs[1] = 0xff;
+
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+	}
 
 	ZetOpen(0);
 	ZetRun(4000000 / 60);
@@ -277,89 +299,104 @@ static INT32 DrvFrame()
 		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
 	}
 
-	if (pBurnDraw) DrvDraw();
+	if (pBurnDraw) {
+		DrvDraw();
+	}
 
 	return 0;
 }
 
-
-static INT32 DrvExit()
-{
-	BurnFree (Mem);
-	BurnFree (pFMBuffer);
-	
-	Mem = Rom = Prom = RomBank = VideoRam = framebuffer = NULL;
-	Palette = NULL;
-	pFMBuffer = NULL;
-	AY8910Exit(0);
-	ZetExit();
-
-	return 0;
-}
-
-
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
-	if (pnMin) {						// Return minimum compatible version
+	if (pnMin) {
 		*pnMin = 0x029521;
 	}
 
-	if (nAction & ACB_VOLATILE) {		// Scan volatile ram		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = VideoRam;
-		ba.nLen	  = 0x08000;
-		ba.szName = "Video Ram";
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd - AllRam;
+		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		ba.Data	  = Rom + 0x4000;
-		ba.nLen	  = 0x00400;
-		ba.szName = "Main Ram";
-		BurnAcb(&ba);
+		ZetScan(nAction);
+		AY8910Scan(nAction, pnMin);
 
-		ba.Data   = framebuffer;
-		ba.nLen   = 320 * 200 * 4;
-		ba.szName = "Main Ram";
-		BurnAcb(&ba);
-
-		ZetScan(nAction);			// Scan Z80
-		AY8910Scan(nAction, pnMin);		// Scan AY8910
-
-		// Scan critical driver variables
 		SCAN_VAR(port60);
 		SCAN_VAR(port70);
-		SCAN_VAR(dirty);
+	}
 
-		port60_w(0, port60);
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		set_rom_bank(port60);
+		set_ram_bank(port70);
+		ZetClose();
 	}
 
 	return 0;
 }
 
 
-// Quiz Olympic
+// Quiz Olympic (set 1)
 
 static struct BurnRomInfo quizoRomDesc[] = {
-	{ "rom1",   0x8000, 0x6731735f, BRF_ESS | BRF_PRG }, //  0 Z80 code
+	{ "rom1",  	0x8000, 0x6731735f, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 code
+	{ "rom2",  	0x8000, 0xa700eb30, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "rom3",   	0x8000, 0xd344f97e, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "rom4",   	0x8000, 0xab1eb174, 1 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "rom2",   0x8000, 0xa700eb30, BRF_ESS | BRF_PRG }, //  1 Z80 code banks
-	{ "rom3",   0x8000, 0xd344f97e, BRF_ESS | BRF_PRG }, //  2
-	{ "rom4",   0x8000, 0xab1eb174, BRF_ESS | BRF_PRG }, //  3
-
-	{ "82s123", 0x0020, 0xc3f15914, BRF_GRA },	     //  4 Color Prom
+	{ "82s123", 	0x0020, 0xc3f15914, 2 | BRF_GRA },	     //  4 Color Prom
 };
 
 STD_ROM_PICK(quizo)
 STD_ROM_FN(quizo)
 
+static INT32 QuizoInit()
+{
+	return DrvInit(0);
+}
+
 struct BurnDriver BurnDrvQuizo = {
 	"quizo", NULL, NULL, NULL, "1985",
-	"Quiz Olympic\0", NULL, "Seoul Coin Corp.", "Miscellaneous",
-	L"\uD034\uC988\uC62C\uB9BC\uD53D\0Quiz Olympic\0", NULL, NULL, NULL,
+	"Quiz Olympic (set 1)\0", NULL, "Seoul Coin Corp.", "Miscellaneous",
+	L"\uD034\uC988\uC62C\uB9BC\uD53D (set 1)\0Quiz Olympic (set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
-	NULL, quizoRomInfo, quizoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan, NULL, 0x10,
+	NULL, quizoRomInfo, quizoRomName, NULL, NULL, QuizoInputInfo, QuizoDIPInfo,
+	QuizoInit, DrvExit, DrvFrame, NULL, DrvScan, NULL, 0x10,
 	320, 200, 4, 3
 };
 
+
+// Quiz Olympic (set 2)
+
+static struct BurnRomInfo quizoaRomDesc[] = {
+	{ "7.bin",	0x4000, 0x1579ae31, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 code
+	{ "6.bin",	0x4000, 0xf00f6356, 1 | BRF_GRA },           //  1
+	{ "5.bin",	0x4000, 0x39e577e3, 1 | BRF_GRA },           //  2
+	{ "4.bin",	0x4000, 0xa977bd3a, 1 | BRF_GRA },           //  3
+	{ "3.bin",	0x4000, 0x4411bcff, 1 | BRF_GRA },           //  4
+	{ "2.bin",	0x4000, 0x4a0df776, 1 | BRF_GRA },           //  5
+	{ "1.bin",	0x4000, 0xd9566c1a, 1 | BRF_GRA },           //  6
+
+	{ "82s123",	0x0020, 0xc3f15914, 2 | BRF_GRA },           //  7 Color Prom
+};
+
+STD_ROM_PICK(quizoa)
+STD_ROM_FN(quizoa)
+
+static INT32 QuizoaInit()
+{
+	return DrvInit(1);
+}
+
+struct BurnDriver BurnDrvQuizoa = {
+	"quizoa", "quizo", NULL, NULL, "1985",
+	"Quiz Olympic (set 2)\0", NULL, "Seoul Coin Corp.", "Miscellaneous",
+	L"\uD034\uC988\uC62C\uB9BC\uD53D (set 2)\0Quiz Olympic (set 2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_QUIZ, 0,
+	NULL, quizoaRomInfo, quizoaRomName, NULL, NULL, QuizoInputInfo, QuizoDIPInfo,
+	QuizoaInit, DrvExit, DrvFrame, NULL, DrvScan, NULL, 0x10,
+	320, 200, 4, 3
+};

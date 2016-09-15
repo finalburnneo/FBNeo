@@ -483,6 +483,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SEGA_MEGADRIVE							(HARDWARE_PREFIX_SEGA_MEGADRIVE)
 
 #define HARDWARE_SEGA_SG1000                            (HARDWARE_PREFIX_SEGA_SG1000)
+#define HARDWARE_SEGA_SG1000_RAMEXP                     (0x2000)
 #define HARDWARE_COLECO                                 (HARDWARE_PREFIX_COLECO)
 
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM			(1)

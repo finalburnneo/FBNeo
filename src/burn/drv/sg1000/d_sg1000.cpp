@@ -40,7 +40,7 @@ static struct BurnInputInfo Sg1000InputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 2"	},
 
-	{"SG1k NMI",		BIT_DIGITAL,	&DrvNMI,	"pauze"	},
+	{"Console Pause",		BIT_DIGITAL,	&DrvNMI,	"consolepause"	},
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 };
 
@@ -67,52 +67,62 @@ static struct BurnDIPInfo Sg1000DIPList[]=
 
 STDDIPINFO(Sg1000)
 
-static void __fastcall sg1000_write_port(unsigned short port, UINT8 data)
+static void __fastcall sg1000_write_port(UINT16 port, UINT8 data)
 {
-	switch (port & 0xff)
+	port &= 0xff;
+	switch (port & ~0x3f)
 	{
 		case 0x40:
-		case 0x7f:
 			SN76496Write(0, data);
 		return;
+	}
 
+	switch (port & ~0x3e)
+	{
 		case 0x80:
-		case 0xbe:
 			TMS9928AWriteVRAM(data);
 		return;
 
 		case 0x81:
-		case 0xbf:
 			TMS9928AWriteRegs(data);
 		return;
+	}
 
+	/*switch (port)
+	{ // only for sf/sc-3000/7000
 		case 0xdc:
 		case 0xdd:
 		case 0xde:
 		case 0xdf:
 			ppi8255_w(0, port & 3, data);
 		return;
-	}
+	}*/
+
 	//bprintf(0, _T("port[%X] data[%X],"), port, data);
 }
 
-static UINT8 __fastcall sg1000_read_port(unsigned short port)
+static UINT8 __fastcall sg1000_read_port(UINT16 port)
 {
-	switch (port & 0xff)
+	port &= 0xff;
+
+	switch (port & ~0x3e)
 	{
 		case 0x80:
-		case 0xbe:
 			return TMS9928AReadVRAM();
 
 		case 0x81:
-		case 0xbf:
 			return TMS9928AReadRegs();
+	}
 
-/*		case 0xdc:
+	switch (port)
+	{
+		/* // only for sf/sc-3000/7000
+        case 0xdc:
 		case 0xdd:
 		case 0xde:
 		case 0xdf:
-                return ppi8255_r(0, port & 3); screws up sg-1000 inputs! */
+		    return ppi8255_r(0, port & 3);
+		*/
 		case 0xdc:
 			return DrvInputs[0];
 
@@ -137,12 +147,12 @@ static void sg1000_ppi8255_portC_write(UINT8 data)
 	data &= 0x01; // coin counter
 }
 
-static void vdp_interrupt(int state)
+static void vdp_interrupt(INT32 state)
 {
 	ZetSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static int DrvDoReset()
+static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
@@ -156,7 +166,7 @@ static int DrvDoReset()
 	return 0;
 }
 
-static int MemIndex()
+static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
@@ -220,7 +230,7 @@ static INT32 DrvInit()
 {
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
@@ -259,7 +269,7 @@ static INT32 DrvInit()
 	return 0;
 }
 
-static int DrvExit()
+static INT32 DrvExit()
 {
 	TMS9928AExit();
 	ZetExit();
@@ -274,15 +284,17 @@ static int DrvExit()
 	return 0;
 }
 
-static int DrvFrame()
+static INT32 DrvFrame()
 {
+	static UINT8 lastnmi = 0;
+
 	if (DrvReset) {
 		DrvDoReset();
 	}
 
 	{ // Compile Inputs
 		memset (DrvInputs, 0xff, 2);
-		for (int i = 0; i < 8; i++) {
+		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			if (i==6 || i==7)
 				DrvInputs[1] ^= (DrvJoy1[i] & 1) << i;
@@ -298,9 +310,11 @@ static int DrvFrame()
 
     ZetOpen(0);
 
-	if (DrvNMI) {
+	if (DrvNMI && !lastnmi) {
+		bprintf(0, _T("nmi %X.\n"), DrvNMI);
 		ZetNmi();
-	}
+		lastnmi = DrvNMI;
+	} else lastnmi = DrvNMI;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -335,7 +349,7 @@ static int DrvFrame()
 	return 0;
 }
 
-static int DrvScan(int nAction,int *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

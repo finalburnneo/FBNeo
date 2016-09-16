@@ -452,7 +452,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 50;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = 3579545 / 60;
 	INT32 nCyclesDone  = 0;
 
@@ -464,10 +464,10 @@ static INT32 DrvFrame()
 
 		nCyclesDone += ZetRun(nSegment);
 
-		paddle_callback(); // 50x / frame (3000x / sec)
-	}
+		TMS9928AScanline(i);
 
-	TMS9928AInterrupt();
+		if ((i%5==5)) paddle_callback(); // 50x / frame (3000x / sec)
+	}
 
 	ZetClose();
 
@@ -564,7 +564,7 @@ struct BurnDriver BurnDrvcv_Coleco = {
 	BDF_BOARDROM, 0, HARDWARE_COLECO, GBF_BIOS, 0,
 	CVGetZipName, cv_colecoRomInfo, cv_colecoRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 // Homebrew games
@@ -583,7 +583,7 @@ struct BurnDriver BurnDrvcv_digger = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_diggerRomInfo, cv_diggerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 static struct BurnRomInfo cv_questgcRomDesc[] = {
@@ -600,7 +600,7 @@ struct BurnDriver BurnDrvcv_questgc = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_questgcRomInfo, cv_questgcRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 static struct BurnRomInfo cv_princessquestRomDesc[] = {
@@ -617,7 +617,7 @@ struct BurnDriver BurnDrvcv_princessquest = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_princessquestRomInfo, cv_princessquestRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 static struct BurnRomInfo cv_danslitherRomDesc[] = {
@@ -634,7 +634,7 @@ struct BurnDriver BurnDrvcv_danslither = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_danslitherRomInfo, cv_danslitherRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 // End of driver, the following driver info. has been synthesized from hash/coleco.xml of MESS
@@ -656,7 +656,7 @@ struct BurnDriver BurnDrvcv_castelo = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_casteloRomInfo, cv_casteloRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -676,7 +676,7 @@ struct BurnDriver BurnDrvcv_qbert = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_qbertRomInfo, cv_qbertRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -696,7 +696,7 @@ struct BurnDriver BurnDrvcv_qberta = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_qbertaRomInfo, cv_qbertaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -716,7 +716,7 @@ struct BurnDriver BurnDrvcv_scobra = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_scobraRomInfo, cv_scobraRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -736,7 +736,7 @@ struct BurnDriver BurnDrvcv_scobraa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_scobraaRomInfo, cv_scobraaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -756,7 +756,7 @@ struct BurnDriver BurnDrvcv_ssketch = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ssketchRomInfo, cv_ssketchRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -777,7 +777,7 @@ struct BurnDriver BurnDrvcv_antarct = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_antarctRomInfo, cv_antarctRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -798,7 +798,7 @@ struct BurnDriver BurnDrvcv_alphazoo = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_alphazooRomInfo, cv_alphazooRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -819,7 +819,7 @@ struct BurnDriver BurnDrvcv_amazing = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_amazingRomInfo, cv_amazingRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -840,7 +840,7 @@ struct BurnDriver BurnDrvcv_numbump = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_numbumpRomInfo, cv_numbumpRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -861,7 +861,7 @@ struct BurnDriver BurnDrvcv_aquatack = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_aquatackRomInfo, cv_aquatackRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -882,7 +882,7 @@ struct BurnDriver BurnDrvcv_aquatacka = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_aquatackaRomInfo, cv_aquatackaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -903,7 +903,7 @@ struct BurnDriver BurnDrvcv_artduel = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_artduelRomInfo, cv_artduelRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -924,7 +924,7 @@ struct BurnDriver BurnDrvcv_bcquest = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_bcquestRomInfo, cv_bcquestRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -945,7 +945,7 @@ struct BurnDriver BurnDrvcv_beamridr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_beamridrRomInfo, cv_beamridrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -966,7 +966,7 @@ struct BurnDriver BurnDrvcv_blockrun = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_blockrunRomInfo, cv_blockrunRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -987,7 +987,7 @@ struct BurnDriver BurnDrvcv_bdash = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_bdashRomInfo, cv_bdashRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1008,7 +1008,7 @@ struct BurnDriver BurnDrvcv_brainstr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_brainstrRomInfo, cv_brainstrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1029,7 +1029,7 @@ struct BurnDriver BurnDrvcv_btime = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_btimeRomInfo, cv_btimeRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1050,7 +1050,7 @@ struct BurnDriver BurnDrvcv_cabbage = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cabbageRomInfo, cv_cabbageRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1071,7 +1071,7 @@ struct BurnDriver BurnDrvcv_campaign = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_campaignRomInfo, cv_campaignRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1092,7 +1092,7 @@ struct BurnDriver BurnDrvcv_carnival = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_carnivalRomInfo, cv_carnivalRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1113,7 +1113,7 @@ struct BurnDriver BurnDrvcv_cavenger = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cavengerRomInfo, cv_cavengerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1134,7 +1134,7 @@ struct BurnDriver BurnDrvcv_cavengera = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cavengeraRomInfo, cv_cavengeraRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1155,7 +1155,7 @@ struct BurnDriver BurnDrvcv_ccrisis = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ccrisisRomInfo, cv_ccrisisRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1176,7 +1176,7 @@ struct BurnDriver BurnDrvcv_centiped = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_centipedRomInfo, cv_centipedRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1197,7 +1197,7 @@ struct BurnDriver BurnDrvcv_choplift = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_chopliftRomInfo, cv_chopliftRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1218,7 +1218,7 @@ struct BurnDriver BurnDrvcv_chucknor = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_chucknorRomInfo, cv_chucknorRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1239,7 +1239,7 @@ struct BurnDriver BurnDrvcv_decathln = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_decathlnRomInfo, cv_decathlnRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1260,7 +1260,7 @@ struct BurnDriver BurnDrvcv_dkong = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_dkongRomInfo, cv_dkongRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1281,7 +1281,7 @@ struct BurnDriver BurnDrvcv_dkongjr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_dkongjrRomInfo, cv_dkongjrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1302,7 +1302,7 @@ struct BurnDriver BurnDrvcv_docastle = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_docastleRomInfo, cv_docastleRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1323,7 +1323,7 @@ struct BurnDriver BurnDrvcv_drgnfire = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_drgnfireRomInfo, cv_drgnfireRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1344,7 +1344,7 @@ struct BurnDriver BurnDrvcv_drseuss = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_drseussRomInfo, cv_drseussRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1365,7 +1365,7 @@ struct BurnDriver BurnDrvcv_evolutio = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_evolutioRomInfo, cv_evolutioRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1386,7 +1386,7 @@ struct BurnDriver BurnDrvcv_fathom = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_fathomRomInfo, cv_fathomRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1407,7 +1407,7 @@ struct BurnDriver BurnDrvcv_flipslip = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_flipslipRomInfo, cv_flipslipRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1428,7 +1428,7 @@ struct BurnDriver BurnDrvcv_ffreddy = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ffreddyRomInfo, cv_ffreddyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1449,7 +1449,7 @@ struct BurnDriver BurnDrvcv_frogger = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_froggerRomInfo, cv_froggerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1470,7 +1470,7 @@ struct BurnDriver BurnDrvcv_frogger2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_frogger2RomInfo, cv_frogger2RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1491,7 +1491,7 @@ struct BurnDriver BurnDrvcv_apshai = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_apshaiRomInfo, cv_apshaiRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1512,7 +1512,7 @@ struct BurnDriver BurnDrvcv_gorf = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_gorfRomInfo, cv_gorfRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1533,7 +1533,7 @@ struct BurnDriver BurnDrvcv_gustbust = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_gustbustRomInfo, cv_gustbustRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1554,7 +1554,7 @@ struct BurnDriver BurnDrvcv_gyruss = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_gyrussRomInfo, cv_gyrussRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1575,7 +1575,7 @@ struct BurnDriver BurnDrvcv_hero = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_heroRomInfo, cv_heroRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1596,7 +1596,7 @@ struct BurnDriver BurnDrvcv_illusion = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_illusionRomInfo, cv_illusionRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1617,7 +1617,7 @@ struct BurnDriver BurnDrvcv_jbond = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_jbondRomInfo, cv_jbondRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1638,7 +1638,7 @@ struct BurnDriver BurnDrvcv_jmpmanjr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_jmpmanjrRomInfo, cv_jmpmanjrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1659,7 +1659,7 @@ struct BurnDriver BurnDrvcv_jmpmanjra = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_jmpmanjraRomInfo, cv_jmpmanjraRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1680,7 +1680,7 @@ struct BurnDriver BurnDrvcv_kubjpok = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_kubjpokRomInfo, cv_kubjpokRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1701,7 +1701,7 @@ struct BurnDriver BurnDrvcv_keykaper = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_keykaperRomInfo, cv_keykaperRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1722,7 +1722,7 @@ struct BurnDriver BurnDrvcv_ladybug = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ladybugRomInfo, cv_ladybugRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1743,7 +1743,7 @@ struct BurnDriver BurnDrvcv_lancelot = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_lancelotRomInfo, cv_lancelotRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1764,7 +1764,7 @@ struct BurnDriver BurnDrvcv_leeper = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_leeperRomInfo, cv_leeperRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1785,7 +1785,7 @@ struct BurnDriver BurnDrvcv_logiclvl = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_logiclvlRomInfo, cv_logiclvlRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1806,7 +1806,7 @@ struct BurnDriver BurnDrvcv_linklogc = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_linklogcRomInfo, cv_linklogcRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1827,7 +1827,7 @@ struct BurnDriver BurnDrvcv_looping = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_loopingRomInfo, cv_loopingRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1848,7 +1848,7 @@ struct BurnDriver BurnDrvcv_meteosho = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_meteoshoRomInfo, cv_meteoshoRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1869,7 +1869,7 @@ struct BurnDriver BurnDrvcv_montezum = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_montezumRomInfo, cv_montezumRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1890,7 +1890,7 @@ struct BurnDriver BurnDrvcv_moonswpr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_moonswprRomInfo, cv_moonswprRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1911,7 +1911,7 @@ struct BurnDriver BurnDrvcv_moonswpra = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_moonswpraRomInfo, cv_moonswpraRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1932,7 +1932,7 @@ struct BurnDriver BurnDrvcv_mking = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mkingRomInfo, cv_mkingRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1953,7 +1953,7 @@ struct BurnDriver BurnDrvcv_mkinga = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mkingaRomInfo, cv_mkingaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1974,7 +1974,7 @@ struct BurnDriver BurnDrvcv_mtcracer = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mtcracerRomInfo, cv_mtcracerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -1995,7 +1995,7 @@ struct BurnDriver BurnDrvcv_mtcracera = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mtcraceraRomInfo, cv_mtcraceraRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2016,7 +2016,7 @@ struct BurnDriver BurnDrvcv_mtrap = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mtrapRomInfo, cv_mtrapRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2037,7 +2037,7 @@ struct BurnDriver BurnDrvcv_mtrapa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mtrapaRomInfo, cv_mtrapaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2058,7 +2058,7 @@ struct BurnDriver BurnDrvcv_novablst = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_novablstRomInfo, cv_novablstRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2079,7 +2079,7 @@ struct BurnDriver BurnDrvcv_oilswell = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_oilswellRomInfo, cv_oilswellRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2100,7 +2100,7 @@ struct BurnDriver BurnDrvcv_oilswella = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_oilswellaRomInfo, cv_oilswellaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2121,7 +2121,7 @@ struct BurnDriver BurnDrvcv_omegrace = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_omegraceRomInfo, cv_omegraceRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2142,7 +2142,7 @@ struct BurnDriver BurnDrvcv_onlyrock = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_onlyrockRomInfo, cv_onlyrockRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2163,7 +2163,7 @@ struct BurnDriver BurnDrvcv_panic = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_panicRomInfo, cv_panicRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2184,7 +2184,7 @@ struct BurnDriver BurnDrvcv_pepper2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_pepper2RomInfo, cv_pepper2RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2205,7 +2205,7 @@ struct BurnDriver BurnDrvcv_pitfall = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_pitfallRomInfo, cv_pitfallRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2226,7 +2226,7 @@ struct BurnDriver BurnDrvcv_pitfall2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_pitfall2RomInfo, cv_pitfall2RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2247,7 +2247,7 @@ struct BurnDriver BurnDrvcv_pitstop = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_pitstopRomInfo, cv_pitstopRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2268,7 +2268,7 @@ struct BurnDriver BurnDrvcv_pitstopa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_pitstopaRomInfo, cv_pitstopaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2289,7 +2289,7 @@ struct BurnDriver BurnDrvcv_popeye = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_popeyeRomInfo, cv_popeyeRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2310,7 +2310,7 @@ struct BurnDriver BurnDrvcv_popeyea = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_popeyeaRomInfo, cv_popeyeaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2331,7 +2331,7 @@ struct BurnDriver BurnDrvcv_qbertqub = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_qbertqubRomInfo, cv_qbertqubRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2352,7 +2352,7 @@ struct BurnDriver BurnDrvcv_quintana = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_quintanaRomInfo, cv_quintanaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2373,7 +2373,7 @@ struct BurnDriver BurnDrvcv_quintanaa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_quintanaaRomInfo, cv_quintanaaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2394,7 +2394,7 @@ struct BurnDriver BurnDrvcv_riveraid = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_riveraidRomInfo, cv_riveraidRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2415,7 +2415,7 @@ struct BurnDriver BurnDrvcv_robinh = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_robinhRomInfo, cv_robinhRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2436,7 +2436,7 @@ struct BurnDriver BurnDrvcv_robinha = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_robinhaRomInfo, cv_robinhaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2457,7 +2457,7 @@ struct BurnDriver BurnDrvcv_rockbolt = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_rockboltRomInfo, cv_rockboltRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2478,7 +2478,7 @@ struct BurnDriver BurnDrvcv_rockbolta = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_rockboltaRomInfo, cv_rockboltaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2499,7 +2499,7 @@ struct BurnDriver BurnDrvcv_rollover = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_rolloverRomInfo, cv_rolloverRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2520,7 +2520,7 @@ struct BurnDriver BurnDrvcv_sammylf = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sammylfRomInfo, cv_sammylfRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2541,7 +2541,7 @@ struct BurnDriver BurnDrvcv_sammylfa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sammylfaRomInfo, cv_sammylfaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2562,7 +2562,7 @@ struct BurnDriver BurnDrvcv_slither = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_slitherRomInfo, cv_slitherRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2583,7 +2583,7 @@ struct BurnDriver BurnDrvcv_slurpy = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_slurpyRomInfo, cv_slurpyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2604,7 +2604,7 @@ struct BurnDriver BurnDrvcv_smurf = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_smurfRomInfo, cv_smurfRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2625,7 +2625,7 @@ struct BurnDriver BurnDrvcv_smurfa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_smurfaRomInfo, cv_smurfaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2646,7 +2646,7 @@ struct BurnDriver BurnDrvcv_spacfury = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_spacfuryRomInfo, cv_spacfuryRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2667,7 +2667,7 @@ struct BurnDriver BurnDrvcv_spacfurya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_spacfuryaRomInfo, cv_spacfuryaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2688,7 +2688,7 @@ struct BurnDriver BurnDrvcv_spectron = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_spectronRomInfo, cv_spectronRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2709,7 +2709,7 @@ struct BurnDriver BurnDrvcv_sprcross = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sprcrossRomInfo, cv_sprcrossRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2730,7 +2730,7 @@ struct BurnDriver BurnDrvcv_sprcrossa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sprcrossaRomInfo, cv_sprcrossaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2751,7 +2751,7 @@ struct BurnDriver BurnDrvcv_squishem = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_squishemRomInfo, cv_squishemRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2772,7 +2772,7 @@ struct BurnDriver BurnDrvcv_starwars = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_starwarsRomInfo, cv_starwarsRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2793,7 +2793,7 @@ struct BurnDriver BurnDrvcv_strikeit = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_strikeitRomInfo, cv_strikeitRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2814,7 +2814,7 @@ struct BurnDriver BurnDrvcv_tankwars = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tankwarsRomInfo, cv_tankwarsRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2835,7 +2835,7 @@ struct BurnDriver BurnDrvcv_telly = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tellyRomInfo, cv_tellyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2856,7 +2856,7 @@ struct BurnDriver BurnDrvcv_threshld = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_threshldRomInfo, cv_threshldRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2877,7 +2877,7 @@ struct BurnDriver BurnDrvcv_timeplt = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_timepltRomInfo, cv_timepltRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2898,7 +2898,7 @@ struct BurnDriver BurnDrvcv_tomarc = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tomarcRomInfo, cv_tomarcRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2919,7 +2919,7 @@ struct BurnDriver BurnDrvcv_turbo = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_turboRomInfo, cv_turboRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2940,7 +2940,7 @@ struct BurnDriver BurnDrvcv_tutankhm = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tutankhmRomInfo, cv_tutankhmRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2961,7 +2961,7 @@ struct BurnDriver BurnDrvcv_tutankhma = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tutankhmaRomInfo, cv_tutankhmaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -2982,7 +2982,7 @@ struct BurnDriver BurnDrvcv_upndown = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_upndownRomInfo, cv_upndownRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3003,7 +3003,7 @@ struct BurnDriver BurnDrvcv_venture = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ventureRomInfo, cv_ventureRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3024,7 +3024,7 @@ struct BurnDriver BurnDrvcv_wingwar = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_wingwarRomInfo, cv_wingwarRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3045,7 +3045,7 @@ struct BurnDriver BurnDrvcv_wizmath = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_wizmathRomInfo, cv_wizmathRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3066,7 +3066,7 @@ struct BurnDriver BurnDrvcv_zenji = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_zenjiRomInfo, cv_zenjiRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3088,7 +3088,7 @@ struct BurnDriver BurnDrvcv_1on1 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_1on1RomInfo, cv_1on1RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3110,7 +3110,7 @@ struct BurnDriver BurnDrvcv_bcquest2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_bcquest2RomInfo, cv_bcquest2RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3132,7 +3132,7 @@ struct BurnDriver BurnDrvcv_bcquest2ca = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_bcquest2caRomInfo, cv_bcquest2caRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3154,7 +3154,7 @@ struct BurnDriver BurnDrvcv_bnj = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_bnjRomInfo, cv_bnjRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3176,7 +3176,7 @@ struct BurnDriver BurnDrvcv_buckrog = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_buckrogRomInfo, cv_buckrogRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3198,7 +3198,7 @@ struct BurnDriver BurnDrvcv_congo = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_congoRomInfo, cv_congoRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3220,7 +3220,7 @@ struct BurnDriver BurnDrvcv_defender = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_defenderRomInfo, cv_defenderRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3242,7 +3242,7 @@ struct BurnDriver BurnDrvcv_dkonga = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_dkongaRomInfo, cv_dkongaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3264,7 +3264,7 @@ struct BurnDriver BurnDrvcv_frenzy = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_frenzyRomInfo, cv_frenzyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3286,7 +3286,7 @@ struct BurnDriver BurnDrvcv_frenzya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_frenzyaRomInfo, cv_frenzyaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3308,7 +3308,7 @@ struct BurnDriver BurnDrvcv_frenzya2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_frenzya2RomInfo, cv_frenzya2RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3330,7 +3330,7 @@ struct BurnDriver BurnDrvcv_frontlin = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_frontlinRomInfo, cv_frontlinRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3352,7 +3352,7 @@ struct BurnDriver BurnDrvcv_frontlina = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_frontlinaRomInfo, cv_frontlinaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3374,7 +3374,7 @@ struct BurnDriver BurnDrvcv_heist = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_heistRomInfo, cv_heistRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3396,7 +3396,7 @@ struct BurnDriver BurnDrvcv_heista = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_heistaRomInfo, cv_heistaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3418,7 +3418,7 @@ struct BurnDriver BurnDrvcv_jungleh = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_junglehRomInfo, cv_junglehRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3440,7 +3440,7 @@ struct BurnDriver BurnDrvcv_mine2049 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mine2049RomInfo, cv_mine2049RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3462,7 +3462,7 @@ struct BurnDriver BurnDrvcv_mine2049a = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mine2049aRomInfo, cv_mine2049aRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3484,7 +3484,7 @@ struct BurnDriver BurnDrvcv_mrdo = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mrdoRomInfo, cv_mrdoRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3506,7 +3506,7 @@ struct BurnDriver BurnDrvcv_mrdoa = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mrdoaRomInfo, cv_mrdoaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3528,7 +3528,7 @@ struct BurnDriver BurnDrvcv_rocnrope = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_rocnropeRomInfo, cv_rocnropeRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3550,7 +3550,7 @@ struct BurnDriver BurnDrvcv_rocky = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_rockyRomInfo, cv_rockyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3572,7 +3572,7 @@ struct BurnDriver BurnDrvcv_secalpha = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_secalphaRomInfo, cv_secalphaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3594,7 +3594,7 @@ struct BurnDriver BurnDrvcv_sewersam = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sewersamRomInfo, cv_sewersamRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3616,7 +3616,7 @@ struct BurnDriver BurnDrvcv_startrek = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_startrekRomInfo, cv_startrekRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3638,7 +3638,7 @@ struct BurnDriver BurnDrvcv_subroc = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_subrocRomInfo, cv_subrocRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3660,7 +3660,7 @@ struct BurnDriver BurnDrvcv_tarzan = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tarzanRomInfo, cv_tarzanRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3682,7 +3682,7 @@ struct BurnDriver BurnDrvcv_victory = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_victoryRomInfo, cv_victoryRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3704,7 +3704,7 @@ struct BurnDriver BurnDrvcv_wargames = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_wargamesRomInfo, cv_wargamesRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3726,7 +3726,7 @@ struct BurnDriver BurnDrvcv_zaxxon = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_zaxxonRomInfo, cv_zaxxonRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3749,7 +3749,7 @@ struct BurnDriver BurnDrvcv_2010 = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_2010RomInfo, cv_2010RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3772,7 +3772,7 @@ struct BurnDriver BurnDrvcv_dambust = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_dambustRomInfo, cv_dambustRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3795,7 +3795,7 @@ struct BurnDriver BurnDrvcv_destruct = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_destructRomInfo, cv_destructRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3818,7 +3818,7 @@ struct BurnDriver BurnDrvcv_hazzard = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_hazzardRomInfo, cv_hazzardRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3841,7 +3841,7 @@ struct BurnDriver BurnDrvcv_fortune = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_fortuneRomInfo, cv_fortuneRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3864,7 +3864,7 @@ struct BurnDriver BurnDrvcv_spyhunt = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_spyhuntRomInfo, cv_spyhuntRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3887,7 +3887,7 @@ struct BurnDriver BurnDrvcv_safootb = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_safootbRomInfo, cv_safootbRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3910,7 +3910,7 @@ struct BurnDriver BurnDrvcv_saftsocc = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_saftsoccRomInfo, cv_saftsoccRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3933,7 +3933,7 @@ struct BurnDriver BurnDrvcv_sasoccer = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sasoccerRomInfo, cv_sasoccerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3956,7 +3956,7 @@ struct BurnDriver BurnDrvcv_tapper = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tapperRomInfo, cv_tapperRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -3979,7 +3979,7 @@ struct BurnDriver BurnDrvcv_2010p = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_2010pRomInfo, cv_2010pRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4002,7 +4002,7 @@ struct BurnDriver BurnDrvcv_2010p1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_2010p1RomInfo, cv_2010p1RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4022,7 +4022,7 @@ struct BurnDriver BurnDrvcv_bbears = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_bbearsRomInfo, cv_bbearsRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4043,7 +4043,7 @@ struct BurnDriver BurnDrvcv_btimem = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_btimemRomInfo, cv_btimemRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4064,7 +4064,7 @@ struct BurnDriver BurnDrvcv_cabbagep1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cabbagep1RomInfo, cv_cabbagep1RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4085,7 +4085,7 @@ struct BurnDriver BurnDrvcv_cabbagep2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cabbagep2RomInfo, cv_cabbagep2RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4107,7 +4107,7 @@ struct BurnDriver BurnDrvcv_digdug = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_digdugRomInfo, cv_digdugRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4129,7 +4129,7 @@ struct BurnDriver BurnDrvcv_dlair = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_dlairRomInfo, cv_dlairRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4150,7 +4150,7 @@ struct BurnDriver BurnDrvcv_mindmstr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mindmstrRomInfo, cv_mindmstrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4171,7 +4171,7 @@ struct BurnDriver BurnDrvcv_fallguy = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_fallguyRomInfo, cv_fallguyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4193,7 +4193,7 @@ struct BurnDriver BurnDrvcv_joust = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_joustRomInfo, cv_joustRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4214,7 +4214,7 @@ struct BurnDriver BurnDrvcv_mash = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_mashRomInfo, cv_mashRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4235,7 +4235,7 @@ struct BurnDriver BurnDrvcv_monkeyp = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_monkeypRomInfo, cv_monkeypRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4257,7 +4257,7 @@ struct BurnDriver BurnDrvcv_monkeyp1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_monkeyp1RomInfo, cv_monkeyp1RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4277,7 +4277,7 @@ struct BurnDriver BurnDrvcv_orbit = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_orbitRomInfo, cv_orbitRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4298,7 +4298,7 @@ struct BurnDriver BurnDrvcv_pacman = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_pacmanRomInfo, cv_pacmanRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4319,7 +4319,7 @@ struct BurnDriver BurnDrvcv_porkys = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_porkysRomInfo, cv_porkysRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4342,7 +4342,7 @@ struct BurnDriver BurnDrvcv_power = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_powerRomInfo, cv_powerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4363,7 +4363,7 @@ struct BurnDriver BurnDrvcv_smurfply = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_smurfplyRomInfo, cv_smurfplyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4386,7 +4386,7 @@ struct BurnDriver BurnDrvcv_spyhuntp = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_spyhuntpRomInfo, cv_spyhuntpRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4409,7 +4409,7 @@ struct BurnDriver BurnDrvcv_spyhuntp1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_spyhuntp1RomInfo, cv_spyhuntp1RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4430,7 +4430,7 @@ struct BurnDriver BurnDrvcv_steam = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_steamRomInfo, cv_steamRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4453,7 +4453,7 @@ struct BurnDriver BurnDrvcv_superdk = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_superdkRomInfo, cv_superdkRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4474,7 +4474,7 @@ struct BurnDriver BurnDrvcv_sword = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_swordRomInfo, cv_swordRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4494,7 +4494,7 @@ struct BurnDriver BurnDrvcv_hustler = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_hustlerRomInfo, cv_hustlerRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4514,7 +4514,7 @@ struct BurnDriver BurnDrvcv_hustler1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_hustler1RomInfo, cv_hustler1RomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4536,7 +4536,7 @@ struct BurnDriver BurnDrvcv_wargamesp = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_wargamespRomInfo, cv_wargamespRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4557,7 +4557,7 @@ struct BurnDriver BurnDrvcv_yolk = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_yolkRomInfo, cv_yolkRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4578,7 +4578,7 @@ struct BurnDriver BurnDrvcv_cbsmon = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cbsmonRomInfo, cv_cbsmonRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4598,7 +4598,7 @@ struct BurnDriver BurnDrvcv_finaltst = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_finaltstRomInfo, cv_finaltstRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4618,7 +4618,7 @@ struct BurnDriver BurnDrvcv_suprtest = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_suprtestRomInfo, cv_suprtestRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4640,7 +4640,7 @@ struct BurnDriver BurnDrvcv_musicbox = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_musicboxRomInfo, cv_musicboxRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4661,7 +4661,7 @@ struct BurnDriver BurnDrvcv_dncfntsy = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_dncfntsyRomInfo, cv_dncfntsyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4682,7 +4682,7 @@ struct BurnDriver BurnDrvcv_facemakr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_facemakrRomInfo, cv_facemakrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4703,7 +4703,7 @@ struct BurnDriver BurnDrvcv_fracfevr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_fracfevrRomInfo, cv_fracfevrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4724,7 +4724,7 @@ struct BurnDriver BurnDrvcv_jukebox = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_jukeboxRomInfo, cv_jukeboxRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4745,7 +4745,7 @@ struct BurnDriver BurnDrvcv_memmanor = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_memmanorRomInfo, cv_memmanorRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4766,7 +4766,7 @@ struct BurnDriver BurnDrvcv_skiing = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_skiingRomInfo, cv_skiingRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4789,7 +4789,7 @@ struct BurnDriver BurnDrvcv_alcazar = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_alcazarRomInfo, cv_alcazarRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4812,7 +4812,7 @@ struct BurnDriver BurnDrvcv_cabbshow = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_cabbshowRomInfo, cv_cabbshowRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4835,7 +4835,7 @@ struct BurnDriver BurnDrvcv_galaxian = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_galaxianRomInfo, cv_galaxianRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4858,7 +4858,7 @@ struct BurnDriver BurnDrvcv_galaxiana = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_galaxianaRomInfo, cv_galaxianaRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4881,7 +4881,7 @@ struct BurnDriver BurnDrvcv_monkey = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_monkeyRomInfo, cv_monkeyRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4904,7 +4904,7 @@ struct BurnDriver BurnDrvcv_smurfpnt = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_smurfpntRomInfo, cv_smurfpntRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4927,7 +4927,7 @@ struct BurnDriver BurnDrvcv_sabaseb = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_sabasebRomInfo, cv_sabasebRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4950,7 +4950,7 @@ struct BurnDriver BurnDrvcv_suprdkjr = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_suprdkjrRomInfo, cv_suprdkjrRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4973,7 +4973,7 @@ struct BurnDriver BurnDrvcv_tunnels = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_tunnelsRomInfo, cv_tunnelsRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -4996,7 +4996,7 @@ struct BurnDriver BurnDrvcv_warroom = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_warroomRomInfo, cv_warroomRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -5017,7 +5017,7 @@ struct BurnDriver BurnDrvcv_wordfeud = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_wordfeudRomInfo, cv_wordfeudRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 
@@ -5040,7 +5040,7 @@ struct BurnDriver BurnDrvcv_ttennis = {
 	BDF_GAME_WORKING, 2, HARDWARE_COLECO, GBF_MISC, 0,
 	CVGetZipName, cv_ttennisRomInfo, cv_ttennisRomName, NULL, NULL, ColecoInputInfo, ColecoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
-	285, 243, 4, 3
+	272, 228, 4, 3
 };
 
 

@@ -15,6 +15,7 @@ int  TMS9928AInterrupt();
 void TMS9928AInit(int model, int vram, int borderx, int bordery, void (*INTCallback)(int));
 void TMS9928AReset();
 void TMS9928AExit();
+void TMS9928AScanline(int scanline);
 int  TMS9928ADraw();
 
 void TMS9928ASetSpriteslimit(int limit);

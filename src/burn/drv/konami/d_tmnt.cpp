@@ -3276,8 +3276,7 @@ static UINT16 ssriders_protection_r()
 			/* collision table */
 			data = -SekReadWord(0x105818);
 			data = ((data / 8 - 4) & 0x1f) * 0x40;
-			data += ((SekReadWord(0x105cb0) +
-						256*K052109Read(0x1a01) + K052109Read(0x1a00) - 6) / 8 + 12) & 0x3f;
+            data += ((SekReadWord(0x105cb0) + SekReadWord(0x1040c8) - 6) / 8 + 12) & 0x3f;
 			return data;
 
 		default:

@@ -32,7 +32,6 @@ static UINT32 nUpdateStep;
 /* this structure defines the parameters for a channel */
 typedef struct
 {
-	//unsigned long counter;
 	UINT64 counter;
 	INT32 frequency;
 	INT32 volume;
@@ -54,11 +53,9 @@ struct _k051649_state
 	INT16 *mixer_table;
 	INT16 *mixer_lookup;
 	INT16 *mixer_buffer;
-
-	INT32 f[10];
 };
 
-static k051649_state Chips[1]; // ok?
+static k051649_state Chips[1]; // ok? (one is good enough)
 static k051649_state *info;
 
 /* build a table to divide by the number of voices */
@@ -95,22 +92,21 @@ void K051649Update(INT16 *pBuf, INT32 samples)
 	info = &Chips[0];
 	k051649_sound_channel *voice=info->channel_list;
 	INT16 *mix;
-	INT32 i,v,f,j,k;
+	INT32 i,v,j;
 	double gain = info->gain;
 
 	/* zap the contents of the mixer buffer */
 	memset(info->mixer_buffer, 0, samples * sizeof(INT16));
 
-	for (j=0; j<5; j++) {
-		v=voice[j].volume;
-		f=voice[j].frequency;
-		k=voice[j].key;
-		/* SY 20040109: the SCC produces no sound for freq < 9 */
-		if (v && f > 8 && k)
+	for (j=0; j<5; j++)
+	{
+		// channel is halted for freq < 9
+		if (voice[j].frequency > 8)
 		{
 			const INT8 *w = voice[j].waveform;			/* 19991207.CAB */
+			v=voice[j].volume * voice[j].key;
 			INT32 c=voice[j].counter;
-
+			INT32 step = (INT32)((((((float)info->mclock / (float)((voice[j].frequency+1) * 16))*(float)(1<<FREQBASEBITS)) / (float)(info->rate / 32)) * nUpdateStep) / 32768);
 			mix = info->mixer_buffer;
 
 			/* add our contribution */
@@ -118,12 +114,8 @@ void K051649Update(INT16 *pBuf, INT32 samples)
 			{
 				INT32 offs;
 
-				/* Amuse source:  Cab suggests this method gives greater resolution */
-				/* Sean Young 20010417: the formula is really: f = clock/(16*(f+1))*/
-				//c+=(long)((((float)info->mclock / (float)((f+1) * 16))*(float)(1<<FREQBASEBITS)) / (float)(info->rate / 32));
-				c+=(INT32)((((((float)info->mclock / (float)((f+1) * 16))*(float)(1<<FREQBASEBITS)) / (float)(info->rate / 32)) * nUpdateStep) / 32768);
+				c+= step;
 				offs = (c >> 16) & 0x1f;
-				//*mix++ += (((w[offs] * v)>>3) * nUpdateStep) >> 15;
 				*mix++ += ((w[offs] * v)>>3);
 			}
 
@@ -253,12 +245,6 @@ INT32 K051649Scan(INT32 nAction, INT32 *pnMin)
 	ba.szName	= "K051649 Channel list";
 	BurnAcb(&ba);
 
-	ba.Data		= info->f;
-	ba.nLen		= sizeof(INT32) * 10;
-	ba.nAddress = 0;
-	ba.szName	= "K051649 Frequency Regs";
-	BurnAcb(&ba);
-
 	return 0;
 }
 
@@ -315,11 +301,18 @@ void K051649FrequencyWrite(INT32 offset, INT32 data)
 #if defined FBA_DEBUG
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649FrequencyWrite called without init\n"));
 #endif
+	INT32 freq_hi = offset & 1;
 
 	info = &Chips[0];
-	info->f[offset]=data;
 
-	info->channel_list[offset>>1].frequency=(info->f[offset&0xe] + (info->f[offset|1]<<8))&0xfff;
+	if (info->channel_list[offset>>1].frequency < 9)
+		info->channel_list[offset>>1].counter |= ((1 << FREQBASEBITS) - 1);
+
+	// update frequency
+	if (freq_hi)
+		info->channel_list[offset>>1].frequency = (info->channel_list[offset>>1].frequency & 0x0ff) | (data << 8 & 0xf00);
+	else
+		info->channel_list[offset>>1].frequency = (info->channel_list[offset>>1].frequency & 0xf00) | data;
 }
 
 void K051649KeyonoffWrite(INT32 data)
@@ -329,10 +322,10 @@ void K051649KeyonoffWrite(INT32 data)
 #endif
 
 	info = &Chips[0];
-	info->channel_list[0].key=data&1;
-	info->channel_list[1].key=data&2;
-	info->channel_list[2].key=data&4;
-	info->channel_list[3].key=data&8;
-	info->channel_list[4].key=data&16;
+	info->channel_list[0].key=(data&1) ? 1 : 0;
+	info->channel_list[1].key=(data&2) ? 1 : 0;
+	info->channel_list[2].key=(data&4) ? 1 : 0;
+	info->channel_list[3].key=(data&8) ? 1 : 0;
+	info->channel_list[4].key=(data&16) ? 1 : 0;
 }
 

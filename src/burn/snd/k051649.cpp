@@ -23,6 +23,7 @@
 ***************************************************************************/
 
 #include "burnint.h"
+#include "k051649.h"
 
 #define FREQBASEBITS	16
 
@@ -171,9 +172,12 @@ void K051649Init(INT32 clock)
 
 	/* allocate a buffer to mix into - 1 second's worth should be more than enough */
 	info->mixer_buffer = (INT16 *)malloc(2 * sizeof(INT16) * info->rate);
+	memset(info->mixer_buffer, 0, 2 * sizeof(INT16) * info->rate);
 	
 	/* build the mixer table */
 	make_mixer_table(5);
+
+	K051649Reset(); // clear things on init.
 }
 
 void K051649SetRoute(double nVolume, INT32 nRouteDir)
@@ -218,10 +222,12 @@ void K051649Reset()
 	INT32 i;
 
 	/* reset all the voices */
-	for (i=0; i>5; i++) {
+	for (i = 0; i < 5; i++) {
 		voice[i].frequency = 0;
 		voice[i].volume = 0;
+		voice[i].key = 0;
 		voice[i].counter = 0;
+		memset(&voice[i].waveform, 0, 32);
 	}
 }
 

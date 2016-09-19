@@ -137,7 +137,7 @@ void K051649Update(INT16 *pBuf, INT32 samples)
 		INT32 output = info->mixer_lookup[*mix++];
 		
 		output = BURN_SND_CLIP(output);
-		output = (INT32)(output * gain);		
+		output = (INT32)(output * gain);
 		output = BURN_SND_CLIP(output);
 		
 		INT32 nLeftSample = 0, nRightSample = 0;
@@ -149,10 +149,10 @@ void K051649Update(INT16 *pBuf, INT32 samples)
 			nRightSample += output;
 		}
 
-		pBuf[0] += nLeftSample;
-		pBuf[1] += nRightSample;
+		pBuf[0] = BURN_SND_CLIP(pBuf[0] + nLeftSample);
+		pBuf[1] = BURN_SND_CLIP(pBuf[1] + nRightSample);
 		pBuf += 2;
-	}	
+	}
 }
 
 void K051649Init(INT32 clock)

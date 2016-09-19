@@ -201,6 +201,7 @@
 #define IDS_SEL_SG1000					(IDS_STRING +  630)
 #define IDS_SEL_COLECO					(IDS_STRING +  632)
 #define IDS_SEL_GG						(IDS_STRING +  634)
+#define IDS_SEL_MSX						(IDS_STRING +  635)
 
 #define IDS_GENRE						(IDS_STRING +  650)
 #define IDS_GENRE_HORSHOOT				(IDS_STRING +  652)

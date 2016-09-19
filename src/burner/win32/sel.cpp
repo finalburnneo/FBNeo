@@ -117,6 +117,7 @@ HTREEITEM hFilterMiscPost90s		= NULL;
 HTREEITEM hFilterMegadrive			= NULL;
 HTREEITEM hFilterPce				= NULL;
 //HTREEITEM hFilterSnes				= NULL;
+HTREEITEM hFilterMsx				= NULL;
 HTREEITEM hFilterSms				= NULL;
 HTREEITEM hFilterGg					= NULL;
 HTREEITEM hFilterSg1000				= NULL;
@@ -238,8 +239,10 @@ static int Sg1000Value			= HARDWARE_PREFIX_SEGA_SG1000 >> 24;
 static int MASKSG1000			= 1 << Sg1000Value;
 static int ColecoValue			= HARDWARE_PREFIX_COLECO >> 24;
 static int MASKCOLECO			= 1 << ColecoValue;
+static int MsxValue				= HARDWARE_PREFIX_MSX >> 24;
+static int MASKMSX				= 1 << MsxValue;
 
-static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO; // | MASKSNES
+static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX; // | MASKSNES
 
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
@@ -254,6 +257,7 @@ static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 |
 #define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST)
 #define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
 
+int nLoadMenuShowY				= 0;
 int nLoadMenuShowX				= 0;
 int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
@@ -537,18 +541,18 @@ static int SelListMake()
 			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
 		}
 
-		if (avOk && (!(nLoadMenuShowX & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
+		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
 			continue;
 		}
 		
-		if (avOk && (!(nLoadMenuShowX & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
+		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
 			continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));
 		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 		TvItem.hInsertAfter = TVI_SORT;
-		TvItem.item.pszText = (nLoadMenuShowX & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 		TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
 		nBurnDrv[nTmpDrvCount].nBurnDrvNo = i;
@@ -607,18 +611,18 @@ static int SelListMake()
 			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
 		}
 
-		if (avOk && (!(nLoadMenuShowX & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
+		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
 			continue;
 		}
 		
-		if (avOk && (!(nLoadMenuShowX & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
+		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
 			continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));
 		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 		TvItem.hInsertAfter = TVI_SORT;
-		TvItem.item.pszText = (nLoadMenuShowX & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 
 		// Find the parent's handle
 		for (j = 0; j < nTmpDrvCount; j++) {
@@ -642,7 +646,7 @@ static int SelListMake()
 					memset(&TempTvItem, 0, sizeof(TempTvItem));
 					TempTvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 					TempTvItem.hInsertAfter = TVI_SORT;
-					TempTvItem.item.pszText = (nLoadMenuShowX & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+					TempTvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 					TempTvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 					nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TempTvItem);
 					nBurnDrv[nTmpDrvCount].nBurnDrvNo = j;
@@ -667,7 +671,7 @@ static int SelListMake()
 	for (i = 0; i < nTmpDrvCount; i++) {
 
 		// See if we need to expand the branch of an unavailable or non-working parent
-		if (nBurnDrv[i].bIsParent && ((nLoadMenuShowX & AUTOEXPAND) || !gameAv[nBurnDrv[i].nBurnDrvNo] || !CheckWorkingStatus(nBurnDrv[i].nBurnDrvNo))) {
+		if (nBurnDrv[i].bIsParent && ((nLoadMenuShowY & AUTOEXPAND) || !gameAv[nBurnDrv[i].nBurnDrvNo] || !CheckWorkingStatus(nBurnDrv[i].nBurnDrvNo))) {
 			for (j = 0; j < nTmpDrvCount; j++) {
 
 				// Expand the branch only if a working clone is available
@@ -823,12 +827,12 @@ static void RefreshPanel()
 		EnableWindow(hInfoLabel[i], FALSE);
 	}
 
-	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowX & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowX & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowX & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAUTOEXPAND, (nLoadMenuShowY & AUTOEXPAND) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKAVAILABLE, (nLoadMenuShowY & AVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_CHECKUNAVAILABLE, (nLoadMenuShowY & UNAVAILABLE) ? BST_CHECKED : BST_UNCHECKED);
 
-	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowX & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
-	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowX & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_SHORTNAME, nLoadMenuShowY & SHOWSHORT ? BST_CHECKED : BST_UNCHECKED);
+	CheckDlgButton(hSelDlg, IDC_SEL_ASCIIONLY, nLoadMenuShowY & ASCIIONLY ? BST_CHECKED : BST_UNCHECKED);
 }
 
 FILE* OpenPreview(int nIndex, TCHAR *szPath)
@@ -1133,6 +1137,7 @@ static void CreateFilters()
 //	_TVCreateFiltersA(hHardware		, IDS_SEL_SNES			, hFilterSnes			, nLoadMenuShowX & MASKSNES							);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_COLECO		, hFilterColeco			, nLoadMenuShowX & MASKCOLECO						);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_MSX			, hFilterMsx			, nLoadMenuShowX & MASKMSX							);
 	
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
@@ -1340,6 +1345,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterGg, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterMsx, FALSE);
 				
 				nLoadMenuShowX |= MASKALL;
 			} else {
@@ -1373,6 +1379,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterGg, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterMsx, TRUE);
 				
 				nLoadMenuShowX &= (0xFFFFFFFF - MASKALL); //0xf8000000; make this dynamic for future hardware additions -dink
 			}
@@ -1520,6 +1527,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterGg)				_ToggleGameListing(nLoadMenuShowX, MASKGG);
 		if (hItemChanged == hFilterSg1000)			_ToggleGameListing(nLoadMenuShowX, MASKSG1000);
 		if (hItemChanged == hFilterColeco)			_ToggleGameListing(nLoadMenuShowX, MASKCOLECO);
+		if (hItemChanged == hFilterMsx)				_ToggleGameListing(nLoadMenuShowX, MASKMSX);
 		
 		if (hItemChanged == hFilterBootleg)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_BOOTLEG);
 		if (hItemChanged == hFilterDemo)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_DEMO);
@@ -1589,23 +1597,23 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					SendMessage(hDlg, WM_CLOSE, 0, 0);
 					return 0;
 				case IDC_CHECKAVAILABLE:
-					nLoadMenuShowX ^= AVAILABLE;
+					nLoadMenuShowY ^= AVAILABLE;
 					RebuildEverything();
 					break;
 				case IDC_CHECKUNAVAILABLE:
-					nLoadMenuShowX ^= UNAVAILABLE;
+					nLoadMenuShowY ^= UNAVAILABLE;
 					RebuildEverything();
 					break;
 				case IDC_CHECKAUTOEXPAND:
-					nLoadMenuShowX ^= AUTOEXPAND;
+					nLoadMenuShowY ^= AUTOEXPAND;
 					RebuildEverything();
 					break;
 				case IDC_SEL_SHORTNAME:
-					nLoadMenuShowX ^= SHOWSHORT;
+					nLoadMenuShowY ^= SHOWSHORT;
 					RebuildEverything();
 					break;
 				case IDC_SEL_ASCIIONLY:
-					nLoadMenuShowX ^= ASCIIONLY;
+					nLoadMenuShowY ^= ASCIIONLY;
 					RebuildEverything();
 					break;
 				case IDGAMEINFO:
@@ -1808,7 +1816,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		
 		if (pNmHdr->code == NM_CUSTOMDRAW && LOWORD(wParam) == IDC_TREE1) {
 			LPNMLVCUSTOMDRAW lplvcd = (LPNMLVCUSTOMDRAW)lParam;
-			int nGetTextFlags = nLoadMenuShowX & ASCIIONLY ? DRV_ASCIIONLY : 0;
+			int nGetTextFlags = nLoadMenuShowY & ASCIIONLY ? DRV_ASCIIONLY : 0;
 			HTREEITEM hSelectHandle;
 			
 			switch (lplvcd->nmcd.dwDrawStage) {
@@ -1890,7 +1898,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						SetBkMode(lplvcd->nmcd.hdc, TRANSPARENT);
 
 						// Display the short name if needed
-						if (nLoadMenuShowX & SHOWSHORT) {
+						if (nLoadMenuShowY & SHOWSHORT) {
 							DrawText(lplvcd->nmcd.hdc, BurnDrvGetText(DRV_NAME), -1, &rect, DT_NOPREFIX | DT_SINGLELINE | DT_LEFT | DT_VCENTER);
 							rect.left += 16 + 40 + 20 + 10;
 						}
@@ -1905,7 +1913,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 									DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 									rect.left += nIconsSizeXY + 4;
 								} else {
-									if (!(nLoadMenuShowX & AVAILABLE) && !(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo] & 2)) {
+									if (!(nLoadMenuShowY & AVAILABLE) && !(gameAv[((NODEINFO*)TvItem.lParam)->nBurnDrvNo] & 2)) {
 										DrawIconEx(lplvcd->nmcd.hdc, rect.left, rect.top, hNotFoundNonEss, nIconsSizeXY, nIconsSizeXY, 0, NULL, DI_NORMAL);
 										rect.left += nIconsSizeXY + 4;
 									}
@@ -2004,7 +2012,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			
 			// Get the text from the drivers via BurnDrvGetText()
 			for (int i = 0; i < 6; i++) {
-				int nGetTextFlags = nLoadMenuShowX & ASCIIONLY ? DRV_ASCIIONLY : 0;
+				int nGetTextFlags = nLoadMenuShowY & ASCIIONLY ? DRV_ASCIIONLY : 0;
 				TCHAR szItemText[256];
 				szItemText[0] = _T('\0');
 
@@ -2175,7 +2183,7 @@ static unsigned int nPrevDrvSelect[6];
 
 static void UpdateInfoROMInfo()
 {
-//	int nGetTextFlags = nLoadMenuShowX & ASCIIONLY ? DRV_ASCIIONLY : 0;
+//	int nGetTextFlags = nLoadMenuShowY & ASCIIONLY ? DRV_ASCIIONLY : 0;
 	TCHAR szItemText[256] = _T("");
 	bool bBracket = false;
 
@@ -2224,7 +2232,7 @@ static void UpdateInfoROMInfo()
 
 static void UpdateInfoRelease()
 {
-	int nGetTextFlags = nLoadMenuShowX & ASCIIONLY ? DRV_ASCIIONLY : 0;
+	int nGetTextFlags = nLoadMenuShowY & ASCIIONLY ? DRV_ASCIIONLY : 0;
 	TCHAR szItemText[256] = _T("");
 
 	TCHAR szUnknown[100];
@@ -2248,7 +2256,7 @@ static void UpdateInfoRelease()
 
 static void UpdateInfoGameInfo()
 {
-	int nGetTextFlags = nLoadMenuShowX & ASCIIONLY ? DRV_ASCIIONLY : 0;
+	int nGetTextFlags = nLoadMenuShowY & ASCIIONLY ? DRV_ASCIIONLY : 0;
 	TCHAR szText[1024] = _T("");
 	TCHAR* pszPosition = szText;
 	TCHAR* pszName = BurnDrvGetText(nGetTextFlags | DRV_FULLNAME);

@@ -366,6 +366,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_PREFIX_COLECO							(0x1A000000)
 #define HARDWARE_PREFIX_MIDWAY							(0x1B000000)
 #define HARDWARE_PREFIX_SEGA_GAME_GEAR					(0x12000000)
+#define HARDWARE_PREFIX_MSX                             (0x1C000000)
 
 #define HARDWARE_MISC_PRE90S							(HARDWARE_PREFIX_MISC_PRE90S)
 #define HARDWARE_MISC_POST90S							(HARDWARE_PREFIX_MISC_POST90S)
@@ -485,6 +486,23 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SEGA_SG1000                            (HARDWARE_PREFIX_SEGA_SG1000)
 #define HARDWARE_SEGA_SG1000_RAMEXP                     (0x2000)
 #define HARDWARE_COLECO                                 (HARDWARE_PREFIX_COLECO)
+
+// 0 for now.
+#define HARDWARE_MSX                                    (HARDWARE_PREFIX_MSX)
+#define HARDWARE_MSX_MAPPER_ASCII8                      (0x01)
+#define HARDWARE_MSX_MAPPER_ASCII8_SRAM                 (0x01)
+#define HARDWARE_MSX_MAPPER_ASCII16                     (0x02)
+#define HARDWARE_MSX_MAPPER_ASCII16_SRAM                (0x02)
+#define HARDWARE_MSX_MAPPER_KONAMI                      (0x03)
+#define HARDWARE_MSX_MAPPER_KONAMI_SCC                  (0x04)
+#define HARDWARE_MSX_MAPPER_MSXWRITE                    (0x01)
+#define HARDWARE_MSX_MAPPER_RTYPE                       (0x01)
+#define HARDWARE_MSX_MAPPER_CROSS_BLAIM                 (0x01)
+#define HARDWARE_MSX_MAPPER_KOREAN_126IN1               (0x01)
+#define HARDWARE_MSX_MAPPER_KOREAN_80IN1                (0x01)
+#define HARDWARE_MSX_MAPPER_KOREAN_90IN1                (0x01)
+#define HARDWARE_MSX_MAPPER_HFOX                        (0x01)
+#define HARDWARE_MSX_MAPPER_KEYBOARD_MASTER             (0x01)
 
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM			(1)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM			(2)

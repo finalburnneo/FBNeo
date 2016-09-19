@@ -186,6 +186,7 @@ int ConfigAppLoad()
 		VAR(nSelDlgWidth);
 		VAR(nSelDlgHeight);
 		VAR(nLoadMenuShowX);
+		VAR(nLoadMenuShowY);
 		VAR(nLoadMenuBoardTypeFilter);
 		VAR(nLoadMenuGenreFilter);
 		VAR(nLoadMenuFamilyFilter);
@@ -539,6 +540,7 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// Load game dialog options\n"));
 	VAR(nLoadMenuShowX);
+	VAR(nLoadMenuShowY);
 	
 	_ftprintf(h, _T("\n// Load game dialog board type filter options\n"));
 	VAR(nLoadMenuBoardTypeFilter);

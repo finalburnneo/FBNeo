@@ -362,6 +362,21 @@ static int RunExit()
 	return 0;
 }
 
+// Keyboard callback function, a way to provide a driver with shifted/unshifted ASCII data from the keyboard.  see drv/msx/d_msx.cpp for usage
+void (*cBurnerKeyCallback)(UINT8 code, UINT8 KeyType, UINT8 down) = NULL;
+
+static void BurnerHandlerKeyCallback(MSG *Msg, INT32 KeyDown, INT32 KeyType)
+{
+	INT32 shifted = (GetAsyncKeyState(VK_SHIFT) & 0x80000000) ? 0xf0 : 0;
+	INT32 scancode = (Msg->lParam >> 16) & 0xFF;
+	UINT8 keyboardState[256];
+	GetKeyboardState(keyboardState);
+	char charvalue[2];
+	if (ToAsciiEx(Msg->wParam, scancode, keyboardState, (LPWORD)&charvalue[0], 0, GetKeyboardLayout(0)) == 1) {
+		cBurnerKeyCallback(charvalue[0], shifted|KeyType, KeyDown);
+	}
+}
+
 // The main message loop
 int RunMessageLoop()
 {
@@ -493,6 +508,10 @@ int RunMessageLoop()
 							}
 						}
 					} else {
+
+						if (cBurnerKeyCallback)
+							BurnerHandlerKeyCallback(&Msg, (Msg.message == WM_KEYDOWN) ? 1 : 0, 0);
+
 						switch (Msg.wParam) {
 
 #if defined (FBA_DEBUG)
@@ -586,6 +605,10 @@ int RunMessageLoop()
 					}
 				} else {
 					if (Msg.message == WM_SYSKEYUP || Msg.message == WM_KEYUP) {
+
+						if (cBurnerKeyCallback)
+							BurnerHandlerKeyCallback(&Msg, (Msg.message == WM_KEYDOWN) ? 1 : 0, 0);
+
 						switch (Msg.wParam) {
 							case VK_MENU:
 								continue;

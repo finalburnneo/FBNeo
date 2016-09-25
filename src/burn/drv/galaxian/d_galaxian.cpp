@@ -10672,21 +10672,17 @@ STD_ROM_PICK(Moonal2)
 STD_ROM_FN(Moonal2)
 
 static struct BurnRomInfo Moonal2bRomDesc[] = {
-	{ "ali1",          0x00400, 0x0dcecab4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali2",          0x00400, 0xc6ee75a7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "md-2",          0x00800, 0x8318b187, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali5",          0x00400, 0x6f3cf61d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali6",          0x00400, 0xe169d432, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali7",          0x00400, 0x41f64b73, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali8",          0x00400, 0xf72ee876, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali9",          0x00400, 0xb7fb763c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "ali10",         0x00400, 0xb1059179, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "md-6",          0x00800, 0x9cc973e0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "md-1.a",        0x00800, 0xd41fd873, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "md-2.b",        0x00800, 0x8318b187, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "md-3.d",        0x00800, 0xb2170d3b, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "md-4.g",        0x00800, 0xbaa4d0bf, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "md-5.h",        0x00800, 0x61afb53c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "md-6.f",        0x00800, 0x9cc973e0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "ali13.1h",      0x00800, 0xa1287bf6, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "ali12.1k",      0x00800, 0x528f1481, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "md-13.h1",      0x00800, 0xa1287bf6, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "md-12.k1",      0x00800, 0x528f1481, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "6l.bpr",        0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+	{ "6331.16",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Moonal2b)

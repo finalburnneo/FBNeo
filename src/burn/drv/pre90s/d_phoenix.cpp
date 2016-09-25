@@ -888,13 +888,13 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Phoenix (Amstar)
+// Phoenix (Amstar, set 1)
 
 static struct BurnRomInfo phoenixRomDesc[] = {
-	{ "ic45",		0x0800, 0x9f68086b, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
-	{ "ic46",		0x0800, 0x273a4a82, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic47",		0x0800, 0x3d4284b9, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ic48",		0x0800, 0xcb5d9915, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic45",			0x0800, 0x9f68086b, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "ic46",			0x0800, 0x273a4a82, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic47",			0x0800, 0x3d4284b9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ic48",			0x0800, 0xcb5d9915, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "h5-ic49.5a",		0x0800, 0xa105e4e7, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "h6-ic50.6a",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "h7-ic51.7a",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
@@ -919,6 +919,41 @@ struct BurnDriver BurnDrvPhoenix = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixRomInfo, phoenixRomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
+	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+// Phoenix (Amstar, set 2)
+
+static struct BurnRomInfo phoenix2RomDesc[] = {
+	{ "ic45-pg1.1a",	0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "ic46-pg2.2a",	0x0800, 0x273a4a82, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic47-pg3.3a",	0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ic48-pg4.4a",	0x0800, 0xcb5d9915, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic49-pg5.5a",	0x0800, 0x73bcd2e1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ic50-pg6.6a",	0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "ic51-pg7.7a",	0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "ic52-pg8.8a",	0x0800, 0xaff8e9c5, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "ic23-cg1.3d",	0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "ic24-cg2.4d",	0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "ic39-cg3.3b",	0x0800, 0x53413e8f, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "ic40-cg4.4b",	0x0800, 0x0be2ba91, 3 | BRF_GRA },           // 11
+
+	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color PROMs
+	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(phoenix2)
+STD_ROM_FN(phoenix2)
+
+struct BurnDriver BurnDrvPhoenix2 = {
+	"phoenix2", "phoenix", NULL, NULL, "1980",
+	"Phoenix (Amstar, set 2)\0", NULL, "Amstar", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, phoenix2RomInfo, phoenix2RomName, NULL, NULL, PhoenixInputInfo, PhoenixDIPInfo,
 	PhoenixInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };
@@ -998,20 +1033,20 @@ struct BurnDriver BurnDrvPhoenixb = {
 // Phoenix (D&L bootleg)
 
 static struct BurnRomInfo phoenixdalRomDesc[] = {
-	{ "dal.a1",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
-	{ "dal.a2",		0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dal.a3",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dal.a4",		0x0800, 0x228b76ad, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dal.a1",			0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "dal.a2",			0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "dal.a3",			0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dal.a4",			0x0800, 0x228b76ad, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "d2716,dal.a5",	0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "h6-ic50.6a",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "h7-ic51.7a",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "dal.a8",		0x0800, 0x0a0f92c0, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "dal.a8",			0x0800, 0x0a0f92c0, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "ic23.3d",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
 	{ "ic24.4d",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
 
-	{ "dal.b3",		0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
-	{ "dal.b4",		0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
+	{ "dal.b3",			0x0800, 0xbb0525ed, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "dal.b4",			0x0800, 0x4178aa4f, 3 | BRF_GRA },           // 11
 
 	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
 	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
@@ -1221,7 +1256,7 @@ static struct BurnRomInfo phoenixc3RomDesc[] = {
 	{ "phoenix.45",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
 	{ "phoenix.46",		0x0800, 0xdbc942fa, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "phoenix.47",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.a4",		0x0800, 0x61514bed, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.a4",			0x0800, 0x61514bed, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "phoenixc.49",	0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "h6-ic50.6a",		0x0800, 0xac5e9ec1, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "h7-ic51.7a",		0x0800, 0x2eab35b4, 1 | BRF_PRG | BRF_ESS }, //  6
@@ -1397,20 +1432,20 @@ struct BurnDriver BurnDrvVautour = {
 // Vautour (bootleg of Phoenix) (Z80 CPU, single PROM)
 
 static struct BurnRomInfo vautourzaRomDesc[] = {
-	{ "1.e1",		0x0800, 0xcd2807ee, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "2.f1",		0x0800, 0x3699b11a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.h1",		0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.j1",		0x0800, 0x106262eb, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "5.k1",		0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "6.h1",		0x0800, 0x1fcac707, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "7.m1",		0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "8.n1",		0x0800, 0x1edebb45, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "1.e1",			0x0800, 0xcd2807ee, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "2.f1",			0x0800, 0x3699b11a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.h1",			0x0800, 0xcbbb8839, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.j1",			0x0800, 0x106262eb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.k1",			0x0800, 0x1a1ce0d0, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6.h1",			0x0800, 0x1fcac707, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7.m1",			0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.n1",			0x0800, 0x1edebb45, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "10.h2",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
-	{ "9.j2",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+	{ "10.h2",			0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "9.j2",			0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
 
-	{ "12.h4",		0x0800, 0x8eff75c9, 3 | BRF_GRA },           // 10 Foreground Tiles
-	{ "11.j4",		0x0800, 0x369e7476, 3 | BRF_GRA },           // 11
+	{ "12.h4",			0x0800, 0x8eff75c9, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "11.j4",			0x0800, 0x369e7476, 3 | BRF_GRA },           // 11
 
 	{ "82s135.m9",		0x0100, 0xc68a49bc, 4 | BRF_GRA },           // 12 Color Proms
 };
@@ -1504,20 +1539,20 @@ struct BurnDriver BurnDrvVautourz = {
 // Fenix (bootleg of Phoenix)
 
 static struct BurnRomInfo fenixRomDesc[] = {
-	{ "0.1e",		0x0800, 0x00000000, 1 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  0 i8085 Code
-	{ "1.1f",		0x0800, 0x3699b11a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "2.1h",		0x0800, 0x750b059b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "3.1j",		0x0800, 0x61b8a41b, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "4.1k",		0x0800, 0x1ff3a982, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "5.1l",		0x0800, 0xa210fe51, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "6.1m",		0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "7.1n",		0x0800, 0x1edebb45, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "0.1e",			0x0800, 0x00000000, 1 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "1.1f",			0x0800, 0x3699b11a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.1h",			0x0800, 0x750b059b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.1j",			0x0800, 0x61b8a41b, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.1k",			0x0800, 0x1ff3a982, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "5.1l",			0x0800, 0xa210fe51, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "6.1m",			0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "7.1n",			0x0800, 0x1edebb45, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "9.2h",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
-	{ "8.2j",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+	{ "9.2h",			0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "8.2j",			0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
 
-	{ "11.3h",		0x0800, 0x8eff75c9, 3 | BRF_GRA },           // 10 Foreground Tiles
-	{ "10.3j",		0x0800, 0x369e7476, 3 | BRF_GRA },           // 11
+	{ "11.3h",			0x0800, 0x8eff75c9, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "10.3j",			0x0800, 0x369e7476, 3 | BRF_GRA },           // 11
 
 	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
 	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
@@ -1973,20 +2008,20 @@ struct BurnDriver BurnDrvPleiadsi = {
 // Pleiads (Niemer S.A.)
 
 static struct BurnRomInfo pleiadsnRomDesc[] = {
-	{ "1.bin",		0x0800, 0xc013515f, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
-	{ "2.bin",		0x0800, 0xb254217c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.bin",		0x0800, 0x3b29aec5, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.bin",		0x0800, 0x1fbde4d7, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "5.bin",		0x0800, 0x9dc73e63, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "6.bin",		0x0800, 0xf1a8a00d, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "7.bin",		0x0800, 0xb5f07fbc, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "8.bin",		0x0800, 0xb3db08c2, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "1.bin",			0x0800, 0xc013515f, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "2.bin",			0x0800, 0xb254217c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",			0x0800, 0x3b29aec5, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",			0x0800, 0x1fbde4d7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.bin",			0x0800, 0x9dc73e63, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6.bin",			0x0800, 0xf1a8a00d, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7.bin",			0x0800, 0xb5f07fbc, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.bin",			0x0800, 0xb3db08c2, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "11.bin",		0x0800, 0x4e30f9e7, 2 | BRF_GRA },           //  8 Background Tiles
-	{ "12.bin",		0x0800, 0x72d511fc, 2 | BRF_GRA },           //  9
+	{ "11.bin",			0x0800, 0x4e30f9e7, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "12.bin",			0x0800, 0x72d511fc, 2 | BRF_GRA },           //  9
 
-	{ "9.bin",		0x0800, 0x85866607, 3 | BRF_GRA },           // 10 Foreground Tiles
-	{ "10.bin",		0x0800, 0xa841d511, 3 | BRF_GRA },           // 11
+	{ "9.bin",			0x0800, 0x85866607, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "10.bin",			0x0800, 0xa841d511, 3 | BRF_GRA },           // 11
 
 	{ "hm3-7611.bin",	0x0100, 0xe38eeb83, 4 | BRF_GRA },           // 12 Color Proms
 	{ "mb7052.ic41",	0x0100, 0x7a1bcb1e, 4 | BRF_GRA },           // 13
@@ -2045,19 +2080,19 @@ struct BurnDriver BurnDrvPleiadss = {
 // Capitol
 
 static struct BurnRomInfo capitolRomDesc[] = {
-	{ "cp1.45",		0x0800, 0x0922905b, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
-	{ "cp2.46",		0x0800, 0x4f168f45, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "cp3.47",		0x0800, 0x3975e0b0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "cp4.48",		0x0800, 0xda49caa8, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "cp5.49",		0x0800, 0x38e4362b, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "cp6.50",		0x0800, 0xaaf798eb, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "cp7.51",		0x0800, 0xeaadf14c, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "cp8.52",		0x0800, 0xd3fe2af4, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "cp1.45",			0x0800, 0x0922905b, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
+	{ "cp2.46",			0x0800, 0x4f168f45, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cp3.47",			0x0800, 0x3975e0b0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cp4.48",			0x0800, 0xda49caa8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cp5.49",			0x0800, 0x38e4362b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "cp6.50",			0x0800, 0xaaf798eb, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "cp7.51",			0x0800, 0xeaadf14c, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "cp8.52",			0x0800, 0xd3fe2af4, 1 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "cp11.23",		0x0800, 0x9b0bbb8d, 2 | BRF_GRA },           //  8 Background Tiles
 	{ "cp12.24",		0x0800, 0x39949e66, 2 | BRF_GRA },           //  9
 
-	{ "cp9.39",		0x0800, 0x04f7d19a, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "cp9.39",			0x0800, 0x04f7d19a, 3 | BRF_GRA },           // 10 Foreground Tiles
 	{ "cp10.40",		0x0800, 0x4807408f, 3 | BRF_GRA },           // 11
 
 	{ "ic41.prm",		0x0100, 0xe176b768, 4 | BRF_GRA },           // 12 Color Proms

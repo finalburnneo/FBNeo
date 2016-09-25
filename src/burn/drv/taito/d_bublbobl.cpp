@@ -512,6 +512,39 @@ static struct BurnRomInfo BublboblRomDesc[] = {
 STD_ROM_PICK(Bublbobl)
 STD_ROM_FN(Bublbobl)
 
+static struct BurnRomInfo BublbobluRomDesc[] = {
+	{ "a78-06.51",   		0x08000, 0xa6345edd, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "a78-05.52",   		0x10000, 0xb31d2edc, BRF_ESS | BRF_PRG }, //  1
+	
+	{ "a78-08.37",     		0x08000, 0xd544be2e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program 
+	
+	{ "a78-07.46",     		0x08000, 0x4f9a26e8, BRF_ESS | BRF_PRG }, //  3	Z80 #3 Program 
+	
+	{ "a78-01.17",     		0x01000, 0xb1bfb53d, BRF_ESS | BRF_PRG }, //  4	MCU Program 
+	
+	{ "a78-09.12",     		0x08000, 0x20358c22, BRF_GRA },	     	  //  5	Tiles
+	{ "a78-10.13",     		0x08000, 0x930168a9, BRF_GRA },	     	  //  6
+	{ "a78-11.14",     		0x08000, 0x9773e512, BRF_GRA },	     	  //  7
+	{ "a78-12.15",     		0x08000, 0xd045549b, BRF_GRA },	     	  //  8
+	{ "a78-13.16",     		0x08000, 0xd0af35c5, BRF_GRA },	     	  //  9
+	{ "a78-14.17",     		0x08000, 0x7b5369a8, BRF_GRA },	     	  // 10
+	{ "a78-15.30",     		0x08000, 0x6b61a413, BRF_GRA },	          // 11
+	{ "a78-16.31",     		0x08000, 0xb5492d97, BRF_GRA },	     	  // 12
+	{ "a78-17.32",     		0x08000, 0xd69762d5, BRF_GRA },	     	  // 13
+	{ "a78-18.33",     		0x08000, 0x9f243b68, BRF_GRA },	     	  // 14
+	{ "a78-19.34",     		0x08000, 0x66e9438c, BRF_GRA },	     	  // 15
+	{ "a78-20.35",     		0x08000, 0x9ef863ad, BRF_GRA },	     	  // 16
+	
+	{ "a71-25.41",     		0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
+	
+	{ "pal16l8.bin",   		0x00001, 0x00000000, BRF_OPT | BRF_NODUMP }, //  18	PLDs
+	{ "pal16l8.bin",   		0x00001, 0x00000000, BRF_OPT | BRF_NODUMP }, //  19
+	{ "pal16r4.bin",   		0x00001, 0x00000000, BRF_OPT | BRF_NODUMP }, //  20
+};
+
+STD_ROM_PICK(Bublboblu)
+STD_ROM_FN(Bublboblu)
+
 static struct BurnRomInfo Bublbob1RomDesc[] = {
 	{ "a78-06.51",     		0x08000, 0x32c8305b, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "a78-05.52",     		0x10000, 0x53f4bc6e, BRF_ESS | BRF_PRG }, //  1
@@ -2844,6 +2877,16 @@ struct BurnDriver BurnDrvBublbobl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, BublboblRomInfo, BublboblRomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
+	BublboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x100, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBublboblu = {
+	"bublboblu", "bublbobl", NULL, NULL, "2011",
+	"Bubble Bobble (Ultra Version, Hack)\0", NULL, "Hack (Penta Penguin)", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, BublbobluRomInfo, BublbobluRomName, NULL, NULL, BublboblInputInfo, BublboblDIPInfo,
 	BublboblInit, BublboblExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

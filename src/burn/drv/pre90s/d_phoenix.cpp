@@ -1321,7 +1321,7 @@ struct BurnDriver BurnDrvPhoenixc4 = {
 };
 
 
-// Condor (bootleg of Phoenix)
+// Condor (Sidam bootleg of Phoenix)
 
 static struct BurnRomInfo condorRomDesc[] = {
 	{ "cond01c.bin",	0x0800, 0xc0f73929, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1348,10 +1348,46 @@ STD_ROM_FN(condor)
 
 struct BurnDriver BurnDrvCondor = {
 	"condor", "phoenix", NULL, NULL, "1981",
-	"Condor (bootleg of Phoenix)\0", NULL, "bootleg", "Miscellaneous",
+	"Condor (Sidam bootleg of Phoenix)\0", NULL, "bootleg (Sidam)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, condorRomInfo, condorRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
+	CondorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
+// Condor (S C Novar bootleg of Phoenix)
+
+static struct BurnRomInfo condornRomDesc[] = {
+	{ "1.bin",			0x0800, 0xc0f73929, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "2.bin",			0x0800, 0x440d56e8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",			0x0800, 0x750b059b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",			0x0800, 0x78416372, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.bin",			0x0800, 0x1ff3a982, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6.bin",			0x0800, 0x8c83bff7, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7.bin",			0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.bin",			0x0800, 0x1edebb45, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "c.bin",			0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "d.bin",			0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "a.bin",			0x0800, 0xcdd5ef12, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "b.bin",			0x0800, 0xeba42f0f, 3 | BRF_GRA },           // 11
+
+	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
+	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(condorn)
+STD_ROM_FN(condorn)
+
+struct BurnDriver BurnDrvCondorn = {
+	"condorn", "phoenix", NULL, NULL, "1981",
+	"Condor (S C Novar bootleg of Phoenix)\0", NULL, "bootleg (S C Novar)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, condornRomInfo, condornRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
 	CondorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };

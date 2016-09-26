@@ -817,7 +817,8 @@ static INT32 DrvInit(INT32 initver)
 			if (BurnLoadRom(Gfx4 + i * 0x10000, i + 36, 1)) return 1;
 		}
 	}
-
+	
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "sfjan") == 0) memcpy (Gfx3, Gfx3 + 0x4000, 0x4000);
 	if (DrvGfxDecode()) return 1;
 
 	SekInit(0, 0x68000);

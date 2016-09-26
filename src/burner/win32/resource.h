@@ -633,9 +633,10 @@
 #define MENU_USEBLEND						10720
 #define MENU_CLRMAME_PRO_XML_SMS_ONLY		10721
 #define MENU_CLRMAME_PRO_XML_GG_ONLY		10722
-#define MENU_AVI1X							10723
-#define MENU_AVI2X							10724
-#define MENU_AVI3X							10725
+#define MENU_CLRMAME_PRO_XML_MSX_ONLY		10723
+#define MENU_AVI1X							10724
+#define MENU_AVI2X							10725
+#define MENU_AVI3X							10726
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

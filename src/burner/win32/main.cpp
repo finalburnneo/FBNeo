@@ -738,6 +738,11 @@ int ProcessCmdLine()
 			write_datfile(DAT_GAMEGEAR_ONLY, stdout);
 			return 1;
 		}
+
+		if (_tcscmp(szName, _T("-listinfomsxonly")) == 0) {
+			write_datfile(DAT_MSX_ONLY, stdout);
+			return 1;
+		}
 		
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
@@ -823,7 +828,7 @@ int ProcessCmdLine()
 
 static void CreateSupportFolders()
 {
-	TCHAR szSupportDirs[31][MAX_PATH] = {
+	TCHAR szSupportDirs[32][MAX_PATH] = {
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
@@ -856,9 +861,10 @@ static void CreateSupportFolders()
 		{_T("coleco/")},
 		{_T("sms/")},
 		{_T("gamegear/")},
+		{_T("msx/")},
 	};
 	
-	for(int x = 0; x < 31; x++) {
+	for(int x = 0; x < 32; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }

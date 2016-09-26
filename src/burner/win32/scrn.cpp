@@ -300,6 +300,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_COLECO_ONLY) _sntprintf(szConsoleString, 64, _T(", ColecoVision only"));
 	if (bType == DAT_MASTERSYSTEM_ONLY) _sntprintf(szConsoleString, 64, _T(", Master System only"));
 	if (bType == DAT_GAMEGEAR_ONLY) _sntprintf(szConsoleString, 64, _T(", Game Gear only"));
+	if (bType == DAT_MSX_ONLY) _sntprintf(szConsoleString, 64, _T(", MSX 1 Cart Games only"));
 
 	TCHAR szProgramString[25];	
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
@@ -2054,6 +2055,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_GG_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_GAMEGEAR_ONLY);
+			}
+			break;
+
+		case MENU_CLRMAME_PRO_XML_MSX_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_MSX_ONLY);
 			}
 			break;
 

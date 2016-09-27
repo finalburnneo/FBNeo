@@ -19500,3 +19500,154 @@ struct BurnDriver BurnDrvMSX_magical = {
 	272, 228, 4, 3
 };
 
+// Wing Warriors
+
+static struct BurnRomInfo MSX_wingwarrRomDesc[] = {
+	{ "WingWarriors.rom",	0x0c000, 0x207d0e62, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_wingwarr, MSX_wingwarr, msx_msx)
+STD_ROM_FN(MSX_wingwarr)
+
+struct BurnDriver BurnDrvMSX_wingwarr = {
+	"MSX_wingwarr", NULL, "msx_msx", NULL, "2015",
+	"Wing Warriors\0", NULL, "Kitmaker", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_wingwarrRomInfo, MSX_wingwarrRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// BitLogic
+
+static struct BurnRomInfo MSX_bitlogicRomDesc[] = {
+	{ "BITLOGIC_v_100.ROM",	0x0c000, 0xfbcd1942, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bitlogic, MSX_bitlogic, msx_msx)
+STD_ROM_FN(MSX_bitlogic)
+
+struct BurnDriver BurnDrvMSX_bitlogic = {
+	"MSX_bitlogic", NULL, "msx_msx", NULL, "2015",
+	"BitLogic\0", NULL, "OxiAB Studio", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_bitlogicRomInfo, MSX_bitlogicRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Uridium
+
+static struct BurnRomInfo MSX_uridiumRomDesc[] = {
+	{ "URDIUM48.rom",	0x0c000, 0xc62d92da, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_uridium, MSX_uridium, msx_msx)
+STD_ROM_FN(MSX_uridium)
+
+struct BurnDriver BurnDrvMSX_uridium = {
+	"MSX_uridium", NULL, "msx_msx", NULL, "2014",
+	"Uridium\0", NULL, "Trilobyte", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_uridiumRomInfo, MSX_uridiumRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Pretty Kingdom
+
+static struct BurnRomInfo MSX_prettykngdmRomDesc[] = {
+	{ "NLKMSX006EN_PRETTYKINGDOM.rom",	0x08000, 0xcb2d148c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_prettykngdm, MSX_prettykngdm, msx_msx)
+STD_ROM_FN(MSX_prettykngdm)
+
+struct BurnDriver BurnDrvMSX_prettykngdm = {
+	"MSX_prettykngdm", NULL, "msx_msx", NULL, "2014",
+	"Pretty Kingdom\0", NULL, "Nerlaska Studio", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_prettykngdmRomInfo, MSX_prettykngdmRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Gorgeous Gemma in Escape from the Space Disposal Planet
+
+static struct BurnRomInfo MSX_ggeftsdpRomDesc[] = {
+	{ "ggeftsdp.rom",	0x08000, 0x818ccade, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ggeftsdp, MSX_ggeftsdp, msx_msx)
+STD_ROM_FN(MSX_ggeftsdp)
+
+struct BurnDriver BurnDrvMSX_ggeftsdp = {
+	"MSX_ggeftsdp", NULL, "msx_msx", NULL, "2013",
+	"Gorgeous Gemma in Escape from the Space Disposal Planet\0", NULL, "Impulse9", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_ggeftsdpRomInfo, MSX_ggeftsdpRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Zambeze
+
+static struct BurnRomInfo MSX_zambezeRomDesc[] = {
+	{ "zambezefacil.rom",	0x08000, 0x91d07554, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_zambeze, MSX_zambeze, msx_msx)
+STD_ROM_FN(MSX_zambeze)
+
+struct BurnDriver BurnDrvMSX_zambeze = {
+	"MSX_zambeze", NULL, "msx_msx", NULL, "2006",
+	"Zambeze\0", NULL, "Degora", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_zambezeRomInfo, MSX_zambezeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Nayade Resistance
+
+static struct BurnRomInfo MSX_nayadeRomDesc[] = {
+	{ "nayade.rom",	0x08000, 0x3587844a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_nayade, MSX_nayade, msx_msx)
+STD_ROM_FN(MSX_nayade)
+
+struct BurnDriver BurnDrvMSX_nayade = {
+	"MSX_nayade", NULL, "msx_msx", NULL, "2013",
+	"Nayade Resistance\0", "Control w/ Arrow-keys, M to select weapon", "Pentacour", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_nayadeRomInfo, MSX_nayadeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Princess Quest
+
+static struct BurnRomInfo MSX_princessquestRomDesc[] = {
+	{ "princess_quest_msx.rom",	0x10000, 0xaa31ac36, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_princessquest, MSX_princessquest, msx_msx)
+STD_ROM_FN(MSX_princessquest)
+
+struct BurnDriver BurnDrvMSX_princessquest = {
+	"MSX_princessquest", NULL, "msx_msx", NULL, "2012",
+	"Princess Quest\0", NULL, "Oscar Toledo G.", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_princessquestRomInfo, MSX_princessquestRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

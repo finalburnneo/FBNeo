@@ -19,7 +19,6 @@ extern "C" {
 	#include "ay8910.h"
 }
 
-
 static INT16 *pAY8910Buffer[6];
 
 static UINT8 *AllMem	= NULL;
@@ -254,7 +253,7 @@ void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 	// matrix-buffer when shift is let up. -dink
 }
 
-static const UINT8 CartMap[4] = { 255, 0, 1, 2 }; // Cart-map decode table
+static const UINT8 CartMap[5] = { 0xff, 0, 1, 2, 0xff }; // Cart-map decode table
 
 static const char *ROMNames[MAXMAPPERS + 1] =
 { 
@@ -263,7 +262,7 @@ static const char *ROMNames[MAXMAPPERS + 1] =
   "Dooly\0","Cross Blaim\0","R-Type\0", "???\0"
 };
 
-static INT32 LoadCart(UINT8 *cartbuf, int cartsize, int nSlot);
+static INT32 LoadCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot);
 static void SetMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nPg3);
 
 void msxinit(INT32 cart_len)
@@ -279,7 +278,7 @@ void msxinit(INT32 cart_len)
 
 	memset(EmptyRAM, 0xff, 0x4000); // bus is pulled high
 
-	for(INT32 PSlot = 0; PSlot < 4; PSlot++)
+	for(INT32 PSlot = 0; PSlot < 4; PSlot++) // Point all pages there
 		for(INT32 Page = 0; Page < 8; Page++)
 			MemMap[PSlot][Page] = EmptyRAM;
 
@@ -303,13 +302,13 @@ void msxinit(INT32 cart_len)
 	PSLReg = 0;
 
 	for (INT32 i = 0; i < 4; i++) {
-		EnWrite[i]          = 0;
-		PSL[i]              = 0;
+		EnWrite[i] = 0;
+		PSL[i] = 0;
 		MemMap[RAMSLOT][i * 2] = RAMData + (3 - i) * 0x4000;
 		MemMap[RAMSLOT][i * 2 + 1] = MemMap[RAMSLOT][i * 2] + 0x2000;
-		RAMMapper[i]        = 3 - i;
-		RAM[i * 2]          = MemMap[0][i * 2];
-		RAM[i * 2 + 1]      = MemMap[0][i * 2 + 1];
+		RAMMapper[i] = 3 - i;
+		RAM[i * 2] = MemMap[0][i * 2];
+		RAM[i * 2 + 1] = MemMap[0][i * 2 + 1];
 	}
 
 
@@ -598,8 +597,8 @@ static void SetSlot(UINT8 nSlot)
 			I = J << 1;
 			PSL[J] = nSlot & 3;
 			RAM[I] = MemMap[PSL[J]][I];
-			RAM[I+1] = MemMap[PSL[J]][I+1];
-			EnWrite[J] = (PSL[J]==RAMSLOT)&&(MemMap[RAMSLOT][I]!=EmptyRAM);
+			RAM[I+1] = MemMap[PSL[J]][I + 1];
+			EnWrite[J] = (PSL[J] == RAMSLOT) && (MemMap[RAMSLOT][I] != EmptyRAM);
 			nSlot >>= 2;
 		}
 	}
@@ -688,7 +687,7 @@ static INT32 GuessROM(UINT8 *buf, INT32 Size)
 	return i;
 }
 
-static INT32 LoadCart(UINT8 *cartbuf, int cartsize, int nSlot)
+static INT32 LoadCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 {
 	INT32 Len, Pages, Flat64;
 	UINT8 ca, cb;
@@ -783,70 +782,70 @@ static INT32 LoadCart(UINT8 *cartbuf, int cartsize, int nSlot)
 		{
 			case 1: // 8k rom-mirroring 0:0:0:0:0:0:0:0
 				if (BasicROM) { // BasicROMS only on page 2
-					MemMap[PS][0]=EmptyRAM;
-					MemMap[PS][1]=EmptyRAM;
-					MemMap[PS][2]=EmptyRAM;
-					MemMap[PS][3]=EmptyRAM;
-					MemMap[PS][4]=ROMData[nSlot];
-					MemMap[PS][5]=ROMData[nSlot];
-					MemMap[PS][6]=EmptyRAM;
-					MemMap[PS][7]=EmptyRAM;
+					MemMap[PS][0] = EmptyRAM;
+					MemMap[PS][1] = EmptyRAM;
+					MemMap[PS][2] = EmptyRAM;
+					MemMap[PS][3] = EmptyRAM;
+					MemMap[PS][4] = ROMData[nSlot];
+					MemMap[PS][5] = ROMData[nSlot];
+					MemMap[PS][6] = EmptyRAM;
+					MemMap[PS][7] = EmptyRAM;
 				} else { // normal 16k
-					MemMap[PS][0]=ROMData[nSlot];
-					MemMap[PS][1]=ROMData[nSlot]+0x2000;
-					MemMap[PS][2]=ROMData[nSlot];
-					MemMap[PS][3]=ROMData[nSlot]+0x2000;
-					MemMap[PS][4]=ROMData[nSlot];
-					MemMap[PS][5]=ROMData[nSlot]+0x2000;
-					MemMap[PS][6]=ROMData[nSlot];
-					MemMap[PS][7]=ROMData[nSlot]+0x2000;
+					MemMap[PS][0] = ROMData[nSlot];
+					MemMap[PS][1] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][2] = ROMData[nSlot];
+					MemMap[PS][3] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][4] = ROMData[nSlot];
+					MemMap[PS][5] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][6] = ROMData[nSlot];
+					MemMap[PS][7] = ROMData[nSlot] + 0x2000;
 				}
 				break;
 
 			case 2: // 16k rom-mirroring 0:1:0:1:0:1:0:1
 				if (BasicROM) { // BasicROMS only on page 2
-					MemMap[PS][0]=EmptyRAM;
-					MemMap[PS][1]=EmptyRAM;
-					MemMap[PS][2]=EmptyRAM;
-					MemMap[PS][3]=EmptyRAM;
-					MemMap[PS][4]=ROMData[nSlot];
-					MemMap[PS][5]=ROMData[nSlot]+0x2000;
-					MemMap[PS][6]=EmptyRAM;
-					MemMap[PS][7]=EmptyRAM;
+					MemMap[PS][0] = EmptyRAM;
+					MemMap[PS][1] = EmptyRAM;
+					MemMap[PS][2] = EmptyRAM;
+					MemMap[PS][3] = EmptyRAM;
+					MemMap[PS][4] = ROMData[nSlot];
+					MemMap[PS][5] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][6] = EmptyRAM;
+					MemMap[PS][7] = EmptyRAM;
 				} else { // normal 16k
-					MemMap[PS][0]=ROMData[nSlot];
-					MemMap[PS][1]=ROMData[nSlot]+0x2000;
-					MemMap[PS][2]=ROMData[nSlot];
-					MemMap[PS][3]=ROMData[nSlot]+0x2000;
-					MemMap[PS][4]=ROMData[nSlot];
-					MemMap[PS][5]=ROMData[nSlot]+0x2000;
-					MemMap[PS][6]=ROMData[nSlot];
-					MemMap[PS][7]=ROMData[nSlot]+0x2000;
+					MemMap[PS][0] = ROMData[nSlot];
+					MemMap[PS][1] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][2] = ROMData[nSlot];
+					MemMap[PS][3] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][4] = ROMData[nSlot];
+					MemMap[PS][5] = ROMData[nSlot] + 0x2000;
+					MemMap[PS][6] = ROMData[nSlot];
+					MemMap[PS][7] = ROMData[nSlot] + 0x2000;
 				}
 				break;
 
 			case 3:
 			case 4: // 24k & 32k rom-mirroring 0:1:0:1:2:3:2:3
-				MemMap[PS][0]=ROMData[nSlot];
-				MemMap[PS][1]=ROMData[nSlot]+0x2000;
-				MemMap[PS][2]=ROMData[nSlot];
-				MemMap[PS][3]=ROMData[nSlot]+0x2000;
-				MemMap[PS][4]=ROMData[nSlot]+0x4000;
-				MemMap[PS][5]=ROMData[nSlot]+0x6000;
-				MemMap[PS][6]=ROMData[nSlot]+0x4000;
-				MemMap[PS][7]=ROMData[nSlot]+0x6000;
+				MemMap[PS][0] = ROMData[nSlot];
+				MemMap[PS][1] = ROMData[nSlot]+0x2000;
+				MemMap[PS][2] = ROMData[nSlot];
+				MemMap[PS][3] = ROMData[nSlot]+0x2000;
+				MemMap[PS][4] = ROMData[nSlot]+0x4000;
+				MemMap[PS][5] = ROMData[nSlot]+0x6000;
+				MemMap[PS][6] = ROMData[nSlot]+0x4000;
+				MemMap[PS][7] = ROMData[nSlot]+0x6000;
 				break;
 
 		default:
 			if(Flat64) { // Flat/64k rom
-				MemMap[PS][0]=ROMData[nSlot];
-				MemMap[PS][1]=ROMData[nSlot]+0x2000;
-				MemMap[PS][2]=ROMData[nSlot]+0x4000;
-				MemMap[PS][3]=ROMData[nSlot]+0x6000;
-				MemMap[PS][4]=ROMData[nSlot]+0x8000;
-				MemMap[PS][5]=ROMData[nSlot]+0xA000;
-				MemMap[PS][6]=ROMData[nSlot]+0xC000;
-				MemMap[PS][7]=ROMData[nSlot]+0xE000;
+				MemMap[PS][0] = ROMData[nSlot];
+				MemMap[PS][1] = ROMData[nSlot]+0x2000;
+				MemMap[PS][2] = ROMData[nSlot]+0x4000;
+				MemMap[PS][3] = ROMData[nSlot]+0x6000;
+				MemMap[PS][4] = ROMData[nSlot]+0x8000;
+				MemMap[PS][5] = ROMData[nSlot]+0xA000;
+				MemMap[PS][6] = ROMData[nSlot]+0xC000;
+				MemMap[PS][7] = ROMData[nSlot]+0xE000;
 			}
 			break;
 		}
@@ -1069,7 +1068,7 @@ static UINT8 __fastcall msx_read(UINT16 address)
 		return d;
 	}
 
-	return (RAM[address>>13][address&0x1FFF]);
+	return (RAM[address >> 13][address & 0x1fff]);
 }
 
 static INT32 DrvInit()
@@ -1288,7 +1287,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (RAMMask) { // re-map ram
 			for (INT32 i = 0; i < 4; i++) {
 				RAMMapper[i] &= RAMMask;
-				MemMap[RAMSLOT][i * 2]   = RAMData+RAMMapper[i] * 0x4000;
+				MemMap[RAMSLOT][i * 2] = RAMData+RAMMapper[i] * 0x4000;
 				MemMap[RAMSLOT][i * 2 + 1] = MemMap[RAMSLOT][i * 2] + 0x2000;
 			}
 		}

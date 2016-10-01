@@ -245,7 +245,7 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 #define PLOTPIXEL_FLIPX(x, a) pPixel[x] = nPalette | pTileData[a];
 #define PLOTPIXEL_MASK(x, mc) if (pTileData[x] != mc) {pPixel[x] = nPalette | pTileData[x];}
 #define PLOTPIXEL_MASK_FLIPX(x, a, mc) if (pTileData[a] != mc) {pPixel[x] = nPalette | pTileData[a] ;}
-#define CLIPPIXEL(x, sx, mx, a) if ((sx + x) >= nScreenWidthMin && (sx + x) < nScreenWidthMax) { a; };
+#define CLIPPIXEL(x, sx, a) if ((sx + x) >= nScreenWidthMin && (sx + x) < nScreenWidthMax) { a; };
 
 /*================================================================================================
 8 x 8 Functions
@@ -290,14 +290,14 @@ void Render8x8Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT3
 			continue;
 		}
 
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL(0));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL(1));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL(2));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL(3));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL(4));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL(5));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL(6));
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL(7));
+		CLIPPIXEL(0, StartX, PLOTPIXEL(0));
+		CLIPPIXEL(1, StartX, PLOTPIXEL(1));
+		CLIPPIXEL(2, StartX, PLOTPIXEL(2));
+		CLIPPIXEL(3, StartX, PLOTPIXEL(3));
+		CLIPPIXEL(4, StartX, PLOTPIXEL(4));
+		CLIPPIXEL(5, StartX, PLOTPIXEL(5));
+		CLIPPIXEL(6, StartX, PLOTPIXEL(6));
+		CLIPPIXEL(7, StartX, PLOTPIXEL(7));
 	}
 }
 
@@ -340,14 +340,14 @@ void Render8x8Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 			continue;
 		}
 
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(7, 0));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(6, 1));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(5, 2));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(4, 3));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(3, 4));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(2, 5));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(1, 6));
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(0, 7));
+		CLIPPIXEL(7, StartX, PLOTPIXEL_FLIPX(7, 0));
+		CLIPPIXEL(6, StartX, PLOTPIXEL_FLIPX(6, 1));
+		CLIPPIXEL(5, StartX, PLOTPIXEL_FLIPX(5, 2));
+		CLIPPIXEL(4, StartX, PLOTPIXEL_FLIPX(4, 3));
+		CLIPPIXEL(3, StartX, PLOTPIXEL_FLIPX(3, 4));
+		CLIPPIXEL(2, StartX, PLOTPIXEL_FLIPX(2, 5));
+		CLIPPIXEL(1, StartX, PLOTPIXEL_FLIPX(1, 6));
+		CLIPPIXEL(0, StartX, PLOTPIXEL_FLIPX(0, 7));
 	}
 }
 
@@ -390,14 +390,14 @@ void Render8x8Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 			continue;
 		}
 
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL(0));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL(1));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL(2));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL(3));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL(4));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL(5));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL(6));
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL(7));
+		CLIPPIXEL(0, StartX, PLOTPIXEL(0));
+		CLIPPIXEL(1, StartX, PLOTPIXEL(1));
+		CLIPPIXEL(2, StartX, PLOTPIXEL(2));
+		CLIPPIXEL(3, StartX, PLOTPIXEL(3));
+		CLIPPIXEL(4, StartX, PLOTPIXEL(4));
+		CLIPPIXEL(5, StartX, PLOTPIXEL(5));
+		CLIPPIXEL(6, StartX, PLOTPIXEL(6));
+		CLIPPIXEL(7, StartX, PLOTPIXEL(7));
 	}
 }
 
@@ -440,14 +440,14 @@ void Render8x8Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 			continue;
 		}
 
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(7, 0));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(6, 1));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(5, 2));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(4, 3));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(3, 4));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(2, 5));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(1, 6));
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(0, 7));
+		CLIPPIXEL(7, StartX, PLOTPIXEL_FLIPX(7, 0));
+		CLIPPIXEL(6, StartX, PLOTPIXEL_FLIPX(6, 1));
+		CLIPPIXEL(5, StartX, PLOTPIXEL_FLIPX(5, 2));
+		CLIPPIXEL(4, StartX, PLOTPIXEL_FLIPX(4, 3));
+		CLIPPIXEL(3, StartX, PLOTPIXEL_FLIPX(3, 4));
+		CLIPPIXEL(2, StartX, PLOTPIXEL_FLIPX(2, 5));
+		CLIPPIXEL(1, StartX, PLOTPIXEL_FLIPX(1, 6));
+		CLIPPIXEL(0, StartX, PLOTPIXEL_FLIPX(0, 7));
 	}
 }
 
@@ -494,14 +494,14 @@ void Render8x8Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX,
 			continue;
 		}
 
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL_MASK(0, nMaskColour));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL_MASK(1, nMaskColour));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL_MASK(2, nMaskColour));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL_MASK(3, nMaskColour));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL_MASK(4, nMaskColour));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL_MASK(5, nMaskColour));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL_MASK(6, nMaskColour));
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL_MASK(7, nMaskColour));
+		CLIPPIXEL(0, StartX, PLOTPIXEL_MASK(0, nMaskColour));
+		CLIPPIXEL(1, StartX, PLOTPIXEL_MASK(1, nMaskColour));
+		CLIPPIXEL(2, StartX, PLOTPIXEL_MASK(2, nMaskColour));
+		CLIPPIXEL(3, StartX, PLOTPIXEL_MASK(3, nMaskColour));
+		CLIPPIXEL(4, StartX, PLOTPIXEL_MASK(4, nMaskColour));
+		CLIPPIXEL(5, StartX, PLOTPIXEL_MASK(5, nMaskColour));
+		CLIPPIXEL(6, StartX, PLOTPIXEL_MASK(6, nMaskColour));
+		CLIPPIXEL(7, StartX, PLOTPIXEL_MASK(7, nMaskColour));
 	}
 }
 
@@ -544,14 +544,14 @@ void Render8x8Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 			continue;
 		}
 
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(7, 0, nMaskColour));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(6, 1, nMaskColour));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(5, 2, nMaskColour));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(4, 3, nMaskColour));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(3, 4, nMaskColour));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(2, 5, nMaskColour));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(1, 6, nMaskColour));
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(0, 7, nMaskColour));
+		CLIPPIXEL(7, StartX, PLOTPIXEL_MASK_FLIPX(7, 0, nMaskColour));
+		CLIPPIXEL(6, StartX, PLOTPIXEL_MASK_FLIPX(6, 1, nMaskColour));
+		CLIPPIXEL(5, StartX, PLOTPIXEL_MASK_FLIPX(5, 2, nMaskColour));
+		CLIPPIXEL(4, StartX, PLOTPIXEL_MASK_FLIPX(4, 3, nMaskColour));
+		CLIPPIXEL(3, StartX, PLOTPIXEL_MASK_FLIPX(3, 4, nMaskColour));
+		CLIPPIXEL(2, StartX, PLOTPIXEL_MASK_FLIPX(2, 5, nMaskColour));
+		CLIPPIXEL(1, StartX, PLOTPIXEL_MASK_FLIPX(1, 6, nMaskColour));
+		CLIPPIXEL(0, StartX, PLOTPIXEL_MASK_FLIPX(0, 7, nMaskColour));
 	}
 }
 
@@ -594,14 +594,14 @@ void Render8x8Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 			continue;
 		}
 
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL_MASK(0, nMaskColour));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL_MASK(1, nMaskColour));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL_MASK(2, nMaskColour));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL_MASK(3, nMaskColour));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL_MASK(4, nMaskColour));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL_MASK(5, nMaskColour));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL_MASK(6, nMaskColour));
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL_MASK(7, nMaskColour));
+		CLIPPIXEL(0, StartX, PLOTPIXEL_MASK(0, nMaskColour));
+		CLIPPIXEL(1, StartX, PLOTPIXEL_MASK(1, nMaskColour));
+		CLIPPIXEL(2, StartX, PLOTPIXEL_MASK(2, nMaskColour));
+		CLIPPIXEL(3, StartX, PLOTPIXEL_MASK(3, nMaskColour));
+		CLIPPIXEL(4, StartX, PLOTPIXEL_MASK(4, nMaskColour));
+		CLIPPIXEL(5, StartX, PLOTPIXEL_MASK(5, nMaskColour));
+		CLIPPIXEL(6, StartX, PLOTPIXEL_MASK(6, nMaskColour));
+		CLIPPIXEL(7, StartX, PLOTPIXEL_MASK(7, nMaskColour));
 	}
 }
 
@@ -644,14 +644,14 @@ void Render8x8Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 			continue;
 		}
 
-		CLIPPIXEL(7, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(7, 0, nMaskColour));
-		CLIPPIXEL(6, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(6, 1, nMaskColour));
-		CLIPPIXEL(5, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(5, 2, nMaskColour));
-		CLIPPIXEL(4, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(4, 3, nMaskColour));
-		CLIPPIXEL(3, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(3, 4, nMaskColour));
-		CLIPPIXEL(2, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(2, 5, nMaskColour));
-		CLIPPIXEL(1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(1, 6, nMaskColour));
-		CLIPPIXEL(0, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(0, 7, nMaskColour));
+		CLIPPIXEL(7, StartX, PLOTPIXEL_MASK_FLIPX(7, 0, nMaskColour));
+		CLIPPIXEL(6, StartX, PLOTPIXEL_MASK_FLIPX(6, 1, nMaskColour));
+		CLIPPIXEL(5, StartX, PLOTPIXEL_MASK_FLIPX(5, 2, nMaskColour));
+		CLIPPIXEL(4, StartX, PLOTPIXEL_MASK_FLIPX(4, 3, nMaskColour));
+		CLIPPIXEL(3, StartX, PLOTPIXEL_MASK_FLIPX(3, 4, nMaskColour));
+		CLIPPIXEL(2, StartX, PLOTPIXEL_MASK_FLIPX(2, 5, nMaskColour));
+		CLIPPIXEL(1, StartX, PLOTPIXEL_MASK_FLIPX(1, 6, nMaskColour));
+		CLIPPIXEL(0, StartX, PLOTPIXEL_MASK_FLIPX(0, 7, nMaskColour));
 	}
 }
 
@@ -706,22 +706,22 @@ void Render16x16Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 			continue;
 		}
 		
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL( 0));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL( 1));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL( 2));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL( 3));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL( 4));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL( 5));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL( 6));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL( 7));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL( 8));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL( 9));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL(10));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL(11));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL(12));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL(13));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL(14));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL(15));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL( 0));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL( 1));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL( 2));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL( 3));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL( 4));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL( 5));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL( 6));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL( 7));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL( 8));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL( 9));
+		CLIPPIXEL(10, StartX, PLOTPIXEL(10));
+		CLIPPIXEL(11, StartX, PLOTPIXEL(11));
+		CLIPPIXEL(12, StartX, PLOTPIXEL(12));
+		CLIPPIXEL(13, StartX, PLOTPIXEL(13));
+		CLIPPIXEL(14, StartX, PLOTPIXEL(14));
+		CLIPPIXEL(15, StartX, PLOTPIXEL(15));
 	}
 }
 
@@ -772,22 +772,22 @@ void Render16x16Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 			continue;
 		}
 
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(15,  0));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(14,  1));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(13,  2));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(12,  3));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(11,  4));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(10,  5));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 9,  6));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 8,  7));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 7,  8));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 6,  9));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 5, 10));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 4, 11));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 3, 12));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 2, 13));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 1, 14));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 0, 15));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_FLIPX(15,  0));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_FLIPX(14,  1));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_FLIPX(13,  2));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_FLIPX(12,  3));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_FLIPX(11,  4));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_FLIPX(10,  5));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_FLIPX( 9,  6));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_FLIPX( 8,  7));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_FLIPX( 7,  8));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_FLIPX( 6,  9));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_FLIPX( 5, 10));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_FLIPX( 4, 11));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_FLIPX( 3, 12));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_FLIPX( 2, 13));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_FLIPX( 1, 14));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_FLIPX( 0, 15));
 	}
 }
 
@@ -800,7 +800,7 @@ void Render16x16Tile_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, I
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL( 0);
@@ -831,29 +831,29 @@ void Render16x16Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL( 0));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL( 1));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL( 2));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL( 3));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL( 4));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL( 5));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL( 6));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL( 7));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL( 8));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL( 9));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL(10));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL(11));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL(12));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL(13));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL(14));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL(15));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL( 0));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL( 1));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL( 2));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL( 3));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL( 4));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL( 5));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL( 6));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL( 7));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL( 8));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL( 9));
+		CLIPPIXEL(10, StartX, PLOTPIXEL(10));
+		CLIPPIXEL(11, StartX, PLOTPIXEL(11));
+		CLIPPIXEL(12, StartX, PLOTPIXEL(12));
+		CLIPPIXEL(13, StartX, PLOTPIXEL(13));
+		CLIPPIXEL(14, StartX, PLOTPIXEL(14));
+		CLIPPIXEL(15, StartX, PLOTPIXEL(15));
 	}
 }
 
@@ -866,7 +866,7 @@ void Render16x16Tile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, 
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_FLIPX(15,  0);
@@ -897,29 +897,29 @@ void Render16x16Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
 
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(15,  0));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(14,  1));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(13,  2));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(12,  3));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(11,  4));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(10,  5));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 9,  6));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 8,  7));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 7,  8));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 6,  9));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 5, 10));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 4, 11));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 3, 12));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 2, 13));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 1, 14));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 0, 15));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_FLIPX(15,  0));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_FLIPX(14,  1));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_FLIPX(13,  2));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_FLIPX(12,  3));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_FLIPX(11,  4));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_FLIPX(10,  5));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_FLIPX( 9,  6));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_FLIPX( 8,  7));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_FLIPX( 7,  8));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_FLIPX( 6,  9));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_FLIPX( 5, 10));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_FLIPX( 4, 11));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_FLIPX( 3, 12));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_FLIPX( 2, 13));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_FLIPX( 1, 14));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_FLIPX( 0, 15));
 	}
 }
 
@@ -974,22 +974,22 @@ void Render16x16Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 0, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 1, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 2, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 3, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 4, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 5, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 6, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 7, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 8, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 9, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK(10, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK(11, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK(12, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK(13, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK(14, nMaskColour));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK(15, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK( 0, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK( 1, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK( 2, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK( 3, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK( 4, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK( 5, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK( 6, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK( 7, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK( 8, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK( 9, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK(10, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK(11, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK(12, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK(13, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK(14, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK(15, nMaskColour));
 	}
 }
 
@@ -1040,22 +1040,22 @@ void Render16x16Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 			continue;
 		}
 
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(15,  0, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(14,  1, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(13,  2, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(12,  3, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(11,  4, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(10,  5, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 9,  6, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 8,  7, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 7,  8, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 6,  9, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 5, 10, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 4, 11, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 3, 12, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 2, 13, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 1, 14, nMaskColour));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 0, 15, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK_FLIPX(15,  0, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK_FLIPX(14,  1, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK_FLIPX(13,  2, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK_FLIPX(12,  3, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK_FLIPX(11,  4, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK_FLIPX(10,  5, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK_FLIPX( 9,  6, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK_FLIPX( 8,  7, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK_FLIPX( 7,  8, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK_FLIPX( 6,  9, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK_FLIPX( 5, 10, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK_FLIPX( 4, 11, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK_FLIPX( 3, 12, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK_FLIPX( 2, 13, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK_FLIPX( 1, 14, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK_FLIPX( 0, 15, nMaskColour));
 	}
 }
 
@@ -1068,7 +1068,7 @@ void Render16x16Tile_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_MASK( 0, nMaskColour);
@@ -1099,29 +1099,29 @@ void Render16x16Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 0, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 1, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 2, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 3, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 4, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 5, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 6, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 7, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 8, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 9, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK(10, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK(11, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK(12, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK(13, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK(14, nMaskColour));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK(15, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK( 0, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK( 1, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK( 2, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK( 3, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK( 4, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK( 5, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK( 6, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK( 7, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK( 8, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK( 9, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK(10, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK(11, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK(12, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK(13, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK(14, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK(15, nMaskColour));
 	}
 }
 
@@ -1134,7 +1134,7 @@ void Render16x16Tile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_MASK_FLIPX(15,  0, nMaskColour);
@@ -1165,29 +1165,29 @@ void Render16x16Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 	UINT32 nPalette = (nTilePalette << nColourDepth) | nPaletteOffset;
 	pTileData = pTile + (nTileNumber << 8);
 
-	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidthMax) + StartX;
+	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
 	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
 
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(15,  0, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(14,  1, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(13,  2, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(12,  3, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(11,  4, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(10,  5, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 9,  6, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 8,  7, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 7,  8, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 6,  9, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 5, 10, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 4, 11, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 3, 12, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 2, 13, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 1, 14, nMaskColour));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 0, 15, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK_FLIPX(15,  0, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK_FLIPX(14,  1, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK_FLIPX(13,  2, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK_FLIPX(12,  3, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK_FLIPX(11,  4, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK_FLIPX(10,  5, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK_FLIPX( 9,  6, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK_FLIPX( 8,  7, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK_FLIPX( 7,  8, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK_FLIPX( 6,  9, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK_FLIPX( 5, 10, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK_FLIPX( 4, 11, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK_FLIPX( 3, 12, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK_FLIPX( 2, 13, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK_FLIPX( 1, 14, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK_FLIPX( 0, 15, nMaskColour));
 	}
 }
 
@@ -1258,38 +1258,38 @@ void Render32x32Tile_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL( 0));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL( 1));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL( 2));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL( 3));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL( 4));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL( 5));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL( 6));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL( 7));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL( 8));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL( 9));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL(10));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL(11));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL(12));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL(13));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL(14));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL(15));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL(16));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL(17));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL(18));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL(19));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL(20));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL(21));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL(22));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL(23));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL(24));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL(25));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL(26));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL(27));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL(28));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL(29));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL(30));
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL(31));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL( 0));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL( 1));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL( 2));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL( 3));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL( 4));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL( 5));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL( 6));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL( 7));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL( 8));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL( 9));
+		CLIPPIXEL(10, StartX, PLOTPIXEL(10));
+		CLIPPIXEL(11, StartX, PLOTPIXEL(11));
+		CLIPPIXEL(12, StartX, PLOTPIXEL(12));
+		CLIPPIXEL(13, StartX, PLOTPIXEL(13));
+		CLIPPIXEL(14, StartX, PLOTPIXEL(14));
+		CLIPPIXEL(15, StartX, PLOTPIXEL(15));
+		CLIPPIXEL(16, StartX, PLOTPIXEL(16));
+		CLIPPIXEL(17, StartX, PLOTPIXEL(17));
+		CLIPPIXEL(18, StartX, PLOTPIXEL(18));
+		CLIPPIXEL(19, StartX, PLOTPIXEL(19));
+		CLIPPIXEL(20, StartX, PLOTPIXEL(20));
+		CLIPPIXEL(21, StartX, PLOTPIXEL(21));
+		CLIPPIXEL(22, StartX, PLOTPIXEL(22));
+		CLIPPIXEL(23, StartX, PLOTPIXEL(23));
+		CLIPPIXEL(24, StartX, PLOTPIXEL(24));
+		CLIPPIXEL(25, StartX, PLOTPIXEL(25));
+		CLIPPIXEL(26, StartX, PLOTPIXEL(26));
+		CLIPPIXEL(27, StartX, PLOTPIXEL(27));
+		CLIPPIXEL(28, StartX, PLOTPIXEL(28));
+		CLIPPIXEL(29, StartX, PLOTPIXEL(29));
+		CLIPPIXEL(30, StartX, PLOTPIXEL(30));
+		CLIPPIXEL(31, StartX, PLOTPIXEL(31));
 	}
 }
 
@@ -1356,38 +1356,38 @@ void Render32x32Tile_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 			continue;
 		}
 
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(31,  0));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(30,  1));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(29,  2));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(28,  3));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(27,  4));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(26,  5));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(25,  6));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(24,  7));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(23,  8));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(22,  9));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(21, 10));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(20, 11));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(19, 12));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(18, 13));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(17, 14));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(16, 15));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(15, 16));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(14, 17));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(13, 18));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(12, 19));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(11, 20));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(10, 21));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 9, 22));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 8, 23));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 7, 24));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 6, 25));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 5, 26));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 4, 27));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 3, 28));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 2, 29));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 1, 30));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 0, 31));
+		CLIPPIXEL(31, StartX, PLOTPIXEL_FLIPX(31,  0));
+		CLIPPIXEL(30, StartX, PLOTPIXEL_FLIPX(30,  1));
+		CLIPPIXEL(29, StartX, PLOTPIXEL_FLIPX(29,  2));
+		CLIPPIXEL(28, StartX, PLOTPIXEL_FLIPX(28,  3));
+		CLIPPIXEL(27, StartX, PLOTPIXEL_FLIPX(27,  4));
+		CLIPPIXEL(26, StartX, PLOTPIXEL_FLIPX(26,  5));
+		CLIPPIXEL(25, StartX, PLOTPIXEL_FLIPX(25,  6));
+		CLIPPIXEL(24, StartX, PLOTPIXEL_FLIPX(24,  7));
+		CLIPPIXEL(23, StartX, PLOTPIXEL_FLIPX(23,  8));
+		CLIPPIXEL(22, StartX, PLOTPIXEL_FLIPX(22,  9));
+		CLIPPIXEL(21, StartX, PLOTPIXEL_FLIPX(21, 10));
+		CLIPPIXEL(20, StartX, PLOTPIXEL_FLIPX(20, 11));
+		CLIPPIXEL(19, StartX, PLOTPIXEL_FLIPX(19, 12));
+		CLIPPIXEL(18, StartX, PLOTPIXEL_FLIPX(18, 13));
+		CLIPPIXEL(17, StartX, PLOTPIXEL_FLIPX(17, 14));
+		CLIPPIXEL(16, StartX, PLOTPIXEL_FLIPX(16, 15));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_FLIPX(15, 16));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_FLIPX(14, 17));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_FLIPX(13, 18));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_FLIPX(12, 19));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_FLIPX(11, 20));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_FLIPX(10, 21));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_FLIPX( 9, 22));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_FLIPX( 8, 23));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_FLIPX( 7, 24));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_FLIPX( 6, 25));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_FLIPX( 5, 26));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_FLIPX( 4, 27));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_FLIPX( 3, 28));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_FLIPX( 2, 29));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_FLIPX( 1, 30));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_FLIPX( 0, 31));
 	}
 }
 
@@ -1454,38 +1454,38 @@ void Render32x32Tile_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL( 0));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL( 1));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL( 2));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL( 3));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL( 4));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL( 5));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL( 6));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL( 7));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL( 8));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL( 9));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL(10));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL(11));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL(12));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL(13));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL(14));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL(15));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL(16));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL(17));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL(18));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL(19));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL(20));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL(21));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL(22));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL(23));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL(24));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL(25));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL(26));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL(27));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL(28));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL(29));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL(30));
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL(31));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL( 0));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL( 1));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL( 2));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL( 3));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL( 4));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL( 5));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL( 6));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL( 7));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL( 8));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL( 9));
+		CLIPPIXEL(10, StartX, PLOTPIXEL(10));
+		CLIPPIXEL(11, StartX, PLOTPIXEL(11));
+		CLIPPIXEL(12, StartX, PLOTPIXEL(12));
+		CLIPPIXEL(13, StartX, PLOTPIXEL(13));
+		CLIPPIXEL(14, StartX, PLOTPIXEL(14));
+		CLIPPIXEL(15, StartX, PLOTPIXEL(15));
+		CLIPPIXEL(16, StartX, PLOTPIXEL(16));
+		CLIPPIXEL(17, StartX, PLOTPIXEL(17));
+		CLIPPIXEL(18, StartX, PLOTPIXEL(18));
+		CLIPPIXEL(19, StartX, PLOTPIXEL(19));
+		CLIPPIXEL(20, StartX, PLOTPIXEL(20));
+		CLIPPIXEL(21, StartX, PLOTPIXEL(21));
+		CLIPPIXEL(22, StartX, PLOTPIXEL(22));
+		CLIPPIXEL(23, StartX, PLOTPIXEL(23));
+		CLIPPIXEL(24, StartX, PLOTPIXEL(24));
+		CLIPPIXEL(25, StartX, PLOTPIXEL(25));
+		CLIPPIXEL(26, StartX, PLOTPIXEL(26));
+		CLIPPIXEL(27, StartX, PLOTPIXEL(27));
+		CLIPPIXEL(28, StartX, PLOTPIXEL(28));
+		CLIPPIXEL(29, StartX, PLOTPIXEL(29));
+		CLIPPIXEL(30, StartX, PLOTPIXEL(30));
+		CLIPPIXEL(31, StartX, PLOTPIXEL(31));
 	}
 }
 
@@ -1552,38 +1552,38 @@ void Render32x32Tile_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 			continue;
 		}
 
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(31,  0));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(30,  1));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(29,  2));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(28,  3));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(27,  4));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(26,  5));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(25,  6));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(24,  7));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(23,  8));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(22,  9));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(21, 10));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(20, 11));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(19, 12));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(18, 13));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(17, 14));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(16, 15));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(15, 16));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(14, 17));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(13, 18));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(12, 19));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(11, 20));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(10, 21));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 9, 22));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 8, 23));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 7, 24));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 6, 25));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 5, 26));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 4, 27));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 3, 28));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 2, 29));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 1, 30));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX( 0, 31));
+		CLIPPIXEL(31, StartX, PLOTPIXEL_FLIPX(31,  0));
+		CLIPPIXEL(30, StartX, PLOTPIXEL_FLIPX(30,  1));
+		CLIPPIXEL(29, StartX, PLOTPIXEL_FLIPX(29,  2));
+		CLIPPIXEL(28, StartX, PLOTPIXEL_FLIPX(28,  3));
+		CLIPPIXEL(27, StartX, PLOTPIXEL_FLIPX(27,  4));
+		CLIPPIXEL(26, StartX, PLOTPIXEL_FLIPX(26,  5));
+		CLIPPIXEL(25, StartX, PLOTPIXEL_FLIPX(25,  6));
+		CLIPPIXEL(24, StartX, PLOTPIXEL_FLIPX(24,  7));
+		CLIPPIXEL(23, StartX, PLOTPIXEL_FLIPX(23,  8));
+		CLIPPIXEL(22, StartX, PLOTPIXEL_FLIPX(22,  9));
+		CLIPPIXEL(21, StartX, PLOTPIXEL_FLIPX(21, 10));
+		CLIPPIXEL(20, StartX, PLOTPIXEL_FLIPX(20, 11));
+		CLIPPIXEL(19, StartX, PLOTPIXEL_FLIPX(19, 12));
+		CLIPPIXEL(18, StartX, PLOTPIXEL_FLIPX(18, 13));
+		CLIPPIXEL(17, StartX, PLOTPIXEL_FLIPX(17, 14));
+		CLIPPIXEL(16, StartX, PLOTPIXEL_FLIPX(16, 15));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_FLIPX(15, 16));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_FLIPX(14, 17));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_FLIPX(13, 18));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_FLIPX(12, 19));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_FLIPX(11, 20));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_FLIPX(10, 21));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_FLIPX( 9, 22));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_FLIPX( 8, 23));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_FLIPX( 7, 24));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_FLIPX( 6, 25));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_FLIPX( 5, 26));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_FLIPX( 4, 27));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_FLIPX( 3, 28));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_FLIPX( 2, 29));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_FLIPX( 1, 30));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_FLIPX( 0, 31));
 	}
 }
 
@@ -1654,38 +1654,38 @@ void Render32x32Tile_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 0, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 1, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 2, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 3, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 4, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 5, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 6, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 7, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 8, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 9, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK(10, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK(11, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK(12, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK(13, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK(14, nMaskColour));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK(15, nMaskColour));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL_MASK(16, nMaskColour));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL_MASK(17, nMaskColour));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL_MASK(18, nMaskColour));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL_MASK(19, nMaskColour));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL_MASK(20, nMaskColour));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL_MASK(21, nMaskColour));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL_MASK(22, nMaskColour));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL_MASK(23, nMaskColour));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL_MASK(24, nMaskColour));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL_MASK(25, nMaskColour));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL_MASK(26, nMaskColour));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL_MASK(27, nMaskColour));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL_MASK(28, nMaskColour));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL_MASK(29, nMaskColour));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL_MASK(30, nMaskColour));
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL_MASK(31, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK( 0, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK( 1, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK( 2, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK( 3, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK( 4, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK( 5, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK( 6, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK( 7, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK( 8, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK( 9, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK(10, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK(11, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK(12, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK(13, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK(14, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK(15, nMaskColour));
+		CLIPPIXEL(16, StartX, PLOTPIXEL_MASK(16, nMaskColour));
+		CLIPPIXEL(17, StartX, PLOTPIXEL_MASK(17, nMaskColour));
+		CLIPPIXEL(18, StartX, PLOTPIXEL_MASK(18, nMaskColour));
+		CLIPPIXEL(19, StartX, PLOTPIXEL_MASK(19, nMaskColour));
+		CLIPPIXEL(20, StartX, PLOTPIXEL_MASK(20, nMaskColour));
+		CLIPPIXEL(21, StartX, PLOTPIXEL_MASK(21, nMaskColour));
+		CLIPPIXEL(22, StartX, PLOTPIXEL_MASK(22, nMaskColour));
+		CLIPPIXEL(23, StartX, PLOTPIXEL_MASK(23, nMaskColour));
+		CLIPPIXEL(24, StartX, PLOTPIXEL_MASK(24, nMaskColour));
+		CLIPPIXEL(25, StartX, PLOTPIXEL_MASK(25, nMaskColour));
+		CLIPPIXEL(26, StartX, PLOTPIXEL_MASK(26, nMaskColour));
+		CLIPPIXEL(27, StartX, PLOTPIXEL_MASK(27, nMaskColour));
+		CLIPPIXEL(28, StartX, PLOTPIXEL_MASK(28, nMaskColour));
+		CLIPPIXEL(29, StartX, PLOTPIXEL_MASK(29, nMaskColour));
+		CLIPPIXEL(30, StartX, PLOTPIXEL_MASK(30, nMaskColour));
+		CLIPPIXEL(31, StartX, PLOTPIXEL_MASK(31, nMaskColour));
 	}
 }
 
@@ -1752,38 +1752,38 @@ void Render32x32Tile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 			continue;
 		}
 
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(31,  0, nMaskColour));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(30,  1, nMaskColour));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(29,  2, nMaskColour));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(28,  3, nMaskColour));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(27,  4, nMaskColour));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(26,  5, nMaskColour));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(25,  6, nMaskColour));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(24,  7, nMaskColour));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(23,  8, nMaskColour));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(22,  9, nMaskColour));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(21, 10, nMaskColour));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(20, 11, nMaskColour));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(19, 12, nMaskColour));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(18, 13, nMaskColour));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(17, 14, nMaskColour));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(16, 15, nMaskColour));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(15, 16, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(14, 17, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(13, 18, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(12, 19, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(11, 20, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(10, 21, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 9, 22, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 8, 23, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 7, 24, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 6, 25, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 5, 26, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 4, 27, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 3, 28, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 2, 29, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 1, 30, nMaskColour));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 0, 31, nMaskColour));
+		CLIPPIXEL(31, StartX, PLOTPIXEL_MASK_FLIPX(31,  0, nMaskColour));
+		CLIPPIXEL(30, StartX, PLOTPIXEL_MASK_FLIPX(30,  1, nMaskColour));
+		CLIPPIXEL(29, StartX, PLOTPIXEL_MASK_FLIPX(29,  2, nMaskColour));
+		CLIPPIXEL(28, StartX, PLOTPIXEL_MASK_FLIPX(28,  3, nMaskColour));
+		CLIPPIXEL(27, StartX, PLOTPIXEL_MASK_FLIPX(27,  4, nMaskColour));
+		CLIPPIXEL(26, StartX, PLOTPIXEL_MASK_FLIPX(26,  5, nMaskColour));
+		CLIPPIXEL(25, StartX, PLOTPIXEL_MASK_FLIPX(25,  6, nMaskColour));
+		CLIPPIXEL(24, StartX, PLOTPIXEL_MASK_FLIPX(24,  7, nMaskColour));
+		CLIPPIXEL(23, StartX, PLOTPIXEL_MASK_FLIPX(23,  8, nMaskColour));
+		CLIPPIXEL(22, StartX, PLOTPIXEL_MASK_FLIPX(22,  9, nMaskColour));
+		CLIPPIXEL(21, StartX, PLOTPIXEL_MASK_FLIPX(21, 10, nMaskColour));
+		CLIPPIXEL(20, StartX, PLOTPIXEL_MASK_FLIPX(20, 11, nMaskColour));
+		CLIPPIXEL(19, StartX, PLOTPIXEL_MASK_FLIPX(19, 12, nMaskColour));
+		CLIPPIXEL(18, StartX, PLOTPIXEL_MASK_FLIPX(18, 13, nMaskColour));
+		CLIPPIXEL(17, StartX, PLOTPIXEL_MASK_FLIPX(17, 14, nMaskColour));
+		CLIPPIXEL(16, StartX, PLOTPIXEL_MASK_FLIPX(16, 15, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK_FLIPX(15, 16, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK_FLIPX(14, 17, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK_FLIPX(13, 18, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK_FLIPX(12, 19, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK_FLIPX(11, 20, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK_FLIPX(10, 21, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK_FLIPX( 9, 22, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK_FLIPX( 8, 23, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK_FLIPX( 7, 24, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK_FLIPX( 6, 25, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK_FLIPX( 5, 26, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK_FLIPX( 4, 27, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK_FLIPX( 3, 28, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK_FLIPX( 2, 29, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK_FLIPX( 1, 30, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK_FLIPX( 0, 31, nMaskColour));
 	}
 }
 
@@ -1850,38 +1850,38 @@ void Render32x32Tile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 			continue;
 		}
 
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 0, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 1, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 2, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 3, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 4, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 5, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 6, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 7, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 8, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK( 9, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK(10, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK(11, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK(12, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK(13, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK(14, nMaskColour));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK(15, nMaskColour));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL_MASK(16, nMaskColour));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL_MASK(17, nMaskColour));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL_MASK(18, nMaskColour));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL_MASK(19, nMaskColour));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL_MASK(20, nMaskColour));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL_MASK(21, nMaskColour));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL_MASK(22, nMaskColour));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL_MASK(23, nMaskColour));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL_MASK(24, nMaskColour));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL_MASK(25, nMaskColour));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL_MASK(26, nMaskColour));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL_MASK(27, nMaskColour));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL_MASK(28, nMaskColour));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL_MASK(29, nMaskColour));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL_MASK(30, nMaskColour));
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL_MASK(31, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK( 0, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK( 1, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK( 2, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK( 3, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK( 4, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK( 5, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK( 6, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK( 7, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK( 8, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK( 9, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK(10, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK(11, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK(12, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK(13, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK(14, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK(15, nMaskColour));
+		CLIPPIXEL(16, StartX, PLOTPIXEL_MASK(16, nMaskColour));
+		CLIPPIXEL(17, StartX, PLOTPIXEL_MASK(17, nMaskColour));
+		CLIPPIXEL(18, StartX, PLOTPIXEL_MASK(18, nMaskColour));
+		CLIPPIXEL(19, StartX, PLOTPIXEL_MASK(19, nMaskColour));
+		CLIPPIXEL(20, StartX, PLOTPIXEL_MASK(20, nMaskColour));
+		CLIPPIXEL(21, StartX, PLOTPIXEL_MASK(21, nMaskColour));
+		CLIPPIXEL(22, StartX, PLOTPIXEL_MASK(22, nMaskColour));
+		CLIPPIXEL(23, StartX, PLOTPIXEL_MASK(23, nMaskColour));
+		CLIPPIXEL(24, StartX, PLOTPIXEL_MASK(24, nMaskColour));
+		CLIPPIXEL(25, StartX, PLOTPIXEL_MASK(25, nMaskColour));
+		CLIPPIXEL(26, StartX, PLOTPIXEL_MASK(26, nMaskColour));
+		CLIPPIXEL(27, StartX, PLOTPIXEL_MASK(27, nMaskColour));
+		CLIPPIXEL(28, StartX, PLOTPIXEL_MASK(28, nMaskColour));
+		CLIPPIXEL(29, StartX, PLOTPIXEL_MASK(29, nMaskColour));
+		CLIPPIXEL(30, StartX, PLOTPIXEL_MASK(30, nMaskColour));
+		CLIPPIXEL(31, StartX, PLOTPIXEL_MASK(31, nMaskColour));
 	}
 }
 
@@ -1948,38 +1948,38 @@ void Render32x32Tile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 			continue;
 		}
 
-		CLIPPIXEL(31, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(31,  0, nMaskColour));
-		CLIPPIXEL(30, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(30,  1, nMaskColour));
-		CLIPPIXEL(29, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(29,  2, nMaskColour));
-		CLIPPIXEL(28, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(28,  3, nMaskColour));
-		CLIPPIXEL(27, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(27,  4, nMaskColour));
-		CLIPPIXEL(26, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(26,  5, nMaskColour));
-		CLIPPIXEL(25, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(25,  6, nMaskColour));
-		CLIPPIXEL(24, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(24,  7, nMaskColour));
-		CLIPPIXEL(23, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(23,  8, nMaskColour));
-		CLIPPIXEL(22, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(22,  9, nMaskColour));
-		CLIPPIXEL(21, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(21, 10, nMaskColour));
-		CLIPPIXEL(20, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(20, 11, nMaskColour));
-		CLIPPIXEL(19, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(19, 12, nMaskColour));
-		CLIPPIXEL(18, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(18, 13, nMaskColour));
-		CLIPPIXEL(17, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(17, 14, nMaskColour));
-		CLIPPIXEL(16, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(16, 15, nMaskColour));
-		CLIPPIXEL(15, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(15, 16, nMaskColour));
-		CLIPPIXEL(14, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(14, 17, nMaskColour));
-		CLIPPIXEL(13, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(13, 18, nMaskColour));
-		CLIPPIXEL(12, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(12, 19, nMaskColour));
-		CLIPPIXEL(11, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(11, 20, nMaskColour));
-		CLIPPIXEL(10, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(10, 21, nMaskColour));
-		CLIPPIXEL( 9, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 9, 22, nMaskColour));
-		CLIPPIXEL( 8, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 8, 23, nMaskColour));
-		CLIPPIXEL( 7, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 7, 24, nMaskColour));
-		CLIPPIXEL( 6, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 6, 25, nMaskColour));
-		CLIPPIXEL( 5, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 5, 26, nMaskColour));
-		CLIPPIXEL( 4, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 4, 27, nMaskColour));
-		CLIPPIXEL( 3, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 3, 28, nMaskColour));
-		CLIPPIXEL( 2, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 2, 29, nMaskColour));
-		CLIPPIXEL( 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 1, 30, nMaskColour));
-		CLIPPIXEL( 0, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX( 0, 31, nMaskColour));
+		CLIPPIXEL(31, StartX, PLOTPIXEL_MASK_FLIPX(31,  0, nMaskColour));
+		CLIPPIXEL(30, StartX, PLOTPIXEL_MASK_FLIPX(30,  1, nMaskColour));
+		CLIPPIXEL(29, StartX, PLOTPIXEL_MASK_FLIPX(29,  2, nMaskColour));
+		CLIPPIXEL(28, StartX, PLOTPIXEL_MASK_FLIPX(28,  3, nMaskColour));
+		CLIPPIXEL(27, StartX, PLOTPIXEL_MASK_FLIPX(27,  4, nMaskColour));
+		CLIPPIXEL(26, StartX, PLOTPIXEL_MASK_FLIPX(26,  5, nMaskColour));
+		CLIPPIXEL(25, StartX, PLOTPIXEL_MASK_FLIPX(25,  6, nMaskColour));
+		CLIPPIXEL(24, StartX, PLOTPIXEL_MASK_FLIPX(24,  7, nMaskColour));
+		CLIPPIXEL(23, StartX, PLOTPIXEL_MASK_FLIPX(23,  8, nMaskColour));
+		CLIPPIXEL(22, StartX, PLOTPIXEL_MASK_FLIPX(22,  9, nMaskColour));
+		CLIPPIXEL(21, StartX, PLOTPIXEL_MASK_FLIPX(21, 10, nMaskColour));
+		CLIPPIXEL(20, StartX, PLOTPIXEL_MASK_FLIPX(20, 11, nMaskColour));
+		CLIPPIXEL(19, StartX, PLOTPIXEL_MASK_FLIPX(19, 12, nMaskColour));
+		CLIPPIXEL(18, StartX, PLOTPIXEL_MASK_FLIPX(18, 13, nMaskColour));
+		CLIPPIXEL(17, StartX, PLOTPIXEL_MASK_FLIPX(17, 14, nMaskColour));
+		CLIPPIXEL(16, StartX, PLOTPIXEL_MASK_FLIPX(16, 15, nMaskColour));
+		CLIPPIXEL(15, StartX, PLOTPIXEL_MASK_FLIPX(15, 16, nMaskColour));
+		CLIPPIXEL(14, StartX, PLOTPIXEL_MASK_FLIPX(14, 17, nMaskColour));
+		CLIPPIXEL(13, StartX, PLOTPIXEL_MASK_FLIPX(13, 18, nMaskColour));
+		CLIPPIXEL(12, StartX, PLOTPIXEL_MASK_FLIPX(12, 19, nMaskColour));
+		CLIPPIXEL(11, StartX, PLOTPIXEL_MASK_FLIPX(11, 20, nMaskColour));
+		CLIPPIXEL(10, StartX, PLOTPIXEL_MASK_FLIPX(10, 21, nMaskColour));
+		CLIPPIXEL( 9, StartX, PLOTPIXEL_MASK_FLIPX( 9, 22, nMaskColour));
+		CLIPPIXEL( 8, StartX, PLOTPIXEL_MASK_FLIPX( 8, 23, nMaskColour));
+		CLIPPIXEL( 7, StartX, PLOTPIXEL_MASK_FLIPX( 7, 24, nMaskColour));
+		CLIPPIXEL( 6, StartX, PLOTPIXEL_MASK_FLIPX( 6, 25, nMaskColour));
+		CLIPPIXEL( 5, StartX, PLOTPIXEL_MASK_FLIPX( 5, 26, nMaskColour));
+		CLIPPIXEL( 4, StartX, PLOTPIXEL_MASK_FLIPX( 4, 27, nMaskColour));
+		CLIPPIXEL( 3, StartX, PLOTPIXEL_MASK_FLIPX( 3, 28, nMaskColour));
+		CLIPPIXEL( 2, StartX, PLOTPIXEL_MASK_FLIPX( 2, 29, nMaskColour));
+		CLIPPIXEL( 1, StartX, PLOTPIXEL_MASK_FLIPX( 1, 30, nMaskColour));
+		CLIPPIXEL( 0, StartX, PLOTPIXEL_MASK_FLIPX( 0, 31, nMaskColour));
 	}
 }
 
@@ -2022,7 +2022,7 @@ void RenderCustomTile_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32
 		}
 		
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(x, StartX, nScreenWidthMax, PLOTPIXEL(x));
+			CLIPPIXEL(x, StartX, PLOTPIXEL(x));
 		}
 	}
 }
@@ -2062,7 +2062,7 @@ void RenderCustomTile_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 		}
 		
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(nWidth - x - 1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(nWidth - x - 1, x));
+			CLIPPIXEL(nWidth - x - 1, StartX, PLOTPIXEL_FLIPX(nWidth - x - 1, x));
 		}
 	}
 }
@@ -2102,7 +2102,7 @@ void RenderCustomTile_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 		}
 
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(x, StartX, nScreenWidthMax, PLOTPIXEL(x));
+			CLIPPIXEL(x, StartX, PLOTPIXEL(x));
 		}
 	}
 }
@@ -2142,7 +2142,7 @@ void RenderCustomTile_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight
 		}
 		
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(nWidth - x - 1, StartX, nScreenWidthMax, PLOTPIXEL_FLIPX(nWidth - x - 1, x));
+			CLIPPIXEL(nWidth - x - 1, StartX, PLOTPIXEL_FLIPX(nWidth - x - 1, x));
 		}
 	}
 }
@@ -2186,7 +2186,7 @@ void RenderCustomTile_Mask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, 
 		}
 		
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(x, StartX, nScreenWidthMax, PLOTPIXEL_MASK(x, nMaskColour));
+			CLIPPIXEL(x, StartX, PLOTPIXEL_MASK(x, nMaskColour));
 		}
 	}
 }
@@ -2226,7 +2226,7 @@ void RenderCustomTile_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 		}
 		
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(nWidth - x - 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(nWidth - x - 1, x, nMaskColour));
+			CLIPPIXEL(nWidth - x - 1, StartX, PLOTPIXEL_MASK_FLIPX(nWidth - x - 1, x, nMaskColour));
 		}
 	}
 }
@@ -2266,7 +2266,7 @@ void RenderCustomTile_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 		}
 		
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(x, StartX, nScreenWidthMax, PLOTPIXEL_MASK(x, nMaskColour));
+			CLIPPIXEL(x, StartX, PLOTPIXEL_MASK(x, nMaskColour));
 		}
 	}
 }
@@ -2306,7 +2306,7 @@ void RenderCustomTile_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nH
 		}
 
 		for (INT32 x = 0; x < nWidth; x++) {
-			CLIPPIXEL(nWidth - x - 1, StartX, nScreenWidthMax, PLOTPIXEL_MASK_FLIPX(nWidth - x - 1, x, nMaskColour));
+			CLIPPIXEL(nWidth - x - 1, StartX, PLOTPIXEL_MASK_FLIPX(nWidth - x - 1, x, nMaskColour));
 		}
 	}
 }

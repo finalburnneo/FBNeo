@@ -91,39 +91,44 @@ static struct BurnDIPInfo MSXDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Hertz"	},
 	{0x17, 0x01, 0x10, 0x00, "50hz (Europe)"	},
 	{0x17, 0x01, 0x10, 0x10, "60hz (Japan, US)"	},
+
+	{0   , 0xfe, 0   ,    2, "Swap Joyports"	},
+	{0x17, 0x01, 0x20, 0x00, "Normal"	},
+	{0x17, 0x01, 0x20, 0x20, "Swapped"	},
 };
 
 STDDIPINFO(MSX)
 
 // ROM mapper types:
-#define MAP_GEN8     0      /* Generic switch, 8kB pages     */
-#define MAP_GEN16    1      /* Generic switch, 16kB pages    */
-#define MAP_KONAMI5  2      /* Konami 5000/7000/9000/B000h   */
-#define MAP_KONAMI4  3      /* Konami 4000/6000/8000/A000h   */
-#define MAP_ASCII8   4      /* ASCII 6000/6800/7000/7800h    */
-#define MAP_ASCII16  5      /* ASCII 6000/7000h              */
+#define MAP_GEN8     0      // Generic 8k
+#define MAP_GEN16    1      // Generic 16k
+#define MAP_KONAMI5  2      // Konami SCC
+#define MAP_KONAMI4  3      // Konami
+#define MAP_ASCII8   4      // ASCII 8
+#define MAP_ASCII16  5      // ASCII 16
 #define MAP_DOOLY    6      // Dooly
 #define MAP_CROSSBL  7      // Cross Blaim
 #define MAP_RTYPE    8      // R-Type
 
-#define MAXSLOTS    6       /* Number of cartridge slots     */
-#define MAXMAPPERS  9       /* Total defined MegaROM mappers */
+#define MAXSLOTS    6
+#define MAXMAPPERS  9
 
 #define MAX_MSX_CARTSIZE 0x200000
 
 // Machine Config
-#define RAMSLOT 1
-#define RAMSUBSLOT 0
-#define CARTSLOTA 2
-#define CARTSLOTB 3
+#define BIOSSLOT 0
+#define CARTSLOTA 1
+#define CARTSLOTB 2
+#define RAMSLOT 3
 
-static UINT8 Joyselect = 0;    // read from Joystick 0 or 1?
+static UINT8 SwapJoyports = 0; // Swap Joyport DIP
+static UINT8 Joyselect = 0;    // read from Joystick 0 or 1? (internal)
 static UINT8 Hertz60 = 0;      // DIP setting.
 static UINT8 BiosmodeJapan = 0;// DIP setting.
 
-static UINT8 *RAM[8];          // RAM
+static UINT8 *RAM[8];          // Mapped address space
 static UINT8 *EmptyRAM = NULL; // Unmapped stuff points here
-static UINT8 *MemMap[4][8];    // pslot, page
+static UINT8 *MemMap[4][8];    // [prislot] [page]
 
 static UINT8 *RAMData;         // main flat-chunk of ram
 static UINT8 RAMMapper[4];
@@ -146,10 +151,10 @@ static UINT8 *rtype_bank_base[2];
 
 static INT32 CurRomSize = 0; // cart A
 
-static UINT8 EnWrite[4];
-static UINT8 PSL[4]; // primary slot list
+static UINT8 EnWrite[MAXSLOTS];
+static UINT8 PSL[MAXSLOTS]; // primary slot list
 static UINT8 PSLReg; // primary slot register
-static UINT8 SCCOn[2]; // Konami-scc enable register
+static UINT8 SCCOn[MAXSLOTS]; // Konami-scc enable register
 
 static UINT8 Kana, KanaByte; // Kanji-rom stuff
 
@@ -247,13 +252,11 @@ void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 	keyInput(/*VK_SHIFT*/'\x10', (KeyType & 0xf0));
 	keyInput(code, down);
 	lastshifted = (KeyType & 0xf0);
-	// Noted regarding 'lastshifted'.  If shift+key is pressed (f.ex. ") and shift
+	// Note regarding 'lastshifted'.  If shift+key is pressed (f.ex. ") and shift
 	// is let up before the key is let up, windows won't send the right keyup message.
 	// this causes keys to get stuck.  To kludge around this, we clear the keyboard
 	// matrix-buffer when shift is let up. -dink
 }
-
-static const UINT8 CartMap[5] = { 0xff, 0, 1, 2, 0xff }; // Cart-map decode table
 
 static const char *ROMNames[MAXMAPPERS + 1] =
 { 
@@ -262,8 +265,9 @@ static const char *ROMNames[MAXMAPPERS + 1] =
   "Dooly\0","Cross Blaim\0","R-Type\0", "???\0"
 };
 
-static INT32 LoadCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot);
-static void SetMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nPg3);
+static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot);
+static void PageMap(INT32 CartSlot, const char *cMap); //("0:0:0:0:0:0:0:0")
+static void MapMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nPg3);
 
 void msxinit(INT32 cart_len)
 {
@@ -274,6 +278,7 @@ void msxinit(INT32 cart_len)
 		ROMData[i] = 0;
 		ROMType[i] = 0;
 		SRAMData[i] = 0;
+		SCCOn[i] = 0;
 	}
 
 	memset(EmptyRAM, 0xff, 0x4000); // bus is pulled high
@@ -286,18 +291,12 @@ void msxinit(INT32 cart_len)
 	RAMMask = RAMPages - 1;
 	RAMData = main_mem;
 
+	// "Insert" BIOS ROM
+	ROMData[BIOSSLOT] = maincpu;
+	PageMap(BIOSSLOT, "0:1:2:3:e:e:e:e");
+
 	if (!msx_basicmode)
-		LoadCart(game, cart_len, CARTSLOTA);
-
-	// load and map BIOS rom.
-	{  // MSX1
-		MemMap[0][0] = maincpu;
-		MemMap[0][1] = maincpu + 0x2000;
-		MemMap[0][2] = maincpu + 0x4000;
-		MemMap[0][3] = maincpu + 0x6000;
-	}
-
-	SCCOn[0] = SCCOn[1] = 0;
+		InsertCart(game, cart_len, CARTSLOTA);
 
 	PSLReg = 0;
 
@@ -318,10 +317,10 @@ void msxinit(INT32 cart_len)
 			INT32 I = ROMMask[J] + 1;
 			
 			if((ROMData[J][0] == 'A') && (ROMData[J][1] == 'B')) {
-				SetMegaROM(J, 0, 1, 2, 3);
+				MapMegaROM(J, 0, 1, 2, 3);
 			} else {
 				if((ROMData[J][(I - 2) << 13] == 'A') && (ROMData[J][((I - 2) << 13) + 1] == 'B'))
-					SetMegaROM(J, I - 2, I - 1, I - 2, I - 1);
+					MapMegaROM(J, I - 2, I - 1, I - 2, I - 1);
 			}
 		}
 }
@@ -348,16 +347,15 @@ static void Mapper_write(UINT16 A, UINT8 V)
 {
 	UINT8 *P;
 
-	UINT8 Page = A>>14; // pg. num
+	UINT8 Page = A >> 14; // pg. num
 	UINT8 PSlot = PSL[Page];
-	UINT8 CartNum = CartMap[PSlot];
 
-	if (CartNum >= MAXSLOTS) return;
+	if (PSlot >= MAXSLOTS) return;
 
-	if (!ROMData[CartNum] && (A == 0x9000))
-		SCCOn[CartNum] = (V == 0x3f) ? 1 : 0;
+	if (!ROMData[PSlot] && (A == 0x9000))
+		SCCOn[PSlot] = (V == 0x3f) ? 1 : 0;
 
-	if (((A & 0xdf00) == 0x9800) && SCCOn[CartNum]) { // Handle Konami-SCC (+)
+	if (((A & 0xdf00) == 0x9800) && SCCOn[PSlot]) { // Handle Konami-SCC (+)
 		UINT16 offset = A & 0x00ff;
 
 		if (offset < 0x80) {
@@ -380,9 +378,9 @@ static void Mapper_write(UINT16 A, UINT8 V)
 		return;
 	}
 
-	if (!ROMData[CartNum] || !ROMMask[CartNum]) return;
+	if (!ROMData[PSlot] || !ROMMask[PSlot]) return;
 
-	switch(ROMType[CartNum])
+	switch(ROMType[PSlot])
 	{
 		case MAP_DOOLY:
 			dooly_prot = V & 0x07;
@@ -393,7 +391,7 @@ static void Mapper_write(UINT16 A, UINT8 V)
 			if (crossblaim_selected_bank == 0) {
 				crossblaim_selected_bank = 1;
 			}
-			crossblaim_do_bank(ROMData[CartNum]);
+			crossblaim_do_bank(ROMData[PSlot]);
 
 			return;
 
@@ -405,19 +403,19 @@ static void Mapper_write(UINT16 A, UINT8 V)
 				{
 					rtype_selected_bank &= 0x17;
 				}
-				rtype_bank_base[1] = ROMData[CartNum] + rtype_selected_bank * 0x4000;
+				rtype_bank_base[1] = ROMData[PSlot] + rtype_selected_bank * 0x4000;
 			}
 
 		case MAP_GEN8:
 			if ((A < 0x4000) || (A > 0xbfff)) break;
 			Page = (A - 0x4000) >> 13;
-			if (Page == 2) SCCOn[CartNum] = (V == 0x3f) ? 1 : 0;
+			if (Page == 2) SCCOn[PSlot] = (V == 0x3f) ? 1 : 0;
 
-			V &= ROMMask[CartNum];
-			if (V != ROMMapper[CartNum][Page])
+			V &= ROMMask[PSlot];
+			if (V != ROMMapper[PSlot][Page])
 			{
-				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[CartNum] + (V << 13);
-				ROMMapper[CartNum][Page] = V;
+				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[PSlot] + (V << 13);
+				ROMMapper[PSlot][Page] = V;
 			}
 			return;
 
@@ -425,12 +423,12 @@ static void Mapper_write(UINT16 A, UINT8 V)
 			if ((A < 0x4000) || (A > 0xbfff)) break;
 			Page = (A & 0x8000) >> 14;
 
-			V = (V << 1) & ROMMask[CartNum];
-			if( V != ROMMapper[CartNum][Page])
+			V = (V << 1) & ROMMask[PSlot];
+			if( V != ROMMapper[PSlot][Page])
 			{
-				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[CartNum] + (V << 13);
+				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[PSlot] + (V << 13);
 				RAM[Page + 3] = MemMap[PSlot][Page + 3] = RAM[Page + 2] + 0x2000;
-				ROMMapper[CartNum][Page]=V;
+				ROMMapper[PSlot][Page]=V;
 			}
 			return;
 
@@ -438,13 +436,13 @@ static void Mapper_write(UINT16 A, UINT8 V)
 			if ((A < 0x5000) || (A > 0xb000) || ((A & 0x1fff) != 0x1000)) break;
 			Page = (A - 0x5000) >> 13;
 
-			if (Page == 2) SCCOn[CartNum] = (V == 0x3f) ? 1 : 0;
+			if (Page == 2) SCCOn[PSlot] = (V == 0x3f) ? 1 : 0;
 
-			V &= ROMMask[CartNum];
-			if(V != ROMMapper[CartNum][Page])
+			V &= ROMMask[PSlot];
+			if(V != ROMMapper[PSlot][Page])
 			{
-				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[CartNum] + (V << 13);
-				ROMMapper[CartNum][Page] = V;
+				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[PSlot] + (V << 13);
+				ROMMapper[PSlot][Page] = V;
 			}
 			return;
 
@@ -452,11 +450,11 @@ static void Mapper_write(UINT16 A, UINT8 V)
 			if ((A < 0x6000) || (A > 0xa000) || (A & 0x1fff)) break;
 			Page = (A - 0x4000) >> 13;
 
-			V &= ROMMask[CartNum];
-			if (V != ROMMapper[CartNum][Page])
+			V &= ROMMask[PSlot];
+			if (V != ROMMapper[PSlot][Page])
 			{
-				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[CartNum] + (V << 13);
-				ROMMapper[CartNum][Page] = V;
+				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[PSlot] + (V << 13);
+				ROMMapper[PSlot][Page] = V;
 			}
 			return;
 
@@ -465,27 +463,27 @@ static void Mapper_write(UINT16 A, UINT8 V)
 			{
 				Page = (A & 0x1800) >> 11;
 
-				if (V & (ROMMask[CartNum] + 1)) {
+				if (V & (ROMMask[PSlot] + 1)) {
 					V = 0xff;
-					P = SRAMData[CartNum];
+					P = SRAMData[PSlot];
 				}
 				else
 				{
-					V &= ROMMask[CartNum];
-					P = ROMData[CartNum] + (V << 13);
+					V &= ROMMask[PSlot];
+					P = ROMData[PSlot] + (V << 13);
 				}
 				
-				if (V != ROMMapper[CartNum][Page])
+				if (V != ROMMapper[PSlot][Page])
 				{
 					MemMap[PSlot][Page + 2] = P;
-					ROMMapper[CartNum][Page] = V;
+					ROMMapper[PSlot][Page] = V;
 
 					if (PSL[(Page >> 1) + 1] == PSlot)
 						RAM[Page + 2] = P;
 				}
 				return;
 			}
-			if((A >= 0x8000) && (A < 0xc000) && (ROMMapper[CartNum][((A >> 13) & 1) + 2] == 0xff))
+			if((A >= 0x8000) && (A < 0xc000) && (ROMMapper[PSlot][((A >> 13) & 1) + 2] == 0xff))
 			{
 				RAM[A >> 13][A & 0x1fff] = V;
 				return;
@@ -493,27 +491,27 @@ static void Mapper_write(UINT16 A, UINT8 V)
 			break;
 
 		case MAP_ASCII16:
-			if ((A >= 0x6000) && (A < 0x8000) && ((V <= ROMMask[CartNum] + 1) || !(A & 0x0fff)))
+			if ((A >= 0x6000) && (A < 0x8000) && ((V <= ROMMask[PSlot] + 1) || !(A & 0x0fff)))
 			{
 				Page = (A & 0x1000) >> 11;
 
-				if (V & (ROMMask[CartNum] + 1))
+				if (V & (ROMMask[PSlot] + 1))
 				{
 					V = 0xff;
-					P = SRAMData[CartNum];
+					P = SRAMData[PSlot];
 				}
 				else
 				{
 
-					V = (V << 1) & ROMMask[CartNum];
-					P = ROMData[CartNum] + (V << 13);
+					V = (V << 1) & ROMMask[PSlot];
+					P = ROMData[PSlot] + (V << 13);
 				}
 
-				if (V != ROMMapper[CartNum][Page])
+				if (V != ROMMapper[PSlot][Page])
 				{
 					MemMap[PSlot][Page + 2] = P;
 					MemMap[PSlot][Page + 3] = P + 0x2000;
-					ROMMapper[CartNum][Page] = V;
+					ROMMapper[PSlot][Page] = V;
 
 					if(PSL[(Page >> 1) + 1] == PSlot)
 					{
@@ -523,7 +521,7 @@ static void Mapper_write(UINT16 A, UINT8 V)
 				}
 				return;
 			}
-			if ((A >= 0x8000) && (A < 0xc000) && (ROMMapper[CartNum][2] == 0xff))
+			if ((A >= 0x8000) && (A < 0xc000) && (ROMMapper[PSlot][2] == 0xff))
 			{
 				P = RAM[A >> 13];
 				A &= 0x07ff;
@@ -542,13 +540,12 @@ static INT32 Mapper_read(UINT16 A, UINT8 *V)
 {
   UINT8 Page = A >> 14;
   UINT8 PSlot = PSL[Page];
-  UINT8 CartNum = CartMap[PSlot];
 
-  if (CartNum >= MAXSLOTS) return 0;
+  if (PSlot >= MAXSLOTS) return 0;
 
-  if(!ROMData[CartNum] || !ROMMask[CartNum]) return 0;
+  if(!ROMData[PSlot] || !ROMMask[PSlot]) return 0;
 
-  switch(ROMType[CartNum])
+  switch(ROMType[PSlot])
   {
 	  case MAP_CROSSBL:
 		  {
@@ -562,7 +559,7 @@ static INT32 Mapper_read(UINT16 A, UINT8 *V)
 	  case MAP_DOOLY:
 		  {
 			  if ((A > 0x3fff) && (A < 0xc000)) {
-				  UINT8 data = ROMData[CartNum][A - 0x4000];
+				  UINT8 data = ROMData[PSlot][A - 0x4000];
 
 				  switch (dooly_prot)
 				  {
@@ -592,8 +589,7 @@ static void SetSlot(UINT8 nSlot)
 
 	if (PSLReg != nSlot) {
 		PSLReg = nSlot;
-		for (J = 0; J < 4; J++)
-		{
+		for (J = 0; J < 4; J++)	{
 			I = J << 1;
 			PSL[J] = nSlot & 3;
 			RAM[I] = MemMap[PSL[J]][I];
@@ -604,7 +600,27 @@ static void SetSlot(UINT8 nSlot)
 	}
 }
 
-static void SetMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nPg3)
+static void PageMap(INT32 CartSlot, const char *cMap) //("0:0:0:0:0:0:0:0")
+{
+	for (INT32 i = 0; i < 8; i++) {
+		switch (cMap[i << 1]) {
+			case 'n': // no change
+				break;
+			case 'e': // empty page
+				{
+					MemMap[CartSlot][i] = EmptyRAM;
+				}
+				break;
+		    default: // map page num.
+				{
+					MemMap[CartSlot][i] = ROMData[CartSlot] + ((cMap[i << 1] - '0') * 0x2000);
+					bprintf(0, _T("pg %X @ %X\n"), i, ((cMap[i << 1] - '0') * 0x2000));
+				}
+		}
+	}
+}
+
+static void MapMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nPg3)
 {
   if (nSlot >= MAXSLOTS) return;
 
@@ -613,10 +629,10 @@ static void SetMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nP
   nPg2 &= ROMMask[nSlot];
   nPg3 &= ROMMask[nSlot];
 
-  MemMap[nSlot + 1][2] = ROMData[nSlot] + nPg0 * 0x2000;
-  MemMap[nSlot + 1][3] = ROMData[nSlot] + nPg1 * 0x2000;
-  MemMap[nSlot + 1][4] = ROMData[nSlot] + nPg2 * 0x2000;
-  MemMap[nSlot + 1][5] = ROMData[nSlot] + nPg3 * 0x2000;
+  MemMap[nSlot][2] = ROMData[nSlot] + nPg0 * 0x2000;
+  MemMap[nSlot][3] = ROMData[nSlot] + nPg1 * 0x2000;
+  MemMap[nSlot][4] = ROMData[nSlot] + nPg2 * 0x2000;
+  MemMap[nSlot][5] = ROMData[nSlot] + nPg3 * 0x2000;
 
   ROMMapper[nSlot][0] = nPg0;
   ROMMapper[nSlot][1] = nPg1;
@@ -680,14 +696,13 @@ static INT32 GuessROM(UINT8 *buf, INT32 Size)
 		}
 	}
 
-
 	for (i = 0, j = 0; j < MAXMAPPERS; j++)
 		if (ROMCount[j] > ROMCount[i]) i = j;
 
 	return i;
 }
 
-static INT32 LoadCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
+static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 {
 	INT32 Len, Pages, Flat64;
 	UINT8 ca, cb;
@@ -695,7 +710,7 @@ static INT32 LoadCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 
 	if (nSlot >= MAXSLOTS) return 0;
 
-	PS = nSlot + 1;
+	PS = nSlot;// + 1;
 
 	Len = cartsize >> 13; // Len, in 8k pages
 
@@ -778,85 +793,48 @@ static INT32 LoadCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 	}
 
 	if (ROMType[nSlot] != MAP_DOOLY) { // set-up non-megarom mirroring & mapping
-		switch(Len)
+		switch (Len)
 		{
-			case 1: // 8k rom-mirroring 0:0:0:0:0:0:0:0
-				if (BasicROM) { // BasicROMS only on page 2
-					MemMap[PS][0] = EmptyRAM;
-					MemMap[PS][1] = EmptyRAM;
-					MemMap[PS][2] = EmptyRAM;
-					MemMap[PS][3] = EmptyRAM;
-					MemMap[PS][4] = ROMData[nSlot];
-					MemMap[PS][5] = ROMData[nSlot];
-					MemMap[PS][6] = EmptyRAM;
-					MemMap[PS][7] = EmptyRAM;
-				} else { // normal 16k
-					MemMap[PS][0] = ROMData[nSlot];
-					MemMap[PS][1] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][2] = ROMData[nSlot];
-					MemMap[PS][3] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][4] = ROMData[nSlot];
-					MemMap[PS][5] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][6] = ROMData[nSlot];
-					MemMap[PS][7] = ROMData[nSlot] + 0x2000;
+			case 1: // 8k rom-mirroring
+				if (BasicROM)
+				{ // BasicROM only on page 2
+					PageMap(nSlot, "e:e:e:e:0:0:e:e");
+				} else
+				{ // normal 8k ROM
+					PageMap(nSlot, "0:0:0:0:0:0:0:0");
 				}
 				break;
 
-			case 2: // 16k rom-mirroring 0:1:0:1:0:1:0:1
-				if (BasicROM) { // BasicROMS only on page 2
-					MemMap[PS][0] = EmptyRAM;
-					MemMap[PS][1] = EmptyRAM;
-					MemMap[PS][2] = EmptyRAM;
-					MemMap[PS][3] = EmptyRAM;
-					MemMap[PS][4] = ROMData[nSlot];
-					MemMap[PS][5] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][6] = EmptyRAM;
-					MemMap[PS][7] = EmptyRAM;
-				} else { // normal 16k
-					MemMap[PS][0] = ROMData[nSlot];
-					MemMap[PS][1] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][2] = ROMData[nSlot];
-					MemMap[PS][3] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][4] = ROMData[nSlot];
-					MemMap[PS][5] = ROMData[nSlot] + 0x2000;
-					MemMap[PS][6] = ROMData[nSlot];
-					MemMap[PS][7] = ROMData[nSlot] + 0x2000;
+			case 2: // 16k rom-mirroring
+				if (BasicROM)
+				{ // BasicROM only on page 2
+					PageMap(nSlot, "e:e:e:e:0:1:e:e");
+				} else
+				{ // normal 16k ROM
+					PageMap(nSlot, "0:1:0:1:0:1:0:1");
 				}
 				break;
 
 			case 3:
-			case 4: // 24k & 32k rom-mirroring 0:1:0:1:2:3:2:3
-				MemMap[PS][0] = ROMData[nSlot];
-				MemMap[PS][1] = ROMData[nSlot]+0x2000;
-				MemMap[PS][2] = ROMData[nSlot];
-				MemMap[PS][3] = ROMData[nSlot]+0x2000;
-				MemMap[PS][4] = ROMData[nSlot]+0x4000;
-				MemMap[PS][5] = ROMData[nSlot]+0x6000;
-				MemMap[PS][6] = ROMData[nSlot]+0x4000;
-				MemMap[PS][7] = ROMData[nSlot]+0x6000;
+			case 4: // 24k & 32k rom-mirroring
+				PageMap(nSlot, "0:1:0:1:2:3:2:3");
 				break;
 
 		default:
-			if(Flat64) { // Flat/64k rom
-				MemMap[PS][0] = ROMData[nSlot];
-				MemMap[PS][1] = ROMData[nSlot]+0x2000;
-				MemMap[PS][2] = ROMData[nSlot]+0x4000;
-				MemMap[PS][3] = ROMData[nSlot]+0x6000;
-				MemMap[PS][4] = ROMData[nSlot]+0x8000;
-				MemMap[PS][5] = ROMData[nSlot]+0xA000;
-				MemMap[PS][6] = ROMData[nSlot]+0xC000;
-				MemMap[PS][7] = ROMData[nSlot]+0xE000;
+			if(Flat64)
+			{ // Flat/64k ROM
+				PageMap(nSlot, "0:1:2:3:4:5:6:7");
 			}
 			break;
 		}
 	}
 
 	bprintf(0, _T("starting address 0x%04X.\n"),
-			MemMap[PS][2][2] + 256 * MemMap[PS][2][3]);
+			MemMap[nSlot][2][2] + 256 * MemMap[nSlot][2][3]);
 
 	// map gen/16k megaROM pages 0:1:N-2:N-1
 	if ((ROMType[nSlot] == MAP_GEN16) && (ROMMask[nSlot] + 1 > 4))
-		SetMegaROM(nSlot, 0, 1, ROMMask[nSlot] - 1, ROMMask[nSlot]);
+		MapMegaROM(nSlot, 0, 1, ROMMask[nSlot] - 1, ROMMask[nSlot]);
 
 	return 1;
 }
@@ -981,7 +959,11 @@ static void msx_ppi8255_portC_write(UINT8 data)
 
 static UINT8 ay8910portAread(UINT32 offset)
 {
-	return (Joyselect) ? DrvInputs[1] : DrvInputs[0];
+	if (SwapJoyports) {
+		return (Joyselect) ? DrvInputs[0] : DrvInputs[1];
+	} else {
+		return (Joyselect) ? DrvInputs[1] : DrvInputs[0];
+	}
 }
 
 static void ay8910portAwrite(UINT32 offset, UINT32 data)
@@ -990,8 +972,7 @@ static void ay8910portAwrite(UINT32 offset, UINT32 data)
 }
 static void ay8910portBwrite(UINT32 offset, UINT32 data)
 {
-	//bprintf(0, _T("8910 portBwrite %X:%X\n"), offset, data);
-	Joyselect = (data & 0x40) >> 6;
+	Joyselect = (data & 0x40) ? 1 : 0;
 }
 
 static void vdp_interrupt(INT32 state)
@@ -1086,9 +1067,10 @@ static INT32 DrvInit()
 		bprintf(0, _T("MSXINIT...\n"));
 		Hertz60 = (DrvDips[0] & 0x10) ? 1 : 0;
 		BiosmodeJapan = (DrvDips[0] & 0x01) ? 1 : 0;
+		SwapJoyports = (DrvDips[0] & 0x20) ? 1 : 0;
 		bprintf(0, _T("60hz mode: %S\n"), (Hertz60) ? "YES" : "no");
 		bprintf(0, _T("BIOS mode: %S\n"), (BiosmodeJapan) ? "Japanese" : "Normal");
-
+		bprintf(0, _T("%S"), (SwapJoyports) ? "Joystick Ports: Swapped.\n" : "");
 		if (BurnLoadRom(maincpu, 0x80+BiosmodeJapan, 1)) return 1; // BIOS
 
 		use_kanji = (BurnLoadRom(kanji_rom, 0x82, 1) == 0);
@@ -1176,6 +1158,8 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		SwapJoyports = (DrvDips[0] & 0x20) ? 1 : 0;
 
 		// Keyboard fun!
 #if 0
@@ -1294,7 +1278,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		for (INT32 i = 0; i < MAXSLOTS; i++)
 			if (ROMData[i] && ROMMask[i]) {
-				SetMegaROM(i, ROMMapper[i][0], ROMMapper[i][1], ROMMapper[i][2], ROMMapper[i][3]);
+				MapMegaROM(i, ROMMapper[i][0], ROMMapper[i][1], ROMMapper[i][2], ROMMapper[i][3]);
 				crossblaim_do_bank(ROMData[i]);
 				rtype_do_bank(ROMData[i]);
 			}
@@ -19312,7 +19296,7 @@ struct BurnDriver BurnDrvMSX_dinosour = {
 // Temptations
 
 static struct BurnRomInfo MSX_temptationsRomDesc[] = {
-	{ "temptati.rom",	0x20000, 0xfccfb207, BRF_PRG | BRF_ESS },
+	{ "temptati.rom",	0x20000, 0x2d46f211, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_temptations, MSX_temptations, msx_msx)
@@ -19322,7 +19306,7 @@ struct BurnDriver BurnDrvMSX_temptations = {
 	"MSX_temptations", NULL, "msx_msx", NULL, "1988",
 	"Temptations\0", NULL, "Topo Soft", "MSX",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_temptationsRomInfo, MSX_temptationsRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
@@ -19594,3 +19578,59 @@ struct BurnDriver BurnDrvMSX_dooly = {
 	272, 228, 4, 3
 };
 
+// MSXMEM
+
+static struct BurnRomInfo MSX_msxmemRomDesc[] = {
+	{ "msxmem.rom",	0x04000, 0x79c851e5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_msxmem, MSX_msxmem, msx_msx)
+STD_ROM_FN(MSX_msxmem)
+
+struct BurnDriver BurnDrvMSX_msxmem = {
+	"MSX_msxmem", NULL, "msx_msx", NULL, "20??",
+	"MSXMEM\0", NULL, "BiFi", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_msxmemRomInfo, MSX_msxmemRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Xenon
+
+static struct BurnRomInfo MSX_xenonRomDesc[] = {
+	{ "xenon.rom",	0x020000, 0xb5586fc4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_xenon, MSX_xenon, msx_msx)
+STD_ROM_FN(MSX_xenon)
+
+struct BurnDriver BurnDrvMSX_xenon = {
+	"MSX_xenon", NULL, "msx_msx", NULL, "1988",
+	"Xenon\0", "Uses joyport #2", "Dro Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_xenonRomInfo, MSX_xenonRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Scentipede
+
+static struct BurnRomInfo MSX_scentipedeRomDesc[] = {
+	{ "Scentipede (1986)(Aackosoft)(NL).rom",	0x10000, 0xd555ae4a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_scentipede, MSX_scentipede, msx_msx)
+STD_ROM_FN(MSX_scentipede)
+
+struct BurnDriver BurnDrvMSX_scentipede = {
+	"MSX_scentipede", NULL, "msx_msx", NULL, "1986",
+	"Scentipede\0", NULL, "Aackosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_scentipedeRomInfo, MSX_scentipedeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

@@ -680,29 +680,17 @@ static void draw_sprites(INT32 start, INT32 stop)
 		if (sx >= 304) sx -= 512;
 		if (sy >= 224) sy -= 512;
 
-		// custom drawing doesn't like 16x32?
-		{
-			color <<= 4;
-
-			INT32 flip = 0;
-			if (flipx) flip |= 0x00f;
-			if (flipy) flip |= 0x1f0;
-			UINT8 *gfx = DrvGfxROM2 + code * 16 * 32;
-
-			for (INT32 y = 0; y < 32 * 16; y+=16, sy++) {
-				if (sy < 0 || sy >= nScreenHeight) continue;
-
-				for (INT32 x = 0; x < 16; x++, sx++) {
-					if (sx < 0 || sx >= nScreenWidth) continue;
-
-					INT32 pxl = gfx[(y + x) ^ flip];
-
-					if (pxl != 0x0f) {
-						pTransDraw[sy * nScreenWidth + sx] = pxl + color;
-					}
-				}
-
-				sx -= 16;
+		if (flipy) {
+			if (flipx) {
+				RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
+			} else {
+				RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
+			}
+		} else {
+			if (flipx) {
+				RenderCustomTile_Mask_FlipX_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
+			} else {
+				RenderCustomTile_Mask_Clip(pTransDraw, 16, 32, code, sx, sy, color, 4, 0xf, 0, DrvGfxROM2);
 			}
 		}
 	}

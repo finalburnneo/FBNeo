@@ -19962,7 +19962,7 @@ struct BurnDriver BurnDrvMSX_feud = {
 // Head over Heels
 
 static struct BurnRomInfo MSX_headheelsRomDesc[] = {
-	{ "headheels.rom",	0x10000, 0x178e6d60, BRF_PRG | BRF_ESS },
+	{ "Head over Heels (1987)(Ocean Software)(GB).rom",	0x20000, 0x48b88fbc, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_headheels, MSX_headheels, msx_msx)
@@ -19978,3 +19978,230 @@ struct BurnDriver BurnDrvMSX_headheels = {
 	272, 228, 4, 3
 };
 
+// Perspective v1.1 T.Yoshida
+
+static struct BurnRomInfo MSX_perspectiveRomDesc[] = {
+	{ "perspective.rom",	0x40000, 0x2c4eead6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_perspective, MSX_perspective, msx_msx)
+STD_ROM_FN(MSX_perspective)
+
+struct BurnDriver BurnDrvMSX_perspective = {
+	"MSX_perspective", NULL, "msx_msx", NULL, "1987",
+	"Perspective (v1.1)\0", NULL, "T.Yoshida", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_perspectiveRomInfo, MSX_perspectiveRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Fruit Panic
+
+static struct BurnRomInfo MSX_fruitpanicRomDesc[] = {
+	{ "Fruit Panic (1984)(Pony Canyon)(JP).rom",	0x04000, 0xa7087d17, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_fruitpanic, MSX_fruitpanic, msx_msx)
+STD_ROM_FN(MSX_fruitpanic)
+
+struct BurnDriver BurnDrvMSX_fruitpanic = {
+	"MSX_fruitpanic", NULL, "msx_msx", NULL, "1984",
+	"Fruit Panic\0", NULL, "Pony Canyon", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_fruitpanicRomInfo, MSX_fruitpanicRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Ale Hop!
+
+static struct BurnRomInfo MSX_alehopRomDesc[] = {
+	{ "Ale Hop! (1988)(Topo Soft)(ES).rom",	0x20000, 0xc2694922, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_alehop, MSX_alehop, msx_msx)
+STD_ROM_FN(MSX_alehop)
+
+struct BurnDriver BurnDrvMSX_alehop = {
+	"MSX_alehop", NULL, "msx_msx", NULL, "1988",
+	"Ale Hop!\0", NULL, "Topo Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_alehopRomInfo, MSX_alehopRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Blackbeard
+
+static struct BurnRomInfo MSX_blackbeardRomDesc[] = {
+	{ "Blackbeard (1988)(Topo Soft)(ES).rom",	0x20000, 0x6e566a11, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_blackbeard, MSX_blackbeard, msx_msx)
+STD_ROM_FN(MSX_blackbeard)
+
+struct BurnDriver BurnDrvMSX_blackbeard = {
+	"MSX_blackbeard", NULL, "msx_msx", NULL, "1988",
+	"Blackbeard\0", "Uses joyport #2", "Topo Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_blackbeardRomInfo, MSX_blackbeardRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Capitan Trueno
+
+static struct BurnRomInfo MSX_ctruenoRomDesc[] = {
+	{ "Capitan Trueno (1989)(Dinamic Software)(ES).rom",	0x20000, 0xb1b434be, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ctrueno, MSX_ctrueno, msx_msx)
+STD_ROM_FN(MSX_ctrueno)
+
+struct BurnDriver BurnDrvMSX_ctrueno = {
+	"MSX_ctrueno", NULL, "msx_msx", NULL, "1989",
+	"Capitan Trueno\0", "Uses joyport #2", "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_ctruenoRomInfo, MSX_ctruenoRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Colt 36
+
+static struct BurnRomInfo MSX_colt36RomDesc[] = {
+	{ "Colt 36 (1987)(Topo Soft)(ES).rom",	0x10000, 0x7ce25b7c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_colt36, MSX_colt36, msx_msx)
+STD_ROM_FN(MSX_colt36)
+
+struct BurnDriver BurnDrvMSX_colt36 = {
+	"MSX_colt36", NULL, "msx_msx", NULL, "1987",
+	"Colt 36\0", NULL, "Topo Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_colt36RomInfo, MSX_colt36RomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Corsarios
+
+static struct BurnRomInfo MSX_corsariosRomDesc[] = {
+	{ "Corsarios (1989)(Opera Soft)(ES).rom",	0x20000, 0x64005d08, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_corsarios, MSX_corsarios, msx_msx)
+STD_ROM_FN(MSX_corsarios)
+
+struct BurnDriver BurnDrvMSX_corsarios = {
+	"MSX_corsarios", NULL, "msx_msx", NULL, "1989",
+	"Corsarios\0", "Uses joyport #2", "Opera Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_corsariosRomInfo, MSX_corsariosRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Game Over
+
+static struct BurnRomInfo MSX_gameoverRomDesc[] = {
+	{ "Game Over (1988)(Dinamic Software)(ES).rom",	0x20000, 0xdfbbdf10, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gameover, MSX_gameover, msx_msx)
+STD_ROM_FN(MSX_gameover)
+
+struct BurnDriver BurnDrvMSX_gameover = {
+	"MSX_gameover", NULL, "msx_msx", NULL, "1988",
+	"Game Over\0", NULL, "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_gameoverRomInfo, MSX_gameoverRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Goody
+
+static struct BurnRomInfo MSX_goodyRomDesc[] = {
+	{ "Goody (1987)(Opera Soft)(ES).rom",	0x20000, 0xa7c7e735, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_goody, MSX_goody, msx_msx)
+STD_ROM_FN(MSX_goody)
+
+struct BurnDriver BurnDrvMSX_goody = {
+	"MSX_goody", NULL, "msx_msx", NULL, "1987",
+	"Goody\0", NULL, "", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_goodyRomInfo, MSX_goodyRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Poder Oscuro, El
+
+static struct BurnRomInfo MSX_poderoRomDesc[] = {
+	{ "Poder Oscuro, El (1988)(Zigurat Software)(ES).rom",	0x20000, 0xdc6eef71, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_podero, MSX_podero, msx_msx)
+STD_ROM_FN(MSX_podero)
+
+struct BurnDriver BurnDrvMSX_podero = {
+	"MSX_podero", NULL, "msx_msx", NULL, "1988",
+	"Poder Oscuro, El\0", NULL, "Zigurat Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_poderoRomInfo, MSX_poderoRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Sorcery
+
+static struct BurnRomInfo MSX_sorceryRomDesc[] = {
+	{ "Sorcery (1985)(Virgin Games)(GB).rom",	0x20000, 0x4300eaa9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sorcery, MSX_sorcery, msx_msx)
+STD_ROM_FN(MSX_sorcery)
+
+struct BurnDriver BurnDrvMSX_sorcery = {
+	"MSX_sorcery", NULL, "msx_msx", NULL, "1985",
+	"Sorcery\0", NULL, "Virgin Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_sorceryRomInfo, MSX_sorceryRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Who Dares Wins II
+
+static struct BurnRomInfo MSX_whodaresRomDesc[] = {
+	{ "Who Dares Wins II (1986)(Alligata Software)(GB).rom",	0x20000, 0x1d10443f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_whodares, MSX_whodares, msx_msx)
+STD_ROM_FN(MSX_whodares)
+
+struct BurnDriver BurnDrvMSX_whodares = {
+	"MSX_whodares", NULL, "msx_msx", NULL, "1986",
+	"Who Dares Wins II\0", NULL, "Alligata Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_whodaresRomInfo, MSX_whodaresRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

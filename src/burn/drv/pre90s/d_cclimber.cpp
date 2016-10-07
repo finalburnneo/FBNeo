@@ -1929,23 +1929,21 @@ static INT32 silvlandInit()
 // River Patrol (Orca)
 
 static struct BurnRomInfo rpatrolRomDesc[] = {
-	{ "sci1.bin",	0x1000, 0x33b01c90, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "sci2.bin",	0x1000, 0x03f53340, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "sci3.bin",	0x1000, 0x8fa300df, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "sci4.bin",	0x1000, 0x74a8f1f4, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "sci5.bin",	0x1000, 0xd7ef6c87, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.1h",		0x1000, 0x065197f0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.1f",		0x1000, 0x3614b820, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.1d",		0x1000, 0xba428bbf, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.1c",		0x1000, 0x41497a94, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.1a",		0x1000, 0xe20ee7e7, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "rp6.6n",	0x0800, 0x19f18e9e, 2 | BRF_GRA },           //  5 gfx1
-	{ "rp7.6l",	0x0800, 0x07f2070d, 2 | BRF_GRA },           //  6
-	{ "rp8.6k",	0x0800, 0x008738c7, 2 | BRF_GRA },           //  7
-	{ "rp9.6h",	0x0800, 0xea5aafca, 2 | BRF_GRA },           //  8
+	{ "6.6l.2732",	0x1000, 0xb38d8aca, 2 | BRF_GRA },           //  5 gfx1
+	{ "7.6p.2732",	0x1000, 0xbc2bddf9, 2 | BRF_GRA },           //  6
 
-	{ "rp11.6c",	0x0800, 0x065651a5, 3 | BRF_GRA },           //  9 gfx2
-	{ "rp10.6a",	0x0800, 0x59747c31, 3 | BRF_GRA },           // 10
+	{ "9.2t",		0x0800, 0xd373fc48, 3 | BRF_GRA },           //  7 gfx2
+	{ "8.2s",		0x0800, 0x59747c31, 3 | BRF_GRA },           //  8
 
-	{ "bprom1.9n",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           // 11 proms
-	{ "bprom2.9p",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 12
-	{ "bprom3.9c",	0x0020, 0xee03bc96, 6 | BRF_GRA },           // 13
+	{ "bprom1.9n",	0x0020, 0xf9a2383b, 6 | BRF_GRA },           //  9 proms
+	{ "bprom2.9p",	0x0020, 0x1743bd26, 6 | BRF_GRA },           // 10
+	{ "bprom3.9c",	0x0020, 0xee03bc96, 6 | BRF_GRA },           // 11
 };
 
 STD_ROM_PICK(rpatrol)

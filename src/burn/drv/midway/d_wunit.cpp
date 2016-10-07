@@ -1085,33 +1085,33 @@ struct BurnDriver BurnDrvNbamht1 = {
 // Rampage: World Tour (rev 1.3)
 
 static struct BurnRomInfo rmpgwtRomDesc[] = {
-	{ "rwtr13.54",	0x080000, 0x2a8f6e1e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "rwtr13.63",	0x080000, 0x403ae41e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.3_rampage_world_u54_game.u54",	0x080000, 0x2a8f6e1e, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "1.3_rampage_world_u63_game.u63",	0x080000, 0x403ae41e, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rwt.2",	0x100000, 0x0e82f83d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
-	{ "rwt.3",	0x100000, 0x3ff54d15, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "rwt.4",	0x100000, 0x5c7f5656, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "rwt.5",	0x100000, 0xfd9aaf24, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "1.0_rampage_world_tour_u2_sound.u2",	0x100000, 0x0e82f83d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "1.0_rampage_world_tour_u3_sound.u3",	0x100000, 0x3ff54d15, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.0_rampage_world_tour_u4_sound.u4",	0x100000, 0x5c7f5656, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.0_rampage_world_tour_u5_sound.u5",	0x100000, 0xfd9aaf24, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rwt.133",	0x100000, 0x5b5ac449, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
-	{ "rwt.132",	0x100000, 0x7b3f09c6, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
-	{ "rwt.131",	0x100000, 0xfdecf12e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
-	{ "rwt.130",	0x100000, 0x4a983b05, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+	{ "1.0_rampage_world_tour_u133_image.u133",	0x100000, 0x5b5ac449, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "1.0_rampage_world_tour_u132_image.u132",	0x100000, 0x7b3f09c6, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "1.0_rampage_world_tour_u131_image.u131",	0x100000, 0xfdecf12e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "1.0_rampage_world_tour_u130_image.u130",	0x100000, 0x4a983b05, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
 
-	{ "rwt.129",	0x100000, 0xdc495c6e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
-	{ "rwt.128",	0x100000, 0x5545503d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
-	{ "rwt.127",	0x100000, 0x6e1756ba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
-	{ "rwt.126",	0x100000, 0xc300eb1b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+	{ "1.0_rampage_world_tour_u129_image.u129",	0x100000, 0xdc495c6e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "1.0_rampage_world_tour_u128_image.u128",	0x100000, 0x5545503d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "1.0_rampage_world_tour_u127_image.u127",	0x100000, 0x6e1756ba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "1.0_rampage_world_tour_u126_image.u126",	0x100000, 0xc300eb1b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
 
-	{ "rwt.125",	0x100000, 0x7369bf5d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
-	{ "rwt.124",	0x100000, 0xc0bf88c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
-	{ "rwt.123",	0x100000, 0xac4c712a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
-	{ "rwt.122",	0x100000, 0x609862a2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+	{ "1.0_rampage_world_tour_u125_image.u125",	0x100000, 0x7369bf5d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "1.0_rampage_world_tour_u124_image.u124",	0x100000, 0xc0bf88c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "1.0_rampage_world_tour_u123_image.u123",	0x100000, 0xac4c712a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "1.0_rampage_world_tour_u122_image.u122",	0x100000, 0x609862a2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
-	{ "rwt.121",	0x100000, 0xf65119b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
-	{ "rwt.120",	0x100000, 0x6d643dee, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
-	{ "rwt.119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
-	{ "rwt.118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	{ "1.0_rampage_world_tour_u121_image.u121",	0x100000, 0xf65119b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "1.0_rampage_world_tour_u120_image.u120",	0x100000, 0x6d643dee, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 };
 
 STD_ROM_PICK(rmpgwt)
@@ -1131,33 +1131,33 @@ struct BurnDriver BurnDrvRmpgwt = {
 // Rampage: World Tour (rev 1.1)
 
 static struct BurnRomInfo rmpgwt11RomDesc[] = {
-	{ "rwtr11.54",	0x080000, 0x3aa514eb, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
-	{ "rwtr11.63",	0x080000, 0x031c908f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.1_rampage_world_u54_game.u54",	0x080000, 0x3aa514eb, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "1.1_rampage_world_u63_game.u63",	0x080000, 0x031c908f, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rwt.2",	0x100000, 0x0e82f83d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
-	{ "rwt.3",	0x100000, 0x3ff54d15, 2 | BRF_PRG | BRF_ESS }, //  3
-	{ "rwt.4",	0x100000, 0x5c7f5656, 2 | BRF_PRG | BRF_ESS }, //  4
-	{ "rwt.5",	0x100000, 0xfd9aaf24, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "1.0_rampage_world_tour_u2_sound.u2",	0x100000, 0x0e82f83d, 2 | BRF_PRG | BRF_ESS }, //  2 DCS sound banks
+	{ "1.0_rampage_world_tour_u3_sound.u3",	0x100000, 0x3ff54d15, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.0_rampage_world_tour_u4_sound.u4",	0x100000, 0x5c7f5656, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.0_rampage_world_tour_u5_sound.u5",	0x100000, 0xfd9aaf24, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "rwt.133",	0x100000, 0x5b5ac449, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
-	{ "rwt.132",	0x100000, 0x7b3f09c6, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
-	{ "rwt.131",	0x100000, 0xfdecf12e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
-	{ "rwt.130",	0x100000, 0x4a983b05, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
+	{ "1.0_rampage_world_tour_u133_image.u133",	0x100000, 0x5b5ac449, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 0) }, //  6 GFX
+	{ "1.0_rampage_world_tour_u132_image.u132",	0x100000, 0x7b3f09c6, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 1) }, //  7
+	{ "1.0_rampage_world_tour_u131_image.u131",	0x100000, 0xfdecf12e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 2) }, //  8
+	{ "1.0_rampage_world_tour_u130_image.u130",	0x100000, 0x4a983b05, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x00, 3) }, //  9
 
-	{ "rwt.129",	0x100000, 0xdc495c6e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
-	{ "rwt.128",	0x100000, 0x5545503d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
-	{ "rwt.127",	0x100000, 0x6e1756ba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
-	{ "rwt.126",	0x100000, 0xc300eb1b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
+	{ "1.0_rampage_world_tour_u129_image.u129",	0x100000, 0xdc495c6e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 0) }, // 10
+	{ "1.0_rampage_world_tour_u128_image.u128",	0x100000, 0x5545503d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 1) }, // 11
+	{ "1.0_rampage_world_tour_u127_image.u127",	0x100000, 0x6e1756ba, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 2) }, // 12
+	{ "1.0_rampage_world_tour_u126_image.u126",	0x100000, 0xc300eb1b, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x04, 3) }, // 13
 
-	{ "rwt.125",	0x100000, 0x7369bf5d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
-	{ "rwt.124",	0x100000, 0xc0bf88c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
-	{ "rwt.123",	0x100000, 0xac4c712a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
-	{ "rwt.122",	0x100000, 0x609862a2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
+	{ "1.0_rampage_world_tour_u125_image.u125",	0x100000, 0x7369bf5d, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 0) }, // 14
+	{ "1.0_rampage_world_tour_u124_image.u124",	0x100000, 0xc0bf88c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 1) }, // 15
+	{ "1.0_rampage_world_tour_u123_image.u123",	0x100000, 0xac4c712a, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 2) }, // 16
+	{ "1.0_rampage_world_tour_u122_image.u122",	0x100000, 0x609862a2, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x08, 3) }, // 17
 
-	{ "rwt.121",	0x100000, 0xf65119b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
-	{ "rwt.120",	0x100000, 0x6d643dee, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
-	{ "rwt.119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
-	{ "rwt.118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	{ "1.0_rampage_world_tour_u121_image.u121",	0x100000, 0xf65119b7, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 0) }, // 18
+	{ "1.0_rampage_world_tour_u120_image.u120",	0x100000, 0x6d643dee, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
+	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
+	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 };
 
 STD_ROM_PICK(rmpgwt11)

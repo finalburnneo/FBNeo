@@ -1648,7 +1648,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 static struct BurnRomInfo sknsRomDesc[] = {
 	{ "sknsj1.u10",		0x80000, 0x7e2b836c, BRF_BIOS}, //  0 Japan
-	{ "sknse1.u10",		0x80000, 0xe2b9d7d1, BRF_BIOS}, //  1 Europe
+	{ "sknse2.u10",		0x80000, 0xe2b9d7d1, BRF_BIOS}, //  1 Europe
 	{ "sknsa1.u10",		0x80000, 0x745e5212, BRF_BIOS}, //  2 Asia
 	{ "sknsu1.u10",		0x80000, 0x384d21ec, BRF_BIOS}, //  3 USA
 	{ "sknsk1.u10",		0x80000, 0xff1c9f79, BRF_BIOS}, //  4 Korea

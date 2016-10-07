@@ -1789,18 +1789,18 @@ static struct BurnRomInfo deluxe4uRomDesc[] = {
 	{ "2.cu02",			0x040000, 0xdb213e1f, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
 	{ "1.cu03",			0x040000, 0xfbf14d74, 1 | BRF_PRG | BRF_ESS },	//  1
 
-	{ "3.su06",			0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+	{ "esd3.su06",		0x040000, 0x31de379a, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
 
-	{ "ju03",			0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  3 - Sprites
-	{ "ju04",			0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  4
-	{ "ju05",			0x040000, 0xbbe81779, 3 | BRF_GRA },		//  5
-	{ "ju06",			0x040000, 0x8b853bce, 3 | BRF_GRA },		//  6
-	{ "ju07",			0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
+	{ "am27c020.ju03",	0x040000, 0xaa130fd3, 3 | BRF_GRA },		//  3 - Sprites
+	{ "am27c020.ju04",	0x040000, 0x40fa2c2f, 3 | BRF_GRA },		//  4
+	{ "am27c020.ju05",	0x040000, 0xbbe81779, 3 | BRF_GRA },		//  5
+	{ "am27c020.ju06",	0x040000, 0x8b853bce, 3 | BRF_GRA },		//  6
+	{ "am27c020.ju07",	0x040000, 0xd414c3af, 3 | BRF_GRA },		//  7
 
 	{ "fu35",			0x200000, 0x6df14570, 4 | BRF_GRA },		//  8 - Tiles
 	{ "fu34",			0x200000, 0x93175d6d, 4 | BRF_GRA },		//  9
 
-	{ "su10",			0x020000, 0x23f2b7d9, 5 | BRF_SND },		// 10 - OKI Samples
+	{ "esd4.su10",		0x020000, 0x23f2b7d9, 5 | BRF_SND },		// 10 - OKI Samples
 };
 
 STD_ROM_PICK(deluxe4u)

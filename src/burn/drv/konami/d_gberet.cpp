@@ -1069,7 +1069,7 @@ static struct BurnRomInfo gberetbRomDesc[] = {
 	{ "577h11.6f",    0x0100, 0x2a1a992b, 4 | BRF_GRA },	       //  8
 	{ "577h10.5f",    0x0100, 0xe9de1e53, 4 | BRF_GRA },	       //  9
 	
-	{ "ic35.5h.bin",  0x0001, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "pal16r6_ic35.5h",  0x0104, 0xbd76fb53, BRF_GRA },
 };
 
 STD_ROM_PICK(gberetb)

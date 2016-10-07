@@ -4611,7 +4611,7 @@ struct BurnDriver BurnDrvcrush2 = {
 
 // Crush Roller (Kural - bootleg?)
 
-static struct BurnRomInfo crush3RomDesc[] = {
+static struct BurnRomInfo crush4RomDesc[] = {
 	{ "unkmol.4e",    0x0800, 0x49150ddf, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "unkmol.6e",    0x0800, 0x21f47e17, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "unkmol.4f",    0x0800, 0x9b6dd592, 1 | BRF_ESS | BRF_PRG },	//  2
@@ -4633,8 +4633,8 @@ static struct BurnRomInfo crush3RomDesc[] = {
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
 };
 
-STD_ROM_PICK(crush3)
-STD_ROM_FN(crush3)
+STD_ROM_PICK(crush4)
+STD_ROM_FN(crush4)
 
 static void eyes_gfx_decode(UINT8 *src)
 {
@@ -4656,25 +4656,25 @@ static void eyes_decode()
 		eyes_gfx_decode(DrvGfxROM + i);
 }
 
-static INT32 crush3Init()
+static INT32 crush4Init()
 {
 	return DrvInit(StandardMap, eyes_decode, PACMAN);
 }
 
-struct BurnDriver BurnDrvcrush3 = {
-	"crush3", "crush", NULL, NULL, "1981",
+struct BurnDriver BurnDrvcrush4 = {
+	"crush4", "crush", NULL, NULL, "1981",
 	"Crush Roller (Kural - bootleg?)\0", NULL, "Kural Electric", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
-	NULL, crush3RomInfo, crush3RomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
-	crush3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, crush4RomInfo, crush4RomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
+	crush4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
 
 // Crush Roller (Kural TWT)
 
-static struct BurnRomInfo crush4RomDesc[] = {
+static struct BurnRomInfo crush5RomDesc[] = {
 	{ "crtwt.2",     0x10000, 0xadbd21f7, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code (banked)
 
 	{ "crtwt.1",      0x4000, 0x4250a9ea, 2 | BRF_GRA },		//  1 Graphics
@@ -4686,10 +4686,10 @@ static struct BurnRomInfo crush4RomDesc[] = {
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
 };
 
-STD_ROM_PICK(crush4)
-STD_ROM_FN(crush4)
+STD_ROM_PICK(crush5)
+STD_ROM_FN(crush5)
 
-static void crush4Callback()
+static void crush5Callback()
 {
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x4000);
 
@@ -4706,18 +4706,18 @@ static void crush4Callback()
 	BurnFree (tmp);
 }
 
-static INT32 crush4Init()
+static INT32 crush5Init()
 {
-	return DrvInit(StandardMap, crush4Callback, PACMAN);
+	return DrvInit(StandardMap, crush5Callback, PACMAN);
 }
 
-struct BurnDriver BurnDrvcrush4 = {
-	"crush4", "crush", NULL, NULL, "1981",
+struct BurnDriver BurnDrvcrush5 = {
+	"crush5", "crush", NULL, NULL, "1981",
 	"Crush Roller (Kural TWT)\0", NULL, "Kural TWT", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
-	NULL, crush4RomInfo, crush4RomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
-	crush4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	NULL, crush5RomInfo, crush5RomName, NULL, NULL, DrvInputInfo, maketraxDIPInfo,
+	crush5Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
@@ -5932,7 +5932,7 @@ struct BurnDriver BurnDrvsprglbpg = {
 
 // Beastie Feastie
 
-static struct BurnRomInfo beastfRomDesc[] = {
+static struct BurnRomInfo beastfpRomDesc[] = {
 	{ "bf-u2.bin",    0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
 	{ "bf-u3.bin",    0x2000, 0x8dbd76d0, 1 | BRF_ESS | BRF_PRG },	//  1
 
@@ -5946,15 +5946,15 @@ static struct BurnRomInfo beastfRomDesc[] = {
 	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 };
 
-STD_ROM_PICK(beastf)
-STD_ROM_FN(beastf)
+STD_ROM_PICK(beastfp)
+STD_ROM_FN(beastfp)
 
-struct BurnDriver BurnDrvbeastf = {
-	"beastf", "suprglob", NULL, NULL, "1984",
+struct BurnDriver BurnDrvbeastfp = {
+	"beastfp", "suprglob", NULL, NULL, "1984",
 	"Beastie Feastie\0", NULL, "Epos Corporation", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_PLATFORM, 0,
-	NULL, beastfRomInfo, beastfRomName, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
+	NULL, beastfpRomInfo, beastfpRomName, NULL, NULL, theglobpInputInfo, theglobpDIPInfo,
 	theglobpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

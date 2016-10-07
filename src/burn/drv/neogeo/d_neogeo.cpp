@@ -5178,7 +5178,7 @@ static struct BurnRomInfo irrmazeRomDesc[] = {
 	{ "236-m1.m1",    0x020000, 0x880a1abd, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
 
 	{ "236-v1.v1",    0x200000, 0x5f89c3b4, 5 | BRF_SND },           //  5 Sound data
-	{ "236-v2.v2",    0x100000, 0x1e843567, 6 | BRF_SND },           //  6 
+	{ "236-v2.v2",    0x100000, 0x72e3add7, 6 | BRF_SND },           //  6 
 };
 
 STDROMPICKEXT(irrmaze, irrmaze, neotrackball)

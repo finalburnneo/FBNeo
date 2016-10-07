@@ -10682,7 +10682,7 @@ static struct BurnRomInfo Moonal2bRomDesc[] = {
 	{ "md-13.h1",      0x00800, 0xa1287bf6, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "md-12.k1",      0x00800, 0x528f1481, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
-	{ "6331.16",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
+	{ "6331.l6",       0x00020, 0xc3ac9467, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Moonal2b)

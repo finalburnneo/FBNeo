@@ -848,6 +848,8 @@ static struct BurnRomInfo NinexxRomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xx.key",      0x000014, 0x77e67ba1, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexx)
@@ -873,6 +875,8 @@ static struct BurnRomInfo NinexxaRomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xxa.key",     0x000014, 0x2cd32eb9, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxa)
@@ -898,6 +902,8 @@ static struct BurnRomInfo Ninexxar1RomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xxa.key",     0x000014, 0x2cd32eb9, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxar1)
@@ -923,6 +929,8 @@ static struct BurnRomInfo NinexxbRomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xxb.key",     0x000014, 0x4200e334, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxb)
@@ -948,6 +956,8 @@ static struct BurnRomInfo NinexxhRomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xxh.key",     0x000014, 0x215cf208, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxh)
@@ -991,6 +1001,8 @@ static struct BurnRomInfo NinexxjRomDesc[] = {
 	{ "19x-56.11a",    0x080000, 0xdfa8819f, CPS2_QSND | BRF_SND }, // 19x.12m
 	{ "19x-57.12a",    0x080000, 0x229ba777, CPS2_QSND | BRF_SND }, // 19x.12m
 	{ "19x-58.13a",    0x080000, 0xc7dceba4, CPS2_QSND | BRF_SND }, // 19x.12m
+	
+	{ "19xxj.key",     0x000014, 0x9aafa71a, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxj)
@@ -1016,6 +1028,8 @@ static struct BurnRomInfo Ninexxjr1RomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xxj.key",     0x000014, 0x9aafa71a, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxjr1)
@@ -1041,6 +1055,8 @@ static struct BurnRomInfo Ninexxjr2RomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "19xxj.key",     0x000014, 0x9aafa71a, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxjr2)
@@ -1064,6 +1080,8 @@ static struct BurnRomInfo Nine44RomDesc[] = {
 
 	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
 	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
+	
+	{ "1944.key",      0x000014, 0x61734f5b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nine44)
@@ -1087,6 +1105,8 @@ static struct BurnRomInfo Nine44jRomDesc[] = {
 
 	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
 	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
+	
+	{ "1944j.key",     0x000014, 0x210202aa, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nine44j)
@@ -1116,6 +1136,8 @@ static struct BurnRomInfo ArmwarRomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwar.key",    0x000014, 0xfe979382, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwar)
@@ -1145,6 +1167,8 @@ static struct BurnRomInfo Armwarr1RomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwar.key",    0x000014, 0xfe979382, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwarr1)
@@ -1174,6 +1198,8 @@ static struct BurnRomInfo ArmwaruRomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwaru.key",   0x000014, 0xfb9aada5, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwaru)
@@ -1203,6 +1229,8 @@ static struct BurnRomInfo Armwaru1RomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwaru.key",   0x000014, 0xfb9aada5, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwaru1)
@@ -1232,6 +1260,8 @@ static struct BurnRomInfo PgearRomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "pgear.key",     0x000014, 0xc576d6fd, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Pgear)
@@ -1261,6 +1291,8 @@ static struct BurnRomInfo Pgearr1RomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "pgear.key",     0x000014, 0xc576d6fd, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Pgearr1)
@@ -1290,6 +1322,8 @@ static struct BurnRomInfo ArmwaraRomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwara.key",   0x000014, 0x525439c0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwara)
@@ -1319,6 +1353,8 @@ static struct BurnRomInfo Armwarar1RomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "armwara.key",   0x000014, 0x525439c0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwarar1)
@@ -1343,6 +1379,8 @@ static struct BurnRomInfo AvspRomDesc[] = {
 	
 	{ "avp.11m",       0x200000, 0x83499817, CPS2_QSND | BRF_SND },
 	{ "avp.12m",       0x200000, 0xf4110d49, CPS2_QSND | BRF_SND },
+	
+	{ "avsp.key",      0x000014, 0xe69fa35b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Avsp)
@@ -1367,6 +1405,8 @@ static struct BurnRomInfo AvspaRomDesc[] = {
 	
 	{ "avp.11m",       0x200000, 0x83499817, CPS2_QSND | BRF_SND },
 	{ "avp.12m",       0x200000, 0xf4110d49, CPS2_QSND | BRF_SND },
+	
+	{ "avspa.key",     0x000014, 0x728efc00, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Avspa)
@@ -1391,6 +1431,8 @@ static struct BurnRomInfo AvsphRomDesc[] = {
 	
 	{ "avp.11m",       0x200000, 0x83499817, CPS2_QSND | BRF_SND },
 	{ "avp.12m",       0x200000, 0xf4110d49, CPS2_QSND | BRF_SND },
+	
+	{ "avsph.key",     0x000014, 0xcae7b680, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Avsph)
@@ -1415,6 +1457,8 @@ static struct BurnRomInfo AvspjRomDesc[] = {
 	
 	{ "avp.11m",       0x200000, 0x83499817, CPS2_QSND | BRF_SND },
 	{ "avp.12m",       0x200000, 0xf4110d49, CPS2_QSND | BRF_SND },
+	
+	{ "avspj.key",     0x000014, 0x3d5ccc08, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Avspj)
@@ -1439,6 +1483,8 @@ static struct BurnRomInfo AvspuRomDesc[] = {
 	
 	{ "avp.11m",       0x200000, 0x83499817, CPS2_QSND | BRF_SND },
 	{ "avp.12m",       0x200000, 0xf4110d49, CPS2_QSND | BRF_SND },
+	
+	{ "avspu.key",     0x000014, 0x4e68e346, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Avspu)
@@ -1463,6 +1509,8 @@ static struct BurnRomInfo BatcirRomDesc[] = {
 
 	{ "btc.11m",       0x200000, 0xc27f2229, CPS2_QSND | BRF_SND },
 	{ "btc.12m",       0x200000, 0x418a2e33, CPS2_QSND | BRF_SND },
+	
+	{ "batcir.key",    0x000014, 0xe316ae67, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Batcir)
@@ -1487,6 +1535,8 @@ static struct BurnRomInfo BatciraRomDesc[] = {
 
 	{ "btc.11m",       0x200000, 0xc27f2229, CPS2_QSND | BRF_SND },
 	{ "btc.12m",       0x200000, 0x418a2e33, CPS2_QSND | BRF_SND },
+	
+	{ "batcira.key",   0x000014, 0x384500f3, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Batcira)
@@ -1511,6 +1561,8 @@ static struct BurnRomInfo BatcirjRomDesc[] = {
 
 	{ "btc.11m",       0x200000, 0xc27f2229, CPS2_QSND | BRF_SND },
 	{ "btc.12m",       0x200000, 0x418a2e33, CPS2_QSND | BRF_SND },
+	
+	{ "batcirj.key",   0x000014, 0x9f9fb965, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Batcirj)
@@ -1532,7 +1584,9 @@ static struct BurnRomInfo ChokoRomDesc[] = {
 	{ "tko.01",        0x020000, 0x6eda50c2, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "tkoj5_a.simm5", 0x200000, 0xab45d509, CPS2_QSND_SIMM_BYTESWAP | BRF_SND },	
-	{ "tkoj5_b.simm5", 0x200000, 0xfa905c3d, CPS2_QSND_SIMM_BYTESWAP | BRF_SND },	
+	{ "tkoj5_b.simm5", 0x200000, 0xfa905c3d, CPS2_QSND_SIMM_BYTESWAP | BRF_SND },
+	
+	{ "choko.key",     0x000014, 0x08505e8b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Choko)
@@ -1572,6 +1626,8 @@ static struct BurnRomInfo CsclubRomDesc[] = {
 	{ "csc.56",        0x080000, 0x9a345334, CPS2_QSND | BRF_SND },
 	{ "csc.57",        0x080000, 0xaedc27f2, CPS2_QSND | BRF_SND },
 	{ "csc.58",        0x080000, 0x2300b7b3, CPS2_QSND | BRF_SND },
+	
+	{ "csclub.key",    0x000014, 0x903907d7, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Csclub)
@@ -1593,6 +1649,8 @@ static struct BurnRomInfo Csclub1RomDesc[] = {
 
 	{ "csc.11m",       0x200000, 0xa027b827, CPS2_QSND | BRF_SND },
 	{ "csc.12m",       0x200000, 0xcb7f6e55, CPS2_QSND | BRF_SND },
+	
+	{ "csclub.key",    0x000014, 0x903907d7, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Csclub1)
@@ -1614,6 +1672,8 @@ static struct BurnRomInfo CsclubaRomDesc[] = {
 
 	{ "csc.11m",       0x200000, 0xa027b827, CPS2_QSND | BRF_SND },
 	{ "csc.12m",       0x200000, 0xcb7f6e55, CPS2_QSND | BRF_SND },
+	
+	{ "cscluba.key",   0x000014, 0x591908dc, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cscluba)
@@ -1635,6 +1695,8 @@ static struct BurnRomInfo CsclubhRomDesc[] = {
 
 	{ "csc.11m",       0x200000, 0xa027b827, CPS2_QSND | BRF_SND },
 	{ "csc.12m",       0x200000, 0xcb7f6e55, CPS2_QSND | BRF_SND },
+	
+	{ "csclubh.key",   0x000014, 0xb0adc39e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Csclubh)
@@ -1656,6 +1718,8 @@ static struct BurnRomInfo CsclubjRomDesc[] = {
 
 	{ "csc.11m",       0x200000, 0xa027b827, CPS2_QSND | BRF_SND },
 	{ "csc.12m",       0x200000, 0xcb7f6e55, CPS2_QSND | BRF_SND },
+	
+	{ "csclubj.key",   0x000014, 0x519a04db, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Csclubj)
@@ -1696,6 +1760,8 @@ static struct BurnRomInfo CsclubjyRomDesc[] = {
 	{ "csc.56",        0x080000, 0x9a345334, CPS2_QSND | BRF_SND },
 	{ "csc.57",        0x080000, 0xaedc27f2, CPS2_QSND | BRF_SND },
 	{ "csc.58",        0x080000, 0x2300b7b3, CPS2_QSND | BRF_SND },
+	
+	{ "csclubj.key",   0x000014, 0x519a04db, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Csclubjy)
@@ -1725,6 +1791,8 @@ static struct BurnRomInfo CybotsRomDesc[] = {
 
 	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
 	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+	
+	{ "cybots.key",    0x000014, 0x9bbcbef3, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cybots)
@@ -1754,6 +1822,8 @@ static struct BurnRomInfo CybotsjRomDesc[] = {
 
 	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
 	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+	
+	{ "cybotsj.key",   0x000014, 0xd4d560b7, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cybotsj)
@@ -1783,6 +1853,8 @@ static struct BurnRomInfo CybotsuRomDesc[] = {
 
 	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
 	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+	
+	{ "cybotsu.key",   0x000014, 0x7a09403c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cybotsu)
@@ -1812,6 +1884,8 @@ static struct BurnRomInfo DdsomRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsom.key",     0x000014, 0x541e425d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsom)
@@ -1841,6 +1915,8 @@ static struct BurnRomInfo Ddsomr1RomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsom.key",     0x000014, 0x541e425d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomr1)
@@ -1870,6 +1946,8 @@ static struct BurnRomInfo Ddsomr2RomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsom.key",     0x000014, 0x541e425d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomr2)
@@ -1899,6 +1977,8 @@ static struct BurnRomInfo Ddsomr3RomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsom.key",     0x000014, 0x541e425d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomr3)
@@ -1928,6 +2008,8 @@ static struct BurnRomInfo DdsomaRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsoma.key",    0x000014, 0x8c3cc560, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsoma)
@@ -1957,6 +2039,8 @@ static struct BurnRomInfo Ddsomar1RomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsoma.key",    0x000014, 0x8c3cc560, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomar1)
@@ -1986,6 +2070,8 @@ static struct BurnRomInfo DdsombRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsomb.key",    0x000014, 0x00b4cc49, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomb)
@@ -2015,6 +2101,8 @@ static struct BurnRomInfo DdsomhRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsomh.key",    0x000014, 0xcaf6b540, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomh)
@@ -2044,6 +2132,8 @@ static struct BurnRomInfo DdsomjRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsomj.key",    0x000014, 0xd8dadb22, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomj)
@@ -2073,6 +2163,8 @@ static struct BurnRomInfo Ddsomjr1RomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsomj.key",    0x000014, 0xd8dadb22, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomjr1)
@@ -2102,6 +2194,8 @@ static struct BurnRomInfo DdsomuRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsomu.key",    0x000014, 0x09ae0f7c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomu)
@@ -2131,6 +2225,8 @@ static struct BurnRomInfo Ddsomur1RomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "ddsomu.key",    0x000014, 0x09ae0f7c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomur1)
@@ -2156,6 +2252,8 @@ static struct BurnRomInfo DdtodRomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtod.key",     0x000014, 0x41dfca41, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtod)
@@ -2181,6 +2279,8 @@ static struct BurnRomInfo Ddtodr1RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtod.key",     0x000014, 0x41dfca41, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodr1)
@@ -2206,6 +2306,8 @@ static struct BurnRomInfo DdtodaRomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtoda.key",    0x000014, 0xe5e8d1b8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtoda)
@@ -2231,6 +2333,8 @@ static struct BurnRomInfo Ddtodar1RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtoda.key",    0x000014, 0xe5e8d1b8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodar1)
@@ -2256,6 +2360,8 @@ static struct BurnRomInfo DdtodhRomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodh.key",    0x000014, 0x65f33a1c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodh)
@@ -2281,6 +2387,8 @@ static struct BurnRomInfo Ddtodhr1RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodh.key",    0x000014, 0x65f33a1c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodhr1)
@@ -2306,6 +2414,8 @@ static struct BurnRomInfo Ddtodhr2RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodh.key",    0x000014, 0x65f33a1c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodhr2)
@@ -2331,6 +2441,8 @@ static struct BurnRomInfo DdtodjRomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodj.key",    0x000014, 0x5414dfca, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodj)
@@ -2356,6 +2468,8 @@ static struct BurnRomInfo Ddtodjr1RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodj.key",    0x000014, 0x5414dfca, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodjr1)
@@ -2381,6 +2495,8 @@ static struct BurnRomInfo Ddtodjr2RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodj.key",    0x000014, 0x5414dfca, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodjr2)
@@ -2406,6 +2522,8 @@ static struct BurnRomInfo DdtoduRomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodu.key",    0x000014, 0x7c03ec9e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodu)
@@ -2431,6 +2549,8 @@ static struct BurnRomInfo Ddtodur1RomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "ddtodu.key",    0x000014, 0x7c03ec9e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodur1)
@@ -2452,6 +2572,8 @@ static struct BurnRomInfo DimahooRomDesc[] = {
 
 	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
 	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
+	
+	{ "dimahoo.key",   0x000014, 0x7d6d2db9, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dimahoo)
@@ -2473,6 +2595,8 @@ static struct BurnRomInfo GmdjRomDesc[] = {
 
 	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
 	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
+	
+	{ "gmahou.key",    0x000014, 0x76a5e659, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gmdj)
@@ -2494,6 +2618,8 @@ static struct BurnRomInfo DimahoouRomDesc[] = {
 
 	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
 	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
+	
+	{ "dimahoou.key",  0x000014, 0x8254d7ab, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dimahoou)
@@ -2523,7 +2649,8 @@ static struct BurnRomInfo DstlkRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
-
+	
+	{ "dstlk.key",     0x000014, 0xcfa46dec, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dstlk)
@@ -2553,6 +2680,8 @@ static struct BurnRomInfo DstlkaRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "dstlka.key",    0x000014, 0xd31d61bc, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dstlka)
@@ -2582,6 +2711,8 @@ static struct BurnRomInfo DstlkhRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "dstlkh.key",    0x000014, 0xd748cb77, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dstlkh)
@@ -2611,6 +2742,8 @@ static struct BurnRomInfo DstlkuRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "dstlku.key",    0x000014, 0xc76091ba, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dstlku)
@@ -2640,6 +2773,8 @@ static struct BurnRomInfo Dstlkur1RomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "dstlku.key",    0x000014, 0xc76091ba, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dstlkur1)
@@ -2669,7 +2804,8 @@ static struct BurnRomInfo VampjRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
-
+	
+	{ "vampj.key",     0x000014, 0x8418cc6f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vampj)
@@ -2699,6 +2835,8 @@ static struct BurnRomInfo VampjaRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "vampj.key",     0x000014, 0x8418cc6f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vampja)
@@ -2728,6 +2866,8 @@ static struct BurnRomInfo Vampjr1RomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "vampj.key",     0x000014, 0x8418cc6f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vampjr1)
@@ -2752,6 +2892,8 @@ static struct BurnRomInfo EcofghtrRomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "ecofghtr.key",  0x000014, 0x2250fd9e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ecofghtr)
@@ -2776,6 +2918,8 @@ static struct BurnRomInfo EcofghtraRomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "ecofghtra.key",  0x000014, 0x4f99a9f5, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ecofghtra)
@@ -2800,6 +2944,8 @@ static struct BurnRomInfo EcofghtrhRomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "ecofghtrh.key",  0x000014, 0x9a9027c8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ecofghtrh)
@@ -2824,6 +2970,8 @@ static struct BurnRomInfo EcofghtruRomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "ecofghtru.key",  0x000014, 0x611aa137, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ecofghtru)
@@ -2848,6 +2996,8 @@ static struct BurnRomInfo Ecofghtru1RomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "ecofghtru.key",  0x000014, 0x611aa137, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ecofghtru1)
@@ -2872,6 +3022,8 @@ static struct BurnRomInfo UecologyRomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "uecology.key",  0x000014, 0x0bab792d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Uecology)
@@ -2891,6 +3043,8 @@ static struct BurnRomInfo GigawingRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "gigawing.key",  0x000014, 0x5076c26b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawing)
@@ -2910,6 +3064,8 @@ static struct BurnRomInfo GigawingaRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "gigawinga.key", 0x000014, 0x7401627e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawinga)
@@ -2929,6 +3085,8 @@ static struct BurnRomInfo GigawingbRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "gigawingb.key", 0x000014, 0x5e7805fa, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawingb)
@@ -2948,6 +3106,8 @@ static struct BurnRomInfo GigawinghRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "gigawingh.key", 0x000014, 0x43198223, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawingh)
@@ -2967,6 +3127,8 @@ static struct BurnRomInfo GigawingjRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "gigawingj.key", 0x000014, 0x8121a25e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawingj)
@@ -2991,6 +3153,8 @@ static struct BurnRomInfo Hsf2RomDesc[] = {
 	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+	
+	{ "hsf2.key",      0x000014, 0xfc9b18c9, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Hsf2)
@@ -3015,6 +3179,8 @@ static struct BurnRomInfo Hsf2aRomDesc[] = {
 	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+	
+	{ "hsf2a.key",     0x000014, 0x2cd9eb99, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Hsf2a)
@@ -3039,6 +3205,8 @@ static struct BurnRomInfo Hsf2jRomDesc[] = {
 	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+	
+	{ "hsf2j.key",     0x000014, 0x19455a93, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Hsf2j)
@@ -3063,6 +3231,8 @@ static struct BurnRomInfo Hsf2j1RomDesc[] = {
 	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+	
+	{ "hsf2j.key",     0x000014, 0x19455a93, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Hsf2j1)
@@ -3083,7 +3253,9 @@ static struct BurnRomInfo JyangokuRomDesc[] = {
 	{ "maj.01",        0x020000, 0x1fe8c213, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "maj5_a.simm5",  0x200000, 0x5ad9ee53, CPS2_QSND_SIMM_BYTESWAP | BRF_SND },	
-	{ "maj5_b.simm5",  0x200000, 0xefb3dbfb, CPS2_QSND_SIMM_BYTESWAP | BRF_SND },	
+	{ "maj5_b.simm5",  0x200000, 0xefb3dbfb, CPS2_QSND_SIMM_BYTESWAP | BRF_SND },
+	
+	{ "jyangoku.key",  0x000014, 0x95b0a560, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Jyangoku)
@@ -3104,6 +3276,8 @@ static struct BurnRomInfo Megaman2RomDesc[] = {
 
 	{ "rm2.11m",       0x200000, 0x2106174d, CPS2_QSND | BRF_SND },
 	{ "rm2.12m",       0x200000, 0x546c1636, CPS2_QSND | BRF_SND },
+	
+	{ "megaman2.key",  0x000014, 0x6828ed6d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Megaman2)
@@ -3124,6 +3298,8 @@ static struct BurnRomInfo Megaman2aRomDesc[] = {
 
 	{ "rm2.11m",       0x200000, 0x2106174d, CPS2_QSND | BRF_SND },
 	{ "rm2.12m",       0x200000, 0x546c1636, CPS2_QSND | BRF_SND },
+	
+	{ "megaman2a.key", 0x000014, 0xd6e8dcd7, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Megaman2a)
@@ -3144,6 +3320,8 @@ static struct BurnRomInfo Megaman2hRomDesc[] = {
 
 	{ "rm2.11m",       0x200000, 0x2106174d, CPS2_QSND | BRF_SND },
 	{ "rm2.12m",       0x200000, 0x546c1636, CPS2_QSND | BRF_SND },
+	
+	{ "megaman2h.key", 0x000014, 0x99cb8d19, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Megaman2h)
@@ -3164,6 +3342,8 @@ static struct BurnRomInfo Rockman2jRomDesc[] = {
 
 	{ "rm2.11m",       0x200000, 0x2106174d, CPS2_QSND | BRF_SND },
 	{ "rm2.12m",       0x200000, 0x546c1636, CPS2_QSND | BRF_SND },
+	
+	{ "rockman2j.key", 0x000014, 0xc590187a, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Rockman2j)
@@ -3201,6 +3381,8 @@ static struct BurnRomInfo Mmancp2uRomDesc[] = {
 	{ "rcm.56",        0x080000, 0xade475bc, CPS2_QSND | BRF_SND },
 	{ "rcm.57",        0x080000, 0x075effb3, CPS2_QSND | BRF_SND },
 	{ "rcm.58",        0x080000, 0xf6c1f87b, CPS2_QSND | BRF_SND },
+	
+	{ "mmancp2u.key",  0x000014, 0x17ca6659, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mmancp2u)
@@ -3238,6 +3420,8 @@ static struct BurnRomInfo Mmancp2ur1RomDesc[] = {
 	{ "rcm.56",        0x080000, 0xade475bc, CPS2_QSND | BRF_SND },
 	{ "rcm.57",        0x080000, 0x075effb3, CPS2_QSND | BRF_SND },
 	{ "rcm.58",        0x080000, 0xf6c1f87b, CPS2_QSND | BRF_SND },
+	
+	{ "mmancp2u.key",  0x000014, 0x17ca6659, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mmancp2ur1)
@@ -3275,6 +3459,8 @@ static struct BurnRomInfo Rmancp2jRomDesc[] = {
 	{ "rcm.56",        0x080000, 0xade475bc, CPS2_QSND | BRF_SND },
 	{ "rcm.57",        0x080000, 0x075effb3, CPS2_QSND | BRF_SND },
 	{ "rcm.58",        0x080000, 0xf6c1f87b, CPS2_QSND | BRF_SND },
+	
+	{ "rmancp2j.key",  0x000014, 0x17309a70, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Rmancp2j)
@@ -3298,6 +3484,8 @@ static struct BurnRomInfo MmatrixRomDesc[] = {
 
 	{ "mmx.11m",       0x400000, 0x4180B39F, CPS2_QSND | BRF_SND },
 	{ "mmx.12m",       0x400000, 0x95E22A59, CPS2_QSND | BRF_SND },
+	
+	{ "mmatrix.key",   0x000014, 0x8ed66bc4, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mmatrix)
@@ -3321,6 +3509,8 @@ static struct BurnRomInfo MmatrixjRomDesc[] = {
 
 	{ "mmx.11m",       0x400000, 0x4180B39F, CPS2_QSND | BRF_SND },
 	{ "mmx.12m",       0x400000, 0x95E22A59, CPS2_QSND | BRF_SND },
+	
+	{ "mmatrixj.key",  0x000014, 0x3b50d889, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mmatrixj)
@@ -3343,6 +3533,8 @@ static struct BurnRomInfo MpangRomDesc[] = {
 
 	{ "mpn-simm.05a",  0x200000, 0x318A2E21, CPS2_QSND_SIMM | BRF_SND },
 	{ "mpn-simm.05b",  0x200000, 0x5462F4E8, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "mpang.key",     0x000014, 0x95354b0f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mpang)
@@ -3365,6 +3557,8 @@ static struct BurnRomInfo Mpangr1RomDesc[] = {
 
 	{ "mpn-simm.05a",  0x200000, 0x318A2E21, CPS2_QSND_SIMM | BRF_SND },
 	{ "mpn-simm.05b",  0x200000, 0x5462F4E8, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "mpang.key",     0x000014, 0x95354b0f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mpangr1)
@@ -3384,7 +3578,9 @@ static struct BurnRomInfo MpanguRomDesc[] = {
 	{ "mpn.q1",        0x100000, 0xd21c1f5a, CPS2_QSND | BRF_SND },	
 	{ "mpn.q2",        0x100000, 0xd22090b1, CPS2_QSND | BRF_SND },	
 	{ "mpn.q3",        0x100000, 0x60aa5ef2, CPS2_QSND | BRF_SND },	
-	{ "mpn.q4",        0x100000, 0x3a67d203, CPS2_QSND | BRF_SND },	
+	{ "mpn.q4",        0x100000, 0x3a67d203, CPS2_QSND | BRF_SND },
+	
+	{ "mpang.key",     0x000014, 0x95354b0f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mpangu)
@@ -3407,6 +3603,8 @@ static struct BurnRomInfo MpangjRomDesc[] = {
 
 	{ "mpn-simm.05a",  0x200000, 0x318A2E21, CPS2_QSND_SIMM | BRF_SND },
 	{ "mpn-simm.05b",  0x200000, 0x5462F4E8, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "mpang.key",     0x000014, 0x95354b0f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mpangj)
@@ -3436,6 +3634,8 @@ static struct BurnRomInfo MshRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "msh.key",       0x000014, 0xb494368e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Msh)
@@ -3465,6 +3665,8 @@ static struct BurnRomInfo MshaRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "msha.key",      0x000014, 0x00f3f2ca, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Msha)
@@ -3495,6 +3697,8 @@ static struct BurnRomInfo MshbRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "mshb.key",      0x000014, 0x92196837, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshb)
@@ -3524,6 +3728,8 @@ static struct BurnRomInfo MshhRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "mshh.key",      0x000014, 0x5dddf5e7, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshh)
@@ -3553,6 +3759,8 @@ static struct BurnRomInfo MshjRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "mshj.key",      0x000014, 0x888761ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshj)
@@ -3582,6 +3790,8 @@ static struct BurnRomInfo Mshjr1RomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "mshj.key",      0x000014, 0x888761ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshjr1)
@@ -3611,6 +3821,8 @@ static struct BurnRomInfo MshuRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "mshu.key",      0x000014, 0x745c1bee, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshu)
@@ -3640,6 +3852,8 @@ static struct BurnRomInfo MshvsfRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsf.key",    0x000014, 0x64660867, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsf)
@@ -3669,6 +3883,8 @@ static struct BurnRomInfo MshvsfhRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfh.key",   0x000014, 0xb93d576f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfh)
@@ -3698,6 +3914,8 @@ static struct BurnRomInfo MshvsfaRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfa.key",   0x000014, 0x6810a3af, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfa)
@@ -3727,6 +3945,8 @@ static struct BurnRomInfo Mshvsfa1RomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfa.key",   0x000014, 0x6810a3af, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfa1)
@@ -3756,6 +3976,8 @@ static struct BurnRomInfo MshvsfbRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfb.key",   0x000014, 0x3f5bb6e4, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfb)
@@ -3785,6 +4007,8 @@ static struct BurnRomInfo Mshvsfb1RomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfb.key",   0x000014, 0x3f5bb6e4, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfb1)
@@ -3814,6 +4038,8 @@ static struct BurnRomInfo MshvsfjRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfj.key",   0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfj)
@@ -3843,6 +4069,8 @@ static struct BurnRomInfo Mshvsfj1RomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfj.key",   0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfj1)
@@ -3872,6 +4100,8 @@ static struct BurnRomInfo Mshvsfj2RomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfj.key",   0x000014, 0x565eeebb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfj2)
@@ -3901,6 +4131,8 @@ static struct BurnRomInfo MshvsfuRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfu.key",   0x000014, 0x4c04797b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfu)
@@ -3930,6 +4162,8 @@ static struct BurnRomInfo Mshvsfu1RomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "mshvsfu.key",   0x000014, 0x4c04797b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfu1)
@@ -3959,6 +4193,8 @@ static struct BurnRomInfo MvscRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvsc.key",      0x000014, 0x7e101e09, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvsc)
@@ -3988,6 +4224,8 @@ static struct BurnRomInfo Mvscr1RomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvsc.key",      0x000014, 0x7e101e09, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscr1)
@@ -4017,6 +4255,8 @@ static struct BurnRomInfo MvscaRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvsca.key",     0x000014, 0x31edaee8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvsca)
@@ -4046,6 +4286,8 @@ static struct BurnRomInfo Mvscar1RomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvsca.key",     0x000014, 0x31edaee8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscar1)
@@ -4075,6 +4317,8 @@ static struct BurnRomInfo MvscbRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvscb.key",     0x000014, 0xd74a7a3d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscb)
@@ -4104,6 +4348,8 @@ static struct BurnRomInfo MvschRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvsch.key",     0x000014, 0xdd647c0d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvsch)
@@ -4133,6 +4379,8 @@ static struct BurnRomInfo MvscjRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvscj.key",     0x000014, 0x9dedbcaf, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscj)
@@ -4162,6 +4410,8 @@ static struct BurnRomInfo Mvscjr1RomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvscj.key",     0x000014, 0x9dedbcaf, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscjr1)
@@ -4191,6 +4441,8 @@ static struct BurnRomInfo MvscuRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvscu.key",     0x000014, 0xa83db333, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscu)
@@ -4220,6 +4472,8 @@ static struct BurnRomInfo Mvscur1RomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "mvscu.key",     0x000014, 0xa83db333, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscur1)
@@ -4238,6 +4492,8 @@ static struct BurnRomInfo MvscjsingRomDesc[] = {
 	{ "mvc.02",        0x020000, 0x963abf6b, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "mvc64-11m.11",  0x800000, 0x5d8819e0, CPS2_QSND | BRF_SND },
+	
+	{ "mvscj.key",     0x000014, 0x9dedbcaf, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscjsing)
@@ -4267,6 +4523,8 @@ static struct BurnRomInfo NwarrRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "nwarr.key",     0x000014, 0x618a13ca, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nwarr)
@@ -4296,6 +4554,8 @@ static struct BurnRomInfo NwarraRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "nwarra.key",    0x000014, 0x9bafff67, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nwarra)
@@ -4325,6 +4585,8 @@ static struct BurnRomInfo NwarrbRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "nwarrb.key",    0x000014, 0x4ffc0a54, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nwarrb)
@@ -4354,6 +4616,8 @@ static struct BurnRomInfo NwarrhRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "nwarrh.key",    0x000014, 0x5fb16b23, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nwarrh)
@@ -4383,6 +4647,8 @@ static struct BurnRomInfo NwarruRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "nwarru.key",    0x000014, 0x1c593f9b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nwarru)
@@ -4412,6 +4678,8 @@ static struct BurnRomInfo VhuntjRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "vhuntj.key",    0x000014, 0x72854f68, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhuntj)
@@ -4441,6 +4709,8 @@ static struct BurnRomInfo Vhuntjr1sRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "vhuntj.key",    0x000014, 0x72854f68, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhuntjr1s)
@@ -4470,6 +4740,8 @@ static struct BurnRomInfo Vhuntjr1RomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "vhuntj.key",    0x000014, 0x72854f68, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhuntjr1)
@@ -4499,6 +4771,8 @@ static struct BurnRomInfo Vhuntjr2RomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "vhuntj.key",    0x000014, 0x72854f68, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhuntjr2)
@@ -4523,6 +4797,8 @@ static struct BurnRomInfo ProgearRomDesc[] = {
 	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "progear.key",   0x000014, 0x46736b17, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Progear)
@@ -4547,6 +4823,8 @@ static struct BurnRomInfo ProgearaRomDesc[] = {
 	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "progeara.key",  0x000014, 0x30a0fab6, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Progeara)
@@ -4571,6 +4849,8 @@ static struct BurnRomInfo ProgearjRomDesc[] = {
 	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "progearj.key",  0x000014, 0xd8d515e5, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Progearj)
@@ -4595,6 +4875,8 @@ static struct BurnRomInfo Pzloop2RomDesc[] = {
 
 	{ "pl2-simm.05a",  0x200000, 0x85d8fbe8, CPS2_QSND_SIMM | BRF_SND },
 	{ "pl2-simm.05b",  0x200000, 0x1ed62584, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "pzloop2.key",   0x000014, 0xae13be78, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Pzloop2)
@@ -4619,6 +4901,8 @@ static struct BurnRomInfo Pzloop2jRomDesc[] = {
 
 	{ "pl2-simm.05a",  0x200000, 0x85d8fbe8, CPS2_QSND_SIMM | BRF_SND },
 	{ "pl2-simm.05b",  0x200000, 0x1ed62584, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "pzloop2.key",   0x000014, 0xae13be78, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Pzloop2j)
@@ -4643,6 +4927,8 @@ static struct BurnRomInfo Pzloop2jr1RomDesc[] = {
 
 	{ "pl2-simm.05a",  0x200000, 0x85d8fbe8, CPS2_QSND_SIMM | BRF_SND },
 	{ "pl2-simm.05b",  0x200000, 0x1ed62584, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "pzloop2.key",   0x000014, 0xae13be78, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Pzloop2jr1)
@@ -4663,6 +4949,8 @@ static struct BurnRomInfo QndreamRomDesc[] = {
 
 	{ "tqz.11m",       0x200000, 0x78e7884f, CPS2_QSND | BRF_SND },
 	{ "tqz.12m",       0x200000, 0x2e049b13, CPS2_QSND | BRF_SND },
+	
+	{ "qndream.key",   0x000014, 0x97eee4ff, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Qndream)
@@ -4694,6 +4982,8 @@ static struct BurnRomInfo RingdestRomDesc[] = {
 
 	{ "smb.11m",       0x200000, 0xc56935f9, CPS2_QSND | BRF_SND },
 	{ "smb.12m",       0x200000, 0x955b0782, CPS2_QSND | BRF_SND },
+	
+	{ "ringdest.key",  0x000014, 0x17f9269c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ringdest)
@@ -4725,6 +5015,8 @@ static struct BurnRomInfo RingdestaRomDesc[] = {
 
 	{ "smb.11m",       0x200000, 0xc56935f9, CPS2_QSND | BRF_SND },
 	{ "smb.12m",       0x200000, 0x955b0782, CPS2_QSND | BRF_SND },
+	
+	{ "ringdesta.key", 0x000014, 0x905c9065, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ringdesta)
@@ -4756,6 +5048,8 @@ static struct BurnRomInfo RingdesthRomDesc[] = {
 
 	{ "smb.11m",       0x200000, 0xc56935f9, CPS2_QSND | BRF_SND },
 	{ "smb.12m",       0x200000, 0x955b0782, CPS2_QSND | BRF_SND },
+	
+	{ "ringdesth.key", 0x000014, 0xffb8d049, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ringdesth)
@@ -4787,6 +5081,8 @@ static struct BurnRomInfo SmbombRomDesc[] = {
 
 	{ "smb.11m",       0x200000, 0xc56935f9, CPS2_QSND | BRF_SND },
 	{ "smb.12m",       0x200000, 0x955b0782, CPS2_QSND | BRF_SND },
+	
+	{ "smbomb.key",    0x000014, 0xf690069b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Smbomb)
@@ -4818,6 +5114,8 @@ static struct BurnRomInfo Smbombr1RomDesc[] = {
 
 	{ "smb.11m",       0x200000, 0xc56935f9, CPS2_QSND | BRF_SND },
 	{ "smb.12m",       0x200000, 0x955b0782, CPS2_QSND | BRF_SND },
+	
+	{ "smbomb.key",    0x000014, 0xf690069b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Smbombr1)
@@ -4839,6 +5137,8 @@ static struct BurnRomInfo SfaRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfa.key",       0x000014, 0x7c095631, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa)
@@ -4860,6 +5160,8 @@ static struct BurnRomInfo Sfar1RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfa.key",       0x000014, 0x7c095631, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfar1)
@@ -4881,6 +5183,8 @@ static struct BurnRomInfo Sfar2RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfa.key",       0x000014, 0x7c095631, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfar2)
@@ -4902,6 +5206,8 @@ static struct BurnRomInfo Sfar3RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfa.key",       0x000014, 0x7c095631, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfar3)
@@ -4923,6 +5229,8 @@ static struct BurnRomInfo SfauRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfau.key",      0x000014, 0x1dd0998d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfau)
@@ -4944,6 +5252,8 @@ static struct BurnRomInfo SfzaRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfza.key",      0x000014, 0x2aa6ac63, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfza)
@@ -4965,6 +5275,8 @@ static struct BurnRomInfo Sfzar1RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfza.key",      0x000014, 0x2aa6ac63, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzar1)
@@ -4986,6 +5298,8 @@ static struct BurnRomInfo SfzbRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzb.key",      0x000014, 0xb0570359, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzb)
@@ -5007,6 +5321,8 @@ static struct BurnRomInfo Sfzbr1RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzb.key",      0x000014, 0xb0570359, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzbr1)
@@ -5028,6 +5344,8 @@ static struct BurnRomInfo SfzhRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzh.key",      0x000014, 0x4763446f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzh)
@@ -5049,6 +5367,8 @@ static struct BurnRomInfo Sfzhr1RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzh.key",      0x000014, 0x4763446f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzhr1)
@@ -5070,6 +5390,8 @@ static struct BurnRomInfo SfzjRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzj.key",      0x000014, 0x355d85b8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzj)
@@ -5091,6 +5413,8 @@ static struct BurnRomInfo Sfzjr1RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzj.key",      0x000014, 0x355d85b8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzjr1)
@@ -5112,6 +5436,8 @@ static struct BurnRomInfo Sfzjr2RomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "sfzj.key",      0x000014, 0x355d85b8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfzjr2)
@@ -5139,6 +5465,8 @@ static struct BurnRomInfo Sfa2RomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfa2.key",      0x000014, 0x1578dcb0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa2)
@@ -5166,6 +5494,8 @@ static struct BurnRomInfo Sfa2uRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfa2u.key",     0x000014, 0x4a8d91ef, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa2u)
@@ -5193,6 +5523,8 @@ static struct BurnRomInfo Sfa2ur1RomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfa2u.key",     0x000014, 0x4a8d91ef, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa2ur1)
@@ -5220,6 +5552,8 @@ static struct BurnRomInfo Sfz2aRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2a.key",     0x000014, 0x777b7358, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2a)
@@ -5247,6 +5581,8 @@ static struct BurnRomInfo Sfz2bRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2b.key",     0x000014, 0x35b1df07, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2b)
@@ -5274,6 +5610,8 @@ static struct BurnRomInfo Sfz2br1RomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2b.key",     0x000014, 0x35b1df07, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2br1)
@@ -5301,6 +5639,8 @@ static struct BurnRomInfo Sfz2hRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2h.key",     0x000014, 0x2719ea16, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2h)
@@ -5328,6 +5668,8 @@ static struct BurnRomInfo Sfz2jRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2j.key",     0x000014, 0x455bd098, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2j)
@@ -5355,6 +5697,8 @@ static struct BurnRomInfo Sfz2jr1RomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2j.key",     0x000014, 0x455bd098, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2jr1)
@@ -5382,6 +5726,8 @@ static struct BurnRomInfo Sfz2nRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2n.key",     0x000014, 0xd1cc49d5, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2n)
@@ -5409,6 +5755,8 @@ static struct BurnRomInfo Sfz2alRomDesc[] = {
 
 	{ "sza.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sza.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2al.key",    0x000014, 0x2904963e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2al)
@@ -5436,6 +5784,8 @@ static struct BurnRomInfo Sfz2albRomDesc[] = {
 
 	{ "sza.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sza.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2alb.key",   0x000014, 0xc8b3ac73, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2alb)
@@ -5463,6 +5813,8 @@ static struct BurnRomInfo Sfz2alhRomDesc[] = {
 
 	{ "sza.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sza.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2alh.key",   0x000014, 0xf320f655, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2alh)
@@ -5490,6 +5842,8 @@ static struct BurnRomInfo Sfz2aljRomDesc[] = {
 
 	{ "sza.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sza.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "sfz2alj.key",   0x000014, 0x4c42320f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2alj)
@@ -5519,6 +5873,8 @@ static struct BurnRomInfo Sfa3RomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3.key",      0x000014, 0x54fa39c6, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3)
@@ -5548,6 +5904,8 @@ static struct BurnRomInfo Sfa3bRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3b.key",     0x000014, 0x2d0a1351, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3b)
@@ -5577,6 +5935,8 @@ static struct BurnRomInfo Sfa3hRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3h.key",     0x000014, 0x1b34998c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3h)
@@ -5606,6 +5966,8 @@ static struct BurnRomInfo Sfa3hr1RomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3h.key",     0x000014, 0x1b34998c, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3hr1)
@@ -5635,6 +5997,8 @@ static struct BurnRomInfo Sfa3uRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3u.key",     0x000014, 0x4a8f98c1, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3u)
@@ -5664,6 +6028,8 @@ static struct BurnRomInfo Sfa3ur1RomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3u.key",     0x000014, 0x4a8f98c1, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3ur1)
@@ -5693,6 +6059,8 @@ static struct BurnRomInfo Sfa3usRomDesc[] = {
 
 	{ "sz3.11m",       		0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       		0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfa3u.key",          0x000014, 0x4a8f98c1, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3us)
@@ -5722,6 +6090,8 @@ static struct BurnRomInfo Sfz3aRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfz3a.key",     0x000014, 0x09045d61, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3a)
@@ -5751,6 +6121,8 @@ static struct BurnRomInfo Sfz3ar1RomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfz3a.key",     0x000014, 0x09045d61, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3ar1)
@@ -5780,6 +6152,8 @@ static struct BurnRomInfo Sfz3jRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfz3j.key",     0x000014, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3j)
@@ -5809,6 +6183,8 @@ static struct BurnRomInfo Sfz3jr1RomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfz3j.key",     0x000014, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3jr1)
@@ -5838,6 +6214,8 @@ static struct BurnRomInfo Sfz3jr2RomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "sfz3j.key",     0x000014, 0xd30cca8d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3jr2)
@@ -5864,6 +6242,8 @@ static struct BurnRomInfo SgemfRomDesc[] = {
 
 	{ "pcf.11m",       0x400000, 0xa5dea005, CPS2_QSND | BRF_SND },
 	{ "pcf.12m",       0x400000, 0x4ce235fe, CPS2_QSND | BRF_SND },
+	
+	{ "sgemf.key",     0x000014, 0x3d604021, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sgemf)
@@ -5890,6 +6270,8 @@ static struct BurnRomInfo PfghtjRomDesc[] = {
 
 	{ "pcf.11m",       0x400000, 0xa5dea005, CPS2_QSND | BRF_SND },
 	{ "pcf.12m",       0x400000, 0x4ce235fe, CPS2_QSND | BRF_SND },
+	
+	{ "pfghtj.key",    0x000014, 0x62297638, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Pfghtj)
@@ -5916,6 +6298,8 @@ static struct BurnRomInfo SgemfaRomDesc[] = {
 
 	{ "pcf.11m",       0x400000, 0xa5dea005, CPS2_QSND | BRF_SND },
 	{ "pcf.12m",       0x400000, 0x4ce235fe, CPS2_QSND | BRF_SND },
+	
+	{ "sgemfa.key",    0x000014, 0xdd513738, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sgemfa)
@@ -5942,6 +6326,8 @@ static struct BurnRomInfo SgemfhRomDesc[] = {
 
 	{ "pcf.11m",       0x400000, 0xa5dea005, CPS2_QSND | BRF_SND },
 	{ "pcf.12m",       0x400000, 0x4ce235fe, CPS2_QSND | BRF_SND },
+	
+	{ "sgemfh.key",    0x000014, 0xf97f4b7d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sgemfh)
@@ -5961,6 +6347,8 @@ static struct BurnRomInfo Spf2tRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "spf2t.key",     0x000014, 0x4c4dc7e3, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2t)
@@ -5980,6 +6368,8 @@ static struct BurnRomInfo Spf2tuRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "spf2tu.key",    0x000014, 0x5d7b15e8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2tu)
@@ -5999,6 +6389,8 @@ static struct BurnRomInfo Spf2taRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "spf2ta.key",    0x000014, 0x61e93a18, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2ta)
@@ -6018,6 +6410,8 @@ static struct BurnRomInfo Spf2thRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "spf2th.key",    0x000014, 0x292db449, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2th)
@@ -6037,6 +6431,8 @@ static struct BurnRomInfo Spf2xjRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "spf2xj.key",    0x000014, 0xdc39fd34, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2xj)
@@ -6068,6 +6464,8 @@ static struct BurnRomInfo Ssf2RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2.key",      0x000014, 0xe469ccbb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2)
@@ -6099,6 +6497,8 @@ static struct BurnRomInfo Ssf2r1RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2.key",      0x000014, 0xe469ccbb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2r1)
@@ -6130,6 +6530,8 @@ static struct BurnRomInfo Ssf2aRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2a.key",     0x000014, 0x5fb6013f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2a)
@@ -6161,6 +6563,8 @@ static struct BurnRomInfo Ssf2ar1RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2a.key",     0x000014, 0x5fb6013f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2ar1)
@@ -6192,6 +6596,8 @@ static struct BurnRomInfo Ssf2hRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2h.key",     0x000014, 0x8331bc8e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2h)
@@ -6223,6 +6629,8 @@ static struct BurnRomInfo Ssf2jRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2j.key",     0x000014, 0xbca45cc2, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2j)
@@ -6254,6 +6662,8 @@ static struct BurnRomInfo Ssf2jr1RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2j.key",     0x000014, 0xbca45cc2, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2jr1)
@@ -6285,6 +6695,8 @@ static struct BurnRomInfo Ssf2jr2RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2j.key",     0x000014, 0xbca45cc2, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2jr2)
@@ -6316,6 +6728,8 @@ static struct BurnRomInfo Ssf2uRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2u.key",     0x000014, 0x2f4f8e9d, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2u)
@@ -6347,6 +6761,8 @@ static struct BurnRomInfo Ssf2tbRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tb.key",    0x000014, 0x1ecc92b2, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tb)
@@ -6378,6 +6794,8 @@ static struct BurnRomInfo Ssf2tbr1RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tb.key",    0x000014, 0x1ecc92b2, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tbr1)
@@ -6409,6 +6827,8 @@ static struct BurnRomInfo Ssf2tbjRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tbj.key",   0x000014, 0xbcc2e017, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tbj)
@@ -6440,6 +6860,8 @@ static struct BurnRomInfo Ssf2tbj1RomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tbj.key",   0x000014, 0xbcc2e017, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tbj1)
@@ -6471,6 +6893,8 @@ static struct BurnRomInfo Ssf2tbhRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tbh.key",   0x000014, 0xfddecf4f, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tbh)
@@ -6503,6 +6927,8 @@ static struct BurnRomInfo Ssf2tRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2t.key",     0x000014, 0x524d608e, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2t)
@@ -6535,6 +6961,8 @@ static struct BurnRomInfo Ssf2taRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2ta.key",    0x000014, 0xc11fa8e9, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2ta)
@@ -6567,6 +6995,8 @@ static struct BurnRomInfo Ssf2thRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2th.key",    0x000014, 0xf6ce6a35, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2th)
@@ -6599,6 +7029,8 @@ static struct BurnRomInfo Ssf2tuRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tu.key",    0x000014, 0xf7d62def, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tu)
@@ -6631,6 +7063,8 @@ static struct BurnRomInfo Ssf2tur1RomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2tu.key",    0x000014, 0xf7d62def, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tur1)
@@ -6663,6 +7097,8 @@ static struct BurnRomInfo Ssf2xjRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2xj.key",    0x000014, 0x160d1424, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2xj)
@@ -6695,6 +7131,8 @@ static struct BurnRomInfo Ssf2xjr1RomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2xj.key",    0x000014, 0x160d1424, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2xjr1)
@@ -6753,6 +7191,8 @@ static struct BurnRomInfo Ssf2xjr1rRomDesc[] = {
 	{ "ssf.56a",       0x080000, 0x3919c0e5, CPS2_QSND | BRF_SND },
 	{ "ssf.57a",       0x080000, 0x1ba9bfa6, CPS2_QSND | BRF_SND },
 	{ "ssf.58a",       0x080000, 0x0c89a272, CPS2_QSND | BRF_SND },
+	
+	{ "ssf2xjr1r.key", 0x000014, 0x82c86e63, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2xjr1r)
@@ -6782,6 +7222,8 @@ static struct BurnRomInfo Vhunt2RomDesc[] = {
 
 	{ "vh2.11m",       0x400000, 0x38922efd, CPS2_QSND | BRF_SND },
 	{ "vh2.12m",       0x400000, 0x6e2430af, CPS2_QSND | BRF_SND },
+	
+	{ "vhunt2.key",    0x000014, 0x61306b20, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhunt2)
@@ -6811,6 +7253,8 @@ static struct BurnRomInfo Vhunt2r1RomDesc[] = {
 
 	{ "vh2.11m",       0x400000, 0x38922efd, CPS2_QSND | BRF_SND },
 	{ "vh2.12m",       0x400000, 0x6e2430af, CPS2_QSND | BRF_SND },
+	
+	{ "vhunt2.key",    0x000014, 0x61306b20, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhunt2r1)
@@ -6840,6 +7284,8 @@ static struct BurnRomInfo VsavRomDesc[] = {
 
 	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
 	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	
+	{ "vsav.key",      0x000014, 0xa6e3b164, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsav)
@@ -6869,6 +7315,8 @@ static struct BurnRomInfo VsavaRomDesc[] = {
 
 	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
 	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	
+	{ "vsava.key",     0x000014, 0x8a3520f4, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsava)
@@ -6898,6 +7346,8 @@ static struct BurnRomInfo VsavhRomDesc[] = {
 
 	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
 	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	
+	{ "vsavh.key",     0x000014, 0xa7dd6409, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsavh)
@@ -6927,6 +7377,8 @@ static struct BurnRomInfo VsavjRomDesc[] = {
 
 	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
 	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	
+	{ "vsavj.key",     0x000014, 0x36d28ab8, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsavj)
@@ -6956,6 +7408,8 @@ static struct BurnRomInfo VsavuRomDesc[] = {
 
 	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
 	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	
+	{ "vsavu.key",     0x000014, 0xff21b9d7, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsavu)
@@ -6985,6 +7439,8 @@ static struct BurnRomInfo Vsav2RomDesc[] = {
 
 	{ "vs2.11m",       0x400000, 0xd67e47b7, CPS2_QSND | BRF_SND },
 	{ "vs2.12m",       0x400000, 0x6d020a14, CPS2_QSND | BRF_SND },
+	
+	{ "vsav2.key",     0x000014, 0x289028ce, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsav2)
@@ -7014,6 +7470,8 @@ static struct BurnRomInfo XmcotaRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcota.key",    0x000014, 0x6665bbfb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcota)
@@ -7043,6 +7501,8 @@ static struct BurnRomInfo Xmcotar1RomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcota.key",    0x000014, 0x6665bbfb, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotar1)
@@ -7072,6 +7532,8 @@ static struct BurnRomInfo XmcotaaRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaa.key",   0x000014, 0x3fdd2d42, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotaa)
@@ -7101,6 +7563,8 @@ static struct BurnRomInfo Xmcotaar1RomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaa.key",   0x000014, 0x3fdd2d42, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotaar1)
@@ -7130,6 +7594,8 @@ static struct BurnRomInfo XmcotahRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotah.key",   0x000014, 0xc9a45a5a, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotah)
@@ -7159,6 +7625,8 @@ static struct BurnRomInfo Xmcotahr1RomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotah.key",   0x000014, 0xc9a45a5a, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotahr1)
@@ -7188,6 +7656,8 @@ static struct BurnRomInfo XmcotajRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaj.key",   0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotaj)
@@ -7217,6 +7687,8 @@ static struct BurnRomInfo Xmcotaj1RomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaj.key",   0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotaj1)
@@ -7246,6 +7718,8 @@ static struct BurnRomInfo Xmcotaj2RomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaj.key",   0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotaj2)
@@ -7275,6 +7749,8 @@ static struct BurnRomInfo Xmcotaj3RomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaj.key",   0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotaj3)
@@ -7304,6 +7780,8 @@ static struct BurnRomInfo XmcotajrRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotaj.key",   0x000014, 0xd278b4ac, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotajr)
@@ -7333,6 +7811,8 @@ static struct BurnRomInfo XmcotauRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotau.key",   0x000014, 0x623d3357, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotau)
@@ -7361,6 +7841,8 @@ static struct BurnRomInfo XmvsfRomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsf.key",     0x000014, 0xd5c07311, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsf)
@@ -7389,6 +7871,8 @@ static struct BurnRomInfo Xmvsfr1RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsf.key",     0x000014, 0xd5c07311, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfr1)
@@ -7417,6 +7901,8 @@ static struct BurnRomInfo XmvsfaRomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfa.key",    0x000014, 0x44941468, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfa)
@@ -7445,6 +7931,8 @@ static struct BurnRomInfo Xmvsfar1RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfa.key",    0x000014, 0x44941468, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfar1)
@@ -7473,6 +7961,8 @@ static struct BurnRomInfo Xmvsfar2RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfa.key",    0x000014, 0x44941468, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfar2)
@@ -7501,6 +7991,8 @@ static struct BurnRomInfo Xmvsfar3RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfa.key",    0x000014, 0x44941468, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfar3)
@@ -7528,6 +8020,8 @@ static struct BurnRomInfo XmvsfbRomDesc[] = {
 	{ "xvs.02",        0x020000, 0x101bdee9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfb.key",    0x000014, 0xf0384798, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfb)
@@ -7556,6 +8050,8 @@ static struct BurnRomInfo XmvsfhRomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfh.key",    0x000014, 0xf632a36b, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfh)
@@ -7584,6 +8080,8 @@ static struct BurnRomInfo XmvsfjRomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfj.key",    0x000014, 0x87576cda, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfj)
@@ -7612,6 +8110,8 @@ static struct BurnRomInfo Xmvsfjr1RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfj.key",    0x000014, 0x87576cda, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfjr1)
@@ -7640,6 +8140,8 @@ static struct BurnRomInfo Xmvsfjr2RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfj.key",    0x000014, 0x87576cda, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfjr2)
@@ -7668,6 +8170,8 @@ static struct BurnRomInfo Xmvsfjr3RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfj.key",    0x000014, 0x87576cda, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfjr3)
@@ -7696,6 +8200,8 @@ static struct BurnRomInfo XmvsfuRomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfu.key",    0x000014, 0xeca13458, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfu)
@@ -7734,6 +8240,8 @@ static struct BurnRomInfo Xmvsfur1RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfu.key",    0x000014, 0xeca13458, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfur1)
@@ -7762,6 +8270,8 @@ static struct BurnRomInfo Xmvsfur2RomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "xmvsfu.key",    0x000014, 0xeca13458, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfur2)
@@ -10432,6 +10942,8 @@ static struct BurnRomInfo NinexxdRomDesc[] = {
 
 	{ "19x.11m",       0x200000, 0xd38beef3, CPS2_QSND | BRF_SND },
 	{ "19x.12m",       0x200000, 0xd47c96e2, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ninexxd)
@@ -10455,6 +10967,8 @@ static struct BurnRomInfo Nine44dRomDesc[] = {
 
 	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
 	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nine44d)
@@ -10478,6 +10992,8 @@ static struct BurnRomInfo Nine44adRomDesc[] = {
 
 	{ "nff.11m",       0x400000, 0x243e4e05, CPS2_QSND | BRF_SND },
 	{ "nff.12m",       0x400000, 0x4fcf1600, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nine44ad)
@@ -10507,6 +11023,8 @@ static struct BurnRomInfo Armwar1dRomDesc[] = {
 
 	{ "pwg.11m",       0x200000, 0xa78f7433, CPS2_QSND | BRF_SND },
 	{ "pwg.12m",       0x200000, 0x77438ed0, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Armwar1d)
@@ -10531,6 +11049,8 @@ static struct BurnRomInfo AvspdRomDesc[] = {
 	
 	{ "avp.11m",       0x200000, 0x83499817, CPS2_QSND | BRF_SND },
 	{ "avp.12m",       0x200000, 0xf4110d49, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Avspd)
@@ -10555,6 +11075,8 @@ static struct BurnRomInfo BatcirdRomDesc[] = {
 
 	{ "btc.11m",       0x200000, 0xc27f2229, CPS2_QSND | BRF_SND },
 	{ "btc.12m",       0x200000, 0x418a2e33, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Batcird)
@@ -10594,6 +11116,8 @@ static struct BurnRomInfo Csclub1dRomDesc[] = {
 	{ "csc.56",        0x080000, 0x9a345334, CPS2_QSND | BRF_SND },
 	{ "csc.57",        0x080000, 0xaedc27f2, CPS2_QSND | BRF_SND },
 	{ "csc.58",        0x080000, 0x2300b7b3, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Csclub1d)
@@ -10623,6 +11147,8 @@ static struct BurnRomInfo CybotsudRomDesc[] = {
 
 	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
 	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cybotsud)
@@ -10652,6 +11178,8 @@ static struct BurnRomInfo CybotsjdRomDesc[] = {
 
 	{ "cyb.11m",       0x200000, 0x362ccab2, CPS2_QSND | BRF_SND },
 	{ "cyb.12m",       0x200000, 0x7066e9cc, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Cybotsjd)
@@ -10681,6 +11209,8 @@ static struct BurnRomInfo DdsomudRomDesc[] = {
 
 	{ "dd2.11m",       0x200000, 0x98d0c325, CPS2_QSND | BRF_SND },
 	{ "dd2.12m",       0x200000, 0x5ea2e7fa, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddsomud)
@@ -10706,6 +11236,8 @@ static struct BurnRomInfo DdtoddRomDesc[] = {
 
 	{ "dad.11m",       0x200000, 0x0c499b67, CPS2_QSND | BRF_SND },
 	{ "dad.12m",       0x200000, 0x2f0b5a4e, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ddtodd)
@@ -10727,6 +11259,8 @@ static struct BurnRomInfo DimahoudRomDesc[] = {
 
 	{ "gmd.11m",       0x400000, 0x06a65542, CPS2_QSND | BRF_SND },
 	{ "gmd.12m",       0x400000, 0x50bc7a31, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dimahoud)
@@ -10756,6 +11290,8 @@ static struct BurnRomInfo Dstlku1dRomDesc[] = {
 
 	{ "vam.11m",       0x200000, 0x4a39deb2, CPS2_QSND | BRF_SND },
 	{ "vam.12m",       0x200000, 0x1a3e5c03, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Dstlku1d)
@@ -10780,6 +11316,8 @@ static struct BurnRomInfo EcofghtrdRomDesc[] = {
 
 	{ "uec.11m",       0x200000, 0x81b25d39, CPS2_QSND | BRF_SND },
 	{ "uec.12m",       0x200000, 0x27729e52, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ecofghtrd)
@@ -10799,6 +11337,8 @@ static struct BurnRomInfo GigawingdRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawingd)
@@ -10818,6 +11358,8 @@ static struct BurnRomInfo GigawingjdRomDesc[] = {
 
 	{ "ggw.11m",       0x400000, 0xe172acf5, CPS2_QSND | BRF_SND },
 	{ "ggw.12m",       0x400000, 0x4bee4e8f, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Gigawingjd)
@@ -10842,6 +11384,8 @@ static struct BurnRomInfo Hsf2dRomDesc[] = {
 	{ "hs2.02",        0x020000, 0x2d8794aa, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "hs2.11m",       0x800000, 0x0e15c359, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Hsf2d)
@@ -10871,6 +11415,8 @@ static struct BurnRomInfo Hsf2daRomDesc[] = {
 
 	{ "hs2(__hsf2da).11m", 0x400000, 0x5cb00496, CPS2_QSND | BRF_SND },
 	{ "hs2.12m",       0x400000, 0x8f298007, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Hsf2da)
@@ -10891,6 +11437,8 @@ static struct BurnRomInfo Megamn2dRomDesc[] = {
 
 	{ "rm2.11m",       0x200000, 0x2106174d, CPS2_QSND | BRF_SND },
 	{ "rm2.12m",       0x200000, 0x546c1636, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Megamn2d)
@@ -10914,6 +11462,8 @@ static struct BurnRomInfo MmatrixdRomDesc[] = {
 
 	{ "mmx.11m",       0x400000, 0x4180b39f, CPS2_QSND | BRF_SND },
 	{ "mmx.12m",       0x400000, 0x95e22a59, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mmatrixd)
@@ -10936,6 +11486,8 @@ static struct BurnRomInfo MpangjdRomDesc[] = {
 
 	{ "mpn-simm.05a",  0x200000, 0x318A2E21, CPS2_QSND_SIMM | BRF_SND },
 	{ "mpn-simm.05b",  0x200000, 0x5462F4E8, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mpangjd)
@@ -10965,6 +11517,8 @@ static struct BurnRomInfo MshudRomDesc[] = {
 
 	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
 	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshud)
@@ -10994,6 +11548,8 @@ static struct BurnRomInfo Mshvsfu1dRomDesc[] = {
 
 	{ "mvs.11m",       0x400000, 0x86219770, CPS2_QSND | BRF_SND },
 	{ "mvs.12m",       0x400000, 0xf2fd7f68, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mshvsfu1d)
@@ -11023,6 +11579,8 @@ static struct BurnRomInfo MvscudRomDesc[] = {
 
 	{ "mvc.11m",       0x400000, 0x850fe663, CPS2_QSND | BRF_SND },
 	{ "mvc.12m",       0x400000, 0x7ccb1896, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Mvscud)
@@ -11052,6 +11610,8 @@ static struct BurnRomInfo NwarrudRomDesc[] = {
 
 	{ "vph.11m",       0x200000, 0xe1837d33, CPS2_QSND | BRF_SND },
 	{ "vph.12m",       0x200000, 0xfbd3cd90, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Nwarrud)
@@ -11076,6 +11636,8 @@ static struct BurnRomInfo ProgearudRomDesc[] = {
 	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Progearud)
@@ -11100,6 +11662,8 @@ static struct BurnRomInfo ProgearjdRomDesc[] = {
 	{ "pga-simm.05b",  0x200000, 0x37a65d86, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06a",  0x200000, 0xd3f1e934, CPS2_QSND_SIMM | BRF_SND },
 	{ "pga-simm.06b",  0x200000, 0x8b39489a, CPS2_QSND_SIMM | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Progearjd)
@@ -11131,6 +11695,8 @@ static struct BurnRomInfo RingdstdRomDesc[] = {
 
 	{ "smb.11m",       0x200000, 0xc56935f9, CPS2_QSND | BRF_SND },
 	{ "smb.12m",       0x200000, 0x955b0782, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ringdstd)
@@ -11152,6 +11718,8 @@ static struct BurnRomInfo SfadRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfad)
@@ -11174,6 +11742,8 @@ static struct BurnRomInfo SfaudRomDesc[] = {
 
 	{ "sfz.11m",       0x200000, 0xc4b093cd, CPS2_QSND | BRF_SND },
 	{ "sfz.12m",       0x200000, 0x8bdbc4b4, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfaud)
@@ -11201,6 +11771,8 @@ static struct BurnRomInfo Sfz2adRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2ad)
@@ -11228,6 +11800,8 @@ static struct BurnRomInfo Sfz2jdRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2jd)
@@ -11255,6 +11829,8 @@ static struct BurnRomInfo Sfz2aldRomDesc[] = {
 
 	{ "sz2.11m",       0x200000, 0xaa47a601, CPS2_QSND | BRF_SND },
 	{ "sz2.12m",       0x200000, 0x2237bc53, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz2ald)
@@ -11284,6 +11860,8 @@ static struct BurnRomInfo Sfa3udRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfa3ud)
@@ -11313,6 +11891,8 @@ static struct BurnRomInfo Sfz3jr2dRomDesc[] = {
 
 	{ "sz3.11m",       0x400000, 0x1c89eed1, CPS2_QSND | BRF_SND },
 	{ "sz3.12m",       0x400000, 0xf392b13a, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sfz3jr2d)
@@ -11339,6 +11919,8 @@ static struct BurnRomInfo SgemfdRomDesc[] = {
 
 	{ "pcf.11m",       0x400000, 0xa5dea005, CPS2_QSND | BRF_SND },
 	{ "pcf.12m",       0x400000, 0x4ce235fe, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Sgemfd)
@@ -11358,6 +11940,8 @@ static struct BurnRomInfo Spf2tdRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2td)
@@ -11377,6 +11961,8 @@ static struct BurnRomInfo Spf2xjdRomDesc[] = {
 
 	{ "pzf.11m",       0x200000, 0x78442743, CPS2_QSND | BRF_SND },
 	{ "pzf.12m",       0x200000, 0x399d2c7b, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Spf2xjd)
@@ -11409,6 +11995,8 @@ static struct BurnRomInfo Ssf2dRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2d)
@@ -11440,6 +12028,8 @@ static struct BurnRomInfo Ssf2udRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2ud)
@@ -11471,6 +12061,8 @@ static struct BurnRomInfo Ssf2tbdRomDesc[] = {
 	{ "ssf.q06",       0x080000, 0x4e79c951, CPS2_QSND | BRF_SND },
 	{ "ssf.q07",       0x080000, 0xcdd14313, CPS2_QSND | BRF_SND },
 	{ "ssf.q08",       0x080000, 0x6f5a088c, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tbd)
@@ -11503,6 +12095,8 @@ static struct BurnRomInfo Ssf2tdRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2td)
@@ -11535,6 +12129,8 @@ static struct BurnRomInfo Ssf2tadRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2tad)
@@ -11567,6 +12163,8 @@ static struct BurnRomInfo Ssf2xjr1dRomDesc[] = {
 
 	{ "sfx.11m",       0x200000, 0x9bdbd476, CPS2_QSND | BRF_SND },
 	{ "sfx.12m",       0x200000, 0xa05e3aab, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Ssf2xjr1d)
@@ -11596,6 +12194,8 @@ static struct BurnRomInfo VsavdRomDesc[] = {
 
 	{ "vm3.11m",       0x400000, 0xe80e956e, CPS2_QSND | BRF_SND },
 	{ "vm3.12m",       0x400000, 0x9cd71557, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsavd)
@@ -11627,6 +12227,8 @@ static struct BurnRomInfo Vhunt2dRomDesc[] = {
 
 	{ "vh2.11m",       0x400000, 0x38922efd, CPS2_QSND | BRF_SND },
 	{ "vh2.12m",       0x400000, 0x6e2430af, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vhunt2d)
@@ -11661,6 +12263,8 @@ static struct BurnRomInfo Vsav2dRomDesc[] = {
 
 	{ "vs2.11m",       0x400000, 0xd67e47b7, CPS2_QSND | BRF_SND },
 	{ "vs2.12m",       0x400000, 0x6d020a14, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Vsav2d)
@@ -11690,6 +12294,8 @@ static struct BurnRomInfo Xmcotar1dRomDesc[] = {
 
 	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
 	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmcotar1d)
@@ -11721,6 +12327,8 @@ static struct BurnRomInfo Xmvsfu1dRomDesc[] = {
 
 	{ "xvs.11m",       0x200000, 0x9cadcdbc, CPS2_QSND | BRF_SND },
 	{ "xvs.12m",       0x200000, 0x7b11e460, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Xmvsfu1d)
@@ -12320,7 +12928,9 @@ static struct BurnRomInfo ProgearjblRomDesc[] = {
 	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "pga.11m",       0x400000, 0xabdd224e, CPS2_QSND | BRF_SND },
-	{ "pga.12m",       0x400000, 0xdac53406, CPS2_QSND | BRF_SND },	
+	{ "pga.12m",       0x400000, 0xdac53406, CPS2_QSND | BRF_SND },
+	
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },
 };
 
 STD_ROM_PICK(Progearjbl)

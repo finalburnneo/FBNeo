@@ -4881,7 +4881,7 @@ struct BurnDriver BurnDrvR2dx_v33_r2 = {
 
 static struct BurnRomInfo nzeroteamRomDesc[] = {
 	{ "SEIBU_1.U0224",		0x080000, 0xce1bcaf4, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "SEIBU_1.U0226",		0x080000, 0x03f6e32d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "SEIBU_2.U0226",		0x080000, 0x03f6e32d, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "copx-d3.bin",		0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  2 Copx data
 
@@ -4897,6 +4897,9 @@ static struct BurnRomInfo nzeroteamRomDesc[] = {
 	{ "obj-2",				0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
 
 	{ "SEIBU_4.U099",		0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
+	
+	{ "SYSV33B-2.U0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
+	{ "SYSV33B-1.U0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(nzeroteam)
@@ -4933,6 +4936,9 @@ static struct BurnRomInfo nzeroteamaRomDesc[] = {
 	{ "obj-2",				0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
 
 	{ "6.pcm",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
+	
+	{ "SYSV33B-2.U0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
+	{ "SYSV33B-1.U0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(nzeroteama)

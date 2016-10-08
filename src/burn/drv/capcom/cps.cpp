@@ -17,6 +17,7 @@ UINT8 *CpsZRom=NULL; UINT32 nCpsZRomLen=0; // Z80 Roms
 INT8 *CpsQSam=NULL; UINT32 nCpsQSamLen=0;	// QSound Sample Roms
 UINT8 *CpsAd  =NULL; UINT32 nCpsAdLen  =0; // ADPCM Data
 UINT8 *CpsStar=NULL;
+UINT8 *CpsKey=NULL; UINT32 nCpsKeyLen = 0;
 UINT32 nCpsGfxScroll[4]={0,0,0,0}; // Offset to Scroll tiles
 UINT32 nCpsGfxMask=0;	  // Address mask
 
@@ -1750,6 +1751,7 @@ static INT32 CpsGetROMs(bool bLoad)
 	UINT8* CpsGfxLoad = CpsGfx;
 	UINT8* CpsZRomLoad = CpsZRom;
 	UINT8* CpsQSamLoad = (UINT8*)CpsQSam;
+	UINT8* CpsKeyLoad = CpsKey;
 
 	INT32 nGfxNum = 0;
 
@@ -1924,6 +1926,16 @@ static INT32 CpsGetROMs(bool bLoad)
 				i++;
 			}
 		}
+		
+		if ((ri.nType & 0x0f) == CPS2_ENCRYPTION_KEY) {
+			if (bLoad) {
+				BurnLoadRom(CpsKeyLoad, i, 1);
+				CpsKeyLoad += ri.nLen;
+			} else {
+				nCpsKeyLen += ri.nLen;
+			}
+			i++;
+		}
 	} while (ri.nLen);
 
 	if (bLoad) {
@@ -1950,6 +1962,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		bprintf(PRINT_IMPORTANT, _T("  - Z80 ROM size:\t0x%08X\n"), nCpsZRomLen);
 		bprintf(PRINT_IMPORTANT, _T("  - Graphics data:\t0x%08X\n"), nCpsGfxLen);
 		bprintf(PRINT_IMPORTANT, _T("  - QSound data:\t0x%08X\n"), nCpsQSamLen);
+		bprintf(PRINT_IMPORTANT, _T("  - Key data:\t0x%08X\n"), nCpsKeyLen);
 #endif
 
 		if (/*!nCpsCodeLen ||*/ !nCpsRomLen || !nCpsGfxLen || !nCpsZRomLen || ! nCpsQSamLen) {
@@ -1983,7 +1996,7 @@ INT32 CpsInit()
 	}
 	nCPS68KClockspeed = nCPS68KClockspeed * 100 / nBurnFPS;
 
-	nMemLen = nCpsGfxLen + nCpsRomLen + nCpsCodeLen + nCpsZRomLen + nCpsQSamLen + nCpsAdLen;
+	nMemLen = nCpsGfxLen + nCpsRomLen + nCpsCodeLen + nCpsZRomLen + nCpsQSamLen + nCpsAdLen + nCpsKeyLen;
 
 	if (Cps1Qs == 1) {
 		nMemLen += nCpsZRomLen * 2;
@@ -2006,6 +2019,7 @@ INT32 CpsInit()
 	}
 	CpsQSam =(INT8*)(CpsZRom + nCpsZRomLen);
 	CpsAd   =(UINT8*)(CpsQSam + nCpsQSamLen);
+	CpsKey  =(UINT8*)(CpsAd + nCpsAdLen);
 
 	// Create Gfx addr mask
 	for (i = 0; i < 31; i++) {
@@ -2073,9 +2087,10 @@ INT32 CpsExit()
 	Scroll2TileMask = 0;
 	Scroll3TileMask = 0;
 
-	nCpsCodeLen = nCpsRomLen = nCpsGfxLen = nCpsZRomLen = nCpsQSamLen = nCpsAdLen = 0;
+	nCpsCodeLen = nCpsRomLen = nCpsGfxLen = nCpsZRomLen = nCpsQSamLen = nCpsAdLen = nCpsKeyLen = 0;
 	CpsRom = CpsZRom = CpsAd = CpsStar = NULL;
 	CpsQSam = NULL;
+	CpsKey = NULL;
 
 	// All Memory is allocated to this (this is the only one we can free)
 	BurnFree(CpsGfx);

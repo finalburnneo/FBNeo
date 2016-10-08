@@ -27,6 +27,7 @@ extern UINT8 *CpsCode; extern UINT32 nCpsCodeLen;		// Program Rom (decrypted)
 extern UINT8 *CpsZRom; extern UINT32 nCpsZRomLen;		// Z80 Roms
 extern          INT8 *CpsQSam; extern UINT32 nCpsQSamLen;		// QSound Sample Roms
 extern UINT8 *CpsAd;   extern UINT32 nCpsAdLen;		// ADPCM Data
+extern UINT8 *CpsKey; extern UINT32 nCpsKeyLen;
 extern UINT32 nCpsGfxScroll[4];								// Offset to Scroll tiles
 extern UINT32 nCpsGfxMask;									// Address mask
 extern UINT8* CpsStar;

@@ -58,6 +58,7 @@ static UINT8 DrvDips[2];
 // per-game constants
 static INT32 game_select;
 static INT32 silvland = 0;
+static INT32 gfx0_cont800 = 0;
 static INT32 uses_sub;
 static UINT8 bigsprite_index;
 
@@ -975,8 +976,19 @@ static INT32 GetRoms()
 
 		if ((ri.nType & 7) == 2) {
 			if (BurnLoadRom(Loadg0, i, 1)) return 1;
-			Loadg0 += (game_select == 1) ? 0x1000 : ri.nLen;
-			DrvGfxROM0Len += (game_select == 1) ? 0x1000 : ri.nLen;
+			if (gfx0_cont800) { // loads 0x800 bytes at 0x0000 and 0x1000
+				UINT8 *tmp = (UINT8*)BurnMalloc(0x4000);
+				memmove(tmp, Loadg0, 0x1000);
+				memset(Loadg0, 0, 0x1000);
+				memmove(Loadg0 + 0x00000, tmp + 0x00000, 0x800);
+				memmove(Loadg0 + 0x01000, tmp + 0x00800, 0x800);
+				BurnFree(tmp);
+				Loadg0 += 0x2000;
+				DrvGfxROM0Len += 0x2000;
+			} else {
+				Loadg0 += (game_select == 1) ? 0x1000 : ri.nLen;
+				DrvGfxROM0Len += (game_select == 1) ? 0x1000 : ri.nLen;
+			}
 
 			continue;
 		}
@@ -1106,6 +1118,7 @@ static INT32 DrvExit()
 	game_select = 0;
 	uses_sub = 0;
 	silvland = 0;
+	gfx0_cont800 = 0;
 
 	return 0;
 }
@@ -1909,6 +1922,25 @@ static INT32 rpatrolInit()
 {
 	game_select = 1;
 	uses_sub = 0;
+	gfx0_cont800 = 1;
+
+	INT32 rc = DrvInit();
+
+	if (rc == 0) { // decryption
+		for (INT32 i = 0x0000; i < 0x5000; i++)	{
+			DrvZ80ROM[i] = DrvZ80ROM[i] ^ 0x79;
+			i++;
+			DrvZ80ROM[i] = DrvZ80ROM[i] ^ 0x5b;
+		}
+	}
+
+	return rc;
+}
+
+static INT32 rpatrolbInit()
+{
+	game_select = 1;
+	uses_sub = 0;
 
 	INT32 rc = DrvInit();
 
@@ -1991,7 +2023,7 @@ struct BurnDriver BurnDrvRpatrolb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, rpatrolbRomInfo, rpatrolbRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
-	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	rpatrolbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

@@ -871,7 +871,7 @@ struct BurnDriver BurnDrvMerlinmm = {
 	"merlinmm", NULL, NULL, NULL, "1986",
 	"Merlins Money Maze\0", NULL, "Zilec-Zenitone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
 	NULL, merlinmmRomInfo, merlinmmRomName, NULL, NULL, MerlinmmInputInfo, MerlinmmDIPInfo,
 	MerlinmmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

@@ -12959,7 +12959,9 @@ static struct BurnRomInfo HalfwayRomDesc[] = {
 	{ "pga.01",        0x020000, 0xbdbfa992, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
 
 	{ "redlabel.11m",  0x400000, 0x33ebf625, CPS2_QSND | BRF_SND },
-	{ "redlabel.12m",  0x400000, 0x47f25cf4, CPS2_QSND | BRF_SND },	
+	{ "redlabel.12m",  0x400000, 0x47f25cf4, CPS2_QSND | BRF_SND },
+
+	{ "phoenix.key",   0x000014, 0x2cf772b0, CPS2_ENCRYPTION_KEY },	
 };
 
 STD_ROM_PICK(Halfway)

@@ -641,7 +641,7 @@ static void optimise_sboxes(struct optimised_sbox* out, const struct sbox* in)
 static void cps2_decrypt(const UINT32 *master_key, UINT32 lower_limit, UINT32 upper_limit)
 {
 	UINT16 *rom = (UINT16 *)CpsRom;
-	UINT32 length = (upper_limit > 0) ? upper_limit : nCpsRomLen;
+	UINT32 length = (upper_limit > 0) ? (upper_limit * 2) : nCpsRomLen;
 	CpsCode = (UINT8*)BurnMalloc(length);
 	nCpsCodeLen = length;
 	UINT16 *dec = (UINT16*)CpsCode;

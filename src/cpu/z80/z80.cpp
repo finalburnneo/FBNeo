@@ -194,6 +194,8 @@ int z80_ICount;
 static Z80_Regs Z80;
 UINT32 EA;
 
+void (*z80edfe_callback)(Z80_Regs *Regs) = NULL;
+
 static UINT8 SZ[256];		/* zero and sign flags */
 static UINT8 SZ_BIT[256];	/* zero, sign and parity/overflow (=zero) flags for BIT opcode */
 static UINT8 SZP[256];		/* zero, sign and parity flags */
@@ -3007,7 +3009,12 @@ OP(ed,fa) { illegal_2();										} /* DB   ED          */
 OP(ed,fb) { illegal_2();										} /* DB   ED          */
 OP(ed,fc) { illegal_2();										} /* DB   ED          */
 OP(ed,fd) { illegal_2();										} /* DB   ED          */
-OP(ed,fe) { illegal_2();										} /* DB   ED          */
+OP(ed,fe) {
+	if (z80edfe_callback) {
+		(*z80edfe_callback)(&Z80);
+	} else {
+		illegal_2();
+	} } /* DB   ED          */
 OP(ed,ff) { illegal_2();										} /* DB   ED          */
 
 
@@ -3528,6 +3535,7 @@ void Z80Exit()
 	SZHVC_add = NULL;
 	if (SZHVC_sub) free(SZHVC_sub);
 	SZHVC_sub = NULL;
+	z80edfe_callback = NULL;
 }
 
 int Z80Execute(int cycles)

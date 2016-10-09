@@ -60,5 +60,6 @@ void ZetSetReadHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetWriteHandler(void (__fastcall *pHandler)(UINT16, UINT8));
 void ZetSetInHandler(UINT8 (__fastcall *pHandler)(UINT16));
 void ZetSetOutHandler(void (__fastcall *pHandler)(UINT16, UINT8));
+void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*));
 
 void ZetSetBUSREQLine(INT32 nStatus);

@@ -69,7 +69,7 @@ int Z80Scan(int nAction);
 INT32 z80TotalCycles();
 
 extern unsigned char Z80Vector;
-
+extern void (*z80edfe_callback)(Z80_Regs *Regs);
 extern int z80_ICount;
 extern UINT32 EA;
 

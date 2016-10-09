@@ -151,6 +151,12 @@ void ZetSetOutHandler(void (__fastcall *pHandler)(UINT16, UINT8))
 	ZetCPUContext[nOpenedCPU]->ZetOut = pHandler;
 }
 
+void ZetSetEDFECallback(void (*pCallback)(Z80_Regs*))
+{
+	// Can be set before init. it's cleared at exit.
+	z80edfe_callback = pCallback;
+}
+
 void ZetNewFrame()
 {
 #if defined FBA_DEBUG

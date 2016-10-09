@@ -148,6 +148,10 @@ static UINT8 Joyselect = 0;    // read from Joystick 0 or 1? (internal)
 static UINT8 Hertz60 = 0;      // DIP setting.
 static UINT8 BiosmodeJapan = 0;// DIP setting.
 
+static INT32 CasMode = 0;      // Using .cas file?
+static INT32 CasPos = 0;
+static INT32 nFrameCtr = 0; // for autoloading
+
 static UINT8 *RAM[8];          // Mapped address space
 static UINT8 *EmptyRAM = NULL; // Unmapped stuff points here
 static UINT8 *MemMap[4][8];    // [prislot] [page]
@@ -287,9 +291,129 @@ static const char *ROMNames[MAXMAPPERS + 1] =
   "Dooly\0","Cross Blaim\0","R-Type\0", "???\0"
 };
 
+#define CAS_BLOAD 1
+#define CAS_RUN 2
+
+static const char *CASAutoLoadTypes[2] =
+{
+	"bload \"cas:\", r\x0d", "run \"cas:\"\x0d"
+};
+
 static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot);
 static void PageMap(INT32 CartSlot, const char *cMap); //("0:0:0:0:0:0:0:0")
 static void MapMegaROM(UINT8 nSlot, UINT8 nPg0, UINT8 nPg1, UINT8 nPg2, UINT8 nPg3);
+
+static INT32 CASAutoLoadPos = 0;
+static INT32 CASAutoLoadTicker = 0;
+
+static void CASAutoLoad()
+{
+	CASAutoLoadPos = 0;
+	CASAutoLoadTicker = 0;
+	nFrameCtr = 0;
+}
+
+static void CASAutoLoadTick()
+{
+	UINT8 c = CASAutoLoadTypes[CasMode - 1][CASAutoLoadPos];
+	if (!c) return;
+
+	keyInput(c, !(CASAutoLoadTicker & 1));
+	if (c == '\"' || c == ':')
+		keyInput(0x10/*SHIFT*/, !(CASAutoLoadTicker & 1));
+	if (CASAutoLoadTicker & 1) CASAutoLoadPos++;
+	CASAutoLoadTicker++;
+}
+
+static void CASPatchBIOS(UINT8 *bios)
+{
+	UINT8 PatchBytes[] = { 0xe1, 0xe4, 0xe7, 0xea, 0xed, 0xf0, 0xf3, 0x00 };
+	UINT8 i = 0;
+
+	while (PatchBytes[i] != 0x00) {
+		UINT8 *p = bios + PatchBytes[i];
+		p[0] = 0xed;
+		p[1] = 0xfe;
+		p[2] = 0xc9;
+		i++;
+	}
+}
+
+extern void (*z80edfe_callback)(Z80_Regs *Regs);
+
+static void Z80EDFECallback(Z80_Regs *Regs)
+{
+	static const UINT8 TapeHeader[8] = { 0x1f, 0xa6, 0xde, 0xba, 0xcc, 0x13, 0x7d, 0x74 };
+    #define Z80CF 0x01
+
+	switch (Regs->pc.d - 2)
+	{
+		case 0x00e1: // TAPION (open & read header)
+			{
+				bprintf(0, _T("CAS: Searching header: "));
+
+				Regs->af.b.l |= Z80CF;
+				if (CasMode) {
+					while (CasPos+8 < CurRomSize) {
+						if (!memcmp(game + CasPos, TapeHeader, 8)) {
+							CasPos+=8;
+							bprintf(0, _T("Found.\n"));
+							Regs->af.b.l &= ~Z80CF;
+							return;
+						}
+						CasPos += 1;
+					}
+					bprintf(0, _T("Not found.\n"));
+					CasPos = 0;
+					return;
+				}
+				bprintf(0, _T("Tape offline.\n"));
+
+				return;
+			}
+
+		  case 0x00e4: // TAPIN (read)
+		  {
+			  Regs->af.b.l |= Z80CF;
+
+			  if (CasMode) {
+				  UINT8 c = game[CasPos++];
+
+				  if (CasPos > CurRomSize) {
+					  CasPos = 0;
+				  }
+				  else
+				  {
+					  Regs->af.b.h = c;
+					  Regs->af.b.l &= ~Z80CF;
+				  }
+			  }
+
+			  return;
+		  }
+
+		  case 0x00e7: // TAPIOF (stop reading from tape)
+		  Regs->af.b.l &= ~Z80CF;
+		  return;
+
+		  case 0x00ea: // TAPOON (write header)
+			  bprintf(0, _T("TAPOON"));
+			  return;
+
+		  case 0x00ed: // TAPOUT (write byte)
+			  bprintf(0, _T("TAPOUT"));
+			  return;
+
+		  case 0x00f0: // TAPOOF (stop writing)
+			  Regs->af.b.l &= ~Z80CF;
+			  return;
+
+		  case 0x00f3: // STMOTR (motor control)
+			  Regs->af.b.l &= ~Z80CF;
+			  return;
+	}
+}
+
 
 void msxinit(INT32 cart_len)
 {
@@ -312,6 +436,14 @@ void msxinit(INT32 cart_len)
 	RAMPages = 4; // 64k
 	RAMMask = RAMPages - 1;
 	RAMData = main_mem;
+
+	CasPos = 0;
+	if (CasMode) {
+		bprintf(0, _T("Cassette mode.\n"));
+		ZetSetEDFECallback(Z80EDFECallback);
+		CASPatchBIOS(maincpu);
+		CASAutoLoad();
+	}
 
 	// "Insert" BIOS ROM
 	ROMData[BIOSSLOT] = maincpu;
@@ -886,19 +1018,20 @@ static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 					PageMap(nSlot, "0:1:0:1:2:3:2:3"); // normal
 				} else {
 					PageMap(nSlot, "2:3:0:1:2:3:0:1"); // swapped
-					bprintf(0, _T("Swapped 24k/32k mirroring.\n"));
+					bprintf(0, _T("Swapped mirroring.\n"));
 				}
 				break;
 
 		default:
 			if(Flat64)
-			{ // Flat/64k ROM
+			{ // Flat-64k ROM
 				PageMap(nSlot, "0:1:2:3:4:5:6:7");
 			}
 			break;
 		}
-		bprintf(0, _T("starting address 0x%04X.\n"),
-				MemMap[nSlot][2][2] + 256 * MemMap[nSlot][2][3]);
+		if (Flat64 || Len < 5)
+			bprintf(0, _T("starting address 0x%04X.\n"),
+					MemMap[nSlot][2][2] + 256 * MemMap[nSlot][2][3]);
 	}
 
 	// map gen/16k megaROM pages 0:1:last-1:last
@@ -1206,6 +1339,7 @@ static INT32 DrvExit()
 
 	msx_basicmode = 0;
 	BiosmodeJapan = 0;
+	CasMode = 0;
 
 #ifdef BUILD_WIN32
 	cBurnerKeyCallback = NULL;
@@ -1254,6 +1388,12 @@ static INT32 DrvFrame()
 		keyInput(0xf9, DrvJoy4[10]); // Key DOWN
 		keyInput(0xfa, DrvJoy4[11]); // Key LEFT
 		keyInput(0xfb, DrvJoy4[12]); // Key RIGHT
+	}
+
+	{ // cassette auto-load keyboard stuffing
+		if (CasMode && nFrameCtr > 250 && nFrameCtr & 2)
+		CASAutoLoadTick();
+		nFrameCtr++;
 	}
 
 	INT32 nInterleave = 256;
@@ -1418,6 +1558,20 @@ struct BurnDriver BurnDrvmsx_msx = {
 static INT32 BasicDrvInit()
 {
 	msx_basicmode = 1;
+	return DrvInit();
+}
+
+static INT32 CasBloadDrvInit()
+{
+	msx_basicmode = 1;
+	CasMode = CAS_BLOAD;
+	return DrvInit();
+}
+
+static INT32 CasRunDrvInit()
+{
+	msx_basicmode = 1;
+	CasMode = CAS_RUN;
 	return DrvInit();
 }
 
@@ -9553,26 +9707,6 @@ struct BurnDriver BurnDrvMSX_legkage = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_legkageRomInfo, MSX_legkageRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
-// Kage no Densetsu - The Legend of Kage (Jpn, Alt)
-
-static struct BurnRomInfo MSX_legkageaRomDesc[] = {
-	{ "kage no densetsu - legend of kage, the (japan) (alt 1).rom",	0x08000, 0xb581f746, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_legkagea, MSX_legkagea, msx_msx)
-STD_ROM_FN(MSX_legkagea)
-
-struct BurnDriver BurnDrvMSX_legkagea = {
-	"MSX_legkagea", "MSX_legkage", "msx_msx", NULL, "1986",
-	"Kage no Densetsu - The Legend of Kage (Jpn, Alt)\0", NULL, "Taito", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_legkageaRomInfo, MSX_legkageaRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -19605,25 +19739,6 @@ struct BurnDriver BurnDrvMSX_xenon = {
 	272, 228, 4, 3
 };
 
-// Scentipede
-
-static struct BurnRomInfo MSX_scentipedeRomDesc[] = {
-	{ "Scentipede (1986)(Aackosoft)(NL).rom",	0x10000, 0xd555ae4a, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_scentipede, MSX_scentipede, msx_msx)
-STD_ROM_FN(MSX_scentipede)
-
-struct BurnDriver BurnDrvMSX_scentipede = {
-	"MSX_scentipede", NULL, "msx_msx", NULL, "1986",
-	"Scentipede\0", NULL, "Aackosoft", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_scentipedeRomInfo, MSX_scentipedeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
 // Genesis: dawn of a new day
 
 static struct BurnRomInfo MSX_genesisRomDesc[] = {
@@ -20764,7 +20879,6 @@ struct BurnDriver BurnDrvMSX_amurisus = {
 	272, 228, 4, 3
 };
 
-
 // Rock 'n Roller
 
 static struct BurnRomInfo MSX_rocknrollerRomDesc[] = {
@@ -20784,3 +20898,40 @@ struct BurnDriver BurnDrvMSX_rocknroller = {
 	272, 228, 4, 3
 };
 
+// Super Ilevan
+
+static struct BurnRomInfo MSX_ilevanRomDesc[] = {
+	{ "Super Ilevan (Koichi Nishida, 1987).cas",	0x59a6, 0x87157a8d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ilevan, MSX_ilevan, msx_msx)
+STD_ROM_FN(MSX_ilevan)
+
+struct BurnDriver BurnDrvMSX_ilevan = {
+	"MSX_ilevan", NULL, "msx_msx", NULL, "1987",
+	"Super Ilevan\0", NULL, "Koichi Nishida", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_ilevanRomInfo, MSX_ilevanRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Scentipede
+
+static struct BurnRomInfo MSX_scentipedeRomDesc[] = {
+	{ "Scentipede (1986)(Eaglesoft)(NL)[RUN'CAS-'].cas",	0x93b8, 0x63f02ed5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_scentipede, MSX_scentipede, msx_msx)
+STD_ROM_FN(MSX_scentipede)
+
+struct BurnDriver BurnDrvMSX_scentipede = {
+	"MSX_scentipede", NULL, "msx_msx", NULL, "1986",
+	"Scentipede\0", NULL, "Aackosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_scentipedeRomInfo, MSX_scentipedeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

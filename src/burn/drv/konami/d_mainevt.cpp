@@ -579,7 +579,7 @@ UINT8 __fastcall mainevt_sound_read(UINT16 address)
 	return 0;
 }
 
-static void K052109Callback(INT32 layer, INT32 bank, INT32 *code, INT32 *color, INT32 *flipx, INT32 *priority)
+static void K052109Callback(INT32 layer, INT32 /*bank*/, INT32 *code, INT32 *color, INT32 *flipx, INT32 *priority)
 {
 	INT32 colorbase[3] = { 0, 8, 4 };
 

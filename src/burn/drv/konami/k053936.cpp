@@ -20,7 +20,7 @@ void K053936Reset()
 {
 	for (INT32 i = 0; i < MAX_K053936; i++) {
 		if (rambuf[i]) {
-			memset (rambuf[i], 0, nRamLen[i]);
+			memset (rambuf[i], 0xff, nRamLen[i]);
 		}
 	}
 }
@@ -33,6 +33,7 @@ void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCa
 
 	if (rambuf[chip] == NULL) {
 		rambuf[chip] = (UINT8*)BurnMalloc(len);
+		memset (rambuf[chip], 0xff, len);
 	}
 
 	nWidth[chip] = w;
@@ -40,6 +41,10 @@ void K053936Init(INT32 chip, UINT8 *ram, INT32 len, INT32 w, INT32 h, void (*pCa
 
 	if (tscreen[chip] == NULL) {
 		tscreen[chip] = (UINT16*)BurnMalloc(w * h * 2);
+
+		for (INT32 i = 0; i < w*h; i++) {
+			tscreen[chip][i] = 0x8000;
+		}
 	}
 
 	if (chip == 0) {
@@ -68,38 +73,50 @@ void K053936Exit()
 	}
 }
 
-void K053936PredrawTiles3(INT32 chip, UINT8 *gfx)
+void K053936PredrawTiles3(INT32 chip, UINT8 *gfx, INT32 tile_size_x, INT32 tile_size_y, INT32 transparent)
 {
 	UINT16 *ram = (UINT16*)ramptr[chip];
-	UINT16 *buf = (UINT16*)rambuf[chip];	
+	UINT16 *buf = (UINT16*)rambuf[chip];
 
-	INT32 width = nWidth[chip];
-	INT32 wide_mod = width / 8;
-	INT32 high_mod = nHeight[chip] / 8;
+	INT32 tilemap_height = nHeight[chip];
+	INT32 tilemap_width = nWidth[chip];
+	INT32 tilemap_wide = tilemap_width / tile_size_x;
+	INT32 tilemap_high = tilemap_height / tile_size_y;
 
-	for (INT32 i = 0; i < wide_mod * high_mod; i++)
+	INT32 xflip = (tile_size_x - 1);
+	INT32 yflip = (tile_size_y - 1);
+
+	for (INT32 i = 0; i < tilemap_wide * tilemap_high; i++)
 	{
 		if (ram[i] != buf[i]) 
 		{
-			INT32 sx = (i % wide_mod) * 8;
-			INT32 sy = (i / wide_mod) * 8;
-			INT32 code = 0;
-			INT32 color = 0;
+			INT32 sx = (i % tilemap_wide) * tile_size_x;
+			INT32 sy = (i / tilemap_wide) * tile_size_y;
+
 			INT32 flipx = 0;
 			INT32 flipy = 0;
+			INT32 code = 0;
+			INT32 color = 0;
 
-			pTileCallback0(i, ram, &code, &color, &sx, &sy, &flipx, &flipy);
+			if (chip==0)
+				pTileCallback0(i, ram, &code, &color, &sx, &sy, &flipx, &flipy);
+			else
+				pTileCallback1(i, ram, &code, &color, &sx, &sy, &flipx, &flipy);
 
 			// draw tile
 			{
-				UINT8 *src = gfx + (code * 0x40);
-				UINT16 *dst = tscreen[chip] + (sy * width) + sx;
+				INT32 flip = 0;
+				if (flipx) flip += xflip;
+				if (flipy) flip += yflip;
+				UINT8 *src = gfx + (code * tile_size_x * tile_size_y);
+				UINT16 *dst = tscreen[chip] + (sy * tilemap_width) + sx;
 	
-				for (INT32 y = 0; y < 8; y++) {
-					for (INT32 x = 0; x < 8; x++) {
-						dst[x] = src[((y * 8) | x)] + color;
+				for (INT32 y = 0; y < tile_size_y; y++) {
+					for (INT32 x = 0; x < tile_size_x; x++) {
+						dst[x] = src[((y*tile_size_x)+x)^flip] + color;
+						if (src[x] == transparent) dst[x] |= 0x8000;
 					}
-					dst += width;
+					dst += tilemap_width;
 				}
 			}
 
@@ -231,6 +248,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 	UINT32 *pal = konami_palette32;
 	UINT16 *src = tscreen[chip];
 
+	INT32 width = nWidth[chip];
 	INT32 hmask = nHeight[chip] - 1;
 	INT32 wmask = nWidth[chip] - 1;
 
@@ -245,7 +263,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 			if (wrap) {
 				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++, pri++)
 				{
-					INT32 pxl = src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)];
+					INT32 pxl = src[(((cy >> 16) & hmask) * width) + ((cx >> 16) & wmask)];
 		
 					if (!(pxl & 0x8000)) {
 						*dst = pal[pxl];
@@ -260,7 +278,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 					INT32 xx = cx >> 16;
 					if (xx > wmask || xx < 0) continue;
 
-					INT32 pxl = src[(yy << 10) + xx];
+					INT32 pxl = src[(yy * width) + xx];
 
 					if (!(pxl & 0x8000)) {
 						*dst = pal[pxl];
@@ -271,7 +289,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 		} else {
 			if (wrap) {
 				for (INT32 x = minx; x < maxx; x++, cx+=incxx, cy+=incxy, dst++, pri++) {
-					*dst = pal[src[(((cy >> 16) & hmask) << 10) + ((cx >> 16) & wmask)] & 0x7fff];
+					*dst = pal[src[(((cy >> 16) & hmask) * width) + ((cx >> 16) & wmask)] & 0x7fff];
 					*pri = priority;
 				}
 			} else {
@@ -281,7 +299,7 @@ static inline void copy_roz(INT32 chip, INT32 minx, INT32 maxx, INT32 miny, INT3
 					INT32 xx = cx >> 16;
 					if (xx > wmask || xx < 0) continue;
 
-					*dst = pal[src[(yy << 10) + xx] & 0x7fff];
+					*dst = pal[src[(yy * width) + xx] & 0x7fff];
 					*pri = priority;
 				}
 			}

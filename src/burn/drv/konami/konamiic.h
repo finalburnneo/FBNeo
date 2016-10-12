@@ -325,6 +325,7 @@ void K053936Scan(INT32 nAction);
 
 void K053936EnableWrap(INT32 chip, INT32 status);
 void K053936SetOffset(INT32 chip, INT32 xoffs, INT32 yoffs);
+void K053936PredrawTiles3(INT32 chip, UINT8 *gfx, INT32 tile_size_x, INT32 tile_size_y, INT32 transparent);
 void K053936PredrawTiles2(INT32 chip, UINT8 *gfx);
 void K053936PredrawTiles(INT32 chip, UINT8 *gfx, INT32 transparent, INT32 tcol /*transparent color*/);
 void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 transp);

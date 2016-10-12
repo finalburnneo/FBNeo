@@ -2048,26 +2048,6 @@ struct BurnDriver BurnDrvMSX_mirai = {
 };
 
 
-// MSX Eiwa Jiten (Jpn)
-
-static struct BurnRomInfo MSX_eiwajiteRomDesc[] = {
-	{ "lh230927",	0x20000, 0x1b10cf79, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_eiwajite, MSX_eiwajite, msx_msx)
-STD_ROM_FN(MSX_eiwajite)
-
-struct BurnDriver BurnDrvMSX_eiwajite = {
-	"msx_eiwajite", NULL, "msx_msx", NULL, "1989",
-	"MSX Eiwa Jiten (Jpn)\0", NULL, "Hi-Score Software", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
-	MSXGetZipName, MSX_eiwajiteRomInfo, MSX_eiwajiteRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
 // Mugen Senshi Valis (Jpn)
 
 static struct BurnRomInfo MSX_valisRomDesc[] = {
@@ -3727,26 +3707,6 @@ struct BurnDriver BurnDrvMSX_beeflowrb = {
 };
 
 
-// Beginner's BASIC I (Euro?)
-
-static struct BurnRomInfo MSX_begbasicRomDesc[] = {
-	{ "casio_basic.rom",	0x08000, 0x2181a21d, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_begbasic, MSX_begbasic, msx_msx)
-STD_ROM_FN(MSX_begbasic)
-
-struct BurnDriver BurnDrvMSX_begbasic = {
-	"msx_begbasic", NULL, "msx_msx", NULL, "1985",
-	"Beginner's BASIC I (Euro?)\0", NULL, "Casio", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_begbasicRomInfo, MSX_begbasicRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
 // The Black Onyx (Jpn)
 
 static struct BurnRomInfo MSX_blckonyxRomDesc[] = {
@@ -5142,46 +5102,6 @@ struct BurnDriver BurnDrvMSX_cloderun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_cloderunRomInfo, MSX_cloderunRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
-// Championship Lode Runner (Kor, Bad?)
-
-static struct BurnRomInfo MSX_cloderunk1RomDesc[] = {
-	{ "championship lode runner (1985)(sony)[cr prosoft][b].rom",	0x08000, 0x00114640, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_cloderunk1, MSX_cloderunk1, msx_msx)
-STD_ROM_FN(MSX_cloderunk1)
-
-struct BurnDriver BurnDrvMSX_cloderunk1 = {
-	"msx_cloderunk1", "MSX_cloderun", "msx_msx", NULL, "19??",
-	"Championship Lode Runner (Kor, Bad?)\0", NULL, "Prosoft", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_cloderunk1RomInfo, MSX_cloderunk1RomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
-// Championship Lode Runner (Kor, Bad 2?)
-
-static struct BurnRomInfo MSX_cloderunk2RomDesc[] = {
-	{ "championship lode runner (1985)(sony)[cr prosoft][b2].rom",	0x08002, 0xe81360fc, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_cloderunk2, MSX_cloderunk2, msx_msx)
-STD_ROM_FN(MSX_cloderunk2)
-
-struct BurnDriver BurnDrvMSX_cloderunk2 = {
-	"msx_cloderunk2", "MSX_cloderun", "msx_msx", NULL, "19??",
-	"Championship Lode Runner (Kor, Bad 2?)\0", NULL, "Prosoft", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_cloderunk2RomInfo, MSX_cloderunk2RomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -9841,26 +9761,6 @@ struct BurnDriver BurnDrvMSX_kickita = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_kickitaRomInfo, MSX_kickitaRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
-// Kinasai (Jpn)
-
-static struct BurnRomInfo MSX_kinasaiRomDesc[] = {
-	{ "kinasai (japan) (unl).rom",	0x04000, 0x18866b57, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_kinasai, MSX_kinasai, msx_msx)
-STD_ROM_FN(MSX_kinasai)
-
-struct BurnDriver BurnDrvMSX_kinasai = {
-	"msx_kinasai", NULL, "msx_msx", NULL, "1984",
-	"Kinasai (Jpn)\0", NULL, "Unknown", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_kinasaiRomInfo, MSX_kinasaiRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -19732,25 +19632,6 @@ struct BurnDriver BurnDrvMSX_dooly = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_DOOLY, GBF_MISC, 0,
 	MSXGetZipName, MSX_doolyRomInfo, MSX_doolyRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-// MSXMEM
-
-static struct BurnRomInfo MSX_msxmemRomDesc[] = {
-	{ "msxmem.rom",	0x04000, 0x79c851e5, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_msxmem, MSX_msxmem, msx_msx)
-STD_ROM_FN(MSX_msxmem)
-
-struct BurnDriver BurnDrvMSX_msxmem = {
-	"msx_msxmem", NULL, "msx_msx", NULL, "20??",
-	"MSXMEM\0", NULL, "BiFi", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_msxmemRomInfo, MSX_msxmemRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

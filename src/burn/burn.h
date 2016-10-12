@@ -487,7 +487,6 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SEGA_SG1000_RAMEXP                     (0x2000)
 #define HARDWARE_COLECO                                 (HARDWARE_PREFIX_COLECO)
 
-// 0 for now.
 #define HARDWARE_MSX                                    (HARDWARE_PREFIX_MSX)
 #define HARDWARE_MSX_MAPPER_ASCII8                      (0x01)
 #define HARDWARE_MSX_MAPPER_ASCII8_SRAM                 (0x01)
@@ -499,11 +498,6 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_MSX_MAPPER_DOOLY                       (0x06)
 #define HARDWARE_MSX_MAPPER_RTYPE                       (0x07)
 #define HARDWARE_MSX_MAPPER_CROSS_BLAIM                 (0x08)
-#define HARDWARE_MSX_MAPPER_KOREAN_126IN1               (0x01)
-#define HARDWARE_MSX_MAPPER_KOREAN_80IN1                (0x01)
-#define HARDWARE_MSX_MAPPER_KOREAN_90IN1                (0x01)
-#define HARDWARE_MSX_MAPPER_HFOX                        (0x01)
-#define HARDWARE_MSX_MAPPER_KEYBOARD_MASTER             (0x01)
 
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_EEPROM			(1)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM			(2)

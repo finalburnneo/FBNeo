@@ -300,7 +300,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_COLECO_ONLY) _sntprintf(szConsoleString, 64, _T(", ColecoVision only"));
 	if (bType == DAT_MASTERSYSTEM_ONLY) _sntprintf(szConsoleString, 64, _T(", Master System only"));
 	if (bType == DAT_GAMEGEAR_ONLY) _sntprintf(szConsoleString, 64, _T(", Game Gear only"));
-	if (bType == DAT_MSX_ONLY) _sntprintf(szConsoleString, 64, _T(", MSX 1 Cart Games only"));
+	if (bType == DAT_MSX_ONLY) _sntprintf(szConsoleString, 64, _T(", MSX 1 Games only"));
 
 	TCHAR szProgramString[25];	
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));

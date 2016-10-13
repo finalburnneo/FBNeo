@@ -22358,7 +22358,7 @@ STD_ROM_FN(MSX_hammboy)
 
 struct BurnDriver BurnDrvMSX_hammboy = {
 	"msx_hammboy", NULL, "msx_msx", NULL, "1991",
-	"Hammer Boy (Spa)\0", NULL, "Dinamic Software", "MSX",
+	"Hammer Boy (Spa)\0", "Keyboard control only.", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_hammboyRomInfo, MSX_hammboyRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22491,7 +22491,7 @@ STD_ROM_FN(MSX_ghost)
 
 struct BurnDriver BurnDrvMSX_ghost = {
 	"msx_ghost", NULL, "msx_msx", NULL, "1989",
-	"Ghost (Spa)\0", NULL, "Mind Games España", "MSX",
+	"Ghost (Spa)\0", "Keyboard control only.", "Mind Games Espana", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_ghostRomInfo, MSX_ghostRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22705,7 +22705,7 @@ struct BurnDriver BurnDrvMSX_dogfight = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_dogfightRomInfo, MSX_dogfightRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

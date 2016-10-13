@@ -278,6 +278,35 @@ static struct BurnInputInfo DharmaInputList[] = {
 
 STDINPUTINFO(Dharma)
 
+static struct BurnInputInfo KaratourInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 1,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
+
+};
+
+STDINPUTINFO(Karatour)
+
 static struct BurnDIPInfo BlzntrndDIPList[]=
 {
 	{0x28, 0xff, 0xff, 0x0e, NULL				},
@@ -937,6 +966,72 @@ static struct BurnDIPInfo PururunDIPList[]=
 
 STDDIPINFO(Pururun)
 
+static struct BurnDIPInfo KaratourDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0x7f, NULL		},
+	{0x12, 0xff, 0xff, 0xff, NULL		},
+	{0x13, 0xff, 0xff, 0xff, NULL		},
+	{0x14, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x11, 0x01, 0x03, 0x01, "1"		},
+	{0x11, 0x01, 0x03, 0x00, "2"		},
+	{0x11, 0x01, 0x03, 0x03, "3"		},
+	{0x11, 0x01, 0x03, 0x02, "4"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x11, 0x01, 0x0c, 0x08, "Easy"		},
+	{0x11, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x11, 0x01, 0x0c, 0x04, "Hard"		},
+	{0x11, 0x01, 0x0c, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    2, "Time"		},
+	{0x11, 0x01, 0x10, 0x10, "60"		},
+	{0x11, 0x01, 0x10, 0x00, "40"		},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"		},
+	{0x11, 0x01, 0x20, 0x20, "Off"		},
+	{0x11, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x11, 0x01, 0x40, 0x00, "No"		},
+	{0x11, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x11, 0x01, 0x80, 0x80, "Off"		},
+	{0x11, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x12, 0x01, 0x07, 0x00, "3 Coins 1 Credits"		},
+	{0x12, 0x01, 0x07, 0x01, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x12, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x12, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x12, 0x01, 0x07, 0x03, "1 Coin  5 Credits"		},
+	{0x12, 0x01, 0x07, 0x02, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x12, 0x01, 0x38, 0x00, "3 Coins 1 Credits"		},
+	{0x12, 0x01, 0x38, 0x08, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x12, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x12, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x12, 0x01, 0x38, 0x18, "1 Coin  5 Credits"		},
+	{0x12, 0x01, 0x38, 0x10, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x12, 0x01, 0x40, 0x40, "Off"		},
+	{0x12, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x12, 0x01, 0x80, 0x80, "Off"		},
+	{0x12, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Karatour)
+
 static UINT16 metro_irq_cause_r()
 {
 	UINT16 res = 0;
@@ -1117,6 +1212,23 @@ static UINT16 __fastcall metro_common_read_word(UINT32 address)
 		return DrvGfxROM[offset + 0] * 256 + DrvGfxROM[offset + 1];
 	}
 
+// karatour
+	if ((address & 0xffff000) == 0x075000) {
+		UINT16 *dst = (UINT16*)DrvVidRAM0;
+		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
+	}
+
+	if ((address & 0xffff000) == 0x076000) {
+		UINT16 *dst = (UINT16*)DrvVidRAM1;
+		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
+	}
+
+	if ((address & 0xffff000) == 0x077000) {
+		UINT16 *dst = (UINT16*)DrvVidRAM2;
+		return dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2];
+	}
+// end
+
 	switch (address)
 	{
 		case 0x0788a2:
@@ -1131,6 +1243,26 @@ static UINT16 __fastcall metro_common_read_word(UINT32 address)
 static void __fastcall metro_common_write_word(UINT32 address, UINT16 data)
 {
 	address &= 0x7ffff;
+
+// karatour
+	if ((address & 0xffff000) == 0x075000) {
+		UINT16 *dst = (UINT16*)DrvVidRAM0;
+		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = data;
+		return;
+	}
+
+	if ((address & 0xffff000) == 0x076000) {
+		UINT16 *dst = (UINT16*)DrvVidRAM1;
+		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = data;
+		return;
+	}
+
+	if ((address & 0xffff000) == 0x077000) {
+		UINT16 *dst = (UINT16*)DrvVidRAM2;
+		dst[((address & 0x7f) + ((address & 0xf80) * 4)) / 2] = data;
+		return;
+	}
+// end
 
 	// mirror or due to chip revision?
 	if ((address >= 0x078800 && address <= 0x078813) || (address >= 0x079700 && address <= 0x079713)) {
@@ -1977,6 +2109,102 @@ static UINT8 __fastcall pururun_main_read_byte(UINT32 address)
 }
 
 
+static void __fastcall karatour_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff80000) == 0x800000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			// soundstatus
+		return;
+
+		case 0x400002:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall karatour_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		metro_common_write_byte(address, data);
+	}
+
+	switch (address)
+	{
+		case 0x400003:
+			// coin lockout
+		return;
+	}
+
+	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall karatour_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			return rand(); // sound status
+
+		case 0x400002:
+			return DrvInputs[0];
+
+		case 0x400004:
+			return DrvInputs[1];
+
+		case 0x400006:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0x40000a:
+			return (DrvDips[2] << 0) | (DrvDips[3] << 8);
+
+		case 0x40000c:
+			return DrvInputs[2];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall karatour_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0x400006:
+		case 0x400007:
+			return DrvDips[address & 1]; // dip0
+
+		case 0x40000a:
+		case 0x40000b:
+			return DrvDips[(address & 1)+2]; // dip0
+
+		case 0x400002:
+		case 0x400003:
+		case 0x400004:
+		case 0x400005:
+			return DrvInputs[(address - 0x400002)/2] >> ((~address & 1) * 8);
+
+		case 0x40000c:
+		case 0x40000d:
+			return DrvInputs[2] >> ((~address & 1) * 8);
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
 
 
 
@@ -2782,6 +3010,73 @@ static INT32 pururunInit()
 	return 0;
 }
 
+static INT32 karatourInit()
+{
+	graphics_length = 0x400000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000000,  3, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000002,  4, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000004,  5, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000006,  6, 8, LD_GROUP(2))) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000,  7, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	metro_common_map_ram(0x800000, 0xf00000);
+	SekSetWriteWordHandler(0,	karatour_main_write_word);
+	SekSetWriteByteHandler(0,	karatour_main_write_byte);
+	SekSetReadWordHandler(0,	karatour_main_read_word);
+	SekSetReadByteHandler(0,	karatour_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 0;
+	support_16x16 = 0;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	// ??????????
+	for (INT32 i = 0; i < 0x20000; i++) {
+		DrvVidRAM0[i] = rand();
+		DrvVidRAM1[i] = rand();
+		DrvVidRAM2[i] = rand();
+	}
+
+	return 0;
+}
+
 static INT32 DrvExit()
 {
 	if (has_z80) BurnYM2610Exit();
@@ -3235,7 +3530,7 @@ static INT32 NoZ80Frame()
 	SekNewFrame();
 
 	INT32 nInterleave = 224;
-	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000  / 58 };
+	INT32 nCyclesTotal[1] = { 16000000 / 58 };
 	
 	SekOpen(0);
 
@@ -3673,3 +3968,34 @@ struct BurnDriver BurnDrvPururun = {
 	pururunInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
 };
+
+
+// The Karate Tournament
+
+static struct BurnRomInfo karatourRomDesc[] = {
+	{ "2.2FAB.8G",	0x040000, 0x199a28d4, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "3.0560.10G",	0x040000, 0xb054e683, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "KT001.1I",	0x020000, 0x1dd2008c, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "361A04.15F",	0x100000, 0xf6bf20a5, 3 | BRF_GRA },           //  3 gfx1
+	{ "361A07.17D",	0x100000, 0x794cc1c0, 3 | BRF_GRA },           //  4
+	{ "361A05.17F",	0x100000, 0xea9c11fc, 3 | BRF_GRA },           //  5
+	{ "361A06.15D",	0x100000, 0x7e15f058, 3 | BRF_GRA },           //  6
+
+	{ "8.4A06.1D",	0x040000, 0x8d208179, 4 | BRF_SND },           //  7 oki
+};
+
+STD_ROM_PICK(karatour)
+STD_ROM_FN(karatour)
+
+struct BurnDriver BurnDrvKaratour = {
+	"karatour", NULL, NULL, NULL, "1992",
+	"The Karate Tournament\0", NULL, "Mitchell", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, karatourRomInfo, karatourRomName, NULL, NULL, KaratourInputInfo, KaratourDIPInfo,
+	karatourInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
+};
+

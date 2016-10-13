@@ -180,6 +180,104 @@ static struct BurnInputInfo SkyalertInputList[] = {
 
 STDINPUTINFO(Skyalert)
 
+static struct BurnInputInfo PoittoInputList[] = {
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Poitto)
+
+static struct BurnInputInfo LadykillInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy2 + 1,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
+
+};
+
+STDINPUTINFO(Ladykill)
+
+static struct BurnInputInfo PururunInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 0,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 1,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Pururun)
+
+static struct BurnInputInfo DharmaInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 0,	"service"},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 1,	"tilt"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Dharma)
+
 static struct BurnDIPInfo BlzntrndDIPList[]=
 {
 	{0x28, 0xff, 0xff, 0x0e, NULL				},
@@ -473,7 +571,371 @@ static struct BurnDIPInfo SkyalertDIPList[]=
 
 STDDIPINFO(Skyalert)
 
+static struct BurnDIPInfo PangpomsDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL				},
+	{0x14, 0xff, 0xff, 0xef, NULL				},
+	{0x15, 0xff, 0xff, 0xff, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL				},
 
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x13, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x07, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
+	{0x13, 0x01, 0x38, 0x08, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x10, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x38, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x40, 0x40, "Off"				},
+	{0x13, 0x01, 0x40, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x13, 0x01, 0x80, 0x80, "Off"				},
+	{0x13, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Time Speed"			},
+	{0x14, 0x01, 0x03, 0x00, "Slowest"			},
+	{0x14, 0x01, 0x03, 0x01, "Slow"				},
+	{0x14, 0x01, 0x03, 0x03, "Normal"			},
+	{0x14, 0x01, 0x03, 0x02, "Fast"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x14, 0x01, 0x0c, 0x08, "1"				},
+	{0x14, 0x01, 0x0c, 0x04, "2"				},
+	{0x14, 0x01, 0x0c, 0x0c, "3"				},
+	{0x14, 0x01, 0x0c, 0x00, "4"				},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x14, 0x01, 0x30, 0x20, "400k and 800k"		},
+	{0x14, 0x01, 0x30, 0x30, "400k"				},
+	{0x14, 0x01, 0x30, 0x10, "800k"				},
+	{0x14, 0x01, 0x30, 0x00, "None"				},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x14, 0x01, 0x40, 0x00, "No"				},
+	{0x14, 0x01, 0x40, 0x40, "Yes"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x14, 0x01, 0x80, 0x00, "Off"				},
+	{0x14, 0x01, 0x80, 0x80, "On"				},
+};
+
+STDDIPINFO(Pangpoms)
+
+static struct BurnDIPInfo PoittoDIPList[]=
+{
+	{0x0b, 0xff, 0xff, 0xff, NULL				},
+	{0x0c, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x0b, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x0b, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x0b, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x0b, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x0b, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x0b, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x0b, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x0b, 0x01, 0x07, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
+	{0x0b, 0x01, 0x38, 0x08, "4 Coins 1 Credits"		},
+	{0x0b, 0x01, 0x38, 0x10, "3 Coins 1 Credits"		},
+	{0x0b, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x0b, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x0b, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x0b, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x0b, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x0b, 0x01, 0x38, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x0b, 0x01, 0x40, 0x40, "Off"				},
+	{0x0b, 0x01, 0x40, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x0b, 0x01, 0x80, 0x80, "Off"				},
+	{0x0b, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x0c, 0x01, 0x03, 0x00, "Easy"				},
+	{0x0c, 0x01, 0x03, 0x03, "Normal"			},
+	{0x0c, 0x01, 0x03, 0x02, "Hard"				},
+	{0x0c, 0x01, 0x03, 0x01, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    0, "Allow Continue"		},
+	{0x0c, 0x01, 0x20, 0x00, "No"				},
+	{0x0c, 0x01, 0x20, 0x20, "Yes"				},
+
+	{0   , 0xfe, 0   ,    0, "Demo Sounds"			},
+	{0x0c, 0x01, 0x40, 0x00, "Off"				},
+	{0x0c, 0x01, 0x40, 0x40, "On"				},
+};
+
+STDDIPINFO(Poitto)
+
+static struct BurnDIPInfo LastfortDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL				},
+	{0x14, 0xff, 0xff, 0xff, NULL				},
+	{0x15, 0xff, 0xff, 0xff, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x13, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x07, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
+	{0x13, 0x01, 0x38, 0x08, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x10, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x38, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x40, 0x40, "Off"				},
+	{0x13, 0x01, 0x40, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x13, 0x01, 0x80, 0x80, "Off"				},
+	{0x13, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x14, 0x01, 0x03, 0x02, "Easy"				},
+	{0x14, 0x01, 0x03, 0x03, "Normal"			},
+	{0x14, 0x01, 0x03, 0x01, "Hard"				},
+	{0x14, 0x01, 0x03, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Retry Level On Continue"	},
+	{0x14, 0x01, 0x08, 0x08, "Ask Player"			},
+	{0x14, 0x01, 0x08, 0x00, "Yes"				},
+
+	{0   , 0xfe, 0   ,    2, "2 Players Game"		},
+	{0x14, 0x01, 0x10, 0x10, "2 Credits"			},
+	{0x14, 0x01, 0x10, 0x00, "1 Credit"			},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x14, 0x01, 0x20, 0x00, "No"				},
+	{0x14, 0x01, 0x20, 0x20, "Yes"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x14, 0x01, 0x40, 0x00, "Off"				},
+	{0x14, 0x01, 0x40, 0x40, "On"				},
+
+	{0   , 0xfe, 0   ,    1, "Tiles"			},
+//	{0x14, 0x01, 0x80, 0x00, "Cards"			},
+	{0x14, 0x01, 0x80, 0x80, "Mahjong"			},
+};
+
+STDDIPINFO(Lastfort)
+
+static struct BurnDIPInfo LadykillDIPList[]=
+{
+	{0x0d, 0xff, 0xff, 0x6f, NULL		},
+	{0x0e, 0xff, 0xff, 0xff, NULL		},
+	{0x0f, 0xff, 0xff, 0xff, NULL		},
+	{0x10, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0d, 0x01, 0x03, 0x01, "1"		},
+	{0x0d, 0x01, 0x03, 0x00, "2"		},
+	{0x0d, 0x01, 0x03, 0x03, "3"		},
+	{0x0d, 0x01, 0x03, 0x02, "4"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x0d, 0x01, 0x0c, 0x08, "Easy"		},
+	{0x0d, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x0d, 0x01, 0x0c, 0x04, "Hard"		},
+	{0x0d, 0x01, 0x0c, 0x00, "Very Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Nudity"		},
+	{0x0d, 0x01, 0x10, 0x10, "Partial"		},
+	{0x0d, 0x01, 0x10, 0x00, "Full"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode / Free Play"		},
+	{0x0d, 0x01, 0x20, 0x20, "Off"		},
+	{0x0d, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x0d, 0x01, 0x40, 0x00, "No"		},
+	{0x0d, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0d, 0x01, 0x80, 0x80, "Off"		},
+	{0x0d, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x0e, 0x01, 0x07, 0x00, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x01, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x0e, 0x01, 0x07, 0x03, "1 Coin  5 Credits"		},
+	{0x0e, 0x01, 0x07, 0x02, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x0e, 0x01, 0x38, 0x00, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x38, 0x08, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x0e, 0x01, 0x38, 0x18, "1 Coin  5 Credits"		},
+	{0x0e, 0x01, 0x38, 0x10, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x0e, 0x01, 0x40, 0x40, "Off"		},
+	{0x0e, 0x01, 0x40, 0x00, "On"		},
+};
+
+STDDIPINFO(Ladykill)
+
+static struct BurnDIPInfo DharmaDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0xff, NULL		},
+	{0x12, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x11, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x11, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x11, 0x01, 0x07, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x11, 0x01, 0x38, 0x08, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0x38, 0x10, "3 Coins 1 Credits"		},
+	{0x11, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x11, 0x01, 0x38, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x11, 0x01, 0x40, 0x40, "Off"		},
+	{0x11, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x11, 0x01, 0x80, 0x80, "Off"		},
+	{0x11, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x12, 0x01, 0x03, 0x02, "Easy"		},
+	{0x12, 0x01, 0x03, 0x03, "Normal"		},
+	{0x12, 0x01, 0x03, 0x01, "Hard"		},
+	{0x12, 0x01, 0x03, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Timer"		},
+	{0x12, 0x01, 0x0c, 0x08, "Slow"		},
+	{0x12, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x12, 0x01, 0x0c, 0x04, "Fast"		},
+	{0x12, 0x01, 0x0c, 0x00, "Fastest"		},
+
+	{0   , 0xfe, 0   ,    2, "2 Players Game"		},
+	{0x12, 0x01, 0x10, 0x10, "2 Credits"		},
+	{0x12, 0x01, 0x10, 0x00, "1 Credit"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x12, 0x01, 0x20, 0x00, "No"		},
+	{0x12, 0x01, 0x20, 0x20, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x12, 0x01, 0x40, 0x00, "Off"		},
+	{0x12, 0x01, 0x40, 0x40, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze (Cheat)"		},
+	{0x12, 0x01, 0x80, 0x80, "Off"		},
+	{0x12, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Dharma)
+
+static struct BurnDIPInfo PururunDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL		},
+	{0x13, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x12, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x12, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x12, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x12, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x12, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x12, 0x01, 0x07, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x12, 0x01, 0x38, 0x08, "4 Coins 1 Credits"		},
+	{0x12, 0x01, 0x38, 0x10, "3 Coins 1 Credits"		},
+	{0x12, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x12, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x12, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x12, 0x01, 0x38, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x12, 0x01, 0x40, 0x40, "Off"		},
+	{0x12, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x12, 0x01, 0x80, 0x80, "Off"		},
+	{0x12, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x13, 0x01, 0x03, 0x02, "Easiest"		},
+	{0x13, 0x01, 0x03, 0x01, "Easy"		},
+	{0x13, 0x01, 0x03, 0x03, "Normal"		},
+	{0x13, 0x01, 0x03, 0x00, "Hard"		},
+
+	{0   , 0xfe, 0   ,    2, "Join In"		},
+	{0x13, 0x01, 0x04, 0x00, "No"		},
+	{0x13, 0x01, 0x04, 0x04, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "2 Players Game"		},
+	{0x13, 0x01, 0x08, 0x00, "1 Credit"		},
+	{0x13, 0x01, 0x08, 0x08, "2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Bombs"		},
+	{0x13, 0x01, 0x10, 0x10, "1"		},
+	{0x13, 0x01, 0x10, 0x00, "2"		},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x13, 0x01, 0x20, 0x00, "No"		},
+	{0x13, 0x01, 0x20, 0x20, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x13, 0x01, 0x40, 0x00, "Off"		},
+	{0x13, 0x01, 0x40, 0x40, "On"		},
+};
+
+STDDIPINFO(Pururun)
 
 static UINT16 metro_irq_cause_r()
 {
@@ -514,6 +976,248 @@ static void metro_irq_cause_w(UINT16 data)
 
 	update_irq_state();
 }
+
+static void metro_blitter_write(INT32 offset)
+{
+	offset &= 0xe;
+
+	if (offset == 0x0c)
+	{
+		UINT16 *m_blitter_regs = (UINT16*)DrvBlitter;
+		UINT8 *ramdst[4] = { NULL, DrvVidRAM0, DrvVidRAM1, DrvVidRAM2 };
+
+		UINT8 *src     = DrvGfxROM;
+		size_t src_len = graphics_length;
+
+		UINT32 tmap     = (m_blitter_regs[0x00 / 2] << 16) + m_blitter_regs[0x02 / 2];
+		UINT32 src_offs = (m_blitter_regs[0x04 / 2] << 16) + m_blitter_regs[0x06 / 2];
+		UINT32 dst_offs = (m_blitter_regs[0x08 / 2] << 16) + m_blitter_regs[0x0a / 2];
+
+	//	int shift   = (dst_offs & 0x80) ? 0 : 8;
+	//	UINT16 mask = (dst_offs & 0x80) ? 0x00ff : 0xff00;
+		UINT8 *dst = ramdst[tmap];
+
+		INT32 offs2 = (~dst_offs >> 7) & 1;
+		dst_offs >>=  8;
+
+		while (1)
+		{
+			UINT16 b1, b2, count;
+
+			src_offs %= src_len;
+			b1 = src[src_offs];
+			src_offs++;
+
+			count = ((~b1) & 0x3f) + 1;
+
+			switch ((b1 & 0xc0) >> 6)
+			{
+			case 0:
+			{
+				if (b1 == 0)
+				{
+					requested_int[blitter_bit] = 1;
+					blit_timer = 1;
+					return;
+				}
+
+				while (count--)
+				{
+					src_offs %= src_len;
+					b2 = src[src_offs];
+					src_offs++;
+
+					dst_offs &= 0xffff;
+					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
+					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
+				}
+				break;
+			}
+
+			case 1:
+			{
+				src_offs %= src_len;
+				b2 = src[src_offs];
+				src_offs++;
+
+				while (count--)
+				{
+					dst_offs &= 0xffff;
+					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
+					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
+					b2++;
+				}
+				break;
+			}
+
+			case 2:
+			{
+				src_offs %= src_len;
+				b2 = src[src_offs];
+				src_offs++;
+
+				while (count--)
+				{
+					dst_offs &= 0xffff;
+					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
+					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
+				}
+				break;
+			}
+
+			case 3:
+			{
+				if (b1 == 0xc0)
+				{
+					dst_offs +=   0x100;
+					dst_offs &= ~(0x100 - 1);
+					dst_offs |=  (0x100 - 1) & (m_blitter_regs[0x0a / 2] >> (7 + 1));
+				}
+				else
+				{
+					dst_offs += count;
+				}
+				break;
+			}
+			}
+
+		}
+	}
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------------
+// sky alert	0x800000
+// poitto	0xc00000
+// pururun	0xc00000
+// pangpoms	0x400000
+
+
+static UINT8 __fastcall metro_common_main_read_byte(UINT32 address)
+{
+	address &= 0x7ffff;
+
+	switch (address)
+	{
+		case 0x0788a3:
+			return metro_irq_cause_r();
+	}
+
+	bprintf (0, _T("Common RB %5.5x\n"), address);
+
+	return 0;
+}
+
+static UINT16 __fastcall metro_common_read_word(UINT32 address)
+{
+	address &= 0x7ffff;
+
+	if ((address & 0xfff0000) == 0x060000) {
+		INT32 offset = gfxrom_bank + (address & 0xfffe);
+		return DrvGfxROM[offset + 0] * 256 + DrvGfxROM[offset + 1];
+	}
+
+	switch (address)
+	{
+		case 0x0788a2:
+			return metro_irq_cause_r();
+	}
+
+	bprintf (0, _T("Common RW %5.5x\n"), address);
+
+	return 0;
+}
+
+static void __fastcall metro_common_write_word(UINT32 address, UINT16 data)
+{
+	address &= 0x7ffff;
+
+	// mirror or due to chip revision?
+	if ((address >= 0x078800 && address <= 0x078813) || (address >= 0x079700 && address <= 0x079713)) {
+		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = data;
+		return;
+	}
+
+	if (address >= 0x078860 && address <= 0x07886b) {
+		*((UINT16*)(DrvWindow + (address & 0xe))) = data;
+		return;
+	}
+
+	if (address >= 0x078870 && address <= 0x07887b) {
+		*((UINT16*)(DrvScroll + (address & 0xe))) = data;
+		return;
+	}
+
+	if (address >= 0x078840 && address <= 0x07884d) {
+		*((UINT16*)(DrvBlitter + (address & 0xe))) = data;
+		metro_blitter_write(address);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x078880:
+		case 0x078890:
+		return; // nop
+
+		case 0x0788a2:
+			metro_irq_cause_w(data);
+		return;
+
+		case 0x0788a4:
+			irq_enable = data;
+		return;
+
+		case 0x0788a8:
+			soundlatch = data;
+		return;
+
+		case 0x0788aa:
+			gfxrom_bank = (data & 0x1ff) * 0x10000;
+			if (gfxrom_bank >= graphics_length) gfxrom_bank = graphics_length-0x10000;
+		return;
+
+		case 0x0788ac:
+			screen_control = data;
+		return;
+	}
+}
+
+static void __fastcall metro_common_write_byte(UINT32 address, UINT8 data)
+{
+	address &= 0x7ffff;
+
+	bprintf (0, _T("Common WB %5.5x, %2.2x\n"), address, data);
+}
+
+static void metro_common_map_ram(UINT32 chip_address, INT32 main_ram_address)
+{
+	SekMapMemory(DrvVidRAM0,	chip_address + 0x000000, chip_address + 0x01ffff, MAP_RAM);
+	SekMapMemory(DrvVidRAM1,	chip_address + 0x020000, chip_address + 0x03ffff, MAP_RAM);
+	SekMapMemory(DrvVidRAM2,	chip_address + 0x040000, chip_address + 0x05ffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM0,	chip_address + 0x070000, chip_address + 0x071fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		chip_address + 0x072000, chip_address + 0x073fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		chip_address + 0x074000, chip_address + 0x074fff, MAP_RAM);
+	SekMapMemory(DrvTileRAM,	chip_address + 0x078000, chip_address + 0x0787ff, MAP_RAM);
+
+	if (main_ram_address == -1) return;
+
+	for (INT32 i = 0; i < 0x10; i++) {
+		SekMapMemory(Drv68KRAM1,	main_ram_address + (i * 0x10000), main_ram_address + 0xffff + (i * 0x10000), MAP_RAM);
+	}
+}
+
+//------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
 
 static void __fastcall blzntrnd_main_write_word(UINT32 address, UINT16 data)
 {
@@ -629,134 +1333,11 @@ static UINT8 __fastcall blzntrnd_main_read_byte(UINT32 address)
 
 
 
-static void metro_blitter_write(INT32 offset)
-{
-	offset &= 0xe;
-
-	if (offset == 0x0c)
-	{
-		UINT16 *m_blitter_regs = (UINT16*)DrvBlitter;
-		UINT8 *ramdst[4] = { NULL, DrvVidRAM0, DrvVidRAM1, DrvVidRAM2 };
-
-		UINT8 *src     = DrvGfxROM;
-		size_t src_len = graphics_length;
-
-		UINT32 tmap     = (m_blitter_regs[0x00 / 2] << 16) + m_blitter_regs[0x02 / 2];
-		UINT32 src_offs = (m_blitter_regs[0x04 / 2] << 16) + m_blitter_regs[0x06 / 2];
-		UINT32 dst_offs = (m_blitter_regs[0x08 / 2] << 16) + m_blitter_regs[0x0a / 2];
-
-	//	int shift   = (dst_offs & 0x80) ? 0 : 8;
-	//	UINT16 mask = (dst_offs & 0x80) ? 0x00ff : 0xff00;
-		UINT8 *dst = ramdst[tmap];
-
-		INT32 offs2 = (~dst_offs >> 7) & 1;
-		dst_offs >>=  8;
-
-		while (1)
-		{
-			UINT16 b1, b2, count;
-
-			src_offs %= src_len;
-			b1 = src[src_offs];
-			src_offs++;
-
-			count = ((~b1) & 0x3f) + 1;
-
-			switch ((b1 & 0xc0) >> 6)
-			{
-			case 0:
-			{
-				if (b1 == 0)
-				{
-					requested_int[blitter_bit] = 1;
-					blit_timer = 1;
-					return;
-				}
-
-				while (count--)
-				{
-					src_offs %= src_len;
-					b2 = src[src_offs];
-					src_offs++;
-
-					dst_offs &= 0xffff;
-					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
-					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
-				}
-				break;
-			}
-
-			case 1:
-			{
-				src_offs %= src_len;
-				b2 = src[src_offs];
-				src_offs++;
-
-				while (count--)
-				{
-					dst_offs &= 0xffff;
-					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
-					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
-					b2++;
-				}
-				break;
-			}
-
-			case 2:
-			{
-				src_offs %= src_len;
-				b2 = src[src_offs];
-				src_offs++;
-
-				while (count--)
-				{
-					dst_offs &= 0xffff;
-					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
-					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
-				}
-				break;
-			}
-
-			case 3:
-			{
-				if (b1 == 0xc0)
-				{
-					dst_offs +=   0x100;
-					dst_offs &= ~(0x100 - 1);
-					dst_offs |=  (0x100 - 1) & (m_blitter_regs[0x0a / 2] >> (7 + 1));
-				}
-				else
-				{
-					dst_offs += count;
-				}
-				break;
-			}
-			}
-
-		}
-	}
-}
 
 static void __fastcall skyalert_main_write_word(UINT32 address, UINT16 data)
 {
-	if (address >= 0x878800 && address <= 0x878813) {
-		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = data;
-		return;
-	}
-
-	if (address >= 0x878860 && address <= 0x87886b) {
-		*((UINT16*)(DrvWindow + (address & 0xe))) = data;
-		return;
-	}
-
-	if (address >= 0x878870 && address <= 0x87887b) {
-		*((UINT16*)(DrvScroll + (address & 0xe))) = data;
-		return;
-	}
-
-	if (address >= 0x878840 && address <= 0x87884d) {
-		*((UINT16*)(DrvBlitter + (address & 0xe))) = data;
-		metro_blitter_write(address);
+	if ((address & 0xfff80000) == 0x800000) {
+		metro_common_write_word(address, data);
 		return;
 	}
 
@@ -769,45 +1350,23 @@ static void __fastcall skyalert_main_write_word(UINT32 address, UINT16 data)
 		case 0x400002:
 			// coin lockout
 		return;
-
-		case 0x878880:
-		case 0x878890:
-		return; // nop
-
-		case 0x8788a2:
-			metro_irq_cause_w(data);
-		return;
-
-		case 0x8788a4:
-			irq_enable = data;
-		return;
-
-		case 0x8788a8:
-			soundlatch = data;
-		return;
-
-		case 0x8788aa:
-			gfxrom_bank = (data & 0x1ff) * 0x10000;
-			if (gfxrom_bank >= 0x200000) gfxrom_bank = 0x200000;
-		return;
-
-		case 0x8788ac:
-			screen_control = data;
-		return;
 	}
 }
 
 static void __fastcall skyalert_main_write_byte(UINT32 address, UINT8 data)
 {
+	if ((address & 0xff80000) == 0x800000) {
+		metro_common_write_byte(address, data);
+	}
+
 	if (address != 0x400001)
 		bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
 }
 
 static UINT16 __fastcall skyalert_main_read_word(UINT32 address)
 {
-	if ((address & 0xfff0000) == 0x860000) {
-		INT32 offset = gfxrom_bank + (address & 0xfffe);
-		return DrvGfxROM[offset + 0] * 256 + DrvGfxROM[offset + 1];
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_read_word(address);
 	}
 
 	switch (address)
@@ -835,11 +1394,6 @@ static UINT16 __fastcall skyalert_main_read_word(UINT32 address)
 
 		case 0x40000e:
 			return DrvInputs[3];
-
-
-		case 0x8788a2:
-			return metro_irq_cause_r();
-
 	}
 
 	return 0;
@@ -847,6 +1401,10 @@ static UINT16 __fastcall skyalert_main_read_word(UINT32 address)
 
 static UINT8 __fastcall skyalert_main_read_byte(UINT32 address)
 {
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_main_read_byte(address);
+	}
+
 	switch (address)
 	{
 		case 0x40000a:
@@ -866,9 +1424,102 @@ static UINT8 __fastcall skyalert_main_read_byte(UINT32 address)
 		case 0x40000e:
 		case 0x40000f:
 			return DrvInputs[3] >> ((~address & 1) * 8);
+	}
 
-		case 0x8788a3:
-			return metro_irq_cause_r();
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
+
+static void __fastcall pangpoms_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff80000) == 0x400000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x800000:
+			// soundstatus
+		return;
+
+		case 0x400002:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall pangpoms_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0x400000) {
+		metro_common_write_byte(address, data);
+	}
+
+	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall pangpoms_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x400000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0x800000:
+			return rand(); // sound status
+
+		case 0x800002:
+			return 0; // nop
+
+		case 0x800004:
+			return DrvInputs[0];
+
+		case 0x800006:
+			return DrvInputs[1];
+
+		case 0x800008:
+			return DrvInputs[2];
+
+		case 0x80000a:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0x80000c:
+			return (DrvDips[2] << 0) | (DrvDips[3] << 8);
+
+		case 0x80000e:
+			return DrvInputs[3];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall pangpoms_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x400000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0x80000a:
+		case 0x80000b:
+		case 0x80000c:
+		case 0x80000d:
+			return DrvDips[(address - 0x40000a) ^ 1]; // dip0
+
+		case 0x800004:
+		case 0x800005:
+		case 0x800006:
+		case 0x800007:
+		case 0x800008:
+		case 0x800009:
+			return DrvInputs[(address - 0x400004)/2] >> ((~address & 1) * 8);
+
+		case 0x80000e:
+		case 0x80000f:
+			return DrvInputs[3] >> ((~address & 1) * 8);
 	}
 
 	bprintf (0, _T("RB %5.5x\n"), address);
@@ -877,8 +1528,453 @@ static UINT8 __fastcall skyalert_main_read_byte(UINT32 address)
 }
 
 
+static void __fastcall poitto_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff80000) == 0xc00000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x800000:
+			// soundstatus
+		return;
+
+		case 0x800002:
+		case 0x800004:
+		case 0x800006:
+		case 0x800008:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall poitto_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0xc00000) {
+		metro_common_write_byte(address, data);
+	}
+
+	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall poitto_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0xc00000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0x800000:
+			return (DrvInputs[0] & 0xff7f) | (rand() & 0x80);
+
+		case 0x800002:
+			return DrvInputs[1];
+
+		case 0x800004:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0x800006:
+			return DrvInputs[2];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall poitto_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0xc00000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0x800000:
+			return DrvInputs[0] >> 8;
+
+		case 0x800001:
+			return (DrvInputs[0] & 0x7f) | (rand() & 0x80); // sound status
+
+		case 0x800002:
+			return DrvInputs[1] >> 8;
+
+		case 0x800003:
+			return DrvInputs[1];
+
+		case 0x800004:
+		case 0x800005:
+			return DrvDips[(address & 1) ^ 1];
+
+		case 0x800006:
+			return DrvInputs[2] >> 8;
+
+		case 0x800007:
+			return DrvInputs[2];
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
+
+static void __fastcall lastforg_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff00000) == 0x800000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			// soundstatus
+		return;
+
+		case 0x400002:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall lastforg_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0x880000) {
+		metro_common_write_byte(address, data);
+	}
+
+	if (address != 0x400001)
+		bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall lastforg_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x880000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			return rand(); // sound status
+
+		case 0x400002:
+			return DrvInputs[0];
+
+		case 0x400004:
+			return DrvInputs[1];
+
+		case 0x400006:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0x40000a:
+			return (DrvDips[2] << 0) | (DrvDips[3] << 8);
+
+		case 0x40000c:
+			return DrvInputs[2];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall lastforg_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x880000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0x400006:
+		case 0x400007:
+			return DrvDips[(address - 0x400006) ^ 1]; // dip0
+
+		case 0x40000a:
+		case 0x40000b:
+			return DrvDips[(address - 0x40000a) ^ 1]; // dip0
+
+		case 0x400000:
+		case 0x400001:
+		case 0x400002:
+		case 0x400003:
+			return DrvInputs[(address - 0x400000)/2] >> ((~address & 1) * 8);
+
+		case 0x40000c:
+		case 0x40000d:
+			return DrvInputs[2] >> ((~address & 1) * 8);
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
 
 
+static void __fastcall lastfort_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff80000) == 0x800000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0xc00000:
+			// soundstatus
+		return;
+
+		case 0xc00002:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall lastfort_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		metro_common_write_byte(address, data);
+	}
+
+	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall lastfort_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0xc00000:
+			return rand(); // sound status
+
+		case 0xc00002:
+			return 0; // nop
+
+		case 0xc00004:
+			return DrvInputs[0];
+
+		case 0xc00006:
+			return DrvInputs[1];
+
+		case 0xc00008:
+			return DrvInputs[2];
+
+		case 0xc0000a:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0xc0000c:
+			return (DrvDips[2] << 0) | (DrvDips[3] << 8);
+
+		case 0xc0000e:
+			return DrvInputs[3];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall lastfort_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0xc0000a:
+		case 0xc0000b:
+		case 0xc0000c:
+		case 0xc0000d:
+			return DrvDips[(address - 0x40000a) ^ 1]; // dip0
+
+		case 0xc00004:
+		case 0xc00005:
+		case 0xc00006:
+		case 0xc00007:
+		case 0xc00008:
+		case 0xc00009:
+			return DrvInputs[(address - 0x400004)/2] >> ((~address & 1) * 8);
+
+		case 0xc0000e:
+		case 0xc0000f:
+			return DrvInputs[3] >> ((~address & 1) * 8);
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
+
+
+static void __fastcall dharma_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff80000) == 0x800000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0xc00000:
+			// soundstatus
+		return;
+
+		case 0xc00002:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall dharma_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		metro_common_write_byte(address, data);
+	}
+
+	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall dharma_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0xc00000:
+			return (DrvInputs[0] & 0xff7f) | (rand() & 0x80);
+
+		case 0xc00002:
+			return DrvInputs[1];
+
+		case 0xc00004:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0xc00006:
+			return DrvInputs[2];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall dharma_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0x800000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0xc00000:
+			return DrvInputs[0] >> 8;
+
+		case 0xc00001:
+			return (DrvInputs[0] & 0x7f) | (rand() & 0x80);
+
+		case 0xc00002:
+		case 0xc00003:
+			return DrvInputs[1] >> ((~address & 1) * 8);
+
+		case 0xc00004:
+		case 0xc00005:
+			return DrvDips[(address - 0xc00004) ^ 1]; // dip0
+
+		case 0xc00006:
+		case 0xc00007:
+			return DrvInputs[2] >> ((~address & 1) * 8);
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
+
+static void __fastcall pururun_main_write_word(UINT32 address, UINT16 data)
+{
+	if ((address & 0xfff80000) == 0xc00000) {
+		metro_common_write_word(address, data);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			// soundstatus
+		return;
+
+		case 0x400002:
+			// coin lockout
+		return;
+	}
+}
+
+static void __fastcall pururun_main_write_byte(UINT32 address, UINT8 data)
+{
+	if ((address & 0xff80000) == 0xc00000) {
+		metro_common_write_byte(address, data);
+	}
+
+	bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall pururun_main_read_word(UINT32 address)
+{
+	if ((address & 0xff80000) == 0xc00000) {
+		return metro_common_read_word(address);
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			return (DrvInputs[0] & 0xff7f) | (rand() & 0x80);
+
+		case 0x400002:
+			return DrvInputs[1];
+
+		case 0x400004:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0x400006:
+			return DrvInputs[2];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall pururun_main_read_byte(UINT32 address)
+{
+	if ((address & 0xff80000) == 0xc00000) {
+		return metro_common_main_read_byte(address);
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			return DrvInputs[0] >> 8;
+
+		case 0x400001:
+			return (DrvInputs[0] & 0x7f) | (rand() & 0x80);
+
+		case 0x400002:
+		case 0x400003:
+			return DrvInputs[1] >> ((~address & 1) * 8);
+
+		case 0x400004:
+		case 0x400005:
+			return DrvDips[(address - 0xc00004) ^ 1]; // dip0
+
+		case 0x400006:
+		case 0x400007:
+			return DrvInputs[2] >> ((~address & 1) * 8);
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
 
 
 
@@ -1117,6 +2213,7 @@ static INT32 DrvInit()
 	SekSetReadByteHandler(0,	blzntrnd_main_read_byte);
 	SekClose();
 
+	has_z80 = 1;
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, MAP_ROM);
@@ -1212,6 +2309,7 @@ static INT32 gstrik2Init()
 	SekSetReadByteHandler(0,	blzntrnd_main_read_byte);
 	SekClose();
 
+	has_z80 = 1;
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, MAP_ROM);
@@ -1282,16 +2380,7 @@ static INT32 skyalertInit()
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(DrvVidRAM0,	0x800000, 0x81ffff, MAP_RAM);
-	SekMapMemory(DrvVidRAM1,	0x820000, 0x83ffff, MAP_RAM);
-	SekMapMemory(DrvVidRAM2,	0x840000, 0x85ffff, MAP_RAM);
-	SekMapMemory(Drv68KRAM0,	0x870000, 0x871fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,		0x872000, 0x873fff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,		0x874000, 0x874fff, MAP_RAM);
-	SekMapMemory(DrvTileRAM,	0x878000, 0x8787ff, MAP_RAM);
-	for (INT32 i = 0; i < 0x10; i++) {
-		SekMapMemory(Drv68KRAM1,	0xc00000 + (i * 0x10000), 0xc0ffff + (i * 0x10000), MAP_RAM);
-	}
+	metro_common_map_ram(0x800000, 0xc00000);
 	SekSetWriteWordHandler(0,	skyalert_main_write_word);
 	SekSetWriteByteHandler(0,	skyalert_main_write_byte);
 	SekSetReadWordHandler(0,	skyalert_main_read_word);
@@ -1321,20 +2410,392 @@ static INT32 skyalertInit()
 	return 0;
 }
 
+static INT32 pangpomsInit()
+{
+	graphics_length = 0x100000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRom(DrvGfxROM + 0x0000000,  3, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000001,  4, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000002,  5, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000003,  6, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000004,  7, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000005,  8, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000006,  9, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000007, 10, 8)) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000, 11, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	metro_common_map_ram(0x400000, 0xc00000);
+	SekSetWriteWordHandler(0,	pangpoms_main_write_word);
+	SekSetWriteByteHandler(0,	pangpoms_main_write_byte);
+	SekSetReadWordHandler(0,	pangpoms_main_read_word);
+	SekSetReadByteHandler(0,	pangpoms_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+	support_8bpp = 0;
+	support_16x16 = 0;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 poittoInit()
+{
+	graphics_length = 0x200000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000000,  3, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000002,  4, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000004,  5, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000006,  6, 8, LD_GROUP(2))) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000,  7, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	metro_common_map_ram(0xc00000, 0x400000);
+	SekSetWriteWordHandler(0,	poitto_main_write_word);
+	SekSetWriteByteHandler(0,	poitto_main_write_byte);
+	SekSetReadWordHandler(0,	poitto_main_read_word);
+	SekSetReadByteHandler(0,	poitto_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 0;
+	support_16x16 = 0;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 lastfortInit()
+{
+	graphics_length = 0x200000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRom(DrvGfxROM + 0x0000000,  3, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000001,  4, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000002,  5, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000003,  6, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000004,  7, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000005,  8, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000006,  9, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000007, 10, 8)) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000, 11, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	metro_common_map_ram(0x800000, 0x400000);
+	SekSetWriteWordHandler(0,	lastfort_main_write_word);
+	SekSetWriteByteHandler(0,	lastfort_main_write_byte);
+	SekSetReadWordHandler(0,	lastfort_main_read_word);
+	SekSetReadByteHandler(0,	lastfort_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 0;
+	support_16x16 = 0;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 lastforgInit()
+{
+	graphics_length = 0x200000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000000,  3, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000002,  4, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000004,  5, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000006,  6, 8, LD_GROUP(2))) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000,  7, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	metro_common_map_ram(0x880000, 0xc00000);
+	SekSetWriteWordHandler(0,	lastforg_main_write_word);
+	SekSetWriteByteHandler(0,	lastforg_main_write_byte);
+	SekSetReadWordHandler(0,	lastforg_main_read_word);
+	SekSetReadByteHandler(0,	lastforg_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 0;
+	support_16x16 = 0;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 dharmaInit()
+{
+	graphics_length = 0x200000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000000,  3, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000002,  4, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000004,  5, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000006,  6, 8, LD_GROUP(2))) return 1;
+
+		for (INT32 i = 0; i < 0x200000; i += 4)
+		{
+			DrvGfxROM[i + 1] = BITSWAP08(DrvGfxROM[i + 1], 7,3,2,4, 5,6,1,0);
+			DrvGfxROM[i + 3] = BITSWAP08(DrvGfxROM[i + 3], 7,2,5,4, 3,6,1,0);
+		}
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000,  7, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	metro_common_map_ram(0x800000, 0x400000);
+	SekSetWriteWordHandler(0,	dharma_main_write_word);
+	SekSetWriteByteHandler(0,	dharma_main_write_byte);
+	SekSetReadWordHandler(0,	dharma_main_read_word);
+	SekSetReadByteHandler(0,	dharma_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 1;
+	support_16x16 = 1;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 pururunInit()
+{
+	graphics_length = 0x200000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000000,  3, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000002,  4, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000004,  5, 8, LD_GROUP(2))) return 1;
+		if (BurnLoadRomExt(DrvGfxROM + 0x0000006,  6, 8, LD_GROUP(2))) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000,  7, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	metro_common_map_ram(0xc00000, 0x800000);
+	SekSetWriteWordHandler(0,	pururun_main_write_word);
+	SekSetWriteByteHandler(0,	pururun_main_write_byte);
+	SekSetReadWordHandler(0,	pururun_main_read_word);
+	SekSetReadByteHandler(0,	pururun_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 1;
+	support_16x16 = 1;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
 
 static INT32 DrvExit()
 {
-	BurnYM2610Exit();
+	if (has_z80) BurnYM2610Exit();
 
 	KonamiICExit();
 	GenericTilesExit();
 
-	if (!has_z80) ZetExit();
+	if (has_z80) ZetExit();
 	SekExit();
 	
 	BurnFree(AllMem);
 
-	has_z80 = 1;
+	has_z80 = 0;
+	has_zoom = 0;
 
 	return 0;
 }
@@ -2023,4 +3484,192 @@ struct BurnDriver BurnDrvSkyalert = {
 	NULL, skyalertRomInfo, skyalertRomName, NULL, NULL, SkyalertInputInfo, SkyalertDIPInfo,
 	skyalertInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	224, 360, 3, 4
+};
+
+// Pang Pom's
+
+static struct BurnRomInfo pangpomsRomDesc[] = {
+	{ "ppoms09.bin",	0x20000, 0x0c292dbc, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "ppoms10.bin",	0x20000, 0x0bc18853, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ppoms12.bin",	0x20000, 0xa749357b, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "ppoms02.bin",	0x20000, 0x88f902f7, 3 | BRF_GRA },           //  3 gfx1
+	{ "ppoms04.bin",	0x20000, 0x9190c2a0, 3 | BRF_GRA },           //  4
+	{ "ppoms06.bin",	0x20000, 0xed15c93d, 3 | BRF_GRA },           //  5
+	{ "ppoms08.bin",	0x20000, 0x9a3408b9, 3 | BRF_GRA },           //  6
+	{ "ppoms01.bin",	0x20000, 0x11ac3810, 3 | BRF_GRA },           //  7
+	{ "ppoms03.bin",	0x20000, 0xe595529e, 3 | BRF_GRA },           //  8
+	{ "ppoms05.bin",	0x20000, 0x02226214, 3 | BRF_GRA },           //  9
+	{ "ppoms07.bin",	0x20000, 0x48471c87, 3 | BRF_GRA },           // 10
+
+	{ "ppoms11.bin",	0x20000, 0xe89bd565, 4 | BRF_SND },           // 11 oki
+};
+
+STD_ROM_PICK(pangpoms)
+STD_ROM_FN(pangpoms)
+
+struct BurnDriver BurnDrvPangpoms = {
+	"pangpoms", NULL, NULL, NULL, "1992",
+	"Pang Pom's\0", "No sound or save states", "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, pangpomsRomInfo, pangpomsRomName, NULL, NULL, SkyalertInputInfo, PangpomsDIPInfo,
+	pangpomsInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
+// Poitto!
+
+static struct BurnRomInfo poittoRomDesc[] = {
+	{ "pt-jd05.20e",	0x20000, 0x6b1be034, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "pt-jd06.20c",	0x20000, 0x3092d9d4, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pt-jc08.3i",		0x20000, 0xf32d386a, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "pt-2.15i",		0x80000, 0x05d15d01, 3 | BRF_GRA },           //  3 gfx1
+	{ "pt-4.19i",		0x80000, 0x8a39edb5, 3 | BRF_GRA },           //  4
+	{ "pt-1.13i",		0x80000, 0xea6e2289, 3 | BRF_GRA },           //  5
+	{ "pt-3.17i",		0x80000, 0x522917c1, 3 | BRF_GRA },           //  6
+
+	{ "pt-jc07.3g",		0x40000, 0x5ae28b8d, 4 | BRF_SND },           //  7 oki
+};
+
+STD_ROM_PICK(poitto)
+STD_ROM_FN(poitto)
+
+struct BurnDriver BurnDrvPoitto = {
+	"poitto", NULL, NULL, NULL, "1993",
+	"Poitto!\0", NULL, "Metro / Able Corp.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, poittoRomInfo, poittoRomName, NULL, NULL, PoittoInputInfo, PoittoDIPInfo,
+	poittoInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
+
+// Last Fortress - Toride
+
+static struct BurnRomInfo lastfortRomDesc[] = {
+	{ "tr_jc09",	0x20000, 0x8b98a49a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tr_jc10",	0x20000, 0x8d04da04, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tr_jb12",	0x20000, 0x8a8f5fef, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "tr_jc02",	0x20000, 0xdb3c5b79, 3 | BRF_GRA },           //  3 gfx1
+	{ "tr_jc04",	0x20000, 0xf8ab2f9b, 3 | BRF_GRA },           //  4
+	{ "tr_jc06",	0x20000, 0x47a7f397, 3 | BRF_GRA },           //  5
+	{ "tr_jc08",	0x20000, 0xd7ba5e26, 3 | BRF_GRA },           //  6
+	{ "tr_jc01",	0x20000, 0x3e3dab03, 3 | BRF_GRA },           //  7
+	{ "tr_jc03",	0x20000, 0x87ac046f, 3 | BRF_GRA },           //  8
+	{ "tr_jc05",	0x20000, 0x3fbbe49c, 3 | BRF_GRA },           //  9
+	{ "tr_jc07",	0x20000, 0x05e1456b, 3 | BRF_GRA },           // 10
+
+	{ "tr_jb11",	0x20000, 0x83786a09, 4 | BRF_SND },           // 11 oki
+};
+
+STD_ROM_PICK(lastfort)
+STD_ROM_FN(lastfort)
+
+struct BurnDriver BurnDrvLastfort = {
+	"lastfort", NULL, NULL, NULL, "1994",
+	"Last Fortress - Toride\0", NULL, "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, lastfortRomInfo, lastfortRomName, NULL, NULL, SkyalertInputInfo, LastfortDIPInfo,
+	lastfortInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
+// Last Fortress - Toride (German)
+
+static struct BurnRomInfo lastfortgRomDesc[] = {
+	{ "tr_ma02.8g",		0x20000, 0xe6f40918, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tr_ma03.10g",	0x20000, 0xb00fb126, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "tr_ma01.1i",		0x20000, 0x8a8f5fef, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "tr_ma04.15f",	0x80000, 0x5feafc6f, 3 | BRF_GRA },           //  3 gfx1
+	{ "tr_ma07.17d",	0x80000, 0x7519d569, 3 | BRF_GRA },           //  4
+	{ "tr_ma05.17f",	0x80000, 0x5d917ba5, 3 | BRF_GRA },           //  5
+	{ "tr_ma06.15d",	0x80000, 0xd366c04e, 3 | BRF_GRA },           //  6
+
+	{ "tr_ma08.1d",		0x20000, 0x83786a09, 4 | BRF_SND },           //  7 oki
+};
+
+STD_ROM_PICK(lastfortg)
+STD_ROM_FN(lastfortg)
+
+struct BurnDriverD BurnDrvLastfortg = {
+	"lastfortg", "lastfort", NULL, NULL, "1994",
+	"Last Fortress - Toride (German)\0", NULL, "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, lastfortgRomInfo, lastfortgRomName, NULL, NULL, LadykillInputInfo, LadykillDIPInfo,
+	lastforgInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	360, 224, 4, 3
+};
+
+
+// Dharma Doujou
+
+static struct BurnRomInfo dharmaRomDesc[] = {
+	{ "dd__wea5.u39",	0x20000, 0x960319d7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "dd__wea6.u42",	0x20000, 0x386eb6b3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "dd__wa-8.u9",	0x20000, 0xaf7ebc4c, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "dd__wa-2.u4",	0x80000, 0x2c67a5c8, 3 | BRF_GRA },           //  3 gfx1
+	{ "dd__wa-4.u5",	0x80000, 0x36ca7848, 3 | BRF_GRA },           //  4
+	{ "dd__wa-1.u10",	0x80000, 0xd8034574, 3 | BRF_GRA },           //  5
+	{ "dd__wa-3.u11",	0x80000, 0xfe320fa3, 3 | BRF_GRA },           //  6
+
+	{ "dd__wa-7.u3",	0x40000, 0x7ce817eb, 4 | BRF_SND },           //  7 oki
+};
+
+STD_ROM_PICK(dharma)
+STD_ROM_FN(dharma)
+
+struct BurnDriver BurnDrvDharma = {
+	"dharma", NULL, NULL, NULL, "1994",
+	"Dharma Doujou\0", NULL, "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, dharmaRomInfo, dharmaRomName, NULL, NULL, DharmaInputInfo, DharmaDIPInfo,
+	dharmaInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Pururun
+
+static struct BurnRomInfo pururunRomDesc[] = {
+	{ "pu9-19-5.20e",	0x20000, 0x5a466a1b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "pu9-19-6.20c",	0x20000, 0xd155a53c, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "pu9-19-8.3i",	0x20000, 0xedc3830b, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "pu9-19-2.14i",	0x80000, 0x21550b26, 3 | BRF_GRA },           //  3 gfx1
+	{ "pu9-19-4.18i",	0x80000, 0x3f3e216d, 3 | BRF_GRA },           //  4
+	{ "pu9-19-1.12i",	0x80000, 0x7e83a75f, 3 | BRF_GRA },           //  5
+	{ "pu9-19-3.16i",	0x80000, 0xd15485c5, 3 | BRF_GRA },           //  6
+
+	{ "pu9-19-7.3g",	0x40000, 0x51ae4926, 4 | BRF_SND },           //  7 oki
+};
+
+STD_ROM_PICK(pururun)
+STD_ROM_FN(pururun)
+
+struct BurnDriver BurnDrvPururun = {
+	"pururun", NULL, NULL, NULL, "1995",
+	"Pururun\0", NULL, "Metro / Banpresto", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, pururunRomInfo, pururunRomName, NULL, NULL, PururunInputInfo, PururunDIPInfo,
+	pururunInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	320, 224, 4, 3
 };

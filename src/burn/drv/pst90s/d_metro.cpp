@@ -35,6 +35,7 @@ static UINT8 *DrvZ80RAM;
 static UINT8 *DrvWindow;
 static UINT8 *DrvScroll;
 static UINT8 *DrvVidRegs;
+static UINT8 *DrvBlitter;
 
 static UINT8 DrvRecalc;
 
@@ -45,7 +46,9 @@ static UINT16 screen_control;
 static UINT8 requested_int[8];
 static INT32 flip_screen;
 static INT32 irq_levels[8];
+static INT32 blit_timer = -1;
 
+static INT32 has_z80 = 1;
 static INT32 m_sprite_xoffs_dx = 0;
 static INT32 m_tilemap_scrolldx[3] = { 8, 8, 8 };
 static UINT32 graphics_length;
@@ -59,8 +62,9 @@ static INT32 has_zoom = 0;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoy4[16];
 static UINT8 DrvDips[4];
-static UINT16 DrvInputs[3];
+static UINT16 DrvInputs[4];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo BlzntrndInputList[] = {
@@ -145,6 +149,36 @@ static struct BurnInputInfo Gstrik2InputList[] = {
 };
 
 STDINPUTINFO(Gstrik2)
+
+static struct BurnInputInfo SkyalertInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy1 + 0,	"service"	},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 1,	"tilt"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
+};
+
+STDINPUTINFO(Skyalert)
 
 static struct BurnDIPInfo BlzntrndDIPList[]=
 {
@@ -375,6 +409,72 @@ static struct BurnDIPInfo Gstrik2DIPList[]=
 
 STDDIPINFO(Gstrik2)
 
+static struct BurnDIPInfo SkyalertDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL				},
+	{0x14, 0xff, 0xff, 0xff, NULL				},
+	{0x15, 0xff, 0xff, 0xff, NULL				},
+	{0x16, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x13, 0x01, 0x07, 0x01, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x02, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x03, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x07, 0x06, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x07, 0x04, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x07, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
+	{0x13, 0x01, 0x38, 0x08, "4 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x10, "3 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x18, "2 Coins 1 Credits"		},
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"		},
+	{0x13, 0x01, 0x38, 0x30, "1 Coin  2 Credits"		},
+	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"		},
+	{0x13, 0x01, 0x38, 0x20, "1 Coin  4 Credits"		},
+	{0x13, 0x01, 0x38, 0x00, "Free Play"			},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x13, 0x01, 0x40, 0x40, "Off"				},
+	{0x13, 0x01, 0x40, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x13, 0x01, 0x80, 0x80, "Off"				},
+	{0x13, 0x01, 0x80, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x14, 0x01, 0x03, 0x02, "Easy"				},
+	{0x14, 0x01, 0x03, 0x03, "Normal"			},
+	{0x14, 0x01, 0x03, 0x01, "Hard"				},
+	{0x14, 0x01, 0x03, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x14, 0x01, 0x0c, 0x08, "1"				},
+	{0x14, 0x01, 0x0c, 0x04, "2"				},
+	{0x14, 0x01, 0x0c, 0x0c, "3"				},
+	{0x14, 0x01, 0x0c, 0x00, "4"				},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
+	{0x14, 0x01, 0x30, 0x30, "100K, every 400K"		},
+	{0x14, 0x01, 0x30, 0x20, "200K, every 400K"		},
+	{0x14, 0x01, 0x30, 0x10, "200K"				},
+	{0x14, 0x01, 0x30, 0x00, "None"				},
+
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0x14, 0x01, 0x40, 0x00, "No"				},
+	{0x14, 0x01, 0x40, 0x40, "Yes"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x14, 0x01, 0x80, 0x00, "Off"				},
+	{0x14, 0x01, 0x80, 0x80, "On"				},
+};
+
+STDDIPINFO(Skyalert)
+
+
+
 static UINT16 metro_irq_cause_r()
 {
 	UINT16 res = 0;
@@ -526,6 +626,265 @@ static UINT8 __fastcall blzntrnd_main_read_byte(UINT32 address)
 	return 0;
 }
 
+
+
+
+static void metro_blitter_write(INT32 offset)
+{
+	offset &= 0xe;
+
+	if (offset == 0x0c)
+	{
+		UINT16 *m_blitter_regs = (UINT16*)DrvBlitter;
+		UINT8 *ramdst[4] = { NULL, DrvVidRAM0, DrvVidRAM1, DrvVidRAM2 };
+
+		UINT8 *src     = DrvGfxROM;
+		size_t src_len = graphics_length;
+
+		UINT32 tmap     = (m_blitter_regs[0x00 / 2] << 16) + m_blitter_regs[0x02 / 2];
+		UINT32 src_offs = (m_blitter_regs[0x04 / 2] << 16) + m_blitter_regs[0x06 / 2];
+		UINT32 dst_offs = (m_blitter_regs[0x08 / 2] << 16) + m_blitter_regs[0x0a / 2];
+
+	//	int shift   = (dst_offs & 0x80) ? 0 : 8;
+	//	UINT16 mask = (dst_offs & 0x80) ? 0x00ff : 0xff00;
+		UINT8 *dst = ramdst[tmap];
+
+		INT32 offs2 = (~dst_offs >> 7) & 1;
+		dst_offs >>=  8;
+
+		while (1)
+		{
+			UINT16 b1, b2, count;
+
+			src_offs %= src_len;
+			b1 = src[src_offs];
+			src_offs++;
+
+			count = ((~b1) & 0x3f) + 1;
+
+			switch ((b1 & 0xc0) >> 6)
+			{
+			case 0:
+			{
+				if (b1 == 0)
+				{
+					requested_int[blitter_bit] = 1;
+					blit_timer = 1;
+					return;
+				}
+
+				while (count--)
+				{
+					src_offs %= src_len;
+					b2 = src[src_offs];
+					src_offs++;
+
+					dst_offs &= 0xffff;
+					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
+					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
+				}
+				break;
+			}
+
+			case 1:
+			{
+				src_offs %= src_len;
+				b2 = src[src_offs];
+				src_offs++;
+
+				while (count--)
+				{
+					dst_offs &= 0xffff;
+					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
+					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
+					b2++;
+				}
+				break;
+			}
+
+			case 2:
+			{
+				src_offs %= src_len;
+				b2 = src[src_offs];
+				src_offs++;
+
+				while (count--)
+				{
+					dst_offs &= 0xffff;
+					dst[dst_offs*2+offs2] = b2; //blt_write(tmap, dst_offs, b2);
+					dst_offs = ((dst_offs + 1) & (0x100 - 1)) | (dst_offs & (~(0x100 - 1)));
+				}
+				break;
+			}
+
+			case 3:
+			{
+				if (b1 == 0xc0)
+				{
+					dst_offs +=   0x100;
+					dst_offs &= ~(0x100 - 1);
+					dst_offs |=  (0x100 - 1) & (m_blitter_regs[0x0a / 2] >> (7 + 1));
+				}
+				else
+				{
+					dst_offs += count;
+				}
+				break;
+			}
+			}
+
+		}
+	}
+}
+
+static void __fastcall skyalert_main_write_word(UINT32 address, UINT16 data)
+{
+	if (address >= 0x878800 && address <= 0x878813) {
+		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = data;
+		return;
+	}
+
+	if (address >= 0x878860 && address <= 0x87886b) {
+		*((UINT16*)(DrvWindow + (address & 0xe))) = data;
+		return;
+	}
+
+	if (address >= 0x878870 && address <= 0x87887b) {
+		*((UINT16*)(DrvScroll + (address & 0xe))) = data;
+		return;
+	}
+
+	if (address >= 0x878840 && address <= 0x87884d) {
+		*((UINT16*)(DrvBlitter + (address & 0xe))) = data;
+		metro_blitter_write(address);
+		return;
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			// soundstatus
+		return;
+
+		case 0x400002:
+			// coin lockout
+		return;
+
+		case 0x878880:
+		case 0x878890:
+		return; // nop
+
+		case 0x8788a2:
+			metro_irq_cause_w(data);
+		return;
+
+		case 0x8788a4:
+			irq_enable = data;
+		return;
+
+		case 0x8788a8:
+			soundlatch = data;
+		return;
+
+		case 0x8788aa:
+			gfxrom_bank = (data & 0x1ff) * 0x10000;
+			if (gfxrom_bank >= 0x200000) gfxrom_bank = 0x200000;
+		return;
+
+		case 0x8788ac:
+			screen_control = data;
+		return;
+	}
+}
+
+static void __fastcall skyalert_main_write_byte(UINT32 address, UINT8 data)
+{
+	if (address != 0x400001)
+		bprintf (0, _T("WB %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall skyalert_main_read_word(UINT32 address)
+{
+	if ((address & 0xfff0000) == 0x860000) {
+		INT32 offset = gfxrom_bank + (address & 0xfffe);
+		return DrvGfxROM[offset + 0] * 256 + DrvGfxROM[offset + 1];
+	}
+
+	switch (address)
+	{
+		case 0x400000:
+			return rand(); // sound status
+
+		case 0x400002:
+			return 0; // nop
+
+		case 0x400004:
+			return DrvInputs[0];
+
+		case 0x400006:
+			return DrvInputs[1];
+
+		case 0x400008:
+			return DrvInputs[2];
+
+		case 0x40000a:
+			return (DrvDips[0] << 0) | (DrvDips[1] << 8);
+
+		case 0x40000c:
+			return (DrvDips[2] << 0) | (DrvDips[3] << 8);
+
+		case 0x40000e:
+			return DrvInputs[3];
+
+
+		case 0x8788a2:
+			return metro_irq_cause_r();
+
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall skyalert_main_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x40000a:
+		case 0x40000b:
+		case 0x40000c:
+		case 0x40000d:
+			return DrvDips[(address - 0x40000a) ^ 1]; // dip0
+
+		case 0x400004:
+		case 0x400005:
+		case 0x400006:
+		case 0x400007:
+		case 0x400008:
+		case 0x400009:
+			return DrvInputs[(address - 0x400004)/2] >> ((~address & 1) * 8);
+
+		case 0x40000e:
+		case 0x40000f:
+			return DrvInputs[3] >> ((~address & 1) * 8);
+
+		case 0x8788a3:
+			return metro_irq_cause_r();
+	}
+
+	bprintf (0, _T("RB %5.5x\n"), address);
+
+	return 0;
+}
+
+
+
+
+
+
+
+
+
+
 static void z80_bankswitch(INT32 data)
 {
 	INT32 bank = (data & 0x3) * 0x4000 + 0x10000;
@@ -617,12 +976,14 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	ZetOpen(0);
-	ZetReset();
-	BurnYM2610Reset();
-	ZetClose();
+	if (has_z80) {
+		ZetOpen(0);
+		ZetReset();
+		BurnYM2610Reset();
+		ZetClose();
+	}
 
-	K053936Reset();
+	if (has_zoom) K053936Reset();
 
 	memset (requested_int, 0, 8);
 
@@ -631,6 +992,7 @@ static INT32 DrvDoReset()
 	irq_enable = 0;
 	screen_control = 0;
 	flip_screen = 0;
+	blit_timer = -1;
 
 	return 0;
 }
@@ -642,8 +1004,8 @@ static INT32 MemIndex()
 	Drv68KROM		= Next; Next += 0x200000;
 	DrvZ80ROM		= Next; Next += 0x020000;
 
-	DrvGfxROM		= Next; Next += 0x2000000;
-	DrvGfxROM0		= Next; Next += 0x4000000;
+	DrvGfxROM		= Next; Next += graphics_length;
+	DrvGfxROM0		= Next; Next += graphics_length*2;
 
 	DrvRozROM		= Next; Next += 0x200000;
 
@@ -672,6 +1034,7 @@ static INT32 MemIndex()
 	DrvWindow		= Next; Next += 0x000010;
 	DrvScroll		= Next; Next += 0x000010;
 	DrvVidRegs		= Next; Next += 0x000020;
+	DrvBlitter		= Next; Next += 0x00000f;
 
 	RamEnd			= Next;
 
@@ -691,6 +1054,8 @@ static void expand_4bpp(INT32 len)
 
 static INT32 DrvInit()
 {
+	graphics_length = 0x1800000;
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -719,8 +1084,7 @@ static INT32 DrvInit()
 		if (BurnLoadRomExt(DrvGfxROM + 0x1000004, 15, 8, LD_GROUP(2))) return 1;
 		if (BurnLoadRomExt(DrvGfxROM + 0x1000006, 16, 8, LD_GROUP(2))) return 1;
 
-		memset (DrvGfxROM + 0x1800000, 0xff, 0x010000);
-		expand_4bpp(0x1810000);
+		expand_4bpp(graphics_length);
 
 		if (BurnLoadRom(DrvRozROM + 0x0000000, 17, 1)) return 1;
 
@@ -776,7 +1140,6 @@ static INT32 DrvInit()
 
 	m_sprite_xoffs_dx = 0;
 	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
-	graphics_length = 0x1800000;
 	vblank_bit = 0;
 	irq_line = 1;
 	blitter_bit = 0;
@@ -791,6 +1154,8 @@ static INT32 DrvInit()
 
 static INT32 gstrik2Init()
 {
+	graphics_length = 0x1000000;
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -815,8 +1180,7 @@ static INT32 gstrik2Init()
 		if (BurnLoadRomExt(DrvGfxROM + 0x0800004, 11, 8, LD_GROUP(2))) return 1;
 		if (BurnLoadRomExt(DrvGfxROM + 0x0800006, 12, 8, LD_GROUP(2))) return 1;
 
-		expand_4bpp(0x1000000);
-		graphics_length = 0x1000000;
+		expand_4bpp(graphics_length);
 
 		if (BurnLoadRom(DrvRozROM + 0x0000000, 13, 1)) return 1;
 
@@ -871,7 +1235,7 @@ static INT32 gstrik2Init()
 
 	m_sprite_xoffs_dx = 0;
 	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 8;
-	graphics_length = 0x1000000;
+
 	vblank_bit = 0;
 	irq_line = 1;
 	blitter_bit = 0;
@@ -884,6 +1248,80 @@ static INT32 gstrik2Init()
 	return 0;
 }
 
+static INT32 skyalertInit()
+{
+	graphics_length = 0x200000;
+
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
+
+	// 	upd rom
+
+		if (BurnLoadRom(DrvGfxROM + 0x0000000,  3, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000001,  4, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000002,  5, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000003,  6, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000004,  7, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000005,  8, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000006,  9, 8)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000007, 10, 8)) return 1;
+
+		expand_4bpp(graphics_length);
+
+		if (BurnLoadRom(DrvYMROMA + 0x0000000, 11, 1)) return 1;
+	}
+
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(DrvVidRAM0,	0x800000, 0x81ffff, MAP_RAM);
+	SekMapMemory(DrvVidRAM1,	0x820000, 0x83ffff, MAP_RAM);
+	SekMapMemory(DrvVidRAM2,	0x840000, 0x85ffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM0,	0x870000, 0x871fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x872000, 0x873fff, MAP_RAM);
+	SekMapMemory(DrvSprRAM,		0x874000, 0x874fff, MAP_RAM);
+	SekMapMemory(DrvTileRAM,	0x878000, 0x8787ff, MAP_RAM);
+	for (INT32 i = 0; i < 0x10; i++) {
+		SekMapMemory(Drv68KRAM1,	0xc00000 + (i * 0x10000), 0xc0ffff + (i * 0x10000), MAP_RAM);
+	}
+	SekSetWriteWordHandler(0,	skyalert_main_write_word);
+	SekSetWriteByteHandler(0,	skyalert_main_write_byte);
+	SekSetReadWordHandler(0,	skyalert_main_read_word);
+	SekSetReadByteHandler(0,	skyalert_main_read_byte);
+	SekClose();
+
+	has_z80 = 0;
+
+	// sound hardware
+
+	GenericTilesInit();
+	KonamiAllocateBitmaps();
+
+	m_sprite_xoffs_dx = 0;
+	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
+
+	vblank_bit = 0;
+	irq_line = 2;
+	blitter_bit = 2;
+
+	support_8bpp = 0;
+	support_16x16 = 0;
+	has_zoom = 0;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+
 static INT32 DrvExit()
 {
 	BurnYM2610Exit();
@@ -891,10 +1329,12 @@ static INT32 DrvExit()
 	KonamiICExit();
 	GenericTilesExit();
 
-	ZetExit();
+	if (!has_z80) ZetExit();
 	SekExit();
 	
 	BurnFree(AllMem);
+
+	has_z80 = 1;
 
 	return 0;
 }
@@ -1018,7 +1458,7 @@ static void draw_sprites()
 			}
 			else
 			{
-				if ((gfxstart + width / 2 * height - 1) >= gfx_size)
+				if ((gfxstart + width / 2 * height - 1) >= gfx_size*2)
 					continue;
 
 				konami_draw_16x16_priozoom_tile(base_gfx4 + 2 * gfxstart, 0, 4, color + color_start, 15, x, y, flipx, flipy, width, height, zoom, zoom, primask[pri]);
@@ -1230,7 +1670,7 @@ static INT32 DrvDraw()
 		if (has_zoom == 1) K053936PredrawTiles3(0, DrvRozROM,  8,  8, 0);
 		if (has_zoom == 2) K053936PredrawTiles3(0, DrvRozROM, 16, 16, 0);
 	
-		if (nBurnLayer & 1) K053936Draw(0, (UINT16*)DrvK053936CRAM, (UINT16*)DrvK053936LRAM, (1 << 8) | 0);
+		if (has_zoom && (nBurnLayer & 1)) K053936Draw(0, (UINT16*)DrvK053936CRAM, (UINT16*)DrvK053936LRAM, (1 << 8) | 0);
 	
 		{
 			for (INT32 pri = 3; pri >= 0; pri--)
@@ -1312,6 +1752,66 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+
+static INT32 NoZ80Frame()
+{
+	if (DrvReset) {
+		DrvDoReset();
+	}
+
+	{
+		memset (DrvInputs, 0xff, 4 * sizeof(short));
+
+		for (INT32 i = 0; i < 16; i++)
+		{
+			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
+			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+		}
+	}
+
+	SekNewFrame();
+
+	INT32 nInterleave = 224;
+	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000  / 58 };
+	
+	SekOpen(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		SekRun(nCyclesTotal[0] / nInterleave);
+
+		if ((i % 28) == 26) {
+			requested_int[4] = 1;
+			update_irq_state();
+		}
+
+		if (i == 223)
+		{
+			requested_int[vblank_bit] = 1;
+			requested_int[5] = 1;
+			update_irq_state();
+			SekRun(500);
+			requested_int[5] = 0;
+		}
+
+		if (blit_timer >= 0) {
+			if (blit_timer == 0) {
+				update_irq_state();
+			}
+			blit_timer--;
+		}
+	}
+
+	SekClose();
+	
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
+	
+	return 0;
+}
 
 static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 {
@@ -1443,7 +1943,7 @@ STD_ROM_FN(blzntrnd)
 
 struct BurnDriver BurnDrvBlzntrnd = {
 	"blzntrnd", NULL, NULL, NULL, "1994",
-	"Blazing Tornado\0", NULL, "Human Amusement", "Miscellaneous",
+	"Blazing Tornado\0", "Save states unsupported", "Human Amusement", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, blzntrndRomInfo, blzntrndRomName, NULL, NULL, BlzntrndInputInfo, BlzntrndDIPInfo,
@@ -1489,4 +1989,38 @@ struct BurnDriverD BurnDrvGstrik2 = {
 	NULL, gstrik2RomInfo, gstrik2RomName, NULL, NULL, Gstrik2InputInfo, Gstrik2DIPInfo,
 	gstrik2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	304, 224, 4, 3
+};
+
+
+// Sky Alert
+
+static struct BurnRomInfo skyalertRomDesc[] = {
+	{ "sa_c_09.bin",		0x20000, 0x6f14d9ae, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sa_c_10.bin",		0x20000, 0xf10bb216, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sa_b_12.bin",		0x20000, 0xf358175d, 2 | BRF_PRG | BRF_ESS }, //  2 UPD7810
+
+	{ "sa_a_02.bin",		0x40000, 0xf4f81d41, 3 | BRF_GRA },           //  3 Sprites
+	{ "sa_a_04.bin",		0x40000, 0x7d071e7e, 3 | BRF_GRA },           //  4
+	{ "sa_a_06.bin",		0x40000, 0x77e4d5e1, 3 | BRF_GRA },           //  5
+	{ "sa_a_08.bin",		0x40000, 0xf2a5a093, 3 | BRF_GRA },           //  6
+	{ "sa_a_01.bin",		0x40000, 0x41ec6491, 3 | BRF_GRA },           //  7
+	{ "sa_a_03.bin",		0x40000, 0xe0dff10d, 3 | BRF_GRA },           //  8
+	{ "sa_a_05.bin",		0x40000, 0x62169d31, 3 | BRF_GRA },           //  9
+	{ "sa_a_07.bin",		0x40000, 0xa6f5966f, 3 | BRF_GRA },           // 10
+
+	{ "sa_a_11.bin",		0x20000, 0x04842a60, 4 | BRF_SND },           // 11 MSM6295 Samples
+};
+
+STD_ROM_PICK(skyalert)
+STD_ROM_FN(skyalert)
+
+struct BurnDriver BurnDrvSkyalert = {
+	"skyalert", NULL, NULL, NULL, "1992",
+	"Sky Alert\0", "No sound or save states", "Metro", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, skyalertRomInfo, skyalertRomName, NULL, NULL, SkyalertInputInfo, SkyalertDIPInfo,
+	skyalertInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	224, 360, 3, 4
 };

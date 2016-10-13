@@ -154,12 +154,13 @@ static UINT8 BiosmodeJapan = 0;// DIP setting.
 // Game-based kludges
 static INT32 VBlankKludge = 0; // For VoidRunner (joystick selection hangs)
 static INT32 SwapRamslot = 0; // For Toshiba-EMI's Break Out!
+static INT32 SwapButton2 = 0; // Swaps Joy button#2 with 'm', for Xenon and Astro Marine Corps
 
 static INT32 CASMode = 0;      // Using .cas file?
-static INT32 CASPos = 0;
+static INT32 CASPos = 0;       // Internal tape position counter
 static INT32 CASFrameCounter = 0; // for autoloading
 
-static INT32 BIOSSLOT = 0;
+static INT32 BIOSSLOT = 0;      // Machine slot configuration
 static INT32 CARTSLOTA = 0;
 static INT32 CARTSLOTB = 0;
 static INT32 RAMSLOT = 0;
@@ -1368,6 +1369,7 @@ static INT32 DrvExit()
 	CASMode = 0;
 	VBlankKludge = 0;
 	SwapRamslot = 0;
+	SwapButton2 = 0;
 
 #ifdef BUILD_WIN32
 	cBurnerKeyCallback = NULL;
@@ -1388,6 +1390,19 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		}
+
+		if (SwapButton2)
+		{ // Kludge for Xenon and Astro Marine Corps where button #2 is the 'm' key.
+			static INT32 lastM = 0;
+			if (DrvJoy1[5]) {
+				keyInput('m', DrvJoy1[5]);
+			} else {
+				if (lastM) { // only turn 'm' off once after Button2 is unpressed.
+					keyInput('m', DrvJoy1[5]);
+				}
+			}
+			lastM = DrvJoy1[5];
 		}
 
 		SwapJoyports = (DrvDips[0] & 0x20) ? 1 : 0;
@@ -1588,6 +1603,12 @@ struct BurnDriver BurnDrvmsx_msx = {
 	272, 228, 4, 3
 };
 
+static INT32 SwapButton2DrvInit()
+{
+	SwapButton2 = 1;
+	return DrvInit();
+}
+
 static INT32 SwapRamDrvInit()
 {
 	SwapRamslot = 1;
@@ -1604,6 +1625,14 @@ static INT32 CasBloadDrvInit()
 {
 	msx_basicmode = 1;
 	CASMode = CAS_BLOAD;
+	return DrvInit();
+}
+
+static INT32 CasRunSwapButton2DrvInit()
+{
+	msx_basicmode = 1;
+	SwapButton2 = 1;
+	CASMode = CAS_RUN;
 	return DrvInit();
 }
 
@@ -3058,11 +3087,11 @@ STD_ROM_FN(MSX_amc)
 
 struct BurnDriver BurnDrvMSX_amc = {
 	"msx_amc", NULL, "msx_msx", NULL, "1989",
-	"Astro Marine Corps (Spa)\0", "Uses joyport #2", "Dinamic Software?", "MSX",
+	"Astro Marine Corps (Spa)\0", "Uses joyport #2. Press 'M' for Grenade.", "Dinamic Software?", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII16, GBF_MISC, 0,
 	MSXGetZipName, MSX_amcRomInfo, MSX_amcRomName, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	SwapButton2DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -19596,10 +19625,10 @@ struct BurnDriver BurnDrvMSX_dooly = {
 	272, 228, 4, 3
 };
 
-// Xenon
+// Xenon (Spa)
 
 static struct BurnRomInfo MSX_xenonRomDesc[] = {
-	{ "xenon.rom",	0x020000, 0xb5586fc4, BRF_PRG | BRF_ESS },
+	{ "xenon (1988)(dro soft)(es)[run'cas-'].cas",	0x12332, 0x4ad26b8f, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_xenon, MSX_xenon, msx_msx)
@@ -19607,11 +19636,11 @@ STD_ROM_FN(MSX_xenon)
 
 struct BurnDriver BurnDrvMSX_xenon = {
 	"msx_xenon", NULL, "msx_msx", NULL, "1988",
-	"Xenon\0", "Uses joyport #2 and M key to switch between land/air vehicle.", "Dro Soft", "MSX",
+	"Xenon (Spa)\0", NULL, "Dro Soft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_xenonRomInfo, MSX_xenonRomName, NULL, NULL, MSXInputInfo, MSXEuropeJoyport2DIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	CasRunSwapButton2DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 
@@ -23326,3 +23355,80 @@ struct BurnDriver BurnDrvMSX_007tld = {
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Inspecteur Z
+
+static struct BurnRomInfo MSX_inspecteurzRomDesc[] = {
+	{ "Buru to Marty Kikiippatsu. Inspecteur Z (1986)(HAL Laboratory)(JP).rom",	0x08000, 0x57a1bfb3, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_inspecteurz, MSX_inspecteurz, msx_msx)
+STD_ROM_FN(MSX_inspecteurz)
+
+struct BurnDriver BurnDrvMSX_inspecteurz = {
+	"msx_inspecteurz", NULL, "msx_msx", NULL, "1986",
+	"Buru to Marty Kikiippatsu. Inspecteur Z\0", NULL, "HAL Laboratory", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_inspecteurzRomInfo, MSX_inspecteurzRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Betiled!
+
+static struct BurnRomInfo MSX_betiledRomDesc[] = {
+	{ "BeTiled!.rom",	0x0c000, 0x4f89a784, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_betiled, MSX_betiled, msx_msx)
+STD_ROM_FN(MSX_betiled)
+
+struct BurnDriver BurnDrvMSX_betiled = {
+	"msx_betiled", NULL, "msx_msx", NULL, "2007",
+	"Betiled!\0", NULL, "CEZ GS", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_betiledRomInfo, MSX_betiledRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Lotus F3
+
+static struct BurnRomInfo MSX_lotusf3RomDesc[] = {
+	{ "lotusf3.rom",	0x20000, 0x565022a4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_lotusf3, MSX_lotusf3, msx_msx)
+STD_ROM_FN(MSX_lotusf3)
+
+struct BurnDriver BurnDrvMSX_lotusf3 = {
+	"msx_lotusf3", NULL, "msx_msx", NULL, "2007",
+	"Lotus F3\0", NULL, "dvik & joyrex", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_lotusf3RomInfo, MSX_lotusf3RomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Mr. Mole
+
+static struct BurnRomInfo MSX_mrmoleRomDesc[] = {
+	{ "NLKMSX003EN_MrMole_KONAMI5.rom",	0x20000, 0xaa6f2968, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mrmole, MSX_mrmole, msx_msx)
+STD_ROM_FN(MSX_mrmole)
+
+struct BurnDriver BurnDrvMSX_mrmole = {
+	"msx_mrmole", NULL, "msx_msx", NULL, "2007",
+	"Mr. Mole\0", NULL, "Nerlaska Studio", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_KONAMI_SCC, GBF_MISC, 0,
+	MSXGetZipName, MSX_mrmoleRomInfo, MSX_mrmoleRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

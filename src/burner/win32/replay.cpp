@@ -25,6 +25,10 @@ TCHAR szCurrentMovieFilename[MAX_PATH] = _T("");
 UINT32 nTotalFrames = 0;
 UINT32 nReplayCurrentFrame;
 
+// If a driver has external data that needs to be recorded every frame.
+INT32 nReplayExternalDataCount = 0;
+UINT8 *ReplayExternalData = NULL;
+
 #define MOVIE_FLAG_FROM_POWERON (1<<1)
 
 const UINT8 nMovieVersion = 0x01;
@@ -70,8 +74,13 @@ INT32 RecordInput()
 			}
 		}
 	}
-
 	EncodeBuffer(0xFF);
+
+	if (nReplayExternalDataCount && ReplayExternalData) {
+		for (INT32 i = 0; i < nReplayExternalDataCount; i++) {
+			EncodeBuffer(ReplayExternalData[i]);
+		}
+	}
 
 	if (bReplayFrameCounterDisplay) {
 		wchar_t framestring[15];
@@ -245,6 +254,12 @@ INT32 ReplayInput()
 			}
 		} else {
 			DecodeBuffer();
+		}
+	}
+
+	if (nReplayExternalDataCount && ReplayExternalData) {
+		for (INT32 i = 0; i < nReplayExternalDataCount; i++) {
+			ReplayExternalData[i] = DecodeBuffer();
 		}
 	}
 

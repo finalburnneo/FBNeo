@@ -15,6 +15,13 @@
 #include "k051649.h"
 #ifdef BUILD_WIN32
 extern void (*cBurnerKeyCallback)(UINT8 code, UINT8 KeyType, UINT8 down);
+extern INT32 nReplayExternalDataCount;
+extern UINT8 *ReplayExternalData;
+#endif
+
+#ifndef BUILD_WIN32
+INT32 nReplayExternalDataCount = 0;
+UINT8 *ReplayExternalData = NULL;
 #endif
 
 extern "C" {
@@ -1323,6 +1330,8 @@ static INT32 DrvInit()
 	}
 #ifdef BUILD_WIN32
 	cBurnerKeyCallback = msxKeyCallback;
+	nReplayExternalDataCount = sizeof(keyRows);
+	ReplayExternalData = &keyRows[0];
 #endif
 	BurnSetRefreshRate((Hertz60) ? 60.0 : 50.0);
 
@@ -1373,6 +1382,8 @@ static INT32 DrvExit()
 
 #ifdef BUILD_WIN32
 	cBurnerKeyCallback = NULL;
+	nReplayExternalDataCount = 0;
+	ReplayExternalData = NULL;
 #endif
 	return 0;
 }
@@ -18932,7 +18943,7 @@ STD_ROM_FN(MSX_pengmind)
 
 struct BurnDriver BurnDrvMSX_pengmind = {
 	"msx_pengmind", NULL, "msx_msx", NULL, "2007",
-	"Penguin Mind\0", NULL, "MSX Cafe", "MSX",
+	"Penguin Mind\0", "Keyboard control only.", "MSX Cafe", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_pengmindRomInfo, MSX_pengmindRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,

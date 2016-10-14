@@ -1264,6 +1264,35 @@ static struct BurnRomInfo TmntjRomDesc[] = {
 STD_ROM_PICK(Tmntj)
 STD_ROM_FN(Tmntj)
 
+static struct BurnRomInfo TmntaRomDesc[] = {
+	{ "tmnt j17.bin",       0x020000, 0x00819687, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "tmnt k17.bin",       0x020000, 0x6930e085, BRF_ESS | BRF_PRG }, //  1
+	{ "tmnt j15.bin",       0x010000, 0xfd1e2e01, BRF_ESS | BRF_PRG }, //  2
+	{ "tmnt k15.bin",       0x010000, 0xb01eea79, BRF_ESS | BRF_PRG }, //  3
+	
+	{ "963e20.g13",         0x008000, 0x1692a6d6, BRF_ESS | BRF_PRG }, //  4	Z80 Program 
+	
+	{ "963a28.h27",         0x080000, 0xdb4769a8, BRF_GRA },	       //  5	Tiles
+	{ "963a29.k27",         0x080000, 0x8069cd2e, BRF_GRA },	       //  6
+	
+	{ "963a17.h4",          0x080000, 0xb5239a44, BRF_GRA },	       //  7	Sprites
+	{ "963a18.h6",          0x080000, 0xdd51adef, BRF_GRA },	       //  8
+	{ "963a15.k4",          0x080000, 0x1f324eed, BRF_GRA },	       //  9
+	{ "963a16.k6",          0x080000, 0xd4bd9984, BRF_GRA },	       // 10
+	
+	{ "963a30.g7",          0x000100, 0xabd82680, BRF_GRA },	       // 11	PROMs
+	{ "963a31.g19",         0x000100, 0xf8004a1c, BRF_GRA },	       // 12
+	
+	{ "963a26.c13",         0x020000, 0xe2ac3063, BRF_SND },	       // 13	K007232 Samples
+	
+	{ "963a27.d18",         0x020000, 0x2dfd674b, BRF_SND },	       // 14	UP7759C Samples
+	
+	{ "963a25.d5",          0x080000, 0xfca078c7, BRF_SND },	       // 15	Title Music Sample
+};
+
+STD_ROM_PICK(Tmnta)
+STD_ROM_FN(Tmnta)
+
 static struct BurnRomInfo Tmht2pRomDesc[] = {
 	{ "963-u23.j17",        0x020000, 0x58bec748, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "963-u24.k17",        0x020000, 0xdce87c8d, BRF_ESS | BRF_PRG }, //  1
@@ -6458,6 +6487,16 @@ struct BurnDriver BurnDrvTmntj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
 	NULL, TmntjRomInfo, TmntjRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
+	TmntInit, TmntExit, TmntFrame, NULL, TmntScan,
+	NULL, 0x400, 304, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvTmnta = {
+	"tmnta", "tmnt", NULL, NULL, "1990",
+	"Teenage Mutant Ninja Turtles (Asia 4 Players, version ?)\0", NULL, "Konami", "GX963",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_KONAMI_68K_Z80, GBF_SCRFIGHT, 0,
+	NULL, TmntaRomInfo, TmntaRomName, NULL, NULL, TmntInputInfo, TmntDIPInfo,
 	TmntInit, TmntExit, TmntFrame, NULL, TmntScan,
 	NULL, 0x400, 304, 224, 4, 3
 };

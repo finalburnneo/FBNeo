@@ -629,7 +629,7 @@ int ConfigAppSave()
 	VAR(bBurnUseBlend);
 	
 #ifdef INCLUDE_AVI_RECORDING
-	_ftprintf(h, _T("\n// If non-zero, enable 3x pixel output for the AVI writer.\n"));
+	_ftprintf(h, _T("\n// If non-zero, enable 1x - 3x pixel output for the AVI writer.\n"));
 	VAR(nAvi3x);
 #endif
 	

@@ -23454,7 +23454,7 @@ STD_ROM_FN(MSX_alteredbeast)
 
 struct BurnDriver BurnDrvMSX_alteredbeast = {
 	"msx_alteredbeast", NULL, "msx_msx", NULL, "1988",
-	"Altered Beast\0", NULL, "Activision / Amusement Factory", "MSX",
+	"Altered Beast\0", "Keyboard control only.", "Activision / Amusement Factory", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_alteredbeastRomInfo, MSX_alteredbeastRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,

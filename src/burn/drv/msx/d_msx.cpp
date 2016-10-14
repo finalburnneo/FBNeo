@@ -23443,3 +23443,117 @@ struct BurnDriver BurnDrvMSX_mrmole = {
 	272, 228, 4, 3
 };
 
+// Altered Beast
+
+static struct BurnRomInfo MSX_alteredbeastRomDesc[] = {
+	{ "alteredbeast.rom",	0x40000, 0xbb5cd0f1, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_alteredbeast, MSX_alteredbeast, msx_msx)
+STD_ROM_FN(MSX_alteredbeast)
+
+struct BurnDriver BurnDrvMSX_alteredbeast = {
+	"msx_alteredbeast", NULL, "msx_msx", NULL, "1988",
+	"Altered Beast\0", NULL, "Activision / Amusement Factory", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_alteredbeastRomInfo, MSX_alteredbeastRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Bold
+
+static struct BurnRomInfo MSX_boldRomDesc[] = {
+	{ "bold.rom",	0x20000, 0x00d02aa4, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_bold, MSX_bold, msx_msx)
+STD_ROM_FN(MSX_bold)
+
+struct BurnDriver BurnDrvMSX_bold = {
+	"msx_bold", NULL, "msx_msx", NULL, "2009",
+	"Bold\0", NULL, "dvik & joyrex", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_boldRomInfo, MSX_boldRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// MSX Unleashed
+
+static struct BurnRomInfo MSX_unleashedRomDesc[] = {
+	{ "unleashed.rom",	0x40000, 0x10f86aa9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_unleashed, MSX_unleashed, msx_msx)
+STD_ROM_FN(MSX_unleashed)
+
+struct BurnDriver BurnDrvMSX_unleashed = {
+	"msx_unleashed", NULL, "msx_msx", NULL, "2006",
+	"MSX Unleashed\0", NULL, "dvik & joyrex", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
+	MSXGetZipName, MSX_unleashedRomInfo, MSX_unleashedRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Invasion of the big pixels
+
+static struct BurnRomInfo MSX_invasionRomDesc[] = {
+	{ "invasion.rom",	0x20000, 0x261c87aa, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_invasion, MSX_invasion, msx_msx)
+STD_ROM_FN(MSX_invasion)
+
+struct BurnDriver BurnDrvMSX_invasion = {
+	"msx_invasion", NULL, "msx_msx", NULL, "2008",
+	"Invasion of the big pixels\0", NULL, "noice", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_invasionRomInfo, MSX_invasionRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Vesikauhu
+
+static struct BurnRomInfo MSX_vesikauhuRomDesc[] = {
+	{ "Vesikauhu.rom",	0x40000, 0x7392b7c7, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_vesikauhu, MSX_vesikauhu, msx_msx)
+STD_ROM_FN(MSX_vesikauhu)
+
+struct BurnDriver BurnDrvMSX_vesikauhu = {
+	"msx_vesikauhu", NULL, "msx_msx", NULL, "2000",
+	"Vesikauhu\0", NULL, "Bandwagon", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_vesikauhuRomInfo, MSX_vesikauhuRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Riyadh
+
+static struct BurnRomInfo MSX_riyadhRomDesc[] = {
+	{ "riyadh.rom",	0x40000, 0x3e207332, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_riyadh, MSX_riyadh, msx_msx)
+STD_ROM_FN(MSX_riyadh)
+
+struct BurnDriver BurnDrvMSX_riyadh = {
+	"msx_riyadh", NULL, "msx_msx", NULL, "2001",
+	"Riyadh\0", NULL, "Bandwagon", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_riyadhRomInfo, MSX_riyadhRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

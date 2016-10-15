@@ -2748,10 +2748,10 @@ struct BurnDriver BurnDrvMSX_aroida = {
 };
 
 
-// American Truck (Jpn, Alt)
+// American Truck (Jpn)
 
 static struct BurnRomInfo MSX_amtruckaRomDesc[] = {
-	{ "american truck (japan) (alt 1).rom",	0x08000, 0x1dd9b4d9, BRF_PRG | BRF_ESS },
+	{ "american truck (japan).rom",	0x08000, 0x1dd9b4d9, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_amtrucka, MSX_amtrucka, msx_msx)
@@ -2759,7 +2759,7 @@ STD_ROM_FN(MSX_amtrucka)
 
 struct BurnDriver BurnDrvMSX_amtrucka = {
 	"msx_amtrucka", NULL, "msx_msx", NULL, "1985",
-	"American Truck (Jpn, Alt)\0", NULL, "Nihon Telenet", "MSX",
+	"American Truck (Jpn)\0", NULL, "Nihon Telenet", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_amtruckaRomInfo, MSX_amtruckaRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,

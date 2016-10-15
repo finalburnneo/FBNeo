@@ -1184,7 +1184,7 @@ static UINT8 __fastcall msx_read_port(UINT16 port)
 
 static UINT8 msx_ppi8255_portB_read()
 {
-	if (ppiC_row>11) bprintf(0, _T("row > 11! %X.\n"), ppiC_row);
+	if (ppiC_row > 11) return 0xff;
 	return keyRowGet(ppiC_row);
 }
 

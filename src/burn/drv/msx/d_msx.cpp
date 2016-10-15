@@ -15025,26 +15025,6 @@ struct BurnDriver BurnDrvMSX_skicomm = {
 };
 
 
-// Ski Command (Jpn, Alt)
-
-static struct BurnRomInfo MSX_skicommaRomDesc[] = {
-	{ "casio ski command (japan) (alt 1).rom",	0x04000, 0xedb91850, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_skicomma, MSX_skicomma, msx_msx)
-STD_ROM_FN(MSX_skicomma)
-
-struct BurnDriver BurnDrvMSX_skicomma = {
-	"msx_skicomma", "msx_skicomm", "msx_msx", NULL, "1985",
-	"Ski Command (Jpn, Alt)\0", NULL, "Casio", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_skicommaRomInfo, MSX_skicommaRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
 // Ski Command (Kor, Aproman)
 
 static struct BurnRomInfo MSX_skicommk1RomDesc[] = {
@@ -15440,26 +15420,6 @@ struct BurnDriver BurnDrvMSX_spider = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_spiderRomInfo, MSX_spiderRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
-
-// Square Dancer (Jpn)
-
-static struct BurnRomInfo MSX_squardanRomDesc[] = {
-	{ "square dancer (japan).rom",	0x04000, 0xdd5cf5c8, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_squardan, MSX_squardan, msx_msx)
-STD_ROM_FN(MSX_squardan)
-
-struct BurnDriver BurnDrvMSX_squardan = {
-	"msx_squardan", NULL, "msx_msx", NULL, "1984",
-	"Square Dancer (Jpn)\0", NULL, "Toshiba EMI", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_squardanRomInfo, MSX_squardanRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

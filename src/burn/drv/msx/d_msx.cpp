@@ -20768,7 +20768,7 @@ STD_ROM_FN(MSX_amurisus)
 
 struct BurnDriver BurnDrvMSX_amurisus = {
 	"msx_amurisus", NULL, "msx_msx", NULL, "2013",
-	"Amurisus\0", NULL, "Lieves!Tuore", "MSX",
+	"Amurisus (demo)\0", NULL, "Lieves!Tuore", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_amurisusRomInfo, MSX_amurisusRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -21403,25 +21403,6 @@ struct BurnDriver BurnDrvMSX_breakoutt = {
 	272, 228, 4, 3
 };
 
-// Rocket Roger (Euro)
-
-static struct BurnRomInfo MSX_rrogerRomDesc[] = {
-	{ "rocket roger (1987)(alligata software)(gb)[run'cas-'].cas",	0x0874f, 0x96fff98e, BRF_PRG | BRF_ESS },
-};
-
-STDROMPICKEXT(MSX_rroger, MSX_rroger, msx_msx)
-STD_ROM_FN(MSX_rroger)
-
-struct BurnDriver BurnDrvMSX_rroger = {
-	"msx_rroger", NULL, "msx_msx", NULL, "1987",
-	"Rocket Roger (Euro)\0", NULL, "Alligata Software", "MSX",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_rrogerRomInfo, MSX_rrogerRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
-	272, 228, 4, 3
-};
-
 // Roboy (Euro)
 
 static struct BurnRomInfo MSX_roboyRomDesc[] = {
@@ -21440,7 +21421,6 @@ struct BurnDriver BurnDrvMSX_roboy = {
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
-
 
 // Rock 'n Roller (Spa)
 
@@ -23473,7 +23453,7 @@ STD_ROM_FN(MSX_bold)
 
 struct BurnDriver BurnDrvMSX_bold = {
 	"msx_bold", NULL, "msx_msx", NULL, "2009",
-	"Bold\0", NULL, "dvik & joyrex", "MSX",
+	"Bold (demo)\0", NULL, "dvik & joyrex", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_boldRomInfo, MSX_boldRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -23492,7 +23472,7 @@ STD_ROM_FN(MSX_unleashed)
 
 struct BurnDriver BurnDrvMSX_unleashed = {
 	"msx_unleashed", NULL, "msx_msx", NULL, "2006",
-	"MSX Unleashed\0", NULL, "dvik & joyrex", "MSX",
+	"MSX Unleashed (demo)\0", NULL, "dvik & joyrex", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX | HARDWARE_MSX_MAPPER_ASCII8, GBF_MISC, 0,
 	MSXGetZipName, MSX_unleashedRomInfo, MSX_unleashedRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -23511,7 +23491,7 @@ STD_ROM_FN(MSX_invasion)
 
 struct BurnDriver BurnDrvMSX_invasion = {
 	"msx_invasion", NULL, "msx_msx", NULL, "2008",
-	"Invasion of the big pixels\0", NULL, "noice", "MSX",
+	"Invasion of the big pixels (demo)\0", NULL, "noice", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_invasionRomInfo, MSX_invasionRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -23530,7 +23510,7 @@ STD_ROM_FN(MSX_vesikauhu)
 
 struct BurnDriver BurnDrvMSX_vesikauhu = {
 	"msx_vesikauhu", NULL, "msx_msx", NULL, "2000",
-	"Vesikauhu\0", NULL, "Bandwagon", "MSX",
+	"Vesikauhu (demo)\0", NULL, "Bandwagon", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_vesikauhuRomInfo, MSX_vesikauhuRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -23549,10 +23529,48 @@ STD_ROM_FN(MSX_riyadh)
 
 struct BurnDriver BurnDrvMSX_riyadh = {
 	"msx_riyadh", NULL, "msx_msx", NULL, "2001",
-	"Riyadh\0", NULL, "Bandwagon", "MSX",
+	"Riyadh (demo)\0", NULL, "Bandwagon", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_riyadhRomInfo, MSX_riyadhRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Montana John
+
+static struct BurnRomInfo MSX_montanajohnRomDesc[] = {
+	{ "MJTT.ROM",	0x20000, 0x7b5e126f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_montanajohn, MSX_montanajohn, msx_msx)
+STD_ROM_FN(MSX_montanajohn)
+
+struct BurnDriver BurnDrvMSX_montanajohn = {
+	"msx_montanajohn", NULL, "msx_msx", NULL, "2008",
+	"Montana John and the Templar's Treasure\0", NULL, "Infinite", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_montanajohnRomInfo, MSX_montanajohnRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Atsarias
+
+static struct BurnRomInfo MSX_atsariasRomDesc[] = {
+	{ "atsarias.rom",	0x10000, 0xe7e245de, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_atsarias, MSX_atsarias, msx_msx)
+STD_ROM_FN(MSX_atsarias)
+
+struct BurnDriver BurnDrvMSX_atsarias = {
+	"msx_atsarias", NULL, "msx_msx", NULL, "2013",
+	"Atsarias (demo)\0", NULL, "Lieves!Tuore", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_atsariasRomInfo, MSX_atsariasRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

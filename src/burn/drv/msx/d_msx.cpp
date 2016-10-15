@@ -162,6 +162,7 @@ static UINT8 BiosmodeJapan = 0;// DIP setting.
 static INT32 VBlankKludge = 0; // For VoidRunner (joystick selection hangs)
 static INT32 SwapRamslot = 0; // For Toshiba-EMI's Break Out!
 static INT32 SwapButton2 = 0; // Swaps Joy button#2 with 'm', for Xenon and Astro Marine Corps
+static INT32 SwapSlash = 0; // For Square Dancer, swaps the / key with the Japanese Underscore key
 
 static INT32 CASMode = 0;      // Using .cas file?
 static INT32 CASPos = 0;       // Internal tape position counter
@@ -244,6 +245,8 @@ static INT32 charMatrix[][3] = {
 	{/*VK_F5,		  */0xf5,  7, 1},
 	{/*VK_F6, 		  */0xf6,  7, 6},
 
+	{/*J-SPADE        */0xe0,  2, 5},
+
 	{/*VK_SHIFT       */0x10,  6, 0},
 	{/*VK_CONTROL     */0x11,  6, 1},
 	{/*VK_TAB         */0x09,  7, 3},
@@ -294,6 +297,8 @@ void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 	static INT32 lastshifted = 0;
 
 	//bprintf(0, _T(" %c:%S,"), code, (down==1)?"DOWN":"UP");
+	if (SwapSlash && code == '/') code = 0xe0;
+
 	if (lastshifted) memset(&keyRows, 0, sizeof(keyRows));
 	keyInput(/*VK_SHIFT*/'\x10', (KeyType & 0xf0));
 	keyInput(code, down);
@@ -306,9 +311,9 @@ void msxKeyCallback(UINT8 code, UINT8 KeyType, UINT8 down)
 
 static const char *ROMNames[MAXMAPPERS + 1] =
 { 
-  "KonamiGeneric 8k\0","KonamiGeneric 16k\0","Konami-SCC\0",
-  "Konami\0","ASCII 8k\0","ASCII 16k\0",
-  "Dooly\0","Cross Blaim\0","R-Type\0", "???\0"
+  "KonamiGeneric 8k\0", "KonamiGeneric 16k\0", "Konami-SCC\0",
+  "Konami\0", "ASCII 8k\0", "ASCII 16k\0",
+  "Dooly\0", "Cross Blaim\0", "R-Type\0", "???\0"
 };
 
 #define CAS_BLOAD 1
@@ -1179,6 +1184,7 @@ static UINT8 __fastcall msx_read_port(UINT16 port)
 
 static UINT8 msx_ppi8255_portB_read()
 {
+	if (ppiC_row>11) bprintf(0, _T("row > 11! %X.\n"), ppiC_row);
 	return keyRowGet(ppiC_row);
 }
 
@@ -1379,6 +1385,7 @@ static INT32 DrvExit()
 	VBlankKludge = 0;
 	SwapRamslot = 0;
 	SwapButton2 = 0;
+	SwapSlash = 0;
 
 #ifdef BUILD_WIN32
 	cBurnerKeyCallback = NULL;
@@ -1613,6 +1620,12 @@ struct BurnDriver BurnDrvmsx_msx = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
 };
+
+static INT32 SwapSlashDrvInit()
+{
+	SwapSlash = 1;
+	return DrvInit();
+}
 
 static INT32 SwapButton2DrvInit()
 {
@@ -15421,6 +15434,26 @@ struct BurnDriver BurnDrvMSX_spider = {
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_spiderRomInfo, MSX_spiderRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+
+// Square Dancer (Jpn)
+
+static struct BurnRomInfo MSX_squardanRomDesc[] = {
+	{ "square dancer (japan).rom",	0x04000, 0xdd5cf5c8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_squardan, MSX_squardan, msx_msx)
+STD_ROM_FN(MSX_squardan)
+
+struct BurnDriver BurnDrvMSX_squardan = {
+	"msx_squardan", NULL, "msx_msx", NULL, "1984",
+	"Square Dancer (Jpn)\0", "Use keys 'Z', '/' and Enter", "Toshiba EMI", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_squardanRomInfo, MSX_squardanRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	SwapSlashDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

@@ -1067,7 +1067,7 @@ static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 static INT32 ReplayDialog()
 {
-	return DialogBox(hAppInst, MAKEINTRESOURCE(IDD_REPLAYINP), hScrnWnd, ReplayDialogProc);
+	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_REPLAYINP), hScrnWnd, (DLGPROC)ReplayDialogProc);
 }
 
 static INT32 VerifyRecordingAccessMode(wchar_t* szFilename, INT32 mode)
@@ -1165,5 +1165,5 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 static INT32 RecordDialog()
 {
-	return DialogBox(hAppInst, MAKEINTRESOURCE(IDD_RECORDINP), hScrnWnd, RecordDialogProc);
+	return FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_RECORDINP), hScrnWnd, (DLGPROC)RecordDialogProc);
 }

@@ -5200,9 +5200,9 @@ STD_ROM_FN(pce_soldblad)
 
 struct BurnDriver BurnDrvpce_soldblad = {
 	"pce_soldblad", NULL, NULL, NULL, "1992",
-	"Soldier Blade\0", NULL, "Hudson", "PC Engine",
+	"Soldier Blade\0", "Hangs at first boss", "Hudson", "PC Engine",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	0, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
 	PceGetZipName, pce_soldbladRomInfo, pce_soldbladRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
@@ -7960,9 +7960,9 @@ STD_ROM_FN(tg_soldblad)
 
 struct BurnDriver BurnDrvtg_soldblad = {
 	"tg_soldblad", NULL, NULL, NULL, "1992",
-	"Soldier Blade\0", NULL, "TTI", "TurboGrafx 16",
+	"Soldier Blade\0", "Hangs at first boss", "TTI", "TurboGrafx 16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
+	0, 5, HARDWARE_PCENGINE_TG16, GBF_MISC, 0,
 	TgGetZipName, tg_soldbladRomInfo, tg_soldbladRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
 	TG16Init, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3

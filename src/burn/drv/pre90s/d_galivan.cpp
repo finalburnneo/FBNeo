@@ -906,9 +906,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Cosmo Police Galivan (12/26/1985)
 
 static struct BurnRomInfo galivanRomDesc[] = {
-	{ "1.1b",		0x8000, 0x1e66b3f8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "2.3b",		0x4000, 0xa45964f1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gv3.4b",		0x4000, 0x82f0c5e6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.1b",			0x8000, 0x1e66b3f8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.3b",			0x4000, 0xa45964f1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gv3.4b",			0x4000, 0x82f0c5e6, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "gv11.14b",		0x4000, 0x05f1a0e3, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 	{ "gv12.15b",		0x8000, 0x5b7a0d6d, 2 | BRF_PRG | BRF_ESS }, //  4
@@ -942,7 +942,7 @@ static INT32 galivanInit()
 	return DrvInit(0);
 }
 
-struct BurnDriver BurnDrvGalivan = {
+struct BurnDriverD BurnDrvGalivan = {
 	"galivan", NULL, NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/26/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -956,9 +956,9 @@ struct BurnDriver BurnDrvGalivan = {
 // Cosmo Police Galivan (12/16/1985)
 
 static struct BurnRomInfo galivan2RomDesc[] = {
-	{ "gv1.1b",		0x8000, 0x5e480bfc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "gv2.3b",		0x4000, 0x0d1b3538, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gv3.4b",		0x4000, 0x82f0c5e6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gv1.1b",			0x8000, 0x5e480bfc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "gv2.3b",			0x4000, 0x0d1b3538, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gv3.4b",			0x4000, 0x82f0c5e6, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "gv11.14b",		0x4000, 0x05f1a0e3, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 	{ "gv12.15b",		0x8000, 0x5b7a0d6d, 2 | BRF_PRG | BRF_ESS }, //  4
@@ -987,7 +987,7 @@ static struct BurnRomInfo galivan2RomDesc[] = {
 STD_ROM_PICK(galivan2)
 STD_ROM_FN(galivan2)
 
-struct BurnDriver BurnDrvGalivan2 = {
+struct BurnDriverD BurnDrvGalivan2 = {
 	"galivan2", "galivan", NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/16/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1001,9 +1001,9 @@ struct BurnDriver BurnDrvGalivan2 = {
 // Cosmo Police Galivan (12/11/1985)
 
 static struct BurnRomInfo galivan3RomDesc[] = {
-	{ "e-1.1b",		0x8000, 0xd8cc72b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "e-2.3b",		0x4000, 0x9e5b3157, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gv3.4b",		0x4000, 0x82f0c5e6, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "e-1.1b",			0x8000, 0xd8cc72b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "e-2.3b",			0x4000, 0x9e5b3157, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gv3.4b",			0x4000, 0x82f0c5e6, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "gv11.14b",		0x4000, 0x05f1a0e3, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 	{ "gv12.15b",		0x8000, 0x5b7a0d6d, 2 | BRF_PRG | BRF_ESS }, //  4
@@ -1032,7 +1032,7 @@ static struct BurnRomInfo galivan3RomDesc[] = {
 STD_ROM_PICK(galivan3)
 STD_ROM_FN(galivan3)
 
-struct BurnDriver BurnDrvGalivan3 = {
+struct BurnDriverD BurnDrvGalivan3 = {
 	"galivan3", "galivan", NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/11/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1046,25 +1046,25 @@ struct BurnDriver BurnDrvGalivan3 = {
 // Ufo Robo Dangar (4/07/1987)
 
 static struct BurnRomInfo dangarRomDesc[] = {
-	{ "8.1b",		0x8000, 0xfe4a3fd6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "9.3b",		0x4000, 0x809d280f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "10.4b",		0x4000, 0x99a3591b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "8.1b",			0x8000, 0xfe4a3fd6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "9.3b",			0x4000, 0x809d280f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "10.4b",			0x4000, 0x99a3591b, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "13.b14",		0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "14.b15",		0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "13.b14",			0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "14.b15",			0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "5.13d",		0x4000, 0x40cb378a, 3 | BRF_GRA },           //  5 Characters
+	{ "5.13d",			0x4000, 0x40cb378a, 3 | BRF_GRA },           //  5 Characters
 
-	{ "1.14f",		0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "2.15f",		0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
-	{ "3.17f",		0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
-	{ "4.19f",		0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
+	{ "1.14f",			0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "2.15f",			0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
+	{ "3.17f",			0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
+	{ "4.19f",			0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
 
-	{ "12.f4",		0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
-	{ "11.f1",		0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
+	{ "12.f4",			0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
+	{ "11.f1",			0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
 
-	{ "7.19d",		0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
-	{ "6.17d",		0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
+	{ "7.19d",			0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
+	{ "6.17d",			0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
 
 	{ "82s129.9f",		0x0100, 0xb29f6a07, 7 | BRF_GRA },           // 14 Color data
 	{ "82s129.10f",		0x0100, 0xc6de5ecb, 7 | BRF_GRA },           // 15
@@ -1077,7 +1077,7 @@ static struct BurnRomInfo dangarRomDesc[] = {
 STD_ROM_PICK(dangar)
 STD_ROM_FN(dangar)
 
-struct BurnDriver BurnDrvDangar = {
+struct BurnDriverD BurnDrvDangar = {
 	"dangar", NULL, NULL, NULL, "1986",
 	"Ufo Robo Dangar (4/07/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1091,25 +1091,25 @@ struct BurnDriver BurnDrvDangar = {
 // Ufo Robo Dangar (12/1/1986)
 
 static struct BurnRomInfo dangaraRomDesc[] = {
-	{ "8.1b",		0x8000, 0xe52638f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "9.3b",		0x4000, 0x809d280f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "10.4b",		0x4000, 0x99a3591b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "8.1b",			0x8000, 0xe52638f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "9.3b",			0x4000, 0x809d280f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "10.4b",			0x4000, 0x99a3591b, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "13.14b",		0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "14.15b",		0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "13.14b",			0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "14.15b",			0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "5.13d",		0x4000, 0x40cb378a, 3 | BRF_GRA },           //  5 Characters
+	{ "5.13d",			0x4000, 0x40cb378a, 3 | BRF_GRA },           //  5 Characters
 
-	{ "1.14f",		0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "2.15f",		0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
-	{ "3.17f",		0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
-	{ "4.19f",		0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
+	{ "1.14f",			0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "2.15f",			0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
+	{ "3.17f",			0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
+	{ "4.19f",			0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
 
-	{ "12.4f",		0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
-	{ "11.1f",		0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
+	{ "12.4f",			0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
+	{ "11.1f",			0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
 
-	{ "7.19d",		0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
-	{ "6.17d",		0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
+	{ "7.19d",			0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
+	{ "6.17d",			0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
 	
 	{ "82s129.9f",		0x0100, 0xb29f6a07, 7 | BRF_GRA },           // 14 Color data
 	{ "82s129.10f",		0x0100, 0xc6de5ecb, 7 | BRF_GRA },           // 15
@@ -1122,7 +1122,7 @@ static struct BurnRomInfo dangaraRomDesc[] = {
 STD_ROM_PICK(dangara)
 STD_ROM_FN(dangara)
 
-struct BurnDriver BurnDrvDangara = {
+struct BurnDriverD BurnDrvDangara = {
 	"dangara", "dangar", NULL, NULL, "1986",
 	"Ufo Robo Dangar (12/1/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1136,25 +1136,25 @@ struct BurnDriver BurnDrvDangara = {
 // Ufo Robo Dangar (9/26/1986)
 
 static struct BurnRomInfo dangarbRomDesc[] = {
-	{ "16.1b",		0x8000, 0x743fa2d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "17.3b",		0x4000, 0x1cdc60a5, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "18.4b",		0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "16.1b",			0x8000, 0x743fa2d4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "17.3b",			0x4000, 0x1cdc60a5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "18.4b",			0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "13.14b",		0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "14.15b",		0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "13.14b",			0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "14.15b",			0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "11.13d",		0x4000, 0xe804ffe1, 3 | BRF_GRA },           //  5 Characters
+	{ "11.13d",			0x4000, 0xe804ffe1, 3 | BRF_GRA },           //  5 Characters
 
-	{ "1.14f",		0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "2.15f",		0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
-	{ "3.17f",		0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
-	{ "4.19f",		0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
+	{ "1.14f",			0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "2.15f",			0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
+	{ "3.17f",			0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
+	{ "4.19f",			0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
 
-	{ "12.4f",		0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
-	{ "11.1f",		0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
+	{ "12.4f",			0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
+	{ "11.1f",			0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
 
-	{ "7.19d",		0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
-	{ "6.17d",		0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
+	{ "7.19d",			0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
+	{ "6.17d",			0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
 
 	{ "82s129.9f",		0x0100, 0xb29f6a07, 7 | BRF_GRA },           // 14 Color data
 	{ "82s129.10f",		0x0100, 0xc6de5ecb, 7 | BRF_GRA },           // 15
@@ -1167,7 +1167,7 @@ static struct BurnRomInfo dangarbRomDesc[] = {
 STD_ROM_PICK(dangarb)
 STD_ROM_FN(dangarb)
 
-struct BurnDriver BurnDrvDangarb = {
+struct BurnDriverD BurnDrvDangarb = {
 	"dangarb", "dangar", NULL, NULL, "1986",
 	"Ufo Robo Dangar (9/26/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1181,25 +1181,25 @@ struct BurnDriver BurnDrvDangarb = {
 // Ufo Robo Dangar (9/26/1986, Japan)
 
 static struct BurnRomInfo dangarjRomDesc[] = {
-	{ "16.1b",		0x8000, 0x1e14b0b4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "17.3b",		0x4000, 0x9ba92111, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "18.4b",		0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "16.1b",			0x8000, 0x1e14b0b4, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "17.3b",			0x4000, 0x9ba92111, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "18.4b",			0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "21.14b",		0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "22.15b",		0x4000, 0x1d484f68, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "21.14b",			0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "22.15b",			0x4000, 0x1d484f68, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "11.13d",		0x4000, 0xe804ffe1, 3 | BRF_GRA },           //  5 Characters
+	{ "11.13d",			0x4000, 0xe804ffe1, 3 | BRF_GRA },           //  5 Characters
 
-	{ "7.14f",		0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
-	{ "8.15f",		0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
-	{ "9.17f",		0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
-	{ "10.19f",		0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
+	{ "7.14f",			0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "8.15f",			0x8000, 0xdfdb931c, 4 | BRF_GRA },           //  7
+	{ "9.17f",			0x8000, 0x6954e8c3, 4 | BRF_GRA },           //  8
+	{ "10.19f",			0x8000, 0x4af6a8bf, 4 | BRF_GRA },           //  9
 
-	{ "20.4f",		0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
-	{ "19.1f",		0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
+	{ "20.4f",			0x8000, 0x55711884, 5 | BRF_GRA },           // 10 Sprites
+	{ "19.1f",			0x8000, 0x8cf11419, 5 | BRF_GRA },           // 11
 
-	{ "15.19d",		0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
-	{ "12.17d",		0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
+	{ "15.19d",			0x4000, 0x6dba32cf, 6 | BRF_GRA },           // 12 Background Tilemaps
+	{ "12.17d",			0x4000, 0x6c899071, 6 | BRF_GRA },           // 13
 
 	{ "82s129.9f",		0x0100, 0xb29f6a07, 7 | BRF_GRA },           // 14 Color data
 	{ "82s129.10f",		0x0100, 0xc6de5ecb, 7 | BRF_GRA },           // 15
@@ -1228,8 +1228,8 @@ struct BurnDriverD BurnDrvDangarj = {
 // Ufo Robo Dangar (bootleg)
 
 static struct BurnRomInfo dangarbtRomDesc[] = {
-	{ "8",			0x8000, 0x8136fd10, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "9",			0x4000, 0x3ce5ec11, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "8",				0x8000, 0x8136fd10, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "9",				0x4000, 0x3ce5ec11, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "dangar2.018",	0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "dangar13.b14",	0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -1259,7 +1259,7 @@ static struct BurnRomInfo dangarbtRomDesc[] = {
 STD_ROM_PICK(dangarbt)
 STD_ROM_FN(dangarbt)
 
-struct BurnDriver BurnDrvDangarbt = {
+struct BurnDriverD BurnDrvDangarbt = {
 	"dangarbt", NULL, NULL, NULL, "1986",
 	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1313,7 +1313,7 @@ static INT32 ninjemakInit()
 	return DrvInit(1);
 }
 
-struct BurnDriver BurnDrvNinjemak = {
+struct BurnDriverD BurnDrvNinjemak = {
 	"ninjemak", NULL, NULL, NULL, "1986",
 	"Ninja Emaki (US)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1362,7 +1362,7 @@ static struct BurnRomInfo youmaRomDesc[] = {
 STD_ROM_PICK(youma)
 STD_ROM_FN(youma)
 
-struct BurnDriver BurnDrvYouma = {
+struct BurnDriverD BurnDrvYouma = {
 	"youma", "ninjemak", NULL, NULL, "1986",
 	"Youma Ninpou Chou (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1376,14 +1376,14 @@ struct BurnDriver BurnDrvYouma = {
 // Youma Ninpou Chou (Japan, alt)
 
 static struct BurnRomInfo youma2RomDesc[] = {
-	{ "1.1d",		0x8000, 0x171dbe99, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "2.3d",		0x4000, 0xe502d62a, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.4d",		0x8000, 0xcb84745c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.1d",			0x8000, 0x171dbe99, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.3d",			0x4000, 0xe502d62a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.4d",			0x8000, 0xcb84745c, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "12.14b",		0x4000, 0x3d1cd329, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "13.15b",		0x8000, 0xac3a0b81, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "12.14b",			0x4000, 0x3d1cd329, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "13.15b",			0x8000, 0xac3a0b81, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "4.7d",		0x8000, 0x40aeffd8, 3 | BRF_GRA },           //  5 Characters
+	{ "4.7d",			0x8000, 0x40aeffd8, 3 | BRF_GRA },           //  5 Characters
 
 	{ "ninjemak.8",		0x8000, 0x655f0a58, 4 | BRF_GRA },           //  6 Background Tiles
 	{ "ninjemak.9",		0x8000, 0x934e1703, 4 | BRF_GRA },           //  7
@@ -1398,20 +1398,20 @@ static struct BurnRomInfo youma2RomDesc[] = {
 	{ "ninjemak.7",		0x4000, 0x80c20d36, 6 | BRF_GRA },           // 14 Background Tilemaps
 	{ "ninjemak.6",		0x4000, 0x1da7a651, 6 | BRF_GRA },           // 15
 
-	{ "bpr.6e",		0x0100, 0x8a62d4e4, 8 | BRF_GRA },           // 16 Color data
-	{ "bpr.7e",		0x0100, 0x2ccf976f, 8 | BRF_GRA },           // 17
-	{ "bpr.8e",		0x0100, 0x16b2a7a4, 8 | BRF_GRA },           // 18
-	{ "bpr.2d",		0x0100, 0x23bade78, 8 | BRF_GRA },           // 19
+	{ "bpr.6e",			0x0100, 0x8a62d4e4, 8 | BRF_GRA },           // 16 Color data
+	{ "bpr.7e",			0x0100, 0x2ccf976f, 8 | BRF_GRA },           // 17
+	{ "bpr.8e",			0x0100, 0x16b2a7a4, 8 | BRF_GRA },           // 18
+	{ "bpr.2d",			0x0100, 0x23bade78, 8 | BRF_GRA },           // 19
 
-	{ "bpr.7f",		0x0100, 0x262d0809, 9 | BRF_GRA },           // 20 Sprite LUT
+	{ "bpr.7f",			0x0100, 0x262d0809, 9 | BRF_GRA },           // 20 Sprite LUT
 
-	{ "5.15d",		0x4000, 0x1b4f64aa, 7 | BRF_GRA },           // 21 nb1414m4 data
+	{ "5.15d",			0x4000, 0x1b4f64aa, 7 | BRF_GRA },           // 21 nb1414m4 data
 };
 
 STD_ROM_PICK(youma2)
 STD_ROM_FN(youma2)
 
-struct BurnDriver BurnDrvYouma2 = {
+struct BurnDriverD BurnDrvYouma2 = {
 	"youma2", "ninjemak", NULL, NULL, "1986",
 	"Youma Ninpou Chou (Japan, alt)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1458,7 +1458,7 @@ static struct BurnRomInfo youmabRomDesc[] = {
 STD_ROM_PICK(youmab)
 STD_ROM_FN(youmab)
 
-struct BurnDriver BurnDrvYoumab = {
+struct BurnDriverD BurnDrvYoumab = {
 	"youmab", "ninjemak", NULL, NULL, "1986",
 	"Youma Ninpou Chou (Game Electronics bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1505,7 +1505,7 @@ static struct BurnRomInfo youmab2RomDesc[] = {
 STD_ROM_PICK(youmab2)
 STD_ROM_FN(youmab2)
 
-struct BurnDriver BurnDrvYoumab2 = {
+struct BurnDriverD BurnDrvYoumab2 = {
 	"youmab2", "ninjemak", NULL, NULL, "1986",
 	"Youma Ninpou Chou (Game Electronics bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

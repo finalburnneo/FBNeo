@@ -942,7 +942,7 @@ static INT32 galivanInit()
 	return DrvInit(0);
 }
 
-struct BurnDriverD BurnDrvGalivan = {
+struct BurnDriver BurnDrvGalivan = {
 	"galivan", NULL, NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/26/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -987,7 +987,7 @@ static struct BurnRomInfo galivan2RomDesc[] = {
 STD_ROM_PICK(galivan2)
 STD_ROM_FN(galivan2)
 
-struct BurnDriverD BurnDrvGalivan2 = {
+struct BurnDriver BurnDrvGalivan2 = {
 	"galivan2", "galivan", NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/16/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1032,7 +1032,7 @@ static struct BurnRomInfo galivan3RomDesc[] = {
 STD_ROM_PICK(galivan3)
 STD_ROM_FN(galivan3)
 
-struct BurnDriverD BurnDrvGalivan3 = {
+struct BurnDriver BurnDrvGalivan3 = {
 	"galivan3", "galivan", NULL, NULL, "1985",
 	"Cosmo Police Galivan (12/11/1985)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1077,7 +1077,7 @@ static struct BurnRomInfo dangarRomDesc[] = {
 STD_ROM_PICK(dangar)
 STD_ROM_FN(dangar)
 
-struct BurnDriverD BurnDrvDangar = {
+struct BurnDriver BurnDrvDangar = {
 	"dangar", NULL, NULL, NULL, "1986",
 	"Ufo Robo Dangar (4/07/1987)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1122,7 +1122,7 @@ static struct BurnRomInfo dangaraRomDesc[] = {
 STD_ROM_PICK(dangara)
 STD_ROM_FN(dangara)
 
-struct BurnDriverD BurnDrvDangara = {
+struct BurnDriver BurnDrvDangara = {
 	"dangara", "dangar", NULL, NULL, "1986",
 	"Ufo Robo Dangar (12/1/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1167,7 +1167,7 @@ static struct BurnRomInfo dangarbRomDesc[] = {
 STD_ROM_PICK(dangarb)
 STD_ROM_FN(dangarb)
 
-struct BurnDriverD BurnDrvDangarb = {
+struct BurnDriver BurnDrvDangarb = {
 	"dangarb", "dangar", NULL, NULL, "1986",
 	"Ufo Robo Dangar (9/26/1986)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1214,7 +1214,7 @@ static struct BurnRomInfo dangarjRomDesc[] = {
 STD_ROM_PICK(dangarj)
 STD_ROM_FN(dangarj)
 
-struct BurnDriverD BurnDrvDangarj = {
+struct BurnDriver BurnDrvDangarj = {
 	"dangarj", "dangar", NULL, NULL, "1986",
 	"Ufo Robo Dangar (9/26/1986, Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1259,7 +1259,7 @@ static struct BurnRomInfo dangarbtRomDesc[] = {
 STD_ROM_PICK(dangarbt)
 STD_ROM_FN(dangarbt)
 
-struct BurnDriverD BurnDrvDangarbt = {
+struct BurnDriver BurnDrvDangarbt = {
 	"dangarbt", NULL, NULL, NULL, "1986",
 	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1313,7 +1313,7 @@ static INT32 ninjemakInit()
 	return DrvInit(1);
 }
 
-struct BurnDriverD BurnDrvNinjemak = {
+struct BurnDriver BurnDrvNinjemak = {
 	"ninjemak", NULL, NULL, NULL, "1986",
 	"Ninja Emaki (US)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1362,7 +1362,7 @@ static struct BurnRomInfo youmaRomDesc[] = {
 STD_ROM_PICK(youma)
 STD_ROM_FN(youma)
 
-struct BurnDriverD BurnDrvYouma = {
+struct BurnDriver BurnDrvYouma = {
 	"youma", "ninjemak", NULL, NULL, "1986",
 	"Youma Ninpou Chou (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
@@ -1411,7 +1411,7 @@ static struct BurnRomInfo youma2RomDesc[] = {
 STD_ROM_PICK(youma2)
 STD_ROM_FN(youma2)
 
-struct BurnDriverD BurnDrvYouma2 = {
+struct BurnDriver BurnDrvYouma2 = {
 	"youma2", "ninjemak", NULL, NULL, "1986",
 	"Youma Ninpou Chou (Japan, alt)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,

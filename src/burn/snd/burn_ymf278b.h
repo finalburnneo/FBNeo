@@ -10,7 +10,7 @@ void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue);
 UINT8 BurnYMF278BReadStatus();
 UINT8 BurnYMF278BReadData();
 
-INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, void (*IRQCallback)(INT32, INT32), INT32 (*StreamCallback)(INT32));
+INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROMSize, void (*IRQCallback)(INT32, INT32), INT32 (*StreamCallback)(INT32));
 void BurnYMF278BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYMF278BReset();
 void BurnYMF278BExit();

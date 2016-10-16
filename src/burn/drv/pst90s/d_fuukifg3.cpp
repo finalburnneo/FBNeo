@@ -685,7 +685,7 @@ static INT32 DrvInit()
 	ZetSetInHandler(fuuki32_sound_in);
 	ZetClose();
 
-	BurnYMF278BInit(0, DrvSndROM, &DrvFMIRQHandler, DrvSynchroniseStream);
+	BurnYMF278BInit(0, DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	BurnTimerAttachZet(6000000);

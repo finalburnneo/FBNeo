@@ -164,11 +164,11 @@ void write_memory(UINT32 offset, UINT8 data)
 
 UINT8 read_memory(UINT32 offset)
 {
-	/*if (offset >= m_romsize)
+	if (offset >= m_romsize)
 	{
-		LOG(("YMF278B:  Memory read overflow %x\n", offset));
+	//	LOG(("YMF278B:  Memory read overflow %x\n", offset));
 		return 0xff;
-	}*/
+	}
 	return m_rom[offset];
 }
 
@@ -1108,12 +1108,12 @@ static void precompute_rate_tables()
 //  device_start - device-specific startup
 //-------------------------------------------------
 
-int ymf278b_start(int num, UINT8 *rom, void (*irq_cb)(INT32, INT32), void (*timer_cb)(INT32, INT32, double), int clock, int rate)
+int ymf278b_start(int num, UINT8 *rom, INT32 romsize, void (*irq_cb)(INT32, INT32), void (*timer_cb)(INT32, INT32, double), int clock, int rate)
 {
 	int i;
 
 	m_rom = rom;
-	m_romsize = 0xffffffff; //romsize;
+	m_romsize = romsize;
 	m_clock = clock;
 	m_irq_handler = irq_cb;
 	timer_callback = timer_cb;

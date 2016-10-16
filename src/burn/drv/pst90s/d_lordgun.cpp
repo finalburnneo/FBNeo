@@ -882,7 +882,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 	ZetClose();
 
 	// aliencha
-	BurnYMF278BInit(0, DrvSndROM2, &DrvFMIRQHandler, DrvSynchroniseStream);
+	BurnYMF278BInit(0, DrvSndROM2, 0x200000, &DrvFMIRQHandler, DrvSynchroniseStream);
 	BurnYMF278BSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 	BurnTimerAttachZet(5000000);
 

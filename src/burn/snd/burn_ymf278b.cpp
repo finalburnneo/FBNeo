@@ -211,7 +211,7 @@ void BurnYMF278BExit()
 	DebugSnd_YMF278BInitted = 0;
 }
 
-INT32 BurnYMF278BInit(INT32 /* nClockFrequency */, UINT8* YMF278BROM, void (*IRQCallback)(INT32, INT32), INT32 (*StreamCallback)(INT32))
+INT32 BurnYMF278BInit(INT32 /* nClockFrequency */, UINT8* YMF278BROM, INT32 YMF278BROMSize, void (*IRQCallback)(INT32, INT32), INT32 (*StreamCallback)(INT32))
 {
 	DebugSnd_YMF278BInitted = 1;
 	BurnYMF278BExit();	
@@ -222,7 +222,7 @@ INT32 BurnYMF278BInit(INT32 /* nClockFrequency */, UINT8* YMF278BROM, void (*IRQ
 		BurnYMF278BStreamCallback = StreamCallback;
 	}
 
-	ymf278b_start(0, YMF278BROM, IRQCallback, BurnYMFTimerCallback, YMF278B_STD_CLOCK, nBurnSoundRate);
+	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, YMF278B_STD_CLOCK, nBurnSoundRate);
 	BurnTimerInit(ymf278b_timer_over, NULL);
 
 	pBuffer = (INT16*)malloc(4096 * 2 * sizeof(INT16));

@@ -110,6 +110,10 @@ static struct BurnDIPInfo MSXDIPList[]=
 	{0x17, 0x01, 0x20, 0x00, "Normal"	},
 	{0x17, 0x01, 0x20, 0x20, "Swapped"	},
 
+	{0   , 0xfe, 0   ,    2, "Map Cursor Keys to Joy #1"	},
+	{0x17, 0x01, 0x80, 0x00, "Off"	},
+	{0x17, 0x01, 0x80, 0x80, "On"	},
+
 	{0   , 0xfe, 0   ,    2, "Tape Side"	},
 	{0x17, 0x01, 0x40, 0x00, "Side A"	},
 	{0x17, 0x01, 0x40, 0x40, "Side B"	},
@@ -135,10 +139,16 @@ static struct BurnDIPInfo MSXJoySwapDIPList[]=
 	{0x17, 0xff, 0xff, 0x30, NULL		},
 };
 
+static struct BurnDIPInfo MSXMapCursorToJoy1DIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x80, NULL		},
+};
+
 STDDIPINFOEXT(MSX, MSXDefault, MSX)
 STDDIPINFOEXT(MSXJapan, MSXJBIOS, MSX)
 STDDIPINFOEXT(MSXJoyport2, MSXJoySwap, MSX)
 STDDIPINFOEXT(MSXEuropeJoyport2, MSX50hzJoySwap, MSX)
+STDDIPINFOEXT(MSXJoyCursor, MSXMapCursorToJoy1, MSX)
 
 // ROM mapper types:
 #define MAP_KONGEN8  0      // KonamiGeneric 8k
@@ -168,6 +178,8 @@ static UINT8 Hertz60 = 0;      // DIP setting.
 static UINT8 BiosmodeJapan = 0;// DIP setting.
 
 // Game-based kludges
+static INT32 MapCursorToJoy1 = 0; // Map Cursor Keys & space to Joy1
+
 static INT32 VBlankKludge = 0; // For VoidRunner (joystick selection hangs)
 static INT32 SwapRamslot = 0; // For Toshiba-EMI's Break Out!
 static INT32 SwapButton2 = 0; // Swaps Joy button#2 with 'm', for Xenon and Astro Marine Corps
@@ -1430,6 +1442,7 @@ static INT32 DrvExit()
 	SwapRamslot = 0;
 	SwapButton2 = 0;
 	SwapSlash = 0;
+	MapCursorToJoy1 = 0;
 
 #ifdef BUILD_WIN32
 	cBurnerKeyCallback = NULL;
@@ -1468,20 +1481,9 @@ static INT32 DrvFrame()
 		}
 
 		SwapJoyports = (DrvDips[0] & 0x20) ? 1 : 0;
+		MapCursorToJoy1 = (DrvDips[0] & 0x80) ? 1 : 0;
 
 		// Keyboard fun!
-#if 0
-		for (INT32 i = 0; i < 10; i++) { // 0 - 9
-			keyInput('0' + i, DrvJoy3[i]);
-		}
-		for (INT32 i = 0; i < 26; i++) { // a - z
-			keyInput('a' + i, DrvJoy5[i]);
-		}
-		keyInput('\x0d', DrvJoy4[0]); // enter
-		keyInput('\x1b', DrvJoy4[1]); // esc
-		keyInput(' ',    DrvJoy4[2]); // space
-#endif
-
 		keyInput(0xf1, DrvJoy4[3]); // f1 - f6
 		keyInput(0xf2, DrvJoy4[4]);
 		keyInput(0xf3, DrvJoy4[5]);
@@ -1489,10 +1491,20 @@ static INT32 DrvFrame()
 		keyInput(0xf5, DrvJoy4[7]);
 		keyInput(0xf6, DrvJoy4[8]);
 
-		keyInput(0xf8, DrvJoy4[9]);  // Key UP
-		keyInput(0xf9, DrvJoy4[10]); // Key DOWN
-		keyInput(0xfa, DrvJoy4[11]); // Key LEFT
-		keyInput(0xfb, DrvJoy4[12]); // Key RIGHT
+		if (MapCursorToJoy1)
+		{ // Mapped to Joy #1
+			keyInput(0xf8, DrvJoy1[0]);  // Key UP
+			keyInput(0xf9, DrvJoy1[1]); // Key DOWN
+			keyInput(0xfa, DrvJoy1[2]); // Key LEFT
+			keyInput(0xfb, DrvJoy1[3]); // Key RIGHT
+			keyInput(' ', DrvJoy1[4]);
+		} else
+		{ // Normal Cursor-key function
+			keyInput(0xf8, DrvJoy4[9]);  // Key UP
+			keyInput(0xf9, DrvJoy4[10]); // Key DOWN
+			keyInput(0xfa, DrvJoy4[11]); // Key LEFT
+			keyInput(0xfb, DrvJoy4[12]); // Key RIGHT
+		}
 	}
 
 	{   // detect tape side changes
@@ -18966,10 +18978,10 @@ STD_ROM_FN(MSX_pengmind)
 
 struct BurnDriver BurnDrvMSX_pengmind = {
 	"msx_pengmind", NULL, "msx_msx", NULL, "2007",
-	"Penguin Mind\0", "Keyboard control only.", "MSX Cafe", "MSX",
+	"Penguin Mind\0", NULL, "MSX Cafe", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_pengmindRomInfo, MSX_pengmindRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_pengmindRomInfo, MSX_pengmindRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -19194,10 +19206,10 @@ STD_ROM_FN(MSX_tvirus)
 
 struct BurnDriver BurnDrvMSX_tvirus = {
 	"msx_tvirus", NULL, "msx_msx", NULL, "2005",
-	"T-Virus\0", "Keyboard control only.", "Dioniso (Alfonso D.C.)", "MSX",
+	"T-Virus\0", NULL, "Dioniso (Alfonso D.C.)", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_tvirusRomInfo, MSX_tvirusRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_tvirusRomInfo, MSX_tvirusRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -19594,10 +19606,10 @@ STD_ROM_FN(MSX_zambeze)
 
 struct BurnDriver BurnDrvMSX_zambeze = {
 	"msx_zambeze", NULL, "msx_msx", NULL, "2006",
-	"Zambeze\0", "Keyboard control only.", "Degora", "MSX",
+	"Zambeze\0", NULL, "Degora", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_zambezeRomInfo, MSX_zambezeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_zambezeRomInfo, MSX_zambezeRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -19758,8 +19770,8 @@ struct BurnDriver BurnDrvMSX_gauntlet = {
 // Navy Moves (Euro)
 
 static struct BurnRomInfo MSX_navymoveRomDesc[] = {
-	{ "navy moves (1988)(dinamic software)(es)(en)(side a)[english edition][run'cas-'].cas",	0x0c697, 0x5a62354d, BRF_PRG | BRF_ESS },
-	{ "navy moves (1988)(dinamic software)(es)(en)(side b)[english edition][run'cas-'].cas",	0x0b4f5, 0x04390c1e, BRF_PRG | BRF_ESS },
+	{ "Navy Moves (1988)(Dinamic Software)(ES)(Side A)[RUN'CAS-'].cas",	0x0c68f, 0xd420952c, BRF_PRG | BRF_ESS },
+	{ "Navy Moves (1988)(Dinamic Software)(ES)(Side B)[RUN'CAS-'].cas",	0x0b4f5, 0x045a7642, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_navymove, MSX_navymove, msx_msx)
@@ -19767,10 +19779,10 @@ STD_ROM_FN(MSX_navymove)
 
 struct BurnDriver BurnDrvMSX_navymove = {
 	"msx_navymove", NULL, "msx_msx", NULL, "1988",
-	"Navy Moves (Euro)\0", NULL, "Dinamic Software", "MSX",
+	"Navy Moves (Euro)\0", "Select Keyboard mode, and use Joystick!", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_navymoveRomInfo, MSX_navymoveRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_navymoveRomInfo, MSX_navymoveRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -19787,10 +19799,10 @@ STD_ROM_FN(MSX_armymove)
 
 struct BurnDriver BurnDrvMSX_armymove = {
 	"msx_armymove", NULL, "msx_msx", NULL, "1987",
-	"Army Moves (Euro)\0", NULL, "Dinamic Software", "MSX",
+	"Army Moves (Euro)\0", "Select Keyboard mode, and use Joystick!", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_armymoveRomInfo, MSX_armymoveRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_armymoveRomInfo, MSX_armymoveRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -20414,7 +20426,7 @@ STD_ROM_FN(MSX_ballblzr)
 
 struct BurnDriver BurnDrvMSX_ballblzr = {
 	"msx_ballblzr", NULL, "msx_msx", NULL, "1988",
-	"Ballblazer\0", NULL, "Pony Canyon", "MSX",
+	"Ballblazer\0", "Keyboard control only.", "Pony Canyon", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_ballblzrRomInfo, MSX_ballblzrRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22493,7 +22505,7 @@ struct BurnDriver BurnDrvMSX_hammboy = {
 	"Hammer Boy (Spa)\0", "Keyboard control only.", "Dinamic Software", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_hammboyRomInfo, MSX_hammboyRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_hammboyRomInfo, MSX_hammboyRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -22623,10 +22635,10 @@ STD_ROM_FN(MSX_ghost)
 
 struct BurnDriver BurnDrvMSX_ghost = {
 	"msx_ghost", NULL, "msx_msx", NULL, "1989",
-	"Ghost (Spa)\0", "Keyboard control only.", "Mind Games Espana", "MSX",
+	"Ghost (Spa)\0", NULL, "Mind Games Espana", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_ghostRomInfo, MSX_ghostRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_ghostRomInfo, MSX_ghostRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -23575,10 +23587,10 @@ STD_ROM_FN(MSX_alteredbeast)
 
 struct BurnDriver BurnDrvMSX_alteredbeast = {
 	"msx_alteredbeast", NULL, "msx_msx", NULL, "1988",
-	"Altered Beast\0", "Keyboard control only.", "Activision / Amusement Factory", "MSX",
+	"Altered Beast\0", "Choose 'B' Cursor from menu.", "Activision / Amusement Factory", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_alteredbeastRomInfo, MSX_alteredbeastRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_alteredbeastRomInfo, MSX_alteredbeastRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -23833,7 +23845,7 @@ struct BurnDriver BurnDrvMSX_invrevenge = {
 // Hyper Viper
 
 static struct BurnRomInfo MSX_hyperviperRomDesc[] = {
-	{ "Hyper Viper (1985)(Kuma Computers).rom",	0x10000, 0x11914d7d, BRF_PRG | BRF_ESS },
+	{ "Hyper Viper (1985)(Kuma Computers)[cursorkeys].rom",	0x10000, 0xa88ecd5d, BRF_PRG | BRF_ESS },
 };
 
 STDROMPICKEXT(MSX_hyperviper, MSX_hyperviper, msx_msx)
@@ -23844,7 +23856,7 @@ struct BurnDriver BurnDrvMSX_hyperviper = {
 	"Hyper Viper\0", NULL, "Kuma Computers", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_hyperviperRomInfo, MSX_hyperviperRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_hyperviperRomInfo, MSX_hyperviperRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

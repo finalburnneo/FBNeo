@@ -961,7 +961,7 @@ static INT32 mainevtInit()
 	return DrvInit(0);
 }
 
-struct BurnDriverD BurnDrvMainevt = {
+struct BurnDriver BurnDrvMainevt = {
 	"mainevt", NULL, NULL, NULL, "1988",
 	"The Main Event (4 Players ver. Y)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
@@ -997,7 +997,7 @@ static struct BurnRomInfo mainevtoRomDesc[] = {
 STD_ROM_PICK(mainevto)
 STD_ROM_FN(mainevto)
 
-struct BurnDriverD BurnDrvMainevto = {
+struct BurnDriver BurnDrvMainevto = {
 	"mainevto", "mainevt", NULL, NULL, "1988",
 	"The Main Event (4 Players ver. F)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
@@ -1033,7 +1033,7 @@ static struct BurnRomInfo mainevt2pRomDesc[] = {
 STD_ROM_PICK(mainevt2p)
 STD_ROM_FN(mainevt2p)
 
-struct BurnDriverD BurnDrvMainevt2p = {
+struct BurnDriver BurnDrvMainevt2p = {
 	"mainevt2p", "mainevt", NULL, NULL, "1988",
 	"The Main Event (2 Players ver. X)\0", NULL, "Konami", "GX799",
 	NULL, NULL, NULL, NULL,
@@ -1069,7 +1069,7 @@ static struct BurnRomInfo ringohjaRomDesc[] = {
 STD_ROM_PICK(ringohja)
 STD_ROM_FN(ringohja)
 
-struct BurnDriverD BurnDrvRingohja = {
+struct BurnDriver BurnDrvRingohja = {
 	"ringohja", "mainevt", NULL, NULL, "1988",
 	"Ring no Ohja (Japan 2 Players ver. N)\0", NULL, "Konami", "GX799",
 	L"\u30EA\u30F3\u30B0\u306E \u738B\u8005 (Japan 2 Players ver. N)\0Ring no Ohja\0", NULL, NULL, NULL,

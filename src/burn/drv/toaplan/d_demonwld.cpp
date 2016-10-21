@@ -1,5 +1,11 @@
 #include "toaplan.h"
 
+#define USE_DSP		// use the dsp or hack it out.
+
+#ifdef USE_DSP
+#include "tms32010.h"
+#endif
+
 #define REFRESHRATE 60
 #define VBLANK_LINES (32)
 
@@ -12,6 +18,8 @@ static UINT8 *DrvZ80ROM;
 static UINT8 *Drv68KRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvPalRAM2;
+static UINT8 *DrvMCUROM;
+static UINT8 *DrvMCURAM;
 static UINT8 *DrvShareRAM;
 
 static UINT8 DrvInputs[3];
@@ -28,10 +36,22 @@ static bool bVBlank;
 
 static bool bEnableInterrupts;
 
-#ifdef BUILD_A68K
+static INT32 m68k_halt;
+
+#ifdef USE_DSP
+
+static UINT32 main_ram_seg;
+static UINT16 dsp_addr_w;
+static INT32 dsp_execute;
+static INT32 dsp_BIO;
+static INT32 dsp_on;
+
+#else
+
 static bool bUseAsm68KCoreOldValue = false;
-#endif
 static INT32 demonwld_hack;
+
+#endif
 
 static struct BurnInputInfo DemonwldInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
@@ -184,7 +204,108 @@ static struct BurnDIPInfo Demonwl1DIPList[]=
 
 STDDIPINFO(Demonwl1)
 
-void __fastcall demonwldWriteWord(UINT32 a, UINT16 d)
+#ifdef USE_DSP
+
+static void demonwld_dsp_addrsel_w(UINT16 data)
+{
+	main_ram_seg = ((data & 0xe000) << 9);
+	dsp_addr_w   = ((data & 0x1fff) << 1);
+}
+
+static UINT16 demonwld_dsp_r()
+{
+	switch (main_ram_seg) {
+		case 0xc00000: return SekReadWord(main_ram_seg + dsp_addr_w);
+	}
+
+	return 0;
+}
+
+static void demonwld_dsp_w(UINT16 data)
+{
+	dsp_execute = 0;
+
+	switch (main_ram_seg) {
+		case 0xc00000: {
+			if ((dsp_addr_w < 3) && (data == 0)) dsp_execute = 1;
+			SekWriteWord(main_ram_seg + dsp_addr_w, data);
+		}
+		break;
+	}
+}
+
+static void demonwld_dsp_bio_w(UINT16 data)
+{
+	if (data & 0x8000) {
+		dsp_BIO = 0;
+	}
+	if (data == 0) {
+		if (dsp_execute) {
+			m68k_halt = 0;
+			dsp_execute = 0;
+		}
+		dsp_BIO = 1;
+	}
+}
+
+static UINT16 demonwld_BIO_r()
+{
+	return dsp_BIO;
+}
+
+static void demonwld_dsp(INT32 enable)
+{
+	enable ^= 1;
+	dsp_on = enable;
+
+	if (enable)
+	{
+		tms32010_set_irq_line(0, CPU_IRQSTATUS_ACK); /* TMS32010 INT */
+		m68k_halt = 1;
+		SekRunEnd();
+	}
+	else
+	{
+		tms32010_set_irq_line(0, CPU_IRQSTATUS_NONE); /* TMS32010 INT */
+		tms32010RunEnd();
+	}
+}
+
+static void demonwld_dsp_ctrl_w(UINT16 data)
+{
+	//if (ACCESSING_BITS_0_7)
+	{
+		switch (data)
+		{
+			case 0x00:
+			case 0x01:  demonwld_dsp(data); break;
+		}
+	}
+}
+
+static void dsp_write(INT32 port, UINT16 data)
+{
+	switch (port)
+	{
+		case 0x00: demonwld_dsp_addrsel_w(data); return;
+		case 0x02: demonwld_dsp_w(data); return;
+		case 0x06: demonwld_dsp_bio_w(data); return;
+	}
+}
+
+static UINT16 dsp_read(INT32 port)
+{
+	switch (port)
+	{
+		case 0x02: return demonwld_dsp_r();
+		case 0x20: return demonwld_BIO_r();
+	}
+
+	return 0;
+}
+#endif
+
+static void __fastcall demonwldWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a)
 	{
@@ -242,11 +363,13 @@ void __fastcall demonwldWriteWord(UINT32 a, UINT16 d)
 		return;
 
 		case 0xe00000:
+			bprintf(0, _T("xoffs %d\n"), d);
 			nBCU2TileXOffset = d;
 		return;
 
 		case 0xe00002:
-			nBCU2TileYOffset = d;
+			bprintf(0, _T("yoffs %d\n"), d);
+			nBCU2TileYOffset = d-16;
 		return;
 
 		case 0xe00006:
@@ -260,17 +383,19 @@ void __fastcall demonwldWriteWord(UINT32 a, UINT16 d)
 		return;
 
 		case 0xe0000a:
-			// dsp_ctrl_w
+#ifdef USE_DSP
+			if (d < 2) demonwld_dsp_ctrl_w(d & 1);
+#endif
 		return;
 	}
 }
 
-void __fastcall demonwldWriteByte(UINT32 , UINT8 )
+static void __fastcall demonwldWriteByte(UINT32 , UINT8 )
 {
 	return;
 }
 
-UINT16 __fastcall demonwldReadWord(UINT32 a)
+static UINT16 __fastcall demonwldReadWord(UINT32 a)
 {
 	switch (a)
 	{
@@ -301,7 +426,7 @@ UINT16 __fastcall demonwldReadWord(UINT32 a)
 
 		case 0xa00006:
 			return ToaFCU2ReadRAMSize();
-
+#ifndef USE_DSP
 		case 0xe0000e: // hack
 		{
 			demonwld_hack++;
@@ -310,12 +435,13 @@ UINT16 __fastcall demonwldReadWord(UINT32 a)
 			else
 				return 0;
 		}
+#endif
 	}
 
 	return 0;
 }
 
-UINT8 __fastcall demonwldReadByte(UINT32 a)
+static UINT8 __fastcall demonwldReadByte(UINT32 a)
 {
 	switch (a)
 	{
@@ -327,7 +453,7 @@ UINT8 __fastcall demonwldReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall demonwld_sound_write_port(UINT16 p, UINT8 d)
+static void __fastcall demonwld_sound_write_port(UINT16 p, UINT8 d)
 {
 	switch (p & 0xff)
 	{
@@ -346,7 +472,7 @@ void __fastcall demonwld_sound_write_port(UINT16 p, UINT8 d)
 	}
 }
 
-UINT8 __fastcall demonwld_sound_read_port(UINT16 p)
+static UINT8 __fastcall demonwld_sound_read_port(UINT16 p)
 {
 	switch (p & 0xff)
 	{
@@ -389,9 +515,22 @@ static INT32 DrvDoReset()
 	BurnYM3812Reset();
 
 	bEnableInterrupts = false;
-	demonwld_hack = 0;
 
 	HiscoreReset();
+
+	m68k_halt = 0;
+
+#ifdef USE_DSP
+	tms32010_reset();
+
+	main_ram_seg = 0;
+	dsp_addr_w = 0;
+	dsp_execute = 0;
+	dsp_BIO = 0;
+	dsp_on = 0;
+#else
+	demonwld_hack = 0;
+#endif
 
 	return 0;
 }
@@ -401,6 +540,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM	= Next; Next += 0x040000 + 0x400;
+	DrvMCUROM	= Next; Next += 0x001000;
 	DrvZ80ROM	= Next; Next += 0x010000;
 	BCU2ROM		= Next; Next += nBCU2ROMSize;
 	FCU2ROM		= Next; Next += nFCU2ROMSize;
@@ -414,6 +554,7 @@ static INT32 MemIndex()
 	RamZ80		= Next;
 	DrvShareRAM	= Next; Next += 0x008000;
 
+	DrvMCURAM	= Next; Next += 0x000400;
 	BCU2RAM		= Next; Next += 0x010000;
 	FCU2RAM		= Next; Next += 0x000800;
 	FCU2RAMSize	= Next; Next += 0x000080;
@@ -430,7 +571,7 @@ static INT32 MemIndex()
 
 static INT32 DrvInit()
 {
-#ifdef BUILD_A68K
+#ifndef USE_DSP
 	if (bBurnUseASMCPUEmulation) {
 		bUseAsm68KCoreOldValue = bBurnUseASMCPUEmulation;
 		bBurnUseASMCPUEmulation = false;
@@ -460,6 +601,9 @@ static INT32 DrvInit()
 	if (BurnLoadRom(Drv68KROM + 0x000000, 1, 2)) return 1;
 
 	if (BurnLoadRom(DrvZ80ROM, 2, 1)) return 1;
+
+	if (BurnLoadRom(DrvMCUROM + 0x000000, 3, 2)) return 1;
+	if (BurnLoadRom(DrvMCUROM + 0x000001, 4, 2)) return 1;
 
 	ToaLoadTiles(BCU2ROM, 5, nBCU2ROMSize);
 	ToaLoadTiles(FCU2ROM, 9, nFCU2ROMSize);
@@ -493,9 +637,18 @@ static INT32 DrvInit()
 		ZetSetOutHandler(demonwld_sound_write_port);
 		ZetSetInHandler(demonwld_sound_read_port);
 		ZetClose();
+
+#ifdef USE_DSP
+		tms32010_init();
+		tms32010_set_write_port_handler(dsp_write);
+		tms32010_set_read_port_handler(dsp_read);
+		tms32010_ram = (UINT16*)DrvMCURAM;
+		tms32010_rom = (UINT16*)DrvMCUROM;
+#endif
 	}
 
 	ToaInitBCU2();
+	nFCU2SpriteYOffset = -16;
 
 	nToaPalLen = nColCount;
 	ToaPalSrc = DrvPalRAM;
@@ -523,6 +676,10 @@ static INT32 DrvExit()
 	ToaZExit();
 	SekExit();
 
+#ifdef USE_DSP
+	tms32010_exit();
+#endif
+
 	BurnFree(AllMem);
 
 	return 0;
@@ -540,7 +697,7 @@ static INT32 DrvDraw()
 	ToaPalUpdate();	
 	ToaPal2Update();
 
-#ifdef BUILD_A68K
+#ifndef USE_DSP
 	if (bUseAsm68KCoreOldValue) {
 		bUseAsm68KCoreOldValue = false;
 		bBurnUseASMCPUEmulation = true;
@@ -583,7 +740,9 @@ static INT32 DrvFrame()
 
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
 	nCyclesTotal[1] = INT32(28000000.0 / 8 / REFRESHRATE);
-
+#ifdef USE_DSP
+	INT32 nCyclesMCU = (INT32)((INT64)14000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
+#endif
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
@@ -600,7 +759,11 @@ static INT32 DrvFrame()
 		if (nNext > nToaCyclesVBlankStart) {
 			if (SekTotalCycles() < nToaCyclesVBlankStart) {
 				nCyclesSegment = nToaCyclesVBlankStart - SekTotalCycles();
-				SekRun(nCyclesSegment);
+				if (!m68k_halt) {
+					SekRun(nCyclesSegment);
+				} else {
+					SekIdle(nCyclesSegment);
+				}
 			}
 
 			if (pBurnDraw) {
@@ -616,12 +779,16 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - SekTotalCycles();
-		if (bVBlank || (!CheckSleep(0))) {
+		if ((bVBlank || (!CheckSleep(0))) && !m68k_halt) {
 			SekRun(nCyclesSegment);
 		} else {
 			SekIdle(nCyclesSegment);
 		}
-		
+
+#ifdef USE_DSP
+		if (dsp_on) tms32010_execute(nCyclesMCU / nInterleave);
+#endif
+
 		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
 	}
 
@@ -648,6 +815,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 	if (pnMin != NULL) {
 		*pnMin = 0x029707;
 	}
+
 	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
     		ba.Data		= AllRam;
@@ -661,12 +829,24 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		BurnYM3812Scan(nAction, pnMin);
 
 		SCAN_VAR(nCyclesDone);
+#ifndef USE_DSP
 		SCAN_VAR(demonwld_hack);
+#else
+		tms32010_scan(nAction);
+
+		SCAN_VAR(m68k_halt);
+		SCAN_VAR(main_ram_seg);
+		SCAN_VAR(dsp_addr_w);
+		SCAN_VAR(dsp_execute);
+		SCAN_VAR(dsp_BIO);
+		SCAN_VAR(dsp_on);
+#endif
 	}
 
 	return 0;
 }
 
+#ifndef USE_DSP
 // Hack to bypass the missing sub-cpu.  All games except the taito
 // set check the crc and rather than dealing with that, I'm seperating
 // the opcodes and data and just patching the opcodes. 
@@ -687,7 +867,7 @@ static void map_hack(INT32 hack_off)
 	SekMapMemory(Drv68KROM + 0x40000, cpy_off, cpy_off + 0x3ff, MAP_FETCH);
 	SekClose();
 }
-
+#endif
 
 // Demon's World / Horror Story (set 1)
 
@@ -700,15 +880,15 @@ static struct BurnRomInfo demonwldRomDesc[] = {
 	{ "dsp_21.bin",		0x00800, 0x2d135376, BRF_PRG | BRF_ESS }, //  3 MCU code
 	{ "dsp_22.bin",		0x00800, 0x79389a71, BRF_PRG | BRF_ESS }, //  4
 
-	{ "rom05",			0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
-	{ "rom07",			0x20000, 0xa3a0d993, BRF_GRA },           //  6
-	{ "rom06",			0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
-	{ "rom08",			0x20000, 0xeb53ab09, BRF_GRA },           //  8
+	{ "rom05",		0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
+	{ "rom07",		0x20000, 0xa3a0d993, BRF_GRA },           //  6
+	{ "rom06",		0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
+	{ "rom08",		0x20000, 0xeb53ab09, BRF_GRA },           //  8
 
-	{ "rom01",			0x20000, 0x1b3724e9, BRF_GRA },           //  9
-	{ "rom02",			0x20000, 0x7b20a44d, BRF_GRA },           // 10
-	{ "rom03",			0x20000, 0x2cacdcd0, BRF_GRA },           // 11
-	{ "rom04",			0x20000, 0x76fd3201, BRF_GRA },           // 12
+	{ "rom01",		0x20000, 0x1b3724e9, BRF_GRA },           //  9
+	{ "rom02",		0x20000, 0x7b20a44d, BRF_GRA },           // 10
+	{ "rom03",		0x20000, 0x2cacdcd0, BRF_GRA },           // 11
+	{ "rom04",		0x20000, 0x76fd3201, BRF_GRA },           // 12
 
 	{ "prom12.bpr",		0x00020, 0xbc88cced, BRF_GRA },           // 13 Sprite attribute PROM
 	{ "prom13.bpr",		0x00020, 0xa1e17492, BRF_GRA },           // 14
@@ -721,9 +901,11 @@ static INT32 demonwldInit()
 {
 	INT32 nRet = DrvInit();
 
+#ifndef USE_DSP
 	if (nRet == 0) {
 		map_hack(0x1430);
 	}
+#endif
 
 	return nRet;
 }
@@ -739,26 +921,26 @@ struct BurnDriver BurnDrvDemonwld = {
 };
 
 
-// Demon's World / Horror Story (set 2)
+// Demon's World / Horror Story (Taito license, set 2)
 
 static struct BurnRomInfo demonwld1RomDesc[] = {
-	{ "o16n-10.bin",	0x20000, 0xfc38aeaa, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
-	{ "o16n-09.bin",	0x20000, 0x74f66643, BRF_PRG | BRF_ESS }, //  1
+	{ "o16-10.rom",		0x20000, 0x036ee46c, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "o16-09.rom",		0x20000, 0xbed746e3, BRF_PRG | BRF_ESS }, //  1
 
-	{ "o16-11.bin",		0x08000, 0xdbe08c85, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
+	{ "rom11",		0x08000, 0x397eca1b, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
 
 	{ "dsp_21.bin",		0x00800, 0x2d135376, BRF_PRG | BRF_ESS }, //  3 MCU code
 	{ "dsp_22.bin",		0x00800, 0x79389a71, BRF_PRG | BRF_ESS }, //  4
 
-	{ "rom05",			0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
-	{ "rom07",			0x20000, 0xa3a0d993, BRF_GRA },           //  6
-	{ "rom06",			0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
-	{ "rom08",			0x20000, 0xeb53ab09, BRF_GRA },           //  8
+	{ "rom05",		0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
+	{ "rom07",		0x20000, 0xa3a0d993, BRF_GRA },           //  6
+	{ "rom06",		0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
+	{ "rom08",		0x20000, 0xeb53ab09, BRF_GRA },           //  8
 
-	{ "rom01",			0x20000, 0x1b3724e9, BRF_GRA },           //  9
-	{ "rom02",			0x20000, 0x7b20a44d, BRF_GRA },           // 10
-	{ "rom03",			0x20000, 0x2cacdcd0, BRF_GRA },           // 11
-	{ "rom04",			0x20000, 0x76fd3201, BRF_GRA },           // 12
+	{ "rom01",		0x20000, 0x1b3724e9, BRF_GRA },           //  9
+	{ "rom02",		0x20000, 0x7b20a44d, BRF_GRA },           // 10
+	{ "rom03",		0x20000, 0x2cacdcd0, BRF_GRA },           // 11
+	{ "rom04",		0x20000, 0x76fd3201, BRF_GRA },           // 12
 
 	{ "prom12.bpr",		0x00020, 0xbc88cced, BRF_GRA },           // 13 Sprite attribute PROM
 	{ "prom13.bpr",		0x00020, 0xa1e17492, BRF_GRA },           // 14
@@ -767,13 +949,26 @@ static struct BurnRomInfo demonwld1RomDesc[] = {
 STD_ROM_PICK(demonwld1)
 STD_ROM_FN(demonwld1)
 
+static INT32 demonwld1Init()
+{
+	INT32 nRet = DrvInit();
+
+#ifndef USE_DSP
+	if (nRet == 0) {
+		map_hack(0x181c);
+	}
+#endif
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvDemonwld1 = {
 	"demonwld1", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Demon's World / Horror Story (Taito license, set 2)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 2)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
-	NULL, demonwld1RomInfo, demonwld1RomName, NULL, NULL, DemonwldInputInfo, DemonwldDIPInfo,
-	demonwldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	NULL, demonwld1RomInfo, demonwld1RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
+	demonwld1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
 
@@ -781,23 +976,23 @@ struct BurnDriver BurnDrvDemonwld1 = {
 // Demon's World / Horror Story (set 3)
 
 static struct BurnRomInfo demonwld2RomDesc[] = {
-	{ "o16-10.rom",		0x20000, 0x036ee46c, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
-	{ "o16-09.rom",		0x20000, 0xbed746e3, BRF_PRG | BRF_ESS }, //  1
+	{ "o16-10-2.bin",	0x20000, 0x84ee5218, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "o16-09-2.bin",	0x20000, 0xcf474cb2, BRF_PRG | BRF_ESS }, //  1
 
-	{ "rom11",			0x08000, 0x397eca1b, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
+	{ "rom11",		0x08000, 0x397eca1b, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
 
 	{ "dsp_21.bin",		0x00800, 0x2d135376, BRF_PRG | BRF_ESS }, //  3 MCU code
 	{ "dsp_22.bin",		0x00800, 0x79389a71, BRF_PRG | BRF_ESS }, //  4
 
-	{ "rom05",			0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
-	{ "rom07",			0x20000, 0xa3a0d993, BRF_GRA },           //  6
-	{ "rom06",			0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
-	{ "rom08",			0x20000, 0xeb53ab09, BRF_GRA },           //  8
+	{ "rom05",		0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
+	{ "rom07",		0x20000, 0xa3a0d993, BRF_GRA },           //  6
+	{ "rom06",		0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
+	{ "rom08",		0x20000, 0xeb53ab09, BRF_GRA },           //  8
 
-	{ "rom01",			0x20000, 0x1b3724e9, BRF_GRA },           //  9
-	{ "rom02",			0x20000, 0x7b20a44d, BRF_GRA },           // 10
-	{ "rom03",			0x20000, 0x2cacdcd0, BRF_GRA },           // 11
-	{ "rom04",			0x20000, 0x76fd3201, BRF_GRA },           // 12
+	{ "rom01",		0x20000, 0x1b3724e9, BRF_GRA },           //  9
+	{ "rom02",		0x20000, 0x7b20a44d, BRF_GRA },           // 10
+	{ "rom03",		0x20000, 0x2cacdcd0, BRF_GRA },           // 11
+	{ "rom04",		0x20000, 0x76fd3201, BRF_GRA },           // 12
 
 	{ "prom12.bpr",		0x00020, 0xbc88cced, BRF_GRA },           // 13 Sprite attribute PROM
 	{ "prom13.bpr",		0x00020, 0xa1e17492, BRF_GRA },           // 14
@@ -806,24 +1001,13 @@ static struct BurnRomInfo demonwld2RomDesc[] = {
 STD_ROM_PICK(demonwld2)
 STD_ROM_FN(demonwld2)
 
-static INT32 demonwld2Init()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0) {
-		map_hack(0x181c);
-	}
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvDemonwld2 = {
 	"demonwld2", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (set 3)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 3)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld2RomInfo, demonwld2RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
-	demonwld2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	demonwld1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };
 
@@ -831,23 +1015,23 @@ struct BurnDriver BurnDrvDemonwld2 = {
 // Demon's World / Horror Story (set 4)
 
 static struct BurnRomInfo demonwld3RomDesc[] = {
-	{ "o16-10-2.bin",	0x20000, 0x84ee5218, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
-	{ "o16-09-2.bin",	0x20000, 0xcf474cb2, BRF_PRG | BRF_ESS }, //  1
+	{ "o16-10.bin",		0x20000, 0x6f7468e0, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "o16-09.bin",		0x20000, 0xa572f5f7, BRF_PRG | BRF_ESS }, //  1
 
-	{ "rom11",			0x08000, 0x397eca1b, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
+	{ "rom11",		0x08000, 0x397eca1b, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
 
 	{ "dsp_21.bin",		0x00800, 0x2d135376, BRF_PRG | BRF_ESS }, //  3 MCU code
 	{ "dsp_22.bin",		0x00800, 0x79389a71, BRF_PRG | BRF_ESS }, //  4
 
-	{ "rom05",			0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
-	{ "rom07",			0x20000, 0xa3a0d993, BRF_GRA },           //  6
-	{ "rom06",			0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
-	{ "rom08",			0x20000, 0xeb53ab09, BRF_GRA },           //  8
+	{ "rom05",		0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
+	{ "rom07",		0x20000, 0xa3a0d993, BRF_GRA },           //  6
+	{ "rom06",		0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
+	{ "rom08",		0x20000, 0xeb53ab09, BRF_GRA },           //  8
 
-	{ "rom01",			0x20000, 0x1b3724e9, BRF_GRA },           //  9
-	{ "rom02",			0x20000, 0x7b20a44d, BRF_GRA },           // 10
-	{ "rom03",			0x20000, 0x2cacdcd0, BRF_GRA },           // 11
-	{ "rom04",			0x20000, 0x76fd3201, BRF_GRA },           // 12
+	{ "rom01",		0x20000, 0x1b3724e9, BRF_GRA },           //  9
+	{ "rom02",		0x20000, 0x7b20a44d, BRF_GRA },           // 10
+	{ "rom03",		0x20000, 0x2cacdcd0, BRF_GRA },           // 11
+	{ "rom04",		0x20000, 0x76fd3201, BRF_GRA },           // 12
 
 	{ "prom12.bpr",		0x00020, 0xbc88cced, BRF_GRA },           // 13 Sprite attribute PROM
 	{ "prom13.bpr",		0x00020, 0xa1e17492, BRF_GRA },           // 14
@@ -856,62 +1040,25 @@ static struct BurnRomInfo demonwld3RomDesc[] = {
 STD_ROM_PICK(demonwld3)
 STD_ROM_FN(demonwld3)
 
+static INT32 demonwld3Init()
+{
+	INT32 nRet = DrvInit();
+
+#ifndef USE_DSP
+	if (nRet == 0) {
+		map_hack(0x1828);
+	}
+#endif
+
+	return nRet;
+}
+
 struct BurnDriver BurnDrvDemonwld3 = {
 	"demonwld3", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 4)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld3RomInfo, demonwld3RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
-	demonwld2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
-	320, 240, 4, 3
-};
-
-
-// Demon's World / Horror Story (set 5)
-
-static struct BurnRomInfo demonwld4RomDesc[] = {
-	{ "o16-10.bin",		0x20000, 0x6f7468e0, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
-	{ "o16-09.bin",		0x20000, 0xa572f5f7, BRF_PRG | BRF_ESS }, //  1
-
-	{ "rom11",			0x08000, 0x397eca1b, BRF_PRG | BRF_ESS }, //  2 CPU #1 code
-
-	{ "dsp_21.bin",		0x00800, 0x2d135376, BRF_PRG | BRF_ESS }, //  3 MCU code
-	{ "dsp_22.bin",		0x00800, 0x79389a71, BRF_PRG | BRF_ESS }, //  4
-
-	{ "rom05",			0x20000, 0x6506c982, BRF_GRA },           //  5 Tile data
-	{ "rom07",			0x20000, 0xa3a0d993, BRF_GRA },           //  6
-	{ "rom06",			0x20000, 0x4fc5e5f3, BRF_GRA },           //  7
-	{ "rom08",			0x20000, 0xeb53ab09, BRF_GRA },           //  8
-
-	{ "rom01",			0x20000, 0x1b3724e9, BRF_GRA },           //  9
-	{ "rom02",			0x20000, 0x7b20a44d, BRF_GRA },           // 10
-	{ "rom03",			0x20000, 0x2cacdcd0, BRF_GRA },           // 11
-	{ "rom04",			0x20000, 0x76fd3201, BRF_GRA },           // 12
-
-	{ "prom12.bpr",		0x00020, 0xbc88cced, BRF_GRA },           // 13 Sprite attribute PROM
-	{ "prom13.bpr",		0x00020, 0xa1e17492, BRF_GRA },           // 14
-};
-
-STD_ROM_PICK(demonwld4)
-STD_ROM_FN(demonwld4)
-
-static INT32 demonwld4Init()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0) {
-		map_hack(0x1828);
-	}
-
-	return nRet;
-}
-
-struct BurnDriver BurnDrvDemonwld4 = {
-	"demonwld4", "demonwld", NULL, NULL, "1989",
-	"Demon's World / Horror Story (set 5)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
-	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 5)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
-	NULL, demonwld4RomInfo, demonwld4RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
-	demonwld4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	demonwld3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

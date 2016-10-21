@@ -220,6 +220,8 @@ extern UINT16 BCU2Reg[8];
 
 extern INT32 nBCU2TileXOffset;
 extern INT32 nBCU2TileYOffset;
+extern INT32 nFCU2SpriteXOffset;
+extern INT32 nFCU2SpriteYOffset;
 
 INT32 ToaPal2Update();
 INT32 ToaInitBCU2();

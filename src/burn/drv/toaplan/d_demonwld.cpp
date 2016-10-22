@@ -1004,7 +1004,7 @@ static INT32 demonwld2Init()
 struct BurnDriver BurnDrvDemonwld2 = {
 	"demonwld2", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (set 3)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
-	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 2)\0", NULL, NULL, NULL,
+	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 3)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld2RomInfo, demonwld2RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
 	demonwld2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
@@ -1043,7 +1043,7 @@ STD_ROM_FN(demonwld3)
 struct BurnDriver BurnDrvDemonwld3 = {
 	"demonwld3", "demonwld", NULL, NULL, "1989",
 	"Demon's World / Horror Story (set 4)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
-	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 3)\0", NULL, NULL, NULL,
+	L"Demon's World\0\u30DB\u30E9\u30FC\u30B9\u30C8\u30FC\u30EA\u30FC (set 4)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_PLATFORM, 0,
 	NULL, demonwld3RomInfo, demonwld3RomName, NULL, NULL, DemonwldInputInfo, Demonwl1DIPInfo,
 	demonwld2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,

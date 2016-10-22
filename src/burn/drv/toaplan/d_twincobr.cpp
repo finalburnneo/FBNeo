@@ -506,7 +506,6 @@ static void twincobr_dsp(INT32 enable)
 	else
 	{
 		tms32010_set_irq_line(0, CPU_IRQSTATUS_NONE); /* TMS32010 INT */
-		tms32010RunEnd();
 	}
 }
 
@@ -780,6 +779,7 @@ static void twincobr_dsp_bio_w(UINT16 data)
 		if (dsp_execute) {
 			m68k_halt = 0;
 			dsp_execute = 0;
+			tms32010RunEnd();
 		}
 
 		dsp_BIO = 1;

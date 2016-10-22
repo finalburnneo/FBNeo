@@ -1985,8 +1985,8 @@ static struct BurnRomInfo gulfwar2aRomDesc[] = {
 
 	{ "06-u51.bin",		0x08000, 0x75504f95, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "gw2_22.udsp1",	0x00800, 0x3a97b0db, 3 | BRF_PRG | BRF_ESS }, //  3 TMS32010 code
-	{ "gw2_21.udsp2",	0x00800, 0x87a473af, 3 | BRF_PRG | BRF_ESS }, //  4
+	{ "gw2_22.udsp1",	0x01000, 0x3a97b0db, 3 | BRF_PRG | BRF_ESS }, //  3 TMS32010 code
+	{ "gw2_21.udsp2",	0x01000, 0x87a473af, 3 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "gw2_23.u9",		0x08000, 0xa2aee4c8, 4 | BRF_GRA },           //  5 Text characters
 	{ "gw2_24.u10",		0x08000, 0xfb3f71cd, 4 | BRF_GRA },           //  6

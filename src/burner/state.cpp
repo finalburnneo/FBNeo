@@ -260,6 +260,10 @@ INT32 BurnStateLoad(TCHAR* szName, INT32 bAll, INT32 (*pLoadGame)())
 
 	fclose(fp);
 
+	if (nRet == 0) { // Force the palette to recalculate on state load
+		BurnRecalcPal();
+	}
+
 	if (nRet < 0) {
 		return -nRet;
 	} else {

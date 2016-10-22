@@ -756,13 +756,13 @@ static UINT16 twincobr_dsp_r()
 	return 0;
 }
 
-static void twincobr_dsp_w(UINT16 /*address*/, UINT16 data)
+static void twincobr_dsp_w(UINT16 data)
 {
 	dsp_execute = 0;
 
 	switch (main_ram_seg)
 	{
-		case 0x30000:   if ((dsp_addr_w < 3) && (data == 0)) dsp_execute = 1;
+		case 0x30000: if ((dsp_addr_w < 3) && (data == 0)) dsp_execute = 1;
 		case 0x40000:
 		case 0x50000:
 			SekWriteWord(main_ram_seg + dsp_addr_w, data);
@@ -796,7 +796,7 @@ static void dsp_write(INT32 port, UINT16 data)
 	switch (port)
 	{
 		case 0x00: twincobr_dsp_addrsel_w(data); return;
-		case 0x02: twincobr_dsp_w(port, data); return;
+		case 0x02: twincobr_dsp_w(data); return;
 		case 0x04: return; // bootleg
 		case 0x06: twincobr_dsp_bio_w(data); return;
 	}
@@ -1051,6 +1051,8 @@ static INT32 DrvInit(INT32 game_select)
 
 	DrvGfxDecode();
 
+	BurnSetRefreshRate(54.877858);
+
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x02ffff, MAP_ROM);
@@ -1232,6 +1234,7 @@ static INT32 DrvDraw()
 		DrvPaletteUpdate();
 		DrvRecalc = 0;
 	}
+
 	BurnTransferClear();
 
 	if (displayenable)
@@ -1271,8 +1274,8 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[3] = { 7000000 / 60, 3500000 / 60, 14000000 / 60 };
+	INT32 nInterleave = 286;
+	INT32 nCyclesTotal[3] = { (INT32)(double)(7000000 / 54.877858), (INT32)(double)(3500000 / 54.877858), (INT32)(double)(14000000 / 54.877858) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	SekOpen(0);
@@ -1290,7 +1293,7 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[0] += SekRun(nSegment);
 
-			if (i == (nInterleave - 1) && irq_enable) {
+			if (i == 240 && irq_enable) {
 				irq_enable = 0;
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
@@ -1300,8 +1303,12 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
-		if (i == 240) vblank = 1;
-
+		if (i == 240) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+			vblank = 1;
+		}
 	}
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
@@ -1312,10 +1319,6 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
 

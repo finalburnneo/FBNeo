@@ -1971,7 +1971,7 @@ struct BurnDriver BurnDrvGulfwar2 = {
 	"Gulf War II (set 1)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, gulfwar2RomInfo, gulfwar2RomName, NULL, NULL, FsharkInputInfo, FsharkDIPInfo,
+	NULL, gulfwar2RomInfo, gulfwar2RomName, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
 	gulfwar2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };
@@ -2022,7 +2022,7 @@ struct BurnDriver BurnDrvGulfwar2a = {
 	"Gulf War II (set 2)\0", NULL, "Comad", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TOAPLAN_MISC, GBF_VERSHOOT, 0,
-	NULL, gulfwar2aRomInfo, gulfwar2aRomName, NULL, NULL, FsharkInputInfo, FsharkDIPInfo,
+	NULL, gulfwar2aRomInfo, gulfwar2aRomName, NULL, NULL, TwincobrInputInfo, TwincobrDIPInfo,
 	gulfwar2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x700,
 	240, 320, 3, 4
 };

@@ -134,6 +134,11 @@ static struct BurnDIPInfo MSX50hzJoySwapDIPList[]=
 	{0x17, 0xff, 0xff, 0x20, NULL		},
 };
 
+static struct BurnDIPInfo MSX50hzDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x20, NULL		},
+};
+
 static struct BurnDIPInfo MSXJoySwapDIPList[]=
 {
 	{0x17, 0xff, 0xff, 0x30, NULL		},
@@ -144,11 +149,18 @@ static struct BurnDIPInfo MSXMapCursorToJoy1DIPList[]=
 	{0x17, 0xff, 0xff, 0x80, NULL		},
 };
 
+static struct BurnDIPInfo MSXMapCursorToJoy1_60hzDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x80+0x10, NULL		},
+};
+
 STDDIPINFOEXT(MSX, MSXDefault, MSX)
 STDDIPINFOEXT(MSXJapan, MSXJBIOS, MSX)
 STDDIPINFOEXT(MSXJoyport2, MSXJoySwap, MSX)
 STDDIPINFOEXT(MSXEuropeJoyport2, MSX50hzJoySwap, MSX)
+STDDIPINFOEXT(MSXEurope, MSX50hz, MSX)
 STDDIPINFOEXT(MSXJoyCursor, MSXMapCursorToJoy1, MSX)
+STDDIPINFOEXT(MSXJoyCursor60hz, MSXMapCursorToJoy1_60hz, MSX)
 
 // ROM mapper types:
 #define MAP_KONGEN8  0      // KonamiGeneric 8k
@@ -23877,6 +23889,120 @@ struct BurnDriver BurnDrvMSX_stratos2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_stratos2RomInfo, MSX_stratos2RomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Addictaball (Euro)
+
+static struct BurnRomInfo MSX_addictblRomDesc[] = {
+	{ "addictaball (1988)(alligata software)(gb)[run'cas-'].cas",	0x0a54f, 0xa74a1df6, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_addictbl, MSX_addictbl, msx_msx)
+STD_ROM_FN(MSX_addictbl)
+
+struct BurnDriver BurnDrvMSX_addictbl = {
+	"msx_addictbl", NULL, "msx_msx", NULL, "1988",
+	"Addictaball (Euro)\0", NULL, "Alligata Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_addictblRomInfo, MSX_addictblRomName, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// The Apeman Strikes Again
+
+static struct BurnRomInfo MSX_apemanRomDesc[] = {
+	{ "The Apeman Strikes Again (Bytebusters, 1985).rom",	0x10000, 0x395bec07, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_apeman, MSX_apeman, msx_msx)
+STD_ROM_FN(MSX_apeman)
+
+struct BurnDriver BurnDrvMSX_apeman = {
+	"msx_apeman", NULL, "msx_msx", NULL, "1985",
+	"The Apeman Strikes Again\0", NULL, "Bytebusters", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_apemanRomInfo, MSX_apemanRomName, NULL, NULL, MSXInputInfo, MSXEuropeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Balloon Punch
+
+static struct BurnRomInfo MSX_balloonpunchRomDesc[] = {
+	{ "Balloon Punch (1989)(Satico)(JP).rom",	0x10000, 0xe018a918, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_balloonpunch, MSX_balloonpunch, msx_msx)
+STD_ROM_FN(MSX_balloonpunch)
+
+struct BurnDriver BurnDrvMSX_balloonpunch = {
+	"msx_balloonpunch", NULL, "msx_msx", NULL, "1989",
+	"Balloon Punch\0", NULL, "Satico", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_balloonpunchRomInfo, MSX_balloonpunchRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Chubby Gristle
+
+static struct BurnRomInfo MSX_chubbygristleRomDesc[] = {
+	{ "Chubby Gristle (1988)(Grandslam Entertainments)(GB).rom",	0x20000, 0x28f873f8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_chubbygristle, MSX_chubbygristle, msx_msx)
+STD_ROM_FN(MSX_chubbygristle)
+
+struct BurnDriver BurnDrvMSX_chubbygristle = {
+	"msx_chubbygristle", NULL, "msx_msx", NULL, "1988",
+	"Chubby Gristle\0", NULL, "Grandslam Entertainments", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_chubbygristleRomInfo, MSX_chubbygristleRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Attack Mosquiton
+
+static struct BurnRomInfo MSX_mosquitonRomDesc[] = {
+	{ "Attack_Mosquiton.cas",	0x33b6, 0xe759ac71, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_mosquiton, MSX_mosquiton, msx_msx)
+STD_ROM_FN(MSX_mosquiton)
+
+struct BurnDriver BurnDrvMSX_mosquiton = {
+	"msx_mosquiton", NULL, "msx_msx", NULL, "1986",
+	"Attack Mosquiton\0", NULL, "Shouji Ogawa", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_mosquitonRomInfo, MSX_mosquitonRomName, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	CasCloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// The Ghost
+
+static struct BurnRomInfo MSX_theghostRomDesc[] = {
+	{ "THE_GHOST.CAS",	0x02726, 0x2db14915, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_theghost, MSX_theghost, msx_msx)
+STD_ROM_FN(MSX_theghost)
+
+struct BurnDriver BurnDrvMSX_theghost = {
+	"msx_theghost", NULL, "msx_msx", NULL, "1987",
+	"The Ghost\0", NULL, "Teruhiko Matsubara", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_theghostRomInfo, MSX_theghostRomName, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	CasCloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

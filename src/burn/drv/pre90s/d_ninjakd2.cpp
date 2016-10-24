@@ -2283,26 +2283,26 @@ struct BurnDriver BurnDrvJt104 = {
 };
 
 
-// Mutant Night
+// Mutant Night 
 
 static struct BurnRomInfo mnightRomDesc[] = {
-	{ "mn6-j19.bin",	0x08000, 0x56678d14, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "mn5-j17.bin",	0x08000, 0x2a73f88e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "mn4-j16.bin",	0x08000, 0xc5e42bb4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "mn3-j14.bin",	0x08000, 0xdf6a4f7a, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "mn2-j12.bin",	0x08000, 0x9c391d1b, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1.j19",			0x08000, 0x56678d14, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.j17",			0x08000, 0x2a73f88e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.j16",			0x08000, 0xc5e42bb4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.j14",			0x08000, 0xdf6a4f7a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.j12",			0x08000, 0x9c391d1b, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "mn1-j7.bin",		0x10000, 0xa0782a31, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "6.j7",			0x10000, 0xa0782a31, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
 
-	{ "mn10-b10.bin",	0x08000, 0x37b8221f, 3 | BRF_GRA },           //  6 Foreground Tiles
+	{ "13.b10",			0x08000, 0x8c177a19, 3 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "mn7-e11.bin",	0x10000, 0x4883059c, 4 | BRF_GRA },           //  7 Sprite Tiles
-	{ "mn8-e12.bin",	0x10000, 0x02b91445, 4 | BRF_GRA },           //  8
-	{ "mn9-e14.bin",	0x10000, 0x9f08d160, 4 | BRF_GRA },           //  9
+	{ "9.e11",			0x10000, 0x4883059c, 4 | BRF_GRA },           //  7 Sprite Tiles
+	{ "8.e12",			0x10000, 0x02b91445, 4 | BRF_GRA },           //  8
+	{ "7.e14",			0x10000, 0x9f08d160, 4 | BRF_GRA },           //  9
 
-	{ "mn11-b20.bin",	0x10000, 0x4d37e0f4, 5 | BRF_GRA },           // 10 Background Tiles
-	{ "mn12-b22.bin",	0x10000, 0xb22cbbd3, 5 | BRF_GRA },           // 11
-	{ "mn13-b23.bin",	0x10000, 0x65714070, 5 | BRF_GRA },           // 12
+	{ "12.b20",			0x10000, 0x4d37e0f4, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "11.b22",			0x10000, 0xb22cbbd3, 5 | BRF_GRA },           // 11
+	{ "10.b23",			0x10000, 0x65714070, 5 | BRF_GRA },           // 12
 };
 
 STD_ROM_PICK(mnight)
@@ -2310,10 +2310,46 @@ STD_ROM_FN(mnight)
 
 struct BurnDriver BurnDrvMnight = {
 	"mnight", NULL, NULL, NULL, "1987",
-	"Mutant Night\0", NULL, "UPL (Kawakus license)", "Miscellaneous",
+	"Mutant Night\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, mnightRomInfo, mnightRomName, NULL, NULL, DrvInputInfo, MnightDIPInfo,
+	MnightInit, DrvExit, DrvFrame, MnightDraw, DrvScan, &DrvRecalc, 0x300,
+	256, 192, 4, 3
+};
+
+
+// Mutant Night (Japan)
+
+static struct BurnRomInfo mnightjRomDesc[] = {
+	{ "1.j19",			0x08000, 0x56678d14, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.j17",			0x08000, 0x2a73f88e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.j16",			0x08000, 0xc5e42bb4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.j14",			0x08000, 0xdf6a4f7a, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.j12",			0x08000, 0x9c391d1b, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "6.j7",			0x10000, 0xa0782a31, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+
+	{ "13.b10",			0x08000, 0x37b8221f, 3 | BRF_GRA },           //  6 Foreground Tiles
+
+	{ "9.e11",			0x10000, 0x4883059c, 4 | BRF_GRA },           //  7 Sprite Tiles
+	{ "8.e12",			0x10000, 0x02b91445, 4 | BRF_GRA },           //  8
+	{ "7.e14",			0x10000, 0x9f08d160, 4 | BRF_GRA },           //  9
+
+	{ "12.b20",			0x10000, 0x4d37e0f4, 5 | BRF_GRA },           // 10 Background Tiles
+	{ "11.b22",			0x10000, 0xb22cbbd3, 5 | BRF_GRA },           // 11
+	{ "10.b23",			0x10000, 0x65714070, 5 | BRF_GRA },           // 12
+};
+
+STD_ROM_PICK(mnightj)
+STD_ROM_FN(mnightj)
+
+struct BurnDriver BurnDrvMnightj = {
+	"mnightj", "mnight", NULL, NULL, "1987",
+	"Mutant Night (Japan)\0", NULL, "UPL (Kawakus license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, mnightjRomInfo, mnightjRomName, NULL, NULL, DrvInputInfo, MnightDIPInfo,
 	MnightInit, DrvExit, DrvFrame, MnightDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 192, 4, 3
 };

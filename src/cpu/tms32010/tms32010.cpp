@@ -136,9 +136,9 @@ void tms32010_set_read_port_handler(UINT16 (*pointer)(INT32))
 }
 
 
-#define TMS32010_BIO_In (io_read_word(TMS32010_BIO<<1))
-#define TMS32010_In(Port) (io_read_word((Port)<<1))
-#define TMS32010_Out(Port,Value) (io_write_word((Port)<<1,Value))
+#define TMS32010_BIO_In (io_read_word(TMS32010_BIO))
+#define TMS32010_In(Port) (io_read_word(Port))
+#define TMS32010_Out(Port,Value) (io_write_word(Port,Value))
 #define TMS32010_ROM_RDMEM(A) (program_read_word_16be((A)<<1))
 #define TMS32010_ROM_WRMEM(A,V) (program_write_word_16be((A)<<1,V))
 #define TMS32010_RAM_RDMEM(A) (data_read_word_16be((A)<<1))

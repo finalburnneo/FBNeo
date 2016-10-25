@@ -288,8 +288,8 @@ static void dsp_write(INT32 port, UINT16 data)
 	switch (port)
 	{
 		case 0x00: demonwld_dsp_addrsel_w(data); return;
-		case 0x02: demonwld_dsp_w(data); return;
-		case 0x06: demonwld_dsp_bio_w(data); return;
+		case 0x01: demonwld_dsp_w(data); return;
+		case 0x03: demonwld_dsp_bio_w(data); return;
 	}
 }
 
@@ -297,8 +297,8 @@ static UINT16 dsp_read(INT32 port)
 {
 	switch (port)
 	{
-		case 0x02: return demonwld_dsp_r();
-		case 0x20: return demonwld_BIO_r();
+		case 0x01: return demonwld_dsp_r();
+		case 0x10: return demonwld_BIO_r();
 	}
 
 	return 0;
@@ -363,13 +363,11 @@ static void __fastcall demonwldWriteWord(UINT32 a, UINT16 d)
 		return;
 
 		case 0xe00000:
-			bprintf(0, _T("xoffs %d\n"), d);
 			nBCU2TileXOffset = d;
 		return;
 
 		case 0xe00002:
-			bprintf(0, _T("yoffs %d\n"), d);
-			nBCU2TileYOffset = d-16;
+			nBCU2TileYOffset = d - 16;
 		return;
 
 		case 0xe00006:

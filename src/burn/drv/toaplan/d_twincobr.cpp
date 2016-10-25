@@ -796,9 +796,9 @@ static void dsp_write(INT32 port, UINT16 data)
 	switch (port)
 	{
 		case 0x00: twincobr_dsp_addrsel_w(data); return;
-		case 0x02: twincobr_dsp_w(data); return;
-		case 0x04: return; // bootleg
-		case 0x06: twincobr_dsp_bio_w(data); return;
+		case 0x01: twincobr_dsp_w(data); return;
+		case 0x02: return; // bootleg
+		case 0x03: twincobr_dsp_bio_w(data); return;
 	}
 }
 
@@ -806,9 +806,9 @@ static UINT16 dsp_read(INT32 port)
 {
 	switch (port)
 	{
-		case 0x02: return twincobr_dsp_r();
-		case 0x04: fsharkbt_8741 += 1; return (fsharkbt_8741 & 1);
-		case 0x20: return twincobr_BIO_r();
+		case 0x01: return twincobr_dsp_r();
+		case 0x02: fsharkbt_8741 += 1; return (fsharkbt_8741 & 1);
+		case 0x10: return twincobr_BIO_r();
 	}
 
 	return 0;

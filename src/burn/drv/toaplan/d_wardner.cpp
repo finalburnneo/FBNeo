@@ -569,21 +569,20 @@ static void dsp_write(INT32 port, UINT16 data)
 	switch (port)
 	{
 		case 0x00: wardner_dsp_addrsel_w(data); return;
-		case 0x02: wardner_dsp_w(data); return;
-		case 0x06: twincobr_dsp_bio_w(data); return;
+		case 0x01: wardner_dsp_w(data); return;
+		case 0x03: twincobr_dsp_bio_w(data); return;
 	}
-	bprintf (0, _T("DSPWP: %2.2x, %4.4x\n"), port&0xff, data);
+	//bprintf (0, _T("DSPWP: %2.2x, %4.4x\n"), port&0xff, data);
 }
 
 static UINT16 dsp_read(INT32 port)
 {
-
 	switch (port)
 	{
-		case 0x02: return wardner_dsp_r();
-		case 0x20: return twincobr_BIO_r();
+		case 0x01: return wardner_dsp_r();
+		case 0x10: return twincobr_BIO_r();
 	}
-	bprintf (0, _T("DSPRP: %2.2x\n"), port&0xff);
+	//bprintf (0, _T("DSPRP: %2.2x\n"), port&0xff);
 
 	return 0;
 }

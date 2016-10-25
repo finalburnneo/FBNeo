@@ -51,6 +51,7 @@ static UINT16 scrolly[4];
 static UINT16 vidramoffs[4];
 
 static INT32 vblank;
+static UINT8 main_bank;
 static INT32 coin_lockout;
 static INT32 previous_coin;
 
@@ -59,7 +60,7 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
-static UINT16 DrvInputs[3];
+static UINT8 DrvInputs[3];
 
 static struct BurnInputInfo WardnerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
@@ -283,7 +284,7 @@ static void wardner_dsp(INT32 enable)
 	{
 		tms32010_set_irq_line(0, CPU_IRQSTATUS_ACK); /* TMS32010 INT */
 		z80_halt = 1;
-		z80_ICount = 0; // ZetRunEnd();
+		z80_ICount = 0;
 	}
 	else
 	{
@@ -298,7 +299,11 @@ static void wardner_coin_write(UINT8 data)
 		case 0x00:
 		case 0x01:
 			wardner_dsp(data);
-		return;
+			return;
+		case 0x0c: coin_lockout = 0x08; break;
+		case 0x0d: coin_lockout = 0x00; break;
+		case 0x0e: coin_lockout = 0x10; break;
+		case 0x0f: coin_lockout = 0x00; break;
 	}
 }
 
@@ -327,8 +332,8 @@ static void control_write(UINT8 data)
 		break;
 
 		case 0x0c:
-		case 0x0d:
-			wardner_dsp(data & 1);
+		case 0x0d: // not for z80 cpus, only 68k! -dink
+			//wardner_dsp(data & 1);
 		break;
 
 		case 0x0e:
@@ -340,6 +345,7 @@ static void control_write(UINT8 data)
 
 static void bankswitch(INT32 data)
 {
+	main_bank = data;
 	INT32 bank = (data & 0x07) * 0x8000;
 
 	ZetMapMemory(DrvZ80ROM0 + bank, 0x8000, 0xffff, MAP_ROM);
@@ -510,7 +516,7 @@ static void twincobr_dsp_bio_w(UINT16 data)
 		if (dsp_execute) {
 			z80_halt = 0;
 			dsp_execute = 0;
-			tms32010RunEnd();
+			//tms32010RunEnd();
 		}
 
 		dsp_BIO = 1;
@@ -537,7 +543,7 @@ static UINT16 wardner_dsp_r()
 		case 0x7000:
 		case 0x8000:
 		case 0xa000:
-			return ZetReadByte(main_ram_seg + dsp_addr_w) + (ZetReadByte(main_ram_seg + dsp_addr_w + 1) << 8);
+			return ZetReadByte(main_ram_seg + dsp_addr_w) | (ZetReadByte(main_ram_seg + dsp_addr_w + 1) << 8);
 	}
 
 	return 0;
@@ -560,25 +566,24 @@ static void wardner_dsp_w(UINT16 data)
 
 static void dsp_write(INT32 port, UINT16 data)
 {
-//	bprintf (0, _T("DSPWP: %2.2x, %4.4x\n"), port&0xff, data);
-
 	switch (port)
 	{
 		case 0x00: wardner_dsp_addrsel_w(data); return;
 		case 0x02: wardner_dsp_w(data); return;
 		case 0x06: twincobr_dsp_bio_w(data); return;
 	}
+	bprintf (0, _T("DSPWP: %2.2x, %4.4x\n"), port&0xff, data);
 }
 
 static UINT16 dsp_read(INT32 port)
 {
-//	bprintf (0, _T("DSPRP: %2.2x\n"), port&0xff);
 
 	switch (port)
 	{
 		case 0x02: return wardner_dsp_r();
 		case 0x20: return twincobr_BIO_r();
 	}
+	bprintf (0, _T("DSPRP: %2.2x\n"), port&0xff);
 
 	return 0;
 }
@@ -599,6 +604,7 @@ static INT32 DrvDoReset()
 
 	ZetOpen(0);
 	ZetReset();
+	bankswitch(0);
 	ZetClose();
 
 	ZetOpen(1);
@@ -732,10 +738,10 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{
+		memset (DrvZ80ROM0, 0xff, 0x40000);
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x20000,  2, 1)) return 1;
-		memset (DrvZ80ROM0 + 0x30000, 0xff, 0x8000);
 		if (BurnLoadRom(DrvZ80ROM0 + 0x38000,  3, 1)) return 1;
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  4, 1)) return 1;
@@ -874,7 +880,7 @@ static void predraw_sprites()
 	INT32 xoffs = 31;
 	INT32 xoffs_flipped = 15;
 
-	memset (pTempDraw, 0, nScreenWidth * nScreenHeight * sizeof(short));
+	memset (pTempDraw, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
 
 	for (INT32 offs = 0; offs < 0x1000/2; offs += 4)
 	{
@@ -946,6 +952,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	if (displayenable)
 	{
 		predraw_sprites();
@@ -956,10 +964,6 @@ static INT32 DrvDraw()
 		draw_sprites(2);
 		draw_layer(0, 0, 0);
 		draw_sprites(3);
-	}
-	else
-	{
-		BurnTransferClear();
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -984,13 +988,13 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		if ((DrvInputs[2] & 0x08) && (previous_coin & 0x08)) coin_lockout |= 0x08;
-		if ((DrvInputs[2] & 0x10) && (previous_coin & 0x10)) coin_lockout |= 0x10;
-
-		previous_coin = DrvInputs[2];
+		// 1 coin per frame.
+		if (DrvInputs[2] & 0x18 && previous_coin & 0x18) {
+			DrvInputs[2] &= ~0x18;
+		} else previous_coin = DrvInputs[2];
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 286;
 	INT32 nCyclesTotal[3] = { 6000000 / 60, 3500000 / 60, 14000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
@@ -1007,9 +1011,9 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[0] += ZetRun(nSegment);
 
-			if (i == (nInterleave - 1) && irq_enable) {
+			if (i == 240 && irq_enable) {
 				irq_enable = 0;
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // or hold?
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // or hold?
 			}
 		}
 
@@ -1019,11 +1023,18 @@ static INT32 DrvFrame()
 		ZetClose();
 
 		ZetOpen(1);
-
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
-
-		if (i == 240) vblank = 1;
 		ZetClose();
+
+		if (i == 240) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+
+			memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
+
+			vblank = 1;
+		}
 	}
 
 	ZetOpen(1);
@@ -1035,12 +1046,6 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
 
 	return 0;
 }
@@ -1079,6 +1084,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dsp_addr_w);
 		SCAN_VAR(dsp_execute);
 		SCAN_VAR(dsp_BIO);
+		SCAN_VAR(main_bank);
+
+		if (nAction & ACB_WRITE) {
+			ZetOpen(0);
+			bankswitch(main_bank);
+			ZetClose();
+		}
+
 	}
 
 	return 0;

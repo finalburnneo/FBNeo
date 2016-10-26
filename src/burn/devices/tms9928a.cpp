@@ -175,6 +175,7 @@ void TMS9928AReset()
 	tms.Addr = tms.ReadAhead = tms.INT = 0;
 	tms.FirstByte = 0;
 	tms.latch = 0;
+	tms.mode = 0;
 }
 
 void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*INTCallback)(int))

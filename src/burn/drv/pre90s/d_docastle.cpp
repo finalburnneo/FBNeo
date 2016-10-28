@@ -417,9 +417,12 @@ STDDIPINFO(Kickridr)
 static void DrvMakeInputs()
 {
 	UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
-	UINT32 DrvJoyInit[3] = { 0xff, 0xff, 0xff };
+	UINT32 DrvJoyInit[3] = { 0, 0xff, 0xff };
 
 	CompileInput(DrvJoy, (void*)DrvInput, 3, 8, DrvJoyInit);
+
+	ProcessJoystick(&DrvInput[0], 0, 1,3,2,0, INPUT_4WAY);
+	ProcessJoystick(&DrvInput[0], 1, 5,7,6,4, INPUT_4WAY | INPUT_MAKEACTIVELOW);
 }
 
 static UINT8 shared0r(UINT8 offs)

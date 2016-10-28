@@ -288,7 +288,7 @@ static INT32 DrvDoReset()
 	EEPROMReset();
 
 	if (EEPROMAvailable() == 0) {
-		EEPROMFill(DrvEEPROM, 0, 0x80);
+		EEPROMFill(DrvEEPROM, 0xff, 0x80);
 	}
 
 	deco16Reset();

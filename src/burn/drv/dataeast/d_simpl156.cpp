@@ -32,6 +32,8 @@ static UINT8 DrvDips[1];
 static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
 
+static INT32 charlienmode = 0;
+
 static INT32 DrvOkiBank;
 
 static struct BurnInputInfo Simpl156InputList[] = {
@@ -288,7 +290,7 @@ static INT32 DrvDoReset()
 	EEPROMReset();
 
 	if (EEPROMAvailable() == 0) {
-		EEPROMFill(DrvEEPROM, 0xff, 0x80);
+		EEPROMFill(DrvEEPROM, (charlienmode) ? 0xff : 0x00, 0x80);
 	}
 
 	deco16Reset();
@@ -418,6 +420,8 @@ static INT32 DrvExit()
 	deco16Exit();
 
 	BurnFree (AllMem);
+
+	charlienmode = 0;
 
 	return 0;
 }
@@ -965,6 +969,7 @@ static INT32 charlienLoadCallback(INT32 *gfxlen0, INT32 *gfxlen1)
 
 static INT32 charlienInit()
 {
+	charlienmode = 1;
 	return CommonInit(charlienLoadCallback, mitchell_map, 2, 0xc8c8);
 }
 

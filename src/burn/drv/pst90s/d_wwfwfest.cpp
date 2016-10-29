@@ -188,56 +188,82 @@ static struct BurnDIPInfo DrvDIPList[]=
 STDDIPINFO(Drv)
 
 static struct BurnRomInfo DrvRomDesc[] = {
-	{ "31a13-2.ic19",  0x040000, 0x7175bca7, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "31a14-2.ic18",  0x040000, 0x5d06bfd1, BRF_ESS | BRF_PRG }, //  1
+	{ "31e13-0.ic19",  0x040000, 0xbd02e3c4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "31e14-0.ic18",  0x040000, 0x933ea1a0, BRF_ESS | BRF_PRG }, //  1
 	
 	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	
-	{ "31a12-0.ic33",  0x020000, 0xd0803e20, BRF_GRA },	      //  3	Chars
+	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      	  //  3	Chars
 	
-	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      //  4	Tiles
-	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      //  5
+	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      	  //  4	Tiles
+	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      	  //  5
 	
-	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      //  6	Sprites
-	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      //  7
-	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      //  8
+	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      	  //  6	Sprites
+	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      	  //  7
+	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      	  //  8
 	{ "31j4.ic10",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  9
-	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      //  10
-	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      //  11
-	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      //  12
-	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      //  13
+	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      // 10
+	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 11
+	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      	  // 12
+	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      	  // 13
 	
-	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      //  14	Samples
+	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      	  // 14	Samples
 };
 
 STD_ROM_PICK(Drv)
 STD_ROM_FN(Drv)
 
-static struct BurnRomInfo DrvaRomDesc[] = {
+static struct BurnRomInfo DrvuRomDesc[] = {
+	{ "31a13-2.ic19",  0x040000, 0x7175bca7, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "31a14-2.ic18",  0x040000, 0x5d06bfd1, BRF_ESS | BRF_PRG }, //  1
+	
+	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
+	
+	{ "31a12-0.ic33",  0x020000, 0xd0803e20, BRF_GRA },	      	  //  3	Chars
+	
+	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      	  //  4	Tiles
+	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      	  //  5
+	
+	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      	  //  6	Sprites
+	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      	  //  7
+	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      	  //  8
+	{ "31j4.ic10",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  9
+	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      // 10
+	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 11
+	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      	  // 12
+	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      	  // 13
+	
+	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      	  // 14	Samples
+};
+
+STD_ROM_PICK(Drvu)
+STD_ROM_FN(Drvu)
+
+static struct BurnRomInfo DrvuaRomDesc[] = {
 	{ "wf_19.rom",     0x040000, 0xbd02e3c4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "wf_18.rom",     0x040000, 0x933ea1a0, BRF_ESS | BRF_PRG }, //  1	
 	
 	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	
-	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      //  3	Chars
+	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      	  //  3	Chars
 	
-	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      //  4	Tiles
-	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      //  5
+	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      	  //  4	Tiles
+	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      	  //  5
 	
-	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      //  6	Sprites
-	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      //  7
-	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      //  8
+	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      	  //  6	Sprites
+	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      	  //  7
+	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      	  //  8
 	{ "31j4.ic10",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  9
-	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      //  10
-	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      //  11
-	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      //  12
-	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      //  13
+	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      // 10
+	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 11
+	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      	  // 12
+	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      	  // 13
 	
-	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      //  14	Samples
+	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      	  // 14	Samples
 };
 
-STD_ROM_PICK(Drva)
-STD_ROM_FN(Drva)
+STD_ROM_PICK(Drvua)
+STD_ROM_FN(Drvua)
 
 static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "2",             0x040000, 0x632bb3a4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -245,23 +271,23 @@ static struct BurnRomInfo DrvbRomDesc[] = {
 	
 	{ "1",             0x010000, 0xd9e8cda2, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	
-	{ "4",             0x020000, 0x520ef575, BRF_GRA },	      //  3	Chars
+	{ "4",             0x020000, 0x520ef575, BRF_GRA },	      	  //  3	Chars
 	
-	{ "5",             0x020000, 0x35e4d6eb, BRF_GRA },	      //  4	Tiles
-	{ "6",             0x020000, 0xa054a5b2, BRF_GRA },	      //  5
-	{ "7",             0x020000, 0x101f0136, BRF_GRA },	      //  6
-	{ "8",             0x020000, 0x7b2ecba7, BRF_GRA },	      //  7
+	{ "5",             0x020000, 0x35e4d6eb, BRF_GRA },	      	  //  4	Tiles
+	{ "6",             0x020000, 0xa054a5b2, BRF_GRA },	      	  //  5
+	{ "7",             0x020000, 0x101f0136, BRF_GRA },	      	  //  6
+	{ "8",             0x020000, 0x7b2ecba7, BRF_GRA },	      	  //  7
 	
-	{ "wf_09.rom",     0x100000, 0xe395cf1d, BRF_GRA },	      //  8	Sprites
-	{ "wf_08.rom",     0x100000, 0xb5a97465, BRF_GRA },	      //  9
-	{ "wf_11.rom",     0x100000, 0x2ce545e8, BRF_GRA },	      //  10
-	{ "wf_10.rom",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  11
-	{ "wf_12.rom",     0x100000, 0x79956cf8, BRF_GRA },  	      //  12
-	{ "wf_13.rom",     0x100000, 0x74d774c3, BRF_GRA }, 	      //  13
-	{ "wf_15.rom",     0x100000, 0xdd387289, BRF_GRA },	      //  14
-	{ "wf_14.rom",     0x100000, 0x44abe127, BRF_GRA },	      //  15
+	{ "wf_09.rom",     0x100000, 0xe395cf1d, BRF_GRA },	      	  //  8	Sprites
+	{ "wf_08.rom",     0x100000, 0xb5a97465, BRF_GRA },	      	  //  9
+	{ "wf_11.rom",     0x100000, 0x2ce545e8, BRF_GRA },	      	  // 10
+	{ "wf_10.rom",     0x100000, 0x00edb66a, BRF_GRA }, 	      // 11
+	{ "wf_12.rom",     0x100000, 0x79956cf8, BRF_GRA },  	      // 12
+	{ "wf_13.rom",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 13
+	{ "wf_15.rom",     0x100000, 0xdd387289, BRF_GRA },	      	  // 14
+	{ "wf_14.rom",     0x100000, 0x44abe127, BRF_GRA },	      	  // 15
 	
-	{ "wf_73a.rom",    0x080000, 0x6c522edb, BRF_SND },	      //  16	Samples
+	{ "wf_73a.rom",    0x080000, 0x6c522edb, BRF_SND },	      	  // 16	Samples
 };
 
 STD_ROM_PICK(Drvb)
@@ -273,21 +299,21 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	
 	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	
-	{ "31j12-0.ic33",  0x020000, 0xf4821fe0, BRF_GRA },	      //  3	Chars
+	{ "31j12-0.ic33",  0x020000, 0xf4821fe0, BRF_GRA },	      	  //  3	Chars
 	
-	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      //  4	Tiles
-	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      //  5
+	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      	  //  4	Tiles
+	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      	  //  5
 	
-	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      //  6	Sprites
-	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      //  7
-	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      //  8
+	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      	  //  6	Sprites
+	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      	  //  7
+	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      	  //  8
 	{ "31j4.ic10",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  9
-	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      //  10
-	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      //  11
-	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      //  12
-	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      //  13
+	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      // 10
+	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 11
+	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      	  // 12
+	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      	  // 13
 	
-	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      //  14	Samples
+	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      	  // 14	Samples
 };
 
 STD_ROM_PICK(Drvj)
@@ -299,21 +325,21 @@ static struct BurnRomInfo DrvkRomDesc[] = {
 	
 	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
 	
-	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      //  3	Chars
+	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      	  //  3	Chars
 	
-	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      //  4	Tiles
-	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      //  5
+	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      	  //  4	Tiles
+	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      	  //  5
 	
-	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      //  6	Sprites
-	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      //  7
-	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      //  8
+	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      	  //  6	Sprites
+	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      	  //  7
+	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      	  //  8
 	{ "31j4.ic10",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  9
-	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      //  10
-	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      //  11
-	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      //  12
-	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      //  13
+	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      // 10
+	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 11
+	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      	  // 12
+	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      	  // 13
 	
-	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      //  14	Samples
+	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      	  // 14	Samples
 };
 
 STD_ROM_PICK(Drvk)
@@ -1193,7 +1219,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvWwfwfest = {
 	"wwfwfest", NULL, NULL, NULL, "1991",
-	"WWF WrestleFest (US set 1)\0", NULL, "Technos Japan", "Miscellaneous",
+	"WWF WrestleFest (World)\0", NULL, "Technos Japan (Tecmo Licence)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1201,12 +1227,22 @@ struct BurnDriver BurnDrvWwfwfest = {
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
-struct BurnDriver BurnDrvWwfwfesta = {
-	"wwfwfesta", "wwfwfest", NULL, NULL, "1991",
+struct BurnDriver BurnDrvWwfwfestu = {
+	"wwfwfestu", "wwfwfest", NULL, NULL, "1991",
+	"WWF WrestleFest (US set 1)\0", NULL, "Technos Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
+	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 0x2000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvWwfwfestua = {
+	"wwfwfestua", "wwfwfest", NULL, NULL, "1991",
 	"WWF WrestleFest (US Tecmo)\0", NULL, "Technos Japan (Tecmo License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, DrvaRomInfo, DrvaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };

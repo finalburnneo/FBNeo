@@ -2286,7 +2286,7 @@ struct BurnDriver BurnDrvBurningfh = {
 	0x1000, 304, 224, 4, 3
 };
 
-// Burning Fight (prototype)
+// Burning Fight (prototype, older)
 /* early prototype - all roms were hand labeled with CRCs, dumps verified against them */
 /* AES VERSION */
 
@@ -2330,10 +2330,50 @@ static INT32 BurningfpInit()
 
 struct BurnDriver BurnDrvBurningfp = {
 	"burningfp", "burningf", "neogeo", NULL, "1991",
-	"Burning Fight (prototype)\0", NULL, "SNK", "Neo Geo MVS",
+	"Burning Fight (prototype, older)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_SCRFIGHT, 0,
 	NULL, burningfpRomInfo, burningfpRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	BurningfpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// Burning Fight (prototype, ver 23.3, 910326)
+/* later prototype - Sx, Vx and Cx data all matches final game, but with different rom arranagement, Px & Mx unique */
+/* MVS VERSION */
+
+static struct BurnRomInfo burningfpaRomDesc[] = {
+	{ "018_p1_1f28.podd",  0x080000, 0xf7d15752, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "018_p2_3217.peven", 0x080000, 0xffae22fb, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "018_s1_4491.s1",    0x020000, 0x6799ea0d, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "018_c1_2505.c1",    0x080000, 0x3a441c6a, 3 | BRF_GRA },           //  3 Sprite data
+	{ "018_c2_3f55.c2",    0x080000, 0xbb72404b, 3 | BRF_GRA },           //  4
+	{ "018_c3_a20d.c3",    0x080000, 0x87bffd2f, 3 | BRF_GRA },           //  5
+	{ "018_c4_c6e1.c4",    0x080000, 0x33803163, 3 | BRF_GRA },           //  6
+	{ "018_c5_2cd1.c5",    0x080000, 0x74391952, 3 | BRF_GRA },           //  7
+	{ "018_c6_8135.c6",    0x080000, 0x95e220e6, 3 | BRF_GRA },           //  8
+	{ "018_c7_d009.c7",    0x080000, 0x41326c0d, 3 | BRF_GRA },           //  9
+	{ "018_c8_dc63.c8",    0x080000, 0xed3b1f04, 3 | BRF_GRA },           //  10	
+
+	{ "018_m1_d13e.m1",    0x020000, 0x2b0c0415, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "018_v11_6c00.v11",  0x080000, 0xb55b9670, 5 | BRF_SND },           //  12 Sound data
+	{ "018_v12_8146.v12",  0x080000, 0xa0bcf260, 5 | BRF_SND },           //  13
+	{ "018_v13_b813.v13",  0x080000, 0x270f4707, 5 | BRF_SND },           //  14
+	{ "018_v24_22ee.v24",  0x080000, 0x924e3d69, 5 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(burningfpa, burningfpa, neogeo)
+STD_ROM_FN(burningfpa)
+
+struct BurnDriver BurnDrvBurningfpa = {
+	"burningfpa", "burningf", "neogeo", NULL, "1991",
+	"Burning Fight (prototype, ver 23.3, 910326)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_SCRFIGHT, 0,
+	NULL, burningfpaRomInfo, burningfpaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	BurningfpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };

@@ -5572,7 +5572,7 @@ struct BurnDriver BurnDrvHippodrm = {
 
 struct BurnDriver BurnDrvFfantasy = {
 	"ffantasy", "hippodrm", NULL, NULL, "1989",
-	"Fighting Fantasy (World revision 3)\0", NULL, "Data East Corpotation", "DEC0",
+	"Fighting Fantasy (Japan revision 3)\0", NULL, "Data East Corpotation", "DEC0",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyRomInfo, FfantasyRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,

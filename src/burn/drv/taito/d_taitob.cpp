@@ -3620,12 +3620,12 @@ static struct BurnRomInfo ashuraRomDesc[] = {
 	{ "c43-14.49",			0x020000, 0xede7f37d, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "c43-12.30",			0x020000, 0xb08a4ba0, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c43-16",			0x010000, 0xcb26fce1, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c43-16",				0x010000, 0xcb26fce1, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c43-02",			0x080000, 0x105722ae, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c43-03",			0x080000, 0x426606ba, TAITO_CHARS },		//  6
+	{ "c43-02",				0x080000, 0x105722ae, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c43-03",				0x080000, 0x426606ba, TAITO_CHARS },		//  6
 
-	{ "c43-01",			0x080000, 0xdb953f37, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "c43-01",				0x080000, 0xdb953f37, TAITO_YM2610A },		//  7 YM2610 A Samples
 };
 
 STD_ROM_PICK(ashura)
@@ -3650,12 +3650,12 @@ static struct BurnRomInfo ashurajRomDesc[] = {
 	{ "c43-06-1.49",		0x020000, 0x0f331802, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "c43-04-1.30",		0x020000, 0xe06a2414, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c43-16",			0x010000, 0xcb26fce1, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c43-16",				0x010000, 0xcb26fce1, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c43-02",			0x080000, 0x105722ae, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c43-03",			0x080000, 0x426606ba, TAITO_CHARS },		//  6
+	{ "c43-02",				0x080000, 0x105722ae, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c43-03",				0x080000, 0x426606ba, TAITO_CHARS },		//  6
 
-	{ "c43-01",			0x080000, 0xdb953f37, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "c43-01",				0x080000, 0xdb953f37, TAITO_YM2610A },		//  7 YM2610 A Samples
 };
 
 STD_ROM_PICK(ashuraj)
@@ -3680,12 +3680,12 @@ static struct BurnRomInfo ashurauRomDesc[] = {
 	{ "c43-10.49",			0x020000, 0xc218e7ea, TAITO_68KROM1_BYTESWAP }, //  2
 	{ "c43-08.30",			0x020000, 0x5ef4f19f, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c43-16",			0x010000, 0xcb26fce1, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c43-16",				0x010000, 0xcb26fce1, TAITO_Z80ROM1 },		//  4 Z80 Code
 
-	{ "c43-02",			0x080000, 0x105722ae, TAITO_CHARS },		//  5 Graphics Tiles
-	{ "c43-03",			0x080000, 0x426606ba, TAITO_CHARS },		//  6
+	{ "c43-02",				0x080000, 0x105722ae, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c43-03",				0x080000, 0x426606ba, TAITO_CHARS },		//  6
 
-	{ "c43-01",			0x080000, 0xdb953f37, TAITO_YM2610A },		//  7 YM2610 A Samples
+	{ "c43-01",				0x080000, 0xdb953f37, TAITO_YM2610A },		//  7 YM2610 A Samples
 };
 
 STD_ROM_PICK(ashurau)
@@ -3733,7 +3733,7 @@ static INT32 HiticeInit()
 
 struct BurnDriver BurnDrvHitice = {
 	"hitice", NULL, NULL, NULL, "1990",
-	"Hit the Ice (US)\0", "Imperfect graphics", "Williams", "Taito B System",
+	"Hit the Ice (US)\0", "Imperfect graphics", "Taito Corporation (Williams licence)", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
 	NULL, hiticeRomInfo, hiticeRomName, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
@@ -3768,7 +3768,7 @@ STD_ROM_FN(hiticej)
 
 struct BurnDriver BurnDrvHiticej = {
 	"hiticej", "hitice", NULL, NULL, "1990",
-	"Hit the Ice (Japan)\0", "Imperfect graphics", "Midway/Taito Corporation", "Taito B System",
+	"Hit the Ice (Japan)\0", "Imperfect graphics", "Taito Corporation (licensed from Midway)", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
 	NULL, hiticejRomInfo, hiticejRomName, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
@@ -3970,8 +3970,8 @@ static struct BurnRomInfo qzshowbyRomDesc[] = {
 	{ "pal16l8-d72-06.bin",		  0x0104, 0x27580efc, BRF_OPT }, 		//  7
 	{ "palce20v8-d72-07.bin",	  0x0157, 0x6359e64c, BRF_OPT }, 		//  8
 	{ "palce20v8-d72-08.bin",	  0x0157, 0x746a6474, BRF_OPT }, 		//  9
-	{ "palce20v8-d72-09.bin",         0x0157, 0x9f680800, BRF_OPT }, 		// 10
-	{ "palce16v8-d72-10.bin",         0x0117, 0xa5181ba2, BRF_OPT }, 		// 11
+	{ "palce20v8-d72-09.bin",     0x0157, 0x9f680800, BRF_OPT }, 		// 10
+	{ "palce16v8-d72-10.bin",     0x0117, 0xa5181ba2, BRF_OPT }, 		// 11
 };
 
 STD_ROM_PICK(qzshowby)
@@ -4029,7 +4029,7 @@ struct BurnDriver BurnDrvPbobble = {
 // Space Invaders DX (US, v2.1)
 
 static struct BurnRomInfo spacedxRomDesc[] = {
-	{ "d89-06",			0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "d89-06",				0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
 	{ "d89-xx.ic2",			0x040000, 0x56b0be6c, TAITO_68KROM1_BYTESWAP }, //  1
 
 	{ "d89-07.27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
@@ -4043,7 +4043,7 @@ static struct BurnRomInfo spacedxRomDesc[] = {
 	{ "pal16l8-d72-06.ic50",	  0x0104, 0xe96b7f37, BRF_OPT }, 		//  7
 	{ "palce20v8-d72-07.ic28",	  0x0157, 0x6359e64c, BRF_OPT }, 		//  8
 	{ "palce20v8-d72-09.ic47",	  0x0157, 0xde1760fd, BRF_OPT }, 		//  9
-	{ "palce16v8-d72-10.ic12",        0x0117, 0xa5181ba2, BRF_OPT }, 		// 10
+	{ "palce16v8-d72-10.ic12",    0x0117, 0xa5181ba2, BRF_OPT }, 		// 10
 	{ "pal20l8b-d89-04.ic40",	  0x0144, 0x00000000, BRF_OPT | BRF_NODUMP },	// 12
 };
 
@@ -4064,8 +4064,8 @@ struct BurnDriver BurnDrvSpacedx = {
 // Space Invaders DX (Japan, v2.1)
 
 static struct BurnRomInfo spacedxjRomDesc[] = {
-	{ "d89-06",			0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "d89-05",			0x040000, 0xbe1638af, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "d89-06",				0x040000, 0x7122751e, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "d89-05",				0x040000, 0xbe1638af, TAITO_68KROM1_BYTESWAP }, //  1
 
 	{ "d89-07.27",			0x010000, 0xbd743401, TAITO_Z80ROM1 },		//  2 Z80 Code
 
@@ -4078,7 +4078,7 @@ static struct BurnRomInfo spacedxjRomDesc[] = {
 	{ "pal16l8-d72-06.ic50",	  0x0104, 0xe96b7f37, BRF_OPT }, 		//  7
 	{ "palce20v8-d72-07.ic28",	  0x0157, 0x6359e64c, BRF_OPT }, 		//  8
 	{ "palce20v8-d72-09.ic47",	  0x0157, 0xde1760fd, BRF_OPT }, 		//  9
-	{ "palce16v8-d72-10.ic12",        0x0117, 0xa5181ba2, BRF_OPT }, 		// 10
+	{ "palce16v8-d72-10.ic12",    0x0117, 0xa5181ba2, BRF_OPT }, 		// 10
 	{ "pal20l8b-d89-04.ic40",	  0x0144, 0x00000000, BRF_OPT | BRF_NODUMP },	// 12
 };
 
@@ -4149,7 +4149,7 @@ static struct BurnRomInfo sbmRomDesc[] = {
 	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	// 11
 	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	// 12
 	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	// 13
-	{ "c69-02.ic6",			0x100000, 0xf0e20d35, TAITO_CHARS },		// 14
+	{ "c69-02.ic6",			0x100000, 0xf0e20d35, TAITO_CHARS },			// 14
 	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 15
 	{ "c69-14.ic3",			0x020000, 0x0ed0272a, TAITO_CHARS_BYTESWAP },	// 16
 	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 17

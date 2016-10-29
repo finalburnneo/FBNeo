@@ -70,6 +70,8 @@ static INT32 System1ColourProms = 0;
 static INT32 System1BankedRom = 0;
 static INT32 IsSystem2 = 0;
 
+static INT32 Sys1UsePPI = 0; // For regulus/regulusu
+
 typedef void (*Decode)();
 static Decode DecodeFunction;
 static Decode TileDecodeFunction;
@@ -4292,7 +4294,7 @@ Reset Functions
 
 static INT32 System1DoReset()
 {
-	if (IsSystem2 || DecodeFunction == regulus_decode) {
+	if (IsSystem2 || Sys1UsePPI) {
 		ppi8255_init(1); // this resets the 8255ppi, needed or wbml reset fails (bad sound, or rom errors)
 	}
 
@@ -4519,7 +4521,7 @@ static UINT8 __fastcall NoboranbZ801PortRead(UINT16 a)
 
 static void __fastcall System1Z801PortWrite(UINT16 a, UINT8 d)
 {
-	if (DecodeFunction == regulus_decode) {
+	if (Sys1UsePPI) {
 		a &= 0x1f;
 		switch (a)
 		{
@@ -4761,7 +4763,7 @@ static void System2PPI0WriteC(UINT8 data)
 	ZetClose();
 	ZetOpen(0);
 
-	if (DecodeFunction != regulus_decode)
+	if (!Sys1UsePPI)
 		System2_videoram_bank_latch_w(data);
 }
 
@@ -4982,7 +4984,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetMapArea(0x8000, 0x87ff, 2, System1Ram2);
 	ZetClose();
 
-	if (DecodeFunction == regulus_decode) { // Regulus uses the PPI for sound
+	if (Sys1UsePPI) { // Regulus uses the PPI for sound
 		ppi8255_init(1);
 		PPI0PortWriteA = System2PPI0WriteA;
 		PPI0PortWriteC = System2PPI0WriteC;
@@ -5496,12 +5498,15 @@ static INT32 RaflesiaInit()
 static INT32 RegulusInit()
 {
 	DecodeFunction = regulus_decode;
-	
+	Sys1UsePPI = 1;
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
 static INT32 RegulusuInit()
 {
+	Sys1UsePPI = 1;
+
 	return System1Init(6, 0x2000, 1, 0x2000, 6, 0x2000, 2, 0x4000, 1);
 }
 
@@ -5725,7 +5730,7 @@ static INT32 System1Exit()
 	
 	SN76496Exit();
 
-	if (IsSystem2 || DecodeFunction == regulus_decode)
+	if (IsSystem2 || Sys1UsePPI)
 		ppi8255_exit();
 
 	GenericTilesExit();
@@ -5760,7 +5765,8 @@ static INT32 System1Exit()
 	System1Draw = NULL;
 	System1RowScroll = 0;
 	IsSystem2 = 0;
-	
+	Sys1UsePPI = 0;
+
 	return 0;
 }
 

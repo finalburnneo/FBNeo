@@ -1526,31 +1526,31 @@ STD_SAMPLE_PICK(congo)
 STD_SAMPLE_FN(congo)
 
 
-// Zaxxon (set 1)
+// Zaxxon (set 1, rev D)
 
 static struct BurnRomInfo zaxxonRomDesc[] = {
-	{ "zaxxon3.u27",	0x2000, 0x6e2b4a30, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "zaxxon2.u28",	0x2000, 0x1c9ea398, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "zaxxon1.u29",	0x1000, 0x1c123ef9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "zaxxon_rom3d.u27",	0x2000, 0x6e2b4a30, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxon_rom2d.u28",	0x2000, 0x1c9ea398, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxon_rom1d.u29",	0x1000, 0x1c123ef9, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+	{ "zaxxon_rom14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon_rom15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+	{ "zaxxon_rom6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon_rom5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon_rom4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+	{ "zaxxon_rom11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon_rom12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon_rom13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+	{ "zaxxon_rom8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon_rom7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon_rom10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon_rom9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
-	{ "zaxxon.u72",		0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
+	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "zaxxon.u72",			0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxon)
@@ -1558,7 +1558,7 @@ STD_ROM_FN(zaxxon)
 
 struct BurnDriver BurnDrvZaxxon = {
 	"zaxxon", NULL, NULL, "zaxxon", "1982",
-	"Zaxxon (set 1)\0", NULL, "Sega", "Zaxxon",
+	"Zaxxon (set 1, rev D)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxonRomInfo, zaxxonRomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
@@ -1567,31 +1567,31 @@ struct BurnDriver BurnDrvZaxxon = {
 };
 
 
-// Zaxxon (set 2)
+// Zaxxon (set 2, unknown rev)
 
 static struct BurnRomInfo zaxxon2RomDesc[] = {
-	{ "zaxxon3a.u27",	0x2000, 0xb18e428a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "zaxxon2.u28",	0x2000, 0x1c9ea398, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "zaxxon1a.u29",	0x1000, 0x1977d933, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "zaxxon_rom3a.u27",	0x2000, 0xb18e428a, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "zaxxon_rom2a.u28",	0x2000, 0x1c9ea398, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "zaxxon_rom1a.u29",	0x1000, 0x1977d933, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+	{ "zaxxon_rom14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon_rom15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+	{ "zaxxon_rom6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon_rom5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon_rom4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+	{ "zaxxon_rom11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon_rom12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon_rom13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+	{ "zaxxon_rom8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon_rom7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon_rom10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon_rom9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
-	{ "j214a2.72",		0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
+	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "mro17.u41",			0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxon2)
@@ -1599,7 +1599,7 @@ STD_ROM_FN(zaxxon2)
 
 struct BurnDriver BurnDrvZaxxon2 = {
 	"zaxxon2", "zaxxon", NULL, "zaxxon", "1982",
-	"Zaxxon (set 2)\0", NULL, "Sega", "Zaxxon",
+	"Zaxxon (set 2, unknown rev)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxon2RomInfo, zaxxon2RomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
@@ -1608,31 +1608,31 @@ struct BurnDriver BurnDrvZaxxon2 = {
 };
 
 
-// Zaxxon (set 3)
+// Zaxxon (set 3, unknown rev)
 
 static struct BurnRomInfo zaxxon3RomDesc[] = {
 	{ "zaxxon3_alt.u27",	0x2000, 0x2f2f2b7c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "zaxxon2_alt.u28",	0x2000, 0xae7e1c38, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "zaxxon1_alt.u29",	0x1000, 0xcc67c097, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+	{ "zaxxon_rom14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon_rom15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+	{ "zaxxon_rom6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon_rom5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon_rom4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+	{ "zaxxon_rom11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon_rom12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon_rom13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+	{ "zaxxon_rom8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon_rom7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon_rom10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon_rom9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
-	{ "j214a2.72",		0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
+	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "mro17.u41",			0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxon3)
@@ -1640,7 +1640,7 @@ STD_ROM_FN(zaxxon3)
 
 struct BurnDriver BurnDrvZaxxon3 = {
 	"zaxxon3", "zaxxon", NULL, "zaxxon", "1982",
-	"Zaxxon (set 3)\0", NULL, "Sega", "Zaxxon",
+	"Zaxxon (set 3, unknown rev)\0", NULL, "Sega", "Zaxxon",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_MISC, GBF_VERSHOOT, 0,
 	NULL, zaxxon3RomInfo, zaxxon3RomName, zaxxonSampleInfo, zaxxonSampleName, ZaxxonInputInfo, ZaxxonDIPInfo,
@@ -1672,8 +1672,8 @@ static struct BurnRomInfo zaxxonjRomDesc[] = {
 	{ "zaxxon_rom10.u60",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
 	{ "zaxxon_rom9.u59",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "mro_16.u76",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
-	{ "mro_17.u41",		0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
+	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "mro17.u41",			0x0100, 0xa9e1fb43, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxonj)
@@ -1758,28 +1758,28 @@ struct BurnDriver BurnDrvZaxxonj = {
 // Jackson
 
 static struct BurnRomInfo zaxxonbRomDesc[] = {
-	{ "zaxxonb3.u27",	0x2000, 0x125bca1c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "zaxxonb2.u28",	0x2000, 0xc088df92, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "zaxxonb1.u29",	0x1000, 0xe7bdc417, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jackson_rom3.u27",	0x2000, 0x125bca1c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "jackson_rom2.u28",	0x2000, 0xc088df92, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jackson_rom1.u29",	0x1000, 0xe7bdc417, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
-	{ "zaxxon15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+	{ "zaxxon_rom14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon_rom15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "zaxxon5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
-	{ "zaxxon4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+	{ "zaxxon_rom6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon_rom5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon_rom4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
-	{ "zaxxon12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
-	{ "zaxxon13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+	{ "zaxxon_rom11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon_rom12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon_rom13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
-	{ "zaxxon7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
-	{ "zaxxon10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
-	{ "zaxxon9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+	{ "zaxxon_rom8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon_rom7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon_rom10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon_rom9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
-	{ "zaxxon.u98",		0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
-	{ "zaxxon.u72",		0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
+	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
+	{ "zaxxon.u72",			0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(zaxxonb)

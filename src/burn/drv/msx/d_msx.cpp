@@ -14,6 +14,8 @@
 #include "8255ppi.h"
 #include "bitswap.h"
 #include "k051649.h"
+#include "dac.h"
+
 #ifdef BUILD_WIN32
 extern void (*cBurnerKeyCallback)(UINT8 code, UINT8 KeyType, UINT8 down);
 extern INT32 nReplayExternalDataCount;
@@ -106,6 +108,10 @@ static struct BurnDIPInfo MSXDIPList[]=
 	{0x17, 0x01, 0x10, 0x00, "50hz (Europe)"	},
 	{0x17, 0x01, 0x10, 0x10, "60hz (Japan, US)"	},
 
+	{0   , 0xfe, 0   ,    2, "Key-Clicker / 1-Bit DAC"	},
+	{0x17, 0x01, 0x02, 0x00, "Off"	},
+	{0x17, 0x01, 0x02, 0x02, "On"	},
+
 	{0   , 0xfe, 0   ,    2, "Swap Joyports"	},
 	{0x17, 0x01, 0x20, 0x00, "Normal"	},
 	{0x17, 0x01, 0x20, 0x20, "Swapped"	},
@@ -154,6 +160,11 @@ static struct BurnDIPInfo MSXMapCursorToJoy1_60hzDIPList[]=
 	{0x17, 0xff, 0xff, 0x80+0x10, NULL		},
 };
 
+static struct BurnDIPInfo MSXKeyClickerDACDIPList[]=
+{
+	{0x17, 0xff, 0xff, 0x02, NULL		},
+};
+
 STDDIPINFOEXT(MSX, MSXDefault, MSX)
 STDDIPINFOEXT(MSXJapan, MSXJBIOS, MSX)
 STDDIPINFOEXT(MSXJoyport2, MSXJoySwap, MSX)
@@ -161,6 +172,7 @@ STDDIPINFOEXT(MSXEuropeJoyport2, MSX50hzJoySwap, MSX)
 STDDIPINFOEXT(MSXEurope, MSX50hz, MSX)
 STDDIPINFOEXT(MSXJoyCursor, MSXMapCursorToJoy1, MSX)
 STDDIPINFOEXT(MSXJoyCursor60hz, MSXMapCursorToJoy1_60hz, MSX)
+STDDIPINFOEXT(MSXKeyClick, MSXKeyClickerDAC, MSX)
 
 // ROM mapper types:
 #define MAP_KONGEN8  0      // KonamiGeneric 8k
@@ -1172,10 +1184,14 @@ static void __fastcall msx_write_port(UINT16 port, UINT8 data)
 			KanaByte = 0;
 			return;
 
+#if 0
+		// disable the ram-mapper for now (only really used in msx2)
+		// causes some issues with games that erraneously write to 0xfc (stardust and utopia demo?)
+
 		case 0xfc: // map ram-page 0x0000, 0x4000, 0x8000, 0xc000
 		case 0xfd:
 		case 0xfe:
-		case 0xff:
+		case 0xff: bprintf(0, _T("Port %X Data %X.\n"), port, data);
 			INT32 PSlot = port - 0xfc;
 			data &= RAMMask;
 			if (RAMMapper[PSlot] != data) {
@@ -1192,6 +1208,7 @@ static void __fastcall msx_write_port(UINT16 port, UINT8 data)
 				}
 			}
 			return;
+#endif
 	}
 
 	//bprintf(0, _T("port[%X] data[%X],"), port, data);
@@ -1249,6 +1266,8 @@ static void msx_ppi8255_portA_write(UINT8 data)
 static void msx_ppi8255_portC_write(UINT8 data)
 {
 	ppiC_row = data & 0x0f;
+	if (DrvDips[0] & 0x02)
+		DACWrite(0, (data & 0x80) ? 0x80 : 0x00); // Key-Clicker / 1-bit DAC
 }
 
 static UINT8 ay8910portAread(UINT32 offset)
@@ -1296,6 +1315,7 @@ static INT32 DrvDoReset()
 
 	AY8910Reset(0);
 	K051649Reset();
+	DACReset();
 
 	return 0;
 }
@@ -1350,6 +1370,11 @@ static UINT8 __fastcall msx_read(UINT16 address)
 	return (RAM[address >> 13][address & 0x1fff]);
 }
 
+static INT32 DrvSyncDAC()
+{
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / ((Hertz60) ? 60.0 : 50.0))));
+}
+
 static INT32 DrvInit()
 {
 	AllMem = NULL;
@@ -1393,13 +1418,12 @@ static INT32 DrvInit()
 		BurnDrvGetRomInfo(&ri, 1);
 
 		if (ri.nLen > 0 && ri.nLen < MAX_MSX_CARTSIZE) {
-			bprintf(0, _T("Loaded secondary tape/rom.\n"));
 			memset(game2, 0xff, MAX_MSX_CARTSIZE);
 
 			if (BurnLoadRom(game2 + 0x00000, 1, 1)) return 1;
 
 			CurRomSizeB = ri.nLen;
-			bprintf(0, _T("cass #2 size: %d dbg[%c%c%c]\n"), CurRomSizeB, game2[0],game2[1],game2[2]);
+			bprintf(0, _T("Loaded secondary tape/rom, size: %d.\n"), CurRomSizeB);
 		}
 
 		// msxinit(ri.nLen); (in DrvDoReset()! -dink)
@@ -1426,6 +1450,9 @@ static INT32 DrvInit()
 	K051649Init(3579545/2);
 	K051649SetRoute(0.20, BURN_SND_ROUTE_BOTH);
 
+	DACInit(0, 0, 1, DrvSyncDAC);
+	DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
 
 	ppi8255_init(1);
@@ -1442,8 +1469,11 @@ static INT32 DrvExit()
 {
 	TMS9928AExit();
 	ZetExit();
+
 	AY8910Exit(0);
 	K051649Exit();
+	DACExit();
+
 	ppi8255_exit();
 
 	BurnFree (AllMem);
@@ -1539,7 +1569,8 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[1] = { 0 };
 	INT32 nSoundBufferPos = 0;
 
-    ZetOpen(0);
+	ZetNewFrame();
+	ZetOpen(0);
 
 	if (DrvNMI && !lastnmi) {
 		ZetNmi();
@@ -1572,6 +1603,7 @@ static INT32 DrvFrame()
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
 			K051649Update(pSoundBuf, nSegmentLength);
 		}
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1599,6 +1631,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 		K051649Scan(nAction, pnMin);
+		DACScan(nAction,pnMin);
 		TMS9928AScan(nAction, pnMin);
 		ppi8255_scan();
 
@@ -24208,3 +24241,271 @@ struct BurnDriver BurnDrvMSX_perezthemouse = {
 	272, 228, 4, 3
 };
 
+// La Abadia del Crimen (Spa)
+
+static struct BurnRomInfo MSX_abadcrimRomDesc[] = {
+	{ "abadia del crimen, la (1988)(opera soft)(es)[bload'cas-',r].cas",	0x195a0, 0x812afd46, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_abadcrim, MSX_abadcrim, msx_msx)
+STD_ROM_FN(MSX_abadcrim)
+
+struct BurnDriver BurnDrvMSX_abadcrim = {
+	"msx_abadcrim", NULL, "msx_msx", NULL, "1988",
+	"La Abadia del Crimen (Spa)\0", NULL, "Opera Soft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_abadcrimRomInfo, MSX_abadcrimRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Starquake (Euro)
+
+static struct BurnRomInfo MSX_starquakRomDesc[] = {
+	{ "starquake (1986)(bubble bus software)(gb)[run'cas-'].cas",	0x0c5c6, 0x2ae2f857, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_starquak, MSX_starquak, msx_msx)
+STD_ROM_FN(MSX_starquak)
+
+struct BurnDriver BurnDrvMSX_starquak = {
+	"msx_starquak", NULL, "msx_msx", NULL, "1986",
+	"Starquake (Euro)\0", NULL, "Bubble Bus Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_starquakRomInfo, MSX_starquakRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Batman - The Movie (Euro)
+
+static struct BurnRomInfo MSX_batmanmvRomDesc[] = {
+	{ "batman - the movie (1989)(ocean software)(gb)(side a)[run'cas-'].cas",	0x1efb5, 0xb51ff961, BRF_PRG | BRF_ESS },
+	{ "batman - the movie (1989)(ocean software)(gb)(side b)[run'cas-'].cas",	0x195dd, 0x9bf4001d, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_batmanmv, MSX_batmanmv, msx_msx)
+STD_ROM_FN(MSX_batmanmv)
+
+struct BurnDriver BurnDrvMSX_batmanmv = {
+	"msx_batmanmv", NULL, "msx_msx", NULL, "1989",
+	"Batman - The Movie (Euro)\0", NULL, "Ocean Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_batmanmvRomInfo, MSX_batmanmvRomName, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// International Karate (Euro)
+
+static struct BurnRomInfo MSX_ikRomDesc[] = {
+	{ "international karate (1986)(endurance games)(gb)[run'cas-'].cas",	0x0ca03, 0xd7eb1d87, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_ik, MSX_ik, msx_msx)
+STD_ROM_FN(MSX_ik)
+
+struct BurnDriver BurnDrvMSX_ik = {
+	"msx_ik", NULL, "msx_msx", NULL, "1986",
+	"International Karate (Euro)\0", NULL, "Endurance Games", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_ikRomInfo, MSX_ikRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Quebert (Euro)
+
+static struct BurnRomInfo MSX_quebertRomDesc[] = {
+	{ "quebert (1988)(eurosoft)(nl)[run'cas-'].cas",	0x08998, 0xf7930f38, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_quebert, MSX_quebert, msx_msx)
+STD_ROM_FN(MSX_quebert)
+
+struct BurnDriver BurnDrvMSX_quebert = {
+	"msx_quebert", NULL, "msx_msx", NULL, "1988",
+	"Quebert (Euro)\0", NULL, "Eurosoft", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_quebertRomInfo, MSX_quebertRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Renegade III - The Final Chapter (Euro)
+
+static struct BurnRomInfo MSX_renegad3RomDesc[] = {
+	{ "renegade iii - the final chapter (1989)(imagine software)(gb)[run'cas-'].cas",	0x184e2, 0x9fc765b8, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_renegad3, MSX_renegad3, msx_msx)
+STD_ROM_FN(MSX_renegad3)
+
+struct BurnDriver BurnDrvMSX_renegad3 = {
+	"msx_renegad3", NULL, "msx_msx", NULL, "1989",
+	"Renegade III - The Final Chapter (Euro)\0", NULL, "Imagine Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_renegad3RomInfo, MSX_renegad3RomName, NULL, NULL, MSXInputInfo, MSXKeyClickDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Satan (Euro)
+
+static struct BurnRomInfo MSX_satanRomDesc[] = {
+	{ "satan (1989)(dinamic software)(es)(en)(side a)[english edition][run'cas-'].cas",	0x0da31, 0x6c16e392, BRF_PRG | BRF_ESS },
+	{ "satan (1989)(dinamic software)(es)(en)(side b)[english edition][run'cas-'].cas",	0x0da31, 0x10914f8a, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_satan, MSX_satan, msx_msx)
+STD_ROM_FN(MSX_satan)
+
+struct BurnDriver BurnDrvMSX_satan = {
+	"msx_satan", NULL, "msx_msx", NULL, "1989",
+	"Satan (Euro)\0", NULL, "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_satanRomInfo, MSX_satanRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Speedboat Racer (Euro)
+
+static struct BurnRomInfo MSX_sbracerRomDesc[] = {
+	{ "speedboat racer (1987)(methodic solutions)(nl)[run'cas-'].cas",	0x0c8d8, 0xa90435f9, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_sbracer, MSX_sbracer, msx_msx)
+STD_ROM_FN(MSX_sbracer)
+
+struct BurnDriver BurnDrvMSX_sbracer = {
+	"msx_sbracer", NULL, "msx_msx", NULL, "1987",
+	"Speedboat Racer (Euro)\0", NULL, "Methodic Solutions", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_sbracerRomInfo, MSX_sbracerRomName, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Thunderbirds (Euro)
+
+static struct BurnRomInfo MSX_tbirds1aRomDesc[] = {
+	{ "thunderbirds (1989)(grandslam entertainments)(gb)(tape 1 of 2 side a)[bload'cas-',r][martos].cas",	0x11b71, 0x04456b16, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tbirds1a, MSX_tbirds1a, msx_msx)
+STD_ROM_FN(MSX_tbirds1a)
+
+struct BurnDriver BurnDrvMSX_tbirds1a = {
+	"msx_tbirds1a", NULL, "msx_msx", NULL, "1989",
+	"Thunderbirds Tape 1 Side A (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_tbirds1aRomInfo, MSX_tbirds1aRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Thunderbirds (Euro)
+
+static struct BurnRomInfo MSX_tbirds1bRomDesc[] = {
+	{ "thunderbirds (1989)(grandslam entertainments)(gb)(tape 1 of 2 side b)[bload'cas-',r][martos].cas",	0x11b71, 0xc4b0130c, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tbirds1b, MSX_tbirds1b, msx_msx)
+STD_ROM_FN(MSX_tbirds1b)
+
+struct BurnDriver BurnDrvMSX_tbirds1b = {
+	"msx_tbirdst1b", "msx_tbirds1a", "msx_msx", NULL, "1989",
+	"Thunderbirds Tape 1 Side B (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_tbirds1bRomInfo, MSX_tbirds1bRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Thunderbirds (Euro)
+
+static struct BurnRomInfo MSX_tbirds2aRomDesc[] = {
+	{ "thunderbirds (1989)(grandslam entertainments)(gb)(tape 2 of 2 side a)[bload'cas-',r][martos].cas",	0x11b71, 0xc986703f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tbirds2a, MSX_tbirds2a, msx_msx)
+STD_ROM_FN(MSX_tbirds2a)
+
+struct BurnDriver BurnDrvMSX_tbirds2a = {
+	"msx_tbirdst2a", "msx_tbirds1a", "msx_msx", NULL, "1989",
+	"Thunderbirds Tape 2 Side A (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_tbirds2aRomInfo, MSX_tbirds2aRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Thunderbirds (Euro)
+
+static struct BurnRomInfo MSX_tbirds2bRomDesc[] = {
+	{ "thunderbirds (1989)(grandslam entertainments)(gb)(tape 2 of 2 side b)[bload'cas-',r][martos].cas",	0x11b71, 0x1bcb9d6f, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_tbirds2b, MSX_tbirds2b, msx_msx)
+STD_ROM_FN(MSX_tbirds2b)
+
+struct BurnDriver BurnDrvMSX_tbirds2b = {
+	"msx_tbirdst2b", "msx_tbirds1a", "msx_msx", NULL, "1989",
+	"Thunderbirds Tape 2 Side B (Euro)\0", NULL, "Grandslam Entertainments", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_tbirds2bRomInfo, MSX_tbirds2bRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasBloadDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Game Over II (Spa)
+
+static struct BurnRomInfo MSX_gameovr2RomDesc[] = {
+	{ "game over ii (1988)(dinamic software)(es)(side a)[re-release of phantis][run'cas-'].cas",	0x0c3c3, 0x12de1170, BRF_PRG | BRF_ESS },
+	{ "game over ii (1988)(dinamic software)(es)(side b)[re-release of phantis][run'cas-'].cas",	0x0bffd, 0x994cd2a2, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_gameovr2, MSX_gameovr2, msx_msx)
+STD_ROM_FN(MSX_gameovr2)
+
+struct BurnDriver BurnDrvMSX_gameovr2 = {
+	"msx_gameovr2", NULL, "msx_msx", NULL, "1988",
+	"Game Over II (Spa)\0", NULL, "Dinamic Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_gameovr2RomInfo, MSX_gameovr2RomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+
+// Sea King (Euro)
+
+static struct BurnRomInfo MSX_seakingRomDesc[] = {
+	{ "sea king (1986)(players software)(gb)[run'cas-'].cas",	0x082ff, 0xb29571ed, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_seaking, MSX_seaking, msx_msx)
+STD_ROM_FN(MSX_seaking)
+
+struct BurnDriver BurnDrvMSX_seaking = {
+	"msx_seaking", NULL, "msx_msx", NULL, "1986",
+	"Sea King (Euro)\0", NULL, "Players Software", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_seakingRomInfo, MSX_seakingRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

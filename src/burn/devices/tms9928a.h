@@ -10,20 +10,18 @@ typedef enum
 	TMS9929A
 } tms9928a_model;
 
-
-int  TMS9928AInterrupt();
-void TMS9928AInit(int model, int vram, int borderx, int bordery, void (*INTCallback)(int));
+void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*INTCallback)(INT32));
 void TMS9928AReset();
 void TMS9928AExit();
-void TMS9928AScanline(int scanline);
-int  TMS9928ADraw();
+void TMS9928AScanline(INT32 scanline);
+INT32 TMS9928ADraw();
 
-void TMS9928ASetSpriteslimit(int limit);
+void TMS9928ASetSpriteslimit(INT32 limit);
 
-void TMS9928AWriteRegs(int data);
-unsigned char TMS9928AReadRegs();
+void TMS9928AWriteRegs(INT32 data);
+UINT8 TMS9928AReadRegs();
 
-void TMS9928AWriteVRAM(int data);
-unsigned char TMS9928AReadVRAM();
+void TMS9928AWriteVRAM(INT32 data);
+UINT8 TMS9928AReadVRAM();
 
-int TMS9928AScan(int nAction, int *pnMin);
+INT32 TMS9928AScan(INT32 nAction, INT32 *pnMin);

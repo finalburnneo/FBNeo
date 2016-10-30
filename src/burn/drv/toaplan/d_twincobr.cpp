@@ -1416,10 +1416,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static struct BurnRomInfo twincobrRomDesc[] = {
 	{ "b30_01.7j",		0x10000, 0x07f64d13, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 	{ "b30_03.7h",		0x10000, 0x41be6978, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "tc15",		0x08000, 0x3a646618, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "tc13",		0x08000, 0xd7d1e317, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b30_26_ii.8j",	0x08000, 0x3a646618, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b30_27_ii.8h",	0x08000, 0xd7d1e317, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tc12",		0x08000, 0xe37b3c44, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+	{ "b30_05_ii.4f",	0x08000, 0xe37b3c44, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
 
 	{ "dsp_22.bin",		0x00800, 0x79389a71, 3 | BRF_PRG | BRF_ESS }, //  5 TMS32010 code
 	{ "dsp_21.bin",		0x00800, 0x2d135376, 3 | BRF_PRG | BRF_ESS }, //  6
@@ -1474,8 +1474,8 @@ struct BurnDriver BurnDrvTwincobr = {
 static struct BurnRomInfo twincobruRomDesc[] = {
 	{ "b30_01.7j",		0x10000, 0x07f64d13, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
 	{ "b30_03.7h",		0x10000, 0x41be6978, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "b30_26-1.8j",	0x08000, 0xbdd00ba4, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "b30_27-1.8h",	0x08000, 0xed600907, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "b30_26_i.8j",	0x08000, 0xbdd00ba4, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "b30_27_i.8h",	0x08000, 0xed600907, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "b30_05.4f",		0x08000, 0x1a8f1e10, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
 
@@ -1532,8 +1532,8 @@ static struct BurnRomInfo ktigerRomDesc[] = {
 
 	{ "b30_05.4f",		0x08000, 0x1a8f1e10, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
 
-	{ "dsp-22",		0x00800, 0x8a1d48d9, 3 | BRF_PRG | BRF_ESS }, //  5 TMS32010 code
-	{ "dsp-21",		0x00800, 0x33d99bc2, 3 | BRF_PRG | BRF_ESS }, //  6
+	{ "dsp-22",			0x00800, 0x8a1d48d9, 3 | BRF_PRG | BRF_ESS }, //  5 TMS32010 code
+	{ "dsp-21",			0x00800, 0x33d99bc2, 3 | BRF_PRG | BRF_ESS }, //  6
 
 	{ "b30_08.8c",		0x04000, 0x0a254133, 4 | BRF_GRA },           //  7 Text characters
 	{ "b30_07.10b",		0x04000, 0xe9e2d4b1, 4 | BRF_GRA },           //  8

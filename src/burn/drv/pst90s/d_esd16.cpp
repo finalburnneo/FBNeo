@@ -27,6 +27,8 @@ static UINT8 *DrvPalRAM;
 static UINT8 *DrvVidRAM0;
 static UINT8 *DrvVidRAM1;
 static UINT8 *DrvSprRAM;
+static UINT8 *DrvEepROM;
+
 static UINT32 *DrvPalette;
 static UINT32 *Palette;
 static UINT8  DrvRecalc;
@@ -354,12 +356,13 @@ UINT8 __fastcall hedpanic_read_byte(UINT32 address)
 		case 0xc00006:
 			return (EEPROMRead() & 1) << 7;
 	}
-
+	//bprintf(0, _T("rb %X.\n"), address);
 	return 0;
 }
 
-UINT16 __fastcall hedpanic_read_word(UINT32)
+UINT16 __fastcall hedpanic_read_word(UINT32 address)
 {
+	//bprintf(0, _T("rw %X.\n"), address);
 	return 0;
 }
 
@@ -616,6 +619,10 @@ static INT32 DrvDoReset()
 
 	EEPROMReset();
 
+	if (game_select == 1 && EEPROMAvailable() == 0) {
+		EEPROMFill(DrvEepROM, 0, 0x80);
+	}
+
 	SekOpen(0);
 	SekReset();
 	SekClose();
@@ -818,6 +825,7 @@ static INT32 MemIndex()
 
 	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x0040000;
+	DrvEepROM   = Next; Next += 0x0000100; // from romset
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 	
@@ -1168,7 +1176,7 @@ static INT32 DrvFrame()
 
 //----------------------------------------------------------------------------------------------------------
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1176,7 +1184,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029692;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -1394,7 +1402,7 @@ static struct BurnRomInfo hedpanicRomDesc[] = {
 
 	{ "esd4.su10",		0x020000, 0x3c11c590, 5 | BRF_SND },			//  8 - OKI Samples
 	
-	{ "hedpanic.nv",	0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
+	{ "hedpanic.nv",	0x000080, 0xe91f4038, 6 | BRF_GRA },			//  9 - Default EEPROM
 };
 
 STD_ROM_PICK(hedpanic)
@@ -1418,6 +1426,8 @@ static INT32 hedpanicCallback()
 		if (BurnLoadRom(DrvGfxROM1 + 0x000001, 7, 2)) return 1;
 
 		if (BurnLoadRom(DrvSndROM,             8, 1)) return 1;
+		if (BurnLoadRom(DrvEepROM,             9, 1)) return 1;
+		
 
 		HedpanicGfxDecode();
 	}

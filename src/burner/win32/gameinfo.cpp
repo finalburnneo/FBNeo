@@ -182,6 +182,9 @@ static int GameInfoInit()
 	SendDlgItemMessage(hGameInfoDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 	SendDlgItemMessage(hGameInfoDlg, IDC_SCREENSHOT_V, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
 
+	// Favorite game checkbox
+	CheckDlgButton(hGameInfoDlg,IDFAVORITESET,(CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? BST_CHECKED : BST_UNCHECKED);
+
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST1), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_LIST2), SW_HIDE);
 	ShowWindow(GetDlgItem(hGameInfoDlg, IDC_MESSAGE_EDIT_ENG), SW_HIDE);
@@ -704,12 +707,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		}
 		
 		if (Id == IDFAVORITESET && Notify == BN_CLICKED) {
-			AddFavorite(1);
-			return 0;
-		}
+			INT32 nButtonState = SendDlgItemMessage(hGameInfoDlg, IDFAVORITESET, BM_GETSTATE, 0, 0);
 
-		if (Id == IDFAVORITEUNSET && Notify == BN_CLICKED) {
-			AddFavorite(0);
+			AddFavorite((nButtonState & BST_CHECKED) ? 1 : 0);
 			return 0;
 		}
 

@@ -259,6 +259,8 @@
 #define IDRESCAN                        	20601
 #define IDGAMEINFO                       	20602
 #define IDRESCANSET                        	20603
+#define IDFAVORITESET                       20604
+#define IDFAVORITEUNSET                     20605
 
 #define IDC_MVS_CART1                 		20700
 #define IDC_MVS_CART2                   	20701

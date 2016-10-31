@@ -189,6 +189,7 @@ int ConfigAppLoad()
 		VAR(nLoadMenuShowY);
 		VAR(nLoadMenuBoardTypeFilter);
 		VAR(nLoadMenuGenreFilter);
+		VAR(nLoadMenuFavoritesFilter);
 		VAR(nLoadMenuFamilyFilter);
 
 		STR(szAppRomPaths[0]);
@@ -547,6 +548,9 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// Load game dialog genre filter options\n"));
 	VAR(nLoadMenuGenreFilter);
+
+	_ftprintf(h, _T("\n// Load game dialog favorites filter options\n"));
+	VAR(nLoadMenuFavoritesFilter);
 	
 	_ftprintf(h, _T("\n// Load game dialog family filter options\n"));
 	VAR(nLoadMenuFamilyFilter);

@@ -163,6 +163,7 @@ HTREEITEM hRoot						= NULL;
 HTREEITEM hBoardType				= NULL;
 HTREEITEM hFamily					= NULL;
 HTREEITEM hGenre					= NULL;
+HTREEITEM hFavorites				= NULL;
 HTREEITEM hHardware					= NULL;
 
 // GCC doesn't seem to define these correctly.....
@@ -261,6 +262,7 @@ int nLoadMenuShowY				= 0;
 int nLoadMenuShowX				= 0;
 int nLoadMenuBoardTypeFilter	= 0;
 int nLoadMenuGenreFilter		= 0;
+int nLoadMenuFavoritesFilter	= 0;
 int nLoadMenuFamilyFilter		= 0;
 
 struct NODEINFO {
@@ -412,6 +414,10 @@ static TCHAR* MangleGamename(const TCHAR* szOldName, bool /*bRemoveArticle*/)
 
 static int DoExtraFilters()
 {
+	if (nLoadMenuFavoritesFilter) {
+		return (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? 0 : 1;
+	}
+
 	if (nShowMVSCartsOnly && ((BurnDrvGetHardwareCode() & HARDWARE_PREFIX_CARTRIDGE) != HARDWARE_PREFIX_CARTRIDGE)) return 1;
 	
 	if ((nLoadMenuBoardTypeFilter & BDF_BOOTLEG)			&& (BurnDrvGetFlags() & BDF_BOOTLEG))				return 1;
@@ -488,6 +494,8 @@ static int SelListMake()
 	if (hSelList == NULL) {
 		return 1;
 	}
+
+	LoadFavorites();
 
 	// Add all the driver names to the list
 
@@ -1056,7 +1064,7 @@ static void CreateFilters()
 	TV_INSERTSTRUCT TvItem;	
 	memset(&TvItem, 0, sizeof(TvItem));
 
-	hFilterList			= GetDlgItem(hSelDlg, IDC_TREE2);	
+	hFilterList			= GetDlgItem(hSelDlg, IDC_TREE2);
 
 	TvItem.item.mask	= TVIF_TEXT | TVIF_PARAM;
 	TvItem.hInsertAfter = TVI_LAST;
@@ -1084,6 +1092,8 @@ static void CreateFilters()
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SAMSHO		, hFilterSamsho			, nLoadMenuFamilyFilter & FBF_SAMSHO				);
 	_TVCreateFiltersA(hFamily		, IDS_FAMILY_SF			, hFilterSf				, nLoadMenuFamilyFilter & FBF_SF					);
 	
+	_TVCreateFiltersA(hRoot			, IDS_FAVORITES			, hFavorites            , !nLoadMenuFavoritesFilter                         );
+
 	_TVCreateFiltersB(hRoot			, IDS_GENRE				, hGenre		);
 	
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_BALLPADDLE	, hFilterBallpaddle		, nLoadMenuGenreFilter & GBF_BALLPADDLE				);
@@ -1141,6 +1151,8 @@ static void CreateFilters()
 	
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
+	//SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hFavorites);
+	TreeView_SelectSetFirstVisible(hFilterList, hRoot);
 }
 
 void LoadDrvIcons() 
@@ -1444,7 +1456,19 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				nLoadMenuFamilyFilter = 0;
 			}
 		}
-		
+
+		if (hItemChanged == hFavorites) {
+			if (nLoadMenuFavoritesFilter) {
+				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
+				
+				nLoadMenuFavoritesFilter = 0;
+			} else {
+				_TreeView_SetCheckState(hFilterList, hItemChanged, TRUE);
+				
+				nLoadMenuFavoritesFilter = 0xff;
+			}
+		}
+
 		if (hItemChanged == hGenre) {
 			if ((nLoadMenuGenreFilter & MASKALLGENRE) == 0) {
 				_TreeView_SetCheckState(hFilterList, hItemChanged, FALSE);
@@ -1986,11 +2010,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			// Search through nBurnDrv[] for the nBurnDrvNo according to the returned hSelectHandle
 			for (unsigned int i = 0; i < nTmpDrvCount; i++) {
-				if (hSelectHandle == nBurnDrv[i].hTreeHandle) 
-				{					
+				if (hSelectHandle == nBurnDrv[i].hTreeHandle)
+				{
 					nBurnDrvActive	= nBurnDrv[i].nBurnDrvNo;
-					nDialogSelect	= nBurnDrvActive;					
-					bDrvSelected	= true;	
+					nDialogSelect	= nBurnDrvActive;
+					bDrvSelected	= true;
 					UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
 					UpdatePreview(false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
 					break;

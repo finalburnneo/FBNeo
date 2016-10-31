@@ -289,6 +289,7 @@ extern int nLoadMenuShowX;
 extern int nLoadMenuShowY;
 extern int nLoadMenuBoardTypeFilter;
 extern int nLoadMenuGenreFilter;
+extern int nLoadMenuFavoritesFilter;
 extern int nLoadMenuFamilyFilter;
 extern int nSelDlgWidth;
 extern int nSelDlgHeight;
@@ -437,6 +438,8 @@ int ProgressDestroy();
 
 // gameinfo.cpp
 int GameInfoDialogCreate(HWND hParentWND, int nDrvSel);
+void LoadFavorites();
+INT32 CheckFavorites(char *name);
 
 // ---------------------------------------------------------------------------
 // Debugger

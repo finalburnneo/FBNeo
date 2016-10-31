@@ -203,6 +203,7 @@ BEGIN
 	IDS_SEL_GG					"Game Gear"
 	IDS_SEL_MSX				"MSX"
 	
+	IDS_FAVORITES					"Favorites"
 	IDS_GENRE					"Genre"
 	IDS_GENRE_HORSHOOT			"Shooter - Horizontal"
 	IDS_GENRE_VERSHOOT			"Shooter - Vertical"

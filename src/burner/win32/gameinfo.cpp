@@ -1,3 +1,4 @@
+// FBAlpha Game Info and Favorites handling
 #include "burner.h"
 
 static HWND hGameInfoDlg	= NULL;
@@ -548,6 +549,95 @@ static int GameInfoInit()
 	return 0;
 }
 
+#define MAXFAVORITES 2000
+char szFavorites[MAXFAVORITES][28];
+INT32 nFavorites = 0;
+
+void LoadFavorites()
+{
+	char szTemp[255];
+	char szFileName[] = "config/favorites.dat";
+
+	nFavorites = 0;
+	memset(szFavorites, 0, sizeof(szFavorites));
+
+	FILE *fp = fopen(szFileName, "rb");
+
+	if (fp) {
+		while (!feof(fp)) {
+			memset(szTemp, 0, sizeof(szTemp));
+			fgets(szTemp, 255, fp);
+
+			// Get rid of the linefeed at the end
+			INT32 nLen = strlen(szTemp);
+			while (nLen > 0 && (szTemp[nLen - 1] == 0x0A || szTemp[nLen - 1] == 0x0D)) {
+				szTemp[nLen - 1] = 0;
+				nLen--;
+			}
+
+			if (strlen(szTemp) < 25 && strlen(szTemp) > 2) {
+				strncpy(szFavorites[nFavorites++], szTemp, 25);
+				//bprintf(0, _T("Loaded: %S.\n"), szFavorites[nFavorites-1]);
+			}
+		}
+		fclose(fp);
+	}
+}
+
+static void SaveFavorites()
+{
+	char szFileName[] = "config/favorites.dat";
+	FILE *fp = fopen(szFileName, "wb");
+	INT32 nSaved = 0;
+
+	if (fp) {
+		for (INT32 i = 0; i < nFavorites; i++) {
+			if (strlen(szFavorites[i]) > 0) {
+				fprintf(fp, "%s\n", szFavorites[i]);
+				nSaved++;
+			}
+		}
+		//bprintf(0, _T("Saved %X favorites.\n"), nSaved);
+	}
+	fclose(fp);
+}
+
+INT32 CheckFavorites(char *name)
+{
+	for (INT32 i = 0; i < nFavorites; i++) {
+		if (!strcmp(name, szFavorites[i])) {
+			return i;
+		}
+	}
+	return -1;
+}
+
+static void AddFavorite(UINT8 addf)
+{
+	UINT32 nOldDrvSelect = nBurnDrvActive;
+	char szBoardName[28] = "";
+
+	LoadFavorites();
+
+	nBurnDrvActive = nGiDriverSelected; // get driver name under cursor
+	strcpy(szBoardName, BurnDrvGetTextA(DRV_NAME));
+	nBurnDrvActive = nOldDrvSelect;
+
+	INT32 inthere = CheckFavorites(szBoardName);
+
+	if (addf && inthere == -1) { // add favorite
+		//bprintf(0, _T("[add]"));
+		strcpy(szFavorites[nFavorites++], szBoardName);
+	}
+
+	if (addf == 0 && inthere != -1) { // remove favorite
+		//bprintf(0, _T("[remove]"));
+		szFavorites[inthere][0] = '\0';
+	}
+
+	SaveFavorites();
+}
+
 static void MyEndDialog()
 {
 	SendDlgItemMessage(hGameInfoDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
@@ -613,6 +703,16 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			return 0;
 		}
 		
+		if (Id == IDFAVORITESET && Notify == BN_CLICKED) {
+			AddFavorite(1);
+			return 0;
+		}
+
+		if (Id == IDFAVORITEUNSET && Notify == BN_CLICKED) {
+			AddFavorite(0);
+			return 0;
+		}
+
 		if (Id == IDRESCANSET && Notify == BN_CLICKED) {
 			nBurnDrvActive = nGiDriverSelected;
 			// use the nBurnDrvActive value from when the Rom Info button was clicked, because it can/will change

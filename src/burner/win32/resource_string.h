@@ -225,6 +225,8 @@
 #define IDS_GENRE_RACING				(IDS_STRING +  688)
 #define IDS_GENRE_SHOOT					(IDS_STRING +  690)
 
+#define IDS_FAVORITES   				(IDS_STRING +  695)
+
 #define IDS_FAMILY						(IDS_STRING +  740)
 #define IDS_FAMILY_MSLUG				(IDS_STRING +  742)
 #define IDS_FAMILY_SF					(IDS_STRING +  744)

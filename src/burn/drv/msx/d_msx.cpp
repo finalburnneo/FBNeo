@@ -1812,7 +1812,7 @@ STDROMPICKEXT(MSX_msxbasic, MSX_msxbasic, msx_msx)
 STD_ROM_FN(MSX_msxbasic)
 
 struct BurnDriver BurnDrvMSX_msxbasic = {
-	"msx_msx", NULL, "msx_msx", NULL, "1983",
+	"msx_msxbasic", NULL, "msx_msx", NULL, "1983",
 	"MSX Basic\0", NULL, "Microsoft / ASCII", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,

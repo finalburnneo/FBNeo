@@ -510,7 +510,6 @@ static struct BurnSampleInfo CheekymsSampleDesc[] = {
 	{ "squeek", SAMPLE_NOLOOP },
 	{ "hammer", SAMPLE_NOLOOP },
 	{ "squeekdead", SAMPLE_NOLOOP },
-	{ "one", SAMPLE_NOLOOP },
 	{ "two", SAMPLE_NOLOOP },
 	{ "squeek2", SAMPLE_NOLOOP },
 #endif

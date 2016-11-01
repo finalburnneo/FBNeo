@@ -24509,3 +24509,22 @@ struct BurnDriver BurnDrvMSX_seaking = {
 	CasRunDrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Maxima (Euro)
+
+static struct BurnRomInfo MSX_maximaRomDesc[] = {
+	{ "Maxima (1984)(PSS)(GB).rom",	0x10000, 0xc9c5b360, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_maxima, MSX_maxima, msx_msx)
+STD_ROM_FN(MSX_maxima)
+
+struct BurnDriver BurnDrvMSX_maxima = {
+	"msx_maxima", NULL, "msx_msx", NULL, "1984",
+	"Maxima (Euro)\0", NULL, "PSS", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_maximaRomInfo, MSX_maximaRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};

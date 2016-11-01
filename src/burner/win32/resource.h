@@ -57,6 +57,7 @@
 #define IDR_MENU_BLITTER_5					114
 #define IDR_MENU_AUD_PLUGIN_1				130
 #define IDR_MENU_AUD_PLUGIN_2				131
+#define	IDR_MENU_GAMESEL					140
 #define IDR_ACCELERATOR                 	150
 
 #define IDD_REPLAYINP                   233
@@ -822,6 +823,10 @@
 #define MENU_AVISTART					    11827
 #define MENU_AVISTOP					    11828
 #define MENU_AVIINTAUD					    11829
+
+#define GAMESEL_MENU_PLAY					11900
+#define GAMESEL_MENU_GAMEINFO				11901
+#define GAMESEL_MENU_VIEWEMMA				11902
 
 // Next default values for new objects
 //

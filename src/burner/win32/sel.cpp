@@ -1667,6 +1667,40 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					break;
 			}
 		}
+		
+		int id = LOWORD(wParam);
+			
+		switch (id) {
+			case GAMESEL_MENU_PLAY: {
+				SelOkay();
+				break;
+			}
+				
+			case GAMESEL_MENU_GAMEINFO: {
+				/*UpdatePreview(true, hSelDlg, szAppPreviewsPath);
+				if (nTimer) {
+					KillTimer(hSelDlg, nTimer);
+					nTimer = 0;
+				}
+				GameInfoDialogCreate(hSelDlg, nBurnDrvSelect);*/
+				if (bDrvSelected) {
+					GameInfoDialogCreate(hSelDlg, nBurnDrvActive);
+					SetFocus(hSelList); // Update list for Rescan Romset button
+				} else {
+					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+				}
+				break;
+			}
+			
+			case GAMESEL_MENU_VIEWEMMA: {
+				if (!nVidFullscreen) {
+					TCHAR szURL[MAX_PATH];
+					_stprintf(szURL, _T("http://www.progettoemma.net/gioco.php?&game=%s"), BurnDrvGetText(DRV_NAME));
+					ShellExecute(NULL, _T("open"), szURL, NULL, NULL, SW_SHOWNORMAL);
+				}
+				break;
+			}
+		}
 	}
 
 	if (Msg == WM_TIMER) {
@@ -2167,6 +2201,49 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					}
 				}
 			}
+		}
+		
+		if(!TreeBuilding && pnmtv->hdr.code == NM_RCLICK && pnmtv->hdr.idFrom == IDC_TREE1)
+		{
+			DWORD dwpos = GetMessagePos();
+
+			TVHITTESTINFO thi;
+			thi.pt.x	= GET_X_LPARAM(dwpos);
+			thi.pt.y	= GET_Y_LPARAM(dwpos);
+			
+			MapWindowPoints(HWND_DESKTOP, pNmHdr->hwndFrom, &thi.pt, 1);
+			
+			TreeView_HitTest(pNmHdr->hwndFrom, &thi);
+			
+			HTREEITEM hSelectHandle = thi.hItem;
+         	if(hSelectHandle == NULL) return 1;
+
+			TreeView_SelectItem(hSelList, hSelectHandle);
+
+			// Search through nBurnDrv[] for the nBurnDrvNo according to the returned hSelectHandle
+			for (unsigned int i = 0; i < nTmpDrvCount; i++) {
+				if (hSelectHandle == nBurnDrv[i].hTreeHandle) {
+					nBurnDrvSelect[0] = nBurnDrv[i].nBurnDrvNo;
+					break;
+				}
+			}
+			
+			nDialogSelect	= nBurnDrvSelect[0];
+			bDrvSelected	= true;
+			UpdatePreview(true, szAppPreviewsPath, IDC_SCREENSHOT_H, IDC_SCREENSHOT_V);
+			UpdatePreview(false, szAppTitlesPath, IDC_SCREENSHOT2_H, IDC_SCREENSHOT2_V);
+
+			// Menu
+			POINT oPoint;
+			GetCursorPos(&oPoint);
+
+			HMENU hMenuLoad = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_GAMESEL));
+			HMENU hMenuX = GetSubMenu(hMenuLoad, 0);
+
+			TrackPopupMenu(hMenuX, TPM_LEFTALIGN | TPM_RIGHTBUTTON, oPoint.x, oPoint.y, 0, hSelDlg, NULL);			
+			DestroyMenu(hMenuLoad);
+			
+			return 1;
 		}
 	}
 	return 0;

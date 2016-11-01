@@ -1416,6 +1416,18 @@ BEGIN
 	END
 END
 
+IDR_MENU_GAMESEL MENU 
+BEGIN
+	POPUP "Game Selection Menu"
+	BEGIN
+		MENUITEM "Play",								GAMESEL_MENU_PLAY
+		MENUITEM SEPARATOR
+		MENUITEM "View Game Information",				GAMESEL_MENU_GAMEINFO
+		MENUITEM SEPARATOR
+		MENUITEM "View in progretto EMMA",				GAMESEL_MENU_VIEWEMMA
+	END
+END
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Bitmap

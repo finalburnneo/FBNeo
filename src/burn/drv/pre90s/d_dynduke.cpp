@@ -1036,10 +1036,10 @@ static INT32 dbldynjInit()
 }
 
 struct BurnDriver BurnDrvDbldynj = {
-	"dbldynj", "dynduke", NULL, NULL, "1989",
+	"dbldynj", NULL, NULL, NULL, "1989",
 	"The Double Dynamites (Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dbldynjRomInfo, dbldynjRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
 	dbldynjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
@@ -1090,7 +1090,7 @@ STD_ROM_PICK(dbldynu)
 STD_ROM_FN(dbldynu)
 
 struct BurnDriver BurnDrvDbldynu = {
-	"dbldynu", "dynduke", NULL, NULL, "1989",
+	"dbldynu", "dbldynj", NULL, NULL, "1989",
 	"The Double Dynamites (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,

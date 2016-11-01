@@ -509,7 +509,8 @@ static struct BurnSampleInfo CheekymsSampleDesc[] = {
 #if !defined ROM_VERIFY
 	{ "squeek", SAMPLE_NOLOOP },
 	{ "hammer", SAMPLE_NOLOOP },
-	{ "sqeekdead", SAMPLE_NOLOOP },
+	{ "squeekdead", SAMPLE_NOLOOP },
+	{ "one", SAMPLE_NOLOOP },
 	{ "two", SAMPLE_NOLOOP },
 	{ "squeek2", SAMPLE_NOLOOP },
 #endif

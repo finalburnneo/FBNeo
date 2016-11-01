@@ -13903,26 +13903,26 @@ struct BurnDriver BurnDrvkf2k2plc = {
 // The King of Fighters 2002 (PlayStation 2 ver 0.4, EGHT hack)
 
 static struct BurnRomInfo kf2k2ps2RomDesc[] = {
-	{ "265ps2-p1.bin",   0x100000, 0x336c4ca8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "265ps2-p2.bin",   0x500000, 0xcb0032bf, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "265ps2-p1.bin",   		0x100000, 0x336c4ca8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265ps2-p2.bin",   		0x500000, 0xcb0032bf, 1 | BRF_ESS | BRF_PRG }, //  1 
 
-	{ "265ps2-s1.bin",   0x020000, 0x714ade47, 2 | BRF_GRA },           //  2 Text layer tiles
+	{ "265ps2-s1.bin",   		0x020000, 0x714ade47, 2 | BRF_GRA },           //  2 Text layer tiles
 
-	{ "265-c1_decrypted.bin", 0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
-	{ "265-c2_decrypted.bin", 0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4 
-	{ "265-c3_decrypted.bin", 0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
-	{ "265-c4_decrypted.bin", 0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
-	{ "265-c5_decrypted.bin", 0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
-	{ "265-c6_decrypted.bin", 0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
-	{ "265ps2-c7.bin",   0x800000, 0x1b1d35fb, 3 | BRF_GRA },           //  9 
-	{ "265ps2-c8.bin",   0x800000, 0xa5e35d11, 3 | BRF_GRA },           // 10 
-	{ "265ps2-c9.bin",   0x800000, 0xaa8bbc97, 3 | BRF_GRA },           // 11
-	{ "265ps2-c10.bin",  0x800000, 0x9832713d, 3 | BRF_GRA },           // 12 
+	{ "265-c1_decrypted.bin", 	0x800000, 0x7efa6ef7, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265-c2_decrypted.bin", 	0x800000, 0xaa82948b, 3 | BRF_GRA },           //  4 
+	{ "265-c3_decrypted.bin", 	0x800000, 0x959fad0b, 3 | BRF_GRA },           //  5 
+	{ "265-c4_decrypted.bin", 	0x800000, 0xefe6a468, 3 | BRF_GRA },           //  6 
+	{ "265-c5_decrypted.bin", 	0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "265-c6_decrypted.bin", 	0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "265ps2-c7.bin",   		0x800000, 0x1b1d35fb, 3 | BRF_GRA },           //  9 
+	{ "265ps2-c8.bin",   		0x800000, 0xa5e35d11, 3 | BRF_GRA },           // 10 
+	{ "265ps2-c9.bin",   		0x800000, 0xaa8bbc97, 3 | BRF_GRA },           // 11
+	{ "265ps2-c10.bin",  		0x800000, 0x9832713d, 3 | BRF_GRA },           // 12 
 
-	{ "265-m1.bin",      0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
+	{ "265-m1.bin",      		0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
 
-	{ "265-v1.bin",      0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 14 Sound data
-	{ "265-v2.bin",      0x800000, 0xda41d6f9, 5 | BRF_SND },           // 15 
+	{ "265-v1.bin",      		0x800000, 0x15e8f3f5, 5 | BRF_SND },           // 14 Sound data
+	{ "265-v2.bin",      		0x800000, 0xda41d6f9, 5 | BRF_SND },           // 15 
 };
 
 STDROMPICKEXT(kf2k2ps2, kf2k2ps2, neogeo)
@@ -14546,10 +14546,10 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2016/10/04 version */
+/* Ivex hack - 2016/10/12 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x6e199445, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.sp2", 	0x400000, 0x99461cf5, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0x92c5db8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.sp2", 	0x400000, 0x2f1e3f42, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -14730,7 +14730,7 @@ struct BurnDriver BurnDrvlasthope = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Metal Slug 2 - Super Vehicle-001/II Turbo (NGM-9410) (slowdown/fix hack by Trap15)
+// Metal Slug 2 Turbo (NGM-9410)
 /* MVS VERSION */
 
 static struct BurnRomInfo mslug2tRomDesc[] = {
@@ -14754,8 +14754,8 @@ STDROMPICKEXT(mslug2t, mslug2t, neogeo)
 STD_ROM_FN(mslug2t)
 
 struct BurnDriver BurnDrvMSlug2t = {
-	"mslug2t", "mslug2", "neogeo", NULL, "1998",
-	"Metal Slug 2 - Super Vehicle-001/II (NGM-9410) (slowdown/fix hack by Trap15)\0", NULL, "Hack / Trap15", "Neo Geo MVS",
+	"mslug2t", "mslug2", "neogeo", NULL, "2015",
+	"Metal Slug 2 Turbo (NGM-9410)\0", NULL, "Hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, FBF_MSLUG,
 	NULL, mslug2tRomInfo, mslug2tRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

@@ -2267,16 +2267,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 			HMENU hMenuLoad = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_GAMESEL));
 			HMENU hMenuX = GetSubMenu(hMenuLoad, 0);
+			
+			CheckMenuItem(hMenuX, GAMESEL_MENU_FAVORITE, (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? MF_CHECKED : MF_UNCHECKED);
 
 			TrackPopupMenu(hMenuX, TPM_LEFTALIGN | TPM_RIGHTBUTTON, oPoint.x, oPoint.y, 0, hSelDlg, NULL);
 			DestroyMenu(hMenuLoad);
-
-			// CheckMenuItem() doesn't work, ideas? (knidknid)
-			int nOldSelect = nBurnDrvActive; // possibly unneeded.
-			nBurnDrvActive = nBurnDrvSelect[0]; // ""
-
-			CheckMenuItem(hMenuX, GAMESEL_MENU_FAVORITE, (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? MF_CHECKED : MF_UNCHECKED);
-			nBurnDrvActive = nOldSelect; // ""
 
 			return 1;
 		}

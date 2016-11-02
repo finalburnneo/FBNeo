@@ -1,6 +1,7 @@
 // Driver Selector module
 // TreeView Version by HyperYagami
 #include "burner.h"
+#include <process.h>
 
 // reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
@@ -1023,6 +1024,25 @@ static int UpdatePreview(bool bReset, TCHAR *szPath, int HorCtrl, int VerCtrl)
 	return 0;
 }
 
+static unsigned __stdcall DoShellExThread(void *arg)
+{
+	ShellExecute(NULL, _T("open"), (TCHAR*)arg, NULL, NULL, SW_SHOWNORMAL);
+
+	return 0;
+}
+
+static void ViewEmma()
+{
+	HANDLE hThread = NULL;
+	unsigned ThreadID = 0;
+	TCHAR szShellExURL[MAX_PATH];
+
+	_stprintf(szShellExURL, _T("http://www.progettoemma.net/gioco.php?&game=%s"), BurnDrvGetText(DRV_NAME));
+
+	hThread = (HANDLE)_beginthreadex(NULL, 0, DoShellExThread, (void*)szShellExURL, 0, &ThreadID);
+	Sleep(150); // allow arguments to pass to ShellExecute() in new thread before they get disposed.
+}
+
 static void RebuildEverything()
 {
 	RefreshPanel();
@@ -1694,10 +1714,18 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			
 			case GAMESEL_MENU_VIEWEMMA: {
 				if (!nVidFullscreen) {
-					TCHAR szURL[MAX_PATH];
-					_stprintf(szURL, _T("http://www.progettoemma.net/gioco.php?&game=%s"), BurnDrvGetText(DRV_NAME));
-					ShellExecute(NULL, _T("open"), szURL, NULL, NULL, SW_SHOWNORMAL);
+					ViewEmma();
 				}
+				break;
+			}
+
+			case GAMESEL_MENU_FAVORITE: { // toggle favorite status.
+				if (bDrvSelected) {
+					AddFavorite_Ext((CheckFavorites(BurnDrvGetTextA(DRV_NAME)) == -1) ? 1 : 0);
+				} else {
+					MessageBox(hSelDlg, FBALoadStringEx(hAppInst, IDS_ERR_NO_DRIVER_SELECTED, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
+				}
+
 				break;
 			}
 		}
@@ -2240,9 +2268,16 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			HMENU hMenuLoad = FBALoadMenu(hAppInst, MAKEINTRESOURCE(IDR_MENU_GAMESEL));
 			HMENU hMenuX = GetSubMenu(hMenuLoad, 0);
 
-			TrackPopupMenu(hMenuX, TPM_LEFTALIGN | TPM_RIGHTBUTTON, oPoint.x, oPoint.y, 0, hSelDlg, NULL);			
+			TrackPopupMenu(hMenuX, TPM_LEFTALIGN | TPM_RIGHTBUTTON, oPoint.x, oPoint.y, 0, hSelDlg, NULL);
 			DestroyMenu(hMenuLoad);
-			
+
+			// CheckMenuItem() doesn't work, ideas? (knidknid)
+			int nOldSelect = nBurnDrvActive; // possibly unneeded.
+			nBurnDrvActive = nBurnDrvSelect[0]; // ""
+
+			CheckMenuItem(hMenuX, GAMESEL_MENU_FAVORITE, (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) ? MF_CHECKED : MF_UNCHECKED);
+			nBurnDrvActive = nOldSelect; // ""
+
 			return 1;
 		}
 	}

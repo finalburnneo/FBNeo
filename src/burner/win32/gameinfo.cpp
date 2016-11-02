@@ -629,16 +629,22 @@ static void AddFavorite(UINT8 addf)
 	INT32 inthere = CheckFavorites(szBoardName);
 
 	if (addf && inthere == -1) { // add favorite
-		//bprintf(0, _T("[add]"));
+		//bprintf(0, _T("[add %S]"), szBoardName);
 		strcpy(szFavorites[nFavorites++], szBoardName);
 	}
 
 	if (addf == 0 && inthere != -1) { // remove favorite
-		//bprintf(0, _T("[remove]"));
+		//bprintf(0, _T("[remove %S]"), szBoardName);
 		szFavorites[inthere][0] = '\0';
 	}
 
 	SaveFavorites();
+}
+
+void AddFavorite_Ext(UINT8 addf)
+{ // For use outside of the gameinfo window.
+	nGiDriverSelected = nBurnDrvActive;
+	AddFavorite(addf);
 }
 
 static void MyEndDialog()

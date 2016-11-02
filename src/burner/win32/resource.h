@@ -827,6 +827,7 @@
 #define GAMESEL_MENU_PLAY					11900
 #define GAMESEL_MENU_GAMEINFO				11901
 #define GAMESEL_MENU_VIEWEMMA				11902
+#define GAMESEL_MENU_FAVORITE				11903
 
 // Next default values for new objects
 //

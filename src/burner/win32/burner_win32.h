@@ -439,6 +439,7 @@ int ProgressDestroy();
 // gameinfo.cpp
 int GameInfoDialogCreate(HWND hParentWND, int nDrvSel);
 void LoadFavorites();
+void AddFavorite_Ext(UINT8 addf);
 INT32 CheckFavorites(char *name);
 
 // ---------------------------------------------------------------------------

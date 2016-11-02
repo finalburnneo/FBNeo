@@ -57,6 +57,7 @@ static struct BurnInputInfo AsterixInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},

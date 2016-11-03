@@ -947,6 +947,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 	if (!(AppInit())) {							// Init the application
 		if (bAlwaysCreateSupportFolders) CreateSupportFolders();
 		if (!(ProcessCmdLine())) {
+			DetectWindowsVersion();
+
 			MediaInit();
 
 			RunMessageLoop();					// Run the application message loop

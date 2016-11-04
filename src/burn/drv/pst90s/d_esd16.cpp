@@ -287,7 +287,7 @@ void __fastcall hedpanic_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0xc0000e:
-			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 6);
+			EEPROMWrite(data & 0x02, data & 0x01, (data & 0x04) >> 2);
 		return;
 	}
 

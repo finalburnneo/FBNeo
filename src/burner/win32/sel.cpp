@@ -1827,12 +1827,8 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		
 		SetControlPosAlignTopLeftResizeHorVert(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
 
-		if (bIsWindowsXP) { // Fix an issue on WinXP where the scrollbar overwrites past the tree size when less then 12 items are in the list
-			if (nTmpDrvCount < 12) {
-				SetControlPosAlignTopLeftResizeHorVertALT(IDC_TREE1, nDlgSelectGameLstInitialPos);
-			} else {
-				SetControlPosAlignTopLeftResizeHorVert(IDC_TREE1, nDlgSelectGameLstInitialPos);
-			}
+		if (bIsWindowsXP && nTmpDrvCount < 12) { // Fix an issue on WinXP where the scrollbar overwrites past the tree size when less then 12 items are in the list
+			SetControlPosAlignTopLeftResizeHorVertALT(IDC_TREE1, nDlgSelectGameLstInitialPos);
 		} else {
 			SetControlPosAlignTopLeftResizeHorVert(IDC_TREE1, nDlgSelectGameLstInitialPos);
 		}

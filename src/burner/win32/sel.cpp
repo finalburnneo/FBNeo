@@ -313,6 +313,9 @@ static void RebuildEverything();
 	xScrollBarDelta = (a == IDC_TREE1) ? -18 : 0;				\
 	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1], b[2] - xDelta - xScrollBarDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
 
+#define SetControlPosAlignTopLeftResizeHorVertALT(a, b)			\
+	SetWindowPos(GetDlgItem(hSelDlg, a), hSelDlg, b[0], b[1], b[2] - xDelta, b[3] - yDelta, SWP_NOZORDER | SWP_NOSENDCHANGING);
+
 static void GetInitialPositions()
 {
 	RECT rect;
@@ -1824,7 +1827,13 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		
 		SetControlPosAlignTopLeftResizeHorVert(IDC_STATIC1, nDlgSelectGameGrpInitialPos);
 
-		if (!bIsWindowsXP) { // Fix an issue on WinXP where the scrollbar overwrites past the tree size.
+		if (bIsWindowsXP) { // Fix an issue on WinXP where the scrollbar overwrites past the tree size when less then 12 items are in the list
+			if (nTmpDrvCount < 12) {
+				SetControlPosAlignTopLeftResizeHorVertALT(IDC_TREE1, nDlgSelectGameLstInitialPos);
+			} else {
+				SetControlPosAlignTopLeftResizeHorVert(IDC_TREE1, nDlgSelectGameLstInitialPos);
+			}
+		} else {
 			SetControlPosAlignTopLeftResizeHorVert(IDC_TREE1, nDlgSelectGameLstInitialPos);
 		}
 

@@ -569,15 +569,15 @@ void msxinit(INT32 cart_len)
 	}
 
 
-	for(INT32 J = 0; J < MAXSLOTS; J++)
-		if(((ROMMask[J] + 1) > 4) || (ROMType[J] == MAP_DOOLY))
+	for (INT32 J = 0; J < MAXSLOTS; J++)
+		if (((ROMMask[J] + 1) > 4) || (ROMType[J] == MAP_DOOLY))
 		{
 			INT32 I = ROMMask[J] + 1;
 			
-			if((ROMData[J][0] == 'A') && (ROMData[J][1] == 'B')) {
+			if ((ROMData[J][0] == 'A') && (ROMData[J][1] == 'B')) {
 				MapMegaROM(J, 0, 1, 2, 3);
 			} else {
-				if((ROMData[J][(I - 2) << 13] == 'A') && (ROMData[J][((I - 2) << 13) + 1] == 'B'))
+				if ((ROMData[J][(I - 2) << 13] == 'A') && (ROMData[J][((I - 2) << 13) + 1] == 'B'))
 					MapMegaROM(J, I - 2, I - 1, I - 2, I - 1);
 			}
 		}
@@ -680,11 +680,12 @@ static void Mapper_write(UINT16 address, UINT8 data)
 			Page = (address & 0x8000) >> 14;
 
 			data = (data << 1) & ROMMask[PSlot];
-			if( data != ROMMapper[PSlot][Page])
+			if (data != ROMMapper[PSlot][Page])
 			{
 				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[PSlot] + (data << 13);
 				RAM[Page + 3] = MemMap[PSlot][Page + 3] = RAM[Page + 2] + 0x2000;
-				ROMMapper[PSlot][Page]=data;
+				ROMMapper[PSlot][Page] = data;
+				ROMMapper[PSlot][Page + 1] = data + 1;
 			}
 			return;
 
@@ -695,7 +696,7 @@ static void Mapper_write(UINT16 address, UINT8 data)
 			if (Page == 2) SCCReg[PSlot] = (data == 0x3f) ? 1 : 0;
 
 			data &= ROMMask[PSlot];
-			if(data != ROMMapper[PSlot][Page])
+			if (data != ROMMapper[PSlot][Page])
 			{
 				RAM[Page + 2] = MemMap[PSlot][Page + 2] = ROMData[PSlot] + (data << 13);
 				ROMMapper[PSlot][Page] = data;
@@ -771,8 +772,9 @@ static void Mapper_write(UINT16 address, UINT8 data)
 					MemMap[PSlot][Page + 2] = pgPtr;
 					MemMap[PSlot][Page + 3] = pgPtr + 0x2000;
 					ROMMapper[PSlot][Page] = data;
+					ROMMapper[PSlot][Page + 1] = data + 1;
 
-					if(PSL[(Page >> 1) + 1] == PSlot)
+					if (PSL[(Page >> 1) + 1] == PSlot)
 					{
 						RAM[Page + 2] = pgPtr;
 						RAM[Page + 3] = pgPtr + 0x2000;
@@ -780,6 +782,7 @@ static void Mapper_write(UINT16 address, UINT8 data)
 				}
 				return;
 			}
+
 			if ((address >= 0x8000) && (address < 0xc000) && (ROMMapper[PSlot][2] == 0xff))
 			{
 				UINT8 *pgPtr = RAM[address >> 13];
@@ -1127,7 +1130,7 @@ static INT32 InsertCart(UINT8 *cartbuf, INT32 cartsize, INT32 nSlot)
 				break;
 
 		default:
-			if(Flat64)
+			if (Flat64)
 			{ // Flat-64k ROM
 				PageMap(nSlot, "0:1:2:3:4:5:6:7");
 			}
@@ -1201,7 +1204,7 @@ static void __fastcall msx_write_port(UINT16 port, UINT8 data)
 				MemMap[RAMSLOT][Page] = RAMData + (data << 14);
 				MemMap[RAMSLOT][Page + 1] = MemMap[RAMSLOT][Page] + 0x2000;
 
-				if((PSL[PSlot] == RAMSLOT))	{
+				if ((PSL[PSlot] == RAMSLOT))	{
 					WriteMode[PSlot] = 1;
 					RAM[Page] = MemMap[RAMSLOT][Page];
 					RAM[Page + 1] = MemMap[RAMSLOT][Page + 1];
@@ -1672,10 +1675,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			RAM[2 * i] = MemMap[PSL[i]][2 * i];
 			RAM[2 * i + 1] = MemMap[PSL[i]][2 * i + 1];
 		}
-
-		UINT8 temppsl = PSLReg;
-		PSLReg = 0;
-		SetSlot(temppsl);
 	}
 
 	return 0;
@@ -11932,7 +11931,7 @@ struct BurnDriver BurnDrvMSX_mokarima = {
 	"Mokari Makka? Bochibochi Denna! (Jpn)\0", NULL, "Leben Pro", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_mokarimaRomInfo, MSX_mokarimaRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_mokarimaRomInfo, MSX_mokarimaRomName, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
@@ -24528,3 +24527,23 @@ struct BurnDriver BurnDrvMSX_maxima = {
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
+
+// Transball (v1.3.2)
+
+static struct BurnRomInfo MSX_transballRomDesc[] = {
+	{ "transball-en.rom",	0x08000, 0xcbcf03c5, BRF_PRG | BRF_ESS },
+};
+
+STDROMPICKEXT(MSX_transball, MSX_transball, msx_msx)
+STD_ROM_FN(MSX_transball)
+
+struct BurnDriver BurnDrvMSX_transball = {
+	"msx_transball", NULL, "msx_msx", NULL, "2005",
+	"Transball (v1.3.2)\0", NULL, "Santiago Ontanon", "MSX",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
+	MSXGetZipName, MSX_transballRomInfo, MSX_transballRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	272, 228, 4, 3
+};
+

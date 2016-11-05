@@ -625,7 +625,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Mustache Boy
+// Mustache Boy (Japan)
 
 static struct BurnRomInfo mustacheRomDesc[] = {
 	{ "mustache.h18",	0x8000, 0x123bd9b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -659,10 +659,53 @@ STD_ROM_FN(mustache)
 
 struct BurnDriver BurnDrvMustache = {
 	"mustache", NULL, NULL, NULL, "1987",
-	"Mustache Boy\0", NULL, "Seibu Kaihatsu (March license)", "Miscellaneous",
+	"Mustache Boy (Japan)\0", NULL, "Seibu Kaihatsu (March license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mustacheRomInfo, mustacheRomName, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	248, 240, 3, 4
+};
+
+
+// Mustache Boy (Italy)
+
+static struct BurnRomInfo mustacheiRomDesc[] = {
+	{ "1.h18",			0x8000, 0x22893fbc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "2.h16",			0x4000, 0xec70cfd3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+#if !defined (ROM_VERIFY)
+	{ "t5182.rom",		0x2000, 0xd354c8fc, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80 #1) Code
+#else
+	{ "",				0x0000, 0x00000000, 2 | BRF_PRG | BRF_ESS }, //  2 t5182 (Z80 #1) Code
+#endif
+	{ "10.e5",			0x8000, 0xefbb1943, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "5.a13",			0x4000, 0x9baee4a7, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "4.a14",			0x4000, 0x8155387d, 3 | BRF_GRA },           //  5
+	{ "3.a16",			0x4000, 0x4db4448d, 3 | BRF_GRA },           //  6
+
+	{ "6.a4",			0x8000, 0x4a95a89c, 4 | BRF_GRA },           //  7 Sprites
+	{ "8.a7",			0x8000, 0x3e6be0fb, 4 | BRF_GRA },           //  8
+	{ "7.a5",			0x8000, 0x8ad38884, 4 | BRF_GRA },           //  9
+	{ "9.a8",			0x8000, 0x3568c158, 4 | BRF_GRA },           // 10
+
+	{ "mustache.c3",	0x0100, 0x68575300, 5 | BRF_GRA },           // 11 Color PROMs
+	{ "mustache.c2",	0x0100, 0xeb008d62, 5 | BRF_GRA },           // 12
+	{ "mustache.c1",	0x0100, 0x65da3604, 5 | BRF_GRA },           // 13
+
+	{ "mustache.b6",	0x1000, 0x5f83fa35, 5 | BRF_GRA | BRF_OPT }, // 14
+};
+
+STD_ROM_PICK(mustachei)
+STD_ROM_FN(mustachei)
+
+struct BurnDriver BurnDrvMustachei = {
+	"mustachei", "mustache", NULL, NULL, "1987",
+	"Mustache Boy (Italy)\0", NULL, "Seibu Kaihatsu (International Games SPA licence)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, mustacheiRomInfo, mustacheiRomName, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	248, 240, 3, 4
 };

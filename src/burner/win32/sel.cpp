@@ -43,7 +43,7 @@ bool bEnableIcons				= 0;
 bool bIconsLoaded				= 0;
 int nIconsXDiff;
 int nIconsYDiff;
-static HICON hDrvIcon[9999];
+static HICON hDrvIcon[19999];
 bool bGameInfoOpen				= false;
 
 // Dialog Sizing
@@ -1202,7 +1202,7 @@ void LoadDrvIcons()
 
 		_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_NAME));
 		hDrvIcon[nDrvIndex] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
-		
+
 		if(!hDrvIcon[nDrvIndex] && BurnDrvGetText(DRV_PARENT)) {
 			_stprintf(szIcon, _T("%s%s.ico"), szAppIconsPath, BurnDrvGetText(DRV_PARENT));
 			hDrvIcon[nDrvIndex] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);

@@ -5805,6 +5805,7 @@ static INT32 Kaneko16Exit()
 	Kaneko16DisplayEnable = 0;
 	Kaneko168BppSprites = 0;
 	Kaneko16Eeprom = 0;
+	Kaneko16NVRam = NULL;
 	Kaneko16TilesXOffset = 0;
 	Kaneko16TilesYOffset = 0;
 	Kaneko16Bg15 = 0;
@@ -6427,8 +6428,14 @@ static void Kaneko16QueueTilesLayer(INT32 Layer)
 			if (px < 0 || px >= nScreenWidth) continue;
 			
 			TileIndex = ((my * 32) + mx) * 2;
-			
-			Code = VRAM[TileIndex + 1] & (numTiles - 1);
+
+			if (numTiles & 0xfff)
+			{ // gtmr2
+				Code = VRAM[TileIndex + 1];
+				if (Code >= numTiles) continue;
+			} else {
+				Code = VRAM[TileIndex + 1] & (numTiles - 1);
+			}
 			Attr = VRAM[TileIndex + 0];
 			Priority = (Attr >> 8) & 7;
 			Colour = (Attr >> 2) & 0x3f;
@@ -6554,7 +6561,15 @@ static void Kaneko16RenderTileLayer(INT32 Layer, INT32 PriorityDraw, INT32 xScro
 
 	for (my = 0; my < 32; my++) {
 		for (mx = 0; mx < 32; mx++) {
-			Code = VRAM[TileIndex + 1] & (numTiles - 1);
+
+			if (numTiles & 0xfff)
+			{ // gtmr2
+				Code = VRAM[TileIndex + 1];
+				if (Code >= numTiles) continue;
+			} else {
+				Code = VRAM[TileIndex + 1] & (numTiles - 1);
+			}
+
 			Attr = VRAM[TileIndex + 0];
 			Colour = (Attr >> 2) & 0x3f;
 			Flip = Attr & 3;

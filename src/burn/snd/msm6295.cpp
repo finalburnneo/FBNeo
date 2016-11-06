@@ -550,7 +550,7 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 	
 	MSM6295[nChip].nOutputDir = BURN_SND_ROUTE_BOTH;
 
-	memset (pBankPointer[nChip], 0, 0x40000/0x100);
+	memset (pBankPointer[nChip], 0, (0x40000/0x100) * sizeof(UINT8*));
 
 	MSM6295Reset(nChip);
 

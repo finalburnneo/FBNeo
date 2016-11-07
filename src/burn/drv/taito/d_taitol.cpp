@@ -61,6 +61,8 @@ static INT32 nmi_enable = 0;
 static INT32 has_ym2610 = 0;
 static INT32 has_adpcm = 0;
 
+static INT32 fhawkmode = 0;
+
 typedef void (*ram_function)(INT32 offset, UINT16 address, UINT8 data);
 static ram_function ram_write_table[4] = { NULL, NULL, NULL, NULL };
 
@@ -2491,6 +2493,8 @@ static INT32 FhawkInit()
 
 	has_adpcm = 0;
 
+	fhawkmode = 1;
+
 	TC0140SYTInit(2);
 
 	DrvDoReset();
@@ -3022,6 +3026,8 @@ static INT32 DrvExit()
 	has_ym2610 = 0;
 	nmi_enable = 0;
 
+	fhawkmode = 0;
+
 	TaitoICExit();
 
 	BurnFree (AllMem);
@@ -3240,7 +3246,7 @@ static INT32 Z80x3Frame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[3] =  { 6665280 / 60, 4000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[3] =  { 6665280 / 60, ((fhawkmode) ? 6665280 : 4000000) / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	if (has_adpcm)

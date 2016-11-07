@@ -411,7 +411,7 @@ void MSM5205InterleaveInit(INT32 chip, INT32 cpu_speed, INT32 interleave)
 
 		if (Idx != LastIdx) {
 			scanline_table[i] = 1;
-		}
+		} else scanline_table[i] = 0;
 		LastIdx = Idx;
 	}
 }

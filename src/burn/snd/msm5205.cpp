@@ -408,7 +408,7 @@ void MSM5205InterleaveInit(INT32 chip, INT32 cpu_speed, INT32 interleave)
 	for (INT32 i = 0; i < interleave; i++)
 	{
 		Idx = (INT32)round(((double)MSMCalcdInterleave / (double)interleave) * (double)i);
-		//Idx = (MSMCalcdInterleave / interleave) * i; // no workie
+
 		if (Idx != LastIdx) {
 			scanline_table[i] = 1;
 		}

@@ -41,6 +41,8 @@ static void MSM5205_playmode(INT32 chip, INT32 select);
 
 static const INT32 index_shift[8] = { -1, -1, -1, -1, 2, 4, 6, 8 };
 
+static UINT8 *scanline_table = NULL;
+
 static void ComputeTables(INT32 chip)
 {
 	voice = &chips[chip];
@@ -263,7 +265,10 @@ void MSM5205Init(INT32 chip, INT32 (*stream_sync)(INT32), INT32 clock, void (*vc
 	float FPSRatio = (float)(6000 - nBurnFPS) / 6000;
 	INT32 nSoundLen = nBurnSoundLen + (INT32)((float)nBurnSoundLen * FPSRatio) + 1;
 	stream[chip]		= (INT16*)BurnMalloc(nSoundLen * sizeof(INT16));
-	
+
+	if (chip == 0)
+		scanline_table = (UINT8*)BurnMalloc(256 * 2); // just incase.
+
 	ComputeTables (chip);
 	
 	nNumChips = chip;
@@ -330,7 +335,9 @@ void MSM5205Exit()
 
 		BurnFree (stream[chip]);
 	}
-	
+
+	BurnFree(scanline_table);
+
 	DebugSnd_MSM5205Initted = 0;
 	nNumChips = 0;
 }
@@ -389,6 +396,34 @@ void MSM5205PlaymodeWrite(INT32 chip, INT32 select)
 
 	voice = &chips[chip];
 	MSM5205_playmode(chip,select);
+}
+
+
+void MSM5205InterleaveInit(INT32 chip, INT32 cpu_speed, INT32 interleave)
+{
+	INT32 MSMCalcdInterleave = MSM5205CalcInterleave(chip, cpu_speed);
+	INT32 LastIdx = -1;
+	INT32 Idx = 0;
+
+	for (INT32 i = 0; i < interleave; i++)
+	{
+		Idx = (INT32)round(((double)MSMCalcdInterleave / (double)interleave) * (double)i);
+		//Idx = (MSMCalcdInterleave / interleave) * i; // no workie
+		if (Idx != LastIdx) {
+			scanline_table[i] = 1;
+		}
+		LastIdx = Idx;
+	}
+}
+
+void MSM5205UpdateScanline(INT32 scanline)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205UpdateScanline called without init\n"));
+#endif
+	if (scanline_table[scanline]) {
+		MSM5205Update();
+	}
 }
 
 void MSM5205Update()

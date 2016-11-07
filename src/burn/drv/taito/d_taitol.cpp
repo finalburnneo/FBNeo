@@ -2222,6 +2222,7 @@ static void champwr_msm5205_vck()
 
 static void rombankswitch2(INT32 data)
 {
+	if (ZetGetActive() == -1) return;
 	cur_rombank[2] = data & 0x03;
 
 	ZetMapMemory(DrvZ80ROM2 + (cur_rombank[2] * 0x4000), 0x4000, 0x7fff, MAP_ROM);
@@ -3239,24 +3240,29 @@ static INT32 Z80x3Frame()
 		}
 	}
 
-	INT32 nInterleave = 256/4;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6665280 / 60, 4000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+
+	if (has_adpcm)
+		MSM5205InterleaveInit(0, 4000000, nInterleave);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		scanline_update(i*4);
+		scanline_update(i);
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdate(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
+		if (has_adpcm)
+			MSM5205UpdateScanline(i);
 		ZetClose();
 	}
 	

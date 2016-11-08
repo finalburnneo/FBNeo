@@ -1867,8 +1867,8 @@ static INT32 tigerhInit()
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
 	AY8910Init(1, 1500000, nBurnSoundRate, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	TigerHeliPaletteInit();
 
@@ -1999,8 +1999,8 @@ static INT32 perfrmanInit()
 
 	AY8910Init(0, 2000000, nBurnSoundRate, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	TigerHeliPaletteInit();
 
@@ -2214,21 +2214,21 @@ static INT32 tigerhFrame()
 		}
 	}
 
-	if ((tigerhInput[0] & 0x03) == 0x03) {
-		tigerhInput[0] &= ~0x03;
-	}
-	if ((tigerhInput[0] & 0x0C) == 0x0C) {
-		tigerhInput[0] &= ~0x0C;
-	}
-	if ((tigerhInput[0] & 0x30) == 0x30) {
-		tigerhInput[0] &= ~0x30;
-	}
-	if ((tigerhInput[0] & 0xC0) == 0xC0) {
-		tigerhInput[0] &= ~0xC0;
-	}
-
-	if (nWhichGame == 1) {
+	if (nWhichGame == 1) { // getstar / guardian
 		tigerhInput[0] = (tigerhInput[0] & 0x99) | ((tigerhInput[0] << 1) & 0x44) | ((tigerhInput[0] >> 1) & 0x22);
+	} else {
+		if ((tigerhInput[0] & 0x03) == 0x03) {
+			tigerhInput[0] &= ~0x03;
+		}
+		if ((tigerhInput[0] & 0x0C) == 0x0C) {
+			tigerhInput[0] &= ~0x0C;
+		}
+		if ((tigerhInput[0] & 0x30) == 0x30) {
+			tigerhInput[0] &= ~0x30;
+		}
+		if ((tigerhInput[0] & 0xC0) == 0xC0) {
+			tigerhInput[0] &= ~0xC0;
+		}
 	}
 
 	nCyclesTotal[0] = nCyclesTotal[1] = 6000000 / 60;
@@ -2286,7 +2286,7 @@ static INT32 tigerhFrame()
 			bVBlank = true;
 
 			if (bInterruptEnable) {
-				ZetSetIRQLine(0xff, CPU_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 #if 0
 				ZetClose();
 				ZetOpen(1);

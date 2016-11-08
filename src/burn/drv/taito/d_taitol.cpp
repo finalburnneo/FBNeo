@@ -3250,7 +3250,7 @@ static INT32 Z80x3Frame()
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	if (has_adpcm)
-		MSM5205InterleaveInit(0, 4000000, nInterleave);
+		MSM5205NewFrame(0, 4000000, nInterleave);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{

@@ -399,7 +399,7 @@ void MSM5205PlaymodeWrite(INT32 chip, INT32 select)
 }
 
 
-void MSM5205InterleaveInit(INT32 chip, INT32 cpu_speed, INT32 interleave)
+void MSM5205NewFrame(INT32 chip, INT32 cpu_speed, INT32 interleave)
 {
 	INT32 MSMCalcdInterleave = MSM5205CalcInterleave(chip, cpu_speed);
 	INT32 LastIdx = -1;

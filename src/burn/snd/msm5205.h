@@ -47,6 +47,6 @@ INT32 MSM5205CalcInterleave(INT32 chip, INT32 cpu_speed);
 void MSM5205Update();
 
 // 2016 version of the above.  see d_taitol.cpp for example
-void MSM5205InterleaveInit(INT32 chip, INT32 cpu_speed, INT32 interleave);
+void MSM5205NewFrame(INT32 chip, INT32 cpu_speed, INT32 interleave);
 void MSM5205UpdateScanline(INT32 scanline);
 

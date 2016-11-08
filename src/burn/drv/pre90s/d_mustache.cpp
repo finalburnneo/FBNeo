@@ -690,11 +690,11 @@ static struct BurnRomInfo mustacheiRomDesc[] = {
 	{ "7.a5",			0x8000, 0x8ad38884, 4 | BRF_GRA },           //  9
 	{ "9.a8",			0x8000, 0x3568c158, 4 | BRF_GRA },           // 10
 
-	{ "mustache.c3",	0x0100, 0x68575300, 5 | BRF_GRA },           // 11 Color PROMs
-	{ "mustache.c2",	0x0100, 0xeb008d62, 5 | BRF_GRA },           // 12
-	{ "mustache.c1",	0x0100, 0x65da3604, 5 | BRF_GRA },           // 13
+	{ "d.c3",			0x0100, 0x68575300, 5 | BRF_GRA },           // 11 Color PROMs
+	{ "c.c2",			0x0100, 0xeb008d62, 5 | BRF_GRA },           // 12
+	{ "b.c1",			0x0100, 0x65da3604, 5 | BRF_GRA },           // 13
 
-	{ "mustache.b6",	0x1000, 0x5f83fa35, 5 | BRF_GRA | BRF_OPT }, // 14
+	{ "a.b6",			0x1000, 0x5f83fa35, 5 | BRF_GRA | BRF_OPT }, // 14
 };
 
 STD_ROM_PICK(mustachei)
@@ -702,7 +702,7 @@ STD_ROM_FN(mustachei)
 
 struct BurnDriver BurnDrvMustachei = {
 	"mustachei", "mustache", NULL, NULL, "1987",
-	"Mustache Boy (Italy)\0", NULL, "Seibu Kaihatsu (International Games SPA licence)", "Miscellaneous",
+	"Mustache Boy (Italy)\0", NULL, "Seibu Kaihatsu (IG SPA licence)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mustacheiRomInfo, mustacheiRomName, NULL, NULL, MustacheInputInfo, MustacheDIPInfo,

@@ -3448,7 +3448,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 			ZetClose();
 		}
 
-		if (cur_rombank[0] != 0xff) 
+		if (cur_rombank[2] != 0xff)
 		{
 			ZetOpen(2);
 			if (has_ym2610) {

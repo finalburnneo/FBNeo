@@ -215,7 +215,7 @@ void __fastcall donpachiWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xB0002D:
 		case 0xB0002E:
 		case 0xB0002F: {
-			NMK112_okibank_write((sekAddress / 2) & 0x1f, byteValue);
+			NMK112_okibank_write((sekAddress / 2) & 0x07, byteValue);
 			break;
 		}
 
@@ -340,7 +340,7 @@ void __fastcall donpachiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		case 0xB0002D:
 		case 0xB0002E:
 		case 0xB0002F: {
-			NMK112_okibank_write((sekAddress / 2) & 0x1f, wordValue & 0xff);
+			NMK112_okibank_write((sekAddress / 2) & 0x07, wordValue & 0xff);
 			break;
 		}
 

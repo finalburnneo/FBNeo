@@ -38,6 +38,14 @@
 
 void	(*const *insnActive)(void);
 
+
+typedef UINT8 (*deco_function)(UINT16 address, UINT8 opcode);
+
+static INT32 Cpu7Written[8];
+static deco_function Cpu7Write[8] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
+
+extern INT32 M6502GetActive();
+
 #include "ops02.h"
 #include "ill02.h"
 
@@ -62,6 +70,12 @@ void	(*const *insnActive)(void);
 static int m6502_ICount = 0;
 
 static m6502_Regs m6502;
+
+void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8))
+{
+	Cpu7Write[M6502GetActive()] = write;
+}
+
 
 //static READ8_HANDLER( default_rdmem_id ) { return program_read_byte_8le(offset); }
 //static WRITE8_HANDLER( default_wdmem_id ) { program_write_byte_8le(offset, data); }
@@ -101,6 +115,13 @@ static m6502_Regs m6502;
  *      6502 CPU interface functions
  *
  *****************************************************************************/
+
+void m6502_core_exit()
+{
+	for (INT32 i = 0; i < 8; i++) {
+		Cpu7Write[i] = NULL;
+	}
+}
 
 static void m6502_common_init(UINT8 subtype, void (*const *insn)(void)/*, const char *type*/)
 {
@@ -151,6 +172,7 @@ void m6502_reset(void)
 	m6502.after_cli = 0;	/* pending IRQ and last insn cleared I */
 	m6502.irq_state = 0;
 	m6502.nmi_state = 0;
+	Cpu7Written[M6502GetActive()] = 0;
 
 	change_pc(PCD);
 }
@@ -237,6 +259,7 @@ int m6502_execute(int cycles)
 			m6502_take_irq();
 
 		op = RDOP();
+
 		//(*m6502.insn[op])();
 		(*insnActive[op])();
 
@@ -273,6 +296,67 @@ int m6502_execute(int cycles)
 	return cycles - m6502_ICount;
 }
 
+int decocpu7_execute(int cycles)
+{
+	m6502_ICount = cycles;
+
+	change_pc(PCD);
+
+	do
+	{
+		UINT8 op;
+		PPC = PCD;
+
+//		debugger_instruction_hook(Machine, PCD);
+
+		/* if an irq is pending, take it now */
+		if( m6502.pending_irq )
+			m6502_take_irq();
+
+		op = RDOP();
+
+		if (Cpu7Written[M6502GetActive()]) {
+			if ((PPC & 0x0104) == 0x0104) {
+				op = Cpu7Write[M6502GetActive()](PPC,op);
+			}
+			Cpu7Written[M6502GetActive()] = 0;
+		}
+
+		//(*m6502.insn[op])();
+		(*insnActive[op])();
+
+		/* check if the I flag was just reset (interrupts enabled) */
+		if( m6502.after_cli )
+		{
+//			LOG(("M6502#%d after_cli was >0", cpu_getactivecpu()));
+			m6502.after_cli = 0;
+			if (m6502.irq_state != M6502_CLEAR_LINE)
+			{
+//				LOG((": irq line is asserted: set pending IRQ\n"));
+				m6502.pending_irq = 1;
+			}
+			else
+			{
+//				LOG((": irq line is clear\n"));
+			}
+		}
+		else {
+			if ( m6502.pending_irq == 2 ) {
+				if ( m6502_IntOccured - m6502_ICount > 1 ) {
+					m6502.pending_irq = 1;
+				}
+			}
+			if( m6502.pending_irq == 1 )
+				m6502_take_irq();
+			if ( m6502.pending_irq == 2 ) {
+				m6502.pending_irq = 1;
+			}
+		}
+
+	} while (m6502_ICount > 0);
+
+	return cycles - m6502_ICount;
+}
 void m6502_set_irq_line(int irqline, int state)
 {
 	if (irqline == M6502_INPUT_LINE_NMI)
@@ -466,6 +550,7 @@ int m65c02_execute(int cycles)
 		//debugger_instruction_hook(Machine, PCD);
 
 		op = RDOP();
+
 		//(*m6502.insn[op])();
 		(*insnActive[op])();
 

@@ -128,6 +128,7 @@ unsigned char M6502ReadOpArg(unsigned short Address);
 void m6502_init();
 void m6502_reset(void);
 void m6502_exit(void);
+void m6502_core_exit();
 void m6502_get_context (void *dst);
 void m6502_set_context (void *src);
 int m6502_execute(int cycles);
@@ -153,6 +154,8 @@ void deco16_set_irq_line(int irqline, int state);
 
 void m6510_init();
 void m6510_reset(void);
+
+int decocpu7_execute(int cycles);
 
 /*enum
 {

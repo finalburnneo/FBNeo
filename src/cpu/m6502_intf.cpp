@@ -75,6 +75,11 @@ static UINT8 M6502CheatRead(UINT32 a)
 	return M6502ReadByte(a);
 }
 
+static UINT8 deco222Decode(UINT16 /*address*/,UINT8 op)
+{
+	return (op & 0x13) | ((op & 0x80) >> 5) | ((op & 0x64) << 1) | ((op & 0x08) << 2);
+}
+
 static cpu_core_config M6502CheatCpuConfig =
 {
 	M6502Open,
@@ -104,6 +109,10 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 
 	memset(pCurrentCPU, 0, sizeof(M6502Ext));
 
+	for (INT32 i = 0; i < 0x100; i++) {
+		pCurrentCPU->opcode_reorder[i] = i;
+	}
+
 	switch (type)
 	{
 		case TYPE_M6502:
@@ -112,6 +121,27 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 			pCurrentCPU->reset = m6502_reset;
 			pCurrentCPU->init = m6502_init;
 			pCurrentCPU->set_irq_line = m6502_set_irq_line;
+		break;
+
+		case TYPE_DECOCPU7:
+			pCurrentCPU->execute = decocpu7_execute;
+			pCurrentCPU->reset = m6502_reset;
+			pCurrentCPU->init = m6502_init;
+			pCurrentCPU->set_irq_line = m6502_set_irq_line;
+		break;
+
+		case TYPE_DECO222:
+		case TYPE_DECOC10707:
+		{
+			pCurrentCPU->execute = m6502_execute;
+			pCurrentCPU->reset = m6502_reset;
+			pCurrentCPU->init = m6502_init;
+			pCurrentCPU->set_irq_line = m6502_set_irq_line;
+
+			for (INT32 i = 0; i < 0x100; i++) {
+				pCurrentCPU->opcode_reorder[i] = (i & 0x9f) | ((i >> 1) & 0x20) | ((i & 0x20) << 1);
+			}
+		}
 		break;
 
 		case TYPE_M65C02:
@@ -172,6 +202,12 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	
 	pCurrentCPU->init();
 
+	if (type == TYPE_DECOCPU7) {
+		M6502Open(cpu);
+		DecoCpu7SetDecode(deco222Decode);
+		M6502Close();
+	}
+
 	CpuCheatRegister(cpu, &M6502CheatCpuConfig);
 
 	return 0;
@@ -188,6 +224,8 @@ void M6502Exit()
 			BurnFree(m6502CPUContext[i]);
 		}
 	}
+
+	m6502_core_exit();
 
 	nM6502Count = 0;
 	
@@ -489,12 +527,12 @@ UINT8 M6502ReadOp(UINT16 Address)
 	// check mem map
 	UINT8 * pr = pCurrentCPU->pMemMap[0x200 | (Address >> 8)];
 	if (pr != NULL) {
-		return pr[Address & 0xff];
+		return pCurrentCPU->opcode_reorder[pr[Address & 0xff]];
 	}
 	
 	// check handler
 	if (pCurrentCPU->ReadOp != NULL) {
-		return pCurrentCPU->ReadOp(Address);
+		return pCurrentCPU->opcode_reorder[pCurrentCPU->ReadOp(Address)];
 	}
 	
 	return 0;

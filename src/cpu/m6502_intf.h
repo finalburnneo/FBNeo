@@ -19,6 +19,7 @@ struct M6502Ext {
 	void (*set_irq_line)(INT32 irqline, INT32 state);
 
 	UINT8* pMemMap[0x100 * 3];
+	UINT8 opcode_reorder[0x100];
 
 	pReadPortHandler ReadPort;
 	pWritePortHandler WritePort;
@@ -50,8 +51,11 @@ void m6510_write_0000(UINT16 address, UINT8 data);
 // The M6504 only has 13 address bits! use address mirroring!
 
 enum { TYPE_M6502=0, TYPE_M6504, TYPE_M65C02, TYPE_M65SC02, TYPE_N2A03, TYPE_DECO16,
-//	 these are the same!
-	TYPE_M6510, TYPE_M6510T, TYPE_M7501, TYPE_M8502	 };
+//	these are the same!
+	TYPE_M6510, TYPE_M6510T, TYPE_M7501, TYPE_M8502,
+//	these involve encryption
+	TYPE_DECOCPU7, TYPE_DECO222, TYPE_DECOC10707
+};
 
 INT32 M6502Init(INT32 cpu, INT32 type); // if you're using more than one type
 void M6502Exit();
@@ -86,3 +90,6 @@ inline static INT32 M6502TotalCycles()
 
 	return nM6502CyclesTotal;
 }
+
+// m6502.cpp used for Data East encrypted CPUs.
+void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8));

@@ -68,7 +68,7 @@
 //#define WRMEM_ID(a,d)	m6502.wrmem_id(Machine,a,d)
 
 #define RDMEM_ID(a)		M6502ReadMemIndex(a)
-#define WRMEM_ID(a,d)	M6502WriteMemIndex(a, d)
+#define WRMEM_ID(a,d)	M6502WriteMemIndex(a, d); Cpu7Written[M6502GetActive()] = 1
 
 #define CHANGE_PC change_pc(PCD)
 
@@ -95,7 +95,7 @@
  *  WRMEM   write memory
  ***************************************************************/
 //#define WRMEM(addr,data) program_write_byte_8le(addr,data); m6502_ICount -= 1
-#define WRMEM(addr,data) M6502WriteByte(addr, data); m6502_ICount -= 1
+#define WRMEM(addr,data) M6502WriteByte(addr, data); m6502_ICount -= 1; Cpu7Written[M6502GetActive()] = 1
 
 /***************************************************************
  *  BRA  branch relative
@@ -559,10 +559,10 @@
 #define JSR 													\
 	EAL = RDOPARG();											\
 	RDMEM(SPD);													\
-	PUSH(PCH);													\
-	PUSH(PCL);													\
+	PUSH(PCH);												\
+	PUSH(PCL);												\
 	EAH = RDOPARG();											\
-	PCD = EAD;													\
+	PCD = EAD;												\
 	CHANGE_PC
 
 /* 6502 ********************************************************

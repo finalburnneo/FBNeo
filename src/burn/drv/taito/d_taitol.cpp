@@ -62,6 +62,7 @@ static INT32 has_ym2610 = 0;
 static INT32 has_adpcm = 0;
 
 static INT32 fhawkmode = 0;
+static INT32 plgirls2bmode = 0;
 
 typedef void (*ram_function)(INT32 offset, UINT16 address, UINT8 data);
 static ram_function ram_write_table[4] = { NULL, NULL, NULL, NULL };
@@ -2978,6 +2979,13 @@ static INT32 LagirlInit()
 	return commonSingleZ80(LagirlRomLoad, palamed_main_write, palamed_main_read, 2);
 }
 
+static INT32 Plgirls2bInit()
+{
+	plgirls2bmode = 1;
+
+	return LagirlInit();
+}
+
 static INT32 HorshoesRomLoad()
 {
 	if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
@@ -3027,6 +3035,7 @@ static INT32 DrvExit()
 	nmi_enable = 0;
 
 	fhawkmode = 0;
+	plgirls2bmode = 0;
 
 	TaitoICExit();
 
@@ -3068,6 +3077,9 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 layer) // 1=bg,0=fg,2=chars
 		INT32 sy = (offs / 0x40) * 8;
 
 		sx -= scrollx + 8;
+		if (plgirls2bmode && layer==0) {
+			sx -= scrollx - 8; //kludge for plgirls2b bootleg bg offset
+		}
 		sy -= scrolly + 16;
 		if (sx >= nScreenWidth) sx -= 512;
 		if (sy >= nScreenHeight) sy -= 256;
@@ -3170,6 +3182,7 @@ static INT32 DrvDraw()
 
 	if (current_control & 0x20)
 	{
+		BurnTransferClear();
 		if (nBurnLayer & 1) draw_layer(DrvBgRAM + 0x1000, DrvGfxROM0, 0); // BG
 
 		// low priority sprites (if priority enabled)
@@ -4254,7 +4267,7 @@ struct BurnDriver BurnDrvPlgirls2b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, plgirls2bRomInfo, plgirls2bRomName, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
-	LagirlInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	Plgirls2bInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 320, 3, 4
 };
 

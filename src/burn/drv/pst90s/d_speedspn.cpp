@@ -244,7 +244,7 @@ static void oki_bankswitch(INT32 data)
 {
 	banks[2] = data & 3;
 
-	MSM6295SetBank(0, DrvSndROM + (data & 3) * 0x20000, 0x20000, 0x3ffff);
+	MSM6295SetBank(0, DrvSndROM + ((data & 3) * 0x20000), 0x20000, 0x3ffff);
 }
 
 void __fastcall speedspn_sound_write(UINT16 address, UINT8 data)
@@ -290,7 +290,6 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	oki_bankswitch(1);
 	MSM6295Reset(0);
 
 	return 0;
@@ -418,6 +417,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	MSM6295Init(0, 1122000 / 132, 0);
+	MSM6295SetBank(0, DrvSndROM, 0, 0x3ffff);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();

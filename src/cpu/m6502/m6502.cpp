@@ -230,6 +230,8 @@ M6502_INLINE void m6502_take_irq(void)
 
 		if (m6502.irq_callback) (*m6502.irq_callback)(0);
 		change_pc(PCD);
+
+		Cpu7Written[M6502GetActive()] = 0;
 	}
 	m6502.pending_irq = 0;
 }
@@ -357,6 +359,7 @@ int decocpu7_execute(int cycles)
 
 	return cycles - m6502_ICount;
 }
+
 void m6502_set_irq_line(int irqline, int state)
 {
 	if (irqline == M6502_INPUT_LINE_NMI)

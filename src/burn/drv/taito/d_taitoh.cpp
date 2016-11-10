@@ -1058,7 +1058,7 @@ static void copy_zoom(INT32 min_x, INT32 max_x, INT32 min_y, INT32 max_y, UINT32
 	startx += min_x * incxx; 
 	starty += min_y * incyy; 
        
-	UINT32 numblocks = (max_x - min_x) / 4;            
+	INT32 numblocks = (max_x - min_x) / 4;            
 
 	for (INT32 cury = min_y; cury <= max_y; cury++)     
 	{         

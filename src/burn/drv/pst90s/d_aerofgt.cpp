@@ -2257,7 +2257,7 @@ static void aerofgt_drawsprites(INT32 priority)
 	}
 }
 
-void RenderZoomedTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT8 *pri, INT32 prio, INT32 turbofrc_layer)
+void RenderZoomedTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy, UINT8 *pri, INT32 prio, INT32 /*turbofrc_layer*/)
 {
 	// Based on MAME sources for tile zooming
 	UINT8 *gfx_base = gfx + (code * width * height);

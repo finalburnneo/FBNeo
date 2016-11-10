@@ -112,7 +112,7 @@ STDDIPINFO(Ssozumo)
 
 static void ssozumo_main_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0x0000 && address <= 0x07ff) {
+	if (address <= 0x07ff) {
 		DrvSprRAM[address] = data;
 		return;
 	}
@@ -172,7 +172,7 @@ static void ssozumo_main_write(UINT16 address, UINT8 data)
 
 static UINT8 ssozumo_main_read(UINT16 address)
 {
-	if (address >= 0x0000 && address <= 0x07ff) {
+	if (address <= 0x07ff) {
 		return DrvSprRAM[address];
 	}
 
@@ -192,7 +192,7 @@ static UINT8 ssozumo_main_read(UINT16 address)
 		return DrvColRAM0[address - 0x3200];
 	}
 
-	if (address >= 0x6000 && address <= 0xffff) {
+	if (address >= 0x6000) {
 		return Drv6502ROM0[address - 0x6000];
 	}
 
@@ -220,7 +220,7 @@ static UINT8 ssozumo_main_read(UINT16 address)
 
 static void ssozumo_sound_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0x0000 && address <= 0x01ff) {
+	if (address <= 0x01ff) {
 		Drv6502RAM1[address] = data;
 		return;
 	}
@@ -246,11 +246,11 @@ static void ssozumo_sound_write(UINT16 address, UINT8 data)
 
 static UINT8 ssozumo_sound_read(UINT16 address)
 {
-	if (address >= 0x0000 && address <= 0x01ff) {
+	if (address <= 0x01ff) {
 		return Drv6502RAM1[address];
 	}
 
-	if (address >= 0x4000 && address <= 0xffff) {
+	if (address >= 0x4000) {
 		return Drv6502ROM1[address - 0x4000];
 	}
 

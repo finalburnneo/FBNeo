@@ -4302,7 +4302,7 @@ static void RastanMSM5205Vck()
 	}
 }
 
-static void TopspeedBankSwitch(UINT32 port, UINT32 Data)
+static void TopspeedBankSwitch(UINT32 /*port*/, UINT32 Data)
 {
 	if (ZetGetActive() == -1) return;
 	Data &= 3;
@@ -5677,7 +5677,7 @@ static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32
 	}
 }
 
-static void TopspeedDrawSprites(INT32 PriorityDraw)
+static void TopspeedDrawSprites(INT32 /*PriorityDraw*/)
 {
 	UINT16 *SpriteRam = (UINT16*)TaitoSpriteRam;
 	INT32 Offset, MapOffset, x, y, xCur, yCur, SpriteChunk;

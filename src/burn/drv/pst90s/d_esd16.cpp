@@ -360,7 +360,7 @@ UINT8 __fastcall hedpanic_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall hedpanic_read_word(UINT32 address)
+UINT16 __fastcall hedpanic_read_word(UINT32 /*address*/)
 {
 	//bprintf(0, _T("rw %X.\n"), address);
 	return 0;

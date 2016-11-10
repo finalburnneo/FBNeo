@@ -215,12 +215,12 @@ static void sg1000_ppi8255_portA_write(UINT8 data)
 
 static UINT8 msx_input_mask = 0;
 
-static UINT8 ay8910portAread(UINT32 offset)
+static UINT8 ay8910portAread(UINT32 /*offset*/)
 {
 	return DrvInputs[0];
 }
 
-static void ay8910portBwrite(UINT32 offset, UINT32 data)
+static void ay8910portBwrite(UINT32 /*offset*/, UINT32 data)
 {
 	/* PSG reg 15, writes 0 at coin insert, 0xff at boot and game over */
 	msx_input_mask = data;
@@ -294,7 +294,7 @@ static void __fastcall msx_write(UINT16 address, UINT8 data)
 	//bprintf(0, _T("a[%X] d[%X],"), address, data);
 }
 
-static UINT8 __fastcall msx_read(UINT16 address)
+static UINT8 __fastcall msx_read(UINT16 /*address*/)
 {
 	//bprintf(0, _T("a[%X],"), address);
 	return 0;

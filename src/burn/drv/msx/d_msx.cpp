@@ -1273,7 +1273,7 @@ static void msx_ppi8255_portC_write(UINT8 data)
 		DACWrite(0, (data & 0x80) ? 0x80 : 0x00); // Key-Clicker / 1-bit DAC
 }
 
-static UINT8 ay8910portAread(UINT32 offset)
+static UINT8 ay8910portAread(UINT32 /*offset*/)
 {
 	if (SwapJoyports) {
 		return (Joyselect) ? DrvInputs[0] : DrvInputs[1];
@@ -1282,11 +1282,12 @@ static UINT8 ay8910portAread(UINT32 offset)
 	}
 }
 
-static void ay8910portAwrite(UINT32 offset, UINT32 data)
+static void ay8910portAwrite(UINT32 /*offset*/, UINT32 /*data*/)
 {
 	//bprintf(0, _T("8910 portAwrite %X:%X\n"), offset, data);
 }
-static void ay8910portBwrite(UINT32 offset, UINT32 data)
+
+static void ay8910portBwrite(UINT32 /*offset*/, UINT32 data)
 {
 	//bprintf(0, _T("B %X:%X\n"), offset, data);
 	Joyselect = (data & 0x40) ? 1 : 0;

@@ -1199,7 +1199,7 @@ static void bnj_main_write(UINT16 address, UINT8 data)
 
 static UINT8 btime_sound_read(UINT16 address)
 {
-	if (address >= 0x0000 && address <= 0x1fff) {
+	if (address <= 0x1fff) {
 		return DrvSoundRAM[address & 0x3ff];
 	}
 
@@ -1272,7 +1272,7 @@ static void checkhiss_and_add01(UINT8 data)
 
 static void btime_sound_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0x0000 && address <= 0x1fff) {
+	if (address <= 0x1fff) {
 		DrvSoundRAM[address & 0x3ff] = data;
 	}
 	switch (address >> 13)

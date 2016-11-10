@@ -721,10 +721,10 @@ static void btimepalettewrite(UINT16 offset, UINT8 data)
 	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
 }
 
-UINT8 swap_bits_5_6(UINT8 data)
+/*UINT8 swap_bits_5_6(UINT8 data)
 {
 	return (data & 0x9f) | ((data & 0x20) << 1) | ((data & 0x40) >> 1);
-}
+}*/
 
 static UINT8 btime_main_read(UINT16 address)
 {
@@ -926,7 +926,7 @@ static UINT8 mmonkey_main_read(UINT16 address)
 	}
 	return 0;
 }
-
+#if 0
 static void btime_decrypt()
 {
 	// d-
@@ -981,11 +981,12 @@ static void zoar_decrypt()
 			   | ((DrvMainROM[A] & 0x08) << 2);
 	}
 }
+#endif
 
 static void mmonkey_main_write(UINT16 address, UINT8 data)
 {
 	DrvMainRAM[address] = data;
-	DrvMainROMdec[address] = swap_bits_5_6(data);
+	DrvMainROMdec[address] = data; //swap_bits_5_6(data);
 
 	if (address >= 0x3c00 && address <= 0x3fff) {
 		DrvVidRAM[address - 0x3c00] = data;
@@ -1028,7 +1029,7 @@ static void mmonkey_main_write(UINT16 address, UINT8 data)
 
 static void btime_main_write(UINT16 address, UINT8 data)
 {
-	btime_decrypt();
+	//btime_decrypt();
 
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x1000, 0x13ff, DrvVidRAM);
@@ -1078,7 +1079,7 @@ static void btime_main_write(UINT16 address, UINT8 data)
 
 static void zoar_main_write(UINT16 address, UINT8 data)
 {
-	zoar_decrypt();
+	//zoar_decrypt();
 
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x8000, 0x83ff, DrvVidRAM);
@@ -1124,7 +1125,7 @@ static void zoar_main_write(UINT16 address, UINT8 data)
 
 static void disco_main_write(UINT16 address, UINT8 data)
 {
-	disco_decrypt();
+	//disco_decrypt();
 
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x2000, 0x7fff, DrvCharRAM);
@@ -1585,11 +1586,11 @@ static INT32 MmonkeyInit() // and lnc
 
 	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
 
-	for (INT32 i = 0; i < 0x10000; i++) {
+	/*for (INT32 i = 0; i < 0x10000; i++) {
 		DrvMainROMdec[i] = BITSWAP08(DrvMainROM[i], 7, 5, 6, 4, 3, 2, 1, 0);
-	}
+	}*/
 
-	M6502Init(0, TYPE_M6502);
+	M6502Init(0, TYPE_DECOC10707);
 	M6502Open(0);
 	M6502SetWriteHandler(mmonkey_main_write);
 	M6502SetReadHandler(mmonkey_main_read);
@@ -1670,7 +1671,7 @@ static INT32 DiscoInit()
 
 	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
 
-	M6502Init(0, TYPE_M6502);
+	M6502Init(0, TYPE_DECOCPU7);
 	M6502Open(0);
 	M6502SetWriteHandler(disco_main_write);
 	M6502SetReadHandler(disco_main_read);
@@ -1877,7 +1878,7 @@ static INT32 BtimeInit()
 
 	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
 
-	M6502Init(0, TYPE_M6502);
+	M6502Init(0, TYPE_DECOCPU7);
 	M6502Open(0);
 	M6502SetWriteHandler(btime_main_write);
 	M6502SetReadHandler(btime_main_read);
@@ -1984,7 +1985,7 @@ static INT32 ZoarInit()
 
 	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
 
-	M6502Init(0, TYPE_M6502);
+	M6502Init(0, TYPE_DECOCPU7);
 	M6502Open(0);
 	M6502SetWriteHandler(zoar_main_write);
 	M6502SetReadHandler(zoar_main_read);
@@ -2547,11 +2548,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		memset(&ba, 0, sizeof(ba));
+/*		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = DrvMainROMdec;
 		ba.nLen	  = 0x10000;
 		ba.szName = "Decoded ROM";
-		BurnAcb(&ba);
+		BurnAcb(&ba); */
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {

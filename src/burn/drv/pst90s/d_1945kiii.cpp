@@ -632,7 +632,7 @@ static struct BurnRomInfo _1945kiiioRomDesc[] = {
 	{ "15.U60",		0x80000, 0x86ab6c7c, 2 | BRF_GRA },           //  8
 	{ "16.U61",		0x80000, 0xff419080, 2 | BRF_GRA },           //  9
 
-	{ "5.U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
+	{ "5.U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 Background Layer
 	{ "6.U103",		0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
 	{ "7.U104",		0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
 	{ "8.U105",		0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
@@ -676,7 +676,7 @@ static struct BurnRomInfo _1945kiiinRomDesc[] = {
 	{ "U60",		0x80000, 0x91eb038a, 2 | BRF_GRA },           //  8
 	{ "U61",		0x80000, 0x1b358c6d, 2 | BRF_GRA },           //  9
 
-	{ "5.U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
+	{ "5.U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 Background Layer
 	{ "6.U103",		0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
 	{ "7.U104",		0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
 	{ "8.U105",		0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13

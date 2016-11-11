@@ -661,9 +661,9 @@ struct BurnDriver BurnDrv1945kiiio = {
 };
 
 
-// 1945k III (older, Korea, OPCX1 PCB)
+// 1945k III (newer, OPCX1 PCB)
 
-static struct BurnRomInfo _1945kiiikRomDesc[] = {
+static struct BurnRomInfo _1945kiiinRomDesc[] = {
 	{ "U34",		0x80000, 0xd0cf4f03, 1 | BRF_PRG | BRF_ESS }, //  0 68000 code 
 	{ "U35",		0x80000, 0x056c64ed, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -676,25 +676,25 @@ static struct BurnRomInfo _1945kiiikRomDesc[] = {
 	{ "U60",		0x80000, 0x91eb038a, 2 | BRF_GRA },           //  8
 	{ "U61",		0x80000, 0x1b358c6d, 2 | BRF_GRA },           //  9
 
-	{ "U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
-	{ "U103",		0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
-	{ "U104",		0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
-	{ "U105",		0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
+	{ "5.U102",		0x80000, 0x91b70a6b, 3 | BRF_GRA },           // 10 ackground Layer
+	{ "6.U103",		0x80000, 0x7b5bfb85, 3 | BRF_GRA },           // 11
+	{ "7.U104",		0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
+	{ "8.U105",		0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
 
-	{ "SU4",		0x80000, 0xbbb7f0ff, 4 | BRF_SND },           // 14 MSM #0 Samples
+	{ "snd-2.su4",	0x80000, 0xbbb7f0ff, 4 | BRF_SND },           // 14 MSM #0 Samples
 
-	{ "SU5",		0x80000, 0x47e3952e, 5 | BRF_SND },           // 15 MSM #1 Samples
+	{ "snd-1.su7",	0x80000, 0x47e3952e, 5 | BRF_SND },           // 15 MSM #1 Samples
 };
 
-STD_ROM_PICK(_1945kiiik)
-STD_ROM_FN(_1945kiiik)
+STD_ROM_PICK(_1945kiiin)
+STD_ROM_FN(_1945kiiin)
 
-struct BurnDriver BurnDrv1945kiiik = {
-	"1945kiiik", "1945kiii", NULL, NULL, "2000",
-	"1945k III (older, Korea, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
+struct BurnDriver BurnDrv1945kiiin = {
+	"1945kiiin", "1945kiii", NULL, NULL, "2000",
+	"1945k III (newer, OPCX1 PCB)\0", NULL, "Oriental Soft", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
-	NULL, _1945kiiikRomInfo, _1945kiiikRomName, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
+	NULL, _1945kiiinRomInfo, _1945kiiinRomName, NULL, NULL, _1945kiiiInputInfo, _1945kiiiDIPInfo,
 	_1945kiiioInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &bRecalcPalette, 0x200,
 	224, 320, 3, 4
 };

@@ -4763,7 +4763,7 @@ static INT32 Z80Frame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 240;
 	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000  / 58 };
 	
 	SekOpen(0);
@@ -4778,7 +4778,7 @@ static INT32 Z80Frame()
 			update_irq_state();
 		}
 
-		if (i == 223)
+		if (i == 234)
 		{
 			requested_int[vblank_bit] = 1;
 			requested_int[5] = 1;
@@ -4828,7 +4828,7 @@ static INT32 NoZ80Frame()
 	upd7810NewFrame();
 
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 240;
 	UINT32 nCyclesTotal[2] = { main_cpu_cycles, main_cpu_cycles };
 	
 	SekOpen(0);
@@ -4850,7 +4850,7 @@ static INT32 NoZ80Frame()
 			update_irq_state();
 		}
 
-		if (i == 223)
+		if (i == 234)
 		{
 			requested_int[vblank_bit] = 1;
 			requested_int[5] = 1;

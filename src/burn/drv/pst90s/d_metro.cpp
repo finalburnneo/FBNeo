@@ -15,7 +15,7 @@
 	Fix sound for ymf278b games
 	Play test!
 
-	Fix graphics (timing?)
+	Fix graphics (timing? better - dink)
 		Bang Bang Ball
 		Battle Bubble
 		Lady Killer
@@ -83,6 +83,7 @@ static UINT8 updportB_data;
 
 static INT32 sound_system = 0;	// 1 = Z80 + YM2610, 2 = uPD7810 + YM2413 + M6295, 3 = YMF278B, 4 = YM2413 + M6295, 5 = uPD7810 + YM2151 + M6295
 static INT32 m_sprite_xoffs_dx = 0;
+static INT32 m_sprite_yoffs_dx = 0;
 static INT32 m_tilemap_scrolldx[3] = { 8, 8, 8 };
 static UINT32 graphics_length;
 static INT32 vblank_bit = 0;
@@ -92,6 +93,7 @@ static INT32 support_8bpp = 1;
 static INT32 support_16x16 = 1;
 static INT32 has_zoom = 0;
 static UINT32 main_cpu_cycles = 12000000 / 60;
+static INT32 ymf278bint = 0;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -3385,15 +3387,15 @@ static void pBlzntrnd_roz_callback(INT32 offset, UINT16 *ram, INT32 *code, INT32
 
 static void pGstrik2_roz_callback(INT32 offset, UINT16 *ram, INT32 *code, INT32 *color, INT32 *sx, INT32 *sy, INT32 *, INT32 *)
 {
-	*sy  = (offset >> 9) & 0x3f;
+	/**sy  = (offset >> 9) & 0x3f;
 	*sy += (offset & 1) << 6;
 	*sy += (offset & 0x100) >> 1;
 	*sy *= 16;
 
 	*sx  = (offset >> 1) & 0x7f;
-	*sx *= 16;
+	*sx *= 16;  */
 
-	*code = (ram[offset] & 0x7ffc) >> 2;
+	*code = (ram[offset] & 0x7fff) >> 2;
 
 	*color = 0xe00;
 }
@@ -3624,6 +3626,7 @@ static INT32 blzntrndInit()
 	K053936SetOffset(0, -69-8, -21);
 
 	m_sprite_xoffs_dx = 0;
+	m_sprite_yoffs_dx = 0;
 	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 0;
 	vblank_bit = 0;
 	irq_line = 1;
@@ -3710,6 +3713,7 @@ static INT32 gstrik2Init()
 	K053936SetOffset(0, -69, -19);
 
 	m_sprite_xoffs_dx = 0;
+	m_sprite_yoffs_dx = 0;
 	m_tilemap_scrolldx[0] = m_tilemap_scrolldx[1] = m_tilemap_scrolldx[2] = 8;
 
 	vblank_bit = 0;
@@ -4013,6 +4017,7 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 
 	// video configuration
 	m_sprite_xoffs_dx = 0;
+	m_sprite_yoffs_dx = 0;
 	m_tilemap_scrolldx[0] = 0;
 	m_tilemap_scrolldx[1] = 0;
 	m_tilemap_scrolldx[2] = 0;
@@ -4248,8 +4253,18 @@ static INT32 msgogoInit()
 	m_tilemap_scrolldx[0] = -2;
 	m_tilemap_scrolldx[1] = -2;
 	m_tilemap_scrolldx[2] = -2;
+	ymf278bint = 1;
 
 	return nRet;
+}
+
+static INT32 daitoridaInit()
+{
+	INT32 rc = msgogoInit();
+
+	ymf278bint = 8;
+
+	return rc;
 }
 
 static void balcubeMapCallback()
@@ -4271,6 +4286,7 @@ static INT32 balcubeInit()
 	m_tilemap_scrolldx[0] = -2;
 	m_tilemap_scrolldx[1] = -2;
 	m_tilemap_scrolldx[2] = -2;
+	ymf278bint = 8;
 
 	return nRet;
 }
@@ -4294,6 +4310,7 @@ static INT32 bangballInit()
 	m_tilemap_scrolldx[0] = -2;
 	m_tilemap_scrolldx[1] = -2;
 	m_tilemap_scrolldx[2] = -2;
+	ymf278bint = 1;
 
 	return nRet;
 }
@@ -4325,6 +4342,7 @@ static INT32 batlbublInit()
 	m_tilemap_scrolldx[0] = -2;
 	m_tilemap_scrolldx[1] = -2;
 	m_tilemap_scrolldx[2] = -2;
+	ymf278bint = 1;
 
 	return nRet;
 }
@@ -4370,6 +4388,9 @@ static INT32 DrvExit()
 	sound_system = 0;
 	has_zoom = 0;
 	main_cpu_cycles = 12000000 / 60;
+	m_sprite_yoffs_dx = 0;
+	m_sprite_yoffs_dx = 0;
+	ymf278bint = 0;
 
 	return 0;
 }
@@ -4398,7 +4419,7 @@ static void draw_sprites()
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 
 	INT32 m_sprite_xoffs = m_videoregs[0x06 / 2] - nScreenWidth  / 2 + m_sprite_xoffs_dx;
-	INT32 m_sprite_yoffs = m_videoregs[0x04 / 2] - nScreenHeight / 2;
+	INT32 m_sprite_yoffs = m_videoregs[0x04 / 2] - nScreenHeight / 2 + m_sprite_yoffs_dx;
 
 	UINT8 *base_gfx4 = DrvGfxROM0;
 	UINT8 *base_gfx8 = DrvGfxROM;
@@ -4742,7 +4763,7 @@ static INT32 Z80Frame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 224;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 16000000 / 58, 8000000  / 58 };
 	
 	SekOpen(0);
@@ -4808,7 +4829,7 @@ static INT32 NoZ80Frame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { main_cpu_cycles, main_cpu_cycles };
+	UINT32 nCyclesTotal[2] = { main_cpu_cycles, main_cpu_cycles };
 	
 	SekOpen(0);
 
@@ -4908,14 +4929,12 @@ static INT32 YMF278bFrame()
 
 	SekNewFrame();
 
-	INT32 nInterleave = 224;
-	INT32 nCyclesTotal[1] = { main_cpu_cycles };
+	INT32 nInterleave = 240;
+	UINT32 nCyclesTotal[1] = { main_cpu_cycles };
 	
 	SekOpen(0);
 
-	INT32 sound_int_mod = 28;
-	if (strncmp(BurnDrvGetTextA(DRV_NAME), "ba", 2) == 0) 
-		sound_int_mod = nInterleave;
+	INT32 sound_int_mod = (ymf278bint == 1) ? sound_int_mod = nInterleave : 28;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -4926,7 +4945,7 @@ static INT32 YMF278bFrame()
 			update_irq_state();
 		}
 
-		if (i == 223)	// balcube likes it like this
+		if (i == 234)	// balcube likes it like this
 		{
 			requested_int[vblank_bit] = 1;
 		//	requested_int[5] = 1;
@@ -5769,7 +5788,7 @@ struct BurnDriver BurnDrvLadykill = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, ladykillRomInfo, ladykillRomName, NULL, NULL, LadykillInputInfo, LadykillDIPInfo,
 	karatourInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	224, 320, 3, 4
+	240, 320, 3, 4
 };
 
 
@@ -5799,7 +5818,7 @@ struct BurnDriver BurnDrvMoegonta = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, moegontaRomInfo, moegontaRomName, NULL, NULL, LadykillInputInfo, LadykillDIPInfo,
 	karatourInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
-	224, 320, 3, 4
+	240, 320, 3, 4
 };
 
 
@@ -5857,7 +5876,7 @@ struct BurnDriver BurnDrvDaitorida = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, daitoridaRomInfo, daitoridaRomName, NULL, NULL, DaitoridInputInfo, DaitoridDIPInfo,
-	msgogoInit, DrvExit, YMF278bFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	daitoridaInit, DrvExit, YMF278bFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
 };
 
@@ -6150,7 +6169,7 @@ STD_ROM_FN(bangball)
 
 struct BurnDriver BurnDrvBangball = {
 	"bangball", NULL, NULL, NULL, "1996",
-	"Bang Bang Ball (v1.05)\0", "Imperfect graphics", "Banpresto / Kunihiko Tashiro+Goodhouse", "Miscellaneous",
+	"Bang Bang Ball (v1.05)\0", NULL, "Banpresto / Kunihiko Tashiro+Goodhouse", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, bangballRomInfo, bangballRomName, NULL, NULL, BalcubeInputInfo, BangballDIPInfo,
@@ -6177,11 +6196,11 @@ static struct BurnRomInfo batlbublRomDesc[] = {
 STD_ROM_PICK(batlbubl)
 STD_ROM_FN(batlbubl)
 
-struct BurnDriverD BurnDrvBatlbubl = {
+struct BurnDriver BurnDrvBatlbubl = {
 	"batlbubl", "bangball", NULL, NULL, "1999",
-	"Battle Bubble (v2.00)\0", "imperfect sound, graphics", "Banpresto (Limenko license?)", "Miscellaneous",
+	"Battle Bubble (v2.00)\0", NULL, "Banpresto (Limenko license?)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, batlbublRomInfo, batlbublRomName, NULL, NULL, BalcubeInputInfo, BatlbublDIPInfo,
 	batlbublInit, DrvExit, YMF278bFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

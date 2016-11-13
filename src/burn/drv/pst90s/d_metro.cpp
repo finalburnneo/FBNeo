@@ -12,7 +12,7 @@
 	Unemulated
 		puzzlet		(h8 main cpu)
 
-	Fix sound for ymf278b games
+	Fix sound for ymf278b games (fixed, overlapping irq's were cauing the fm timer to die)
 	Play test!
 
 	Fix graphics (timing? better - dink)
@@ -445,7 +445,7 @@ static struct BurnDIPInfo BlzntrndDIPList[]=
 	{0x29, 0x01, 0x03, 0x02, "2C to start, 1C to continue"	},
 	{0x29, 0x01, 0x03, 0x03, "Disabled"			},
 
-	{0   , 0xfe, 0   ,    0, "Coin A"			},
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
 	{0x29, 0x01, 0x07, 0x04, "4 Coins 1 Credits"		},
 	{0x29, 0x01, 0x07, 0x05, "3 Coins 1 Credits"		},
 	{0x29, 0x01, 0x07, 0x06, "2 Coins 1 Credits"		},
@@ -455,7 +455,7 @@ static struct BurnDIPInfo BlzntrndDIPList[]=
 	{0x29, 0x01, 0x07, 0x01, "1 Coin  4 Credits"		},
 	{0x29, 0x01, 0x07, 0x00, "1 Coin  5 Credits"		},
 
-	{0   , 0xfe, 0   ,    0, "Coin B"			},
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
 	{0x29, 0x01, 0x38, 0x20, "4 Coins 1 Credits"		},
 	{0x29, 0x01, 0x38, 0x28, "3 Coins 1 Credits"		},
 	{0x29, 0x01, 0x38, 0x30, "2 Coins 1 Credits"		},
@@ -465,33 +465,33 @@ static struct BurnDIPInfo BlzntrndDIPList[]=
 	{0x29, 0x01, 0x38, 0x08, "1 Coin  4 Credits"		},
 	{0x29, 0x01, 0x38, 0x00, "1 Coin  5 Credits"		},
 
-	{0   , 0xfe, 0   ,    0, "Free Play"			},
+	{0   , 0xfe, 0   ,    2, "Free Play"			},
 	{0x29, 0x01, 0x40, 0x40, "Off"				},
 	{0x29, 0x01, 0x40, 0x00, "On"				},
 
-	{0   , 0xfe, 0   ,    0, "Service Mode"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x29, 0x01, 0x80, 0x80, "Off"				},
 	{0x29, 0x01, 0x80, 0x00, "On"				},
 
-	{0   , 0xfe, 0   ,    0, "CP Single"			},
+	{0   , 0xfe, 0   ,    4, "CP Single"			},
 	{0x2a, 0x01, 0x03, 0x03, "2:00"				},
 	{0x2a, 0x01, 0x03, 0x02, "2:30"				},
 	{0x2a, 0x01, 0x03, 0x01, "3:00"				},
 	{0x2a, 0x01, 0x03, 0x00, "3:30"				},
 
-	{0   , 0xfe, 0   ,    0, "CP Tag"			},
+	{0   , 0xfe, 0   ,    4, "CP Tag"			},
 	{0x2a, 0x01, 0x0c, 0x0c, "2:00"				},
 	{0x2a, 0x01, 0x0c, 0x08, "2:30"				},
 	{0x2a, 0x01, 0x0c, 0x04, "3:00"				},
 	{0x2a, 0x01, 0x0c, 0x00, "3:30"				},
 
-	{0   , 0xfe, 0   ,    8, "Vs Single"			},
+	{0   , 0xfe, 0   ,    4, "Vs Single"			},
 	{0x2a, 0x01, 0x30, 0x30, "2:30"				},
 	{0x2a, 0x01, 0x30, 0x20, "3:00"				},
 	{0x2a, 0x01, 0x30, 0x10, "4:00"				},
 	{0x2a, 0x01, 0x30, 0x00, "5:00"				},
 
-	{0   , 0xfe, 0   ,    8, "Vs Tag"			},
+	{0   , 0xfe, 0   ,    4, "Vs Tag"			},
 	{0x2a, 0x01, 0xc0, 0xc0, "2:30"				},
 	{0x2a, 0x01, 0xc0, 0x80, "3:00"				},
 	{0x2a, 0x01, 0xc0, 0x40, "4:00"				},
@@ -801,11 +801,11 @@ static struct BurnDIPInfo PoittoDIPList[]=
 	{0x12, 0x01, 0x03, 0x02, "Hard"				},
 	{0x12, 0x01, 0x03, 0x01, "Hardest"			},
 
-	{0   , 0xfe, 0   ,    0, "Allow Continue"		},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
 	{0x12, 0x01, 0x20, 0x00, "No"				},
 	{0x12, 0x01, 0x20, 0x20, "Yes"				},
 
-	{0   , 0xfe, 0   ,    0, "Demo Sounds"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x12, 0x01, 0x40, 0x00, "Off"				},
 	{0x12, 0x01, 0x40, 0x40, "On"				},
 };
@@ -934,7 +934,7 @@ static struct BurnDIPInfo LastferoDIPList[]=
 	{0x14, 0x01, 0x40, 0x40, "On"				},
 
 	{0   , 0xfe, 0   ,    1, "Tiles"			},
-	{0x14, 0x01, 0x80, 0x00, "Cards"			},
+	//{0x14, 0x01, 0x80, 0x00, "Cards"			},
 	{0x14, 0x01, 0x80, 0x80, "Mahjong"			},
 };
 
@@ -1233,17 +1233,17 @@ static struct BurnDIPInfo DaitoridDIPList[]=
 	{0x12, 0x01, 0x03, 0x01, "Fast"				},
 	{0x12, 0x01, 0x03, 0x00, "Fastest"			},
 
-	{0   , 0xfe, 0   ,    0, "Winning Rounds (P VS P)"	},
+	{0   , 0xfe, 0   ,    2, "Winning Rounds (P VS P)"	},
 	{0x12, 0x01, 0x08, 0x00, "1/1"				},
 	{0x12, 0x01, 0x08, 0x08, "2/3"				},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
+	{0   , 0xfe, 0   ,    4, "Allow Continue"		},
 	{0x12, 0x01, 0x30, 0x30, "Retry Level"			},
 	{0x12, 0x01, 0x30, 0x20, "Ask Player"			},
 	{0x12, 0x01, 0x30, 0x10, "No"				},
 	{0x12, 0x01, 0x30, 0x00, "Retry Level"			},
 
-	{0   , 0xfe, 0   ,    4, "Demo Sounds"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x12, 0x01, 0x40, 0x00, "Off"				},
 	{0x12, 0x01, 0x40, 0x40, "On"				},
 };
@@ -1347,15 +1347,15 @@ static struct BurnDIPInfo _3kokushiDIPList[]=
 	{0x14, 0x01, 0x03, 0x01, "Hard"				},
 	{0x14, 0x01, 0x03, 0x00, "Hardest"			},
 
-	{0   , 0xfe, 0   ,    0, "Allow Continue"		},
+	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
 	{0x14, 0x01, 0x10, 0x00, "No"				},
 	{0x14, 0x01, 0x10, 0x10, "Yes"				},
 
-	{0   , 0xfe, 0   ,    0, "Service Mode / Free Play"	},
+	{0   , 0xfe, 0   ,    2, "Service Mode / Free Play"	},
 	{0x14, 0x01, 0x20, 0x20, "Off"				},
 	{0x14, 0x01, 0x20, 0x00, "On"				},
 
-	{0   , 0xfe, 0   ,    2, "Helps"			},
+	{0   , 0xfe, 0   ,    4, "Helps"			},
 	{0x14, 0x01, 0xc0, 0x00, "1"				},
 	{0x14, 0x01, 0xc0, 0x40, "2"				},
 	{0x14, 0x01, 0xc0, 0xc0, "3"				},
@@ -1604,7 +1604,7 @@ static struct BurnDIPInfo BalcubeDIPList[]=
 	{0x12, 0x01, 0x10, 0x00, "No"				},
 	{0x12, 0x01, 0x10, 0x10, "Yes"				},
 
-	{0   , 0xfe, 0   ,    0, "Demo Sounds"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x12, 0x01, 0x80, 0x00, "Off"				},
 	{0x12, 0x01, 0x80, 0x80, "On"				},
 };
@@ -3403,6 +3403,7 @@ static void pGstrik2_roz_callback(INT32 offset, UINT16 *ram, INT32 *code, INT32 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	SekSetIRQLine(2, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	SekRun(100); // lame hack for overlapped irq's causing the ymf278b timer to die
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -4940,17 +4941,14 @@ static INT32 YMF278bFrame()
 	{
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 
-		if ((i % sound_int_mod) == (sound_int_mod - 2)) {
+		if ((i % sound_int_mod) == 0) {
 			requested_int[4] = 1;
 			update_irq_state();
 		}
 
-		if (i == 234)	// balcube likes it like this
-		{
+		if (i == 236) {
 			requested_int[vblank_bit] = 1;
-		//	requested_int[5] = 1;
 			update_irq_state();
-		//	requested_int[5] = 0;
 		}
 
 		if (blit_timer >= 0) {

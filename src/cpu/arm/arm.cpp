@@ -586,7 +586,7 @@ static void HandleMemSingle( UINT32 insn )
 		{
 			if (rd == eR15)
 			{
-				R15 = (READ32(rnv) & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & MODE_MASK);
+				R15 = (READ32(rnv) & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & IRQ_MASK) | (R15 & MODE_MASK);
 				change_pc(R15 & ADDRESS_MASK);
 
 				/*
@@ -1176,7 +1176,7 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 		if (k)
 		{
 			while (k > 32) k -= 32;
-			if (pCarry) *pCarry = rm & SIGN_BIT;
+			if (pCarry) *pCarry = rm & (1 << (k - 1));
 			return ROR(rm, k);
 		}
 		else

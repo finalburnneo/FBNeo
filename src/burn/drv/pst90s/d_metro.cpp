@@ -4943,7 +4943,7 @@ static INT32 YMF278bFrame()
 			update_irq_state();
 		}
 
-		if (i == 236) {
+		if (i == 237) {
 			requested_int[vblank_bit] = 1;
 			update_irq_state();
 		}

@@ -3292,7 +3292,7 @@ static UINT16 __fastcall kokushi_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0xc00000:
-			return (DrvInputs[0] & 0xff7f) | ((~sound_busy & 1) << 7);
+			return (DrvInputs[0] & 0xff7f) | ((sound_busy & 1) << 7);
 
 		case 0xc00002:
 			return DrvInputs[1];
@@ -3314,7 +3314,7 @@ static UINT8 __fastcall kokushi_main_read_byte(UINT32 address)
 			return DrvInputs[0] >> 8;
 
 		case 0xc00001:
-			return (DrvInputs[0] & 0x7f) | ((~sound_busy & 1) << 7);
+			return (DrvInputs[0] & 0x7f) | ((sound_busy & 1) << 7);
 
 		case 0xc00002:
 			return DrvInputs[1] >> 8;
@@ -4843,12 +4843,12 @@ static INT32 NoZ80Frame()
 			requested_int[5] = 0;
 		}
 
-		if ((i % 28) == 26) {
+		if ((i % 28) == 0) {
 			requested_int[4] = 1;
 			update_irq_state();
 		}
 
-		if (i == 234)
+		if (i == 236)
 		{
 			requested_int[vblank_bit] = 1;
 			requested_int[5] = 1;

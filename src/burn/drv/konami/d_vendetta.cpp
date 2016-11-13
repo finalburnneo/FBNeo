@@ -894,19 +894,19 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Vendetta (World, 4 Players ver. T)
 
 static struct BurnRomInfo vendettaRomDesc[] = {
-	{ "081t01",	0x040000, 0xe76267f5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081t01.17c",	0x040000, 0xe76267f5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
@@ -933,19 +933,19 @@ struct BurnDriver BurnDrvVendetta = {
 // Vendetta (US, 4 Players ver. R)
 
 static struct BurnRomInfo vendettarRomDesc[] = {
-	{ "081r01",	0x040000, 0x84796281, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081r01.17c",	0x040000, 0x84796281, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendettar.nv",  0x000080, 0xec3f0449, BRF_OPT },
 };
@@ -967,19 +967,19 @@ struct BurnDriver BurnDrvVendettar = {
 // Vendetta (Asia, 4 Players ver. Z)
 
 static struct BurnRomInfo vendettazRomDesc[] = {
-	{ "081z01.bin",	0x040000, 0x4d225a8d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081z01.17c",	0x040000, 0x4d225a8d, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
@@ -1001,19 +1001,19 @@ struct BurnDriver BurnDrvVendettaz = {
 // Vendetta (World, 2 Players ver. W)
 
 static struct BurnRomInfo vendetta2pRomDesc[] = {
-	{ "081w01",	0x040000, 0xcee57132, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081w01.17c",	0x040000, 0xcee57132, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
@@ -1066,22 +1066,57 @@ struct BurnDriver BurnDrvVendetta2peba = {
 };
 
 
+// Vendetta (World, 2 Players ver. ?)
+
+static struct BurnRomInfo vendetta2punRomDesc[] = {
+	/* program rom labeled as 1 */
+	{ "1.17c",		0x040000, 0xb4edde48, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+
+	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
+};
+
+STD_ROM_PICK(vendetta2pun)
+STD_ROM_FN(vendetta2pun)
+
+struct BurnDriver BurnDrvVendetta2pun = {
+	"vendetta2pun", "vendetta", NULL, NULL, "1991",
+	"Vendetta (World, 2 Players ver. ?)\0", NULL, "Konami", "GX081",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, vendetta2punRomInfo, vendetta2punRomName, NULL, NULL, VendettaInputInfo, NULL,
+	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	304, 224, 4, 3
+};
+
+
 // Vendetta (Asia, 2 Players ver. U)
 
 static struct BurnRomInfo vendetta2puRomDesc[] = {
-	{ "081u01",	0x040000, 0xb4d9ade5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081u01.17c",	0x040000, 0xb4d9ade5, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
@@ -1103,19 +1138,19 @@ struct BurnDriver BurnDrvVendetta2pu = {
 // Vendetta (Asia, 2 Players ver. D)
 
 static struct BurnRomInfo vendetta2pdRomDesc[] = {
-	{ "081d01",	0x040000, 0x335da495, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081d01.17c",	0x040000, 0x335da495, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
@@ -1137,19 +1172,19 @@ struct BurnDriver BurnDrvVendetta2pd = {
 // Crime Fighters 2 (Japan, 2 Players ver. P)
 
 static struct BurnRomInfo vendettajRomDesc[] = {
-	{ "081p01",	0x040000, 0x5fe30242, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+	{ "081p01.17c",	0x040000, 0x5fe30242, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
-	{ "081b02",	0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "081a09",	0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
-	{ "081a08",	0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
 
-	{ "081a04",	0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
-	{ "081a05",	0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
-	{ "081a06",	0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
-	{ "081a07",	0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
 
-	{ "081a03",	0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
 
 	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
 };

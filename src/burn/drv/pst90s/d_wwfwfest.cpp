@@ -188,6 +188,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 STDDIPINFO(Drv)
 
 static struct BurnRomInfo DrvRomDesc[] = {
+	/* Euro label but shows FBI "Winners Don't Do drugs" logo */
 	{ "31e13-0.ic19",  0x040000, 0xbd02e3c4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "31e14-0.ic18",  0x040000, 0x933ea1a0, BRF_ESS | BRF_PRG }, //  1
 	
@@ -238,32 +239,6 @@ static struct BurnRomInfo DrvuRomDesc[] = {
 
 STD_ROM_PICK(Drvu)
 STD_ROM_FN(Drvu)
-
-static struct BurnRomInfo DrvuaRomDesc[] = {
-	{ "wf_19.rom",     0x040000, 0xbd02e3c4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
-	{ "wf_18.rom",     0x040000, 0x933ea1a0, BRF_ESS | BRF_PRG }, //  1	
-	
-	{ "31a11-2.ic42",  0x010000, 0x5ddebfea, BRF_ESS | BRF_PRG }, //  2	Z80 Program 
-	
-	{ "31e12-0.ic33",  0x020000, 0x06f22615, BRF_GRA },	      	  //  3	Chars
-	
-	{ "31j0.ic1",      0x040000, 0x8a12b450, BRF_GRA },	      	  //  4	Tiles
-	{ "31j1.ic2",      0x040000, 0x82ed7155, BRF_GRA },	      	  //  5
-	
-	{ "31j3.ic9",      0x100000, 0xe395cf1d, BRF_GRA },	      	  //  6	Sprites
-	{ "31j2.ic8",      0x100000, 0xb5a97465, BRF_GRA },	      	  //  7
-	{ "31j5.ic11",     0x100000, 0x2ce545e8, BRF_GRA },	      	  //  8
-	{ "31j4.ic10",     0x100000, 0x00edb66a, BRF_GRA }, 	      //  9
-	{ "31j6.ic12",     0x100000, 0x79956cf8, BRF_GRA },  	      // 10
-	{ "31j7.ic13",     0x100000, 0x74d774c3, BRF_GRA }, 	      // 11
-	{ "31j9.ic15",     0x100000, 0xdd387289, BRF_GRA },	      	  // 12
-	{ "31j8.ic14",     0x100000, 0x44abe127, BRF_GRA },	      	  // 13
-	
-	{ "31j10.ic73",    0x080000, 0x6c522edb, BRF_SND },	      	  // 14	Samples
-};
-
-STD_ROM_PICK(Drvua)
-STD_ROM_FN(Drvua)
 
 static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "2",             0x040000, 0x632bb3a4, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
@@ -320,6 +295,7 @@ STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
 
 static struct BurnRomInfo DrvkRomDesc[] = {
+	/* same program roms labels as the World set */
 	{ "31e13-0.ic19",  0x040000, 0x774a26a7, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "31e14-0.ic18",  0x040000, 0x05bbb807, BRF_ESS | BRF_PRG }, //  1
 	
@@ -1219,7 +1195,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvWwfwfest = {
 	"wwfwfest", NULL, NULL, NULL, "1991",
-	"WWF WrestleFest (World)\0", NULL, "Technos Japan (Tecmo Licence)", "Miscellaneous",
+	"WWF WrestleFest (World)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
@@ -1229,20 +1205,10 @@ struct BurnDriver BurnDrvWwfwfest = {
 
 struct BurnDriver BurnDrvWwfwfestu = {
 	"wwfwfestu", "wwfwfest", NULL, NULL, "1991",
-	"WWF WrestleFest (US set 1)\0", NULL, "Technos Japan", "Miscellaneous",
+	"WWF WrestleFest (US)\0", NULL, "Technos Japan (Tecmo License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x2000, 320, 240, 4, 3
-};
-
-struct BurnDriver BurnDrvWwfwfestua = {
-	"wwfwfestua", "wwfwfest", NULL, NULL, "1991",
-	"WWF WrestleFest (US Tecmo)\0", NULL, "Technos Japan (Tecmo License)", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
@@ -1259,7 +1225,7 @@ struct BurnDriver BurnDrvWwfwfestb = {
 
 struct BurnDriver BurnDrvWwfwfestj = {
 	"wwfwfestj", "wwfwfest", NULL, NULL, "1991",
-	"WWF WrestleFest (Japan)\0", NULL, "Technos Japan", "Miscellaneous",
+	"WWF WrestleFest (Japan)\0", NULL, "Technos Japan (Tecmo License)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

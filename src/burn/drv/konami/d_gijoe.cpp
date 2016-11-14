@@ -187,6 +187,7 @@ static void _fastcall gijoe_main_write_word(UINT32 address, UINT16 data)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
+	//bprintf(0, _T("%X %X\n"), address, data);
 }
 
 static void _fastcall gijoe_main_write_byte(UINT32 address, UINT8 data)
@@ -542,7 +543,7 @@ static INT32 DrvInit()
 	K056832SetGlobalOffsets(24, 16);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, gijoe_sprite_callback, 1);
-	K053247SetSpriteOffset(-61, -46);
+	K053247SetSpriteOffset(-61, -46+10);
 
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
@@ -593,7 +594,7 @@ static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
 
-	int layers[4], dirty, mask, vrc_mode, vrc_new;
+	int layers[4], dirty, mask = 0, vrc_mode, vrc_new;
 
 	K056832ReadAvac(&vrc_mode, &vrc_new);
 
@@ -657,7 +658,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-
+		   extern int counter;
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -673,14 +674,14 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
-		DrvInputs[0] = (DrvInputs[0] & 0xfff7) | (DrvDips[0] & 0x08);
+		DrvInputs[0] = (DrvInputs[0] & 0xf7ff) | ((DrvDips[0] & 0x08) << 8);
 		DrvInputs[2] = (DrvInputs[2] & 0x7f7f) | (DrvDips[1] & 0x80) | ((DrvDips[2] & 0x80) << 8);
 		DrvInputs[3] = (DrvInputs[3] & 0xff7f) | (DrvDips[3] & 0x80);
 		DrvInputs[0] &= 0x0fff;
 		DrvInputs[1] &= 0x0fff;
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 256; //nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -696,10 +697,10 @@ static INT32 DrvFrame()
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nCyclesDone[0] += nCyclesSegment;
 
-		if (control_data & 0x20 && irq6_timer > 0) {
+		if (control_data & 0x20 && irq6_timer == 0) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-		}
-		irq6_timer--;
+			irq6_timer = -1;
+		} else if (irq6_timer != -1) irq6_timer--;
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[1];
@@ -709,23 +710,25 @@ static INT32 DrvFrame()
 			ZetNmi();
 		}
 
+		if (i == 240) {
+			if (K056832IsIrqEnabled()) {
+				if (K053246_is_IRQ_enabled()) {
+					gijoe_objdma();
+					irq6_timer = 1; // guess
+				}
+
+				if (control_data & 0x80) {
+					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+				}
+			}
+		}
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
 			K054539Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
-		}
-	}
-
-	if (K056832IsIrqEnabled()) {
-		if (K053246_is_IRQ_enabled()) {
-			gijoe_objdma();
-			irq6_timer = 10; // guess
-		}
-
-		if (control_data & 0x80) {
-			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
 	}
 
@@ -748,7 +751,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -756,7 +759,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029732;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

@@ -13,6 +13,8 @@ static UINT8 *rambuf[MAX_K053936] = { NULL, NULL };
 static INT32 K053936Wrap[MAX_K053936] = { 0, 0 };
 static INT32 K053936Offset[MAX_K053936][2] = { { 0, 0 }, { 0, 0 } };
 
+static INT32 glfgreat_mode = 0;
+
 static void (*pTileCallback0)(INT32 offset, UINT16 *ram, INT32 *code, INT32 *color, INT32 *sx, INT32 *sy, INT32 *fx, INT32 *fy);
 static void (*pTileCallback1)(INT32 offset, UINT16 *ram, INT32 *code, INT32 *color, INT32 *sx, INT32 *sy, INT32 *fx, INT32 *fy);
 
@@ -71,6 +73,8 @@ void K053936Exit()
 		K053936Wrap[i] = 0;
 		K053936Offset[i][0] = K053936Offset[i][1] = 0;
 	}
+
+	KonamiIC_K053936InUse = 0;
 }
 
 void K053936PredrawTiles3(INT32 chip, UINT8 *gfx, INT32 tile_size_x, INT32 tile_size_y, INT32 transparent)
@@ -319,7 +323,7 @@ void K053936Draw(INT32 chip, UINT16 *ctrl, UINT16 *linectrl, INT32 flags)
 
 		INT32 minx, maxx, maxy, miny, y;
 
-		if ((ctrl[0x07] & 0x0002) && ctrl[0x09])	// glfgreat
+		if ((ctrl[0x07] & 0x0002) && ctrl[0x09] && glfgreat_mode)	// glfgreat
 		{
 			minx = ctrl[0x08] + K053936Offset[chip][0]+2;
 			maxx = ctrl[0x09] + K053936Offset[chip][0]+2 - 1;

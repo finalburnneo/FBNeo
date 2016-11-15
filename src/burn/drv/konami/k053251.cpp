@@ -3,10 +3,20 @@
 static UINT8 K053251Ram[0x10];
 static INT32 K053251PalIndex[6];
 
+void K053251ResetIndexes()
+{
+	K053251PalIndex[0] = 32 * ((K053251Ram[9] >> 0) & 0x03);
+	K053251PalIndex[1] = 32 * ((K053251Ram[9] >> 2) & 0x03);
+	K053251PalIndex[2] = 32 * ((K053251Ram[9] >> 4) & 0x03);
+	K053251PalIndex[3] = 16 * ((K053251Ram[10] >> 0) & 0x07);
+	K053251PalIndex[4] = 16 * ((K053251Ram[10] >> 3) & 0x07);
+}
+
 void K053251Reset()
 {
-	memset (K053251Ram, 0, 16);
-	memset (K053251PalIndex, 0, 5 * sizeof(INT32));
+	memset (K053251Ram, 0, sizeof(K053251Ram));
+	memset (K053251PalIndex, 0, sizeof(K053251PalIndex));
+	K053251ResetIndexes();
 }
 
 void K053251Write(INT32 offset, INT32 data)
@@ -14,7 +24,7 @@ void K053251Write(INT32 offset, INT32 data)
 	data &= 0x3f;
 	offset &= 0x0f;
 
-	K053251Ram[offset] = (UINT8)data;
+	K053251Ram[offset] = data & 0xff;
 
 	if (offset == 9)
 	{
@@ -46,8 +56,8 @@ void K053251Scan(INT32 nAction)
 	
 	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = K053251Ram;
-		ba.nLen	  = 0x10;
+		ba.Data	  = &K053251Ram;
+		ba.nLen	  = sizeof(K053251Ram);
 		ba.szName = "K053251 Ram";
 		BurnAcb(&ba);
 
@@ -56,5 +66,9 @@ void K053251Scan(INT32 nAction)
 		SCAN_VAR(K053251PalIndex[2]);
 		SCAN_VAR(K053251PalIndex[3]);
 		SCAN_VAR(K053251PalIndex[4]);
+
+		if (nAction & ACB_WRITE) {
+			K053251ResetIndexes();
+		}
 	}
 }

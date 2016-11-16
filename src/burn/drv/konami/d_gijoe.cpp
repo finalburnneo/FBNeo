@@ -356,7 +356,7 @@ static UINT8 __fastcall gijoe_sound_read(UINT16 address)
 
 static void gijoe_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 {
-	int pri = (*color & 0x03e0) >> 4;
+	INT32 pri = (*color & 0x03e0) >> 4;
 
 	if (pri <= layerpri[3])					*priority = 0x0000;
 	else if (pri > layerpri[3] && pri <= layerpri[2])	*priority = 0xff00;
@@ -369,7 +369,7 @@ static void gijoe_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority
 
 static void gijoe_tile_callback(int layer, int *code, int *color, int */*flags*/)
 {
-	int tile = *code;
+	INT32 tile = *code;
 
 	if (tile >= 0xf000 && tile <= 0xf4ff)
 	{
@@ -442,6 +442,8 @@ static INT32 DrvDoReset()
 
 	avac_vrc = 0xffff;
 	sound_nmi_enable = 0;
+
+	irq6_timer = -1;
 
 	return 0;
 }
@@ -594,7 +596,7 @@ static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
 
-	int layers[4], dirty, mask = 0, vrc_mode, vrc_new;
+	INT32 layers[4], dirty, mask = 0, vrc_mode, vrc_new;
 
 	K056832ReadAvac(&vrc_mode, &vrc_new);
 
@@ -658,7 +660,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-		   extern int counter;
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -681,7 +683,7 @@ static INT32 DrvFrame()
 		DrvInputs[1] &= 0x0fff;
 	}
 
-	INT32 nInterleave = 256; //nBurnSoundLen;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -775,15 +777,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		KonamiICScan(nAction);
 
 		SCAN_VAR(avac_vrc);
+		SCAN_VAR(avac_bits);
+		SCAN_VAR(avac_occupancy);
 		SCAN_VAR(sound_nmi_enable);
 		SCAN_VAR(control_data);
-		SCAN_VAR(sound_nmi_enable);
 		SCAN_VAR(irq6_timer);
 
-		for (INT32 i = 0; i < 4; i++) {
-			SCAN_VAR(avac_bits[i]);
-			SCAN_VAR(avac_occupancy[i]);
-		}
+		SCAN_VAR(layerpri);
+		SCAN_VAR(layer_colorbase);
+		SCAN_VAR(sprite_colorbase);
 	}
 
 	return 0;

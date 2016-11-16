@@ -28,6 +28,7 @@ static INT32 m_default_layer_association;
 static INT32 m_uses_tile_banks;
 static INT32 m_cur_tile_bank;
 static INT32 m_layer_tile_mode[8];
+static INT32 m_page_tile_mode[16];
 static INT32 m_num_gfx_banks;
 static INT32 m_cur_gfx_banks;
 static INT32 tilemap_flip;
@@ -86,6 +87,10 @@ void K056832Init(UINT8 *rom, UINT8 *romexp, INT32 rom_size, void (*cb)(INT32 lay
 		m_lsram_page[i][0] = i;
 		m_lsram_page[i][1] = i << 11;
 		m_layer_tile_mode[i] = 1;
+	}
+
+	for (INT32 i = 0; i < 16; i++) {
+		m_page_tile_mode[i] = 1;
 	}
 
 	K056832SetGlobalOffsets(0, 0);
@@ -170,6 +175,17 @@ INT32 K056832GetLookup( INT32 bits )
 	return res;
 }
 
+static void mark_all_tilemaps_dirty()
+{ // this sets the page/layer associations.
+	for (INT32 i = 0; i < 16; i++)
+	{
+		if (m_layer_assoc_with_page[i] != -1)
+		{
+			m_page_tile_mode[i] = m_layer_tile_mode[m_layer_assoc_with_page[i]];
+		}
+	}
+}
+
 static void k056832_change_rambank()
 {
 	INT32 bank = k056832Regs[0x19];
@@ -180,6 +196,8 @@ static void k056832_change_rambank()
 		m_selected_page = ((bank >> 1) & 0xc) | (bank & 3);
 
 	m_selected_page_x4096 = m_selected_page << 12;
+
+	mark_all_tilemaps_dirty();
 }
 
 #if 0
@@ -261,6 +279,8 @@ static void k056832_update_page_layout()
 			}
 		}
 	}
+
+	mark_all_tilemaps_dirty();
 }
 
 static void k056832_word_write_update(INT32 offset) // (offset/2)&0x1f internally
@@ -288,6 +308,17 @@ static void k056832_word_write_update(INT32 offset) // (offset/2)&0x1f internall
 		case 0x08/2:
 			for (INT32 layer = 0; layer < 4; layer++) {
 				m_layer_tile_mode[layer] = data & (1 << layer);
+
+				INT32 tilemode = m_layer_tile_mode[layer];
+
+				for (INT32 i = 0; i < 16; i++)
+				{
+					if (m_layer_assoc_with_page[i] == layer)
+					{
+						m_page_tile_mode[i] = tilemode;
+						//mark_page_dirty(i);
+					}
+				}
 			}
 		break;
 
@@ -783,7 +814,9 @@ void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority)
 			}
 
 		//	if (update_linemap(pageIndex, flags)) // unnecessary?
-		//		continue;
+			//		continue;
+
+			if (!m_page_tile_mode[pageIndex]) continue; // this was hidden in update_linemap()
 
 			tmap = pageIndex;
 

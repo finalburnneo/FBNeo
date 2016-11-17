@@ -768,11 +768,14 @@ static INT32 DrvFrame()
 
 		CompileInput(DrvJoy, (void*)DrvInputs, 3, 8, DrvJoyInit);
 
-	if (dacholer) {
-		// Convert to 4-way for Dacholer
-		ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
-		ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
-	}
+		if (dacholer) {
+			// Convert to 4-way for Dacholer
+			ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+			ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+		} else {
+			ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_MAKEACTIVELOW);
+			ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_MAKEACTIVELOW);
+		}
 	}
 
 	INT32 nInterleave = 256;

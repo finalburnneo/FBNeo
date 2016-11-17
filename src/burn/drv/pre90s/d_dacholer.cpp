@@ -9,9 +9,6 @@ extern "C" {
 #include "ay8910.h"
 }
 
-// to do
-// fix msm5205 (disabled for now)
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -53,6 +50,7 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static INT32 itaten = 0;
+static INT32 dacholer = 0;
 
 static struct BurnInputInfo DacholerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -109,7 +107,7 @@ STDINPUTINFO(Itaten)
 static struct BurnDIPInfo DacholerDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0x0f, NULL				},
-	{0x13, 0xff, 0xff, 0x3f, NULL				},
+	{0x13, 0xff, 0xff, 0x3d, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"			},
 	{0x12, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
@@ -301,7 +299,7 @@ static UINT8 __fastcall dacholer_main_read_port(UINT16 port)
 			return (DrvDips[0] & 0xef) | (sound_ack ? 0x10 : 0); // correct???
 
 		case 0x04:
-			return DrvInputs[1];
+			return DrvDips[1];
 
 		case 0x05:
 			return 0; // nop
@@ -324,6 +322,7 @@ static void __fastcall dacholer_sound_write_port(UINT16 port, UINT8 data)
 
 		case 0x08:
 			sound_interrupt_enable = data;
+			if (data) MSM5205ResetWrite(0, 0);
 		return;
 
 		case 0x0c:
@@ -377,6 +376,8 @@ static void adpcm_int()
 			ZetSetVector(0x38);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
+	} else {
+		MSM5205ResetWrite(0, 1);
 	}
 }
 
@@ -413,6 +414,7 @@ static INT32 DrvDoReset()
 	msm_toggle = 0;
 	msm_data = 0;
 	sound_ack = 0;
+	MSM5205ResetWrite(0, 1);
 
 	return 0;
 }
@@ -517,6 +519,8 @@ static INT32 DrvInit(INT32 type)
 		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 13, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00000, 14, 1)) return 1;
+
+		dacholer = 1;
 	}
 	else if (type == 1)
 	{
@@ -539,6 +543,8 @@ static INT32 DrvInit(INT32 type)
 		if (BurnLoadRom(DrvGfxROM2 + 0x04000, 12, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x00000, 13, 1)) return 1;
+
+		dacholer = 1; // kickboy (dacholer clone)
 	}
 	else if (type == 2)
 	{
@@ -605,9 +611,9 @@ static INT32 DrvInit(INT32 type)
 	AY8910Init(0, 1248000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 1248000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(2, 1248000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(2, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, adpcm_int, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
@@ -632,6 +638,7 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	itaten = 0;
+	dacholer = 0;
 
 	return 0;
 }
@@ -756,39 +763,59 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 3);
+		UINT8 *DrvJoy[3] = { DrvJoy1, DrvJoy2, DrvJoy3 };
+		UINT32 DrvJoyInit[3] = { 0x00, 0x00, 0xff };
 
-		for (INT32 i = 0; i < 8; i++) {
-			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
-		}
+		CompileInput(DrvJoy, (void*)DrvInputs, 3, 8, DrvJoyInit);
+
+	if (dacholer) {
+		// Convert to 4-way for Dacholer
+		ProcessJoystick(&DrvInputs[0], 0, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+		ProcessJoystick(&DrvInputs[1], 1, 0,1,2,3, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+	}
 	}
 
-	INT32 nInterleave = (itaten == 0) ? MSM5205CalcInterleave(0, 2496000) : 10;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 2496000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
+
+	MSM5205NewFrame(0, 2496000, nInterleave);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (i == (nInterleave - 1) && music_interrupt_enable == 1) {
+		if (i == 240 && music_interrupt_enable == 1) {
 			ZetSetVector(0x30);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-	//	if (itaten == 0) MSM5205Update();
+		MSM5205UpdateScanline(i);
 		ZetClose();
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			nSoundBufferPos += nSegmentLength;
+		}
+
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
-	//	if (itaten == 0) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+		}
+		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -798,7 +825,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -806,7 +833,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

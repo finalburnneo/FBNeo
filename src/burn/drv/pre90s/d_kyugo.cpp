@@ -2330,9 +2330,9 @@ static void KyugoDraw()
 {
 	BurnTransferClear();
 	KyugoCalcPalette();
-	KyugoRenderBgLayer();
-	KyugoRenderSpriteLayer();
-	KyugoRenderCharLayer();
+	if (nBurnLayer & 1) KyugoRenderBgLayer();
+	if (nBurnLayer & 2) KyugoRenderSpriteLayer();
+	if (nBurnLayer & 4) KyugoRenderCharLayer();
 	BurnTransferCopy(KyugoPalette);
 }
 

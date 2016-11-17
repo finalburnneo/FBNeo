@@ -870,6 +870,14 @@ struct BurnDriver BurnDrvSoldivid = {
 	320, 224, 4, 3
 };
 
+static INT32 SoldividkInit()
+{
+	speedhack_address = 0x00000c;
+	speedhack_pc[0] = 0x0001AFDC;
+	speedhack_pc[1] = 0x0001AEA6;
+
+	return DrvInit(SoldividLoadCallback, 0, 0x3800000, 0x2000000);
+}
 
 // Sol Divide - The Sword Of Darkness (Korea)
 
@@ -890,13 +898,13 @@ static struct BurnRomInfo soldividkRomDesc[] = {
 STD_ROM_PICK(soldividk)
 STD_ROM_FN(soldividk)
 
-struct BurnDriver BurnDrvSoldividk = {
+struct BurnDriverD BurnDrvSoldividk = {
 	"soldividk", "soldivid", NULL, NULL, "1997",
-	"Sol Divide - The Sword Of Darkness (Korea)\0", NULL, "Psikyo", "PS3-V1",
+	"Sol Divide - The Sword Of Darkness (Korea)\0", "Sound is broken/Use parent!", "Psikyo", "PS3-V1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PSIKYO, GBF_HORSHOOT, 0,
 	NULL, soldividkRomInfo, soldividkRomName, NULL, NULL, Common3ButtonInputInfo, SoldividkDIPInfo,
-	SoldividInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
+	SoldividkInit, DrvExit, DrvFrame, PsikyoshDraw, DrvScan, NULL, 0x1400,
 	320, 224, 4, 3
 };
 

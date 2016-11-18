@@ -83,6 +83,7 @@ static UINT8 brubbermode = 0;
 static UINT8 discomode = 0;
 static UINT8 lncmode = 0;
 static UINT8 zoarmode = 0;
+static UINT8 mmonkeymode = 0;
 
 static UINT8 bnjskew = 0;
 
@@ -552,17 +553,14 @@ STDDIPINFO(Zoar)
 static UINT8 mmonkey_protection_r(UINT16 offset)
 {
 	UINT8 *RAM = DrvMainRAM;
-	int ret = 0;
-	//bprintf(0, _T("protection_r(%X)\n"), offset);
+	INT32 ret = 0;
 
 	if (offset == 0x0000)
 		ret = protection_status;
 	else if (offset == 0x0e00)
 		ret = protection_ret;
 	else if (offset >= 0x0d00 && offset <= 0x0d02)
-		ret = RAM[mmonkeyBASE + offset];  /* addition result */
-	//else
-	//	bprintf(0, _T("Unknown protection read.   Offset=%04X\n"), offset);
+		ret = RAM[mmonkeyBASE + offset];  // addition result
 
 	return ret;
 }
@@ -571,7 +569,6 @@ static void mmonkey_protection_w(UINT16 offset, UINT8 data)
 {
 	UINT8 *RAM = DrvMainRAM;
 
-	//bprintf(0, _T("protection_w(%X, %X)\n"), offset,data);
 	if (offset == 0)
 	{
 		/* protection trigger */
@@ -618,7 +615,7 @@ static void mmonkey_protection_w(UINT16 offset, UINT8 data)
 				break;
 
 			default:
-				//logerror("Unemulated protection command=%02X.  PC=%04X\n", protection_command, space.device().safe_pc());
+				// Uhoh.
 				break;
 			}
 
@@ -633,8 +630,6 @@ static void mmonkey_protection_w(UINT16 offset, UINT8 data)
 		RAM[mmonkeyBASE + offset] = data;   /* decrypt table */
 	else if (offset >= 0x0d00 && offset <= 0x0d05)
 		RAM[mmonkeyBASE + offset] = data;   /* source table */
-	//else
-	//	logerror("Unknown protection write=%02X.  PC=%04X  Offset=%04X\n", data, space.device().safe_pc(), offset);
 }
 
 static void lncpaletteupdate()
@@ -721,11 +716,6 @@ static void btimepalettewrite(UINT16 offset, UINT8 data)
 	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
 }
 
-/*UINT8 swap_bits_5_6(UINT8 data)
-{
-	return (data & 0x9f) | ((data & 0x20) << 1) | ((data & 0x40) >> 1);
-}*/
-
 static UINT8 btime_main_read(UINT16 address)
 {
 	RB(0x0000, 0x07ff, DrvMainRAM);
@@ -734,7 +724,7 @@ static UINT8 btime_main_read(UINT16 address)
 	RB(0x1400, 0x17ff, DrvColRAM);
 
 	if (address >= 0xb000 && address <= 0xffff) {
-		return DrvMainROMdec[address];
+		return DrvMainROM[address];
 	}
 
 	if (address >= 0x1800 && address <= 0x1bff) {
@@ -815,7 +805,7 @@ static UINT8 zoar_main_read(UINT16 address)
 	RB(0x8400, 0x87ff, DrvColRAM);
 
 	if (address >= 0xd000 && address <= 0xffff) {
-		return DrvMainROMdec[address];
+		return DrvMainROM[address];
 	}
 
 	if (address >= 0x8800 && address <= 0x8bff) {
@@ -926,67 +916,11 @@ static UINT8 mmonkey_main_read(UINT16 address)
 	}
 	return 0;
 }
-#if 0
-static void btime_decrypt()
-{
-	// d-
-	UINT16 A = M6502GetPC(0);
-	UINT16 A1 = M6502GetPrevPC(0);
-
-	if (DrvMainROMdec[A1] == 0x20)	/* JSR $xxxx */
-		A = btime_main_read(A1+1) + 256 * btime_main_read(A1+2);
-	//if (A1 < 0xa000) bprintf(0, _T("a1 < 0xa000."));
-	//if (A < 0xa000) bprintf(0, _T("a < 0xa000."));
-	/* If the address of the next instruction is xxxx xxx1 xxxx x1xx, decode it. */
-	if ((A & 0x0104) == 0x0104)
-	{
-		/* 76543210 -> 65342710 bit rotation */
-		DrvMainROMdec[A] = (DrvMainROM[A] & 0x13) | ((DrvMainROM[A] & 0x80) >> 5) | ((DrvMainROM[A] & 0x64) << 1)
-			   | ((DrvMainROM[A] & 0x08) << 2);
-	}
-}
-
-static void disco_decrypt()
-{
-	// d-
-	UINT16 A = M6502GetPC(0);
-	UINT16 A1 = M6502GetPrevPC(0);
-
-	if (DrvMainROMdec[A1] == 0x20)	/* JSR $xxxx */
-		A = disco_main_read(A1+1) + 256 * disco_main_read(A1+2);
-
-	/* If the address of the next instruction is xxxx xxx1 xxxx x1xx, decode it. */
-	if ((A & 0x0104) == 0x0104)
-	{
-		/* 76543210 -> 65342710 bit rotation */
-		DrvMainROMdec[A] = (DrvMainROM[A] & 0x13) | ((DrvMainROM[A] & 0x80) >> 5) | ((DrvMainROM[A] & 0x64) << 1)
-			   | ((DrvMainROM[A] & 0x08) << 2);
-	}
-}
-
-static void zoar_decrypt()
-{
-	// d-
-	UINT16 A = M6502GetPC(0);
-	UINT16 A1 = M6502GetPrevPC(0);
-
-	if (DrvMainROMdec[A1] == 0x20)	/* JSR $xxxx */
-		A = zoar_main_read(A1+1) + 256 * zoar_main_read(A1+2);
-
-	/* If the address of the next instruction is xxxx xxx1 xxxx x1xx, decode it. */
-	if ((A & 0x0104) == 0x0104)
-	{
-		/* 76543210 -> 65342710 bit rotation */
-		DrvMainROMdec[A] = (DrvMainROM[A] & 0x13) | ((DrvMainROM[A] & 0x80) >> 5) | ((DrvMainROM[A] & 0x64) << 1)
-			   | ((DrvMainROM[A] & 0x08) << 2);
-	}
-}
-#endif
 
 static void mmonkey_main_write(UINT16 address, UINT8 data)
 {
 	DrvMainRAM[address] = data;
-	DrvMainROMdec[address] = data; //swap_bits_5_6(data);
+	DrvMainROMdec[address] = data;
 
 	if (address >= 0x3c00 && address <= 0x3fff) {
 		DrvVidRAM[address - 0x3c00] = data;
@@ -1029,8 +963,6 @@ static void mmonkey_main_write(UINT16 address, UINT8 data)
 
 static void btime_main_write(UINT16 address, UINT8 data)
 {
-	//btime_decrypt();
-
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x1000, 0x13ff, DrvVidRAM);
 	WB(0x1400, 0x17ff, DrvColRAM);
@@ -1079,8 +1011,6 @@ static void btime_main_write(UINT16 address, UINT8 data)
 
 static void zoar_main_write(UINT16 address, UINT8 data)
 {
-	//zoar_decrypt();
-
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x8000, 0x83ff, DrvVidRAM);
 	WB(0x8400, 0x87ff, DrvColRAM);
@@ -1125,8 +1055,6 @@ static void zoar_main_write(UINT16 address, UINT8 data)
 
 static void disco_main_write(UINT16 address, UINT8 data)
 {
-	//disco_decrypt();
-
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x2000, 0x7fff, DrvCharRAM);
 	WB(0x8000, 0x83ff, DrvVidRAM);
@@ -1361,7 +1289,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvMainROM	= Next; Next += 0x010000;
-	DrvMainROMdec	= Next; Next += 0x010000; // this is needed for savestates, as the rom is decoded on-the-fly
+	DrvMainROMdec	= Next; Next += 0x010000; // for mmonkey's readop
 	DrvSoundROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x020000;
@@ -1586,10 +1514,6 @@ static INT32 MmonkeyInit() // and lnc
 
 	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
 
-	/*for (INT32 i = 0; i < 0x10000; i++) {
-		DrvMainROMdec[i] = BITSWAP08(DrvMainROM[i], 7, 5, 6, 4, 3, 2, 1, 0);
-	}*/
-
 	M6502Init(0, TYPE_DECOC10707);
 	M6502Open(0);
 	M6502SetWriteHandler(mmonkey_main_write);
@@ -1638,6 +1562,8 @@ static INT32 MmonkeyInit() // and lnc
 	filter_rc_set_route(4, (lncmode) ? 0.20 : 0.10, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(5, (lncmode) ? 0.20 : 0.10, BURN_SND_ROUTE_BOTH);
 
+	mmonkeymode = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -1669,16 +1595,14 @@ static INT32 DiscoInit()
 		gfx1len = 0x00;
 	}
 
-	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
-
 	M6502Init(0, TYPE_DECOCPU7);
 	M6502Open(0);
 	M6502SetWriteHandler(disco_main_write);
 	M6502SetReadHandler(disco_main_read);
 	M6502SetWriteMemIndexHandler(disco_main_write);
 	M6502SetReadMemIndexHandler(disco_main_read);
-	M6502SetReadOpArgHandler(mmonkeyop_main_read);
-	M6502SetReadOpHandler(mmonkeyop_main_read);
+	M6502SetReadOpArgHandler(disco_main_read);
+	M6502SetReadOpHandler(disco_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
@@ -1773,19 +1697,15 @@ static INT32 BnjInit()
 		DrvBnjGfxDecode();
 	}
 
-	for (INT32 i = 0; i < 0x10000; i++) {
-		DrvMainROMdec[i] = BITSWAP08(DrvMainROM[i], 7, 5, 6, 4, 3, 2, 1, 0);
-	}
-
-	M6502Init(0, TYPE_M6502);
+	M6502Init(0, TYPE_DECOC10707);
 	M6502Open(0);
 	M6502SetWriteHandler(bnj_main_write);
 	M6502SetReadHandler(bnj_main_read);
 	M6502SetWriteMemIndexHandler(bnj_main_write);
 	M6502SetReadMemIndexHandler(bnj_main_read);
 	M6502SetReadOpArgHandler(bnj_main_read);
-	M6502SetReadOpHandler(mmonkeyop_main_read);
-	M6502Close();
+	M6502SetReadOpHandler(bnj_main_read);
+    M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
@@ -1875,8 +1795,6 @@ static INT32 BtimeInit()
 	}
 
 	btimemode = 1;
-
-	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
 
 	M6502Init(0, TYPE_DECOCPU7);
 	M6502Open(0);
@@ -1983,8 +1901,6 @@ static INT32 ZoarInit()
 
 	}
 
-	memcpy(DrvMainROMdec, DrvMainROM, 0x10000);
-
 	M6502Init(0, TYPE_DECOCPU7);
 	M6502Open(0);
 	M6502SetWriteHandler(zoar_main_write);
@@ -2061,6 +1977,7 @@ static INT32 DrvExit()
 	discomode = 0;
 	lncmode = 0;
 	zoarmode = 0;
+	mmonkeymode = 0;
 	bnjskew = 0;
 	zippysoundinit = 0;
 
@@ -2275,10 +2192,7 @@ static INT32 BnjDraw()
 	BurnTransferClear();
 
 	if (bnj_scroll1) {
-		INT32 tmpwidth = nScreenWidth;
-		INT32 tmpheight = nScreenHeight;
-		nScreenWidth = 512;
-		nScreenHeight = 256;
+		GenericTilesSetClipRaw(0,512,0,256);
 
 		for (INT32 offs = 0x200 - 1; offs >= 0; offs--)
 		{
@@ -2298,8 +2212,7 @@ static INT32 BnjDraw()
 			Render16x16Tile_Clip(DrvBGBitmap, code, sx, sy, 0, 3, 8, DrvGfxROM2);
 		}
 
-		nScreenWidth = tmpwidth;
-		nScreenHeight = tmpheight;
+		GenericTilesClearClipRaw();
 
 		/* copy the background bitmap to the screen */
 		INT32 scroll = (bnj_scroll1 & 0x02) * 128 + 511 - bnj_scroll2;
@@ -2438,8 +2351,6 @@ static INT32 BtimeFrame()
 		prevcoin = thiscoin;
 	}
 
-	//bprintf(0, _T("inp: %X %X %X.   "), DrvInputs[0],DrvInputs[1],DrvInputs[2]);
-
 	INT32 nInterleave = 272;
 
 	INT32 nCyclesTotal[2] = { ((discomode) ? 750000 : 1500000) / 60, ((zippysoundinit) ? 6500000 : 500000) / 60 };
@@ -2548,15 +2459,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-/*		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = DrvMainROMdec;
-		ba.nLen	  = 0x10000;
-		ba.szName = "Decoded ROM";
-		BurnAcb(&ba); */
+		if (mmonkeymode) {
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = DrvMainROMdec;
+			ba.nLen	  = 0x10000;
+			ba.szName = "decROMops";
+			BurnAcb(&ba);
+		}
 	}
-	
-	if (nAction & ACB_DRIVER_DATA) {
 
+	if (nAction & ACB_DRIVER_DATA) {
 		M6502Scan(nAction);
 
 		AY8910Scan(nAction, pnMin);

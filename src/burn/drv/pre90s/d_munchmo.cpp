@@ -501,10 +501,7 @@ static void draw_background()
 {
 	INT32 scrollx = (-(DrvVRegs[6] *2 + (DrvVRegs[7] >> 7)) - 64 - 128 - 16) & 0x1ff; 
 
-	INT32 tmpwidth = nScreenWidth;
-	INT32 tmpheight = nScreenHeight;
-	nScreenWidth = 512;
-	nScreenHeight = 512;
+	GenericTilesSetClipRaw(0, 512, 0, 512);
 
 	for (INT32 offs = 0; offs < 16 * 16; offs++)
 	{
@@ -524,8 +521,7 @@ static void draw_background()
 		}
 	}
 
-	nScreenWidth = tmpwidth;
-	nScreenHeight = tmpheight;
+	GenericTilesClearClipRaw();
 
 	// copy the BGBitmap to pTransDraw
 	for (INT32 sy = 0; sy < nScreenHeight; sy++) {

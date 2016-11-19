@@ -37,8 +37,6 @@ static INT32 SoundLatchReplyIndex;
 static INT32 SoundLatchReplyMax;
 
 static UINT8 DrvZ80Bank;
-static UINT8 DrvOkiBank1[4];
-static UINT8 DrvOkiBank2[4];
 
 static struct BurnInputInfo pwrinst2InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
@@ -732,9 +730,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	EEPROMScan(nAction, pnMin);			// Scan EEPROM
 
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
-
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd - RamStart;
 		ba.szName	= "RAM";
 		BurnAcb(&ba);
@@ -757,8 +754,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvInput);
 		SCAN_VAR(SoundLatch);
 		SCAN_VAR(DrvZ80Bank);
-		SCAN_VAR(DrvOkiBank1);
-		SCAN_VAR(DrvOkiBank2);
 		
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);

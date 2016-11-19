@@ -1057,6 +1057,11 @@ static INT32 DrvYM3812SynchroniseStream(INT32 nSoundRate)
 	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
 }
 
+static INT32 DrvYM3812SynchroniseStreamCsilver(INT32 nSoundRate)
+{
+	return (INT64)M6502TotalCycles() * nSoundRate / (1500000*2);
+}
+
 static INT32 DrvYM2203SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)HD6309TotalCycles() * nSoundRate / 12000000;
@@ -1089,7 +1094,7 @@ static double DrvYM2203M6809GetTime()
 
 static INT32 DrvYM2203M6809SynchroniseStream1500000(INT32 nSoundRate)
 {
-	return (INT64)M6809TotalCycles() * nSoundRate / 1500000;
+	return (INT64)M6809TotalCycles() * nSoundRate / (1500000*2);
 }
 
 static double DrvYM2203M6809GetTime1500000()
@@ -1099,11 +1104,12 @@ static double DrvYM2203M6809GetTime1500000()
 
 inline static INT32 CsilverMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)M6809TotalCycles() * nSoundRate / 1500000);
+	return (INT64)((double)M6809TotalCycles() * nSoundRate / (1500000*2));
 }
 
 static void DrvYM3812FMIRQHandler(INT32, INT32 nStatus)
 {
+	if (M6502GetActive() == -1) return;
 	if (nStatus) {
 		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
 	} else {
@@ -5207,15 +5213,14 @@ struct BurnDriver BurnDrvBreywood = {
 };
 
 
-
-
 static INT32 MSM5205Next = 0;
+static UINT8 MSM5205Last = 0;
 static INT32 Toggle = 0;
 static INT32 SndRomBank = 0;
 
 static void csilver_i8751_write(INT32 offset, UINT8 data)
 {
-	static INT32 coin, latch = 0, snd;
+	static INT32 coin, latch = 0, snd = 0;
 	i8751_return = 0;
 
 	UINT8 coininp = DrvInputs[2];
@@ -5231,14 +5236,16 @@ static void csilver_i8751_write(INT32 offset, UINT8 data)
 		break;
 	}
 
-	if(offset == 0)
+	if ((coininp & 3) == 3 && !latch) latch = 1;
+	if ((coininp & 3) != 3 && latch) {coin++; latch = 0; snd = 0x1200; i8751_return = 0x1200; return;}
+
+	if (i8751_value == 0x054a) {i8751_return = ~(0x4a); coin = 0; snd = 0;} /* Captain Silver (Japan) ID */
+	if (i8751_value == 0x054c) {i8751_return = ~(0x4c); coin = 0; snd = 0;} /* Captain Silver (World) ID */
+
+	if (offset == 0)
 	{
 		/* Coins are controlled by the i8751 */
- 		if ((coininp & 3) == 3 && !latch) latch = 1;
- 		if ((coininp & 3) != 3 && latch) {coin++; latch = 0; snd = 0x1200; i8751_return = 0x1200; return;}
 
-		if (i8751_value == 0x054a) {i8751_return = ~(0x4a); coin = 0; snd = 0;} /* Captain Silver (Japan) ID */
-		if (i8751_value == 0x054c) {i8751_return = ~(0x4c); coin = 0; snd = 0;} /* Captain Silver (World) ID */
 		if ((i8751_value >> 8) == 0x01) i8751_return = 0; /* Coinage - Not Supported */
 		if ((i8751_value >> 8) == 0x02) {i8751_return = snd | coin; snd = 0; } /* Coin Return */
 		if ((i8751_value >> 8) == 0x03 && coin) {i8751_return = 0; coin--;} /* Coin Clear */
@@ -5357,6 +5364,10 @@ void csilver_sound_write(UINT16 address, UINT8 data)
 
 		case 0x1800:
 			MSM5205Next = data;
+			if (MSM5205Last == 0x8 && MSM5205Next == 0x8) { // clears up hissing & clicking noise
+				MSM5205ResetWrite(0, 1);
+			} else MSM5205ResetWrite(0, 0);
+			MSM5205Last = data;
 		return;
 
 		case 0x2000:
@@ -5372,7 +5383,7 @@ UINT8 csilver_sound_read(UINT16 address)
 		case 0x3000:
 			return *soundlatch;
 
-		case 0x3400: 
+		case 0x3400:
 			MSM5205ResetWrite(0, 0);
 			return 0;
 	}
@@ -5466,16 +5477,18 @@ static INT32 CsilverInit()
 	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(csilver_sound_read);
 	M6502SetWriteHandler(csilver_sound_write);
+	M6502SetWriteMemIndexHandler(csilver_sound_write);
+	M6502SetReadMemIndexHandler(csilver_sound_read);
 	M6502Close();
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
-	BurnTimerAttachM6502YM3526(1500000);
+	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStreamCsilver, 0);
+	BurnTimerAttachM6502YM3526(1500000*2);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, DrvYM2203M6809SynchroniseStream1500000, DrvYM2203M6809GetTime1500000, 1);
-	BurnTimerAttachM6809(1500000);
+	BurnTimerAttachM6809(1500000*2);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -5490,9 +5503,6 @@ static INT32 CsilverInit()
 
 	return 0;
 }
-
-
-
 
 static INT32 CsilverFrame()
 {
@@ -5513,9 +5523,9 @@ static INT32 CsilverFrame()
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
 	}
-
+	// Our m6809 has cycle accuracy issues, thats why we need to double the mhz here to get the same performance as MAME.
 	INT32 nInterleave = MSM5205CalcInterleave(0, 1500000);
-	INT32 nCyclesTotal[3] = { 1500000 / 58, 1500000 / 58, 1500000 / 58 };
+	INT32 nCyclesTotal[3] = { (1500000*2) / 58, (1500000*2) / 58, 1500000 / 58 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6502Open(0);
@@ -5552,7 +5562,7 @@ static INT32 CsilverFrame()
 	BurnTimerEndFrameYM3526(nCyclesTotal[2]);
 	
 	if (pBurnSoundOut) {
-		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);	
+		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}

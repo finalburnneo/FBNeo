@@ -21,6 +21,8 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 
 void GenericTilesSetClip(INT32 nMinx, INT32 nMaxx, INT32 nMiny, INT32 nMaxy);
 void GenericTilesClearClip();
+void GenericTilesSetClipRaw(INT32 nMinx, INT32 nMaxx, INT32 nMiny, INT32 nMaxy);
+void GenericTilesClearClipRaw();
 void GenericTilesSetScanline(INT32 nScanline);
 
 void RenderZoomedTile(UINT16 *pDestDraw, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 zoomx, INT32 zoomy);

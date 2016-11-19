@@ -75,6 +75,30 @@ void GenericTilesClearClip()
 	nScreenHeightMax = nScreenHeight;
 }
 
+void GenericTilesSetClipRaw(INT32 nMinx, INT32 nMaxx, INT32 nMiny, INT32 nMaxy)
+{
+	nScreenWidthMin = nMinx;
+	nScreenWidthMax = nMaxx;
+	nScreenHeightMin = nMiny;
+	nScreenHeightMax = nMaxy;
+
+	nScreenWidth = nMaxx;
+	nScreenHeight = nMaxy;
+}
+
+void GenericTilesClearClipRaw()
+{
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
+	} else {
+		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
+	}
+
+	nScreenWidthMax = nScreenWidth;
+	nScreenHeightMax = nScreenHeight;
+	nScreenHeightMin = nScreenWidthMin = 0;
+}
+
 void GenericTilesSetScanline(INT32 nScanline)
 {
 	if (nScanline < 0 || nScanline == nScreenWidth) {

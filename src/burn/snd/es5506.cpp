@@ -871,6 +871,9 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 	}
 #endif
 
+	INT32 rate = (chip->sample_rate * 100) / nBurnFPS;
+	samples = rate;
+
 	/* loop until all samples are output */
 	while (samples)
 	{
@@ -883,14 +886,15 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 		generate_samples(lsrc, rsrc, length);
 		
 		/* copy the data */
-		for (samp = 0; samp < length; samp++)
+		INT32 len = (length * nBurnSoundLen) / rate;
+
+		for (samp = 0; samp < len; samp++)
 		{
-//			*ldest++ = lsrc[samp] >> 4;
-//			*rdest++ = rsrc[samp] >> 4;
-			pBuffer[0] = lsrc[samp] >> 4;
-			pBuffer[1] = rsrc[samp] >> 4;
+			INT32 k = (samp * rate) / nBurnSoundLen;
+
+			pBuffer[0] = lsrc[k] >> 4;
+			pBuffer[1] = rsrc[k] >> 4;
 			pBuffer += 2;
-//			bprintf(PRINT_NORMAL, _T("%x, %x\n"), lsrc[samp] >> 4, rsrc[samp] >> 4);
 		}
 
 #if MAKE_WAVS
@@ -903,6 +907,8 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 		samples -= length;
 	}
 }
+
+
 
 
 /**********************************************************************************************

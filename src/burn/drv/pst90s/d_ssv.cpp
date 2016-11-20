@@ -4466,16 +4466,16 @@ static struct BurnRomInfo gdfsRomDesc[] = {
 	{ "vg004-10.u45",	0x200000, 0xb3c6b1cb, 3 | BRF_GRA },           //  4
 	{ "vg004-11.u48",	0x200000, 0x1491def1, 3 | BRF_GRA },           //  5
 
-	{ "vg004-01.u33",	0x200000, 0xaa9a81c2, 8 | BRF_GRA },           //  6 ST0020 sprites
-	{ "vg004-02.u34",	0x200000, 0xfa40ecb4, 8 | BRF_GRA },           //  7
-	{ "vg004-03.u35",	0x200000, 0x90004023, 8 | BRF_GRA },           //  8
-	{ "vg004-04.u36",	0x200000, 0xfdafd289, 8 | BRF_GRA },           //  9
-	{ "vg004-06.u38",	0x200000, 0x3402325f, 8 | BRF_GRA },           // 10
-	{ "vg004-05.u37",	0x200000, 0x9ae488b0, 8 | BRF_GRA },           // 11
-	{ "vg004-07.u39",	0x200000, 0x5e89fcf9, 8 | BRF_GRA },           // 12
-	{ "vg004-08.u40",	0x200000, 0x6b1746dc, 8 | BRF_GRA },           // 13
+	{ "vg004-01.u33",	0x200000, 0xaa9a81c2, 0 | BRF_GRA },           //  6 ST0020 sprites
+	{ "vg004-02.u34",	0x200000, 0xfa40ecb4, 0 | BRF_GRA },           //  7
+	{ "vg004-03.u35",	0x200000, 0x90004023, 0 | BRF_GRA },           //  8
+	{ "vg004-04.u36",	0x200000, 0xfdafd289, 0 | BRF_GRA },           //  9
+	{ "vg004-06.u38",	0x200000, 0x3402325f, 0 | BRF_GRA },           // 10
+	{ "vg004-05.u37",	0x200000, 0x9ae488b0, 0 | BRF_GRA },           // 11
+	{ "vg004-07.u39",	0x200000, 0x5e89fcf9, 0 | BRF_GRA },           // 12
+	{ "vg004-08.u40",	0x200000, 0x6b1746dc, 0 | BRF_GRA },           // 13
 
-	{ "ssvv7.u16",		0x080000, 0xf1c3ab6f, 9 | BRF_GRA },           // 14 Tilemap tiles
+	{ "ssvv7.u16",		0x080000, 0xf1c3ab6f, 8 | BRF_GRA },           // 14 Tilemap tiles
 
 	{ "vg004-12.u4",	0x200000, 0xeb41a4ef, 5 | BRF_SND },           // 15 Ensoniq samples 0
 	{ "vg004-13.u5",	0x200000, 0xa4ed3977, 5 | BRF_SND },           // 16

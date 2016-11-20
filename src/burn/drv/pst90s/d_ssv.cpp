@@ -66,6 +66,7 @@ static INT32 Gclip_max_y;
 static INT32 interrupt_ultrax = 0;
 static INT32 watchdog_disable = 0;
 static INT32 is_gdfs = 0;
+static INT32 is_cairblade = 0;
 
 static INT32 nDrvSndROMLen[4];
 static INT32 nDrvGfxROMLen;
@@ -3017,6 +3018,7 @@ static INT32 DrvExit()
 	interrupt_ultrax = 0;
 	watchdog_disable = 0;
 	is_gdfs = 0;
+	is_cairblade = 0;
 
 	return 0;
 }
@@ -3548,7 +3550,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = 16000000 / 60;
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesDone = 0;
 
 	v60Open(0);
 
@@ -3568,7 +3570,7 @@ static INT32 DrvFrame()
 			update_irq_state();
 		}
 
-		if (i == 240) {
+		if (i == ((is_cairblade) ? 248 : 240)) {
 			vblank = 1;
 
 			requested_int |= 1 << 3;
@@ -4176,6 +4178,7 @@ static void CairbladV60Map()
 
 static INT32 CairbladInit()
 {
+	is_cairblade = 1;
 	return DrvCommonInit(CairbladV60Map, NULL, 1, 0, -1, -1, -1);
 }
 

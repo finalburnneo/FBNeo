@@ -4138,7 +4138,7 @@ struct BurnDriver BurnDrvMeosism = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_CASINO, 0,
 	NULL, meosismRomInfo, meosismRomName, NULL, NULL, MeosismInputInfo, MeosismDIPInfo,
 	MeosismInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	336, 236, 4, 3
 };
 
 

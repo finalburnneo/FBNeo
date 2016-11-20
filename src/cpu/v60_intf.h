@@ -22,5 +22,6 @@ void v60MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, UINT32 flags);
 INT32 v60TotalCycles();
 void v60RunEnd();
 void v60NewFrame();
+INT32 v60GetActive();
 
 INT32 v60Scan(INT32 nAction);

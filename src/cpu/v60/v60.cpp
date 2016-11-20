@@ -6,7 +6,7 @@
 #include "burnint.h"
 #include "bitswap.h" // ...xor_le
 #include "driver.h"
-#include "v60.h"
+#include "v60_intf.h"
 
 #define offs_t			UINT32
 #define INPUT_LINE_NMI		CPU_IRQLINE_NMI
@@ -240,7 +240,7 @@ static void program_write_byte_16le(UINT32 a, UINT8 d)
 #endif
 
 	if (mem[1][a / page_size]) {
-		mem[2][a / page_size][a & page_mask] = d;
+		mem[1][a / page_size][a & page_mask] = d;
 		return;
 	}
 
@@ -280,12 +280,6 @@ static void io_write_byte_16le(UINT32 a, UINT8 d)
 		return v60_iowrite8(a,d);
 	}
 }
-
-
-
-
-
-
 
 static UINT32 io_read_dword_32le(UINT32 a)
 {
@@ -368,7 +362,7 @@ static UINT16 program_read_word_32le(UINT32 a)
 static UINT8 program_read_byte_32le(UINT32 a)
 {
 	if (mem[0][a / page_size]) {
-		return mem[2][a / page_size][a & page_mask];
+		return mem[0][a / page_size][a & page_mask];
 	}
 
 	if (v60_read8) {
@@ -380,7 +374,7 @@ static UINT8 program_read_byte_32le(UINT32 a)
 
 static void program_write_dword_32le(UINT32 a, UINT32 d)
 {
-	UINT32 *p = (UINT32*)mem[0][a / page_size];
+	UINT32 *p = (UINT32*)mem[1][a / page_size];
 
 	if (p) {
 		p[(a & page_mask)/4] = d;
@@ -395,7 +389,7 @@ static void program_write_dword_32le(UINT32 a, UINT32 d)
 
 static void program_write_word_32le(UINT32 a, UINT16 d)
 {
-	UINT16 *p = (UINT16*)mem[0][a / page_size];
+	UINT16 *p = (UINT16*)mem[1][a / page_size];
 
 	if (p) {
 		p[(a & page_mask)/2] = d;
@@ -410,8 +404,8 @@ static void program_write_word_32le(UINT32 a, UINT16 d)
 
 static void program_write_byte_32le(UINT32 a, UINT8 d)
 {
-	if (mem[0][a / page_size]) {
-		mem[2][a / page_size][a & page_mask] = d;
+	if (mem[1][a / page_size]) {
+		mem[1][a / page_size][a & page_mask] = d;
 		return;
 	}
 
@@ -736,6 +730,49 @@ static int v60_default_irq_cb(int )
 	return 0;
 }
 
+INT32 v60GetActive()
+{
+	return 0;
+}
+
+static void cheat_write_byte(UINT32 a, UINT8 d)
+{
+	if (mem[0][a / page_size]) {
+		mem[0][a / page_size][a & page_mask] = d;
+		return;
+	}
+
+	if (mem[1][a / page_size]) {
+		mem[1][a / page_size][a & page_mask] = d;
+		return;
+	}
+
+	if (mem[2][a / page_size]) {
+		mem[2][a / page_size][a & page_mask] = d;
+		return;
+	}
+
+	if (v60_write8) {
+		return v60_write8(a,d);
+	}
+}
+
+static cpu_core_config v60CheatCpuConfig =
+{
+	v60Open,
+	v60Close,
+	program_read_byte_16le,
+	cheat_write_byte,
+	v60GetActive,
+	v60TotalCycles,
+	v60NewFrame,
+	v60Run,
+	v60RunEnd,
+	v60Reset,
+	1<<24,
+	0
+};
+
 static void base_init()
 {
 	v60.irq_cb = v60_default_irq_cb;
@@ -763,6 +800,8 @@ void v60Init()
 	// so I don't know what it contains.
 	PIR = 0x00006000;
 	v60.info = v60_i;
+
+	CpuCheatRegister(0, &v60CheatCpuConfig);
 }
 
 void v70Init()

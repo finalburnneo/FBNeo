@@ -586,7 +586,7 @@ static void generate_ulaw(es5506_voice *voice, UINT16 *base, INT32 *lbuffer, INT
 	INT32 lvol = chip->volume_lookup[voice->lvol >> 4];
 	INT32 rvol = chip->volume_lookup[voice->rvol >> 4];
 	
-	bprintf(PRINT_NORMAL, _T("ULAW\n"));
+	//bprintf(PRINT_NORMAL, _T("ULAW\n"));
 
 	/* pre-add the bank offset */
 	base += voice->exbank;
@@ -892,8 +892,8 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 		{
 			INT32 k = (samp * rate) / nBurnSoundLen;
 
-			pBuffer[0] = lsrc[k] >> 4;
-			pBuffer[1] = rsrc[k] >> 4;
+			pBuffer[0] = BURN_SND_CLIP(lsrc[k] >> 4);
+			pBuffer[1] = BURN_SND_CLIP(rsrc[k] >> 4);
 			pBuffer += 2;
 		}
 
@@ -1020,6 +1020,34 @@ void ES5506Init(INT32 clock, UINT8* region0, UINT8* region1, UINT8* region2, UIN
 	es5506_start_common(clock, region0, region1, region2, region3, callback, ES5506);
 }
 
+void ES5506Scan(INT32 nAction, INT32* pnMin)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Scan called without init\n"));
+#endif
+
+	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+
+		ba.Data	  = chip->scratch;
+		ba.nLen	  = 2 * MAX_SAMPLE_CHUNK * sizeof(INT32);
+		ba.szName = "ES5506ScratchRam";
+		BurnAcb(&ba);
+
+		SCAN_VAR(chip->sample_rate);
+		SCAN_VAR(chip->write_latch);
+		SCAN_VAR(chip->read_latch);
+		SCAN_VAR(chip->current_page);
+		SCAN_VAR(chip->active_voices);
+		SCAN_VAR(chip->mode);
+		SCAN_VAR(chip->wst);
+		SCAN_VAR(chip->wend);
+		SCAN_VAR(chip->lrend);
+		SCAN_VAR(chip->irqv);
+		SCAN_VAR(chip->voice);
+	}
+}
 
 
 /**********************************************************************************************

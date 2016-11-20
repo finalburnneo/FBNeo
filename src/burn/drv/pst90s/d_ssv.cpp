@@ -3044,7 +3044,7 @@ static void drawgfx(INT32 gfx, UINT32 code, UINT32 color, int flipx, int flipy, 
 	int sy, y1, dy;
 	int penmask = gfx-1;
 
-	addr    =   DrvGfxROM + ((code * 16 * 8) % 0x4000000);
+	addr    =   DrvGfxROM + ((code * 16 * 8) % nDrvGfxROMLen);
 	color   =   (color * 0x40) & 0x7fc0;
 
 	if ( flipx )    {   x1 = x0-1;     x0 += 16-1; dx = -1; }

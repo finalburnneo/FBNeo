@@ -1,7 +1,6 @@
 
 // To do:
 //	gondo needs rotary inputs hooked up and doesn't read the i8751 value at all - so coins don't work
-//  csilver - one of the fm chips isn't working (insert coin sound missing etc) btw: background "whine" noise is normal - clicking noise isn't!
 
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -890,17 +889,11 @@ static struct BurnDIPInfo CsilverDIPList[]=
 	{0x11, 0xff, 0xff, 0x7f, NULL		},
 	{0x12, 0xff, 0xff, 0xff, NULL		},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x11, 0x01, 0x03, 0x00, "3 Coins 1 Credits "		},
-	{0x11, 0x01, 0x03, 0x01, "2 Coins 1 Credits "		},
+	{0   , 0xfe, 0   ,    1, "Coin A"		},
 	{0x11, 0x01, 0x03, 0x03, "1 Coin 1 Credits "		},
-	{0x11, 0x01, 0x03, 0x02, "1 Coin 2 Credits "		},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x11, 0x01, 0x0c, 0x00, "3 Coins 1 Credits "		},
-	{0x11, 0x01, 0x0c, 0x04, "2 Coins 1 Credits "		},
+	{0   , 0xfe, 0   ,    1, "Coin B"		},
 	{0x11, 0x01, 0x0c, 0x0c, "1 Coin 1 Credits "		},
-	{0x11, 0x01, 0x0c, 0x08, "1 Coin 2 Credits "		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x11, 0x01, 0x20, 0x00, "Off"		},
@@ -1059,7 +1052,7 @@ static INT32 DrvYM3812SynchroniseStream(INT32 nSoundRate)
 
 static INT32 DrvYM3812SynchroniseStreamCsilver(INT32 nSoundRate)
 {
-	return (INT64)M6502TotalCycles() * nSoundRate / (1500000*2);
+	return (INT64)M6502TotalCycles() * nSoundRate / (1500000);
 }
 
 static INT32 DrvYM2203SynchroniseStream(INT32 nSoundRate)
@@ -1094,7 +1087,7 @@ static double DrvYM2203M6809GetTime()
 
 static INT32 DrvYM2203M6809SynchroniseStream1500000(INT32 nSoundRate)
 {
-	return (INT64)M6809TotalCycles() * nSoundRate / (1500000*2);
+	return (INT64)M6809TotalCycles() * nSoundRate / (1500000);
 }
 
 static double DrvYM2203M6809GetTime1500000()
@@ -1104,7 +1097,7 @@ static double DrvYM2203M6809GetTime1500000()
 
 inline static INT32 CsilverMSM5205SynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)M6809TotalCycles() * nSoundRate / (1500000*2));
+	return (INT64)((double)M6809TotalCycles() * nSoundRate / (1500000));
 }
 
 static void DrvYM3812FMIRQHandler(INT32, INT32 nStatus)
@@ -5217,18 +5210,22 @@ static INT32 MSM5205Next = 0;
 static UINT8 MSM5205Last = 0;
 static INT32 Toggle = 0;
 static INT32 SndRomBank = 0;
+static INT32 csilver_coin = 0;
 
 static void csilver_i8751_write(INT32 offset, UINT8 data)
 {
-	static INT32 coin, latch = 0, snd = 0;
+	static INT32 latch = 0, snd = 0;
 	i8751_return = 0;
 
 	UINT8 coininp = DrvInputs[2];
-	
+
+	//bprintf(0, _T("i8751_w()..\n"));
+
 	switch (offset)
 	{
 	case 0: /* High byte */
 		i8751_value = (i8751_value & 0xff) | (data << 8);
+		//bprintf(0, _T("INT!\n"));
 		M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); /* Signal main cpu */
 		break;
 	case 1: /* Low byte */
@@ -5237,18 +5234,23 @@ static void csilver_i8751_write(INT32 offset, UINT8 data)
 	}
 
 	if ((coininp & 3) == 3 && !latch) latch = 1;
-	if ((coininp & 3) != 3 && latch) {coin++; latch = 0; snd = 0x1200; i8751_return = 0x1200; return;}
+	if ((coininp & 3) != 3 && latch) {
+		csilver_coin++;
+		latch = 0;
+		snd = 0x1200;
+		i8751_return = 0x1200;
+	}
 
-	if (i8751_value == 0x054a) {i8751_return = ~(0x4a); coin = 0; snd = 0;} /* Captain Silver (Japan) ID */
-	if (i8751_value == 0x054c) {i8751_return = ~(0x4c); coin = 0; snd = 0;} /* Captain Silver (World) ID */
+	if (i8751_value == 0x054a) { i8751_return = 0xb5; } /* Captain Silver (Japan) ID */
+	if (i8751_value == 0x054c) { i8751_return = 0xb3; } /* Captain Silver (World) ID */
 
 	if (offset == 0)
 	{
 		/* Coins are controlled by the i8751 */
 
-		if ((i8751_value >> 8) == 0x01) i8751_return = 0; /* Coinage - Not Supported */
-		if ((i8751_value >> 8) == 0x02) {i8751_return = snd | coin; snd = 0; } /* Coin Return */
-		if ((i8751_value >> 8) == 0x03 && coin) {i8751_return = 0; coin--;} /* Coin Clear */
+		if ((i8751_value >> 8) == 0x01) i8751_return = i8751_value; /* Coinage - Not Supported */
+		if ((i8751_value >> 8) == 0x02) {i8751_return = snd | csilver_coin; snd = 0; } /* Coin Return */
+		if ((i8751_value >> 8) == 0x03 && csilver_coin) {i8751_return = 0; csilver_coin--;} /* Coin Clear */
 	}
 }
 
@@ -5291,6 +5293,7 @@ void csilver_main_write(UINT16 address, UINT8 data)
 		case 0x180c:
 			*soundlatch = data;
 			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
+			M6502Run(500);
 		return;
 
 		case 0x1808:
@@ -5332,7 +5335,7 @@ UINT8 csilver_main_read(UINT16 address)
 			return DrvDips[0];
 
 		case 0x1c00:
-			return i8751_return >> 8;
+			return (i8751_return >> 8) & 0xff;
 
 		case 0x1e00:
 			return i8751_return & 0xff;
@@ -5405,6 +5408,7 @@ static INT32 CsilverDoReset()
 	INT32 nRet = LastmissDoReset();
 	
 	MSM5205Reset();
+	csilver_coin = 0;
 	
 	return nRet;
 }
@@ -5484,11 +5488,11 @@ static INT32 CsilverInit()
 	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStreamCsilver, 0);
-	BurnTimerAttachM6502YM3526(1500000*2);
+	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, DrvYM2203M6809SynchroniseStream1500000, DrvYM2203M6809GetTime1500000, 1);
-	BurnTimerAttachM6809(1500000*2);
+	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
@@ -5523,22 +5527,19 @@ static INT32 CsilverFrame()
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
 	}
-	// Our m6809 has cycle accuracy issues, thats why we need to double the mhz here to get the same performance as MAME.
-	INT32 nInterleave = MSM5205CalcInterleave(0, 1500000);
-	INT32 nCyclesTotal[3] = { (1500000*2) / 58, (1500000*2) / 58, 1500000 / 58 };
+
+	INT32 nInterleave = 256;
+	MSM5205NewFrame(0, 1500000, nInterleave);
+	INT32 nCyclesTotal[3] = { 1500000 / 58, 1500000 / 58, 1500000 / 58 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6502Open(0);
 
 	vblank = 0x80;
-	
-	INT32 DrvVBlankSlices[2];
-	DrvVBlankSlices[0] = (INT32)((double)nInterleave * 0.03);
-	DrvVBlankSlices[1] = (INT32)((double)nInterleave * 0.97);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == DrvVBlankSlices[0]) vblank = 0x80;
+		if (i == 8) vblank = 0x00;
 
 		M6809Open(0);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
@@ -5547,11 +5548,11 @@ static INT32 CsilverFrame()
 		M6809Open(1);
 		INT32 nSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
 		nCyclesDone[1] += M6809Run(nSegment - nCyclesDone[1]);
-		if (i == DrvVBlankSlices[1]) {
-			vblank = 0;
+		if (i == 248) {
+			vblank = 0x80;
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		}
-		MSM5205Update();
+		MSM5205UpdateScanline(i);
 		M6809Close();
 		
 		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
@@ -5588,6 +5589,7 @@ static INT32 CsilverScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Toggle);
 		SCAN_VAR(SndRomBank);
 		SCAN_VAR(RomBank);
+		SCAN_VAR(csilver_coin);
 		
 		if (nAction & ACB_WRITE) {
 			M6809Open(0);
@@ -5645,7 +5647,7 @@ static INT32 CsilverExit()
 
 struct BurnDriver BurnDrvCsilver = {
 	"csilver", NULL, NULL, NULL, "1987",
-	"Captain Silver (World)\0", "imperfect sound", "Data East Corporation", "DEC8",
+	"Captain Silver (World)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverRomInfo, csilverRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,

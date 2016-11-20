@@ -10,7 +10,7 @@
 
 /*
 	some sprites flickery - notably in cairblade
-	gundam - broken sprites in st0020...
+	gundam - verify layer should be OVER sprites and not behind
 	analog inputs not hooked up at all
 	clipping is not hooked up (broken) - marked with "iq_132" test with twin eagle
 */
@@ -3511,8 +3511,8 @@ static INT32 DrvDraw()
 
 	if (is_gdfs)
 	{
-		if (nSpriteEnable & 1) gdfs_draw_layer();
-		if (nSpriteEnable & 2) st0020Draw();
+		if (nSpriteEnable & 1) st0020Draw();
+		if (nSpriteEnable & 2) gdfs_draw_layer();
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -3624,6 +3624,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 static INT32 eaglshtScan(INT32 nAction, INT32 *pnMin)
 {
+	struct BurnArea ba;
+
 	if (nAction & ACB_DRIVER_DATA) {
 		ba.Data	  = DrvGfxROM;
 		ba.nLen	  = 0x400000;
@@ -4477,8 +4479,8 @@ static struct BurnRomInfo gdfsRomDesc[] = {
 	{ "vg004-02.u34",	0x200000, 0xfa40ecb4, 0 | BRF_GRA },           //  7
 	{ "vg004-03.u35",	0x200000, 0x90004023, 0 | BRF_GRA },           //  8
 	{ "vg004-04.u36",	0x200000, 0xfdafd289, 0 | BRF_GRA },           //  9
-	{ "vg004-06.u38",	0x200000, 0x3402325f, 0 | BRF_GRA },           // 10
-	{ "vg004-05.u37",	0x200000, 0x9ae488b0, 0 | BRF_GRA },           // 11
+	{ "vg004-05.u37",	0x200000, 0x9ae488b0, 0 | BRF_GRA },           // 10
+	{ "vg004-06.u38",	0x200000, 0x3402325f, 0 | BRF_GRA },           // 11
 	{ "vg004-07.u39",	0x200000, 0x5e89fcf9, 0 | BRF_GRA },           // 12
 	{ "vg004-08.u40",	0x200000, 0x6b1746dc, 0 | BRF_GRA },           // 13
 
@@ -4524,6 +4526,9 @@ static void GdfsRomLoadCallback()
 	if (BurnLoadRom(st0020GfxROM + 0x0a00000, 11, 1)) return;
 	if (BurnLoadRom(st0020GfxROM + 0x0c00000, 12, 1)) return;
 	if (BurnLoadRom(st0020GfxROM + 0x0e00000, 13, 1)) return;
+
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 15, 2)) return;
+	if (BurnLoadRom(DrvSndROM0 + 0x000001, 16, 2)) return;
 }
 
 static INT32 GdfsInit()

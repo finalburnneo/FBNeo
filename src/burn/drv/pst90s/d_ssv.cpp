@@ -2156,7 +2156,9 @@ static UINT16 common_main_read_word(UINT32 address)
 			return DrvInputs[3];
 
 		case 0x510000: // drifto94
+		case 0x510001:
 		case 0x520000:
+		case 0x520001:
 			return rand();
 	}
 
@@ -2200,7 +2202,9 @@ static UINT8 common_main_read_byte(UINT32 address)
 			return DrvInputs[3];
 
 		case 0x510000: // drifto94
+		case 0x510001:
 		case 0x520000:
+		case 0x520001:
 			return rand();
 	}
 
@@ -3536,7 +3540,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 248;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal = 16000000 / 60;
 	INT32 nCyclesDone  = 0;
 

@@ -458,7 +458,10 @@ static struct v60info {
 	UINT8 nmi_line;
 	int (*irq_cb)(int irqline);
 	UINT32 PPC;
+	UINT32 current_cycles;
+	UINT32 cycles;
 } v60;
+
 
 static int v60_ICount;
 
@@ -771,6 +774,32 @@ void v70Init()
 	v60.info = v70_i;
 }
 
+INT32 v60Scan(INT32 nAction)
+{
+	struct BurnArea ba;
+	
+	if ((nAction & ACB_DRIVER_DATA) == 0) {
+		return 1;
+	}
+
+	ba.Data = &v60.reg;
+	ba.nLen = sizeof(v60.reg);
+	ba.szName = "V60 Regs";
+	BurnAcb(&ba);
+
+	SCAN_VAR(v60.flags.CY);
+	SCAN_VAR(v60.flags.OV);
+	SCAN_VAR(v60.flags.S);
+	SCAN_VAR(v60.flags.Z);
+	SCAN_VAR(v60.irq_line);
+	SCAN_VAR(v60.nmi_line);
+	SCAN_VAR(v60.PPC);
+	SCAN_VAR(v60.current_cycles);
+	SCAN_VAR(v60.cycles);
+	
+	return 0;
+}
+
 void v60SetIRQCallback(int (*callback)(int irqline))
 {
 	v60.irq_cb = callback;
@@ -778,6 +807,7 @@ void v60SetIRQCallback(int (*callback)(int irqline))
 
 void v60Reset()
 {
+	v60.current_cycles = 0;
 	PSW		= 0x10000000;
 	PC		= v60.info.start_pc;
 	SBR		= 0x00000000;
@@ -869,6 +899,8 @@ INT32 v60Run(int cycles)
 {
 	UINT32 inc;
 
+	v60.cycles = cycles;
+
 	v60_ICount = cycles;
 	if(v60.irq_line != CLEAR_LINE)
 		v60_try_irq();
@@ -882,22 +914,41 @@ INT32 v60Run(int cycles)
 			v60_try_irq();
 	}
 
+	v60.current_cycles += cycles - v60_ICount;
+
 	return cycles - v60_ICount;
 }
 
 void v60SetIRQLine(INT32 irqline, INT32 state)
 {
 	if (state == CPU_IRQSTATUS_AUTO) {
+	//	INT32 tmp0 = v60.current_cycles;
+	//	INT32 tmp1 = v60.cycles;
 		set_irq_line(irqline,1);
 		v60Run(100);
+	//	if (tmp1) tmp1 -= 100;
 		set_irq_line(irqline,0);
 		v60Run(100);
 	}
 	else
 	{
 		set_irq_line(irqline,state);
-	//	v60Run(100);
 	}
+}
+
+INT32 v60TotalCycles()
+{
+	return v60.current_cycles + (v60.cycles - v60_ICount);
+}
+
+void v60RunEnd()
+{
+	v60_ICount = 0;
+}
+
+void v60NewFrame()
+{
+	v60.current_cycles = 0;
 }
 
 #if 0

@@ -9,8 +9,6 @@
 #include "math.h"
 
 /*
-	sound  crackles (survarts is most obvious, sexy reaction 2, etc)
-	save states not hooked up
 	some sprites flickery - notably in cairblade
 	gundam - broken sprites in st0020...
 	analog inputs not hooked up at all
@@ -52,6 +50,8 @@ static UINT16 irq_enable;
 static UINT8 input_select;
 static UINT16 sexyreact_previous_dial;
 static UINT32 sexyreact_serial_read;
+
+static UINT8 *eaglshot_bank;
 
 // not required for save states
 static INT32 watchdog;
@@ -2626,12 +2626,16 @@ static void eaglshot_gfxram_bank(INT32 data)
 {
 	INT32 bank = ((data & 0x0f) * 0x40000);
 
+	eaglshot_bank[0] = data;
+
 	v60MapMemory(DrvGfxROM + bank,	0x180000, 0x1bffff, MAP_RAM);
 }
 
 static void eaglshot_gfxrom_bank(INT32 data)
 {
 	INT32 bank = ((data < 6) ? data : 6) * 0x200000;
+
+	eaglshot_bank[1] = data;
 
 	v60MapMemory(DrvGfxROM2 + bank, 0xa00000, 0xbfffff, MAP_ROM);
 }
@@ -2803,6 +2807,8 @@ static INT32 MemIndex()
 
 	DrvVectors		= Next; Next += 0x000080;
 	DrvScrollRAM		= Next; Next += 0x000080;
+
+	eaglshot_bank		= Next; Next += 0x000002;
 
 	RamEnd			= Next;
 
@@ -3599,9 +3605,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-	//	v60Scan(nAction);
+		v60Scan(nAction);
 
-	//	ES5506Scan(nAction);
+		ES5506Scan(nAction,pnMin);
 
 		SCAN_VAR(requested_int);
 		SCAN_VAR(enable_video);
@@ -3609,11 +3615,25 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(input_select);
 		SCAN_VAR(sexyreact_previous_dial);
 		SCAN_VAR(sexyreact_serial_read);
+
+		if (is_gdfs) EEPROMScan(nAction, pnMin);
 	}
 
 	return 0;
 }
 
+static INT32 eaglshtScan(INT32 nAction, INT32 *pnMin)
+{
+	if (nAction & ACB_WRITE)
+	{
+		v60Open(0);
+		eaglshot_gfxram_bank(eaglshot_bank[0]);
+		eaglshot_gfxram_bank(eaglshot_bank[1]);
+		v60Close();
+	}
+
+	return DrvScan(nAction,pnMin);
+}
 
 // Vasara
 
@@ -5112,6 +5132,6 @@ struct BurnDriver BurnDrvEaglshot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, eaglshotRomInfo, eaglshotRomName, NULL, NULL, EaglshotInputInfo, EaglshotDIPInfo,
-	EaglshotInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	EaglshotInit, DrvExit, DrvFrame, DrvDraw, eaglshtScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
 };

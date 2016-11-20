@@ -1030,10 +1030,10 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = chip->scratch;
-		ba.nLen	  = 2 * MAX_SAMPLE_CHUNK * sizeof(INT32);
-		ba.szName = "ES5506ScratchRam";
-		BurnAcb(&ba);
+	//	ba.Data	  = chip->scratch;
+	//	ba.nLen	  = 2 * MAX_SAMPLE_CHUNK * sizeof(INT32);
+	//	ba.szName = "ES5506ScratchRam";
+	//	BurnAcb(&ba);
 
 		SCAN_VAR(chip->sample_rate);
 		SCAN_VAR(chip->write_latch);

@@ -234,15 +234,6 @@ inline void WelltrisClearOpposites(UINT8* nJoystickInputs)
 	}
 }
 
-static void cpu_sync()
-{
-	UINT32 cycles = (SekTotalCycles() * 2) - (ZetTotalCycles() * 5);
-
-	if (cycles > 5) {
-		BurnTimerUpdate(cycles / 5);
-	}
-}
-
 static inline void sprite_hack(INT32 offset)
 {
 	UINT16 *ram = (UINT16*)DrvSprRAM;
@@ -298,7 +289,6 @@ void __fastcall welltris_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0xfff009:
-			cpu_sync();
 			*pending_command = 0x80;
 			*soundlatch = data;
 			ZetNmi();
@@ -349,7 +339,6 @@ UINT8 __fastcall welltris_main_read_byte(UINT32 address)
 			return ~DrvInputs[4];
 
 		case 0xfff009:
-			cpu_sync();
 			return (DrvInputs[0] & 0x7f) | *pending_command;
 
 		case 0xfff00b:
@@ -418,11 +407,7 @@ UINT8 __fastcall welltris_sound_read_port(UINT16 port)
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -459,13 +444,13 @@ static INT32 MemIndex()
 	Drv68KROM	= Next; Next += 0x180000;
 	DrvZ80ROM	= Next; Next += 0x020000;
 
-	DrvGfxROM0	= Next; Next += 0x300000;
-	DrvGfxROM1	= Next; Next += 0x200000;
+	DrvGfxROM0	= Next; Next += 0x300000*2;
+	DrvGfxROM1	= Next; Next += 0x200000*2;
 
 	DrvSndROM0	= Next; Next += 0x080000;
 	DrvSndROM1	= Next; Next += 0x100000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -548,7 +533,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x100000, 12, 1)) return 1;
 		} else {
 			// welltris 4 player hack (change ori 0030 to 0000
-			*((UINT16 *)(Drv68KROM + 0xB91E)) = 0x0000;
+			//*((UINT16 *)(Drv68KROM + 0xB91E)) = 0x0000;
 		}
 
 		DrvFixSprites();
@@ -593,7 +578,7 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
-	DrvDoReset();	
+	DrvDoReset();
 
 	return 0;
 }
@@ -743,8 +728,9 @@ static void draw_background()
 		INT32 pxl = vram[offs];
 
 		if (sy < nScreenHeight && sy >= 0) {
-			if (sx >= 0 && sx < nScreenWidth) pTransDraw[sy * nScreenWidth + sx++] = color_bank | (pxl >> 8);
-			if (sx >= 0 && sx < nScreenWidth) pTransDraw[sy * nScreenWidth + sx  ] = color_bank | (pxl & 0xff);
+			if (sx >= 0 && sx < nScreenWidth) pTransDraw[sy * nScreenWidth + sx] = color_bank | (pxl >> 8);
+			sx++;
+			if (sx >= 0 && sx < nScreenWidth) pTransDraw[sy * nScreenWidth + sx] = color_bank | (pxl & 0xff);
 		}
 	}
 }
@@ -760,9 +746,9 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	draw_background();
-	draw_foreground();
-	draw_sprites();
+	if (nBurnLayer & 1) draw_background();
+	if (nBurnLayer & 2) draw_foreground();
+	if (nBurnLayer & 4) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -802,10 +788,17 @@ static INT32 DrvFrame()
 //	WelltrisClearOpposites(&DrvInputs[3]);
 //	WelltrisClearOpposites(&DrvInputs[4]);
 
+	INT32 nInterleave = 256;
+
 	SekOpen(0);
 	ZetOpen(0);
 	
-	SekRun(10000000 / 60);
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		SekRun(10000000 / 60 / nInterleave);
+		BurnTimerUpdate((4000000 / 60 * (i + 1)) / nInterleave);
+
+	}
 	SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	
 	BurnTimerEndFrame(4000000 / 60);

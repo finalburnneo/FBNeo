@@ -3624,6 +3624,13 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 static INT32 eaglshtScan(INT32 nAction, INT32 *pnMin)
 {
+	if (nAction & ACB_DRIVER_DATA) {
+		ba.Data	  = DrvGfxROM;
+		ba.nLen	  = 0x400000;
+		ba.szName = "Gfx Ram";
+		BurnAcb(&ba);
+	}
+
 	if (nAction & ACB_WRITE)
 	{
 		v60Open(0);

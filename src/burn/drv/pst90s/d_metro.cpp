@@ -2308,7 +2308,7 @@ static UINT8 __fastcall pangpoms_main_read_byte(UINT32 address)
 		case 0x80000b:
 		case 0x80000c:
 		case 0x80000d:
-			return DrvDips[(address - 0x40000a) ^ 1]; // dip0
+			return DrvDips[(address - 0x80000a) ^ 1]; // dip0
 
 		case 0x800004:
 		case 0x800005:
@@ -2316,7 +2316,7 @@ static UINT8 __fastcall pangpoms_main_read_byte(UINT32 address)
 		case 0x800007:
 		case 0x800008:
 		case 0x800009:
-			return DrvInputs[(address - 0x400004)/2] >> ((~address & 1) * 8);
+			return DrvInputs[(address - 0x800004)/2] >> ((~address & 1) * 8);
 
 		case 0x80000e:
 		case 0x80000f:
@@ -2546,7 +2546,7 @@ static UINT8 __fastcall lastfort_main_read_byte(UINT32 address)
 		case 0xc0000b:
 		case 0xc0000c:
 		case 0xc0000d:
-			return DrvDips[(address - 0x40000a) ^ 1]; // dip0
+			return DrvDips[(address - 0xc0000a) ^ 1]; // dip0
 
 		case 0xc00004:
 		case 0xc00005:
@@ -2554,7 +2554,7 @@ static UINT8 __fastcall lastfort_main_read_byte(UINT32 address)
 		case 0xc00007:
 		case 0xc00008:
 		case 0xc00009:
-			return DrvInputs[(address - 0x400004)/2] >> ((~address & 1) * 8);
+			return DrvInputs[(address - 0xc00004)/2] >> ((~address & 1) * 8);
 
 		case 0xc0000e:
 		case 0xc0000f:
@@ -2696,7 +2696,7 @@ static UINT8 __fastcall pururun_main_read_byte(UINT32 address)
 
 		case 0x400004:
 		case 0x400005:
-			return DrvDips[(address - 0xc00004) ^ 1]; // dip0
+			return DrvDips[(address - 0x400004) ^ 1]; // dip0
 
 		case 0x400006:
 		case 0x400007:
@@ -3132,7 +3132,7 @@ static void __fastcall bangball_main_write_byte(UINT32 address, UINT8 data)
 		case 0xb00007:
 		case 0xb00009:
 		case 0xb0000b:
-			BurnYMF278BWriteRegister(((address - 0x400007)/2) & 3, data & 0xff);
+			BurnYMF278BWriteRegister(((address - 0xb00007)/2) & 3, data & 0xff);
 		return;
 	}
 }

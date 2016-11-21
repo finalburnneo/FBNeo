@@ -10,6 +10,7 @@
 #include "math.h"
 
 /*
+	add volume support to es5506.cpp and hook up in this driver, some games are way too loud.
 	gundam - verify layer should be OVER sprites and not behind
 	analog inputs not hooked up at all
 	clipping is not hooked up (broken) - marked with "iq_132" test with twin eagle
@@ -2912,6 +2913,23 @@ static void DrvComputeTileCode(INT32 version)
 	}
 }
 
+#if 1
+
+static void gfxdecode(UINT8 *src, UINT8 *dst, INT32 ofst, INT32 len)
+{
+	INT32 plane  = ofst / (nDrvGfxROMLen / 4);
+	INT32 offset = ofst % (nDrvGfxROMLen / 4);
+
+	for (INT32 i = offset*8; i < (offset + len) * 8; i++)
+	{
+		INT32 d = (src[(i / 8) - offset] >> (i & 7)) & 1;
+
+		dst[(7 - (i & 7)) | ((i & ~0xf) >> 1)] |= d << (((i & 8) >> 3) | (plane << 1));
+	}
+}
+
+#else
+
 static void decode(UINT8 *src, UINT8 *dst, INT32 len, INT32 plane)
 {
 	for (INT32 i = 0; i < len * 8; i++)
@@ -2936,6 +2954,8 @@ static void DrvGfxDecode(INT32 gfxlen)
 
 	BurnFree (tmp);
 }
+
+#endif
 
 static INT32 DrvGetRoms(bool bLoad)
 {
@@ -2979,7 +2999,16 @@ static INT32 DrvGetRoms(bool bLoad)
 		}
 
 		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 3) {
-			if (bLoad) BurnLoadRom(GfxLoad, i, 1);
+		//	if (bLoad) BurnLoadRom(GfxLoad, i, 1);
+
+			if (bLoad)
+			{
+				UINT8 *tmp = (UINT8*)BurnMalloc(ri.nLen);
+				if (BurnLoadRom(tmp, i, 1)) return 1;
+				gfxdecode(tmp, DrvGfxROM, GfxLoad - DrvGfxROM, ri.nLen);
+				BurnFree(tmp);
+			}
+
 			GfxLoad += ri.nLen;
 			gfxrom_count++;
 			continue;
@@ -3006,7 +3035,9 @@ static INT32 DrvGetRoms(bool bLoad)
 
 	if (bLoad)
 	{
+#if 0
 		DrvGfxDecode(nDrvGfxROMLen);
+#endif
 	}
 	else
 	{

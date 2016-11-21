@@ -453,7 +453,7 @@ UINT8 snesdsp_read(bool mode)
 	}
 }
 
-void snesdsp_write(bool mode, uint8_t data)
+void snesdsp_write(bool mode, UINT8 data)
 {
 	if (!mode) return;
 

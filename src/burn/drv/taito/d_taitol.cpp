@@ -2824,7 +2824,7 @@ static INT32 KurikintaInit()
 	return KurikintCommonInit(1);
 }
 
-static INT32 commonSingleZ80(INT32 (*pRomLoadCallback)(), void __fastcall (*write)(UINT16,UINT8), UINT8 __fastcall (*read)(UINT16), INT32 type)
+static INT32 commonSingleZ80(INT32 (*pRomLoadCallback)(), void (*write)(UINT16,UINT8), UINT8 (*read)(UINT16), INT32 type)
 {
 	DrvGetGfxRomLen();
 

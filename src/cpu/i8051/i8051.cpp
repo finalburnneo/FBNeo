@@ -229,7 +229,7 @@ typedef struct {
 	//Internal Ram
 	UINT8	IntRam[0xff+1];	//Max 256 Bytes of Internal RAM (8031/51 have 128, 8032/52 have 256)
 
-	UINT8   pointer_block_divider; // Used to calculate the context-size (savestates etc)
+	UINT32  pointer_block_divider;
 
 	//Interrupt Callback
 	int 	(*irq_callback)(int irqline);
@@ -246,6 +246,22 @@ typedef struct {
 	UINT32 (*eram_iaddr_callback)(INT32,UINT32);
 
 }	I8051;
+
+struct i8051_pointer_block {
+	//Interrupt Callback
+	int 	(*irq_callback)(int irqline);
+
+	//Serial Port TX/RX Call backs
+	void    (*serial_tx_callback)(int data);	//Call back funciton when sending data out of serial port
+	int		(*serial_rx_callback)(void);		//Call back function to retrieve data when receiving serial port data
+
+	//Internal Indirect Read/Write Handlers
+	UINT8 (*iram_iread)(INT32);
+	void (*iram_iwrite)(INT32,UINT8);
+
+	//External Ram Address Callback for generating the hardware specific access to external ram
+	UINT32 (*eram_iaddr_callback)(INT32,UINT32);
+};
 
 static int i8051_icount;
 
@@ -1375,18 +1391,13 @@ INT32 i8051Run(int cycles)
 	return cycles - i8051_icount;
 }
 
-unsigned int i8051_context_size_no_pointers()
-{
-	return (int)&i8051.pointer_block_divider - (int)&i8051;
-}
-
 void i8051_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &i8051;
-		ba.nLen	  = i8051_context_size_no_pointers();
+		ba.nLen	  = sizeof(i8051) - sizeof(i8051_pointer_block);
 		ba.szName = "i8051 Regs";
 		BurnAcb(&ba);
 	}

@@ -747,7 +747,7 @@ reverse:
 				INT32 val1 = (INT16)base[accum >> 11];
 				INT32 val2 = (INT16)base[((accum + (1 << 11)) & voice->accum_mask) >> 11];
 				
-				bprintf(PRINT_NORMAL, _T("%x, %x\n"), val1, val2);
+				//bprintf(PRINT_NORMAL, _T("%x, %x\n"), val1, val2);
 
 				/* interpolate */
 				val1 = interpolate(val1, val2, accum);
@@ -1668,13 +1668,13 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 {
 //	running_machine *machine = chip->device->machine;
 
-	if (offset == 0) bprintf(PRINT_NORMAL, _T("low data %x\n"), data);
+	//if (offset == 0) bprintf(PRINT_NORMAL, _T("low data %x\n"), data);
 
 	switch (offset)
 	{
 		case 0x00:	/* CR */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 			{
 #if RAINE_CHECK
 				voice->control &= ~(CONTROL_STOPMASK | CONTROL_LOOPMASK | CONTROL_DIR);
@@ -1685,7 +1685,7 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 								  ((data << 12) & CONTROL_BS0);
 			}
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 			{
 				voice->control &= ~(CONTROL_CA0 | CONTROL_CA1 | CONTROL_LPMASK);
 				voice->control |= ((data >> 2) & CONTROL_LPMASK) |
@@ -1698,10 +1698,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x01:	/* FC */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->freqcount = (voice->freqcount & ~0x001fe) | ((data & 0x00ff) << 1);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->freqcount = (voice->freqcount & ~0x1fe00) | ((data & 0xff00) << 1);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, freq count=%08x\n", machine->describe_context(), chip->current_page & 0x1f, voice->freqcount);
@@ -1709,10 +1709,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x02:	/* STRT (hi) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->start = (voice->start & ~0x03fc0000) | ((data & 0x00ff) << 18);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->start = (voice->start & ~0x7c000000) | ((data & 0x1f00) << 18);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, loop start=%08x\n", machine->describe_context(), chip->current_page & 0x1f, voice->start);
@@ -1731,10 +1731,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x04:	/* END (hi) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->end = (voice->end & ~0x03fc0000) | ((data & 0x00ff) << 18);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->end = (voice->end & ~0x7c000000) | ((data & 0x1f00) << 18);
 #if RAINE_CHECK
 			voice->control |= CONTROL_STOP0;
@@ -1745,10 +1745,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x05:	/* END (lo) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->end = (voice->end & ~0x00000380) | ((data & 0x00e0) << 2);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->end = (voice->end & ~0x0003fc00) | ((data & 0xff00) << 2);
 #if RAINE_CHECK
 			voice->control |= CONTROL_STOP0;
@@ -1759,10 +1759,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x06:	/* K2 */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->k2 = (voice->k2 & ~0x00f0) | (data & 0x00f0);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->k2 = (voice->k2 & ~0xff00) | (data & 0xff00);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, K2=%04x\n", machine->describe_context(), chip->current_page & 0x1f, voice->k2);
@@ -1770,10 +1770,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x07:	/* K1 */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->k1 = (voice->k1 & ~0x00f0) | (data & 0x00f0);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->k1 = (voice->k1 & ~0xff00) | (data & 0xff00);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, K1=%04x\n", machine->describe_context(), chip->current_page & 0x1f, voice->k1);
@@ -1781,7 +1781,7 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x08:	/* LVOL */
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->lvol = (voice->lvol & ~0xff00) | (data & 0xff00);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, left vol=%04x\n", machine->describe_context(), chip->current_page & 0x1f, voice->lvol);
@@ -1789,7 +1789,7 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x09:	/* RVOL */
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->rvol = (voice->rvol & ~0xff00) | (data & 0xff00);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, right vol=%04x\n", machine->describe_context(), chip->current_page & 0x1f, voice->rvol);
@@ -1797,10 +1797,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x0a:	/* ACC (hi) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->accum = (voice->accum & ~0x03fc0000) | ((data & 0x00ff) << 18);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->accum = (voice->accum & ~0x7c000000) | ((data & 0x1f00) << 18);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, accum=%08x\n", machine->describe_context(), chip->current_page & 0x1f, voice->accum);
@@ -1808,10 +1808,10 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x0b:	/* ACC (lo) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->accum = (voice->accum & ~0x000003fc) | ((data & 0x00ff) << 2);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->accum = (voice->accum & ~0x0003fc00) | ((data & 0xff00) << 2);
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, accum=%08x\n", machine->describe_context(), chip->current_page & 0x1f, voice->accum);
@@ -1822,7 +1822,7 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x0d:	/* ACT */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 			{
 				chip->active_voices = data & 0x1f;
 				chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
@@ -1838,7 +1838,7 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 
 		case 0x0f:	/* PAGE */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				chip->current_page = data & 0x7f;
 			break;
 	}
@@ -1849,20 +1849,20 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 {
 //	running_machine *machine = chip->device->machine;
 
-	if (offset == 0) bprintf(PRINT_NORMAL, _T("high data %x\n"), data);
+	//if (offset == 0) bprintf(PRINT_NORMAL, _T("high data %x\n"), data);
 
 	switch (offset)
 	{
 		case 0x00:	/* CR */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 			{
 				voice->control &= ~(CONTROL_STOPMASK | CONTROL_BS0 | CONTROL_LOOPMASK | CONTROL_IRQE | CONTROL_DIR | CONTROL_IRQ);
 				voice->control |= (data & (CONTROL_STOPMASK | CONTROL_LOOPMASK | CONTROL_IRQE | CONTROL_DIR | CONTROL_IRQ)) |
 								  ((data << 12) & CONTROL_BS0);
 			}
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 			{
 				voice->control &= ~(CONTROL_CA0 | CONTROL_CA1 | CONTROL_LPMASK);
 				voice->control |= ((data >> 2) & CONTROL_LPMASK) |
@@ -1874,10 +1874,10 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x01:	/* O4(n-1) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->o4n1 = (voice->o4n1 & ~0x00ff) | (data & 0x00ff);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->o4n1 = (INT16)((voice->o4n1 & ~0xff00) | (data & 0xff00));
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, O4(n-1)=%05x\n", machine->describe_context(), chip->current_page & 0x1f, voice->o4n1 & 0x3ffff);
@@ -1885,10 +1885,10 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x02:	/* O3(n-1) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->o3n1 = (voice->o3n1 & ~0x00ff) | (data & 0x00ff);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->o3n1 = (INT16)((voice->o3n1 & ~0xff00) | (data & 0xff00));
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, O3(n-1)=%05x\n", machine->describe_context(), chip->current_page & 0x1f, voice->o3n1 & 0x3ffff);
@@ -1896,10 +1896,10 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x03:	/* O3(n-2) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->o3n2 = (voice->o3n2 & ~0x00ff) | (data & 0x00ff);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->o3n2 = (INT16)((voice->o3n2 & ~0xff00) | (data & 0xff00));
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, O3(n-2)=%05x\n", machine->describe_context(), chip->current_page & 0x1f, voice->o3n2 & 0x3ffff);
@@ -1907,10 +1907,10 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x04:	/* O2(n-1) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->o2n1 = (voice->o2n1 & ~0x00ff) | (data & 0x00ff);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->o2n1 = (INT16)((voice->o2n1 & ~0xff00) | (data & 0xff00));
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, O2(n-1)=%05x\n", machine->describe_context(), chip->current_page & 0x1f, voice->o2n1 & 0x3ffff);
@@ -1918,10 +1918,10 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x05:	/* O2(n-2) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->o2n2 = (voice->o2n2 & ~0x00ff) | (data & 0x00ff);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->o2n2 = (INT16)((voice->o2n2 & ~0xff00) | (data & 0xff00));
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, O2(n-2)=%05x\n", machine->describe_context(), chip->current_page & 0x1f, voice->o2n2 & 0x3ffff);
@@ -1929,10 +1929,10 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x06:	/* O1(n-1) */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				voice->o1n1 = (voice->o1n1 & ~0x00ff) | (data & 0x00ff);
 //			if (ACCESSING_BITS_8_15)
-			if (data & 0xff00)
+			//if (data & 0xff00)
 				voice->o1n1 = (INT16)((voice->o1n1 & ~0xff00) | (data & 0xff00));
 //			if (LOG_COMMANDS && eslog)
 //				fprintf(eslog, "%s:voice %d, O1(n-1)=%05x (accum=%08x)\n", machine->describe_context(), chip->current_page & 0x1f, voice->o2n1 & 0x3ffff, voice->accum);
@@ -1948,7 +1948,7 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x0d:	/* ACT */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 			{
 				chip->active_voices = data & 0x1f;
 				chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
@@ -1964,7 +1964,7 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 
 		case 0x0f:	/* PAGE */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				chip->current_page = data & 0x7f;
 			break;
 	}
@@ -1994,7 +1994,7 @@ ES5506_INLINE void es5505_reg_write_test(UINT32 offset, UINT16 data)
 
 		case 0x0d:	/* ACT */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 			{
 				chip->active_voices = data & 0x1f;
 				chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
@@ -2010,7 +2010,7 @@ ES5506_INLINE void es5505_reg_write_test(UINT32 offset, UINT16 data)
 
 		case 0x0f:	/* PAGE */
 //			if (ACCESSING_BITS_0_7)
-			if (data & 0xff)
+			//if (data & 0xff)
 				chip->current_page = data & 0x7f;
 			break;
 	}

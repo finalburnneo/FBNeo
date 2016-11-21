@@ -2824,7 +2824,7 @@ static INT32 KurikintaInit()
 	return KurikintCommonInit(1);
 }
 
-static INT32 commonSingleZ80(INT32 (*pRomLoadCallback)(), void __fastcall (*write)(UINT16,UINT8), UINT8 __fastcall (*read)(UINT16), INT32 type)
+static INT32 commonSingleZ80(INT32 (*pRomLoadCallback)(), void (*write)(UINT16,UINT8), UINT8 (*read)(UINT16), INT32 type)
 {
 	DrvGetGfxRomLen();
 
@@ -2853,8 +2853,8 @@ static INT32 commonSingleZ80(INT32 (*pRomLoadCallback)(), void __fastcall (*writ
 //	bank3 = 0xd000-dfff
 //	bank4 = 0xe000-efff
 //	bank5 = 0xf000-fdff
-	ZetSetWriteHandler(write);
-	ZetSetReadHandler(read);
+	ZetSetWriteHandler((void (__fastcall*) (UINT16,UINT8))write);
+	ZetSetReadHandler((UINT8 (__fastcall*) (UINT16))read);
 	ZetClose();
 
 	ZetInit(1); // not used
@@ -2896,7 +2896,7 @@ static INT32 PlottingRomLoad()
 
 static INT32 PlottingInit()
 {
-	return commonSingleZ80(PlottingRomLoad, plotting_main_write, plotting_main_read, 0);
+	return commonSingleZ80(PlottingRomLoad, (void (__cdecl *)(UINT16,UINT8))plotting_main_write, (UINT8 (__cdecl *)(UINT16))plotting_main_read, 0);
 }
 
 static INT32 PlottingaRomLoad()
@@ -2915,17 +2915,17 @@ static INT32 PlottingaRomLoad()
 
 static INT32 PlottingaInit()
 {
-	return commonSingleZ80(PlottingaRomLoad, plotting_main_write, plotting_main_read, 0);
+	return commonSingleZ80(PlottingaRomLoad, (void (__cdecl *)(UINT16,UINT8))plotting_main_write, (UINT8 (__cdecl *)(UINT16))plotting_main_read, 0);
 }
 
 static INT32 PuzznicInit()
 {
-	return commonSingleZ80(PlottingRomLoad, puzznic_main_write, puzznic_main_read, 1);
+	return commonSingleZ80(PlottingRomLoad, (void (__cdecl *)(UINT16,UINT8))puzznic_main_write, (UINT8 (__cdecl *)(UINT16))puzznic_main_read, 1);
 }
 
 static INT32 PalamedInit()
 {
-	return commonSingleZ80(PlottingRomLoad, palamed_main_write, palamed_main_read, 2);
+	return commonSingleZ80(PlottingRomLoad, (void (__cdecl *)(UINT16,UINT8))palamed_main_write, (UINT8 (__cdecl *)(UINT16))palamed_main_read, 2);
 }
 
 static INT32 CachatRomLoad()
@@ -2942,7 +2942,7 @@ static INT32 CachatRomLoad()
 
 static INT32 CachatInit()
 {
-	return commonSingleZ80(CachatRomLoad, palamed_main_write, palamed_main_read, 2);
+	return commonSingleZ80(CachatRomLoad, (void (__cdecl *)(UINT16,UINT8))palamed_main_write, (UINT8 (__cdecl *)(UINT16))palamed_main_read, 2);
 }
 
 static INT32 CubybopRomLoad()
@@ -2959,7 +2959,7 @@ static INT32 CubybopRomLoad()
 
 static INT32 CubybopInit()
 {
-	return commonSingleZ80(CubybopRomLoad, palamed_main_write, palamed_main_read, 2);
+	return commonSingleZ80(CubybopRomLoad, (void (__cdecl *)(UINT16,UINT8))palamed_main_write, (UINT8 (__cdecl *)(UINT16))palamed_main_read, 2);
 }
 
 static INT32 LagirlRomLoad()
@@ -2976,7 +2976,7 @@ static INT32 LagirlRomLoad()
 
 static INT32 LagirlInit()
 {
-	return commonSingleZ80(LagirlRomLoad, palamed_main_write, palamed_main_read, 2);
+	return commonSingleZ80(LagirlRomLoad, (void (__cdecl *)(UINT16,UINT8))palamed_main_write, (UINT8 (__cdecl *)(UINT16))palamed_main_read, 2);
 }
 
 static INT32 Plgirls2bInit()
@@ -3012,7 +3012,7 @@ static INT32 HorshoesRomLoad()
 
 static INT32 HorshoesInit()
 {
-	return commonSingleZ80(HorshoesRomLoad, horshoes_main_write, horshoes_main_read, 0);
+	return commonSingleZ80(HorshoesRomLoad, (void (__cdecl *)(UINT16,UINT8))horshoes_main_write, (UINT8 (__cdecl *)(UINT16))horshoes_main_read, 0);
 }
 
 static INT32 DrvExit()

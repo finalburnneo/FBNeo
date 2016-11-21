@@ -1381,7 +1381,7 @@ void i8051_scan(INT32 nAction)
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &i8051;
-		ba.nLen	  = (int)&i8051.pointer_block_divider - (int)&i8051;
+		ba.nLen	  = i8051.pointer_block_divider;// - (int)&i8051;
 		ba.szName = "i8051 Regs";
 		BurnAcb(&ba);
 	}

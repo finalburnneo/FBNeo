@@ -1375,13 +1375,18 @@ INT32 i8051Run(int cycles)
 	return cycles - i8051_icount;
 }
 
+unsigned int i8051_context_size_no_pointers()
+{
+	return (int)&i8051.pointer_block_divider - (int)&i8051;
+}
+
 void i8051_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &i8051;
-		ba.nLen	  = i8051.pointer_block_divider;// - (int)&i8051;
+		ba.nLen	  = i8051_context_size_no_pointers();
 		ba.szName = "i8051 Regs";
 		BurnAcb(&ba);
 	}

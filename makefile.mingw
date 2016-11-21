@@ -280,6 +280,9 @@ ifdef BUILD_X64_EXE
 	CFLAGS += -m64
 	CXXFLAGS += -m64
 	LDFLAGS += -m64
+	
+	# allow nasty C code in i8051.cpp
+	CXXFLAGS += -fpermissive
 else
 	CFLAGS += -m32
 	CXXFLAGS += -m32

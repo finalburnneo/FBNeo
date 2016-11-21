@@ -3,13 +3,13 @@
 
 #include "tiles_generic.h"
 #include "v60_intf.h"
+#include "upd7725.h"
 #include "es5506.h"
 #include "st0020.h"
 #include "eeprom.h"
 #include "math.h"
 
 /*
-	some sprites flickery - notably in cairblade
 	gundam - verify layer should be OVER sprites and not behind
 	analog inputs not hooked up at all
 	clipping is not hooked up (broken) - marked with "iq_132" test with twin eagle
@@ -20,6 +20,7 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvV60ROM;
+static UINT8 *DrvDSPROM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvSndROM0;
 static UINT8 *DrvSndROM1;
@@ -67,6 +68,7 @@ static INT32 interrupt_ultrax = 0;
 static INT32 watchdog_disable = 0;
 static INT32 is_gdfs = 0;
 static INT32 is_cairblade = 0;
+static INT32 dsp_enable = 0;
 
 static INT32 nDrvSndROMLen[4];
 static INT32 nDrvGfxROMLen;
@@ -1980,27 +1982,40 @@ static void irq_ack_write(UINT8 offset)
 	update_irq_state();
 }
 
-// Hack to bypass the dsp
-static void dsp_update(INT32 offset)
+static void dsp_write(INT32 offset, UINT8 data)
 {
-	offset = (offset & 0x7fe) / 2;
+	UINT16 *ram = (UINT16*)DrvDspRAM;
 
-	UINT16 *dsp_ram = (UINT16*)DrvDspRAM;
+	offset = (offset & 0xffe)/2;
 
-	if (offset == 0x21 && dsp_ram[0x21])
-	{
-		switch(dsp_ram[0x20])
-		{
-			case 0x0001:
-				dsp_ram[0x11] = (UINT8)(128*atan2(dsp_ram[0] - dsp_ram[1], dsp_ram[2] - dsp_ram[3])/3.14159) ^ 0x80;
-				dsp_ram[0x21] = 0;
-			break;
+	UINT16 temp = ram[offset/2];
 
-			default:
-				dsp_ram[0x21] = 0;
-			break;
-		}
+	if (offset & 1) {
+		temp &= 0xff;
+		temp |= data << 8;
+	} else {
+		temp &= 0xff00;
+		temp |= data;
 	}
+
+	ram[offset/2] = temp;
+}
+
+static UINT16 dsp_read(INT32 offset)
+{
+	UINT16 *ram = (UINT16*)DrvDspRAM;
+
+	offset = (offset & 0xffe)/2;
+
+	UINT16 temp = ram[offset/2];
+
+	if (offset & 1) {
+		temp >>= 8;
+	} else {
+		temp &= 0xff;
+	}
+
+	return temp;
 }
 
 static void common_main_write_byte(UINT32 address, UINT8 data)
@@ -2031,9 +2046,8 @@ static void common_main_write_byte(UINT32 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xfff800) == 0x482000) {
-		DrvDspRAM[(address & 0x7ff)] = data;
-		dsp_update(address);
+	if ((address & 0xfff000) == 0x482000) {
+		dsp_write(address,data);
 		return;
 	}
 
@@ -2057,6 +2071,11 @@ static void common_main_write_byte(UINT32 address, UINT8 data)
 		case 0x260000:
 		case 0x260001:
 			irq_enable = data;
+		return;
+
+		case 0x480000:
+		case 0x480001:
+			if (dsp_enable) snesdsp_write(true, data);
 		return;
 	}
 }
@@ -2092,10 +2111,8 @@ static void common_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xfff800) == 0x482000) {
-		UINT16 *p = (UINT16*)(DrvDspRAM + (address & 0x7ff));
-		*p = data;
-		dsp_update(address);
+	if ((address & 0xfff000) == 0x482000) {
+		dsp_write(address,data);
 		return;
 	}
 
@@ -2117,11 +2134,20 @@ static void common_main_write_word(UINT32 address, UINT16 data)
 		case 0x260000:
 			irq_enable = data;
 		return;
+
+		case 0x480000:
+		case 0x480001:
+			if (dsp_enable) snesdsp_write(true, data);
+		return;
 	}
 }
 
 static UINT16 common_main_read_word(UINT32 address)
 {
+	if ((address & 0xfff000) == 0x482000) {
+		return dsp_read(address);
+	}
+
 	if ((address & 0xffff80) == 0x300000) {
 		return ES5506Read((address & 0x7e)/2);
 	}
@@ -2151,6 +2177,11 @@ static UINT16 common_main_read_word(UINT32 address)
 			return DrvInputs[2];
 
 		case 0x21000e:
+			return 0;
+
+		case 0x480000:
+		case 0x480001:
+			if (dsp_enable) return snesdsp_read(true);
 			return 0;
 
 		case 0x500008: // survarts
@@ -2168,6 +2199,10 @@ static UINT16 common_main_read_word(UINT32 address)
 
 static UINT8 common_main_read_byte(UINT32 address)
 {
+	if ((address & 0xfff000) == 0x482000) {
+		return dsp_read(address);
+	}
+
 	if ((address & 0xffff80) == 0x300000) {
 		return ES5506Read((address & 0x7e)/2);
 	}
@@ -2197,6 +2232,11 @@ static UINT8 common_main_read_byte(UINT32 address)
 			return DrvInputs[2];
 
 		case 0x21000e:
+			return 0;
+
+		case 0x480000:
+		case 0x480001:
+			if (dsp_enable) return snesdsp_read(true);
 			return 0;
 
 		case 0x500008: // survarts
@@ -2769,6 +2809,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvV60ROM		= Next; Next += 0x0400000;
+	DrvDSPROM		= Next; Next += 0x0011000;
 
 	if (is_gdfs)
 	{
@@ -2818,6 +2859,34 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static void st010Expand(INT32 rom_offset)
+{
+	dsp_enable = 1;
+
+	UINT8 *dspsrc = (UINT8*)BurnMalloc(0x11000);
+	UINT32 *dspprg = (UINT32 *)DrvDSPROM;
+	UINT16 *dspdata = (UINT16*)(DrvDSPROM + 0x10000);
+
+	BurnLoadRom(dspsrc, rom_offset, 1);
+
+	memset (DrvDSPROM, 0xff, 0x11000);
+
+	// copy DSP program
+	for (int i = 0; i < 0x10000; i+= 4)
+	{
+		*dspprg = dspsrc[0+i]<<24 | dspsrc[1+i]<<16 | dspsrc[2+i]<<8;
+		dspprg++;
+	}
+
+	// copy DSP data
+	for (int i = 0; i < 0x1000; i+= 2)
+	{
+		*dspdata++ = dspsrc[0x10000+i]<<8 | dspsrc[0x10001+i];
+	}
+
+	BurnFree(dspsrc);
+}
+
 static void DrvMemSwap(UINT8 *src0, UINT8 *src1, INT32 len)
 {
 	for (INT32 i = 0; i < len; i++ ) {
@@ -2843,19 +2912,27 @@ static void DrvComputeTileCode(INT32 version)
 	}
 }
 
+static void decode(UINT8 *src, UINT8 *dst, INT32 len, INT32 plane)
+{
+	for (INT32 i = 0; i < len * 8; i++)
+	{
+		INT32 d = (src[i / 8] >> (i & 7)) & 1;
+
+		dst[(7 - (i & 7)) | ((i & ~0xf) >> 1)] |= d << (((i & 8) >> 3) | (plane << 1));
+	}
+}
+
 static void DrvGfxDecode(INT32 gfxlen)
 {
-	INT32 psize = (gfxlen / 4) * 8;
-
-	INT32 Planes[8] = { (psize*3)+8, (psize*3)+0, (psize*2)+8, (psize*2)+0, (psize*1)+8, (psize*1)+0, 8, 0 };
-	INT32 XOffs[16] = { STEP8(0,1), STEP8(16,1) };
-	INT32 YOffs[8]  = { STEP8(0,16*2) };
-
 	UINT8 *tmp = (UINT8*)BurnMalloc(gfxlen);
 
-	memcpy (tmp, DrvGfxROM, gfxlen);
+	memset (tmp, 0, gfxlen);
 
-	GfxDecode(gfxlen / 8 / 16, 8, 16, 8, Planes, XOffs, YOffs, 0x100, tmp, DrvGfxROM);
+	for (INT32 i = 0; i < 4; i++) {
+		decode(DrvGfxROM + ((gfxlen / 4) * i), tmp, (gfxlen / 4), i);
+	}
+
+	memcpy (DrvGfxROM, tmp, gfxlen);
 
 	BurnFree (tmp);
 }
@@ -2990,6 +3067,8 @@ static INT32 DrvCommonInit(void (*pV60Callback)(), void (*pRomLoadCallback)(), I
 	v60SetIRQCallback(ssv_irq_callback);
 	v60Close();
 
+	upd96050Init(96050, DrvDSPROM, DrvDSPROM + 0x10000, DrvDspRAM, NULL, NULL);
+
 	UINT8 *snd[5] = { NULL, DrvSndROM0, DrvSndROM1, DrvSndROM2, DrvSndROM3 };
 
 	ES5506Init(16000000, snd[s0+1], snd[s1+1], snd[s2+1], snd[s3+1], /*IRQCallback*/NULL);
@@ -3018,6 +3097,7 @@ static INT32 DrvExit()
 	interrupt_ultrax = 0;
 	watchdog_disable = 0;
 	is_gdfs = 0;
+	dsp_enable = 0;
 	is_cairblade = 0;
 
 	return 0;
@@ -3549,8 +3629,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 16000000 / 60;
-	INT32 nCyclesDone = 0;
+	INT32 nCyclesTotal[2] = { 16000000 / 60, 10000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	v60Open(0);
 
@@ -3558,7 +3638,16 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone += v60Run(nCyclesTotal / nInterleave);
+		if (dsp_enable)
+		{
+			for (INT32 j = 0; j < 20; j++)
+			{
+				nCyclesDone[0] += v60Run((nCyclesTotal[0] / nInterleave) / 20);
+				nCyclesDone[1] += upd96050Run((nCyclesTotal[1] / nInterleave) / 20);
+			}
+		} else {
+			nCyclesDone[0] += v60Run(nCyclesTotal[0] / nInterleave);
+		}
 
 		if (i == 0 && interrupt_ultrax) {
 			requested_int |= 1 << 1;
@@ -3610,6 +3699,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		v60Scan(nAction);
 
 		ES5506Scan(nAction,pnMin);
+		if (dsp_enable) upd96050Scan(nAction);
 
 		SCAN_VAR(requested_int);
 		SCAN_VAR(enable_video);
@@ -4000,13 +4090,13 @@ static void Twineag2V60Map()
 	v60MapMemory(DrvSprRAM,			0x100000, 0x13ffff, MAP_RAM);
 	v60MapMemory(DrvPalRAM,			0x140000, 0x15ffff, MAP_ROM); // handler
 	v60MapMemory(DrvV60RAM1,		0x160000, 0x17ffff, MAP_RAM);
-	v60MapMemory(DrvDspRAM + 0x000,		0x482000, 0x4827ff, MAP_ROM); // handler
-	v60MapMemory(DrvDspRAM + 0x800,		0x482800, 0x482fff, MAP_RAM);
 	v60MapMemory(DrvV60ROM,			0xe00000, 0xffffff, MAP_ROM);	
 	v60SetWriteWordHandler(common_main_write_word);
 	v60SetWriteByteHandler(common_main_write_byte);
 	v60SetReadWordHandler(common_main_read_word);
 	v60SetReadByteHandler(common_main_read_byte);
+
+	st010Expand(12);
 }
 
 static INT32 Twineag2Init()
@@ -4068,14 +4158,14 @@ static void Drifto94V60Map()
 	v60MapMemory(DrvSprRAM,			0x100000, 0x13ffff, MAP_RAM);
 	v60MapMemory(DrvPalRAM,			0x140000, 0x15ffff, MAP_ROM); // handler
 	v60MapMemory(DrvV60RAM1,		0x160000, 0x17ffff, MAP_RAM);
-	v60MapMemory(DrvDspRAM + 0x000,		0x482000, 0x482fff, MAP_ROM); // handler
-	v60MapMemory(DrvDspRAM + 0x800,		0x482800, 0x482fff, MAP_RAM);
 	v60MapMemory(DrvNVRAM,			0x580000, 0x5807ff, MAP_RAM);
 	v60MapMemory(DrvV60ROM,			0xc00000, 0xffffff, MAP_ROM);
 	v60SetWriteWordHandler(common_main_write_word);
 	v60SetWriteByteHandler(common_main_write_byte);
 	v60SetReadWordHandler(common_main_read_word);
 	v60SetReadByteHandler(common_main_read_byte);
+
+	st010Expand(21);
 }
 
 static INT32 Drifto94Init()
@@ -4179,6 +4269,7 @@ static void CairbladV60Map()
 static INT32 CairbladInit()
 {
 	is_cairblade = 1;
+
 	return DrvCommonInit(CairbladV60Map, NULL, 1, 0, -1, -1, -1);
 }
 
@@ -4312,8 +4403,6 @@ static void StmbladeV60Map()
 	v60MapMemory(DrvSprRAM,			0x100000, 0x13ffff, MAP_RAM);
 	v60MapMemory(DrvPalRAM,			0x140000, 0x15ffff, MAP_ROM); // handler
 	v60MapMemory(DrvV60RAM1,		0x160000, 0x17ffff, MAP_RAM);
-	v60MapMemory(DrvDspRAM + 0x000,		0x482000, 0x4827ff, MAP_ROM); // handler
-	v60MapMemory(DrvDspRAM + 0x800,		0x482800, 0x482fff, MAP_RAM);
 	v60MapMemory(DrvNVRAM,			0x580000, 0x5807ff, MAP_RAM);
 	v60MapMemory(DrvV60ROM,			0xc00000, 0xcfffff, MAP_ROM);
 	v60MapMemory(DrvV60ROM + 0x100000,	0xe00000, 0xffffff, MAP_ROM);
@@ -4321,6 +4410,8 @@ static void StmbladeV60Map()
 	v60SetWriteByteHandler(common_main_write_byte);
 	v60SetReadWordHandler(common_main_read_word);
 	v60SetReadByteHandler(common_main_read_byte);
+
+	st010Expand(13);
 }
 
 static INT32 StmbladeInit()

@@ -10,7 +10,6 @@
 #include "math.h"
 
 /*
-	add volume support to es5506.cpp and hook up in this driver, some games are way too loud.
 	gundam - verify layer should be OVER sprites and not behind
 	analog inputs not hooked up at all
 	clipping is not hooked up (broken) - marked with "iq_132" test with twin eagle
@@ -68,7 +67,7 @@ static INT32 Gclip_max_y;
 static INT32 interrupt_ultrax = 0;
 static INT32 watchdog_disable = 0;
 static INT32 is_gdfs = 0;
-static INT32 is_cairblade = 0;
+static INT32 vbl_kludge = 0;
 static INT32 dsp_enable = 0;
 
 static INT32 nDrvSndROMLen[4];
@@ -3032,7 +3031,7 @@ static INT32 DrvGetRoms(bool bLoad)
 	return 0;
 }
 
-static INT32 DrvCommonInit(void (*pV60Callback)(), void (*pRomLoadCallback)(), INT32 compute, INT32 s0, INT32 s1, INT32 s2, INT32 s3)
+static INT32 DrvCommonInit(void (*pV60Callback)(), void (*pRomLoadCallback)(), INT32 compute, INT32 s0, INT32 s1, INT32 s2, INT32 s3, double volume, INT32 funky_vbl)
 {
 	DrvGetRoms(false);
 
@@ -3060,11 +3059,13 @@ static INT32 DrvCommonInit(void (*pV60Callback)(), void (*pRomLoadCallback)(), I
 	UINT8 *snd[5] = { NULL, DrvSndROM0, DrvSndROM1, DrvSndROM2, DrvSndROM3 };
 
 	ES5506Init(16000000, snd[s0+1], snd[s1+1], snd[s2+1], snd[s3+1], /*IRQCallback*/NULL);
-	ES5506SetRoute(0, 0.10, BURN_SND_ES5506_ROUTE_BOTH);
+	ES5506SetRoute(0, volume, BURN_SND_ES5506_ROUTE_BOTH);
 
 	DrvComputeTileCode(compute);
 
 	GenericTilesInit();
+
+	vbl_kludge = funky_vbl;
 
 	DrvDoReset(1);
 
@@ -3087,7 +3088,7 @@ static INT32 DrvExit()
 	watchdog_disable = 0;
 	is_gdfs = 0;
 	dsp_enable = 0;
-	is_cairblade = 0;
+	vbl_kludge = 0;
 
 	return 0;
 }
@@ -3648,7 +3649,7 @@ static INT32 DrvFrame()
 			update_irq_state();
 		}
 
-		if (i == ((is_cairblade) ? 248 : 240)) {
+		if (i == ((vbl_kludge) ? (nInterleave-1) : 240)) {
 			vblank = 1;
 
 			requested_int |= 1 << 3;
@@ -3761,7 +3762,7 @@ static void VasaraV60Map()
 
 static INT32 VasaraInit()
 {
-	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, 1, -1, -1);
+	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, 1, -1, -1, 0.80, 1);
 }
 
 struct BurnDriver BurnDrvVasara = {
@@ -3880,7 +3881,12 @@ static void SurvartsV60Map()
 
 static INT32 SurvartsInit()
 {
-	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1);
+	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1, 0.30, 0);
+}
+
+static INT32 DynagearInit()
+{
+	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1, 0.20, 0);
 }
 
 struct BurnDriver BurnDrvSurvarts = {
@@ -3994,7 +4000,7 @@ struct BurnDriver BurnDrvDynagear = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, dynagearRomInfo, dynagearRomName, NULL, NULL, DrvInputInfo, DynagearDIPInfo,
-	SurvartsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
+	DynagearInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3
 };
 
@@ -4035,7 +4041,7 @@ static INT32 KeithlcyInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(KeithlcyV60Map, NULL, 0, 0, -1, -1, -1);
+	return DrvCommonInit(KeithlcyV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvKeithlcy = {
@@ -4094,7 +4100,7 @@ static INT32 Twineag2Init()
 	interrupt_ultrax = 1;
 	watchdog_disable = 1;
 
-	return DrvCommonInit(Twineag2V60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(Twineag2V60Map, NULL, 0, 0, 1, 0, 1, 0.80, 1);
 }
 
 struct BurnDriver BurnDrvTwineag2 = {
@@ -4162,7 +4168,7 @@ static INT32 Drifto94Init()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(Drifto94V60Map, NULL, 0, 0, 1, -1, -1);
+	return DrvCommonInit(Drifto94V60Map, NULL, 0, 0, 1, -1, -1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvDrifto94 = {
@@ -4210,7 +4216,7 @@ static void MeosismV60Map()
 
 static INT32 MeosismInit()
 {
-	return DrvCommonInit(MeosismV60Map, NULL, 0, -1, -1, 2, -1);
+	return DrvCommonInit(MeosismV60Map, NULL, 0, -1, -1, 2, -1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvMeosism = {
@@ -4258,9 +4264,7 @@ static void CairbladV60Map()
 
 static INT32 CairbladInit()
 {
-	is_cairblade = 1;
-
-	return DrvCommonInit(CairbladV60Map, NULL, 1, 0, -1, -1, -1);
+	return DrvCommonInit(CairbladV60Map, NULL, 1, 0, -1, -1, -1, 0.80, 1);
 }
 
 struct BurnDriver BurnDrvCairblad = {
@@ -4314,7 +4318,7 @@ static INT32 UltraxInit()
 {
 	interrupt_ultrax = 1;
 
-	return DrvCommonInit(UltraxV60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(UltraxV60Map, NULL, 0, 0, 1, 0, 1, 0.80, 1);
 }
 
 struct BurnDriver BurnDrvUltrax = {
@@ -4408,7 +4412,7 @@ static INT32 StmbladeInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1);
+	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 1);
 }
 
 struct BurnDriver BurnDrvStmblade = {
@@ -4482,7 +4486,7 @@ STD_ROM_FN(ryorioh)
 
 static INT32 RyoriohInit()
 {
-	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, -1, -1, -1);
+	return DrvCommonInit(VasaraV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvRyorioh = {
@@ -4534,7 +4538,7 @@ static INT32 MsliderInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(MsliderV60Map, NULL, 0, 0, -1, -1, -1);
+	return DrvCommonInit(MsliderV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvMslider = {
@@ -4621,7 +4625,7 @@ static INT32 GdfsInit()
 	st0020GfxROMLen = 0x1000000;
 	watchdog_disable = 1;
 
-	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0);
+	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvGdfs = {
@@ -4681,7 +4685,7 @@ static INT32 Janjans1Init()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(Janjans1V60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(Janjans1V60Map, NULL, 0, 0, 1, 0, 1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvJanjans1 = {
@@ -4721,7 +4725,7 @@ STD_ROM_FN(janjans2)
 
 static INT32 Janjans2Init()
 {
-	return DrvCommonInit(Janjans1V60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(Janjans1V60Map, NULL, 0, 0, 1, 0, 1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvJanjans2 = {
@@ -4774,7 +4778,7 @@ static void Koikois2V60Map()
 
 static INT32 Koikois2Init()
 {
-	return DrvCommonInit(Koikois2V60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(Koikois2V60Map, NULL, 0, 0, 1, 0, 1, 1.40, 0);
 }
 
 struct BurnDriver BurnDrvKoikois2 = {
@@ -4826,7 +4830,7 @@ static void Srmp4V60Map()
 
 static INT32 Srmp4Init()
 {
-	return DrvCommonInit(Srmp4V60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(Srmp4V60Map, NULL, 0, 0, 1, 0, 1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvSrmp4 = {
@@ -4900,7 +4904,7 @@ static INT32 HypreactInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(Srmp4V60Map, NULL, 0, 0, 1, 0, 1);
+	return DrvCommonInit(Srmp4V60Map, NULL, 0, 0, 1, 0, 1, 0.10, 0);
 }
 
 struct BurnDriver BurnDrvHypreact = {
@@ -4958,7 +4962,7 @@ static void Hypreac2V60Map()
 
 static INT32 Hypreac2Init()
 {
-	return DrvCommonInit(Hypreac2V60Map, NULL, 1, 0, 1, 2, -1);
+	return DrvCommonInit(Hypreac2V60Map, NULL, 1, 0, 1, 2, -1, 0.10, 0);
 }
 
 struct BurnDriver BurnDrvHypreac2 = {
@@ -5034,7 +5038,7 @@ static void Srmp7ROMCallback()
 
 static INT32 Srmp7Init()
 {
-	return DrvCommonInit(Srmp7V60Map, Srmp7ROMCallback, 1, 0, 1, 2, 3);
+	return DrvCommonInit(Srmp7V60Map, Srmp7ROMCallback, 1, 0, 1, 2, 3, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvSrmp7 = {
@@ -5095,7 +5099,7 @@ static void SxyreactV60Map()
 
 static INT32 SxyreactInit()
 {
-	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1);
+	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1, 0.10, 0);
 }
 
 struct BurnDriver BurnDrvSxyreact = {
@@ -5131,7 +5135,7 @@ STD_ROM_FN(sxyreac2)
 
 static INT32 Sxyreac2Init()
 {
-	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1);
+	return DrvCommonInit(SxyreactV60Map, SexyreactRomLoadCallback, 1, 0, 1, 2, -1, 0.10, 0);
 }
 
 struct BurnDriver BurnDrvSxyreac2 = {
@@ -5219,7 +5223,7 @@ static void EaglshotV60Map()
 
 static INT32 EaglshotInit()
 {
-	return DrvCommonInit(EaglshotV60Map, NULL, 0, 0, 0, 0, 0);
+	return DrvCommonInit(EaglshotV60Map, NULL, 0, 0, 0, 0, 0, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvEaglshot = {

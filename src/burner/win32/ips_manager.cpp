@@ -45,7 +45,7 @@ TCHAR szIpsActivePatches[MAX_ACTIVE_PATCHES][MAX_PATH];
 static TCHAR* GameIpsConfigName()
 {
 	// Return the path of the config file for this game
-	static TCHAR szName[32];
+	static TCHAR szName[64];
 	_stprintf(szName, _T("config\\ips\\%s.ini"), BurnDrvGetText(DRV_NAME));
 	return szName;
 }
@@ -80,7 +80,7 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 {
 	TCHAR* result = NULL;
 	char* desc = NULL;
-	char langtag[8];
+	char langtag[10];
 
 	sprintf(langtag, "[%s]", TCHARToANSI(szLanguageCodes[nLang], NULL, 0));
 	
@@ -90,12 +90,12 @@ static TCHAR* GetPatchDescByLangcode(FILE* fp, int nLang)
 	{
 		char s[4096];
 
-		if (fgets(s, sizeof s, fp) != NULL)
+		if (fgets(s, sizeof(s), fp) != NULL)
 		{
 			if (strncmp(langtag, s, strlen(langtag)) != 0)
 				continue;
 
-			while (fgets(s, sizeof s, fp) != NULL)
+			while (fgets(s, sizeof(s), fp) != NULL)
 			{
 				char* p;
 
@@ -198,7 +198,9 @@ static void FillListBox()
 				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 0);
 				// Simplified Chinese is the reference language (should always be available!!)
 				if (PatchDesc == NULL) PatchDesc = GetPatchDescByLangcode(fp, 1);
-				
+
+				bprintf(0, _T("PatchDesc [%s]\n"), PatchDesc);
+
 				for (unsigned int i = 0; i < _tcslen(PatchDesc); i++) {
 					if (PatchDesc[i] == '\r' || PatchDesc[i] == '\n') break;
 					PatchName[i] = PatchDesc[i];					
@@ -701,15 +703,17 @@ static void PatchFile(const char* ips_path, UINT8* base)
 	if (NULL == (f = fopen(ips_path, "rb")))
 		return;
 
-	memset(buf, 0, sizeof buf);
+	memset(buf, 0, sizeof(buf));
 	fread(buf, 1, 5, f);
 	if (strcmp(buf, IPS_SIGNATURE)) {
+		bprintf(0, _T("IPS - Bad IPS-Signature in: %S.\n"), ips_path);
 		if (f)
 		{
 			fclose(f);
 		}
 		return;
 	} else {
+		bprintf(0, _T("IPS - Patching with: %S.\n"), ips_path);
 		UINT8 ch = 0;
 		int bRLE = 0;
 		while (!feof(f)) {
@@ -759,7 +763,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base)
 		fseek(fp, 0, SEEK_SET);
 
 		while (!feof(fp)) {
-			if (fgets(s, sizeof s, fp) != NULL) {
+			if (fgets(s, sizeof(s), fp) != NULL) {
 				p = s;
 
 				// skip UTF-8 sig
@@ -770,6 +774,7 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT8* base)
 					break;
 
 				rom_name = strtok(p, " \t\r\n");
+
 				if (!rom_name)
 					continue;
 				if (*rom_name == '#')

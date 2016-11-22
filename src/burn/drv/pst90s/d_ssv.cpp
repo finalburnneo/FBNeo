@@ -2913,49 +2913,18 @@ static void DrvComputeTileCode(INT32 version)
 	}
 }
 
-#if 1
-
 static void gfxdecode(UINT8 *src, UINT8 *dst, INT32 ofst, INT32 len)
 {
 	INT32 plane  = ofst / (nDrvGfxROMLen / 4);
 	INT32 offset = ofst % (nDrvGfxROMLen / 4);
 
-	for (INT32 i = offset*8; i < (offset + len) * 8; i++)
+	for (INT32 i = offset * 8; i < (offset + len) * 8; i++)
 	{
 		INT32 d = (src[(i / 8) - offset] >> (i & 7)) & 1;
 
 		dst[(7 - (i & 7)) | ((i & ~0xf) >> 1)] |= d << (((i & 8) >> 3) | (plane << 1));
 	}
 }
-
-#else
-
-static void decode(UINT8 *src, UINT8 *dst, INT32 len, INT32 plane)
-{
-	for (INT32 i = 0; i < len * 8; i++)
-	{
-		INT32 d = (src[i / 8] >> (i & 7)) & 1;
-
-		dst[(7 - (i & 7)) | ((i & ~0xf) >> 1)] |= d << (((i & 8) >> 3) | (plane << 1));
-	}
-}
-
-static void DrvGfxDecode(INT32 gfxlen)
-{
-	UINT8 *tmp = (UINT8*)BurnMalloc(gfxlen);
-
-	memset (tmp, 0, gfxlen);
-
-	for (INT32 i = 0; i < 4; i++) {
-		decode(DrvGfxROM + ((gfxlen / 4) * i), tmp, (gfxlen / 4), i);
-	}
-
-	memcpy (DrvGfxROM, tmp, gfxlen);
-
-	BurnFree (tmp);
-}
-
-#endif
 
 static INT32 DrvGetRoms(bool bLoad)
 {
@@ -2999,10 +2968,7 @@ static INT32 DrvGetRoms(bool bLoad)
 		}
 
 		if ((ri.nType & BRF_GRA) && (ri.nType & 0x0f) == 3) {
-		//	if (bLoad) BurnLoadRom(GfxLoad, i, 1);
-
-			if (bLoad)
-			{
+			if (bLoad) {
 				UINT8 *tmp = (UINT8*)BurnMalloc(ri.nLen);
 				if (BurnLoadRom(tmp, i, 1)) return 1;
 				gfxdecode(tmp, DrvGfxROM, GfxLoad - DrvGfxROM, ri.nLen);
@@ -3033,13 +2999,7 @@ static INT32 DrvGetRoms(bool bLoad)
 		}
 	}
 
-	if (bLoad)
-	{
-#if 0
-		DrvGfxDecode(nDrvGfxROMLen);
-#endif
-	}
-	else
+	if (bLoad == false)
 	{
 		// get gfx rom length and then make sure it can be
 		// decoded as 8 bpp.
@@ -3067,9 +3027,6 @@ static INT32 DrvGetRoms(bool bLoad)
 		if (nDrvSndROMLen[1] && nDrvSndROMLen[1] < 0x400000) nDrvSndROMLen[1] = 0x400000;
 		if (nDrvSndROMLen[2] && nDrvSndROMLen[2] < 0x400000) nDrvSndROMLen[2] = 0x400000;
 		if (nDrvSndROMLen[3] && nDrvSndROMLen[3] < 0x400000) nDrvSndROMLen[3] = 0x400000;
-
-//		INT32 prgsize = V60Load - DrvV60ROM;
-//		bprintf (0, _T("PRG %5.5x, GFX %5.5x, SND0 %5.5x, SND1 %5.5x, SND2 %5.5x, SND3 %5.5x\n"), prgsize, nDrvGfxROMLen, nDrvSndROMLen[0], nDrvSndROMLen[1], nDrvSndROMLen[2],nDrvSndROMLen[3]);
 	}
 
 	return 0;
@@ -3103,6 +3060,7 @@ static INT32 DrvCommonInit(void (*pV60Callback)(), void (*pRomLoadCallback)(), I
 	UINT8 *snd[5] = { NULL, DrvSndROM0, DrvSndROM1, DrvSndROM2, DrvSndROM3 };
 
 	ES5506Init(16000000, snd[s0+1], snd[s1+1], snd[s2+1], snd[s3+1], /*IRQCallback*/NULL);
+	ES5506SetRoute(0, 0.10, BURN_SND_ES5506_ROUTE_BOTH);
 
 	DrvComputeTileCode(compute);
 

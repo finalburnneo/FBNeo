@@ -64,3 +64,9 @@ UINT16 ES5505Read(UINT32 offset);
 void es5505_voice_bank_w(INT32 voice, INT32 bank);
 void ES5506Scan(INT32 nAction, INT32* pnMin);
 #endif /* __ES5506_H__ */
+
+#define BURN_SND_ES5506_ROUTE_LEFT	1
+#define BURN_SND_ES5506_ROUTE_RIGHT	2
+#define BURN_SND_ES5506_ROUTE_BOTH	3
+
+void ES5506SetRoute(INT32 chip /*always 0*/, double nVolume, INT32 nRoute);

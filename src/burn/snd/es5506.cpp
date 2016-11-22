@@ -199,6 +199,8 @@ struct _es5506_state
 	UINT16 *	volume_lookup;
 //	device_t *device;
 
+	double volume[2];			/* set gain */
+
 #if MAKE_WAVS
 	void *		wavraw;					/* raw waveform */
 #endif
@@ -859,8 +861,7 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 
 //	es5506_state *chip = (es5506_state *)param;
 	INT32 *lsrc = chip->scratch, *rsrc = chip->scratch;
-//	short *ldest = &pBuffer[0];
-//	short *rdest = &pBuffer[1];
+
 
 #if MAKE_WAVS
 	/* start the logging once we have a sample rate */
@@ -892,8 +893,8 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 		{
 			INT32 k = (samp * rate) / nBurnSoundLen;
 
-			pBuffer[0] = BURN_SND_CLIP(lsrc[k] >> 4);
-			pBuffer[1] = BURN_SND_CLIP(rsrc[k] >> 4);
+			pBuffer[0] = BURN_SND_CLIP((INT32)((lsrc[k] >> 4) * chip->volume[0]));
+			pBuffer[1] = BURN_SND_CLIP((INT32)((rsrc[k] >> 4) * chip->volume[1]));
 			pBuffer += 2;
 		}
 
@@ -964,6 +965,10 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 
 	/* allocate memory */
 	chip->scratch = (INT32*)malloc(2 * MAX_SAMPLE_CHUNK * sizeof(INT32));//auto_alloc_array(device->machine, INT32, 2 * MAX_SAMPLE_CHUNK);
+
+	/* set volume */
+	chip->volume[0] = 1.00;
+	chip->volume[1] = 1.00;
 
 	/* register save */
 /*	device->save_item(NAME(chip->sample_rate));
@@ -1046,6 +1051,17 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(chip->lrend);
 		SCAN_VAR(chip->irqv);
 		SCAN_VAR(chip->voice);
+	}
+}
+
+void ES5506SetRoute(INT32, double nVolume, INT32 nRouteDir)
+{
+	if (nRouteDir & 1) { // left
+		chip->volume[0] = nVolume;
+	}
+
+	if (nRouteDir & 2) { // right
+		chip->volume[1] = nVolume;
 	}
 }
 

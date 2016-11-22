@@ -1,10 +1,4 @@
 // Taito SuperChase driver for FBAlpha
-//
-// Notes: (Nov.21.2016)
-//
-//   Analogue inputs need to be added, as the game is nearly unplayable with
-// the current digital-hack.
-//
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -302,16 +296,16 @@ static struct SpriteEntry *SpriteList;
 
 static UINT8 SuperchsCoinWord;
 static UINT16 SuperchsCpuACtrl;
-static UINT32 SuperchsSteer = 0;
+static UINT8 SuperchsSteer = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SuperchsInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL   , TaitoInputPort2 + 7, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL   , TaitoInputPort1 + 7, "p1 start"  },
 	{"Coin 2"            , BIT_DIGITAL   , TaitoInputPort2 + 6, "p2 coin"   },
 
-	{"P1 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 1, "p1 left"   },
-	{"P1 Right"          , BIT_DIGITAL   , TaitoInputPort3 + 2, "p1 right"  },
+	A("P1 Steering"      , BIT_ANALOG_REL, &TaitoAnalogPort0      , "p1 x-axis"      ),
 	{"P1 Accelerate"     , BIT_DIGITAL   , TaitoInputPort3 + 0, "p1 fire 1" },
 	{"P1 Fire 2 (Brake)" , BIT_DIGITAL   , TaitoInputPort1 + 6, "p1 fire 2" },
 	{"P1 Fire 3 (Nitro)" , BIT_DIGITAL   , TaitoInputPort1 + 4, "p1 fire 3" },
@@ -324,6 +318,7 @@ static struct BurnInputInfo SuperchsInputList[] =
 };
 
 STDINPUTINFO(Superchs)
+#undef A
 
 static UINT8 shift_toggle(UINT8 shifter_input) // topspeed
 {
@@ -532,6 +527,10 @@ static INT32 SuperchsDoReset()
 	return 0;
 }
 
+static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 {
 	switch (a) {
@@ -556,20 +555,11 @@ UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 		}
 
 		case 0x340000: {
-			INT32 Delta;
-			UINT32 Goal = 0x80;
-			if (TaitoInputPort3[1]) Goal = 0xff;
-			if (TaitoInputPort3[2]) Goal = 0x0;
+			SuperchsSteer = 0xff - (TaitoAnalogPort0 >> 4); // Inverted.
+			SuperchsSteer += 0x7f; // center = 0x7f
+			if (SuperchsSteer < 0x01) SuperchsSteer = 0x01;
+			SuperchsSteer = scalerange(SuperchsSteer, 0x3f, 0xbe, 0x01, 0xff);
 
-			if (SuperchsSteer != Goal) {
-				Delta = Goal - SuperchsSteer;
-				if (SuperchsSteer < Goal) {
-					if (Delta > 2) Delta = 2;
-				} else {
-					if (Delta < -2) Delta = -2;
-				}
-				SuperchsSteer += Delta;
-			}
 			return SuperchsSteer;
 		}
 
@@ -848,14 +838,6 @@ static INT32 SuperchsInit()
 	if (TaitoLoadRoms(1)) return 1;
 
 	TC0480SCPInit(TaitoNumChar, 0, 0x20, 8, -1, 0, 0);
-
-#if 0
-	ROM_REGION16_BE( 0x1000000, "ensoniq.0" , ROMREGION_ERASE00 )
-	ROM_LOAD16_BYTE( "d46-10.ic2", 0xc00000, 0x200000, CRC(306256be) SHA1(e6e5d4a4c0b98470f2aff2e94624dd19af73ec5d) )
-	ROM_LOAD16_BYTE( "d46-12.ic4", 0x000000, 0x200000, CRC(a24a53a8) SHA1(5d5fb87a94ceabda89360064d7d9b6d23c4c606b) )
-	ROM_RELOAD     (               0x400000, 0x200000 )
-	ROM_LOAD16_BYTE( "d46-11.ic5", 0x800000, 0x200000, CRC(d4ea0f56) SHA1(dc8d2ed3c11d0b6f9ebdfde805188884320235e6) )
-#endif
 
 	TaitoES5505RomSize = 0x2000000;
 

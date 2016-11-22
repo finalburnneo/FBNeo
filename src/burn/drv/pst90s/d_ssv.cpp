@@ -3570,11 +3570,11 @@ static INT32 DrvDraw()
 		if (Gclip_min_y > Gclip_max_y) Gclip_min_y = Gclip_max_y;
 
 #if 1
-	// iq_132
-	Gclip_min_x = 0;
-	Gclip_max_x = nScreenWidth - 1;
-	Gclip_min_y = 0;
-	Gclip_max_y = nScreenHeight - 1;
+		// iq_132
+		Gclip_min_x = 0;
+		Gclip_max_x = nScreenWidth - 1;
+		Gclip_min_y = 0;
+		Gclip_max_y = nScreenHeight - 1;
 #endif
 		draw_layer(0);
 		draw_sprites();
@@ -3724,6 +3724,7 @@ static INT32 eaglshtScan(INT32 nAction, INT32 *pnMin)
 
 	return DrvScan(nAction,pnMin);
 }
+
 
 // Vasara
 
@@ -4044,7 +4045,7 @@ struct BurnDriver BurnDrvKeithlcy = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, keithlcyRomInfo, keithlcyRomName, NULL, NULL, KeithlcyInputInfo, KeithlcyDIPInfo,
 	KeithlcyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	336, 238, 4, 3
 };
 
 
@@ -4171,7 +4172,7 @@ struct BurnDriver BurnDrvDrifto94 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, drifto94RomInfo, drifto94RomName, NULL, NULL, DrvInputInfo, Drifto94DIPInfo,
 	Drifto94Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	336, 238, 4, 3
 };
 
 
@@ -4219,7 +4220,7 @@ struct BurnDriver BurnDrvMeosism = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_CASINO, 0,
 	NULL, meosismRomInfo, meosismRomName, NULL, NULL, MeosismInputInfo, MeosismDIPInfo,
 	MeosismInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 236, 4, 3
+	338, 236, 4, 3
 };
 
 
@@ -4269,7 +4270,7 @@ struct BurnDriver BurnDrvCairblad = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, cairbladRomInfo, cairbladRomName, NULL, NULL, DrvInputInfo, CairbladDIPInfo,
 	CairbladInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	240, 336, 3, 4
+	240, 338, 3, 4
 };
 
 
@@ -4417,7 +4418,7 @@ struct BurnDriver BurnDrvStmblade = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, stmbladeRomInfo, stmbladeRomName, NULL, NULL, DrvInputInfo, StmbladeDIPInfo,
 	StmbladeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	240, 336, 3, 4
+	240, 340, 3, 4
 };
 
 
@@ -4543,7 +4544,7 @@ struct BurnDriver BurnDrvMslider = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, msliderRomInfo, msliderRomName, NULL, NULL, DrvInputInfo, MsliderDIPInfo,
 	MsliderInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	352, 240, 4, 3
 };
 
 
@@ -4630,7 +4631,7 @@ struct BurnDriver BurnDrvGdfs = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, gdfsRomInfo, gdfsRomName, NULL, NULL, GdfsInputInfo, GdfsDIPInfo,
 	GdfsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	338, 240, 4, 3
 };
 
 
@@ -4690,7 +4691,7 @@ struct BurnDriver BurnDrvJanjans1 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, janjans1RomInfo, janjans1RomName, NULL, NULL, MahjongInputInfo, Janjans1DIPInfo,
 	Janjans1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	336, 238, 4, 3
 };
 
 
@@ -4730,7 +4731,7 @@ struct BurnDriver BurnDrvJanjans2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, janjans2RomInfo, janjans2RomName, NULL, NULL, MahjongInputInfo, Janjans2DIPInfo,
 	Janjans2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	336, 238, 4, 3
 };
 
 
@@ -4909,7 +4910,7 @@ struct BurnDriver BurnDrvHypreact = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, hypreactRomInfo, hypreactRomName, NULL, NULL, HypreactInputInfo, HypreactDIPInfo,
 	HypreactInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	338, 240, 4, 3
 };
 
 
@@ -4967,7 +4968,7 @@ struct BurnDriver BurnDrvHypreac2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, hypreac2RomInfo, hypreac2RomName, NULL, NULL, Hypreac2InputInfo, Hypreac2DIPInfo,
 	Hypreac2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	338, 240, 4, 3
 };
 
 
@@ -5043,7 +5044,7 @@ struct BurnDriver BurnDrvSrmp7 = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, srmp7RomInfo, srmp7RomName, NULL, NULL, Srmp7InputInfo, Srmp7DIPInfo,
 	Srmp7Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	336, 239, 4, 3
 };
 
 
@@ -5104,7 +5105,7 @@ struct BurnDriver BurnDrvSxyreact = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, sxyreactRomInfo, sxyreactRomName, NULL, NULL, SxyreactInputInfo, SxyreactDIPInfo,
 	SxyreactInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	336, 240, 4, 3
+	338, 240, 4, 3
 };
 
 

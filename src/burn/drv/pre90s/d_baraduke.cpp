@@ -32,6 +32,7 @@ static UINT8 *buffer_sprites;
 static UINT8 *coin_lockout;
 static UINT8 *scroll;
 static UINT8 *ip_select;
+static INT32 *kludge1105;
 
 static INT32 watchdog;
 
@@ -41,8 +42,6 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 static UINT8 DrvInputs[8];
-
-static INT32 nCyclesDone[2];
 
 static struct BurnInputInfo BaradukeInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
@@ -256,9 +255,8 @@ UINT8 baraduke_mcu_read(UINT16 address)
 	}
 
 	if (address == 0x1105) {
-		static INT32 kludge = 0;
-		kludge++;
-		return kludge>>4;
+		*kludge1105++;
+		return *kludge1105>>4;
 	}
 
 	if ((address & 0xfc00) == 0x1000) {
@@ -322,6 +320,8 @@ static INT32 DrvDoReset(INT32 ClearRAM)
 	HD63701Reset();
 //	HD63701Close();
 
+	NamcoSoundReset();
+
 	BurnLEDReset();
 
 	BurnLEDSetFlipscreen(1);
@@ -361,6 +361,7 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x002000;
 
 	coin_lockout		= Next; Next += 0x000001;
+	kludge1105      = (INT32*)Next; Next += 0x000004;
 	ip_select		= Next; Next += 0x000001;
 	buffer_sprites		= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
@@ -735,10 +736,9 @@ static INT32 DrvFrame()
 	M6809NewFrame();
 	HD63701NewFrame();
 
-	INT32 nInterleave = 100; // 1000?
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
-	//INT32 nCyclesDone[2] = { 0, 0 };
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -782,7 +782,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

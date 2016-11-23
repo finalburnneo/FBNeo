@@ -124,7 +124,7 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 	sound_channel *voice;
 
 	/* zap the contents of the buffer */
-	memset(buffer, 0, length * sizeof(*buffer) * 2);
+	memset(buffer, 0, length * sizeof(INT16) * 2);
 
 	/* if no sound, we're done */
 	if (chip->sound_enable == 0)
@@ -207,7 +207,7 @@ void NamcoSoundUpdateStereo(INT16* buffer, INT32 length)
 	sound_channel *voice;
 
 	/* zap the contents of the buffers */
-	memset(buffer, 0, length * 2 * sizeof(*buffer));
+	memset(buffer, 0, length * 2 * sizeof(INT16));
 
 	/* if no sound, we're done */
 	if (chip->sound_enable == 0)

@@ -4591,7 +4591,7 @@ static void GdfsV60Map()
 	v60MapMemory(DrvDspRAM,			0x482000, 0x482fff, MAP_RAM);
 	v60MapMemory(DrvV60RAM2,		0x600000, 0x600fff, MAP_RAM);
 	v60MapMemory(st0020SprRAM,		0x800000, 0x87ffff, MAP_RAM);
-	v60MapMemory(DrvV60ROM,			0xc00000, 0xffffff, MAP_ROM);	
+	v60MapMemory(DrvV60ROM,			0xc00000, 0xffffff, MAP_ROM);
 	v60SetWriteWordHandler(gdfs_write_word);
 	v60SetWriteByteHandler(gdfs_write_byte);
 	v60SetReadWordHandler(gdfs_read_word);
@@ -4615,8 +4615,8 @@ static void GdfsRomLoadCallback()
 	if (BurnLoadRom(st0020GfxROM + 0x0c00000, 12, 1)) return;
 	if (BurnLoadRom(st0020GfxROM + 0x0e00000, 13, 1)) return;
 
-	if (BurnLoadRom(DrvSndROM0 + 0x000000, 15, 2)) return;
-	if (BurnLoadRom(DrvSndROM0 + 0x000001, 16, 2)) return;
+	if (BurnLoadRom(DrvSndROM0 + 0x000001, 15, 2)) return;
+	if (BurnLoadRom(DrvSndROM0 + 0x000000, 16, 2)) return;
 }
 
 static INT32 GdfsInit()
@@ -4635,7 +4635,7 @@ struct BurnDriver BurnDrvGdfs = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, gdfsRomInfo, gdfsRomName, NULL, NULL, GdfsInputInfo, GdfsDIPInfo,
 	GdfsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	338, 240, 4, 3
+	336, 240, 4, 3
 };
 
 

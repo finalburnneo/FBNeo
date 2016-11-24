@@ -2186,6 +2186,8 @@ static INT32 DrvDoReset(INT32 clear_ram)
 
 	AY8910Reset(0);
 
+	NamcoSoundReset();
+
 	HiscoreReset();
 
 	mschamp_counter = 0;

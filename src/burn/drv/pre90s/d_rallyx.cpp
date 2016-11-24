@@ -716,7 +716,9 @@ static INT32 DrvDoReset()
 	ZetClose();
 	
 	BurnSampleReset();
-	
+
+	NamcoSoundReset();
+
 	DrvCPUFireIRQ = 0;
 	DrvCPUIRQVector = 0;
 	xScroll = 0;

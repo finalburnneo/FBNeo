@@ -18,7 +18,6 @@ static UINT8 *DrvGfxROM2;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvHD63701RAM1;
 static UINT8 *DrvHD63701RAM;
-static UINT8 *DrvWavRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvTxtRAM;
 static UINT8 *DrvSprRAM;
@@ -516,6 +515,8 @@ static INT32 DrvDoReset(INT32 ClearRAM)
 	HD63701Reset();
 //	HD63701Close();
 
+	NamcoSoundReset();
+
 	watchdog = 0;
 	hd63701_in_reset = 0;
 
@@ -543,9 +544,6 @@ static INT32 MemIndex()
 
 	DrvHD63701RAM1		= Next; Next += 0x000080;
 	DrvHD63701RAM		= Next; Next += 0x000800;
-
-	NamcoSoundProm		= Next;
-	DrvWavRAM		= Next; Next += 0x000500;
 
 	DrvVidRAM		= Next; Next += 0x001000;
 	DrvTxtRAM		= Next; Next += 0x000800;
@@ -644,8 +642,6 @@ static INT32 DrvExit()
 	HD63701Exit();
 
 	BurnFree (AllMem);
-
-	NamcoSoundProm = NULL;
 
 	return 0;
 }
@@ -807,7 +803,7 @@ static INT32 DrvFrame()
 	M6809NewFrame();
 	HD63701NewFrame();
 
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	nCyclesDone[0] = nCyclesDone[1] = 0;
@@ -868,7 +864,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

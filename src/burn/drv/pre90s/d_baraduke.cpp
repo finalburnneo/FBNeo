@@ -19,7 +19,6 @@ static UINT8 *DrvGfxROM2;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvHD63701RAM1;
 static UINT8 *DrvHD63701RAM;
-static UINT8 *DrvWavRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvTxtRAM;
 static UINT8 *DrvSprRAM;
@@ -255,8 +254,7 @@ UINT8 baraduke_mcu_read(UINT16 address)
 	}
 
 	if (address == 0x1105) {
-		*kludge1105++;
-		return *kludge1105>>4;
+		return ((*kludge1105)++ >> 4) & 0xff;
 	}
 
 	if ((address & 0xfc00) == 0x1000) {
@@ -352,9 +350,6 @@ static INT32 MemIndex()
 
 	DrvHD63701RAM1		= Next; Next += 0x000080;
 	DrvHD63701RAM		= Next; Next += 0x000800;
-
-	NamcoSoundProm		= Next;
-	DrvWavRAM		= Next; Next += 0x000400;
 
 	DrvVidRAM		= Next; Next += 0x002000;
 	DrvTxtRAM		= Next; Next += 0x000800;
@@ -512,7 +507,7 @@ static INT32 DrvInit(INT32 type)
 //	HD63701Close();
 
 	NamcoSoundInit(49152000/2048, 8);
-	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
+	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_5x5, LED_COLOR_GREEN, 100);
 
@@ -739,6 +734,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -752,17 +748,30 @@ static INT32 DrvFrame()
 		}
 		M6809Close();
 
-	//	HD63701Open(0);
+		//	HD63701Open(0);
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += HD63701Run(nNext - nCyclesDone[1]);
 		if (i == (nInterleave - 1)) {
 			HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
-	//	HD63701Close();
-	}
+		//	HD63701Close();
 
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
+
+	}
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {

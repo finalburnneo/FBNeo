@@ -591,9 +591,6 @@ void NamcoSoundExit()
 	if (namco_soundregs) {
 		free(namco_soundregs);
 		namco_soundregs = NULL;
-
-		//free (namco_wavedata); hmmm -dink
-		//namco_wavedata = NULL;
 	}
 
 	if (enable_ram) {
@@ -608,7 +605,7 @@ void NamcoSoundExit()
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
-	char szName[20];
+	char szName[22];
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;

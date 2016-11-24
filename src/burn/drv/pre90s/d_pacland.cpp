@@ -274,15 +274,15 @@ static UINT8 pacland_mcu_read(UINT16 address)
 
 static void pacland_mcu_write_port(UINT16 port, UINT8 data)
 {
-	switch (port)
+	switch (port & 0x1ff)
 	{
-		case 0x100:
+		case HD63701_PORT1:
 			coin_lockout[0] = data & 0x01;
 			// bprintf(0, _T("coin lockout\n"));
 			// coin counters ~data & 2 -> 0, ~data & 4 -> 1
 		return;
 
-		case 0x101:
+		case HD63701_PORT2:
 			BurnLEDSetStatus(0, data & 0x08);
 			BurnLEDSetStatus(1, data & 0x10);
 		return;
@@ -291,10 +291,10 @@ static void pacland_mcu_write_port(UINT16 port, UINT8 data)
 
 static UINT8 pacland_mcu_read_port(UINT16 port)
 {
-	switch (port)
+	switch (port & 0x1ff)
 	{
-		case 0x100: return DrvInputs[1];
-		case 0x101: return 0xff; // led status?
+		case HD63701_PORT1: return DrvInputs[1];
+		case HD63701_PORT2: return 0xff; // led status?
 	}
 
 	return 0;
@@ -320,8 +320,6 @@ static INT32 MemIndex()
 	DrvSprMask		= Next; Next += 0x000c00;
 
 	AllRam			= Next;
-
-	NamcoSoundProm		= Next; Next += 0x000400; // RAM
 
 	DrvVidRAM0		= Next; Next += 0x001000;
 	DrvVidRAM1		= Next; Next += 0x001000;
@@ -356,6 +354,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	// open
 	HD63701Reset();
 	// close
+
+	NamcoSoundReset();
 
 	BurnLEDReset();
 
@@ -535,7 +535,6 @@ static INT32 DrvExit()
 	BurnLEDExit();
 
 	NamcoSoundExit();
-	NamcoSoundProm = NULL;
 
 	BurnFree(AllMem);
 
@@ -763,7 +762,7 @@ static INT32 DrvFrame()
 	//	if (coin_lockout[0]) DrvInputs[0] |= 0x0c;
 	}
 
-	INT32 nInterleave = nBurnSoundLen;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 49152000 / 32 / 60, 49152000 / 8 / 4 / 60 }; // refresh 60.606060
 	INT32 nCyclesDone[2]  = { 0, 0 };

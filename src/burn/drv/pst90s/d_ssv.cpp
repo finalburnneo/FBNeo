@@ -2152,7 +2152,7 @@ static UINT16 common_main_read_word(UINT32 address)
 		return ES5506Read((address & 0x7e)/2);
 	}
 
-	switch (address)
+	switch (address & ~1)
 	{
 		case 0x1c0000:
 			return (vblank) ? 0x3000 : 0;
@@ -2193,6 +2193,8 @@ static UINT16 common_main_read_word(UINT32 address)
 		case 0x520001:
 			return rand();
 	}
+
+	bprintf (0, _T("RW Unmapped: %5.5x\n"), address);
 
 	return 0;
 }
@@ -2207,7 +2209,7 @@ static UINT8 common_main_read_byte(UINT32 address)
 		return ES5506Read((address & 0x7e)/2);
 	}
 
-	switch (address)
+	switch (address & ~1)
 	{
 		case 0x1c0000:
 			return (vblank) ? 0x3000 : 0;
@@ -2248,6 +2250,8 @@ static UINT8 common_main_read_byte(UINT32 address)
 		case 0x520001:
 			return rand();
 	}
+
+	bprintf (0, _T("RB Unmapped: %5.5x\n"), address);
 
 	return 0;
 }
@@ -2358,13 +2362,13 @@ static void gdfs_write_byte(UINT32 address, UINT8 data)
 	common_main_write_word(address,data);
 }
 
-static UINT8 srmp4_inputs()
+static UINT16 srmp4_inputs()
 {
 	for (INT32 i = 0; i < 5; i++) {
 		if (input_select & (1 << i)) return DrvInputs[i+3];
 	}
 
-	return 0xff;
+	return 0xffff;
 }
 
 static void janjan1_write_byte(UINT32 address, UINT8 data)
@@ -4828,9 +4832,14 @@ static void Srmp4V60Map()
 	v60SetReadByteHandler(janjan1_read_byte);
 }
 
+static void Srpm4RomLoadCallback()
+{
+	memcpy (DrvSndROM0 + 0x200000, DrvSndROM0, 0x200000);
+}
+
 static INT32 Srmp4Init()
 {
-	return DrvCommonInit(Srmp4V60Map, NULL, 0, 0, 1, 0, 1, 0.80, 0);
+	return DrvCommonInit(Srmp4V60Map, Srpm4RomLoadCallback, 0, 0, 1, 0, 1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvSrmp4 = {
@@ -4962,6 +4971,8 @@ static void Hypreac2V60Map()
 
 static INT32 Hypreac2Init()
 {
+	watchdog_disable = 1;
+
 	return DrvCommonInit(Hypreac2V60Map, NULL, 1, 0, 1, 2, -1, 0.10, 0);
 }
 
@@ -5038,7 +5049,7 @@ static void Srmp7ROMCallback()
 
 static INT32 Srmp7Init()
 {
-	return DrvCommonInit(Srmp7V60Map, Srmp7ROMCallback, 1, 0, 1, 2, 3, 0.80, 0);
+	return DrvCommonInit(Srmp7V60Map, Srmp7ROMCallback, 0, 0, 1, 2, 3, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvSrmp7 = {

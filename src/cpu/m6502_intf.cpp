@@ -199,8 +199,10 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	}
 	
 	nM6502CyclesTotal = 0;
-	
+
+	M6502Open(cpu);
 	pCurrentCPU->init();
+	M6502Close();
 
 	if (type == TYPE_DECOCPU7) {
 		M6502Open(cpu);

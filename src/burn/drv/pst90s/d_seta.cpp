@@ -55,10 +55,11 @@ static UINT32 *Palette		= NULL;
 static UINT32 *DrvPalette	= NULL;
 static UINT8 DrvRecalc;
 
-static UINT8 *soundlatch	= NULL;
-static UINT8 *soundlatch2	= NULL;
+static UINT8 soundlatch     = 0;
+static UINT8 soundlatch2    = 0;
+
 static UINT8 *tilebank		= NULL;
-static UINT32  *tile_offset	= NULL;
+static UINT32 *tile_offset	= NULL;
 
 // allow us to override generic rom loading
 static INT32 (*pRomLoadCallback)(INT32 bLoad) = NULL;
@@ -89,6 +90,7 @@ static INT32 watchdog = 0;
 static INT32 flipscreen;
 static INT32 m65c02_mode = 0;
 static INT32 m65c02_bank = 0;
+static INT32 sub_ctrl_data = 0;
 
 static INT32 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
@@ -1090,7 +1092,7 @@ STDINPUTINFO(Umanclub)
 
 static struct BurnInputInfo TwineaglInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
@@ -1099,7 +1101,7 @@ static struct BurnInputInfo TwineaglInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
@@ -4658,9 +4660,38 @@ void __fastcall downtown_write_word(UINT32 address, UINT16 data)
 		case 0xa00000:
 		case 0xa00002:
 		case 0xa00004:
-		case 0xa00006:
+		case 0xa00006: bprintf(0, _T("sub ctrlW %X\n"), address);
 			// sub_ctrl_w
 		return;
+	}
+}
+
+static void sub_ctrl_w(INT32 offset, UINT8 data)
+{
+	switch(offset)
+	{
+		case 0:   // bit 0: reset sub cpu?
+			{
+				if ( !(sub_ctrl_data & 1) && (data & 1) )
+				{
+					M6502Open(0);
+					M6502Reset(); bprintf(0, _T("[6502 reset!]\n"));
+					M6502Close();
+				}
+				sub_ctrl_data = data;
+			}
+			break;
+
+		case 2:   // ?
+			break;
+
+		case 4:   // not sure
+			soundlatch = data; bprintf(0, _T("SL--"));
+			break;
+
+		case 6:   // not sure
+			soundlatch2 = data;bprintf(0, _T("SL2--"));
+			break;
 	}
 }
 
@@ -4689,7 +4720,7 @@ void __fastcall downtown_write_byte(UINT32 address, UINT8 data)
 		case 0xa00005:
 		case 0xa00006:
 		case 0xa00007:
-			// sub_ctrl_w
+			sub_ctrl_w((address&6), data);
 		return;
 	}
 }
@@ -4869,7 +4900,7 @@ UINT8 __fastcall utoukond_sound_read_port(UINT16 port)
 
 		case 0xc0:
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			return *soundlatch;
+			return soundlatch;
 	}
 
 	return 0;
@@ -4887,7 +4918,7 @@ void __fastcall wiggie_sound_write_byte(UINT32 address, UINT8 data)
 {
 	if (address != 0xb00008 && address != 0xc00000) return; // wiggie
 
-	*soundlatch = data;
+	soundlatch = data;
 	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
@@ -4910,7 +4941,7 @@ UINT8 __fastcall wiggie_sound_read(UINT16 address)
 
 		case 0xa000:
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			return *soundlatch;
+			return soundlatch;
 	}
 
 	return 0;
@@ -4932,7 +4963,7 @@ void __fastcall usclssic_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0xb40010:
-			*soundlatch = data;
+			soundlatch = data;
 		return;
 
 		case 0xb40018:
@@ -4956,7 +4987,7 @@ void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
 
 		case 0xb40010:
 		case 0xb40011:
-			*soundlatch = data;
+			soundlatch = data;
 		return;
 
 		case 0xb40018:
@@ -5069,7 +5100,6 @@ static UINT16 calibr50_input_read(INT32 offset)
 
 UINT16 __fastcall calibr50_read_word(UINT32 address)
 {
-	if ((address & 0xb00000)==0xb00000) bprintf(0, _T("crw. a[%X]"), address);
 	switch (address)
 	{
 		case 0x400000:
@@ -5098,11 +5128,7 @@ UINT8 __fastcall calibr50_read_byte(UINT32 address)
 
 		case 0xb00000:
 		case 0xb00001:
-			{   //bprintf(0, _T("68krb %X. "), address);
-				//static INT32 ret;	// fake read from sound cpu
-				//ret ^= 0x80;
-				return *soundlatch2;
-			}
+			return soundlatch2;
 	}
 
 	if ((address & 0xfffffe0) == 0xa00000) {
@@ -5119,31 +5145,27 @@ void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 	SetaVidRAMCtrlWriteWord(0, 0x800000)
 
 	if ((address & ~1) == 0xb00000) {
-		*soundlatch = data;
-		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		soundlatch = data;
 
-		M6502Run(100); // guess..? -dink
+		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		M6502Run(100);
 
 		return;
 	}
-	//bprintf(0, _T("ww %X %X. "), address, data);
 }
 
 void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 {
 	SetaVidRAMCtrlWriteByte(0, 0x800000)
 
-		if ((address & ~1) == 0xb00000) {
-			//bprintf(0, _T("a %X. "), address);
-			*soundlatch = data;
-			bprintf(0, _T("cwb."));
+	if ((address & ~1) == 0xb00000) {
+		soundlatch = data;
 
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-			M6502Run(100); // guess? -dink
+		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		M6502Run(100);
 
-			return;
-		}
-	//bprintf(0, _T("wb %X %X. "), address, data);
+		return;
+	}
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -5374,128 +5396,29 @@ UINT8 __fastcall downtown_sharedram_read_byte(UINT32 address) // downtown input 
 UINT16 __fastcall downtown_sharedram_read_word(UINT32 address)
 {
 	downtown_sharedram_read_byte(address & 0xffe);
-	return DrvShareRAM[address & 0xffe]; //
+	return DrvShareRAM[address & 0xffe];
 }
 
-UINT8 __fastcall twineagl_sharedram_read_byte(UINT32 address) // twineagl input simulation
+// twineagle
+
+UINT8 __fastcall twineagl_sharedram_read_byte(UINT32 address)
 {
-	static INT32 coin_read = 0;
-	INT32 inputs0 = DrvInputs[0]^0xffff;
-	INT32 inputs1 = DrvInputs[1]^0xffff;
-	INT32 inputs2 = (DrvInputs[2]^0xff^DrvDips[2])^0xffff;
-	INT32 offset = address & 0xffe;
-
-	if (offset == 0x000) DrvShareRAM[offset] = 0x00;
-	if (offset == 0x002) DrvShareRAM[offset] = 0x31; // or ERROR COM RAM
-
-	if (offset == 0x00a) { // player 1 inputs...
-		DrvShareRAM[offset] = simulation_input_return(inputs0, 2, 1, 4, 8);
-	}
-
-	if (offset == 0x010) { // player 2 inputs...
-		DrvShareRAM[offset] = simulation_input_return(inputs1, 2, 1, 4, 8);
-	}
-
-	if (offset == 0x014) {	// handle start input...
-		DrvShareRAM[offset] = 0;
-		if (inputs0 & 0x80) DrvShareRAM[offset] |= 0x04; // start 1 pressed
-		if (inputs1 & 0x80) DrvShareRAM[offset] |= 0x08; // start 2 pressed
-		if (inputs2 & 0x20) DrvShareRAM[offset] |= 0x10; // service
-		if (inputs2 & 0x10) DrvShareRAM[offset] |= 0x20; // tilt
-
-		static INT32 nPreviousStart0, nPreviousStart1;
-		INT32 nCurrentStart0 = inputs0 & 0x80;
-		INT32 nCurrentStart1 = inputs1 & 0x80;
-		if ((nCurrentStart0 != nPreviousStart0) && !nCurrentStart0) {
-			if (DrvShareRAM[0x68] && coin_read) {
-				DrvShareRAM[0x68]--;
-				coin_read = 0;
-			}
-		}
-		if ((nCurrentStart1 != nPreviousStart1) && !nCurrentStart1) {
-			if (DrvShareRAM[0x68] > 1 && coin_read) {
-				DrvShareRAM[0x68]-=2;
-				coin_read = 0;
-			}
-		}
-		nPreviousStart0 = nCurrentStart0;
-		nPreviousStart1 = nCurrentStart1;
-	}
-
-	if (offset == 0x068) {	// coin1 & coin2
-		static INT32 nPreviousCoin0, nPreviousCoin1;
-		INT32 nCurrentCoin0 = inputs2 & 0x01;
-		INT32 nCurrentCoin1 = inputs2 & 0x02; 
-		if (nPreviousCoin0 != nCurrentCoin0) DrvShareRAM[offset] += ((nCurrentCoin0 >> 0) & 1);
-		if (nPreviousCoin1 != nCurrentCoin1) DrvShareRAM[offset] += ((nCurrentCoin1 >> 1) & 1);
-		if (DrvShareRAM[offset] > 9) DrvShareRAM[offset] = 9;
-		nPreviousCoin0 = nCurrentCoin0;
-		nPreviousCoin1 = nCurrentCoin1;
-		coin_read = 1;
-	}
-
-	if (offset == 0x0a8) { // more start inputs...
-		if (coin_read && ((inputs0 & 0x80) || (inputs1 & 0x80))) {
-			DrvShareRAM[offset] = 0;
-			if (inputs0 & 0x80) DrvShareRAM[offset] |= 0x04; // start 1 pressed
-			if (inputs1 & 0x80) DrvShareRAM[offset] |= 0x08; // start 2 pressed
-		}
-	}
-
-	if (offset >= 0x1c0 && offset <= 0x1de) { // these are read often, the game refuses to boot without the proper sequence
-		if (tndrcade_init_sim <= 1) {
-			DrvShareRAM[offset] = ((((offset - 0x1c0) / 2) * 0x0f) + 1) - tndrcade_init_sim;
-			if (offset == 0x1de) tndrcade_init_sim++;
-		} else {
-			DrvShareRAM[offset] = ((offset & 0x1f) / 2) | (((offset & 0x1f) / 2) << 4);
-			if (offset == 0x1dc) tndrcade_init_sim++;
-		}
-	}
-
-	return DrvShareRAM[offset];
+	return DrvShareRAM[(address&0xfff)>>1];
 }
 
 UINT16 __fastcall twineagl_sharedram_read_word(UINT32 address)
 {
-	INT32 offset = address & 0xffe;
-	twineagl_sharedram_read_byte(offset);
-	return DrvShareRAM[offset];
+	return DrvShareRAM[(address&0xfff)>>1]&0xff;
 }
 
 void __fastcall twineagl_sharedram_write_word(UINT32 address, UINT16 data)
 {
-	INT32 offset = address & 0xffe;
-
-	data &= 0xff;
-
-	DrvShareRAM[offset] = data;
-
-	if (offset == 0x400 && data) {
-		INT32 ofst = 0;
-
-		for (INT32 i = 0; i < 0x100; i+=16) {
-			if (DrvShareRAM[i + 0x200] == 0) {
-				ofst = i + 0x200;
-				break;
-			}
-		}
-		if (ofst == 0) return;
-
-		// add to playlist 
-		{
-			INT32 ofst2 = (DrvShareRAM[offset] * 0x0b) + 0x204; // find song data in m65c02 rom (correct?)
-
-			DrvShareRAM[ofst + 0] = 0x81;
-			DrvShareRAM[ofst + 2] = DrvSubROM[ofst2 + 0];
-			DrvShareRAM[ofst + 4] = DrvSubROM[ofst2 + 1];
-			DrvShareRAM[ofst + 8] = DrvSubROM[ofst2 + 2];
-		}
-	}
+	DrvShareRAM[(address&0xfff)>>1] = data&0xff;
 }
 
 void __fastcall twineagl_sharedram_write_byte(UINT32 address, UINT8 data)
 {
-	twineagl_sharedram_write_word(address, data);
+	DrvShareRAM[(address&0xfff)>>1] = data;
 }
 
 
@@ -6261,7 +6184,7 @@ static void downtown68kInit()
 	SekMapMemory(Drv68KROM, 		0x000000, 0x09ffff, MAP_ROM);
 	SekMapMemory(DrvPalRAM,			0x700000, 0x7003ff, MAP_RAM);
 	SekMapMemory(DrvVidRAM0,		0x900000, 0x903fff, MAP_RAM);
-	SekMapMemory(DrvShareRAM,		0xb00000, 0xb00fff, MAP_WRITE); // m65c02 not emulated, simulate instead
+	//SekMapMemory(DrvShareRAM,		0xb00000, 0xb00fff, MAP_WRITE); // m65c02 not emulated, simulate instead
 	SekMapMemory(DrvSprRAM0,		0xd00000, 0xd00607 | 0x7ff, MAP_RAM);
 	SekMapMemory(DrvSprRAM1,		0xe00000, 0xe03fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,			0xf00000, 0xffffff, MAP_RAM);
@@ -6280,9 +6203,9 @@ static void downtown68kInit()
 	SekMapHandler(2,			0x200000, 0x2003ff, MAP_READ);
 	SekSetReadByteHandler (2,		downtown_prot_read);
 
-	SekMapHandler(3,			0xb00000, 0xb00fff, MAP_READ);
+	/*SekMapHandler(3,			0xb00000, 0xb00fff, MAP_READ);
 	SekSetReadByteHandler (3,		downtown_sharedram_read_byte);
-	SekSetReadWordHandler (3,		downtown_sharedram_read_word);
+	SekSetReadWordHandler (3,		downtown_sharedram_read_word);*/
 	SekClose();
 }
 
@@ -6352,6 +6275,35 @@ UINT8 __fastcall twineagle_extram_read_byte(UINT32 address)
 	return DrvNVRAM[address & 0x3fe];
 }
 
+static void twineagl_sub_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x1000: {
+			m65c02_bank = data >> 4;
+			//bprintf(0, _T("bank %X.\n"), m65c02_bank);
+			M6502MapMemory(DrvSubROM + 0xc000 + (m65c02_bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+			return;
+		}
+	}
+
+	bprintf(0, _T("ssw %X,"), address);
+}
+
+static UINT8 twineagl_sub_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x0800: return soundlatch;
+		case 0x0801: return soundlatch2;
+		case 0x1000: return DrvInputs[0];
+		case 0x1001: return DrvInputs[1];
+		case 0x1002: return DrvInputs[2];
+	}
+
+	return 0;
+}
+
 static void twineagle68kInit()
 {
 	downtown68kInit();
@@ -6369,6 +6321,32 @@ static void twineagle68kInit()
 	SekClose();
 
 	BurnByteswap(Drv68KROM, 0x80000);
+
+	BurnLoadRom(DrvSubROM + 0x0006000, 1, 1);
+	memcpy(DrvSubROM + 0x0008000, DrvSubROM + 0x0006000, 0x2000);
+	memcpy(DrvSubROM + 0x000a000, DrvSubROM + 0x0006000, 0x2000);
+	memcpy(DrvSubROM + 0x000c000, DrvSubROM + 0x0006000, 0x2000);
+	memcpy(DrvSubROM + 0x000e000, DrvSubROM + 0x0006000, 0x2000);
+
+	//bprintf(0, _T("vectors: %X,%X,%X,%X\n"), DrvSubROM[0xfffc], DrvSubROM[0xfffd], DrvSubROM[0xfffe], DrvSubROM[0xffff]);
+	//bprintf(0, _T("0x7000: %X,%X,%X,%X\n"), DrvSubROM[0x7000], DrvSubROM[0x7001], DrvSubROM[0x7002], DrvSubROM[0x7003]);
+
+	M6502Init(0, TYPE_M65C02);
+	M6502Open(0);
+	M6502MapMemory(DrvSubRAM,	        0x0000, 0x01ff, MAP_RAM);
+	M6502MapMemory(DrvShareRAM,	        0x5000, 0x57ff, MAP_RAM);
+	M6502MapMemory(DrvSubROM + 0x7000,	0x7000, 0x7fff, MAP_ROM);
+	M6502MapMemory(DrvSubROM + 0xc000,	0x8000, 0xbfff, MAP_ROM); // bank default
+	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
+	M6502SetWriteHandler(twineagl_sub_write);
+	M6502SetReadHandler(twineagl_sub_read);
+	M6502SetWriteMemIndexHandler(twineagl_sub_write);
+	M6502SetReadMemIndexHandler(twineagl_sub_read);
+	M6502SetReadOpArgHandler(twineagl_sub_read);
+	M6502SetReadOpHandler(twineagl_sub_read);
+	M6502Close();
+	m65c02_mode = 1;
+
 }
 
 static void crazyfgt68kInit()
@@ -6416,11 +6394,9 @@ static void usclssic68kInit()
 
 static void sub_bankswitch(UINT8 d)
 {
-	//INT32 bank = d >> 4;
-
 	m65c02_bank = d >> 4;
-	//bprintf(0, _T("banksw %X\n"), bank);
-	//M6502MapMemory(DrvSubROM + (bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+
+	M6502MapMemory(DrvSubROM + (m65c02_bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
 }
 
 int m6502_releaseslice();
@@ -6439,7 +6415,7 @@ static void calibr50_sub_write(UINT16 address, UINT8 data)
 
 		case 0xc000:
 			{
-				*soundlatch2 = data;
+				soundlatch2 = data;
 				m6502_releaseslice();
 
 				return;
@@ -6455,19 +6431,12 @@ static UINT8 calibr50_sub_read(UINT16 address)
 		return x1010_sound_read(address);
 	}
 
-	if (address >= 0xc000) { // ROM
-		return DrvSubROM[address - 0xc000];
-	}
-	if (address >= 0x8000 && address <= 0xbfff) {
-		return DrvSubROM[m65c02_bank * 0x4000 + (address & 0x3fff)];
-	}
-
 	switch (address)
 	{
 		case 0x4000: {
-			M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
+			//M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 
-			return *soundlatch;
+			return soundlatch;
 		}
 	}
 
@@ -6497,15 +6466,17 @@ static void calibr5068kInit()
 	// m65c02 sound...
 	M6502Init(0, TYPE_M65C02);
 	M6502Open(0);
-	//M6502MapMemory(DrvSubROM,	0xC000, 0xffff, MAP_ROM); // in handler
-	//M6502MapMemory(DrvSubROM+0x4000,	0x8000, 0xbfff, MAP_ROM); // in handler
-	BurnLoadRom(DrvSubROM + 0x0000000, 4, 1);
+	M6502MapMemory(DrvSubROM,	        0xC000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvSubROM + 0x4000,	0x8000, 0xbfff, MAP_ROM);
+	BurnLoadRom(DrvSubROM + 0x0000, 4, 1);
 	M6502SetWriteHandler(calibr50_sub_write);
 	M6502SetReadHandler(calibr50_sub_read);
 	M6502SetWriteMemIndexHandler(calibr50_sub_write);
 	M6502SetReadMemIndexHandler(calibr50_sub_read);
+#if 0
 	M6502SetReadOpArgHandler(calibr50_sub_read);
 	M6502SetReadOpHandler(calibr50_sub_read);
+#endif
 	M6502Close();
 	m65c02_mode = 1;
 }
@@ -6720,8 +6691,10 @@ static INT32 DrvDoReset(INT32 ram)
 		M6502Reset();
 		m65c02_bank = 0;
 		M6502Close();
-		*soundlatch = 0xff;
-		*soundlatch2 = 0xff;
+		soundlatch = 0;//xff;
+		soundlatch2 = 0;//xff;
+		sub_ctrl_data = 0;
+		bprintf(0, _T("6502 mode!\n"));
 	}
 
 	x1010Reset();
@@ -6776,8 +6749,6 @@ static INT32 MemIndex()
 
 	DrvVideoRegs		= Next; Next += 0x000008;
 
-	soundlatch		= Next; Next += 0x000001;
-	soundlatch2		= Next; Next += 0x000001;
 	tilebank		= Next; Next += 0x000004;
 	tile_offset		= (UINT32*)Next; Next += 0x000001 * sizeof(UINT32);
 
@@ -7453,7 +7424,7 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
-			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;	
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
@@ -7631,6 +7602,31 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 	}
 }
 
+static void Drv68k_Twineagl_FrameCallback()
+{
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, 2000000 / 60 };
+	INT32 nCyclesDone[2]  = { 0, 0 };
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		SekOpen(0);
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		irq_generator(i);
+		SekClose();
+
+		M6502Open(0);
+		M6502Run(nCyclesTotal[1] / nInterleave);
+		if (i == 4) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		if (i == 9) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		M6502Close();
+	}
+
+	if (pBurnSoundOut) {
+		x1010_sound_update();
+	}
+}
+
 static INT32 DrvKMFrame()
 {
 	return DrvCommonFrame(Drv68k_KM_FrameCallback);
@@ -7639,6 +7635,11 @@ static INT32 DrvKMFrame()
 static INT32 DrvCalibr50Frame()
 {
 	return DrvCommonFrame(Drv68k_Calibr50_FrameCallback);
+}
+
+static INT32 DrvTwineaglFrame()
+{
+	return DrvCommonFrame(Drv68k_Twineagl_FrameCallback);
 }
 
 static INT32 Drv5IRQFrame()
@@ -7699,7 +7700,7 @@ static void Drv68kZ80M6295FrameCallback()
 
 static INT32 DrvZ80M6295Frame()
 {
-	return DrvCommonFrame(Drv68kZ80M6295FrameCallback);
+ 	return DrvCommonFrame(Drv68kZ80M6295FrameCallback);
 }
 
 
@@ -10523,11 +10524,11 @@ static INT32 twineaglInit()
 
 struct BurnDriver BurnDrvTwineagl = {
 	"twineagl", NULL, NULL, NULL, "1988",
-	"Twin Eagle - Revenge Joe's Brother\0", "Imperfect inputs, Sound issues", "Seta (Taito license)", "Seta",
+	"Twin Eagle - Revenge Joe's Brother\0", NULL, "Seta (Taito license)", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, twineaglRomInfo, twineaglRomName, NULL, NULL, TwineaglInputInfo, TwineaglDIPInfo,
-	twineaglInit, DrvExit, DrvFrame /*DrvM65c02Frame*/, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
+	twineaglInit, DrvExit, DrvTwineaglFrame /*DrvM65c02Frame*/, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
 };
 

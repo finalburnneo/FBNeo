@@ -105,6 +105,15 @@ static UINT8 DrvDips[7];
 static UINT16 DrvInputs[7];
 static UINT8 DrvReset;
 
+// Rotation stuff! -dink
+static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
+static UINT8  nRotateHoldInput[2]   = {0, 0};
+static INT32  nRotate[2]            = {0, 0};
+static INT32  nRotateTarget[2]      = {0, 0};
+static INT32  nRotateTry[2]         = {0, 0};
+static UINT32 nRotateTime[2]        = {0, 0};
+static UINT8  game_rotates = 0;
+
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
 static struct BurnInputInfo QzkklogyInputList[] = {
@@ -1145,8 +1154,7 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-// fake to make space for analog inputs...
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+	{"P1 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 4,	"p1 fire 3"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -1156,9 +1164,7 @@ static struct BurnInputInfo Calibr50InputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-// fake to make space for analog inputs...
-
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"	},
+	{"P2 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 5,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
@@ -5078,10 +5084,174 @@ UINT8 __fastcall usclssic_read_byte(UINT32 address)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // calibr50
 
+// Rotation-handler code
+
+static void RotateReset() {
+	for (INT32 playernum = 0; playernum < 2; playernum++) {
+		nRotate[playernum] = 0; // start out pointing straight up (0=up)
+		nRotateTarget[playernum] = -1;
+		nRotateTime[playernum] = 0;
+		nRotateHoldInput[0] = nRotateHoldInput[1] = 0;
+	}
+}
+
+static UINT32 RotationTimer(void) {
+    return nCurrentFrame;
+}
+
+static void RotateRight(INT32 *v) {
+    (*v)-=4;
+    if (*v < 0) *v = 0x3c;
+}
+
+static void RotateLeft(INT32 *v) {
+    (*v)+=4;
+    if (*v > 0x3c) *v = 0;
+}
+
+static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -dink
+	if (joy[0] && joy[2]) return 7;    // up left
+	if (joy[0] && joy[3]) return 1;    // up right
+
+	if (joy[1] && joy[2]) return 5;    // down left
+	if (joy[1] && joy[3]) return 3;    // down right
+
+	if (joy[0]) return 0;    // up
+	if (joy[1]) return 4;    // down
+	if (joy[2]) return 6;    // left
+	if (joy[3]) return 2;    // right
+
+	return 0xff;
+}
+
+static int dialRotation(INT32 playernum) {
+    // p1 = 0, p2 = 1
+	UINT8 player[2] = { 0, 0 };
+	static UINT8 lastplayer[2][2] = { { 0, 0 }, { 0, 0 } };
+
+    if ((playernum != 0) && (playernum != 1)) {
+        bprintf(PRINT_NORMAL, _T("Strange Rotation address => %06X\n"), playernum);
+        return 0;
+    }
+    if (playernum == 0) {
+        player[0] = DrvFakeInput[0]; player[1] = DrvFakeInput[1];
+    }
+    if (playernum == 1) {
+        player[0] = DrvFakeInput[2]; player[1] = DrvFakeInput[3];
+    }
+
+    if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
+		RotateLeft(&nRotate[playernum]);
+        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
+		nRotateTime[playernum] = RotationTimer();
+		nRotateTarget[playernum] = -1;
+    }
+
+	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
+        RotateRight(&nRotate[playernum]);
+        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+        nRotateTime[playernum] = RotationTimer();
+		nRotateTarget[playernum] = -1;
+	}
+
+	lastplayer[playernum][0] = player[0];
+	lastplayer[playernum][1] = player[1];
+
+	return (nRotate[playernum]);
+}
+
+static UINT8 *rotate_gunpos[2] = {NULL, NULL};
+static UINT8 rotate_gunpos_multiplier = 1;
+
+// Gun-rotation memory locations - do not remove this tag. - dink :)
+// game     p1           p2           clockwise value in memory         multiplier
+// calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
+
+static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
+	rotate_gunpos[0] = p1;
+	rotate_gunpos[1] = p2;
+	rotate_gunpos_multiplier = multiplier;
+}
+
+static INT32 get_distance(INT32 from, INT32 to) {
+// this function finds the easiest way to get from "from" to "to", wrapping at 0 and 7
+	INT32 countA = 0;
+	INT32 countB = 0;
+	INT32 fromtmp = from;// / rotate_gunpos_multiplier;
+	INT32 totmp = to;// / rotate_gunpos_multiplier;
+
+	while (1) {
+		fromtmp++;
+		countA++;
+		if(fromtmp>0xf) fromtmp = 0;
+		if(fromtmp == totmp || countA > 32) break;
+	}
+
+	fromtmp = from;// / rotate_gunpos_multiplier;
+	totmp = to;// / rotate_gunpos_multiplier;
+
+	while (1) {
+		fromtmp--;
+		countB++;
+		if(fromtmp<0) fromtmp = 0xf;
+		if(fromtmp == totmp || countB > 32) break;
+	}
+
+	if (countA > countB) {
+		return 1; // go negative
+	} else {
+		return 0; // go positive
+	}
+}
+
+static void RotateDoTick() {
+	// since the game only allows for 1 rotation every other frame, we have to
+	// do this.
+	if (nCurrentFrame&1) return;
+
+	for (INT32 i = 0; i < 2; i++) {
+		if (rotate_gunpos[i] && (nRotateTarget[i] != -1) && (nRotateTarget[i] != (*rotate_gunpos[i] & 0xff))) {
+			if (get_distance(nRotateTarget[i], *rotate_gunpos[i] & 0xff)) {
+				RotateLeft(&nRotate[i]);  // ++
+			} else {
+				RotateRight(&nRotate[i]); // --
+			}
+			bprintf(0, _T("p%X target %X mempos %X nRotate %X.\n"), i, nRotateTarget[0], *rotate_gunpos[0] & 0xff, nRotate[0]);
+			nRotateTry[i]++;
+			if (nRotateTry[i] > 0xf) nRotateTarget[i] = -1; // don't get stuck in a loop if something goes horribly wrong here.
+		} else {
+			nRotateTarget[i] = -1;
+		}
+	}
+}
+
+static void SuperJoy2Rotate() {
+	for (INT32 i = 0; i < 2; i++) { // p1 = 0, p2 = 1
+		if (DrvFakeInput[4 + i]) { //  rotate-button had been pressed
+			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy1[0] : &DrvJoy2[0]));
+			if (rot != 0xff) {
+				//bprintf(0, _T("joy2rotate[%x] = %X\n"), i, rot);
+				nRotateTarget[i] = rot*2;// * rotate_gunpos_multiplier;
+			}
+			//DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
+			DrvInputs[i] = (DrvInputs[i] & ~0xf) | (nRotateHoldInput[i] & 0xf); // for midnight resistance! be able to duck + change direction of gun.
+			nRotateTry[i] = 0;
+		} else { // cache joystick UDLR if the rotate button isn't pressed.
+			// This feature is for Midnight Resistance, if you are crawling on the
+			// ground and need to rotate your gun WITHOUT getting up.
+			nRotateHoldInput[i] = DrvInputs[i];
+		}
+	}
+
+	RotateDoTick();
+}
+
+// end Rotation-handler
+
 static UINT16 calibr50_input_read(INT32 offset)
 {
-	INT32 dir1 = 0; 					// analog port
-	INT32 dir2 = 0;					// analog port
+	INT32 dir1 = dialRotation(0); 					// analog port
+	INT32 dir2 = dialRotation(1);					// analog port
 
 	switch (offset & 0x1e)
 	{
@@ -6479,6 +6649,10 @@ static void calibr5068kInit()
 #endif
 	M6502Close();
 	m65c02_mode = 1;
+
+	RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
+	game_rotates = 1;
+
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -6694,13 +6868,15 @@ static INT32 DrvDoReset(INT32 ram)
 		soundlatch = 0;//xff;
 		soundlatch2 = 0;//xff;
 		sub_ctrl_data = 0;
-		bprintf(0, _T("6502 mode!\n"));
 	}
 
 	x1010Reset();
 	MSM6295Reset(0);
 	BurnYM3438Reset();
 	BurnYM3812Reset();
+
+	if (game_rotates)
+		RotateReset();
 
 	watchdog = 0;
 
@@ -6878,7 +7054,6 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	buffer_sprites = spr_buffer;
 
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "calibr50")) {
-		bprintf(0, _T("calibr50-x1_010 address 0x1000 mode\n"));
 		x1010_sound_init(16000000, 0x1000);
 	} else {
 		x1010_sound_init(16000000, 0x0000);
@@ -6953,6 +7128,7 @@ static INT32 DrvExit()
 	daiohc = 0;
 	watchdog_enable = 0;
 	refresh_rate = 6000;
+	game_rotates = 0;
 
 	BurnFree (DrvGfxTransMask[0]);
 	BurnFree (DrvGfxTransMask[2]);
@@ -7429,7 +7605,11 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
 		}
-	
+
+		if (game_rotates) {
+			SuperJoy2Rotate();
+		}
+
 		BurnGunMakeInputs(0, (INT16)DrvAxis[0], (INT16)DrvAxis[1]);	// zombraid
 		BurnGunMakeInputs(1, (INT16)DrvAxis[2], (INT16)DrvAxis[3]);
 		

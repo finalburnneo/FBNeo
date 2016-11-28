@@ -7,14 +7,15 @@
 #include "m6502_intf.h"
 #include "burn_ym2612.h"
 #include "burn_ym3812.h"
+#include "burn_ym2203.h"
 #include "burn_gun.h"
 #include "msm6295.h"
 #include "x1010.h"
 
 /*
 	To do:
-		further simulate m65c02 games
-		calibr50, usclassc, krazybowl, downtown need analog inputs hooked up...
+		hookup m65c02 to usclassic
+		usclassc, krazybowl need analog inputs hooked up...
 		flipscreen support
 		jockeyc needs work...
 */
@@ -80,7 +81,6 @@ static INT32 refresh_rate = 6000;
 
 static INT32 seta_samples_bank = 0;
 static INT32 usclssic_port_select = 0;
-static INT32 tndrcade_init_sim = 0;
 static INT32 gun_input_bit = 0;
 static INT32 gun_input_src = 0;
 static INT32 flipflop = 0;
@@ -91,6 +91,8 @@ static INT32 flipscreen;
 static INT32 m65c02_mode = 0;
 static INT32 m65c02_bank = 0;
 static INT32 sub_ctrl_data = 0;
+static INT32 has_2203 = 0;
+static INT32 tndrcade_init_sim = 0;
 
 static INT32 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
@@ -870,7 +872,7 @@ STDINPUTINFO(Utoukond)
 
 static struct BurnInputInfo TndrcadeInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
@@ -879,7 +881,7 @@ static struct BurnInputInfo TndrcadeInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
@@ -892,7 +894,6 @@ static struct BurnInputInfo TndrcadeInputList[] = {
 	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 5,	"tilt"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Tndrcade)
@@ -904,10 +905,9 @@ static struct BurnInputInfo DowntownInputList[] = {
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-// fake to make space for analog
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 4"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvFakeInput + 0,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvFakeInput + 1,	"p1 fire 2"	},
+	{"P1 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 4,	"p1 fire 3"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -917,8 +917,7 @@ static struct BurnInputInfo DowntownInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-// fake to make space for analog
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 fire 4"	},
+	{"P2 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 5,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 5,	"service"	},
@@ -1776,7 +1775,6 @@ static struct BurnDIPInfo TndrcadeDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0x7f, NULL			},
 	{0x14, 0xff, 0xff, 0xf7, NULL			},
-	{0x15, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
 	{0x13, 0x01, 0x03, 0x02, "Easy"			},
@@ -4666,7 +4664,7 @@ void __fastcall downtown_write_word(UINT32 address, UINT16 data)
 		case 0xa00000:
 		case 0xa00002:
 		case 0xa00004:
-		case 0xa00006: bprintf(0, _T("sub ctrlW %X\n"), address);
+		case 0xa00006: bprintf(0, _T("sub ctrlW unimpl. %X\n"), address);
 			// sub_ctrl_w
 		return;
 	}
@@ -4681,7 +4679,7 @@ static void sub_ctrl_w(INT32 offset, UINT8 data)
 				if ( !(sub_ctrl_data & 1) && (data & 1) )
 				{
 					M6502Open(0);
-					M6502Reset(); bprintf(0, _T("[6502 reset!]\n"));
+					M6502Reset();
 					M6502Close();
 				}
 				sub_ctrl_data = data;
@@ -4692,11 +4690,11 @@ static void sub_ctrl_w(INT32 offset, UINT8 data)
 			break;
 
 		case 4:   // not sure
-			soundlatch = data; bprintf(0, _T("SL--"));
+			soundlatch = data;
 			break;
 
 		case 6:   // not sure
-			soundlatch2 = data;bprintf(0, _T("SL2--"));
+			soundlatch2 = data;
 			break;
 	}
 }
@@ -5100,13 +5098,23 @@ static UINT32 RotationTimer(void) {
 }
 
 static void RotateRight(INT32 *v) {
-    (*v)-=4;
-    if (*v < 0) *v = 0x3c;
+	if (game_rotates == 2) { // downtown mode
+		(*v)-=1;
+		if (*v < 0) *v = 0xb;
+	} else { // calibr50 mode
+		(*v)-=4;
+		if (*v < 0) *v = 0x3c;
+	}
 }
 
 static void RotateLeft(INT32 *v) {
-    (*v)+=4;
-    if (*v > 0x3c) *v = 0;
+	if (game_rotates == 2) { // downtown mode
+		(*v)+=1;
+		if (*v > 0xb) *v = 0;
+	} else { // calibr50 mode
+		(*v)+=4;
+		if (*v > 0x3c) *v = 0;
+	}
 }
 
 static UINT8 Joy2Rotate(UINT8 *joy) { // ugly code, but the effect is awesome. -dink
@@ -5142,14 +5150,14 @@ static int dialRotation(INT32 playernum) {
 
     if (player[0] && (player[0] != lastplayer[playernum][0] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
 		RotateLeft(&nRotate[playernum]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
+		bprintf(PRINT_NORMAL, _T("Player %d Rotate Left => %06X\n"), playernum+1, nRotate[playernum]);
 		nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
     }
 
 	if (player[1] && (player[1] != lastplayer[playernum][1] || (RotationTimer() > nRotateTime[playernum]+0xf))) {
         RotateRight(&nRotate[playernum]);
-        //bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
+        bprintf(PRINT_NORMAL, _T("Player %d Rotate Right => %06X\n"), playernum+1, nRotate[playernum]);
         nRotateTime[playernum] = RotationTimer();
 		nRotateTarget[playernum] = -1;
 	}
@@ -5166,6 +5174,7 @@ static UINT8 rotate_gunpos_multiplier = 1;
 // Gun-rotation memory locations - do not remove this tag. - dink :)
 // game     p1           p2           clockwise value in memory         multiplier
 // calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
+// downtown 0xffef90+1   0xfefd0+1    0 1 2 3 4 5 6 7                   1
 
 static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
 	rotate_gunpos[0] = p1;
@@ -5174,7 +5183,7 @@ static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
 }
 
 static INT32 get_distance(INT32 from, INT32 to) {
-// this function finds the easiest way to get from "from" to "to", wrapping at 0 and 7
+// this function finds the shortest way to get from "from" to "to", wrapping at 0 and 7
 	INT32 countA = 0;
 	INT32 countB = 0;
 	INT32 fromtmp = from;// / rotate_gunpos_multiplier;
@@ -5183,7 +5192,7 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	while (1) {
 		fromtmp++;
 		countA++;
-		if(fromtmp>0xf) fromtmp = 0;
+		if(fromtmp>((game_rotates == 2) ? 0x7 : 0xf)) fromtmp = 0;
 		if(fromtmp == totmp || countA > 32) break;
 	}
 
@@ -5193,7 +5202,7 @@ static INT32 get_distance(INT32 from, INT32 to) {
 	while (1) {
 		fromtmp--;
 		countB++;
-		if(fromtmp<0) fromtmp = 0xf;
+		if(fromtmp<0) fromtmp = ((game_rotates == 2) ? 0x7 : 0xf);
 		if(fromtmp == totmp || countB > 32) break;
 	}
 
@@ -5216,7 +5225,7 @@ static void RotateDoTick() {
 			} else {
 				RotateRight(&nRotate[i]); // --
 			}
-			bprintf(0, _T("p%X target %X mempos %X nRotate %X.\n"), i, nRotateTarget[0], *rotate_gunpos[0] & 0xff, nRotate[0]);
+			bprintf(0, _T("p%X target %X mempos %X nRotate %X try %X.\n"), i, nRotateTarget[0], *rotate_gunpos[0] & 0xff, nRotate[0], nRotateTry[i]);
 			nRotateTry[i]++;
 			if (nRotateTry[i] > 0xf) nRotateTarget[i] = -1; // don't get stuck in a loop if something goes horribly wrong here.
 		} else {
@@ -5231,7 +5240,7 @@ static void SuperJoy2Rotate() {
 			UINT8 rot = Joy2Rotate(((!i) ? &DrvJoy1[0] : &DrvJoy2[0]));
 			if (rot != 0xff) {
 				//bprintf(0, _T("joy2rotate[%x] = %X\n"), i, rot);
-				nRotateTarget[i] = rot*2;// * rotate_gunpos_multiplier;
+				nRotateTarget[i] = rot * rotate_gunpos_multiplier;
 			}
 			//DrvInput[i] &= ~0xf; // cancel out directionals since they are used to rotate here.
 			DrvInputs[i] = (DrvInputs[i] & ~0xf) | (nRotateHoldInput[i] & 0xf); // for midnight resistance! be able to duck + change direction of gun.
@@ -5357,219 +5366,7 @@ UINT8 __fastcall downtown_prot_read(UINT32 address)
 	return downtown_protram[(address & 0x1ff)^1];
 }
 
-static inline UINT8 simulation_input_return(UINT8 inputs, INT32 a0, INT32 a1, INT32 a2, INT32 a3)
-{
-	UINT8 ret = 0;
-	if (inputs & a0  ) ret |= 0x01; // right
-	if (inputs & a1  ) ret |= 0x02; // left
-	if (inputs & a2  ) ret |= 0x04; // up
-	if (inputs & a3  ) ret |= 0x08; // down
-	if (inputs & 0x10) ret |= 0x10; // button 1
-	if (inputs & 0x20) ret |= 0x20; // button 2
-	if (inputs & 0x20) ret |= 0x40; // button 3
-	if (inputs & 0x80) ret |= 0x80; // start
-
-	if ((ret & 0x0c) == 0x0c) ret &= ~0x0c; // clear opposites
-	if ((ret & 0x03) == 0x03) ret &= ~0x03;
-
-	return ret;
-}
-
-UINT8 __fastcall metafox_sharedram_read_byte(UINT32 address)// metafox input simulation
-{
-	static INT32 coin_read = 0;
-	INT32 inputs0 = DrvInputs[0]^0xffff;
-	INT32 inputs1 = DrvInputs[1]^0xffff;
-	INT32 inputs2 = (DrvInputs[2]^0xff^DrvDips[2])^0xffff;
-
-	INT32 offset = address & 0xffe;
-
-	if (offset == 0x014) {	// handle start input...
-		DrvShareRAM[offset] = 0;
-		if (inputs0 & 0x80) DrvShareRAM[0x14] |= 0x04; // start 1 pressed
-		if (inputs1 & 0x80) DrvShareRAM[0x14] |= 0x08; // start 2 pressed
-		if (inputs2 & 0x20) DrvShareRAM[0x14] |= 0x10; // service
-		if (inputs2 & 0x10) DrvShareRAM[0x14] |= 0x20; // tilt
-
-		static INT32 nPreviousStart0, nPreviousStart1;
-		INT32 nCurrentStart0 = inputs0 & 0x80;
-		INT32 nCurrentStart1 = inputs1 & 0x80;
-		if ((nCurrentStart0 != nPreviousStart0) && !nCurrentStart0) {
-			if (DrvShareRAM[0x68] && coin_read) {
-				DrvShareRAM[0x68]--;
-				coin_read = 0;
-			}
-		}
-		if ((nCurrentStart1 != nPreviousStart1) && !nCurrentStart1) {
-			if (DrvShareRAM[0x68] && coin_read) {
-				DrvShareRAM[0x68]--;
-				coin_read = 0;
-			}
-		}
-		nPreviousStart0 = nCurrentStart0;
-		nPreviousStart1 = nCurrentStart1;
-	}
-
-	if (offset == 0x00a) { // player 1 inputs...
-		DrvShareRAM[offset] = simulation_input_return(inputs0, 8, 4, 1, 2);
-	}
-
-	if (offset == 0x010) { // player 2 inputs...
-		DrvShareRAM[offset] = simulation_input_return(inputs1, 8, 4, 1, 2);
-	}
-
-	if (offset == 0x068) {	// coin1 & coin2 (needs coinage dips added)
-		static INT32 nPreviousCoin0, nPreviousCoin1;
-		INT32 nCurrentCoin0 = inputs2 & 0x80;
-		INT32 nCurrentCoin1 = inputs2 & 0x40; 
-		if (nPreviousCoin0 != nCurrentCoin0) DrvShareRAM[0x068] += ((nCurrentCoin0 >> 7) & 1);
-		if (nPreviousCoin1 != nCurrentCoin1) DrvShareRAM[0x068] += ((nCurrentCoin1 >> 6) & 1);
-		if (DrvShareRAM[0x68] > 9) DrvShareRAM[0x68] = 9;
-		nPreviousCoin0 = nCurrentCoin0;
-		nPreviousCoin1 = nCurrentCoin1;
-		coin_read = 1;
-	}
-
-	return DrvShareRAM[offset];
-}
-
-UINT16 __fastcall metafox_sharedram_read_word(UINT32 address)
-{
-	return metafox_sharedram_read_byte(address);
-}
-
-UINT8 __fastcall tndrcade_sharedram_read_byte(UINT32 address) // tndrcade input simulation
-{
-	static INT32 coin_read = 0;
-	INT32 inputs0 = DrvInputs[0]^0xffff;
-	INT32 inputs1 = DrvInputs[1]^0xffff;
-	INT32 inputs2 = (DrvInputs[2]^0xff^DrvDips[2])^0xffff;
-
-	INT32 offset = address & 0xffe;
-
-	if (offset >= 0x1c0 && offset <= 0x1de) { // these are read often, the game refuses to boot without the proper sequence
-		if (tndrcade_init_sim > 0 && tndrcade_init_sim <= 4) {
-			DrvShareRAM[offset] = ((((offset - 0x1c0) / 2) * 0x0f) + 3) - (tndrcade_init_sim-1);
-			if (offset == 0x1de) tndrcade_init_sim++;
-		} else {
-			DrvShareRAM[offset] = ((offset & 0x1f) / 2) | (((offset & 0x1f) / 2) << 4);
-			if (offset == 0x1dc) tndrcade_init_sim++;
-		}
-	}
-
-	if (offset == 0x002) return 0x31;	// or error
-	if (offset == 0x09a) return DrvDips[1] ^ 0xff; // ?
-	if (offset == 0x09c) return DrvDips[0] ^ 0xff;
-
-	if (offset == 0x014) {	// handle start input...
-		DrvShareRAM[0x14] = 0;
-		if (inputs0 & 0x80) DrvShareRAM[0x14] |= 0x04; // start 1 pressed
-		if (inputs1 & 0x80) DrvShareRAM[0x14] |= 0x08; // start 2 pressed
-		if (inputs2 & 0x20) DrvShareRAM[0x14] |= 0x10; // service
-		if (inputs2 & 0x10) DrvShareRAM[0x14] |= 0x20; // tilt
-
-		static INT32 nPreviousStart0, nPreviousStart1;
-		INT32 nCurrentStart0 = inputs0 & 0x80;
-		INT32 nCurrentStart1 = inputs1 & 0x80;
-		if ((nCurrentStart0 != nPreviousStart0) && !nCurrentStart0) {
-			if (DrvShareRAM[0x68] && coin_read) {
-				DrvShareRAM[0x68]--;
-				coin_read = 0;
-			}
-		}
-		if ((nCurrentStart1 != nPreviousStart1) && !nCurrentStart1) {
-			if (DrvShareRAM[0x68] && coin_read) {
-				DrvShareRAM[0x68]--;
-				coin_read = 0;
-			}
-		}
-		nPreviousStart0 = nCurrentStart0;
-		nPreviousStart1 = nCurrentStart1;
-	}
-
-	if (offset == 0x00a) { // player 1 inputs...
-		DrvShareRAM[offset] = simulation_input_return(inputs0, 2, 1, 4, 8);
-	}
-
-	if (offset == 0x010) { // player 2 inputs...
-		DrvShareRAM[offset] = simulation_input_return(inputs1, 2, 1, 4, 8);
-	}
-
-	if (offset == 0x068) {	// coin1 & coin2 (needs coinage dips added)
-		static INT32 nPreviousCoin0, nPreviousCoin1;
-		INT32 nCurrentCoin0 = inputs2 & 0x01;
-		INT32 nCurrentCoin1 = inputs2 & 0x02; 
-		if (nPreviousCoin0 != nCurrentCoin0) DrvShareRAM[offset] += ((nCurrentCoin0 >> 0) & 1);
-		if (nPreviousCoin1 != nCurrentCoin1) DrvShareRAM[offset] += ((nCurrentCoin1 >> 1) & 1);
-		if (DrvShareRAM[offset] > 9) DrvShareRAM[offset] = 9;
-		nPreviousCoin0 = nCurrentCoin0;
-		nPreviousCoin1 = nCurrentCoin1;
-		coin_read = 1;
-	}
-
-	return DrvShareRAM[(address & 0xffe)];
-}
-
-UINT16 __fastcall tndrcade_sharedram_read_word(UINT32 address)
-{
-	return tndrcade_sharedram_read_byte(address);
-}
-
-UINT8 __fastcall downtown_sharedram_read_byte(UINT32 address) // downtown input simulation
-{
-//bprintf (0, _T("%5.5x\n"), address);
-	static INT32 coin_read = 0;
-	INT32 inputs0 = DrvInputs[0]^0xffff;
-	INT32 inputs1 = DrvInputs[1]^0xffff;
-	INT32 inputs2 = (DrvInputs[2]^0xff^DrvDips[2])^0xffff;
-	INT32 offset = address & 0xffe;
-
-	if (offset == 0x002) DrvShareRAM[offset] = 0x31; // or ERROR COM RAM
-
-	if (offset == 0x070) {	// coin1 & coin2
-		static INT32 nPreviousCoin0, nPreviousCoin1;
-		INT32 nCurrentCoin0 = inputs2 & 0x80;
-		INT32 nCurrentCoin1 = inputs2 & 0x40; 
-		if (nPreviousCoin0 != nCurrentCoin0) DrvShareRAM[offset] += ((nCurrentCoin0 >> 7) & 1);
-		if (nPreviousCoin1 != nCurrentCoin1) DrvShareRAM[offset] += ((nCurrentCoin1 >> 6) & 1);
-		if (DrvShareRAM[offset] > 9) DrvShareRAM[offset] = 9;
-		nPreviousCoin0 = nCurrentCoin0;
-		nPreviousCoin1 = nCurrentCoin1;
-		coin_read = 1;
-	}
-
-	if (offset == 0x0d4) { // service button & tilt
-		DrvShareRAM[offset] = 0xf7;								// player 1 rotation high
-		if (inputs2 & 0x10) DrvShareRAM[offset] ^= 0x10;
-		if (inputs2 & 0x20) DrvShareRAM[offset] ^= 0x20;
-	}
-
-	if (offset == 0x0d6) DrvShareRAM[offset] = 0xff; 						// player 1 rotation low
-	if (offset == 0x0d8) DrvShareRAM[offset] = ~simulation_input_return(inputs0, 1, 2, 4, 8);	// player 1 inputs...
-	if (offset == 0x0dc) DrvShareRAM[offset] = 0x0f;						// player 2 rotation high
-	if (offset == 0x0de) DrvShareRAM[offset] = 0xbf;						// player 2 rotation low
-	if (offset == 0x0e0) DrvShareRAM[offset] = ~simulation_input_return(inputs1, 1, 2, 4, 8);	// player 2 inputs...
-
-	if (offset >= 0x1c0 && offset <= 0x1de) { // these are read often, the game refuses to boot without the proper sequence
-		if (tndrcade_init_sim <= 1) {
-			DrvShareRAM[offset] = ((((offset - 0x1c0) / 2) * 0x0f) + 1) - tndrcade_init_sim;
-			if (offset == 0x1de) tndrcade_init_sim++;
-		} else {
-			DrvShareRAM[offset] = ((offset & 0x1f) / 2) | (((offset & 0x1f) / 2) << 4);
-			if (offset == 0x1dc) tndrcade_init_sim++;
-		}
-	}
-
-	return DrvShareRAM[offset];
-}
-
-UINT16 __fastcall downtown_sharedram_read_word(UINT32 address)
-{
-	downtown_sharedram_read_byte(address & 0xffe);
-	return DrvShareRAM[address & 0xffe];
-}
-
-// twineagle
+// twineagle, downtown, calibr50, tndrcade, arbalester, metafox etc. uses these below
 
 UINT8 __fastcall twineagl_sharedram_read_byte(UINT32 address)
 {
@@ -6345,6 +6142,65 @@ static void wiggie68kInit()
 	ZetClose();
 }
 
+static UINT16 downtown_input_read(INT32 offset)
+{
+	INT32 dir1 = dialRotation(0); 				// analog port
+	INT32 dir2 = dialRotation(1);				// analog port
+
+	dir1 = (~ (0x800 >> dir1)) & 0xfff;
+	dir2 = (~ (0x800 >> dir2)) & 0xfff;
+
+	switch (offset)
+	{
+		case 0: return (DrvInputs[2] & 0xf0) + (dir1 >> 8);  // upper 4 bits of p1 rotation + coins
+		case 1: return (dir1 & 0xff);                   // lower 8 bits of p1 rotation
+		case 2: return DrvInputs[0];    // p1
+		case 3: return 0xff;                            // ?
+		case 4: return (dir2 >> 8);                     // upper 4 bits of p2 rotation + ?
+		case 5: return (dir2 & 0xff);                   // lower 8 bits of p2 rotation
+		case 6: return DrvInputs[1];    // p2
+		case 7: return 0xff;                            // ?
+	}
+
+	return 0;
+}
+
+static void m65c02_sub_bankswitch(UINT8 d)
+{
+	m65c02_bank = d >> 4;
+
+	M6502MapMemory(DrvSubROM + 0xc000 + (m65c02_bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+}
+
+static void downtown_sub_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x1000:
+			m65c02_sub_bankswitch(data);
+			return;
+	}
+}
+
+static UINT8 downtown_sub_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x0800: return soundlatch;
+		case 0x0801: return soundlatch2;
+		case 0x1000:
+		case 0x1001:
+		case 0x1002:
+		case 0x1003:
+		case 0x1004:
+		case 0x1005:
+		case 0x1006:
+		case 0x1007: return downtown_input_read(address&7);
+	}
+
+	return 0;
+}
+
 static void downtown68kInit()
 {
 	downtown_protram = DrvNVRAM;
@@ -6354,7 +6210,6 @@ static void downtown68kInit()
 	SekMapMemory(Drv68KROM, 		0x000000, 0x09ffff, MAP_ROM);
 	SekMapMemory(DrvPalRAM,			0x700000, 0x7003ff, MAP_RAM);
 	SekMapMemory(DrvVidRAM0,		0x900000, 0x903fff, MAP_RAM);
-	//SekMapMemory(DrvShareRAM,		0xb00000, 0xb00fff, MAP_WRITE); // m65c02 not emulated, simulate instead
 	SekMapMemory(DrvSprRAM0,		0xd00000, 0xd00607 | 0x7ff, MAP_RAM);
 	SekMapMemory(DrvSprRAM1,		0xe00000, 0xe03fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,			0xf00000, 0xffffff, MAP_RAM);
@@ -6373,10 +6228,48 @@ static void downtown68kInit()
 	SekMapHandler(2,			0x200000, 0x2003ff, MAP_READ);
 	SekSetReadByteHandler (2,		downtown_prot_read);
 
-	/*SekMapHandler(3,			0xb00000, 0xb00fff, MAP_READ);
-	SekSetReadByteHandler (3,		downtown_sharedram_read_byte);
-	SekSetReadWordHandler (3,		downtown_sharedram_read_word);*/
+	SekMapHandler(3,			0xb00000, 0xb00fff, MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler (3,		twineagl_sharedram_read_byte);
+	SekSetReadWordHandler (3,		twineagl_sharedram_read_word);
+	SekSetWriteWordHandler(3,		twineagl_sharedram_write_word);
+	SekSetWriteByteHandler(3,		twineagl_sharedram_write_byte);
 	SekClose();
+
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "downtown")) {
+		BurnLoadRom(DrvSubROM + 0x0004000, 4, 1);
+		BurnLoadRom(DrvSubROM + 0x000c000, 4, 1);
+
+		M6502Init(0, TYPE_M65C02);
+		M6502Open(0);
+		M6502MapMemory(DrvSubRAM,	        0x0000, 0x01ff, MAP_RAM);
+		M6502MapMemory(DrvShareRAM,	        0x5000, 0x57ff, MAP_RAM);
+		M6502MapMemory(DrvSubROM + 0x7000,	0x7000, 0x7fff, MAP_ROM);
+		M6502MapMemory(DrvSubROM + 0xc000,	0x8000, 0xbfff, MAP_ROM); // bank default
+		M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
+		M6502SetWriteHandler(downtown_sub_write);
+		M6502SetReadHandler(downtown_sub_read);
+		M6502SetWriteMemIndexHandler(downtown_sub_write);
+		M6502SetReadMemIndexHandler(downtown_sub_read);
+		M6502Close();
+		m65c02_mode = 1;
+
+		game_rotates = 2; // 2 == downtown mode.
+		RotateSetGunPosRAM(Drv68KRAM + (0xfef90+1), Drv68KRAM + (0xfefd0+1), 1);
+	}
+}
+
+static UINT8 metafox_sub_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x0800: return soundlatch;
+		case 0x0801: return soundlatch2;
+		case 0x1000: return DrvInputs[2];
+		case 0x1002: return DrvInputs[0];
+		case 0x1006: return DrvInputs[1];
+	}
+
+	return 0;
 }
 
 static void metafox68kInit()
@@ -6384,9 +6277,66 @@ static void metafox68kInit()
 	downtown68kInit();
 
 	SekOpen(0);
-	SekSetReadByteHandler (3,		metafox_sharedram_read_byte);
-	SekSetReadWordHandler (3,		metafox_sharedram_read_word);
+	SekMapHandler(3,			0xb00000, 0xb00fff, MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler (3,		twineagl_sharedram_read_byte);
+	SekSetReadWordHandler (3,		twineagl_sharedram_read_word);
+	SekSetWriteWordHandler(3,		twineagl_sharedram_write_word);
+	SekSetWriteByteHandler(3,		twineagl_sharedram_write_byte);
 	SekClose();
+
+	if (X1010_Arbalester_Mode) {
+		BurnLoadRom(DrvSubROM + 0x0006000, 2, 1);
+		memcpy(DrvSubROM + 0x000a000, DrvSubROM + 0x0006000, 0x4000);
+		memcpy(DrvSubROM + 0x000e000, DrvSubROM + 0x0006000, 0x2000);
+	} else {
+		BurnLoadRom(DrvSubROM + 0x0006000, 4, 1);
+		memcpy(DrvSubROM + 0x0008000, DrvSubROM + 0x0006000, 0x2000);
+		memcpy(DrvSubROM + 0x000a000, DrvSubROM + 0x0006000, 0x2000);
+		memcpy(DrvSubROM + 0x000c000, DrvSubROM + 0x0006000, 0x2000);
+		memcpy(DrvSubROM + 0x000e000, DrvSubROM + 0x0006000, 0x2000);
+	}
+
+	M6502Init(0, TYPE_M65C02);
+	M6502Open(0);
+	M6502MapMemory(DrvSubRAM,	        0x0000, 0x01ff, MAP_RAM);
+	M6502MapMemory(DrvShareRAM,	        0x5000, 0x57ff, MAP_RAM);
+	M6502MapMemory(DrvSubROM + 0x7000,	0x7000, 0x7fff, MAP_ROM);
+	M6502MapMemory(DrvSubROM + 0xc000,	0x8000, 0xbfff, MAP_ROM); // bank default
+	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
+	M6502SetWriteHandler(downtown_sub_write);
+	M6502SetReadHandler(metafox_sub_read);
+	M6502SetWriteMemIndexHandler(downtown_sub_write);
+	M6502SetReadMemIndexHandler(metafox_sub_read);
+	M6502Close();
+	m65c02_mode = 1;
+
+}
+
+static void tndrcade_sub_write(UINT16 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x2000: BurnYM2203Write(0, 0, data); return;
+		case 0x2001: BurnYM2203Write(0, 1, data); return;
+		case 0x3000: BurnYM3812Write(0, 0, data); return;
+		case 0x3001: BurnYM3812Write(0, 1, data); return;
+		case 0x1000: m65c02_sub_bankswitch(data); return;
+	}
+}
+
+static UINT8 tndrcade_sub_read(UINT16 address)
+{
+	switch (address)
+	{
+		case 0x0800: return 0xff;
+		case 0x1000: return DrvInputs[0];
+		case 0x1001: return DrvInputs[1];
+		case 0x1002: return DrvInputs[2];
+		case 0x2000: return BurnYM2203Read(0, 0);
+		case 0x2001: return BurnYM2203Read(0, 1);
+	}
+
+	return 0;
 }
 
 static void tndrcade68kInit()
@@ -6401,11 +6351,30 @@ static void tndrcade68kInit()
 	SekMapMemory(Drv68KRAM,			0xe00000, 0xe03fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,			0xffc000, 0xffffff, MAP_RAM);
 
-	// install simulation to make game playable
-	SekMapHandler(3,			0xa00000, 0xa00fff, MAP_READ);
-	SekSetReadByteHandler (3,		tndrcade_sharedram_read_byte);
-	SekSetReadWordHandler (3,		tndrcade_sharedram_read_word);
+	SekMapHandler(3,			0xa00000, 0xa00fff, MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler (3,		twineagl_sharedram_read_byte);
+	SekSetReadWordHandler (3,		twineagl_sharedram_read_word);
+	SekSetWriteWordHandler(3,		twineagl_sharedram_write_word);
+	SekSetWriteByteHandler(3,		twineagl_sharedram_write_byte);
 	SekClose();
+
+	BurnLoadRom(DrvSubROM + 0x0004000, 4, 1);
+	BurnLoadRom(DrvSubROM + 0x000c000, 4, 1);
+
+	M6502Init(0, TYPE_M65C02);
+	M6502Open(0);
+	M6502MapMemory(DrvSubRAM,	        0x0000, 0x01ff, MAP_RAM);
+	M6502MapMemory(DrvShareRAM,	        0x5000, 0x57ff, MAP_RAM);
+	M6502MapMemory(DrvSubROM + 0x6000,	0x6000, 0x7fff, MAP_ROM);
+	//M6502MapMemory(DrvSubROM + 0xc000,	0x8000, 0xbfff, MAP_ROM); // bank default
+	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
+	M6502SetWriteHandler(tndrcade_sub_write);
+	M6502SetReadHandler(tndrcade_sub_read);
+	M6502SetWriteMemIndexHandler(tndrcade_sub_write);
+	M6502SetReadMemIndexHandler(tndrcade_sub_read);
+	M6502Close();
+	m65c02_mode = 1;
+
 }
 
 static void kiwame68kInit()
@@ -6443,21 +6412,6 @@ static void kiwame68kInit()
 UINT8 __fastcall twineagle_extram_read_byte(UINT32 address)
 {
 	return DrvNVRAM[address & 0x3fe];
-}
-
-static void twineagl_sub_write(UINT16 address, UINT8 data)
-{
-	switch (address)
-	{
-		case 0x1000: {
-			m65c02_bank = data >> 4;
-			//bprintf(0, _T("bank %X.\n"), m65c02_bank);
-			M6502MapMemory(DrvSubROM + 0xc000 + (m65c02_bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
-			return;
-		}
-	}
-
-	bprintf(0, _T("ssw %X,"), address);
 }
 
 static UINT8 twineagl_sub_read(UINT16 address)
@@ -6498,9 +6452,6 @@ static void twineagle68kInit()
 	memcpy(DrvSubROM + 0x000c000, DrvSubROM + 0x0006000, 0x2000);
 	memcpy(DrvSubROM + 0x000e000, DrvSubROM + 0x0006000, 0x2000);
 
-	//bprintf(0, _T("vectors: %X,%X,%X,%X\n"), DrvSubROM[0xfffc], DrvSubROM[0xfffd], DrvSubROM[0xfffe], DrvSubROM[0xffff]);
-	//bprintf(0, _T("0x7000: %X,%X,%X,%X\n"), DrvSubROM[0x7000], DrvSubROM[0x7001], DrvSubROM[0x7002], DrvSubROM[0x7003]);
-
 	M6502Init(0, TYPE_M65C02);
 	M6502Open(0);
 	M6502MapMemory(DrvSubRAM,	        0x0000, 0x01ff, MAP_RAM);
@@ -6508,15 +6459,12 @@ static void twineagle68kInit()
 	M6502MapMemory(DrvSubROM + 0x7000,	0x7000, 0x7fff, MAP_ROM);
 	M6502MapMemory(DrvSubROM + 0xc000,	0x8000, 0xbfff, MAP_ROM); // bank default
 	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
-	M6502SetWriteHandler(twineagl_sub_write);
+	M6502SetWriteHandler(downtown_sub_write);
 	M6502SetReadHandler(twineagl_sub_read);
-	M6502SetWriteMemIndexHandler(twineagl_sub_write);
+	M6502SetWriteMemIndexHandler(downtown_sub_write);
 	M6502SetReadMemIndexHandler(twineagl_sub_read);
-	M6502SetReadOpArgHandler(twineagl_sub_read);
-	M6502SetReadOpHandler(twineagl_sub_read);
 	M6502Close();
 	m65c02_mode = 1;
-
 }
 
 static void crazyfgt68kInit()
@@ -6562,15 +6510,6 @@ static void usclssic68kInit()
 	// m65c02 sound...
 }
 
-static void sub_bankswitch(UINT8 d)
-{
-	m65c02_bank = d >> 4;
-
-	M6502MapMemory(DrvSubROM + (m65c02_bank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
-}
-
-int m6502_releaseslice();
-
 static void calibr50_sub_write(UINT16 address, UINT8 data)
 {
 	if (address <= 0x1fff) { // x1_010
@@ -6580,19 +6519,17 @@ static void calibr50_sub_write(UINT16 address, UINT8 data)
 
 	switch (address)
 	{
-		case 0x4000: sub_bankswitch(data);
-		return;
+		case 0x4000:
+			m65c02_sub_bankswitch(data);
+			return;
 
 		case 0xc000:
 			{
 				soundlatch2 = data;
-				m6502_releaseslice();
-
+				M6502ReleaseSlice();
 				return;
 			}
 	}
-
-	bprintf(0, _T("sw %X,"), address);
 }
 
 static UINT8 calibr50_sub_read(UINT16 address)
@@ -6604,13 +6541,9 @@ static UINT8 calibr50_sub_read(UINT16 address)
 	switch (address)
 	{
 		case 0x4000: {
-			//M6502SetIRQLine(0x20, CPU_IRQSTATUS_NONE);
-
 			return soundlatch;
 		}
 	}
-
-	bprintf(0, _T("sr %X,"), address);
 
 	return 0;
 }
@@ -6638,15 +6571,12 @@ static void calibr5068kInit()
 	M6502Open(0);
 	M6502MapMemory(DrvSubROM,	        0xC000, 0xffff, MAP_ROM);
 	M6502MapMemory(DrvSubROM + 0x4000,	0x8000, 0xbfff, MAP_ROM);
-	BurnLoadRom(DrvSubROM + 0x0000, 4, 1);
+	BurnLoadRom(DrvSubROM + 0x4000, 4, 1);
+	BurnLoadRom(DrvSubROM + 0xc000, 4, 1);
 	M6502SetWriteHandler(calibr50_sub_write);
 	M6502SetReadHandler(calibr50_sub_read);
 	M6502SetWriteMemIndexHandler(calibr50_sub_write);
 	M6502SetReadMemIndexHandler(calibr50_sub_read);
-#if 0
-	M6502SetReadOpArgHandler(calibr50_sub_read);
-	M6502SetReadOpHandler(calibr50_sub_read);
-#endif
 	M6502Close();
 	m65c02_mode = 1;
 
@@ -6671,15 +6601,34 @@ static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
 }
 
+static INT32 DrvSynchroniseStream2203(INT32 nSoundRate)
+{
+	return (INT64)M6502TotalCycles() * nSoundRate / 2000000;
+}
+
 static INT32 DrvYM3812SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)SekTotalCycles() * nSoundRate / 16000000;
 }
 
-
 static double DrvGetTime()
 {
 	return (double)ZetTotalCycles() / 4000000.0;
+}
+
+static double DrvGetTime2203()
+{
+	return (double)M6502TotalCycles() / 2000000.0;
+}
+
+static UINT8 DrvYM2203ReadPortA(UINT32)
+{
+	return DrvDips[1];
+}
+
+static UINT8 DrvYM2203ReadPortB(UINT32)
+{
+	return DrvDips[0];
 }
 
 static INT32 DrvGfxDecode(INT32 type, UINT8 *gfx, INT32 num)
@@ -6865,8 +6814,8 @@ static INT32 DrvDoReset(INT32 ram)
 		M6502Reset();
 		m65c02_bank = 0;
 		M6502Close();
-		soundlatch = 0;//xff;
-		soundlatch2 = 0;//xff;
+		soundlatch = 0;
+		soundlatch2 = 0;
 		sub_ctrl_data = 0;
 	}
 
@@ -6874,6 +6823,9 @@ static INT32 DrvDoReset(INT32 ram)
 	MSM6295Reset(0);
 	BurnYM3438Reset();
 	BurnYM3812Reset();
+	if (has_2203) {
+		BurnYM2203Reset();
+	}
 
 	if (game_rotates)
 		RotateReset();
@@ -7076,6 +7028,16 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
 	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
 
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "tndrcade"))
+		has_2203 = 1;
+
+	if (has_2203) {
+		BurnYM2203Init(1,  4000000, NULL, DrvSynchroniseStream2203, DrvGetTime2203, 1);
+		BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
+		BurnYM2203SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
+		BurnTimerAttachM6502(2000000);
+	}
+
 	GenericTilesInit();
 
 	DrvSetDefaultColorTable();
@@ -7117,6 +7079,9 @@ static INT32 DrvExit()
 	x1010_exit();
 	BurnYM3438Exit();
 	BurnYM3812Exit();
+	if (has_2203) {
+		BurnYM2203Exit();
+	}
 
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
@@ -7129,6 +7094,7 @@ static INT32 DrvExit()
 	watchdog_enable = 0;
 	refresh_rate = 6000;
 	game_rotates = 0;
+	has_2203 = 0;
 
 	BurnFree (DrvGfxTransMask[0]);
 	BurnFree (DrvGfxTransMask[2]);
@@ -7807,6 +7773,67 @@ static void Drv68k_Twineagl_FrameCallback()
 	}
 }
 
+static void Drv68k_Downtown_FrameCallback()
+{
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, 2000000 / 60 };
+	INT32 nCyclesDone[2]  = { 0, 0 };
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		SekOpen(0);
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		irq_generator(i);
+		SekClose();
+
+		M6502Open(0);
+		M6502Run(nCyclesTotal[1] / nInterleave);
+		if (i == 4) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		if (i == 9) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		M6502Close();
+	}
+
+	if (pBurnSoundOut) {
+		x1010_sound_update();
+	}
+}
+
+static void Drv68k_Tndrcade_FrameCallback()
+{
+	INT32 nInterleave = 16;
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, 2000000 / 60 };
+
+	SekNewFrame();
+	M6502NewFrame();
+
+	SekOpen(0);
+	M6502Open(0);
+
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		BurnTimerUpdateYM3812((i+1) * (nCyclesTotal[0] / nInterleave));
+		if (i == (nInterleave-1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+	
+		BurnTimerUpdate((i+1) * (nCyclesTotal[1] / nInterleave));
+		if (i == 4) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+	}
+
+	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
+	SekClose();
+	M6502Close();
+
+	if (pBurnSoundOut) {
+		SekOpen(0);
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		SekClose();
+		M6502Open(0);
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		M6502Close();
+	}
+}
+
 static INT32 DrvKMFrame()
 {
 	return DrvCommonFrame(Drv68k_KM_FrameCallback);
@@ -7820,6 +7847,16 @@ static INT32 DrvCalibr50Frame()
 static INT32 DrvTwineaglFrame()
 {
 	return DrvCommonFrame(Drv68k_Twineagl_FrameCallback);
+}
+
+static INT32 DrvDowntownFrame()
+{
+	return DrvCommonFrame(Drv68k_Downtown_FrameCallback);
+}
+
+static INT32 DrvTndrcadeFrame()
+{
+	return DrvCommonFrame(Drv68k_Tndrcade_FrameCallback);
 }
 
 static INT32 Drv5IRQFrame()
@@ -7985,6 +8022,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		x1010_scan(nAction, pnMin);
 		BurnYM3812Scan(nAction, pnMin);	
 		BurnYM3438Scan(nAction, pnMin);
+		if (has_2203)
+			BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 
 		SCAN_VAR(seta_samples_bank);
@@ -10331,19 +10370,17 @@ static INT32 downtownInit()
 	DrvSetColorOffsets(0, 0, 0);
 
 	INT32 nRet = DrvInit(downtown68kInit, 8000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
-	
-	x1010_set_all_routes(0.50, BURN_SND_ROUTE_LEFT);
-	
+
 	return nRet;
 }
 
 struct BurnDriver BurnDrvDowntown = {
 	"downtown", NULL, NULL, NULL, "1989",
-	"DownTown / Mokugeki (Set 1)\0", "No sound, imperfect inputs", "Seta", "Seta",
+	"DownTown / Mokugeki (Set 1)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
 	NULL, downtownRomInfo, downtownRomName, NULL, NULL, DowntownInputInfo, DowntownDIPInfo,
-	downtownInit, DrvExit, DrvFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
+	downtownInit, DrvExit, DrvDowntownFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
 };
 
@@ -10374,9 +10411,9 @@ STD_ROM_FN(downtown2)
 
 struct BurnDriverD BurnDrvDowntown2 = {
 	"downtown2", "downtown", NULL, NULL, "1989",
-	"DownTown / Mokugeki (Set 2)\0", "No sound, imperfect inputs", "Seta", "Seta",
+	"DownTown / Mokugeki (Set 2)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
 	NULL, downtown2RomInfo, downtown2RomName, NULL, NULL, DowntownInputInfo, DowntownDIPInfo,
 	downtownInit, DrvExit, DrvFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
@@ -10409,7 +10446,7 @@ STD_ROM_FN(downtownj)
 
 struct BurnDriver BurnDrvDowntownj = {
 	"downtownj", "downtown", NULL, NULL, "1989",
-	"DownTown / Mokugeki (Joystick Hack)\0", "No sound, imperfect inputs", "Seta", "Seta",
+	"DownTown / Mokugeki (Joystick Hack)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
 	NULL, downtownjRomInfo, downtownjRomName, NULL, NULL, DowntownInputInfo, DowntownDIPInfo,
@@ -10444,9 +10481,9 @@ STD_ROM_FN(downtownp)
 
 struct BurnDriverD BurnDrvDowntownp = {
 	"downtownp", "downtown", NULL, NULL, "1989",
-	"DownTown / Mokugeki (prototype)\0", "No sound, imperfect inputs", "Seta", "Seta",
+	"DownTown / Mokugeki (prototype)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SCRFIGHT, 0,
 	NULL, downtownpRomInfo, downtownpRomName, NULL, NULL, DowntownInputInfo, DowntownDIPInfo,
 	downtownInit, DrvExit, DrvFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
@@ -10481,16 +10518,18 @@ static INT32 tndrcadeInit()
 	DrvSetVideoOffsets(-1, 0, 0, 0);
 	DrvSetColorOffsets(0, 0, 0);
 
+	oisipuzl_hack = 1;
+
 	return DrvInit(tndrcade68kInit, 8000000, SET_IRQLINES(2, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, -1, -1));
 }
 
-struct BurnDriverD BurnDrvTndrcade = {
+struct BurnDriver BurnDrvTndrcade = {
 	"tndrcade", NULL, NULL, NULL, "1987",
-	"Thundercade / Twin Formation\0", "No sound, imperfect inputs", "Seta (Taito license)", "Seta",
+	"Thundercade / Twin Formation\0", NULL, "Seta (Taito license)", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, tndrcadeRomInfo, tndrcadeRomName, NULL, NULL, TndrcadeInputInfo, TndrcadeDIPInfo,
-	tndrcadeInit, DrvExit, DrvFrame /*DrvM65c02Frame*/, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
+	tndrcadeInit, DrvExit, DrvTndrcadeFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
 };
 
@@ -10518,13 +10557,13 @@ static struct BurnRomInfo tndrcadejRomDesc[] = {
 STD_ROM_PICK(tndrcadej)
 STD_ROM_FN(tndrcadej)
 
-struct BurnDriverD BurnDrvTndrcadej = {
+struct BurnDriver BurnDrvTndrcadej = {
 	"tndrcadej", "tndrcade", NULL, NULL, "1987",
-	"Tokusyu Butai U.A.G. (Japan)\0", "No sound, imperfect inputs", "Seta (Taito license)", "Seta",
+	"Tokusyu Butai U.A.G. (Japan)\0", NULL, "Seta (Taito license)", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, tndrcadejRomInfo, tndrcadejRomName, NULL, NULL, TndrcadeInputInfo, TndrcadjDIPInfo,
-	tndrcadeInit, DrvExit, DrvFrame /*DrvM65c02Frame*/, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
+	tndrcadeInit, DrvExit, DrvTndrcadeFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
 };
 
@@ -10560,22 +10599,19 @@ static INT32 arbalestInit()
 	INT32 rc = 0;
 	DrvSetVideoOffsets(0, 1, -2, -1);
 	DrvSetColorOffsets(0, 0, 0);
+	X1010_Arbalester_Mode = 1;
 	rc = DrvInit(metafox68kInit, 8000000, SET_IRQLINES(3, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
-
-	if (!rc) {
-		X1010_Arbalester_Mode = 1;
-	}
 
 	return rc;
 }
 
 struct BurnDriver BurnDrvArbalest = {
 	"arbalest", NULL, NULL, NULL, "1989",
-	"Arbalester\0", "Imperfect inputs", "Seta", "Seta",
+	"Arbalester\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, arbalestRomInfo, arbalestRomName, NULL, NULL, MetafoxInputInfo, ArbalestDIPInfo,
-	arbalestInit, DrvExit, DrvFrame /*DrvM65c02Frame*/, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
+	arbalestInit, DrvExit, DrvTwineaglFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
 };
 
@@ -10625,11 +10661,11 @@ static INT32 metafoxInit()
 
 struct BurnDriver BurnDrvMetafox = {
 	"metafox", NULL, NULL, NULL, "1989",
-	"Meta Fox\0", "Imperfect inputs", "Seta", "Seta",
+	"Meta Fox\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_VERSHOOT, 0,
 	NULL, metafoxRomInfo, metafoxRomName, NULL, NULL, MetafoxInputInfo, MetafoxDIPInfo,
-	metafoxInit, DrvExit, DrvFrame /*DrvM65c02Frame*/, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
+	metafoxInit, DrvExit, DrvTwineaglFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 384, 3, 4
 };
 
@@ -10809,15 +10845,13 @@ static INT32 calibr50Init()
 	DrvSetVideoOffsets(-1, 2, -3, -2);
 
 	INT32 nRet = DrvInit(calibr5068kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
-	
-	//x1010_set_all_routes(0.50, BURN_SND_ROUTE_LEFT);
-	
+
 	return nRet;
 }
 
 struct BurnDriver BurnDrvCalibr50 = {
 	"calibr50", NULL, NULL, NULL, "1989",
-	"Caliber 50\0", "No sound, imperfect inputs", "Athena / Seta", "Seta",
+	"Caliber 50\0", NULL, "Athena / Seta", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SHOOT, 0,
 	NULL, calibr50RomInfo, calibr50RomName, NULL, NULL, Calibr50InputInfo, Calibr50DIPInfo,

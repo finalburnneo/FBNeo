@@ -286,6 +286,15 @@ void M6502Idle(INT32 nCycles)
 	nM6502CyclesTotal += nCycles;
 }
 
+void M6502ReleaseSlice()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502ReleaseSlice called without init\n"));
+#endif
+
+	m6502_releaseslice();
+}
+
 void M6502SetIRQLine(INT32 vector, INT32 status)
 {
 #if defined FBA_DEBUG

@@ -905,8 +905,8 @@ static struct BurnInputInfo DowntownInputList[] = {
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvFakeInput + 0,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvFakeInput + 1,	"p1 fire 2"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3 (rotate)",		BIT_DIGITAL,	DrvFakeInput + 4,	"p1 fire 3"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 coin"	},

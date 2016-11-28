@@ -59,7 +59,7 @@ void x1010_sound_update()
 	memset(pSoundBuf, 0, nBurnSoundLen * sizeof(INT16) * 2);
 
 	X1_010_CHANNEL	*reg;
-	INT32 ch, i, volL, volR, freq, mempos;
+	INT32 ch, i, volL, volR, freq, mempos, div;
 	INT8 *start, *end, data;
 	UINT8 *env;
 	UINT32 smp_offs, smp_step, env_offs, env_step, delta;
@@ -69,7 +69,7 @@ void x1010_sound_update()
 		if( reg->status & 1 ) {	// Key On
 			INT16 *bufL = pSoundBuf + 0;
 			INT16 *bufR = pSoundBuf + 1;
-
+			div = (reg->status&0x80) ? 1 : 0;
 			if( (reg->status & 2) == 0 ) { // PCM sampling
 				start    = (INT8*)( reg->start * 0x1000 + X1010SNDROM );
 				mempos   = reg->start * 0x1000; // used only for bounds checking
@@ -77,7 +77,7 @@ void x1010_sound_update()
 				volL     = ((reg->volume >> 4) & 0xf) * VOL_BASE;
 				volR     = ((reg->volume >> 0) & 0xf) * VOL_BASE;
 				smp_offs = x1_010_chip->smp_offset[ch];
-				freq     = reg->frequency & 0x1f;
+				freq     = reg->frequency>>div;
 				if (!volL) volL = volR;       // dink aug.17,2016: fix missing samples in ms gundam
 				if (!volR) volR = volL;
 				// Meta Fox does not write the frequency register. Ever
@@ -139,7 +139,7 @@ void x1010_sound_update()
 				start    = (INT8*) & (x1_010_chip->reg[reg->volume * 128 + 0x1000]);
 				mempos   = reg->volume * 128 + 0x1000; // used only for bounds checking
 				smp_offs = x1_010_chip->smp_offset[ch];
-				freq     = (reg->pitch_hi << 8) + reg->frequency;
+				freq     = ((reg->pitch_hi << 8) + reg->frequency)>>div;
 				smp_step = (UINT32)((float)x1_010_chip->rate / (float)nBurnSoundRate / 128.0 / 4.0 * freq * (1 << FREQ_BASE_BITS) );
 
 				env      = (UINT8*) & (x1_010_chip->reg[reg->end * 128]);

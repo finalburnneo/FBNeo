@@ -76,7 +76,8 @@ static INT32 ColorOffsets[3] = { 0, 0, 0 };
 static INT32 ColorDepths[3];
 static INT32 twineagle = 0;
 static INT32 daiohc = 0; // lazy fix - disable writes to alternate scroll write offsets
-static INT32 oisipuzl_hack = 0;
+static INT32 oisipuzl_hack = 0; // 32px sprite offset
+static INT32 crazyfoffsetkludge = 0; // offset one of the tile layers only
 static INT32 refresh_rate = 6000;
 
 static INT32 seta_samples_bank = 0;
@@ -92,7 +93,6 @@ static INT32 m65c02_mode = 0;
 static INT32 m65c02_bank = 0;
 static INT32 sub_ctrl_data = 0;
 static INT32 has_2203 = 0;
-static INT32 tndrcade_init_sim = 0;
 
 static INT32 DrvAxis[4];
 static UINT16 DrvAnalogInput[4];
@@ -4866,8 +4866,9 @@ UINT8 __fastcall zombraid_gun_read_byte(UINT32 )
 
 void __fastcall utoukond_sound_write(UINT16 address, UINT8 data)
 {
-	if (address >= 0xf000) {
-		setaSoundRegWriteByte((address & 0xfff) * 2 + 1, data);
+	if (address >= 0xf000) { // x1_010
+		setaSoundRegWriteByte8bit(address & 0xfff, data);
+		return;
 	}
 }
 
@@ -4913,17 +4914,19 @@ UINT8 __fastcall utoukond_sound_read_port(UINT16 port)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // wiggie / superbar sound handler
 
-void __fastcall wiggie_sound_write_word(UINT32 , UINT16 )
+void __fastcall wiggie_sound_write_word(UINT32 a, UINT16 d)
 {
+	bprintf(0, _T("sww %X:%X."),a,d);
 
 }
 
 void __fastcall wiggie_sound_write_byte(UINT32 address, UINT8 data)
 {
-	if (address != 0xb00008 && address != 0xc00000) return; // wiggie
+	bprintf(0, _T("sww %X:%X."),address,data);
+	//if (address != 0xb00008 && address != 0xc00000) return; // wiggie
 
 	soundlatch = data;
-	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 }
 
 void __fastcall wiggie_sound_write(UINT16 address, UINT8 data)
@@ -6124,9 +6127,9 @@ static void wiggie68kInit()
 	SekOpen(0);
 	SekMapMemory(Drv68KRAM + 0x80000, 0x100000, 0x103fff, MAP_READ); // nop
 
-	SekMapHandler(1,			0xb00008, 0xb00009, MAP_WRITE);
-	SekSetWriteWordHandler(1,		wiggie_sound_write_word);
-	SekSetWriteByteHandler(1,		wiggie_sound_write_byte);
+	SekMapHandler(2,			0xb00008, 0xb00009, MAP_WRITE);
+	SekSetWriteWordHandler(2,		wiggie_sound_write_word);
+	SekSetWriteByteHandler(2,		wiggie_sound_write_byte);
 	SekClose();
 
 	Wiggie68kDecode();
@@ -6812,7 +6815,7 @@ static INT32 DrvDoReset(INT32 ram)
 	if (m65c02_mode) {
 		M6502Open(0);
 		M6502Reset();
-		m65c02_bank = 0;
+		m65c02_sub_bankswitch(0);
 		M6502Close();
 		soundlatch = 0;
 		soundlatch2 = 0;
@@ -6831,8 +6834,6 @@ static INT32 DrvDoReset(INT32 ram)
 		RotateReset();
 
 	watchdog = 0;
-
-	tndrcade_init_sim = 0;
 
 	return 0;
 }
@@ -7064,7 +7065,8 @@ static INT32 DrvExit()
 	DrvGfxROM1 = NULL;
 	DrvGfxROM2 = NULL;
 
-	memset (ColorOffsets, 0, 3 * sizeof(INT32));
+	DrvSetColorOffsets(0, 0, 0);
+	DrvSetVideoOffsets(0, 0, 0, 0);
 
 	SekExit();
 	ZetExit();
@@ -7088,6 +7090,7 @@ static INT32 DrvExit()
 
 	BurnFree (AllMem);
 
+	crazyfoffsetkludge = 0;
 	oisipuzl_hack = 0;
 	twineagle = 0;
 	daiohc = 0;
@@ -7318,6 +7321,7 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 num, INT32 opaque, INT32 sc
 		INT32 sy = (offs >> 6) << 4;
 
 		sx -= scrollx;
+		if (crazyfoffsetkludge) sx += 6; //scrollx is overflowed (0x3ff masks out the +6), so have to do it this way.
 		if (sx < -15) sx += 0x400;
 		sy -= scrolly;
 		if (sy < -15) sy += 0x200;
@@ -8028,15 +8032,22 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(seta_samples_bank);
 		SCAN_VAR(usclssic_port_select);
-		SCAN_VAR(tndrcade_init_sim);
 		SCAN_VAR(gun_input_bit);
 		SCAN_VAR(gun_input_src);
+		SCAN_VAR(m65c02_bank);
+		SCAN_VAR(sub_ctrl_data);
 	}
 
 	if (nAction & ACB_WRITE) {
 		INT32 tmpbank = seta_samples_bank;
 		seta_samples_bank = -1;
 		set_pcm_bank(tmpbank);
+
+		if (m65c02_mode) {
+			M6502Open(0);
+			m65c02_sub_bankswitch(m65c02_bank);
+			M6502Close();
+		}
 	}
 
 	return 0;
@@ -10330,7 +10341,7 @@ static INT32 utoukondInit()
 
 struct BurnDriver BurnDrvUtoukond = {
 	"utoukond", NULL, NULL, NULL, "1993",
-	"Ultra Toukon Densetsu (Japan)\0", "No sound", "Banpresto / Tsuburaya Productions", "Seta",
+	"Ultra Toukon Densetsu (Japan)\0", NULL, "Banpresto / Tsuburaya Productions", "Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA1, GBF_VSFIGHT, 0,
 	NULL, utoukondRomInfo, utoukondRomName, NULL, NULL, UtoukondInputInfo, UtoukondDIPInfo,
@@ -10886,7 +10897,9 @@ STD_ROM_FN(crazyfgt)
 static INT32 crazyfgtInit()
 {
 	DrvSetColorOffsets(0, 0xa00, 0x200);
-	DrvSetVideoOffsets(6, 0, -4, 0);
+	DrvSetVideoOffsets(8, 0, -4, 0);
+
+	crazyfoffsetkludge = 1;
 
 	INT32 nRet = DrvInit(crazyfgt68kInit, 16000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(5, 4, 4));
 

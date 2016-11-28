@@ -514,6 +514,14 @@ static struct BurnDIPInfo RoishtarDIPList[]=
 
 STDDIPINFO(Roishtar)
 
+static INT32 tile_xoffset[4] = { 4, 2, 5, 3 };
+
+static void set_tile_offsets(INT32 a, INT32 b, INT32 c, INT32 d)
+{
+	tile_xoffset[0] = a; tile_xoffset[1] = b;
+	tile_xoffset[2] = c; tile_xoffset[3] = d;
+}
+
 static void namco_63701x_write(INT32 offset, UINT8 data)
 {
 	offset &= 3;
@@ -597,7 +605,7 @@ static void namco_63701x_update(INT16 *outputs, INT32  samples)
 		buffer[1] += t_samples[offset];
 		buffer += 2;
 	}
-		
+
 }
 
 static UINT8 namcos86_cpu0_read(UINT16 address)
@@ -1290,6 +1298,8 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 	HD63701SetReadPortHandler(namcos86_mcu_read_port);
 //	HD63701Close();
 
+	set_tile_offsets(4, 2, 5, 3); // rthunder
+
 	switch (nSubCPUConfig)
 	{
 		case 0: // hopmappy / skykid
@@ -1298,6 +1308,11 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 			M6809MapMemory(DrvSubROM + 0x0000,	0x0000, 0xffff, MAP_ROM);
 			M6809SetWriteHandler(hopmappy_cpu1_write);
 			M6809Close();
+
+			set_tile_offsets(-3, -2, 5, 3); // skykid
+
+			if (strstr(BurnDrvGetTextA(DRV_NAME), "hopmappy"))
+				set_tile_offsets(4, -2, 5, 3); // hopmappy
 		}
 		break;
 
@@ -1410,9 +1425,7 @@ static void draw_layer(INT32 layer, INT32 priority)
 {
 	if ((nBurnLayer & (1 << layer)) == 0) return;
 
-	const int xoffset[4] = { 1, 2, 0, 2 };
-
-	INT32 scrollx_offset = flipscreen ? -xoffset[layer] : xoffset[layer];
+	INT32 scrollx_offset = flipscreen ? -tile_xoffset[layer] : tile_xoffset[layer];
 	INT32 scrollx = ((scroll[layer][0] * 256) + scroll[layer][1] + scrollx_offset) & 0x1ff;
 	INT32 scrolly = (scroll[layer][2] - 0) & 0xff;
 
@@ -1856,13 +1869,18 @@ static struct BurnRomInfo hopmappyRomDesc[] = {
 STD_ROM_PICK(hopmappy)
 STD_ROM_FN(hopmappy)
 
+static INT32 HopmappyInit()
+{
+	return CommonInit(0, 0);
+}
+
 struct BurnDriver BurnDrvHopmappy = {
 	"hopmappy", NULL, NULL, NULL, "1986",
 	"Hopping Mappy\0", NULL, "Namco", "System 86",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, hopmappyRomInfo, hopmappyRomName, NULL, NULL, HopmappyInputInfo, HopmappyDIPInfo,
-	SkykiddxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	HopmappyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	288, 224, 4, 3
 };
 

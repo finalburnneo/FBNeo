@@ -224,7 +224,8 @@ static void BCU2QueueLayer(UINT16* pTilemap, INT32 nXPos, INT32 nYPos)
 			nTileNumber = pTilemap[nTileRow + nTileColumn + 1];
 			nTileAttrib = pTilemap[nTileRow + nTileColumn];
 
-			if (!(nTileNumber & 0x8000) && (nTileAttrib & 0xF000)) {
+			// Rallybik uses hidden tiles to do the background fades on the titlescreen.
+			if ((!(nTileNumber & 0x8000) && (nTileAttrib & 0xF000)) || Rallybik) {
 				pBCU2TileQueue[nTileAttrib >> 12]->nTileAttrib = (nTileAttrib << 16) | nTileNumber;
 				pBCU2TileQueue[nTileAttrib >> 12]->nTileXPos = (x << 3) - (nXPos & 7);
 				pBCU2TileQueue[nTileAttrib >> 12]->nTileYPos = (y << 3) - (nYPos & 7);

@@ -5178,6 +5178,8 @@ static UINT8 rotate_gunpos_multiplier = 1;
 // game     p1           p2           clockwise value in memory         multiplier
 // calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
 // downtown 0xffef90+1   0xfefd0+1    0 1 2 3 4 5 6 7                   1
+//ff3867 on ground or plane? (not for 2 pl)
+//p1 ff0e69 p2 ff0e89? rotate reg.
 
 static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
 	rotate_gunpos[0] = p1;
@@ -8022,9 +8024,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		ZetScan(nAction);
+		if (m65c02_mode) {
+			M6502Scan(nAction);
+		}
 
 		x1010_scan(nAction, pnMin);
-		BurnYM3812Scan(nAction, pnMin);	
+		BurnYM3812Scan(nAction, pnMin);
 		BurnYM3438Scan(nAction, pnMin);
 		if (has_2203)
 			BurnYM2203Scan(nAction, pnMin);

@@ -7675,7 +7675,7 @@ static INT32 DrvFrameMsgundam()
 static void Drv68k_Calibr50_FrameCallback()
 {
 	INT32 nInterleave = 4;
-	INT32 nCyclesTotal[2] = { 8000000 / 60, 2000000 / 60}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
+	INT32 nCyclesTotal[2] = { (8000000 * 100) / refresh_rate, (2000000 * 100) / refresh_rate}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	SekOpen(0);
@@ -7755,7 +7755,7 @@ static void Drv68k_KM_FrameCallback() // kamenrid & madshark
 static void Drv68k_Twineagl_FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, 2000000 / 60 };
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -7780,7 +7780,7 @@ static void Drv68k_Twineagl_FrameCallback()
 static void Drv68k_Downtown_FrameCallback()
 {
 	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, 2000000 / 60 };
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -7805,7 +7805,7 @@ static void Drv68k_Downtown_FrameCallback()
 static void Drv68k_Tndrcade_FrameCallback()
 {
 	INT32 nInterleave = 16;
-	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, 2000000 / 60 };
+	INT32 nCyclesTotal[2] = { (cpuspeed * 100) / refresh_rate, (2000000 * 100) / refresh_rate };
 
 	SekNewFrame();
 	M6502NewFrame();

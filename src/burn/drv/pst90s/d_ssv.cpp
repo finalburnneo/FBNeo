@@ -10,6 +10,7 @@
 #include "math.h"
 
 /*
+	srmp7 - no music/sfx
 	gundam - verify layer should be OVER sprites and not behind
 	analog inputs not hooked up at all
 	clipping is not hooked up (broken) - marked with "iq_132" test with twin eagle
@@ -67,7 +68,9 @@ static INT32 Gclip_max_y;
 static INT32 interrupt_ultrax = 0;
 static INT32 watchdog_disable = 0;
 static INT32 is_gdfs = 0;
-static INT32 vbl_kludge = 0;
+static INT32 vbl_kludge = 0; // late vbl, for flicker issues in vertical games
+static INT32 vbl_invert = 0; // invert vblank register, for drifto94
+
 static INT32 dsp_enable = 0;
 
 static INT32 nDrvSndROMLen[4];
@@ -368,6 +371,56 @@ static struct BurnInputInfo MahjongInputList[] = {
 };
 
 STDINPUTINFO(Mahjong)
+
+static struct BurnInputInfo Srmp4InputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy8 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"	},
+	{"A",			BIT_DIGITAL,	DrvJoy8 + 5,	"mah a"		},
+	{"B",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah b"		},
+	{"C",			BIT_DIGITAL,	DrvJoy6 + 2,	"mah c"		},
+	{"D",			BIT_DIGITAL,	DrvJoy5 + 5,	"mah d"		},
+	{"E",			BIT_DIGITAL,	DrvJoy8 + 4,	"mah e"		},
+	{"F",			BIT_DIGITAL,	DrvJoy7 + 4,	"mah f"		},
+	{"G",			BIT_DIGITAL,	DrvJoy6 + 4,	"mah g"		},
+	{"H",			BIT_DIGITAL,	DrvJoy5 + 4,	"mah h"		},
+	{"I",			BIT_DIGITAL,	DrvJoy8 + 3,	"mah i"		},
+	{"J",			BIT_DIGITAL,	DrvJoy7 + 3,	"mah j"		},
+	{"K",			BIT_DIGITAL,	DrvJoy6 + 3,	"mah k"		},
+	{"L",			BIT_DIGITAL,	DrvJoy5 + 3,	"mah l"		},
+	{"M",			BIT_DIGITAL,	DrvJoy8 + 2,	"mah m"		},
+	{"N",			BIT_DIGITAL,	DrvJoy7 + 2,	"mah n"		},
+	{"Pon",			BIT_DIGITAL,	DrvJoy5 + 2,	"mah pon"	},
+	{"Chi",			BIT_DIGITAL,	DrvJoy6 + 2,	"mah chi"	},
+	{"Kan",			BIT_DIGITAL,	DrvJoy8 + 1,	"mah kan"	},
+	{"Ron",			BIT_DIGITAL,	DrvJoy6 + 1,	"mah ron"	},
+	{"Reach",		BIT_DIGITAL,	DrvJoy7 + 1,	"mah reach"	},
+	{"Bet",			BIT_DIGITAL,	DrvJoy7 + 0,	"mah bet"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Srmp4)
 
 static struct BurnInputInfo HypreactInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -2155,7 +2208,14 @@ static UINT16 common_main_read_word(UINT32 address)
 	switch (address & ~1)
 	{
 		case 0x1c0000:
-			return (vblank) ? 0x3000 : 0;
+			if (vbl_invert) {
+				return (vblank) ? 0 : 0x3000;
+			} else {
+				return (vblank) ? 0x3000 : 0;
+			}
+
+		case 0x1c0002:
+			return 0;
 
 		case 0x210000:
 			watchdog = 0;
@@ -2239,6 +2299,10 @@ static UINT8 common_main_read_byte(UINT32 address)
 		case 0x480000:
 		case 0x480001:
 			if (dsp_enable) return snesdsp_read(true);
+			return 0;
+
+		case 0x500002: // nop?
+		case 0x500004: // nop?
 			return 0;
 
 		case 0x500008: // survarts
@@ -3093,6 +3157,7 @@ static INT32 DrvExit()
 	is_gdfs = 0;
 	dsp_enable = 0;
 	vbl_kludge = 0;
+	vbl_invert = 0;
 
 	return 0;
 }
@@ -3600,6 +3665,7 @@ static INT32 DrvFrame()
 {
 	watchdog++;
 	if (watchdog >= 180 && watchdog_disable == 0) {
+		bprintf(0, _T("Watchdog tripped.\n"));
 		DrvDoReset(0);
 	}
 
@@ -3623,8 +3689,9 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 16000000 / 60, 10000000 / 60 };
+	INT32 nCyclesTotal[2] = { (16000000 * 100) / 6018, (10000000 * 100) / 6018 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSegment = 0;
 
 	v60Open(0);
 
@@ -3632,15 +3699,23 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (dsp_enable)
+		/*if (dsp_enable)   // saving just in-case.
 		{
 			for (INT32 j = 0; j < 20; j++)
 			{
+				//nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+				//nCyclesDone[0] += v60Run(nSegment/20);
+
 				nCyclesDone[0] += v60Run((nCyclesTotal[0] / nInterleave) / 20);
 				nCyclesDone[1] += upd96050Run((nCyclesTotal[1] / nInterleave) / 20);
 			}
-		} else {
-			nCyclesDone[0] += v60Run(nCyclesTotal[0] / nInterleave);
+			} else*/
+		{
+			nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+			nCyclesDone[0] += v60Run(nSegment);
+			if (dsp_enable)
+				nCyclesDone[1] += upd96050Run(nCyclesTotal[1] / nInterleave);
+			//nCyclesDone[0] += v60Run(nCyclesTotal[0] / nInterleave);
 		}
 
 		if (i == 0 && interrupt_ultrax) {
@@ -3655,7 +3730,6 @@ static INT32 DrvFrame()
 
 		if (i == ((vbl_kludge) ? (nInterleave-1) : 240)) {
 			vblank = 1;
-
 			requested_int |= 1 << 3;
 			update_irq_state();
 		}
@@ -3907,8 +3981,8 @@ struct BurnDriver BurnDrvSurvarts = {
 // Survival Arts (USA)
 
 static struct BurnRomInfo survartsuRomDesc[] = {
-	{ "usa-pr-l.u4",	0x080000, 0xfa328673, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
-	{ "usa-pr-h.u3",	0x080000, 0x6bee2635, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "usa-pr-l.u4",	0x080000, 0xfa328673, 2 | BRF_PRG | BRF_ESS }, //  0 V60 Code
+	{ "usa-pr-h.u3",	0x080000, 0x6bee2635, 2 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "si001-01.u27",	0x200000, 0x8b38fbab, 3 | BRF_GRA },           //  2 Graphics
 	{ "si001-04.u26",	0x200000, 0x34248b54, 3 | BRF_GRA },           //  3
@@ -3943,8 +4017,8 @@ struct BurnDriver BurnDrvSurvartsu = {
 // Survival Arts (Japan)
 
 static struct BurnRomInfo survartsjRomDesc[] = {
-	{ "jpn-pr-l.u4",	0x080000, 0xe5a52e8c, 1 | BRF_PRG | BRF_ESS }, //  0 V60 Code
-	{ "jan-pr-h.u3",	0x080000, 0x051c9bca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jpn-pr-l.u4",	0x080000, 0xe5a52e8c, 2 | BRF_PRG | BRF_ESS }, //  0 V60 Code
+	{ "jan-pr-h.u3",	0x080000, 0x051c9bca, 2 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "si001-01.u27",	0x200000, 0x8b38fbab, 3 | BRF_GRA },           //  2 Graphics
 	{ "si001-04.u26",	0x200000, 0x34248b54, 3 | BRF_GRA },           //  3
@@ -4171,6 +4245,7 @@ static void Drifto94V60Map()
 static INT32 Drifto94Init()
 {
 	watchdog_disable = 1;
+	vbl_invert = 1;
 
 	return DrvCommonInit(Drifto94V60Map, NULL, 0, 0, 1, -1, -1, 0.80, 0);
 }
@@ -4426,7 +4501,7 @@ struct BurnDriver BurnDrvStmblade = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, stmbladeRomInfo, stmbladeRomName, NULL, NULL, DrvInputInfo, StmbladeDIPInfo,
 	StmbladeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	240, 340, 3, 4
+	240, 352, 3, 4
 };
 
 
@@ -4462,7 +4537,7 @@ struct BurnDriver BurnDrvStmbladej = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, stmbladejRomInfo, stmbladejRomName, NULL, NULL, DrvInputInfo, StmbladeDIPInfo,
 	StmbladeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
-	240, 336, 3, 4
+	240, 352, 3, 4
 };
 
 
@@ -4847,7 +4922,7 @@ struct BurnDriver BurnDrvSrmp4 = {
 	"Super Real Mahjong PIV (Japan)\0", NULL, "Seta", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, srmp4RomInfo, srmp4RomName, NULL, NULL, MahjongInputInfo, Srmp4DIPInfo,
+	NULL, srmp4RomInfo, srmp4RomName, NULL, NULL, Srmp4InputInfo, Srmp4DIPInfo,
 	Srmp4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3
 };
@@ -4880,7 +4955,7 @@ struct BurnDriver BurnDrvSrmp4o = {
 	"Super Real Mahjong PIV (Japan, older set)\0", NULL, "Seta", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, srmp4oRomInfo, srmp4oRomName, NULL, NULL, MahjongInputInfo, Srmp4DIPInfo,
+	NULL, srmp4oRomInfo, srmp4oRomName, NULL, NULL, Srmp4InputInfo, Srmp4DIPInfo,
 	Srmp4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3
 };
@@ -5054,7 +5129,7 @@ static INT32 Srmp7Init()
 
 struct BurnDriver BurnDrvSrmp7 = {
 	"srmp7", NULL, NULL, NULL, "1997",
-	"Super Real Mahjong P7 (Japan)\0", NULL, "Seta", "SSV",
+	"Super Real Mahjong P7 (Japan)\0", "No sound.", "Seta", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, srmp7RomInfo, srmp7RomName, NULL, NULL, Srmp7InputInfo, Srmp7DIPInfo,
@@ -5187,11 +5262,11 @@ static INT32 JskInit()
 	return 1;
 }
 
-struct BurnDriver BurnDrvJsk = {
+struct BurnDriverD BurnDrvJsk = {
 	"jsk", NULL, NULL, NULL, "1997",
 	"Joryuu Syougi Kyoushitsu (Japan)\0", "Unemulated CPU", "Visco", "MSSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
+	0, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, jskRomInfo, jskRomName, NULL, NULL, DrvInputInfo, JskDIPInfo,
 	JskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3

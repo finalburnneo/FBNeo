@@ -823,7 +823,7 @@ STD_ROM_FN(tricktrp)
 
 struct BurnDriver BurnDrvTricktrp = {
 	"tricktrp", NULL, NULL, NULL, "1987",
-	"Trick Trap (World?)\0", NULL, "Konami", "GX771",
+	"Trick Trap (World?)\0", "Graphics issues in the ending credits.", "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, tricktrpRomInfo, tricktrpRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
@@ -848,7 +848,7 @@ STD_ROM_FN(labyrunr)
 
 struct BurnDriver BurnDrvLabyrunr = {
 	"labyrunr", "tricktrp", NULL, NULL, "1987",
-	"Labyrinth Runner (Japan)\0", NULL, "Konami", "GX771",
+	"Labyrinth Runner (Japan)\0", "Graphics issues in the ending credits.", "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, labyrunrRomInfo, labyrunrRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
@@ -876,7 +876,7 @@ STD_ROM_FN(labyrunrk)
 
 struct BurnDriver BurnDrvLabyrunrk = {
 	"labyrunrk", "tricktrp", NULL, NULL, "1987",
-	"Labyrinth Runner (World Ver. K)\0", NULL, "Konami", "GX771",
+	"Labyrinth Runner (World Ver. K)\0", "Graphics issues in the ending credits.", "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, labyrunrkRomInfo, labyrunrkRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,

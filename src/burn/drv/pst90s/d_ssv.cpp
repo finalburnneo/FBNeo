@@ -2205,6 +2205,10 @@ static UINT16 common_main_read_word(UINT32 address)
 		return ES5506Read((address & 0x7e)/2);
 	}
 
+	if ((address & 0xffff00) == 0x8c0000) {
+		return st0020_blitram_read_word(address);
+	}
+
 	switch (address & ~1)
 	{
 		case 0x1c0000:
@@ -3951,7 +3955,7 @@ static INT32 SurvartsInit()
 
 static INT32 DynagearInit()
 {
-	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1, 0.20, 0);
+	return DrvCommonInit(SurvartsV60Map, NULL, 0, -1, -1, 2, -1, 0.20, 1);
 }
 
 struct BurnDriver BurnDrvSurvarts = {
@@ -4063,7 +4067,7 @@ struct BurnDriver BurnDrvDynagear = {
 	"dynagear", NULL, NULL, NULL, "1993",
 	"Dyna Gear\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, dynagearRomInfo, dynagearRomName, NULL, NULL, DrvInputInfo, DynagearDIPInfo,
 	DynagearInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3
@@ -4691,7 +4695,7 @@ static INT32 GdfsInit()
 	st0020GfxROMLen = 0x1000000;
 	watchdog_disable = 1;
 
-	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0, 0.80, 0);
+	return DrvCommonInit(GdfsV60Map, GdfsRomLoadCallback, 0, 0, 0, 0, 0, 0.80, 1);
 }
 
 struct BurnDriver BurnDrvGdfs = {

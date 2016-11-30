@@ -74,6 +74,13 @@ void st0020_blitram_write_word(UINT32 offset, UINT16 data)
 	if ((offset & 0xfe) == 0xca) st0020_blitter_write();
 }
 
+UINT16 st0020_blitram_read_word(UINT32 offset)
+{
+	UINT16 *st0020_blitram = (UINT16*)st0020BlitRAM;
+
+	return st0020_blitram[(offset/2)&0x7f];
+}
+
 void st0020_blitram_write_byte(UINT32 offset, UINT8 data)
 {
 	st0020BlitRAM[(offset & 0xff)] = data;

@@ -11,4 +11,5 @@ void st0020GfxramWriteWord(UINT32 offset, UINT16 data);
 
 void st0020_blitram_write_word(UINT32 offset, UINT16 data);
 void st0020_blitram_write_byte(UINT32 offset, UINT8 data);
+UINT16 st0020_blitram_read_word(UINT32 offset);
 void st0020Draw();

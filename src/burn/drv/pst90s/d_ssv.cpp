@@ -3699,24 +3699,11 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		/*if (dsp_enable)   // saving just in-case.
-		{
-			for (INT32 j = 0; j < 20; j++)
-			{
-				//nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-				//nCyclesDone[0] += v60Run(nSegment/20);
+		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+		nCyclesDone[0] += v60Run(nSegment);
 
-				nCyclesDone[0] += v60Run((nCyclesTotal[0] / nInterleave) / 20);
-				nCyclesDone[1] += upd96050Run((nCyclesTotal[1] / nInterleave) / 20);
-			}
-			} else*/
-		{
-			nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-			nCyclesDone[0] += v60Run(nSegment);
-			if (dsp_enable)
-				nCyclesDone[1] += upd96050Run(nCyclesTotal[1] / nInterleave);
-			//nCyclesDone[0] += v60Run(nCyclesTotal[0] / nInterleave);
-		}
+		if (dsp_enable)
+			nCyclesDone[1] += upd96050Run(nCyclesTotal[1] / nInterleave);
 
 		if (i == 0 && interrupt_ultrax) {
 			requested_int |= 1 << 1;
@@ -4812,7 +4799,7 @@ struct BurnDriver BurnDrvJanjans2 = {
 	"Lovely Pop Mahjong JangJang Shimasho 2 (Japan)\0", NULL, "Visco", "SSV",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
-	NULL, janjans2RomInfo, janjans2RomName, NULL, NULL, MahjongInputInfo, Janjans2DIPInfo,
+	NULL, janjans2RomInfo, janjans2RomName, NULL, NULL, Srmp4InputInfo, Janjans2DIPInfo,
 	Janjans2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 238, 4, 3
 };

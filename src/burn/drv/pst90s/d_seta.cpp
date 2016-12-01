@@ -5176,10 +5176,12 @@ static UINT8 rotate_gunpos_multiplier = 1;
 
 // Gun-rotation memory locations - do not remove this tag. - dink :)
 // game     p1           p2           clockwise value in memory         multiplier
-// calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
 // downtown 0xffef90+1   0xfefd0+1    0 1 2 3 4 5 6 7                   1
-//ff3867 on ground or plane? (not for 2 pl)
-//p1 ff0e69 p2 ff0e89? rotate reg.
+//
+// calibr50 0xff2500+3   0xff2520+7   0 1 2 3 4 5 6 7 8 9 a b c d e f   2
+// ff4ede = 0xff = onplane
+// a00010 a00014 = plane rotate regs  MMIO INPUTS DUMBASS
+// p1 ff0e69 p2 ff0e89? rotate reg.
 
 static void RotateSetGunPosRAM(UINT8 *p1, UINT8 *p2, UINT8 multiplier) {
 	rotate_gunpos[0] = p1;
@@ -5223,9 +5225,19 @@ static void RotateDoTick() {
 	// do this.
 	if (nCurrentFrame&1) return;
 
+	if (game_rotates == 1) { // calibr50 switcheroo
+		if (Drv68KRAM[0x4ede] == 0xff) {
+			// P1/P2 in the airplane
+			RotateSetGunPosRAM(Drv68KRAM + (0x0e69-1), Drv68KRAM + (0x0e89-1), 2);
+		} else {
+			// P1/P2 normal.
+			RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
+		}
+	}
+
 	for (INT32 i = 0; i < 2; i++) {
 		if (rotate_gunpos[i] && (nRotateTarget[i] != -1) && (nRotateTarget[i] != (*rotate_gunpos[i] & 0xff))) {
-			if (get_distance(nRotateTarget[i], *rotate_gunpos[i] & 0xff)) {
+			if (get_distance(nRotateTarget[i], *rotate_gunpos[i] & 0x0f)) {
 				RotateLeft(&nRotate[i]);  // ++
 			} else {
 				RotateRight(&nRotate[i]); // --
@@ -5336,6 +5348,7 @@ void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 
 		return;
 	}
+	//bprintf(0, _T("ww: %X."), address);
 }
 
 void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
@@ -5350,6 +5363,7 @@ void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 
 		return;
 	}
+	//bprintf(0, _T("wb: %X."), address);
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------

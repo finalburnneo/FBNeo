@@ -50,6 +50,7 @@ static UINT8 DrvSoundLatch;
 static INT32 PriorityFlag;
 
 static INT32 dim_c, dim_v;
+static INT32 NoDim = 0;
 
 static INT32 DrvNvRamBank;
 static INT32 CuebrickSndIrqFire;
@@ -5167,7 +5168,9 @@ static INT32 LgtnfghtInit()
 	K053260SetRoute(0, BURN_SND_K053260_ROUTE_2, 0.70, BURN_SND_ROUTE_RIGHT);
 
 	EEPROMInit(&thndrx2_eeprom_interface);
-	
+
+	NoDim = 1;
+
 	// Reset the driver
 	SsridersDoReset();
 
@@ -5497,7 +5500,8 @@ static INT32 BlswhstlExit()
 {
 	K053260Exit();
 	EEPROMExit();
-	
+	NoDim = 0;
+
 	return CommonZ80Exit();
 }
 
@@ -5580,7 +5584,7 @@ static void PaletteDim(INT32 dimslayer)
 	brt = 100;
 	if (en) brt -= 40*dim/8;
 
-	if (brt < 100) {
+	if (brt < 100 && !NoDim) {
 		cb = LayerColourBase[dimslayer] << 4;
 		ce = cb + 128;
 

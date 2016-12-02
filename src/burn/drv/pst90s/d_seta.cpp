@@ -77,7 +77,6 @@ static INT32 ColorDepths[3];
 static INT32 twineagle = 0;
 static INT32 daiohc = 0; // lazy fix - disable writes to alternate scroll write offsets
 static INT32 oisipuzl_hack = 0; // 32px sprite offset
-static INT32 crazyfoffsetkludge = 0; // offset one of the tile layers only
 static INT32 refresh_rate = 6000;
 
 static INT32 seta_samples_bank = 0;
@@ -5344,7 +5343,7 @@ void __fastcall calibr50_write_word(UINT32 address, UINT16 data)
 		soundlatch = data;
 
 		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-		M6502Run(100);
+		SekRunEnd();
 
 		return;
 	}
@@ -5359,7 +5358,7 @@ void __fastcall calibr50_write_byte(UINT32 address, UINT8 data)
 		soundlatch = data;
 
 		M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-		M6502Run(100);
+		SekRunEnd();
 
 		return;
 	}
@@ -7106,7 +7105,6 @@ static INT32 DrvExit()
 
 	BurnFree (AllMem);
 
-	crazyfoffsetkludge = 0;
 	oisipuzl_hack = 0;
 	twineagle = 0;
 	daiohc = 0;
@@ -7326,7 +7324,7 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 num, INT32 opaque, INT32 sc
 	INT32 depth = ColorDepths[num];
 	INT32 color_offset = ColorOffsets[num];
 
-	scrollx = (scrollx + VideoOffsets[1][flipscreen]) & 0x3ff;
+	scrollx = scrollx & 0x3ff; // offsets added in seta_update()
 	scrolly = (scrolly + VideoOffsets[2][0]) & 0x1ff;
 
 	UINT16 *vram = (UINT16*)ram;
@@ -7337,7 +7335,6 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 num, INT32 opaque, INT32 sc
 		INT32 sy = (offs >> 6) << 4;
 
 		sx -= scrollx;
-		if (crazyfoffsetkludge) sx += 6; //scrollx is overflowed (0x3ff masks out the +6), so have to do it this way.
 		if (sx < -15) sx += 0x400;
 		sy -= scrolly;
 		if (sy < -15) sy += 0x200;
@@ -7690,7 +7687,7 @@ static INT32 DrvFrameMsgundam()
 
 static void Drv68k_Calibr50_FrameCallback()
 {
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { (8000000 * 100) / refresh_rate, (2000000 * 100) / refresh_rate}; //(cpuspeed * 100) / refresh_rate, ((cpuspeed/4) * 100) / refresh_rate};
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
@@ -7701,11 +7698,11 @@ static void Drv68k_Calibr50_FrameCallback()
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
-		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 2) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
-		M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	}
 
 	SekClose();
@@ -10916,9 +10913,7 @@ STD_ROM_FN(crazyfgt)
 static INT32 crazyfgtInit()
 {
 	DrvSetColorOffsets(0, 0xa00, 0x200);
-	DrvSetVideoOffsets(8, 0, -4, 0);
-
-	crazyfoffsetkludge = 1;
+	DrvSetVideoOffsets(8, 0, 6, 0);
 
 	INT32 nRet = DrvInit(crazyfgt68kInit, 16000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(5, 4, 4));
 

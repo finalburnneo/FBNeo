@@ -367,6 +367,7 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
 	DrvDoReset();
+	konami_set_highlight_over_sprites_mode(1);
 
 	return 0;
 }

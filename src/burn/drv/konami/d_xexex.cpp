@@ -629,7 +629,8 @@ static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
 
-	int layer[4], bg_colorbase, plane, alpha;
+	INT32 layer[4], bg_colorbase, plane, alpha;
+	static INT32 lastalpha = 0, alphakludgefudgeframes = 0;
 
 	sprite_colorbase = K053251GetPaletteIndex(0);
 
@@ -673,6 +674,27 @@ static INT32 DrvDraw()
 	{
 		alpha = K054338_set_alpha_level(1);
 
+		{ // -- begin kludge --
+			// there is some sort of possibly timing issue here.  the alpha
+			// fade-ins flash during scene changes after alpha falls down past 0x10.
+			// solution: when alpha falls past 0x10, hold it at 10 for 5 frames
+			// for a nice smoothe transition.
+			// TODO: fix it the right way and remove this kludge.
+
+			if (lastalpha > 0xF && alpha < 0x10) {
+				alphakludgefudgeframes = 5;
+			}
+
+			lastalpha = alpha;
+
+			if (alphakludgefudgeframes) {
+				alphakludgefudgeframes--;
+
+				if (alpha < 0x10)
+					alpha = 0x10;
+			}
+		} // -- end kludge --
+
 		if (alpha > 0)
 		{
 			if (nBurnLayer & 8) K056832Draw(1, K056832_SET_ALPHA(255-alpha), 0);
@@ -685,7 +707,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-
+			  extern int counter;
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -716,8 +738,7 @@ static INT32 DrvFrame()
 
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = SekRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
+		nCyclesDone[0] += SekRun(nCyclesSegment);
 
 		if (i == 0 && control_data & 0x20) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
@@ -744,8 +765,7 @@ static INT32 DrvFrame()
 
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
+		nCyclesDone[1] += ZetRun(nCyclesSegment);
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -775,7 +795,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -783,7 +803,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029732;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

@@ -38,9 +38,10 @@ static INT32 layerpri[4];
 static INT32 layer_colorbase[4];
 static INT32 sprite_colorbase;
 
-static UINT8 DrvJoy1[16];
-static UINT8 DrvJoy2[16];
-static UINT8 DrvJoy3[16];
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
+static UINT8 DrvJoy4[8];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
 static UINT8 DrvDips[2];
@@ -73,6 +74,7 @@ static struct BurnInputInfo XexexInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy4 + 3,	"diagnostics"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
@@ -80,11 +82,11 @@ STDINPUTINFO(Xexex)
 
 static struct BurnDIPInfo XexexDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0xfe, NULL		},
+	{0x13, 0xff, 0xff, 0x00, NULL		},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    2, "PCM Volume Boost"	},
+	{0x13, 0x01, 0x08, 0x00, "Off"		},
+	{0x13, 0x01, 0x08, 0x08, "On"		},
 };
 
 STDDIPINFO(Xexex)
@@ -589,8 +591,8 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 
 	K054539Init(0, 48000, DrvSndROM, 0x300000);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, (DrvDips[0] & 0x08) ? 1.40 : 1.00, BURN_SND_ROUTE_BOTH);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, (DrvDips[0] & 0x08) ? 1.40 : 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 
@@ -707,7 +709,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-			  extern int counter;
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -722,7 +724,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		DrvInputs[3] = DrvDips[0] & 0x08;
+		DrvInputs[3] = (DrvJoy4[3]) ? 0x08 : 0x00; // Service Mode
 	}
 
 	INT32 nInterleave = 120;
@@ -750,7 +752,7 @@ static INT32 DrvFrame()
 				if (irq5_timer == 0 && control_data & 0x40) {
 					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 				}
-			} 
+			}
 		}
 
 		if (i == ((nInterleave/2)-1)) {

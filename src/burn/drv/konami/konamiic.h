@@ -198,7 +198,7 @@ void K056832WritebRegsByte(INT32 offset, UINT8 data);
 UINT16 K056832mwRomWordRead(INT32 address);
 void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority);
 INT32 K056832GetLayerAssociation();
-
+void K056832Metamorphic_Fixup();
 
 // K051316.cpp
 //---------------------------------------------------------------------------------------------------------------

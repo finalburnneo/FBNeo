@@ -33,6 +33,7 @@ static INT32 m_num_gfx_banks;
 static INT32 m_cur_gfx_banks;
 static INT32 tilemap_flip;
 static INT32 m_rom_half;
+static INT32 K056832_metamorphic_textfix = 0;
 
 #define CLIP_MINX	global_clip[0]
 #define CLIP_MAXX	global_clip[1]
@@ -119,6 +120,8 @@ void K056832Exit()
 {
 	BurnFree (K056832VideoRAM);
 	BurnFree (K056832TransTab);
+
+	K056832_metamorphic_textfix = 0;
 
 	m_callback = NULL;
 }
@@ -779,7 +782,7 @@ void K056832Draw(INT32 layer, UINT32 flags, UINT32 priority)
 			sdat_start = K056832_PAGE_HEIGHT - 1;
 
 			if (scrollmode == 2) {
-				sdat_start = dy - 8; // fix for Metamorphic Force "Break the Statue"
+				if (K056832_metamorphic_textfix) sdat_start = dy - 8; // fix for Metamorphic Force "Break the Statue"
 				sdat_start &= ~7;
 				line_starty -= dy & 7;
 			}
@@ -912,6 +915,10 @@ int K056832GetLayerAssociation()
 	return m_layer_association;
 }
 
+void K056832Metamorphic_Fixup()
+{ // Metmorphic Force (metamrph)'s scroll data has a different offset.  Notably, this fixes the jumbled up "Break the Statue" text. (for those familiar with the game)
+	K056832_metamorphic_textfix = 1;
+}
 
 // some of these this may not be necessary to save...
 void K056832Scan(INT32 nAction)

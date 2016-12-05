@@ -2087,6 +2087,7 @@ static INT32 MetamrphInit()
 	K056832SetLayerOffsets(1,  0+4, 2);
 	K056832SetLayerOffsets(2,  2+4, 2);
 	K056832SetLayerOffsets(3,  3+4, 2);
+	K056832Metamorphic_Fixup();
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, metamrph_sprite_callback, 1);
 	K053247SetSpriteOffset(-51-24, -24-15+0);

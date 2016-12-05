@@ -268,7 +268,7 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 co
 
 		for (INT32 y = sy; y < ey; y++)
 		{
-			if (y >= 0 && y < nScreenHeight) 
+			if (y >= 0 && y < nScreenHeight)
 			{
 				UINT8 *src = gfx_base + (y_index / 0x10000) * width;
 				UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
@@ -277,16 +277,15 @@ void konami_draw_16x16_priozoom_tile(UINT8 *gfx, INT32 code, INT32 bpp, INT32 co
 				for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 				{
 					if (x >= 0 && x < nScreenWidth) {
-						if ((priority & (1 << (prio[x]&0x1f)))==0) {
-							INT32 pxl = src[x_index>>16];
+						INT32 pxl = src[x_index>>16];
 
-							if (pxl != t) {
+						if (pxl != t) {
+							if ((priority & (1 << (prio[x]&0x1f)))==0) {
 								dst[x] = pal[pxl];
-								prio[x] |= 0x1f;
 							}
+							prio[x] |= 0x1f;
 						}
 					}
-
 					x_index += dx;
 				}
 			}
@@ -325,7 +324,7 @@ void konami_draw_16x16_zoom_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 co
 
 		for (INT32 y = sy; y < ey; y++)
 		{
-			if (y >= 0 && y < nScreenHeight) 
+			if (y >= 0 && y < nScreenHeight)
 			{
 				UINT8 *src = gfx_base + (y_index / 0x10000) * width;
 				UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
@@ -486,17 +485,17 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 		{
 			for (INT32 y = sy; y < ey; y++)
 			{
-				if (y >= 0 && y < nScreenHeight) 
+				if (y >= 0 && y < nScreenHeight)
 				{
 					UINT8 *src = gfx_base + (y_index / 0x10000) * width;
 					UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
 					UINT8 *pri = konami_priority_bitmap + y * nScreenWidth;
-	
+
 					for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 					{
 						if (x >= 0 && x < nScreenWidth) {
 							INT32 pxl = src[x_index>>16];
-	
+
 							if (pxl) {
 								if (pxl == shadow_color) {
 									dst[x] = highlight_mode ? highlight_blend(dst[x]) : shadow_blend(dst[x]);
@@ -511,11 +510,11 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 								}
 							}
 						}
-	
+
 						x_index += dx;
 					}
 				}
-	
+
 				y_index += dy;
 			}
 		} else {
@@ -523,17 +522,17 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 
 			for (INT32 y = sy; y < ey; y++)
 			{
-				if (y >= 0 && y < nScreenHeight) 
+				if (y >= 0 && y < nScreenHeight)
 				{
 					UINT8 *src = gfx_base + (y_index / 0x10000) * width;
 					UINT32 *dst = konami_bitmap32 + y * nScreenWidth;
 					UINT8 *pri = konami_priority_bitmap + y * nScreenWidth;
-	
+
 					for (INT32 x = sx, x_index = x_index_base; x < ex; x++)
 					{
 						if (x >= 0 && x < nScreenWidth) {
 							INT32 pxl = src[x_index>>16];
-	
+
 							if (pxl) {
 								if (pxl == shadow_color) {
 									if ((priority & (1 << (pri[x]&0x1f)))==0 && (pri[x] & 0x80) == 0) {
@@ -554,14 +553,13 @@ void konami_render_zoom_shadow_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32
 								}
 							}
 						}
-	
+
 						x_index += dx;
 					}
 				}
-	
+
 				y_index += dy;
 			}
 		}
 	}
 }
-

@@ -503,6 +503,11 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static void XexexApan(double one, double two)
+{
+	//bprintf(0, _T("apan %f, %f. "), one, two);
+}
+
 static INT32 DrvInit()
 {
 	BurnSetRefreshRate(54.25);
@@ -593,6 +598,7 @@ static INT32 DrvInit()
 	K054539Init(0, 48000, DrvSndROM, 0x300000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, (DrvDips[0] & 0x08) ? 1.40 : 1.00, BURN_SND_ROUTE_BOTH);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, (DrvDips[0] & 0x08) ? 1.40 : 1.00, BURN_SND_ROUTE_BOTH);
+	K054539SetApanCallback(0, XexexApan);
 
 	DrvDoReset();
 

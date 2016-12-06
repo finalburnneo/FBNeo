@@ -14,6 +14,7 @@ UINT8 K054539Read(INT32 chip, INT32 offset);
 void K054539Reset(INT32 chip);
 void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen);
 void K054539SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
+void K054539SetApanCallback(INT32 chip, void (*ApanCB)(double, double));
 void K054539Exit();
 
 INT32 K054539Scan(INT32 nAction);

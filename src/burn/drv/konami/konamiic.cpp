@@ -407,8 +407,8 @@ void konami_draw_16x16_prio_tile(UINT8 *gfxbase, INT32 code, INT32 bpp, INT32 co
 							} else {
 								dst[x] = pal[pxl];
 							}
-							pri[x] |= 0x1f;
 						}
+						pri[x] |= 0x1f;
 					}
 				}
 			}

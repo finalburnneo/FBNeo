@@ -191,14 +191,19 @@ void pia_init(int count)
 		state_save_register_func_postload(pia_postload_funcs[i]);
 	}
 }
+#endif
 
 /******************* un-configuration *******************/
 
-void pia_unconfig(void)
+void pia_init(void) // was pia_unconfig
 {
 	memset(&pia, 0, sizeof(pia));
 }
-#endif
+
+void pia_exit(void)
+{
+	pia_init();
+}
 
 /******************* configuration *******************/
 

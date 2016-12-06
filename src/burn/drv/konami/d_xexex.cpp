@@ -632,7 +632,6 @@ static INT32 DrvDraw()
 	DrvPaletteRecalc();
 
 	INT32 layer[4], bg_colorbase, plane, alpha;
-	static INT32 lastalpha = 0, alphakludgefudgeframes = 0;
 
 	sprite_colorbase = K053251GetPaletteIndex(0);
 
@@ -676,26 +675,10 @@ static INT32 DrvDraw()
 	{
 		alpha = K054338_set_alpha_level(1);
 
-		{ // -- begin kludge --
-			// there is some sort of possibly timing issue here.  the alpha
-			// fade-ins flash during scene changes after alpha falls down past 0x10.
-			// solution: when alpha falls past 0x10, hold it at 10 for 5 frames
-			// for a nice smoothe transition.
-			// TODO: fix it the right way and remove this kludge.
-
-			if (lastalpha > 0xF && alpha < 0x10) {
-				alphakludgefudgeframes = 5;
-			}
-
-			lastalpha = alpha;
-
-			if (alphakludgefudgeframes) {
-				alphakludgefudgeframes--;
-
-				if (alpha < 0x10)
-					alpha = 0x10;
-			}
-		} // -- end kludge --
+		// this kludge fixes: flashy transitions in intro, cutscene after stage 3
+		// is missing several effects, continue screen is missing "zooming!" numbers.
+		if (alpha < 0x10)
+			alpha = 0x10;
 
 		if (alpha > 0)
 		{
@@ -758,7 +741,7 @@ static INT32 DrvFrame()
 		if (i == ((nInterleave/2)-1)) {
 			if (K053246_is_IRQ_enabled()) {
 				xexex_objdma();
-				irq5_timer = 5; // guess
+				irq5_timer = 5; // lots of testing led to this number.
 			}
 
 			if (control_data & 0x0800)

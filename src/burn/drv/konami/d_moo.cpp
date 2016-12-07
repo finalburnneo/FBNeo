@@ -44,6 +44,7 @@ static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
+static UINT8 DrvJoy5[16];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
 static UINT8 DrvDips[1];
@@ -98,6 +99,7 @@ static struct BurnInputInfo MooInputList[] = {
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy5 + 3,	"diagnostics"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -149,6 +151,7 @@ static struct BurnInputInfo BuckyInputList[] = {
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"	},
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Service 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy5 + 3,	"diagnostics"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -156,48 +159,40 @@ STDINPUTINFO(Bucky)
 
 static struct BurnDIPInfo MooDIPList[]=
 {
-	{0x25, 0xff, 0xff, 0xa8, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x25, 0x01, 0x08, 0x08, "Off"			},
-	{0x25, 0x01, 0x08, 0x00, "On"			},
+	{0x26, 0xff, 0xff, 0x60, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x25, 0x01, 0x10, 0x10, "Mono"			},
-	{0x25, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x26, 0x01, 0x10, 0x10, "Mono"			},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x25, 0x01, 0x20, 0x20, "Common"		},
-	{0x25, 0x01, 0x20, 0x00, "Independent"		},
+	{0x26, 0x01, 0x20, 0x20, "Common"		},
+	{0x26, 0x01, 0x20, 0x00, "Independent"		},
 
 	{0   , 0xfe, 0   ,    3, "Number of Players"	},
-	{0x25, 0x01, 0xc0, 0xc0, "2"			},
-	{0x25, 0x01, 0xc0, 0x40, "3"			},
-	{0x25, 0x01, 0xc0, 0x80, "4"			},
+	{0x26, 0x01, 0xc0, 0xc0, "2"			},
+	{0x26, 0x01, 0xc0, 0x40, "3"			},
+	{0x26, 0x01, 0xc0, 0x80, "4"			},
 };
 
 STDDIPINFO(Moo)
 
 static struct BurnDIPInfo BuckyDIPList[]=
 {
-	{0x29, 0xff, 0xff, 0xa8, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x29, 0x01, 0x08, 0x08, "Off"			},
-	{0x29, 0x01, 0x08, 0x00, "On"			},
+	{0x2a, 0xff, 0xff, 0x60, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x29, 0x01, 0x10, 0x10, "Mono"			},
-	{0x29, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x2a, 0x01, 0x10, 0x10, "Mono"			},
+	{0x2a, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x29, 0x01, 0x20, 0x20, "Common"		},
-	{0x29, 0x01, 0x20, 0x00, "Independent"		},
+	{0x2a, 0x01, 0x20, 0x20, "Common"		},
+	{0x2a, 0x01, 0x20, 0x00, "Independent"		},
 
 	{0   , 0xfe, 0   ,    3, "Number of Players"	},
-	{0x29, 0x01, 0xc0, 0xc0, "2"			},
-	{0x29, 0x01, 0xc0, 0x40, "3"			},
-	{0x29, 0x01, 0xc0, 0x80, "4"			},
+	{0x2a, 0x01, 0xc0, 0xc0, "2"			},
+	{0x2a, 0x01, 0xc0, 0x40, "3"			},
+	{0x2a, 0x01, 0xc0, 0x80, "4"			},
 };
 
 STDDIPINFO(Bucky)
@@ -400,7 +395,7 @@ static UINT16 __fastcall moo_main_read_word(UINT32 address)
 			return DrvInputs[0] & 0xff;
 
 		case 0x0dc002:
-			return (DrvInputs[1] & 0xfa) | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf8) | 2 | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x0de000:
 			return control_data;
@@ -447,10 +442,10 @@ static UINT8 __fastcall moo_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x0dc002:
-			return DrvInputs[1] >> 8;
+			return 0;
 
 		case 0x0dc003:
-			return ((DrvInputs[1]) & 0xfa) | (EEPROMRead() ? 0x01 : 0);
+			return ((DrvInputs[1]) & 0xf8) | 2 | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x0d6015:
 			return *soundlatch3;
@@ -508,6 +503,7 @@ static void __fastcall bucky_main_write_word(UINT32 address, UINT16 data)
 			K053246_set_OBJCHA_line((data & 0x100) >> 8);
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
+
 	}
 }
 
@@ -609,7 +605,7 @@ static UINT16 __fastcall bucky_main_read_word(UINT32 address)
 			return DrvInputs[0] & 0xff;
 
 		case 0x0dc002:
-			return (DrvInputs[1] & 0xfa) | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf8) | 2 | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x0de000:
 			return control_data;
@@ -660,10 +656,10 @@ static UINT8 __fastcall bucky_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x0dc002:
-			return DrvInputs[1] >> 8;
+			return 0;
 
 		case 0x0dc003:
-			return ((DrvInputs[1]) & 0xfa) | (EEPROMRead() ? 0x01 : 0);
+			return ((DrvInputs[1]) & 0xf8) | 2 | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x0d6015:
 			return *soundlatch3;
@@ -1117,13 +1113,13 @@ static INT32 DrvFrame()
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 
-		DrvInputs[1] = (DrvDips[0] << 8) | 0x07ff;
+		DrvInputs[1] = (DrvDips[0] & 0xf0) | ((DrvJoy5[3]) ? 0x00 : 0x08);
 	}
 
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = ((pBurnSoundOut == NULL) ? 120 : nBurnSoundLen);
+	INT32 nInterleave = 120;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -1136,13 +1132,12 @@ static INT32 DrvFrame()
 
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = SekRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
+		nCyclesDone[0] += SekRun(nCyclesSegment);
 
 		if (i == (nInterleave - 1)) {
 			if (K053246_is_IRQ_enabled()) {
 				moo_objdma();
-				irq5_timer = 10; // guess
+				irq5_timer = 5; // guess
 			}
 
 			if (control_data & 0x20) {
@@ -1150,11 +1145,10 @@ static INT32 DrvFrame()
 			}
 		}
 
-		if (i != (nInterleave-1)) {
+		if (i != (nInterleave - 1)) {
 			if (irq5_timer > 0) {
 				irq5_timer--;
-				if (control_data & 0x800) {
-					irq5_timer = 0;
+				if (control_data & 0x800 && (irq5_timer == 0)) {
 					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 				}
 			} 
@@ -1199,7 +1193,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029732;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

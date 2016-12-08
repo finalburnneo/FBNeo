@@ -540,9 +540,6 @@ static INT32 DrvFrame()
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
 		}
 	}
-	/*if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
-	}*/
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -606,7 +603,7 @@ STD_ROM_FN(bogeyman)
 
 struct BurnDriver BurnDrvBogeyman = {
 	"bogeyman", NULL, NULL, NULL, "1985",
-	"Bogey Manor\0", "Incorrect colors", "Technos Japan", "Miscellaneous",
+	"Bogey Manor\0", "NULL", "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, bogeymanRomInfo, bogeymanRomName, NULL, NULL, BogeymanInputInfo, BogeymanDIPInfo,

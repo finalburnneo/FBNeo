@@ -116,6 +116,14 @@ static void xexex_objdma()
 	if (num_inactive) do { *dst = 0; dst += 8; } while (--num_inactive);
 }
 
+static void update_de000()
+{
+	K053246_set_OBJCHA_line((control_data & 0x100) >> 8);
+	EEPROMWrite((control_data & 0x04), (control_data & 0x02), (control_data & 0x01));
+	enable_alpha = ~control_data & 0x200;
+
+}
+
 static void _fastcall xexex_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffc0) == 0x0c0000) {
@@ -151,10 +159,8 @@ static void _fastcall xexex_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x0de000:
-			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
-			K053246_set_OBJCHA_line((data & 0x100) >> 8);
-			enable_alpha = ~data & 0x200;
 			control_data = data;
+			update_de000();
 		return;
 	}
 }
@@ -225,15 +231,13 @@ static void _fastcall xexex_main_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x0de000:
-			enable_alpha = ~data & 0x02;
 			control_data = (control_data & 0x00ff) | (data << 8);
-			K053246_set_OBJCHA_line((data & 0x100) >> 8);
+			update_de000();
 		return;
 
 		case 0x0de001:
-			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 			control_data = (control_data & 0xff00) | (data << 0);
-			K053246_set_OBJCHA_line((data & 0x100) >> 8);
+			update_de000();
 		return;
 
 		case 0x170000:
@@ -244,7 +248,7 @@ static void _fastcall xexex_main_write_byte(UINT32 address, UINT8 data)
 static UINT16 _fastcall xexex_main_read_word(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x0c8000) {
-		return K053250RegRead(0, address);	
+		return K053250RegRead(0, address);
 	}
 
 	if ((address & 0xffc000) == 0x180000) {
@@ -274,7 +278,7 @@ static UINT16 _fastcall xexex_main_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x0dc002:
-			return DrvInputs[3] | 2 | (EEPROMRead() ? 0x0001 : 0);
+			return (DrvInputs[3] & 0x8) | 2 | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x0de000:
 			return control_data;
@@ -307,6 +311,9 @@ static UINT8 _fastcall xexex_main_read_byte(UINT32 address)
 		case 0x0c4001:
 			return K053246Read((address & 1)); // ^ 1? ??
 
+		case 0x0d6011:
+			return 0; // nop
+
 		case 0x0d6015:
 			return *soundlatch3;
 
@@ -332,7 +339,7 @@ static UINT8 _fastcall xexex_main_read_byte(UINT32 address)
 			return 0;
 
 		case 0x0dc003:
-			return DrvInputs[3] | 2 | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[3] & 0x8) | 2 | (EEPROMRead() ? 0x01 : 0);
 	}
 
 	return 0;
@@ -503,9 +510,9 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void XexexApan(double one, double two)
+static void XexexApanCallback(double one, double two)
 {
-	//bprintf(0, _T("apan %f, %f. "), one, two);
+	//bprintf(0, _T("apan %f, %f. "), one, two); - wip
 }
 
 static INT32 DrvInit()
@@ -596,9 +603,9 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
 
 	K054539Init(0, 48000, DrvSndROM, 0x300000);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, (DrvDips[0] & 0x08) ? 1.40 : 1.00, BURN_SND_ROUTE_BOTH);
-	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, (DrvDips[0] & 0x08) ? 1.40 : 1.00, BURN_SND_ROUTE_BOTH);
-	K054539SetApanCallback(0, XexexApan);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, (DrvDips[0] & 0x08) ? 1.40 : 1.10, BURN_SND_ROUTE_BOTH);
+	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, (DrvDips[0] & 0x08) ? 1.40 : 1.10, BURN_SND_ROUTE_BOTH);
+	K054539SetApanCallback(0, XexexApanCallback);
 
 	DrvDoReset();
 
@@ -713,7 +720,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		DrvInputs[3] = (DrvJoy4[3]) ? 0x08 : 0x00; // Service Mode
+		DrvInputs[3] = (DrvJoy4[3]) ? 0x00 : 0x08; // Service Mode
 	}
 
 	INT32 nInterleave = 120;

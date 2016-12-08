@@ -4887,12 +4887,12 @@ static INT32 ShackledDraw()
 		DrvRecalcSplit(0x400);
 	}
 
-	lastmiss_draw_bg_layer(0, 0xfff0);
-	lastmiss_draw_bg_layer(0, 0x000f);
-	lastmiss_draw_bg_layer(1, 0xfff0);
-	lastmiss_draw_bg_layer(1, 0x000f);
-	draw_sprites1(0);
-	lastmiss_draw_txt_layer();
+	if (nBurnLayer & 1) lastmiss_draw_bg_layer(0, 0xfff0);
+	if (nBurnLayer & 2) lastmiss_draw_bg_layer(0, 0x000f);
+	if (nBurnLayer & 4) lastmiss_draw_bg_layer(1, 0xfff0);
+	if (nSpriteEnable & 1) draw_sprites1(0);
+	if (nBurnLayer & 8) lastmiss_draw_bg_layer(1, 0x000f);
+	if (nSpriteEnable & 2) lastmiss_draw_txt_layer();
 
 	BurnTransferCopy(DrvPalette);
 

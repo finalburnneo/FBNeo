@@ -231,14 +231,13 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane0[3]  = { 0x8000*8+4, 0x1000*8*0, 4+0x1000*8*0 };
-	INT32 Plane1[3]  = { 0x8000*8+0, 0x1000*8*1, 4+0x1000*8*1 };
-	//INT32 Plane2[3]  = { 0x4000*8*2, 0x4000*8*1, 0x4000*8+0 }; // NG - dink
-	INT32 SpritesPlane[3] = { 0x8000*8, 0x4000*8, 0 };
+	INT32 Plane0[3]  = { 0x8000*8+4, 0, 4 };
+	INT32 Plane1[3]  = { 0x8000*8+0, 0x1000*8+0, 0x1000*8+4 };
+	INT32 Plane2[3]  = { 0x8000*8, 0x4000*8, 0 };
 	INT32 XOffs0[8]  = { STEP4(0x2000*8+3, -1), STEP4(3,-1) };
 	INT32 YOffs0[16] = { STEP16(0,8) };
 	INT32 XOffs2[16] = { STEP8(16*8,1), STEP8(0,1) };
-	INT32 YOffs2[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 };
+	INT32 YOffs2[16] = { STEP16(0,8) };
 	INT32 XOffs3[16] = { STEP4(1024*8*8+3, -1), STEP4(3,-1), STEP4(1024*8*8+3+64, -1), STEP4(3+64,-1) };
 	INT32 YOffs3[16] = { STEP8(0,8), STEP8(128, 8) };
 
@@ -254,7 +253,7 @@ static INT32 DrvGfxDecode()
 
 	memcpy (tmp, DrvGfxROM1, 0x10000);
 
-	GfxDecode(0x0200, 3, 16, 16, SpritesPlane, XOffs2, YOffs2, 0x100, tmp + 0x0000, DrvGfxROM1 + 0x00000);
+	GfxDecode(0x0200, 3, 16, 16, Plane2, XOffs2, YOffs2, 0x100, tmp + 0x0000, DrvGfxROM1 + 0x00000);
 
 	memcpy (tmp, DrvGfxROM2, 0x10000);
 
@@ -293,12 +292,16 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvGfxROM2  + 0x00000,  8, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2  + 0x04000,  9, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM2  + 0x08000,  10, 1)) return 1;
-		memcpy (DrvGfxROM2 + 0xe000, DrvGfxROM2 + 0xb000, 0x1000);
-		memcpy (DrvGfxROM2 + 0xc000, DrvGfxROM2 + 0xa000, 0x1000);
-		memcpy (DrvGfxROM2 + 0xa000, DrvGfxROM2 + 0x9000, 0x1000);
-		memset (DrvGfxROM2 + 0x9000, 0, 0x1000);
-		memset (DrvGfxROM2 + 0xb000, 0, 0x1000);
+
+		UINT8 *tmp = (UINT8*)BurnMalloc(0x4000);
+		if (BurnLoadRom(tmp,  10, 1)) return 1;
+
+		memcpy (DrvGfxROM2 + 0x8000, tmp + 0x0000, 0x1000);
+		memcpy (DrvGfxROM2 + 0xa000, tmp + 0x1000, 0x1000);
+		memcpy (DrvGfxROM2 + 0xc000, tmp + 0x2000, 0x1000);
+		memcpy (DrvGfxROM2 + 0xe000, tmp + 0x3000, 0x1000);
+
+		BurnFree(tmp);
 
 		if (BurnLoadRom(DrvColPROM  + 0x00000,  11, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM  + 0x00100,  12, 1)) return 1;
@@ -352,7 +355,7 @@ static void DrvPaletteInit()
 		INT32 bit2 = (DrvColPROM[i+0] >> 2) & 0x01;
 		INT32 r = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
 
-		bit0 = (DrvColPROM[i+0] >> 3) & 0x01;
+		bit0 = (DrvColPROM[i+0]   >> 3) & 0x01;
 		bit1 = (DrvColPROM[i+256] >> 0) & 0x01;
 		bit2 = (DrvColPROM[i+256] >> 1) & 0x01;
 		INT32 g = 0x21 * bit0 + 0x47 * bit1 + 0x97 * bit2;
@@ -380,14 +383,7 @@ static void DrvPaletteUpdate()
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }
-#if 0
-    int attr = m_colorram[tile_index];
-	int gfxbank = ((((attr & 0x01) << 8) + m_videoram[tile_index]) / 0x80) + 3;
-	int code = m_videoram[tile_index] & 0x7f;
-	int color = (attr >> 1) & 0x07;
 
-	SET_TILE_INFO_MEMBER(gfxbank, code, color, 0);
-#endif
 static void draw_bg_layer()
 {
 	for (INT32 offs = 0; offs < 16 * 16; offs++)
@@ -396,16 +392,13 @@ static void draw_bg_layer()
 		INT32 sy = (offs / 0x10) * 16;
 
 		INT32 attr = DrvBgRAM[offs+0x100];
-		//INT32 gfxbank = ((((attr & 0x01) << 8) + DrvBgRAM[offs]) / 0x80) + 3;
-		//INT32 code = (DrvBgRAM[offs] & 0x7f) + gfxbank;
-
 		INT32 code = DrvBgRAM[offs] + ((attr & 1) << 8);
 
-		INT32 color = (attr >> 1) & 7;
+		INT32 color = ((attr >> 1) & 7) + (0x90 >> 3);
 
 		if (sx >= nScreenWidth || sy > nScreenHeight) continue;
 
-		Render16x16Tile_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0x90, DrvGfxROM2);
+		Render16x16Tile_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, DrvGfxROM2);
 	}
 }
 

@@ -394,11 +394,11 @@ static void draw_bg_layer()
 		INT32 attr = DrvBgRAM[offs+0x100];
 		INT32 code = DrvBgRAM[offs] + ((attr & 1) << 8);
 
-		INT32 color = ((attr >> 1) & 7) + (0x90 >> 3);
+		INT32 color = ((attr >> 1) & 7);
 
 		if (sx >= nScreenWidth || sy > nScreenHeight) continue;
 
-		Render16x16Tile_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0, DrvGfxROM2);
+		Render16x16Tile_Clip(pTransDraw, code, sx, sy - 8, color, 3, 0x90, DrvGfxROM2);
 	}
 }
 

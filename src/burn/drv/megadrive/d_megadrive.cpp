@@ -41381,3 +41381,20 @@ struct BurnDriver BurnDrvmd_megaqbert11 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mini Planets
+static struct BurnRomInfo md_miniplanetsRomDesc[] = {
+	{ "Miniplanets.bin", 0x40000, 0x934c81b8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_miniplanets)
+STD_ROM_FN(md_miniplanets)
+
+struct BurnDriver BurnDrvmd_miniplanets = {
+	"md_miniplanets", NULL, NULL, NULL, "2016",
+	"Mini Planets\0", NULL, "2016 Sik", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_miniplanetsRomInfo, md_miniplanetsRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

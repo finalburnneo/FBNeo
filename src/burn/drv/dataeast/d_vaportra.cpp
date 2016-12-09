@@ -134,6 +134,12 @@ void __fastcall vaportra_main_write_word(UINT32 address, UINT16 data)
 	deco16_write_control_word(1, address, 0x240000, data)
 	deco16_write_control_word(0, address, 0x2c0000, data)
 
+	if ((address & ~0xce0000) >= 0x318000 && (address & ~0xce0000) <= 0x3187ff)
+	{
+		*((UINT16*)(DrvSprRAM + (address & 0x7fe))) = data;
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x100000:
@@ -154,6 +160,12 @@ void __fastcall vaportra_main_write_word(UINT32 address, UINT16 data)
 
 void __fastcall vaportra_main_write_byte(UINT32 address, UINT8 data)
 {
+	if ((address & ~0xce0000) >= 0x318000 && (address & ~0xce0000) <= 0x3187ff)
+	{
+		DrvSprRAM[(address & 0x7ff) ^ 1] = data;
+		return;
+	}
+
 	switch (address)
 	{
 		case 0x100000:
@@ -177,6 +189,11 @@ void __fastcall vaportra_main_write_byte(UINT32 address, UINT8 data)
 
 UINT16 __fastcall vaportra_main_read_word(UINT32 address)
 {
+	if ((address & ~0xce0000) >= 0x318000 && (address & ~0xce0000) <= 0x3187ff)
+	{
+		return *((UINT16*)(DrvSprRAM + (address & 0x7fe)));
+	}
+
 	switch (address)
 	{
 		case 0x100000:
@@ -201,6 +218,11 @@ UINT16 __fastcall vaportra_main_read_word(UINT32 address)
 
 UINT8 __fastcall vaportra_main_read_byte(UINT32 address)
 {
+	if ((address & ~0xce0000) >= 0x318000 && (address & ~0xce0000) <= 0x3187ff)
+	{
+		return DrvSprRAM[(address & 0x7ff) ^ 1];
+	}
+
 	switch (address)
 	{
 		case 0x100000:
@@ -380,7 +402,7 @@ static INT32 DrvInit(INT32 type)
 	SekMapMemory(deco16_pf_ram[1],		0x282000, 0x283fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM0,		0x300000, 0x3009ff, MAP_RAM);
 	SekMapMemory(DrvPalRAM1,		0x304000, 0x3049ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM,			0xff8000, 0xff87ff, MAP_RAM);
+	//SekMapMemory(DrvSprRAM,			0xff8000, 0xff87ff, MAP_RAM); // in handler w/mirroring (fixes gameover animation)
 	SekMapMemory(Drv68KRAM,			0xffc000, 0xffffff, MAP_RAM);
 	SekSetWriteWordHandler(0,		vaportra_main_write_word);
 	SekSetWriteByteHandler(0,		vaportra_main_write_byte);

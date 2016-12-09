@@ -2930,8 +2930,8 @@ static struct BurnDIPInfo DambustrDIPList[]=
 	{0x0d, 0x01, 0x40, 0x40, "On"                     },
 	
 	{0   , 0xfe, 0   , 2   , "Coinage"                },
-	{0x0d, 0x01, 0x80, 0x80, "2 Coins 1 Play"         },
-	{0x0d, 0x01, 0x80, 0x00, "1 Coin  1 Play"         },
+	{0x0d, 0x01, 0x80, 0x80, "1 Coin  1 Credit"       },
+	{0x0d, 0x01, 0x80, 0x00, "1 Coin  2 Credits"      },
 	
 	// Dip 3	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },

@@ -2375,7 +2375,7 @@ void Render8x8Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT3
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO(0);
 		PLOTPIXEL_PRIO(1);
 		PLOTPIXEL_PRIO(2);
@@ -2399,7 +2399,7 @@ void Render8x8Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX,
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2427,7 +2427,7 @@ void Render8x8Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO_FLIPX(7, 0);
 		PLOTPIXEL_PRIO_FLIPX(6, 1);
 		PLOTPIXEL_PRIO_FLIPX(5, 2);
@@ -2451,7 +2451,7 @@ void Render8x8Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2479,7 +2479,7 @@ void Render8x8Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO(0);
 		PLOTPIXEL_PRIO(1);
 		PLOTPIXEL_PRIO(2);
@@ -2503,7 +2503,7 @@ void Render8x8Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2531,7 +2531,7 @@ void Render8x8Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO_FLIPX(7, 0);
 		PLOTPIXEL_PRIO_FLIPX(6, 1);
 		PLOTPIXEL_PRIO_FLIPX(5, 2);
@@ -2555,7 +2555,7 @@ void Render8x8Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw+ ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2587,7 +2587,7 @@ void Render8x8Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX,
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO_MASK(0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK(1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK(2, nMaskColour);
@@ -2611,7 +2611,7 @@ void Render8x8Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 St
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2639,7 +2639,7 @@ void Render8x8Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO_MASK_FLIPX(7, 0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(6, 1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(5, 2, nMaskColour);
@@ -2663,7 +2663,7 @@ void Render8x8Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, IN
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pTileData += 8) {
+	for (INT32 y = 0; y < 8; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2691,7 +2691,7 @@ void Render8x8Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 S
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO_MASK(0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK(1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK(2, nMaskColour);
@@ -2715,7 +2715,7 @@ void Render8x8Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, IN
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2743,7 +2743,7 @@ void Render8x8Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		PLOTPIXEL_PRIO_MASK_FLIPX(7, 0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(6, 1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(5, 2, nMaskColour);
@@ -2767,7 +2767,7 @@ void Render8x8Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, I
 	UINT16* pPixel = pDestDraw + ((StartY + 7) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 7) * nScreenWidth) + StartX;
 
-	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 8) {
+	for (INT32 y = 7; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 8) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2799,7 +2799,7 @@ void Render16x16Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO( 0);
 		PLOTPIXEL_PRIO( 1);
 		PLOTPIXEL_PRIO( 2);
@@ -2831,7 +2831,7 @@ void Render16x16Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2867,7 +2867,7 @@ void Render16x16Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO_FLIPX(15,  0);
 		PLOTPIXEL_PRIO_FLIPX(14,  1);
 		PLOTPIXEL_PRIO_FLIPX(13,  2);
@@ -2899,7 +2899,7 @@ void Render16x16Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -2935,7 +2935,7 @@ void Render16x16Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO( 0);
 		PLOTPIXEL_PRIO( 1);
 		PLOTPIXEL_PRIO( 2);
@@ -2967,7 +2967,7 @@ void Render16x16Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3003,7 +3003,7 @@ void Render16x16Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO_FLIPX(15,  0);
 		PLOTPIXEL_PRIO_FLIPX(14,  1);
 		PLOTPIXEL_PRIO_FLIPX(13,  2);
@@ -3035,7 +3035,7 @@ void Render16x16Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3075,7 +3075,7 @@ void Render16x16Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO_MASK( 0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 2, nMaskColour);
@@ -3107,7 +3107,7 @@ void Render16x16Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3143,7 +3143,7 @@ void Render16x16Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO_MASK_FLIPX(15,  0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(14,  1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(13,  2, nMaskColour);
@@ -3175,7 +3175,7 @@ void Render16x16Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pTileData += 16) {
+	for (INT32 y = 0; y < 16; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3211,7 +3211,7 @@ void Render16x16Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO_MASK( 0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 2, nMaskColour);
@@ -3243,7 +3243,7 @@ void Render16x16Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3279,7 +3279,7 @@ void Render16x16Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT3
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		PLOTPIXEL_PRIO_MASK_FLIPX(15,  0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(14,  1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(13,  2, nMaskColour);
@@ -3311,7 +3311,7 @@ void Render16x16Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber,
 	UINT16* pPixel = pDestDraw + ((StartY + 15) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 15) * nScreenWidth) + StartX;
 
-	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 16) {
+	for (INT32 y = 15; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 16) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3351,7 +3351,7 @@ void Render32x32Tile_Prio(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, IN
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO( 0);
 		PLOTPIXEL_PRIO( 1);
 		PLOTPIXEL_PRIO( 2);
@@ -3399,7 +3399,7 @@ void Render32x32Tile_Prio_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3451,7 +3451,7 @@ void Render32x32Tile_Prio_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO_FLIPX(31,  0);
 		PLOTPIXEL_PRIO_FLIPX(30,  1);
 		PLOTPIXEL_PRIO_FLIPX(29,  2);
@@ -3499,7 +3499,7 @@ void Render32x32Tile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3551,7 +3551,7 @@ void Render32x32Tile_Prio_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Star
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO( 0);
 		PLOTPIXEL_PRIO( 1);
 		PLOTPIXEL_PRIO( 2);
@@ -3599,7 +3599,7 @@ void Render32x32Tile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3651,7 +3651,7 @@ void Render32x32Tile_Prio_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 Sta
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO_FLIPX(31,  0);
 		PLOTPIXEL_PRIO_FLIPX(30,  1);
 		PLOTPIXEL_PRIO_FLIPX(29,  2);
@@ -3699,7 +3699,7 @@ void Render32x32Tile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT3
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3755,7 +3755,7 @@ void Render32x32Tile_Prio_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 Start
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO_MASK( 0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 2, nMaskColour);
@@ -3803,7 +3803,7 @@ void Render32x32Tile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nTileNumber, INT32 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3855,7 +3855,7 @@ void Render32x32Tile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO_MASK_FLIPX(31,  0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(30,  1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(29,  2, nMaskColour);
@@ -3903,7 +3903,7 @@ void Render32x32Tile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pTileData += 32) {
+	for (INT32 y = 0; y < 32; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -3955,7 +3955,7 @@ void Render32x32Tile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nTileNumber, INT32
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO_MASK( 0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK( 2, nMaskColour);
@@ -4003,7 +4003,7 @@ void Render32x32Tile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nTileNumber, 
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4055,7 +4055,7 @@ void Render32x32Tile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT3
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		PLOTPIXEL_PRIO_MASK_FLIPX(31,  0, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(30,  1, nMaskColour);
 		PLOTPIXEL_PRIO_MASK_FLIPX(29,  2, nMaskColour);
@@ -4103,7 +4103,7 @@ void Render32x32Tile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nTileNumber,
 	UINT16* pPixel = pDestDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + 31) * nScreenWidthMax) + StartX;
 
-	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pTileData += 32) {
+	for (INT32 y = 31; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += 32) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4159,7 +4159,7 @@ void RenderCustomTile_Prio(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO(x);
 		}
@@ -4178,7 +4178,7 @@ void RenderCustomTile_Prio_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4201,7 +4201,7 @@ void RenderCustomTile_Prio_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO_FLIPX(nWidth - x - 1, x);
 		}
@@ -4220,7 +4220,7 @@ void RenderCustomTile_Prio_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4243,7 +4243,7 @@ void RenderCustomTile_Prio_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight,
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO(x);
 		}
@@ -4262,7 +4262,7 @@ void RenderCustomTile_Prio_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4285,7 +4285,7 @@ void RenderCustomTile_Prio_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO_FLIPX(nWidth - x - 1, x);
 		}
@@ -4304,7 +4304,7 @@ void RenderCustomTile_Prio_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nH
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4331,7 +4331,7 @@ void RenderCustomTile_Prio_Mask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, 
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO_MASK(x, nMaskColour);
 		}
@@ -4350,7 +4350,7 @@ void RenderCustomTile_Prio_Mask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHei
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4373,7 +4373,7 @@ void RenderCustomTile_Prio_Mask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO_MASK_FLIPX(nWidth - x - 1, x, nMaskColour);
 		}
@@ -4392,7 +4392,7 @@ void RenderCustomTile_Prio_Mask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT3
 	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
 
-	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4415,7 +4415,7 @@ void RenderCustomTile_Prio_Mask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHe
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO_MASK(x, nMaskColour);
 		}
@@ -4434,7 +4434,7 @@ void RenderCustomTile_Prio_Mask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT3
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}
@@ -4457,7 +4457,7 @@ void RenderCustomTile_Prio_Mask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nH
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		for (INT32 x = 0; x < nWidth; x++) {
 			PLOTPIXEL_PRIO_MASK_FLIPX(nWidth - x - 1, x, nMaskColour);
 		}
@@ -4476,7 +4476,7 @@ void RenderCustomTile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT
 	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
 
-	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pTileData += nWidth) {
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
 		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
 			continue;
 		}

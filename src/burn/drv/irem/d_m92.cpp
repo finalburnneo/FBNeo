@@ -1,7 +1,7 @@
 // FB Alpha Irem M92 system driver
 // Based on MAME driver by Bryan McPhail
 // Original port from MAME by OopsWare
-// Overhauled and tuned up by dink in August 2014
+// Overhauled and tuned up by dink in August 2014, R-Type LEO title intro-effect fixed Dec.2016
 
 #include "tiles_generic.h"
 #include "burn_ym2151.h"
@@ -1808,8 +1808,8 @@ static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, IN
 
 			if ((prio & (1 << pri[sy * nScreenWidth + sx])) == 0) {
 				dest[sy * nScreenWidth + sx] = pxl | color;
-				pri[sy * nScreenWidth + sx] = 7;
 			}
+			pri[sy * nScreenWidth + sx] = 7;
 		}
 
 		sx -= width;

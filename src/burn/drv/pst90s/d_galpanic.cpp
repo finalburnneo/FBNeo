@@ -756,6 +756,23 @@ STD_ROM_PICK(Wownfant)
 STD_ROM_FN(Wownfant)
 
 // Rom information
+static struct BurnRomInfo Missw02RomDesc[] = {
+	{ "8.u81",  					0x080000, 0x316666d0, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "7.u80",  					0x080000, 0xd61f4d18, BRF_ESS | BRF_PRG },
+	{ "3.bin",   					0x200000, 0xfdfe36ba, BRF_ESS | BRF_PRG },
+	{ "4.bin",						0x200000, 0xaa769a81, BRF_ESS | BRF_PRG },
+
+	{ "6.u113", 					0x080000, 0x3e77ca1f, BRF_GRA },			  // graphics
+	{ "5.u112", 					0x080000, 0xead3411d, BRF_GRA },
+
+	{ "2.u4",   					0x080000, 0x06dc889e, BRF_SND },			  // PCM
+	{ "1.u1",   					0x080000, 0x864167c2, BRF_SND },
+};
+
+STD_ROM_PICK(Missw02)
+STD_ROM_FN(Missw02)
+
+// Rom information
 static struct BurnRomInfo GalhustlRomDesc[] = {
 	{ "ue17.3",        		0x080000, 0xb2583dbb, BRF_ESS | BRF_PRG }, // 68000 code
 	{ "ud17.4",        		0x080000, 0x470a3668, BRF_ESS | BRF_PRG },
@@ -2306,6 +2323,16 @@ struct BurnDriver BurnDrvWownfant = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, WownfantRomInfo, WownfantRomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
+	WownfantInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
+	256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMissw02 = {
+	"missw02", NULL, NULL, NULL, "2002",
+	"Miss World 2002\0", NULL, "Daigom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Missw02RomInfo, Missw02RomName, NULL, NULL, GalpanicInputInfo, Missw96DIPInfo,
 	WownfantInit, GalpanicExit, ComadFrame, ComadDraw, GalpanicScan, &RecalcBgPalette, 0x400,
 	256, 224, 4, 3
 };

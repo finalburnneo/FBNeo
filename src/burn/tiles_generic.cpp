@@ -295,6 +295,12 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 #define PLOTPIXEL_FLIPX(x, a) pPixel[x] = nPalette + pTileData[a];
 #define PLOTPIXEL_MASK(x, mc) if (pTileData[x] != mc) {pPixel[x] = nPalette + pTileData[x];}
 #define PLOTPIXEL_MASK_FLIPX(x, a, mc) if (pTileData[a] != mc) {pPixel[x] = nPalette + pTileData[a] ;}
+
+#define PLOTPIXEL_PRIO_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority; }
+#define PLOTPIXEL_PRIO_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
+#define PLOTPIXEL_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) {pPixel[x] = nPalette + pTileData[x];}
+#define PLOTPIXEL_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[a] ;}
+
 #define CLIPPIXEL(x, sx, a) if ((sx + x) >= nScreenWidthMin && (sx + x) < nScreenWidthMax) { a; };
 
 /*================================================================================================
@@ -4486,6 +4492,189 @@ void RenderCustomTile_Prio_Mask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+void RenderCustomTile_Prio_TransMask(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
+
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
+		for (INT32 x = 0; x < nWidth; x++) {
+			PLOTPIXEL_PRIO_TRANSMASK(x);
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_Clip called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
+
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
+		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
+			continue;
+		}
+		
+		for (INT32 x = 0; x < nWidth; x++) {
+			CLIPPIXEL(x, StartX, PLOTPIXEL_PRIO_TRANSMASK(x));
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_FlipX(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipX called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
+
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
+		for (INT32 x = 0; x < nWidth; x++) {
+			PLOTPIXEL_PRIO_TRANSMASK_FLIPX(nWidth - x - 1, x);
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_FlipX_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipX_Clip called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + (StartY * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + (StartY * nScreenWidth) + StartX;
+
+	for (INT32 y = 0; y < nHeight; y++, pPixel += nScreenWidth, pPri += nScreenWidth, pTileData += nWidth) {
+		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
+			continue;
+		}
+		
+		for (INT32 x = 0; x < nWidth; x++) {
+			CLIPPIXEL(nWidth - x - 1, StartX, PLOTPIXEL_PRIO_TRANSMASK_FLIPX(nWidth - x - 1, x));
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_FlipY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipY called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
+		for (INT32 x = 0; x < nWidth; x++) {
+			PLOTPIXEL_PRIO_TRANSMASK(x);
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_FlipY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipY_Clip called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
+		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
+			continue;
+		}
+		
+		for (INT32 x = 0; x < nWidth; x++) {
+			CLIPPIXEL(x, StartX, PLOTPIXEL_PRIO_TRANSMASK(x));
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_FlipXY(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipXY called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
+		for (INT32 x = 0; x < nWidth; x++) {
+			PLOTPIXEL_PRIO_TRANSMASK_FLIPX(nWidth - x - 1, x);
+		}
+	}
+}
+
+void RenderCustomTile_Prio_TransMask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, UINT8 *pTransTable, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderCustomTile_Prio_Mask_FlipXY_Clip called without init\n"));
+#endif
+
+	UINT32 nPalette = (nTilePalette << nColourDepth) + nPaletteOffset;
+	pTileData = pTile + (nTileNumber * nWidth * nHeight);
+
+	UINT16* pPixel = pDestDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+	UINT8 *pPri = pPrioDraw + ((StartY + nHeight - 1) * nScreenWidth) + StartX;
+
+	for (INT32 y = nHeight - 1; y >= 0; y--, pPixel -= nScreenWidth, pPri -= nScreenWidth, pTileData += nWidth) {
+		if ((StartY + y) < nScreenHeightMin || (StartY + y) >= nScreenHeightMax) {
+			continue;
+		}
+
+		for (INT32 x = 0; x < nWidth; x++) {
+			CLIPPIXEL(nWidth - x - 1, StartX, PLOTPIXEL_PRIO_TRANSMASK_FLIPX(nWidth - x - 1, x));
+		}
+	}
+}
+
+
+
+#undef PLOTPIXEL_PRIO_TRANSMASK
+#undef PLOTPIXEL_PRIO_MASK_FLIPX
+#undef PLOTPIXEL_TRANSMASK
+#undef PLOTPIXEL_TRANSMASK_FLIPX
 
 #undef PLOTPIXEL
 #undef PLOTPIXEL_FLIPX

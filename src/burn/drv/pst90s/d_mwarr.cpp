@@ -41,7 +41,6 @@ static UINT8 *DrvUnkRAM1;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-static UINT16 *pPrioDraw;
 
 static INT32 sprite_command_switch;
 static INT32 nSoundBank[2];
@@ -415,8 +414,6 @@ static INT32 MemIndex(INT32 mwarr)
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(INT32);
 
-	pPrioDraw	= (UINT16*)Next; Next += 512 * 256 * sizeof(UINT16);
-
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x018000;
@@ -687,7 +684,7 @@ static INT32 DrvExit()
 static inline void draw16x16_prio_tile(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 priority)
 {
 	UINT16 *dst = pTransDraw + (sy * nScreenWidth) + sx;
-	UINT16 *pri = pPrioDraw + (sy * nScreenWidth) + sx;
+	UINT8 *pri = pPrioDraw + (sy * nScreenWidth) + sx;
 
 	UINT8 *gfx = DrvGfxROM0 + code * (16*16);
 
@@ -790,7 +787,7 @@ static void draw_layer(UINT8 *src, UINT8 *gfxbase, UINT8 *scrl, INT32 attand, IN
 		INT32 scrollx = (((linescroll) ? xscroll[yy] : xscroll[0]) + x_offset) & 0x3ff;
 
 		UINT16 *dst = pTransDraw + sy * nScreenWidth;
-		UINT16 *pri = pPrioDraw + sy * nScreenWidth;
+		UINT8 *pri = pPrioDraw + sy * nScreenWidth;
 
 		for (INT32 sx = 0; sx < nScreenWidth + 16; sx += 16)
 		{
@@ -845,7 +842,7 @@ static void draw_text_layer()
 			code *= 8*8;
 			UINT8 *gfx = DrvGfxROM1 + code;
 			UINT16 *dst = pTransDraw + sy * nScreenWidth + sx;
-			UINT16 *pri = pPrioDraw + sy * nScreenWidth + sx;
+			UINT8 *pri = pPrioDraw + sy * nScreenWidth + sx;
 
 			for (INT32 y = 0; y < 8; y++)
 			{
@@ -882,7 +879,6 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	memset (pPrioDraw, 0, 512 * 256 * sizeof(UINT16));
 	BurnTransferClear();
 
 	if (nBurnLayer & 1) draw_layer(DrvBgRAM,  DrvGfxROM4, DrvBgScrollRAM,  0x01, 0x000, 1, 0x01);

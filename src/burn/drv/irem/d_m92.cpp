@@ -50,7 +50,7 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
-static UINT8 DrvInput[8];
+static UINT8 DrvInput[9];
 static UINT8 DrvReset = 0;
 
 static INT32 m92_irq_vectorbase;
@@ -194,6 +194,53 @@ static struct BurnInputInfo p4CommonInputList[] = {
 };
 
 STDINPUTINFO(p4Common)
+
+static struct BurnInputInfo nbbatmanInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvButton + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvButton + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
+
+	{"P3 Coin",		BIT_DIGITAL,	DrvJoy3 + 5,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 4,	"p3 start"	},
+	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 3,	"p3 up"		},
+	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 down"	},
+	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 1,	"p3 left"	},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 right"	},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 7,	"p3 fire 1"	},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 6,	"p3 fire 2"	},
+
+	{"P4 Coin",		BIT_DIGITAL,	DrvJoy4 + 5,	"p4 coin"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 4,	"p4 start"	},
+	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 up"		},
+	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 2,	"p4 down"	},
+	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 1,	"p4 left"	},
+	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 right"	},
+	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 fire 1"	},
+	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvButton + 4,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvInput + 5,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvInput + 6,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvInput + 7,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvInput + 8,	"dip"		},
+};
+
+STDINPUTINFO(nbbatman)
 
 static struct BurnInputInfo PsoldierInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 2,	"p1 coin"	},
@@ -930,6 +977,7 @@ static struct BurnDIPInfo NbbatmanDIPList[]=
 	{0x22, 0xff, 0xff, 0x9f, NULL					},
 	{0x23, 0xff, 0xff, 0xff, NULL					},
 	{0x24, 0xff, 0xff, 0xff, NULL					},
+	{0x25, 0xff, 0xff, 0x00, NULL                   },
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
 	{0x22, 0x01, 0x03, 0x00, "1"					},
@@ -988,6 +1036,10 @@ static struct BurnDIPInfo NbbatmanDIPList[]=
 	{0x23, 0x01, 0xf0, 0x60, "1 Coin  5 Credits"			},
 	{0x23, 0x01, 0xf0, 0x50, "1 Coin  6 Credits"			},
 	{0x23, 0x01, 0xf0, 0x00, "Free Play"				},
+
+	{0   , 0xfe, 0   ,    2, "Early SoundCPU emulation mode. (HACK)" },
+	{0x25, 0x01, 0x01, 0x00, "Off"					},
+	{0x25, 0x01, 0x01, 0x01, "On (Reload game after change!)" },
 };
 
 STDDIPINFO(Nbbatman)
@@ -1795,6 +1847,8 @@ static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, IN
 	if (flipx) flip |= width - 1;
 
 	gfx += code * width * height;
+
+	//"m92 is a special case, usually it would need pri |= 1<<31; but not this time! -dink"
 
 	for (INT32 y = 0; y < height; y++, sy++) {
 		if (sy < 0 || sy >= nScreenHeight) continue;
@@ -3255,10 +3309,14 @@ STD_ROM_FN(nbbatman)
 static INT32 nbbatmanInit()
 {
 	INT32 nRet;
+	const UINT8 *decrtab = leagueman_decryption_table;
 
 	m92_kludge = 4;
 
-	nRet = DrvInit(gunforc2RomLoad, leagueman_decryption_table, 1, 0x200000, 0x400000);
+	if (DrvInput[8] & 1) // dip option, use old soundCPU emulation "style", for weirdos!
+		decrtab = leagueman_OLD_decryption_table;
+
+	nRet = DrvInit(gunforc2RomLoad, decrtab, 1, 0x200000, 0x400000);
 
 	if (nRet == 0) {
 		memcpy (DrvV33ROM + 0x80000, DrvV33ROM + 0x100000, 0x20000);
@@ -3272,7 +3330,7 @@ struct BurnDriver BurnDrvNbbatman = {
 	"Ninja Baseball Batman (World)\0", NULL, "Irem", "M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
-	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, p4CommonInputInfo, NbbatmanDIPInfo,
+	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
 	nbbatmanInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

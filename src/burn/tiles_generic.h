@@ -1,4 +1,5 @@
 #include "burnint.h"
+#include "tilemap_generic.h"
 
 extern UINT8* pTileData;
 extern INT32 nScreenWidth, nScreenHeight;

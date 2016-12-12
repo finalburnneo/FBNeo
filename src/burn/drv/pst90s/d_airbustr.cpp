@@ -523,6 +523,26 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
+static tilemap_callback( airbustr0 )
+{
+	INT32 attr = DrvVidRAM0[offs + 0x400];
+
+	*code = DrvVidRAM0[offs + 0x000] + ((attr & 0x0f) << 8);
+	*color = (attr >> 4) + 0x10;
+	*gfx = 0;
+	*flags = 0;
+}
+
+static tilemap_callback( airbustr1 )
+{
+	INT32 attr = DrvVidRAM1[offs + 0x400];
+
+	*code = DrvVidRAM1[offs + 0x000] + ((attr & 0x0f) << 8);
+	*color = (attr >> 4) + 0;
+	*gfx = 0;
+	*flags = 0;
+}
+
 static INT32 DrvInit()
 {
 	is_bootleg = BurnDrvGetFlags() & BDF_BOOTLEG;
@@ -642,6 +662,11 @@ static INT32 DrvInit()
 
 	pandora_init(DrvPandoraRAM, DrvGfxROM1, (0x400000/0x100)-1, 0x200, 0, -16);
 
+	GenericTilemapInit(0, scan_rows_map_scan, airbustr0_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(1, scan_rows_map_scan, airbustr1_map_callback, 16, 16, 32, 32);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 16, 16, 0x100000, 0, 0x1f);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -663,7 +688,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_layer(UINT8 *ram, INT32 r0, INT32 r1, INT32 r2, INT32 r3, INT32 t)
+static void draw_layer(INT32 layer, INT32 r0, INT32 r1, INT32 r2, INT32 r3)
 {
 	INT32 scrollx = DrvScrollRegs[r0] + ((~DrvScrollRegs[4] << r1) & 0x100);
 	INT32 scrolly = DrvScrollRegs[r2] + ((~DrvScrollRegs[4] << r3) & 0x100) + 16;
@@ -675,46 +700,19 @@ static void draw_layer(UINT8 *ram, INT32 r0, INT32 r1, INT32 r2, INT32 r3, INT32
 		scrollx = (scrollx - 0x094) & 0x1ff;
 		scrolly = (scrolly - 0x100) & 0x1ff;
 	}
-	
-	for (INT32 offs = 0; offs < 32 * 32; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 4;
-		INT32 sy = (offs >> 5) << 4;
 
-		sx -= scrollx;
-		if (sx < -15) sx += 512;
-		sy -= scrolly;
-		if (sy < -15) sy += 512;
-
-		if (sx >= nScreenWidth) continue;
-		if (sy >= nScreenHeight) continue;
-
-		INT32 attr  = ram[offs + 0x400];
-		INT32 code  = ram[offs + 0x000] | ((attr & 0x0f) << 8);
-
-		if (t) {
-			if (*flipscreen) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, 240 - sx, 240 - sy, attr >> 4, 4, 0, 0, DrvGfxROM0);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, attr >> 4, 4, 0, 0, DrvGfxROM0);
-			}
-		} else {
-			if (*flipscreen) {
-				Render16x16Tile_FlipXY_Clip(pTransDraw, code, 240 - sx, 240 - sy, attr >> 4, 4, 0x100, DrvGfxROM0);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code, sx, sy, attr >> 4, 4, 0x100, DrvGfxROM0);
-			}
-		}
-	}
+	GenericTilemapSetFlip(layer, (*flipscreen) ? TMAP_FLIPXY : 0);
+	GenericTilemapSetScrollX(layer, scrollx);
+	GenericTilemapSetScrollY(layer, scrolly);
+	GenericTilemapDraw(layer, pTransDraw, -1);
 }
 
 static INT32 DrvDraw()
 {
 	DrvRecalcPalette();
 
-	draw_layer(DrvVidRAM0, 3, 6, 2, 5, 0);
-
-	draw_layer(DrvVidRAM1, 1, 8, 0, 7, 1);
+	draw_layer(0, 3, 6, 2, 5);
+	draw_layer(1, 1, 8, 0, 7);
 
 	pandora_flipscreen = *flipscreen;
 	pandora_update(pTransDraw);

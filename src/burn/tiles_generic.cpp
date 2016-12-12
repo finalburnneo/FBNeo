@@ -37,6 +37,8 @@ INT32 GenericTilesInit()
 
 	nRet = BurnTransferInit();
 
+	GenericTilemapExit();
+
 	return nRet;
 }
 
@@ -49,6 +51,8 @@ INT32 GenericTilesExit()
 	BurnTransferExit();
 	
 	Debug_GenericTilesInitted = 0;
+
+	GenericTilemapExit();
 
 	return 0;
 }

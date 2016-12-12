@@ -245,6 +245,14 @@ static INT32 DrvDoReset(INT32 full_reset)
 	return 0;
 }
 
+static tilemap_callback( atetris )
+{
+	*gfx  = 0;
+	*code  = DrvVidRAM[offs * 2 + 0] | ((DrvVidRAM[offs * 2 + 1] & 0x07) << 8);
+	*color = DrvVidRAM[offs * 2 + 1] >> 4;
+	*flags = 0;
+}
+
 static void DrvGfxExpand()
 {
 	for (INT32 i = (0x10000 - 1) * 2; i >= 0; i-=2) {
@@ -331,6 +339,8 @@ static INT32 CommonInit(INT32 boot)
 	}
 
 	GenericTilesInit();
+	GenericTilemapInit(0, scan_rows_map_scan, atetris_map_callback, 8, 8, 64, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM, 4, 8, 8, 0x20000, 0, 0xf);
 
 	memset (DrvNVRAM, 0xff, 0x200);
 
@@ -357,6 +367,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
+#if 0
 static void DrawLayer()
 {
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
@@ -372,6 +383,7 @@ static void DrawLayer()
 		Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, DrvGfxROM);
 	}
 }
+#endif
 
 static INT32 DrvDraw()
 {
@@ -383,7 +395,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	DrawLayer();
+	GenericTilemapDraw(0, pTransDraw, -1);
 
 	BurnTransferCopy(DrvPalette);
 

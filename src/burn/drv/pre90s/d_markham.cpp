@@ -177,6 +177,16 @@ void __fastcall markham_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
+static tilemap_callback( markham )
+{
+	INT32 attr  = DrvVidRAM[offs * 2 + 0];
+
+	*code  = DrvVidRAM[offs * 2 + 1] | ((attr & 0x60) << 3);
+	*color = (attr & 0x1f) | ((attr & 0x80) >> 2);
+	*gfx = 0;
+	*flags = 0;
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -337,6 +347,11 @@ static INT32 DrvInit()
 
 	GenericTilesInit();
 
+	GenericTilemapInit(0, scan_cols_map_scan, markham_map_callback, 8, 8, 32, 32);
+	GenericTilemapSetOffsets(0, -8, -16);
+	GenericTilemapSetScrollRows(0, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 8, 8, 0x10000, 0x200, 0x3f);
+
 	DrvDoReset();
 
 	return 0;
@@ -355,6 +370,7 @@ static INT32 DrvExit()
 	return 0;
 }
 
+#if 0
 static void draw_background_layer()
 {
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
@@ -378,6 +394,7 @@ static void draw_background_layer()
 		}
 	}
 }
+#endif
 
 static void draw_sprites()
 {
@@ -408,7 +425,14 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_background_layer();
+	for (INT32 i =  32/8; i < 128/8; i++) GenericTilemapSetScrollRow(0, i, scroll[0]);
+	for (INT32 i = 128/8; i < 256/8; i++) GenericTilemapSetScrollRow(0, i, scroll[1]);
+
+//	GenericTilemapSetFlip(0, (flipscreen) ? TMAP_FLIPXY : 0);
+	GenericTilemapDraw(0, pTransDraw, -1);
+
+	//draw_background_layer();
+
 	draw_sprites();
 
 	BurnTransferCopy(DrvPalette);

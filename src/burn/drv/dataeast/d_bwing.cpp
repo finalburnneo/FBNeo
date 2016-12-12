@@ -545,6 +545,8 @@ static INT32 DrvInit()
 	DACInit(0, 0, 1, DrvDACSync);
 	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
+	GenericTilesInit();
+
 	GenericTilemapInit(0, bwing_scan_cols_map_scan, bglayer_map_callback, 16, 16, 64, 64);
 	GenericTilemapInit(1, bwing_scan_cols_map_scan, fglayer_map_callback, 16, 16, 64, 64);
 	GenericTilemapInit(2, scan_cols_map_scan,       txlayer_map_callback, 8, 8, 32, 32);
@@ -556,8 +558,6 @@ static INT32 DrvInit()
 	GenericTilemapSetOffsets(2, 0, -8);
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
-
-	GenericTilesInit();
 
 	DrvDoReset();
 

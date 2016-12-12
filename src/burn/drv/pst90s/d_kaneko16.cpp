@@ -7292,7 +7292,7 @@ static INT32 ShogwarrFrame()
 	SekOpen(0);
 	SekNewFrame();
 
-	INT32 nInterleave = 240;
+	INT32 nInterleave = 256;
 
 	for (INT32 nScanline = 0; nScanline < nInterleave; nScanline++)
 	{
@@ -7302,14 +7302,13 @@ static INT32 ShogwarrFrame()
 
 		if (nScanline ==  64) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (nScanline == 144) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (nScanline == 223) {
-			SekSetIRQLine(4, CPU_IRQSTATUS_ACK); //AUTO);
-			 shogwarr_calc3_mcu_run();
+		if (nScanline == 223-16) {
+			shogwarr_calc3_mcu_run();
 		}
-		if (nScanline == 224) {
-			SekSetIRQLine(4, CPU_IRQSTATUS_NONE); //AUTO);
+
+		if (nScanline == 224-16) { // needs -16 otherwise sprite flicker in some shogunwarriors levels.
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
-			
 	}
 
 	SekClose();

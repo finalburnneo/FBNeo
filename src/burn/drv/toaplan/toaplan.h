@@ -115,9 +115,11 @@ inline static void ToaGP9001SetRAMPointer(UINT32 wordValue, const INT32 nControl
 inline static void ToaGP9001WriteRAM(const UINT16 wordValue, const INT32 nController)
 {
 	extern UINT8* GP9001Pointer[2];
+	extern UINT32 GP9001PointerCfg[2];
 
 	*((UINT16*)(GP9001Pointer[nController])) = BURN_ENDIAN_SWAP_INT16(wordValue);
 	GP9001Pointer[nController] += 2;
+	GP9001PointerCfg[nController] += 1; // +1 because (wordValue << 1) in ToaGP9001SetRAMPointer()
 }
 
 inline static UINT16 ToaGP9001ReadRAM_Hi(const INT32 nController)

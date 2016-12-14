@@ -608,7 +608,8 @@ INT32 ToaScanGP9001(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(GP9001TileBank);
 		if (nAction & ACB_WRITE) {
 			for (INT32 i = 0; i < nControllers; i++) {
-				ToaGP9001SetRAMPointer(GP9001PointerCfg[i]);
+				//bprintf(0, _T("ncontrgp9001: %X\n"), i);
+				ToaGP9001SetRAMPointer(GP9001PointerCfg[i], i);
 			}
 		}
 	}

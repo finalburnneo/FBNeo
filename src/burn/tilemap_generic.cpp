@@ -128,16 +128,19 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 
 	if (which == TMAP_GLOBAL) {
 		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
-			cur_map = &maps[which];
+			cur_map = &maps[i];
 			if (cur_map->initialized) {
 				cur_map->xoffset = x;
 				cur_map->yoffset = y;
+
+				
 			}
 		}
 		return;
 	}
 
 	cur_map = &maps[which];
+
 	if (cur_map->initialized == 0) {
 		bprintf (0, _T("GenericTilemapSetOffsets(%d, %d, %d); called without initialized tilemap!\n"), which, x, y);
 		return;
@@ -373,7 +376,7 @@ void GenericTilemapSetFlip(INT32 which, INT32 flip)
 
 	if (which == TMAP_GLOBAL) {
 		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
-			cur_map = &maps[which];
+			cur_map = &maps[i];
 			if (cur_map->initialized) {
 				cur_map->flags &= ~(TMAP_FLIPY|TMAP_FLIPX);
 				cur_map->flags |= flip;
@@ -402,7 +405,7 @@ void GenericTilemapSetEnable(INT32 which, INT32 enable)
 
 	if (which == TMAP_GLOBAL) {
 		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
-			cur_map = &maps[which];
+			cur_map = &maps[i];
 			if (cur_map->initialized) {
 				cur_map->enable = enable ? 1 : 0;
 			}

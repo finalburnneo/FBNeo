@@ -1,18 +1,28 @@
 
 // Tilemap defines
 
+// use this when in place of "which" to have this apply to all initialized tilemaps
+// works for: GenericTilemapSetEnable, GenericTilemapSetFlip, GenericTilemapSetOffsets
+#define TMAP_GLOBAL		-1
+
 // flip the tilemap on the screen horizontally (used with GenericTilemapSetFlip )
 #define TMAP_FLIPX		(1 <<  0)
+
 // flip the tilemap on the screen vertically (used with GenericTilemapSetFlip )
 #define TMAP_FLIPY		(1 <<  1)
+
 // flip the tilemap on the screen vertically and horizontally (used with GenericTilemapSetFlip )
 #define TMAP_FLIPXY		(TMAP_FLIPX | TMAP_FLIPY)
+
 // force the tilemap to ignore any transparency settings
 #define TMAP_FORCEOPAQUE	(1 <<  8)
+
 // set tilemap to use transparent color (is set when using GenericTilemapSetTransparent)
 #define TMAP_TRANSPARENT	(1 <<  9)
+
 // set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask)
 #define TMAP_TRANSMASK		(1 << 10)
+
 // select which group to use in the tilemap (group is set in the tilemap_callback)
 // pass this in the priority variable in GenericTilemapDraw.
 #define TMAP_SET_GROUP(x)	((x) <<8)
@@ -21,12 +31,16 @@
 
 // flip this tile horizontally
 #define TILE_FLIPX		(1 <<  0)
+
 // flip this tile vertically
 #define TILE_FLIPY		(1 <<  1)
+
 // ignore transparency for this tile only
 #define TILE_OPAQUE		(1 <<  2)
+
 // skip drawing this tile (can be used for speedups)
 #define TILE_SKIP		(1 <<  3)
+
 // enabled in TILE_GROUP to show that the group is enabled
 #define TILE_GROUP_ENABLE	(1 <<  4)
 
@@ -106,6 +120,9 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y);
 // Used to flip the tilemap on the screen vertically or horizontally
 // Very useful for *flipscreen
 void GenericTilemapSetFlip(INT32 which, INT32 flip);
+
+// Disable (0) or enable (1) tile map (draw or don't draw)
+void GenericTilemapSetEnable(INT32 which, INT32 enable);
 
 // Actually draw the tilemap.
 // which 	- select which tilemap to draw

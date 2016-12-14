@@ -3,8 +3,10 @@
 #define MAX_TILEMAPS	32
 
 struct GenericTilemap {
+	UINT8 initialized;
 	INT32 (*pScan)(INT32 cols, INT32 rows, INT32 col, INT32 row);
 	void (*pTile)(INT32 offs, INT32 *gfx, INT32 *code, INT32 *color, UINT32 *flags);
+	UINT8 enable;
 	UINT32 mwidth;
 	UINT32 mheight;
 	UINT32 twidth;
@@ -39,12 +41,21 @@ static GenericTilemap *cur_map;
 
 void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 cols, INT32 rows, INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *gfx, INT32 *code, INT32 *color, UINT32 *flags), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
 {
+	if (Debug_GenericTilesInitted == 0) {
+		bprintf (0, _T("Please call GenericTilesInit() before GenericTilemapInit()!\n"));
+		return;
+	}
+
 	cur_map = &maps[which];
 
 	memset (cur_map, 0, sizeof(GenericTilemap));
 
+	cur_map->initialized = 1;
+
 	cur_map->pTile = pTile;
 	cur_map->pScan = pScan;
+
+	cur_map->enable = 1;
 
 	cur_map->mwidth = map_width;
 	cur_map->mheight = map_height;
@@ -68,6 +79,10 @@ void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 cols, INT32 rows, INT3
 
 void GenericTilemapSetGfx(INT32 num, UINT8 *gfxbase, INT32 depth, INT32 tile_width, INT32 tile_height, INT32 gfxlen, UINT32 color_offset, UINT32 color_mask)
 {
+	if (Debug_GenericTilesInitted == 0) {
+		bprintf (0, _T("Please call GenericTilesInit() before GenericTilemapInit()!\n"));
+	}
+
 	GenericTilemapGfx *ptr = &gfxdata[num];
 
 	ptr->gfxbase = gfxbase;
@@ -92,13 +107,41 @@ void GenericTilemapSetGfx(INT32 num, UINT8 *gfxbase, INT32 depth, INT32 tile_wid
 
 void GenericTilemapExit()
 {
+	// de-allocate any row/col scroll tables
+	for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
+		cur_map = &maps[i];
+		if (cur_map->scrolly_table) BurnFree(cur_map->scrolly_table);
+		if (cur_map->scrollx_table) BurnFree(cur_map->scrollx_table);
+	}
+
+	// wipe everything else out
 	memset (maps, 0, sizeof(maps));
 	memset (gfxdata, 0, sizeof(gfxdata));
 }
 
 void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 {
+	if (which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetOffsets(%d, %d, %d); called with impossible tilemap!\n"), which, x, y);
+		return;
+	}
+
+	if (which == TMAP_GLOBAL) {
+		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
+			cur_map = &maps[which];
+			if (cur_map->initialized) {
+				cur_map->xoffset = x;
+				cur_map->yoffset = y;
+			}
+		}
+		return;
+	}
+
 	cur_map = &maps[which];
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetOffsets(%d, %d, %d); called without initialized tilemap!\n"), which, x, y);
+		return;
+	}
 
 	cur_map->xoffset = x;
 	cur_map->yoffset = y;
@@ -106,14 +149,35 @@ void GenericTilemapSetOffsets(INT32 which, INT32 x, INT32 y)
 
 void GenericTilemapSetTransparent(INT32 which, UINT32 transparent)
 {
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetTransparent(%d, 0x%x); called with impossible tilemap number!\n"), which, transparent);
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetTransparent(%d, 0x%x); called without initialized tilemap!\n"), which, transparent);
+		return;
+	}
+
 	cur_map->transparent[0] = transparent;
 	cur_map->flags |= TMAP_TRANSPARENT;
 }
 
 void GenericTilemapSetTransMask(INT32 which, UINT16 transmask)
 {
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetTransMask(%d, 0x%4.4x); called with impossible tilemap number!\n"), which, transmask);
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapTransMask(%d, 0x%4.4x); called without initialized tilemap!\n"), which, transmask);
+		return;
+	}
 
 	memset (cur_map->transparent, 1, 256);
 
@@ -128,68 +192,251 @@ void GenericTilemapSetTransMask(INT32 which, UINT16 transmask)
 
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx)
 {
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetScrollX(%d, %d); called with impossible tilemap!\n"), which, scrollx);
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetScrollX(%d, %d); called without initialized tilemap!\n"), which, scrollx);
+		return;
+	}
+
 	cur_map->scrollx = scrollx % (cur_map->twidth * cur_map->mwidth);
 }
 
 void GenericTilemapSetScrollY(INT32 which, INT32 scrolly)
 {
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetScrollY(%d, %d); called with impossible tilemap!\n"), which, scrolly);
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetScrollY(%d, %d); called without initialized tilemap!\n"), which, scrolly);
+		return;
+	}
+
 	cur_map->scrolly = scrolly % (cur_map->theight * cur_map->mheight);
 }
 
 void GenericTilemapSetScrollCols(INT32 which, UINT32 cols)
 {
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d); called with impossible tilemap!\n"), which, cols);
+		return;
+	}
+
 	cur_map = &maps[which];
-	cur_map->scroll_cols = cols;
-	cur_map->scrolly_table = (INT32*)BurnMalloc(cols * sizeof(INT32));
 
-	memset (cur_map->scrolly_table, 0, cols * sizeof(INT32));
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d); called without initialized tilemap!\n"), which, cols);
+		return;
+	}
 
-	if (cols > cur_map->mwidth) {
-		bprintf (0, _T("Line scroll not supported at this time (cols).\n"));
+	if (cols > (cur_map->mwidth * cur_map->twidth)) {
+		bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d); called with more cols than tilemap is wide!\n"), which, cols);
+		return;
+	}
+
+	// use scrolly instead
+	if (cols <= 0) cols = 1;
+	if (cols == 1) {
+		if (cur_map->scrolly_table) {
+			BurnFree(cur_map->scrolly_table);
+		}
+		return;
+	}
+
+	if (cur_map->scroll_cols != cols)
+	{
+		cur_map->scroll_cols = cols;
+
+		if (cur_map->scrolly_table) {
+			BurnFree(cur_map->scrolly_table);
+		}
+
+		cur_map->scrolly_table = (INT32*)BurnMalloc(cols * sizeof(INT32));
+
+		memset (cur_map->scrolly_table, 0, cols * sizeof(INT32));
+
+		if (cols > cur_map->mwidth) {
+			bprintf (0, _T("Vertical line scroll not supported at this time (cols).\n"));
+		}
 	}
 }
 
 void GenericTilemapSetScrollRows(INT32 which, UINT32 rows)
 {
-	cur_map = &maps[which];
-	cur_map->scroll_rows = rows;
-	cur_map->scrollx_table = (INT32*)BurnMalloc(rows * sizeof(INT32));
-
-	memset (cur_map->scrollx_table, 0, rows * sizeof(INT32));
-
-	if (rows > cur_map->mheight) {
-		bprintf (0, _T("Setting line scroll (%d rows).\n"), rows);
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetScrollRows(%d, %d); called with impossible tilemap!\n"), which, rows);
+		return;
 	}
-}
 
-void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll)
-{
 	cur_map = &maps[which];
-	if (cur_map->scrollx_table != NULL) {
-		cur_map->scrollx_table[row] = scroll;
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetScrollRows(%d, %d); called without initialized tilemap!\n"), which, rows);
+		return;
+	}
+
+	if (rows > (cur_map->mheight * cur_map->theight)) {
+		bprintf (0, _T("GenericTilemapSetScrollRows(%d, %d); called with more rows than tilemap is high!\n"), which, rows);
+		return;
+	}
+
+	// use scrollx instead
+	if (rows <= 0) rows = 1;
+	if (rows == 1) {
+		if (cur_map->scrollx_table) {
+			BurnFree(cur_map->scrollx_table);
+		}
+		return;
+	}
+
+	if (cur_map->scroll_rows != rows)
+	{
+		cur_map->scroll_rows = rows;
+
+		if (cur_map->scrollx_table) {
+			BurnFree(cur_map->scrollx_table);
+		}
+
+		cur_map->scrollx_table = (INT32*)BurnMalloc(rows * sizeof(INT32));
+
+		memset (cur_map->scrollx_table, 0, rows * sizeof(INT32));
+
+	//	if (rows > cur_map->mheight) {
+	//		bprintf (0, _T("Setting line scroll (%d rows).\n"), rows);
+	//	}
 	}
 }
 
 void GenericTilemapSetScrollCol(INT32 which, INT32 col, INT32 scroll)
 {
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetScrollCol(%d, %d, %d); called with impossible tilemap!\n"), which, col, scroll);
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetScrollCol(%d, %d, %d); called without initialized tilemap!\n"), which, col, scroll);
+		return;
+	}
+
+	if ((INT32)cur_map->scroll_cols <= col || col < 0) {
+		bprintf (0, _T("GenericTilemapSetScrollCol(%d, %d, %d); called with improper value!\n"), which, col, scroll);
+		return;
+	}
+
 	if (cur_map->scrolly_table != NULL) {
 		cur_map->scrolly_table[col] = scroll;
 	}
 }
 
+void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll)
+{
+	if (which < 0 || which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetScrollRow(%d, %d, %d); called with impossible tilemap!\n"), which, row, scroll);
+		return;
+	}
+
+	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetScrollRow(%d, %d, %d); called without initialized tilemap!\n"), which, row, scroll);
+		return;
+	}
+
+	if ((INT32)cur_map->scroll_rows <= row || row < 0) {
+		bprintf (0, _T("GenericTilemapSetScrollRow(%d, %d, %d); called with improper value!\n"), which, row, scroll);
+		return;
+	}
+
+	if (cur_map->scrollx_table != NULL) {
+		cur_map->scrollx_table[row] = scroll;
+	}
+}
+
 void GenericTilemapSetFlip(INT32 which, INT32 flip)
 {
+	if (which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetFlip(%d, %d); called with impossible tilemap!\n"), which, flip);
+		return;
+	}
+
+	if (which == TMAP_GLOBAL) {
+		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
+			cur_map = &maps[which];
+			if (cur_map->initialized) {
+				cur_map->flags &= ~(TMAP_FLIPY|TMAP_FLIPX);
+				cur_map->flags |= flip;
+			}
+		}
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetFlip(%d, %d); called without initialized tilemap!\n"), which, flip);
+		return;
+	}
+
 	cur_map->flags &= ~(TMAP_FLIPY|TMAP_FLIPX);
 	cur_map->flags |= flip;
 }
 
+void GenericTilemapSetEnable(INT32 which, INT32 enable)
+{
+	if (which >= MAX_TILEMAPS) {
+		bprintf (0, _T("GenericTilemapSetEnable(%d, %d); called with impossible tilemap!\n"), which, enable);
+		return;
+	}
+
+	if (which == TMAP_GLOBAL) {
+		for (INT32 i = 0; i < MAX_TILEMAPS; i++) {
+			cur_map = &maps[which];
+			if (cur_map->initialized) {
+				cur_map->enable = enable ? 1 : 0;
+			}
+		}
+		return;
+	}
+
+	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetEnable(%d, %d); called without initialized tilemap!\n"), which, enable);
+		return;
+	}
+
+	cur_map->enable = enable ? 1 : 0;
+}
+
 void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 {
+	if (Bitmap == NULL) {
+		bprintf (0, _T("GenericTilemapSetFlip(%d, Bitmap, %d); called without initialized Bitmap!\n"), which, priority);
+		return;
+	}
+
 	cur_map = &maps[which];
+
+	if (cur_map->initialized == 0) {
+		bprintf (0, _T("GenericTilemapSetFlip(%d, Bitmap, %d); called without initialized tilemap!\n"), which, priority);
+		return;
+	}
+
+	if (cur_map->enable == 0) { // layer disabled!
+		return;
+	}
 
 	INT32 minx, maxx, miny, maxy;
 	GenericTilesGetClip(&minx, &maxx, &miny, &maxy);
@@ -228,14 +475,21 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				if (flags & TILE_SKIP) continue; // skip this tile
 
 				flip = flags & 3;
-				if (flags & TILE_GROUP_ENABLE) group = flags >> 16;
-				if (cur_map->flags & TMAP_TRANSMASK) {
+
+				if (flags & TILE_GROUP_ENABLE) {
+					group = (flags >> 16) & 0xff;
+
 					if (group != tgroup) {
 						continue;
 					}
 				}
 
 				GenericTilemapGfx *gfx = &gfxdata[gfxnum];
+
+				if (gfx->gfxbase == NULL) {
+					bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					continue;
+				}
 			
 				color &= gfx->color_mask;
 				color = (color << gfx->depth) + gfx->color_offset;
@@ -278,16 +532,22 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 		if (flags & TILE_SKIP) continue; // skip this tile
 
-		if (flags & TILE_GROUP_ENABLE) flip = flags & 3;
-		group = flags >> 16;
+		flip = flags & 3;
 
-		if (cur_map->flags & TMAP_TRANSMASK) {
+		if (flags & TILE_GROUP_ENABLE) {
+			group = (flags >> 16) & 0xff;
+
 			if (group != tgroup) {
 				continue;
 			}
 		}
 
 		GenericTilemapGfx *gfx = &gfxdata[gfxnum];
+
+		if (gfx->gfxbase == NULL) {
+			bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+			continue;
+		}
 
 		color &= gfx->color_mask;
 		code &= gfx->code_mask;

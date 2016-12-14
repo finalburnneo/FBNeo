@@ -272,13 +272,9 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[3]  = { RGN_FRAC(0xc000, 2,3), RGN_FRAC(0xc000, 1,3), RGN_FRAC(0xc000, 0,3) }; //0x4000*8*2, 0x4000*8*1, 0 };
-	INT32 XOffs[16] = { 64+0, 64+1, 64+2, 64+3, 64+4, 64+5, 64+6, 64+7, 0, 1, 2, 3, 4, 5, 6, 7 }; //{ STEP8(64,1), STEP8(0,1) };
-	INT32 YOffs[32] = { 55*8, 54*8, 53*8, 52*8, 51*8, 50*8, 49*8, 48*8,
-		39*8, 38*8, 37*8, 36*8, 35*8, 34*8, 33*8, 32*8,
-		23*8, 22*8, 21*8, 20*8, 19*8, 18*8, 17*8, 16*8,
-		7*8,  6*8,  5*8,  4*8,  3*8,  2*8,  1*8,  0*8
-	}; //{ STEP8(55*8,-8), STEP8(39*8,-8), STEP8(23*8,-8), STEP8(7*8,-8) };
+	INT32 Plane[3]  = { RGN_FRAC(0xc000, 2,3), RGN_FRAC(0xc000, 1,3), RGN_FRAC(0xc000, 0,3) };
+	INT32 XOffs[16] = { STEP8(64,1), STEP8(0,1) };
+	INT32 YOffs[32] = { STEP8(55*8,-8), STEP8(39*8,-8), STEP8(23*8,-8), STEP8(7*8,-8) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0xc000);
 	if (tmp == NULL) {
@@ -367,7 +363,7 @@ static INT32 DrvInit()
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetOffsets(0, 0, -16);
 	GenericTilemapSetScrollCols(0, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x20000, 0, 0x1f);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 3, 8, 8, 0x20000, 0x200, 0x1f);
 
 	DrvDoReset();
 

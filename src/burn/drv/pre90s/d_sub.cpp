@@ -408,7 +408,7 @@ static void draw_sprites()
 	{
 		INT32 code  = DrvSprRAM0[i+1];
 		INT32 sx    = DrvSprRAM0[i+0];
-		INT32 sy    = 0xe0 - DrvSprRAM1[i+1];
+		INT32 sy    = (0xe0 - DrvSprRAM1[i+1]) - 16;
 		INT32 color = DrvSprRAM1[i+0] & 0x3f;
 		INT32 flipx =~DrvSprRAM1[i+0] & 0x80;
 		INT32 flipy =~DrvSprRAM1[i+0] & 0x40;

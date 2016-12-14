@@ -302,7 +302,7 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 
 #define PLOTPIXEL_PRIO_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority; }
 #define PLOTPIXEL_PRIO_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
-#define PLOTPIXEL_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) {pPixel[x] = nPalette + pTileData[x];}
+#define PLOTPIXEL_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x];}
 #define PLOTPIXEL_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[a] ;}
 
 #define CLIPPIXEL(x, sx, a) if ((sx + x) >= nScreenWidthMin && (sx + x) < nScreenWidthMax) { a; };
@@ -4944,7 +4944,7 @@ void RenderPrioSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 t
 	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderPrioSprite called without init\n"));
 #endif
 
-	if (sx < (0 - nScreenWidthMin) || sy < (0 - nScreenHeightMin) || sx >= nScreenWidthMax || sy >= nScreenHeightMax) return;
+	if (sx < (nScreenWidthMin - (width - 1)) || sy < (nScreenHeightMin - (height - 1)) || sx >= nScreenWidthMax || sy >= nScreenHeightMax) return;
 
 	UINT8 *gfx_base = gfx + (code * width * height);
 

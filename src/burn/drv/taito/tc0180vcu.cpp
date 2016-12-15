@@ -520,8 +520,11 @@ void TC0180VCUFramebufferDraw(INT32 priority, INT32 color_base)
 
 void TC0180VCUDrawSprite(UINT16 *dest)
 {
-	INT32 t_swide = nScreenWidth;  nScreenWidth  = 512; // hack to allow use of generic tile routines
-	INT32 t_shigh = nScreenHeight; nScreenHeight = 256;
+	//INT32 t_swide = nScreenWidth;  nScreenWidth = 512; // hack to allow use of generic tile routines
+	//INT32 t_shigh = nScreenHeight; nScreenHeight = 256;
+	// The above method can no longer be used, instead, use this below:  (Keep for reference!)
+
+	GenericTilesSetClipRaw(0, 512, 0, 256);
 
 	INT32 xlatch = 0;
 	INT32 ylatch = 0;
@@ -619,8 +622,10 @@ void TC0180VCUDrawSprite(UINT16 *dest)
 		}
 	}
 
-	nScreenWidth  = t_swide;
-	nScreenHeight = t_shigh;
+	//nScreenWidth = t_swide;
+	//nScreenHeight = t_shigh;
+	// Like above, use this to revert the ClipRaw() changes, instead of setting the nScreenWidth/Height directly.
+	GenericTilesClearClipRaw();
 }
 
 void TC0180VCUBufferSprites()

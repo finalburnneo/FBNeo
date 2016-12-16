@@ -3,7 +3,9 @@
 
 /*
 	to do:
-		clean
+	    cosmic cop tile corruption issue(?), when attract-mode demo plays,
+    	watch the tiles on the bottom of the screen when the screen scrolls down. -dink dec.2016
+	    clean
 		poundfor inputs
 */
 
@@ -67,6 +69,7 @@ static INT32 nCyclesTotal[2];
 
 static INT32 Clock_16mhz = 0;
 static INT32 Kengo = 0;
+static INT32 CosmicCop = 0;
 static INT32 m72_video_type = 0;
 static INT32 z80_nmi_enable = 0;
 static INT32 enable_z80_reset = 0; // only if z80 is not rom-based!
@@ -1296,7 +1299,7 @@ static INT32 DrvDoReset()
 	ym2151_previous = 0;
 	sample_address = 0;
 	irq_raster_position = -1;
-	m72_irq_base = 0;
+	if (!CosmicCop) m72_irq_base = 0;
 
 	return 0;
 }
@@ -1766,6 +1769,7 @@ static INT32 DrvExit()
 	z80_nmi_enable = 0;
 	m72_irq_base = 0;
 	Kengo = 0;
+	CosmicCop = 0;
 	Clock_16mhz = 0;
 
 	m72_install_protection(NULL,NULL,NULL);
@@ -1866,7 +1870,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 	}
 }
 
-INT32 start_screen = 0;
+//INT32 start_screen = 0;
 
 static void draw_sprites()
 {
@@ -1887,7 +1891,7 @@ static void draw_sprites()
 		INT32 h = 1 << ((attr & 0x3000) >> 12);
 		sy -= 16 * h;
 
-		sy -= start_screen;
+		//sy -= start_screen;
 		sx -= 64; // ?
 #if 0
 		if (*flipscreen)
@@ -1956,7 +1960,7 @@ static void majtitle_draw_sprites()
 		h = 1 << ((BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+2]) & 0x3000) >> 12);
 		sy -= 16 * h;
 
-		sy -= start_screen;
+		//sy -= start_screen;
 		sx -= 64; // ?
 #if 0
 		if (flip_screen_get(machine))
@@ -2011,16 +2015,10 @@ static void dodrawline(INT32 start, INT32 finish)
 	draw_layer(1, 1, m72_video_type, start, finish);
 	draw_layer(0, 1, m72_video_type, start, finish);
 
-	// hacky hack for drawing sprites in scanline... slow.
-	start_screen = start;
-	UINT16 *ptr = pTransDraw;
-	INT32 scrn = nScreenHeight;
-	pTransDraw += start * nScreenWidth;
-	nScreenHeight = finish - start;
+	GenericTilesSetClip(0, -1, start, finish);
 	if (m72_video_type == 3) majtitle_draw_sprites();
 	draw_sprites();
-	pTransDraw = ptr;
-	nScreenHeight = scrn;
+	GenericTilesClearClip();
 
 	draw_layer(1, 0, m72_video_type, start, finish);
 	draw_layer(0, 0, m72_video_type, start, finish);
@@ -2068,7 +2066,7 @@ static void compile_inputs()
 }
 
 static INT32 nPreviousLine = 0;
-
+		 extern int counter;
 static void scanline_interrupts(INT32 scanline)
 {
 	if (scanline == (irq_raster_position - 128) && scanline < 256) {
@@ -3521,7 +3519,8 @@ static INT32 cosmccopInit()
 
 	INT32 rc = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 2);
 
-	m72_irq_base = 0x60; // Cosmic Cop doesn't write to port 0x42, set it manually.
+	m72_irq_base = 0x60; // Cosmic Cop doesn't write to port 0x42, set it manually. (after DrvInit()!)
+	CosmicCop = 1;
 
 	return rc;
 }

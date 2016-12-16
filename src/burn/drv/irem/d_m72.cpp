@@ -1870,8 +1870,6 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 	}
 }
 
-//INT32 start_screen = 0;
-
 static void draw_sprites()
 {
 	UINT16 *sprram = (UINT16*)DrvSprBuf;
@@ -1891,7 +1889,6 @@ static void draw_sprites()
 		INT32 h = 1 << ((attr & 0x3000) >> 12);
 		sy -= 16 * h;
 
-		//sy -= start_screen;
 		sx -= 64; // ?
 #if 0
 		if (*flipscreen)
@@ -1960,7 +1957,6 @@ static void majtitle_draw_sprites()
 		h = 1 << ((BURN_ENDIAN_SWAP_INT16(spriteram16_2[offs+2]) & 0x3000) >> 12);
 		sy -= 16 * h;
 
-		//sy -= start_screen;
 		sx -= 64; // ?
 #if 0
 		if (flip_screen_get(machine))
@@ -2033,7 +2029,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-//	if (*video_enable) {
+//	if (*video_enable) { // save for possible slower system use (gamezfan :)
 //		BurnTransferClear();
 //		BurnTransferCopy(DrvPalette);
 //		return 0;
@@ -2066,7 +2062,7 @@ static void compile_inputs()
 }
 
 static INT32 nPreviousLine = 0;
-		 extern int counter;
+
 static void scanline_interrupts(INT32 scanline)
 {
 	if (scanline == (irq_raster_position - 128) && scanline < 256) {

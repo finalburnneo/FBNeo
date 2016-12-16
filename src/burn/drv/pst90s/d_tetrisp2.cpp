@@ -4,9 +4,8 @@
 /*
 	To do:
 		clean ups
-		nndmseal screen upside-down
-		Stepping Stage
-		priority fixes
+		nndmseal screen upside-down (game doesn't work, so who cares?)
+		Stepping Stage (also doesn't work)
 		Rock'n MegaSession (Japan)
 */
 
@@ -15,41 +14,39 @@
 #include "ymz280b.h"
 #include "msm6295.h"
 
-static unsigned char *AllMem;
-static unsigned char *AllRam;
-static unsigned char *RamEnd;
-static unsigned char *MemEnd;
-static unsigned char *Drv68KROM;
-static unsigned char *DrvGfxROM0;
-static unsigned char *DrvGfxROM1;
-static unsigned char *DrvGfxROM2;
-static unsigned char *DrvGfxROM3;
-static unsigned char *DrvSndROM;
-static unsigned char *Drv68KRAM0;
-static unsigned char *Drv68KRAM1;
-static unsigned char *DrvPalRAM;
-static unsigned char *DrvVFgRAM;
-static unsigned char *DrvVBgRAM;
-static unsigned char *DrvPriRAM;
-static unsigned char *DrvRotRAM;
-static unsigned char *DrvNvRAM;
-static unsigned char *DrvSprRAM;
-static unsigned char *DrvFgScr;
-static unsigned char *DrvBgScr;
-static unsigned char *DrvRotReg;
-static unsigned char *DrvSysReg;
+static UINT8 *AllMem;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
+static UINT8 *MemEnd;
+static UINT8 *Drv68KROM;
+static UINT8 *DrvGfxROM0;
+static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM2;
+static UINT8 *DrvGfxROM3;
+static UINT8 *DrvSndROM;
+static UINT8 *Drv68KRAM0;
+static UINT8 *Drv68KRAM1;
+static UINT8 *DrvPalRAM;
+static UINT8 *DrvVFgRAM;
+static UINT8 *DrvVBgRAM;
+static UINT8 *DrvPriRAM;
+static UINT8 *DrvRotRAM;
+static UINT8 *DrvNvRAM;
+static UINT8 *DrvSprRAM;
+static UINT8 *DrvFgScr;
+static UINT8 *DrvBgScr;
+static UINT8 *DrvRotReg;
+static UINT8 *DrvSysReg;
 
-static UINT16 *DrvPrioDraw;
+static UINT32  *DrvPalette;
+static UINT8  DrvRecalc;
 
-static unsigned int  *DrvPalette;
-static unsigned char  DrvRecalc;
-
-static unsigned char DrvJoy1[16];
-static unsigned char DrvJoy2[16];
-static unsigned char DrvJoy3[16];
-static unsigned char DrvDips[3];
-static unsigned char DrvReset;
-static unsigned short DrvInputs[3];
+static UINT8 DrvJoy1[16];
+static UINT8 DrvJoy2[16];
+static UINT8 DrvJoy3[16];
+static UINT8 DrvDips[3];
+static UINT8 DrvReset;
+static UINT16 DrvInputs[3];
 
 static INT32 watchdog;
 static INT32 game;
@@ -308,7 +305,7 @@ static inline void palette_update(INT32 offset)
 
 	INT32 p = *((UINT16*)(DrvPalRAM + offset)) >> 1;
 
-	unsigned char r,g,b;
+	UINT8 r,g,b;
 
 	r =  p & 0x1f;
 	g = (p >>  5) & 0x1f;
@@ -337,7 +334,7 @@ static void rockn_adpcmbankswitch(INT32 data)
 
 static void rockn2_adpcmbankswitch(INT32 data)
 {
-	int bank;
+	INT32 bank;
 
 	char banktable[9][3]=
 	{
@@ -382,7 +379,7 @@ static void nndmseal_sound_bankswitch(INT32 data)
 	}
 }
 
-static void __fastcall tetrisp2_write_word(unsigned int address, unsigned short data)
+static void __fastcall tetrisp2_write_word(UINT32 address, UINT16 data)
 {
 //	bprintf (0, _T("WW: %5.5x, %4.4x\n"), address, data);
 
@@ -398,17 +395,17 @@ static void __fastcall tetrisp2_write_word(unsigned int address, unsigned short 
 	}
 
 	if ((address & 0xfffff0) == 0xb40000) {
-		*((unsigned short*)(DrvFgScr + (address & 0x0e))) = data;
+		*((UINT16*)(DrvFgScr + (address & 0x0e))) = data;
 		return;
 	}
 
 	if ((address & 0xfffff0) == 0xb40010) {
-		*((unsigned short*)(DrvBgScr + (address & 0x0e))) = data;
+		*((UINT16*)(DrvBgScr + (address & 0x0e))) = data;
 		return;
 	}
 
 	if (address >= 0xb60000 && address <= 0xb6002f) {
-		*((unsigned short*)(DrvRotReg + (address & 0x3e))) = data;
+		*((UINT16*)(DrvRotReg + (address & 0x3e))) = data;
 		return;
 	}
 
@@ -420,7 +417,7 @@ static void __fastcall tetrisp2_write_word(unsigned int address, unsigned short 
 			rockn_14_timer_countdown = rockn_14_timer / 6000;
 		}
 
-		*((unsigned short*)(DrvSysReg + (address & 0x1e))) = data;
+		*((UINT16*)(DrvSysReg + (address & 0x1e))) = data;
 		return;
 	}
 
@@ -466,7 +463,7 @@ static void __fastcall tetrisp2_write_word(unsigned int address, unsigned short 
 	}
 }
 
-static void __fastcall tetrisp2_write_byte(unsigned int address, unsigned char data)
+static void __fastcall tetrisp2_write_byte(UINT32 address, UINT8 data)
 {
 //	bprintf (0, _T("WB: %5.5x, %2.2x\n"), address, data);
 
@@ -490,7 +487,7 @@ static void __fastcall tetrisp2_write_byte(unsigned int address, unsigned char d
 	bprintf (0, _T("WB: %5.5x, %2.2x\n"), address, data);
 }
 
-static unsigned short __fastcall tetrisp2_read_word(unsigned int address)
+static UINT16 __fastcall tetrisp2_read_word(UINT32 address)
 {
 //	bprintf (0, _T("RW: %5.5x\n"), address);
 
@@ -499,19 +496,19 @@ static unsigned short __fastcall tetrisp2_read_word(unsigned int address)
 	}
 
 	if ((address & 0xfffff0) == 0xb40000) {
-		return *((unsigned short*)(DrvFgScr + (address & 0x0e)));
+		return *((UINT16*)(DrvFgScr + (address & 0x0e)));
 	}
 
 	if ((address & 0xfffff0) == 0xb40010) {
-		return *((unsigned short*)(DrvBgScr + (address & 0x0e)));
+		return *((UINT16*)(DrvBgScr + (address & 0x0e)));
 	}
 
 	if (address >= 0xb60000 && address <= 0xb6002f) {
-		return *((unsigned short*)(DrvRotReg + (address & 0x3e)));
+		return *((UINT16*)(DrvRotReg + (address & 0x3e)));
 	}
 
 	if ((address & 0xffffe0) == 0xba0000) {
-		return *((unsigned short*)(DrvSysReg + (address & 0x1e)));
+		return *((UINT16*)(DrvSysReg + (address & 0x1e)));
 	}
 
 	switch (address)
@@ -557,14 +554,14 @@ static unsigned short __fastcall tetrisp2_read_word(unsigned int address)
 	return 0;
 }
 
-static unsigned char __fastcall tetrisp2_read_byte(unsigned int address)
+static UINT8 __fastcall tetrisp2_read_byte(UINT32 address)
 {
 	bprintf (0, _T("RB: %5.5x\n"), address);
 
 	return 0;
 }
 
-static int DrvDoReset(INT32 clear_mem)
+static INT32 DrvDoReset(INT32 clear_mem)
 {
 	if (clear_mem) {
 		memset (AllRam, 0, RamEnd - AllRam);
@@ -588,9 +585,9 @@ static int DrvDoReset(INT32 clear_mem)
 	return 0;
 }
 
-static int MemIndex()
+static INT32 MemIndex()
 {
-	unsigned char *Next; Next = AllMem;
+	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM	= Next; Next += 0x100000;
 
@@ -603,7 +600,7 @@ static int MemIndex()
 	YMZ280BROM	= Next;
 	DrvSndROM	= Next; Next += 0x7000000;
 
-	DrvPalette	= (unsigned int*)Next; Next += 0x8000 * sizeof(int);
+	DrvPalette	= (UINT32*)Next; Next += 0x8000 * sizeof(int);
 
 	AllRam		= Next;
 
@@ -632,14 +629,44 @@ static int MemIndex()
 	return 0;
 }
 
-static int Tetrisp2Init()
+static tilemap_callback( rtlayer )
+{
+	UINT16 *ram = (UINT16*)DrvRotRAM;
+
+	*code = ram[offs * 2 + 0];
+	*color = ram[offs * 2 + 1] & 0x000f;
+	*gfx = 2;
+	*flags = 0;
+}
+
+static tilemap_callback( bglayer )
+{
+	UINT16 *ram = (UINT16*)DrvVBgRAM;
+
+	*code = ram[offs * 2 + 0];
+	*color = ram[offs * 2 + 1] & 0x000f;
+	*gfx = 1;
+	*flags = 0;
+}
+
+static tilemap_callback( fglayer )
+{
+	UINT16 *ram = (UINT16*)DrvVFgRAM;
+
+	*code  = ram[offs * 2 + 0];
+	*color = ram[offs * 2 + 1] & 0x000f;
+	*gfx = 3;
+	*flags = 0;
+}
+
+static INT32 Tetrisp2Init()
 {
 	game = 0;
 
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (unsigned char *)0;
-	if ((AllMem = (unsigned char *)malloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -650,7 +677,7 @@ static int Tetrisp2Init()
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,  2, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x000001,  3, 2)) return 1;
 
-		for (int i = 0; i < 0x800000; i+=4) {
+		for (INT32 i = 0; i < 0x800000; i+=4) {
 			BurnByteswap(DrvGfxROM0 + i + 1, 2);
 		}
 
@@ -688,22 +715,29 @@ static int Tetrisp2Init()
 	srand(0x9a89810f);
 
 	GenericTilesInit();
-
-	DrvPrioDraw = (UINT16*)BurnMalloc(nScreenWidth * 2 * nScreenHeight);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16,  64,  64);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fglayer_map_callback,  8,  8,  64,  64);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 8, 16, 16, 0x800000, 0x1000, 0xf);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 8, 16, 16, 0x400000, 0x2000, 0xf);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 8,  8,  8, 0x080000, 0x6000, 0xf);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset(1);
 
 	return 0;
 }
 
-static int RocknInit()
+static INT32 RocknInit()
 {
 	game = 1;
 
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (unsigned char *)0;
-	if ((AllMem = (unsigned char *)malloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -714,7 +748,7 @@ static int RocknInit()
 		if (BurnLoadRom(DrvGfxROM0 + 0x000001,   2, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,   3, 2)) return 1;
 
-		for (int i = 0; i < 0x400000; i+=4) {
+		for (INT32 i = 0; i < 0x400000; i+=4) {
 			BurnByteswap(DrvGfxROM0 + i + 1, 2);
 		}
 
@@ -770,22 +804,29 @@ static int RocknInit()
 	srand(0x9a89810f);
 
 	GenericTilesInit();
-
-	DrvPrioDraw = (UINT16*)BurnMalloc(nScreenWidth * 2 * nScreenHeight);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16, 256,  16);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fglayer_map_callback,  8,  8,  64,  64);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 8, 16, 16, 0x800000, 0x1000, 0xf);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 8, 16, 16, 0x400000, 0x2000, 0xf);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 8,  8,  8, 0x080000, 0x6000, 0xf);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset(1);
 
 	return 0;
 }
 
-static int NndmsealInit()
+static INT32 NndmsealInit()
 {
 	game = 3;
 
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (unsigned char *)0;
-	if ((AllMem = (unsigned char *)malloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -829,22 +870,29 @@ static int NndmsealInit()
 	srand(0x9a89810f);
 
 	GenericTilesInit();
-
-	DrvPrioDraw = (UINT16*)BurnMalloc(nScreenWidth * 2 * nScreenHeight);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16,  64,  64);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fglayer_map_callback,  8,  8,  64,  64);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 8, 16, 16, 0x800000, 0x1000, 0xf);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 8, 16, 16, 0x400000, 0x2000, 0xf);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 8,  8,  8, 0x080000, 0x6000, 0xf);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset(1);
 
 	return 0;
 }
 
-static int NndmsealaInit()
+static INT32 NndmsealaInit()
 {
 	game = 3;
 
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (unsigned char *)0;
-	if ((AllMem = (unsigned char *)malloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -887,22 +935,29 @@ static int NndmsealaInit()
 	srand(0x9a89810f);
 
 	GenericTilesInit();
-
-	DrvPrioDraw = (UINT16*)BurnMalloc(nScreenWidth * 2 * nScreenHeight);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16,  64,  64);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fglayer_map_callback,  8,  8,  64,  64);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 8, 16, 16, 0x800000, 0x1000, 0xf);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 8, 16, 16, 0x400000, 0x2000, 0xf);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 8,  8,  8, 0x080000, 0x6000, 0xf);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset(1);
 
 	return 0;
 }
 
-static int Rockn2CommonInit(INT32 nSoundRoms)
+static INT32 Rockn2CommonInit(INT32 nSoundRoms)
 {
 	game = 2;
 
 	AllMem = NULL;
 	MemIndex();
-	int nLen = MemEnd - (unsigned char *)0;
-	if ((AllMem = (unsigned char *)malloc(nLen)) == NULL) return 1;
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -913,7 +968,7 @@ static int Rockn2CommonInit(INT32 nSoundRoms)
 		if (BurnLoadRom(DrvGfxROM0 + 0x000001,   2, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x000000,   3, 2)) return 1;
 
-		for (int i = 0; i < 0x400000; i+=4) {
+		for (INT32 i = 0; i < 0x400000; i+=4) {
 			BurnByteswap(DrvGfxROM0 + i + 1, 2);
 		}
 
@@ -957,8 +1012,15 @@ static int Rockn2CommonInit(INT32 nSoundRoms)
 	srand(0x9a89810f);
 
 	GenericTilesInit();
-
-	DrvPrioDraw = (UINT16*)BurnMalloc(nScreenWidth * 2 * nScreenHeight);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16, 256,  16);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fglayer_map_callback,  8,  8,  64,  64);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 8, 16, 16, 0x800000, 0x1000, 0xf);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 8, 16, 16, 0x400000, 0x2000, 0xf);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 8,  8,  8, 0x080000, 0x6000, 0xf);
+	GenericTilemapSetTransparent(0, 0);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
 
 	DrvDoReset(1);
 
@@ -986,7 +1048,7 @@ static INT32 Rockn4Init()
 	return Rockn2CommonInit(10);
 }
 
-static int DrvExit()
+static INT32 DrvExit()
 {
 	GenericTilesExit();
 
@@ -998,9 +1060,6 @@ static int DrvExit()
 
 	SekExit();
 
-	BurnFree (DrvPrioDraw);
-	DrvPrioDraw = NULL;
-
 	free (AllMem);
 	AllMem = NULL;
 
@@ -1009,149 +1068,21 @@ static int DrvExit()
 	return 0;
 }
 
-static void draw_priority_tile(UINT16 *dest, UINT16 *prio, UINT8 *gfx, INT32 index, INT32 sizex, INT32 sizey, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 color, INT32 priority, INT32 trans)
-{
-	UINT16 *dst;
-	UINT16 *pri;
-	UINT8 *src = gfx + index * sizex * sizey;
-
-	for (INT32 y = 0; y < sizey; y++)
-	{
-		dst = dest + ((sy + y) * nScreenWidth) + sx;
-		pri = prio + ((sy + y) * nScreenWidth) + sx;
-
-		for (INT32 x = 0; x < sizex; x++)
-		{
-			INT32 p;
-
-			if ((sy + y) >= nScreenHeight || (sy + y) < 0 || (sx + x) >= nScreenWidth || (sx + x) < 0) continue;
-
-			if (fy) {
-				if (fx) {
-					p = src[((sizey - 1) - y) * sizex + ((sizex - 1) - x)];
-				} else {
-					p = src[((sizey - 1) - y) * sizex + x];
-				}
-			} else {
-				if (fx) {
-					p = src[y * sizex + ((sizex - 1) - x)];
-				} else {
-					p = src[y * sizex + x];
-				}
-			}
-
-			if (p != trans) {
-				dst[x] = p + color;
-				pri[x] = priority;
-			}
-		}
-	}
-}
-
-static void draw_priority_sprite(UINT16 *dest, UINT16 *prio, UINT8 *gfx, INT32 index, INT32 sizex, INT32 sizey, INT32 sx, INT32 sy, INT32 fx, INT32 fy, INT32 color, INT32 priority, INT32 trans)
-{
-	if (~nBurnLayer & 0x08) return;
-
-	UINT16 *dst;
-	UINT16 *pri;
-	UINT8 *src = gfx + index * sizex * sizey;
-
-	for (INT32 y = 0; y < sizey; y++)
-	{
-		dst = dest + ((sy + y) * nScreenWidth) + sx;
-		pri = prio + ((sy + y) * nScreenWidth) + sx;
-
-		for (INT32 x = 0; x < sizex; x++)
-		{
-			INT32 p;
-
-			if ((sy + y) >= nScreenHeight || (sy + y) < 0 || (sx + x) >= nScreenWidth || (sx + x) < 0) continue;
-
-			if (fy) {
-				if (fx) {
-					p = src[((sizey - 1) - y) * sizex + ((sizex - 1) - x)];
-				} else {
-					p = src[((sizey - 1) - y) * sizex + x];
-				}
-			} else {
-				if (fx) {
-					p = src[y * sizex + ((sizex - 1) - x)];
-				} else {
-					p = src[y * sizex + x];
-				}
-			}
-
-			if (p != trans) {
-				if (priority & (1 << pri[x]) && (pri[x] & 0x80) == 0) {
-					dst[x] = p + color;
-					pri[x] |= 0x80;
-				}
-			}		
-		}
-	}
-}
-
-static void draw_16x16_layer(unsigned char *src, unsigned char *gfx, int col, int wide, int high, int scrollx, int scrolly, int priority)
-{
-	if (~nBurnLayer & 0x01 && col == 0x2000) return;
-	if (~nBurnLayer & 0x02 && col == 0x1000) return;
-
-	unsigned short *vram = (unsigned short*)src;
-
-	for (int offs = 0; offs < high * wide; offs++) {
-		int sx = (offs & (wide - 1)) * 16;
-		int sy = ((offs / wide) & (high - 1)) * 16;
-
-		sx -= scrollx;
-		if (sx < -15) sx += (wide * 16);
-		sy -= scrolly;
-		if (sy < -15) sy += (high * 16);
-
-		int code  = vram[offs * 2 + 0];
-		int color = vram[offs * 2 + 1] & 0x000f;
-
-		draw_priority_tile(pTransDraw, DrvPrioDraw, gfx, code, 16, 16, sx, sy, 0, 0, (color << 8) + col, priority, 0);
-	}
-}
-
-static void draw_fg_layer()
-{
-	if (~nBurnLayer & 0x04) return;
-
-	int scrollx = *((unsigned short*)(DrvFgScr +  4)) & 0x1ff;
-	int scrolly = *((unsigned short*)(DrvFgScr + 10)) & 0x1ff;
-
-	unsigned short *vram = (unsigned short*)DrvVFgRAM;
-
-	for (int offs = 0; offs < 64 * 64; offs++) {
-		int sx = (offs & 0x3f) << 3;
-		int sy = (offs >> 6) << 3;
-
-		sx -= scrollx;
-		if (sx < -7) sx += 512;
-		sy -= scrolly;
-		if (sy < -7) sy += 512;
-
-		int code  = vram[offs * 2 + 0];
-		int color = vram[offs * 2 + 1] & 0x000f;
-
-		draw_priority_tile(pTransDraw, DrvPrioDraw, DrvGfxROM3, code, 8, 8, sx, sy, 0, 0, (color << 8) + 0x6000, 0x04, 0);
-	}
-}
-
 static void draw_sprites(UINT8 *SpriteRAM, INT32 sprram_size)
 {
-	int x, y, tx, ty, sx, sy, flipx, flipy;
-	int xsize, ysize, xnum, ynum;
-	int xstart, ystart, xend, yend, xinc, yinc;
-	int code, attr, color, size;
+	INT32 x, y, tx, ty, sx, sy, flipx, flipy;
+	INT32 xsize, ysize, xnum, ynum;
+	INT32 xstart, ystart, xend, yend, xinc, yinc;
+	INT32 code, attr, color, size;
 	UINT32 primask;
 
 	UINT16 *sprram_top = (UINT16*)SpriteRAM;
 	UINT16	*source	=	sprram_top;
 	UINT16	*finish	=	sprram_top + (sprram_size - 0x10) / 2;
 
-	UINT16 *priority_ram = (UINT16*)DrvPriRAM;
+	UINT8 *priority_ram = DrvPriRAM;
+
+//	INT32 flipscreen = *((UINT16*)(DrvSysReg + 0)) & 0x02;
 
 	for (; source <= finish; source += 0x10/2 )
 	{
@@ -1206,7 +1137,7 @@ static void draw_sprites(UINT8 *SpriteRAM, INT32 sprram_size)
 		{
 			for (x = xstart; x != xend; x += xinc)
 			{
-				draw_priority_sprite(pTransDraw, DrvPrioDraw, DrvGfxROM0, code++, 8, 8, sx + x * 8, sy + y * 8, flipx, flipy, color << 8, primask, 0);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, code++, (color << 8), 0, sx + x * 8, sy + y * 8, flipx, flipy, 8, 8, primask);
 			}
 
 			code += (0x100/8) - xnum;
@@ -1214,7 +1145,7 @@ static void draw_sprites(UINT8 *SpriteRAM, INT32 sprram_size)
 	}
 }
 
-static int Tetrisp2Draw()
+static INT32 Tetrisp2Draw()
 {
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x20000; i++) {
@@ -1223,23 +1154,26 @@ static int Tetrisp2Draw()
 		DrvRecalc = 0;
 	}
 
-	memset (DrvPrioDraw, 0, nScreenWidth * nScreenHeight * 2);
 	BurnTransferClear(); // black?
 
-	unsigned short *bgregs = (unsigned short*)DrvBgScr;
-	unsigned short *rotregs = (unsigned short*)DrvRotReg;
+	INT32 flipscreen = *((UINT16*)(DrvSysReg + 0)) & 0x02;
 
-	int bgscroll[2];
-	int rotscroll[2];
+	UINT16 *bgregs = (UINT16 *)DrvBgScr;
+	UINT16 *rtregs = (UINT16 *)DrvRotReg;
+	UINT16 *fgregs = (UINT16 *)DrvFgScr;
 
-	int asc_pri = 0;
-	int scr_pri = 0;
-	int rot_pri = 0;
+	INT32 asc_pri = 0;
+	INT32 scr_pri = 0;
+	INT32 rot_pri = 0;
 
-	bgscroll[0] = (bgregs[0] + bgregs[2] + 0x14) & 0x3ff;
-	bgscroll[1] = (bgregs[3] + bgregs[5]) & 0x3ff;
-	rotscroll[0] = (rotregs[0] - 0x400) & 0x7ff;
-	rotscroll[1] = (rotregs[2] - 0x400) & 0x7ff;
+	GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen) ? TMAP_FLIPXY : 0);
+
+	GenericTilemapSetScrollX(0, (rtregs[0] - (flipscreen ? 0x53f : 0x400)));
+	GenericTilemapSetScrollY(0, (rtregs[2] - (flipscreen ? 0x4df : 0x400)));
+	GenericTilemapSetScrollX(1, (bgregs[0] + bgregs[2] + 0x14));
+	GenericTilemapSetScrollY(1, (bgregs[3] + bgregs[5]));
+	GenericTilemapSetScrollX(2, (fgregs[2]));
+	GenericTilemapSetScrollY(2, (fgregs[5]));
 
 	if(DrvPriRAM[0x2b00 / 2] == 0x34)
 		asc_pri++;
@@ -1257,104 +1191,34 @@ static int Tetrisp2Draw()
 		rot_pri++;
 
 	if (rot_pri == 0)
-		draw_16x16_layer(DrvRotRAM, DrvGfxROM2, 0x2000, 128, 128, rotscroll[0], rotscroll[1], 2);
+		GenericTilemapDraw(0, pTransDraw, 2); // rot
 	else if (scr_pri == 0)
-		draw_16x16_layer(DrvVBgRAM, DrvGfxROM1, 0x1000, 64, 64, bgscroll[0], bgscroll[1], 1);
+		GenericTilemapDraw(1, pTransDraw, 1); // bg
 	else if (asc_pri == 0)
-		draw_fg_layer();
+		GenericTilemapDraw(2, pTransDraw, 4); // fg
 
 	if (rot_pri == 1)
-		draw_16x16_layer(DrvRotRAM, DrvGfxROM2, 0x2000, 128, 128, rotscroll[0], rotscroll[1], 2);
+		GenericTilemapDraw(0, pTransDraw, 2); // rot
 	else if (scr_pri == 1)
-		draw_16x16_layer(DrvVBgRAM, DrvGfxROM1, 0x1000, 64, 64, bgscroll[0], bgscroll[1], 1);
+		GenericTilemapDraw(1, pTransDraw, 1); // bg
 	else if (asc_pri == 1)
-		draw_fg_layer();
+		GenericTilemapDraw(2, pTransDraw, 4); // fg
 
 	if (rot_pri == 2)
-		draw_16x16_layer(DrvRotRAM, DrvGfxROM2, 0x2000, 128, 128, rotscroll[0], rotscroll[1], 2);
+		GenericTilemapDraw(0, pTransDraw, 2); // rot
 	else if (scr_pri == 2)
-		draw_16x16_layer(DrvVBgRAM, DrvGfxROM1, 0x1000, 64, 64, bgscroll[0], bgscroll[1], 1);
+		GenericTilemapDraw(1, pTransDraw, 1); // bg
 	else if (asc_pri == 2)
-		draw_fg_layer();
+		GenericTilemapDraw(2, pTransDraw, 4); // fg
 
-	draw_sprites(DrvSprRAM, 0x4000);
+	if (nBurnLayer & 8) draw_sprites(DrvSprRAM, 0x4000);
 
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
 }
 
-static INT32 RocknDraw()
-{
-	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x20000; i++) {
-			palette_update(i);
-		}
-		DrvRecalc = 0;
-	}
-
-	int asc_pri = 0;
-	int scr_pri = 0;
-	int rot_pri = 0;
-
-	unsigned short *bgregs = (unsigned short*)DrvBgScr;
-	unsigned short *rotregs = (unsigned short*)DrvRotReg;
-
-	BurnTransferClear();
-	memset (DrvPrioDraw, 0, nScreenWidth * nScreenHeight * 2);
-
-	int bgscroll[2];
-	int rotscroll[2]; // x,y
-
-	bgscroll[0] = (bgregs[0] + bgregs[2] + 0x14) & 0x3ff;
-	bgscroll[1] = (bgregs[3] + bgregs[5]) & 0x3ff;
-	rotscroll[0] = (rotregs[0] - 0x400) & 0x7ff;
-	rotscroll[1] = (rotregs[2] - 0x400) & 0x7ff;
-
-	if(DrvPriRAM[0x2b00 / 2] == 0x34)
-		asc_pri++;
-	else
-		rot_pri++;
-
-	if(DrvPriRAM[0x2e00 / 2] == 0x34)
-		asc_pri++;
-	else
-		scr_pri++;
-
-	if(DrvPriRAM[0x3a00 / 2] == 0x0c)
-		scr_pri++;
-	else
-		rot_pri++;
-
-	if (rot_pri == 0)
-		draw_16x16_layer(DrvRotRAM, DrvGfxROM2, 0x2000, 128, 128, rotscroll[0], rotscroll[1], 2);
-	else if (scr_pri == 0)
-		draw_16x16_layer(DrvVBgRAM, DrvGfxROM1, 0x1000, 256, 16, bgscroll[0], bgscroll[1], 1);
-	else if (asc_pri == 0)
-		draw_fg_layer();
-
-	if (rot_pri == 1)
-		draw_16x16_layer(DrvRotRAM, DrvGfxROM2, 0x2000, 128, 128, rotscroll[0], rotscroll[1], 2);
-	else if (scr_pri == 1)
-		draw_16x16_layer(DrvVBgRAM, DrvGfxROM1, 0x1000, 256, 16, bgscroll[0], bgscroll[1], 1);
-	else if (asc_pri == 1)
-		draw_fg_layer();
-
-	if (rot_pri == 2)
-		draw_16x16_layer(DrvRotRAM, DrvGfxROM2, 0x2000, 128, 128, rotscroll[0], rotscroll[1], 2);
-	else if (scr_pri == 2) 
-		draw_16x16_layer(DrvVBgRAM, DrvGfxROM1, 0x1000, 256, 16, bgscroll[0], bgscroll[1], 1);
-	else if (asc_pri == 2)
-		draw_fg_layer();
-
-	draw_sprites(DrvSprRAM, 0x4000);
-
-	BurnTransferCopy(DrvPalette);
-
-	return 0;
-}
-
-static int Tetrisp2Frame()
+static INT32 Tetrisp2Frame()
 {
 	watchdog++;
 	if (watchdog >= 180) {
@@ -1369,7 +1233,7 @@ static int Tetrisp2Frame()
 	{
 		memset (DrvInputs, 0xff, 4);
 
-		for (int i = 0; i < 16; i++)
+		for (INT32 i = 0; i < 16; i++)
 		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1392,7 +1256,7 @@ static int Tetrisp2Frame()
 	return 0;
 }
 
-static int RocknFrame()
+static INT32 RocknFrame()
 {
 	watchdog++;
 	if (watchdog >= 180) {
@@ -1407,7 +1271,7 @@ static int RocknFrame()
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(short));
 
-		for (int i = 0; i < 16; i++)
+		for (INT32 i = 0; i < 16; i++)
 		{
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1499,11 +1363,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
+
 // Tetris Plus 2 (World)
 
 static struct BurnRomInfo tetrisp2RomDesc[] = {
-	{ "tet2_4_ver2.8.ic59",	0x080000, 0xe67f9c51, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tet2_1_ver2.8.ic65",	0x080000, 0x5020a4ed, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "tet2_4_ver2.8.ic59",		0x080000, 0xe67f9c51, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tet2_1_ver2.8.ic65",		0x080000, 0x5020a4ed, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "96019-01.9",			0x400000, 0x06f7dc64, 0x02 | BRF_GRA },           //  2 Sprites
 	{ "96019-02.8",			0x400000, 0x3e613bed, 0x02 | BRF_GRA },           //  3
@@ -1521,9 +1386,9 @@ STD_ROM_FN(tetrisp2)
 
 struct BurnDriver BurnDrvTetrisp2 = {
 	"tetrisp2", NULL, NULL, NULL, "1997",
-	"Tetris Plus 2 (World)\0", NULL, "Jaleco / The Tetris Company", "hardware",
+	"Tetris Plus 2 (World)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, tetrisp2RomInfo, tetrisp2RomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2DIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -1554,7 +1419,7 @@ struct BurnDriver BurnDrvTetrisp2j = {
 	"tetrisp2j", "tetrisp2", NULL, NULL, "1997",
 	"Tetris Plus 2 (Japan, V2.2)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, tetrisp2jRomInfo, tetrisp2jRomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -1585,7 +1450,7 @@ struct BurnDriver BurnDrvTetrisp2ja = {
 	"tetrisp2ja", "tetrisp2", NULL, NULL, "1997",
 	"Tetris Plus 2 (Japan, V2.1)\0", NULL, "Jaleco / The Tetris Company", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, tetrisp2jaRomInfo, tetrisp2jaRomName, NULL, NULL, Tetrisp2InputInfo, Tetrisp2jDIPInfo,
 	Tetrisp2Init, DrvExit, Tetrisp2Frame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 224, 4, 3
@@ -1632,7 +1497,7 @@ struct BurnDriver BurnDrvRockn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rocknRomInfo, rocknRomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	RocknInit, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
+	RocknInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1677,7 +1542,7 @@ struct BurnDriver BurnDrvRockna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rocknaRomInfo, rocknaRomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	RocknInit, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
+	RocknInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1729,7 +1594,7 @@ struct BurnDriver BurnDrvRockn2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rockn2RomInfo, rockn2RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	Rockn2Init, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
+	Rockn2Init, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1780,7 +1645,7 @@ struct BurnDriver BurnDrvRockn3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rockn3RomInfo, rockn3RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	Rockn3Init, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
+	Rockn3Init, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1820,7 +1685,7 @@ struct BurnDriver BurnDrvRockn4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, rockn4RomInfo, rockn4RomName, NULL, NULL, RocknInputInfo, RocknDIPInfo,
-	Rockn4Init, DrvExit, RocknFrame, RocknDraw, DrvScan, &DrvRecalc, 0x8000,
+	Rockn4Init, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	224, 320, 3, 4
 };
 
@@ -1843,11 +1708,11 @@ static struct BurnRomInfo nndmsealRomDesc[] = {
 STD_ROM_PICK(nndmseal)
 STD_ROM_FN(nndmseal)
 
-struct BurnDriver BurnDrvNndmseal = {
+struct BurnDriverD BurnDrvNndmseal = {
 	"nndmseal", NULL, NULL, NULL, "1997",
 	"Nandemo Seal Iinkai\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealRomInfo, nndmsealRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
 	NndmsealInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1871,11 +1736,11 @@ static struct BurnRomInfo nndmsealaRomDesc[] = {
 STD_ROM_PICK(nndmseala)
 STD_ROM_FN(nndmseala)
 
-struct BurnDriver BurnDrvNndmseala = {
+struct BurnDriverD BurnDrvNndmseala = {
 	"nndmseala", "nndmseal", NULL, NULL, "1997",
 	"Nandemo Seal Iinkai (Astro Boy ver.)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealaRomInfo, nndmsealaRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
 	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3

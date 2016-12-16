@@ -1,4 +1,3 @@
-
 // Tilemap defines
 
 // use this when in place of "which" to have this apply to all initialized tilemaps
@@ -94,6 +93,10 @@ void GenericTilemapSetTransparent(INT32 which, UINT32 transparent);
 
 // Set a mask for transparent colors, only works with 4bpp or less tiles
 void GenericTilemapSetTransMask(INT32 which, UINT16 transmask);
+
+// Set entry (color) in transparency table (1 if transparent, 0 if opaque)
+// works for depths from 1bpp (2 entries) to 8bpp (256 entries)
+void GenericTilemapSetTransTable(INT32 which, INT32 color, INT32 transparent);
 
 // Set scroll x (horizontal) for the tilemap
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx);

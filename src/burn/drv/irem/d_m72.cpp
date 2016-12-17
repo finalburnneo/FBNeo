@@ -3,10 +3,8 @@
 
 /*
 	to do:
-	    cosmic cop tile corruption issue(?), when attract-mode demo plays,
-    	watch the tiles on the bottom of the screen when the screen scrolls down. -dink dec.2016
-	    clean
-		poundfor inputs
+		majtitle rowscrolling issue (start game, hit a ball and watch the bg)
+	    poundfor inputs
 */
 
 #include "tiles_generic.h"
@@ -43,7 +41,7 @@ static UINT8 *scroll;
 static UINT8 *RamPrioBitmap;
 
 static UINT8 *soundlatch;
-static UINT8 *video_enable;
+static UINT8 *video_disable;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -688,7 +686,7 @@ STDDIPINFO(Poundfor)
 
 static const UINT8 *protection_code = NULL;
 static const UINT8 *protection_crc = NULL;
-static const INT32           *protection_sample_offsets = NULL;
+static const INT32 *protection_sample_offsets = NULL;
 
 static UINT8 protection_read(INT32 address)
 {
@@ -1062,9 +1060,8 @@ void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 			// coin counter = data & 3 (&1 = 0, &2 = 1)
 			// flipscreen = ((data & 0x04) >> 2) ^ ((~input_port_read(space->machine, "DSW") >> 8) & 1);
 
-			video_enable[0] = data & 0x08;
+			video_disable[0] = data & 0x08;
 
-	//		bprintf (0, _T("%x\n"), data & 0x10);
 			if (enable_z80_reset) {
 				if (data & 0x10) {
 					z80_reset = 0;
@@ -1185,10 +1182,6 @@ UINT8 __fastcall m72_main_read_port(UINT32 port)
 
 void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 {
-	//port &= 0xff;
-	//if (port != 0x00 && port != 0x01)
-	//	bprintf (0, _T("%2.2x, %2.2x wp\n"), port & 0xff, data);
-
 	switch (port & 0xff)
 	{
 		case 0x00:
@@ -1245,8 +1238,6 @@ void __fastcall m72_sound_write_port(UINT16 port, UINT8 data)
 
 UINT8 __fastcall m72_sound_read_port(UINT16 port)
 {
-//	if ((port & 0xff) != 0x84 && (port & 0xfe) != 0x00) bprintf (0, _T("%2.2x, rp\n"), port & 0xff);
-
 	switch (port & 0xff)
 	{
 		case 0x00:
@@ -1661,7 +1652,7 @@ static INT32 MemIndex()
 	DrvRowScroll	= Next; Next += 0x000800;
 
 	soundlatch	= Next; Next += 0x000001;
-	video_enable	= Next; Next += 0x000001;
+	video_disable	= Next; Next += 0x000001;
 
 	scroll		= Next; Next += 0x000008;
 
@@ -1833,7 +1824,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 			INT32 code  = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 0]);
 			INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs * 2 + 1]);
 
-			if (type == 1||type==3) {
+			if (type == 1 || type == 3) {
 				flipy = color & 0x0040;
 				flipx = color & 0x0020;
 				prio  = (color & 0x0100) ? 2 : (color & 0x80) ? 1 : 0;
@@ -2010,18 +2001,25 @@ static void majtitle_draw_sprites()
 
 static void dodrawline(INT32 start, INT32 finish)
 {
-	if (*video_enable) return;
+	if (*video_disable) return;
 
-	draw_layer(1, 1, m72_video_type, start, finish);
-	draw_layer(0, 1, m72_video_type, start, finish);
+	if (nBurnLayer & 1) draw_layer(1, 1, m72_video_type, start, finish);
+	if (nBurnLayer & 2) draw_layer(0, 1, m72_video_type, start, finish);
 
 	GenericTilesSetClip(0, -1, start, finish);
-	if (m72_video_type == 3) majtitle_draw_sprites();
-	draw_sprites();
+	if (nSpriteEnable & 1) {
+		if (m72_video_type == 3) majtitle_draw_sprites();
+		draw_sprites();
+	}
 	GenericTilesClearClip();
 
-	draw_layer(1, 0, m72_video_type, start, finish);
-	draw_layer(0, 0, m72_video_type, start, finish);
+	if (nBurnLayer & 4) draw_layer(1, 0, m72_video_type, start, finish);
+	if (nBurnLayer & 8) draw_layer(0, 0, m72_video_type, start, finish);
+}
+
+static inline void DrvDrawInitFrame()
+{
+	BurnTransferClear();
 }
 
 static INT32 DrvDraw()
@@ -2033,21 +2031,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-//	if (*video_enable) { // save for possible slower system use (gamezfan :)
-//		BurnTransferClear();
-//		BurnTransferCopy(DrvPalette);
-//		return 0;
-//	}
-
-//	draw_layer(1, 1, 0, nScreenHeight);
-//	draw_layer(0, 1, 0, nScreenHeight);
-//	draw_sprites();
-//	draw_layer(1, 0, 0, nScreenHeight);
-//	draw_layer(0, 0, 0, nScreenHeight);
-
 	BurnTransferCopy(DrvPalette);
-
-	BurnTransferClear();
 
 	return 0;
 }
@@ -2116,6 +2100,10 @@ static INT32 DrvFrame()
 		nCyclesTotal[0] = (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesTotal[1] = (INT32)((INT64)(3579545 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
+
+	if (pBurnDraw) {
+		DrvDrawInitFrame();
+	}
 
 	VezOpen(0);
 	ZetOpen(0);
@@ -4025,7 +4013,7 @@ static INT32 majtitleInit()
 
 struct BurnDriver BurnDrvMajtitle = {
 	"majtitle", NULL, NULL, NULL, "1990",
-	"Major Title (World)\0", NULL, "Irem", "M84",
+	"Major Title (World)\0", "Graphics issues", "Irem", "M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitleRomInfo, majtitleRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -4067,7 +4055,7 @@ STD_ROM_FN(majtitlej)
 
 struct BurnDriver BurnDrvMajtitlej = {
 	"majtitlej", "majtitle", NULL, NULL, "1990",
-	"Major Title (Japan)\0", NULL, "Irem", "M84",
+	"Major Title (Japan)\0", "Graphics issues", "Irem", "M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitlejRomInfo, majtitlejRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,

@@ -425,6 +425,30 @@ static struct BurnDIPInfo InsectxDIPList[]=
 
 STDDIPINFO(Insectx)
 
+static struct BurnDIPInfo InsectxjDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xfe, NULL			},
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+
+	TNZS_CABINET_FLIP_SERVICE_DIPSETTING(0x13)
+
+	TNZS_DEMOSOUNDS_DIPSETTING(0x13)
+
+	TNZS_COINAGE_JAPAN_OLD(0x13)
+
+	TNZS_DIFFICULTY_DIPSETTING(0x14)
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x0c, 0x08, "100k 200k 300k 440k"	},
+	{0x14, 0x01, 0x0c, 0x0c, "100k 400k"		},
+	{0x14, 0x01, 0x0c, 0x04, "100k 500k"		},
+	{0x14, 0x01, 0x0c, 0x00, "150000 Only"		},
+
+	TNZS_LIVES_DIPSETTING(0x14)
+};
+
+STDDIPINFO(Insectxj)
+
 static struct BurnDIPInfo KagekiDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xfe, NULL			},
@@ -1934,6 +1958,12 @@ static struct BurnRomInfo plumppopRomDesc[] = {
 
 	{ "a98-13.bpr",		0x00200, 0x7cde2da5, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "a98-12.bpr",		0x00200, 0x90dc9da7, 5 | BRF_GRA },	      	  // 13
+	
+	/* pals on plumppop are unknown, but very likely the same set as arkanoid2/extrmatn/drtoppel/chukataio/etc */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17 	
 };
 
 STD_ROM_PICK(plumppop)
@@ -1972,6 +2002,12 @@ static struct BurnRomInfo extrmatnRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
+	
+	/* these are shared with several other games on this hardware */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13 	
 };
 
 STD_ROM_PICK(extrmatn)
@@ -2010,6 +2046,12 @@ static struct BurnRomInfo extrmatuRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
+	
+	/* these are shared with several other games on this hardware */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
 
 STD_ROM_PICK(extrmatu)
@@ -2043,6 +2085,12 @@ static struct BurnRomInfo extrmaturRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
+	
+	/* these are shared with several other games on this hardware */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
 
 STD_ROM_PICK(extrmatur)
@@ -2076,6 +2124,12 @@ static struct BurnRomInfo extrmatjRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
+	
+	/* these are shared with several other games on this hardware */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
 
 STD_ROM_PICK(extrmatj)
@@ -2095,11 +2149,11 @@ struct BurnDriver BurnDrvExtrmatj = {
 // Arkanoid - Revenge of DOH (World)
 
 static struct BurnRomInfo arknoid2RomDesc[] = {
-	{ "b08_05.11c",		0x10000, 0x136edf9d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b08__05.11c",	0x10000, 0x136edf9d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b08_13.3e",		0x10000, 0xe8035ef1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b08__13.3e",		0x10000, 0xe8035ef1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "ark28742.3g",	0x00800, 0x00000000, 3 | BRF_NODUMP },        //  2 I8742 MCU
+	{ "b08__09.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP },        //  2 I8742 MCU
 
 	{ "b08-01.13a",		0x20000, 0x2ccc86b4, 4 | BRF_GRA },	      	  //  3 Graphics
 	{ "b08-02.10a",		0x20000, 0x056a985f, 4 | BRF_GRA },	      	  //  4
@@ -2108,6 +2162,12 @@ static struct BurnRomInfo arknoid2RomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
 
 STD_ROM_PICK(arknoid2)
@@ -2132,11 +2192,11 @@ struct BurnDriver BurnDrvArknoid2 = {
 // Arkanoid - Revenge of DOH (US)
 
 static struct BurnRomInfo arknid2uRomDesc[] = {
-	{ "b08_11.11c",		0x10000, 0x99555231, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b08__11.11c",	0x10000, 0x99555231, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b08_12.3e",		0x10000, 0xdc84e27d, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b08__12.3e",		0x10000, 0xdc84e27d, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "ark28742.3g",	0x00800, 0x00000000, 3 | BRF_NODUMP },	      //  2 I8742 MCU
+	{ "b08__09.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP },	      //  2 I8742 MCU
 
 	{ "b08-01.13a",		0x20000, 0x2ccc86b4, 4 | BRF_GRA },	      	  //  3 Graphics
 	{ "b08-02.10a",		0x20000, 0x056a985f, 4 | BRF_GRA },	      	  //  4
@@ -2145,6 +2205,12 @@ static struct BurnRomInfo arknid2uRomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
 
 STD_ROM_PICK(arknid2u)
@@ -2168,7 +2234,7 @@ static struct BurnRomInfo arknid2jRomDesc[] = {
 
 	{ "b08_06.3e",		0x10000, 0xadfcd40c, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "ark28742.3g",	0x00800, 0x00000000, 3 | BRF_NODUMP }, 	      //  2 I8742 MCU
+	{ "b08__09.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP }, 	      //  2 I8742 MCU
 
 	{ "b08-01.13a",		0x20000, 0x2ccc86b4, 4 | BRF_GRA },	      	  //  3 Graphics
 	{ "b08-02.10a",		0x20000, 0x056a985f, 4 | BRF_GRA },	      	  //  4
@@ -2177,6 +2243,12 @@ static struct BurnRomInfo arknid2jRomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
 
 STD_ROM_PICK(arknid2j)
@@ -2200,6 +2272,7 @@ static struct BurnRomInfo arknid2bRomDesc[] = {
 
 	{ "b08_13.3e",		0x10000, 0xe8035ef1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
+	/* Labeled B08 // 09 and under printed label "?Taito M-009?", is a mask 8042... does the bootleg set even HAVE the mcu? */
 	{ "ark28742.3g",	0x00800, 0x00000000, 3 | BRF_NODUMP },	      //  2 I8742 MCU
 
 	{ "b08-01.13a",		0x20000, 0x2ccc86b4, 4 | BRF_GRA },	      	  //  3 Graphics
@@ -2209,6 +2282,12 @@ static struct BurnRomInfo arknid2bRomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
 
 STD_ROM_PICK(arknid2b)
@@ -2228,24 +2307,31 @@ struct BurnDriver BurnDrvArknid2b = {
 // Dr. Toppel's Adventure (World)
 
 static struct BurnRomInfo drtoppelRomDesc[] = {
-	{ "b19-09.11c",		0x10000, 0x3e654f82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "b19-10.9c",		0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b19__09.11c",			0x10000, 0x3e654f82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b19__10.9c",				0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b19-15.3e",		0x10000, 0x37a0d3fb, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	/* Region-Hacked??, need correct Taito rom number */
+	{ "b19__15.3e",				0x10000, 0x37a0d3fb, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "drt8742.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP },        //  3 I8742 MCU
+	{ "b06__14.1g",				0x00800, 0x28907072, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
-	{ "b19-01.13a",		0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      	  //  4 Graphics
-	{ "b19-02.12a",		0x20000, 0x790ae654, 4 | BRF_GRA },	      	  //  5
-	{ "b19-03.10a",		0x20000, 0x495c4c5a, 4 | BRF_GRA },	      	  //  6
-	{ "b19-04.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      	  //  7
-	{ "b19-05.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      	  //  8
-	{ "b19-06.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      	  //  9
-	{ "b19-07.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      	  // 10
-	{ "b19-08.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      	  // 11
+	{ "b19-01.23cc1000.13a",	0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "b19-02.23cc1000.12a",	0x20000, 0x790ae654, 4 | BRF_GRA },	      	  //  5
+	{ "b19-03.23cc1000.10a",	0x20000, 0x495c4c5a, 4 | BRF_GRA },	      	  //  6
+	{ "b19-04.23cc1000.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      	  //  7
+	{ "b19-05.23cc1000.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      	  //  8
+	{ "b19-06.23cc1000.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      	  //  9
+	{ "b19-07.23cc1000.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      	  // 10
+	{ "b19-08.23cc1000.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      	  // 11
 
-	{ "b19-13.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
-	{ "b19-12.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
+	{ "b19-13.am27s29.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
+	{ "b19-12.am27s29.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
 
 STD_ROM_PICK(drtoppel)
@@ -2271,7 +2357,7 @@ struct BurnDriver BurnDrvDrtoppel = {
 // one byte different (db8f : 39 instead of 37) - possible of bad and/or hacked rom
 
 static struct BurnRomInfo drtoppelaRomDesc[] = {
-	{ "b19-09.bin",		0x10000, 0x6364a970, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b19_09.bin",		0x10000, 0x6364a970, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "b19-10.9c",		0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "b19-15.3e",		0x10000, 0x37a0d3fb, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
@@ -2308,24 +2394,31 @@ struct BurnDriver BurnDrvDrtoppela = {
 // Dr. Toppel's Adventure (US)
 
 static struct BurnRomInfo drtoppluRomDesc[] = {
-	{ "b19-09.11c",		0x10000, 0x3e654f82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "b19-10.9c",		0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b19__09.11c",			0x10000, 0x3e654f82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b19__10.9c",				0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b19-14.3e",		0x10000, 0x05565b22, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	/* Region-Hacked??, need correct Taito rom number */
+	{ "b19__14.3e",				0x10000, 0x05565b22, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "drt8742.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP },        //  3 I8742 MCU
+	{ "b06__14.1g",				0x00800, 0x28907072, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
-	{ "b19-01.13a",		0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      	  //  4 Graphics
-	{ "b19-02.12a",		0x20000, 0x790ae654, 4 | BRF_GRA },	      	  //  5
-	{ "b19-03.10a",		0x20000, 0x495c4c5a, 4 | BRF_GRA },	      	  //  6
-	{ "b19-04.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      	  //  7
-	{ "b19-05.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      	  //  8
-	{ "b19-06.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      	  //  9
-	{ "b19-07.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      	  // 10
-	{ "b19-08.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      	  // 11
+	{ "b19-01.23cc1000.13a",	0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "b19-02.23cc1000.12a",	0x20000, 0x790ae654, 4 | BRF_GRA },	      	  //  5
+	{ "b19-03.23cc1000.10a",	0x20000, 0x495c4c5a, 4 | BRF_GRA },	      	  //  6
+	{ "b19-04.23cc1000.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      	  //  7
+	{ "b19-05.23cc1000.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      	  //  8
+	{ "b19-06.23cc1000.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      	  //  9
+	{ "b19-07.23cc1000.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      	  // 10
+	{ "b19-08.23cc1000.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      	  // 11
 
-	{ "b19-13.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
-	{ "b19-12.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
+	{ "b19-13.am27s29.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
+	{ "b19-12.am27s29.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
 
 STD_ROM_PICK(drtopplu)
@@ -2345,24 +2438,30 @@ struct BurnDriver BurnDrvDrtopplu = {
 // Dr. Toppel's Tankentai (Japan)
 
 static struct BurnRomInfo drtoppljRomDesc[] = {
-	{ "b19-09.11c",		0x10000, 0x3e654f82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "b19-10.9c",		0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b19__09.11c",			0x10000, 0x3e654f82, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b19__10.9c",				0x10000, 0x7e72fd25, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b19-11.3e",		0x10000, 0x524dc249, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "b19__11.3e",				0x10000, 0x524dc249, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "drt8742.3g",		0x00800, 0x00000000, 3 | BRF_NODUMP },        //  3 I8742 MCU
+	{ "b06__14.1g",				0x00800, 0x28907072, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
-	{ "b19-01.13a",		0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      	  //  4 Graphics
-	{ "b19-02.12a",		0x20000, 0x790ae654, 4 | BRF_GRA },	      	  //  5
-	{ "b19-03.10a",		0x20000, 0x495c4c5a, 4 | BRF_GRA },	      	  //  6
-	{ "b19-04.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      	  //  7
-	{ "b19-05.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      	  //  8
-	{ "b19-06.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      	  //  9
-	{ "b19-07.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      	  // 10
-	{ "b19-08.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      	  // 11
+	{ "b19-01.23cc1000.13a",	0x20000, 0xa7e8a0c1, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "b19-02.23cc1000.12a",	0x20000, 0x790ae654, 4 | BRF_GRA },	      	  //  5
+	{ "b19-03.23cc1000.10a",	0x20000, 0x495c4c5a, 4 | BRF_GRA },	      	  //  6
+	{ "b19-04.23cc1000.8a",		0x20000, 0x647007a0, 4 | BRF_GRA },	      	  //  7
+	{ "b19-05.23cc1000.7a",		0x20000, 0x49f2b1a5, 4 | BRF_GRA },	      	  //  8
+	{ "b19-06.23cc1000.5a",		0x20000, 0x2d39f1d0, 4 | BRF_GRA },	      	  //  9
+	{ "b19-07.23cc1000.4a",		0x20000, 0x8bb06f41, 4 | BRF_GRA },	      	  // 10
+	{ "b19-08.23cc1000.2a",		0x20000, 0x3584b491, 4 | BRF_GRA },	      	  // 11
 
-	{ "b19-13.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
-	{ "b19-12.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
+	{ "b19-13.am27s29.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
+	{ "b19-12.am27s29.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
 
 STD_ROM_PICK(drtopplj)
@@ -2387,16 +2486,22 @@ static struct BurnRomInfo kagekiRomDesc[] = {
 
 	{ "b35-17.43e",		0x10000, 0xfdd9c246, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "b35-01.13a",		0x20000, 0x01d83a69, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b35-02.12a",		0x20000, 0xd8af47ac, 4 | BRF_GRA },	      	  //  4
-	{ "b35-03.10a",		0x20000, 0x3cb68797, 4 | BRF_GRA },	      	  //  5
-	{ "b35-04.8a",		0x20000, 0x71c03f91, 4 | BRF_GRA },	      	  //  6
-	{ "b35-05.7a",		0x20000, 0xa4e20c08, 4 | BRF_GRA },	      	  //  7
-	{ "b35-06.5a",		0x20000, 0x3f8ab658, 4 | BRF_GRA },	      	  //  8
-	{ "b35-07.4a",		0x20000, 0x1b4af049, 4 | BRF_GRA },	      	  //  9
-	{ "b35-08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
+	{ "b35__01.13a",	0x20000, 0x01d83a69, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b35__02.12a",	0x20000, 0xd8af47ac, 4 | BRF_GRA },	      	  //  4
+	{ "b35__03.10a",	0x20000, 0x3cb68797, 4 | BRF_GRA },	      	  //  5
+	{ "b35__04.8a",		0x20000, 0x71c03f91, 4 | BRF_GRA },	      	  //  6
+	{ "b35__05.7a",		0x20000, 0xa4e20c08, 4 | BRF_GRA },	      	  //  7
+	{ "b35__06.5a",		0x20000, 0x3f8ab658, 4 | BRF_GRA },	      	  //  8
+	{ "b35__07.4a",		0x20000, 0x1b4af049, 4 | BRF_GRA },	      	  //  9
+	{ "b35__08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-15.98g",		0x10000, 0xe6212a0f, 6 | BRF_SND },	      	  // 11 Samples
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
 
 STD_ROM_PICK(kageki)
@@ -2436,6 +2541,12 @@ static struct BurnRomInfo kagekijRomDesc[] = {
 	{ "b35-08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-12.98g",		0x10000, 0x184409f1, 6 | BRF_SND },	      	  // 11 Samples
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
 
 STD_ROM_PICK(kagekij)
@@ -2470,6 +2581,12 @@ static struct BurnRomInfo kagekihRomDesc[] = {
 	{ "b35-08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-12.98g",		0x10000, 0x184409f1, 6 | BRF_SND },	      	  // 11 Samples
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
 
 STD_ROM_PICK(kagekih)
@@ -2494,6 +2611,7 @@ static struct BurnRomInfo chukataiRomDesc[] = {
 
 	{ "b44-12w",		0x10000, 0xe80ecdca, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
+	/* B44 // 09 is the label? what is the mask number under the label? maybe Taito M-011? last digit is definitely 1 */
 	{ "b44-8742.mcu",	0x00800, 0x7dff3f9f, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
 	{ "b44-01.a13",		0x20000, 0xaae7b3d5, 4 | BRF_GRA },	      	  //  4 Graphics
@@ -2504,6 +2622,12 @@ static struct BurnRomInfo chukataiRomDesc[] = {
 	{ "b44-06.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-07.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-08.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 };
 
 STD_ROM_PICK(chukatai)
@@ -2531,8 +2655,10 @@ static struct BurnRomInfo chukatauRomDesc[] = {
 	{ "b44-10",			0x10000, 0x8c69e008, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "b44-11",			0x10000, 0x32484094, 1 | BRF_PRG | BRF_ESS }, //  1
 
+	/* Hacked??, need correct Taito rom number */
 	{ "b44-12u",		0x10000, 0x9f09fd5c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
+	/* B44 // 09 is the label? what is the mask number under the label? maybe Taito M-011? last digit is definitely 1 */
 	{ "b44-8742.mcu",	0x00800, 0x7dff3f9f, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
 	{ "b44-01.a13",		0x20000, 0xaae7b3d5, 4 | BRF_GRA },	      	  //  4 Graphics
@@ -2543,6 +2669,12 @@ static struct BurnRomInfo chukatauRomDesc[] = {
 	{ "b44-06.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-07.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-08.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 };
 
 STD_ROM_PICK(chukatau)
@@ -2567,6 +2699,7 @@ static struct BurnRomInfo chukatajRomDesc[] = {
 
 	{ "b44-12",			0x10000, 0x0600ace6, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
+	/* B44 // 09 is the label? what is the mask number under the label? maybe Taito M-011? last digit is definitely 1 */
 	{ "b44-8742.mcu",	0x00800, 0x7dff3f9f, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
 	{ "b44-01.a13",		0x20000, 0xaae7b3d5, 4 | BRF_GRA },	      	  //  4 Graphics
@@ -2577,6 +2710,12 @@ static struct BurnRomInfo chukatajRomDesc[] = {
 	{ "b44-06.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-07.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-08.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 };
 
 STD_ROM_PICK(chukataj)
@@ -2611,7 +2750,10 @@ static struct BurnRomInfo tnzsRomDesc[] = {
 	{ "b53-20.ic12",	0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-21.ic14",	0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
-	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	/* these are shared with extermination except for the subpcb pal */
+	{ "b06-13.pal16l8a.f2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-101.pal16l8a.i2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 on sub pcb
 };
 
 STD_ROM_PICK(tnzs)
@@ -2646,7 +2788,10 @@ static struct BurnRomInfo tnzsjRomDesc[] = {
 	{ "b53-20.ic12",	0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-21.ic14",	0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
-	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	/* these are shared with extermination except for the subpcb pal */
+	{ "b06-13.pal16l8a.f2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-101.pal16l8a.i2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 on sub pcb
 };
 
 STD_ROM_PICK(tnzsj)
@@ -2747,6 +2892,7 @@ struct BurnDriver BurnDrvTnzsuo = {
 
 
 // The NewZealand Story (World, old version) (older PCB)
+// is this a legit set, or a hack, or a near-final (later than tnzsop below) prototype?
 
 static struct BurnRomInfo tnzsoRomDesc[] = {
 	{ "b53-unknown.27c1001d.u32",	0x20000, 0xedf3b39e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2785,26 +2931,31 @@ struct BurnDriver BurnDrvTnzso = {
 	256, 224, 4, 3
 };
 
+/* This is a prototype CA403001A PCB (Seta: P0-041-1), and is ALMOST but not exactly the same as the K1100356A/J1100156A (Seta: P0-041A) 'tnzsuo/tnzsjo/arkanoid2/etc' pcb above:
+This pcb uses 32-pin 27c1000d eproms for the 8 gfx roms, and the final K1100356A/J1100156A pcb uses 28 pin 23c1000 mask roms instead. Some capacitors near the jamma connector were moved as well.
+No other obviously evident routing/wiring changes are present.
+This type of pcb might have been used for in-house testing of all the games on this hardware.
+*/
 
-// The NewZealand Story (World, prototype?) (older PCB)
+// The NewZealand Story (World, prototype) (older PCB)
+// prototype (location test?) version; has different rom labels, and the Seta X1-001 chip has prototype markings revealing it was fabbed by Yamaha, as 'YM3906'
 
 static struct BurnRomInfo tnzsopRomDesc[] = {
-	{ "c-11_6-24_1959h.u32",		0x20000, 0x3c1dae7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "c-11_6-24_1959h.d27c1000d-15.u32",	0x20000, 0x3c1dae7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "e-3_6-24_c4ach.u38",			0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "e-3_6-24_c4ach.tm27512d-20.u38",		0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b8042_88-6-22_0fcc.u46",		0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b8042_88-6-22_0fcc.d8742.u46",		0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "a13_03e8.a13",				0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "a12_f4ec.a12",				0x20000, 0x95880726, 4 | BRF_GRA },	      	  //  4
-	{ "a10_f2b5.a10",				0x20000, 0x2bc4c053, 4 | BRF_GRA },	      	  //  5
-	{ "a08_bd49.a8",				0x20000, 0x8ff8d88c, 4 | BRF_GRA },	      	  //  6
-	{ "a07_d5f3.a7",				0x20000, 0x291bcaca, 4 | BRF_GRA },	      	  //  7
-	{ "a05_662a.a5",				0x20000, 0x6e762e20, 4 | BRF_GRA },	      	  //  8
-	{ "a04_0c21.a4",				0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      	  //  9
-	{ "a02_904f.a2",				0x20000, 0x2ab06bda, 4 | BRF_GRA },	      	  // 10
+	{ "a13_03e8.d27c1000d-15.a13",			0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "a12_f4ec.d27c1000d-15.a12",			0x20000, 0x95880726, 4 | BRF_GRA },	      	  //  4
+	{ "a10_f2b5.d27c1000d-15.a10",			0x20000, 0x2bc4c053, 4 | BRF_GRA },	      	  //  5
+	{ "a08_bd49.d27c1000d-15.a8",			0x20000, 0x8ff8d88c, 4 | BRF_GRA },	      	  //  6
+	{ "a07_d5f3.d27c1000d-15.a7",			0x20000, 0x291bcaca, 4 | BRF_GRA },	      	  //  7
+	{ "a05_662a.d27c1000d-15.a5",			0x20000, 0x6e762e20, 4 | BRF_GRA },	      	  //  8
+	{ "a04_0c21.d27c1000d-15.a4",			0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      	  //  9
+	{ "a02_904f.d27c1000d-15.a2",			0x20000, 0x2ab06bda, 4 | BRF_GRA },	      	  // 10
 	
-	/* PALS not directly observed on this board but assumed to exist */
 	/* these are probably shared with extermination except for u35 */
 	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
 	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
@@ -2817,7 +2968,7 @@ STD_ROM_FN(tnzsop)
 
 struct BurnDriver BurnDrvTnzsop = {
 	"tnzsop", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (World, prototype?) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"The NewZealand Story (World, prototype) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, tnzsopRomInfo, tnzsopRomName, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
@@ -2887,12 +3038,13 @@ struct BurnDriverD BurnDrvKabukizj = {
 // Insector X (World)
 
 static struct BurnRomInfo insectxRomDesc[] = {
-	{ "b97-03.u32",		0x20000, 0x18eef387, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b97__03.u32",	0x20000, 0x18eef387, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b97-07.u38",		0x10000, 0x324b28c9, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	/* Label is B97 07* with an asterisk */
+	{ "b97__07.u38",	0x10000, 0x324b28c9, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b97-01.u1",		0x80000, 0xd00294b1, 4 | BRF_GRA },	      //  2 Graphics
-	{ "b97-02.u2",		0x80000, 0xdb5a7434, 4 | BRF_GRA },	      //  3
+	{ "b97__01.u1",		0x80000, 0xd00294b1, 4 | BRF_GRA },	      	  //  2 Graphics
+	{ "b97__02.u2",		0x80000, 0xdb5a7434, 4 | BRF_GRA },	      	  //  3
 };
 
 STD_ROM_PICK(insectx)
@@ -2909,6 +3061,32 @@ struct BurnDriver BurnDrvInsectx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, insectxRomInfo, insectxRomName, NULL, NULL, InsectxInputInfo, InsectxDIPInfo,
+	InsectxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// Insector X (Japan)
+
+static struct BurnRomInfo insectxjRomDesc[] = {
+	{ "b97__03.u32",	0x20000, 0x18eef387, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	/* Label is B97 04* with an asterisk */
+	{ "b97__04.u38",	0x10000, 0xdc4549e5, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "b97__01.u1",		0x80000, 0xd00294b1, 4 | BRF_GRA },	      	  //  2 Graphics
+	{ "b97__02.u2",		0x80000, 0xdb5a7434, 4 | BRF_GRA },	      	  //  3
+};
+
+STD_ROM_PICK(insectxj)
+STD_ROM_FN(insectxj)
+
+struct BurnDriver BurnDrvInsectxj = {
+	"insectxj", "insectx", NULL, NULL, "1989",
+	"Insector X (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, insectxjRomInfo, insectxjRomName, NULL, NULL, InsectxInputInfo, InsectxjDIPInfo,
 	InsectxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

@@ -1720,19 +1720,23 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 		break;
 
 		case 2: // hharry
+		case 7: // cosmccop (layer offsets of type 2, flipxy of type 1)
 			video_offsets[0] = -4;
 			video_offsets[1] = -6;
+			if (video_type == 7) m72_video_type = 1; // cosmccop: diff flipx/y handling in draw_layer()
 		break;
 
 		case 4: // poundfor
 			video_offsets[0] = video_offsets[1] = -6;
 			m72_video_type = 1; // rtype
 		break;
+
 		case 5: // kengo
 			video_offsets[0] = -3;
 			video_offsets[1] = -6;
 			m72_video_type = 1; // rtype
 		break;
+
 		case 6: // airduel m82
 			video_offsets[0] = video_offsets[1] = -6;
 			m72_video_type = 1; // rtype
@@ -3513,9 +3517,9 @@ static INT32 cosmccopInit()
 {
 	Clock_16mhz = 1;
 
-	INT32 rc = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 2);
+	INT32 rc = DrvInit(hharryu_main_cpu_map, sound_rom_map, NULL, Z80_REAL_NMI, 7);
 
-	m72_irq_base = 0x60; // Cosmic Cop doesn't write to port 0x42, set it manually. (after DrvInit()!)
+	m72_irq_base = 0x60; // Cosmic Cop doesn't write to port 0x42 (irq config), set it manually. (after DrvInit()!)
 	CosmicCop = 1;
 
 	return rc;

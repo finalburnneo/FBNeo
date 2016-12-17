@@ -2666,26 +2666,26 @@ struct BurnDriver BurnDrvtnzsj = {
 // The NewZealand Story (Japan, old version) (older PCB)
 
 static struct BurnRomInfo tnzsjoRomDesc[] = {
-	{ "b53-10.27c1001d.u32",	0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b53-10.27c1001d.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b53-11.27c512.u38",		0x10000, 0x9784d443, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b53-11.27c512.u38",			0x10000, 0x9784d443, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-09.u46",				0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b53-09.u46",					0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "b53-08.u8",				0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b53-07.u7",				0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
-	{ "b53-06.u6",				0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
-	{ "b53-05.u5",				0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
-	{ "b53-04.u4",				0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
-	{ "b53-03.u3",				0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
-	{ "b53-02.u2",				0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
-	{ "b53-01.u1",				0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	{ "b53-08.u8",					0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-07.u7",					0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-06.u6",					0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-05.u5",					0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-04.u4",					0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
 	/* these are probably shared with extermination except for u35 */
-	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
+	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
 };
 
 STD_ROM_PICK(tnzsjo)
@@ -2710,26 +2710,26 @@ struct BurnDriver BurnDrvTnzsjo = {
 // The NewZealand Story (US, old version) (older PCB)
 
 static struct BurnRomInfo tnzsuoRomDesc[] = {
-	{ "b53-10.27c1001d.u32",	0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b53-10.27c1001d.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "b53-13.27c512.u38",		0x10000, 0xc09f4d28, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "b53-13.27c512.u38",			0x10000, 0xc09f4d28, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-09.u46",				0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b53-09.u46",					0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "b53-08.u8",				0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
-	{ "b53-07.u7",				0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
-	{ "b53-06.u6",				0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
-	{ "b53-05.u5",				0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
-	{ "b53-04.u4",				0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
-	{ "b53-03.u3",				0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
-	{ "b53-02.u2",				0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
-	{ "b53-01.u1",				0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	{ "b53-08.u8",					0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-07.u7",					0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-06.u6",					0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-05.u5",					0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-04.u4",					0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
 	
 	/* these are probably shared with extermination except for u35 */
-	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
+	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
 };
 
 STD_ROM_PICK(tnzsuo)
@@ -2766,10 +2766,10 @@ static struct BurnRomInfo tnzsoRomDesc[] = {
 	
 	/* PALS not directly observed on this board but assumed to exist */
 	/* these are probably shared with extermination except for u35 */
-	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
+	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
 };
 
 STD_ROM_PICK(tnzso)
@@ -2789,27 +2789,27 @@ struct BurnDriver BurnDrvTnzso = {
 // The NewZealand Story (World, prototype?) (older PCB)
 
 static struct BurnRomInfo tnzsopRomDesc[] = {
-	{ "ns_c-11.27c1001d.u32",	0x20000, 0x3c1dae7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "c-11_6-24_1959h.u32",		0x20000, 0x3c1dae7b, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "ns_e-3.27c512.u38",		0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "e-3_6-24_c4ach.u38",			0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b53-09.u46",				0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b8042_88-6-22_0fcc.u46",		0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
-	{ "ns_a13.rom.u8",			0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      //  3 Graphics
-	{ "ns_a12.rom.u7",			0x20000, 0x95880726, 4 | BRF_GRA },	      //  4
-	{ "ns_a10.rom.u6",			0x20000, 0x2bc4c053, 4 | BRF_GRA },	      //  5
-	{ "ns_a08.rom.u5",			0x20000, 0x8ff8d88c, 4 | BRF_GRA },	      //  6
-	{ "ns_a07.rom.u4",			0x20000, 0x291bcaca, 4 | BRF_GRA },	      //  7
-	{ "ns_a05.rom.u3",			0x20000, 0x6e762e20, 4 | BRF_GRA },	      //  8
-	{ "ns_a04.rom.u2",			0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      //  9
-	{ "ns_a02.rom.u1",			0x20000, 0x2ab06bda, 4 | BRF_GRA },	      // 10
+	{ "a13_03e8.a13",				0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "a12_f4ec.a12",				0x20000, 0x95880726, 4 | BRF_GRA },	      	  //  4
+	{ "a10_f2b5.a10",				0x20000, 0x2bc4c053, 4 | BRF_GRA },	      	  //  5
+	{ "a08_bd49.a8",				0x20000, 0x8ff8d88c, 4 | BRF_GRA },	      	  //  6
+	{ "a07_d5f3.a7",				0x20000, 0x291bcaca, 4 | BRF_GRA },	      	  //  7
+	{ "a05_662a.a5",				0x20000, 0x6e762e20, 4 | BRF_GRA },	      	  //  8
+	{ "a04_0c21.a4",				0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      	  //  9
+	{ "a02_904f.a2",				0x20000, 0x2ab06bda, 4 | BRF_GRA },	      	  // 10
 	
 	/* PALS not directly observed on this board but assumed to exist */
 	/* these are probably shared with extermination except for u35 */
-	{ "b06-12.pal16l8a.u26.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
-	{ "b53-12.pal16l8a.u35.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // likely has a different name on the proto pcb...
-	{ "b06-101.pal16l8a.u36.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "st-6.pal1618a.u35.jed",    	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // likely has a different name on the proto pcb...
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
 
 STD_ROM_PICK(tnzsop)
@@ -2835,10 +2835,10 @@ static struct BurnRomInfo kabukizRomDesc[] = {
 
 	{ "b50-07.u34",		0x20000, 0xbf7fc2ed, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "b50-04.u35",		0x80000, 0x04829aa9, 4 | BRF_GRA },	      //  3 Graphics
-	{ "b50-03.u39",		0x80000, 0x31489a4c, 4 | BRF_GRA },	      //  4
-	{ "b50-02.u43",		0x80000, 0x90b8a8e7, 4 | BRF_GRA },	      //  5
-	{ "b50-01.u46",		0x80000, 0xf4277751, 4 | BRF_GRA },	      //  6
+	{ "b50-04.u35",		0x80000, 0x04829aa9, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b50-03.u39",		0x80000, 0x31489a4c, 4 | BRF_GRA },	      	  //  4
+	{ "b50-02.u43",		0x80000, 0x90b8a8e7, 4 | BRF_GRA },	      	  //  5
+	{ "b50-01.u46",		0x80000, 0xf4277751, 4 | BRF_GRA },	      	  //  6
 };
 
 STD_ROM_PICK(kabukiz)
@@ -2921,10 +2921,10 @@ static struct BurnRomInfo jpopnicsRomDesc[] = {
 
 	{ "u124cpu1",		0x10000, 0x8453e8e4, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "u94gfx",		0x20000, 0xe49f2fdd, 4 | BRF_GRA },	      //  2 Graphics
-	{ "u93gfx",		0x20000, 0xa7791b5b, 4 | BRF_GRA },	      //  3
-	{ "u92gfx",		0x20000, 0xb30caac7, 4 | BRF_GRA },	      //  4
-	{ "u91gfx",		0x20000, 0x18ada5f2, 4 | BRF_GRA },	      //  5
+	{ "u94gfx",			0x20000, 0xe49f2fdd, 4 | BRF_GRA },	      	  //  2 Graphics
+	{ "u93gfx",			0x20000, 0xa7791b5b, 4 | BRF_GRA },	      	  //  3
+	{ "u92gfx",			0x20000, 0xb30caac7, 4 | BRF_GRA },	      	  //  4
+	{ "u91gfx",			0x20000, 0x18ada5f2, 4 | BRF_GRA },	      	  //  5
 };
 
 STD_ROM_PICK(jpopnics)

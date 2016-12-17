@@ -51,6 +51,11 @@ enum {
 #define I8051_T1_LINE		3   /* Timer 1 External Input */
 #define I8051_RX_LINE		4   /* Serial Port Receive Line */
 
+#define MCS51_PORT_P0	0x00
+#define MCS51_PORT_P1	0x01
+#define MCS51_PORT_P2	0x02
+#define MCS51_PORT_P3	0x03
+
 /* definition of the special function registers. Note that the values are */
 /* the same as the internal memory address in the 8051 */
 #define		P0		0x80
@@ -102,6 +107,7 @@ extern void i8051_init (int index, int clock, const void *config, int (*irqcallb
 extern void i8051_reset (void);			/* Reset registers to the initial values */
 extern void i8051_exit	(void); 				/* Shut down CPU core */
 extern INT32 i8051Run(int cycles);			/* Execute cycles - returns number of cycles actually run */
+extern void i8051RunEnd(void);			/* stop execution */
 extern void i8051_get_context (void *dst);	/* Get registers, return context size */
 extern void i8051_set_context (void *src);    	/* Set registers */
 extern unsigned i8051_get_intram (int offset);

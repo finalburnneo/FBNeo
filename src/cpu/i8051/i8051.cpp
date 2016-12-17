@@ -1391,6 +1391,11 @@ INT32 i8051Run(int cycles)
 	return cycles - i8051_icount;
 }
 
+void i8051RunEnd(void)
+{
+	i8051_icount = 0;
+}
+
 void i8051_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {

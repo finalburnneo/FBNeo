@@ -7293,12 +7293,14 @@ static INT32 ShogwarrFrame()
 	SekNewFrame();
 
 	INT32 nInterleave = 256;
+	nCyclesTotal[0] = (12000000 * 100) / 5918;
+	nCyclesDone[0] = 0;
+	INT32 nSegment = 0;
 
 	for (INT32 nScanline = 0; nScanline < nInterleave; nScanline++)
 	{
-		INT32 nSegment = ((12000000 * 100) / 5918) / nInterleave;
-
-		SekRun(nSegment);
+		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - nScanline);
+		nCyclesDone[0] += SekRun(nSegment);
 
 		if (nScanline ==  64) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (nScanline == 144) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);

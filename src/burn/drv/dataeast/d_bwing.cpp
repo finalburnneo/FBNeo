@@ -535,6 +535,8 @@ static INT32 DrvInit()
 	M6502SetWriteHandler(bwing_sound_write);
 	M6502SetReadHandler(bwing_sound_read);
 	M6502SetReadPortHandler(bwing_sound_read_port);
+	M6502SetWriteMemIndexHandler(bwing_sound_write);
+	M6502SetReadMemIndexHandler(bwing_sound_read);
 	M6502Close();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);

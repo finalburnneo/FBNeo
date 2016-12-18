@@ -7,6 +7,7 @@
 #include "konamiic.h"
 #include "burn_ym2151.h"
 #include "k007232.h"
+#include "burn_shift.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -441,6 +442,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	gearshifter = 1; // because active low, start in low gear.
 
 	watchdog = 0;
+	BurnShiftReset();
+	BurnShiftSetStatus(!gearshifter);
 
 	HiscoreReset();
 
@@ -555,6 +558,10 @@ static INT32 DrvInit()
 	K051316Init(1, DrvGfxROM2, DrvGfxROM2, 0xfffff, K051316Callback1, 8, 0xc0 | 0x200);
 	K051316SetOffset(1, -96, -16);
 
+	konami_set_highlight_over_sprites_mode(1);
+
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT | SHIFT_POSITION_ROTATE_CCW, SHIFT_COLOR_GREEN, 80);
+
 	DrvDoReset(1);
 
 	return 0;
@@ -571,6 +578,8 @@ static INT32 DrvExit()
 
 	K007232Exit();
 	BurnYM2151Exit();
+
+	BurnShiftExit();
 
 	BurnFree (AllMem);
 
@@ -622,6 +631,8 @@ static INT32 DrvDraw()
 
 	KonamiBlendCopy(DrvPalette);
 
+	BurnShiftRender();
+
 	return 0;
 }
 
@@ -649,6 +660,7 @@ static INT32 DrvFrame()
 		{ // gear shifter stuff
 			if (prevshift != DrvJoy2[0] && DrvJoy2[0]) {
 				gearshifter = !gearshifter;
+				BurnShiftSetStatus(!gearshifter); // active-low
 			}
 			DrvInputs[1] &= ~1;
 			DrvInputs[1] |= gearshifter;

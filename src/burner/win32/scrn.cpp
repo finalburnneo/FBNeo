@@ -1845,6 +1845,10 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_USEBLEND:
 			bBurnUseBlend = !bBurnUseBlend;
 			break;
+
+		case MENU_GEARSHIFT:
+			BurnShiftEnabled = !BurnShiftEnabled;
+			break;
 			
 #ifdef INCLUDE_AVI_RECORDING
 		case MENU_AVI1X:

@@ -639,6 +639,7 @@
 #define MENU_AVI1X							10724
 #define MENU_AVI2X							10725
 #define MENU_AVI3X							10726
+#define MENU_GEARSHIFT						10727
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

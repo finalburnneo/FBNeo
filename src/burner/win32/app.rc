@@ -1031,6 +1031,7 @@ BEGIN
 #endif
            MENUITEM "Save High Scores when supported",			MENU_SAVEHISCORES
 	   MENUITEM "Use alpha blend effects when supported",		MENU_USEBLEND
+	   MENUITEM "Display Gear-Shift Indicator when supported",	MENU_GEARSHIFT
 #ifdef INCLUDE_AVI_RECORDING
 	   POPUP "AVI Writer Output size"
        	   BEGIN

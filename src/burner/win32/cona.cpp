@@ -243,6 +243,7 @@ int ConfigAppLoad()
 		
 		VAR(EnableHiscores);
 		VAR(bBurnUseBlend);
+		VAR(BurnShiftEnabled);
 		
 #ifdef INCLUDE_AVI_RECORDING
 		VAR(nAvi3x);
@@ -631,6 +632,9 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// If non-zero, enable alpha blending support.\n"));
 	VAR(bBurnUseBlend);
+
+	_ftprintf(h, _T("\n// If non-zero, enable gear shifter display support.\n"));
+	VAR(BurnShiftEnabled);
 	
 #ifdef INCLUDE_AVI_RECORDING
 	_ftprintf(h, _T("\n// If non-zero, enable 1x - 3x pixel output for the AVI writer.\n"));

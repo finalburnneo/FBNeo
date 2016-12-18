@@ -5,6 +5,7 @@
 UINT8 Debug_BurnTransferInitted;
 UINT8 Debug_BurnGunInitted;
 UINT8 Debug_BurnLedInitted;
+UINT8 Debug_BurnShiftInitted;
 UINT8 Debug_HiscoreInitted;
 UINT8 Debug_GenericTilesInitted;
 
@@ -81,6 +82,7 @@ void DebugTrackerExit()
 	if (Debug_BurnTransferInitted) 		bprintf(PRINT_ERROR, _T("BurnTransfer Not Exited\n"));
 	if (Debug_BurnGunInitted) 			bprintf(PRINT_ERROR, _T("BurnGun Not Exited\n"));
 	if (Debug_BurnLedInitted) 			bprintf(PRINT_ERROR, _T("BurnLed Not Exited\n"));
+	if (Debug_BurnShiftInitted) 		bprintf(PRINT_ERROR, _T("BurnShit Not Exited\n"));
 	if (Debug_HiscoreInitted) 			bprintf(PRINT_ERROR, _T("Hiscore Not Exited\n"));
 	if (Debug_GenericTilesInitted) 		bprintf(PRINT_ERROR, _T("GenericTiles Not Exited\n"));
 	

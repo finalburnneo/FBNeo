@@ -169,6 +169,7 @@ void BurnExitMemoryManager();
 extern UINT8 Debug_BurnTransferInitted;
 extern UINT8 Debug_BurnGunInitted;
 extern UINT8 Debug_BurnLedInitted;
+extern UINT8 Debug_BurnShiftInitted;
 extern UINT8 Debug_HiscoreInitted;
 extern UINT8 Debug_GenericTilesInitted;
 

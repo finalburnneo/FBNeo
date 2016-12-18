@@ -7,6 +7,7 @@
 #include "taito_ic.h"
 #include "eeprom.h"
 #include "es5506.h"
+#include "burn_shift.h"
 
 static UINT8 *TaitoF3SoundRam = NULL;
 static UINT8 *TaitoF3SharedRam = NULL;
@@ -327,6 +328,7 @@ static UINT8 shift_toggle(UINT8 shifter_input) // topspeed
 
 		if (prevshift != shifter_input && shifter_input) {
 			gearshifter = !gearshifter;
+			BurnShiftSetStatus(gearshifter);
 		}
 
 		prevshift = shifter_input;
@@ -521,6 +523,8 @@ static INT32 SuperchsDoReset()
 	SuperchsCpuACtrl = 0;
 	SuperchsSteer = 0;
 	gearshifter = 0;
+	BurnShiftReset();
+	BurnShiftSetStatus(gearshifter);
 
 	TaitoF3SoundReset();
 
@@ -896,6 +900,8 @@ static INT32 SuperchsInit()
 
 	ES5505Init(30476100/2, TaitoES5505Rom, TaitoES5505Rom, NULL);
 
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+
 	SuperchsDoReset();
 
 	return 0;
@@ -905,6 +911,7 @@ static int SuperchsExit()
 {
 	TaitoExit();
 	ES5506Exit();
+	BurnShiftExit();
 
 	SuperchsCoinWord = 0;
 	SuperchsCpuACtrl = 0;
@@ -1146,6 +1153,7 @@ static void SuperchsDraw()
 	TC0480SCPRenderCharLayer();
 	SuperchsRenderSpriteList(3);
 	BurnTransferCopy(TaitoPalette);
+	BurnShiftRender();
 }
 
 static void F3Sound_IRQ()

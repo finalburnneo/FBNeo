@@ -1,4 +1,9 @@
 // FBAlpha Shifter / Gear Display
+//
+// Todo:
+//   1: Figure out how to convince iq_132 to make this work with 1 single font
+//      per character with rotation tricks.
+//   2: Add internal shift toggle function and remove from driver.
 
 #include "burnint.h"
 #include "burn_shift.h"
@@ -27,23 +32,23 @@ static INT32 flipscreen = -1;
 UINT8 BurnGearRender[8*8];
 
 UINT8 BurnGearL[8*8] = {
-	  a b a a a a a a
+	  a a a a a a a a
 	  a b b a a a a a
 	  a b b a a a a a
 	  a b b a a a a a
 	  a b b a a a a a
-	  a b b b b b b a
-	  a b b b b b b a
+	  a b b b b b a a
+	  a b b b b b a a
 	  a a a a a a a a };
 
 UINT8 BurnGearL_V[8*8] = {
 	  a a a a a a a a
-	  a b b b b b b b
+	  a b b b b b b a
 	  a b b b b b b a
 	  a b b a a a a a
 	  a b b a a a a a
 	  a b b a a a a a
-	  a b b a a a a a
+	  a a a a a a a a
 	  a a a a a a a a };
 
 UINT8 BurnGearL_V2[8*8] = {
@@ -57,13 +62,13 @@ UINT8 BurnGearL_V2[8*8] = {
 	  a a a a a a a a };
 
 UINT8 BurnGearH[8*8] = {
-	  a a a a a b b a
+	  a a a a a a a a
 	  a b b a a b b a
 	  a b b a a b b a
 	  a b b b b b b a
 	  a b b b b b b a
 	  a b b a a b b a
-	  a b a a a b b a
+	  a b b a a b b a
 	  a a a a a a a a };
 
 UINT8 BurnGearH_V[8*8] = {

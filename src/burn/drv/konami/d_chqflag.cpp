@@ -47,7 +47,6 @@ static INT32 k051316_readroms;
 static INT32 analog_ctrl;
 static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
-static UINT8 gearshifter;
 static UINT8 accelerator;
 static UINT8 steeringwheel;
 
@@ -439,11 +438,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	analog_ctrl = 0;
 	nNmiEnable = 0;
 
-	gearshifter = 1; // because active low, start in low gear.
-
 	watchdog = 0;
 	BurnShiftReset();
-	BurnShiftSetStatus(!gearshifter);
 
 	HiscoreReset();
 
@@ -560,7 +556,7 @@ static INT32 DrvInit()
 
 	konami_set_highlight_over_sprites_mode(1);
 
-	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT | SHIFT_POSITION_ROTATE_CCW, SHIFT_COLOR_GREEN, 80);
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
 
 	DrvDoReset(1);
 
@@ -648,8 +644,6 @@ static INT32 DrvFrame()
 	}
 
 	{
-		static UINT8 prevshift = 0;
-
 		memset (DrvInputs, 0xff, 3);
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -658,14 +652,10 @@ static INT32 DrvFrame()
 		}
 
 		{ // gear shifter stuff
-			if (prevshift != DrvJoy2[0] && DrvJoy2[0]) {
-				gearshifter = !gearshifter;
-				BurnShiftSetStatus(!gearshifter); // active-low
-			}
-			DrvInputs[1] &= ~1;
-			DrvInputs[1] |= gearshifter;
+			BurnShiftInputCheckToggle(DrvJoy2[0]);
 
-			prevshift = DrvJoy2[0];
+			DrvInputs[1] &= ~1;
+			DrvInputs[1] |= !bBurnShiftStatus;
 		}
 	}
 
@@ -742,13 +732,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		KonamiICScan(nAction);
 
+		BurnShiftScan(nAction);
+
 		SCAN_VAR(nDrvRomBank);
 		SCAN_VAR(nDrvRamBank);
 		SCAN_VAR(k051316_readroms);
 		SCAN_VAR(analog_ctrl);
 		SCAN_VAR(nNmiEnable);
 		SCAN_VAR(nBackgroundBrightness);
-		SCAN_VAR(gearshifter);
 		SCAN_VAR(accelerator);
 		SCAN_VAR(steeringwheel);
 	}

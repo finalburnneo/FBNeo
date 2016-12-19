@@ -28,8 +28,6 @@ static UINT32 TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
 #define IRQ_TRIGGER_PULSE	2
 static INT32 TaitoF3SoundTriggerIRQCyclesMode = 0;
 
-static UINT8 gearshifter = 0; // Toggle.
-
 static INT32 __fastcall TaitoF3SoundIRQCallback(INT32 /*irq*/)
 {
 	return TaitoF3VectorReg;
@@ -321,21 +319,6 @@ static struct BurnInputInfo SuperchsInputList[] =
 STDINPUTINFO(Superchs)
 #undef A
 
-static UINT8 shift_toggle(UINT8 shifter_input) // topspeed
-{
-	{ // gear shifter stuff
-		static UINT8 prevshift = 0;
-
-		if (prevshift != shifter_input && shifter_input) {
-			gearshifter = !gearshifter;
-			BurnShiftSetStatus(gearshifter);
-		}
-
-		prevshift = shifter_input;
-	}
-	return (gearshifter) ? 0x20 : 0x00;
-}
-
 static void SuperchsMakeInputs()
 {
 	TaitoInput[0] = 0x7f;// bit 7 is eeprom read
@@ -348,7 +331,9 @@ static void SuperchsMakeInputs()
 		TaitoInput[2] -= (TaitoInputPort2[i] & 1) << i;
 	}
 
-	TaitoInput[1] = (TaitoInput[1] & ~0x20) | shift_toggle(TaitoInputPort1[5]);
+	BurnShiftInputCheckToggle(TaitoInputPort1[5]);
+
+	TaitoInput[1] = (TaitoInput[1] & ~0x20) | ((bBurnShiftStatus) ? 0x20 : 0x00);
 }
 
 static struct BurnRomInfo SuperchsRomDesc[] = {
@@ -522,9 +507,8 @@ static INT32 SuperchsDoReset()
 	SuperchsCoinWord = 0;
 	SuperchsCpuACtrl = 0;
 	SuperchsSteer = 0;
-	gearshifter = 0;
+
 	BurnShiftReset();
-	BurnShiftSetStatus(gearshifter);
 
 	TaitoF3SoundReset();
 
@@ -1252,6 +1236,8 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		ES5506Scan(nAction, pnMin);
+
+		BurnShiftScan(nAction);
 
 		SCAN_VAR(SuperchsCoinWord);
 		SCAN_VAR(SuperchsCpuACtrl);

@@ -1,16 +1,12 @@
 // FBAlpha Shifter / Gear Display
-//
-// Todo:
-//   1: Figure out how to convince iq_132 to make this work with 1 single font
-//      per character with rotation tricks.
-//   2: Add internal shift toggle function and remove from driver.
 
 #include "burnint.h"
 #include "burn_shift.h"
 
-INT32 BurnShiftEnabled = 1;
+INT32 BurnShiftEnabled = 1; // enable/disable rendering
+INT32 bBurnShiftStatus; // current status of shifter
 
-static INT32 shift_status;
+static INT32 prev_shift;
 
 static INT32 shift_alpha_level;
 static INT32 shift_alpha_level2;
@@ -25,6 +21,7 @@ static INT32 shift_yadv;
 
 static INT32 nScreenWidth, nScreenHeight;
 static INT32 screen_flipped;
+static INT32 screen_vertical;
 static INT32 flipscreen = -1;
 
 #define a 0,
@@ -41,26 +38,6 @@ UINT8 BurnGearL[8*8] = {
 	  a b b b b b a a
 	  a a a a a a a a };
 
-UINT8 BurnGearL_V[8*8] = {
-	  a a a a a a a a
-	  a b b b b b b a
-	  a b b b b b b a
-	  a b b a a a a a
-	  a b b a a a a a
-	  a b b a a a a a
-	  a a a a a a a a
-	  a a a a a a a a };
-
-UINT8 BurnGearL_V2[8*8] = {
-	  a a a a a a a a
-	  a a a a a a a a
-	  a a a a a b b a
-	  a a a a a b b a
-	  a a a a a b b a
-	  a b b b b b b a
-	  a b b b b b b a
-	  a a a a a a a a };
-
 UINT8 BurnGearH[8*8] = {
 	  a a a a a a a a
 	  a b b a a b b a
@@ -69,16 +46,6 @@ UINT8 BurnGearH[8*8] = {
 	  a b b b b b b a
 	  a b b a a b b a
 	  a b b a a b b a
-	  a a a a a a a a };
-
-UINT8 BurnGearH_V[8*8] = {
-	  a a a a a a a a
-	  a b b b b b b a
-	  a b b b b b b a
-	  a a a b b a a a
-	  a a a b b a a a
-	  a b b b b b b a
-	  a b b b b b b a
 	  a a a a a a a a };
 #undef b
 #undef a
@@ -104,6 +71,8 @@ static void set_shift_draw_position()
 
 	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
+
+		screen_vertical = 1;
 
 		shift_xadv = 0;
 		shift_yadv = shift_size + 1;
@@ -134,9 +103,11 @@ static void set_shift_draw_position()
 	} else {
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
 
+		screen_vertical = 0;
+
 		shift_xadv = shift_size + 1;
 		shift_yadv = 0;
-	
+
 		switch (shift_position & 3)
 		{
 			case SHIFT_POSITION_BOTTOM_LEFT:
@@ -184,6 +155,8 @@ void BurnShiftReset()
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftReset called without init\n"));
 #endif
 
+	prev_shift = 0;
+
 	BurnShiftSetStatus(0);
 
 	BurnShiftSetFlipscreen(0);
@@ -201,8 +174,19 @@ void BurnShiftInit(INT32 position, INT32 color, INT32 transparency)
 	shift_alpha_level2 = 256 - shift_alpha_level;
 
 	screen_flipped = (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) ? 1 : 0;
+	screen_vertical = (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) ? 1 : 0;
 
 	BurnShiftReset();
+}
+
+void BurnShiftInputCheckToggle(UINT8 shiftinput)
+{
+	if (prev_shift != shiftinput && shiftinput) {
+		bBurnShiftStatus = !bBurnShiftStatus;
+		BurnShiftSetStatus(bBurnShiftStatus);
+	}
+
+	prev_shift = shiftinput;
 }
 
 void BurnShiftSetStatus(UINT32 status)
@@ -211,23 +195,30 @@ void BurnShiftSetStatus(UINT32 status)
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftSetStatus called without init\n"));
 #endif
 
-	shift_status = status ? 1 : 0;
+	bBurnShiftStatus = status ? 1 : 0;
 
-	if (status) { // HIGH
-		if (shift_position0 & SHIFT_POSITION_ROTATE_CCW) {
-			//bprintf(0, _T("ro-H!"));
-			memcpy(&BurnGearRender, &BurnGearH_V, sizeof(BurnGearRender));
-		} else {
-			memcpy(&BurnGearRender, &BurnGearH, sizeof(BurnGearRender));
+	UINT8 *source = (status) ? &BurnGearH[0] : &BurnGearL[0];
+
+	for (UINT8 y = 0; y < 8; y++)
+		for (UINT8 x = 0; x < 8; x++)
+		{
+			if ((screen_flipped ^ flipscreen)) {
+				if (screen_vertical)
+				{ // flipped + vertical
+					BurnGearRender[(y * 8) + x] = source[(x * 8) + (7-y)];
+				}
+				else
+				{ // flipped
+					BurnGearRender[(y * 8) + x] = source[(y * 8) + (7-x)];
+				}
+			} else if (screen_vertical)
+			{ // vertical
+				BurnGearRender[(y * 8) + x] = source[(x * 8) + y];
+			} else
+			{ // normal
+				BurnGearRender[(y * 8) + x] = source[(y * 8) + x];
+			}
 		}
-	} else { // LOW
-		if (shift_position0 & SHIFT_POSITION_ROTATE_CCW) {
-			//bprintf(0, _T("ro-L!"));
-			memcpy(&BurnGearRender, &BurnGearL_V2, sizeof(BurnGearRender));
-		} else {
-			memcpy(&BurnGearRender, &BurnGearL, sizeof(BurnGearRender));
-		}
-	}
 }
 
 void BurnShiftExit()
@@ -307,18 +298,18 @@ void BurnShiftRender()
 	}
 }
 
-INT32 BurnShiftScan(INT32 nAction, INT32 *pnMin)
+INT32 BurnShiftScan(INT32 nAction)
 {
 #if defined FBA_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftScan called without init\n"));
 #endif
 
-	if (pnMin != NULL) {
-		*pnMin = 0x029707;
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(bBurnShiftStatus);
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {
-		SCAN_VAR(shift_status);
+	if (nAction & ACB_WRITE) {
+		BurnShiftSetStatus(bBurnShiftStatus);
 	}
 
 	return 0;

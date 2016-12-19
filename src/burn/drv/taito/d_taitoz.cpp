@@ -6,13 +6,14 @@
 #include "burn_ym2610.h"
 #include "eeprom.h"
 #include "burn_gun.h"
+#include "burn_shift.h"
 
 static INT32 Sci;
 static INT32 OldSteer; // Hack to centre the steering in SCI
 static INT32 SciSpriteFrame;
 static INT32 TaitoZINT6timer = 0;
-
-static UINT8 gearshifter; // chasehq, contcirc, sci shifter toggle
+static INT32 bUseShifter = 0;
+static INT32 bUseGun = 0;
 
 static double TaitoZYM2610Route1MasterVol;
 static double TaitoZYM2610Route2MasterVol;
@@ -337,20 +338,6 @@ static void BsharkMakeInputs()
 	if (TC0220IOCInputPort2[7]) TC0220IOCInput[2] -= 0x80;
 }
 
-static UINT8 shift_update(UINT8 shifter_input) // chasehq, contcirc, sci
-{
-	{ // gear shifter stuff
-		static UINT8 prevshift = 0;
-
-		if (prevshift != shifter_input && shifter_input) {
-			gearshifter = !gearshifter;
-		}
-
-		prevshift = shifter_input;
-	}
-	return (gearshifter) ? 0x00 : 0x10;
-}
-
 static void ChasehqMakeInputs()
 {
 	// Reset Inputs
@@ -371,7 +358,7 @@ static void ChasehqMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
+	TC0220IOCInput[1] |= (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
@@ -397,7 +384,7 @@ static void ContcircMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
+	TC0220IOCInput[1] |= (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] |= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] |= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] |= 0x80;
@@ -411,7 +398,7 @@ static void DblaxleMakeInputs() // and racingb
 	TC0510NIOInput[2] = 0xff;
 
 	if (TC0510NIOInputPort0[0]) TC0510NIOInput[0] -= 0x01;
-	TC0510NIOInput[0] -= shift_update(TC0510NIOInputPort0[1]) ? 0x02 : 0x00;
+	TC0510NIOInput[0] -= (BurnShiftInputCheckToggle(TC0510NIOInputPort0[1]) ? 0x00 : 0x02);
 	if (TC0510NIOInputPort0[2]) TC0510NIOInput[0] -= 0x04;
 	if (TC0510NIOInputPort0[3]) TC0510NIOInput[0] -= 0x08;
 	if (TC0510NIOInputPort0[4]) TC0510NIOInput[0] -= 0x10;
@@ -501,7 +488,7 @@ static void SciMakeInputs()
 	if (TC0220IOCInputPort1[1]) TC0220IOCInput[1] -= 0x02;
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
-	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
+	TC0220IOCInput[1] |= (BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]) ? 0x00 : 0x10);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] -= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] -= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] -= 0x80;
@@ -3308,11 +3295,12 @@ static INT32 TaitoZDoReset()
 {
 	TaitoDoReset();
 
+	if (bUseShifter)
+		BurnShiftReset();
+
 	SciSpriteFrame = 0;
 	OldSteer = 0;
 
-	gearshifter = 0;
-	
 	return 0;
 }
 
@@ -5016,6 +5004,12 @@ static INT32 BsharkInit()
 	return 0;
 }
 
+static void TaitoZSetupShifter()
+{
+	bUseShifter = 1;
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+}
+
 static INT32 ChasehqInit()
 {
 	INT32 nLen;
@@ -5115,7 +5109,9 @@ static INT32 ChasehqInit()
 	nTaitoCyclesTotal[0] = 12000000 / 60;
 	nTaitoCyclesTotal[1] = 12000000 / 60;
 	nTaitoCyclesTotal[2] = (16000000 / 4) / 60;
-	
+
+	TaitoZSetupShifter();
+
 	// Reset the driver
 	TaitoZDoReset();
 
@@ -5214,7 +5210,9 @@ static INT32 ContcircInit()
 	nTaitoCyclesTotal[0] = 12000000 / 60;
 	nTaitoCyclesTotal[1] = 12000000 / 60;
 	nTaitoCyclesTotal[2] = (16000000 / 4) / 60;
-	
+
+	TaitoZSetupShifter();
+
 	// Reset the driver
 	TaitoZDoReset();
 
@@ -5312,6 +5310,8 @@ static INT32 DblaxleInit()
 	nTaitoCyclesTotal[2] = (16000000 / 4) / 60;
 	
 	GenericTilesInit();
+
+	TaitoZSetupShifter();
 
 	// Reset the driver
 	TaitoZDoReset();
@@ -5618,6 +5618,8 @@ static INT32 RacingbInit()
 	
 	GenericTilesInit();
 
+	TaitoZSetupShifter();
+
 	// Reset the driver
 	TaitoZDoReset();
 
@@ -5715,7 +5717,9 @@ static INT32 SciInit()
 	nTaitoCyclesTotal[0] = 12000000 / 60;
 	nTaitoCyclesTotal[1] = 12000000 / 60;
 	nTaitoCyclesTotal[2] = (16000000 / 4) / 60;
-	
+
+	TaitoZSetupShifter();
+
 	// Reset the driver
 	TaitoZDoReset();
 
@@ -5812,7 +5816,8 @@ static INT32 SpacegunInit()
 	nTaitoCyclesTotal[0] = 16000000 / 60;
 	nTaitoCyclesTotal[1] = 16000000 / 60;
 	
-	BurnGunInit(2, true);	
+	BurnGunInit(2, true);
+	bUseGun = 1;
 
 	// Reset the driver
 	TaitoZDoReset();
@@ -5828,7 +5833,15 @@ static INT32 TaitoZExit()
 	OldSteer = 0;
 	Sci = 0;
 	TaitoZINT6timer = 0;
-	
+
+	if (bUseGun)
+		BurnGunExit();
+	bUseGun = 0;
+
+	if (bUseShifter)
+		BurnShiftExit();
+	bUseShifter = 0;
+
 #ifdef BUILD_A68K
 	// Switch back CPU core if needed
 	if (bUseAsm68KCoreOldValue) {
@@ -6474,6 +6487,7 @@ static void ChasehqDraw()
 	
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TC0110PCRPalette);
+	BurnShiftRender();
 }
 
 static void ContcircDraw()
@@ -6498,6 +6512,7 @@ static void ContcircDraw()
 	
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TC0110PCRPalette);
+	BurnShiftRender();
 }
 
 static void EnforceDraw()
@@ -6551,6 +6566,7 @@ static void DblaxleDraw()
 	
 	TC0480SCPRenderCharLayer();
 	BurnTransferCopy(TaitoPalette);
+	BurnShiftRender();
 }
 
 static void RacingbDraw()
@@ -6575,6 +6591,7 @@ static void RacingbDraw()
 	SciRenderSprites(0, 7);	
 	TC0480SCPRenderCharLayer();
 	BurnTransferCopy(TaitoPalette);
+	BurnShiftRender();
 }
 
 static void SciDraw()
@@ -6601,6 +6618,7 @@ static void SciDraw()
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	
 	BurnTransferCopy(TaitoPalette);
+	BurnShiftRender();
 }
 
 static void SpacegunDraw()
@@ -6722,9 +6740,13 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumZ80s) ZetScan(nAction);
 
 		BurnYM2610Scan(nAction, pnMin);
-		
-		BurnGunScan();
-				
+
+		if (bUseGun)
+			BurnGunScan();
+
+		if (bUseShifter)
+			BurnShiftScan(nAction);
+
 		SCAN_VAR(TaitoAnalogPort0);
 		SCAN_VAR(TaitoAnalogPort1);
 		SCAN_VAR(TaitoAnalogPort2);
@@ -6737,7 +6759,6 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoRoadPalBank);
 		SCAN_VAR(nTaitoCyclesDone);
 		SCAN_VAR(nTaitoCyclesSegment);
-		SCAN_VAR(gearshifter);
 	}
 	
 	if (nAction & ACB_WRITE) {

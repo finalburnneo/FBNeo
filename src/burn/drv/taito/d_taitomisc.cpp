@@ -9,6 +9,7 @@
 #include "burn_ym2151.h"
 #include "burn_ym2203.h"
 #include "burn_gun.h"
+#include "burn_shift.h"
 
 static UINT32 RastanADPCMPos;
 static INT32 RastanADPCMData;
@@ -24,6 +25,7 @@ static INT32 OpwolfADPCMData[2];
 static INT32 OpWolfGunXOffset;
 static INT32 OpWolfGunYOffset;
 static INT32 bUseGuns = 0;
+static INT32 bUseShifter = 0;
 
 static UINT8 DariusADPCMCommand;
 static INT32 DariusNmiEnable;
@@ -40,7 +42,6 @@ static UINT16 VolfiedVidMask;
 
 static INT32 RainbowCChipVer = 0;
 
-static UINT8 gearshifter; // Topspeed & clones
 static UINT8 z80ctc_load;
 static INT32 z80ctc_constant;
 static INT32 z80ctc_ctr;
@@ -444,20 +445,6 @@ static void RastanMakeInputs()
 	if (TaitoInputPort3[7]) TaitoInput[3] |= 0x80;
 }
 
-static UINT8 shift_update(UINT8 shifter_input) // topspeed
-{
-	{ // gear shifter stuff
-		static UINT8 prevshift = 0;
-
-		if (prevshift != shifter_input && shifter_input) {
-			gearshifter = !gearshifter;
-		}
-
-		prevshift = shifter_input;
-	}
-	return (gearshifter) ? 0x00 : 0x10;
-}
-
 static void TopspeedMakeInputs()
 {
 	// Reset Inputs
@@ -479,7 +466,9 @@ static void TopspeedMakeInputs()
 	if (TC0220IOCInputPort1[2]) TC0220IOCInput[1] -= 0x04;
 	if (TC0220IOCInputPort1[3]) TC0220IOCInput[1] -= 0x08;
 //	if (TC0220IOCInputPort1[4]) TC0220IOCInput[1] |= 0x10;
-	TC0220IOCInput[1] |= shift_update(TC0220IOCInputPort1[4]);
+
+	BurnShiftInputCheckToggle(TC0220IOCInputPort1[4]);
+	TC0220IOCInput[1] |= ((bBurnShiftStatus) ? 0x00 : 0x10);
 	if (TC0220IOCInputPort1[5]) TC0220IOCInput[1] |= 0x20;
 	if (TC0220IOCInputPort1[6]) TC0220IOCInput[1] |= 0x40;
 	if (TC0220IOCInputPort1[7]) TC0220IOCInput[1] |= 0x80;
@@ -2474,6 +2463,8 @@ static void z80ctc_reset();
 static INT32 TopspeedDoReset()
 {
 	TaitoDoReset();
+
+	BurnShiftReset();
 
 	z80ctc_reset();
 	RastanADPCMPos = 0;
@@ -5211,7 +5202,10 @@ static INT32 TopspeedInit()
 	nTaitoCyclesTotal[0] = 8000000 / 60;
 	nTaitoCyclesTotal[1] = 8000000 / 60;
 	nTaitoCyclesTotal[2] = 4000000 / 60;
-	
+
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+	bUseShifter = 1;
+
 	pTopspeedTempDraw = (UINT16*)BurnMalloc(512 * 512 * sizeof(UINT16));
 
 	// Reset the driver
@@ -5330,7 +5324,10 @@ static INT32 TaitoMiscExit()
 	
 	RainbowCChipVer = 0;
 	bUseGuns = 0;
-	
+	if (bUseShifter)
+		BurnShiftExit();
+	bUseShifter = 0;
+
 	BurnFree(pTopspeedTempDraw);
 	
 	return TaitoExit();
@@ -5811,6 +5808,8 @@ static void TopspeedDraw()
 	if (nSpriteEnable & 2) TopspeedDrawSprites(0);
 	if (nBurnLayer & 8) PC080SNDrawBgLayerPrio(0, 0, TaitoChars, pTransDraw, DrvPriBmp, 8);
 	BurnTransferCopy(TaitoPalette);
+
+	BurnShiftRender();
 }
 
 static void VolfiedDraw()
@@ -6150,6 +6149,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
 		
 		if (bUseGuns) BurnGunScan();
+		if (bUseShifter) BurnShiftScan(nAction);
 				
 		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoAnalogPort0);
@@ -6173,7 +6173,6 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DariusNmiEnable);
 		SCAN_VAR(DariusCoinWord);
 		SCAN_VAR(PC090OJSpriteCtrl);	// for jumping
-		SCAN_VAR(gearshifter);
 		z80ctc_scan();
 	}
 	

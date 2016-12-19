@@ -179,7 +179,7 @@ void BurnShiftInit(INT32 position, INT32 color, INT32 transparency)
 	BurnShiftReset();
 }
 
-void BurnShiftInputCheckToggle(UINT8 shiftinput)
+INT32 BurnShiftInputCheckToggle(UINT8 shiftinput)
 {
 	if (prev_shift != shiftinput && shiftinput) {
 		bBurnShiftStatus = !bBurnShiftStatus;
@@ -187,6 +187,8 @@ void BurnShiftInputCheckToggle(UINT8 shiftinput)
 	}
 
 	prev_shift = shiftinput;
+
+	return bBurnShiftStatus;
 }
 
 void BurnShiftSetStatus(UINT32 status)
@@ -226,8 +228,6 @@ void BurnShiftExit()
 #if defined FBA_DEBUG
 	if (!Debug_BurnShiftInitted) bprintf(PRINT_ERROR, _T("BurnShiftExit called without init\n"));
 #endif
-
-	BurnShiftReset();
 
 	shift_alpha_level = 0;
 	shift_alpha_level2 = 0;

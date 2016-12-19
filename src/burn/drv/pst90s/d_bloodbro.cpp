@@ -1,5 +1,4 @@
 // FB Alpha Blood Bros. driver module
-// FB Alpha Blood Bros. driver module
 // Based on MAME driver by Carlos A. Lozano Baides and Richard Bush
 
 #include "tiles_generic.h"
@@ -26,7 +25,6 @@ static UINT8 *DrvTxRAM;
 static UINT8 *DrvFgRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvScrollRAM;
-static UINT8 *DrvPriBuf;
 static UINT32 *DrvPalette;
 
 static UINT8 DrvRecalc;
@@ -130,8 +128,8 @@ static struct BurnDIPInfo BloodbroDIPList[]=
 	{0x15, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
-	{0x14, 0x01, 0x01, 0x01, "1"		},
-	{0x14, 0x01, 0x01, 0x00, "2"		},
+	{0x14, 0x01, 0x01, 0x01, "1"			},
+	{0x14, 0x01, 0x01, 0x00, "2"			},
 
 	// Coinage condition: Coin Mode 1
 	{0   , 0xfe, 0   ,   16, "Coinage"		},
@@ -201,9 +199,9 @@ static struct BurnDIPInfo BloodbroDIPList[]=
 	{0x15, 0x01, 0x03, 0x01, "5"			},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x15, 0x01, 0x0c, 0x0c, "300K, 500K Every"		},
-	{0x15, 0x01, 0x0c, 0x08, "500K, 500K Every"		},
-	{0x15, 0x01, 0x0c, 0x04, "500K Only"			},
+	{0x15, 0x01, 0x0c, 0x0c, "300K, 500K Every"	},
+	{0x15, 0x01, 0x0c, 0x08, "500K, 500K Every"	},
+	{0x15, 0x01, 0x0c, 0x04, "500K Only"		},
 	{0x15, 0x01, 0x0c, 0x00, "None"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
@@ -229,8 +227,8 @@ static struct BurnDIPInfo WeststryDIPList[]=
 	{0x14, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
-	{0x13, 0x01, 0x01, 0x01, "1"		},
-	{0x13, 0x01, 0x01, 0x00, "2"		},
+	{0x13, 0x01, 0x01, 0x01, "1"			},
+	{0x13, 0x01, 0x01, 0x00, "2"			},
 
 	// Coinage condition: Coin Mode 1
 	{0   , 0xfe, 0   ,   16, "Coinage"		},
@@ -265,7 +263,7 @@ static struct BurnDIPInfo WeststryDIPList[]=
 	{0x13, 0x02, 0x1e, 0x0a, "1 Coin  6 Credits"	},
 	{0x13, 0x00, 0x01, 0x01, NULL},
 	{0x13, 0x02, 0x1e, 0x00, "Free Play"		},
-	{0x13, 0x00, 0x01, 0x01, NULL},
+	{0x13, 0x00, 0x01, 0x01, NULL			},
 
 	// Coin A condition: Coin Mode 2
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
@@ -281,13 +279,13 @@ static struct BurnDIPInfo WeststryDIPList[]=
 	// Coin B condition: Coin Mode 2
 	{0   , 0xfe, 0   ,    4, "Coin B"		},
 	{0x13, 0x02, 0x18, 0x18, "1 Coin 2 Credits"	},
-	{0x13, 0x00, 0x01, 0x00, NULL},
+	{0x13, 0x00, 0x01, 0x00, NULL			},
 	{0x13, 0x02, 0x18, 0x10, "1 Coin 3 Credits"	},
-	{0x13, 0x00, 0x01, 0x00, NULL},
+	{0x13, 0x00, 0x01, 0x00, NULL			},
 	{0x13, 0x02, 0x18, 0x08, "1 Coin 5 Credits"	},
-	{0x13, 0x00, 0x01, 0x00, NULL},
+	{0x13, 0x00, 0x01, 0x00, NULL			},
 	{0x13, 0x02, 0x18, 0x00, "1 Coin 6 Credits"	},
-	{0x13, 0x00, 0x01, 0x00, NULL},
+	{0x13, 0x00, 0x01, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Starting Coin"	},
 	{0x13, 0x01, 0x20, 0x20, "Normal"		},
@@ -300,9 +298,9 @@ static struct BurnDIPInfo WeststryDIPList[]=
 	{0x14, 0x01, 0x03, 0x01, "5"			},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x14, 0x01, 0x0c, 0x0c, "300K, 500K Every"		},
-	{0x14, 0x01, 0x0c, 0x08, "500K, 500K Every"		},
-	{0x14, 0x01, 0x0c, 0x04, "500K Only"			},
+	{0x14, 0x01, 0x0c, 0x0c, "300K, 500K Every"	},
+	{0x14, 0x01, 0x0c, 0x08, "500K, 500K Every"	},
+	{0x14, 0x01, 0x0c, 0x04, "500K Only"		},
 	{0x14, 0x01, 0x0c, 0x00, "None"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
@@ -328,8 +326,8 @@ static struct BurnDIPInfo SkysmashDIPList[]=
 	{0x13, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
-	{0x12, 0x01, 0x01, 0x01, "1"		},
-	{0x12, 0x01, 0x01, 0x00, "2"		},
+	{0x12, 0x01, 0x01, 0x01, "1"			},
+	{0x12, 0x01, 0x01, 0x00, "2"			},
 
 	// Coinage condition: Coin Mode 1
 	{0   , 0xfe, 0   ,   16, "Coinage"		},
@@ -369,9 +367,9 @@ static struct BurnDIPInfo SkysmashDIPList[]=
 	// Coin A condition: Coin Mode 2
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x12, 0x02, 0x06, 0x00, "5 Coins 1 Credit"	},
-	{0x12, 0x00, 0x01, 0x00, NULL},
+	{0x12, 0x00, 0x01, 0x00, NULL		},
 	{0x12, 0x02, 0x06, 0x02, "3 Coins 1 Credit"	},
-	{0x12, 0x00, 0x01, 0x00, NULL},
+	{0x12, 0x00, 0x01, 0x00, NULL		},
 	{0x12, 0x02, 0x06, 0x04, "2 Coins 1 Credit"	},
 	{0x12, 0x00, 0x01, 0x00, NULL},
 	{0x12, 0x02, 0x06, 0x06, "1 Coin  1 Credit"	},
@@ -399,10 +397,10 @@ static struct BurnDIPInfo SkysmashDIPList[]=
 	{0x13, 0x01, 0x03, 0x00, "Infinite"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x13, 0x01, 0x0c, 0x0c, "120K, 200K Every"		},
-	{0x13, 0x01, 0x0c, 0x08, "200K, 200K Every"		},
-	{0x13, 0x01, 0x0c, 0x04, "250K, 250K Every"		},
-	{0x13, 0x01, 0x0c, 0x00, "200K Only"			},
+	{0x13, 0x01, 0x0c, 0x0c, "120K, 200K Every"	},
+	{0x13, 0x01, 0x0c, 0x08, "200K, 200K Every"	},
+	{0x13, 0x01, 0x0c, 0x04, "250K, 250K Every"	},
+	{0x13, 0x01, 0x0c, 0x00, "200K Only"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
 	{0x13, 0x01, 0x30, 0x00, "Easy"			},
@@ -421,7 +419,7 @@ static struct BurnDIPInfo SkysmashDIPList[]=
 
 STDDIPINFO(Skysmash)
 
-void __fastcall bloodbro_write_byte(UINT32 address, UINT8 data)
+static void __fastcall bloodbro_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
 		seibu_main_word_write(address, data);
@@ -429,7 +427,7 @@ void __fastcall bloodbro_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall bloodbro_write_word(UINT32 address, UINT16 data)
+static void __fastcall bloodbro_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
 		seibu_main_word_write(address, data);
@@ -442,7 +440,7 @@ void __fastcall bloodbro_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall bloodbro_read_byte(UINT32 address)
+static UINT8 __fastcall bloodbro_read_byte(UINT32 address)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
 		return seibu_main_word_read(address);
@@ -451,7 +449,7 @@ UINT8 __fastcall bloodbro_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall bloodbro_read_word(UINT32 address)
+static UINT16 __fastcall bloodbro_read_word(UINT32 address)
 {
 	if ((address & 0xffffff0) == 0xa0000) {
 		return seibu_main_word_read(address);
@@ -556,13 +554,41 @@ static INT32 MemIndex()
 	SeibuZ80RAM	= Next;
 	DrvZ80RAM	= Next; Next += 0x000800;
 
-	DrvPriBuf   = Next; Next += 256*256;
-
 	RamEnd		= Next;
 
 	MemEnd		= Next;
 
 	return 0;
+}
+
+static tilemap_callback( background )
+{
+	UINT16 *ram = (UINT16*)DrvBgRAM;
+
+	*code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff;
+	*color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
+	*gfx = 1;
+	*flags = 0;
+}
+
+static tilemap_callback( foreground )
+{
+	UINT16 *ram = (UINT16*)DrvFgRAM;
+
+	*code  =(BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff) + (0x1000);
+	*color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
+	*gfx = 2;
+	*flags = 0;
+}
+
+static tilemap_callback( text )
+{
+	UINT16 *ram = (UINT16*)DrvTxRAM;
+
+	*code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff;
+	*color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
+	if (*code == 0) *flags |= TILE_SKIP; // skip this one
+	*gfx = 0;
 }
 
 static INT32 DrvInit()
@@ -573,7 +599,6 @@ static INT32 DrvInit()
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
-
 
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "weststry"))
 	{
@@ -684,6 +709,15 @@ static INT32 DrvInit()
 	seibu_sound_init(0, 0, 3579545, 3579545, 1000000/132);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback, 16, 16, 32, 16);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, foreground_map_callback, 16, 16, 32, 16);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, text_map_callback,        8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM0,            4,  8,  8,  8 *  8 * 0x1000, 0x700, 0xf);
+	GenericTilemapSetGfx(1, DrvGfxROM1,            4, 16, 16, 16 * 16 * 0x1000, 0x400, 0xf);
+	GenericTilemapSetGfx(2, DrvGfxROM1 + 0x100000, 4, 16, 16, 16 * 16 * 0x1000, 0x500, 0xf);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapSetTransparent(1, 0xf);
+	GenericTilemapSetTransparent(2, 0xf);
 
 	DrvDoReset();
 
@@ -702,146 +736,6 @@ static INT32 DrvExit()
 	nGameSelect = 0;
 
 	return 0;
-}
-
-static void RenderTilePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height)
-{
-	INT32 flip = 0;
-	if (flipy) flip |= (height - 1) * width;
-	if (flipx) flip |= width - 1;
-
-	gfx += code * width * height;
-
-	for (INT32 y = 0; y < height; y++, sy++) {
-		if (sy < 0 || sy >= nScreenHeight) continue;
-
-		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
-
-			INT32 pxl = gfx[((y * width) + x) ^ flip];
-
-			if (pxl == trans_col) continue;
-
-			dest[sy * nScreenWidth + sx] = pxl | color;
-			DrvPriBuf[sy * nScreenWidth + sx] = 2;
-		}
-
-		sx -= width;
-	}
-}
-
-static void RenderSpritePrio(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 prio)
-{
-	INT32 flip = 0;
-	if (flipy) flip |= (height - 1) * width;
-	if (flipx) flip |= width - 1;
-
-	gfx += code * width * height;
-
-	for (INT32 y = 0; y < height; y++, sy++) {
-		if (sy < 0 || sy >= nScreenHeight) continue;
-
-		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
-
-			INT32 pxl = gfx[((y * width) + x) ^ flip];
-
-			if (pxl == trans_col) continue;
-
-			if ((DrvPriBuf[sy * nScreenWidth + sx] & (0x05 | prio)) == 0) {
-				dest[sy * nScreenWidth + sx] = pxl | color;
-				DrvPriBuf[sy * nScreenWidth + sx] |= (1 << prio);
-			}
-		}
-
-		sx -= width;
-	}
-}
-
-static void draw_layer(UINT8 *src, INT32 palette_offset, INT32 transp, INT32 scrollx, INT32 scrolly)
-{
-	UINT16 *vram = (UINT16*)src;
-
-	for (INT32 offs = 0; offs < 32 * 16; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 4;
-		INT32 sy = (offs >> 5) << 4;
-
-		sx -= scrollx;
-		if (sx < -15) sx += 0x200;
-		sy -= scrolly + 16;
-		if (sy < -15) sy += 0x100;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 code = (BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0xfff) | (transp << 12);
-		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12;
-
-		if (transp) {
-			//Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, palette_offset, DrvGfxROM1);
-			RenderTilePrio(pTransDraw, DrvGfxROM1, code, (color << 4) | palette_offset, 15, sx, sy, 0, 0, 16, 16);
-		} else {
-			// First (Opaque) BG layer - doesn't write to the Priority bitmap
-			Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, palette_offset, DrvGfxROM1);
-		}
-	}
-}
-
-static void draw_text_layer()
-{
-	UINT16 *vram = (UINT16*)DrvTxRAM;
-
-	for (INT32 offs = 0x40; offs < 0x3c0; offs++)
-	{
-		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0xfff;
-		if (!code) continue;
-
-		INT32 sx = (offs & 0x1f) << 3;
-		INT32 sy = (offs >> 5) << 3;
-		INT32 color = BURN_ENDIAN_SWAP_INT16(vram[offs]) >> 12;
-
-		Render8x8Tile_Mask(pTransDraw, code, sx, sy-16, color, 4, 15, 0x700, DrvGfxROM0);
-	}
-}
-
-static void draw_sprites()
-{
-	UINT16 *ram = (UINT16*)DrvSprRAM;
-
-	for (INT32 offs = 0; offs < 0x800; offs += 4)
-	{
-		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
-		INT32 prio = (attr & 0x0800) ? 2 : 0;
-
-		if (attr & 0x8000) continue;
-
-		INT32 width   = (attr >> 7) & 7;
-		INT32 height  = (attr >> 4) & 7;
-		INT32 code    = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0x1fff;
-		INT32 sx      = BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x01ff;
-		INT32 sy      = BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x01ff;
-		if (sx > 255) sx -= 512;
-		if (sy > 255) sy -= 512;
-		sy -= 16;
-
-		INT32 flipx = attr & 0x2000;
-		INT32 flipy = attr & 0x4000;
-		INT32 color = attr & 0x000f;
-
-		for (INT32 x = 0; x <= width; x++)
-		{
-			for (INT32 y = 0; y <= height; y++)
-			{
-				INT32 syy = sy + 16 * ((flipy) ? (height - y) : y);
-				INT32 sxx = sx + 16 * ((flipx) ? (width - x) : x);
-
-				RenderSpritePrio(pTransDraw, DrvGfxROM2, code, (color << 4), 15, sxx, syy, flipx, flipy, 16, 16, prio);
-
-				code++;
-				code &= 0x1fff;
-			}
-		}
-	}
 }
 
 static inline void DrvRecalcPalette()
@@ -865,6 +759,43 @@ static inline void DrvRecalcPalette()
 	}
 }
 
+static void draw_sprites()
+{
+	UINT16 *ram = (UINT16*)DrvSprRAM;
+
+	for (INT32 offs = 0; offs < 0x800; offs += 4)
+	{
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(ram[offs]);
+		INT32 pri_mask = (attr & 0x0800) ? 2 : 0;
+
+		if (attr & 0x8000) continue;
+
+		INT32 width   = (attr >> 7) & 7;
+		INT32 height  = (attr >> 4) & 7;
+		INT32 code    = BURN_ENDIAN_SWAP_INT16(ram[offs+1]) & 0x1fff;
+		INT32 sx      = BURN_ENDIAN_SWAP_INT16(ram[offs+2]) & 0x01ff;
+		INT32 sy      = BURN_ENDIAN_SWAP_INT16(ram[offs+3]) & 0x01ff;
+		if (sx > 255) sx -= 512;
+		if (sy > 255) sy -= 512;
+		sy -= 16;
+
+		INT32 flipx = attr & 0x2000;
+		INT32 flipy = attr & 0x4000;
+		INT32 color = attr & 0x000f;
+
+		for (INT32 x = 0; x <= width; x++)
+		{
+			for (INT32 y = 0; y <= height; y++)
+			{
+				INT32 syy = sy + 16 * ((flipy) ? (height - y) : y);
+				INT32 sxx = sx + 16 * ((flipx) ? (width - x) : x);
+
+				RenderPrioSprite(pTransDraw, DrvGfxROM2, (code++) & 0x1fff, (color << 4), 15, sxx, syy, flipx, flipy, 16, 16, pri_mask);
+			}
+		}
+	}
+}
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -874,16 +805,17 @@ static INT32 DrvDraw()
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
 	scroll += 0x10 >> (nGameSelect & 1); // skysmash
 
-	memset(DrvPriBuf, 0, 256 * 256);
-
 	BurnTransferClear();
-	if (nBurnLayer & 1) draw_layer(DrvBgRAM, 0x400, 0, BURN_ENDIAN_SWAP_INT16(scroll[0]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[1]) & 0x0ff);
 
-	if (nBurnLayer & 2) draw_layer(DrvFgRAM, 0x500, 1, BURN_ENDIAN_SWAP_INT16(scroll[2]) & 0x1ff, BURN_ENDIAN_SWAP_INT16(scroll[3]) & 0x0ff);
+	GenericTilemapSetScrollX(0, BURN_ENDIAN_SWAP_INT16(scroll[0]));
+	GenericTilemapSetScrollY(0, BURN_ENDIAN_SWAP_INT16(scroll[1]));
+	GenericTilemapSetScrollX(1, BURN_ENDIAN_SWAP_INT16(scroll[2]));
+	GenericTilemapSetScrollY(1, BURN_ENDIAN_SWAP_INT16(scroll[3]));
 
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
 	if (nBurnLayer & 4) draw_sprites();
-
-	if (nBurnLayer & 8) draw_text_layer();
+	if (nBurnLayer & 8) GenericTilemapDraw(2, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 

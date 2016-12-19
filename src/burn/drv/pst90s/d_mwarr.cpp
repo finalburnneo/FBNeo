@@ -6,12 +6,6 @@
 #include "msm6295.h"
 #include "eeprom.h"
 
-/*
-	To do:
-		why do some times get clipped on the left side in steel force?
-		is the terrible sound normal?
-*/
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -481,6 +475,46 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
+static tilemap_callback( bg )
+{
+	UINT16 *ram = (UINT16*)DrvBgRAM;
+
+	*code  = ram[offs] & 0x1fff;
+	*color = ram[offs] >> 13;
+	*gfx = 4;
+	*flags = 0;
+}
+
+static tilemap_callback( low )
+{
+	UINT16 *ram = (UINT16*)DrvMloRAM;
+
+	*code  = ram[offs] & 0x1fff;
+	*color = ram[offs] >> 13;
+	*gfx = 3;
+	*flags = 0;
+}
+
+static tilemap_callback( mid )
+{
+	UINT16 *ram = (UINT16*)DrvMhiRAM;
+
+	*code  = ram[offs] & 0x1fff;
+	*color = ram[offs] >> 13;
+	*gfx = 2;
+	*flags = 0;
+}
+
+static tilemap_callback( txt )
+{
+	UINT16 *ram = (UINT16*)DrvTxtRAM;
+
+	*code  = ram[offs] & 0x1fff;
+	*color = ram[offs] >> 13;
+	*gfx = 1;
+	*flags = 0;
+}
+
 static INT32 MwarrInit()
 {
 	game_select = 0;
@@ -567,6 +601,19 @@ static INT32 MwarrInit()
 	global_x_offset = 8;
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback,  16, 16, 64, 16);
+	GenericTilemapInit(1, TILEMAP_SCAN_COLS, low_map_callback, 16, 16, 64, 16);
+	GenericTilemapInit(2, TILEMAP_SCAN_COLS, mid_map_callback, 16, 16, 64, 16);
+	GenericTilemapInit(3, TILEMAP_SCAN_ROWS, txt_map_callback,  8,  8, 64, 32);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 16, 16, 0x200000, 0x180, 0x07);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x200000, 0x100, 0x07);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 4, 16, 16, 0x200000, 0x080, 0x07);
+	GenericTilemapSetGfx(4, DrvGfxROM4, 4,  8,  8, 0x100000, 0x000, 0x07);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
+	GenericTilemapSetTransparent(3, 0);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -global_x_offset, 0);
+	GenericTilemapSetOffsets(3, -24, 0);
 
 	DrvDoReset();
 
@@ -642,6 +689,18 @@ static INT32 CommonInit(INT32 select, INT32 xoffset)
 	global_x_offset = xoffset;
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback,  16, 16, 64, 16);
+	GenericTilemapInit(1, TILEMAP_SCAN_COLS, low_map_callback, 16, 16, 64, 16);
+	GenericTilemapInit(2, TILEMAP_SCAN_COLS, mid_map_callback, 16, 16, 64, 16);
+	GenericTilemapInit(3, TILEMAP_SCAN_ROWS, txt_map_callback,  8,  8, 64, 32);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 16, 16, 0x200000, 0x180, 0x07);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x200000, 0x100, 0x07);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 4, 16, 16, 0x200000, 0x080, 0x07);
+	GenericTilemapSetGfx(4, DrvGfxROM4, 4,  8,  8, 0x100000, 0x000, 0x07);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
+	GenericTilemapSetTransparent(3, 0);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -global_x_offset, 0);
 
 	DrvDoReset();
 
@@ -650,12 +709,20 @@ static INT32 CommonInit(INT32 select, INT32 xoffset)
 
 static INT32 StlforceInit()
 {
-	return CommonInit(1, 8);
+	INT32 nRet = CommonInit(1, 8);
+
+	GenericTilemapSetOffsets(3, -24, 0);
+
+	return nRet;
 }
 
 static INT32 TwinbratInit()
 {
-	return CommonInit(2, 24);
+	INT32 nRet = CommonInit(2, 16);
+
+	GenericTilemapSetOffsets(3, -32, 0);
+
+	return nRet;
 }
 
 static INT32 DrvExit()
@@ -679,41 +746,6 @@ static INT32 DrvExit()
 	DrvSpriteBpp = 0;
 
 	return 0;
-}
-
-static inline void draw16x16_prio_tile(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 priority)
-{
-	UINT16 *dst = pTransDraw + (sy * nScreenWidth) + sx;
-	UINT8 *pri = pPrioDraw + (sy * nScreenWidth) + sx;
-
-	UINT8 *gfx = DrvGfxROM0 + code * (16*16);
-
-	if (flipx) flipx = 0x0f;
-
-	for (INT32 y = 0; y < 16; y++)
-	{
-		if ((sy + y) >= 0 && (sy + y) < nScreenHeight)
-		{
-			for (INT32 x = 0; x < 16; x++)
-			{
-				if ((sx + x) >= 0 && (sx + x) < nScreenWidth)
-				{
-					if (gfx[x^flipx])
-					{
-						if ((priority & (1 << pri[x])) == 0 && pri[x] < 0x80)
-						{
-							dst[x] = gfx[x^flipx] + color;
-							pri[x] |= 0x80;
-						}
-					}
-				}
-			}
-		}
-
-		dst += nScreenWidth;
-		pri += nScreenWidth;
-		gfx += 16;
-	}
 }
 
 static void draw_sprites(INT32 use_priority)
@@ -744,129 +776,14 @@ static void draw_sprites(INT32 use_priority)
 			{
 				INT32 yy = y + i * 16;
 
-#if 1
-				draw16x16_prio_tile(source[2]+i, color, x,	yy,	flipx, pri_mask);
-				draw16x16_prio_tile(source[2]+i, color, x-1024, yy,	flipx, pri_mask);
-				draw16x16_prio_tile(source[2]+i, color, x-1024, yy-512, flipx, pri_mask);
-				draw16x16_prio_tile(source[2]+i, color, x,	yy-512, flipx, pri_mask);
-#else
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, source[2]+i, x,      yy,     color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, source[2]+i, x-1024, yy,     color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, source[2]+i, x-1024, yy-512, color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, source[2]+i, x,      yy-512, color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, source[2]+i, x,      yy,     color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-					Render16x16Tile_Mask_Clip(pTransDraw, source[2]+i, x-1024, yy,     color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-					Render16x16Tile_Mask_Clip(pTransDraw, source[2]+i, x-1024, yy-512, color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-					Render16x16Tile_Mask_Clip(pTransDraw, source[2]+i, x,      yy-512, color, DrvSpriteBpp, 0, 0x400, DrvGfxROM0);
-				}
-#endif
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x     , yy    , flipx, 0, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x-1024, yy    , flipx, 0, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x-1024, yy-512, flipx, 0, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x     , yy-512, flipx, 0, 16, 16, pri_mask);
 			}
 		}
 
 		source -= 0x04;
-	}
-}
-
-static void draw_layer(UINT8 *src, UINT8 *gfxbase, UINT8 *scrl, INT32 attand, INT32 gfxoffs, INT32 scrolloff, INT32 priority)
-{
-	UINT16 *vram = (UINT16*)src;
-	UINT16 *attr = (UINT16 *)DrvVidAttrRAM;
-	UINT16 *xscroll = (UINT16*)scrl;
-
-	INT32 linescroll = attr[6] & attand;
-	INT32 scrolly = attr[scrolloff] & 0xff;
-
-	INT32 x_offset = ((game_select) ? 8 : 19) + global_x_offset;
-
-	for (INT32 sy = 0; sy < nScreenHeight; sy++)
-	{
-		INT32 yy = (sy + scrolly) & 0xff;
-
-		INT32 scrollx = (((linescroll) ? xscroll[yy] : xscroll[0]) + x_offset) & 0x3ff;
-
-		UINT16 *dst = pTransDraw + sy * nScreenWidth;
-		UINT8 *pri = pPrioDraw + sy * nScreenWidth;
-
-		for (INT32 sx = 0; sx < nScreenWidth + 16; sx += 16)
-		{
-			INT32 sxx = sx - (scrollx & 0xf);
-
-			INT32 offs = (yy / 16) + ((sx + scrollx) & 0x3f0);
-
-			INT32 code  =  vram[offs] & 0x1fff;
-			INT32 color =((vram[offs] & 0xe000) >> 9) + gfxoffs;
-
-			UINT8 *gfx = gfxbase + (code * 256) + ((yy & 0x0f) * 16);
-
-			for (INT32 x = 0; x < 16; x++, sxx++)
-			{
-				if (sxx >= 0 && sxx < nScreenWidth) {
-					if (gfx[x]) {
-						dst[sxx] = gfx[x] + color;
-						pri[sxx] = priority;
-					}
-				}
-			}
-		}
-	}
-}
-
-static void draw_text_layer()
-{
-	UINT16 *vram = (UINT16*)DrvTxtRAM;
-	UINT16 *scroll = (UINT16 *)DrvVidAttrRAM;
-
-	INT32 scrollx = (scroll[0] + (((game_select) ? 8 : 16) + global_x_offset)) & 0x1ff;
-	INT32 scrolly = (scroll[4] + 1) & 0xff;
-
-	for (INT32 offs = 0; offs < 64 * 32; offs++)
-	{
-		INT32 code = vram[offs] & 0x1fff;
-
-		INT32 sx = (offs & 0x3f) << 3;
-		INT32 sy = (offs >> 6) << 3;
-
-		sx -= scrollx;
-		if (sx < -7) sx += 512;
-		sy -= scrolly;
-		if (sy < -7) sy += 256;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 color = vram[offs] >> 13;
-
-		{
-			color = (color * 16) + 0x180;
-			code *= 8*8;
-			UINT8 *gfx = DrvGfxROM1 + code;
-			UINT16 *dst = pTransDraw + sy * nScreenWidth + sx;
-			UINT8 *pri = pPrioDraw + sy * nScreenWidth + sx;
-
-			for (INT32 y = 0; y < 8; y++)
-			{
-				if ((sy + y) >= 0 && (sy + y) < nScreenHeight)
-				{
-					for (INT32 x = 0; x < 8; x++)
-					{
-						if ((sx+x) >= 0 && (sx + x) < nScreenWidth)
-						{
-							if (gfx[x]) {
-								dst[x] = gfx[x] + color;
-								pri[x] = 0x10;
-							}
-						}
-					}
-				}
-
-				gfx += 8;
-				dst += nScreenWidth;
-				pri += nScreenWidth;
-			}
-		}
-
-	//	Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 1, color, 4, 0, 0x180, DrvGfxROM1);
 	}
 }
 
@@ -881,10 +798,55 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) draw_layer(DrvBgRAM,  DrvGfxROM4, DrvBgScrollRAM,  0x01, 0x000, 1, 0x01);
-	if (nBurnLayer & 2) draw_layer(DrvMloRAM, DrvGfxROM3, DrvMloScrollRAM, 0x04, 0x080, 2, 0x02);
-	if (nBurnLayer & 4) draw_layer(DrvMhiRAM, DrvGfxROM2, DrvMhiScrollRAM, 0x10, 0x100, 3, 0x04);
-	if (nBurnLayer & 8) draw_text_layer();
+	UINT16 *scroll = (UINT16 *)DrvVidAttrRAM;
+	UINT16 *bgscroll = (UINT16 *)DrvBgScrollRAM;
+	UINT16 *loscroll = (UINT16 *)DrvMloScrollRAM;
+	UINT16 *mgscroll = (UINT16 *)DrvMhiScrollRAM;
+
+	if (scroll[6] & 0x01) {
+		GenericTilemapSetScrollRows(0, 256);
+
+		for (INT32 y = 0; y < 256; y++) {
+			GenericTilemapSetScrollRow(0, y, bgscroll[y] + 20);
+		}
+	} else {
+		GenericTilemapSetScrollRows(0, 1);
+		GenericTilemapSetScrollX(0, bgscroll[0] + 19);
+	}
+
+	if (scroll[6] & 0x04) {
+		GenericTilemapSetScrollRows(1, 256);
+
+		for (INT32 y = 0; y < 256; y++) {
+			GenericTilemapSetScrollRow(1, y, loscroll[y] + 19);
+		}
+	} else {
+		GenericTilemapSetScrollRows(1, 1);
+		GenericTilemapSetScrollX(1, loscroll[0] + 19);
+	}
+
+	if (scroll[6] & 0x10) {
+		GenericTilemapSetScrollRows(2, 256);
+
+		for (INT32 y = 0; y < 256; y++) {
+			GenericTilemapSetScrollRow(2, y, mgscroll[y] + 19);
+		}
+	} else {
+		GenericTilemapSetScrollRows(2, 1);
+		GenericTilemapSetScrollX(2, mgscroll[0] + 19);
+	}
+
+	GenericTilemapSetScrollX(3, scroll[0]);
+
+	GenericTilemapSetScrollY(0, scroll[1] + 1);
+	GenericTilemapSetScrollY(1, scroll[2] + 1);
+	GenericTilemapSetScrollY(2, scroll[3] + 1);
+	GenericTilemapSetScrollY(3, scroll[4] + 1);
+
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x01);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0x02);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0x04);
+	if (nBurnLayer & 8) GenericTilemapDraw(3, pTransDraw, 0x10);
 
 	if (nSpriteEnable & 1) draw_sprites((game_select) ? 0 : 1);
 

@@ -259,6 +259,7 @@ void GenericTilemapSetTransTable(INT32 which, INT32 color, INT32 transparent)
 	}
 
 	cur_map->transparent[color] = (transparent) ? 1 : 0;
+	cur_map->flags |= TMAP_TRANSMASK;
 }	
 
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx)
@@ -317,6 +318,7 @@ void GenericTilemapSetScrollCols(INT32 which, UINT32 cols)
 	// use scrolly instead
 	if (cols <= 0) cols = 1;
 	if (cols == 1) {
+		cur_map->scroll_rows = cols;
 		if (cur_map->scrolly_table) {
 			BurnFree(cur_map->scrolly_table);
 		}
@@ -363,6 +365,7 @@ void GenericTilemapSetScrollRows(INT32 which, UINT32 rows)
 	// use scrollx instead
 	if (rows <= 0) rows = 1;
 	if (rows == 1) {
+		cur_map->scroll_rows = rows;
 		if (cur_map->scrollx_table) {
 			BurnFree(cur_map->scrollx_table);
 		}
@@ -403,7 +406,7 @@ void GenericTilemapSetScrollCol(INT32 which, INT32 col, INT32 scroll)
 	}
 
 	if (cur_map->scrolly_table != NULL) {
-		cur_map->scrolly_table[col] = scroll;
+		cur_map->scrolly_table[col] = scroll % (cur_map->theight * cur_map->mheight);
 	}
 }
 
@@ -427,7 +430,7 @@ void GenericTilemapSetScrollRow(INT32 which, INT32 row, INT32 scroll)
 	}
 
 	if (cur_map->scrollx_table != NULL) {
-		cur_map->scrollx_table[row] = scroll;
+		cur_map->scrollx_table[row] = scroll % (cur_map->twidth * cur_map->mwidth);
 	}
 }
 
@@ -548,7 +551,9 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		{
 			INT32 scrolly = (cur_map->scrolly + y + cur_map->yoffset) % (cur_map->mheight * cur_map->theight);
 
-			INT32 scrollx = cur_map->scrollx_table[(scrolly * cur_map->scroll_rows) / cur_map->mheight] + cur_map->xoffset;
+			INT32 scrollx = cur_map->scrollx_table[(scrolly * cur_map->scroll_rows) / (cur_map->mheight * cur_map->theight)] - cur_map->xoffset;
+
+			scrollx %= (cur_map->twidth * cur_map->mwidth);
 
 			INT32 row = scrolly / cur_map->theight;
 
@@ -562,7 +567,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 			dest = Bitmap + sy * nScreenWidth;
 
-			for (UINT32 x = 0; x < bitmap_width + (cur_map->twidth-1); x+=cur_map->twidth)
+			for (UINT32 x = 0; x < bitmap_width + cur_map->twidth; x+=cur_map->twidth)
 			{
 				INT32 sx = x;
 				INT32 col = ((x + scrollx) % (cur_map->mwidth * cur_map->twidth)) / cur_map->twidth;

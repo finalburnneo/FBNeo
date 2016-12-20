@@ -34,9 +34,7 @@ static UINT8 DrvJoy3[16];
 static UINT8 DrvDips[2];
 static UINT16 DrvInps[3];
 
-static UINT32  *DrvPalette;
-static UINT32  *Palette;
-
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT16 *priority_control;
@@ -50,7 +48,7 @@ static UINT8 drgnmst_oki0_bank = 0;
 static UINT8 drgnmst_oki1_bank = 0;
 static UINT8 drgnmst_oki_command = 0;
 
-static INT32  nCyclesDone[2] = { 0, 0 };
+static INT32 nCyclesDone[2] = { 0, 0 };
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -170,18 +168,14 @@ static void palette_write(INT32 offset)
 	b = (data >> 0) & 0x0f;
 	b |= b << 4;
 
-	Palette[offset >> 1] = (r << 16) | (g << 8) | b;
 	DrvPalette[offset >> 1] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
+static void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 {
-
 	if ((address & 0xffc000) == 0x900000) {
 		DrvPalRAM[(address & 0x3fff)] = data;
-
 		palette_write(address & 0x3ffe);
-
 		return;
 	}
 
@@ -189,7 +183,6 @@ void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 		DrvVidRegs[address & 0x1f] = data;
 		return;
 	}
-
 
 	switch (address)
 	{
@@ -200,16 +193,12 @@ void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 
 		case 0x800154:
 		case 0x800155:
-		// priority control
+			// priority control
 		return;
 
 		case 0x800181:
-	//bprintf (PRINT_NORMAL, _T("%5.5x %2.2x, wb\n"), address, data);
 			drgnmst_snd_command = data;
-		//	hack = 1;
-		//	pic16c5xRun(1000);
-			SekRunEnd();//?
-			// cpu_yield();
+			SekRunEnd();
 		return;
 
 		case 0x800188:
@@ -219,17 +208,13 @@ void __fastcall drgnmst_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
+static void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 {
-
 	if ((address & 0xffc000) == 0x900000) {
 		*((UINT16 *)(DrvPalRAM + (address & 0x3ffe))) = data;
-
 		palette_write(address & 0x3ffe);
-
 		return;
 	}
-
 
 	if (address >= 0x800100 && address <= 0x80011f) {
 		*((UINT16*)(DrvVidRegs + (address & 0x1e))) = data;
@@ -245,13 +230,9 @@ void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 		case 0x800180:
 		case 0x800181:
 		{
-	bprintf (PRINT_NORMAL, _T("%5.5x %4.4x, ww\n"), address, data);
-
 			drgnmst_snd_command = (data & 0xff);
 			INT32 cycles = (SekTotalCycles() / 3) - nCyclesDone[1];
 			nCyclesDone[1] += pic16c5xRun(cycles);
-			//SekRunEnd();
-			// cpu_yield();
 		}
 		return;
 
@@ -262,7 +243,7 @@ void __fastcall drgnmst_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall drgnmst_read_byte(UINT32 address)
+static UINT8 __fastcall drgnmst_read_byte(UINT32 address)
 {
 //	bprintf (PRINT_NORMAL, _T("%5.5x rb\n"), address);
 
@@ -295,7 +276,7 @@ UINT8 __fastcall drgnmst_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall drgnmst_read_word(UINT32 address)
+static UINT16 __fastcall drgnmst_read_word(UINT32 address)
 {
 //	bprintf (PRINT_NORMAL, _T("%5.5x rw\n"), address);
 
@@ -340,11 +321,10 @@ static UINT8 drgnmst_snd_command_r()
 
 	switch (drgnmst_oki_control & 0x1f)
 	{
-		case 0x12:	data = MSM6295ReadStatus(1) & 0x0f; break;//(okim6295_status_1_r(machine, 0) & 0x0f); break;
-		case 0x16:	data = MSM6295ReadStatus(0) & 0x0f; break;//(okim6295_status_0_r(machine, 0) & 0x0f); break;
+		case 0x12: data = MSM6295ReadStatus(1) & 0x0f; break;
+		case 0x16: data = MSM6295ReadStatus(0) & 0x0f; break;
 		case 0x0b:
-		case 0x0f:      data = drgnmst_snd_command; break;
-		default:	break;
+		case 0x0f: data = drgnmst_snd_command; break;
 	}
 
 	return data;
@@ -372,22 +352,19 @@ static void drgnmst_snd_control_w(INT32 data)
 	switch (drgnmst_oki_control & 0x1f)
 	{
 		case 0x15:
-			bprintf (PRINT_NORMAL, _T("0, %2.2x\n"), drgnmst_oki_command);
+		//	bprintf (PRINT_NORMAL, _T("0, %2.2x\n"), drgnmst_oki_command);
 			MSM6295Command(0, drgnmst_oki_command);
 			break;
 
 		case 0x11:
-			bprintf (PRINT_NORMAL, _T("1, %2.2x\n"), drgnmst_oki_command);
+		//	bprintf (PRINT_NORMAL, _T("1, %2.2x\n"), drgnmst_oki_command);
 			MSM6295Command(1, drgnmst_oki_command);
 			break;
 	}
 }
 
-
-UINT8 drgnmst_sound_readport(UINT16 port)
+static UINT8 drgnmst_sound_readport(UINT16 port)
 {
-//	if (port != 0x10)bprintf (PRINT_NORMAL, _T("%4.4x rp\n"), port);
-
 	switch (port)
 	{
 		case 0x00:
@@ -411,10 +388,8 @@ UINT8 drgnmst_sound_readport(UINT16 port)
 	return 0;
 }
 
-void drgnmst_sound_writeport(UINT16 port, UINT8 data)
+static void drgnmst_sound_writeport(UINT16 port, UINT8 data)
 {
-//	bprintf (PRINT_NORMAL, _T("%4.4x %2.2x wp\n"), port, data);
-
 	switch (port & 0xff)
 	{
 		case 0x00:
@@ -431,24 +406,61 @@ void drgnmst_sound_writeport(UINT16 port, UINT8 data)
 	}
 }
 
+static tilemap_scan( fg )
+{
+	return (col * 32) + (row & 0x1f) + ((row & 0xe0) >> 5) * 2048;
+	rows = cols = 0;
+}
+
+static tilemap_scan( md )
+{
+	return (col * 16) + (row & 0x0f) + ((row & 0xf0) >> 4) * 1024;
+	rows = cols = 0;
+}
+
+static tilemap_scan( bg )
+{
+	return (col * 8) + (row & 0x07) + ((row & 0xf8) >> 3) * 512;
+	rows = cols = 0;
+}
+
+static tilemap_callback( fg )
+{
+	UINT16 *ram = (UINT16*)DrvFgRAM;
+
+	*code  = ram[offs * 2] & 0xfff;
+	*color = ram[offs * 2 + 1] & 0x1f;
+	*flags = TILE_FLIPYX(ram[offs * 2 + 1] >> 5);
+	*gfx = 1;
+}
+
+static tilemap_callback( md )
+{
+	UINT16 *ram = (UINT16*)DrvMidRAM;
+
+	*code  = (ram[offs * 2] & 0x7fff) - 0x2000;
+	*color = ram[offs * 2 + 1] & 0x1f;
+	*flags = TILE_FLIPYX(ram[offs * 2 + 1] >> 5);
+	*gfx = 2;
+}
+
+static tilemap_callback( bg )
+{
+	UINT16 *ram = (UINT16*)DrvBgRAM;
+
+	*code  = (ram[offs * 2] & 0x1fff) + 0x800;
+	*color = ram[offs * 2 + 1] & 0x1f;
+	*flags = TILE_FLIPYX(ram[offs * 2 + 1] >> 5);
+	*gfx = 3;
+}
+
 static INT32 DrvGfxDecode()
 {
-	INT32 Plane[4]  = { 24, 8, 16, 0 };
-	INT32 XOffs0[32] = { 0x800000,0x800001,0x800002,0x800003,0x800004,0x800005,0x800006,0x800007,
-			   0x000000,0x000001,0x000002,0x000003,0x000004,0x000005,0x000006,0x000007,
-	    		   0x800020,0x800021,0x800022,0x800023,0x800024,0x800025,0x800026,0x800027,
-			   0x000020,0x000021,0x000022,0x000023,0x000024,0x000025,0x000026,0x000027 };
-	INT32 YOffs0[16] = { 0*32,1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
-	 		   8*32,9*32,10*32,11*32,12*32,13*32,14*32,15*32 };
-
-
-	INT32 XOffs1[16] = { 0x2000000,0x2000001,0x2000002,0x2000003,0x2000004,0x2000005,0x2000006,0x2000007,
-			   0x0000000,0x0000001,0x0000002,0x0000003,0x0000004,0x0000005,0x0000006,0x0000007 };
-
-	INT32 YOffs1[32] = { 0*64, 1*64, 2*64, 3*64, 4*64, 5*64, 6*64, 7*64,
-		 	   8*64, 9*64,10*64,11*64,12*64,13*64,14*64,15*64,
-	 		  16*64,17*64,18*64,19*64,20*64,21*64,22*64,23*64,
-	 		  24*64,25*64,26*64,27*64,28*64,29*64,30*64,31*64 };
+	INT32 Plane[4]   = { 24, 8, 16, 0 };
+	INT32 XOffs0[32] = { STEP8(0x800000,1), STEP8(0,1), STEP8(0x800020,1), STEP8(0x20,1) };
+	INT32 YOffs0[16] = { STEP16(0,32) };
+	INT32 XOffs1[16] = { STEP8(0x2000000,1),STEP8(0,1) };
+	INT32 YOffs1[32] = { STEP32(0,64) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x800000);
 	if (tmp == NULL) {
@@ -526,8 +538,6 @@ static INT32 MemIndex()
 
 	coin_lockout	= Next; Next += 0x000001;
 
-	Palette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
-
 	RamEnd		= Next;
 
 	MemEnd		= Next;
@@ -602,6 +612,15 @@ static INT32 DrvInit()
 	MSM6295SetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, fg_map_scan, fg_map_callback,  8,  8, 64, 64);
+	GenericTilemapInit(1, md_map_scan, md_map_callback, 16, 16, 64, 64);
+	GenericTilemapInit(2, bg_map_scan, bg_map_callback, 32, 32, 64, 64);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 4,  8,  8, 0x400000, 0x200, 0x1f);
+	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x400000, 0x400, 0x1f);
+	GenericTilemapSetGfx(3, DrvGfxROM3, 4, 32, 32, 0x400000, 0x600, 0x1f);
+	GenericTilemapSetTransparent(0, 0xf);
+	GenericTilemapSetTransparent(1, 0xf);
+	GenericTilemapSetTransparent(2, 0xf);
 
 	DrvDoReset();
 
@@ -620,159 +639,6 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
 	return 0;
-}
-
-static void draw_background()
-{
-	UINT16 *ram = (UINT16*)DrvBgRAM;
-	INT32 scrollx = *((UINT16*)(DrvVidRegs + 0x14)) - 18;
-	INT32 scrolly = *((UINT16*)(DrvVidRegs + 0x16));
-
-	scrollx = (scrollx & 0x7ff) + 64;
-	scrolly = (scrolly & 0x7ff) + 16;
-
-	for (INT32 offs = 0; offs < 0x1000; offs++)
-	{
-		INT32 sy = (offs & 0x3f) << 5;
-		INT32 sx = (offs >> 6) << 5;
-
-		INT32 ofst = ((sx>>2)+((sy>>5)&7)+((sy>>8)<<9))<<1;
-
-		INT32 code = (ram[ofst] & 0x1fff) + 0x800;
-		INT32 color = ram[ofst+1];
-		INT32 flipy = color & 0x40;
-		INT32 flipx = color & 0x20;
-
-		color &= 0x3f;
-
-		sy -= scrolly;
-		if (sy < -31) sy += 0x800;
-		sx -= scrollx;
-		if (sx < -31) sx += 0x800;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		if (flipy) {
-			if (flipx) {
-				Render32x32Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x600, DrvGfxROM3);
-			} else {
-				Render32x32Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x600, DrvGfxROM3);
-			}
-		} else {
-			if (flipx) {
-				Render32x32Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x600, DrvGfxROM3);
-			} else {
-				Render32x32Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x600, DrvGfxROM3);
-			}
-		}
-	}
-}
-
-static void draw_16x16_rowscroll(INT32 code, INT32 sx, INT32 sy, INT32 color, INT32 flipx, INT32 flipy, INT32 scrolly, INT32 scroll_x, UINT16 *rowscroll)
-{
-	UINT8 *src = DrvGfxROM2 + code * 0x100;
-	INT32 flip = (flipx ? 0x0f : 0) | (flipy ? 0xf0 : 0);
-
-	color = (color << 4) | 0x400;
-
-	for (INT32 y = 0, off = 0; y < 16; y++)
-	{
-		INT32 yy = y + sy;
-
-		INT32 px = sx - ((scroll_x + rowscroll[yy]) & 0x3ff);
-
-		yy -= scrolly + 16;
-
-		if (yy < -15) yy += 0x400;
-		if (yy >= nScreenHeight) break;
-	
-		for (INT32 x = 0; x < 16; x++, off++)
-		{
-			INT32 xx = (x + px);
-
-			if (xx < -15) xx += 0x400;
-
-			if (xx < 0 || yy < 0 || xx >= nScreenWidth) continue;
-
-			if (src[off ^ flip] == 0x0f) continue;
-
-			pTransDraw[(yy * nScreenWidth) + xx] = src[off ^ flip] | color;
-		}
-	}
-}
-
-static void draw_midground()
-{
-	UINT16 *ram = (UINT16*)DrvMidRAM;
-	INT32 scrollx = *((UINT16*)(DrvVidRegs + 0x10)) - 16;
-	INT32 scrolly = *((UINT16*)(DrvVidRegs + 0x12)) & 0x3ff;
-	UINT16 *rowscroll = (UINT16*)(DrvRowScroll + ((DrvVidRegs[0x13] & 0x30) << 8));
-
-	for (INT32 offs = 0; offs < 0x1000; offs++)
-	{
-		INT32 sy = (offs & 0x3f) << 4;
-		INT32 sx = (offs >> 6) << 4;
-
-		INT32 ofst = (sx+((sy>>4)&0x0f)+(((sy>>4)&0xf0)<<6))<<1;
-
-		INT32 code = (ram[ofst] & 0x7fff) - 0x2000;
-		if (code == 0x800) continue;
-		INT32 color = ram[ofst+1];
-		INT32 flipy = color & 0x40;
-		INT32 flipx = color & 0x20;
-
-		color &= 0x1f;
-
-		draw_16x16_rowscroll(code, sx - 64, sy, color, flipx, flipy, scrolly, scrollx, rowscroll);
-	}
-}
-
-static void draw_foreground()
-{
-	UINT16 *ram = (UINT16*)DrvFgRAM;
-	INT32 scrollx = *((UINT16*)(DrvVidRegs + 0x0c)) - 18;
-	INT32 scrolly = *((UINT16*)(DrvVidRegs + 0x0e));
-
-	scrollx = (scrollx & 0x1ff) + 64;
-	scrolly = (scrolly & 0x1ff) + 16;
-
-	for (INT32 offs = 0; offs < 64 * 64; offs++)
-	{
-		INT32 sy = (offs & 0x3f) << 3;
-		INT32 sx = (offs >> 6) << 3;
-
-		INT32 ofst = ((sx<<2)+((sy>>3)&0x1f)+((sy&0x300)<<3))<<1;
-
-		INT32 code = ram[ofst] & 0x0fff;
-		if (code == 0x0020) continue;
-
-		INT32 color = ram[ofst+1];
-		INT32 flipy = color & 0x40;
-		INT32 flipx = color & 0x20;
-
-		color &= 0x1f;
-
-		sy -= scrolly;
-		if (sy < -7) sy += 0x200;
-		sx -= scrollx;
-		if (sx < -7) sx += 0x200;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM1);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM1);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM1);
-			}
-		}
-	}
 }
 
 static void draw_sprites()
@@ -829,20 +695,51 @@ static void draw_sprites()
 	}
 }
 
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x2000; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+		for (INT32 i = 0; i < 0x4000; i+=2) {
+			palette_write(i);
 		}
+		DrvRecalc = 0;
 	}
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x000f;
-
 	}
+
+	UINT16 *regs = (UINT16*)DrvVidRegs;
+	UINT16 *rowscroll = (UINT16*)(DrvRowScroll + ((DrvVidRegs[0x13] & 0x30) << 8));
+
+	GenericTilemapSetScrollX(0, regs[0x0c/2] - 18 + 64);
+	GenericTilemapSetScrollY(0, regs[0x0e/2] + 16);
+
+	GenericTilemapSetScrollY(1, regs[0x12/2] + 16);
+
+	GenericTilemapSetScrollX(2, regs[0x14/2] - 18 + 64);
+	GenericTilemapSetScrollY(2, regs[0x16/2] + 16);
+
+	// hack - check to see if row scroll used
+	INT32 scrolls = 0;
+	for (INT32 i = 0; i < nScreenHeight; i++) {
+		scrolls |= rowscroll[i];
+	}
+
+	if (scrolls == 0) {
+		GenericTilemapSetScrollRows(1, 1);
+		
+		GenericTilemapSetScrollX(1, regs[0x10/2] - 16 + 64);
+	} else {
+		GenericTilemapSetScrollRows(1, 1024);
+
+		for (INT32 i = 0; i < nScreenHeight; i++) {
+			GenericTilemapSetScrollRow(1, i, regs[0x10/2] - 16 + rowscroll[i] + 64);
+		}
+	}
+
+	GenericTilemapSetEnable(0, (nBurnLayer & 1));	// debug
+	GenericTilemapSetEnable(1, (nBurnLayer & 2));	// debug
+	GenericTilemapSetEnable(2, (nBurnLayer & 4));	// debug
 
 	switch (*priority_control)
 	{
@@ -850,29 +747,29 @@ static INT32 DrvDraw()
 		case 0x2d9a:
 		case 0x2440:
 		case 0x245a:
-			draw_foreground();
-			draw_midground();
-			draw_background();
+			GenericTilemapDraw(0, pTransDraw, 0);
+			GenericTilemapDraw(1, pTransDraw, 0);
+			GenericTilemapDraw(2, pTransDraw, 0);
 		break;
 
 		case 0x23c0:
-			draw_background();
-			draw_foreground();
-			draw_midground();
+			GenericTilemapDraw(2, pTransDraw, 0);
+			GenericTilemapDraw(0, pTransDraw, 0);
+			GenericTilemapDraw(1, pTransDraw, 0);
 		break;
 
 		case 0x38da:
 		case 0x215a:
 		case 0x2140:
-			draw_foreground();
-			draw_background();
-			draw_midground();
+			GenericTilemapDraw(0, pTransDraw, 0);
+			GenericTilemapDraw(2, pTransDraw, 0);
+			GenericTilemapDraw(1, pTransDraw, 0);
 		break;
 
 		case 0x2d80:
-			draw_midground();
-			draw_background();
-			draw_foreground();
+			GenericTilemapDraw(1, pTransDraw, 0);
+			GenericTilemapDraw(2, pTransDraw, 0);
+			GenericTilemapDraw(0, pTransDraw, 0);
 		break;
 	}
 

@@ -10,6 +10,7 @@
 #include "bitswap.h"
 #include "genesis_vid.h"
 #include "8255ppi.h"
+#include "burn_shift.h"
 
 #define SYS16_ROM_PROG			1
 #define SYS16_ROM_TILES			2

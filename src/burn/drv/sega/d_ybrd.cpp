@@ -2158,7 +2158,7 @@ struct BurnDriver BurnDrvGlocr360 = {
 
 struct BurnDriver BurnDrvPdrift = {
 	"pdrift", NULL, NULL, NULL, "1988",
-	"Power Drift (World, Rev A)\0", NULL, "Sega", "Y-Board",
+	"Power Drift (World, Rev A)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftRomInfo, PdriftRomName, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
@@ -2168,7 +2168,7 @@ struct BurnDriver BurnDrvPdrift = {
 
 struct BurnDriver BurnDrvPdrifta = {
 	"pdrifta", "pdrift", NULL, NULL, "1988",
-	"Power Drift (World)\0", NULL, "Sega", "Y-Board",
+	"Power Drift (World)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftaRomInfo, PdriftaRomName, NULL, NULL, PdriftInputInfo, PdriftDIPInfo,
@@ -2178,7 +2178,7 @@ struct BurnDriver BurnDrvPdrifta = {
 
 struct BurnDriver BurnDrvPdrifte = {
 	"pdrifte", "pdrift", NULL, NULL, "1988",
-	"Power Drift (World, Earlier)\0", NULL, "Sega", "Y-Board",
+	"Power Drift (World, Earlier)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdrifteRomInfo, PdrifteRomName, NULL, NULL, PdriftInputInfo, PdrifteDIPInfo,
@@ -2188,7 +2188,7 @@ struct BurnDriver BurnDrvPdrifte = {
 
 struct BurnDriver BurnDrvPdriftj = {
 	"pdriftj", "pdrift", NULL, NULL, "1988",
-	"Power Drift (Japan)\0", NULL, "Sega", "Y-Board",
+	"Power Drift (Japan)\0", "Select Auto-Center preset in Input Configuration", "Sega", "Y-Board",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEMY, GBF_RACING, 0,
 	NULL, PdriftjRomInfo, PdriftjRomName, NULL, NULL, PdriftInputInfo, PdriftjDIPInfo,

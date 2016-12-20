@@ -3255,6 +3255,8 @@ void OutrunRender()
 	OutrunRenderSpriteLayer(8);
 	System16BRenderTextLayer(1);
 	BurnTransferCopy(System16Palette);
+
+	if (System16HasGears) BurnShiftRender();
 }
 
 void ShangonRender()
@@ -3331,4 +3333,6 @@ void YBoardRender()
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
 		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
 	}
+
+	if (System16HasGears) BurnShiftRender();
 }

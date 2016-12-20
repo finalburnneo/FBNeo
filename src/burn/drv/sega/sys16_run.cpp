@@ -119,7 +119,6 @@ UINT32 System16RotateRamSize = 0;
 UINT32 System16BackupRamSize = 0;
 UINT32 System16BackupRam2Size = 0;
 
-static INT32 System16LastGear;
 bool System16HasGears = false;
 
 UINT8 System16VideoControl;
@@ -193,14 +192,12 @@ inline static void OutrunMakeInputs()
 	// Reset Inputs
 	System16Input[0] = 0;
 	
-	if (System16Gear && System16LastGear == 0) System16InputPort0[4] ^= 1;
+	System16InputPort0[4] = BurnShiftInputCheckToggle(System16Gear) ? 0x00 : 0x01;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
 		System16Input[0] |= (System16InputPort0[i] & 1) << i;
 	}
-	
-	System16LastGear = System16Gear;
 }
 
 inline static void PdriftMakeInputs()
@@ -208,14 +205,12 @@ inline static void PdriftMakeInputs()
 	// Reset Inputs
 	System16Input[0] = 0;
 	
-	if (System16Gear && System16LastGear == 0) System16InputPort0[5] ^= 1;
+	System16InputPort0[5] = BurnShiftInputCheckToggle(System16Gear) ? 0x00 : 0x01;
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
 		System16Input[0] |= (System16InputPort0[i] & 1) << i;
 	}
-	
-	System16LastGear = System16Gear;
 }
 
 static void System16GunMakeInputs()
@@ -246,29 +241,22 @@ static INT32 System16DoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-	
+
+	if (System16HasGears) BurnShiftReset();
+
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN || (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMX || (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON || (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) {
 		SekOpen(1);
 		SekReset();
 		SekClose();
 		
-		System16LastGear = 0;
 		System16RoadControl = 0;
 		System16AnalogSelect = 0;
-		
-		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) {
-			// Start in low gear
-			if (System16HasGears) System16InputPort0[4] = 1;
-		}
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) {
 		SekOpen(2);
 		SekReset();
 		SekClose();
-		
-		// Start in low gear
-		if (System16HasGears) System16InputPort0[5] = 1;
 	}
 	
 	if (System16Z80RomNum || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM)) {
@@ -2437,7 +2425,10 @@ INT32 System16Init()
 	
 	GenericTilesInit();
 	bSystem16BootlegRender = false;
-	
+
+	if (System16HasGears)
+		BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+
 	// Reset the driver
 	System16DoReset();
 	
@@ -2518,8 +2509,8 @@ INT32 System16Exit()
 	System16ColScroll = 0;
 	System16RowScroll = 0;
 	System16IgnoreVideoEnable = 0;
-	
-	System16LastGear = 0;
+
+	if (System16HasGears) BurnShiftExit();
 	System16HasGears = false;
 
  	System16RoadControl = 0;
@@ -3029,7 +3020,7 @@ INT32 HangonYM2203Frame()
 		ZetClose();
 	}
 	
-	if (Simulate8751) Simulate8751();	
+	if (Simulate8751) Simulate8751();
 
 	if (pBurnDraw) {
 		if (Hangon) {
@@ -3501,7 +3492,9 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		}
 		
 		if (nBurnGunNumPlayers) BurnGunScan();
-		
+
+		if (System16HasGears) BurnShiftScan(nAction);
+
 		SCAN_VAR(System16SoundLatch);
 		SCAN_VAR(System16Input);
 		SCAN_VAR(System16Dip);
@@ -3517,7 +3510,6 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(BootlegBgPage);
 		SCAN_VAR(BootlegFgPage);
 		SCAN_VAR(System16AnalogSelect);
-		SCAN_VAR(System16LastGear);
 		SCAN_VAR(nSystem16CyclesDone);
 		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(System16RoadControl);

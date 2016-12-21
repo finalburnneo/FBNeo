@@ -58,7 +58,7 @@ UINT8 BurnGearH[8*8] = {
 	  a a a a a a a a
 	  a a a a a a a a };
 #endif
-#if 1
+#if 0
 // blocky font (Gab75)
 UINT8 BurnGearL[8*8] = {
 	  b b d a a d a a
@@ -80,7 +80,7 @@ UINT8 BurnGearH[8*8] = {
 	  b b d a a d b b
 	  b b d a a d b b };
 #endif
-#if 0
+#if 1
 // Shadow font (Gab75)
 UINT8 BurnGearL[8*8] = {
 	  a a a a a a a a

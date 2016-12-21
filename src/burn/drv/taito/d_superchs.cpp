@@ -1,4 +1,10 @@
 // Taito SuperChase driver for FBAlpha
+//
+// Notes:
+//   SubCPU needs a 2mhz overclocking boost to prevent flashing glitches in
+//   certain areas.  For example - late in level 1 near the SanFranCisco-style Cable Cars;
+//   when going down a hill, the background "buildings" tilemap will flash through the road
+//   near the bottom quarter of the screen. -dink
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -515,10 +521,6 @@ static INT32 SuperchsDoReset()
 	return 0;
 }
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 {
 	switch (a) {
@@ -543,10 +545,10 @@ UINT8 __fastcall Superchs68K1ReadByte(UINT32 a)
 		}
 
 		case 0x340000: {
-			SuperchsSteer = 0xff - (TaitoAnalogPort0 >> 4); // Inverted.
-			SuperchsSteer += 0x7f; // center = 0x7f
-			if (SuperchsSteer < 0x01) SuperchsSteer = 0x01;
-			SuperchsSteer = scalerange(SuperchsSteer, 0x3f, 0xbe, 0x01, 0xff);
+			SuperchsSteer = (0xff - (TaitoAnalogPort0 >> 4)) + 0x80; // Inverted.
+
+			if (SuperchsSteer < 0x20) SuperchsSteer = 0x20;
+			if (SuperchsSteer > 0xe0) SuperchsSteer = 0xe0;
 
 			return SuperchsSteer;
 		}
@@ -809,7 +811,7 @@ static INT32 SuperchsInit()
 	TaitoNumEEPROM = 1;
 
 	nTaitoCyclesTotal[0] = 20000000 / 60;
-	nTaitoCyclesTotal[1] = 16000000 / 60;
+	nTaitoCyclesTotal[1] = (16000000+2000000) / 60;
 	nTaitoCyclesTotal[2] = 16000000 / 60;
 
 	TaitoLoadRoms(0);
@@ -884,7 +886,7 @@ static INT32 SuperchsInit()
 
 	ES5505Init(30476100/2, TaitoES5505Rom, TaitoES5505Rom, NULL);
 
-	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+	BurnShiftInitDefault();
 
 	SuperchsDoReset();
 
@@ -1150,7 +1152,7 @@ static void F3Sound_IRQ()
 
 static INT32 SuperchsFrame()
 {
-	INT32 nInterleave = 16;
+	INT32 nInterleave = 64;
 
 	if (TaitoReset) SuperchsDoReset();
 

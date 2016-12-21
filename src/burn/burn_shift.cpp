@@ -13,6 +13,8 @@ static INT32 prev_shift;
 
 static INT32 shift_alpha_level;
 static INT32 shift_alpha_level2;
+static INT32 shift_alpha_level_grey;
+static INT32 shift_alpha_level2_grey;
 static INT32 shift_color;
 static INT32 shift_size;
 static INT32 shift_position0;
@@ -26,37 +28,101 @@ static INT32 nScreenWidth, nScreenHeight;
 static INT32 screen_flipped;
 static INT32 screen_vertical;
 static INT32 flipscreen = -1;
+static INT32 colortab[10] = { 0, 0, 0x42f4f4, 0xffffff, 0x0000ff, 0x9200f4, 0xf4f400, 0xf45900, 0x00d8f4, 0 };
+static INT32 lhtimer = 0; // color-cycle effect counter
 
 #define a 0,
 #define b 1,
+#define c 2,
+#define d 3,
 UINT8 BurnGearRender[8*8];
-
+#if 0
+// small font
 UINT8 BurnGearL[8*8] = {
 	  a a a a a a a a
-	  a b b a a a a a
-	  a b b a a a a a
-	  a b b a a a a a
-	  a b b a a a a a
-	  a b b b b b a a
-	  a b b b b b a a
+	  a a a a a a a a
+	  a a a b c a a a
+	  a a a b c a a a
+	  a a a b c c c a
+	  a a a b b b c a
+	  a a a c c c c a
+	  a a a a a a a a };
+
+UINT8 BurnGearH[8*8] = {
+	  a a a a a a a a
+	  a a a a a a a a
+	  a a a b c b c a
+	  a a a b b b c a
+	  a a a b c b c a
+	  a a a c c c c a
+	  a a a a a a a a
+	  a a a a a a a a };
+#endif
+#if 1
+// blocky font (Gab75)
+UINT8 BurnGearL[8*8] = {
+	  b b d a a d a a
+	  b b d a a d a a
+	  d d d d d d d d
+	  b b d a a d a a
+	  b b d a a d a a
+	  d d d d d d d d
+	  b b d b b d b b
+	  b b d b b d b b };
+
+UINT8 BurnGearH[8*8] = {
+	  b b d a a d b b
+	  b b d a a d b b
+	  d d d d d d d d
+	  b b d b b d b b
+	  b b d b b d b b
+	  d d d d d d d d
+	  b b d a a d b b
+	  b b d a a d b b };
+#endif
+#if 0
+// Shadow font (Gab75)
+UINT8 BurnGearL[8*8] = {
+	  a a a a a a a a
+	  a a b b a a a a
+	  a a b b c a a a
+	  a a b b c a a a
+	  a a b b c a a a
+	  a a b b b b a a
+	  a a a c c c c a
 	  a a a a a a a a };
 
 UINT8 BurnGearH[8*8] = {
 	  a a a a a a a a
 	  a b b a a b b a
-	  a b b a a b b a
-	  a b b b b b b a
-	  a b b b b b b a
-	  a b b a a b b a
-	  a b b a a b b a
+	  a b b c a b b c
+	  a b b b b b b c
+	  a b b c c b b c
+	  a b b c a b b c
+	  a a c c a a c c
 	  a a a a a a a a };
+#endif
 #undef b
 #undef a
+#undef c
+#undef d
 
-static inline UINT32 alpha_blend32(UINT32 d)
+static UINT32 alpha_blend32(UINT32 d, UINT32 col)
 {
-	return (((((shift_color & 0xff00ff) * shift_alpha_level) + ((d & 0xff00ff) * shift_alpha_level2)) & 0xff00ff00) |
-		((((shift_color & 0x00ff00) * shift_alpha_level) + ((d & 0x00ff00) * shift_alpha_level2)) & 0x00ff0000)) >> 8;
+	if (col == 3) col = 3 /*0x1f1f1f*/; else
+	if (col == 2) col = 0; else
+		if (lhtimer == 0) col = colortab[1]; else
+		col = colortab[lhtimer/2];
+
+
+	if (col == 3) { // handle grey with a lighter transparency
+		col = 0x1f1f1f;
+		return (((((col & 0xff00ff) * shift_alpha_level_grey) + ((d & 0xff00ff) * shift_alpha_level2_grey)) & 0xff00ff00) |
+				((((col & 0x00ff00) * shift_alpha_level_grey) + ((d & 0x00ff00) * shift_alpha_level2_grey)) & 0x00ff0000)) >> 8;
+	}
+
+	return (((((col & 0xff00ff) * shift_alpha_level) + ((d & 0xff00ff) * shift_alpha_level2)) & 0xff00ff00) |
+		((((col & 0x00ff00) * shift_alpha_level) + ((d & 0x00ff00) * shift_alpha_level2)) & 0x00ff0000)) >> 8;
 }
 
 static void set_shift_draw_position()
@@ -163,23 +229,34 @@ void BurnShiftReset()
 	BurnShiftSetStatus(0);
 
 	BurnShiftSetFlipscreen(0);
+
+	lhtimer = 0;
 }
 
 void BurnShiftInit(INT32 position, INT32 color, INT32 transparency)
 {
 	Debug_BurnShiftInitted = 1;
 
-	shift_color = color;
+	colortab[1] = shift_color = color;
+
 	shift_size = 8;
 	shift_position0 = position;
 
 	shift_alpha_level = (255 * transparency) / 100;
 	shift_alpha_level2 = 256 - shift_alpha_level;
 
+	shift_alpha_level_grey = (255 * 20) / 100;
+	shift_alpha_level2_grey = 256 - shift_alpha_level_grey;
+
 	screen_flipped = (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) ? 1 : 0;
 	screen_vertical = (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) ? 1 : 0;
 
 	BurnShiftReset();
+}
+
+void BurnShiftInitDefault()
+{
+	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
 }
 
 INT32 BurnShiftInputCheckToggle(UINT8 shiftinput)
@@ -224,6 +301,7 @@ void BurnShiftSetStatus(UINT32 status)
 				BurnGearRender[(y * 8) + x] = source[(y * 8) + x];
 			}
 		}
+	lhtimer = 19; // for color effects
 }
 
 void BurnShiftExit()
@@ -234,6 +312,8 @@ void BurnShiftExit()
 
 	shift_alpha_level = 0;
 	shift_alpha_level2 = 0;
+	shift_alpha_level_grey = 0;
+	shift_alpha_level2_grey = 0;
 	shift_color = 0;
 	shift_size = 0;
 	shift_position = 0;
@@ -245,6 +325,7 @@ void BurnShiftExit()
 	screen_flipped = 0;
 	nScreenWidth = 0;
 	nScreenHeight = 0;
+	lhtimer = 0;
 
 	flipscreen = -1;
 	
@@ -276,17 +357,17 @@ void BurnShiftRender()
 					{
 						if (nBurnBpp >= 4)
 						{
-							*((UINT32*)ptr) = alpha_blend32(*((UINT32*)ptr));
+							*((UINT32*)ptr) = alpha_blend32(*((UINT32*)ptr), BurnGearRender[(y*8)+x]);
 						}
 						else if (nBurnBpp == 3)
 						{
-							UINT32 t = alpha_blend32((ptr[2] << 16) | (ptr[1] << 8) | ptr[0]);
+							UINT32 t = alpha_blend32((ptr[2] << 16) | (ptr[1] << 8) | ptr[0], BurnGearRender[(y*8)+x]);
 
 							ptr[2] = t >> 16;
 							ptr[1] = t >> 8;
 							ptr[0] = t >> 0;
 						}
-						else if (nBurnBpp == 2) // alpha blend not supported for 16-bit
+						else if (nBurnBpp == 2 && BurnGearRender[(y*8)+x] == 1) // alpha blend not supported for 16-bit
 						{
 							*((UINT16*)ptr) =  color;
 						}
@@ -299,6 +380,7 @@ void BurnShiftRender()
 		xpos += shift_xadv;
 		ypos += shift_yadv;
 	}
+	if (lhtimer > 0) lhtimer--;
 }
 
 INT32 BurnShiftScan(INT32 nAction)
@@ -313,6 +395,7 @@ INT32 BurnShiftScan(INT32 nAction)
 
 	if (nAction & ACB_WRITE) {
 		BurnShiftSetStatus(bBurnShiftStatus);
+		lhtimer = 0;
 	}
 
 	return 0;

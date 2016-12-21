@@ -5203,7 +5203,7 @@ static INT32 TopspeedInit()
 	nTaitoCyclesTotal[1] = 8000000 / 60;
 	nTaitoCyclesTotal[2] = 4000000 / 60;
 
-	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+	BurnShiftInitDefault();
 	bUseShifter = 1;
 
 	pTopspeedTempDraw = (UINT16*)BurnMalloc(512 * 512 * sizeof(UINT16));

@@ -2427,7 +2427,7 @@ INT32 System16Init()
 	bSystem16BootlegRender = false;
 
 	if (System16HasGears)
-		BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+		BurnShiftInitDefault();
 
 	// Reset the driver
 	System16DoReset();

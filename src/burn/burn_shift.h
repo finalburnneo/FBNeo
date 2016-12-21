@@ -12,6 +12,7 @@
 
 // transparency is a percentage 0 - 100
 void BurnShiftInit(INT32 position, INT32 color, INT32 transparency);
+void BurnShiftInitDefault();
 
 void BurnShiftReset();
 void BurnShiftSetFlipscreen(INT32 flip);

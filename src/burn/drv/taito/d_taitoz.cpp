@@ -5007,7 +5007,7 @@ static INT32 BsharkInit()
 static void TaitoZSetupShifter()
 {
 	bUseShifter = 1;
-	BurnShiftInit(SHIFT_POSITION_BOTTOM_RIGHT, SHIFT_COLOR_GREEN, 80);
+	BurnShiftInitDefault();
 }
 
 static INT32 ChasehqInit()

@@ -39,6 +39,10 @@ static UINT8 nBrightness = 0xFF;
 
 static UINT8 okibank;
 static UINT8 video_enable;
+static UINT8 irqs_enable;
+static UINT16 raster_scanline;
+static UINT8 raster_irq_enable;
+static UINT8 previous_irq_value;
 static UINT8 bVBlank = 0;
 static UINT16 bg0scrollx, bg0scrolly, bg1scrollx, bg1scrolly;
 static UINT8 nSoundlatch = 0;
@@ -220,6 +224,36 @@ static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			// shadfrce_flip_screen
 		break;
 
+		case 0x1D0000:
+		case 0x1D0001:
+		case 0x1D0002:
+		case 0x1D0003:
+		case 0x1D0004:
+		case 0x1D0005:
+			SekSetIRQLine(((sekAddress/2) & 3) ^ 3, CPU_IRQSTATUS_NONE);
+		break;
+
+		case 0x1D0007:
+		{
+			irqs_enable = byteValue & 1;
+			video_enable = byteValue & 0x08;
+
+			if ((previous_irq_value & 4) == 0 && (byteValue & 4) == 4) {
+				raster_irq_enable = 1;
+			}
+			if ((previous_irq_value & 4) == 4 && (byteValue & 4) == 0) {
+				raster_irq_enable = 0;
+			}
+
+			previous_irq_value = byteValue;
+		}
+		break;
+
+		case 0x1D0009:
+		case 0x1D0008:
+			raster_scanline = 0;
+		break;
+
 		case 0x1D000C:
 			nSoundlatch = byteValue;
 			ZetNmi();
@@ -230,13 +264,7 @@ static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			for(INT32 i=0;i<0x4000;i++) CalcCol(i);
 		break;
 
-		case 0x1D0007:
-			video_enable = byteValue & 0x08;
-		break;
-
-		case 0x1C0009:
 		case 0x1C000D:
-		case 0x1D0009:
 		case 0x1D0011:
 		case 0x1D0013:
 		case 0x1D0015:
@@ -266,13 +294,29 @@ static void __fastcall shadfrceWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		break;
 
 		case 0x1D0006:
-			// irq enable
+		{
+			irqs_enable = wordValue & 1;
 			video_enable = wordValue & 0x08;
+
+			if ((previous_irq_value & 4) == 0 && (wordValue & 4) == 4) {
+				raster_irq_enable = 1;
+			}
+			if ((previous_irq_value & 4) == 4 && (wordValue & 4) == 0) {
+				raster_irq_enable = 0;
+			}
+
+			previous_irq_value = wordValue;
+		}
 		break;
 
 		case 0x1D0000:
 		case 0x1D0002:
+		case 0x1D0004:
+			SekSetIRQLine(((sekAddress/2) & 3) ^ 3, CPU_IRQSTATUS_NONE);
+		break;
+
 		case 0x1D0008:
+			raster_scanline = 0;
 		break;
 
 	//	default:
@@ -360,6 +404,10 @@ static INT32 DrvDoReset()
 	BurnYM2151Reset();
 
 	video_enable = 0;
+	irqs_enable = 0;
+	raster_scanline = 0;
+	raster_irq_enable = 0;
+	previous_irq_value = 0;
 
 	return 0;
 }
@@ -599,6 +647,36 @@ static void drawSprites()
 	}
 }
 
+static void draw_line(INT32 line)
+{
+	GenericTilesSetScanline(line);
+
+	if (video_enable)
+	{
+		GenericTilemapSetScrollX(1, bg0scrollx);
+		GenericTilemapSetScrollY(1, bg0scrolly);
+
+		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
+	}
+}
+
+static void draw_bg_layer_raster()
+{
+	GenericTilesClearClip();
+
+	if (video_enable)
+	{
+		GenericTilemapSetScrollX(2, bg1scrollx);
+		GenericTilemapSetScrollY(2, bg1scrolly);
+
+		if (nBurnLayer & 1) GenericTilemapDraw(2, pTransDraw, 0);
+	}
+	else
+	{
+		BurnTransferClear();
+	}
+}
+
 static INT32 shadfrceDraw()
 {
 	if (bRecalcPalette) {
@@ -606,23 +684,29 @@ static INT32 shadfrceDraw()
 		bRecalcPalette = 0;
 	}
 
+	GenericTilesClearClip();
+
 	if (video_enable)
 	{
-		GenericTilemapSetScrollX(1, bg0scrollx);
-		GenericTilemapSetScrollY(1, bg0scrolly);
-		GenericTilemapSetScrollX(2, bg1scrollx);
-		GenericTilemapSetScrollY(2, bg1scrolly);
+		if (raster_irq_enable == 0) {
+			GenericTilemapSetScrollX(1, bg0scrollx);
+			GenericTilemapSetScrollY(1, bg0scrolly);
+			GenericTilemapSetScrollX(2, bg1scrollx);
+			GenericTilemapSetScrollY(2, bg1scrolly);
 
-		if (nBurnLayer & 1) GenericTilemapDraw(2, pTransDraw, 0);
-		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
-	
+			if (nBurnLayer & 1) GenericTilemapDraw(2, pTransDraw, 0);
+			if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
+		}
+
 		if (nBurnLayer & 4) drawSprites();
 	
 		if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0);
 	}
 	else
 	{
-		BurnTransferClear();
+		if (raster_irq_enable == 0) {
+			BurnTransferClear();
+		}
 	}
 
 	BurnTransferCopy(RamCurPal);
@@ -651,53 +735,51 @@ static INT32 shadfrceFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
+	INT32 nInterleave = 272;
+	INT32 nCyclesTotal[2] = { 14000000 / 60, 3579545 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+ 	INT32 nSoundBufferPos = 0;
+
 	SekOpen(0);
 	ZetOpen(0);
- 	
- 	INT32 nSoundBufferPos = 0;
- 	
+ 
 	bVBlank = 1;
-	SekRun(3500000 / 60);
-	
-	ZetRun(nZ80Cycles >> 2);
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = (nBurnSoundLen * 1 / 4) - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		BurnYM2151Render(pSoundBuf, nSegmentLength);
-		MSM6295Render(0, pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+
+	for (INT32 scanline = 0; scanline < nInterleave; scanline++)
+	{
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+
+		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+
+		if (raster_irq_enable && (scanline == raster_scanline)) {
+			raster_scanline = (raster_scanline + 1) % 240;
+			if (raster_scanline > 0) {
+				SekSetIRQLine(1, CPU_IRQSTATUS_ACK);
+			}
+		}
+
+		if (irqs_enable) {
+			if ((scanline & 0xf) == 0 && (scanline > 0)) {
+				SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+			}
+
+			if (scanline == 248) {
+				SekSetIRQLine(3, CPU_IRQSTATUS_ACK);
+			}
+		}
+
+		if (scanline == 247) {
+			bVBlank = 0;
+		}
+
+		if (scanline == 0 && raster_irq_enable) {
+			draw_bg_layer_raster();
+		}
+
+		if (scanline < 256 && raster_irq_enable) {
+			draw_line(scanline);
+		}
 	}
-	
-	bVBlank = 0;
-	SekRun(3500000 / 60);
-	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-
-	ZetRun(nZ80Cycles >> 2);
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = (nBurnSoundLen * 2 / 4) - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		BurnYM2151Render(pSoundBuf, nSegmentLength);
-		MSM6295Render(0, pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
-	}
-
-	bVBlank = 1;
-	SekRun(3500000 / 60);
-	
-	ZetRun(nZ80Cycles >> 2);
-	if (pBurnSoundOut) {
-		INT32 nSegmentLength = (nBurnSoundLen * 3 / 4) - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		BurnYM2151Render(pSoundBuf, nSegmentLength);
-		MSM6295Render(0, pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
-	}
-
-	bVBlank = 0;
-	SekRun(3500000 / 60);
-	SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-
-	ZetRun(nZ80Cycles >> 2);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

@@ -113,12 +113,12 @@ void GenericTilesClearClipRaw()
 
 void GenericTilesSetScanline(INT32 nScanline)
 {
-	if (nScanline < 0 || nScanline == nScreenWidth) {
+	if (nScanline < 0 || nScanline == nScreenHeight) {
 		return;
 	}
 
-	nScreenWidthMin = nScanline;
-	nScreenWidthMax = nScanline + 1;
+	nScreenHeightMin = nScanline;
+	nScreenHeightMax = nScanline + 1;
 }
 
 // ----------------------------------------------------------------------------

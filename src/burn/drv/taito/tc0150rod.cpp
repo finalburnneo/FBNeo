@@ -5,16 +5,19 @@
 
 UINT8 *TC0150RODRom = NULL;
 UINT8 *TC0150RODRam = NULL;
+static UINT8 *TC0150RODPriMap = NULL;
+
 static INT32 TC0150RODFlipScreenX;
 
-static void DrawScanLine(INT32 y, const UINT16 *src, INT32 Transparent, INT32 /*Pri*/)
+static void DrawScanLine(INT32 y, const UINT16 *src, INT32 Transparent, INT32 Pri)
 {
-	UINT16* pPixel;
+	UINT16 *pPixel;
+	UINT8 *pPri;
 	INT32 Length;
 	
 	if (!TC0150RODFlipScreenX) {
 		pPixel = pTransDraw + (y * nScreenWidth);
-	
+	    pPri = TC0150RODPriMap + (y * nScreenWidth);
 		Length = nScreenWidth;
 	
 		if (Transparent) {
@@ -22,30 +25,36 @@ static void DrawScanLine(INT32 y, const UINT16 *src, INT32 Transparent, INT32 /*
 				UINT16 sPixel = *src++;
 				if (sPixel < 0x7fff) {
 					*pPixel = sPixel;
+					if (TC0150RODPriMap) *pPri = Pri;
 				}
 				pPixel++;
+				if (TC0150RODPriMap) pPri++;
 			}
 		} else {
 			while (Length--) {
 				*pPixel++ = *src++;
+				if (TC0150RODPriMap) *pPri++ = Pri;
 			}
 		}
 	} else {
 		pPixel = pTransDraw + (y * nScreenWidth) + (nScreenWidth - 1);
-	
+	    pPri = TC0150RODPriMap + (y * nScreenWidth) + (nScreenWidth - 1);
 		Length = nScreenWidth;
-	
+
 		if (Transparent) {
 			while (Length--) {
 				UINT16 sPixel = *src++;
 				if (sPixel < 0x7fff) {
 					*pPixel = sPixel;
+					if (TC0150RODPriMap) *pPri = Pri;
 				}
 				pPixel--;
+				if (TC0150RODPriMap) pPri--;
 			}
 		} else {
 			while (Length--) {
 				*pPixel-- = *src++;
+				if (TC0150RODPriMap) *pPri-- = Pri;
 			}
 		}
 	}
@@ -420,6 +429,11 @@ void TC0150RODReset()
 
 }
 
+void TC0150RODSetPriMap(UINT8 *PriMap)
+{
+	TC0150RODPriMap = PriMap;
+}
+
 void TC0150RODInit(INT32 nRomSize, INT32 xFlip)
 {
 	TC0150RODRom = (UINT8*)BurnMalloc(nRomSize);
@@ -436,7 +450,8 @@ void TC0150RODExit()
 {
 	BurnFree(TC0150RODRom);
 	BurnFree(TC0150RODRam);
-	
+
+	TC0150RODPriMap = NULL;
 	TC0150RODFlipScreenX = 0;
 }
 

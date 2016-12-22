@@ -32,6 +32,7 @@ static INT32 TC0100SCNPaletteOffset[TC0100SCN_MAX_CHIPS];
 static UINT16 *pTC0100SCNBgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static UINT16 *pTC0100SCNFgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static INT32 TC0100SCNNum = 0;
+INT32 TC0100HackPriority = 0;
 
 #define PLOTPIXEL(x, po) pPixel[x] = nPalette | pTileData[x] | po;
 #define PLOTPIXEL_FLIPX(x, a, po) pPixel[x] = nPalette | pTileData[a] | po;
@@ -171,7 +172,7 @@ INT32 TC0100SCNBottomLayer(INT32 Chip)
 	return (TC0100SCNCtrl[Chip][6] & 0x08) >> 3;
 }
 
-void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
+void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priority)
 {
 	INT32 mx, my, Attr, Code, Colour, x, y, xSrc = 0, ySrc = 0, TileIndex = 0, Offset, Flip, xFlip, yFlip, p, dxScroll, dyScroll;
 	
@@ -253,8 +254,10 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 
 			if ((p & 0x0f) != 0 || Opaque) {
 				pTransDraw[(y * nScreenWidth) + x] = p;
-//				if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(y * TC0100SCNClipWidth[Chip]) + (x - TC0100SCNClipStartX[Chip])] = 1;
-				if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(y * nScreenWidth) + x] = 1;
+
+				if (TC0100SCNPriorityMap[Chip]) {
+					TC0100SCNPriorityMap[Chip][(y * nScreenWidth) + x] = Priority;
+				}
 			}
 			xSrc = (xSrc + 1);
 			xSrc &= WidthMask;
@@ -264,7 +267,7 @@ void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 	}
 }
 
-void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
+void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priority)
 {
 	INT32 mx, my, Attr, Code, Colour, x, y, xSrc = 0, ySrc = 0, TileIndex = 0, Offset, Flip, xFlip, yFlip, p, ColumnOffset, dxScroll, dyScroll;
 	
@@ -349,8 +352,10 @@ void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc)
 
 			if ((p & 0x0f) != 0 || Opaque) {
 				pTransDraw[(y * nScreenWidth) + x] = p;
-//				if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(y * TC0100SCNClipWidth[Chip]) + (x - TC0100SCNClipStartX[Chip])] = 2;
-				if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(y * nScreenWidth) + x] = 2;
+
+				if (TC0100SCNPriorityMap[Chip]) {
+					TC0100SCNPriorityMap[Chip][(y * nScreenWidth) + x] = Priority;
+				}
 			}
 			xSrc = (xSrc + 1);
 			xSrc &= WidthMask;

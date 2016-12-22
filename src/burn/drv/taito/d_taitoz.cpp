@@ -3285,6 +3285,7 @@ static INT32 MemIndex()
 	TaitoSpritesA                  = Next; Next += TaitoNumSpriteA * TaitoSpriteAWidth * TaitoSpriteAHeight;
 	TaitoSpritesB                  = Next; Next += TaitoNumSpriteB * TaitoSpriteBWidth * TaitoSpriteBHeight;
 	TaitoPalette                   = (UINT32*)Next; Next += 0x01000 * sizeof(UINT32);
+	TaitoPriorityMap               = Next; Next += nScreenWidth * nScreenHeight;
 
 	TaitoMemEnd                    = Next;
 
@@ -5047,6 +5048,8 @@ static INT32 ChasehqInit()
 	
 	TaitoLoadRoms(0);
 
+	GenericTilesInit();
+
 	// Allocate and Blank all required memory
 	TaitoMem = NULL;
 	MemIndex();
@@ -5054,12 +5057,12 @@ static INT32 ChasehqInit()
 	if ((TaitoMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
-	
-	GenericTilesInit();
-	
-	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
+
+	// This block must be before TaitoLoadRoms(1) - or else!
+	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, TaitoPriorityMap);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
+	TC0150RODSetPriMap(TaitoPriorityMap);
 	TC0140SYTInit(0);
 	TC0220IOCInit();
 	
@@ -5968,6 +5971,96 @@ static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32
 	}
 }
 
+static void RenderSpriteZoomPri(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32 xFlip, INT32 yFlip, INT32 xScale, INT32 yScale, UINT8* pSource, INT32 Priority)
+{
+	// We can use sprite A for sizes, etc. as only Chase HQ uses sprite B and it has the same sizes and count
+	
+	UINT8 *SourceBase = pSource + ((Code % TaitoNumSpriteA) * TaitoSpriteAWidth * TaitoSpriteAHeight);
+	
+	INT32 SpriteScreenHeight = (yScale * TaitoSpriteAHeight + 0x8000) >> 16;
+	INT32 SpriteScreenWidth = (xScale * TaitoSpriteAWidth + 0x8000) >> 16;
+	
+	Colour = 0x10 * (Colour % 0x100);
+
+	Priority |= 1 << 31;
+	
+	if (TaitoFlipScreenX) {
+		xFlip = !xFlip;
+		sx = 320 - sx - (xScale >> 12);
+	}	
+		
+	if (SpriteScreenWidth && SpriteScreenHeight) {
+		INT32 dx = (TaitoSpriteAWidth << 16) / SpriteScreenWidth;
+		INT32 dy = (TaitoSpriteAHeight << 16) / SpriteScreenHeight;
+		
+		INT32 ex = sx + SpriteScreenWidth;
+		INT32 ey = sy + SpriteScreenHeight;
+		
+		INT32 xIndexBase;
+		INT32 yIndex;
+		
+		if (xFlip) {
+			xIndexBase = (SpriteScreenWidth - 1) * dx;
+			dx = -dx;
+		} else {
+			xIndexBase = 0;
+		}
+		
+		if (yFlip) {
+			yIndex = (SpriteScreenHeight - 1) * dy;
+			dy = -dy;
+		} else {
+			yIndex = 0;
+		}
+		
+		if (sx < 0) {
+			INT32 Pixels = 0 - sx;
+			sx += Pixels;
+			xIndexBase += Pixels * dx;
+		}
+		
+		if (sy < 0) {
+			INT32 Pixels = 0 - sy;
+			sy += Pixels;
+			yIndex += Pixels * dy;
+		}
+		
+		if (ex > nScreenWidth) {
+			INT32 Pixels = ex - nScreenWidth;
+			ex -= Pixels;
+		}
+		
+		if (ey > nScreenHeight) {
+			INT32 Pixels = ey - nScreenHeight;
+			ey -= Pixels;	
+		}
+		
+		if (ex > sx) {
+			INT32 y;
+			
+			for (y = sy; y < ey; y++) {
+				UINT8 *Source = SourceBase + ((yIndex >> 16) * TaitoSpriteAWidth);
+				UINT16* pPixel = pTransDraw + (y * nScreenWidth);
+				UINT8 *pPri = TaitoPriorityMap + (y * nScreenWidth);
+				
+				INT32 x, xIndex = xIndexBase;
+				for (x = sx; x < ex; x++) {
+					INT32 c = Source[xIndex >> 16];
+					if (c != 0) {
+						if ((Priority & (1 << pPri[x])) == 0) {
+							pPixel[x] = c | Colour;
+						}
+						pPri[x] = 0x1f;
+					}
+					xIndex += dx;
+				}
+				
+				yIndex += dy;
+			}
+		}
+	}
+}
+
 static void AquajackRenderSprites(INT32 PriorityDraw)
 {
 	UINT16 *SpriteMap = (UINT16*)TaitoSpriteMapRom;
@@ -6102,7 +6195,7 @@ static void BsharkRenderSprites(INT32 PriorityDraw, INT32 yOffset, INT32 SpriteR
 	}
 }
 
-static void ChasehqRenderSprites(INT32 PriorityDraw)
+static void ChasehqRenderSprites()
 {
 	UINT16 *SpriteMap = (UINT16*)TaitoSpriteMapRom;
 	UINT16 *SpriteRam = (UINT16*)TaitoSpriteRam;
@@ -6110,13 +6203,11 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 	INT32 x, y, Priority, xCur, yCur;
 	INT32 xZoom, yZoom, zx, zy;
 	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
-	
-	for (Offset = 0; Offset < 0x400; Offset += 4) {
+	const INT32 primasks[2] = { 0xf0, 0xfc };
+
+	for (Offset = 0x400-4; Offset >= 0; Offset -= 4) {
 		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
 		Priority = (Data & 0x8000) >> 15;
-		
-		if (Priority != 0 && Priority != 1) bprintf(PRINT_NORMAL, _T("Unused Priority %x\n"), Priority);
-		if (Priority != PriorityDraw) continue;
 		
 		Colour = (Data & 0x7f80) >> 7;
 		xZoom = (Data & 0x7f);
@@ -6164,7 +6255,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 				
 				yCur -= 16;
 				
-				RenderSpriteZoom(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 12, TaitoSpritesA);
+				RenderSpriteZoomPri(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 12, TaitoSpritesA, primasks[Priority]);
 			}
 		} else if ((xZoom - 1) & 0x20) {
 			MapOffset = (Tile << 5) + 0x20000;
@@ -6187,7 +6278,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 				
 				yCur -= 16;
 				
-				RenderSpriteZoom(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 12, TaitoSpritesB);
+				RenderSpriteZoomPri(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 12, TaitoSpritesB, primasks[Priority]);
 			}
 		} else if (!((xZoom - 1) & 0x60)) {
 			MapOffset = (Tile << 4) + 0x30000;
@@ -6210,7 +6301,7 @@ static void ChasehqRenderSprites(INT32 PriorityDraw)
 				
 				yCur -= 16;
 				
-				RenderSpriteZoom(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 12, TaitoSpritesB);
+				RenderSpriteZoomPri(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 12, TaitoSpritesB, primasks[Priority]);
 			}
 		}
 	}
@@ -6470,22 +6561,22 @@ static void ChasehqDraw()
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
 	BurnTransferClear();
-	
+
+	memset(TaitoPriorityMap, 0, nScreenWidth * nScreenHeight);
+
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (!(Disable & 0x02)) if (nBurnLayer & 1) TC0100SCNRenderFgLayer(0, 1, TaitoChars, 0);
+		if (!(Disable & 0x01)) if (nBurnLayer & 2) TC0100SCNRenderBgLayer(0, 0, TaitoChars, 1);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoChars);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (!(Disable & 0x01)) if (nBurnLayer & 1) TC0100SCNRenderBgLayer(0, 1, TaitoChars, 0);
+		if (!(Disable & 0x02)) if (nBurnLayer & 2) TC0100SCNRenderFgLayer(0, 0, TaitoChars, 1);
 	}
-	
-	ChasehqRenderSprites(1);
-	
-	TC0150RODDraw(-1, 0xc0, 0, 0, 1, 2);
-	
-	ChasehqRenderSprites(0);
-	
-	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+	if (nBurnLayer & 4) TC0150RODDraw(-1, 0xc0, 0, 0, 1, 2);
+
+	if (nBurnLayer & 8) if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+
+	if (nSpriteEnable & 1) ChasehqRenderSprites();
+
 	BurnTransferCopy(TC0110PCRPalette);
 	BurnShiftRender();
 }

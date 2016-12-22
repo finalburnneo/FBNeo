@@ -32,7 +32,6 @@ static INT32 TC0100SCNPaletteOffset[TC0100SCN_MAX_CHIPS];
 static UINT16 *pTC0100SCNBgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static UINT16 *pTC0100SCNFgTempDraw[TC0100SCN_MAX_CHIPS] = { NULL, };
 static INT32 TC0100SCNNum = 0;
-INT32 TC0100HackPriority = 0;
 
 #define PLOTPIXEL(x, po) pPixel[x] = nPalette | pTileData[x] | po;
 #define PLOTPIXEL_FLIPX(x, a, po) pPixel[x] = nPalette | pTileData[a] | po;

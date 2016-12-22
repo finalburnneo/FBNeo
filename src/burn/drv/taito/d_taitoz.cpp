@@ -5457,6 +5457,8 @@ static INT32 NightstrInit()
 	TaitoNumZ80s = 1;
 	TaitoNumYM2610 = 1;
 	
+	GenericTilesInit();
+
 	TaitoLoadRoms(0);
 
 	// Allocate and Blank all required memory
@@ -5467,14 +5469,13 @@ static INT32 NightstrInit()
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
-	GenericTilesInit();
-	
-	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
+	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, TaitoPriorityMap);
 	TC0110PCRInit(1, 0x1000);
 	TC0150RODInit(TaitoRoadRomSize, 0);
+	TC0150RODSetPriMap(TaitoPriorityMap);
 	TC0140SYTInit(0);
 	TC0220IOCInit();
-	
+
 	if (TaitoLoadRoms(1)) return 1;
 
 #ifdef BUILD_A68K
@@ -5656,6 +5657,8 @@ static INT32 SciInit()
 	TaitoNum68Ks = 2;
 	TaitoNumZ80s = 1;
 	TaitoNumYM2610 = 1;
+
+	GenericTilesInit();
 	
 	TaitoLoadRoms(0);
 
@@ -5667,13 +5670,12 @@ static INT32 SciInit()
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 	
-	GenericTilesInit();
-	
-	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, NULL);
+	TC0100SCNInit(0, TaitoNumChar, 0, 8, 0, TaitoPriorityMap);
 	TC0150RODInit(TaitoRoadRomSize, 0);
+	TC0150RODSetPriMap(TaitoPriorityMap);
 	TC0140SYTInit(0);
 	TC0220IOCInit();
-	
+
 	if (TaitoLoadRoms(1)) return 1;
 
 #ifdef BUILD_A68K
@@ -6441,6 +6443,73 @@ static void SciRenderSprites(INT32 PriorityDraw, INT32 yOffs)
 	}
 }
 
+static void SciRenderSpritesPrio(INT32 yOffs)
+{
+	UINT16 *SpriteMap = (UINT16*)TaitoSpriteMapRom;
+	UINT16 *SpriteRam = (UINT16*)TaitoSpriteRam;
+	INT32 Offset, StartOffs, Data, Tile, Colour, xFlip, yFlip;
+	INT32 x, y, Priority, xCur, yCur;
+	INT32 xZoom, yZoom, zx, zy;
+	INT32 SpriteChunk, MapOffset, Code, j, k, px, py;
+	const INT32 primasks[2] = { 0xf0, 0xfc };
+	
+	StartOffs = (SciSpriteFrame & 1) ? 0x800 : 0;
+	//StartOffs = 0x800 - StartOffs;
+	
+	for (Offset = (StartOffs + 0x800 - 4); Offset >= StartOffs; Offset -= 4) {
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 1]);
+		Priority = (Data & 0x8000) >> 15;
+		
+		Colour = (Data & 0x7f80) >> 7;
+		xZoom = (Data & 0x3f);
+		
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 3]);
+		Tile = Data & 0x1fff;
+		if (!Tile) continue;
+		
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 0]);
+		yZoom = (Data & 0x7e00) >> 9;
+		y = Data & 0x1ff;
+
+		Data = BURN_ENDIAN_SWAP_INT16(SpriteRam[Offset + 2]);
+		yFlip = (Data & 0x8000) >> 15;
+		xFlip = (Data & 0x4000) >> 14;
+		x = Data & 0x1ff;
+
+		MapOffset = Tile << 5;
+
+		xZoom += 1;
+		yZoom += 1;
+
+		y += yOffs;
+		y += (64 - yZoom);
+
+		if (x > 0x140) x -= 0x200;
+		if (y > 0x140) y -= 0x200;
+		
+		for (SpriteChunk = 0; SpriteChunk < 32; SpriteChunk++) {
+			k = SpriteChunk % 4;
+			j = SpriteChunk / 4;
+
+			px = xFlip ? (3-k) : k;
+			py = yFlip ? (7-j) : j;
+
+			Code = BURN_ENDIAN_SWAP_INT16(SpriteMap[MapOffset + px + (py << 2)]);
+			Code &= (TaitoNumSpriteA - 1);
+
+			xCur = x + ((k * xZoom) / 4);
+			yCur = y + ((j * yZoom) / 8);
+
+			zx = x + (((k + 1) * xZoom) / 4) - xCur;
+			zy = y + (((j + 1) * yZoom) / 8) - yCur;
+			
+			yCur -= 16;
+
+			RenderSpriteZoomPri(Code, xCur, yCur, Colour, xFlip, yFlip, zx << 12, zy << 13, TaitoSpritesA, primasks[Priority]);
+		}
+	}
+}
+
 static void SpacegunRenderSprites(INT32 PriorityDraw)
 {
 	UINT16 *SpriteMap = (UINT16*)TaitoSpriteMapRom;
@@ -6578,7 +6647,7 @@ static void ChasehqDraw()
 	if (nSpriteEnable & 1) ChasehqRenderSprites();
 
 	BurnTransferCopy(TC0110PCRPalette);
-	BurnShiftRender();
+	if (bUseShifter) BurnShiftRender();
 }
 
 static void ContcircDraw()
@@ -6691,22 +6760,22 @@ static void SciDraw()
 	
 	BurnTransferClear();
 	TaitoZCalcPalette();
+
+	memset(TaitoPriorityMap, 0, nScreenWidth * nScreenHeight);
 	
 	if (TC0100SCNBottomLayer(0)) {
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
+		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars, 0);
+		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars, 1);
 	} else {
-		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoChars);
-		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
+		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 1, TaitoChars, 0);
+		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars, 1);
 	}
 	
-	SciRenderSprites(1, 6);
-
 	TC0150RODDraw(-1, 0xc0, 0, 0, 1, 2);
 	
-	SciRenderSprites(0, 6);
-
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
+
+	SciRenderSpritesPrio(6);
 	
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();

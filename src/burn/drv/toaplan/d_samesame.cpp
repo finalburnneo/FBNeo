@@ -1,5 +1,4 @@
 #include "toaplan.h"
-#include "samples.h"
 
 #define REFRESHRATE 60
 #define VBLANK_LINES (32)
@@ -9,7 +8,9 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
+static UINT8 *DrvZ80ROM;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvZ80RAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvPalRAM2;
 
@@ -27,18 +28,8 @@ static bool bVBlank;
 
 static bool bEnableInterrupts;
 
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-static UINT8 FadeoutReady;
-static UINT8 FadeoutStop;
-static UINT8 Playing1;
-static UINT8 Playing2;
-static UINT8 Play1;
-static UINT8 Counter1;
-static float Vol1;
-static INT32 Wait;
-static INT32 Start;
-static INT32 Start2;
-#endif
+static UINT8 to_mcu;
+static UINT8 z80cmdavailable;
 
 static struct BurnInputInfo SamesameInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
@@ -312,231 +303,7 @@ static struct BurnDIPInfo FireshrkaDIPList[]=
 
 STDDIPINFO(Fireshrka)
 
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-static void StopAllSamples()
-{
-	for (INT32 i = 0x00; i <= 0x28; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel0()
-{
-	for (INT32 i = 0x01; i <= 0x07; i++) {
-		BurnSampleStop(i);
-		BurnSampleSetLoop(i, 0);
-	}
-	
-	for (INT32 i = 0x1c; i <= 0x1f; i++) {
-		BurnSampleStop(i);
-		BurnSampleSetLoop(i, 0);
-	}
-	
-	BurnSampleStop(0x22);
-	BurnSampleSetLoop(0x22, 0);
-	BurnSampleStop(0x25);
-	BurnSampleSetLoop(0x25, 0);
-	BurnSampleStop(0x27);
-	BurnSampleSetLoop(0x27, 0);
-}
-
-static void StopSamplesChannel1()
-{
-	for (INT32 i = 0x08; i <= 0x09; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel2()
-{
-	for (INT32 i = 0x0a; i <= 0x0f; i++) {
-		BurnSampleStop(i);
-	}
-	
-	BurnSampleStop(0x26);
-}
-
-static void StopSamplesChannel3()
-{
-	for (INT32 i = 0x10; i <= 0x11; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel4()
-{
-	for (INT32 i = 0x12; i <= 0x16; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel5()
-{
-	for (INT32 i = 0x17; i <= 0x1b; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel6()
-{
-	for (INT32 i = 0x20; i <= 0x21; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel7()
-{
-	for (INT32 i = 0x23; i <= 0x24; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void SetVolumeSamplesChannel0(double nVol)
-{
-	for (INT32 i = 0x01; i <= 0x06; i++) {
-		BurnSampleSetAllRoutes(i, nVol, BURN_SND_ROUTE_BOTH);
-	}
-	
-	for (INT32 i = 0x1c; i <= 0x1f; i++) {
-		BurnSampleSetAllRoutes(i, nVol, BURN_SND_ROUTE_BOTH);
-	}
-	
-	BurnSampleSetAllRoutes(0x22, nVol, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetAllRoutes(0x25, nVol, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetAllRoutes(0x27, nVol, BURN_SND_ROUTE_BOTH);
-}
-
-static void ESEFadeout2()
-{
-	if (FadeoutStop == 1) {
-		Playing2 = 0xff;
-		FadeoutReady = 0;
-		FadeoutStop = 0;
-		Vol1 = 1.00;
-		SetVolumeSamplesChannel0(1.00);
-	}
-	
-	if (Counter1 >= 10) {
-		Counter1 = 0;
-		if (FadeoutReady == 1) {
-			Vol1 = Vol1 - 0.10;
-			if (Vol1 <= 0) Vol1 = 0;
-			SetVolumeSamplesChannel0(Vol1);
-		}
-		if (Vol1 == 0) {
-			StopSamplesChannel0();
-			FadeoutReady = 0;
-			FadeoutStop = 0;
-			Vol1 = 1.00;
-			SetVolumeSamplesChannel0(1.00);
-		}
-	}	
-	Counter1++;
-}
-
-static void samesameSndCmd(UINT16 d)
-{
-	if (d == 0x00 || d == 0xdf) {
-		StopAllSamples();
-	}
-
-	if (d >= 0x01 && d <= 0x05) {
-		StopSamplesChannel0();
-		SetVolumeSamplesChannel0(1.00);
-		FadeoutStop = 1;
-		Start2 = 0;
-		BurnSampleSetLoop(d, 1);
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x06) {
-		StopSamplesChannel0();
-		BurnSamplePlay(d);
-		Start2 = 72;
-	}
-
-	if (d == 0x07) {
-		FadeoutReady = 1;
-		Start = 1;
-	}
-
-	if (d == 0x08 || d == 0x09) {
-		StopSamplesChannel1();
-		BurnSamplePlay(d);
-	}
-
-	if (d >= 0x0a && d <= 0x0f) {
-		StopSamplesChannel2();
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x10 || d == 0x11) {
-		StopSamplesChannel3();
-		BurnSamplePlay(d);
-	}
-
-	if (d >= 0x12 && d <= 0x16) {
-		StopSamplesChannel4();
-		BurnSamplePlay(d);
-	}
-
-	if (d >= 0x17 && d <= 0x1b) {
-		StopSamplesChannel5();
-		BurnSamplePlay(d);
-	}
-
-	if (d >= 0x1c && d <= 0x1f) {
-		StopSamplesChannel0();
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x20 || d == 0x21) {
-		StopSamplesChannel6();
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x22) {
-		StopSamplesChannel0();
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x23) {
-		StopSamplesChannel7();
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x24) {
-		StopSamplesChannel7();
-		BurnSamplePlay(d);
-		FadeoutReady = 1;
-	}
-
-	if (d == 0x25) {
-		StopSamplesChannel0();
-		SetVolumeSamplesChannel0(1.00);
-		BurnSamplePlay(d);
-		FadeoutStop = 1;
-	}
-
-	if (d == 0x26) {
-		StopSamplesChannel2();
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0x27) {
-		StopSamplesChannel0();
-		SetVolumeSamplesChannel0(1.00);
-		BurnSamplePlay(d);
-		FadeoutStop = 1;
-	}
-
-	if (d == 0x28) {
-		BurnSamplePlay(d);
-	}
-}
-#endif
-
-void __fastcall samesameWriteWord(UINT32 a, UINT16 d)
+static void __fastcall samesameWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a)
 	{
@@ -571,10 +338,9 @@ void __fastcall samesameWriteWord(UINT32 a, UINT16 d)
 		return;
 
 		case 0x14000e:
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-		samesameSndCmd(d);
-#endif
-		return;	// mcu writes...
+			to_mcu = d & 0xff;
+			z80cmdavailable = 1;
+		return;
 
 		case 0x180000:
 			// toaplan1_bcu_flipscreen_w
@@ -617,12 +383,12 @@ void __fastcall samesameWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-void __fastcall samesameWriteByte(UINT32 , UINT8 )
+static void __fastcall samesameWriteByte(UINT32 , UINT8 )
 {
 	return;
 }
 
-UINT16 __fastcall samesameReadWord(UINT32 a)
+static UINT16 __fastcall samesameReadWord(UINT32 a)
 {
 	switch (a)
 	{
@@ -679,7 +445,7 @@ UINT16 __fastcall samesameReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall samesameReadByte(UINT32 a)
+static UINT8 __fastcall samesameReadByte(UINT32 a)
 {
 	switch (a)
 	{
@@ -709,36 +475,60 @@ UINT8 __fastcall samesameReadByte(UINT32 a)
 	return 0;
 }
 
+static UINT8 __fastcall samesameZ80In(UINT16 nAddress)
+{
+	nAddress &= 0xFF;
+
+	switch (nAddress) {
+		case 0x63: {
+			return (z80cmdavailable) ? 0xff : 0x00;
+		}
+
+		case 0xa0: {
+			return to_mcu;
+		}
+
+		case 0x80:
+			return BurnYM3812Read(0, 0);
+	}
+	
+	return 0;
+}
+
+static void __fastcall samesameZ80Out(UINT16 nAddress, UINT8 nValue)
+{
+	nAddress &= 0xFF;
+
+	switch (nAddress) {
+		case 0x80:
+			BurnYM3812Write(0, 0, nValue);
+			break;
+		case 0x81:
+			BurnYM3812Write(0, 1, nValue);
+			break;
+
+		case 0xb0: {
+			to_mcu = nValue;
+			z80cmdavailable = 0;
+		}
+	}
+}
+
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
 	SekReset();
 	SekClose();
 
-//	BurnYM3812Reset();
+	ZetOpen(0);
+	ZetReset();
+	BurnYM3812Reset();
+	ZetClose();
 
-	BurnSampleReset();
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	StopAllSamples();
-	
-	for (INT32 i = 0; i <= 0x28; i++) {
-		BurnSampleSetAllRoutes(i, 1.00, BURN_SND_ROUTE_BOTH);
-		BurnSampleSetLoop(i, 0);
-	}
+	to_mcu = 0;
+	z80cmdavailable = 0;
 
 	HiscoreReset();
-
-	FadeoutReady = 0;
-	FadeoutStop = 0;
-	Playing1 = 0xff;
-	Playing2 = 0xff;
-	Play1 = 0;
-	Counter1 = 0;
-	Vol1 = 0;
-	Wait = 0;
-	Start = 0;
-	Start2 = 0;
-#endif
 
 	bEnableInterrupts = false;
 
@@ -750,12 +540,15 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM	= Next; Next += 0x080000;
+	DrvZ80ROM   = Next; Next += 0x008000;
+
 	BCU2ROM		= Next; Next += nBCU2ROMSize;
 	FCU2ROM		= Next; Next += nFCU2ROMSize;
 
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvZ80RAM	= Next; Next += 0x000200;
 	DrvPalRAM	= Next; Next += 0x000800;
 	DrvPalRAM2	= Next; Next += 0x000800;
 
@@ -798,6 +591,7 @@ static INT32 DrvInit()
 	if (BurnLoadRom(Drv68KROM + 0x000000, 1, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x040001, 2, 2)) return 1;
 	if (BurnLoadRom(Drv68KROM + 0x040000, 3, 2)) return 1;
+	if (BurnLoadRom(DrvZ80ROM + 0x000000, 14, 1)) return 1;
 
 	ToaLoadTiles(BCU2ROM, 4, nBCU2ROMSize);
 	ToaLoadTiles(FCU2ROM, 8, nFCU2ROMSize);
@@ -816,6 +610,19 @@ static INT32 DrvInit()
 		SekClose();
 	}
 
+	{
+		ZetInit(0);
+		ZetOpen(0);
+
+		ZetSetInHandler(samesameZ80In);
+		ZetSetOutHandler(samesameZ80Out);
+
+		ZetMapMemory(DrvZ80ROM, 0x0000, 0x3FFF, MAP_ROM);
+		ZetMapMemory(DrvZ80RAM, 0xfe00, 0xFFFF, MAP_RAM);
+
+		ZetClose();
+	}
+
 	ToaInitBCU2();
 
 	nToaPalLen = nColCount;
@@ -823,15 +630,9 @@ static INT32 DrvInit()
 	ToaPalSrc2 = DrvPalRAM2;
 	ToaPalInit();
 
-//	BurnYM3812Init(28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
-//	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-        BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
-
-	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(0.60, BURN_SND_ROUTE_BOTH);
-#endif
+	BurnYM3812Init(1, 28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
+	BurnTimerAttachZetYM3812(28000000 / 8);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -841,28 +642,15 @@ static INT32 DrvInit()
 
 static INT32 DrvExit()
 {
-//	BurnYM3812Exit();
+	BurnYM3812Exit();
 	ToaPalExit();
 
 	ToaExitBCU2();
 	SekExit();
-	BurnSampleExit();
+	ZetExit();
 
 	BurnFree(AllMem);
 	
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	FadeoutReady = 0;
-	FadeoutStop = 0;
-	Playing1 = 0xff;
-	Playing2 = 0xff;
-	Play1 = 0;
-	Counter1 = 0;
-	Vol1 = 0;
-	Wait = 0;
-	Start = 0;
-	Start2 = 0;
-#endif
-
 	return 0;
 }
 
@@ -904,12 +692,16 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInputs[1]);
 
 	SekNewFrame();
+	ZetNewFrame();
 	
 	SekOpen(0);
+	ZetOpen(0);
 
 	SekIdle(nCyclesDone[0]);
+	ZetIdle(nCyclesDone[1]);
 
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
+	nCyclesTotal[1] = INT32(28000000.0 / 8 / REFRESHRATE);
 
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
@@ -948,30 +740,19 @@ static INT32 DrvFrame()
 		} else {
 			SekIdle(nCyclesSegment);
 		}
+
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	nToa1Cycles68KSync = SekTotalCycles();
-//	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-//	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-		if (Start > 0) Wait++;
-	
-		if (Wait >= (108 + Start2)) {
-			StopSamplesChannel0();
-			SetVolumeSamplesChannel0(1.00);
-			BurnSamplePlay(0x07);
-			Start = 0;
-			Start2 = 1;
-			Wait = 0;
-		}
-	
-		if (Start2 == 0) ESEFadeout2();
-#endif
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
+
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
+	nCyclesDone[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 //	bprintf(PRINT_NORMAL, _T("    %i\n"), nCyclesDone[0]);
 
@@ -980,6 +761,7 @@ static INT32 DrvFrame()
 	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO); // sprite buffer finished...
 
 	SekClose();
+	ZetClose();
 
 	return 0;
 }
@@ -999,23 +781,13 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		BurnAcb(&ba);
 
 		SekScan(nAction);
+		ZetScan(nAction);
 
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-		BurnSampleScan(nAction, pnMin);
-		SCAN_VAR(FadeoutReady);
-		SCAN_VAR(FadeoutStop);
-		SCAN_VAR(Playing1);
-		SCAN_VAR(Playing2);
-		SCAN_VAR(Play1);
-		SCAN_VAR(Counter1);
-		SCAN_VAR(Vol1);
-		SCAN_VAR(Wait);
-		SCAN_VAR(Start);
-		SCAN_VAR(Start2);
-#endif
+		ToaScanBCU2(nAction, pnMin);
 
 		SCAN_VAR(nCyclesDone);
-		ToaScanBCU2(nAction, pnMin);
+		SCAN_VAR(to_mcu);
+		SCAN_VAR(z80cmdavailable);
 
 		ToaRecalcPalette = 1;
 		bDrawScreen = true; // get background back ?
@@ -1023,60 +795,6 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 
 	return 0;
 }
-
-// samples
-
-static struct BurnSampleInfo samesameSampleDesc[] = {
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-#if !defined ROM_VERIFY
-	{ "dm", SAMPLE_NOLOOP },
-	{ "01", SAMPLE_NOLOOP },
-	{ "02", SAMPLE_NOLOOP },
-	{ "03", SAMPLE_NOLOOP },
-	{ "04", SAMPLE_NOLOOP },
-	{ "05", SAMPLE_NOLOOP },
-	{ "06", SAMPLE_NOLOOP },
-	{ "07", SAMPLE_NOLOOP },
-	{ "08", SAMPLE_NOLOOP },
-	{ "09", SAMPLE_NOLOOP },
-	{ "0a", SAMPLE_NOLOOP },
-	{ "0b", SAMPLE_NOLOOP },
-	{ "0c", SAMPLE_NOLOOP },
-	{ "0d", SAMPLE_NOLOOP },
-	{ "0e", SAMPLE_NOLOOP },
-	{ "0f", SAMPLE_NOLOOP },
-	{ "10", SAMPLE_NOLOOP },
-	{ "11", SAMPLE_NOLOOP },
-	{ "12", SAMPLE_NOLOOP },
-	{ "13", SAMPLE_NOLOOP },
-	{ "14", SAMPLE_NOLOOP },
-	{ "15", SAMPLE_NOLOOP },
-	{ "16", SAMPLE_NOLOOP },
-	{ "17", SAMPLE_NOLOOP },
-	{ "18", SAMPLE_NOLOOP },
-	{ "19", SAMPLE_NOLOOP },
-	{ "1a", SAMPLE_NOLOOP },
-	{ "1b", SAMPLE_NOLOOP },
-	{ "1c", SAMPLE_NOLOOP },
-	{ "1d", SAMPLE_NOLOOP },
-	{ "1e", SAMPLE_NOLOOP },
-	{ "1f", SAMPLE_NOLOOP },
-	{ "20", SAMPLE_NOLOOP },
-	{ "21", SAMPLE_NOLOOP },
-	{ "22", SAMPLE_NOLOOP },
-	{ "23", SAMPLE_NOLOOP },
-	{ "24", SAMPLE_NOLOOP },
-	{ "25", SAMPLE_NOLOOP },
-	{ "26", SAMPLE_NOLOOP },
-	{ "27", SAMPLE_NOLOOP },
-	{ "28", SAMPLE_NOLOOP },
-#endif
-#endif
-	{ "", 0 }
-};
-
-STD_SAMPLE_PICK(samesame)
-STD_SAMPLE_FN(samesame)
 
 // Fire Shark 
 
@@ -1099,7 +817,7 @@ static struct BurnRomInfo fireshrkRomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(fireshrk)
@@ -1110,7 +828,7 @@ struct BurnDriver BurnDrvFireshrk = {
 	"Fire Shark\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkRomInfo, fireshrkRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, FireshrkDIPInfo,
+	NULL, fireshrkRomInfo, fireshrkRomName, NULL, NULL, SamesameInputInfo, FireshrkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1137,7 +855,7 @@ static struct BurnRomInfo fireshrkaRomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(fireshrka)
@@ -1148,7 +866,7 @@ struct BurnDriver BurnDrvFireshrka = {
 	"Fire Shark (Earlier)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkaRomInfo, fireshrkaRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, FireshrkaDIPInfo,
+	NULL, fireshrkaRomInfo, fireshrkaRomName, NULL, NULL, SamesameInputInfo, FireshrkaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1175,7 +893,7 @@ static struct BurnRomInfo fireshrkdRomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(fireshrkd)
@@ -1186,7 +904,7 @@ struct BurnDriver BurnDrvFireshrkd = {
 	"Fire Shark (Korea, set 1, easier)\0", "No sound", "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkdRomInfo, fireshrkdRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, Samesam2DIPInfo,
+	NULL, fireshrkdRomInfo, fireshrkdRomName, NULL, NULL, SamesameInputInfo, Samesam2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1213,7 +931,7 @@ static struct BurnRomInfo fireshrkdhRomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(fireshrkdh)
@@ -1224,7 +942,7 @@ struct BurnDriver BurnDrvFireshrkdh = {
 	"Fire Shark (Korea, set 2, harder)\0", "No sound", "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, fireshrkdhRomInfo, fireshrkdhRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, Samesam2DIPInfo,
+	NULL, fireshrkdhRomInfo, fireshrkdhRomName, NULL, NULL, SamesameInputInfo, Samesam2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1251,7 +969,7 @@ static struct BurnRomInfo samesameRomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(samesame)
@@ -1262,7 +980,7 @@ struct BurnDriver BurnDrvSamesame = {
 	"Same! Same! Same! (2 player alternating ver.)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (2 player alternating ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samesameRomInfo, samesameRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, SamesameDIPInfo,
+	NULL, samesameRomInfo, samesameRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1289,7 +1007,7 @@ static struct BurnRomInfo samesame2RomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(samesame2)
@@ -1300,7 +1018,7 @@ struct BurnDriver BurnDrvSamesame2 = {
 	"Same! Same! Same!\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samesame2RomInfo, samesame2RomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, Samesam2DIPInfo,
+	NULL, samesame2RomInfo, samesame2RomName, NULL, NULL, SamesameInputInfo, Samesam2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1327,7 +1045,7 @@ static struct BurnRomInfo samenewRomDesc[] = {
 	{ "prom14.25b",		0x00020, 0xbc88cced, BRF_GRA },              // 12 Sprite attribute PROM
 	{ "prom15.20c",		0x00020, 0xa1e17492, BRF_GRA },              // 13
 
-	{ "hd647180.017",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 14 Sound HD647180 code
+	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
 STD_ROM_PICK(samenew)
@@ -1338,7 +1056,7 @@ struct BurnDriver BurnDrvSamenew = {
 	"Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", "No sound", "Hack / Trap15", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samenewRomInfo, samenewRomName, samesameSampleInfo, samesameSampleName, SamesameInputInfo, SamesameDIPInfo,
+	NULL, samenewRomInfo, samenewRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

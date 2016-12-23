@@ -1028,9 +1028,9 @@ struct BurnDriver BurnDrvSamesame2 = {
 
 // Same! Same! Same! NEW VER! (v1.00, hack by Trap15)
 
-static struct BurnRomInfo samenewRomDesc[] = {
-	{ "o17_09_new.8j",	0x08000, 0xf60af2f9, BRF_PRG | BRF_ESS },    //  0 CPU #0 code
-	{ "o17_10_new.8l",	0x08000, 0x023bcb95, BRF_PRG | BRF_ESS },    //  1
+static struct BurnRomInfo samesamenhRomDesc[] = {
+	{ "o17_09_nv.8j",	0x08000, 0xf60af2f9, BRF_PRG | BRF_ESS },    //  0 CPU #0 code
+	{ "o17_10_nv.8l",	0x08000, 0x023bcb95, BRF_PRG | BRF_ESS },    //  1
 	{ "o17_11.7j",		0x20000, 0xbe07d101, BRF_PRG | BRF_ESS },    //  2
 	{ "o17_12.7l",		0x20000, 0xef698811, BRF_PRG | BRF_ESS },    //  3
 
@@ -1050,15 +1050,15 @@ static struct BurnRomInfo samenewRomDesc[] = {
 	{ "hd647180.017",	0x08000, 0x43523032, BRF_PRG },              // 14 Sound HD647180 code
 };
 
-STD_ROM_PICK(samenew)
-STD_ROM_FN(samenew)
+STD_ROM_PICK(samesamenh)
+STD_ROM_FN(samesamenh)
 
 struct BurnDriver BurnDrvSamenew = {
-	"samenew", "fireshrk", NULL, NULL, "1989",
+	"samesamenh", "fireshrk", NULL, NULL, "1989",
 	"Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, "Hack / Trap15", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, samenewRomInfo, samenewRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,
+	NULL, samesamenhRomInfo, samesamenhRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

@@ -457,6 +457,11 @@ static void __fastcall tekipakiZ80Out(UINT16 nAddress, UINT8 nValue)
 	}
 }
 
+INT32 tekipakiSynchroniseStream(INT32 nSoundRate)
+{
+	return (INT64)ZetTotalCycles() * nSoundRate / 10000000;
+}
+
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
@@ -545,8 +550,8 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 
-	BurnYM3812Init(1, 28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(28000000 / 8);
+	BurnYM3812Init(1, 27000000 / 8, &toaplan1FMIRQHandler, &tekipakiSynchroniseStream, 0);
+	BurnTimerAttachZetYM3812(10000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	bDrawScreen = true;
@@ -612,7 +617,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	nCyclesTotal[1] = INT32(28000000.0 / 8 / 60);
+	nCyclesTotal[1] = INT32(10000000 / 60);
 	nCyclesDone[0] = 0;
 	nCyclesDone[1] = 0;
 	

@@ -825,7 +825,7 @@ STD_ROM_FN(fireshrk)
 
 struct BurnDriver BurnDrvFireshrk = {
 	"fireshrk", NULL, NULL, "fireshrk", "1990",
-	"Fire Shark\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Fire Shark\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, fireshrkRomInfo, fireshrkRomName, NULL, NULL, SamesameInputInfo, FireshrkDIPInfo,
@@ -863,7 +863,7 @@ STD_ROM_FN(fireshrka)
 
 struct BurnDriver BurnDrvFireshrka = {
 	"fireshrka", "fireshrk", NULL, "fireshrk", "1989",
-	"Fire Shark (Earlier)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Fire Shark (Earlier)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, fireshrkaRomInfo, fireshrkaRomName, NULL, NULL, SamesameInputInfo, FireshrkaDIPInfo,
@@ -901,7 +901,7 @@ STD_ROM_FN(fireshrkd)
 
 struct BurnDriver BurnDrvFireshrkd = {
 	"fireshrkd", "fireshrk", NULL, "fireshrk", "1990",
-	"Fire Shark (Korea, set 1, easier)\0", "No sound", "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
+	"Fire Shark (Korea, set 1, easier)\0", NULL, "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, fireshrkdRomInfo, fireshrkdRomName, NULL, NULL, SamesameInputInfo, Samesam2DIPInfo,
@@ -939,7 +939,7 @@ STD_ROM_FN(fireshrkdh)
 
 struct BurnDriver BurnDrvFireshrkdh = {
 	"fireshrkdh", "fireshrk", NULL, "fireshrk", "1990",
-	"Fire Shark (Korea, set 2, harder)\0", "No sound", "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
+	"Fire Shark (Korea, set 2, harder)\0", NULL, "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, fireshrkdhRomInfo, fireshrkdhRomName, NULL, NULL, SamesameInputInfo, Samesam2DIPInfo,
@@ -977,7 +977,7 @@ STD_ROM_FN(samesame)
 
 struct BurnDriver BurnDrvSamesame = {
 	"samesame", "fireshrk", NULL, "fireshrk", "1989",
-	"Same! Same! Same! (2 player alternating ver.)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Same! Same! Same! (2 player alternating ver.)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (2 player alternating ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesameRomInfo, samesameRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,
@@ -1015,7 +1015,7 @@ STD_ROM_FN(samesame2)
 
 struct BurnDriver BurnDrvSamesame2 = {
 	"samesame2", "fireshrk", NULL, "fireshrk", "1989",
-	"Same! Same! Same!\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Same! Same! Same!\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samesame2RomInfo, samesame2RomName, NULL, NULL, SamesameInputInfo, Samesam2DIPInfo,
@@ -1053,7 +1053,7 @@ STD_ROM_FN(samenew)
 
 struct BurnDriver BurnDrvSamenew = {
 	"samenew", "fireshrk", NULL, "fireshrk", "1989",
-	"Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", "No sound", "Hack / Trap15", "Toaplan BCU-2 / FCU-2 based",
+	"Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, "Hack / Trap15", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, samenewRomInfo, samenewRomName, NULL, NULL, SamesameInputInfo, SamesameDIPInfo,

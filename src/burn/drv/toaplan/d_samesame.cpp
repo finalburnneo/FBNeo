@@ -826,7 +826,7 @@ STD_ROM_PICK(fireshrk)
 STD_ROM_FN(fireshrk)
 
 struct BurnDriver BurnDrvFireshrk = {
-	"fireshrk", NULL, NULL, "fireshrk", "1990",
+	"fireshrk", NULL, NULL, NULL, "1990",
 	"Fire Shark\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -864,7 +864,7 @@ STD_ROM_PICK(fireshrka)
 STD_ROM_FN(fireshrka)
 
 struct BurnDriver BurnDrvFireshrka = {
-	"fireshrka", "fireshrk", NULL, "fireshrk", "1989",
+	"fireshrka", "fireshrk", NULL, NULL, "1989",
 	"Fire Shark (Earlier)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -902,7 +902,7 @@ STD_ROM_PICK(fireshrkd)
 STD_ROM_FN(fireshrkd)
 
 struct BurnDriver BurnDrvFireshrkd = {
-	"fireshrkd", "fireshrk", NULL, "fireshrk", "1990",
+	"fireshrkd", "fireshrk", NULL, NULL, "1990",
 	"Fire Shark (Korea, set 1, easier)\0", NULL, "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -940,7 +940,7 @@ STD_ROM_PICK(fireshrkdh)
 STD_ROM_FN(fireshrkdh)
 
 struct BurnDriver BurnDrvFireshrkdh = {
-	"fireshrkdh", "fireshrk", NULL, "fireshrk", "1990",
+	"fireshrkdh", "fireshrk", NULL, NULL, "1990",
 	"Fire Shark (Korea, set 2, harder)\0", NULL, "Toaplan (Dooyong license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -978,7 +978,7 @@ STD_ROM_PICK(samesame)
 STD_ROM_FN(samesame)
 
 struct BurnDriver BurnDrvSamesame = {
-	"samesame", "fireshrk", NULL, "fireshrk", "1989",
+	"samesame", "fireshrk", NULL, NULL, "1989",
 	"Same! Same! Same! (2 player alternating ver.)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! (2 player alternating ver.)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -1016,7 +1016,7 @@ STD_ROM_PICK(samesame2)
 STD_ROM_FN(samesame2)
 
 struct BurnDriver BurnDrvSamesame2 = {
-	"samesame2", "fireshrk", NULL, "fireshrk", "1989",
+	"samesame2", "fireshrk", NULL, NULL, "1989",
 	"Same! Same! Same!\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -1054,7 +1054,7 @@ STD_ROM_PICK(samenew)
 STD_ROM_FN(samenew)
 
 struct BurnDriver BurnDrvSamenew = {
-	"samenew", "fireshrk", NULL, "fireshrk", "1989",
+	"samenew", "fireshrk", NULL, NULL, "1989",
 	"Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, "Hack / Trap15", "Toaplan BCU-2 / FCU-2 based",
 	L"\u9BAB!\u9BAB!\u9BAB!\0Same! Same! Same! NEW VER! (v1.00, hack by Trap15)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,

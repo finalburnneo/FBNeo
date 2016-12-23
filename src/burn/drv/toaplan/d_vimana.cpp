@@ -654,7 +654,7 @@ STD_ROM_PICK(vimana)
 STD_ROM_FN(vimana)
 
 struct BurnDriver BurnDrvVimana = {
-	"vimana", NULL, NULL, "vimana", "1991",
+	"vimana", NULL, NULL, NULL, "1991",
 	"Vimana (World, set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -688,7 +688,7 @@ STD_ROM_PICK(vimanan)
 STD_ROM_FN(vimanan)
 
 struct BurnDriver BurnDrvVimanan = {
-	"vimanan", "vimana", NULL, "vimana", "1991",
+	"vimanan", "vimana", NULL, NULL, "1991",
 	"Vimana (World, set 2)\0", NULL, "Toaplan (Nova Apparate GMBH & Co license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
@@ -722,7 +722,7 @@ STD_ROM_PICK(vimanaj)
 STD_ROM_FN(vimanaj)
 
 struct BurnDriver BurnDrvVimanaj = {
-	"vimanaj", "vimana", NULL, "vimana", "1991",
+	"vimanaj", "vimana", NULL, NULL, "1991",
 	"Vimana (Japan)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,

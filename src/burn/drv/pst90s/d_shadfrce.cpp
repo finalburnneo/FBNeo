@@ -240,9 +240,11 @@ static void __fastcall shadfrceWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 			if ((previous_irq_value & 4) == 0 && (byteValue & 4) == 4) {
 				raster_irq_enable = 1;
+				GenericTilemapSetScrollRows(1, 16*32);
 			}
 			if ((previous_irq_value & 4) == 4 && (byteValue & 4) == 0) {
 				raster_irq_enable = 0;
+				GenericTilemapSetScrollRows(1, 1);
 			}
 
 			previous_irq_value = byteValue;
@@ -300,9 +302,11 @@ static void __fastcall shadfrceWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 			if ((previous_irq_value & 4) == 0 && (wordValue & 4) == 4) {
 				raster_irq_enable = 1;
+				GenericTilemapSetScrollRows(1, 16*32);
 			}
 			if ((previous_irq_value & 4) == 4 && (wordValue & 4) == 0) {
 				raster_irq_enable = 0;
+				GenericTilemapSetScrollRows(1, 1);
 			}
 
 			previous_irq_value = wordValue;
@@ -653,7 +657,8 @@ static void draw_line(INT32 line)
 
 	if (video_enable)
 	{
-		GenericTilemapSetScrollX(1, bg0scrollx);
+	//	GenericTilemapSetScrollX(1, bg0scrollx);
+		GenericTilemapSetScrollRow(1, line, bg0scrollx);
 		GenericTilemapSetScrollY(1, bg0scrolly);
 
 		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 1);
@@ -778,6 +783,14 @@ static INT32 shadfrceFrame()
 
 		if (scanline < 256 && raster_irq_enable) {
 			draw_line(scanline);
+		}
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = (nBurnSoundLen / nInterleave) - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos * 2);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
 		}
 	}
 

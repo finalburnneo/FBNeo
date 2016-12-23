@@ -1,5 +1,4 @@
 #include "toaplan.h"
-#include "samples.h"
 
 #define REFRESHRATE 57.59
 #define VBLANK_LINES (32)
@@ -9,7 +8,10 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
+static UINT8 *DrvZ80ROM;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvZ80RAM;
+static UINT8 *DrvShareRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvPalRAM2;
 
@@ -22,23 +24,10 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvReset;
 
-static INT32 vimana_latch;
-static INT32 vimana_credits;
-
 static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static bool bEnableInterrupts;
-
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-static UINT8 FadeoutReady;
-static UINT8 FadeoutStop;
-static UINT8 Playing1;
-static UINT8 Playing2;
-static UINT8 Play1;
-static UINT8 Counter1;
-static float Vol1;
-#endif
 
 static struct BurnInputInfo VimanaInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 coin"	},
@@ -108,10 +97,10 @@ static struct BurnDIPInfo VimanaDIPList[]=
 	{0x16, 0x01, 0x03, 0x03, "Hardest"					},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"					},
-	{0x16, 0x01, 0x0c, 0x00, "70K and 200K"					},
-	{0x16, 0x01, 0x0c, 0x04, "100K and 250K"				},
-	{0x16, 0x01, 0x0c, 0x08, "100K"						},
-	{0x16, 0x01, 0x0c, 0x0c, "200K"						},
+	{0x16, 0x01, 0x0c, 0x00, "70k 270k 200k+"					},
+	{0x16, 0x01, 0x0c, 0x04, "100k 350k 250k+"				},
+	{0x16, 0x01, 0x0c, 0x08, "100k Only"						},
+	{0x16, 0x01, 0x0c, 0x0c, "200k Only"						},
 
 	{0   , 0xfe, 0   ,    4, "Lives"					},
 	{0x16, 0x01, 0x30, 0x30, "2"						},
@@ -196,221 +185,6 @@ static struct BurnDIPInfo VimananDIPList[]=
 
 STDDIPINFO(Vimanan)
 
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-static void StopAllSamples()
-{
-	for (INT32 i = 0x00; i <= 0x22; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel0()
-{
-	for (INT32 i = 0x01; i <= 0x07; i++) {
-		BurnSampleStop(i);
-		BurnSampleSetLoop(i, 0);
-	}
-	
-	BurnSampleStop(0x1d);
-	BurnSampleSetLoop(0x1d, 0);
-	BurnSampleStop(0x1e);
-	BurnSampleSetLoop(0x1e, 0);
-	BurnSampleStop(0x22);
-	BurnSampleSetLoop(0x22, 0);
-}
-
-static void SetVolumeSamplesChannel0(double nVol)
-{
-	for (INT32 i = 0x01; i <= 0x07; i++) {
-		BurnSampleSetAllRoutes(i, nVol, BURN_SND_ROUTE_BOTH);
-	}
-	
-	BurnSampleSetAllRoutes(0x1d, nVol, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetAllRoutes(0x1e, nVol, BURN_SND_ROUTE_BOTH);
-	BurnSampleSetAllRoutes(0x22, nVol, BURN_SND_ROUTE_BOTH);
-}
-
-static void StopSamplesChannel2()
-{
-	for (INT32 i = 0x09; i <= 0x0c; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel4()
-{
-	for (INT32 i = 0x0e; i <= 0x10; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel6()
-{
-	for (INT32 i = 0x12; i <= 0x13; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel11()
-{
-	for (INT32 i = 0x18; i <= 0x1a; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void ESEFadeout()
-{
-	if (FadeoutStop == 1) {
-		Playing2 = 0xff;
-		FadeoutReady = 0;
-		FadeoutStop = 0;
-		Vol1 = 1.00;
-		SetVolumeSamplesChannel0(1.00);
-	}
-	
-	if (Counter1 >= 17) {
-		Counter1 = 0;
-		if (FadeoutReady == 1) {
-			Vol1 = Vol1 - 0.10;
-			if (Vol1 <= 0) Vol1 = 0;
-			SetVolumeSamplesChannel0(Vol1);
-		}
-		if (Vol1 == 0) {
-			StopSamplesChannel0();
-			FadeoutReady = 0;
-			FadeoutStop = 0;
-			Vol1 = 1.00;
-			SetVolumeSamplesChannel0(1.00);
-			if (Playing2 != 0xff) {
-				BurnSampleSetLoop(Playing2, 1);
-				BurnSamplePlay(Playing2);
-				Playing1 = 0xff;
-				Playing2 = 0xff;
-			}
-		}
-	}
-	Counter1++;
-}
-
-static void vimanaMcuWrite(UINT16 d)
-{
-	if (d == 0x00) {
-		FadeoutStop = 1;
-		StopAllSamples();
-	}
-	
-	if (d >= 0x01 && d <= 0x06) {
-		if (Play1 >= 0x01 && Play1 <= 0x06) {
-			FadeoutReady = 1;
-			Playing2 = d;
-			Play1 = d;
-		} else {
-			FadeoutStop = 1;
-			StopSamplesChannel0();
-			BurnSampleSetLoop(d, 1);
-			BurnSamplePlay(d);
-			Play1 = d;
-		}
-	}
-	
-	if (d == 0x07) {
-		FadeoutStop = 1;
-		StopSamplesChannel0();
-		BurnSamplePlay(0x07);
-		Play1 = 0;
-	}
-	
-	if (d == 0x08) {
-		BurnSamplePlay(0x08);
-	}
-	
-	if (d >= 0x09 && d <= 0x0c) {
-		StopSamplesChannel2();
-		BurnSamplePlay(d);
-	}
-	
-	if (d == 0x0d) {
-		BurnSamplePlay(0x0d);
-	}
-	
-	if (d >= 0x0e && d <= 0x10) {
-		StopSamplesChannel4();
-		BurnSamplePlay(d);
-	}
-	
-	if (d == 0x11) {
-		BurnSamplePlay(0x11);
-	}
-
-	if (d == 0x12) {
-		BurnSamplePlay(0x12);
-	}
-
-	if (d == 0x91) {
-		BurnSampleStop(0x11);
-		StopSamplesChannel6();
-	}
-	
-	if (d == 0x13) {
-		BurnSamplePlay(0x13);
-	}
-	
-	if (d == 0x14) {
-		BurnSamplePlay(0x14);
-	}
-
-	if (d == 0x15) {
-		BurnSamplePlay(0x15);
-	}
-
-	if (d == 0x16) {
-		BurnSamplePlay(0x16);
-	}
-
-	if (d == 0x17) {
-		BurnSamplePlay(0x17);
-	}
-	
-	if (d == 0x18 || d == 0x19) {
-		StopSamplesChannel11();
-		BurnSamplePlay(d);
-	}
-	
-	if (d == 0x1a) {
-		FadeoutReady = 1;
-		StopSamplesChannel11();
-		BurnSamplePlay(0x1a);
-	}
-	
-	if (d == 0x1c) {
-		BurnSamplePlay(0x1c);
-	}
-		
-	if (d == 0x1d) {
-		FadeoutStop = 1;
-		StopSamplesChannel0();
-		BurnSamplePlay(0x1d);
-		Play1 = 1;
-	}
-
-	if (d == 0x1e) {
-		StopSamplesChannel0();
-		BurnSamplePlay(0x1e);
-		Play1 = 0;
-	}
-
-	if (d == 0x20) {
-		BurnSamplePlay(0x20);
-	}
-
-	if (d == 0x22) {
-		StopSamplesChannel0();
-		BurnSamplePlay(0x22);
-		Play1 = 0;
-	}
-}
-#endif
-
 void __fastcall vimanaWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a)
@@ -454,20 +228,6 @@ void __fastcall vimanaWriteWord(UINT32 a, UINT16 d)
 		case 0x40000c:
 		case 0x40000e:
 			// toaplan1_bcu_control_w
-		return;
-
-		case 0x440000:
-		case 0x440002:
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-			vimanaMcuWrite(d);
-#endif
-		return;
-
-		case 0x440004:
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-			vimanaMcuWrite(d);
-#endif
-			vimana_credits = d & 0xff;
 		return;
 
 		case 0x4c0000:
@@ -545,48 +305,49 @@ UINT8 __fastcall vimanaReadByte(UINT32 a)
 		case 0x0c0001:
 		case 0x400001:
 			return ToaVBlankRegister();
-
-		case 0x440001:
-			return 0xff;
-
-		case 0x440003:
-			return 0;
-
-		case 0x440005:
-			return vimana_credits;
-
-		case 0x440007:
-			return DrvDips[0];
-
-		case 0x440009:
-		{
-			INT32 p = DrvInputs[2];
-			vimana_latch ^= p;
-			UINT8 data = vimana_latch & p;
-
-			if (data & 0x18) {
-				vimana_credits++;
-				BurnSamplePlay(0);
-			}
-			vimana_latch = p;
-
-			return p;
-		}
-
-		case 0x44000b:
-			return DrvInputs[0];
-
-		case 0x44000d:
-			return DrvInputs[1];
-
-		case 0x44000f:
-			return DrvDips[1];
-
-		case 0x440011:
-			return DrvDips[2];
 	}
 
 	return 0;
+}
+
+static UINT8 __fastcall vimanaZ80In(UINT16 nAddress)
+{
+	nAddress &= 0xFF;
+
+	switch (nAddress) {
+		case 0x60: return (DrvDips[1] ^ 0xff);
+
+		case 0x66: return (DrvDips[2] ^ 0xff) | 0xc0;
+
+		case 0x80: return DrvInputs[0];
+
+		case 0x81: return DrvInputs[1];
+
+		case 0x82: return DrvDips[0];
+
+		case 0x83: return DrvInputs[2];
+
+		case 0x87: return BurnYM3812Read(0, 0);
+
+		case 0x8f: return BurnYM3812Read(0, 1);
+	}
+	
+	return 0;
+}
+
+static void __fastcall vimanaZ80Out(UINT16 nAddress, UINT8 nValue)
+{
+	nAddress &= 0xFF;
+
+	switch (nAddress) {
+		case 0x87:
+			BurnYM3812Write(0, 0, nValue);
+			break;
+
+		case 0x8f:
+			BurnYM3812Write(0, 1, nValue);
+			break;
+	}
 }
 
 static INT32 DrvDoReset()
@@ -595,33 +356,14 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-//	BurnYM3812Reset();
-	
-	BurnSampleReset();
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	StopAllSamples();
-	
-	for (INT32 i = 0; i <= 0x22; i++) {
-		BurnSampleSetAllRoutes(i, 0.60, BURN_SND_ROUTE_BOTH);
-		BurnSampleSetLoop(i, 0);
-	}
-	SetVolumeSamplesChannel0(1.00);
-	
-	FadeoutReady = 0;
-	FadeoutStop = 0;
-	Playing1 = 0xff;
-	Playing2 = 0xff;
-	Play1 = 0;
-	Counter1 = 0;
-	Vol1 = 0;
-#endif
+	ZetOpen(0);
+	ZetReset();
+	BurnYM3812Reset();
+	ZetClose();
 
 	bEnableInterrupts = false;
 
 	HiscoreReset();
-
-	vimana_latch = 0;
-	vimana_credits = 0;
 
 	return 0;
 }
@@ -631,12 +373,17 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM	= Next; Next += 0x040000;
+	DrvZ80ROM   = Next; Next += 0x008000;
+
 	BCU2ROM		= Next; Next += nBCU2ROMSize;
 	FCU2ROM		= Next; Next += nFCU2ROMSize;
 
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x008000;
+	DrvZ80RAM	= Next; Next += 0x000200;
+	RamZ80      = Next; // this is really shared ram between cpus.
+	DrvShareRAM	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x000800;
 	DrvPalRAM2	= Next; Next += 0x000800;
 
@@ -678,6 +425,7 @@ static INT32 DrvInit()
 	ToaLoadCode(Drv68KROM, 0, 2);
 	ToaLoadTiles(BCU2ROM, 2, nBCU2ROMSize);
 	ToaLoadGP9001Tiles(FCU2ROM, 6, 3, nFCU2ROMSize);
+	if (BurnLoadRom(DrvZ80ROM + 0x000000, 10, 1)) return 1;
 
 	{
 		SekInit(0, 0x68000);
@@ -690,7 +438,27 @@ static INT32 DrvInit()
 		SekSetReadByteHandler(0, 	vimanaReadByte);
 		SekSetWriteWordHandler(0, 	vimanaWriteWord);
 		SekSetWriteByteHandler(0, 	vimanaWriteByte);
+
+		SekMapHandler(1,			0x440000, 0x440FFF, MAP_RAM); // Shared RAM between cpu's
+		SekSetReadByteHandler(1, toaplan1ReadByteZ80RAM);
+		SekSetReadWordHandler(1, toaplan1ReadWordZ80RAM);
+		SekSetWriteByteHandler(1, toaplan1WriteByteZ80RAM);
+		SekSetWriteWordHandler(1, toaplan1WriteWordZ80RAM);
 		SekClose();
+	}
+
+	{
+		ZetInit(0);
+		ZetOpen(0);
+
+		ZetSetInHandler(vimanaZ80In);
+		ZetSetOutHandler(vimanaZ80Out);
+
+		ZetMapMemory(DrvZ80ROM, 0x0000, 0x3FFF, MAP_ROM);
+		ZetMapMemory(DrvShareRAM, 0x8000, 0x87FF, MAP_RAM);
+		ZetMapMemory(DrvZ80RAM, 0xFE00, 0xFFFF, MAP_RAM);
+
+		ZetClose();
 	}
 
 	ToaInitBCU2();
@@ -700,15 +468,9 @@ static INT32 DrvInit()
 	ToaPalSrc2 = DrvPalRAM2;
 	ToaPalInit();
 
-//	BurnYM3812Init(28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
-//	BurnYM3812SetRoute(BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-        BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
-
-	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(0.60, BURN_SND_ROUTE_BOTH);
-#endif
+	BurnYM3812Init(1, 28000000 / 8, &toaplan1FMIRQHandler, &toaplan1SynchroniseStream, 0);
+	BurnTimerAttachZetYM3812(28000000 / 8);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -718,24 +480,14 @@ static INT32 DrvInit()
 
 static INT32 DrvExit()
 {
-//	BurnYM3812Exit();
+	BurnYM3812Exit();
 	ToaPalExit();
 
 	ToaExitBCU2();
 	SekExit();
-	BurnSampleExit();
+	ZetExit();
 
 	BurnFree(AllMem);
-
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	FadeoutReady = 0;
-	FadeoutStop = 0;
-	Playing1 = 0xff;
-	Playing2 = 0xff;
-	Play1 = 0;
-	Counter1 = 0;
-	Vol1 = 0;
-#endif
 
 	return 0;
 }
@@ -778,12 +530,16 @@ static INT32 DrvFrame()
 	ToaClearOpposites(&DrvInputs[1]);
 
 	SekNewFrame();
+	ZetNewFrame();
 	
 	SekOpen(0);
+	ZetOpen(0);
 
 	SekIdle(nCyclesDone[0]);
+	ZetIdle(nCyclesDone[1]);
 
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
+	nCyclesTotal[1] = INT32(28000000.0 / 8 / REFRESHRATE);
 
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
@@ -822,24 +578,22 @@ static INT32 DrvFrame()
 		} else {
 			SekIdle(nCyclesSegment);
 		}
+
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
 	nToa1Cycles68KSync = SekTotalCycles();
-//	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-//	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 	
 	if (pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-		ESEFadeout();
-#endif
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
-
-//	bprintf(PRINT_NORMAL, _T("    %i\n"), nCyclesDone[0]);
+	nCyclesDone[1] = ZetTotalCycles() - nCyclesTotal[1];
 
 	SekClose();
+	ZetClose();
 
 //	ToaBufferFCU2Sprites();
 
@@ -861,78 +615,20 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		BurnAcb(&ba);
 
 		SekScan(nAction);
+		ZetScan(nAction);
 
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-		BurnSampleScan(nAction, pnMin);
-		SCAN_VAR(FadeoutReady);
-		SCAN_VAR(FadeoutStop);
-		SCAN_VAR(Playing1);
-		SCAN_VAR(Playing2);
-		SCAN_VAR(Play1);
-		SCAN_VAR(Counter1);
-		SCAN_VAR(Vol1);
-#endif
+		BurnYM3812Scan(nAction, pnMin);
 
-		SCAN_VAR(nCyclesDone);
 		ToaScanBCU2(nAction, pnMin);
 
-		SCAN_VAR(vimana_credits);
-		SCAN_VAR(vimana_latch);
+		SCAN_VAR(nCyclesDone);
+
 		ToaRecalcPalette = 1;
 		bDrawScreen = true; // get background back ?
 	}
 
 	return 0;
 }
-
-// samples
-
-static struct BurnSampleInfo vimanaSampleDesc[] = {
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-#if !defined ROM_VERIFY
-	{ "00", SAMPLE_NOLOOP },
-	{ "01", SAMPLE_NOLOOP },
-	{ "02", SAMPLE_NOLOOP },
-	{ "03", SAMPLE_NOLOOP },
-	{ "04", SAMPLE_NOLOOP },
-	{ "05", SAMPLE_NOLOOP },
-	{ "06", SAMPLE_NOLOOP },
-	{ "07", SAMPLE_NOLOOP },
-	{ "08", SAMPLE_NOLOOP },
-	{ "09", SAMPLE_NOLOOP },
-	{ "0a", SAMPLE_NOLOOP },
-	{ "0b", SAMPLE_NOLOOP },
-	{ "0c", SAMPLE_NOLOOP },
-	{ "0d", SAMPLE_NOLOOP },
-	{ "0e", SAMPLE_NOLOOP },
-	{ "0f", SAMPLE_NOLOOP },
-	{ "10", SAMPLE_NOLOOP },
-	{ "11", SAMPLE_NOLOOP },
-	{ "12", SAMPLE_NOLOOP },
-	{ "13", SAMPLE_NOLOOP },
-	{ "14", SAMPLE_NOLOOP },
-	{ "15", SAMPLE_NOLOOP },
-	{ "16", SAMPLE_NOLOOP },
-	{ "17", SAMPLE_NOLOOP },
-	{ "18", SAMPLE_NOLOOP },
-	{ "19", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "1c", SAMPLE_NOLOOP },
-	{ "1d", SAMPLE_NOLOOP },
-	{ "1e", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "20", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "22", SAMPLE_NOLOOP },
-#endif
-#endif
-	{ "", 0 }
-};
-
-STD_SAMPLE_PICK(vimana)
-STD_SAMPLE_FN(vimana)
-
 
 // Vimana (World, set 1)
 
@@ -951,7 +647,7 @@ static struct BurnRomInfo vimanaRomDesc[] = {
 	{ "tp019-09.bpr",	0x00020, 0xbc88cced, BRF_GRA },		     //  8 Sprite attribute PROM
 	{ "tp019-10.bpr",	0x00020, 0xa1e17492, BRF_GRA },		     //  9
 
-	{ "hd647180.019",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 10 Sound HD647180 code
+	{ "hd647180.019",	0x08000, 0x41a97ebe, BRF_PRG },          // 10 Sound HD647180 code
 };
 
 STD_ROM_PICK(vimana)
@@ -959,10 +655,10 @@ STD_ROM_FN(vimana)
 
 struct BurnDriver BurnDrvVimana = {
 	"vimana", NULL, NULL, "vimana", "1991",
-	"Vimana (World, set 1)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (World, set 1)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimanaRomInfo, vimanaRomName, vimanaSampleInfo, vimanaSampleName, VimanaInputInfo, VimanaDIPInfo,
+	NULL, vimanaRomInfo, vimanaRomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -985,7 +681,7 @@ static struct BurnRomInfo vimananRomDesc[] = {
 	{ "tp019-09.bpr",	0x00020, 0xbc88cced, BRF_GRA },		     //  8 Sprite attribute PROM
 	{ "tp019-10.bpr",	0x00020, 0xa1e17492, BRF_GRA },		     //  9
 
-	{ "hd647180.019",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 10 Sound HD647180 code
+	{ "hd647180.019",	0x08000, 0x41a97ebe, BRF_PRG },          // 10 Sound HD647180 code
 };
 
 STD_ROM_PICK(vimanan)
@@ -993,10 +689,10 @@ STD_ROM_FN(vimanan)
 
 struct BurnDriver BurnDrvVimanan = {
 	"vimanan", "vimana", NULL, "vimana", "1991",
-	"Vimana (World, set 2)\0", "No sound", "Toaplan (Nova Apparate GMBH & Co license)", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (World, set 2)\0", NULL, "Toaplan (Nova Apparate GMBH & Co license)", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimananRomInfo, vimananRomName, vimanaSampleInfo, vimanaSampleName, VimanaInputInfo, VimananDIPInfo,
+	NULL, vimananRomInfo, vimananRomName, NULL, NULL, VimanaInputInfo, VimananDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -1019,7 +715,7 @@ static struct BurnRomInfo vimanajRomDesc[] = {
 	{ "tp019-09.bpr",	0x00020, 0xbc88cced, BRF_GRA },		     //  8 Sprite attribute PROM
 	{ "tp019-10.bpr",	0x00020, 0xa1e17492, BRF_GRA },		     //  9
 
-	{ "hd647180.019",	0x08000, 0x00000000, BRF_OPT | BRF_NODUMP }, // 10 Sound HD647180 code
+	{ "hd647180.019",	0x08000, 0x41a97ebe, BRF_PRG },          // 10 Sound HD647180 code
 };
 
 STD_ROM_PICK(vimanaj)
@@ -1027,10 +723,10 @@ STD_ROM_FN(vimanaj)
 
 struct BurnDriver BurnDrvVimanaj = {
 	"vimanaj", "vimana", NULL, "vimana", "1991",
-	"Vimana (Japan)\0", "No sound", "Toaplan", "Toaplan BCU-2 / FCU-2 based",
+	"Vimana (Japan)\0", NULL, "Toaplan", "Toaplan BCU-2 / FCU-2 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, vimanajRomInfo, vimanajRomName, vimanaSampleInfo, vimanaSampleName, VimanaInputInfo, VimanaDIPInfo,
+	NULL, vimanajRomInfo, vimanajRomName, NULL, NULL, VimanaInputInfo, VimanaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

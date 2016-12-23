@@ -783,6 +783,8 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
+		BurnYM3812Scan(nAction, pnMin);
+
 		ToaScanBCU2(nAction, pnMin);
 
 		SCAN_VAR(nCyclesDone);

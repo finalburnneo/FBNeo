@@ -238,32 +238,22 @@ static tilemap_callback( background )
 {
 	INT32 attr = DrvGfxROM4[offs];
 
-	*code  = attr & 0x3f;
-	*color = DrvGfxROM4[offs + 0x40];
-	*flags = TILE_FLIPYX(attr >> 6);
-	*gfx = 1;
+	TILE_SET_INFO(1, attr & 0x3f, DrvGfxROM4[offs + 0x40], TILE_FLIPYX(attr >> 6));
 }
 
 static tilemap_callback( foreground )
 {
-	*code = DrvGfxROM4[offs];
-	*color = 0;
-	*flags = 0;
-	*gfx = 2;
+	TILE_SET_INFO(2, DrvGfxROM4[offs], 0, 0);
 }
 
 static tilemap_callback( text )
 {
 	INT32 attr = DrvColRAM[offs];
 
-	*code  = DrvVidRAM[offs] + ((attr & 0x80) << 1);
-	*color = attr & 0x3f;
-	*flags = 0; //TILE_GROUP(attr & 0x3f);
-	*gfx = 0;
-
-	attr = (attr & 0x3f) << 2;
+	TILE_SET_INFO(0, DrvVidRAM[offs] + ((attr & 0x80) << 1), attr & 0x3f, 0);
 
 	// hacky
+	attr = (attr & 0x3f) << 2;
 	GenericTilemapSetTransTable(2, 0, DrvTransTable[attr+0]);
 	GenericTilemapSetTransTable(2, 1, DrvTransTable[attr+1]);
 	GenericTilemapSetTransTable(2, 2, DrvTransTable[attr+2]);
@@ -273,13 +263,11 @@ static tilemap_callback( text )
 static tilemap_scan( background )
 {
 	return ((col * 32 & 0xe0) >> 5) + ((row * 32 & 0xe0) >> 2) + ((col * 32 & 0x3f00) >> 1) + 0x4000;
-	cols = rows = 0;
 }
 
 static tilemap_scan( foreground )
 {
 	return ((col * 16 & 0xf0) >> 4) + (row * 16 & 0xf0) + (col * 16 & 0x700) + ((row * 16 & 0x700) << 3);
-	cols = rows = 0;
 }
 
 static INT32 DrvDoReset()

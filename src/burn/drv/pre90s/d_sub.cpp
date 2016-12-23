@@ -69,7 +69,7 @@ STDINPUTINFO(Sub)
 static struct BurnDIPInfo SubDIPList[]=
 {
 	{0x10, 0xff, 0xff, 0x1f, NULL			},
-	{0x11, 0xff, 0xff, 0xbc, NULL			},
+	{0x11, 0xff, 0xff, 0xfc, NULL			},
 
 	{0   , 0xfe, 0   ,    11, "Coinage"		},
 	{0x10, 0x01, 0xf0, 0x40, "3 Coins 1 Credits"	},
@@ -205,10 +205,8 @@ static UINT8 __fastcall sub_sound_read_port(UINT16 port)
 static tilemap_callback( background )
 {
 	INT32 attr = DrvAttrRAM[offs];
-	*code  = DrvVidRAM[offs] + ((attr & 0xe0) << 3);
-	*color = attr & 0x1f;
-	*gfx = 0;
-	*flags = TILE_OPAQUE;
+
+	TILE_SET_INFO(0, DrvVidRAM[offs] + ((attr & 0xe0) << 3), attr & 0x1f, 0);
 }
 
 static INT32 DrvDoReset()
@@ -408,7 +406,7 @@ static void draw_sprites()
 	{
 		INT32 code  = DrvSprRAM0[i+1];
 		INT32 sx    = DrvSprRAM0[i+0];
-		INT32 sy    = (0xe0 - DrvSprRAM1[i+1]) - 16;
+		INT32 sy    = 0xe0 - DrvSprRAM1[i+1];
 		INT32 color = DrvSprRAM1[i+0] & 0x3f;
 		INT32 flipx =~DrvSprRAM1[i+0] & 0x80;
 		INT32 flipy =~DrvSprRAM1[i+0] & 0x40;

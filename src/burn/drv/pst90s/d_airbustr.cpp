@@ -527,20 +527,14 @@ static tilemap_callback( airbustr0 )
 {
 	INT32 attr = DrvVidRAM0[offs + 0x400];
 
-	*code = DrvVidRAM0[offs + 0x000] + ((attr & 0x0f) << 8);
-	*color = (attr >> 4) + 0x10;
-	*gfx = 0;
-	*flags = 0;
+	TILE_SET_INFO(0, DrvVidRAM0[offs] + ((attr & 0x0f) << 8), (attr >> 4) + 0x10, 0);
 }
 
 static tilemap_callback( airbustr1 )
 {
 	INT32 attr = DrvVidRAM1[offs + 0x400];
 
-	*code = DrvVidRAM1[offs + 0x000] + ((attr & 0x0f) << 8);
-	*color = (attr >> 4) + 0;
-	*gfx = 0;
-	*flags = 0;
+	TILE_SET_INFO(0, DrvVidRAM1[offs] + ((attr & 0x0f) << 8), (attr >> 4), 0);
 }
 
 static INT32 DrvInit()

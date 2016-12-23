@@ -181,10 +181,7 @@ static tilemap_callback( markham )
 {
 	INT32 attr  = DrvVidRAM[offs * 2 + 0];
 
-	*code  = DrvVidRAM[offs * 2 + 1] | ((attr & 0x60) << 3);
-	*color = (attr & 0x1f) | ((attr & 0x80) >> 2);
-	*gfx = 0;
-	*flags = 0;
+	TILE_SET_INFO(0, DrvVidRAM[offs * 2 + 1] | ((attr & 0x60) << 3), (attr & 0x1f) | ((attr & 0x80) >> 2), 0);
 }
 
 static INT32 DrvDoReset()

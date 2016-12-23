@@ -479,40 +479,28 @@ static tilemap_callback( bg )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	*code  = ram[offs] & 0x1fff;
-	*color = ram[offs] >> 13;
-	*gfx = 4;
-	*flags = 0;
+	TILE_SET_INFO(4, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
 }
 
 static tilemap_callback( low )
 {
 	UINT16 *ram = (UINT16*)DrvMloRAM;
 
-	*code  = ram[offs] & 0x1fff;
-	*color = ram[offs] >> 13;
-	*gfx = 3;
-	*flags = 0;
+	TILE_SET_INFO(3, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
 }
 
 static tilemap_callback( mid )
 {
 	UINT16 *ram = (UINT16*)DrvMhiRAM;
 
-	*code  = ram[offs] & 0x1fff;
-	*color = ram[offs] >> 13;
-	*gfx = 2;
-	*flags = 0;
+	TILE_SET_INFO(2, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
 }
 
 static tilemap_callback( txt )
 {
 	UINT16 *ram = (UINT16*)DrvTxtRAM;
 
-	*code  = ram[offs] & 0x1fff;
-	*color = ram[offs] >> 13;
-	*gfx = 1;
-	*flags = 0;
+	TILE_SET_INFO(1, ram[offs] & 0x1fff, ram[offs] >> 13, 0);
 }
 
 static INT32 MwarrInit()

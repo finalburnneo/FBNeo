@@ -487,32 +487,24 @@ static INT32 DrvGfxDecode()
 static tilemap_callback( background0 )
 {
 	INT32 attr = RamBg00[offs * 2 + 0];
+	INT32 color = (attr & 0x1f);
+	if (color & 0x10) color ^= 0x30;
 
-	*code  = RamBg00[offs * 2 + 1] & 0x3fff;
-	*color = (attr & 0x1f);
-	if (*color & 0x10) *color ^= 0x30;
-	*gfx = 1;
-	*flags = TILE_FLIPYX((attr >> 6) & 3);
+	TILE_SET_INFO(1, RamBg00[offs * 2 + 1] & 0x3fff, color, TILE_FLIPYX((attr >> 6) & 3));
 }
 
 static tilemap_callback( background1 )
 {
 	INT32 attr = RamBg01[offs];
 
-	*code  = attr & 0xfff;
-	*color = (attr >> 12) + 0x40;
-	*gfx = 1;
-	*flags = 0;
+	TILE_SET_INFO(1, attr & 0xfff, (attr >> 12) + 0x40, 0);
 }
 
 static tilemap_callback( foreground )
 {
 	INT32 attr = RamFg[offs * 2 + 1] & 0xff;
 
-	*code  = (RamFg[offs * 2] & 0xff) + (attr << 8);
-	*color = attr >> 4;
-	*gfx = 0;
-	*flags = 0;
+	TILE_SET_INFO(0, (RamFg[offs * 2] & 0xff) + (attr << 8), attr >> 4, 0);
 }
 
 static INT32 shadfrceInit()

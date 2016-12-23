@@ -342,30 +342,21 @@ static UINT8 bwing_sound_read(UINT16 address)
 static tilemap_scan( bwing_scan_cols )
 {
 	return (row & 0xf) | ((col & 0xf) << 4) | ((row & 0x30) << 4) | ((col & 0x30) << 6);
-	cols = rows = 0; // kill warnings
 }
 
 static tilemap_callback( bglayer )
 {
-	*code = DrvBgRAM[offs] & 0x7f;
-	*color = DrvBgRAM[offs] >> 7;
-	*gfx = 2;
-	*flags = 0;
+	TILE_SET_INFO(2, DrvBgRAM[offs] & 0x7f, DrvBgRAM[offs] >> 7, 0);
 }
 
 static tilemap_callback( fglayer )
 {
-	*code = DrvFgRAM[offs] & 0x7f;
-	*color = DrvFgRAM[offs] >> 7;
-	*gfx = 1;
-	*flags = 0;
+	TILE_SET_INFO(1, DrvFgRAM[offs] & 0x7f, DrvFgRAM[offs] >> 7, 0);
 }
 
 static tilemap_callback( txlayer )
 {
-	*code = DrvVidRAM[offs];
-	*gfx = 0;
-	*color = *flags = 0;
+	TILE_SET_INFO(0, DrvVidRAM[offs] & 0x7f, 0, 0);
 }
 
 static INT32 DrvDACSync()
@@ -535,8 +526,6 @@ static INT32 DrvInit()
 	M6502SetWriteHandler(bwing_sound_write);
 	M6502SetReadHandler(bwing_sound_read);
 	M6502SetReadPortHandler(bwing_sound_read_port);
-	M6502SetWriteMemIndexHandler(bwing_sound_write);
-	M6502SetReadMemIndexHandler(bwing_sound_read);
 	M6502Close();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);

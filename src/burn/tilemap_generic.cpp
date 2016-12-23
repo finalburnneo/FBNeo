@@ -5,8 +5,8 @@
 
 struct GenericTilemap {
 	UINT8 initialized;
-	INT32 (*pScan)(INT32 cols, INT32 rows, INT32 col, INT32 row);
-	void (*pTile)(INT32 offs, INT32 *gfx, INT32 *code, INT32 *color, UINT32 *flags);
+	INT32 (*pScan)(INT32 col, INT32 row);
+	void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags);
 	UINT8 enable;
 	UINT32 mwidth;
 	UINT32 mheight;
@@ -40,7 +40,7 @@ static GenericTilemap maps[MAX_TILEMAPS];
 static GenericTilemapGfx gfxdata[MAX_TILEMAPS];
 static GenericTilemap *cur_map;
 
-void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 cols, INT32 rows, INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *gfx, INT32 *code, INT32 *color, UINT32 *flags), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
+void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height)
 {
 	if (Debug_GenericTilesInitted == 0) {
 		bprintf (0, _T("Please call GenericTilesInit() before GenericTilemapInit()!\n"));
@@ -536,13 +536,15 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		if (maxy >= nScreenHeight) maxy = nScreenHeight;
 	}
 
+	INT32 opaque = priority & TMAP_FORCEOPAQUE;
+
 	INT32 tgroup = (priority >> 8) & 0xff;
 	priority &= 0xff;
 
 	if ((cur_map->scrollx_table != NULL) && (cur_map->scroll_rows > cur_map->mheight))
 	{
 		INT32 transparent = 0xffff;
-		if (cur_map->flags & TMAP_TRANSPARENT) transparent = cur_map->transparent[0];
+		if (cur_map->flags & TMAP_TRANSPARENT && opaque == 0) transparent = cur_map->transparent[0];
 		INT32 bitmap_width = maxx - minx;
 		UINT16 *dest = Bitmap;
 		UINT8 *prio = pPrioDraw;
@@ -575,7 +577,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				INT32 code = 0, color = 0, flip = 0, group = 0, gfxnum = 0;
 				UINT32 flags = 0;
 
-				cur_map->pTile(cur_map->pScan(cur_map->mwidth,cur_map->mheight,col,row), &gfxnum, &code, &color, &flags);
+				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags);
 
 				if (flags & TILE_SKIP) continue; // skip this tile
 
@@ -643,7 +645,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		INT32 code = 0, color = 0, flip = 0, group = 0, gfxnum = 0;
 		UINT32 flags = 0;
 			
-		cur_map->pTile(cur_map->pScan(cur_map->mwidth,cur_map->mheight,col,row), &gfxnum, &code, &color, &flags);
+		cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags);
 
 		if (flags & TILE_SKIP) continue; // skip this tile
 
@@ -707,7 +709,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 		if (sx < minx || sy < miny || sx >= (INT32)(maxx - cur_map->twidth - 1) || sy >= (INT32)(maxy - cur_map->theight - 1))
 		{
-			if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0)
+			if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
 			{
 				if (flip & TMAP_FLIPY) {
 					if (flip & TMAP_FLIPX) {
@@ -723,7 +725,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 					}
 				}
 			}
-			else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0)
+			else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
 			{
 				if (flip & TMAP_FLIPY) {
 					if (flip & TMAP_FLIPX) {
@@ -758,7 +760,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		} 
 		else
 		{
-			if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0)
+			if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
 			{
 				if (flip & TMAP_FLIPY) {
 					if (flip & TMAP_FLIPX) {
@@ -774,7 +776,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 					}
 				}
 			}
-			else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0)
+			else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
 			{
 				if (flip & TMAP_FLIPY) {
 					if (flip & TMAP_FLIPX) {
@@ -812,16 +814,12 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 tilemap_scan( scan_rows )
 {
-	return (cols * row) + col;
-
-	if (rows) return 1; // kill warnings
+	return (cur_map->mwidth * row) + col;
 }
 
 tilemap_scan( scan_cols )
 {
-	return (rows * col) + row;
-
-	if (cols) return 1; // kill warnings
+	return (cur_map->mheight * col) + row;
 }
 
 

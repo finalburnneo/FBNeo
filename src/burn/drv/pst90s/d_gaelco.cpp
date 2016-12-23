@@ -812,11 +812,9 @@ static tilemap_callback( screen0 )
 	INT32 attr0 = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
 	INT32 attr1 = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
 
-	*code   = (attr0 & 0xfffc) >> 2;
-	*color  = (attr1 & 0x003f);
-	*flags  = TILE_FLIPYX(attr0 & 0x0003);
-	*flags |= TILE_GROUP((attr1 >> 6) & 3);
-	*gfx = 1;
+	INT32 flags = TILE_FLIPYX(attr0 & 0x0003) | TILE_GROUP((attr1 >> 6) & 3);
+
+	TILE_SET_INFO(1, (attr0 & 0xfffc) >> 2, (attr1 & 0x003f), flags);
 }
 
 static tilemap_callback( screen1 )
@@ -826,11 +824,9 @@ static tilemap_callback( screen1 )
 	INT32 attr0 = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 0]);
 	INT32 attr1 = BURN_ENDIAN_SWAP_INT16(ram[offs * 2 + 1]);
 
-	*code   = (attr0 & 0xfffc) >> 2;
-	*color  = (attr1 & 0x003f);
-	*flags  = TILE_FLIPYX(attr0 & 0x0003);
-	*flags |= TILE_GROUP((attr1 >> 6) & 3);
-	*gfx = 1;
+	INT32 flags = TILE_FLIPYX(attr0 & 0x0003) | TILE_GROUP((attr1 >> 6) & 3);
+
+	TILE_SET_INFO(1, (attr0 & 0xfffc) >> 2, (attr1 & 0x003f), flags);
 }
 
 static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sound_cpu)
@@ -1083,14 +1079,19 @@ static INT32 DrvDraw()
 	GenericTilemapSetTransparent(0, 0);
 	GenericTilemapSetTransparent(1, 0);
 
+#if 1
 	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(3) | 0);
 	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(3) | 0);
+
 	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(2) | 1);
 	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(2) | 1);
+
 	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1) | 2);
 	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1) | 2);
+
 	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0) | 4);
 	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0) | 4);
+#endif
 
 	draw_sprites();
 

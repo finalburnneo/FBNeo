@@ -633,30 +633,21 @@ static tilemap_callback( rtlayer )
 {
 	UINT16 *ram = (UINT16*)DrvRotRAM;
 
-	*code = ram[offs * 2 + 0];
-	*color = ram[offs * 2 + 1] & 0x000f;
-	*gfx = 2;
-	*flags = 0;
+	TILE_SET_INFO(2, ram[offs * 2 + 0], ram[offs * 2 + 1] & 0x000f, 0);
 }
 
 static tilemap_callback( bglayer )
 {
 	UINT16 *ram = (UINT16*)DrvVBgRAM;
 
-	*code = ram[offs * 2 + 0];
-	*color = ram[offs * 2 + 1] & 0x000f;
-	*gfx = 1;
-	*flags = 0;
+	TILE_SET_INFO(1, ram[offs * 2 + 0], ram[offs * 2 + 1] & 0x000f, 0);
 }
 
 static tilemap_callback( fglayer )
 {
 	UINT16 *ram = (UINT16*)DrvVFgRAM;
 
-	*code  = ram[offs * 2 + 0];
-	*color = ram[offs * 2 + 1] & 0x000f;
-	*gfx = 3;
-	*flags = 0;
+	TILE_SET_INFO(3, ram[offs * 2 + 0], ram[offs * 2 + 1] & 0x000f, 0);
 }
 
 static INT32 Tetrisp2Init()

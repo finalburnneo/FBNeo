@@ -14,7 +14,7 @@
 #define TMAP_FLIPXY		(TMAP_FLIPX | TMAP_FLIPY)
 
 // force the tilemap to ignore any transparency settings
-#define TMAP_FORCEOPAQUE	(1 <<  8)
+#define TMAP_FORCEOPAQUE	(1 << 24)
 
 // set tilemap to use transparent color (is set when using GenericTilemapSetTransparent)
 #define TMAP_TRANSPARENT	(1 <<  9)
@@ -51,8 +51,15 @@
 #define TILE_GROUP(x)		(((x) << 16) | TILE_GROUP_ENABLE)
 
 // This are used to make sure the tilemap functions are given standard names
-#define tilemap_callback( xname )	void xname##_map_callback(INT32 offs, INT32 *gfx, INT32 *code, INT32 *color, UINT32 *flags)
-#define tilemap_scan( xname )		INT32 xname##_map_scan(INT32 cols, INT32 rows, INT32 col, INT32 row)
+#define tilemap_callback( xname )	void xname##_map_callback(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags)
+#define tilemap_scan( xname )		INT32 xname##_map_scan(INT32 col, INT32 row)
+
+// Pass the tilemap callback variables using this macro (looks nice)
+#define TILE_SET_INFO(ttgfx, ttcode, ttcolor, ttflags)	\
+	*tile_gfx = (ttgfx);	\
+	*tile_code = (ttcode);	\
+	*tile_color = (ttcolor);	\
+	*tile_flags = (ttflags)
 
 // The tilemap scan calculates the offset of the current tile information in the video ram
 // these are the two most common variations
@@ -71,7 +78,7 @@ extern tilemap_scan( scan_cols );
 // tile_height	- how many pixels tall are the tiles
 // map_width	- how many tiles wide is the tile map
 // map_height	- how many tiles high is the tile map
-void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 cols, INT32 rows, INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *gfx, INT32 *code, INT32 *color, UINT32 *flags), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height);
+void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height);
 
 // SetGfx sets information on the tile data the tile map is drawing.
 // THIS MUST BE USED in conjunction with GenericTilemapInit

@@ -247,10 +247,9 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 static tilemap_callback( atetris )
 {
-	*gfx  = 0;
-	*code  = DrvVidRAM[offs * 2 + 0] | ((DrvVidRAM[offs * 2 + 1] & 0x07) << 8);
-	*color = DrvVidRAM[offs * 2 + 1] >> 4;
-	*flags = 0;
+	INT32 attr = DrvVidRAM[offs * 2 + 1];
+
+	TILE_SET_INFO(0, DrvVidRAM[offs * 2 + 0] | ((attr & 0x07) << 8), attr >> 4, 0);
 }
 
 static void DrvGfxExpand()

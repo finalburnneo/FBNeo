@@ -565,30 +565,21 @@ static tilemap_callback( background )
 {
 	UINT16 *ram = (UINT16*)DrvBgRAM;
 
-	*code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff;
-	*color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
-	*gfx = 1;
-	*flags = 0;
+	TILE_SET_INFO(1, BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12, 0);
 }
 
 static tilemap_callback( foreground )
 {
 	UINT16 *ram = (UINT16*)DrvFgRAM;
 
-	*code  =(BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff) + (0x1000);
-	*color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
-	*gfx = 2;
-	*flags = 0;
+	TILE_SET_INFO(2, (BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff) + 0x1000, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12, 0);
 }
 
 static tilemap_callback( text )
 {
 	UINT16 *ram = (UINT16*)DrvTxRAM;
 
-	*code  = BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff;
-	*color = BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12;
-	if (*code == 0) *flags |= TILE_SKIP; // skip this one
-	*gfx = 0;
+	TILE_SET_INFO(0, BURN_ENDIAN_SWAP_INT16(ram[offs]) & 0xfff, BURN_ENDIAN_SWAP_INT16(ram[offs]) >> 12, 0);
 }
 
 static INT32 DrvInit()

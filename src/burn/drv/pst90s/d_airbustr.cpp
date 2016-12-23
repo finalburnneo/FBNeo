@@ -698,7 +698,7 @@ static void draw_layer(INT32 layer, INT32 r0, INT32 r1, INT32 r2, INT32 r3)
 	GenericTilemapSetFlip(layer, (*flipscreen) ? TMAP_FLIPXY : 0);
 	GenericTilemapSetScrollX(layer, scrollx);
 	GenericTilemapSetScrollY(layer, scrolly);
-	GenericTilemapDraw(layer, pTransDraw, -1);
+	GenericTilemapDraw(layer, pTransDraw, 0);
 }
 
 static INT32 DrvDraw()

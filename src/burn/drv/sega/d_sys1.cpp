@@ -1692,19 +1692,19 @@ static struct BurnRomInfo FourdwarrioRomDesc[] = {
 	
 	{ "4d.120",            0x002000, 0x5241c009, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "4d.62",             0x002000, 0xf31b2e09, BRF_GRA },		  //  4 Tiles
-	{ "4d.61",             0x002000, 0x5430e925, BRF_GRA },		  //  5 Tiles
-	{ "4d.64",             0x002000, 0x9f442351, BRF_GRA },		  //  6 Tiles
-	{ "4d.63",             0x002000, 0x633232bd, BRF_GRA },		  //  7 Tiles
-	{ "4d.66",             0x002000, 0x52bfa2ed, BRF_GRA },		  //  8 Tiles
-	{ "4d.65",             0x002000, 0xe9ba4658, BRF_GRA },		  //  9 Tiles
+	{ "4d.62",             0x002000, 0xf31b2e09, BRF_GRA },		  	  //  4 Tiles
+	{ "4d.61",             0x002000, 0x5430e925, BRF_GRA },		  	  //  5 Tiles
+	{ "4d.64",             0x002000, 0x9f442351, BRF_GRA },		  	  //  6 Tiles
+	{ "4d.63",             0x002000, 0x633232bd, BRF_GRA },		  	  //  7 Tiles
+	{ "4d.66",             0x002000, 0x52bfa2ed, BRF_GRA },		  	  //  8 Tiles
+	{ "4d.65",             0x002000, 0xe9ba4658, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "4d.117",            0x004000, 0x436e4141, BRF_GRA },		  //  10 Sprites
-	{ "4d.04",             0x004000, 0x8b7cecef, BRF_GRA },		  //  11 Sprites
-	{ "4d.110",            0x004000, 0x6ec5990a, BRF_GRA },		  //  12 Sprites
-	{ "4d.05",             0x004000, 0xf31a1e6a, BRF_GRA },		  //  13 Sprites
+	{ "4d.117",            0x004000, 0x436e4141, BRF_GRA },		  	  // 10 Sprites
+	{ "4d.04",             0x004000, 0x8b7cecef, BRF_GRA },		  	  // 11 Sprites
+	{ "4d.110",            0x004000, 0x6ec5990a, BRF_GRA },		  	  // 12 Sprites
+	{ "4d.05",             0x004000, 0xf31a1e6a, BRF_GRA },		  	  // 13 Sprites
 
-	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Fourdwarrio)
@@ -1716,21 +1716,21 @@ static struct BurnRomInfo BlockgalRomDesc[] = {
 	
 	{ "bg.120",            0x002000, 0xd848faff, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
 	
-	{ "bg.62",             0x002000, 0x7e3ea4eb, BRF_GRA },		  //  3 Tiles
-	{ "bg.61",             0x002000, 0x4dd3d39d, BRF_GRA },		  //  4 Tiles
-	{ "bg.64",             0x002000, 0x17368663, BRF_GRA },		  //  5 Tiles
-	{ "bg.63",             0x002000, 0x0c8bc404, BRF_GRA },		  //  6 Tiles
-	{ "bg.66",             0x002000, 0x2b7dc4fa, BRF_GRA },		  //  7 Tiles
-	{ "bg.65",             0x002000, 0xed121306, BRF_GRA },		  //  8 Tiles
+	{ "bg.62",             0x002000, 0x7e3ea4eb, BRF_GRA },		  	  //  3 Tiles
+	{ "bg.61",             0x002000, 0x4dd3d39d, BRF_GRA },		  	  //  4 Tiles
+	{ "bg.64",             0x002000, 0x17368663, BRF_GRA },		  	  //  5 Tiles
+	{ "bg.63",             0x002000, 0x0c8bc404, BRF_GRA },		  	  //  6 Tiles
+	{ "bg.66",             0x002000, 0x2b7dc4fa, BRF_GRA },		  	  //  7 Tiles
+	{ "bg.65",             0x002000, 0xed121306, BRF_GRA },		  	  //  8 Tiles
 	
-	{ "bg.117",            0x004000, 0xe99cc920, BRF_GRA },		  //  9 Sprites
-	{ "bg.04",             0x004000, 0x213057f8, BRF_GRA },		  //  10 Sprites
-	{ "bg.110",            0x004000, 0x064c812c, BRF_GRA },		  //  11 Sprites
-	{ "bg.05",             0x004000, 0x02e0b040, BRF_GRA },		  //  12 Sprites
+	{ "bg.117",            0x004000, 0xe99cc920, BRF_GRA },		  	  //  9 Sprites
+	{ "bg.04",             0x004000, 0x213057f8, BRF_GRA },		  	  // 10 Sprites
+	{ "bg.110",            0x004000, 0x064c812c, BRF_GRA },		  	  // 11 Sprites
+	{ "bg.05",             0x004000, 0x02e0b040, BRF_GRA },		  	  // 12 Sprites
 
-	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  //  13 Timing PROM
+	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  	  // 13 Timing PROM
 	
-	{ "317-0029.key",      0x002000, 0x350d7f93, BRF_ESS | BRF_PRG }, //  14 MC8123 Key
+	{ "317-0029.key",      0x002000, 0x350d7f93, BRF_ESS | BRF_PRG }, // 14 MC8123 Key
 };
 
 STD_ROM_PICK(Blockgal)
@@ -1743,18 +1743,18 @@ static struct BurnRomInfo BrainRomDesc[] = {
 	
 	{ "brain.120",         0x008000, 0xc7e50278, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "brain.62",          0x004000, 0x7dce2302, BRF_GRA },		  //  4 Tiles
-	{ "brain.64",          0x004000, 0x7ce03fd3, BRF_GRA },		  //  5 Tiles
-	{ "brain.66",          0x004000, 0xea54323f, BRF_GRA },		  //  6 Tiles
+	{ "brain.62",          0x004000, 0x7dce2302, BRF_GRA },		  	  //  4 Tiles
+	{ "brain.64",          0x004000, 0x7ce03fd3, BRF_GRA },		  	  //  5 Tiles
+	{ "brain.66",          0x004000, 0xea54323f, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "brain.117",         0x008000, 0x92ff71a4, BRF_GRA },		  //  7 Sprites
-	{ "brain.110",         0x008000, 0xa1b847ec, BRF_GRA },		  //  8 Sprites
-	{ "brain.4",           0x008000, 0xfd2ea53b, BRF_GRA },		  //  9 Sprites
+	{ "brain.117",         0x008000, 0x92ff71a4, BRF_GRA },		  	  //  7 Sprites
+	{ "brain.110",         0x008000, 0xa1b847ec, BRF_GRA },		  	  //  8 Sprites
+	{ "brain.4",           0x008000, 0xfd2ea53b, BRF_GRA },		  	  //  9 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  //  10 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  //  11 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  //  12 Blue PROM
-	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  //  13 Timing PROM
+	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  	  // 10 Red PROM
+	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  	  // 11 Green PROM
+	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  	  // 12 Blue PROM
+	{ "pr5317.76",         0x000100, 0x648350b8, BRF_OPT },		  	  // 13 Timing PROM
 };
 
 STD_ROM_PICK(Brain)
@@ -1770,17 +1770,17 @@ static struct BurnRomInfo BullfgtRomDesc[] = {
 	
 	{ "epr-6077.120",      0x002000, 0x02a37602, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
 	
-	{ "epr-.82",           0x002000, 0xb71c349f, BRF_GRA },		  //  7 Tiles
-	{ "epr-.65",           0x002000, 0x86deafa8, BRF_GRA },		  //  8 Tiles
-	{ "epr-6087.81",       0x002000, 0x2677742c, BRF_GRA },		  //  9 Tiles
-	{ "epr-.64",           0x002000, 0x6f0a62be, BRF_GRA },		  //  10 Tiles
-	{ "epr-6085.80",       0x002000, 0x9c3ddc62, BRF_GRA },		  //  11 Tiles
-	{ "epr-.63",           0x002000, 0xc0fce57c, BRF_GRA },		  //  12 Tiles
+	{ "epr-.82",           0x002000, 0xb71c349f, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-.65",           0x002000, 0x86deafa8, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6087.81",       0x002000, 0x2677742c, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-.64",           0x002000, 0x6f0a62be, BRF_GRA },		  	  // 10 Tiles
+	{ "epr-6085.80",       0x002000, 0x9c3ddc62, BRF_GRA },		  	  // 11 Tiles
+	{ "epr-.63",           0x002000, 0xc0fce57c, BRF_GRA },		  	  // 12 Tiles
 	
-	{ "epr-6069.86",       0x004000, 0xfe691e41, BRF_GRA },		  //  13 Sprites
-	{ "epr-6070.93",       0x004000, 0x34f080df, BRF_GRA },		  //  14 Sprites
+	{ "epr-6069.86",       0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
+	{ "epr-6070.93",       0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  15 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Bullfgt)
@@ -1793,17 +1793,17 @@ static struct BurnRomInfo ThetogyuRomDesc[] = {
 	
 	{ "epr-6077.120",      0x002000, 0x02a37602, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
 	
-	{ "epr-6089.62",       0x002000, 0xa183e5ff, BRF_GRA },		  //  7 Tiles
-	{ "epr-6088.61",       0x002000, 0xb919b4a6, BRF_GRA },		  //  8 Tiles
-	{ "epr-6087.64",       0x002000, 0x2677742c, BRF_GRA },		  //  9 Tiles
-	{ "epr-6086.63",       0x002000, 0x76b5a084, BRF_GRA },		  //  10 Tiles
-	{ "epr-6085.66",       0x002000, 0x9c3ddc62, BRF_GRA },		  //  11 Tiles
-	{ "epr-6084.65",       0x002000, 0x90e1fa5f, BRF_GRA },		  //  12 Tiles
+	{ "epr-6089.62",       0x002000, 0xa183e5ff, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-6088.61",       0x002000, 0xb919b4a6, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6087.64",       0x002000, 0x2677742c, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-6086.63",       0x002000, 0x76b5a084, BRF_GRA },		  	  // 10 Tiles
+	{ "epr-6085.66",       0x002000, 0x9c3ddc62, BRF_GRA },		  	  // 11 Tiles
+	{ "epr-6084.65",       0x002000, 0x90e1fa5f, BRF_GRA },		  	  // 12 Tiles
 	
-	{ "epr-6069.117",      0x004000, 0xfe691e41, BRF_GRA },		  //  13 Sprites
-	{ "epr-6070.110",      0x004000, 0x34f080df, BRF_GRA },		  //  14 Sprites
+	{ "epr-6069.117",      0x004000, 0xfe691e41, BRF_GRA },		  	  // 13 Sprites
+	{ "epr-6070.110",      0x004000, 0x34f080df, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  15 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Thetogyu)
@@ -1815,21 +1815,40 @@ static struct BurnRomInfo FlickyRomDesc[] = {
 	
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
 	
-	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  //  3 Tiles
-	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  //  4 Tiles
-	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  //  5 Tiles
-	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  //  6 Tiles
-	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  //  7 Tiles
-	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  //  8 Tiles
+	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  3 Tiles
+	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  //  8 Tiles
 	
-	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  //  9 Sprites
-	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  //  10 Sprites
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  9 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 10 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  11 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 11 Timing PROM
 };
 
 STD_ROM_PICK(Flicky)
 STD_ROM_FN(Flicky)
+
+static struct BurnRomInfo FlickyaRomDesc[] = {
+	{ "epr5978a.116",      0x004000, 0x296f1492, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr5979a.109",      0x004000, 0x64b03ef9, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	
+	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
+	
+	{ "epr-6001.62",       0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
+	{ "epr-6000.64",       0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-5999.66",       0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
+		
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
+
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  //  8 Timing PROM
+};
+
+STD_ROM_PICK(Flickya)
+STD_ROM_FN(Flickya)
 
 static struct BurnRomInfo FlickygRomDesc[] = {
 	{ "epr5978a.116",      0x004000, 0x296f1492, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -1837,14 +1856,14 @@ static struct BurnRomInfo FlickygRomDesc[] = {
 	
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
 	
-	{ "66xx.ic62",         0x004000, 0xf1a75200, BRF_GRA },		  //  3 Tiles
-	{ "66x0.ic64",         0x004000, 0x299aefb7, BRF_GRA },		  //  4 Tiles
-	{ "5999.ic66",         0x004000, 0x1ca53157, BRF_GRA },		  //  5 Tiles
+	{ "66xx.ic62",         0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
+	{ "66x0.ic64",         0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
+	{ "5999.ic66",         0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
 	
-	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  //  8 Sprites
-	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  //  9 Sprites
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  10 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  //  8 Timing PROM
 };
 
 STD_ROM_PICK(Flickyg)
@@ -1858,17 +1877,17 @@ static struct BurnRomInfo Flickys1RomDesc[] = {
 	
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
 	
-	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  //  5 Tiles
-	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  //  6 Tiles
-	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  //  7 Tiles
-	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  //  8 Tiles
-	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  //  9 Tiles
-	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  //  10 Tiles
+	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  // 10 Tiles
 	
-	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  //  11 Sprites
-	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  //  12 Sprites
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  // 11 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 12 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  13 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 13 Timing PROM
 };
 
 STD_ROM_PICK(Flickys1)
@@ -1880,17 +1899,17 @@ static struct BurnRomInfo Flickys2RomDesc[] = {
 	
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
 	
-	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  //  3 Tiles
-	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  //  4 Tiles
-	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  //  5 Tiles
-	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  //  6 Tiles
-	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  //  7 Tiles
-	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  //  8 Tiles
+	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  3 Tiles
+	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  //  8 Tiles
 	
-	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  //  9 Sprites
-	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  //  10 Sprites
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  9 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 10 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  11 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 11 Timing PROM
 };
 
 STD_ROM_PICK(Flickys2)
@@ -1902,14 +1921,14 @@ static struct BurnRomInfo Flickys2gRomDesc[] = {
 	
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program Code
 	
-	{ "66xx.ic62",         0x004000, 0xf1a75200, BRF_GRA },		  //  3 Tiles
-	{ "66x0.ic64",         0x004000, 0x299aefb7, BRF_GRA },		  //  4 Tiles
-	{ "5999.ic66",         0x004000, 0x1ca53157, BRF_GRA },		  //  5 Tiles
+	{ "66xx.ic62",         0x004000, 0xf1a75200, BRF_GRA },		  	  //  3 Tiles
+	{ "66x0.ic64",         0x004000, 0x299aefb7, BRF_GRA },		  	  //  4 Tiles
+	{ "5999.ic66",         0x004000, 0x1ca53157, BRF_GRA },		  	  //  5 Tiles
 	
-	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  //  6 Sprites
-	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  //  7 Sprites
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  //  6 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  //  7 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  8 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  //  8 Timing PROM
 };
 
 STD_ROM_PICK(Flickys2g)
@@ -1923,17 +1942,17 @@ static struct BurnRomInfo FlickyoRomDesc[] = {
 	
 	{ "epr-5869.120",      0x002000, 0x6d220d4e, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
 	
-	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  //  5 Tiles
-	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  //  6 Tiles
-	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  //  7 Tiles
-	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  //  8 Tiles
-	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  //  9 Tiles
-	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  //  10 Tiles
+	{ "epr-5868.62",       0x002000, 0x7402256b, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-5867.61",       0x002000, 0x2f5ce930, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-5866.64",       0x002000, 0x967f1d9a, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-5865.63",       0x002000, 0x03d9a34c, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-5864.66",       0x002000, 0xe659f358, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-5863.65",       0x002000, 0xa496ca15, BRF_GRA },		  	  // 10 Tiles
 	
-	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  //  11 Sprites
-	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  //  12 Sprites
+	{ "epr-5855.117",      0x004000, 0xb5f894a1, BRF_GRA },		  	  // 11 Sprites
+	{ "epr-5856.110",      0x004000, 0x266af78f, BRF_GRA },		  	  // 12 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  13 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 13 Timing PROM
 };
 
 STD_ROM_PICK(Flickyo)
@@ -1946,19 +1965,19 @@ static struct BurnRomInfo GardiaRomDesc[] = {
 	
 	{ "epr10243.120",      0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr10249.61",       0x004000, 0x4e0ad0f2, BRF_GRA },		  //  4 Tiles
-	{ "epr10248.64",       0x004000, 0x3515d124, BRF_GRA },		  //  5 Tiles
-	{ "epr10247.66",       0x004000, 0x541e1555, BRF_GRA },		  //  6 Tiles
+	{ "epr10249.61",       0x004000, 0x4e0ad0f2, BRF_GRA },		  	  //  4 Tiles
+	{ "epr10248.64",       0x004000, 0x3515d124, BRF_GRA },		  	  //  5 Tiles
+	{ "epr10247.66",       0x004000, 0x541e1555, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  //  7 Sprites
-	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  //  8 Sprites
-	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  //  9 Sprites
-	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  //  10 Sprites
+	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
+	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
+	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
+	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  //  11 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  //  12 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  //  13 Blue PROM
-	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
+	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM
+	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  	  // 13 Blue PROM
+	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Gardia)
@@ -1971,19 +1990,19 @@ static struct BurnRomInfo GardiabRomDesc[] = {
 	
 	{ "epr10243.120",      0x004000, 0x87220660, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "gardiabl.8",        0x004000, 0x367c9a17, BRF_GRA },		  //  4 Tiles
-	{ "gardiabl.9",        0x004000, 0x1540fd30, BRF_GRA },		  //  5 Tiles
-	{ "gardiabl.10",       0x004000, 0xe5c9af10, BRF_GRA },		  //  6 Tiles
+	{ "gardiabl.8",        0x004000, 0x367c9a17, BRF_GRA },		  	  //  4 Tiles
+	{ "gardiabl.9",        0x004000, 0x1540fd30, BRF_GRA },		  	  //  5 Tiles
+	{ "gardiabl.10",       0x004000, 0xe5c9af10, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  //  7 Sprites
-	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  //  8 Sprites
-	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  //  9 Sprites
-	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  //  10 Sprites
+	{ "epr10234.117",      0x008000, 0x8a6aed33, BRF_GRA },		  	  //  7 Sprites
+	{ "epr10233.110",      0x008000, 0xc52784d3, BRF_GRA },		  	  //  8 Sprites
+	{ "epr10236.04",       0x008000, 0xb35ab227, BRF_GRA },		  	  //  9 Sprites
+	{ "epr10235.5",        0x008000, 0x006a3151, BRF_GRA },		  	  // 10 Sprites
 
-	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  //  11 Red PROM
-	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  //  12 Green PROM
-	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  //  13 Blue PROM
-	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "bprom.3",           0x000100, 0x8eee0f72, BRF_GRA },		  	  // 11 Red PROM
+	{ "bprom.2",           0x000100, 0x3e7babd7, BRF_GRA },		  	  // 12 Green PROM
+	{ "bprom.1",           0x000100, 0x371c44a6, BRF_GRA },		  	  // 13 Blue PROM
+	{ "pr5317.4",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Gardiab)
@@ -1994,21 +2013,21 @@ static struct BurnRomInfo GardiajRomDesc[] = {
 	{ "epr-10251.ic91",     0x8000, 0xb2ed05dc, BRF_ESS | BRF_PRG }, //  1
 	{ "epr-10252.ic92",     0x8000, 0x0a490588, BRF_ESS | BRF_PRG }, //  2
 
-	{ "epr-10243.ic126",    0x4000, 0x87220660, BRF_ESS | BRF_PRG }, //  Z80 #2 Program Code
+	{ "epr-10243.ic126",    0x4000, 0x87220660, BRF_ESS | BRF_PRG }, //  3 Z80 #2 Program Code
 
-	{ "epr-10240.ic4",      0x8000, 0x998ce090, BRF_GRA }, //  4 Tiles
-	{ "epr-10241.ic5",      0x8000, 0x81ab0b07, BRF_GRA }, //  5
-	{ "epr-10242.ic6",      0x8000, 0x2dc4c4c7, BRF_GRA }, //  6
+	{ "epr-10240.ic4",      0x8000, 0x998ce090, BRF_GRA }, 			//  4 Tiles
+	{ "epr-10241.ic5",      0x8000, 0x81ab0b07, BRF_GRA }, 			//  5
+	{ "epr-10242.ic6",      0x8000, 0x2dc4c4c7, BRF_GRA }, 			//  6
 
-	{ "epr-10234.ic87",     0x8000, 0x8a6aed33, BRF_GRA }, //  7 Sprites
-	{ "epr-10233.ic86",     0x8000, 0xc52784d3, BRF_GRA }, //  8
-	{ "epr-10236.ic89",     0x8000, 0xb35ab227, BRF_GRA }, //  9
-	{ "epr-10235.ic88",     0x8000, 0x006a3151, BRF_GRA }, // 10
+	{ "epr-10234.ic87",     0x8000, 0x8a6aed33, BRF_GRA }, 			//  7 Sprites
+	{ "epr-10233.ic86",     0x8000, 0xc52784d3, BRF_GRA }, 			//  8
+	{ "epr-10236.ic89",     0x8000, 0xb35ab227, BRF_GRA }, 			//  9
+	{ "epr-10235.ic88",     0x8000, 0x006a3151, BRF_GRA }, 			// 10
 
-	{ "pr-7345.ic20",       0x0100, 0x8eee0f72, BRF_GRA }, // 11 Palette
-	{ "pr-7344.ic14",       0x0100, 0x3e7babd7, BRF_GRA }, // 12
-	{ "pr-7343.ic8",        0x0100, 0x371c44a6, BRF_GRA }, // 13
-	{ "pr5317.ic28",        0x0100, 0x648350b8, BRF_OPT }, // 14 Timing proms
+	{ "pr-7345.ic20",       0x0100, 0x8eee0f72, BRF_GRA }, 			// 11 Palette
+	{ "pr-7344.ic14",       0x0100, 0x3e7babd7, BRF_GRA }, 			// 12
+	{ "pr-7343.ic8",        0x0100, 0x371c44a6, BRF_GRA }, 			// 13
+	{ "pr5317.ic28",        0x0100, 0x648350b8, BRF_OPT }, 			// 14 Timing proms
 };
 
 STD_ROM_PICK(Gardiaj)
@@ -2021,23 +2040,23 @@ static struct BurnRomInfo HvymetalRomDesc[] = {
 	
 	{ "epr6787.120",       0x008000, 0xb64ac7f0, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr6795.62",        0x004000, 0x58a3d038, BRF_GRA },		  //  4 Tiles
-	{ "epr6796.61",        0x004000, 0xd8b08a55, BRF_GRA },		  //  5 Tiles
-	{ "epr6793.64",        0x004000, 0x487407c2, BRF_GRA },		  //  6 Tiles
-	{ "epr6794.63",        0x004000, 0x89eb3793, BRF_GRA },		  //  7 Tiles
-	{ "epr6791.66",        0x004000, 0xa7dcd042, BRF_GRA },		  //  8 Tiles
-	{ "epr6792.65",        0x004000, 0xd0be5e33, BRF_GRA },		  //  9 Tiles
+	{ "epr6795.62",        0x004000, 0x58a3d038, BRF_GRA },		  	  //  4 Tiles
+	{ "epr6796.61",        0x004000, 0xd8b08a55, BRF_GRA },		  	  //  5 Tiles
+	{ "epr6793.64",        0x004000, 0x487407c2, BRF_GRA },		  	  //  6 Tiles
+	{ "epr6794.63",        0x004000, 0x89eb3793, BRF_GRA },		  	  //  7 Tiles
+	{ "epr6791.66",        0x004000, 0xa7dcd042, BRF_GRA },		  	  //  8 Tiles
+	{ "epr6792.65",        0x004000, 0xd0be5e33, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr6778.117",       0x008000, 0x0af61aee, BRF_GRA },		  //  10 Sprites
-	{ "epr6777.110",       0x008000, 0x91d7a197, BRF_GRA },		  //  11 Sprites
-	{ "epr6780.4",         0x008000, 0x55b31df5, BRF_GRA },		  //  12 Sprites
-	{ "epr6779.5",         0x008000, 0xe03a2b28, BRF_GRA },		  //  13 Sprites
+	{ "epr6778.117",       0x008000, 0x0af61aee, BRF_GRA },		  	  // 10 Sprites
+	{ "epr6777.110",       0x008000, 0x91d7a197, BRF_GRA },		  	  // 11 Sprites
+	{ "epr6780.4",         0x008000, 0x55b31df5, BRF_GRA },		  	  // 12 Sprites
+	{ "epr6779.5",         0x008000, 0xe03a2b28, BRF_GRA },		  	  // 13 Sprites
 	
-	{ "pr7036.3",          0x000100, 0x146f16fb, BRF_GRA },		  //  14 Red PROM
-	{ "pr7035.2",          0x000100, 0x50b201ed, BRF_GRA },		  //  15 Green PROM
-	{ "pr7034.1",          0x000100, 0xdfb5f139, BRF_GRA },		  //  16 Blue PROM
+	{ "pr7036.3",          0x000100, 0x146f16fb, BRF_GRA },		  	  // 14 Red PROM
+	{ "pr7035.2",          0x000100, 0x50b201ed, BRF_GRA },		  	  // 15 Green PROM
+	{ "pr7034.1",          0x000100, 0xdfb5f139, BRF_GRA },		  	  // 16 Blue PROM
 
-	{ "pr5317p.4",         0x000100, 0x648350b8, BRF_OPT },		  //  17 Timing PROM
+	{ "pr5317p.4",         0x000100, 0x648350b8, BRF_OPT },		  	  // 17 Timing PROM
 };
 
 STD_ROM_PICK(Hvymetal)
@@ -2050,17 +2069,17 @@ static struct BurnRomInfo ImsorryRomDesc[] = {
 	
 	{ "epr-6656.120",      0x002000, 0x25e3d685, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr-6684.62",       0x002000, 0x2c8df377, BRF_GRA },		  //  4 Tiles
-	{ "epr-6683.61",       0x002000, 0x89431c48, BRF_GRA },		  //  5 Tiles
-	{ "epr-6682.64",       0x002000, 0x256a9246, BRF_GRA },		  //  6 Tiles
-	{ "epr-6681.63",       0x002000, 0x6974d189, BRF_GRA },		  //  7 Tiles
-	{ "epr-6680.66",       0x002000, 0x10a629d6, BRF_GRA },		  //  8 Tiles
-	{ "epr-6674.65",       0x002000, 0x143d883c, BRF_GRA },		  //  9 Tiles
+	{ "epr-6684.62",       0x002000, 0x2c8df377, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-6683.61",       0x002000, 0x89431c48, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-6682.64",       0x002000, 0x256a9246, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-6681.63",       0x002000, 0x6974d189, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-6680.66",       0x002000, 0x10a629d6, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6674.65",       0x002000, 0x143d883c, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr-6645.117",      0x004000, 0x1ba167ee, BRF_GRA },		  //  10 Sprites
-	{ "epr-6646.04",       0x004000, 0xedda7ad6, BRF_GRA },		  //  11 Sprites
+	{ "epr-6645.117",      0x004000, 0x1ba167ee, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6646.04",       0x004000, 0xedda7ad6, BRF_GRA },		  	  // 11 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  12 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 12 Timing PROM
 };
 
 STD_ROM_PICK(Imsorry)
@@ -2073,17 +2092,17 @@ static struct BurnRomInfo ImsorryjRomDesc[] = {
 	
 	{ "epr-6656.120",      0x002000, 0x25e3d685, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr-6655.62",       0x002000, 0xbe1f762f, BRF_GRA },		  //  4 Tiles
-	{ "epr-6654.61",       0x002000, 0xed5f7fc8, BRF_GRA },		  //  5 Tiles
-	{ "epr-6653.64",       0x002000, 0x8b4845a7, BRF_GRA },		  //  6 Tiles
-	{ "epr-6652.63",       0x002000, 0x001d68cb, BRF_GRA },		  //  7 Tiles
-	{ "epr-6651.66",       0x002000, 0x4ee9b5e6, BRF_GRA },		  //  8 Tiles
-	{ "epr-6650.65",       0x002000, 0x3fca4414, BRF_GRA },		  //  9 Tiles
+	{ "epr-6655.62",       0x002000, 0xbe1f762f, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-6654.61",       0x002000, 0xed5f7fc8, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-6653.64",       0x002000, 0x8b4845a7, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-6652.63",       0x002000, 0x001d68cb, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-6651.66",       0x002000, 0x4ee9b5e6, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6650.65",       0x002000, 0x3fca4414, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr-6645.117",      0x004000, 0x1ba167ee, BRF_GRA },		  //  10 Sprites
-	{ "epr-6646.04",       0x004000, 0xedda7ad6, BRF_GRA },		  //  11 Sprites
+	{ "epr-6645.117",      0x004000, 0x1ba167ee, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6646.04",       0x004000, 0xedda7ad6, BRF_GRA },		  	  // 11 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  12 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 12 Timing PROM
 };
 
 STD_ROM_PICK(Imsorryj)
@@ -2099,17 +2118,17 @@ static struct BurnRomInfo MrvikingRomDesc[] = {
 	
 	{ "epr-5763.3",        0x002000, 0xd712280d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
 	
-	{ "epr-5762.82",       0x002000, 0x4a91d08a, BRF_GRA },		  //  7 Tiles
-	{ "epr-5761.65",       0x002000, 0xf7d61b65, BRF_GRA },		  //  8 Tiles
-	{ "epr-5760.81",       0x002000, 0x95045820, BRF_GRA },		  //  9 Tiles
-	{ "epr-5759.64",       0x002000, 0x5f9bae4e, BRF_GRA },		  //  10 Tiles
-	{ "epr-5758.80",       0x002000, 0x808ee706, BRF_GRA },		  //  11 Tiles
-	{ "epr-5757.63",       0x002000, 0x480f7074, BRF_GRA },		  //  12 Tiles
+	{ "epr-5762.82",       0x002000, 0x4a91d08a, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-5761.65",       0x002000, 0xf7d61b65, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-5760.81",       0x002000, 0x95045820, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-5759.64",       0x002000, 0x5f9bae4e, BRF_GRA },		  	  // 10 Tiles
+	{ "epr-5758.80",       0x002000, 0x808ee706, BRF_GRA },		  	  // 11 Tiles
+	{ "epr-5757.63",       0x002000, 0x480f7074, BRF_GRA },		  	  // 12 Tiles
 	
-	{ "epr-5749.86",       0x004000, 0xe24682cd, BRF_GRA },		  //  13 Sprites
-	{ "epr-5750.93",       0x004000, 0x6564d1ad, BRF_GRA },		  //  14 Sprites
+	{ "epr-5749.86",       0x004000, 0xe24682cd, BRF_GRA },		  	  // 13 Sprites
+	{ "epr-5750.93",       0x004000, 0x6564d1ad, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  15 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Mrviking)
@@ -2125,17 +2144,17 @@ static struct BurnRomInfo MrvikingjRomDesc[] = {
 	
 	{ "epr-5763.3",        0x002000, 0xd712280d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
 	
-	{ "epr-5762.82",       0x002000, 0x4a91d08a, BRF_GRA },		  //  7 Tiles
-	{ "epr-5761.65",       0x002000, 0xf7d61b65, BRF_GRA },		  //  8 Tiles
-	{ "epr-5760.81",       0x002000, 0x95045820, BRF_GRA },		  //  9 Tiles
-	{ "epr-5759.64",       0x002000, 0x5f9bae4e, BRF_GRA },		  //  10 Tiles
-	{ "epr-5758.80",       0x002000, 0x808ee706, BRF_GRA },		  //  11 Tiles
-	{ "epr-5757.63",       0x002000, 0x480f7074, BRF_GRA },		  //  12 Tiles
+	{ "epr-5762.82",       0x002000, 0x4a91d08a, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-5761.65",       0x002000, 0xf7d61b65, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-5760.81",       0x002000, 0x95045820, BRF_GRA },		  	  //  9 Tiles
+	{ "epr-5759.64",       0x002000, 0x5f9bae4e, BRF_GRA },		  	  // 10 Tiles
+	{ "epr-5758.80",       0x002000, 0x808ee706, BRF_GRA },		  	  // 11 Tiles
+	{ "epr-5757.63",       0x002000, 0x480f7074, BRF_GRA },		  	  // 12 Tiles
 	
-	{ "epr-5749.86",       0x004000, 0xe24682cd, BRF_GRA },		  //  13 Sprites
-	{ "epr-5750.93",       0x004000, 0x6564d1ad, BRF_GRA },		  //  14 Sprites
+	{ "epr-5749.86",       0x004000, 0xe24682cd, BRF_GRA },		  	  // 13 Sprites
+	{ "epr-5750.93",       0x004000, 0x6564d1ad, BRF_GRA },		  	  // 14 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  15 Timing PROM
+	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  	  // 15 Timing PROM
 };
 
 STD_ROM_PICK(Mrvikingj)
@@ -2148,19 +2167,19 @@ static struct BurnRomInfo MyheroRomDesc[] = {
 	
 	{ "epr-69xx.120",      0x002000, 0x0039e1e9, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr-6966.62",       0x002000, 0x157f0401, BRF_GRA },		  //  4 Tiles
-	{ "epr-6961.61",       0x002000, 0xbe53ce47, BRF_GRA },		  //  5 Tiles
-	{ "epr-6960.64",       0x002000, 0xbd381baa, BRF_GRA },		  //  6 Tiles
-	{ "epr-6959.63",       0x002000, 0xbc04e79a, BRF_GRA },		  //  7 Tiles
-	{ "epr-6958.66",       0x002000, 0x714f2c26, BRF_GRA },		  //  8 Tiles
-	{ "epr-6957.65",       0x002000, 0x80920112, BRF_GRA },		  //  9 Tiles
+	{ "epr-6966.62",       0x002000, 0x157f0401, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-6961.61",       0x002000, 0xbe53ce47, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-6960.64",       0x002000, 0xbd381baa, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-6959.63",       0x002000, 0xbc04e79a, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-6958.66",       0x002000, 0x714f2c26, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6957.65",       0x002000, 0x80920112, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  //  10 Sprites
-	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  //  11 Sprites
-	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  //  12 Sprites
-	{ "epr-6924.05",       0x004000, 0x42bdc8f6, BRF_GRA },		  //  13 Sprites
+	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  	  // 11 Sprites
+	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  	  // 12 Sprites
+	{ "epr-6924.05",       0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Myhero)
@@ -2173,19 +2192,19 @@ static struct BurnRomInfo SscandalRomDesc[] = {
 	
 	{ "epr-6934.120",      0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr-6933.62",       0x002000, 0xe7304036, BRF_GRA },		  //  4 Tiles
-	{ "epr-6932.61",       0x002000, 0xf5cfbfda, BRF_GRA },		  //  5 Tiles
-	{ "epr-6931.64",       0x002000, 0x599d7f87, BRF_GRA },		  //  6 Tiles
-	{ "epr-6930.63",       0x002000, 0xcb6616c2, BRF_GRA },		  //  7 Tiles
-	{ "epr-6929.66",       0x002000, 0x27a16856, BRF_GRA },		  //  8 Tiles
-	{ "epr-6928.65",       0x002000, 0xc0c9cfa4, BRF_GRA },		  //  9 Tiles
+	{ "epr-6933.62",       0x002000, 0xe7304036, BRF_GRA },		  	  //  4 Tiles
+	{ "epr-6932.61",       0x002000, 0xf5cfbfda, BRF_GRA },		  	  //  5 Tiles
+	{ "epr-6931.64",       0x002000, 0x599d7f87, BRF_GRA },		  	  //  6 Tiles
+	{ "epr-6930.63",       0x002000, 0xcb6616c2, BRF_GRA },		  	  //  7 Tiles
+	{ "epr-6929.66",       0x002000, 0x27a16856, BRF_GRA },		  	  //  8 Tiles
+	{ "epr-6928.65",       0x002000, 0xc0c9cfa4, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  //  10 Sprites
-	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  //  11 Sprites
-	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  //  12 Sprites
-	{ "epr-6924.05",       0x004000, 0x42bdc8f6, BRF_GRA },		  //  13 Sprites
+	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  	  // 11 Sprites
+	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  	  // 12 Sprites
+	{ "epr-6924.05",       0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 13 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Sscandal)
@@ -2198,16 +2217,16 @@ static struct BurnRomInfo MyherokRomDesc[] = {
 	
 	{ "epr-6934.120",      0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "ry-04.rom",         0x004000, 0xdfb75143, BRF_GRA },		  //  4 Tiles
-	{ "ry-03.rom",         0x004000, 0xcf68b4a2, BRF_GRA },		  //  5 Tiles
-	{ "ry-02.rom",         0x004000, 0xd100eaef, BRF_GRA },		  //  6 Tiles
+	{ "ry-04.rom",         0x004000, 0xdfb75143, BRF_GRA },		  	  //  4 Tiles
+	{ "ry-03.rom",         0x004000, 0xcf68b4a2, BRF_GRA },		  	  //  5 Tiles
+	{ "ry-02.rom",         0x004000, 0xd100eaef, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  //  7 Sprites
-	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  //  8 Sprites
-	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  //  9 Sprites
-	{ "epr-6924.05",       0x004000, 0x42bdc8f6, BRF_GRA },		  //  10 Sprites
+	{ "epr-6921.117",      0x004000, 0xf19e05a1, BRF_GRA },		  	  //  7 Sprites
+	{ "epr-6923.04",       0x004000, 0x7988adc3, BRF_GRA },		  	  //  8 Sprites
+	{ "epr-6922.110",      0x004000, 0x37f77a78, BRF_GRA },		  	  //  9 Sprites
+	{ "epr-6924.05",       0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 10 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  11 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 11 Timing PROM
 };
 
 STD_ROM_PICK(Myherok)
@@ -2220,18 +2239,18 @@ static struct BurnRomInfo MyheroblRomDesc[] = {
 	
 	{ "6.E10",      	   0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "B13.R10",           0x004000, 0x9a4861b1, BRF_GRA },		  //  4 Tiles
-	{ "B11.R7",            0x004000, 0x0d6f248a, BRF_GRA },		  //  5 Tiles
-	{ "x.R8",              0x004000, 0x24537709, BRF_GRA },		  //  6 Tiles
+	{ "B13.R10",           0x004000, 0x9a4861b1, BRF_GRA },		  	  //  4 Tiles
+	{ "B11.R7",            0x004000, 0x0d6f248a, BRF_GRA },		  	  //  5 Tiles
+	{ "x.R8",              0x004000, 0x24537709, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "4.f4",      		   0x004000, 0xf19e05a1, BRF_GRA },		  //  7 Sprites
-	{ "x.H4",              0x004000, 0x7988adc3, BRF_GRA },		  //  8 Sprites
-	{ "x.G4",      		   0x004000, 0x37f77a78, BRF_GRA },		  //  9 Sprites
-	{ "B7.K4",       	   0x004000, 0x42bdc8f6, BRF_GRA },		  //  10 Sprites
+	{ "4.f4",      		   0x004000, 0xf19e05a1, BRF_GRA },		  	  //  7 Sprites
+	{ "x.H4",              0x004000, 0x7988adc3, BRF_GRA },		  	  //  8 Sprites
+	{ "x.G4",      		   0x004000, 0x37f77a78, BRF_GRA },		  	  //  9 Sprites
+	{ "B7.K4",       	   0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 10 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  11 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 11 Timing PROM
 	
-	{ "PROM.A2",           0x000200, 0x4fcaf000, BRF_OPT },       //  12 Timing PROMBL
+	{ "PROM.A2",           0x000200, 0x4fcaf000, BRF_OPT },       	  // 12 Timing PROMBL
 };
 
 STD_ROM_PICK(Myherobl)
@@ -2244,21 +2263,21 @@ static struct BurnRomInfo NobRomDesc[] = {
 	
 	{ "dm03.9h",           0x004000, 0x415adf76, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "dm01.12b",          0x008000, 0x446fbcdd, BRF_GRA },		  //  4 Tiles
-	{ "dm02.13b",          0x008000, 0xf12df039, BRF_GRA },		  //  5 Tiles	
-	{ "dm00.10b",          0x008000, 0x35f396df, BRF_GRA },		  //  6 Tiles
+	{ "dm01.12b",          0x008000, 0x446fbcdd, BRF_GRA },		  	  //  4 Tiles
+	{ "dm02.13b",          0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles	
+	{ "dm00.10b",          0x008000, 0x35f396df, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "dm04.5f",           0x008000, 0x2442b86d, BRF_GRA },		  //  7 Sprites
-	{ "dm06.5k",           0x008000, 0xe33743a6, BRF_GRA },		  //  8 Sprites
-	{ "dm05.5h",           0x008000, 0x7fbba01d, BRF_GRA },		  //  9 Sprites
-	{ "dm07.5l",           0x008000, 0x85e7a29f, BRF_GRA },		  //  10 Sprites
+	{ "dm04.5f",           0x008000, 0x2442b86d, BRF_GRA },		  	  //  7 Sprites
+	{ "dm06.5k",           0x008000, 0xe33743a6, BRF_GRA },		  	  //  8 Sprites
+	{ "dm05.5h",           0x008000, 0x7fbba01d, BRF_GRA },		  	  //  9 Sprites
+	{ "dm07.5l",           0x008000, 0x85e7a29f, BRF_GRA },		  	  // 10 Sprites
 
-	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  //  11 Red PROM
-	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  //  12 Green PROM
-	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_GRA },		  //  13 Blue PROM
-	{ "dc-11.6a",          0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  	  // 11 Red PROM
+	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  	  // 12 Green PROM
+	{ "dm-12.ic3",         0x000100, 0xde394cee, BRF_GRA },		  	  // 13 Blue PROM
+	{ "dc-11.6a",          0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 	
-	{ "dm.bin",            0x001000, 0x6fde9dcb, BRF_PRG | BRF_OPT },		  //  15 MCU
+	{ "dm.bin",            0x001000, 0x6fde9dcb, BRF_PRG | BRF_OPT }, // 15 MCU
 };
 
 STD_ROM_PICK(Nob)
@@ -2271,19 +2290,19 @@ static struct BurnRomInfo NobbRomDesc[] = {
 	
 	{ "nobo-m.bin",        0x004000, 0x415adf76, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "nobo-k.bin",        0x008000, 0x446fbcdd, BRF_GRA },		  //  4 Tiles
-	{ "nobo-j.bin",        0x008000, 0xf12df039, BRF_GRA },		  //  5 Tiles	
-	{ "nobo-l.bin",        0x008000, 0x35f396df, BRF_GRA },		  //  6 Tiles
+	{ "nobo-k.bin",        0x008000, 0x446fbcdd, BRF_GRA },		  	  //  4 Tiles
+	{ "nobo-j.bin",        0x008000, 0xf12df039, BRF_GRA },		  	  //  5 Tiles	
+	{ "nobo-l.bin",        0x008000, 0x35f396df, BRF_GRA },		  	  //  6 Tiles
 	
-	{ "nobo-q.bin",        0x008000, 0x2442b86d, BRF_GRA },		  //  7 Sprites
-	{ "nobo-o.bin",        0x008000, 0xe33743a6, BRF_GRA },		  //  8 Sprites
-	{ "nobo-p.bin",        0x008000, 0x7fbba01d, BRF_GRA },		  //  9 Sprites
-	{ "nobo-n.bin",        0x008000, 0x85e7a29f, BRF_GRA },		  //  10 Sprites
+	{ "nobo-q.bin",        0x008000, 0x2442b86d, BRF_GRA },		  	  //  7 Sprites
+	{ "nobo-o.bin",        0x008000, 0xe33743a6, BRF_GRA },		  	  //  8 Sprites
+	{ "nobo-p.bin",        0x008000, 0x7fbba01d, BRF_GRA },		  	  //  9 Sprites
+	{ "nobo-n.bin",        0x008000, 0x85e7a29f, BRF_GRA },		  	  // 10 Sprites
 
-	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  //  11 Red PROM
-	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  //  12 Green PROM
-	{ "nobo_pr.14d",       0x000100, 0xde394cee, BRF_GRA },		  //  13 Blue PROM
-	{ "nobo_pr.13a",       0x000100, 0x648350b8, BRF_OPT },		  //  14 Timing PROM
+	{ "nobo_pr.16d",       0x000100, 0x95010ac2, BRF_GRA },		  	  // 11 Red PROM
+	{ "nobo_pr.15d",       0x000100, 0xc55aac0c, BRF_GRA },		  	  // 12 Green PROM
+	{ "nobo_pr.14d",       0x000100, 0xde394cee, BRF_GRA },		  	  // 13 Blue PROM
+	{ "nobo_pr.13a",       0x000100, 0x648350b8, BRF_OPT },		  	  // 14 Timing PROM
 };
 
 STD_ROM_PICK(Nobb)
@@ -2296,17 +2315,17 @@ static struct BurnRomInfo Pitfall2RomDesc[] = {
 	
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  //  4 Tiles
-	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  //  5 Tiles
-	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  //  6 Tiles
-	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  //  7 Tiles
-	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  //  8 Tiles
-	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  //  9 Tiles
+	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
+	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
+	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
+	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
+	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
+	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  //  10 Sprites
-	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  //  11 Sprites
+	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  12 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 12 Timing PROM
 };
 
 STD_ROM_PICK(Pitfall2)
@@ -2319,17 +2338,17 @@ static struct BurnRomInfo Pitfall2aRomDesc[] = {
 	
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  //  4 Tiles
-	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  //  5 Tiles
-	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  //  6 Tiles
-	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  //  7 Tiles
-	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  //  8 Tiles
-	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  //  9 Tiles
+	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
+	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
+	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
+	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
+	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
+	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  //  10 Sprites
-	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  //  11 Sprites
+	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  12 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 12 Timing PROM
 };
 
 STD_ROM_PICK(Pitfall2a)
@@ -2342,17 +2361,17 @@ static struct BurnRomInfo Pitfall2uRomDesc[] = {
 	
 	{ "epr-6462.120",      0x002000, 0x86bb9185, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  //  4 Tiles
-	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  //  5 Tiles
-	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  //  6 Tiles
-	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  //  7 Tiles
-	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  //  8 Tiles
-	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  //  9 Tiles
+	{ "epr6474a.62",       0x002000, 0x9f1711b9, BRF_GRA },		  	  //  4 Tiles
+	{ "epr6473a.61",       0x002000, 0x8e53b8dd, BRF_GRA },		  	  //  5 Tiles
+	{ "epr6472a.64",       0x002000, 0xe0f34a11, BRF_GRA },		  	  //  6 Tiles
+	{ "epr6471a.63",       0x002000, 0xd5bc805c, BRF_GRA },		  	  //  7 Tiles
+	{ "epr6470a.66",       0x002000, 0x1439729f, BRF_GRA },		  	  //  8 Tiles
+	{ "epr6469a.65",       0x002000, 0xe4ac6921, BRF_GRA },		  	  //  9 Tiles
 	
-	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  //  10 Sprites
-	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  //  11 Sprites
+	{ "epr6454a.117",      0x004000, 0xa5d96780, BRF_GRA },		  	  // 10 Sprites
+	{ "epr-6455.05",       0x004000, 0x32ee64a1, BRF_GRA },		  	  // 11 Sprites
 
-	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  //  12 Timing PROM
+	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 12 Timing PROM
 };
 
 STD_ROM_PICK(Pitfall2u)
@@ -6318,11 +6337,21 @@ struct BurnDriver BurnDrvThetogyu = {
 
 struct BurnDriver BurnDrvFlicky = {
 	"flicky", NULL, NULL, NULL, "1984",
-	"Flicky (128k Version, System 2, 315-5051)\0", NULL, "Sega", "System 1",
+	"Flicky (128k Version, 315-5051)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyRomInfo, FlickyRomName, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
 	FlickyInit, System1Exit, System1Frame, NULL, System1Scan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvFlickya = {
+	"flickya", "flicky", NULL, NULL, "1984",
+	"Flicky (128k Version, 315-5051, larger roms))\0", NULL, "Sega", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
+	NULL, FlickyaRomInfo, FlickyaRomName, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
+	FlickygInit, System1Exit, System1Frame, NULL, System1Scan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -6338,7 +6367,7 @@ struct BurnDriver BurnDrvFlickyg = {
 
 struct BurnDriver BurnDrvFlickys1 = {
 	"flickys1", "flicky", NULL, NULL, "1984",
-	"Flicky (64k Version, System 1, 315-5051, set 2)\0", NULL, "Sega", "System 1",
+	"Flicky (64k Version, 315-5051, set 2)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Flickys1RomInfo, Flickys1RomName, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
@@ -6348,7 +6377,7 @@ struct BurnDriver BurnDrvFlickys1 = {
 
 struct BurnDriver BurnDrvFlickys2 = {
 	"flickys2", "flicky", NULL, NULL, "1984",
-	"Flicky (128k Version, System 2, not encrypted)\0", NULL, "Sega", "System 1",
+	"Flicky (128k Version, not encrypted)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, Flickys2RomInfo, Flickys2RomName, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,
@@ -6368,7 +6397,7 @@ struct BurnDriver BurnDrvFlickys2g = {
 
 struct BurnDriver BurnDrvFlickyo = {
 	"flickyo", "flicky", NULL, NULL, "1984",
-	"Flicky (64k Version, System 1, 315-5051, set 1)\0", NULL, "Sega", "System 1",
+	"Flicky (64k Version, 315-5051, set 1)\0", NULL, "Sega", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM1, GBF_PLATFORM, 0,
 	NULL, FlickyoRomInfo, FlickyoRomName, NULL, NULL, FlickyInputInfo, FlickyDIPInfo,

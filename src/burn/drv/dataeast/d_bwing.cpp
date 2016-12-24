@@ -722,12 +722,10 @@ static INT32 DrvFrame()
 		}
 
 		if ((previous_coin & 3) != (DrvInputs[2] & 0x03)) {
-			bprintf(0, _T("c %X %X."),DrvInputs[2] & 0x03, previous_coin & 3 );
 			M6809Open(0);
 			M6809SetIRQLine(CPU_IRQLINE_NMI, ((DrvInputs[2] & 3) == 3) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
-
 
 		if ((previous_tilt & 1) != (DrvInputs[3] & 0x01)) {
 			M6809Open(0);

@@ -754,34 +754,34 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Momoko 120%
+// Momoko 120% (Japanese text)
 
 static struct BurnRomInfo momokoRomDesc[] = {
-	{ "momoko03.bin",	0x8000, 0x386e26ed, 0x01 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "momoko02.bin",	0x4000, 0x4255e351, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "momoko03.m6",	0x8000, 0x386e26ed, 0x01 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "momoko02.m5",	0x4000, 0x4255e351, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "momoko01.bin",	0x8000, 0xe8a6673c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "momoko01.u4",	0x8000, 0xe8a6673c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "momoko13.bin",	0x2000, 0x2745cf5a, 0x03 | BRF_GRA },           //  3 Character Tiles
+	{ "momoko13.u4",	0x2000, 0x2745cf5a, 0x03 | BRF_GRA },           //  3 Character Tiles
 
-	{ "momoko14.bin",	0x2000, 0xcfccca05, 0x04 | BRF_GRA },           //  4 Foreground Tiles
+	{ "momoko14.p2",	0x2000, 0xcfccca05, 0x04 | BRF_GRA },           //  4 Foreground Tiles
 
-	{ "momoko16.bin",	0x8000, 0xfc6876fc, 0x05 | BRF_GRA },           //  5 Sprite Tiles
-	{ "momoko17.bin",	0x8000, 0x45dc0247, 0x05 | BRF_GRA },           //  6
+	{ "momoko16.e5",	0x8000, 0xfc6876fc, 0x05 | BRF_GRA },           //  5 Sprite Tiles
+	{ "momoko17.e6",	0x8000, 0x45dc0247, 0x05 | BRF_GRA },           //  6
 
-	{ "momoko09.bin",	0x8000, 0x9f5847c7, 0x06 | BRF_GRA },           //  7 Background Tiles
-	{ "momoko11.bin",	0x8000, 0x9c9fbd43, 0x06 | BRF_GRA },           //  8
-	{ "momoko10.bin",	0x8000, 0xae17e74b, 0x06 | BRF_GRA },           //  9
-	{ "momoko12.bin",	0x8000, 0x1e29c9c4, 0x06 | BRF_GRA },           // 10
+	{ "momoko09.e8",	0x8000, 0x9f5847c7, 0x06 | BRF_GRA },           //  7 Background Tiles
+	{ "momoko11.c8",	0x8000, 0x9c9fbd43, 0x06 | BRF_GRA },           //  8
+	{ "momoko10.d8",	0x8000, 0xae17e74b, 0x06 | BRF_GRA },           //  9
+	{ "momoko12.a8",	0x8000, 0x1e29c9c4, 0x06 | BRF_GRA },           // 10
 
-	{ "momoko04.bin",	0x8000, 0x3ab3c2c3, 0x07 | BRF_GRA },           // 11 Background Map (Banks used by Z80 #0)
-	{ "momoko05.bin",	0x8000, 0x757cdd2b, 0x07 | BRF_GRA },           // 12
-	{ "momoko06.bin",	0x8000, 0x20cacf8b, 0x07 | BRF_GRA },           // 13
-	{ "momoko07.bin",	0x8000, 0xb94b38db, 0x07 | BRF_GRA },           // 14
+	{ "momoko04.r8",	0x8000, 0x3ab3c2c3, 0x07 | BRF_GRA },           // 11 Background Map (Banks used by Z80 #0)
+	{ "momoko05.p8",	0x8000, 0x757cdd2b, 0x07 | BRF_GRA },           // 12
+	{ "momoko06.n8",	0x8000, 0x20cacf8b, 0x07 | BRF_GRA },           // 13
+	{ "momoko07.l8",	0x8000, 0xb94b38db, 0x07 | BRF_GRA },           // 14
 
-	{ "momoko08.bin",	0x2000, 0x69b41702, 0x08 | BRF_GRA },           // 15 Background Color/Priority Table
+	{ "momoko08.h8",	0x2000, 0x69b41702, 0x08 | BRF_GRA },           // 15 Background Color/Priority Table
 
-	{ "momoko15.bin",	0x4000, 0x8028f806, 0x09 | BRF_GRA },           // 16 Foreground Map
+	{ "momoko15.k2",	0x4000, 0x8028f806, 0x09 | BRF_GRA },           // 16 Foreground Map
 
 	{ "momoko-c.bin",	0x0100, 0xf35ccae0, 0x0a | BRF_GRA },           // 17 Text Layer Color PROMs
 	{ "momoko-b.bin",	0x0020, 0x427b0e5c, 0x0a | BRF_GRA },           // 18
@@ -792,10 +792,57 @@ STD_ROM_FN(momoko)
 
 struct BurnDriver BurnDrvMomoko = {
 	"momoko", NULL, NULL, NULL, "1986",
-	"Momoko 120%\0", NULL, "Jaleco", "Miscellaneous",
+	"Momoko 120% (Japanese text)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, momokoRomInfo, momokoRomName, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	240, 224, 4, 3
+};
+
+
+// Momoko 120% (English text)
+
+static struct BurnRomInfo momokoeRomDesc[] = {
+	{ "3.m6",			0x8000, 0x84053a7d, 0x01 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.m5",			0x4000, 0x98ad397b, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "momoko01.u4",	0x8000, 0xe8a6673c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "momoko13.u4",	0x2000, 0x2745cf5a, 0x03 | BRF_GRA },           //  3 Character Tiles
+
+	{ "momoko14.p2",	0x2000, 0xcfccca05, 0x04 | BRF_GRA },           //  4 Foreground Tiles
+
+	{ "momoko16.e5",	0x8000, 0xfc6876fc, 0x05 | BRF_GRA },           //  5 Sprite Tiles
+	{ "momoko17.e6",	0x8000, 0x45dc0247, 0x05 | BRF_GRA },           //  6
+
+	{ "momoko09.e8",	0x8000, 0x9f5847c7, 0x06 | BRF_GRA },           //  7 Background Tiles
+	{ "momoko11.c8",	0x8000, 0x9c9fbd43, 0x06 | BRF_GRA },           //  8
+	{ "momoko10.d8",	0x8000, 0xae17e74b, 0x06 | BRF_GRA },           //  9
+	{ "momoko12.a8",	0x8000, 0x1e29c9c4, 0x06 | BRF_GRA },           // 10
+
+	{ "momoko04.r8",	0x8000, 0x3ab3c2c3, 0x07 | BRF_GRA },           // 11 Background Map (Banks used by Z80 #0)
+	{ "momoko05.p8",	0x8000, 0x757cdd2b, 0x07 | BRF_GRA },           // 12
+	{ "momoko06.n8",	0x8000, 0x20cacf8b, 0x07 | BRF_GRA },           // 13
+	{ "momoko07.l8",	0x8000, 0xb94b38db, 0x07 | BRF_GRA },           // 14
+
+	{ "momoko08.h8",	0x2000, 0x69b41702, 0x08 | BRF_GRA },           // 15 Background Color/Priority Table
+
+	{ "momoko15.k2",	0x4000, 0x8028f806, 0x09 | BRF_GRA },           // 16 Foreground Map
+
+	{ "momoko-c.bin",	0x0100, 0xf35ccae0, 0x0a | BRF_GRA },           // 17 Text Layer Color PROMs
+	{ "momoko-b.bin",	0x0020, 0x427b0e5c, 0x0a | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(momokoe)
+STD_ROM_FN(momokoe)
+
+struct BurnDriver BurnDrvMomokoe = {
+	"momokoe", "momoko", NULL, NULL, "1986",
+	"Momoko 120% (English text)\0", NULL, "Jaleco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, momokoeRomInfo, momokoeRomName, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };

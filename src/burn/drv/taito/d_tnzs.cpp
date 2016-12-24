@@ -2892,9 +2892,47 @@ struct BurnDriver BurnDrvTnzsuo = {
 
 
 // The NewZealand Story (World, old version) (older PCB)
-// is this a legit set, or a hack, or a near-final (later than tnzsop below) prototype?
 
 static struct BurnRomInfo tnzsoRomDesc[] = {
+	{ "b53-10.27c1001d.u32",		0x20000, 0xa73745c6, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+
+	{ "b53-14.u38",					0x10000, 0xf269c5f1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+
+	{ "b53-09.u46",					0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+
+	{ "b53-08.u8",					0x20000, 0xc3519c2a, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b53-07.u7",					0x20000, 0x2bf199e8, 4 | BRF_GRA },	      	  //  4
+	{ "b53-06.u6",					0x20000, 0x92f35ed9, 4 | BRF_GRA },	      	  //  5
+	{ "b53-05.u5",					0x20000, 0xedbb9581, 4 | BRF_GRA },	      	  //  6
+	{ "b53-04.u4",					0x20000, 0x59d2aef6, 4 | BRF_GRA },	      	  //  7
+	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
+	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
+	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
+	
+	/* these are probably shared with extermination except for u35 */
+	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
+};
+
+STD_ROM_PICK(tnzso)
+STD_ROM_FN(tnzso)
+
+struct BurnDriver BurnDrvTnzso = {
+	"tnzso", "tnzs", NULL, NULL, "1988",
+	"The NewZealand Story (World, old version) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, tnzsoRomInfo, tnzsoRomName, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
+	TnzsoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+// The NewZealand Story (World, unknown version) (older PCB)
+// is this a legit set, or a hack, or a near-final (later than tnzsop below) prototype?
+
+static struct BurnRomInfo tnzsoaRomDesc[] = {
 	{ "b53-unknown.27c1001d.u32",	0x20000, 0xedf3b39e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
 	{ "b53-unknown.27c512.u38",		0x10000, 0x60340d63, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
@@ -2918,15 +2956,15 @@ static struct BurnRomInfo tnzsoRomDesc[] = {
 	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
 };
 
-STD_ROM_PICK(tnzso)
-STD_ROM_FN(tnzso)
+STD_ROM_PICK(tnzsoa)
+STD_ROM_FN(tnzsoa)
 
-struct BurnDriver BurnDrvTnzso = {
-	"tnzso", "tnzs", NULL, NULL, "1988",
-	"The NewZealand Story (World, old version) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+struct BurnDriver BurnDrvTnzsoa = {
+	"tnzsoa", "tnzs", NULL, NULL, "1988",
+	"The NewZealand Story (World, unknown version) (older PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, tnzsoRomInfo, tnzsoRomName, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
+	NULL, tnzsoaRomInfo, tnzsoaRomName, NULL, NULL, CommonInputInfo, TnzsopDIPInfo,
 	TnzsoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };

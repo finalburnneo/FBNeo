@@ -356,7 +356,7 @@ static tilemap_callback( fglayer )
 
 static tilemap_callback( txlayer )
 {
-	TILE_SET_INFO(0, DrvVidRAM[offs] & 0x7f, 0, 0);
+	TILE_SET_INFO(0, DrvVidRAM[offs], 0, 0);
 }
 
 static INT32 DrvDACSync()
@@ -395,8 +395,8 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6809ROM0		= Next; Next += 0x00c000;
-	DrvM6809ROM1		= Next; Next += 0x006000;
+	DrvM6809ROM0	= Next; Next += 0x00c000;
+	DrvM6809ROM1	= Next; Next += 0x006000;
 	DrvM6502ROM		= Next; Next += 0x002000;
 
 	DrvGfxROM0		= Next; Next += 0x004000;
@@ -414,8 +414,8 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x000200;
 	DrvPalRAM		= Next; Next += 0x000200;
 	DrvShareRAM		= Next; Next += 0x000800;
-	DrvM6809RAM0		= Next; Next += 0x000800;
-	DrvM6809RAM1		= Next; Next += 0x000800;
+	DrvM6809RAM0	= Next; Next += 0x000800;
+	DrvM6809RAM1	= Next; Next += 0x000800;
 	DrvM6502RAM		= Next; Next += 0x000200;
 
 	scroll			= Next; Next += 0x000008;
@@ -709,10 +709,10 @@ static INT32 DrvFrame()
 	M6502NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 4);
+		UINT8 previous_coin = DrvInputs[2];
+		UINT8 previous_tilt = DrvInputs[3];
 
-		INT32 previous_coin = DrvInputs[2];
-		INT32 previous_tilt = DrvInputs[3];
+		memset (DrvInputs, 0xff, 4);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -722,6 +722,7 @@ static INT32 DrvFrame()
 		}
 
 		if ((previous_coin & 3) != (DrvInputs[2] & 0x03)) {
+			bprintf(0, _T("c %X %X."),DrvInputs[2] & 0x03, previous_coin & 3 );
 			M6809Open(0);
 			M6809SetIRQLine(CPU_IRQLINE_NMI, ((DrvInputs[2] & 3) == 3) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 			M6809Close();
@@ -738,6 +739,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 2000000 / 60, 2000000 / 60, 2000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	M6502Open(0);
 
@@ -757,10 +759,23 @@ static INT32 DrvFrame()
 		if ((i & 0xf)==0xf && nmimask == 0) M6502SetIRQLine(CPU_IRQLINE_NMI, CPU_IRQSTATUS_ACK);
 
 		if (i == 240) vblank = 1;
+
+		// Render Sound Segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

@@ -6353,7 +6353,7 @@ static struct BurnRomInfo DaimakaiRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "dm22a.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "dm22a.1a",      0x000117, 0xd4776116, BRF_OPT }, // b-board PLDs
 	{ "lwio.12c",      0x000117, 0xad52b90c, BRF_OPT },
 };
 

@@ -8333,6 +8333,46 @@ static struct BurnRomInfo UniwarsRomDesc[] = {
 STD_ROM_PICK(Uniwars)
 STD_ROM_FN(Uniwars)
 
+static struct BurnRomInfo UniwarsaRomDesc[] = {
+	{ "u1",    		   0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u2",    		   0x00800, 0xb2ed14c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u3",    		   0x00800, 0x945f4160, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u4",    		   0x00800, 0xddc80bc5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u5",   		   0x00800, 0xa0847fe4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u6",            0x00800, 0x270a3f4d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u7",   		   0x00800, 0xc9245346, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "u8",   		   0x00800, 0x5760b65c, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "u10",           0x00800, 0x012941e0, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "u12",     	   0x00800, 0xc26132af, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "u9",            0x00800, 0xfc8b58fd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "u11",     	   0x00800, 0xdcc2b33b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "kareteco.clr",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Uniwarsa)
+STD_ROM_FN(Uniwarsa)
+
+static struct BurnRomInfo MltiwarsRomDesc[] = {
+	{ "g1.bin",    	   0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g2.bin",    	   0x00800, 0xb2ed14c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g3.bin",    	   0x00800, 0x945f4160, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g4.bin",    	   0x00800, 0xef28ec00, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g5.bin",   	   0x00800, 0x855ab0dd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g6.bin",        0x00800, 0xd915a389, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g7.bin",   	   0x00800, 0xc9245346, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "g8.bin",   	   0x00800, 0x797d45c7, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "g14.bin",       0x01000, 0x227f9e8e, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "g15.bin",       0x01000, 0x3f8b6a24, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "prom.bin",  		0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Mltiwars)
+STD_ROM_FN(Mltiwars)
+
 static struct BurnRomInfo GteikokuRomDesc[] = {
 	{ "f07_1a.bin",    0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "h07_2a.bin",    0x00800, 0xb2ed14c3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8680,6 +8720,26 @@ struct BurnDriver BurnDrvUniwars = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, UniwarsRomInfo, UniwarsRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	PiscesInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvUniwarsa = {
+	"uniwarsa", "uniwars", NULL, NULL, "1980",
+	"UniWar S (bootleg)\0", NULL, "bootleg (Karateco)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, UniwarsaRomInfo, UniwarsaRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
+	PiscesInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvMltiwars = {
+	"mltiwars", "uniwars", NULL, NULL, "1980",
+	"Multi Wars (bootleg of UniWar S)\0", NULL, "bootleg (Gayton Games)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MltiwarsRomInfo, MltiwarsRomName, NULL, NULL, GalaxianInputInfo, SupergDIPInfo,
 	PiscesInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

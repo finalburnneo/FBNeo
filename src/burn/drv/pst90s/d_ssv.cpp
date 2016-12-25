@@ -4481,8 +4481,9 @@ static void StmbladeV60Map()
 static INT32 StmbladeInit()
 {
 	watchdog_disable = 1;
+	vbl_invert = 1;
 
-	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 1);
+	return DrvCommonInit(StmbladeV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 0);
 }
 
 struct BurnDriver BurnDrvStmblade = {

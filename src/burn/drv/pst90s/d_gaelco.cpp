@@ -1364,8 +1364,8 @@ static struct BurnRomInfo biomtoyaRomDesc[] = {
 	{ "h10",		0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
 	{ "j10",		0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
 
-	{ "c1",			0x80000, 0x0f02de7e, 3 | BRF_SND },           // 10 M6295 Samples
-	{ "c3",			0x80000, 0x914e4bbc, 3 | BRF_SND },           // 11
+	{ "c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(biomtoya)

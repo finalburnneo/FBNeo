@@ -2229,7 +2229,6 @@ static INT32 DrvDoReset(INT32 clear_ram)
 		case EPOS:
 			epos_hardware_counter = 0x0A + acitya;
 			if (strcmp(BurnDrvGetTextA(DRV_NAME), "eeekk") == 0) epos_hardware_counter = 0x09;
-bprintf (0, _T("%d\n"), epos_hardware_counter);
 			epos_hardware_set_bank(epos_hardware_counter);
 		break;
 

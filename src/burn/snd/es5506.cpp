@@ -178,7 +178,7 @@ struct _es5506_voice
 //typedef struct _es5506_state es5506_state;
 struct _es5506_state
 {
-//	sound_stream *stream;				/* which stream are we using */
+	INT32       chiptype;               // 5505 or 5506?
 	INT32		sample_rate;			/* current sample rate */
 	UINT16 *	region_base[4];			/* pointer to the base of the region */
 	UINT32		write_latch;			/* currently accumulated data for write */
@@ -914,12 +914,25 @@ void ES5506Update(INT16 *pBuffer, INT32 samples)
 
 ***********************************************************************************************/
 
+static void init_voices()
+{
+	/* init the voices */
+	UINT32 accum_mask = (chip->chiptype == ES5506) ? 0xffffffff : 0x7fffffff;
+
+	for (INT32 j = 0; j < 32; j++)
+	{
+		chip->voice[j].index = j;
+		chip->voice[j].control = CONTROL_STOPMASK;
+		chip->voice[j].lvol = 0xffff;
+		chip->voice[j].rvol = 0xffff;
+		chip->voice[j].exbank = 0;
+		chip->voice[j].accum_mask = accum_mask;
+	}
+}
+
 static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UINT8* region2, UINT8* region3, irq_callback callback, INT32 sndtype)
 {
 	DebugSnd_ES5506Initted = 1;
-
-	INT32 j;
-	UINT32 accum_mask;
 
 	/* debugging */
 	if (LOG_COMMANDS && !eslog)
@@ -928,6 +941,8 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 	/* create the struct */
 	chip = (struct _es5506_state*)malloc(sizeof(_es5506_state));
 	memset(chip, 0, sizeof(_es5506_state));
+
+	chip->chiptype = sndtype;
 
 	/* initialize the regions */
 	chip->region_base[0] = region0 ? (UINT16 *)region0 : NULL;
@@ -943,20 +958,11 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 	/* compute the tables */
 	compute_tables();
 
-	/* init the voices */
-	accum_mask = (sndtype == ES5506) ? 0xffffffff : 0x7fffffff;
-	for (j = 0; j < 32; j++)
-	{
-		chip->voice[j].index = j;
-		chip->voice[j].control = CONTROL_STOPMASK;
-		chip->voice[j].lvol = 0xffff;
-		chip->voice[j].rvol = 0xffff;
-		chip->voice[j].exbank = 0;
-		chip->voice[j].accum_mask = accum_mask;
-	}
+	// init voices. also used in reset()!
+	init_voices();
 
 	/* allocate memory */
-	chip->scratch = (INT32*)malloc(2 * MAX_SAMPLE_CHUNK * sizeof(INT32));//auto_alloc_array(device->machine, INT32, 2 * MAX_SAMPLE_CHUNK);
+	chip->scratch = (INT32*)malloc(2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
 
 	/* set volume */
 	chip->volume[0] = 1.00;
@@ -1024,16 +1030,22 @@ void ES5506Exit()
 	}
 
 #if MAKE_WAVS
-{
-	INT32 i;
-
-	for (i = 0; i < MAX_ES5506; i++)
 	{
-		if (es5506[i].wavraw)
-			wav_close(es5506[i].wavraw);
+		INT32 i;
+
+		for (i = 0; i < MAX_ES5506; i++)
+		{
+			if (es5506[i].wavraw)
+				wav_close(es5506[i].wavraw);
+		}
 	}
-}
 #endif
+
+	free(chip->ulaw_lookup);
+	free(chip->volume_lookup);
+	free(chip->scratch);
+	free(chip);
+	chip = NULL;
 
 	DebugSnd_ES5506Initted = 0;
 }
@@ -1044,6 +1056,8 @@ void ES5506Reset()
 #if defined FBA_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Reset called without init\n"));
 #endif
+
+	init_voices();
 }
 
 

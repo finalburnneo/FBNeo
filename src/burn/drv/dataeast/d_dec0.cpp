@@ -1316,6 +1316,45 @@ static struct BurnRomInfo FfantasyaRomDesc[] = {
 STD_ROM_PICK(Ffantasya)
 STD_ROM_FN(Ffantasya)
 
+static struct BurnRomInfo FfantasybRomDesc[] = {
+	// DE-0297-3 PCB. All EX labels.
+	{ "ex02-2",             0x10000, 0x4c26cda6, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
+	{ "ex01",               0x10000, 0xd2c4ab91, BRF_ESS | BRF_PRG },	//  1
+	{ "ex05",               0x10000, 0xc76d65ec, BRF_ESS | BRF_PRG },	//  2
+	{ "ex00",               0x10000, 0xe9b427a6, BRF_ESS | BRF_PRG },	//  3
+	
+	{ "ex04",               0x08000, 0x9871b98d, BRF_ESS | BRF_PRG },	//  4	6502 Program 
+	
+	{ "ex08",               0x10000, 0x53010534, BRF_ESS | BRF_PRG },	//  5	HuC6280 Program
+	
+	{ "ex14",               0x10000, 0x686f72c1, BRF_GRA },			//  6	Characters
+	{ "ex13",               0x10000, 0xb787dcc9, BRF_GRA },			//  7
+
+	{ "ex19",               0x08000, 0x6b80d7a3, BRF_GRA },			//  8	Tiles 1
+	{ "ex18",               0x08000, 0x78d3d764, BRF_GRA },			//  9
+	{ "ex20",               0x08000, 0xce9f5de3, BRF_GRA },			// 10
+	{ "ex21",               0x08000, 0x487a7ba2, BRF_GRA },			// 11
+	
+	{ "ex24",               0x08000, 0x4e1bc2a4, BRF_GRA },			// 12	Tiles 2
+	{ "ex25",               0x08000, 0x9eb47dfb, BRF_GRA },			// 13
+	{ "ex23",               0x08000, 0x9ecf479e, BRF_GRA },			// 14
+	{ "ex22",               0x08000, 0xe55669aa, BRF_GRA },			// 15
+	
+	{ "ex15",               0x10000, 0x95423914, BRF_GRA },			// 16	Sprites
+	{ "ex16",               0x10000, 0x96233177, BRF_GRA },			// 17
+	{ "ex10",               0x10000, 0x4c25dfe8, BRF_GRA },			// 18
+	{ "ex11",               0x10000, 0xf2e007fc, BRF_GRA },			// 19
+	{ "ex06",               0x10000, 0xe4bb8199, BRF_GRA },			// 20
+	{ "ex07",               0x10000, 0x470b6989, BRF_GRA },			// 21
+	{ "ex17",               0x10000, 0x8c97c757, BRF_GRA },			// 22
+	{ "ex12",               0x10000, 0xa2d244bc, BRF_GRA },			// 23
+	
+	{ "ex03",               0x10000, 0xb606924d, BRF_SND },			// 24	Samples
+};
+
+STD_ROM_PICK(Ffantasyb)
+STD_ROM_FN(Ffantasyb)
+
 static struct BurnRomInfo MidresRomDesc[] = {
 	{ "fk_14.rom",          0x20000, 0xde7522df, BRF_ESS | BRF_PRG },	//  0	68000 Program Code
 	{ "fk_12.rom",          0x20000, 0x3494b8c9, BRF_ESS | BRF_PRG },	//  1
@@ -5596,6 +5635,16 @@ struct BurnDriver BurnDrvFfantasya = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
+	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	NULL, 0x400, 256, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvFfantasyb = {
+	"ffantasyb", "hippodrm", NULL, NULL, "1989",
+	"Fighting Fantasy (Japan revision ?)\0", NULL, "Data East Corpotation", "DEC0",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	NULL, FfantasybRomInfo, FfantasybRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
 	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

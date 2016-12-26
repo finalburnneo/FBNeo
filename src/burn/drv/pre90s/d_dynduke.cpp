@@ -766,13 +766,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 
 
-// Dynamite Duke (Europe set 1)
+// Dynamite Duke (Europe, 03SEP89)
 
 static struct BurnRomInfo dyndukeRomDesc[] = {
 	{ "1.cd8",	    0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
 	{ "2.cd7",	    0x10000, 0x7e51af22, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.e8",		0x20000, 0xa56f8692, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4e.e7",		0x20000, 0x384c0635, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dde3.e8",	0x20000, 0xa56f8692, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dde4.e7",	0x20000, 0x384c0635, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "5.p8",	    0x10000, 0x883d319c, 2 | BRF_PRG | BRF_ESS }, //  4 V30 #1 Code
 	{ "6.p7",	    0x10000, 0xd94cb4ff, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -816,7 +816,7 @@ static INT32 dyndukeInit()
 
 struct BurnDriver BurnDrvDynduke = {
 	"dynduke", NULL, NULL, NULL, "1989",
-	"Dynamite Duke (Europe set 1)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Dynamite Duke (Europe, 03SEP89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukeRomInfo, dyndukeRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
@@ -825,13 +825,13 @@ struct BurnDriver BurnDrvDynduke = {
 };
 
 
-// Dynamite Duke (Europe set 2)
+// Dynamite Duke (Europe, 25JUL89)
 
 static struct BurnRomInfo dyndukeaRomDesc[] = {
 	{ "1.cd8",	    0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
 	{ "2.cd7",	    0x10000, 0x7e51af22, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dde3.e8",	0x20000, 0x95336279, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dde4.e7",	0x20000, 0xeb2d8fea, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "3.e8",		0x20000, 0xa56f8692, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4e.e7",		0x20000, 0x384c0635, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "5.p8",	    0x10000, 0x883d319c, 2 | BRF_PRG | BRF_ESS }, //  4 V30 #1 Code
 	{ "6.p7",	    0x10000, 0xd94cb4ff, 2 | BRF_PRG | BRF_ESS }, //  5
@@ -870,7 +870,7 @@ STD_ROM_FN(dyndukea)
 
 struct BurnDriver BurnDrvDyndukea = {
 	"dyndukea", "dynduke", NULL, NULL, "1989",
-	"Dynamite Duke (Europe set 2)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Dynamite Duke (Europe, 25JUL89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukeaRomInfo, dyndukeaRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
@@ -879,7 +879,7 @@ struct BurnDriver BurnDrvDyndukea = {
 };
 
 
-// Dynamite Duke (Japan)
+// Dynamite Duke (Japan, 03SEP89)
 
 static struct BurnRomInfo dyndukejRomDesc[] = {
 	{ "1.cd8",		0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
@@ -924,7 +924,7 @@ STD_ROM_FN(dyndukej)
 
 struct BurnDriver BurnDrvDyndukej = {
 	"dyndukej", "dynduke", NULL, NULL, "1989",
-	"Dynamite Duke (Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"Dynamite Duke (Japan, 03SEP89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukejRomInfo, dyndukejRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
@@ -933,7 +933,61 @@ struct BurnDriver BurnDrvDyndukej = {
 };
 
 
-// Dynamite Duke (US)
+// Dynamite Duke (Japan, 25JUL89)
+
+static struct BurnRomInfo dyndukejaRomDesc[] = {
+	{ "1.cd8",		0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
+	{ "2.cd7",		0x10000, 0x7e51af22, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.e8", 		0x20000, 0x2f06ddce, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4j.e7",		0x20000, 0x63092078, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "5.p8",		0x10000, 0x883d319c, 2 | BRF_PRG | BRF_ESS }, //  4 V30 #1 Code
+	{ "6.p7",		0x10000, 0xd94cb4ff, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "8.w8",		0x10000, 0x3c29480b, 3 | BRF_PRG | BRF_ESS }, //  6 Z80 Code
+
+	{ "9.5k",		0x04000, 0xf2bc9af4, 4 | BRF_GRA },           //  7 Character Tiles
+	{ "10.34k",		0x04000, 0xc2a9f19b, 4 | BRF_GRA },           //  8
+
+	{ "dd.a2",		0x40000, 0x598f343f, 5 | BRF_GRA },           //  9 Background Tiles
+	{ "dd.b2",		0x40000, 0x41a9088d, 5 | BRF_GRA },           // 10
+	{ "dd.c2",		0x40000, 0xcc341b42, 5 | BRF_GRA },           // 11
+	{ "dd.d2",		0x40000, 0x4752b4d7, 5 | BRF_GRA },           // 12
+	{ "dd.de3",		0x40000, 0x44a4cb62, 5 | BRF_GRA },           // 13
+	{ "dd.ef3",		0x40000, 0xaa8aee1a, 5 | BRF_GRA },           // 14
+
+	{ "dd.mn3",		0x40000, 0x2ee0ca98, 6 | BRF_GRA },           // 15 Foreground Tiles
+	{ "dd.mn4",		0x40000, 0x6c71e2df, 6 | BRF_GRA },           // 16
+	{ "dd.n45",		0x40000, 0x85d918e1, 6 | BRF_GRA },           // 17
+	{ "dd.mn5",		0x40000, 0xe71e34df, 6 | BRF_GRA },           // 18
+
+	{ "dd.n1",		0x40000, 0xcf1db927, 7 | BRF_GRA },           // 19 Sprites
+	{ "dd.n2",		0x40000, 0x5328150f, 7 | BRF_GRA },           // 20
+	{ "dd.m1",		0x40000, 0x80776452, 7 | BRF_GRA },           // 21
+	{ "dd.m2",		0x40000, 0xff61a573, 7 | BRF_GRA },           // 22
+	{ "dd.e1",		0x40000, 0x84a0b87c, 7 | BRF_GRA },           // 23
+	{ "dd.e2",		0x40000, 0xa9585df2, 7 | BRF_GRA },           // 24
+	{ "dd.f1",		0x40000, 0x9aed24ba, 7 | BRF_GRA },           // 25
+	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
+
+	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+};
+
+STD_ROM_PICK(dyndukeja)
+STD_ROM_FN(dyndukeja)
+
+struct BurnDriver BurnDrvDyndukeja = {
+	"dyndukeja", "dynduke", NULL, NULL, "1989",
+	"Dynamite Duke (Japan, 25JUL89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, dyndukejaRomInfo, dyndukejaRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
+	dyndukeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
+// Dynamite Duke (US, 25JUL89)
 
 static struct BurnRomInfo dyndukeuRomDesc[] = {
 	{ "1.cd8",		0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
@@ -978,7 +1032,7 @@ STD_ROM_FN(dyndukeu)
 
 struct BurnDriver BurnDrvDyndukeu = {
 	"dyndukeu", "dynduke", NULL, NULL, "1989",
-	"Dynamite Duke (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"Dynamite Duke (US, 25JUL89)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dyndukeuRomInfo, dyndukeuRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
@@ -987,7 +1041,7 @@ struct BurnDriver BurnDrvDyndukeu = {
 };
 
 
-// The Double Dynamites (Japan)
+// The Double Dynamites (Japan, 13NOV89)
 
 static struct BurnRomInfo dbldynjRomDesc[] = {
 	{ "1.cd8",		0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
@@ -1037,7 +1091,7 @@ static INT32 dbldynjInit()
 
 struct BurnDriver BurnDrvDbldynj = {
 	"dbldynj", NULL, NULL, NULL, "1989",
-	"The Double Dynamites (Japan)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	"The Double Dynamites (Japan, 13NOV89)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dbldynjRomInfo, dbldynjRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,
@@ -1046,7 +1100,7 @@ struct BurnDriver BurnDrvDbldynj = {
 };
 
 
-// The Double Dynamites (US)
+// The Double Dynamites (US, 13NOV89)
 
 static struct BurnRomInfo dbldynuRomDesc[] = {
 	{ "1.cd8",		0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
@@ -1091,7 +1145,7 @@ STD_ROM_FN(dbldynu)
 
 struct BurnDriver BurnDrvDbldynu = {
 	"dbldynu", "dbldynj", NULL, NULL, "1989",
-	"The Double Dynamites (US)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
+	"The Double Dynamites (US, 13NOV89)\0", NULL, "Seibu Kaihatsu (Fabtek license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, dbldynuRomInfo, dbldynuRomName, NULL, NULL, DyndukeInputInfo, DyndukeDIPInfo,

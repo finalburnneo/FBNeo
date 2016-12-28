@@ -2489,10 +2489,10 @@ STD_ROM_PICK(bigfghtr)
 STD_ROM_FN(bigfghtr)
 
 struct BurnDriver BurnDrvBigfghtr = {
-	"bigfghtr", NULL, NULL, NULL, "1989",
+	"bigfghtr", "skyrobo", NULL, NULL, "1989",
 	"Tatakae! Big Fighter (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, bigfghtrRomInfo, bigfghtrRomName, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
 	SkyRoboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

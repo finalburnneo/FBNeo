@@ -8,12 +8,15 @@
 // fix fg layer scrolling in terraf/terrafu/terrafj
 // fix chaotic music tempo & dac sound clarity in all games -dink
 //
-// todo:
-//   clean up _after_ extensive playtesting
+// - dec 27, 2016 -
+// added Tatakae! Big Fighter / SkyRobo, biiiiiig thanks to Caps0ff.blogspot.com
+// for dumping the impossible / badly damaged & protected i8751 protection mcu -dink
+//
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
+#include "i8051.h"
 #include "burn_ym3812.h"
 #include "dac.h"
 #include "nb1414m4.h"
@@ -26,6 +29,7 @@ static UINT8 *Drv68KROM;
 static UINT8 *Drv68KRAM0;
 static UINT8 *Drv68KRAM1;
 static UINT8 *Drv68KRAM2;
+static UINT8 *DrvShareRAM;
 static UINT8 *DrvZ80ROM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvZ80ROM2;
@@ -62,6 +66,8 @@ static INT32 sprite_offy;
 static INT32 yoffset;
 static INT32 xoffset;
 static INT32 irqline;
+
+static INT32 usemcu = 0;
 
 static INT32 Terrafjb = 0;
 static INT32 Kozuremode = 0;
@@ -128,6 +134,98 @@ static struct BurnInputInfo Cclimbr2InputList[] = {
 };
 
 STDINPUTINFO(Cclimbr2)
+
+static struct BurnInputInfo BigfghtrInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 10,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+};
+
+STDINPUTINFO(Bigfghtr)
+
+
+static struct BurnDIPInfo BigfghtrDIPList[]=
+{
+	{0x14, 0xff, 0xff, 0xdf, NULL		},
+	{0x15, 0xff, 0xff, 0xff, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x14, 0x01, 0x03, 0x03, "3"		},
+	{0x14, 0x01, 0x03, 0x02, "4"		},
+	{0x14, 0x01, 0x03, 0x01, "5"		},
+	{0x14, 0x01, 0x03, 0x00, "6"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x0c, 0x0c, "80k then every 80k"		},
+	{0x14, 0x01, 0x0c, 0x04, "80k then every 100k"		},
+	{0x14, 0x01, 0x0c, 0x08, "100k then every 80k"		},
+	{0x14, 0x01, 0x0c, 0x00, "100k then every 100k"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x14, 0x01, 0x10, 0x10, "On"		},
+	{0x14, 0x01, 0x10, 0x00, "Off"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x14, 0x01, 0x20, 0x00, "Upright"		},
+	{0x14, 0x01, 0x20, 0x20, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x14, 0x01, 0xc0, 0xc0, "Easy"		},
+	{0x14, 0x01, 0xc0, 0x80, "Normal"		},
+	{0x14, 0x01, 0xc0, 0x40, "Hard"		},
+	{0x14, 0x01, 0xc0, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x15, 0x01, 0x03, 0x01, "2 Coins 1 Credits"		},
+	{0x15, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
+	{0x15, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
+	{0x15, 0x01, 0x03, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x15, 0x01, 0x0c, 0x04, "2 Coins 1 Credits"		},
+	{0x15, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"		},
+	{0x15, 0x01, 0x0c, 0x00, "2 Coins 3 Credits"		},
+	{0x15, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x15, 0x01, 0x10, 0x10, "Off"		},
+	{0x15, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x15, 0x01, 0x20, 0x20, "Off"		},
+	{0x15, 0x01, 0x20, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x15, 0x01, 0x40, 0x40, "Off"		},
+	{0x15, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x15, 0x01, 0x80, 0x80, "Off"		},
+	{0x15, 0x01, 0x80, 0x00, "On"		},
+};
+
+STDDIPINFO(Bigfghtr)
 
 static struct BurnDIPInfo ArmedfDIPList[]=
 {
@@ -447,6 +545,68 @@ void __fastcall armedf_write_word(UINT32 address, UINT16 data)
 	}
 }
 
+UINT16 __fastcall bigfghtr_read_word(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x8c000:
+			return DrvInputs[0];
+
+		case 0x8c002:
+			return DrvInputs[1];
+
+		case 0x8c004:
+			return DrvInputs[2];
+
+		case 0x8c006:
+			return DrvInputs[3];
+
+		case 0x400000:
+			i8051_set_irq_line(I8051_INT0_LINE, CPU_IRQSTATUS_ACK);
+			i8051Run(20);
+			i8051_set_irq_line(I8051_INT0_LINE, CPU_IRQSTATUS_NONE);
+			return 0;
+	}
+
+	return 0;
+}
+
+void __fastcall bigfghtr_write_word(UINT32 address, UINT16 data)
+{
+	switch (address)
+	{
+		case 0x08d000:
+			*DrvVidRegs = data >> 8;
+			*flipscreen = (data >> 12) & 1;
+		return;
+
+		case 0x08d002:
+			DrvScroll[0] = data & 0x3ff;
+		return;
+
+		case 0x08d004:
+			DrvScroll[1] = data & 0x1ff;
+		return;
+
+		case 0x08d006:
+			DrvScroll[2] = data & 0x3ff;
+		return;
+
+		case 0x08d008:
+			DrvScroll[3] = data & 0x1ff;
+		return;
+
+		case 0x08d00a:
+			*soundlatch = ((data & 0x7f) << 1) | 1;
+		return;
+
+		case 0x08d00e:
+			SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
+		return;
+
+	}
+}
+
 static UINT32 m_fg_scrolly = 0;
 static UINT32 m_fg_scrollx = 0;
 static UINT32 m_waiting_msb = 0;
@@ -489,13 +649,6 @@ void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-/*static void DrvClearTxtRAM() {
-	UINT16 *ram = (UINT16*)DrvTxRAM;
-	for (INT32 i = 0x10; i < 0x1000; i++) {
-		ram[i] = 0x0020;
-	}
-}*/
-
 void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 {
 	if (scroll_type == 6 && (address & 0xffffc0) == 0x040000) {
@@ -513,14 +666,6 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 						nb_1414m4_exec((ram[0] << 8) | (ram[1] & 0xff),(UINT16*)DrvTxRAM,&DrvScroll[2],&DrvScroll[3]);
 					}
 				}
-				/*{
-					if (scroll_type == 0 || scroll_type == 3 || scroll_type == 5 || scroll_type == 6) { // scroll6 - hack
-						if (((data & 0x4100) == 0x4000 && scroll_type != 6) ||
-							((data & 0x4100) == 0x0000 && scroll_type == 6)) {
-							DrvClearTxtRAM();
-						}
-					}
-				}*/
 
 				m_vreg = data;
 
@@ -604,8 +749,6 @@ UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 
 void __fastcall armedf_write_port(UINT16 port, UINT8 data)
 {
-//	bprintf (PRINT_NORMAL, _T("%2.2x %2.2x\n"), port & 0xff, data);
-
 	switch (port & 0xff)
 	{
 		case 0x00:
@@ -628,8 +771,6 @@ void __fastcall armedf_write_port(UINT16 port, UINT8 data)
 
 UINT8 __fastcall armedf_read_port(UINT16 port)
 {
-//	bprintf (PRINT_NORMAL, _T("%2.2x read\n"), port & 0xff);
-
 	switch (port & 0xff)
 	{
 		case 0x04:
@@ -716,9 +857,6 @@ UINT8 __fastcall terrafjbextra_read(UINT16 address)
 	return 0;
 }
 
-
-
-
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
@@ -742,7 +880,11 @@ static INT32 DrvDoReset()
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
-	
+
+	if (usemcu) {
+		i8051_reset();
+	}
+
 	if (Terrafjb) {
 		ZetOpen(1);
 		ZetReset();
@@ -760,16 +902,14 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM	= Next; Next += 0x010000;
-	Drv68KROM	= Next; Next += 0x060000;
+	Drv68KROM	= Next; Next += 0x080000;
 
 	DrvGfxROM0	= Next; Next += 0x010000;
 	DrvGfxROM1	= Next; Next += 0x080000;
 	DrvGfxROM2	= Next; Next += 0x080000;
 	DrvGfxROM3	= Next; Next += 0x080000;
 	
-	if (Terrafjb) {
-		DrvZ80ROM2	= Next; Next += 0x004000;
-	}
+	DrvZ80ROM2	= Next; Next += 0x004000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
@@ -778,7 +918,7 @@ static INT32 MemIndex()
 	AllRam		= Next;
 
 	DrvSprRAM	= Next; Next += 0x001000;
-	DrvSprClut	= (UINT16*)Next; Next += 0x001000;
+	DrvSprClut	= (UINT16*)Next; Next += 0x002000;
 	DrvSprBuf	= Next; Next += 0x001000;
 	DrvBgRAM	= Next; Next += 0x001000;
 	DrvFgRAM	= Next; Next += 0x001000;
@@ -787,6 +927,7 @@ static INT32 MemIndex()
 	Drv68KRAM0	= Next; Next += 0x005000;
 	Drv68KRAM1	= Next; Next += 0x001000;
 	Drv68KRAM2	= Next; Next += 0x001000;
+	DrvShareRAM = Next; Next += 0x004000;
 	
 	flipscreen	= Next; Next += 0x000001;
 	soundlatch	= Next; Next += 0x000001;
@@ -854,9 +995,47 @@ static void Armedf68KInit()
 	SekMapMemory(DrvFgRAM,		0x067000, 0x067fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x06a000, 0x06afff, MAP_RAM);
-	//SekMapMemory(Drv68KRAM1,	0x06b000, 0x06bfff, MAP_RAM); clut!
 	SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c7ff, MAP_RAM);
 	SekSetWriteWordHandler(0,	armedf_write_word);
+}
+
+static UINT8 mcu_read_data(INT32 address)
+{
+	if (address >= 0x0600 && address <= 0x3fff) {
+		return DrvShareRAM[(address&0x3fff)^1];
+	}
+
+	return 0;
+}
+
+static void mcu_write_data(INT32 address, UINT8 data)
+{
+	if (address >= 0x0600 && address <= 0x3fff) {
+		DrvShareRAM[(address&0x3fff)^1] = data;
+		return;
+	}
+}
+
+static void Bigfghtr68KInit()
+{
+	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(DrvSprRAM,		0x080000, 0x0805ff, MAP_RAM);
+	SekMapMemory((UINT8 *)DrvSprClut,	0x08b000, 0x08bfff, MAP_RAM);
+	SekMapMemory(Drv68KRAM0,	0x084000, 0x085fff, MAP_RAM);
+	SekMapMemory(DrvBgRAM,		0x086000, 0x086fff, MAP_RAM);
+	SekMapMemory(DrvShareRAM + 0x600,		0x080600, 0x083fff, MAP_RAM);
+	SekMapMemory(DrvFgRAM,		0x087000, 0x087fff, MAP_RAM);
+	SekMapMemory(DrvTxRAM,		0x088000, 0x089fff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,		0x08a000, 0x08afff, MAP_RAM);
+	SekMapMemory(Drv68KRAM2,	0x08c000, 0x08c7ff, MAP_RAM);
+	SekSetWriteWordHandler(0,	bigfghtr_write_word);
+	SekSetReadWordHandler(0,	bigfghtr_read_word);
+
+	i8051_program_data = DrvZ80ROM2;
+	i8051_init (0,0,NULL,NULL);
+	i8051_set_write_data_handler(mcu_write_data);
+	i8051_set_read_data_handler(mcu_read_data);
+
 }
 
 static void Cclimbr268KInit()
@@ -965,6 +1144,12 @@ static INT32 DrvExit()
 	Terrafjb = 0;
 	Kozuremode = 0;
 	fiftysevenhertz = 0;
+
+	if (usemcu) {
+		i8051_exit();
+		usemcu = 0;
+	}
+
 	BurnSetRefreshRate(60.00);
 
 	return 0;
@@ -1133,7 +1318,7 @@ static void draw_sprites(INT32 priority)
 			for (INT32 x = 0; x < 16; x++, sx++) {
 				if (sx < 0 || sx >= nScreenWidth) continue;
 
-				//INT32 pxl = src[((y^flipy << 4) | x^flipx)]; <- neat mosaic effect, save/use for tshingen & p-47
+				//INT32 pxl = src[((y^flipy << 4) | x^flipx)]; <- neat mosaic effect, save/use for tshingen & p-47 (dink)
 				INT32 pxl = src[(((y^flipy) << 4) | (x^flipx))];
 				UINT32 nColor = (color << 4) | 0x200;
 				UINT32 clutpxl = (pxl & ~0xf) | ((DrvSprClut[clut*0x10+(pxl & 0xf)]) & 0xf);
@@ -1221,10 +1406,6 @@ static INT32 DrvFrame()
 	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
-/*	INT32 Z80IRQSlice[9];
-	for (INT32 i = 0; i < 9; i++) {
-		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 10));
-	}*/
 	INT32 Z80IRQSlice[134];
 	for (INT32 i = 0; i < 133; i++) {
 		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 134));
@@ -1251,14 +1432,11 @@ static INT32 DrvFrame()
 				nCyclesDone[1] += ZetRun(500);
 			}
 		}
-/*		for (INT32 j = 0; j < 9; j++) {
-			if (i == Z80IRQSlice[j]) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-				nCyclesDone[1] += ZetRun(3000);
-				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-			}
+
+		if (usemcu) {
+			i8051Run(4000000 / 60 / nInterleave);
 		}
-*/
+
 		if (Terrafjb) {
 			ZetClose();
 			ZetOpen(1);
@@ -1277,8 +1455,12 @@ static INT32 DrvFrame()
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-	
-	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
+
+	if (usemcu) {
+		SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
+	} else {
+		SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
+	}
 
 	ZetClose();
 	SekClose();
@@ -2194,5 +2376,124 @@ struct BurnDriver BurnDrvTerrafb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafbRomInfo, terrafbRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
 	TerrafbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+static INT32 SkyroboLoadRoms()
+{
+	if (BurnLoadRom(Drv68KROM + 0x000001,	 0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x000000,	 1, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x040001,	 2, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM + 0x040000,	 3, 2)) return 1;
+
+	if (BurnLoadRom(DrvZ80ROM,		 4, 1)) return 1;
+	
+	if (BurnLoadRom(DrvZ80ROM2,		 5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0,		 6, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x000000,	 7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x020000,	 8, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM2 + 0x000000,	 9, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM2 + 0x010000,	10, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM3 + 0x000000,	11, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM3 + 0x020000,	12, 1)) return 1;
+
+	return 0;
+}
+
+static INT32 SkyRoboInit()
+{
+	scroll_type = 1;
+	sprite_offy = 128;
+	irqline = 1;
+
+	usemcu = 1;
+
+	INT32 nRet = DrvInit(SkyroboLoadRoms, Bigfghtr68KInit, 0xf800);
+	
+	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	
+	return nRet;
+}
+
+// Sky Robo
+
+static struct BurnRomInfo skyroboRomDesc[] = {
+	{ "3",		0x20000, 0x02d8ba9f, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "1",		0x20000, 0xfcfd9e2e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4",		0x20000, 0x37ced4b7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2",		0x20000, 0x88d52f8e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "8.17k",	0x10000, 0x0aeab61e, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+
+	{ "i8751.bin",	0x01000, 0x64a0d225, 3 | BRF_PRG | BRF_ESS }, //  5 mcu
+
+	{ "7",		0x08000, 0xf556ef28, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "5.13f",	0x20000, 0xd440a29f, 5 | BRF_GRA },           //  7 gfx2
+	{ "6.15f",	0x10000, 0x27469a76, 5 | BRF_GRA },           //  8
+
+	{ "12.8a",	0x10000, 0xa5694ea9, 6 | BRF_GRA },           //  9 gfx3
+	{ "11.6a",	0x10000, 0x10b74e2c, 6 | BRF_GRA },           // 10
+
+	{ "9.8d",	0x20000, 0xfe67800e, 7 | BRF_GRA },           // 11 gfx4
+	{ "10.9d",	0x20000, 0xdcb828c4, 7 | BRF_GRA },           // 12
+
+	{ "tf.13h",	0x00100, 0x81244757, 8 | BRF_GRA },           // 13 proms
+};
+
+STD_ROM_PICK(skyrobo)
+STD_ROM_FN(skyrobo)
+
+struct BurnDriver BurnDrvSkyrobo = {
+	"skyrobo", NULL, NULL, NULL, "1989",
+	"Sky Robo\0", NULL, "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, skyroboRomInfo, skyroboRomName, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
+	SkyRoboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	320, 240, 4, 3
+};
+
+// Tatakae! Big Fighter (Japan)
+
+static struct BurnRomInfo bigfghtrRomDesc[] = {
+	{ "3.ic3",	0x20000, 0xe1e1f291, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "1.ic2",	0x20000, 0x1100d991, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.ic5",	0x20000, 0x2464a83b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "2.ic4",	0x20000, 0xb47bbcd5, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "8.17k",	0x10000, 0x0aeab61e, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+
+	{ "i8751.bin",	0x01000, 0x64a0d225, 3 | BRF_PRG | BRF_ESS }, //  5 mcu
+
+	{ "7.11c",	0x08000, 0x1809e79f, 4 | BRF_GRA },           //  6 gfx1
+
+	{ "5.13f",	0x20000, 0xd440a29f, 5 | BRF_GRA },           //  7 gfx2
+	{ "6.15f",	0x10000, 0x27469a76, 5 | BRF_GRA },           //  8
+
+	{ "12.8a",	0x10000, 0xa5694ea9, 6 | BRF_GRA },           //  9 gfx3
+	{ "11.6a",	0x10000, 0x10b74e2c, 6 | BRF_GRA },           // 10
+
+	{ "9.8d",	0x20000, 0xfe67800e, 7 | BRF_GRA },           // 11 gfx4
+	{ "10.9d",	0x20000, 0xdcb828c4, 7 | BRF_GRA },           // 12
+
+	{ "tf.13h",	0x00100, 0x81244757, 8 | BRF_GRA },           // 13 proms
+};
+
+STD_ROM_PICK(bigfghtr)
+STD_ROM_FN(bigfghtr)
+
+struct BurnDriver BurnDrvBigfghtr = {
+	"bigfghtr", NULL, NULL, NULL, "1989",
+	"Tatakae! Big Fighter (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, bigfghtrRomInfo, bigfghtrRomName, NULL, NULL, BigfghtrInputInfo, BigfghtrDIPInfo,
+	SkyRoboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

@@ -1289,7 +1289,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				break;
 			}
 		}
-		if (!bFoundROMs) {
+		if (!bFoundROMs && bSkipStartupCheck == false) {
 			RomsDirCreate(hSelDlg);
 		}
 		

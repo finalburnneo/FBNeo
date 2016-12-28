@@ -398,6 +398,7 @@ int SFactdCreate();
 // roms.cpp
 extern char* gameAv;
 extern bool avOk;
+extern bool bSkipStartupCheck;
 int RomsDirCreate(HWND hParentWND);
 int CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();

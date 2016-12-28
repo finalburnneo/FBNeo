@@ -10,6 +10,8 @@ static HWND hParent = NULL;
 char* gameAv = NULL;
 bool avOk = false;
 
+bool bSkipStartupCheck = false;
+
 static unsigned ScanThreadId = 0;
 static HANDLE hScanThread = NULL;
 static int nOldSelect = 0;
@@ -459,15 +461,18 @@ static INT_PTR CALLBACK WaitProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lPar
 int CreateROMInfo(HWND hParentWND)
 {
 	hParent = hParentWND;
-	
+	bool bStarting = 0;
+
 	if (gameAv == NULL) {
 		gameAv = (char*)malloc(nBurnDrvCount);
 		memset(gameAv, 0, nBurnDrvCount);
+		bStarting = 1;
 	}
 
 	if (gameAv) {
 		if (CheckGameAvb() || bRescanRoms) {
-			FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
+			if (bStarting && bSkipStartupCheck == false)
+				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
 		}
 	}
 

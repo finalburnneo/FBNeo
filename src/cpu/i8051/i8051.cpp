@@ -73,8 +73,10 @@
 #define INLINE		//
 
 UINT8 *i8051_program_data;
-static void (*i8051_write_port)(INT32,UINT8);
-static UINT8 (*i8051_read_port)(INT32);
+static void (*i8051_write_port)(INT32,UINT8) = NULL;
+static UINT8 (*i8051_read_port)(INT32) = NULL;
+static void (*i8051_write_data)(INT32,UINT8) = NULL;
+static UINT8 (*i8051_read_data)(INT32) = NULL;
 
 #if 0
 
@@ -101,13 +103,29 @@ UINT8 program_read_byte_8(INT32 offset)
 
 void data_write_byte_8(INT32 offset, UINT8 data)
 {
-	bprintf (0, _T("data_write_byte_8 %4.4x, %2.2x\n"), offset, data);
+	if (i8051_write_data) {
+		i8051_write_data(offset, data);
+		return;
+	}
 }
 
 UINT8 data_read_byte_8(INT32 offset)
 {
-	bprintf (0, _T("data_read_byte_8 %4.4x\n"), offset);
+	if (i8051_read_data) {
+		return i8051_read_data(offset);
+	}
+
 	return 0;
+}
+
+void i8051_set_write_data_handler(void (*pointer)(INT32,UINT8))
+{
+	i8051_write_data = pointer;
+}
+
+void i8051_set_read_data_handler(UINT8 (*pointer)(INT32))
+{
+	i8051_read_data = pointer;
 }
 
 void i8051_set_write_port_handler(void (*pointer)(INT32,UINT8))
@@ -214,6 +232,7 @@ typedef struct {
 	UINT8	ie;				//Interrupt Enable
 	UINT8	p3;				//Port 3
 	UINT8	ip;				//Interrupt Priority
+
 	//8052 Only registers
 	#if (HAS_I8052 || HAS_I8752)
 		UINT8	t2con;		//Timer/Counter 2 Control
@@ -676,7 +695,11 @@ void i8051_reset(void)
 /* Shut down CPU core */
 void i8051_exit(void)
 {
-	/* nothing to do */
+	i8051_read_port = NULL;
+	i8051_write_port = NULL;
+	i8051_read_data = NULL;
+	i8051_write_data = NULL;
+	i8051_program_data = NULL;
 }
 
 /* Execute cycles - returns number of cycles actually run */
@@ -1528,7 +1551,6 @@ void i8051_set_irq_line(int irqline, int state)
 
 		//External Interrupt 1
 		case I8051_INT1_LINE:
-
 			//Line Asserted?
 			if (state != CLEAR_LINE) {
 				if(GET_EX1) {

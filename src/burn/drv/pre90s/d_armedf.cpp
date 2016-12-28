@@ -859,12 +859,12 @@ UINT8 __fastcall terrafjbextra_read(UINT16 address)
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
+	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
 }
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.000 / (nBurnFPS / 100.000))));
+	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset()
@@ -1031,6 +1031,7 @@ static void Bigfghtr68KInit()
 	SekSetWriteWordHandler(0,	bigfghtr_write_word);
 	SekSetReadWordHandler(0,	bigfghtr_read_word);
 
+	usemcu = 1;
 	i8051_program_data = DrvZ80ROM2;
 	i8051_init (0,0,NULL,NULL);
 	i8051_set_write_data_handler(mcu_write_data);
@@ -1107,7 +1108,7 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 	}
 
 	BurnYM3812Init(1, 4000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
@@ -1403,7 +1404,7 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 100;
-	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
+	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
 	INT32 Z80IRQSlice[134];
@@ -1424,7 +1425,7 @@ static INT32 DrvFrame()
 		nSegment = SekRun(nSegment);
 		nCyclesDone[0] += nSegment;
 
-		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 
 		for (INT32 j = 0; j < 133; j++) {
 			if (i == Z80IRQSlice[j]) {
@@ -1434,7 +1435,7 @@ static INT32 DrvFrame()
 		}
 
 		if (usemcu) {
-			i8051Run(4000000 / 60 / nInterleave);
+			i8051Run(nTotalCycles[2] / nInterleave);
 		}
 
 		if (Terrafjb) {
@@ -1485,7 +1486,7 @@ static INT32 DrvFrameTerraf()
 
 	INT32 nSegment;
 	INT32 nInterleave = 100;
-	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
+	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
 	INT32 Z80IRQSlice[134];
@@ -2410,13 +2411,15 @@ static INT32 SkyRoboInit()
 	sprite_offy = 128;
 	irqline = 1;
 
-	usemcu = 1;
-
 	INT32 nRet = DrvInit(SkyroboLoadRoms, Bigfghtr68KInit, 0xf800);
-	
-	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	
+
+	if (nRet == 0) {
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+		//BurnSetRefreshRate(57.00); // note: won't accept coins or start reliably @ 57hz
+		//fiftysevenhertz = 1;
+	}
+
 	return nRet;
 }
 

@@ -91,7 +91,11 @@ INT32 SMSExit()
 	GenericTilesExit();
 
 	BurnFree (AllMem);
-	BurnFree (cart.rom);
+
+	if (cart.rom) {
+		BurnFree (cart.rom);
+		cart.rom = NULL;
+	}
 
 	system_shutdown();
 
@@ -295,6 +299,8 @@ static INT32 load_rom()
 
 INT32 SMSInit()
 {
+	cart.rom = NULL;
+
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;

@@ -158,9 +158,15 @@ void RF5C68PCMExit()
 		free(left);
 		left = NULL;
 	}
+
 	if (right) {
 		free(right);
 		right = NULL;
+	}
+
+	if (chip) {
+		free(chip);
+		chip = NULL;
 	}
 
 	DebugSnd_RF5C68Initted = 0;

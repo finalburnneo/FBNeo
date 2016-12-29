@@ -173,6 +173,8 @@ void t5182Exit()
 	if (!DebugDev_T5182Initted) bprintf(PRINT_ERROR, _T("t5182Exit called without init\n"));
 #endif
 
+	if (!DebugDev_T5182Initted) return;
+
 	BurnYM2151Exit();
 
 	if (nHasZet > 0) {

@@ -297,6 +297,8 @@ void MSM5232Exit()
 	if (!DebugSnd_MSM5232Initted) bprintf(PRINT_ERROR, _T("MSM5232Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_MSM5232Initted) return;
+
 	for (INT32 j = 0; j < 11; j++) {
 		BurnFree(sound_buffer[j]);
 		sound_buffer[j] = NULL;

@@ -157,6 +157,8 @@ void BurnYM2151Exit()
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_YM2151Initted) return;
+
 	BurnYM2151SetIrqHandler(NULL);
 	BurnYM2151SetPortHandler(NULL);
 

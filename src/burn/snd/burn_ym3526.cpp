@@ -493,6 +493,8 @@ void BurnYM3526Exit()
 	if (!DebugSnd_YM3526Initted) bprintf(PRINT_ERROR, _T("BurnYM3526Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_YM3526Initted) return;
+
 	YM3526Shutdown();
 
 	BurnTimerExitYM3526();

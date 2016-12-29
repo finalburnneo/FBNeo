@@ -80,6 +80,9 @@ void BurnYM2413Exit()
 #if defined FBA_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Exit called without init\n"));
 #endif
+
+	if (!DebugSnd_YM2413Initted) return;
+
 	YM2413Shutdown();
 
 	if (pBuffer) {

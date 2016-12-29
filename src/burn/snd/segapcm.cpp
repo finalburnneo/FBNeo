@@ -175,6 +175,8 @@ void SegaPCMExit()
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMExit called without init\n"));
 #endif
 
+	if (!DebugSnd_SegaPCMInitted) return;
+
 	for (INT32 i = 0; i < nNumChips + 1; i++) {
 		BurnFree(Chip[i]);
 		BurnFree(Left[i]);

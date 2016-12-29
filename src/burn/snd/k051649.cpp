@@ -186,6 +186,8 @@ void K051649Exit()
 	if (!DebugSnd_K051649Initted) bprintf(PRINT_ERROR, _T("K051649Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_K051649Initted) return;
+
 	info = &Chips[0];
 
 	if (info->mixer_buffer) {

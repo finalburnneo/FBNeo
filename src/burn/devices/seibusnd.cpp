@@ -36,9 +36,9 @@ static INT32 sub2main_pending;
 static INT32 SeibuSoundBank;
 static INT32 irq1,irq2;
 
-UINT8 *SeibuZ80DecROM;
-UINT8 *SeibuZ80ROM;
-UINT8 *SeibuZ80RAM;
+UINT8 *SeibuZ80DecROM = NULL;
+UINT8 *SeibuZ80ROM = NULL;
+UINT8 *SeibuZ80RAM = NULL;
 INT32 seibu_coin_input;
 
 static INT32 seibu_sndcpu_frequency;
@@ -455,7 +455,7 @@ void seibu_sound_reset()
 void seibu_sound_init(INT32 type, INT32 len, INT32 freq0 /*cpu*/, INT32 freq1 /*ym*/, INT32 freq2 /*oki*/)
 {
 	DebugDev_SeibuSndInitted = 1;
-	
+
 	seibu_snd_type = type;
 
 	if (len && SeibuZ80DecROM != NULL) {
@@ -521,6 +521,8 @@ void seibu_sound_exit()
 #if defined FBA_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_exit called without init\n"));
 #endif
+
+	if (!DebugDev_SeibuSndInitted) return;
 
 	switch (seibu_snd_type & 3)
 	{

@@ -199,6 +199,8 @@ void BurnYMF278BExit()
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BExit called without init\n"));
 #endif
 
+	if (!DebugSnd_YMF278BInitted) return;
+
 	YMF278B_sh_stop();
 
 	BurnTimerExit();
@@ -213,8 +215,6 @@ void BurnYMF278BExit()
 
 INT32 BurnYMF278BInit(INT32 /* nClockFrequency */, UINT8* YMF278BROM, INT32 YMF278BROMSize, void (*IRQCallback)(INT32, INT32), INT32 (*StreamCallback)(INT32))
 {
-	DebugSnd_YMF278BInitted = 1;
-	BurnYMF278BExit();	
 	DebugSnd_YMF278BInitted = 1;
 
 	BurnYMF278BStreamCallback = YMF278BStreamCallbackDummy;

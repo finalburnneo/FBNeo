@@ -1022,6 +1022,8 @@ void ES5506Exit()
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_ES5506Initted) return;
+
 	/* debugging */
 	if (LOG_COMMANDS && eslog)
 	{

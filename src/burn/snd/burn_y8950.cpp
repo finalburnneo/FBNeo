@@ -540,6 +540,9 @@ void BurnY8950Exit()
 	if (!DebugSnd_Y8950Initted) bprintf(PRINT_ERROR, _T("BurnY8950Exit called without init\n"));
 #endif
 
+	// Crash prevention.
+	if (!DebugSnd_Y8950Initted) return;
+
 	Y8950Shutdown();
 
 	BurnTimerExitY8950();

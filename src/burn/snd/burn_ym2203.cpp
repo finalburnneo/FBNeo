@@ -570,6 +570,8 @@ void BurnYM2203Exit()
 	if (!DebugSnd_YM2203Initted) bprintf(PRINT_ERROR, _T("BurnYM2203Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_YM2203Initted) return;
+
 	YM2203Shutdown();
 	
 	for (INT32 i = 0; i < nNumChips; i++) {

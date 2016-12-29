@@ -222,6 +222,8 @@ void DACExit()
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACExit called without init\n"));
 #endif
 
+	if (!DebugSnd_DACInitted) return;
+
 	struct dac_info *ptr;
 
 	for (INT32 i = 0; i < DAC_NUM; i++) {
@@ -237,6 +239,8 @@ void DACExit()
 
 	BurnFree (lBuffer);
 	BurnFree (rBuffer);
+	lBuffer = NULL;
+	rBuffer = NULL;
 }
 
 INT32 DACScan(INT32 nAction,INT32 *pnMin)

@@ -22,6 +22,8 @@ static UINT32 *poly18 = NULL;
 static int polybit;
 static double custom_volume = 1.00;
 
+static INT32 pleiadssound_initted = 0;
+
 /* fixed 8kHz clock */
 #define TONE1_CLOCK  8000
 
@@ -489,17 +491,20 @@ void pleiads_sound_init(int naughtybpopflamer)
 		double decays[6] = {0.33,0.33,0,0.33,0,0.33};
 		tms36xx_init(247, TMS3615, &decays[0], 0.00);
 	}
-
+	pleiadssound_initted = 1;
 }
 
 void pleiads_sound_deinit()
 {
+	if (!pleiadssound_initted) return;
+
 	if (poly18) {
 		free(poly18);
 		poly18 = NULL;
 	}
 
 	tms36xx_deinit();
+	pleiadssound_initted = 0;
 }
 
 static void internal_reset()

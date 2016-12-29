@@ -50,6 +50,8 @@ typedef struct {
 
 static TMS9928A tms;
 
+static INT32 TMS9928A_initted = 0;
+
 static UINT32 Palette[16]; // high color support
 
 static void TMS89928aPaletteRecalc()
@@ -165,6 +167,8 @@ void TMS9928AReset()
 
 void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*INTCallback)(int))
 {
+	TMS9928A_initted = 1;
+
 	GenericTilesInit();
 
 	memset(&tms, 0, sizeof(tms));
@@ -189,6 +193,9 @@ void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*
 
 void TMS9928AExit()
 {
+	if (!TMS9928A_initted) return;
+
+	TMS9928A_initted = 0;
 	TMS9928AReset();
 
 	GenericTilesExit();

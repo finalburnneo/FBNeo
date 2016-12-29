@@ -60,7 +60,7 @@ chirp  2   : volume  6- 4 : with filter
 chirp  3   : volume   4   : no filter ??
 chirp  4- 5: volume  4- 2 : with filter
 chirp  6-11: volume  2- 0 : with filter
-chirp 12-..: vokume   0   : silent
+chirp 12-..: volume   0   : silent
 
  ---------- digial output information ----------
  when ME pin = high , some status output to A0..15 pins
@@ -721,14 +721,16 @@ void vlm5030Exit()
 	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030Exit called without init\n"));
 #endif
 
-	INT32 i;
+	if (!DebugSnd_VLM5030Initted) return;
+
 	struct vlm5030_info *chip;
 
-	for (i = 0; i < CHIP_COUNT; i++) {
+	for (INT32 i = 0; i < CHIP_COUNT; i++) {
 		chip = &vlm5030_chips[i];
 
 		if (chip->output) {
 			BurnFree(chip->output);
+			chip->output = NULL;
 		}
 	}
 	

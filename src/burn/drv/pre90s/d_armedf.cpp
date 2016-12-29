@@ -2416,8 +2416,6 @@ static INT32 SkyRoboInit()
 	if (nRet == 0) {
 		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-		//BurnSetRefreshRate(57.00); // note: won't accept coins or start reliably @ 57hz
-		//fiftysevenhertz = 1;
 	}
 
 	return nRet;

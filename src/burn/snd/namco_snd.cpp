@@ -583,6 +583,8 @@ void NamcoSoundExit()
 	if (!DebugSnd_NamcoSndInitted) bprintf(PRINT_ERROR, _T("NamcoSoundExit called without init\n"));
 #endif
 
+	if (!DebugSnd_NamcoSndInitted) return;
+
 	if (chip) {
 		free(chip);
 		chip = NULL;

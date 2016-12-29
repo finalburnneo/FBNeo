@@ -293,6 +293,8 @@ void BurnYM2612Exit()
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnYM2612Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_YM2612Initted) return;
+
 	YM2612Shutdown();
 
 	BurnTimerExit();

@@ -380,6 +380,8 @@ void BurnYM2610Exit()
 	if (!DebugSnd_YM2610Initted) bprintf(PRINT_ERROR, _T("BurnYM2610Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_YM2610Initted) return;
+
 	YM2610Shutdown();
 	AY8910Exit(0);
 

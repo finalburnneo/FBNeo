@@ -62,7 +62,7 @@ struct sYMZ280BChannelInfo {
 };
 
 static INT32 nActiveChannel, nDelta, nSample, nCount, nRamReadAddress;
-static INT32* buf;
+static INT32* buf = NULL;
 
 sYMZ280BChannelInfo YMZ280BChannelInfo[8];
 static sYMZ280BChannelInfo* channelInfo;
@@ -191,9 +191,17 @@ void YMZ280BExit()
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BExit called without init\n"));
 #endif
 
+	if (!DebugSnd_YMZ280BInitted) return;
+
 	if (pBuffer) {
 		free(pBuffer);
 		pBuffer = NULL;
+	}
+
+	for (INT32 j = 0; j < 8; j++) {
+		if (YMZ280BChannelData[j])
+			free(YMZ280BChannelData[j]);
+		YMZ280BChannelData[j] = NULL;
 	}
 
 	YMZ280BIRQCallback = NULL;

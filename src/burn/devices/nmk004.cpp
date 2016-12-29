@@ -18,6 +18,8 @@ static UINT8 to_nmk004 = 0;
 static UINT8 to_main = 0;
 static INT32 bankdata[2] = { 0, 0 };
 
+static INT32 nmk004_initted = 0;
+
 static UINT8 nmk004_tlcs90_read(UINT32 address)
 {
 	if (address >= 0xfec0 && address < 0xffc0) {	// internal ram
@@ -139,6 +141,7 @@ inline static INT32 NMK004SynchroniseStream(INT32 nSoundRate)
 
 void NMK004_init()
 {
+	nmk004_initted = 1;
 	ram = (UINT8*)BurnMalloc(0x900);
 
 	tlcs90Init(0, 8000000);
@@ -172,7 +175,12 @@ void NMK004_init()
 
 void NMK004_exit()
 {
+	if (!nmk004_initted) return;
+
+	nmk004_initted = 0;
+
 	BurnFree(ram);
+	ram = NULL;
 
 	tlcs90Exit();
 	BurnYM2203Exit();
@@ -180,11 +188,11 @@ void NMK004_exit()
 	MSM6295Exit(1);
 }
 
-INT32 NMK004Scan(INT32 nAction,INT32 *pnMin)
+INT32 NMK004Scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = ram;

@@ -342,6 +342,8 @@ void K054539Exit()
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_K054539Initted) return;
+
 	if (soundbuf[0] != NULL) {
 		free (soundbuf[0]);
 		soundbuf[0] = NULL;

@@ -448,6 +448,8 @@ void BurnSampleExit()
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleExit called without init\n"));
 #endif
 
+	if (!DebugSnd_SamplesInitted) return;
+
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];
 		if (sample_ptr->data != NULL) {

@@ -9,6 +9,7 @@ static UINT8 data_to_z80;
 static INT32 z80_to_mermaid_full;
 static INT32 mermaid_to_z80_full;
 static INT32 mermaid_int0;
+static INT32 mermaid_initted = 0;
 INT32 mermaid_sub_z80_reset;
 
 #ifndef MCS51_PORT_P0
@@ -140,10 +141,13 @@ void mermaidInit(UINT8 *rom, UINT8 *inputs)
 	i8051_init (0,0,NULL,NULL);
 	i8051_set_write_port_handler(mermaid_write_port);
 	i8051_set_read_port_handler(mermaid_read_port);
+	mermaid_initted = 1;
 }
 
 void mermaidExit()
 {
+	if (!mermaid_initted) return;
+	mermaid_initted = 0;
 	i8051_exit();
 }
 

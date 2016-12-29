@@ -284,6 +284,8 @@ void K053260Exit()
 	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_K053260Initted) return;
+
 	for (INT32 i = 0; i < 2; i++) {
 		ic = &Chips[i];
 

@@ -58,7 +58,7 @@ UINT8 ES5506Read(UINT32 offset);
 void es5506_voice_bank_w(INT32 voice, INT32 bank);
 void ES5505Init(INT32 clock, UINT8 *region0, UINT8* region1, irq_callback callback);
 #define ES5505Reset	ES5506Reset
-#define ES5505Exit	ES5505Exit
+#define ES5505Exit	ES5506Exit
 void ES5505Write(UINT32 offset, UINT16 data);
 UINT16 ES5505Read(UINT32 offset);
 void es5505_voice_bank_w(INT32 voice, INT32 bank);

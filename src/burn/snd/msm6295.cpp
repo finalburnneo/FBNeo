@@ -456,8 +456,12 @@ void MSM6295Exit(INT32 nChip)
 	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Exit called with invalid chip number %x\n"), nChip);
 #endif
 
-	BurnFree(pLeftBuffer);
-	BurnFree(pRightBuffer);
+	if (!DebugSnd_MSM6295Initted) return;
+
+	if (pLeftBuffer) BurnFree(pLeftBuffer);
+	if (pRightBuffer) BurnFree(pRightBuffer);
+	pLeftBuffer = NULL;
+	pRightBuffer = NULL;
 
 	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
 		BurnFree(MSM6295ChannelData[nChip][nChannel]);

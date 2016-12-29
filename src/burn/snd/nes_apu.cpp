@@ -899,9 +899,10 @@ void nesapuExit()
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuExit called without init\n"));
 #endif
 
-	INT32 i;
+	if (!DebugSnd_NESAPUSndInitted) return;
+
 	struct nesapu_info *info;
-	for (i = 0; i < CHIP_NUM; i++)
+	for (INT32 i = 0; i < CHIP_NUM; i++)
 	{
 		info = &nesapu_chips[i];
 		if (info->stream)

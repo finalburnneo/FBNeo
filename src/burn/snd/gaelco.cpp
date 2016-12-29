@@ -53,6 +53,8 @@ static INT32 m_banks[4];                                         /* start of eac
 static gaelco_sound_channel m_channel[GAELCO_NUM_CHANNELS];    /* 7 stereo channels */
 static UINT16 m_sndregs[0x38];
 
+static INT32 gaelcosnd_initted = 0;
+
 static INT16 *sample_buffer;
 
 // Table for converting from 8 to 16 bits with volume control
@@ -232,10 +234,14 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 	}
 
 	gaelcosnd_reset();
+
+	gaelcosnd_initted = 1;
 }
 
 void gaelcosnd_exit()
 {
+	if (!gaelcosnd_initted) return;
+
 	BurnFree(sample_buffer);
 	sample_buffer = NULL;
 	m_snd_data = NULL;

@@ -325,6 +325,8 @@ void MSM5205Exit()
 	if (!DebugSnd_MSM5205Initted) bprintf(PRINT_ERROR, _T("MSM5205Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_MSM5205Initted) return;
+
 	for (INT32 chip = 0; chip < MAX_MSM5205; chip++)
 	{
 		voice = &chips[chip];
@@ -337,6 +339,7 @@ void MSM5205Exit()
 	}
 
 	BurnFree(scanline_table);
+	scanline_table = NULL;
 
 	DebugSnd_MSM5205Initted = 0;
 	nNumChips = 0;

@@ -69,7 +69,7 @@ struct upd7759_chip
 	INT32		output_dir;
 };
 
-static struct upd7759_chip *Chips[2]; // more?
+static struct upd7759_chip *Chips[2] = { NULL, NULL }; // more?
 static struct upd7759_chip *Chip = NULL;
 
 static INT32 nNumChips = 0;

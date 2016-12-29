@@ -608,12 +608,17 @@ void SN76496Exit()
 
 	NumChips = 0;
 	
-	BurnFree(Chip0);
-	BurnFree(Chip1);
-	BurnFree(Chip2);
-	BurnFree(Chip3);
-	BurnFree(Chip4);
-	
+	if (Chip0) BurnFree(Chip0);
+	if (Chip1) BurnFree(Chip1);
+	if (Chip2) BurnFree(Chip2);
+	if (Chip3) BurnFree(Chip3);
+	if (Chip4) BurnFree(Chip4);
+	Chip0 = NULL;
+	Chip1 = NULL;
+	Chip2 = NULL;
+	Chip3 = NULL;
+	Chip4 = NULL;
+
 	DebugSnd_SN76496Initted = 0;
 }
 

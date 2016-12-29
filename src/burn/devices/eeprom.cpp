@@ -110,6 +110,8 @@ void EEPROMExit()
 	if (!DebugDev_EEPROMInitted) bprintf(PRINT_ERROR, _T("EEPROMExit called without init\n"));
 #endif
 
+	if (!DebugDev_EEPROMInitted) return;
+
 	char output[128];
 	sprintf (output, "config/games/%s.nv", BurnDrvGetTextA(DRV_NAME));
 

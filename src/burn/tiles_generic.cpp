@@ -188,7 +188,7 @@ INT32 BurnTransferCopy(UINT32* pPalette)
 void BurnTransferExit()
 {
 #if defined FBA_DEBUG
-	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferClear called without init\n"));
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
 #endif
 
 	if (pTransDraw) {

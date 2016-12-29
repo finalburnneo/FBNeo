@@ -549,6 +549,8 @@ void BurnYM3812Exit()
 	if (!DebugSnd_YM3812Initted) bprintf(PRINT_ERROR, _T("BurnYM3812Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_YM3812Initted) return;
+
 	YM3812Shutdown();
 
 	BurnTimerExitYM3812();

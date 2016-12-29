@@ -282,6 +282,8 @@ void es8712Exit(INT32 device)
 	if (!DebugSnd_ES8712Initted) bprintf(PRINT_ERROR, _T("es8712Exit called without init\n"));
 #endif
 
+	if (!DebugSnd_ES8712Initted) return;
+
 	if (device >= MAX_ES8712_CHIPS) return;
 
 	chip = &chips[device];

@@ -471,7 +471,7 @@ int CreateROMInfo(HWND hParentWND)
 
 	if (gameAv) {
 		if (CheckGameAvb() || bRescanRoms) {
-			if (bStarting && bSkipStartupCheck == false)
+			if ((bStarting && bSkipStartupCheck == false) || bRescanRoms)
 				FBADialogBox(hAppInst, MAKEINTRESOURCE(IDD_WAIT), hParent, (DLGPROC)WaitProc);
 		}
 	}

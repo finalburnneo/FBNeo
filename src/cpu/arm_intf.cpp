@@ -320,6 +320,8 @@ void ArmExit()
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("ArmExit called without init\n"));
 #endif
 
+	if (!DebugCPU_ARMInitted) return;
+
 	for (INT32 i = 0; i < 3; i++) {
 		if (membase[i]) {
 			free (membase[i]);

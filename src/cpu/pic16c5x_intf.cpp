@@ -51,7 +51,7 @@ void pic16c5xWrite(UINT16 address, UINT8 data)
 #endif
 
 	address &= ram_address_mask;
-	
+
 	if (nPic16c5xCpuType == 0x16C57 || nPic16c5xCpuType == 0x16C58) {
 		if (address >= 0x60 && address <= 0x6f) {
 			// mirror
@@ -59,7 +59,7 @@ void pic16c5xWrite(UINT16 address, UINT8 data)
 			return;
 		}
 	}
-		
+
 	pic16c5x_ram[address] = data;
 }
 
@@ -129,8 +129,14 @@ void pic16c5xExit()
 	pic16c5x_rom = NULL;
 	nPic16c5xCpuType = -1;
 	
-	BurnFree(pic16c5x_ram);
-	
+	if (pic16c5x_ram) {
+		BurnFree(pic16c5x_ram);
+		pic16c5x_ram = NULL;
+	}
+
+	pPic16c5xReadPort = NULL;
+	pPic16c5xWritePort = NULL;
+
 	DebugCPU_PIC16C5XInitted = 0;
 }
 

@@ -6,7 +6,7 @@
 INT32 nM6809Count = 0;
 static INT32 nActiveCPU = 0;
 
-static M6809Ext *m6809CPUContext;
+static M6809Ext *m6809CPUContext = NULL;
 
 static INT32 nM6809CyclesDone[MAX_CPU];
 INT32 nM6809CyclesTotal;

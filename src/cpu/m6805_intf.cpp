@@ -11,8 +11,8 @@ static INT32 PAGE_SHIFT;
 #define WRITE		1
 #define FETCH		2
 
-static UINT8 (*m6805ReadFunction)(UINT16 address);
-static void (*m6805WriteFunction)(UINT16 address, UINT8 data);
+static UINT8 (*m6805ReadFunction)(UINT16 address) = NULL;
+static void (*m6805WriteFunction)(UINT16 address, UINT8 data) = NULL;
 
 static UINT8 *mem[3][0x100];
 

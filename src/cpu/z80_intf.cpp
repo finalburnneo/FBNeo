@@ -445,11 +445,14 @@ void ZetExit()
 	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetExit called without init\n"));
 #endif
 
+	if (!DebugCPU_ZetInitted) return;
+
 	Z80Exit();
 
 	for (INT32 i = 0; i < MAX_Z80; i++) {
 		if (ZetCPUContext[i]) {
 			BurnFree (ZetCPUContext[i]);
+			ZetCPUContext[i] = NULL;
 		}
 	}
 

@@ -6,7 +6,7 @@
 INT32 nM6800Count = 0;
 static INT32 nCpuType = 0;
 
-static M6800Ext *M6800CPUContext;
+static M6800Ext *M6800CPUContext = NULL;
 
 static INT32 nM6800CyclesDone[MAX_CPU];
 INT32 nM6800CyclesTotal;

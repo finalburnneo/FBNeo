@@ -6,7 +6,7 @@
 INT32 nHD6309Count = 0;
 static INT32 nActiveCPU = 0;
 
-static HD6309Ext *HD6309CPUContext;
+static HD6309Ext *HD6309CPUContext = NULL;
 
 static INT32 nHD6309CyclesDone[MAX_CPU];
 INT32 nHD6309CyclesTotal;

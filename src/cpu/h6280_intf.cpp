@@ -269,6 +269,8 @@ void h6280Exit()
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280Exit called without init\n"));
 #endif
 
+	if (!DebugCPU_H6280Initted) return;
+
 	for (INT32 i = 0; i < MAX_H6280; i++) {
 		sPointer = &sHandler[i];
 

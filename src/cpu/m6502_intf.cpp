@@ -221,9 +221,12 @@ void M6502Exit()
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502Exit called without init\n"));
 #endif
 
+	if (!DebugCPU_M6502Initted) return;
+
 	for (INT32 i = 0; i < MAX_CPU; i++) {
 		if (m6502CPUContext[i]) {
 			BurnFree(m6502CPUContext[i]);
+			m6502CPUContext[i] = NULL;
 		}
 	}
 

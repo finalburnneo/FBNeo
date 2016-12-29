@@ -245,6 +245,8 @@ void s2650Exit()
 	if (!DebugCPU_S2650Initted) bprintf(PRINT_ERROR, _T("s2650Exit called without init\n"));
 #endif
 
+	if (!DebugCPU_S2650Initted) return;
+
 	memset (&sHandler, 0, sizeof (sHandler));
 	s2650Count = 0;
 	s2650_exit();

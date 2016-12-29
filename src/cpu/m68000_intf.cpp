@@ -1049,6 +1049,8 @@ INT32 SekExit()
 	if (!DebugCPU_SekInitted) bprintf(PRINT_ERROR, _T("SekExit called without init\n"));
 #endif
 
+	if (!DebugCPU_SekInitted) return;
+
 	// Deallocate cpu extenal data (memory map etc)
 	for (INT32 i = 0; i <= nSekCount; i++) {
 

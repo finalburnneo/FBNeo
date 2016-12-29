@@ -391,6 +391,7 @@ void VezExit()
 	for (INT32 i = 0; i < MAX_VEZ; i++) {
 		if (VezCPUContext[i]) {
 			BurnFree(VezCPUContext[i]);
+			VezCPUContext[i] = NULL;
 		}
 	}
 

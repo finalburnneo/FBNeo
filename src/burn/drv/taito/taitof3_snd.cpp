@@ -273,10 +273,9 @@ static void __fastcall TaitoF3Sound68KWriteWord(UINT32 a, UINT16 d)
 
 void TaitoF3SoundReset()
 {
-	memcpy(TaitoF3SoundRam, TaitoF3SoundRom, 8);
+	memcpy(TaitoF3SoundRam, TaitoF3SoundRom, 8); // copy vectors
 
-//	taito system resets these
-	//if (TaitoNumES5505 == 0) {
+//	taito system resets these, but SekReset() is needed to latch the vectors.
 	{
 		SekOpen(TaitoF3CpuNum);
 		SekReset();

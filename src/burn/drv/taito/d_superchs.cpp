@@ -8,282 +8,12 @@
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
-#include "z80_intf.h"
+#include "taitof3_snd.h"
 #include "taito.h"
 #include "taito_ic.h"
 #include "eeprom.h"
-#include "es5506.h"
+//#include "es5506.h"
 #include "burn_shift.h"
-
-static UINT8 *TaitoF3SoundRam = NULL;
-static UINT8 *TaitoF3SharedRam = NULL;
-static UINT8 *TaitoES5510DSPRam = NULL;
-static INT32 TaitoF3Counter;
-static INT32 TaitoF3VectorReg;
-static INT32 M68681IMR;
-static INT32 IMRStatus;
-static UINT32 TaitoES5510GPRLatch;
-static UINT32 *TaitoES5510GPR = NULL;
-
-static UINT32 TaitoF3SoundTriggerIRQCycles = 0;
-static UINT32 TaitoF3SoundTriggerIRQPulseCycles = 0;
-static UINT32 TaitoF3SoundTriggerIRQCycleCounter = 0;
-static UINT32 TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
-#define IRQ_TRIGGER_OFF		0
-#define IRQ_TRIGGER_ONCE	1
-#define IRQ_TRIGGER_PULSE	2
-static INT32 TaitoF3SoundTriggerIRQCyclesMode = 0;
-
-static INT32 __fastcall TaitoF3SoundIRQCallback(INT32 /*irq*/)
-{
-	return TaitoF3VectorReg;
-}
-
-static void TaitoF3SoundReset()
-{
-	memcpy(TaitoF3SoundRam, Taito68KRom3, 8);
-
-	SekOpen(2);
-	SekReset();
-	SekClose();
-}
-
-UINT8 __fastcall TaitoF3Sound68KReadByte(UINT32 a)
-{
-	if (a >= 0x140000 && a <= 0x140fff) {
-		INT32 Offset = (a & 0xfff) >> 1;
-		UINT8 *Ram = (UINT8*)TaitoF3SharedRam;
-		return Ram[Offset^1];
-	}
-
-	if (a >= 0x260000 && a <= 0x2601ff) {
-		INT32 Offset = (a & 0x1ff);
-
-		if (Offset == 0x12 * 2) return 0;
-		if (Offset == 0x16 * 2) return 0x27;
-
-		return TaitoES5510DSPRam[Offset^1];
-	}
-
-	if (a >= 0x280000 && a <= 0x28001f) {
-		INT32 Offset = (a & 0x1f) >> 1;
-		if (Offset == 0x05) {
-			INT32 Ret = IMRStatus;
-			IMRStatus = 0;
-			return Ret;
-		}
-
-		if (Offset == 0x0e) return 0x01;
-
-		if (Offset == 0x0f) {
-			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
-			return 0x00;
-		}
-
-		return 0xff;
-	}
-
-	if (a >= 0x200000 && a <= 0x20001f) {
-		INT32 Offset = ((a & 0x1f) >> 1);
-		INT16 rc = ES5505Read(Offset);
-		if (Offset&1) rc >>=8;
-
-		return rc&0xff;
-	}
-
-	bprintf(PRINT_NORMAL, _T("Sound 68K Read byte => %06X\n"), a);
-
-	return 0;
-}
-
-void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x140000 && a <= 0x140fff) {
-		INT32 Offset = (a & 0xfff) >> 1;
-		UINT8 *Ram = (UINT8*)TaitoF3SharedRam;
-		Ram[Offset^1] = d;
-		return;
-	}
-
-	if (a >= 0x260000 && a <= 0x2601ff) {
-		INT32 Offset = (a & 0x1ff);
-
-		TaitoES5510DSPRam[Offset^1] = d;
-
-		switch (Offset) {
-			case 0x00: {
-				TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0x00ffff) | ((d & 0xff) << 16);
-				return;
-			}
-
-			case 0x01: {
-				TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0xff00ff) | ((d & 0xff) << 8);
-				return;
-			}
-
-			case 0x02: {
-				TaitoES5510GPRLatch= (TaitoES5510GPRLatch & 0xffff00) | ((d & 0xff) << 0);
-				return;
-			}
-
-			case 0x03: {
-				return;
-			}
-
-			case 0x80: {
-				if (d < 0xc0) {
-					TaitoES5510GPRLatch = TaitoES5510GPR[d];
-				}
-				return;
-			}
-
-			case 0xa0: {
-				if (d < 0xc0) {
-					TaitoES5510GPR[d] = TaitoES5505Rom[(TaitoES5510GPRLatch >> 8) & (TaitoES5505RomSize - 1)];
-				}
-				return;
-			}
-
-			case 0xc0: {
-				return;
-			}
-
-			case 0xe0: {
-				return;
-			}
-
-			default: {
-//				bprintf(PRINT_NORMAL,_T("es5510_dsp_w byte %x -> %x\n"), Offset, d);
-				return;
-			}
-		}
-	}
-
-	if (a >= 0x280000 && a <= 0x28001f) {
-		INT32 Offset = (a & 0x1f) >> 1;
-
-		switch (Offset) {
-			case 0x04: {
-				switch ((d >> 4) & 0x07) {
-					case 0x0: {
-						return;
-					}
-
-					case 0x01: {
-						return;
-					}
-
-					case 0x02: {
-						return;
-					}
-
-					case 0x03: {
-						//bprintf(PRINT_NORMAL, _T("counter is %04x (/16), so interrupt once in %d cycles\n"), TaitoF3Counter, (16000000 / 2000000) * TaitoF3Counter * 16);
-						TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_ONCE;
-						TaitoF3SoundTriggerIRQCycleCounter = 0;
-						TaitoF3SoundTriggerIRQCycles = (16000000 / 2000000) * TaitoF3Counter * 16;
-						return;
-					}
-
-					case 0x04: {
-						return;
-					}
-
-					case 0x05: {
-						return;
-					}
-
-					case 0x06: {
-						//bprintf(PRINT_NORMAL, _T("counter is %04x, so interrupt every %d cycles\n"), TaitoF3Counter, (16000000 / 2000000) * TaitoF3Counter);
-						TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_PULSE;
-						TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
-						TaitoF3SoundTriggerIRQPulseCycles = (16000000 / 2000000) * TaitoF3Counter;
-						return;
-					}
-
-					case 0x07: {
-						return;
-					}
-				}
-			}
-
-			case 0x05: {
-				M68681IMR = d & 0xff;
-				return;
-			}
-
-			case 0x06: {
-				TaitoF3Counter = ((d & 0xff) << 8) | (TaitoF3Counter & 0xff);
-				return;
-			}
-
-			case 0x07: {
-				TaitoF3Counter = (TaitoF3Counter & 0xff00) | (d & 0xff);
-				return;
-			}
-
-			case 0x08: return;
-			case 0x09: return;
-			case 0x0a: return;
-			case 0x0b: return;
-
-			case 0x0c: {
-				TaitoF3VectorReg = d & 0xff;
-				return;
-			}
-
-			default: {
-//				bprintf(PRINT_NORMAL,_T("f3_68681_w byte %x -> %x\n"), Offset, d);
-				return;
-			}
-		}
-	}
-
-	if (a >= 0x300000 && a <= 0x30003f) {
-		UINT32 MaxBanks = (TaitoES5505RomSize / 0x200000) - 1;
-		INT32 Offset = (a & 0x3f) >> 1;
-
-		d &= MaxBanks;
-		es5505_voice_bank_w(Offset, d << 20);
-		return;
-	}
-
-	switch (a) {
-		case 0x340000:
-		case 0x340002: {
-			// f3_volume_w
-			return;
-		}
-
-		default: {
-			bprintf(PRINT_NORMAL, _T("Sound 68K Write byte => %06X, %02X\n"), a, d);
-		}
-	}
-}
-
-UINT16 __fastcall TaitoF3Sound68KReadWord(UINT32 a)
-{
-	if (a >= 0x200000 && a <= 0x20001f) {
-		INT32 Offset = (a & 0x1f) >> 1;
-
-		return ES5505Read(Offset);
-	}
-
-	bprintf(PRINT_NORMAL, _T("Sound 68K Read word => %06X\n"), a);
-
-	return 0;
-}
-
-void __fastcall TaitoF3Sound68KWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0x200000 && a <= 0x20001f) {
-		INT32 Offset = (a & 0x1f) >> 1;
-		ES5505Write(Offset, d);
-		return;
-	}
-
-	bprintf(PRINT_NORMAL, _T("Sound 68K Write word => %06X, %04X\n"), a, d);
-}
 
 struct SpriteEntry {
 	INT32 Code;
@@ -477,8 +207,10 @@ static INT32 MemIndex()
 
 	Taito68KRom1                    = Next; Next += Taito68KRom1Size;
 	Taito68KRom2                    = Next; Next += Taito68KRom2Size;
+	TaitoF3SoundRom			= Next;
 	Taito68KRom3                    = Next; Next += Taito68KRom3Size;
 	TaitoSpriteMapRom               = Next; Next += TaitoSpriteMapRomSize;
+	TaitoF3ES5506Rom		= Next;
 	TaitoES5505Rom                  = Next; Next += TaitoES5505RomSize;
 	TaitoDefaultEEProm              = Next; Next += TaitoDefaultEEPromSize;
 
@@ -830,6 +562,7 @@ static INT32 SuperchsInit()
 	TC0480SCPInit(TaitoNumChar, 0, 0x20, 8, -1, 0, 0);
 
 	TaitoES5505RomSize = 0x2000000;
+	TaitoF3ES5506RomSize = TaitoES5505RomSize;
 
 	memset(TaitoES5505Rom, 0, TaitoES5505RomSize);
 	BurnLoadRom(TaitoES5505Rom + 0xc00000 + 1, 15, 2);
@@ -865,26 +598,10 @@ static INT32 SuperchsInit()
 	SekSetWriteWordHandler(0, Superchs68K2WriteWord);
 	SekClose();
 
-	SekInit(2, 0x68000);
-	SekOpen(2);
-	SekMapMemory(TaitoF3SoundRam          , 0x000000, 0x00ffff, MAP_RAM);
-	SekMapMemory(TaitoF3SoundRam          , 0x010000, 0x01ffff, MAP_RAM);
-	SekMapMemory(TaitoF3SoundRam          , 0x020000, 0x02ffff, MAP_RAM);
-	SekMapMemory(TaitoF3SoundRam          , 0x030000, 0x03ffff, MAP_RAM);
-	SekMapMemory(Taito68KRom3             , 0xc00000, 0xcfffff, MAP_ROM);
-//	SekMapMemory(Taito68KRom3 + 0x20000   , 0xc20000, 0xc3ffff, MAP_ROM);
-	SekMapMemory(TaitoF3SoundRam          , 0xff0000, 0xffffff, MAP_RAM);
-	SekSetReadByteHandler(0, TaitoF3Sound68KReadByte);
-	SekSetWriteByteHandler(0, TaitoF3Sound68KWriteByte);
-	SekSetReadWordHandler(0, TaitoF3Sound68KReadWord);
-	SekSetWriteWordHandler(0, TaitoF3Sound68KWriteWord);
-	SekSetIrqCallback(TaitoF3SoundIRQCallback);
-	SekClose();
+	TaitoF3SoundInit(2);
 
 	EEPROMInit(&superchs_eeprom_interface);
 	if (!EEPROMAvailable()) EEPROMFill(TaitoDefaultEEProm, 0, 128);
-
-	ES5505Init(30476100/2, TaitoES5505Rom, TaitoES5505Rom, NULL);
 
 	BurnShiftInitDefault();
 
@@ -896,7 +613,7 @@ static INT32 SuperchsInit()
 static int SuperchsExit()
 {
 	TaitoExit();
-	ES5506Exit();
+	TaitoF3SoundExit();
 	BurnShiftExit();
 
 	SuperchsCoinWord = 0;
@@ -925,88 +642,6 @@ static void SuperchsCalcPalette()
 
 	for (i = 0, ps = (UINT32*)TaitoPaletteRam, pd = TaitoPalette; i < 0x2000; i++, ps++, pd++) {
 		*pd = CalcCol(*ps);
-	}
-}
-
-static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32 xFlip, INT32 yFlip, INT32 xScale, INT32 yScale, UINT8* pSource)
-{
-	UINT8 *SourceBase = pSource + ((Code % TaitoNumSpriteA) * TaitoSpriteAWidth * TaitoSpriteAHeight);
-
-	INT32 SpriteScreenHeight = (yScale * TaitoSpriteAHeight + 0x8000) >> 16;
-	INT32 SpriteScreenWidth = (xScale * TaitoSpriteAWidth + 0x8000) >> 16;
-
-	Colour = 0x10 * (Colour % 0x200);
-
-	if (TaitoFlipScreenX) {
-		xFlip = !xFlip;
-		sx = 320 - sx - (xScale >> 12);
-	}
-
-	if (SpriteScreenWidth && SpriteScreenHeight) {
-		INT32 dx = (TaitoSpriteAWidth << 16) / SpriteScreenWidth;
-		INT32 dy = (TaitoSpriteAHeight << 16) / SpriteScreenHeight;
-
-		INT32 ex = sx + SpriteScreenWidth;
-		INT32 ey = sy + SpriteScreenHeight;
-
-		INT32 xIndexBase;
-		INT32 yIndex;
-
-		if (xFlip) {
-			xIndexBase = (SpriteScreenWidth - 1) * dx;
-			dx = -dx;
-		} else {
-			xIndexBase = 0;
-		}
-
-		if (yFlip) {
-			yIndex = (SpriteScreenHeight - 1) * dy;
-			dy = -dy;
-		} else {
-			yIndex = 0;
-		}
-
-		if (sx < 0) {
-			INT32 Pixels = 0 - sx;
-			sx += Pixels;
-			xIndexBase += Pixels * dx;
-		}
-
-		if (sy < 0) {
-			INT32 Pixels = 0 - sy;
-			sy += Pixels;
-			yIndex += Pixels * dy;
-		}
-
-		if (ex > nScreenWidth) {
-			INT32 Pixels = ex - nScreenWidth;
-			ex -= Pixels;
-		}
-
-		if (ey > nScreenHeight) {
-			INT32 Pixels = ey - nScreenHeight;
-			ey -= Pixels;
-		}
-
-		if (ex > sx) {
-			INT32 y;
-
-			for (y = sy; y < ey; y++) {
-				UINT8 *Source = SourceBase + ((yIndex >> 16) * TaitoSpriteAWidth);
-				UINT16* pPixel = pTransDraw + (y * nScreenWidth);
-
-				INT32 x, xIndex = xIndexBase;
-				for (x = sx; x < ex; x++) {
-					INT32 c = Source[xIndex >> 16];
-					if (c != 0) {
-						pPixel[x] = c | Colour;
-					}
-					xIndex += dx;
-				}
-
-				yIndex += dy;
-			}
-		}
 	}
 }
 
@@ -1110,7 +745,9 @@ static void SuperchsMakeSpriteList(INT32 xOffset, INT32 yOffset)
 static void SuperchsRenderSpriteList(INT32 SpritePriorityLevel)
 {
 	for (INT32 i = 0; i < 0x4000; i++) {
-		if (SpriteList[i].Priority == SpritePriorityLevel) RenderSpriteZoom(SpriteList[i].Code, SpriteList[i].x, SpriteList[i].y, SpriteList[i].Colour, SpriteList[i].xFlip, SpriteList[i].yFlip, SpriteList[i].xZoom, SpriteList[i].yZoom, TaitoSpritesA);
+		if (SpriteList[i].Priority == SpritePriorityLevel) {
+			RenderZoomedTile(pTransDraw, TaitoSpritesA, SpriteList[i].Code % TaitoNumSpriteA, 0x10 * (SpriteList[i].Colour & 0x1ff), 0, SpriteList[i].x, SpriteList[i].y, SpriteList[i].xFlip, SpriteList[i].yFlip, TaitoSpriteAWidth, TaitoSpriteAHeight, SpriteList[i].xZoom, SpriteList[i].yZoom);
+		}
 	}
 }
 
@@ -1140,14 +777,6 @@ static void SuperchsDraw()
 	SuperchsRenderSpriteList(3);
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
-}
-
-static void F3Sound_IRQ()
-{
-	if (M68681IMR & 0x08) {
-		SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
-		IMRStatus |= 0x08;
-	}
 }
 
 static INT32 SuperchsFrame()
@@ -1184,33 +813,10 @@ static INT32 SuperchsFrame()
 			SekClose();
 		}
 
-		nCurrentCPU = 2;
-		SekOpen(2);
-		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
-		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
-
-		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (TaitoF3SoundTriggerIRQCyclesMode == IRQ_TRIGGER_ONCE) {
-			TaitoF3SoundTriggerIRQCycleCounter += nTaitoCyclesSegment;
-			if (TaitoF3SoundTriggerIRQCycleCounter >= TaitoF3SoundTriggerIRQCycles) {
-				TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_OFF;
-				F3Sound_IRQ();
-			}
-		}
-		if (TaitoF3SoundTriggerIRQCyclesMode == IRQ_TRIGGER_PULSE) {
-			TaitoF3SoundTriggerIRQPulseCycleCounter += nTaitoCyclesSegment;
-			if (TaitoF3SoundTriggerIRQPulseCycleCounter >= TaitoF3SoundTriggerIRQPulseCycles) {
-				F3Sound_IRQ();
-				TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
-			}
-		}
-		SekClose();
-
+		TaitoF3CpuUpdate(nInterleave, i);
 	}
 
-	if (pBurnSoundOut) {
-		ES5505Update(pBurnSoundOut, nBurnSoundLen);
-	}
+	TaitoF3SoundUpdate(pBurnSoundOut, nBurnSoundLen);
 
 	if (pBurnDraw) SuperchsDraw();
 
@@ -1237,8 +843,7 @@ static INT32 SuperchsScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		ES5506Scan(nAction, pnMin);
-
+		TaitoF3SoundScan(nAction, pnMin);
 		BurnShiftScan(nAction);
 
 		SCAN_VAR(SuperchsCoinWord);
@@ -1278,3 +883,4 @@ struct BurnDriver BurnDrvSuperchsj = {
 	SuperchsInit, SuperchsExit, SuperchsFrame, NULL, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
+

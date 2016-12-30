@@ -57,7 +57,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
-static UINT8 DrvDips[2];
+static UINT8 DrvDips[3];
 static UINT16 DrvInputs[4];
 static UINT8 DrvReset;
 
@@ -66,6 +66,11 @@ static INT32 sprite_offy;
 static INT32 yoffset;
 static INT32 xoffset;
 static INT32 irqline;
+
+static UINT32 fg_scrolly = 0;
+static UINT32 fg_scrollx = 0;
+static UINT32 waiting_msb = 0;
+static UINT32 scroll_msb = 0;
 
 static INT32 usemcu = 0;
 
@@ -160,6 +165,7 @@ static struct BurnInputInfo BigfghtrInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 8,	"service"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Dip C",       BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 };
 
 STDINPUTINFO(Bigfghtr)
@@ -169,6 +175,7 @@ static struct BurnDIPInfo BigfghtrDIPList[]=
 {
 	{0x14, 0xff, 0xff, 0xdf, NULL		},
 	{0x15, 0xff, 0xff, 0xff, NULL		},
+	{0x16, 0xff, 0xff, 0x02, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
 	{0x14, 0x01, 0x03, 0x03, "3"		},
@@ -223,13 +230,16 @@ static struct BurnDIPInfo BigfghtrDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Unknown"		},
 	{0x15, 0x01, 0x80, 0x80, "Off"		},
 	{0x15, 0x01, 0x80, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x16, 0x01, 0x02, 0x02, "Off"		},
+	{0x16, 0x01, 0x02, 0x00, "On"		},
 };
 
 STDDIPINFO(Bigfghtr)
 
 static struct BurnDIPInfo ArmedfDIPList[]=
 {
-	// Default Values
 	{0x15, 0xff, 0xff, 0xdf, NULL					},
 	{0x16, 0xff, 0xff, 0xcf, NULL					},
 
@@ -514,7 +524,7 @@ static struct BurnDIPInfo TerrafDIPList[]=
 
 STDDIPINFO(Terraf)
 
-void __fastcall armedf_write_word(UINT32 address, UINT16 data)
+static void __fastcall armedf_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -545,7 +555,7 @@ void __fastcall armedf_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT16 __fastcall bigfghtr_read_word(UINT32 address)
+static UINT16 __fastcall bigfghtr_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -553,7 +563,7 @@ UINT16 __fastcall bigfghtr_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x8c002:
-			return DrvInputs[1];
+			return (DrvInputs[1] & ~0x0200) | ((DrvDips[2] << 8) & 0x0200);
 
 		case 0x8c004:
 			return DrvInputs[2];
@@ -571,7 +581,7 @@ UINT16 __fastcall bigfghtr_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall bigfghtr_write_word(UINT32 address, UINT16 data)
+static void __fastcall bigfghtr_write_word(UINT32 address, UINT16 data)
 {
 	switch (address)
 	{
@@ -607,49 +617,41 @@ void __fastcall bigfghtr_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static UINT32 m_fg_scrolly = 0;
-static UINT32 m_fg_scrollx = 0;
-static UINT32 m_waiting_msb = 0;
-static UINT32 m_scroll_msb = 0;
-static UINT16 m_vreg = 0;
-
-void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
+static void __fastcall cclimbr2_write_byte(UINT32 address, UINT8 data)
 {
-	//if (scroll_type != 0) return;
-
 	switch (address)
 	{
-		case 0x7c006: //scrolly_w
+		case 0x7c006: // scroll_x
 			DrvMcuCmd[11] = data;
 			DrvMcuCmd[31] = 1;
-			m_fg_scrolly = ((data >> 8) & 0xff) | (m_fg_scrolly & 0x300);
-			m_waiting_msb = 1;
+			fg_scrolly = ((data >> 8) & 0xff) | (fg_scrolly & 0x300);
+			waiting_msb = 1;
 		return;
 
-		case 0x7c008: // scrollx_w
+		case 0x7c008: // scroll_y
 			if (DrvMcuCmd[31]) {
 				DrvMcuCmd[14] = data >> 4;
 				DrvMcuCmd[12] = data;
 			} else {
 				DrvMcuCmd[13] = data;
 			}
-			if (m_waiting_msb) {
-				m_scroll_msb = data >> 8;
-				m_fg_scrollx = (m_fg_scrollx & 0xff) | (((m_scroll_msb >> 4) & 3) << 8);
-				m_fg_scrolly = (m_fg_scrolly & 0xff) | (((m_scroll_msb >> 0) & 3) << 8);
+			if (waiting_msb) {
+				scroll_msb = data >> 8;
+				fg_scrollx = (fg_scrollx & 0xff) | (((scroll_msb >> 4) & 3) << 8);
+				fg_scrolly = (fg_scrolly & 0xff) | (((scroll_msb >> 0) & 3) << 8);
 			} else {
-				m_fg_scrollx = ((data >> 8) & 0xff) | (m_fg_scrollx & 0x300);
+				fg_scrollx = ((data >> 8) & 0xff) | (fg_scrollx & 0x300);
 			}
 		return;
 
 		case 0xc0000: // msb_arm_w
 			DrvMcuCmd[31] = 0;
-			m_waiting_msb = 0;
+			waiting_msb = 0;
 		return;
 	}
 }
 
-void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
+static void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 {
 	if (scroll_type == 6 && (address & 0xffffc0) == 0x040000) {
 		DrvMcuCmd[(address >> 1) & 0x1f] = data;
@@ -667,8 +669,6 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 					}
 				}
 
-				m_vreg = data;
-
 				*DrvVidRegs = data >> 8;
 				*flipscreen = (data >> 12) & 1;
 		}
@@ -685,8 +685,8 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 		case 0x7c006: //scrolly_w
 			DrvMcuCmd[11] = data;
 			DrvMcuCmd[31] = 1;
-			m_fg_scrolly = ((data >> 8) & 0xff) | (m_fg_scrolly & 0x300);
-			m_waiting_msb = 1;
+			fg_scrolly = ((data >> 8) & 0xff) | (fg_scrolly & 0x300);
+			waiting_msb = 1;
 		return;
 
 		case 0x7c008: // scrollx_w
@@ -696,23 +696,24 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 			} else {
 				DrvMcuCmd[13] = data;
 			}
-			if (m_waiting_msb) {
-				m_scroll_msb = data >> 8;
-				m_fg_scrollx = (m_fg_scrollx & 0xff) | (((m_scroll_msb >> 4) & 3) << 8);
-				m_fg_scrolly = (m_fg_scrolly & 0xff) | (((m_scroll_msb >> 0) & 3) << 8);
+			if (waiting_msb) {
+				scroll_msb = data >> 8;
+				fg_scrollx = (fg_scrollx & 0xff) | (((scroll_msb >> 4) & 3) << 8);
+				fg_scrolly = (fg_scrolly & 0xff) | (((scroll_msb >> 0) & 3) << 8);
 			} else {
-				m_fg_scrollx = ((data >> 8) & 0xff) | (m_fg_scrollx & 0x300);
+				fg_scrollx = ((data >> 8) & 0xff) | (fg_scrollx & 0x300);
 			}
 		return;
 
 		case 0xc0000: // msb_arm_w
 			DrvMcuCmd[31] = 0;
-			m_waiting_msb = 0;
+			waiting_msb = 0;
 		return;
 
 		case 0x7c00a:
 			*soundlatch = ((data & 0x7f) << 1) | 1;
 		return;
+
 		case 0x7c00c:
 			//NOP.
 		return;
@@ -727,7 +728,7 @@ void __fastcall cclimbr2_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT16 __fastcall cclimbr2_read_word(UINT32 address)
+static UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -747,7 +748,7 @@ UINT16 __fastcall cclimbr2_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall armedf_write_port(UINT16 port, UINT8 data)
+static void __fastcall armedf_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -769,7 +770,7 @@ void __fastcall armedf_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall armedf_read_port(UINT16 port)
+static UINT8 __fastcall armedf_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -784,74 +785,18 @@ UINT8 __fastcall armedf_read_port(UINT16 port)
 	return 0;
 }
 
-void __fastcall terrafjbextra_write_port(UINT16 port, UINT8 data)
-{
-	// rendering code reads scroll values from RAM - we write the values to RAM here so that the rendering code still works
-//	UINT16 *RAM = (UINT16*)DrvTxRAM;
-	
-	switch (port & 0xff) {
-		case 0x00: {
-//			RAM[13] = data & 0xff;
-//			RAM[14] = data >> 8;
-			return;
-		}
-		
-		case 0x01: {
-//			RAM[11] = data & 0xff;
-//			RAM[12] = data >> 8;
-			return;
-		}
-		
-		case 0x02: {
-			/*
-			state->m_fg_scrolly = (((data & 0x03) >> 0) << 8) | (state->m_fg_scrolly & 0xff);
-			state->m_fg_scrollx = (((data & 0x0c) >> 2) << 8) | (state->m_fg_scrollx & 0xff);*/
-//			RAM[12] = data;//(data & 0x03) >> 0;
-//			RAM[14] = data;//(data & 0x0c) >> 2;
-			return;
-		}
-		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Port write %x, %x\n"), port, data);
-		}
-	}
-}
-
-UINT8 __fastcall terrafjbextra_read_port(UINT16 port)
-{
-	switch (port & 0xff) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Port read %x\n"), port);
-		}
-	}
-
-	return 0;
-}
-
-void __fastcall terrafjbextra_write(UINT16 address, UINT8 data)
+static void __fastcall terrafjbextra_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x4000 && address <= 0x5fff) {
 		DrvTxRAM[(address ^ 1) - 0x4000] = data;
 		return;
 	}
-	
-	switch (address) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Write %x, %x\n"), address, data);
-		}
-	}
 }
 
-UINT8 __fastcall terrafjbextra_read(UINT16 address)
+static UINT8 __fastcall terrafjbextra_read(UINT16 address)
 {
 	if (address >= 0x4000 && address <= 0x5fff) {
 		return DrvTxRAM[(address ^ 1) - 0x4000];
-	}
-	
-	switch (address) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Read %x\n"), address);
-		}
 	}
 
 	return 0;
@@ -894,6 +839,11 @@ static INT32 DrvDoReset()
 	BurnYM3812Reset();
 	DACReset();
 
+	fg_scrolly = 0;
+	fg_scrollx = 0;
+	waiting_msb = 0;
+	scroll_msb = 0;
+
 	return 0;
 }
 
@@ -908,7 +858,7 @@ static INT32 MemIndex()
 	DrvGfxROM1	= Next; Next += 0x080000;
 	DrvGfxROM2	= Next; Next += 0x080000;
 	DrvGfxROM3	= Next; Next += 0x080000;
-	
+
 	DrvZ80ROM2	= Next; Next += 0x004000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
@@ -928,7 +878,7 @@ static INT32 MemIndex()
 	Drv68KRAM1	= Next; Next += 0x001000;
 	Drv68KRAM2	= Next; Next += 0x001000;
 	DrvShareRAM = Next; Next += 0x004000;
-	
+
 	flipscreen	= Next; Next += 0x000001;
 	soundlatch	= Next; Next += 0x000001;
 	DrvVidRegs	= Next; Next += 0x000001;
@@ -936,7 +886,7 @@ static INT32 MemIndex()
 	DrvMcuCmd	= (UINT16*)Next; Next += 0x000020 * sizeof(UINT16);
 
 	DrvZ80RAM	= Next; Next += 0x004000;
-	
+
 	if (Terrafjb) {
 		DrvZ80RAM2	= Next; Next += 0x001800;
 	}
@@ -999,7 +949,7 @@ static void Armedf68KInit()
 	SekSetWriteWordHandler(0,	armedf_write_word);
 }
 
-static UINT8 mcu_read_data(INT32 address)
+static UINT8 mcu_read_data(INT32 address) // skyrobo, bigfghtr
 {
 	if (address >= 0x0600 && address <= 0x3fff) {
 		return DrvShareRAM[(address&0x3fff)^1];
@@ -1027,7 +977,6 @@ static void Bigfghtr68KInit()
 	SekMapMemory(DrvFgRAM,		0x087000, 0x087fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x088000, 0x089fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x08a000, 0x08afff, MAP_RAM);
-	SekMapMemory(Drv68KRAM2,	0x08c000, 0x08c7ff, MAP_RAM);
 	SekSetWriteWordHandler(0,	bigfghtr_write_word);
 	SekSetReadWordHandler(0,	bigfghtr_read_word);
 
@@ -1048,7 +997,6 @@ static void Cclimbr268KInit()
 	SekMapMemory(DrvPalRAM,		0x064000, 0x064fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x068000, 0x069fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM1,	0x06a000, 0x06a9ff, MAP_RAM);
-	//SekMapMemory(Drv68KRAM2,	0x06c000, 0x06c9ff, MAP_RAM); clut!
 	SekMapMemory(DrvFgRAM,		0x070000, 0x070fff, MAP_RAM);
 	SekMapMemory(DrvBgRAM,		0x074000, 0x074fff, MAP_RAM);
 	SekSetWriteWordHandler(0,	cclimbr2_write_word);
@@ -1083,27 +1031,19 @@ static INT32 DrvInit(INT32 (*pLoadRoms)(), void (*p68KInit)(), INT32 zLen)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, zLen-1, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, zLen-1, 2, DrvZ80ROM);
-	ZetMapArea(zLen+0, 0xffff, 0, DrvZ80RAM);
-	ZetMapArea(zLen+0, 0xffff, 1, DrvZ80RAM);
-	ZetMapArea(zLen+0, 0xffff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, zLen-1, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, zLen+0, 0xffff, MAP_RAM);
 	ZetSetOutHandler(armedf_write_port);
 	ZetSetInHandler(armedf_read_port);
 	ZetClose();
-	
+
 	if (Terrafjb) {
 		ZetInit(1);
 		ZetOpen(1);
-		ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM2);
-		ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM2);
-		ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM);
-		ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM);
-		ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
+		ZetMapMemory(DrvZ80ROM2, 0x0000, 0x3fff, MAP_ROM);
+		ZetMapMemory(DrvZ80RAM2, 0x8000, 0x87ff, MAP_RAM);
 		ZetSetWriteHandler(terrafjbextra_write);
 		ZetSetReadHandler(terrafjbextra_read);
-		ZetSetOutHandler(terrafjbextra_write_port);
-		ZetSetInHandler(terrafjbextra_read_port);
 		ZetClose();
 	}
 
@@ -1140,16 +1080,16 @@ static INT32 DrvExit()
 	SekExit();
 	ZetExit();
 
-	BurnFree (AllMem);
-	
-	Terrafjb = 0;
-	Kozuremode = 0;
-	fiftysevenhertz = 0;
-
 	if (usemcu) {
 		i8051_exit();
 		usemcu = 0;
 	}
+
+	BurnFree (AllMem);
+
+	Terrafjb = 0;
+	Kozuremode = 0;
+	fiftysevenhertz = 0;
 
 	BurnSetRefreshRate(60.00);
 
@@ -1308,7 +1248,7 @@ static void draw_sprites(INT32 priority)
 		// Render sprites with CLUT
 		if (flipy) flipy  = 0x0f;
 		if (flipx) flipx  = 0x0f;
-		UINT8 mask = 0xf; // 15
+		UINT8 mask = 0xf;
 		UINT8 *src = DrvGfxROM3 + (code * 16 * 16);
 		UINT16 *dst;
 
@@ -1329,20 +1269,6 @@ static void draw_sprites(INT32 priority)
 
 			sx -= 16;
 		}
-		// end new code */
-		/*if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
-			}
-		} */
 	}
 }
 
@@ -1370,16 +1296,14 @@ static INT32 DrvDraw()
 	}
 
 	if (scroll_type == 0) { // terraf
-		DrvScroll[2] = m_fg_scrollx;
-		DrvScroll[3] = m_fg_scrolly;
+		DrvScroll[2] = fg_scrollx;
+		DrvScroll[3] = fg_scrolly;
 	}
 
 	if ((*DrvMcuCmd & 0x30) == 0x30 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 1);
 	if (*DrvVidRegs & 0x08) draw_layer(DrvBgRAM, DrvGfxROM2, DrvScroll[0], DrvScroll[1], 0x600, 0x3ff);
 	if (*DrvVidRegs & 0x02) draw_sprites(2);
-//	if ((*DrvMcuCmd & 0x30) == 0x20 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x04) draw_layer(DrvFgRAM, DrvGfxROM1, DrvScroll[2], DrvScroll[3], 0x400, 0x7ff);
-//	if ((*DrvMcuCmd & 0x30) == 0x10 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp);
 	if (*DrvVidRegs & 0x02) draw_sprites(1);
 	if ((*DrvMcuCmd & 0x30) == 0x00 && *DrvVidRegs & 0x01) draw_txt_layer(txt_transp, 0);
 	if (*DrvVidRegs & 0x02) draw_sprites(0);
@@ -1403,36 +1327,23 @@ static INT32 DrvFrame()
 	AssembleInputs();
 
 	INT32 nSegment;
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 262;
 	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	
-	INT32 Z80IRQSlice[134];
-	for (INT32 i = 0; i < 133; i++) {
-		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 134));
-	}
-	
+
 	SekOpen(0);
 	ZetOpen(0);
 	nb1414_frame++;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext;
-		
-		nNext = (i + 1) * nTotalCycles[0] / nInterleave;
+		INT32 nNext = (i + 1) * nTotalCycles[0] / nInterleave;
 		nSegment = nNext - nCyclesDone[0];
-		nSegment = SekRun(nSegment);
-		nCyclesDone[0] += nSegment;
+		nCyclesDone[0] += SekRun(nSegment);
 
 		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 
-		for (INT32 j = 0; j < 133; j++) {
-			if (i == Z80IRQSlice[j]) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-				nCyclesDone[1] += ZetRun(500);
-			}
-		}
+		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
 		if (usemcu) {
 			i8051Run(nTotalCycles[2] / nInterleave);
@@ -1443,102 +1354,21 @@ static INT32 DrvFrame()
 			ZetOpen(1);
 			nNext = (i + 1) * nTotalCycles[2] / nInterleave;
 			nSegment = nNext - nCyclesDone[2];
-			nSegment = ZetRun(nSegment);
-			nCyclesDone[2] += nSegment;
+			nCyclesDone[2] += ZetRun(nSegment);
 			ZetClose();
 			ZetOpen(0);
 		}
 	}
-	
+
 	BurnTimerEndFrameYM3812(nTotalCycles[1]);
-	
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
-	if (usemcu) {
-		SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
-	} else {
-		SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
-	}
+	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
 
-	ZetClose();
-	SekClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	return 0;
-}
-
-static INT32 DrvFrameTerraf()
-{
-	if (DrvReset) {
-		DrvDoReset();
-	}
-
-	SekNewFrame();
-	ZetNewFrame();
-
-	AssembleInputs();
-
-	INT32 nSegment;
-	INT32 nInterleave = 100;
-	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
-	
-	INT32 Z80IRQSlice[134];
-	for (INT32 i = 0; i < 133; i++) {
-		Z80IRQSlice[i] = (INT32)((double)((nInterleave * (i + 1)) / 134));
-	}
-	
-	SekOpen(0);
-	ZetOpen(0);
-	nb1414_frame++;
-
-	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		INT32 nNext;
-		
-		nNext = (i + 1) * nTotalCycles[0] / nInterleave;
-		nSegment = nNext - nCyclesDone[0];
-		nSegment = SekRun(nSegment);
-		nCyclesDone[0] += nSegment;
-
-		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
-
-		for (INT32 j = 0; j < 133; j++) {
-			if (i == Z80IRQSlice[j]) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-				nCyclesDone[1] += ZetRun(500);
-			}
-		}
-		
-		if (Terrafjb) {
-			ZetClose();
-			ZetOpen(1);
-			nNext = (i + 1) * nTotalCycles[2] / nInterleave;
-			nSegment = nNext - nCyclesDone[2];
-			nSegment = ZetRun(nSegment);
-			nCyclesDone[2] += nSegment;
-			ZetClose();
-			ZetOpen(0);
-		}
-
-		if (i == 93) {
-			SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
-		}
-	}
-	
-	BurnTimerEndFrameYM3812(nTotalCycles[1]);
-	
-	if (pBurnSoundOut) {
-		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-	}
-	
 	ZetClose();
 	SekClose();
 
@@ -1552,7 +1382,7 @@ static INT32 DrvFrameTerraf()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029702;
 	}
@@ -1568,9 +1398,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		ZetScan(nAction);
+		if (usemcu) {
+			i8051_scan(nAction);
+		}
 
 		BurnYM3812Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
+
+		SCAN_VAR(fg_scrolly);
+		SCAN_VAR(fg_scrollx);
+		SCAN_VAR(waiting_msb);
+		SCAN_VAR(scroll_msb);
 	}
 
 	return 0;
@@ -1668,7 +1506,7 @@ static INT32 ArmedfInit()
 		BurnSetRefreshRate(57.00);
 		fiftysevenhertz = 1;
 	}
-	
+
 	return nRet;
 }
 
@@ -1691,10 +1529,6 @@ struct BurnDriver BurnDrvArmedff = {
 	ArmedfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 320, 3, 4
 };
-
-
-// missing text layer on left?
-
 
 // Crazy Climber 2 (Japan)
 
@@ -2099,7 +1933,7 @@ struct BurnDriver BurnDrvLegionjb = {
 };
 
 
-// Terra Force 
+// Terra Force
 
 static struct BurnRomInfo terrafRomDesc[] = {
 	{ "8.6e",		0x10000, 0xfd58fa06, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -2146,7 +1980,7 @@ static INT32 TerrafInit()
 		BurnSetRefreshRate(57.00);
 		fiftysevenhertz = 1;
 	}
-	
+
 	return nRet;
 }
 
@@ -2156,7 +1990,7 @@ struct BurnDriver BurnDrvTerraf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, terrafRomInfo, terrafRomName, NULL, NULL, ArmedfInputInfo, TerrafDIPInfo,
-	TerrafInit, DrvExit, DrvFrameTerraf, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	TerrafInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -2199,10 +2033,12 @@ static INT32 TerrafbInit()
 	irqline = 1;
 
 	INT32 nRet = DrvInit(ArmedfLoadRoms, Cclimbr268KInit, 0xf800);
-	
-	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	
+
+	if (nRet == 0) {
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	}
+
 	return nRet;
 }
 
@@ -2300,7 +2136,7 @@ static INT32 TerrafjbLoadRoms()
 	if (BurnLoadRom(Drv68KROM + 0x040000,	 5, 2)) return 1;
 
 	if (BurnLoadRom(DrvZ80ROM,		 6, 1)) return 1;
-	
+
 	if (BurnLoadRom(DrvZ80ROM2,		 7, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0,		 8, 1)) return 1;
@@ -2322,14 +2158,16 @@ static INT32 TerrafjbInit()
 	scroll_type = 5;
 	sprite_offy = 128;
 	irqline = 1;
-	
+
 	Terrafjb = 1;
 
 	INT32 nRet = DrvInit(TerrafjbLoadRoms, Cclimbr268KInit, 0xf800);
-	
-	DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
-	
+
+	if (nRet == 0) {
+		DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(1, 0.80, BURN_SND_ROUTE_BOTH);
+	}
+
 	return nRet;
 }
 
@@ -2342,6 +2180,7 @@ struct BurnDriver BurnDrvTerrafjb = {
 	TerrafjbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
+
 
 // Terra Force (Japan, bootleg set 2)
 
@@ -2388,7 +2227,7 @@ static INT32 SkyroboLoadRoms()
 	if (BurnLoadRom(Drv68KROM + 0x040000,	 3, 2)) return 1;
 
 	if (BurnLoadRom(DrvZ80ROM,		 4, 1)) return 1;
-	
+
 	if (BurnLoadRom(DrvZ80ROM2,		 5, 1)) return 1;
 
 	if (BurnLoadRom(DrvGfxROM0,		 6, 1)) return 1;
@@ -2420,6 +2259,7 @@ static INT32 SkyRoboInit()
 
 	return nRet;
 }
+
 
 // Sky Robo
 
@@ -2459,6 +2299,7 @@ struct BurnDriver BurnDrvSkyrobo = {
 	SkyRoboInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
+
 
 // Tatakae! Big Fighter (Japan)
 

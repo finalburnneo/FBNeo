@@ -1,6 +1,6 @@
 #include "burnint.h"
 #include "z80_intf.h"
-#include "i8051.h"
+#include "mcs51.h"
 
 static UINT8 *mermaid_inputs;
 static UINT8 mermaid_p[4] = { 0, 0, 0, 0 };
@@ -12,19 +12,12 @@ static INT32 mermaid_int0;
 static INT32 mermaid_initted = 0;
 INT32 mermaid_sub_z80_reset;
 
-#ifndef MCS51_PORT_P0
-#define MCS51_PORT_P0	0x00
-#define MCS51_PORT_P1	0x01
-#define MCS51_PORT_P2	0x02
-#define MCS51_PORT_P3	0x03
-#endif
-
 void mermaidWrite(UINT8 data)
 {
 	data_to_mermaid = data;
 	z80_to_mermaid_full = 1;
 	mermaid_int0 = 0;
-	i8051_set_irq_line(I8051_INT0_LINE, CPU_IRQSTATUS_ACK);
+	mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
 }
 
 UINT8 mermaidRead()
@@ -58,7 +51,7 @@ static void mermaid_write_port(INT32 port, UINT8 data)
 		{
 			if (data == 0xff) {
 				mermaid_int0 = 1;
-				i8051_set_irq_line(I8051_INT0_LINE, CPU_IRQSTATUS_NONE);
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
 			}
 
 			mermaid_p[1] = data;
@@ -123,7 +116,7 @@ static UINT8 mermaid_read_port(INT32 port)
 
 void mermaidReset()
 {
-	i8051_reset();
+	mcs51_reset();
 
 	memset (mermaid_p, 0, 4);
 	mermaid_sub_z80_reset = 0;
@@ -136,11 +129,11 @@ void mermaidReset()
 
 void mermaidInit(UINT8 *rom, UINT8 *inputs)
 {
-	i8051_program_data=rom;
+	mcs51_program_data=rom;
 	mermaid_inputs = inputs;
-	i8051_init (0,0,NULL,NULL);
-	i8051_set_write_port_handler(mermaid_write_port);
-	i8051_set_read_port_handler(mermaid_read_port);
+	mcs51_init ();
+	mcs51_set_write_port_handler(mermaid_write_port);
+	mcs51_set_read_port_handler(mermaid_read_port);
 	mermaid_initted = 1;
 }
 
@@ -148,12 +141,12 @@ void mermaidExit()
 {
 	if (!mermaid_initted) return;
 	mermaid_initted = 0;
-	i8051_exit();
+	mcs51_exit();
 }
 
 INT32 mermaidRun(INT32 cycles)
 {
-	i8051Run(cycles);
+	mcs51Run(cycles / 12);
 
 	return cycles;
 }
@@ -166,7 +159,7 @@ INT32 mermaidScan(INT32 nAction)
 	SCAN_VAR(z80_to_mermaid_full);
 	SCAN_VAR(mermaid_to_z80_full);
 	SCAN_VAR(mermaid_int0);
-	i8051_scan(nAction);
+	mcs51_scan(nAction);
 
 	return 0;
 }

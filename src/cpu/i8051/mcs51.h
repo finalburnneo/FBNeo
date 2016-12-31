@@ -101,6 +101,19 @@ void mcs51_set_read_data_handler(UINT8 (*pointer)(INT32));
 void mcs51_scan(INT32 nAction);
 extern UINT8 *mcs51_program_data;
 
+extern void ds5002fp_init(UINT8 mcon, UINT8 rpctl, UINT8 crc); // default: 0, 0, 0
+#define ds5002fp_reset                  mcs51_reset
+#define ds5002fp_exit                   mcs51_exit
+#define ds5002fpRun                     mcs51Run
+#define ds5002fpRunEnd                  mcs51RunEnd
+#define ds5002fp_set_irq_line           mcs51_set_irq_line
+#define ds5002fp_set_write_port_handler mcs51_set_write_port_handler
+#define ds5002fp_set_read_port_handler  mcs51_set_read_port_handler
+#define ds5002fp_set_write_data_handler mcs51_set_write_data_handler
+#define ds5002fp_set_read_data_handler  mcs51_set_read_data_handler
+#define ds5002fp_scan                   mcs51_scan
+#define ds5002fp_program_data           mcs51_program_data
+
 #if 0
 typedef void (*mcs51_serial_tx_func)(device_t *device, int data);
 typedef int (*mcs51_serial_rx_func)(device_t *device);

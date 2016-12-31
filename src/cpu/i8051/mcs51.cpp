@@ -142,9 +142,7 @@
 
 #define VERBOSE 0
 #define CLEAR_LINE	0
-// below must contain static at least. -dink
-#define INLINE		static inline
-
+#define INLINE		inline
 //#define LOG(x)	do { if (VERBOSE) logerror x; } while (0)
 #define LOG(x)
 #define fatalerror(x)
@@ -250,7 +248,7 @@ struct _mcs51_uart
 	UINT8	delay_cycles;	//Gross Hack;
 };
 
-UINT8 *mcs51_program_data;
+UINT8 *mcs51_program_data = NULL;
 static void (*mcs51_write_port)(INT32,UINT8) = NULL;
 static UINT8 (*mcs51_read_port)(INT32) = NULL;
 static void (*mcs51_write_data)(INT32,UINT8) = NULL;
@@ -339,12 +337,10 @@ struct _mcs51_state_t
 
 	int		icount;
 
-	UINT8	IntRam[0xff+1];	//Max 256 Bytes of Internal RAM (8031/51 have 128, 8032/52 have 256)
-
 	mcs51_uart uart;			/* internal uart */
 
 	/* Internal Ram */
-	//UINT8	*internal_ram;		/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
+	UINT8	internal_ram[0xff+1];	/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
 	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
 
 	/* SFR Callbacks */
@@ -353,14 +349,6 @@ struct _mcs51_state_t
 
 	/* Interrupt Callback */
 	//device_irq_callback irq_callback;
-	//legacy_cpu_device *device;
-
-	/* Memory spaces */
-	//UINT8 *
-    //address_space *program;
-	//direct_read_data *direct;
-	//address_space *data;
-	//address_space *io;
 
 	/* Serial Port TX/RX Callbacks */
 	// TODO: Move to special port r/w
@@ -372,7 +360,7 @@ struct _mcs51_state_t
 		UINT8	previous_ta;		/* Previous Timed Access value */
 		UINT8	ta_window;			/* Limed Access window */
 		UINT8	range;				/* Memory Range */
-		const ds5002fp_config *config;	/* Bootstrap Configuration */
+		ds5002fp_config config;	/* Bootstrap Configuration */
 	} ds5002fp;
 };
 
@@ -400,8 +388,8 @@ mcs51_state_t mcs51_state;
 
 /* Read/Write a byte from/to the Internal RAM indirectly */
 /* (called from indirect addressing)                     */
-INLINE UINT8 iram_iread(INT32 a) { return (a <= mcs51_state.ram_mask) ? mcs51_state.IntRam[a] : 0xff; }
-INLINE void iram_iwrite(INT32 a, UINT8 d) { if (a <= mcs51_state.ram_mask) mcs51_state.IntRam[a] = d; }
+static INLINE UINT8 iram_iread(INT32 a) { return (a <= mcs51_state.ram_mask) ? mcs51_state.internal_ram[a] : 0xff; }
+static INLINE void iram_iwrite(INT32 a, UINT8 d) { if (a <= mcs51_state.ram_mask) mcs51_state.internal_ram[a] = d; }
 
 #define IRAM_IR(a)		iram_iread(a)
 #define IRAM_IW(a, d)	iram_iwrite(a, d)
@@ -457,7 +445,7 @@ INLINE void iram_iwrite(INT32 a, UINT8 d) { if (a <= mcs51_state.ram_mask) mcs51
 #define B			SFR_A(ADDR_B)
 #define SBUF		SFR_A(ADDR_SBUF)
 
-#define R_REG(r)	mcs51_state.IntRam[(r) | (PSW & 0x18)]
+#define R_REG(r)	mcs51_state.internal_ram[(r) | (PSW & 0x18)]
 #define DPTR		((DPH<<8) | DPL)
 
 /* 8052 Only registers */
@@ -516,7 +504,7 @@ INLINE void iram_iwrite(INT32 a, UINT8 d) { if (a <= mcs51_state.ram_mask) mcs51
 #define SET_SBUF(v)	SET_SFR_A(ADDR_SBUF, v)
 
 /* No actions triggered on write */
-#define SET_REG(r, v)	do { mcs51_state.IntRam[(r) | (PSW & 0x18)] = (v); } while (0)
+#define SET_REG(r, v)	do { mcs51_state.internal_ram[(r) | (PSW & 0x18)] = (v); } while (0)
 
 #define SET_DPTR(n)		do { DPH = ((n) >> 8) & 0xff; DPL = (n) & 0xff; } while (0)
 
@@ -713,7 +701,7 @@ INLINE void iram_iwrite(INT32 a, UINT8 d) { if (a <= mcs51_state.ram_mask) mcs51
 ***************************************************************************/
 
 static void check_irqs();
-INLINE void serial_transmit(UINT8 data);
+static INLINE void serial_transmit(UINT8 data);
 
 /* Hold callback functions so they can be set by caller (before the cpu reset) */
 
@@ -721,7 +709,7 @@ INLINE void serial_transmit(UINT8 data);
     INLINE FUNCTIONS
 ***************************************************************************/
 
-INLINE void clear_current_irq()
+static INLINE void clear_current_irq()
 {
 	if (mcs51_state.cur_irq_prio >= 0)
 		mcs51_state.irq_active &= ~(1 << mcs51_state.cur_irq_prio);
@@ -740,10 +728,11 @@ INLINE void clear_current_irq()
 
 //INLINE UINT8 r_psw() { return SFR_A(ADDR_PSW); }
 
-INLINE void update_ptrs()
+static INLINE void update_ptrs()
 {
-	//mcs51_state.IntRam = (UINT8 *)mcs51_state.data->get_write_ptr(0x00);
+	//mcs51_state.internal_ram = (UINT8 *)mcs51_state.data->get_write_ptr(0x00);
 	//mcs51_state.sfr_ram = (UINT8 *)mcs51_state.data->get_write_ptr(0x100);
+	// note: statically mapped in mcs51_state -dink
 }
 
 
@@ -778,7 +767,7 @@ INLINE void update_ptrs()
     0x0000-0xffff -> data memory (the bus used to access it does not matter)
 */
 
-INLINE INT32 external_ram_iaddr(INT32 offset, INT32 mem_mask)
+static INLINE INT32 external_ram_iaddr(INT32 offset, INT32 mem_mask)
 {
 	/* Memory Range (RG1 and RG0 @ MCON and RPCTL registers) */
 	static const UINT16 ds5002fp_ranges[4] = { 0x1fff, 0x3fff, 0x7fff, 0xffff };
@@ -808,21 +797,21 @@ INLINE INT32 external_ram_iaddr(INT32 offset, INT32 mem_mask)
 
 /* Internal ram read/write */
 
-INLINE UINT8 iram_read(INT32 offset)
+static INLINE UINT8 iram_read(INT32 offset)
 {
-	return (((offset) < 0x80) ? mcs51_state.IntRam[offset] : mcs51_state.sfr_read(offset));
+	return (((offset) < 0x80) ? mcs51_state.internal_ram[offset] : mcs51_state.sfr_read(offset));
 }
 
-INLINE void iram_write(INT32 offset, UINT8 data)
+static INLINE void iram_write(INT32 offset, UINT8 data)
 {
 	if ((offset) < 0x80)
-		mcs51_state.IntRam[offset] = data;
+		mcs51_state.internal_ram[offset] = data;
 	else
 		mcs51_state.sfr_write(offset, data);
 }
 
 /*Push the current PC to the stack*/
-INLINE void push_pc()
+static INLINE void push_pc()
 {
 	UINT8 tmpSP = SP+1;						//Grab and Increment Stack Pointer
 	IRAM_IW(tmpSP, (PC & 0xff));				//Store low byte of PC to Internal Ram (Use IRAM_IW to store stack above 128 bytes)
@@ -832,7 +821,7 @@ INLINE void push_pc()
 }
 
 /*Pop the current PC off the stack and into the pc*/
-INLINE void pop_pc()
+static INLINE void pop_pc()
 {
 	UINT8 tmpSP = SP;							//Grab Stack Pointer
 	PC = (IRAM_IR(tmpSP--) & 0xff) << 8;		//Store hi byte to PC (must use IRAM_IR to access stack pointing above 128 bytes)
@@ -841,7 +830,7 @@ INLINE void pop_pc()
 }
 
 //Set the PSW Parity Flag
-INLINE void set_parity()
+static INLINE void set_parity()
 {
 	//This flag will be set when the accumulator contains an odd # of bits set..
 	UINT8 p = 0;
@@ -856,7 +845,7 @@ INLINE void set_parity()
 	SET_P(p & 1);
 }
 
-INLINE UINT8 bit_address_r(UINT8 offset)
+static INLINE UINT8 bit_address_r(UINT8 offset)
 {
 	UINT8	word;
 	UINT8	mask;
@@ -883,7 +872,7 @@ INLINE UINT8 bit_address_r(UINT8 offset)
 }
 
 
-INLINE void bit_address_w(UINT8 offset, UINT8 bit)
+static INLINE void bit_address_w(UINT8 offset, UINT8 bit)
 {
 	int	word;
 	UINT8	mask;
@@ -915,7 +904,7 @@ INLINE void bit_address_w(UINT8 offset, UINT8 bit)
 	}
 }
 
-INLINE void do_add_flags(UINT8 a, UINT8 data, UINT8 c)
+static INLINE void do_add_flags(UINT8 a, UINT8 data, UINT8 c)
 {
 	UINT16 result = a+data+c;
 	INT16 result1 = (INT8)a+(INT8)data+c;
@@ -926,7 +915,7 @@ INLINE void do_add_flags(UINT8 a, UINT8 data, UINT8 c)
 	SET_OV(result1 < -128 || result1 > 127);
 }
 
-INLINE void do_sub_flags(UINT8 a, UINT8 data, UINT8 c)
+static INLINE void do_sub_flags(UINT8 a, UINT8 data, UINT8 c)
 {
 	UINT16 result = a-(data+c);
 	INT16 result1 = (INT8)a-(INT8)(data+c);
@@ -937,7 +926,7 @@ INLINE void do_sub_flags(UINT8 a, UINT8 data, UINT8 c)
 	SET_OV((result1 < -128 || result1 > 127));
 }
 
-INLINE void transmit_receive(int source)
+static INLINE void transmit_receive(int source)
 {
 	int mode = (GET_SM0<<1) | GET_SM1;
 
@@ -1010,7 +999,7 @@ INLINE void transmit_receive(int source)
 }
 
 
-INLINE void update_timer_t0(int cycles)
+static INLINE void update_timer_t0(int cycles)
 {
 	int mode = (GET_M0_1<<1) | GET_M0_0;
 	UINT32 count = 0;
@@ -1096,7 +1085,7 @@ switching it into or out of Mode 3 or it can be assigned as a baud rate generato
  * overflow flag
  */
 
-INLINE void update_timer_t1(int cycles)
+static INLINE void update_timer_t1(int cycles)
 {
 	UINT8 mode = (GET_M1_1<<1) | GET_M1_0;
 	UINT8 mode_0 = (GET_M0_1<<1) | GET_M0_0;
@@ -1199,7 +1188,7 @@ INLINE void update_timer_t1(int cycles)
 	}
 }
 
-INLINE void update_timer_t2(int cycles)
+static INLINE void update_timer_t2(int cycles)
 {
 	/* Update Timer 2 */
 	if(GET_TR2) {
@@ -1252,7 +1241,7 @@ INLINE void update_timer_t2(int cycles)
 	}
 }
 
-INLINE void update_timers(int cycles)
+static INLINE void update_timers(int cycles)
 {
 	/* Update Timer 0 */
 	update_timer_t0(cycles);
@@ -1267,7 +1256,7 @@ INLINE void update_timers(int cycles)
 //Set up to transmit data out of serial port
 //NOTE: Enable Serial Port Interrupt bit is NOT required to send/receive data!
 
-INLINE void serial_transmit(UINT8 data)
+static INLINE void serial_transmit(UINT8 data)
 {
 	int mode = (GET_SM0<<1) | GET_SM1;
 
@@ -1291,7 +1280,7 @@ INLINE void serial_transmit(UINT8 data)
 	}
 }
 
-INLINE void serial_receive()
+static INLINE void serial_receive()
 {
 	int mode = (GET_SM0<<1) | GET_SM1;
 
@@ -1315,14 +1304,14 @@ INLINE void serial_receive()
 }
 
 /* Check and update status of serial port */
-INLINE void	update_serial(int cycles)
+static INLINE void	update_serial(int cycles)
 {
 	while (--cycles>=0)
 		transmit_receive(0);
 }
 
 /* Check and update status of serial port */
-INLINE void	update_irq_prio(UINT8 ipl, UINT8 iph)
+static INLINE void	update_irq_prio(UINT8 ipl, UINT8 iph)
 {
 	int i;
 	for (i=0; i<8; i++)
@@ -1334,7 +1323,7 @@ INLINE void	update_irq_prio(UINT8 ipl, UINT8 iph)
     OPCODES
 ***************************************************************************/
 
-#define OPHANDLER( _name ) INLINE void _name (UINT8 r)
+#define OPHANDLER( _name ) static INLINE void _name (UINT8 r)
 
 #include "mcs51ops.c"
 
@@ -1840,7 +1829,7 @@ static void check_irqs()
 	}
 }
 
-INLINE void burn_cycles(int cycles)
+static INLINE void burn_cycles(int cycles)
 {
 	/* Update Timer (if any timers are running) */
 	update_timers(cycles);
@@ -2145,12 +2134,6 @@ static UINT8 mcs51_sfr_read(INT32 offset)
 void mcs51_init (void)
 {
 	//mcs51_state.irq_callback = irqcallback;
-	//mcs51_state.device = device;
-
-	//mcs51_state.program = device->space(AS_PROGRAM);
-	//mcs51_state.direct = &mcs51_state.program->direct();
-	//mcs51_state.data = device->space(AS_DATA);
-	//mcs51_state.io = device->space(AS_IO);
 
 	memset(&mcs51_state, 0, sizeof(mcs51_state));
 
@@ -2160,10 +2143,9 @@ void mcs51_init (void)
 	mcs51_state.sfr_read = mcs51_sfr_read;
 	mcs51_state.sfr_write = mcs51_sfr_write;
 
+#if 0
 	/* ensure these pointers are set before get_info is called */
 	update_ptrs();
-
-#if 0
 	/* Save states */
 
 	device->save_item(NAME(mcs51_state.ppc));
@@ -2183,7 +2165,6 @@ void mcs51_init (void)
 
 /*static CPU_INIT( i80c51 )
 {
-	 = get_safe_token(device);
 	CPU_INIT_CALL(mcs51);
 	mcs51_state.features |= FEATURE_CMOS;
 }*/
@@ -2202,7 +2183,7 @@ void mcs51_reset (void)
 	mcs51_state.cur_irq_prio = -1;
 
 	//Clear Ram (w/0xff)
-	memset(&mcs51_state.IntRam,0xff,sizeof(mcs51_state.IntRam));
+	memset(&mcs51_state.internal_ram,0xff,sizeof(mcs51_state.internal_ram));
 
 	/* these are all defined reset states */
 	PC = 0;
@@ -2253,11 +2234,11 @@ void mcs51_reset (void)
 	{
 		// set initial values (some of them are set using the bootstrap loader)
 		PCON = 0;
-		MCON = mcs51_state.ds5002fp.config->mcon & 0xfb;
-		RPCTL = mcs51_state.ds5002fp.config->rpctl & 0x01;
+		MCON = mcs51_state.ds5002fp.config.mcon & 0xfb;
+		RPCTL = mcs51_state.ds5002fp.config.rpctl & 0x01;
 		RPS = 0;
 		RNR = 0;
-		CRCR = mcs51_state.ds5002fp.config->crc & 0xf0;
+		CRCR = mcs51_state.ds5002fp.config.crc & 0xf0;
 		CRCL = 0;
 		CRCH = 0;
 		TA = 0;
@@ -2278,6 +2259,102 @@ void mcs51_exit(void)
 	mcs51_read_data = NULL;
 	mcs51_write_data = NULL;
 	mcs51_program_data = NULL;
+}
+
+/****************************************************************************
+ * DS5002FP Section
+ ****************************************************************************/
+
+
+#define DS5_LOGW(a, d)	LOG(("ds5002fp '%s': write to  " # a " register at 0x%04x, data=%x\n", mcs51_state.device->tag(), PC, d))
+#define DS5_LOGR(a, d)	LOG(("ds5002fp '%s': read from " # a " register at 0x%04x\n", mcs51_state.device->tag(), PC))
+
+static INLINE UINT8 ds5002fp_protected(INT32 offset, UINT8 data, UINT8 ta_mask, UINT8 mask)
+{
+	UINT8 is_timed_access;
+
+	is_timed_access = (mcs51_state.ds5002fp.ta_window > 0) && (TA == 0x55);
+	if (is_timed_access)
+	{
+		ta_mask = 0xff;
+	}
+	data = (mcs51_state.sfr_ram[offset] & (~ta_mask)) | (data & ta_mask);
+	return (mcs51_state.sfr_ram[offset] & (~mask)) | (data & mask);
+}
+
+static void ds5002fp_sfr_write(INT32 offset, UINT8 data)
+{
+	switch (offset)
+	{
+
+		case ADDR_TA:
+			mcs51_state.ds5002fp.previous_ta = TA;
+			/*  init the time window after having wrote 0xaa */
+			if ((data == 0xaa) && (mcs51_state.ds5002fp.ta_window == 0))
+			{
+				mcs51_state.ds5002fp.ta_window = 6; /* 4*12 + 2*12 */
+				LOG(("ds5002fp '%s': TA window initiated at 0x%04x\n", mcs51_state.device->tag(), PC));
+			}
+			break;
+		case ADDR_MCON: 	data = ds5002fp_protected(ADDR_MCON, data, 0x0f, 0xf7);	DS5_LOGW(MCON, data); break;
+		case ADDR_RPCTL:	data = ds5002fp_protected(ADDR_RPCTL, data, 0xef, 0xfe); DS5_LOGW(RPCTL, data); break;
+		case ADDR_CRCR:		data = ds5002fp_protected(ADDR_CRCR, data, 0xff, 0x0f);	DS5_LOGW(CRCR, data);	break;
+		case ADDR_PCON:		data = ds5002fp_protected(ADDR_PCON, data, 0xb9, 0xff); break;
+		case ADDR_IP:		data = ds5002fp_protected(ADDR_IP, data, 0x7f, 0xff);	break;
+		case ADDR_CRCL:		DS5_LOGW(CRCL, data);									break;
+		case ADDR_CRCH:		DS5_LOGW(CRCH, data);									break;
+		case ADDR_RNR:		DS5_LOGW(RNR, data);									break;
+		case ADDR_RPS:		DS5_LOGW(RPS, data);									break;
+		default:
+			mcs51_sfr_write(offset, data);
+			return;
+	}
+	mcs51_state.sfr_ram[offset] = data;
+	//mcs51_state.data->write_byte((INT32) offset | 0x100, data);
+}
+
+static UINT8 ds5002fp_sfr_read(INT32 offset)
+{
+	switch (offset)
+	{
+		case ADDR_CRCR: 	DS5_LOGR(CRCR, data);		break;
+		case ADDR_CRCL: 	DS5_LOGR(CRCL, data);		break;
+		case ADDR_CRCH: 	DS5_LOGR(CRCH, data);		break;
+		case ADDR_MCON: 	DS5_LOGR(MCON, data);		break;
+		case ADDR_TA:		DS5_LOGR(TA, data);			break;
+		case ADDR_RNR:		DS5_LOGR(RNR, data);		break;
+		case ADDR_RPCTL:	DS5_LOGR(RPCTL, data);		break;
+		case ADDR_RPS:		DS5_LOGR(RPS, data);		break;
+		case ADDR_PCON:
+			SET_PFW(0);		/* reset PFW flag */
+			return mcs51_sfr_read(offset);
+		default:
+			return mcs51_sfr_read(offset);
+	}
+	return mcs51_state.sfr_ram[offset];
+	//return mcs51_state.data->read_byte((INT32) offset | 0x100);
+}
+
+void ds5002fp_init (UINT8 mcon, UINT8 rpctl, UINT8 crc)
+{
+	/* default configuration */
+	// mcon = 0x00, rpctl = 0x00, crc = 0x00
+
+	mcs51_init();
+
+	mcs51_state.ds5002fp.config.mcon = mcon;
+	mcs51_state.ds5002fp.config.rpctl = rpctl;
+	mcs51_state.ds5002fp.config.crc = crc;
+
+	mcs51_state.features |= (FEATURE_DS5002FP | FEATURE_CMOS);
+	mcs51_state.sfr_read = ds5002fp_sfr_read;
+	mcs51_state.sfr_write = ds5002fp_sfr_write;
+
+#if 0
+	device->save_item(NAME(mcs51_state.ds5002fp.previous_ta) );
+	device->save_item(NAME(mcs51_state.ds5002fp.ta_window) );
+	device->save_item(NAME(mcs51_state.ds5002fp.range) );
+#endif
 }
 
 
@@ -2393,97 +2470,6 @@ static CPU_INIT( i80c31 )
 	mcs51_state.ram_mask = 0x7F;			/* 128 bytes of ram */
 }
 
-/****************************************************************************
- * DS5002FP Section
- ****************************************************************************/
-
-
-#define DS5_LOGW(a, d)	LOG(("ds5002fp '%s': write to  " # a " register at 0x%04x, data=%x\n", mcs51_state.device->tag(), PC, d))
-#define DS5_LOGR(a, d)	LOG(("ds5002fp '%s': read from " # a " register at 0x%04x\n", mcs51_state.device->tag(), PC))
-
-INLINE UINT8 ds5002fp_protected(INT32 offset, UINT8 data, UINT8 ta_mask, UINT8 mask)
-{
-	UINT8 is_timed_access;
-
-	is_timed_access = (mcs51_state.ds5002fp.ta_window > 0) && (TA == 0x55);
-	if (is_timed_access)
-	{
-		ta_mask = 0xff;
-	}
-	data = (mcs51_state.sfr_ram[offset] & (~ta_mask)) | (data & ta_mask);
-	return (mcs51_state.sfr_ram[offset] & (~mask)) | (data & mask);
-}
-
-static void ds5002fp_sfr_write(INT32 offset, UINT8 data)
-{
-	switch (offset)
-	{
-
-		case ADDR_TA:
-			mcs51_state.ds5002fp.previous_ta = TA;
-			/*  init the time window after having wrote 0xaa */
-			if ((data == 0xaa) && (mcs51_state.ds5002fp.ta_window == 0))
-			{
-				mcs51_state.ds5002fp.ta_window = 6; /* 4*12 + 2*12 */
-				LOG(("ds5002fp '%s': TA window initiated at 0x%04x\n", mcs51_state.device->tag(), PC));
-			}
-			break;
-		case ADDR_MCON: 	data = ds5002fp_protected(ADDR_MCON, data, 0x0f, 0xf7);	DS5_LOGW(MCON, data); break;
-		case ADDR_RPCTL:	data = ds5002fp_protected(ADDR_RPCTL, data, 0xef, 0xfe); DS5_LOGW(RPCTL, data); break;
-		case ADDR_CRCR:		data = ds5002fp_protected(ADDR_CRCR, data, 0xff, 0x0f);	DS5_LOGW(CRCR, data);	break;
-		case ADDR_PCON:		data = ds5002fp_protected(ADDR_PCON, data, 0xb9, 0xff); break;
-		case ADDR_IP:		data = ds5002fp_protected(ADDR_IP, data, 0x7f, 0xff);	break;
-		case ADDR_CRCL:		DS5_LOGW(CRCL, data);									break;
-		case ADDR_CRCH:		DS5_LOGW(CRCH, data);									break;
-		case ADDR_RNR:		DS5_LOGW(RNR, data);									break;
-		case ADDR_RPS:		DS5_LOGW(RPS, data);									break;
-		default:
-			mcs51_sfr_write(offset, data);
-			return;
-	}
-	mcs51_state.data->write_byte((INT32) offset | 0x100, data);
-}
-
-static UINT8 ds5002fp_sfr_read(INT32 offset)
-{
-	switch (offset)
-	{
-		case ADDR_CRCR: 	DS5_LOGR(CRCR, data);		break;
-		case ADDR_CRCL: 	DS5_LOGR(CRCL, data);		break;
-		case ADDR_CRCH: 	DS5_LOGR(CRCH, data);		break;
-		case ADDR_MCON: 	DS5_LOGR(MCON, data);		break;
-		case ADDR_TA:		DS5_LOGR(TA, data);			break;
-		case ADDR_RNR:		DS5_LOGR(RNR, data);		break;
-		case ADDR_RPCTL:	DS5_LOGR(RPCTL, data);		break;
-		case ADDR_RPS:		DS5_LOGR(RPS, data);		break;
-		case ADDR_PCON:
-			SET_PFW(0);		/* reset PFW flag */
-			return mcs51_sfr_read(offset);
-		default:
-			return mcs51_sfr_read(offset);
-	}
-	return mcs51_state.data->read_byte((INT32) offset | 0x100);
-}
-
-static CPU_INIT( ds5002fp )
-{
-	/* default configuration */
-	static const ds5002fp_config default_config = { 0x00, 0x00, 0x00 };
-	const ds5002fp_config *sconfig = device->static_config() ? (const ds5002fp_config *)device->static_config() : &default_config;
-	 = get_safe_token(device);
-
-	CPU_INIT_CALL( mcs51 );
-
-	mcs51_state.ds5002fp.config = sconfig;
-	mcs51_state.features |= (FEATURE_DS5002FP | FEATURE_CMOS);
-	mcs51_state.sfr_read = ds5002fp_sfr_read;
-	mcs51_state.sfr_write = ds5002fp_sfr_write;
-
-	device->save_item(NAME(mcs51_state.ds5002fp.previous_ta) );
-	device->save_item(NAME(mcs51_state.ds5002fp.ta_window) );
-	device->save_item(NAME(mcs51_state.ds5002fp.range) );
-
-}
 
 /***************************************************************************
     ADDRESS MAPS

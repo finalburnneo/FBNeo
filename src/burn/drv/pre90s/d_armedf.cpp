@@ -16,7 +16,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
-#include "i8051.h"
+#include "mcs51.h"
 #include "burn_ym3812.h"
 #include "dac.h"
 #include "nb1414m4.h"
@@ -76,6 +76,7 @@ static INT32 usemcu = 0;
 
 static INT32 Terrafjb = 0;
 static INT32 Kozuremode = 0;
+static INT32 Skyrobo = 0;
 static INT32 fiftysevenhertz = 0;
 
 static struct BurnInputInfo ArmedfInputList[] = {
@@ -572,9 +573,8 @@ static UINT16 __fastcall bigfghtr_read_word(UINT32 address)
 			return DrvInputs[3];
 
 		case 0x400000:
-			i8051_set_irq_line(I8051_INT0_LINE, CPU_IRQSTATUS_ACK);
-			i8051Run(20);
-			i8051_set_irq_line(I8051_INT0_LINE, CPU_IRQSTATUS_NONE);
+			mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_HOLD);
+			SekRunEnd();
 			return 0;
 	}
 
@@ -827,7 +827,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	if (usemcu) {
-		i8051_reset();
+		mcs51_reset();
 	}
 
 	if (Terrafjb) {
@@ -851,15 +851,14 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM	= Next; Next += 0x010000;
 	Drv68KROM	= Next; Next += 0x080000;
+	DrvZ80ROM	= Next; Next += 0x010000;
+	DrvZ80ROM2	= Next; Next += 0x004000;
 
 	DrvGfxROM0	= Next; Next += 0x010000;
 	DrvGfxROM1	= Next; Next += 0x080000;
 	DrvGfxROM2	= Next; Next += 0x080000;
 	DrvGfxROM3	= Next; Next += 0x080000;
-
-	DrvZ80ROM2	= Next; Next += 0x004000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
@@ -981,10 +980,10 @@ static void Bigfghtr68KInit()
 	SekSetReadWordHandler(0,	bigfghtr_read_word);
 
 	usemcu = 1;
-	i8051_program_data = DrvZ80ROM2;
-	i8051_init (0,0,NULL,NULL);
-	i8051_set_write_data_handler(mcu_write_data);
-	i8051_set_read_data_handler(mcu_read_data);
+	mcs51_program_data = DrvZ80ROM2;
+	mcs51_init ();
+	mcs51_set_write_data_handler(mcu_write_data);
+	mcs51_set_read_data_handler(mcu_read_data);
 
 }
 
@@ -1081,7 +1080,7 @@ static INT32 DrvExit()
 	ZetExit();
 
 	if (usemcu) {
-		i8051_exit();
+		mcs51_exit();
 		usemcu = 0;
 	}
 
@@ -1089,6 +1088,7 @@ static INT32 DrvExit()
 
 	Terrafjb = 0;
 	Kozuremode = 0;
+	Skyrobo = 0;
 	fiftysevenhertz = 0;
 
 	BurnSetRefreshRate(60.00);
@@ -1218,6 +1218,7 @@ static void draw_sprites(INT32 priority)
 
 	INT32 sprlen = 0x1000;
 	if (scroll_type == 0 || scroll_type == 5) sprlen = 0x400;
+	if (Skyrobo) sprlen = 0x600;
 
 	for (INT32 offs = 0; offs < sprlen / 2; offs+=4)
 	{
@@ -1231,7 +1232,7 @@ static void draw_sprites(INT32 priority)
 		INT32 clut  = spr[offs + 2] & 0x7f;
 		INT32 sx    = spr[offs + 3];
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
-		code     &= 0xfff;
+		code     &= 0x7ff;//((sprlen/2)-1);//0xfff;
 
 		if (*flipscreen) {
 			sx = 320 - sx + 176;
@@ -1327,9 +1328,11 @@ static INT32 DrvFrame()
 	AssembleInputs();
 
 	INT32 nSegment;
-	INT32 nInterleave = 262;
+	INT32 nInterleave = 262*2;
 	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+
+	if (usemcu) nTotalCycles[2] /= 12; // i8751 internal divider (12)
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -1343,10 +1346,11 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 
-		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
+		//if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
+		if ((i % 4)==0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
 		if (usemcu) {
-			i8051Run(nTotalCycles[2] / nInterleave);
+			mcs51Run((nTotalCycles[2] / nInterleave));
 		}
 
 		if (Terrafjb) {
@@ -1362,12 +1366,12 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 
+	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
+
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
-
-	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
 
 	ZetClose();
 	SekClose();
@@ -1399,7 +1403,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 		if (usemcu) {
-			i8051_scan(nAction);
+			mcs51_scan(nAction);
 		}
 
 		BurnYM3812Scan(nAction, pnMin);
@@ -2249,6 +2253,8 @@ static INT32 SkyRoboInit()
 	scroll_type = 1;
 	sprite_offy = 128;
 	irqline = 1;
+
+	Skyrobo = 1;
 
 	INT32 nRet = DrvInit(SkyroboLoadRoms, Bigfghtr68KInit, 0xf800);
 

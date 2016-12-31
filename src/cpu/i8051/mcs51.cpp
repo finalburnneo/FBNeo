@@ -333,6 +333,7 @@ struct _mcs51_state_t
 	int		t2_cnt;				/* number of 0->1 transistions on T2 line */
 	int		t2ex_cnt;			/* number of 0->1 transistions on T2EX line */
 	int		cur_irq_prio;		/* Holds value of the current IRQ Priority Level; -1 if no irq */
+	UINT8   irqHOLD;            // Auto-Clear IRQ (CPU_IRQSTATUS_HOLD mode)
 	UINT8	irq_active;			/* mask which irq levels are serviced */
 	UINT8	irq_prio[8];		/* interrupt priority */
 
@@ -1790,6 +1791,11 @@ static void check_irqs()
 			if(GET_IT0)  /* for some reason having this, breaks alving dmd games */
 				SET_IE0(0);
 
+			if (mcs51_state.irqHOLD) {
+				mcs51_set_irq_line(MCS51_INT0_LINE, 0);
+				mcs51_state.irqHOLD = 0;
+			}
+
 			/* indicate we took the external IRQ */
 			//if (mcs51_state.irq_callback != NULL)
 			//	(*mcs51_state.irq_callback)(mcs51_state.device, 0);
@@ -1803,6 +1809,12 @@ static void check_irqs()
 			//External Int Flag only cleared when configured as Edge Triggered..
 			if(GET_IT1)  /* for some reason having this, breaks alving dmd games */
 				SET_IE1(0);
+
+			if (mcs51_state.irqHOLD) {
+				mcs51_set_irq_line(MCS51_INT1_LINE, 0);
+				mcs51_state.irqHOLD = 0;
+			}
+
 			/* indicate we took the external IRQ */
 			//if (mcs51_state.irq_callback != NULL)
 			//	(*mcs51_state.irq_callback)(mcs51_state.device, 1);
@@ -1862,6 +1874,7 @@ void mcs51_set_irq_line(int irqline, int state)
 		case MCS51_INT0_LINE:
 			//Line Asserted?
 			if (state != CLEAR_LINE) {
+				if (state == CPU_IRQSTATUS_HOLD) mcs51_state.irqHOLD = 1;
 				//Need cleared->active line transition? (Logical 1-0 Pulse on the line) - CLEAR->ASSERT Transition since INT0 active lo!
 				if (GET_IT0) {
 					if (GET_BIT(tr_state, MCS51_INT0_LINE))
@@ -1883,6 +1896,7 @@ void mcs51_set_irq_line(int irqline, int state)
 
 			//Line Asserted?
 			if (state != CLEAR_LINE) {
+				if (state == CPU_IRQSTATUS_HOLD) mcs51_state.irqHOLD = 1;
 				//Need cleared->active line transition? (Logical 1-0 Pulse on the line) - CLEAR->ASSERT Transition since INT1 active lo!
 				if(GET_IT1){
 					if (GET_BIT(tr_state, MCS51_INT1_LINE))

@@ -1,4 +1,4 @@
-#include "i8051.h"
+#include "mcs51.h"
 
 void mermaidWrite(UINT8 data);
 UINT8 mermaidRead();

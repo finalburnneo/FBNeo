@@ -610,10 +610,13 @@ static void __fastcall bigfghtr_write_word(UINT32 address, UINT16 data)
 			*soundlatch = ((data & 0x7f) << 1) | 1;
 		return;
 
+		case 0x08d00c:
+			// NOP
+		return;
+
 		case 0x08d00e:
 			SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
 		return;
-
 	}
 }
 
@@ -968,11 +971,12 @@ static void mcu_write_data(INT32 address, UINT8 data)
 static void Bigfghtr68KInit()
 {
 	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM,		0x080000, 0x0805ff, MAP_RAM);
+	//SekMapMemory(DrvSprRAM,		0x080000, 0x0805ff, MAP_RAM); // copied from shareram
+	SekMapMemory(DrvShareRAM,		0x080000, 0x083fff, MAP_RAM);
+	DrvSprRAM = DrvShareRAM; // Sprites 0x80000 - 0x805ff, Share 0x80600 - 0x803ff
 	SekMapMemory((UINT8 *)DrvSprClut,	0x08b000, 0x08bfff, MAP_RAM);
 	SekMapMemory(Drv68KRAM0,	0x084000, 0x085fff, MAP_RAM);
 	SekMapMemory(DrvBgRAM,		0x086000, 0x086fff, MAP_RAM);
-	SekMapMemory(DrvShareRAM + 0x600,		0x080600, 0x083fff, MAP_RAM);
 	SekMapMemory(DrvFgRAM,		0x087000, 0x087fff, MAP_RAM);
 	SekMapMemory(DrvTxRAM,		0x088000, 0x089fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x08a000, 0x08afff, MAP_RAM);
@@ -1232,7 +1236,7 @@ static void draw_sprites(INT32 priority)
 		INT32 clut  = spr[offs + 2] & 0x7f;
 		INT32 sx    = spr[offs + 3];
 		INT32 sy    = sprite_offy + 240 - (attr & 0x1ff);
-		code     &= 0x7ff;//((sprlen/2)-1);//0xfff;
+		code       &= 0xfff;
 
 		if (*flipscreen) {
 			sx = 320 - sx + 176;
@@ -1328,7 +1332,7 @@ static INT32 DrvFrame()
 	AssembleInputs();
 
 	INT32 nSegment;
-	INT32 nInterleave = 262*2;
+	INT32 nInterleave = 262;
 	INT32 nTotalCycles[3] = { 8000000 / ((fiftysevenhertz) ? 57 : 60), 6000000 / ((fiftysevenhertz) ? 57 : 60), 4000000 / ((fiftysevenhertz) ? 57 : 60) };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
@@ -1346,8 +1350,7 @@ static INT32 DrvFrame()
 
 		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 
-		//if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
-		if ((i % 4)==0) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
+		if (i & 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // 130 per frame (based on nInterleave = 262)
 
 		if (usemcu) {
 			mcs51Run((nTotalCycles[2] / nInterleave));
@@ -1366,7 +1369,7 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 
-	SekSetIRQLine(irqline, CPU_IRQSTATUS_AUTO);
+	SekSetIRQLine(irqline, (usemcu) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);

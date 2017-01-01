@@ -157,7 +157,7 @@ enum
 	FEATURE_I8052			= 0x01,
 	FEATURE_CMOS			= 0x02,
 	FEATURE_I80C52			= 0x04,
-	FEATURE_DS5002FP		= 0x08,
+	FEATURE_DS5002FP		= 0x08
 };
 
 /* Internal address in SFR of registers */
@@ -210,7 +210,7 @@ enum
 	ADDR_TA		= 0xc7,
 	ADDR_RNR	= 0xcf,
 	ADDR_RPCTL	= 0xd8,
-	ADDR_RPS	= 0xda,
+	ADDR_RPS	= 0xda
 
 };
 
@@ -229,7 +229,7 @@ enum
 	V_TF2	= 0x02b,	/* Timer 2 Overflow */
 
 	/* DS5002FP */
-	V_PFI	= 0x02b,	/* Power Failure Interrupt */
+	V_PFI	= 0x02b		/* Power Failure Interrupt */
 };
 
 /***************************************************************************
@@ -781,7 +781,7 @@ static INLINE INT32 external_ram_iaddr(INT32 offset, INT32 mem_mask)
 	{
 		if (!GET_PM) {
 			if (!GET_EXBS) {
-				if ((offset >= ds5002fp_partitions[GET_PA]) && (offset <= ds5002fp_ranges[mcs51_state.ds5002fp.range])) {
+				if (((UINT32)offset >= ds5002fp_partitions[GET_PA]) && ((UINT32)offset <= ds5002fp_ranges[mcs51_state.ds5002fp.range])) {
 					offset += 0x10000;
 				}
 			}

@@ -440,8 +440,8 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 	deco16_pf_ram[0] = (UINT8*)BurnMalloc(0x2000); // ok
 	deco16_pf_ram[1] = (UINT8*)BurnMalloc(0x2000);
 
-	deco16_pf_rowscroll[0] = (UINT8*)BurnMalloc(0x1000);// plenty
-	deco16_pf_rowscroll[1] = (UINT8*)BurnMalloc(0x1000);
+	deco16_pf_rowscroll[0] = (UINT8*)BurnMalloc(0x2000);// plenty
+	deco16_pf_rowscroll[1] = (UINT8*)BurnMalloc(0x2000);
 
 	deco16_pf_control[0]	= (UINT16*)BurnMalloc(0x10); //1/2
 	deco16_pf_control[1]	= (UINT16*)BurnMalloc(0x10); //3/4

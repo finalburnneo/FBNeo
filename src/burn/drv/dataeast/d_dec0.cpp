@@ -102,6 +102,7 @@ static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
+static INT32 nCyclesExtra = 0;
 
 static INT32 Dec0Game = 0;
 
@@ -1990,6 +1991,7 @@ static INT32 DrvDoReset()
 	DrvFlipScreen = 0;
 	DrvPriority = 0;
 	memset(DrvTileRamBank, 0, 3);
+	nCyclesExtra = 0;
 
 	RotateReset();
 
@@ -5327,9 +5329,10 @@ static INT32 DrvFrame()
 	M6502Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave) + nCyclesExtra);
+		nCyclesExtra = 0;
 
-		if (i == 8) DrvVBlank = 0; // changed.
+		if (i == 8) DrvVBlank = 0;
 		if (i == 248) {
 			DrvVBlank = 1;
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
@@ -5346,6 +5349,7 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
+	nCyclesExtra = SekTotalCycles() - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);

@@ -2365,7 +2365,7 @@ static struct BurnRomInfo hangzoRomDesc[] = {
 
 	{ "PCM16K 11.5.14P.574000",	0x80000, 0x5b95c6c7, 7 | BRF_SND },           // 16 OKI M6295 Samples 1
 
-	{ "hb-00.11p",		0x00200, 0xb7a7baad, 8 | BRF_GRA },         	      // 17 Unused PROMs
+	{ "hb-00.11p",		0x00200, 0xb7a7baad, 0 | BRF_OPT },         	      // 17 Unused PROMs
 };
 
 STD_ROM_PICK(hangzo)
@@ -2375,7 +2375,7 @@ struct BurnDriver BurnDrvHangzo = {
 	"hangzo", NULL, NULL, NULL, "1992",
 	"Hangzo (Japan, prototype)\0", NULL, "Hot-B", "DECO IC16",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, hangzoRomInfo, hangzoRomName, NULL, NULL, RohgaInputInfo, HangzoDIPInfo,
 	HangzoInit, DrvExit, DrvFrame, SchmeisrDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

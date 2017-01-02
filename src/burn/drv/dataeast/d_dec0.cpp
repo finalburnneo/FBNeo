@@ -2562,7 +2562,7 @@ static UINT16 __fastcall Dec068KReadWord(UINT32 a)
 		}
 		
 		case 0x30c008: {
-			DrvMCUSync();
+			if (realMCU) DrvMCUSync();
 			return i8751RetVal;
 		}
 		

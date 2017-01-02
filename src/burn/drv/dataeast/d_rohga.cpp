@@ -408,8 +408,8 @@ static struct BurnDIPInfo HangzoDIPList[]=
 	{0x14, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x14, 0x01, 0x40, 0x40, "Off"			},
-	{0x14, 0x01, 0x40, 0x00, "On"			},
+	{0x14, 0x01, 0x40, 0x00, "Off"			},
+	{0x14, 0x01, 0x40, 0x40, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "2 Credits to Start, 1 to Continue"		},
 	{0x14, 0x01, 0x80, 0x80, "Off"			},
@@ -2339,6 +2339,7 @@ struct BurnDriver BurnDrvSchmeisr = {
 
 
 // Hangzo (Japan, prototype)
+/* Found on a Data East DE-0353-3 PCB */
 
 static struct BurnRomInfo hangzoRomDesc[] = {
 	{ "Pro0H 12.18.2A.27C1001",	0x20000, 0xac8087db, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code

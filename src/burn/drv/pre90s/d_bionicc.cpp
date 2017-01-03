@@ -13,8 +13,10 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 static UINT8 DrvDips[2];
 
-static UINT8 *Mem, *MemEnd;
-static UINT8 *AllRam, *RamEnd;
+static UINT8 *Mem;
+static UINT8 *MemEnd;
+static UINT8 *AllRam;
+static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
 static UINT8 *Drv68KRAM0;
 static UINT8 *DrvTextRAM;
@@ -32,7 +34,6 @@ static UINT8 *DrvSprBuf;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-
 
 static UINT8 *soundlatch;
 
@@ -174,7 +175,7 @@ void __fastcall bionicc_write_byte(UINT32 address, UINT8 data)
 			flipscreen = data & 0x01;
 			fg_enable  = data & 0x10;
 			bg_enable  = data & 0x20;
-			return;
+		return;
 	}
 }
 
@@ -194,26 +195,26 @@ void __fastcall bionicc_write_word(UINT32 address, UINT16 data)
 	{
 		case 0xfe8010:
 			fg_scroll_x = data & 0x3ff;
-			return;
+		return;
 
 		case 0xfe8012:
 			fg_scroll_y = data & 0x3ff;
-			return;
+		return;
 
 		case 0xfe8014:
 			bg_scroll_x = data & 0x1ff;
-			return;
+		return;
 
 		case 0xfe8016:
 			bg_scroll_y = data & 0x1ff;
-			return;
+		return;
 
 		case 0xfe801a:
 			UINT16 *inp = (UINT16*)(Drv68KRAM1 + 0x3ffa);
 			inp[0] = (DrvInputs[0] >> 4) ^ 0x0f;
 			inp[1] = DrvInputs[2] ^ 0xff;
 			inp[2] = DrvInputs[1] ^ 0xff;
-			return;
+		return;
 	}
 }
 
@@ -279,6 +280,44 @@ void __fastcall bionicc_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
+static tilemap_callback( background )
+{
+	UINT16 *ram = (UINT16*)DrvVidRAM1;
+
+	INT32 attr  = ram[(offs * 2) + 1];
+	INT32 code  = (ram[offs * 2] & 0xff) | ((attr & 0x07) * 256);
+
+	TILE_SET_INFO(0, code, attr >> 3, TILE_FLIPXY(attr >> 6));
+}
+
+static tilemap_callback( foreground )
+{
+	UINT16 *ram = (UINT16*)DrvVidRAM0;
+
+	INT32 attr  = ram[(offs * 2) + 1];
+	INT32 code  = (ram[offs * 2] & 0xff) | ((attr & 0x07) * 256);
+
+	INT32 flags = TILE_FLIPXY(attr >> 6);
+	INT32 group = (attr >> 5) & 1;
+
+	if (attr >= 0xc0) {
+		flags ^= 3;
+		group = 2;
+	}
+
+	TILE_SET_INFO(1, code, attr >> 3, flags | TILE_GROUP(group));
+}
+
+static tilemap_callback( text )
+{
+	UINT16 *ram = (UINT16*)DrvTextRAM;
+
+	INT32 attr  = ram[offs + 0x400];
+	INT32 code  = (ram[offs] & 0xff) | ((attr & 0xc0) << 2);
+
+	TILE_SET_INFO(2, code, attr, 0);
+}
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -315,9 +354,19 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
+
+	SekOpen(0);
+	SekReset();
+	SekClose();
+
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+
+	BurnYM2151Reset();
+
+	HiscoreReset();
 
 	fg_scroll_x = 0;
 	fg_scroll_y = 0;
@@ -329,17 +378,6 @@ static INT32 DrvDoReset()
 
 	fg_enable = 0;
 	bg_enable = 0;
-
-	SekOpen(0);
-	SekReset();
-	SekClose();
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-
-	BurnYM2151Reset();
-
-	HiscoreReset();
 
 	return 0;
 }
@@ -355,14 +393,10 @@ static INT32 DrvGfxDecode()
 	static INT32 Tile0Planes[4]   = { 0x040004, 0x040000, 0x000004, 0x000000 };
 	static INT32 Tile1Planes[4]   = { 0x100004, 0x100000, 0x000004, 0x000000 };
 	static INT32 SpriPlanes[4]    = { 0x180000, 0x100000, 0x080000, 0x000000 };
-	static INT32 CharXOffsets[16] = { 0x000, 0x001, 0x002, 0x003, 0x008, 0x009, 0x00a, 0x00b,
-					0x100, 0x101, 0x102, 0x103, 0x108, 0x109, 0x10a, 0x10b };
-	static INT32 SpriXOffsets[16] = {	0x000, 0x001, 0x002, 0x003, 0x004, 0x005, 0x006, 0x007,
-					0x080, 0x081, 0x082, 0x083, 0x084, 0x085, 0x086, 0x087 };
-	static INT32 CharYOffsets[16] = { 0x000, 0x010, 0x020, 0x030, 0x040, 0x050, 0x060, 0x070,
-					0x080, 0x090, 0x0a0, 0x0b0, 0x0c0, 0x0d0, 0x0e0, 0x0f0 };
-	static INT32 SpriYOffsets[16] = { 0x000, 0x008, 0x010, 0x018, 0x020, 0x028, 0x030, 0x038,
-					0x040, 0x048, 0x050, 0x058, 0x060, 0x068, 0x070, 0x078 };
+	static INT32 CharXOffsets[16] = { STEP4(0,1), STEP4(8,1), STEP4(256,1), STEP4(256+8,1) };
+	static INT32 SpriXOffsets[16] = { STEP8(0,1), STEP8(128,1) };
+	static INT32 CharYOffsets[16] = { STEP16(0,16) };
+	static INT32 SpriYOffsets[16] = { STEP16(0,8) };
 
 	memcpy (tmp, DrvGfxROM0, 0x08000);
 
@@ -387,11 +421,9 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvInit()
 {
-	INT32 nLen;
-
 	Mem = NULL;
 	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
@@ -402,7 +434,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(Drv68KROM + 0x20001, 2, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM + 0x20000, 3, 2)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM, 	     	 4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM, 	     4, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0, 	     5, 1)) return 1;
 
@@ -447,6 +479,16 @@ static INT32 DrvInit()
 	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback,  8,  8, 64, 64);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, foreground_map_callback, 16, 16, 64, 64);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, text_map_callback,        8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM1, 4,  8,  8, 0x20000, 0x000, 0x03);
+	GenericTilemapSetGfx(1, DrvGfxROM2, 4, 16, 16, 0x80000, 0x100, 0x03);
+	GenericTilemapSetGfx(2, DrvGfxROM0, 2,  8,  8, 0x20000, 0x300, 0x3f);
+	GenericTilemapSetTransparent(0, 0x0f);
+	GenericTilemapSetTransparent(1, 0x0f);
+	GenericTilemapSetTransparent(2, 0x03);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
 	DrvDoReset();
 
@@ -455,11 +497,9 @@ static INT32 DrvInit()
 
 static INT32 DrvbInit()
 {
-	INT32 nLen;
-
 	Mem = NULL;
 	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
@@ -470,7 +510,7 @@ static INT32 DrvbInit()
 		if (BurnLoadRom(Drv68KROM  + 0x20001,  2, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM  + 0x20000,  3, 2)) return 1;
 
-		if (BurnLoadRom(DrvZ80ROM, 	     	   4, 1)) return 1;
+		if (BurnLoadRom(DrvZ80ROM, 	       4, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0, 	       5, 1)) return 1;
 
@@ -524,6 +564,16 @@ static INT32 DrvbInit()
 	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, background_map_callback,  8,  8, 64, 64);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, foreground_map_callback, 16, 16, 64, 64);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, text_map_callback,        8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM1, 4,  8,  8, 0x20000, 0x000, 0x03);
+	GenericTilemapSetGfx(1, DrvGfxROM2, 4, 16, 16, 0x80000, 0x100, 0x03);
+	GenericTilemapSetGfx(2, DrvGfxROM0, 2,  8,  8, 0x20000, 0x300, 0x3f);
+	GenericTilemapSetTransparent(0, 0x0f);
+	GenericTilemapSetTransparent(1, 0x0f);
+	GenericTilemapSetTransparent(2, 0x03);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
 	DrvDoReset();
 
@@ -543,49 +593,45 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_foreground(INT32 priority)
+static void draw_sprites()
 {
-	UINT16 *vidram = (UINT16*)DrvVidRAM0;
+	UINT16 *ram = (UINT16*)DrvSprBuf;
 
-	for (INT32 offs = 0; offs < 0x4000 / 4; offs++)
+	for (INT32 offs = (0x500-8)/2; offs >= 0; offs -= 4)
 	{
-		INT32 sx = (offs & 0x3f) << 4;
-		INT32 sy = (offs >> 6) << 4;
+		INT32 code = ram[offs] & 0x7ff;
 
-		sx -= fg_scroll_x;
-		sy -= fg_scroll_y;
+		if (code != 0x7ff)
+		{
+			INT32 attr = ram[offs+1];
+			INT32 color = (attr & 0x3c) >> 2;
+			INT32 flipx = attr & 0x02;
+			INT32 flipy = 0;
+			INT32 sx = (INT16)ram[offs+3];
+			INT32 sy = (INT16)ram[offs+2];
+			if (sy > 496) sy -= 512;
 
-		if (sx < -15) sx += 0x400;
-		if (sy < -15) sy += 0x400;
-		if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;
-		sy -= 16;
+			if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;
 
-		INT32 attr  = vidram[(offs << 1) | 1];
-		INT32 code  = (vidram[offs << 1] & 0xff) | ((attr & 0x07) << 8);
-		INT32 color = (attr & 0x18) >> 3;
-		INT32 flipx = attr & 0x80;
-		INT32 flipy = attr & 0x40;
-		INT32 prior = (attr & 0x20) >> 5;
-
-		if ((attr & 0xc0) == 0xc0) {
-			flipx = 0;
-			flipy = 0;
-			prior = 2;
-		}
-
-		if (prior != priority) continue;
-
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);
+			if (flipscreen) {
+				flipx ^= 2;
+				flipy = 1;
+				sx = (256 - 16) - sx;
+				sy = (256 - 16) - sy;
 			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);
+
+			if (flipy) {
+				if (flipx) {
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
+				} else {
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
+				}
 			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x100, DrvGfxROM2);
+				if (flipx) {
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
+				} else {
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 15, 0x200, DrvGfxROM3);
+				}
 			}
 		}
 	}
@@ -600,114 +646,26 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	memset (pTransDraw, 0, nScreenHeight * nScreenWidth * 2);
+	BurnTransferClear();
 
-	if (fg_enable) {
-		draw_foreground(2);
-	}
+	GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? (TMAP_FLIPY | TMAP_FLIPX) : 0);
 
-	if (bg_enable)
-	{
-		UINT16 *vidram = (UINT16*)DrvVidRAM1;
+	GenericTilemapSetScrollX(0, bg_scroll_x);
+	GenericTilemapSetScrollY(0, bg_scroll_y);
+	GenericTilemapSetScrollX(1, fg_scroll_x);
+	GenericTilemapSetScrollY(1, fg_scroll_y);
 
-		for (INT32 offs = 0; offs < 0x4000 / 4; offs++)
-		{
-			INT32 sx = (offs & 0x3f) << 3;
-			INT32 sy = (offs >> 6) << 3;
+	GenericTilemapSetEnable(0, bg_enable);
+	GenericTilemapSetEnable(1, fg_enable);
 
-			sx -= bg_scroll_x;
-			sy -= bg_scroll_y;
+	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(2));
+	GenericTilemapDraw(0, pTransDraw, 0);
+	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0));
 
-			if (sx < -7) sx += 0x200;
-			if (sy < -7) sy += 0x200;
-			if (sy < 9 || sy > 239 || sx < -7 || sx > 255) continue;
-			sy -= 16;
+	draw_sprites();
 
-			INT32 attr  = vidram[(offs << 1) | 1];
-			INT32 code  = (vidram[offs << 1] & 0xff) | ((attr & 0x07) << 8);
-			INT32 color = (attr & 0x18) >> 3;
-			INT32 flipx = attr & 0x80;
-			INT32 flipy = attr & 0x40;
-
-			if (flipy) {
-				if (flipx) {
-					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x000, DrvGfxROM1);
-				} else {
-					Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x000, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x000, DrvGfxROM1);
-				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x000, DrvGfxROM1);
-				}
-			}
-		}
-	}
-
-	if (fg_enable) {
-		draw_foreground(0);
-	}
-
-	{
-		UINT16 *vidram = (UINT16*)DrvSprBuf;
-	
-		for (INT32 offs = (0x500-8)/2; offs >= 0; offs -= 4)
-		{
-			INT32 code = vidram[offs] & 0x7ff;
-
-			if (code != 0x7ff)
-			{
-				INT32 attr = vidram[offs+1];
-				INT32 color = (attr&0x3C)>>2;
-				INT32 flipx = attr & 0x02;
-				INT32 sx = (INT16)vidram[offs+3];
-				INT32 sy = (INT16)vidram[offs+2];
-				if(sy>512-16) sy-=512;
-
-				if (sx < -15 || sx > 255 || sy < 1 || sy > 239) continue;
-
-				sy -= 16;
-
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 15, 0x200, DrvGfxROM3);
-				}
-			}
-		}
-	}
-
-	if (fg_enable) {
-		draw_foreground(1);
-	}
-
-	{
-		UINT16 *vidram = (UINT16*)DrvTextRAM;
-
-		for (INT32 offs = 0; offs < 0x800 / 2; offs++)
-		{
-			INT32 sx = (offs << 3) & 0xf8;
-			INT32 sy = (offs >> 2) & 0xf8;
-			sy -= 16;
-			if (sy < 0 || sy > 223) continue;
-
-			INT32 attr  = vidram[offs + 0x400];
-			INT32 code  = (vidram[offs] & 0xff) | ((attr & 0xc0) << 2);
-			INT32 color = attr & 0x3f;
-
-			Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 2, 3, 0x300, DrvGfxROM0);
-		}
-	}
-
-	if (flipscreen) {
-		INT32 nSize = (nScreenWidth * nScreenHeight) - 1;
-		for (INT32 i = 0; i < nSize >> 1; i++) {
-			INT32 n = pTransDraw[i];
-			pTransDraw[i] = pTransDraw[nSize - i];
-			pTransDraw[nSize - i] = n;
-		}
-	}
+	GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1));
+	GenericTilemapDraw(2, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -846,7 +804,7 @@ static struct BurnRomInfo bioniccRomDesc[] = {
 
 	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },				// 24 Priority (not used)
 	
-	{ "c8751h-88",      0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "c8751h-88",          0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(bionicc)

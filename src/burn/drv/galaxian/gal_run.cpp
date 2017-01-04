@@ -1610,18 +1610,19 @@ INT32 GalFrame()
 {
 	INT32 nInterleave = 8;
 	INT32 nSoundBufferPos = 0;
-	
+	INT32 SoundLenInterlv = (nBurnSoundLen > 0x100) ? 0x100 : nBurnSoundLen; // keep spdcoin from freezing up when the coin breaks @ 48khz
+
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_GALAXIAN || GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 		nInterleave = nBurnSoundLen;
 		GalaxianSoundUpdateTimers();
 	}
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) nInterleave = nBurnSoundLen / 4;
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) nInterleave = SoundLenInterlv / 4;
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) nInterleave = 32;
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910) nInterleave = 32;
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910) nInterleave = 32;
 	
 	INT32 nIrqInterleaveFire = nInterleave / 4;
-	
+
 	if (GameIsBagmanmc) nIrqInterleaveFire = 0;
 
 	if (GalReset) GalDoReset();
@@ -1632,7 +1633,7 @@ INT32 GalFrame()
 		if (GmgalaxSelectedGame == 1) nAddress = 0x4000;
 		ZetOpen(0);
 		ZetMapArea(0x0000, 0x3fff, 0, GalZ80Rom1 + nAddress);
-		ZetMapArea(0x0000, 0x3fff, 2 ,GalZ80Rom1 + nAddress);
+		ZetMapArea(0x0000, 0x3fff, 2, GalZ80Rom1 + nAddress);
 		ZetClose();
 		
 		GalGfxBank[0] = 0;

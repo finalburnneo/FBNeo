@@ -291,6 +291,44 @@ INT32 BurnTimerInit(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCallback
 	return 0;
 }
 
+// Null CPU, for a FM timer that isn't attached to anything.
+static INT32 NullCyclesTotal;
+
+void NullNewFrame()
+{
+	NullCyclesTotal = 0;
+}
+
+INT32 NullTotalCycles()
+{
+	return NullCyclesTotal;
+}
+
+INT32 NullRun(const INT32 nCycles)
+{
+	NullCyclesTotal += nCycles;
+
+	return nCycles;
+}
+
+void NullRunEnd()
+{
+}
+
+INT32 BurnTimerAttachNull(INT32 nClockspeed)
+{
+	nCPUClockspeed = nClockspeed;
+	pCPUTotalCycles = NullTotalCycles;
+	pCPURun = NullRun;
+	pCPURunEnd = NullRunEnd;
+
+	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+
+	return 0;
+}
+
 INT32 BurnTimerAttachSek(INT32 nClockspeed)
 {
 	nCPUClockspeed = nClockspeed;

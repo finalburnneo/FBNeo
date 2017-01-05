@@ -20,6 +20,7 @@ extern double dTime;
 void BurnTimerExit();
 void BurnTimerReset();
 INT32 BurnTimerInit(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCallback)());
+INT32 BurnTimerAttachNull(INT32 nClockspeed);
 INT32 BurnTimerAttachSek(INT32 nClockspeed);
 INT32 BurnTimerAttachZet(INT32 nClockspeed);
 INT32 BurnTimerAttachM6809(INT32 nClockspeed);
@@ -35,3 +36,7 @@ void BurnTimerScan(INT32 nAction, INT32* pnMin);
 INT32 BurnTimerUpdate(INT32 nCycles);
 void BurnTimerUpdateEnd();
 void BurnTimerEndFrame(INT32 nCycles);
+
+void NullNewFrame();
+INT32 NullTotalCycles();
+INT32 NullRun(const INT32 nCycles);

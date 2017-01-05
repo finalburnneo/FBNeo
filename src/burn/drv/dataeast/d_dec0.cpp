@@ -61,6 +61,8 @@ static INT32 i8751RetVal;
 static INT32 i8751Command;
 static UINT8 i8751PortData[4] = { 0, 0, 0, 0 };
 
+static INT32 bTimerNullCPU = 0;
+
 static UINT8 DrvVBlank;
 static UINT8 DrvSoundLatch;
 static UINT8 DrvFlipScreen;
@@ -102,7 +104,6 @@ static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
 
 static INT32 nCyclesDone[3], nCyclesTotal[3];
-static INT32 nCyclesExtra = 0;
 
 static INT32 Dec0Game = 0;
 
@@ -1991,7 +1992,6 @@ static INT32 DrvDoReset()
 	DrvFlipScreen = 0;
 	DrvPriority = 0;
 	memset(DrvTileRamBank, 0, 3);
-	nCyclesExtra = 0;
 
 	RotateReset();
 
@@ -2364,8 +2364,9 @@ static void mcu_write_port(INT32 port, UINT8 data)
 
 	if (port == 2)
 	{
-		if ((data & 0x4) == 0)
+		if ((data & 0x4) == 0) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		}
 		if ((data & 0x8) == 0)
 			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
 		if ((data & 0x40) == 0)
@@ -2400,7 +2401,7 @@ static INT32 DrvMCUScan(INT32 nAction)
 {
 	mcs51_scan(nAction);
 
-	//SCAN_VAR(i8751RetVal); // in DrvScan (used by MCU Simulations)
+	//SCAN_VAR(i8751RetVal); // in DrvScan (also used by MCU Simulations)
 	SCAN_VAR(i8751Command);
 	SCAN_VAR(i8751PortData);
 
@@ -4020,6 +4021,9 @@ static INT32 HbarrelInit()
 	nRet = BurnLoadRom(DrvMCURom + 0x00000, 30, 1); if (nRet != 0) return 1;
 	DrvMCUInit();
 
+	BurnTimerAttachNull(10000000); // YM2203 timer, not attached to Sek
+	bTimerNullCPU = 1;
+
 	BurnFree(DrvTempRom);
 
 	Dec0DrawFunction = HbarrelDraw;
@@ -4567,6 +4571,8 @@ static INT32 DrvExit()
 	
 	game_rotates = 0;
 	realMCU = 0;
+
+	bTimerNullCPU = 0;
 
 	BurnFree(Mem);
 
@@ -5305,7 +5311,7 @@ static void SlyspyDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 272;
+	INT32 nInterleave = 272*4;
 
 	if (DrvReset) BaddudesDoReset();
 
@@ -5320,23 +5326,29 @@ static INT32 DrvFrame()
 	nCyclesTotal[2] = (INT32)((double)8000000 / 57.41);
 	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
 
-	if (realMCU) nCyclesTotal[2] /= 12;
+	if (realMCU) {
+		nCyclesTotal[2] /= 12; // i8751 divider
+		nCyclesTotal[0] = (INT32)((double)12000000 / 57.41); // tweak for hbarrel
+	}
 
 	SekNewFrame();
 	M6502NewFrame();
+	NullNewFrame();
 
 	SekOpen(0);
 	M6502Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave) + nCyclesExtra);
-		nCyclesExtra = 0;
-
-		if (i == 8) DrvVBlank = 0;
-		if (i == 248) {
+		if (i == 8*4) DrvVBlank = 0;
+		if (i == 248*4) {
 			DrvVBlank = 1;
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 		}
+
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
+
+		if (bTimerNullCPU)
+			nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 
 		if (realMCU) {
 			INT32 nNext = (i + 1) * nCyclesTotal[2] / nInterleave;
@@ -5349,7 +5361,6 @@ static INT32 DrvFrame()
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
-	nCyclesExtra = SekTotalCycles() - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -5516,6 +5527,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotate);
 		SCAN_VAR(nRotateTarget);
 		SCAN_VAR(nRotateTry);
+		SCAN_VAR(nRotateHoldInput);
 	}
 
 	return 0;

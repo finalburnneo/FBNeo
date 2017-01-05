@@ -1582,7 +1582,7 @@ static INT32 DrvDraw()
 		if (flipscreen)
 		{
 			GenericTilemapSetScrollX(i, -((scroll[i][0] * 256) + scroll[i][1] - 192 - tile_xoffset[i]));
-			GenericTilemapSetScrollY(i, -scroll[i][2] - 1);
+			GenericTilemapSetScrollY(i, -scroll[i][2] - 1 - 16);
 		}
 		else
 		{

@@ -810,18 +810,36 @@ static INT32 DrvDraw()
 	color_mask[1] = (reg[1] & 0x8000000) ? 0x7 : 0x1f;
 	color_mask[2] = (reg[2] & 0x8000000) ? 0x7 : 0x1f;
 
-	GenericTilemapSetScrollX(1, reg[0] >> 16);
-	GenericTilemapSetScrollY(1, reg[0] >> 0);
-	GenericTilemapSetScrollX(2, reg[1] >> 16);
-	GenericTilemapSetScrollY(2, reg[1] >> 0);
-	GenericTilemapSetScrollX(3, reg[2] >> 16);
-	GenericTilemapSetScrollY(3, reg[2] >> 0);
+//	GenericTilemapSetScrollX(1, reg[0] >> 16);
+//	GenericTilemapSetScrollY(1, reg[0] >> 0);
+//	GenericTilemapSetScrollX(2, reg[1] >> 16);
+//	GenericTilemapSetScrollY(2, reg[1] >> 0);
+//	GenericTilemapSetScrollX(3, reg[2] >> 16);
+//	GenericTilemapSetScrollY(3, reg[2] >> 0);
 
 	BurnTransferClear();
 
-	for (INT32 pri = 0;  pri <= 3;  pri++) {
-		for (INT32 layer = 2; layer >= 0; layer--) {
-			if (layerpri[layer] == pri) {
+	for (INT32 pri = 0;  pri <= 3;  pri++)
+	{
+		for (INT32 layer = 2; layer >= 0; layer--)
+		{
+			if (layerpri[layer] == pri)
+			{
+				UINT32 *vreg = (UINT32*)DrvVidReg[layer];
+
+				INT32 zoom_layer = ((vreg[2] & 0xf000) == 0xe000) ? 1 : 0;
+
+				INT32 scrollx = reg[layer] >> 16;
+				INT32 scrolly = reg[layer] & 0xffff;
+
+				if (zoom_layer) {
+					scrollx -= (368 / 2);
+					scrolly -= (240 / 2);
+				}
+
+				GenericTilemapSetScrollX(layer+1, scrollx);
+				GenericTilemapSetScrollY(layer+1, scrolly);
+
 				if (nBurnLayer & (1 << (layer + 1)))GenericTilemapDraw(layer+1, pTransDraw, 1<<pri);
 			}
 		}

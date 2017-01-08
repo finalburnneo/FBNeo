@@ -43,7 +43,7 @@ static INT16 nAnalogAxis[2] = {0,0};
 static UINT8 nCharAxis[2] = {0,0};
 
 enum { PACMAN=0, MSPACMAN, CANNONBP, MAKETRAX, PIRANHA, VANVAN, NMOUSE, DREMSHPR, 
-       MSCHAMP, BIGBUCKS, ROCKTRV2, ALIBABA, CRUSHS, SHOOTBUL, BIRDIY, EPOS, PENGO };
+       MSCHAMP, BIGBUCKS, ROCKTRV2, ALIBABA, CRUSHS, SHOOTBUL, BIRDIY, EPOS, PENGO, JUMPSHOT };
 
 static INT32 game_select;
 static INT32 acitya = 0;
@@ -2769,7 +2769,7 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 
-		if (!acitya && game_select != SHOOTBUL) {
+		if (!acitya && game_select != SHOOTBUL && game_select != JUMPSHOT) {
 			// Convert to 4-way & clear opposites for Puckman / Pac-man
 			ProcessJoystick(&DrvInputs[0], 0, 0,3,1,2, INPUT_4WAY | INPUT_CLEAROPPOSITES);
 			ProcessJoystick(&DrvInputs[1], 1, 0,3,1,2, INPUT_4WAY | INPUT_CLEAROPPOSITES);
@@ -5495,7 +5495,7 @@ static void jumpshot_decode()
 
 static INT32 jumpshotInit()
 {
-	return DrvInit(StandardMap, jumpshot_decode, PACMAN);
+	return DrvInit(StandardMap, jumpshot_decode, JUMPSHOT);
 }
 
 struct BurnDriver BurnDrvjumpshot = {

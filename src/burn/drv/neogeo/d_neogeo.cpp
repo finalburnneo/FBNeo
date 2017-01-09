@@ -3043,7 +3043,7 @@ struct BurnDriver BurnDrvKotm2 = {
 /* MVS VERSION */
 
 static struct BurnRomInfo kotm2aRomDesc[] = {
-	{ "039-p1.p1",    0x080000, 0x8d186638, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
+	{ "039_p1.p1",    0x080000, 0x8d186638, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC534200
 	{ "039-p2.p2",    0x080000, 0x28661afe, 1 | BRF_ESS | BRF_PRG }, //  1 					/ TC534200
 
 	{ "039-s1.s1",    0x020000, 0x63ee053a, 2 | BRF_GRA },           //  2 Text layer tiles / TC531000
@@ -14691,10 +14691,10 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2016/10/12 version */
+/* Ivex hack - 2016/12/20 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x92c5db8d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.sp2", 	0x400000, 0x2f1e3f42, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0x4b889699, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.sp2", 	0x400000, 0x2058504a, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 

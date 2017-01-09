@@ -1703,7 +1703,7 @@ struct BurnDriverD BurnDrvNndmseal = {
 	"nndmseal", NULL, NULL, NULL, "1997",
 	"Nandemo Seal Iinkai\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealRomInfo, nndmsealRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
 	NndmsealInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3
@@ -1731,7 +1731,7 @@ struct BurnDriverD BurnDrvNndmseala = {
 	"nndmseala", "nndmseal", NULL, NULL, "1997",
 	"Nandemo Seal Iinkai (Astro Boy ver.)\0", NULL, "I'Max / Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nndmsealaRomInfo, nndmsealaRomName, NULL, NULL, NndmsealInputInfo, NndmsealDIPInfo,
 	NndmsealaInit, DrvExit, RocknFrame, Tetrisp2Draw, DrvScan, &DrvRecalc, 0x8000,
 	320, 240, 4, 3

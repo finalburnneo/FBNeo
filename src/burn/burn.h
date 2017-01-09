@@ -317,6 +317,7 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 // Flags used with the Burndriver structure
 
 // Flags for the flags member
+#define BDF_GAME_NOT_WORKING							(0)
 #define BDF_GAME_WORKING								(1 << 0)
 #define BDF_ORIENTATION_FLIPPED							(1 << 1)
 #define BDF_ORIENTATION_VERTICAL						(1 << 2)

@@ -48,6 +48,7 @@ static UINT8 DrvReset;
 static UINT32 DrvInputs[2];
 
 static INT32 color_mask[3];
+static INT32 volume_mute = 0;
 
 static struct BurnInputInfo MacrosspInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
@@ -362,6 +363,9 @@ static INT32 DrvDoReset()
 
 	ES5506Reset();
 
+	volume_mute = 60;
+	ES5506SetRoute(0, 0.00, BURN_SND_ES5506_ROUTE_BOTH);
+
 	palette_fade = 0xff; // quizmoon doesn't initialize!
 	soundlatch = 0;
 	sound_pending = 0;
@@ -389,8 +393,8 @@ static INT32 MemIndex()
 	DrvTransTab[3]		= Next; Next += 0x0800000 / 0x100;
 	DrvTransTab[4]		= Next; Next += 0x0100000 / 0x100;
 
-	DrvSndROM2		= Next; Next += 0x800000;
-	DrvSndROM0		= Next; Next += 0x800000;
+	DrvSndROM0		= Next; Next += 0x800000; // ES5506 Banks 0 & 1
+	DrvSndROM2		= Next; Next += 0x800000; // 2 & 3
 
 	Palette			= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
@@ -487,8 +491,6 @@ static INT32 DrvInit(INT32 select)
 		memset (DrvSndROM0, 0xff, 0x800000);
 		if (BurnLoadRom(DrvSndROM0 + 0x000001, 18, 2)) return 1;
 
-		memcpy (DrvSndROM2, DrvSndROM0, 0x800000);
-
 		DrvGfxExpand(DrvGfxROM4, 0x80000);
 	}
 	else
@@ -567,7 +569,8 @@ static INT32 DrvInit(INT32 select)
 	SekSetReadByteHandler(0,		macrossp_sound_read_byte);
 	SekClose();
 
-	ES5506Init(16000000, DrvSndROM0, DrvSndROM0, DrvSndROM2, DrvSndROM2, NULL);
+	ES5506Init(16000000, DrvSndROM0, DrvSndROM0 + 0x400000, DrvSndROM2, DrvSndROM2 + 0x400000, NULL);
+	ES5506SetRoute(0, 0.00, BURN_SND_ES5506_ROUTE_BOTH); // start at 0 because loud BRRRRPPPP! at reset.
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, text_map_callback, 16, 16, 64, 64);
@@ -804,7 +807,7 @@ static INT32 DrvDraw()
 
 	UINT32 reg[3] = { *((UINT32*)DrvVidReg[0]), *((UINT32*)DrvVidReg[1]), *((UINT32*)DrvVidReg[2]) };
 
-	INT32 layerpri[3] = { (reg[0] >> 30) & 3, (reg[1] >> 30) & 3, (reg[2] >> 30) & 3 };
+	UINT32 layerpri[3] = { (reg[0] >> 30) & 3, (reg[1] >> 30) & 3, (reg[2] >> 30) & 3 };
 
 	color_mask[0] = (reg[0] & 0x8000000) ? 0x7 : 0x1f;
 	color_mask[1] = (reg[1] & 0x8000000) ? 0x7 : 0x1f;
@@ -837,10 +840,10 @@ static INT32 DrvDraw()
 					scrolly -= (240 / 2);
 				}
 
-				GenericTilemapSetScrollX(layer+1, scrollx);
-				GenericTilemapSetScrollY(layer+1, scrolly);
+				GenericTilemapSetScrollX(layer + 1, scrollx);
+				GenericTilemapSetScrollY(layer + 1, scrolly);
 
-				if (nBurnLayer & (1 << (layer + 1)))GenericTilemapDraw(layer+1, pTransDraw, 1<<pri);
+				if (nBurnLayer & (1 << (layer + 1))) GenericTilemapDraw(layer + 1, pTransDraw, 1 << pri);
 			}
 		}
 	}
@@ -887,6 +890,10 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
+		if (volume_mute) volume_mute--;
+		if (volume_mute == 1) {
+			ES5506SetRoute(0, 3.00, BURN_SND_ES5506_ROUTE_BOTH);
+		}
 		ES5506Update(pBurnSoundOut, nBurnSoundLen);
 	}
 	

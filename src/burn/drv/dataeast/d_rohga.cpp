@@ -48,6 +48,7 @@ static UINT16 *tempdraw[2];
 static INT32 DrvOkiBank;
 
 static INT32 DrvIsWizdfireEnglish = 0;
+static INT32 DrvHangzo = 0;
 
 static struct BurnInputInfo RohgaInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -728,7 +729,7 @@ static INT32 DrvDoReset()
 	deco16Reset();
 
 	DrvOkiBank = -1;
-	DrvYM2151WritePort(0, 3);
+	DrvYM2151WritePort(0, (DrvHangzo) ? 0 : 3);
 
 	return 0;
 }
@@ -1132,7 +1133,7 @@ static INT32 HangzoInit()
 		deco16_tile_decode(DrvGfxROM1, DrvGfxROM1, 0x100000, 0);
 		deco16_tile_decode(DrvGfxROM2, DrvGfxROM2, 0x200000, 0);
 		DrvSpriteDecode();
-	}	
+	}
 
 	deco16Init(0, 0, 1);
 	deco16_set_graphics(DrvGfxROM0, 0x40000 * 2, DrvGfxROM1, 0x100000 * 2, DrvGfxROM2, 0x200000 * 2);
@@ -1171,6 +1172,8 @@ static INT32 HangzoInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.80, 1006875, 1.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+
+	DrvHangzo = 1;
 
 	GenericTilesInit();
 
@@ -1295,6 +1298,7 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 	
 	DrvIsWizdfireEnglish = 0;
+	DrvHangzo = 0;
 
 	return 0;
 }

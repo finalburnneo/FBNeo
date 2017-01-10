@@ -251,46 +251,17 @@ struct _mcs51_uart
 UINT8 *mcs51_program_data = NULL;
 static void (*mcs51_write_port)(INT32,UINT8) = NULL;
 static UINT8 (*mcs51_read_port)(INT32) = NULL;
-static void (*mcs51_write_data)(INT32,UINT8) = NULL;
-static UINT8 (*mcs51_read_data)(INT32) = NULL;
 
 #define cpu_readop_arg(x)	mcs51_program_data[((x)&0xfff)]
 #define cpu_readop(x) 		mcs51_program_data[((x)&0xfff)]
 #define program_read_byte_8(x)	mcs51_program_data[((x)&0xfff)]
 
-static void data_write_byte_8(INT32 offset, UINT8 data)
-{
-	if (mcs51_write_data) {
-		mcs51_write_data(offset, data);
-		return;
-	}
-}
-
-static UINT8 data_read_byte_8(INT32 offset)
-{
-	if (mcs51_read_data) {
-		return mcs51_read_data(offset);
-	}
-
-	return 0;
-}
-
-void mcs51_set_write_data_handler(void (*pointer)(INT32,UINT8))
-{
-	mcs51_write_data = pointer;
-}
-
-void mcs51_set_read_data_handler(UINT8 (*pointer)(INT32))
-{
-	mcs51_read_data = pointer;
-}
-
-void mcs51_set_write_port_handler(void (*pointer)(INT32,UINT8))
+void mcs51_set_write_handler(void (*pointer)(INT32,UINT8))
 {
 	mcs51_write_port = pointer;
 }
 
-void mcs51_set_read_port_handler(UINT8 (*pointer)(INT32))
+void mcs51_set_read_handler(UINT8 (*pointer)(INT32))
 {
 	mcs51_read_port = pointer;
 }
@@ -378,8 +349,8 @@ mcs51_state_t mcs51_state;
 #define CODEMEM_R(a)	(UINT8)program_read_byte_8(a)
 
 /* Read/Write a byte from/to External Data Memory (Usually RAM or other I/O) */
-#define DATAMEM_R(a)	(UINT8)data_read_byte_8(a)
-#define DATAMEM_W(a,v)	data_write_byte_8(a,v)
+#define DATAMEM_R(a)	((UINT8)io_read_byte(a))
+#define DATAMEM_W(a,v)	io_write_byte(a,v)
 
 /* Read/Write a byte from/to the Internal RAM */
 
@@ -993,6 +964,7 @@ static INLINE void transmit_receive(int source)
 				SET_SBUF(data);
 				//Flag the IRQ
 				SET_RI(1);
+				SET_RB8(1); // HACK force 2nd stop bit
 			}
 		}
 	}
@@ -1243,13 +1215,15 @@ static INLINE void update_timer_t2(int cycles)
 
 static INLINE void update_timers(int cycles)
 {
-	/* Update Timer 0 */
-	update_timer_t0(cycles);
-	update_timer_t1(cycles);
-
-	if (mcs51_state.features & FEATURE_I8052)
+	while (cycles--)
 	{
-		update_timer_t2(cycles);
+		update_timer_t0(1);
+		update_timer_t1(1);
+
+		if (mcs51_state.features & FEATURE_I8052)
+		{
+			update_timer_t2(1);
+		}
 	}
 }
 
@@ -2256,8 +2230,6 @@ void mcs51_exit(void)
 {
 	mcs51_read_port = NULL;
 	mcs51_write_port = NULL;
-	mcs51_read_data = NULL;
-	mcs51_write_data = NULL;
 	mcs51_program_data = NULL;
 }
 

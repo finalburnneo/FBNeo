@@ -94,10 +94,8 @@ extern void mcs51_exit(void); 			/* Shut down CPU core */
 extern INT32 mcs51Run(int cycles);		/* /12 ! Execute cycles - returns number of cycles actually run */
 extern void mcs51RunEnd(void);			/* stop execution */
 extern void mcs51_set_irq_line(int irqline, int state);
-void mcs51_set_write_port_handler(void (*pointer)(INT32,UINT8));
-void mcs51_set_read_port_handler(UINT8 (*pointer)(INT32));
-void mcs51_set_write_data_handler(void (*pointer)(INT32,UINT8));
-void mcs51_set_read_data_handler(UINT8 (*pointer)(INT32));
+void mcs51_set_write_handler(void (*pointer)(INT32,UINT8));
+void mcs51_set_read_handler(UINT8 (*pointer)(INT32));
 void mcs51_scan(INT32 nAction);
 extern UINT8 *mcs51_program_data;
 
@@ -107,10 +105,8 @@ extern void ds5002fp_init(UINT8 mcon, UINT8 rpctl, UINT8 crc); // default: 0, 0,
 #define ds5002fpRun                     mcs51Run
 #define ds5002fpRunEnd                  mcs51RunEnd
 #define ds5002fp_set_irq_line           mcs51_set_irq_line
-#define ds5002fp_set_write_port_handler mcs51_set_write_port_handler
-#define ds5002fp_set_read_port_handler  mcs51_set_read_port_handler
-#define ds5002fp_set_write_data_handler mcs51_set_write_data_handler
-#define ds5002fp_set_read_data_handler  mcs51_set_read_data_handler
+#define ds5002fp_set_write_handler      mcs51_set_write_handler
+#define ds5002fp_set_read_handler       mcs51_set_read_handler
 #define ds5002fp_scan                   mcs51_scan
 #define ds5002fp_program_data           mcs51_program_data
 

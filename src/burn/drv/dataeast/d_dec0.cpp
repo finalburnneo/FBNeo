@@ -2337,6 +2337,8 @@ static void SuperJoy2Rotate() {
 
 static UINT8 mcu_read_port(INT32 port)
 {
+	if (!(port >= MCS51_PORT_P0 && port <= MCS51_PORT_P3))
+		return 0;
 	port &= 0x3;
 
 	INT32 latchEnable = i8751PortData[2] >> 4;
@@ -2358,6 +2360,9 @@ static UINT8 mcu_read_port(INT32 port)
 
 static void mcu_write_port(INT32 port, UINT8 data)
 {
+	if (!(port >= MCS51_PORT_P0 && port <= MCS51_PORT_P3))
+		return;
+
 	port &= 0x3;
 
 	i8751PortData[port] = data;
@@ -2380,8 +2385,8 @@ static void DrvMCUInit()
 {
 	mcs51_program_data = DrvMCURom;
 	mcs51_init ();
-	mcs51_set_write_port_handler(mcu_write_port);
-	mcs51_set_read_port_handler(mcu_read_port);
+	mcs51_set_write_handler(mcu_write_port);
+	mcs51_set_read_handler(mcu_read_port);
 
 	DrvMCUReset();
 }

@@ -986,8 +986,8 @@ static void Bigfghtr68KInit()
 	usemcu = 1;
 	mcs51_program_data = DrvZ80ROM2;
 	mcs51_init ();
-	mcs51_set_write_data_handler(mcu_write_data);
-	mcs51_set_read_data_handler(mcu_read_data);
+	mcs51_set_write_handler(mcu_write_data);
+	mcs51_set_read_handler(mcu_read_data);
 
 }
 

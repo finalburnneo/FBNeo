@@ -246,11 +246,15 @@ static UINT8 __fastcall wrally_main_read_byte(UINT32 address)
 
 static void dallas_sharedram_write(INT32 address, UINT8 data)
 {
+	if (address >= MCS51_PORT_P0) return;
+
 	DrvShareRAM[(address & 0x3fff) ^ 1] = data;
 }
 
 static UINT8 dallas_sharedram_read(INT32 address)
 {
+	if (address >= MCS51_PORT_P0) return 0;
+
 	return DrvShareRAM[(address & 0x3fff) ^ 1];
 }
 
@@ -390,8 +394,8 @@ static INT32 DrvInit(INT32 load)
 
 	mcs51_program_data = DrvMCUROM;
 	ds5002fp_init(0x88, 0x00, 0x80);
-	mcs51_set_write_data_handler(dallas_sharedram_write);
-	mcs51_set_read_data_handler(dallas_sharedram_read);
+	mcs51_set_write_handler(dallas_sharedram_write);
+	mcs51_set_read_handler(dallas_sharedram_read);
 
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);

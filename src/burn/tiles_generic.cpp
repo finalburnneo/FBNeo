@@ -301,9 +301,9 @@ void GfxDecodeSingle(INT32 which, INT32 numPlanes, INT32 xSize, INT32 ySize, INT
 #define PLOTPIXEL_MASK_FLIPX(x, a, mc) if (pTileData[a] != mc) {pPixel[x] = nPalette + pTileData[a] ;}
 
 #define PLOTPIXEL_PRIO_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x]; pPri[x] = nPriority; }
-#define PLOTPIXEL_PRIO_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
+#define PLOTPIXEL_PRIO_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[a]] == 0) { pPixel[x] = nPalette + pTileData[a]; pPri[x] = nPriority; }
 #define PLOTPIXEL_TRANSMASK(x) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[x];}
-#define PLOTPIXEL_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[x]] == 0) { pPixel[x] = nPalette + pTileData[a] ;}
+#define PLOTPIXEL_TRANSMASK_FLIPX(x, a) if (pTransTable[pTileData[a]] == 0) { pPixel[x] = nPalette + pTileData[a] ;}
 
 #define CLIPPIXEL(x, sx, a) if ((sx + x) >= nScreenWidthMin && (sx + x) < nScreenWidthMax) { a; };
 

@@ -252,9 +252,9 @@ UINT8 *mcs51_program_data = NULL;
 static void (*mcs51_write_port)(INT32,UINT8) = NULL;
 static UINT8 (*mcs51_read_port)(INT32) = NULL;
 
-#define cpu_readop_arg(x)	mcs51_program_data[((x)&0xfff)]
-#define cpu_readop(x) 		mcs51_program_data[((x)&0xfff)]
-#define program_read_byte_8(x)	mcs51_program_data[((x)&0xfff)]
+#define cpu_readop_arg(x)	mcs51_program_data[((x)&0x7fff)]
+#define cpu_readop(x) 		mcs51_program_data[((x)&0x7fff)]
+#define program_read_byte_8(x)	mcs51_program_data[((x)&0x7fff)]
 
 void mcs51_set_write_handler(void (*pointer)(INT32,UINT8))
 {

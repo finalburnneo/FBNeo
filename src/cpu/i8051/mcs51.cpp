@@ -249,12 +249,19 @@ struct _mcs51_uart
 };
 
 UINT8 *mcs51_program_data = NULL;
+static UINT8 (*cpu_readop_arg_dat)(INT32) = NULL;
 static void (*mcs51_write_port)(INT32,UINT8) = NULL;
 static UINT8 (*mcs51_read_port)(INT32) = NULL;
 
-#define cpu_readop_arg(x)	mcs51_program_data[((x)&0x7fff)]
-#define cpu_readop(x) 		mcs51_program_data[((x)&0x7fff)]
-#define program_read_byte_8(x)	mcs51_program_data[((x)&0x7fff)]
+static UINT8 mcs51_readop_arg_dat(INT32 address)
+{
+	return mcs51_program_data[((address)&0xfff)];
+}
+
+static UINT8 ds5002fp_readop_arg_dat(INT32 address)
+{
+	return mcs51_program_data[((address)&0x7fff)];
+}
 
 void mcs51_set_write_handler(void (*pointer)(INT32,UINT8))
 {
@@ -342,11 +349,11 @@ mcs51_state_t mcs51_state;
 ***************************************************************************/
 
 /* Read Opcode/Opcode Arguments from Program Code */
-#define ROP(pc)			cpu_readop(pc)
-#define ROP_ARG(pc)		cpu_readop_arg(pc)
+#define ROP(pc)			cpu_readop_arg_dat(pc)
+#define ROP_ARG(pc)     cpu_readop_arg_dat(pc)
 
 /* Read a byte from External Code Memory (Usually Program Rom(s) Space) */
-#define CODEMEM_R(a)	(UINT8)program_read_byte_8(a)
+#define CODEMEM_R(a)	(UINT8)cpu_readop_arg_dat(a)
 
 /* Read/Write a byte from/to External Data Memory (Usually RAM or other I/O) */
 #define DATAMEM_R(a)	((UINT8)io_read_byte(a))
@@ -1967,7 +1974,7 @@ INT32 mcs51Run(int cycles) // divide cycles by 12! -dink
 		/* Read next opcode */
 		PPC = PC;
 		//debugger_instruction_hook(device, PC);
-		op = cpu_readop(PC++);
+		op = cpu_readop_arg_dat(PC++);
 
 		/* process opcode and count cycles */
 		mcs51_state.inst_cycles = mcs51_cycles[op];
@@ -2117,6 +2124,8 @@ void mcs51_init (void)
 	mcs51_state.sfr_read = mcs51_sfr_read;
 	mcs51_state.sfr_write = mcs51_sfr_write;
 
+	cpu_readop_arg_dat = mcs51_readop_arg_dat;
+
 #if 0
 	/* ensure these pointers are set before get_info is called */
 	update_ptrs();
@@ -2231,6 +2240,7 @@ void mcs51_exit(void)
 	mcs51_read_port = NULL;
 	mcs51_write_port = NULL;
 	mcs51_program_data = NULL;
+	cpu_readop_arg_dat = NULL;
 }
 
 /****************************************************************************
@@ -2313,6 +2323,8 @@ void ds5002fp_init (UINT8 mcon, UINT8 rpctl, UINT8 crc)
 	// mcon = 0x00, rpctl = 0x00, crc = 0x00
 
 	mcs51_init();
+
+	cpu_readop_arg_dat = ds5002fp_readop_arg_dat;
 
 	mcs51_state.ds5002fp.config.mcon = mcon;
 	mcs51_state.ds5002fp.config.rpctl = rpctl;

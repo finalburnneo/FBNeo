@@ -278,9 +278,22 @@ inline static UINT16 ReadWord(UINT32 a)
 //	bprintf(PRINT_NORMAL, _T("read16 0x%08X\n"), a);
 
 	pr = FIND_R(a);
-	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
+	if ((uintptr_t)pr >= SEK_MAXHANDLER)
+	{
+		if (a & 1)
+		{
+			// This is dangerous! if a = 0x3ff a + 1 and so on can read outside of bounds
+			// however, this is a fairly unlikely scenario.
+
+			a &= SEK_PAGEM;
+			return BURN_ENDIAN_SWAP_INT16((pr[((a + 0) ^ 1)] << 8) + pr[((a + 1) ^ 1)]);
+		}
+		else
+		{
+			return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
+		}
 	}
+
 	return pSekExt->ReadWord[(uintptr_t)pr](a);
 }
 
@@ -296,6 +309,7 @@ inline static UINT16 FetchWord(UINT32 a)
 	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
 		return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pr + (a & SEK_PAGEM))));
 	}
+
 	return pSekExt->ReadWord[(uintptr_t)pr](a);
 }
 
@@ -308,10 +322,26 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 //	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
 
 	pr = FIND_W(a);
-	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)BURN_ENDIAN_SWAP_INT16(d);
-		return;
+	if ((uintptr_t)pr >= SEK_MAXHANDLER)
+	{
+		if (a & 1)
+		{
+			// This is dangerous! if a = 0x3ff a + 1 and so on can write outside of bounds
+			// however, this is a fairly unlikely scenario.
+			a &= SEK_PAGEM;
+			d = BURN_ENDIAN_SWAP_INT16(d);
+
+			pr[(a + 0) ^ 1] = d >> 8;
+			pr[(a + 1) ^ 1] = d & 0xff;
+			return;
+		}
+		else
+		{
+			*((UINT16*)(pr + (a & SEK_PAGEM))) = (UINT16)BURN_ENDIAN_SWAP_INT16(d);
+			return;
+		}
 	}
+
 	pSekExt->WriteWord[(uintptr_t)pr](a, d);
 }
 
@@ -338,11 +368,30 @@ inline static UINT32 ReadLong(UINT32 a)
 //	bprintf(PRINT_NORMAL, _T("read32 0x%08X\n"), a);
 
 	pr = FIND_R(a);
-	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		UINT32 r = *((UINT32*)(pr + (a & SEK_PAGEM)));
-		r = (r >> 16) | (r << 16);
-		return BURN_ENDIAN_SWAP_INT32(r);
+	if ((uintptr_t)pr >= SEK_MAXHANDLER)
+	{
+		if (a & 1)
+		{
+			// This is dangerous! if a = 0x3ff a + 1 and so on can read outside of bounds
+			// however, this is a fairly unlikely scenario.
+			a &= SEK_PAGEM;
+
+			UINT32 r;
+			r  = pr[(a + 0)^1] <<  0; // correct?
+			r += pr[(a + 1)^0] <<  8;
+			r += pr[(a + 2)^0] << 16;
+			r += pr[(a + 3)^1] << 24; // correct?
+
+			return BURN_ENDIAN_SWAP_INT32(r);
+		}
+		else
+		{
+			UINT32 r = *((UINT32*)(pr + (a & SEK_PAGEM)));
+			r = (r >> 16) | (r << 16);
+			return BURN_ENDIAN_SWAP_INT32(r);
+		}
 	}
+
 	return pSekExt->ReadLong[(uintptr_t)pr](a);
 }
 
@@ -372,10 +421,27 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 //	bprintf(PRINT_NORMAL, _T("write32 0x%08X\n"), a);
 
 	pr = FIND_W(a);
-	if ((uintptr_t)pr >= SEK_MAXHANDLER) {
-		d = (d >> 16) | (d << 16);
-		*((UINT32*)(pr + (a & SEK_PAGEM))) = BURN_ENDIAN_SWAP_INT32(d);
-		return;
+	if ((uintptr_t)pr >= SEK_MAXHANDLER)
+	{
+		if (a & 1)
+		{
+			// This is dangerous! if a = 0x3ff a + 1 and so on can write outside of bounds
+			// however, this is a fairly unlikely scenario.
+			a &= SEK_PAGEM;
+			d = BURN_ENDIAN_SWAP_INT32(d);
+
+			pr[(a + 0)^1] = d >>  0; // correct?
+			pr[(a + 1)^0] = d >>  8;
+			pr[(a + 2)^0] = d >> 16;
+			pr[(a + 3)^1] = d >> 24; // correct?
+			return;
+		}
+		else
+		{
+			d = (d >> 16) | (d << 16);
+			*((UINT32*)(pr + (a & SEK_PAGEM))) = BURN_ENDIAN_SWAP_INT32(d);
+			return;
+		}
 	}
 	pSekExt->WriteLong[(uintptr_t)pr](a, d);
 }

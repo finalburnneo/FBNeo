@@ -18,6 +18,7 @@ static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvMCUROM;
 static UINT8 *DrvGfxROM;
+static UINT8 *DrvTransTab[2];
 static UINT8 *DrvSndROM;
 static UINT8 *DrvShareRAM;
 static UINT8 *DrvPalRAM;
@@ -31,6 +32,8 @@ static UINT8 DrvRecalc;
 static UINT8 okibank;
 static UINT8 flipscreen;
 static UINT8 coin_lockout[2];
+
+static INT32 transparent_select;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -262,7 +265,11 @@ static tilemap_callback( screen0 )
 {
 	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x0000 + offs * 4);
 
-	TILE_SET_INFO(0, ram[0], ram[1] & 0x1f, TILE_FLIPYX(ram[1] >> 6) | TILE_GROUP((ram[1] >> 5) & 1));
+	INT32 flags = TILE_FLIPYX(ram[1] >> 6) | TILE_GROUP((ram[1] >> 5) & 1);
+
+	flags |= DrvTransTab[transparent_select][ram[0]&0x3fff] ? TILE_SKIP : 0;
+
+	TILE_SET_INFO(0, ram[0], ram[1] & 0x1f, flags);
 }
 
 static tilemap_callback( screen1 )
@@ -301,6 +308,8 @@ static INT32 MemIndex()
 	DrvMCUROM	= Next; Next += 0x008000;
 
 	DrvGfxROM	= Next; Next += 0x400000;
+	DrvTransTab[0]	= Next; Next += 0x004000;
+	DrvTransTab[1]	= Next; Next += 0x004000;
 
 	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x100000;
@@ -343,6 +352,29 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
+static void DrvTransTableInit()
+{
+	UINT16 mask0 = 0xff01;
+	UINT16 mask1 = 0x00ff;
+
+	for (INT32 i = 0; i < 0x400000; i+= 16 * 16)
+	{
+		DrvTransTab[0][i/(16*16)] = 1;
+		DrvTransTab[1][i/(16*16)] = 1;
+
+		for (INT32 j = 0; j < 16 * 16; j++)
+		{
+			if ((mask0 & (1 << DrvGfxROM[i+j])) == 0) {
+				DrvTransTab[0][i/(16*16)] = 0;
+			}
+
+			if ((mask1 & (1 << DrvGfxROM[i+j])) == 0) {
+				DrvTransTab[1][i/(16*16)] = 0;
+			}
+		}
+	}
+}
+
 static INT32 DrvInit(INT32 load)
 {
 	AllMem = NULL;
@@ -377,6 +409,7 @@ static INT32 DrvInit(INT32 load)
 		}
 
 		DrvGfxDecode();
+		DrvTransTableInit();
 	}
 
 	SekInit(0, 0x68000);
@@ -544,19 +577,23 @@ static INT32 DrvDraw()
 
 	GenericTilemapDraw(1, pTransDraw, 0 | TMAP_FORCEOPAQUE);
 
+	transparent_select = 0;
 	GenericTilemapSetTransMask(0, 0xff01);
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(0));
 
+	transparent_select = 1;
 	GenericTilemapSetTransMask(0, 0x00ff);
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(0));
 
 	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
+	transparent_select = 0;
 	GenericTilemapSetTransMask(0, 0xff01);
 	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
 	draw_sprites(0);
 
+	transparent_select = 1;
 	GenericTilemapSetTransMask(0, 0x00ff);
 	if (nSpriteEnable & 1) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
@@ -801,3 +838,4 @@ struct BurnDriver BurnDrvWrallyat = {
 	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	368, 232, 4, 3
 };
+

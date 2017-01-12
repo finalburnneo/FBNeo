@@ -541,6 +541,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 	INT32 tgroup = (priority >> 8) & 0xff;
 	priority &= 0xff;
 
+	// line / column scroll
 	if ((cur_map->scrollx_table != NULL) && (cur_map->scroll_rows > cur_map->mheight))
 	{
 		INT32 transparent = 0xffff;
@@ -636,7 +637,177 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 		return;
 	}
+	// scrollx and scrolly
+	else if (cur_map->scroll_rows <= 1 && cur_map->scroll_cols <= 1) // one scroll row and column. Fast!
+	{
+		INT32 syshift = ((cur_map->scrolly - cur_map->yoffset) % cur_map->theight);
+		INT32 scrolly = ((cur_map->scrolly - cur_map->yoffset) / cur_map->theight) * cur_map->theight;
 
+		INT32 sxshift = ((cur_map->scrollx - cur_map->xoffset) % cur_map->twidth);
+		INT32 scrollx = ((cur_map->scrollx - cur_map->xoffset) / cur_map->twidth) * cur_map->twidth;
+
+		for (INT32 y = miny; y < (INT32)(maxy + cur_map->theight); y += cur_map->theight)
+		{
+			INT32 syy = (y + scrolly) % (cur_map->theight * cur_map->mheight);
+
+			for (INT32 x = minx; x < (INT32)(maxx + cur_map->twidth); x += cur_map->twidth)
+			{
+				INT32 sxx = (x + scrollx) % (cur_map->twidth * cur_map->mwidth);
+
+				INT32 code = 0, color = 0, flip = 0, group = 0, gfxnum = 0;
+				UINT32 flags = 0;
+			
+				cur_map->pTile(cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight), &gfxnum, &code, &color, &flags);
+
+				if (flags & TILE_SKIP) continue; // skip this tile
+
+				flip = flags & 3;
+
+				if (flags & TILE_GROUP_ENABLE) {
+					group = (flags >> 16) & 0xff;
+	
+					if (group != tgroup) {
+						continue;
+					}
+				}
+
+				GenericTilemapGfx *gfx = &gfxdata[gfxnum];
+
+				if (gfx->gfxbase == NULL) {
+					bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					continue;
+				}
+
+				color &= gfx->color_mask;
+				code &= gfx->code_mask;
+
+				INT32 sy = y - syshift;
+				INT32 sx = x - sxshift;
+
+				if (cur_map->flags & TMAP_FLIPY) {
+					sy = ((maxy - miny) - cur_map->theight) - sy;
+					flip ^= TMAP_FLIPY;
+				}
+
+				if (cur_map->flags & TMAP_FLIPX) {
+					sx = ((maxx - minx) - cur_map->twidth) - sx;
+					flip ^= TMAP_FLIPX;
+				}
+
+				// skip tiles that are out of the visible area
+				if ((sx >= maxx) || (sy >= maxy) || (sx < (INT32)(minx - (cur_map->twidth - 1))) || (sy < (INT32)(miny - (cur_map->theight - 1)))) {
+					continue;
+				}
+
+				if (sx < minx || sy < miny || sx >= (INT32)(maxx - cur_map->twidth - 1) || sy >= (INT32)(maxy - cur_map->theight - 1))
+				{
+					if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
+					{
+						if (flip & TMAP_FLIPY) {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_Mask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_Mask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							}
+						} else {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_Mask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_Mask_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							}
+						}
+					}
+					else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
+					{
+						if (flip & TMAP_FLIPY) {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_TransMask_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_TransMask_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						} else {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_TransMask_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_TransMask_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						}	
+					}
+					else
+					{
+						if (flip & TMAP_FLIPY) {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_FlipXY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_FlipY_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						} else {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_FlipX_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_Clip(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						}
+					}
+				} 
+				else
+				{
+					if ((cur_map->flags & TMAP_TRANSPARENT) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
+					{
+						if (flip & TMAP_FLIPY) {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_Mask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_Mask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							}
+						} else {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_Mask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_Mask(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent[0], gfx->color_offset, priority, gfx->gfxbase);
+							}
+						}
+					}
+					else if ((cur_map->flags & TMAP_TRANSMASK) && (flags & TILE_OPAQUE) == 0 && opaque == 0)
+					{
+						if (flip & TMAP_FLIPY) {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_TransMask_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_TransMask_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						} else {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_TransMask_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_TransMask(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, cur_map->transparent, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						}	
+					}
+					else
+					{
+						if (flip & TMAP_FLIPY) {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_FlipXY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio_FlipY(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						} else {
+							if (flip & TMAP_FLIPX) {
+								RenderCustomTile_Prio_FlipX(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							} else {
+								RenderCustomTile_Prio(Bitmap, cur_map->twidth, cur_map->theight, code, sx, sy, color, gfx->depth, gfx->color_offset, priority, gfx->gfxbase);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return;
+	}
+
+	// column / row scroll (greater >= tile size)
 	for (UINT32 offs = 0; offs < (cur_map->mwidth * cur_map->mheight); offs++)
 	{
 		INT32 col = offs % cur_map->mwidth; //x

@@ -4761,7 +4761,7 @@ static INT32 MemIndex()
 	TaitoZ80Rom1                    = Next; Next += TaitoZ80Rom1Size;
 	TaitoYM2610ARom                 = Next; Next += TaitoYM2610ARomSize;
 	TaitoYM2610BRom                 = Next; Next += TaitoYM2610BRomSize;
-	if (TaitoNumMSM6295) MSM6295ROM = Next; Next += 0x40000;
+	if (TaitoNumMSM6295) {MSM6295ROM = Next; Next += 0x40000; }
 	TaitoMSM6295Rom                 = Next; Next += TaitoMSM6295RomSize;
 	
 	TaitoRamStart                   = Next;
@@ -4777,7 +4777,7 @@ static INT32 MemIndex()
 	TaitoRamEnd                     = Next;
 
 	TaitoChars                      = Next; Next += TaitoNumChar * TaitoCharWidth * TaitoCharHeight;
-	if (TaitoNumCharB) TaitoCharsB  = Next; Next += TaitoNumCharB * TaitoCharBWidth * TaitoCharBHeight;
+	if (TaitoNumCharB) { TaitoCharsB  = Next; Next += TaitoNumCharB * TaitoCharBWidth * TaitoCharBHeight; }
 	TaitoCharsPivot                 = Next; Next += TaitoNumCharPivot * TaitoCharPivotWidth * TaitoCharPivotHeight;
 	TaitoSpritesA                   = Next; Next += TaitoNumSpriteA * TaitoSpriteAWidth * TaitoSpriteAHeight;
 	TaitoPalette                    = (UINT32*)Next; Next += 0x02000 * sizeof(UINT32);

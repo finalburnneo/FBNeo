@@ -1509,15 +1509,15 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = Mem;
 
 	Drv68KRom                   = Next; Next += 0x100000;
-	if (DrvHasZ80)DrvZ80Rom     = Next; Next += 0x010000;
-	if (DrvHasProt) DrvProtData = Next; Next += 0x000200;
+	if (DrvHasZ80) { DrvZ80Rom     = Next; Next += 0x010000; }
+	if (DrvHasProt) { DrvProtData = Next; Next += 0x000200; }
 	MSM6295ROM                  = Next; Next += 0x040000;
 	DrvMSM6295ROMSrc            = Next; Next += 0x100000;
 
 	RamStart                    = Next;
 
 	Drv68KRam                   = Next; Next += 0x010800;
-	if (DrvHasZ80)DrvZ80Ram     = Next; Next += 0x000800;
+	if (DrvHasZ80) { DrvZ80Ram     = Next; Next += 0x000800; }
 	DrvSpriteRam                = Next; Next += DrvSpriteRamSize;
 	DrvPf1Ram                   = Next; Next += 0x002000;
 	DrvPf2Ram                   = Next; Next += 0x002000;
@@ -2416,7 +2416,7 @@ static INT32 TumblebLoadRoms()
 	
 	// Load Sample Roms
 	nRet = BurnLoadRom(DrvMSM6295ROMSrc + 0x00000, 6, 1); if (nRet != 0) return 1;
-	if (Tumbleb2) nRet = BurnLoadRom(DrvMSM6295ROMSrc + 0x80000, 6, 1); if (nRet != 0) return 1;
+	if (Tumbleb2) { nRet = BurnLoadRom(DrvMSM6295ROMSrc + 0x80000, 6, 1); if (nRet != 0) return 1; }
 	memcpy(MSM6295ROM, DrvMSM6295ROMSrc, 0x40000);
 	
 	BurnFree(DrvTempRom);

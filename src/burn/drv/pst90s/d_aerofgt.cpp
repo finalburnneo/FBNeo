@@ -736,9 +736,10 @@ static void __fastcall aerofgtWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	if (( sekAddress & 0xFF0000 ) == 0x1A0000) {
 		sekAddress &= 0xFFFF;
-		if (sekAddress < 0x800)
+		if (sekAddress < 0x800) {
 			*((UINT16 *)&RamPal[sekAddress]) = BURN_ENDIAN_SWAP_INT16(wordValue);
 			RamCurPal[sekAddress>>1] = CalcCol( wordValue );
+		}
 		return;	
 	}
 

@@ -1551,7 +1551,7 @@ static INT32 MemIndex(INT32 CodeSize, INT32 GfxSize, INT32 PcmSize, INT32 ExtRam
 
 	Ram68K		= Next; Next += 0x010000;
 	RamUnknown	= Next; Next += ExtRamSize;
-	if (HasNVRam) RamNV = Next; Next += 0x10000;
+	if (HasNVRam) { RamNV = Next; Next += 0x10000; }
 	RamSpr		= (UINT16 *) Next; Next += 0x020000 * sizeof(UINT16);
 	RamSprBak	= (UINT16 *) Next; Next += 0x020000 * sizeof(UINT16);
 	RamPal		= (UINT16 *) Next; Next += 0x008000 * sizeof(UINT16);

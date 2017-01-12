@@ -65,8 +65,7 @@ void sound_reset(void)
 
 void psg_stereo_w(INT32 data)
 {
-    if(!snd.enabled)
-        return;
+    if(!snd.enabled) return;
 
 	SN76496StereoWrite(0, data);
 }
@@ -74,8 +73,7 @@ void psg_stereo_w(INT32 data)
 
 void psg_write(INT32 data)
 {
-    if(!snd.enabled)
-        return;
+    if(!snd.enabled) return;
 
 	SN76496Write(0, data);
 }

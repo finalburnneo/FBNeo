@@ -9179,13 +9179,13 @@ void kf2k3pcb_bios_decode()
 				  j  = i;
 		if ( i & 0x00020) j ^= 0x0010;
 		if (~i & 0x00010) j ^= 0x0040;
-				  j ^= 0x00a0;
+		j ^= 0x00a0;
 		if ( i & 0x00004) j ^= 0x0080;
 		if ( i & 0x00200) j ^= 0x0100;
 		if (~i & 0x02000) j ^= 0x0400;
 		if (~i & 0x10000) j ^= 0x1000;
 		if ( i & 0x02000) j ^= 0x8000;
-				  j ^= address[((i >> 1) & 0x38) | (i & 7)];
+		j ^= address[((i >> 1) & 0x38) | (i & 7)];
 
 				     dst[i]  = src[j];
 		if (BURN_ENDIAN_SWAP_INT16(dst[i]) & 0x0004) dst[i] ^= BURN_ENDIAN_SWAP_INT16(0x0001);

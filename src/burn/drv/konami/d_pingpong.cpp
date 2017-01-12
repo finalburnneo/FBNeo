@@ -394,8 +394,9 @@ static INT32 MemIndex()
 
 	DrvZ80ROM		= Next; Next += 0x008000;
 
-	if (cashquiz)
+	if (cashquiz) {
 		DrvBankROM	= Next; Next += 0x040000;
+	}
 
 	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x008000;

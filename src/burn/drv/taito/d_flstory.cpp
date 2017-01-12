@@ -710,16 +710,13 @@ static void onna34ro_mcu_write(INT32 data)
 			from_mcu = 0x6a;
 			break;
 
-		case 0x40: if(score_adr >= 0xe000 && score_adr < 0xe800)
-			from_mcu = ZetReadByte(score_adr);
+		case 0x40: if(score_adr >= 0xe000 && score_adr < 0xe800) from_mcu = ZetReadByte(score_adr);
 			break;
 
-		case 0x41: if(score_adr >= 0xe000 && score_adr < 0xe800)
-			from_mcu = ZetReadByte(score_adr+1);
+		case 0x41: if(score_adr >= 0xe000 && score_adr < 0xe800) from_mcu = ZetReadByte(score_adr+1);
 			break;
 
-		case 0x42: if(score_adr >= 0xe000 && score_adr < 0xe800)
-			from_mcu = ZetReadByte(score_adr+2) & 0x0f;
+		case 0x42: if(score_adr >= 0xe000 && score_adr < 0xe800) from_mcu = ZetReadByte(score_adr+2) & 0x0f;
 			break;
 
 		default:

@@ -946,7 +946,7 @@ static INT32 System16MemIndex()
 	System16SpriteRam2   = Next; Next += System16SpriteRam2Size;
 	System16RotateRam    = Next; Next += System16RotateRamSize;
 	System16RotateRamBuff= Next; Next += System16RotateRamSize;
-	if (SpriteBuffer) System16SpriteRamBuff = Next; Next += System16SpriteRamSize;
+	if (SpriteBuffer) { System16SpriteRamBuff = Next; Next += System16SpriteRamSize; }
 	System16PaletteRam   = Next; Next += System16PaletteEntries * 2;
 
 	if (HasRoad) {
@@ -975,7 +975,7 @@ static INT32 System16MemIndex()
 	
 	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
 	
-	if (UseTempDraw) pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16));
+	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)); }
 	
 	MemEnd = Next;
 

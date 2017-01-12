@@ -2342,7 +2342,7 @@ static int MemIndex()
 
 	Taito68KRam1                        = Next; Next += 0x018000;
 	TaitoZ80Ram1                        = Next; Next += 0x001000;
-	if (TaitoNumZ80s == 2) TaitoZ80Ram2 = Next; Next += 0x000800;
+	if (TaitoNumZ80s == 2) { TaitoZ80Ram2 = Next; Next += 0x000800; }
 	TaitoPaletteRam                     = Next; Next += 0x004000;
 	TaitoSpriteRam                      = Next; Next += 0x00f000;
 	TaitoSharedRam                      = Next; Next += 0x010000;

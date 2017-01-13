@@ -51,6 +51,8 @@ static UINT8 DrvReset;
 
 static INT32 nEnableRaster[3];
 
+static INT32 asurablade = 0;
+
 static struct BurnInputInfo AsurabldInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 start"	},
@@ -302,11 +304,6 @@ static inline void cpu_sync() // sync z80 & 68k
 	}
 }
 
-void __fastcall fuuki32_write_long(UINT32 , UINT32 )
-{
-
-}
-
 void __fastcall fuuki32_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffe0) == 0x8c0000) {
@@ -347,11 +344,6 @@ void __fastcall fuuki32_write_byte(UINT32 address, UINT8 data)
 		DrvShareRAM[(address & 0x1f) >> 1] = data;
 		return;
 	}
-}
-
-UINT32 __fastcall fuuki32_read_long(UINT32)
-{
-	return 0;
 }
 
 UINT16 __fastcall fuuki32_read_word(UINT32 address)
@@ -449,11 +441,7 @@ UINT8 __fastcall fuuki32_sound_in(UINT16 port)
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -662,10 +650,8 @@ static INT32 DrvInit()
 	SekMapMemory(DrvFgRAM2 + 0x2000,0x508000, 0x517fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,		0x600000, 0x601fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x700000, 0x703fff, MAP_RAM);
-	SekSetWriteLongHandler(0,	fuuki32_write_long);
 	SekSetWriteWordHandler(0,	fuuki32_write_word);
 	SekSetWriteByteHandler(0,	fuuki32_write_byte);
-	SekSetReadLongHandler(0,	fuuki32_read_long);
 	SekSetReadWordHandler(0,	fuuki32_read_word);
 	SekSetReadByteHandler(0,	fuuki32_read_byte);
 	SekClose();
@@ -685,7 +671,11 @@ static INT32 DrvInit()
 	ZetSetInHandler(fuuki32_sound_in);
 	ZetClose();
 
-	BurnYMF278BInit(0, DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
+	if (asurablade) {
+		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.93), DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
+	} else {
+		BurnYMF278BInit((INT32)(YMF278B_STD_CLOCK * 1.80), DrvSndROM, 0x400000, &DrvFMIRQHandler, DrvSynchroniseStream);
+	}
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYMF278BSetRoute(BURN_SND_YMF278B_YMF278B_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 	BurnTimerAttachZet(6000000);
@@ -706,6 +696,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	BurnFree (AllMem);
+
+	asurablade = 0;
 
 	return 0;
 }
@@ -1274,7 +1266,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nSegment;
-	INT32 nInterleave = 248; // ?
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 20000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	UINT32 *vregs = (UINT32*)DrvVidRegs;
@@ -1287,15 +1279,16 @@ static INT32 DrvFrame()
 	{
 		nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
 		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
-	//	if (i ==  16) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO); // raster line -- 0 not 16?
 
 		if (i == DrvRasterPos[0]) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			DrvRasterPos[0] = 0x1000;
 		}
 
-		if (i == 247) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1 or 8 ?
+		if (i == 247) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1
 		if (i == 239) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank
+
+		//BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave); // not needed - see cpu_sync()
 
 		// hack -- save scroll/offset registers so the
 		// lines can be drawn in one pass -- should save
@@ -1304,22 +1297,25 @@ static INT32 DrvFrame()
 		DrvScrollBuf[i + 0x100] = BURN_ENDIAN_SWAP_INT32(vregs[1]);
 		DrvScrollBuf[i + 0x200] = BURN_ENDIAN_SWAP_INT32(vregs[2]);
 		DrvScrollBuf[i + 0x300] = BURN_ENDIAN_SWAP_INT32(vregs[3]);
+
+		if (i == 0xf0) { // eliminate glitches in sprites, backgrounds
+			if (pBurnDraw) DrvDraw();
+
+			memcpy (DrvSprBuf1, DrvSprBuf0, 0x2000);
+			memcpy (DrvSprBuf0, DrvSprRAM,  0x2000);
+			tilebank_buf[1] = tilebank_buf[0];
+			tilebank_buf[0] = tilebank[0];
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	BurnYMF278BUpdate(nBurnSoundLen);
+
+	if (pBurnSoundOut) {
+		BurnYMF278BUpdate(nBurnSoundLen);
+	}
 
 	ZetClose();
 	SekClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	memcpy (DrvSprBuf1, DrvSprBuf0, 0x2000);
-	memcpy (DrvSprBuf0, DrvSprRAM,  0x2000);
-	tilebank_buf[1] = tilebank_buf[0];
-	tilebank_buf[0] = tilebank[0];
 
 	return 0;
 }
@@ -1388,13 +1384,20 @@ static struct BurnRomInfo asurabldRomDesc[] = {
 STD_ROM_PICK(asurabld)
 STD_ROM_FN(asurabld)
 
+static INT32 BladeDrvInit()
+{
+	asurablade = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvAsurabld = {
 	"asurabld", NULL, NULL, NULL, "1998",
 	"Asura Blade - Sword of Dynasty (Japan)\0", "Imperfect GFX", "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabldRomInfo, asurabldRomName, NULL, NULL, AsurabldInputInfo, AsurabldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	BladeDrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 240, 4, 3
 };
 
@@ -1434,7 +1437,7 @@ STD_ROM_FN(asurabus)
 
 struct BurnDriver BurnDrvAsurabus = {
 	"asurabus", NULL, NULL, NULL, "2000",
-	"Asura Buster - Eternal Warriors (Japan)\0", "Imperfect SND, freezes on first boss", "Fuuki", "FG-3",
+	"Asura Buster - Eternal Warriors (Japan)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabusRomInfo, asurabusRomName, NULL, NULL, AsurabldInputInfo, AsurabusDIPInfo,
@@ -1478,7 +1481,7 @@ STD_ROM_FN(asurabusa)
 
 struct BurnDriver BurnDrvAsurabusa = {
 	"asurabusa", "asurabus", NULL, NULL, "2000",
-	"Asura Buster - Eternal Warriors (Japan) (ARCADIA review build)\0", "Imperfect SND, freezes on first boss", "Fuuki", "FG-3",
+	"Asura Buster - Eternal Warriors (Japan) (ARCADIA review build)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabusaRomInfo, asurabusaRomName, NULL, NULL, AsurabusaInputInfo, AsurabusDIPInfo,

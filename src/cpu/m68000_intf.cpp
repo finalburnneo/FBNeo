@@ -282,11 +282,7 @@ inline static UINT16 ReadWord(UINT32 a)
 	{
 		if (a & 1)
 		{
-			// This is dangerous! if a = 0x3ff a + 1 and so on can read outside of bounds
-			// however, this is a fairly unlikely scenario.
-
-			a &= SEK_PAGEM;
-			return BURN_ENDIAN_SWAP_INT16((pr[((a + 0) ^ 1)] << 8) + pr[((a + 1) ^ 1)]);
+			return BURN_ENDIAN_SWAP_INT16((ReadByte(a + 0) * 256) + ReadByte(a + 1));
 		}
 		else
 		{
@@ -326,13 +322,13 @@ inline static void WriteWord(UINT32 a, UINT16 d)
 	{
 		if (a & 1)
 		{
-			// This is dangerous! if a = 0x3ff a + 1 and so on can write outside of bounds
-			// however, this is a fairly unlikely scenario.
-			a &= SEK_PAGEM;
+		//	bprintf(PRINT_NORMAL, _T("write16 0x%08X\n"), a);
+
 			d = BURN_ENDIAN_SWAP_INT16(d);
 
-			pr[(a + 0) ^ 1] = d >> 8;
-			pr[(a + 1) ^ 1] = d & 0xff;
+			WriteByte(a + 0, d / 0x100);
+			WriteByte(a + 1, d);
+
 			return;
 		}
 		else
@@ -372,15 +368,24 @@ inline static UINT32 ReadLong(UINT32 a)
 	{
 		if (a & 1)
 		{
-			// This is dangerous! if a = 0x3ff a + 1 and so on can read outside of bounds
-			// however, this is a fairly unlikely scenario.
-			a &= SEK_PAGEM;
+			UINT32 r = 0;
 
-			UINT32 r;
-			r  = pr[(a + 0)^1] <<  0; // correct?
-			r += pr[(a + 1)^0] <<  8;
-			r += pr[(a + 2)^0] << 16;
-			r += pr[(a + 3)^1] << 24; // correct?
+			if (r & 2)
+			{
+				r  = ReadByte((a + 0));
+				r += ReadByte((a + 1) ^ 1) * 0x100;
+				r += ReadByte((a + 2) ^ 1) * 0x10000;
+				r += ReadByte((a + 3)) * 0x1000000;
+			}
+			else
+			{
+				r  = ReadByte((a + 0)) * 0x1000000;
+				r += ReadByte((a + 1)) * 0x100;
+				r += ReadByte((a + 2)) * 0x10000;
+				r += ReadByte((a + 3));
+			}
+
+		//	bprintf(PRINT_NORMAL, _T("read32 0x%08X 0x%8.8x\n"), a, r);
 
 			return BURN_ENDIAN_SWAP_INT32(r);
 		}
@@ -425,15 +430,26 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 	{
 		if (a & 1)
 		{
-			// This is dangerous! if a = 0x3ff a + 1 and so on can write outside of bounds
-			// however, this is a fairly unlikely scenario.
-			a &= SEK_PAGEM;
+		//	bprintf(PRINT_NORMAL, _T("write32 0x%08X 0x%8.8x\n"), a,d);
+
 			d = BURN_ENDIAN_SWAP_INT32(d);
 
-			pr[(a + 0)^1] = d >>  0; // correct?
-			pr[(a + 1)^0] = d >>  8;
-			pr[(a + 2)^0] = d >> 16;
-			pr[(a + 3)^1] = d >> 24; // correct?
+			if (a & 2)
+			{
+				WriteByte((a + 0), d);
+				WriteByte((a + 1) ^ 1, d / 0x100);
+				WriteByte((a + 2) ^ 1, d / 0x10000);
+				WriteByte((a + 3), d / 0x1000000);
+
+			}
+			else
+			{
+				WriteByte(a + 0, d / 0x1000000);
+				WriteByte(a + 1, d / 0x100);
+				WriteByte(a + 2, d / 0x10000);
+				WriteByte(a + 3, d);
+			}
+
 			return;
 		}
 		else

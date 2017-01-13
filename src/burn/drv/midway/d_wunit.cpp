@@ -1119,7 +1119,7 @@ static struct BurnRomInfo rmpgwtRomDesc[] = {
 	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "465 Rampage WT.u64",	0x010009, 0x5c14d850, 0 | BRF_OPT },
+	{ "465 Rampage WT.u64",	0x001009, 0x5c14d850, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(rmpgwt)

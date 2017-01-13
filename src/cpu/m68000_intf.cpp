@@ -370,7 +370,7 @@ inline static UINT32 ReadLong(UINT32 a)
 		{
 			UINT32 r = 0;
 
-			if (r & 2)
+			if (a & 2)
 			{
 				r  = ReadByte((a + 0));
 				r += ReadByte((a + 1) ^ 1) * 0x100;

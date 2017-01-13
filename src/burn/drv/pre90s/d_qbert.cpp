@@ -932,6 +932,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo qbertSampleDesc[] = {
+#if !defined (ROM_VERIFY)
 	{"fx_17a", SAMPLE_NOLOOP },
 	{"fx_17b", SAMPLE_NOLOOP },
 	{"fx_17c", SAMPLE_NOLOOP },
@@ -976,6 +977,7 @@ static struct BurnSampleInfo qbertSampleDesc[] = {
 	{"fx_23",  SAMPLE_NOLOOP },
 	{"fx_28",  SAMPLE_NOLOOP },
 	{"fx_36",  SAMPLE_NOLOOP },
+#endif
 	{"knocker", SAMPLE_NOLOOP },
 	{"", 0 }
 };

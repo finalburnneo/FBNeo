@@ -3062,7 +3062,7 @@ static struct BurnRomInfo srdarwinRomDesc[] = {
 	{ "dy03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
 	{ "dy02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 6 | BRF_NODUMP }, // 12 mcu
+	{ "id8751h.mcu",	0x01000, 0x11cd6ca4, 6 }, // 12 mcu
 
 	{ "dy12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
 };
@@ -3101,7 +3101,7 @@ static struct BurnRomInfo srdarwnjRomDesc[] = {
 	{ "dy03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
 	{ "dy02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 6 | BRF_NODUMP }, // 12 mcu
+	{ "id8751h.mcu",	0x01000, 0x11cd6ca4, 6  }, // 12 mcu
 
 	{ "dy12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
 };
@@ -5629,7 +5629,7 @@ static struct BurnRomInfo csilverRomDesc[] = {
 	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 15 mcu
+	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 mcu
 };
 
 STD_ROM_PICK(csilver)
@@ -5680,7 +5680,7 @@ static struct BurnRomInfo csilverjRomDesc[] = {
 	{ "dx10.b1",		0x10000, 0x3ef77a32, 6 }, // 13
 	{ "dx11.b2",		0x10000, 0x9cf3d5b8, 6 }, // 14
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 15 mcu
+	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 mcu
 };
 
 STD_ROM_PICK(csilverj)

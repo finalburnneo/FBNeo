@@ -9211,6 +9211,8 @@ static struct BurnRomInfo zombraidRomDesc[] = {
 
 	{ "fy001012.b",		0x200000, 0xfd30e102, 0x06 | BRF_SND },           //  9 x1-010 Samples
 	{ "fy001011.a",		0x200000, 0xe3c431de, 0x06 | BRF_SND },           // 10
+	
+	{ "nvram.bin",		0x010000, 0x1a4b2ee8, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(zombraid)
@@ -9281,6 +9283,8 @@ static struct BurnRomInfo zombraidpRomDesc[] = {
 	{ "u161_master_snd_5_599c.u161",	0x080000, 0x1793dd13, 0x06 | BRF_SND },           // 29
 	{ "u162_master_snd_6_6d2e.u162",	0x080000, 0x2ece241f, 0x06 | BRF_SND },           // 30
 	{ "u163_master_snd_7_c733.u163",	0x080000, 0xd90f78b2, 0x06 | BRF_SND },           // 31
+	
+	{ "nvram.bin",		0x010000, 0x1a4b2ee8, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(zombraidp)
@@ -9405,6 +9409,8 @@ static struct BurnRomInfo zombraidpjRomDesc[] = {
 	{ "u161_master_snd_5_599c.u161",	0x080000, 0x1793dd13, 0x06 | BRF_SND },           // 29
 	{ "u162_master_snd_6_6d2e.u162",	0x080000, 0x2ece241f, 0x06 | BRF_SND },           // 30
 	{ "u163_master_snd_7_c733.u163",	0x080000, 0xd90f78b2, 0x06 | BRF_SND },           // 31
+	
+	{ "nvram.bin",		0x010000, 0x1a4b2ee8, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(zombraidpj)
@@ -10707,6 +10713,8 @@ static struct BurnRomInfo kiwameRomDesc[] = {
 
 	{ "fp001006.bin",	0x80000, 0x96cf395d, 0x06 | BRF_SND },           //  3 x1-010 Samples
 	{ "fp001005.bin",	0x80000, 0x65b5fe9a, 0x06 | BRF_SND },           //  4
+	
+	{ "nvram.bin",		0x10000, 0x1f719400, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(kiwame)

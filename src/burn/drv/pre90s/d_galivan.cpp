@@ -1260,7 +1260,7 @@ STD_ROM_PICK(dangarbt)
 STD_ROM_FN(dangarbt)
 
 struct BurnDriver BurnDrvDangarbt = {
-	"dangarbt", NULL, NULL, NULL, "1986",
+	"dangarbt", "dangar", NULL, NULL, "1986",
 	"Ufo Robo Dangar (bootleg)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

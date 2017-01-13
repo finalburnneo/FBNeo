@@ -771,8 +771,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static struct BurnRomInfo dyndukeRomDesc[] = {
 	{ "1.cd8",	    0x10000, 0xa5e2a95a, 1 | BRF_PRG | BRF_ESS }, //  0 V30 #0 Code
 	{ "2.cd7",	    0x10000, 0x7e51af22, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "dde3.e8",	0x20000, 0xa56f8692, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "dde4.e7",	0x20000, 0x384c0635, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "dde3.e8",	0x20000, 0x95336279, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "dde4.e7",	0x20000, 0xeb2d8fea, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "5.p8",	    0x10000, 0x883d319c, 2 | BRF_PRG | BRF_ESS }, //  4 V30 #1 Code
 	{ "6.p7",	    0x10000, 0xd94cb4ff, 2 | BRF_PRG | BRF_ESS }, //  5

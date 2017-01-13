@@ -765,6 +765,8 @@ static struct BurnRomInfo umk3RomDesc[] = {
 	{ "umk-u112.bin",	0x100000, 0xb5a46488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "umk-u111.bin",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "umk-u110.bin",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+	
+	{ "463 MK3 Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3)
@@ -816,6 +818,8 @@ static struct BurnRomInfo umk3r11RomDesc[] = {
 	{ "umk-u112.bin",	0x100000, 0xb5a46488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "umk-u111.bin",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "umk-u110.bin",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+	
+	{ "463 MK3 Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3r11)
@@ -867,6 +871,8 @@ static struct BurnRomInfo umk3r10RomDesc[] = {
 	{ "umk-u112.bin",	0x100000, 0xb5a46488, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 1) }, // 23
 	{ "umk-u111.bin",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "umk-u110.bin",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
+	
+	{ "463 MK3 Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3r10)
@@ -1021,10 +1027,10 @@ STD_ROM_PICK(nbamht)
 STD_ROM_FN(nbamht)
 
 struct BurnDriver BurnDrvNbamht = {
-	"nbamht", "nbahangt", NULL, NULL, "1996",
+	"nbamht", NULL, NULL, NULL, "1996",
 	"NBA Maximum Hangtime (rev 1.03 06/09/97)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, nbamhtRomInfo, nbamhtRomName, NULL, NULL, NbahangtInputInfo, NbahangtDIPInfo,
     WolfUnitInit, WolfUnitExit, WolfUnitFrame, WolfUnitDraw, WolfUnitScan, &nWolfUnitRecalc, 0x8000,
     512, 254, 4, 3
@@ -1072,7 +1078,7 @@ STD_ROM_PICK(nbamht1)
 STD_ROM_FN(nbamht1)
 
 struct BurnDriver BurnDrvNbamht1 = {
-	"nbamht1", "nbahangt", NULL, NULL, "1996",
+	"nbamht1", "nbamht", NULL, NULL, "1996",
 	"NBA Maximum Hangtime (rev 1.0 11/08/96)\0", NULL, "Midway", "MIDWAY Wolf-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_16BIT_ONLY, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
@@ -1112,6 +1118,8 @@ static struct BurnRomInfo rmpgwtRomDesc[] = {
 	{ "1.0_rampage_world_tour_u120_image.u120",	0x100000, 0x6d643dee, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
 	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	
+	{ "465 Rampage WT.u64",	0x010009, 0x5c14d850, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(rmpgwt)
@@ -1158,6 +1166,8 @@ static struct BurnRomInfo rmpgwt11RomDesc[] = {
 	{ "1.0_rampage_world_tour_u120_image.u120",	0x100000, 0x6d643dee, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 1) }, // 19
 	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
+	
+	{ "465 Rampage WT.u64",	0x010009, 0x5c14d850, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(rmpgwt11)

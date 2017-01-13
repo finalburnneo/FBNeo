@@ -681,9 +681,9 @@ static struct BurnRomInfo _1945kiiinRomDesc[] = {
 	{ "7.U104",		0x80000, 0xcdafcedf, 3 | BRF_GRA },           // 12
 	{ "8.U105",		0x80000, 0x2c3895d5, 3 | BRF_GRA },           // 13
 
-	{ "snd-2.su4",	0x80000, 0xbbb7f0ff, 4 | BRF_SND },           // 14 MSM #0 Samples
+	{ "snd-1.su7",	0x80000, 0xbbb7f0ff, 4 | BRF_SND },           // 14 MSM #0 Samples
 
-	{ "snd-1.su7",	0x80000, 0x47e3952e, 5 | BRF_SND },           // 15 MSM #1 Samples
+	{ "snd-2.su4",	0x80000, 0x47e3952e, 5 | BRF_SND },           // 15 MSM #1 Samples
 };
 
 STD_ROM_PICK(_1945kiiin)

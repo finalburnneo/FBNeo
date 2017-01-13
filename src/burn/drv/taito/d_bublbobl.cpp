@@ -1043,7 +1043,7 @@ static struct BurnRomInfo Bublcave11RomDesc[] = {
 	{ "bublcave-19.34",    	0x08000, 0x1ceeb1fa, BRF_GRA },	     	  // 15
 	{ "bublcave-20.35",    	0x08000, 0x64322e24, BRF_GRA },	     	  // 16
 	
-	{ "a71-25.41",         	0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
+	{ "a71-25.41",			0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
 };
 
 STD_ROM_PICK(Bublcave11)
@@ -1072,7 +1072,7 @@ static struct BurnRomInfo Bublcave10RomDesc[] = {
 	{ "bublcave-19.34",     0x08000, 0x1ceeb1fa, BRF_GRA },	     	  // 15
 	{ "bublcave-20.35",     0x08000, 0x64322e24, BRF_GRA },	     	  // 16
 	
-	{ "a71-25.41",          0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
+	{ "a71-25.41",			0x00100, 0x2d0f8545, BRF_GRA },	     	  // 17	PROMs
 };
 
 STD_ROM_PICK(Bublcave10)
@@ -1108,7 +1108,7 @@ static struct BurnRomInfo tokioRomDesc[] = {
 
 	{ "a71-25.ic41",	0x0100, 0x2d0f8545, BRF_GRA },	         // 23 PROMs
 
-	{ "a71-24.ic57",	0x0800, 0x00000000, 6 | BRF_NODUMP },    // 24 Mcu Code
+	{ "a71__24.ic57",	0x0800, 0x0f4b25de, 6 | BRF_PRG},        // 24 Mcu Code
 
 	{ "a71-26.ic19",	0x0117, 0x4e1f119c, 7 | BRF_OPT },       // 25 PLDs
 };
@@ -1146,7 +1146,7 @@ static struct BurnRomInfo tokiooRomDesc[] = {
 
 	{ "a71-25.ic41",	0x0100, 0x2d0f8545, BRF_GRA },	         // 23 PROMs
 
-	{ "a71-24.ic57",	0x0800, 0x00000000, 6 | BRF_NODUMP },    // 24 Mcu Code
+	{ "a71__24.ic57",	0x0800, 0x0f4b25de, 6 | BRF_PRG},        // 24 Mcu Code
 
 	{ "a71-26.ic19",	0x0117, 0x4e1f119c, 7 | BRF_OPT },       // 25 PLDs
 };
@@ -1184,7 +1184,7 @@ static struct BurnRomInfo tokiouRomDesc[] = {
 
 	{ "a71-25.ic41",	0x0100, 0x2d0f8545, BRF_GRA },	         // 23 PROMs
 
-	{ "a71-24.ic57",	0x0800, 0x00000000, 6 | BRF_NODUMP },    // 24 Mcu Code
+	{ "a71__24.ic57",	0x0800, 0x0f4b25de, 6 | BRF_PRG},        // 24 Mcu Code
 
 	{ "a71-26.ic19",	0x0117, 0x4e1f119c, 7 | BRF_OPT },       // 25 PLDs
 };

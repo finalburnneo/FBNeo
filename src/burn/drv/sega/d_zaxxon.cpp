@@ -1762,21 +1762,21 @@ static struct BurnRomInfo zaxxonbRomDesc[] = {
 	{ "jackson_rom2.u28",	0x2000, 0xc088df92, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "jackson_rom1.u29",	0x1000, 0xe7bdc417, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "zaxxon_rom14.u68",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
-	{ "zaxxon_rom15.u69",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
+	{ "zaxxon_rom14.u54",	0x0800, 0x07bf8c52, 2 | BRF_GRA },           //  3 Characters
+	{ "zaxxon_rom15.u55",	0x0800, 0xc215edcb, 2 | BRF_GRA },           //  4
 
-	{ "zaxxon_rom6.u113",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
-	{ "zaxxon_rom5.u112",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
-	{ "zaxxon_rom4.u111",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
+	{ "zaxxon_rom6.u70",	0x2000, 0x6e07bb68, 3 | BRF_GRA },           //  5 Background Tiles
+	{ "zaxxon_rom5.u69",	0x2000, 0x0a5bce6a, 3 | BRF_GRA },           //  6
+	{ "zaxxon_rom4.u68",	0x2000, 0xa5bf1465, 3 | BRF_GRA },           //  7
 
-	{ "zaxxon_rom11.u77",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
-	{ "zaxxon_rom12.u78",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
-	{ "zaxxon_rom13.u79",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
+	{ "zaxxon_rom11.u59",	0x2000, 0xeaf0dd4b, 4 | BRF_GRA },           //  8 Sprites
+	{ "zaxxon_rom12.u60",	0x2000, 0x1c5369c7, 4 | BRF_GRA },           //  9
+	{ "zaxxon_rom13.u61",	0x2000, 0xab4e8a9a, 4 | BRF_GRA },           // 10
 
-	{ "zaxxon_rom8.u91",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
-	{ "zaxxon_rom7.u90",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
-	{ "zaxxon_rom10.u93",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
-	{ "zaxxon_rom9.u92",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
+	{ "zaxxon_rom8.u58",	0x2000, 0x28d65063, 5 | BRF_GRA },           // 11 Tilemaps
+	{ "zaxxon_rom7.u57",	0x2000, 0x6284c200, 5 | BRF_GRA },           // 12
+	{ "zaxxon_rom10.u60",	0x2000, 0xa95e61fd, 5 | BRF_GRA },           // 13
+	{ "zaxxon_rom9.u59",	0x2000, 0x7e42691f, 5 | BRF_GRA },           // 14
 
 	{ "mro16.u76",			0x0100, 0x6cc6695b, 6 | BRF_GRA },           // 15 Color Proms
 	{ "zaxxon.u72",			0x0100, 0xdeaa21f7, 6 | BRF_GRA },           // 16

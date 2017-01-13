@@ -2023,7 +2023,7 @@ static struct BurnRomInfo AltbeastRomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0078.c2",    0x01000, 0x00000000, BRF_NODUMP },
+	{ "317-0078.c2",    0x01000, 0x8101925f, BRF_OPT },
 };
 
 
@@ -3991,7 +3991,7 @@ static struct BurnRomInfo GoldnaxeRomDesc[] = {
 	
 	{ "mpr-12384.ic6",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0123a.c2",   0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
+	{ "317-0123a.c2",   0x01000, 0xcf19e7d4, BRF_OPT }, // Intel i8751 protection MCU
 };
 
 
@@ -4069,7 +4069,7 @@ static struct BurnRomInfo Goldnaxe2RomDesc[] = {
 	
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0112.c2",    0x01000, 0x00000000, BRF_NODUMP }, // Intel i8751 protection MCU
+	{ "317-0112.c2",    0x01000, 0xd8f2f1c0, BRF_OPT }, // Intel i8751 protection MCU
 };
 
 

@@ -6000,6 +6000,8 @@ static struct BurnRomInfo beastfpRomDesc[] = {
 
 	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
 	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
+	
+	{ "beastf.ic4",   0x002c, 0xa6ab926d, 0 | BRF_OPT },			//  8 PAL
 };
 
 STD_ROM_PICK(beastfp)
@@ -6019,14 +6021,14 @@ struct BurnDriver BurnDrvbeastfp = {
 // Eeekk!
 
 static struct BurnRomInfo eeekkRomDesc[] = {
-	{ "pg03094.u2",	0x2000, 0x701e37f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "pg03094.u3",	0x2000, 0xbcf524ae, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u_2_eeekk_pg03094.u2",	0x2000, 0x701e37f2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "u_3_eeekk_pg03094.u3",	0x2000, 0xbcf524ae, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "pg03094.5e",	0x1000, 0x780183a8, 2 | BRF_GRA },           //  2 Graphics
-	{ "pg03094.5f",	0x1000, 0x418526e4, 2 | BRF_GRA },           //  3
+	{ "5_e_eeekk_pg03094.5e",	0x1000, 0x780183a8, 2 | BRF_GRA },           //  2 Graphics
+	{ "5_f_eeekk_pg03094.5f",	0x1000, 0x418526e4, 2 | BRF_GRA },           //  3
 
-	{ "eeekk.7f",	0x0020, 0xc64c8a53, 3 | BRF_GRA },           //  4 Color Proms
-	{ "eeekk.4a",	0x0100, 0xa5044ded, 3 | BRF_GRA },           //  5
+	{ "7_f_eeekk.7f",	0x0020, 0xc64c8a53, 3 | BRF_GRA },           //  4 Color Proms
+	{ "4_a_eeekk.4a",	0x0100, 0xa5044ded, 3 | BRF_GRA },           //  5
 
 	{ "82s126.1m",	0x0100, 0xa9cc86bf, 4 | BRF_SND },           //  6 Sound Prom
 

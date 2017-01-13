@@ -682,7 +682,7 @@ static struct BurnRomInfo mustacheiRomDesc[] = {
 	{ "10.e5",			0x8000, 0xefbb1943, 2 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "5.a13",			0x4000, 0x9baee4a7, 3 | BRF_GRA },           //  4 Background Tiles
-	{ "4.a14",			0x4000, 0x8155387d, 3 | BRF_GRA },           //  5
+	{ "4.a15",			0x4000, 0x8155387d, 3 | BRF_GRA },           //  5
 	{ "3.a16",			0x4000, 0x4db4448d, 3 | BRF_GRA },           //  6
 
 	{ "6.a4",			0x8000, 0x4a95a89c, 4 | BRF_GRA },           //  7 Sprites

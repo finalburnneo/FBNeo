@@ -2861,7 +2861,7 @@ static struct BurnRomInfo turbofrcRomDesc[] = {
 	{ "6.u166", 	  	0x020000, 0x2ca14a65, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "lh532h74.u180", 	0x040000, 0xa3d43254, BRF_SND },		   // samples
-	{ "lh538o7h.u179", 	0x100000, 0x60ca0333, BRF_SND },	
+	{ "lh538o7j.u179", 	0x100000, 0x60ca0333, BRF_SND },	
 };
 
 STD_ROM_PICK(turbofrc)
@@ -2902,7 +2902,7 @@ static struct BurnRomInfo turbofrcuRomDesc[] = {
 	{ "6.u166", 	  	0x020000, 0x2ca14a65, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "lh532h74.u180", 	0x040000, 0xa3d43254, BRF_SND },		   // samples
-	{ "lh538o7h.u179", 	0x100000, 0x60ca0333, BRF_SND },	
+	{ "lh538o7j.u179", 	0x100000, 0x60ca0333, BRF_SND },	
 };
 
 STD_ROM_PICK(turbofrcu)

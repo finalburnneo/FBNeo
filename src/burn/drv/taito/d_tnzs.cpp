@@ -1940,30 +1940,30 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Plump Pop (Japan)
 
 static struct BurnRomInfo plumppopRomDesc[] = {
-	{ "a98-09.bin",		0x10000, 0x107f9e06, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "a98-10.bin",		0x10000, 0xdf6e6af2, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a98__09.11c",			0x10000, 0x107f9e06, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a98__10.9c",				0x10000, 0xdf6e6af2, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "a98-11.bin",		0x10000, 0xbc56775c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "a98__11.4e",				0x10000, 0xbc56775c, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "b06-14.1g",		0x00800, 0x28907072, 3 },	      //  3 I8742 MCU
+	{ "b06__14.1g",				0x00800, 0x28907072, 3 },	      			  //  3 I8742 MCU
 
-	{ "a98-01.bin",		0x10000, 0xf3033dca, 4 | BRF_GRA },	      	  //  4 Graphics
-	{ "a98-02.bin",		0x10000, 0xf2d17b0c, 4 | BRF_GRA },	      	  //  5
-	{ "a98-03.bin",		0x10000, 0x1a519b0a, 4 | BRF_GRA },	      	  //  6
-	{ "a98-04.bin",		0x10000, 0xb64501a1, 4 | BRF_GRA },	      	  //  7
-	{ "a98-05.bin",		0x10000, 0x45c36963, 4 | BRF_GRA },	      	  //  8
-	{ "a98-06.bin",		0x10000, 0xe075341b, 4 | BRF_GRA },	      	  //  9
-	{ "a98-07.bin",		0x10000, 0x8e16cd81, 4 | BRF_GRA },	      	  // 10
-	{ "a98-08.bin",		0x10000, 0xbfa7609a, 4 | BRF_GRA },	      	  // 11
+	{ "a98__01.mbm27c512.13a",	0x10000, 0xf3033dca, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "a98__02.mbm27c512.12a",	0x10000, 0xf2d17b0c, 4 | BRF_GRA },	      	  //  5
+	{ "a98__03.mbm27c512.10a",	0x10000, 0x1a519b0a, 4 | BRF_GRA },	      	  //  6
+	{ "a98__04.mbm27c512.8a",	0x10000, 0xb64501a1, 4 | BRF_GRA },	      	  //  7
+	{ "a98__05.mbm27c512.7a",	0x10000, 0x45c36963, 4 | BRF_GRA },	      	  //  8
+	{ "a98__06.mbm27c512.5a",	0x10000, 0xe075341b, 4 | BRF_GRA },	      	  //  9
+	{ "a98__07.mbm27c512.4a",	0x10000, 0x8e16cd81, 4 | BRF_GRA },	      	  // 10
+	{ "a98__08.mbm27c512.2a",	0x10000, 0xbfa7609a, 4 | BRF_GRA },	      	  // 11
 
-	{ "a98-13.bpr",		0x00200, 0x7cde2da5, 5 | BRF_GRA },	      	  // 12 Color PROMs
-	{ "a98-12.bpr",		0x00200, 0x90dc9da7, 5 | BRF_GRA },	      	  // 13
+	{ "a98-13.15f",				0x00200, 0x7cde2da5, 5 | BRF_GRA },	      	  // 12 Color PROMs
+	{ "a98-12.17f",				0x00200, 0x90dc9da7, 5 | BRF_GRA },	      	  // 13
 	
-	/* pals on plumppop are unknown, but very likely the same set as arkanoid2/extrmatn/drtoppel/chukataio/etc */
-	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
-	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
-	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17 	
+	/* pals on plumppop are the same set as arkanoid2/extrmatn/drtoppel/chukataio/etc with the exception of d9? */
+	{ "b06-10-1.pal16l8a.d9.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
+	{ "b06-11.pal16l8a.d6.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-12.pal16l8a.c3.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
+	{ "b06-13.pal16l8a.c2.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17 	
 };
 
 STD_ROM_PICK(plumppop)
@@ -1993,7 +1993,7 @@ static struct BurnRomInfo extrmatnRomDesc[] = {
 
 	{ "b06-19.4e",		0x10000, 0x8de43ed9, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "b06-14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
+	{ "b06__14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
 
 	{ "b06-01.13a",		0x20000, 0xd2afbf7e, 4 | BRF_GRA },	      	  //  4 Graphics
 	{ "b06-02.10a",		0x20000, 0xe0c2757a, 4 | BRF_GRA },	      	  //  5
@@ -2037,7 +2037,7 @@ static struct BurnRomInfo extrmatuRomDesc[] = {
 
 	{ "b06-22.4e",		0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "b06-14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
+	{ "b06__14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
 
 	{ "b06-01.13a",		0x20000, 0xd2afbf7e, 4 | BRF_GRA },	      	  //  4 Graphics
 	{ "b06-02.10a",		0x20000, 0xe0c2757a, 4 | BRF_GRA },	      	  //  5
@@ -2076,7 +2076,7 @@ static struct BurnRomInfo extrmaturRomDesc[] = {
 
 	{ "b06_17",			0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "b06-14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
+	{ "b06__14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
 
 	{ "b06-01.13a",		0x20000, 0xd2afbf7e, 4 | BRF_GRA },	      	  //  4 Graphics
 	{ "b06-02.10a",		0x20000, 0xe0c2757a, 4 | BRF_GRA },	      	  //  5
@@ -2115,7 +2115,7 @@ static struct BurnRomInfo extrmatjRomDesc[] = {
 
 	{ "b06-07.4e",		0x10000, 0xb37fb8b3, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
-	{ "b06-14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
+	{ "b06__14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
 
 	{ "b06-01.13a",		0x20000, 0xd2afbf7e, 4 | BRF_GRA },	      	  //  4 Graphics
 	{ "b06-02.10a",		0x20000, 0xe0c2757a, 4 | BRF_GRA },	      	  //  5

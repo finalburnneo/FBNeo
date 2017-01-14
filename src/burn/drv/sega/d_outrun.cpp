@@ -142,6 +142,44 @@ static struct BurnDIPInfo OutrunDIPList[]=
 
 STDDIPINFO(Outrun)
 
+static struct BurnDIPInfo OutrunehDIPList[]=
+{
+	// Default Values
+	{0x0a, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0b, 0xff, 0xff, 0xf9, NULL                                 },
+
+	// Dip 1
+	OUTRUN_COINAGE(0x0a)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 3   , "Cabinet"                            },
+	{0x0b, 0x01, 0x03, 0x03, "Moving"                             },
+	{0x0b, 0x01, 0x03, 0x02, "Up Cockpit"                         },
+	{0x0b, 0x01, 0x03, 0x01, "Mini Up"                            },
+	
+	{0   , 0xfe, 0   , 2   , "Speed Indicator"                    },
+	{0x0b, 0x01, 0x08, 0x08, "km/h"                               },
+	{0x0b, 0x01, 0x08, 0x00, "MPH"                         		  },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x0b, 0x01, 0x04, 0x04, "Off"                                },
+	{0x0b, 0x01, 0x04, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 4   , "Time Adjust"                        },
+	{0x0b, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x0b, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x0b, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x0b, 0x01, 0x30, 0x00, "Hardest"                            },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x0b, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x0b, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x0b, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x0b, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(Outruneh)
+
 static struct BurnDIPInfo OutrundxDIPList[]=
 {
 	// Default Values
@@ -174,6 +212,43 @@ static struct BurnDIPInfo OutrundxDIPList[]=
 };
 
 STDDIPINFO(Outrundx)
+
+static struct BurnDIPInfo OutrundxehDIPList[]=
+{
+	// Default Values
+	{0x0a, 0xff, 0xff, 0xff, NULL                                 },
+	{0x0b, 0xff, 0xff, 0xfc, NULL                                 },
+
+	// Dip 1
+	OUTRUN_COINAGE(0x0a)
+
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Cabinet"                            },
+	{0x0b, 0x01, 0x01, 0x00, "Not Moving"                         },
+	{0x0b, 0x01, 0x01, 0x01, "Moving"                             },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x0b, 0x01, 0x02, 0x02, "Off"                                },
+	{0x0b, 0x01, 0x02, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 2   , "Speed Indicator"                    },
+	{0x0b, 0x01, 0x08, 0x08, "km/h"                               },
+	{0x0b, 0x01, 0x08, 0x00, "MPH"                         		  },
+	
+	{0   , 0xfe, 0   , 4   , "Time Adjust"                        },
+	{0x0b, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x0b, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x0b, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x0b, 0x01, 0x30, 0x00, "Hardest"                            },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x0b, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x0b, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x0b, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x0b, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(Outrundxeh)
 
 static struct BurnDIPInfo ShangonDIPList[]=
 {
@@ -2195,7 +2270,7 @@ struct BurnDriver BurnDrvOutruneh = {
 	"Out Run (sitdown/upright, Rev B) (Enhanced Edition v1.1.0)\0", NULL, "hack (Chris White)", "Out Run",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
-	NULL, OutrunehRomInfo, OutrunehRomName, NULL, NULL, OutrunInputInfo, OutrunDIPInfo,
+	NULL, OutrunehRomInfo, OutrunehRomName, NULL, NULL, OutrunInputInfo, OutrunehDIPInfo,
 	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
@@ -2234,7 +2309,7 @@ struct BurnDriver BurnDrvOutrundxeh = {
 	"Out Run (deluxe sitdown) (Enhanced Edition v1.0.3)\0", NULL, "hack (Chris White)", "Out Run",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_SPRITE_LOAD32, GBF_RACING, 0,
-	NULL, OutrundxehRomInfo, OutrundxehRomName, NULL, NULL, OutrunInputInfo, OutrundxDIPInfo,
+	NULL, OutrundxehRomInfo, OutrundxehRomName, NULL, NULL, OutrunInputInfo, OutrundxehDIPInfo,
 	OutrunInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };

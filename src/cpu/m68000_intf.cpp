@@ -372,10 +372,10 @@ inline static UINT32 ReadLong(UINT32 a)
 
 			if (a & 2)
 			{
-				r  = ReadByte((a + 0));
+				r  = ReadByte((a + 0)) * 0x1000000;
 				r += ReadByte((a + 1) ^ 1) * 0x100;
 				r += ReadByte((a + 2) ^ 1) * 0x10000;
-				r += ReadByte((a + 3)) * 0x1000000;
+				r += ReadByte((a + 3));
 			}
 			else
 			{
@@ -385,7 +385,7 @@ inline static UINT32 ReadLong(UINT32 a)
 				r += ReadByte((a + 3));
 			}
 
-		//	bprintf(PRINT_NORMAL, _T("read32 0x%08X 0x%8.8x\n"), a, r);
+			//bprintf(PRINT_NORMAL, _T("read32 0x%08X 0x%8.8x\n"), a, r);
 
 			return BURN_ENDIAN_SWAP_INT32(r);
 		}
@@ -436,11 +436,10 @@ inline static void WriteLong(UINT32 a, UINT32 d)
 
 			if (a & 2)
 			{
-				WriteByte((a + 0), d);
+				WriteByte((a + 0), d / 0x1000000);
 				WriteByte((a + 1) ^ 1, d / 0x100);
 				WriteByte((a + 2) ^ 1, d / 0x10000);
-				WriteByte((a + 3), d / 0x1000000);
-
+				WriteByte((a + 3), d);
 			}
 			else
 			{

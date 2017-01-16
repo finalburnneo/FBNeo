@@ -838,9 +838,9 @@ static INT32 DrvFrame()
 		nCyclesDone += SekRun(nSegment);
 
 		if (i == 224) {
-			SekSetIRQLine(4, SEK_IRQSTATUS_ACK); // Oddity: _AUTO doesn't work here..
+			SekSetIRQLine(4, CPU_IRQSTATUS_ACK); // Oddity: _AUTO doesn't work here..
 			nCyclesDone += SekRun(50);
-			SekSetIRQLine(4, SEK_IRQSTATUS_NONE);
+			SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		}
 	}
 

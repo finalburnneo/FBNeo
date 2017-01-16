@@ -3858,6 +3858,8 @@ UINT8 __fastcall macross2_sound_in(UINT16 port)
 
 static void DrvYM2203IrqHandler(INT32, INT32 nStatus)
 {
+	if (ZetGetActive() == -1) return;
+
 	if (nStatus) {
 		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
@@ -3867,6 +3869,8 @@ static void DrvYM2203IrqHandler(INT32, INT32 nStatus)
 
 static void DrvYM2151IrqHandler(INT32 nStatus)
 {
+	if (ZetGetActive() == -1) return;
+
 	if (nStatus) {
 		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
 	} else {
@@ -3874,14 +3878,14 @@ static void DrvYM2151IrqHandler(INT32 nStatus)
 	}
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
+inline static INT32 DrvSynchroniseStream(INT32 nSoundRate) // tharrier & manybloc
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3000000);
+	return (INT64)(ZetTotalCycles() * nSoundRate / 6000000);
 }
 
 inline static double DrvGetTime()
 {
-	return (double)ZetTotalCycles() / 3000000;
+	return (double)ZetTotalCycles() / 6000000;
 }
 
 inline static INT32 Macross2SynchroniseStream(INT32 nSoundRate)
@@ -4172,7 +4176,7 @@ static INT32 GrdnstrmGfxDecode(INT32 len0, INT32 len1, INT32 len2)
 	return 0;
 }
 
-static INT32 DrvInit(INT32 (*pLoadCallback)())
+static INT32 DrvInit(INT32 (*pLoadCallback)()) // tharrier, manybloc
 {
 	AllMem = NULL;
 	MemIndex();
@@ -4201,7 +4205,7 @@ static INT32 DrvInit(INT32 (*pLoadCallback)())
 	BurnSetRefreshRate(56.00);
 
 	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(3000000);
+	BurnTimerAttachZet(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.50, BURN_SND_ROUTE_BOTH);
@@ -4251,8 +4255,8 @@ static INT32 BjtwinInit(INT32 (*pLoadCallback)())
 	MSM6295Init(1, 4000000 / 165, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
-        MSM6295x2_only = 1;
-        no_z80 = 1;
+	MSM6295x2_only = 1;
+	no_z80 = 1;
 
 	NMK112_init(0, DrvSndROM0, DrvSndROM1, 0x100000, 0x100000);
 	NMK112_enabled = 1;
@@ -4388,7 +4392,7 @@ static INT32 MSM6295x1Init(INT32  (*pLoadCallback)())
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
-        MSM6295x1_only = 1;
+	MSM6295x1_only = 1;
 
 	GenericTilesInit();
 
@@ -4459,7 +4463,7 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 		if (pLoadCallback()) return 1;
 	}
 
-	SekInit(0, 0x68000);	
+	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x07ffff, MAP_ROM);
 	SekMapMemory(DrvPalRAM,		0x088000, 0x0887ff, MAP_RAM);
@@ -4490,7 +4494,7 @@ static INT32 AfegaInit(INT32 (*pLoadCallback)(), void (*pZ80Callback)(), INT32 p
 	MSM6295Init(1, 1000000 / (pin7high ? 132 : 165), 1);
 	MSM6295SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	MSM6295SetRoute(1, 0.60, BURN_SND_ROUTE_BOTH);
-        AFEGA_SYS = 1;
+	AFEGA_SYS = 1;
 
 	GenericTilesInit();
 
@@ -5007,8 +5011,8 @@ static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscroll
 
 	if (nBurnLayer & 1) draw_macross_background(DrvBgRAM0, bgscrollx, bgscrolly, 0, 0);
 
-	if (spriteflip == -1) {
-		if (nSpriteEnable & 1) draw_sprites(0, 0x100, 0x0f, -1); // order-based
+	if (spriteflip == -1 || Tharriermode) {
+		if (nSpriteEnable & 1) draw_sprites((spriteflip == -1) ? 0 : 1, 0x100, 0x0f, -1); // order-based
 	} else { // priority-based
 		if (nSpriteEnable & 1) draw_sprites(spriteflip, 0x100, 0x0f, 3);
 		if (nSpriteEnable & 2) draw_sprites(spriteflip, 0x100, 0x0f, 2);
@@ -5336,7 +5340,7 @@ static INT32 Bubl2000Draw()
 	return 0;
 }
 
-static INT32 DrvFrame()
+static INT32 DrvFrame() // tharrier, manybloc
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -5371,8 +5375,8 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nSegment;
-	INT32 nInterleave = 10;
-	INT32 nTotalCycles[2] = { 10000000 / 56, 3000000 / 56 };
+	INT32 nInterleave = 256;
+	INT32 nTotalCycles[2] = { 12000000 / 56, 6000000 / 56 }; // a little oc to quench that horrible slowdown in tharrier
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -5382,14 +5386,15 @@ static INT32 DrvFrame()
 	{
 		nSegment = nTotalCycles[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment);
-		if (i == (nInterleave-1) || i == ((nInterleave / 2) - 1)) {
-			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
-			SekRun(0);
-		}
-		if (i == ((nInterleave/2)-1))	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == (nInterleave-1)) 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdate(i * (nTotalCycles[1] / nInterleave));
+		if (i == 25 || i == ((nInterleave / 2) + 25)) {
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		}
+
+		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 240) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		BurnTimerUpdate((i + 1) * (nTotalCycles[1] / nInterleave));
 	}
 
 	BurnTimerEndFrame(nTotalCycles[1]);

@@ -66,7 +66,7 @@ static struct BurnInputInfo WrallyInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 0,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 1,	"service"	},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy2 + 1,	"diagnostics"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -314,7 +314,7 @@ static INT32 MemIndex()
 	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x100000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x800 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -466,7 +466,7 @@ static void DrvPaletteUpdate()
 {
 	UINT16 *p = (UINT16*)DrvPalRAM;
 
-	for (INT32 i = 0; i < 0x1000/2; i++)
+	for (INT32 i = 0; i < 0x4000/2; i++)
 	{
 		UINT16 x = BURN_ENDIAN_SWAP_INT16(p[i]);
 
@@ -591,13 +591,13 @@ static INT32 DrvDraw()
 	GenericTilemapSetTransMask(0, 0xff01);
 	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
-	draw_sprites(0);
+	if (nSpriteEnable & 1) draw_sprites(0);
 
 	transparent_select = 1;
 	GenericTilemapSetTransMask(0, 0x00ff);
-	if (nSpriteEnable & 1) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
+	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
-	draw_sprites(1);
+	if (nSpriteEnable & 2) draw_sprites(1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -725,7 +725,7 @@ struct BurnDriver BurnDrvWrally = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyRomInfo, wrallyRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
-	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
 
@@ -762,7 +762,7 @@ struct BurnDriver BurnDrvWrallya = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyaRomInfo, wrallyaRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
-	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	WrallyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
 
@@ -801,7 +801,7 @@ struct BurnDriver BurnDrvWrallyb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallybRomInfo, wrallybRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
-	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
 
@@ -835,7 +835,7 @@ struct BurnDriver BurnDrvWrallyat = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrallyatRomInfo, wrallyatRomName, NULL, NULL, WrallyInputInfo, WrallyDIPInfo,
-	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	WrallybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	368, 232, 4, 3
 };
 

@@ -36,6 +36,7 @@ static UINT8 *DrvTxRAM;
 static UINT8 *Drv68KRAM;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvSprBuf2;
+static UINT8 *DrvSprBuf3;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvScrollRAM;
 
@@ -4057,6 +4058,7 @@ static INT32 MemIndex()
 
 	DrvSprBuf		= Next; Next += 0x001000;
 	DrvSprBuf2		= Next; Next += 0x001000;
+	DrvSprBuf3		= Next; Next += 0x001000;
 
 	DrvZ80RAM		= Next; Next += 0x002000;
 
@@ -4659,7 +4661,7 @@ static void DrvPaletteRecalc()
 
 static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 {
-	UINT16 *sprram = (UINT16*)DrvSprBuf2;
+	UINT16 *sprram = (Tharriermode) ? (UINT16*)DrvSprBuf3 : (UINT16*)DrvSprBuf2;
 
 	for (INT32 offs = 0; offs < 0x1000/2; offs += 8)
 	{
@@ -5375,7 +5377,7 @@ static INT32 DrvFrame() // tharrier, manybloc
 	ZetNewFrame();
 
 	INT32 nSegment;
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 263;
 	INT32 nTotalCycles[2] = { 12000000 / 56, 6000000 / 56 }; // a little oc to quench that horrible slowdown in tharrier
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -5392,7 +5394,12 @@ static INT32 DrvFrame() // tharrier, manybloc
 		}
 
 		if (i == (nInterleave - 1)) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 240) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 240-1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		if (i == 241-1) { //sprdma
+			memcpy (DrvSprBuf3, DrvSprBuf2, 0x1000);
+			memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+		}
 
 		BurnTimerUpdate((i + 1) * (nTotalCycles[1] / nInterleave));
 	}
@@ -5411,8 +5418,6 @@ static INT32 DrvFrame() // tharrier, manybloc
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
-
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
 
 	return 0;
 }

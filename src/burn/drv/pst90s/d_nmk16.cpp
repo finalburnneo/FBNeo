@@ -76,6 +76,7 @@ static INT32 Macrossmode = 0; // use macross1 text draw
 static INT32 Strahlmode = 0;
 static INT32 Tdragon2mode = 0; // use draw_sprites_tdragon2()
 static INT32 GunnailMode = 0;
+static INT32 TharrierShakey = 0; // kludge for shakey-ship on the end of level cutscene
 
 static INT32 mustang_bg_xscroll = 0;
 
@@ -4570,6 +4571,7 @@ static INT32 DrvExit()
 	Macrossmode = 0;
 	Strahlmode = 0;
 	Tdragon2mode = 0;
+	TharrierShakey = 0;
 
 	return CommonExit();
 }
@@ -4662,6 +4664,10 @@ static void DrvPaletteRecalc()
 static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 {
 	UINT16 *sprram = (Tharriermode) ? (UINT16*)DrvSprBuf3 : (UINT16*)DrvSprBuf2;
+
+	if (Tharriermode && TharrierShakey && nCurrentFrame & 1) {
+		sprram = (UINT16*)DrvSprBuf2;
+	}
 
 	for (INT32 offs = 0; offs < 0x1000/2; offs += 8)
 	{
@@ -5035,6 +5041,15 @@ static inline void common_draw(INT32 spriteflip, INT32 bgscrollx, INT32 bgscroll
 static INT32 TharrierDraw()
 {
 	INT32 scrollx = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(Drv68KRAM + 0x9f00))) & 0xfff;
+
+	{
+		// shakey ship hack
+		// f3310 & f3410 are 0x100 during the shakey transition
+		UINT16 *f3310 = (UINT16*)&Drv68KRAM[0x3310>>0];
+		UINT16 *f3410 = (UINT16*)&Drv68KRAM[0x3410>>0];
+
+		TharrierShakey = (f3310[0] == 0x100 && f3410[0] == 0x100);
+	}
 
 	common_draw(1, scrollx, 0, 0, 0, 0, 0);
 
@@ -6077,7 +6092,7 @@ static INT32 TharrierLoadCallback()
 		DrvGfxDecode(0x10000, 0x80000, 0x100000);
 	}
 
-	SekInit(0, 0x68000);	
+	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,		0x000000, 0x03ffff, MAP_ROM);
 	SekMapMemory(DrvPalRAM,		0x088000, 0x0883ff, MAP_RAM);
@@ -6099,6 +6114,7 @@ static INT32 TharrierInit()
 	input_high[0] = 0x7fff;
 	input_high[1] = 0xffff;
 	Tharriermode = 1;
+	TharrierShakey = 0;
 
 	return DrvInit(TharrierLoadCallback);
 }

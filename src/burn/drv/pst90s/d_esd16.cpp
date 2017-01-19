@@ -984,13 +984,12 @@ static void esd16_draw_sprites(INT32 priority)
 
 static void draw_background_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, INT32 scrolly)
 {
-	INT32 offs;
 	UINT16 *vram = (UINT16*)vidram;
 
 	scrollx &= 0x3ff;
 	scrolly &= 0x1ff;
 
-	for (offs = 0; offs < 0x4000 / 2; offs++) {
+	for (INT32 offs = 0; offs < 0x4000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 
 		if (DrvGfx1Trans[code] && transp) continue;
@@ -1027,13 +1026,12 @@ static void draw_background_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 
 
 static void draw_background_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, INT32 scrolly)
 {
-	INT32 offs;
 	UINT16 *vram = (UINT16*)vidram;
 
 	scrollx &= 0x3ff;
 	scrolly &= 0x3ff;
 
-	for (offs = 0; offs < 0x1000 / 2; offs++) {
+	for (INT32 offs = 0; offs < 0x1000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x3fff;
 
 		if (DrvGfx2Trans[code] && transp) continue;
@@ -1041,7 +1039,7 @@ static void draw_background_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT3
 		INT32 sx = (offs & 0x3f) << 4;
 		INT32 sy = (offs >> 6) << 4;
 
-		sx -= scrollx;
+		sx -= scrollx-4;
 		sy -= scrolly;
 
 		if (sx > 0x3ff) sx -= 0x400;
@@ -1078,18 +1076,20 @@ static INT32 DrvDraw()
 		}
 	}
 
+	BurnTransferClear();
+
 	if (head_layersize & 0x0001) {
-		draw_background_16x16(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
+		if (nBurnLayer & 1) draw_background_16x16(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
 	} else {
-		draw_background_8x8(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
+		if (nBurnLayer & 1) draw_background_8x8(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
 	}
 
 	if (nSpriteEnable & 1) esd16_draw_sprites(1);
 
 	if (head_layersize & 0x0002) {
-		draw_background_16x16(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
+		if (nBurnLayer & 2) draw_background_16x16(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
 	} else {
-		draw_background_8x8(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
+		if (nBurnLayer & 2) draw_background_8x8(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
 	}
 
 	if (nSpriteEnable & 2) esd16_draw_sprites(0);

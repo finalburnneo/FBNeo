@@ -30,7 +30,7 @@
 	spcinvdj
 	kirameki 	- has extra 68k rom that is banked for sound, not hooked up yet,
 	qtheater
-	quizhuhu	- missing text?
+	quizhuhu	- missing text?  this is normal.
 	elavctrl
 	cleopatr
 	intcup94
@@ -275,9 +275,9 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 		{
 			//bprintf (0, _T("%x, %x, %d\n"),offset,d,b);
 			if ((offset & 3) == 3) {
+				EEPROMSetClockLine((d & 0x08) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 				EEPROMWriteBit(d & 0x04);
 				EEPROMSetCSLine((d & 0x10) ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);
-				EEPROMSetClockLine((d & 0x08) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 			}
 		}	
 		return;
@@ -4947,31 +4947,6 @@ struct BurnDriver BurnDrvPrmtmfgto = {
 	320, 232, 4, 3
 };
 
-static INT32 gunlockRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
 
 // Gunlock (Ver 2.3O 1994/01/20)
 
@@ -4998,6 +4973,32 @@ static struct BurnRomInfo gunlockRomDesc[] = {
 
 STD_ROM_PICK(gunlock)
 STD_ROM_FN(gunlock)
+
+static INT32 gunlockRomCallback()
+{
+	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
+	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
+	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
+	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
+
+	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
+	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
+	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
+
+	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
+	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
+	if (BurnLoadRom(TaitoChars      + 0x300000,  9, 1)) return 1;
+
+	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
+	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
+
+	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
+	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 13, 2)) return 1;
+
+	tile_decode(0x400000, 0x400000);
+
+	return 0;
+}
 
 static INT32 gunlockInit()
 {
@@ -8564,6 +8565,11 @@ static INT32 landmakrpRomCallback()
 	if (BurnLoadRom(TaitoES5505Rom	+ 0xf00001, 41, 2)) return 1;
 
 	tile_decode(0x800000, 0x800000);
+
+	UINT32 *RAM = (UINT32 *)Taito68KRom1;
+
+	RAM[0x1ffff8 / 4] = 0xffffffff;
+	RAM[0x1ffffc / 4] = 0xffff0003;
 
 	return 0;
 }

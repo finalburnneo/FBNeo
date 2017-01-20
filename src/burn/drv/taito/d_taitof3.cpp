@@ -35,7 +35,7 @@
 	cleopatr
 	intcup94
 	pwrgoal
-	gunlock		- title broken
+	gunlock		- blank line on y[0] / video offset? -dink
 	GSEEKER
 	arkretrn
 	tcobra2

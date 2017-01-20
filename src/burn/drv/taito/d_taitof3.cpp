@@ -14,10 +14,10 @@
 	RIDINGF
 	LIGHTBR
 	RINGRAGE
-	LANDMAKER
+	LANDMAKER & proto
 	DARIUSG
 	PUCHICAR
-	PBOBBLE2 clones (parent broken??, gives illegal opcode error...)
+	PBOBBLE2 & clones
 	pbobble3 
 	pbobble4
 	bublbob2
@@ -42,9 +42,7 @@
 
 	broken
 
-	PBOBBLE2	- hits illegal instruction???
 	commandw	- bad graphics
-	landmakrp	- ?
 
 	not tested
 

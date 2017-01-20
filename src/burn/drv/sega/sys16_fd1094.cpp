@@ -7,7 +7,7 @@ static UINT8 *fd1094_key; // the memory region containing key
 static UINT16 *fd1094_cpuregion; // the CPU region with encrypted code
 static UINT32  fd1094_cpuregionsize; // the size of this region in bytes
 
-static UINT16* fd1094_userregion; // a user region where the current decrypted state is put and executed from
+UINT16* fd1094_userregion; // a user region where the current decrypted state is put and executed from
 static UINT16* fd1094_cacheregion[S16_NUMCACHE]; // a cache region where S16_NUMCACHE states are stored to improve performance
 static INT32 fd1094_cached_states[S16_NUMCACHE]; // array of cached state numbers
 static INT32 fd1094_current_cacheposition; // current position in cache array

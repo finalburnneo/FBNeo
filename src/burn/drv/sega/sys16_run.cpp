@@ -67,7 +67,7 @@ UINT8  *System16Tiles         = NULL;
 UINT8  *System16Sprites       = NULL;
 UINT8  *System16Sprites2      = NULL;
 UINT8  *System16Roads         = NULL;
-UINT32   *System16Palette       = NULL;
+UINT32 *System16Palette       = NULL;
 UINT8  *System16TempGfx       = NULL;
 
 UINT32 System16RomSize = 0;
@@ -145,6 +145,8 @@ static UINT8 N7751Command;
 static UINT32 N7751RomAddress;
 static UINT32 UPD7759BankAddress;
 static UINT32 RF5C68PCMBankAddress;
+
+UINT8 *System16I8751InitialConfig = NULL;
 
 Sim8751 Simulate8751;
 System16Map68K System16Map68KDo;
@@ -232,6 +234,12 @@ static INT32 System16DoReset()
 		fd1094_machine_init();
 	}
 	
+	if (System16I8751InitialConfig) {
+		SekOpen(0);
+		sega_315_5195_configure_explicit(System16I8751InitialConfig);
+		SekClose();
+	}
+	
 	if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) {
 		SekOpen(0);
 		SekMapMemory(System16Rom, 0x000000, 0x0fffff, MAP_ROM);
@@ -239,6 +247,11 @@ static INT32 System16DoReset()
 	}
 	
 	SekOpen(0);
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
+		if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) == 0) {
+			sega_315_5195_reset();
+		}
+	}
 	SekReset();
 	SekClose();
 
@@ -308,7 +321,7 @@ static INT32 System16DoReset()
 		BootlegFgPage[i] = 0;
 	}
 	
-	if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_5358) {
+	if (((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5358) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5358_SMALL)) {
 		System16SpriteBanks[ 0] = 0;
 		System16SpriteBanks[ 1] = 255;
 		System16SpriteBanks[ 2] = 255;
@@ -481,7 +494,7 @@ void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d)
 				UPD7759StartWrite(0,d & 0x80);
 				UPD7759ResetWrite(0,d & 0x40);
 				
-				if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_5358) {
+				if (((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5358) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5358_SMALL)) {
 					if (!(d & 0x04)) UPD7759BankAddress = 0x00000;
 					if (!(d & 0x08)) UPD7759BankAddress = 0x10000;
 					if (!(d & 0x10)) UPD7759BankAddress = 0x20000;
@@ -490,12 +503,12 @@ void __fastcall System16Z80PortWrite(UINT16 a, UINT8 d)
 					
 				}
 				
-				if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_5521) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_5704_PS2)) {
+				if (((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5521) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5704) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5704_PS2)) {
 					UPD7759BankAddress = ((d & 0x08) >> 3) * 0x20000;
 					UPD7759BankAddress += (d & 0x07) * 0x4000;
 				}
 				
-				if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_5797) {
+				if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5797) {
 					UPD7759BankAddress = ((d & 0x08) >> 3) * 0x40000;
 					UPD7759BankAddress += ((d & 0x10) >> 4) * 0x20000;
 					UPD7759BankAddress += (d & 0x07) * 0x04000;
@@ -910,7 +923,7 @@ static INT32 System16MemIndex()
 		Z80RomSize = 0x40000;
 	}
 	
-	if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_5704_PS2) {
+	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5704_PS2) {
 		System16RamSize = 0x40000;
 	}
 	
@@ -1808,7 +1821,7 @@ INT32 System16Init()
 	System16MemIndex();
 	
 	// Load Roms
-	if (!(BurnDrvGetHardwareCode() & HARDWARE_SEGA_5704_PS2)) {
+	if (!((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_5704_PS2)) {
 		nRet = System16LoadRoms(1); if (nRet) return 1;
 	}
 	if (System16CustomLoadRomDo) { nRet = System16CustomLoadRomDo(); if (nRet) return 1; }
@@ -1922,18 +1935,13 @@ INT32 System16Init()
 		} else {
 			SekInit(0, 0x68000);
 			SekOpen(0);
-			SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
-			SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
-			SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-			SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-			SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
-			SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-			SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-		
-			SekSetReadByteHandler(0, System16BReadByte);
-			SekSetWriteByteHandler(0, System16BWriteByte);
-			SekSetWriteWordHandler(0, System16BWriteWord);
+			SekSetReadByteHandler(0, sega_315_5195_read_byte);
+			SekSetReadWordHandler(0, sega_315_5195_read_word);
+			SekSetWriteByteHandler(0, sega_315_5195_write_byte);
+			SekSetWriteWordHandler(0, sega_315_5195_write_word);
 			SekClose();
+			
+			sega_315_5195_init();
 		}
 		
 		if (System16Z80RomNum || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM)) {
@@ -2474,6 +2482,10 @@ INT32 System16Exit()
 	
 	if (nBurnGunNumPlayers) BurnGunExit();
 	
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
+		sega_315_5195_exit();
+	}
+	
 	GenericTilesExit();
 	System16TileMapsExit();
 
@@ -2599,6 +2611,7 @@ INT32 System16Exit()
  	System16CustomDecryptOpCodeDo = NULL;
  	System16ProcessAnalogControlsDo = NULL;
  	System16MakeAnalogInputsDo = NULL;
+	System16I8751InitialConfig = NULL;
  	
  	memset(multiply, 0, sizeof(multiply));
  	memset(divide, 0, sizeof(divide));

@@ -114,6 +114,8 @@ extern bool System16HasGears;
 extern INT32 nSystem16CyclesDone[4]; 
 extern UINT32 System16ClockSpeed;
 
+extern UINT8* System16I8751InitialConfig;
+
 typedef void (*Sim8751)();
 extern Sim8751 Simulate8751;
 
@@ -290,9 +292,30 @@ void YBoardRender();
 void FD1089Decrypt();
 
 // sys16_fd1094.cpp
+extern UINT16* fd1094_userregion;
+
 void fd1094_driver_init(INT32 nCPU);
 void fd1094_machine_init();
 void fd1094_exit();
 void fd1094_scan(INT32 nAction);
 
 // genesis_vid.cpp
+
+// sega_315_5195.cpp
+typedef UINT8 (*sega_315_5195_custom_io)(UINT32);
+extern sega_315_5195_custom_io sega_315_5195_custom_io_do;
+
+typedef void (*sega_315_5195_custom_io_write)(UINT32, UINT8);
+extern sega_315_5195_custom_io_write sega_315_5195_custom_io_write_do;
+
+UINT8 sega_315_5195_io_read(UINT32 offset);
+void sega_315_5195_io_write(UINT32 offset, UINT8 d);
+UINT8 __fastcall sega_315_5195_read_byte(UINT32 a);
+UINT16 __fastcall sega_315_5195_read_word(UINT32 a);
+void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d);
+void __fastcall sega_315_5195_write_word(UINT32 a, UINT16 d);
+
+void sega_315_5195_reset();
+void sega_315_5195_configure_explicit(UINT8 *map_data);
+void sega_315_5195_init();
+void sega_315_5195_exit();

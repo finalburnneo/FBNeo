@@ -5799,7 +5799,7 @@ void BootlegMapZ80()
 }
 
 /*====================================================
-Memory Handlers
+Memory Handlers - used by games not using the mapper
 ====================================================*/
 
 UINT8 __fastcall System16BReadByte(UINT32 a)
@@ -5877,19 +5877,6 @@ void __fastcall System16BWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall AliensynWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xc00007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
 void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
@@ -5954,330 +5941,6 @@ void __fastcall AltbeastblGfxWriteWord(UINT32 a, UINT16 d)
 #if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X, 0x%04X\n"), a, d, d ^ 0xffff);
 #endif
-}
-
-UINT8 __fastcall AtomicpReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xc41001: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0xc41003: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0xc41005: {
-			return System16Dip[0];
-		}
-		
-		case 0xc41007: {
-			return System16Dip[1];
-		}
-	}
-	
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
-#endif
-
-	return 0xff;
-}
-
-void __fastcall AtomicpWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileByteWrite((a - 0x400000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x123407: {
-			// ???
-			return;
-		}
-		
-		case 0x3f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x080000: {
-			BurnYM2413Write(0, d);
-			return;
-		}
-		
-		case 0x080002: {
-			BurnYM2413Write(1, d);
-			return;
-		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
-#endif
-}
-
-void __fastcall AurailWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xfc0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0xfc0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
-UINT8 __fastcall BayrouteReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0x901001: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0x901003: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0x901007: {
-			return 0xff - System16Input[2];
-		}
-		
-		case 0x902001: {
-			return System16Dip[0];
-		}
-
-		case 0x902003: {
-			return System16Dip[1];
-		}
-	}
-
-	return 0xff;
-}
-
-void __fastcall BayrouteWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x700000 && a <= 0x70ffff) {
-		System16BTileByteWrite((a - 0x700000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x900001: {
-			System16VideoEnable = d & 0x20;
-			System16ScreenFlip = d & 0x40;
-			return;
-		}
-		
-		case 0xff0007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-void __fastcall BayrouteWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0x700000 && a <= 0x70ffff) {
-		System16BTileWordWrite(a - 0x700000, d);
-		return;
-	}
-}
-
-UINT8 __fastcall BulletReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xc41001: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0xc41003: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0xc41005: {
-			return 0xff - System16Input[3];
-		}
-		
-		case 0xc41007: {
-			return 0xff - System16Input[2];
-		}
-		
-		case 0xc42001: {
-			return System16Dip[0];
-		}
-
-		case 0xc42003: {
-			return System16Dip[1];
-		}
-	}
-
-	return 0xff;
-}
-
-void __fastcall BulletWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xc00007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-UINT8 __fastcall CottonReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0x601001: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0x601003: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0x601005: {
-			return 0xff;
-		}
-		
-		case 0x601007: {
-			return 0xff - System16Input[2];
-		}
-		
-		case 0x602001: {
-			return System16Dip[0];
-		}
-
-		case 0x602003: {
-			return System16Dip[1];
-		}
-		
-		case 0x7038f7: {
-			return (System16Rom[SekGetPC(0) + 1] << 8) | System16Rom[SekGetPC(0) + 0];
-		}
-	}
-	
-	return 0xff;
-}
-
-void __fastcall CottonWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileByteWrite((a - 0x400000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x100001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x100003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	
-		case 0x600001: {
-			System16VideoEnable = d & 0x20;
-			System16ScreenFlip = d & 0x40;
-			return;
-		}
-		
-		case 0xff0007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-void __fastcall CottonWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileWordWrite(a - 0x400000, d);
-		return;
-	}
-}
-
-void __fastcall DduxWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
 }
 
 void __fastcall DduxblGfxWriteByte(UINT32 a, UINT8 d)
@@ -6345,6 +6008,28 @@ void __fastcall DduxblGfxWriteWord(UINT32 a, UINT16 d)
 void __fastcall DduxblWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
+		case 0x3f0001: {
+			if (System16TileBanks[0] != (d & 0x07)) {
+				System16TileBanks[0] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+		
+		case 0x3f0003: {
+			if (System16TileBanks[1] != (d & 0x07)) {
+				System16TileBanks[1] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+		
 		case 0xc40001: {
 			System16VideoEnable = d & 0x20;
 			System16ScreenFlip = d & 0x40;
@@ -6374,7 +6059,7 @@ static INT16 DunkshotTrack3Y = 0;
 static INT16 DunkshotTrack4X = 0;
 static INT16 DunkshotTrack4Y = 0;
 
-void DunkshotMakeAnalogInputs()
+static void DunkshotMakeAnalogInputs()
 {
 	if (System16InputPort2[0]) DunkshotTrack1X += 0x40;
 	if (System16InputPort2[1]) DunkshotTrack1X -= 0x40;
@@ -6417,111 +6102,36 @@ void DunkshotMakeAnalogInputs()
 	if (DunkshotTrack4Y < 0) DunkshotTrack4Y = 0xfc0;
 }
 
-UINT8 __fastcall DunkshotReadByte(UINT32 a)
+static UINT8 DunkshotReadIO(UINT32 offset)
 {
-	switch (a) {
-		case 0xc43001: {
-			return DunkshotTrack1X & 0xff;
-		}
-
-		case 0xc43003: {
-			return DunkshotTrack1X >> 8;
-		}
-		
-		case 0xc43005: {
-			return DunkshotTrack1Y & 0xff;
-		}
-
-		case 0xc43007: {
-			return DunkshotTrack1Y >> 8;
-		}
-		
-		case 0xc43009: {
-			return DunkshotTrack2X & 0xff;
-		}
-
-		case 0xc4300b: {
-			return DunkshotTrack2X >> 8;
-		}
-		
-		case 0xc4300d: {
-			return DunkshotTrack2Y & 0xff;
-		}
-
-		case 0xc4300f: {
-			return DunkshotTrack2Y >> 8;
-		}
-		
-		case 0xc43011: {
-			return DunkshotTrack3X & 0xff;
-		}
-
-		case 0xc43013: {
-			return DunkshotTrack3X >> 8;
-		}
-		
-		case 0xc43015: {
-			return DunkshotTrack3Y & 0xff;
-		}
-
-		case 0xc43017: {
-			return DunkshotTrack3Y >> 8;
-		}
-		
-		case 0xc43019: {
-			return DunkshotTrack4X & 0xff;
-		}
-
-		case 0xc4301b: {
-			return DunkshotTrack4X >> 8;
-		}
-		
-		case 0xc4301d: {
-			return DunkshotTrack4Y & 0xff;
-		}
-
-		case 0xc4301f: {
-			return DunkshotTrack4Y >> 8;
+	switch (offset & (0x3000 / 2)) {
+		case 0x3000 / 2: {
+			switch (offset & 0x0f) {
+				case 0x00: return DunkshotTrack1X & 0xff;
+				case 0x01: return DunkshotTrack1X >> 8;
+				case 0x02: return DunkshotTrack1Y & 0xff;
+				case 0x03: return DunkshotTrack1Y >> 8;
+				case 0x04: return DunkshotTrack2X & 0xff;
+				case 0x05: return DunkshotTrack2X >> 8;
+				case 0x06: return DunkshotTrack2Y & 0xff;
+				case 0x07: return DunkshotTrack2Y >> 8;
+				case 0x08: return DunkshotTrack3X & 0xff;
+				case 0x09: return DunkshotTrack3X >> 8;
+				case 0x0a: return DunkshotTrack3Y & 0xff;
+				case 0x0b: return DunkshotTrack3Y >> 8;
+				case 0x0c: return DunkshotTrack4X & 0xff;
+				case 0x0d: return DunkshotTrack4X >> 8;
+				case 0x0e: return DunkshotTrack4Y & 0xff;
+				case 0x0f: return DunkshotTrack4Y >> 8;
+			}
+			break;
 		}
 	}
-
-	return 0xff;
+	
+	return sega_315_5195_io_read(offset);
 }
 
-UINT16 __fastcall EswatMultiply0ReadWord(UINT32 a)
-{
-	return System16MultiplyChipRead(0, (a - 0x3e0000) >> 1);
-}
-
-void __fastcall EswatMultiply0WriteWord(UINT32 a, UINT16 d)
-{
-	System16MultiplyChipWrite(0, (a - 0x3e0000) >> 1, d);
-}
-
-UINT16 __fastcall EswatCompare0ReadWord(UINT32 a)
-{
-	return System16CompareTimerChipRead(0, (a - 0x3e1000) >> 1);
-}
-
-void __fastcall EswatCompare0WriteWord(UINT32 a, UINT16 d)
-{
-	System16CompareTimerChipWrite(0, (a - 0x3e1000) >> 1, d);
-}
-
-void __fastcall EswatSoundWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x123407: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-void __fastcall EswatWriteByte(UINT32 a, UINT8 d)
+void __fastcall EswatblBankWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x3e2001: {
@@ -6536,33 +6146,6 @@ void __fastcall EswatWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x3e2003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
-void __fastcall Eswatj1WriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f0003: {
 			if (System16TileBanks[1] != (d & 0x07)) {
 				System16TileBanks[1] = d & 0x07;
 				System16RecalcBgTileMap = 1;
@@ -6647,7 +6230,7 @@ static INT16 ExctleagTrack1Y = 0;
 static INT16 ExctleagTrack2X = 0;
 static INT16 ExctleagTrack2Y = 0;
 
-void ExctleagMakeAnalogInputs()
+static void ExctleagMakeAnalogInputs()
 {
 	if (System16InputPort4[0]) ExctleagTrack1X += 0x1;
 	if (System16InputPort4[1]) ExctleagTrack1X -= 0x1;
@@ -6670,86 +6253,55 @@ void ExctleagMakeAnalogInputs()
 	if (ExctleagTrack2Y < 0) ExctleagTrack2Y = 0xfc;
 }
 
-UINT8 __fastcall ExctleagReadByte(UINT32 a)
+static UINT8 ExctleagReadIO(UINT32 offset)
 {
-	switch (a) {
-		case 0xc41001: {
+	switch (offset) {
+		case 0x0800: {
 			return 0xff - System16Input[0];
 		}
 		
-		case 0xc41003: {
+		case 0x0801: {
 			return 0xff - System16Input[1];
 		}
 		
-		case 0xc41005: {
+		case 0x0802: {
 			return 0xff - System16Input[3];
 		}
 		
-		case 0xc41007: {
+		case 0x0803: {
 			return 0xff - System16Input[2];
 		}
 		
-		case 0xc42001: {
+		case 0x1000: {
 			return System16Dip[0];
 		}
 
-		case 0xc42003: {
+		case 0x1001: {
 			return System16Dip[1];
 		}
 		
-		case 0xc43001:
-		case 0xc43003: {
+		case 0x1800:
+		case 0x1801: {
 			return ExctleagTrack1X;
 		}
 		
-		case 0xc43005:
-		case 0xc43007: {
+		case 0x1802:
+		case 0x1803: {
 			return ExctleagTrack1Y;
 		}
 		
-		case 0xc43009:
-		case 0xc4300b: {
+		case 0x1804:
+		case 0x1805: {
 			return ExctleagTrack2X;
 		}
 		
-		case 0xc4300d:
-		case 0xc4300f: {
+		case 0x1806:
+		case 0x1807: {
 			return ExctleagTrack2Y;
 		}
 	}
-
-	return 0xff;
-}
-
-void __fastcall Fantzn2xWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
-#endif
+	
+	return sega_315_5195_io_read(offset);
 }
 
 UINT8 __fastcall FpointblReadByte(UINT32 a)
@@ -6851,125 +6403,47 @@ void __fastcall FpointblGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall GoldnaxeTileWriteByte(UINT32 a, UINT8 d)
-{
-	System16BTileByteWrite((a - 0x100000) ^ 1, d);
-}
-
-void __fastcall GoldnaxeTileWriteWord(UINT32 a, UINT16 d)
-{
-	System16BTileWordWrite(a - 0x100000, d);
-}
-
-UINT16 __fastcall GoldnaxeMultiply0ReadWord(UINT32 a)
-{
-	return System16MultiplyChipRead(0, (a - 0x1f0000) >> 1);
-}
-
-void __fastcall GoldnaxeMultiply0WriteWord(UINT32 a, UINT16 d)
-{
-	System16MultiplyChipWrite(0, (a - 0x1f0000) >> 1, d);
-}
-
-UINT16 __fastcall GoldnaxeCompare0ReadWord(UINT32 a)
-{
-	return System16CompareTimerChipRead(0, (a - 0x1f1000) >> 1);
-}
-
-void __fastcall GoldnaxeCompare0WriteWord(UINT32 a, UINT16 d)
-{
-	System16CompareTimerChipWrite(0, (a - 0x1f1000) >> 1, d);
-}
-
-UINT16 __fastcall GoldnaxeCompare1ReadWord(UINT32 a)
-{
-	return System16CompareTimerChipRead(1, (a - 0x1e0000) >> 1);
-}
-
-void __fastcall GoldnaxeCompare1WriteWord(UINT32 a, UINT16 d)
-{
-	System16CompareTimerChipWrite(1, (a - 0x1e0000) >> 1, d);
-}
-
-void __fastcall Goldnaxe1WriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x1f2001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x1f2003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
-void __fastcall Goldnaxe3WriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x1f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x1f0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
 static UINT8 HwchampInputVal;
 
-UINT16 __fastcall HwchampCtrlReadWord(UINT32 a)
+static UINT8 HwchampReadIO(UINT32 offset)
 {
 	UINT16 result;
 	
-	switch (a) {
-		case 0xc43020: 
-		case 0xc43022: 
-		case 0xc43024: {
+	switch (offset) {
+		case 0x0800: {
+			return 0xff - System16Input[0];
+		}
+		
+		case 0x1000: {
+			return System16Dip[1];
+		}
+		
+		case 0x1001: {
+			return System16Dip[0];
+		}
+	
+		case 0x1810:
+		case 0x1811:
+		case 0x1812:
+		case 0x1818: 
+		case 0x1819: 
+		case 0x181a: {
 			result = (HwchampInputVal & 0x80) >> 7;
 			HwchampInputVal <<= 1;
-			return result;
+			return result & 0xff;
 		}
 	}
-
-	return 0xffff;
+	
+	return sega_315_5195_io_read(offset);
 }
 
-void __fastcall HwchampCtrlWriteWord(UINT32 a, UINT16 /*d*/)
+static void HwchampWriteIO(UINT32 offset, UINT8 d)
 {
 	UINT8 temp = 0;
 	
-	switch (a) {
-		case 0xc43020: {
+	switch (offset) {
+		case 0x1810:
+		case 0x1818: {
 			temp = 0x80 + (System16AnalogPort0 >> 4);
 			if (temp < 0x01) temp = 0x01;
 			if (temp > 0xfe) temp = 0xfe;
@@ -6977,137 +6451,24 @@ void __fastcall HwchampCtrlWriteWord(UINT32 a, UINT16 /*d*/)
 			return;
 		}
 		
-		case 0xc43022: {
+		case 0x1811:
+		case 0x1819: {
 			temp = 0x26;
 			if (System16AnalogPort2 > 1) temp = 0xfe;
 			HwchampInputVal = temp;
 			return;
 		}
 		
-		case 0xc43024: {
+		case 0x1812:
+		case 0x181a: {
 			temp = 0x26;
 			if (System16AnalogPort1 > 1) temp = 0xfe;
 			HwchampInputVal = temp;
 			return;
 		}
 	}
-}
 
-void __fastcall HwchampWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
-void __fastcall MvpWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3f2001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f2003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
-void __fastcall MvpjWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3f0001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3f0003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
-void __fastcall PassshtWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xc00007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-UINT8 __fastcall PassshtaReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xc43001: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0xc43003: {
-			return 0xff - System16Input[2];
-		}
-		
-		case 0xc43005: {
-			return 0xff - System16Input[3];
-		}
-		
-		case 0xc43007: {
-			return 0xff - System16Input[4];
-		}
-	}
-
-	return 0xff;
+	sega_315_5195_io_write(offset, d);
 }
 
 void __fastcall PassshtbGfxWriteWord(UINT32 a, UINT16 d)
@@ -7154,161 +6515,6 @@ void __fastcall PassshtbGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-UINT8 __fastcall RiotcityReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xf81001: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0xf81003: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0xf81007: {
-			return 0xff - System16Input[2];
-		}
-		
-		case 0xf82001: {
-			return System16Dip[0];
-		}
-
-		case 0xf82003: {
-			return System16Dip[1];
-		}
-	}
-
-	return 0xff;
-}
-
-void __fastcall RiotcityWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0xfa0000 && a <= 0xfaffff) {
-		System16BTileByteWrite((a - 0xfa0000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0xf00007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-		
-		case 0xf20001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0xf20003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-
-		case 0xf80001: {
-			System16VideoEnable = d & 0x20;
-			System16ScreenFlip = d & 0x40;
-			return;
-		}
-	}
-}
-
-void __fastcall RiotcityWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0xfa0000 && a <= 0xfaffff) {
-		System16BTileWordWrite(a - 0xfa0000, d);
-		return;
-	}
-}
-
-UINT16 __fastcall RyukyuReadWord(UINT32 a)
-{
-	switch (a) {
-		case 0x601000: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0x601002: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0x602000: {
-			return System16Dip[0];
-		}
-		
-		case 0x602002: {
-			return System16Dip[1];
-		}
-	}
-	
-	return 0xffff;
-}
-
-void __fastcall RyukyuWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileWordWrite(a - 0x400000, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x100000: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x100002: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x600000: {
-			System16VideoEnable = d & 0x20;
-			System16ScreenFlip = d & 0x40;
-			return;
-		}
-	}
-}
-
-void __fastcall RyukyuWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xff0007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
 static INT16 SdiTrack1X = 0;
 static INT16 SdiTrack1Y = 0;
 static INT16 SdiTrack2X = 0;
@@ -7323,7 +6529,46 @@ void SdibMakeAnalogInputs()
 	SdiTrack2Y += (System16AnalogPort3 >> 8) & 0xff;
 }
 
-UINT8 __fastcall SdibReadByte(UINT32 a)
+static UINT8 SdibReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x0800: {
+			return 0xff - System16Input[0];
+		}
+		
+		case 0x0802: {
+			return 0xff - System16Input[1];
+		}
+		
+		case 0x1000: {
+			return System16Dip[1];
+		}
+		
+		case 0x1001: {
+			return System16Dip[0];
+		}
+		
+		case 0x1800: {
+			return SdiTrack1X;
+		}
+		
+		case 0x1802: {
+			return SdiTrack1Y;
+		}
+		
+		case 0x1804: {
+			return SdiTrack2X;
+		}
+		
+		case 0x1806: {
+			return SdiTrack2Y;
+		}
+	}
+	
+	return sega_315_5195_io_read(offset);
+}
+
+UINT8 __fastcall SdiblReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -7362,7 +6607,7 @@ UINT8 __fastcall SdibReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall SdibSoundWriteByte(UINT32 a, UINT8 d)
+void __fastcall SdiblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x123407: {
@@ -7377,87 +6622,55 @@ void __fastcall SdibSoundWriteByte(UINT32 a, UINT8 d)
 
 static UINT8 MahjongInputNum;
 
-UINT16 __fastcall SjryukoReadWord(UINT32 a)
+static UINT8 SjryukoReadIO(UINT32 offset)
 {
-	SEK_DEF_READ_WORD(0, a);
-	
-	return 0xffff;
-}
-
-UINT8 __fastcall SjryukoReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xc41001: {
+	switch (offset) {
+		case 0x0800: {
 			return 0xff - System16Input[0];
 		}
 		
-		case 0xc41003: {
+		case 0x0801: {
 			if (System16Input[MahjongInputNum + 1] != 0xff) return 0xff & ~(1 << MahjongInputNum);
 			return 0xff;
 		}
 		
-		case 0xc41005: {
+		case 0x802: {
 			return 0xff - System16Input[MahjongInputNum + 1];
 		}
 		
-		case 0xc42001: {
+		case 0x803: {
+			0xff - System16Input[2];
+		}
+		
+		case 0x1000: {
 			return System16Dip[0];
 		}
 
-		case 0xc42003: {
+		case 0x1001: {
 			return System16Dip[1];
 		}
 	}
 	
-	return 0xff;
+	bprintf(PRINT_NORMAL, _T("Read %x\n"), offset);
+	
+	
+	return sega_315_5195_io_read(offset);
 }
 
-void __fastcall SjryukoWriteByte(UINT32 a, UINT8 d)
+static void SjryukoWriteIO(UINT32 offset, UINT8 d)
 {
-	switch (a) {
-		case 0xc40003: {
+	switch (offset) {
+		case 0x0001: {
 			System16VideoEnable = d & 0x20;
 			System16ScreenFlip = d & 0x40;
 			if (d & 4) MahjongInputNum = (MahjongInputNum + 1) % 6;
 			return;
 		}
-		
-		case 0xc00007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-UINT16 __fastcall SonicbomReadWord(UINT32 a)
-{
-	switch (a) {
-		case 0xc42000: {
-			return (0xff << 8) | System16Dip[0];
-		}
-		
-		case 0xc42002: {
-			return (0xff << 8) | System16Dip[1];
-		}
 	}
 	
-	return 0xffff;
-}
-
-void __fastcall SonicbomWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x123407: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
+	bprintf(PRINT_NORMAL, _T("Write %x\n"), offset, d);
+	
+	sega_315_5195_io_write(offset, d);
 }
 
 void __fastcall TetrisblGfxWriteWord(UINT32 a, UINT16 d)
@@ -7517,122 +6730,6 @@ void __fastcall TetrisblSndWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall ToryumonReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xe41001: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0xe41003: {
-			return 0xff - System16Input[1];
-		}
-		
-		case 0xe41005: {
-			return 0;
-		}
-		
-		case 0xe41007: {
-			return 0xff - System16Input[2];
-		}
-		
-		case 0xe42001: {
-			return System16Dip[0];
-		}
-
-		case 0xe42003: {
-			return System16Dip[1];
-		}
-	}
-
-	return 0xff;
-}
-
-void __fastcall ToryumonWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x3e2001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x3e2003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0xe40001: {
-			System16VideoEnable = d & 0x20;
-			System16ScreenFlip = d & 0x40;
-			return;
-		}
-		
-		case 0xfe0007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
-UINT8 __fastcall TturfReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0x602001: {
-			return System16Dip[0];
-		}
-
-		case 0x602003: {
-			return System16Dip[1];
-		}
-	}
-
-	return 0xff;
-}
-
-void __fastcall TturfWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileByteWrite((a - 0x400000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x600001: {
-			System16VideoEnable = d & 0x20;
-			System16ScreenFlip = d & 0x40;
-			return;
-		}
-	}
-}
-
-void __fastcall Wb3WriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xdf0007: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			ZetClose();
-			return;
-		}
-	}
-}
-
 void __fastcall Wb3bblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
@@ -7677,43 +6774,6 @@ void __fastcall Wb3bblGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall WrestwarTileWriteByte(UINT32 a, UINT8 d)
-{
-	System16BTileByteWrite((a - 0x100000) ^ 1, d);
-}
-
-void __fastcall WrestwarTileWriteWord(UINT32 a, UINT16 d)
-{
-	System16BTileWordWrite(a - 0x100000, d);
-}
-
-void __fastcall WrestwarWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0x400001: {
-			if (System16TileBanks[0] != (d & 0x07)) {
-				System16TileBanks[0] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-		
-		case 0x400003: {
-			if (System16TileBanks[1] != (d & 0x07)) {
-				System16TileBanks[1] = d & 0x07;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-			return;
-		}
-	}
-}
-
 /*====================================================
 Driver Inits
 ====================================================*/
@@ -7725,29 +6785,7 @@ static INT32 Fantzn2xYOffsets[8]     = { 0, 32, 64, 96, 128, 160, 192, 224 };
 static INT32 AliensynInit()
 {
 	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc00006, 0xc00007, MAP_WRITE);
-		SekSetWriteByteHandler(1, AliensynWriteByte);
-		SekClose();
-		AlienSyndrome = true;
-	}
-	
-	return nRet;
-}
-
-static INT32 Aliensyn3Init()
-{
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc00006, 0xc00007, MAP_WRITE);
-		SekSetWriteByteHandler(1, AliensynWriteByte);
-		SekClose();
-		AlienSyndrome = true;
-	}
+	AlienSyndrome = true;
 	
 	return nRet;
 }
@@ -7876,34 +6914,6 @@ static INT32 Altbeast6Init()
 	return nRet;
 }
 
-static INT32 Altbeastj3Init()
-{
-	// Start off with some sprite rom and let the load routine add on the rest
-	System16SpriteRomSize = 0x1a0000 - 0xe0000;
-
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
-		if (pTemp) {
-			memcpy(pTemp, System16Sprites, 0xe0000);
-			memset(System16Sprites, 0, 0x1a0000);
-			memcpy(System16Sprites + 0x000000, pTemp + 0x00000, 0x20000);
-			memcpy(System16Sprites + 0x040000, pTemp + 0x20000, 0x20000);
-			memcpy(System16Sprites + 0x080000, pTemp + 0x40000, 0x20000);
-			memcpy(System16Sprites + 0x0c0000, pTemp + 0x60000, 0x20000);
-			memcpy(System16Sprites + 0x100000, pTemp + 0x80000, 0x20000);
-			memcpy(System16Sprites + 0x140000, pTemp + 0xa0000, 0x20000);
-			memcpy(System16Sprites + 0x180000, pTemp + 0xc0000, 0x20000);
-		} else {
-			nRet = 1;
-		}
-		BurnFree(pTemp);
-	}
-	
-	return nRet;
-}
-
 static INT32 Altbeast4Init()
 {
 	// Start off with some sprite rom and let the load routine add on the rest
@@ -7932,151 +6942,50 @@ static INT32 Altbeast4Init()
 	return nRet;
 }
 
+static void AltbeastblMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetReadByteHandler(0, System16BReadByte);
+	SekSetWriteByteHandler(0, System16BWriteByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekMapHandler(1, 0x418000, 0x418031, MAP_WRITE);
+	SekSetWriteWordHandler(1, AltbeastblGfxWriteWord);
+	SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
+	SekSetWriteByteHandler(2, AltbeastblSoundWriteByte);
+	SekClose();
+}
+
 static INT32 AltbeastblInit()
 {
+	System16Map68KDo = AltbeastblMap68K;
+	
 	INT32 nRet = System16Init();
 	
 	System16SpriteXOffset = 114;
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x418000, 0x418031, MAP_WRITE);
-		SekSetWriteWordHandler(1, AltbeastblGfxWriteWord);
-		SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
-		SekSetWriteByteHandler(2, AltbeastblSoundWriteByte);
-		SekClose();
-		
 		bSystem16BootlegRender = true;
 	}
 	
 	return nRet;
 }
 
-void AtomicpMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x01ffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x01ffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetWriteWordHandler(0, System16BWriteWord);
-	SekSetReadByteHandler(0, AtomicpReadByte);
-	SekSetWriteByteHandler(0, AtomicpWriteByte);
-	SekClose();
-}
-
 static INT32 AtomicpInit()
 {
-	System16Map68KDo = AtomicpMap68K;
-	
 	INT32 nRet = System16Init();
 	
 	System16IgnoreVideoEnable = 1;
 	System16YM2413IRQInterval = 166;
 	
 	return nRet;
-}
-
-static INT32 AurailInit()
-{
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xfc0000, 0xfc0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, AurailWriteByte);
-		SekClose();
-	}
-	
-	return nRet;
-}
-
-static INT32 Aurail1Init()
-{
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xfc0000, 0xfc0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, AurailWriteByte);
-		SekClose();
-	}
-	
-	return nRet;
-}
-
-static INT32 AurailjInit()
-{
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xfc0000, 0xfc0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, AurailWriteByte);
-		SekClose();
-	}
-	
-	return nRet;
-}
-
-void BayrouteMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16Ram           , 0x500000, 0x503fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x600000, 0x6007ff, MAP_RAM);
-	SekMapMemory(System16TileRam       , 0x700000, 0x70ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x710000, 0x710fff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x800000, 0x800fff, MAP_RAM);
-	SekSetReadByteHandler(0, BayrouteReadByte);
-	SekSetWriteByteHandler(0, BayrouteWriteByte);
-	SekSetWriteWordHandler(0, BayrouteWriteWord);
-	SekClose();
-}
-
-static INT32 BayrouteInit()
-{
-	System16Map68KDo = BayrouteMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
-	return System16Init();
-}
-
-static INT32 Bayroute1Init()
-{
-	System16Map68KDo = BayrouteMap68K;
-	System16CustomLoadRomDo = CustomLoadRom20000;
-	
-	return System16Init();
-}
-
-void Blox16bMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetWriteWordHandler(0, System16BWriteWord);
-	SekSetReadByteHandler(0, System16BReadByte);
-	SekSetWriteByteHandler(0, System16BWriteByte);
-	SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-	SekSetWriteByteHandler(1, Fantzn2xWriteByte);
-	SekClose();
 }
 
 static INT32 Blox16bLoadRom()
@@ -8100,48 +7009,8 @@ static INT32 Blox16bLoadRom()
 
 static INT32 Blox16bInit()
 {
-	System16Map68KDo = Blox16bMap68K;
 	System16CustomLoadRomDo = Blox16bLoadRom;
 	System16UPD7759DataSize = 0x08000;
-	
-	return System16Init();
-}
-
-static INT32 BulletInit()
-{
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekSetReadByteHandler(0, BulletReadByte);
-		SekMapHandler(1, 0xc00006, 0xc00007, MAP_WRITE);
-		SekSetWriteByteHandler(1, BulletWriteByte);
-		SekClose();
-	}
-	return nRet;
-}
-
-void CottonMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x300000, 0x3007ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x500000, 0x500fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0x200000, 0x203fff, MAP_RAM);
-	SekSetReadByteHandler(0, CottonReadByte);
-	SekSetWriteByteHandler(0, CottonWriteByte);
-	SekSetWriteWordHandler(0, CottonWriteWord);
-	SekClose();
-}
-
-static INT32 CottonInit()
-{
-	System16Map68KDo = CottonMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
 	
 	return System16Init();
 }
@@ -8159,42 +7028,37 @@ void Ddux_Sim8751()
 	}
 }
 
-static INT32 DduxInit()
-{
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, DduxWriteByte);
-		SekClose();
-	}
-	
-	return nRet;
-}
-
 static INT32 Ddux1Init()
 {
 	Simulate8751 = Ddux_Sim8751;
-	System16CustomLoadRomDo = CustomLoadRom40000;
 	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, DduxWriteByte);
-		SekClose();
-	}
-	
-	return nRet;
+	return System16Init();
+}
+
+static void DduxblMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetReadByteHandler(0, System16BReadByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekSetWriteByteHandler(0, DduxblWriteByte);
+	SekMapHandler(2, 0xc46000, 0xc46027, MAP_WRITE);
+	SekSetWriteByteHandler(2, DduxblGfxWriteByte);
+	SekSetWriteWordHandler(2, DduxblGfxWriteWord);
+	SekClose();
 }
 
 static INT32 DduxblInit()
 {
 	System16CustomLoadRomDo = CustomLoadRom40000;
+	System16Map68KDo = DduxblMap68K;
 	
 	System16SpriteXOffset = 112;
 	
@@ -8203,15 +7067,6 @@ static INT32 DduxblInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekSetWriteByteHandler(0, DduxblWriteByte);
-		SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, DduxWriteByte);
-		SekMapHandler(2, 0xc46000, 0xc46027, MAP_WRITE);
-		SekSetWriteByteHandler(2, DduxblGfxWriteByte);
-		SekSetWriteWordHandler(2, DduxblGfxWriteWord);
-		SekClose();
-		
 		bSystem16BootlegRender = true;
 	}
 	
@@ -8221,6 +7076,7 @@ static INT32 DduxblInit()
 static INT32 DunkshotInit()
 {
 	System16MakeAnalogInputsDo = DunkshotMakeAnalogInputs;
+	sega_315_5195_custom_io_do = DunkshotReadIO;
 	
 	System16BTileAlt = true;
 	
@@ -8230,11 +7086,6 @@ static INT32 DunkshotInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc43000, 0xc4301f, MAP_READ);
-		SekSetReadByteHandler(1, DunkshotReadByte);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x80000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
@@ -8290,7 +7141,7 @@ static INT32 DunkshotScan(INT32 nAction,INT32 *pnMin)
 	return System16Scan(nAction, pnMin);;
 }
 
-void EswatMap68K()
+static void EswatblMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -8304,35 +7155,24 @@ void EswatMap68K()
 	SekSetReadByteHandler(0, System16BReadByte);
 	SekSetWriteByteHandler(0, System16BWriteByte);
 	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekMapHandler(1, 0x418000, 0x418031, MAP_WRITE);
+	SekSetWriteWordHandler(1, EswatblGfxWriteWord);
+	SekSetWriteByteHandler(1, EswatblGfxWriteByte);
+	SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
+	SekSetWriteByteHandler(2, EswatblSoundWriteByte);
+	SekMapHandler(3, 0x3e2000, 0x3e2003, MAP_WRITE);
+	SekSetWriteByteHandler(3, EswatblBankWriteByte);
 	SekClose();
 }
 
 static INT32 EswatInit()
 {
-	System16Map68KDo = EswatMap68K;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 	
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
-		SekSetWriteByteHandler(1, EswatSoundWriteByte);
-		
-		SekMapHandler(2, 0x3e0000, 0x3e0fff, MAP_RAM);
-		SekSetReadWordHandler(2, EswatMultiply0ReadWord);
-		SekSetWriteWordHandler(2, EswatMultiply0WriteWord);
-		
-		SekMapHandler(3, 0x3e1000, 0x3e1fff, MAP_RAM);
-		SekSetReadWordHandler(3, EswatCompare0ReadWord);
-		SekSetWriteWordHandler(3, EswatCompare0WriteWord);
-		
-		SekMapHandler(4, 0x3e2000, 0x3e2003, MAP_WRITE);
-		SekSetWriteByteHandler(4, EswatWriteByte);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
@@ -8354,8 +7194,6 @@ static INT32 EswatInit()
 
 static INT32 Eswatj1Init()
 {
-	System16Map68KDo = EswatMap68K;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 	
@@ -8364,26 +7202,6 @@ static INT32 Eswatj1Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapMemory(System16Rom + 0x40000 , 0x080000, 0x0bffff, MAP_READ);	// mirror
-		SekMapMemory(System16Code + 0x40000, 0x080000, 0x0bffff, MAP_FETCH);	// mirror
-		SekMapMemory(System16Ram           , 0xff0000, 0xff3fff, MAP_RAM);
-		
-		SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
-		SekSetWriteByteHandler(1, EswatSoundWriteByte);
-		
-		SekMapHandler(2, 0x3e0000, 0x3e0fff, MAP_RAM);
-		SekSetReadWordHandler(2, EswatMultiply0ReadWord);
-		SekSetWriteWordHandler(2, EswatMultiply0WriteWord);
-		
-		SekMapHandler(3, 0x3e1000, 0x3e1fff, MAP_RAM);
-		SekSetReadWordHandler(3, EswatCompare0ReadWord);
-		SekSetWriteWordHandler(3, EswatCompare0WriteWord);
-		
-		SekMapHandler(4, 0x3f0000, 0x3f0003, MAP_WRITE);
-		SekSetWriteByteHandler(4, Eswatj1WriteByte);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x0c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites + 0x0c0000, 0x0c0000);
@@ -8413,7 +7231,7 @@ static INT32 Eswatj1Init()
 
 static INT32 EswatblInit()
 {
-	System16Map68KDo = EswatMap68K;
+	System16Map68KDo = EswatblMap68K;
 	
 	System16SpriteXOffset = 124;
 	
@@ -8423,19 +7241,6 @@ static INT32 EswatblInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x418000, 0x418031, MAP_WRITE);
-		SekSetWriteWordHandler(1, EswatblGfxWriteWord);
-		SekSetWriteByteHandler(1, EswatblGfxWriteByte);
-		
-		SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
-		SekSetWriteByteHandler(2, EswatblSoundWriteByte);
-		
-		SekMapHandler(3, 0x3e2000, 0x3e2003, MAP_WRITE);
-		SekSetWriteByteHandler(3, EswatWriteByte);
-
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
@@ -8460,16 +7265,9 @@ static INT32 EswatblInit()
 static INT32 ExctleagInit()
 {
 	System16MakeAnalogInputsDo = ExctleagMakeAnalogInputs;
+	sega_315_5195_custom_io_do = ExctleagReadIO;
 	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekSetReadByteHandler(0, ExctleagReadByte);
-		SekClose();
-	}
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 ExctleagExit()
@@ -8509,41 +7307,15 @@ static INT32 FantzonetaInit()
 	return nRet;
 }
 
-void Fantzn2xMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0x200000, 0x23ffff, MAP_RAM);
-	SekSetWriteWordHandler(0, System16BWriteWord);
-	SekSetReadByteHandler(0, System16BReadByte);
-	SekSetWriteByteHandler(0, System16BWriteByte);
-	SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-	SekSetWriteByteHandler(1, Fantzn2xWriteByte);
-	SekClose();
-}
-
 static INT32 Fantzn2xLoadRom()
 {
-	INT32 nRet = System16LoadRoms(1);
-	
-	memcpy(System16Rom + 0x80000, System16Rom + 0x40000, 0x40000);
-	memset(System16Rom + 0x40000, 0, 0x40000);
-	memcpy(System16Code + 0x80000, System16Code + 0x40000, 0x40000);
-	memset(System16Code + 0x40000, 0, 0x40000);
-	
-	return nRet;
+	return System16LoadRoms(1);
 }
 
 static INT32 Fantzn2xps2LoadRom()
 {
 	if (BurnLoadRom(System16Rom + 0x00000, 0, 1)) return 1;
-	if (BurnLoadRom(System16Rom + 0x80000, 1, 1)) return 1;
+	if (BurnLoadRom(System16Rom + 0x40000, 1, 1)) return 1;
 	
 	memcpy(System16Code, System16Rom, 0x100000);
 	
@@ -8563,7 +7335,6 @@ static INT32 Fantzn2xps2LoadRom()
 
 static INT32 Fantzn2xInit()
 {
-	System16Map68KDo = Fantzn2xMap68K;
 	System16CustomLoadRomDo = Fantzn2xLoadRom;
 	
 	return System16Init();
@@ -8571,29 +7342,10 @@ static INT32 Fantzn2xInit()
 
 static INT32 Fantzn2xps2Init()
 {
-	System16Map68KDo = Fantzn2xMap68K;
 	System16CustomLoadRomDo = Fantzn2xps2LoadRom;
 	System16UPD7759DataSize = 0x20000;
 	
 	return System16Init();
-}
-
-void FantzntaMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x03ffff, MAP_ROM);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetWriteWordHandler(0, System16BWriteWord);
-	SekSetReadByteHandler(0, System16BReadByte);
-	SekSetWriteByteHandler(0, System16BWriteByte);
-	SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-	SekSetWriteByteHandler(1, Fantzn2xWriteByte);
-	SekClose();
 }
 
 static INT32 FantzntaLoadRom()
@@ -8617,15 +7369,34 @@ static INT32 FantzntaLoadRom()
 
 static INT32 FantzntaInit()
 {
-	System16Map68KDo = FantzntaMap68K;
 	System16CustomLoadRomDo = FantzntaLoadRom;
 	System16UPD7759DataSize = 0x10000;
 	
 	return System16Init();
 }
 
+static void FpointblMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekSetReadByteHandler(0, FpointblReadByte);
+	SekSetWriteByteHandler(0, FpointblWriteByte);
+	SekMapHandler(1, 0xc46000, 0xc46031, MAP_WRITE);
+	SekSetWriteWordHandler(1, FpointblGfxWriteWord);
+	SekClose();
+}
+
 static INT32 FpointblInit()
 {
+	System16Map68KDo = FpointblMap68K;
 	System16MapZ80Do = BootlegMapZ80;
 	
 	INT32 nRet = System16Init();
@@ -8633,45 +7404,10 @@ static INT32 FpointblInit()
 	System16SpriteXOffset = 109;
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekSetReadByteHandler(0, FpointblReadByte);
-		SekSetWriteByteHandler(0, FpointblWriteByte);
-		
-		SekMapHandler(1, 0xc46000, 0xc46031, MAP_WRITE);
-		SekSetWriteWordHandler(1, FpointblGfxWriteWord);
-		SekClose();
-		
 		bSystem16BootlegRender = true;
 	}
 	
 	return nRet;
-}
-
-void GoldnaxeMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x100000, 0x10ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x110000, 0x110fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x200000, 0x2007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x300000, 0x3007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x400000, 0x4007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x700000, 0x7007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x800000, 0x8007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x900000, 0x9007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x600000, 0x6007ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x140000, 0x140fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);	
-	SekSetReadByteHandler(0, System16BReadByte);
-	SekSetWriteByteHandler(0, System16BWriteByte);
-	
-	SekMapHandler(1, 0x100000, 0x10ffff, MAP_WRITE);
-	SekSetWriteByteHandler(1, GoldnaxeTileWriteByte);
-	SekSetWriteWordHandler(1, GoldnaxeTileWriteWord);
-	SekClose();
 }
 
 void Goldnaxe_Sim8751()
@@ -8706,7 +7442,9 @@ void Goldnaxe_Sim8751()
 static INT32 GoldnaxeInit()
 {
 	Simulate8751 = Goldnaxe_Sim8751;
-	System16Map68KDo = GoldnaxeMap68K;
+	
+	UINT8 memory_control_5704[0x10] = { 0x02,0x00, 0x00,0x1f, 0x00,0x1e, 0x00,0xff, 0x00,0x20, 0x01,0x10, 0x00,0x14, 0x00,0xc4 };
+	System16I8751InitialConfig = memory_control_5704;
 	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
@@ -8714,69 +7452,6 @@ static INT32 GoldnaxeInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(2, 0x1e0000, 0x1e0fff, MAP_RAM);
-		SekSetReadWordHandler(2, GoldnaxeCompare1ReadWord);
-		SekSetWriteWordHandler(2, GoldnaxeCompare1WriteWord);
-		
-		SekMapHandler(3, 0x1f0000, 0x1f0fff, MAP_RAM);
-		SekSetReadWordHandler(3, GoldnaxeMultiply0ReadWord);
-		SekSetWriteWordHandler(3, GoldnaxeMultiply0WriteWord);
-		
-		SekMapHandler(4, 0x1f1000, 0x1f1fff, MAP_RAM);
-		SekSetReadWordHandler(4, GoldnaxeCompare0ReadWord);
-		SekSetWriteWordHandler(4, GoldnaxeCompare0WriteWord);
-		
-		SekMapHandler(5, 0x1f2000, 0x1f2003, MAP_WRITE);
-		SekSetWriteByteHandler(5, Goldnaxe1WriteByte);
-		SekClose();
-		
-		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
-		if (pTemp) {
-			memcpy(pTemp, System16Sprites, 0x1c0000);
-			memset(System16Sprites, 0, 0x1c0000);
-			memcpy(System16Sprites + 0x000000, pTemp + 0x000000, 0x40000);
-			memcpy(System16Sprites + 0x100000, pTemp + 0x040000, 0x40000);
-			memcpy(System16Sprites + 0x040000, pTemp + 0x080000, 0x40000);
-			memcpy(System16Sprites + 0x140000, pTemp + 0x0c0000, 0x40000);
-			memcpy(System16Sprites + 0x080000, pTemp + 0x100000, 0x40000);
-			memcpy(System16Sprites + 0x180000, pTemp + 0x140000, 0x40000);
-		} else {
-			nRet = 1;
-		}
-		BurnFree(pTemp);
-	}
-	
-	return nRet;
-}
-
-static INT32 Goldnaxe1Init()
-{
-	System16Map68KDo = GoldnaxeMap68K;
-	
-	// Start off with some sprite rom and let the load routine add on the rest
-	System16SpriteRomSize = 0x1c0000 - 0x180000;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(2, 0x1e0000, 0x1e0fff, MAP_RAM);
-		SekSetReadWordHandler(2, GoldnaxeCompare1ReadWord);
-		SekSetWriteWordHandler(2, GoldnaxeCompare1WriteWord);
-		
-		SekMapHandler(3, 0x1f0000, 0x1f0fff, MAP_RAM);
-		SekSetReadWordHandler(3, GoldnaxeMultiply0ReadWord);
-		SekSetWriteWordHandler(3, GoldnaxeMultiply0WriteWord);
-		
-		SekMapHandler(4, 0x1f1000, 0x1f1fff, MAP_RAM);
-		SekSetReadWordHandler(4, GoldnaxeCompare0ReadWord);
-		SekSetWriteWordHandler(4, GoldnaxeCompare0WriteWord);
-		
-		SekMapHandler(5, 0x1f2000, 0x1f2003, MAP_WRITE);
-		SekSetWriteByteHandler(5, Goldnaxe1WriteByte);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
@@ -8799,8 +7474,9 @@ static INT32 Goldnaxe1Init()
 static INT32 Goldnaxe2Init()
 {
 	Simulate8751 = Goldnaxe_Sim8751;
-	System16Map68KDo = GoldnaxeMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
+	
+	UINT8 memory_control_5704[0x10] = { 0x02,0x00, 0x02,0x08, 0x00,0x1f, 0x00,0xff, 0x00,0x20, 0x01,0x10, 0x00,0x14, 0x00,0xc4 };
+	System16I8751InitialConfig = memory_control_5704;
 	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
@@ -8808,11 +7484,6 @@ static INT32 Goldnaxe2Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(2, 0x1f0000, 0x1f0003, MAP_WRITE);
-		SekSetWriteByteHandler(2, Goldnaxe3WriteByte);
-		SekClose();
-	
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
@@ -8834,20 +7505,12 @@ static INT32 Goldnaxe2Init()
 
 static INT32 Goldnaxe3Init()
 {
-	System16Map68KDo = GoldnaxeMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 	
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(2, 0x1f0000, 0x1f0003, MAP_WRITE);
-		SekSetWriteByteHandler(2, Goldnaxe3WriteByte);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x1c0000);
@@ -8869,20 +7532,10 @@ static INT32 Goldnaxe3Init()
 
 static INT32 HwchampInit()
 {
-	INT32 nRet = System16Init();
+	sega_315_5195_custom_io_do = HwchampReadIO;
+	sega_315_5195_custom_io_write_do = HwchampWriteIO;
 	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, HwchampWriteByte);
-		
-		SekMapHandler(2, 0xc43020, 0xc43025, MAP_RAM);
-		SekSetReadWordHandler(2, HwchampCtrlReadWord);
-		SekSetWriteWordHandler(2, HwchampCtrlWriteWord);
-		SekClose();
-	}
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 HwchampExit()
@@ -8910,11 +7563,6 @@ static INT32 MvpInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x3f2000, 0x3f2003, MAP_WRITE);
-		SekSetWriteByteHandler(1, MvpWriteByte);
-		SekClose();
-	
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x200000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x200000);
@@ -8938,19 +7586,12 @@ static INT32 MvpInit()
 
 static INT32 MvpjInit()
 {
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x200000 - 0x180000;
 	
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x3f0000, 0x3f0003, MAP_WRITE);
-		SekSetWriteByteHandler(1, MvpjWriteByte);
-		SekClose();
-	
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x200000);
 		if (pTemp) {
 			memset(pTemp, 0, 0x200000);
@@ -8967,82 +7608,42 @@ static INT32 MvpjInit()
 	return nRet;
 }
 
-static INT32 PassshtInit()
+static void PassshtbMap68K()
 {
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc00006, 0xc00007, MAP_WRITE);
-		SekSetWriteByteHandler(1, PassshtWriteByte);
-		SekClose();
-	}
-	
-	return nRet;
-}
-
-static INT32 PassshtaInit()
-{
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc00006, 0xc00007, MAP_WRITE);
-		SekSetWriteByteHandler(1, PassshtWriteByte);
-		SekMapHandler(2, 0xc43000, 0xc43007, MAP_READ);
-		SekSetReadByteHandler(2, PassshtaReadByte);
-		SekClose();
-	}
-	
-	return nRet;
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetReadByteHandler(0, System16BReadByte);
+	SekSetWriteByteHandler(0, System16BWriteByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekMapHandler(1, 0xc46000, 0xc46031, MAP_WRITE);
+	SekSetWriteWordHandler(1, PassshtbGfxWriteWord);
+	SekClose();
 }
 
 static INT32 PassshtbInit()
 {
+	System16Map68KDo = PassshtbMap68K;
+	
 	INT32 nRet = System16Init();
 	
 //	System16SpriteXOffset = 114;
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc46000, 0xc46031, MAP_WRITE);
-		SekSetWriteWordHandler(1, PassshtbGfxWriteWord);
-		
-//		SekMapHandler(2, 0x842000, 0x842001, MAP_READ);
-//		SekSetReadByteHandler(2, PassshtbReadByte);
-		
-//		SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
-//		SekSetWriteByteHandler(2, TetrisblSndWriteByte);
-		SekClose();
-		
 		bSystem16BootlegRender = true;
 	}
 	
 	return nRet;
 }
 
-void RiotcityMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0xfa0000, 0xfaffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0xfb0000, 0xfb0fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0xf40000, 0xf407ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0xf60000, 0xf60fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetReadByteHandler(0, RiotcityReadByte);
-	SekSetWriteByteHandler(0, RiotcityWriteByte);
-	SekSetWriteWordHandler(0, RiotcityWriteWord);
-	SekClose();
-}
-
 static INT32 RiotcityInit()
 {
-	System16Map68KDo = RiotcityMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 
@@ -9068,64 +7669,39 @@ static INT32 RiotcityInit()
 	return nRet;
 }
 
-void RyukyuMap68K()
+static INT32 SdibInit()
 {
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x300000, 0x3007ff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x300800, 0x300fff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x500000, 0x500fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0x200000, 0x203fff, MAP_RAM);
-	SekSetReadWordHandler(0, RyukyuReadWord);
-	SekSetWriteWordHandler(0, RyukyuWriteWord);
-	SekSetReadByteHandler(0, System16BReadByte);
-	SekSetWriteByteHandler(0, RyukyuWriteByte);
-	SekClose();
-}
-
-static INT32 RyukyuInit()
-{
-	System16Map68KDo = RyukyuMap68K;
+	System16MakeAnalogInputsDo = SdibMakeAnalogInputs;
+	sega_315_5195_custom_io_do = SdibReadIO;
 	
 	return System16Init();
 }
 
-static INT32 SdibInit()
+static void SdiblMap68K()
 {
-	System16MakeAnalogInputsDo = SdibMakeAnalogInputs;
-	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekSetReadByteHandler(0, SdibReadByte);
-		SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
-		SekSetWriteByteHandler(1, SdibSoundWriteByte);		
-		SekClose();
-	}
-	
-	return nRet;
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetWriteByteHandler(0, System16BWriteByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekSetReadByteHandler(0, SdiblReadByte);
+	SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
+	SekSetWriteByteHandler(1, SdiblSoundWriteByte);
+	SekClose();
 }
 
 static INT32 SdiblInit()
 {
+	System16Map68KDo = SdiblMap68K;
 	System16MakeAnalogInputsDo = SdibMakeAnalogInputs;
 	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekSetReadByteHandler(0, SdibReadByte);
-		SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
-		SekSetWriteByteHandler(1, SdibSoundWriteByte);		
-		SekClose();
-	}
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 SdibExit()
@@ -9156,19 +7732,12 @@ static INT32 SdibScan(INT32 nAction,INT32 *pnMin)
 
 static INT32 SjryukoInit()
 {
+	sega_315_5195_custom_io_do = SjryukoReadIO;
+	sega_315_5195_custom_io_write_do = SjryukoWriteIO;
+	
 	System16BTileAlt = true;
 	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekSetWriteByteHandler(0, SjryukoWriteByte);
-		SekSetReadByteHandler(0, SjryukoReadByte);
-		SekSetReadWordHandler(0, SjryukoReadWord);
-		SekClose();
-	}
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 SjryukoExit()
@@ -9193,8 +7762,6 @@ static INT32 SjryukoScan(INT32 nAction,INT32 *pnMin)
 
 static INT32 SnapperInit()
 {
-	System16Map68KDo = AtomicpMap68K;
-	
 	INT32 nRet = System16Init();
 	
 	System16IgnoreVideoEnable = 1;
@@ -9203,37 +7770,36 @@ static INT32 SnapperInit()
 	return nRet;
 }
 
-static INT32 SonicbomInit()
+static void TetrisblMap68K()
 {
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x123406, 0x123407, MAP_WRITE);
-		SekSetWriteByteHandler(1, SonicbomWriteByte);
-		SekMapHandler(2, 0xc42000, 0xc42003, MAP_READ);
-		SekSetReadWordHandler(2, SonicbomReadWord);
-		SekClose();
-	}
-
-	return nRet;
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetReadByteHandler(0, System16BReadByte);
+	SekSetWriteByteHandler(0, System16BWriteByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekMapHandler(1, 0x418000, 0x418031, MAP_WRITE);
+	SekSetWriteWordHandler(1, TetrisblGfxWriteWord);
+	SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
+	SekSetWriteByteHandler(2, TetrisblSndWriteByte);
+	SekClose();
 }
 
 static INT32 TetrisblInit()
 {
+	System16Map68KDo = TetrisblMap68K;
+	
 	INT32 nRet = System16Init();
 	
 	System16SpriteXOffset = 114;
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0x418000, 0x418031, MAP_WRITE);
-		SekSetWriteWordHandler(1, TetrisblGfxWriteWord);
-		
-		SekMapHandler(2, 0xc42006, 0xc42007, MAP_WRITE);
-		SekSetWriteByteHandler(2, TetrisblSndWriteByte);
-		SekClose();
-		
 		bSystem16BootlegRender = true;
 	}
 	
@@ -9267,40 +7833,6 @@ static INT32 TimescanInit()
 	return nRet;
 }
 
-static INT32 ToryumonInit()
-{
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekSetReadByteHandler(0, ToryumonReadByte);
-		SekSetWriteByteHandler(0, ToryumonWriteByte);
-		SekMapMemory(System16Ram, 0xff0000, 0xff3fff, MAP_RAM);
-		SekMapMemory(System16Ram, 0xff4000, 0xff7fff, MAP_RAM);
-		SekMapMemory(System16Ram, 0xff8000, 0xffbfff, MAP_RAM);
-		SekClose();
-	}
-
-	return nRet;
-}
-
-void TturfMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x300000, 0x3007ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x500000, 0x500fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0x200000, 0x203fff, MAP_RAM);
-	SekSetReadByteHandler(0, TturfReadByte);
-	SekSetWriteByteHandler(0, TturfWriteByte);
-	SekSetWriteWordHandler(0, System16BWriteWord);
-	SekClose();
-}
-
 void Tturf_Sim8751()
 {
 	// Inputs
@@ -9322,7 +7854,6 @@ void Tturf_Sim8751()
 static INT32 TturfInit()
 {
 	Simulate8751 = Tturf_Sim8751;
-	System16Map68KDo = TturfMap68K;
 	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0xe0000 - 0x80000;
@@ -9350,7 +7881,6 @@ static INT32 TturfInit()
 static INT32 TturfuInit()
 {
 	Simulate8751 = Tturf_Sim8751;
-	System16Map68KDo = TturfMap68K;
 	
 	return System16Init();
 }
@@ -9395,20 +7925,6 @@ static INT32 Wb3Init()
 	return nRet;
 }
 
-static INT32 Wb32Init()
-{
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xdf0006, 0xdf0007, MAP_WRITE);
-		SekSetWriteByteHandler(1, Wb3WriteByte);
-		SekClose();
-	}
-
-	return nRet;
-}
-
 static INT32 Wb33Init()
 {
 	// Start off with some sprite rom and let the load routine add on the rest
@@ -9417,11 +7933,6 @@ static INT32 Wb33Init()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xdf0006, 0xdf0007, MAP_WRITE);
-		SekSetWriteByteHandler(1, Wb3WriteByte);
-		SekClose();
-	
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
@@ -9439,19 +7950,35 @@ static INT32 Wb33Init()
 	return nRet;
 }
 
+static void Wb3bblMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	SekSetReadByteHandler(0, System16BReadByte);
+	SekSetWriteByteHandler(0, System16BWriteByte);
+	SekSetWriteWordHandler(0, System16BWriteWord);
+	SekMapHandler(1, 0xc44000, 0xc46031, MAP_WRITE);
+	SekSetWriteWordHandler(1, Wb3bblGfxWriteWord);
+	SekClose();
+}
+
 static INT32 Wb3bblInit()
 {
+	System16Map68KDo = Wb3bblMap68K;
+	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0xe0000 - 0x80000;
 
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xc44000, 0xc46031, MAP_WRITE);
-		SekSetWriteWordHandler(1, Wb3bblGfxWriteWord);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x80000);
@@ -9469,27 +7996,6 @@ static INT32 Wb3bblInit()
 	}
 
 	return nRet;
-}
-
-void WrestwarMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x100000, 0x10ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x110000, 0x110fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x200000, 0x2007ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x300000, 0x300fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetReadByteHandler(0, System16BReadByte);
-	SekSetWriteByteHandler(0, System16BWriteByte);
-	SekMapHandler(1, 0x400000, 0x400003, MAP_WRITE);
-	SekSetWriteByteHandler(1, WrestwarWriteByte);
-	SekMapHandler(2, 0x100000, 0x10ffff, MAP_WRITE);
-	SekSetWriteByteHandler(2, WrestwarTileWriteByte);
-	SekSetWriteWordHandler(2, WrestwarTileWriteWord);
-	SekClose();
 }
 
 void Wrestwar_Sim8751()
@@ -9511,16 +8017,6 @@ void Wrestwar_Sim8751()
 static INT32 WrestwarInit()
 {
 	Simulate8751 = Wrestwar_Sim8751;
-	System16Map68KDo = WrestwarMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
-	
-	return System16Init();
-}
-
-static INT32 Wrestwar1Init()
-{
-	System16Map68KDo = WrestwarMap68K;
-	System16CustomLoadRomDo = CustomLoadRom40000;
 	
 	return System16Init();
 }
@@ -9543,7 +8039,7 @@ struct BurnDriver BurnDrvAliensyn = {
 	"aliensyn", NULL, NULL, NULL, "1987",
 	"Alien Syndrome (set 4, System 16B, unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_MAZE, 0,
 	NULL, AliensynRomInfo, AliensynRomName, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9553,9 +8049,9 @@ struct BurnDriver BurnDrvAliensyn3 = {
 	"aliensyn3", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 3, System 16B, FD1089A 317-0033)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
 	NULL, Aliensyn3RomInfo, Aliensyn3RomName, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
-	Aliensyn3Init, System16Exit, System16BFrame, NULL, System16Scan,
+	AliensynInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9563,7 +8059,7 @@ struct BurnDriver BurnDrvAliensyn7 = {
 	"aliensyn7", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 7, System 16B, MC-8123B 317-00xx)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE, 0,
 	NULL, Aliensyn7RomInfo, Aliensyn7RomName, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9573,9 +8069,9 @@ struct BurnDriver BurnDrvAliensynj = {
 	"aliensynj", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 6, Japan, new, System 16B, FD1089A 317-0033)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
 	NULL, AliensynjRomInfo, AliensynjRomName, NULL, NULL, System16bfire1InputInfo, AliensynjDIPInfo,
-	Aliensyn3Init, System16Exit, System16BFrame, NULL, System16Scan,
+	AliensynInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9625,7 +8121,7 @@ struct BurnDriver BurnDrvAltbeastj3 = {
 	L"Juuoki (set 3, Japan, FD1094 317-0068)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Altbeastj3RomInfo, Altbeastj3RomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
-	Altbeastj3Init, System16Exit, System16BFrame, NULL, System16Scan,
+	Altbeast4Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9635,7 +8131,7 @@ struct BurnDriver BurnDrvAltbeastj3d = {
 	L"Juuoki (set 3, Japan, FD1094 317-0068 decrypted)\0\u7363\u738B\u8A18\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, Altbeastj3dRomInfo, Altbeastj3dRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
-	Altbeastj3Init, System16Exit, System16BFrame, NULL, System16Scan,
+	Altbeast4Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9679,21 +8175,21 @@ struct BurnDriver BurnDrvAltbeast6 = {
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvAltbeastbl = {
+struct BurnDriverD BurnDrvAltbeastbl = {
 	"altbeastbl", "altbeast", NULL, NULL, "1988",
 	"Altered Beast (Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
 	NULL, AltbeastblRomInfo, AltbeastblRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastblInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvMutantwarr = {
+struct BurnDriverD BurnDrvMutantwarr = {
 	"mutantwarr", "altbeast", NULL, NULL, "1988",
 	"Mutant Warrior (Altered Beast - Datsu bootleg)\0", "no Sound", "bootleg (Datsu)", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
+	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_INVERT_TILES, GBF_SCRFIGHT, 0,
 	NULL, MutantwarrRomInfo, MutantwarrRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
 	AltbeastblInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9713,9 +8209,9 @@ struct BurnDriver BurnDrvAurail = {
 	"aurail", NULL, NULL, NULL, "1990",
 	"Aurail (set 3, US, unprotected)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VERSHOOT, 0,
 	NULL, AurailRomInfo, AurailRomName, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
-	AurailInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9723,9 +8219,9 @@ struct BurnDriver BurnDrvAurail1 = {
 	"aurail1", "aurail", NULL, NULL, "1990",
 	"Aurail (set 2, World, FD1089B 317-0168)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1089B_ENC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1089B_ENC, GBF_VERSHOOT, 0,
 	NULL, Aurail1RomInfo, Aurail1RomName, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
-	Aurail1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9733,9 +8229,9 @@ struct BurnDriver BurnDrvAurail1d = {
 	"aurail1d", "aurail", NULL, NULL, "1990",
 	"Aurail (set 2, World, FD1089B 317-0168 decrypted)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VERSHOOT, 0,
 	NULL, Aurail1dRomInfo, Aurail1dRomName, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
-	Aurail1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9743,9 +8239,9 @@ struct BurnDriver BurnDrvAurailj = {
 	"aurailj", "aurail", NULL, NULL, "1990",
 	"Aurail (set 1, Japan, FD1089A 317-0167)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1089A_ENC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1089A_ENC, GBF_VERSHOOT, 0,
 	NULL, AurailjRomInfo, AurailjRomName, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
-	AurailjInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9753,9 +8249,9 @@ struct BurnDriver BurnDrvAurailjd = {
 	"aurailjd", "aurail", NULL, NULL, "1990",
 	"Aurail (set 1, Japan, FD1089A 317-0167 decrypted)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VERSHOOT, 0,
 	NULL, AurailjdRomInfo, AurailjdRomName, NULL, NULL, System16bfire3InputInfo, AurailDIPInfo,
-	AurailjInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9763,9 +8259,9 @@ struct BurnDriver BurnDrvBayroute = {
 	"bayroute", NULL, NULL, NULL, "1989",
 	"Bay Route (set 3, World, FD1094 317-0116)\0", NULL, "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, BayrouteRomInfo, BayrouteRomName, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
-	BayrouteInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9773,9 +8269,9 @@ struct BurnDriver BurnDrvBayrouted = {
 	"bayrouted", "bayroute", NULL, NULL, "1989",
 	"Bay Route (set 3, World, FD1094 317-0116 decrypted)\0", NULL, "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, BayroutedRomInfo, BayroutedRomName, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
-	BayrouteInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9783,9 +8279,9 @@ struct BurnDriver BurnDrvBayroutej = {
 	"bayroutej", "bayroute", NULL, NULL, "1989",
 	"Bay Route (set 2, Japan, FD1094 317-0115)\0", NULL, "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, BayroutejRomInfo, BayroutejRomName, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
-	BayrouteInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9793,19 +8289,19 @@ struct BurnDriver BurnDrvBayroutejd = {
 	"bayroutejd", "bayroute", NULL, NULL, "1989",
 	"Bay Route (set 2, Japan, FD1094 317-0115 decrypted)\0", NULL, "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, BayroutejdRomInfo, BayroutejdRomName, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
-	BayrouteInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
 struct BurnDriver BurnDrvBayroute1 = {
 	"bayroute1", "bayroute", NULL, NULL, "1989",
-	"Bay Route (set 1, US, unprotected)\0", "No Sound, Missing Z80 Program ROM", "Sunsoft / Sega", "System 16B",
+	"Bay Route (set 1, US, unprotected)\0", "", "Sunsoft / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM, 0,
 	NULL, Bayroute1RomInfo, Bayroute1RomName, NULL, NULL, System16bfire3InputInfo, BayrouteDIPInfo,
-	Bayroute1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9823,9 +8319,9 @@ struct BurnDriver BurnDrvBullet = {
 	"bullet", NULL, NULL, NULL, "1987",
 	"Bullet (FD1094 317-0041)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 3, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358_SMALL, GBF_VERSHOOT, 0,
 	NULL, BulletRomInfo, BulletRomName, NULL, NULL, BulletInputInfo, BulletDIPInfo,
-	BulletInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9833,9 +8329,9 @@ struct BurnDriver BurnDrvBulletd = {
 	"bulletd", "bullet", NULL, NULL, "1987",
 	"Bullet (FD1094 317-0041 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_VERSHOOT, 0,
 	NULL, BulletdRomInfo, BulletdRomName, NULL, NULL, BulletInputInfo, BulletDIPInfo,
-	BulletInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9843,9 +8339,9 @@ struct BurnDriver BurnDrvCotton = {
 	"cotton", NULL, NULL, NULL, "1991",
 	"Cotton (set 3, World, FD1094 317-0181a)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonRomInfo, CottonRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9853,9 +8349,9 @@ struct BurnDriver BurnDrvCottond = {
 	"cottond", "cotton", NULL, NULL, "1991",
 	"Cotton (set 3, World, FD1094 317-0181a decrypted)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
 	NULL, CottondRomInfo, CottondRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9863,9 +8359,9 @@ struct BurnDriver BurnDrvCottonu = {
 	"cottonu", "cotton", NULL, NULL, "1991",
 	"Cotton (set 2, US, FD1094 317-0180)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonuRomInfo, CottonuRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9873,9 +8369,9 @@ struct BurnDriver BurnDrvCottonud = {
 	"cottonud", "cotton", NULL, NULL, "1991",
 	"Cotton (set 2, US, FD1094 317-0180 decrypted)\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
 	NULL, CottonudRomInfo, CottonudRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9883,9 +8379,9 @@ struct BurnDriver BurnDrvCottonj = {
 	"cottonj", "cotton", NULL, NULL, "1991",
 	"Cotton (set 2, Japan, Rev B, FD1094 317-0179b))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonjRomInfo, CottonjRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9893,9 +8389,9 @@ struct BurnDriver BurnDrvCottonjd = {
 	"cottonjd", "cotton", NULL, NULL, "1991",
 	"Cotton (set 2, Japan, Rev B, FD1094 317-0179b decrypted))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
 	NULL, CottonjdRomInfo, CottonjdRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9903,9 +8399,9 @@ struct BurnDriver BurnDrvCottonja = {
 	"cottonja", "cotton", NULL, NULL, "1991",
 	"Cotton (set 1, Japan, Rev A, FD1094 317-0179a))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_HORSHOOT, 0,
 	NULL, CottonjaRomInfo, CottonjaRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9913,9 +8409,9 @@ struct BurnDriver BurnDrvCottonjad = {
 	"cottonjad", "cotton", NULL, NULL, "1991",
 	"Cotton (set 1, Japan, Rev A, FD1094 317-0179a decrypted))\0", NULL, "Success / Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
 	NULL, CottonjadRomInfo, CottonjadRomName, NULL, NULL, System16bInputInfo, CottonDIPInfo,
-	CottonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9925,7 +8421,7 @@ struct BurnDriver BurnDrvDdux = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DduxRomInfo, DduxRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
-	DduxInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9935,7 +8431,7 @@ struct BurnDriver BurnDrvDduxd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, DduxdRomInfo, DduxdRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
-	DduxInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9945,7 +8441,7 @@ struct BurnDriver BurnDrvDduxj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, DduxjRomInfo, DduxjRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
-	DduxInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9955,7 +8451,7 @@ struct BurnDriver BurnDrvDduxjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, DduxjdRomInfo, DduxjdRomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
-	DduxInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -9963,7 +8459,7 @@ struct BurnDriver BurnDrvDdux1 = {
 	"ddux1", "ddux", NULL, NULL, "1989",
 	"Dynamite Dux (set 1, 8751 317-0095)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Ddux1RomInfo, Ddux1RomName, NULL, NULL, System16bInputInfo, DduxDIPInfo,
 	Ddux1Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9983,7 +8479,7 @@ struct BurnDriver BurnDrvDunkshot = {
 	"dunkshot", NULL, NULL, NULL, "1987",
 	"Dunk Shot (Rev C, FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
 	NULL, DunkshotRomInfo, DunkshotRomName, NULL, NULL, DunkshotInputInfo, DunkshotDIPInfo,
 	DunkshotInit, DunkshotExit, System16BFrame, NULL, DunkshotScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9993,7 +8489,7 @@ struct BurnDriver BurnDrvDunkshota = {
 	"dunkshota", "dunkshot", NULL, NULL, "1987",
 	"Dunk Shot (Rev A, FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
 	NULL, DunkshotaRomInfo, DunkshotaRomName, NULL, NULL, DunkshotInputInfo, DunkshotDIPInfo,
 	DunkshotInit, DunkshotExit, System16BFrame, NULL, DunkshotScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10003,7 +8499,7 @@ struct BurnDriver BurnDrvDunkshoto = {
 	"dunkshoto", "dunkshot", NULL, NULL, "1986",
 	"Dunk Shot (FD1089 317-0022)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SPORTSMISC, 0,
 	NULL, DunkshotoRomInfo, DunkshotoRomName, NULL, NULL, DunkshotInputInfo, DunkshotDIPInfo,
 	DunkshotInit, DunkshotExit, System16BFrame, NULL, DunkshotScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10053,7 +8549,7 @@ struct BurnDriver BurnDrvEswatj1 = {
 	"eswatj1", "eswat", NULL, NULL, "1989",
 	"E-Swat - Cyber Police (set 1, Japan, FD1094 317-0131)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Eswatj1RomInfo, Eswatj1RomName, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	Eswatj1Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10063,7 +8559,7 @@ struct BurnDriver BurnDrvEswatj1d = {
 	"eswatj1d", "eswat", NULL, NULL, "1989",
 	"E-Swat - Cyber Police (set 1, Japan, FD1094 317-0131 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, Eswatj1dRomInfo, Eswatj1dRomName, NULL, NULL, System16bfire3InputInfo, EswatDIPInfo,
 	Eswatj1Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10123,7 +8619,7 @@ struct BurnDriver BurnDrvFantzoneta = {
 	"fantzoneta", "fantzone", NULL, NULL, "2008",
 	"Fantasy Zone (Time Attack, bootleg)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_HORSHOOT, 0,
 	NULL, FantzonetaRomInfo, FantzonetaRomName, NULL, NULL, System16bInputInfo, FantzonetaDIPInfo,
 	FantzonetaInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10193,7 +8689,7 @@ struct BurnDriver BurnDrvFpoint1 = {
 	"fpoint1", "fpoint", NULL, NULL, "1989",
 	"Flash Point (set 1, Japan, FD1094 317-0127A)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Fpoint1RomInfo, Fpoint1RomName, NULL, NULL, System16bfire1InputInfo, FpointDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10203,7 +8699,7 @@ struct BurnDriver BurnDrvFpoint1d = {
 	"fpoint1d", "fpoint", NULL, NULL, "1989",
 	"Flash Point (set 1, Japan, FD1094 317-0127A decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PUZZLE, 0,
 	NULL, Fpoint1dRomInfo, Fpoint1dRomName, NULL, NULL, System16bfire1InputInfo, FpointDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10245,7 +8741,7 @@ struct BurnDriver BurnDrvGoldnaxe1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe1RomInfo, Goldnaxe1RomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
-	Goldnaxe1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10255,7 +8751,7 @@ struct BurnDriver BurnDrvGoldnaxe1d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe1dRomInfo, Goldnaxe1dRomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
-	Goldnaxe1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10263,7 +8759,7 @@ struct BurnDriver BurnDrvGoldnaxe2 = {
 	"goldnaxe2", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 2, US, 8751 317-0112)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe2RomInfo, Goldnaxe2RomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe2Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10273,7 +8769,7 @@ struct BurnDriver BurnDrvGoldnaxe3 = {
 	"goldnaxe3", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 3, World, FD1094 317-0120)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe3RomInfo, Goldnaxe3RomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10283,7 +8779,7 @@ struct BurnDriver BurnDrvGoldnaxe3d = {
 	"goldnaxe3d", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 3, World, FD1094 317-0120 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe3dRomInfo, Goldnaxe3dRomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10293,7 +8789,7 @@ struct BurnDriver BurnDrvGoldnaxej = {
 	"goldnaxej", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 4, Japan, FD1094 317-0121)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxejRomInfo, GoldnaxejRomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10303,7 +8799,7 @@ struct BurnDriver BurnDrvGoldnaxejd = {
 	"goldnaxejd", "goldnaxe", NULL, NULL, "1989",
 	"Golden Axe (set 4, Japan, FD1094 317-0121 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxejdRomInfo, GoldnaxejdRomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
 	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10315,7 +8811,7 @@ struct BurnDriver BurnDrvGoldnaxeu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797 | HARDWARE_SEGA_FD1094_ENC, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxeuRomInfo, GoldnaxeuRomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
-	Goldnaxe1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10325,7 +8821,7 @@ struct BurnDriver BurnDrvGoldnaxeud = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_SCRFIGHT, 0,
 	NULL, GoldnaxeudRomInfo, GoldnaxeudRomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
-	Goldnaxe1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	Goldnaxe3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10383,7 +8879,7 @@ struct BurnDriver BurnDrvMvpj = {
 	"mvpj", "mvp", NULL, NULL, "1989",
 	"MVP (set 1, Japan, FD1094 317-0142)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
 	NULL, MvpjRomInfo, MvpjRomName, NULL, NULL, System16bfire3InputInfo, MvpDIPInfo,
 	MvpjInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10393,7 +8889,7 @@ struct BurnDriver BurnDrvMvpjd = {
 	"mvpjd", "mvp", NULL, NULL, "1989",
 	"MVP (set 1, Japan, FD1094 317-0142 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SPORTSMISC, 0,
 	NULL, MvpjdRomInfo, MvpjdRomName, NULL, NULL, System16bfire3InputInfo, MvpDIPInfo,
 	MvpjInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10405,7 +8901,7 @@ struct BurnDriver BurnDrvPasssht = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtRomInfo, PassshtRomName, NULL, NULL, System16bfire4InputInfo, PassshtDIPInfo,
-	PassshtInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10415,7 +8911,7 @@ struct BurnDriver BurnDrvPassshtd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtdRomInfo, PassshtdRomName, NULL, NULL, System16bfire4InputInfo, PassshtDIPInfo,
-	PassshtInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10425,7 +8921,7 @@ struct BurnDriver BurnDrvPassshta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtaRomInfo, PassshtaRomName, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10435,7 +8931,7 @@ struct BurnDriver BurnDrvPassshtad = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtadRomInfo, PassshtadRomName, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10445,7 +8941,7 @@ struct BurnDriver BurnDrvPassshtj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtjRomInfo, PassshtjRomName, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10455,7 +8951,7 @@ struct BurnDriver BurnDrvPassshtjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SPORTSMISC, 0,
 	NULL, PassshtjdRomInfo, PassshtjdRomName, NULL, NULL, PassshtInputInfo, PassshtaDIPInfo,
-	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10475,7 +8971,7 @@ struct BurnDriver BurnDrvCencourt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_SPORTSMISC, 0,
 	NULL, CencourtRomInfo, CencourtRomName, NULL, NULL, PassshtInputInfo, CencourtDIPInfo,
-	PassshtaInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10483,7 +8979,7 @@ struct BurnDriver BurnDrvRiotcity = {
 	"riotcity", NULL, NULL, NULL, "1991",
 	"Riot City (Japan)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, RiotcityRomInfo, RiotcityRomName, NULL, NULL, System16bInputInfo, RiotcityDIPInfo,
 	RiotcityInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10493,9 +8989,9 @@ struct BurnDriver BurnDrvRyukyu = {
 	"ryukyu", NULL, NULL, NULL, "1990",
 	"RyuKyu (Japan, FD1094 317-5023)\0", NULL, "Success / Sega", "System 16B",
 	L"RyuKyu \u7409\u7403 (Japan, FD1094 317-5023)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, RyukyuRomInfo, RyukyuRomName, NULL, NULL, RyukyuInputInfo, RyukyuDIPInfo,
-	RyukyuInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10503,9 +8999,9 @@ struct BurnDriver BurnDrvRyukyud = {
 	"ryukyud", "ryukyu", NULL, NULL, "1990",
 	"RyuKyu (Japan, FD1094 317-5023 decrypted)\0", NULL, "Success / Sega", "System 16B",
 	L"RyuKyu \u7409\u7403 (Japan, FD1094 317-5023 decrypted)\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PUZZLE, 0,
 	NULL, RyukyudRomInfo, RyukyudRomName, NULL, NULL, RyukyuInputInfo, RyukyuDIPInfo,
-	RyukyuInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10513,7 +9009,7 @@ struct BurnDriver BurnDrvSdib = {
 	"sdib", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (System 16B, FD1089A 317-0028)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, SdibRomInfo, SdibRomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdibInit, SdibExit, System16BFrame, NULL, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10523,7 +9019,7 @@ struct BurnDriver BurnDrvSdibl = {
 	"sdibl", "sdi", NULL, NULL, "1987",
 	"SDI - Strategic Defense Initiative (bootleg)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, SdiblRomInfo, SdiblRomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdiblInit, SdibExit, System16BFrame, NULL, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10533,7 +9029,7 @@ struct BurnDriver BurnDrvDefense = {
 	"defense", "sdi", NULL, NULL, "1987",
 	"Defense (System 16B, FD1089A 317-0028)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089A_ENC | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, DefenseRomInfo, DefenseRomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdibInit, SdibExit, System16BFrame, NULL, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10593,7 +9089,7 @@ struct BurnDriver BurnDrvSjryuko = {
 	"sjryuko", NULL, NULL, NULL, "1987",
 	"Sukeban Jansi Ryuko (set 2, System 16B, FD1089B 317-5021)\0", NULL, "White Board", "System 16B",
 	L"Sukeban Jansi Ryuko (set 2, System 16B, FD1089B 317-5021)\0\u30B9\u30B1\u30D0\u30F3\u96C0\u58EB \u7ADC\u5B50\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_5358_SMALL, GBF_MAHJONG, 0,
 	NULL, SjryukoRomInfo, SjryukoRomName, NULL, NULL, SjryukoInputInfo, SjryukoDIPInfo,
 	SjryukoInit, SjryukoExit, System16BFrame, NULL, SjryukoScan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10615,7 +9111,7 @@ struct BurnDriver BurnDrvSonicbom = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_VERSHOOT, 0,
 	NULL, SonicbomRomInfo, SonicbomRomName, NULL, NULL, System16bInputInfo, SonicbomDIPInfo,
-	SonicbomInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10625,7 +9121,7 @@ struct BurnDriver BurnDrvSonicbomd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_VERSHOOT, 0,
 	NULL, SonicbomdRomInfo, SonicbomdRomName, NULL, NULL, System16bInputInfo, SonicbomDIPInfo,
-	SonicbomInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10643,7 +9139,7 @@ struct BurnDriver BurnDrvTetris1 = {
 	"tetris1", "tetris", NULL, NULL, "1988",
 	"Tetris (set 1, Japan, System 16B, FD1094 317-0091)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Tetris1RomInfo, Tetris1RomName, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10653,7 +9149,7 @@ struct BurnDriver BurnDrvTetris1d = {
 	"tetris1d", "tetris", NULL, NULL, "1988",
 	"Tetris (set 1, Japan, System 16B, FD1094 317-0091 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_PUZZLE, 0,
 	NULL, Tetris1dRomInfo, Tetris1dRomName, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10663,7 +9159,7 @@ struct BurnDriver BurnDrvTetris2 = {
 	"tetris2", "tetris", NULL, NULL, "1988",
 	"Tetris (set 2, Japan, System 16B, FD1094 317-0092)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PUZZLE, 0,
 	NULL, Tetris2RomInfo, Tetris2RomName, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10673,7 +9169,7 @@ struct BurnDriver BurnDrvTetris2d = {
 	"tetris2d", "tetris", NULL, NULL, "1988",
 	"Tetris (set 2, Japan, System 16B, FD1094 317-0092 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PUZZLE, 0,
 	NULL, Tetris2dRomInfo, Tetris2dRomName, NULL, NULL, System16bfire1InputInfo, TetrisDIPInfo,
 	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10693,7 +9189,7 @@ struct BurnDriver BurnDrvTimescan = {
 	"timescan", NULL, NULL, NULL, "1987",
 	"Time Scanner (set 2, System 16B)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PINBALL, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_PINBALL, 0,
 	NULL, TimescanRomInfo, TimescanRomName, NULL, NULL, System16bDip3InputInfo, TimescanDIPInfo,
 	TimescanInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10705,7 +9201,7 @@ struct BurnDriver BurnDrvToryumon = {
 	L"Toryumon\0\u767B\u9F8D\u9580\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5797, GBF_PUZZLE, 0,
 	NULL, ToryumonRomInfo, ToryumonRomName, NULL, NULL, System16bfire1InputInfo, ToryumonDIPInfo,
-	ToryumonInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10713,7 +9209,7 @@ struct BurnDriver BurnDrvTturf = {
 	"tturf", NULL, NULL, NULL, "1989",
 	"Tough Turf (set 2, Japan, 8751 317-0104)\0", NULL, "Sega / Sunsoft", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, TturfRomInfo, TturfRomName, NULL, NULL, System16bfire3InputInfo, TturfDIPInfo,
 	TturfInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10733,7 +9229,7 @@ struct BurnDriver BurnDrvWb3 = {
 	"wb3", NULL, NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 6, World, System 16B, 8751 317-0098)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, Wb3RomInfo, Wb3RomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb3Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10745,7 +9241,7 @@ struct BurnDriver BurnDrvWb32 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb32RomInfo, Wb32RomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
-	Wb32Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10755,7 +9251,7 @@ struct BurnDriver BurnDrvWb32d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM, 0,
 	NULL, Wb32dRomInfo, Wb32dRomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
-	Wb32Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -10763,7 +9259,7 @@ struct BurnDriver BurnDrvWb33 = {
 	"wb33", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 3, World, System 16B, FD1094 317-0089)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb33RomInfo, Wb33RomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb33Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10773,7 +9269,7 @@ struct BurnDriver BurnDrvWb33d = {
 	"wb33d", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 3, World, System 16B, FD1094 317-0089 decrypted)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, Wb33dRomInfo, Wb33dRomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb33Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10783,7 +9279,7 @@ struct BurnDriver BurnDrvWb34 = {
 	"wb34", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 4, Japan, System 16B, FD1094 317-0087)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
 	NULL, Wb34RomInfo, Wb34RomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb33Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10793,7 +9289,7 @@ struct BurnDriver BurnDrvWb34d = {
 	"wb34d", "wb3", NULL, NULL, "1988",
 	"Wonder Boy III - Monster Lair (set 4, Japan, System 16B, FD1094 317-0087 decrypted)\0", NULL, "Sega / Westone", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_PLATFORM, 0,
 	NULL, Wb34dRomInfo, Wb34dRomName, NULL, NULL, System16bInputInfo, Wb3DIPInfo,
 	Wb33Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10813,7 +9309,7 @@ struct BurnDriver BurnDrvWrestwar = {
 	"wrestwar", NULL, NULL, NULL, "1988",
 	"Wrestle War (set 3, World, 8751 317-0103)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VSFIGHT, 0,
 	NULL, WrestwarRomInfo, WrestwarRomName, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
 	WrestwarInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
@@ -10823,9 +9319,9 @@ struct BurnDriver BurnDrvWrestwar1 = {
 	"wrestwar1", "wrestwar", NULL, NULL, "1988",
 	"Wrestle War (set 1, Japan, FD1094 317-0090)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
 	NULL, Wrestwar1RomInfo, Wrestwar1RomName, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
-	Wrestwar1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10833,9 +9329,9 @@ struct BurnDriver BurnDrvWrestwar1d = {
 	"wrestwar1d", "wrestwar", NULL, NULL, "1988",
 	"Wrestle War (set 1, Japan, FD1094 317-0090 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VSFIGHT, 0,
 	NULL, Wrestwar1dRomInfo, Wrestwar1dRomName, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
-	Wrestwar1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10843,9 +9339,9 @@ struct BurnDriver BurnDrvWrestwar2 = {
 	"wrestwar2", "wrestwar", NULL, NULL, "1988",
 	"Wrestle War (set 2, World, FD1094 317-0102)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704 | HARDWARE_SEGA_FD1094_ENC, GBF_VSFIGHT, 0,
 	NULL, Wrestwar2RomInfo, Wrestwar2RomName, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
-	Wrestwar1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -10853,9 +9349,9 @@ struct BurnDriver BurnDrvWrestwar2d = {
 	"wrestwar2d", "wrestwar", NULL, NULL, "1988",
 	"Wrestle War (set 2, World, FD1094 317-0102 decrypted)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VSFIGHT, 0,
 	NULL, Wrestwar2dRomInfo, Wrestwar2dRomName, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
-	Wrestwar1Init, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

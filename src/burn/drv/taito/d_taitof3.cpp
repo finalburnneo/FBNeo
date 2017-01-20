@@ -6966,8 +6966,7 @@ static INT32 pbobble2RomCallback()
 
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	ROM[0x40090/4]=0x00004e71|(ROM[0x40090/4]&0xffff0000);
-	ROM[0x40090/4] = (ROM[0x40090/4] >> 16) | (ROM[0x40090/4] << 16);
+	ROM[0x40090/4]=0x4e71815c;
 	ROM[0x40094/4]=0x4e714e71;
 
 	return 0;

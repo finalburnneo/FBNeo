@@ -276,8 +276,8 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 			//bprintf (0, _T("%x, %x, %d\n"),offset,d,b);
 			if ((offset & 3) == 3) {
 				EEPROMWriteBit(d & 0x04);
-				EEPROMSetClockLine((d & 0x08) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 				EEPROMSetCSLine((d & 0x10) ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);
+				EEPROMSetClockLine((d & 0x08) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 			}
 		}	
 		return;
@@ -634,7 +634,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	if (EEPROMAvailable() == 0) {
 		if (TaitoDefaultEEProm[0] != 0) {
 			EEPROMFill((const UINT8*)TaitoDefaultEEProm, 0, 128);
-		} else {
+		} else if (m_f3_game == RECALH) {
 			static const UINT16 recalh_eeprom[64] =	{
 				0x8554,0x0000,0x3000,0x0000,0x0000,0x0000,0x0000,0xf335,
 				0x0001,0x86a0,0x0013,0x0413,0x0000,0xc350,0x0019,0x000a,
@@ -704,12 +704,12 @@ static INT32 MemIndex()
 
 	DrvCoinWord		    = (UINT16*)Next; Next += 2 * sizeof(INT16);
 
-	TaitoF3SoundRam         = Next; Next += 0x010000;
-	TaitoF3SharedRam        = Next; Next += 0x000800;
-	TaitoES5510DSPRam       = Next; Next += 0x000200;
-	TaitoES5510GPR          = (UINT32*)Next; Next += 0x0000c0 * sizeof(UINT32);
+	TaitoF3SoundRam     = Next; Next += 0x010000;
+	TaitoF3SharedRam    = Next; Next += 0x000800;
+	TaitoES5510DSPRam   = Next; Next += 0x000200;
+	TaitoES5510GPR      = (UINT32*)Next; Next += 0x0000c0 * sizeof(UINT32);
 
-	TaitoRamEnd		= Next;
+	TaitoRamEnd		    = Next;
 
 	output_bitmap		= (UINT32*)Next; Next += 512 * 512 * sizeof(INT32);
 
@@ -4947,6 +4947,31 @@ struct BurnDriver BurnDrvPrmtmfgto = {
 	320, 232, 4, 3
 };
 
+static INT32 gunlockRomCallback()
+{
+	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
+	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
+	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
+	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
+
+	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
+	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
+	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
+
+	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
+	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
+	if (BurnLoadRom(TaitoChars      + 0x300000,  9, 1)) return 1;
+
+	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
+	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
+
+	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
+	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 13, 2)) return 1;
+
+	tile_decode(0x400000, 0x400000);
+
+	return 0;
+}
 
 // Gunlock (Ver 2.3O 1994/01/20)
 
@@ -4976,7 +5001,7 @@ STD_ROM_FN(gunlock)
 
 static INT32 gunlockInit()
 {
-	return DrvInit(ringrageRomCallback, f3_24bit_palette_update, 1, GUNLOCK);
+	return DrvInit(gunlockRomCallback, f3_24bit_palette_update, 1, GUNLOCK);
 }
 
 struct BurnDriver BurnDrvGunlock = {

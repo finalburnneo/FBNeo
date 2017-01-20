@@ -6964,6 +6964,12 @@ static INT32 pbobble2RomCallback()
 
 	tile_decode(0x400000, 0x400000);
 
+	UINT32 *ROM = (UINT32 *)Taito68KRom1;
+
+	ROM[0x40090/4]=0x00004e71|(ROM[0x40090/4]&0xffff0000);
+	ROM[0x40090/4] = (ROM[0x40090/4] >> 16) | (ROM[0x40090/4] << 16);
+	ROM[0x40094/4]=0x4e714e71;
+
 	return 0;
 }
 
@@ -8566,10 +8572,10 @@ static INT32 landmakrpRomCallback()
 
 	tile_decode(0x800000, 0x800000);
 
-	UINT32 *RAM = (UINT32 *)Taito68KRom1;
+	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	RAM[0x1ffff8 / 4] = 0xffffffff;
-	RAM[0x1ffffc / 4] = 0xffff0003;
+	ROM[0x1ffff8 / 4] = 0xffffffff;
+	ROM[0x1ffffc / 4] = 0x0003ffff;
 
 	return 0;
 }

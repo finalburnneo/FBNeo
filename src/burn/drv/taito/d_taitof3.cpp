@@ -85,7 +85,7 @@ static UINT8 *bitmap_flags[10];
 static INT32 bitmap_width[8];
 
 static UINT8 *m_tile_opaque_pf[8];
-static UINT8 dirty_tiles[0x8000/4];
+static UINT8 *dirty_tiles;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -635,6 +635,11 @@ static void __fastcall f3_playfield_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
+static void f3_reset_dirtybuffer()
+{
+	memset (dirty_tiles, 1, 0x8000/4);
+}
+
 static INT32 DrvDoReset(INT32 full_reset)
 {
 	if (full_reset) {
@@ -670,7 +675,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	}
 #endif
 
-	memset (dirty_tiles, 1, 0x8000/4);
+	f3_reset_dirtybuffer();
 
 	sound_cpu_in_reset = 1;
 	watchdog = 0;
@@ -757,6 +762,8 @@ static INT32 MemIndex()
 	bitmap_flags[7]		= Next; Next += 512 * 512;
 	bitmap_flags[8]		= Next; Next += 512 * 512;
 	bitmap_flags[9]		= Next; Next += 512 * 256;
+
+	dirty_tiles         = Next; Next += 0x8000 / 4;
 
 	TaitoMemEnd		= Next;
 
@@ -3924,6 +3931,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		TaitoF3SoundScan(nAction, pnMin);
+
+		if (nAction & ACB_WRITE) {
+			f3_reset_dirtybuffer();
+		}
 	}
 
  	return 0;

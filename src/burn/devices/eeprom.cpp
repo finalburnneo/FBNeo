@@ -18,6 +18,8 @@ static INT32 reset_delay;
 
 static INT32 neeprom_available = 0;
 
+static INT32 overrun_errmsg_ignore = 0;
+
 static INT32 eeprom_command_match(const char *buf, const char *cmd, INT32 len)
 {
 	if ( cmd == 0 )	return 0;
@@ -124,15 +126,24 @@ void EEPROMExit()
 		fwrite (eeprom_data, len, 1, fz);
 		fclose (fz);
 	}
-	
+
+	overrun_errmsg_ignore = 0;
+
 	DebugDev_EEPROMInitted = 0;
+}
+
+void EEPROMIgnoreErrMessage(INT32 onoff)
+{
+	overrun_errmsg_ignore = (onoff) ? 1 : 0;
 }
 
 static void eeprom_write(INT32 bit)
 {
 	if (serial_count >= SERIAL_BUFFER_LENGTH-1)
 	{
-		bprintf(0, _T("error: EEPROM serial buffer overflow\n"));
+		if (!overrun_errmsg_ignore) {
+			bprintf(0, _T("error: EEPROM serial buffer overflow\n"));
+		}
 		return;
 	}
 

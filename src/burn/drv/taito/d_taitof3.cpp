@@ -898,6 +898,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	TaitoF3ES5506RomSize = 0x1000000;
 
 	EEPROMInit(&eeprom_interface_93C46);
+	EEPROMIgnoreErrMessage(1);
 
 	GenericTilesInit();
 
@@ -3692,9 +3693,9 @@ static void DrawCommon(INT32 scanline_start)
 	{
 		if (m_flipscreen)
 		{
-			scanline_start = 0; // iq_132!!!
+			scanline_start = (scanline_start == 0x1234) ? 1 : 0; // iq_132!!! super-kludge for gunlock. -dink
 
-			UINT32 *src = output_bitmap + ((nScreenHeight - 1) * 512) + 46;
+			UINT32 *src = output_bitmap + ((nScreenHeight + scanline_start - 1) * 512) + 46;
 			UINT8 *dst = pBurnDraw;
 
 			for (INT32 y = 0, i = 0; y < nScreenHeight; y++)
@@ -3723,6 +3724,13 @@ static void DrawCommon(INT32 scanline_start)
 			}
 		}
 	}
+}
+
+static INT32 DrvDrawGunlock()
+{
+	DrawCommon(0x1234);
+
+	return 0;
 }
 
 static INT32 DrvDraw224A()
@@ -5009,7 +5017,7 @@ struct BurnDriver BurnDrvGunlock = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gunlockRomInfo, gunlockRomName, NULL, NULL, F3InputInfo, NULL,
-	gunlockInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	gunlockInit, DrvExit, DrvFrame, DrvDrawGunlock, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
 
@@ -5046,7 +5054,7 @@ struct BurnDriver BurnDrvRayforce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforceRomInfo, rayforceRomName, NULL, NULL, F3InputInfo, NULL,
-	gunlockInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	gunlockInit, DrvExit, DrvFrame, DrvDrawGunlock, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
 
@@ -5083,7 +5091,7 @@ struct BurnDriver BurnDrvRayforcej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforcejRomInfo, rayforcejRomName, NULL, NULL, F3InputInfo, NULL,
-	gunlockInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	gunlockInit, DrvExit, DrvFrame, DrvDrawGunlock, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
 
@@ -6962,11 +6970,6 @@ static INT32 pbobble2RomCallback()
 
 	tile_decode(0x400000, 0x400000);
 
-	UINT32 *ROM = (UINT32 *)Taito68KRom1;
-
-	ROM[0x40090/4]=0x4e71815c;
-	ROM[0x40094/4]=0x4e714e71;
-
 	return 0;
 }
 
@@ -6975,13 +6978,27 @@ static INT32 pbobble2Init()
 	return DrvInit(pbobble2RomCallback, f3_24bit_palette_update, 0, PBOBBLE2);
 }
 
+static INT32 pbobble23OInit()
+{
+	INT32 rc = DrvInit(pbobble2RomCallback, f3_24bit_palette_update, 0, PBOBBLE2);
+
+	if (!rc) {
+		UINT32 *ROM = (UINT32 *)Taito68KRom1;
+
+		ROM[0x40090/4]=0x4e71815c;
+		ROM[0x40094/4]=0x4e714e71;
+	}
+
+	return rc;
+}
+
 struct BurnDriver BurnDrvPbobble2 = {
 	"pbobble2", NULL, NULL, NULL, "1995",
 	"Puzzle Bobble 2 (Ver 2.3O 1995/07/31)\0", NULL, "Taito Corporation Japan", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble2RomInfo, pbobble2RomName, NULL, NULL, F3InputInfo, NULL,
-	pbobble2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	pbobble23OInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 232, 4, 3
 };
 
@@ -7200,7 +7217,7 @@ struct BurnDriver BurnDrvGekiridn = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gekiridnRomInfo, gekiridnRomName, NULL, NULL, F3InputInfo, NULL,
 	gekiridnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	224, 320, 3, 4
+	232, 320, 3, 4
 };
 
 
@@ -7237,7 +7254,7 @@ struct BurnDriver BurnDrvGekiridnj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gekiridnjRomInfo, gekiridnjRomName, NULL, NULL, F3InputInfo, NULL,
 	gekiridnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	224, 320, 3, 4
+	232, 320, 3, 4
 };
 
 

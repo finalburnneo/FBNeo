@@ -6815,7 +6815,10 @@ void Altbeastj_Sim8751()
 	*((UINT16*)(System16Ram + 0x30d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
 	
 	// Tile Banking
-	System16TileBanks[1] = ((System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0]) & 7;
+	INT32 Bank = (System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0];
+	Bank &= 0xff;
+	Bank = (Bank & 0x01) | ((Bank & 0xfe) << 1);
+	System16TileBanks[1] = Bank & 7;
 	
 	// Sound command
 	UINT16 temp = (System16Ram[0x30d4 + 1] << 8) | System16Ram[0x30d4 + 0];
@@ -6834,7 +6837,10 @@ void Altbeast6_Sim8751()
 	*((UINT16*)(System16Ram + 0x3096)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
 	
 	// Tile Banking
-	System16TileBanks[1] = ((System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0]) & 7;
+	INT32 Bank = (System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0];
+	Bank &= 0xff;
+	Bank = (Bank & 0x01) | ((Bank & 0xfe) << 1);
+	System16TileBanks[1] = Bank & 7;
 	
 	// Sound command
 	UINT16 temp = (System16Ram[0x3098 + 1] << 8) | System16Ram[0x3098 + 0];

@@ -5,6 +5,7 @@
     no attempt at speed-ups
 	no attempt at cleaning at all
 	ROM sets might be out of date!!!
+	no palette viewer
 
 	working
 
@@ -934,7 +935,7 @@ static INT32 DrvExit()
 
 	EEPROMExit();
 
-	GenericTilesExit();
+	//GenericTilesExit(); - in TaitoExit();
 
 	BurnFree (TaitoMem);
 
@@ -5099,10 +5100,10 @@ struct BurnDriver BurnDrvRayforcej = {
 // Super Cup Finals (Ver 2.1O 1993/11/19)
 
 static struct BurnRomInfo scfinalsRomDesc[] = {
-	{ "d68-01.20",		0x040000, 0xcb951856, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "d68-02.19",		0x040000, 0x4f94413a, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "d68-04.18",		0x040000, 0x4a4e4972, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "d68-03.17",		0x040000, 0xa40be699, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "d68-09.ic40",		0x040000, 0x28193b3f, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d68-10.ic38",		0x040000, 0x67481bad, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d68-11.ic36",		0x040000, 0xd456c124, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d68-12.ic34",		0x040000, 0xdec41397, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
 	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
@@ -5152,10 +5153,10 @@ static INT32 scfinalsCallback()
 
 	tile_decode(0x1000000, 0x200000);
 
-	UINT32 *RAM = (UINT32 *)Taito68KRom1;
+	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	RAM[0x5af0/4]=0x4e710000|(RAM[0x5af0/4]&0xffff);
-	RAM[0xdd0/4]=0x4e750000;
+	ROM[0x5af0/4] = 0x4e754e71;
+	ROM[0xdd0/4] = 0x00004e75;
 
 	return 0;
 }
@@ -6985,8 +6986,8 @@ static INT32 pbobble23OInit()
 	if (!rc) {
 		UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-		ROM[0x40090/4]=0x4e71815c;
-		ROM[0x40094/4]=0x4e714e71;
+		ROM[0x40090/4] = 0x4e71815c;
+		ROM[0x40094/4] = 0x4e714e71;
 	}
 
 	return rc;

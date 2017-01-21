@@ -426,7 +426,7 @@ static void qbert_knocker(UINT8 knock)
 
 static void gottlieb_sh_w(UINT16 /*offset*/, UINT8 data)
 {
-	static INT32 random_offset=0;
+	static INT32 random_offset = rand()&7;
 	data &= 0x3f;
 
 	if ((data & 0x0f) != 0xf) {

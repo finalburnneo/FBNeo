@@ -41,6 +41,8 @@ static UINT8 scrolly;
 static UINT16 scrollx;
 static INT32 watchdog;
 
+static INT32 TimelimtMode = 0;
+
 static struct BurnInputInfo TimelimtInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 start"	},
@@ -374,7 +376,10 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvColPROM + 0x0000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x0020, 12, 1)) return 1;
 
-		if (BurnLoadRom(DrvColPROM + 0x0040, 13, 1))
+		if (!TimelimtMode)
+			if (BurnLoadRom(DrvColPROM + 0x0040, 13, 1)) return 1;
+
+		if (TimelimtMode)
 		{ // fill in missing timelimt prom with color values, values (c) 2017 -dink
 	            const UINT8 color_data[32] = {
 		        //0     1     2     3     4     5     6     7     8     9     a     b     c     d     e     f
@@ -386,7 +391,9 @@ static INT32 DrvInit()
 		}
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x0000, 14, 1)) return 1;
-		    BurnLoadRom(DrvZ80ROM1 + 0x1000, 15, 1); // "progress" doesn't have this, so don't check.
+
+		if (TimelimtMode)
+			if (BurnLoadRom(DrvZ80ROM1 + 0x1000, 15, 1)) return 1;
 
 		DrvGfxDecode();
 		DrvPaletteInit();
@@ -435,6 +442,8 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 
 	BurnFree(AllMem);
+
+	TimelimtMode = 0;
 
 	return 0;
 }
@@ -675,13 +684,20 @@ static struct BurnRomInfo timelimtRomDesc[] = {
 STD_ROM_PICK(timelimt)
 STD_ROM_FN(timelimt)
 
+static INT32 TimelimtInit()
+{
+	TimelimtMode = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvTimelimt = {
 	"timelimt", NULL, NULL, NULL, "1983",
 	"Time Limit\0", NULL, "Chuo Co. Ltd", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, timelimtRomInfo, timelimtRomName, NULL, NULL, TimelimtInputInfo, TimelimtDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	TimelimtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
 };
 

@@ -1,7 +1,7 @@
 #include "sys16.h"
 
 #define MAX_MIRRORS		32
-#define LOG_MAPPER		1
+#define LOG_MAPPER		0
 
 typedef struct
 {
@@ -505,11 +505,11 @@ static void chip_write(UINT32 offset, UINT8 data)
 			if ((chip.regs[offset] & 7) != 7) {
 				for (INT32 irqnum = 0; irqnum < 8; irqnum++) {
 					if (irqnum == (~chip.regs[offset] & 7)) {
-						bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ\n"));
+						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ\n"));
 						SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
 					} else {
 						SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
-						bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ\n"));
+						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ\n"));
 					}
 				}
 			}
@@ -519,15 +519,14 @@ static void chip_write(UINT32 offset, UINT8 data)
 		case 0x05: {
 			if (data == 0x01) {
 				UINT32 addr = (chip.regs[0x0a] << 17) | (chip.regs[0x0b] << 9) | (chip.regs[0x0c] << 1);
-				//m_space.write_word(addr, (chip.regs[0x00] << 8) | chip.regs[0x01]);
+				SekWriteWord(addr, (chip.regs[0x00] << 8) | chip.regs[0x01]);
 				
-				bprintf(PRINT_IMPORTANT, _T("Mapper Chip Write Word %06x . %04x\n"), addr, (chip.regs[0x00] << 8) | chip.regs[0x01]);
+				if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper Chip Write Word %06x . %04x\n"), addr, (chip.regs[0x00] << 8) | chip.regs[0x01]);
 			} else if (data == 0x02) {
 				UINT32 addr = (chip.regs[0x07] << 17) | (chip.regs[0x08] << 9) | (chip.regs[0x09] << 1);
-				//UINT16 result = m_space.read_word(addr);
-				UINT16 result = 0xffff;
+				UINT16 result = SekReadWord(addr);
 				
-				bprintf(PRINT_IMPORTANT, _T("Mapper Chip Read Word %06x\n"), addr);
+				if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper Chip Read Word %06x\n"), addr);
 				
 				chip.regs[0x00] = result >> 8;
 				chip.regs[0x01] = result;
@@ -977,6 +976,99 @@ void __fastcall sega_315_5195_write_word(UINT32 a, UINT16 d)
 	if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Write Word 0x%06X, 0x%04X\n"), a, d);
 	
 	chip_write(a >> 1, d & 0xff);
+}
+
+UINT8 sega_315_5195_i8751_read_port(INT32 port)
+{
+	switch (port) {
+		case MCS51_PORT_P1: {
+			return 0xff - System16Input[0];
+		}
+		
+		case 0xff00:
+		case 0xff01:
+		case 0xff02:
+		case 0xff03:
+		case 0xff04:
+		case 0xff05:
+		case 0xff06:
+		case 0xff07:
+		case 0xff08:
+		case 0xff09:
+		case 0xff0a:
+		case 0xff0b:
+		case 0xff0c:
+		case 0xff0d:
+		case 0xff0e:
+		case 0xff0f:
+		case 0xff10:
+		case 0xff11:
+		case 0xff12:
+		case 0xff13:
+		case 0xff14:
+		case 0xff15:
+		case 0xff16:
+		case 0xff17:
+		case 0xff18:
+		case 0xff19:
+		case 0xff1a:
+		case 0xff1b:
+		case 0xff1c:
+		case 0xff1d:
+		case 0xff1e:
+		case 0xff1f: {
+			return chip_read((UINT32)port, 8);
+		}
+	}
+	
+	bprintf(PRINT_IMPORTANT, _T("I8751 Read %x\n"), port);
+		
+	return 0;
+}
+
+void sega_315_5195_i8751_write_port(INT32 port, UINT8 data)
+{
+	if (port >= MCS51_PORT_P0 && port <= MCS51_PORT_P3) return;
+	
+	switch (port) {
+		case 0xff00:
+		case 0xff01:
+		case 0xff02:
+		case 0xff03:
+		case 0xff04:
+		case 0xff05:
+		case 0xff06:
+		case 0xff07:
+		case 0xff08:
+		case 0xff09:
+		case 0xff0a:
+		case 0xff0b:
+		case 0xff0c:
+		case 0xff0d:
+		case 0xff0e:
+		case 0xff0f:
+		case 0xff10:
+		case 0xff11:
+		case 0xff12:
+		case 0xff13:
+		case 0xff14:
+		case 0xff15:
+		case 0xff16:
+		case 0xff17:
+		case 0xff18:
+		case 0xff19:
+		case 0xff1a:
+		case 0xff1b:
+		case 0xff1c:
+		case 0xff1d:
+		case 0xff1e:
+		case 0xff1f: {
+			return chip_write((UINT32)port, data);
+		}
+	}
+	
+	
+	bprintf(PRINT_IMPORTANT, _T("I8751 Write %x, %x\n"), port, data);
 }
 
 void sega_315_5195_reset()

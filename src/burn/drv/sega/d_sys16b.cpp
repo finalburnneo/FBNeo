@@ -2023,7 +2023,7 @@ static struct BurnRomInfo AltbeastRomDesc[] = {
 	{ "opr-11672.a11",  0x20000, 0xbbd7f460, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "opr-11673.a12",  0x20000, 0x400c4a36, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0078.c2",    0x01000, 0x8101925f, BRF_OPT },
+	{ "317-0078.c2",    0x01000, 0x8101925f, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
 };
 
 
@@ -6790,25 +6790,6 @@ static INT32 AliensynInit()
 	return nRet;
 }
 
-void Altbeast_Sim8751()
-{
-	// System Inputs
-	*((UINT16*)(System16Ram + 0x30c2)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
-	
-	// Tile Banking
-	System16TileBanks[1] = ((System16Ram[0x3094 + 1] << 8) | System16Ram[0x3094 + 0]) & 7;
-	
-	// Sound command
-	UINT16 temp = (System16Ram[0x30c4 + 1] << 8) | System16Ram[0x30c4 + 0];
-	if ((temp & 0xff00) != 0x0000) {
-		System16SoundLatch = temp >> 8;
-		ZetOpen(0);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		ZetClose();
-		*((UINT16*)(System16Ram + 0x30c4)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
-	}
-}
-
 void Altbeastj_Sim8751()
 {
 	// System Inputs
@@ -6851,13 +6832,6 @@ void Altbeast6_Sim8751()
 		ZetClose();
 		*((UINT16*)(System16Ram + 0x3098)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
 	}
-}
-
-static INT32 AltbeastInit()
-{
-	Simulate8751 = Altbeast_Sim8751;
-
-	return System16Init();
 }
 
 static INT32 AltbeastjInit()
@@ -8087,7 +8061,7 @@ struct BurnDriver BurnDrvAltbeast = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_SCRFIGHT, 0,
 	NULL, AltbeastRomInfo, AltbeastRomName, NULL, NULL, System16bfire3InputInfo, AltbeastDIPInfo,
-	AltbeastInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

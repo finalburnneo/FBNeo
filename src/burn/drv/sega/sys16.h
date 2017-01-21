@@ -11,6 +11,7 @@
 #include "genesis_vid.h"
 #include "8255ppi.h"
 #include "burn_shift.h"
+#include "mcs51.h"
 
 #define SYS16_ROM_PROG			1
 #define SYS16_ROM_TILES			2
@@ -31,6 +32,7 @@
 #define SYS16_ROM_PROG3			17
 #define SYS16_ROM_SPRITES2		18
 #define SYS16_ROM_RF5C68DATA	19
+#define SYS16_ROM_I8751			20
 
 // sys16_run.cpp
 extern UINT8 System16InputPort0[8];
@@ -59,6 +61,7 @@ extern UINT8 *System16Z80Code;
 extern UINT8 *System16UPD7759Data;
 extern UINT8 *System16PCMData;
 extern UINT8 *System16RF5C68Data;
+extern UINT8 *System16I8751Rom;
 extern UINT8 *System16Prom;
 extern UINT8 *System16Key;
 extern UINT8 *System16Ram;
@@ -314,6 +317,8 @@ UINT8 __fastcall sega_315_5195_read_byte(UINT32 a);
 UINT16 __fastcall sega_315_5195_read_word(UINT32 a);
 void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d);
 void __fastcall sega_315_5195_write_word(UINT32 a, UINT16 d);
+UINT8 sega_315_5195_i8751_read_port(INT32 port);
+void sega_315_5195_i8751_write_port(INT32 port, UINT8 data);
 
 void sega_315_5195_reset();
 void sega_315_5195_configure_explicit(UINT8 *map_data);

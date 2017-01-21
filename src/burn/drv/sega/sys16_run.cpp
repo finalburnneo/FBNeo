@@ -43,6 +43,7 @@ UINT8  *System16UPD7759Data   = NULL;
 UINT8  *System16PCMData       = NULL;
 UINT8  *System16PCM2Data      = NULL;
 UINT8  *System16RF5C68Data    = NULL;
+UINT8  *System16I8751Rom      = NULL;
 UINT8  *System16Prom          = NULL;
 UINT8  *System16Key           = NULL;
 UINT8  *System16Ram           = NULL;
@@ -106,9 +107,12 @@ UINT32 System16PCM2DataSize = 0;
 UINT32 System16PCM2DataNum = 0;
 UINT32 System16RF5C68DataSize = 0;
 UINT32 System16RF5C68DataNum = 0;
+UINT32 System16I8751RomSize = 0;
+UINT32 System16I8751RomNum = 0;
 UINT32 System16PromSize = 0;
 UINT32 System16PromNum = 0;
 UINT32 System16KeySize = 0;
+UINT32 System16KeyNum = 0;
 UINT32 System16RamSize = 0;
 UINT32 System16ExtraRamSize = 0;
 UINT32 System16ExtraRam2Size = 0;
@@ -309,6 +313,10 @@ static INT32 System16DoReset()
 				BurnYM2151Reset();
 			}
 		}
+	}
+	
+	if (System16I8751RomNum) {
+		mcs51_reset();
 	}
 	
 	// Reset Variables
@@ -946,6 +954,7 @@ static INT32 System16MemIndex()
 	System16RF5C68Data   = Next; Next += System16RF5C68DataSize;
 	System16Key          = Next; Next += System16KeySize;
 	System16Prom         = Next; Next += System16PromSize;
+	System16I8751Rom     = Next; Next += System16I8751RomSize;
 	
 	RamStart = Next;
 
@@ -1095,6 +1104,11 @@ INT32 System16LoadRoms(bool bLoad)
 			}
 			if ((ri.nType & 0xff) == SYS16_ROM_KEY) {
 				System16KeySize += ri.nLen;
+				System16KeyNum++;
+			}
+			if ((ri.nType & 0xff) == SYS16_ROM_I8751) {
+				System16I8751RomSize += ri.nLen;
+				System16I8751RomNum++;
 			}
 		} while (ri.nLen);
 		
@@ -1123,6 +1137,7 @@ INT32 System16LoadRoms(bool bLoad)
 		if (System16PCM2DataSize) bprintf(PRINT_NORMAL, _T("PCM Data #2 Size: 0x%X (%i roms)\n"), System16PCM2DataSize, System16PCM2DataNum);
 		if (System16PromSize) bprintf(PRINT_NORMAL, _T("PROM Rom Size: 0x%X (%i roms)\n"), System16PromSize, System16PromNum);
 		if (System16KeySize) bprintf(PRINT_NORMAL, _T("Encryption Key Size: 0x%X\n"), System16KeySize);
+		if (System16I8751RomSize) bprintf(PRINT_NORMAL, _T("I8751 Prog Size: 0x%X\n"), System16I8751RomSize);
 #endif
 	}
 	
@@ -1401,6 +1416,12 @@ INT32 System16LoadRoms(bool bLoad)
 		if (System16KeySize) {
 			Offset = System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum + System16RoadRomNum + System16Z80RomNum + System16Z80Rom2Num + System16Z80Rom3Num + System16Z80Rom4Num + System167751ProgNum + System167751DataNum + System16UPD7759DataNum + System16PCMDataNum + System16PCM2DataNum + System16RF5C68DataNum + System16PromNum;
 			nRet = BurnLoadRom(System16Key, Offset, 1); if (nRet) return 1;
+		}
+		
+		// I8751 Program Roms
+		if (System16I8751RomSize) {
+			Offset = System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum + System16RoadRomNum + System16Z80RomNum + System16Z80Rom2Num + System16Z80Rom3Num + System16Z80Rom4Num + System167751ProgNum + System167751DataNum + System16UPD7759DataNum + System16PCMDataNum + System16PCM2DataNum + System16RF5C68DataNum + System16PromNum + System16KeyNum;
+			nRet = BurnLoadRom(System16I8751Rom, Offset, 1); if (nRet) return 1;
 		}
 	}
 	
@@ -1975,6 +1996,13 @@ INT32 System16Init()
 			}
 		}
 		
+		if (System16I8751RomNum) {
+			mcs51_program_data = System16I8751Rom;
+			mcs51_init();
+			mcs51_set_write_handler(sega_315_5195_i8751_write_port);
+			mcs51_set_read_handler(sega_315_5195_i8751_read_port);
+		}
+		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
 			BurnYM2413Init(5000000);
 			BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
@@ -2486,6 +2514,10 @@ INT32 System16Exit()
 		sega_315_5195_exit();
 	}
 	
+	if (System16I8751RomNum) {
+		mcs51_exit();
+	}
+	
 	GenericTilesExit();
 	System16TileMapsExit();
 
@@ -2736,7 +2768,8 @@ INT32 System16BFrame()
 	
 	nCyclesTotal[0] = (INT32)((INT64)System16ClockSpeed * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 5000000 / 60;
-	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = 0;
+	nCyclesTotal[2] = 8000000 / 60;
+	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
 
 	INT32 nSoundBufferPos = 0;
 	
@@ -2766,6 +2799,16 @@ INT32 System16BFrame()
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
 			ZetClose();
+		}
+		
+		if (System16I8751RomNum) {
+			nCurrentCPU = 2;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nSystem16CyclesDone[nCurrentCPU] += mcs51Run(nCyclesSegment);
+			
+			if (i == (nInterleave - 2)) mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+			if (i == (nInterleave - 1)) mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
 		}
 
 		if (pBurnSoundOut) {
@@ -2803,6 +2846,11 @@ INT32 System16BFrame()
 	
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
+	
+/*	if (System16I8751RomNum) {
+		mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+		mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+	}*/
 	
 	if (Simulate8751) Simulate8751();
 	

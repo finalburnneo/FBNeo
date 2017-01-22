@@ -1,6 +1,7 @@
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "es5506.h"
+#include "mb87078.h"
 #include "taito.h"
 
 // Allocate these externally!
@@ -234,17 +235,14 @@ static void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
 		return;
 	}
 
-	switch (a) {
-		case 0x340000:
-		case 0x340002: {
-			// f3_volume_w
-			return;
-		}
+	if (a >= 0x340000 && a <= 0x340003) {
+		INT32 Offset = (a & 3) >> 1;
 
-		default: {
-			bprintf(PRINT_NORMAL, _T("Sound 68K Write byte => %06X, %02X\n"), a, d);
-		}
+		mb87078_write(Offset^1, d);
+		return;
 	}
+
+	bprintf(PRINT_NORMAL, _T("Sound 68K Write byte => %06X, %02X\n"), a, d);
 }
 
 static UINT16 __fastcall TaitoF3Sound68KReadWord(UINT32 a)
@@ -271,6 +269,14 @@ static void __fastcall TaitoF3Sound68KWriteWord(UINT32 a, UINT16 d)
 	bprintf(PRINT_NORMAL, _T("Sound 68K Write word => %06X, %04X\n"), a, d);
 }
 
+void TaitoF3VolumeCallback(INT32 offset, INT32 data)
+{
+	if (offset > 1) {
+		offset = (offset & 1) ? BURN_SND_ES5506_ROUTE_RIGHT : BURN_SND_ES5506_ROUTE_LEFT;
+		ES5506SetRoute(0, (double)(data / 100.00), offset);
+	}
+}
+
 void TaitoF3SoundReset()
 {
 	memcpy(TaitoF3SoundRam, TaitoF3SoundRom, 8); // copy vectors
@@ -293,6 +299,7 @@ void TaitoF3SoundReset()
 	TaitoF3SoundTriggerIRQCycleCounter = 0;
 	TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
 	TaitoF3SoundTriggerIRQCyclesMode = 0;
+	mb87078_reset();
 }
 
 void TaitoF3SoundExit()
@@ -309,6 +316,8 @@ void TaitoF3SoundExit()
 	TaitoF3ES5506RomSize = 0;
 
 	ES5506Exit();
+
+	mb87078_exit();
 }
 
 void TaitoF3SoundInit(INT32 cpunum)
@@ -331,6 +340,8 @@ void TaitoF3SoundInit(INT32 cpunum)
 	SekClose();
 
 	ES5505Init(30476100/2, TaitoF3ES5506Rom, TaitoF3ES5506Rom, NULL);
+
+	mb87078_init(TaitoF3VolumeCallback);
 }
 
 void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)
@@ -387,6 +398,8 @@ INT32 TaitoF3SoundScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 	//	SekScan(nAction);		// call in driver!
 		ES5506Scan(nAction, pnMin);
+
+		mb87078_scan();
 
 		SCAN_VAR(TaitoF3Counter);
 		SCAN_VAR(TaitoF3VectorReg);

@@ -44,6 +44,7 @@ UINT8 *TaitoSpriteRam          = NULL;
 UINT8 *TaitoSpriteRam2         = NULL;
 UINT8 *TaitoSpriteRamBuffered  = NULL;
 UINT8 *TaitoSpriteRamDelayed   = NULL;
+UINT8 *TaitoSpriteRamDelayed2  = NULL;
 UINT8 *TaitoSpriteExtension    = NULL;
 UINT8 *TaitoVideoRam           = NULL;
 UINT32 *TaitoPalette           = NULL;

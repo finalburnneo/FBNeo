@@ -29,6 +29,7 @@ extern UINT8 *TaitoSpriteRam;
 extern UINT8 *TaitoSpriteRam2;
 extern UINT8 *TaitoSpriteRamBuffered;
 extern UINT8 *TaitoSpriteRamDelayed;
+extern UINT8 *TaitoSpriteRamDelayed2;
 extern UINT8 *TaitoSpriteExtension;
 extern UINT8 *TaitoVideoRam;
 extern UINT32  *TaitoPalette;

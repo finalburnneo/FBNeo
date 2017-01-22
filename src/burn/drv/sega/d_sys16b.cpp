@@ -156,6 +156,61 @@ static struct BurnInputInfo System16bDip3InputList[] = {
 
 STDINPUTINFO(System16bDip3)
 
+static struct BurnInputInfo AceattacInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , System16InputPort0 + 4, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , System16InputPort0 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , System16InputPort0 + 5, "p2 start"  },
+
+	{"P1 Up"             , BIT_DIGITAL  , System16InputPort3 + 2, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , System16InputPort3 + 3, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , System16InputPort3 + 0, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System16InputPort3 + 1, "p1 right"  },
+	{"P1 Dial Left"      , BIT_DIGITAL  , System16InputPort4 + 0, "p1 fire 14"},
+	{"P1 Dial Right"     , BIT_DIGITAL  , System16InputPort4 + 1, "p1 fire 15"},
+	{"P1 Block"          , BIT_DIGITAL  , System16InputPort0 + 6, "p1 fire 1" },
+	{"P1 Select"         , BIT_DIGITAL  , System16InputPort1 + 4, "p1 fire 2" },
+	{"P1 Attack Dir0"    , BIT_DIGITAL  , System16InputPort1 + 0, "p1 fire 3" },
+	{"P1 Attack Dir1"    , BIT_DIGITAL  , System16InputPort1 + 1, "p1 fire 4" },
+	{"P1 Attack Dir2"    , BIT_DIGITAL  , System16InputPort1 + 2, "p1 fire 5" },
+	{"P1 Attack Dir3"    , BIT_DIGITAL  , System16InputPort1 + 3, "p1 fire 6" },
+	{"P1 Attack Dir4"    , BIT_DIGITAL  , System16InputPort1 + 4, "p1 fire 7" },
+	{"P1 Attack Dir5"    , BIT_DIGITAL  , System16InputPort1 + 5, "p1 fire 8" },
+	{"P1 Attack Dir6"    , BIT_DIGITAL  , System16InputPort1 + 6, "p1 fire 9" },
+	{"P1 Attack Dir7"    , BIT_DIGITAL  , System16InputPort1 + 7, "p1 fire 10"},
+	{"P1 Attack Pow0"    , BIT_DIGITAL  , System16InputPort2 + 4, "p1 fire 11"},
+	{"P1 Attack Pow1"    , BIT_DIGITAL  , System16InputPort2 + 5, "p1 fire 12"},
+	{"P1 Attack Pow2"    , BIT_DIGITAL  , System16InputPort2 + 6, "p1 fire 13"},
+
+	{"P2 Up"             , BIT_DIGITAL  , System16InputPort3 + 6, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , System16InputPort3 + 7, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , System16InputPort3 + 4, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System16InputPort3 + 5, "p2 right"  },
+	{"P2 Dial Left"      , BIT_DIGITAL  , System16InputPort4 + 2, "p2 fire 14"},
+	{"P2 Dial Right"     , BIT_DIGITAL  , System16InputPort4 + 3, "p2 fire 15"},
+	{"P2 Block"          , BIT_DIGITAL  , System16InputPort0 + 7, "p2 fire 1" },
+	{"P2 Select"         , BIT_DIGITAL  , System16InputPort5 + 4, "p2 fire 2" },
+	{"P2 Attack Dir0"    , BIT_DIGITAL  , System16InputPort5 + 0, "p2 fire 3" },
+	{"P2 Attack Dir1"    , BIT_DIGITAL  , System16InputPort5 + 1, "p2 fire 4" },
+	{"P2 Attack Dir2"    , BIT_DIGITAL  , System16InputPort5 + 2, "p2 fire 5" },
+	{"P2 Attack Dir3"    , BIT_DIGITAL  , System16InputPort5 + 3, "p2 fire 6" },
+	{"P2 Attack Dir4"    , BIT_DIGITAL  , System16InputPort5 + 4, "p2 fire 7" },
+	{"P2 Attack Dir5"    , BIT_DIGITAL  , System16InputPort5 + 5, "p2 fire 8" },
+	{"P2 Attack Dir6"    , BIT_DIGITAL  , System16InputPort5 + 6, "p2 fire 9" },
+	{"P2 Attack Dir7"    , BIT_DIGITAL  , System16InputPort5 + 7, "p2 fire 10"},
+	{"P2 Attack Pow0"    , BIT_DIGITAL  , System16InputPort6 + 4, "p2 fire 11"},
+	{"P2 Attack Pow1"    , BIT_DIGITAL  , System16InputPort6 + 5, "p2 fire 12"},
+	{"P2 Attack Pow2"    , BIT_DIGITAL  , System16InputPort6 + 6, "p2 fire 13"},
+
+	{"Service"           , BIT_DIGITAL  , System16InputPort0 + 3 , "service"   },
+	{"Diagnostics"       , BIT_DIGITAL  , System16InputPort0 + 2 , "diag"      },
+	{"Reset"             , BIT_DIGITAL  , &System16Reset         , "reset"     },
+	{"Dip 1"             , BIT_DIPSWITCH, System16Dip + 0        , "dip"       },
+	{"Dip 2"             , BIT_DIPSWITCH, System16Dip + 1        , "dip"       },
+};
+
+STDINPUTINFO(Aceattac)
+
 static struct BurnInputInfo AtomicpInputList[] = {
 	{"Coin 1"            , BIT_DIGITAL  , System16InputPort1 + 7, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL  , System16InputPort0 + 6, "p1 start"  },
@@ -569,6 +624,45 @@ Dip defs
 	{dipval, 0x01, 0xf0, 0xb0, "1 Coin  5 Credits"                  },			\
 	{dipval, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"                  },			\
 	{dipval, 0x01, 0xf0, 0x00, "Free Play (if coin A too) or 1C/1C" },
+
+static struct BurnDIPInfo AceattacDIPList[]=
+{
+	// Default Values
+	{0x2d, 0xff, 0xff, 0xfe, NULL                                 },
+	{0x2e, 0xff, 0xff, 0xff, NULL                                 },
+
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x2d, 0x01, 0x01, 0x01, "Off"                                },
+	{0x2d, 0x01, 0x01, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 8   , "Starting Points"                    },
+	{0x2d, 0x01, 0x0e, 0x06, "2000"                               },
+	{0x2d, 0x01, 0x0e, 0x0a, "3000"                               },
+	{0x2d, 0x01, 0x0e, 0x0c, "4000"                               },
+	{0x2d, 0x01, 0x0e, 0x0e, "5000"                               },	
+	{0x2d, 0x01, 0x0e, 0x08, "6000"                               },	
+	{0x2d, 0x01, 0x0e, 0x04, "7000"                               },
+	{0x2d, 0x01, 0x0e, 0x02, "8000"                               },
+	{0x2d, 0x01, 0x0e, 0x00, "9000"                               },
+	
+	{0   , 0xfe, 0   , 4   , "Point Table"                        },
+	{0x2d, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x2d, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x2d, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x2d, 0x01, 0x30, 0x00, "Hardest"                            },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x2d, 0x01, 0xc0, 0x20, "Easy"                               },
+	{0x2d, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x2d, 0x01, 0xc0, 0x10, "Hard"                               },
+	{0x2d, 0x01, 0xc0, 0x00, "Hardest"                            },
+	
+	// Dip 2
+	SYSTEM16B_COINAGE(0x2e)
+};
+
+STDDIPINFO(Aceattac)
 
 static struct BurnDIPInfo AliensynDIPList[]=
 {
@@ -6042,6 +6136,111 @@ void __fastcall System16BWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
+static INT16 AceattacTrack1X = 0;
+static INT16 AceattacTrack1Y = 0;
+static INT16 AceattacTrack2X = 0;
+static INT16 AceattacTrack2Y = 0;
+static INT8 AceattacDial1 = 0;
+static INT8 AceattacDial2 = 0;
+
+static void AceattacMakeAnalogInputs()
+{
+	if (System16InputPort3[0]) AceattacTrack1X += 0x40;
+	if (System16InputPort3[1]) AceattacTrack1X -= 0x40;
+	if (AceattacTrack1X >= 0x100) AceattacTrack1X = 0;
+	if (AceattacTrack1X < 0) AceattacTrack1X = 0xfd;
+	
+	if (System16InputPort3[2]) AceattacTrack1Y -= 0x40;
+	if (System16InputPort3[3]) AceattacTrack1Y += 0x40;
+	if (AceattacTrack1Y >= 0x100) AceattacTrack1Y = 0;
+	if (AceattacTrack1Y < 0) AceattacTrack1Y = 0xfd;
+	
+	if (System16InputPort4[0]) AceattacDial1 += 0x01;
+	if (System16InputPort4[1]) AceattacDial1 -= 0x01;
+	if (AceattacDial1 >= 0x10) AceattacDial1 = 0;
+	if (AceattacDial1 < 0) AceattacDial1 = 0x0f;
+	
+	if (System16InputPort3[4]) AceattacTrack2X += 0x40;
+	if (System16InputPort3[5]) AceattacTrack2X -= 0x40;
+	if (AceattacTrack2X >= 0x100) AceattacTrack2X = 0;
+	if (AceattacTrack2X < 0) AceattacTrack2X = 0xfd;
+	
+	if (System16InputPort3[6]) AceattacTrack2Y -= 0x40;
+	if (System16InputPort3[7]) AceattacTrack2Y += 0x40;
+	if (AceattacTrack2Y >= 0x100) AceattacTrack2Y = 0;
+	if (AceattacTrack2Y < 0) AceattacTrack2Y = 0xfd;
+	
+	if (System16InputPort4[2]) AceattacDial2 += 0x01;
+	if (System16InputPort4[3]) AceattacDial2 -= 0x01;
+	if (AceattacDial2 >= 0x10) AceattacDial2 = 0;
+	if (AceattacDial2 < 0) AceattacDial2 = 0x0f;
+}
+
+static UINT8 AceattacReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x0800: {
+			return 0xff - System16Input[0];
+		}
+		
+		case 0x0802: {
+			return AceattacDial1 | (AceattacDial2 << 4);
+		}
+		
+		case 0x1000: {
+			return System16Dip[0];
+		}
+		
+		case 0x1001: {
+			return System16Dip[1];
+		}
+		
+		case 0x1800: {
+			return AceattacTrack1X & 0xff;
+		}
+		
+		case 0x1801: {
+			return ((AceattacTrack1X >> 8) & 0x0f) | (System16Input[2] & 0xf0);
+		}
+		
+		case 0x1802: {
+			return AceattacTrack1Y & 0xff;
+		}
+		
+		case 0x1803: {
+			return ((AceattacTrack1Y >> 8) & 0x0f);
+		}
+		
+		case 0x1808: {
+			return AceattacTrack2X & 0xff;
+		}
+		
+		case 0x1809: {
+			return ((AceattacTrack2X >> 8) & 0x0f) | (System16Input[6] & 0xf0);
+		}
+		
+		case 0x180a: {
+			return AceattacTrack2Y & 0xff;
+		}
+		
+		case 0x180b: {
+			return ((AceattacTrack2Y >> 8) & 0xff);
+		}
+		
+		case 0x1810: {
+			return 0xff - System16Input[1];
+		}
+		
+		case 0x1811: {
+			return 0xff - System16Input[5];
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("%x\n"), offset);
+	
+	return sega_315_5195_io_read(offset);
+}
+
 void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
@@ -6946,6 +7145,14 @@ Driver Inits
 static INT32 Fantzn2xPlaneOffsets[3] = { 1, 2, 3 };
 static INT32 Fantzn2xXOffsets[8]     = { 0, 4, 8, 12, 16, 20, 24, 28 };
 static INT32 Fantzn2xYOffsets[8]     = { 0, 32, 64, 96, 128, 160, 192, 224 };
+
+static INT32 AceattacInit()
+{
+	System16MakeAnalogInputsDo = AceattacMakeAnalogInputs;
+	sega_315_5195_custom_io_do = AceattacReadIO;
+	
+	return System16Init();
+}
 
 static INT32 AliensynInit()
 {
@@ -8186,8 +8393,8 @@ struct BurnDriver BurnDrvAceattac = {
 	"Ace Attacker (FD1094 317-0059)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_SPORTSMISC, 0,
-	NULL, AceattacRomInfo, AceattacRomName, NULL, NULL, System16bDip3InputInfo, NULL,
-	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
+	NULL, AceattacRomInfo, AceattacRomName, NULL, NULL, AceattacInputInfo, AceattacDIPInfo,
+	AceattacInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

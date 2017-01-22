@@ -7,7 +7,7 @@
 UINT8 *TaitoF3SoundRom = NULL;
 UINT8 *TaitoF3SoundRam = NULL;
 UINT8 *TaitoF3ES5506Rom = NULL;
-INT32 TaitoF3ES5506RomSize = 0x1000000;
+INT32 TaitoF3ES5506RomSize = 0;
 UINT8 *TaitoF3SharedRam = NULL;
 UINT8 *TaitoES5510DSPRam = NULL;
 UINT32 *TaitoES5510GPR = NULL;
@@ -306,7 +306,7 @@ void TaitoF3SoundExit()
 	TaitoES5510DSPRam = NULL;
 	TaitoES5510GPR = NULL;
 
-	TaitoF3ES5506RomSize = 0x1000000;
+	TaitoF3ES5506RomSize = 0;
 
 	ES5506Exit();
 }

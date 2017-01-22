@@ -36,14 +36,14 @@
 	cleopatr
 	intcup94
 	pwrgoal
-	gunlock		- blank line on y[0] / video offset? -dink
+	gunlock
 	GSEEKER
 	arkretrn
 	tcobra2
 
 	broken
 
-	commandw	- bad graphics
+	commandw	- bad graphics / missing roz layer (bottom)
 
 	not tested
 
@@ -95,8 +95,7 @@ static UINT8 DrvSrv[1];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[5];
 
-
-static int sprite_code_mask;
+static UINT32 sprite_code_mask; // set in init
 
 static UINT32 m_sprite_pen_mask;
 static UINT32 m_sprite_pri_usage;
@@ -149,13 +148,12 @@ static INT32 m_f3_game = 0; // iq_132!!!!!!!!!!!!
 
 struct tempsprite
 {
-	int code,color;
-	int flipx,flipy;
-	int x,y;
-	int zoomx,zoomy;
-	int pri;
+	INT32 code, color;
+	INT32 flipx, flipy;
+	INT32 x, y;
+	INT32 zoomx, zoomy;
+	INT32 pri;
 };
-
 
 struct tempsprite *m_spritelist;
 const struct tempsprite *m_sprite_end;
@@ -272,8 +270,8 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 
 		case 0x10:
 		{
-			//bprintf (0, _T("%x, %x, %d\n"),offset,d,b);
-			if ((offset & 3) == 3) {
+			//if (b!=1) bprintf (0, _T("%x, %x, %d\n"),offset,d,b);
+			if ((offset & 3) == 3 || (offset == 0x4a0012 && b == 2)) {
 				EEPROMSetClockLine((d & 0x08) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 				EEPROMWriteBit(d & 0x04);
 				EEPROMSetCSLine((d & 0x10) ? EEPROM_CLEAR_LINE : EEPROM_ASSERT_LINE);
@@ -629,7 +627,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	EEPROMReset();
 
-#if 1
 	if (EEPROMAvailable() == 0) {
 		if (TaitoDefaultEEProm[0] != 0) {
 			EEPROMFill((const UINT8*)TaitoDefaultEEProm, 0, 128);
@@ -645,12 +642,16 @@ static INT32 DrvDoReset(INT32 full_reset)
 				0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff,0xffff
 			};
 
-			EEPROMFill((const UINT8*)recalh_eeprom, 0, 64 * 2);
+			EEPROMFill((const UINT8*)&recalh_eeprom, 0, 64 * 2);
 		}
 	}
-#endif
 
 	f3_reset_dirtybuffer();
+
+	m_sprite_pen_mask = 0;
+	m_sprite_pri_usage = 0;
+	m_flipscreen = 0;
+	m_sprite_extra_planes = 0;
 
 	sound_cpu_in_reset = 1;
 	watchdog = 0;
@@ -896,7 +897,9 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	
 	TaitoF3SoundInit(1);
 
-	TaitoF3ES5506RomSize = 0x1000000;
+	if (TaitoF3ES5506RomSize == 0) { // Default. Some games set this in the callback.
+		TaitoF3ES5506RomSize = 0x1000000;
+	}
 
 	EEPROMInit(&eeprom_interface_93C46);
 	EEPROMIgnoreErrMessage(1);
@@ -3727,7 +3730,7 @@ static void DrawCommon(INT32 scanline_start)
 	}
 }
 
-static INT32 DrvDrawGunlock()
+static INT32 DrvDraw224A_Flipped()
 {
 	DrawCommon(0x1234);
 
@@ -3754,7 +3757,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-
+		extern int counter;
 static INT32 DrvFrame()
 {
 	watchdog++;
@@ -3797,8 +3800,8 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 255) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 261) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 255+counter) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 261+counter) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (sound_cpu_in_reset == 0)
@@ -3823,7 +3826,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		*pnMin =  0x029702;
 	}
 
-	if (nAction & ACB_MEMORY_ROM) {	
+	if (nAction & ACB_MEMORY_ROM) {
 		ba.Data		= Taito68KRom1;
 		ba.nLen		= 0x0200000;
 		ba.nAddress	= 0;
@@ -4115,7 +4118,7 @@ struct BurnDriver BurnDrvArabianm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabianmRomInfo, arabianmRomName, NULL, NULL, F3InputInfo, NULL,
-	arabianmInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	arabianmInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -4162,7 +4165,7 @@ struct BurnDriver BurnDrvArabianmj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabianmjRomInfo, arabianmjRomName, NULL, NULL, F3InputInfo, NULL,
-	arabianmInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	arabianmInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -4209,7 +4212,7 @@ struct BurnDriver BurnDrvArabianmu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabianmuRomInfo, arabianmuRomName, NULL, NULL, F3InputInfo, NULL,
-	arabianmInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	arabianmInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -4618,9 +4621,10 @@ static INT32 cupfinalRomCallback()
 
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 16, 2)) return 1;
-	memcpy (TaitoES5505Rom + 0x600000, TaitoES5505Rom + 0x400000, 0x200000); // scfinals
 
 	tile_decode(0x1000000, 0x200000);
+
+	TaitoF3ES5506RomSize = 0x800000;
 
 	return 0;
 }
@@ -4636,7 +4640,7 @@ struct BurnDriver BurnDrvCupfinal = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, cupfinalRomInfo, cupfinalRomName, NULL, NULL, F3InputInfo, NULL,
-	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -4676,7 +4680,7 @@ struct BurnDriver BurnDrvHthero93 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero93RomInfo, hthero93RomName, NULL, NULL, F3InputInfo, NULL,
-	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -5018,7 +5022,7 @@ struct BurnDriver BurnDrvGunlock = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gunlockRomInfo, gunlockRomName, NULL, NULL, F3InputInfo, NULL,
-	gunlockInit, DrvExit, DrvFrame, DrvDrawGunlock, DrvScan, &DrvRecalc, 0x2000,
+	gunlockInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
 
@@ -5055,7 +5059,7 @@ struct BurnDriver BurnDrvRayforce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforceRomInfo, rayforceRomName, NULL, NULL, F3InputInfo, NULL,
-	gunlockInit, DrvExit, DrvFrame, DrvDrawGunlock, DrvScan, &DrvRecalc, 0x2000,
+	gunlockInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
 
@@ -5092,7 +5096,7 @@ struct BurnDriver BurnDrvRayforcej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforcejRomInfo, rayforcejRomName, NULL, NULL, F3InputInfo, NULL,
-	gunlockInit, DrvExit, DrvFrame, DrvDrawGunlock, DrvScan, &DrvRecalc, 0x2000,
+	gunlockInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
 
@@ -5149,7 +5153,6 @@ static INT32 scfinalsCallback()
 
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 16, 2)) return 1;
-	memcpy (TaitoES5505Rom + 0x600000, TaitoES5505Rom + 0x400000, 0x200000); // scfinals
 
 	tile_decode(0x1000000, 0x200000);
 
@@ -5172,7 +5175,7 @@ struct BurnDriver BurnDrvScfinals = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, scfinalsRomInfo, scfinalsRomName, NULL, NULL, F3InputInfo, NULL,
-	scfinalsInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	scfinalsInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -5406,7 +5409,7 @@ struct BurnDriver BurnDrvIntcup94 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, intcup94RomInfo, intcup94RomName, NULL, NULL, F3InputInfo, NULL,
-	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -5446,7 +5449,7 @@ struct BurnDriver BurnDrvHthero94 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero94RomInfo, hthero94RomName, NULL, NULL, F3InputInfo, NULL,
-	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -5494,7 +5497,9 @@ static INT32 recalhRomCallback()
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 10, 2)) return 1;
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 11, 2)) return 1;
 
-	tile_decode(0x800000, 0x400000);
+	tile_decode(0x400000, 0x400000);
+
+	TaitoF3ES5506RomSize = 0x800000;
 
 	return 0;
 }

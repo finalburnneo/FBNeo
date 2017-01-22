@@ -479,13 +479,25 @@ static void chip_write(UINT32 offset, UINT8 data)
 				if ((chip.regs[offset] & 3) == 3) {
 					if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Write forced reset\n"));
 					
+					System1668KEnable = false;
+					
 					if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC) {
 						SekClose();
 						fd1094_machine_init();
 						SekOpen(0);
 					}
 					
-					SekReset();
+					INT32 active_cpu = SekGetActive();
+					if (active_cpu == -1) {
+						SekOpen(0);
+						SekReset();
+						SekClose();
+					} else {
+						SekReset();
+					}
+				} else {
+					if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Write cleared reset\n"));
+					System1668KEnable = true;
 				}
 			}
 			break;
@@ -505,11 +517,11 @@ static void chip_write(UINT32 offset, UINT8 data)
 			if ((chip.regs[offset] & 7) != 7) {
 				for (INT32 irqnum = 0; irqnum < 8; irqnum++) {
 					if (irqnum == (~chip.regs[offset] & 7)) {
-						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ\n"));
+						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ %i \n"), irqnum);
 						SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
 					} else {
 						SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
-						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ\n"));
+						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ %i\n"), irqnum);
 					}
 				}
 			}
@@ -1028,9 +1040,19 @@ UINT8 sega_315_5195_i8751_read_port(INT32 port)
 
 void sega_315_5195_i8751_write_port(INT32 port, UINT8 data)
 {
-	if (port >= MCS51_PORT_P0 && port <= MCS51_PORT_P3) return;
-	
 	switch (port) {
+		case MCS51_PORT_P1: {
+			INT32 active_cpu = SekGetActive();
+			if (active_cpu == -1) {
+				SekOpen(0);
+				nSystem16CyclesDone[0] += SekRun(10000);
+				SekClose();
+			} else {
+				nSystem16CyclesDone[0] += SekRun(10000);
+			}
+			return;
+		}
+		
 		case 0xff00:
 		case 0xff01:
 		case 0xff02:
@@ -1063,10 +1085,10 @@ void sega_315_5195_i8751_write_port(INT32 port, UINT8 data)
 		case 0xff1d:
 		case 0xff1e:
 		case 0xff1f: {
-			return chip_write((UINT32)port, data);
+			chip_write((UINT32)port, data);
+			return;
 		}
 	}
-	
 	
 	bprintf(PRINT_IMPORTANT, _T("I8751 Write %x, %x\n"), port, data);
 }

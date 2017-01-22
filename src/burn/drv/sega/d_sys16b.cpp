@@ -3991,7 +3991,7 @@ static struct BurnRomInfo GoldnaxeRomDesc[] = {
 	
 	{ "mpr-12384.ic6",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0123a.c2",   0x01000, 0xcf19e7d4, BRF_OPT }, // Intel i8751 protection MCU
+	{ "317-0123a.c2",   0x01000, 0xcf19e7d4, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
 };
 
 
@@ -7421,11 +7421,6 @@ void Goldnaxe_Sim8751()
 
 static INT32 GoldnaxeInit()
 {
-	Simulate8751 = Goldnaxe_Sim8751;
-	
-	UINT8 memory_control_5704[0x10] = { 0x02,0x00, 0x00,0x1f, 0x00,0x1e, 0x00,0xff, 0x00,0x20, 0x01,0x10, 0x00,0x14, 0x00,0xc4 };
-	System16I8751InitialConfig = memory_control_5704;
-	
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 

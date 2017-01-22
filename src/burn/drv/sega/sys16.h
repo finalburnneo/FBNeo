@@ -109,6 +109,7 @@ extern bool Hangon;
 extern bool AlienSyndrome;
 extern bool HammerAway;
 extern bool System16Z80Enable;
+extern bool System1668KEnable;
 
 extern INT32 System16YM2413IRQInterval;
 

@@ -133,6 +133,7 @@ bool Hangon = false;
 bool AlienSyndrome = false;
 bool HammerAway = false;
 bool System16Z80Enable = true;
+bool System1668KEnable = true;
 
 INT32 nSystem16CyclesDone[4];
 static INT32 nCyclesTotal[4];
@@ -251,6 +252,7 @@ static INT32 System16DoReset()
 	}
 	
 	SekOpen(0);
+	System1668KEnable = true;
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
 		if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) == 0) {
 			sega_315_5195_reset();
@@ -2587,6 +2589,7 @@ INT32 System16Exit()
 	Shangon = false;
 	Hangon = false;
 	AlienSyndrome = false;
+	System1668KEnable = true;
 
 	bSystem16BootlegRender = false;
  	
@@ -2781,13 +2784,15 @@ INT32 System16BFrame()
 		INT32 nCurrentCPU, nNext;
 
 		// Run 68000
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
-		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		
-		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
-			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (System1668KEnable) {
+			nCurrentCPU = 0;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+			
+			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
+				SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+			}
 		}
 
 		// Run Z80
@@ -2807,8 +2812,11 @@ INT32 System16BFrame()
 			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 			nSystem16CyclesDone[nCurrentCPU] += mcs51Run(nCyclesSegment);
 			
-			if (i == (nInterleave - 2)) mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
-			if (i == (nInterleave - 1)) mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+			if (i == (nInterleave - 1)) {
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+				nSystem16CyclesDone[nCurrentCPU] += mcs51Run(2000);
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+			}
 		}
 
 		if (pBurnSoundOut) {
@@ -2844,14 +2852,9 @@ INT32 System16BFrame()
 		}
 	}
 	
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+	if (System1668KEnable) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
-	
-/*	if (System16I8751RomNum) {
-		mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
-		mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
-	}*/
-	
+		
 	if (Simulate8751) Simulate8751();
 	
 	if (pBurnDraw) {

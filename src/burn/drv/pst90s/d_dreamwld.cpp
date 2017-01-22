@@ -29,10 +29,9 @@ static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
 static UINT8 DrvReset;
-static UINT8 DrvJoy1[16];
-static UINT8 DrvJoy2[16];
-static UINT16 DrvInputs[2];
-static UINT8 DrvDips[4];
+static UINT8 DrvJoy1[32];
+static UINT32 DrvInputs;
+static UINT8 DrvDips[2];
 
 static UINT8 *DrvOkiBank;
 static INT32 protindex = 0;
@@ -313,7 +312,7 @@ static UINT8 __fastcall dreamwld_read_byte(UINT32 address)
 		case 0xc00001:
 		case 0xc00002:
 		case 0xc00003:
-			return DrvInputs[(~address >> 1) & 1] >> ((~address & 1) << 3);
+			return DrvInputs >> (8 * (~address & 0x3));
 
 		case 0xc00004:
 		case 0xc00005:
@@ -343,7 +342,7 @@ static UINT16 __fastcall dreamwld_read_word(UINT32 address)
 	{
 		case 0xc00000:
 		case 0xc00002:
-			return DrvInputs[(~address >> 1) & 1];
+			return DrvInputs >> (((~address >> 1) & 1) * 16);
 
 		case 0xc00004:
 		case 0xc00006:
@@ -373,6 +372,7 @@ static void __fastcall dreamwld_write_byte(UINT32 address, UINT8 data)
 
 		case 0x000001:
 		case 0x000002:
+		case 0x00000c:
 		case 0xc0fffc:
 		case 0xc0fffd:
 		case 0xc0fffe:
@@ -818,11 +818,10 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(UINT16));
+		memset (&DrvInputs, 0xff, sizeof(DrvInputs));
 
-		for (INT32 i = 0; i < 16; i++) {
-			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
-			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
+		for (INT32 i = 0; i < 32; i++) {
+			DrvInputs ^= (DrvJoy1[i] & 1) << i;
 		}
 	}
 

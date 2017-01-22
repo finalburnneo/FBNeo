@@ -4813,6 +4813,171 @@ static struct BurnRomInfo SdiblRomDesc[] = {
 STD_ROM_PICK(Sdibl)
 STD_ROM_FN(Sdibl)
 
+static struct BurnRomInfo Sdibl2RomDesc[] = {
+	{ "de1",            0x08000, 0x56f6fd26, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do1",            0x08000, 0x549c759f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de2",            0x08000, 0xb0a9ad05, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do2",            0x08000, 0x54b7ec04, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de3",            0x08000, 0x8ee2c287, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do3",            0x08000, 0x193e4231, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "pe1",            0x08000, 0xf0a190c0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po1",            0x08000, 0xf68c4d0e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe2",            0x08000, 0x109c9afd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po2",            0x08000, 0x6d614e76, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe3",            0x08000, 0x589e2cfe, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po3",            0x08000, 0x57ba57b2, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10772.b9",   0x10000, 0x182b6301, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10773.b10",  0x10000, 0x8f7129a2, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10774.b11",  0x10000, 0x4409411f, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "10760.b1",       0x10000, 0x70de327b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10763.b5",       0x10000, 0x99ec5cb5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10761.b2",       0x10000, 0x4e80f80d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10764.b6",       0x10000, 0x602da5d5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10762.b3",       0x10000, 0x464b5f78, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10765.b7",       0x10000, 0x0a73a057, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "a7.rom",         0x08000, 0x793f9f7f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Sdibl2)
+STD_ROM_FN(Sdibl2)
+
+static struct BurnRomInfo Sdibl3RomDesc[] = {
+	{ "de1a",           0x08000, 0x3908c6a0, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do1a",           0x08000, 0xcd7b7750, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de2a",           0x08000, 0xf45f6935, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do2a",           0x08000, 0xd3d3efaa, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de3",            0x08000, 0x8ee2c287, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do3",            0x08000, 0x193e4231, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "pe1a",           0x08000, 0xe4d8f399, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po1a",           0x08000, 0x910f9532, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe2a",           0x08000, 0x76a261b1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po2a",           0x08000, 0x2cd18da8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe3a",           0x08000, 0x19120b62, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po3a",           0x08000, 0x4dce4361, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10772.b9",   0x10000, 0x182b6301, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10773.b10",  0x10000, 0x8f7129a2, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10774.b11",  0x10000, 0x4409411f, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "10760.b1",       0x10000, 0x70de327b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10763.b5",       0x10000, 0x99ec5cb5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10761.b2",       0x10000, 0x4e80f80d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10764.b6",       0x10000, 0x602da5d5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10762.b3",       0x10000, 0x464b5f78, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10765.b7",       0x10000, 0x0a73a057, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "a7.rom",         0x08000, 0x793f9f7f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Sdibl3)
+STD_ROM_FN(Sdibl3)
+
+static struct BurnRomInfo Sdibl4RomDesc[] = {
+	{ "de1b",           0x08000, 0x8045bfd1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do1b",           0x08000, 0x8f86f2ad, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de2b",           0x08000, 0x1b284afd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do2b",           0x08000, 0x8c979a2b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de3",            0x08000, 0x8ee2c287, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do3",            0x08000, 0x193e4231, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "pe1b",           0x08000, 0xaba84f5e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po1b",           0x08000, 0x249278a3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe2b",           0x08000, 0x480d4379, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po2b",           0x08000, 0xf27eae0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe3a",           0x08000, 0x19120b62, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po3a",           0x08000, 0x4dce4361, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10772.b9",   0x10000, 0x182b6301, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10773.b10",  0x10000, 0x8f7129a2, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10774.b11",  0x10000, 0x4409411f, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "10760.b1",       0x10000, 0x70de327b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10763.b5",       0x10000, 0x99ec5cb5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10761.b2",       0x10000, 0x4e80f80d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10764.b6",       0x10000, 0x602da5d5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10762.b3",       0x10000, 0x464b5f78, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10765.b7",       0x10000, 0x0a73a057, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "a7.rom",         0x08000, 0x793f9f7f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Sdibl4)
+STD_ROM_FN(Sdibl4)
+
+static struct BurnRomInfo Sdibl5RomDesc[] = {
+	{ "de1c",           0x08000, 0x3e3d4cc1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do1c",           0x08000, 0xa71ad68c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de2c",           0x08000, 0x770bbec5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do2c",           0x08000, 0x0f1f339f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de3",            0x08000, 0x8ee2c287, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do3",            0x08000, 0x193e4231, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "pe1c",           0x08000, 0xd7d444d5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po1c",           0x08000, 0x1bc879dd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe2c",           0x08000, 0x5cd1bfc8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po2c",           0x08000, 0xb404d1be, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe3a",           0x08000, 0x19120b62, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po3a",           0x08000, 0x4dce4361, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10772.b9",   0x10000, 0x182b6301, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10773.b10",  0x10000, 0x8f7129a2, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10774.b11",  0x10000, 0x4409411f, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "10760.b1",       0x10000, 0x70de327b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10763.b5",       0x10000, 0x99ec5cb5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10761.b2",       0x10000, 0x4e80f80d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10764.b6",       0x10000, 0x602da5d5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10762.b3",       0x10000, 0x464b5f78, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10765.b7",       0x10000, 0x0a73a057, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "a7.rom",         0x08000, 0x793f9f7f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Sdibl5)
+STD_ROM_FN(Sdibl5)
+
+static struct BurnRomInfo Sdibl6RomDesc[] = {
+	{ "de1c",           0x08000, 0x3e3d4cc1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do1c",           0x08000, 0xa71ad68c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de2c",           0x08000, 0x770bbec5, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do2c",           0x08000, 0x0f1f339f, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "de3",            0x08000, 0x8ee2c287, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "do3",            0x08000, 0x193e4231, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "pe1d",           0x08000, 0xc8b9e556, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po1d",           0x08000, 0x38eaeeb1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe2c",           0x08000, 0x5cd1bfc8, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po2c",           0x08000, 0xb404d1be, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "pe3a",           0x08000, 0x19120b62, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "po3d",           0x08000, 0xb1e5c2f1, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "epr-10772.b9",   0x10000, 0x182b6301, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10773.b10",  0x10000, 0x8f7129a2, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-10774.b11",  0x10000, 0x4409411f, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "10760.b1",       0x10000, 0x70de327b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10763.b5",       0x10000, 0x99ec5cb5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10761.b2",       0x10000, 0x4e80f80d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10764.b6",       0x10000, 0x602da5d5, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10762.b3",       0x10000, 0x464b5f78, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "10765.b7",       0x10000, 0x0a73a057, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "a7.rom",         0x08000, 0x793f9f7f, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Sdibl6)
+STD_ROM_FN(Sdibl6)
+
 static struct BurnRomInfo DefenseRomDesc[] = {
 	{ "epr-10917a.a4",  0x08000, 0xd91ac47c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10915.a1",   0x08000, 0x7344c510, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -7705,6 +7870,22 @@ static INT32 SdibScan(INT32 nAction,INT32 *pnMin)
 	return System16Scan(nAction, pnMin);;
 }
 
+static INT32 Sdibl2LoadRom()
+{
+	memset(System16Code, 0, System16RomSize);
+	memcpy(System16Code, System16Rom + 0x30000, 0x30000);
+	memset(System16Rom + 0x30000, 0, 0x30000);
+	
+	return 0;
+}
+
+static INT32 Sdibl2Init()
+{
+	System16CustomDecryptOpCodeDo = Sdibl2LoadRom;
+			
+	return SdiblInit();
+}
+
 static INT32 SjryukoInit()
 {
 	sega_315_5195_custom_io_do = SjryukoReadIO;
@@ -8992,11 +9173,61 @@ struct BurnDriver BurnDrvSdib = {
 
 struct BurnDriver BurnDrvSdibl = {
 	"sdibl", "sdi", NULL, NULL, "1987",
-	"SDI - Strategic Defense Initiative (bootleg)\0", NULL, "Sega", "System 16B",
+	"SDI - Strategic Defense Initiative (bootleg, original hardware)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
 	NULL, SdiblRomInfo, SdiblRomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
 	SdiblInit, SdibExit, System16BFrame, NULL, SdibScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSdibl2 = {
+	"sdibl2", "sdi", NULL, NULL, "1987",
+	"SDI - Strategic Defense Initiative (bootleg, set 1)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	NULL, Sdibl2RomInfo, Sdibl2RomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
+	Sdibl2Init, SdibExit, System16BFrame, NULL, SdibScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSdibl3 = {
+	"sdibl3", "sdi", NULL, NULL, "1987",
+	"SDI - Strategic Defense Initiative (bootleg, set 2)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	NULL, Sdibl3RomInfo, Sdibl3RomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
+	Sdibl2Init, SdibExit, System16BFrame, NULL, SdibScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSdibl4 = {
+	"sdibl4", "sdi", NULL, NULL, "1987",
+	"SDI - Strategic Defense Initiative (bootleg, set 3)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	NULL, Sdibl4RomInfo, Sdibl4RomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
+	Sdibl2Init, SdibExit, System16BFrame, NULL, SdibScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSdibl5 = {
+	"sdibl5", "sdi", NULL, NULL, "1987",
+	"SDI - Strategic Defense Initiative (bootleg, set 4)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	NULL, Sdibl5RomInfo, Sdibl5RomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
+	Sdibl2Init, SdibExit, System16BFrame, NULL, SdibScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSdibl6 = {
+	"sdibl6", "sdi", NULL, NULL, "1987",
+	"SDI - Strategic Defense Initiative (bootleg, set 5)\0", NULL, "Sega", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_SHOOT, 0,
+	NULL, Sdibl6RomInfo, Sdibl6RomName, NULL, NULL, SdiInputInfo, SdibDIPInfo,
+	Sdibl2Init, SdibExit, System16BFrame, NULL, SdibScan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

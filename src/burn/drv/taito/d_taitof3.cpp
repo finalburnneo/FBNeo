@@ -6,6 +6,7 @@
 	no attempt at cleaning at all
 	ROM sets might be out of date!!!
 	no palette viewer
+	implement sprite lag(!)
 
 	working
 
@@ -34,7 +35,7 @@
 	quizhuhu	- missing text?  this is normal.
 	elavctrl
 	cleopatr
-	intcup94
+	intcup94 / hthero94 ok
 	pwrgoal
 	gunlock
 	GSEEKER
@@ -47,8 +48,8 @@
 
 	not tested
 
-	scfinals
-	cupfinal
+	scfinals    - coin inputs don't work, service coin ok.
+	cupfinal    - ok
 */
 
 
@@ -630,7 +631,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	if (EEPROMAvailable() == 0) {
 		if (TaitoDefaultEEProm[0] != 0) {
 			EEPROMFill((const UINT8*)TaitoDefaultEEProm, 0, 128);
-		} else if (m_f3_game == RECALH) {
+		} else if (m_f3_game == RECALH || m_f3_game == GSEEKER ) {
 			static const UINT16 recalh_eeprom[64] =	{
 				0x8554,0x0000,0x3000,0x0000,0x0000,0x0000,0x0000,0xf335,
 				0x0001,0x86a0,0x0013,0x0413,0x0000,0xc350,0x0019,0x000a,
@@ -3757,7 +3758,7 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-		extern int counter;
+
 static INT32 DrvFrame()
 {
 	watchdog++;
@@ -3785,8 +3786,8 @@ static INT32 DrvFrame()
 	}
 
 
-	INT32 nInterleave = 264;
-	nTaitoCyclesTotal[0] = 16000000 / 60;
+	INT32 nInterleave = 256;
+	nTaitoCyclesTotal[0] = (16000000 * 100) / 5897;
 
 	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 
@@ -3800,8 +3801,8 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 255+counter) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i == 261+counter) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 255) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		if (i == 7) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		if (sound_cpu_in_reset == 0)
@@ -5004,9 +5005,11 @@ static INT32 gunlockRomCallback()
 	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
 
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 13, 2)) return 1;
+	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
 
 	tile_decode(0x400000, 0x400000);
+
+	TaitoF3ES5506RomSize = 0x800000;
 
 	return 0;
 }
@@ -5125,6 +5128,9 @@ static struct BurnRomInfo scfinalsRomDesc[] = {
 
 	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
 	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+
+	{ "scfinals.nv",		0x000080, 0xf25945fc, TAITO_DEFAULT_EEPROM }, // 17 eeprom
+
 };
 
 STD_ROM_PICK(scfinals)
@@ -5154,12 +5160,14 @@ static INT32 scfinalsCallback()
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
 	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 16, 2)) return 1;
 
+	if (BurnLoadRom(TaitoDefaultEEProm + 0x000000, 17, 1)) return 1;
+
 	tile_decode(0x1000000, 0x200000);
 
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
 	ROM[0x5af0/4] = 0x4e754e71;
-	ROM[0xdd0/4] = 0x00004e75;
+	ROM[0xdd0/4] = 0x4e714e75;
 
 	return 0;
 }

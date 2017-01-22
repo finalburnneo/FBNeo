@@ -5030,7 +5030,7 @@ struct BurnDriver BurnDrvGunlock = {
 };
 
 
-// Ray Force (Ver 2.3J 1994/01/20)
+// Ray Force (Ver 2.3A 1994/01/20)
 
 static struct BurnRomInfo rayforceRomDesc[] = {
 	{ "d66-18.ic24",	0x040000, 0x8418513e, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
@@ -5058,7 +5058,7 @@ STD_ROM_FN(rayforce)
 
 struct BurnDriver BurnDrvRayforce = {
 	"rayforce", "gunlock", NULL, NULL, "1993",
-	"Ray Force (Ver 2.3J 1994/01/20)\0", NULL, "Taito Corporation", "F3 System",
+	"Ray Force (Ver 2.3A 1994/01/20)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforceRomInfo, rayforceRomName, NULL, NULL, F3InputInfo, NULL,

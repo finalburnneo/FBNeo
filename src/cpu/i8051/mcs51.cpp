@@ -1833,7 +1833,10 @@ void mcs51_set_irq_line(int irqline, int state)
      * ==> Since we do not emulate sub-states, this assumes that the signal is present
      * for at least one cycle (12 states)
      *
-     */
+	 */
+
+	if (state == CPU_IRQSTATUS_AUTO) state = CPU_IRQSTATUS_HOLD; // for compatibility
+
 	UINT32 new_state = (mcs51_state.last_line_state & ~(1 << irqline)) | ((state != CLEAR_LINE) << irqline);
 	/* detect 0->1 transistions */
 	UINT32 tr_state = (~mcs51_state.last_line_state) & new_state;

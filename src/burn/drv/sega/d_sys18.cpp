@@ -765,6 +765,49 @@ static struct BurnDIPInfo MwalkDIPList[]=
 
 STDDIPINFO(Mwalk)
 
+static struct BurnDIPInfo MwalkuDIPList[]=
+{
+	// Default Values
+	{0x1e, 0xff, 0xff, 0xff, NULL                                 },
+	{0x1f, 0xff, 0xff, 0xcd, NULL                                 },
+
+	// Dip 1
+	SYSTEM18_COINAGE(0x1e)
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "2 Credits to Start"                 },
+	{0x1f, 0x01, 0x01, 0x01, "Off"                                },
+	{0x1f, 0x01, 0x01, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
+	{0x1f, 0x01, 0x02, 0x02, "Off"                                },
+	{0x1f, 0x01, 0x02, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 2   , "Lives"                              },
+	{0x1f, 0x01, 0x04, 0x04, "2"                                  },
+	{0x1f, 0x01, 0x04, 0x00, "3"                                  },
+	
+	{0   , 0xfe, 0   , 2   , "Player Vitality"                    },
+	{0x1f, 0x01, 0x08, 0x08, "Low"                                },
+	{0x1f, 0x01, 0x08, 0x00, "High"                               },
+	
+	{0   , 0xfe, 0   , 2   , "Play Mode"                          },
+	{0x1f, 0x01, 0x10, 0x00, "2 Players"                          },
+	{0x1f, 0x01, 0x10, 0x10, "3 Players"                          },
+	
+	{0   , 0xfe, 0   , 2   , "Coin Chute"                         },
+	{0x1f, 0x01, 0x20, 0x00, "Common"                             },
+	{0x1f, 0x01, 0x20, 0x20, "Individual"                         },
+	
+	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
+	{0x1f, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x1f, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x1f, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x1f, 0x01, 0xc0, 0x00, "Hardest"                            },
+};
+
+STDDIPINFO(Mwalku)
+
 static struct BurnDIPInfo ShdancerDIPList[]=
 {
 	// Default Values
@@ -1909,6 +1952,130 @@ static struct BurnRomInfo MwalkdRomDesc[] = {
 
 STD_ROM_PICK(Mwalkd)
 STD_ROM_FN(Mwalkd)
+
+static struct BurnRomInfo MwalkjRomDesc[] = {
+	{ "epr-13237.a6",   0x40000, 0x6c0534b3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13236.a5",   0x40000, 0x99765854, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13218.b3",   0x40000, 0x56d3393c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-13224.b11",  0x40000, 0xc59f107b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13231.a11",  0x40000, 0xa5e96346, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13223.b10",  0x40000, 0x364f60ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13230.a10",  0x40000, 0x9550091f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13222.b9",   0x40000, 0x523df3ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13229.a9",   0x40000, 0xf40dc45d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13221.b8",   0x40000, 0x9ae7546a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13228.a8",   0x40000, 0xde3786be, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13225.a4",   0x20000, 0x56c2e82b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13219.b4",   0x40000, 0x19e2061f, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13220.b5",   0x40000, 0x58d4d9ce, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13249.b6",   0x40000, 0x623edc5d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "317-0157.key",   0x02000, 0x324d6931, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
+	
+	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Mwalkj)
+STD_ROM_FN(Mwalkj)
+
+static struct BurnRomInfo MwalkjdRomDesc[] = {
+	{ "bootleg_epr-13237.a6",   0x40000, 0xd8e00521, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13236.a5",   0x40000, 0xcb0ba822, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13218.b3",   0x40000, 0x56d3393c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-13224.b11",  0x40000, 0xc59f107b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13231.a11",  0x40000, 0xa5e96346, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13223.b10",  0x40000, 0x364f60ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13230.a10",  0x40000, 0x9550091f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13222.b9",   0x40000, 0x523df3ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13229.a9",   0x40000, 0xf40dc45d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13221.b8",   0x40000, 0x9ae7546a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13228.a8",   0x40000, 0xde3786be, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13225.a4",   0x20000, 0x56c2e82b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13219.b4",   0x40000, 0x19e2061f, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13220.b5",   0x40000, 0x58d4d9ce, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13249.b6",   0x40000, 0x623edc5d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Mwalkjd)
+STD_ROM_FN(Mwalkjd)
+
+static struct BurnRomInfo MwalkuRomDesc[] = {
+	{ "epr-13233.a6",   0x40000, 0xf3dac671, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13232.a5",   0x40000, 0x541d8bdf, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13218.b3",   0x40000, 0x56d3393c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-13224.b11",  0x40000, 0xc59f107b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13231.a11",  0x40000, 0xa5e96346, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13223.b10",  0x40000, 0x364f60ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13230.a10",  0x40000, 0x9550091f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13222.b9",   0x40000, 0x523df3ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13229.a9",   0x40000, 0xf40dc45d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13221.b8",   0x40000, 0x9ae7546a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13228.a8",   0x40000, 0xde3786be, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13225.a4",   0x20000, 0x56c2e82b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13219.b4",   0x40000, 0x19e2061f, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13220.b5",   0x40000, 0x58d4d9ce, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13249.b6",   0x40000, 0x623edc5d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "317-0158.key",   0x02000, 0xa8a50e8c, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
+	
+	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Mwalku)
+STD_ROM_FN(Mwalku)
+
+static struct BurnRomInfo MwalkudRomDesc[] = {
+	{ "bootleg_epr-13233.a6",   0x40000, 0xb34fe725, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13232.a5",   0x40000, 0x0d100fd4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13218.b3",   0x40000, 0x56d3393c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-13224.b11",  0x40000, 0xc59f107b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13231.a11",  0x40000, 0xa5e96346, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13223.b10",  0x40000, 0x364f60ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13230.a10",  0x40000, 0x9550091f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13222.b9",   0x40000, 0x523df3ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13229.a9",   0x40000, 0xf40dc45d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13221.b8",   0x40000, 0x9ae7546a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13228.a8",   0x40000, 0xde3786be, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13225.a4",   0x20000, 0x56c2e82b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13219.b4",   0x40000, 0x19e2061f, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13220.b5",   0x40000, 0x58d4d9ce, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13249.b6",   0x40000, 0x623edc5d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Mwalkud)
+STD_ROM_FN(Mwalkud)
 
 static struct BurnRomInfo Mwalkbl2RomDesc[] = {
 	{ "mwalkbl.01",     0x10000, 0xf49cdb16, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3396,8 +3563,48 @@ struct BurnDriver BurnDrvMWalkd = {
 	"mwalkd", "mwalk", NULL, NULL, "1990",
 	"Michael Jackson's Moonwalker (World) (bootleg of FD1094/8751 317-0159)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkdRomInfo, MwalkdRomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMWalkj = {
+	"mwalkj", "mwalk", NULL, NULL, "1990",
+	"Michael Jackson's Moonwalker (Japan) (FD1094/8751 317-0157)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	NULL, MwalkjRomInfo, MwalkjRomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMWalkjd = {
+	"mwalkjd", "mwalk", NULL, NULL, "1990",
+	"Michael Jackson's Moonwalker (Japan) (bootleg of FD1094/8751 317-0157 set)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	NULL, MwalkjdRomInfo, MwalkjdRomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMWalku = {
+	"mwalku", "mwalk", NULL, NULL, "1990",
+	"Michael Jackson's Moonwalker (US) (FD1094/8751 317-0158)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	NULL, MwalkuRomInfo, MwalkuRomName, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMWalkud = {
+	"mwalkud", "mwalk", NULL, NULL, "1990",
+	"Michael Jackson's Moonwalker (US) (bootleg of FD1094/8751 317-0158)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	NULL, MwalkudRomInfo, MwalkudRomName, NULL, NULL, MwalkInputInfo, MwalkuDIPInfo,
 	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

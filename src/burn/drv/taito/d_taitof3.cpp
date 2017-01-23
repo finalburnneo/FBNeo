@@ -3794,7 +3794,7 @@ static INT32 DrvFrame()
 
 
 	INT32 nInterleave = 256;
-	nTaitoCyclesTotal[0] = (16000000 * 100) / 5897;
+	nTaitoCyclesTotal[0] = 16000000 / 60; //(16000000 * 100) / 5897; <- this freezes gekirindan and gdarius
 
 	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 

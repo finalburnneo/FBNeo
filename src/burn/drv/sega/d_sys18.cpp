@@ -1873,12 +1873,42 @@ static struct BurnRomInfo MwalkRomDesc[] = {
 	
 	{ "317-0159.key",   0x02000, 0x507838f0, SYS16_ROM_KEY | BRF_ESS | BRF_PRG},
 	
-	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_PROM | BRF_PRG},
+	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG},
 };
 
 
 STD_ROM_PICK(Mwalk)
 STD_ROM_FN(Mwalk)
+
+static struct BurnRomInfo MwalkdRomDesc[] = {
+	{ "bootleg_epr-13235.a6",   0x40000, 0x9973f6c3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13234.a5",   0x40000, 0xef5098e9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },
+	{ "mpr-13218.b3",   0x40000, 0x56d3393c, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "mpr-13224.b11",  0x40000, 0xc59f107b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13231.a11",  0x40000, 0xa5e96346, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13223.b10",  0x40000, 0x364f60ff, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13230.a10",  0x40000, 0x9550091f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13222.b9",   0x40000, 0x523df3ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-13229.a9",   0x40000, 0xf40dc45d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13221.b8",   0x40000, 0x9ae7546a, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "epr-13228.a8",   0x40000, 0xde3786be, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "epr-13225.a4",   0x20000, 0x56c2e82b, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "mpr-13219.b4",   0x40000, 0x19e2061f, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13220.b5",   0x40000, 0x58d4d9ce, SYS16_ROM_RF5C68DATA | BRF_SND },
+	{ "mpr-13249.b6",   0x40000, 0x623edc5d, SYS16_ROM_RF5C68DATA | BRF_SND },
+	
+	{ "315-5437.ic4",   0x01000, 0x4bf63bc1, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG},
+};
+
+
+STD_ROM_PICK(Mwalkd)
+STD_ROM_FN(Mwalkd)
 
 static struct BurnRomInfo Mwalkbl2RomDesc[] = {
 	{ "mwalkbl.01",     0x10000, 0xf49cdb16, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -3356,8 +3386,18 @@ struct BurnDriver BurnDrvMWalk = {
 	"mwalk", NULL, NULL, NULL, "1990",
 	"Michael Jackson's Moonwalker (set 3, World, FD1094/8751 317-0159)\0", NULL, "Sega", "System 18",
 	NULL, NULL, NULL, NULL,
-	0, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, MwalkRomInfo, MwalkRomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMWalkd = {
+	"mwalkd", "mwalk", NULL, NULL, "1990",
+	"Michael Jackson's Moonwalker (World) (bootleg of FD1094/8751 317-0159)\0", NULL, "Sega", "System 18",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
+	NULL, MwalkdRomInfo, MwalkdRomName, NULL, NULL, MwalkInputInfo, MwalkDIPInfo,
 	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };

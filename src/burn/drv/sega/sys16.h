@@ -101,6 +101,7 @@ extern UINT32 System16SpriteRamSize;
 extern UINT32 System16SpriteRam2Size;
 extern UINT32 System16RotateRamSize;
 extern UINT32 System16UPD7759DataSize;
+extern UINT32 System16I8751RomNum;
 
 extern UINT8 System16VideoControl;
 extern INT32 System16SoundLatch;

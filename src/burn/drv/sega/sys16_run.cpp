@@ -757,6 +757,14 @@ void __fastcall System18Z80PortWrite(UINT16 a, UINT8 d)
 			ZetMapArea(0xa000, 0xbfff, 2, System16Z80Rom + 0x10000 + RF5C68PCMBankAddress);
 			return;
 		}
+		
+		case 0xc0: {
+			System16MCUData = d;
+			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+			nSystem16CyclesDone[2] += mcs51Run(2000);
+			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+			return;
+		}
 	}
 
 #if 0 && defined FBA_DEBUG
@@ -2067,6 +2075,13 @@ INT32 System16Init()
 			ZetClose();
 		}
 		
+		if (System16I8751RomNum) {
+			mcs51_program_data = System16I8751Rom;
+			mcs51_init();
+			mcs51_set_write_handler(sega_315_5195_i8751_write_port);
+			mcs51_set_read_handler(sega_315_5195_i8751_read_port);
+		}
+		
 		BurnYM3438Init(2, 8000000, &System18YM3438IRQHandler, System18SynchroniseStream, System18GetTime, 1);
 		BurnTimerAttachZet(8000000);
 		BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
@@ -2884,7 +2899,8 @@ INT32 System18Frame()
 	
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 8000000 / 60;
-	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = 0;
+	nCyclesTotal[2] = 8000000 / 60;
+	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
 	
 	INT32 nSoundBufferPos = 0;
 
@@ -2896,15 +2912,30 @@ INT32 System18Frame()
 		INT32 nCurrentCPU, nNext;
 
 		// Run 68000
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
-		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		if (System1668KEnable) {
+			nCurrentCPU = 0;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		}
 		
 		nCurrentCPU = 1;
 		ZetOpen(0);
 		BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		ZetClose();
+		
+		if (System16I8751RomNum) {
+			nCurrentCPU = 2;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nSystem16CyclesDone[nCurrentCPU] += mcs51Run(nCyclesSegment);
+			
+			if (i == (nInterleave - 1)) {
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+				nSystem16CyclesDone[nCurrentCPU] += mcs51Run(2000);
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+			}
+		}
 		
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -2914,7 +2945,7 @@ INT32 System18Frame()
 		}
 	}
 
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+	if (!System16I8751RomNum && System1668KEnable) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	ZetOpen(0);

@@ -780,7 +780,14 @@ static void chip_write(UINT32 offset, UINT8 data)
 				for (INT32 irqnum = 0; irqnum < 8; irqnum++) {
 					if (irqnum == (~chip.regs[offset] & 7)) {
 						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ %i \n"), irqnum);
-						SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
+						if (System16I8751RomNum) {
+							// the I8751 does the vblank IRQ
+							SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
+							nSystem16CyclesDone[0] += SekRun(200);
+							SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
+						} else {
+							SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
+						}
 					} else {
 						SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
 						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ %i\n"), irqnum);
@@ -1418,7 +1425,10 @@ UINT8 sega_315_5195_i8751_read_port(INT32 port)
 {
 	switch (port) {
 		case MCS51_PORT_P1: {
-			return 0xff - System16Input[0];
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
+				return 0xff - System16Input[0];
+			}
+			return 0;
 		}
 		
 		case 0xff00:
@@ -1464,15 +1474,17 @@ void sega_315_5195_i8751_write_port(INT32 port, UINT8 data)
 {
 	switch (port) {
 		case MCS51_PORT_P1: {
-			INT32 active_cpu = SekGetActive();
-			if (active_cpu == -1) {
-				SekOpen(0);
-				nSystem16CyclesDone[0] += SekRun(10000);
-				SekClose();
-			} else {
-				nSystem16CyclesDone[0] += SekRun(10000);
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
+				INT32 active_cpu = SekGetActive();
+				if (active_cpu == -1) {
+					SekOpen(0);
+					nSystem16CyclesDone[0] += SekRun(10000);
+					SekClose();
+				} else {
+					nSystem16CyclesDone[0] += SekRun(10000);
+				}
+				return;
 			}
-			return;
 		}
 		
 		case 0xff00:

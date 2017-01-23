@@ -23,6 +23,7 @@ INT32  System16AnalogSelect   = 0;
 UINT8  System16Dip[3]         = {0, 0, 0};
 UINT8  System16Input[7]       = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
 UINT8  System16Reset          = 0;
+UINT8  System16MCUData        = 0;
 
 UINT8  *Mem                   = NULL;
 UINT8  *MemEnd                = NULL;
@@ -253,7 +254,7 @@ static INT32 System16DoReset()
 	
 	SekOpen(0);
 	System1668KEnable = true;
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
+	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18)) {
 		if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) == 0) {
 			sega_315_5195_reset();
 		}
@@ -368,7 +369,8 @@ static INT32 System16DoReset()
 	System16ScreenFlip = 0;
 	System16SoundLatch = 0;
 	System16ColScroll = 0;
-	System16RowScroll = 0;;
+	System16RowScroll = 0;
+	System16MCUData = 0;
 	
 	return 0;
 }
@@ -2031,19 +2033,13 @@ INT32 System16Init()
 		} else {
 			SekInit(0, 0x68000);
 			SekOpen(0);
-			SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
-			SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
-			SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-			SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-			SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
-			SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-			SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-			
-			SekSetReadWordHandler(0, System18ReadWord);
-			SekSetWriteWordHandler(0, System18WriteWord);
-			SekSetReadByteHandler(0, System18ReadByte);
-			SekSetWriteByteHandler(0, System18WriteByte);
+			SekSetReadByteHandler(0, sega_315_5195_read_byte);
+			SekSetReadWordHandler(0, sega_315_5195_read_word);
+			SekSetWriteByteHandler(0, sega_315_5195_write_byte);
+			SekSetWriteWordHandler(0, sega_315_5195_write_word);
 			SekClose();
+			
+			sega_315_5195_init();
 		}
 		
 		if (System16MapZ80Do) {
@@ -2512,7 +2508,7 @@ INT32 System16Exit()
 	
 	if (nBurnGunNumPlayers) BurnGunExit();
 	
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
+	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18)) {
 		sega_315_5195_exit();
 	}
 	
@@ -2555,6 +2551,7 @@ INT32 System16Exit()
 	System16ColScroll = 0;
 	System16RowScroll = 0;
 	System16IgnoreVideoEnable = 0;
+	System16MCUData = 0;
 
 	if (System16HasGears) BurnShiftExit();
 	System16HasGears = false;
@@ -2589,6 +2586,7 @@ INT32 System16Exit()
 	Shangon = false;
 	Hangon = false;
 	AlienSyndrome = false;
+	LaserGhost = false;
 	System1668KEnable = true;
 
 	bSystem16BootlegRender = false;

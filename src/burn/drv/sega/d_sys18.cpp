@@ -2168,7 +2168,7 @@ Memory Handlers
 
 static UINT8 misc_io_data[0x10];
 
-static UINT8 io_chip_r(UINT32 offset)
+UINT8 system18_io_chip_r(UINT32 offset)
 {
 	switch (offset) {
 		case 0x03:
@@ -2237,7 +2237,7 @@ static UINT8 io_chip_r(UINT32 offset)
 	return 0xff;
 }
 
-static void io_chip_w(UINT32 offset, UINT16 d)
+void system18_io_chip_w(UINT32 offset, UINT16 d)
 {
 	UINT8 old;
 	
@@ -2257,7 +2257,7 @@ static void io_chip_w(UINT32 offset, UINT16 d)
 		}
 		
 		case 0x07: {
-			for (int i = 0; i < 4; i++) {
+			for (INT32 i = 0; i < 4; i++) {
 				if (System16TileBanks[0 + i] != ((d & 0xf) * 4 + i)) {
 					System16TileBanks[0 + i] = (d & 0xf) * 4 + i;
 					System16RecalcBgTileMap = 1;
@@ -2285,7 +2285,131 @@ static void io_chip_w(UINT32 offset, UINT16 d)
 	}
 }
 
-static void System18GfxBankWrite(UINT32 offset, UINT16 d)
+static UINT8 DdcrewReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x1810: {
+			return 0xff - System16Input[3];
+		}
+		
+		case 0x1811: {
+			return 0xff - System16Input[4];
+		}
+		
+		case 0x1812: {
+			return 0xff - System16Input[5];
+		}
+	}
+	
+	return sega_315_5195_io_read(offset);
+}
+
+static UINT8 LghostValue;
+
+static UINT8 LghostReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x1808:
+		case 0x1809:
+		case 0x180a:
+		case 0x180b: {
+			UINT8 result = LghostValue | 0x7f;
+			LghostValue <<= 1;
+			return result;
+		}
+	}
+	
+	return sega_315_5195_io_read(offset);
+}
+
+static void LghostWriteIO(UINT32 offset, UINT8 d)
+{
+	switch (offset) {
+		case 0x1808: {
+			LghostValue = ~BurnGunReturnY(0);
+			return;
+		}
+		
+		case 0x1809: {
+			LghostValue = BurnGunReturnX(0);
+			return;
+		}
+		
+		case 0x180a: {
+			LghostValue = (System16AnalogSelect) ? ~BurnGunReturnY(2) : ~BurnGunReturnY(1);
+			return;
+		}
+		
+		case 0x180b: {
+			LghostValue = (System16AnalogSelect) ? BurnGunReturnX(2) : BurnGunReturnX(1);
+			return;
+		}
+		
+		case 0x1810: {
+			System16AnalogSelect = d & 1;
+			return;
+		}
+		
+		case 0x181a: {
+			// ???
+			return;
+		}
+	}
+
+	sega_315_5195_io_write(offset, d);
+}
+
+static INT16 WwallyTrack1X = 0;
+static INT16 WwallyTrack1Y = 0;
+static INT16 WwallyTrack2X = 0;
+static INT16 WwallyTrack2Y = 0;
+
+static UINT8 WwallyLastX[2];
+static UINT8 WwallyLastY[2];
+
+static UINT8 WwallyReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x1800: {
+			return (WwallyTrack1X - WwallyLastX[0]) & 0xff;
+		}
+		
+		case 0x1802: {
+			return (WwallyTrack1Y - WwallyLastY[0]) & 0xff;
+		}
+		
+		case 0x1804: {
+			return (WwallyTrack2X - WwallyLastX[1]) & 0xff;
+		}
+		
+		case 0x1806: {
+			return (WwallyTrack2Y - WwallyLastY[1]) & 0xff;
+		}
+	}
+	
+	return sega_315_5195_io_read(offset);
+}
+
+static void WwallyWriteIO(UINT32 offset, UINT8 d)
+{
+	switch (offset) {
+		case 0x1800: {
+			WwallyLastX[0] = WwallyTrack1X;
+			WwallyLastY[0] = WwallyTrack1Y;
+			return;
+		}
+		
+		case 0x1804: {
+			WwallyLastX[1] = WwallyTrack2X;
+			WwallyLastY[1] = WwallyTrack2Y;
+			return;
+		}
+	}
+	
+	sega_315_5195_io_write(offset, d);
+}
+
+void System18GfxBankWrite(UINT32 offset, UINT16 d)
 {
 	// Tile Banking
 	if (offset < 8) {
@@ -2307,6 +2431,22 @@ static void System18GfxBankWrite(UINT32 offset, UINT16 d)
 	}
 }
 
+void HamawayGfxBankWrite(UINT32 offset, UINT16 d)
+{
+	if (offset < 8) {
+		d &= 0x9f;
+		if (d & 0x80) d += 0x20;
+		d &= 0x3f;
+		if (System16TileBanks[offset] != d) {
+			System16TileBanks[offset] = d;
+			System16RecalcBgTileMap = 1;
+			System16RecalcBgAltTileMap = 1;
+			System16RecalcFgTileMap = 1;
+			System16RecalcFgAltTileMap = 1;
+		}
+	}
+}
+
 UINT16 __fastcall System18ReadWord(UINT32 a)
 {
 	if (a >= 0xc00000 && a <= 0xc0000f) {
@@ -2323,11 +2463,11 @@ UINT16 __fastcall System18ReadWord(UINT32 a)
 UINT8 __fastcall System18ReadByte(UINT32 a)
 {
 	if (a >= 0xa40000 && a <= 0xa4001f) {
-		return io_chip_r((a - 0xa40000) >> 1);
+		return system18_io_chip_r((a - 0xa40000) >> 1);
 	}
 	
 	if (a >= 0xe40000 && a <= 0xe4001f) {
-		return io_chip_r((a - 0xe40000) >> 1);
+		return system18_io_chip_r((a - 0xe40000) >> 1);
 	}
 	
 #if 0 && defined FBA_DEBUG
@@ -2374,7 +2514,7 @@ void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 	}
 	
 	if (a >= 0xa40000 && a <= 0xa41fff) {
-		io_chip_w((a - 0xa40000) >> 1, d);
+		system18_io_chip_w((a - 0xa40000) >> 1, d);
 		return;
 	}
 	
@@ -2384,7 +2524,7 @@ void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 	}
 	
 	if (a >= 0xe40000 && a <= 0xe41fff) {
-		io_chip_w((a - 0xe40000) >> 1, d);
+		system18_io_chip_w((a - 0xe40000) >> 1, d);
 		return;
 	}
 
@@ -2407,185 +2547,6 @@ void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 #if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
-}
-
-UINT8 __fastcall Astorm3ReadByte(UINT32 a)
-{
-	if (a >= 0xa00000 && a <= 0xa0001f) {
-		return io_chip_r((a - 0xa00000) >> 1);
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
-#endif
-
-	return 0xff;
-}
-
-void __fastcall Astorm3WriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0xa00000 && a <= 0xa01fff) {
-		io_chip_w((a - 0xa00000) >> 1, d);
-		return;
-	}
-
-	switch (a) {
-		case 0xa02101: {
-			System18VdpMixing = d & 0xff;
-			return;
-		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
-#endif
-}
-
-UINT8 __fastcall DdcrewuReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xe43021: {
-			return 0xff - System16Input[3];
-		}
-		
-		case 0xe43023: {
-			return 0xff - System16Input[4];
-		}
-		
-		case 0xe43025: {
-			return 0xff - System16Input[5];
-		}
-	}
-	
-	return 0xff;
-}
-
-UINT8 __fastcall HamawayReadByte(UINT32 a)
-{
-	if (a >= 0xa00000 && a <= 0xa0001f) {
-		return io_chip_r((a - 0xa00000) >> 1);
-	}
-	
-	return 0xff;
-}
-
-UINT16 __fastcall HamawayReadWord(UINT32 a)
-{
-	if (a >= 0xc00000 && a <= 0xc0000f) {
-		return GenesisVDPRead((a - 0xc00000) >> 1);
-	}
-	
-	return 0xffff;
-}
-
-void __fastcall HamawayWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x3e0000 && a <= 0x3e001f) {
-		// Tile Banking
-		INT32 offset = (a - 0x3e0000) >> 1;
-		if (offset < 8) {
-			d &= 0x9f;
-			if (d & 0x80) d += 0x20;
-			d &= 0x3f;
-			if (System16TileBanks[offset] != d) {
-				System16TileBanks[offset] = d;
-				System16RecalcBgTileMap = 1;
-				System16RecalcBgAltTileMap = 1;
-				System16RecalcFgTileMap = 1;
-				System16RecalcFgAltTileMap = 1;
-			}
-		}
-		
-		return;
-	}
-	
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileByteWrite((a - 0x400000) ^ 1, d);
-		return;
-	}
-	
-	if (a >= 0xa00000 && a <= 0xa03fff) {
-		io_chip_w((a - 0xa00000) >> 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0xfe0007: {
-			System16SoundLatch = d;
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
-			return;
-		}
-	}
-}
-
-void __fastcall HamawayWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0x400000 && a <= 0x40ffff) {
-		System16BTileWordWrite(a - 0x400000, d);
-		return;
-	}
-	
-	if (a >= 0xc00000 && a <= 0xc0000f) {
-		GenesisVDPWrite((a - 0xc00000) >> 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0xa02000: {
-			System18VdpMixing = d & 0xff;
-			return;
-		}
-	}
-}
-
-UINT8 LghostValue;
-
-UINT8 __fastcall LghostReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xe43011:
-		case 0xe43013:
-		case 0xe43015:
-		case 0xe43017: {
-			UINT8 result = LghostValue | 0x7f;
-			LghostValue <<= 1;
-			return result;
-		}
-	}
-
-	return 0xff;
-}
-
-void __fastcall LghostWriteByte(UINT32 a, UINT8 d)
-{
-	switch (a) {
-		case 0xe43011: {
-			LghostValue = ~BurnGunReturnY(0);
-			return;
-		}
-		
-		case 0xe43013: {
-			LghostValue = BurnGunReturnX(0);
-			return;
-		}
-		
-		case 0xe43015: {
-			LghostValue = (System16AnalogSelect) ? ~BurnGunReturnY(2) : ~BurnGunReturnY(1);
-			return;
-		}
-		
-		case 0xe43017: {
-			LghostValue = (System16AnalogSelect) ? BurnGunReturnX(2) : BurnGunReturnX(1);
-			return;
-		}
-		
-		case 0xe43021: {
-			System16AnalogSelect = d & 1;
-			return;
-		}
-	}
 }
 
 UINT8 __fastcall Mwalkbl2ReadByte(UINT32 a)
@@ -2636,7 +2597,7 @@ void __fastcall Mwalkbl2WriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0xc46801: {
-			for (int i = 0; i < 4; i++) {
+			for (INT32 i = 0; i < 4; i++) {
 				if (System16TileBanks[0 + i] != ((d & 0xf) * 4 + i)) {
 					System16TileBanks[0 + i] = (d & 0xf) * 4 + i;
 					System16RecalcBgTileMap = 1;
@@ -2738,7 +2699,7 @@ void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0xe4000f: {
-			for (int i = 0; i < 4; i++) {
+			for (INT32 i = 0; i < 4; i++) {
 				if (System16TileBanks[0 + i] != ((d & 0xf) * 4 + i)) {
 					System16TileBanks[0 + i] = (d & 0xf) * 4 + i;
 					System16RecalcBgTileMap = 1;
@@ -2762,55 +2723,6 @@ void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
 #if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
-}
-
-static INT16 WwallyTrack1X = 0;
-static INT16 WwallyTrack1Y = 0;
-static INT16 WwallyTrack2X = 0;
-static INT16 WwallyTrack2Y = 0;
-
-static UINT8 WwallyLastX[2];
-static UINT8 WwallyLastY[2];
-
-UINT8 __fastcall WwallyReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0xa43001: {
-			return (WwallyTrack1X - WwallyLastX[0]) & 0xff;
-		}
-		
-		case 0xa43005: {
-			return (WwallyTrack1Y - WwallyLastY[0]) & 0xff;
-		}
-		
-		case 0xa43009: {
-			return (WwallyTrack2X - WwallyLastX[1]) & 0xff;
-		}
-		
-		case 0xa4300d: {
-			return (WwallyTrack2Y - WwallyLastY[1]) & 0xff;
-		}
-
-	}
-	
-	return 0xff;
-}
-
-void __fastcall WwallyWriteWord(UINT32 a, UINT16 /*d*/)
-{
-	switch (a) {
-		case 0xa43000: {
-			WwallyLastX[0] = WwallyTrack1X;
-			WwallyLastY[0] = WwallyTrack1Y;
-			return;
-		}
-		
-		case 0xa43008: {
-			WwallyLastX[1] = WwallyTrack2X;
-			WwallyLastY[1] = WwallyTrack2Y;
-			return;
-		}
-	}
 }
 
 /*====================================================
@@ -2840,55 +2752,13 @@ void WwallyMakeAnalogInputs()
 	if (WwallyTrack2Y < 0) WwallyTrack2Y = 0xfc;
 }
 
-static INT32 System18BankRom40000()
-{
-	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)BurnMalloc(0x280000);
-	
-	if (pTemp) {
-		memcpy(pTemp, System16Rom, 0x280000);
-		memset(System16Rom, 0, 0x280000);
-		memcpy(System16Rom + 0x000000, pTemp + 0x00000, 0x80000);
-		memcpy(System16Rom + 0x200000, pTemp + 0x80000, 0x80000);
-		BurnFree(pTemp);
-		nRet = 0;
-	}
-		
-	return nRet;
-}
-
-static INT32 System18BankRom80000()
-{
-	INT32 nRet = 1;
-	UINT8 *pTemp = (UINT8*)BurnMalloc(0x300000);
-	
-	if (pTemp) {
-		memcpy(pTemp, System16Rom, 0x300000);
-		memset(System16Rom, 0, 0x300000);
-		memcpy(System16Rom + 0x000000, pTemp + 0x000000, 0x100000);
-		memcpy(System16Rom + 0x200000, pTemp + 0x100000, 0x100000);
-		BurnFree(pTemp);
-		nRet = 0;
-	}
-		
-	return nRet;
-}
-
 static INT32 System18Bank40000Init()
 {
-	System16RomSize = 0x180000;
-	
-	System16CustomLoadRomDo = System18BankRom40000;
-	
 	System16SpriteRomSize = 0x800000 - 0x400000;
 
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, MAP_READ);
-		SekClose();
-		
 		UINT8 *pTemp = (UINT8*)BurnMalloc(0x400000);
 		if (pTemp) {
 			memcpy(pTemp, System16Sprites, 0x400000);
@@ -2901,97 +2771,20 @@ static INT32 System18Bank40000Init()
 			nRet = 1;
 		}
 		BurnFree(pTemp);
-		
 	}
 	
 	return nRet;
 }
 
-static INT32 System18Bank80000Init()
+static INT32 DdcrewInit()
 {
-	System16RomSize = 0x100000;
+	sega_315_5195_custom_io_do = DdcrewReadIO;
 	
-	System16CustomLoadRomDo = System18BankRom80000;
-
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapMemory(System16Rom + 0x200000, 0x200000, 0x27ffff, MAP_READ);
-		SekClose();
-	}
-	
-	return nRet;
-}
-
-void Astorm3Map68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x100000, 0x10ffff, MAP_RAM);
-	SekMapMemory(System16TextRam       , 0x110000, 0x110fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x200000, 0x2007ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x140000, 0x140fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetReadWordHandler(0, System18ReadWord);
-	SekSetWriteWordHandler(0, System18WriteWord);
-	SekSetReadByteHandler(0, System18ReadByte);
-	SekSetWriteByteHandler(0, System18WriteByte);
-	SekMapHandler(1, 0xa00000, 0xa03fff, MAP_RAM);
-	SekSetReadByteHandler(1, Astorm3ReadByte);
-	SekSetWriteByteHandler(1, Astorm3WriteByte);
-	SekClose();
-}
-
-static INT32 Astorm3Init()
-{
-	System16Map68KDo = Astorm3Map68K;
-	
-	INT32 nRet = System16Init();
-
-	return nRet;
-}
-
-static INT32 DdcrewuInit()
-{
-	INT32 nRet = System18Bank40000Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xe43020, 0xe43025, MAP_READ);
-		SekSetReadByteHandler(1, DdcrewuReadByte);
-		SekClose();
-	}
-
-	return nRet;
-}
-
-static void HamawayMap68K()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(System16Rom           , 0x000000, 0x07ffff, MAP_READ);
-	SekMapMemory(System16Code          , 0x000000, 0x07ffff, MAP_FETCH);
-	SekMapMemory(System16Rom + 0x80000 , 0x200000, 0x27ffff, MAP_READ);
-	SekMapMemory(System16Code + 0x80000, 0x200000, 0x27ffff, MAP_FETCH);
-	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
-	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
-	SekMapMemory(System16SpriteRam     , 0x500000, 0x5007ff, MAP_RAM);
-	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
-	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
-	SekSetReadByteHandler(0, HamawayReadByte);
-	SekSetReadWordHandler(0, HamawayReadWord);
-	SekSetWriteByteHandler(0, HamawayWriteByte);
-	SekSetWriteWordHandler(0, HamawayWriteWord);
-	SekClose();
+	return System18Bank40000Init();
 }
 
 static INT32 HamawayInit()
 {
-	System16Map68KDo = HamawayMap68K;
-	
 	INT32 nRet = System16Init();
 
 	HammerAway = true;
@@ -3007,17 +2800,12 @@ static INT32 LghostInit()
 {
 	BurnGunInit(3, true);
 	
-	INT32 nRet = System18Bank40000Init();
+	sega_315_5195_custom_io_do = LghostReadIO;
+	sega_315_5195_custom_io_write_do = LghostWriteIO;
 	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xe43010, 0xe43021, MAP_RAM);
-		SekSetReadByteHandler(1, LghostReadByte);
-		SekSetWriteByteHandler(1, LghostWriteByte);
-		SekClose();
-	}
-
-	return nRet;
+	LaserGhost = true;
+	
+	return System18Bank40000Init();
 }
 
 static INT32 Mwalkbl2PatchRom()
@@ -3056,9 +2844,29 @@ static INT32 Mwalkbl2PatchRom()
 	return 0;
 }
 
+static void Mwalkbl2Map68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	
+	SekSetReadWordHandler(0, System18ReadWord);
+	SekSetWriteWordHandler(0, System18WriteWord);
+	SekSetReadByteHandler(0, System18ReadByte);
+	SekSetWriteByteHandler(0, System18WriteByte);
+	SekClose();
+}
+
 static INT32 Mwalkbl2Init()
 {
 	System16CustomLoadRomDo = Mwalkbl2PatchRom;
+	System16Map68KDo = Mwalkbl2Map68K;
 	
 	System16SpriteXOffset = 128;
 
@@ -3077,9 +2885,29 @@ static INT32 Mwalkbl2Init()
 	return nRet;
 }
 
+static void ShdancblMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0fffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0fffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x840fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xffc000, 0xffffff, MAP_RAM);
+	
+	SekSetReadWordHandler(0, System18ReadWord);
+	SekSetWriteWordHandler(0, System18WriteWord);
+	SekSetReadByteHandler(0, System18ReadByte);
+	SekSetWriteByteHandler(0, System18WriteByte);
+	SekClose();
+}
+
 static INT32 ShdancblInit()
 {
 	System16SpriteXOffset = 112;
+	System16Map68KDo = ShdancblMap68K;
 
 	INT32 nRet = System16Init();
 	
@@ -3098,18 +2926,10 @@ static INT32 ShdancblInit()
 static INT32 WwallyInit()
 {
 	System16MakeAnalogInputsDo = WwallyMakeAnalogInputs;
+	sega_315_5195_custom_io_do = WwallyReadIO;
+	sega_315_5195_custom_io_write_do = WwallyWriteIO;
 	
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		SekOpen(0);
-		SekMapHandler(1, 0xa43000, 0xa4300e, MAP_RAM);
-		SekSetReadByteHandler(1, WwallyReadByte);
-		SekSetWriteWordHandler(1, WwallyWriteWord);
-		SekClose();
-	}
-	
-	return nRet;
+	return System16Init();
 }
 
 static INT32 System18Exit()
@@ -3198,7 +3018,7 @@ struct BurnDriver BurnDrvAstorm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, AstormRomInfo, AstormRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3208,7 +3028,7 @@ struct BurnDriver BurnDrvAstorm3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, Astorm3RomInfo, Astorm3RomName, NULL, NULL, AstormInputInfo, AstormDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3218,7 +3038,7 @@ struct BurnDriver BurnDrvAstorm3d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, Astorm3dRomInfo, Astorm3dRomName, NULL, NULL, AstormInputInfo, AstormDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3228,7 +3048,7 @@ struct BurnDriver BurnDrvAstormj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, AstormjRomInfo, AstormjRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3238,7 +3058,7 @@ struct BurnDriver BurnDrvAstormjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, AstormjdRomInfo, AstormjdRomName, NULL, NULL, System18InputInfo, Astorm2pDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3248,7 +3068,7 @@ struct BurnDriver BurnDrvAstormu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, AstormuRomInfo, AstormuRomName, NULL, NULL, AstormInputInfo, AstormDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3258,7 +3078,7 @@ struct BurnDriver BurnDrvAstormud = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5874, GBF_PLATFORM, 0,
 	NULL, AstormudRomInfo, AstormudRomName, NULL, NULL, AstormInputInfo, AstormDIPInfo,
-	Astorm3Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3348,7 +3168,7 @@ struct BurnDriver BurnDrvDdcrew1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_SCRFIGHT, 0,
 	NULL, Ddcrew1RomInfo, Ddcrew1RomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
-	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	DdcrewInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3358,7 +3178,7 @@ struct BurnDriver BurnDrvDdcrew1d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_SCRFIGHT, 0,
 	NULL, Ddcrew1dRomInfo, Ddcrew1dRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
-	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	DdcrewInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3388,7 +3208,7 @@ struct BurnDriver BurnDrvDdcrewj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_SCRFIGHT, 0,
 	NULL, DdcrewjRomInfo, DdcrewjRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
-	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	DdcrewInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3398,7 +3218,7 @@ struct BurnDriver BurnDrvDdcrewjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_SCRFIGHT, 0,
 	NULL, DdcrewjdRomInfo, DdcrewjdRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
-	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	DdcrewInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3428,7 +3248,7 @@ struct BurnDriver BurnDrvDdcrewu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_SCRFIGHT, 0,
 	NULL, DdcrewuRomInfo, DdcrewuRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
-	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	DdcrewInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3438,7 +3258,7 @@ struct BurnDriver BurnDrvDdcrewud = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_SCRFIGHT, 0,
 	NULL, DdcrewudRomInfo, DdcrewudRomName, NULL, NULL, DdcrewuInputInfo, DdcrewuDIPInfo,
-	DdcrewuInit, System18Exit, System18Frame, NULL, System18Scan,
+	DdcrewInit, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3448,7 +3268,7 @@ struct BurnDriver BurnDrvDesertbr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_VERSHOOT, 0,
 	NULL, DesertbrRomInfo, DesertbrRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
-	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -3458,7 +3278,7 @@ struct BurnDriver BurnDrvDesertbrd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_VERSHOOT, 0,
 	NULL, DesertbrdRomInfo, DesertbrdRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
-	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -3468,7 +3288,7 @@ struct BurnDriver BurnDrvDesertbrj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_FD1094_ENC | HARDWARE_SEGA_171_5987, GBF_VERSHOOT, 0,
 	NULL, DesertbrjRomInfo, DesertbrjRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
-	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 
@@ -3478,7 +3298,7 @@ struct BurnDriver BurnDrvDesertbrjd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 3, HARDWARE_SEGA_SYSTEM18 | HARDWARE_SEGA_171_5987, GBF_VERSHOOT, 0,
 	NULL, DesertbrjdRomInfo, DesertbrjdRomName, NULL, NULL, DesertbrInputInfo, DesertbrDIPInfo,
-	System18Bank80000Init, System18Exit, System18Frame, NULL, System18Scan,
+	System16Init, System18Exit, System18Frame, NULL, System18Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

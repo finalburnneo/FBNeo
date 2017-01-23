@@ -53,6 +53,7 @@ extern INT32 System16AnalogSelect;
 extern UINT8 System16Dip[3];
 extern UINT8 System16Input[7];
 extern UINT8 System16Reset;
+extern UINT8 System16MCUData;
 extern UINT8 *System16Rom;
 extern UINT8 *System16Code;
 extern UINT8 *System16Rom2;
@@ -189,6 +190,11 @@ UINT8 __fastcall System18ReadByte(UINT32 a);
 void __fastcall System18WriteWord(UINT32 a, UINT16 d);
 void __fastcall System18WriteByte(UINT32 a, UINT8 d);
 
+UINT8 system18_io_chip_r(UINT32 offset);
+void system18_io_chip_w(UINT32 offset, UINT16 d);
+void System18GfxBankWrite(UINT32 offset, UINT16 d);
+void HamawayGfxBankWrite(UINT32 offset, UINT16 d);
+
 // d_hangon.cpp
 void HangonPPI0WritePortA(UINT8 data);
 void HangonPPI0WritePortB(UINT8 data);
@@ -306,6 +312,8 @@ void fd1094_scan(INT32 nAction);
 // genesis_vid.cpp
 
 // sega_315_5195.cpp
+extern bool LaserGhost;
+
 typedef UINT8 (*sega_315_5195_custom_io)(UINT32);
 extern sega_315_5195_custom_io sega_315_5195_custom_io_do;
 

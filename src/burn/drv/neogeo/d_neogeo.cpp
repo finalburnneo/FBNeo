@@ -5720,7 +5720,7 @@ struct BurnDriver BurnDrvKof98a = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board)
+// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 1)
 /* encrypted code + protection, only z80 rom is different to kof98 */ /* KOREAN VERSION */
 
 static struct BurnRomInfo kof98kRomDesc[] = {
@@ -5752,7 +5752,7 @@ STD_ROM_FN(kof98k)
 
 struct BurnDriver BurnDrvKof98k = {
 	"kof98k", "kof98", "neogeo", NULL, "1998",
-	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board)\0", NULL, "SNK", "Neo Geo MVS",
+	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 1)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98kRomInfo, kof98kRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -5760,7 +5760,7 @@ struct BurnDriver BurnDrvKof98k = {
 	0x1000, 304, 224, 4, 3
 };
 
-// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board 2)
+// The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 2)
 /* encrypted code + protection, only z80 rom is different to kof98 */ /* KOREAN VERSION */
 
 static struct BurnRomInfo kof98kaRomDesc[] = {
@@ -5792,7 +5792,7 @@ STD_ROM_FN(kof98ka)
 
 struct BurnDriver BurnDrvKof98ka = {
 	"kof98ka", "kof98", "neogeo", NULL, "1998",
-	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board 2)\0", NULL, "SNK", "Neo Geo MVS",
+	"The King of Fighters '98 - The Slugfest / King of Fighters '98 - dream match never ends (Korean board, set 2)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98kaRomInfo, kof98kaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -6251,11 +6251,12 @@ struct BurnDriver BurnDrvkof99e = {
 };
 
 // The King of Fighters '99 - Millennium Battle (Korean release)
-/* Original Version - Encrypted GFX */ /* KOREAN VERSION */
+/* Original Version - Encrypted code & GFX */ /* KOREAN VERSION */
 
 static struct BurnRomInfo kof99kRomDesc[] = {
-	{ "152-p1.p1",    0x100000, 0xf2c7ddfa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "kb.neo-sma",   0x040000, 0x9fccc688, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "151-pg1k.p1",  0x400000, 0xef259292, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "151-pg2k.p2",  0x400000, 0xf3898ec2, 1 | BRF_ESS | BRF_PRG }, //  2  
 	
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	/* Encrypted */
@@ -6279,19 +6280,58 @@ static struct BurnRomInfo kof99kRomDesc[] = {
 STDROMPICKEXT(kof99k, kof99k, neogeo)
 STD_ROM_FN(kof99k)
 
-INT32 kof99kInit()
+struct BurnDriver BurnDrvkof99k = {
+	"kof99k", "kof99", "neogeo", NULL, "1999",
+	"The King of Fighters '99 - Millennium Battle (Korean release)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof99kRomInfo, kof99kRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99Init, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+// The King of Fighters '99 - Millennium Battle (Korean release)
+/* Original Version - Encrypted GFX */ /* KOREAN VERSION */
+
+static struct BurnRomInfo kof99kaRomDesc[] = {
+	{ "152-p1.p1",    0x100000, 0xf2c7ddfa, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "152-p2.sp2",   0x400000, 0x274ef47a, 1 | BRF_ESS | BRF_PRG }, //  1 
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "251-c1.c1",    0x800000, 0x0f9e93fe, 3 | BRF_GRA },           //  2 Sprite data
+	{ "251-c2.c2",    0x800000, 0xe71e2ea3, 3 | BRF_GRA },           //  3 
+	{ "251-c3.c3",    0x800000, 0x238755d2, 3 | BRF_GRA },           //  4 
+	{ "251-c4.c4",    0x800000, 0x438c8b22, 3 | BRF_GRA },           //  5 
+	{ "251-c5.c5",    0x800000, 0x0b0abd0a, 3 | BRF_GRA },           //  6 
+	{ "251-c6.c6",    0x800000, 0x65bbf281, 3 | BRF_GRA },           //  7 
+	{ "251-c7.c7",    0x800000, 0xff65f62e, 3 | BRF_GRA },           //  8 
+	{ "251-c8.c8",    0x800000, 0x8d921c68, 3 | BRF_GRA },           //  9 
+
+	{ "251-m1.m1",    0x020000, 0x5e74539c, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "251-v1.v1",    0x400000, 0xef2eecc8, 5 | BRF_SND },           // 11 Sound data
+	{ "251-v2.v2",    0x400000, 0x73e211ca, 5 | BRF_SND },           // 12 
+	{ "251-v3.v3",    0x400000, 0x821901da, 5 | BRF_SND },           // 13 
+	{ "251-v4.v4",    0x200000, 0xb49e6178, 5 | BRF_SND },           // 14 
+};
+
+STDROMPICKEXT(kof99ka, kof99ka, neogeo)
+STD_ROM_FN(kof99ka)
+
+INT32 kof99kaInit()
 {
 	nNeoProtectionXor = 0x00;
 	return NeoInit();
 }
 
-struct BurnDriver BurnDrvkof99k = {
-	"kof99k", "kof99", "neogeo", NULL, "1999",
-	"The King of Fighters '99 - Millennium Battle (Korean release)\0", NULL, "SNK", "Neo Geo MVS",
+struct BurnDriver BurnDrvkof99ka = {
+	"kof99ka", "kof99", "neogeo", NULL, "1999",
+	"The King of Fighters '99 - Millennium Battle (Korean release, non-encrypted program)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_VSFIGHT, FBF_KOF,
-	NULL, kof99kRomInfo, kof99kRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	kof99kInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	NULL, kof99kaRomInfo, kof99kaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof99kaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
 };
 

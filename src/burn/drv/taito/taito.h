@@ -100,6 +100,7 @@ extern INT32 TaitoDoReset();
 #define TAITO_ES5505			30
 #define TAITO_ES5505_BYTESWAP		31
 #define TAITO_DEFAULT_EEPROM		32
+#define TAITO_CHARS_BYTESWAP32		33
 
 extern UINT8 *Taito68KRom1;
 extern UINT8 *Taito68KRom2;

@@ -397,6 +397,10 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define HARDWARE_SEGA_5521								(0x04)
 #define HARDWARE_SEGA_5797								(0x05)
 #define HARDWARE_SEGA_5704_PS2							(0x06)
+#define HARDWARE_SEGA_171_SHADOW						(0x07)
+#define HARDWARE_SEGA_171_5874							(0x08)
+#define HARDWARE_SEGA_171_5987							(0x09)
+#define HARDWARE_SEGA_837_7525							(0x0a)
 
 #define HARDWARE_SEGA_FD1089A_ENC						(0x0010)
 #define HARDWARE_SEGA_FD1089B_ENC						(0x0020)

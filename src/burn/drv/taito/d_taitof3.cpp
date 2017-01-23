@@ -1,19 +1,18 @@
 
 /*
-    version .00001 :)
+    version .00001a ;)
 
-    no attempt at speed-ups
+
+	no attempt at speed-ups
 	no attempt at cleaning at all
 	ROM sets might be out of date!!!
-	no palette viewer
-	implement sprite lag(!)
 
 	working
 
 	ARABIANM
 	kaiserkn
 	RECALH
-	RIDINGF
+	RIDINGF	    - no sound
 	LIGHTBR
 	RINGRAGE    - no sound
 	LANDMAKER & proto
@@ -26,7 +25,7 @@
 	bublblem
 	gekiridn
 	popnpop
-	twinqix
+	twinqix	- special case, layer still incorrect! fix later
 	trstar
 	spcinv95
 	spcinvdj
@@ -41,15 +40,12 @@
 	GSEEKER
 	arkretrn
 	tcobra2
+	cupfinal    - ok (clone of scfinals!)
 
 	broken
 
 	commandw	- bad graphics / missing roz layer (bottom)
-
-	not tested
-
 	scfinals    - coin inputs don't work, service coin ok.
-	cupfinal    - ok (clone of scfinals!)
 */
 
 
@@ -146,7 +142,7 @@ enum {
 	TMDRILL
 };
 
-static INT32 m_f3_game = 0; // iq_132!!!!!!!!!!!!
+static INT32 m_f3_game = 0;
 
 struct tempsprite
 {
@@ -164,6 +160,8 @@ static INT32 min_x = 0;
 static INT32 max_x = 512;
 static INT32 min_y = 0;
 static INT32 max_y = 256;
+
+void TaitoF3VideoInit();
 
 static struct BurnInputInfo F3InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"},
@@ -214,7 +212,7 @@ static struct BurnInputInfo F3InputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"service"},
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 11,	"service"},
-	{"Service Mode",    BIT_DIGITAL,    DrvSrv + 0,     "diag"},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 8,	"tilt"},
 };
 
@@ -251,7 +249,7 @@ static struct BurnInputInfo KnInputList[] = {
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 10,	"service"},
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 11,	"service"},
-	{"Service Mode",    BIT_DIGITAL,    DrvSrv + 0,     "diag"},
+	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 8,	"tilt"},
 };
 
@@ -266,13 +264,16 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 		return;
 
 		case 0x04:
-			if ((offset & 3) == 0) DrvCoinWord[0] = d << 8;
-			//else coin stuff
+		{
+	//		bprintf (0, _T("contrl %2.2x, %8.8x, %8.8x\n"), offset, d, b);
+		//	if (offset & 2 && b == 2) DrvCoinWord[0] = d;
+		//	if ((offset & 3) == 0) DrvCoinWord[0] = d << 8;
+			if ((offset & 3) == 0) DrvCoinWord[0] = d << 0; // or 8?
+		}
 		return;
 
 		case 0x10:
 		{
-			//if (b!=1) bprintf (0, _T("%x, %x, %d\n"),offset,d,b);
 			if ((offset & 3) == 3 || (offset == 0x4a0012 && b == 2)) {
 				EEPROMSetClockLine((d & 0x08) ? EEPROM_ASSERT_LINE : EEPROM_CLEAR_LINE);
 				EEPROMWriteBit(d & 0x04);
@@ -282,8 +283,12 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 		return;
 
 		case 0x14:
-			if ((offset & 3) == 0) DrvCoinWord[1] = d << 8;
-			//else coin stuff
+		{
+	//		bprintf (0, _T("contrl %2.2x, %8.8x, %8.8x\n"), offset, d, b);
+		//	if ((offset & 3) == 0) DrvCoinWord[1] = d << 8;
+		//	if (offset & 2 && b == 2) DrvCoinWord[1] = d;
+			if ((offset & 3) == 0) DrvCoinWord[1] = d << 0; // or 8?
+		}
 
 		return;
 	}
@@ -388,11 +393,15 @@ static void __fastcall f3_main_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-static UINT32 control_r(INT32 offset)
+static UINT32 control_r(INT32 offset, INT32 b)
 {
 	offset &= 0x1c;
 
 	UINT32 ret = 0xffffffff;
+
+//	if (offset >= 4) {
+//		bprintf (0, _T("Control read: %2.2x, %d\n"), offset,b);
+//	}
 
 	switch (offset & 0x1c)
 	{
@@ -432,7 +441,7 @@ static UINT32 __fastcall f3_main_read_long(UINT32 a)
 #endif
 
 	if ((a & 0xffffe0) == 0x4a0000) {
-		return control_r(a);
+		return control_r(a, 4);
 	}
 
 	return 0;
@@ -445,7 +454,7 @@ static UINT16 __fastcall f3_main_read_word(UINT32 a)
 #endif
 
 	if ((a & 0xffffe0) == 0x4a0000) {
-		return control_r(a) >> ((~a & 2) * 8);
+		return control_r(a, 2) >> ((~a & 2) * 8);
 	}
 
 	return 0;
@@ -458,7 +467,7 @@ static UINT8 __fastcall f3_main_read_byte(UINT32 a)
 #endif
 
 	if ((a & 0xffffe0) == 0x4a0000) {
-		return control_r(a) >> (((a & 3)^3) * 8);
+		return control_r(a, 1) >> (((a & 3)^3) * 8);
 	}
 
 	return 0;
@@ -668,10 +677,12 @@ static INT32 MemIndex()
 	Taito68KRom1		= Next; Next += 0x0200000;
 
 	TaitoF3SoundRom		= Next;
-	Taito68KRom2		= Next; Next += 0x0300000;
+	Taito68KRom2		= Next; Next += 0x0100000;
+	if (m_f3_game == KIRAMEKI) Next += 0x200000;
+
 
 	TaitoSpritesA		= Next; Next += 0x1a00000;
-	TaitoChars		    = Next; Next += 0x0c00000;
+	TaitoChars		= Next; Next += 0x0c00000;
 
 	m_tile_opaque_pf[0]	= Next; Next += 0x0c00000 / 0x100;
 	m_tile_opaque_pf[1]	= Next; Next += 0x0c00000 / 0x100;
@@ -687,9 +698,10 @@ static INT32 MemIndex()
 
 	TaitoDefaultEEProm	= Next; Next += 0x0000080;
 
-	TaitoPalette		= (UINT32  *)Next; Next += 0x0002000 * sizeof (UINT32);
+	pBurnDrvPalette		= (UINT32 *)Next;
+	TaitoPalette		= (UINT32 *)Next; Next += 0x0002000 * sizeof (UINT32);
 
-	TaitoCharsB		    = Next; Next += 0x0004000;
+	TaitoCharsB		= Next; Next += 0x0004000;
 	TaitoCharsPivot		= Next; Next += 0x0020000;
 
 	TaitoRamStart		= Next;
@@ -697,21 +709,22 @@ static INT32 MemIndex()
 	Taito68KRam1		= Next; Next += 0x0020000;
 	TaitoPaletteRam		= Next; Next += 0x0008000;
 	TaitoSpriteRam		= Next; Next += 0x0010000;
-	TaitoSpriteRamDelayed = Next; Next += 0x0010000;
-	TaitoSpriteRamDelayed2= Next; Next += 0x0010000;
-	DrvPfRAM		    = Next; Next += 0x000c000;
+	TaitoSpriteRamDelayed	= Next; Next += 0x0010000;
+	TaitoSpriteRamDelayed2	= Next; Next += 0x0010000;
+	DrvPfRAM		= Next; Next += 0x000c000;
 	TaitoVideoRam		= Next; Next += 0x0002000;
-	DrvVRAMRAM		    = Next; Next += 0x0002000;
-	DrvLineRAM		    = Next; Next += 0x0010000;
-	DrvPivotRAM		    = Next; Next += 0x0010000;
-	DrvCtrlRAM		    = Next; Next += 0x0000400;
+	DrvVRAMRAM		= Next; Next += 0x0002000;
+	DrvLineRAM		= Next; Next += 0x0010000;
+	DrvPivotRAM		= Next; Next += 0x0010000;
+	DrvCtrlRAM		= Next; Next += 0x0000400;
 
-	DrvCoinWord		    = (UINT16*)Next; Next += 2 * sizeof(INT16);
+	DrvCoinWord		 = (UINT16*)Next; Next += 2 * sizeof(INT16);
 
-	TaitoF3SoundRam     = Next; Next += 0x010000;
-	TaitoF3SharedRam    = Next; Next += 0x000800;
-	TaitoES5510DSPRam   = Next; Next += 0x000200;
-	TaitoES5510GPR      = (UINT32*)Next; Next += 0x0000c0 * sizeof(UINT32);
+	TaitoF3SoundRam		= Next; Next += 0x010000;
+	TaitoF3SharedRam	= Next; Next += 0x000800;
+	TaitoES5510DSPRam	= Next; Next += 0x000200;
+
+	TaitoES5510GPR		= (UINT32*)Next; Next += 0x0000c0 * sizeof(UINT32);
 
 	TaitoRamEnd		    = Next;
 
@@ -743,13 +756,12 @@ static INT32 MemIndex()
 	bitmap_flags[8]		= Next; Next += 512 * 512;
 	bitmap_flags[9]		= Next; Next += 512 * 256;
 
-	dirty_tiles         = Next; Next += 0x8000 / 4;
+	dirty_tiles		= Next; Next += 0x8000 / 4;
 
 	TaitoMemEnd		= Next;
 
 	return 0;
 }
-
 
 static void DrvCalculateTransTable(INT32 len)
 {
@@ -842,18 +854,237 @@ static void tile_decode(INT32 spr_len, INT32 tile_len)
 	DrvCalculateTransTable(tile_len);
 }
 
-void TaitoF3VideoInit();
+static INT32 load_sound_offset = 0;
 
-static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag, UINT32 f3_sndsize)
+static INT32 TaitoF3GetRoms(bool bLoad)
 {
+	if (!bLoad) load_sound_offset = 0;
+
+	char* pRomName;
+	struct BurnRomInfo ri;
+
+	UINT8 *sprites = TaitoSpritesA;
+	UINT8 *tiles = TaitoChars;
+	UINT8 *samples = TaitoES5505Rom + load_sound_offset;
+
+	INT32 prevsize = 0;
+	INT32 prevtype = 0;
+	INT32 tilecount = 0;
+	INT32 spritecount = 0;
+
+	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
+		prevsize = ri.nLen;
+		prevtype = ri.nType;
+
+		BurnDrvGetRomInfo(&ri, i);
+
+		if (ri.nType == TAITO_68KROM1_BYTESWAP32)
+		{
+			bprintf (0, _T("000000 68k1\n"));
+
+			if (bLoad) {
+				BurnLoadRom(Taito68KRom1 + 1, i + 0, 4);
+				BurnLoadRom(Taito68KRom1 + 0, i + 1, 4);
+				BurnLoadRom(Taito68KRom1 + 3, i + 2, 4);
+				BurnLoadRom(Taito68KRom1 + 2, i + 3, 4);
+			}
+			i += 3;
+			continue;
+		}
+
+		if (ri.nType == TAITO_SPRITESA_BYTESWAP)
+		{
+			bprintf (0, _T("%6.6x sprite 2x\n"), sprites - TaitoSpritesA);
+
+			if (m_f3_game == GSEEKER)
+			{
+				if (bLoad) {
+					if (BurnLoadRom(sprites + 0x000000, i + 0, 2)) return 1;
+					if (BurnLoadRom(sprites + 0x100001, i + 1, 2)) return 1;
+					if (BurnLoadRom(sprites + 0x000000, i + 2, 2)) return 1;
+					if (BurnLoadRom(sprites + 0x000001, i + 3, 2)) return 1;
+					memset (sprites + 0x200000, 0, 0x100000);
+				}
+				sprites += 0x400000;
+				i+=3;
+			}
+			else
+			{
+				if (bLoad) {
+					BurnLoadRom(sprites + 0, i + 0, 2);
+					BurnLoadRom(sprites + 1, i + 1, 2);
+				}
+				sprites += ri.nLen * 2;
+				i++;
+			}
+			continue;
+		}
+
+		if (ri.nType == TAITO_SPRITESA)
+		{
+			spritecount = 1;
+			if (prevtype == TAITO_SPRITESA_BYTESWAP) {
+				sprites = TaitoSpritesA + ((sprites - TaitoSpritesA) / 2) * 3;
+			}
+
+			bprintf (0, _T("%6.6x sprite 1x \n"), sprites - TaitoSpritesA);
+
+			if (bLoad) {
+				BurnLoadRom(sprites + 0, i + 0, 1);
+			}
+			sprites += ri.nLen;
+			continue;
+		}
+
+		if (ri.nType == TAITO_CHARS_BYTESWAP32)
+		{
+			bprintf (0, _T("%6.6x tiles x4\n"), tiles - TaitoChars);
+
+			if (bLoad) {
+				BurnLoadRom(tiles + 0, i + 0, 4);
+				BurnLoadRom(tiles + 1, i + 1, 4);
+				BurnLoadRom(tiles + 2, i + 2, 4);
+				BurnLoadRom(tiles + 3, i + 3, 4);
+			}
+			i+=3;
+			tiles += ri.nLen * 4;
+			continue;
+		}
+
+		if (ri.nType == TAITO_CHARS_BYTESWAP)
+		{
+			if (prevtype == TAITO_CHARS_BYTESWAP32 && m_f3_game == TWINQIX) {
+				tiles += 0x100000;
+			}
+
+			bprintf (0, _T("%6.6x tiles x2\n"), tiles - TaitoChars);
+
+			if (bLoad) {
+				BurnLoadRom(tiles + 0, i + 0, 2);
+				BurnLoadRom(tiles + 1, i + 1, 2);
+			}
+			i++;
+			tiles += ri.nLen * 2;
+			continue;
+		}
+
+		if (ri.nType == TAITO_CHARS)
+		{
+			tilecount = 1;
+			if (prevtype == TAITO_CHARS_BYTESWAP) {
+				tiles = TaitoChars + ((tiles - TaitoChars) / 2) * 3;
+			}
+
+			bprintf (0, _T("%6.6x tiles x1 \n"), tiles - TaitoChars);
+
+			if (bLoad) {
+				BurnLoadRom(tiles + 0, i + 0, 1);
+			}
+			tiles += ri.nLen;
+			bprintf (0, _T("%6.6x tiles x1b \n"), tiles - TaitoChars);
+
+			continue;
+		}
+
+		if (ri.nType == TAITO_68KROM2_BYTESWAP)
+		{
+			bprintf (0, _T("000000 68k2 x2\n"));
+
+			if (bLoad) {
+				BurnLoadRom(Taito68KRom2 + 1, i + 0, 2);
+				BurnLoadRom(Taito68KRom2 + 0, i + 1, 2);
+			}
+			i++;
+			continue;
+		}
+
+		if (ri.nType == TAITO_68KROM2) // kirameki
+		{
+			bprintf (0, _T("100000, 68k1 x1\n"));
+			if (bLoad) {
+				BurnLoadRom(Taito68KRom2 + 0x100000, i, 1);
+			}
+			continue;
+		}
+
+		if (ri.nType == TAITO_ES5505_BYTESWAP)
+		{
+			INT32 size = samples - TaitoES5505Rom;
+
+			if (prevtype == TAITO_ES5505_BYTESWAP && prevsize == 0x200000 && ri.nLen == 0x100000 && size == 0x400000) {
+				samples += 0x200000;
+			}
+
+			if (size == 0xc00000 && ri.nLen == 0x100000) {
+				samples += 0x200000;
+			}
+
+			bprintf (0, _T("%6.6x, samples \n"), samples - TaitoES5505Rom);
+
+			if (bLoad) {
+				BurnLoadRom(samples + 1, i, 2);
+			}
+			samples += ri.nLen * 2;
+			continue;
+		}
+
+		if (ri.nType == TAITO_DEFAULT_EEPROM)
+		{
+			if (bLoad) {
+				BurnLoadRom(TaitoDefaultEEProm, i, 1);
+			}
+			continue;
+		}
+	}
+
+	if (bLoad == false) {
+		INT32 spritesize = sprites - TaitoSpritesA;
+		INT32 tilesize = tiles - TaitoChars;
+		INT32 samplesize = samples - TaitoES5505Rom;
+
+		if (samplesize == 0xc00000 || samplesize == 0xa00000) {
+			load_sound_offset = 0x400000;
+		}
+
+		if (tilecount == 0) tilesize *= 2;
+		if (spritecount == 0) spritesize *= 2;
+
+		for (INT32 i = 1; i < 1<<30; i<<=1) {
+			if (i >= samplesize) {
+				samplesize = i;
+				break;
+			}
+		}
+
+		TaitoSpriteARomSize = spritesize;
+		TaitoCharRomSize = tilesize;
+		TaitoF3ES5506RomSize = samplesize;
+		bprintf (0, _T("Load: %x, %x, %x\n"), spritesize, tilesize, samplesize);
+	}
+
+	return 0;
+}
+
+static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag)
+{
+	m_f3_game = kludge;
+
+	TaitoF3GetRoms(false);
+
 	MemIndex();
 	INT32 nLen = TaitoMemEnd - (UINT8 *)0;
 	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(TaitoMem, 0, nLen);
 	MemIndex();
 
-	if (pRomLoadCB) {
-		if (pRomLoadCB()) return 1;
+	{
+		TaitoF3GetRoms(true);
+
+		if (pRomLoadCB) {
+			if (pRomLoadCB()) return 1;
+		}
+
+		tile_decode(TaitoSpriteARomSize, TaitoCharRomSize);
 	}
 
 	SekInit(0, 0x68ec020);
@@ -898,20 +1129,20 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	SekSetWriteWordHandler(4,	f3_playfield_write_word);
 	SekSetWriteByteHandler(4,	f3_playfield_write_byte);
 	SekClose();
-	
-	TaitoF3ES5506RomSize = f3_sndsize;
 
 	TaitoF3SoundInit(1);
 
 	EEPROMInit(&eeprom_interface_93C46);
 	EEPROMIgnoreErrMessage(1);
 
-	GenericTilesInit();
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
+	} else {
+		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
+	}
 
 	pPaletteUpdateCallback = pPalUpdateCB;
 	extended_layers = extend;
-
-	m_f3_game = kludge;
 	sprite_lag = spritelag;
 
 	m_spritelist = (struct tempsprite*)BurnMalloc(0x400 * sizeof(struct tempsprite));
@@ -940,8 +1171,6 @@ static INT32 DrvExit()
 	TaitoF3SoundExit();
 
 	EEPROMExit();
-
-	//GenericTilesExit(); - in TaitoExit();
 
 	BurnFree (TaitoMem);
 
@@ -3665,12 +3894,10 @@ static void DrawCommon(INT32 scanline_start)
 	memset (TaitoPriorityMap, 0, 1024 * 512);
 	memset (output_bitmap, 0, 512 * 512 * sizeof(UINT32));
 
-//	BurnTransferClear();
-
 	switch (sprite_lag) {
 		case 2: get_sprite_info((UINT16*)TaitoSpriteRamDelayed2); break;
 		case 1: get_sprite_info((UINT16*)TaitoSpriteRamDelayed); break;
-    	default: get_sprite_info((UINT16*)TaitoSpriteRam); break;
+    		default: get_sprite_info((UINT16*)TaitoSpriteRam); 	break;
 	}
 
 	draw_sprites();
@@ -3685,7 +3912,6 @@ static void DrawCommon(INT32 scanline_start)
 	draw_vram_layer();
 
 	{
-
 		get_line_ram_info(0,sx_fix[0],sy_fix[0],0,(UINT16*)(DrvPfRAM + (extended_layers ? 0x0000 : 0x0000)));
 
 		get_line_ram_info(1,sx_fix[1],sy_fix[1],1,(UINT16*)(DrvPfRAM + (extended_layers ? 0x2000 : 0x1000)));
@@ -3698,8 +3924,6 @@ static void DrawCommon(INT32 scanline_start)
 
 		scanline_draw();
 	}
-
-//	BurnTransferCopy(TaitoPalette);
 
 	// copy video to draw surface
 	{
@@ -3794,7 +4018,7 @@ static INT32 DrvFrame()
 
 
 	INT32 nInterleave = 256;
-	nTaitoCyclesTotal[0] = 16000000 / 60; //(16000000 * 100) / 5897; <- this freezes gekirindan and gdarius
+	nTaitoCyclesTotal[0] = 16000000 / 60; // do not touch!
 
 	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 
@@ -3968,35 +4192,9 @@ static struct BurnRomInfo ringrageRomDesc[] = {
 STD_ROM_PICK(ringrage)
 STD_ROM_FN(ringrage)
 
-static INT32 ringrageRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x600000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x180000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 13, 2)) return 1;
-
-	tile_decode(0x800000, 0x200000);
-
-	return 0;
-}
-
 static INT32 ringrageInit()
 {
-	return DrvInit(ringrageRomCallback, f3_12bit_palette_update, 0, RINGRAGE, 2, 0x800000);
+	return DrvInit(NULL, f3_12bit_palette_update, 0, RINGRAGE, 2);
 }
 
 struct BurnDriver BurnDrvRingrage = {
@@ -4107,15 +4305,15 @@ static struct BurnRomInfo arabianmRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    //  12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    //  13
 
-	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, 6 }, // 14 plds
-	{ "pal20l8b.2",		0x000144, 0xc91437e2, 6 }, // 15
-	{ "palce20v8h.3",	0x000157, 0x74d61d36, 6 }, // 16
-	{ "palce16v8h.11",	0x000117, 0x51088324, 6 }, // 17
-	{ "pal16l8b.22",	0x000104, 0x3e01e854, 6 }, // 18
-	{ "palce16v8h.31",	0x000117, 0xe0789727, 6 }, // 19
-	{ "pal16l8b.62",	0x000104, 0x7093e2f3, 6 }, // 20
-	{ "palce20v8h.69",	0x000157, 0x25d205d5, 6 }, // 21
-	{ "pal20l8b.70",	0x000144, 0x92b5b97c, 6 }, // 22
+	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
+	{ "palce20v8h.3",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
+	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
+	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
+	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
+	{ "palce20v8h.69",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
 STD_ROM_PICK(arabianm)
@@ -4123,7 +4321,7 @@ STD_ROM_FN(arabianm)
 
 static INT32 arabianmInit()
 {
-	return DrvInit(ringrageRomCallback, f3_12bit_palette_update, 0, ARABIANM, 2, 0x800000);
+	return DrvInit(NULL, f3_12bit_palette_update, 0, ARABIANM, 2);
 }
 
 struct BurnDriver BurnDrvArabianm = {
@@ -4159,15 +4357,15 @@ static struct BurnRomInfo arabianmjRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, 6 }, // 14 plds
-	{ "pal20l8b.2",		0x000144, 0xc91437e2, 6 }, // 15
-	{ "palce20v8h.3",	0x000157, 0x74d61d36, 6 }, // 16
-	{ "palce16v8h.11",	0x000117, 0x51088324, 6 }, // 17
-	{ "pal16l8b.22",	0x000104, 0x3e01e854, 6 }, // 18
-	{ "palce16v8h.31",	0x000117, 0xe0789727, 6 }, // 19
-	{ "pal16l8b.62",	0x000104, 0x7093e2f3, 6 }, // 20
-	{ "palce20v8h.69",	0x000157, 0x25d205d5, 6 }, // 21
-	{ "pal20l8b.70",	0x000144, 0x92b5b97c, 6 }, // 22
+	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
+	{ "palce20v8h.3",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
+	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
+	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
+	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
+	{ "palce20v8h.69",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
 STD_ROM_PICK(arabianmj)
@@ -4206,15 +4404,15 @@ static struct BurnRomInfo arabianmuRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, 6 }, // 14 plds
-	{ "pal20l8b.2",		0x000144, 0xc91437e2, 6 }, // 15
-	{ "palce20v8h.3",	0x000157, 0x74d61d36, 6 }, // 16
-	{ "palce16v8h.11",	0x000117, 0x51088324, 6 }, // 17
-	{ "pal16l8b.22",	0x000104, 0x3e01e854, 6 }, // 18
-	{ "palce16v8h.31",	0x000117, 0xe0789727, 6 }, // 19
-	{ "pal16l8b.62",	0x000104, 0x7093e2f3, 6 }, // 20
-	{ "palce20v8h.69",	0x000157, 0x25d205d5, 6 }, // 21
-	{ "pal20l8b.70",	0x000144, 0x92b5b97c, 6 }, // 22
+	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
+	{ "palce20v8h.3",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
+	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
+	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
+	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
+	{ "palce20v8h.69",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
 STD_ROM_PICK(arabianmu)
@@ -4255,33 +4453,9 @@ static struct BurnRomInfo ridingfRomDesc[] = {
 STD_ROM_PICK(ridingf)
 STD_ROM_FN(ridingf)
 
-static INT32 ridingfRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000,  9, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 11, 2)) return 1;
-
-	tile_decode(0x800000, 0x400000);
-
-	return 0;
-}
-
 static INT32 ridingfInit()
 {
-	return DrvInit(ridingfRomCallback, f3_12bit_palette_update, 1, RIDINGF, 1, 0x800000);
+	return DrvInit(NULL, f3_12bit_palette_update, 1, RIDINGF, 1);
 }
 
 struct BurnDriver BurnDrvRidingf = {
@@ -4382,46 +4556,19 @@ static struct BurnRomInfo gseekerRomDesc[] = {
 	{ "d40_05.rom",		0x100000, 0xbe6eec8f, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
 	{ "d40_06.rom",		0x100000, 0xa822abe4, TAITO_CHARS_BYTESWAP },     //  9
 
-	{ "d40_07.rom",		0x020000, 0x7e9b26c2, TAITO_68KROM2_BYTESWAP }, // 10 68k Code
-	{ "d40_08.rom",		0x020000, 0x9c926a28, TAITO_68KROM2_BYTESWAP }, // 11
+	{ "d40_07.rom",		0x020000, 0x7e9b26c2, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d40_08.rom",		0x020000, 0x9c926a28, TAITO_68KROM2_BYTESWAP },   // 11
 
-	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },  // 12 Ensoniq Samples
-	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },  // 13
+	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 };
 
 STD_ROM_PICK(gseeker)
 STD_ROM_FN(gseeker)
 
-static INT32 gseekerRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x100001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  7, 2)) return 1;
-	memset (TaitoSpritesA + 0x200000, 0, 0x100000);
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  9, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 13, 2)) return 1;
-
-	tile_decode(0x800000, 0x400000);
-
-	return 0;
-}
-
 static INT32 gseekerInit()
 {
-	return DrvInit(gseekerRomCallback, f3_24bit_palette_update, 0, GSEEKER, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, GSEEKER, 1);
 }
 
 struct BurnDriver BurnDrvGseeker = {
@@ -4451,11 +4598,11 @@ static struct BurnRomInfo gseekerjRomDesc[] = {
 	{ "d40_05.rom",		0x100000, 0xbe6eec8f, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
 	{ "d40_06.rom",		0x100000, 0xa822abe4, TAITO_CHARS_BYTESWAP },     //  9
 
-	{ "d40_07.rom",		0x020000, 0x7e9b26c2, TAITO_68KROM2_BYTESWAP }, // 10 68k Code
-	{ "d40_08.rom",		0x020000, 0x9c926a28, TAITO_68KROM2_BYTESWAP }, // 11
+	{ "d40_07.rom",		0x020000, 0x7e9b26c2, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d40_08.rom",		0x020000, 0x9c926a28, TAITO_68KROM2_BYTESWAP },   // 11
 
-	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },  // 12 Ensoniq Samples
-	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },  // 13
+	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 };
 
 STD_ROM_PICK(gseekerj)
@@ -4488,11 +4635,11 @@ static struct BurnRomInfo gseekeruRomDesc[] = {
 	{ "d40_05.rom",		0x100000, 0xbe6eec8f, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
 	{ "d40_06.rom",		0x100000, 0xa822abe4, TAITO_CHARS_BYTESWAP },     //  9
 
-	{ "d40_07.rom",		0x020000, 0x7e9b26c2, TAITO_68KROM2_BYTESWAP }, // 10 68k Code
-	{ "d40_08.rom",		0x020000, 0x9c926a28, TAITO_68KROM2_BYTESWAP }, // 11
+	{ "d40_07.rom",		0x020000, 0x7e9b26c2, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d40_08.rom",		0x020000, 0x9c926a28, TAITO_68KROM2_BYTESWAP },   // 11
 
-	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },  // 12 Ensoniq Samples
-	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },  // 13
+	{ "d40_01.rom",		0x200000, 0xee312e95, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "d40_02.rom",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 };
 
 STD_ROM_PICK(gseekeru)
@@ -4538,45 +4685,16 @@ static struct BurnRomInfo commandwRomDesc[] = {
 STD_ROM_PICK(commandw)
 STD_ROM_FN(commandw)
 
-static INT32 commandwRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xc00000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xe00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 16, 2)) return 1;
-
-	tile_decode(0x1000000, 0x400000);
-
-	return 0;
-}
-
 static INT32 commandwInit()
 {
-	return DrvInit(commandwRomCallback, f3_24bit_palette_update, 1, COMMANDW, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, COMMANDW, 1);
 }
 
 struct BurnDriver BurnDrvCommandw = {
 	"commandw", NULL, NULL, NULL, "1992",
 	"Command War - Super Special Battle & War Game (Ver 0.0J) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, commandwRomInfo, commandwRomName, NULL, NULL, F3InputInfo, NULL,
 	commandwInit, DrvExit, DrvFrame, DrvDraw224B, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -4602,8 +4720,8 @@ static struct BurnRomInfo cupfinalRomDesc[] = {
 	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
 	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
-	{ "d49-17.32",	0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
-	{ "d49-18.33",	0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
+	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
+	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
 	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
 	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
@@ -4612,38 +4730,9 @@ static struct BurnRomInfo cupfinalRomDesc[] = {
 STD_ROM_PICK(cupfinal)
 STD_ROM_FN(cupfinal)
 
-static INT32 cupfinalRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x900000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xb00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x180000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 16, 2)) return 1;
-
-	tile_decode(0x1000000, 0x200000);
-
-	return 0;
-}
-
 static INT32 cupfinalInit()
 {
-	return DrvInit(cupfinalRomCallback, f3_24bit_palette_update, 0, SCFINALS, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, SCFINALS, 1);
 }
 
 struct BurnDriver BurnDrvCupfinal = {
@@ -4676,8 +4765,8 @@ static struct BurnRomInfo hthero93RomDesc[] = {
 	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
 	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
-	{ "d49-17.32",	0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
-	{ "d49-18.33",	0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
+	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
+	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
 	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
 	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
@@ -4692,6 +4781,56 @@ struct BurnDriver BurnDrvHthero93 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero93RomInfo, hthero93RomName, NULL, NULL, F3InputInfo, NULL,
+	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
+// Hat Trick Hero '93 (Ver 1.0A 1993/02/28)
+
+static struct BurnRomInfo hthero93uRomDesc[] = {
+	{ "d49-13.24",		0x020000, 0xccee5e73, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d49-14.26",		0x020000, 0x2323bf2e, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d49-16.37",		0x020000, 0x8e73f739, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d49-19.35",		0x020000, 0x699b09ba, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+
+	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+
+	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
+	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
+
+	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+
+	{ "D49-12.IC60.bin",	0x000104, 0xaa4cff37, 0 | BRF_OPT },              // 17 palsgame
+	{ "D49-21.IC17.bin",	0x000104, 0x821775d4, 0 | BRF_OPT },              // 18
+
+	{ "D29-11.IC15.bin",	0x000157, 0x5dd5c8f9, 0 | BRF_OPT },              // 19 palsbase
+	{ "D29-12.IC12.bin",	0x000144, 0xc872f1fd, 0 | BRF_OPT },              // 20
+	{ "D29-13.IC14.bin",	0x000157, 0x74d61d36, 0 | BRF_OPT },              // 21
+	{ "D29-14.IC28.bin",	0x000157, 0x25d205d5, 0 | BRF_OPT },              // 22
+	{ "D29-15.IC29.bin",	0x000157, 0x692eb582, 0 | BRF_OPT },              // 23
+	{ "D29-16.IC7.bin",	0x000117, 0x11875f52, 0 | BRF_OPT },              // 24
+	{ "D29-17.IC16.bin",	0x000117, 0xa0f74b51, 0 | BRF_OPT },              // 25
+};
+
+STD_ROM_PICK(hthero93u)
+STD_ROM_FN(hthero93u)
+
+struct BurnDriver BurnDrvHthero93u = {
+	"hthero93u", "cupfinal", NULL, NULL, "1993",
+	"Hat Trick Hero '93 (Ver 1.0A 1993/02/28)\0", NULL, "Taito Corporation", "F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
+	NULL, hthero93uRomInfo, hthero93uRomName, NULL, NULL, F3InputInfo, NULL,
 	cupfinalInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
@@ -4726,38 +4865,9 @@ static struct BurnRomInfo trstarRomDesc[] = {
 STD_ROM_PICK(trstar)
 STD_ROM_FN(trstar)
 
-static INT32 trstarRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x900000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xb00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 16, 2)) return 1;
-
-	tile_decode(0x1000000, 0x400000);
-
-	return 0;
-}
-
 static INT32 trstarInit()
 {
-	return DrvInit(trstarRomCallback, f3_24bit_palette_update, 1, TRSTAR, 0, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, TRSTAR, 0);
 }
 
 struct BurnDriver BurnDrvTrstar = {
@@ -4997,35 +5107,9 @@ static struct BurnRomInfo gunlockRomDesc[] = {
 STD_ROM_PICK(gunlock)
 STD_ROM_FN(gunlock)
 
-static INT32 gunlockRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
-
 static INT32 gunlockInit()
 {
-	return DrvInit(gunlockRomCallback, f3_24bit_palette_update, 1, GUNLOCK, 2, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, GUNLOCK, 2);
 }
 
 struct BurnDriver BurnDrvGunlock = {
@@ -5113,13 +5197,13 @@ struct BurnDriver BurnDrvRayforcej = {
 };
 
 
-// Super Cup Finals (Ver 2.1O 1993/11/19)
+// Super Cup Finals (Ver 2.2O 1994/01/13)
 
 static struct BurnRomInfo scfinalsRomDesc[] = {
-	{ "d68-09.ic40",		0x040000, 0x28193b3f, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "d68-10.ic38",		0x040000, 0x67481bad, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "d68-11.ic36",		0x040000, 0xd456c124, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "d68-12.ic34",		0x040000, 0xdec41397, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "d68-09.ic40",	0x040000, 0x28193b3f, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d68-10.ic38",	0x040000, 0x67481bad, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d68-11.ic36",	0x040000, 0xd456c124, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d68-12.ic34",	0x040000, 0xdec41397, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
 	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
@@ -5132,13 +5216,13 @@ static struct BurnRomInfo scfinalsRomDesc[] = {
 	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
 	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
-	{ "d49-17.ic5",	0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
-	{ "d49-18.ic6",	0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
+	{ "d49-17.ic5",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
+	{ "d49-18.ic6",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
 	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
 	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 
-	{ "scfinals.nv",		0x000080, 0xf25945fc, TAITO_DEFAULT_EEPROM }, // 17 eeprom
+	{ "scfinals.nv",	0x000080, 0xf25945fc, TAITO_DEFAULT_EEPROM },     // 17 eeprom
 
 };
 
@@ -5147,32 +5231,6 @@ STD_ROM_FN(scfinals)
 
 static INT32 scfinalsCallback()
 {
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x900000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xb00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x180000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 16, 2)) return 1;
-
-	if (BurnLoadRom(TaitoDefaultEEProm + 0x000000, 17, 1)) return 1;
-
-	tile_decode(0x1000000, 0x200000);
-
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
 	ROM[0x5af0/4] = 0x4e754e71;
@@ -5183,15 +5241,57 @@ static INT32 scfinalsCallback()
 
 static INT32 scfinalsInit()
 {
-	return DrvInit(scfinalsCallback, f3_24bit_palette_update, 0, SCFINALS, 1, 0x800000);
+	return DrvInit(scfinalsCallback, f3_24bit_palette_update, 0, SCFINALS, 1);
 }
 
 struct BurnDriver BurnDrvScfinals = {
 	"scfinals", NULL, NULL, NULL, "1993",
+	"Super Cup Finals (Ver 2.2O 1994/01/13)\0", NULL, "Taito Corporation Japan", "F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
+	NULL, scfinalsRomInfo, scfinalsRomName, NULL, NULL, F3InputInfo, NULL,
+	scfinalsInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
+// Super Cup Finals (Ver 2.1O 1993/11/19)
+
+static struct BurnRomInfo scfinalsoRomDesc[] = {
+	{ "d68-01.20",		0x040000, 0xcb951856, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d68-02.19",		0x040000, 0x4f94413a, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d68-04.18",		0x040000, 0x4a4e4972, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d68-03.17",		0x040000, 0xa40be699, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+
+	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+
+	{ "d49-17.ic5",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
+	{ "d49-18.ic6",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
+
+	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+
+	{ "scfinals.nv",	0x000080, 0xf25945fc, TAITO_DEFAULT_EEPROM },     // 17 eeprom
+};
+
+STD_ROM_PICK(scfinalso)
+STD_ROM_FN(scfinalso)
+
+struct BurnDriver BurnDrvScfinalso = {
+	"scfinalso", "scfinals", NULL, NULL, "1993",
 	"Super Cup Finals (Ver 2.1O 1993/11/19)\0", NULL, "Taito Corporation Japan", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
-	NULL, scfinalsRomInfo, scfinalsRomName, NULL, NULL, F3InputInfo, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
+	NULL, scfinalsoRomInfo, scfinalsoRomName, NULL, NULL, F3InputInfo, NULL,
 	scfinalsInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
@@ -5226,38 +5326,9 @@ static struct BurnRomInfo lightbrRomDesc[] = {
 STD_ROM_PICK(lightbr)
 STD_ROM_FN(lightbr)
 
-static INT32 lightbrRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x900000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xb00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 16, 2)) return 1;
-
-	tile_decode(0xc00000, 0x800000);
-
-	return 0;
-}
-
 static INT32 lightbrInit()
 {
-	return DrvInit(lightbrRomCallback, f3_24bit_palette_update, 1, LIGHTBR, 2, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, LIGHTBR, 2);
 }
 
 struct BurnDriver BurnDrvLightbr = {
@@ -5495,40 +5566,16 @@ static struct BurnRomInfo recalhRomDesc[] = {
 STD_ROM_PICK(recalh)
 STD_ROM_FN(recalh)
 
-static INT32 recalhRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000,  9, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 11, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
-
 static INT32 recalhInit()
 {
-	return DrvInit(recalhRomCallback, f3_21bit_typeB_palette_update, 1, RECALH, 1, 0x800000);
+	return DrvInit(NULL, f3_21bit_typeB_palette_update, 1, RECALH, 1);
 }
 
 struct BurnDriver BurnDrvRecalh = {
 	"recalh", NULL, NULL, NULL, "1994",
 	"Recalhorn (Ver 1.42J 1994/5/11) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, recalhRomInfo, recalhRomName, NULL, NULL, F3InputInfo, NULL,
 	recalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 232, 4, 3
@@ -5574,48 +5621,9 @@ static struct BurnRomInfo kaiserknRomDesc[] = {
 STD_ROM_PICK(kaiserkn)
 STD_ROM_FN(kaiserkn)
 
-static INT32 kaiserknRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA       + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x800000,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x800001,  9, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0xc00000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0xc00001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x1380000, 12, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x1580000, 13, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x1780000, 14, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA       + 0x1980000, 15, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 16, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 17, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x400000, 18, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x400001, 19, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x900000, 20, 1)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0xb00000, 21, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 22, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 23, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 24, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 25, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xe00001, 26, 2)) return 1;
-
-	tile_decode(0x1a00000, 0xc00000);
-
-	return 0;
-}
-
 static INT32 kaiserknInit()
 {
-	return DrvInit(kaiserknRomCallback, f3_24bit_palette_update, 0, KAISERKN, 2, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, KAISERKN, 2);
 }
 
 struct BurnDriver BurnDrvKaiserkn = {
@@ -5772,7 +5780,7 @@ struct BurnDriver BurnDrvDankuga = {
 	"dankuga", "kaiserkn", NULL, NULL, "1994",
 	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, dankugaRomInfo, dankugaRomName, NULL, NULL, KnInputInfo, NULL,
 	kaiserknInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -5805,35 +5813,9 @@ static struct BurnRomInfo dariusgRomDesc[] = {
 STD_ROM_PICK(dariusg)
 STD_ROM_FN(dariusg)
 
-static INT32 dariusgRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x600000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 dariusgInit()
 {
-	return DrvInit(dariusgRomCallback, f3_24bit_palette_update, 0, DARIUSG, 2, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, DARIUSG, 1);
 }
 
 struct BurnDriver BurnDrvDariusg = {
@@ -5958,9 +5940,51 @@ struct BurnDriver BurnDrvDariusgx = {
 };
 
 
-// Bubble Bobble II (Ver 2.5O 1994/10/05)
+// Bubble Bobble II (Ver 2.6O 1994/12/16)
 
 static struct BurnRomInfo bublbob2RomDesc[] = {
+	{ "d90-21.ic20",	0x040000, 0x2a2b771a, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d90-20.ic19",	0x040000, 0xf01f63b6, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d90-19.ic18",	0x040000, 0x86eef19a, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d90-18.ic17",	0x040000, 0xf5b8cdce, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "d90-03",		0x100000, 0x6fa894a1, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d90-02",		0x100000, 0x5ab04ca2, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d90-01",		0x100000, 0x8aedb9e5, TAITO_SPRITESA },           //  6
+
+	{ "d90-08",		0x100000, 0x25a4fb2c, TAITO_CHARS_BYTESWAP },     //  7 Layer Tiles
+	{ "d90-07",		0x100000, 0xb436b42d, TAITO_CHARS_BYTESWAP },     //  8
+	{ "d90-06",		0x100000, 0x166a72b8, TAITO_CHARS },              //  9
+
+	{ "d90-13",		0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d90-14",		0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
+
+	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
+};
+
+STD_ROM_PICK(bublbob2)
+STD_ROM_FN(bublbob2)
+
+static INT32 bublbob2Init()
+{
+	return DrvInit(NULL, f3_24bit_palette_update, 1, BUBSYMPH, 1);
+}
+
+struct BurnDriver BurnDrvBublbob2 = {
+	"bublbob2", NULL, NULL, NULL, "1994",
+	"Bubble Bobble II (Ver 2.6O 1994/12/16)\0", NULL, "Taito Corporation Japan", "F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bublbob2RomInfo, bublbob2RomName, NULL, NULL, F3InputInfo, NULL,
+	bublbob2Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
+// Bubble Bobble II (Ver 2.5O 1994/10/05)
+
+static struct BurnRomInfo bublbob2oRomDesc[] = {
 	{ "d90-12",		0x040000, 0x9e523996, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
 	{ "d90-11",		0x040000, 0xedfdbb7f, TAITO_68KROM1_BYTESWAP32 }, //  1
 	{ "d90-10",		0x040000, 0x8e957d3d, TAITO_68KROM1_BYTESWAP32 }, //  2
@@ -5981,46 +6005,15 @@ static struct BurnRomInfo bublbob2RomDesc[] = {
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
 };
 
-STD_ROM_PICK(bublbob2)
-STD_ROM_FN(bublbob2)
+STD_ROM_PICK(bublbob2o)
+STD_ROM_FN(bublbob2o)
 
-static INT32 bublbob2RomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
-
-static INT32 bublbob2Init()
-{
-	return DrvInit(bublbob2RomCallback, f3_24bit_palette_update, 1, BUBSYMPH, 1, 0x800000);
-}
-
-struct BurnDriver BurnDrvBublbob2 = {
-	"bublbob2", NULL, NULL, NULL, "1994",
+struct BurnDriver BurnDrvBublbob2o = {
+	"bublbob2o", "bublbob2", NULL, NULL, "1994",
 	"Bubble Bobble II (Ver 2.5O 1994/10/05)\0", NULL, "Taito Corporation Japan", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, bublbob2RomInfo, bublbob2RomName, NULL, NULL, F3InputInfo, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bublbob2oRomInfo, bublbob2oRomName, NULL, NULL, F3InputInfo, NULL,
 	bublbob2Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
@@ -6085,11 +6078,11 @@ static struct BurnRomInfo bubsymphjRomDesc[] = {
 	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 }, // 14 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 }, // 15
-	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, 6 }, // 16
-	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, 6 }, // 17
-	{ "palce16v8q-d77-14.bin",	0x000117, 0x7427e777, 6 }, // 18
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, BRF_OPT }, // 14 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, BRF_OPT }, // 15
+	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, BRF_OPT }, // 16
+	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, BRF_OPT }, // 17
+	{ "palce16v8q-d77-14.bin",	0x000117, 0x7427e777, BRF_OPT }, // 18
 };
 
 STD_ROM_PICK(bubsymphj)
@@ -6102,6 +6095,67 @@ struct BurnDriver BurnDrvBubsymphj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubsymphjRomInfo, bubsymphjRomName, NULL, NULL, F3InputInfo, NULL,
 	bublbob2Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
+// Bubble Bobble II (Ver 0.0J 1993/12/13, prototype)
+
+static struct BurnRomInfo bublbob2pRomDesc[] = {
+	{ "soft-3-8c9b.ic60",		0x40000, 0x15d0594e, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "soft-2-0587.ic61",		0x40000, 0xd1a5231f, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "soft-1-9a9c.ic62",		0x40000, 0xc11a4d26, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "soft-0-a523.ic63",		0x40000, 0x58131f9e, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "cq80-obj-0l-c166.ic8",	0x80000, 0x9bff223b, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "cq80-obj-0m-24f4.ic30",	0x80000, 0xee71f643, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "cq80-obj-0h-990d.ic32",	0x80000, 0x4d3a78e0, TAITO_SPRITESA },           //  6
+
+	{ "cq80-scr0-5ba4.ic7",		0x80000, 0x044dc38b, TAITO_CHARS_BYTESWAP32 },   //  7 Layer Tiles
+	{ "cq80-scr2-cc11.ic5",		0x80000, 0xb81aa2c7, TAITO_CHARS_BYTESWAP32 },   //  8
+	{ "cq80-scr1-a5f3.ic6",		0x80000, 0x3cf3a3ba, TAITO_CHARS_BYTESWAP32 },   //  9
+	{ "cq80-scr3-4266.ic4",		0x80000, 0xc114583f, TAITO_CHARS_BYTESWAP32 },   // 10
+	{ "cq80-scr4-7fe1.ic3",		0x80000, 0x2bba1728, TAITO_CHARS  },             // 11
+
+	{ "snd-h-348f.ic66",		0x20000, 0xf66e60f2, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
+	{ "snd-l-4ec1.ic65",		0x20000, 0xd302d8bc, TAITO_68KROM2_BYTESWAP },   // 13
+
+	{ "cq80-snd-data0-7b5f.ic43",	0x80000, 0xbf8f26d3, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
+	{ "cq80-snd-data1-933b.ic44",	0x80000, 0x62b00475, TAITO_ES5505_BYTESWAP },    // 15
+	{ "cq80-snd3-std5-3a9c.ic10",	0x80000, 0x26312451, TAITO_ES5505_BYTESWAP },    // 16
+	{ "cq80-snd2-std6-a148.ic11",	0x80000, 0x2edaa9dc, TAITO_ES5505_BYTESWAP },    // 17
+
+	{ "bb2proto-ic12.bin",		0x002e5, 0xacf20b88, 0 | BRF_OPT },              // 18 pals
+	{ "bb2proto-ic24.bin",		0x002e5, 0xd15a4987, 0 | BRF_OPT },              // 19
+	{ "pal16l8b.ic57.bin",		0x00104, 0x74b4d8be, 0 | BRF_OPT },              // 20
+	{ "pal16l8b.ic58.bin",		0x00104, 0x17e2c9b8, 0 | BRF_OPT },              // 21
+	{ "pal16l8b.ic59.bin",		0x00104, 0xdc0db200, 0 | BRF_OPT },              // 22
+	{ "pal16l8b.ic64.bin",		0x00104, 0x3aed3d98, 0 | BRF_OPT },              // 23
+};
+
+STD_ROM_PICK(bublbob2p)
+STD_ROM_FN(bublbob2p)
+
+static INT32 bublbob2pRomCallback()
+{
+	memcpy (TaitoES5505Rom + 0x600000, TaitoES5505Rom + 0x200000, 0x200000);
+	memset (TaitoES5505Rom + 0x200000, 0, 0x200000);
+
+	return 0;
+}
+
+static INT32 bublbob2pInit()
+{
+	return DrvInit(bublbob2pRomCallback, f3_24bit_palette_update, 1, BUBSYMPH, 1);
+}
+
+struct BurnDriver BurnDrvBublbob2p = {
+	"bublbob2p", "bublbob2", NULL, NULL, "1994",
+	"Bubble Bobble II (Ver 0.0J 1993/12/13, prototype)\0", NULL, "Taito Corporation Japan", "F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bublbob2pRomInfo, bublbob2pRomName, NULL, NULL, F3InputInfo, NULL,
+	bublbob2pInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 
@@ -6126,13 +6180,13 @@ static struct BurnRomInfo bubsymphbRomDesc[] = {
 	{ "bsb_d12b.bin",	0x80000, 0xcb2e2abb, TAITO_CHARS },              // 12
 	{ "bsb_d11b.bin",	0x80000, 0xd0607829, TAITO_CHARS },              // 13
 
-	{ "bsb_d11.bin",	0x80000, 0x26bdc617, TAITO_MSM6295 },           // 14 oki
+	{ "bsb_d11.bin",	0x80000, 0x26bdc617, TAITO_MSM6295 },            // 14 oki
 };
 
 STD_ROM_PICK(bubsymphb)
 STD_ROM_FN(bubsymphb)
 
-struct BurnDriver BurnDrvBubsymphb = {
+struct BurnDriverD BurnDrvBubsymphb = {
 	"bubsymphb", "bublbob2", NULL, NULL, "1994",
 	"Bubble Symphony (bootleg with OKI6295)\0", NULL, "bootleg", "F3 System",
 	NULL, NULL, NULL, NULL,
@@ -6206,35 +6260,9 @@ static struct BurnRomInfo spcinvdjRomDesc[] = {
 STD_ROM_PICK(spcinvdj)
 STD_ROM_FN(spcinvdj)
 
-static INT32 spcinvdjRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000,  9, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x100001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x200001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x300001, 13, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 spcinvdjInit()
 {
-	return DrvInit(spcinvdjRomCallback, f3_12bit_palette_update, 1, SPCINVDX, 1, 0x400000);
+	return DrvInit(NULL, f3_12bit_palette_update, 1, SPCINVDX, 1);
 }
 
 struct BurnDriver BurnDrvSpcinvdj = {
@@ -6257,10 +6285,10 @@ static struct BurnRomInfo pwrgoalRomDesc[] = {
 	{ "d94-22.rom",		0x040000, 0xf672e487, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "d94-09.bin",		0x200000, 0x425e6bec, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d94-08.bin",		0x200000, 0xbd909caf, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d94-07.bin",		0x200000, 0xc8c95e49, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d94-06.bin",		0x200000, 0x0ed1df55, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d94-05.bin",		0x200000, 0x121c8542, TAITO_SPRITESA_BYTESWAP },  //  8
+	{ "d94-06.bin",		0x200000, 0x0ed1df55, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d94-08.bin",		0x200000, 0xbd909caf, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d94-05.bin",		0x200000, 0x121c8542, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d94-07.bin",		0x200000, 0xc8c95e49, TAITO_SPRITESA_BYTESWAP },  //  8
 	{ "d94-04.bin",		0x200000, 0x24958b50, TAITO_SPRITESA_BYTESWAP },  //  9
 	{ "d94-03.bin",		0x200000, 0x95e32072, TAITO_SPRITESA },           // 10
 	{ "d94-02.bin",		0x200000, 0xf460b9ac, TAITO_SPRITESA },           // 11
@@ -6280,41 +6308,9 @@ static struct BurnRomInfo pwrgoalRomDesc[] = {
 STD_ROM_PICK(pwrgoal)
 STD_ROM_FN(pwrgoal)
 
-static INT32 pwrgoalRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x800000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x800001,  9, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x1200000, 10, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x1400000, 11, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x1600000, 12, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  13, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  14, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  15, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 16, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 17, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 18, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 19, 2)) return 1;
-
-	tile_decode(0x1800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 pwrgoalInit()
 {
-	return DrvInit(pwrgoalRomCallback, f3_24bit_palette_update, 0, HTHERO95, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, HTHERO95, 1);
 }
 
 struct BurnDriver BurnDrvPwrgoal = {
@@ -6337,10 +6333,10 @@ static struct BurnRomInfo hthero95RomDesc[] = {
 	{ "d94-15.bin",		0x040000, 0x187c85ab, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "d94-09.bin",		0x200000, 0x425e6bec, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d94-08.bin",		0x200000, 0xbd909caf, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d94-07.bin",		0x200000, 0xc8c95e49, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d94-06.bin",		0x200000, 0x0ed1df55, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d94-05.bin",		0x200000, 0x121c8542, TAITO_SPRITESA_BYTESWAP },  //  8
+	{ "d94-06.bin",		0x200000, 0x0ed1df55, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d94-08.bin",		0x200000, 0xbd909caf, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d94-05.bin",		0x200000, 0x121c8542, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d94-07.bin",		0x200000, 0xc8c95e49, TAITO_SPRITESA_BYTESWAP },  //  8
 	{ "d94-04.bin",		0x200000, 0x24958b50, TAITO_SPRITESA_BYTESWAP },  //  9
 	{ "d94-03.bin",		0x200000, 0x95e32072, TAITO_SPRITESA },           // 10
 	{ "d94-02.bin",		0x200000, 0xf460b9ac, TAITO_SPRITESA },           // 11
@@ -6380,10 +6376,10 @@ static struct BurnRomInfo hthero95uRomDesc[] = {
 	{ "d94-21.bin",		0x040000, 0x8175d411, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "d94-09.bin",		0x200000, 0x425e6bec, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d94-08.bin",		0x200000, 0xbd909caf, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d94-07.bin",		0x200000, 0xc8c95e49, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d94-06.bin",		0x200000, 0x0ed1df55, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d94-05.bin",		0x200000, 0x121c8542, TAITO_SPRITESA_BYTESWAP },  //  8
+	{ "d94-06.bin",		0x200000, 0x0ed1df55, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d94-08.bin",		0x200000, 0xbd909caf, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d94-05.bin",		0x200000, 0x121c8542, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d94-07.bin",		0x200000, 0xc8c95e49, TAITO_SPRITESA_BYTESWAP },  //  8
 	{ "d94-04.bin",		0x200000, 0x24958b50, TAITO_SPRITESA_BYTESWAP },  //  9
 	{ "d94-03.bin",		0x200000, 0x95e32072, TAITO_SPRITESA },           // 10
 	{ "d94-02.bin",		0x200000, 0xf460b9ac, TAITO_SPRITESA },           // 11
@@ -6438,33 +6434,9 @@ static struct BurnRomInfo qtheaterRomDesc[] = {
 STD_ROM_PICK(qtheater)
 STD_ROM_FN(qtheater)
 
-static INT32 qtheaterRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000,  9, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 11, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 qtheaterInit()
 {
-	return DrvInit(qtheaterRomCallback, f3_24bit_palette_update, 1, QTHEATER, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, QTHEATER, 1);
 }
 
 struct BurnDriver BurnDrvQtheater = {
@@ -6500,45 +6472,19 @@ static struct BurnRomInfo spcinv95RomDesc[] = {
 	{ "e06-04",		0x200000, 0x1dac29df, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e06-05",		0x200000, 0xf370ff15, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 }, // 14 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 }, // 15
-	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, 6 }, // 16
-	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, 6 }, // 17
-	{ "palce16v8q-d77-13.bin",	0x000117, 0x66e32e73, 6 }, // 18
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, BRF_OPT }, // 14 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, BRF_OPT }, // 15
+	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, BRF_OPT }, // 16
+	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, BRF_OPT }, // 17
+	{ "palce16v8q-d77-13.bin",	0x000117, 0x66e32e73, BRF_OPT }, // 18
 };
 
 STD_ROM_PICK(spcinv95)
 STD_ROM_FN(spcinv95)
 
-static INT32 spcinv95RomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
-
 static INT32 spcinv95Init()
 {
-	return DrvInit(spcinv95RomCallback, f3_24bit_palette_update, 0, SPCINV95, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, SPCINV95, 1);
 }
 
 struct BurnDriver BurnDrvSpcinv95 = {
@@ -6574,11 +6520,11 @@ static struct BurnRomInfo spcinv95uRomDesc[] = {
 	{ "e06-04",		0x200000, 0x1dac29df, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e06-05",		0x200000, 0xf370ff15, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 }, // 14 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 }, // 15
-	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, 6 }, // 16
-	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, 6 }, // 17
-	{ "palce16v8q-d77-13.bin",	0x000117, 0x66e32e73, 6 }, // 18
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, BRF_OPT }, // 14 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, BRF_OPT }, // 15
+	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, BRF_OPT }, // 16
+	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, BRF_OPT }, // 17
+	{ "palce16v8q-d77-13.bin",	0x000117, 0x66e32e73, BRF_OPT }, // 18
 };
 
 STD_ROM_PICK(spcinv95u)
@@ -6654,47 +6600,21 @@ static struct BurnRomInfo elvactrRomDesc[] = {
 	{ "e02-04.38",		0x200000, 0xb74307af, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e02-05.39",		0x200000, 0xeb729855, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "ampal20l10a.a12",	0x0000cc, 0xe719542f, 6 }, // 14 plds
-	{ "pal20l10b.a24",	0x0000cc, 0x00000000, 6 | BRF_NODUMP }, // 15
-	{ "pal16l8b.b24",	0x000104, 0x0b73a7d1, 6 }, // 16
-	{ "pal16l8b.b57",	0x000104, 0x74b4d8be, 6 }, // 17
-	{ "pal16l8b.b58",	0x000104, 0x17e2c9b8, 6 }, // 18
-	{ "pal16l8b.b59",	0x000104, 0xdc0db200, 6 }, // 19
-	{ "pal16l8b.b64",	0x000104, 0x3aed3d98, 6 }, // 20
+	{ "ampal20l10a.a12",	0x0000cc, 0xe719542f, BRF_OPT }, // 14 plds
+	{ "pal20l10b.a24",	0x0000cc, 0x00000000, BRF_OPT | BRF_NODUMP }, // 15
+	{ "pal16l8b.b24",	0x000104, 0x0b73a7d1, BRF_OPT }, // 16
+	{ "pal16l8b.b57",	0x000104, 0x74b4d8be, BRF_OPT }, // 17
+	{ "pal16l8b.b58",	0x000104, 0x17e2c9b8, BRF_OPT }, // 18
+	{ "pal16l8b.b59",	0x000104, 0xdc0db200, BRF_OPT }, // 19
+	{ "pal16l8b.b64",	0x000104, 0x3aed3d98, BRF_OPT }, // 20
 };
 
 STD_ROM_PICK(elvactr)
 STD_ROM_FN(elvactr)
 
-static INT32 elvactrRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x600000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 elvactrInit()
 {
-	return DrvInit(elvactrRomCallback, f3_24bit_palette_update, 1, EACTION2, 2, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, EACTION2, 2);
 }
 
 struct BurnDriver BurnDrvElvactr = {
@@ -6793,10 +6713,10 @@ static struct BurnRomInfo twinqixRomDesc[] = {
 	{ "obj0-0.a08",		0x80000, 0xc6ea845c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
 	{ "obj0-1.a20",		0x80000, 0x8c12b7fb, TAITO_SPRITESA_BYTESWAP },  //  5
 
-	{ "scr0-0.b07",		0x80000, 0x9a1b9b34, TAITO_CHARS },              //  6 Layer Tiles
-	{ "scr0-1.b06",		0x80000, 0xe9bef879, TAITO_CHARS },              //  7
-	{ "scr0-2.b05",		0x80000, 0xcac6854b, TAITO_CHARS },              //  8
-	{ "scr0-3.b04",		0x80000, 0xce063034, TAITO_CHARS },              //  9
+	{ "scr0-0.b07",		0x80000, 0x9a1b9b34, TAITO_CHARS_BYTESWAP32 },   //  6 Layer Tiles
+	{ "scr0-2.b05",		0x80000, 0xcac6854b, TAITO_CHARS_BYTESWAP32 },   //  7
+	{ "scr0-1.b06",		0x80000, 0xe9bef879, TAITO_CHARS_BYTESWAP32 },   //  8
+	{ "scr0-3.b04",		0x80000, 0xce063034, TAITO_CHARS_BYTESWAP32 },   //  9
 	{ "scr0-4.b03",		0x80000, 0xd32280fe, TAITO_CHARS_BYTESWAP },     // 10
 	{ "scr0-5.b02",		0x80000, 0xfdd1a85b, TAITO_CHARS_BYTESWAP },     // 11
 
@@ -6808,18 +6728,19 @@ static struct BurnRomInfo twinqixRomDesc[] = {
 	{ "snd-14.b10",		0x80000, 0x26312451, TAITO_ES5505_BYTESWAP },    // 16
 	{ "snd-15.b11",		0x80000, 0x2edaa9dc, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal20l10a.a12",	0x0cc, 0x00000000, BRF_OPT | BRF_NODUMP },       // 18 plds
-	{ "pal20l10a.a24",	0x0cc, 0x00000000, BRF_OPT | BRF_NODUMP },       // 19
-	{ "pal16l8b.b24",	0x104, 0x0b73a7d1, BRF_OPT },                    // 20
-	{ "pal16l8b.b57",	0x104, 0x74b4d8be, BRF_OPT },                    // 21
-	{ "pal16l8b.b58",	0x104, 0x17e2c9b8, BRF_OPT },                    // 22
-	{ "pal16l8b.b59",	0x104, 0xdc0db200, BRF_OPT },                    // 23
-	{ "pal16l8b.b64",	0x104, 0x3aed3d98, BRF_OPT },                    // 24
+	{ "pal20l10a.a12",	0x0cc, 0x00000000, 0 },       		   // 18 plds
+	{ "pal20l10a.a24",	0x0cc, 0x00000000, 0 },       		   // 19
+	{ "pal16l8b.b24",	0x104, 0x0b73a7d1, 0 },                    // 20
+	{ "pal16l8b.b57",	0x104, 0x74b4d8be, 0 },                    // 21
+	{ "pal16l8b.b58",	0x104, 0x17e2c9b8, 0 },                    // 22
+	{ "pal16l8b.b59",	0x104, 0xdc0db200, 0 },                    // 23
+	{ "pal16l8b.b64",	0x104, 0x3aed3d98, 0 },                    // 24
 };
 
 STD_ROM_PICK(twinqix)
 STD_ROM_FN(twinqix)
 
+/*
 static INT32 twinqixRomCallback()
 {
 	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
@@ -6849,17 +6770,18 @@ static INT32 twinqixRomCallback()
 
 	return 0;
 }
+*/
 
 static INT32 twinqixInit()
 {
-	return DrvInit(twinqixRomCallback, f3_21bit_typeB_palette_update, 1, TWINQIX, 1, 0x400000);
+	return DrvInit(NULL/*twinqixRomCallback*/, f3_21bit_typeB_palette_update, 1, TWINQIX, 1);
 }
 
 struct BurnDriver BurnDrvTwinqix = {
 	"twinqix", NULL, NULL, NULL, "1995",
 	"Twin Qix (Ver 1.0A 1995/01/17) (Prototype)\0", NULL, "Taito America Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, twinqixRomInfo, twinqixRomName, NULL, NULL, F3InputInfo, NULL,
 	twinqixInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -6896,39 +6818,9 @@ static struct BurnRomInfo quizhuhuRomDesc[] = {
 STD_ROM_PICK(quizhuhu)
 STD_ROM_FN(quizhuhu)
 
-static INT32 quizhuhuRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x900000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xb00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 16, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xc00001, 17, 2)) return 1;
-
-	tile_decode(0xc00000, 0x400000);
-
-	return 0;
-}
-
 static INT32 quizhuhuInit()
 {
-	return DrvInit(quizhuhuRomCallback, f3_24bit_palette_update, 1, QUIZHUHU, 1, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, QUIZHUHU, 1);
 }
 
 struct BurnDriver BurnDrvQuizhuhu = {
@@ -6963,54 +6855,30 @@ static struct BurnRomInfo pbobble2RomDesc[] = {
 	{ "e10-04.rom",		0x200000, 0x5c0862a6, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
 	{ "e10-03.rom",		0x200000, 0x46d68ac8, TAITO_ES5505_BYTESWAP },    // 12
 
-	{ "e10-21.bin",		0x000117, 0x458499b7, 6 }, // 13 extra
+	{ "e10-21.bin",		0x000117, 0x458499b7, BRF_OPT }, // 13 extra
 };
 
 STD_ROM_PICK(pbobble2)
 STD_ROM_FN(pbobble2)
 
-static INT32 pbobble2RomCallback()
+static INT32 pbobble2Init()
 {
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
+	return DrvInit(NULL, f3_24bit_palette_update, 0, PBOBBLE2, 1);
+}
 
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
+static INT32 pbobble23OCallback()
+{
+	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  8, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  9, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 10, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 12, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
+	ROM[0x40090/4] = 0x4e71815c;
+	ROM[0x40094/4] = 0x4e714e71;
 
 	return 0;
 }
 
-static INT32 pbobble2Init()
-{
-	return DrvInit(pbobble2RomCallback, f3_24bit_palette_update, 0, PBOBBLE2, 1, 0x800000);
-}
-
 static INT32 pbobble23OInit()
 {
-	INT32 rc = DrvInit(pbobble2RomCallback, f3_24bit_palette_update, 0, PBOBBLE2, 1, 0x800000);
-
-	if (!rc) {
-		UINT32 *ROM = (UINT32 *)Taito68KRom1;
-
-		ROM[0x40090/4] = 0x4e71815c;
-		ROM[0x40094/4] = 0x4e714e71;
-	}
-
-	return rc;
+	return DrvInit(pbobble23OCallback, f3_24bit_palette_update, 0, PBOBBLE2, 1);
 }
 
 struct BurnDriver BurnDrvPbobble2 = {
@@ -7153,11 +7021,11 @@ static struct BurnRomInfo pbobble2xRomDesc[] = {
 	{ "e10-04.rom",		0x200000, 0x5c0862a6, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
 	{ "e10-03.rom",		0x200000, 0x46d68ac8, TAITO_ES5505_BYTESWAP },    // 12
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 }, // 13 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 }, // 14
-	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, 6 }, // 15
-	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, 6 }, // 16
-	{ "palce16v8q-d77-14.bin",	0x000117, 0x7427e777, 6 }, // 17
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, BRF_OPT }, // 13 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, BRF_OPT }, // 14
+	{ "palce16v8q-d77-11.bin",	0x000117, 0xeacc294e, BRF_OPT }, // 15
+	{ "palce16v8q-d77-12.bin",	0x000117, 0xe9920cfe, BRF_OPT }, // 16
+	{ "palce16v8q-d77-14.bin",	0x000117, 0x7427e777, BRF_OPT }, // 17
 };
 
 STD_ROM_PICK(pbobble2x)
@@ -7200,35 +7068,9 @@ static struct BurnRomInfo gekiridnRomDesc[] = {
 STD_ROM_PICK(gekiridn)
 STD_ROM_FN(gekiridn)
 
-static INT32 gekiridnRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x600000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 gekiridnInit()
 {
-	return DrvInit(gekiridnRomCallback, f3_24bit_palette_update, 0, GEKIRIDO, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, GEKIRIDO, 1);
 }
 
 struct BurnDriver BurnDrvGekiridn = {
@@ -7307,37 +7149,9 @@ static struct BurnRomInfo tcobra2RomDesc[] = {
 STD_ROM_PICK(tcobra2)
 STD_ROM_FN(tcobra2)
 
-static INT32 tcobra2RomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  9, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x400000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x400001, 11, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 13, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 14, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 15, 2)) return 1;
-
-	tile_decode(0xc00000, 0xc00000);
-
-	return 0;
-}
-
 static INT32 tcobra2Init()
 {
-	return DrvInit(tcobra2RomCallback, f3_24bit_palette_update, 0, KTIGER2, 0, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, KTIGER2, 0);
 }
 
 struct BurnDriver BurnDrvTcobra2 = {
@@ -7456,38 +7270,9 @@ static struct BurnRomInfo bubblemRomDesc[] = {
 STD_ROM_PICK(bubblem)
 STD_ROM_FN(bubblem)
 
-static INT32 bubblemRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  8, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  9, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 10, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 12, 2)) return 1;
-
-	if (BurnLoadRom(TaitoDefaultEEProm + 0x000000, 13, 1)) return 1;
-
-//	BurnByteswap(TaitoDefaultEEProm, 0x80); // ?
-
-	tile_decode(0x800000, 0x400000);
-
-	return 0;
-}
-
 static INT32 bubblemInit()
 {
-	return DrvInit(bubblemRomCallback, f3_24bit_palette_update, 1, BUBBLEM, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, BUBBLEM, 1);
 }
 
 struct BurnDriver BurnDrvBubblem = {
@@ -7563,33 +7348,9 @@ static struct BurnRomInfo cleopatrRomDesc[] = {
 STD_ROM_PICK(cleopatr)
 STD_ROM_FN(cleopatr)
 
-static INT32 cleopatrRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  8, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  9, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 10, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 11, 2)) return 1;
-
-	tile_decode(0x200000, 0x400000);
-
-	return 0;
-}
-
 static INT32 cleopatrInit()
 {
-	return DrvInit(cleopatrRomCallback, f3_21bit_typeA_palette_update, 0, CLEOPATR, 1, 0x400000);
+	return DrvInit(NULL, f3_21bit_typeA_palette_update, 0, CLEOPATR, 1);
 }
 
 struct BurnDriver BurnDrvCleopatr = {
@@ -7629,35 +7390,9 @@ static struct BurnRomInfo pbobble3RomDesc[] = {
 STD_ROM_PICK(pbobble3)
 STD_ROM_FN(pbobble3)
 
-static INT32 pbobble3RomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  8, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  9, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 10, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xc00001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
-
 static INT32 pbobble3Init()
 {
-	return DrvInit(pbobble3RomCallback, f3_24bit_palette_update, 0, PBOBBLE3, 1, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, PBOBBLE3, 1);
 }
 
 struct BurnDriver BurnDrvPbobble3 = {
@@ -7766,44 +7501,19 @@ static struct BurnRomInfo arkretrnRomDesc[] = {
 
 	{ "e36-04.38",		0x200000, 0x2250959b, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 | BRF_OPT },           // 13 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 | BRF_OPT },           // 14
-	{ "palce16v8-d77-11.bin",	0x000117, 0xeacc294e, 6 | BRF_OPT },           // 15
-	{ "palce16v8-d77-12.bin",	0x000117, 0xe9920cfe, 6 | BRF_OPT },           // 16
-	{ "palce16v8-d77-14.bin",	0x000117, 0x7427e777, 6 | BRF_OPT },           // 17
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 0 },           // 13 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 0 },           // 14
+	{ "palce16v8-d77-11.bin",	0x000117, 0xeacc294e, 0 },           // 15
+	{ "palce16v8-d77-12.bin",	0x000117, 0xe9920cfe, 0 },           // 16
+	{ "palce16v8-d77-14.bin",	0x000117, 0x7427e777, 0 },           // 17
 };
 
 STD_ROM_PICK(arkretrn)
 STD_ROM_FN(arkretrn)
 
-static INT32 arkretrnRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x0c0000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x180000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-
-	tile_decode(0x100000, 0x200000);
-
-	return 0;
-}
-
 static INT32 arkretrnInit()
 {
-	return DrvInit(arkretrnRomCallback, f3_24bit_palette_update, 1, ARKRETRN, 1, 0x400000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, ARKRETRN, 1);
 }
 
 struct BurnDriver BurnDrvArkretrn = {
@@ -7838,11 +7548,11 @@ static struct BurnRomInfo arkretrnuRomDesc[] = {
 
 	{ "e36-04.38",		0x200000, 0x2250959b, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 | BRF_OPT },           // 13 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 | BRF_OPT },           // 14
-	{ "palce16v8-d77-11.bin",	0x000117, 0xeacc294e, 6 | BRF_OPT },           // 15
-	{ "palce16v8-d77-12.bin",	0x000117, 0xe9920cfe, 6 | BRF_OPT },           // 16
-	{ "palce16v8-d77-14.bin",	0x000117, 0x7427e777, 6 | BRF_OPT },           // 17
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 0 },           // 13 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 0 },           // 14
+	{ "palce16v8-d77-11.bin",	0x000117, 0xeacc294e, 0 },           // 15
+	{ "palce16v8-d77-12.bin",	0x000117, 0xe9920cfe, 0 },           // 16
+	{ "palce16v8-d77-14.bin",	0x000117, 0x7427e777, 0 },           // 17
 };
 
 STD_ROM_PICK(arkretrnu)
@@ -7880,11 +7590,11 @@ static struct BurnRomInfo arkretrnjRomDesc[] = {
 
 	{ "e36-04.38",		0x200000, 0x2250959b, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 
-	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 6 | BRF_OPT },           // 13 plds
-	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 6 | BRF_OPT },           // 14
-	{ "palce16v8-d77-11.bin",	0x000117, 0xeacc294e, 6 | BRF_OPT },           // 15
-	{ "palce16v8-d77-12.bin",	0x000117, 0xe9920cfe, 6 | BRF_OPT },           // 16
-	{ "palce16v8-d77-14.bin",	0x000117, 0x7427e777, 6 | BRF_OPT },           // 17
+	{ "pal16l8a-d77-09.bin",	0x000104, 0xb371532b, 0 },           // 13 plds
+	{ "pal16l8a-d77-10.bin",	0x000104, 0x42f59227, 0 },           // 14
+	{ "palce16v8-d77-11.bin",	0x000117, 0xeacc294e, 0 },           // 15
+	{ "palce16v8-d77-12.bin",	0x000117, 0xe9920cfe, 0 },           // 16
+	{ "palce16v8-d77-14.bin",	0x000117, 0x7427e777, 0 },           // 17
 };
 
 STD_ROM_PICK(arkretrnj)
@@ -7925,7 +7635,7 @@ static struct BurnRomInfo kiramekiRomDesc[] = {
 
 	{ "e44-20.51",		0x080000, 0x4df7e051, TAITO_68KROM2_BYTESWAP },   // 16 68k Code
 	{ "e44-21.52",		0x080000, 0xd31b94b8, TAITO_68KROM2_BYTESWAP },   // 17
-	{ "e44-15.53",		0x200000, 0x5043b608, TAITO_68KROM2_BYTESWAP },   // 18
+	{ "e44-15.53",		0x200000, 0x5043b608, TAITO_68KROM2 },            // 18
 
 	{ "e44-07.38",		0x400000, 0xa9e28544, TAITO_ES5505_BYTESWAP },    // 19 Ensoniq Samples
 	{ "e44-08.39",		0x400000, 0x33ba3037, TAITO_ES5505_BYTESWAP },    // 20
@@ -7934,42 +7644,9 @@ static struct BurnRomInfo kiramekiRomDesc[] = {
 STD_ROM_PICK(kirameki)
 STD_ROM_FN(kirameki)
 
-static INT32 kiramekiRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x800000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x800001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x1200000, 8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x1600000, 9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x400000, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x400001, 13, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x900000, 14, 1)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0xb00000, 15, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 16, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 17, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2    + 0x100000, 18, 1)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 19, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 20, 2)) return 1;
-
-	tile_decode(0x1800000, 0xc00000);
-
-	return 0;
-}
-
 static INT32 kiramekiInit()
 {
-	return DrvInit(kiramekiRomCallback, f3_24bit_palette_update, 0, KIRAMEKI, 1, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, KIRAMEKI, 1);
 }
 
 struct BurnDriver BurnDrvKirameki = {
@@ -8009,49 +7686,19 @@ static struct BurnRomInfo puchicarRomDesc[] = {
 	{ "e46-08",		0x200000, 0xf7f96e1d, TAITO_ES5505_BYTESWAP },    // 16
 	{ "e46-09",		0x200000, 0x824135f8, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(puchicar)
 STD_ROM_FN(puchicar)
 
-static INT32 puchicarRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x400001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xc00000,  8, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0xe00000,  9, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000, 12, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 13, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 14, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 15, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 16, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xc00001, 17, 2)) return 1;
-
-	tile_decode(0x1000000, 0x400000);
-
-	return 0;
-}
-
 static INT32 puchicarInit()
 {
-	return DrvInit(puchicarRomCallback, f3_24bit_palette_update, 1, PUCHICAR, 1, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, PUCHICAR, 1);
 }
 
 struct BurnDriver BurnDrvPuchicar = {
@@ -8091,11 +7738,11 @@ static struct BurnRomInfo puchicarjRomDesc[] = {
 	{ "e46-08",		0x200000, 0xf7f96e1d, TAITO_ES5505_BYTESWAP },    // 16
 	{ "e46-09",		0x200000, 0x824135f8, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(puchicarj)
@@ -8134,45 +7781,19 @@ static struct BurnRomInfo pbobble4RomDesc[] = {
 	{ "e49-04",		0x200000, 0x09be229c, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e49-05",		0x200000, 0x5ce90ee2, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(pbobble4)
 STD_ROM_FN(pbobble4)
 
-static INT32 pbobble4RomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x300000,  8, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001,  9, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 10, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xc00001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x400000);
-
-	return 0;
-}
-
 static INT32 pbobble4Init()
 {
-	return DrvInit(pbobble4RomCallback, f3_24bit_palette_update, 0, PBOBBLE4, 1, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 0, PBOBBLE4, 1);
 }
 
 struct BurnDriver BurnDrvPbobble4 = {
@@ -8208,11 +7829,11 @@ static struct BurnRomInfo pbobble4jRomDesc[] = {
 	{ "e49-04",		0x200000, 0x09be229c, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e49-05",		0x200000, 0x5ce90ee2, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(pbobble4j)
@@ -8251,11 +7872,11 @@ static struct BurnRomInfo pbobble4uRomDesc[] = {
 	{ "e49-04",		0x200000, 0x09be229c, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e49-05",		0x200000, 0x5ce90ee2, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(pbobble4u)
@@ -8294,45 +7915,19 @@ static struct BurnRomInfo popnpopRomDesc[] = {
 	{ "e51-04.38",		0x200000, 0x66790f55, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e51-05.41",		0x200000, 0x4d08b26d, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(popnpop)
 STD_ROM_FN(popnpop)
 
-static INT32 popnpopRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x000001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 13, 2)) return 1;
-
-	tile_decode(0x400000, 0x800000);
-
-	return 0;
-}
-
 static INT32 popnpopInit()
 {
-	return DrvInit(popnpopRomCallback, f3_24bit_palette_update, 1, POPNPOP, 1, 0x800000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, POPNPOP, 1);
 }
 
 struct BurnDriver BurnDrvPopnpop = {
@@ -8368,11 +7963,11 @@ static struct BurnRomInfo popnpopjRomDesc[] = {
 	{ "e51-04.38",		0x200000, 0x66790f55, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e51-05.41",		0x200000, 0x4d08b26d, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(popnpopj)
@@ -8411,11 +8006,11 @@ static struct BurnRomInfo popnpopuRomDesc[] = {
 	{ "e51-04.38",		0x200000, 0x66790f55, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "e51-05.41",		0x200000, 0x4d08b26d, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, BRF_OPT },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, BRF_OPT },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, BRF_OPT },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, BRF_OPT | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
+	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
+	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
+	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
+	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(popnpopu)
@@ -8448,47 +8043,20 @@ static struct BurnRomInfo landmakrRomDesc[] = {
 	{ "e61-08.45",		0x200000, 0x76c98e14, TAITO_CHARS_BYTESWAP },     //  8
 	{ "e61-07.43",		0x200000, 0x4a57965d, TAITO_CHARS },              //  9
 
-	{ "e61-14.32",		0x020000, 0xb905f4a7, TAITO_68KROM2_BYTESWAP },  // 10 68k Code
-	{ "e61-15.33",		0x020000, 0x87909869, TAITO_68KROM2_BYTESWAP },  // 11
+	{ "e61-14.32",		0x020000, 0xb905f4a7, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "e61-15.33",		0x020000, 0x87909869, TAITO_68KROM2_BYTESWAP },   // 11
 
-	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },   // 12 Ensoniq Samples
-	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },   // 13
-	{ "e61-06.40",		0x200000, 0x2e717bfe, TAITO_ES5505_BYTESWAP },   // 14
+	{ "e61-04.38",		0x200000, 0xc27aec0c, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
+	{ "e61-05.39",		0x200000, 0x83920d9d, TAITO_ES5505_BYTESWAP },    // 13
+	{ "e61-06.40",		0x200000, 0x2e717bfe, TAITO_ES5505_BYTESWAP },    // 14
 };
 
 STD_ROM_PICK(landmakr)
 STD_ROM_FN(landmakr)
 
-static INT32 landmakrRomCallback()
-{
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x600000,  6, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000,  9, 1)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 10, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 11, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 12, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 13, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xc00001, 14, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
-	return 0;
-}
-
 static INT32 landmakrInit()
 {
-	return DrvInit(landmakrRomCallback, f3_24bit_palette_update, 1, LANDMAKR, 1, 0x1000000);
+	return DrvInit(NULL, f3_24bit_palette_update, 1, LANDMAKR, 1);
 }
 
 struct BurnDriver BurnDrvLandmakr = {
@@ -8511,26 +8079,26 @@ static struct BurnRomInfo landmakrpRomDesc[] = {
 	{ "mpro-0.63",		0x80000, 0xbc71dd2f, TAITO_68KROM1_BYTESWAP32 }, //  3
 
 	{ "obj0-0.8",		0x80000, 0x4b862c1b, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "obj1-0.7",		0x80000, 0x90502355, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "obj2-0.6",		0x80000, 0x3bffe4b2, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "obj3-0.5",		0x80000, 0x3a0e1479, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "obj0-1.20",		0x80000, 0x1dc6e1ae, TAITO_SPRITESA_BYTESWAP },  //  8
-	{ "obj1-1.19",		0x80000, 0xa24edb24, TAITO_SPRITESA_BYTESWAP },  //  9
-	{ "obj2-1.18",		0x80000, 0x1b2a87f3, TAITO_SPRITESA_BYTESWAP },  // 10
+	{ "obj0-1.20",		0x80000, 0x1dc6e1ae, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "obj1-0.7",		0x80000, 0x90502355, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "obj1-1.19",		0x80000, 0xa24edb24, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "obj2-0.6",		0x80000, 0x3bffe4b2, TAITO_SPRITESA_BYTESWAP },  //  8
+	{ "obj2-1.18",		0x80000, 0x1b2a87f3, TAITO_SPRITESA_BYTESWAP },  //  9
+	{ "obj3-0.5",		0x80000, 0x3a0e1479, TAITO_SPRITESA_BYTESWAP },  // 10
 	{ "obj3-1.17",		0x80000, 0xc7e91180, TAITO_SPRITESA_BYTESWAP },  // 11
-	{ "obj0-2.32",		0x80000, 0x94cc01d0, TAITO_SPRITESA_BYTESWAP },  // 12
-	{ "obj1-2.31",		0x80000, 0xc2757722, TAITO_SPRITESA_BYTESWAP },  // 13
-	{ "obj2-2.30",		0x80000, 0x934556ff, TAITO_SPRITESA_BYTESWAP },  // 14
-	{ "obj3-2.29",		0x80000, 0x97f0f777, TAITO_SPRITESA_BYTESWAP },  // 15
+	{ "obj0-2.32",		0x80000, 0x94cc01d0, TAITO_SPRITESA },           // 12
+	{ "obj1-2.31",		0x80000, 0xc2757722, TAITO_SPRITESA },           // 13
+	{ "obj2-2.30",		0x80000, 0x934556ff, TAITO_SPRITESA },           // 14
+	{ "obj3-2.29",		0x80000, 0x97f0f777, TAITO_SPRITESA },           // 15
 
-	{ "scr0-0.7",		0x80000, 0xda6ba562, TAITO_CHARS_BYTESWAP },     // 16 Layer Tiles
-	{ "scr0-1.6",		0x80000, 0x8c201d27, TAITO_CHARS_BYTESWAP },     // 17
-	{ "scr0-2.5",		0x80000, 0x36756b9c, TAITO_CHARS_BYTESWAP },     // 18
-	{ "scr0-3.4",		0x80000, 0x4e0274f3, TAITO_CHARS_BYTESWAP },     // 19
-	{ "scr1-0.19",		0x80000, 0x2689f716, TAITO_CHARS_BYTESWAP },     // 20
-	{ "scr1-1.18",		0x80000, 0xf3086949, TAITO_CHARS_BYTESWAP },     // 21
-	{ "scr1-2.17",		0x80000, 0x7841468a, TAITO_CHARS_BYTESWAP },     // 22
-	{ "scr1-3.16",		0x80000, 0x926ad229, TAITO_CHARS_BYTESWAP },     // 23
+	{ "scr0-0.7",		0x80000, 0xda6ba562, TAITO_CHARS_BYTESWAP32 },   // 16 Layer Tiles
+	{ "scr0-2.5",		0x80000, 0x36756b9c, TAITO_CHARS_BYTESWAP32 },   // 17
+	{ "scr0-1.6",		0x80000, 0x8c201d27, TAITO_CHARS_BYTESWAP32 },   // 18
+	{ "scr0-3.4",		0x80000, 0x4e0274f3, TAITO_CHARS_BYTESWAP32 },   // 19
+	{ "scr1-0.19",		0x80000, 0x2689f716, TAITO_CHARS_BYTESWAP32 },   // 20
+	{ "scr1-2.17",		0x80000, 0x7841468a, TAITO_CHARS_BYTESWAP32 },   // 21
+	{ "scr1-1.18",		0x80000, 0xf3086949, TAITO_CHARS_BYTESWAP32 },   // 22
+	{ "scr1-3.16",		0x80000, 0x926ad229, TAITO_CHARS_BYTESWAP32 },   // 23
 	{ "scr0-4.3",		0x80000, 0x5b3cf564, TAITO_CHARS_BYTESWAP },     // 24
 	{ "scr0-5.2",		0x80000, 0x8e1ea0fe, TAITO_CHARS_BYTESWAP },     // 25
 	{ "scr1-4.15",		0x80000, 0x783b6d10, TAITO_CHARS_BYTESWAP },     // 26
@@ -8539,18 +8107,18 @@ static struct BurnRomInfo landmakrpRomDesc[] = {
 	{ "spro-1.66",		0x40000, 0x18961bbb, TAITO_68KROM2_BYTESWAP },   // 28 68k Code
 	{ "spro-0.65",		0x40000, 0x2c64557a, TAITO_68KROM2_BYTESWAP },   // 29
 
-	{ "snd-0.43",		0x80000, 0x0e5ef5c8, TAITO_ES5505 },             // 30 Ensoniq Samples
-	{ "snd-1.44",		0x80000, 0x2998fd65, TAITO_ES5505 },             // 31
-	{ "snd-2.45",		0x80000, 0xda7477ad, TAITO_ES5505 },             // 32
-	{ "snd-3.46",		0x80000, 0x141670b9, TAITO_ES5505 },             // 33
-	{ "snd-4.32",		0x80000, 0xe9dc18f6, TAITO_ES5505 },             // 34
-	{ "snd-5.33",		0x80000, 0x8af91ca8, TAITO_ES5505 },             // 35
-	{ "snd-6.34",		0x80000, 0x6f520b82, TAITO_ES5505 },             // 36
-	{ "snd-7.35",		0x80000, 0x69410f0f, TAITO_ES5505 },             // 37
-	{ "snd-8.20",		0x80000, 0xd98c275e, TAITO_ES5505 },             // 38
-	{ "snd-9.21",		0x80000, 0x82a76cfc, TAITO_ES5505 },             // 39
-	{ "snd-10.22",		0x80000, 0x0345f585, TAITO_ES5505 },             // 40
-	{ "snd-11.23",		0x80000, 0x4caf571a, TAITO_ES5505 },             // 41
+	{ "snd-0.43",		0x80000, 0x0e5ef5c8, TAITO_ES5505_BYTESWAP },    // 30 Ensoniq Samples
+	{ "snd-1.44",		0x80000, 0x2998fd65, TAITO_ES5505_BYTESWAP },    // 31
+	{ "snd-2.45",		0x80000, 0xda7477ad, TAITO_ES5505_BYTESWAP },    // 32
+	{ "snd-3.46",		0x80000, 0x141670b9, TAITO_ES5505_BYTESWAP },    // 33
+	{ "snd-4.32",		0x80000, 0xe9dc18f6, TAITO_ES5505_BYTESWAP },    // 34
+	{ "snd-5.33",		0x80000, 0x8af91ca8, TAITO_ES5505_BYTESWAP },    // 35
+	{ "snd-6.34",		0x80000, 0x6f520b82, TAITO_ES5505_BYTESWAP },    // 36
+	{ "snd-7.35",		0x80000, 0x69410f0f, TAITO_ES5505_BYTESWAP },    // 37
+	{ "snd-8.20",		0x80000, 0xd98c275e, TAITO_ES5505_BYTESWAP },    // 38
+	{ "snd-9.21",		0x80000, 0x82a76cfc, TAITO_ES5505_BYTESWAP },    // 39
+	{ "snd-10.22",		0x80000, 0x0345f585, TAITO_ES5505_BYTESWAP },    // 40
+	{ "snd-11.23",		0x80000, 0x4caf571a, TAITO_ES5505_BYTESWAP },    // 41
 };
 
 STD_ROM_PICK(landmakrp)
@@ -8558,55 +8126,6 @@ STD_ROM_FN(landmakrp)
 
 static INT32 landmakrpRomCallback()
 {
-	if (BurnLoadRom(Taito68KRom1	+ 0x000001,  0, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000000,  1, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000003,  2, 4)) return 1;
-	if (BurnLoadRom(Taito68KRom1	+ 0x000002,  3, 4)) return 1;
-
-	if (BurnLoadRom(TaitoSpritesA   + 0x000000,  4, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x100000,  5, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x200000,  6, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300000,  7, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x000001,  8, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x100001,  9, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x200001, 10, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x300001, 11, 2)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x600000, 12, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x680000, 13, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x700000, 14, 1)) return 1;
-	if (BurnLoadRom(TaitoSpritesA   + 0x780000, 15, 1)) return 1;
-
-	if (BurnLoadRom(TaitoChars      + 0x000000, 16, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000002, 17, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000001, 18, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x000003, 19, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x200000, 20, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x200002, 21, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x200001, 22, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x200003, 23, 4)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600000, 24, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x600001, 25, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x700000, 26, 2)) return 1;
-	if (BurnLoadRom(TaitoChars      + 0x700001, 27, 2)) return 1;
-
-	if (BurnLoadRom(Taito68KRom2	+ 0x000001, 28, 2)) return 1;
-	if (BurnLoadRom(Taito68KRom2	+ 0x000000, 29, 2)) return 1;
-
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x400001, 30, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x500001, 31, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x600001, 32, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x700001, 33, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x800001, 34, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0x900001, 35, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xa00001, 36, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xb00001, 37, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xc00001, 38, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xd00001, 39, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xe00001, 40, 2)) return 1;
-	if (BurnLoadRom(TaitoES5505Rom	+ 0xf00001, 41, 2)) return 1;
-
-	tile_decode(0x800000, 0x800000);
-
 	UINT32 *ROM = (UINT32 *)Taito68KRom1;
 
 	ROM[0x1ffff8 / 4] = 0xffffffff;
@@ -8617,15 +8136,15 @@ static INT32 landmakrpRomCallback()
 
 static INT32 landmakrpInit()
 {
-	return DrvInit(landmakrpRomCallback, f3_24bit_palette_update, 1, LANDMAKR, 1, 0x1000000);
+	return DrvInit(landmakrpRomCallback, f3_24bit_palette_update, 1, LANDMAKR, 1);
 }
 
 struct BurnDriver BurnDrvLandmakrp = {
 	"landmakrp", "landmakr", NULL, NULL, "1998",
 	"Land Maker (Ver 2.02O 1998/06/02) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, landmakrpRomInfo, landmakrpRomName, NULL, NULL, F3InputInfo, NULL,
-	landmakrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	landmakrpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 232, 4, 3
 };

@@ -36,11 +36,14 @@ typedef struct
 	
 	UINT32 bank_7525_start, bank_7525_end;
 	UINT32 bank_7525_start_mirror[MAX_MIRRORS], bank_7525_end_mirror[MAX_MIRRORS];
+	
+	UINT32 road_ctrl_start, road_ctrl_end;
+	UINT32 road_ctrl_start_mirror[MAX_MIRRORS], road_ctrl_end_mirror[MAX_MIRRORS];
 } sega_315_5195_struct;
 
 static sega_315_5195_struct chip;
 
-static bool mapper_in_user = false;
+static bool mapper_in_use = false;
 static UINT32 region_start = 0;
 static UINT32 region_end = 0;
 static UINT32 region_mirror = 0;
@@ -148,6 +151,7 @@ static void update_mapping()
 	chip.genesis_vdp_start = chip.genesis_vdp_end = 0x000000;
 	chip.bank_5987_start = chip.bank_5987_end = 0x000000;
 	chip.bank_7525_start = chip.bank_7525_end = 0x000000;
+	chip.road_ctrl_start = chip.road_ctrl_end = 0x000000;
 	
 	for (INT32 i = 0; i < MAX_MIRRORS; i++) {
 		chip.io_start_mirror[i] = chip.io_end_mirror[i] = 0x000000;
@@ -159,6 +163,7 @@ static void update_mapping()
 		chip.genesis_vdp_start_mirror[i] = chip.genesis_vdp_end_mirror[i] = 0x000000;
 		chip.bank_5987_start_mirror[i] = chip.bank_5987_end_mirror[i] = 0x000000;
 		chip.bank_7525_start_mirror[i] = chip.bank_7525_end_mirror[i] = 0x000000;
+		chip.road_ctrl_start_mirror[i] = chip.road_ctrl_end_mirror[i] = 0x000000;
 	}
 	
 	for (INT32 index = 7; index >= 0; index--) {
@@ -674,6 +679,138 @@ static void update_mapping()
 				}
 			}
 		}
+		
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) {
+			switch (index) {
+				case 7: {
+					break;
+				}
+				
+				case 6: {
+					break;
+				}
+				
+				case 5: {
+					// road control
+					compute_region(index, 0x010000, 0xf00000, 0x090000);
+					chip.road_ctrl_start = region_start;
+					chip.road_ctrl_end = region_end;
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Road Ctrl: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					store_mirrors(chip.road_ctrl_start_mirror, chip.road_ctrl_end_mirror, region_start, region_end, region_mirror);
+					
+					// road ram
+					compute_region(index, 0x001000, 0xf0f000, 0x080000);
+					SekMapMemory(System16RoadRam, region_start, region_end, MAP_RAM);
+						
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Road RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+						
+					map_mirrors(System16RoadRam, region_start, region_end, region_mirror, MAP_RAM);
+					
+					// shared ram
+					compute_region(index, 0x008000, 0xf18000, 0x060000);
+					SekMapMemory(System16Ram, region_start, region_end, MAP_RAM);
+						
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Shared RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+						
+					map_mirrors(System16Ram, region_start, region_end, region_mirror, MAP_RAM);
+					
+					// second 68k rom
+					compute_region(index, 0x060000, 0xf00000, 0x000000);
+					SekMapMemory(System16Rom2, region_start, region_end, MAP_ROM);
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("68K #2 ROM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					map_mirrors(System16Rom2, region_start, region_end, region_mirror, MAP_ROM);
+					
+					break;
+				}
+				
+				case 4: {
+					compute_region(index, 0x010000, 0xf00000, 0x090000);
+					chip.io_start = region_start;
+					chip.io_end = region_end;
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("IO: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					store_mirrors(chip.io_start_mirror, chip.io_end_mirror, region_start, region_end, region_mirror);
+					
+					break;
+				}
+				
+				case 3: {
+					compute_region(index, 0x001000, 0xff0000, 0x000000);
+					SekMapMemory(System16SpriteRam, region_start, region_end, MAP_RAM);
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Sprite RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					map_mirrors(System16SpriteRam, region_start, region_end, region_mirror, MAP_RAM);
+					
+					break;
+				}
+				
+				case 2: {
+					compute_region(index, 0x002000, 0xffe000, 0x000000);
+					SekMapMemory(System16PaletteRam, region_start, region_end, MAP_RAM);
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Palette RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					map_mirrors(System16PaletteRam, region_start, region_end, region_mirror, MAP_RAM);
+					
+					break;
+				}
+				
+				case 1: {
+					compute_region(index, 0x001000, 0xfef000, 0x010000);
+					SekMapMemory(System16TextRam, region_start, region_end, MAP_RAM);
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Text RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					map_mirrors(System16TextRam, region_start, region_end, region_mirror, MAP_RAM);
+					
+					compute_region(index, 0x010000, 0xfe0000, 0x000000);
+					SekMapMemory(System16TileRam, region_start, region_end, MAP_READ);
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Tile RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					chip.tile_ram_start = region_start;
+					chip.tile_ram_end = region_end;
+					
+					store_mirrors(chip.tile_ram_start_mirror, chip.tile_ram_end_mirror, region_start, region_end, region_mirror);
+					
+					break;
+				}
+				
+				case 0: {
+					// work ram
+					compute_region(index, 0x008000, 0xf98000, 0x060000);
+					SekMapMemory(System16ExtraRam, region_start, region_end, MAP_RAM);
+						
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("Work RAM: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+						
+					map_mirrors(System16ExtraRam, region_start, region_end, region_mirror, MAP_RAM);
+					
+					// rom
+					compute_region(index, 0x060000, 0xf80000, 0x000000);
+					SekMapMemory(System16Rom, region_start, region_end, MAP_READ);
+					
+					if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("ROM 0: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
+					
+					map_mirrors(System16Rom, region_start, region_end, region_mirror, MAP_READ);
+					
+					if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_FD1094_ENC) {
+						SekMapMemory(((UINT8*)fd1094_userregion), region_start, region_end, MAP_FETCH);
+						map_mirrors(((UINT8*)fd1094_userregion), region_start, region_end, region_mirror, MAP_FETCH);
+					} else {
+						SekMapMemory(System16Code, region_start, region_end, MAP_FETCH);
+						map_mirrors(System16Code, region_start, region_end, region_mirror, MAP_FETCH);
+					}
+					
+					break;
+				}
+			}
+		}
 	}
 }
 
@@ -769,6 +906,13 @@ static void chip_write(UINT32 offset, UINT8 data)
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
 				ZetOpen(0);
 				ZetNmi();
+				ZetClose();
+			}
+			
+			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) {
+				ZetOpen(0);
+				ZetNmi();
+				nSystem16CyclesDone[2] += ZetRun(200);
 				ZetClose();
 			}
 			
@@ -1023,6 +1167,13 @@ UINT8 __fastcall sega_315_5195_read_byte(UINT32 a)
 		}
 	}
 	
+	if (chip.road_ctrl_start > 0) {
+		if (a >= chip.road_ctrl_start && a <= chip.road_ctrl_end) {
+			UINT16 offset = (a - chip.road_ctrl_start) >> 1;
+			return System16RoadControlRead(offset) & 0xff;
+		}
+	}
+	
 	for (INT32 i = 0; i < MAX_MIRRORS; i++) {
 		if (chip.io_start_mirror[i] > 0) {
 			if (a >= chip.io_start_mirror[i] && a <= chip.io_end_mirror[i]) {
@@ -1036,6 +1187,13 @@ UINT8 __fastcall sega_315_5195_read_byte(UINT32 a)
 			if (a >= chip.genesis_vdp_start_mirror[i] && a <= chip.genesis_vdp_end_mirror[i]) {
 				UINT16 offset = (a - chip.genesis_vdp_start_mirror[i]) >> 1;
 				return GenesisVDPRead(offset) & 0xff;
+			}
+		}
+		
+		if (chip.road_ctrl_start_mirror[i] > 0) {
+			if (a >= chip.road_ctrl_start_mirror[i] && a <= chip.road_ctrl_end_mirror[i]) {
+				UINT16 offset = (a - chip.road_ctrl_start_mirror[i]) >> 1;
+				return System16RoadControlRead(offset) & 0xff;
 			}
 		}
 	}
@@ -1080,6 +1238,13 @@ UINT16 __fastcall sega_315_5195_read_word(UINT32 a)
 		}
 	}
 	
+	if (chip.road_ctrl_start > 0) {
+		if (a >= chip.road_ctrl_start && a <= chip.road_ctrl_end) {
+			UINT16 offset = (a - chip.road_ctrl_start) >> 1;
+			return System16RoadControlRead(offset);
+		}
+	}
+	
 	for (INT32 i = 0; i < MAX_MIRRORS; i++) {
 		if (chip.io_start_mirror[i] > 0) {
 			if (a >= chip.io_start_mirror[i] && a <= chip.io_end_mirror[i]) {
@@ -1111,6 +1276,13 @@ UINT16 __fastcall sega_315_5195_read_word(UINT32 a)
 			if (a >= chip.genesis_vdp_start_mirror[i] && a <= chip.genesis_vdp_end_mirror[i]) {
 				UINT16 offset = (a - chip.genesis_vdp_start_mirror[i]) >> 1;
 				return GenesisVDPRead(offset);
+			}
+		}
+		
+		if (chip.road_ctrl_start_mirror[i] > 0) {
+			if (a >= chip.road_ctrl_start_mirror[i] && a <= chip.road_ctrl_end_mirror[i]) {
+				UINT16 offset = (a - chip.road_ctrl_start_mirror[i]) >> 1;
+				return System16RoadControlRead(offset) & 0xff;
 			}
 		}
 	}
@@ -1197,6 +1369,14 @@ void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d)
 		}	
 	}
 	
+	if (chip.road_ctrl_start > 0) {
+		if (a >= chip.road_ctrl_start && a <= chip.road_ctrl_end) {
+			UINT16 offset = (a - chip.road_ctrl_start) >> 1;
+			System16RoadControlWrite(offset, d);
+			return;
+		}
+	}
+	
 	for (INT32 i = 0; i < MAX_MIRRORS; i++) {
 		if (chip.io_start_mirror[i] > 0) {
 			if (a >= chip.io_start_mirror[i] && a <= chip.io_end_mirror[i]) {
@@ -1271,6 +1451,14 @@ void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d)
 				HamawayGfxBankWrite(offset, d);
 				return;
 			}	
+		}
+		
+		if (chip.road_ctrl_start_mirror[i] > 0) {
+			if (a >= chip.road_ctrl_start_mirror[i] && a <= chip.road_ctrl_end_mirror[i]) {
+				UINT16 offset = (a - chip.road_ctrl_start_mirror[i]) >> 1;
+				System16RoadControlWrite(offset, d);
+				return;
+			}
 		}
 	}
 	
@@ -1350,6 +1538,14 @@ void __fastcall sega_315_5195_write_word(UINT32 a, UINT16 d)
 		}	
 	}
 	
+	if (chip.road_ctrl_start > 0) {
+		if (a >= chip.road_ctrl_start && a <= chip.road_ctrl_end) {
+			UINT16 offset = (a - chip.road_ctrl_start) >> 1;
+			System16RoadControlWrite(offset, d);
+			return;
+		}
+	}
+	
 	for (INT32 i = 0; i < MAX_MIRRORS; i++) {
 		if (chip.io_start_mirror[i] > 0) {
 			if (a >= chip.io_start_mirror[i] && a <= chip.io_end_mirror[i]) {
@@ -1416,6 +1612,14 @@ void __fastcall sega_315_5195_write_word(UINT32 a, UINT16 d)
 				HamawayGfxBankWrite(offset, d);
 				return;
 			}	
+		}
+		
+		if (chip.road_ctrl_start_mirror[i] > 0) {
+			if (a >= chip.road_ctrl_start_mirror[i] && a <= chip.road_ctrl_end_mirror[i]) {
+				UINT16 offset = (a - chip.road_ctrl_start_mirror[i]) >> 1;
+				System16RoadControlWrite(offset, d);
+				return;
+			}
 		}
 	}
 	
@@ -1530,7 +1734,7 @@ void sega_315_5195_i8751_write_port(INT32 port, UINT8 data)
 
 void sega_315_5195_reset()
 {
-	if (mapper_in_user) {
+	if (mapper_in_use) {
 		update_mapping();
 	
 		open_bus_recurse = false;
@@ -1547,7 +1751,7 @@ void sega_315_5195_init()
 {
 	memset((void*)&chip, 0, sizeof(sega_315_5195_struct));
 	
-	mapper_in_user = true;
+	mapper_in_use = true;
 }
 
 void sega_315_5195_exit()
@@ -1558,7 +1762,7 @@ void sega_315_5195_exit()
 	region_end = 0;
 	region_mirror = 0;
 	open_bus_recurse = false;
-	mapper_in_user = false;
+	mapper_in_use = false;
 	
 	sega_315_5195_custom_io_do = NULL;
 	sega_315_5195_custom_io_write_do = NULL;

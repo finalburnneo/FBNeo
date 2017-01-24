@@ -6236,8 +6236,6 @@ static UINT8 AceattacReadIO(UINT32 offset)
 		}
 	}
 	
-	bprintf(PRINT_NORMAL, _T("%x\n"), offset);
-	
 	return sega_315_5195_io_read(offset);
 }
 
@@ -7015,9 +7013,6 @@ static UINT8 SjryukoReadIO(UINT32 offset)
 		}
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Read %x\n"), offset);
-	
-	
 	return sega_315_5195_io_read(offset);
 }
 
@@ -7031,8 +7026,6 @@ static void SjryukoWriteIO(UINT32 offset, UINT8 d)
 			return;
 		}
 	}
-	
-	bprintf(PRINT_NORMAL, _T("Write %x\n"), offset, d);
 	
 	sega_315_5195_io_write(offset, d);
 }

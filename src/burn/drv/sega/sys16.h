@@ -209,6 +209,8 @@ void __fastcall HangonWriteByte(UINT32 a, UINT8 d);
 
 // d_outrun.cpp
 void OutrunPPI0WritePortC(UINT8 data);
+UINT16 System16RoadControlRead(UINT32 a);
+void System16RoadControlWrite(UINT32 offset, UINT16 d);
 UINT16 __fastcall OutrunReadWord(UINT32 a);
 UINT8 __fastcall OutrunReadByte(UINT32 a);
 void __fastcall OutrunWriteWord(UINT32 a, UINT16 d);

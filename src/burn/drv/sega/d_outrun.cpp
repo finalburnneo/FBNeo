@@ -1686,103 +1686,75 @@ void OutrunPPI0WritePortC(UINT8 data)
 	}
 }
 
-UINT16 __fastcall OutrunReadWord(UINT32 a)
+static UINT8 OutrunReadIO(UINT32 offset)
 {
-	switch (a) {
-		case 0x140060: {
-			// watchdog read
-			return 0;
-		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
-#endif
-
-	return 0xffff;
-}
-
-UINT8 __fastcall OutrunReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0x140001: {
-			ppi8255_r(0, (a - 0x140000) >> 1);
+	switch (offset) {
+		case 0x00:
+		case 0x01:
+		case 0x02:
+		case 0x03: {
+			return ppi8255_r(0, offset);
 		}
 		
-		case 0x140011: {
+		case 0x08: {
 			return 0xff - System16Input[0];
 		}
 		
-		case 0x140015: {
+		case 0x09: {
+			return 0xff - System16Input[1];
+		}
+		
+		case 0x0a: {
 			return System16Dip[0];
 		}
 		
-		case 0x140017: {
+		case 0x0b: {
 			return System16Dip[1];
 		}
 		
-		case 0x140031: {
+		case 0x18: {
 			if (System16ProcessAnalogControlsDo) return System16ProcessAnalogControlsDo(System16AnalogSelect);
+			return 0xff;
+		}
+	
+		case 0x30: {
+			// watchdog read
+			return 0;
+		}
+		
+		case 0x38: {
+			// ???
+			return 0;
 		}
 	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
-#endif
-
-	return 0xff;
+	
+	bprintf(PRINT_NORMAL, _T("Read IO %x, %x\n"), offset, offset & (0x7f / 2));
+	
+	return sega_315_5195_io_read(offset);
 }
 
-void __fastcall OutrunWriteWord(UINT32 a, UINT16 d)
+static void OutrunWriteIO(UINT32 offset, UINT8 d)
 {
-	if (a >= 0x100000 && a <= 0x10ffff) {
-		System16BTileWordWrite(a - 0x100000, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x140070: {
-			UINT32 *src = (UINT32 *)System16SpriteRam;
-			UINT32 *dst = (UINT32 *)System16SpriteRamBuff;
-
-			/* swap the halves of the sprite RAM */
-			for (UINT32 i = 0; i < System16SpriteRamSize/4; i++) {
-				UINT32 temp = *src;
-				*src++ = *dst;
-				*dst++ = temp;
-			}
-		
-			/* hack for thunderblade */
-			memset(System16SpriteRam, 0xff, System16SpriteRamSize);
+	switch (offset) {
+		case 0x00:
+		case 0x01:
+		case 0x02:
+		case 0x03: {
+			ppi8255_w(0, offset, d);
 			return;
 		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
-#endif
-}
-
-void __fastcall OutrunWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x100000 && a <= 0x10ffff) {
-		System16BTileByteWrite((a - 0x100000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x140003:
-		case 0x140005:
-		case 0x140007: {
-			ppi8255_w(0, (a - 0x140000) >> 1, d & 0xff);
+		
+		case 0x10: {
+			// motors
+			return;
 		}
 		
-		case 0x140031: {
+		case 0x18: {
 			System16AnalogSelect = d;
 			return;
 		}
 		
-		case 0x140071: {
+		case 0x38: {
 			UINT32 *src = (UINT32 *)System16SpriteRam;
 			UINT32 *dst = (UINT32 *)System16SpriteRamBuff;
 
@@ -1797,26 +1769,78 @@ void __fastcall OutrunWriteByte(UINT32 a, UINT8 d)
 			memset(System16SpriteRam, 0xff, System16SpriteRamSize);
 			return;
 		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("Write IO %x->%x\n"), offset, d);
+
+	sega_315_5195_io_write(offset, d);
+}
+
+static UINT8 ShangonReadIO(UINT32 offset)
+{
+	switch (offset) {
+		case 0x0801: {
+			return 0xff - System16Input[0];
+		}
 		
-		case 0xffff07: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetNmi();
-			ZetClose();
+		case 0x0802: {
+			return System16Dip[0];
+		}
+		
+		case 0x0803: {
+			return System16Dip[1];
+		}
+		
+		case 0x1810: {
+			if (System16ProcessAnalogControlsDo) return System16ProcessAnalogControlsDo(System16AnalogSelect);
+			return 0xff;
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("Read IO %x, %x\n"), offset, offset & (0x7f / 2));
+	
+	return sega_315_5195_io_read(offset);
+}
+
+static void ShangonWriteIO(UINT32 offset, UINT8 d)
+{
+	switch (offset) {
+		case 0x0000: {
+			System16AnalogSelect = (d >> 6) & 3;
+			System16VideoEnable = (d >> 5) & 1;
+			return;
+		}
+		
+		case 0x0010: {
+			if (!(d & 1)) {
+				ZetOpen(0);
+				ZetReset();
+				ZetClose();
+			}
+			return;
+			
+		}
+		
+		case 0x1800: {
+			// watchdog write
+			return;
+		}
+		
+		case 0x1810: {
+			// adc trigger
 			return;
 		}
 	}
+	
+	bprintf(PRINT_NORMAL, _T("Write IO %x->%x\n"), offset, d);
 
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
-#endif
+	sega_315_5195_io_write(offset, d);
 }
 
-UINT8 __fastcall Outrun2ReadByte(UINT32 a)
+UINT16 System16RoadControlRead(UINT32 offset)
 {
-	switch (a) {
-		case 0x090000:
-		case 0x090001: {
+	switch (offset) {
+		case 0x00: {
 			// swap the halves of the road RAM
 			memcpy(System16RoadRamBuff, System16RoadRam, 0x1000);
 			UINT32 *src = (UINT32 *)System16RoadRamBuff;
@@ -1828,6 +1852,27 @@ UINT8 __fastcall Outrun2ReadByte(UINT32 a)
 			}
 			
 			return System16RoadControl;
+		}
+	}
+	
+	return 0;
+}
+
+void System16RoadControlWrite(UINT32 offset, UINT16 d)
+{
+	switch (offset) {
+		case 0x00: {
+			System16RoadControl = d & 3;
+		}
+	}
+}
+
+UINT8 __fastcall Outrun2ReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0x090000:
+		case 0x090001: {
+			return System16RoadControlRead((a - 0x090000) >> 1);
 		}
 	}
 
@@ -1842,7 +1887,7 @@ void __fastcall Outrun2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x090000: {
-			System16RoadControl = d & 3;
+			System16RoadControlWrite((a - 0x090000) >> 1, d);
 			return;
 		}
 	}
@@ -1856,157 +1901,13 @@ void __fastcall Outrun2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x090001: {
-			System16RoadControl = d & 3;
+			System16RoadControlWrite((a - 0x090000) >> 1, d);
 			return;
 		}
 	}
 
 #if 0 && defined FBA_DEBUG
 	bprintf(PRINT_NORMAL, _T("68000 # 2 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
-#endif
-}
-
-UINT16 __fastcall ShangonReadWord(UINT32 a)
-{
-	switch (a) {
-		case 0x141002: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0x141004: {
-			return System16Dip[0];
-		}
-		
-		case 0x141006: {
-			return System16Dip[1];
-		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
-#endif
-
-	return 0xffff;
-}
-
-UINT8 __fastcall ShangonReadByte(UINT32 a)
-{
-	switch (a) {
-		case 0x141003: {
-			return 0xff - System16Input[0];
-		}
-		
-		case 0x141005: {
-			return System16Dip[0];
-		}
-		
-		case 0x141007: {
-			return System16Dip[1];
-		}
-		
-		case 0x143021: {
-			if (System16ProcessAnalogControlsDo) return System16ProcessAnalogControlsDo(System16AnalogSelect);
-		}
-		
-		case 0x290000: {
-			// swap the halves of the road RAM
-			memcpy(System16RoadRamBuff, System16RoadRam, 0x1000);
-			UINT32 *src = (UINT32 *)System16RoadRamBuff;
-			UINT32 *dst = (UINT32 *)System16RoadRam;
-			for (INT32 i = 0; i < 0x1000/4; i++) {
-				UINT32 temp = *src;
-				*src++ = *dst;
-				*dst++ = temp;
-			}
-			
-			return System16RoadControl;
-		}
-		
-		case 0xffff05: {
-			return System16SoundLatch;
-		}
-	}
-		
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
-#endif
-
-	return 0xff;
-}
-
-void __fastcall ShangonWriteWord(UINT32 a, UINT16 d)
-{
-	if (a >= 0x100000 && a <= 0x10ffff) {
-		System16BTileWordWrite(a - 0x100000, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x290000: {
-			System16RoadControl = d & 3;
-			return;
-		}
-		
-		case 0xffff06: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetNmi();
-			nSystem16CyclesDone[2] += ZetRun(200);
-			ZetClose();
-			return;
-		}
-	}
-	
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
-#endif
-}
-
-void __fastcall ShangonWriteByte(UINT32 a, UINT8 d)
-{
-	if (a >= 0x100000 && a <= 0x10ffff) {
-		System16BTileByteWrite((a - 0x100000) ^ 1, d);
-		return;
-	}
-	
-	switch (a) {
-		case 0x140001: {
-			System16AnalogSelect = (d >> 6) & 3;
-			System16VideoEnable = (d >> 5) & 1;
-			return;
-		}
-		
-		case 0x140021: {
-			if (!(d & 1)) {
-				ZetOpen(0);
-				ZetReset();
-				ZetClose();
-			}
-			return;
-			
-		}
-		
-		case 0x143001: {
-			// watchdog write
-			return;
-		}
-		
-		case 0x143021: {
-			return;
-		}
-		
-		case 0xffff07: {
-			System16SoundLatch = d & 0xff;
-			ZetOpen(0);
-			ZetNmi();
-			nSystem16CyclesDone[2] += ZetRun(200);
-			ZetClose();
-			return;
-		}
-	}
-
-#if 0 && defined FBA_DEBUG
-	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
 
@@ -2091,6 +1992,8 @@ UINT8 ShangonProcessAnalogControls(UINT16 value)
 static INT32 OutrunInit()
 {
 	System16ProcessAnalogControlsDo = OutrunProcessAnalogControls;
+	sega_315_5195_custom_io_do = OutrunReadIO;
+	sega_315_5195_custom_io_write_do = OutrunWriteIO;
 	
 	System16HasGears = true;
 	
@@ -2123,6 +2026,11 @@ static INT32 OutrunInit()
 static INT32 OutrunbInit()
 {
 	System16ProcessAnalogControlsDo = OutrunProcessAnalogControls;
+	sega_315_5195_custom_io_do = OutrunReadIO;
+	sega_315_5195_custom_io_write_do = OutrunWriteIO;
+	
+	UINT8 memory_control[0x10] = { 0x02, 0x00, 0x0d, 0x10, 0x00, 0x12, 0x0c, 0x13, 0x08, 0x14, 0x0f ,0x20, 0x00, 0x00, 0x00, 0x00 };
+	System16I8751InitialConfig = memory_control;
 	
 	System16HasGears = true;
 	
@@ -2185,6 +2093,8 @@ static INT32 OutrunbInit()
 static INT32 ShangonInit()
 {
 	System16ProcessAnalogControlsDo = ShangonProcessAnalogControls;
+	sega_315_5195_custom_io_do = ShangonReadIO;
+	sega_315_5195_custom_io_write_do = ShangonWriteIO;
 	
 	Shangon = true;
 	
@@ -2193,13 +2103,6 @@ static INT32 ShangonInit()
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
-		SekOpen(0);
-		SekSetReadWordHandler(0, ShangonReadWord);
-		SekSetWriteWordHandler(0, ShangonWriteWord);
-		SekSetReadByteHandler(0, ShangonReadByte);
-		SekSetWriteByteHandler(0, ShangonWriteByte);
-		SekClose();
-		
 		System16RoadColorOffset1 = 0x7f6;
 		System16RoadColorOffset2 = 0x7c0;
 		System16RoadColorOffset3 = 0x7c0;
@@ -2221,18 +2124,11 @@ static INT32 ShangonInit()
 	return nRet;
 }
 
-static INT32 Shangon1Init()
-{
-	System16ProcessAnalogControlsDo = ShangonProcessAnalogControls;
-	
-	System16PCMDataSizePreAllocate = 0x40000;
-	
-	return ShangonInit();
-}
-
 static INT32 ToutrunInit()
 {
 	System16ProcessAnalogControlsDo = OutrunProcessAnalogControls;
+	sega_315_5195_custom_io_do = OutrunReadIO;
+	sega_315_5195_custom_io_write_do = OutrunWriteIO;
 	
 	System16HasGears = true;
 	
@@ -2340,7 +2236,7 @@ struct BurnDriver BurnDrvShangon1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
 	NULL, Shangon1RomInfo, Shangon1RomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
-	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	ShangonInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 
@@ -2350,7 +2246,7 @@ struct BurnDriver BurnDrvShangon2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
 	NULL, Shangon2RomInfo, Shangon2RomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
-	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	ShangonInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 
@@ -2360,7 +2256,7 @@ struct BurnDriver BurnDrvShangon3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_OUTRUN | HARDWARE_SEGA_FD1089B_ENC, GBF_RACING, 0,
 	NULL, Shangon3RomInfo, Shangon3RomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
-	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	ShangonInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 
@@ -2370,7 +2266,7 @@ struct BurnDriver BurnDrvShangon3d = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_OUTRUN, GBF_RACING, 0,
 	NULL, Shangon3dRomInfo, Shangon3dRomName, NULL, NULL, ShangonInputInfo, ShangonDIPInfo,
-	Shangon1Init, System16Exit, OutrunFrame, NULL, System16Scan,
+	ShangonInit, System16Exit, OutrunFrame, NULL, System16Scan,
 	NULL, 0x3000, 320, 224, 4, 3
 };
 

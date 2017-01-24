@@ -254,7 +254,7 @@ static INT32 System16DoReset()
 	
 	SekOpen(0);
 	System1668KEnable = true;
-	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18)) {
+	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
 		if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) == 0) {
 			sega_315_5195_reset();
 		}
@@ -2210,23 +2210,14 @@ INT32 System16Init()
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN) {
 		SekInit(0, 0x68000);
 		SekOpen(0);
-		SekMapMemory(System16Rom           , 0x000000, 0x05ffff, MAP_READ);
-		SekMapMemory(System16Code          , 0x000000, 0x05ffff, MAP_FETCH);
-		SekMapMemory(System16ExtraRam      , 0x060000, 0x067fff, MAP_RAM);
-		SekMapMemory(System16TileRam       , 0x100000, 0x10ffff, MAP_READ);
-		SekMapMemory(System16TextRam       , 0x110000, 0x110fff, MAP_RAM);
-		SekMapMemory(System16PaletteRam    , 0x120000, 0x121fff, MAP_RAM);
-		SekMapMemory(System16SpriteRam     , 0x130000, 0x130fff, MAP_RAM);
-		SekMapMemory(System16Rom2          , 0x200000, 0x23ffff, MAP_READ);
-		SekMapMemory(System16Rom2          , 0x200000, 0x23ffff, MAP_FETCH);
-		SekMapMemory(System16Ram           , 0x260000, 0x267fff, MAP_RAM);
-		SekMapMemory(System16RoadRam       , 0x280000, 0x280fff, MAP_RAM);
 		SekSetResetCallback(OutrunResetCallback);
-		SekSetReadWordHandler(0, OutrunReadWord);
-		SekSetWriteWordHandler(0, OutrunWriteWord);
-		SekSetReadByteHandler(0, OutrunReadByte);
-		SekSetWriteByteHandler(0, OutrunWriteByte);
+		SekSetReadByteHandler(0, sega_315_5195_read_byte);
+		SekSetReadWordHandler(0, sega_315_5195_read_word);
+		SekSetWriteByteHandler(0, sega_315_5195_write_byte);
+		SekSetWriteWordHandler(0, sega_315_5195_write_word);
 		SekClose();
+		
+		sega_315_5195_init();
 		
 		SekInit(1, 0x68000);
 		SekOpen(1);
@@ -2523,7 +2514,7 @@ INT32 System16Exit()
 	
 	if (nBurnGunNumPlayers) BurnGunExit();
 	
-	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18)) {
+	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
 		sega_315_5195_exit();
 	}
 	

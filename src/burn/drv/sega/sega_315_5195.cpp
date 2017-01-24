@@ -780,16 +780,19 @@ static void chip_write(UINT32 offset, UINT8 data)
 				for (INT32 irqnum = 0; irqnum < 8; irqnum++) {
 					if (irqnum == (~chip.regs[offset] & 7)) {
 						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ %i \n"), irqnum);
-						if (System16I8751RomNum) {
-							// the I8751 does the vblank IRQ
+						
+						if (System16I8751RomNum && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18)) {
+							// the I8751 does the vblank IRQ for System 18 (Moon Walker)
 							SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
 							nSystem16CyclesDone[0] += SekRun(200);
 							SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
 						} else {
+							// normal - just raise it
 							SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
 						}
 					} else {
 						SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
+						
 						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ %i\n"), irqnum);
 					}
 				}

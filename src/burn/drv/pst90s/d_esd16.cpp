@@ -1629,6 +1629,8 @@ static struct BurnRomInfo tangtangRomDesc[] = {
 	{ "fu34.bin",	0x200000, 0xbf91f543, 4 | BRF_GRA },		//  9
 
 	{ "esd4.su10",	0x020000, 0xf2dfb02d, 5 | BRF_SND },		// 10 - OKI Samples
+	
+	{ "eeprom",		0x000080, 0x00514989, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(tangtang)

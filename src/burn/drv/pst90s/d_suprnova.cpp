@@ -2714,18 +2714,18 @@ struct BurnDriver BurnDrvRyouran = {
 };
 
 
-// VS Block Breaker (Asia)
+// VS Block Breaker (Europe)
 
 static struct BurnRomInfo vblokbrkRomDesc[] = {
-	{ "sk01a.u10",		0x080000, 0x4d1be53e, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "sk01a.u8",		0x080000, 0x461e0197, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "sk000e2-e.u10",	0x080000, 0x5a278f10, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "sk000e-o.u8",	0x080000, 0xaecf0647, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "sk100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
+	{ "sk-100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
 	{ "sk-101.u20",		0x100000, 0x779cce23, 2 | BRF_GRA },           //  3
 
-	{ "sk200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "sk-200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
 
-	{ "sk300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
+	{ "sk-300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
 };
 
 STDROMPICKEXT(vblokbrk, vblokbrk, skns)
@@ -2738,16 +2738,54 @@ static INT32 VblokbrkInit()
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
 
-	return DrvInit(2 /*Asia*/);
+	return DrvInit(1 /*Europe*/);
 }
 
 struct BurnDriver BurnDrvVblokbrk = {
 	"vblokbrk", NULL, "skns", NULL, "1997",
-	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	"VS Block Breaker (Europe)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
 	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo,
 	VblokbrkInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// VS Block Breaker (Asia)
+
+static struct BurnRomInfo vblokbrkaRomDesc[] = {
+	{ "sk01a.u10",		0x080000, 0x4d1be53e, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "sk01a.u8",		0x080000, 0x461e0197, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sk-100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
+	{ "sk-101.u20",		0x100000, 0x779cce23, 2 | BRF_GRA },           //  3
+
+	{ "sk-200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
+
+	{ "sk-300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
+};
+
+STDROMPICKEXT(vblokbrka, vblokbrka, skns)
+STD_ROM_FN(vblokbrka)
+
+static INT32 VblokbrkaInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+	suprnova_alt_enable_background = 1;
+	Vblokbrk = 1;
+
+	return DrvInit(2 /*Asia*/);
+}
+
+struct BurnDriver BurnDrvVblokbrka = {
+	"vblokbrka", "vblokbrk", "skns", NULL, "1997",
+	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
+	NULL, vblokbrkaRomInfo, vblokbrkaRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo,
+	VblokbrkaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -2758,12 +2796,12 @@ static struct BurnRomInfo sarukaniRomDesc[] = {
 	{ "sk1j1.u10",		0x080000, 0xfcc131b6, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
 	{ "sk1j1.u8",		0x080000, 0x3b6aa343, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "sk100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
+	{ "sk-100-00.u24",	0x200000, 0x151dd88a, 2 | BRF_GRA },           //  2 Sprites
 	{ "sk-101.u20",		0x100000, 0x779cce23, 2 | BRF_GRA },           //  3
 
-	{ "sk200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
+	{ "sk-200-00.u16",	0x200000, 0x2e297c61, 3 | BRF_GRA },           //  4 Background Tiles
 
-	{ "sk300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
+	{ "sk-300-00.u4",	0x200000, 0xe6535c05, 5 | BRF_SND },           //  5 YMZ280b Samples
 };
 
 STDROMPICKEXT(sarukani, sarukani, skns)

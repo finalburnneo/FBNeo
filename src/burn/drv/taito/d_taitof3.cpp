@@ -4312,14 +4312,14 @@ static struct BurnRomInfo arabianmRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    //  12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    //  13
 
-	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "D29-11.IC15.bin",0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
 	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
-	{ "palce20v8h.3",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "D29-13.IC14.bin",0x000157, 0x74d61d36, BRF_OPT }, // 16
 	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
 	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
 	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
 	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
-	{ "palce20v8h.69",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "D29-14.IC28.bin",0x000157, 0x25d205d5, BRF_OPT }, // 21
 	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
@@ -4364,14 +4364,14 @@ static struct BurnRomInfo arabianmjRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "D29-11.IC15.bin",0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
 	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
-	{ "palce20v8h.3",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "D29-13.IC14.bin",0x000157, 0x74d61d36, BRF_OPT }, // 16
 	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
 	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
 	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
 	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
-	{ "palce20v8h.69",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "D29-14.IC28.bin",0x000157, 0x25d205d5, BRF_OPT }, // 21
 	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
@@ -4411,14 +4411,14 @@ static struct BurnRomInfo arabianmuRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "palce20v8h.1",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "D29-11.IC15.bin",0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
 	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
-	{ "palce20v8h.3",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "D29-13.IC14.bin",0x000157, 0x74d61d36, BRF_OPT }, // 16
 	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
 	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
 	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
 	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
-	{ "palce20v8h.69",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "D29-14.IC28.bin",0x000157, 0x25d205d5, BRF_OPT }, // 21
 	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
@@ -4711,27 +4711,27 @@ struct BurnDriver BurnDrvCommandw = {
 // Taito Cup Finals (Ver 1.0O 1993/02/28)
 
 static struct BurnRomInfo cupfinalRomDesc[] = {
-	{ "d49-13.bin",		0x020000, 0xccee5e73, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "d49-14.bin",		0x020000, 0x2323bf2e, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "d49-16.bin",		0x020000, 0x8e73f739, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "d49-20.bin",		0x020000, 0x1e9c392c, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "d49-13.20",		0x020000, 0xccee5e73, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d49-14.19",		0x020000, 0x2323bf2e, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d49-16.18",		0x020000, 0x8e73f739, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d49-20.17",		0x020000, 0x1e9c392c, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
-	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+	{ "d49-01.12",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d49-02.8",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06.11",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07.7",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03.4",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08.3",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
 
-	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
-	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
-	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+	{ "d49-09.47",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10.45",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11.43",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
 	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
 	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
-	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
-	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 };
 
 STD_ROM_PICK(cupfinal)
@@ -4756,27 +4756,27 @@ struct BurnDriver BurnDrvCupfinal = {
 // Hat Trick Hero '93 (Ver 1.0J 1993/02/28)
 
 static struct BurnRomInfo hthero93RomDesc[] = {
-	{ "d49-13.bin",		0x020000, 0xccee5e73, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "d49-14.bin",		0x020000, 0x2323bf2e, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "d49-16.bin",		0x020000, 0x8e73f739, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "d49-19.35",		0x020000, 0xf0925800, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "d49-13.20",		0x020000, 0xccee5e73, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "d49-14.19",		0x020000, 0x2323bf2e, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "d49-16.18",		0x020000, 0x8e73f739, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "d49-19.17",		0x020000, 0xf0925800, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
-	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+	{ "d49-01.12",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d49-02.8",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06.11",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07.7",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03.4",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08.3",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
 
-	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
-	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
-	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+	{ "d49-09.47",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10.45",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11.43",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
 	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
 	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
-	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
-	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 };
 
 STD_ROM_PICK(hthero93)
@@ -4801,21 +4801,22 @@ static struct BurnRomInfo hthero93uRomDesc[] = {
 	{ "d49-16.37",		0x020000, 0x8e73f739, TAITO_68KROM1_BYTESWAP32 }, //  2
 	{ "d49-19.35",		0x020000, 0x699b09ba, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
-	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+	{ "d49-01.12",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d49-02.8",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06.11",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07.7",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03.4",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08.3",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
 
-	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
-	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
-	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+	{ "d49-09.47",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10.45",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11.43",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
 	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
 	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
-	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
-	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 
 	{ "D49-12.IC60.bin",	0x000104, 0xaa4cff37, 0 | BRF_OPT },              // 17 palsgame
 	{ "D49-21.IC17.bin",	0x000104, 0x821775d4, 0 | BRF_OPT },              // 18
@@ -5212,22 +5213,22 @@ static struct BurnRomInfo scfinalsRomDesc[] = {
 	{ "d68-11.ic36",	0x040000, 0xd456c124, TAITO_68KROM1_BYTESWAP32 }, //  2
 	{ "d68-12.ic34",	0x040000, 0xdec41397, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
-	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+	{ "d49-01.12",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d49-02.8",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06.11",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07.7",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03.4",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08.3",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
 
-	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
-	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
-	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+	{ "d49-09.47",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10.45",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11.43",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
 	{ "d49-17.ic5",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
 	{ "d49-18.ic6",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
-	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
-	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 
 	{ "scfinals.nv",	0x000080, 0xf25945fc, TAITO_DEFAULT_EEPROM },     // 17 eeprom
 
@@ -5270,24 +5271,24 @@ static struct BurnRomInfo scfinalsoRomDesc[] = {
 	{ "d68-04.18",		0x040000, 0x4a4e4972, TAITO_68KROM1_BYTESWAP32 }, //  2
 	{ "d68-03.17",		0x040000, 0xa40be699, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "d49-01",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "d49-02",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "d49-06",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "d49-07",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
-	{ "d49-03",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
-	{ "d49-08",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
+	{ "d49-01.12",		0x200000, 0x1dc89f1c, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "d49-02.8",		0x200000, 0x1e4c374f, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "d49-06.11",		0x100000, 0x71ef4ee1, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "d49-07.7",		0x100000, 0xe5655b8f, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "d49-03.4",		0x200000, 0xcf9a8727, TAITO_SPRITESA },           //  8
+	{ "d49-08.3",		0x100000, 0x7d3c6536, TAITO_SPRITESA },           //  9
 
-	{ "d49-09",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
-	{ "d49-10",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
-	{ "d49-11",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
+	{ "d49-09.47",		0x080000, 0x257ede01, TAITO_CHARS_BYTESWAP },     // 10 Layer Tiles
+	{ "d49-10.45",		0x080000, 0xf587b787, TAITO_CHARS_BYTESWAP },     // 11
+	{ "d49-11.43",		0x080000, 0x11318b26, TAITO_CHARS },              // 12
 
-	{ "d49-17.ic5",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
-	{ "d49-18.ic6",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
+	{ "d49-17.32",		0x020000, 0xf2058eba, TAITO_68KROM2_BYTESWAP },   // 13 68k Code
+	{ "d49-18.33",		0x020000, 0xa0fdd270, TAITO_68KROM2_BYTESWAP },   // 14
 
-	{ "d49-04",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
-	{ "d49-05",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
+	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
+	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 
-	{ "scfinals.nv",	0x000080, 0xf25945fc, TAITO_DEFAULT_EEPROM },     // 17 eeprom
+	{ "scfinalso.nv",	0x000080, 0x1319752e, TAITO_DEFAULT_EEPROM },     // 17 eeprom
 };
 
 STD_ROM_PICK(scfinalso)
@@ -5784,10 +5785,10 @@ STD_ROM_PICK(dankuga)
 STD_ROM_FN(dankuga)
 
 struct BurnDriver BurnDrvDankuga = {
-	"dankuga", "kaiserkn", NULL, NULL, "1994",
+	"dankuga", NULL, NULL, NULL, "1994",
 	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, dankugaRomInfo, dankugaRomName, NULL, NULL, KnInputInfo, NULL,
 	kaiserknInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -5937,10 +5938,10 @@ STD_ROM_PICK(dariusgx)
 STD_ROM_FN(dariusgx)
 
 struct BurnDriver BurnDrvDariusgx = {
-	"dariusgx", "dariusg", NULL, NULL, "1994",
+	"dariusgx", NULL, NULL, NULL, "1994",
 	"Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 1995/03/06) (Official Hack)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgxRomInfo, dariusgxRomName, NULL, NULL, F3InputInfo, NULL,
 	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 232, 4, 3
@@ -5963,11 +5964,15 @@ static struct BurnRomInfo bublbob2RomDesc[] = {
 	{ "d90-07",		0x100000, 0xb436b42d, TAITO_CHARS_BYTESWAP },     //  8
 	{ "d90-06",		0x100000, 0x166a72b8, TAITO_CHARS },              //  9
 
-	{ "d90-13",		0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
-	{ "d90-14",		0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
+	{ "d90-13.ic32",0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d90-14.ic33",0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
 
 	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "d77-14_palce16v8q-15.ic21.bin", 0x117, 0x2c798a1c, BRF_OPT },
+	{ "d77-12_palce16v8q-15.ic48.bin", 0x117, 0xb1cc6195, BRF_OPT },
+	{ "d77-11_palce16v8q-15.ic37.bin", 0x117, 0xa733f0de, BRF_OPT },
 };
 
 STD_ROM_PICK(bublbob2)
@@ -6005,8 +6010,8 @@ static struct BurnRomInfo bublbob2oRomDesc[] = {
 	{ "d90-07",		0x100000, 0xb436b42d, TAITO_CHARS_BYTESWAP },     //  8
 	{ "d90-06",		0x100000, 0x166a72b8, TAITO_CHARS },              //  9
 
-	{ "d90-13",		0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
-	{ "d90-14",		0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
+	{ "d90-13.ic32",0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d90-14.ic33",0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
 
 	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
@@ -6042,8 +6047,8 @@ static struct BurnRomInfo bubsympheRomDesc[] = {
 	{ "d90-07",		0x100000, 0xb436b42d, TAITO_CHARS_BYTESWAP },     //  8
 	{ "d90-06",		0x100000, 0x166a72b8, TAITO_CHARS },              //  9
 
-	{ "d90-13",		0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
-	{ "d90-14",		0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
+	{ "d90-13.ic32",0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d90-14.ic33",0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
 
 	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
@@ -6079,8 +6084,8 @@ static struct BurnRomInfo bubsymphjRomDesc[] = {
 	{ "d90-07",		0x100000, 0xb436b42d, TAITO_CHARS_BYTESWAP },     //  8
 	{ "d90-06",		0x100000, 0x166a72b8, TAITO_CHARS },              //  9
 
-	{ "d90-13",		0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
-	{ "d90-14",		0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
+	{ "d90-13.ic32",0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d90-14.ic33",0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
 
 	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
@@ -6220,8 +6225,8 @@ static struct BurnRomInfo bubsymphuRomDesc[] = {
 	{ "d90-07",		0x100000, 0xb436b42d, TAITO_CHARS_BYTESWAP },     //  8
 	{ "d90-06",		0x100000, 0x166a72b8, TAITO_CHARS },              //  9
 
-	{ "d90-13",		0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
-	{ "d90-14",		0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
+	{ "d90-13.ic32",0x040000, 0x6762bd90, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
+	{ "d90-14.ic33",0x040000, 0x8e33357e, TAITO_68KROM2_BYTESWAP },   // 11
 
 	{ "d90-04",		0x200000, 0xfeee5fda, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d90-05",		0x200000, 0xc192331f, TAITO_ES5505_BYTESWAP },    // 13
@@ -7131,26 +7136,32 @@ struct BurnDriver BurnDrvGekiridnj = {
 // Twin Cobra II (Ver 2.1O 1995/11/30)
 
 static struct BurnRomInfo tcobra2RomDesc[] = {
-	{ "e15-14.bin",		0x040000, 0xb527b733, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "e15-13.bin",		0x040000, 0x0f03daf7, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "e15-12.bin",		0x040000, 0x59d832f2, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "e15-18.bin",		0x040000, 0x4908c3aa, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "e15-14.ic20",	0x040000, 0xb527b733, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e15-13.ic19",	0x040000, 0x0f03daf7, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e15-12.ic18",	0x040000, 0x59d832f2, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e15-18.ic17",	0x040000, 0x4908c3aa, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "e15-04.bin",		0x200000, 0x6ea8d9bd, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "e15-02.bin",		0x200000, 0xbf1232aa, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "e15-03.bin",		0x100000, 0xbe45a52f, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "e15-01.bin",		0x100000, 0x85421aac, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "e15-04.ic12",	0x200000, 0x6ea8d9bd, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e15-02.ic8",		0x200000, 0xbf1232aa, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "e15-03.ic11",	0x100000, 0xbe45a52f, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "e15-01.ic7",		0x100000, 0x85421aac, TAITO_SPRITESA_BYTESWAP },  //  7
 
-	{ "e15-10.bin",		0x200000, 0xd8c96b00, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
-	{ "e15-08.bin",		0x200000, 0x4bdb2bf3, TAITO_CHARS_BYTESWAP },     //  9
-	{ "e15-09.bin",		0x100000, 0x07c29f60, TAITO_CHARS_BYTESWAP },     // 10
-	{ "e15-07.bin",		0x100000, 0x8164f7ee, TAITO_CHARS_BYTESWAP },     // 11
+	{ "e15-10.ic47",	0x200000, 0xd8c96b00, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
+	{ "e15-08.ic45",	0x200000, 0x4bdb2bf3, TAITO_CHARS_BYTESWAP },     //  9
+	{ "e15-09.ic46",	0x100000, 0x07c29f60, TAITO_CHARS_BYTESWAP },     // 10
+	{ "e15-07.ic44",	0x100000, 0x8164f7ee, TAITO_CHARS_BYTESWAP },     // 11
 
-	{ "e15-15.bin",		0x020000, 0x22126dfb, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
-	{ "e15-16.bin",		0x020000, 0xf8b58ea0, TAITO_68KROM2_BYTESWAP },   // 13
+	{ "e15-15.ic32",	0x020000, 0x22126dfb, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
+	{ "e15-16.ic33",	0x020000, 0xf8b58ea0, TAITO_68KROM2_BYTESWAP },   // 13
 
-	{ "e15-05.bin",		0x200000, 0x3e5da5f6, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
-	{ "e15-06.bin",		0x200000, 0xb182a3e1, TAITO_ES5505_BYTESWAP },    // 15
+	{ "e15-05.ic38",	0x200000, 0x3e5da5f6, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
+	{ "e15-06.ic41",	0x200000, 0xb182a3e1, TAITO_ES5505_BYTESWAP },    // 15
+	
+	{ "d77-12.ic48.bin", 0x117, 0x6f93a4d8, BRF_OPT },
+	{ "d77-14.ic21.bin", 0x117, 0xf2264f51, BRF_OPT },
+	{ "palce16v8.ic37.bin", 0x117, 0x6ccd8168, BRF_OPT },
+	{ "d77-09.ic14.bin", 0x001, 0x00000000, BRF_NODUMP },
+	{ "d77-10.ic28.bin", 0x001, 0x00000000, BRF_NODUMP },
 };
 
 STD_ROM_PICK(tcobra2)
@@ -7181,26 +7192,32 @@ struct BurnDriver BurnDrvTcobra2 = {
 // Twin Cobra II (Ver 2.1A 1995/11/30)
 
 static struct BurnRomInfo tcobra2uRomDesc[] = {
-	{ "e15-14.bin",		0x040000, 0xb527b733, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "e15-13.bin",		0x040000, 0x0f03daf7, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "e15-12.bin",		0x040000, 0x59d832f2, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "e15-17.bin",		0x040000, 0x3e0ff33c, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "e15-14.ic20",	0x040000, 0xb527b733, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e15-13.ic19",	0x040000, 0x0f03daf7, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e15-12.ic18",	0x040000, 0x59d832f2, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e15-17.ic17",	0x040000, 0x3e0ff33c, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "e15-04.bin",		0x200000, 0x6ea8d9bd, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "e15-02.bin",		0x200000, 0xbf1232aa, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "e15-03.bin",		0x100000, 0xbe45a52f, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "e15-01.bin",		0x100000, 0x85421aac, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "e15-04.ic12",	0x200000, 0x6ea8d9bd, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e15-02.ic8",		0x200000, 0xbf1232aa, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "e15-03.ic11",	0x100000, 0xbe45a52f, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "e15-01.ic7",		0x100000, 0x85421aac, TAITO_SPRITESA_BYTESWAP },  //  7
 
-	{ "e15-10.bin",		0x200000, 0xd8c96b00, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
-	{ "e15-08.bin",		0x200000, 0x4bdb2bf3, TAITO_CHARS_BYTESWAP },     //  9
-	{ "e15-09.bin",		0x100000, 0x07c29f60, TAITO_CHARS_BYTESWAP },     // 10
-	{ "e15-07.bin",		0x100000, 0x8164f7ee, TAITO_CHARS_BYTESWAP },     // 11
+	{ "e15-10.ic47",	0x200000, 0xd8c96b00, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
+	{ "e15-08.ic45",	0x200000, 0x4bdb2bf3, TAITO_CHARS_BYTESWAP },     //  9
+	{ "e15-09.ic46",	0x100000, 0x07c29f60, TAITO_CHARS_BYTESWAP },     // 10
+	{ "e15-07.ic44",	0x100000, 0x8164f7ee, TAITO_CHARS_BYTESWAP },     // 11
 
-	{ "e15-15.bin",		0x020000, 0x22126dfb, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
-	{ "e15-16.bin",		0x020000, 0xf8b58ea0, TAITO_68KROM2_BYTESWAP },   // 13
+	{ "e15-15.ic32",	0x020000, 0x22126dfb, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
+	{ "e15-16.ic33",	0x020000, 0xf8b58ea0, TAITO_68KROM2_BYTESWAP },   // 13
 
-	{ "e15-05.bin",		0x200000, 0x3e5da5f6, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
-	{ "e15-06.bin",		0x200000, 0xb182a3e1, TAITO_ES5505_BYTESWAP },    // 15
+	{ "e15-05.ic38",	0x200000, 0x3e5da5f6, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
+	{ "e15-06.ic41",	0x200000, 0xb182a3e1, TAITO_ES5505_BYTESWAP },    // 15
+	
+	{ "d77-12.ic48.bin", 0x117, 0x6f93a4d8, BRF_OPT },
+	{ "d77-14.ic21.bin", 0x117, 0xf2264f51, BRF_OPT },
+	{ "palce16v8.ic37.bin", 0x117, 0x6ccd8168, BRF_OPT },
+	{ "d77-09.ic14.bin", 0x001, 0x00000000, BRF_NODUMP },
+	{ "d77-10.ic28.bin", 0x001, 0x00000000, BRF_NODUMP },
 };
 
 STD_ROM_PICK(tcobra2u)
@@ -7220,26 +7237,32 @@ struct BurnDriver BurnDrvTcobra2u = {
 // Kyukyoku Tiger II (Ver 2.1J 1995/11/30)
 
 static struct BurnRomInfo ktiger2RomDesc[] = {
-	{ "e15-14.bin",		0x040000, 0xb527b733, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "e15-13.bin",		0x040000, 0x0f03daf7, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "e15-12.bin",		0x040000, 0x59d832f2, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "e15-11.bin",		0x040000, 0xa706a286, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "e15-14.ic20",	0x040000, 0xb527b733, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e15-13.ic19",	0x040000, 0x0f03daf7, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e15-12.ic18",	0x040000, 0x59d832f2, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e15-11.ic17",	0x040000, 0xa706a286, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "e15-04.bin",		0x200000, 0x6ea8d9bd, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "e15-02.bin",		0x200000, 0xbf1232aa, TAITO_SPRITESA_BYTESWAP },  //  5
-	{ "e15-03.bin",		0x100000, 0xbe45a52f, TAITO_SPRITESA_BYTESWAP },  //  6
-	{ "e15-01.bin",		0x100000, 0x85421aac, TAITO_SPRITESA_BYTESWAP },  //  7
+	{ "e15-04.ic12",	0x200000, 0x6ea8d9bd, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e15-02.ic8",		0x200000, 0xbf1232aa, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "e15-03.ic11",	0x100000, 0xbe45a52f, TAITO_SPRITESA_BYTESWAP },  //  6
+	{ "e15-01.ic7",		0x100000, 0x85421aac, TAITO_SPRITESA_BYTESWAP },  //  7
 
-	{ "e15-10.bin",		0x200000, 0xd8c96b00, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
-	{ "e15-08.bin",		0x200000, 0x4bdb2bf3, TAITO_CHARS_BYTESWAP },     //  9
-	{ "e15-09.bin",		0x100000, 0x07c29f60, TAITO_CHARS_BYTESWAP },     // 10
-	{ "e15-07.bin",		0x100000, 0x8164f7ee, TAITO_CHARS_BYTESWAP },     // 11
+	{ "e15-10.ic47",	0x200000, 0xd8c96b00, TAITO_CHARS_BYTESWAP },     //  8 Layer Tiles
+	{ "e15-08.ic45",	0x200000, 0x4bdb2bf3, TAITO_CHARS_BYTESWAP },     //  9
+	{ "e15-09.ic46",	0x100000, 0x07c29f60, TAITO_CHARS_BYTESWAP },     // 10
+	{ "e15-07.ic44",	0x100000, 0x8164f7ee, TAITO_CHARS_BYTESWAP },     // 11
 
-	{ "e15-15.bin",		0x020000, 0x22126dfb, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
-	{ "e15-16.bin",		0x020000, 0xf8b58ea0, TAITO_68KROM2_BYTESWAP },   // 13
+	{ "e15-15.ic32",	0x020000, 0x22126dfb, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
+	{ "e15-16.ic33",	0x020000, 0xf8b58ea0, TAITO_68KROM2_BYTESWAP },   // 13
 
-	{ "e15-05.bin",		0x200000, 0x3e5da5f6, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
-	{ "e15-06.bin",		0x200000, 0xb182a3e1, TAITO_ES5505_BYTESWAP },    // 15
+	{ "e15-05.ic38",	0x200000, 0x3e5da5f6, TAITO_ES5505_BYTESWAP },    // 14 Ensoniq Samples
+	{ "e15-06.ic41",	0x200000, 0xb182a3e1, TAITO_ES5505_BYTESWAP },    // 15
+	
+	{ "d77-12.ic48.bin", 0x117, 0x6f93a4d8, BRF_OPT },
+	{ "d77-14.ic21.bin", 0x117, 0xf2264f51, BRF_OPT },
+	{ "palce16v8.ic37.bin", 0x117, 0x6ccd8168, BRF_OPT },
+	{ "d77-09.ic14.bin", 0x001, 0x00000000, BRF_NODUMP },
+	{ "d77-10.ic28.bin", 0x001, 0x00000000, BRF_NODUMP },
 };
 
 STD_ROM_PICK(ktiger2)
@@ -7459,24 +7482,30 @@ struct BurnDriver BurnDrvPbobble3u = {
 // Puzzle Bobble 3 (Ver 2.1J 1996/09/27)
 
 static struct BurnRomInfo pbobble3jRomDesc[] = {
-	{ "e29-12.rom",		0x080000, 0x9eb19a00, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
-	{ "e29-11.rom",		0x080000, 0xe54ada97, TAITO_68KROM1_BYTESWAP32 }, //  1
-	{ "e29-10.rom",		0x080000, 0x1502a122, TAITO_68KROM1_BYTESWAP32 }, //  2
-	{ "e29-09.bin",		0x080000, 0x44ccf2f6, TAITO_68KROM1_BYTESWAP32 }, //  3
+	{ "e29-12.ic20",	0x080000, 0x9eb19a00, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e29-11.ic19",	0x080000, 0xe54ada97, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e29-10.ic18",	0x080000, 0x1502a122, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e29-09.ic17",	0x080000, 0x44ccf2f6, TAITO_68KROM1_BYTESWAP32 }, //  3
 
-	{ "e29-02.rom",		0x100000, 0x437391d3, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
-	{ "e29-01.rom",		0x100000, 0x52547c77, TAITO_SPRITESA_BYTESWAP },  //  5
+	{ "e29-02.ic8",		0x100000, 0x437391d3, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e29-01.ic12",	0x100000, 0x52547c77, TAITO_SPRITESA_BYTESWAP },  //  5
 
-	{ "e29-08.rom",		0x100000, 0x7040a3d5, TAITO_CHARS_BYTESWAP },     //  6 Layer Tiles
-	{ "e29-07.rom",		0x100000, 0xfca2ea9b, TAITO_CHARS_BYTESWAP },     //  7
-	{ "e29-06.rom",		0x100000, 0xc16184f8, TAITO_CHARS },              //  8
+	{ "e29-08.ic47",	0x100000, 0x7040a3d5, TAITO_CHARS_BYTESWAP },     //  6 Layer Tiles
+	{ "e29-07.ic45",	0x100000, 0xfca2ea9b, TAITO_CHARS_BYTESWAP },     //  7
+	{ "e29-06.ic43",	0x100000, 0xc16184f8, TAITO_CHARS },              //  8
 
-	{ "e29-13.rom",		0x040000, 0x1ef551ef, TAITO_68KROM2_BYTESWAP },   //  9 68k Code
-	{ "e29-14.rom",		0x040000, 0x7ee7e688, TAITO_68KROM2_BYTESWAP },   // 10
+	{ "e29-13.ic32",	0x040000, 0x1ef551ef, TAITO_68KROM2_BYTESWAP },   //  9 68k Code
+	{ "e29-14.ic33",	0x040000, 0x7ee7e688, TAITO_68KROM2_BYTESWAP },   // 10
 
-	{ "e29-03.rom",		0x200000, 0xa4371658, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
-	{ "e29-04.rom",		0x200000, 0xd1f42457, TAITO_ES5505_BYTESWAP },    // 12
-	{ "e29-05.rom",		0x200000, 0xe33c1234, TAITO_ES5505_BYTESWAP },    // 13
+	{ "e29-03.ic38",	0x200000, 0xa4371658, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
+	{ "e29-04.ic39",	0x200000, 0xd1f42457, TAITO_ES5505_BYTESWAP },    // 12
+	{ "e29-05.ic41",	0x200000, 0xe33c1234, TAITO_ES5505_BYTESWAP },    // 13
+	
+	{ "d77-12.ic48.bin", 0x000001, 0x00000000, BRF_OPT },
+	{ "d77-14.ic21.bin", 0x000001, 0x00000000, BRF_OPT },
+	{ "d77-11.ic37.bin", 0x000001, 0x00000000, BRF_OPT },
+	{ "d77-09.ic14.bin", 0x000001, 0x00000000, BRF_OPT },
+	{ "d77-10.ic28.bin", 0x000001, 0x00000000, BRF_OPT },
 };
 
 STD_ROM_PICK(pbobble3j)
@@ -7699,11 +7728,11 @@ static struct BurnRomInfo puchicarRomDesc[] = {
 	{ "e46-08",		0x200000, 0xf7f96e1d, TAITO_ES5505_BYTESWAP },    // 16
 	{ "e46-09",		0x200000, 0x824135f8, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09a.bin",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
+	{ "pal16l8a-d77-10a.bin",	0x104, 0x42f59227, BRF_OPT },             // 15
+	{ "palce16v8q-d77-11a.bin",	0x117, 0xeacc294e, BRF_OPT },             // 16
+	{ "palce16v8q-d77-12a.bin",	0x117, 0xe9920cfe, BRF_OPT },             // 17
+	{ "palce16v8q-d77-15a.bin",	0x117, 0x0edf820a, BRF_OPT },// 18
 };
 
 STD_ROM_PICK(puchicar)
@@ -7751,11 +7780,11 @@ static struct BurnRomInfo puchicarjRomDesc[] = {
 	{ "e46-08",		0x200000, 0xf7f96e1d, TAITO_ES5505_BYTESWAP },    // 16
 	{ "e46-09",		0x200000, 0x824135f8, TAITO_ES5505_BYTESWAP },    // 17
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09a.bin",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
+	{ "pal16l8a-d77-10a.bin",	0x104, 0x42f59227, BRF_OPT },             // 15
+	{ "palce16v8q-d77-11a.bin",	0x117, 0xeacc294e, BRF_OPT },             // 16
+	{ "palce16v8q-d77-12a.bin",	0x117, 0xe9920cfe, BRF_OPT },             // 17
+	{ "palce16v8q-d77-15a.bin",	0x117, 0x0edf820a, BRF_OPT },// 18
 };
 
 STD_ROM_PICK(puchicarj)
@@ -7794,11 +7823,11 @@ static struct BurnRomInfo pbobble4RomDesc[] = {
 	{ "e49-04",		0x200000, 0x09be229c, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e49-05",		0x200000, 0x5ce90ee2, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.bin",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
+	{ "pal16l8a-d77-10.bin",	0x104, 0x42f59227, BRF_OPT },             // 15
+	{ "palce16v8q-d77-11.bin",	0x117, 0xeacc294e, BRF_OPT },             // 16
+	{ "palce16v8q-d77-12.bin",	0x117, 0xe9920cfe, BRF_OPT },             // 17
+	{ "palce16v8q-d77-15.bin",	0x117, 0x00000000, BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(pbobble4)
@@ -7842,11 +7871,11 @@ static struct BurnRomInfo pbobble4jRomDesc[] = {
 	{ "e49-04",		0x200000, 0x09be229c, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e49-05",		0x200000, 0x5ce90ee2, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.bin",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
+	{ "pal16l8a-d77-10.bin",	0x104, 0x42f59227, BRF_OPT },             // 15
+	{ "palce16v8q-d77-11.bin",	0x117, 0xeacc294e, BRF_OPT },             // 16
+	{ "palce16v8q-d77-12.bin",	0x117, 0xe9920cfe, BRF_OPT },             // 17
+	{ "palce16v8q-d77-15.bin",	0x117, 0x00000000, BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(pbobble4j)
@@ -7885,11 +7914,11 @@ static struct BurnRomInfo pbobble4uRomDesc[] = {
 	{ "e49-04",		0x200000, 0x09be229c, TAITO_ES5505_BYTESWAP },    // 12
 	{ "e49-05",		0x200000, 0x5ce90ee2, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "pal16l8a-d77-09.ic14",	0x104, 0xb371532b, 0 },             // 14 plds
-	{ "pal16l8a-d77-10.ic28",	0x104, 0x42f59227, 0 },             // 15
-	{ "palce16v8q-d77-11.ic37",	0x117, 0xeacc294e, 0 },             // 16
-	{ "palce16v8q-d77-12.ic48",	0x117, 0xe9920cfe, 0 },             // 17
-	{ "palce16v8q-d77-15.ic21",	0x117, 0x00000000, 0 | BRF_NODUMP },// 18
+	{ "pal16l8a-d77-09.bin",	0x104, 0xb371532b, BRF_OPT },             // 14 plds
+	{ "pal16l8a-d77-10.bin",	0x104, 0x42f59227, BRF_OPT },             // 15
+	{ "palce16v8q-d77-11.bin",	0x117, 0xeacc294e, BRF_OPT },             // 16
+	{ "palce16v8q-d77-12.bin",	0x117, 0xe9920cfe, BRF_OPT },             // 17
+	{ "palce16v8q-d77-15.bin",	0x117, 0x00000000, BRF_NODUMP },// 18
 };
 
 STD_ROM_PICK(pbobble4u)

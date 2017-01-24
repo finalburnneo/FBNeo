@@ -1954,8 +1954,8 @@ STD_ROM_PICK(Mwalkd)
 STD_ROM_FN(Mwalkd)
 
 static struct BurnRomInfo MwalkjRomDesc[] = {
-	{ "epr-13237.a6",   0x40000, 0x6c0534b3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "epr-13236.a5",   0x40000, 0x99765854, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13227.a6",   0x40000, 0x6c0534b3, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-13226.a5",   0x40000, 0x99765854, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
 	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },
@@ -1986,8 +1986,8 @@ STD_ROM_PICK(Mwalkj)
 STD_ROM_FN(Mwalkj)
 
 static struct BurnRomInfo MwalkjdRomDesc[] = {
-	{ "bootleg_epr-13237.a6",   0x40000, 0xd8e00521, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "bootleg_epr-13236.a5",   0x40000, 0xcb0ba822, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13227.a6",   0x40000, 0xd8e00521, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "bootleg_epr-13226.a5",   0x40000, 0xcb0ba822, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-13216.b1",   0x40000, 0x862d2c03, SYS16_ROM_TILES | BRF_GRA },
 	{ "mpr-13217.b2",   0x40000, 0x7d1ac3ec, SYS16_ROM_TILES | BRF_GRA },

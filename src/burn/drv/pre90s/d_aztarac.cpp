@@ -604,24 +604,24 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Aztarac
 
 static struct BurnRomInfo aztaracRomDesc[] = {
-	{ "6.18",	0x1000, 0x25f8da18, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "6.l8",	0x1000, 0x25f8da18, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "0.n8",	0x1000, 0x04e20626, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "7.17",	0x1000, 0x230e244c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "7.l7",	0x1000, 0x230e244c, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "1.n7",	0x1000, 0x37b12697, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "8.16",	0x1000, 0x1293fb9d, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "8.l6",	0x1000, 0x1293fb9d, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "2.n6",	0x1000, 0x712c206a, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "9.15",	0x1000, 0x743a6501, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "9.l5",	0x1000, 0x743a6501, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "3.n5",	0x1000, 0xa65cbf99, 1 | BRF_PRG | BRF_ESS }, //  7
-	{ "a.14",	0x1000, 0x9cf1b0a1, 1 | BRF_PRG | BRF_ESS }, //  8
+	{ "a.l4",	0x1000, 0x9cf1b0a1, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "4.n4",	0x1000, 0x5f0080d5, 1 | BRF_PRG | BRF_ESS }, //  9
-	{ "b.13",	0x1000, 0x8cc7f7fa, 1 | BRF_PRG | BRF_ESS }, // 10
+	{ "b.l3",	0x1000, 0x8cc7f7fa, 1 | BRF_PRG | BRF_ESS }, // 10
 	{ "5.n3",	0x1000, 0x40452376, 1 | BRF_PRG | BRF_ESS }, // 11
 
 	{ "c.j4",	0x1000, 0xe897dfcd, 2 | BRF_PRG | BRF_ESS }, // 12 Z80 Code
 	{ "d.j3",	0x1000, 0x4016de77, 2 | BRF_PRG | BRF_ESS }, // 13
 	
 	/* not hooked up */
-	{ "15.15",	0x00020, 0x317fb438, 0 | BRF_OPT },			 // 14 Proms
+	{ "l5.l5",	0x00020, 0x317fb438, 0 | BRF_OPT },			 // 14 Proms
 	{ "k8.k8",	0x01000, 0x596ad8d9, 0 | BRF_OPT },			 // 15
 	{ "k9.k9",	0x01000, 0xb8544823, 0 | BRF_OPT },			 // 16
 };

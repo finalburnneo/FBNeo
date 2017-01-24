@@ -905,17 +905,17 @@ static struct BurnRomInfo baryonRomDesc[] = {
 
 	{ "protdata.bin",	0x0006bd, 0x117f32a8, 3 | BRF_PRG | BRF_ESS }, //  5 Protection data
 
-	{ "1.bin",		0x080000, 0xe0349074, 4 | BRF_SND },           //  6 Oki #0 samples
+	{ "1_semicom",		0x080000, 0xe0349074, 4 | BRF_SND },           //  6 Oki #0 samples
 
-	{ "9.bin",		0x200000, 0x28bf828f, 5 | BRF_GRA },           //  7 Sprites
-	{ "11.bin",		0x200000, 0xd0ff1bc6, 5 | BRF_GRA },           //  8
+	{ "10_semicom",		0x200000, 0x28bf828f, 5 | BRF_GRA },           //  7 Sprites
+	{ "11_semicom",		0x200000, 0xd0ff1bc6, 5 | BRF_GRA },           //  8
 
-	{ "2.bin",		0x200000, 0x684012e6, 6 | BRF_GRA },           //  9 Background Tiles
+	{ "8_semicom",		0x200000, 0x684012e6, 6 | BRF_GRA },           //  9 Background Tiles
 
-	{ "8.bin",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           // 10 Sprite Lookup Table
-	{ "10.bin",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 11
+	{ "6_semicom",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           // 10 Sprite Lookup Table
+	{ "7_semicom",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 11
 
-//	{ "7.bin",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 Unknown
+	{ "9_semicom",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 Unknown
 };
 
 STD_ROM_PICK(baryon)
@@ -959,7 +959,7 @@ static struct BurnRomInfo baryonaRomDesc[] = {
 	{ "8.bin",		0x020000, 0xfdbb08b0, 7 | BRF_GRA },           // 10 Sprite Lookup Table
 	{ "10.bin",		0x020000, 0xc9d20480, 7 | BRF_GRA },           // 11
 
-//	{ "7.bin",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 Unknown
+	{ "7.bin",		0x010000, 0x0da8db45, 8 | BRF_OPT },           // 12 Unknown
 };
 
 STD_ROM_PICK(baryona)

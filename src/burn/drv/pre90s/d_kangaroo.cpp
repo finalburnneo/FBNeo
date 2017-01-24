@@ -719,19 +719,19 @@ struct BurnDriver BurnDrvkangaroa = {
 // Kangaroo (bootleg)
 
 static struct BurnRomInfo kangarobRomDesc[] = {
-	{ "tvg_75.0",    0x1000, 0x0d18c581, 1 | BRF_ESS | BRF_PRG }, //  0 Main Z80 Code
-	{ "tvg_76.1",    0x1000, 0x5978d37a, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "tvg_77.2",    0x1000, 0x522d1097, 1 | BRF_ESS | BRF_PRG }, //  2
-	{ "tvg_78.3",    0x1000, 0x063da970, 1 | BRF_ESS | BRF_PRG }, //  3
-	{ "tvg_79.4",    0x1000, 0x9e5cf8ca, 1 | BRF_ESS | BRF_PRG }, //  4
-	{ "k6",          0x1000, 0x7644504a, 1 | BRF_ESS | BRF_PRG }, //  5
+	{ "k1.ic7",     0x1000, 0x0d18c581, 1 | BRF_ESS | BRF_PRG }, //  0 Main Z80 Code
+	{ "k2.ic8",     0x1000, 0x5978d37a, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "k3.ic9",     0x1000, 0x522d1097, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "k4.ic10",    0x1000, 0x063da970, 1 | BRF_ESS | BRF_PRG }, //  3
+	{ "k5.ic16",    0x1000, 0x9e5cf8ca, 1 | BRF_ESS | BRF_PRG }, //  4
+	{ "k6.ic17",    0x1000, 0x7644504a, 1 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "tvg_81.8",    0x1000, 0xfb449bfd, 2 | BRF_ESS | BRF_PRG }, //  6 Sound Z80 Code
+	{ "k7.ic24",    0x1000, 0xfb449bfd, 2 | BRF_ESS | BRF_PRG }, //  6 Sound Z80 Code
 
-	{ "tvg_83.v0",   0x1000, 0xc0446ca6, 3 | BRF_GRA },	      //  7 Graphics
-	{ "tvg_85.v2",   0x1000, 0x72c52695, 3 | BRF_GRA },	      //  8
-	{ "tvg_84.v1",   0x1000, 0xe4cb26c2, 3 | BRF_GRA },	      //  9
-	{ "tvg_86.v3",   0x1000, 0x9e6a599f, 3 | BRF_GRA },	      // 10
+	{ "k10.ic76",   0x1000, 0xc0446ca6, 3 | BRF_GRA },	      //  7 Graphics
+	{ "k11.ic77",   0x1000, 0x72c52695, 3 | BRF_GRA },	      //  8
+	{ "k8.ic52",    0x1000, 0xe4cb26c2, 3 | BRF_GRA },	      //  9
+	{ "k9.ic53",    0x1000, 0x9e6a599f, 3 | BRF_GRA },	      // 10
 };
 
 STD_ROM_PICK(kangarob)

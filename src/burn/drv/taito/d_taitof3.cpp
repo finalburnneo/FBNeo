@@ -872,6 +872,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 	INT32 prevtype = 0;
 	INT32 tilecount = 0;
 	INT32 spritecount = 0;
+	INT32 ret = 0;
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 		prevsize = ri.nLen;
@@ -881,13 +882,14 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_68KROM1_BYTESWAP32)
 		{
-			bprintf (0, _T("000000 68k1\n"));
+			if (bLoad) bprintf (0, _T("000000 68k1\n"));
 
 			if (bLoad) {
-				BurnLoadRom(Taito68KRom1 + 1, i + 0, 4);
-				BurnLoadRom(Taito68KRom1 + 0, i + 1, 4);
-				BurnLoadRom(Taito68KRom1 + 3, i + 2, 4);
-				BurnLoadRom(Taito68KRom1 + 2, i + 3, 4);
+				ret  = BurnLoadRom(Taito68KRom1 + 1, i + 0, 4);
+				ret |= BurnLoadRom(Taito68KRom1 + 0, i + 1, 4);
+				ret |= BurnLoadRom(Taito68KRom1 + 3, i + 2, 4);
+				ret |= BurnLoadRom(Taito68KRom1 + 2, i + 3, 4);
+				if (ret) return 1;
 			}
 			i += 3;
 			continue;
@@ -895,7 +897,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_SPRITESA_BYTESWAP)
 		{
-			bprintf (0, _T("%6.6x sprite 2x\n"), sprites - TaitoSpritesA);
+			if (bLoad) bprintf (0, _T("%6.6x sprite 2x\n"), sprites - TaitoSpritesA);
 
 			if (m_f3_game == GSEEKER)
 			{
@@ -928,7 +930,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				sprites = TaitoSpritesA + ((sprites - TaitoSpritesA) / 2) * 3;
 			}
 
-			bprintf (0, _T("%6.6x sprite 1x \n"), sprites - TaitoSpritesA);
+			if (bLoad) bprintf (0, _T("%6.6x sprite 1x \n"), sprites - TaitoSpritesA);
 
 			if (bLoad) {
 				BurnLoadRom(sprites + 0, i + 0, 1);
@@ -939,13 +941,14 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_CHARS_BYTESWAP32)
 		{
-			bprintf (0, _T("%6.6x tiles x4\n"), tiles - TaitoChars);
+			if (bLoad) bprintf (0, _T("%6.6x tiles x4\n"), tiles - TaitoChars);
 
 			if (bLoad) {
-				BurnLoadRom(tiles + 0, i + 0, 4);
-				BurnLoadRom(tiles + 1, i + 1, 4);
-				BurnLoadRom(tiles + 2, i + 2, 4);
-				BurnLoadRom(tiles + 3, i + 3, 4);
+				ret  = BurnLoadRom(tiles + 0, i + 0, 4);
+				ret |= BurnLoadRom(tiles + 1, i + 1, 4);
+				ret |= BurnLoadRom(tiles + 2, i + 2, 4);
+				ret |= BurnLoadRom(tiles + 3, i + 3, 4);
+				if (ret) return 1;
 			}
 			i+=3;
 			tiles += ri.nLen * 4;
@@ -958,7 +961,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				tiles += 0x100000;
 			}
 
-			bprintf (0, _T("%6.6x tiles x2\n"), tiles - TaitoChars);
+			if (bLoad) bprintf (0, _T("%6.6x tiles x2\n"), tiles - TaitoChars);
 
 			if (bLoad) {
 				BurnLoadRom(tiles + 0, i + 0, 2);
@@ -976,24 +979,25 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				tiles = TaitoChars + ((tiles - TaitoChars) / 2) * 3;
 			}
 
-			bprintf (0, _T("%6.6x tiles x1 \n"), tiles - TaitoChars);
+			if (bLoad) bprintf (0, _T("%6.6x tiles x1 \n"), tiles - TaitoChars);
 
 			if (bLoad) {
 				BurnLoadRom(tiles + 0, i + 0, 1);
 			}
 			tiles += ri.nLen;
-			bprintf (0, _T("%6.6x tiles x1b \n"), tiles - TaitoChars);
+			if (bLoad) bprintf (0, _T("%6.6x tiles x1b \n"), tiles - TaitoChars);
 
 			continue;
 		}
 
 		if (ri.nType == TAITO_68KROM2_BYTESWAP)
 		{
-			bprintf (0, _T("000000 68k2 x2\n"));
+			if (bLoad) bprintf (0, _T("000000 68k2 x2\n"));
 
 			if (bLoad) {
-				BurnLoadRom(Taito68KRom2 + 1, i + 0, 2);
-				BurnLoadRom(Taito68KRom2 + 0, i + 1, 2);
+				ret  = BurnLoadRom(Taito68KRom2 + 1, i + 0, 2);
+				ret |= BurnLoadRom(Taito68KRom2 + 0, i + 1, 2);
+				if (ret) return 1;
 			}
 			i++;
 			continue;
@@ -1001,7 +1005,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_68KROM2) // kirameki
 		{
-			bprintf (0, _T("100000, 68k1 x1\n"));
+			if (bLoad) bprintf (0, _T("100000, 68k1 x1\n"));
 			if (bLoad) {
 				BurnLoadRom(Taito68KRom2 + 0x100000, i, 1);
 			}
@@ -1020,10 +1024,10 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				samples += 0x200000;
 			}
 
-			bprintf (0, _T("%6.6x, samples \n"), samples - TaitoES5505Rom);
+			if (bLoad) bprintf (0, _T("%6.6x, samples \n"), samples - TaitoES5505Rom);
 
 			if (bLoad) {
-				BurnLoadRom(samples + 1, i, 2);
+				if (BurnLoadRom(samples + 1, i, 2)) return 1;
 			}
 			samples += ri.nLen * 2;
 			continue;
@@ -1032,7 +1036,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		if (ri.nType == TAITO_DEFAULT_EEPROM)
 		{
 			if (bLoad) {
-				BurnLoadRom(TaitoDefaultEEProm, i, 1);
+				if (BurnLoadRom(TaitoDefaultEEProm, i, 1)) return 1;
 			}
 			continue;
 		}
@@ -1060,7 +1064,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		TaitoSpriteARomSize = spritesize;
 		TaitoCharRomSize = tilesize;
 		TaitoF3ES5506RomSize = samplesize;
-		bprintf (0, _T("Load: %x, %x, %x\n"), spritesize, tilesize, samplesize);
+		if (bLoad) bprintf (0, _T("Load: %x, %x, %x\n"), spritesize, tilesize, samplesize);
 	}
 
 	return 0;
@@ -1079,7 +1083,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	MemIndex();
 
 	{
-		TaitoF3GetRoms(true);
+		if (TaitoF3GetRoms(true)) return 1;
 
 		if (pRomLoadCB) {
 			if (pRomLoadCB()) return 1;

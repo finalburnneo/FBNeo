@@ -636,10 +636,10 @@ static struct BurnRomInfo OutrundxjRomDesc[] = {
 	{ "epr-10332.ic132",  0x10000, 0x53d298d7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-10334.ic117",  0x10000, 0xff22ad0b, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
-	{ "epr-10328.75",     0x10000, 0x3c0e9a7f, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "epr-10330.57",     0x10000, 0x59786e99, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 	{ "epr-10327.76",     0x10000, 0xda99d855, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 	{ "epr-10329.58",     0x10000, 0xfe0fa5e2, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10328.75",     0x10000, 0x3c0e9a7f, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-10330.57",     0x10000, 0x59786e99, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 
 	{ "opr-10268.99",     0x08000, 0x95344b04, SYS16_ROM_TILES | BRF_GRA },
 	{ "opr-10232.102",    0x08000, 0x776ba1eb, SYS16_ROM_TILES | BRF_GRA },
@@ -1728,8 +1728,6 @@ static UINT8 OutrunReadIO(UINT32 offset)
 		}
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Read IO %x, %x\n"), offset, offset & (0x7f / 2));
-	
 	return sega_315_5195_io_read(offset);
 }
 
@@ -1771,8 +1769,6 @@ static void OutrunWriteIO(UINT32 offset, UINT8 d)
 		}
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Write IO %x->%x\n"), offset, d);
-
 	sega_315_5195_io_write(offset, d);
 }
 
@@ -1796,8 +1792,6 @@ static UINT8 ShangonReadIO(UINT32 offset)
 			return 0xff;
 		}
 	}
-	
-	bprintf(PRINT_NORMAL, _T("Read IO %x, %x\n"), offset, offset & (0x7f / 2));
 	
 	return sega_315_5195_io_read(offset);
 }
@@ -1832,8 +1826,6 @@ static void ShangonWriteIO(UINT32 offset, UINT8 d)
 		}
 	}
 	
-	bprintf(PRINT_NORMAL, _T("Write IO %x->%x\n"), offset, d);
-
 	sega_315_5195_io_write(offset, d);
 }
 

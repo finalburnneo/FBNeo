@@ -1735,7 +1735,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 	struct tempsprite *sprite_ptr = m_spritelist;
 
 	int total_sprites=0;
-
+	int jumpcnt = 0;
 	color=0;
 	flipx=flipy=0;
 	//old_x=0;
@@ -1751,9 +1751,10 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 			uint32_t jump = (spriteram16_ptr[current_offs+6+0])&0x3ff;
 
 			int32_t new_offs=((offs&0x4000)|((jump<<4)/2));
-			if (new_offs==offs)
+			if (new_offs==offs || jumpcnt > 100)
 				break;
 			offs=new_offs - 8;
+			jumpcnt++;
 		}
 
 		/* Check if special command bit is set */
@@ -1977,6 +1978,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 		sprite_ptr++;
 		total_sprites++;
 	}
+	if (jumpcnt>1) bprintf(0, _T("Sprite Jumps: %d. \n"), jumpcnt);
 	m_sprite_end = sprite_ptr;
 }
 #undef CALC_ZOOM

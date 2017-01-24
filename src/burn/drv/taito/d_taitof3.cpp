@@ -53,6 +53,7 @@
 #include "m68000_intf.h"
 #include "taito.h"
 #include "taitof3_snd.h"
+#include "es5506.h"
 #include "eeprom.h"
 
 //#define DO_LOG
@@ -7153,7 +7154,13 @@ STD_ROM_FN(tcobra2)
 
 static INT32 tcobra2Init()
 {
-	return DrvInit(NULL, f3_24bit_palette_update, 0, KTIGER2, 0);
+	INT32 rc = DrvInit(NULL, f3_24bit_palette_update, 0, KTIGER2, 0);
+
+	if (!rc) {
+		ES550X_twincobra2_pan_fix = 1;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvTcobra2 = {

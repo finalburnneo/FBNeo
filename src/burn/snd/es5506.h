@@ -5,12 +5,8 @@
  *
  **********************************************************************************************/
 
-//#pragma once
-
 #ifndef __ES5506_H__
 #define __ES5506_H__
-
-//#include "devlegcy.h"
 
 typedef void (*irq_callback)(INT32 param);
 typedef UINT16(port_read)();
@@ -24,13 +20,6 @@ struct _es5505_interface
 	UINT16 (*read_port)();			/* input port read */
 };
 
-//READ16_DEVICE_HANDLER( es5505_r );
-//WRITE16_DEVICE_HANDLER( es5505_w );
-//void es5505_voice_bank_w(device_t *device, int voice, int bank);
-
-//DECLARE_LEGACY_SOUND_DEVICE(ES5505, es5505);
-
-
 typedef struct _es5506_interface es5506_interface;
 struct _es5506_interface
 {
@@ -42,11 +31,7 @@ struct _es5506_interface
 	UINT16 (*read_port)();			/* input port read */
 };
 
-//READ8_DEVICE_HANDLER( es5506_r );
-//WRITE8_DEVICE_HANDLER( es5506_w );
-//void es5506_voice_bank_w(device_t *device, int voice, int bank);
-
-//DECLARE_LEGACY_SOUND_DEVICE(ES5506, es5506);
+extern INT32 ES550X_twincobra2_pan_fix;
 
 void ES5506Update(INT16 *pBuffer, INT32 samples);
 #define ES5505Update ES5506Update
@@ -63,10 +48,10 @@ void ES5505Write(UINT32 offset, UINT16 data);
 UINT16 ES5505Read(UINT32 offset);
 void es5505_voice_bank_w(INT32 voice, INT32 bank);
 void ES5506Scan(INT32 nAction, INT32* pnMin);
-#endif /* __ES5506_H__ */
 
+void ES5506SetRoute(INT32 chip /*always 0*/, double nVolume, INT32 nRoute);
 #define BURN_SND_ES5506_ROUTE_LEFT	1
 #define BURN_SND_ES5506_ROUTE_RIGHT	2
 #define BURN_SND_ES5506_ROUTE_BOTH	3
 
-void ES5506SetRoute(INT32 chip /*always 0*/, double nVolume, INT32 nRoute);
+#endif /* __ES5506_H__ */

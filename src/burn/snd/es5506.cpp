@@ -212,6 +212,8 @@ struct _es5506_state
 
 static struct _es5506_state *chip = NULL;
 
+INT32 ES550X_twincobra2_pan_fix = 0;
+
 
 /**********************************************************************************************
 
@@ -693,6 +695,11 @@ alldone:
 
 ***********************************************************************************************/
 
+#define twincobra2_check() { \
+	    if (ES550X_twincobra2_pan_fix && lvol > 0x100 && rvol < 7) \
+	    rvol = lvol; \
+	}
+
 static void generate_pcm(es5506_voice *voice, UINT16 *base, INT32 *lbuffer, INT32 *rbuffer, INT32 samples)
 {
 	UINT32 freqcount = voice->freqcount;
@@ -701,6 +708,8 @@ static void generate_pcm(es5506_voice *voice, UINT16 *base, INT32 *lbuffer, INT3
 	INT32 rvol = chip->volume_lookup[voice->rvol >> 4];
 	
 	//bprintf(PRINT_NORMAL, _T("PCM, %x, %x, %x\n"), lvol, rvol, voice->control & CONTROL_STOPMASK);
+
+	twincobra2_check();
 
 	/* pre-add the bank offset */
 	base += voice->exbank;
@@ -732,6 +741,7 @@ reverse:
 					update_envelopes(voice, 1);
 					lvol = chip->volume_lookup[voice->lvol >> 4];
 					rvol = chip->volume_lookup[voice->rvol >> 4];
+					twincobra2_check();
 				}
 
 				/* apply volumes and add */
@@ -766,6 +776,7 @@ reverse:
 					update_envelopes(voice, 1);
 					lvol = chip->volume_lookup[voice->lvol >> 4];
 					rvol = chip->volume_lookup[voice->rvol >> 4];
+					twincobra2_check();
 				}
 
 				/* apply volumes and add */
@@ -968,6 +979,8 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 	chip->volume[0] = 1.00;
 	chip->volume[1] = 1.00;
 
+	ES550X_twincobra2_pan_fix = 0; // this can be set after init.
+
 	/* success */
 }
 
@@ -1048,6 +1061,8 @@ void ES5506Exit()
 	free(chip->scratch);
 	free(chip);
 	chip = NULL;
+
+	ES550X_twincobra2_pan_fix = 0;
 
 	DebugSnd_ES5506Initted = 0;
 }

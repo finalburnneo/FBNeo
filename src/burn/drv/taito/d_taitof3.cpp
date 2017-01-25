@@ -809,7 +809,7 @@ static void DrvGfxDecode(INT32 spr_len, INT32 tile_len)
 
 	GfxDecode((tile_len / 0x100), 6, 16, 16, Plane1, XOffs1, YOffs, 0x400, tmp, TaitoChars);
 
-	sprite_code_mask = (spr_len / 0x100);
+	sprite_code_mask = (spr_len / 0x100) - 1;
 	tileno_mask = (tile_len / 0x100);
 
 	BurnFree (tmp);
@@ -1968,7 +1968,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 			sprite_ptr->flipy = flipy;
 		}
 
-		sprite_ptr->code = sprite;
+		sprite_ptr->code = sprite & sprite_code_mask;
 		sprite_ptr->color = color;
 		sprite_ptr->zoomx = x_addition;
 		sprite_ptr->zoomy = y_addition;
@@ -7400,7 +7400,7 @@ struct BurnDriver BurnDrvCleopatr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, cleopatrRomInfo, cleopatrRomName, NULL, NULL, F3InputInfo, NULL,
-	cleopatrInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	cleopatrInit, DrvExit, DrvFrame, DrvDraw224A_Flipped, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 

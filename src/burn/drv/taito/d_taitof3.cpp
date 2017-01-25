@@ -25,13 +25,13 @@
 	bublblem
 	gekiridn
 	popnpop
-	twinqix	- special case, layer still incorrect! fix later
+	twinqix
 	trstar
 	spcinv95
 	spcinvdj
 	kirameki 	- has extra 68k rom that is banked for sound, not hooked up yet,
 	qtheater
-	quizhuhu	- missing text?  this is normal.
+	quizhuhu	- missing text is normal.
 	elavctrl
 	cleopatr
 	intcup94 / hthero94 ok
@@ -92,6 +92,7 @@ static UINT8 DrvJoy5[16];
 static UINT8 DrvSrv[1];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[5];
+static UINT8 previous_coin;
 
 static UINT32 sprite_code_mask; // set in init
 static INT32 sprite_lag; // set in init
@@ -267,8 +268,6 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 		case 0x04:
 		{
 	//		bprintf (0, _T("contrl %2.2x, %8.8x, %8.8x\n"), offset, d, b);
-		//	if (offset & 2 && b == 2) DrvCoinWord[0] = d;
-		//	if ((offset & 3) == 0) DrvCoinWord[0] = d << 8;
 			if ((offset & 3) == 0) DrvCoinWord[0] = d << 0; // or 8?
 		}
 		return;
@@ -286,8 +285,6 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 		case 0x14:
 		{
 	//		bprintf (0, _T("contrl %2.2x, %8.8x, %8.8x\n"), offset, d, b);
-		//	if ((offset & 3) == 0) DrvCoinWord[1] = d << 8;
-		//	if (offset & 2 && b == 2) DrvCoinWord[1] = d;
 			if ((offset & 3) == 0) DrvCoinWord[1] = d << 0; // or 8?
 		}
 
@@ -394,15 +391,11 @@ static void __fastcall f3_main_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-static UINT32 control_r(INT32 offset, INT32 b)
+static UINT32 control_r(INT32 offset, INT32 )
 {
 	offset &= 0x1c;
 
 	UINT32 ret = 0xffffffff;
-
-//	if (offset >= 4) {
-//		bprintf (0, _T("Control read: %2.2x, %d\n"), offset,b);
-//	}
 
 	switch (offset & 0x1c)
 	{
@@ -667,6 +660,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	sound_cpu_in_reset = 1;
 	watchdog = 0;
+	previous_coin = 0;
 
 	return 0;
 }
@@ -681,21 +675,20 @@ static INT32 MemIndex()
 	Taito68KRom2		= Next; Next += 0x0100000;
 	if (m_f3_game == KIRAMEKI) Next += 0x200000;
 
+	TaitoSpritesA		= Next; Next += TaitoSpriteARomSize;
+	TaitoChars		= Next; Next += TaitoCharRomSize;
 
-	TaitoSpritesA		= Next; Next += 0x1a00000;
-	TaitoChars		= Next; Next += 0x0c00000;
-
-	m_tile_opaque_pf[0]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[1]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[2]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[3]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[4]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[5]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[6]	= Next; Next += 0x0c00000 / 0x100;
-	m_tile_opaque_pf[7]	= Next; Next += 0x0c00000 / 0x100;
+	m_tile_opaque_pf[0]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[1]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[2]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[3]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[4]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[5]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[6]	= Next; Next += TaitoCharRomSize / 0x100;
+	m_tile_opaque_pf[7]	= Next; Next += TaitoCharRomSize / 0x100;
 
 	TaitoF3ES5506Rom	= Next;
-	TaitoES5505Rom		= Next; Next += 0x1000000;
+	TaitoES5505Rom		= Next; Next += TaitoF3ES5506RomSize;
 
 	TaitoDefaultEEProm	= Next; Next += 0x0000080;
 
@@ -719,15 +712,16 @@ static INT32 MemIndex()
 	DrvPivotRAM		= Next; Next += 0x0010000;
 	DrvCtrlRAM		= Next; Next += 0x0000400;
 
-	DrvCoinWord		 = (UINT16*)Next; Next += 2 * sizeof(INT16);
+	DrvCoinWord		= (UINT16*)Next; Next += 2 * sizeof(INT16);
 
-	TaitoF3SoundRam		= Next; Next += 0x010000;
-	TaitoF3SharedRam	= Next; Next += 0x000800;
-	TaitoES5510DSPRam	= Next; Next += 0x000200;
+	TaitoF3SoundRam		= Next; Next += 0x0010000;
+	TaitoF3SharedRam	= Next; Next += 0x0000800;
+	TaitoES5510DSPRam	= Next; Next += 0x0000200;
 
 	TaitoES5510GPR		= (UINT32*)Next; Next += 0x0000c0 * sizeof(UINT32);
+	TaitoES5510DRAM		= (UINT32*)Next; Next += 0x1000000 * sizeof(UINT32); // 64meg
 
-	TaitoRamEnd		    = Next;
+	TaitoRamEnd		= Next;
 
 	output_bitmap		= (UINT32*)Next; Next += 512 * 512 * sizeof(INT32);
 
@@ -855,18 +849,16 @@ static void tile_decode(INT32 spr_len, INT32 tile_len)
 	DrvCalculateTransTable(tile_len);
 }
 
-static INT32 load_sound_offset = 0;
-
 static INT32 TaitoF3GetRoms(bool bLoad)
 {
-	if (!bLoad) load_sound_offset = 0;
+	if (!bLoad) TaitoF3ES5506RomSize = 0;
 
 	char* pRomName;
 	struct BurnRomInfo ri;
 
 	UINT8 *sprites = TaitoSpritesA;
 	UINT8 *tiles = TaitoChars;
-	UINT8 *samples = TaitoES5505Rom + load_sound_offset;
+	UINT8 *samples = TaitoES5505Rom + ((TaitoF3ES5506RomSize == 0x1000000) ? 0x400000 : 0);
 
 	INT32 prevsize = 0;
 	INT32 prevtype = 0;
@@ -882,7 +874,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_68KROM1_BYTESWAP32)
 		{
-			if (bLoad) bprintf (0, _T("000000 68k1\n"));
+	//		if (bLoad) bprintf (0, _T("000000 68k1\n"));
 
 			if (bLoad) {
 				ret  = BurnLoadRom(Taito68KRom1 + 1, i + 0, 4);
@@ -897,7 +889,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_SPRITESA_BYTESWAP)
 		{
-			if (bLoad) bprintf (0, _T("%6.6x sprite 2x\n"), sprites - TaitoSpritesA);
+	//		if (bLoad) bprintf (0, _T("%6.6x sprite 2x\n"), sprites - TaitoSpritesA);
 
 			if (m_f3_game == GSEEKER)
 			{
@@ -930,7 +922,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				sprites = TaitoSpritesA + ((sprites - TaitoSpritesA) / 2) * 3;
 			}
 
-			if (bLoad) bprintf (0, _T("%6.6x sprite 1x \n"), sprites - TaitoSpritesA);
+	//		if (bLoad) bprintf (0, _T("%6.6x sprite 1x \n"), sprites - TaitoSpritesA);
 
 			if (bLoad) {
 				BurnLoadRom(sprites + 0, i + 0, 1);
@@ -941,7 +933,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_CHARS_BYTESWAP32)
 		{
-			if (bLoad) bprintf (0, _T("%6.6x tiles x4\n"), tiles - TaitoChars);
+	//		if (bLoad) bprintf (0, _T("%6.6x tiles x4\n"), tiles - TaitoChars);
 
 			if (bLoad) {
 				ret  = BurnLoadRom(tiles + 0, i + 0, 4);
@@ -959,9 +951,10 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		{
 			if (prevtype == TAITO_CHARS_BYTESWAP32 && m_f3_game == TWINQIX) {
 				tiles += 0x100000;
+				tilecount = 1;
 			}
 
-			if (bLoad) bprintf (0, _T("%6.6x tiles x2\n"), tiles - TaitoChars);
+	//		if (bLoad) bprintf (0, _T("%6.6x tiles x2\n"), tiles - TaitoChars);
 
 			if (bLoad) {
 				BurnLoadRom(tiles + 0, i + 0, 2);
@@ -979,20 +972,20 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				tiles = TaitoChars + ((tiles - TaitoChars) / 2) * 3;
 			}
 
-			if (bLoad) bprintf (0, _T("%6.6x tiles x1 \n"), tiles - TaitoChars);
+	//		if (bLoad) bprintf (0, _T("%6.6x tiles x1 \n"), tiles - TaitoChars);
 
 			if (bLoad) {
 				BurnLoadRom(tiles + 0, i + 0, 1);
 			}
 			tiles += ri.nLen;
-			if (bLoad) bprintf (0, _T("%6.6x tiles x1b \n"), tiles - TaitoChars);
+	//		if (bLoad) bprintf (0, _T("%6.6x tiles x1b \n"), tiles - TaitoChars);
 
 			continue;
 		}
 
 		if (ri.nType == TAITO_68KROM2_BYTESWAP)
 		{
-			if (bLoad) bprintf (0, _T("000000 68k2 x2\n"));
+	//		if (bLoad) bprintf (0, _T("000000 68k2 x2\n"));
 
 			if (bLoad) {
 				ret  = BurnLoadRom(Taito68KRom2 + 1, i + 0, 2);
@@ -1005,7 +998,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_68KROM2) // kirameki
 		{
-			if (bLoad) bprintf (0, _T("100000, 68k1 x1\n"));
+	//		if (bLoad) bprintf (0, _T("100000, 68k1 x1\n"));
 			if (bLoad) {
 				BurnLoadRom(Taito68KRom2 + 0x100000, i, 1);
 			}
@@ -1024,7 +1017,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 				samples += 0x200000;
 			}
 
-			if (bLoad) bprintf (0, _T("%6.6x, samples \n"), samples - TaitoES5505Rom);
+	//		if (bLoad) bprintf (0, _T("%6.6x, samples \n"), samples - TaitoES5505Rom);
 
 			if (bLoad) {
 				if (BurnLoadRom(samples + 1, i, 2)) return 1;
@@ -1047,8 +1040,8 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		INT32 tilesize = tiles - TaitoChars;
 		INT32 samplesize = samples - TaitoES5505Rom;
 
-		if (samplesize == 0xc00000 || samplesize == 0xa00000) {
-			load_sound_offset = 0x400000;
+		if (samplesize >= 0xa00000) {
+			samplesize = 0x1000000;
 		}
 
 		if (tilecount == 0) tilesize *= 2;
@@ -1064,7 +1057,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		TaitoSpriteARomSize = spritesize;
 		TaitoCharRomSize = tilesize;
 		TaitoF3ES5506RomSize = samplesize;
-		if (bLoad) bprintf (0, _T("Load: %x, %x, %x\n"), spritesize, tilesize, samplesize);
+	//	bprintf (0, _T("Load: %x, %x, %x\n"), spritesize, tilesize, samplesize);
 	}
 
 	return 0;
@@ -2274,8 +2267,8 @@ inline void f3_alpha_blend_3b_2(uint32_t s){f3_alpha_blend32_d(m_alpha_s_3b_2,s)
 /*============================================================================*/
 
 int dpix_1_noalpha(uint32_t s_pix) {m_dval = s_pix; return 1;}
-int dpix_ret1(uint32_t s_pix) {return 1;}
-int dpix_ret0(uint32_t s_pix) {return 0;}
+int dpix_ret1(uint32_t /*s_pix*/) {return 1;}
+int dpix_ret0(uint32_t /*s_pix*/) {return 0;}
 int dpix_1_1(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_1(s_pix); return 1;}
 int dpix_1_2(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_2(s_pix); return 1;}
 int dpix_1_4(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_4(s_pix); return 1;}
@@ -2720,6 +2713,8 @@ static void draw_scanlines(int xsize,INT16 *draw_line_num,
 		yadvp = -yadvp;
 	}
 #endif
+
+	
 
 	dstp0 = TaitoPriorityMap + (ty * 1024) + x;
 
@@ -4021,12 +4016,22 @@ static INT32 DrvFrame()
 
 		DrvInputs[1] &= ~0xff00;
 		DrvInputs[4] = (DrvInputs[4] & ~2) | ((DrvSrv[0]) ? 0x00 : 0x02);
-	}
 
+		DrvInputs[4] |= 0xf0; // set all coins disabled
+
+		INT32 cur_coin = ((DrvJoy5[4] & 1) << 4) | ((DrvJoy5[5] & 1) << 5) | ((DrvJoy5[6] & 1) << 6) | ((DrvJoy5[7] & 1) << 7);
+
+		for (INT32 i = 0x10; i < 0x100; i <<= 1) {
+			if ((cur_coin & i) == i && (previous_coin & i) == 0) {
+				DrvInputs[4] &= ~i;
+			}
+		}
+
+		previous_coin = cur_coin;
+	}
 
 	INT32 nInterleave = 256;
 	nTaitoCyclesTotal[0] = 16000000 / 60; // do not touch!
-
 	nTaitoCyclesDone[0] = nTaitoCyclesDone[1] = 0;
 
 	SekNewFrame();
@@ -7565,7 +7570,7 @@ struct BurnDriver BurnDrvArkretrn = {
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkretrnRomInfo, arkretrnRomName, NULL, NULL, F3InputInfo, NULL,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	320, 224, 4, 3
+	320, 232, 4, 3
 };
 
 
@@ -7607,7 +7612,7 @@ struct BurnDriver BurnDrvArkretrnu = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkretrnuRomInfo, arkretrnuRomName, NULL, NULL, F3InputInfo, NULL,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	320, 224, 4, 3
+	320, 232, 4, 3
 };
 
 
@@ -7649,7 +7654,7 @@ struct BurnDriver BurnDrvArkretrnj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkretrnjRomInfo, arkretrnjRomName, NULL, NULL, F3InputInfo, NULL,
 	arkretrnInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
-	320, 224, 4, 3
+	320, 232, 4, 3
 };
 
 
@@ -7698,7 +7703,7 @@ struct BurnDriver BurnDrvKirameki = {
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_QUIZ, 0,
 	NULL, kiramekiRomInfo, kiramekiRomName, NULL, NULL, F3InputInfo, NULL,
 	kiramekiInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
-	320, 232, 4, 3
+	320, 224, 4, 3
 };
 
 

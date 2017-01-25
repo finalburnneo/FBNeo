@@ -1749,7 +1749,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 			uint32_t jump = (spriteram16_ptr[current_offs+6+0])&0x3ff;
 
 			int32_t new_offs=((offs&0x4000)|((jump<<4)/2));
-			if (new_offs==offs || jumpcnt > 100)
+			if (new_offs==offs || jumpcnt > 250)
 				break;
 			offs=new_offs - 8;
 			jumpcnt++;
@@ -1976,7 +1976,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 		sprite_ptr++;
 		total_sprites++;
 	}
-	if (jumpcnt>1) bprintf(0, _T("Sprite Jumps: %d. \n"), jumpcnt);
+	if (jumpcnt>150) bprintf(0, _T("Sprite Jumps: %d. \n"), jumpcnt);
 	m_sprite_end = sprite_ptr;
 }
 #undef CALC_ZOOM

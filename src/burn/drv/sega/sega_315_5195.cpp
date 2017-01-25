@@ -1853,8 +1853,10 @@ INT32 sega_315_5195_scan(INT32 nAction)
 {
 	if (!mapper_in_use) return 0;
 	
-	SCAN_VAR(chip.regs);
-	SCAN_VAR(open_bus_recurse);
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(chip.regs);
+		SCAN_VAR(open_bus_recurse);
+	}
 	
 	if (nAction & ACB_WRITE) {
 		SekOpen(0);

@@ -1767,3 +1767,19 @@ void sega_315_5195_exit()
 	sega_315_5195_custom_io_do = NULL;
 	sega_315_5195_custom_io_write_do = NULL;
 }
+
+INT32 sega_315_5195_scan(INT32 nAction)
+{
+	if (!mapper_in_use) return 0;
+	
+	SCAN_VAR(chip.regs);
+	SCAN_VAR(open_bus_recurse);
+	
+	if (nAction & ACB_WRITE) {
+		SekOpen(0);
+		update_mapping();
+		SekClose();
+	}
+	
+	return 0;
+}

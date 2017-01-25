@@ -3522,7 +3522,7 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin != NULL) {
-		*pnMin =  0x029719;
+		*pnMin =  0x029740;
 	}
 
 	if (nAction & ACB_NVRAM) {
@@ -3575,6 +3575,14 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 			ppi8255_scan();
 		}
 		
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
+			if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_ISGSM) == 0) {
+				sega_315_5195_scan(nAction);
+			}
+		}
+		
+		if (System16I8751RomNum) mcs51_scan(nAction);
+		
 		if (nBurnGunNumPlayers) BurnGunScan();
 
 		if (System16HasGears) BurnShiftScan(nAction);
@@ -3607,6 +3615,8 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(System18VdpEnable);
 		SCAN_VAR(RF5C68PCMBankAddress);
 		SCAN_VAR(System16Z80Enable);
+		SCAN_VAR(System1668KEnable);
+		SCAN_VAR(System16MCUData);
 		
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
 			BurnYM3438Scan(nAction, pnMin);

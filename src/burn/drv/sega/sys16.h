@@ -336,3 +336,4 @@ void sega_315_5195_reset();
 void sega_315_5195_configure_explicit(UINT8 *map_data);
 void sega_315_5195_init();
 void sega_315_5195_exit();
+INT32 sega_315_5195_scan(INT32 nAction);

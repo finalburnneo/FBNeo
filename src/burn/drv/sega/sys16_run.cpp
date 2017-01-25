@@ -2642,6 +2642,8 @@ INT32 System16Exit()
  	System16PromSize = 0;
 	System16PromNum = 0;
  	System16KeySize = 0;
+	System16I8751RomSize = 0;
+	System16I8751RomNum = 0;
  	
  	Simulate8751 = NULL;
  	System16Map68KDo = NULL;

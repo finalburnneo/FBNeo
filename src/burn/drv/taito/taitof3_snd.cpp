@@ -12,7 +12,7 @@ INT32  TaitoF3ES5506RomSize = 0;
 UINT8 *TaitoF3SharedRam = NULL;
 UINT8 *TaitoES5510DSPRam = NULL;
 UINT32 *TaitoES5510GPR = NULL;
-UINT32 *TaitoES5510DRAM = NULL; // 1<<24 * sizeof(UINT32);
+UINT16 *TaitoES5510DRAM = NULL;
 
 static INT32 TaitoF3Counter;
 static INT32 TaitoF3VectorReg;
@@ -120,10 +120,14 @@ static void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
 			case 0x0e: TaitoES5510DOLLatch = (TaitoES5510DOLLatch & 0xffff00) | ((d & 0xff) << 0); return;
 			case 0x0f: {
 				TaitoES5510DADRLatch = (TaitoES5510DADRLatch & 0x00ffff) | ((d & 0xff) << 16);
+				if (TaitoES5510DADRLatch > 0x1fffff) {
+					bprintf(0, _T("Taito F3SND-error: DRAM OVERFLOW! Addr = %X\n"), TaitoES5510DADRLatch);
+					TaitoES5510DADRLatch &= 0x1fffff;
+				}
 				if(TaitoES5510RAMSelect)
-					TaitoES5510DILLatch = TaitoES5510DRAM[TaitoES5510DADRLatch];
+					TaitoES5510DILLatch = ((UINT32)TaitoES5510DRAM[TaitoES5510DADRLatch] << 8);
 				else
-					TaitoES5510DRAM[TaitoES5510DADRLatch] = TaitoES5510DOLLatch;
+					TaitoES5510DRAM[TaitoES5510DADRLatch] = (TaitoES5510DOLLatch >> 8);
 				return;
 			}
 			case 0x10: TaitoES5510DADRLatch = (TaitoES5510DADRLatch & 0xff00ff) | ((d & 0xff) << 8); return;

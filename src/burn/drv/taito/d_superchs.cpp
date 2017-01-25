@@ -225,7 +225,7 @@ static INT32 MemIndex()
 	TaitoF3SharedRam                = Next; Next += 0x000800;
 	TaitoES5510DSPRam               = Next; Next += 0x000200;
 	TaitoES5510GPR                  = (UINT32*)Next; Next += 0x0000c0 * sizeof(UINT32);
-	TaitoES5510DRAM                 = (UINT32*)Next; Next += (1<<24) * sizeof(UINT32); // 64meg
+	TaitoES5510DRAM                 = (UINT16*)Next; Next += 0x200000 * sizeof(UINT16);
 
 	TaitoRamEnd                     = Next;
 

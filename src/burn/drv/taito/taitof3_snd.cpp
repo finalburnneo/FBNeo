@@ -8,21 +8,27 @@
 UINT8 *TaitoF3SoundRom = NULL;
 UINT8 *TaitoF3SoundRam = NULL;
 UINT8 *TaitoF3ES5506Rom = NULL;
-INT32 TaitoF3ES5506RomSize = 0;
+INT32  TaitoF3ES5506RomSize = 0;
 UINT8 *TaitoF3SharedRam = NULL;
 UINT8 *TaitoES5510DSPRam = NULL;
 UINT32 *TaitoES5510GPR = NULL;
+UINT32 *TaitoES5510DRAM = NULL; // 1<<24 * sizeof(UINT32);
 
 static INT32 TaitoF3Counter;
 static INT32 TaitoF3VectorReg;
-static UINT32 TaitoES5510GPRLatch;
 static INT32 M68681IMR;
 static INT32 IMRStatus;
 static UINT32 TaitoF3SoundTriggerIRQCycles;
 static UINT32 TaitoF3SoundTriggerIRQPulseCycles;
 static UINT32 TaitoF3SoundTriggerIRQCycleCounter;
 static UINT32 TaitoF3SoundTriggerIRQPulseCycleCounter;
-static INT32 TaitoF3SoundTriggerIRQCyclesMode = 0;
+static INT32  TaitoF3SoundTriggerIRQCyclesMode = 0;
+
+static UINT32 TaitoES5510GPRLatch;
+static UINT32 TaitoES5510DOLLatch;
+static UINT32 TaitoES5510DILLatch;
+static UINT32 TaitoES5510DADRLatch;
+static UINT8  TaitoES5510RAMSelect;
 
 #define IRQ_TRIGGER_OFF		0
 #define IRQ_TRIGGER_ONCE	1
@@ -46,10 +52,17 @@ static UINT8 __fastcall TaitoF3Sound68KReadByte(UINT32 a)
 	if (a >= 0x260000 && a <= 0x2601ff) {
 		INT32 Offset = (a & 0x1ff);
 
-		if (Offset == 0x12 * 2) return 0;
-		if (Offset == 0x16 * 2) return 0x27;
+		switch (Offset>>1)
+		{
+			case (0x09): return (TaitoES5510DILLatch >> 16) & 0xff;
+			case (0x0a): return (TaitoES5510DILLatch >> 8) & 0xff;
+			case (0x0b): return (TaitoES5510DILLatch >> 0) & 0xff;
+			case (0x12): return 0;
+			case (0x16): return 0x27;
+		    default: break;
+		}
 
-		return TaitoES5510DSPRam[Offset^1];
+		return TaitoES5510DSPRam[Offset];
 	}
 
 	if (a >= 0x280000 && a <= 0x28001f) {
@@ -95,55 +108,35 @@ static void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
 	if (a >= 0x260000 && a <= 0x2601ff) {
 		INT32 Offset = (a & 0x1ff);
 
-		TaitoES5510DSPRam[Offset^1] = d;
+		TaitoES5510DSPRam[Offset] = d;
 
-		switch (Offset) {
-			case 0x00: {
-				TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0x00ffff) | ((d & 0xff) << 16);
+		switch (Offset>>1) {
+			case 0x00: TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0x00ffff) | ((d & 0xff) <<16); return;
+			case 0x01: TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0xff00ff) | ((d & 0xff) << 8); return;
+			case 0x02: TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0xffff00) | ((d & 0xff) << 0); return;
+
+			case 0x0c: TaitoES5510DOLLatch = (TaitoES5510DOLLatch & 0x00ffff) | ((d & 0xff) <<16); return;
+			case 0x0d: TaitoES5510DOLLatch = (TaitoES5510DOLLatch & 0xff00ff) | ((d & 0xff) << 8); return;
+			case 0x0e: TaitoES5510DOLLatch = (TaitoES5510DOLLatch & 0xffff00) | ((d & 0xff) << 0); return;
+			case 0x0f: {
+				TaitoES5510DADRLatch = (TaitoES5510DADRLatch & 0x00ffff) | ((d & 0xff) << 16);
+				if(TaitoES5510RAMSelect)
+					TaitoES5510DILLatch = TaitoES5510DRAM[TaitoES5510DADRLatch];
+				else
+					TaitoES5510DRAM[TaitoES5510DADRLatch] = TaitoES5510DOLLatch;
 				return;
 			}
+			case 0x10: TaitoES5510DADRLatch = (TaitoES5510DADRLatch & 0xff00ff) | ((d & 0xff) << 8); return;
+			case 0x11: TaitoES5510DADRLatch = (TaitoES5510DADRLatch & 0xffff00) | ((d & 0xff) << 0); return;
+			case 0x14: TaitoES5510RAMSelect = d & 0x80; return;
 
-			case 0x01: {
-				TaitoES5510GPRLatch = (TaitoES5510GPRLatch & 0xff00ff) | ((d & 0xff) << 8);
-				return;
-			}
+			case 0x80: if (d < 0xc0) { TaitoES5510GPRLatch = TaitoES5510GPR[d]; return; }
 
-			case 0x02: {
-				TaitoES5510GPRLatch= (TaitoES5510GPRLatch & 0xffff00) | ((d & 0xff) << 0);
-				return;
-			}
+			case 0xa0: if (d < 0xc0) { TaitoES5510GPR[d] = TaitoF3ES5506Rom[(TaitoES5510GPRLatch >> 8) & (TaitoF3ES5506RomSize - 1)]; return; }
 
-			case 0x03: {
-				return;
-			}
-
-			case 0x80: {
-				if (d < 0xc0) {
-					TaitoES5510GPRLatch = TaitoES5510GPR[d];
-				}
-				return;
-			}
-
-			case 0xa0: {
-				if (d < 0xc0) {
-					TaitoES5510GPR[d] = TaitoF3ES5506Rom[(TaitoES5510GPRLatch >> 8) & (TaitoF3ES5506RomSize - 1)];
-				}
-				return;
-			}
-
-			case 0xc0: {
-				return;
-			}
-
-			case 0xe0: {
-				return;
-			}
-
-			default: {
-//				bprintf(PRINT_NORMAL,_T("es5510_dsp_w byte %x -> %x\n"), Offset, d);
-				return;
-			}
+		    default: return;
 		}
+		return;
 	}
 
 	if (a >= 0x280000 && a <= 0x28001f) {
@@ -292,6 +285,11 @@ void TaitoF3SoundReset()
 	TaitoF3Counter = 0;
 	TaitoF3VectorReg = 0;
 	TaitoES5510GPRLatch = 0;
+	TaitoES5510DOLLatch = 0;
+	TaitoES5510DILLatch = 0;
+	TaitoES5510DADRLatch = 0;
+	TaitoES5510RAMSelect = 0;
+
 	M68681IMR = 0;
 	IMRStatus = 0;
 	TaitoF3SoundTriggerIRQCycles = 0;
@@ -352,7 +350,7 @@ void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)
 		nCyclesDone = 0;
 	}
 
-	INT32 nTotalCycles = 16000000 / (nBurnFPS / 100);
+	INT32 nTotalCycles = (30476100 / 2) / (nBurnFPS / 100);
 
 	SekOpen(TaitoF3CpuNum);
 

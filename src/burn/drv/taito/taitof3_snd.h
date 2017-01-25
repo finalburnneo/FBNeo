@@ -4,6 +4,7 @@ extern UINT8 *TaitoF3ES5506Rom;		// variable...
 extern UINT8 *TaitoF3SharedRam;		// 2 KB
 extern UINT8 *TaitoES5510DSPRam;	// 512 Bytes
 extern UINT32 *TaitoES5510GPR;		// 192x4 Bytes
+extern UINT32 *TaitoES5510DRAM;     // 1<<24 * sizeof(UINT32) (64megs)
 extern INT32 TaitoF3ES5506RomSize;	// 
 
 void TaitoF3SoundReset();

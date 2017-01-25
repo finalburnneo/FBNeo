@@ -12,9 +12,9 @@
 	ARABIANM
 	kaiserkn
 	RECALH
-	RIDINGF	    - no sound
+	RIDINGF	    - missing road in some parts, incl. at the beginning when falling from the chopper.
 	LIGHTBR
-	RINGRAGE    - no sound
+	RINGRAGE
 	LANDMAKER & proto
 	DARIUSG
 	PUCHICAR
@@ -1164,7 +1164,6 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 
 static INT32 DrvExit()
 {
-	TaitoExit();
 	SekExit();
 	TaitoF3SoundExit();
 
@@ -1173,6 +1172,8 @@ static INT32 DrvExit()
 	BurnFree (TaitoMem);
 
 	BurnFree (m_spritelist);
+
+	TaitoClearVariables(); // from taito.cpp
 
 	pPaletteUpdateCallback = NULL;
 
@@ -2760,7 +2761,7 @@ static void draw_scanlines(int xsize,INT16 *draw_line_num,
 					UINT8 sprite_pri;
 					switch(skip_layer_num)
 					{
-						case 0: UPDATE_PIXMAP_SP(0) UPDATE_PIXMAP_LP(0) 
+						case 0: UPDATE_PIXMAP_SP(0) UPDATE_PIXMAP_LP(0)
 						case 1: UPDATE_PIXMAP_SP(1) UPDATE_PIXMAP_LP(1)
 						case 2: UPDATE_PIXMAP_SP(2) UPDATE_PIXMAP_LP(2)
 						case 3: UPDATE_PIXMAP_SP(3) UPDATE_PIXMAP_LP(3)
@@ -2819,8 +2820,6 @@ static void visible_tile_check(
 	int alpha_type,alpha_mode;
 	int opaque_all;
 	int total_elements;
-
-
 
 	alpha_mode=line_t->alpha_mode[line];
 	if(!alpha_mode) return;

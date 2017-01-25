@@ -847,28 +847,8 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 	return 0;
 }
 
-INT32 TaitoExit()
+void TaitoClearVariables()
 {
-	INT32 i;
-
-	if (TaitoNum68Ks) SekExit();
-	if (TaitoNumZ80s) ZetExit();
-	if (TaitoNumYM2610) BurnYM2610Exit();
-	if (TaitoNumYM2151) BurnYM2151Exit();
-	if (TaitoNumYM2203) BurnYM2203Exit();
-	if (TaitoNumMSM5205) MSM5205Exit();
-	for (i = 0; i < TaitoNumMSM6295; i++) {
-		MSM6295Exit(i);
-	}
-	if (TaitoNumEEPROM) EEPROMExit();
-	
-	TaitoICExit();
-	
-	GenericTilesExit();
-	if (nBurnGunNumPlayers) BurnGunExit();
-	
-	BurnFree(TaitoMem);
-
 	Taito68KRom1Num = 0;
 	Taito68KRom2Num = 0;
 	Taito68KRom3Num = 0;
@@ -977,6 +957,31 @@ INT32 TaitoExit()
 	TaitoDrawFunction = NULL;
 	TaitoMakeInputsFunction = NULL;
 	TaitoResetFunction = NULL;
+}
+
+INT32 TaitoExit()
+{
+	INT32 i;
+
+	if (TaitoNum68Ks) SekExit();
+	if (TaitoNumZ80s) ZetExit();
+	if (TaitoNumYM2610) BurnYM2610Exit();
+	if (TaitoNumYM2151) BurnYM2151Exit();
+	if (TaitoNumYM2203) BurnYM2203Exit();
+	if (TaitoNumMSM5205) MSM5205Exit();
+	for (i = 0; i < TaitoNumMSM6295; i++) {
+		MSM6295Exit(i);
+	}
+	if (TaitoNumEEPROM) EEPROMExit();
 	
+	TaitoICExit();
+	
+	GenericTilesExit();
+	if (nBurnGunNumPlayers) BurnGunExit();
+	
+	BurnFree(TaitoMem);
+
+	TaitoClearVariables();
+
 	return 0;
 }

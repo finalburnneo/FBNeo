@@ -206,6 +206,7 @@ extern INT32 *TaitoSpriteBYOffsets;
 
 extern INT32 TaitoLoadRoms(INT32 bLoad);
 extern INT32 TaitoExit();
+extern void TaitoClearVariables();
 
 // Taito F2 Sprites
 struct TaitoF2SpriteEntry {

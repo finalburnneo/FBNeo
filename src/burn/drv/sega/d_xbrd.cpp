@@ -2518,7 +2518,7 @@ static UINT8 iochip_regs[2][8] = {{ 0, 0, 0, 0, 0, 0, 0, 0 }, { 0, 0, 0, 0, 0, 0
 static UINT8 LastsurvMux = 0;
 static INT32 LastsurvPosition[2] = { 0, 0 };
 
-inline UINT16 iochip_r(INT32 which, INT32 port, INT32 inputval)
+static inline UINT16 iochip_r(INT32 which, INT32 port, INT32 inputval)
 {
 	UINT16 result = iochip_regs[which][port];
 	

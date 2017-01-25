@@ -2219,7 +2219,7 @@ static INT16 AceattacaTrack2Y = 0;
 static INT8 AceattacaDial1 = 0;
 static INT8 AceattacaDial2 = 0;
 
-void AceattacaMakeAnalogInputs()
+static void AceattacaMakeAnalogInputs()
 {
 	if (System16InputPort3[0]) AceattacaTrack1X += 0x40;
 	if (System16InputPort3[1]) AceattacaTrack1X -= 0x40;
@@ -2252,7 +2252,7 @@ void AceattacaMakeAnalogInputs()
 	if (AceattacaDial2 < 0) AceattacaDial2 = 0x0f;
 }
 
-UINT8 __fastcall AceattacaReadByte(UINT32 a)
+static UINT8 __fastcall AceattacaReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -2306,7 +2306,7 @@ static INT16 MjleagueTrack2Y = 0;
 static INT16 MjleagueBat1 = 0;
 static INT16 MjleagueBat2 = 0;
 
-void MjleagueMakeAnalogInputs()
+static void MjleagueMakeAnalogInputs()
 {
 	if (System16InputPort3[0]) MjleagueTrack1X -= 0x04;
 	if (System16InputPort3[1]) MjleagueTrack1X += 0x04;
@@ -2332,7 +2332,7 @@ void MjleagueMakeAnalogInputs()
 	MjleagueBat2 = 0x80 + (System16AnalogPort1 >> 4);
 }
 
-UINT8 __fastcall MjleagueReadByte(UINT32 a)
+static UINT8 __fastcall MjleagueReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -2399,7 +2399,7 @@ UINT8 __fastcall MjleagueReadByte(UINT32 a)
 	return 0xff;
 }
 
-UINT8 __fastcall Passsht16aReadByte(UINT32 a)
+static UINT8 __fastcall Passsht16aReadByte(UINT32 a)
 {
 	static INT32 PortNum = 0;
 	
@@ -2437,7 +2437,7 @@ UINT8 __fastcall Passsht16aReadByte(UINT32 a)
 	return 0xff;
 }
 
-UINT8 __fastcall QuartetReadByte(UINT32 a)
+static UINT8 __fastcall QuartetReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -2477,7 +2477,7 @@ static INT16 SdiTrack1Y = 0;
 static INT16 SdiTrack2X = 0;
 static INT16 SdiTrack2Y = 0;
 
-void SdiMakeAnalogInputs()
+static void SdiMakeAnalogInputs()
 {
 	SdiTrack1X += (System16AnalogPort0 >> 8) & 0xff;
 	SdiTrack1Y -= (System16AnalogPort1 >> 8) & 0xff;
@@ -2486,7 +2486,7 @@ void SdiMakeAnalogInputs()
 	SdiTrack2Y -= (System16AnalogPort3 >> 8) & 0xff;
 }
 
-UINT8 __fastcall SdiReadByte(UINT32 a)
+static UINT8 __fastcall SdiReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -2530,7 +2530,7 @@ UINT16 __fastcall Sjryuko1ReadWord(UINT32 a)
 	return 0xffff;
 }
 
-UINT8 __fastcall Sjryuko1ReadByte(UINT32 a)
+static UINT8 __fastcall Sjryuko1ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -2558,7 +2558,7 @@ UINT8 __fastcall Sjryuko1ReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall Sjryuko1WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Sjryuko1WriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
 		System16ATileByteWrite((a - 0x400000) ^ 1, d);
@@ -2705,7 +2705,7 @@ static INT32 Aliensyn5Init()
 	return nRet;
 }
 
-void Bodyslam_Sim8751()
+static void Bodyslam_Sim8751()
 {
 	UINT8 flag = ((System16Ram[0x200 + 1] << 8) | System16Ram[0x200 + 0]) >> 8;
 	UINT8 tick = ((System16Ram[0x200 + 1] << 8) | System16Ram[0x200 + 0]) & 0xff;
@@ -2929,7 +2929,7 @@ static INT32 MjleagueScan(INT32 nAction,INT32 *pnMin)
 	return System16Scan(nAction, pnMin);;
 }
 
-void Quartet_Sim8751()
+static void Quartet_Sim8751()
 {
 	// X-Scroll Values
 	*((UINT16*)(System16TextRam + 0xff8)) = BURN_ENDIAN_SWAP_INT16(((System16Ram[0x0d14 + 1] << 8) | System16Ram[0x0d14 + 0]));

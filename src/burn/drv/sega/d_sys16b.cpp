@@ -6061,7 +6061,7 @@ void BootlegMapZ80()
 Memory Handlers - used by games not using the mapper
 ====================================================*/
 
-UINT8 __fastcall System16BReadByte(UINT32 a)
+static UINT8 __fastcall System16BReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -6096,7 +6096,7 @@ UINT8 __fastcall System16BReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall System16BWriteByte(UINT32 a, UINT8 d)
+static void __fastcall System16BWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
 		System16BTileByteWrite((a - 0x400000) ^ 1, d);
@@ -6124,7 +6124,7 @@ void __fastcall System16BWriteByte(UINT32 a, UINT8 d)
 #endif
 }
 
-void __fastcall System16BWriteWord(UINT32 a, UINT16 d)
+static void __fastcall System16BWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
 		System16BTileWordWrite(a - 0x400000, d);
@@ -6239,7 +6239,7 @@ static UINT8 AceattacReadIO(UINT32 offset)
 	return sega_315_5195_io_read(offset);
 }
 
-void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
+static void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc42007: {
@@ -6253,7 +6253,7 @@ void __fastcall AltbeastblSoundWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall AltbeastblGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall AltbeastblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x418000: {
@@ -6305,7 +6305,7 @@ void __fastcall AltbeastblGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall DduxblGfxWriteByte(UINT32 a, UINT8 d)
+static void __fastcall DduxblGfxWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc46021: {
@@ -6338,7 +6338,7 @@ void __fastcall DduxblGfxWriteByte(UINT32 a, UINT8 d)
 #endif
 }
 
-void __fastcall DduxblGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall DduxblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xc46000: {
@@ -6367,7 +6367,7 @@ void __fastcall DduxblGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall DduxblWriteByte(UINT32 a, UINT8 d)
+static void __fastcall DduxblWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x3f0001: {
@@ -6493,7 +6493,7 @@ static UINT8 DunkshotReadIO(UINT32 offset)
 	return sega_315_5195_io_read(offset);
 }
 
-void __fastcall EswatblBankWriteByte(UINT32 a, UINT8 d)
+static void __fastcall EswatblBankWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x3e2001: {
@@ -6520,7 +6520,7 @@ void __fastcall EswatblBankWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall EswatblSoundWriteByte(UINT32 a, UINT8 d)
+static void __fastcall EswatblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc42007: {
@@ -6533,7 +6533,7 @@ void __fastcall EswatblSoundWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall EswatblGfxWriteByte(UINT32 a, UINT8 d)
+static void __fastcall EswatblGfxWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x418031: {
@@ -6543,7 +6543,7 @@ void __fastcall EswatblGfxWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall EswatblGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall EswatblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x418000: {
@@ -6666,7 +6666,7 @@ static UINT8 ExctleagReadIO(UINT32 offset)
 	return sega_315_5195_io_read(offset);
 }
 
-UINT8 __fastcall FpointblReadByte(UINT32 a)
+static UINT8 __fastcall FpointblReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x601001: {
@@ -6697,7 +6697,7 @@ UINT8 __fastcall FpointblReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall FpointblWriteByte(UINT32 a, UINT8 d)
+static void __fastcall FpointblWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x600007: {
@@ -6721,7 +6721,7 @@ void __fastcall FpointblWriteByte(UINT32 a, UINT8 d)
 #endif
 }
 
-void __fastcall FpointblGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall FpointblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xc46000: {
@@ -6833,7 +6833,7 @@ static void HwchampWriteIO(UINT32 offset, UINT8 d)
 	sega_315_5195_io_write(offset, d);
 }
 
-void __fastcall PassshtbGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall PassshtbGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xc46000: {
@@ -6882,7 +6882,7 @@ static INT16 SdiTrack1Y = 0;
 static INT16 SdiTrack2X = 0;
 static INT16 SdiTrack2Y = 0;
 
-void SdibMakeAnalogInputs()
+static void SdibMakeAnalogInputs()
 {
 	SdiTrack1X -= (System16AnalogPort0 >> 8) & 0xff;
 	SdiTrack1Y += (System16AnalogPort1 >> 8) & 0xff;
@@ -6930,7 +6930,7 @@ static UINT8 SdibReadIO(UINT32 offset)
 	return sega_315_5195_io_read(offset);
 }
 
-UINT8 __fastcall SdiblReadByte(UINT32 a)
+static UINT8 __fastcall SdiblReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc41001: {
@@ -6969,7 +6969,7 @@ UINT8 __fastcall SdiblReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall SdiblSoundWriteByte(UINT32 a, UINT8 d)
+static void __fastcall SdiblSoundWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x123407: {
@@ -7030,7 +7030,7 @@ static void SjryukoWriteIO(UINT32 offset, UINT8 d)
 	sega_315_5195_io_write(offset, d);
 }
 
-void __fastcall TetrisblGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall TetrisblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x418000: {
@@ -7074,7 +7074,7 @@ void __fastcall TetrisblGfxWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall TetrisblSndWriteByte(UINT32 a, UINT8 d)
+static void __fastcall TetrisblSndWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc42007: {
@@ -7087,7 +7087,7 @@ void __fastcall TetrisblSndWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall Wb3bblGfxWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Wb3bblGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xc46000: {
@@ -7155,7 +7155,7 @@ static INT32 AliensynInit()
 	return nRet;
 }
 
-void Altbeastj_Sim8751()
+static void Altbeastj_Sim8751()
 {
 	// System Inputs
 	*((UINT16*)(System16Ram + 0x30d0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
@@ -7177,7 +7177,7 @@ void Altbeastj_Sim8751()
 	}
 }
 
-void Altbeast6_Sim8751()
+static void Altbeast6_Sim8751()
 {
 	// System Inputs
 	*((UINT16*)(System16Ram + 0x3096)) = BURN_ENDIAN_SWAP_INT16((UINT16)(System16Input[0] << 8));
@@ -7360,7 +7360,7 @@ static INT32 Blox16bInit()
 	return System16Init();
 }
 
-void Ddux_Sim8751()
+static void Ddux_Sim8751()
 {
 	// Sound command
 	UINT16 temp = (System16Ram[0x0bd0 + 1] << 8) | System16Ram[0x0bd0 + 0];
@@ -7755,7 +7755,7 @@ static INT32 FpointblInit()
 	return nRet;
 }
 
-void Goldnaxe_Sim8751()
+static void Goldnaxe_Sim8751()
 {
 	// Protection MCU
 	UINT16 temp1 = (System16Ram[0x2cd8 + 1] << 8) | System16Ram[0x2cd8 + 0];
@@ -8189,7 +8189,7 @@ static INT32 TimescanInit()
 	return nRet;
 }
 
-void Tturf_Sim8751()
+static void Tturf_Sim8751()
 {
 	// Inputs
 	*((UINT16*)(System16Ram + 0x01e6)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~System16Input[0] << 8));
@@ -8354,7 +8354,7 @@ static INT32 Wb3bblInit()
 	return nRet;
 }
 
-void Wrestwar_Sim8751()
+static void Wrestwar_Sim8751()
 {
 	// System Inputs
 	*((UINT16*)(System16Ram + 0x2082)) = BURN_ENDIAN_SWAP_INT16((UINT16)~System16Input[0]);

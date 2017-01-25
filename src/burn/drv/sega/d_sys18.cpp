@@ -2644,7 +2644,7 @@ void HamawayGfxBankWrite(UINT32 offset, UINT16 d)
 	}
 }
 
-UINT16 __fastcall System18ReadWord(UINT32 a)
+static UINT16 __fastcall System18ReadWord(UINT32 a)
 {
 	if (a >= 0xc00000 && a <= 0xc0000f) {
 		return GenesisVDPRead((a - 0xc00000) >> 1);
@@ -2657,7 +2657,7 @@ UINT16 __fastcall System18ReadWord(UINT32 a)
 	return 0xffff;
 }
 
-UINT8 __fastcall System18ReadByte(UINT32 a)
+static UINT8 __fastcall System18ReadByte(UINT32 a)
 {
 	if (a >= 0xa40000 && a <= 0xa4001f) {
 		return system18_io_chip_r((a - 0xa40000) >> 1);
@@ -2674,7 +2674,7 @@ UINT8 __fastcall System18ReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall System18WriteWord(UINT32 a, UINT16 d)
+static void __fastcall System18WriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
 		System16BTileWordWrite(a - 0x400000, d);
@@ -2698,7 +2698,7 @@ void __fastcall System18WriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-void __fastcall System18WriteByte(UINT32 a, UINT8 d)
+static void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x400000 && a <= 0x40ffff) {
 		System16BTileByteWrite((a - 0x400000) ^ 1, d);
@@ -2746,7 +2746,7 @@ void __fastcall System18WriteByte(UINT32 a, UINT8 d)
 #endif
 }
 
-UINT8 __fastcall Mwalkbl2ReadByte(UINT32 a)
+static UINT8 __fastcall Mwalkbl2ReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc40001: {
@@ -2777,7 +2777,7 @@ UINT8 __fastcall Mwalkbl2ReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall Mwalkbl2WriteByte(UINT32 a, UINT8 d)
+static void __fastcall Mwalkbl2WriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc40007: {
@@ -2819,7 +2819,7 @@ void __fastcall Mwalkbl2WriteByte(UINT32 a, UINT8 d)
 #endif
 }
 
-void __fastcall Mwalkbl2WriteWord(UINT32 a, UINT16 d)
+static void __fastcall Mwalkbl2WriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0xc46000: {
@@ -2844,7 +2844,7 @@ void __fastcall Mwalkbl2WriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-UINT8 __fastcall ShdancblReadByte(UINT32 a)
+static UINT8 __fastcall ShdancblReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0xc40001: {
@@ -2879,7 +2879,7 @@ UINT8 __fastcall ShdancblReadByte(UINT32 a)
 	return 0xff;
 }
 
-void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
+static void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc40007: {
@@ -2926,7 +2926,7 @@ void __fastcall ShdancblWriteByte(UINT32 a, UINT8 d)
 Driver inits
 ====================================================*/
 
-void WwallyMakeAnalogInputs()
+static void WwallyMakeAnalogInputs()
 {
 	if (System16InputPort1[1]) WwallyTrack1X += 0x4;
 	if (System16InputPort1[2]) WwallyTrack1X -= 0x4;

@@ -1750,7 +1750,7 @@ void __fastcall YBoard3WriteWord(UINT32 a, UINT16 d)
 Driver Inits
 ====================================================*/
 
-UINT8 Gforce2ProcessAnalogControls(UINT16 value)
+static UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1815,7 +1815,7 @@ UINT8 Gforce2ProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 GlocProcessAnalogControls(UINT16 value)
+static UINT8 GlocProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1863,7 +1863,7 @@ UINT8 GlocProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 Glocr360ProcessAnalogControls(UINT16 value)
+static UINT8 Glocr360ProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1929,7 +1929,7 @@ UINT8 Glocr360ProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 PdriftProcessAnalogControls(UINT16 value)
+static UINT8 PdriftProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1966,7 +1966,7 @@ UINT8 PdriftProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 RchaseProcessAnalogControls(UINT16 value)
+static UINT8 RchaseProcessAnalogControls(UINT16 value)
 {
 	switch (value) {
 		case 0: {

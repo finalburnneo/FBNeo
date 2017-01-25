@@ -181,16 +181,8 @@ void __fastcall System16AWriteWord(UINT32 a, UINT16 d);
 void __fastcall System16AWriteByte(UINT32 a, UINT8 d);
 
 // d_sys16b.cpp
-UINT8 __fastcall System16BReadByte(UINT32 a);
-void __fastcall System16BWriteByte(UINT32 a, UINT8 d);
-void __fastcall System16BWriteWord(UINT32 a, UINT16 d);
 
 // d_sys18.cpp
-UINT16 __fastcall System18ReadWord(UINT32 a);
-UINT8 __fastcall System18ReadByte(UINT32 a);
-void __fastcall System18WriteWord(UINT32 a, UINT16 d);
-void __fastcall System18WriteByte(UINT32 a, UINT8 d);
-
 UINT8 system18_io_chip_r(UINT32 offset);
 void system18_io_chip_w(UINT32 offset, UINT16 d);
 void System18GfxBankWrite(UINT32 offset, UINT16 d);
@@ -211,10 +203,6 @@ void __fastcall HangonWriteByte(UINT32 a, UINT8 d);
 void OutrunPPI0WritePortC(UINT8 data);
 UINT16 System16RoadControlRead(UINT32 a);
 void System16RoadControlWrite(UINT32 offset, UINT16 d);
-UINT16 __fastcall OutrunReadWord(UINT32 a);
-UINT8 __fastcall OutrunReadByte(UINT32 a);
-void __fastcall OutrunWriteWord(UINT32 a, UINT16 d);
-void __fastcall OutrunWriteByte(UINT32 a, UINT8 d);
 UINT8 __fastcall Outrun2ReadByte(UINT32 a);
 void __fastcall Outrun2WriteWord(UINT32 a, UINT16 d);
 void __fastcall Outrun2WriteByte(UINT32 a, UINT8 d);

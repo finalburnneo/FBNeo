@@ -1055,7 +1055,7 @@ void __fastcall HangonWriteWord(UINT32 a, UINT16 d)
 #endif
 }
 
-UINT16 __fastcall SharrierReadWord(UINT32 a)
+static UINT16 __fastcall SharrierReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x140010: {
@@ -1078,7 +1078,7 @@ UINT16 __fastcall SharrierReadWord(UINT32 a)
 	return 0;
 }
 
-UINT8 __fastcall SharrierReadByte(UINT32 a)
+static UINT8 __fastcall SharrierReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x140001:
@@ -1112,7 +1112,7 @@ UINT8 __fastcall SharrierReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
+static void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 {
 	if (a >= 0x100000 && a <= 0x107fff) {
 		System16ATileByteWrite((a - 0x100000) ^ 1, d);
@@ -1142,7 +1142,7 @@ void __fastcall SharrierWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
+static void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
 {
 	if (a >= 0x100000 && a <= 0x107fff) {
 		System16ATileWordWrite(a - 0x100000, d);
@@ -1154,7 +1154,7 @@ void __fastcall SharrierWriteWord(UINT32 a, UINT16 d)
 Driver Inits
 ====================================================*/
 
-UINT8 EndurorProcessAnalogControls(UINT16 value)
+static UINT8 EndurorProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1204,7 +1204,7 @@ UINT8 EndurorProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 HangonProcessAnalogControls(UINT16 value)
+static UINT8 HangonProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1241,7 +1241,7 @@ UINT8 HangonProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-UINT8 SharrierProcessAnalogControls(UINT16 value)
+static UINT8 SharrierProcessAnalogControls(UINT16 value)
 {
 	UINT8 temp = 0;
 	
@@ -1281,7 +1281,7 @@ UINT8 SharrierProcessAnalogControls(UINT16 value)
 	return 0;
 }
 
-void SharrierMap68K()
+static void SharrierMap68K()
 {
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1335,7 +1335,7 @@ static INT32 Enduror1Init()
 	return System16Init();
 }
 
-INT32 EnduroblLoadRom()
+static INT32 EnduroblLoadRom()
 {
 	INT32 nRet = 1;
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
@@ -1404,7 +1404,7 @@ static INT32 ShangonrbInit()
 	return nRet;
 }
 
-void Sharrier_Sim8751()
+static void Sharrier_Sim8751()
 {
 	// Inputs
 	*((UINT16*)(System16Ram + 0x0492)) = BURN_ENDIAN_SWAP_INT16((UINT16)((SharrierProcessAnalogControls(0) << 8) | SharrierProcessAnalogControls(1)));

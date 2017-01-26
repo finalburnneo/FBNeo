@@ -47,6 +47,10 @@ static UINT16 *pSys16BgAltTileMapPri1 = NULL;
 static UINT16 *pSys16FgAltTileMapPri0 = NULL;
 static UINT16 *pSys16FgAltTileMapPri1 = NULL;
 
+static UINT8 System16PaletteNormal[32];
+static UINT8 System16PaletteShadow[32];
+static UINT8 System16PaletteHilight[32];
+
 /*====================================================
 Scan Function
 ====================================================*/
@@ -2947,6 +2951,37 @@ void UpdateSystem18VDP()
 Palette Generation
 ====================================================*/
 
+void System16PaletteInit()
+{
+	static const INT32 resistances_normal[6] = { 3900, 2000, 1000, 1000/2, 1000/4, 0 };
+	double weights_normal[6];
+	compute_resistor_weights(0, 255, -1.0, 6, resistances_normal, weights_normal, 0, 0, 0, nullptr, nullptr, 0, 0, 0, nullptr, nullptr, 0, 0);
+
+	// compute weight table for shadow/hilight palette entries
+	static const INT32 resistances_sh[6]     = { 3900, 2000, 1000, 1000/2, 1000/4, 470 };
+	double weights_sh[6];
+	compute_resistor_weights(0, 255, -1.0, 6, resistances_sh, weights_sh, 0, 0, 0, nullptr, nullptr, 0, 0, 0, nullptr, nullptr, 0, 0);
+
+	// compute R, G, B for each weight
+	for (INT32 value = 0; value < 32; value++) {
+		INT32 i4 = (value >> 4) & 1;
+		INT32 i3 = (value >> 3) & 1;
+		INT32 i2 = (value >> 2) & 1;
+		INT32 i1 = (value >> 1) & 1;
+		INT32 i0 = (value >> 0) & 1;
+		System16PaletteNormal[value] = combine_6_weights(weights_normal, i0, i1, i2, i3, i4, 0);
+		System16PaletteShadow[value] = combine_6_weights(weights_sh, i0, i1, i2, i3, i4, 0);
+		System16PaletteHilight[value] = combine_6_weights(weights_sh, i0, i1, i2, i3, i4, 1);
+	}
+}
+
+void System16PaletteExit()
+{
+	memset(System16PaletteNormal, 0, 32 * sizeof(UINT8));
+	memset(System16PaletteShadow, 0, 32 * sizeof(UINT8));
+	memset(System16PaletteHilight, 0, 32 * sizeof(UINT8));
+}
+
 static INT32 System16CalcPalette()
 {
 	INT32 i;
@@ -2955,27 +2990,13 @@ static INT32 System16CalcPalette()
 		INT32 r, g, b;
 		INT32 nColour = (System16PaletteRam[i + 1] << 8) | System16PaletteRam[i + 0];
 	
-		r = (nColour & 0x00f) << 1;
-		g = (nColour & 0x0f0) >> 2;
-		b = (nColour & 0xf00) >> 7;
-
-		if (nColour & 0x1000) r |= 1;
-		if (nColour & 0x2000) g |= 2;
-		if (nColour & 0x8000) g |= 1;
-		if (nColour & 0x4000) b |= 1;
-	
-		r = (r << 3) | (r >> 2);
-		g = (g << 2) | (g >> 4);
-		b = (b << 3) | (b >> 2);
+		r = ((nColour >> 12) & 0x01) | ((nColour << 1) & 0x1e);
+		g = ((nColour >> 13) & 0x01) | ((nColour >> 3) & 0x1e);
+		b = ((nColour >> 14) & 0x01) | ((nColour >> 7) & 0x1e);
 		
-		System16Palette[i / 2] = BurnHighCol(r, g, b, 0);
-		
-		r = r * 160 / 256;
-		g = g * 160 / 256;
-		b = b * 160 / 256;
-	
-		System16Palette[(i / 2) + System16PaletteEntries] = BurnHighCol(r, g, b, 0);
-		System16Palette[(i / 2) + (System16PaletteEntries * 2)] = BurnHighCol(r, g, b, 0);
+		System16Palette[i / 2] = BurnHighCol(System16PaletteNormal[r], System16PaletteNormal[g], System16PaletteNormal[b], 0);
+		System16Palette[(i / 2) + System16PaletteEntries] = BurnHighCol(System16PaletteShadow[r], System16PaletteShadow[g], System16PaletteShadow[b], 0);
+		System16Palette[(i / 2) + (System16PaletteEntries * 2)] = BurnHighCol(System16PaletteHilight[r], System16PaletteHilight[g], System16PaletteHilight[b], 0);
 	}
 	
 	return 0;

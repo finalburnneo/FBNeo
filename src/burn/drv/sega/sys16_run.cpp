@@ -2465,6 +2465,8 @@ INT32 System16Init()
 	
 	GenericTilesInit();
 	bSystem16BootlegRender = false;
+	
+	System16PaletteInit();
 
 	if (System16HasGears)
 		BurnShiftInitDefault();
@@ -2523,6 +2525,7 @@ INT32 System16Exit()
 	}
 	
 	GenericTilesExit();
+	System16PaletteExit();
 	System16TileMapsExit();
 
 	BurnFree(Mem);

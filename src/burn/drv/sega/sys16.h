@@ -12,6 +12,7 @@
 #include "8255ppi.h"
 #include "burn_shift.h"
 #include "mcs51.h"
+#include "resnet.h"
 
 #define SYS16_ROM_PROG			1
 #define SYS16_ROM_TILES			2
@@ -203,6 +204,7 @@ void __fastcall HangonWriteByte(UINT32 a, UINT8 d);
 void OutrunPPI0WritePortC(UINT8 data);
 UINT16 System16RoadControlRead(UINT32 a);
 void System16RoadControlWrite(UINT32 offset, UINT16 d);
+UINT16 __fastcall Outrun2ReadWord(UINT32 a);
 UINT8 __fastcall Outrun2ReadByte(UINT32 a);
 void __fastcall Outrun2WriteWord(UINT32 a, UINT16 d);
 void __fastcall Outrun2WriteByte(UINT32 a, UINT8 d);
@@ -265,6 +267,9 @@ extern INT32 System16IgnoreVideoEnable;
 extern bool bSystem16BootlegRender;
 
 extern UINT16 *pTempDraw;
+
+void System16PaletteInit();
+void System16PaletteExit();
 
 void System16GfxScan(INT32 nAction);
 void System16Decode8x8Tiles(UINT8 *pTile, INT32 Num, INT32 offs1, INT32 offs2, INT32 offs3);

@@ -3901,16 +3901,16 @@ static void DrawCommon(INT32 scanline_start)
     		default: get_sprite_info((UINT16*)TaitoSpriteRam); 	break;
 	}
 
-	draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	get_spritealphaclip_info();
 
 	for (INT32 i = 0; i < (8 >> extended_layers); i++) {
-		draw_pf_layer(i);
+		if (nBurnLayer & 1) draw_pf_layer(i);
 	}
 
-	draw_pixel_layer();
-	draw_vram_layer();
+	if (nBurnLayer & 2) draw_pixel_layer();
+	if (nBurnLayer & 4) draw_vram_layer();
 
 	{
 		get_line_ram_info(0,sx_fix[0],sy_fix[0],0,(UINT16*)(DrvPfRAM + (extended_layers ? 0x0000 : 0x0000)));
@@ -3923,7 +3923,7 @@ static void DrawCommon(INT32 scanline_start)
 
 		get_vram_info(sx_fix[4],sy_fix[4]);
 
-		scanline_draw();
+		if (nBurnLayer & 8) scanline_draw();
 	}
 
 	// copy video to draw surface

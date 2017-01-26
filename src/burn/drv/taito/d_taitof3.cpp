@@ -6695,7 +6695,7 @@ static struct BurnRomInfo elvact2uRomDesc[] = {
 
 	{ "e02-08.47",		0x200000, 0x29c9bd02, TAITO_CHARS_BYTESWAP },     //  7 Layer Tiles
 	{ "e02-07.45",		0x200000, 0x5eeee925, TAITO_CHARS_BYTESWAP },     //  8
-	{ "e02-06.43",		0x200000, 0x4c8726e9, TAITO_CHARS_BYTESWAP },     //  9
+	{ "e02-06.43",		0x200000, 0x4c8726e9, TAITO_CHARS },     //  9
 
 	{ "e02-13.32",		0x040000, 0x80932702, TAITO_68KROM2_BYTESWAP },   // 10 68k Code
 	{ "e02-14.33",		0x040000, 0x706671a5, TAITO_68KROM2_BYTESWAP },   // 11

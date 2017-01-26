@@ -13,6 +13,7 @@
 #include "burn_shift.h"
 #include "mcs51.h"
 #include "resnet.h"
+#include "msm6295.h"
 
 #define SYS16_ROM_PROG			1
 #define SYS16_ROM_TILES			2
@@ -34,6 +35,7 @@
 #define SYS16_ROM_SPRITES2		18
 #define SYS16_ROM_RF5C68DATA	19
 #define SYS16_ROM_I8751			20
+#define SYS16_ROM_MSM6295		21
 
 // sys16_run.cpp
 extern UINT8 System16InputPort0[8];
@@ -103,6 +105,7 @@ extern UINT32 System16SpriteRam2Size;
 extern UINT32 System16RotateRamSize;
 extern UINT32 System16UPD7759DataSize;
 extern UINT32 System16I8751RomNum;
+extern UINT32 System16MSM6295RomNum;
 
 extern UINT8 System16VideoControl;
 extern INT32 System16SoundLatch;
@@ -111,6 +114,7 @@ extern bool Shangon;
 extern bool Hangon;
 extern bool AlienSyndrome;
 extern bool HammerAway;
+extern bool Lockonph;
 extern bool System16Z80Enable;
 extern bool System1668KEnable;
 
@@ -120,6 +124,7 @@ extern bool System16HasGears;
 
 extern INT32 nSystem16CyclesDone[4]; 
 extern UINT32 System16ClockSpeed;
+extern UINT32 System16Z80ClockSpeed;
 
 extern UINT8* System16I8751InitialConfig;
 
@@ -255,6 +260,7 @@ extern INT32 System16RoadColorOffset3;
 extern INT32 System16RoadXOffset;
 extern INT32 System16RoadPriority;
 extern INT32 System16PaletteEntries;
+extern INT32 System16SpritePalOffset;
 extern INT32 System16TilemapColorOffset;
 extern INT32 System16TileBankSize;
 extern INT32 System16RecalcBgTileMap;

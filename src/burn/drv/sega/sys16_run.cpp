@@ -110,6 +110,8 @@ UINT32 System16RF5C68DataSize = 0;
 UINT32 System16RF5C68DataNum = 0;
 UINT32 System16I8751RomSize = 0;
 UINT32 System16I8751RomNum = 0;
+UINT32 System16MSM6295RomSize = 0;
+UINT32 System16MSM6295RomNum = 0;
 UINT32 System16PromSize = 0;
 UINT32 System16PromNum = 0;
 UINT32 System16KeySize = 0;
@@ -133,6 +135,7 @@ bool Shangon = false;
 bool Hangon = false;
 bool AlienSyndrome = false;
 bool HammerAway = false;
+bool Lockonph = false;
 bool System16Z80Enable = true;
 bool System1668KEnable = true;
 
@@ -140,6 +143,7 @@ INT32 nSystem16CyclesDone[4];
 static INT32 nCyclesTotal[4];
 static INT32 nCyclesSegment;
 UINT32 System16ClockSpeed = 0;
+UINT32 System16Z80ClockSpeed = 0;
 
 INT32 System16YM2413IRQInterval;
 
@@ -301,6 +305,10 @@ static INT32 System16DoReset()
 	if (System16UPD7759DataSize) {
 		UPD7759Reset();
 		UPD7759BankAddress = 0;
+	}
+	
+	if (System16MSM6295RomSize) {
+		MSM6295Reset(0);
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
@@ -947,6 +955,11 @@ static INT32 System16MemIndex()
 		System16RamSize = 0x40000;
 	}
 	
+	if (Lockonph) {
+		System16PaletteEntries = 0x1000;
+		System16RamSize = 0x10000;
+	}
+	
 	System16Rom          = Next; Next += (System16RomSize > 0x100000) ? System16RomSize : 0x100000;
 	System16Code         = Next; Next += (System16RomSize > 0x100000) ? System16RomSize : 0x100000;
 	System16Rom2         = Next; (System16Rom2Size) ? Next += 0x080000 : Next += 0;
@@ -967,6 +980,7 @@ static INT32 System16MemIndex()
 	System16Key          = Next; Next += System16KeySize;
 	System16Prom         = Next; Next += System16PromSize;
 	System16I8751Rom     = Next; Next += System16I8751RomSize;
+	MSM6295ROM           = Next; Next += System16MSM6295RomSize;
 	
 	RamStart = Next;
 
@@ -1122,6 +1136,10 @@ INT32 System16LoadRoms(bool bLoad)
 				System16I8751RomSize += ri.nLen;
 				System16I8751RomNum++;
 			}
+			if ((ri.nType & 0xff) == SYS16_ROM_MSM6295) {
+				System16MSM6295RomSize += ri.nLen;
+				System16MSM6295RomNum++;
+			}
 		} while (ri.nLen);
 		
 		System16NumTiles = System16TileRomSize / 24;
@@ -1150,6 +1168,7 @@ INT32 System16LoadRoms(bool bLoad)
 		if (System16PromSize) bprintf(PRINT_NORMAL, _T("PROM Rom Size: 0x%X (%i roms)\n"), System16PromSize, System16PromNum);
 		if (System16KeySize) bprintf(PRINT_NORMAL, _T("Encryption Key Size: 0x%X\n"), System16KeySize);
 		if (System16I8751RomSize) bprintf(PRINT_NORMAL, _T("I8751 Prog Size: 0x%X\n"), System16I8751RomSize);
+		if (System16MSM6295RomSize) bprintf(PRINT_NORMAL, _T("MSM6295 Rom Size: 0x%X (%i roms)\n"), System16MSM6295RomSize, System16MSM6295RomNum);
 #endif
 	}
 	
@@ -1434,6 +1453,17 @@ INT32 System16LoadRoms(bool bLoad)
 		if (System16I8751RomSize) {
 			Offset = System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum + System16RoadRomNum + System16Z80RomNum + System16Z80Rom2Num + System16Z80Rom3Num + System16Z80Rom4Num + System167751ProgNum + System167751DataNum + System16UPD7759DataNum + System16PCMDataNum + System16PCM2DataNum + System16RF5C68DataNum + System16PromNum + System16KeyNum;
 			nRet = BurnLoadRom(System16I8751Rom, Offset, 1); if (nRet) return 1;
+		}
+		
+		// MSM6295 Data Roms
+		if (System16MSM6295RomSize) {
+			Offset = 0;
+			for (i = System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum + System16RoadRomNum + System16Z80RomNum + System16Z80Rom2Num + System16Z80Rom3Num + System16Z80Rom4Num + System167751ProgNum + System167751DataNum + System16UPD7759DataNum + System16PCMDataNum + System16PCM2DataNum + System16RF5C68DataNum + System16PromNum + System16KeyNum + System16I8751RomNum; i < System16RomNum + System16Rom2Num + System16Rom3Num + System16TileRomNum + System16SpriteRomNum + System16Sprite2RomNum + System16RoadRomNum + System16Z80RomNum + System16Z80Rom2Num + System16Z80Rom3Num + System16Z80Rom4Num + System167751ProgNum + System167751DataNum + System16UPD7759DataNum + System16PCMDataNum + System16PCM2DataNum + System16RF5C68DataNum + System16PromNum + System16KeyNum + System16I8751RomNum + System16MSM6295RomNum; i++) {
+				nRet = BurnLoadRom(MSM6295ROM + Offset, i, 1); if (nRet) return 1;
+				
+				BurnDrvGetRomInfo(&ri, i + 0);
+				Offset += ri.nLen;
+			}
 		}
 	}
 	
@@ -2029,10 +2059,16 @@ INT32 System16Init()
 			UPD7759SetRoute(0, 0.48, BURN_SND_ROUTE_BOTH);
 		}
 		
+		if (System16MSM6295RomSize) {
+			MSM6295Init(0, 1000000 / 132, 1);
+			MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
+		}
+		
 		System16TileBankSize = 0x1000;
 		System16CreateOpaqueTileMaps = 1;
 		System16BTileMapsInit(1);
 		System16ClockSpeed = 10000000;
+		System16Z80ClockSpeed = 5000000;
 	}
 	
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
@@ -2465,6 +2501,7 @@ INT32 System16Init()
 	
 	GenericTilesInit();
 	bSystem16BootlegRender = false;
+	System16SpritePalOffset = 0x400;
 	
 	System16PaletteInit();
 
@@ -2509,6 +2546,7 @@ INT32 System16Exit()
 			
 	if (System16PCMDataSize) SegaPCMExit();
 	if (System16UPD7759DataSize) UPD7759Exit();
+	if (System16MSM6295RomSize) MSM6295Exit(0);
 	
 	if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16A) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON) || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_OUTRUN)) {
 		ppi8255_exit();
@@ -2574,8 +2612,10 @@ INT32 System16Exit()
  	System16AnalogSelect = 0;
  	
  	System16ClockSpeed = 0;
+	System16Z80ClockSpeed = 0;
  	
  	System16PaletteEntries = 0;
+	System16SpritePalOffset = 0x400;
  	System16RamSize = 0;
  	System16ExtraRamSize = 0;
  	System16ExtraRam2Size = 0;
@@ -2596,7 +2636,10 @@ INT32 System16Exit()
 	Hangon = false;
 	AlienSyndrome = false;
 	LaserGhost = false;
+	HammerAway = false;
+	Lockonph = false;
 	System1668KEnable = true;
+	System16Z80Enable = true;
 
 	bSystem16BootlegRender = false;
  	
@@ -2647,6 +2690,8 @@ INT32 System16Exit()
  	System16KeySize = 0;
 	System16I8751RomSize = 0;
 	System16I8751RomNum = 0;
+	System16MSM6295RomSize = 0;
+	System16MSM6295RomNum = 0;
  	
  	Simulate8751 = NULL;
  	System16Map68KDo = NULL;
@@ -2768,7 +2813,7 @@ INT32 System16BFrame()
 {
 	INT32 nInterleave = (nBurnSoundRate <= 44100) ? 183 : 200;	// For the UPD7759
 	
-	if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) nInterleave = System16YM2413IRQInterval;
+	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) || Lockonph) nInterleave = System16YM2413IRQInterval;
 	
 	if (System16Reset) System16DoReset();
 	
@@ -2779,7 +2824,7 @@ INT32 System16BFrame()
 	}
 	
 	nCyclesTotal[0] = (INT32)((INT64)System16ClockSpeed * nBurnCPUSpeedAdjust / (0x0100 * 60));
-	nCyclesTotal[1] = 5000000 / 60;
+	nCyclesTotal[1] = System16Z80ClockSpeed / 60;
 	nCyclesTotal[2] = 8000000 / 60;
 	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
 
@@ -2799,7 +2844,7 @@ INT32 System16BFrame()
 			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 			nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			
-			if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
+			if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) || Lockonph) {
 				SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			}
 		}
@@ -2838,6 +2883,7 @@ INT32 System16BFrame()
 				ZetOpen(0);
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 				if (System16UPD7759DataSize) UPD7759Update(0,pSoundBuf, nSegmentLength);
+				if (System16MSM6295RomSize) MSM6295Render(0, pSoundBuf, nSegmentLength);
 				ZetClose();
 			}
 			nSoundBufferPos += nSegmentLength;
@@ -2856,6 +2902,7 @@ INT32 System16BFrame()
 				ZetOpen(0);
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 				if (System16UPD7759DataSize) UPD7759Update(0,pSoundBuf, nSegmentLength);
+				if (System16MSM6295RomSize) MSM6295Render(0, pSoundBuf, nSegmentLength);
 				ZetClose();
 			}
 		}
@@ -3654,6 +3701,10 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 				ZetMapArea(0x8000, 0xdfff, 2, System16UPD7759Data + UPD7759BankAddress);
 				ZetClose();
 			}
+		}
+		
+		if (System16MSM6295RomSize) {
+			MSM6295Scan(0, nAction);
 		}
 		
 		if (System167751ProgSize) {

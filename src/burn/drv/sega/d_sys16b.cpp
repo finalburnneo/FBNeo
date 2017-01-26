@@ -420,6 +420,35 @@ static struct BurnInputInfo HwchampInputList[] = {
 
 STDINPUTINFO(Hwchamp)
 
+static struct BurnInputInfo LockonphInputList[] = {
+	{"Coin 1"            , BIT_DIGITAL  , System16InputPort2 + 0, "p1 coin"   },
+	{"Start 1"           , BIT_DIGITAL  , System16InputPort2 + 4, "p1 start"  },
+	{"Coin 2"            , BIT_DIGITAL  , System16InputPort2 + 1, "p2 coin"   },
+	{"Start 2"           , BIT_DIGITAL  , System16InputPort2 + 5, "p2 start"  },
+
+	{"P1 Up"             , BIT_DIGITAL  , System16InputPort0 + 5, "p1 up"     },
+	{"P1 Down"           , BIT_DIGITAL  , System16InputPort0 + 4, "p1 down"   },
+	{"P1 Left"           , BIT_DIGITAL  , System16InputPort0 + 7, "p1 left"   },
+	{"P1 Right"          , BIT_DIGITAL  , System16InputPort0 + 6, "p1 right"  },
+	{"P1 Fire 1"         , BIT_DIGITAL  , System16InputPort0 + 0, "p1 fire 1" },
+	{"P1 Fire 2"         , BIT_DIGITAL  , System16InputPort0 + 1, "p1 fire 2" },
+
+	{"P2 Up"             , BIT_DIGITAL  , System16InputPort1 + 5, "p2 up"     },
+	{"P2 Down"           , BIT_DIGITAL  , System16InputPort1 + 4, "p2 down"   },
+	{"P2 Left"           , BIT_DIGITAL  , System16InputPort1 + 7, "p2 left"   },
+	{"P2 Right"          , BIT_DIGITAL  , System16InputPort1 + 6, "p2 right"  },
+	{"P2 Fire 1"         , BIT_DIGITAL  , System16InputPort1 + 0, "p2 fire 1" },
+	{"P2 Fire 2"         , BIT_DIGITAL  , System16InputPort1 + 1, "p2 fire 2" },
+
+	{"Service"           , BIT_DIGITAL  , System16InputPort2 + 3 , "service"  },
+	{"Diagnostics"       , BIT_DIGITAL  , System16InputPort2 + 2 , "diag"     },
+	{"Reset"             , BIT_DIGITAL  , &System16Reset         , "reset"    },
+	{"Dip 1"             , BIT_DIPSWITCH, System16Dip + 0        , "dip"      },
+	{"Dip 2"             , BIT_DIPSWITCH, System16Dip + 1        , "dip"      },
+};
+
+STDINPUTINFO(Lockonph)
+
 static struct BurnInputInfo PassshtInputList[] = {
 	{"Coin 1"            , BIT_DIGITAL  , System16InputPort0 + 0, "p1 coin"   },
 	{"Start 1"           , BIT_DIGITAL  , System16InputPort0 + 4, "p1 start"  },
@@ -1282,6 +1311,59 @@ static struct BurnDIPInfo HwchampDIPList[]=
 };
 
 STDDIPINFO(Hwchamp)
+
+static struct BurnDIPInfo LockonphDIPList[]=
+{
+	// Default Values
+	{0x13, 0xff, 0xff, 0xff, NULL                                 },
+	{0x14, 0xff, 0xff, 0xc4, NULL                                 },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 8   , "Coin A"                             },
+	{0x13, 0x01, 0x07, 0x00, "4 Coins 1 Credit"                   },
+	{0x13, 0x01, 0x07, 0x04, "3 Coins 1 Credit"                   },
+	{0x13, 0x01, 0x07, 0x02, "2 Coins 1 Credit"                   },
+	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credit"                   },
+	{0x13, 0x01, 0x07, 0x03, "1 Coin  2 Credits"                  },
+	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"                  },
+	{0x13, 0x01, 0x07, 0x01, "1 Coin  4 Credits"                  },
+	{0x13, 0x01, 0x07, 0x06, "1 Coin  5 Credits"                  },
+												
+	{0   , 0xfe, 0   , 8   , "Coin B"                             },
+	{0x13, 0x01, 0x38, 0x00, "4 Coins 1 Credit"                   },
+	{0x13, 0x01, 0x38, 0x20, "3 Coins 1 Credit"                   },
+	{0x13, 0x01, 0x38, 0x10, "2 Coins 1 Credit"                   },
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credit"                   },
+	{0x13, 0x01, 0x38, 0x18, "1 Coin  2 Credits"                  },
+	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"                  },
+	{0x13, 0x01, 0x38, 0x08, "1 Coin  4 Credits"                  },
+	{0x13, 0x01, 0x38, 0x30, "1 Coin  5 Credits"                  },
+	
+	{0   , 0xfe, 0   , 2   , "Flip Screen"                        },
+	{0x13, 0x01, 0x80, 0x80, "Off"                                },
+	{0x13, 0x01, 0x80, 0x00, "On"                                 },
+
+	// Dip 2
+	{0   , 0xfe, 0   , 8   , "Difficulty"                         },
+	{0x14, 0x01, 0x07, 0x00, "0"                                  },
+	{0x14, 0x01, 0x07, 0x01, "1"                                  },
+	{0x14, 0x01, 0x07, 0x02, "2"                                  },
+	{0x14, 0x01, 0x07, 0x03, "3"                                  },
+	{0x14, 0x01, 0x07, 0x04, "4"                                  },
+	{0x14, 0x01, 0x07, 0x05, "5"                                  },
+	{0x14, 0x01, 0x07, 0x06, "6"                                  },
+	{0x14, 0x01, 0x07, 0x07, "7"                                  },
+	
+	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
+	{0x14, 0x01, 0x08, 0x08, "Off"                                },
+	{0x14, 0x01, 0x08, 0x00, "On"                                 },
+	
+	{0   , 0xfe, 0   , 2   , "Region"                             },
+	{0x14, 0x01, 0x10, 0x10, "Korea"                              },
+	{0x14, 0x01, 0x10, 0x00, "Europe"                             },
+};
+
+STDDIPINFO(Lockonph)
 
 static struct BurnDIPInfo MvpDIPList[]=
 {
@@ -4426,6 +4508,31 @@ static struct BurnRomInfo HwchampjdRomDesc[] = {
 STD_ROM_PICK(Hwchampjd)
 STD_ROM_FN(Hwchampjd)
 
+static struct BurnRomInfo LockonphRomDesc[] = {
+	{ "B4",             0x40000, 0xfbb896f4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "B2",             0x40000, 0xfc1c9f81, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "B3",             0x20000, 0x3f8c0215, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "B1",             0x20000, 0xf11a72ac, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+
+	{ "B10",            0x20000, 0xd3a8bd15, SYS16_ROM_TILES | BRF_GRA },
+	{ "B7",             0x20000, 0x787c382e, SYS16_ROM_TILES | BRF_GRA },
+	{ "B9",             0x20000, 0xaae2cef1, SYS16_ROM_TILES | BRF_GRA },
+	{ "B8",             0x20000, 0xcd30abe0, SYS16_ROM_TILES | BRF_GRA },
+	
+	{ "B14",            0x40000, 0xaf943525, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "B12",            0x40000, 0x9088d980, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "B13",            0x20000, 0x62f4b64f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "B11",            0x20000, 0x5da3dfcd, SYS16_ROM_SPRITES | BRF_GRA },
+
+	{ "B6",             0x10000, 0xaa7b1880, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "B5",             0x20000, 0xd6369a39, SYS16_ROM_MSM6295 | BRF_SND },
+};
+
+
+STD_ROM_PICK(Lockonph)
+STD_ROM_FN(Lockonph)
+
 static struct BurnRomInfo MvpRomDesc[] = {
 	{ "epr-13000.a2",   0x40000, 0x2e0e21ec, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "epr-12999.a1",   0x40000, 0xfd213d28, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -6833,6 +6940,146 @@ static void HwchampWriteIO(UINT32 offset, UINT8 d)
 	sega_315_5195_io_write(offset, d);
 }
 
+static UINT8 __fastcall LockonphZ80PortRead(UINT16 a)
+{
+	a &= 0xff;
+	
+	switch (a) {
+		case 0x01: {
+			return BurnYM2151ReadStatus();
+		}
+		
+		case 0x80: {
+			return MSM6295ReadStatus(0);
+		}
+		
+		case 0xc0: {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			return System16SoundLatch;
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("Z80 Read Port -> %02X\n"), a);
+
+	return 0;
+}
+
+static void __fastcall LockonphZ80PortWrite(UINT16 a, UINT8 d)
+{
+	a &= 0xff;
+	d &= 0xff;
+	
+	switch (a) {
+		case 0x00: {
+			BurnYM2151SelectRegister(d);
+			return;
+		}
+		
+		case 0x01: {
+			BurnYM2151WriteRegister(d);
+			return;
+		}
+		
+		case 0x40: {
+			return;
+		}
+		
+		case 0x80: {
+			MSM6295Command(0, d);
+			return;
+		}
+	}
+
+	bprintf(PRINT_NORMAL, _T("Z80 Write Port -> %02X, %02X\n"), a, d);
+}
+
+static UINT8 __fastcall LockonphReadByte(UINT32 a)
+{
+	switch (a) {
+		case 0xc41001: {
+			return 0xff - System16Input[0];
+		}
+		
+		case 0xc41003: {
+			return 0xff - System16Input[1];
+		}
+		
+		case 0xc41005: {
+			return 0xff - System16Input[2];
+		}
+		
+		case 0xc42001: {
+			return System16Dip[0];
+		}
+		
+		case 0xc42003: {
+			return System16Dip[1];
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("68000 Read Byte -> 0x%06X\n"), a);
+	
+	return 0;
+}
+
+static void __fastcall LockonphWriteByte(UINT32 a, UINT8 d)
+{
+	switch (a) {
+		case 0x3f0001: {
+			if (System16TileBanks[0] != (d & 0x07)) {
+				System16TileBanks[0] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+		
+		case 0x3f0003: {
+			if (System16TileBanks[1] != (d & 0x07)) {
+				System16TileBanks[1] = d & 0x07;
+				System16RecalcBgTileMap = 1;
+				System16RecalcBgAltTileMap = 1;
+				System16RecalcFgTileMap = 1;
+				System16RecalcFgAltTileMap = 1;
+			}
+			return;
+		}
+		
+		case 0x777707: {
+			System16SoundLatch = d & 0xff;
+			ZetOpen(0);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetClose();
+			return;
+		}
+		
+		case 0xc40001: {
+			return;
+		}
+	}
+	
+	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
+}
+
+static UINT16 __fastcall LockonphReadWord(UINT32 a)
+{
+	bprintf(PRINT_NORMAL, _T("68000 Read Word -> 0x%06X\n"), a);
+	
+	return 0;
+}
+
+static void __fastcall LockonphWriteWord(UINT32 a, UINT16 d)
+{
+	if (a >= 0x400000 && a <= 0x40ffff) {
+		System16BTileWordWrite(a - 0x400000, d);
+		return;
+	}
+
+	bprintf(PRINT_NORMAL, _T("68000 Write Word -> 0x%06X, 0x%04X\n"), a, d);
+}
+
 static void __fastcall PassshtbGfxWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
@@ -7138,6 +7385,9 @@ Driver Inits
 static INT32 Fantzn2xPlaneOffsets[3] = { 1, 2, 3 };
 static INT32 Fantzn2xXOffsets[8]     = { 0, 4, 8, 12, 16, 20, 24, 28 };
 static INT32 Fantzn2xYOffsets[8]     = { 0, 32, 64, 96, 128, 160, 192, 224 };
+static INT32 LockonphPlaneOffsets[4] = { 0x300000, 0x200000, 0x100000, 0 };
+static INT32 LockonphXOffsets[8]     = { 0, 1, 2, 3, 4, 5, 6, 7 };
+static INT32 LockonphYOffsets[8]     = { 0, 8, 16, 24, 32, 40, 48, 56 };
 
 static INT32 AceattacInit()
 {
@@ -7896,6 +8146,66 @@ static INT32 HwchampScan(INT32 nAction,INT32 *pnMin)
 	}
 	
 	return System16Scan(nAction, pnMin);;
+}
+
+static void LockonphMap68K()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(System16Rom           , 0x000000, 0x0bffff, MAP_READ);
+	SekMapMemory(System16Code          , 0x000000, 0x0bffff, MAP_FETCH);
+	SekMapMemory(System16TileRam       , 0x400000, 0x40ffff, MAP_READ);
+	SekMapMemory(System16TextRam       , 0x410000, 0x410fff, MAP_RAM);
+	SekMapMemory(System16SpriteRam     , 0x440000, 0x4407ff, MAP_RAM);
+	SekMapMemory(System16PaletteRam    , 0x840000, 0x841fff, MAP_RAM);
+	SekMapMemory(System16Ram           , 0xff0000, 0xffffff, MAP_RAM);
+	SekSetReadByteHandler(0, LockonphReadByte);
+	SekSetWriteByteHandler(0, LockonphWriteByte);
+	SekSetReadWordHandler(0, LockonphReadWord);
+	SekSetWriteWordHandler(0, LockonphWriteWord);
+	SekClose();
+}
+
+static void LockonphMapZ80()
+{
+	ZetMapArea(0x0000, 0xf7ff, 0, System16Z80Rom);
+	ZetMapArea(0x0000, 0xf7ff, 2, System16Z80Rom);
+
+	ZetMapArea(0xf800, 0xffff, 0, System16Z80Ram);
+	ZetMapArea(0xf800, 0xffff, 1, System16Z80Ram);
+	ZetMapArea(0xf800, 0xffff, 2, System16Z80Ram);
+	
+	ZetSetInHandler(LockonphZ80PortRead);
+	ZetSetOutHandler(LockonphZ80PortWrite);
+}
+
+static INT32 LockonphInit()
+{
+	Lockonph = true;
+	
+	System16Map68KDo = LockonphMap68K;
+	System16MapZ80Do = LockonphMapZ80;
+	
+	System16SpriteRomSize = 0x40000;
+
+	INT32 nRet = System16Init();
+	
+	System16TempGfx = (UINT8*)BurnMalloc(System16TileRomSize);
+	BurnLoadRom(System16TempGfx + 0x00000, 4, 1);
+	BurnLoadRom(System16TempGfx + 0x20000, 5, 1);
+	BurnLoadRom(System16TempGfx + 0x40000, 6, 1);
+	BurnLoadRom(System16TempGfx + 0x60000, 7, 1);
+	GfxDecode(0x4000, 4, 8, 8, LockonphPlaneOffsets, LockonphXOffsets, LockonphYOffsets, 0x40, System16TempGfx, System16Tiles);
+	System16NumTiles = 0x4000;
+	BurnFree(System16TempGfx);
+	
+	System16ClockSpeed = 8000000;
+	System16Z80ClockSpeed = 4000000;
+	System16IgnoreVideoEnable = 1;
+	System16SpritePalOffset = 0x800;
+	System16YM2413IRQInterval = 166; // used to drive the YM2151
+	
+	return nRet;
 }
 
 static INT32 MvpInit()
@@ -9208,6 +9518,16 @@ struct BurnDriver BurnDrvHwchampjd = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_VSFIGHT, 0,
 	NULL, HwchampjdRomInfo, HwchampjdRomName, NULL, NULL, HwchampInputInfo, HwchampDIPInfo,
 	HwchampInit, HwchampExit, System16BFrame, NULL, HwchampScan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvLockonph = {
+	"lockonph", NULL, NULL, NULL, "1991",
+	"Lock On (Philko)\0", NULL, "Philco", "System 16B",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B, GBF_MISC, 0,
+	NULL,LockonphRomInfo, LockonphRomName, NULL, NULL, LockonphInputInfo, LockonphDIPInfo,
+	LockonphInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

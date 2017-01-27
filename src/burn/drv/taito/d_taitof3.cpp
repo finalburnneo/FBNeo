@@ -3151,17 +3151,17 @@ static void get_line_ram_info(INT32 which_map, int sx, int sy, int pos, UINT16 *
 
 		if (cs&0x200)
 		{
-			if (extended_layers)
+			if (extended_layers == 0)
 			{
 				if (which_map == 2) {
 					tmap = bitmap_layer[4]; //m_pf5_tilemap; // pitch -> crowd
-					pmap = bitmap_flags[4];
-					map_width = bitmap_width[4];
+					//pmap = bitmap_flags[4]; // breaks hthero & the footy games. keeping for reference. -dink
+					//map_width = bitmap_width[4];
 				}
 				if (which_map == 3) {
-					pmap = bitmap_flags[5];
 					tmap = bitmap_layer[5]; //m_pf6_tilemap; // corruption on goals -> blank (hthero94)
-					map_width = bitmap_width[5];
+					//pmap = bitmap_flags[5]; // "same as above"
+					//map_width = bitmap_width[5];
 				}
 			}
 		}
@@ -4177,11 +4177,19 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		TaitoF3SoundScan(nAction, pnMin);
 
 		if (nAction & ACB_WRITE) {
+			for (INT32 i = 0; i < 0x2000; i+=4) {
+				DrvVRAMExpand(i);
+			}
+
+			for (INT32 i = 0; i < 0x10000; i+=4) {
+				DrvPivotExpand(i);
+			}
+
 			f3_reset_dirtybuffer();
 		}
 	}
 
- 	return 0;
+	return 0;
 }
 
 

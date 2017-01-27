@@ -809,7 +809,7 @@ static void DrvGfxDecode(INT32 spr_len, INT32 tile_len)
 
 	GfxDecode((tile_len / 0x100), 6, 16, 16, Plane1, XOffs1, YOffs, 0x400, tmp, TaitoChars);
 
-	sprite_code_mask = (spr_len / 0x100) - 1;
+	sprite_code_mask = (spr_len / 0x100);
 	tileno_mask = (tile_len / 0x100);
 
 	BurnFree (tmp);
@@ -1256,7 +1256,7 @@ static void draw_pf_layer(INT32 layer)
 		INT32 sy = (offs / wide) * 16;
 
 		UINT16 tile = ram[offs * 2 + 0];
-		UINT16 code = ram[offs * 2 + 1];
+		UINT16 code = (ram[offs * 2 + 1] & 0xffff) % tileno_mask;
 
 		UINT8 category = (tile >> 9) & 1;
 
@@ -1309,7 +1309,7 @@ static void draw_vram_layer()
 		INT32 sx = (offs & 0x3f) * 8;
 		INT32 sy = (offs / 0x40) * 8;
 
-		INT32 tile = ram[offs];
+		INT32 tile = ram[offs] & 0xffff;
 
 		INT32 code = tile & 0x00ff;
 
@@ -1360,16 +1360,17 @@ static void draw_pixel_layer()
 {
 	UINT16 *ram = (UINT16*)TaitoVideoRam;
 
-	UINT16 y_offs = *((UINT16*)(DrvCtrlRAM + 0x1b));
+	UINT16 y_offs = *((UINT16*)(DrvCtrlRAM + 0x1a)) & 0x1ff;
+	if (m_flipscreen) y_offs += 0x100;
 
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{
 		INT32 sx = (offs / 0x20) * 8;
 		INT32 sy = (offs & 0x1f) * 8;
 
-		INT32 col_off = ((offs&0x1f)*0x40)+((offs & 0xfe0)>>5);
+		INT32 col_off = ((offs & 0x1f) * 0x40) + ((offs & 0xfe0) >> 5);
 
-		if ((((offs & 0x1f)*8 + y_offs) & 0x1ff) > 0xff)
+		if ((((offs & 0x1f) * 8 + y_offs) & 0x1ff) > 0xff)
 			col_off += 0x800;
 
 		INT32 tile = ram[col_off];
@@ -1387,7 +1388,7 @@ static void draw_pixel_layer()
 			flipy ^= 0x8000;
 			sy = (256 - 8) - sy;
 			sx = (512 - 8) - sx;
-		} 
+		}
 
 		{
 			color *= 16;
@@ -1969,7 +1970,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 			sprite_ptr->flipy = flipy;
 		}
 
-		sprite_ptr->code = sprite & sprite_code_mask;
+		sprite_ptr->code = sprite % sprite_code_mask;
 		sprite_ptr->color = color;
 		sprite_ptr->zoomx = x_addition;
 		sprite_ptr->zoomy = y_addition;
@@ -2160,13 +2161,20 @@ struct f3_spritealpha_line_inf
 
 
 
-	struct f3_playfield_line_inf m_pf_line_inf[5];
-	struct f3_spritealpha_line_inf m_sa_line_inf[1];
+static struct f3_playfield_line_inf m_pf_line_inf[5];
+static struct f3_spritealpha_line_inf m_sa_line_inf[1];
 
 
-	int (*m_dpix_n[8][16])(UINT32 s_pix);
-	int (**m_dpix_lp[5])(UINT32 s_pix);
-	int (**m_dpix_sp[9])(UINT32 s_pix);
+static void clear_f3_stuff()
+{
+	memset(&m_pf_line_inf, 0, sizeof(m_pf_line_inf));
+	memset(&m_sa_line_inf, 0, sizeof(m_sa_line_inf));
+}
+
+
+static int (*m_dpix_n[8][16])(UINT32 s_pix);
+static int (**m_dpix_lp[5])(UINT32 s_pix);
+static int (**m_dpix_sp[9])(UINT32 s_pix);
 
 
 
@@ -3819,6 +3827,7 @@ static void get_spritealphaclip_info()
 
 void TaitoF3VideoInit()
 {
+	clear_f3_stuff();
 	m_f3_alpha_level_2as=127;
 	m_f3_alpha_level_2ad=127;
 	m_f3_alpha_level_3as=127;

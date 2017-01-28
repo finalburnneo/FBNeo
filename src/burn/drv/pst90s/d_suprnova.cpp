@@ -2379,11 +2379,12 @@ struct BurnDriver BurnDrvGalpanisk = {
 };
 
 
-// Gals Panic S2 (Japan)
+// Gals Panic S2 (Europe)
+// only the 2 program ROMs were dumped, but mask ROMs are supposed to match.
 
 static struct BurnRomInfo galpans2RomDesc[] = {
-	{ "gps2j.u6",		0x100000, 0x6e74005b, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "gps2j.u4",		0x100000, 0x9b4b2304, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "GPS2E_U6_Ver.3.u6",		0x100000, 0x72fff5d1, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "GPS2E_U4_Ver.3.u4",		0x100000, 0x95061601, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gs210000.u21",	0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
 	{ "gs210100.u20",	0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
@@ -2409,16 +2410,60 @@ static INT32 Galpans2Init()
 	speedhack_address = 0x60fb6bc;
 	speedhack_pc[0] = 0x4049ae2 + 2;
 
-	return DrvInit(0 /*Japan*/);
+	return DrvInit(1 /*Europe*/);
 }
 
 struct BurnDriver BurnDrvGalpans2 = {
 	"galpans2", NULL, "skns", NULL, "1999",
-	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S2 (Europe)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2RomInfo, galpans2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
 	Galpans2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
+	320, 240, 4, 3
+};
+
+
+// Gals Panic S2 (Japan)
+
+static struct BurnRomInfo galpans2jRomDesc[] = {
+	{ "gps2j.u6",		0x100000, 0x6e74005b, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "gps2j.u4",		0x100000, 0x9b4b2304, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "gs210000.u21",	0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
+	{ "gs210100.u20",	0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3
+	{ "gs210200.u8",	0x400000, 0x25b4f56b, 2 | BRF_GRA },           //  4
+	{ "gs210300.u32",	0x400000, 0xdb6d4424, 2 | BRF_GRA },           //  5
+
+	{ "gs220000.u17",	0x400000, 0x5caae1c0, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "gs220100.u9",	0x400000, 0x8d51f197, 3 | BRF_GRA },           //  7
+
+	{ "gs221000.u3",	0x400000, 0x58800a18, 4 | BRF_GRA },           //  8 Foreground Tiles
+
+	{ "gs230000.u1",	0x400000, 0x0348e8e1, 5 | BRF_SND },           //  9 YMZ280b Samples
+};
+
+STDROMPICKEXT(galpans2j, galpans2j, skns)
+STD_ROM_FN(galpans2j)
+
+static INT32 Galpans2jInit()
+{
+	sprite_kludge_x = -1;
+	sprite_kludge_y = -1;
+
+	speedhack_address = 0x60fb6bc;
+	speedhack_pc[0] = 0x4049ae2 + 2;
+
+	return DrvInit(0 /*Japan*/);
+}
+
+struct BurnDriver BurnDrvGalpans2j = {
+	"galpans2j", "galpans2", "skns", NULL, "1999",
+	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
+	NULL, galpans2jRomInfo, galpans2jRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	Galpans2jInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
 

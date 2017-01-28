@@ -18,6 +18,7 @@
 #include "taitof3_snd.h"
 #include "es5506.h"
 #include "eeprom.h"
+#include "msm6295.h"
 
 //#define DO_LOG
 
@@ -244,7 +245,16 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 	//		bprintf (0, _T("contrl %2.2x, %8.8x, %8.8x\n"), offset, d, b);
 			if ((offset & 3) == 0) DrvCoinWord[1] = d << 0; // or 8?
 		}
+		return;
 
+		case 0x1c:
+		{
+			if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+				if ((offset & 3) == 3) { MSM6295Command(0, d); return; }
+			//	bprintf (0, _T("Sound Command: %x, %x %d\n"), offset & 0x1f, d, b); 
+				if ((offset & 3) == 0) { } // banking
+			}
+		}
 		return;
 	}
 }
@@ -348,7 +358,7 @@ static void __fastcall f3_main_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-static UINT32 control_r(INT32 offset, INT32 )
+static UINT32 control_r(INT32 offset, INT32 b)
 {
 	offset &= 0x1c;
 
@@ -378,6 +388,10 @@ static UINT32 control_r(INT32 offset, INT32 )
 
 		case 0x14:
 			ret = DrvInputs[3] | (DrvCoinWord[1] << 16);
+		break;
+
+		case 0x1c:
+			ret = MSM6295ReadStatus(0);
 		break;
 	}
 
@@ -585,7 +599,11 @@ static INT32 DrvDoReset(INT32 full_reset)
 	SekReset();
 	SekClose();
 
-	TaitoF3SoundReset();
+	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+		MSM6295Reset(0);
+	} else {
+		TaitoF3SoundReset();
+	}
 
 	EEPROMReset();
 
@@ -709,6 +727,7 @@ static INT32 MemIndex()
 	tile_opaque_pf[6]	= Next; Next += TaitoCharRomSize / 0x100;
 	tile_opaque_pf[7]	= Next; Next += TaitoCharRomSize / 0x100;
 
+	MSM6295ROM		= Next;
 	TaitoF3ES5506Rom	= Next;
 	TaitoES5505Rom		= Next; Next += TaitoF3ES5506RomSize;
 
@@ -1196,6 +1215,10 @@ static INT32 DrvExit()
 {
 	SekExit();
 	TaitoF3SoundExit();
+
+	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+		MSM6295Exit(0);
+	}
 
 	EEPROMExit();
 
@@ -3967,7 +3990,7 @@ static void DrawCommon(INT32 scanline_start)
 	{
 		if (flipscreen)
 		{
-			scanline_start = (scanline_start == 0x1234) ? 1 : 0; // iq_132!!! super-kludge for gunlock. -dink
+			scanline_start = (scanline_start == 0x1234) ? 1 : 0; // super-kludge for gunlock. -dink
 
 			UINT32 *src = output_bitmap + ((nScreenHeight + scanline_start - 1) * 512) + 46;
 			UINT8 *dst = pBurnDraw;
@@ -3976,7 +3999,8 @@ static void DrawCommon(INT32 scanline_start)
 			{	
 				for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
 				{
-					PutPix(dst, src[x]);
+					UINT32 pixel = src[x];
+					PutPix(dst, BurnHighCol(pixel/0x10000,pixel/0x100,pixel,0));
 				}
 
 				src -= 512;
@@ -3991,7 +4015,8 @@ static void DrawCommon(INT32 scanline_start)
 			{	
 				for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
 				{
-					PutPix(dst, src[x]);
+					UINT32 pixel = src[x];
+					PutPix(dst, BurnHighCol(pixel/0x10000,pixel/0x100,pixel,0));
 				}
 
 				src += 512;
@@ -4084,11 +4109,19 @@ static INT32 DrvFrame()
 		if (i == 7) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		if (sound_cpu_in_reset == 0)
-			TaitoF3CpuUpdate(nInterleave, i);
+		if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0) {
+			if (sound_cpu_in_reset == 0)
+				TaitoF3CpuUpdate(nInterleave, i);
+		}
 	}
 
-	TaitoF3SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	if (BurnDrvGetFlags() & BDF_BOOTLEG) {
+		if (pBurnSoundOut) {
+			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		}
+	} else {
+		TaitoF3SoundUpdate(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -4102,7 +4135,6 @@ static INT32 DrvFrame()
 
 	return 0;
 }
-
 
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
@@ -6248,13 +6280,254 @@ static struct BurnRomInfo bubsymphbRomDesc[] = {
 STD_ROM_PICK(bubsymphb)
 STD_ROM_FN(bubsymphb)
 
+static void bootlegpatch()
+{
+	Taito68KRom1[0xed9ca] = 0x6d; // 2d
+	Taito68KRom1[0xed9cb] = 0x4a; // 30
+	Taito68KRom1[0xed9cc] = 0x00; // 8c
+	Taito68KRom1[0xed9cd] = 0x80; // 82
+	Taito68KRom1[0xed9ce] = 0x00; // 02
+	Taito68KRom1[0xed9cf] = 0x66; // 6a
+	Taito68KRom1[0xed9d0] = 0xcc; // 40
+	Taito68KRom1[0xed9d1] = 0x00; // 44
+	Taito68KRom1[0xed9d2] = 0x2d; // 40
+	Taito68KRom1[0xed9d3] = 0x30; // 04
+	Taito68KRom1[0xed9d4] = 0x8c; // 1a
+	Taito68KRom1[0xed9d5] = 0x82; // 00
+	Taito68KRom1[0xed9d6] = 0x40; // c0
+	Taito68KRom1[0xed9d7] = 0x06; // 33
+	Taito68KRom1[0xed9d8] = 0x29; // 66
+	Taito68KRom1[0xed9da] = 0xc0; // 18
+	Taito68KRom1[0xed9db] = 0x33; // 00
+	Taito68KRom1[0xed9dc] = 0x66; // 2d
+	Taito68KRom1[0xed9dd] = 0x00; // 30
+	Taito68KRom1[0xed9de] = 0x18; // a0
+	Taito68KRom1[0xed9df] = 0x00; // 82
+	Taito68KRom1[0xed9e0] = 0x2d; // 02
+	Taito68KRom1[0xed9e1] = 0x30; // 6a
+	Taito68KRom1[0xed9e2] = 0xa0; // 40
+	Taito68KRom1[0xed9e3] = 0x82; // 44
+	Taito68KRom1[0xed9e5] = 0x06; // 04
+	Taito68KRom1[0xed9e6] = 0x1f; // 00
+	Taito68KRom1[0xed9f4] = 0xd8; // 2c
+	Taito68KRom1[0xed9f5] = 0xff; // 00
+	Taito68KRom1[0xeda1c] = 0xdc; // 2d
+	Taito68KRom1[0xeda1d] = 0xff; // 00
+	Taito68KRom1[0xeda44] = 0xe0; // 30
+	Taito68KRom1[0xeda45] = 0xff; // 00
+	Taito68KRom1[0xeda6c] = 0xe4; // 32
+	Taito68KRom1[0xeda6d] = 0xff; // 00
+	Taito68KRom1[0xedaa1] = 0x06; // 04
+	Taito68KRom1[0xedaa2] = 0x9e; // 10
+	Taito68KRom1[0xedba8] = 0x29; // f0
+	Taito68KRom1[0xedba9] = 0x00; // ff
+
+	Taito68KRom1[0xee1d0] = 0x3e; // 00	// black backgrounds
+	Taito68KRom1[0xee1d2] = 0xc0; // 00
+	Taito68KRom1[0xee1d3] = 0x01; // 00
+	Taito68KRom1[0xee1d4] = 0xfa; // 75
+	Taito68KRom1[0xee1d5] = 0x41; // 4e
+
+	Taito68KRom1[0xf04e7] = 0x08; // 00	- demo logo
+}
+
+static INT32 DrvGfxDecode()
+{
+	INT32 Plane0[8] = { STEP8(0, 0x080000*8) };
+	INT32 XOffs0[16] = { STEP8(7,-1), STEP8(15,-1) };
+	INT32 YOffs0[16] = { STEP16(0,16) };
+
+	INT32 Plane1[5] = { 0x200000*8, STEP4(0,1) };
+	INT32 XOffs1[16] = { 20,16,12,8, 4,0,28,24, 52,48,44,40, 36,32,60,56 };
+	INT32 YOffs1[16] = { STEP16(0,64) };
+
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x400000);
+	if (tmp == NULL) {
+		return 1;
+	}
+
+	{
+		UINT8 *gfx = TaitoChars;
+
+		for (INT32 i=0x200000;i<0x400000; i+=4)
+		{
+			UINT8 byte = gfx[i];
+			gfx[i+0] = (byte & 0x80)? 1<<7 : 0<<4;
+			gfx[i+0]|= (byte & 0x40)? 1<<3 : 0<<0;
+			gfx[i+1] = (byte & 0x20)? 1<<7 : 0<<4;
+			gfx[i+1]|= (byte & 0x10)? 1<<3 : 0<<0;
+			gfx[i+2] = (byte & 0x08)? 1<<7 : 0<<4;
+			gfx[i+2]|= (byte & 0x04)? 1<<3 : 0<<0;
+			gfx[i+3] = (byte & 0x02)? 1<<7 : 0<<4;
+			gfx[i+3]|= (byte & 0x01)? 1<<3 : 0<<0;
+		}
+	}
+
+	memcpy (tmp, TaitoSpritesA, 0x400000);
+
+	GfxDecode(0x4000, 6, 16, 16, Plane0, XOffs0, YOffs0, 0x100, tmp, TaitoSpritesA);
+
+	memcpy (tmp, TaitoChars, 0x400000);
+
+	GfxDecode(0x4000, 5, 16, 16, Plane1, XOffs1, YOffs1, 0x400, tmp, TaitoChars);
+
+	UINT8 tmp2[0x8];
+
+	for (INT32 i = 0x200000; i < 0x400000; i+=8) {
+		memcpy (tmp2, TaitoChars + i, 8);
+
+		for (INT32 j = 0; j < 8; j++) {
+			TaitoChars[i+j] &= 0xf;
+			TaitoChars[i+j] |= 0x20;
+			tmp2[j] &= 0x10;
+		}
+
+		TaitoChars[i+0] |= tmp2[6];
+		TaitoChars[i+1] |= tmp2[7];
+		TaitoChars[i+2] |= tmp2[0];
+		TaitoChars[i+3] |= tmp2[1];
+		TaitoChars[i+4] |= tmp2[2];
+		TaitoChars[i+5] |= tmp2[3];
+		TaitoChars[i+6] |= tmp2[4];
+		TaitoChars[i+7] |= tmp2[5];
+	}
+
+	DrvCalculateTransTable(0x400000);
+
+	BurnFree(tmp);
+
+	return 0;
+}
+
+static INT32 bubsymphbInit()
+{
+	f3_game = BUBSYMPH;
+
+	TaitoSpriteARomSize = (0x300000 * 8) / 6;
+	TaitoCharRomSize = 0x400000;
+	TaitoF3ES5506RomSize = 0x80000;
+	sprite_code_mask = (TaitoSpriteARomSize / 0x100);
+	tileno_mask = (TaitoCharRomSize / 0x100);
+
+	MemIndex();
+	INT32 nLen = TaitoMemEnd - (UINT8 *)0;
+	if ((TaitoMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(TaitoMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (BurnLoadRom(Taito68KRom1  + 0x000001,  0, 4)) return 1;
+		if (BurnLoadRom(Taito68KRom1  + 0x000000,  1, 4)) return 1;
+		if (BurnLoadRom(Taito68KRom1  + 0x000003,  2, 4)) return 1;
+		if (BurnLoadRom(Taito68KRom1  + 0x000002,  3, 4)) return 1;
+
+		if (BurnLoadRom(TaitoSpritesA + 0x080000,  4, 1)) return 1;
+		if (BurnLoadRom(TaitoSpritesA + 0x100000,  5, 1)) return 1;
+		if (BurnLoadRom(TaitoSpritesA + 0x180000,  6, 1)) return 1;
+		if (BurnLoadRom(TaitoSpritesA + 0x200000,  7, 1)) return 1;
+		if (BurnLoadRom(TaitoSpritesA + 0x280000,  8, 1)) return 1;
+
+		if (BurnLoadRom(TaitoChars    + 0x000000,  9, 4)) return 1;
+		if (BurnLoadRom(TaitoChars    + 0x000001, 10, 4)) return 1;
+		if (BurnLoadRom(TaitoChars    + 0x000002, 11, 4)) return 1;
+		if (BurnLoadRom(TaitoChars    + 0x000003, 12, 4)) return 1;
+		if (BurnLoadRom(TaitoChars    + 0x200000, 13, 4)) return 1;
+
+		if (BurnLoadRom(TaitoF3ES5506Rom,         14, 1)) return 1;
+
+		DrvGfxDecode();
+
+		bootlegpatch();
+	}
+
+	SekInit(0, 0x68ec020);
+	SekOpen(0);
+	SekMapMemory(Taito68KRom1,	0x000000, 0x1fffff, MAP_ROM);
+	SekMapMemory(Taito68KRam1,	0x400000, 0x41ffff, MAP_RAM);
+	SekMapMemory(Taito68KRam1,	0x420000, 0x43ffff, MAP_RAM); // mirror
+	SekMapMemory(TaitoPaletteRam,	0x440000, 0x447fff, MAP_ROM); // write through handler
+	SekMapMemory(TaitoSpriteRam,	0x600000, 0x60ffff, MAP_RAM);
+	SekMapMemory(DrvPfRAM,		0x610000, 0x617fff, MAP_ROM); // write through handler
+	SekMapMemory(DrvPfRAM + 0x8000,	0x618000, 0x61bfff, MAP_RAM);
+	SekMapMemory(TaitoVideoRam,	0x61c000, 0x61dfff, MAP_RAM);
+	SekMapMemory(DrvVRAMRAM,	0x61e000, 0x61ffff, MAP_ROM); // write through handler
+	SekMapMemory(DrvLineRAM,	0x620000, 0x62ffff, MAP_RAM);
+	SekMapMemory(DrvPivotRAM,	0x630000, 0x63ffff, MAP_ROM); // write through handler
+	SekMapMemory(DrvCtrlRAM,	0x660000, 0x6603ff, MAP_WRITE); // 0-1f
+	SekMapMemory(TaitoF3SharedRam,	0xc00000, 0xc007ff, MAP_RAM);
+	SekSetWriteLongHandler(0,	f3_main_write_long);
+	SekSetWriteWordHandler(0,	f3_main_write_word);
+	SekSetWriteByteHandler(0,	f3_main_write_byte);
+	SekSetReadLongHandler(0,	f3_main_read_long);
+	SekSetReadWordHandler(0,	f3_main_read_word);
+	SekSetReadByteHandler(0,	f3_main_read_byte);
+
+	SekMapHandler(1,		0x440000, 0x447fff, MAP_WRITE);
+	SekSetWriteLongHandler(1,	f3_palette_write_long);
+	SekSetWriteWordHandler(1,	f3_palette_write_word);
+	SekSetWriteByteHandler(1,	f3_palette_write_byte);
+
+	SekMapHandler(2,		0x61e000, 0x61ffff, MAP_WRITE);
+	SekSetWriteLongHandler(2,	f3_VRAM_write_long);
+	SekSetWriteWordHandler(2,	f3_VRAM_write_word);
+	SekSetWriteByteHandler(2,	f3_VRAM_write_byte);
+
+	SekMapHandler(3,		0x630000, 0x63ffff, MAP_WRITE);
+	SekSetWriteLongHandler(3,	f3_pivot_write_long);
+	SekSetWriteWordHandler(3,	f3_pivot_write_word);
+	SekSetWriteByteHandler(3,	f3_pivot_write_byte);
+
+	SekMapHandler(4,		0x610000, 0x617fff, MAP_WRITE);
+	SekSetWriteLongHandler(4,	f3_playfield_write_long);
+	SekSetWriteWordHandler(4,	f3_playfield_write_word);
+	SekSetWriteByteHandler(4,	f3_playfield_write_byte);
+	SekClose();
+
+	TaitoF3SoundInit(1); // keep us safe from crashes!
+
+	MSM6295Init(0, 1000000 / 132, 0);
+	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
+
+	EEPROMInit(&eeprom_interface_93C46);
+	EEPROMIgnoreErrMessage(1);
+
+	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
+	} else {
+		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
+	}
+
+	pPaletteUpdateCallback = f3_24bit_palette_update;
+	extended_layers = 1;
+	sprite_lag = 1;
+
+	m_spritelist = (struct tempsprite*)BurnMalloc(0x400 * sizeof(struct tempsprite));
+	m_sprite_end = m_spritelist;
+
+	TaitoF3VideoInit();
+
+	bitmap_width[0] = extended_layers ? 1024 : 512;
+	bitmap_width[1] = extended_layers ? 1024 : 512;
+	bitmap_width[2] = extended_layers ? 1024 : 512;
+	bitmap_width[3] = extended_layers ? 1024 : 512;
+	bitmap_width[4] = 512;
+	bitmap_width[5] = 512;
+	bitmap_width[6] = 512;
+	bitmap_width[7] = 512;
+
+	DrvDoReset(1);
+
+	return 0;
+}
+
+
 struct BurnDriverD BurnDrvBubsymphb = {
 	"bubsymphb", "bublbob2", NULL, NULL, "1994",
 	"Bubble Symphony (bootleg with OKI6295)\0", NULL, "bootleg", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubsymphbRomInfo, bubsymphbRomName, NULL, NULL, F3InputInfo, NULL,
-	bublbob2Init, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
+	bubsymphbInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
 };
 

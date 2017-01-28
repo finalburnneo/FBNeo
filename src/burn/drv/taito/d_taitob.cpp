@@ -1887,6 +1887,7 @@ static INT32 CommonInit(void (*pInitCallback)(), INT32 sound_type, INT32 color_s
 	TC0180VCUInit(TaitoChars, tilemaskChars, TaitoSpritesA, tilemaskSprites, 0, 16);
 
 	EEPROMInit(&taitob_eeprom_intf);
+	EEPROMIgnoreErrMessage(1);
 
 	if (pInitCallback) {
 		pInitCallback();

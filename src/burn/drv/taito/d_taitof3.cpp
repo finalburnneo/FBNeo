@@ -5835,10 +5835,10 @@ STD_ROM_PICK(dankuga)
 STD_ROM_FN(dankuga)
 
 struct BurnDriver BurnDrvDankuga = {
-	"dankuga", NULL, NULL, NULL, "1994",
+	"dankuga", "kaiserkn", NULL, NULL, "1994",
 	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, dankugaRomInfo, dankugaRomName, NULL, NULL, KnInputInfo, NULL,
 	kaiserknInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &DrvRecalc, 0x2000,
 	320, 224, 4, 3
@@ -5988,10 +5988,10 @@ STD_ROM_PICK(dariusgx)
 STD_ROM_FN(dariusgx)
 
 struct BurnDriver BurnDrvDariusgx = {
-	"dariusgx", NULL, NULL, NULL, "1994",
+	"dariusgx", "dariusg", NULL, NULL, "1994",
 	"Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 1995/03/06) (Official Hack)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgxRomInfo, dariusgxRomName, NULL, NULL, F3InputInfo, NULL,
 	dariusgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	320, 232, 4, 3

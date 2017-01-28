@@ -1011,6 +1011,20 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 	}
 }
 
+// Some games (Taito F3) change the l/r volume in-game, this is for them
+void ES5506ScanRoutes(INT32 nAction, INT32* pnMin)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506ScanRoutes called without init\n"));
+#endif
+
+	ES5506Scan(nAction, pnMin);
+
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(chip->volume);
+	}
+}
+
 void ES5506SetRoute(INT32, double nVolume, INT32 nRouteDir)
 {
 	if (nRouteDir & 1) { // left

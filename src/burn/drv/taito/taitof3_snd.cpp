@@ -399,7 +399,7 @@ INT32 TaitoF3SoundScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 	//	SekScan(nAction);		// call in driver!
-		ES5506Scan(nAction, pnMin);
+		ES5506ScanRoutes(nAction, pnMin); // F3 games change the volume levels in-game
 
 		mb87078_scan();
 

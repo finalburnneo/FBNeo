@@ -1,51 +1,14 @@
+// FB Alpha Taito F3 driver module
+// Based on MAME driver by Bryan McPhail and MANY others.
 
 /*
-    version .00001a ;)
+    version .00001c ;)
 
 
 	no attempt at speed-ups
 	no attempt at cleaning at all
 	ROM sets might be out of date!!!
 
-	working
-
-	ARABIANM
-	kaiserkn
-	RECALH
-	RIDINGF
-	LIGHTBR
-	RINGRAGE
-	LANDMAKER & proto
-	DARIUSG
-	PUCHICAR
-	PBOBBLE2 & clones
-	pbobble3 
-	pbobble4
-	bublbob2
-	bublblem
-	gekiridn
-	popnpop
-	twinqix
-	trstar
-	spcinv95
-	spcinvdj
-	kirameki 	- has extra 68k rom that is banked for sound, not hooked up yet,
-	qtheater
-	quizhuhu	- missing text is normal.
-	elavctrl
-	cleopatr
-	intcup94 / hthero94 ok
-	pwrgoal
-	gunlock
-	GSEEKER
-	arkretrn
-	tcobra2
-	cupfinal    - ok (clone of scfinals!)
-	commandw
-
-	broken
-
-	scfinals    - coin inputs don't work, service coin ok.
 */
 
 
@@ -64,24 +27,16 @@ static UINT8 *DrvLineRAM;
 static UINT8 *DrvPivotRAM;
 static UINT8 *DrvCtrlRAM;
 static UINT16 *DrvCoinWord;
-
-static UINT32 *output_bitmap;
-
 static UINT8 DrvRecalc;
 
-static INT32 tileno_mask;
-
-static INT32 watchdog;
-static INT32 extended_layers;
-#define SPRITE_KLUDGE	1
-static INT32 f3_kludge=0;
 static void (*pPaletteUpdateCallback)(UINT16) = NULL;
 
 static UINT16 *bitmap_layer[10];
 static UINT8 *bitmap_flags[10];
 static INT32 bitmap_width[8];
+static UINT32 *output_bitmap;
 
-static UINT8 *m_tile_opaque_pf[8];
+static UINT8 *tile_opaque_pf[8];
 static UINT8 *dirty_tiles;
 
 static UINT8 DrvJoy1[16];
@@ -94,57 +49,59 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[5];
 static UINT8 previous_coin;
 
-static UINT32 sprite_code_mask; // set in init
-static INT32 sprite_lag; // set in init
+// set in init
+static UINT32 tileno_mask;
+static UINT32 sprite_code_mask;
+static UINT32 sprite_lag;
+static UINT32 extended_layers;
 
-static UINT32 m_sprite_pen_mask;
-static UINT32 m_sprite_pri_usage;
-static INT32 m_flipscreen = 0;
-static INT32 m_sprite_extra_planes = 0;
+// set each frame
+static UINT32 sprite_pen_mask;
+static UINT32 sprite_pri_usage;
+static INT32 flipscreen = 0;
+static INT32 sprite_extra_planes = 0;
+
 static INT32 sound_cpu_in_reset = 0;
+static INT32 watchdog;
 
 enum {
-	/* Early F3 class games, these are not cartridge games and system features may be different */
-	RINGRAGE=0, /* D21 */
-	ARABIANM,   /* D29 */
-	RIDINGF,    /* D34 */
-	GSEEKER,    /* D40 */
-	TRSTAR,     /* D53 */
-	GUNLOCK,    /* D66 */
+	RINGRAGE = 0,
+	ARABIANM,
+	RIDINGF,
+	GSEEKER,
+	TRSTAR,
+	GUNLOCK,
 	TWINQIX,
-	UNDRFIRE,   /* D67 - Heavily modified F3 hardware (different memory map) */
-	SCFINALS,
-	LIGHTBR,    /* D69 */
-
-	/* D77 - F3 motherboard proms, all following games are 'F3 package system' */
-	/* D78 I CUP */
-	KAISERKN,   /* D84 */
-	DARIUSG,    /* D87 */
-	BUBSYMPH,   /* D90 */
-	SPCINVDX,   /* D93 */
-	HTHERO95,   /* D94 */
-	QTHEATER,   /* D95 */
-	EACTION2,   /* E02 */
-	SPCINV95,   /* E06 */
-	QUIZHUHU,   /* E08 */
-	PBOBBLE2,   /* E10 */
-	GEKIRIDO,   /* E11 */
-	KTIGER2,    /* E15 */
-	BUBBLEM,    /* E21 */
-	CLEOPATR,   /* E28 */
-	PBOBBLE3,   /* E29 */
-	ARKRETRN,   /* E36 */
-	KIRAMEKI,   /* E44 */
-	PUCHICAR,   /* E46 */
-	PBOBBLE4,   /* E49 */
-	POPNPOP,    /* E51 */
-	LANDMAKR,   /* E61 */
-	RECALH,     /* prototype */
-	COMMANDW,   /* prototype */
+	UNDRFIRE,
+	SCFINALS,  // - coin inputs don't work, service coin ok.
+	LIGHTBR,
+	KAISERKN,
+	DARIUSG,
+	BUBSYMPH,
+	SPCINVDX,
+	HTHERO95,
+	QTHEATER,
+	EACTION2,
+	SPCINV95,
+	QUIZHUHU,  //  - missing text is normal.
+	PBOBBLE2,
+	GEKIRIDO,
+	KTIGER2,
+	BUBBLEM,
+	CLEOPATR,
+	PBOBBLE3,
+	ARKRETRN,
+	KIRAMEKI,  // - has extra 68k rom that is banked for sound, not hooked up yet,
+	PUCHICAR,
+	PBOBBLE4,
+	POPNPOP,
+	LANDMAKR,
+	RECALH,
+	COMMANDW,
 	TMDRILL
 };
 
-static INT32 m_f3_game = 0;
+static INT32 f3_game = 0;
 
 struct tempsprite
 {
@@ -155,15 +112,15 @@ struct tempsprite
 	INT32 pri;
 };
 
-struct tempsprite *m_spritelist;
-const struct tempsprite *m_sprite_end;
+static struct tempsprite *m_spritelist;
+static const struct tempsprite *m_sprite_end;
 
 static INT32 min_x = 0;
 static INT32 max_x = 512;
 static INT32 min_y = 0;
 static INT32 max_y = 256;
 
-void TaitoF3VideoInit();
+static void TaitoF3VideoInit();
 
 static struct BurnInputInfo F3InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"},
@@ -635,7 +592,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 	if (EEPROMAvailable() == 0) {
 		if (TaitoDefaultEEProm[0] != 0) {
 			EEPROMFill((const UINT8*)TaitoDefaultEEProm, 0, 128);
-		} else if (m_f3_game == RECALH || m_f3_game == GSEEKER ) {
+		} else if (f3_game == RECALH || f3_game == GSEEKER ) {
 			static const UINT8 recalh_eeprom[128] =	{
 				0x85,0x54,0x00,0x00,0x30,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xf3,0x35,
 				0x00,0x01,0x86,0xa0,0x00,0x13,0x04,0x13,0x00,0x00,0xc3,0x50,0x00,0x19,0x00,0x0a,
@@ -648,7 +605,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 			};
 
 			EEPROMFill(recalh_eeprom, 0, 128);
-		} else if (m_f3_game == ARKRETRN) {
+		} else if (f3_game == ARKRETRN) {
 			static const UINT8 arkretrn_eeprom[128] = {
 				0x54,0x41,0x49,0x54,0x4f,0x03,0x00,0x07,0xa1,0xe8,0xe0,0x01,0x11,0x12,0x30,0x00,
 				0x00,0x00,0x02,0x02,0x02,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x4c,0x63,
@@ -687,7 +644,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 			} else {
 				EEPROMFill(arkretrn_eeprom, 0, 128);
 			}
-		} else if (m_f3_game == PUCHICAR) {
+		} else if (f3_game == PUCHICAR) {
 			static const UINT8 puchicar_eeprom[128] = {
 				0x54,0x41,0x49,0x54,0x4f,0x03,0x00,0x07,0xa1,0xf2,0xe0,0x01,0x11,0x12,0x30,0x00,
 				0x00,0x00,0x02,0x02,0x01,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x4d,0x59,
@@ -718,10 +675,10 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	f3_reset_dirtybuffer();
 
-	m_sprite_pen_mask = 0;
-	m_sprite_pri_usage = 0;
-	m_flipscreen = 0;
-	m_sprite_extra_planes = 0;
+	sprite_pen_mask = 0;
+	sprite_pri_usage = 0;
+	flipscreen = 0;
+	sprite_extra_planes = 0;
 
 	sound_cpu_in_reset = 1;
 	watchdog = 0;
@@ -738,19 +695,19 @@ static INT32 MemIndex()
 
 	TaitoF3SoundRom		= Next;
 	Taito68KRom2		= Next; Next += 0x0100000;
-	if (m_f3_game == KIRAMEKI) Next += 0x200000;
+	if (f3_game == KIRAMEKI) Next += 0x200000;
 
 	TaitoSpritesA		= Next; Next += TaitoSpriteARomSize;
 	TaitoChars		= Next; Next += TaitoCharRomSize;
 
-	m_tile_opaque_pf[0]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[1]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[2]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[3]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[4]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[5]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[6]	= Next; Next += TaitoCharRomSize / 0x100;
-	m_tile_opaque_pf[7]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[0]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[1]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[2]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[3]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[4]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[5]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[6]	= Next; Next += TaitoCharRomSize / 0x100;
+	tile_opaque_pf[7]	= Next; Next += TaitoCharRomSize / 0x100;
 
 	TaitoF3ES5506Rom	= Next;
 	TaitoES5505Rom		= Next; Next += TaitoF3ES5506RomSize;
@@ -826,16 +783,16 @@ static INT32 MemIndex()
 static void DrvCalculateTransTable(INT32 len)
 {
 	UINT8 *pf_gfx = TaitoChars;
-	int c;
+	INT32 c;
 
 	for (c = 0;c < len/0x100;c++)
 	{
-		int x,y;
-		int extra_planes; /* 0 = 4bpp, 1=5bpp, 2=?, 3=6bpp */
+		INT32 x,y;
+		INT32 extra_planes; /* 0 = 4bpp, 1=5bpp, 2=?, 3=6bpp */
 
 		for (extra_planes=0; extra_planes<4; extra_planes++)
 		{
-			int chk_trans_or_opa=0;
+			INT32 chk_trans_or_opa=0;
 			UINT8 extra_mask = ((extra_planes << 4) | 0x0f);
 			const UINT8 *dp = pf_gfx + c * 0x100; //pf_gfx->get_data(c);
 
@@ -851,7 +808,7 @@ static void DrvCalculateTransTable(INT32 len)
 				dp += 16;
 			}
 
-			m_tile_opaque_pf[extra_planes][c]=chk_trans_or_opa;
+			tile_opaque_pf[extra_planes][c]=chk_trans_or_opa;
 		}
 	}
 }
@@ -884,7 +841,7 @@ static void tile_decode(INT32 spr_len, INT32 tile_len)
 {
 	UINT8 lsb,msb;
 	UINT8 *gfx = TaitoChars;
-	int size=tile_len;
+	INT32 size=tile_len;
 	UINT32 offset = size/2;
 
 	for (INT32 i = size/2+size/4; i<size; i+=2)
@@ -958,7 +915,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		{
 	//		if (bLoad) bprintf (0, _T("%6.6x sprite 2x\n"), sprites - TaitoSpritesA);
 
-			if (m_f3_game == GSEEKER)
+			if (f3_game == GSEEKER)
 			{
 				if (bLoad) {
 					if (BurnLoadRom(sprites + 0x000000, i + 0, 2)) return 1;
@@ -1138,7 +1095,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag)
 {
-	m_f3_game = kludge;
+	f3_game = kludge;
 
 	TaitoF3GetRoms(false);
 
@@ -1250,8 +1207,6 @@ static INT32 DrvExit()
 
 	pPaletteUpdateCallback = NULL;
 
-	f3_kludge = 0;
-
 	return 0;
 }
 
@@ -1340,7 +1295,7 @@ static void draw_pf_layer(INT32 layer)
 
 		INT32 penmask = (explane << 4) | 0x0f;
 
-		if (m_flipscreen) {
+		if (flipscreen) {
 			sx = (width - 16) - sx;
 			sy = (512 - 16) - sy;
 			flipy ^= 1;
@@ -1358,7 +1313,7 @@ static void draw_pf_layer(INT32 layer)
 			{
 				for (INT32 x = 0; x < 16; x++)
 				{
-					int pxl = gfx[((y*16)+x)^flip] & penmask;
+					INT32 pxl = gfx[((y*16)+x)^flip] & penmask;
 
 					dst[x] = pxl + color;
 
@@ -1389,7 +1344,7 @@ static void draw_vram_layer()
 		INT32 flipx = tile & 0x0100;
 		INT32 flipy = tile & 0x8000;
 
-		if (m_flipscreen) {
+		if (flipscreen) {
 			sx = (512 - 8) - sx;
 			sy = (512 - 8) - sy;
 			flipx ^= 0x100;
@@ -1434,7 +1389,7 @@ static void draw_pixel_layer()
 	UINT16 *ram = (UINT16*)TaitoVideoRam;
 
 	UINT16 y_offs = *((UINT16*)(DrvCtrlRAM + 0x1a)) & 0x1ff;
-	if (m_flipscreen) y_offs += 0x100;
+	if (flipscreen) y_offs += 0x100;
 
 	for (INT32 offs = 0; offs < 64 * 32; offs++)
 	{
@@ -1455,7 +1410,7 @@ static void draw_pixel_layer()
 
 		INT32 color = (tile >> 9) & 0x3f;
 
-		if (m_flipscreen)
+		if (flipscreen)
 		{
 			flipx ^= 0x0100;
 			flipy ^= 0x8000;
@@ -1500,7 +1455,7 @@ static void draw_pixel_layer()
 #if 1
 
 #define PSET_T					\
-	c = *source & m_sprite_pen_mask;	\
+	c = *source & sprite_pen_mask;	\
 	if(c)						\
 	{							\
 		p=*pri;					\
@@ -1515,7 +1470,7 @@ static void draw_pixel_layer()
 	p=*pri;						\
 	if(!p || p==0xff)			\
 	{							\
-		*dest = pal[(*source & m_sprite_pen_mask)];	\
+		*dest = pal[(*source & sprite_pen_mask)];	\
 		*pri = pri_dst;			\
 	}
 
@@ -1525,10 +1480,10 @@ static void draw_pixel_layer()
 	pri++;
 
 static void f3_drawgfx(
-		int code,
-		int color,
-		int flipx,int flipy,
-		int sx,int sy,
+		INT32 code,
+		INT32 color,
+		INT32 flipx,INT32 flipy,
+		INT32 sx,INT32 sy,
 		UINT8 pri_dst)
 {
 	pri_dst=1<<pri_dst;
@@ -1543,14 +1498,14 @@ static void f3_drawgfx(
 
 		{
 			/* compute sprite increment per screen pixel */
-			int dx = 1;
-			int dy = 1;
+			INT32 dx = 1;
+			INT32 dy = 1;
 
-			int ex = sx+16;
-			int ey = sy+16;
+			INT32 ex = sx+16;
+			INT32 ey = sy+16;
 
-			int x_index_base;
-			int y_index;
+			INT32 x_index_base;
+			INT32 y_index;
 
 			if( flipx )
 			{
@@ -1574,39 +1529,39 @@ static void f3_drawgfx(
 
 			if(sx < min_x)
 			{ /* clip left */
-				int pixels = min_x-sx;
+				INT32 pixels = min_x-sx;
 				sx += pixels;
 				x_index_base += pixels*dx;
 			}
 			if( sy < min_y )
 			{ /* clip top */
-				int pixels = min_y-sy;
+				INT32 pixels = min_y-sy;
 				sy += pixels;
 				y_index += pixels*dy;
 			}
 			/* NS 980211 - fixed incorrect clipping */
 			if( ex > max_x+1 )
 			{ /* clip right */
-				int pixels = ex-max_x-1;
+				INT32 pixels = ex-max_x-1;
 				ex -= pixels;
 			}
 			if( ey > max_y+1 )
 			{ /* clip bottom */
-				int pixels = ey-max_y-1;
+				INT32 pixels = ey-max_y-1;
 				ey -= pixels;
 			}
 
 			if( ex>sx && ey>sy)
 			{ /* skip if inner loop doesn't draw anything */
 				{
-					int y=ey-sy;
-					int x=(ex-sx-1);//|(state->m_tile_opaque_sp[code % gfx->elements()]<<4); // iq_132
+					INT32 y=ey-sy;
+					INT32 x=(ex-sx-1);//|(state->m_tile_opaque_sp[code % gfx->elements()]<<4); // iq_132
 					const UINT8 *source0 = code_base + y_index * 16 + x_index_base;
 					UINT32 *dest0 = output_bitmap + sy * 512 + sx;
 					UINT8 *pri0   = TaitoPriorityMap + sy * 1024 + sx;
 
-					int yadv = 512;
-					int yadvp = 1024;
+					INT32 yadv = 512;
+					INT32 yadvp = 1024;
 
 					dy=dy*16;
 
@@ -1618,7 +1573,7 @@ static void f3_drawgfx(
 
 						switch(x)
 						{
-							int c;
+							INT32 c;
 							UINT8 p;
 							case 31: PSET_O NEXT_P
 							case 30: PSET_O NEXT_P
@@ -1670,12 +1625,12 @@ static void f3_drawgfx(
 #undef NEXT_P
 
 
-void f3_drawgfxzoom(
-		int code,
-		int color,
-		int flipx,int flipy,
-		int sx,int sy,
-		int scalex, int scaley,
+static void f3_drawgfxzoom(
+		INT32 code,
+		INT32 color,
+		INT32 flipx,INT32 flipy,
+		INT32 sx,INT32 sy,
+		INT32 scalex, INT32 scaley,
 		UINT8 pri_dst)
 {
 	pri_dst=1<<pri_dst;
@@ -1691,14 +1646,14 @@ void f3_drawgfxzoom(
 
 		{
 			/* compute sprite increment per screen pixel */
-			int dx = (16<<16)/scalex;
-			int dy = (16<<16)/scaley;
+			INT32 dx = (16<<16)/scalex;
+			INT32 dy = (16<<16)/scaley;
 
-			int ex = sx+scalex;
-			int ey = sy+scaley;
+			INT32 ex = sx+scalex;
+			INT32 ey = sy+scaley;
 
-			int x_index_base;
-			int y_index;
+			INT32 x_index_base;
+			INT32 y_index;
 
 			if( flipx )
 			{
@@ -1722,42 +1677,42 @@ void f3_drawgfxzoom(
 
 			if(sx < min_x)
 			{ /* clip left */
-				int pixels = min_x-sx;
+				INT32 pixels = min_x-sx;
 				sx += pixels;
 				x_index_base += pixels*dx;
 			}
 			if( sy < min_y )
 			{ /* clip top */
-				int pixels = min_y-sy;
+				INT32 pixels = min_y-sy;
 				sy += pixels;
 				y_index += pixels*dy;
 			}
 			/* NS 980211 - fixed incorrect clipping */
 			if( ex > max_x+1 )
 			{ /* clip right */
-				int pixels = ex-max_x-1;
+				INT32 pixels = ex-max_x-1;
 				ex -= pixels;
 			}
 			if( ey > max_y+1 )
 			{ /* clip bottom */
-				int pixels = ey-max_y-1;
+				INT32 pixels = ey-max_y-1;
 				ey -= pixels;
 			}
 
 			if( ex>sx )
 			{ /* skip if inner loop doesn't draw anything */
 				{
-					int y;
+					INT32 y;
 					for( y=sy; y<ey; y++ )
 					{
 						const UINT8 *source = code_base + (y_index>>16) * 16;
 						UINT32 *dest = output_bitmap + y * 512;
 						UINT8 *pri = TaitoPriorityMap + y * 1024;
 
-						int x, x_index = x_index_base;
+						INT32 x, x_index = x_index_base;
 						for( x=sx; x<ex; x++ )
 						{
-							int c = source[x_index>>16] & m_sprite_pen_mask;
+							INT32 c = source[x_index>>16] & sprite_pen_mask;
 							if(c)
 							{
 								UINT8 p=pri[x];
@@ -1791,24 +1746,24 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 #define DARIUSG_KLUDGE
 
 	//const rectangle &visarea = m_screen->visible_area();
-	//const int min_x=visarea.min_x,max_x=visarea.max_x;
-	//const int min_y=visarea.min_y,max_y=visarea.max_y;
+	//const INT32 min_x=visarea.min_x,max_x=visarea.max_x;
+	//const INT32 min_y=visarea.min_y,max_y=visarea.max_y;
 
-	int offs,spritecont,flipx,flipy,/*old_x,*/color,x,y;
-	int sprite,global_x=0,global_y=0,subglobal_x=0,subglobal_y=0;
-	int block_x=0, block_y=0;
-	int last_color=0,last_x=0,last_y=0,block_zoom_x=0,block_zoom_y=0;
-	int this_x,this_y;
-	int y_addition=16, x_addition=16;
-	int multi=0;
-	int sprite_top;
+	INT32 offs,spritecont,flipx,flipy,/*old_x,*/color,x,y;
+	INT32 sprite,global_x=0,global_y=0,subglobal_x=0,subglobal_y=0;
+	INT32 block_x=0, block_y=0;
+	INT32 last_color=0,last_x=0,last_y=0,block_zoom_x=0,block_zoom_y=0;
+	INT32 this_x,this_y;
+	INT32 y_addition=16, x_addition=16;
+	INT32 multi=0;
+	INT32 sprite_top;
 
-	int x_addition_left = 8, y_addition_left = 8;
+	INT32 x_addition_left = 8, y_addition_left = 8;
 
 	struct tempsprite *sprite_ptr = m_spritelist;
 
-	int total_sprites=0;
-	int jumpcnt = 0;
+	INT32 total_sprites=0;
+	INT32 jumpcnt = 0;
 	color=0;
 	flipx=flipy=0;
 	//old_x=0;
@@ -1817,13 +1772,13 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 	sprite_top=0x2000;
 	for (offs = 0; offs < sprite_top && (total_sprites < 0x400); offs += 8)
 	{
-		const int current_offs=offs; /* Offs can change during loop, current_offs cannot */
+		const INT32 current_offs=offs; /* Offs can change during loop, current_offs cannot */
 
 		/* Check if the sprite list jump command bit is set */
 		if ((spriteram16_ptr[current_offs+6+0]) & 0x8000) {
-			uint32_t jump = (spriteram16_ptr[current_offs+6+0])&0x3ff;
+			UINT32 jump = (spriteram16_ptr[current_offs+6+0])&0x3ff;
 
-			int32_t new_offs=((offs&0x4000)|((jump<<4)/2));
+			INT32 new_offs=((offs&0x4000)|((jump<<4)/2));
 			if (new_offs==offs || jumpcnt > 250)
 				break;
 			offs=new_offs - 8;
@@ -1832,16 +1787,16 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 
 		/* Check if special command bit is set */
 		if (spriteram16_ptr[current_offs+2+1] & 0x8000) {
-			uint32_t cntrl=(spriteram16_ptr[current_offs+4+1])&0xffff;
-			m_flipscreen=cntrl&0x2000;
+			UINT32 cntrl=(spriteram16_ptr[current_offs+4+1])&0xffff;
+			flipscreen=cntrl&0x2000;
 
 			/*  cntrl&0x1000 = disabled?  (From F2 driver, doesn't seem used anywhere)
 			    cntrl&0x0010 = ???
 			    cntrl&0x0020 = ???
 			*/
 
-			m_sprite_extra_planes = (cntrl & 0x0300) >> 8;   // 0 = 4bpp, 1 = 5bpp, 2 = unused?, 3 = 6bpp
-			m_sprite_pen_mask = (m_sprite_extra_planes << 4) | 0x0f;
+			sprite_extra_planes = (cntrl & 0x0300) >> 8;   // 0 = 4bpp, 1 = 5bpp, 2 = unused?, 3 = 6bpp
+			sprite_pen_mask = (sprite_extra_planes << 4) | 0x0f;
 
 			/* Sprite bank select */
 			if (cntrl&1) {
@@ -1882,7 +1837,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 /* These games either don't set the XY control bits properly (68020 bug?), or
     have some different mode from the others */
 #ifdef DARIUSG_KLUDGE
-		if (m_f3_game==DARIUSG || m_f3_game==GEKIRIDO || m_f3_game==CLEOPATR || m_f3_game==RECALH)
+		if (f3_game==DARIUSG || f3_game==GEKIRIDO || f3_game==CLEOPATR || f3_game==RECALH)
 			multi=spritecont&0xf0;
 #endif
 
@@ -1893,7 +1848,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 			else color=(spriteram16_ptr[current_offs+4+0])&0xff;
 
 #ifdef DARIUSG_KLUDGE
-			if (m_f3_game==DARIUSG || m_f3_game==GEKIRIDO || m_f3_game==CLEOPATR || m_f3_game==RECALH) {
+			if (f3_game==DARIUSG || f3_game==GEKIRIDO || f3_game==CLEOPATR || f3_game==RECALH) {
 				/* Adjust X Position */
 				if ((spritecont & 0x40) == 0) {
 					if (spritecont & 0x4) {
@@ -2021,9 +1976,9 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 		if (!sprite) continue;
 		if (!x_addition || !y_addition) continue;
 
-		if (m_flipscreen)
+		if (flipscreen)
 		{
-			int tx,ty;
+			INT32 tx,ty;
 
 			tx = 512-x_addition-x;
 			ty = y; //256-y_addition-y;
@@ -2061,30 +2016,30 @@ static void draw_sprites()
 {
 	const struct tempsprite *sprite_ptr;
 	sprite_ptr = m_sprite_end;
-	m_sprite_pri_usage=0;
+	sprite_pri_usage=0;
 
 	// if sprites use more than 4bpp, the bottom bits of the color code must be masked out.
 	// This fixes (at least) stage 1 battle ships and attract mode explosions in Ray Force.
 
 	while (sprite_ptr != m_spritelist)
 	{
-		int pri;
+		INT32 pri;
 		sprite_ptr--;
 
 		pri=sprite_ptr->pri;
-		m_sprite_pri_usage|=1<<pri;
+		sprite_pri_usage|=1<<pri;
 
 		if(sprite_ptr->zoomx==16 && sprite_ptr->zoomy==16)
 			f3_drawgfx(
 					sprite_ptr->code,
-					sprite_ptr->color & (~m_sprite_extra_planes),
+					sprite_ptr->color & (~sprite_extra_planes),
 					sprite_ptr->flipx,sprite_ptr->flipy,
 					sprite_ptr->x,sprite_ptr->y,
 					pri);
 		else
 			f3_drawgfxzoom(
 					sprite_ptr->code,
-					sprite_ptr->color & (~m_sprite_extra_planes),
+					sprite_ptr->color & (~sprite_extra_planes),
 					sprite_ptr->flipx,sprite_ptr->flipy,
 					sprite_ptr->x,sprite_ptr->y,
 					sprite_ptr->zoomx,sprite_ptr->zoomy,
@@ -2102,118 +2057,118 @@ static INT32 m_twidth_mask_bit=7;
 #define ORIENTATION_FLIP_Y	1
 
 
-	UINT16 *m_src0;
-	UINT16 *m_src_s0;
-	UINT16 *m_src_e0;
-	UINT16 m_clip_al0;
-	UINT16 m_clip_ar0;
-	UINT16 m_clip_bl0;
-	UINT16 m_clip_br0;
-	UINT8 *m_tsrc0;
-	UINT8 *m_tsrc_s0;
-	UINT32 m_x_count0;
-	UINT32 m_x_zoom0;
-	UINT16 *m_src1;
-	UINT16 *m_src_s1;
-	UINT16 *m_src_e1;
-	UINT16 m_clip_al1;
-	UINT16 m_clip_ar1;
-	UINT16 m_clip_bl1;
-	UINT16 m_clip_br1;
-	UINT8 *m_tsrc1;
-	UINT8 *m_tsrc_s1;
-	UINT32 m_x_count1;
-	UINT32 m_x_zoom1;
-	UINT16 *m_src2;
-	UINT16 *m_src_s2;
-	UINT16 *m_src_e2;
-	UINT16 m_clip_al2;
-	UINT16 m_clip_ar2;
-	UINT16 m_clip_bl2;
-	UINT16 m_clip_br2;
-	UINT8 *m_tsrc2;
-	UINT8 *m_tsrc_s2;
-	UINT32 m_x_count2;
-	UINT32 m_x_zoom2;
-	UINT16 *m_src3;
-	UINT16 *m_src_s3;
-	UINT16 *m_src_e3;
-	UINT16 m_clip_al3;
-	UINT16 m_clip_ar3;
-	UINT16 m_clip_bl3;
-	UINT16 m_clip_br3;
-	UINT8 *m_tsrc3;
-	UINT8 *m_tsrc_s3;
-	UINT32 m_x_count3;
-	UINT32 m_x_zoom3;
-	UINT16 *m_src4;
-	UINT16 *m_src_s4;
-	UINT16 *m_src_e4;
-	UINT16 m_clip_al4;
-	UINT16 m_clip_ar4;
-	UINT16 m_clip_bl4;
-	UINT16 m_clip_br4;
-	UINT8 *m_tsrc4;
-	UINT8 *m_tsrc_s4;
-	UINT32 m_x_count4;
-	UINT32 m_x_zoom4;
+static UINT16 *m_src0;
+static UINT16 *m_src_s0;
+static UINT16 *m_src_e0;
+static UINT16 m_clip_al0;
+static UINT16 m_clip_ar0;
+static UINT16 m_clip_bl0;
+static UINT16 m_clip_br0;
+static UINT8 *m_tsrc0;
+static UINT8 *m_tsrc_s0;
+static UINT32 m_x_count0;
+static UINT32 m_x_zoom0;
+static UINT16 *m_src1;
+static UINT16 *m_src_s1;
+static UINT16 *m_src_e1;
+static UINT16 m_clip_al1;
+static UINT16 m_clip_ar1;
+static UINT16 m_clip_bl1;
+static UINT16 m_clip_br1;
+static UINT8 *m_tsrc1;
+static UINT8 *m_tsrc_s1;
+static UINT32 m_x_count1;
+static UINT32 m_x_zoom1;
+static UINT16 *m_src2;
+static UINT16 *m_src_s2;
+static UINT16 *m_src_e2;
+static UINT16 m_clip_al2;
+static UINT16 m_clip_ar2;
+static UINT16 m_clip_bl2;
+static UINT16 m_clip_br2;
+static UINT8 *m_tsrc2;
+static UINT8 *m_tsrc_s2;
+static UINT32 m_x_count2;
+static UINT32 m_x_zoom2;
+static UINT16 *m_src3;
+static UINT16 *m_src_s3;
+static UINT16 *m_src_e3;
+static UINT16 m_clip_al3;
+static UINT16 m_clip_ar3;
+static UINT16 m_clip_bl3;
+static UINT16 m_clip_br3;
+static UINT8 *m_tsrc3;
+static UINT8 *m_tsrc_s3;
+static UINT32 m_x_count3;
+static UINT32 m_x_zoom3;
+static UINT16 *m_src4;
+static UINT16 *m_src_s4;
+static UINT16 *m_src_e4;
+static UINT16 m_clip_al4;
+static UINT16 m_clip_ar4;
+static UINT16 m_clip_bl4;
+static UINT16 m_clip_br4;
+static UINT8 *m_tsrc4;
+static UINT8 *m_tsrc_s4;
+static UINT32 m_x_count4;
+static UINT32 m_x_zoom4;
 
-	UINT8 m_add_sat[256][256];
+static UINT8 m_add_sat[256][256];
 
-	int m_f3_alpha_level_2as;
-	int m_f3_alpha_level_2ad;
-	int m_f3_alpha_level_3as;
-	int m_f3_alpha_level_3ad;
-	int m_f3_alpha_level_2bs;
-	int m_f3_alpha_level_2bd;
-	int m_f3_alpha_level_3bs;
-	int m_f3_alpha_level_3bd;
-	int m_alpha_level_last;
+static INT32 m_f3_alpha_level_2as;
+static INT32 m_f3_alpha_level_2ad;
+static INT32 m_f3_alpha_level_3as;
+static INT32 m_f3_alpha_level_3ad;
+static INT32 m_f3_alpha_level_2bs;
+static INT32 m_f3_alpha_level_2bd;
+static INT32 m_f3_alpha_level_3bs;
+static INT32 m_f3_alpha_level_3bd;
+static INT32 m_alpha_level_last;
 
-	int m_alpha_s_1_1;
-	int m_alpha_s_1_2;
-	int m_alpha_s_1_4;
-	int m_alpha_s_1_5;
-	int m_alpha_s_1_6;
-	int m_alpha_s_1_8;
-	int m_alpha_s_1_9;
-	int m_alpha_s_1_a;
-	int m_alpha_s_2a_0;
-	int m_alpha_s_2a_4;
-	int m_alpha_s_2a_8;
-	int m_alpha_s_2b_0;
-	int m_alpha_s_2b_4;
-	int m_alpha_s_2b_8;
-	int m_alpha_s_3a_0;
-	int m_alpha_s_3a_1;
-	int m_alpha_s_3a_2;
-	int m_alpha_s_3b_0;
-	int m_alpha_s_3b_1;
-	int m_alpha_s_3b_2;
-	UINT32 m_dval;
-	UINT8 m_pval;
-	UINT8 m_tval;
-	UINT8 m_pdest_2a;
-	UINT8 m_pdest_2b;
-	int m_tr_2a;
-	int m_tr_2b;
-	UINT8 m_pdest_3a;
-	UINT8 m_pdest_3b;
-	int m_tr_3a;
-	int m_tr_3b;
+static INT32 m_alpha_s_1_1;
+static INT32 m_alpha_s_1_2;
+static INT32 m_alpha_s_1_4;
+static INT32 m_alpha_s_1_5;
+static INT32 m_alpha_s_1_6;
+static INT32 m_alpha_s_1_8;
+static INT32 m_alpha_s_1_9;
+static INT32 m_alpha_s_1_a;
+static INT32 m_alpha_s_2a_0;
+static INT32 m_alpha_s_2a_4;
+static INT32 m_alpha_s_2a_8;
+static INT32 m_alpha_s_2b_0;
+static INT32 m_alpha_s_2b_4;
+static INT32 m_alpha_s_2b_8;
+static INT32 m_alpha_s_3a_0;
+static INT32 m_alpha_s_3a_1;
+static INT32 m_alpha_s_3a_2;
+static INT32 m_alpha_s_3b_0;
+static INT32 m_alpha_s_3b_1;
+static INT32 m_alpha_s_3b_2;
+static UINT32 m_dval;
+static UINT8 m_pval;
+static UINT8 m_tval;
+static UINT8 m_pdest_2a;
+static UINT8 m_pdest_2b;
+static INT32 m_tr_2a;
+static INT32 m_tr_2b;
+static UINT8 m_pdest_3a;
+static UINT8 m_pdest_3b;
+static INT32 m_tr_3a;
+static INT32 m_tr_3b;
 
 #define BYTE4_XOR_LE(x)	x
 
 
 struct f3_playfield_line_inf
 {
-	int alpha_mode[256];
-	int pri[256];
+	INT32 alpha_mode[256];
+	INT32 pri[256];
 
 	/* use for draw_scanlines */
 	UINT16 *src[256],*src_s[256],*src_e[256];
 	UINT8 *tsrc[256],*tsrc_s[256];
-	int x_count[256];
+	INT32 x_count[256];
 	UINT32 x_zoom[256];
 	UINT32 clip0[256];
 	UINT32 clip1[256];
@@ -2245,9 +2200,9 @@ static void clear_f3_stuff()
 }
 
 
-static int (*m_dpix_n[8][16])(UINT32 s_pix);
-static int (**m_dpix_lp[5])(UINT32 s_pix);
-static int (**m_dpix_sp[9])(UINT32 s_pix);
+static INT32 (*m_dpix_n[8][16])(UINT32 s_pix);
+static INT32 (**m_dpix_lp[5])(UINT32 s_pix);
+static INT32 (**m_dpix_sp[9])(UINT32 s_pix);
 
 
 
@@ -2257,12 +2212,12 @@ static int (**m_dpix_sp[9])(UINT32 s_pix);
 
 #define SET_ALPHA_LEVEL(d,s)            \
 {                                       \
-	int level = s;                      \
+	INT32 level = s;                      \
 	if(level == 0) level = -1;          \
 	d = level+1;                        \
 }
 
-inline void f3_alpha_set_level()
+static inline void f3_alpha_set_level()
 {
 //  SET_ALPHA_LEVEL(m_alpha_s_1_1, m_f3_alpha_level_2ad)
 	SET_ALPHA_LEVEL(m_alpha_s_1_1, 255-m_f3_alpha_level_2as)
@@ -2301,19 +2256,19 @@ inline void f3_alpha_set_level()
 #define COLOR2 BYTE4_XOR_LE(1)
 #define COLOR3 BYTE4_XOR_LE(2)
 
-inline void f3_alpha_blend32_s(int alphas, uint32_t s)
+static inline void f3_alpha_blend32_s(INT32 alphas, UINT32 s)
 {
-	uint8_t *sc = (uint8_t *)&s;
-	uint8_t *dc = (uint8_t *)&m_dval;
+	UINT8 *sc = (UINT8 *)&s;
+	UINT8 *dc = (UINT8 *)&m_dval;
 	dc[COLOR1] = (alphas * sc[COLOR1]) >> 8;
 	dc[COLOR2] = (alphas * sc[COLOR2]) >> 8;
 	dc[COLOR3] = (alphas * sc[COLOR3]) >> 8;
 }
 
-inline void f3_alpha_blend32_d(int alphas, uint32_t s)
+static inline void f3_alpha_blend32_d(INT32 alphas, UINT32 s)
 {
-	uint8_t *sc = (uint8_t *)&s;
-	uint8_t *dc = (uint8_t *)&m_dval;
+	UINT8 *sc = (UINT8 *)&s;
+	UINT8 *dc = (UINT8 *)&m_dval;
 	dc[COLOR1] = m_add_sat[dc[COLOR1]][(alphas * sc[COLOR1]) >> 8];
 	dc[COLOR2] = m_add_sat[dc[COLOR2]][(alphas * sc[COLOR2]) >> 8];
 	dc[COLOR3] = m_add_sat[dc[COLOR3]][(alphas * sc[COLOR3]) >> 8];
@@ -2321,128 +2276,128 @@ inline void f3_alpha_blend32_d(int alphas, uint32_t s)
 
 /*============================================================================*/
 
-inline void f3_alpha_blend_1_1(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_1,s);}
-inline void f3_alpha_blend_1_2(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_2,s);}
-inline void f3_alpha_blend_1_4(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_4,s);}
-inline void f3_alpha_blend_1_5(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_5,s);}
-inline void f3_alpha_blend_1_6(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_6,s);}
-inline void f3_alpha_blend_1_8(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_8,s);}
-inline void f3_alpha_blend_1_9(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_9,s);}
-inline void f3_alpha_blend_1_a(uint32_t s){f3_alpha_blend32_d(m_alpha_s_1_a,s);}
+static inline void f3_alpha_blend_1_1(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_1,s);}
+static inline void f3_alpha_blend_1_2(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_2,s);}
+static inline void f3_alpha_blend_1_4(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_4,s);}
+static inline void f3_alpha_blend_1_5(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_5,s);}
+static inline void f3_alpha_blend_1_6(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_6,s);}
+static inline void f3_alpha_blend_1_8(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_8,s);}
+static inline void f3_alpha_blend_1_9(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_9,s);}
+static inline void f3_alpha_blend_1_a(UINT32 s){f3_alpha_blend32_d(m_alpha_s_1_a,s);}
 
-inline void f3_alpha_blend_2a_0(uint32_t s){f3_alpha_blend32_s(m_alpha_s_2a_0,s);}
-inline void f3_alpha_blend_2a_4(uint32_t s){f3_alpha_blend32_d(m_alpha_s_2a_4,s);}
-inline void f3_alpha_blend_2a_8(uint32_t s){f3_alpha_blend32_d(m_alpha_s_2a_8,s);}
+static inline void f3_alpha_blend_2a_0(UINT32 s){f3_alpha_blend32_s(m_alpha_s_2a_0,s);}
+static inline void f3_alpha_blend_2a_4(UINT32 s){f3_alpha_blend32_d(m_alpha_s_2a_4,s);}
+static inline void f3_alpha_blend_2a_8(UINT32 s){f3_alpha_blend32_d(m_alpha_s_2a_8,s);}
 
-inline void f3_alpha_blend_2b_0(uint32_t s){f3_alpha_blend32_s(m_alpha_s_2b_0,s);}
-inline void f3_alpha_blend_2b_4(uint32_t s){f3_alpha_blend32_d(m_alpha_s_2b_4,s);}
-inline void f3_alpha_blend_2b_8(uint32_t s){f3_alpha_blend32_d(m_alpha_s_2b_8,s);}
+static inline void f3_alpha_blend_2b_0(UINT32 s){f3_alpha_blend32_s(m_alpha_s_2b_0,s);}
+static inline void f3_alpha_blend_2b_4(UINT32 s){f3_alpha_blend32_d(m_alpha_s_2b_4,s);}
+static inline void f3_alpha_blend_2b_8(UINT32 s){f3_alpha_blend32_d(m_alpha_s_2b_8,s);}
 
-inline void f3_alpha_blend_3a_0(uint32_t s){f3_alpha_blend32_s(m_alpha_s_3a_0,s);}
-inline void f3_alpha_blend_3a_1(uint32_t s){f3_alpha_blend32_d(m_alpha_s_3a_1,s);}
-inline void f3_alpha_blend_3a_2(uint32_t s){f3_alpha_blend32_d(m_alpha_s_3a_2,s);}
+static inline void f3_alpha_blend_3a_0(UINT32 s){f3_alpha_blend32_s(m_alpha_s_3a_0,s);}
+static inline void f3_alpha_blend_3a_1(UINT32 s){f3_alpha_blend32_d(m_alpha_s_3a_1,s);}
+static inline void f3_alpha_blend_3a_2(UINT32 s){f3_alpha_blend32_d(m_alpha_s_3a_2,s);}
 
-inline void f3_alpha_blend_3b_0(uint32_t s){f3_alpha_blend32_s(m_alpha_s_3b_0,s);}
-inline void f3_alpha_blend_3b_1(uint32_t s){f3_alpha_blend32_d(m_alpha_s_3b_1,s);}
-inline void f3_alpha_blend_3b_2(uint32_t s){f3_alpha_blend32_d(m_alpha_s_3b_2,s);}
+static inline void f3_alpha_blend_3b_0(UINT32 s){f3_alpha_blend32_s(m_alpha_s_3b_0,s);}
+static inline void f3_alpha_blend_3b_1(UINT32 s){f3_alpha_blend32_d(m_alpha_s_3b_1,s);}
+static inline void f3_alpha_blend_3b_2(UINT32 s){f3_alpha_blend32_d(m_alpha_s_3b_2,s);}
 
 /*============================================================================*/
 
-int dpix_1_noalpha(uint32_t s_pix) {m_dval = s_pix; return 1;}
-int dpix_ret1(uint32_t /*s_pix*/) {return 1;}
-int dpix_ret0(uint32_t /*s_pix*/) {return 0;}
-int dpix_1_1(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_1(s_pix); return 1;}
-int dpix_1_2(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_2(s_pix); return 1;}
-int dpix_1_4(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_4(s_pix); return 1;}
-int dpix_1_5(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_5(s_pix); return 1;}
-int dpix_1_6(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_6(s_pix); return 1;}
-int dpix_1_8(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_8(s_pix); return 1;}
-int dpix_1_9(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_9(s_pix); return 1;}
-int dpix_1_a(uint32_t s_pix) {if(s_pix) f3_alpha_blend_1_a(s_pix); return 1;}
+static INT32 dpix_1_noalpha(UINT32 s_pix) {m_dval = s_pix; return 1;}
+static INT32 dpix_ret1(UINT32 /*s_pix*/) {return 1;}
+static INT32 dpix_ret0(UINT32 /*s_pix*/) {return 0;}
+static INT32 dpix_1_1(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_1(s_pix); return 1;}
+static INT32 dpix_1_2(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_2(s_pix); return 1;}
+static INT32 dpix_1_4(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_4(s_pix); return 1;}
+static INT32 dpix_1_5(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_5(s_pix); return 1;}
+static INT32 dpix_1_6(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_6(s_pix); return 1;}
+static INT32 dpix_1_8(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_8(s_pix); return 1;}
+static INT32 dpix_1_9(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_9(s_pix); return 1;}
+static INT32 dpix_1_a(UINT32 s_pix) {if(s_pix) f3_alpha_blend_1_a(s_pix); return 1;}
 
-int dpix_2a_0(uint32_t s_pix)
+static INT32 dpix_2a_0(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_2a_0(s_pix);
 	else      m_dval = 0;
 	if(m_pdest_2a) {m_pval |= m_pdest_2a;return 0;}
 	return 1;
 }
-int dpix_2a_4(uint32_t s_pix)
+static INT32 dpix_2a_4(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_2a_4(s_pix);
 	if(m_pdest_2a) {m_pval |= m_pdest_2a;return 0;}
 	return 1;
 }
-int dpix_2a_8(uint32_t s_pix)
+static INT32 dpix_2a_8(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_2a_8(s_pix);
 	if(m_pdest_2a) {m_pval |= m_pdest_2a;return 0;}
 	return 1;
 }
 
-int dpix_3a_0(uint32_t s_pix)
+static INT32 dpix_3a_0(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_3a_0(s_pix);
 	else      m_dval = 0;
 	if(m_pdest_3a) {m_pval |= m_pdest_3a;return 0;}
 	return 1;
 }
-int dpix_3a_1(uint32_t s_pix)
+static INT32 dpix_3a_1(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_3a_1(s_pix);
 	if(m_pdest_3a) {m_pval |= m_pdest_3a;return 0;}
 	return 1;
 }
-int dpix_3a_2(uint32_t s_pix)
+static INT32 dpix_3a_2(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_3a_2(s_pix);
 	if(m_pdest_3a) {m_pval |= m_pdest_3a;return 0;}
 	return 1;
 }
 
-int dpix_2b_0(uint32_t s_pix)
+static INT32 dpix_2b_0(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_2b_0(s_pix);
 	else      m_dval = 0;
 	if(m_pdest_2b) {m_pval |= m_pdest_2b;return 0;}
 	return 1;
 }
-int dpix_2b_4(uint32_t s_pix)
+static INT32 dpix_2b_4(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_2b_4(s_pix);
 	if(m_pdest_2b) {m_pval |= m_pdest_2b;return 0;}
 	return 1;
 }
-int dpix_2b_8(uint32_t s_pix)
+static INT32 dpix_2b_8(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_2b_8(s_pix);
 	if(m_pdest_2b) {m_pval |= m_pdest_2b;return 0;}
 	return 1;
 }
 
-int dpix_3b_0(uint32_t s_pix)
+static INT32 dpix_3b_0(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_3b_0(s_pix);
 	else      m_dval = 0;
 	if(m_pdest_3b) {m_pval |= m_pdest_3b;return 0;}
 	return 1;
 }
-int dpix_3b_1(uint32_t s_pix)
+static INT32 dpix_3b_1(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_3b_1(s_pix);
 	if(m_pdest_3b) {m_pval |= m_pdest_3b;return 0;}
 	return 1;
 }
-int dpix_3b_2(uint32_t s_pix)
+static INT32 dpix_3b_2(UINT32 s_pix)
 {
 	if(s_pix) f3_alpha_blend_3b_2(s_pix);
 	if(m_pdest_3b) {m_pval |= m_pdest_3b;return 0;}
 	return 1;
 }
 
-int dpix_2_0(uint32_t s_pix)
+static INT32 dpix_2_0(UINT32 s_pix)
 {
-	uint8_t tr2=m_tval&1;
+	UINT8 tr2=m_tval&1;
 	if(s_pix)
 	{
 		if(tr2==m_tr_2b)     {f3_alpha_blend_2b_0(s_pix);if(m_pdest_2b) m_pval |= m_pdest_2b;else return 1;}
@@ -2455,9 +2410,9 @@ int dpix_2_0(uint32_t s_pix)
 	}
 	return 0;
 }
-int dpix_2_4(uint32_t s_pix)
+static INT32 dpix_2_4(UINT32 s_pix)
 {
-	uint8_t tr2=m_tval&1;
+	UINT8 tr2=m_tval&1;
 	if(s_pix)
 	{
 		if(tr2==m_tr_2b)     {f3_alpha_blend_2b_4(s_pix);if(m_pdest_2b) m_pval |= m_pdest_2b;else return 1;}
@@ -2470,9 +2425,9 @@ int dpix_2_4(uint32_t s_pix)
 	}
 	return 0;
 }
-int dpix_2_8(uint32_t s_pix)
+static INT32 dpix_2_8(UINT32 s_pix)
 {
-	uint8_t tr2=m_tval&1;
+	UINT8 tr2=m_tval&1;
 	if(s_pix)
 	{
 		if(tr2==m_tr_2b)     {f3_alpha_blend_2b_8(s_pix);if(m_pdest_2b) m_pval |= m_pdest_2b;else return 1;}
@@ -2486,9 +2441,9 @@ int dpix_2_8(uint32_t s_pix)
 	return 0;
 }
 
-int dpix_3_0(uint32_t s_pix)
+static INT32 dpix_3_0(UINT32 s_pix)
 {
-	uint8_t tr2=m_tval&1;
+	UINT8 tr2=m_tval&1;
 	if(s_pix)
 	{
 		if(tr2==m_tr_3b)     {f3_alpha_blend_3b_0(s_pix);if(m_pdest_3b) m_pval |= m_pdest_3b;else return 1;}
@@ -2501,9 +2456,9 @@ int dpix_3_0(uint32_t s_pix)
 	}
 	return 0;
 }
-int dpix_3_1(uint32_t s_pix)
+static INT32 dpix_3_1(UINT32 s_pix)
 {
-	uint8_t tr2=m_tval&1;
+	UINT8 tr2=m_tval&1;
 	if(s_pix)
 	{
 		if(tr2==m_tr_3b)     {f3_alpha_blend_3b_1(s_pix);if(m_pdest_3b) m_pval |= m_pdest_3b;else return 1;}
@@ -2516,9 +2471,9 @@ int dpix_3_1(uint32_t s_pix)
 	}
 	return 0;
 }
-int dpix_3_2(uint32_t s_pix)
+static INT32 dpix_3_2(UINT32 s_pix)
 {
-	uint8_t tr2=m_tval&1;
+	UINT8 tr2=m_tval&1;
 	if(s_pix)
 	{
 		if(tr2==m_tr_3b)     {f3_alpha_blend_3b_2(s_pix);if(m_pdest_3b) m_pval |= m_pdest_3b;else return 1;}
@@ -2532,11 +2487,11 @@ int dpix_3_2(uint32_t s_pix)
 	return 0;
 }
 
-inline void dpix_1_sprite(uint32_t s_pix)
+static inline void dpix_1_sprite(UINT32 s_pix)
 {
 	if(s_pix)
 	{
-		uint8_t p1 = m_pval&0xf0;
+		UINT8 p1 = m_pval&0xf0;
 		if     (p1==0x10)   f3_alpha_blend_1_1(s_pix);
 		else if(p1==0x20)   f3_alpha_blend_1_2(s_pix);
 		else if(p1==0x40)   f3_alpha_blend_1_4(s_pix);
@@ -2548,9 +2503,9 @@ inline void dpix_1_sprite(uint32_t s_pix)
 	}
 }
 
-inline void dpix_bg(uint32_t bgcolor)
+static inline void dpix_bg(UINT32 bgcolor)
 {
-	uint8_t p1 = m_pval&0xf0;
+	UINT8 p1 = m_pval&0xf0;
 	if(!p1)         m_dval = bgcolor;
 	else if(p1==0x10)   f3_alpha_blend_1_1(bgcolor);
 	else if(p1==0x20)   f3_alpha_blend_1_2(bgcolor);
@@ -2564,9 +2519,9 @@ inline void dpix_bg(uint32_t bgcolor)
 
 /******************************************************************************/
 
-int alpha_blend_inited = 0;
+static INT32 alpha_blend_inited = 0;
 
-void init_alpha_blend_func()
+static void init_alpha_blend_func()
 {
 	alpha_blend_inited = 1;
 
@@ -2706,8 +2661,8 @@ void init_alpha_blend_func()
 	m_dpix_n[7][0xe]=&dpix_ret0;
 	m_dpix_n[7][0xf]=&dpix_ret0;
 
-	for(int i = 0; i < 256; i++)
-		for(int j = 0; j < 256; j++)
+	for(INT32 i = 0; i < 256; i++)
+		for(INT32 j = 0; j < 256; j++)
 			m_add_sat[i][j] = (i + j < 256) ? i + j : 255;
 }
 
@@ -2766,26 +2721,26 @@ if(cx>=clip_als && cx<clip_ars && !(cx>=clip_bls && cx<clip_brs)) \
 	}
 
 
-static void draw_scanlines(int xsize,INT16 *draw_line_num,
+static void draw_scanlines(INT32 xsize,INT16 *draw_line_num,
 							const struct f3_playfield_line_inf **line_t,
-							const int *sprite,
+							const INT32 *sprite,
 							UINT32 orient,
-							int skip_layer_num)
+							INT32 skip_layer_num)
 {
 	UINT32 *clut = TaitoPalette;
 	UINT32 bgcolor=clut[0];
-	int length;
+	INT32 length;
 
-	const int x=46;
+	const INT32 x=46;
 
 	UINT16 clip_als=0, clip_ars=0, clip_bls=0, clip_brs=0;
 
 	UINT8 *dstp0,*dstp;
 
-	int yadv = 512;
-	int yadvp = 1024;
-	int i=0,y=draw_line_num[0];
-	int ty = y;
+	INT32 yadv = 512;
+	INT32 yadvp = 1024;
+	INT32 i=0,y=draw_line_num[0];
+	INT32 ty = y;
 
 #if 1
 	if (orient & ORIENTATION_FLIP_Y)
@@ -2814,7 +2769,7 @@ static void draw_scanlines(int xsize,INT16 *draw_line_num,
 		dsti0 = output_bitmap + (ty * 512) + x;
 		while(1)
 		{
-			int cx=0;
+			INT32 cx=0;
 
 			clip_als=m_sa_line_inf[0].sprite_clip0[y]&0xffff;
 			clip_ars=m_sa_line_inf[0].sprite_clip0[y]>>16;
@@ -2892,15 +2847,15 @@ static void draw_scanlines(int xsize,INT16 *draw_line_num,
 
 static void visible_tile_check(
 						struct f3_playfield_line_inf *line_t,
-						int line,
+						INT32 line,
 						UINT32 x_index_fx,UINT32 y_index,
 						UINT16 *f3_pf_data_n)
 {
 	UINT16 *pf_base;
-	int i,trans_all,tile_index,tile_num;
-	int alpha_type,alpha_mode;
-	int opaque_all;
-	int total_elements;
+	INT32 i,trans_all,tile_index,tile_num;
+	INT32 alpha_type,alpha_mode;
+	INT32 opaque_all;
+	INT32 total_elements;
 
 	alpha_mode=line_t->alpha_mode[line];
 	if(!alpha_mode) return;
@@ -2911,7 +2866,7 @@ static void visible_tile_check(
 	tile_num=(((line_t->x_zoom[line]*320+(x_index_fx & 0xffff)+0xffff)>>16)+(tile_index%16)+15)/16;
 	tile_index/=16;
 
-	if (m_flipscreen)
+	if (flipscreen)
 	{
 		pf_base=f3_pf_data_n+((31-(y_index/16))<<m_twidth_mask_bit);
 		tile_index=(m_twidth_mask-tile_index)-tile_num+1;
@@ -2930,7 +2885,7 @@ static void visible_tile_check(
 			trans_all=0;
 			if(opaque_all)
 			{
-				if(m_tile_opaque_pf[extra_planes][(tile&0xffff)%total_elements]!=1) opaque_all=0;
+				if(tile_opaque_pf[extra_planes][(tile&0xffff)%total_elements]!=1) opaque_all=0;
 			}
 
 			if(alpha_mode==1)
@@ -2963,7 +2918,7 @@ static void visible_tile_check(
 		line_t->alpha_mode[line]|=0x80;
 }
 
-static void calculate_clip(int y, UINT16 pri, UINT32* clip0, UINT32* clip1, int* line_enable)
+static void calculate_clip(INT32 y, UINT16 pri, UINT32* clip0, UINT32* clip1, int* line_enable)
 {
 	const struct f3_spritealpha_line_inf *sa_line_t=&m_sa_line_inf[0];
 
@@ -3001,7 +2956,7 @@ static void calculate_clip(int y, UINT16 pri, UINT32* clip0, UINT32* clip1, int*
 		break;
 	case 0x0300: /* Clip plane 1 & 2 enable */
 		{
-			int clipl=0,clipr=0;
+			INT32 clipl=0,clipr=0;
 
 			if (sa_line_t->clip1_l[y] > sa_line_t->clip0_l[y])
 				clipl=sa_line_t->clip1_l[y];
@@ -3042,7 +2997,7 @@ static void calculate_clip(int y, UINT16 pri, UINT32* clip0, UINT32* clip1, int*
 		break;
 	case 0x0330: /* Clip plane 1 & 2 enable, both inverted */
 		{
-			int clipl=0,clipr=0;
+			INT32 clipl=0,clipr=0;
 
 			if (sa_line_t->clip1_l[y] < sa_line_t->clip0_l[y])
 				clipl=sa_line_t->clip1_l[y];
@@ -3067,27 +3022,27 @@ static void calculate_clip(int y, UINT16 pri, UINT32* clip0, UINT32* clip1, int*
 	}
 }
 
-static void get_line_ram_info(INT32 which_map, int sx, int sy, int pos, UINT16 *f3_pf_data_n)
+static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UINT16 *f3_pf_data_n)
 {
 	UINT16 *m_f3_line_ram = (UINT16*)DrvLineRAM;
 	struct f3_playfield_line_inf *line_t=&m_pf_line_inf[pos];
 
-	int y,y_start,y_end,y_inc;
-	int line_base,zoom_base,col_base,pri_base,inc;
+	INT32 y,y_start,y_end,y_inc;
+	INT32 line_base,zoom_base,col_base,pri_base,inc;
 
-	int line_enable;
-	int colscroll=0,x_offset=0,line_zoom=0;
+	INT32 line_enable;
+	INT32 colscroll=0,x_offset=0,line_zoom=0;
 	UINT32 _y_zoom[256];
 	UINT16 pri=0;
-	int bit_select=1<<pos;
+	INT32 bit_select=1<<pos;
 
-	int _colscroll[256];
+	INT32 _colscroll[256];
 	UINT32 _x_offset[256];
-	int y_index_fx;
+	INT32 y_index_fx;
 
 	sx+=((46<<16));
 
-	if (m_flipscreen)
+	if (flipscreen)
 	{
 		line_base=0xa1fe + (pos*0x200);
 		zoom_base=0x81fe;// + (pos*0x200);
@@ -3158,7 +3113,7 @@ static void get_line_ram_info(INT32 which_map, int sx, int sy, int pos, UINT16 *
 				colscroll=(m_f3_line_ram[col_base/2]>> 0)&0x3ff;
 		}
 
-		if (!pri || (!m_flipscreen && y<24) || (m_flipscreen && y>231) ||
+		if (!pri || (!flipscreen && y<24) || (flipscreen && y>231) ||
 			(pri&0xc000)==0xc000 || !(pri&0x2000)/**/)
 			line_enable=0;
 		else if(pri&0x4000) //alpha1
@@ -3220,7 +3175,7 @@ static void get_line_ram_info(INT32 which_map, int sx, int sy, int pos, UINT16 *
 		    the crowd area still seems to 'lag' behind the pitch area however.. but these are the values
 		    in ram??
 		*/
-		int cs = _colscroll[y];
+		INT32 cs = _colscroll[y];
 
 		if (cs&0x200)
 		{
@@ -3280,23 +3235,23 @@ static void get_line_ram_info(INT32 which_map, int sx, int sy, int pos, UINT16 *
 	}
 }
 
-static void get_vram_info(int sx, int sy)
+static void get_vram_info(INT32 sx, INT32 sy)
 {
 	UINT16 *m_f3_line_ram = (UINT16*)DrvLineRAM;
 
 	const struct f3_spritealpha_line_inf *sprite_alpha_line_t=&m_sa_line_inf[0];
 	struct f3_playfield_line_inf *line_t=&m_pf_line_inf[4];
 
-	int y,y_start,y_end,y_inc;
-	int pri_base,inc;
+	INT32 y,y_start,y_end,y_inc;
+	INT32 pri_base,inc;
 
-	int line_enable;
+	INT32 line_enable;
 
 	UINT16 pri=0;
 
-	const int vram_width_mask=0x3ff;
+	const INT32 vram_width_mask=0x3ff;
 
-	if (m_flipscreen)
+	if (flipscreen)
 	{
 		pri_base =0x73fe;
 		inc=-2;
@@ -3322,7 +3277,7 @@ static void get_vram_info(int sx, int sy)
 				pri=(m_f3_line_ram[pri_base/2]&0xffff);
 		}
 
-		if (!pri || (!m_flipscreen && y<24) || (m_flipscreen && y>231) ||
+		if (!pri || (!flipscreen && y<24) || (flipscreen && y>231) ||
 			(pri&0xc000)==0xc000 || !(pri&0x2000)/**/)
 			line_enable=0;
 		else if(pri&0x4000) //alpha1
@@ -3376,7 +3331,7 @@ static void get_vram_info(int sx, int sy)
 
 			// These bits in control ram indicate whether the line is taken from
 			// the VRAM tilemap layer or pixel layer.
-			const int usePixelLayer=((sprite_alpha_line_t->sprite_alpha[y]&0xa000)==0xa000);
+			const INT32 usePixelLayer=((sprite_alpha_line_t->sprite_alpha[y]&0xa000)==0xa000);
 
 			/* set pixmap index */
 			line_t->x_count[y]=0xffff;
@@ -3402,14 +3357,14 @@ static void get_vram_info(int sx, int sy)
 
 static void scanline_draw()
 {
-	int i,j,y,ys,ye;
-	int y_start,y_end,y_start_next,y_end_next;
+	INT32 i,j,y,ys,ye;
+	INT32 y_start,y_end,y_start_next,y_end_next;
 	UINT8 draw_line[256];
 	INT16 draw_line_num[256];
 
 	UINT32 rot=0;
 
-	if (m_flipscreen)
+	if (flipscreen)
 	{
 		rot=0;//ORIENTATION_FLIP_Y;
 		ys=0;
@@ -3427,18 +3382,18 @@ static void scanline_draw()
 
 	while(1)
 	{
-		int pos;
-		int pri[5],alpha_mode[5],alpha_mode_flag[5],alpha_level;
+		INT32 pos;
+		INT32 pri[5],alpha_mode[5],alpha_mode_flag[5],alpha_level;
 		UINT16 sprite_alpha;
 		UINT8 sprite_alpha_check;
 		UINT8 sprite_alpha_all_2a;
-		int spri;
-		int alpha;
-		int layer_tmp[5];
+		INT32 spri;
+		INT32 alpha;
+		INT32 layer_tmp[5];
 		struct f3_playfield_line_inf *pf_line_inf = m_pf_line_inf;
 		struct f3_spritealpha_line_inf *sa_line_inf = m_sa_line_inf;
-		int count_skip_layer=0;
-		int sprite[6]={0,0,0,0,0,0};
+		INT32 count_skip_layer=0;
+		INT32 sprite[6]={0,0,0,0,0,0};
 		const struct f3_playfield_line_inf *line_t[5];
 
 
@@ -3513,11 +3468,11 @@ static void scanline_draw()
 			/* set alpha level */
 			if(alpha_level!=m_alpha_level_last)
 			{
-				int al_s,al_d;
-				int a=alpha_level;
-				int b=(a>>8)&0xf;
-				int c=(a>>4)&0xf;
-				int d=(a>>0)&0xf;
+				INT32 al_s,al_d;
+				INT32 a=alpha_level;
+				INT32 b=(a>>8)&0xf;
+				INT32 c=(a>>4)&0xf;
+				INT32 d=(a>>0)&0xf;
 				a>>=12;
 
 				/* b000 7000 */
@@ -3554,12 +3509,12 @@ static void scanline_draw()
 			{
 				UINT8 sprite_alpha_mode=(sprite_alpha>>(i*2))&3;
 				UINT8 sftbit=1<<i;
-				if(m_sprite_pri_usage&sftbit)
+				if(sprite_pri_usage&sftbit)
 				{
 					if(sprite_alpha_mode==1)
 					{
 						if(m_f3_alpha_level_2as==0 && m_f3_alpha_level_2ad==255)
-							m_sprite_pri_usage&=~sftbit;  // Disable sprite priority block
+							sprite_pri_usage&=~sftbit;  // Disable sprite priority block
 						else
 						{
 							m_dpix_sp[sftbit]=m_dpix_n[2];
@@ -3570,7 +3525,7 @@ static void scanline_draw()
 					{
 						if(sprite_alpha&0xff00)
 						{
-							if(m_f3_alpha_level_3as==0 && m_f3_alpha_level_3ad==255) m_sprite_pri_usage&=~sftbit;
+							if(m_f3_alpha_level_3as==0 && m_f3_alpha_level_3ad==255) sprite_pri_usage&=~sftbit;
 							else
 							{
 								m_dpix_sp[sftbit]=m_dpix_n[3];
@@ -3580,7 +3535,7 @@ static void scanline_draw()
 						}
 						else
 						{
-							if(m_f3_alpha_level_3bs==0 && m_f3_alpha_level_3bd==255) m_sprite_pri_usage&=~sftbit;
+							if(m_f3_alpha_level_3bs==0 && m_f3_alpha_level_3bd==255) sprite_pri_usage&=~sftbit;
 							else
 							{
 								m_dpix_sp[sftbit]=m_dpix_n[5];
@@ -3596,7 +3551,7 @@ static void scanline_draw()
 			/* check alpha level */
 			for(i=0;i<5;i++)    /* i = playfield num (pos) */
 			{
-				int alpha_type = (alpha_mode_flag[i]>>4)&3;
+				INT32 alpha_type = (alpha_mode_flag[i]>>4)&3;
 
 				if(alpha_mode[i]==2)
 				{
@@ -3652,7 +3607,7 @@ static void scanline_draw()
 					(alpha_mode[4]==1 || alpha_mode[4]==2 || !alpha_mode[4]) &&
 					sprite_alpha_all_2a                     )
 			{
-				int alpha_type = (alpha_mode_flag[0] | alpha_mode_flag[1] | alpha_mode_flag[2] | alpha_mode_flag[3])&0x30;
+				INT32 alpha_type = (alpha_mode_flag[0] | alpha_mode_flag[1] | alpha_mode_flag[2] | alpha_mode_flag[3])&0x30;
 				if(     (alpha_type==0x10 && m_f3_alpha_level_2as==255) ||
 						(alpha_type==0x20 && m_f3_alpha_level_2as==255 && m_f3_alpha_level_2bs==255) ||
 						(alpha_type==0x30 && m_f3_alpha_level_2as==255 && m_f3_alpha_level_2bs==255)  )
@@ -3683,11 +3638,11 @@ static void scanline_draw()
 
 		/* set scanline priority */
 		{
-			int pri_max_opa=-1;
+			INT32 pri_max_opa=-1;
 			for(i=0;i<5;i++)    /* i = playfield num (pos) */
 			{
-				int p0=pri[i];
-				int pri_sl1=p0&0x0f;
+				INT32 p0=pri[i];
+				INT32 pri_sl1=p0&0x0f;
 
 				layer_tmp[i]=i + (pri_sl1<<3);
 
@@ -3720,7 +3675,7 @@ static void scanline_draw()
 			{
 				if(layer_tmp[i]<layer_tmp[j])
 				{
-					int temp = layer_tmp[i];
+					INT32 temp = layer_tmp[i];
 					layer_tmp[i] = layer_tmp[j];
 					layer_tmp[j] = temp;
 				}
@@ -3730,8 +3685,8 @@ static void scanline_draw()
 
 		/* check sprite & layer priority */
 		{
-			int l0,l1,l2,l3,l4;
-			int pri_sp[5];
+			INT32 l0,l1,l2,l3,l4;
+			INT32 pri_sp[5];
 
 			l0=layer_tmp[0]>>3;
 			l1=layer_tmp[1]>>3;
@@ -3746,8 +3701,8 @@ static void scanline_draw()
 
 			for(i=0;i<4;i++)    /* i = sprite priority offset */
 			{
-				int sp,sflg=1<<i;
-				if(!(m_sprite_pri_usage & sflg)) continue;
+				INT32 sp,sflg=1<<i;
+				if(!(sprite_pri_usage & sflg)) continue;
 				sp=pri_sp[i];
 
 				/*
@@ -3757,8 +3712,8 @@ static void scanline_draw()
 				        DARIUSG (ZONE V' BOSS) ---> playfield
 				*/
 
-				if (m_f3_game == BUBSYMPH ) sp++;        //BUBSYMPH (title)
-				if (m_f3_game == GSEEKER ) sp++;     //GSEEKER (plane leaving hangar)
+				if (f3_game == BUBSYMPH ) sp++;        //BUBSYMPH (title)
+				if (f3_game == GSEEKER ) sp++;     //GSEEKER (plane leaving hangar)
 
 						if(       sp>l0) sprite[0]|=sflg;
 				else if(sp<=l0 && sp>l1) sprite[1]|=sflg;
@@ -3782,7 +3737,7 @@ static void scanline_draw()
 
 			if(alpha_mode[pos]>1)
 			{
-				int alpha_type=(((alpha_mode_flag[pos]>>4)&3)-1)*2;
+				INT32 alpha_type=(((alpha_mode_flag[pos]>>4)&3)-1)*2;
 				m_dpix_lp[i]=m_dpix_n[alpha_mode[pos]+alpha_type];
 				alpha=1;
 			}
@@ -3806,17 +3761,17 @@ static void get_spritealphaclip_info()
 	UINT16 *m_f3_line_ram = (UINT16*)DrvLineRAM;
 	struct f3_spritealpha_line_inf *line_t=&m_sa_line_inf[0];
 
-	int y,y_end,y_inc;
+	INT32 y,y_end,y_inc;
 
-	int spri_base,clip_base_low,clip_base_high,inc;
+	INT32 spri_base,clip_base_low,clip_base_high,inc;
 
 	UINT16 spri=0;
 	UINT16 sprite_clip=0;
 	UINT16 clip0_low=0, clip0_high=0, clip1_low=0;
-	int alpha_level=0;
+	INT32 alpha_level=0;
 	UINT16 sprite_alpha=0;
 
-	if (m_flipscreen)
+	if (flipscreen)
 	{
 		spri_base=0x77fe;
 		clip_base_low=0x51fe;
@@ -3880,7 +3835,7 @@ static void get_spritealphaclip_info()
 		}
 		else if (sprite_clip&0x33)
 		{
-			int line_enable=1;
+			INT32 line_enable=1;
 			calculate_clip(y, ((sprite_clip&0x33)<<4), &line_t->sprite_clip0[y], &line_t->sprite_clip1[y], &line_enable);
 			if (line_enable==0)
 				line_t->sprite_clip0[y]=0x7fff7fff;
@@ -3898,7 +3853,7 @@ static void get_spritealphaclip_info()
 	}
 }
 
-void TaitoF3VideoInit()
+static void TaitoF3VideoInit()
 {
 	clear_f3_stuff();
 	m_f3_alpha_level_2as=127;
@@ -3958,7 +3913,7 @@ static void DrawCommon(INT32 scanline_start)
 	sx_fix[2]-=((m_f3_control_0[2]&0x003f)<<10)+0x0400-0x10000;
 	sx_fix[3]-=((m_f3_control_0[3]&0x003f)<<10)+0x0400-0x10000;
 
-	if (m_flipscreen)
+	if (flipscreen)
 	{
 		sy_fix[0]= 0x3000000-sy_fix[0];
 		sy_fix[1]= 0x3000000-sy_fix[1];
@@ -4010,7 +3965,7 @@ static void DrawCommon(INT32 scanline_start)
 
 	// copy video to draw surface
 	{
-		if (m_flipscreen)
+		if (flipscreen)
 		{
 			scanline_start = (scanline_start == 0x1234) ? 1 : 0; // iq_132!!! super-kludge for gunlock. -dink
 
@@ -4045,7 +4000,7 @@ static void DrawCommon(INT32 scanline_start)
 	}
 }
 
-static INT32 DrvDraw224A_Flipped() // 224A, w/ m_flipscreen
+static INT32 DrvDraw224A_Flipped() // 224A, w/ flipscreen
 {
 	DrawCommon(0x1234);
 
@@ -4248,6 +4203,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		TaitoF3SoundScan(nAction, pnMin);
+		SCAN_VAR(sound_cpu_in_reset);
 
 		if (nAction & ACB_WRITE) {
 			for (INT32 i = 0; i < 0x2000; i+=4) {

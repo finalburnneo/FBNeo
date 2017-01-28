@@ -920,6 +920,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 	char* pRomName;
 	struct BurnRomInfo ri;
+	struct BurnRomInfo pi;
 
 	UINT8 *sprites = TaitoSpritesA;
 	UINT8 *tiles = TaitoChars;
@@ -936,6 +937,7 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 		prevtype = ri.nType;
 
 		BurnDrvGetRomInfo(&ri, i);
+		BurnDrvGetRomInfo(&pi, i+1);
 
 		if (ri.nType == TAITO_68KROM1_BYTESWAP32)
 		{
@@ -1014,18 +1016,24 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 
 		if (ri.nType == TAITO_CHARS_BYTESWAP)
 		{
-			if (prevtype == TAITO_CHARS_BYTESWAP32 && m_f3_game == TWINQIX) {
-				tiles += 0x100000;
+			if (prevtype == TAITO_CHARS_BYTESWAP32) {
+				tiles = TaitoChars + ((tiles - TaitoChars) / 2) * 3;
 				tilecount = 1;
 			}
 
 	//		if (bLoad) bprintf (0, _T("%6.6x tiles x2\n"), tiles - TaitoChars);
 
-			if (bLoad) {
-				BurnLoadRom(tiles + 0, i + 0, 2);
-				BurnLoadRom(tiles + 1, i + 1, 2);
+			if (pi.nType != TAITO_CHARS_BYTESWAP) {
+				if (bLoad) {
+					BurnLoadRom(tiles + 0, i + 0, 2);
+				}
+			} else {
+				if (bLoad) {
+					BurnLoadRom(tiles + 0, i + 0, 2);
+					BurnLoadRom(tiles + 1, i + 1, 2);
+				}
+				i++;
 			}
-			i++;
 			tiles += ri.nLen * 2;
 			continue;
 		}
@@ -6213,7 +6221,7 @@ static struct BurnRomInfo bublbob2pRomDesc[] = {
 	{ "cq80-scr2-cc11.ic5",		0x80000, 0xb81aa2c7, TAITO_CHARS_BYTESWAP32 },   //  8
 	{ "cq80-scr1-a5f3.ic6",		0x80000, 0x3cf3a3ba, TAITO_CHARS_BYTESWAP32 },   //  9
 	{ "cq80-scr3-4266.ic4",		0x80000, 0xc114583f, TAITO_CHARS_BYTESWAP32 },   // 10
-	{ "cq80-scr4-7fe1.ic3",		0x80000, 0x2bba1728, TAITO_CHARS  },             // 11
+	{ "cq80-scr4-7fe1.ic3",		0x80000, 0x2bba1728, TAITO_CHARS_BYTESWAP  },    // 11
 
 	{ "snd-h-348f.ic66",		0x20000, 0xf66e60f2, TAITO_68KROM2_BYTESWAP },   // 12 68k Code
 	{ "snd-l-4ec1.ic65",		0x20000, 0xd302d8bc, TAITO_68KROM2_BYTESWAP },   // 13

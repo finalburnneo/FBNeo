@@ -2687,6 +2687,7 @@ INT32 System16Exit()
 	System16RF5C68DataNum = 0;
  	System16PromSize = 0;
 	System16PromNum = 0;
+	System16KeyNum = 0;
  	System16KeySize = 0;
 	System16I8751RomSize = 0;
 	System16I8751RomNum = 0;

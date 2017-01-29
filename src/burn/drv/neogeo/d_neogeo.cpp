@@ -3191,7 +3191,7 @@ struct BurnDriver BurnDrvBstars2 = {
 	"bstars2", NULL, "neogeo", NULL, "1992",
 	"Baseball Stars 2\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, bstars2RomInfo, bstars2RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 304, 224, 4, 3
@@ -3340,7 +3340,7 @@ static struct BurnRomInfo samshoRomDesc[] = {
 STDROMPICKEXT(samsho, samsho, neogeo)
 STD_ROM_FN(samsho)
 
-struct BurnDriver BurnDrvSamSho = {
+struct BurnDriver BurnDrvSamsho = {
 	"samsho", NULL, "neogeo", NULL, "1993",
 	"Samurai Shodown / Samurai Spirits (NGM-045)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
@@ -4038,7 +4038,7 @@ static struct BurnRomInfo samsho2RomDesc[] = {
 STDROMPICKEXT(samsho2, samsho2, neogeo)
 STD_ROM_FN(samsho2)
 
-struct BurnDriver BurnDrvSamSho2 = {
+struct BurnDriver BurnDrvSamsho2 = {
 	"samsho2", NULL, "neogeo", NULL, "1994",
 	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (NGM-063)(NGH-063)\0", NULL, "SNK", "Neo Geo MVS",
 	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (NGM-063)(NGH-063)\0", NULL, NULL, NULL,
@@ -14731,10 +14731,10 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2016/12/20 version */
+/* Ivex hack - 2017/01/08 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x4b889699, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
-	{ "242cb-p2.sp2", 	0x400000, 0x2058504a, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "242cb-p1.p1", 	0x100000, 0xf9e0f936, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p2.sp2", 	0x400000, 0x8a4ff4f6, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -15049,6 +15049,47 @@ struct BurnDriver BurnDrvSamShoa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samshoaRomInfo, samshoaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017)
+// Modified by GSC2007	
+// Version number: Ver 1.0.0122
+
+static struct BurnRomInfo samsho2spRomDesc[] = {
+	{ "063-p1sp.p1",  0x100000, 0x07d5c8f5, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 
+	{ "063-p2sp.p2",  0x100000, 0x6e1aef70, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "063-p3sp.p3",  0x020000, 0xe56076ae, 0 | BRF_ESS | BRF_PRG }, //  2
+		
+	{ "063-s1sp.s1",  0x020000, 0x1951a907, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
+
+	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  3 Sprite data		/ TC5316200
+	{ "063-c2.c2",    0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "063-c3.c3",    0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "063-c4.c4",    0x200000, 0x751025ce, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "063-c5.c5",    0x200000, 0x20d3a475, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "063-c6.c6",    0x200000, 0xae4c0a88, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "063-c7sp.c7",  0x200000, 0xdbebced2, 3 | BRF_GRA },           // 10 					/ TC5316200
+	{ "063-c8sp.c8",  0x200000, 0xbf70b93c, 3 | BRF_GRA },           // 11 					/ TC5316200
+
+	{ "063-m1.m1",    0x020000, 0x56675098, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code			/ TC531001
+
+	{ "063-v1.v1",    0x200000, 0x37703f91, 5 | BRF_SND },           // 13 Sound data		/ TC5316200
+	{ "063-v2.v2",    0x200000, 0x0142bde8, 5 | BRF_SND },           // 14 					/ TC5316200
+	{ "063-v3.v3",    0x200000, 0xd07fa5ca, 5 | BRF_SND },           // 15 					/ TC5316200	
+	{ "063-v4.v4",    0x100000, 0x24aab4bb, 5 | BRF_SND },           // 16 					/ TC538200
+};
+
+STDROMPICKEXT(samsho2sp, samsho2sp, neogeo)
+STD_ROM_FN(samsho2sp)
+
+struct BurnDriverD BurnDrvSamsho2sp = {
+	"samsho2sp", "samsho2", "neogeo", NULL, "2017",
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Special 2017)\0", NULL, NULL, NULL,
+	BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho2spRomInfo, samsho2spRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };

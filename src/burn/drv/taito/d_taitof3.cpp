@@ -37,6 +37,8 @@ static UINT8 *bitmap_flags[10];
 static INT32 bitmap_width[8];
 static UINT32 *output_bitmap;
 
+static UINT16 *pal16; // fast palette for 16bpp video emulation
+
 static UINT8 *tile_opaque_pf[8];
 static UINT8 *dirty_tiles;
 
@@ -736,6 +738,10 @@ static INT32 MemIndex()
 	pBurnDrvPalette		= (UINT32 *)Next;
 	TaitoPalette		= (UINT32 *)Next; Next += 0x0002000 * sizeof (UINT32);
 
+	if (nBurnBpp < 3) {
+		pal16           = (UINT16 *)Next; Next += (1<<24) * sizeof (UINT16);
+	}
+
 	TaitoCharsB		= Next; Next += 0x0004000;
 	TaitoCharsPivot		= Next; Next += 0x0020000;
 
@@ -1186,6 +1192,15 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
 	} else {
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
+	}
+
+	if (nBurnBpp < 3) { // palette for 16bpp video
+		for (INT32 i = 0; i < (1 << 24); i++) {
+			INT32 r = (i >> (16+3)) & 0x1f;
+			INT32 g = (i >> (8+3)) & 0x1f;
+			INT32 b = (i >> (0+3)) & 0x1f;
+			pal16[i] = (r * 10) + (g * 5) + b;
+		}
 	}
 
 	pPaletteUpdateCallback = pPalUpdateCB;
@@ -3996,14 +4011,33 @@ static void DrawCommon(INT32 scanline_start)
 			UINT8 *dst = pBurnDraw;
 
 			for (INT32 y = 0, i = 0; y < nScreenHeight; y++)
-			{	
-				for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
-				{
-					UINT32 pixel = src[x];
-					PutPix(dst, BurnHighCol(pixel/0x10000,pixel/0x100,pixel,0));
-				}
+			{
+				if (nBurnBpp == 2) { // 16bpp
+					for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
+					{
+						//UINT32 pixel = src[x];
+						PutPix(dst, pal16[src[x]]);
+					}
 
-				src -= 512;
+					src -= 512;
+				} else if (nBurnBpp == 4) { // quad block-32bit (fast)
+					for (INT32 x = 0; x < nScreenWidth; x+=4, i++, dst += (nBurnBpp*4))
+					{
+						*((UINT32*)(dst + 0)) = src[x + 0];
+						*((UINT32*)(dst + 4)) = src[x + 1];
+						*((UINT32*)(dst + 8)) = src[x + 2];
+						*((UINT32*)(dst + 12))= src[x + 3];
+					}
+
+					src -= 512;
+				} else { // 24bit
+					for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
+					{
+						PutPix(dst, src[x]);
+					}
+
+					src -= 512;
+				}
 			}
 		}
 		else
@@ -4013,13 +4047,31 @@ static void DrawCommon(INT32 scanline_start)
 
 			for (INT32 y = 0, i = 0; y < nScreenHeight; y++)
 			{	
-				for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
-				{
-					UINT32 pixel = src[x];
-					PutPix(dst, BurnHighCol(pixel/0x10000,pixel/0x100,pixel,0));
-				}
+				if (nBurnBpp == 2) { // 16bpp
+					for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
+					{
+						PutPix(dst, pal16[src[x]]);
+					}
 
-				src += 512;
+					src += 512;
+				} else if (nBurnBpp == 4) { // quad block-32bit (fast)
+					for (INT32 x = 0; x < nScreenWidth; x+=4, i++, dst += (nBurnBpp*4))
+					{
+						*((UINT32*)(dst + 0)) = src[x + 0];
+						*((UINT32*)(dst + 4)) = src[x + 1];
+						*((UINT32*)(dst + 8)) = src[x + 2];
+						*((UINT32*)(dst + 12))= src[x + 3];
+					}
+
+					src += 512;
+				} else { // 24bpp
+					for (INT32 x = 0; x < nScreenWidth; x++, i++, dst += nBurnBpp)
+					{
+						PutPix(dst, src[x]);
+					}
+
+					src += 512;
+				}
 			}
 		}
 	}

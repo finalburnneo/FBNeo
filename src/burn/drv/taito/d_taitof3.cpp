@@ -1197,9 +1197,9 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	if (nBurnBpp < 3) { // palette for 16bpp video
 		for (INT32 i = 0; i < (1 << 24); i++) {
 			INT32 r = (i >> (16+3)) & 0x1f;
-			INT32 g = (i >> (8+3)) & 0x1f;
+			INT32 g = (i >> (8+2)) & 0x3f;
 			INT32 b = (i >> (0+3)) & 0x1f;
-			pal16[i] = (r * 10) + (g * 5) + b;
+			pal16[i] = (r << 11) | (g << 5) | b;
 		}
 	}
 

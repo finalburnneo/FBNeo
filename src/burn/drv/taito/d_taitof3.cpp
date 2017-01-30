@@ -3595,10 +3595,9 @@ static void scanline_draw()
 				{
 					if(alpha_type==1)
 					{
-						/* if (m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255)
-						 *     alpha_mode[i]=3; alpha_mode_flag[i] |= 0x80;}
-						 * will display continue screen in gseeker (mt 00026) */
-						if     (m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255) alpha_mode[i]=0;
+						if (m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255 && f3_game == GSEEKER) {
+							alpha_mode[i]=3; alpha_mode_flag[i] |= 0x80;} /* will display continue screen in gseeker (mt 00026) */
+						else if(m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255) alpha_mode[i]=0;
 						else if(m_f3_alpha_level_2as==255 && m_f3_alpha_level_2ad==0  ) alpha_mode[i]=1;
 					}
 					else if(alpha_type==2)

@@ -15064,7 +15064,7 @@ static struct BurnRomInfo samsho2spRomDesc[] = {
 		
 	{ "063-s1sp.s1",  0x020000, 0x1951a907, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
 
-	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  3 Sprite data		/ TC5316200
+	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  4 Sprite data		/ TC5316200
 	{ "063-c2.c2",    0x200000, 0xcdfcc4ca, 3 | BRF_GRA },           //  5 					/ TC5316200
 	{ "063-c3.c3",    0x200000, 0x7a63ccc7, 3 | BRF_GRA },           //  6 					/ TC5316200
 	{ "063-c4.c4",    0x200000, 0x751025ce, 3 | BRF_GRA },           //  7 					/ TC5316200
@@ -15084,13 +15084,41 @@ static struct BurnRomInfo samsho2spRomDesc[] = {
 STDROMPICKEXT(samsho2sp, samsho2sp, neogeo)
 STD_ROM_FN(samsho2sp)
 
+static UINT8 *samsho2spExtraROM;
+
+static INT32 Samsho2spInit()
+{
+    INT32 nRet = NeoInit();
+
+    if (nRet == 0) {
+        samsho2spExtraROM = (UINT8*)BurnMalloc(0x20000);
+
+        if (BurnLoadRom(samsho2spExtraROM, 2, 1)) return 1;
+
+    //    BurnByteswap(samsho2spExtraROM, 0x20000); // necessary?
+
+        SekOpen(0);
+        SekMapMemory(samsho2spExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+        SekClose();
+    }
+
+    return nRet;
+}
+
+static INT32 Samsho2spExit()
+{
+    BurnFree (samsho2spExtraROM);
+
+    return NeoExit();
+}
+
 struct BurnDriverD BurnDrvSamsho2sp = {
 	"samsho2sp", "samsho2", "neogeo", NULL, "2017",
 	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017)\0", NULL, "SNK", "Neo Geo MVS",
 	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Special 2017)\0", NULL, NULL, NULL,
-	BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2spRomInfo, samsho2spRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	Samsho2spInit, Samsho2spExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
 

@@ -1891,7 +1891,7 @@ static void palette_write(INT32 offset)
 	g = (g << 3) | (g >> 2);
 	b = (b << 3) | (b >> 2);
 
-	konami_palette32[offset/2] = BurnHighCol(r,g,b,0);
+	konami_palette32[offset/2] = r * 0x10000 | g * 0x100 | b;
 }
 
 static void __fastcall metro_common_palette_write_byte(UINT32 address, UINT8 data)

@@ -42,6 +42,7 @@ static UINT16 *pal16; // fast palette for 16bpp video emulation
 static UINT8 *tile_opaque_sp;
 static UINT8 *tile_opaque_pf[8];
 static UINT8 *dirty_tiles;
+static UINT8 dirty_tile_count[10];
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -542,6 +543,7 @@ static void __fastcall f3_pivot_write_long(UINT32 a, UINT32 d)
 	if ((a & 0xff0000) == 0x630000) {
 		*((UINT32*)(DrvPivotRAM + (a & 0xfffc))) = (d << 16) | (d >> 16);
 		DrvPivotExpand(a);
+		dirty_tile_count[9] = 1;
 		return;
 	}
 }
@@ -551,6 +553,7 @@ static void __fastcall f3_pivot_write_word(UINT32 a, UINT16 d)
 	if ((a & 0xff0000) == 0x630000) {
 		*((UINT16*)(DrvPivotRAM + (a & 0xfffe))) = d;
 		DrvPivotExpand(a);
+		dirty_tile_count[9] = 1;
 		return;
 	}
 }
@@ -560,6 +563,7 @@ static void __fastcall f3_pivot_write_byte(UINT32 a, UINT8 d)
 	if ((a & 0xff0000) == 0x630000) {
 		DrvPivotRAM[(a & 0xffff) ^ 1] = d;
 		DrvPivotExpand(a);
+		dirty_tile_count[9] = 1;
 		return;
 	}
 }
@@ -572,6 +576,7 @@ static void __fastcall f3_playfield_write_long(UINT32 a, UINT32 d)
 		if (ram[0] != ((d << 16) | (d >> 16))) {
 			ram[0] = (d << 16) | (d >> 16);
 			dirty_tiles[(a & 0x7ffc)/4] = 1;
+			dirty_tile_count[((a & 0x7000)/0x1000)] = 1;
 		}
 		return;
 	}
@@ -585,6 +590,7 @@ static void __fastcall f3_playfield_write_word(UINT32 a, UINT16 d)
 		if (ram[0] != d) {
 			ram[0] = d;
 			dirty_tiles[(a & 0x7ffc)/4] = 1;
+			dirty_tile_count[((a & 0x7000)/0x1000)] = 1;
 		}
 		return;
 	}
@@ -596,6 +602,7 @@ static void __fastcall f3_playfield_write_byte(UINT32 a, UINT8 d)
 		if (DrvPfRAM[(a & 0x7fff) ^ 1] != d) {
 			DrvPfRAM[(a & 0x7fff) ^ 1] = d;
 			dirty_tiles[(a & 0x7ffc)/4] = 1;
+			dirty_tile_count[((a & 0x7000)/0x1000)] = 1;
 		}
 		return;
 	}
@@ -719,6 +726,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	watchdog = 0;
 	previous_coin = 0;
 
+	memset (dirty_tile_count, 1, 10);
+
 	return 0;
 }
 
@@ -835,6 +844,27 @@ static void DrvCalculateTransTable(INT32 sprlen, INT32 len)
 				i|=0xff;
 			}
 		}
+#if 0
+				
+
+		for (INT32 c = 0;c < sprlen/0x100;c++)
+		{
+			int x,y;
+			int chk_trans_or_opa=0;
+			const UINT8 *dp = sprite_gfx + (c * 16 * 16);
+			for (y = 0;y < 16;y++)
+			{
+				for (x = 0;x < 16;x++)
+				{
+					if(!dp[x]) chk_trans_or_opa|=2;
+					else       chk_trans_or_opa|=1;
+				}
+				dp += 16;
+			}
+			if(chk_trans_or_opa==1) tile_opaque_sp[c]=1;
+			else                    tile_opaque_sp[c]=0;
+		}
+#endif
 	}
 
 	{
@@ -1345,6 +1375,19 @@ static void draw_pf_layer(INT32 layer)
 	INT32 width = extended_layers ? 1024 : 512;
 	INT32 wide = width / 16;
 
+	// was this layer written at all? skip!
+	if (extended_layers) {
+		if (dirty_tile_count[layer*2+0] == 0 && dirty_tile_count[layer*2+1] == 0) {
+			return;
+		}
+		dirty_tile_count[layer*2+0] = dirty_tile_count[layer*2+1] = 0;
+	} else {
+		if (dirty_tile_count[layer] == 0) {
+			return;
+		}
+		dirty_tile_count[layer] = 0;
+	}
+
 	for (INT32 offs = 0; offs < wide * 32; offs++)
 	{
 		if (dirty_tiles[((offs * 4) + offset) / 4] == 0) continue;
@@ -1456,6 +1499,13 @@ static void draw_vram_layer()
 
 static void draw_pixel_layer()
 {
+	// was this written? skip!
+	if (dirty_tile_count[9] == 0) {
+	//	bprintf (0, _T("Skip pixel layer!\n"));
+		return;
+	}
+	dirty_tile_count[9] = 0;
+
 	UINT16 *ram = (UINT16*)TaitoVideoRam;
 
 	UINT16 y_offs = *((UINT16*)(DrvCtrlRAM + 0x1a)) & 0x1ff;

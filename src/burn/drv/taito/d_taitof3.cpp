@@ -2133,7 +2133,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 
 	if (f3_game == GSEEKER && DrvDip[0] & 1)
 	{ // gseeker st.5 boss spriteram overflow corruption fix.
-		if (total_sprites > 8) {
+		if (total_sprites > 1) {
 			sprite_ptr--;
 			INT32 i = 0x1ff8;
 			while ((sprite_ptr->rampos == i || sprite_ptr->rampos >= i-0x400) && sprite_ptr != m_spritelist) {
@@ -2141,7 +2141,7 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 				sprite_ptr--;
 			}
 			//bprintf(0, _T("last good: %X."), sprite_ptr->rampos);
-			sprite_ptr++; // always one empty sprite at the end.
+			if (sprite_ptr != m_spritelist) sprite_ptr++; // always one empty sprite at the end.
 		}
 	}
 

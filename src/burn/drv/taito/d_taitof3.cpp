@@ -39,6 +39,7 @@ static UINT32 *output_bitmap;
 
 static UINT16 *pal16; // fast palette for 16bpp video emulation
 
+static UINT8 *tile_opaque_sp;
 static UINT8 *tile_opaque_pf[8];
 static UINT8 *dirty_tiles;
 
@@ -734,6 +735,8 @@ static INT32 MemIndex()
 	TaitoSpritesA		= Next; Next += TaitoSpriteARomSize;
 	TaitoChars		= Next; Next += TaitoCharRomSize;
 
+	tile_opaque_sp		= Next; Next += TaitoSpriteARomSize / 0x100;
+
 	tile_opaque_pf[0]	= Next; Next += TaitoCharRomSize / 0x100;
 	tile_opaque_pf[1]	= Next; Next += TaitoCharRomSize / 0x100;
 	tile_opaque_pf[2]	= Next; Next += TaitoCharRomSize / 0x100;
@@ -819,35 +822,50 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static void DrvCalculateTransTable(INT32 len)
+static void DrvCalculateTransTable(INT32 sprlen, INT32 len)
 {
-	UINT8 *pf_gfx = TaitoChars;
-	INT32 c;
-
-	for (c = 0;c < len/0x100;c++)
 	{
-		INT32 x,y;
-		INT32 extra_planes; /* 0 = 4bpp, 1=5bpp, 2=?, 3=6bpp */
+		UINT8 *sprite_gfx = TaitoSpritesA;
 
-		for (extra_planes=0; extra_planes<4; extra_planes++)
-		{
-			INT32 chk_trans_or_opa=0;
-			UINT8 extra_mask = ((extra_planes << 4) | 0x0f);
-			const UINT8 *dp = pf_gfx + c * 0x100; //pf_gfx->get_data(c);
+		memset (tile_opaque_sp, 1, sprlen/0x100);
 
-			for (y = 0;y < 16;y++)
-			{
-				for (x = 0;x < 16;x++)
-				{
-					if(!(dp[x] & extra_mask))
-						chk_trans_or_opa|=2;
-					else
-						chk_trans_or_opa|=1;
-				}
-				dp += 16;
+		for (INT32 i = 0; i < sprlen; i++) {
+			if (sprite_gfx[i] == 0) {
+				tile_opaque_sp[i/0x100] = 0;
+				i|=0xff;
 			}
+		}
+	}
 
-			tile_opaque_pf[extra_planes][c]=chk_trans_or_opa;
+	{
+		UINT8 *pf_gfx = TaitoChars;
+		INT32 c;
+	
+		for (c = 0;c < len/0x100;c++)
+		{
+			INT32 x,y;
+			INT32 extra_planes; /* 0 = 4bpp, 1=5bpp, 2=?, 3=6bpp */
+	
+			for (extra_planes=0; extra_planes<4; extra_planes++)
+			{
+				INT32 chk_trans_or_opa=0;
+				UINT8 extra_mask = ((extra_planes << 4) | 0x0f);
+				const UINT8 *dp = pf_gfx + c * 0x100;
+	
+				for (y = 0;y < 16;y++)
+				{
+					for (x = 0;x < 16;x++)
+					{
+						if(!(dp[x] & extra_mask))
+							chk_trans_or_opa|=2;
+						else
+							chk_trans_or_opa|=1;
+					}
+					dp += 16;
+				}
+	
+				tile_opaque_pf[extra_planes][c]=chk_trans_or_opa;
+			}
 		}
 	}
 }
@@ -907,7 +925,7 @@ static void tile_decode(INT32 spr_len, INT32 tile_len)
 
 	DrvGfxDecode(spr_len, tile_len);
 
-	DrvCalculateTransTable(tile_len);
+	DrvCalculateTransTable(spr_len, tile_len);
 }
 
 static INT32 TaitoF3GetRoms(bool bLoad)
@@ -1607,7 +1625,7 @@ static void f3_drawgfx(
 			{ /* skip if inner loop doesn't draw anything */
 				{
 					INT32 y=ey-sy;
-					INT32 x=(ex-sx-1);//|(state->m_tile_opaque_sp[code % gfx->elements()]<<4); // iq_132
+					INT32 x=(ex-sx-1)|(tile_opaque_sp[code]<<4);
 					const UINT8 *source0 = code_base + y_index * 16 + x_index_base;
 					UINT32 *dest0 = output_bitmap + sy * 512 + sx;
 					UINT8 *pri0   = TaitoPriorityMap + sy * 1024 + sx;
@@ -6471,7 +6489,7 @@ static INT32 DrvGfxDecode()
 		TaitoChars[i+7] |= tmp2[5];
 	}
 
-	DrvCalculateTransTable(0x400000);
+	DrvCalculateTransTable(0x400000,0x400000);
 
 	BurnFree(tmp);
 

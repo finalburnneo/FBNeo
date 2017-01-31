@@ -114,6 +114,7 @@ struct tempsprite
 	INT32 x, y;
 	INT32 zoomx, zoomy;
 	INT32 pri;
+	INT32 rampos;
 };
 
 static struct tempsprite *m_spritelist;
@@ -1791,7 +1792,6 @@ static void f3_drawgfxzoom(
 	/*zoom##p = p##_addition << 12;*/							\
 }
 
-
 static void get_sprite_info(UINT16 *spriteram16_ptr)
 {
 #define DARIUSG_KLUDGE
@@ -1811,14 +1811,13 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 
 	INT32 total_sprites=0;
 	INT32 jumpcnt = 0;
+
 	color=0;
 	flipx=flipy=0;
 	//old_x=0;
 	y=x=0;
 
-	sprite_top = (f3_game == GSEEKER && DrvDip[0] & 1) ? ((0x2000) - 0x12 * 8) : 0x2000;
-
-	//sprite_top=0x2000;
+	sprite_top=0x2000;
 	for (offs = 0; offs < sprite_top && (total_sprites < 0x400); offs += 8)
 	{
 		const INT32 current_offs=offs; /* Offs can change during loop, current_offs cannot */
@@ -2052,9 +2051,27 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 		sprite_ptr->zoomx = x_addition;
 		sprite_ptr->zoomy = y_addition;
 		sprite_ptr->pri = (color & 0xc0) >> 6;
+		sprite_ptr->rampos = current_offs & 0x1fff;
+		//bprintf(0, _T("%X, "), current_offs);
 		sprite_ptr++;
 		total_sprites++;
 	}
+
+	if (f3_game == GSEEKER && DrvDip[0] & 1)
+	{ // gseeker st.5 boss spriteram overflow corruption fix.
+		if (total_sprites > 8) {
+			sprite_ptr--;
+			INT32 i = 0x1ff8;
+			while ((sprite_ptr->rampos == i || sprite_ptr->rampos >= i-0x400) && sprite_ptr != m_spritelist) {
+				i -= 8;
+				sprite_ptr--;
+			}
+			//bprintf(0, _T("last good: %X."), sprite_ptr->rampos);
+			sprite_ptr++; // always one empty sprite at the end.
+		}
+	}
+
+	//bprintf(0, _T("\n"));
 	if (jumpcnt>150) bprintf(0, _T("Sprite Jumps: %d. \n"), jumpcnt);
 	m_sprite_end = sprite_ptr;
 }

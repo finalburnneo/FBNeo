@@ -47,6 +47,7 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
 static UINT8 DrvJoy5[16];
+static UINT8 DrvDip[1];
 static UINT8 DrvSrv[1];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[5];
@@ -176,6 +177,7 @@ static struct BurnInputInfo F3InputList[] = {
 	{"Service 3",		BIT_DIGITAL,	DrvJoy1 + 11,	"service"},
 	{"Service Mode",	BIT_DIGITAL,    DrvSrv + 0,     "diag"},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy1 + 8,	"tilt"},
+	{"Dip",	        BIT_DIPSWITCH,  DrvDip + 0,	"dip"},
 };
 
 STDINPUTINFO(F3)
@@ -216,6 +218,17 @@ static struct BurnInputInfo KnInputList[] = {
 };
 
 STDINPUTINFO(Kn)
+
+static struct BurnDIPInfo gseekerDIPList[]=
+{
+	{0x2e, 0xff, 0xff, 0x01, NULL },
+
+	{0   , 0xfe, 0   , 2   , "Stage 5 Graphic Glitch Fix" },
+	{0x2e, 0x01, 0x01, 0x01, "Yes" },
+	{0x2e, 0x01, 0x01, 0x00, "No" },
+};
+
+STDDIPINFO(gseeker)
 
 static void control_w(INT32 offset, UINT32 d, INT32 b)
 {
@@ -1783,10 +1796,6 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 {
 #define DARIUSG_KLUDGE
 
-	//const rectangle &visarea = m_screen->visible_area();
-	//const INT32 min_x=visarea.min_x,max_x=visarea.max_x;
-	//const INT32 min_y=visarea.min_y,max_y=visarea.max_y;
-
 	INT32 offs,spritecont,flipx,flipy,/*old_x,*/color,x,y;
 	INT32 sprite,global_x=0,global_y=0,subglobal_x=0,subglobal_y=0;
 	INT32 block_x=0, block_y=0;
@@ -1807,7 +1816,9 @@ static void get_sprite_info(UINT16 *spriteram16_ptr)
 	//old_x=0;
 	y=x=0;
 
-	sprite_top=0x2000;
+	sprite_top = (f3_game == GSEEKER && DrvDip[0] & 1) ? ((0x2000) - 0x12 * 8) : 0x2000;
+
+	//sprite_top=0x2000;
 	for (offs = 0; offs < sprite_top && (total_sprites < 0x400); offs += 8)
 	{
 		const INT32 current_offs=offs; /* Offs can change during loop, current_offs cannot */
@@ -4716,7 +4727,7 @@ struct BurnDriver BurnDrvGseeker = {
 	"Grid Seeker: Project Storm Hammer (Ver 1.3O)\0", NULL, "Taito Corporation Japan", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, gseekerRomInfo, gseekerRomName, NULL, NULL, F3InputInfo, NULL,
+	NULL, gseekerRomInfo, gseekerRomName, NULL, NULL, F3InputInfo, gseekerDIPInfo,
 	gseekerInit, DrvExit, DrvFrame, DrvDraw224B, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
@@ -4753,7 +4764,7 @@ struct BurnDriver BurnDrvGseekerj = {
 	"Grid Seeker: Project Storm Hammer (Ver 1.3J)\0", NULL, "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, gseekerjRomInfo, gseekerjRomName, NULL, NULL, F3InputInfo, NULL,
+	NULL, gseekerjRomInfo, gseekerjRomName, NULL, NULL, F3InputInfo, gseekerDIPInfo,
 	gseekerInit, DrvExit, DrvFrame, DrvDraw224B, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };
@@ -4790,7 +4801,7 @@ struct BurnDriver BurnDrvGseekeru = {
 	"Grid Seeker: Project Storm Hammer (Ver 1.3A)\0", NULL, "Taito America Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, gseekeruRomInfo, gseekeruRomName, NULL, NULL, F3InputInfo, NULL,
+	NULL, gseekeruRomInfo, gseekeruRomName, NULL, NULL, F3InputInfo, gseekerDIPInfo,
 	gseekerInit, DrvExit, DrvFrame, DrvDraw224B, DrvScan, &DrvRecalc, 0x2000,
 	224, 320, 3, 4
 };

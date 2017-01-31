@@ -37,7 +37,7 @@ static UINT8 *bitmap_flags[10];
 static INT32 bitmap_width[8];
 static UINT32 *output_bitmap;
 
-static UINT16 *pal16; // fast palette for 16bpp video emulation
+static UINT16 *pal16 = NULL; // fast palette for 16bpp video emulation
 
 static UINT8 *tile_opaque_sp;
 static UINT8 *tile_opaque_pf[8];
@@ -611,6 +611,7 @@ static void __fastcall f3_playfield_write_byte(UINT32 a, UINT8 d)
 static void f3_reset_dirtybuffer()
 {
 	memset (dirty_tiles, 1, 0x8000/4);
+	memset (dirty_tile_count, 1, 10);
 }
 
 static INT32 DrvDoReset(INT32 full_reset)
@@ -726,8 +727,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 	watchdog = 0;
 	previous_coin = 0;
 
-	memset (dirty_tile_count, 1, 10);
-
 	return 0;
 }
 
@@ -763,10 +762,6 @@ static INT32 MemIndex()
 
 	pBurnDrvPalette		= (UINT32 *)Next;
 	TaitoPalette		= (UINT32 *)Next; Next += 0x0002000 * sizeof (UINT32);
-
-	if (nBurnBpp < 3) {
-		pal16           = (UINT16 *)Next; Next += (1<<24) * sizeof (UINT16);
-	}
 
 	TaitoCharsB		= Next; Next += 0x0004000;
 	TaitoCharsPivot		= Next; Next += 0x0020000;
@@ -1180,6 +1175,20 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 	return 0;
 }
 
+static void pal16_check_init()
+{
+	if (nBurnBpp < 3 && !pal16) {
+		pal16 = (UINT16 *)BurnMalloc((1<<24) * sizeof (UINT16));
+
+		for (INT32 i = 0; i < (1 << 24); i++) {
+			INT32 r = (i >> (16+3)) & 0x1f;
+			INT32 g = (i >> (8+2)) & 0x3f;
+			INT32 b = (i >> (0+3)) & 0x1f;
+			pal16[i] = (r << 11) | (g << 5) | b;
+		}
+	}
+}
+
 static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag)
 {
 	f3_game = kludge;
@@ -1256,14 +1265,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
 	}
 
-	if (nBurnBpp < 3) { // palette for 16bpp video
-		for (INT32 i = 0; i < (1 << 24); i++) {
-			INT32 r = (i >> (16+3)) & 0x1f;
-			INT32 g = (i >> (8+2)) & 0x3f;
-			INT32 b = (i >> (0+3)) & 0x1f;
-			pal16[i] = (r << 11) | (g << 5) | b;
-		}
-	}
+	pal16_check_init();
 
 	pPaletteUpdateCallback = pPalUpdateCB;
 	extended_layers = extend;
@@ -1306,6 +1308,10 @@ static INT32 DrvExit()
 	TaitoClearVariables(); // from taito.cpp
 
 	pPaletteUpdateCallback = NULL;
+	if (pal16) {
+		BurnFree(pal16);
+		pal16 = NULL;
+	}
 
 	return 0;
 }
@@ -4018,6 +4024,8 @@ static void TaitoF3VideoInit()
 static void DrawCommon(INT32 scanline_start)
 {
 	if (DrvRecalc) {
+		pal16_check_init();
+
 		for (INT32 i = 0; i < 0x8000; i+=4) {
 			pPaletteUpdateCallback(i);
 		}

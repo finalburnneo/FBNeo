@@ -1,6 +1,12 @@
 // FB Alpha Super Kaneko Nova System driver module by iq_132, fixups by dink
 // Based on MAME driver by Sylvain Glaize and David Haywood
 
+// Todo:
+//   Figure out screen garbage in saru kani/vblokbrk when attract mode
+//   switches to demo game. (even when nRedrawTiles is always 1)
+//
+//   Dirty tile stuff for draw_layer(). (needs to be hooked to decode_graphics_ram() too)
+
 #include "tiles_generic.h"
 #include "ymz280b.h"
 #include "sknsspr.h"
@@ -592,7 +598,6 @@ static UINT32 __fastcall suprnova_read_long(UINT32 address)
 	return 0;
 }
 
-
 static INT32 suprnova_alt_enable_sprites = 0;
 static INT32 bright_spc_g_trans = 0;
 static INT32 bright_spc_r_trans = 0;
@@ -618,37 +623,37 @@ static void skns_pal_regs_w(UINT32 offset)
 			use_spc_bright = data&1;
 			suprnova_alt_enable_sprites = (data>>8)&1;
 			break;
-	
+
 		case (0x04/4): // RWRA1
 			bright_spc_g = data&0xff;
 			bright_spc_g_trans = (data>>8) &0xff;
 			break;
-	
+
 		case (0x08/4): // RWRA2
 			bright_spc_r = data&0xff;
 			bright_spc_r_trans = (data>>8) &0xff;
 			break;
-	
+
 		case (0x0C/4): // RWRA3
 			bright_spc_b = data&0xff;
 			bright_spc_b_trans = (data>>8)&0xff;
 			break;
-	
+
 		case (0x10/4): // RWRB0
 			use_v3_bright = data&1;
 			suprnova_alt_enable_background = (data>>8)&1;
 			break;
-	
+
 		case (0x14/4): // RWRB1
 			bright_v3_g = data&0xff;
 		//	bright_v3_g_trans = (data>>8)&0xff;
 			break;
-	
+
 		case (0x18/4): // RWRB2
 			bright_v3_r = data&0xff;
 		//	bright_v3_r_trans = (data>>8)&0xff;
 			break;
-	
+
 		case (0x1C/4): // RWRB3
 			bright_v3_b = data&0xff;
 		//	bright_v3_b_trans = (data>>8)&0xff;
@@ -690,36 +695,36 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 			YMZ280BWriteRegister(data);
 		return;
 
-                case 0x01800000:
-              //  case 0x01800001:
-              //  case 0x01800002:
-              //  case 0x01800003:// sengeki writes here... puzzloop complains (security...)
-                    {
-                        hit.disconnect=1; /* hit2 stuff */
-                        switch (m_region) /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
-                        {
-                        case 0:
-                            if (data == 0) hit.disconnect= 0;
-                            break;
-                        case 3:
-                            if (data == 1) hit.disconnect= 0;
-                            break;
-                        case 4: // korea
-                            if (data == 2) hit.disconnect= 0;
-                            break;
-                        case 1:
-                            if (data == 3) hit.disconnect= 0;
-                            break;
-                        case 2:
-                            if (data < 2) hit.disconnect= 0;
-                            break;
-                            // unknown country id, unlock per default
-                        default:
-                            hit.disconnect= 0;
-                            break;
-                        }
-                    }
-		return;
+		case 0x01800000:
+			//  case 0x01800001:
+			//  case 0x01800002:
+			//  case 0x01800003:// sengeki writes here... puzzloop complains (security...)
+			{
+				hit.disconnect=1; /* hit2 stuff */
+				switch (m_region) /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
+				{
+					case 0:
+						if (data == 0) hit.disconnect= 0;
+						break;
+					case 3:
+						if (data == 1) hit.disconnect= 0;
+						break;
+                    case 4: // korea
+						if (data == 2) hit.disconnect= 0;
+						break;
+                    case 1:
+						if (data == 3) hit.disconnect= 0;
+						break;
+                    case 2:
+						if (data < 2) hit.disconnect= 0;
+						break;
+						// unknown country id, unlock per default
+                    default:
+						hit.disconnect= 0;
+						break;
+				}
+			}
+			return;
 	}
 
 	if ((address & 0xffffffe0) == 0x02a00000) {
@@ -734,7 +739,7 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 	// skns io -- not used
 	if ((address & ~0x0f) == 0x00400000) {
 		if ((Sh2GetPC(0) == 0x04013B42 + 2) && Vblokbrk) { // speedhack for Vblokbrk / Saru Kani
-			Sh2BurnUntilInt(0);
+			//Sh2BurnUntilInt(0); // this breaks sound in vblokbrk...
 		}
 		return;
 	}
@@ -782,10 +787,10 @@ static inline void suprnova_speedhack(UINT32 a)
 	UINT32 b  = a & ~3;
 	UINT32 pc = Sh2GetPC(0);
 
-        if (b == speedhack_address) {
-            if (pc == speedhack_pc[0]) {
-                Sh2BurnUntilInt(0);
-            }
+	if (b == speedhack_address) {
+		if (pc == speedhack_pc[0]) {
+			Sh2BurnUntilInt(0);
+		}
 	}
 }
 
@@ -793,7 +798,7 @@ static UINT32 __fastcall suprnova_hack_read_long(UINT32 a)
 {
 	suprnova_speedhack(a);
 
-        a &= 0xffffc;
+	a &= 0xffffc;
 
 	return *((UINT32*)(DrvSh2RAM + a));
 }
@@ -1289,7 +1294,7 @@ static void supernova_draw(INT32 *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *db
 			incxx=1<<8;
 		}
 
-		suprnova_draw_roz(bitmap,flags,dbitmap,dflags,startx << 8,starty << 8,	incxx << 8,incxy << 8,incyx << 8,incyy << 8, !nowrap, columnscroll, &line[offs[8]]);
+		if (nBurnLayer & (layer+1)) suprnova_draw_roz(bitmap,flags,dbitmap,dflags,startx << 8,starty << 8,	incxx << 8,incxy << 8,incyx << 8,incyy << 8, !nowrap, columnscroll, &line[offs[8]]);
 	}
 }
 
@@ -1343,11 +1348,8 @@ static void copy_layers()
 	};
 
 	{
-		INT32 supernova_pri_a;
-		INT32 supernova_pri_b;
-
-		supernova_pri_a = (vreg[0x10/4] & 0x0002)>>1;
-		supernova_pri_b = (vreg[0x34/4] & 0x0002)>>1;
+		INT32 supernova_pri_a = (vreg[0x10/4] & 0x0002)>>1;
+		INT32 supernova_pri_b = (vreg[0x34/4] & 0x0002)>>1;
 
 		supernova_draw(offs[1], DrvTmpScreenB, DrvTmpFlagB, DrvTmpScreenB2, DrvTmpFlagB2, 1);
 		supernova_draw(offs[0], DrvTmpScreenA, DrvTmpFlagA, DrvTmpScreenA2, DrvTmpFlagA2, 0);
@@ -1391,17 +1393,17 @@ static void copy_layers()
 					{
 						if (pendata2&0xff)
 						{
-							bgpendata = pendata2;
+							bgpendata = pendata2&0x7fff;
 							bgpri = pri2;
 						}
 						else if (pendata&0xff)
 						{
-							bgpendata = pendata;
+							bgpendata = pendata&0x7fff;
 							bgpri = pri;
 						}
 						else
 						{
-							bgpendata = pendata2;
+							bgpendata = pendata2&0x7fff;
 							bgpri = 0;
 						}
 					}
@@ -1409,12 +1411,12 @@ static void copy_layers()
 					{
 						if (pendata&0xff)
 						{
-							bgpendata = pendata;
+							bgpendata = pendata&0x7fff;
 							bgpri = pri;
 						}
 						else if (pendata2&0xff)
 						{
-							bgpendata = pendata2;
+							bgpendata = pendata2&0x7fff;
 							bgpri = pri2;
 						}
 						else
@@ -1494,7 +1496,7 @@ static INT32 DrvDraw()
 {
 	DrvRecalcPalette();
 
-	if (nBurnBpp == 4) {
+	if (nBurnBpp == 4) { // 32bpp rendered directly
 		DrvTmpDraw = (UINT32*)pBurnDraw;
 	} else {
 		DrvTmpDraw = pDrvTmpDraw;
@@ -1506,13 +1508,17 @@ static INT32 DrvDraw()
 		memset(DrvTmpScreenA, 0, 1024 * 1024 * sizeof(INT16));
 		memset(DrvTmpScreenB, 0, 1024 * 1024 * sizeof(INT16));
 	}
-	copy_layers();
-	memset (DrvTmpScreenC,  0, nScreenWidth * nScreenHeight * 2);
-	if (nBurnLayer & 4) skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs, 0);
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+	memset (DrvTmpScreenC,  0, nScreenWidth * nScreenHeight * 2);
+	if (nSpriteEnable & 1) skns_draw_sprites(DrvTmpScreenC, (UINT32*)DrvSprRAM, 0x4000, DrvGfxROM0, nGfxLen0, (UINT32*)DrvSprRegs, 0);
+
+	copy_layers();
+
+	if (nBurnBpp != 4) {
+		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 			INT32 d = DrvTmpDraw[i];
 			PutPix(pBurnDraw + i * nBurnBpp, BurnHighCol(d>>16, d>>8, d, 0));
+		}
 	}
 
 	nRedrawTiles = 0;

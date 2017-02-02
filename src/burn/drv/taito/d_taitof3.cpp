@@ -1224,7 +1224,7 @@ static void pal16_check_init()
 	}
 }
 
-static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag, UINT32 speedhack_address)
+static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 extend, INT32 kludge, INT32 spritelag, UINT32 speedhack_addr)
 {
 	f3_game = kludge;
 
@@ -1289,7 +1289,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	SekSetWriteByteHandler(4,	f3_playfield_write_byte);
 	SekClose();
 
-	f3_speedhack_init(speedhack_address);
+	f3_speedhack_init(speedhack_addr);
 
 	TaitoF3SoundInit(1);
 

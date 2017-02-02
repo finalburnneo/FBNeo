@@ -41,6 +41,7 @@
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
+INT32 sh2_suprnova_speedhack;
 
 /*typedef signed char INT8;
 typedef unsigned char UINT8;
@@ -495,6 +496,7 @@ int Sh2Init(int nCount)
 
 	has_sh2 = 1;
 	cps3speedhack = 0;
+	sh2_suprnova_speedhack = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
 	if (Sh2Ext == NULL) {
@@ -3372,7 +3374,7 @@ int Sh2Run(int cycles)
 		}
 
 		sh2->sh2_total_cycles++;
-		sh2->sh2_icount--;
+		sh2->sh2_icount -= (sh2_suprnova_speedhack) ? 6 : 1;
 		
 		// timer check 
 		
@@ -3492,6 +3494,16 @@ void Sh2BurnCycles(int cycles)
 
 	sh2->sh2_icount -= cycles;
 	sh2->sh2_total_cycles += cycles;
+}
+
+void Sh2Idle(int cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Idle called without init\n"));
+#endif
+
+	sh2->sh2_total_cycles += cycles;
+	sh2->cycle_counts += cycles;
 }
 
 void __fastcall Sh2WriteByte(unsigned int a, unsigned char d)

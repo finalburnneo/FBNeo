@@ -3244,7 +3244,7 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 
 #if USE_JUMPTABLE
 
-int Sh2Run(int cycles)
+int Sh2Run(int cycles) // Goto next Sh2Run()! -dink feb.2.2017
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Run called without init\n"));
@@ -3374,7 +3374,7 @@ int Sh2Run(int cycles)
 		}
 
 		sh2->sh2_total_cycles++;
-		sh2->sh2_icount -= (sh2_suprnova_speedhack) ? 6 : 1;
+		sh2->sh2_icount -= (sh2_suprnova_speedhack) ? 4 : 1;
 		
 		// timer check 
 		
@@ -3405,12 +3405,8 @@ int Sh2Run(int cycles)
 	return cycles - sh2->sh2_icount;
 }
 
-void Sh2SetIRQLine(const int line, const int state)
+static void Sh2SetIRQLine_Internal(const int line, const int state)
 {
-#if defined FBA_DEBUG
-	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetIRQLine called without init\n"));
-#endif
-
 	if (sh2->irq_line_state[line] == state) return;
 	sh2->irq_line_state[line] = state;
 
@@ -3428,6 +3424,25 @@ void Sh2SetIRQLine(const int line, const int state)
 		pSh2Ext->suspend = 0;
 	}
 
+}
+
+void Sh2SetIRQLine(const int line, const int state)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetIRQLine called without init\n"));
+#endif
+
+	switch (state) {
+		case CPU_IRQSTATUS_AUTO:
+			Sh2SetIRQLine_Internal(line, CPU_IRQSTATUS_ACK);
+			Sh2Run(0);
+			Sh2SetIRQLine_Internal(line, CPU_IRQSTATUS_NONE);
+			break;
+
+    	default:
+			Sh2SetIRQLine_Internal(line, state);
+			break;
+	}
 }
 
 unsigned int Sh2GetPC(int)

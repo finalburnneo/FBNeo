@@ -16,6 +16,8 @@ UINT32 *konami_bitmap32 = NULL;
 UINT8  *konami_priority_bitmap = NULL;
 UINT32 *konami_palette32;
 
+static UINT16 *konami_blendpal16;
+
 static INT32 highlight_mode = 0;  // set in driver init.
 static INT32 highlight_over_sprites_mode = 0; // ""
 
@@ -231,8 +233,42 @@ void KonamiBlendCopy(UINT32 *pPalette)
 
 	UINT32 *bmp = konami_bitmap32;
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol((bmp[i]>>16)&0xff, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
+	switch (nBurnBpp)
+	{
+		case 4:
+		{
+			memcpy (pBurnDraw, bmp, nScreenWidth * nScreenHeight * sizeof(INT32));
+		}
+		break;
+
+		case 3:
+		{
+			UINT8 *dst = pBurnDraw;
+			for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++, dst+=3, bmp++) {
+				dst[0] = *bmp;
+				dst[1] = *bmp / 0x100;
+				dst[2] = *bmp / 0x10000;
+			}
+		}
+		break;
+
+		case 2:
+		{
+			UINT16 *dst = (UINT16*)pBurnDraw;
+			for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++, dst++, bmp++) {
+				*dst = *bmp / 0x10000;
+				*dst += (*bmp / 0x400) & 0x3f;
+				*dst += (*bmp / 8) & 0x1f;
+			}	
+
+		//	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
+		//		PutPix(pBurnDraw + (i * nBurnBpp), BurnHighCol((bmp[i]>>16)&0xff, (bmp[i]>>8)&0xff, bmp[i]&0xff, 0));
+		//	}
+		}
+		break;
+
+		default:
+			bprintf (0, _T("Unsupported KonamiBlendCopy bit depth! %d\n"), nBurnBpp);
 	}
 }
 

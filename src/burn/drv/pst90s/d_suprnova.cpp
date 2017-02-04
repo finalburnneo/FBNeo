@@ -170,6 +170,30 @@ static struct BurnDIPInfo SknsDIPList[]=
 
 STDDIPINFO(Skns)
 
+static struct BurnDIPInfo SknsNoSpeedhackDIPList[]=
+{
+	{0x15, 0xff, 0xff, 0xff, NULL		},
+	{0x16, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"	},
+	{0x15, 0x01, 0x01, 0x01, "Off"		},
+	{0x15, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
+	{0x15, 0x01, 0x02, 0x02, "Off"		},
+	{0x15, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Backup Ram"},
+	{0x15, 0x01, 0x40, 0x00, "No"		},
+	{0x15, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"	},
+	{0x15, 0x01, 0x80, 0x00, "Freezes the game"},
+	{0x15, 0x01, 0x80, 0x80, "No"	},
+};
+
+STDDIPINFO(SknsNoSpeedhack)
+
 static struct BurnDIPInfo VblokbrkDIPList[]=
 {
 	{0x17, 0xff, 0xff, 0xff, NULL		},
@@ -1056,7 +1080,12 @@ static INT32 DrvInit(INT32 bios)
 	Sh2SetReadWordHandler (1,		suprnova_hack_read_word);
 	Sh2SetReadLongHandler (1,		suprnova_hack_read_long);
 
-	BurnSetRefreshRate(59.5971); //do not use - causes skips in music
+	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "galpanis", 8)) {
+		bprintf(0, _T("Note (soundfix): switching Busy Loop Speedhack to mode #2 for galpanis*.\n"));
+		sh2_busyloop_speedhack_mode2 = 1;
+	}
+
+	BurnSetRefreshRate(59.5971);
 
 	YMZ280BInit(16666666, NULL);
 
@@ -2347,10 +2376,10 @@ static INT32 GalpanisInit()
 
 struct BurnDriver BurnDrvGalpanis = {
 	"galpanis", NULL, "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Europe)\0", "Music / Sound Issues.", "Kaneko", "Miscellaneous",
+	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpanisInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2385,10 +2414,10 @@ static INT32 GalpanisjInit()
 
 struct BurnDriver BurnDrvGalpanisj = {
 	"galpanisj", "galpanis", "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Japan)\0", "Music / Sound Issues.", "Kaneko", "Miscellaneous",
+	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpanisjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2423,10 +2452,10 @@ static INT32 GalpaniskInit()
 
 struct BurnDriver BurnDrvGalpanisk = {
 	"galpanisk", "galpanis", "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Korea)\0", "Music / Sound Issues.", "Kaneko", "Miscellaneous",
+	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
+	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
 	GalpaniskInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

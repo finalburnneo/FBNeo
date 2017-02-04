@@ -29,30 +29,15 @@
  *
  *****************************************************************************/
 
-//#include <stdio.h>
-//#include <stdlib.h>
-//#include <string.h>
-
 #include "burnint.h"
 #include "sh2_intf.h"
-
-//#include "tchar.h"
-//extern int (__cdecl *bprintf) (int nStatus, TCHAR* szFormat, ...);
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
 INT32 sh2_suprnova_speedhack;
+INT32 sh2_busyloop_speedhack_mode2;
 
-/*typedef signed char INT8;
-typedef unsigned char UINT8;
-typedef signed short INT16;
-typedef unsigned short UINT16;
-typedef signed int INT32;
-typedef unsigned int UINT32;
-typedef signed long long INT64;
-typedef unsigned long long UINT64;*/
-
-#define BUSY_LOOP_HACKS 	1
+#define BUSY_LOOP_HACKS     1
 #define FAST_OP_FETCH		1
 #define USE_JUMPTABLE		0
 
@@ -127,10 +112,10 @@ typedef struct
 
 //	int     is_slave, cpu_number;
 	
-	UINT32	cycle_counts;
+	UINT32	cycle_counts; // used internally for timers / sh2_GetTotalCycles()
 	UINT32	sh2_cycles_to_run;
 	INT32	sh2_icount;
-	int     sh2_total_cycles;
+	int     sh2_total_cycles; // used externally (drivers/etc)
 	
 	int 	(*irq_callback)(int irqline);
 
@@ -143,7 +128,7 @@ static UINT32 sh2_GetTotalCycles()
 	return sh2->cycle_counts + sh2->sh2_cycles_to_run - sh2->sh2_icount;
 }
 
-static const int div_tab[4] = { 3, 5, 3, 0 };
+static const int div_tab[4] = { 3, 5, 7, 0 };
 
 enum {
 	ICF  = 0x00800000,
@@ -497,6 +482,7 @@ int Sh2Init(int nCount)
 	has_sh2 = 1;
 	cps3speedhack = 0;
 	sh2_suprnova_speedhack = 0;
+	sh2_busyloop_speedhack_mode2 = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
 	if (Sh2Ext == NULL) {
@@ -988,16 +974,17 @@ SH2_INLINE void BRA(UINT32 d)
 	if (disp == -2)
 	{
 		UINT32 next_opcode = RW(sh2->ppc & AM);
-		//UINT32 next_opcode = OPRW(sh2->ppc & AM);
-		
 		/* BRA  $
          * NOP
          */
-		if (next_opcode == 0x0009){
-			//bprintf(0, _T("SH2: BUSY_LOOP_HACKS %d\n"), sh2->sh2_icount);
-			sh2->sh2_total_cycles += sh2->sh2_icount;
-			sh2->sh2_icount %= 3;	/* cycles for BRA $ and NOP taken (3) */
-			sh2->sh2_total_cycles -= sh2->sh2_icount;
+		if (next_opcode == 0x0009) {
+			//bprintf(0, _T("SH2: BUSY_LOOP_HACKS: %d\n"), sh2->sh2_icount);
+			if (sh2_busyloop_speedhack_mode2) {
+				sh2->sh2_icount -= 10;
+			} else {
+				sh2->sh2_total_cycles += sh2->sh2_icount;
+				sh2->sh2_icount %= 3;	/* cycles for BRA $ and NOP taken (3) */
+			}
 		}
 	}
 #endif
@@ -1423,13 +1410,12 @@ SH2_INLINE void DT(UINT32 n)
 #if BUSY_LOOP_HACKS
 	{
 		UINT32 next_opcode = RW(sh2->ppc & AM);
-		//UINT32 next_opcode = OPRW(sh2->ppc & AM);
 		/* DT   Rn
-         * BF   $-2
-         */
+		 * BF   $-2
+		 */
 		if (next_opcode == 0x8bfd)
 		{
-			//bprintf(0, _T("SH2: BUSY_LOOP_HACKS (%d)--; \n"), sh2->r[n], sh2->sh2_icount);
+			//bprintf(0, _T("SH2: BUSY_LOOP_HACKS %d (%d)--; \n"), sh2->r[n], sh2->sh2_icount);
 			while (sh2->r[n] > 1 && sh2->sh2_icount > 4)
 			{
 				sh2->r[n]--;
@@ -2033,7 +2019,6 @@ SH2_INLINE void OR(UINT32 m, UINT32 n)
 SH2_INLINE void ORI(UINT32 i)
 {
 	sh2->r[0] |= i;
-	sh2->sh2_icount -= 2;
 }
 
 /*  OR.B    #imm,@(R0,GBR) */
@@ -2045,6 +2030,7 @@ SH2_INLINE void ORM(UINT32 i)
 	temp = RB( sh2->ea );
 	temp |= i;
 	WB( sh2->ea, temp );
+	sh2->sh2_icount -= 2;
 }
 
 /*  ROTCL   Rn */
@@ -2822,7 +2808,6 @@ static void sh2_timer_activate(void)
 			sh2->timer_base = sh2->frc_base;
 			
 		} else {
-//			logerror("SH2.%d: Timer event in %d cycles of external clock", sh2->cpu_number, max_delta);
 			//bprintf(0, _T("SH2.0: Timer event in %d cycles of external clock\n"), max_delta);
 		}
 	}
@@ -2898,7 +2883,6 @@ static void sh2_timer_callback()
 
 	sh2_recalc_irq();
 	sh2_timer_activate();
-
 //	cpuintrf_pop_context();
 }
 
@@ -2907,7 +2891,7 @@ static void sh2_dmac_callback(int dma)
 //	cpuintrf_push_context(cpunum);
 
 //	LOG(("SH2.%d: DMA %d complete\n", cpunum, dma));
-//	bprintf(0, _T("SH2: DMA %d complete at %d\n"), dma, sh2_GetTotalCycles());
+	//bprintf(0, _T("SH2: DMA %d complete at %d\n"), dma, sh2_GetTotalCycles());
 
 	sh2->m[0x63+4*dma] |= 2;
 	sh2->dma_timer_active[dma] = 0;
@@ -3242,78 +3226,6 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 
 // -------------------------------------------------------
 
-#if USE_JUMPTABLE
-
-int Sh2Run(int cycles) // Goto next Sh2Run()! -dink feb.2.2017
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Run called without init\n"));
-#endif
-
-	sh2->sh2_icount = cycles;
-	sh2->sh2_cycles_to_run = cycles;
-
-	do
-	{
-		if ( pSh2Ext->suspend ) {
-			sh2->sh2_total_cycles += cycles;
-			sh2->sh2_icount = 0;
-			break;
-		}
-
-		UINT16 opcode;
-
-		if (sh2->delay) {
-			//opcode = cpu_readop16(WORD_XOR_BE((UINT32)(sh2->delay & AM)));
-			opcode = cpu_readop16(sh2->delay & AM);
-			change_pc(sh2->pc & AM);
-			sh2->delay = 0;
-		} else {
-			//opcode = cpu_readop16(WORD_XOR_BE((UINT32)(sh2->pc & AM)));
-			opcode = cpu_readop16(sh2->pc & AM);
-			sh2->pc += 2;
-		}
-
-		sh2->ppc = sh2->pc;
-
-		opcode_jumptable[opcode](opcode);
-
-		if(sh2->test_irq && !sh2->delay)
-		{
-			CHECK_PENDING_IRQ(/*"mame_sh2_execute"*/);
-			sh2->test_irq = 0;
-		}
-
-		sh2->sh2_icount--;
-		
-		// timer check 
-		
-		{
-			unsigned int cy = sh2_GetTotalCycles();
-
-			if (sh2->dma_timer_active[0])
-				if ((cy - sh2->dma_timer_base[0]) >= sh2->dma_timer_cycles[0])
-					sh2_dmac_callback(0);
-
-			if (sh2->dma_timer_active[1])
-				if ((cy - sh2->dma_timer_base[1]) >= sh2->dma_timer_cycles[1])
-					sh2_dmac_callback(1);
-	
-			if ( sh2->timer_active )
-				if ((cy - sh2->timer_base) >= sh2->timer_cycles)
-					sh2_timer_callback();
-		}
-		
-		
-	} while( sh2->sh2_icount > 0 );
-	
-	sh2->cycle_counts += cycles - (UINT32)sh2->sh2_icount;
-
-	return cycles - sh2->sh2_icount;
-}
-
-#else
-
 int Sh2Run(int cycles)
 {
 #if defined FBA_DEBUG
@@ -3331,7 +3243,7 @@ int Sh2Run(int cycles)
 			break;
 		}
 
-		if (!pSh2Ext->suspend) {
+		if (pSh2Ext->suspend == 0) {
 			UINT16 opcode;
 
 			if (sh2->delay) {
@@ -3365,7 +3277,6 @@ int Sh2Run(int cycles)
 			default: op1111(opcode); break;
 			}
 		}
-#endif
 
 		if(sh2->test_irq && !sh2->delay)
 		{

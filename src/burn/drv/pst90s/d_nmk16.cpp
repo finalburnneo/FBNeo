@@ -6836,13 +6836,38 @@ static struct BurnRomInfo redhawkgRomDesc[] = {
 STD_ROM_PICK(redhawkg)
 STD_ROM_FN(redhawkg)
 
+static INT32 RedhawkgLoadCallback()
+{
+	Stagger1LoadCallback();
+
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x40000);
+
+	memcpy (tmp, Drv68KROM, 0x40000);
+
+	for (INT32 i = 0; i < 0x40000; i+= 0x04000)
+	{
+		INT32 j = ((i & 0x30000) >> 2) | ((i & 0x04000) << 3) | ((i & 0x08000) << 1);
+
+		memcpy (Drv68KROM + j, tmp + i, 0x04000);
+	}
+
+	BurnFree(tmp);
+
+	return 0;
+}
+
+static INT32 RedhawkgInit()
+{
+	return AfegaInit(RedhawkgLoadCallback, pAfegaZ80Callback, 1);
+}
+
 struct BurnDriver BurnDrvRedhawkg = {
 	"redhawkg", "stagger1", NULL, NULL, "1997",
 	"Red Hawk (Greece)\0", NULL, "Afega (Hea Dong Corp license)", "NMK16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
 	NULL, redhawkgRomInfo, redhawkgRomName, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
-	RedhawkiInit, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
+	RedhawkgInit, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
 	256, 224, 4, 3
 };
 

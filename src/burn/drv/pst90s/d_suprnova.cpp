@@ -1,5 +1,8 @@
 // FB Alpha Super Kaneko Nova System driver module by iq_132, fixups by dink
 // Based on MAME driver by Sylvain Glaize and David Haywood
+//
+// notes: vblokbr/sarukani prefers 60hz w/the speedhack, or it gets stuck in testmode.
+//
 
 #include "tiles_generic.h"
 #include "ymz280b.h"
@@ -66,6 +69,8 @@ static UINT32 DrvInputs[3];
 static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static UINT8 DrvReset;
+
+static INT32 sixtyhz = 0;
 
 static INT32 nGfxLen0 = 0;
 static INT32 nRedrawTiles = 0;
@@ -1085,7 +1090,7 @@ static INT32 DrvInit(INT32 bios)
 		sh2_busyloop_speedhack_mode2 = 1;
 	}
 
-	BurnSetRefreshRate(59.5971);
+	if (!sixtyhz) BurnSetRefreshRate(59.5971);
 
 	YMZ280BInit(16666666, NULL);
 
@@ -1115,6 +1120,8 @@ static INT32 DrvExit()
 	suprnova_alt_enable_background = 0;
 	Vblokbrk = 0;
 	nGfxLen0 = 0;
+
+	sixtyhz = 0;
 
 	speedhack_address = ~0;
 	memset (speedhack_pc, 0, 2 * sizeof(INT32));
@@ -1631,7 +1638,7 @@ static INT32 DrvFrame()
 		DrvInputs[2] = 0xffffffff;
 	}
 
-	INT32 nTotalCycles = (INT32)(28638000 / 59.5971);
+	UINT32 nTotalCycles = (sixtyhz) ? (28638000 / 60) : (INT32)(28638000 / 59.5971);
 	INT32 nCyclesDone = 0;
 	INT32 nInterleave = 262;
 
@@ -1906,6 +1913,7 @@ static INT32 SengekisInit()
 
 	speedhack_address = 0x60b74bc;
 	speedhack_pc[0] = 0x60006ec + 2;
+	sixtyhz = 1;
 
 	return DrvInit(2 /*asia*/);
 }
@@ -1949,6 +1957,7 @@ static INT32 SengekisjInit()
 
 	speedhack_address = 0x60b7380;
 	speedhack_pc[0] = 0x60006ec + 2;
+	sixtyhz = 1;
 
 	return DrvInit(0 /*japan*/);
 }
@@ -2864,6 +2873,7 @@ static INT32 VblokbrkInit()
 	sprite_kludge_y = -1;
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
+	sixtyhz = 1;
 
 	return DrvInit(1 /*Europe*/);
 }
@@ -2902,6 +2912,7 @@ static INT32 VblokbrkaInit()
 	sprite_kludge_y = -1;
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
+	sixtyhz = 1;
 
 	return DrvInit(2 /*Asia*/);
 }
@@ -2940,6 +2951,7 @@ static INT32 SarukaniInit()
 	sprite_kludge_y = -1;
 	suprnova_alt_enable_background = 1;
 	Vblokbrk = 1;
+	sixtyhz = 1;
 
 	return DrvInit(0 /*Japan*/);
 }

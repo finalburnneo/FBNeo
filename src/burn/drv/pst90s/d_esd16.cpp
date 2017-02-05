@@ -1467,6 +1467,40 @@ struct BurnDriver BurnDrvHedpanic = {
 };
 
 
+// Head Panic (ver. 0702, 02/07/1999)
+
+static struct BurnRomInfo hedpanicaRomDesc[] = {
+	{ "esd12.cu03",		0x040000, 0xdeb7e0a0, 1 | BRF_PRG | BRF_ESS },	//  0 - 68k Code
+	{ "esd11.cu02", 	0x040000, 0xe1418f23, 1 | BRF_PRG | BRF_ESS },	//  1
+
+	{ "esd3.su06",		0x040000, 0xa88d4424, 2 | BRF_PRG | BRF_ESS },	//  2 - Z80 Code
+
+	{ "ju06",			0x200000, 0x9f6f6193, 3 | BRF_GRA },			//  3 - Sprites
+	{ "ju04",			0x200000, 0x4f3503d7, 3 | BRF_GRA },			//  4
+	{ "esd5.bin",		0x080000, 0x6968265a, 3 | BRF_GRA },			//  5
+
+	{ "fu35",			0x200000, 0x9b5a45c5, 4 | BRF_GRA },			//  6 - Tiles
+	{ "fu34",			0x200000, 0x8f2099cc, 4 | BRF_GRA },			//  7
+
+	{ "esd4.bin",		0x080000, 0x5692fe92, 5 | BRF_SND },			//  8 - OKI Samples
+	
+	{ "hedpanic.nv",	0x000080, 0xe91f4038, 0 | BRF_OPT },			//  9 - Default EEPROM
+};
+
+STD_ROM_PICK(hedpanica)
+STD_ROM_FN(hedpanica)
+
+struct BurnDriver BurnDrvHedpanica = {
+	"hedpanica", "hedpanic", NULL, NULL, "1999",
+	"Head Panic (ver. 0702, 02/07/1999)\0", "Story line & game instructions in English", "ESD / Fuuki", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, hedpanicaRomInfo, hedpanicaRomName, NULL, NULL, HedpanicInputInfo, NULL,
+	HedpanicInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x800, 320, 240, 4, 3
+};
+
+
 // Head Panic (ver. 0315, 15/03/2000)
 
 static struct BurnRomInfo hedpanifRomDesc[] = {

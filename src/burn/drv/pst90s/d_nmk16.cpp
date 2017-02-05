@@ -6817,6 +6817,36 @@ struct BurnDriver BurnDrvRedhawki = {
 };
 
 
+// Red Hawk (Greece)
+
+static struct BurnRomInfo redhawkgRomDesc[] = {
+	{ "2.bin",			0x020000, 0xccd459eb, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "3.bin",			0x020000, 0x483802fd, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "1.bin",			0x010000, 0x5d8cf28e, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+
+	{ "4.bin",			0x080000, 0xaafb3cc4, 4 | BRF_GRA },           //  3 Tiles
+
+	{ "7.bin",			0x080000, 0xa28c8454, 5 | BRF_GRA },           //  4 Characters
+	{ "6.bin",			0x080000, 0x710c9e3c, 5 | BRF_GRA },           //  5
+
+	{ "5",				0x040000, 0xe911ce33, 6 | BRF_SND },           //  6 OKI1 Samples
+};
+
+STD_ROM_PICK(redhawkg)
+STD_ROM_FN(redhawkg)
+
+struct BurnDriver BurnDrvRedhawkg = {
+	"redhawkg", "stagger1", NULL, NULL, "1997",
+	"Red Hawk (Greece)\0", NULL, "Afega (Hea Dong Corp license)", "NMK16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	NULL, redhawkgRomInfo, redhawkgRomName, NULL, NULL, CommonInputInfo, Stagger1DIPInfo,
+	RedhawkiInit, AfegaExit, AfegaFrame, RedhawkiDraw, DrvScan, NULL, 0x300,
+	256, 224, 4, 3
+};
+
+
 // Vince (Redhawk bootleg)
 
 static struct BurnRomInfo redhawkbRomDesc[] = {

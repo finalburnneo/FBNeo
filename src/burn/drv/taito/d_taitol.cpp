@@ -3961,7 +3961,7 @@ static struct BurnRomInfo puzznicRomDesc[] = {
 	{ "c20-07.ic10",	0x10000, 0xbe12749a, 4 | BRF_GRA },           //  1 graphics data
 	{ "c20-06.ic9",		0x10000, 0xac85a9c5, 4 | BRF_GRA },           //  2
 
-	{ "mc68705p3.ic4",	0x00800, 0x085f68b4, 9 | BRF_PRG | BRF_ESS }, //  3 mcu code
+	{ "c20-01.ic4",		0x00800, 0x085f68b4, 9 | BRF_PRG | BRF_ESS }, //  3 mcu code
 
 	{ "mmipal20l8.ic3",	0x00800, 0x00000000, 0 | BRF_NODUMP },        //  4 pals
 };
@@ -3980,6 +3980,33 @@ struct BurnDriver BurnDrvPuzznic = {
 };
 
 
+// Puzznic (US)
+
+static struct BurnRomInfo puzznicuRomDesc[] = {
+	{ "c20-10.ic11",	0x20000, 0x3522d2e5, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+	{ "c20-03.ic10",	0x20000, 0x4264056c, 4 | BRF_GRA },           //  1 graphics data
+	{ "c20-02.ic9",		0x20000, 0x3c115f8b, 4 | BRF_GRA },           //  2
+
+	{ "c20-01.ic4",		0x00800, 0x085f68b4, 9 | BRF_PRG | BRF_ESS }, //  3 mcu code
+
+	{ "mmipal20l8.ic3",	0x00800, 0x00000000, 0 | BRF_NODUMP },        //  4 pals
+};
+
+STD_ROM_PICK(puzznicu)
+STD_ROM_FN(puzznicu)
+
+struct BurnDriver BurnDrvPuzznicu = {
+	"puzznicu", "puzznic", NULL, NULL, "1989",
+	"Puzznic (US)\0", NULL, "Taito America Corporation", "L-System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, puzznicuRomInfo, puzznicuRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
+	PuzznicInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 224, 4, 3
+};
+
+
 // Puzznic (Japan)
 
 static struct BurnRomInfo puzznicjRomDesc[] = {
@@ -3988,7 +4015,7 @@ static struct BurnRomInfo puzznicjRomDesc[] = {
 	{ "c20-03.ic10",	0x20000, 0x4264056c, 4 | BRF_GRA },           //  1 graphics data
 	{ "c20-02.ic9",		0x20000, 0x3c115f8b, 4 | BRF_GRA },           //  2
 
-	{ "mc68705p3.ic4",	0x00800, 0x085f68b4, 9 | BRF_PRG | BRF_ESS }, //  3 mcu code
+	{ "c20-01.ic4",		0x00800, 0x085f68b4, 9 | BRF_PRG | BRF_ESS }, //  3 mcu code
 
 	{ "c20-05.ic3",		0x00144, 0xf90e5594, 0 | BRF_GRA },           //  4 pals
 };

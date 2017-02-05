@@ -514,6 +514,12 @@ static void DrvPivotExpand(UINT16 offset)
 
 static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 {
+	if ((a & 0xffe000) == 0x61c000) {
+		*((UINT32*)(TaitoVideoRam + (a & 0x1ffc))) = (d << 16) | (d >> 16);
+		dirty_tile_count[9] = 1;
+		return;
+	}
+
 	if ((a & 0xffe000) == 0x61e000) {
 		*((UINT32*)(DrvVRAMRAM + (a & 0x1ffc))) = (d << 16) | (d >> 16);
 		DrvVRAMExpand(a);
@@ -523,6 +529,12 @@ static void __fastcall f3_VRAM_write_long(UINT32 a, UINT32 d)
 
 static void __fastcall f3_VRAM_write_word(UINT32 a, UINT16 d)
 {
+	if ((a & 0xffe000) == 0x61c000) {
+		*((UINT16*)(TaitoVideoRam + (a & 0x1ffe))) = d;
+		dirty_tile_count[9] = 1;
+		return;
+	}
+
 	if ((a & 0xffe000) == 0x61e000) {
 		*((UINT16*)(DrvVRAMRAM + (a & 0x1ffe))) = d;
 		DrvVRAMExpand(a);
@@ -532,6 +544,12 @@ static void __fastcall f3_VRAM_write_word(UINT32 a, UINT16 d)
 
 static void __fastcall f3_VRAM_write_byte(UINT32 a, UINT8 d)
 {
+	if ((a & 0xffe000) == 0x61c000) {
+		TaitoVideoRam[(a & 0x1fff) ^ 1] = d;
+		dirty_tile_count[9] = 1;
+		return;
+	}
+
 	if ((a & 0xffe000) == 0x61e000) {
 		DrvVRAMRAM[(a & 0x1fff) ^ 1] = d;
 		DrvVRAMExpand(a);
@@ -1255,7 +1273,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	SekMapMemory(TaitoSpriteRam,	0x600000, 0x60ffff, MAP_RAM);
 	SekMapMemory(DrvPfRAM,		0x610000, 0x617fff, MAP_ROM); // write through handler
 	SekMapMemory(DrvPfRAM + 0x8000,	0x618000, 0x61bfff, MAP_RAM);
-	SekMapMemory(TaitoVideoRam,	0x61c000, 0x61dfff, MAP_RAM);
+	SekMapMemory(TaitoVideoRam,	0x61c000, 0x61dfff, MAP_ROM); // write through
 	SekMapMemory(DrvVRAMRAM,	0x61e000, 0x61ffff, MAP_ROM); // write through handler
 	SekMapMemory(DrvLineRAM,	0x620000, 0x62ffff, MAP_RAM);
 	SekMapMemory(DrvPivotRAM,	0x630000, 0x63ffff, MAP_ROM); // write through handler
@@ -1273,7 +1291,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCB)(), void (*pPalUpdateCB)(UINT16), INT32 
 	SekSetWriteWordHandler(1,	f3_palette_write_word);
 	SekSetWriteByteHandler(1,	f3_palette_write_byte);
 
-	SekMapHandler(2,		0x61e000, 0x61ffff, MAP_WRITE);
+	SekMapHandler(2,		0x61c000, 0x61ffff, MAP_WRITE); // VRAM and TaitoVideoRam
 	SekSetWriteLongHandler(2,	f3_VRAM_write_long);
 	SekSetWriteWordHandler(2,	f3_VRAM_write_word);
 	SekSetWriteByteHandler(2,	f3_VRAM_write_byte);

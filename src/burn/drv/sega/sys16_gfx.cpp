@@ -2315,14 +2315,20 @@ static void XBoardRenderSpriteLayer(INT32 Priority)
 	}
 }
 
-inline static void YBoardSystem16BDrawPixel(INT32 x, INT32 pix, INT32 colour, UINT16* pPixel)
+inline static void YBoardSystem16BDrawPixel(INT32 x, INT32 pix, INT32 colour, UINT16* pPixel, UINT8* pPriorityMap, UINT16* PalRAM)
 {
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
-		if (pix == 14) {
-			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += ((((System16PaletteRam[pPixel[x] + 1] << 8) | System16PaletteRam[pPixel[x] + 0]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries);
-		} else {
-			pPixel[x] = (pix | colour | 0x800) & (System16PaletteEntries - 1);
+		UINT16 Pixel = pPixel[x];
+		if (Pixel != 0xffff) {
+			INT32 Priority = (pix >> 11) & 0x1e;
+			if (Priority < (pPriorityMap[x] & 0x1f)) {
+				if (pix == 14) {
+					pPixel[x] &= (System16PaletteEntries - 1);
+					pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
+				} else {
+					pPixel[x] = (pix | colour | 0x800) & (System16PaletteEntries - 1);
+				}
+			}
 		}
 	}
 }
@@ -2335,6 +2341,8 @@ static void YBoardSystem16BRenderSpriteLayer()
 
 	spritebase = (const UINT16 *)System16Sprites;
 	numbanks = System16SpriteRomSize / 0x20000;
+	
+	UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 
 	for (data = (UINT16*)System16SpriteRam; data < (UINT16*)System16SpriteRam + System16SpriteRamSize / 2; data += 8) {
 		if (BURN_ENDIAN_SWAP_INT16(data[2]) & 0x8000) break;
@@ -2384,6 +2392,7 @@ static void YBoardSystem16BRenderSpriteLayer()
 			/* skip drawing if not within the cliprect */
 			if (y >= 0 && y <= 223) {
 				UINT16* pPixel = pTransDraw + (y * 320);
+				UINT8* pPrio = System16PriorityMap + (y * 320);
 				INT32 xacc;
 
 				/* compute the initial X zoom accumulator; this is verified on the real PCB */
@@ -2397,10 +2406,10 @@ static void YBoardSystem16BRenderSpriteLayer()
 						UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7]]);
 
 						/* draw four pixels */
-						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
-						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
-						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
-						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
+						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
+						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
+						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
+						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
 
 						/* stop if the last pixel in the group was 0xf */
 						if (pix == 15) break;
@@ -2412,10 +2421,10 @@ static void YBoardSystem16BRenderSpriteLayer()
 						UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7]]);
 
 						/* draw four pixels */
-						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
-						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
-						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
-						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel); x += xdelta; }
+						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
+						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
+						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
+						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { YBoardSystem16BDrawPixel(x, pix, color, pPixel, pPrio, PalRAM); x += xdelta; }
 
 						/* stop if the last pixel in the group was 0xf */
 						if (pix == 15) break;
@@ -2915,6 +2924,7 @@ void System16RotateDraw()
 	{
 		UINT16* pPixel = pTransDraw + (y * 320);
 		UINT16* pSrc = pTempDraw;
+		UINT8* pPri = System16PriorityMap + (y * 320);
 		INT32 tx = currx;
 		INT32 ty = curry;
 
@@ -2930,10 +2940,12 @@ void System16RotateDraw()
 			if (pix != 0xffff)
 			{
 				*pPixel++ = ((pix & 0x1ff) | ((pix >> 6) & 0x200) | ((pix >> 3) & 0xc00) | 0x1000) & (System16PaletteEntries - 1);
+				*pPri++ = (pix >> 8) | 1;
 			}
 			else
 			{
 				*pPixel++ = /*info->colorbase +*/ sy;
+				*pPri++ = 0xff;
 			}
 
 			/* advance the source X/Y pointers */

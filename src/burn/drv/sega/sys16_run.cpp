@@ -71,6 +71,7 @@ UINT8  *System16Sprites2      = NULL;
 UINT8  *System16Roads         = NULL;
 UINT32 *System16Palette       = NULL;
 UINT8  *System16TempGfx       = NULL;
+UINT8  *System16PriorityMap   = NULL;
 
 UINT32 System16RomSize = 0;
 UINT32 System16RomNum = 0;
@@ -1024,6 +1025,8 @@ static INT32 System16MemIndex()
 	System16Palette      = (UINT32*)Next; Next += System16PaletteEntries * 3 * sizeof(UINT32) + (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) ? (0x40 * sizeof(UINT32)) : 0);
 	
 	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)); }
+	
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) System16PriorityMap = Next; Next += 320 * 224;
 	
 	MemEnd = Next;
 

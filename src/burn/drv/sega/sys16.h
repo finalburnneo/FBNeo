@@ -72,6 +72,7 @@ extern UINT8 *System16Ram;
 extern UINT8 *System16ExtraRam;
 extern UINT8 *System16Z80Ram;
 extern UINT8 *System16TempGfx;
+extern UINT8 *System16PriorityMap;
 extern UINT8 *System16TileRam;
 extern UINT8 *System16TextRam;
 extern UINT8 *System16TextRam;

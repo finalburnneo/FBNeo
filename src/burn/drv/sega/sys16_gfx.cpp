@@ -1587,73 +1587,44 @@ static void System16ARenderSpriteLayer(INT32 Priority)
 			bank %= numbanks;
 		spritedata = spritebase + 0x8000 * bank;
 		
-		if (!System16ScreenFlip) {
-			for (y = top; y < bottom; y++) {
-				addr += pitch;
-				if (y >= 0 && y <= 223) {
-					UINT16* pPixel = pTransDraw + (y * 320);
-					if (!(addr & 0x8000)) {
-						/* start at the word before because we preincrement below */
-						data[7] = addr - 1;
-						for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
-							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7] & 0x7fff]);
-					
-							pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-					
-							if (pix == 15) break;
-						}
-					} else {
-						data[7] = addr + 1;
-						for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
-							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7] & 0x7fff]);
-
-							/* draw four pixels */
-							pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-
-							/* stop if the last pixel in the group was 0xf */
-							if (pix == 15) break;
-						}
+		if (System16ScreenFlip) {
+			INT32 temp = top;
+			top = 224 - bottom;
+			bottom = 224 - temp;
+			xpos = 320 - xpos;
+			xdelta = -1;
+		}
+		
+		for (y = top; y < bottom; y++) {
+			addr += pitch;
+			if (y >= 0 && y <= 223) {
+				UINT16* pPixel = pTransDraw + (y * 320);
+				if (!(addr & 0x8000)) {
+					/* start at the word before because we preincrement below */
+					data[7] = addr - 1;
+					for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
+						UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7] & 0x7fff]);
+				
+						pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+				
+						if (pix == 15) break;
 					}
-				}
-			}
-		} else {
-			for (y = bottom - 3; y > top - 3; y--) {
-				addr += pitch;
-				if (y >= 0 && y <= 223) {
-					UINT16* pPixel = pTransDraw + (y * 320);
-					if (!(addr & 0x8000)) {
-						/* start at the word before because we preincrement below */
-						data[7] = addr - 1;
-						for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
-							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7] & 0x7fff]);
-					
-							pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-					
-							if (pix == 15) break;
-						}
-					} else {
-						data[7] = addr + 1;
-						for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
-							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7] & 0x7fff]);
+				} else {
+					data[7] = addr + 1;
+					for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
+						UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7] & 0x7fff]);
 
-							/* draw four pixels */
-							pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-							pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						/* draw four pixels */
+						pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
 
-							/* stop if the last pixel in the group was 0xf */
-							if (pix == 15) break;
-						}
+						/* stop if the last pixel in the group was 0xf */
+						if (pix == 15) break;
 					}
 				}
 			}

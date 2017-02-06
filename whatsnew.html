@@ -210,6 +210,24 @@
 <li>Fixed odd-word/long reads and writes in the m68000 cpu interface which in turn fixes the nasty 68x020 bug that has been plaguing us for ages.  This fixes freeze-ups in Asura Buster and other 68ec020-based games. [iq_132/dink]</li>
 <li>Fixed in Asura Buster / Blade: Sprite &amp; tile glitches, music synchronization [dink]</li>
 <li>Added clone of Three Wonders (3wondersha) [Barry]</li>
+<li>System 16 Updates [Barry]<ul>
+<li>Added support for the Sega 315 5195 Memory Mapper chip<ul>
+<li>Hooked up in Sega System 16B driver</li>
+<li>Hooked up in Sega OutRun driver</li>
+<li>Hooked up in Sega System 18 driver</li>
+<li>Added Moonwalker and clones to the Sega System 18 driver now they can be supported</li>
+</ul></li>
+<li>Properly emulate the shadow/hilight palettes in Sega System 16 and associated drivers</li>
+<li>Emulate priority buffer for Y-Board driver when mixing in System 16B sprites</li>
+<li>Added Lock On (Philko) to the Sega System 16B driver</li>
+<li>Fixed tile banking in some Altered Beast sets</li>
+<li>Emulated the I8751 MCU in the parent set of Altered Beast</li>
+<li>Emulated the I8751 MCU in the parent set of Golden Axe</li>
+<li>Added 5 bootlegs of SDI to the Sega System 16B driver</li>
+<li>Implemented full controls in Ace Attacker in the Sega System 16B driver</li>
+<li>Fix outrundxj</li>
+</ul></li>
+<li>Added a module for Resister Networks (Palette Generation) [Barry]</li>
 <li>Update lzma sdk to 16.04 [Barry]</li>
 <li>Update libpng to 1.6.28 [Barry]</li>
 <li>Update zlib to 1.2.10 [Barry]</li>

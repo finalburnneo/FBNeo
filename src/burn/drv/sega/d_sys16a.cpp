@@ -2063,8 +2063,6 @@ STD_ROM_FN(Wb35d)
 Memory Handlers
 ====================================================*/
 
-static bool Mjleague = false;
-
 void System16APPI0WritePortA(UINT8 data)
 {
 	System16SoundLatch = data & 0xff;
@@ -2074,7 +2072,7 @@ void System16APPI0WritePortB(UINT8 data)
 {
 	System16VideoControl = data;
 	System16VideoEnable = data & 0x10;
-	if (Mjleague) System16ScreenFlip = data & 0x80;
+	System16ScreenFlip = data & 0x80;
 }
 
 void System16APPI0WritePortC(UINT8 data)
@@ -2335,6 +2333,13 @@ static void MjleagueMakeAnalogInputs()
 static UINT8 __fastcall MjleagueReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0xc40001:
+		case 0xc40003: 
+		case 0xc40005:
+		case 0xc40007: {
+			return ppi8255_r(0, (a - 0xc40000) >> 1);
+		}
+		
 		case 0xc41001: {
 			UINT8 buttons = 0x3f - System16Input[0];
 			UINT8 analog1 = (System16VideoControl & 4) ? MjleagueTrack1Y : MjleagueTrack1X;
@@ -2884,8 +2889,6 @@ static INT32 MjleagueInit()
 {
 	System16MakeAnalogInputsDo = MjleagueMakeAnalogInputs;
 	
-	Mjleague = true;
-	
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
@@ -2905,8 +2908,6 @@ static INT32 MjleagueExit()
 	MjleagueTrack2Y = 0;
 	MjleagueBat1 = 0;
 	MjleagueBat2 = 0;
-	
-	Mjleague = false;
 	
 	return System16Exit();
 }

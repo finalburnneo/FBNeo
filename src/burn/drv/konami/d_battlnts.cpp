@@ -555,7 +555,7 @@ static INT32 DrvFrame()
 
 		HD6309Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 240 && K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 248 && K007342_irq_enabled()) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}

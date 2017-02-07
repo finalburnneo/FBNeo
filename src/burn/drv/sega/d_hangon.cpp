@@ -1406,6 +1406,8 @@ static INT32 ShangonrbInit()
 
 static void Sharrier_Sim8751()
 {
+	*((UINT16*)(System16Ram + 0x00f0)) = 0;
+	
 	// Inputs
 	*((UINT16*)(System16Ram + 0x0492)) = BURN_ENDIAN_SWAP_INT16((UINT16)((SharrierProcessAnalogControls(0) << 8) | SharrierProcessAnalogControls(1)));
 }

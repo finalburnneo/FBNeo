@@ -1535,13 +1535,13 @@ static void System16BAltRenderTextLayer(INT32 PriorityDraw)
 Sprite Rendering
 ====================================================*/
 
-static void System16DrawPixel(INT32 x, INT32 pix, INT32 colour, UINT16* pPixel)
+static void System16DrawPixel(INT32 x, INT32 pix, INT32 colour, UINT16* pPixel, UINT16* PalRAM)
 {
 	x += System16SpriteXOffset;
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (colour == (0x3f << 4)) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += ((((System16PaletteRam[pPixel[x] + 1] << 8) | System16PaletteRam[pPixel[x] + 0]) & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries);
+			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour | System16SpritePalOffset) & (System16PaletteEntries - 1);
 		}
@@ -1554,6 +1554,8 @@ static void System16ARenderSpriteLayer(INT32 Priority)
 
 	const UINT16 *spritebase = (const UINT16*)System16Sprites;
 	UINT16 *data;
+	
+	UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 		
 	for (data = (UINT16*)System16SpriteRam; data < (UINT16*)System16SpriteRam + System16SpriteRamSize / 2; data += 8) {
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;
@@ -1605,10 +1607,10 @@ static void System16ARenderSpriteLayer(INT32 Priority)
 					for (x = xpos; ((xpos - x) & 0x1ff) != 1; ) {
 						UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7] & 0x7fff]);
 				
-						pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-						pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-						pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-						pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
+						pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
+						pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
+						pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
 				
 						if (pix == 15) break;
 					}
@@ -1618,10 +1620,10 @@ static void System16ARenderSpriteLayer(INT32 Priority)
 						UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7] & 0x7fff]);
 
 						/* draw four pixels */
-						pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-						pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-						pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
-						pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel); x += xdelta;
+						pix = (pixels >>  0) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
+						pix = (pixels >>  4) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
+						pix = (pixels >>  8) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
+						pix = (pixels >> 12) & 0xf; System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta;
 
 						/* stop if the last pixel in the group was 0xf */
 						if (pix == 15) break;
@@ -1637,6 +1639,8 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 	UINT8 numbanks;
 	const UINT16 *spritebase;
   	UINT16 *data;
+	
+	UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 
 	spritebase = (const UINT16 *)System16Sprites;
 	numbanks = System16SpriteRomSize / 0x20000;
@@ -1709,10 +1713,10 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7]]);
 
 							/* draw four pixels */
-							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
+							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
 
 							/* stop if the last pixel in the group was 0xf */
 							if (pix == 15) break;
@@ -1724,10 +1728,10 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7]]);
 
 							/* draw four pixels */
-							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
+							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
 
 							/* stop if the last pixel in the group was 0xf */
 							if (pix == 15) break;
@@ -1764,10 +1768,10 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[++data[7]]);
 
 							/* draw four pixels */
-							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
+							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
 
 							/* stop if the last pixel in the group was 0xf */
 							if (pix == 15) break;
@@ -1779,10 +1783,10 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 							UINT16 pixels = BURN_ENDIAN_SWAP_INT16(spritedata[--data[7]]);
 
 							/* draw four pixels */
-							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
-							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel); x += xdelta; }
+							pix = (pixels >>  0) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  4) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >>  8) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
+							pix = (pixels >> 12) & 0xf; xacc = (xacc & 0x3f) + hzoom; if (xacc < 0x40) { System16DrawPixel(x, pix, color, pPixel, PalRAM); x += xdelta; }
 
 							/* stop if the last pixel in the group was 0xf */
 							if (pix == 15) break;
@@ -1795,12 +1799,12 @@ static void System16BRenderSpriteLayer(INT32 Priority)
 	}
 }
 
-inline static void OutrunDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shadow, UINT16* pPixel)
+inline static void OutrunDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shadow, UINT16* pPixel, UINT16* PalRAM)
 {
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (shadow && pix == 0xa) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += ((((System16PaletteRam[pPixel[x] + 1] << 8) | System16PaletteRam[pPixel[x] + 0]) & 0x8000) ? System16PaletteEntries * 2 : System16PaletteEntries);
+			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour | 0x800) & (System16PaletteEntries - 1);
 		}
@@ -1812,6 +1816,8 @@ static void OutrunRenderSpriteLayer(INT32 Priority)
 	UINT8 numbanks = System16SpriteRomSize / 0x40000;
 	const UINT32 *spritebase = (const UINT32 *)System16Sprites;
 	UINT16 *data;
+	
+	UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 
 	for (data = (UINT16*)System16SpriteRamBuff; data < (UINT16*)System16SpriteRamBuff + System16SpriteRamSize / 2; data += 8) {
 		if (BURN_ENDIAN_SWAP_INT16(data[0]) & 0x8000) break;
@@ -1881,14 +1887,14 @@ static void OutrunRenderSpriteLayer(INT32 Priority)
 						UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[++data[7]]);
 
 						/* draw four pixels */
-						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
 
 						/* stop if the second-to-last pixel in the group was 0xf */
 						if ((pixels & 0x000000f0) == 0x000000f0)
@@ -1906,14 +1912,14 @@ static void OutrunRenderSpriteLayer(INT32 Priority)
 						UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[--data[7]]);
 
 						/* draw four pixels */
-						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { OutrunDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
 
 						/* stop if the second-to-last pixel in the group was 0xf */
 						if ((pixels & 0x0f000000) == 0x0f000000)
@@ -1930,12 +1936,12 @@ static void OutrunRenderSpriteLayer(INT32 Priority)
 	}
 }
 
-inline static void HangonDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shadow, UINT16* pPixel)
+inline static void HangonDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shadow, UINT16* pPixel, UINT16* PalRAM)
 {
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (shadow && pix == 0xa) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += ((((System16PaletteRam[pPixel[x] + 1] << 8) | System16PaletteRam[pPixel[x] + 0]) & 0x8000) ? System16PaletteEntries * 2 : System16PaletteEntries);
+			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour | 0x400) & (System16PaletteEntries - 1);
 		}
@@ -1948,6 +1954,8 @@ static void HangonRenderSpriteLayer(INT32 Priority)
 	const UINT32 *spritebase = (UINT32*)System16Sprites;
 	const UINT8 *zoom = System16Prom;
 	UINT16 *data;
+	
+	UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 
 	for (data = (UINT16*)System16SpriteRam; data < (UINT16*)System16SpriteRam + System16SpriteRamSize / 2; data += 8) {
 		if ((BURN_ENDIAN_SWAP_INT16(data[0]) >> 8) > 0xf0) break;	
@@ -2005,14 +2013,14 @@ static void HangonRenderSpriteLayer(INT32 Priority)
 					for (x = xpos; x <= 319; ) {
 						UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[++data[7] & 0x7fff]);
 					
-						pix = (pixels >> 28) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 24) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 20) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 16) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
+						pix = (pixels >> 28) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 24) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 20) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 16) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
 					
 						if (pix == 15) break;
 					}
@@ -2021,14 +2029,14 @@ static void HangonRenderSpriteLayer(INT32 Priority)
 					for (x = xpos; x <= 319; ) {
 						UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[--data[7] & 0x7fff]);
 
-						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 16) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 20) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 24) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
-						pix = (pixels >> 28) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel); x++; }
+						pix = (pixels >>  0) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >>  4) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >>  8) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 12) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 16) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 20) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 24) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
+						pix = (pixels >> 28) & 0xf; xacc = (xacc & 0xff) + hzoom; if (xacc < 0x100) { if (x >= 0) HangonDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x++; }
 
 						/* stop if the last pixel in the group was 0xf */
 						if (pix == 15) break;
@@ -2163,12 +2171,12 @@ static void HangonAltRenderSpriteLayer(INT32 Priority)
 	}
 }
 
-inline static void BoardXDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shadow, UINT16* pPixel)
+inline static void BoardXDrawPixel(INT32 x, INT32 pix, INT32 colour, INT32 shadow, UINT16* pPixel, UINT16* PalRAM)
 {
 	if (x >= 0 && x <= 319 && pix != 0 && pix != 15) {
 		if (shadow && pix == 0xa) {
 			pPixel[x] &= (System16PaletteEntries - 1);
-			pPixel[x] += ((((System16PaletteRam[pPixel[x] + 1] << 8) | System16PaletteRam[pPixel[x] + 0]) & 0x8000) ? System16PaletteEntries * 2 : System16PaletteEntries);
+			pPixel[x] += (PalRAM[pPixel[x]] & 0x8000) ? (System16PaletteEntries * 2) : System16PaletteEntries;
 		} else {
 			pPixel[x] = (pix | colour) & (System16PaletteEntries - 1);
 		}
@@ -2180,6 +2188,8 @@ static void XBoardRenderSpriteLayer(INT32 Priority)
 	UINT8 numbanks = System16SpriteRomSize / 0x40000;
 	const UINT32 *spritebase = (const UINT32 *)System16Sprites;
 	UINT16 *data;
+	
+	UINT16 *PalRAM = (UINT16*)System16PaletteRam;
 
 	for (data = (UINT16*)System16SpriteRamBuff; data < (UINT16*)System16SpriteRamBuff + System16SpriteRamSize / 2; data += 8) {
 		if (BURN_ENDIAN_SWAP_INT16(data[0]) & 0x8000) break;
@@ -2249,14 +2259,14 @@ static void XBoardRenderSpriteLayer(INT32 Priority)
 						UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[++data[7]]);
 						
 						/* draw four pixels */
-						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
 
 						/* stop if the second-to-last pixel in the group was 0xf */
 						if ((pixels & 0x000000f0) == 0x000000f0)
@@ -2274,14 +2284,14 @@ static void XBoardRenderSpriteLayer(INT32 Priority)
 						UINT32 pixels = BURN_ENDIAN_SWAP_INT32(spritedata[--data[7]]);
 						
 						/* draw four pixels */
-						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
-						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  0) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  4) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >>  8) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 12) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 16) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 20) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 24) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
+						pix = (pixels >> 28) & 0xf; while (xacc < 0x200) { BoardXDrawPixel(x, pix, color, shadow, pPixel, PalRAM); x += xdelta; xacc += hzoom; } xacc -= 0x200;
 
 						/* stop if the second-to-last pixel in the group was 0xf */
 						if ((pixels & 0x0f000000) == 0x0f000000)

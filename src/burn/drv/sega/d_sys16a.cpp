@@ -2392,6 +2392,13 @@ static void AceattacaMakeAnalogInputs()
 static UINT8 __fastcall AceattacaReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0xc40001:
+		case 0xc40003: 
+		case 0xc40005:
+		case 0xc40007: {
+			return ppi8255_r(0, (a - 0xc40000) >> 1);
+		}
+		
 		case 0xc41001: {
 			return 0xff - System16Input[0];
 		}
@@ -2548,6 +2555,13 @@ static UINT8 __fastcall Passsht16aReadByte(UINT32 a)
 	static INT32 PortNum = 0;
 	
 	switch (a) {
+		case 0xc40001:
+		case 0xc40003: 
+		case 0xc40005:
+		case 0xc40007: {
+			return ppi8255_r(0, (a - 0xc40000) >> 1);
+		}
+		
 		case 0xc41001: {
 			return 0xff - System16Input[0];
 		}
@@ -2584,6 +2598,13 @@ static UINT8 __fastcall Passsht16aReadByte(UINT32 a)
 static UINT8 __fastcall QuartetReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0xc40001:
+		case 0xc40003: 
+		case 0xc40005:
+		case 0xc40007: {
+			return ppi8255_r(0, (a - 0xc40000) >> 1);
+		}
+		
 		case 0xc41001: {
 			return 0xff - System16Input[0];
 		}
@@ -2633,6 +2654,13 @@ static void SdiMakeAnalogInputs()
 static UINT8 __fastcall SdiReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0xc40001:
+		case 0xc40003: 
+		case 0xc40005:
+		case 0xc40007: {
+			return ppi8255_r(0, (a - 0xc40000) >> 1);
+		}
+		
 		case 0xc41001: {
 			return 0xff - System16Input[0];
 		}
@@ -2677,6 +2705,13 @@ UINT16 __fastcall Sjryuko1ReadWord(UINT32 a)
 static UINT8 __fastcall Sjryuko1ReadByte(UINT32 a)
 {
 	switch (a) {
+		case 0xc40001:
+		case 0xc40003: 
+		case 0xc40005:
+		case 0xc40007: {
+			return ppi8255_r(0, (a - 0xc40000) >> 1);
+		}
+		
 		case 0xc41001: {
 			return 0xff - System16Input[0];
 		}

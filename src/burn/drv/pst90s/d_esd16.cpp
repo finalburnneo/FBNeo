@@ -824,7 +824,7 @@ static INT32 MemIndex()
 	DrvGfx2Trans	= Next; Next += 0x0006000;
 
 	MSM6295ROM	= Next;
-	DrvSndROM	= Next; Next += 0x0040000;
+	DrvSndROM	= Next; Next += 0x0080000;
 	DrvEepROM   = Next; Next += 0x0000100; // from romset
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
@@ -1494,7 +1494,7 @@ struct BurnDriver BurnDrvHedpanica = {
 	"hedpanica", "hedpanic", NULL, NULL, "1999",
 	"Head Panic (ver. 0702, 02/07/1999)\0", "Story line & game instructions in English", "ESD / Fuuki", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, hedpanicaRomInfo, hedpanicaRomName, NULL, NULL, HedpanicInputInfo, NULL,
 	HedpanicInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 320, 240, 4, 3

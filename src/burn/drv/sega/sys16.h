@@ -186,6 +186,8 @@ UINT16 __fastcall System16AReadWord(UINT32 a);
 UINT8 __fastcall System16AReadByte(UINT32 a);
 void __fastcall System16AWriteWord(UINT32 a, UINT16 d);
 void __fastcall System16AWriteByte(UINT32 a, UINT8 d);
+UINT8 System16A_I8751ReadPort(INT32 port);
+void System16A_I8751WritePort(INT32 port, UINT8 data);
 
 // d_sys16b.cpp
 

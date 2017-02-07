@@ -1254,7 +1254,7 @@ static struct BurnRomInfo BodyslamRomDesc[] = {
 	{ "epr-10031.c3",  0x08000, 0xea3c4472, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-10032.c4",  0x08000, 0x0aabebce, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "317-0015.bin",  0x01000, 0x833869e2, BRF_PRG | BRF_OPT },
+	{ "317-0015.bin",  0x01000, 0x833869e2, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
 };
 
 
@@ -1554,7 +1554,7 @@ static struct BurnRomInfo Quartet2RomDesc[] = {
 	{ "epr-7474.3c",   0x08000, 0xdbf853b8, SYS16_ROM_7751DATA | BRF_SND },
 	{ "epr-7476.4c",   0x08000, 0x5eba655a, SYS16_ROM_7751DATA | BRF_SND },
 	
-	{ "317-0010.bin",  0x01000, 0x8c2033ea, BRF_PRG | BRF_OPT },
+	{ "317-0010.bin",  0x01000, 0x8c2033ea, SYS16_ROM_I8751 | BRF_PRG | BRF_OPT },
 };
 
 
@@ -2073,6 +2073,13 @@ void System16APPI0WritePortB(UINT8 data)
 	System16VideoControl = data;
 	System16VideoEnable = data & 0x10;
 	System16ScreenFlip = data & 0x80;
+	
+	if (System16I8751RomNum) {
+		if (data & 0x40) {
+			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+			mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+		}
+	}
 }
 
 void System16APPI0WritePortC(UINT8 data)
@@ -2209,6 +2216,138 @@ void __fastcall System16AWriteByte(UINT32 a, UINT8 d)
 	bprintf(PRINT_NORMAL, _T("68000 Write Byte -> 0x%06X, 0x%02X\n"), a, d);
 #endif
 }
+
+UINT8 System16A_I8751ReadPort(INT32 port)
+{
+	if (port >= 0x0000 && port <= 0xffff) {
+		switch ((System16MCUData >> 3) & 7) {
+			case 0: {
+				if (port <= 0x3fff) {
+					// watchdog reset
+					return 0;
+				}
+				
+				if (port >= 0x4000 && port < 0x8000) {
+					return SekReadByte(0xffc001 ^ (port & 0x3fff));
+				}
+				
+				if (port >= 0x8000 && port < 0xc000) {
+					return SekReadByte(0xc40001 ^ (port & 0x3fff));
+				}
+				
+				return 0xff;
+			}
+			
+			case 1: {
+				if (port >= 0x8000 && port < 0x9000) {
+					return SekReadByte(0x410001 ^ (port & 0xfff));
+				}
+				
+				return 0xff;
+			}
+			
+			case 3: {
+				return SekReadByte(0x840001 ^ port);
+			}
+			
+			case 5: {
+				return System16Rom[0x00000 + port];
+			}
+			
+			case 6: {
+				return System16Rom[0x10000 + port];
+			}
+			
+			case 7: {
+				return System16Rom[0x20000 + port];
+			}
+		}
+	}
+	
+	switch (port) {
+		case MCS51_PORT_P3: {
+			// nop
+			return 0xff;
+		}
+	}
+	
+	return 0xff;
+}
+
+void System16A_I8751WritePort(INT32 port, UINT8 data)
+{
+	if (port >= 0x0000 && port <= 0xffff) {
+		switch ((System16MCUData >> 3) & 7) {
+			case 0: {
+				if (port >= 0x4000 && port < 0x8000) {
+					SekWriteByte(0xffc001 ^ (port & 0x3fff), data);
+					return;
+				}
+				
+				if (port >= 0x8000 && port < 0xc000) {
+					SekWriteByte(0xc40001 ^ (port & 0x3fff), data);
+					return;
+				}
+				
+				return;
+			}
+			
+			case 1: {
+				if (port >= 0x8000 && port < 0x9000) {
+					SekWriteByte(0x410001 ^ (port & 0xfff), data);
+					return;
+				}
+				
+				return;
+			}
+			
+			case 3: {
+				SekWriteByte(0x840001 ^ port, data);
+				return;
+			}
+		}
+		
+		return;
+	}
+	
+	switch (port) {
+		case MCS51_PORT_P1: {
+			if (SekGetActive() > -1) {
+				if (data & 0x40) {
+					System1668KEnable = false;
+					
+					SekReset();
+					
+					System16VideoEnable = 1;
+				} else {
+					System1668KEnable = true;
+				}
+				
+				for (INT32 irqline = 1; irqline <= 7; irqline++) {
+					if ((~data & 7) == irqline) {
+						if (irqline == 4) {
+							SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
+							nSystem16CyclesDone[0] += SekRun(200);
+							SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
+						} else {
+							SekSetIRQLine(irqline, CPU_IRQSTATUS_ACK);
+						}
+					} else {
+						SekSetIRQLine(irqline, CPU_IRQSTATUS_NONE);
+					}
+				}
+				
+				if ((System16MCUData ^ data) & 0x40) {
+					nSystem16CyclesDone[0] += SekRun(10000);
+				}
+			}
+			
+			System16MCUData = data;
+			
+			return;
+		}
+	}
+}	
 
 static INT16 AceattacaTrack1X = 0;
 static INT16 AceattacaTrack1Y = 0;
@@ -3230,7 +3369,7 @@ struct BurnDriver BurnDrvBodyslam = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16A, GBF_VSFIGHT, 0,
 	NULL, BodyslamRomInfo, BodyslamRomName, NULL, NULL, System16aInputInfo, BodyslamDIPInfo,
-	BodyslamInit, System16Exit, System16AFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16AFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 
@@ -3320,7 +3459,7 @@ struct BurnDriver BurnDrvQuartet2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
 	NULL, Quartet2RomInfo, Quartet2RomName, NULL, NULL, System16aInputInfo, Quart2DIPInfo,
-	QuartetInit, System16Exit, System16AFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16AFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

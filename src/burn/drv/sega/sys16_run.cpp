@@ -1990,6 +1990,13 @@ INT32 System16Init()
 			DACSetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 		}
 		
+		if (System16I8751RomNum) {
+			mcs51_program_data = System16I8751Rom;
+			mcs51_init();
+			mcs51_set_write_handler(System16A_I8751WritePort);
+			mcs51_set_read_handler(System16A_I8751ReadPort);
+		}
+		
 		System16TileBankSize = 0x1000;
 		System16CreateOpaqueTileMaps = 1;
 		System16ATileMapsInit(1);
@@ -2743,7 +2750,8 @@ INT32 System16AFrame()
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 4000000 / 60;
 	nCyclesTotal[2] = (6000000 / 15) / 60;
-	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
+	nCyclesTotal[3] = (8000000 / 12) / 60;
+	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = nSystem16CyclesDone[3] = 0;
 
 	INT32 nSoundBufferPos = 0;
 
@@ -2756,10 +2764,12 @@ INT32 System16AFrame()
 		INT32 nCurrentCPU, nNext;
 
 		// Run 68000
-		nCurrentCPU = 0;
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
-		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		if (System1668KEnable) {
+			nCurrentCPU = 0;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		}
 
 		// Run Z80
 		nCurrentCPU = 1;
@@ -2777,6 +2787,18 @@ INT32 System16AFrame()
 			nCyclesSegment = N7751Run(nCyclesSegment);
 			nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
 		}
+		
+		if (System16I8751RomNum) {
+			nCurrentCPU = 3;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
+			nSystem16CyclesDone[nCurrentCPU] += mcs51Run(nCyclesSegment);
+			
+			if (i == (nInterleave - 1)) {
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_ACK);
+				mcs51_set_irq_line(MCS51_INT0_LINE, CPU_IRQSTATUS_NONE);
+			}
+		}
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -2789,7 +2811,7 @@ INT32 System16AFrame()
 		}
 	}
 
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+	if (System1668KEnable && !System16I8751RomNum) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
 	if (Simulate8751) Simulate8751();

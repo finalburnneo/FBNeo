@@ -40,6 +40,7 @@ static UINT8 *DrvUnkRAM1;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static UINT32 sprite_mask;
 static INT32 sprite_command_switch;
 static INT32 nSoundBank[2];
 
@@ -403,8 +404,10 @@ static int DrvGfxDecode(INT32 sprite_length, INT32 sprite_bpp)
 
 	memcpy (tmp, DrvGfxROM0, sprite_length);
 
-	GfxDecode(fract / (16 * 16), sprite_bpp, 16, 16, Plane0 + (6 - sprite_bpp), XOffs0, YOffs0, 0x100, tmp, DrvGfxROM0);
-
+	sprite_mask = fract / (16 * 16);
+	GfxDecode(sprite_mask, sprite_bpp, 16, 16, Plane0 + (6 - sprite_bpp), XOffs0, YOffs0, 0x100, tmp, DrvGfxROM0);
+	sprite_mask--;
+	//bprintf(0, _T("sprite mask: %X.\n"), sprite_mask);
 	memcpy (tmp, DrvGfxROM1, 0x040000);
 
 	GfxDecode(0x2000, 4,  8,  8, Plane1, XOffs1, YOffs1, 0x100, tmp, DrvGfxROM1);
@@ -746,6 +749,7 @@ static INT32 TwinbratInit()
 {
 	INT32 nRet = CommonInit(2, 16);
 
+		GenericTilemapSetOffsets(TMAP_GLOBAL, -global_x_offset, 1);
 	GenericTilemapSetOffsets(3, -32, 0);
 
 	global_x_offset = 24+3;
@@ -803,11 +807,11 @@ static void draw_sprites(INT32 use_priority)
 			for (INT32 i = 0; i <= dy; i++)
 			{
 				INT32 yy = y + i * 16;
-
-				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x     , yy    , flipx, 0, 16, 16, pri_mask);
-				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x-1024, yy    , flipx, 0, 16, 16, pri_mask);
-				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x-1024, yy-512, flipx, 0, 16, 16, pri_mask);
-				RenderPrioSprite(pTransDraw, DrvGfxROM0, source[2]+i, color, 0, x     , yy-512, flipx, 0, 16, 16, pri_mask);
+				INT32 code = (source[2]+i);// & sprite_mask; // breaks mwarr sprites.
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x     , yy    , flipx, 0, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x-1024, yy    , flipx, 0, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x-1024, yy-512, flipx, 0, 16, 16, pri_mask);
+				RenderPrioSprite(pTransDraw, DrvGfxROM0, code, color, 0, x     , yy-512, flipx, 0, 16, 16, pri_mask);
 			}
 		}
 
@@ -1172,7 +1176,7 @@ struct BurnDriver BurnDrvTwinbrat = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	336, 240, 4, 3
+	334, 240, 4, 3
 };
 
 
@@ -1207,5 +1211,5 @@ struct BurnDriver BurnDrvTwinbrata = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	336, 240, 4, 3
+	334, 240, 4, 3
 };

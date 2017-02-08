@@ -1,5 +1,9 @@
 // Fb Alpha Mighty Warrior / Steel Force / Twin Brats driver module
 // Based on MAME drivers by Pierpaolo Prazzoli, David Haywood, and stephh
+//
+// for later: figure out why the 3rd tile layer needs prio-hack, otherwise
+// mwarr title goes under the sprites in the attract mode.
+//
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -52,6 +56,8 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvDips[2];
 static UINT16 DrvInps[2];
 
+static UINT8 DrvSrv[1] = { 0 }; // stlforce, twinbrat
+
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -79,6 +85,35 @@ static struct BurnInputInfo DrvInputList[] = {
 };
 
 STDINPUTINFO(Drv)
+
+static struct BurnInputInfo StlforceInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service Mode",BIT_DIGITAL,    DrvSrv + 0,     "diag"  },
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Stlforce)
 
 static struct BurnDIPInfo MwarrDIPList[]=
 {
@@ -136,7 +171,7 @@ STDDIPINFO(Mwarr)
 
 static inline void palette_write(INT32 offset)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + offset));	
+	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
 
 	UINT16 b = (p >> 10) & 0x1f;
 	b = (((b << 3) | (b >> 2)) * bright) / 256;
@@ -333,13 +368,13 @@ static UINT8 __fastcall stlforce_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x400000:
-			return DrvInps[0];
-
-		case 0x400001:
 			return DrvInps[0] >> 8;
 
+		case 0x400001:
+			return DrvInps[0];
+
 		case 0x400003:
-			return (DrvInps[1] & ~0x50) | (EEPROMRead() ? 0x40 : 0) | vblank;
+			return (DrvInps[1] & ~0x58) | (DrvSrv[0] ? 0x00 : 0x08) | (EEPROMRead() ? 0x40 : 0) | vblank;
 
 		case 0x410001:
 			return MSM6295ReadStatus(0);
@@ -669,7 +704,7 @@ static INT32 CommonInit(INT32 select, INT32 xoffset)
 	SekSetWriteByteHandler(0,	stlforce_write_byte);
 	SekSetWriteWordHandler(0,	stlforce_write_word);
 	SekSetReadByteHandler(0,	stlforce_read_byte);
-//	SekSetReadWordHandler(0,	stlforce_read_word);
+	//SekSetReadWordHandler(0,	stlforce_read_word);
 	SekClose();
 
 	MSM6295Init(0, 937500 / 132, 0);
@@ -712,6 +747,8 @@ static INT32 TwinbratInit()
 	INT32 nRet = CommonInit(2, 16);
 
 	GenericTilemapSetOffsets(3, -32, 0);
+
+	global_x_offset = 24+3;
 
 	return nRet;
 }
@@ -836,7 +873,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0x01);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0x02);
-	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0x04);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0x08); // this should be 0x04, but something is wrong somewhere. -dink
 	if (nBurnLayer & 8) GenericTilemapDraw(3, pTransDraw, 0x10);
 
 	if (nSpriteEnable & 1) draw_sprites((game_select) ? 0 : 1);
@@ -873,12 +910,11 @@ static INT32 stlforceFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCycleSegment = nCyclesTotal / nInterleave;
-		nCycleSegment = (nCycleSegment * i) - nCyclesDone;
-		nCyclesDone += SekRun(nCycleSegment);
+		nCyclesDone += SekRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
 
 		if (i == 240) {
 			vblank = 0x10;
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nCycleSegment = nBurnSoundLen / nInterleave;
@@ -888,8 +924,6 @@ static INT32 stlforceFrame()
 			nSoundBufferPos += (nCycleSegment << 1);
 		}
 	}
-
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {
@@ -1100,7 +1134,7 @@ struct BurnDriver BurnDrvStlforce = {
 	"Steel Force\0", NULL, "Electronic Devices Italy / Ecogames S.L. Spain", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, stlforceRomInfo, stlforceRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, stlforceRomInfo, stlforceRomName, NULL, NULL, StlforceInputInfo, NULL,
 	StlforceInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	368, 240, 4, 3
 };
@@ -1131,12 +1165,12 @@ static struct BurnRomInfo twinbratRomDesc[] = {
 STD_ROM_PICK(twinbrat)
 STD_ROM_FN(twinbrat)
 
-struct BurnDriverD BurnDrvTwinbrat = {
+struct BurnDriver BurnDrvTwinbrat = {
 	"twinbrat", NULL, NULL, NULL, "1995",
 	"Twin Brats (set 1)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, twinbratRomInfo, twinbratRomName, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };
@@ -1166,12 +1200,12 @@ static struct BurnRomInfo twinbrataRomDesc[] = {
 STD_ROM_PICK(twinbrata)
 STD_ROM_FN(twinbrata)
 
-struct BurnDriverD BurnDrvTwinbrata = {
+struct BurnDriver BurnDrvTwinbrata = {
 	"twinbrata", "twinbrat", NULL, NULL, "1995",
 	"Twin Brats (set 2)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, DrvInputInfo, NULL,
+	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	336, 240, 4, 3
 };

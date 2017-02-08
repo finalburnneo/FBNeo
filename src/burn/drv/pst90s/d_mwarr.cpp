@@ -163,7 +163,7 @@ static void sprite_buffer_command(INT32 data)
 {
 	if (sprite_command_switch)
 	{
-		switch (data & 0x0f)
+		switch (data)
 		{
 			case 0x00: // clear sprites
 				memset (DrvSprBuf, 0, 0x1000);
@@ -179,7 +179,7 @@ static void sprite_buffer_command(INT32 data)
 			case 0x0b: // mighty warrior
 			case 0x0e: // mighty warrior
 			case 0x0f: // mighty warrior
-			default:
+    		default:
 				memcpy (DrvSprBuf, DrvSprRAM, 0x1000);
 			break;
 		}
@@ -208,7 +208,7 @@ static void __fastcall mwarr_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if (address >= 0x110020 && address <= 0x11ffff) {
-		Drv68KRAM[address & 0xffff] = data;
+		Drv68KRAM[(address & 0xffff)^1] = data;
 		return;
 	}
 
@@ -225,10 +225,14 @@ static void __fastcall mwarr_write_byte(UINT32 address, UINT8 data)
 		case 0x190001:
 			MSM6295Command(1, data);
 		return;
+
+		case 0x110017:
+			sprite_buffer_command(data);
+		break;
 	}
 
 	if (address >= 0x110000 && address <= 0x11ffff) {
-		Drv68KRAM[address & 0xffff] = data;
+		Drv68KRAM[(address & 0xffff)^1] = data;
 		return;
 	}
 }
@@ -265,7 +269,6 @@ static void __fastcall mwarr_write_word(UINT32 address, UINT16 data)
 		*((UINT16*)(Drv68KRAM + (address & 0xfffe))) = data;
 		return;
 	}
-
 }
 
 static UINT8 __fastcall mwarr_read_byte(UINT32 address)
@@ -868,7 +871,7 @@ static INT32 stlforceFrame()
 
 	vblank = 0;
 
-	for (INT32 i = 0; i < 256; i++)
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCycleSegment = nCyclesTotal / nInterleave;
 		nCycleSegment = (nCycleSegment * i) - nCyclesDone;
@@ -931,14 +934,13 @@ static INT32 DrvFrame()
 
 	Drv68KRAM[2] &= ~0x04; // vblank
 
-	for (INT32 i = 0; i < 256; i++)
+	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCycleSegment = nCyclesTotal / nInterleave;
-		nCycleSegment = (nCycleSegment * i) - nCyclesDone;
-		nCyclesDone += SekRun(nCycleSegment);
+		nCyclesDone += SekRun(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
 
 		if (i == 240) {
 			Drv68KRAM[2] |= 0x04; // vblank
+			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
 		nCycleSegment = nBurnSoundLen / nInterleave;
@@ -950,8 +952,6 @@ static INT32 DrvFrame()
 			nSoundBufferPos += (nCycleSegment << 1);
 		}
 	}
-
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {

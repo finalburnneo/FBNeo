@@ -2209,6 +2209,10 @@ static UINT16 common_main_read_word(UINT32 address)
 		return st0020_blitram_read_word(address);
 	}
 
+	if ((address & 0xffff00) == 0x4f000) {
+		return 0; // NOP
+	}
+
 	switch (address & ~1)
 	{
 		case 0x1c0000:
@@ -2241,6 +2245,9 @@ static UINT16 common_main_read_word(UINT32 address)
 			return DrvInputs[2];
 
 		case 0x21000e:
+			return 0;
+
+		case 0x210010: // NOP
 			return 0;
 
 		case 0x480000:

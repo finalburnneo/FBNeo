@@ -2851,7 +2851,7 @@ INT32 System16BFrame()
 	
 	nCyclesTotal[0] = (INT32)((INT64)System16ClockSpeed * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = System16Z80ClockSpeed / 60;
-	nCyclesTotal[2] = 8000000 / 60;
+	nCyclesTotal[2] = (8000000 / 12) / 60;
 	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
 
 	INT32 nSoundBufferPos = 0;
@@ -2934,7 +2934,7 @@ INT32 System16BFrame()
 		}
 	}
 	
-	if (System1668KEnable) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+	if (!System16I8751RomNum && System1668KEnable) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 		
 	if (Simulate8751) Simulate8751();
@@ -2968,7 +2968,7 @@ INT32 System18Frame()
 	
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * 60));
 	nCyclesTotal[1] = 8000000 / 60;
-	nCyclesTotal[2] = 8000000 / 60;
+	nCyclesTotal[2] = (8000000 / 12) / 60;
 	nSystem16CyclesDone[0] = nSystem16CyclesDone[1] = nSystem16CyclesDone[2] = 0;
 	
 	INT32 nSoundBufferPos = 0;

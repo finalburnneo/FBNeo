@@ -956,23 +956,25 @@ static void chip_write(UINT32 offset, UINT8 data)
 		
 		case 0x04: {
 			if ((chip.regs[offset] & 7) != 7) {
-				for (INT32 irqnum = 0; irqnum < 8; irqnum++) {
-					if (irqnum == (~chip.regs[offset] & 7)) {
-						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ %i \n"), irqnum);
-						
-						if (System16I8751RomNum && ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18)) {
-							// the I8751 does the vblank IRQ for System 18 (Moon Walker)
-							SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
-							nSystem16CyclesDone[0] += SekRun(200);
-							SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
+				if (System1668KEnable) {
+					for (INT32 irqnum = 0; irqnum < 8; irqnum++) {
+						if (irqnum == (~chip.regs[offset] & 7)) {
+							if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Triggering IRQ %i \n"), irqnum);
+							
+							if (System16I8751RomNum && irqnum == 4) {
+								// the I8751 does the vblank IRQ
+								SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
+								nSystem16CyclesDone[0] += SekRun(200);
+								SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
+							} else {
+								// normal - just raise it
+								SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
+							}
 						} else {
-							// normal - just raise it
-							SekSetIRQLine(irqnum, CPU_IRQSTATUS_ACK);
+							SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
+							
+							if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ %i\n"), irqnum);
 						}
-					} else {
-						SekSetIRQLine(irqnum, CPU_IRQSTATUS_NONE);
-						
-						if (LOG_MAPPER) bprintf(PRINT_IMPORTANT, _T("Mapper: Clearing IRQ %i\n"), irqnum);
 					}
 				}
 			}
@@ -1763,16 +1765,19 @@ void sega_315_5195_i8751_write_port(INT32 port, UINT8 data)
 	switch (port) {
 		case MCS51_PORT_P1: {
 			if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM16B) {
-				INT32 active_cpu = SekGetActive();
-				if (active_cpu == -1) {
-					SekOpen(0);
-					nSystem16CyclesDone[0] += SekRun(10000);
-					SekClose();
-				} else {
-					nSystem16CyclesDone[0] += SekRun(10000);
+				if (System1668KEnable) {
+					INT32 active_cpu = SekGetActive();
+					if (active_cpu == -1) {
+						SekOpen(0);
+						nSystem16CyclesDone[0] += SekRun(10000);
+						SekClose();
+					} else {
+						nSystem16CyclesDone[0] += SekRun(10000);
+					}
 				}
-				return;
 			}
+			
+			return;
 		}
 		
 		case 0xff00:

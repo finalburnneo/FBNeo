@@ -53,3 +53,14 @@ inline static INT32 M6809TotalCycles()
 
 	return nM6809CyclesTotal;
 }
+
+inline static INT32 M6809Idle(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Idle called without init\n"));
+#endif
+
+	nM6809CyclesTotal += cycles;
+
+	return cycles;
+}

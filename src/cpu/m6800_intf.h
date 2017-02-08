@@ -160,3 +160,14 @@ inline static INT32 M6800TotalCycles()
 
 	return nM6800CyclesTotal;
 }
+
+inline static INT32 M6800Idle(INT32 cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800Idle called without init\n"));
+#endif
+
+	nM6800CyclesTotal += cycles;
+
+	return cycles;
+}

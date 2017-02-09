@@ -12,9 +12,12 @@
 /*
  // - dink's part --
  to fix:
-     blast off musicless
-	 pacmania wont start
-	 dac dc filter to remove clicks.  lots of clicks :( *DONE*
+    blast off musicless
+	pacmania wont start
+	dac dc filter to remove clicks.  lots of clicks :( *DONE*
+
+ way down the line: (low priority)
+    figure out why fps needs -2 in DacSync for perfect click-free samples in splatterhouse
 
  // --  iq_132 --
 	to do:
@@ -1282,7 +1285,7 @@ static UINT8 mcu_read_port(UINT16 port)
 
 static INT32 DrvDACSync() // sync to hd63701 (m6800 core)
 {
-	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000)-2)))); // it needs -2 to get rid of clicks in some sounds (splatterhouse)
 }
 
 static void YM2151IrqHandler(INT32 status)
@@ -1345,6 +1348,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	sub_cpu_reset = 0;
 	shared_watchdog = 0;
 	watchdog = 0;
+	mcu_patch_data = 0;
 	buffer_sprites = 0;
 	coin_lockout = 0;
 
@@ -1542,6 +1546,7 @@ static INT32 Namcos1GetRoms()
 
 static INT32 DrvInit()
 {
+	BurnSetRefreshRate(60.6060);
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -1661,10 +1666,10 @@ static void draw_layer(INT32 layer, INT32 pri_mask)
 
 		if (flipscreen) {
 			scrollx = -(scrollx + 288 + dispx[layer]);
-			scrolly = -(scrolly + 224 + 23);
+			scrolly = -(scrolly + 224 + 24);
 		} else {
 			scrollx =  (scrollx + dispx[layer]);
-			scrolly =  (scrolly +  23);
+			scrolly =  (scrolly +  24);
 		}
 
 		scrollx &= 0x1ff;
@@ -1899,7 +1904,7 @@ static INT32 DrvFrame()
 	INT32 nSegment;
 	INT32 nInterleave = 640; // mame interleave
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[4] = { 1536000 / 60, 1536000 / 60, 1536000 / 60, 1536000 / 60 };
+	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -2654,7 +2659,7 @@ struct BurnDriver BurnDrvPacmaniaj = {
 	"pacmaniaj", "pacmania", NULL, NULL, "1987",
 	"Pac-Mania (Japan)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, pacmaniajRomInfo, pacmaniajRomName, NULL, NULL, DrvInputInfo, PacmaniaDIPInfo,
 	PacmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	224, 288, 3, 4

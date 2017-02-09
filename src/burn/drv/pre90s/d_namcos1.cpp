@@ -10,6 +10,13 @@
 #include "driver.h"
 
 /*
+ // - dink's part --
+ to fix:
+     blast off musicless
+	 pacmania wont start
+	 dac dc filter to remove clicks.  lots of clicks :( *DONE*
+
+ // --  iq_132 --
 	to do:
 		Custom input handling for quester
 		make namco sound core have 'add' function
@@ -58,6 +65,11 @@ static INT32 shared_watchdog;
 static UINT32 bank_offsets[2][8];
 static UINT8  sound_bank;
 static UINT8  mcu_bank;
+
+static INT32 dac0_value;
+static INT32 dac1_value;
+static INT32 dac0_gain;
+static INT32 dac1_gain;
 
 static INT32 buffer_sprites;
 static UINT8 mcu_patch_data;
@@ -478,7 +490,7 @@ STDDIPINFO(Wldcourt)
 
 static struct BurnDIPInfo Splatter3DIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xa0, NULL			},
+	{0x14, 0xff, 0xff, 0xa0+0x17, NULL			}, // 0x17 for the strange watchdog settings.
 
 	{0   , 0xfe, 0   ,    2, "Stage Select"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -1148,6 +1160,19 @@ static void mcu_bankswitch(INT32 data)
 	HD63701MapMemory(DrvMCUROM + 0x10000 + (bank * 0x8000), 0x4000, 0xbfff, MAP_ROM);
 }
 
+static void reset_dacs()
+{
+	dac0_value = 0;
+	dac1_value = 0;
+	dac0_gain = 0x80;
+	dac1_gain = 0x80;
+}
+
+static void update_dacs()
+{
+	DACWrite16(0, (dac0_value * dac0_gain) + (dac1_value * dac1_gain));
+}
+
 static void mcu_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xffe0) == 0x0000) {
@@ -1172,11 +1197,13 @@ static void mcu_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xd000:
-			DACWrite(0, data);
+			dac0_value = data - 0x80;
+			update_dacs();
 		return;
 
 		case 0xd400:
-			DACWrite(1, data);
+			dac1_value = data - 0x80;
+			update_dacs();
 		return;
 
 		case 0xd800:
@@ -1228,11 +1255,12 @@ static void mcu_write_port(UINT16 port, UINT8 data)
 
 		case HD63701_PORT2:
 		{
-			INT32 dac0_gain = ((data & 0x04) >> 1) | ((data & 1) << 0);
-			INT32 dac1_gain = ((data & 0x18) >> 3);
+			INT32 value = (data & 1) | ((data >> 1) & 2);
+			dac0_gain = 0x20 * (value+1);
 
-			DACSetRoute(0, (dac0_gain + 1) / 4.0f, BURN_SND_ROUTE_BOTH);
-			DACSetRoute(1, (dac1_gain + 1) / 4.0f, BURN_SND_ROUTE_BOTH);
+			value = (data >> 3) & 3;
+			dac1_gain = 0x20 * (value+1);
+			update_dacs();
 		}
 		return;
 	}
@@ -1313,7 +1341,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 //	HD63701Close();
 #endif
 
-	sub_cpu_in_reset = 0;
+	sub_cpu_in_reset = 1;
 	sub_cpu_reset = 0;
 	shared_watchdog = 0;
 	watchdog = 0;
@@ -1331,13 +1359,14 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	M6809Open(0);
 	M6809Reset();
-	subres_callback(ASSERT_LINE);
+	//subres_callback(ASSERT_LINE);
 	M6809Close();
 
 	M6809Open(2);
 	NamcoSoundReset();
 	BurnYM2151Reset();
 	DACReset();
+	reset_dacs();
 	M6809Close();
 
 	return 0;
@@ -1568,9 +1597,7 @@ static INT32 DrvInit()
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvDACSync);
-	DACInit(1, 0, 1, DrvDACSync);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	DACSetRoute(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1939,7 +1966,7 @@ static INT32 DrvFrame()
 		if (nSegment > 0) {
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
-		NamcoSoundUpdate(pSoundBuffer, nBurnSoundLen);
+		NamcoSoundUpdateStereo(pSoundBuffer, nBurnSoundLen);
 
 		for (INT32 i = 0; i < nBurnSoundLen; i++) { // mix the unmixable
 			pBurnSoundOut[(i << 1) + 0] += pSoundBuffer[(i << 1) + 0];
@@ -2016,6 +2043,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(input_count);
 		SCAN_VAR(strobe_count);
 		SCAN_VAR(stored_input);
+		SCAN_VAR(dac0_value);
+		SCAN_VAR(dac1_value);
+		SCAN_VAR(dac0_gain);
+		SCAN_VAR(dac1_gain);
 	}
 
 	if (nAction & ACB_WRITE) {

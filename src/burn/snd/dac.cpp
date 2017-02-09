@@ -131,6 +131,23 @@ void DACWrite(INT32 Chip, UINT8 Data)
 	ptr->Output = (INT32)(UnsignedVolTable[Data] * ptr->nVolume);
 }
 
+void DACWrite16(INT32 Chip, INT16 Data)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite16 called without init\n"));
+	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite16 called with invalid chip number %x\n"), Chip);
+#endif
+
+	struct dac_info *ptr;
+
+	ptr = &dac_table[Chip];
+
+	if (Data != ptr->Output) {
+		UpdateStream(Chip, ptr->pSyncCallback());
+		ptr->Output = Data;
+	}
+}
+
 void DACSignedWrite(INT32 Chip, UINT8 Data)
 {
 #if defined FBA_DEBUG

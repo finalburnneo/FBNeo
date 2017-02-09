@@ -13,11 +13,15 @@
  // - dink's part --
  to fix:
     blast off musicless
+	blazer is musicless
+	baraduke ii has flickering on the left side when game starts,
+	    dac sounds wrong when the alien says "thankyou"
 	pacmania wont start
 	dac dc filter to remove clicks.  lots of clicks :( *DONE*
 
  way down the line: (low priority)
-    figure out why fps needs -2 in DacSync for perfect click-free samples in splatterhouse
+ figure out why fps needs -2 in DacSync for perfect click-free
+    samples in splatterhouse
 
  // --  iq_132 --
 	to do:

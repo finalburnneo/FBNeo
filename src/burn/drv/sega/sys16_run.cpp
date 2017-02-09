@@ -1026,7 +1026,7 @@ static INT32 System16MemIndex()
 	
 	if (UseTempDraw) { pTempDraw = (UINT16*)Next; Next += (512 * 512 * sizeof(UINT16)); }
 	
-	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) System16PriorityMap = Next; Next += 320 * 224;
+	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEMY) { System16PriorityMap = Next; Next += 320 * 224; }
 	
 	MemEnd = Next;
 

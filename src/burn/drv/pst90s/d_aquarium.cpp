@@ -738,21 +738,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Aquarium (US)
 
 static struct BurnRomInfo aquariumRomDesc[] = {
-	{ "aquar3.bin",	0x080000, 0xf197991e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "aquar3.13h",	0x080000, 0xf197991e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 
-	{ "aquar5",	0x040000, 0xfa555be1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "excellent_5.10c",	0x040000, 0xfa555be1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "aquar1",	0x080000, 0x575df6ac, 3 | BRF_GRA },           //  2 Midground Tiles
-	{ "aquar6",	0x020000, 0x9065b146, 3 | BRF_GRA },           //  3
+	{ "excellent_1.15b",	0x080000, 0x575df6ac, 3 | BRF_GRA },           //  2 Midground Tiles
+	{ "excellent_6.15d",	0x020000, 0x9065b146, 3 | BRF_GRA },           //  3
 
-	{ "aquar2",	0x020000, 0xaa071b05, 4 | BRF_GRA },           //  6 Foreground Tiles
+	{ "excellent_2.17e",	0x020000, 0xaa071b05, 4 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "aquarf1",	0x100000, 0x14758b3c, 5 | BRF_GRA },           //  7 Sprites
+	{ "d23c8000.1f",	0x100000, 0x14758b3c, 5 | BRF_GRA },           //  7 Sprites
 
-	{ "aquar8",	0x080000, 0x915520c4, 6 | BRF_GRA },           //  4 Background Tiles
-	{ "aquar7",	0x020000, 0xb96b2b82, 6 | BRF_GRA },           //  5
+	{ "excellent_8.14g",	0x080000, 0x915520c4, 6 | BRF_GRA },           //  4 Background Tiles
+	{ "excellent_7.17g",	0x020000, 0xb96b2b82, 6 | BRF_GRA },           //  5
 
-	{ "aquar4",	0x080000, 0x9a4af531, 7 | BRF_SND },           //  8 MSM6295 Samples
+	{ "excellent_4.7d",	0x080000, 0x9a4af531, 7 | BRF_SND },           //  8 MSM6295 Samples
 };
 
 STD_ROM_PICK(aquarium)
@@ -772,21 +772,21 @@ struct BurnDriver BurnDrvAquarium = {
 // Aquarium (Japan)
 
 static struct BurnRomInfo aquariumjRomDesc[] = {
-	{ "aquar3",	0x080000, 0x344509a1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "excellent_3.13h",	0x080000, 0x344509a1, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 
-	{ "aquar5",	0x040000, 0xfa555be1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+	{ "excellent_5.10c",	0x040000, 0xfa555be1, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
 
-	{ "aquar1",	0x080000, 0x575df6ac, 3 | BRF_GRA },           //  2 Midground Tiles
-	{ "aquar6",	0x020000, 0x9065b146, 3 | BRF_GRA },           //  3
+	{ "excellent_1.15b",	0x080000, 0x575df6ac, 3 | BRF_GRA },           //  2 Midground Tiles
+	{ "excellent_6.15d",	0x020000, 0x9065b146, 3 | BRF_GRA },           //  3
 
-	{ "aquar2",	0x020000, 0xaa071b05, 4 | BRF_GRA },           //  6 Foreground Tiles
+	{ "excellent_2.17e",	0x020000, 0xaa071b05, 4 | BRF_GRA },           //  6 Foreground Tiles
 
-	{ "aquarf1",	0x100000, 0x14758b3c, 5 | BRF_GRA },           //  7 Sprites
+	{ "d23c8000.1f",	0x100000, 0x14758b3c, 5 | BRF_GRA },           //  7 Sprites
 
-	{ "aquar8",	0x080000, 0x915520c4, 6 | BRF_GRA },           //  4 Background Tiles
-	{ "aquar7",	0x020000, 0xb96b2b82, 6 | BRF_GRA },           //  5
+	{ "excellent_8.14g",	0x080000, 0x915520c4, 6 | BRF_GRA },           //  4 Background Tiles
+	{ "excellent_7.17g",	0x020000, 0xb96b2b82, 6 | BRF_GRA },           //  5
 
-	{ "aquar4",	0x080000, 0x9a4af531, 7 | BRF_SND },           //  8 MSM6295 Samples
+	{ "excellent_4.7d",	0x080000, 0x9a4af531, 7 | BRF_SND },           //  8 MSM6295 Samples
 };
 
 STD_ROM_PICK(aquariumj)

@@ -939,7 +939,7 @@ static struct BurnRomInfo bballsRomDesc[] = {
 
 	{ "bb13.n4",		0x08000, 0x1ef78175, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "68705.uc",		0x01000, 0x00000000, 3 | BRF_PRG | BRF_NODUMP }, //  3 M68705 MCU Code
+	{ "mc68705r3.bin",	0x01000, 0x4b37b853, 3 | BRF_PRG }, //  3 M68705 MCU Code
 
 	{ "bb1.g20",		0x08000, 0xb62dbcb8, 4 | BRF_GRA },           //  4 Characters
 
@@ -987,7 +987,7 @@ static struct BurnRomInfo bballsaRomDesc[] = {
 
 	{ "13.ic216",		0x08000, 0x1ef78175, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
-	{ "68705.uc",		0x01000, 0x00000000, 3 | BRF_PRG | BRF_NODUMP }, //  3 M68705 MCU Code
+	{ "mc68705r3.bin",	0x01000, 0x4b37b853, 3 | BRF_PRG }, //  3 M68705 MCU Code
 
 	{ "1.ic130",		0x08000, 0x67672444, 4 | BRF_GRA },           //  4 Characters
 

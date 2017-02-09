@@ -2474,8 +2474,8 @@ struct BurnDriver BurnDrvGalpanisk = {
 // only the 2 program ROMs were dumped, but mask ROMs are supposed to match.
 
 static struct BurnRomInfo galpans2RomDesc[] = {
-	{ "GPS2E_U6_Ver.3.u6",		0x100000, 0x72fff5d1, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
-	{ "GPS2E_U4_Ver.3.u4",		0x100000, 0x95061601, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "GPS2E_U6__Ver.3.u6",		0x100000, 0x72fff5d1, 1 | BRF_PRG | BRF_ESS }, //  0 SH2 Code
+	{ "GPS2E_U4__Ver.3.u4",		0x100000, 0x95061601, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gs210000.u21",	0x400000, 0x294b2f14, 2 | BRF_GRA },           //  2 Sprites
 	{ "gs210100.u20",	0x400000, 0xf75c5a9a, 2 | BRF_GRA },           //  3

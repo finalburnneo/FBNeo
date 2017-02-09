@@ -852,7 +852,7 @@ static struct BurnRomInfo BaddudesRomDesc[] = {
 	
 	{ "ei08.2c",            0x10000, 0x3c87463e, BRF_SND },			// 21	Samples
 	
-	{ "ei31.9a",            0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 22	I8751
+	{ "ei31.9a",            0x01000, 0x2a8745d2, BRF_OPT },			// 22	I8751
 };
 
 STD_ROM_PICK(Baddudes)
@@ -993,7 +993,7 @@ static struct BurnRomInfo DrgninjaRomDesc[] = {
 	
 	{ "eg08.2c",            0x10000, 0x92f2c916, BRF_SND },			// 21	Samples
 	
-	{ "i8751",              0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 22	I8751
+	{ "i8751",              0x01000, 0xc3f6bc70, BRF_OPT },			// 22	I8751
 };
 
 STD_ROM_PICK(Drgninja)
@@ -1029,7 +1029,7 @@ static struct BurnRomInfo DrgninjabRomDesc[] = {
 	
 	{ "eg08.2c",            0x10000, 0x92f2c916, BRF_SND },			// 21	Samples
 	
-	{ "i8751",              0x01000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 22	I8751
+	{ "i8751",              0x01000, 0xc3f6bc70, BRF_OPT },			// 22	I8751
 };
 
 STD_ROM_PICK(Drgninjab)

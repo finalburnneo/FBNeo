@@ -3,7 +3,7 @@
 
 #define MAX_CPU		1
 
-INT32 nM6800Count = 0;
+INT32 nM6800Count = 0; // note: is 0 when 1 cpu is in use. also, 0 when no cpus are in use.
 static INT32 nCpuType = 0;
 
 static M6800Ext *M6800CPUContext = NULL;
@@ -54,7 +54,7 @@ void M6800NewFrame()
 	if (!DebugCPU_M6800Initted) bprintf(PRINT_ERROR, _T("M6800NewFrame called without init\n"));
 #endif
 
-	for (INT32 i = 0; i < nM6800Count; i++) {
+	for (INT32 i = 0; i <= nM6800Count; i++) {
 		nM6800CyclesDone[i] = 0;
 	}
 	nM6800CyclesTotal = 0;

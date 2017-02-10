@@ -524,6 +524,13 @@ void m6800_init()
 
 void m6800_reset(void)
 {
+	// save pointers, clear context, restore pointers
+	void (* const * insn)(void) = m6800.insn;
+	const UINT8 *cycles = m6800.cycles;
+	memset(&m6800, 0, sizeof(m6800));
+	m6800.insn = insn;
+	m6800.cycles = cycles;
+
 	SEI;				/* IRQ disabled */
 	PCD = RM16( 0xfffe );
 	CHANGE_PC();

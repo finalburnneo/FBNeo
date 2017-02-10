@@ -47,6 +47,7 @@ struct namco_sound
 	
 	double gain[2];
 	INT32 output_dir[2];
+	INT32 bAdd;
 };
 
 static struct namco_sound *chip = NULL;
@@ -79,24 +80,49 @@ static void update_namco_waveform(INT32 offset, UINT8 data)
 
 static inline UINT32 namco_update_one(INT16 *buffer, INT32 length, const INT16 *wave, UINT32 counter, UINT32 freq)
 {
-	while (length-- > 0)
+	if (chip->bAdd)
 	{
-		INT32 nLeftSample = 0, nRightSample = 0;
-		
-		if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+		while (length-- > 0)
+		{
+			INT32 nLeftSample = 0, nRightSample = 0;
+			
+			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+			}
+			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+			}
+			
+			nLeftSample = BURN_SND_CLIP(nLeftSample);
+			nRightSample = BURN_SND_CLIP(nRightSample);
+	
+			*buffer = BURN_SND_CLIP(*buffer + nLeftSample); buffer++;
+			*buffer = BURN_SND_CLIP(*buffer + nRightSample); buffer++;
+			
+			counter += freq * chip->update_step;
 		}
-		if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+	}
+	else
+	{
+		while (length-- > 0)
+		{
+			INT32 nLeftSample = 0, nRightSample = 0;
+			
+			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+				nLeftSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+			}
+			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+				nRightSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+			}
+			
+			nLeftSample = BURN_SND_CLIP(nLeftSample);
+			nRightSample = BURN_SND_CLIP(nRightSample);
+	
+			*buffer++ += nLeftSample;
+			*buffer++ += nRightSample;
+			
+			counter += freq * chip->update_step;
 		}
-		
-		nLeftSample = BURN_SND_CLIP(nLeftSample);
-		nRightSample = BURN_SND_CLIP(nRightSample);
-		
-		*buffer++ += nLeftSample;
-		*buffer++ += nRightSample;
-		
-		counter += freq * chip->update_step;
 	}
 
 	return counter;
@@ -104,14 +130,23 @@ static inline UINT32 namco_update_one(INT16 *buffer, INT32 length, const INT16 *
 
 static inline UINT32 namco_stereo_update_one(INT16 *buffer, INT32 length, const INT16 *wave, UINT32 counter, UINT32 freq)
 {
-	while (length-- > 0)
-	{
-		// no route support here - no games use this currently
-		*buffer += wave[WAVEFORM_POSITION(counter)];
-		counter += freq * chip->update_step;
-		buffer +=2;
+	if (chip->bAdd) {
+		while (length-- > 0)
+		{
+			// no route support here - no games use this currently
+			*buffer = BURN_SND_CLIP(*buffer + wave[WAVEFORM_POSITION(counter)]);
+			counter += freq * chip->update_step;
+			buffer +=2;
+		}
+	} else {
+		while (length-- > 0)
+		{
+			// no route support here - no games use this currently
+			*buffer += wave[WAVEFORM_POSITION(counter)];
+			counter += freq * chip->update_step;
+			buffer +=2;
+		}
 	}
-
 	return counter;
 }
 
@@ -123,9 +158,12 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 
 	sound_channel *voice;
 
-	/* zap the contents of the buffer */
-	memset(buffer, 0, length * sizeof(INT16) * 2);
+	INT32 add_stream = chip->bAdd;
 
+	/* zap the contents of the buffers */
+	if (add_stream == 0) {
+		memset(buffer, 0, length * 2 * sizeof(INT16));
+	}
 	/* if no sound, we're done */
 	if (chip->sound_enable == 0)
 		return;
@@ -155,10 +193,19 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 				{
 					INT32 cnt;
 
-					if (voice->noise_state)
-						*mix++ += noise_data;
-					else
-						*mix++ -= noise_data;
+					if (add_stream) {
+						if (voice->noise_state)
+							*mix = BURN_SND_CLIP(*mix + noise_data);
+						else
+							*mix = BURN_SND_CLIP(*mix - noise_data);
+
+						*mix++;
+					} else {
+						if (voice->noise_state)
+							*mix++ += noise_data;
+						else
+							*mix++ -= noise_data;
+					}
 
 					if (hold)
 					{
@@ -206,8 +253,12 @@ void NamcoSoundUpdateStereo(INT16* buffer, INT32 length)
 
 	sound_channel *voice;
 
+	INT32 add_stream = chip->bAdd;
+
 	/* zap the contents of the buffers */
-	memset(buffer, 0, length * 2 * sizeof(INT16));
+	if (add_stream == 0) {
+		memset(buffer, 0, length * 2 * sizeof(INT16));
+	}
 
 	/* if no sound, we're done */
 	if (chip->sound_enable == 0)
@@ -240,15 +291,32 @@ void NamcoSoundUpdateStereo(INT16* buffer, INT32 length)
 				{
 					INT32 cnt;
 
-					if (voice->noise_state)
-					{
-						*lrmix++ += l_noise_data;
-						*lrmix++ += r_noise_data;
-					}
-					else
-					{
-						*lrmix++ -= l_noise_data;
-						*lrmix++ -= r_noise_data;
+					if (add_stream) {
+						if (voice->noise_state)
+						{
+							*lrmix = BURN_SND_CLIP(*lrmix + l_noise_data);
+							*lrmix++;
+							*lrmix = BURN_SND_CLIP(*lrmix + r_noise_data);
+							*lrmix++;
+						}
+						else
+						{
+							*lrmix = BURN_SND_CLIP(*lrmix - l_noise_data);
+							*lrmix++;
+							*lrmix = BURN_SND_CLIP(*lrmix - r_noise_data);
+							*lrmix++;
+						}
+					} else {
+						if (voice->noise_state)
+						{
+							*lrmix++ += l_noise_data;
+							*lrmix++ += r_noise_data;
+						}
+						else
+						{
+							*lrmix++ -= l_noise_data;
+							*lrmix++ -= r_noise_data;
+						}
 					}
 
 					if (hold)
@@ -511,7 +579,7 @@ void NamcoSoundReset()
 	}
 }
 
-void NamcoSoundInit(INT32 clock, INT32 num_voices)
+void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd)
 {
 	DebugSnd_NamcoSndInitted = 1;
 	
@@ -527,6 +595,8 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices)
 	chip->num_voices = num_voices;
 	chip->last_channel = chip->channel_list + chip->num_voices;
 	chip->stereo = 0;
+
+	chip->bAdd = bAdd;
 
 	/* adjust internal clock */
 	chip->namco_clock = clock;

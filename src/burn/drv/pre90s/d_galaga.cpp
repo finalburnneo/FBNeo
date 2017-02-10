@@ -1153,7 +1153,7 @@ static void MachineInit()
 	ZetMapArea(0x9800, 0x9bff, 2, DrvSharedRam3);
 	ZetClose();
 	
-	NamcoSoundInit(18432000 / 6 / 32, 3);
+	NamcoSoundInit(18432000 / 6 / 32, 3, 0);
 	NacmoSoundSetAllRoutes(0.90 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);

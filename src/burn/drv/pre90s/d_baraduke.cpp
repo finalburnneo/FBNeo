@@ -506,7 +506,7 @@ static INT32 DrvInit(INT32 type)
 	HD63701SetWritePortHandler(baraduke_mcu_write_port);
 //	HD63701Close();
 
-	NamcoSoundInit(49152000/2048, 8);
+	NamcoSoundInit(49152000/2048, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnLEDInit(2, LED_POSITION_BOTTOM_RIGHT, LED_SIZE_5x5, LED_COLOR_GREEN, 100);

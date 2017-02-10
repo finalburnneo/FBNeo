@@ -27,8 +27,6 @@ static UINT8 *DrvMCURAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pSoundBuffer;
-
 static INT32 buffer_sprites;
 static INT32 watchdog;
 static INT32 watchdog1;
@@ -1100,9 +1098,6 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x1000 * sizeof(UINT32);
 
-	// for mixing 2 soundcores neither of which have an "add to stream" option in init.
-	pSoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16); 
-
 	AllRam			= Next;
 
 	DrvSprRAM		= Next; Next += 0x002000;
@@ -1422,7 +1417,7 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
-	NamcoSoundInit(24000, 8);
+	NamcoSoundInit(24000, 8, 0);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	has_pcm = pcmdata;
@@ -1669,12 +1664,7 @@ static INT32 DrvFrame()
 		if (nSegment > 0) {
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
-		NamcoSoundUpdate(pSoundBuffer, nBurnSoundLen);
-
-		for (INT32 i = 0; i < nBurnSoundLen; i++) { // mix the unmixable
-			pBurnSoundOut[(i << 1) + 0] += pSoundBuffer[(i << 1) + 0];
-			pBurnSoundOut[(i << 1) + 1] += pSoundBuffer[(i << 1) + 1];
-		}
+		NamcoSoundUpdate(pBurnSoundOut, nBurnSoundLen);
 
 		namco_63701x_update(pBurnSoundOut, nBurnSoundLen);
 	}

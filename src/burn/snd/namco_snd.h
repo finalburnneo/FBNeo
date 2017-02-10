@@ -2,7 +2,7 @@ extern UINT8* NamcoSoundProm;
 void NamcoSoundUpdate(INT16* buffer, INT32 length);
 void NamcoSoundUpdateStereo(INT16* buffer, INT32 length);
 void NamcoSoundWrite(UINT32 offset, UINT8 data);
-void NamcoSoundInit(INT32 clock, INT32 num_voices);
+void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd);
 void NacmoSoundSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void NamcoSoundExit();
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin);

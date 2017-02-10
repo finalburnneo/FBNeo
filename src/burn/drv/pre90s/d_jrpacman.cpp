@@ -383,7 +383,7 @@ static INT32 DrvInit()
 	ZetSetOutHandler(jrpacman_out);
 	ZetClose();
 
-	NamcoSoundInit(18432000 / 6 / 32, 3);
+	NamcoSoundInit(18432000 / 6 / 32, 3, 0);
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

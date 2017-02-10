@@ -12,22 +12,13 @@
 /*
  // - dink's part --
  to fix:
-    blast off musicless
-	blazer is musicless
-	baraduke ii has flickering on the left side when game starts,
-	    dac sounds wrong when the alien says "thankyou"
-	pacmania wont start
-	dac dc filter to remove clicks.  lots of clicks :( *DONE*
-
- way down the line: (low priority)
- figure out why fps needs -2 in DacSync for perfect click-free
-    samples in splatterhouse
+    baradukeii: dac sounds wrong when the alien says "thankyou"
+    dac is more fucked up than I thought. save for later tonight.
 
  // --  iq_132 --
 	to do:
 		Custom input handling for quester
 		make namco sound core have 'add' function
-		fix rompers (clone is ok) and pacmania
 		test!
 		some games don't reset properly!
 		test save states!
@@ -1962,7 +1953,9 @@ static INT32 DrvFrame()
 		if ((i % 8) == 7) {
 			if (pBurnSoundOut) {
 				nSegment = nBurnSoundLen / (nInterleave / 8);
+				M6809Open(2);
 				BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
+				M6809Close();
 				nSoundBufferPos += nSegment;
 			}
 		}

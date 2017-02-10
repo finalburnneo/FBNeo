@@ -1527,9 +1527,9 @@ static void System16BRenderTextLayer(INT32 PriorityDraw)
 					y = 216 - y;
 					
 					if (x > 7 && x < 312 && y > 7 && y < 216) {
-						Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, ColourDepth, 0, System16TilemapColorOffset, System16Tiles);
+						Render8x8Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, ColourDepth, 0, System16TilemapColorOffset, System16Tiles);
 					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, ColourDepth, 0, System16TilemapColorOffset, System16Tiles);
+						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, ColourDepth, 0, System16TilemapColorOffset, System16Tiles);
 					}
 				} else {
 					if (x > 7 && x < 312 && y > 7 && y < 216) {
@@ -1572,9 +1572,9 @@ static void System16BAltRenderTextLayer(INT32 PriorityDraw)
 					y = 216 - y;
 					
 					if (x > 7 && x < 312 && y > 7 && y < 216) {
-						Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 3, 0, System16TilemapColorOffset, System16Tiles);
+						Render8x8Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 3, 0, System16TilemapColorOffset, System16Tiles);
 					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 3, 0, System16TilemapColorOffset, System16Tiles);
+						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 3, 0, System16TilemapColorOffset, System16Tiles);
 					}
 				} else {
 					if (x > 7 && x < 312 && y > 7 && y < 216) {

@@ -1353,19 +1353,24 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	set_initial_map_banks();
 
-#if 1			// necessary (done in subres_callback
+	M6809Open(0);
+	M6809Reset();
+	M6809Close();
+
 	M6809Open(1);
 	M6809Reset();
 	M6809Close();
 
 	M6809Open(2);
-	M6809Reset();
+	NamcoSoundReset();
+	BurnYM2151Reset();
+	DACReset();
+	reset_dacs();
 	M6809Close();
 
 //	HD63701Open(0);
 	HD63701Reset();
 //	HD63701Close();
-#endif
 
 	sub_cpu_in_reset = 1;
 	sub_cpu_reset = 0;
@@ -1383,18 +1388,6 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	input_count = 0;
 	strobe_count = 0;
 	stored_input[0] = stored_input[1];
-
-	M6809Open(0);
-	M6809Reset();
-	//subres_callback(ASSERT_LINE);
-	M6809Close();
-
-	M6809Open(2);
-	NamcoSoundReset();
-	BurnYM2151Reset();
-	DACReset();
-	reset_dacs();
-	M6809Close();
 
 	return 0;
 }

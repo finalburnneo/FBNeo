@@ -10,16 +10,15 @@
 #include "driver.h"
 
 /*
- // - dink's part --
- to fix:
-    baradukeii: dac sounds wrong when the alien says "thankyou"
-    dac is more messed up than I thought. save for later tonight.
+ // -- dink's part --
+ 	to fix:
+    		baradukeii: dac sounds wrong when the alien says "thankyou"
+    		dac is more messed up than I thought. save for later tonight.
+		analog input for quester
 
  // --  iq_132 --
 	to do:
-		Custom input handling for quester
 		test!
-		some games don't reset properly!
 		test save states!
 */
 
@@ -1387,7 +1386,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	input_count = 0;
 	strobe_count = 0;
-	stored_input[0] = stored_input[1];
+	stored_input[0] = stored_input[1] = 0;
 
 	return 0;
 }
@@ -2461,7 +2460,14 @@ static INT32 BlazerInit()
 {
 	namcos1_key_init(1, 0x013, -1, -1, -1, -1, -1, -1);
 
-	return DrvInit();
+	INT32 nRet = DrvInit();
+
+	if (nRet == 0) {
+		// transparent sprites in empty space, otherwise the explosions look bad.
+		memset (DrvGfxROM2 + 0x100000, 0xf, 0x100000);
+	}
+
+	return nRet;
 }
 
 struct BurnDriver BurnDrvBlazer = {

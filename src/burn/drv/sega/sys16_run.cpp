@@ -3486,7 +3486,8 @@ INT32 XBoardFrameGPRider()
 
 INT32 YBoardFrame()
 {
-	INT32 nInterleave = 262, i;
+	INT32 nInterleaveBoost = 8;
+	INT32 nInterleave = 262 * nInterleaveBoost, i;
 
 	if (System16Reset) System16DoReset();
 	
@@ -3518,10 +3519,10 @@ INT32 YBoardFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nSystem16CyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 170) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
-		if (i == 171) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
-		if (i == 223) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
-		if (i == 224) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
+		if (i == 170 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 171 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 223 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 224 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #2
@@ -3531,10 +3532,10 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 170) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
-		if (i == 171) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
-		if (i == 223) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
-		if (i == 224) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
+		if (i == 170 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 171 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 223 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 224 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 		
 		// Run 68000 #3
@@ -3544,10 +3545,10 @@ INT32 YBoardFrame()
 		nCyclesSegment = nNext - nSystem16CyclesDone[nCurrentCPU];
 		nCyclesSegment = SekRun(nCyclesSegment);
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
-		if (i == 170) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
-		if (i == 171) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
-		if (i == 223) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
-		if (i == 224) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
+		if (i == 170 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_ACK);
+		if (i == 171 * nInterleaveBoost) SekSetIRQLine(2, CPU_IRQSTATUS_NONE);
+		if (i == 223 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
+		if (i == 224 * nInterleaveBoost) SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 		SekClose();
 
 		// Run Z80

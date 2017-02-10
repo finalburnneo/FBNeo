@@ -14,8 +14,8 @@
     		baradukeii: dac sounds wrong when the alien says "thankyou"
     		dac is more messed up than I thought. save for later tonight.
 			analog input for quester
-			shadowld won't reset!
-			black boxes in bakutotu (see Hey. thread)
+-- fixed -> shadowld won't reset!
+not a bug ->black boxes in bakutotu (see Hey. thread)  (actually a bug in the game itself)
 			test!
 			test save states! (more)
 */

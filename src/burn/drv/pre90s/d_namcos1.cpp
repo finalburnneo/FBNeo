@@ -13,12 +13,11 @@
  // - dink's part --
  to fix:
     baradukeii: dac sounds wrong when the alien says "thankyou"
-    dac is more fucked up than I thought. save for later tonight.
+    dac is more messed up than I thought. save for later tonight.
 
  // --  iq_132 --
 	to do:
 		Custom input handling for quester
-		make namco sound core have 'add' function
 		test!
 		some games don't reset properly!
 		test save states!
@@ -53,8 +52,6 @@ static UINT16 *DrvPalRegs;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-
-static INT16 *pSoundBuffer;
 
 static INT32 sub_cpu_reset;
 static UINT8 sub_cpu_in_reset;
@@ -488,7 +485,7 @@ STDDIPINFO(Wldcourt)
 
 static struct BurnDIPInfo Splatter3DIPList[]=
 {
-	{0x14, 0xff, 0xff, 0xa0+0x17, NULL			}, // 0x17 for the strange watchdog settings.
+	{0x14, 0xff, 0xff, 0xa0+0x17, NULL		}, // 0x17 for the strange watchdog settings.
 
 	{0   , 0xfe, 0   ,    2, "Stage Select"		},
 	{0x14, 0x01, 0x20, 0x20, "Off"			},
@@ -618,6 +615,37 @@ static UINT8 berabohm_buttons_read(INT32 offset)
 		return res | stored_input[0];
 	}
 }
+
+static UINT8 quester_paddle_read(INT32 offset)
+{
+	if ((offset & 1) == 0)
+	{
+		INT32 ret;
+
+		if (!(strobe_count & 0x20))
+			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40)/* | (ioport("PADDLE0")->read()&0x0f)*/;
+		else
+			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40)/* | (ioport("PADDLE1")->read()&0x0f)*/;
+
+		strobe_count ^= 0x40;
+
+		return ret;
+	}
+	else
+	{
+		INT32 ret;
+
+		if (!(strobe_count & 0x20))
+			ret = (DrvInputs[1]&0x90) | 0x00/* | (ioport("PADDLE0")->read()>>4)*/;
+		else
+			ret = (DrvInputs[1]&0x90) | 0x20/* | (ioport("PADDLE1")->read()>>4)*/;
+
+		if (!(strobe_count & 0x40)) strobe_count ^= 0x20;
+
+		return ret;
+	}
+}
+
 
 static UINT8 key_type1_read(INT32 offset)
 {
@@ -1407,9 +1435,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	// HACK - for mixing 2 soundcores neither of which have an "add to stream" option in init.
-	pSoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16); 
-
 	MemEnd			= Next;
 
 	return 0;
@@ -1593,7 +1618,7 @@ static INT32 DrvInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
-	NamcoSoundInit(24000, 8);
+	NamcoSoundInit(24000/2, 8, 1);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvDACSync);
@@ -1968,12 +1993,7 @@ static INT32 DrvFrame()
 		if (nSegment > 0) {
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 		}
-		NamcoSoundUpdateStereo(pSoundBuffer, nBurnSoundLen);
-
-		for (INT32 i = 0; i < nBurnSoundLen; i++) { // mix the unmixable
-			pBurnSoundOut[(i << 1) + 0] += pSoundBuffer[(i << 1) + 0];
-			pBurnSoundOut[(i << 1) + 1] += pSoundBuffer[(i << 1) + 1];
-		}
+		NamcoSoundUpdateStereo(pBurnSoundOut , nBurnSoundLen);
 
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -2489,7 +2509,7 @@ STD_ROM_FN(quester)
 
 static INT32 QuesterInit()
 {
-	// custom inputs!
+	input_read_callback = quester_paddle_read;
 
 	return DrvInit();
 }

@@ -998,13 +998,17 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 			pTileMapDest = pTransDraw + (y * nScreenWidth);
 		
 			RowScrollIndex = y / 8;
+			if (System16ScreenFlip) RowScrollIndex = (216 - y) / 8;
 		
 			xEffScroll = BURN_ENDIAN_SWAP_INT16(TextRam[0xf80/2 + RowScrollIndex * 2 + Page]) & 0x1ff;
+			if (System16ScreenFlip) xEffScroll += 17;
 			
 			for (x = 0; x < nScreenWidth; x++) {
 				yEffScroll = BURN_ENDIAN_SWAP_INT16(TextRam[0xf30/2 + (x/16) * 2 + Page]) & 0xff;
 		
 				ySrcOff = (y + yEffScroll) & 0x1ff;
+				if (System16ScreenFlip) ySrcOff = ((216 - y) + yEffScroll) & 0x1ff;
+				
 				if (Page == 0 && PriorityDraw == 0) pTileMapSrc = pSys16FgTileMapPri0 + (ySrcOff * 1024);
 				if (Page == 0 && PriorityDraw == 1) pTileMapSrc = pSys16FgTileMapPri1 + (ySrcOff * 1024);
 				if (Page == 1 && PriorityDraw == 0 && Transparent == 1) pTileMapSrc = pSys16BgTileMapPri0 + (ySrcOff * 1024);
@@ -1012,6 +1016,8 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 				if (Page == 1 && Transparent == 0) pTileMapSrc = pSys16BgTileMapOpaque + (ySrcOff * 1024);
 							
 				xSrcOff = (x - xEffScroll + 200) & 0x3ff;
+				if (System16ScreenFlip) xSrcOff = ((312 - x) - xEffScroll + 200) & 0x3ff;
+				
 				Pix = pTileMapSrc[xSrcOff];
 
 				if (Transparent) {
@@ -1027,11 +1033,14 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 				pTileMapDest = pTransDraw + (y * nScreenWidth);
 				
 				xEffScroll = xScroll;
+				if (System16ScreenFlip) xEffScroll += 17;
 		
 				for (x = 0; x < nScreenWidth; x++) {
 					yEffScroll = BURN_ENDIAN_SWAP_INT16(TextRam[0xf30/2 + (x/16) * 2 + Page]) & 0xff;
 		
 					ySrcOff = (y + yEffScroll) & 0x1ff;
+					if (System16ScreenFlip) ySrcOff = ((216 - y) + yEffScroll) & 0x1ff;
+					
 					if (Page == 0 && PriorityDraw == 0) pTileMapSrc = pSys16FgTileMapPri0 + (ySrcOff * 1024);
 					if (Page == 0 && PriorityDraw == 1) pTileMapSrc = pSys16FgTileMapPri1 + (ySrcOff * 1024);
 					if (Page == 1 && PriorityDraw == 0 && Transparent == 1) pTileMapSrc = pSys16BgTileMapPri0 + (ySrcOff * 1024);
@@ -1039,6 +1048,8 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 					if (Page == 1 && Transparent == 0) pTileMapSrc = pSys16BgTileMapOpaque + (ySrcOff * 1024);
 							
 					xSrcOff = (x - xEffScroll + 200) & 0x3ff;
+					if (System16ScreenFlip) xSrcOff = ((312 - x) - xEffScroll + 200) & 0x3ff;
+					
 					Pix = pTileMapSrc[xSrcOff];
 
 					if (Transparent) {
@@ -1054,13 +1065,17 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 					pTileMapDest = pTransDraw + (y * nScreenWidth);
 		
 					RowScrollIndex = y / 8;
+					if (System16ScreenFlip) RowScrollIndex = (216 - y) / 8;
 		
 					xEffScroll = BURN_ENDIAN_SWAP_INT16(TextRam[0xf80/2 + RowScrollIndex * 2 + Page]) & 0x1ff;
+					if (System16ScreenFlip) xEffScroll += 17;
 			
 					for (x = 0; x < nScreenWidth; x++) {
 						yEffScroll = yScroll;
 		
 						ySrcOff = (y + yEffScroll) & 0x1ff;
+						if (System16ScreenFlip) ySrcOff = ((216 - y) + yEffScroll) & 0x1ff;
+						
 						if (Page == 0 && PriorityDraw == 0) pTileMapSrc = pSys16FgTileMapPri0 + (ySrcOff * 1024);
 						if (Page == 0 && PriorityDraw == 1) pTileMapSrc = pSys16FgTileMapPri1 + (ySrcOff * 1024);
 						if (Page == 1 && PriorityDraw == 0 && Transparent == 1) pTileMapSrc = pSys16BgTileMapPri0 + (ySrcOff * 1024);
@@ -1068,6 +1083,8 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 						if (Page == 1 && Transparent == 0) pTileMapSrc = pSys16BgTileMapOpaque + (ySrcOff * 1024);
 							
 						xSrcOff = (x - xEffScroll + 200) & 0x3ff;
+						if (System16ScreenFlip) xSrcOff = ((312 - x) - xEffScroll + 200) & 0x3ff;
+						
 						Pix = pTileMapSrc[xSrcOff];
 
 						if (Transparent) {
@@ -1080,8 +1097,12 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 			} else {
 				for (y = 0; y < nScreenHeight; y++) {
 					pTileMapDest = pTransDraw + (y * nScreenWidth);
+					
+					if (System16ScreenFlip) xScroll += 17;
 			
 					ySrcOff = (y + yScroll) & 0x1ff;
+					if (System16ScreenFlip) ySrcOff = ((216 - y) + yScroll) & 0x1ff;
+					
 					if (Page == 0 && PriorityDraw == 0) pTileMapSrc = pSys16FgTileMapPri0 + (ySrcOff * 1024);
 					if (Page == 0 && PriorityDraw == 1) pTileMapSrc = pSys16FgTileMapPri1 + (ySrcOff * 1024);
 					if (Page == 1 && PriorityDraw == 0) pTileMapSrc = pSys16BgTileMapPri0 + (ySrcOff * 1024);
@@ -1090,6 +1111,8 @@ static void System16ARenderTileLayer(INT32 Page, INT32 PriorityDraw, INT32 Trans
 		
 					for (x = 0; x < nScreenWidth; x++) {	
 						xSrcOff = (x - xScroll + 200) & 0x3ff;
+						if (System16ScreenFlip) xSrcOff = ((312 - x) - xScroll + 200) & 0x3ff;
+						
 						Pix = pTileMapSrc[xSrcOff];
 
 						if (Transparent) {

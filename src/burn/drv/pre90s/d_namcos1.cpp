@@ -1361,6 +1361,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6809Close();
 
 	M6809Open(2);
+	M6809Reset();
 	NamcoSoundReset();
 	BurnYM2151Reset();
 	DACReset();

@@ -13,6 +13,7 @@ INT32 System16VideoEnable;
 INT32 System18VdpEnable;
 INT32 System18VdpMixing;
 INT32 System16ScreenFlip;
+static INT32 System16ScreenFlipOld = 0;
 INT32 System16SpriteShadow;
 INT32 System16SpriteXOffset = 0;
 INT32 System16ColScroll = 0;
@@ -146,7 +147,9 @@ Tile Layer Rendering
 ====================================================*/
 
 #define PLOTPIXEL(x, po) pPixel[x] = nPalette | pTileData[x] | po;
+#define PLOTPIXEL_FLIPX(x, a, po) pPixel[x] = nPalette | pTileData[a] | po;
 #define PLOTPIXEL_MASK(x, mc, po) if (pTileData[x] != mc) {pPixel[x] = nPalette | pTileData[x] | po;}
+#define PLOTPIXEL_MASK_FLIPX(x, a, mc, po) if (pTileData[a] != mc) {pPixel[x] = nPalette | pTileData[a] | po;}
 
 static inline void RenderTile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
 {
@@ -164,6 +167,25 @@ static inline void RenderTile(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX
 		PLOTPIXEL(5, nPaletteOffset);
 		PLOTPIXEL(6, nPaletteOffset);
 		PLOTPIXEL(7, nPaletteOffset);
+	}
+}
+
+static inline void RenderTile_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	UINT32 nPalette = nTilePalette << nColourDepth;
+	pTileData = pTile + (nTileNumber << 6);
+
+	UINT16* pPixel = pDestDraw + ((StartY + 7) * 1024) + StartX;
+
+	for (INT32 y = 7; y >= 0; y--, pPixel -= 1024, pTileData += 8) {
+		PLOTPIXEL_FLIPX(7, 0, nPaletteOffset);
+		PLOTPIXEL_FLIPX(6, 1, nPaletteOffset);
+		PLOTPIXEL_FLIPX(5, 2, nPaletteOffset);
+		PLOTPIXEL_FLIPX(4, 3, nPaletteOffset);
+		PLOTPIXEL_FLIPX(3, 4, nPaletteOffset);
+		PLOTPIXEL_FLIPX(2, 5, nPaletteOffset);
+		PLOTPIXEL_FLIPX(1, 6, nPaletteOffset);
+		PLOTPIXEL_FLIPX(0, 7, nPaletteOffset);
 	}
 }
 
@@ -186,8 +208,29 @@ static void RenderTile_Mask(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, 
 	}
 }
 
+static void RenderTile_Mask_FlipXY(UINT16* pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	UINT32 nPalette = nTilePalette << nColourDepth;
+	pTileData = pTile + (nTileNumber << 6);
+
+	UINT16* pPixel = pDestDraw + ((StartY + 7) * 1024) + StartX;
+
+	for (INT32 y = 7; y >= 0; y--, pPixel -= 1024, pTileData += 8) {
+		PLOTPIXEL_MASK_FLIPX(7, 0, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(6, 1, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(5, 2, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(4, 3, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(3, 4, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(2, 5, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(1, 6, nMaskColour, nPaletteOffset);
+		PLOTPIXEL_MASK_FLIPX(0, 7, nMaskColour, nPaletteOffset);
+	}
+}
+
 #undef PLOTPIXEL
+#undef PLOTPIXEL_FLIPX
 #undef PLOTPIXEL_MASK
+#undef PLOTPIXEL_MASK_FLIPX
 
 void System16ATileMapsInit(INT32 bOpaque)
 {
@@ -231,6 +274,8 @@ void System16TileMapsExit()
 	BurnFree(pSys16BgAltTileMapPri1);
 	BurnFree(pSys16FgAltTileMapPri0);
 	BurnFree(pSys16FgAltTileMapPri1);
+	
+	System16ScreenFlipOld = 0;
 }
 
 static void System16ACreateBgTileMaps()
@@ -241,23 +286,38 @@ static void System16ACreateBgTileMaps()
 	UINT16 *pDest = NULL;
 	
 	if (System16CreateOpaqueTileMaps) memset(pSys16BgTileMapOpaque, 0, 1024 * 512 * sizeof(UINT16));
+	
 	EffPage = System16Page[1];
 	EffPage = ((EffPage >> 4) & 0x0707) | ((EffPage << 4) & 0x7070);
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON) EffPage &= 0x3333;
+	
 	for (i = 0; i < 2; i++) {
 		if (i == 0) pDest = pSys16BgTileMapPri0;
 		if (i == 1) pDest = pSys16BgTileMapPri1;
 		memset(pDest, 0, 1024 * 512 * sizeof(UINT16));
+		
 		for (TilePage = 0; TilePage < 4; TilePage++) {
 			ActPage = (EffPage >> 0) & 0x0f;
+			
 			xOffs = 0;
 			yOffs = 0;
+			
 			if (TilePage == 1) { ActPage = (EffPage >> 4) & 0x0f; xOffs = 512; }
 			if (TilePage == 2) { ActPage = (EffPage >> 8) & 0x0f; yOffs = 256; }
 			if (TilePage == 3) { ActPage = (EffPage >> 12) & 0x0f; xOffs = 512; yOffs = 256; }
+			
+			if (System16ScreenFlip) {
+				if (TilePage == 0) { xOffs = 512; yOffs = 256; }
+				if (TilePage == 1) { xOffs = 0; yOffs = 256; }
+				if (TilePage == 2) { xOffs = 512; yOffs = 0; }
+				if (TilePage == 3) { xOffs = 0; yOffs = 0; }
+			}
+			
 			for (my = 0; my < 32; my++) {
 				y = 8 * my;
 				y += yOffs;
+				if (System16ScreenFlip) y = 504 - y;
+				
 				for (mx = 0; mx < 64; mx++) {
 					TileIndex = (ActPage * 64 * 32) + (my * 64) + mx;
 						
@@ -268,6 +328,7 @@ static void System16ACreateBgTileMaps()
 					
 					x = 8 * mx;
 					x += xOffs;
+					if (System16ScreenFlip) x = 1016 - x;
 								
 					Code = ((Attr >> 1) & 0x1000) | (Attr & 0xfff);
 					Code &= (System16NumTiles - 1);
@@ -277,9 +338,14 @@ static void System16ACreateBgTileMaps()
 					if (Colour >= 0x20) ColourOff = 0x100 | System16TilemapColorOffset;
 					if (Colour >= 0x40) ColourOff = 0x200 | System16TilemapColorOffset;
 					if (Colour >= 0x60) ColourOff = 0x300 | System16TilemapColorOffset;
-			
-					if (System16CreateOpaqueTileMaps) RenderTile(pSys16BgTileMapOpaque, Code, x, y, Colour, 3, ColourOff, System16Tiles);
-					RenderTile_Mask(pDest, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+					
+					if (System16ScreenFlip) {
+						if (System16CreateOpaqueTileMaps) RenderTile_FlipXY(pSys16BgTileMapOpaque, Code, x, y, Colour, 3, ColourOff, System16Tiles);
+						RenderTile_Mask_FlipXY(pDest, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+					} else {
+						if (System16CreateOpaqueTileMaps) RenderTile(pSys16BgTileMapOpaque, Code, x, y, Colour, 3, ColourOff, System16Tiles);
+						RenderTile_Mask(pDest, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+					}
 				}
 			}
 		}
@@ -298,16 +364,29 @@ static void System16ACreateFgTileMaps()
 	EffPage = System16Page[0];
 	EffPage = ((EffPage >> 4) & 0x0707) | ((EffPage << 4) & 0x7070);
 	if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_HANGON) EffPage &= 0x3333;
+	
 	for (TilePage = 0; TilePage < 4; TilePage++) {
 		ActPage = (EffPage >> 0) & 0x0f;
+		
 		xOffs = 0;
 		yOffs = 0;
+		
 		if (TilePage == 1) { ActPage = (EffPage >> 4) & 0x0f; xOffs = 512; }
 		if (TilePage == 2) { ActPage = (EffPage >> 8) & 0x0f; yOffs = 256; }
 		if (TilePage == 3) { ActPage = (EffPage >> 12) & 0x0f; xOffs = 512; yOffs = 256; }
+		
+		if (System16ScreenFlip) {
+			if (TilePage == 0) { xOffs = 512; yOffs = 256; }
+			if (TilePage == 1) { xOffs = 0; yOffs = 256; }
+			if (TilePage == 2) { xOffs = 512; yOffs = 0; }
+			if (TilePage == 3) { xOffs = 0; yOffs = 0; }
+		}
+		
 		for (my = 0; my < 32; my++) {
 			y = 8 * my;
 			y += yOffs;
+			if (System16ScreenFlip) y = 504 - y;
+			
 			for (mx = 0; mx < 64; mx++) {
 				TileIndex = (ActPage * 64 * 32) + (my * 64) + mx;
 					
@@ -316,6 +395,7 @@ static void System16ACreateFgTileMaps()
 			
 				x = 8 * mx;
 				x += xOffs;
+				if (System16ScreenFlip) x = 1016 - x;
 			
 				Code = ((Attr >> 1) & 0x1000) | (Attr & 0xfff);
 				Code &= (System16NumTiles - 1);
@@ -325,9 +405,14 @@ static void System16ACreateFgTileMaps()
 				if (Colour >= 0x20) ColourOff = 0x100 | System16TilemapColorOffset;
 				if (Colour >= 0x40) ColourOff = 0x200 | System16TilemapColorOffset;
 				if (Colour >= 0x60) ColourOff = 0x300 | System16TilemapColorOffset;
-		
-				if (Priority == 0) RenderTile_Mask(pSys16FgTileMapPri0, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
-				if (Priority == 1) RenderTile_Mask(pSys16FgTileMapPri1, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+				
+				if (System16ScreenFlip) {
+					if (Priority == 0) RenderTile_Mask_FlipXY(pSys16FgTileMapPri0, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+					if (Priority == 1) RenderTile_Mask_FlipXY(pSys16FgTileMapPri1, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+				} else {
+					if (Priority == 0) RenderTile_Mask(pSys16FgTileMapPri0, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+					if (Priority == 1) RenderTile_Mask(pSys16FgTileMapPri1, Code, x, y, Colour, 3, 0, ColourOff, System16Tiles);
+				}
 			}
 		}
 	}
@@ -3081,6 +3166,12 @@ inline static void System16AUpdateTileValues()
 	
 	if (System16OldPage[1] != System16Page[1]) {
 		System16RecalcBgTileMap = 1;
+	}
+	
+	if (System16ScreenFlip != System16ScreenFlipOld) {
+		System16RecalcFgTileMap = 1;
+		System16RecalcBgTileMap = 1;
+		System16ScreenFlipOld = System16ScreenFlip;
 	}
 }
 

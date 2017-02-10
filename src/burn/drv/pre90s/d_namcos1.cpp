@@ -10,16 +10,14 @@
 #include "driver.h"
 
 /*
- // -- dink's part --
  	to fix:
     		baradukeii: dac sounds wrong when the alien says "thankyou"
     		dac is more messed up than I thought. save for later tonight.
-		analog input for quester
-
- // --  iq_132 --
-	to do:
-		test!
-		test save states!
+			analog input for quester
+			shadowld won't reset!
+			black boxes in bakutotu (see Hey. thread)
+			test!
+			test save states! (more)
 */
 
 static UINT8 *AllRam;
@@ -107,6 +105,8 @@ static UINT8 DrvJoy7[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[7];
 static UINT8 DrvReset;
+
+static UINT8 shadowld = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -1632,6 +1632,8 @@ static INT32 DrvExit()
 	key_read_callback = NULL;
 	key_write_callback = NULL;
 
+	shadowld = 0;
+
 	M6809Exit();
 	HD63701Exit();
 
@@ -1916,15 +1918,19 @@ static INT32 DrvFrame()
 
 	INT32 nSegment;
 	INT32 nInterleave = 640; // mame interleave
+	INT32 S1VBL = ((nInterleave * 240) / 256);
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060) };
+	if (shadowld) {
+		nCyclesTotal[0] = nCyclesTotal[1] = nCyclesTotal[2] = nCyclesTotal[3] = 1536000 / 60;
+	}
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
-		if (i == 608) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		nSegment = M6809TotalCycles();
 		M6809Close();
 
@@ -1932,16 +1938,16 @@ static INT32 DrvFrame()
 		{
 			M6809Open(1);
 			nCyclesDone[1] += M6809Run(nSegment - M6809TotalCycles());
-			if (i == 608) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 
 			M6809Open(2);
 			nCyclesDone[2] += M6809Run(nSegment - M6809TotalCycles());
-			if (i == 608) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 
 			nCyclesDone[3] += HD63701Run(nSegment - nCyclesDone[3]);
-			if (i == 608) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == S1VBL) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		else
 		{
@@ -1957,7 +1963,7 @@ static INT32 DrvFrame()
 			nCyclesDone[3] += M6800Idle(nSegment - M6800TotalCycles());
 		}
 
-		if (i == 608) {
+		if (i == S1VBL) {
 			if (buffer_sprites) {
 				for (INT32 s = 0; s < 0x800; s+= 16) {
 					for (INT32 j = 10; j < 16; j++) {
@@ -2039,8 +2045,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6809Scan(nAction);
 		HD63701Scan(nAction);
 
+		M6809Open(2);
 		NamcoSoundScan(nAction, pnMin);
 		BurnYM2151Scan(nAction);
+		M6809Close();
 
 		SCAN_VAR(bank_offsets);
 		SCAN_VAR(buffer_sprites);
@@ -2127,13 +2135,20 @@ static struct BurnRomInfo shadowldRomDesc[] = {
 STD_ROM_PICK(shadowld)
 STD_ROM_FN(shadowld)
 
+static INT32 ShadowldInit()
+{
+	shadowld = 1;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvShadowld = {
 	"shadowld", NULL, NULL, NULL, "1987",
 	"Shadowland (YD3)\0", NULL, "Namco", "System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, shadowldRomInfo, shadowldRomName, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	ShadowldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
 
@@ -2185,7 +2200,7 @@ struct BurnDriver BurnDrvYoukaidk2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, youkaidk2RomInfo, youkaidk2RomName, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	ShadowldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
 
@@ -2237,7 +2252,7 @@ struct BurnDriver BurnDrvYoukaidk1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, youkaidk1RomInfo, youkaidk1RomName, NULL, NULL, DrvInputInfo, ShadowldDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	ShadowldInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
 };
 

@@ -1417,7 +1417,7 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.60, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.60, BURN_SND_ROUTE_RIGHT);
 
-	NamcoSoundInit(24000, 8, 0);
+	NamcoSoundInit(24000, 8, 1);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	has_pcm = pcmdata;

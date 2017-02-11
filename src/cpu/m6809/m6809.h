@@ -39,6 +39,7 @@ enum
 
 void m6809_init(int (*irqcallback)(int));
 void m6809_reset(void);
+void m6809_reset_hard(void);
 int m6809_execute(int cycles);
 void m6809_set_irq_line(int irqline, int state);
 void m6809_get_context(void *dst);

@@ -421,10 +421,6 @@ void m6809_init(int (*irqcallback)(int))
 
 void m6809_reset(void)
 {
-	int (*irq_callback)(int irqline) = m6809.irq_callback;
-	memset(&m6809, 0, sizeof(m6809));
-	m6809.irq_callback = irq_callback;
-
 	m6809.int_state = 0;
 	m6809.nmi_state = M6809_CLEAR_LINE;
 	m6809.irq_state[0] = M6809_CLEAR_LINE;
@@ -437,6 +433,15 @@ void m6809_reset(void)
 
 	PCD = RM16(0xfffe);
 	CHANGE_PC;
+}
+
+void m6809_reset_hard(void)
+{
+	int (*irq_callback)(int irqline) = m6809.irq_callback;
+	memset(&m6809, 0, sizeof(m6809));
+	m6809.irq_callback = irq_callback;
+
+	m6809_reset();
 }
 
 /*

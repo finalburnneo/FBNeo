@@ -13,8 +13,9 @@
  	to fix:
     		baradukeii: dac sounds wrong when the alien says "thankyou"
     		dac is more messed up than I thought. save for later tonight.
-			analog input for quester
--- fixed -> shadowld won't reset!
+impl'd! --> analog input for quester
+-- fixed -> rompers can't be reset properly, everything goes bonkers. very unstable.
+-- fixed -> shadowld won't reset!  m680x_reset_hard() w/f3 (not wdt!!)
 not a bug ->black boxes in bakutotu (see Hey. thread)  (actually a bug in the game itself)
 			test!
 			test save states! (more)
@@ -106,7 +107,11 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[7];
 static UINT8 DrvReset;
 
-static UINT8 shadowld = 0;
+static INT16 Paddle[2]; // quester
+
+static UINT8 sixtyhz = 0;
+static UINT8 dac_kludge = 0;
+static UINT8 quester = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -622,9 +627,9 @@ static UINT8 quester_paddle_read(INT32 offset)
 		INT32 ret;
 
 		if (!(strobe_count & 0x20))
-			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40)/* | (ioport("PADDLE0")->read()&0x0f)*/;
+			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40) | (Paddle[0]&0x0f);
 		else
-			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40)/* | (ioport("PADDLE1")->read()&0x0f)*/;
+			ret = (DrvInputs[0]&0x90) | (strobe_count & 0x40) | (Paddle[1]&0x0f);
 
 		strobe_count ^= 0x40;
 
@@ -635,16 +640,15 @@ static UINT8 quester_paddle_read(INT32 offset)
 		INT32 ret;
 
 		if (!(strobe_count & 0x20))
-			ret = (DrvInputs[1]&0x90) | 0x00/* | (ioport("PADDLE0")->read()>>4)*/;
+			ret = (DrvInputs[1]&0x90) | 0x00 | (Paddle[0]>>4);
 		else
-			ret = (DrvInputs[1]&0x90) | 0x20/* | (ioport("PADDLE1")->read()>>4)*/;
+			ret = (DrvInputs[1]&0x90) | 0x20 | (Paddle[1]>>4);
 
 		if (!(strobe_count & 0x40)) strobe_count ^= 0x20;
 
 		return ret;
 	}
 }
-
 
 static UINT8 key_type1_read(INT32 offset)
 {
@@ -1310,6 +1314,11 @@ static INT32 DrvDACSync() // sync to hd63701 (m6800 core)
 	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000)-2)))); // it needs -2 to get rid of clicks in some sounds (splatterhouse)
 }
 
+static INT32 DrvDACSync2() // sync to hd63701 (m6800 core)
+{
+	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000)-2)))); // it needs -2 to get rid of clicks in some sounds (splatterhouse)
+}
+
 static void YM2151IrqHandler(INT32 status)
 {
 	if (M6809GetActive() == -1) return;
@@ -1333,12 +1342,14 @@ static void set_initial_map_banks()
 	bank_offsets[1][7] = 0x03ff * 0x2000; // bank7 = 0x3ff(PRG7)
 
 	M6809Open(0);
+	M6809UnmapMemory(0x0000, 0xffff, MAP_RAM);
 	M6809MapMemory(DrvMainRAM + 0x000000, 0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvMainRAM + 0x000000, 0x2000, 0x3fff, MAP_RAM);
 	M6809MapMemory(DrvMainROM + 0x3fe000, 0xe000, 0xffff, MAP_ROM);
 	M6809Close();
 
 	M6809Open(1);
+	M6809UnmapMemory(0x0000, 0xffff, MAP_RAM);
 	M6809MapMemory(DrvMainRAM + 0x000000, 0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvMainROM + 0x3fe000, 0xe000, 0xffff, MAP_ROM);
 	M6809Close();
@@ -1350,18 +1361,24 @@ static INT32 DrvDoReset(INT32 clear_mem)
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-	set_initial_map_banks();
+	if (clear_mem) set_initial_map_banks();  // this fixes rompers boot. (relies on wdt after warning screen)
 
 	M6809Open(0);
 	M6809Reset();
+	if (clear_mem) m6809_reset_hard();
 	M6809Close();
 
 	M6809Open(1);
 	M6809Reset();
+	if (clear_mem) m6809_reset_hard(); // this gets shadowld to reboot
 	M6809Close();
 
 	M6809Open(2);
 	M6809Reset();
+	if (clear_mem) {
+		M6809MapMemory(NULL, 0x0000, 0x3fff, MAP_ROM);
+		m6809_reset_hard();
+	}
 	NamcoSoundReset();
 	BurnYM2151Reset();
 	DACReset();
@@ -1370,6 +1387,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 //	HD63701Open(0);
 	HD63701Reset();
+	if (clear_mem) {
+		HD63701MapMemory(NULL, 0x4000, 0xbfff, MAP_ROM);
+		m6800_reset_hard(); // HD63701
+	}
 //	HD63701Close();
 
 	sub_cpu_in_reset = 1;
@@ -1388,6 +1409,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	input_count = 0;
 	strobe_count = 0;
 	stored_input[0] = stored_input[1] = 0;
+
+	Paddle[0] = Paddle[1] = 0;
 
 	return 0;
 }
@@ -1504,7 +1527,7 @@ static INT32 Namcos1GetRoms()
 				whichrompos = pRomName[j] & 7;
 			}
 		}
-
+		//bprintf(0, _T("[%S] rompos %X.\n"), pRomName, whichrompos);
 		// pacmania has rom positions at the end of the file name
 		if ((pRomName[strlen(pRomName)-1] & 0xf8) == 0x30 && pRomName[strlen(pRomName)-2] != '1') {
 			whichrompos = pRomName[strlen(pRomName)-1] & 7;
@@ -1614,7 +1637,7 @@ static INT32 DrvInit()
 	NamcoSoundInit(24000/2, 8, 1);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvDACSync);
+	DACInit(0, 0, 1, (dac_kludge) ? DrvDACSync2 : DrvDACSync);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1632,7 +1655,9 @@ static INT32 DrvExit()
 	key_read_callback = NULL;
 	key_write_callback = NULL;
 
-	shadowld = 0;
+	sixtyhz = 0;
+	dac_kludge = 0;
+	quester = 0;
 
 	M6809Exit();
 	HD63701Exit();
@@ -1878,9 +1903,9 @@ static INT32 DrvDraw()
 		}
 	}
 
-	//if (nBurnLayer & 1) {
+	if (nSpriteEnable & 1) {
 		draw_sprites();
-	//}
+	}
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1895,7 +1920,7 @@ static INT32 DrvFrame()
 
 	watchdog++;
 	if (watchdog >= 180) {
-	//	bprintf (0, _T("Watchdog triggered!\n"));
+		bprintf (0, _T("Watchdog triggered!\n"));
 		DrvDoReset(0);
 	}
 
@@ -1914,6 +1939,17 @@ static INT32 DrvFrame()
 			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
 		}
+
+		if (quester) {
+			if (DrvJoy1[0]) Paddle[0] += 0x04;
+			if (DrvJoy1[1]) Paddle[0] -= 0x04;
+			if (Paddle[0] >= 0x100) Paddle[0] = 0;
+			if (Paddle[0] < 0) Paddle[0] = 0xfc;
+			if (DrvJoy2[0]) Paddle[1] += 0x04;
+			if (DrvJoy2[1]) Paddle[1] -= 0x04;
+			if (Paddle[1] >= 0x100) Paddle[1] = 0;
+			if (Paddle[1] < 0) Paddle[1] = 0xfc;
+		}
 	}
 
 	INT32 nSegment;
@@ -1921,7 +1957,7 @@ static INT32 DrvFrame()
 	INT32 S1VBL = ((nInterleave * 240) / 256);
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060), (INT32)((double)1536000 / 60.6060) };
-	if (shadowld) {
+	if (sixtyhz) {
 		nCyclesTotal[0] = nCyclesTotal[1] = nCyclesTotal[2] = nCyclesTotal[3] = 1536000 / 60;
 	}
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
@@ -2137,7 +2173,7 @@ STD_ROM_FN(shadowld)
 
 static INT32 ShadowldInit()
 {
-	shadowld = 1;
+	sixtyhz = 1;
 
 	return DrvInit();
 }
@@ -2525,6 +2561,7 @@ STD_ROM_FN(quester)
 static INT32 QuesterInit()
 {
 	input_read_callback = quester_paddle_read;
+	quester = 1;
 
 	return DrvInit();
 }
@@ -3109,6 +3146,7 @@ STD_ROM_FN(bakutotu)
 static INT32 BakutotuInit()
 {
 	namcos1_key_init(2, 0x022, -1, -1, -1, -1, -1, -1);
+	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3218,6 +3256,7 @@ STD_ROM_FN(splatter)
 static INT32 SplatterInit()
 {
 	namcos1_key_init(3, 0x0b5, 3,  4, -1, -1, -1, -1);
+	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3376,6 +3415,7 @@ STD_ROM_FN(faceoff)
 static INT32 FaceoffInit()
 {
 	input_read_callback = faceoff_inputs_read;
+	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3427,6 +3467,7 @@ STD_ROM_FN(rompers)
 static INT32 RompersInit()
 {
 	namcos1_key_init(3, 0x0b6, 7, -1, -1, -1, -1, -1);
+	sixtyhz = 1;
 
 	return DrvInit();
 }

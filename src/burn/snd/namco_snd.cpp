@@ -27,6 +27,8 @@ typedef struct
 
 static UINT8 *namco_soundregs;
 static UINT8 *namco_wavedata;
+static UINT8 *namco_waveformdata;
+static INT32 namco_waveformdatasize = 0;
 
 struct namco_sound
 {
@@ -533,7 +535,12 @@ static INT32 build_decoded_waveform()
 		size = 32 * 8;		/* 32 samples, 8 waveforms */
 	}
 
-	p = (INT16*)malloc(size * MAX_VOLUME * sizeof (INT16));
+	namco_waveformdatasize = size * MAX_VOLUME * sizeof (INT16);
+
+	p = (INT16*)malloc(namco_waveformdatasize);
+	namco_waveformdata = (UINT8*)p; //strictly for savestates.
+
+	memset(p, 0, namco_waveformdatasize);
 
 	for (v = 0; v < MAX_VOLUME; v++)
 	{
@@ -544,6 +551,7 @@ static INT32 build_decoded_waveform()
 	if (namco_wavedata == NULL) {
 		enable_ram = 1;
 		namco_wavedata = (UINT8*)malloc(0x400);
+		memset(namco_wavedata, 0, 0x400);
 	}
 
 	/* We need waveform data. It fails if region is not specified. */
@@ -677,7 +685,7 @@ void NamcoSoundExit()
 void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 {
 	struct BurnArea ba;
-	char szName[22];
+	char szName[30];
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
 		return;
@@ -687,6 +695,7 @@ void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
+	memset(&ba, 0, sizeof(ba));
 	sprintf(szName, "NamcoSound");
 	ba.Data		= &chip->channel_list;
 	ba.nLen		= sizeof(chip->channel_list);
@@ -694,7 +703,16 @@ void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 	ba.szName	= szName;
 	BurnAcb(&ba);
 
+	memset(&ba, 0, sizeof(ba));
+	sprintf(szName, "NamcoSoundWaveFormData");
+	ba.Data		= namco_waveformdata;
+	ba.nLen		= namco_waveformdatasize;
+	ba.nAddress = 0;
+	ba.szName	= szName;
+	BurnAcb(&ba);
+
 	if (enable_ram) {
+		memset(&ba, 0, sizeof(ba));
 		sprintf(szName, "NamcoSoundWaveData");
 		ba.Data		= namco_wavedata;
 		ba.nLen		= 0x400;
@@ -703,6 +721,7 @@ void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
+	memset(&ba, 0, sizeof(ba));
 	sprintf(szName, "NamcoSoundRegs");
 	ba.Data		= namco_soundregs;
 	ba.nLen		= 0x40;

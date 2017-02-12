@@ -466,7 +466,7 @@ static INT32 DrvFrame()
 
 		TMS9928AScanline(i);
 
-		if ((i%5==5)) paddle_callback(); // 50x / frame (3000x / sec)
+		if ((i%5)==4) paddle_callback(); // 50x / frame (3000x / sec)
 	}
 
 	ZetClose();

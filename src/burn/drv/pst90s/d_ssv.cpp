@@ -79,7 +79,7 @@ static INT32 nDrvGfxROM2Len;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvJoy3[8];
+static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvJoy5[8];
 static UINT8 DrvJoy6[8];

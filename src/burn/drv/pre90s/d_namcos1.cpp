@@ -9,18 +9,6 @@
 #include "dac.h"
 #include "driver.h"
 
-/*
- 	to fix:
-    		baradukeii: dac sounds wrong when the alien says "thankyou"
-    		dac is more messed up than I thought. save for later tonight.
-impl'd! --> analog input for quester
--- fixed -> rompers can't be reset properly, everything goes bonkers. very unstable.
--- fixed -> shadowld won't reset!  m680x_reset_hard() w/f3 (not wdt!!)
-not a bug ->black boxes in bakutotu (see Hey. thread)  (actually a bug in the game itself)
-			test!
-			test save states! (more)
-*/
-
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *AllMem;
@@ -108,10 +96,10 @@ static UINT8 DrvInputs[7];
 static UINT8 DrvReset;
 
 static INT16 Paddle[2]; // quester
+static UINT8 quester = 0; // use paddle?
 
-static UINT8 sixtyhz = 0;
-static UINT8 dac_kludge = 0;
-static UINT8 quester = 0;
+static UINT8 sixtyhz = 0; // some games only like 60hz
+static UINT8 dac_kludge = 0; // dac is fine-tuned to each game, due to cycle-inaccuracy of our m680x cores.
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -1311,12 +1299,7 @@ static UINT8 mcu_read_port(UINT16 port)
 
 static INT32 DrvDACSync() // sync to hd63701 (m6800 core)
 {
-	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000)-2)))); // it needs -2 to get rid of clicks in some sounds (splatterhouse)
-}
-
-static INT32 DrvDACSync2() // sync to hd63701 (m6800 core)
-{
-	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000)-2)))); // it needs -2 to get rid of clicks in some sounds (splatterhouse)
+	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000) - dac_kludge))));
 }
 
 static void YM2151IrqHandler(INT32 status)
@@ -1582,7 +1565,7 @@ static INT32 Namcos1GetRoms()
 
 static INT32 DrvInit()
 {
-	BurnSetRefreshRate(60.6060);
+	BurnSetRefreshRate((sixtyhz) ? 60.00 : 60.6060);
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
@@ -1637,7 +1620,8 @@ static INT32 DrvInit()
 	NamcoSoundInit(24000/2, 8, 1);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, (dac_kludge) ? DrvDACSync2 : DrvDACSync);
+	DACInit(0, 0, 1, DrvDACSync);
+
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -2174,6 +2158,7 @@ STD_ROM_FN(shadowld)
 static INT32 ShadowldInit()
 {
 	sixtyhz = 1;
+	dac_kludge = 4;
 
 	return DrvInit();
 }
@@ -2513,6 +2498,8 @@ static INT32 BlazerInit()
 	namcos1_key_init(1, 0x013, -1, -1, -1, -1, -1, -1);
 
 	INT32 nRet = DrvInit();
+
+	dac_kludge = 4;
 
 	if (nRet == 0) {
 		// transparent sprites in empty space, otherwise the explosions look bad.
@@ -2930,6 +2917,7 @@ STD_ROM_FN(ws)
 static INT32 WsInit()
 {
 	namcos1_key_init(2, 0x007, -1, -1, -1, -1, -1, -1);
+	dac_kludge = 3;
 
 	return DrvInit();
 }
@@ -2987,6 +2975,7 @@ STD_ROM_FN(berabohm)
 static INT32 BerabohmInit()
 {
 	input_read_callback = berabohm_buttons_read;
+	dac_kludge = 4;
 
 	return DrvInit();
 }
@@ -3090,6 +3079,7 @@ STD_ROM_FN(mmaze)
 static INT32 MmazeInit()
 {
 	namcos1_key_init(2, 0x025, -1, -1, -1, -1, -1, -1);
+	dac_kludge = 2;
 
 	return DrvInit();
 }
@@ -3146,7 +3136,7 @@ STD_ROM_FN(bakutotu)
 static INT32 BakutotuInit()
 {
 	namcos1_key_init(2, 0x022, -1, -1, -1, -1, -1, -1);
-	dac_kludge = 1;
+	dac_kludge = 2;
 
 	return DrvInit();
 }
@@ -3468,6 +3458,7 @@ static INT32 RompersInit()
 {
 	namcos1_key_init(3, 0x0b6, 7, -1, -1, -1, -1, -1);
 	sixtyhz = 1;
+	dac_kludge = 3;
 
 	return DrvInit();
 }
@@ -3565,6 +3556,7 @@ STD_ROM_FN(blastoff)
 static INT32 BlastoffInit()
 {
 	namcos1_key_init(3, 0x0b7, 0,  7,  3,  5, -1, -1);
+	dac_kludge = 1;
 
 	return DrvInit();
 }
@@ -3770,6 +3762,7 @@ STD_ROM_FN(pistoldm)
 static INT32 PistoldmInit()
 {
 	namcos1_key_init(3, 0x135, 1,  2,  0, -1,  4, -1);
+	dac_kludge = 3;
 
 	return DrvInit();
 }

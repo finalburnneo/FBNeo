@@ -51,6 +51,7 @@ static UINT16 headpanic_platform_y;
 static UINT8 esd16_z80_bank;
 
 static INT32 game_select;
+static INT32 weird_offsets = 0;
 
 static struct BurnInputInfo MultchmpInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy2 + 0,	 "p1 coin"  },
@@ -913,6 +914,8 @@ static INT32 DrvExit()
 
 	BurnFree (AllMem);
 
+	weird_offsets = 0;
+
 	return 0;
 }
 
@@ -992,7 +995,7 @@ static void draw_layer_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrol
 	//scrollx &= 0x3ff; breaks a few frames of scrolling in hedpanic
 	scrolly &= 0x1ff;
 
-	if (game_select == 1 && fg == 0) scrollx += -3; //hedpanic
+	if (weird_offsets && fg == 0) scrollx += -3; //hedpanic
 
 	for (INT32 offs = 0; offs < 0x4000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
@@ -1036,7 +1039,7 @@ static void draw_layer_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT32 scr
 	scrollx &= 0x3ff;
 	scrolly &= 0x3ff;
 
-	if (game_select == 1 && fg == 1) scrollx += 4; //hedpanic
+	if (weird_offsets && fg == 1) scrollx += 4; //hedpanic
 
 	for (INT32 offs = 0; offs < 0x1000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x3fff;
@@ -1253,6 +1256,7 @@ STD_ROM_FN(multchmp)
 static INT32 multchmpCallback()
 {
 	game_select = 0;
+	weird_offsets = 1;
 
 	{
 		if (BurnLoadRom(Drv68KROM + 1, 0, 2)) return 1;
@@ -1413,6 +1417,7 @@ STD_ROM_FN(hedpanic)
 static INT32 hedpanicCallback()
 {
 	game_select = 1;
+	weird_offsets = 1;
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 1, 0, 2)) return 1;
@@ -1675,6 +1680,7 @@ STD_ROM_FN(tangtang)
 static INT32 tangtangCallback()
 {
 	game_select = 4;
+	weird_offsets = 1;
 
 	{
 		if (BurnLoadRom(Drv68KROM  + 1, 0, 2)) return 1;

@@ -131,22 +131,32 @@ static inline UINT32 namco_update_one(INT16 *buffer, INT32 length, const INT16 *
 }
 
 static inline UINT32 namco_stereo_update_one(INT16 *buffer, INT32 length, const INT16 *wave, UINT32 counter, UINT32 freq)
-{
+{ // confused? it does 2 passes of this, one for left, one for right, hence the buffer += 2.
 	if (chip->bAdd) {
 		while (length-- > 0)
 		{
-			// no route support here - no games use this currently
-			*buffer = BURN_SND_CLIP(*buffer + wave[WAVEFORM_POSITION(counter)]);
+			INT32 nSample = 0;
+
+			// no route support here - no games use this currently (just volume/gain)
+			nSample = (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+
+			*buffer = BURN_SND_CLIP(*buffer + BURN_SND_CLIP(nSample));
+
 			counter += freq * chip->update_step;
-			buffer +=2;
+			buffer += 2;
 		}
 	} else {
 		while (length-- > 0)
 		{
-			// no route support here - no games use this currently
-			*buffer += wave[WAVEFORM_POSITION(counter)];
+			INT32 nSample = 0;
+
+			// no route support here - no games use this currently (just volume/gain)
+			nSample = (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+
+			*buffer = BURN_SND_CLIP(nSample);
+
 			counter += freq * chip->update_step;
-			buffer +=2;
+			buffer += 2;
 		}
 	}
 	return counter;

@@ -922,7 +922,7 @@ static void esd16_draw_sprites(INT32 priority)
 {
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
 
-	for (INT32 offs = 0;  offs < 0x800/2 - 8/2 ; offs += 8/2 )
+	for (INT32 offs = 0; offs < 0x800/2 - 8/2; offs += 8/2 )
 	{
 		INT32 y, starty, endy;
 
@@ -932,6 +932,9 @@ static void esd16_draw_sprites(INT32 priority)
 
 		int	sy	=	BURN_ENDIAN_SWAP_INT16(spriteram16[ offs ]);
 		int	code	=	BURN_ENDIAN_SWAP_INT16(spriteram16[ offs + 1 ]);
+		int flash = sy & 0x1000;
+
+		if (flash && nCurrentFrame & 1) continue;
 
 		INT32 dimy	=	0x10 << ((sy >> 9) & 3);
 
@@ -982,12 +985,14 @@ static void esd16_draw_sprites(INT32 priority)
 	}
 }
 
-static void draw_background_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, INT32 scrolly)
+static void draw_layer_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, INT32 scrolly, INT32 fg)
 {
 	UINT16 *vram = (UINT16*)vidram;
 
-	scrollx &= 0x3ff;
+	//scrollx &= 0x3ff; breaks a few frames of scrolling in hedpanic
 	scrolly &= 0x1ff;
+
+	if (game_select == 1 && fg == 0) scrollx += -3; //hedpanic
 
 	for (INT32 offs = 0; offs < 0x4000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
@@ -1024,12 +1029,14 @@ static void draw_background_8x8(UINT8 *vidram, INT32 color, INT32 transp, INT32 
 	return;
 }
 
-static void draw_background_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, INT32 scrolly)
+static void draw_layer_16x16(UINT8 *vidram, INT32 color, INT32 transp, INT32 scrollx, INT32 scrolly, INT32 fg)
 {
 	UINT16 *vram = (UINT16*)vidram;
 
 	scrollx &= 0x3ff;
 	scrolly &= 0x3ff;
+
+	if (game_select == 1 && fg == 1) scrollx += 4; //hedpanic
 
 	for (INT32 offs = 0; offs < 0x1000 / 2; offs++) {
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]) & 0x3fff;
@@ -1079,17 +1086,17 @@ static INT32 DrvDraw()
 	BurnTransferClear();
 
 	if (head_layersize & 0x0001) {
-		if (nBurnLayer & 1) draw_background_16x16(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
+		if (nBurnLayer & 1) draw_layer_16x16(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8, 0);
 	} else {
-		if (nBurnLayer & 1) draw_background_8x8(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8);
+		if (nBurnLayer & 1) draw_layer_8x8(DrvVidRAM0, esd16_tilemap0_color, 0, esd16_scroll_0[0] + 0x62, esd16_scroll_0[1]+8, 0);
 	}
 
 	if (nSpriteEnable & 1) esd16_draw_sprites(1);
 
 	if (head_layersize & 0x0002) {
-		if (nBurnLayer & 2) draw_background_16x16(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
+		if (nBurnLayer & 2) draw_layer_16x16(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8, 1);
 	} else {
-		if (nBurnLayer & 2) draw_background_8x8(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8);
+		if (nBurnLayer & 2) draw_layer_8x8(DrvVidRAM1, 0, 1, esd16_scroll_1[0] + 0x60, esd16_scroll_1[1]+8, 1);
 	}
 
 	if (nSpriteEnable & 2) esd16_draw_sprites(0);
@@ -1110,11 +1117,6 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nCyclesSegment;
-	INT32 nInterleave = 64;
-	INT32 nCyclesTotal[2];
-	INT32 nCyclesDone[2];
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -1136,13 +1138,13 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
+	INT32 nCyclesSegment;
+	INT32 nInterleave = 64;
+	INT32 nCyclesTotal[2] = { 16000000 / 60, 4000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
 	SekOpen(0);
 	ZetOpen(0);
-
-	nCyclesTotal[0] = 16000000 / 60;
-	nCyclesTotal[1] = 4000000  / 60;
-
-	nCyclesDone[0] = nCyclesDone[1] = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{

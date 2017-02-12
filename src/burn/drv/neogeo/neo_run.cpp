@@ -1518,7 +1518,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 			nPrevBurnCPUSpeedAdjust = -1;
 
 			SCAN_VAR(nLEDLatch);
-			SCAN_VAR(nLED[3]);
+			SCAN_VAR(nLED);
 
 //			BurnGameFeedback(sizeof(nLED), nLED);
 		}

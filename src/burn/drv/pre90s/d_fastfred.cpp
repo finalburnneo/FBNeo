@@ -22,7 +22,7 @@ static UINT8 *DrvAttrRAM;
 static UINT8 *Rom0, *Rom1;
 static UINT8 *Gfx0, *Gfx1, *Gfx2, *Gfx3, *GfxImagoSprites, *Prom;
 
-static UINT8 DrvJoy1[8], DrvJoy2[8], DrvDips[1], DrvInput[2], DrvReset;
+static UINT8 DrvJoy1[8], DrvJoy2[8], DrvDips[2], DrvInput[2], DrvReset;
 
 static INT16 *pAY8910Buffer[6];
 

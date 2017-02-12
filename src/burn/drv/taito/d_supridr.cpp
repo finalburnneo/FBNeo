@@ -466,7 +466,7 @@ static void draw_fg_layer()
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
 
-		if (sx >=32 || sx < 248) sy -= fgscrolly;
+		if (sx >= 32 && sx < 248) sy -= fgscrolly;
 		if (sy < -7) sy += 256;
 		sy -= 16; // offset
 		INT32 code = DrvFgRAM[offs];

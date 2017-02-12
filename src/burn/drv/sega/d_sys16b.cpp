@@ -7248,7 +7248,7 @@ static UINT8 SjryukoReadIO(UINT32 offset)
 		}
 		
 		case 0x803: {
-			0xff - System16Input[2];
+			return 0xff - System16Input[2];
 		}
 		
 		case 0x1000: {

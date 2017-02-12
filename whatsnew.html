@@ -108,7 +108,7 @@
 <h2>Fixes and new features</h2>
 <ul>
 <!-- fixes and features -->
-<li>Added Favorites feature, mark games as favorite from the Game Info window, or right-click in the list.  Toggle favorites mode in the "Filters" section [dink]</li>
+<li>Added Favorites feature: mark games as favorite from the Game Info window, or right-click in the list.  Toggle favorites mode in the "Filters" section [dink]</li>
 <li>Added right-click context menu (Play game, View in Progetto Emma, Game Info and Mark as Favorite) [Barry]</li>
 <li>Added a gear-shifter display for Chequered Flag, Contental Circus, Super Chase, Chase HQ, SCI, Double Axle, Racing Beat, Top Speed, KonamiGT / RF2, OutRun / Turbo Outrun and Power Drift.  Can be enabled/disabled in Misc -> Options. [dink]</li>
 <li>Hooked up newly dumped sound-MCU's in Fire Shark, Vimana and Teki Paki, giving these games sound!  Thank you CapsOff!! [dink]</li>
@@ -117,20 +117,20 @@
 <li>Fixed in Asura Buster / Blade: Sprite &amp; tile glitches, music synchronization [dink]</li>
 <li>Fixed several issues which caused FBAlpha to crash when loading romsets with missing roms [dink]</li>
 <li>Fixed Tail 2 Nose missing backgrounds [dink]</li>
-<li>Added TMS32010 cpu core for the above 2 drivers [dink]</li>
-<li>Fixed Demon World sprite and tile offsets, also hooked up TMS32010 cpu instead of hacking it out [iq_132 / dink]</li>
+<li>Added TMS32010 cpu core for the Flying Shark/Twin Cobra/Wardner drivers [dink]</li>
+<li>Fixed Demon World sprite and tile offsets, also hooked up TMS32010 cpu and removed the no-TMS32010 hack [iq_132 / dink]</li>
 <li>Fixed Flicky on SG-1000 hw [dink]</li>
 <li>Fixed default eeprom settings for Charlie Ninja [dink]</li>
 <li>Fixed sound in regulusu [dink]</li>
 <li>Fixed Head Panic default settings, game is now playable [dink]</li>
-<li>Fixed broken graphics corruption in Mille Miglia 2: Great 1000 Miles Rally [dink]</li>
-<li>Added support for more than 9999 icons [dink]</li>
+<li>Fixed broken graphics/corruption in Mille Miglia 2: Great 1000 Miles Rally [dink]</li>
+<li>Increased the Icon limit [dink]</li>
 <li>Fixed P2 Start in Asterix [dink]</li>
 <li>Added 1-bit dac/key clicker, map joy to cursor keys, Swap tape side A/B and lots of games to the MSX driver [dink]</li>
 <li>Improved savestate stability/reliability with the MSX driver [dink]</li>
 <li>Improved the MSM5205 interface w/MSM5205NewFrame() and MSM5205UpdateScanline(), for games that need a 256 interleave. [dink]</li>
 <li>Fixed diagonal movements in Toaplan/Taito's GetStar / Guardian [dink]</li>
-<li>Fixed a crash-scenario w/DonPachi on ARM systems [dink]</li>
+<li>Fixed a crash-scenario w/DonPachi on ARM and 64-bit systems [dink]</li>
 <li>Fixed sound in Speed Spin [iq_132]</li>
 <li>Added encrypted DataEast cpus to the M6502 core [iq_132]</li>
 <li>Fixed service mode, sprite offsets and corrupt tilemaps in G.I.Joe [dink]</li>
@@ -155,7 +155,7 @@
 <li>Added new tilemap system with all the bells &amp; whistles [iq_132]</li>
 <li>Fixed dips in Dam Busters [dink]</li>
 <li>Fixed gameover animation in Vapor Trail [rb6502]</li>
-<li>Fixed titlescreen effect in R-Type Leo [dink]</li>
+<li>Fixed titlescreen raster effect in R-Type Leo [dink]</li>
 <li>Fixed sprite glitching in Shogun Warriors [dink]</li>
 <li>Fixed strangely flipped tiles in Cosmic Cop [dink]</li>
 <li>Ported latest i8051 core with DS5002FP support [dink]</li>
@@ -164,7 +164,7 @@
 <li>Fixed service mode in Xexex. Bucky O`Hare and Moo Mesa [dink]</li>
 <li>Fixed tile priority issue in Shackled [dink]</li>
 <li>Re-wrote driver for Shadow Force and added raster effects [iq_132]</li>
-<li>Re-write driver for Exed Exes [iq_132]</li>
+<li>Re-wrote driver for Exed Exes [iq_132]</li>
 <li>Fixed screen priority &amp; graphics issues in Chase HQ, SCI and Night Striker [dink]</li>
 <li>Fixed DIPs for Mars by Artic [dink]</li>
 <li>Added proper MCU emulation on Heavy Barrel with the new i8051 core [dink]</li>
@@ -201,7 +201,7 @@
 <li>Update zlib to 1.2.10 [Barry]</li>
 <li>Synchronize romsets with the latest MAME [Barry]</li>
 <li>Fixed sprite priority issues in Task Force Harrier [dink]</li>
-<li>Fixed alignment issues in Swat Police on ESD16 Hardware [dink]</li>
+<li>Fixed alignment issues in Swat Police and Head Panic, x-scroll issues, and added missing flashing sprite effect on ESD16 Hardware [dink]</li>
 <li>Synthesized a proper color palette for Time Limit [dink]</li>
 <li>Fixes for Super Kaneko Nova System:  [dink]<ul>
         <li>New cpu-based speedhack for most games - dip option</li>
@@ -231,6 +231,7 @@
 <li>Added driver for Gaelco's World Rally [iq_132, dink]</li>
 <li>Added driver for Dream World, Cute Fighter, Baryon Future Assault, Rolling Crush, Gaia on SemiCom DreamWorld Hardware [iq_132]</li>
 <li>Added driver for Puzzle Bobble 2, 3 &amp; 4, Gunlock/Rayforce, Bubble Bobble 2 &amp; 3, Gekirindan, Grid Seeker, Twin Cobra II, Recalhorn, Land Maker and a whole bunch more on Taito F3 hardware [iq_132, dink]</li>
+<li>Added driver for Shadow Land, Dragon Spirit, Pac-Mania, Galaga '88, Splatter House and others on Namco System 1 Hardware [iq_132, dink]</li>
 <!-- new game additions to existing drivers -->
 </ul>
 <h2>New additions to existing drivers</h2>
@@ -270,7 +271,7 @@
 <li>Added clone of Puzznic (US) [Coolmod, JacKc]</li>
 <li>Added clone of Head Panic (ver. 0702, 02/07/1999) [hammy, Brian Troha, The Dumping Union, JacKc]</li>
 <li>Added clone of Red Hawk (Greece) [Abelardator2, JacKc, iq_132]</li>
-<li> []</li>
+<li>Added clone of Dungeons & Dragons: Shadow over Mystara (Japan 960223) [ShouTime, Steven Fairbrother, Smitdogg, The Dumping Union, JacKc]</li>
 <li> []</li>
 <li> []</li>
 <li> []</li>

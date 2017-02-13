@@ -417,7 +417,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 #else
 // Just read from the file directly at the correct offset (0x8000 + 0x9e for the start of the root directory record)
 						unsigned char buffer[8];
-						char szRootSector[4];
+						char szRootSector[32];
 						unsigned int nRootSector = 0;
 						
 						fseek(fp, 0x809e, SEEK_SET);

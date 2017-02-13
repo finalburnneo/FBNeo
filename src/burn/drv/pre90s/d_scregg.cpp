@@ -123,11 +123,11 @@ static inline INT32 calc_mirror_offset(UINT16 address)
 
 static UINT8 eggs_read(UINT16 address)
 {
-	if ((address & 0xf800) == 0x1800) {
+	if ((address & 0xfc00) == 0x1800) {
     		return DrvVidRAM[calc_mirror_offset(address)];
 	}
 
-	if ((address & 0xf800) == 0x1c00) {
+	if ((address & 0xfc00) == 0x1c00) {
     		return DrvColRAM[calc_mirror_offset(address)];
 	}
 

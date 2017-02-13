@@ -863,7 +863,7 @@ static void DrvMSM5205Int()
 		M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 	} else {
 		UINT8 const data = DrvADPCMRom[DrvADPCMPos / 2];
-		MSM5205DataWrite(0, DrvADPCMPos & 1 ? data & 0xf : data >> 4);
+		MSM5205DataWrite(0, (DrvADPCMPos & 1) ? data & 0xf : data >> 4);
 		DrvADPCMPos++;
 	}
 }

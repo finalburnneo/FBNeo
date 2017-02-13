@@ -619,7 +619,6 @@ static UINT8 __fastcall ninjakd2_main_read(UINT16 address)
 		case 0xf803:
 		case 0xf804:
 			return DrvDips[(address & 7) - 3];
-			return DrvDips[1];
 	}
 
 	return 0;

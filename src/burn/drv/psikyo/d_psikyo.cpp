@@ -1048,10 +1048,10 @@ UINT16 tengaiMCURead(UINT32 offset)
 		case 0: {
 			UINT16 res;
 			if (s1945_mcu_control & 16) {
-				res = s1945_mcu_latching & 4 ? 0xff00 : s1945_mcu_latch1 << 8;
+				res = (s1945_mcu_latching & 4) ? 0xff00 : s1945_mcu_latch1 << 8;
 				s1945_mcu_latching |= 4;
 			} else {
-				res = s1945_mcu_latching & 1 ? 0xff00 : s1945_mcu_latch2 << 8;
+				res = (s1945_mcu_latching & 1) ? 0xff00 : s1945_mcu_latch2 << 8;
 				s1945_mcu_latching |= 1;
 			}
 			res |= s1945_mcu_bctrl & 0x00f0;

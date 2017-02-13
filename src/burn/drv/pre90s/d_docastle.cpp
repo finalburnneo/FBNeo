@@ -552,7 +552,7 @@ static UINT8 __fastcall docastle_cpu1_read(UINT16 address)
 		case 0xc007: return DrvInput[2] | DrvDip[0]; // wont work because its active low, revisit.
 
 		case 0xc004:
-			flipscreen = address & 0x80 ? 1 : 0;
+			flipscreen = (address & 0x80) ? 1 : 0;
 			return flipscreen;
 	}
 

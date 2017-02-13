@@ -2924,14 +2924,6 @@ UINT8 __fastcall mustangb_main_read_byte(UINT32 address)
 	return 0;
 }
 
-static void sync_nmk004()
-{
-return;
-	int cycles = (SekTotalCycles() * 8) / (nNMK004CpuSpeed / 1000000);
-
-	if ((cycles  - tlcs90TotalCycles()) > 0) BurnTimerUpdate(cycles);
-}
-
 UINT8 __fastcall mustang_main_read_byte(UINT32 address)
 {
 	switch (address)
@@ -2950,7 +2942,6 @@ UINT8 __fastcall mustang_main_read_byte(UINT32 address)
 
 		case 0x08000e:
 		case 0x08000f:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -2971,7 +2962,6 @@ UINT16 __fastcall mustang_main_read_word(UINT32 address)
 			return (DrvDips[0] << 8) | DrvDips[1];
 
 		case 0x08000e:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -2989,12 +2979,10 @@ void __fastcall mustang_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x080016:
-			sync_nmk004();
 			NMK004NmiWrite(data);
 		return;
 
 		case 0x08001e:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 
@@ -3020,12 +3008,10 @@ void __fastcall mustang_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x080016:
 		case 0x080017:
-			sync_nmk004();
 			NMK004NmiWrite(data);
 		return;
 		case 0x08001e:
 		case 0x08001f:
-			sync_nmk004();
 			NMK004Write(0, data);
                         return;
         }
@@ -3052,7 +3038,6 @@ UINT8 __fastcall acrobatm_main_read_byte(UINT32 address)
 			return DrvDips[1];
 
 		case 0x0c000e:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -3076,7 +3061,6 @@ UINT16 __fastcall acrobatm_main_read_word(UINT32 address)
 			return DrvDips[1];
 
 		case 0x0c000e:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -3105,7 +3089,6 @@ void __fastcall acrobatm_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x0c001e:
 		case 0x0c001f:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 	}
@@ -3134,7 +3117,6 @@ void __fastcall acrobatm_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0c001e:
 		case 0x0c001f:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 	}
@@ -3162,7 +3144,6 @@ UINT8 __fastcall tdragon_main_read_byte(UINT32 address)
 
 		case 0x0c000e:
 		case 0x0c000f:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -3186,7 +3167,6 @@ UINT16 __fastcall tdragon_main_read_word(UINT32 address)
 			return DrvDips[1];
 
 		case 0x0c000e:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -3209,7 +3189,6 @@ void __fastcall tdragon_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x0c0016:
 		case 0x0c0017:
-			sync_nmk004();
 			NMK004NmiWrite(data);
 		return;
 
@@ -3220,7 +3199,6 @@ void __fastcall tdragon_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x0c001e:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 	}
@@ -3243,7 +3221,6 @@ void __fastcall tdragon_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0c0016:
 		case 0x0c0017:
-			sync_nmk004();
 			NMK004NmiWrite(data);
 		return;
 
@@ -3256,7 +3233,6 @@ void __fastcall tdragon_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0c001e:
 		case 0x0c001f:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 	}
@@ -3472,7 +3448,6 @@ UINT8 __fastcall hachamf_main_read_byte(UINT32 address)
 
 		case 0x08000e:
 		case 0x08000f:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -3496,7 +3471,6 @@ UINT16 __fastcall hachamf_main_read_word(UINT32 address)
 			return DrvDips[1];
 
 		case 0x08000e:
-			sync_nmk004();
 			return NMK004Read();
 	}
 
@@ -3519,7 +3493,6 @@ void __fastcall hachamf_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x080016:
 		case 0x080017:
-			sync_nmk004();
 			NMK004NmiWrite(data);
 		return;
 
@@ -3530,7 +3503,6 @@ void __fastcall hachamf_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x08001e:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 	}
@@ -3553,7 +3525,6 @@ void __fastcall hachamf_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x080016:
 		case 0x080017:
-			sync_nmk004();
 			NMK004NmiWrite(data);
 		return;
 
@@ -3566,7 +3537,6 @@ void __fastcall hachamf_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x08001e:
 		case 0x08001f:
-			sync_nmk004();
 			NMK004Write(0, data);
 		return;
 	}

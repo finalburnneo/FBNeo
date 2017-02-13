@@ -515,11 +515,11 @@ static void phoenix_main_write(UINT16 address, UINT8 data)
 			if (phoenixmode) phoenix_sound_control_a_w(address, data);
 			if (pleiads) pleiads_sound_control_a_w(address, data);
 			return;
+
 		case 0x6800: // control b
 			if (phoenixmode) phoenix_sound_control_b_w(address, data);
 			if (pleiads) pleiads_sound_control_b_w(address, data);
 			return;
-		return;
 	}
 }
 

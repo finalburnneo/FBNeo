@@ -331,7 +331,7 @@ static int GameInfoInit()
 		int nRet;
 		struct BurnRomInfo ri;
 		char nLen[10] = "";
-		char nCrc[8] = "";
+		char nCrc[10] = "";
 		char *szRomName = NULL;
 		char Type[100] = "";
 		char FormatType[100] = "";
@@ -386,7 +386,7 @@ static int GameInfoInit()
 	
 	// Check for board roms
 	if (BurnDrvGetTextA(DRV_BOARDROM)) {
-		char szBoardName[8] = "";
+		char szBoardName[12] = "";
 		unsigned int nOldDrvSelect = nBurnDrvActive;
 		strcpy(szBoardName, BurnDrvGetTextA(DRV_BOARDROM));
 			
@@ -399,7 +399,7 @@ static int GameInfoInit()
 			int nRetBoard;
 			struct BurnRomInfo riBoard;
 			char nLenBoard[10] = "";
-			char nCrcBoard[8] = "";
+			char nCrcBoard[10] = "";
 			char *szBoardRomName = NULL;
 			char BoardType[100] = "";
 			char BoardFormatType[100] = "";
@@ -601,8 +601,8 @@ static void SaveFavorites()
 			}
 		}
 		//bprintf(0, _T("Saved %X favorites.\n"), nSaved);
+		fclose(fp);
 	}
-	fclose(fp);
 }
 
 INT32 CheckFavorites(char *name)

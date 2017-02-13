@@ -846,3 +846,51 @@ struct BurnDriver BurnDrvMomokoe = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 224, 4, 3
 };
+
+
+// Momoko 120% (bootleg)
+// bootleg board, almost exact copy of an original one
+
+static struct BurnRomInfo momokobRomDesc[] = {
+	{ "3.bin",			0x8000, 0xa18d7e78, 0x01 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.bin",			0x4000, 0x2dcf50ed, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "momoko01.u4",	0x8000, 0xe8a6673c, 0x02 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "momoko13.u4",	0x2000, 0x2745cf5a, 0x03 | BRF_GRA },           //  3 Character Tiles
+
+	{ "momoko14.p2",	0x2000, 0xcfccca05, 0x04 | BRF_GRA },           //  4 Foreground Tiles
+
+	{ "16.bin",			0x8000, 0x49de49a1, 0x05 | BRF_GRA },           //  5 Sprite Tiles
+	{ "17.bin",			0x8000, 0xf06a3d1a, 0x05 | BRF_GRA },           //  6
+
+	{ "momoko09.e8",	0x8000, 0x9f5847c7, 0x06 | BRF_GRA },           //  7 Background Tiles
+	{ "momoko11.c8",	0x8000, 0x9c9fbd43, 0x06 | BRF_GRA },           //  8
+	{ "10.bin",			0x8000, 0x68b9156d, 0x06 | BRF_GRA },           //  9
+	{ "12.bin",			0x8000, 0xc32f5e19, 0x06 | BRF_GRA },           // 10
+
+	{ "4.bin",			0x8000, 0x1f0226d5, 0x07 | BRF_GRA },           // 11 Background Map (Banks used by Z80 #0)
+	{ "momoko05.p8",	0x8000, 0x757cdd2b, 0x07 | BRF_GRA },           // 12
+	{ "momoko06.n8",	0x8000, 0x20cacf8b, 0x07 | BRF_GRA },           // 13
+	{ "momoko07.l8",	0x8000, 0xb94b38db, 0x07 | BRF_GRA },           // 14
+
+	{ "momoko08.h8",	0x2000, 0x69b41702, 0x08 | BRF_GRA },           // 15 Background Color/Priority Table
+
+	{ "momoko15.k2",	0x4000, 0x8028f806, 0x09 | BRF_GRA },           // 16 Foreground Map
+
+	{ "momoko-c.bin",	0x0100, 0xf35ccae0, 0x0a | BRF_GRA },           // 17 Text Layer Color PROMs
+	{ "momoko-b.bin",	0x0020, 0x427b0e5c, 0x0a | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(momokob)
+STD_ROM_FN(momokob)
+
+struct BurnDriver BurnDrvMomokob = {
+	"momokob", "momoko", NULL, NULL, "1986",
+	"Momoko 120% (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, momokobRomInfo, momokobRomName, NULL, NULL, MomokoInputInfo, MomokoDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	240, 224, 4, 3
+};

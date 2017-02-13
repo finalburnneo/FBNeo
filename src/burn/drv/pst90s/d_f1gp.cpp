@@ -836,13 +836,13 @@ static void draw_16x16_zoom(UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32
 	{
 		INT32 yy = sy + y;
 
-		if (ym[y ^ fy] == -1 || yy < 0 || yy >= nScreenHeight) continue;
+		if (ym[(y ^ fy) % 16] == -1 || yy < 0 || yy >= nScreenHeight) continue;
 
-		INT32 yyz = (ym[y ^ fy] << 4);
+		INT32 yyz = (ym[(y ^ fy) % 16] << 4);
 
 		for (INT32 x = 0; x < 16; x++)
 		{
-			INT16 xxz = xm[x ^ fx];
+			INT16 xxz = xm[(x ^ fx) % 16];
 			if (xxz == -1) continue;
 
 			INT32 xx = sx + x;

@@ -1962,7 +1962,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		bprintf(PRINT_IMPORTANT, _T("  - Z80 ROM size:\t0x%08X\n"), nCpsZRomLen);
 		bprintf(PRINT_IMPORTANT, _T("  - Graphics data:\t0x%08X\n"), nCpsGfxLen);
 		bprintf(PRINT_IMPORTANT, _T("  - QSound data:\t0x%08X\n"), nCpsQSamLen);
-		bprintf(PRINT_IMPORTANT, _T("  - Key data:\t0x%08X\n"), nCpsKeyLen);
+		bprintf(PRINT_IMPORTANT, _T("  - Key data:\t\t0x%08X\n"), nCpsKeyLen);
 #endif
 
 		if (/*!nCpsCodeLen ||*/ !nCpsRomLen || !nCpsGfxLen || !nCpsZRomLen || ! nCpsQSamLen) {

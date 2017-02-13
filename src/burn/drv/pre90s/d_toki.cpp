@@ -35,7 +35,7 @@ static UINT8 *DrvScrollRAM;
 static UINT8 DrvReset;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
-static UINT8 DrvJoy3[2];
+static UINT8 DrvJoy3[3];
 static UINT8 DrvDips[3];
 static UINT16 DrvInps[2];
 

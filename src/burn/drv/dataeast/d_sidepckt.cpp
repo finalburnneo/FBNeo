@@ -1,3 +1,4 @@
+// Notes: driver needs some fixing up gfx-wise
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6502_intf.h"
@@ -394,9 +395,9 @@ static void SidecpcktI8751Write(UINT8 Data)
 		}
 
 		case 6: {
-			if (CurrentTable == 1) I8751Return = table_1[CurrentPtr++];
-			if (CurrentTable == 2) I8751Return = table_2[CurrentPtr++];
-			if (CurrentTable == 3) I8751Return = table_3[CurrentPtr++];
+			if (CurrentTable == 1) I8751Return = table_1[CurrentPtr++ % 3];
+			if (CurrentTable == 2) I8751Return = table_2[CurrentPtr++ % 0xf];
+			if (CurrentTable == 3) I8751Return = table_3[CurrentPtr++ % 0xf];
 			break;
 		}
 	}
@@ -447,9 +448,9 @@ static void SidecpcktjI8751Write(UINT8 Data)
 		}
 
 		case 6: {
-			if (CurrentTable == 1) I8751Return = table_1[CurrentPtr++];
-			if (CurrentTable == 2) I8751Return = table_2[CurrentPtr++];
-			if (CurrentTable == 3) I8751Return = table_3[CurrentPtr++];
+			if (CurrentTable == 1) I8751Return = table_1[CurrentPtr++ % 3];
+			if (CurrentTable == 2) I8751Return = table_2[CurrentPtr++ % 0xf];
+			if (CurrentTable == 3) I8751Return = table_3[CurrentPtr++ % 0xf];
 			break;
 		}
 	}

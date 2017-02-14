@@ -81,84 +81,45 @@ static void update_namco_waveform(INT32 offset, UINT8 data)
 }
 
 static inline UINT32 namco_update_one(INT16 *buffer, INT32 length, const INT16 *wave, UINT32 counter, UINT32 freq)
-{
-	if (chip->bAdd)
+{ // accumulator.
+	while (length-- > 0)
 	{
-		while (length-- > 0)
-		{
-			INT32 nLeftSample = 0, nRightSample = 0;
-			
-			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
-			}
-			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
-			}
-			
-			nLeftSample = BURN_SND_CLIP(nLeftSample);
-			nRightSample = BURN_SND_CLIP(nRightSample);
-	
-			*buffer = BURN_SND_CLIP(*buffer + nLeftSample); buffer++;
-			*buffer = BURN_SND_CLIP(*buffer + nRightSample); buffer++;
-			
-			counter += freq * chip->update_step;
+		INT32 nLeftSample = 0, nRightSample = 0;
+
+		if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
+			nLeftSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
 		}
-	}
-	else
-	{
-		while (length-- > 0)
-		{
-			INT32 nLeftSample = 0, nRightSample = 0;
-			
-			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-				nLeftSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
-			}
-			if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-				nRightSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
-			}
-			
-			nLeftSample = BURN_SND_CLIP(nLeftSample);
-			nRightSample = BURN_SND_CLIP(nRightSample);
-	
-			*buffer++ += nLeftSample;
-			*buffer++ += nRightSample;
-			
-			counter += freq * chip->update_step;
+		if ((chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
+			nRightSample += (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
 		}
+
+		nLeftSample = BURN_SND_CLIP(nLeftSample);
+		nRightSample = BURN_SND_CLIP(nRightSample);
+
+		*buffer = BURN_SND_CLIP(*buffer + nLeftSample); buffer++;
+		*buffer = BURN_SND_CLIP(*buffer + nRightSample); buffer++;
+
+		counter += freq * chip->update_step;
 	}
 
 	return counter;
 }
 
 static inline UINT32 namco_stereo_update_one(INT16 *buffer, INT32 length, const INT16 *wave, UINT32 counter, UINT32 freq)
-{ // confused? it does 2 passes of this, one for left, one for right, hence the buffer += 2.
-	if (chip->bAdd) {
-		while (length-- > 0)
-		{
-			INT32 nSample = 0;
+{ // stereo accumulator. confused? it does 2 passes of this, one for left, one for right, hence the buffer += 2.
+	while (length-- > 0)
+	{
+		INT32 nSample = 0;
 
-			// no route support here - no games use this currently (just volume/gain)
-			nSample = (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
+		// no route support here - no games use this currently (just volume/gain)
+		nSample = (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
 
-			*buffer = BURN_SND_CLIP(*buffer + BURN_SND_CLIP(nSample));
+		*buffer = BURN_SND_CLIP(*buffer + BURN_SND_CLIP(nSample));
 
-			counter += freq * chip->update_step;
-			buffer += 2;
-		}
-	} else {
-		while (length-- > 0)
-		{
-			INT32 nSample = 0;
-
-			// no route support here - no games use this currently (just volume/gain)
-			nSample = (INT32)(wave[WAVEFORM_POSITION(counter)] * chip->gain[BURN_SND_NAMCOSND_ROUTE_1]);
-
-			*buffer = BURN_SND_CLIP(nSample);
-
-			counter += freq * chip->update_step;
-			buffer += 2;
-		}
+		counter += freq * chip->update_step;
+		buffer += 2;
 	}
+
 	return counter;
 }
 
@@ -205,18 +166,12 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 				{
 					INT32 cnt;
 
-					if (add_stream) {
-						if (voice->noise_state)
-							*mix = BURN_SND_CLIP(*mix + noise_data);
-						else
-							*mix = BURN_SND_CLIP(*mix - noise_data);
-
-						*mix++;
+					if (voice->noise_state) {
+						*(mix++) = BURN_SND_CLIP(*mix + noise_data);
+						*(mix++) = BURN_SND_CLIP(*mix + noise_data);
 					} else {
-						if (voice->noise_state)
-							*mix++ += noise_data;
-						else
-							*mix++ -= noise_data;
+						*(mix++) = BURN_SND_CLIP(*mix - noise_data);
+						*(mix++) = BURN_SND_CLIP(*mix - noise_data);
 					}
 
 					if (hold)
@@ -303,32 +258,19 @@ void NamcoSoundUpdateStereo(INT16* buffer, INT32 length)
 				{
 					INT32 cnt;
 
-					if (add_stream) {
-						if (voice->noise_state)
-						{
-							*lrmix = BURN_SND_CLIP(*lrmix + l_noise_data);
-							*lrmix++;
-							*lrmix = BURN_SND_CLIP(*lrmix + r_noise_data);
-							*lrmix++;
-						}
-						else
-						{
-							*lrmix = BURN_SND_CLIP(*lrmix - l_noise_data);
-							*lrmix++;
-							*lrmix = BURN_SND_CLIP(*lrmix - r_noise_data);
-							*lrmix++;
-						}
-					} else {
-						if (voice->noise_state)
-						{
-							*lrmix++ += l_noise_data;
-							*lrmix++ += r_noise_data;
-						}
-						else
-						{
-							*lrmix++ -= l_noise_data;
-							*lrmix++ -= r_noise_data;
-						}
+					if (voice->noise_state)
+					{
+						*lrmix = BURN_SND_CLIP(*lrmix + l_noise_data);
+						lrmix++;
+						*lrmix = BURN_SND_CLIP(*lrmix + r_noise_data);
+						lrmix++;
+					}
+					else
+					{
+						*lrmix = BURN_SND_CLIP(*lrmix - l_noise_data);
+						lrmix++;
+						*lrmix = BURN_SND_CLIP(*lrmix - r_noise_data);
+						lrmix++;
 					}
 
 					if (hold)

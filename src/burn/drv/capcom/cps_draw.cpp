@@ -385,8 +385,7 @@ static void Cps2Layers()
 		nSlice = 0;
 		do {
 			for (INT32 i = 0; i < 4; i++) {
-
-				if (Prio[nSlice][Draw[nSlice][i]] == nCurrPrio) {
+				if ((Draw[nSlice][i] >= 0) && Prio[nSlice][Draw[nSlice][i]] == nCurrPrio) {
 
 					// Render sprites between the previous layer and this one
 					if ((nDrawMask[0] & 1) && (nPrevPrio < nCurrPrio)) {

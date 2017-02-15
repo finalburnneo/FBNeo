@@ -258,7 +258,7 @@ static struct BurnDIPInfo Glocr360DIPList[]=
 	{0x0c, 0x01, 0xf0, 0x70, "12"                                 },
 	
 	// Dip 2
-	{0   , 0xfe, 0   , 16  , "Coin A"                             },
+	{0   , 0xfe, 0   , 9   , "Coin A"                             },
 	{0x0d, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"                   },
 	{0x0d, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"                  },
 	{0x0d, 0x01, 0x0f, 0x0d, "1 Coin  3 Credits"                  },
@@ -269,7 +269,7 @@ static struct BurnDIPInfo Glocr360DIPList[]=
 	{0x0d, 0x01, 0x0f, 0x08, "1 Coin  8 Credits"                  },
 	{0x0d, 0x01, 0x0f, 0x00, "Free Play (if coin B too) or 1C/1C" },
 
-	{0   , 0xfe, 0   , 16  , "Coin B"                             },
+	{0   , 0xfe, 0   , 9   , "Coin B"                             },
 	{0x0d, 0x01, 0xf0, 0xf0, "1 Coin  1 Credit"                   },
 	{0x0d, 0x01, 0xf0, 0xe0, "1 Coin  2 Credits"                  },
 	{0x0d, 0x01, 0xf0, 0xd0, "1 Coin  3 Credits"                  },

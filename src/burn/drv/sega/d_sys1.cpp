@@ -823,7 +823,7 @@ static struct BurnDIPInfo NobbDIPList[]=
 	{0x13, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"      },
 	{0x13, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"      },
 	
-	{0   , 0xfe, 0   , 2   , "Difficulty"             },
+	{0   , 0xfe, 0   , 4   , "Difficulty"             },
 	{0x13, 0x01, 0x30, 0x20, "Easy"                   },
 	{0x13, 0x01, 0x30, 0x30, "Medium"                 },
 	{0x13, 0x01, 0x30, 0x10, "Hard"                   },
@@ -1262,7 +1262,7 @@ static struct BurnDIPInfo TokisensDIPList[]=
 	SYSTEM1_COINAGE(0x13)
 
 	// Dip 2
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0   , 0xfe, 0   ,    2, "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
 
@@ -1546,7 +1546,7 @@ static struct BurnDIPInfo ChplftbDIPList[]=
    {0x13, 0x01, 0x01, 0x00, "Upright"                },
    {0x13, 0x01, 0x01, 0x01, "Cocktail"               },
    
-   {0   , 0xfe, 0   , 4   , "Lives"                  },
+   {0   , 0xfe, 0   , 3   , "Lives"                  },
    {0x13, 0x01, 0x0c, 0x04, "3"                      },
    {0x13, 0x01, 0x0c, 0x0c, "4"                      },
    {0x13, 0x01, 0x06, 0x08, "5"                      },
@@ -1647,7 +1647,7 @@ static struct BurnDIPInfo WbmlDIPList[]=
 	SYSTEM1_COINAGE(0x13)
 	
 	// Dip 2	
-	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0   , 0xfe, 0   ,    2, "Cabinet"                },
 	{0x14, 0x01, 0x01, 0x00, "Upright"                },
 	{0x14, 0x01, 0x01, 0x01, "Cocktail"               },
 

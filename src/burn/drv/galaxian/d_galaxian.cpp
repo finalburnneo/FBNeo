@@ -2656,7 +2656,7 @@ static struct BurnDIPInfo BlkholeDIPList[]=
 	{0x0b, 0x01, 0xc0, 0x80, "1 Coin  3 Plays"        },
 	
 	// Dip 3	
-	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x0c, 0x01, 0x01, 0x00, "5000"                   },
 	{0x0c, 0x01, 0x01, 0x01, "10000"                  },
 	
@@ -3221,7 +3221,7 @@ static struct BurnDIPInfo ExodusDIPList[]=
 	{0x0c, 0x01, 0x80, 0x00, "1 Coin 5 Plays"         },
 	
 	// Dip 3	
-	{0   , 0xfe, 0   , 4   , "Bonus Life"             },
+	{0   , 0xfe, 0   , 2   , "Bonus Life"             },
 	{0x0d, 0x01, 0x01, 0x00, "7000"                   },
 	{0x0d, 0x01, 0x01, 0x01, "None"                   },
 	
@@ -3973,7 +3973,7 @@ static struct BurnDIPInfo HunchbksDIPList[]=
 	{0x12, 0x01, 0x01, 0x00, "3"                      },
 	{0x12, 0x01, 0x01, 0x01, "5"                      },
 	
-	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0   , 0xfe, 0   , 2   , "Coinage"                },
 	{0x12, 0x01, 0x02, 0x00, "A 2C/1P  B 1C/3P"       },
 	{0x12, 0x01, 0x02, 0x02, "A 1C/1P  B 1C/5P"       },
 	
@@ -4301,7 +4301,7 @@ static struct BurnDIPInfo MimonkeyDIPList[]=
 	// Dip 1
 	
 	// Dip 2	
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x12, 0x01, 0x03, 0x03, "3"                      },
 	{0x12, 0x01, 0x03, 0x02, "4"                      },
 	{0x12, 0x01, 0x03, 0x01, "5"                      },
@@ -4335,7 +4335,7 @@ static struct BurnDIPInfo MimonscoDIPList[]=
 	// Dip 1
 	
 	// Dip 2
-	{0   , 0xfe, 0   , 2   , "Lives"                  },
+	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x12, 0x01, 0x03, 0x03, "1"                      },
 	{0x12, 0x01, 0x03, 0x02, "2"                      },
 	{0x12, 0x01, 0x03, 0x01, "3"                      },
@@ -5021,7 +5021,7 @@ static struct BurnDIPInfo PiscesDIPList[]=
 	{0x0d, 0x01, 0x01, 0x00, "10000"                  },
 	{0x0d, 0x01, 0x01, 0x01, "20000"                  },
 	
-	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0   , 0xfe, 0   , 2   , "Coinage"                },
 	{0x0d, 0x01, 0x02, 0x02, "A 2C/1P  B 1C/3P"       },
 	{0x0d, 0x01, 0x02, 0x00, "A 1C/1P  B 1C/6P"       },
 	
@@ -5055,7 +5055,7 @@ static struct BurnDIPInfo PiscesbDIPList[]=
 	{0x0d, 0x01, 0x01, 0x00, "10000"                  },
 	{0x0d, 0x01, 0x01, 0x01, "20000"                  },
 	
-	{0   , 0xfe, 0   , 4   , "Coinage"                },
+	{0   , 0xfe, 0   , 2   , "Coinage"                },
 	{0x0d, 0x01, 0x02, 0x02, "A 2C/1P  B 1C/2P 2C/5P" },
 	{0x0d, 0x01, 0x02, 0x00, "A 1C/1P  B 1C/5P"       },
 	

@@ -356,7 +356,7 @@ static struct BurnDIPInfo TnzsjoDIPList[]=
 
 	TNZS_CABINET_FLIP_SERVICE_DIPSETTING(0x13)
 
-	{0   , 0xfe, 0   ,    4, "Invulnerability (Debug)"	},
+	{0   , 0xfe, 0   ,    2, "Invulnerability (Debug)"	},
 	{0x14, 0x01, 0x08, 0x08, "Off"				},
 	{0x14, 0x01, 0x08, 0x00, "On"				},
 
@@ -557,7 +557,7 @@ static struct BurnDIPInfo JpopnicsDIPList[]=
 
 	TNZS_DIFFICULTY_DIPSETTING(0x0c)
 
-	{0   , 0xfe, 0   ,    0, "Bonus Life"		},
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
 	{0x0c, 0x01, 0x0c, 0x08, "50k 200k 150k+"	},
 	{0x0c, 0x01, 0x0c, 0x0c, "50k 250k 200k+"	},
 	{0x0c, 0x01, 0x0c, 0x04, "100k 300k 200k+"	},

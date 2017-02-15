@@ -307,7 +307,7 @@ static struct BurnDIPInfo martmastDIPList[] = {
 static struct BurnDIPInfo martmastc102DIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x00, NULL				},
 
-	{0,	0xFE, 0,	7,    "Region (Fake)"			},
+	{0,	0xFE, 0,	6,    "Region (Fake)"			},
 	{0x2E,	0x01, 0x07,	0x00, "China"				},
 	{0x2E,	0x01, 0x07,	0x01, "Taiwan"				},
 	{0x2E,	0x01, 0x07,	0x02, "Japan"				},

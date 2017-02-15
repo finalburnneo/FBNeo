@@ -1366,7 +1366,7 @@ static struct BurnDIPInfo vanvanDIPList[]=
 	{0x0f, 0x01, 0x30, 0x10, "3"     		  },
 	{0x0f, 0x01, 0x30, 0x00, "5"     		  },
 
-	{0   , 0xfe, 0   , 2   , "Coinage"                },
+	{0   , 0xfe, 0   , 4   , "Coinage"                },
 	{0x0f, 0x01, 0xc0, 0x00, "2c_1c"      		  },
 	{0x0f, 0x01, 0xc0, 0xc0, "1C_1C"       		  },
 	{0x0f, 0x01, 0xc0, 0x80, "1c_2C"      		  },
@@ -1425,11 +1425,11 @@ static struct BurnDIPInfo jumpshotDIPList[]=
 	{0x10, 0x01, 0x03, 0x03, "3 Minutes"    	  },
 	{0x10, 0x01, 0x03, 0x01, "4 Minutes"     	  },
 
-	{0   , 0xfe, 0   , 4   , "Player Skin Tone"       },
+	{0   , 0xfe, 0   , 2   , "Player Skin Tone"       },
 	{0x10, 0x01, 0x04, 0x04, "Lighter"     		  },
 	{0x10, 0x01, 0x04, 0x00, "Darker"    		  },
 
-	{0   , 0xfe, 0   , 4   , "Player Skin Tone"       },
+	{0   , 0xfe, 0   , 2   , "Player Skin Tone"       },
 	{0x10, 0x01, 0x08, 0x08, "Lighter"     		  },
 	{0x10, 0x01, 0x08, 0x00, "Darker"    		  },
 
@@ -1455,11 +1455,11 @@ static struct BurnDIPInfo jumpshtpDIPList[]=
 	{0x10, 0x01, 0x03, 0x03, "Average"    	 	  },
 	{0x10, 0x01, 0x03, 0x01, "Above Average"     	  },
 
-	{0   , 0xfe, 0   , 4   , "Player Skin Tone"       },
+	{0   , 0xfe, 0   , 2   , "Player Skin Tone"       },
 	{0x10, 0x01, 0x04, 0x04, "Lighter"     		  },
 	{0x10, 0x01, 0x04, 0x00, "Darker"    		  },
 
-	{0   , 0xfe, 0   , 4   , "Player Skin Tone"       },
+	{0   , 0xfe, 0   , 2   , "Player Skin Tone"       },
 	{0x10, 0x01, 0x08, 0x08, "Lighter"     		  },
 	{0x10, 0x01, 0x08, 0x00, "Darker"    		  },
 

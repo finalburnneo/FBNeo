@@ -2623,7 +2623,7 @@ static struct BurnDIPInfo RockmanjDIPList[]=
 	{0x15, 0x01, 0x1f, 0x11, "2 Coins Start 1 Coin Continue"},
 	{0x15, 0x01, 0x1f, 0x12, "Free Play"              },
 
-	{0   , 0xfe, 0   , 4   , "Coin Slots"             },
+	{0   , 0xfe, 0   , 3   , "Coin Slots"             },
 	{0x15, 0x01, 0x60, 0x40, "1, Common"              },
 	{0x15, 0x01, 0x60, 0x00, "2, Common"              },
 	{0x15, 0x01, 0x60, 0x20, "2, Individual"          },
@@ -2955,12 +2955,12 @@ static struct BurnDIPInfo PokonyanDIPList[]=
 	{0x14, 0x01, 0x03, 0x00, "2 Coins 1 Credit"       },
 	{0x14, 0x01, 0x03, 0x01, "1 Coin  1 Credit"       },
 	
-	{0   , 0xfe, 0   , 3   , "Controls"               },
+	{0   , 0xfe, 0   , 2   , "Controls"               },
 	{0x14, 0x01, 0x40, 0x40, "Digital"                },
 	{0x14, 0x01, 0x40, 0x00, "Wheel"                  }, // I assume this enables the wheel as the directions don't work (and the left/right input check just flashes) - not worked out to hook the wheel up yet though
 	
 	// Dip B
-	{0   , 0xfe, 0   , 3   , "Demo Sounds"            },
+	{0   , 0xfe, 0   , 4   , "Demo Sounds"            },
 	{0x15, 0x01, 0x03, 0x03, "Off"                    },
 	{0x15, 0x01, 0x03, 0x02, "Every 4"                },
 	{0x15, 0x01, 0x03, 0x01, "Every 2"                },

@@ -146,7 +146,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x14, 0x01, 0x10, 0x10, "1"                      },
 	{0x14, 0x01, 0x10, 0x00, "2"                      },
 	
-	{0   , 0xfe, 0   , 4   , "Bonus"                  },
+	{0   , 0xfe, 0   , 2   , "Bonus"                  },
 	{0x14, 0x01, 0x20, 0x20, "30k"                    },
 	{0x14, 0x01, 0x20, 0x00, "None"                   },
 	

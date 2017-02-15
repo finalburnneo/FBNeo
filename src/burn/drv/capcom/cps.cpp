@@ -1776,7 +1776,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K) {
 			if (bLoad) {
-				BurnLoadRom(CpsRomLoad, i, 1);
+				if (BurnLoadRom(CpsRomLoad, i, 1)) return 1;
 				CpsRomLoad += ri.nLen;
 			} else {
 				nCpsRomLen += ri.nLen;
@@ -1786,8 +1786,8 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K_SIMM) {
 			if (bLoad) {
-				BurnLoadRom(CpsRomLoad + 0x000001, i + 0, 2);
-				BurnLoadRom(CpsRomLoad + 0x000000, i + 1, 2);
+				if (BurnLoadRom(CpsRomLoad + 0x000001, i + 0, 2)) return 1;
+				if (BurnLoadRom(CpsRomLoad + 0x000000, i + 1, 2)) return 1;
 				CpsRomLoad += ri.nLen * 2;
 				i += 2;
 			} else {
@@ -1798,7 +1798,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_PRG_68K_XOR_TABLE) {
 			if (bLoad) {
-				BurnLoadRom(CpsCodeLoad, i, 1);
+				if (BurnLoadRom(CpsCodeLoad, i, 1)) return 1;
 				CpsCodeLoad += ri.nLen;
 			} else {
 				nCpsCodeLen += ri.nLen;
@@ -1886,7 +1886,7 @@ static INT32 CpsGetROMs(bool bLoad)
 				
 		if ((ri.nType & 0x0f) == CPS2_PRG_Z80) {
 			if (bLoad) {
-				BurnLoadRom(CpsZRomLoad, i, 1);
+				if (BurnLoadRom(CpsZRomLoad, i, 1)) return 1;
 				CpsZRomLoad += ri.nLen;
 			} else {
 				nCpsZRomLen += ri.nLen;
@@ -1896,7 +1896,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_QSND) {
 			if (bLoad) {
-				BurnLoadRom(CpsQSamLoad, i, 1);
+				if (BurnLoadRom(CpsQSamLoad, i, 1)) return 1;
 				BurnByteswap(CpsQSamLoad, ri.nLen);
 				CpsQSamLoad += ri.nLen;
 			} else {
@@ -1907,7 +1907,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_QSND_SIMM) {
 			if (bLoad) {
-				BurnLoadRom(CpsQSamLoad, i, 1);
+				if (BurnLoadRom(CpsQSamLoad, i, 1)) return 1;
 				BurnByteswap(CpsQSamLoad, ri.nLen);
 				CpsQSamLoad += ri.nLen;
 			} else {
@@ -1918,8 +1918,8 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_QSND_SIMM_BYTESWAP) {
 			if (bLoad) {
-				BurnLoadRom(CpsQSamLoad + 1, i + 0, 2);
-				BurnLoadRom(CpsQSamLoad + 0, i + 1, 2);
+				if (BurnLoadRom(CpsQSamLoad + 1, i + 0, 2)) return 1;
+				if (BurnLoadRom(CpsQSamLoad + 0, i + 1, 2)) return 1;
 				i += 2;
 			} else {
 				nCpsQSamLen += ri.nLen;
@@ -1929,7 +1929,7 @@ static INT32 CpsGetROMs(bool bLoad)
 		
 		if ((ri.nType & 0x0f) == CPS2_ENCRYPTION_KEY) {
 			if (bLoad) {
-				BurnLoadRom(CpsKeyLoad, i, 1);
+				if (BurnLoadRom(CpsKeyLoad, i, 1)) return 1;
 				CpsKeyLoad += ri.nLen;
 			} else {
 				nCpsKeyLen += ri.nLen;

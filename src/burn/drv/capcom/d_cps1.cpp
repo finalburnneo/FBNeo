@@ -13733,7 +13733,7 @@ static INT32 DrvInit()
 	Cps = 1;
 	nRet = CpsInit(); if (nRet != 0) return 1;
 	
-	Cps1LoadRoms(1);
+	if (Cps1LoadRoms(1)) return 1;
 	
 	if (AmendProgRomCallback) AmendProgRomCallback();
 	

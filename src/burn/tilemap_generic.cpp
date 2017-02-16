@@ -569,6 +569,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 			}
 
 			dest = Bitmap + sy * nScreenWidth;
+			prio = pPrioDraw + sy * nScreenWidth;
 
 			for (UINT32 x = 0; x < bitmap_width + cur_map->twidth; x+=cur_map->twidth)
 			{

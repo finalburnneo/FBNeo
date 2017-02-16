@@ -33,6 +33,7 @@ void VezSetDecode(UINT8 *decode); // set opcode decode
 INT32 VezMemCallback(INT32 nStart,INT32 nEnd,INT32 nMode);
 INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem);
 INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2);
+INT32 VezMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nMode);
 
 void VezSetReadHandler(UINT8 (__fastcall*)(UINT32));
 void VezSetWriteHandler(void (__fastcall*)(UINT32, UINT8));

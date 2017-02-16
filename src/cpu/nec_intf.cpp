@@ -558,6 +558,22 @@ INT32 VezMapArea(INT32 nStart, INT32 nEnd, INT32 nMode, UINT8 *Mem1, UINT8 *Mem2
 	return 0;
 }
 
+INT32 VezMapMemory(UINT8 *Mem, INT32 nStart, INT32 nEnd, INT32 nMode)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_VezInitted) bprintf(PRINT_ERROR, _T("VezMapMemory called without init\n"));
+	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("VezMapMemory called when no CPU open\n"));
+#endif
+
+	for (INT32 i = 0; i < 3; i++) {
+		if (nMode & (1 << i)) {
+			VezMapArea(nStart, nEnd, i, Mem);
+		}
+	}
+
+	return 0;
+}
+
 void VezReset()
 {
 #if defined FBA_DEBUG

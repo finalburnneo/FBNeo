@@ -150,9 +150,10 @@ INT32 Cps2LoadTilesGigaman2(UINT8 *Tile, UINT8 *pSrc);
 #define mapper_PKB10B		37
 #define mapper_pang3		38
 #define mapper_sfzch		39
-#define mapper_cps2		40
-#define mapper_frog		41
-#define mapper_pokon	42
+#define mapper_cps2			40
+#define mapper_frog			41
+#define mapper_pokon		42
+#define mapper_KNM10B		43
 extern void SetGfxMapper(INT32 MapperId);
 extern INT32 GfxRomBankMapper(INT32 Type, INT32 Code);
 extern void SetCpsBId(INT32 CpsBId, INT32 bStars);

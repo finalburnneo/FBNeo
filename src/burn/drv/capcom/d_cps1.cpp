@@ -13416,6 +13416,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofchdx"     , CPS_B_21_DEF, mapper_sfzch , 0, wof_decode          },
 	{ "cps1demo"    , CPS_B_04    , mapper_sfzch , 0, NULL                },
 	{ "cps1frog"    , CPS_B_04    , mapper_frog  , 0, NULL                },
+	{ "kenseim"     , CPS_B_21_DEF, mapper_KNM10B, 0, NULL                },
 	
 	// Not included games
 	{ "pnicku"      , CPS_B_21_DEF, mapper_PKB10B, 0, NULL                },	// IPS
@@ -21043,6 +21044,8 @@ struct BurnDriverX BurnDrvCpsSfzhch = {
 	SfzchInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
+
+#include "d_kenseim.h"
 
 #undef CPS1_68K_PROGRAM_BYTESWAP
 #undef CPS1_68K_PROGRAM_NO_BYTESWAP

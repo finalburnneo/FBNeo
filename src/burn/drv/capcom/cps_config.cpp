@@ -407,6 +407,16 @@ static const struct GfxRange mapper_frog_table[] = {
 	{ 0                                                                    ,       0,       0, 0 }
 };
 
+static const struct GfxRange mapper_KNM10B_table[] = {
+	{ GFXTYPE_SPRITES, 0x00000, 0x07fff, 0 },
+	{ GFXTYPE_SPRITES, 0x08000, 0x0ffff, 1 },
+	{ GFXTYPE_SPRITES, 0x10000, 0x17fff, 2 },
+	{ GFXTYPE_SCROLL2, 0x04000, 0x07fff, 2 },
+	{ GFXTYPE_SCROLL1, 0x01000, 0x01fff, 2 },
+	{ GFXTYPE_SCROLL3, 0x02000, 0x03fff, 2 },
+	{ 0              ,       0,       0, 0 }
+};
+
 void SetGfxMapper(INT32 MapperId)
 {
 	switch (MapperId) {
@@ -794,6 +804,15 @@ void SetGfxMapper(INT32 MapperId)
 			GfxBankSizes[2] = 0x00000;
 			GfxBankSizes[3] = 0x00000;
 			GfxBankMapper = mapper_frog_table;
+			return;
+		}
+		
+		case mapper_KNM10B: {
+			GfxBankSizes[0] = 0x8000;
+			GfxBankSizes[1] = 0x8000;
+			GfxBankSizes[2] = 0x8000;
+			GfxBankSizes[3] = 0x0000;
+			GfxBankMapper = mapper_KNM10B_table;
 			return;
 		}
 	}

@@ -4714,6 +4714,7 @@ static INT32 WingforcInit()
 	Kaneko16VideoInit();
 	Kaneko16SpriteRamSize = 0x1000;
 	Kaneko16SpriteXOffset = 0x10000 - 0x680;
+	Kaneko16TilesYOffset = -0x09;
 	Kaneko16SpritePrio(2, 3, 5, 7);
 	
 	// Allocate and Blank all required memory

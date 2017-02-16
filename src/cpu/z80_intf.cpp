@@ -28,6 +28,7 @@ static INT32 nZetCyclesTotal;
 static INT32 nZ80ICount[MAX_Z80];
 static UINT32 Z80EA[MAX_Z80];
 
+static INT32 bZetRunEndEnabled = 0;
 static INT32 nOpenedCPU = -1;
 static INT32 nCPUCount = 0;
 INT32 nHasZet = -1;
@@ -398,6 +399,18 @@ void ZetRunAdjust(INT32 /*nCycles*/)
 #endif
 }
 
+void ZetEnableRunEnd()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetEnableRunEnd called without init\n"));
+#endif
+
+	// enabling this is dangerous!! breaks timers etc. see notes in ZetRunEnd() below.
+	// Only enable this for special cases, such as Strikers 1945 Plus.  Auto-Disabled on exit.
+
+	bZetRunEndEnabled = 1;
+}
+
 void ZetRunEnd()
 {
 #if defined FBA_DEBUG
@@ -405,9 +418,10 @@ void ZetRunEnd()
 	if (nOpenedCPU == -1) bprintf(PRINT_ERROR, _T("ZetRunEnd called when no CPU open\n"));
 #endif
 
-	//ZetRunEnd() re-broken March 23, 2016.  breaks YM irq's in some games:
-	//  karnov's revenge, haunted castle (before frame rewrite: see svn history for drv/konami/d_hcastle.cpp), and a few others that I forgot...
-	//z80_ICount = 0;
+	// ZetRunEnd() re-broken March 23, 2016.  breaks YM irq's in many games:
+	// f.ex. karnov's revenge, haunted castle, and a few others that I forgot...
+
+	if (bZetRunEndEnabled) z80_ICount = 0;
 }
 
 // This function will make an area callback ZetRead/ZetWrite
@@ -456,6 +470,7 @@ void ZetExit()
 		}
 	}
 
+	bZetRunEndEnabled = 0;
 	nCPUCount = 0;
 	nHasZet = -1;
 	

@@ -623,14 +623,32 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 				UINT8 *gfxsrc = gfx->gfxbase + (code * cur_map->twidth * cur_map->theight) + (scy * cur_map->twidth);
 
-				for (UINT32 dx = 0; dx < cur_map->twidth; dx++)
+				if (flip & TMAP_FLIPX)
 				{
-					INT32 dst = (sx + dx) - scrx;
-					if (dst < minx || dst >= maxx) continue;
+					INT32 flip_wide = cur_map->twidth - 1;
 
-					if (gfxsrc[dx] != transparent) {
-						dest[dst] = color + gfxsrc[dx];
-						prio[dst] = priority;
+					for (UINT32 dx = 0; dx < cur_map->twidth; dx++)
+					{
+						INT32 dst = (sx + dx) - scrx;
+						if (dst < minx || dst >= maxx) continue;
+
+						if (gfxsrc[flip_wide - dx] != transparent) {
+							dest[dst] = color + gfxsrc[flip_wide - dx];
+							prio[dst] = priority;
+						}
+					}
+				}
+				else
+				{
+					for (UINT32 dx = 0; dx < cur_map->twidth; dx++)
+					{
+						INT32 dst = (sx + dx) - scrx;
+						if (dst < minx || dst >= maxx) continue;
+
+						if (gfxsrc[dx] != transparent) {
+							dest[dst] = color + gfxsrc[dx];
+							prio[dst] = priority;
+						}
 					}
 				}
 			}

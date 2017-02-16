@@ -317,7 +317,7 @@ UINT8 i8257Read(UINT8 offset)
 		case 6:
 		case 7:
 			/* DMA address/count register */
-			data = ( m_registers[offset] >> (m_msb ? 8 : 0) ) & 0xFF;
+			data = ( m_registers[offset & 7] >> (m_msb ? 8 : 0) ) & 0xFF;
 			i8257_prepare_msb_flip();
 		break;
 
@@ -355,11 +355,11 @@ void i8257Write(UINT8 offset, UINT8 data)
 			/* DMA address/count register */
 			if (m_msb)
 			{
-				m_registers[offset] |= ((UINT16) data) << 8;
+				m_registers[offset & 0x7] |= ((UINT16) data) << 8;
 			}
 			else
 			{
-				m_registers[offset] = data;
+				m_registers[offset & 0x7] = data;
 			}
 	
 			if (DMA_MODE_AUTOLOAD(m_mode))
@@ -372,11 +372,11 @@ void i8257Write(UINT8 offset, UINT8 data)
 					case 5:
 						if (m_msb)
 						{
-							m_registers[offset+2] |= ((UINT16) data) << 8;
+							m_registers[(offset & 0x7)+2] |= ((UINT16) data) << 8;
 						}
 						else
 						{
-							m_registers[offset+2] = data;
+							m_registers[(offset & 0x7)+2] = data;
 						}
 				}
 			}

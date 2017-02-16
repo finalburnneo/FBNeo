@@ -555,7 +555,7 @@ static UINT16 bang_analog_read(INT32 port)
 
 	INT32 analog_value = 0x80; // placeholder until analog inputs hooked up!
 
-	const INT32 adjust[4] = { 320, 240, 1, -4 };
+	const INT32 adjust[6] = { 320, 240, 1, -4, 0, 0};
 
 	switch (port & 3)
 	{

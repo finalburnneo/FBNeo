@@ -277,7 +277,7 @@ static void Cps1Layers()
     if (n==0) {
 	  if (nDrawMask & 1)  CpsObjDrawDoX(0,7);
 
-	  if (!Cps1DisableBgHi) {
+	  if (!Cps1DisableBgHi && i+1 < 4) {
 		nBgHi=1;
 		switch (Draw[i+1]) {
 			case 1:

@@ -11461,7 +11461,13 @@ STD_ROM_FN(s1945p)
 static INT32 s1945pInit()
 {
 	nNeoProtectionXor = 0x05;
-	return NeoInit();
+
+	INT32 rc = NeoInit();
+	if (!rc) {
+		ZetEnableRunEnd();
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvs1945p = {

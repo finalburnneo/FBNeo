@@ -1,6 +1,14 @@
 // FB Alpha Fuuki 16 Bit driver module
 // Based on MAME driver by Luca Elia
 
+// todo:
+//
+//  x: missing highscore screen borders etc?
+//  x: fuuki logo screen @ bootup is supposed to have a whiteish background
+//  x: missing flashy effect when chickens are running and crash into the screen
+//     (probably related to #2, palette bg color stuff?)
+//
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -793,26 +801,26 @@ static INT32 DrvDraw()
 	INT32 layer[3] = { pri_table[DrvPriority][2], pri_table[DrvPriority][1], pri_table[DrvPriority][0] };
 
 	INT32 scrollx_offs = regs[6] - 0x1f3;
+	if (scrollx_offs == 2) scrollx_offs = 0; // bad offset in playscreen?
 	INT32 scrolly_offs = regs[7] - 0x3f6;
 
-	GenericTilemapSetScrollY(0, regs[0] + scrolly_offs);
-	GenericTilemapSetScrollY(1, regs[2] + scrolly_offs);
-	GenericTilemapSetScrollY(2, regs[4] + scrolly_offs);
-
-//	GenericTilemapSetScrollX(0, regs[1] + scrollx_offs);
-//	GenericTilemapSetScrollX(1, regs[3] + scrollx_offs);
-//	GenericTilemapSetScrollX(2, regs[5] + scrollx_offs + 0x10);
+	//if (regs[0] + scrolly_offs < nScreenHeight)
+		GenericTilemapSetScrollY(0, regs[0] + scrolly_offs);
+	//if (regs[2] + scrolly_offs < nScreenHeight)
+		GenericTilemapSetScrollY(1, regs[2] + scrolly_offs);
+	//if (regs[4] + scrolly_offs < nScreenHeight)
+		GenericTilemapSetScrollY(2, regs[4] + scrolly_offs);
 
 	for (INT32 i = previous_previous_line; i < previous_line; i++) {
-		GenericTilemapSetScrollRow(0, i, regs[1] + scrollx_offs);
-		GenericTilemapSetScrollRow(1, i, regs[3] + scrollx_offs);
-		GenericTilemapSetScrollRow(2, i, regs[5] + scrollx_offs + 0x10);
+		GenericTilemapSetScrollRow(0, (i + regs[0] + scrolly_offs) & 0x1ff, regs[1] + scrollx_offs);
+		GenericTilemapSetScrollRow(1, (i + regs[2] + scrolly_offs) & 0x1ff, regs[3] + scrollx_offs);
+		GenericTilemapSetScrollRow(2, (i + regs[4] + scrolly_offs) & 0x0ff, regs[5] + scrollx_offs + 0x10);
 	}
 
 	video_char_bank = (regs[0xf] & 0x40) * 0x80; // 0x2000
 
 	for (INT32 i = 0; i < 3; i++) {
-		if (nSpriteEnable & (1 << layer[i])) GenericTilemapDraw(layer[i], pTransDraw, 1 << i);
+		if (nBurnLayer & (1 << layer[i])) GenericTilemapDraw(layer[i], pTransDraw, 1 << i);
 	}
 
 	return 0;
@@ -857,29 +865,28 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-	//	nCyclesDone[0] += SekRun(nCyclesSegment - nCyclesDone[0]);
-		BurnTimerUpdate(nCyclesSegment - nCyclesDone[0]);
+		BurnTimerUpdate(nCyclesSegment);
 
 		if (i == 239) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank
 		if (i == 247) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1
-		if (i == raster_timer) {
-			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-
+		if (i == raster_timer+1) {
 			// update layers when calling for a raster update
 			if (i < nScreenHeight) {
 				set_clipping(i);
 				BurnDrvRedraw();
 			}
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			raster_timer = nInterleave - 2; // fix glitch in middle of pink x+y scroll "mile smile" screen
 		}
 
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment - nCyclesDone[1]);
+		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment);
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
-	if (pBurnSoundOut) {		
+	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
@@ -901,7 +908,7 @@ static INT32 DrvFrame()
 
 		GenericTilesClearClip();
 
-		if (nSpriteEnable & 0x10) draw_sprites();
+		if (nSpriteEnable & 1) draw_sprites();
 
 		BurnTransferCopy(DrvPalette);
 	}

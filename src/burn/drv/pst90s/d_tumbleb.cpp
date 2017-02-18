@@ -3213,7 +3213,7 @@ static INT32 ChokchokInit()
 	Pf1XOffset = -5;
 	Pf1YOffset = 0;
 	Pf2XOffset = -1;
-	Pf2YOffset = 2;
+	Pf2YOffset = 1;
 	
 	return nRet;
 }
@@ -4270,15 +4270,15 @@ static void DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
-	DrvRenderPf2Layer(DrvControl[3], DrvControl[4]);
+	if (nBurnLayer & 1) DrvRenderPf2Layer(DrvControl[3], DrvControl[4]);
 	
 	if (DrvControl[6] & 0x80) {
-		DrvRenderCharLayer();
+		if (nBurnLayer & 2) DrvRenderCharLayer();
 	} else {
-		DrvRenderPf1Layer(DrvControl[1], DrvControl[2]);
+		if (nBurnLayer & 4) DrvRenderPf1Layer(DrvControl[1], DrvControl[2]);
 	}
 	
-	DrvRenderSprites(0, 0);
+	if (nSpriteEnable & 1) DrvRenderSprites(0, 0);
 	BurnTransferCopy(DrvPalette);
 }
 

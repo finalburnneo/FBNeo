@@ -3,10 +3,7 @@
 
 // todo:
 //
-//  x: missing highscore screen borders etc?
-//  x: fuuki logo screen @ bootup is supposed to have a whiteish background
-//  x: missing flashy effect when chickens are running and crash into the screen
-//     (probably related to #2, palette bg color stuff?)
+//  x: (gogomile) missing highscore screen borders
 //
 
 #include "tiles_generic.h"
@@ -259,7 +256,7 @@ STDDIPINFO(Pbancho)
 
 static inline void palette_update(INT32 offset)
 {
-	offset &= 0x1ffe;
+	offset &= 0x3ffe;
 	UINT16 p = *((UINT16*)(DrvPalRAM + offset));
 
 	INT32 r = (p >> 10) & 0x1f;
@@ -275,8 +272,8 @@ static inline void palette_update(INT32 offset)
 
 static void __fastcall fuuki16_main_write_word(UINT32 address, UINT16 data)
 {
-	if ((address & 0xfffe000) == 0x700000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x1ffe))) = data;
+	if ((address & 0xfffc000) == 0x700000) {
+		*((UINT16*)(DrvPalRAM + (address & 0x3ffe))) = data;
 		palette_update(address);
 		return;
 	}
@@ -312,8 +309,8 @@ static void __fastcall fuuki16_main_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall fuuki16_main_write_byte(UINT32 address, UINT8 data)
 {
-	if ((address & 0xfffe000) == 0x700000) {
-		DrvPalRAM[(address & 0x1fff)^1] = data;
+	if ((address & 0xfffc000) == 0x700000) {
+		DrvPalRAM[(address & 0x3fff)^1] = data;
 		palette_update(address);
 		return;
 	}

@@ -11462,12 +11462,7 @@ static INT32 s1945pInit()
 {
 	nNeoProtectionXor = 0x05;
 
-	INT32 rc = NeoInit();
-	if (!rc) {
-		ZetEnableRunEnd();
-	}
-
-	return rc;
+	return NeoInit();
 }
 
 struct BurnDriver BurnDrvs1945p = {

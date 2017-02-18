@@ -191,6 +191,7 @@ unsigned char Z80Vector = 0xff;
 #define HALT Z80.halt
 
 int z80_ICount;
+static INT32 end_run;
 static Z80_Regs Z80;
 UINT32 EA;
 
@@ -3542,6 +3543,7 @@ int Z80Execute(int cycles)
 {
 	z80_ICount = cycles;
 	Z80.cycles_left = cycles;
+	end_run = 0;
 
 	/* check for NMIs on the way in; they can only be set externally */
 	/* via timers, and can't be dynamically enabled, so it is safe */
@@ -3571,11 +3573,16 @@ int Z80Execute(int cycles)
 //		CALL_DEBUGGER(PCD);
 		R++;
 		EXEC_INLINE(op,ROP());
-	} while( z80_ICount > 0 );
+	} while( z80_ICount > 0 && !end_run );
 
-	Z80.cycles_left = 0;
-	
+	if (!end_run) Z80.cycles_left = 0;
+
 	return cycles - z80_ICount;
+}
+
+void Z80StopExecute()
+{
+	end_run = 1;
 }
 
 INT32 z80TotalCycles()

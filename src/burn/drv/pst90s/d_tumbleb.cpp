@@ -3020,7 +3020,9 @@ static INT32 DrvInit(bool bReset, INT32 SpriteRamSize, INT32 SpriteMask, INT32 S
 	MemIndex();
 
 	nRet = DrvLoadRoms();
-	
+
+	if (nRet) return 1;
+
 	DrvMap68k();
 	
 	if (DrvHasZ80) DrvMapZ80();

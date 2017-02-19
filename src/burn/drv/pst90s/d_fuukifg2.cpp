@@ -1,11 +1,6 @@
 // FB Alpha Fuuki 16 Bit driver module
 // Based on MAME driver by Luca Elia
 
-// todo:
-//
-//  x: (gogomile) missing highscore screen borders
-//
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -335,9 +330,7 @@ static UINT8 __fastcall fuuki16_main_read_byte(UINT32 address)
 static UINT16 __fastcall fuuki16_main_read_word(UINT32 address)
 {
 	if ((address & 0xffffe0) == 0x8c0000) {
-		INT32 offset = (address / 2) & 0xf;
-		UINT16 *regs = (UINT16*)DrvVidRegs;
-		return regs[offset];
+		return *((UINT16*)(DrvVidRegs) + ((address / 2) & 0xf));
 	}
 
 	switch (address)
@@ -370,9 +363,9 @@ static void bankswitch(INT32 data)
 
 static void oki_bankswitch(INT32 data)
 {
-	INT32 bank = (data & 3) * 0x40000;
+	INT32 bank = ((data & 6) >> 1) * 0x40000;
 
-	DrvOkiBank = data & 3;
+	DrvOkiBank = data;
 
 	MSM6295SetBank(0, DrvSndROM + bank, 0, 0x3ffff);
 }
@@ -809,12 +802,9 @@ static INT32 DrvDraw()
 	if (scrollx_offs == 2) scrollx_offs = 0; // bad offset in playscreen?
 	INT32 scrolly_offs = regs[7] - 0x3f6;
 
-	//if (regs[0] + scrolly_offs < nScreenHeight)
-		GenericTilemapSetScrollY(0, regs[0] + scrolly_offs);
-	//if (regs[2] + scrolly_offs < nScreenHeight)
-		GenericTilemapSetScrollY(1, regs[2] + scrolly_offs);
-	//if (regs[4] + scrolly_offs < nScreenHeight)
-		GenericTilemapSetScrollY(2, regs[4] + scrolly_offs);
+	GenericTilemapSetScrollY(0, regs[0] + scrolly_offs);
+	GenericTilemapSetScrollY(1, regs[2] + scrolly_offs);
+	GenericTilemapSetScrollY(2, regs[4] + scrolly_offs);
 
 	for (INT32 i = previous_previous_line; i < previous_line; i++) {
 		GenericTilemapSetScrollRow(0, (i + regs[0] + scrolly_offs) & 0x1ff, regs[1] + scrollx_offs);

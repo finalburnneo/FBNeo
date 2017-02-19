@@ -330,7 +330,10 @@ static UINT8 __fastcall fuuki16_main_read_byte(UINT32 address)
 static UINT16 __fastcall fuuki16_main_read_word(UINT32 address)
 {
 	if ((address & 0xffffe0) == 0x8c0000) {
-		return *((UINT16*)(DrvVidRegs) + ((address / 2) & 0xf));
+		//return *((UINT16*)(DrvVidRegs) + ((address / 2) & 0xf));
+		INT32 offset = (address / 2) & 0xf;
+		UINT16 *regs = (UINT16*)DrvVidRegs;
+		return regs[offset];
 	}
 
 	switch (address)
@@ -431,7 +434,7 @@ static tilemap_callback( layer0 )
 	UINT16 *ram = (UINT16*)DrvVidRAM0;
 	UINT16 attr = ram[2 * offs + 1];
 
-	TILE_SET_INFO(0, ram[offs * 2], attr, TILE_FLIPYX(attr >> 6));
+	TILE_SET_INFO(0, ram[offs * 2], attr, TILE_FLIPYX((attr >> 6) & 3)); // hack! y flipping is broken. see the waves and highscore table in pbancho
 }
 
 static tilemap_callback( layer1 )
@@ -439,7 +442,7 @@ static tilemap_callback( layer1 )
 	UINT16 *ram = (UINT16*)DrvVidRAM1;
 	UINT16 attr = ram[2 * offs + 1];
 
-	TILE_SET_INFO(1, ram[offs * 2], attr, TILE_FLIPYX(attr >> 6));
+	TILE_SET_INFO(1, ram[offs * 2], attr, TILE_FLIPYX((attr >> 6) & 3));
 }
 
 static tilemap_callback( layer2 )
@@ -447,7 +450,7 @@ static tilemap_callback( layer2 )
 	UINT16 *ram = (UINT16*)(DrvVidRAM2 + video_char_bank);
 	UINT16 attr = ram[2 * offs + 1];
 
-	TILE_SET_INFO(2, ram[offs * 2], attr, TILE_FLIPYX(attr >> 6));
+	TILE_SET_INFO(2, ram[offs * 2], attr, TILE_FLIPYX((attr >> 6) & 3));
 }
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
@@ -597,7 +600,7 @@ static INT32 DrvInit(INT32 nGame)
 		else
 		{
 			if (BurnLoadRom(DrvGfxROM2 + 0x0000001,  6, 2)) return 1;
-			memcpy (DrvGfxROM2 + 0x400000, DrvGfxROM2, 0x400000);
+			//memcpy (DrvGfxROM2 + 0x400000, DrvGfxROM2, 0x400000);
 
 			if (BurnLoadRom(DrvGfxROM3 + 0x0000000,  7, 1)) return 1;
 
@@ -798,9 +801,8 @@ static INT32 DrvDraw()
 
 	INT32 layer[3] = { pri_table[DrvPriority][2], pri_table[DrvPriority][1], pri_table[DrvPriority][0] };
 
-	INT32 scrollx_offs = regs[6] - 0x1f3;
-	if (scrollx_offs == 2) scrollx_offs = 0; // bad offset in playscreen?
-	INT32 scrolly_offs = regs[7] - 0x3f6;
+	INT32 scrolly_offs = regs[6] - 0x1f3;
+	INT32 scrollx_offs = regs[7] - 0x3f6;
 
 	GenericTilemapSetScrollY(0, regs[0] + scrolly_offs);
 	GenericTilemapSetScrollY(1, regs[2] + scrolly_offs);
@@ -862,7 +864,7 @@ static INT32 DrvFrame()
 		nCyclesSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
 		BurnTimerUpdate(nCyclesSegment);
 
-		if (i == 239) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank
+		if (i == 239+3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank (+3 for occasional coin-up issues in gogomile in demo mode)
 		if (i == 247) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1
 		if (i == raster_timer+1) {
 			// update layers when calling for a raster update

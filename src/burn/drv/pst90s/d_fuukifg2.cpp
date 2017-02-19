@@ -334,6 +334,12 @@ static UINT8 __fastcall fuuki16_main_read_byte(UINT32 address)
 
 static UINT16 __fastcall fuuki16_main_read_word(UINT32 address)
 {
+	if ((address & 0xffffe0) == 0x8c0000) {
+		INT32 offset = (address / 2) & 0xf;
+		UINT16 *regs = (UINT16*)DrvVidRegs;
+		return regs[offset];
+	}
+
 	switch (address)
 	{
 		case 0x800000:
@@ -345,6 +351,8 @@ static UINT16 __fastcall fuuki16_main_read_word(UINT32 address)
 		case 0x880000:
 			return (DrvDips[1] * 256) + DrvDips[0];
 	}
+
+	bprintf (0, _T("MRW: %5.5x\n"), address);
 
 	return 0;
 }

@@ -841,7 +841,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 6000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -861,11 +860,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-		BurnTimerUpdate(nCyclesSegment);
+		BurnTimerUpdate((nCyclesTotal[0] / nInterleave) * (i + 1));
 
-		if (i == 239+3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank (+3 for occasional coin-up issues in gogomile in demo mode)
-		if (i == 247) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1
+		if (i == 239+3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO); // vblank - +3 for occasional coin-up issues in gogomile in demo mode
+		if (i == 0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO); // level 1 - start at line 0, fixes glitches during bootup/huge tilemap animations
 		if (i == raster_timer+1) {
 			// update layers when calling for a raster update
 			if (i < nScreenHeight) {
@@ -876,8 +874,7 @@ static INT32 DrvFrame()
 			raster_timer = nInterleave - 2; // fix glitch in middle of pink x+y scroll "mile smile" screen
 		}
 
-		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment);
+		nCyclesDone[1] += BurnTimerUpdateYM3812((nCyclesTotal[1] / nInterleave) * (i + 1));
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);

@@ -576,14 +576,12 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				INT32 sx = x;
 				INT32 col = ((x + scrollx) % (cur_map->mwidth * cur_map->twidth)) / cur_map->twidth;
 
-				INT32 code = 0, color = 0, flip = 0, group = 0, gfxnum = 0;
+				INT32 code = 0, color = 0, group = 0, gfxnum = 0;
 				UINT32 flags = 0;
 
 				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags);
 
 				if (flags & TILE_SKIP) continue; // skip this tile
-
-				flip = flags & 3;
 
 				if (flags & TILE_GROUP_ENABLE) {
 					group = (flags >> 16) & 0xff;
@@ -605,25 +603,28 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 				code &= gfx->code_mask;
 
+				INT32 flipx = flags & TILE_FLIPX; 
+				INT32 flipy = flags & TILE_FLIPY;
+
 				if (cur_map->flags & TMAP_FLIPY) {
-					flip ^= TMAP_FLIPY;
+					flipy ^= TILE_FLIPY;
 				}
 
-				INT32 scy = scry;
-				if (flip & 2) scry = (cur_map->theight - 1) - scry;
-
-				INT32 flipx = 0;
-				if (flip & 1) flipx = (cur_map->twidth - 1);
+				INT32 scy;
+				if (flipy)
+					scy = (cur_map->theight - 1) - scry;
+				else
+					scy = scry;
 
 				if (cur_map->flags & TMAP_FLIPX) {
 					sx = ((maxx - minx) - cur_map->twidth) - sx;
 					scrx = ((cur_map->twidth) - 1) - scrx;
-					flip ^= TMAP_FLIPX;
+					flipx ^= TILE_FLIPX;
 				}
 
 				UINT8 *gfxsrc = gfx->gfxbase + (code * cur_map->twidth * cur_map->theight) + (scy * cur_map->twidth);
 
-				if (flip & TMAP_FLIPX)
+				if (flipx)
 				{
 					INT32 flip_wide = cur_map->twidth - 1;
 

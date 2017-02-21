@@ -471,7 +471,7 @@ STDDIPINFO(Kageki)
 static struct BurnDIPInfo Arknoid2DIPList[]=
 {
 	{0x0b, 0xff, 0xff, 0xfe, NULL			},
-	{0x0c, 0xff, 0xff, 0xff, NULL			},
+	{0x0c, 0xff, 0xff, 0x7f, NULL			},
 
 	TNZS_CABINET_FLIP_SERVICE_DIPSETTING(0x0b)
 
@@ -489,7 +489,9 @@ static struct BurnDIPInfo Arknoid2DIPList[]=
 
 	TNZS_LIVES_DIPSETTING(0x0c)
 
-	TNZS_ALLOWCONTINUE_DIPSETTING(0x0c, 0x80)
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x0c, 0x01, 0x80, 0x80, "No"			},
+	{0x0c, 0x01, 0x80, 0x00, "Yes"			},
 };
 
 STDDIPINFO(Arknoid2)
@@ -497,7 +499,7 @@ STDDIPINFO(Arknoid2)
 static struct BurnDIPInfo Arknid2uDIPList[]=
 {
 	{0x0b, 0xff, 0xff, 0xfe, NULL			},
-	{0x0c, 0xff, 0xff, 0xff, NULL			},
+	{0x0c, 0xff, 0xff, 0x7f, NULL			},
 
 	TNZS_CABINET_FLIP_SERVICE_DIPSETTING(0x0b)
 
@@ -515,7 +517,9 @@ static struct BurnDIPInfo Arknid2uDIPList[]=
 
 	TNZS_LIVES_DIPSETTING(0x0c)
 
-	TNZS_ALLOWCONTINUE_DIPSETTING(0x0c, 0x80)
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x0c, 0x01, 0x80, 0x80, "No"			},
+	{0x0c, 0x01, 0x80, 0x00, "Yes"			},
 };
 
 STDDIPINFO(Arknid2u)

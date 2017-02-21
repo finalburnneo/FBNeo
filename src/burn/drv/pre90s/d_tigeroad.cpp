@@ -342,7 +342,7 @@ static void f1dream_protection_w()
 			{
 				indx <<= 4;
 				indx += ram16[0x3ff6/2] & 0x00ff;
-				value = f1dream_613eb_lookup[indx];
+				value = f1dream_613eb_lookup[indx & 0xff];
 			}
 		}
 

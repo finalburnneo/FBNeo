@@ -89,8 +89,6 @@ void __fastcall VezDummyWritePort(UINT32, UINT8) { }
 
 UINT8 cpu_readport(UINT32 p)
 {
-	p &= 0x100ff; // ?
-
 	return VezCurrentCPU->ReadPort(p);
 }
 

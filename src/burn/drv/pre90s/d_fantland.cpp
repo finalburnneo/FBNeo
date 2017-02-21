@@ -5,7 +5,7 @@
 //
 // 1: wheelrun wheel *done*
 // 2: wheelrun pic missing on title screen
-// 3: galaxygn sound
+// 3: galaxygn sound *done* (cpu core interface bug)
 //
 
 #include "tiles_generic.h"
@@ -309,7 +309,6 @@ static UINT8 __fastcall fantland_sound_read_port(UINT32 port)
 		case 0x0080:
 			return soundlatch;
 
-		case 0x0100:
 		case 0x0101:
 			return BurnYM2151ReadStatus();
 	}

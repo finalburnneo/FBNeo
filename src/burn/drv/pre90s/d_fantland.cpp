@@ -300,6 +300,7 @@ static void __fastcall fantland_sound_write_port(UINT32 port, UINT8 data)
 			DACSignedWrite(0, data);
 		return;
 	}
+	bprintf(0, _T("wp %X %X. "), port, data);
 }
 
 static UINT8 __fastcall fantland_sound_read_port(UINT32 port)
@@ -312,7 +313,7 @@ static UINT8 __fastcall fantland_sound_read_port(UINT32 port)
 		case 0x0101:
 			return BurnYM2151ReadStatus();
 	}
-
+	bprintf(0, _T("rp %X. "), port);
 	return 0;
 }
 
@@ -357,7 +358,9 @@ static void DrvYM2151IrqHandler(INT32 nStatus)
 {
 	if (VezGetActive() == -1) return;
 
-	VezSetIRQLineAndVector(0, 0x80/4, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	if (nStatus) VezSetIRQLineAndVector(0, 0x80/4, CPU_IRQSTATUS_AUTO);
+	// Galaxygn soundcpu will eventually crash with the traditional method, below...
+	//VezSetIRQLineAndVector(0, 0x80/4, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDACSync()
@@ -514,11 +517,11 @@ static INT32 FantlandInit()
 	VezClose();
 
 	BurnYM2151Init(3000000);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.35, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.35, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
 
 	DACInit(0, 0, 1, DrvDACSync);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -603,11 +606,11 @@ static INT32 GalaxygnInit()
 
 	BurnYM2151Init(3000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.35, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.35, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
 
 	DACInit(0, 0, 1, DrvDACSync);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -843,12 +846,14 @@ static INT32 FantlandFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		VezOpen(0);
-		nCyclesDone[0] += VezRun(nCyclesTotal[0] / nInterleave);
+		nSegment = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesDone[0] += VezRun(nSegment - nCyclesDone[0]);
 		if (i == (nInterleave - 1) && nmi_enable) VezSetIRQLineAndVector(0x20, 0xff, CPU_IRQSTATUS_AUTO);
 		VezClose();
 
 		VezOpen(1);
-		nCyclesDone[1] += VezRun(nCyclesTotal[1] / nInterleave);
+		nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
+		nCyclesDone[1] += VezRun(nSegment - nCyclesDone[1]);
 		if (game_select == 0) VezSetIRQLineAndVector(0, 0x80/4, CPU_IRQSTATUS_AUTO);
 
 		if (pBurnSoundOut) {

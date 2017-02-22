@@ -17,6 +17,8 @@ static UINT8 DrvRecalc;
 
 static UINT32 *DrvVidRAM32;
 
+static UINT8 GfxRomBank;
+
 static INT16* pAY8910Buffer[3];
 static INT16 *pFMBuffer;
 
@@ -147,7 +149,7 @@ static void blitter_execute()
 
 	// during DMA operations, the top 2 bits are ORed together, as well as the bottom 2 bits
 	// adjust the mask to account for this
-	mask |= ((mask & 0x41) << 1) | ((mask & 0x82) >> 1);
+	mask |= ((mask & 0x5) << 1) | ((mask & 0xa) >> 1);
 
 	// loop over height, then width
 	for (INT32 y = 0; y <= height; y++, dst += 256) {
@@ -160,7 +162,13 @@ static void blitter_execute()
 	}
 }
 
-void __fastcall kangaroo_main_write(UINT16 address, UINT8 data)
+static void set_gfxrombank(UINT8 bank)
+{
+	GfxRomBank = bank;
+	ZetMapArea(0xc000, 0xdfff, 0, DrvGfxROM + ((bank & 0x05) ? 0 : 0x2000));
+}
+
+static void __fastcall kangaroo_main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x8000 && address <= 0xbfff) {
 		videoram_write(address & 0x3fff, data, DrvVidControl[8]);
@@ -194,7 +202,7 @@ void __fastcall kangaroo_main_write(UINT16 address, UINT8 data)
 		case 0xe808:
 			DrvVidControl[address & 0x0f] = data;
 
-			ZetMapArea(0xc000, 0xdfff, 0, DrvGfxROM + ((data & 0x05) ? 0 : 0x2000));
+			set_gfxrombank(data);
 		return;
 
 		case 0xe809:
@@ -212,7 +220,7 @@ void __fastcall kangaroo_main_write(UINT16 address, UINT8 data)
 	}	
 }
 
-UINT8 __fastcall kangaroo_main_read(UINT16 address)
+static UINT8 __fastcall kangaroo_main_read(UINT16 address)
 {
 	if ((address & 0xec00) == 0xe400) address &= 0xfc00;
 	if ((address & 0xec00) == 0xec00) address &= 0xff00;
@@ -264,7 +272,7 @@ UINT8 __fastcall kangaroo_main_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall kangaroo_sound_read(UINT16 address)
+static UINT8 __fastcall kangaroo_sound_read(UINT16 address)
 {
 	switch (address & 0xf000)
 	{
@@ -275,7 +283,7 @@ UINT8 __fastcall kangaroo_sound_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall kangaroo_sound_write(UINT16 address, UINT8 data)
+static void __fastcall kangaroo_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address & 0xf000)
 	{
@@ -333,6 +341,7 @@ static INT32 DrvDoReset()
 	memset (AllRAM, 0, RamEnd - AllRAM);
 
 	ZetOpen(0);
+	set_gfxrombank(0x05 /*default*/);
 	ZetReset();
 	ZetNmi();
 	ZetClose();
@@ -516,32 +525,32 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	
 	if (nAction & ACB_MEMORY_RAM) {					// Scan all memory, devices & variables
 		memset(&ba, 0, sizeof(ba));
-                ba.Data	  = AllRAM;
+		ba.Data	  = AllRAM;
 		ba.nLen	  = MemEnd-AllRAM;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 		
 	}
 
-        if (nAction & ACB_DRIVER_DATA) {
-            ZetScan(nAction);
-            AY8910Scan(nAction, pnMin);
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);
+		AY8910Scan(nAction, pnMin);
 
-//            SCAN_VAR(irq_raster_position);
+		SCAN_VAR(soundlatch);
+		SCAN_VAR(kangaroo_clock);
+		SCAN_VAR(GfxRomBank);
 	}
 	
 	if (nAction & ACB_WRITE) {
-/*		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x4000));
-                ZetClose();
-*/
+		ZetOpen(0);
+		set_gfxrombank(GfxRomBank);
+		ZetClose();
 	}
 	
 	return 0;
 }
 
-INT32 DrvFrame()
+static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -564,7 +573,7 @@ INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == (nInterleave - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 		
@@ -575,20 +584,9 @@ INT32 DrvFrame()
 		nCyclesSegment = ZetRun(nCyclesSegment);
 		nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		if (i == (nInterleave - 1)) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
-
-/*		ZetOpen(0);
-		nCyclesDone[0] -= ZetRun(nCyclesDone[0] / (nInterleave - i));
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		ZetClose();
-
-		// Run Z80 #1
-		ZetOpen(1);
-		nCyclesDone[1] -= ZetRun(nCyclesDone[1] / (nInterleave - i));
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		ZetClose();*/
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {

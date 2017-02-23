@@ -544,9 +544,9 @@ void update_bg_pattern_cache(void)
             {
                 UINT8 *dst = &bg_pattern_cache[name << 6];
 
-                UINT16 bp01 = *(UINT16 *)&vdp.vram[(name << 5) | (y << 2) | (0)];
-                UINT16 bp23 = *(UINT16 *)&vdp.vram[(name << 5) | (y << 2) | (2)];
-                UINT32 temp = (bp_lut[bp01] >> 2) | (bp_lut[bp23]);
+                UINT16 *bp01 = (UINT16 *)&vdp.vram[(name << 5) | (y << 2) | (0)];
+                UINT16 *bp23 = (UINT16 *)&vdp.vram[(name << 5) | (y << 2) | (2)];
+                UINT32 temp = (bp_lut[*bp01] >> 2) | (bp_lut[*bp23]);
 
                 for(x = 0; x < 8; x++)
                 {

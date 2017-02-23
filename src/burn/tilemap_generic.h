@@ -29,10 +29,10 @@
 // Tile defines (used in tilemap_callback)
 
 // flip this tile horizontally
-#define TILE_FLIPX		(1 <<  0)
+#define TILE_FLIPX		TMAP_FLIPX
 
 // flip this tile vertically
-#define TILE_FLIPY		(1 <<  1)
+#define TILE_FLIPY		TMAP_FLIPY
 
 // ignore transparency for this tile only
 #define TILE_OPAQUE		(1 <<  2)
@@ -81,7 +81,7 @@ extern tilemap_scan( scan_cols );
 void GenericTilemapInit(INT32 which, INT32 (*pScan)(INT32 col, INT32 row), void (*pTile)(INT32 offs, INT32 *tile_gfx, INT32 *tile_code, INT32 *tile_color, UINT32 *tile_flags), UINT32 tile_width, UINT32 tile_height, UINT32 map_width, UINT32 map_height);
 
 // SetGfx sets information on the tile data the tile map is drawing.
-// THIS MUST BE USED in conjunction with GenericTilemapInit
+// This MUST be used in conjunction with GenericTilemapInit
 // num		- which graphics data to set as
 // gfxbase	- pointer to tile data
 // depth	- how many bits per pixel

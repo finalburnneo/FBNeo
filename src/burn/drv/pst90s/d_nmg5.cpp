@@ -1915,7 +1915,7 @@ static struct BurnRomInfo wondstckaRomDesc[] = {
 	{ "6.u74", 		0x80000, 0x9795ff80, 3 | BRF_GRA },	      //  9
 	{ "3.u80", 		0x80000, 0x553c5781, 3 | BRF_GRA },	      // 10
 
-	{ "8.u83 ",		0x80000, 0xf51cf9c6, 4 | BRF_GRA },	      // 11 - Sprites
+	{ "8.u83",		0x80000, 0xf51cf9c6, 4 | BRF_GRA },	      // 11 - Sprites
 //	{ "9.u82",		0x80000, 0x8c6cff4d, 4 | BRF_GRA },	      // 12 Bad dump
 	{ "9.u82",		0x80000, 0xddd3c60c, 4 | BRF_GRA },	      // 12
 	{ "7.u105",		0x80000, 0xa7fc624d, 4 | BRF_GRA },	      // 13

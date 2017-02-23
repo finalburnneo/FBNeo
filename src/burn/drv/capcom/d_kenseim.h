@@ -113,9 +113,9 @@ STDDIPINFO(Kenseim)
 
 static struct BurnRomInfo KenseimRomDesc[] = {
 	{ "knm_23.8f",     0x080000, 0xf8368900, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
-	{ "knm_21.7f",     0x080000, 0xa8025e91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "knm_21.6f",     0x080000, 0xa8025e91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 	// repeat to allocate enough memory and load in right place
-	{ "knm_21.7f",     0x080000, 0xa8025e91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "knm_21.6f",     0x080000, 0xa8025e91, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
 
 	{ "knm_01.3a",     0x080000, 0x923f0c0c, BRF_GRA | CPS1_TILES },
 	{ "knm_02.4a",     0x080000, 0xfa694f67, BRF_GRA | CPS1_TILES },

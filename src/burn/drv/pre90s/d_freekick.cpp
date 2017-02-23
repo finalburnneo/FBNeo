@@ -1416,7 +1416,7 @@ struct BurnDriver BurnDrvPbillrd = {
 // Perfect Billiard (MC-8123, 317-5008)
 
 static struct BurnRomInfo pbillrdsaRomDesc[] = {
-	{ "29",			0x4000, 0xda020258, 1 }, //  0 maincpu
+	{ "20",			0x4000, 0xda020258, 1 }, //  0 maincpu
 	{ "17",			0x8000, 0x9bb3d467, 1 }, //  1
 	{ "19",			0x4000, 0x2335e6dd, 1 }, //  2
 

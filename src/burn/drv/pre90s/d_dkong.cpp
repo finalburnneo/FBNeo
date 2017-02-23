@@ -74,6 +74,7 @@ static int dkongjr_walk = 0;
 static int page = 0,mcustatus;
 static int p[8] = { 255,255,255,255,255,255,255,255 };
 static int t[2] = { 1,1 };
+static UINT8 radarscp1 = 0;
 
 static struct BurnInputInfo DkongInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"},
@@ -1464,6 +1465,8 @@ static INT32 DrvExit()
 
 	BurnFree(AllMem);
 
+	radarscp1 = 0;
+
 	return 0;
 }
 
@@ -1737,7 +1740,7 @@ static void draw_grid()
 	const UINT8 *table = DrvGfxROM2;
 	INT32 x,y,counter;
 
-	counter = 0x400; //flip_screen ? 0x000 : 0x400;
+	counter = (radarscp1) ? 0x000 : 0x400; //flip_screen ? 0x000 : 0x400;
 
 	x = 0;
 	y = 16;
@@ -2173,7 +2176,7 @@ static INT32 Dkong3Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvRadarscp = {
 	"radarscp", NULL, NULL, NULL, "1980",
-	"Radar Scope\0", NULL, "Nintendo", "Miscellaneous",
+	"Radar Scope\0", "No sound", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscpRomInfo, radarscpRomName, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,
@@ -2235,6 +2238,7 @@ static INT32 radarscp1Init()
 		ZetOpen(0);
 		ZetSetWriteHandler(radarscp_main_write);
 		ZetClose();
+		radarscp1 = 1;
 	}
 
 	return ret;
@@ -2242,7 +2246,7 @@ static INT32 radarscp1Init()
 
 struct BurnDriver BurnDrvRadarscp1 = {
 	"radarscp1", "radarscp", NULL, NULL, "1980",
-	"Radar Scope (TRS01)\0", "No sound", "Nintendo", "Miscellaneous",
+	"Radar Scope (TRS01)\0", "No sound / Gfx Issues", "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, radarscp1RomInfo, radarscp1RomName, NULL, NULL, RadarscpInputInfo, RadarscpDIPInfo,

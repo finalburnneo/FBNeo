@@ -53,10 +53,10 @@ struct VezContext {
 	void (*runend)();
 	void (*idle)(INT32);
 
-	UINT8 * ppMemRead[512];
-	UINT8 * ppMemWrite[512];
-	UINT8 * ppMemFetch[512];
-	UINT8 * ppMemFetchData[512];
+	UINT8 * ppMemRead[2048];
+	UINT8 * ppMemWrite[2048];
+	UINT8 * ppMemFetch[2048];
+	UINT8 * ppMemFetchData[2048];
 
 	// Handlers
  #ifdef FASTCALL
@@ -75,7 +75,7 @@ struct VezContext {
 static struct VezContext *VezCPUContext[MAX_VEZ] = { NULL, NULL, NULL, NULL };
 struct VezContext *VezCurrentCPU = 0;
 
-#define VEZ_MEM_SHIFT	11
+#define VEZ_MEM_SHIFT	9
 #define VEZ_MEM_MASK	((1 << VEZ_MEM_SHIFT) - 1)
 
 static INT32 nCPUCount = 0;

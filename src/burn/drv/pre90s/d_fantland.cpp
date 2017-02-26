@@ -1,13 +1,6 @@
 // FB Alpha Fantasy Land driver module
 // Based on MAME driver by Luca Elia
 
-// todo:
-//
-// 1: wheelrun wheel *done*
-// 2: wheelrun pic missing on title screen
-// 3: galaxygn sound *done* (cpu core interface bug)
-//
-
 #include "tiles_generic.h"
 #include "nec_intf.h"
 #include "z80_intf.h"

@@ -91,11 +91,17 @@ static int GetInput(bool bCopy)
 	return 0;
 }
 
+static time_t fpstimer;
+static unsigned int nPreviousFrames;
+
+static void DisplayFPSInit()
+{
+	fpstimer = clock();
+	nPreviousFrames = nFramesRendered;
+}
+
 static void DisplayFPS()
 {
-	static time_t fpstimer;
-	static unsigned int nPreviousFrames;
-
 	TCHAR fpsstring[8];
 	time_t temptime = clock();
 	double fps = (double)(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
@@ -331,6 +337,8 @@ int RunReset()
 	nNormalLast = 0; nNormalFrac = 0;
 	// Reset FPS display
 	nDoFPS = 0;
+
+	DisplayFPSInit();
 
 	if (!bAudPlaying) {
 		// run without sound

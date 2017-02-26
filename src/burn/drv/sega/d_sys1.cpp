@@ -4281,7 +4281,7 @@ static INT32 MemIndex()
 
 	RamStart = Next;
 
-	System1Ram1            = Next; Next += 0x0040fd;
+	System1Ram1            = Next; Next += 0x004100;
 	System1Ram2            = Next; Next += 0x000800;
 	System1SpriteRam       = Next; Next += 0x000800;
 	System1PaletteRam      = Next; Next += 0x000800;

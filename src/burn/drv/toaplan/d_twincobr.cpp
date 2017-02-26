@@ -39,7 +39,7 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvJoy4[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
-static UINT16 DrvInputs[4];
+static UINT8 DrvInputs[4];
 
 static UINT16 scrollx[4];
 static UINT16 scrolly[4];
@@ -1264,7 +1264,7 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 4*sizeof(INT16));
+		memset (DrvInputs, 0, 4);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -1334,56 +1334,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_MEMORY_RAM)
-	{	
-		ba.Data		= Drv68KRAM;
-		ba.nLen		= 0x004000;
-		ba.nAddress	= 0x030000;
-		ba.szName	= "68k RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvPalRAM;
-		ba.nLen		= 0x000e00;
-		ba.nAddress	= 0x050000;
-		ba.szName	= "Palette RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvSprRAM;
-		ba.nLen		= 0x001000;
-		ba.nAddress	= 0x040000;
-		ba.szName	= "Sprite RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvSprBuf;
-		ba.nLen		= 0x001000;
-		ba.nAddress	= 0x041000;
-		ba.szName	= "Sprite RAM Buffer";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvShareRAM;
-		ba.nLen		= 0x000800;
-		ba.nAddress	= 0x07a000;
-		ba.szName	= "Shared RAM (with z80)";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvBgRAM;
-		ba.nLen		= 0x004000;
-		ba.nAddress	= 0xff0000;
-		ba.szName	= "Bg RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvFgRAM;
-		ba.nLen		= 0x002000;
-		ba.nAddress	= 0xff4000;
-		ba.szName	= "Fg RAM";
-		BurnAcb(&ba);
-
-		ba.Data		= DrvTxRAM;
-		ba.nLen		= 0x001000;
-		ba.nAddress	= 0xff6000;
-		ba.szName	= "Tx RAM";
+	{
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= AllRam;
+		ba.nLen		= RamEnd - AllRam;
+		ba.szName	= "RAM";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		SekScan(nAction);
@@ -1402,13 +1360,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dsp_addr_w);
 		SCAN_VAR(dsp_execute);
 		SCAN_VAR(dsp_BIO);
+		SCAN_VAR(dsp_on);
+		SCAN_VAR(scrollx);
+		SCAN_VAR(scrolly);
+		SCAN_VAR(vidramoffs);
 
 		SCAN_VAR(fsharkbt_8741);
 	}
 
 	return 0;
 }
-
 
 
 // Twin Cobra (World)

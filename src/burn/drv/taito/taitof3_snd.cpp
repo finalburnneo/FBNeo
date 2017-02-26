@@ -13,6 +13,7 @@ UINT8 *TaitoF3SharedRam = NULL;
 UINT8 *TaitoES5510DSPRam = NULL;
 UINT32 *TaitoES5510GPR = NULL;
 UINT16 *TaitoES5510DRAM = NULL;
+double TaitoF3VolumeOffset = 0.0;
 
 static INT32 TaitoF3Counter;
 static INT32 TaitoF3VectorReg;
@@ -270,7 +271,7 @@ void TaitoF3VolumeCallback(INT32 offset, INT32 data)
 {
 	if (offset > 1) {
 		offset = (offset & 1) ? BURN_SND_ES5506_ROUTE_RIGHT : BURN_SND_ES5506_ROUTE_LEFT;
-		ES5506SetRoute(0, (double)(data / 100.00), offset);
+		ES5506SetRoute(0, (double)(data / 100.00) + TaitoF3VolumeOffset, offset);
 	}
 }
 
@@ -314,6 +315,7 @@ void TaitoF3SoundExit()
 	TaitoF3SharedRam = NULL;
 	TaitoES5510DSPRam = NULL;
 	TaitoES5510GPR = NULL;
+	TaitoF3VolumeOffset = 0.0;
 
 	TaitoF3ES5506RomSize = 0;
 

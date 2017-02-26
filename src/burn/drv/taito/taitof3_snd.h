@@ -6,6 +6,7 @@ extern UINT8 *TaitoES5510DSPRam;	// 512 Bytes
 extern UINT32 *TaitoES5510GPR;		// 192x4 Bytes
 extern UINT16 *TaitoES5510DRAM;     // 4 MB
 extern INT32 TaitoF3ES5506RomSize;	//
+extern double TaitoF3VolumeOffset;  // Games set their own volume (mb87078), but sometimes it is too low (superchs).
 
 void TaitoF3SoundReset();
 void TaitoF3SoundExit();

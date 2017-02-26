@@ -768,15 +768,15 @@ static void SuperchsDraw()
 
 	SuperchsMakeSpriteList(48, -116 - 16);
 
-	TC0480SCPTilemapRender(Layer[0], 1, TaitoChars);
-	TC0480SCPTilemapRender(Layer[1], 0, TaitoChars);
-	SuperchsRenderSpriteList(0);
-	TC0480SCPTilemapRender(Layer[2], 0, TaitoChars);
-	TC0480SCPTilemapRender(Layer[3], 0, TaitoChars);
-	SuperchsRenderSpriteList(1);
-	SuperchsRenderSpriteList(2);
+	if (nBurnLayer & 1) TC0480SCPTilemapRender(Layer[0], 1, TaitoChars);
+	if (nBurnLayer & 2) TC0480SCPTilemapRender(Layer[1], 0, TaitoChars);
+	if (nSpriteEnable & 1) SuperchsRenderSpriteList(0);
+	if (nBurnLayer & 4) TC0480SCPTilemapRender(Layer[2], 0, TaitoChars);
+	if (nBurnLayer & 8) TC0480SCPTilemapRender(Layer[3], 0, TaitoChars);
+	if (nSpriteEnable & 2) SuperchsRenderSpriteList(1);
+	if (nSpriteEnable & 4) SuperchsRenderSpriteList(2);
 	TC0480SCPRenderCharLayer();
-	SuperchsRenderSpriteList(3);
+	if (nSpriteEnable & 8) SuperchsRenderSpriteList(3);
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
 }

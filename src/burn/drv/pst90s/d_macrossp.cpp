@@ -790,40 +790,26 @@ static void tilemap_update(INT32 map)
 static void draw_roz(UINT16 *sbitmap, INT32 sy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy, INT32 priority)
 {
 	starty += sy * incyy;
-
-	INT32 x = 0;
 	UINT32 cx = startx;
 
 	UINT16 *src = sbitmap + ((starty >> 16) & 0x3ff) * 0x400;
 	UINT8 *pri = pPrioDraw + (sy * nScreenWidth);
 	UINT16 *dest = pTransDraw + (sy * nScreenWidth);
 
-	if (incxx == 0x10000)
-	{
-		startx >>= 16;
+	INT32 x = 0;
 
-		for (INT32 x = 0; x < nScreenWidth; x++,startx++) {
-			if ((src[(startx&0x3ff)] & 0x8000) == 0) {
-				dest[x] = src[(startx&0x3ff)];
-			}
-		}
-		return;
-	}
-	else
+	while (x < nScreenWidth)
 	{
-		while (x < nScreenWidth)
+		if ((src[(cx >> 16) & 0x3ff] & 0x8000) == 0)
 		{
-			if ((src[(cx >> 16) & 0x3ff] & 0x8000) == 0)
-			{
-				*dest = src[(cx >> 16) & 0x3ff];
-				*pri = priority;
-			}
-
-			cx += incxx;
-			x++;
-			++dest;
-			pri++;
+			*dest = src[(cx >> 16) & 0x3ff];
+			*pri = priority;
 		}
+
+		cx += incxx;
+		x++;
+		++dest;
+		pri++;
 	}
 }
 

@@ -1,10 +1,6 @@
 // FB Alpha Macross Plus driver module
 // Based on MAME driver by David Haywood
 
-// notes:
-//	quizmoon inputs do not work!
-//	background zoom is not emulated at all
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "es5506.h"
@@ -31,6 +27,10 @@ static UINT8 *DrvPalRAM;
 static UINT8 *Drv68KRAM0;
 static UINT8 *Drv68KRAM1;
 static UINT8 *DrvSprBuf[2];
+
+static UINT16 *tilemaps[4];
+static UINT8 *dirty_tiles[4];
+static INT32 dirty_layer[4];
 
 static UINT32 *Palette;
 static UINT32 *DrvPalette;
@@ -191,6 +191,7 @@ static void __fastcall macrossp_main_write_word(UINT32 address, UINT16 data)
 			data &= 0xff;
 			if (data != 0xff) {
 				palette_fade = (UINT8)(0xff - ((data & 0xff) - 40) / 212.0 * 255.0);
+				DrvRecalc = 1;
 			}
 		}
 		return;
@@ -242,6 +243,86 @@ static UINT8 __fastcall macrossp_main_read_byte(UINT32 address)
 	}
 
 	return 0;
+}
+
+static void __fastcall macrossp_vidram_write_long(UINT32 address, UINT32 data)
+{
+	INT32 select = (address / 0x8000) & 3;
+	address = (address & 0x3ffc) / 4;
+
+	UINT32 *ram = (UINT32*)DrvVidRAM[select];
+
+	data = (data << 16) | (data >> 16);
+
+	if (ram[address] != data) {
+		ram[address] = data;
+		dirty_tiles[select][address/1] = 1;
+		dirty_layer[select] = 1;
+	}
+}
+
+static void __fastcall macrossp_vidram_write_word(UINT32 address, UINT16 data)
+{
+	INT32 select = (address / 0x8000) & 3;
+
+	address = (address & 0x3ffe) / 2;
+
+	UINT16 *ram = (UINT16*)DrvVidRAM[select];
+
+	if (ram[address] != data) {
+		ram[address] = data;
+		dirty_tiles[select][address/2] = 1;
+		dirty_layer[select] = 1;
+	}
+}
+
+
+static void __fastcall macrossp_vidram_write_byte(UINT32 address, UINT8 data)
+{
+	INT32 select = (address / 0x8000) & 3;
+
+	address &= 0x3fff;
+
+	if (DrvVidRAM[select][address^1] != data) {
+		DrvVidRAM[select][address^1] = data;
+		dirty_tiles[select][address/4] = 1;
+		dirty_layer[select] = 1;
+	}
+}
+
+static inline void palette_write(INT32 offset)
+{
+	UINT32 p = *((UINT32*)(DrvPalRAM + offset));
+
+	UINT8 r = p >>  8;
+	UINT8 g = p >>  0;
+	UINT8 b = p >> 24;
+
+	r = (r * palette_fade) / 255;
+	g = (g * palette_fade) / 255;
+	b = (b * palette_fade) / 255;
+
+	Palette[offset/4] = (r * 0x10000) + (g * 0x100) + b;
+	DrvPalette[offset/4] = BurnHighCol(r,g,b,0);
+}
+
+static void __fastcall macrossp_palette_write_long(UINT32 address, UINT32 data)
+{
+	*((UINT32*)(DrvPalRAM + (address & 0x3ffc))) = (data << 16) | (data >> 16);
+	palette_write(address & 0x3ffc);
+
+}
+
+static void __fastcall macrossp_palette_write_word(UINT32 address, UINT16 data)
+{
+	*((UINT16*)(DrvPalRAM + (address & 0x3ffe))) = data;
+	palette_write(address & 0x3ffc);
+}
+
+static void __fastcall macrossp_palette_write_byte(UINT32 address, UINT8 data)
+{
+	DrvPalRAM[(address & 0x3fff)^1] = data;
+	palette_write(address & 0x3ffc);
 }
 
 static UINT8 __fastcall macrossp_sound_read_byte(UINT32 /*address*/)
@@ -353,6 +434,11 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
+	memset (dirty_tiles[0], 1, 64*64);
+	memset (dirty_tiles[1], 1, 64*64);
+	memset (dirty_tiles[2], 1, 64*64);
+	dirty_layer[0] = dirty_layer[1] = dirty_layer[2] = 1;
+
 	SekOpen(0);
 	SekReset();
 	SekClose();
@@ -421,6 +507,14 @@ static INT32 MemIndex()
 	Drv68KRAM1		= Next; Next += 0x008000;
 
 	RamEnd			= Next;
+
+	tilemaps[0]		= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
+	tilemaps[1]		= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
+	tilemaps[2]		= (UINT16*)Next; Next += (16 * 64) * (16 * 64) * 2;
+
+	dirty_tiles[0]		= Next; Next += 64 * 64;
+	dirty_tiles[1]		= Next; Next += 64 * 64;
+	dirty_tiles[2]		= Next; Next += 64 * 64;
 
 	MemEnd			= Next;
 
@@ -537,13 +631,13 @@ static INT32 DrvInit(INT32 select)
 	SekOpen(0);
 	SekMapMemory(Drv68KROM0,		0x000000, 0x3fffff, MAP_ROM);
 	SekMapMemory(DrvSprRAM,			0x800000, 0x802fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM[0],		0x900000, 0x903fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM[0],		0x900000, 0x903fff, MAP_RAM); // handler
 	SekMapMemory(DrvZoomRAM[0],		0x904000, 0x9043ff, MAP_RAM); // + 0x200
 	SekMapMemory(DrvVidReg[0],		0x905000, 0x9053ff, MAP_RAM); // 0-b
-	SekMapMemory(DrvVidRAM[1],		0x908000, 0x90bfff, MAP_RAM);
+	SekMapMemory(DrvVidRAM[1],		0x908000, 0x90bfff, MAP_RAM); // handler
 	SekMapMemory(DrvZoomRAM[1],		0x90c000, 0x90c3ff, MAP_RAM); // + 0x200
 	SekMapMemory(DrvVidReg[1],		0x90d000, 0x90d3ff, MAP_RAM); // 0-b
-	SekMapMemory(DrvVidRAM[2],		0x910000, 0x913fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM[1],		0x910000, 0x913fff, MAP_RAM); // handler
 	SekMapMemory(DrvZoomRAM[2],		0x914000, 0x9143ff, MAP_RAM); // + 0x200
 	SekMapMemory(DrvVidReg[2],		0x915000, 0x9153ff, MAP_RAM); // 0-b
 	SekMapMemory(DrvVidRAM[3],		0x918000, 0x91bfff, MAP_RAM);
@@ -557,6 +651,26 @@ static INT32 DrvInit(INT32 select)
 	SekSetReadLongHandler(0,		macrossp_main_read_long);
 	SekSetReadWordHandler(0,		macrossp_main_read_word);
 	SekSetReadByteHandler(0,		macrossp_main_read_byte);
+
+	SekMapHandler(1,			0x900000, 0x903fff, MAP_WRITE);
+	SekSetWriteLongHandler(1,		macrossp_vidram_write_long);
+	SekSetWriteWordHandler(1,		macrossp_vidram_write_word);
+	SekSetWriteByteHandler(1,		macrossp_vidram_write_byte);
+
+	SekMapHandler(2,			0x908000, 0x90bfff, MAP_WRITE);
+	SekSetWriteLongHandler(2,		macrossp_vidram_write_long);
+	SekSetWriteWordHandler(2,		macrossp_vidram_write_word);
+	SekSetWriteByteHandler(2,		macrossp_vidram_write_byte);
+
+	SekMapHandler(3,			0x910000, 0x913fff, MAP_WRITE);
+	SekSetWriteLongHandler(3,		macrossp_vidram_write_long);
+	SekSetWriteWordHandler(3,		macrossp_vidram_write_word);
+	SekSetWriteByteHandler(3,		macrossp_vidram_write_byte);
+
+	SekMapHandler(4,			0xa00000, 0xa03fff, MAP_WRITE);
+	SekSetWriteLongHandler(4,		macrossp_palette_write_long);
+	SekSetWriteWordHandler(4,		macrossp_palette_write_word);
+	SekSetWriteByteHandler(4,		macrossp_palette_write_byte);
 	SekClose();
 
 	SekInit(1, 0x68000);
@@ -620,6 +734,135 @@ static void palette_update()
 
 		Palette[i] = (r * 0x10000) + (g * 0x100) + b;
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
+	}
+}
+
+static void tilemap_update(INT32 map)
+{
+	if (dirty_layer[map] == 0) return;
+
+	dirty_layer[map] = 0;
+
+	UINT32 *ram = (UINT32*)DrvVidRAM[map];
+
+	UINT8 *gfxbase[3] = { DrvGfxROM1, DrvGfxROM2, DrvGfxROM3 };
+
+	INT32 fliptab[4] = { 0, 0x0f, 0xf0, 0xff };
+
+	for (INT32 offs = 0; offs < 64 * 64; offs++)
+	{
+		if (dirty_tiles[map][offs] == 0) continue;
+		dirty_tiles[map][offs] = 0;
+
+		INT32 sx = (offs & 0x3f) * 16;
+		INT32 sy = (offs / 0x40) * 16;
+
+		UINT16 attr = ram[offs];
+		UINT16 code = (ram[offs] >> 16) & 0x7fff;
+
+		INT32 color;
+		if (color_mask[map] == 7)
+			color = (attr << 1) & 0x1c;
+		else
+			color = (attr >> 1) & 0x1f;
+
+		color = (color * 0x40) + 0x800;
+		UINT8 *gfx = gfxbase[map] + (code * 0x100);
+		UINT16 *dst = tilemaps[map] + (sy * 0x400) + sx;
+
+		INT32 flip = fliptab[(attr >> 14) & 3];
+
+		for (INT32 y = 0; y < 16; y++)
+		{
+			for (INT32 x = 0; x < 16; x++)
+			{
+				INT32 pxl = gfx[((y*16)+x)^flip];
+
+				dst[x] = pxl + color;
+				if (pxl == 0) dst[x] |= 0x8000;
+			}
+
+			dst += 0x400;
+		}
+	}
+}
+
+static void draw_roz(UINT16 *sbitmap, INT32 sy, UINT32 startx, UINT32 starty, INT32 incxx, INT32 incyy, INT32 priority)
+{
+	starty += sy * incyy;
+
+	INT32 x = 0;
+	UINT32 cx = startx;
+
+	UINT16 *src = sbitmap + ((starty >> 16) & 0x3ff) * 0x400;
+	UINT8 *pri = pPrioDraw + (sy * nScreenWidth);
+	UINT16 *dest = pTransDraw + (sy * nScreenWidth);
+
+	if (incxx == 0x10000)
+	{
+		startx >>= 16;
+
+		for (INT32 x = 0; x < nScreenWidth; x++,startx++) {
+			if ((src[(startx&0x3ff)] & 0x8000) == 0) {
+				dest[x] = src[(startx&0x3ff)];
+			}
+		}
+		return;
+	}
+	else
+	{
+		while (x < nScreenWidth)
+		{
+			if ((src[(cx >> 16) & 0x3ff] & 0x8000) == 0)
+			{
+				*dest = src[(cx >> 16) & 0x3ff];
+				*pri = priority;
+			}
+
+			cx += incxx;
+			x++;
+			++dest;
+			pri++;
+		}
+	}
+}
+
+static void draw_layer(INT32 layer, INT32 pri)
+{
+	UINT32 *reg = (UINT32*)DrvVidReg[layer];
+
+	if ((reg[2] & 0xf000) == 0xe000)
+	{
+		UINT16 *map = (UINT16*)tilemaps[layer];
+		UINT32 *lz = (UINT32*)(DrvZoomRAM[layer] + 0x200);
+
+		tilemap_update(layer);
+
+		INT32 startx = (reg[0] & 0x3ff0000);
+		INT32 starty = (reg[0] & 0x00003ff) << 16;
+		INT32 incy   = (reg[2] & 0x00001ff) << 10;
+		INT32 sy     = starty - (240/2) * (incy - 0x10000);
+
+		for (INT32 line = 0; line < 240; line++)
+		{
+			UINT32 incx;
+
+			if (line & 1)
+				incx = (lz[line/2] & 0xffff0000)>>6;
+			else
+				incx = (lz[line/2] & 0x0000ffff)<<10;
+	
+			INT32 sx = startx - (368/2) * (incx - 0x10000);
+
+			draw_roz(map, line, sx, sy, incx, incy, 1 << pri);
+		}
+	}
+	else
+	{
+		GenericTilemapSetScrollX(layer+1, reg[0] >> 16);
+		GenericTilemapSetScrollY(layer+1, reg[0] & 0xffff);
+
+		if (nBurnLayer & (1 << (layer+1))) GenericTilemapDraw(layer+1, pTransDraw, 1 << pri);
 	}
 }
 
@@ -801,24 +1044,29 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		palette_update();
-		DrvRecalc = 1;	
+		DrvRecalc = 0;	
 	}
-
 
 	UINT32 reg[3] = { *((UINT32*)DrvVidReg[0]), *((UINT32*)DrvVidReg[1]), *((UINT32*)DrvVidReg[2]) };
 
 	UINT32 layerpri[3] = { (reg[0] >> 30) & 3, (reg[1] >> 30) & 3, (reg[2] >> 30) & 3 };
 
+	INT32 pcmask[3];
+
+	pcmask[0] = color_mask[0];
+	pcmask[1] = color_mask[1];
+	pcmask[2] = color_mask[2];
+
 	color_mask[0] = (reg[0] & 0x8000000) ? 0x7 : 0x1f;
 	color_mask[1] = (reg[1] & 0x8000000) ? 0x7 : 0x1f;
 	color_mask[2] = (reg[2] & 0x8000000) ? 0x7 : 0x1f;
 
-//	GenericTilemapSetScrollX(1, reg[0] >> 16);
-//	GenericTilemapSetScrollY(1, reg[0] >> 0);
-//	GenericTilemapSetScrollX(2, reg[1] >> 16);
-//	GenericTilemapSetScrollY(2, reg[1] >> 0);
-//	GenericTilemapSetScrollX(3, reg[2] >> 16);
-//	GenericTilemapSetScrollY(3, reg[2] >> 0);
+	for (INT32 i = 0; i < 3; i++) {
+		if (color_mask[i] != pcmask[i]) {
+			memset (dirty_tiles[i], 1, 64*64);
+			dirty_layer[i] = 1;
+		}
+	}
 
 	BurnTransferClear();
 
@@ -826,24 +1074,9 @@ static INT32 DrvDraw()
 	{
 		for (INT32 layer = 2; layer >= 0; layer--)
 		{
-			if (layerpri[layer] == pri)
+			if (layerpri[layer] == (UINT32)pri)
 			{
-				UINT32 *vreg = (UINT32*)DrvVidReg[layer];
-
-				INT32 zoom_layer = ((vreg[2] & 0xf000) == 0xe000) ? 1 : 0;
-
-				INT32 scrollx = reg[layer] >> 16;
-				INT32 scrolly = reg[layer] & 0xffff;
-
-				if (zoom_layer) {
-					scrollx -= (368 / 2);
-					scrolly -= (240 / 2);
-				}
-
-				GenericTilemapSetScrollX(layer + 1, scrollx);
-				GenericTilemapSetScrollY(layer + 1, scrolly);
-
-				if (nBurnLayer & (1 << (layer + 1))) GenericTilemapDraw(layer + 1, pTransDraw, 1 << pri);
+				draw_layer(layer, pri);
 			}
 		}
 	}

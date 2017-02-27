@@ -1153,6 +1153,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_toggle);
 	}
 
+	if (nAction & ACB_WRITE) {
+		dirty_layer[0] = 1;
+		dirty_layer[1] = 1;
+		dirty_layer[2] = 1;
+		memset (dirty_tiles[0], 1, 64*64);
+		memset (dirty_tiles[1], 1, 64*64);
+		memset (dirty_tiles[1], 1, 64*64);
+		DrvRecalc = 1;
+	}
+
 	return 0;
 }
 

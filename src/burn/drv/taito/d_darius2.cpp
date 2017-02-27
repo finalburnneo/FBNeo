@@ -1751,7 +1751,7 @@ static void Darius2dRenderSprites(INT32 PriorityDraw)
 		
 		if (Priority != PriorityDraw) continue;
 
-		y -= (Warriorb) ? 8 : 16;
+		y -= (Warriorb) ? 8 : 16+8; //darius2d (16+8)
 
 		if (x > 0x3c0) x -= 0x400;
 		if (y > 0x180) y -= 0x200;

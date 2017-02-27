@@ -10,7 +10,9 @@
 
   June 07, 2016 - Added Burgertime Mode                              [dink]
                   This feature eliminates the horrible hissing noise
-				  present in the game.
+				  present in the game.  Note: no longer used!  Code moved to
+				  driver-level.  Keeping this just in-case it might be usefull
+				  for something else.
 
 ***************************************************************************/
 

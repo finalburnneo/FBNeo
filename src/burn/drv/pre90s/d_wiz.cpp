@@ -1,7 +1,5 @@
 // Wiz Todo:
-//
-// stinger: hook-up discrete samples
-// scion: static in audio is normal (no kidding)
+// scion: static in audio is normal (no kidding), use scionc!
 //
 
 #include "tiles_generic.h"
@@ -11,6 +9,7 @@
 extern "C" {
 #include "ay8910.h"
 }
+#include "samples.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -49,6 +48,8 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+
+static UINT8 bHasSamples = 0;
 
 static UINT8 Wizmode = 0;
 static UINT8 Scionmodeoffset = 0;
@@ -457,6 +458,8 @@ STDDIPINFO(Wiz)
 
 void __fastcall wiz_main_write(UINT16 address, UINT8 data)
 {
+	static INT32 lastboom = 0;
+
 	switch (address)
 	{
 		case 0xc800:
@@ -499,13 +502,31 @@ void __fastcall wiz_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf800:
-			if (data != 0x90) {
-				*soundlatch = data;
-			}
+			*soundlatch = data;
 		return;
 
-		case 0xf808:
-		case 0xf80a: // discrete sound
+		case 0xf808: { // Explosions!
+			switch (ZetGetPC(-1)) {
+				case 0x3394: if (!BurnSampleGetStatus(2)) BurnSamplePlay(2); break; // plr death
+
+    			default: { // enemy death (scion/scionc)
+					if (lastboom + 1 == nCurrentFrame || lastboom == nCurrentFrame) {
+						lastboom = nCurrentFrame;
+					} else {
+						BurnSamplePlay(1);
+						lastboom = nCurrentFrame;
+					}
+					break;
+				}
+			}
+		}
+		return;
+
+		case 0xf80a: {
+			// Pew! Pew!
+			BurnSamplePlay(0);
+			lastboom = 0;
+		}
 		return;
 
 		case 0xf818:
@@ -616,6 +637,8 @@ static INT32 DrvDoReset()
 	AY8910Reset(1);
 	AY8910Reset(2);
 
+	BurnSampleReset();
+
 	return 0;
 }
 
@@ -659,7 +682,7 @@ static INT32 MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000300;
 
-	DrvPalette		= (unsigned int*)Next; Next += 0x0100 * sizeof(int);
+	DrvPalette		= (unsigned int*)Next; Next += 0x0100 * sizeof(INT32);
 
 	AllRam			= Next;
 
@@ -830,39 +853,23 @@ static INT32 DrvInit(int (*RomLoadCallback)())
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM0);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xd3ff, 0, DrvVidRAM1);
-	ZetMapArea(0xd000, 0xd3ff, 1, DrvVidRAM1);
-	ZetMapArea(0xd000, 0xd3ff, 2, DrvVidRAM1);
-	ZetMapArea(0xd400, 0xd7ff, 1, DrvColRAM1);
-	ZetMapArea(0xd400, 0xd7ff, 2, DrvColRAM1);
-	ZetMapArea(0xd800, 0xd8ff, 0, DrvSprRAM1); // 00 - 3f attributs, 40-5f sprites, 60+ junk
-	ZetMapArea(0xd800, 0xd8ff, 1, DrvSprRAM1);
-	ZetMapArea(0xd800, 0xd8ff, 2, DrvSprRAM1);
-	ZetMapArea(0xe000, 0xe3ff, 0, DrvVidRAM0);
-	ZetMapArea(0xe000, 0xe3ff, 1, DrvVidRAM0);
-	ZetMapArea(0xe000, 0xe3ff, 2, DrvVidRAM0);
-	ZetMapArea(0xe400, 0xe7ff, 0, DrvColRAM0); //just ram?
-	ZetMapArea(0xe400, 0xe7ff, 1, DrvColRAM0);
-	ZetMapArea(0xe400, 0xe7ff, 2, DrvColRAM0);
-	ZetMapArea(0xe800, 0xe8ff, 0, DrvSprRAM0); // 00 - 3f attributs, 40-5f sprites, 60+ junk
-	ZetMapArea(0xe800, 0xe8ff, 1, DrvSprRAM0);
-	ZetMapArea(0xe800, 0xe8ff, 2, DrvSprRAM0);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0, 0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM1, 0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(DrvColRAM1, 0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM1, 0xd800, 0xd8ff, MAP_RAM); // 00 - 3f attributs, 40-5f sprites, 60+ junk
+	ZetMapMemory(DrvVidRAM0, 0xe000, 0xe3ff, MAP_RAM);
+	ZetMapMemory(DrvColRAM0, 0xe400, 0xe7ff, MAP_RAM); //just ram?
+	ZetMapMemory(DrvSprRAM0, 0xe800, 0xe8ff, MAP_RAM); // 00 - 3f attributs, 40-5f sprites, 60+ junk
+
 	ZetSetWriteHandler(wiz_main_write);
 	ZetSetReadHandler(wiz_main_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x1fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x1fff, 2, DrvZ80ROM1);
-	ZetMapArea(0x2000, 0x23ff, 0, DrvZ80RAM1);
-	ZetMapArea(0x2000, 0x23ff, 1, DrvZ80RAM1);
-	ZetMapArea(0x2000, 0x23ff, 2, DrvZ80RAM1);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x1fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0x2000, 0x23ff, MAP_RAM);
 	ZetSetWriteHandler(wiz_sound_write);
 	ZetSetReadHandler(wiz_sound_read);
 	ZetClose();
@@ -873,6 +880,10 @@ static INT32 DrvInit(int (*RomLoadCallback)())
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
+
+	BurnSampleInit(1);
+	BurnSampleSetAllRoutesAllSamples(0.05, BURN_SND_ROUTE_BOTH);
+    bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	GenericTilesInit();
 
@@ -890,12 +901,14 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 	AY8910Exit(2);
+	BurnSampleExit();
 
 	free (AllMem);
 	AllMem = NULL;
 
 	Wizmode = 0;
 	Scionmodeoffset = 0;
+	bHasSamples = 0;
 
 	return 0;
 }
@@ -925,15 +938,12 @@ static void draw_background(INT16 bank, INT16 palbank, INT16 colortype)
 			if (screen_flip[0]) { // flipx
 				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, (sx << 3) ^ 0xf8, sy - 16, color, 3, 0, 0, DrvGfxROM0);
 			} else {
-//				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx << 3, (248 - (sy <<3)) + 16, color, 3, 0, 0, DrvGfxROM0);
 				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx << 3, sy - 16, color, 3, 0, 0, DrvGfxROM0);
 			}
 		} else {
 			if (screen_flip[0]) { // flipx
-//				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, (sx << 3) ^ 0xf8, (sy <<3) + 16, color, 3, 0, 0, DrvGfxROM0);
 				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, (sx << 3) ^ 0xf8, sy - 16, color, 3, 0, 0, DrvGfxROM0);
 			} else {
-//				Render8x8Tile_Mask_Clip(pTransDraw, code, sx << 3, (sy <<3) + 16, color, 3, 0, 0, DrvGfxROM0);
 				Render8x8Tile_Mask_Clip(pTransDraw, code, (sx << 3)-Scionmodeoffset, sy - 16, color, 3, 0, 0, DrvGfxROM0);
 			}
 		}
@@ -970,22 +980,6 @@ static void draw_foreground(INT16 palbank, INT16 colortype)
 		if (screen_flip[0]) sx = 31 - sx;
 
 		Render8x8Tile_Mask_Clip(pTransDraw, code, (sx << 3)-Scionmodeoffset, sy-16, color, 3, 0, 0, DrvGfxROM0);
-
-/*
-		if (screen_flip[1]) { // flipy
-			if (screen_flip[0]) { // flipx
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, (sx << 3) ^ 0xf8, (248 - sy) - 16, color, 3, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx << 3, (248 - sy) - 16, color, 3, 0, 0, DrvGfxROM0);
-			}
-		} else {
-			if (screen_flip[0]) { // flipx
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, (sx << 3) ^ 0xf8, sy - 16, color, 3, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx << 3, sy - 16, color, 3, 0, 0, DrvGfxROM0);
-			}
-		}
-*/
 	}
 }
 
@@ -1102,26 +1096,40 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 16;
-	INT32 nCyclesTotal[2] = { 3072000 / 60, 1789750 / 60 };
+	INT32 nCyclesTotal[2] = { 3072000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[2]  = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if ((i & 0x0f) == 0x0f && interrupt_enable[0]) ZetNmi();
+		if (i == (nInterleave - 1) && interrupt_enable[0]) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if ((i & 0x03) == 0x03 && interrupt_enable[1]) ZetNmi();
+		if ((i % 4) == 0x03 && interrupt_enable[1]) ZetNmi();
 		ZetClose();
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
+		}
 	}
-  
+
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -1129,6 +1137,41 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {
+		*pnMin = 0x029698;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		ZetScan(nAction);
+
+		AY8910Scan(nAction, pnMin);
+		BurnSampleScan(nAction, pnMin);
+	}
+
+	return 0;
+}
+
+static struct BurnSampleInfo stingerSampleDesc[] = {
+	{"pewpew",      SAMPLE_NOLOOP   },
+	{"boomshort",   SAMPLE_NOLOOP   },
+	{"boomlong",    SAMPLE_NOLOOP   },
+	{"",            0               }
+};
+
+STD_SAMPLE_PICK(stinger)
+STD_SAMPLE_FN(stinger)
 
 // Wiz
 
@@ -1168,7 +1211,7 @@ struct BurnDriver BurnDrvWiz = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, wizRomInfo, wizRomName, NULL, NULL, WizInputInfo, WizDIPInfo,
-	WizInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	WizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
@@ -1203,7 +1246,7 @@ struct BurnDriver BurnDrvWizt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, wiztRomInfo, wiztRomName, NULL, NULL, WizInputInfo, WizDIPInfo,
-	WizInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	WizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
@@ -1239,7 +1282,7 @@ struct BurnDriver BurnDrvWizta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, wiztaRomInfo, wiztaRomName, NULL, NULL, WizInputInfo, WizDIPInfo,
-	WizInit, DrvExit, DrvFrame, DrvDraw, NULL, 
+	WizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
@@ -1270,6 +1313,7 @@ STD_ROM_FN(kungfut)
 
 static INT32 KungfutInit()
 {
+	Wizmode = 1;
 	return DrvInit(KungfutLoadRoms);
 }
 
@@ -1279,8 +1323,8 @@ struct BurnDriver BurnDrvKungfut = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, kungfutRomInfo, kungfutRomName, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
-	KungfutInit, DrvExit, DrvFrame, KungfutDraw, NULL,  
-	&DrvRecalc, 0x100, 256, 256, 4, 3
+	KungfutInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
+	&DrvRecalc, 0x100, 256, 224, 4, 3
 };
 
 // Kung-Fu Taikun (alt)
@@ -1314,8 +1358,8 @@ struct BurnDriver BurnDrvKungfuta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, kungfutaRomInfo, kungfutaRomName, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
-	KungfutInit, DrvExit, DrvFrame, KungfutDraw, NULL, 
-	&DrvRecalc, 0x100, 256, 256, 4, 3
+	KungfutInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
+	&DrvRecalc, 0x100, 256, 224, 4, 3
 };
 
 // Stinger
@@ -1386,12 +1430,12 @@ static INT32 StingerInit()
 }
 
 struct BurnDriver BurnDrvStinger = {
-	"stinger", NULL, NULL,  NULL, "1983",
+	"stinger", NULL, NULL, "stinger", "1983",
 	"Stinger\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, stingerRomInfo, stingerRomName, NULL, NULL, StingerInputInfo, StingerDIPInfo,
-	StingerInit, DrvExit, DrvFrame, StingerDraw, NULL, 
+	NULL, stingerRomInfo, stingerRomName, stingerSampleInfo, stingerSampleName, StingerInputInfo, StingerDIPInfo,
+	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
@@ -1423,13 +1467,13 @@ STD_ROM_PICK(stinger2)
 STD_ROM_FN(stinger2)
 
 struct BurnDriver BurnDrvStinger2 = {
-	"stinger2", "stinger", NULL, NULL, "1983",
+	"stinger2", "stinger", NULL, "stinger", "1983",
 	"Stinger (prototype?)\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, stinger2RomInfo, stinger2RomName, NULL, NULL, StingerInputInfo, Stinger2DIPInfo,
-	StingerInit, DrvExit, DrvFrame, StingerDraw, NULL, 
-	&DrvRecalc, 0x100, 256, 256, 4, 3
+	NULL, stinger2RomInfo, stinger2RomName, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
+	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
+	&DrvRecalc, 0x100, 224, 256, 3, 4
 };
 
 // Scion
@@ -1461,19 +1505,19 @@ STD_ROM_FN(scion)
 
 static INT32 ScionInit()
 {
-	Scionmodeoffset = 8*4; // 8 8x8char offset
+	Scionmodeoffset = 8*2; // 2 8x8char offset
 
 	return DrvInit(StingerLoadRoms);
 }
 
 struct BurnDriver BurnDrvScion = {
-	"scion", NULL, NULL, NULL, "1984",
-	"Scion\0", NULL, "Seibu Denshi", "Miscellaneous",
+	"scion", NULL, NULL, "stinger", "1984",
+	"Scion\0", "Music horribly broken, use scionc instead!", "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, scionRomInfo, scionRomName, NULL, NULL, ScionInputInfo, ScionDIPInfo,
-	ScionInit, DrvExit, DrvFrame, StingerDraw, NULL,
-	&DrvRecalc, 0x100, 224, 240, 4, 3
+	NULL, scionRomInfo, scionRomName, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
+	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
+	&DrvRecalc, 0x100, 240, 224, 4, 3
 };
 
 // Scion (Cinematronics)
@@ -1504,11 +1548,11 @@ STD_ROM_PICK(scionc)
 STD_ROM_FN(scionc)
 
 struct BurnDriver BurnDrvScionc = {
-	"scionc", "scion", NULL, NULL, "1984",
+	"scionc", "scion", NULL, "stinger", "1984",
 	"Scion (Cinematronics)\0", NULL, "Seibu Denshi (Cinematronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, scioncRomInfo, scioncRomName, NULL, NULL, ScionInputInfo, ScionDIPInfo,
-	ScionInit, DrvExit, DrvFrame, StingerDraw, NULL, 
-	&DrvRecalc, 0x100, 224, 240, 4, 3
+	NULL, scioncRomInfo, scioncRomName, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
+	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
+	&DrvRecalc, 0x100, 240, 224, 4, 3
 };

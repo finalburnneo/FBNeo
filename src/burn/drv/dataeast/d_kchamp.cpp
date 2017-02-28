@@ -49,25 +49,25 @@ static UINT8 msm_data;
 static struct BurnInputInfo KchampInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"	},
-	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
-	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
-	{"P1 Left Left",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
-	{"P1 Left Right",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
-	{"P1 Right Right Up",	BIT_DIGITAL,	DrvJoy1 + 6,	"p3 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p3 down"	},
-	{"P1 Right Left",	BIT_DIGITAL,	DrvJoy1 + 5,	"p3 left"	},
-	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy1 + 4,	"p3 right"	},
+	{"P1 Up (left)",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"		},
+	{"P1 Down (left)",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left (left)",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right (left)",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 right"	},
+	{"P1 Up (right)",	BIT_DIGITAL,	DrvJoy1 + 6,	"p3 up"		},
+	{"P1 Down (right)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p3 down"	},
+	{"P1 Left (right)",	BIT_DIGITAL,	DrvJoy1 + 5,	"p3 left"	},
+	{"P1 Right (right)",	BIT_DIGITAL,	DrvJoy1 + 4,	"p3 right"	},
 
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 start"	},
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
-	{"P2 Left Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
-	{"P2 Left Down",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
-	{"P2 Left Left",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
-	{"P2 Left Right",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
-	{"P2 Right Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p4 up"		},
-	{"P2 Right Down",	BIT_DIGITAL,	DrvJoy2 + 7,	"p4 down"	},
-	{"P2 Right Left",	BIT_DIGITAL,	DrvJoy2 + 5,	"p4 left"	},
-	{"P2 Right Right",	BIT_DIGITAL,	DrvJoy2 + 4,	"p4 right"	},
+	{"P2 Up (left)",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 up"		},
+	{"P2 Down (left)",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
+	{"P2 Left (left)",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right (left)",	BIT_DIGITAL,	DrvJoy2 + 0,	"p2 right"	},
+	{"P2 Up (right)",		BIT_DIGITAL,	DrvJoy2 + 6,	"p4 up"		},
+	{"P2 Down (right)",	BIT_DIGITAL,	DrvJoy2 + 7,	"p4 down"	},
+	{"P2 Left (right)",	BIT_DIGITAL,	DrvJoy2 + 5,	"p4 left"	},
+	{"P2 Right (right)",	BIT_DIGITAL,	DrvJoy2 + 4,	"p4 right"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -832,7 +832,7 @@ static INT32 KchampvsFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -840,7 +840,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

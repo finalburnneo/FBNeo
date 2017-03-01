@@ -380,7 +380,7 @@ static INT32 MemIndex()
 	soundlatch2		= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
 
-	gfxbank			= Next; Next += 0x000002;
+	gfxbank			= Next; Next += 0x000004; // 2
 
 	RamEnd			= Next;
 

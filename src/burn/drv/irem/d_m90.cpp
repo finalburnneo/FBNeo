@@ -1013,7 +1013,7 @@ static INT32 MemIndex()
 	DrvPalRAM	= Next; Next += 0x000800;
 	DrvZ80RAM	= Next; Next += 0x001000;
 
-	soundlatch	= Next; Next += 0x000001;
+	soundlatch	= Next; Next += 0x000004; // 1
 
 	m90_video_control	= Next; Next += 0x000010;
 

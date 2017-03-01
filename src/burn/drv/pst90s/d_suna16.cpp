@@ -1300,7 +1300,7 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x01000 * sizeof(UINT32);
 
-	pFMBuffer	= (INT16*)Next; Next += nBurnSoundLen * 3 * sizeof(INT16);
+	pFMBuffer	= (INT16*)Next; Next += nBurnSoundLen * 4 /*3*/ * sizeof(INT16);
 	pSoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	AllRam		= Next;

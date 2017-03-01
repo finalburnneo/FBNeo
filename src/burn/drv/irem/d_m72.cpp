@@ -1651,8 +1651,8 @@ static INT32 MemIndex()
 	DrvProtRAM	= Next; Next += 0x001000;
 	DrvRowScroll	= Next; Next += 0x000800;
 
-	soundlatch	= Next; Next += 0x000001;
-	video_disable	= Next; Next += 0x000001;
+	soundlatch	= Next; Next += 0x000004; // 1
+	video_disable	= Next; Next += 0x000004; // 1
 
 	scroll		= Next; Next += 0x000008;
 

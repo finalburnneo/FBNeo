@@ -313,7 +313,7 @@ static INT32 MemIndex()
 	DrvZ80RAM		= Next; Next += 0x000800;
 	DrvVecRAM		= Next; Next += 0x003000;
 
-	soundlatch		= Next; Next += 0x000001;	
+	soundlatch		= Next; Next += 0x000004; // 1
 
 	RamEnd			= Next;
 

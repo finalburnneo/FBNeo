@@ -110,7 +110,7 @@ static INT32 GalMemIndex()
 	GalVideoRam            = Next; Next += 0x00400;
 	GalSpriteRam           = Next; Next += 0x00400;
 	GalScrollVals          = Next; Next += 0x00020;
-	GalGfxBank             = Next; Next += 0x0001f;
+	GalGfxBank             = Next; Next += 0x00020;
 	
 	if (GalZ80Rom2Size) {
 		GalZ80Ram2     = Next; Next += 0x00400;

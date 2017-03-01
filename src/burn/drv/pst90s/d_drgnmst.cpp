@@ -522,9 +522,9 @@ static INT32 MemIndex()
 	DrvRowScroll	= Next; Next += 0x004000;
 
 	DrvVidRegs	= Next; Next += 0x000020;
-	priority_control= (UINT16*)Next; Next += 0x0001 * sizeof(UINT16);
+	priority_control= (UINT16*)Next; Next += 0x0002 /*1*/ * sizeof(UINT16);
 
-	coin_lockout	= Next; Next += 0x000001;
+	coin_lockout	= Next; Next += 0x000004; // 1
 
 	Palette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
 

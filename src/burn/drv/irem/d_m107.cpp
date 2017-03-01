@@ -633,8 +633,8 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 	DrvV30RAM	= Next; Next += 0x004000;
 	DrvPalRAM	= Next; Next += 0x001000;
 
-	sound_status	= Next; Next += 0x000002;
-	sound_latch	= Next; Next += 0x000001;
+	sound_status	= Next; Next += 0x000004; // 2
+	sound_latch	= Next; Next += 0x000004; // 1
 
 	pf_control[0]	= Next; Next += 0x000008;
 	pf_control[1]	= Next; Next += 0x000008;

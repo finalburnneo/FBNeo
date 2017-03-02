@@ -6879,7 +6879,7 @@ static INT32 MemIndex()
 
 	Drv68KRAM		= Next; Next += 0x100000;
 	Drv68KRAM2		= Next; Next += 0x020000;
-	Drv68KRAM3		= Next; Next += 0x000fff;
+	Drv68KRAM3		= Next; Next += 0x001000;
 	DrvSubRAM		= Next; Next += 0x004000;
 	DrvPalRAM		= Next; Next += 0x001000;
 	DrvSprRAM0		= Next; Next += 0x000800;

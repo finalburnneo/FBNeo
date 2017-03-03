@@ -168,7 +168,7 @@ static void GameInpInitMacros()
 	INT32 nKickInputs[4][3];
 
 	INT32 nNeogeoButtons[4][4];
-	INT32 nPgmButtons[10][8];
+	INT32 nPgmButtons[10][16];
 
 	bStreetFighterLayout = false;
 	nMacroCount = 0;

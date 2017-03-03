@@ -45,6 +45,7 @@ static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 msm_play_lo_nibble;
 static UINT8 msm_data;
+static UINT8 msmcounter;
 
 static struct BurnInputInfo KchampInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -155,14 +156,13 @@ static void __fastcall kchamp_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x81:
 			nmi_enable = data & 1;
-			if (nmi_enable == 0) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xa8:
 			soundlatch = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -214,7 +214,6 @@ static void __fastcall kchamp_sound_write_port(UINT16 port, UINT8 data)
 
 		case 0x05:
 			sound_nmi_enable = data & 0x80;
-			if (sound_nmi_enable == 0) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -224,7 +223,6 @@ static UINT8 __fastcall kchamp_sound_read_port(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x06:
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -241,7 +239,6 @@ static void __fastcall kchampvs_main_write_port(UINT16 port, UINT8 data)
 
 		case 0x01:
 			nmi_enable = data & 1;
-			if (nmi_enable == 0) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0x02:
@@ -256,7 +253,7 @@ static void __fastcall kchampvs_main_write_port(UINT16 port, UINT8 data)
 			soundlatch = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -302,7 +299,6 @@ static void __fastcall kchampvs_sound_write_port(UINT16 port, UINT8 data)
 		case 0x05:
 			MSM5205ResetWrite(0, ~data & 1);
 			sound_nmi_enable = data & 0x02;
-			if (sound_nmi_enable == 0) ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 		return;
 	}
 }
@@ -312,7 +308,6 @@ static UINT8 __fastcall kchampvs_sound_read_port(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x01:
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -321,15 +316,15 @@ static UINT8 __fastcall kchampvs_sound_read_port(UINT16 port)
 
 static void kchampvs_adpcm_interrupt()
 {
-	msm_play_lo_nibble = !msm_play_lo_nibble;
-
 	if (msm_play_lo_nibble)
 		MSM5205DataWrite(0, msm_data & 0x0f);
 	else
 		MSM5205DataWrite(0, msm_data >> 4);
 
-	if (msm_play_lo_nibble && sound_nmi_enable) {
-		ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+	msm_play_lo_nibble = !msm_play_lo_nibble;
+
+	if (!(msmcounter ^= 1) && sound_nmi_enable) {
+		ZetNmi();
 	}
 }
 
@@ -366,6 +361,7 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	msm_play_lo_nibble = 1;
 	msm_data = 0;
+	msmcounter = 0;
 
 	return 0;
 }
@@ -503,8 +499,8 @@ static INT32 KchampInit()
 	ZetSetInHandler(kchamp_sound_read_port);
 	ZetClose();
 
-	AY8910Init(0, 1000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -599,8 +595,8 @@ static INT32 KchampvsInit()
 	ZetSetInHandler(kchampvs_sound_read_port);
 	ZetClose();
 
-	AY8910Init(0, 1000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -737,7 +733,7 @@ static INT32 KchampFrame()
 		}
 	}
 
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 40;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -745,12 +741,12 @@ static INT32 KchampFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (nmi_enable && i == 9) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		if (nmi_enable && i == 39) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-		if (sound_nmi_enable && (i == 4 || i == 9)) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		if (sound_nmi_enable && (i == 20 || i == 39)) ZetNmi();
 		ZetClose();
 	}
 
@@ -807,7 +803,7 @@ static INT32 KchampvsFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (nmi_enable && i == (nInterleave - 1)) ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		if (nmi_enable && i == (nInterleave - 1)) ZetNmi();
 		ZetClose();
 
 		ZetOpen(1);
@@ -851,6 +847,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
 
 		SCAN_VAR(nmi_enable);
 		SCAN_VAR(sound_nmi_enable);

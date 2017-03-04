@@ -712,7 +712,7 @@ static inline INT32 scanline_to_vcount(INT32 scanline) // ripped directly from M
 	else
 		return (vcount - 0x18) | 0x100;
 }
-
+				
 static void xain_scanline(INT32 scanline) // ripped directly from MAME
 {
 	INT32 screen_height = 240;
@@ -863,62 +863,64 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	switch (xain_pri & 0x07)
 	{
 		case 0:
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-			draw_sprites();
-			draw_layer_8x8(1);
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 4) draw_layer_8x8(1);
 		break;
 
 		case 1:
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-			draw_sprites();
-			draw_layer_8x8(1);
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 4) draw_layer_8x8(1);
 		break;
 
 		case 2:
-			draw_layer_8x8(0);
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-			draw_sprites();
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
+			if (nBurnLayer & 4) draw_layer_8x8(0);
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
 		break;
 
 		case 3:
-			draw_layer_8x8(0);
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-			draw_sprites();
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
+			if (nBurnLayer & 4) draw_layer_8x8(0);
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
 		break;
 
 		case 4:
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
-			draw_layer_8x8(1);
-			draw_sprites();
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
+			if (nBurnLayer & 4) draw_layer_8x8(1);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
 		break;
 
 		case 5:
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
-			draw_layer_8x8(1);
-			draw_sprites();
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
+			if (nBurnLayer & 4) draw_layer_8x8(1);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
 		break;
 
 		case 6:
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
-			draw_sprites();
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
-			draw_layer_8x8(1);
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 0);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 1);
+			if (nBurnLayer & 4) draw_layer_8x8(1);
 		break;
 
 		case 7:
-			draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
-			draw_sprites();
-			draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
-			draw_layer_8x8(1);
+			if (nBurnLayer & 2) draw_layer_16x16(DrvBgRAM1, DrvGfxROM1, 0x100, scrollxp1, scrollyp1, 0);
+			if (nSpriteEnable & 1) draw_sprites();
+			if (nBurnLayer & 1) draw_layer_16x16(DrvBgRAM0, DrvGfxROM2, 0x180, scrollxp0, scrollyp0, 1);
+			if (nBurnLayer & 4) draw_layer_8x8(1);
 		break;
 	}
 
@@ -945,29 +947,28 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[4] = { 1500000 / 60, 1500000 / 60, 1500000 / 60, 3000000 / 60 };
+	INT32 nInterleave = 272*8;
+	INT32 nCyclesTotal[4] = { (INT32)((double)1500000 / 57.44), (INT32)((double)1500000 / 57.44), (INT32)((double)1500000 / 57.44), (INT32)((double)3000000 / 57.44) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	m6805Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-
 		M6809Open(0);
-		nCyclesDone[0] += M6809Run(nSegment);
-		xain_scanline(i);
+		if ((i%8) == 7)
+			xain_scanline(i/8);
+		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 		M6809Close();
 
 		M6809Open(1);
-		nCyclesDone[1] += M6809Run(nCyclesDone[0] - nCyclesDone[1]);
+		nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
 		M6809Close();
 
-		m6805Run((M6809TotalCycles() * 2) - m6805TotalCycles());
+		m6805Run(nCyclesTotal[3] / nInterleave);
 
 		M6809Open(2);
-		BurnTimerUpdate(nCyclesDone[0]);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
 		M6809Close();
 	}
 
@@ -989,7 +990,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -997,7 +998,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029722;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

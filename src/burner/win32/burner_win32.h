@@ -103,6 +103,8 @@ extern bool bCmdOptUsed;
 extern bool bAlwaysProcessKeyboardInput;
 extern bool bAlwaysCreateSupportFolders;
 
+extern bool bQuietLoading;
+
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;
 

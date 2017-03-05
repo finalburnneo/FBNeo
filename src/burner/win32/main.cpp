@@ -41,6 +41,8 @@ bool bCmdOptUsed = 0;
 bool bAlwaysProcessKeyboardInput = false;
 bool bAlwaysCreateSupportFolders = true;
 
+bool bQuietLoading = false;
+
 bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
 
@@ -800,14 +802,20 @@ int ProcessCmdLine()
 					return 1;
 				}
 			} else {
+				bQuietLoading = true;
+
 				for (i = 0; i < nBurnDrvCount; i++) {
 					nBurnDrvActive = i;
 					if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))){
-						MediaInit();
-						DrvInit(i, true);
+						if (DrvInit(i, true)) { // failed (bad romset, etc.)
+							nVidFullscreen = 0; // Don't get stuck in fullscreen mode
+						}
 						break;
 					}
 				}
+
+				bQuietLoading = false;
+
 				if (i == nBurnDrvCount) {
 					FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_NOSUPPORT), szName, _T(APP_TITLE));
 					FBAPopupDisplay(PUF_TYPE_ERROR);

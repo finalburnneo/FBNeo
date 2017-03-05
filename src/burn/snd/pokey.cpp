@@ -199,6 +199,40 @@ struct POKEYregisters {
 static struct POKEYinterface intf;
 static struct POKEYregisters pokey[MAXPOKEYS];
 
+void pokey_scan(INT32 nAction, INT32* pnMin)
+{
+	if (pnMin && *pnMin < 0x029521) {
+		*pnMin = 0x029521;
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		for (INT32 i = 0; i < MAXPOKEYS; i++)
+		{
+			// save pointers.
+			void *timer[3] = { pokey[i].timer[0], pokey[i].timer[1], pokey[i].timer[2] };
+			void *rtimer = pokey[i].rtimer;
+			void *ptimer[8] = { pokey[i].ptimer[0],pokey[i].ptimer[1],pokey[i].ptimer[2],pokey[i].ptimer[3],pokey[i].ptimer[4],pokey[i].ptimer[5],pokey[i].ptimer[6],pokey[i].ptimer[7] };
+			int (*pot_r[8])(int offs) = { pokey[i].pot_r[0], pokey[i].pot_r[1], pokey[i].pot_r[2], pokey[i].pot_r[3], pokey[i].pot_r[4], pokey[i].pot_r[5], pokey[i].pot_r[6], pokey[i].pot_r[7] };
+			int (*allpot_r)(int offs) = pokey[i].allpot_r;
+			int (*serin_r)(int offs) = pokey[i].serin_r;
+			void (*serout_w)(int offs, int data) = pokey[i].serout_w;
+			void (*interrupt_cb)(int mask) = pokey[i].interrupt_cb;
+
+			SCAN_VAR(pokey[i]);
+
+			// restore pointers.
+			pokey[i].timer[0] = timer[0]; pokey[i].timer[1] = timer[1]; pokey[i].timer[2] = timer[2];
+			pokey[i].rtimer = rtimer;
+			pokey[i].ptimer[0] = ptimer[0]; pokey[i].ptimer[1] = ptimer[1]; pokey[i].ptimer[2] = ptimer[2]; pokey[i].ptimer[3] = ptimer[3]; pokey[i].ptimer[4] = ptimer[4]; pokey[i].ptimer[5] = ptimer[5]; pokey[i].ptimer[6] = ptimer[6]; pokey[i].ptimer[7] = ptimer[7];
+			pokey[i].pot_r[0] = pot_r[0]; pokey[i].pot_r[1] = pot_r[1]; pokey[i].pot_r[2] = pot_r[2]; pokey[i].pot_r[3] = pot_r[3]; pokey[i].pot_r[4] = pot_r[4]; pokey[i].pot_r[5] = pot_r[5]; pokey[i].pot_r[6] = pot_r[6]; pokey[i].pot_r[7] = pot_r[7];
+			pokey[i].allpot_r = allpot_r;
+			pokey[i].serin_r = serin_r;
+			pokey[i].serout_w = serout_w;
+			pokey[i].interrupt_cb = interrupt_cb;
+		}
+	}
+}
+
 static UINT8 poly4[0x0f];
 static UINT8 poly5[0x1f];
 static UINT8 *poly9;
@@ -1073,10 +1107,10 @@ void pokey_register_w(int chip, int offs, int data)
 		if( p->timer[TIMER2] )
 			timer_remove(p->timer[TIMER2]);
 		if( p->timer[TIMER4] )
-			timer_remove(p->timer[TIMER4]);*/
+			timer_remove(p->timer[TIMER4]);
 		p->timer[TIMER1] = NULL;
 		p->timer[TIMER2] = NULL;
-		p->timer[TIMER4] = NULL;
+		p->timer[TIMER4] = NULL;*/
 
         /* reset all counters to zero (side effect) */
 		p->polyadjust = 0;

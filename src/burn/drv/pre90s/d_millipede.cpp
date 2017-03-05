@@ -1009,6 +1009,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		pokey_scan(nAction, pnMin);
+
 		SCAN_VAR(earom_offset);
 		SCAN_VAR(earom_data);
 		SCAN_VAR(m_dsw_select);

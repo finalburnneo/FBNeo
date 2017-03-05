@@ -489,6 +489,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (is_Bootleg)	// Bootleg set 2 sound system
 		{
 			SN76496Scan(nAction, pnMin);
+		} else {
+			pokey_scan(nAction, pnMin);
 		}
 
 		SCAN_VAR(nvram_enable);

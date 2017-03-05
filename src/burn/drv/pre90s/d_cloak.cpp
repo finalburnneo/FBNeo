@@ -784,6 +784,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		M6502Scan(nAction);
 
+		pokey_scan(nAction, pnMin);
+
 		SCAN_VAR(nvram_enable);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(video_selected);

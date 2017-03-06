@@ -351,7 +351,7 @@ static UINT8 __fastcall hyperspt_sound_read(UINT16 address)
 			return soundlatch;
 
 		case 0x8000:
-			return (ZetTotalCycles() / 1024) & 0xf;
+			return ((ZetTotalCycles() / 1024) & 0x3) | (vlm5030_bsy(0) ? 4 : 0);
 	}
 
 	return 0;
@@ -360,7 +360,7 @@ static UINT8 __fastcall hyperspt_sound_read(UINT16 address)
 static tilemap_callback( hyperspt )
 {
 	UINT8 attr = DrvColRAM[offs];
-	INT32 code = DrvVidRAM[offs] + ((attr & 0x80) << 1) | ((attr & 0x40) << 3);
+	INT32 code = DrvVidRAM[offs] + (((attr & 0x80) << 1) | ((attr & 0x40) << 3));
 
 	TILE_SET_INFO(0, code, attr, TILE_FLIPXY(attr >> 4));
 }
@@ -368,7 +368,7 @@ static tilemap_callback( hyperspt )
 static tilemap_callback( roadf )
 {
 	UINT8 attr = DrvColRAM[offs];
-	INT32 code = DrvVidRAM[offs] + ((attr & 0x80) << 1) | ((attr & 0x60) << 4);
+	INT32 code = DrvVidRAM[offs] + (((attr & 0x80) << 1) | ((attr & 0x60) << 4));
 
 	TILE_SET_INFO(0, code, attr, (attr & 0x10) ? TILE_FLIPX : 0);
 }
@@ -773,7 +773,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
+	INT32 nSoundBufferPos = 0, nSegment = 0;
 
 	ZetOpen(0);
 	M6809Open(0);
@@ -784,7 +784,8 @@ static INT32 DrvFrame()
 
 		if (i == 255 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
+		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {

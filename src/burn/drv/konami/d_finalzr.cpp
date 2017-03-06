@@ -6,6 +6,7 @@
 #include "i8039.h"
 #include "sn76496.h"
 #include "dac.h"
+#include "resnet.h"
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -54,7 +55,6 @@ static struct BurnInputInfo FinalizrInputList[] = {
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
@@ -64,7 +64,6 @@ static struct BurnInputInfo FinalizrInputList[] = {
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
@@ -270,7 +269,7 @@ static UINT8 __fastcall finalizr_sound_read_port(UINT32 port)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (M6809TotalCycles() / (1536000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / (409600.0000 / (nBurnFPS / 100.0000))));
 }
 
 static INT32 DrvDoReset(INT32 clear_ram)
@@ -304,7 +303,7 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	DrvM6809ROM		= Next; Next += 0x00c000;
-	DrvM6809DecROM		= Next; Next += 0x00c000;
+	DrvM6809DecROM  = Next; Next += 0x00c000;
 
 	DrvI8039ROM		= Next; Next += 0x001000;
 
@@ -350,28 +349,36 @@ static void DrvPaletteInit()
 {
 	UINT32 palette[0x20];
 
+	static const int resistances[4] = { 2200, 1000, 470, 220 };
+	double rweights[4], gweights[4], bweights[4];
+
+	compute_resistor_weights(0, 0xff, -1.0,
+			4, &resistances[0], rweights, 470, 0,
+			4, &resistances[0], gweights, 470, 0,
+			4, &resistances[0], bweights, 470, 0);
+
 	for (INT32 i = 0; i < 0x20; i++)
 	{
-		INT32 bit0 = ((DrvColPROM[i] >> 0) & 0x01) * 14;
-		INT32 bit1 = ((DrvColPROM[i] >> 1) & 0x01) * 31;
-		INT32 bit2 = ((DrvColPROM[i] >> 2) & 0x01) * 67;
-		INT32 bit3 = ((DrvColPROM[i] >> 3) & 0x01) * 143;
+		INT32 bit0 = (DrvColPROM[i] >> 0) & 0x01;
+		INT32 bit1 = (DrvColPROM[i] >> 1) & 0x01;
+		INT32 bit2 = (DrvColPROM[i] >> 2) & 0x01;
+		INT32 bit3 = (DrvColPROM[i] >> 3) & 0x01;
 
-		INT32 r = bit0 + bit1 + bit2 + bit3;
+		INT32 r = combine_4_weights(rweights, bit0, bit1, bit2, bit3);
 
-		bit0 = ((DrvColPROM[i] >> 4) & 0x01) * 14;
-		bit1 = ((DrvColPROM[i] >> 5) & 0x01) * 31;
-		bit2 = ((DrvColPROM[i] >> 6) & 0x01) * 67;
-		bit3 = ((DrvColPROM[i] >> 7) & 0x01) * 143;
+		bit0 = (DrvColPROM[i] >> 4) & 0x01;
+		bit1 = (DrvColPROM[i] >> 5) & 0x01;
+		bit2 = (DrvColPROM[i] >> 6) & 0x01;
+		bit3 = (DrvColPROM[i] >> 7) & 0x01;
 
-		INT32 g = bit0 + bit1 + bit2 + bit3;
+		INT32 g = combine_4_weights(rweights, bit0, bit1, bit2, bit3);
 
-		bit0 = ((DrvColPROM[i + 0x20] >> 0) & 0x01) * 14;
-		bit1 = ((DrvColPROM[i + 0x20] >> 1) & 0x01) * 31;
-		bit2 = ((DrvColPROM[i + 0x20] >> 2) & 0x01) * 67;
-		bit3 = ((DrvColPROM[i + 0x20] >> 3) & 0x01) * 14;
+		bit0 = (DrvColPROM[i + 0x20] >> 0) & 0x01;
+		bit1 = (DrvColPROM[i + 0x20] >> 1) & 0x01;
+		bit2 = (DrvColPROM[i + 0x20] >> 2) & 0x01;
+		bit3 = (DrvColPROM[i + 0x20] >> 3) & 0x01;
 
-		INT32 b = bit0 + bit1 + bit2 + bit3;
+		INT32 b = combine_4_weights(rweights, bit0, bit1, bit2, bit3);
 
 		palette[i] = BurnHighCol(r,g,b,0);
 	}
@@ -487,15 +494,16 @@ static INT32 DrvExit()
 
 static void draw_bg_layer()
 {
-	INT32 scrollx = (scroll - 32) & 0xff;
+	INT32 scrollx = scroll - 32;
 
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
-		INT32 sx = (offs & 0x1f) * 8;
+		INT32 sx = ((offs & 0x1f) * 8);
 		INT32 sy = ((offs / 0x20) * 8) - 16;
 		if (sy < 0 || sy >= nScreenHeight) continue;
 
 		sx -= scrollx;
+
 		if (sx < 25) sx += 256;
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
@@ -700,7 +708,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, 3);
-		for (INT32 i = 0; i < 5; i++) {
+		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
  			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
@@ -729,7 +737,9 @@ static INT32 DrvFrame()
 
 		if (i == 240) vblank = 1; // ?
 
-		nCyclesDone[1] += I8039Run(nCyclesTotal[1] / nInterleave);
+		INT32 nSegment = (i + 1) * nCyclesTotal[1] / nInterleave;
+		nCyclesDone[1] += I8039Run(nSegment - nCyclesDone[1]);
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -823,7 +833,7 @@ struct BurnDriver BurnDrvFinalizr = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrRomInfo, finalizrRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 280, 3, 4
+	224, 272, 3, 4
 };
 
 
@@ -858,5 +868,5 @@ struct BurnDriver BurnDrvFinalizrb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, finalizrbRomInfo, finalizrbRomName, NULL, NULL, FinalizrInputInfo, FinalizrDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 280, 3, 4
+	224, 272, 3, 4
 };

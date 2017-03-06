@@ -54,9 +54,8 @@ double compute_resistor_weights(INT32 minval, INT32 maxval, double scaler, INT32
 		}
 
 		/* parameters validity check */
-		/*if (count > MAX_RES_PER_NET)
-			fatalerror("compute_resistor_weights(): too many resistors in net #%i. The maximum allowed is %i, the number requested was: %i\n",n, MAX_RES_PER_NET, count);*/
-
+		if (count > MAX_RES_PER_NET)
+			bprintf(PRINT_ERROR, _T("compute_resistor_weights(): too many resistors in net #%i. The maximum allowed is %i, the number requested was: %i\n"), n, MAX_RES_PER_NET, count);
 
 		if (count > 0)
 		{
@@ -71,8 +70,8 @@ double compute_resistor_weights(INT32 minval, INT32 maxval, double scaler, INT32
 			networks_no++;
 		}
 	}
-	/*if (networks_no < 1)
-		fatalerror("compute_resistor_weights(): no input data\n");*/
+	if (networks_no < 1)
+		bprintf(PRINT_ERROR, _T("compute_resistor_weights(): no input data\n"));
 
 	/* calculate outputs for all given networks */
 	for( i = 0; i < networks_no; i++ )

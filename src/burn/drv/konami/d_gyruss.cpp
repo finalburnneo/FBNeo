@@ -238,7 +238,7 @@ static struct BurnDIPInfo GyrussceDIPList[]=
 
 STDDIPINFO(Gyrussce)
 
-void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
+static void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -271,7 +271,7 @@ void __fastcall gyruss_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall gyruss_main_read(UINT16 address)
+static UINT8 __fastcall gyruss_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -297,7 +297,7 @@ UINT8 __fastcall gyruss_main_read(UINT16 address)
 	return 0;
 }
 
-void gyruss_sub_write(UINT16 address, UINT8 data)
+static void gyruss_sub_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -310,7 +310,7 @@ void gyruss_sub_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 gyruss_sub_read(UINT16 address)
+static UINT8 gyruss_sub_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -321,7 +321,7 @@ UINT8 gyruss_sub_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall gyruss_sound0_read(UINT16 address)
+static UINT8 __fastcall gyruss_sound0_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -342,7 +342,7 @@ static void filter_write(INT32 num, UINT8 d)
 	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
 }
 
-void AY8910_0_portBwrite(UINT32 /*port*/, UINT32 data)
+static void AY8910_0_portBwrite(UINT32 /*port*/, UINT32 data)
 {
 	if (ZetGetActive() == -1) return;
 
@@ -356,7 +356,7 @@ void AY8910_0_portBwrite(UINT32 /*port*/, UINT32 data)
 	}
 }
 
-void AY8910_1_portBwrite(UINT32 /*port*/, UINT32 data)
+static void AY8910_1_portBwrite(UINT32 /*port*/, UINT32 data)
 {
 	if (ZetGetActive() == -1) return;
 
@@ -370,7 +370,7 @@ void AY8910_1_portBwrite(UINT32 /*port*/, UINT32 data)
 	}
 }
 
-UINT8 __fastcall gyruss_sound0_in(UINT16 port)
+static UINT8 __fastcall gyruss_sound0_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -393,7 +393,7 @@ UINT8 __fastcall gyruss_sound0_in(UINT16 port)
 	return 0;
 }
 
-void __fastcall gyruss_sound0_out(UINT16 port, UINT8 data)
+static void __fastcall gyruss_sound0_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -447,7 +447,7 @@ void __fastcall gyruss_sound0_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 AY8910_3_portA(UINT32)
+static UINT8 AY8910_3_portA(UINT32)
 {
 	static const INT32 gyruss_timer[10] =
 	{

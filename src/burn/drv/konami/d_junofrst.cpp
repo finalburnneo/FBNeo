@@ -618,7 +618,7 @@ static INT32 DrvFrame()
 	I8039NewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[3] = { 1500000 / 60, 1789750 / 60, 8000000 / 15 / 60 };
+	INT32 nCyclesTotal[3] = { 1536000 / 60, 1789750 / 60, 8000000 / 15 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 
@@ -628,14 +628,14 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		INT32 nNext;
-		
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+
+		nNext = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
-		if (i == (nInterleave - 248) && irq_enable && (irq_toggle ^= 1)) {
+		if (i == 248 && irq_enable && (irq_toggle ^= 1)) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
+		nNext = (nCyclesTotal[1] * (i + 1)) / nInterleave;
 		nCyclesDone[1] += ZetRun(nNext - nCyclesDone[1]);
 
 		nNext = (nCyclesTotal[2] * (i + 1)) / nInterleave;

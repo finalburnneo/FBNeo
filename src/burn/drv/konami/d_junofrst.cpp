@@ -131,7 +131,7 @@ static struct BurnDIPInfo JunofrstDIPList[]=
 	{0x15, 0x01, 0x04, 0x00, "Upright"		},
 	{0x15, 0x01, 0x04, 0x04, "Cocktail"		},
 
-	{0   , 0xfe, 0   ,    0, "Difficulty"		},
+	{0   , 0xfe, 0   ,    8, "Difficulty"		},
 	{0x15, 0x01, 0x70, 0x70, "1 (Easiest)"		},
 	{0x15, 0x01, 0x70, 0x60, "2"			},
 	{0x15, 0x01, 0x70, 0x50, "3"			},
@@ -141,7 +141,7 @@ static struct BurnDIPInfo JunofrstDIPList[]=
 	{0x15, 0x01, 0x70, 0x10, "7"			},
 	{0x15, 0x01, 0x70, 0x00, "8 (Hardest)"		},
 
-	{0   , 0xfe, 0   ,    8, "Demo Sounds"		},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x15, 0x01, 0x80, 0x80, "Off"			},
 	{0x15, 0x01, 0x80, 0x00, "On"			}
 };
@@ -631,7 +631,7 @@ static INT32 DrvFrame()
 
 		nNext = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
-		if (i == 248 && irq_enable && (irq_toggle ^= 1)) {
+		if (i == 240-1 && (irq_toggle ^= 1) && irq_enable) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 

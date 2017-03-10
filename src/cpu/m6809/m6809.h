@@ -44,6 +44,7 @@ int m6809_execute(int cycles);
 void m6809_set_irq_line(int irqline, int state);
 void m6809_get_context(void *dst);
 void m6809_set_context(void *src);
+UINT16 m6809_get_pc();
 
 unsigned char M6809ReadByte(unsigned short Address);
 void M6809WriteByte(unsigned short Address, unsigned char Data);

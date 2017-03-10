@@ -505,6 +505,11 @@ void m6809_set_irq_line(int irqline, int state)
 /* includes the actual opcode implementations */
 #include "6809ops.c"
 
+UINT16 m6809_get_pc()
+{
+	return m6809.pc.w.l;
+}
+
 /* execute instructions on this CPU until icount expires */
 int m6809_execute(int cycles)	/* NS 970908 */
 {

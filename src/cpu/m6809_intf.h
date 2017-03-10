@@ -42,6 +42,7 @@ void M6809SetWriteHandler(void (*pHandler)(UINT16, UINT8));
 void M6809SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6809Scan(INT32 nAction);
+UINT16 M6809GetPC();
 
 void M6809WriteRom(UINT32 Address, UINT8 Data);
 

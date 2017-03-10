@@ -40,6 +40,16 @@ void M6809Reset()
 	m6809_reset();
 }
 
+UINT16 M6809GetPC()
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809GetPC called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6809GetPC called when no CPU open\n"));
+#endif
+
+	return m6809_get_pc();
+}
+
 void M6809NewFrame()
 {
 #if defined FBA_DEBUG

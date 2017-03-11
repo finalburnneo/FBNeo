@@ -18951,7 +18951,7 @@ struct BurnDriver BurnDrvCpsSf2em = {
 	"Street Fighter II - The World Warrior (910129 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2emRomInfo, Sf2emRomName, NULL, NULL, Sf2ueInputInfo, Sf2DIPInfo,
+	NULL, Sf2emRomInfo, Sf2emRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

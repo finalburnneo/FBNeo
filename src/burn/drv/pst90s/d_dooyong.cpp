@@ -1257,16 +1257,22 @@ static UINT8 __fastcall superx_main_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x080002:
+			return DrvDips[1];
+
 		case 0x080003:
-			return (DrvDips[1] << 8) | DrvDips[0];
+			return DrvDips[0];
 
 		case 0x080004:
+			return (DrvInputs[0] >> 8) & 0xff;
+
 		case 0x080005:
-			return DrvInputs[0];
+			return DrvInputs[0] & 0xff;
 
 		case 0x080006:
+			return (DrvInputs[1] >> 8) & 0xff;
+
 		case 0x080007:
-			return DrvInputs[1];
+			return DrvInputs[1] & 0xff;
 	}
 
 	return 0;
@@ -2961,6 +2967,16 @@ static INT32 FlytigerFrame()
 	return 0;
 }
 
+static inline void JoyClearOpposites(UINT8* nJoystickInputs)
+{ // works on active-high
+	if ((*nJoystickInputs & 0x03) == 0x03) {
+		*nJoystickInputs &= ~0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x0c) {
+		*nJoystickInputs &= ~0x0c;
+	}
+}
+
 static INT32 RsharkFrame()
 {
 	if (DrvReset) {
@@ -2972,10 +2988,17 @@ static INT32 RsharkFrame()
 
 	{
 		memset (DrvInputs, 0xff, 3*sizeof(INT16));
+		DrvInputs[0] = 0;
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		UINT8 *p1p2 = (UINT8 *)&DrvInputs[0];
+		JoyClearOpposites(p1p2 + 0);
+		JoyClearOpposites(p1p2 + 1);
+
+		DrvInputs[0] ^= 0xffff; // convert to active-low
 	}
 
 	INT32 nSegment = 0;

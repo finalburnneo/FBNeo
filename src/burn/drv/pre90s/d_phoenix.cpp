@@ -1211,6 +1211,7 @@ struct BurnDriver BurnDrvPhoenixc = {
 
 
 // Phoenix (Irecsa / G.G.I Corp, set 2)
+// verified main and ROMs PCBs and 2 PROMs
 
 static struct BurnRomInfo phoenixc2RomDesc[] = {
 	{ "phoenix.45",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
@@ -1251,6 +1252,7 @@ struct BurnDriver BurnDrvPhoenixc2 = {
 
 
 // Phoenix (Irecsa / G.G.I Corp, set 3)
+// verified main and ROMs PCBs and 2 PROMs
 
 static struct BurnRomInfo phoenixc3RomDesc[] = {
 	{ "phoenix.45",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
@@ -1287,6 +1289,7 @@ struct BurnDriver BurnDrvPhoenixc3 = {
 
 
 // Phoenix (Irecsa / G.G.I Corp, set 4)
+// verified main and ROMs PCBs and 2 PROMs
 
 static struct BurnRomInfo phoenixc4RomDesc[] = {
 	{ "phoenix.45",		0x0800, 0x5b8c55a8, 1 | BRF_PRG | BRF_ESS }, //  0 i8085 Code
@@ -1316,6 +1319,44 @@ struct BurnDriver BurnDrvPhoenixc4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixc4RomInfo, phoenixc4RomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
+	SinglePromInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	208, 256, 3, 4
+};
+
+
+// Phoenix (IDI bootleg)
+// verified single PCB, single PROM
+// Needs correct color PROM decode
+
+static struct BurnRomInfo phoenixiRomDesc[] = {
+	{ "0201.bin",		0x0800, 0xc0f73929, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "0202.bin",		0x0800, 0x440d56e8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "0203.bin",		0x0800, 0x750b059b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "0204.bin",		0x0800, 0xe2d3271f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "0205.bin",		0x0800, 0x1ff3a982, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "0206.bin",		0x0800, 0x8c83bff7, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "0207.bin",		0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6
+	// 0208.bin wasn't readable, but very probably matches the one from condor
+	{ "cond08c.bin",	0x0800, 0x1edebb45, 1 | BRF_PRG | BRF_ESS }, //  7
+	
+	{ "0209.bin",		0x0800, 0x3c7e623f, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "0210.bin",		0x0800, 0x59916d3b, 2 | BRF_GRA },           //  9
+
+	{ "0211.bin",		0x0800, 0x53c52eb0, 3 | BRF_GRA },           // 10 Foreground Tiles
+	{ "0212.bin",		0x0800, 0xeba42f0f, 3 | BRF_GRA },           // 11
+
+	{ "sn74s471n.bin",	0x0100, 0xc68a49bc, 4 | BRF_GRA },           // 12 Color Proms
+};
+
+STD_ROM_PICK(phoenixi)
+STD_ROM_FN(phoenixi)
+
+struct BurnDriver BurnDrvPhoenixi = {
+	"phoenixi", "phoenix", NULL, NULL, "1981",
+	"Phoenix (IDI bootleg)\0", NULL, "bootleg (IDI)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, phoenixiRomInfo, phoenixiRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
 	SinglePromInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };
@@ -1375,8 +1416,7 @@ static struct BurnRomInfo condornRomDesc[] = {
 	{ "a.bin",			0x0800, 0xcdd5ef12, 3 | BRF_GRA },           // 10 Foreground Tiles
 	{ "b.bin",			0x0800, 0xeba42f0f, 3 | BRF_GRA },           // 11
 
-	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
-	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+	{ "sn74s471n.bin",	0x0100, 0xc68a49bc, 4 | BRF_GRA },           // 12 Color Proms
 };
 
 STD_ROM_PICK(condorn)
@@ -1388,7 +1428,7 @@ struct BurnDriver BurnDrvCondorn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, condornRomInfo, condornRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
-	CondorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	SinglePromInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };
 
@@ -1573,6 +1613,7 @@ struct BurnDriver BurnDrvVautourz = {
 
 
 // Fenix (bootleg of Phoenix)
+// verified single PCB, single PROM
 
 static struct BurnRomInfo fenixRomDesc[] = {
 	{ "0.1e",			0x0800, 0x00000000, 1 | BRF_NODUMP | BRF_PRG | BRF_ESS }, //  0 i8085 Code
@@ -1717,6 +1758,7 @@ struct BurnDriver BurnDrvAvefenixl = {
 
 
 // Griffon (bootleg of Phoenix)
+// verified single PCB, single PROM
 
 static struct BurnRomInfo griffonRomDesc[] = {
 	{ "griffon0.a5",	0x0800, 0xc0f73929, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -1734,8 +1776,7 @@ static struct BurnRomInfo griffonRomDesc[] = {
 	{ "griffon.d7",		0x0800, 0x53c52eb0, 3 | BRF_GRA },           // 10 Foreground Tiles
 	{ "griffon.d8",		0x0800, 0xeba42f0f, 3 | BRF_GRA },           // 11
 
-	{ "mmi6301.ic40",	0x0100, 0x79350b25, 4 | BRF_GRA },           // 12 Color Proms
-	{ "mmi6301.ic41",	0x0100, 0xe176b768, 4 | BRF_GRA },           // 13
+	{ "sn74s471n.bin",	0x0100, 0xc68a49bc, 4 | BRF_GRA },           // 12 Color Proms
 };
 
 STD_ROM_PICK(griffon)
@@ -1747,7 +1788,7 @@ struct BurnDriver BurnDrvGriffon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, griffonRomInfo, griffonRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
-	CondorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
+	SinglePromInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
 };
 

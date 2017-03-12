@@ -2173,6 +2173,45 @@ struct BurnDriver BurnDrvmartmastc = {
 };
 
 
+// Martial Masters / Xing Yi (V103, 102, 102, China)
+// Needs proper martial_masters_v102_cn.asic to be dumped
+
+static struct BurnRomInfo martmastc103RomDesc[] = {
+	{ "v103_32m.u9",   		0x400000, 0xdf5ffbe9, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+
+	{ "t1000.u3",	   		0x800000, 0xbbf879b5, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a1000.u3",      		0x800000, 0x43577ac8, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a1001.u4",      		0x800000, 0xfe7a476f, 3 | BRF_GRA },			//  3
+	{ "a1002.u6",      		0x800000, 0x62e33d38, 3 | BRF_GRA },			//  4
+	{ "a1003.u8",      		0x800000, 0xb2c4945a, 3 | BRF_GRA },			//  5
+	{ "a1004.u10",     		0x400000, 0x9fd3f5fd, 3 | BRF_GRA },			//  6
+
+	{ "b1000.u9",	   		0x800000, 0xc5961f6f, 4 | BRF_GRA },			//  7 Sprite Masks & Color Indexes
+	{ "b1001.u11",	   		0x800000, 0x0b7e1c06, 4 | BRF_GRA },			//  8
+
+	{ "m1000.u5",      		0x800000, 0xed407ae8, 5 | BRF_SND },			//  9 Samples
+	{ "m1001.u7",      		0x400000, 0x662d2d48, 5 | BRF_SND },			// 10
+	
+	{ "martial_masters_v102_usa.asic",	0x004000, 0xa6c0828c, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+
+	{ "v102_16m.u10",  		0x200000, 0x18b745e6, 8 | BRF_PRG | BRF_ESS },  // 12 External ARM7 Rom
+};
+
+STDROMPICKEXT(martmastc103, martmastc103, pgm)
+STD_ROM_FN(martmastc103)
+
+struct BurnDriver BurnDrvmartmastc103 = {
+	"martmastc103", "martmast", "pgm", NULL, "2001",
+	"Martial Masters (V103, 102, 102, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Martial Masters\0\u5f62\u610f\u62f3 (V103, 102, 102, China)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
+	NULL, martmastc103RomInfo, martmastc103RomName, NULL, NULL, pgmInputInfo, martmastc102DIPInfo,
+	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
 // Martial Masters / Xing Yi (V102, 101, 101, China)
 
 static struct BurnRomInfo martmastc102RomDesc[] = {

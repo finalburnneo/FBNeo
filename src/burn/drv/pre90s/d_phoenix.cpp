@@ -1420,7 +1420,7 @@ STD_ROM_FN(falcon)
 
 struct BurnDriver BurnDrvFalcon = {
 	"falcon", "phoenix", NULL, NULL, "1980",
-	"Falcon (bootleg of Phoenix) (8085A CPU)\0", NULL, "bootleg", "Miscellaneous",
+	"Falcon (bootleg of Phoenix) (8085A CPU)\0", NULL, "bootleg (BGV Ltd.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, falconRomInfo, falconRomName, NULL, NULL, PhoenixInputInfo, PhoenixtDIPInfo,
@@ -1670,7 +1670,7 @@ STD_ROM_PICK(avefenixrf)
 STD_ROM_FN(avefenixrf)
 
 struct BurnDriver BurnDrvAvefenixrf = {
-	"avefenixrf", "phoenix", NULL, NULL, "1980",
+	"avefenixrf", "phoenix", NULL, NULL, "1981",
 	"Ave Fenix (Recreativos Franco, Spanish bootleg of Phoenix)\0", NULL, "bootleg (Recreativos Franco S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,

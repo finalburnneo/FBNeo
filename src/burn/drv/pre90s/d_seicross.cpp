@@ -482,6 +482,10 @@ static INT32 DrvInit(INT32 select)
 		if (BurnLoadRom(DrvZ80ROM + 0x6000,   6, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x7000,   7, 1)) return 1;
 
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "radradj") ==0) 
+			if (BurnLoadRom(DrvZ80ROM + 0x7000,   7, 1)) return 1;
+			memcpy (DrvZ80ROM + 0x7800, DrvGfxROM0 + 0x7000, 0x0800);
+		
 		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  8, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x2000, 10, 1)) return 1;
@@ -495,7 +499,7 @@ static INT32 DrvInit(INT32 select)
 				DrvMCUOps[i] = BITSWAP08(DrvZ80ROM[i], 6, 7, 5, 4, 3, 2, 0, 1);
 			}
 		}
-
+				
 		DrvGfxDecode();
 	}
 
@@ -915,7 +919,7 @@ struct BurnDriver BurnDrvFriskytb = {
 };
 
 
-// Radical Radial
+// Radical Radial (US)
 
 static struct BurnRomInfo radradRomDesc[] = {
 	{ "1.3a",	0x1000, 0xb1e958ca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
@@ -948,10 +952,48 @@ static INT32 radradInit()
 
 struct BurnDriver BurnDrvRadrad = {
 	"radrad", NULL, NULL, NULL, "1982",
-	"Radical Radial\0", NULL, "Nichibutsu USA", "Miscellaneous",
+	"Radical Radial (US)\0", NULL, "Nichibutsu USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, radradRomInfo, radradRomName, NULL, NULL, RadradInputInfo, RadradDIPInfo,
+	radradInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	256, 224, 4, 3
+};
+
+
+// Radical Radial (Japan)
+// Top and bottom PCBs have Nihon Bussan etched and the top PCB has a Nichibutsu sticker
+
+static struct BurnRomInfo radradjRomDesc[] = {
+	{ "1.3a",	0x1000, 0xb1e958ca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
+	{ "2.3b",	0x1000, 0x30ba76b3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.3d",	0x1000, 0x1c9f397b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.3e",	0x1000, 0x453966a3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.3f",	0x1000, 0xc337c4bd, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6.3h",	0x1000, 0x06e15b59, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7.3i",	0x1000, 0x02b1f9c9, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.3j",	0x1000, 0xbc9c7fae, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "11.7k",	0x1000, 0xc75b96da, 2 | BRF_GRA },           //  8 Graphics
+	{ "12.7m",	0x1000, 0x83f35c05, 2 | BRF_GRA },           //  9
+	{ "9.7h",	0x1000, 0xf2da3954, 2 | BRF_GRA },           // 10
+	{ "10.7j",	0x1000, 0x79237913, 2 | BRF_GRA },           // 11
+
+	{ "clr.9c",	0x0020, 0xc9d88422, 3 | BRF_GRA },           // 12 Color Data
+	{ "clr.9b",	0x0020, 0xee81af16, 3 | BRF_GRA },           // 13
+
+	{ "pal16h2.2b",	0x0044, 0xa356803a, 0 | BRF_OPT },           // 14 plds
+};
+
+STD_ROM_PICK(radradj)
+STD_ROM_FN(radradj)
+
+struct BurnDriver BurnDrvRadradj = {
+	"radradj", "radrad", NULL, NULL, "1982",
+	"Radical Radial (Japan)\0", NULL, "Logitec Corp.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, radradjRomInfo, radradjRomName, NULL, NULL, RadradInputInfo, RadradDIPInfo,
 	radradInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };

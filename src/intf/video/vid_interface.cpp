@@ -49,7 +49,7 @@ static UINT32 nVidActive = 0;
 
 bool bVidOkay = false;
 
-INT32 nVidWidth		= 640, nVidHeight		= 480, nVidDepth = 16, nVidRefresh = 0;
+INT32 nVidWidth		= 640, nVidHeight		= 480, nVidDepth = 32, nVidRefresh = 0;
 
 INT32 nVidHorWidth	= 640, nVidHorHeight	= 480;	// Default Horizontal oritated resolution
 INT32 nVidVerWidth	= 640, nVidVerHeight	= 480;	// Default Vertical oriented resoultion

@@ -284,6 +284,30 @@ static struct BurnDIPInfo CyvernDIPList[]=
 
 STDDIPINFO(Cyvern)
 
+static struct BurnDIPInfo CyvernNoSpeedhackDIPList[]= // gals panic 4 (galpani4)
+{
+	{0x13, 0xff, 0xff, 0xff, NULL		},
+	{0x14, 0xff, 0xff, 0x00, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode" },
+	{0x13, 0x01, 0x01, 0x01, "Off"		},
+	{0x13, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"	},
+	{0x13, 0x01, 0x02, 0x02, "Off"		},
+	{0x13, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Use Backup Ram"},
+	{0x13, 0x01, 0x40, 0x00, "No"		},
+	{0x13, 0x01, 0x40, 0x40, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Freeze"	},
+	{0x13, 0x01, 0x80, 0x00, "Freezes the game"},
+	{0x13, 0x01, 0x80, 0x80, "No"	},
+};
+
+STDDIPINFO(CyvernNoSpeedhack)
+
 static void hit_calc_orig(UINT16 p, UINT16 s, UINT16 org, UINT16 *l, UINT16 *r)
 {
 	switch(org & 3) {
@@ -2312,7 +2336,7 @@ struct BurnDriver BurnDrvGalpani4 = {
 	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //CyvernInputInfo, CyvernDIPInfo,
+	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
 	Galpani4Init, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };
@@ -2350,7 +2374,7 @@ struct BurnDriver BurnDrvGalpani4k = {
 	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
-	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
+	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
 	Galpani4kInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x8000,
 	320, 240, 4, 3
 };

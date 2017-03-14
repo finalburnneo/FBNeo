@@ -850,7 +850,7 @@ void __fastcall N7751WriteIo(UINT32 Port, UINT8 Value)
 {
 	switch (Port) {
 		case 0x101: {
-			DACWrite(0, Value);
+			DACSignedWrite(0, Value);
 			return;
 		}
 		

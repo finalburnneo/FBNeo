@@ -24,24 +24,22 @@ static UINT8 DrvRecalc;
 
 static INT16 *pAY8910Buffer[3];
 
-static UINT8  DrvJoy1[8];
-static UINT8  DrvDips[2];
-static UINT16 DrvAxis[1];
-static UINT8  DrvInputs[2];
-static UINT8  DrvReset;
-static UINT32   nAnalogAxis;
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvDips[2];
+static UINT8 DrvInputs[2];
+static UINT8 DrvReset;
 
-#define A(a, b, c, d) { a, b, (UINT8*)(c), d }
+static UINT8 Dial1;
 
 static struct BurnInputInfo WallcInputList[] = {
-	{"Coin 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
-	{"Coin 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
-	{"Coin 3",	BIT_DIGITAL,	DrvJoy1 + 6,	"p3 coin"	},
-	{"Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Coin",	    BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
 	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
 	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
-
-	A("P1 Right / left",	BIT_ANALOG_REL, DrvAxis + 0,	"p1 x-axis"),
 
 	{"Service",     BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
 	{"Reset",	BIT_DIGITAL,	&DrvReset,	"reset"		},
@@ -53,52 +51,40 @@ STDINPUTINFO(Wallc)
 
 static struct BurnDIPInfo WallcDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0x61, NULL                     	},
-	{0x0a, 0xff, 0xff, 0x00, NULL                     	},
+	{0x08, 0xff, 0xff, 0x55, NULL                     	},
+	{0x09, 0xff, 0xff, 0x00, NULL                     	},
 
 	{0   , 0xfe, 0   , 4   , "Lives"                  	},
-	{0x09, 0x01, 0x03, 0x03, "5"       		  	},
-	{0x09, 0x01, 0x03, 0x02, "4"       		  	},
-	{0x09, 0x01, 0x03, 0x01, "3"       		  	},
-	{0x09, 0x01, 0x03, 0x00, "2"       		  	},
+	{0x08, 0x01, 0x03, 0x03, "5"       		  	},
+	{0x08, 0x01, 0x03, 0x02, "4"       		  	},
+	{0x08, 0x01, 0x03, 0x01, "3"       		  	},
+	{0x08, 0x01, 0x03, 0x00, "2"       		  	},
 
 	{0   , 0xfe, 0   , 4   , "Bonus Life"             	},
-	{0x09, 0x01, 0x0c, 0x0c, "100K/200K/400K/800K"   	},
-	{0x09, 0x01, 0x0c, 0x08, "80K/160K/320K/640K"     	},
-	{0x09, 0x01, 0x0c, 0x04, "60K/120K/240K/480K"     	},
-	{0x09, 0x01, 0x0c, 0x00, "Off"    		  	},
+	{0x08, 0x01, 0x0c, 0x0c, "100K/200K/400K/800K"   	},
+	{0x08, 0x01, 0x0c, 0x08, "80K/160K/320K/640K"     	},
+	{0x08, 0x01, 0x0c, 0x04, "60K/120K/240K/480K"     	},
+	{0x08, 0x01, 0x0c, 0x00, "Off"    		  	},
 	
 	{0   , 0xfe, 0   , 2   , "Curve Effect"           	},
-	{0x09, 0x01, 0x10, 0x10, "Normal"     		  	},
-	{0x09, 0x01, 0x10, 0x00, "More"		          	},
+	{0x08, 0x01, 0x10, 0x10, "Normal"     		  	},
+	{0x08, 0x01, 0x10, 0x00, "More"		          	},
 
 	{0   , 0xfe, 0   , 4   , "Timer Speed"            	},
-	{0x09, 0x01, 0x60, 0x60, "Slow"     		  	},
-	{0x09, 0x01, 0x60, 0x40, "Normal"    		  	},
-	{0x09, 0x01, 0x60, 0x20, "Fast"     		  	},
-	{0x09, 0x01, 0x60, 0x00, "Super Fast" 		  	},
+	{0x08, 0x01, 0x60, 0x60, "Slow"     		  	},
+	{0x08, 0x01, 0x60, 0x40, "Normal"    		  	},
+	{0x08, 0x01, 0x60, 0x20, "Fast"     		  	},
+	{0x08, 0x01, 0x60, 0x00, "Super Fast" 		  	},
 
 	{0   , 0xfe, 0   , 2   , "Service" 	          	},
-	{0x09, 0x01, 0x80, 0x80, "Free Play and Level Select"	},
-	{0x09, 0x01, 0x80, 0x00, "Normal"    		  	},
+	{0x08, 0x01, 0x80, 0x80, "Free Play and Level Select"	},
+	{0x08, 0x01, 0x80, 0x00, "Normal"    		  	},
 
 	{0   , 0xfe, 0   , 4   , "Coin A" 	          	},
-	{0x0a, 0x01, 0x03, 0x03, "2C 1C"       		  	},
-	{0x0a, 0x01, 0x03, 0x00, "1C 1C"       		  	},
-	{0x0a, 0x01, 0x03, 0x01, "1C 2C"       		  	},
-	{0x0a, 0x01, 0x03, 0x02, "1C 5C"       		  	},
-
-	{0   , 0xfe, 0   , 4   , "Coin B" 	          	},
-	{0x0a, 0x01, 0x0c, 0x0c, "2C 1C"       		  	},
-	{0x0a, 0x01, 0x0c, 0x00, "1C 1C"       		  	},
-	{0x0a, 0x01, 0x0c, 0x04, "1C 2C"       		  	},
-	{0x0a, 0x01, 0x0c, 0x08, "1C 5C"       		  	},
-
-	{0   , 0xfe, 0   , 4   , "Coin C" 	         	},
-	{0x0a, 0x01, 0x30, 0x30, "2C 1C"       		 	},
-	{0x0a, 0x01, 0x30, 0x00, "1C 1C"       		 	},
-	{0x0a, 0x01, 0x30, 0x10, "1C 2C"       		  	},
-	{0x0a, 0x01, 0x30, 0x20, "1C 5C"       		  	},
+	{0x09, 0x01, 0x03, 0x03, "2C 1C"       		  	},
+	{0x09, 0x01, 0x03, 0x00, "1C 1C"       		  	},
+	{0x09, 0x01, 0x03, 0x01, "1C 2C"       		  	},
+	{0x09, 0x01, 0x03, 0x02, "1C 5C"       		  	},
 };
 
 STDDIPINFO(Wallc)
@@ -140,7 +126,8 @@ UINT8 __fastcall wallc_read(UINT16 address)
 static INT32 DrvDoReset()
 {
 	DrvReset = 0;
-	nAnalogAxis = 0;
+
+	Dial1 = 0;
 
 	memset(AllRam, 0, RamEnd - AllRam);
 
@@ -204,7 +191,7 @@ static INT32 MemIndex()
 
 	DrvGfxROM		= Next; Next += 0x004000;
 
-	DrvColPROM		= Next; Next += 0x000020; 
+	DrvColPROM		= Next; Next += 0x000020;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0008 * sizeof(UINT32);
 
@@ -249,23 +236,14 @@ static INT32 DrvInit(INT32 incr)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x83ff, 0, DrvVidRAM);
-	ZetMapArea(0x8000, 0x83ff, 1, DrvVidRAM);
-	ZetMapArea(0x8000, 0x83ff, 2, DrvVidRAM);
-	ZetMapArea(0x8400, 0x87ff, 0, DrvVidRAM);
-	ZetMapArea(0x8400, 0x87ff, 1, DrvVidRAM);
-	ZetMapArea(0x8400, 0x87ff, 2, DrvVidRAM);
-	ZetMapArea(0x8800, 0x8bff, 0, DrvVidRAM);
-	ZetMapArea(0x8800, 0x8bff, 1, DrvVidRAM);
-	ZetMapArea(0x8800, 0x8bff, 2, DrvVidRAM);
-	ZetMapArea(0x8c00, 0x8fff, 0, DrvVidRAM);
-	ZetMapArea(0x8c00, 0x8fff, 1, DrvVidRAM);
-	ZetMapArea(0x8c00, 0x8fff, 2, DrvVidRAM);
-	ZetMapArea(0xa000, 0xa3ff, 0, DrvZ80RAM);
-	ZetMapArea(0xa000, 0xa3ff, 1, DrvZ80RAM);
-	ZetMapArea(0xa000, 0xa3ff, 2, DrvZ80RAM);
+
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM, 0x8000, 0x83ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0x8400, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0x8800, 0x8bff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM, 0x8c00, 0x8fff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM, 0xa000, 0xa3ff, MAP_RAM);
+
 	ZetSetWriteHandler(wallc_write);
 	ZetSetReadHandler(wallc_read);
 	ZetClose();
@@ -304,7 +282,7 @@ static INT32 DrvDraw()
 		INT32 sx   = ( offs >> 5) << 3;
 		INT32 code = DrvVidRAM[offs];
 
-		Render8x8Tile(pTransDraw, code, sx, sy, 0, 0, 0, DrvGfxROM);
+		Render8x8Tile_Clip(pTransDraw, code, sx, sy, 0, 0, 0, DrvGfxROM);
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -324,13 +302,18 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
 
-		nAnalogAxis -= DrvAxis[0];
-		DrvInputs[1] = nAnalogAxis >> 8;
+		if (DrvJoy2[0]) Dial1 += 0x02;
+		if (DrvJoy2[1]) Dial1 -= 0x02;
+
+		// bounds 0x50 - 0xcf
+		if (Dial1 > 0xcf) Dial1 = 0xcf;
+		if (Dial1 < 0x50) Dial1 = 0x50;
+
+		DrvInputs[1] = Dial1;
+
 	}
 
 	ZetOpen(0);
-//	ZetRun(3072000 / 60);
-//	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 	ZetRun(3000000 / 60);
 	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	ZetRun(72000 / 60);
@@ -348,7 +331,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -356,7 +339,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -368,7 +351,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
-		SCAN_VAR(nAnalogAxis);
+		SCAN_VAR(Dial1);
 	}
 
 	return 0;

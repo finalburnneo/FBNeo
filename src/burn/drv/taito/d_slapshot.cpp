@@ -12,6 +12,9 @@ static void SlapshotDraw();
 static void Opwolf3Draw();
 static TaitoF2SpriteBufferUpdate TaitoF2SpriteBufferFunction;
 
+static INT32 CheckTimeKeeper = 0; // for gun auto-calibration
+static INT32 Opwolf3mode = 0;
+
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
 #endif
@@ -221,7 +224,9 @@ static INT32 MemIndex()
 static INT32 SlapshotDoReset()
 {
 	TaitoDoReset();
-	
+
+	CheckTimeKeeper = 1;
+
 	return 0;
 }
 
@@ -692,7 +697,8 @@ static INT32 Opwolf3Init()
 	
 	TaitoMakeInputsFunction = Opwolf3MakeInputs;
 	TaitoDrawFunction = Opwolf3Draw;
-	
+	Opwolf3mode = 1;
+
 	BurnGunInit(2, true);
 
 	SlapshotDoReset();
@@ -716,7 +722,9 @@ static INT32 SlapshotExit()
 #endif
 	
 	TimeKeeperExit();
-	
+
+	Opwolf3mode = 0;
+
 	return 0;
 }
 
@@ -792,11 +800,41 @@ static void Opwolf3Draw()
 	}
 }
 
+static void Opwolf3Defaults()
+{
+	UINT8 opwolf3tkprdata[80] = {
+		// first 64 bytes of 8192
+		0x45,0x41,0x53,0x54,0x00,0x08,0x05,0x08,0x05,0x08,0xa5,0x77,0xa5,0x77,0x11,0x03,
+		0x0e,0x00,0x01,0x39,0x41,0x00,0x00,0x7f,0xff,0xff,0xff,0x00,0x00,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+		0x02,0x00,0x02,0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0xe4,0x00,0x00,0x00,
+		// last 16 bytes of 8192
+		0x00,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x30,0x26,0x22,0x03,0x14,0x03,0x17
+	};
+
+	UINT8 *tkprdat = TimeKeeperGetRaw();
+	if (tkprdat) {
+		memset(tkprdat, 0, 8192);
+		memmove(tkprdat, opwolf3tkprdata, 64);
+		memmove(tkprdat + 0x1ff0, opwolf3tkprdata + 64, 16);
+	}
+
+}
+
 static INT32 SlapshotFrame()
 {
 	INT32 nInterleave = 100;
 
 	if (TaitoReset) SlapshotDoReset();
+
+	if (CheckTimeKeeper) {
+		CheckTimeKeeper = 0;
+		if (Opwolf3mode && TimeKeeperIsEmpty()) {
+			bprintf(0, _T("Operation Wolf 3 default calibrations loaded..\n"));
+			Opwolf3Defaults();
+		}
+	}
+
 
 	TaitoMakeInputsFunction();
 	
@@ -816,7 +854,7 @@ static INT32 SlapshotFrame()
 		nNext = (i + 1) * nTaitoCyclesTotal[nCurrentCPU] / nInterleave;
 		nTaitoCyclesSegment = nNext - nTaitoCyclesDone[nCurrentCPU];
 		nTaitoCyclesDone[nCurrentCPU] += SekRun(nTaitoCyclesSegment);
-		if (i == 10) { SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); nTaitoCyclesDone[0] += SekRun(200000 - 500); }
+		if (i == 83) { SekSetIRQLine(6, CPU_IRQSTATUS_AUTO); }
 		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
@@ -881,7 +919,7 @@ static INT32 SlapshotScan(INT32 nAction, INT32 *pnMin)
 			ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
 			ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
 			ZetClose();
-		}		
+		}
 	}
 	
 	return 0;

@@ -10,3 +10,6 @@ void TimeKeeperTick();
 void TimeKeeperInit(INT32 type, UINT8 *data);
 void TimeKeeperExit();
 void TimeKeeperScan(INT32 nAction);
+INT32 TimeKeeperIsEmpty();
+UINT8* TimeKeeperGetRaw();
+

@@ -215,6 +215,21 @@
 <li>Added newer-style VezMapMemory() function to the NEC V20-35 cpu interfaces. [dink]</li>
 <li>Fixed a masking issue in NEC V20-35's read port interface [dink]</li>
 <li>Fixed a blitter issue in Kangaroo, fixed savestates: video banking and lost music [dink]</li>
+<li>Fixed nasty crackling/popping noises in Darius 2 [dink]</li>
+<li>Hooked up shot and explosion samples to Seibu Stinger and Scion[c] [dink]</li>
+<li>Fixed sprite flickering and freeze-ups in Xain'd Sleena [dink]</li>
+<li>Front-End fix: when starting a game from the commandline, only init the blitter once. also don't get stuck in fullscreen when loading fails due to a bad romset [dink]</li>
+<li>Fix some structure alignment issues so drivers can benefit from vectorization/SIMD optimizations present in latest gcc w/ -O3 and other recent compilers [dink, barbudreadmon]</li>
+<li>Fix dipswitch issues in several games thanks to info from the libretro/fba guys [barbudreadmon, dink]</li>
+<li>Fixed Dac and scrolling issues in Konami's Finalizer [dink]</li>
+<li>Fixed a crash issue in Super-X (NTC) when up + down was pressed [dink]</li>
+<li>Default Full Screen depth to 32bpp [dink]</li>
+<li>Fixed DC Offset on Quartet 1 and 2's DAC, eliminating pops and clicks [dink]</li>
+<li>Added proper inputs for Wall Crash [dink]</li>
+<li>Add default gun calibrations and fix sprite:tile priority issues in Operation Wolf 3 [dink]</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
 <!-- new drivers -->
 </ul>
 <h2>New drivers</h2>
@@ -239,11 +254,21 @@
 <li>Added driver for Shadow Land, Dragon Spirit, Pac-Mania, Galaga '88, Splatter House and others on Namco System 1 Hardware [iq_132, dink]</li>
 <li>Added driver for Fantasy Land, Galaxy Gunner and Wheels Runner [iq_132, dink]</li>
 <li>Added driver for Susume! / Go Go! Mile Smile and Gyakuten! Puzzle Bancho on Fuuki 16-bit Hardware [iq_132, dink]</li>
+<li>Added driver for Karate Champ by Data East [iq_132, dink]</li>
+<li>Added driver for Shot Rider, Zippy Race / Traverse USA [iq_132, dink]</li>
+<li>Added driver for Konami's Hyper Sports and Road Fighter [iq_132]</li>
+<li>Added driver for Konami's Juno First [iq_132]</li>
+<li>Added driver for Battle Cross and DodgeMan [iq_132]</li>
+<li>Added driver for Shoot Out by Data East [iq_132, dink]</li>
+<li>Added driver for Acrobatic Dog Fight [iq_132, dink]</li>
+<li> []</li>
+<li> []</li>
+<li> []</li>
 <!-- new game additions to existing drivers -->
 </ul>
 <h2>New additions to existing drivers</h2>
 <ul>
-<li>Added Mini Planets to the Megadrive driver [dink]</li>
+<li>Added Mini Planets (REV02) to the Megadrive driver [dink]</li>
 <li>Added Miss World 2002 [NeoGeo de Ahuizotla, Artemio Urbina, The Dumping Union, JacKc]</li>
 <li>Added Eeekk!! on pacman hardware [iq_132]</li>
 <li>Added Sky Robo and Tatakae! Big Fighter to the armedf driver.  Thanks to CapsOff for dumping the impossible protection MCU! [dink]</li>
@@ -281,6 +306,12 @@
 <li>Added clone of Red Hawk (Greece) [Abelardator2, JacKc, iq_132]</li>
 <li>Added clone of Dungeons & Dragons: Shadow over Mystara (Japan 960223) [ShouTime, Steven Fairbrother, Smitdogg, The Dumping Union, JacKc]</li>
 <li>Added clone of Raiden II (Germany) [Caius, JacKc]</li>
+<li>Update Samurai Shodown II Special to v1.0.0311 [GSC2007, JacKc]</li>
+<li>Added clone of Street Fighter II: The World Warrior (World 910129) [Janniz, JacKc]</li>
+<li>Added clone of Radical Radial (Japan) [ShouTime, JacKc]</li>
+<li>Added clone of Flashgal (set 1, Kyugo logo) [Corrado Tomaselli, The Dumping Union, JacKc]</li>
+<li>Added clone of Martial Masters / Xing Yi (V103, 102, 102, China) [kuze, JacKc]</li>
+<li> []</li>
 <li> []</li>
 <li> []</li>
 <li> []</li>

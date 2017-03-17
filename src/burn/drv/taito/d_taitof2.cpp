@@ -9686,10 +9686,98 @@ static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32
 										}
 									}
 								}
-							}							
+							}
 						} else {
 							pPixel[x] = c | Colour;
 						}
+					}
+					xIndex += dx;
+				}
+				
+				yIndex += dy;
+			}
+		}
+	}
+}
+
+static void RenderSpriteZoomPriMask(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32 xFlip, INT32 yFlip, INT32 xScale, INT32 yScale, INT32 Priority, UINT8* pSource)
+{
+	UINT8 *SourceBase = pSource + ((Code % TaitoNumSpriteA) * TaitoSpriteAWidth * TaitoSpriteAHeight);
+	
+	INT32 SpriteScreenHeight = (yScale * TaitoSpriteAHeight + 0x8000) >> 16;
+	INT32 SpriteScreenWidth = (xScale * TaitoSpriteAWidth + 0x8000) >> 16;
+	
+	Colour = 0x10 * (Colour % 0x100);
+	Priority |= 1<<31;
+	if (TaitoF2SpritesFlipScreen) {
+		xFlip = !xFlip;
+		sx = 320 - sx - (xScale >> 12);
+		yFlip = !yFlip;
+		sy = 256 - sy - (yScale >> 12);
+	}
+		
+	if (SpriteScreenWidth && SpriteScreenHeight) {
+		INT32 dx = (TaitoSpriteAWidth << 16) / SpriteScreenWidth;
+		INT32 dy = (TaitoSpriteAHeight << 16) / SpriteScreenHeight;
+		
+		INT32 ex = sx + SpriteScreenWidth;
+		INT32 ey = sy + SpriteScreenHeight;
+		
+		INT32 xIndexBase;
+		INT32 yIndex;
+		
+		if (xFlip) {
+			xIndexBase = (SpriteScreenWidth - 1) * dx;
+			dx = -dx;
+		} else {
+			xIndexBase = 0;
+		}
+		
+		if (yFlip) {
+			yIndex = (SpriteScreenHeight - 1) * dy;
+			dy = -dy;
+		} else {
+			yIndex = 0;
+		}
+		
+		if (sx < 0) {
+			INT32 Pixels = 0 - sx;
+			sx += Pixels;
+			xIndexBase += Pixels * dx;
+		}
+		
+		if (sy < 0) {
+			INT32 Pixels = 0 - sy;
+			sy += Pixels;
+			yIndex += Pixels * dy;
+		}
+		
+		if (ex > nScreenWidth) {
+			INT32 Pixels = ex - nScreenWidth;
+			ex -= Pixels;
+		}
+		
+		if (ey > nScreenHeight) {
+			INT32 Pixels = ey - nScreenHeight;
+			ey -= Pixels;	
+		}
+		
+		if (ex > sx) {
+			INT32 y;
+			
+			for (y = sy; y < ey; y++) {
+				UINT8 *Source = SourceBase + ((yIndex >> 16) * TaitoSpriteAWidth);
+				UINT16* pPixel = pTransDraw + (y * nScreenWidth);
+				UINT8 *pri = TaitoPriorityMap + (y * nScreenWidth);
+
+				INT32 x, xIndex = xIndexBase;
+				for (x = sx; x < ex; x++) {
+					INT32 c = Source[xIndex >> 16];
+					if (c) {
+						if ((Priority & (1 << (pri[x]&0x1f))) == 0) {
+							pPixel[x] = c | Colour;
+						}
+						pri[x] = 0x1f;
 					}
 					xIndex += dx;
 				}
@@ -9898,7 +9986,7 @@ void TaitoF2MakeSpriteList()
 		}
 
 		INT32 Priority = (Colour & 0xc0) >> 6;
-		
+
 		SpritePtr->Code = Code;
 		SpritePtr->x = xCur;
 		SpritePtr->y = yCur;
@@ -9908,6 +9996,7 @@ void TaitoF2MakeSpriteList()
 		SpritePtr->xZoom = zx << 12;
 		SpritePtr->yZoom = zy << 12;
 		SpritePtr->Priority = TaitoF2SpritePriority[Priority];
+		SpritePtr->Priority_Raw = Priority;
 		SpritePtr++;
 	}
 }
@@ -9916,6 +10005,13 @@ void TaitoF2RenderSpriteList(INT32 TaitoF2SpritePriorityLevel)
 {
 	for (INT32 i = 0; i < 0x400; i++) {
 		if (TaitoF2SpriteList[i].Priority == TaitoF2SpritePriorityLevel) RenderSpriteZoom(TaitoF2SpriteList[i].Code, TaitoF2SpriteList[i].x, TaitoF2SpriteList[i].y, TaitoF2SpriteList[i].Colour, TaitoF2SpriteList[i].xFlip, TaitoF2SpriteList[i].yFlip, TaitoF2SpriteList[i].xZoom, TaitoF2SpriteList[i].yZoom, TaitoF2SpritePriorityLevel, TaitoSpritesA);
+	}
+}
+
+void TaitoF2RenderSpriteListPriMasks(INT32 *primasks)
+{
+	for (INT32 i = 0x400-1; i > -1; i--) {
+		RenderSpriteZoomPriMask(TaitoF2SpriteList[i].Code, TaitoF2SpriteList[i].x, TaitoF2SpriteList[i].y, TaitoF2SpriteList[i].Colour, TaitoF2SpriteList[i].xFlip, TaitoF2SpriteList[i].yFlip, TaitoF2SpriteList[i].xZoom, TaitoF2SpriteList[i].yZoom, primasks[TaitoF2SpriteList[i].Priority_Raw & 3], TaitoSpritesA);
 	}
 }
 

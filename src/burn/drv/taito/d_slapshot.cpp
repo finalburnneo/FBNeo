@@ -265,7 +265,7 @@ void __fastcall Slapshot68KWriteByte(UINT32 a, UINT8 d)
 		TimeKeeperWrite((a - 0xa00000) >> 1, d);
 		return;
 	}
-	
+
 	TC0360PRIHalfWordWrite_Map(0xb00000)
 
 	if (a >= 0xc00000 && a <= 0xc0000f) {
@@ -307,6 +307,10 @@ UINT16 __fastcall Slapshot68KReadWord(UINT32 a)
 
 void __fastcall Slapshot68KWriteWord(UINT32 a, UINT16 d)
 {
+	if (a < 0x10000) return; // silly bad writes to rom area
+
+	if (a == 0xe80000) return; // gun "rumble"
+
 	TC0480SCPCtrlWordWrite_Map(0x830000)
 	
 	if (a >= 0xc00000 && a <= 0xc0000f) {
@@ -517,8 +521,11 @@ static INT32 MachineInit()
 	MemIndex();
 	
 	GenericTilesInit();
+
+	TaitoPriorityMap = pPrioDraw;
 	
 	TC0480SCPInit(TaitoNumChar, 3, 30, 9, -1, 1, -2);
+	TC0480SCPSetPriMap(TaitoPriorityMap);
 	TC0480SCPSetColourBase(256);
 	TC0140SYTInit(0);
 	TC0360PRIInit();
@@ -760,34 +767,50 @@ static void SlapshotDraw()
 	Layer[2] = (Priority & 0x00f0) >>  4;
 	Layer[3] = (Priority & 0x000f) >>  0;
 	
-	TaitoF2TilePriority[Layer[0]] = TC0360PRIRegs[4] & 0x0f;
-	TaitoF2TilePriority[Layer[1]] = TC0360PRIRegs[4] >> 4;
-	TaitoF2TilePriority[Layer[2]] = TC0360PRIRegs[5] & 0x0f;
-	TaitoF2TilePriority[Layer[3]] = TC0360PRIRegs[5] >> 4;
-	
+	TaitoF2TilePriority[0] = TC0360PRIRegs[4] & 0x0f;
+	TaitoF2TilePriority[1] = TC0360PRIRegs[4] >> 4;
+	TaitoF2TilePriority[2] = TC0360PRIRegs[5] & 0x0f;
+	TaitoF2TilePriority[3] = TC0360PRIRegs[5] >> 4;
+
 	TaitoF2SpritePriority[0] = TC0360PRIRegs[6] & 0x0f;
 	TaitoF2SpritePriority[1] = TC0360PRIRegs[6] >> 4;
 	TaitoF2SpritePriority[2] = TC0360PRIRegs[7] & 0x0f;
 	TaitoF2SpritePriority[3] = TC0360PRIRegs[7] >> 4;
-	
+
+#if 0
+	// ** save this! **  for later impl. in d_taitof2 -dink
+	bprintf(0, _T("sprite   %X %X %X %X\n"), TaitoF2SpritePriority[0], TaitoF2SpritePriority[1], TaitoF2SpritePriority[2], TaitoF2SpritePriority[3]);
+	bprintf(0, _T("tile     %X %X %X %X\n"), TaitoF2TilePriority[0], TaitoF2TilePriority[1], TaitoF2TilePriority[2], TaitoF2TilePriority[3]);
+	bprintf(0, _T("layer    %X %X %X %X\n"), Layer[0], Layer[1], Layer[2], Layer[3]);
+	bprintf(0, _T("pri %X %X %X %X %X %X %X %X %X %X.\n"), TC0360PRIRegs[0], TC0360PRIRegs[1], TC0360PRIRegs[2], TC0360PRIRegs[3], TC0360PRIRegs[4], TC0360PRIRegs[5], TC0360PRIRegs[6], TC0360PRIRegs[7], TC0360PRIRegs[8], TC0360PRIRegs[9], TC0360PRIRegs[10]);
+#endif
+
 	SlapshotCalcPalette();
-	BurnTransferClear();	
-	
-	TaitoF2MakeSpriteList();
-	
-	for (INT32 i = 0; i < 16; i++) {
-		if (TaitoF2TilePriority[0] == i) TC0480SCPTilemapRender(Layer[0], 0, TaitoChars);
-		if (TaitoF2TilePriority[1] == i) TC0480SCPTilemapRender(Layer[1], 0, TaitoChars);
-		if (TaitoF2TilePriority[2] == i) TC0480SCPTilemapRender(Layer[2], 0, TaitoChars);
-		if (TaitoF2TilePriority[3] == i) TC0480SCPTilemapRender(Layer[3], 0, TaitoChars);
-		if (TaitoF2SpritePriority[3] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[3]);
-		if (TaitoF2SpritePriority[2] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[2]);
-		if (TaitoF2SpritePriority[1] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[1]);
-		if (TaitoF2SpritePriority[0] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[0]);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) TC0480SCPTilemapRenderPrio(Layer[0], 0, 1, TaitoChars);
+	if (nBurnLayer & 2) TC0480SCPTilemapRenderPrio(Layer[1], 0, 2, TaitoChars);
+	if (nBurnLayer & 4) TC0480SCPTilemapRenderPrio(Layer[2], 0, 4, TaitoChars);
+	if (nBurnLayer & 8) TC0480SCPTilemapRenderPrio(Layer[3], 0, 8, TaitoChars);
+
+	{ // sprite layer
+		TaitoF2MakeSpriteList();
+
+		INT32 primasks[4] = { 0, 0, 0, 0 };
+
+		for (INT32 i = 0; i < 4; i++) {
+			if (TaitoF2SpritePriority[i] < TaitoF2TilePriority[Layer[0]]) primasks[i] |= 0xaaaa;
+			if (TaitoF2SpritePriority[i] < TaitoF2TilePriority[Layer[1]]) primasks[i] |= 0xcccc;
+			if (TaitoF2SpritePriority[i] < TaitoF2TilePriority[Layer[2]]) primasks[i] |= 0xf0f0;
+			if (TaitoF2SpritePriority[i] < TaitoF2TilePriority[Layer[3]]) primasks[i] |= 0xff00;
+		}
+
+		if (nSpriteEnable & 1)
+			TaitoF2RenderSpriteListPriMasks((INT32 *)&primasks);
 	}
-	
+
 	TC0480SCPRenderCharLayer();
-	
+
 	BurnTransferCopy(TaitoPalette);
 }
 
@@ -795,9 +818,9 @@ static void Opwolf3Draw()
 {
 	SlapshotDraw();
 	
-	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
+	/*for (INT32 i = 0; i < nBurnGunNumPlayers; i++) { // game draws it's own targets.  saving just incase.
 		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
-	}
+	}*/
 }
 
 static void Opwolf3Defaults()
@@ -859,7 +882,7 @@ static INT32 SlapshotFrame()
 		SekClose();
 		
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	

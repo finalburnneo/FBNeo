@@ -1355,7 +1355,7 @@ struct BurnDriver BurnDrvPhoenixi = {
 	"phoenixi", "phoenix", NULL, NULL, "1981",
 	"Phoenix (IDI bootleg)\0", NULL, "bootleg (IDI)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phoenixiRomInfo, phoenixiRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
 	SinglePromInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4
@@ -1642,7 +1642,7 @@ struct BurnDriver BurnDrvFenix = {
 	"fenix", "phoenix", NULL, NULL, "1980",
 	"Fenix (bootleg of Phoenix)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, fenixRomInfo, fenixRomName, NULL, NULL, CondorInputInfo, CondorDIPInfo,
 	CondorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
 	208, 256, 3, 4

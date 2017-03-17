@@ -219,6 +219,7 @@ struct TaitoF2SpriteEntry {
 	INT32 xZoom;
 	INT32 yZoom;
 	INT32 Priority;
+	INT32 Priority_Raw;
 };
 extern struct TaitoF2SpriteEntry *TaitoF2SpriteList;
 
@@ -241,4 +242,5 @@ void TaitoF2FullBufferDelayed();
 
 void TaitoF2MakeSpriteList();
 void TaitoF2RenderSpriteList(INT32 TaitoF2SpritePriorityLevel);
+void TaitoF2RenderSpriteListPriMasks(INT32 *primasks);
 void TaitoF2HandleSpriteBuffering();

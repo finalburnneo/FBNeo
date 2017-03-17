@@ -376,23 +376,39 @@ void TC0480SCPCtrlWordWrite(INT32 Offset, UINT16 Data)
 static inline void DrawScanLine(INT32 y, const UINT16 *src, INT32 Transparent, INT32 Prio)
 {
 	UINT16 *pPixel = pTransDraw + (y * nScreenWidth);
-	UINT8 *pPrio = TC0480SCPPriMap + (y * nScreenWidth);
 	INT32 Length = nScreenWidth;
-	
-	if (Transparent) {
-		while (Length--) {
-			UINT16 sPixel = *src++;
-			if (sPixel < 0x7fff) {
-				*pPixel = sPixel;
-				if (TC0480SCPPriMap) *pPrio = Prio;
+
+	if (TC0480SCPPriMap) {
+		UINT8 *pPrio = TC0480SCPPriMap + (y * nScreenWidth);
+		if (Transparent) {
+			while (Length--) {
+				UINT16 sPixel = *src++;
+				if (sPixel < 0x7fff) {
+					*pPixel = sPixel;
+					*pPrio = Prio;
+				}
+				pPixel++;
+				pPrio++;
 			}
-			pPixel++;
-			if (TC0480SCPPriMap) pPrio++;
+		} else {
+			while (Length--) {
+				*pPixel++ = *src++;
+				*pPrio++ = Prio;
+			}
 		}
-	} else {
-		while (Length--) {
-			*pPixel++ = *src++;
-			if (TC0480SCPPriMap) *pPrio++ = Prio;
+	} else { // no-priority buffer version
+		if (Transparent) {
+			while (Length--) {
+				UINT16 sPixel = *src++;
+				if (sPixel < 0x7fff) {
+					*pPixel = sPixel;
+				}
+				pPixel++;
+			}
+		} else {
+			while (Length--) {
+				*pPixel++ = *src++;
+			}
 		}
 	}
 }

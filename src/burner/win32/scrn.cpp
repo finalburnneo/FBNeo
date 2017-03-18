@@ -780,9 +780,13 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
-int StartFromReset()
+int StartFromReset(TCHAR *szDriverName)
 {
-	if(nBurnDrvActive < 1) return 0;
+	if (!bDrvOkay) {
+		BurnerLoadDriver(szDriverName);
+		return 1;
+	}
+	//if(nBurnDrvActive < 1) return 0;
 	
 	int nOldDrvSelect = nBurnDrvActive;
 

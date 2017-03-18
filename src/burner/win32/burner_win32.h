@@ -256,7 +256,7 @@ void SetPauseMode(bool bPause);
 int ActivateChat();
 void DeActivateChat();
 int BurnerLoadDriver(TCHAR *szDriverName);
-int StartFromReset();
+int StartFromReset(TCHAR *szDriverName);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
@@ -429,6 +429,7 @@ int StartReplay(const TCHAR* szFileName = NULL);
 void StopReplay();
 int FreezeInput(unsigned char** buf, int* size);
 int UnfreezeInput(const unsigned char* buf, int size);
+void DisplayReplayProperties(HWND hDlg, bool bClear);
 
 // memcard.cpp
 extern int nMemoryCardStatus;						// & 1 = file selected, & 2 = inserted

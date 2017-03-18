@@ -11,6 +11,8 @@
 
 #define MAX_METADATA 1024
 wchar_t wszMetadata[MAX_METADATA];
+wchar_t wszStartupGame[MAX_PATH];
+wchar_t wszAuthorInfo[MAX_METADATA-64];
 
 INT32 nReplayStatus = 0; // 1 record, 2 replay, 0 nothing
 bool bReplayReadOnly = false;
@@ -271,7 +273,6 @@ INT32 ReplayInput()
 #if 0
 	if ( (GetCurrentFrame()-nStartFrame) == (nTotalFrames-1) ) {
 		//bRunPause = 1; // not needed, but reenable if problems -dink.
-		//bprintf(0, _T("testing. things.\n"));
 	}
 #endif
 
@@ -322,7 +323,7 @@ INT32 StartRecord()
 	bReplayShowMovement = false;
 
 	if (bStartFromReset) {
-		if(!StartFromReset()) return 1;
+		if(!StartFromReset(NULL)) return 1;
 		movieFlags |= MOVIE_FLAG_FROM_POWERON;
 	}
 	{
@@ -418,6 +419,10 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 
 	if (szFileName) {
 		_tcscpy(szChoice, szFileName);
+		if (!bReplayDontClose) {
+			// if startfromreset, get file "wszStartupGame" from metadata!!
+			DisplayReplayProperties(0, false);
+		}
 	} else {
 		bOldPause = bRunPause;
 		bRunPause = 1;
@@ -449,12 +454,12 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 			if (movieFlags&MOVIE_FLAG_FROM_POWERON) { // Starts from reset
 				bStartFromReset = 1;
 				if (!bReplayDontClose)
-					if(!StartFromReset()) return 0;
+					if(!StartFromReset(wszStartupGame)) return 0;
 				nRet = 0;
 			}
 			else {// Load the savestate associated with the recording
 				bStartFromReset = 0;
-			nRet = BurnStateLoadEmbed(fp, -1, 1, &DrvInitCallback);
+				nRet = BurnStateLoadEmbed(fp, -1, 1, &DrvInitCallback);
 			}
 			if (nRet == 0) {
 				const char szChunkHeader[] = "FR1 ";		// Chunk identifier
@@ -749,61 +754,63 @@ static void GetRecordingPath(wchar_t* szPath)
 	}
 }
 
-static void DisplayReplayProperties(HWND hDlg, bool bClear)
+void DisplayReplayProperties(HWND hDlg, bool bClear)
 {
-	// save status of read only checkbox
-	static bool bReadOnlyStatus = true;
-	if (IsWindowEnabled(GetDlgItem(hDlg, IDC_READONLY))) {
-		bReadOnlyStatus = (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_READONLY, BM_GETCHECK, 0, 0));
-	}
-
-	//bReplayShowMovement = false;
-	if (IsWindowEnabled(GetDlgItem(hDlg, IDC_SHOWMOVEMENT))) {
-		if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_GETCHECK, 0, 0)) {
-			bReplayShowMovement = true;
+	if (hDlg != 0) {
+		// save status of read only checkbox
+		static bool bReadOnlyStatus = true;
+		if (IsWindowEnabled(GetDlgItem(hDlg, IDC_READONLY))) {
+			bReadOnlyStatus = (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_READONLY, BM_GETCHECK, 0, 0));
 		}
+
+		//bReplayShowMovement = false;
+		if (IsWindowEnabled(GetDlgItem(hDlg, IDC_SHOWMOVEMENT))) {
+			if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_GETCHECK, 0, 0)) {
+				bReplayShowMovement = true;
+			}
+		}
+
+		bReplayReadOnly = bReadOnlyStatus;
+
+		// set default values
+		SetDlgItemTextA(hDlg, IDC_LENGTH, "");
+		SetDlgItemTextA(hDlg, IDC_FRAMES, "");
+		SetDlgItemTextA(hDlg, IDC_UNDO, "");
+		SetDlgItemTextA(hDlg, IDC_METADATA, "");
+		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "");
+		EnableWindow(GetDlgItem(hDlg, IDC_READONLY), FALSE);
+		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
+
+		EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), FALSE);
+		SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, BST_UNCHECKED, 0);
+
+		EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
+
+		if(bClear) {
+			return;
+		}
+
+		long lCount = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCOUNT, 0, 0);
+		long lIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCURSEL, 0, 0);
+		if (lIndex == CB_ERR) {
+			return;
+		}
+
+		if (lIndex == lCount - 1) {							// Last item is "Browse..."
+			EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);		// Browse is selectable
+			return;
+		}
+
+		long lStringLength = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETLBTEXTLEN, (WPARAM)lIndex, 0);
+		if(lStringLength + 1 > MAX_PATH) {
+			return;
+		}
+
+		SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETLBTEXT, (WPARAM)lIndex, (LPARAM)szChoice);
+
+		// check relative path
+		GetRecordingPath(szChoice);
 	}
-
-	bReplayReadOnly = bReadOnlyStatus;
-
-	// set default values
-	SetDlgItemTextA(hDlg, IDC_LENGTH, "");
-	SetDlgItemTextA(hDlg, IDC_FRAMES, "");
-	SetDlgItemTextA(hDlg, IDC_UNDO, "");
-	SetDlgItemTextA(hDlg, IDC_METADATA, "");
-	SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "");
-	EnableWindow(GetDlgItem(hDlg, IDC_READONLY), FALSE);
-	SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_UNCHECKED, 0);
-
-	EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), FALSE);
-	SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, BST_UNCHECKED, 0);
-
-	EnableWindow(GetDlgItem(hDlg, IDOK), FALSE);
-
-	if(bClear) {
-		return;
-	}
-
-	long lCount = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCOUNT, 0, 0);
-	long lIndex = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETCURSEL, 0, 0);
-	if (lIndex == CB_ERR) {
-		return;
-	}
-
-	if (lIndex == lCount - 1) {							// Last item is "Browse..."
-		EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);		// Browse is selectable
-		return;
-	}
-
-	long lStringLength = SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETLBTEXTLEN, (WPARAM)lIndex, 0);
-	if(lStringLength + 1 > MAX_PATH) {
-		return;
-	}
-
-	SendDlgItemMessage(hDlg, IDC_CHOOSE_LIST, CB_GETLBTEXT, (WPARAM)lIndex, (LPARAM)szChoice);
-
-	// check relative path
-	GetRecordingPath(szChoice);
 
 	const char szFileHeader[] = "FB1 ";					// File identifier
 	const char szSavestateHeader[] = "FS1 ";			// Chunk identifier
@@ -824,15 +831,17 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 		return;
 	}
 
-	if (_waccess(szChoice, W_OK)) {
-		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
-	} else {
-		EnableWindow(GetDlgItem(hDlg, IDC_READONLY), TRUE);
-		SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, (bReplayReadOnly) ? BST_CHECKED : BST_UNCHECKED, 0); //read-only by default
-	}
+	if (hDlg != 0) {
+		if (_waccess(szChoice, W_OK)) {
+			SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, BST_CHECKED, 0);
+		} else {
+			EnableWindow(GetDlgItem(hDlg, IDC_READONLY), TRUE);
+			SendDlgItemMessage(hDlg, IDC_READONLY, BM_SETCHECK, (bReplayReadOnly) ? BST_CHECKED : BST_UNCHECKED, 0); //read-only by default
+		}
 
-	EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), TRUE);
-	SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, (bReplayShowMovement) ? BST_CHECKED : BST_UNCHECKED, 0);
+		EnableWindow(GetDlgItem(hDlg, IDC_SHOWMOVEMENT), TRUE);
+		SendDlgItemMessage(hDlg, IDC_SHOWMOVEMENT, BM_SETCHECK, (bReplayShowMovement) ? BST_CHECKED : BST_UNCHECKED, 0);
+	}
 
 	memset(ReadHeader, 0, 4);
 	fread(ReadHeader, 1, 4, fd);						// Read identifier
@@ -842,39 +851,38 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 	}
 
 	fread(&movieFlags, 1, 1, fd);						// Read identifier
-	if (movieFlags&MOVIE_FLAG_FROM_POWERON)			// starts from reset
-		bStartFromReset = 1;
-	else
-		bStartFromReset = 0;
+
+	bStartFromReset = (movieFlags&MOVIE_FLAG_FROM_POWERON) ? 1 : 0; // Starts from reset
+
 	if (!bStartFromReset) {
-	memset(ReadHeader, 0, 4);
-	fread(ReadHeader, 1, 4, fd);						// Read identifier
-	if (memcmp(ReadHeader, szSavestateHeader, 4)) {		// Not the chunk type
-		fclose(fd);
-		return;
-	}
+		memset(ReadHeader, 0, 4);
+		fread(ReadHeader, 1, 4, fd);						// Read identifier
+		if (memcmp(ReadHeader, szSavestateHeader, 4)) {		// Not the chunk type
+			fclose(fd);
+			return;
+		}
 
-	fread(&nChunkSize, 1, 4, fd);
-	if (nChunkSize <= 0x40) {							// Not big enough
-		fclose(fd);
-		return;
-	}
+		fread(&nChunkSize, 1, 4, fd);
+		if (nChunkSize <= 0x40) {							// Not big enough
+			fclose(fd);
+			return;
+		}
 
-	nChunkDataPosition = ftell(fd);
+		nChunkDataPosition = ftell(fd);
 
-	fread(&nFileVer, 1, 4, fd);							// Version of FB that this file was saved from
+		fread(&nFileVer, 1, 4, fd);							// Version of FB that this file was saved from
 
-	fread(&t1, 1, 4, fd);								// Min version of FB that NV  data will work with
-	fread(&t2, 1, 4, fd);								// Min version of FB that All data will work with
+		fread(&t1, 1, 4, fd);								// Min version of FB that NV  data will work with
+		fread(&t2, 1, 4, fd);								// Min version of FB that All data will work with
 
-	nFileMin = t2;										// Replays require a full state
+		nFileMin = t2;										// Replays require a full state
 
 //		if (nBurnVer < nFileMin) {							// Error - emulator is too old to load this state
 //			fclose(fd);
 //			return;
 //		}
 
-	fseek(fd, nChunkDataPosition + nChunkSize, SEEK_SET);
+		fseek(fd, nChunkDataPosition + nChunkSize, SEEK_SET);
 	}
 
 	memset(ReadHeader, 0, 4);
@@ -915,37 +923,47 @@ static void DisplayReplayProperties(HWND hDlg, bool bClear)
 			local_metadata[i] = c;
 		}
 		local_metadata[i] = L'\0';
+
+		if (bStartFromReset) {
+			swscanf(local_metadata, L"%[^','],%s", wszStartupGame, wszAuthorInfo);
+			bprintf(0, _T("startup game: %s.\n"), wszStartupGame);
+			bprintf(0, _T("author info: %s.\n"), wszAuthorInfo);
+		} else {
+			wcsncpy(wszAuthorInfo, local_metadata, MAX_METADATA-64);
+		}
 	}
 
 	// done reading file
 	fclose(fd);
-
-	// file exists and is the correct format,
-	// so enable the "Ok" button
-	EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
-
-	// turn nFrames into a length string
-	INT32 nSeconds = (nFrames * 100 + (nBurnFPS>>1)) / nBurnFPS;
-	INT32 nMinutes = nSeconds / 60;
-	INT32 nHours = nSeconds / 3600;
-
-	// write strings to dialog
-	char szFramesString[32];
-	char szLengthString[32];
-	char szUndoCountString[32];
-	sprintf(szFramesString, "%d", nFrames);
-	sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
-	sprintf(szUndoCountString, "%d", nUndoCount);
-
-	SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
-	SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);
-	SetDlgItemTextA(hDlg, IDC_UNDO, szUndoCountString);
-	SetDlgItemTextW(hDlg, IDC_METADATA, local_metadata);
-	if (bStartFromReset)
-		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Power-On");
-	else
-		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Savestate");
 	free(local_metadata);
+
+	if (hDlg != 0) {
+		// file exists and is the correct format,
+		// so enable the "Ok" button
+		EnableWindow(GetDlgItem(hDlg, IDOK), TRUE);
+
+		// turn nFrames into a length string
+		INT32 nSeconds = (nFrames * 100 + (nBurnFPS>>1)) / nBurnFPS;
+		INT32 nMinutes = nSeconds / 60;
+		INT32 nHours = nSeconds / 3600;
+
+		// write strings to dialog
+		char szFramesString[32];
+		char szLengthString[32];
+		char szUndoCountString[32];
+		sprintf(szFramesString, "%d", nFrames);
+		sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
+		sprintf(szUndoCountString, "%d", nUndoCount);
+
+		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
+		SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);
+		SetDlgItemTextA(hDlg, IDC_UNDO, szUndoCountString);
+		SetDlgItemTextW(hDlg, IDC_METADATA, wszAuthorInfo);
+		if (bStartFromReset)
+			SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Power-On");
+		else
+			SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Savestate");
+	}
 }
 
 static BOOL CALLBACK ReplayDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
@@ -1094,10 +1112,13 @@ static void VerifyRecordingFilename(HWND hDlg)
 
 static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM)
 {
+	wchar_t szAuthInfo[MAX_METADATA];
+
 	if (Msg == WM_INITDIALOG) {
 		// come up with a unique name
 		wchar_t szPath[MAX_PATH];
 		wchar_t szFilename[MAX_PATH];
+
 		INT32 i = 0;
 		_stprintf(szFilename, _T("%s.fr"), BurnDrvGetText(DRV_NAME));
 		wcscpy(szPath, szFilename);
@@ -1137,10 +1158,12 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					return TRUE;
 				case IDOK:
 					GetDlgItemText(hDlg, IDC_FILENAME, szChoice, MAX_PATH);
-					GetDlgItemTextW(hDlg, IDC_METADATA, wszMetadata, MAX_METADATA);
+					GetDlgItemTextW(hDlg, IDC_METADATA, szAuthInfo, MAX_METADATA-64);
 					bStartFromReset = false;
 					if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_REPLAYRESET, BM_GETCHECK, 0, 0)) {
 						bStartFromReset = true;
+						// add "romset," to beginning of metadata
+						_stprintf(wszMetadata, _T("%s,%s"), BurnDrvGetText(DRV_NAME), szAuthInfo);
 					}
 					wszMetadata[MAX_METADATA-1] = L'\0';
 					// ensure a relative path has the "recordings\" path in prepended to it

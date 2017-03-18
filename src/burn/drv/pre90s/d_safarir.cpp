@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "namco_snd.h"
 #include "samples.h"
 
 static UINT8 *AllMem;

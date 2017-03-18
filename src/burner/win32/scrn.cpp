@@ -1145,7 +1145,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_STATE_LOAD_SLOT:
 			if (bDrvOkay && !kNetGame) {
 				if (StatedLoad(nSavestateSlot) == 0) {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOADED, true));
+					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOADED, true), 0, 40);
 				} else {
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_LOAD_ERROR, true), 0xFF3F3F);
 				}
@@ -1155,7 +1155,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_STATE_SAVE_SLOT:
 			if (bDrvOkay) {
 				if (StatedSave(nSavestateSlot) == 0) {
-					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVED, true));
+					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVED, true), 0, 40);
 				} else {
 					VidSNewShortMsg(FBALoadStringEx(hAppInst, IDS_STATE_SAVE_ERROR, true), 0xFF3F3F);
 					SetPauseMode(1);

@@ -780,6 +780,33 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 	return 0;
 }
 
+int StartFromReset()
+{
+	if(nBurnDrvActive < 1) return 0;
+	
+	int nOldDrvSelect = nBurnDrvActive;
+
+	DrvExit();
+	bLoading = 1;
+	
+	nBurnDrvActive = nOldDrvSelect;
+	nDialogSelect = nOldDrvSelect;
+	SplashDestroy(1);
+	StopReplay();
+	
+	DrvInit(nOldDrvSelect, false);	// Init the game driver, without loading SRAM
+	MenuEnableItems();
+	bAltPause = 0;
+	AudSoundPlay();			// Restart sound
+	bLoading = 0;
+	UpdatePreviousGameList();
+	if (bVidAutoSwitchFull) {
+		nVidFullscreen = 1;
+		POST_INITIALISE_MESSAGE;
+	}
+	return 1;
+}
+
 void scrnSSUndo() // called from the menu (shift+F8) and CheckSystemMacros() in run.cpp
 {
 	if (bDrvOkay) {

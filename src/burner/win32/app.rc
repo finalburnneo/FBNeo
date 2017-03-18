@@ -786,7 +786,7 @@ BEGIN
     EDITTEXT        IDC_FILENAME,55,10,189,14,ES_AUTOHSCROLL
     PUSHBUTTON      "...",IDC_BROWSE,249,10,18,14
     EDITTEXT        IDC_METADATA,55,30,189,37,ES_AUTOHSCROLL
-//    CONTROL         "Record From Power-On",IDC_REPLAYRESET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,55,79,106,14
+    CONTROL         "Record From Power-On",IDC_REPLAYRESET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,55,79,106,14
 END
 
 /////////////////////////////////////////////////////////////////////////////

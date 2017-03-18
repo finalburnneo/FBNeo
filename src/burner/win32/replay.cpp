@@ -45,11 +45,6 @@ static INT32 nPrintInputsActive[2] = { 0, 0 };
 static INT32 ReplayDialog();
 static INT32 RecordDialog();
 
-INT32 StartFromReset()
-{
-	return 0; // record from power-on not implemented yet.
-}
-
 INT32 RecordInput()
 {
 	struct BurnInputInfo bii;
@@ -1113,7 +1108,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 
 		SetDlgItemText(hDlg, IDC_FILENAME, szFilename);
 		SetDlgItemTextW(hDlg, IDC_METADATA, L"");
-		CheckDlgButton(hDlg, IDC_REPLAYRESET, BST_CHECKED);
+		CheckDlgButton(hDlg, IDC_REPLAYRESET, BST_UNCHECKED);
 
 		VerifyRecordingFilename(hDlg);
 

@@ -255,7 +255,7 @@ INT32 ToaExtraTextLayer()
 
 				for (x = 0, pTile = pCurrentRow - nOffset * nBurnColumn; x < 41; x++, pTile += nTileLeft) {
 					UINT32 nTile = BURN_ENDIAN_SWAP_INT16(pTileRow[(x + nStartX) & 0x3F]);
-					if (nTile && nTile != 0x20) {
+					if (/*nTile &&*/ nTile != 0x20) {
 						pTileData = ExtraTROM + ((nTile & 0x3FF) << 5);
 						pTilePalette = &pTextPalette[((nTile >> 6) & 0x03F0)];
 						if (x == 0 || x == 40) {
@@ -282,7 +282,7 @@ INT32 ToaExtraTextLayer()
 
 		for (x = 0, pTile = pCurrentRow - nOffset * nBurnColumn; x < 41; x++, pTile += nTileLeft) {
 			UINT32 nTile = BURN_ENDIAN_SWAP_INT16(pTileRow[(x + nStartX) & 0x3F]);
-			if (nTile && nTile != 0x20) {
+			if (/*nTile &&*/ nTile != 0x20) {
 				pTileData = ExtraTROM + ((nTile & 0x3FF) << 5) + ((nLine & 7) << 2);
 				pTilePalette = &pTextPalette[((nTile >> 6) & 0x03F0)];
 				if (x == 0 || x == 40) {

@@ -800,11 +800,6 @@ static INT32 drvExit()
 	return 0;
 }
 
-inline static INT32 CheckSleep(INT32)
-{
-	return 0;
-}
-
 static INT32 drvDraw()
 {
 	ToaClearScreen(0);
@@ -822,7 +817,7 @@ static INT32 drvDraw()
 
 static INT32 drvFrame()
 {
-	INT32 nInterleave = 8;
+	INT32 nInterleave = 128;
 
 	if (drvReset) {														// Reset machine
 		drvDoReset();
@@ -857,23 +852,15 @@ static INT32 drvFrame()
 
 	ZetOpen(0);
 	for (INT32 i = 1; i <= nInterleave; i++) {
-    	INT32 nCurrentCPU;
-		INT32 nNext;
-
 		// Run 68000
-
-		nCurrentCPU = 0;
-		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
+		INT32 nCurrentCPU = 0;
+		INT32 nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
 
 		// Trigger VBlank interrupt
 		if (!bVBlank && nNext > nToaCyclesVBlankStart) {
 			if (nCyclesDone[nCurrentCPU] < nToaCyclesVBlankStart) {
 				nCyclesSegment = nToaCyclesVBlankStart - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			ToaBufferGP9001Sprites();
@@ -888,28 +875,22 @@ static INT32 drvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 
-		if ((i & 1) == 0) {
-			// Run Z80
-			nCurrentCPU = 1;
-			nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		// Run Z80
+		nCurrentCPU = 1;
+		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 
-			// Render sound segment
-			if (pBurnSoundOut) {
-				INT32 nSegmentLength = (nBurnSoundLen * i / nInterleave) - nSoundBufferPos;
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				MSM6295Render(0, pSoundBuf, nSegmentLength);
-				MSM6295Render(1, pSoundBuf, nSegmentLength);
-				nSoundBufferPos += nSegmentLength;
-			}
+		// Render sound segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = (nBurnSoundLen * i / nInterleave) - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
 		}
 	}
 

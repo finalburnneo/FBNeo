@@ -555,7 +555,7 @@ static INT32 LoadRomsBla()
 
 UINT8 __fastcall battlegZ80Read(UINT16 nAddress)
 {
-//	printf("z80 read %4X\n", nAddress);
+//	bprintf(0, _T("z80 read %4X\n"), nAddress);
 	switch (nAddress) {
 		case 0xE001:
 			return BurnYM2151ReadStatus();
@@ -575,7 +575,7 @@ UINT8 __fastcall battlegZ80Read(UINT16 nAddress)
 
 void __fastcall battlegZ80Write(UINT16 nAddress, UINT8 nValue)
 {
-//	printf("z80 wrote %4X with %2X\n", nAddress, nValue);
+//	bprintf(0, _T("z80 wrote %4X with %2X\n"), nAddress, nValue);
 	switch (nAddress) {
 		case 0xE000:
 			BurnYM2151SelectRegister(nValue);
@@ -601,7 +601,7 @@ void __fastcall battlegZ80Write(UINT16 nAddress, UINT8 nValue)
 
 		case 0xE00C:
 			// Once a sound command is processed, it is written to this address
-			// printf("z80 wrote %4X -> %2X\n", nAddress, nValue);
+			// bprintf(0, _T("z80 wrote %4X -> %2X\n"), nAddress, nValue);
 			break;
 
 	}
@@ -659,7 +659,7 @@ UINT8 __fastcall battlegReadByte(UINT32 sekAddress)
 			return DrvInput[5];
 
 //		default:
-//			printf("Attempt to read byte value of location %x\n", sekAddress);
+//			bprintf(0, _T("Attempt to read byte value of location %x\n"), sekAddress);
 	}
 	return 0;
 }
@@ -677,7 +677,7 @@ UINT16 __fastcall battlegReadWord(UINT32 sekAddress)
 			return ToaGP9001ReadRAM_Lo(0);
 
 //		default:
-//			printf("Attempt to read word value of location %x\n", sekAddress);
+//			bprintf(0, _T("Attempt to read word value of location %x\n"), sekAddress);
 	}
 	return 0;
 }
@@ -702,7 +702,7 @@ void __fastcall battlegWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			break;
 
 //		default:
-//			printf("Attempt to write byte value %x to location %x\n", byteValue, sekAddress);
+//			bprintf(0, _T("Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
 	}
 }
 
@@ -710,23 +710,12 @@ void __fastcall battlegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
 
-//		static int p;
-
 		case 0x300000:								// Set GP9001 VRAM address-pointer
 			ToaGP9001SetRAMPointer(wordValue);
-//			p = wordValue & 0x1FFF;
 			break;
 
 		case 0x300004:
-//			if (p++ >= 0x1800) {
-//				static int s;
-//				if (s != SekCurrentScanline()) {
-//					s = SekCurrentScanline();
-//					bprintf(PRINT_NORMAL, _T("  - sprite (%3i).\n"), s);
-//				}
-//			}
 		case 0x300006:
-//			p++;
 			ToaGP9001WriteRAM(wordValue, 0);
 			break;
 
@@ -740,7 +729,7 @@ void __fastcall battlegWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		}
 
 //		default:
-//			printf("Attempt to write word value %x to location %x\n", wordValue, sekAddress);
+//			bprintf(0, _T("Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
 	}
 }
 
@@ -856,6 +845,7 @@ static INT32 battlegInit()
 	// feb 2 1996 ver:				0x0009AC - 0x0009B8 & 0x001F2E - 0x001F34 & 0x0039EC - 0x0039F2
 
 	DrvDoReset();												// Reset machine
+
 	return 0;
 }
 
@@ -908,11 +898,6 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-inline static INT32 CheckSleep(INT32)
-{
-	return 0;
-}
-
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = 8;
@@ -942,7 +927,7 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
-	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
+	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262); // 0
 	nToaCyclesVBlankStart = nCyclesTotal[0] - ((nCyclesTotal[0] * TOA_VBLANK_LINES) / 262);
 	bVBlank = false;
 
@@ -950,23 +935,15 @@ static INT32 DrvFrame()
 
 	ZetOpen(0);
 	for (INT32 i = 1; i <= nInterleave; i++) {
-    	INT32 nCurrentCPU;
-		INT32 nNext;
-
 		// Run 68000
-
-		nCurrentCPU = 0;
-		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
+		INT32 nCurrentCPU = 0;
+		INT32 nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
 
 		// Trigger VBlank interrupt
 		if (!bVBlank && nNext > nToaCyclesVBlankStart) {
 			if (nCyclesDone[nCurrentCPU] < nToaCyclesVBlankStart) {
 				nCyclesSegment = nToaCyclesVBlankStart - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			nIRQPending = 1;
@@ -982,28 +959,22 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-			nIRQPending = 0;
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
+		nIRQPending = 0;
 
-		if ((i & 1) == 0) {
-			// Run Z80
-			nCurrentCPU = 1;
-			nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
-			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-			nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		// Run Z80
+		nCurrentCPU = 1;
+		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 
-			// Render sound segment
-			if (pBurnSoundOut) {
-				INT32 nSegmentLength = (nBurnSoundLen * i / nInterleave) - nSoundBufferPos;
-				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				MSM6295Render(0, pSoundBuf, nSegmentLength);
-				nSoundBufferPos += nSegmentLength;
-			}
+		// Render sound segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = (nBurnSoundLen * i / nInterleave) - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
 		}
 	}
 

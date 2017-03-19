@@ -1,6 +1,8 @@
 // MSM6295 module header
 
 #define MAX_MSM6295 (2)
+#define MSM6295_PIN7_HIGH (132)
+#define MSM6295_PIN7_LOW (165)
 
 INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal);
 void MSM6295SetSamplerate(INT32 nChip, INT32 nSamplerate);

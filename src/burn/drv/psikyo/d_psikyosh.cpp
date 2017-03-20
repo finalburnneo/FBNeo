@@ -1,5 +1,5 @@
 // FB Alpha Psikyo Sh2-based hardware driver module
-// Based on MAME driver by David Haywood
+// Based on MAME driver by Paul Priest, David Haywood
 
 // To do!
 // implement background zooming update.

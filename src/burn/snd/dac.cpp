@@ -1,5 +1,3 @@
-// based on MAME sources by Aaron Giles
-
 #include "burnint.h"
 #include "burn_sound.h"
 

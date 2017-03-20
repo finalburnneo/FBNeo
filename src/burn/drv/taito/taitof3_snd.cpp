@@ -1,3 +1,6 @@
+// FB Alpha Taito En / F3 sound core
+// Based on MAME sources by Bryan McPhail, Aaron Giles, R. Belmont, hap, Philip Bennett
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "es5506.h"

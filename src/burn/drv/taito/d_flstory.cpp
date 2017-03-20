@@ -1,3 +1,6 @@
+// FB Alpha Fairyland story driver module
+// Based on MAME driver by Nicola Salmoria
+
 // Todo: victnine
 
 #include "tiles_generic.h"

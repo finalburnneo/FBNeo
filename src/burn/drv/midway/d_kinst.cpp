@@ -1,3 +1,4 @@
+// Based on MAME driver by Aaron Giles
 
 #include "driver.h"
 #include "burnint.h"

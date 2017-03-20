@@ -1,3 +1,5 @@
+// Based on MAME sources by Bryan McPhail, Nicola Salmoria
+
 #include "burnint.h"
 #include "taito_ic.h"
 #include "taito.h"

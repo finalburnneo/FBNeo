@@ -1,5 +1,5 @@
 // FB Alpha Wild West C.O.W.-Boys of Moo Mesa / Bucky O'Hare driver module
-// Based on MAME driver by 
+// Based on MAME driver by R. Belmont, Acho A. Tang
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"

@@ -1,3 +1,6 @@
+// Time pilot, pooyan, rallyx, tutankhm, and rocnrope sound 
+// Based on MAME driver by Nicola Salmoria
+
 #include "burnint.h"
 #include "z80_intf.h"
 #include "flt_rc.h"

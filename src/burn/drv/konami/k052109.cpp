@@ -1,3 +1,6 @@
+// license:BSD-3-Clause
+// copyright-holders:Fabio Priuli,Acho A. Tang, R. Belmont
+
 // K052109
 
 #include "tiles_generic.h"

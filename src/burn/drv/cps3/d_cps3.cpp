@@ -1,6 +1,8 @@
 // ------------------------------------------------------------------------------------
 // Capcom Play System III Drivers for FB Alpha (2007 - 2008).
 // ------------------------------------------------------------------------------------
+//     Based on MAME driver by David Haywood, Andreas Naive, El Semi, Philip Bennett,
+//	and Tomasz Slanina
 //
 //	v1	[ OopsWare ]
 //     - Original drivers release.

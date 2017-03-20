@@ -1,3 +1,6 @@
+// license:BSD-3-Clause
+// copyright-holders:Fabio Priuli,Acho A. Tang, R. Belmont
+
 #include "tiles_generic.h"
 
 #define K007342_OPAQUE	(1<<16)

@@ -1,4 +1,5 @@
 // PC080SN & PC090OJ based games
+// Based on MAME drivers by Bryan McPhail, Nicola Salmoria, Jarek Burczynski, and David Graves
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"

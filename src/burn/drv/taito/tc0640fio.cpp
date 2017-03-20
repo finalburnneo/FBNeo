@@ -1,4 +1,5 @@
 // TC0640FIO
+// Based on MAME sources by Nicola Salmoria
 
 #include "burnint.h"
 #include "taito_ic.h"

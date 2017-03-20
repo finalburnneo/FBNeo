@@ -1,3 +1,5 @@
+// Based on MAME driver by David Graves
+
 // tofix: darius2d's offsets and y screen size is wrong - it should be 232 and everything moved down 8px
 
 #include "tiles_generic.h"

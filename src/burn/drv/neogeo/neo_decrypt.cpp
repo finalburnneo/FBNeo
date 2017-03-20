@@ -1,4 +1,5 @@
 // This file is based on the MAME source code (see http://www.mame.net/)
+// sources by Bryan McPhail,Fuzz,Ernesto Corvi,Andrew Prime,Zsolt Vasvari
 
 /***************************************************************************
 

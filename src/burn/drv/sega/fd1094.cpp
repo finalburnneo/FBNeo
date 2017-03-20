@@ -176,6 +176,8 @@ unknown   11111111 11110110 10111110 (Shinobi 16A, part no. unreadable, could be
 dead      00001111 00001111 00001111 (Alien Storm CPU with no battery)
 bad       11100000 10101011 10111001 (flaky 317-0049)
 
+based on MAME FD1094 sources by Nicola Salmoria, Andreas Naive, Charles MacDonald
+
 *****************************************************************************/
 
 #include "burnint.h"

@@ -1,5 +1,6 @@
-// Taito SuperChase driver for FBAlpha
-//
+// Taito SuperChase driver for FB Alpha
+// Based on MAME driver by Bryan McPhail, David Graves
+
 // Notes:
 //   SubCPU needs a 2mhz overclocking boost to prevent flashing glitches in
 //   certain areas.  For example - late in level 1 near the SanFranCisco-style Cable Cars;

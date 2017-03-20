@@ -1,5 +1,7 @@
 #include "cps3.h"
 
+// CPS-3 sound emulation by Philip Bennett
+
 #define CPS3_VOICES		16
 
 #define CPS3_SND_INT_RATE		(nBurnFPS / 100)

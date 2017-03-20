@@ -1,27 +1,30 @@
+// Based on MAME sources by Zsolt Vasvari
 /*****************************************************************************
-  SN76477 pins and assigned interface variables/functions
 
-								SN76477_envelope_w()
-							   /					\
-					   [ 1] ENV SEL 1			ENV SEL 2 [28]
-					   [ 2] GND 				  MIXER C [27] \
- SN76477_noise_clock_w [ 3] NOISE EXT OSC		  MIXER A [26]	> SN76477_mixer_w()
-		  noise_res    [ 4] RES NOISE OSC		  MIXER B [25] /
-		 filter_res    [ 5] NOISE FILTER RES	  O/S RES [24] oneshot_res
-		 filter_cap    [ 6] NOISE FILTER CAP	  O/S CAP [23] oneshot_cap
-		  decay_res    [ 7] DECAY RES			  VCO SEL [22] SN76477_vco_w()
-   attack_decay_cap    [ 8] A/D CAP 			  SLF CAP [21] slf_cap
- SN76477_enable_w()    [ 9] ENABLE				  SLF RES [20] slf_res
-		 attack_res    [10] ATTACK RES				PITCH [19] pitch_voltage
-	  amplitude_res    [11] AMP 				  VCO RES [18] vco_res
-	   feedback_res    [12] FEEDBACK			  VCO CAP [17] vco_cap
-					   [13] OUTPUT			 VCO EXT CONT [16] vco_voltage
-					   [14] Vcc 			  +5V REG OUT [15]
+    Texas Instruments SN76477 emulator
 
-	All resistor values in Ohms.
-	All capacitor values in Farads.
-	Use RES_K, RES_M and CAP_U, CAP_N, CAP_P macros to convert
-	magnitudes, eg. 220k = RES_K(220), 47nF = CAP_N(47)
+    authors: Derrick Renaud - info
+             Zsolt Vasvari  - software
+
+    (see sn76477.h for details)
+
+    Notes:
+        * All formulas were derived by taking measurements of a real device,
+          then running the data sets through the numerical analysis
+          application at http://zunzun.com to come up with the functions.
+
+    Known issues/to-do's:
+        * VCO
+            * confirm value of VCO_MAX_EXT_VOLTAGE, VCO_TO_SLF_VOLTAGE_DIFF
+              VCO_CAP_VOLTAGE_MIN and VCO_CAP_VOLTAGE_MAX
+            * confirm value of VCO_MIN_DUTY_CYCLE
+            * get real formulas for VCO cap charging and discharging
+            * get real formula for VCO duty cycle
+            * what happens if no vco_res
+            * what happens if no vco_cap
+
+        * Attack/Decay
+            * get real formulas for a/d cap charging and discharging
 
  *****************************************************************************/
 

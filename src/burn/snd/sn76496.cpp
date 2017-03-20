@@ -1,3 +1,5 @@
+// Based on MAME driver by Nicola Salmoria
+
 #include "burnint.h"
 #include "burn_sound.h"
 #include "sn76496.h"

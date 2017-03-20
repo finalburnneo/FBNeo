@@ -1,3 +1,5 @@
+// Based on MAME driver by Curt Coder
+
 #include "burnint.h"
 #include "8255ppi.h"
 

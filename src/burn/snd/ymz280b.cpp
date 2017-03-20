@@ -1,4 +1,5 @@
 // Yamaha YMZ280B module
+// Based on MAME sources by Aaron Giles
 #include <math.h>
 #include "burnint.h"
 #include "ymz280b.h"

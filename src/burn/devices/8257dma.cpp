@@ -27,6 +27,8 @@
     7.  The DMA clears the CPU's HRQ line
     8.  (steps 3-7 are repeated for every byte in the chain)
 
+    MAME sources by Curt Coder,Carl
+
 **********************************************************************/
 
 #include "burnint.h"

@@ -1,5 +1,7 @@
 //
 // FB Alpha Seibu sound hardware module
+//
+// Based on MAME sources by Bryan McPhail, R. Belmont
 // 
 // Games using this hardware:
 //

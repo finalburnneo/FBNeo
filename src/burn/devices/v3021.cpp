@@ -1,4 +1,5 @@
 /* v3021 Calendar Emulation */
+/* Based on MAME sources by Angelo Salese */
 
 #include "burnint.h"
 

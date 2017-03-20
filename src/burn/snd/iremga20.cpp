@@ -2,6 +2,8 @@
 
 Irem GA20 PCM Sound Chip
 
+Based on MAME sources by Acho A. Tang,R. Belmont
+
 It's not currently known whether this chip is stereo.
 
 

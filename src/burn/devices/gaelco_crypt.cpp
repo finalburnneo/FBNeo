@@ -1,3 +1,5 @@
+// Based on sources by Manuel Abadia
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "bitswap.h"

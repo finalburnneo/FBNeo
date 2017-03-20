@@ -1,3 +1,29 @@
+// copyright-holders:Nicola Salmoria,Hiromitsu Shioya
+/*********************************************************/
+/*    Konami PCM controller                              */
+/*********************************************************/
+
+/*
+  Changelog, Hiromitsu Shioya 02/05/2002
+  fix start address decode timing. (sample loop bug.)
+
+    Changelog, Mish, August 1999:
+        Removed interface support for different memory regions per channel.
+        Removed interface support for differing channel volume.
+
+        Added bankswitching.
+        Added support for multiple chips.
+
+        (Nb:  Should different memory regions per channel be needed
+        the bankswitching function can set this up).
+
+NS990821
+support for the k007232_VOL() macro.
+added external port callback, and functions to set the volume of the channels
+
+*/
+
+
 #include "burnint.h"
 #include "burn_sound.h"
 #include "k007232.h"

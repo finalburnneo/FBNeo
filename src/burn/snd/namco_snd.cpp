@@ -1,3 +1,17 @@
+// Based on MAME sources by Nicola Salmoria,Aaron Giles
+/***************************************************************************
+
+    NAMCO sound driver.
+
+    This driver handles the four known types of NAMCO wavetable sounds:
+
+        - 3-voice mono (PROM-based design: Pac-Man, Pengo, Dig Dug, etc)
+        - 8-voice quadrophonic (Pole Position 1, Pole Position 2)
+        - 8-voice mono (custom 15XX: Mappy, Dig Dug 2, etc)
+        - 8-voice stereo (System 1)
+
+***************************************************************************/
+
 #include "burnint.h"
 #include "burn_sound.h"
 #include "namco_snd.h"

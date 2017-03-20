@@ -1,3 +1,5 @@
+// is this based on the MAME M6295 core?
+
 #include <math.h>
 #include "burnint.h"
 #include "msm6295.h"

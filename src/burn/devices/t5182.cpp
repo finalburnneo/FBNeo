@@ -1,3 +1,5 @@
+// FB Alpha t5182 core
+// Based on MAME sources by Jonathan Gevaryahu
 
 #include "burnint.h"
 #include "t5182.h"

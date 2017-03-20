@@ -38,7 +38,7 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
-static UINT8 DrvInputs[2];
+static UINT8 DrvInputs[3];
 
 static struct BurnInputInfo BigstrkbInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},

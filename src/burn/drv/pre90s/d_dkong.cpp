@@ -1,5 +1,5 @@
 // Fb Alpha Donkey Kong driver module
-// Based on MAME driver by various
+// Based on MAME driver by Couriersud
 
 // still need:
 

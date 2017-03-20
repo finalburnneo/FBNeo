@@ -1,4 +1,5 @@
 // Truxton
+// Based on MAME driver by Darren Olafson, Quench,Stephane Humbert
 
 #include "toaplan.h"
 

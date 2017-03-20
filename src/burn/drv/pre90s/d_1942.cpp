@@ -1,3 +1,5 @@
+// FB Alpha 1942 driver module
+// Based on MAME driver by Paul Leaman, Couriersud
 #include "tiles_generic.h"
 #include "z80_intf.h"
 

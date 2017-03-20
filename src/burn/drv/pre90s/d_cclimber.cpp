@@ -1,4 +1,5 @@
 // Crazy Climber FBA Driver
+// Based on MAME driver by Nicola Salmoria
 
 // Todo:
 // 1: hook up samples

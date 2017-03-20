@@ -1,4 +1,5 @@
 // Tiger Heli, Get Star / Guardian, & Slap Fight
+// Based on MAME sources by K.Wilkins,Stephane Humbert
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

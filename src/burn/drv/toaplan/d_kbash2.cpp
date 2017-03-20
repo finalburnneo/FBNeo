@@ -1,3 +1,5 @@
+// Based on MAME driver by Quench, Yochizo, David Haywood
+
 #include "toaplan.h"
 // Knuckle Bash 2
 

@@ -1,3 +1,6 @@
+// FB Alpha Renegade driver module
+// Based on MAME driver by Phil Stroffolino, Carlos A. Lozano, Rob Rosenbrock
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "m6805_intf.h"

@@ -1,5 +1,7 @@
 #include "toaplan.h"
 
+// Based on MAME driver by Darren Olafson, Quench,Stephane Humbert
+
 #define REFRESHRATE 57.59
 #define VBLANK_LINES (32)
 

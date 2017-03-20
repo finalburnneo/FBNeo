@@ -1,5 +1,6 @@
 #include "toaplan.h"
 // Pipi & Bibis / Whoopee!!
+// Based on MAME driver by Quench, Yochizo, David Haywood
 
 #define REFRESHRATE 60
 #define VBLANK_LINES (32)

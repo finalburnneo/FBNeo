@@ -1,4 +1,4 @@
-// Mr. Do's Castle emu-layer for FB Alpha by dink, based on the MAME driver.
+// Mr. Do's Castle emu-layer for FB Alpha by dink, based on the MAME driver by Brad Oliver.
 //
 // Todo:
 //   fix DrvDip[0]

@@ -1,5 +1,6 @@
 /*
  * Aero Fighters driver for FB Alpha 0.2.96.71
+ * based on MAME driver by Nicola Salmoria
  * Port by OopsWare. 2007
  * http://oopsware.googlepages.com
  * http://oopsware.ys168.com

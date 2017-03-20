@@ -1,3 +1,6 @@
+// FB Alpha Wiz driver module
+// Based on MAME driver by Zsolt Vasvari
+
 // Wiz Todo:
 // scion: static in audio is normal (no kidding), use scionc!
 //

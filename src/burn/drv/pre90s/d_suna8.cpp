@@ -1,3 +1,6 @@
+// FB Alpha SunA 8-bit driver module
+// Based on MAME driver by Luca Elia
+
 #include "tiles_generic.h"
 #include "bitswap.h"
 #include "z80_intf.h"

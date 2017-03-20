@@ -1,3 +1,4 @@
+// Based on MAME driver by Quench, Yochizo, David Haywood
 #include "toaplan.h"
 // Snow Bros. 2
 

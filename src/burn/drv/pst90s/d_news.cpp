@@ -3,6 +3,7 @@
 #include "msm6295.h"
 
 // FB Alpha - "News" Driver
+// Based on MAME driver by David Haywood
 
 // Input Related Variables
 static UINT8 NewsInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};

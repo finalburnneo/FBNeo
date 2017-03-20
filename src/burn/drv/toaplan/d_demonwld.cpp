@@ -1,3 +1,5 @@
+// Based on MAME driver by Darren Olafson, Quench,Stephane Humbert
+
 #include "toaplan.h"
 
 #define USE_DSP		// use the dsp or hack it out.

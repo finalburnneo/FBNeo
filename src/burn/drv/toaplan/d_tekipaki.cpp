@@ -1,6 +1,7 @@
 #include "toaplan.h"
 
 // Teki Paki
+// Based on MAME driver by Quench, Yochizo, David Haywood
 
 static UINT8 DrvButton[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy1[8] = {0, 0, 0, 0, 0, 0, 0, 0};

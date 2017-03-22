@@ -287,6 +287,13 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static void DrvZ80Sync()
+{
+	INT32 todo = ((SekTotalCycles() / 4) - nCyclesDone[1]);
+	if (todo > 0) nCyclesDone[1] += ZetRun(todo);
+}
+
+
 static void drvZ80Bankswitch(INT32 nBank)
 {
 	nBank &= 0x0F;
@@ -536,23 +543,23 @@ void __fastcall batriderWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
 		case 0x500020: {
+			DrvZ80Sync();
 			RamShared[0] = wordValue;
 
 			// The 68K program normally writes 0x500020/0x500022 as a single longword,
 			// except during the communications test.
 			if (wordValue == 0x55) {
 				ZetNmi();
-				nCyclesDone[1] += ZetRun(0x1800);
 			}
 			break;
 		}
 		case 0x500022:
+			DrvZ80Sync();
 			RamShared[1] = wordValue;
 
 			// Sound commands are processed by the Z80 using an NMI
 			// So, trigger a Z80 NMI and execute it
 			ZetNmi();
-			nCyclesDone[1] += ZetRun(0x1800);
 			break;
 
 		case 0x500024:
@@ -819,7 +826,7 @@ static INT32 drvDraw()
 
 static INT32 drvFrame()
 {
-	INT32 nInterleave = 128;
+	INT32 nInterleave = 8;
 
 	if (drvReset) {														// Reset machine
 		drvDoReset();

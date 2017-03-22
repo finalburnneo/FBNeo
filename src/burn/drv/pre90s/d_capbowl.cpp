@@ -30,15 +30,23 @@ static INT32 watchdog;
 static INT32 game_select;
 static INT32 previous_scanline;
 
-static UINT8  DrvJoy1[8];
-static UINT8  DrvJoy2[8];
-static UINT8  DrvDips[2];
-static UINT8  DrvInputs[2];
-static UINT8  DrvReset;
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvDips[2];
+static UINT8 DrvInputs[2];
+static UINT8 DrvReset;
 
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static INT32 track_x_last = 0;
+static INT32 track_y_last = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo CapbowlInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 start"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
 
@@ -46,13 +54,11 @@ static struct BurnInputInfo CapbowlInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"	},
 
-	{"Trackball x",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
-	{"Trackball y",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 4"	},
-
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Capbowl)
 
@@ -81,6 +87,55 @@ static void bankswitch(INT32 d)
 	int bank = 0x08000 + (((d & 0x0c) >> 1) | (d & 1)) * 0x4000;
 
 	M6809MapMemory(DrvMainROM + bank, 0x0000, 0x3fff, MAP_ROM);
+}
+
+static void TrackReset()
+{
+	track_x_last = 0;
+	track_y_last = 0;
+}
+
+static UINT8 ProcessTrack(UINT8 pad)
+{
+	if ((pad & 0xf0) == 0xf0 || pad < 0x10) pad = 0;
+	pad = (pad>>4);
+	if (pad & 0x10) pad = 0x15-pad;
+
+	return pad;
+}
+
+static UINT8 TrackY()
+{
+	UINT8 pad = (DrvAnalogPort1 >> 4);
+
+	pad = ProcessTrack(0xff - pad) & 0xf; // reversed
+	if (pad) track_y_last = pad;
+
+	return ((pad) ? pad : track_y_last);
+}
+
+static UINT8 TrackX()
+{
+	UINT8 pad = (DrvAnalogPort0 >> 4);
+
+	pad = ProcessTrack(pad) & 0xf;
+	if (pad) track_x_last = pad;
+
+	return ((pad) ? pad : track_x_last);
+}
+
+static void TrackTick()
+{ // executes once every 8th frame to simulate linear deceleration
+	if (!(nCurrentFrame & 8)) return;
+	if (track_y_last !=0) {
+		if (track_y_last>0 && track_y_last < 9) track_y_last--;
+		else if (track_y_last > 9) { track_y_last++; if (track_y_last>0xf) track_y_last = 0; }
+	}
+
+	if (track_x_last !=0) {
+		if (track_x_last>0 && track_x_last < 9) track_x_last--;
+		else if (track_x_last > 9) { track_x_last++; if (track_x_last>0xf) track_x_last = 0; }
+	}
 }
 
 static void main_write(UINT16 a, UINT8 d)
@@ -125,7 +180,7 @@ static void main_write(UINT16 a, UINT8 d)
 
 		case 0x6800:
 			watchdog = 0;
-			// track_reset_w
+			TrackReset();
 		return;
 	}
 }
@@ -157,10 +212,10 @@ static UINT8 main_read(UINT16 a)
 			return 0;
 
 		case 0x7000:
-			return (DrvInputs[0] & 0xb0) | (DrvDips[0] & 0x40) | 0x0f; // track 0 r
+			return (DrvInputs[0] & 0xb0) | (DrvDips[0] & 0x40) | TrackY(); // track Y
 
 		case 0x7800:
-			return (DrvInputs[1] & 0xf0) | 0x0f; // track 1 r
+			return (DrvInputs[1] & 0xf0) | TrackX(); // track X
 	}
 
 	return 0;
@@ -179,7 +234,7 @@ static void sound_write(UINT16 a, UINT8 d)
 		return; // nop
 
 		case 0x6000:
-			DACWrite(0, d);
+			DACSignedWrite(0, d);
 		return;
 	}
 }
@@ -389,7 +444,7 @@ static INT32 DrvInit(INT32 game)
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.75, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 
 	tms34061_init(8, 0x10000, draw_layer, tms34061_interrupt);
 
@@ -451,11 +506,13 @@ static INT32 DrvFrame()
 		}
 	}
 
+	TrackTick();
+
 	M6809NewFrame();
 
 	INT32 nInterleave = 256; // scanlines
 	INT32 nCyclesSegment = 0;
-	INT32 nCyclesTotal[2] =  { 2000000 / 57, 2000000 / 57 };
+	INT32 nCyclesTotal[2] =  { 4000000 / 57, 2000000 / 57 };
 	INT32 nCyclesDone[2] =  { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -526,7 +583,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -577,7 +634,7 @@ static INT32 CapbowlInit()
 
 struct BurnDriver BurnDrvCapbowl = {
 	"capbowl", NULL, NULL, NULL, "1988",
-	"Capcom Bowling (set 1)\0", "needs analog inputs hooked up", "Incredible Technologies / Capcom", "Miscellaneous",
+	"Capcom Bowling (set 1)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, capbowlRomInfo, capbowlRomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
@@ -602,7 +659,7 @@ STD_ROM_FN(capbowl2)
 
 struct BurnDriver BurnDrvCapbowl2 = {
 	"capbowl2", "capbowl", NULL, NULL, "1988",
-	"Capcom Bowling (set 2)\0", "needs analog inputs hooked up", "Incredible Technologies / Capcom", "Miscellaneous",
+	"Capcom Bowling (set 2)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, capbowl2RomInfo, capbowl2RomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
@@ -627,7 +684,7 @@ STD_ROM_FN(capbowl3)
 
 struct BurnDriver BurnDrvCapbowl3 = {
 	"capbowl3", "capbowl", NULL, NULL, "1988",
-	"Capcom Bowling (set 3)\0", "needs analog inputs hooked up", "Incredible Technologies / Capcom", "Miscellaneous",
+	"Capcom Bowling (set 3)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, capbowl3RomInfo, capbowl3RomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
@@ -652,7 +709,7 @@ STD_ROM_FN(capbowl4)
 
 struct BurnDriver BurnDrvCapbowl4 = {
 	"capbowl4", "capbowl", NULL, NULL, "1988",
-	"Capcom Bowling (set 4)\0", "needs analog inputs hooked up", "Incredible Technologies / Capcom", "Miscellaneous",
+	"Capcom Bowling (set 4)\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, capbowl4RomInfo, capbowl4RomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
@@ -677,7 +734,7 @@ STD_ROM_FN(clbowl)
 
 struct BurnDriver BurnDrvClbowl = {
 	"clbowl", "capbowl", NULL, NULL, "1989",
-	"Coors Light Bowling\0", "needs analog inputs hooked up", "Incredible Technologies / Capcom", "Miscellaneous",
+	"Coors Light Bowling\0", NULL, "Incredible Technologies / Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, clbowlRomInfo, clbowlRomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,
@@ -706,7 +763,7 @@ static INT32 BowlramaInit()
 
 struct BurnDriver BurnDrvBowlrama = {
 	"bowlrama", NULL, NULL, NULL, "1991",
-	"Bowl-O-Rama\0", "needs analog inputs hooked up", "P&P Marketing", "Miscellaneous",
+	"Bowl-O-Rama\0", NULL, "P&P Marketing", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, bowlramaRomInfo, bowlramaRomName, NULL, NULL, CapbowlInputInfo, CapbowlDIPInfo,

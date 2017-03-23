@@ -262,7 +262,7 @@ static UINT8 capbowl_ym2203_portA(UINT32)
 
 static void capbowl_ym2203_write_portB(UINT32, UINT32 )
 {
-	// ticket handling	
+	// ticket handling
 }
 
 static INT32 DrvSyncDAC()
@@ -431,20 +431,17 @@ static INT32 DrvInit(INT32 game)
 	M6809SetReadHandler(sound_read);
 	M6809Close();
 
-	BurnYM2203Init(2, 4000000, DrvFMIRQCallback, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 4000000, DrvFMIRQCallback, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetPorts(0, &capbowl_ym2203_portA, NULL, NULL, &capbowl_ym2203_write_portB);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.75, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE,   0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.70, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.75, BURN_SND_ROUTE_BOTH);
+
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 
 	tms34061_init(8, 0x10000, draw_layer, tms34061_interrupt);
 
@@ -528,7 +525,7 @@ static INT32 DrvFrame()
 
 		tms34061_interrupt();
 
-		if (((i + 1) & 0x1f) == 0x1f) { // force draw every 32 scanlines
+		if (((i + ((game_select) ? 0x10 : 0x00)) & 0x1f) == 0x1f) { // force draw every 32 scanlines
 			draw_layer();
 		}
 
@@ -536,10 +533,7 @@ static INT32 DrvFrame()
 
 		nCurrentCPU = 1;
 		M6809Open(nCurrentCPU);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += nCyclesSegment; // M6809Run(nCyclesSegment);
-		BurnTimerUpdate(nNext);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave);
 		M6809Close();
 	}
 
@@ -553,8 +547,8 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut,nBurnSoundLen);
-		DACUpdate(pBurnSoundOut,nBurnSoundLen);
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	M6809Close();

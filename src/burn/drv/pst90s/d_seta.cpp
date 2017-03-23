@@ -106,6 +106,15 @@ static UINT8 DrvDips[7];
 static UINT16 DrvInputs[7];
 static UINT8 DrvReset;
 
+// trackball stuff for Krazy Bowl (maybe usclssic)
+static INT32 krzybowlmode = 0;
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static UINT32 track_x = 0;
+static UINT32 track_y = 0;
+static INT32 track_x_last = 0;
+static INT32 track_y_last = 0;
+
 // Rotation stuff! -dink
 static UINT8  DrvFakeInput[6]       = {0, 0, 0, 0, 0, 0};
 static UINT8  nRotateHoldInput[2]   = {0, 0};
@@ -812,9 +821,8 @@ static struct BurnInputInfo KrzybowlInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	// space holders for analog inputs
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 9,	"p1 fire 5"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 start"	},
@@ -1178,9 +1186,9 @@ static struct BurnInputInfo UsclssicInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 14,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 13,	"p1 fire 1"	},
-// space holder for analog inputs
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 3"	},
+
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 14,	"p2 start"	},
@@ -4362,14 +4370,48 @@ UINT8 __fastcall kamenrid_read_byte(UINT32 address)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // krzybowl, madshark
 
+static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+static UINT16 ananice(UINT16 anaval)
+{
+	UINT8 Temp = 0x7f - (anaval >> 4);
+	if (Temp < 0x01) Temp = 0x01;
+	if (Temp > 0xfe) Temp = 0xfe;
+	UINT16 pad = scalerange_skns(Temp, 0x3f, 0xc0, 0x01, 0xff);
+	if (pad > 0xff) pad = 0xff;
+	if (pad > 0x75 && pad < 0x85) pad = 0x7f;
+	return pad;
+}
+
+static void krzybowl_input_tick()
+{
+	INT32 padx = ananice(DrvAnalogPort0) - 0x7f;
+	track_x += padx;
+	if (padx) track_x_last = padx;
+	/*if (!padx) { // enable for deceleration code, doesn't work good in this game.
+		if (nCurrentFrame & 4) track_x_last /= 2;
+		track_x += track_x_last;
+	}*/
+
+	INT32 pady = ananice(DrvAnalogPort1) - 0x7f;
+	track_y += pady;
+	if (pady) track_y_last = pady;
+	/*if (!pady) {
+		if (nCurrentFrame & 4) track_y_last /= 2;
+		track_y += track_y_last;
+	}*/
+}
+
 static UINT16 krzybowl_input_read(INT32 offset)
 {
-	INT32 dir1x = 0x800; //input_port_read(space->machine, "TRACK1_X") & 0xfff;
-	INT32 dir1y = 0x800; //input_port_read(space->machine, "TRACK1_Y") & 0xfff;
-	INT32 dir2x = 0x800; //input_port_read(space->machine, "TRACK2_X") & 0xfff;
-	INT32 dir2y = 0x800; //input_port_read(space->machine, "TRACK2_Y") & 0xfff;
+	INT32 dir1x = track_x & 0xfff;
+	INT32 dir1y = track_y & 0xfff;
+	INT32 dir2x = 0x800;
+	INT32 dir2y = 0x800;
 
-	switch ((offset & 0x0e) / 2)
+	switch (offset / 2)
 	{
 		case 0x0/2:	return dir1x & 0xff;
 		case 0x2/2:	return dir1x >> 8;
@@ -4406,7 +4448,7 @@ UINT16 __fastcall madshark_read_word(UINT32 address)
 	}
 
 	if ((address & ~0x00000f) == 0x600000) {
-		return krzybowl_input_read(address);
+		return krzybowl_input_read(address&0xf);
 	}
 
 	return 0;
@@ -4420,12 +4462,14 @@ UINT8 __fastcall madshark_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x500000:
+			return DrvInputs[0] >> 8;
 		case 0x500001:
-			return DrvInputs[0];
+			return DrvInputs[0] & 0xff;
 
 		case 0x500002:
+			return DrvInputs[1] >> 8;
 		case 0x500003:
-			return DrvInputs[1];
+			return DrvInputs[1] & 0xff;
 
 		case 0x500004:
 		case 0x500005:
@@ -4438,7 +4482,7 @@ UINT8 __fastcall madshark_read_byte(UINT32 address)
 	}
 
 	if ((address & ~0x00000f) == 0x600000) {
-		return krzybowl_input_read(address);
+		return krzybowl_input_read(address&0xf);
 	}
 
 	return 0;
@@ -5005,7 +5049,9 @@ void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
 
 static UINT8 uclssic_trackball_read(INT32 offset)
 {
-	const UINT16 start_vals[2] = { 0xf000, 0x9000 };
+	UINT16 start_vals[2] = { 0xf000, 0x9000 };
+	start_vals[0] = track_x;
+	start_vals[1] = track_y;
 
 	UINT16 ret = DrvInputs[1 + ((offset & 4)/4) + (usclssic_port_select * 2)] ^ start_vals[(offset / 4) & 1];
 
@@ -7112,6 +7158,7 @@ static INT32 DrvExit()
 	refresh_rate = 6000;
 	game_rotates = 0;
 	has_2203 = 0;
+	krzybowlmode = 0;
 
 	BurnFree (DrvGfxTransMask[0]);
 	BurnFree (DrvGfxTransMask[2]);
@@ -7677,6 +7724,7 @@ static void Drv68kNoSubFrameCallback()
 
 static INT32 DrvFrame()
 {
+	if (krzybowlmode) krzybowl_input_tick();
 	return DrvCommonFrame(Drv68kNoSubFrameCallback);
 }
 
@@ -7878,6 +7926,7 @@ static INT32 DrvTndrcadeFrame()
 
 static INT32 Drv5IRQFrame()
 {
+	if (krzybowlmode) krzybowl_input_tick();
 	return DrvCommonFrame(Drv68k_5IRQ_FrameCallback);
 }
 
@@ -10236,6 +10285,7 @@ static INT32 krzybowlInit()
 {
 	DrvSetVideoOffsets(0, 0, 0, 0);
 	DrvSetColorOffsets(0, 0, 0);
+	krzybowlmode = 1;
 
 	return DrvInit(krzybowl68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, -1, -1));
 }
@@ -10244,7 +10294,7 @@ struct BurnDriverD BurnDrvKrzybowl = {
 	"krzybowl", NULL, NULL, NULL, "1994",
 	"Krazy Bowl\0", NULL, "American Sammy", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SPORTSMISC, 0,
 	NULL, krzybowlRomInfo, krzybowlRomName, NULL, NULL, KrzybowlInputInfo, KrzybowlDIPInfo,
 	krzybowlInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
 	240, 320, 3, 4
@@ -10826,6 +10876,7 @@ static INT32 usclssicInit()
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0x200, 0);
 	DrvSetVideoOffsets(1, 2, 0, -1);
+	krzybowlmode = 1; // for trackball
 
 	INT32 nRet = DrvInit(usclssic68kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 4, -1));
 

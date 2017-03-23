@@ -528,7 +528,7 @@ static INT32 DrvFrame()
 
 		tms34061_interrupt();
 
-		if ((i & 0x1f) == 0x1f) { // force draw every 32 scanlines
+		if (((i + 1) & 0x1f) == 0x1f) { // force draw every 32 scanlines
 			draw_layer();
 		}
 

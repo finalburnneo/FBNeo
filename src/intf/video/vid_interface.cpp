@@ -287,7 +287,7 @@ static INT32 VidDoFrame(bool bRedraw)
 {
 	INT32 nRet;
 	
-	if (pVidTransImage) {
+	if (pVidTransImage && pVidTransPalette) {
 		UINT16* pSrc = (UINT16*)pVidTransImage;
 		UINT8* pDest = pVidImage;
 

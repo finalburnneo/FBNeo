@@ -8318,8 +8318,10 @@ static INT32 GunfrontInit()
 	SekClose();
 	
 	TaitoF2SoundInit();
+
+	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
 	
-	TaitoXOffset = 3;	
+	TaitoXOffset = 3;
 	
 	// Reset the driver
 	TaitoF2DoReset();

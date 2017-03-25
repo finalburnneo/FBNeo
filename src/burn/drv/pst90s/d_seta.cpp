@@ -4965,9 +4965,6 @@ void __fastcall wiggie_sound_write_word(UINT32 a, UINT16 d)
 
 void __fastcall wiggie_sound_write_byte(UINT32 address, UINT8 data)
 {
-	bprintf(0, _T("sww %X:%X."),address,data);
-	//if (address != 0xb00008 && address != 0xc00000) return; // wiggie
-
 	soundlatch = data;
 	ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 }

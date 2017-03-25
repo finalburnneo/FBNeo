@@ -306,13 +306,13 @@ static INT32 DrvGfxDecode()
 
 	memcpy (tmp, DrvGfxROM0, 0x040000);
 
-	GfxDecode(0x1000, 4,  8,  8, Plane0, XOffs, YOffs0, 0x040, tmp, DrvGfxROM0);
+	GfxDecode(0x2000, 4,  8,  8, Plane0, XOffs, YOffs0, 0x040, tmp, DrvGfxROM0);
 
 	for (INT32 i = 0; i < 0x200000; i++) tmp[i] = DrvGfxROM1[i] ^ 0xff; //memcpy (tmp, DrvGfxROM1, 0x200000);
 
 	GfxDecode(0x4000, 4, 16, 16, Plane1, XOffs, YOffs1, 0x100, tmp, DrvGfxROM1);
 
-	for (INT32 i = 0; i < 0x080000; i++) tmp[i] = DrvGfxROM2[i] ^ 0xff; //memcpy (tmp, DrvGfxROM2, 0x080000);
+	for (INT32 i = 0; i < 0x100000; i++) tmp[i] = DrvGfxROM2[i] ^ 0xff; //memcpy (tmp, DrvGfxROM2, 0x080000);
 
 	GfxDecode(0x1000, 4, 16, 16, Plane2, XOffs, YOffs1, 0x100, tmp, DrvGfxROM2);
 
@@ -403,6 +403,7 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	MSM6295Exit(0);
+	MSM6295Exit(1);
 	SekExit();
 
 	BurnFree (AllMem);
@@ -472,10 +473,13 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 	}
-	
+
+	UINT32 nCycles = 12000000 / 60;
+
 	SekOpen(0);
-	SekRun(12000000 / 60);
+	SekRun((nCycles * 240)/256);
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+	SekRun((nCycles * 16 )/256);
 	SekClose();
 
 	if (pBurnSoundOut) {
@@ -511,6 +515,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 
 		MSM6295Scan(0, nAction);
+		MSM6295Scan(1, nAction);
 
 		SCAN_VAR(scroll);
 	}
@@ -562,8 +567,8 @@ struct BurnDriver BurnDrvBigstrkb = {
 // Big Striker (bootleg w/Italian teams)
 
 static struct BurnRomInfo bigstrkbaRomDesc[] = {
-	{ "15.cpu16",		0x40000, 0x204551b5, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "16.cpu17",		0x40000, 0x3ba6997b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "16.cpu17",		0x40000, 0x3ba6997b, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "15.cpu16",		0x40000, 0x204551b5, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "5.bin",		0x10000, 0xf51ea151, 2 | BRF_GRA },           //  2 Characters
 	{ "6.bin",		0x10000, 0x754d750e, 2 | BRF_GRA },           //  3
@@ -594,6 +599,6 @@ struct BurnDriver BurnDrvBigstrkba = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, bigstrkbaRomInfo, bigstrkbaRomName, NULL, NULL, BigstrkbInputInfo, BigstrkbDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

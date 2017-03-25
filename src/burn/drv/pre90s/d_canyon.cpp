@@ -168,7 +168,7 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6502ROM		= Next; Next += 0x001000;
+	DrvM6502ROM		= Next; Next += 0x002000;
 
 	DrvGfxROM0		= Next; Next += 0x001000;
 	DrvGfxROM1		= Next; Next += 0x000800;
@@ -247,16 +247,15 @@ static INT32 DrvInit(INT32 select)
 	{
 		if (BurnLoadRom(DrvM6502ROM + 0x0000, 0, 2)) return 1;
 		if (BurnLoadRom(DrvM6502ROM + 0x0001, 1, 2)) return 1;
-		FixNibbles(DrvM6502ROM, 0x800);
-		if (BurnLoadRom(DrvM6502ROM + 0x0800, 2, 2)) return 1;
-		if (BurnLoadRom(DrvM6502ROM + 0x0801, 3, 2)) return 1;
-		FixNibbles(DrvM6502ROM + 0x800, 0x1000);
+		if (BurnLoadRom(DrvM6502ROM + 0x1000, 2, 2)) return 1;
+		if (BurnLoadRom(DrvM6502ROM + 0x1001, 3, 2)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0  + 0x0000, 4, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM1  + 0x0000, 5, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM1  + 0x0001, 6, 2)) return 1;
 
+		FixNibbles(DrvM6502ROM, 0x2000);
 	}
 
 	memset (DrvGfxROM2, 1, 4); // bombs

@@ -247,15 +247,16 @@ static INT32 DrvInit(INT32 select)
 	{
 		if (BurnLoadRom(DrvM6502ROM + 0x0000, 0, 2)) return 1;
 		if (BurnLoadRom(DrvM6502ROM + 0x0001, 1, 2)) return 1;
+		FixNibbles(DrvM6502ROM, 0x800);
 		if (BurnLoadRom(DrvM6502ROM + 0x0800, 2, 2)) return 1;
 		if (BurnLoadRom(DrvM6502ROM + 0x0801, 3, 2)) return 1;
+		FixNibbles(DrvM6502ROM + 0x800, 0x1000);
 
 		if (BurnLoadRom(DrvGfxROM0  + 0x0000, 4, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM1  + 0x0000, 5, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM1  + 0x0001, 6, 2)) return 1;
 
-		FixNibbles(DrvM6502ROM, 0x1000);
 	}
 
 	memset (DrvGfxROM2, 1, 4); // bombs
@@ -479,7 +480,7 @@ struct BurnDriver BurnDrvCanyonp = {
 	"canyonp", "canyon", NULL, NULL, "1977",
 	"Canyon Bomber (prototype)\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, canyonpRomInfo, canyonpRomName, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
 	CanyonpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 4,
 	256, 240, 4, 3

@@ -395,7 +395,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -403,7 +403,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
@@ -479,7 +479,7 @@ struct BurnDriver BurnDrvCanyonp = {
 	"canyonp", "canyon", NULL, NULL, "1977",
 	"Canyon Bomber (prototype)\0", "No sound", "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, canyonpRomInfo, canyonpRomName, NULL, NULL, CanyonInputInfo, CanyonDIPInfo,
 	CanyonpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 4,
 	256, 240, 4, 3

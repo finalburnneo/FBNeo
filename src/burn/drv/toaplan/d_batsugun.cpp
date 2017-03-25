@@ -1,4 +1,5 @@
-// Based on MAME driver by Quench, Yochizo, David Haywood
+// FB Alpha Batsugun driver module
+// Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"
 #include "nec_intf.h"

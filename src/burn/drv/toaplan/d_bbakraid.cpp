@@ -1,4 +1,5 @@
-// Based on MAME driver by Darren Olafson, Quench,Stephane Humbert
+// FB Alpha Battle Bakraid driver module
+// Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"
 #include "ymz280b.h"

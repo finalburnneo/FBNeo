@@ -1,5 +1,5 @@
-// Out Zone
-// Based on MAME driver by Darren Olafson, Quench,Stephane Humbert
+// FB Alpha Out Zone driver module
+// Driver and emulation by Jan Klaassen
 
 #include "toaplan.h"
 

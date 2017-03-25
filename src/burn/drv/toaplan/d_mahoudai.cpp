@@ -1,4 +1,6 @@
-// Based on MAME driver by Darren Olafson, Quench,Stephane Humbert
+// FB Alpha Mahou Daisakusen driver module
+// Driver and emulation by Jan Klaassen
+
 #include "toaplan.h"
 // Mahou Daisakusen
 

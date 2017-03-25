@@ -1,4 +1,5 @@
-// is this based on the MAME M6295 core?
+// OKI MSM6295 module
+// Emulation by Jan Klaassen
 
 #include <math.h>
 #include "burnint.h"

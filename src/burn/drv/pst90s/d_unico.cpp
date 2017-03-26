@@ -783,6 +783,7 @@ UINT16 __fastcall Zeropnt68KReadWord(UINT32 a)
 void __fastcall Zeropnt68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
+		case 0x000000:
 		case 0x800030: {
 			// NOP???
 			return;
@@ -1318,8 +1319,8 @@ static INT32 Zeropnt2Init()
 	
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295Init(1, 3960000 / 132, 1);
-	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_LEFT);
-	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_RIGHT);
+	MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
 	
@@ -1553,7 +1554,7 @@ static void DrvRenderLayer(INT32 Layer)
 			if (y < -16) y += 1024;
 			
 			y -= 15;
-			if (Layer == 0) x -= 0x32;
+			if (Layer == 0) x -= 0x31;
 			if (Layer == 1) x -= 0x30;
 			if (Layer == 2) x -= 0x2e;
 			
@@ -1712,13 +1713,13 @@ static void DrvDraw()
 		pTransDraw[i] = 0x1f00;	
 	}
 	
-	DrvRenderLayer(0);
-	DrvRenderSprites(0);
-	DrvRenderLayer(1);
-	DrvRenderSprites(1);
-	DrvRenderLayer(2);
-	DrvRenderSprites(2);
-	DrvRenderSprites(3);
+	if (nSpriteEnable & 1) DrvRenderSprites(0);
+	if (nBurnLayer & 1) DrvRenderLayer(0);
+	if (nSpriteEnable & 4) DrvRenderSprites(2);
+	if (nBurnLayer & 2) DrvRenderLayer(1);
+	if (nSpriteEnable & 2) DrvRenderSprites(1);
+	if (nBurnLayer & 4) DrvRenderLayer(2);
+	if (nSpriteEnable & 8) DrvRenderSprites(3);
 	
 	BurnTransferCopy(DrvPalette);
 	
@@ -1765,8 +1766,10 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	BurnTimerEndFrameYM3812(nCyclesTotal[0]);
 	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-	BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-	MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);	
+	if (pBurnSoundOut) {
+		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+	}
 	SekClose();
 	
 	if (pBurnDraw) DrvDraw();

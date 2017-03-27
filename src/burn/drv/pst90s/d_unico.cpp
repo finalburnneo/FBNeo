@@ -1713,7 +1713,7 @@ static void DrvDraw()
 		pTransDraw[i] = 0x1f00;	
 	}
 	
-	if (nSpriteEnable & 1) DrvRenderSprites(0);
+	if (nSpriteEnable & 1) DrvRenderSprites(0);  // why does spri 0 and 3 need to be swapped?
 	if (nBurnLayer & 1) DrvRenderLayer(0);
 	if (nSpriteEnable & 4) DrvRenderSprites(2);
 	if (nBurnLayer & 2) DrvRenderLayer(1);
@@ -1737,13 +1737,13 @@ static void Zeropnt2Draw()
 		pTransDraw[i] = 0x1f00;	
 	}
 	
-	Zeropnt2RenderSprites(3);
-	Zeropnt2RenderLayer(0);
-	Zeropnt2RenderSprites(2);
-	Zeropnt2RenderLayer(1);
-	Zeropnt2RenderSprites(1);
-	Zeropnt2RenderLayer(2);	
-	Zeropnt2RenderSprites(0);
+	if (nSpriteEnable & 1) Zeropnt2RenderSprites(0); // why does spri 0 and 3 need to be swapped?
+	if (nBurnLayer & 1) Zeropnt2RenderLayer(0);
+	if (nSpriteEnable & 2) Zeropnt2RenderSprites(2);
+	if (nBurnLayer & 2) Zeropnt2RenderLayer(1);
+	if (nSpriteEnable & 4) Zeropnt2RenderSprites(1);
+	if (nBurnLayer & 4) Zeropnt2RenderLayer(2);
+	if (nSpriteEnable & 8) Zeropnt2RenderSprites(3);
 	
 	BurnTransferCopy(DrvPalette);
 	

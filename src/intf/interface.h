@@ -232,6 +232,7 @@ INT32 VidSNewTinyMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, IN
 INT32 VidSNewJoystickMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nLineNo = 0);
 INT32 VidSNewShortMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);
 void VidSKillShortMsg();
+void VidSKillTinyMsg();
 
 INT32 VidSAddChatMsg(const TCHAR* pID, INT32 nIDRGB, const TCHAR* pMain, INT32 nMainRGB);
 

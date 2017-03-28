@@ -73,7 +73,7 @@ static int GetInput(bool bCopy)
 	static int i = 0;
 	InputMake(bCopy); 						// get input
 
-        CheckSystemMacros();
+	CheckSystemMacros();
 
 	// Update Input dialog ever 3 frames
 	if (i == 0) {
@@ -96,7 +96,8 @@ static unsigned int nPreviousFrames;
 
 static void DisplayFPSInit()
 {
-	fpstimer = clock();
+	nDoFPS = 0;
+	fpstimer = 0;
 	nPreviousFrames = nFramesRendered;
 }
 
@@ -106,8 +107,9 @@ static void DisplayFPS()
 	time_t temptime = clock();
 	double fps = (double)(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
 	_sntprintf(fpsstring, 7, _T("%2.2lf"), fps);
-	if (temptime - fpstimer>0) // to avoid strange fps value from division by zero at start -dink
+	if (fpstimer && temptime - fpstimer>0) { // avoid strange fps values
 		VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
+	}
 
 	fpstimer = temptime;
 	nPreviousFrames = nFramesRendered;
@@ -335,9 +337,8 @@ int RunReset()
 {
 	// Reset the speed throttling code
 	nNormalLast = 0; nNormalFrac = 0;
-	// Reset FPS display
-	nDoFPS = 0;
 
+	// Reset FPS display
 	DisplayFPSInit();
 
 	if (!bAudPlaying) {
@@ -592,12 +593,21 @@ int RunMessageLoop()
 								break;
 							}
 							case VK_BACK: {
-								bShowFPS = !bShowFPS;
-								if (bShowFPS) {
-									DisplayFPS();
-								} else {
-									VidSKillShortMsg();
-									VidSKillOSDMsg();
+								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL))
+								{ // Shift-Backspace: toggles recording/replay frame counter
+									bReplayFrameCounterDisplay = !bReplayFrameCounterDisplay;
+									if (!bReplayFrameCounterDisplay) {
+										VidSKillTinyMsg();
+									}
+								} else
+								{ // Backspace: toggles FPS counter
+									bShowFPS = !bShowFPS;
+									if (bShowFPS) {
+										DisplayFPSInit();
+									} else {
+										VidSKillShortMsg();
+										VidSKillOSDMsg();
+									}
 								}
 								break;
 							}

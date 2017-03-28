@@ -501,8 +501,13 @@ static int SelListMake()
 
 	LoadFavorites();
 
-	// Add all the driver names to the list
+	// Get dialog search string
+	TCHAR szSearchString[256] = { _T("") };
+	j = GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
+	for (UINT32 k = 0; k < j; k++)
+		szSearchString[k] = _totlower(szSearchString[k]);
 
+	// Add all the driver names to the list
 	// 1st: parents
 	for (i = 0; i < nBurnDrvCount; i++) {
 		TV_INSERTSTRUCT TvItem;
@@ -523,11 +528,17 @@ static int SelListMake()
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || (nHardware & MASKALL) == 0)) {
 			continue;
 		}
+
+		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i]) {						// Skip non-available games if needed
+			continue;
+		}
+		
+		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i]) {						// Skip available games if needed
+			continue;
+		}
 		
 		if (DoExtraFilters()) continue;
 		
-		TCHAR szSearchString[256];
-		GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
@@ -539,8 +550,7 @@ static int SelListMake()
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
 			wcscpy(szManufacturerName, BurnDrvGetText(DRV_MANUFACTURER));
 			wcscpy(szSystemName, BurnDrvGetText(DRV_SYSTEM));
-			for (int k =0; k < 256; k++) {
-				szSearchString[k] = _totlower(szSearchString[k]);
+			for (int k = 0; k < 256; k++) {
 				szDriverName[k] = _totlower(szDriverName[k]);
 				szManufacturerName[k] = _totlower(szManufacturerName[k]);
 				szSystemName[k] = _totlower(szSystemName[k]);
@@ -551,14 +561,6 @@ static int SelListMake()
 			StringFound4 = wcsstr(szSystemName, szSearchString);
 
 			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
-		}
-
-		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
-			continue;
-		}
-		
-		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
-			continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));
@@ -593,24 +595,29 @@ static int SelListMake()
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || ((nHardware & MASKALL) == 0))) {
 			continue;
 		}
+
+		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i]) {						// Skip non-available games if needed
+			continue;
+		}
+		
+		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i]) {						// Skip available games if needed
+			continue;
+		}
 		
 		if (DoExtraFilters()) continue;
 		
-		TCHAR szSearchString[256];
-		GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
 		if (szSearchString[0]) {
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
 			TCHAR *StringFound3 = NULL;
 			TCHAR *StringFound4 = NULL;
-			TCHAR szDriverName[256];
+			TCHAR szDriverName[256] = { _T("") };
 			TCHAR szManufacturerName[256] = { _T("") };
 			TCHAR szSystemName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
 			wcscpy(szManufacturerName, BurnDrvGetText(DRV_MANUFACTURER));
 			wcscpy(szSystemName, BurnDrvGetText(DRV_SYSTEM));
 			for (int k =0; k < 256; k++) {
-				szSearchString[k] = _totlower(szSearchString[k]);
 				szDriverName[k] = _totlower(szDriverName[k]);
 				szManufacturerName[k] = _totlower(szManufacturerName[k]);
 				szSystemName[k] = _totlower(szSystemName[k]);
@@ -621,14 +628,6 @@ static int SelListMake()
 			StringFound4 = wcsstr(szSystemName, szSearchString);
 
 			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
-		}
-
-		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i])	{						// Skip non-available games if needed
-			continue;
-		}
-		
-		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i])	{						// Skip available games if needed
-			continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));
@@ -681,7 +680,6 @@ static int SelListMake()
 	}
 
 	for (i = 0; i < nTmpDrvCount; i++) {
-
 		// See if we need to expand the branch of an unavailable or non-working parent
 		if (nBurnDrv[i].bIsParent && ((nLoadMenuShowY & AUTOEXPAND) || !gameAv[nBurnDrv[i].nBurnDrvNo] || !CheckWorkingStatus(nBurnDrv[i].nBurnDrvNo))) {
 			for (j = 0; j < nTmpDrvCount; j++) {
@@ -691,7 +689,7 @@ static int SelListMake()
 					nBurnDrvActive = nBurnDrv[j].nBurnDrvNo;
 					if (BurnDrvGetTextA(DRV_PARENT)) {
 						if (strcmp(nBurnDrv[i].pszROMName, BurnDrvGetTextA(DRV_PARENT)) == 0) {
-							SendMessage(hSelList, TVM_EXPAND,TVE_EXPAND, (LPARAM)nBurnDrv[i].hTreeHandle);
+							SendMessage(hSelList, TVM_EXPAND, TVE_EXPAND, (LPARAM)nBurnDrv[i].hTreeHandle);
 							break;
 						}
 					}

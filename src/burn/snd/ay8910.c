@@ -53,10 +53,10 @@ struct AY8910
 {
 	INT32 Channel;
 	INT32 SampleRate;
-	read8_handler PortAread;
-	read8_handler PortBread;
-	write8_handler PortAwrite;
-	write8_handler PortBwrite;
+	ALIGN_VAR(8) read8_handler PortAread;
+	ALIGN_VAR(8) read8_handler PortBread;
+	ALIGN_VAR(8) write8_handler PortAwrite;
+	ALIGN_VAR(8) write8_handler PortBwrite;
 	INT32 register_latch;
 	UINT8 Regs[16];
 	INT32 lastEnable;

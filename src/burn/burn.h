@@ -21,6 +21,13 @@ extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];
 
+// Alignment macro, to keep savestates compatible between 32/64bit platforms.
+#ifdef _MSC_VER
+#define ALIGN_VAR(x)  __declspec(align(x))
+#else
+#define ALIGN_VAR(x)  __attribute__((aligned(x)))
+#endif
+
 // Enable the MAME logerror() function in debug builds
 // #define MAME_USE_LOGERROR
 

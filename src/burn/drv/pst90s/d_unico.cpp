@@ -532,7 +532,7 @@ static INT32 Zeropnt2DoReset()
 	return 0;
 }
 
-UINT8 __fastcall Burglarx68KReadByte(UINT32 a)
+static UINT8 __fastcall Burglarx68KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x800000: {
@@ -571,7 +571,7 @@ UINT8 __fastcall Burglarx68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Burglarx68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Burglarx68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x800189: {
@@ -601,7 +601,7 @@ void __fastcall Burglarx68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Burglarx68KReadWord(UINT32 a)
+static UINT16 __fastcall Burglarx68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -612,7 +612,7 @@ UINT16 __fastcall Burglarx68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Burglarx68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Burglarx68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x800030: {
@@ -661,7 +661,31 @@ void __fastcall Burglarx68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Zeropnt68KReadByte(UINT32 a)
+static UINT8 GetGunX(INT32 gun)
+{
+	INT32 x = BurnGunReturnX(gun);
+
+	x = x * 384 / 256;
+	if (x < 0x160) {
+		x = 0x30 + (x * 0xd0 / 0x15f);
+	} else {
+		x = ((x - 0x160) * 0x20) / 0x1f;
+	}
+
+	return ((x & 0xff) ^ (GetCurrentFrame() & 3));
+}
+
+static UINT8 GetGunY(INT32 gun)
+{
+	INT32 y = BurnGunReturnY(gun);
+			
+	y = 0x18 + ((y * 0xe0) / 0xff);
+			
+	return ((y & 0xff) ^ (GetCurrentFrame() & 3));
+
+}
+
+static UINT8 __fastcall Zeropnt68KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x800018: {
@@ -681,46 +705,19 @@ UINT8 __fastcall Zeropnt68KReadByte(UINT32 a)
 		}
 		
 		case 0x800170: {
-			INT32 y = BurnGunReturnY(1);
-			
-			y = 0x18 + ((y * 0xe0) / 0xff);
-			
-			return ((y & 0xff) ^ (GetCurrentFrame() & 1));
+			return GetGunY(1);
 		}
 		
 		case 0x800174: {
-			INT32 x = BurnGunReturnX(1);
-			
-			x = x * 384 / 256;
-			if (x < 0x160) {
-				x = 0x30 + (x * 0xd0 / 0x15f);
-			} else {
-				x = ((x - 0x160) * 0x20) / 0x1f;
-			}
-			
-			return ((x & 0xff) ^ (GetCurrentFrame() & 1));
+			return GetGunX(1);
 		}
 		
 		case 0x800178: {
-			INT32 y = BurnGunReturnY(0);
-			
-			y = 0x18 + ((y * 0xe0) / 0xff);
-			
-			return ((y & 0xff) ^ (GetCurrentFrame() & 1));
+			return GetGunY(0);
 		}
 		
 		case 0x80017c: {
-			INT32 x = BurnGunReturnX(0);
-			
-			x = x * 384 / 256;
-			if (x < 0x160) {
-				x = 0x30 + (x * 0xd0 / 0x15f);
-			} else {
-				x = ((x - 0x160) * 0x20) / 0x1f;
-			}
-			
-			return ((x & 0xff) ^ (GetCurrentFrame() & 1));
-		
+			return GetGunX(0);
 		}
 		
 		case 0x800189: {
@@ -739,7 +736,7 @@ UINT8 __fastcall Zeropnt68KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Zeropnt68KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Zeropnt68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x800189: {
@@ -769,7 +766,7 @@ void __fastcall Zeropnt68KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Zeropnt68KReadWord(UINT32 a)
+static UINT16 __fastcall Zeropnt68KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -780,7 +777,7 @@ UINT16 __fastcall Zeropnt68KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Zeropnt68KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Zeropnt68KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x000000:
@@ -830,7 +827,7 @@ void __fastcall Zeropnt68KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall Zeropnt268KReadByte(UINT32 a)
+static UINT8 __fastcall Zeropnt268KReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x800019: {
@@ -850,45 +847,19 @@ UINT8 __fastcall Zeropnt268KReadByte(UINT32 a)
 		}
 		
 		case 0x800140: {
-			INT32 y = BurnGunReturnY(1);
-			
-			y = 0x18 + ((y * 0xe0) / 0xff);
-			
-			return ((y & 0xff) ^ (GetCurrentFrame() & 1)) + 0x08;
+			return GetGunY(1) + 0x08;
 		}
 		
 		case 0x800144: {
-			INT32 x = BurnGunReturnX(1);
-			
-			x = x * 384 / 256;
-			if (x < 0x160) {
-				x = 0x30 + (x * 0xd0 / 0x15f);
-			} else {
-				x = ((x - 0x160) * 0x20) / 0x1f;
-			}
-			
-			return ((x & 0xff) ^ (GetCurrentFrame() & 1)) - 0x08;
+			return GetGunX(1) - 0x08;
 		}
 		
 		case 0x800148: {
-			INT32 y = BurnGunReturnY(0);
-			
-			y = 0x18 + ((y * 0xe0) / 0xff);
-			
-			return ((y & 0xff) ^ (GetCurrentFrame() & 1)) + 0x08;
+			return GetGunY(0) + 0x08;
 		}
 		
 		case 0x80014c: {
-			INT32 x = BurnGunReturnX(0);
-			
-			x = x * 384 / 256;
-			if (x < 0x160) {
-				x = 0x30 + (x * 0xd0 / 0x15f);
-			} else {
-				x = ((x - 0x160) * 0x20) / 0x1f;
-			}
-			
-			return ((x & 0xff) ^ (GetCurrentFrame() & 1)) - 0x08;
+			return GetGunX(0) - 0x08;
 		}
 		
 		case 0x800150: {
@@ -911,7 +882,7 @@ UINT8 __fastcall Zeropnt268KReadByte(UINT32 a)
 	return 0;
 }
 
-void __fastcall Zeropnt268KWriteByte(UINT32 a, UINT8 d)
+static void __fastcall Zeropnt268KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x800025: {
@@ -956,7 +927,7 @@ void __fastcall Zeropnt268KWriteByte(UINT32 a, UINT8 d)
 	}
 }
 
-UINT16 __fastcall Zeropnt268KReadWord(UINT32 a)
+static UINT16 __fastcall Zeropnt268KReadWord(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -967,7 +938,7 @@ UINT16 __fastcall Zeropnt268KReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall Zeropnt268KWriteWord(UINT32 a, UINT16 d)
+static void __fastcall Zeropnt268KWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x80010c: {
@@ -1017,7 +988,7 @@ void __fastcall Zeropnt268KWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT32 __fastcall Zeropnt268KReadLong(UINT32 a)
+static UINT32 __fastcall Zeropnt268KReadLong(UINT32 a)
 {
 	switch (a) {
 		default: {
@@ -1028,7 +999,7 @@ UINT32 __fastcall Zeropnt268KReadLong(UINT32 a)
 	return 0;
 }
 
-void __fastcall Zeropnt268KWriteLong(UINT32 a, UINT32 d)
+static void __fastcall Zeropnt268KWriteLong(UINT32 a, UINT32 d)
 {
 	switch (a) {
 		default: {
@@ -1848,6 +1819,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		MSM6295Scan(0, nAction);
+
+		if (nBurnGunNumPlayers) BurnGunScan();
 
 		// Scan critical driver variables
 		SCAN_VAR(nCyclesDone);

@@ -336,7 +336,7 @@ INT32 StartRecord()
 			nRet = 1;
 		} else {
 			fwrite(&szFileHeader, 1, 4, fp);
-			fwrite(&movieFlags, 1, 1, fp);
+			fwrite(&movieFlags, 1, 4, fp);
 			if (bStartFromReset)
 				nRet = 1;
 			else
@@ -450,7 +450,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 			nRet = 2;
 		} else {
 			memset(ReadHeader, 0, 4);
-			fread(&movieFlags, 1, 1, fp); // Read movie flags
+			fread(&movieFlags, 1, 4, fp); // Read movie flags
 			if (movieFlags&MOVIE_FLAG_FROM_POWERON) { // Starts from reset
 				bStartFromReset = 1;
 				if (!bReplayDontClose)
@@ -754,6 +754,23 @@ static void GetRecordingPath(wchar_t* szPath)
 	}
 }
 
+static void DisplayPropertiesError(HWND hDlg, INT32 nErrType)
+{
+	if (hDlg != 0) {
+		switch (nErrType) {
+			case 0:
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Not a FBAlpha input recording file.\0"));
+				break;
+			case 1:
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Incompatible file-type.  Try playback with an earlier version of FBAlpha.\0"));
+				break;
+			case 2:
+				SetDlgItemTextW(hDlg, IDC_METADATA, _T("ERROR: Recording is corrupt :(\0"));
+				break;
+		}
+	}
+}
+
 void DisplayReplayProperties(HWND hDlg, bool bClear)
 {
 	if (hDlg != 0) {
@@ -826,6 +843,9 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	INT32 nUndoCount = 0;
 	wchar_t* local_metadata = NULL;
 
+	memset(&wszStartupGame, 0, sizeof(wszStartupGame));
+	memset(&wszAuthorInfo, 0, sizeof(wszAuthorInfo));
+
 	FILE* fd = _wfopen(szChoice, L"r+b");
 	if (!fd) {
 		return;
@@ -847,10 +867,11 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	fread(ReadHeader, 1, 4, fd);						// Read identifier
 	if (memcmp(ReadHeader, szFileHeader, 4)) {			// Not the right file type
 		fclose(fd);
+		DisplayPropertiesError(hDlg, 0 /* not our file */);
 		return;
 	}
 
-	fread(&movieFlags, 1, 1, fd);						// Read identifier
+	fread(&movieFlags, 1, 4, fd);						// Read identifier
 
 	bStartFromReset = (movieFlags&MOVIE_FLAG_FROM_POWERON) ? 1 : 0; // Starts from reset
 
@@ -859,12 +880,14 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		fread(ReadHeader, 1, 4, fd);						// Read identifier
 		if (memcmp(ReadHeader, szSavestateHeader, 4)) {		// Not the chunk type
 			fclose(fd);
+			DisplayPropertiesError(hDlg, 1 /* most likely recorded w/ an earlier version */);
 			return;
 		}
 
 		fread(&nChunkSize, 1, 4, fd);
 		if (nChunkSize <= 0x40) {							// Not big enough
 			fclose(fd);
+			DisplayPropertiesError(hDlg, 2 /* corrupt. */);
 			return;
 		}
 
@@ -889,6 +912,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	fread(ReadHeader, 1, 4, fd);						// Read identifier
 	if (memcmp(ReadHeader, szRecordingHeader, 4)) {		// Not the chunk type
 		fclose(fd);
+		DisplayPropertiesError(hDlg, 1 /* most likely recorded w/ an earlier version */);
 		return;
 	}
 
@@ -896,6 +920,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 	fread(&nChunkSize, 1, 4, fd);
 	if (nChunkSize <= 0x10) {							// Not big enough
 		fclose(fd);
+		DisplayPropertiesError(hDlg, 2 /* corrupt. */);
 		return;
 	}
 
@@ -914,7 +939,10 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		if(nMetaLen >= MAX_METADATA) {
 			nMetaLen = MAX_METADATA-1;
 		}
+
 		local_metadata = (wchar_t*)malloc((nMetaLen+1)*sizeof(wchar_t));
+		memset(local_metadata, 0, (nMetaLen+1)*sizeof(wchar_t));
+
 		INT32 i;
 		for(i=0; i<nMetaLen; ++i) {
 			wchar_t c = 0;
@@ -925,7 +953,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		local_metadata[i] = L'\0';
 
 		if (bStartFromReset) {
-			swscanf(local_metadata, L"%[^','],%s", wszStartupGame, wszAuthorInfo);
+			swscanf(local_metadata, L"%[^','],%959c", wszStartupGame, wszAuthorInfo);
 			bprintf(0, _T("startup game: %s.\n"), wszStartupGame);
 			bprintf(0, _T("author info: %s.\n"), wszAuthorInfo);
 		} else {
@@ -1164,6 +1192,8 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 						bStartFromReset = true;
 						// add "romset," to beginning of metadata
 						_stprintf(wszMetadata, _T("%s,%s"), BurnDrvGetText(DRV_NAME), szAuthInfo);
+					} else {
+						_tcscpy(wszMetadata, szAuthInfo);
 					}
 					wszMetadata[MAX_METADATA-1] = L'\0';
 					// ensure a relative path has the "recordings\" path in prepended to it

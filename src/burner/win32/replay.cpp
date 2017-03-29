@@ -340,7 +340,7 @@ INT32 StartRecord()
 			if (bStartFromReset)
 				nRet = 1;
 			else
-			nRet = BurnStateSaveEmbed(fp, -1, 1);
+				nRet = BurnStateSaveEmbed(fp, -1, 1);
 			if (nRet >= 0) {
 				const char szChunkHeader[] = "FR1 ";	// Chunk identifier
 				INT32 nZero = 0;
@@ -420,7 +420,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 	if (szFileName) {
 		_tcscpy(szChoice, szFileName);
 		if (!bReplayDontClose) {
-			// if startfromreset, get file "wszStartupGame" from metadata!!
+			// if bStartFromReset, get file "wszStartupGame" from metadata!!
 			DisplayReplayProperties(0, false);
 		}
 	} else {
@@ -672,13 +672,13 @@ static inline void Write32(UINT8*& ptr, const unsigned long v)
 	*ptr++ = (UINT8)((v>>24)&0xff);
 }
 
-static inline unsigned long Read32(const UINT8*& ptr)
+static inline UINT32 Read32(const UINT8*& ptr)
 {
-	unsigned long v;
-	v = (unsigned long)(*ptr++);
-	v |= (unsigned long)((*ptr++)<<8);
-	v |= (unsigned long)((*ptr++)<<16);
-	v |= (unsigned long)((*ptr++)<<24);
+	UINT32 v;
+	v = (UINT32)(*ptr++);
+	v |= (UINT32)((*ptr++)<<8);
+	v |= (UINT32)((*ptr++)<<16);
+	v |= (UINT32)((*ptr++)<<24);
 	return v;
 }
 
@@ -696,7 +696,7 @@ static inline UINT16 Read16(const UINT8*& ptr)
 	return v;
 }
 
-INT32 FreezeInput(UINT8** buf, int* size)
+INT32 FreezeInput(UINT8** buf, INT32* size)
 {
 	*size = 4 + 2*nGameInpCount;
 	*buf = (UINT8*)malloc(*size);
@@ -957,7 +957,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 			bprintf(0, _T("startup game: %s.\n"), wszStartupGame);
 			bprintf(0, _T("author info: %s.\n"), wszAuthorInfo);
 		} else {
-			wcsncpy(wszAuthorInfo, local_metadata, MAX_METADATA-64);
+			wcsncpy(wszAuthorInfo, local_metadata, MAX_METADATA-64-1);
 		}
 	}
 
@@ -979,18 +979,18 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		char szFramesString[32];
 		char szLengthString[32];
 		char szUndoCountString[32];
+		char szRecordedFrom[32];
+
 		sprintf(szFramesString, "%d", nFrames);
 		sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
 		sprintf(szUndoCountString, "%d", nUndoCount);
+		sprintf(szRecordedFrom, "v%x.%x.%x.%02x, %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, (bStartFromReset) ? "Power-On" : "Savestate");
 
 		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
 		SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);
 		SetDlgItemTextA(hDlg, IDC_UNDO, szUndoCountString);
 		SetDlgItemTextW(hDlg, IDC_METADATA, wszAuthorInfo);
-		if (bStartFromReset)
-			SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Power-On");
-		else
-			SetDlgItemTextA(hDlg, IDC_REPLAYRESET, "Savestate");
+		SetDlgItemTextA(hDlg, IDC_REPLAYRESET, szRecordedFrom);
 	}
 }
 
@@ -1186,7 +1186,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 					return TRUE;
 				case IDOK:
 					GetDlgItemText(hDlg, IDC_FILENAME, szChoice, MAX_PATH);
-					GetDlgItemTextW(hDlg, IDC_METADATA, szAuthInfo, MAX_METADATA-64);
+					GetDlgItemTextW(hDlg, IDC_METADATA, szAuthInfo, MAX_METADATA-64-1);
 					bStartFromReset = false;
 					if (BST_CHECKED == SendDlgItemMessage(hDlg, IDC_REPLAYRESET, BM_GETCHECK, 0, 0)) {
 						bStartFromReset = true;
@@ -1196,6 +1196,7 @@ static BOOL CALLBACK RecordDialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM
 						_tcscpy(wszMetadata, szAuthInfo);
 					}
 					wszMetadata[MAX_METADATA-1] = L'\0';
+
 					// ensure a relative path has the "recordings\" path in prepended to it
 					GetRecordingPath(szChoice);
 					EndDialog(hDlg, 1);

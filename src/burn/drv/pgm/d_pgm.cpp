@@ -2173,7 +2173,7 @@ struct BurnDriver BurnDrvmartmastc = {
 };
 
 
-// Martial Masters / Xing Yi (V103, 102, 102, China)
+// Martial Masters / Xing Yi (V103, 102, 101, China)
 // Needs proper martial_masters_v102_cn.asic to be dumped
 
 static struct BurnRomInfo martmastc103RomDesc[] = {
@@ -2193,7 +2193,7 @@ static struct BurnRomInfo martmastc103RomDesc[] = {
 	{ "m1000.u5",      		0x800000, 0xed407ae8, 5 | BRF_SND },			//  9 Samples
 	{ "m1001.u7",      		0x400000, 0x662d2d48, 5 | BRF_SND },			// 10
 	
-	{ "martial_masters_v102_usa.asic",	0x004000, 0xa6c0828c, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
+	{ "martial_masters_v101_cn.asic",	0x004000, 0xb3e25b7d, 7 | BRF_PRG | BRF_ESS },  // 11 Internal ARM7 Rom
 
 	{ "v102_16m.u10",  		0x200000, 0x18b745e6, 8 | BRF_PRG | BRF_ESS },  // 12 External ARM7 Rom
 };
@@ -2203,8 +2203,8 @@ STD_ROM_FN(martmastc103)
 
 struct BurnDriver BurnDrvmartmastc103 = {
 	"martmastc103", "martmast", "pgm", NULL, "2001",
-	"Martial Masters (V103, 102, 102, China)\0", NULL, "IGS", "PolyGameMaster",
-	L"Martial Masters\0\u5f62\u610f\u62f3 (V103, 102, 102, China)\0", NULL, NULL, NULL,
+	"Martial Masters (V103, 102, 101, China)\0", NULL, "IGS", "PolyGameMaster",
+	L"Martial Masters\0\u5f62\u610f\u62f3 (V103, 102, 101, China)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VSFIGHT, 0,
 	NULL, martmastc103RomInfo, martmastc103RomName, NULL, NULL, pgmInputInfo, martmastc102DIPInfo,
 	martmastInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,

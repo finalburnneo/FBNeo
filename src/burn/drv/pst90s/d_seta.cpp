@@ -9804,7 +9804,7 @@ static INT32 oisipuzlInit()
 	oisipuzl_hack = 1; // 32 pixel offset for sprites???
 	watchdog_enable = 1; // needs a reset before it will boot
 
-	DrvSetVideoOffsets(2, 2, -1, -1);
+	DrvSetVideoOffsets(1, 1, -1, -1);
 	DrvSetColorOffsets(0, 0x400, 0x200);
 
 	INT32 nRet = DrvInit(oisipuzl68kInit, 16000000, (2 << 8) | (1 << 0), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 2, 2));

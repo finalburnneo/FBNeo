@@ -9111,8 +9111,9 @@ STD_ROM_PICK(Sf2jl)
 STD_ROM_FN(Sf2jl)
 
 static struct BurnRomInfo Sf2jlaRomDesc[] = {
+	// Not yet added to MAME but dumped from a real official board from Capcom 
 	{ "sf-2_30l.bin",  	0x020000, 0x79022b31, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },  // Verified "SF-2" without "J" for Japan region
-	{ "sf-2_37l.bin",  	0x020000, 0x04ba20c7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "sf-2_37l.bin",  	0x020000, 0x04ba20c7, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },  
 	{ "sf-2_31l.bin",  	0x020000, 0xfe15cb39, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf-2_38l.bin",  	0x020000, 0x65cb1883, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "sf-2_28l.bin",  	0x020000, 0xd283187a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },

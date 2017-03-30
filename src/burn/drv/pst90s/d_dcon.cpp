@@ -650,7 +650,7 @@ static INT32 DrvFrame()
 
 			BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 
-			if (i == 240) {
+			if (i == nInterleave-1) {
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 			}
 		}

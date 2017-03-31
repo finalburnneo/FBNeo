@@ -42,6 +42,7 @@ static INT32 RomLoadOffset = 0;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
+static INT32 nExtraCycles = 0;
 
 static INT32 Diamond;
 
@@ -724,6 +725,7 @@ static INT32 DrvDoReset()
 	DrvBgScrollX[0] = DrvBgScrollX[1] = 0;
 	DrvBgScrollY[0] = DrvBgScrollY[1] = 0;
 	DrvSoundLatch = 0;
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -908,6 +910,8 @@ static INT32 DrvInit()
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
+
+	BurnSetRefreshRate(59.59);
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x20000);
 
@@ -1365,14 +1369,14 @@ static void DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 25;
+	INT32 nInterleave = 256;
 
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = 1500000 / 60;
-	nCyclesTotal[1] = 3000000 / 60;
+	nCyclesTotal[0] = (UINT32)((double)1500000 / 59.59);
+	nCyclesTotal[1] = (UINT32)((double)3000000 / 59.59);
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	ZetNewFrame();
@@ -1385,8 +1389,8 @@ static INT32 DrvFrame()
 		M6809Open(0);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
-		if (i == 22) {
+		nCyclesDone[nCurrentCPU] += M6809Run((i == nInterleave-1) ? nCyclesSegment - nExtraCycles : nCyclesSegment );
+		if (i == 239) {
 			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x200);
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
@@ -1395,14 +1399,15 @@ static INT32 DrvFrame()
 		// Run Z80
 		nCurrentCPU = 1;
 		ZetOpen(0);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (i == 5 || i == 10 || i == 15 || i == 20) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 6 || i == 11 || i == 16 || i == 21) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		if (i % 64 == 63) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 
 	ZetOpen(0);
 	BurnTimerEndFrame(nCyclesTotal[1]);
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -1439,6 +1444,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		// Scan critical driver variables
 		SCAN_VAR(nCyclesDone);
 		SCAN_VAR(nCyclesSegment);
+		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(DrvRomBank);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBgScrollX);

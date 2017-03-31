@@ -131,9 +131,10 @@ static m6809_Regs m6809;
 #define DPD 	m6809.dp.d
 #define CC  	m6809.cc
 
-static PAIR ea;         /* effective address */
-#define EA	ea.w.l
-#define EAD ea.d
+#define ea      m6809.ea
+#define EA      ea.w.l
+#define EAD     ea.d
+#define EAB     ea.b.l
 
 #define CHANGE_PC change_pc(PCD)
 
@@ -288,7 +289,7 @@ CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N,CC_N
 #define SIGNED(b) ((UINT16)(b&0x80?b|0xff00:b))
 
 /* macros for addressing modes (postbytes have their own code) */
-#define DIRECT	EAD = DPD; IMMBYTE(ea.b.l)
+#define DIRECT	EAD = DPD; IMMBYTE(EAB)
 #define IMM8	EAD = PCD; PC++
 #define IMM16	EAD = PCD; PC+=2
 #define EXTENDED IMMWORD(ea)

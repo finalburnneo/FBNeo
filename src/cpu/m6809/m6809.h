@@ -12,6 +12,7 @@ typedef struct
 {
 	PAIR	pc; 		/* Program counter */
 	PAIR	ppc;		/* Previous program counter */
+	PAIR    ea;         /* effective address */
 	PAIR	d;			/* Accumulator a and b */
 	PAIR	dp; 		/* Direct Page register (page in MSB) */
 	PAIR	u, s;		/* Stack pointers */
@@ -20,7 +21,7 @@ typedef struct
 	UINT8	ireg;		/* First opcode */
 	UINT8	irq_state[2];
     int     extra_cycles; /* cycles used up by interrupts */
-    int     (*irq_callback)(int irqline);
+	ALIGN_VAR(8) int (*irq_callback)(int irqline);
     UINT8   int_state;  /* SYNC and CWAI flags */
     UINT8   nmi_state;
 } m6809_Regs;

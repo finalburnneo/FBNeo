@@ -249,6 +249,7 @@ STD_ROM_PICK(Gensitou)
 STD_ROM_FN(Gensitou)
 
 static struct BurnRomInfo PrehislbRomDesc[] = {
+	// world bootleg using 64k*8 UVEPROMs, program and sound unchanged, sprites and background tilemaps altered
 	{ "u_h1.bin",      0x10000, 0x04c1703b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "u_h3.bin",      0x10000, 0x62f04cd1, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
 	{ "u_j2.bin",      0x10000, 0x7b12501d, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
@@ -273,9 +274,9 @@ static struct BurnRomInfo PrehislbRomDesc[] = {
 	{ "u_j10.bin",     0x10000, 0x785bf046, BRF_GRA },			 // 19	Sprite Layer Tiles
 	{ "u_j11.bin",     0x10000, 0xc306b9fa, BRF_GRA },			 // 20	Sprite Layer Tiles
 	{ "u_j12.bin",     0x10000, 0x5ba5bbed, BRF_GRA },			 // 21	Sprite Layer Tiles
-	{ "u_j13.bin",     0x10000, 0x007dee47, BRF_GRA },			 // 22	Sprite Layer Tiles
+	{ "u_j13.bin",     0x10000, 0x007dee47, BRF_GRA },			 // 22	Sprite Layer Tiles // modified by bootleggers
 	
-	{ "1_a6.bin",      0x10000, 0xb4f0fcf0, BRF_GRA },			 // 23	Background 2 TileMap
+	{ "1_a6.bin",      0x10000, 0xb4f0fcf0, BRF_GRA },			 // 23	Background 2 TileMap // modified by bootleggers
 
 	{ "u_e12.bin",     0x10000, 0x80a4c093, BRF_SND },			 // 24	Z80 Program Code
 

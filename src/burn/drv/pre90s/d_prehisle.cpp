@@ -248,6 +248,45 @@ static struct BurnRomInfo GensitouRomDesc[] = {
 STD_ROM_PICK(Gensitou)
 STD_ROM_FN(Gensitou)
 
+static struct BurnRomInfo PrehislbRomDesc[] = {
+	{ "u_h1.bin",      0x10000, 0x04c1703b, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "u_h3.bin",      0x10000, 0x62f04cd1, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+	{ "u_j2.bin",      0x10000, 0x7b12501d, BRF_ESS | BRF_PRG }, //  2	68000 Program Code
+	{ "u_j3.bin",      0x10000, 0x2a86f7c4, BRF_ESS | BRF_PRG }, //  3	68000 Program Code
+
+	{ "l_a17.bin",     0x08000, 0xac652412, BRF_GRA },			 //  4	Text Layer Tiles
+	{ "l_b17.bin",     0x10000, 0x65a22ffc, BRF_GRA },			 //  5	Background2 Layer Tiles
+	{ "l_b16.bin",     0x10000, 0xb1e1f527, BRF_GRA },			 //  6	Background2 Layer Tiles
+	{ "l_b14.bin",     0x10000, 0x28e94d40, BRF_GRA },			 //  7	Background2 Layer Tiles
+	{ "l_b13.bin",     0x10000, 0x4dbb557a, BRF_GRA },			 //  8	Background2 Layer Tiles
+	{ "l_h17.bin",     0x10000, 0x79c42316, BRF_GRA },			 //  9	Background1 Layer Tiles
+	{ "l_h15.bin",     0x10000, 0x50e31fb0, BRF_GRA },			 // 10	Background1 Layer Tiles
+	{ "l_f17.bin",     0x10000, 0x2af1739d, BRF_GRA },			 // 11	Background1 Layer Tiles
+	{ "l_f15.bin",     0x10000, 0xcac11327, BRF_GRA },			 // 12	Background1 Layer Tiles
+	
+	{ "u_k12.bin",     0x10000, 0x4b0215f0, BRF_GRA },			 // 13	Sprite Layer Tiles
+	{ "u_k13.bin",     0x10000, 0x68b8a698, BRF_GRA },			 // 14	Sprite Layer Tiles
+	{ "u_j4.bin",      0x10000, 0x06ce7b57, BRF_GRA },			 // 15	Sprite Layer Tiles
+	{ "u_j5.bin",      0x10000, 0x2ee8b401, BRF_GRA },			 // 16	Sprite Layer Tiles
+	{ "u_j7.bin",      0x10000, 0x35656cbc, BRF_GRA },			 // 17	Sprite Layer Tiles
+	{ "u_j8.bin",      0x10000, 0x1e7e9336, BRF_GRA },			 // 18	Sprite Layer Tiles
+	{ "u_j10.bin",     0x10000, 0x785bf046, BRF_GRA },			 // 19	Sprite Layer Tiles
+	{ "u_j11.bin",     0x10000, 0xc306b9fa, BRF_GRA },			 // 20	Sprite Layer Tiles
+	{ "u_j12.bin",     0x10000, 0x5ba5bbed, BRF_GRA },			 // 21	Sprite Layer Tiles
+	{ "u_j13.bin",     0x10000, 0x007dee47, BRF_GRA },			 // 22	Sprite Layer Tiles
+	
+	{ "1_a6.bin",      0x10000, 0xb4f0fcf0, BRF_GRA },			 // 23	Background 2 TileMap
+
+	{ "u_e12.bin",     0x10000, 0x80a4c093, BRF_SND },			 // 24	Z80 Program Code
+
+	{ "u_f14.bin",     0x10000, 0x2fb32933, BRF_SND },			 // 25	ADPCM Samples
+	{ "u_j14.bin",     0x10000, 0x32d5f7c9, BRF_SND },			 // 26	ADPCM Samples
+};
+
+
+STD_ROM_PICK(Prehislb)
+STD_ROM_FN(Prehislb)
+
 // Misc Driver Functions and Memory Handlers
 INT32 PrehisleDoReset()
 {
@@ -520,6 +559,114 @@ INT32 PrehisleInit()
 
 	// Load ADPCM Samples
 	nRet = BurnLoadRom(PrehisleADPCMSamples, 9, 1); if (nRet != 0) return 1;
+
+	// Setup the 68000 emulation
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(PrehisleRom       , 0x000000, 0x03ffff, MAP_ROM);
+	SekMapMemory(PrehisleRam       , 0x070000, 0x073fff, MAP_RAM);
+	SekMapMemory(PrehisleVideoRam  , 0x090000, 0x0907ff, MAP_RAM);
+	SekMapMemory(PrehisleSpriteRam , 0x0a0000, 0x0a07ff, MAP_RAM);
+	SekMapMemory(PrehisleVideo2Ram , 0x0b0000, 0x0b3fff, MAP_RAM);
+	SekMapMemory(PrehislePaletteRam, 0x0d0000, 0x0d07ff, MAP_RAM);
+	SekSetReadWordHandler(0, PrehisleReadWord);
+	SekSetWriteWordHandler(0, PrehisleWriteWord);
+	SekClose();
+
+	// Setup the Z80 emulation
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapArea(0x0000, 0xefff, 0, PrehisleZ80Rom);
+	ZetMapArea(0x0000, 0xefff, 2, PrehisleZ80Rom);
+	ZetMapArea(0xf000, 0xf7ff, 0, PrehisleZ80Ram);
+	ZetMapArea(0xf000, 0xf7ff, 1, PrehisleZ80Ram);
+	ZetMapArea(0xf000, 0xf7ff, 2, PrehisleZ80Ram);
+	ZetSetReadHandler(PrehisleZ80Read);
+	ZetSetInHandler(PrehisleZ80PortRead);
+	ZetSetOutHandler(PrehisleZ80PortWrite);
+	ZetClose();
+
+	BurnYM3812Init(1, 4000000, &prehisleFMIRQHandler, &prehisleSynchroniseStream, 0);
+	BurnTimerAttachZetYM3812(4000000);
+	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
+	
+	UPD7759Init(0, UPD7759_STANDARD_CLOCK, PrehisleADPCMSamples);
+	UPD7759SetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
+	
+	GenericTilesInit();
+
+	// Reset the driver
+	PrehisleDoReset();
+
+	return 0;
+}
+
+INT32 PrehislebInit()
+{
+	INT32 nRet = 0, nLen;
+
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	PrehisleTempGfx = (UINT8*)BurnMalloc(0xa0000);
+
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(PrehisleRom + 0x00001, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleRom + 0x00000, 1, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleRom + 0x20001, 2, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleRom + 0x20000, 3, 2); if (nRet != 0) return 1;
+
+	// Load and decode Text Tiles rom
+	memset(PrehisleTempGfx, 0, 0xa0000);
+	nRet = BurnLoadRom(PrehisleTempGfx, 4, 1); if (nRet != 0) return 1;
+	GfxDecode(1024, 4, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x100, PrehisleTempGfx, PrehisleTextTiles);
+
+	// Load and decode Background2 Tile rom
+	memset(PrehisleTempGfx, 0, 0xa0000);
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000, 5, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x10000, 6, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x20000, 7, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x30000, 8, 1); if (nRet != 0) return 1;
+	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleBack2Tiles);
+
+	// Load and decode Background1 Tile rom
+	memset(PrehisleTempGfx, 0, 0xa0000);
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000, 9, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x10000,10, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x20000,11, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x30000,12, 1); if (nRet != 0) return 1;
+	GfxDecode(2048, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleBack1Tiles);
+
+	// Load and decode Sprite roms
+	memset(PrehisleTempGfx, 0, 0xa0000);
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x00000,13, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x10000,14, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x20000,15, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x30000,16, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x40000,17, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x50000,18, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x60000,19, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x70000,20, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x80000,21, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleTempGfx + 0x90000,22, 1); if (nRet != 0) return 1;
+	GfxDecode(5120, 4, 16, 16, TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x400, PrehisleTempGfx, PrehisleSprites);
+
+	BurnFree(PrehisleTempGfx);
+
+	// Load Background2 Tilemap rom
+	nRet = BurnLoadRom(PrehisleTileMapRom,23, 1); if (nRet != 0) return 1;
+
+	// Load Z80 Program rom
+	nRet = BurnLoadRom(PrehisleZ80Rom,24, 1); if (nRet != 0) return 1;
+
+	// Load ADPCM Samples
+	nRet = BurnLoadRom(PrehisleADPCMSamples + 0x00000,25, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(PrehisleADPCMSamples + 0x10000,26, 1); if (nRet != 0) return 1;
 
 	// Setup the 68000 emulation
 	SekInit(0, 0x68000);
@@ -888,5 +1035,15 @@ struct BurnDriver BurnDrvGensitou = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, GensitouRomInfo, GensitouRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
 	PrehisleInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvPrehislb = {
+	"prehisleb", "prehisle", NULL, NULL, "1989",
+	"Prehistoric Isle in 1930 (World, bootleg)\0", NULL, "bootleg", "Prehistoric Isle (SNK)",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, PrehislbRomInfo, PrehislbRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
+	PrehislebInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
 	NULL, 0x800, 256, 224, 4, 3
 };

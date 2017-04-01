@@ -4130,18 +4130,18 @@ struct BurnDriver BurnDrvSpacedxo = {
 };
 
 
-// Sonic Blast Man (Japan)
+// Sonic Blast Man (US)
 
 static struct BurnRomInfo sbmRomDesc[] = {
-	{ "c69-20-1.10",		0x020000, 0xb40e4910, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
-	{ "c69-22-1.12",		0x020000, 0xecbcf830, TAITO_68KROM1_BYTESWAP }, //  1
-	{ "c69-19-1.9",			0x020000, 0x5719c158, TAITO_68KROM1_BYTESWAP }, //  2
-	{ "c69-21-1.11",		0x020000, 0x73562394, TAITO_68KROM1_BYTESWAP }, //  3
+	{ "c69-20-2.ic10",		0x020000, 0x225952a3, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c69-22-2.ic12",		0x020000, 0xd900ce83, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c69-19-2.ic9",		0x020000, 0xd6cfacfb, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c69-25-2.ic11",		0x020000, 0x70903898, TAITO_68KROM1_BYTESWAP }, //  3
 
-	{ "c69-23.28",			0x010000, 0xb2fce13e, TAITO_Z80ROM1 },		//  4 Z80 Code
+	{ "c69-31.ic28",		0x010000, 0xc999f753, TAITO_Z80ROM1 },			//  4 Z80 Code
 
 	// Some roms are repeated to compensate for the way the taito rom loading system in fba works.
-	{ "c69-01.ic5",			0x100000, 0x521fabe3, TAITO_CHARS },		//  5 Graphics Tiles
+	{ "c69-01.ic5",			0x100000, 0x521fabe3, TAITO_CHARS },			//  5 Graphics Tiles
 	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	//  6
 	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	//  7
 	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	//  8
@@ -4175,10 +4175,57 @@ static INT32 SbmInit()
 
 struct BurnDriver BurnDrvSbm = {
 	"sbm", NULL, NULL, NULL, "1990",
-	"Sonic Blast Man (Japan)\0", NULL, "Taito Corporation", "Taito B System",
+	"Sonic Blast Man (US)\0", NULL, "Taito Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_TAITO_TAITOB, GBF_MISC, 0,
 	NULL, sbmRomInfo, sbmRomName, NULL, NULL, SbmInputInfo, SbmDIPInfo,
+	SbmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	320, 224, 4, 3
+};
+
+
+// Sonic Blast Man (Japan)
+
+static struct BurnRomInfo sbmjRomDesc[] = {
+	{ "c69-20-1.10",		0x020000, 0xb40e4910, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "c69-22-1.12",		0x020000, 0xecbcf830, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "c69-19-1.9",			0x020000, 0x5719c158, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "c69-21-1.11",		0x020000, 0x73562394, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "c69-23.28",			0x010000, 0xb2fce13e, TAITO_Z80ROM1 },			//  4 Z80 Code
+
+	// Some roms are repeated to compensate for the way the taito rom loading system in fba works.
+	{ "c69-01.ic5",			0x100000, 0x521fabe3, TAITO_CHARS },			//  5 Graphics Tiles
+	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	//  6
+	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	//  7
+	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	//  8
+	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	//  9
+	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	// 10
+	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	// 11
+	{ "c69-13.ic2",			0x020000, 0xd1550884, TAITO_CHARS_BYTESWAP },	// 12
+	{ "c69-12.ic1",			0x020000, 0xeb56582c, TAITO_CHARS_BYTESWAP },	// 13
+	{ "c69-02.ic6",			0x100000, 0xf0e20d35, TAITO_CHARS },			// 14
+	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 15
+	{ "c69-14.ic3",			0x020000, 0x0ed0272a, TAITO_CHARS_BYTESWAP },	// 16
+	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 17
+	{ "c69-14.ic3",			0x020000, 0x0ed0272a, TAITO_CHARS_BYTESWAP },	// 18
+	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 19
+	{ "c69-14.ic3",			0x020000, 0x0ed0272a, TAITO_CHARS_BYTESWAP },	// 20
+	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 21
+	{ "c69-14.ic3",			0x020000, 0x0ed0272a, TAITO_CHARS_BYTESWAP },	// 22
+
+	{ "c69-03.36",			0x080000, 0x63e6b6e7, TAITO_YM2610A },		// 23 ymsnd
+};
+
+STD_ROM_PICK(sbmj)
+STD_ROM_FN(sbmj)
+
+struct BurnDriver BurnDrvSbmj = {
+	"sbmj", "sbm", NULL, NULL, "1990",
+	"Sonic Blast Man (Japan)\0", NULL, "Taito Corporation", "Taito B System",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_TAITO_TAITOB, GBF_MISC, 0,
+	NULL, sbmjRomInfo, sbmjRomName, NULL, NULL, SbmInputInfo, SbmDIPInfo,
 	SbmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	320, 224, 4, 3
 };

@@ -276,7 +276,7 @@ static struct BurnRomInfo PrehislbRomDesc[] = {
 	{ "u_j12.bin",     0x10000, 0x5ba5bbed, BRF_GRA },			 // 21	Sprite Layer Tiles
 	{ "u_j13.bin",     0x10000, 0x007dee47, BRF_GRA },			 // 22	Sprite Layer Tiles // modified by bootleggers
 	
-	{ "1_a6.bin",      0x10000, 0xb4f0fcf0, BRF_GRA },			 // 23	Background 2 TileMap // modified by bootleggers
+	{ "1_a6.bin",      0x10000, 0xe2b9a44b, BRF_GRA },			 // 23	Background 2 TileMap // modified by bootleggers
 
 	{ "u_e12.bin",     0x10000, 0x80a4c093, BRF_SND },			 // 24	Z80 Program Code
 

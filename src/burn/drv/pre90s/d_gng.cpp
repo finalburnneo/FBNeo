@@ -714,11 +714,10 @@ static INT32 DrvDoReset()
 	M6809Close();
 	
 	ZetOpen(0);
+	BurnYM2203Reset();
 	ZetReset();
 	ZetClose();
 	
-	BurnYM2203Reset();
-
 	HiscoreReset();
 
 	DrvRomBank = 0;
@@ -728,6 +727,17 @@ static INT32 DrvDoReset()
 	nExtraCycles = 0;
 
 	return 0;
+}
+
+static void bank_switch(UINT8 bank)
+{
+	DrvRomBank = bank & 3;
+	if (bank == 4) {
+		DrvRomBank = 4;
+		M6809MapMemory(DrvM6809Rom, 0x4000, 0x5fff, MAP_ROM);
+	} else {
+		M6809MapMemory(DrvM6809Rom + 0xc000 + (DrvRomBank * 0x2000), 0x4000, 0x5fff, MAP_ROM);
+	}
 }
 
 UINT8 DrvGngM6809ReadByte(UINT16 Address)
@@ -811,13 +821,7 @@ void DrvGngM6809WriteByte(UINT16 Address, UINT8 Data)
 		}
 		
 		case 0x3e00: {
-			DrvRomBank = Data & 3;
-			if (Data == 4) {
-				DrvRomBank = 4;
-				M6809MapMemory(DrvM6809Rom, 0x4000, 0x5fff, MAP_ROM);
-			} else {
-				M6809MapMemory(DrvM6809Rom + 0xc000 + (DrvRomBank * 0x2000), 0x4000, 0x5fff, MAP_ROM);
-			}
+			bank_switch(Data);
 			return;
 		}
 	}
@@ -1438,19 +1442,23 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		M6809Scan(nAction);
 		ZetScan(nAction);
-		
+
+		ZetOpen(0);
 		BurnYM2203Scan(nAction, pnMin);
+		ZetClose();
 
 		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(nExtraCycles);
 		SCAN_VAR(DrvRomBank);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
-		SCAN_VAR(DrvDip);
-		SCAN_VAR(DrvInput);
+	}
+
+	if (nAction & ACB_WRITE) {
+		M6809Open(0);
+		bank_switch(DrvRomBank);
+		M6809Close();
 	}
 	
 	return 0;

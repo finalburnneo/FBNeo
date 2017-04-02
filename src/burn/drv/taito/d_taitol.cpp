@@ -3327,19 +3327,23 @@ static INT32 Z80x2Frame()
 		}
 	}
 
-	INT32 nInterleave = 256/4;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] =  { 6665280 / 60, 0, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nNext = 0;
+	INT32 nCyclesSegment = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		scanline_update(i*4);
+		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[0];
+		nCyclesDone[0] += ZetRun(nCyclesSegment);
+		scanline_update(i-15);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdate(i * (nCyclesTotal[2] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
 		if (i == (nInterleave - 4) && nmi_enable) ZetNmi(); // 60hz
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();

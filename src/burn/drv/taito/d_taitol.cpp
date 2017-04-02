@@ -60,6 +60,15 @@ static INT32 nGfxRomLen = 0;
 static INT32 nmi_enable = 0;
 static INT32 has_ym2610 = 0;
 static INT32 has_adpcm = 0;
+static INT32 has_track = 0;
+
+// trackball stuff
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static UINT32 track_x = 0;
+static UINT32 track_y = 0;
+static INT32 track_x_last = 0;
+static INT32 track_y_last = 0;
 
 static INT32 fhawkmode = 0;
 static INT32 plgirls2bmode = 0;
@@ -350,14 +359,14 @@ static struct BurnInputInfo PlgirlsInputList[] = {
 
 STDINPUTINFO(Plgirls)
 
+#define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 static struct BurnInputInfo HorshoesInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 coin"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 fire 2"	},
 
-	// Fake, placeholder for analog inputs
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 fire 4"	},
+	A("P1 Trackball X", BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Trackball Y", BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 0,	"service"	},
@@ -367,6 +376,7 @@ static struct BurnInputInfo HorshoesInputList[] = {
 };
 
 STDINPUTINFO(Horshoes)
+#undef A
 
 static struct BurnDIPInfo FhawkDIPList[]=
 {
@@ -1894,6 +1904,31 @@ static void __fastcall horshoes_main_write(UINT16 address, UINT8 data)
 	fhawk_main_write(address,data);
 }
 
+// horshoes trackball stuff
+static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+static UINT16 ananice(UINT16 anaval)
+{
+	UINT8 Temp = 0x7f - (anaval >> 4);
+	if (Temp < 0x01) Temp = 0x01;
+	if (Temp > 0xfe) Temp = 0xfe;
+	UINT16 pad = scalerange(Temp, 0x3f, 0xc0, 0x01, 0xff);
+	if (pad > 0xff) pad = 0xff;
+	if (pad > 0x75 && pad < 0x85) pad = 0x7f;
+	return pad;
+}
+
+static void trackball_tick()
+{
+	INT32 padx = ananice(DrvAnalogPort0) - 0x7f;
+	track_x -= padx/2;  // (-=) reversed :)
+
+	INT32 pady = ananice(DrvAnalogPort1) - 0x7f;
+	track_y += pady/2;
+}
+
 static UINT8 __fastcall horshoes_main_read(UINT16 address)
 {
 	switch (address)
@@ -1906,22 +1941,22 @@ static UINT8 __fastcall horshoes_main_read(UINT16 address)
 			return BurnYM2203Read(0, address & 1);
 
 		case 0xa800:
-			return 0; // tracky_lo_r
+			return (track_y - track_y_last) & 0xff; // tracky_lo_r
 
-		case 0xa802:
+		case 0xa802: track_y_last = track_y;
 			return 0; // tracky_reset_r
 
-		case 0xa803:
+		case 0xa803: track_x_last = track_x;
 			return 0; // trackx_reset_r
 
 		case 0xa804:
-			return 0; // tracky_hi_r
+			return (track_y - track_y_last) >> 8; // tracky_hi_r
 
 		case 0xa808:
-			return 0; // trackx_lo_r
+			return (track_x - track_x_last) & 0xff; // trackx_lo_r
 
 		case 0xa80c:
-			return 0; // trackx_hi_r
+			return (track_x - track_x_last) >> 8; // trackx_hi_r
 	}
 
 	return fhawk_main_read(address);
@@ -3012,6 +3047,7 @@ static INT32 HorshoesRomLoad()
 
 static INT32 HorshoesInit()
 {
+	has_track = 1;
 	return commonSingleZ80(HorshoesRomLoad, (void (__cdecl *)(UINT16,UINT8))horshoes_main_write, (UINT8 (__cdecl *)(UINT16))horshoes_main_read, 0);
 }
 
@@ -3033,6 +3069,7 @@ static INT32 DrvExit()
 	has_adpcm = 0;
 	has_ym2610 = 0;
 	nmi_enable = 0;
+	has_track = 0;
 
 	fhawkmode = 0;
 	plgirls2bmode = 0;
@@ -3056,7 +3093,7 @@ static void DrvPaletteInit()
 	}
 }
 
-static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 layer) // 1=bg,0=fg,2=chars
+static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 layer, INT32 prio) // 1=bg,0=fg,2=chars
 {
 	INT32 scrollx = 0;
 	INT32 scrolly = 0;
@@ -3098,28 +3135,25 @@ static void draw_layer(UINT8 *ram, UINT8 *gfx, INT32 layer) // 1=bg,0=fg,2=chars
 
 		if (sx >= 0 && sx < (nScreenWidth - 7) && sy >= 0 && sy < (nScreenHeight - 7)) {
 			if (layer) {
-				Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0, gfx);
+				Render8x8Tile_Prio_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0, prio, gfx);
 			} else {
-				Render8x8Tile(pTransDraw, code, sx, sy, color, 4, 0, gfx);
+				Render8x8Tile_Prio(pTransDraw, code, sx, sy, color, 4, 0, prio, gfx);
 			}
 		} else {
 			if (layer) {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, gfx);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, prio, gfx);
 			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0, gfx);
+				Render8x8Tile_Prio_Clip(pTransDraw, code, sx, sy, color, 4, 0, prio, gfx);
 			}
 		}
 	}
 }
 
-static void draw_sprites(INT32 priority)
+static void draw_sprites()
 {
-	for (INT32 offs = 0x400 - 4 * 8; offs >= 0; offs -= 8)
+	for (INT32 offs = 0; offs < 0x400 - 3 * 8; offs += 8)
 	{
 		INT32 color = DrvSprBuf[offs + 2] & 0x0f;
-		if ((current_control & 8) == 0) {
-			if ((color >> 3) != priority) continue;
-		}
 
 		INT32 code  = DrvSprBuf[offs] | (DrvSprBuf[offs + 1] << 8) | ((horshoes_bank & 3) << 10);
 		code &= ((nGfxRomLen * 2) / 0x100) - 1;
@@ -3141,35 +3175,7 @@ static void draw_sprites(INT32 priority)
 
 		sy -= 16;
 
-		if (sx >= 0 && sy >= 0 && sx < (nScreenWidth - 15) && sy < (nScreenHeight - 15)) {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				}
-			}
-		} else {
-			if (flipy) {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				}
-			} else {
-				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-				}
-			}
-		}
+		RenderPrioSprite(pTransDraw, DrvGfxROM1, code, color<<4, 0, sx, sy, flipx, flipy, 16, 16, (color & 0x08) ? 0xaa : 0x00);
 	}
 }
 
@@ -3183,18 +3189,17 @@ static INT32 DrvDraw()
 	if (current_control & 0x20)
 	{
 		BurnTransferClear();
-		if (nBurnLayer & 1) draw_layer(DrvBgRAM + 0x1000, DrvGfxROM0, 0); // BG
+		if (nBurnLayer & 1) draw_layer(DrvBgRAM + 0x1000, DrvGfxROM0, 0, 0); // BG
 
-		// low priority sprites (if priority enabled)
-		if ((current_control & 0x08) == 0) {
-			if (nSpriteEnable & 1) draw_sprites(1);
+		if (current_control & 0x08) {
+			if (nBurnLayer & 2) draw_layer(DrvBgRAM + 0x0000, DrvGfxROM0, 1, 0); // FG
+		} else {
+			if (nBurnLayer & 2) draw_layer(DrvBgRAM + 0x0000, DrvGfxROM0, 1, 1); // FG
 		}
 
-		if (nBurnLayer & 2) draw_layer(DrvBgRAM + 0x0000, DrvGfxROM0, 1); // FG
+		if (nSpriteEnable & 1) draw_sprites();
 
-		if (nSpriteEnable & 2) draw_sprites(0);
-
-		if (nBurnLayer & 4) draw_layer(DrvCharRAM,        DrvGfxROM2, 2); // CHARS
+		if (nBurnLayer & 4) draw_layer(DrvCharRAM,        DrvGfxROM2, 2, 0); // CHARS
 	}
 	else
 	{
@@ -3375,6 +3380,8 @@ static INT32 Z80x1Frame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		if (has_track) trackball_tick();
 	}
 
 	INT32 nInterleave = 256/4;
@@ -4317,7 +4324,7 @@ STD_ROM_FN(horshoes)
 
 struct BurnDriverD BurnDrvHorshoes = {
 	"horshoes", NULL, NULL, NULL, "1990",
-	"American Horseshoes (US)\0", "analog inputs not set up", "Taito America Corporation", "L-System",
+	"American Horseshoes (US)\0", NULL, "Taito America Corporation", "L-System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, horshoesRomInfo, horshoesRomName, NULL, NULL, HorshoesInputInfo, HorshoesDIPInfo,

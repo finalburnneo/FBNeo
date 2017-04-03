@@ -1764,7 +1764,7 @@ static struct BurnRomInfo griffonRomDesc[] = {
 	{ "griffon0.a5",	0x0800, 0xc0f73929, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "griffon1.a6",	0x0800, 0x3cc33e4a, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "griffon2.a7",	0x0800, 0x750b059b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "griffon3.a8",	0x0800, 0x3a6188eb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "griffon3.a8",	0x0800, 0x5e49f5b5, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "griffon4.a9",	0x0800, 0x87a45ceb, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "griffon5.a10",	0x0800, 0x8c83bff7, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "griffon6.a11",	0x0800, 0x805ec2e8, 1 | BRF_PRG | BRF_ESS }, //  6

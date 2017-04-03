@@ -1167,9 +1167,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo stingerSampleDesc[] = {
+#if !defined ROM_VERIFY
 	{"pewpew",      SAMPLE_NOLOOP   },
 	{"boomshort",   SAMPLE_NOLOOP   },
 	{"boomlong",    SAMPLE_NOLOOP   },
+#endif
 	{"",            0               }
 };
 

@@ -482,9 +482,10 @@ static INT32 DrvInit(INT32 select)
 		if (BurnLoadRom(DrvZ80ROM + 0x6000,   6, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x7000,   7, 1)) return 1;
 
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "radradj") ==0) 
+		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "radradj") ==0) {
 			if (BurnLoadRom(DrvZ80ROM + 0x7000,   7, 1)) return 1;
 			memcpy (DrvZ80ROM + 0x7800, DrvGfxROM0 + 0x7000, 0x0800);
+		}
 		
 		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  8, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  9, 1)) return 1;
@@ -968,7 +969,7 @@ static struct BurnRomInfo radradjRomDesc[] = {
 	{ "1.3a",	0x1000, 0xb1e958ca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 & NSC8105 Code
 	{ "2.3b",	0x1000, 0x30ba76b3, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "3.3d",	0x1000, 0x1c9f397b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.3e",	0x1000, 0x453966a3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.3d",	0x1000, 0x453966a3, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "5.3f",	0x1000, 0xc337c4bd, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "6.3h",	0x1000, 0x06e15b59, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "7.3i",	0x1000, 0x02b1f9c9, 1 | BRF_PRG | BRF_ESS }, //  6

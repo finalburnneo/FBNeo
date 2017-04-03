@@ -4160,7 +4160,11 @@ static struct BurnRomInfo sbmRomDesc[] = {
 	{ "c69-15.ic4",			0x020000, 0x9761d316, TAITO_CHARS_BYTESWAP },	// 21
 	{ "c69-14.ic3",			0x020000, 0x0ed0272a, TAITO_CHARS_BYTESWAP },	// 22
 
-	{ "c69-03.36",			0x080000, 0x63e6b6e7, TAITO_YM2610A },		// 23 ymsnd
+	{ "c69-26.ic36",		0x080000, 0x8784058b, TAITO_YM2610A },		// 23 ymsnd
+	
+	{ "c69-04.ic6",			0x000104, 0x80498715, BRF_OPT }, // pld
+	{ "c69-05.ic25",		0x000104, 0x35e345b4, BRF_OPT }, // pld
+	{ "c69-06.ic17",		0x000144, 0x3988e5d1, BRF_OPT }, // pld
 };
 
 STD_ROM_PICK(sbm)

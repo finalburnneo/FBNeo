@@ -557,13 +557,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Best League (bootleg of Big Striker, Italian Serie A)
 
 static struct BurnRomInfo bestleagRomDesc[] = {
-	{ "2(__bestleag).bin",	0x20000, 0xd2be3431, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "3(__bestleag).bin",	0x20000, 0xf29c613a, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.bin",			0x20000, 0xd2be3431, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3.bin",			0x20000, 0xf29c613a, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "4(__bestleag).bin",	0x80000, 0x47f7c9bc, 2 | BRF_GRA },           //  2 Layer tiles
-	{ "5(__bestleag).bin",	0x80000, 0x6a6f499d, 2 | BRF_GRA },           //  3
-	{ "6(__bestleag).bin",	0x80000, 0x0c3d2609, 2 | BRF_GRA },           //  4
-	{ "7(__bestleag).bin",	0x80000, 0xdcece871, 2 | BRF_GRA },           //  5
+	{ "4.bin",			0x80000, 0x47f7c9bc, 2 | BRF_GRA },           //  2 Layer tiles
+	{ "5.bin",			0x80000, 0x6a6f499d, 2 | BRF_GRA },           //  3
+	{ "6.bin",			0x80000, 0x0c3d2609, 2 | BRF_GRA },           //  4
+	{ "7.bin",			0x80000, 0xdcece871, 2 | BRF_GRA },           //  5
 
 	{ "27_27c010.u86",	0x20000, 0xa463422a, 3 | BRF_GRA },           //  6 Sprites
 	{ "28_27c010.u85",	0x20000, 0xebec74ed, 3 | BRF_GRA },           //  7

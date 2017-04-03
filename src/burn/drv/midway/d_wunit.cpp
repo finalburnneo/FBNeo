@@ -767,7 +767,7 @@ static struct BurnRomInfo umk3RomDesc[] = {
 	{ "umk-u111.bin",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "umk-u110.bin",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 	
-	{ "463 MK3 Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_MK3_Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3)
@@ -820,7 +820,7 @@ static struct BurnRomInfo umk3r11RomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u111_video_image.u111",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "mortal_kombat_iii_ultimate_u110_video_image.u110",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 	
-	{ "463 MK3 Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_MK3_Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3r11)
@@ -873,7 +873,7 @@ static struct BurnRomInfo umk3r10RomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u111_video_image.u111",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "mortal_kombat_iii_ultimate_u110_video_image.u110",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 	
-	{ "463 MK3 Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_MK3_Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3r10)

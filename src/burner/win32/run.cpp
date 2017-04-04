@@ -475,9 +475,10 @@ int RunMessageLoop()
 								nOldAudVolume = nAudVolume;
 								TCHAR buffer[60];
 
-								nAudVolume += 100;
 								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									nAudVolume += 900;
+									nAudVolume += 100;
+								} else {
+									nAudVolume += 1000;
 								}
 
 								if (nAudVolume > 10000) {
@@ -496,9 +497,10 @@ int RunMessageLoop()
 							  	nOldAudVolume = nAudVolume;
 								TCHAR buffer[60];
 
-								nAudVolume -= 100;
 								if (GetAsyncKeyState(VK_CONTROL) & 0x80000000) {
-									nAudVolume -= 900;
+									nAudVolume -= 100;
+								} else {
+									nAudVolume -= 1000;
 								}
 
 								if (nAudVolume < 0) {

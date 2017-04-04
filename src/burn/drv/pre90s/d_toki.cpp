@@ -1340,7 +1340,7 @@ static INT32 DrvFrame()
 		}
 
 		// when the line clears, the timer starts counting for the scroll regs to be written!
-		if (i == 250) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == 251) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	}
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);

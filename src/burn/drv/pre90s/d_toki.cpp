@@ -1333,14 +1333,14 @@ static INT32 DrvFrame()
 			nCyclesDone[0] += SekRun(segment - SekTotalCycles());
 		}
 
-		BurnTimerUpdateYM3812(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
 		if (pTransDraw && i >= 16 && i < 240) {
 			DrawByLine(i - 16);
 		}
 
 		// when the line clears, the timer starts counting for the scroll regs to be written!
-		if (i == 251) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave-1) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 	}
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
@@ -1391,7 +1391,7 @@ static INT32 TokibFrame()
 		SekClose();
 
 		ZetOpen(0);
-		BurnTimerUpdateYM3812(i * (nCyclesToDo[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesToDo[1] / nInterleave));
 		MSM5205Update();
 		ZetClose();
 	}

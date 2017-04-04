@@ -1,11 +1,6 @@
 // FB Alpha Taito System-L driver module
 // Based on MAME driver by Oliver Galibert
 
-// to do:
-// verify sprite priorites good
-// verify save states
-// American Horseshoes - set up analog inputs
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_ic.h"

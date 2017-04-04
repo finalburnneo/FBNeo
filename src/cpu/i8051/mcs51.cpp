@@ -322,8 +322,8 @@ struct _mcs51_state_t
 	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
 
 	/* SFR Callbacks */
-	void	(*sfr_write)(INT32 offset, UINT8 data);
-	UINT8	(*sfr_read)(INT32 offset);
+	ALIGN_VAR(8) void	(*sfr_write)(INT32 offset, UINT8 data);
+	ALIGN_VAR(8) UINT8	(*sfr_read)(INT32 offset);
 
 	/* Interrupt Callback */
 	//device_irq_callback irq_callback;

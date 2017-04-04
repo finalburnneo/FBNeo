@@ -31,8 +31,8 @@ typedef struct
 	UINT8	ic_eddge;		/* InputCapture eddge , b.0=fall,b.1=raise */
 
 //	int		(*irq_callback)(int irqline);
-	void	(* const * insn)(void);	/* instruction table */
-	const UINT8 *cycles;			/* clock cycle of instruction table */
+	ALIGN_VAR(8) void	(* const * insn)(void);	/* instruction table */
+	ALIGN_VAR(8) const UINT8 *cycles;			/* clock cycle of instruction table */
 	int 	extra_cycles;	/* cycles used for interrupts */
 	/* internal registers */
 	UINT8	port1_ddr;

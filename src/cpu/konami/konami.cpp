@@ -62,8 +62,8 @@ typedef struct
 	UINT8   int_state;  /* SYNC and CWAI flags */
 	UINT8	nmi_state;
 	int	nTotalCycles;
-	int     (*irq_callback)(int irqline);
-	void 	(*setlines_callback)( int lines ); /* callback called when A16-A23 are set */
+	ALIGN_VAR(8) int     (*irq_callback)(int irqline);
+	ALIGN_VAR(8) void 	(*setlines_callback)( int lines ); /* callback called when A16-A23 are set */
 } konami_Regs;
 
 /* flag bits in the cc register */

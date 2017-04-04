@@ -61,7 +61,7 @@ typedef struct
 	UINT8	cc; 			/* Condition codes */
 
 	UINT16	pending_interrupts; /* MB */
-	int 	(*irq_callback)(int irqline);
+	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);
 	int 	irq_state[9];		/* KW Additional lines for HD63705 */
 	int		nmi_state;
 	int	nTotalCycles;

@@ -104,7 +104,7 @@ typedef struct
 	UINT8	t_flag, timer, timerON, countON, xirq_en, tirq_en;
 	UINT16	A11;
 	UINT8	irq_state, irq_extra_cycles;
-	int		(*irq_callback)(int irqline);
+	ALIGN_VAR(8) int (*irq_callback)(int irqline);
 	int		inst_cycles;
 	UINT8	Old_T1;
 	double total_cycles;

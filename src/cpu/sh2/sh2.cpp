@@ -117,7 +117,7 @@ typedef struct
 	INT32	sh2_icount;
 	int     sh2_total_cycles; // used externally (drivers/etc)
 	
-	int 	(*irq_callback)(int irqline);
+	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);
 
 } SH2;
 
@@ -3470,7 +3470,13 @@ int Sh2Scan(int nAction)
 
 		for (int i = 0; i < 1 /*nCPUCount*/; i++) {
 			szText[5] = '1' + i;
-			ScanVar(& ( Sh2Ext[i].sh2 ), sizeof(SH2) - 4, szText);
+
+			int (*irq_callback)(int irqline);
+			irq_callback = Sh2Ext[i].sh2.irq_callback;
+
+			ScanVar(& ( Sh2Ext[i].sh2 ), sizeof(SH2), szText);
+
+			Sh2Ext[i].sh2.irq_callback = irq_callback;
 			
 			SCAN_VAR (Sh2Ext[i].suspend);
 			SCAN_VAR (Sh2Ext[i].opbase);

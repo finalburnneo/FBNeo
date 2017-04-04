@@ -450,7 +450,7 @@ static struct v60info {
 	Flags flags;
 	UINT8 irq_line;
 	UINT8 nmi_line;
-	int (*irq_cb)(int irqline);
+	ALIGN_VAR(8) int (*irq_cb)(int irqline);
 	UINT32 PPC;
 	UINT32 current_cycles;
 	UINT32 cycles;

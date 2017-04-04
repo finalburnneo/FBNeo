@@ -32,7 +32,7 @@ typedef struct
 	UINT8	ireg;		/* First opcode */
 	UINT8	irq_state[2];
 	int 	extra_cycles; /* cycles used up by interrupts */
-	int 	(*irq_callback)(int irqline);
+	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);
 	UINT8	int_state;	/* SYNC and CWAI flags */
 	UINT8	nmi_state;
 } hd6309_Regs;

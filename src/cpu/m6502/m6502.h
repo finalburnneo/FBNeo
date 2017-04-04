@@ -57,15 +57,15 @@ typedef struct
 	UINT8	irq_state;
 	UINT8   so_state;
 	UINT8   hold_irq;
-	int 	(*irq_callback)(int irqline);	/* IRQ callback */
+	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);	/* IRQ callback */
 //	read8_machine_func rdmem_id;					/* readmem callback for indexed instructions */
 //	write8_machine_func wrmem_id;				/* writemem callback for indexed instructions */
 
 #if (HAS_M6510) || (HAS_M6510T) || (HAS_M8502) || (HAS_M7501)
 	UINT8    ddr;
 	UINT8    port;
-	UINT8	(*port_read)(UINT8 direction);
-	void	(*port_write)(UINT8 direction, UINT8 data);
+	ALIGN_VAR(8) UINT8	(*port_read)(UINT8 direction);
+	ALIGN_VAR(8) void	(*port_write)(UINT8 direction, UINT8 data);
 #endif
 
 }	m6502_Regs;

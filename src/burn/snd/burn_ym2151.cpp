@@ -237,27 +237,8 @@ void BurnYM2151Scan(INT32 nAction)
 	}
 
 	{
-		// A long time ago these variables were mistakenly scanned for the savestates.
-		// Recently it was found that this causes crash situations if the samplerate or
-		// sample size had changed between machines loading the states.
-		// These dummy variables are to prevent the breaking all states for games that use the 2151.
-		double dummyYM2151Volumes[2];
-		INT32 dummyYM2151RouteDirs[2];
-		INT32 dummynBurnYM2151SoundRate;
-		INT32 dummynBurnPosition;
-		UINT32 dummynSampleSize;
-		UINT32 dummynFractionalPosition;
-		UINT32 dummynSamplesRendered;
-
 		SCAN_VAR(nBurnCurrentYM2151Register);
 		SCAN_VAR(BurnYM2151Registers);
-		SCAN_VAR(dummyYM2151Volumes);
-		SCAN_VAR(dummyYM2151RouteDirs);
-		SCAN_VAR(dummynBurnYM2151SoundRate);
-		SCAN_VAR(dummynBurnPosition);
-		SCAN_VAR(dummynSampleSize);
-		SCAN_VAR(dummynFractionalPosition);
-		SCAN_VAR(dummynSamplesRendered);
 	}
 
 	BurnYM2151Scan_int(nAction); // Scan the YM2151's internal registers

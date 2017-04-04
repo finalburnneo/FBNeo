@@ -5,11 +5,13 @@
 #include "burn_sound.h"
 #include "driverlist.h"
 
+#ifndef __LIBRETRO__
 // filler function, used if the application is not printing debug messages
 static INT32 __cdecl BurnbprintfFiller(INT32, TCHAR* , ...) { return 0; }
 // pointer to burner printing function
 #ifndef bprintf
 INT32 (__cdecl *bprintf)(INT32 nStatus, TCHAR* szFormat, ...) = BurnbprintfFiller;
+#endif
 #endif
 
 INT32 nBurnVer = BURN_VERSION;		// Version number of the library
@@ -187,6 +189,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 	if (!(i & DRV_ASCIIONLY)) {
 		switch (i & 0xFF) {
+#ifndef __LIBRETRO__
 			case DRV_FULLNAME:
 				pszStringW = pDriver[nBurnDrvActive]->szFullNameW;
 				
@@ -226,6 +229,7 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 
 				}
 				break;
+#endif // __LIBRETRO__
 			case DRV_COMMENT:
 				pszStringW = pDriver[nBurnDrvActive]->szCommentW;
 				break;

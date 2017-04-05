@@ -106,6 +106,9 @@ static void DisplayFPS()
 	TCHAR fpsstring[8];
 	time_t temptime = clock();
 	double fps = (double)(nFramesRendered - nPreviousFrames) * CLOCKS_PER_SEC / (temptime - fpstimer);
+	if (bAppDoFast) {
+		fps *= nFastSpeed+1;
+	}
 	_sntprintf(fpsstring, 7, _T("%2.2lf"), fps);
 	if (fpstimer && temptime - fpstimer>0) { // avoid strange fps values
 		VidSNewShortMsg(fpsstring, 0xDFDFFF, 480, 0);
@@ -576,6 +579,8 @@ int RunMessageLoop()
 								break;
 							}
 							case VK_F1: {
+								bool bOldAppDoFast = bAppDoFast;
+
 								if (kNetGame) {
 									break;
 								}
@@ -591,6 +596,10 @@ int RunMessageLoop()
 								if ((GetAsyncKeyState(VK_SHIFT) & 0x80000000) && !GetAsyncKeyState(VK_CONTROL)) { // Shift-F1: toggles FFWD state
 									bAppDoFast = !bAppDoFast;
 									bAppDoFasttoggled = bAppDoFast;
+								}
+
+								if (bOldAppDoFast != bAppDoFast) {
+									DisplayFPSInit(); // resync fps display
 								}
 								break;
 							}
@@ -632,11 +641,17 @@ int RunMessageLoop()
 						switch (Msg.wParam) {
 							case VK_MENU:
 								continue;
-							case VK_F1:
+							case VK_F1: {
+								bool bOldAppDoFast = bAppDoFast;
+
 								if (!bAppDoFasttoggled)
 									bAppDoFast = 0;
 								bAppDoFasttoggled = 0;
+								if (bOldAppDoFast != bAppDoFast) {
+									DisplayFPSInit(); // resync fps display
+								}
 								break;
+							}
 						}
 					}
 				}

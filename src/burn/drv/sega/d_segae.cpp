@@ -488,7 +488,7 @@ static INT32 MemIndex()
 	segae_vdp_cram[1]	= Next; Next += 0x20;
 	segae_vdp_regs[1]	= Next; Next += 0x20;
 
-	cache_bitmap		= Next; Next += ( (16+256+16) * 192+17); /* 16 pixels either side to simplify drawing */
+	cache_bitmap		= Next; Next += ( (16+256+16) * 192+17 ) + 0x0f; /* 16 pixels either side to simplify drawing + 0xf for alignment */
 
 	DrvPalette			= (UINT32*)Next; Next += 0x040 * sizeof(UINT32);
 	Palette			    = (UINT32*)Next; Next += 0x040 * sizeof(UINT32);

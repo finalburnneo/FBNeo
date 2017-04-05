@@ -12,13 +12,8 @@
 	Unemulated
 		puzzlet		(h8 main cpu)
 
-	Fix sound for ymf278b games (fixed, overlapping irq's were cauing the fm timer to die)
-	Play test!
-
-	Fix graphics (timing? better - dink)
-		Bang Bang Ball
-		Battle Bubble
-		Lady Killer
+	Broken
+		daitorid, crashes in the blitter after the book opens(attract)
 */
 
 #include "tiles_generic.h"
@@ -5851,7 +5846,7 @@ struct BurnDriver BurnDrvDaitorid = {
 	"daitorid", NULL, NULL, NULL, "1995",
 	"Daitoride\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, daitoridRomInfo, daitoridRomName, NULL, NULL, DaitoridInputInfo, DaitoridDIPInfo,
 	daitoridInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -5880,7 +5875,7 @@ struct BurnDriver BurnDrvDaitorida = {
 	"daitorida", "daitorid", NULL, NULL, "1996",
 	"Daitoride (YMF278B version)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, daitoridaRomInfo, daitoridaRomName, NULL, NULL, DaitoridInputInfo, DaitoridDIPInfo,
 	daitoridaInit, DrvExit, YMF278bFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

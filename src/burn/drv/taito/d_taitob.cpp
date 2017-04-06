@@ -1533,7 +1533,7 @@ static void bankswitch(UINT32, UINT32 data)
 	ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
 }
 
-void __fastcall taitob_sound_write_ym2610(UINT16 a, UINT8 d)
+static void __fastcall taitob_sound_write_ym2610(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
@@ -1558,7 +1558,7 @@ void __fastcall taitob_sound_write_ym2610(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall taitob_sound_read_ym2610(UINT16 a)
+static UINT8 __fastcall taitob_sound_read_ym2610(UINT16 a)
 {
 	switch (a)
 	{
@@ -1575,7 +1575,7 @@ UINT8 __fastcall taitob_sound_read_ym2610(UINT16 a)
 	return 0;
 }
 
-void __fastcall taitob_sound_write_ym2203(UINT16 a, UINT8 d)
+static void __fastcall taitob_sound_write_ym2203(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
@@ -1599,7 +1599,7 @@ void __fastcall taitob_sound_write_ym2203(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall taitob_sound_read_ym2203(UINT16 a)
+static UINT8 __fastcall taitob_sound_read_ym2203(UINT16 a)
 {
 	switch (a)
 	{
@@ -2121,7 +2121,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 //----------------------------------------------------------------------------------------------------------
 // Rastan Saga 2 / Ashura Blaster
 
-UINT8 __fastcall rastsag2_read_byte(UINT32 a)
+static UINT8 __fastcall rastsag2_read_byte(UINT32 a)
 {
 	TC0180VCUHalfWordRead_Map(0x400000)
 	TC0220IOCHalfWordRead_Map(0xa00000)
@@ -2135,7 +2135,7 @@ UINT8 __fastcall rastsag2_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall rastsag2_write_byte(UINT32 a, UINT8 d)
+static void __fastcall rastsag2_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0xa00000)
@@ -2154,7 +2154,7 @@ void __fastcall rastsag2_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall rastsag2_write_word(UINT32 a, UINT16 d)
+static void __fastcall rastsag2_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 }
@@ -2179,7 +2179,7 @@ static void NastarInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Crime City
 
-UINT8 __fastcall crimec_read_byte(UINT32 a)
+static UINT8 __fastcall crimec_read_byte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x200000)
 	TC0180VCUHalfWordRead_Map(0x400000)
@@ -2193,7 +2193,7 @@ UINT8 __fastcall crimec_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall crimec_write_byte(UINT32 a, UINT8 d)
+static void __fastcall crimec_write_byte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x200000)
 	TC0180VCUHalfWordWrite_Map(0x400000)
@@ -2212,7 +2212,7 @@ void __fastcall crimec_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall crimec_write_word(UINT32 a, UINT16 d)
+static void __fastcall crimec_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 }
@@ -2237,7 +2237,7 @@ static void CrimecInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Tetris (ym2610)
 
-UINT8 __fastcall tetrist_read_byte(UINT32 a)
+static UINT8 __fastcall tetrist_read_byte(UINT32 a)
 {
 	TC0180VCUHalfWordRead_Map(0x400000)
 	TC0220IOCHalfWordRead_Map(0x600000)
@@ -2275,7 +2275,7 @@ UINT8 __fastcall tetrist_read_byte(UINT32 a)
 	return 0;
 }
 
-UINT16 __fastcall tetrist_read_word(UINT32 a)
+static UINT16 __fastcall tetrist_read_word(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x600000)
 
@@ -2309,7 +2309,7 @@ UINT16 __fastcall tetrist_read_word(UINT32 a)
 	return 0;
 }
 
-void __fastcall tetrist_write_byte(UINT32 a, UINT8 d)
+static void __fastcall tetrist_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x600000)
@@ -2328,7 +2328,7 @@ void __fastcall tetrist_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall tetrist_write_word(UINT32 a, UINT16 d)
+static void __fastcall tetrist_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x600000)
@@ -2354,7 +2354,7 @@ static void TetristInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Puzzle Bobble / Space Invaders Dx (v2.1)
 
-UINT8 __fastcall pbobble_read_byte(UINT32 a)
+static UINT8 __fastcall pbobble_read_byte(UINT32 a)
 {
 	TC0180VCUHalfWordRead_Map(0x400000)
 
@@ -2394,7 +2394,7 @@ UINT8 __fastcall pbobble_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall pbobble_write_byte(UINT32 a, UINT8 d)
+static void __fastcall pbobble_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x500000)
@@ -2429,7 +2429,7 @@ void __fastcall pbobble_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall pbobble_write_word(UINT32 a, UINT16 d)
+static void __fastcall pbobble_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x500000)
@@ -2455,7 +2455,7 @@ static void PbobbleInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Sel Feena / Ryu Jin
 
-UINT8 __fastcall selfeena_read_byte(UINT32 a)
+static UINT8 __fastcall selfeena_read_byte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x400000)
 	TC0220IOCHalfWordRead_Map(0x410000)
@@ -2473,7 +2473,7 @@ UINT8 __fastcall selfeena_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall selfeena_write_byte(UINT32 a, UINT8 d)
+static void __fastcall selfeena_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x200000)
 	TC0220IOCHalfWordWrite_Map(0x400000)
@@ -2493,7 +2493,7 @@ void __fastcall selfeena_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall selfeena_write_word(UINT32 a, UINT16 d)
+static void __fastcall selfeena_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x200000)
 }
@@ -2518,7 +2518,7 @@ static void SelfeenaInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Sonic Blast Man
 
-UINT8 __fastcall sbm_read_byte(UINT32 a)
+static UINT8 __fastcall sbm_read_byte(UINT32 a)
 {
 	if ((a & 0xffffff0) == 0x300000) a ^= 2;
 	TC0220IOCHalfWordRead_Map(0x300000)
@@ -2533,7 +2533,7 @@ UINT8 __fastcall sbm_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall sbm_write_byte(UINT32 a, UINT8 d)
+static void __fastcall sbm_write_byte(UINT32 a, UINT8 d)
 {
 	if ((a & 0xffffff0) == 0x300000) a ^= 2;
 	TC0220IOCHalfWordWrite_Map(0x300000)
@@ -2553,7 +2553,7 @@ void __fastcall sbm_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall sbm_write_word(UINT32 a, UINT16 d)
+static void __fastcall sbm_write_word(UINT32 a, UINT16 d)
 {
 	if ((a & 0xffffff0) == 0x0300000) a ^= 2;
 	TC0220IOCHalfWordWrite_Map(0x300000)
@@ -2580,7 +2580,7 @@ static void SbmInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Silent Dragon
 
-UINT8 __fastcall silentd_read_byte(UINT32 a)
+static UINT8 __fastcall silentd_read_byte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x200000)
 	TC0180VCUHalfWordRead_Map(0x500000)
@@ -2603,7 +2603,7 @@ UINT8 __fastcall silentd_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall silentd_write_byte(UINT32 a, UINT8 d)
+static void __fastcall silentd_write_byte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x200000)
 	TC0180VCUHalfWordWrite_Map(0x500000)
@@ -2622,7 +2622,7 @@ void __fastcall silentd_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall silentd_write_word(UINT32 a, UINT16 d)
+static void __fastcall silentd_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x500000)
 }
@@ -2647,7 +2647,7 @@ static void SilentdInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Violence Fight
 
-UINT8 __fastcall viofight_read_byte(UINT32 a)
+static UINT8 __fastcall viofight_read_byte(UINT32 a)
 {
 	TC0180VCUHalfWordRead_Map(0x400000)
 	TC0220IOCHalfWordRead_Map(0x800000)
@@ -2661,7 +2661,7 @@ UINT8 __fastcall viofight_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall viofight_write_byte(UINT32 a, UINT8 d)
+static void __fastcall viofight_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x800000)
@@ -2680,7 +2680,7 @@ void __fastcall viofight_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall viofight_write_word(UINT32 a, UINT16 d)
+static void __fastcall viofight_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x800000)
@@ -2710,7 +2710,7 @@ static void ViofightInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Hit the Ice
 
-UINT8 __fastcall hitice_read_byte(UINT32 a)
+static UINT8 __fastcall hitice_read_byte(UINT32 a)
 {
 	TC0180VCUHalfWordRead_Map(0x400000)
 	TC0220IOCHalfWordRead_Map(0x600000)
@@ -2744,7 +2744,7 @@ static void hiticeFramebufferStateload()
 	}
 }
 
-void __fastcall hitice_write_byte(UINT32 a, UINT8 d)
+static void __fastcall hitice_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x600000)
@@ -2769,7 +2769,7 @@ void __fastcall hitice_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall hitice_write_word(UINT32 a, UINT16 d)
+static void __fastcall hitice_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x600000)
@@ -2822,7 +2822,7 @@ static void HiticeInitCallback()
 //----------------------------------------------------------------------------------------------------------
 // Tetris (ym2203)
 
-UINT8 __fastcall tetrista_read_byte(UINT32 a)
+static UINT8 __fastcall tetrista_read_byte(UINT32 a)
 {
 	TC0180VCUHalfWordRead_Map(0x400000)
 
@@ -2843,7 +2843,7 @@ UINT8 __fastcall tetrista_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall tetrista_write_byte(UINT32 a, UINT8 d)
+static void __fastcall tetrista_write_byte(UINT32 a, UINT8 d)
 {
 	TC0180VCUHalfWordWrite_Map(0x400000)
 
@@ -2872,7 +2872,7 @@ void __fastcall tetrista_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall tetrista_write_word(UINT32 a, UINT16 d)
+static void __fastcall tetrista_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 }
@@ -2915,7 +2915,7 @@ static void MasterwInitCallback()
 // Quiz Sekai Wa Show by shobai
 
 
-UINT8 __fastcall qzshowby_read_byte(UINT32 a)
+static UINT8 __fastcall qzshowby_read_byte(UINT32 a)
 {
 	if (a != 0x200002) {
 		TC0220IOCHalfWordRead_Map(0x200000)
@@ -2944,7 +2944,7 @@ UINT8 __fastcall qzshowby_read_byte(UINT32 a)
 	return 0;
 }
 
-void __fastcall qzshowby_write_byte(UINT32 a, UINT8 d)
+static void __fastcall qzshowby_write_byte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x200000)
 	TC0180VCUHalfWordWrite_Map(0x400000)
@@ -2979,7 +2979,7 @@ void __fastcall qzshowby_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall qzshowby_write_word(UINT32 a, UINT16 d)
+static void __fastcall qzshowby_write_word(UINT32 a, UINT16 d)
 {
 	TC0180VCUWordWrite_Map(0x400000)
 	TC0220IOCHalfWordWrite_Map(0x200000)

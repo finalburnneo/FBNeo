@@ -3560,8 +3560,8 @@ INT32 YBoardFrame()
 		nSystem16CyclesDone[nCurrentCPU] += nCyclesSegment;
 		ZetClose();
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && (i % (nInterleaveBoost * 2)) == (nInterleaveBoost * 2) - 1) { // update 131x per frame
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / (nInterleaveBoost * 2));
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 			ZetOpen(0);

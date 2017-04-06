@@ -29,6 +29,8 @@ static INT32 sound_config = 0;
 static INT32 cpu_speed[2];
 static UINT8 nTaitoInputConfig[5] = { 0, 0, 0, 0, 0 };
 
+static INT32 LastScrollX = 0; // hitice
+
 static struct BurnInputInfo CommonInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	TC0220IOCInputPort2 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	TC0220IOCInputPort2 + 6,	"p1 start"	},
@@ -1722,6 +1724,7 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	coin_control = 0;
 	eeprom_latch = 0;
 	TaitoZ80Bank = 0;
+	LastScrollX = 0;
 
 	HiscoreReset();
 
@@ -1921,7 +1924,10 @@ static INT32 DrvExit()
 		MSM6295ROM = NULL;
 	}
 
-	BurnFree (DrvFramebuffer);
+	if (DrvFramebuffer) {
+		BurnFree (DrvFramebuffer);
+		DrvFramebuffer = NULL;
+	}
 
 	memset (nTaitoInputConfig, 0, 5);
 
@@ -1955,13 +1961,13 @@ static void draw_hitice_framebuffer()
 	INT32 scrollx = -((2 * DrvPxlScroll[0] +  0) & 0x3ff);
 	INT32 scrolly = -((1 * DrvPxlScroll[1] + 16) & 0x1ff);
 
-	for (INT32 sy = 0; sy < nScreenHeight; sy++)
+	for (INT32 sy = 0; sy < nScreenHeight-17; sy++)
 	{
-		UINT16 *dst = pTransDraw + sy * nScreenWidth;
-		UINT8  *src = DrvFramebuffer + ((sy + scrolly) & 0x1ff) * 1024;
+		UINT16 *dst = pTransDraw + (sy + 17) * nScreenWidth;
+		UINT8  *src = DrvFramebuffer + ((sy - scrolly) & 0x1ff) * 1024;
 
 		for (INT32 sx = 0; sx < nScreenWidth; sx++) {
-			INT32 pxl = src[(sx + scrollx) & 0x3ff];
+			INT32 pxl = src[(sx - scrollx) & 0x3ff];
 
 			if (pxl) {
 				dst[sx] = pxl | 0x800;
@@ -2062,6 +2068,8 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static void hiticeFramebufferStateload(); // several pages below...
+
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
@@ -2100,6 +2108,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetOpen(0);
 		bankswitch(0, TaitoZ80Bank);
 		ZetClose();
+
+		if (DrvFramebuffer) {
+			hiticeFramebufferStateload();
+		}
 	}
 
 	return 0;
@@ -2706,10 +2718,10 @@ UINT8 __fastcall hitice_read_byte(UINT32 a)
 	switch (a)
 	{
 		case 0x610000:
-			return TC0220IOCInput[4];
+			return TaitoInput[4];
 
 		case 0x610001:
-			return TC0220IOCInput[3];
+			return TaitoInput[3];
 
 		case 0x700002:
 			return TC0140SYTCommRead();
@@ -2723,6 +2735,13 @@ static void hiticeFramebufferUpdate(UINT32 offset)
 	offset &= 0x7fffe;
 	DrvFramebuffer[offset + 0] = DrvPxlRAM[offset];
 	DrvFramebuffer[offset + 1] = DrvPxlRAM[offset];
+}
+
+static void hiticeFramebufferStateload()
+{
+	for (INT32 i = 0; i < 0x80000; i+=2) {
+		hiticeFramebufferUpdate(i);
+	}
 }
 
 void __fastcall hitice_write_byte(UINT32 a, UINT8 d)
@@ -2765,6 +2784,13 @@ void __fastcall hitice_write_word(UINT32 a, UINT16 d)
 	{
 		case 0xbffff2:
 			DrvPxlScroll[0] = d;
+			if ((LastScrollX > d+0x10) || (LastScrollX < d-0x10))
+			{
+				// Clear blitter framebuffer
+				memset (DrvPxlRAM, 0, 0x80000);
+				memset (DrvFramebuffer, 0, 1024 * 512);
+			}
+			LastScrollX = d;
 		return;
 
 		case 0xbffff4:
@@ -3734,7 +3760,7 @@ static INT32 HiticeInit()
 
 struct BurnDriver BurnDrvHitice = {
 	"hitice", NULL, NULL, NULL, "1990",
-	"Hit the Ice (US)\0", "Imperfect graphics", "Taito Corporation (Williams licence)", "Taito B System",
+	"Hit the Ice (US)\0", NULL, "Taito Corporation (Williams licence)", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
 	NULL, hiticeRomInfo, hiticeRomName, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,
@@ -3769,7 +3795,7 @@ STD_ROM_FN(hiticej)
 
 struct BurnDriver BurnDrvHiticej = {
 	"hiticej", "hitice", NULL, NULL, "1990",
-	"Hit the Ice (Japan)\0", "Imperfect graphics", "Taito Corporation (licensed from Midway)", "Taito B System",
+	"Hit the Ice (Japan)\0", NULL, "Taito Corporation (licensed from Midway)", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_SPORTSMISC, 0,
 	NULL, hiticejRomInfo, hiticejRomName, NULL, NULL, HiticeInputInfo, HiticeDIPInfo,

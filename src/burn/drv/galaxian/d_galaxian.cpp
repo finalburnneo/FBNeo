@@ -1738,6 +1738,7 @@ static struct BurnInputInfo StratgyxInputList[] =
 	{"Right"             , BIT_DIGITAL   , GalInputPort0 + 4, "p1 right"  },
 	{"Fire 1"            , BIT_DIGITAL   , GalInputPort0 + 3, "p1 fire 1" },
 	{"Fire 2"            , BIT_DIGITAL   , GalInputPort0 + 1, "p1 fire 2" },
+	{"Fire 3"            , BIT_DIGITAL   , GalInputPort2 + 5, "p1 fire 3" },
 	
 	{"Up (Cocktail)"     , BIT_DIGITAL   , GalInputPort0 + 0, "p2 up"     },
 	{"Down (Cocktail)"   , BIT_DIGITAL   , GalInputPort2 + 0, "p2 down"   },
@@ -1745,6 +1746,7 @@ static struct BurnInputInfo StratgyxInputList[] =
 	{"Right (Cocktail)"  , BIT_DIGITAL   , GalInputPort1 + 4, "p2 right"  },
 	{"Fire 1 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 3, "p2 fire 1" },
 	{"Fire 2 (Cocktail)" , BIT_DIGITAL   , GalInputPort1 + 2, "p2 fire 2" },
+	{"Fire 3 (Cocktail)" , BIT_DIGITAL   , GalInputPort2 + 7, "p2 fire 3" },
 
 	{"Reset"             , BIT_DIGITAL   , &GalReset        , "reset"     },
 	{"Service"           , BIT_DIGITAL   , GalInputPort0 + 2, "service"   },
@@ -5747,7 +5749,7 @@ static struct BurnDIPInfo SpdcoinDIPList[]=
 	
 	{0   , 0xfe, 0   , 2   , "Free Play"              },
 	{0x08, 0x01, 0x02, 0x02, "Off"                    },
-	{0x08, 0x01, 0x02, 0x00, "On"                     },	
+	{0x08, 0x01, 0x02, 0x00, "On"                     },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
@@ -5764,23 +5766,23 @@ STDDIPINFO(Spdcoin)
 static struct BurnDIPInfo StratgyxDIPList[] =
 {
 	// Default Values
-	{0x12, 0xff, 0xff, 0x00, NULL                     },
-	{0x13, 0xff, 0xff, 0x03, NULL                     },
-	{0x14, 0xff, 0xff, 0x08, NULL                     },
+	{0x14, 0xff, 0xff, 0x00, NULL                     },
+	{0x15, 0xff, 0xff, 0x03, NULL                     },
+	{0x16, 0xff, 0xff, 0x08, NULL                     },
 	
 	// Dip 1
 	
 	// Dip 2
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
-	{0x13, 0x01, 0x03, 0x03, "3"                      },
-	{0x13, 0x01, 0x03, 0x02, "4"                      },
-	{0x13, 0x01, 0x03, 0x01, "5"                      },
-	{0x13, 0x01, 0x03, 0x00, "255"                    },
+	{0x15, 0x01, 0x03, 0x03, "3"                      },
+	{0x15, 0x01, 0x03, 0x02, "4"                      },
+	{0x15, 0x01, 0x03, 0x01, "5"                      },
+	{0x15, 0x01, 0x03, 0x00, "255"                    },
 	
 	// Dip 3
 	{0   , 0xfe, 0   , 2   , "Cabinet"                },
-	{0x14, 0x01, 0x08, 0x08, "Upright"                },
-	{0x14, 0x01, 0x08, 0x00, "Cocktail"               },
+	{0x16, 0x01, 0x08, 0x08, "Upright"                },
+	{0x16, 0x01, 0x08, 0x00, "Cocktail"               },
 };
 
 STDDIPINFO(Stratgyx)
@@ -19942,8 +19944,9 @@ void __fastcall StratgyxZ80Write(UINT16 a, UINT8 d)
 			GalIrqFire = d & 1;
 			return;
 		}
-		
-		case 0xb006: {
+
+		case 0xb006:
+		case 0xb008: {
 			// coin_count_0_w
 			return;
 		}
@@ -20424,7 +20427,7 @@ static void MapTazmani2()
 	ZetMapArea(0x8800, 0x88ff, 2, GalSpriteRam);
 	ZetMapArea(0x9000, 0x93ff, 0, GalVideoRam);
 	ZetMapArea(0x9000, 0x93ff, 1, GalVideoRam);
-	ZetMapArea(0x9000, 0x93ff, 2, GalVideoRam);	
+	ZetMapArea(0x9000, 0x93ff, 2, GalVideoRam);
 	ZetClose();
 }
 
@@ -20725,6 +20728,9 @@ static void StratgyxPostLoad()
 	
 	ZetOpen(0);
 	ZetSetWriteHandler(StratgyxZ80Write);
+	ZetMapArea(0x9400, 0x97ff, 0, GalVideoRam);
+	ZetMapArea(0x9400, 0x97ff, 1, GalVideoRam);
+	ZetMapArea(0x9400, 0x97ff, 2, GalVideoRam);
 	ZetClose();
 }
 

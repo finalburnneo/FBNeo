@@ -10287,7 +10287,7 @@ static INT32 krzybowlInit()
 	return DrvInit(krzybowl68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, -1, -1));
 }
 
-struct BurnDriverD BurnDrvKrzybowl = {
+struct BurnDriver BurnDrvKrzybowl = {
 	"krzybowl", NULL, NULL, NULL, "1994",
 	"Krazy Bowl\0", NULL, "American Sammy", "Seta",
 	NULL, NULL, NULL, NULL,
@@ -10489,7 +10489,7 @@ static struct BurnRomInfo downtown2RomDesc[] = {
 STD_ROM_PICK(downtown2)
 STD_ROM_FN(downtown2)
 
-struct BurnDriverD BurnDrvDowntown2 = {
+struct BurnDriver BurnDrvDowntown2 = {
 	"downtown2", "downtown", NULL, NULL, "1989",
 	"DownTown / Mokugeki (Set 2)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
@@ -10559,7 +10559,7 @@ static struct BurnRomInfo downtownpRomDesc[] = {
 STD_ROM_PICK(downtownp)
 STD_ROM_FN(downtownp)
 
-struct BurnDriverD BurnDrvDowntownp = {
+struct BurnDriver BurnDrvDowntownp = {
 	"downtownp", "downtown", NULL, NULL, "1989",
 	"DownTown / Mokugeki (prototype)\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,

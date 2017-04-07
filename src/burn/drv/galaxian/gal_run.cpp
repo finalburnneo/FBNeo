@@ -626,6 +626,10 @@ INT32 GalInit()
 // Moon Cresta Memory Map
 UINT8 __fastcall MooncrstZ80Read(UINT16 a)
 {
+	if (a >= 0x7000 && a <= 0x77ff) {
+		return 0; // nop / unmapped area constantly read/written to by porter / portman
+	}
+
 	switch (a) {
 		case 0xa000: {
 			return GalInput[0] | GalDip[0];
@@ -667,7 +671,11 @@ void __fastcall MooncrstZ80Write(UINT16 a, UINT8 d)
 		
 		return;
 	}
-	
+
+	if (a >= 0x7000 && a <= 0x77ff) {
+		return; // nop / unmapped area constantly written to by porter / portman
+	}
+
 	switch (a) {
 		case 0xa000:
 		case 0xa001:

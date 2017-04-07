@@ -22466,7 +22466,7 @@ UINT8 RacknrolS2650PortRead(UINT16 Port)
 {
 	switch (Port) {
 		case S2650_SENSE_PORT: {
-			return GalVBlank ? 0x80 : 0x00;
+			return GalVBlank ? 0x00 : 0x80;
 		}
 		
 		default: {
@@ -22523,7 +22523,7 @@ UINT8 HexpoolaS2650PortRead(UINT16 Port)
 		}
 		
 		case S2650_SENSE_PORT: {
-			return GalVBlank ? 0x80 : 0x00;
+			return GalVBlank ? 0x00 : 0x80;
 		}
 		
 		default: {

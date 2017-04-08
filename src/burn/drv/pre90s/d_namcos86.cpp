@@ -1284,7 +1284,7 @@ static INT32 DrvROMload()
 
 	return 0;
 }
-
+					   extern int counter;
 static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 {
 	AllMem = NULL;
@@ -1337,10 +1337,8 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 			M6809SetWriteHandler(hopmappy_cpu1_write);
 			M6809Close();
 
-			set_tile_offsets(-3, -2, 5, 3); // skykid
-
-			if (strstr(BurnDrvGetTextA(DRV_NAME), "hopmappy"))
-				set_tile_offsets(4, -2, 5, 3); // hopmappy
+			if (strstr(BurnDrvGetTextA(DRV_NAME), "skykid"))
+				set_tile_offsets(-3, -2, 5, 3); // skykid
 		}
 		break;
 
@@ -1639,16 +1637,16 @@ static INT32 DrvFrame()
 		M6809Open(0);
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 		nSegment = M6809TotalCycles();
-		if (i == 760) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 725) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
 		M6809Open(1);
 		nCyclesDone[1] += M6809Run(nSegment - M6809TotalCycles());
-		if (i == 760) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 725) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
 		nCyclesDone[2] += HD63701Run(nSegment - M6800TotalCycles());
-		if (i == 760) HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 725) HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		if ((i % 8) == 7) {
 			if (pBurnSoundOut) {

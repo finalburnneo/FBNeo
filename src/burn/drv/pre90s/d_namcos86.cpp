@@ -1284,7 +1284,7 @@ static INT32 DrvROMload()
 
 	return 0;
 }
-					   extern int counter;
+
 static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 {
 	AllMem = NULL;

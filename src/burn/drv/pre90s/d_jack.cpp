@@ -107,10 +107,6 @@ static struct BurnInputInfo SucasinoInputList[] = {
 STDINPUTINFO(Sucasino)
 
 static struct BurnInputInfo TripoolInputList[] = {
-	{"Select Game 1", BIT_DIGITAL  , DrvJoy1 + 2,   "Select Game 1"},
-	{"Select Game 2", BIT_DIGITAL,   DrvJoy1 + 3,   "Select Game 2"},
-	{"Select Game 3", BIT_DIGITAL,   DrvJoy1 + 4,   "Select Game 3"},
-
 	{"P1 Coin"      , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
 	{"P1 start"  ,    BIT_DIGITAL  , DrvJoy1 + 0,	"p1 start" },
 	{"P1 Up",	  BIT_DIGITAL,   DrvJoy2 + 0,   "p1 up"    },
@@ -119,6 +115,9 @@ static struct BurnInputInfo TripoolInputList[] = {
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy2 + 3, 	"p1 left"  },
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy3 + 0,	"p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy3 + 1,	"p1 fire 2"},
+	{"Select Game 1", BIT_DIGITAL,   DrvJoy1 + 2,   "p1 fire 3"},
+	{"Select Game 2", BIT_DIGITAL,   DrvJoy1 + 3,   "p1 fire 4"},
+	{"Select Game 3", BIT_DIGITAL,   DrvJoy1 + 4,   "p1 fire 5"},
 
 	{"P2 Coin"      , BIT_DIGITAL  , DrvJoy1 + 5,	"p2 coin"  },
 	{"P2 start"  ,    BIT_DIGITAL  , DrvJoy1 + 1,	"p2 start" },
@@ -1273,21 +1272,12 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 
-		//if (joinem)
-			//if (i == (nInterleave / 3) || i == ((nInterleave / 3) * 2))
 		if (joinem && (i % 249) == 0)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // game speed (joinem, uncle poo)
 
-		if (tri_fix && i == (nInterleave / 2)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
-		if (i == (nInterleave - 1)) // vblank
-		{
-			if (joinem) {					// joinem, uncle poo
-				if (joinem_nmi_enable)
-					ZetNmi();
-			} else if (loverb) {				// loverboy
+		if (i == (nInterleave - 1)) { // vblank
+			if ((joinem && joinem_nmi_enable) || (loverb)) { // joinem, uncle poo, loverboy
 				ZetNmi();
-
 			} else {					// other
 				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
@@ -1305,8 +1295,8 @@ static INT32 DrvFrame()
 		ZetClose();
 		
 		// Render Sound Segment
-		if (pBurnSoundOut && !suprtriv) {	// disable sound for suprtriv
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && (i%8) == 7 && !suprtriv) {	// disable sound for suprtriv
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
 			nSoundBufferPos += nSegmentLength;
@@ -1773,7 +1763,7 @@ STD_ROM_FN(tripool)
 static INT32 tripoolInit()
 {
 	tri_fix = 1;
-	timer_rate = 128;
+	timer_rate = 256;
 
 	return DrvInit();
 }

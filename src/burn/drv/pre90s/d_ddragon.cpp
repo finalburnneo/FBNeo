@@ -1077,6 +1077,7 @@ UINT8 DrvDdragonHD6309ReadByte(UINT16 Address)
 			return DrvDip[1];
 		}
 		
+		case 0x380a:
 		case 0x380b: {
 			// ???
 			return 0;

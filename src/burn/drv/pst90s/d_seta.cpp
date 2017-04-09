@@ -14,8 +14,6 @@
 
 /*
 	To do:
-		hookup m65c02 to usclassic
-		usclassc, krazybowl need analog inputs hooked up...
 		flipscreen support
 		jockeyc needs work...
 */
@@ -76,6 +74,7 @@ static INT32 ColorOffsets[3] = { 0, 0, 0 };
 static INT32 ColorDepths[3];
 static INT32 twineagle = 0;
 static INT32 daiohc = 0; // lazy fix - disable writes to alternate scroll write offsets
+static INT32 usclssic = 0;
 static INT32 oisipuzl_hack = 0; // 32px sprite offset
 static INT32 refresh_rate = 6000;
 
@@ -106,8 +105,8 @@ static UINT8 DrvDips[7];
 static UINT16 DrvInputs[7];
 static UINT8 DrvReset;
 
-// trackball stuff for Krazy Bowl (maybe usclssic)
-static INT32 krzybowlmode = 0;
+// trackball stuff for Krazy Bowl & usclssic
+static INT32 trackball_mode = 0;
 static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static UINT32 track_x = 0;
@@ -4374,34 +4373,52 @@ static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-static UINT16 ananice(UINT16 anaval)
+static UINT16 ananice(INT16 anaval)
 {
-	UINT8 Temp = 0x7f - (anaval >> 4);
+	if (anaval > 1024) anaval = 1024;
+	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion
+	UINT8 Temp = 0x7f - (anaval >> 4); // convert to INT8, but store in UINT8
 	if (Temp < 0x01) Temp = 0x01;
 	if (Temp > 0xfe) Temp = 0xfe;
 	UINT16 pad = scalerange_skns(Temp, 0x3f, 0xc0, 0x01, 0xff);
 	if (pad > 0xff) pad = 0xff;
-	if (pad > 0x75 && pad < 0x85) pad = 0x7f;
+	if (pad > 0x75 && pad < 0x85) pad = 0x7f; // dead zone
 	return pad;
 }
 
-static void krzybowl_input_tick()
+static void trackball_input_tick() // krzybowl, usclssic
 {
 	INT32 padx = ananice(DrvAnalogPort0) - 0x7f;
-	track_x += padx;
-	if (padx) track_x_last = padx;
-	/*if (!padx) { // enable for deceleration code, doesn't work good in this game.
-		if (nCurrentFrame & 4) track_x_last /= 2;
-		track_x += track_x_last;
-	}*/
+
+	if (usclssic) {
+		padx /= 16;
+		track_x -= padx;
+		if (padx) track_x_last = padx;
+		if (!padx) {
+			//if (nCurrentFrame & 4) track_x_last /= 4; // deceleration code, save for later
+			//track_x += track_x_last;
+			//if (track_x_last == 0) track_x = 0;
+			track_x = 0; track_x_last = 0; // PORT_RESET
+		}
+	} else { // krzybowl
+		track_x += padx;
+	}
 
 	INT32 pady = ananice(DrvAnalogPort1) - 0x7f;
-	track_y += pady;
-	if (pady) track_y_last = pady;
-	/*if (!pady) {
-		if (nCurrentFrame & 4) track_y_last /= 2;
-		track_y += track_y_last;
-	}*/
+
+	if (usclssic) {
+		pady /= 16;
+		track_y -= pady;
+		if (pady) track_y_last = pady;
+		if (!pady) {
+			//if (nCurrentFrame & 4) track_y_last /= 4;
+			//track_y += track_y_last;
+			//if (track_y_last == 0) track_y = 0;
+			track_y = 0; track_y_last = 0; // PORT_RESET
+		}
+	} else { // krzybowl
+		track_y += pady;
+	}
 }
 
 static UINT16 krzybowl_input_read(INT32 offset)
@@ -5011,6 +5028,9 @@ void __fastcall usclssic_write_word(UINT32 address, UINT16 data)
 
 		case 0xb40010:
 			soundlatch = data;
+
+			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+			SekRunEnd();
 		return;
 
 		case 0xb40018:
@@ -5032,9 +5052,11 @@ void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
 			// coin lockout too...
 		return;
 
-		case 0xb40010:
+		//case 0xb40010:
 		case 0xb40011:
 			soundlatch = data;
+			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+			SekRunEnd();
 		return;
 
 		case 0xb40018:
@@ -5047,8 +5069,8 @@ void __fastcall usclssic_write_byte(UINT32 address, UINT8 data)
 static UINT8 uclssic_trackball_read(INT32 offset)
 {
 	UINT16 start_vals[2] = { 0xf000, 0x9000 };
-	start_vals[0] = track_x;
-	start_vals[1] = track_y;
+	start_vals[0] |= track_x&0xfff;
+	start_vals[1] |= track_y&0xfff;
 
 	UINT16 ret = DrvInputs[1 + ((offset & 4)/4) + (usclssic_port_select * 2)] ^ start_vals[(offset / 4) & 1];
 
@@ -5068,7 +5090,7 @@ UINT16 __fastcall usclssic_read_word(UINT32 address)
 			return uclssic_trackball_read(address);
 
 		case 0xb40010:
-			return DrvInputs[0] ^ 0xf0;
+			return (DrvInputs[0] ^ 0xf0) | 0x0f;
 
 		case 0xb40018:
 			return DrvDips[1] & 0x0f;
@@ -5100,9 +5122,9 @@ UINT8 __fastcall usclssic_read_byte(UINT32 address)
 		case 0xb40007:
 			return uclssic_trackball_read(address);
 
-		case 0xb40010:
+		//case 0xb40010:
 		case 0xb40011:
-			return DrvInputs[0] ^ 0xf0;
+			return (DrvInputs[0] ^ 0xf0) | 0x0f;
 
 		case 0xb40018:
 		case 0xb40019:
@@ -6551,26 +6573,6 @@ static void crazyfgt68kInit()
 	BlandiaGfxRearrange(); // fix bg tiles
 }
 
-static void usclssic68kInit()
-{
-	SekInit(0, 0x68000);
-	SekOpen(0);
-	SekMapMemory(Drv68KROM, 		0x000000, 0x07ffff, MAP_ROM);
-	SekMapMemory(DrvSprRAM0,		0x800000, 0x800607 | 0x7ff, MAP_RAM);
-	SekMapMemory(DrvPalRAM,			0xb00000, 0xb003ff, MAP_RAM);
-	SekMapMemory(DrvSprRAM1,		0xc00000, 0xc03fff, MAP_RAM);
-	SekMapMemory(DrvVidRAM0,		0xd00000, 0xd04fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM2,		0xe00000, 0xe00fff, MAP_RAM);
-	SekMapMemory(Drv68KRAM,			0xff0000, 0xffffff, MAP_RAM);
-	SekSetWriteWordHandler(0,		usclssic_write_word);
-	SekSetWriteByteHandler(0,		usclssic_write_byte);
-	SekSetReadWordHandler(0,		usclssic_read_word);
-	SekSetReadByteHandler(0,		usclssic_read_byte);
-	SekClose();
-
-	// m65c02 sound...
-}
-
 static void calibr50_sub_write(UINT16 address, UINT8 data)
 {
 	if (address <= 0x1fff) { // x1_010
@@ -6643,7 +6645,38 @@ static void calibr5068kInit()
 
 	RotateSetGunPosRAM(Drv68KRAM + (0x2503-1), Drv68KRAM + (0x2527-1), 2);
 	game_rotates = 1;
+}
 
+static void usclssic68kInit()
+{
+	SekInit(0, 0x68000);
+	SekOpen(0);
+	SekMapMemory(Drv68KROM, 		0x000000, 0x07ffff, MAP_ROM);
+	SekMapMemory(DrvSprRAM0,		0x800000, 0x800607 | 0x7ff, MAP_RAM);
+	SekMapMemory(DrvPalRAM,			0xb00000, 0xb003ff, MAP_RAM);
+	SekMapMemory(DrvSprRAM1,		0xc00000, 0xc03fff, MAP_RAM);
+	SekMapMemory(DrvVidRAM0,		0xd00000, 0xd04fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM2,		0xe00000, 0xe00fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,			0xff0000, 0xffffff, MAP_RAM);
+	SekSetWriteWordHandler(0,		usclssic_write_word);
+	SekSetWriteByteHandler(0,		usclssic_write_byte);
+	SekSetReadWordHandler(0,		usclssic_read_word);
+	SekSetReadByteHandler(0,		usclssic_read_byte);
+	SekClose();
+
+	// m65c02 sound...
+	M6502Init(0, TYPE_M65C02);
+	M6502Open(0);
+	M6502MapMemory(DrvSubROM,	        0xC000, 0xffff, MAP_ROM);
+	M6502MapMemory(DrvSubROM + 0x4000,	0x8000, 0xbfff, MAP_ROM);
+	BurnLoadRom(DrvSubROM + 0x4000, 4, 1);
+	BurnLoadRom(DrvSubROM + 0xc000, 4, 1);
+	M6502SetWriteHandler(calibr50_sub_write);
+	M6502SetReadHandler(calibr50_sub_read);
+	M6502SetWriteMemIndexHandler(calibr50_sub_write);
+	M6502SetReadMemIndexHandler(calibr50_sub_read);
+	M6502Close();
+	m65c02_mode = 1;
 }
 
 //-----------------------------------------------------------------------------------------------------------------------------------
@@ -7013,13 +7046,14 @@ static void usclssicSetColorTable()
 	memcpy (DrvColPROM + 0x600, DrvColPROM + 0x000, 0x200);
 //	memcpy (DrvColPROM + 0x200, DrvColPROM + 0x200, 0x200);
 
-	for (INT32 color = 0; color < 0x200; color++) {
+	for (INT32 color = 0; color < BurnDrvGetPaletteEntries(); color++) {
 		Palette[color] = color;
 	}
 
 	for (INT32 color = 0; color < 0x20; color++) {
 		for (INT32 pen = 0; pen < 0x40; pen++) {
-			Palette[0x200 + ((color << 6) | pen)] = 0x200 + (((color << 4) + pen) & 0x1ff);
+			Palette[0x200 + ((color << 6) | pen)] = 0x200 + ((((color & ~3) << 4) + pen) & 0x1ff);
+			Palette[0xA00 + ((color << 6) | pen)] = 0x200 + ((((color & ~3) << 4) + pen) & 0x1ff);
 		}
 	}
 }
@@ -7064,7 +7098,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	irqtype = irq_type;
 	buffer_sprites = spr_buffer;
 
-	if (strstr(BurnDrvGetTextA(DRV_NAME), "calibr50")) {
+	if ((strstr(BurnDrvGetTextA(DRV_NAME), "calibr50")) || (strstr(BurnDrvGetTextA(DRV_NAME), "usclssic"))) {
 		x1010_sound_init(16000000, 0x1000);
 	} else {
 		x1010_sound_init(16000000, 0x0000);
@@ -7155,7 +7189,8 @@ static INT32 DrvExit()
 	refresh_rate = 6000;
 	game_rotates = 0;
 	has_2203 = 0;
-	krzybowlmode = 0;
+	trackball_mode = 0;
+	usclssic = 0;
 
 	BurnFree (DrvGfxTransMask[0]);
 	BurnFree (DrvGfxTransMask[2]);
@@ -7163,8 +7198,6 @@ static INT32 DrvExit()
 
 	return 0;
 }
-
-// usclssic needs color  set up...
 
 static inline void DrvColors(INT32 i, INT32 pal)
 {
@@ -7183,11 +7216,9 @@ static void DrvPaletteRecalc()
 {
 	UINT16 *p  = (UINT16*)DrvPalRAM;
 
-	if (DrvROMLen[4]) { // color prom
-		if (DrvROMLen[4] > 1) { // usclassic
-			memcpy (DrvColPROM + 0x400, DrvPalRAM, 0x200);
-			memcpy (DrvColPROM + 0x000, DrvPalRAM, 0x200);
-		}
+	if (DrvROMLen[4] && DrvROMLen[4] > 1) { // usclassic color prom
+		memcpy (DrvColPROM + 0x400, DrvPalRAM, 0x200);
+		memcpy (DrvColPROM + 0x000, DrvPalRAM + 0x200, 0x200);
 		p = (UINT16*)DrvColPROM;
 	}
 
@@ -7637,6 +7668,8 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 			SuperJoy2Rotate();
 		}
 
+		if (trackball_mode) trackball_input_tick();
+
 		BurnGunMakeInputs(0, (INT16)DrvAxis[0], (INT16)DrvAxis[1]);	// zombraid
 		BurnGunMakeInputs(1, (INT16)DrvAxis[2], (INT16)DrvAxis[3]);
 		
@@ -7721,7 +7754,6 @@ static void Drv68kNoSubFrameCallback()
 
 static INT32 DrvFrame()
 {
-	if (krzybowlmode) krzybowl_input_tick();
 	return DrvCommonFrame(Drv68kNoSubFrameCallback);
 }
 
@@ -7747,34 +7779,15 @@ static void Drv68k_Calibr50_FrameCallback()
 		if ((i%64) == 63) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
-		if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (usclssic) {
+			if (i == 240) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		} else {// calibr50
+			if ((i%64) == 63) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		}
 	}
 
 	SekClose();
 	M6502Close();
-
-	if (pBurnSoundOut) {
-		x1010_sound_update();
-	}
-}
-
-static void Drv68k_5IRQ_FrameCallback()
-{
-	INT32 nInterleave = 10;
-	INT32 nCyclesTotal[1] = { (cpuspeed * 100) / refresh_rate };
-	INT32 nCyclesDone[1]  = { 0 };
-
-	SekOpen(0);
-
-	for (INT32 i = 0; i < nInterleave; i++)
-	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-
-		if (i & 1 && i == 1) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-		if (i & 1 && i != 1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	}
-
-	SekClose();
 
 	if (pBurnSoundOut) {
 		x1010_sound_update();
@@ -7919,12 +7932,6 @@ static INT32 DrvDowntownFrame()
 static INT32 DrvTndrcadeFrame()
 {
 	return DrvCommonFrame(Drv68k_Tndrcade_FrameCallback);
-}
-
-static INT32 Drv5IRQFrame()
-{
-	if (krzybowlmode) krzybowl_input_tick();
-	return DrvCommonFrame(Drv68k_5IRQ_FrameCallback);
 }
 
 static void Drv68kNoSubM6295FrameCallback()
@@ -8098,6 +8105,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(gun_input_src);
 		SCAN_VAR(m65c02_bank);
 		SCAN_VAR(sub_ctrl_data);
+		SCAN_VAR(flipflop);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -10282,9 +10290,13 @@ static INT32 krzybowlInit()
 {
 	DrvSetVideoOffsets(0, 0, 0, 0);
 	DrvSetColorOffsets(0, 0, 0);
-	krzybowlmode = 1;
+	trackball_mode = 1;
 
-	return DrvInit(krzybowl68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, -1, -1));
+	INT32 rc = DrvInit(krzybowl68kInit, 16000000, SET_IRQLINES(1, 2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, -1, -1));
+
+	VideoOffsets[2][0] = 8;
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvKrzybowl = {
@@ -10294,7 +10306,7 @@ struct BurnDriver BurnDrvKrzybowl = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SPORTSMISC, 0,
 	NULL, krzybowlRomInfo, krzybowlRomName, NULL, NULL, KrzybowlInputInfo, KrzybowlDIPInfo,
 	krzybowlInit, DrvExit, DrvFrame, setaNoLayersDraw, DrvScan, &DrvRecalc, 0x200,
-	240, 320, 3, 4
+	232, 320, 3, 4
 };
 
 
@@ -10873,7 +10885,8 @@ static INT32 usclssicInit()
 	watchdog_enable = 1;
 	DrvSetColorOffsets(0, 0x200, 0);
 	DrvSetVideoOffsets(1, 2, 0, -1);
-	krzybowlmode = 1; // for trackball
+	trackball_mode = 1; // for trackball
+	usclssic = 1;
 
 	INT32 nRet = DrvInit(usclssic68kInit, 8000000, SET_IRQLINES(0x80, 0x80) /*custom*/, NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 4, -1));
 
@@ -10884,13 +10897,13 @@ static INT32 usclssicInit()
 	return nRet;
 }
 
-struct BurnDriverD BurnDrvUsclssic = {
+struct BurnDriver BurnDrvUsclssic = {
 	"usclssic", NULL, NULL, NULL, "1989",
-	"U.S. Classic\0", "No sound, imperfect inputs", "Seta", "Seta",
+	"U.S. Classic\0", NULL, "Seta", "Seta",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SETA1, GBF_SPORTSMISC, 0,
 	NULL, usclssicRomInfo, usclssicRomName, NULL, NULL, UsclssicInputInfo, UsclssicDIPInfo,
-	usclssicInit, DrvExit, Drv5IRQFrame, seta1layerDraw, DrvScan, &DrvRecalc, 0xa00,
+	usclssicInit, DrvExit, DrvCalibr50Frame, seta1layerDraw, DrvScan, &DrvRecalc, 0x1200,
 	240, 384, 3, 4
 };
 

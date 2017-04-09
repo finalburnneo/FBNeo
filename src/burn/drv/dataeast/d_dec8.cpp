@@ -1833,6 +1833,52 @@ struct BurnDriver BurnDrvGhostb2a = {
 	256, 240, 4, 3
 };
 
+// The Real Ghostbusters (US 2 Players) from caius
+
+static struct BurnRomInfo ghostb2bRomDesc[] = {
+	{ "dz01.1d",		0x08000, 0x1b16890e, 1 }, //  0 maincpu
+	{ "dz02.3d",		0x10000, 0x8e117541, 1 }, //  1
+	{ "dz03.4d",		0x10000, 0x5606a8f4, 1 }, //  2
+	{ "dz04.6d",		0x10000, 0x490b4525, 1 }, //  3
+	{ "dz05.7d",		0x10000, 0xb4971d33, 1 }, //  4
+
+	{ "dz06.5f",		0x08000, 0x798f56df, 2 }, //  5 audiocpu
+
+	{ "dz00.16b",		0x08000, 0x992b4f31, 3 }, //  6 gfx1
+
+	{ "dz15.14f",		0x10000, 0xa01a5fd9, 4 }, //  7 gfx2
+	{ "dz16.15f",		0x10000, 0x5a9a344a, 4 }, //  8
+	{ "dz12.9f",		0x10000, 0x817fae99, 4 }, //  9
+	{ "dz14.12f",		0x10000, 0x0abbf76d, 4 }, // 10
+	{ "dz11.8f",		0x10000, 0xa5e19c24, 4 }, // 11
+	{ "dz13.1f",		0x10000, 0x3e7c0405, 4 }, // 12
+	{ "dz17.17f",		0x10000, 0x40361b8b, 4 }, // 13
+	{ "dz18.18f",		0x10000, 0x8d219489, 4 }, // 14
+
+	{ "dz07.12f",		0x10000, 0xe7455167, 5 }, // 15 gfx3
+	{ "dz08.14f",		0x10000, 0x32f9ddfe, 5 }, // 16
+	{ "dz09.15f",		0x10000, 0xbb6efc02, 5 }, // 17
+	{ "dz10.17f",		0x10000, 0x6ef9963b, 5 }, // 18
+
+	{ "dz19a.10d",		0x00400, 0x47e1f83b, 6 }, // 19 proms
+	{ "dz20a.11d",		0x00400, 0xd8fe2d99, 6 }, // 20
+
+	{ "dz.1b",         	0x01000, 0x18b7e1e6, 7 }, // 21 mcu
+};
+
+STD_ROM_PICK(ghostb2b)
+STD_ROM_FN(ghostb2b)
+
+struct BurnDriverD BurnDrvGhostb2b = {    // needs i8751 MCU hooked up
+	"ghostb2b", "ghostb", NULL, NULL, "1987",
+	"The Real Ghostbusters (US 2 Players, Alternate?)\0", NULL, "Data East USA", "DEC8",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, ghostb2bRomInfo, ghostb2bRomName, NULL, NULL, GhostbInputInfo, GhostbDIPInfo,
+	DrvInit, GhostbExit, DrvFrame, DrvDraw, GhostbScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
+
 
 // The Real Ghostbusters (US 3 Players)
 

@@ -1393,7 +1393,7 @@ static INT32 BladeDrvInit()
 
 struct BurnDriver BurnDrvAsurabld = {
 	"asurabld", NULL, NULL, NULL, "1998",
-	"Asura Blade - Sword of Dynasty (Japan)\0", "Imperfect GFX", "Fuuki", "FG-3",
+	"Asura Blade - Sword of Dynasty (Japan)\0", NULL, "Fuuki", "FG-3",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, asurabldRomInfo, asurabldRomName, NULL, NULL, AsurabldInputInfo, AsurabldDIPInfo,

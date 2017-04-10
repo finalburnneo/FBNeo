@@ -95,6 +95,14 @@ static void TrackReset()
 	track_y_last = 0;
 }
 
+static UINT8 ananice(INT16 anaval)
+{
+	if (anaval > 1024) anaval = 1024;
+	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion (mouse)
+
+	return (anaval >> 4) & 0xff;
+}
+
 static UINT8 ProcessTrack(UINT8 pad)
 {
 	if ((pad & 0xf0) == 0xf0 || pad < 0x10) pad = 0;
@@ -106,7 +114,7 @@ static UINT8 ProcessTrack(UINT8 pad)
 
 static UINT8 TrackY()
 {
-	UINT8 pad = (DrvAnalogPort1 >> 4);
+	UINT8 pad = ananice(DrvAnalogPort1);
 
 	pad = ProcessTrack(0xff - pad) & 0xf; // reversed
 	if (pad) track_y_last = pad;
@@ -116,7 +124,7 @@ static UINT8 TrackY()
 
 static UINT8 TrackX()
 {
-	UINT8 pad = (DrvAnalogPort0 >> 4);
+	UINT8 pad = ananice(DrvAnalogPort0);
 
 	pad = ProcessTrack(pad) & 0xf;
 	if (pad) track_x_last = pad;

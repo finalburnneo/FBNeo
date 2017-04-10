@@ -489,6 +489,8 @@ static INT32 DrvFrame()
 		DrvInputs[2] = (DrvInputs[2] & 0x80) | (DrvDips[0] & 0x7f);
 	}
 
+	ZetNewFrame();
+
 	INT32 nSegment;
 	INT32 nInterleave = 256;
 	INT32 nTotalCycles[2] = { (18432000 / 8) / 60, (18432000 / 8) / 60 };
@@ -496,14 +498,14 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
-
 		ZetOpen(0);
+		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
 		nCyclesDone[0] += ZetRun(nSegment);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
+		nSegment = (nTotalCycles[1] - nCyclesDone[1]) / (nInterleave - i);
 		nCyclesDone[1] += ZetRun(nSegment);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();

@@ -103,8 +103,6 @@ static void set_oki_bank(INT32 data)
 {
 	*DrvOkiBank = data;
 	memcpy (MSM6295ROM, DrvSndROM + (data << 12), 0x40000);
-
-bprintf (PRINT_NORMAL, _T("%2.2x\n"), data);
 }
 
 void __fastcall pirates_write_byte(UINT32 address, UINT8 data)
@@ -121,8 +119,6 @@ void __fastcall pirates_write_byte(UINT32 address, UINT8 data)
 		palette_write(address & 0x3ffe);
 		return;
 	}
-
-//bprintf (PRINT_NORMAL, _T("%5.5x, %2.2x\n"), address, data);
 
 	switch (address)
 	{
@@ -154,8 +150,6 @@ void __fastcall pirates_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-//bprintf (PRINT_NORMAL, _T("%5.5x, %4.4x\n"), address, data);
-
 	switch (address)
 	{
 		case 0x600000:
@@ -176,8 +170,6 @@ void __fastcall pirates_write_word(UINT32 address, UINT16 data)
 UINT8 __fastcall pirates_read_byte(UINT32 address)
 {
 	genix_hack();
-//bprintf (PRINT_NORMAL, _T("%5.5x, b\n"), address);
-
 
 	switch (address)
 	{
@@ -199,7 +191,6 @@ UINT8 __fastcall pirates_read_byte(UINT32 address)
 UINT16 __fastcall pirates_read_word(UINT32 address)
 {
 	genix_hack();
-//bprintf (PRINT_NORMAL, _T("%5.5x, w\n"), address);
 
 	switch (address)
 	{
@@ -413,8 +404,8 @@ static INT32 DrvInit()
 	SekSetReadWordHandler(0,	 pirates_read_word);
 	SekClose();
 
-	MSM6295Init(0, 1333333 / (132 + 39), 0); // otherwise too fast!
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295Init(0, 1333333 / MSM6295_PIN7_LOW, 0);
+	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -536,7 +527,7 @@ static INT32 DrvDraw()
 	if (nBurnLayer & 1)
 		draw_layer(0x2a80, 0x100, 0);
 	else
-		memset (pTransDraw, 0, nScreenWidth * nScreenHeight * 2);
+		BurnTransferClear();
 
 	if (nBurnLayer & 2) draw_layer(0x1380, 0x080, 1);
 
@@ -598,7 +589,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -606,7 +597,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029698;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {	
+	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -621,7 +612,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		MSM6295Scan(0, nAction);
 	}
 
-	set_oki_bank(*DrvOkiBank);
+	if (nAction & ACB_WRITE) {
+		set_oki_bank(*DrvOkiBank);
+	}
 
 	return 0;
 }

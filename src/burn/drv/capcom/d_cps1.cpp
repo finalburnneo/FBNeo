@@ -13088,6 +13088,27 @@ static struct BurnRomInfo WofsjbRomDesc[] = {
 STD_ROM_PICK(Wofsjb)
 STD_ROM_FN(Wofsjb)
 
+static struct BurnRomInfo WofsjcRomDesc[] = {
+	{ "2223.bin",      0x100000, 0xcb28807e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	{ "1.bin",         0x080000, 0x0d9cb9bf, BRF_GRA | CPS1_TILES },
+	{ "2.bin",         0x080000, 0x45227027, BRF_GRA | CPS1_TILES },
+	{ "3.bin",         0x080000, 0xc5ca2460, BRF_GRA | CPS1_TILES },
+	{ "4.bin",         0x080000, 0xe349551c, BRF_GRA | CPS1_TILES },
+	{ "5.bin",         0x080000, 0x291f0f0b, BRF_GRA | CPS1_TILES },
+	{ "6.bin",         0x080000, 0x3edeb949, BRF_GRA | CPS1_TILES },
+	{ "7.bin",         0x080000, 0x1abd14d6, BRF_GRA | CPS1_TILES },
+	{ "9.bin",         0x080000, 0xb27948e3, BRF_GRA | CPS1_TILES },
+	
+	{ "9.bin",         0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "18.bin",        0x020000, 0xc04be720, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "19.bin",        0x020000, 0xfbb8d8c1, BRF_SND | CPS1_OKIM6295_SAMPLES },
+};
+
+STD_ROM_PICK(Wofsjc)
+STD_ROM_FN(Wofsjc)
+
 static struct BurnRomInfo WofbRomDesc[] = {
 	{ "3-f2ab.040",    0x080000, 0x61fd0a01, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "1-9207.040",    0x080000, 0x7f59e24c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -13523,6 +13544,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "wofsj"       , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsja"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofsjb"      , CPS_B_21_DEF, mapper_TK263B, 0, NULL                },
+	{ "wofsjc"      , HACK_B_6    , mapper_TK263B, 0, NULL                },
 	{ "wofb"        , CPS_B_21_DEF, mapper_TK263B, 0, NULL                }, // game controls layers at 0x98000c
 	{ "wofjh"       , CPS_B_21_QS1, mapper_TK263B, 0, wof_decode          },
 	{ "wofah"       , CPS_B_21_DEF, mapper_TK263B, 0, wof_decode          },
@@ -20451,6 +20473,16 @@ struct BurnDriver BurnDrvCpsWofsjb = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, WofsjbRomInfo, WofsjbRomName, NULL, NULL, WofsjbInputInfo, NULL,
 	WofsjbInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsWofsjc = {
+	"wofsjc", "wof", NULL, NULL, "1992",
+	"Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 2, 921005 Asia)\0", NULL, "bootleg", "CPS1",
+	L"\u4E09\u56FD\u5FD7 II: \u5723\u5251\u4E09\0Sangokushi II: Sheng Jian Sanguo (Chinese bootleg set 4, 921005 Asia)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, WofsjcRomInfo, WofsjcRomName, NULL, NULL, WofhInputInfo, Wof3sjDIPInfo,
+	WofsjInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

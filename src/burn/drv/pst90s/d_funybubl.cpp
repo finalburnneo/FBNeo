@@ -37,7 +37,7 @@ static UINT8 DrvRecalc;
 static UINT8 soundlatch;
 static INT32 nDrvRomBank;
 static INT32 nDrvVidRAMBank;
-static INT32 	     nDrvOkiBank;
+static INT32 nDrvOkiBank;
 
 static struct BurnInputInfo FunybublInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -172,7 +172,7 @@ static void funybubl_set_oki_bank(INT32 data)
 {
 	nDrvOkiBank = data & 1;
 
-	MSM6295ROM = DrvSndROM + nDrvOkiBank * 0x40000;
+	MSM6295SetBank(0, DrvSndROM + (nDrvOkiBank * 0x40000), 0x00000, 0x3ffff);
 }
 
 void __fastcall funybubl_out(UINT16 port, UINT8 data)
@@ -275,7 +275,6 @@ static INT32 MemIndex()
 	DrvZ80ROM0	= Next; Next += 0x040000;
 	DrvZ80ROM1	= Next; Next += 0x008000;
 
-	MSM6295ROM 	= Next;
 	DrvSndROM	= Next; Next += 0x080000;
 
 	DrvGfxROM0	= Next; Next += 0x200000;
@@ -396,8 +395,6 @@ static INT32 DrvExit()
 
 	BurnFree (AllMem);
 
-	MSM6295ROM = NULL;
-
 	return 0;
 }
 
@@ -509,7 +506,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -517,7 +514,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029697;
 	}
 
-	if (nAction & ACB_MEMORY_RAM) {	
+	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -539,8 +536,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_WRITE) {
 		funybubl_set_oki_bank(nDrvOkiBank);
+		ZetOpen(0);
 		funybubl_set_rom_bank(nDrvRomBank);
 		funybubl_set_vidram_bank(nDrvVidRAMBank);
+		ZetClose();
 	}
 
 	return 0;

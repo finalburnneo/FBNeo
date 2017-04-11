@@ -55,9 +55,7 @@ static UINT8 flipscreen;
 static UINT8 DrvEnableNmi;
 
 static struct BurnInputInfo RygarInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy5 + 3,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy5 + 2,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL , DrvJoy5 + 3,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy5 + 1,	"p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 1, 	"p1 right" },
@@ -66,6 +64,7 @@ static struct BurnInputInfo RygarInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 1,	"p1 fire 2"},
 
+	{"P2 Coin"       , BIT_DIGITAL , DrvJoy5 + 2,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy5 + 0,	"p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 right" },
@@ -86,9 +85,7 @@ static struct BurnInputInfo RygarInputList[] = {
 STDINPUTINFO(Rygar)
 
 static struct BurnInputInfo BackfirtInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy6 + 2,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy6 + 3,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL , DrvJoy6 + 2,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy6 + 1,	"p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 1, 	"p1 right" },
@@ -98,6 +95,7 @@ static struct BurnInputInfo BackfirtInputList[] = {
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 1,	"p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy2 + 2,	"p1 fire 3"},
 
+	{"P2 Coin"       , BIT_DIGITAL , DrvJoy6 + 3,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy6 + 0,	"p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 right" },
@@ -117,9 +115,7 @@ static struct BurnInputInfo BackfirtInputList[] = {
 STDINPUTINFO(Backfirt)
 
 static struct BurnInputInfo GeminiInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy6 + 2,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy6 + 3,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL , DrvJoy6 + 2,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy6 + 0,	"p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 1, 	"p1 right" },
@@ -128,6 +124,7 @@ static struct BurnInputInfo GeminiInputList[] = {
 	{"P1 Button 1"  , BIT_DIGITAL  , DrvJoy2 + 1,	"p1 fire 1"},
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 fire 2"},
 
+	{"P2 Coin"       , BIT_DIGITAL , DrvJoy6 + 3,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy6 + 1,	"p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 right" },
@@ -146,9 +143,7 @@ static struct BurnInputInfo GeminiInputList[] = {
 STDINPUTINFO(Gemini)
 
 static struct BurnInputInfo SilkwormInputList[] = {
-	{"Coin 1"       , BIT_DIGITAL  , DrvJoy11 + 2,	"p1 coin"  },
-	{"Coin 2"       , BIT_DIGITAL  , DrvJoy11 + 3,	"p2 coin"  },
-
+	{"P1 Coin"       , BIT_DIGITAL , DrvJoy11 + 2,	"p1 coin"  },
 	{"P1 Start"  ,    BIT_DIGITAL  , DrvJoy11 + 0,	"p1 start" },
 	{"P1 Left"      , BIT_DIGITAL  , DrvJoy1 + 0, 	"p1 left"  },
 	{"P1 Right"     , BIT_DIGITAL  , DrvJoy1 + 1, 	"p1 right" },
@@ -158,6 +153,7 @@ static struct BurnInputInfo SilkwormInputList[] = {
 	{"P1 Button 2"  , BIT_DIGITAL  , DrvJoy2 + 0,	"p1 fire 2"},
 	{"P1 Button 3"  , BIT_DIGITAL  , DrvJoy2 + 2,	"p1 fire 3"},
 
+	{"P2 Coin"       , BIT_DIGITAL , DrvJoy11 + 3,	"p2 coin"  },
 	{"P2 Start"  ,    BIT_DIGITAL  , DrvJoy11 + 1,	"p2 start" },
 	{"P2 Left"      , BIT_DIGITAL  , DrvJoy3 + 0, 	"p2 left"  },
 	{"P2 Right"     , BIT_DIGITAL  , DrvJoy3 + 1, 	"p2 right" },
@@ -438,7 +434,7 @@ static inline void palette_write(INT32 offset)
 
 	data = *((UINT16*)(DrvPalRAM + (offset & ~1)));
 
-	#ifdef LSB_FIRST
+#ifdef LSB_FIRST
 	data = (data << 8) | (data >> 8);
 #endif
 
@@ -1174,14 +1170,14 @@ static INT32 DrvFrame()
 			ZetNmi();
 			DrvEnableNmi = 0;
 		}
-		BurnTimerUpdateYM3812(i * (nTotalCycles[1] / nInterleave));
+		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[1] / nInterleave));
 		if (DrvHasADPCM)  MSM5205Update();
 		ZetClose();
 	}
 
 	ZetOpen(1);
+	BurnTimerEndFrameYM3812(nTotalCycles[1]);
 	if (pBurnSoundOut) {
-		BurnTimerEndFrameYM3812(nTotalCycles[1]);
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
 		if (DrvHasADPCM) MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
@@ -1194,7 +1190,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1202,7 +1198,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029622;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -1227,10 +1223,12 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(adpcm_end);
 	}
 
-	ZetOpen(0);
-	ZetMapArea(0xf000, 0xf7ff, 0, DrvZ80ROM0 + DrvZ80Bank);
-	ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80ROM0 + DrvZ80Bank);
-	ZetClose();
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		ZetMapArea(0xf000, 0xf7ff, 0, DrvZ80ROM0 + DrvZ80Bank);
+		ZetMapArea(0xf000, 0xf7ff, 2, DrvZ80ROM0 + DrvZ80Bank);
+		ZetClose();
+	}
 
 	return 0;
 }

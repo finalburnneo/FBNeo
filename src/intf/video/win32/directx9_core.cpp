@@ -143,7 +143,7 @@ INT32 Dx9Core_Init()
 	hDx9Core_D3DX9 = LoadLibrary(_T("D3DX9_43.dll"));
 
 	if(!hDx9Core_D3D9 || !hDx9Core_D3DX9) {
-		MessageBox(NULL, _T("Loading of D3D9.DLL and D3DX9_43.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
+		//MessageBox(NULL, _T("Loading of D3D9.DLL and D3DX9_43.DLL failed."), _T("Error"), MB_OK | MB_ICONERROR);
 		nDx9CoreInit = FALSE;
 		return 0;
 	}

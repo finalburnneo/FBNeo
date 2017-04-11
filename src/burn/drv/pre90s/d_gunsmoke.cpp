@@ -644,11 +644,11 @@ static INT32 DrvDraw()
 		DrvCalcPal = 0;
 	}
 
-	if (!bgon) memset (pTransDraw, 0, 224 * 256 * 2);
+	BurnTransferClear();
 
-	if (bgon)  draw_bg_layer();
-	if (objon) draw_sprites();
-	if (chon)  draw_fg_layer();
+	if (bgon  && nBurnLayer & 1)    draw_bg_layer();
+	if (objon && nSpriteEnable & 1) draw_sprites();
+	if (chon  && nBurnLayer & 2)    draw_fg_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -664,15 +664,11 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
 
-	INT32 nInterleave = 278;
+	INT32 nInterleave = 256;
 
 	INT32 nCyclesSegment;
-	INT32 nCyclesDone[2], nCyclesTotal[2];
-
-	nCyclesTotal[0] = 4000000 / 60;
-	nCyclesTotal[1] = 3000000 / 60;
-	
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { 4000000 / 60, 3000000 / 60 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
@@ -683,18 +679,14 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 274) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 276) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		// Run Z80 #1
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		// execute IRQ quarterly 68.5 (or 69) is 25% of 278 (nInterleave)
-		if (i%69 == 0 && i>0) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		// execute CPU_IRQSTATUS_NONE 1 interleave past the last one
-		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i%64 == 63) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 	
@@ -712,7 +704,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -720,7 +712,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029521;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = Ram;
@@ -741,6 +733,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(objon);
 		SCAN_VAR(gunsmoke_scrollx);
 		SCAN_VAR(gunsmoke_scrolly);
+
 		if (nAction & ACB_WRITE) {
 			INT32 banktemp = nGunsmokeBank;
 			ZetOpen(0);

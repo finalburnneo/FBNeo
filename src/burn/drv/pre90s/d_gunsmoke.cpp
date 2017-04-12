@@ -644,8 +644,7 @@ static INT32 DrvDraw()
 		DrvCalcPal = 0;
 	}
 
-	BurnTransferClear();
-
+	if (!bgon || ~nBurnLayer & 1)   BurnTransferClear();
 	if (bgon  && nBurnLayer & 1)    draw_bg_layer();
 	if (objon && nSpriteEnable & 1) draw_sprites();
 	if (chon  && nBurnLayer & 2)    draw_fg_layer();

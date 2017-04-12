@@ -5,6 +5,9 @@
 #include "m68000_intf.h"
 #include "m6502_intf.h"
 #include "burn_ym2151.h"
+#include "pokey.h"
+
+//#define SNDCPUDBG
 
 #define USE_OWN_SLAPSTIC		1
 
@@ -416,8 +419,6 @@ void atarigen_SlapsticInit(INT32 base, INT32 chipnum)
 #else
 		SlapsticInit(chipnum);
 #endif
-		//atarigen_slapstic = install_mem_read_handler(cpunum, base, base + 0x7fff, atarigen_slapstic_r);
-		//atarigen_slapstic = install_mem_write_handler(cpunum, base, base + 0x7fff, atarigen_slapstic_w);
 		SekOpen(0);
 		SekMapHandler(1, base, base + 0x7fff, MAP_RAM);
 		SekSetReadByteHandler(1, atarigen_slapstic_r);
@@ -433,7 +434,7 @@ void atarigen_SlapsticInit(INT32 base, INT32 chipnum)
 
 
 
-static UINT8 					eeprom_unlocked;
+static UINT8 eeprom_unlocked;
 
 void atarigen_eeprom_reset(void)
 {
@@ -455,16 +456,14 @@ void atarigen_slapstic_exit()
 }
 
 
-
-
-
 static UINT8 DrvInputPort0[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort2[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort3[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
-static UINT8 DrvInputPort4[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
+//static UINT8 DrvInputPort4[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort5[8]      = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInput[6]           = {0x00, 0x00, 0x00, 0x00, 0x00, 0x00};
+static UINT8 DrvDip[1]             = {0x00};
 static UINT8 DrvReset              = 0;
 
 static UINT8 *Mem                  = NULL;
@@ -749,17 +748,6 @@ void atarigen_exit()
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
 static struct BurnInputInfo GauntletInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort5 + 3, "p1 coin"   },
@@ -796,10 +784,23 @@ static struct BurnInputInfo GauntletInputList[] =
 	{"P4 Fire 2"         , BIT_DIGITAL  , DrvInputPort3 + 0, "p4 fire 2" },
 
 	{"Reset"             , BIT_DIGITAL  , &DrvReset        , "reset"     },
-	{"Diagnostics"       , BIT_DIGITAL  , DrvInputPort4 + 3, "diag"      },
+	{"Dip 1"             , BIT_DIPSWITCH, DrvDip + 0       , "dip"       },
+//	{"Diagnostics"       , BIT_DIGITAL  , DrvSrv + 0, "diag"      },
 };
 
 STDINPUTINFO(Gauntlet)
+
+static struct BurnDIPInfo DrvDIPList[]=
+{
+	// Default Values
+	{0x1d, 0xff, 0xff, 0x08, NULL                     },
+
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x1d, 0x01, 0x08, 0x08, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x00, "On"                     },
+};
+
+STDDIPINFO(Drv)
 
 static inline void DrvClearOpposites(UINT8* nJoystickInputs)
 {
@@ -815,8 +816,7 @@ static inline void DrvMakeInputs()
 {
 	// Reset Inputs
 	DrvInput[0] = DrvInput[1] = DrvInput[2] = DrvInput[3] = DrvInput[5] = 0x00;
-	DrvInput[4] = 0x08; // 0x48 when VBLANK, 0x00 and 0x40 for test mode
-	if (DrvInputPort4[3]) DrvInput[4] -= 0x08;
+	DrvInput[4] = DrvDip[0]; // 0x40 VBLANK, 0x08 Diagnostics (active low)
 
 	// Compile Digital Inputs
 	for (INT32 i = 0; i < 8; i++) {
@@ -1625,7 +1625,6 @@ static INT32 MemIndex()
 
 	Drv68KRam              = Next; Next += 0x03000;
 	DrvM6502Ram            = Next; Next += 0x01000;
-	DrvEEPROM              = Next; Next += 0x01000;
 	DrvPlayfieldRam        = Next; Next += 0x02000;
 	DrvMOSpriteRam         = Next; Next += 0x02000;
 	DrvAlphaRam            = Next; Next += 0x00f80;
@@ -1633,6 +1632,8 @@ static INT32 MemIndex()
 	DrvPaletteRam          = Next; Next += 0x00800;
 	
 	RamEnd                 = Next;
+
+	DrvEEPROM              = Next; Next += 0x01000;
 
 	DrvChars               = Next; Next += 0x0400 * 8 * 8;
 	DrvMotionObjectTiles   = Next; Next += /*0x2000*/0x3000 * 8 * 8;
@@ -1645,6 +1646,8 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
+	memset(RamStart, 0, RamEnd - RamStart);
+
 	SekOpen(0);
 	SekReset();
 	SekClose();
@@ -1659,8 +1662,8 @@ static INT32 DrvDoReset()
 	atarigen_eeprom_reset();
 	
 	DrvVBlank = 1;
-	DrvSoundResetVal = 0;
-	DrvSoundCPUHalt = 0;
+	DrvSoundResetVal = 1;
+	DrvSoundCPUHalt = 1;
 	DrvCPUtoSoundReady = 0;
 	DrvSoundtoCPUReady = 0;
 	DrvCPUtoSound = 0;
@@ -1687,6 +1690,9 @@ UINT8 __fastcall Gauntlet68KReadByte(UINT32 a)
 		
 		case 0x80300f: {
 			DrvSoundtoCPUReady = 0;
+#ifdef SNDCPUDBG
+			bprintf(0, _T("68k_rb."));
+#endif
 			SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return DrvSoundtoCPU;
 		}
@@ -1746,6 +1752,9 @@ UINT16 __fastcall Gauntlet68KReadWord(UINT32 a)
 		
 		case 0x80300e: {
 			DrvSoundtoCPUReady = 0;
+#ifdef SNDCPUDBG
+			bprintf(0, _T("68k_rw."));
+#endif
 			SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return 0xff00 | DrvSoundtoCPU;
 		}
@@ -1756,6 +1765,16 @@ UINT16 __fastcall Gauntlet68KReadWord(UINT32 a)
 	}
 	
 	return 0;
+}
+
+static void soundcpuSync()
+{
+	if (!DrvSoundCPUHalt) {
+		INT32 todo = (SekTotalCycles() / 4) - nCyclesDone[1];
+		if (todo > 0) nCyclesDone[1] += M6502Run(todo);
+	} else {
+		nCyclesDone[1] = SekTotalCycles() / 4;
+	}
 }
 
 void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
@@ -1772,16 +1791,22 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 			DrvSoundResetVal = d;
 			if ((OldVal ^ DrvSoundResetVal) & 1) {
 				if (DrvSoundResetVal & 1) {
-					DrvSoundCPUHalt = 0;
-					bprintf(PRINT_NORMAL, _T("Enabling sound CPU\n"));
-				} else {
-					M6502Open(0);
+    				M6502Open(0);
 					M6502Reset();
+					DrvSoundtoCPUReady = 0;
+					M6502Run(10); // why's this needed? who knows...
 					M6502Close();
+					DrvSoundCPUHalt = 0;
+#ifdef SNDCPUDBG
+					bprintf(PRINT_NORMAL, _T("Enabling sound CPU\n"));
+#endif
+				} else {
 					DrvSoundCPUHalt = 1;
+#ifdef SNDCPUDBG
 					bprintf(PRINT_NORMAL, _T("Disabling sound CPU\n"));
+#endif
 				}
-			}
+ 			}
 			
 			return;
 		}
@@ -1798,11 +1823,13 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 		
 		case 0x803170: {
 			DrvCPUtoSound = d & 0xff;
+#ifdef SNDCPUDBG
+			if (DrvCPUtoSoundReady) bprintf(0, _T("68k: sound command missed!\n"));
+#endif
 			DrvCPUtoSoundReady = 1;
 			M6502Open(0);
-			nCyclesDone[1] += M6502Run(100);
-			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_AUTO);
-			nCyclesDone[1] += M6502Run(100);
+			soundcpuSync();
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 			M6502Close();
 			return;
 		}
@@ -1820,9 +1847,17 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 
 UINT8 GauntletSoundRead(UINT16 Address)
 {
+	if ((Address & 0xd830) == 0x1800) {
+		return pokey1_r(Address & 0xf);
+	}
+
 	switch (Address) {
 		case 0x1010: {
+#ifdef SNDCPUDBG
+			bprintf(0, _T("snd_rb."));
+#endif
 			DrvCPUtoSoundReady = 0;
+			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			return DrvCPUtoSound;
 		}
 		
@@ -1832,43 +1867,14 @@ UINT8 GauntletSoundRead(UINT16 Address)
 		
 		case 0x1030:
 		case 0x1031: {
-			/*INT32 temp = 0x30;
-
-			if (atarigen_cpu_to_sound_ready) temp ^= 0x80;
-			if (atarigen_sound_to_cpu_ready) temp ^= 0x40;
-			if (tms5220_ready_r(devtag_get_device(space->machine, "tms"))) temp ^= 0x20;
-			if (!(input_port_read(space->machine, "803008") & 0x0008)) temp ^= 0x10;
-
-			return temp;*/
-			
 			UINT8 Res = 0x30;
 			UINT8 Input = DrvInput[4] | (DrvVBlank ? 0x40 : 0x00);
 			
 			if (DrvCPUtoSoundReady) Res ^= 0x80;
 			if (DrvSoundtoCPUReady) Res ^= 0x40;
-			Res ^= 0x20;
+			Res ^= 0x20; // tms5220 ready status, no core yet.
 			if (!(Input & 0x08)) Res ^= 0x10;
 			return Res;
-		}
-		
-		case 0x1800:
-		case 0x1801:
-		case 0x1802:
-		case 0x1803:
-		case 0x1804:
-		case 0x1805:
-		case 0x1806:
-		case 0x1807:
-		case 0x1808:
-		case 0x1809:
-		case 0x180a:
-		case 0x180b:
-		case 0x180c:
-		case 0x180d:
-		case 0x180e:
-		case 0x180f: {
-			// pokey_r
-			return 0;
 		}
 		
 		case 0x1811: {
@@ -1885,6 +1891,12 @@ UINT8 GauntletSoundRead(UINT16 Address)
 
 void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 {
+
+	if ((Address & 0xd830) == 0x1800) {
+		pokey1_w(Address & 0xf, Data);
+		return;
+	}
+
 	switch (Address) {
 		case 0x1000:
 		case 0x1001:
@@ -1903,6 +1915,9 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 		case 0x100e:
 		case 0x100f: {
 			DrvSoundtoCPU = Data;
+#ifdef SNDCPUDBG
+			if (DrvSoundtoCPUReady) bprintf(0, _T("main missed sound cmd!\n"));
+#endif
 			DrvSoundtoCPUReady = 1;
 			if (SekGetActive() == -1) {
 				SekOpen(0);
@@ -1913,7 +1928,11 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 			}
 			return;
 		}
-		
+
+		case 0x1020: {
+			return; // sound mixer
+		}
+
 		case 0x1030:
 		case 0x1031:
 		case 0x1032:
@@ -1921,26 +1940,6 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 		case 0x1034:
 		case 0x1035: {
 			// sound_ctl_w
-			return;
-		}
-		
-		case 0x1800:
-		case 0x1801:
-		case 0x1802:
-		case 0x1803:
-		case 0x1804:
-		case 0x1805:
-		case 0x1806:
-		case 0x1807:
-		case 0x1808:
-		case 0x1809:
-		case 0x180a:
-		case 0x180b:
-		case 0x180c:
-		case 0x180d:
-		case 0x180e:
-		case 0x180f: {
-			// pokey_w
 			return;
 		}
 		
@@ -2070,6 +2069,8 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
+	M6502SetReadMemIndexHandler(GauntletSoundRead);
+	M6502SetWriteMemIndexHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_SlapsticInit(0x038000, 104);
@@ -2078,7 +2079,9 @@ static INT32 DrvInit()
 	BurnYM2151Init(14318180 / 4);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
-	
+
+	PokeyInit(14000000/8, 2, 1.00, 1);
+
 	GenericTilesInit();
 	
 	static struct atarigen_modesc gauntlet_modesc =
@@ -2182,6 +2185,8 @@ static INT32 Gaunt2pInit()
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
+	M6502SetReadMemIndexHandler(GauntletSoundRead);
+	M6502SetWriteMemIndexHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_SlapsticInit(0x038000, 107);
@@ -2190,6 +2195,8 @@ static INT32 Gaunt2pInit()
 	BurnYM2151Init(14318180 / 4);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
+
+	PokeyInit(14000000/8, 2, 1.00, 1);
 	
 	GenericTilesInit();
 	
@@ -2304,6 +2311,8 @@ static INT32 Gaunt2Init()
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
+	M6502SetReadMemIndexHandler(GauntletSoundRead);
+	M6502SetWriteMemIndexHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_SlapsticInit(0x038000, 106);
@@ -2313,6 +2322,8 @@ static INT32 Gaunt2Init()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.48, BURN_SND_ROUTE_RIGHT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
 	
+	PokeyInit(14000000/8, 2, 1.00, 1);
+
 	GenericTilesInit();
 	
 	static struct atarigen_modesc gauntlet_modesc =
@@ -2341,6 +2352,8 @@ static INT32 DrvExit()
 	M6502Exit();
 	
 	BurnYM2151Exit();
+
+	PokeyExit();
 	
 	GenericTilesExit();
 	
@@ -2381,16 +2394,6 @@ static void DrvCalcPalette()
 	}
 }
 
-#if 0
-static TILE_GET_INFO( get_playfield_tile_info )
-{
-	UINT16 data = atarigen_playfield[tile_index];
-	int code = ((playfield_tile_bank * 0x1000) + (data & 0xfff)) ^ 0x800;
-	int color = 0x10 + (playfield_color_bank * 8) + ((data >> 12) & 7);
-	SET_TILE_INFO(0, code, color, (data >> 15) & 1);
-}
-#endif
-
 static void DrvRenderPlayfield(INT32 PriorityDraw)
 {
 	INT32 mx, my, Data, Code, Colour, x, y, TileIndex, Priority;
@@ -2424,17 +2427,6 @@ static void DrvRenderPlayfield(INT32 PriorityDraw)
 	}
 }
 
-//static void DrvRenderSprites()
-//{
-//}
-
-#if 0
-	UINT16 data = atarigen_alpha[tile_index];
-	int code = data & 0x3ff;
-	int color = ((data >> 10) & 0x0f) | ((data >> 9) & 0x20);
-	int opaque = data & 0x8000;
-	SET_TILE_INFO(1, code, color, opaque ? TILE_FORCE_LAYER0 : 0);
-#endif
 static void DrvRenderCharLayer()
 {
 	INT32 mx, my, Code, Colour, x, y, Opaque, TileIndex = 0;
@@ -2467,7 +2459,7 @@ static void DrvDraw()
 	BurnTransferClear();
 	DrvCalcPalette();
 	
-	DrvRenderPlayfield(0);	
+	DrvRenderPlayfield(0);
 	DrvRenderPlayfield(1);
 	atarigen_render_display_list();
 	DrvRenderCharLayer();
@@ -2477,7 +2469,8 @@ static void DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 262;
+	INT32 nMult = 2;
+	INT32 nInterleave = 262*nMult;
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) DrvDoReset();
@@ -2492,7 +2485,7 @@ static INT32 DrvFrame()
 	
 	INT32 NextScanline = 0;
 	
-	UINT16 *AlphaRam = (UINT16*)DrvAlphaRam;	
+	UINT16 *AlphaRam = (UINT16*)DrvAlphaRam;
 	DrvScrollY = BURN_ENDIAN_SWAP_INT16(AlphaRam[0xf6e >> 1]);
 	DrvTileBank = DrvScrollY & 0x03;
 	DrvScrollY >>= 7;
@@ -2515,14 +2508,14 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 11) DrvVBlank = 0;
-		if (i == 250) DrvVBlank = 1;
-		if (i == 261) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 11*nMult) DrvVBlank = 0;
+		if (i == 250*nMult) DrvVBlank = 1;
+		if (i == 261*nMult) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		SekClose();
 		
-		if (i == NextScanline) {
-			INT32 Link = (DrvMOSlipRam[2 * (((i + DrvScrollY) / 8) & 0x3f) + 0] | (DrvMOSlipRam[2 * (((i + DrvScrollY) / 8) & 0x3f) + 1] << 8)) & 0x3ff;
-			atarigen_update_display_list(DrvMOSpriteRam, Link, i);
+		if (i%nMult==nMult-1 && i/nMult == NextScanline) {
+			INT32 Link = (DrvMOSlipRam[2 * ((((i/nMult) + DrvScrollY) / 8) & 0x3f) + 0] | (DrvMOSlipRam[2 * ((((i/nMult) + DrvScrollY) / 8) & 0x3f) + 1] << 8)) & 0x3ff;
+			atarigen_update_display_list(DrvMOSpriteRam, Link, (i/nMult));
 			
 			if (!NextScanline) {
 				NextScanline += 8 - (DrvScrollY & 7);
@@ -2537,8 +2530,19 @@ static INT32 DrvFrame()
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += M6502Run(nCyclesSegment);
-			if (i == 64 || i == 128 || i == 192 || i == 256) M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
+
+			if (i%nMult==nMult-1 && (i/nMult) % 32 == 0)
+			{
+				if ((i/nMult) & 32)
+					M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
+				else
+					M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
+			}
 			M6502Close();
+		} else {
+			nCurrentCPU = 1;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesDone[nCurrentCPU] += nNext; // idle skip
 		}
 		
 		if (pBurnSoundOut) {
@@ -2556,6 +2560,7 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 		}
+		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	if (pBurnDraw) DrvDraw();
@@ -2579,6 +2584,28 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
+	if (nAction & ACB_DRIVER_DATA) {
+		SekScan(nAction);
+		M6502Scan(nAction);
+
+		BurnYM2151Scan(nAction);
+		pokey_scan(nAction, pnMin);
+
+		SCAN_VAR(DrvVBlank);
+		SCAN_VAR(DrvSoundResetVal);
+		SCAN_VAR(DrvSoundCPUHalt);
+		SCAN_VAR(DrvCPUtoSoundReady);
+		SCAN_VAR(DrvSoundtoCPUReady);
+		SCAN_VAR(DrvCPUtoSound);
+		SCAN_VAR(DrvSoundtoCPU);
+		SCAN_VAR(eeprom_unlocked);
+		// slapstic stuff
+		SCAN_VAR(state);
+		SCAN_VAR(next_bank);
+		SCAN_VAR(extra_bank);
+		SCAN_VAR(current_bank);
+	}
+
 	return 0;
 }
 
@@ -2587,7 +2614,7 @@ struct BurnDriver BurnDrvGauntlet = {
 	"Gauntlet (rev 14)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, GauntletRomInfo, GauntletRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, GauntletRomInfo, GauntletRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2597,7 +2624,7 @@ struct BurnDriver BurnDrvGauntlets = {
 	"Gauntlet (Spanish, rev 15)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, GauntletsRomInfo, GauntletsRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, GauntletsRomInfo, GauntletsRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2607,7 +2634,7 @@ struct BurnDriver BurnDrvGauntletj = {
 	"Gauntlet (Japanese, rev 13)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, GauntletjRomInfo, GauntletjRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, GauntletjRomInfo, GauntletjRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2617,7 +2644,7 @@ struct BurnDriver BurnDrvGauntletg = {
 	"Gauntlet (German, rev 10)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, GauntletgRomInfo, GauntletgRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, GauntletgRomInfo, GauntletgRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2627,7 +2654,7 @@ struct BurnDriver BurnDrvGauntletj12 = {
 	"Gauntlet (Japanese, rev 12)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletj12RomInfo, Gauntletj12RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletj12RomInfo, Gauntletj12RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2637,7 +2664,7 @@ struct BurnDriver BurnDrvGauntletr9 = {
 	"Gauntlet (rev 9)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletr9RomInfo, Gauntletr9RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletr9RomInfo, Gauntletr9RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2647,7 +2674,7 @@ struct BurnDriver BurnDrvGauntletgr8 = {
 	"Gauntlet (German, rev 8)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletgr8RomInfo, Gauntletgr8RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletgr8RomInfo, Gauntletgr8RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2657,7 +2684,7 @@ struct BurnDriver BurnDrvGauntletr7 = {
 	"Gauntlet (rev 7)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletr7RomInfo, Gauntletr7RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletr7RomInfo, Gauntletr7RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2667,7 +2694,7 @@ struct BurnDriver BurnDrvGauntletgr6 = {
 	"Gauntlet (German, rev 6)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletgr6RomInfo, Gauntletgr6RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletgr6RomInfo, Gauntletgr6RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2677,7 +2704,7 @@ struct BurnDriver BurnDrvGauntletr5 = {
 	"Gauntlet (rev 5)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletr5RomInfo, Gauntletr5RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletr5RomInfo, Gauntletr5RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2687,7 +2714,7 @@ struct BurnDriver BurnDrvGauntletr4 = {
 	"Gauntlet (rev 4)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletr4RomInfo, Gauntletr4RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletr4RomInfo, Gauntletr4RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2697,7 +2724,7 @@ struct BurnDriver BurnDrvGauntletgr3 = {
 	"Gauntlet (German, rev 3)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletgr3RomInfo, Gauntletgr3RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletgr3RomInfo, Gauntletgr3RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2707,7 +2734,7 @@ struct BurnDriver BurnDrvGauntletr2 = {
 	"Gauntlet (rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletr2RomInfo, Gauntletr2RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletr2RomInfo, Gauntletr2RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2717,7 +2744,7 @@ struct BurnDriver BurnDrvGauntletr1 = {
 	"Gauntlet (rev 1)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntletr1RomInfo, Gauntletr1RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntletr1RomInfo, Gauntletr1RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2727,7 +2754,7 @@ struct BurnDriver BurnDrvGauntlet2p = {
 	"Gauntlet (2 Players, rev 6)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntlet2pRomInfo, Gauntlet2pRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntlet2pRomInfo, Gauntlet2pRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2737,7 +2764,7 @@ struct BurnDriver BurnDrvGauntlet2pj = {
 	"Gauntlet (2 Players, Japanese, rev 5)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntlet2pjRomInfo, Gauntlet2pjRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntlet2pjRomInfo, Gauntlet2pjRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2747,7 +2774,7 @@ struct BurnDriver BurnDrvGauntlet2pg = {
 	"Gauntlet (2 Players, German, rev 4)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntlet2pgRomInfo, Gauntlet2pgRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntlet2pgRomInfo, Gauntlet2pgRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2757,7 +2784,7 @@ struct BurnDriver BurnDrvGauntlet2pr3 = {
 	"Gauntlet (2 Players, rev 3)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntlet2pr3RomInfo, Gauntlet2pr3RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntlet2pr3RomInfo, Gauntlet2pr3RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2767,7 +2794,7 @@ struct BurnDriver BurnDrvGauntlet2pj2 = {
 	"Gauntlet (2 Players, Japanese rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntlet2pj2RomInfo, Gauntlet2pj2RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntlet2pj2RomInfo, Gauntlet2pj2RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2777,7 +2804,7 @@ struct BurnDriver BurnDrvGauntlet2pg1 = {
 	"Gauntlet (2 Players, German, rev 1)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gauntlet2pg1RomInfo, Gauntlet2pg1RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gauntlet2pg1RomInfo, Gauntlet2pg1RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2787,7 +2814,7 @@ struct BurnDriver BurnDrvGaunt2 = {
 	"Gauntlet II\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gaunt2RomInfo, Gaunt2RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gaunt2RomInfo, Gaunt2RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2797,7 +2824,7 @@ struct BurnDriver BurnDrvGaunt2g = {
 	"Gauntlet II (German)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gaunt2gRomInfo, Gaunt2gRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gaunt2gRomInfo, Gaunt2gRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2807,7 +2834,7 @@ struct BurnDriver BurnDrvGaunt22p = {
 	"Gauntlet II (2 Players, rev 2)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gaunt22pRomInfo, Gaunt22pRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gaunt22pRomInfo, Gaunt22pRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2817,7 +2844,7 @@ struct BurnDriver BurnDrvGaunt22p1 = {
 	"Gauntlet II (2 Players, rev 1)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gaunt22p1RomInfo, Gaunt22p1RomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gaunt22p1RomInfo, Gaunt22p1RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
@@ -2827,11 +2854,7 @@ struct BurnDriver BurnDrvGaunt22pg = {
 	"Gauntlet II (2 Players, German)\0", NULL, "Atari Games", "Atari Gauntlet",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, Gaunt22pgRomInfo, Gaunt22pgRomName, NULL, NULL , GauntletInputInfo, NULL,
+	NULL, Gaunt22pgRomInfo, Gaunt22pgRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
 	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
-
-//GAME( 1988, vindctr2, 0,        gauntlet, vindctr2, vindctr2,  ROT0, "Atari Games", "Vindicators Part II (rev 3)", 0 )
-//GAME( 1988, vindc2r2, vindctr2, gauntlet, vindctr2, vindctr2,  ROT0, "Atari Games", "Vindicators Part II (rev 2)", 0 )
-//GAME( 1988, vindc2r1, vindctr2, gauntlet, vindctr2, vindctr2,  ROT0, "Atari Games", "Vindicators Part II (rev 1)", 0 )

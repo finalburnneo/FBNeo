@@ -26,6 +26,7 @@ static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 bankdata;
 static INT32 coin_nmi;
+static INT32 soundcpu_mhz;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -177,6 +178,14 @@ static void bankswitch(INT32 data)
 	M6502MapMemory(DrvM6502ROM0 + bank, 0x4000, 0x7fff, MAP_ROM);
 }
 
+static void soundcpuSync()
+{
+	INT32 todo = ((M6502TotalCycles() * 3) / 2);
+	if (todo > 0) {
+		BurnTimerUpdate(todo);
+	}
+}
+
 static void shootout_main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x1004 && address <= 0x17ff) {
@@ -203,6 +212,7 @@ static void shootout_main_write(UINT16 address, UINT8 data)
 			M6502Close();
 			M6502Open(1);
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+			soundcpuSync();
 			M6502Close();
 			M6502Open(0);
 		return;
@@ -303,12 +313,12 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)M6502TotalCycles() * nSoundRate / 2000000;
+	return (INT64)M6502TotalCycles() * nSoundRate / soundcpu_mhz;
 }
 
 inline static double DrvGetTime()
 {
-	return (double)M6502TotalCycles() / 2000000;
+	return (double)M6502TotalCycles() / soundcpu_mhz;
 }
 
 static tilemap_callback( background )
@@ -341,6 +351,7 @@ static INT32 DrvDoReset()
 	M6502Open(1);
 	M6502Reset();
 	BurnYM2203Reset();
+	M6502Run(100);
 	M6502Close();
 
 	soundlatch = 0;
@@ -476,7 +487,8 @@ static INT32 ShootoutInit()
 	M6502Close();
 
 	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachM6502(2000000);
+	BurnTimerAttachM6502(1500000);
+	soundcpu_mhz = 1500000;
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -545,6 +557,7 @@ static INT32 ShootoujInit()
 	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &ym2203_write_port_A, &ym2203_write_port_B);
 	BurnTimerAttachM6502(2000000);
+	soundcpu_mhz = 2000000;
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

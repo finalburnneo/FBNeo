@@ -120,8 +120,8 @@ unsigned char M6502ReadPort(unsigned short Address);
 void M6502WritePort(unsigned short Address, unsigned char Data);
 unsigned char M6502ReadByte(unsigned short Address);
 void M6502WriteByte(unsigned short Address, unsigned char Data);
-unsigned char M6502ReadMemIndex(unsigned short Address);
-void M6502WriteMemIndex(unsigned short Address, unsigned char Data);
+//unsigned char M6502ReadMemIndex(unsigned short Address);
+//void M6502WriteMemIndex(unsigned short Address, unsigned char Data);
 unsigned char M6502ReadOp(unsigned short Address);
 unsigned char M6502ReadOpArg(unsigned short Address);
 

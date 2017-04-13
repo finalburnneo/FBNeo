@@ -64,9 +64,6 @@
 
 #define PPC m6502.ppc.d
 
-// Indexed mem handlers have been disabled and routed to read/writeByte handlers April 12, 2017 -dink
-//#define RDMEM_ID(a)		M6502ReadMemIndex(a)
-//#define WRMEM_ID(a,d)	M6502WriteMemIndex(a, d); Cpu7Written[M6502GetActive()] = 1
 #define RDMEM_ID(a)		M6502ReadByte(a)
 #define WRMEM_ID(a,d)	M6502WriteByte(a, d); Cpu7Written[M6502GetActive()] = 1
 

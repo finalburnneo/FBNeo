@@ -29,15 +29,6 @@ static void M6502WriteByteDummyHandler(UINT16, UINT8)
 {
 }
 
-static UINT8 M6502ReadMemIndexDummyHandler(UINT16)
-{
-	return 0;
-}
-
-static void M6502WriteMemIndexDummyHandler(UINT16, UINT8)
-{
-}
-
 static UINT8 M6502ReadOpDummyHandler(UINT16)
 {
 	return 0;
@@ -187,8 +178,6 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	pCurrentCPU->WritePort = M6502WritePortDummyHandler;
 	pCurrentCPU->ReadByte = M6502ReadByteDummyHandler;
 	pCurrentCPU->WriteByte = M6502WriteByteDummyHandler;
-	pCurrentCPU->ReadMemIndex = M6502ReadMemIndexDummyHandler;
-	pCurrentCPU->WriteMemIndex = M6502WriteMemIndexDummyHandler;
 	pCurrentCPU->ReadOp = M6502ReadOpDummyHandler;
 	pCurrentCPU->ReadOpArg = M6502ReadOpArgDummyHandler;
 	
@@ -413,29 +402,6 @@ void M6502SetWriteHandler(void (*pHandler)(UINT16, UINT8))
 	pCurrentCPU->WriteByte = pHandler;
 }
 
-#if 0
-// disabled - see m6502/ops02.h for more info (RDMEM_ID)
-void M6502SetReadMemIndexHandler(UINT8 (*pHandler)(UINT16))
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadMemIndexHandler called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadMemIndexHandler called with no CPU open\n"));
-#endif
-
-	pCurrentCPU->ReadMemIndex = pHandler;
-}
-
-void M6502SetWriteMemIndexHandler(void (*pHandler)(UINT16, UINT8))
-{
-#if defined FBA_DEBUG
-	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetWriteMemIndexHandler called without init\n"));
-	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetWriteMemIndexHandler called with no CPU open\n"));
-#endif
-
-	pCurrentCPU->WriteMemIndex = pHandler;
-}
-#endif
-
 void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16))
 {
 #if defined FBA_DEBUG
@@ -503,38 +469,6 @@ void M6502WriteByte(UINT16 Address, UINT8 Data)
 	// check handler
 	if (pCurrentCPU->WriteByte != NULL) {
 		pCurrentCPU->WriteByte(Address, Data);
-		return;
-	}
-}
-
-UINT8 M6502ReadMemIndex(UINT16 Address)
-{
-	// check mem map
-	UINT8 * pr = pCurrentCPU->pMemMap[0x000 | (Address >> 8)];
-	if (pr != NULL) {
-		return pr[Address & 0xff];
-	}
-	
-	// check handler
-	if (pCurrentCPU->ReadMemIndex != NULL) {
-		return pCurrentCPU->ReadMemIndex(Address);
-	}
-	
-	return 0;
-}
-
-void M6502WriteMemIndex(UINT16 Address, UINT8 Data)
-{
-	// check mem map
-	UINT8 * pr = pCurrentCPU->pMemMap[0x100 | (Address >> 8)];
-	if (pr != NULL) {
-		pr[Address & 0xff] = Data;
-		return;
-	}
-	
-	// check handler
-	if (pCurrentCPU->WriteMemIndex != NULL) {
-		pCurrentCPU->WriteMemIndex(Address, Data);
 		return;
 	}
 }

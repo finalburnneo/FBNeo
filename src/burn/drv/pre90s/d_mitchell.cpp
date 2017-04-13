@@ -1071,7 +1071,6 @@ static INT32 MgakuenMemIndex()
 	UINT8 *Next; Next = Mem;
 
 	DrvZ80Rom              = Next; Next += 0x50000;
-	MSM6295ROM             = Next; Next += 0x40000;
 	DrvSoundRom            = Next; Next += 0x80000;
 	
 	RamStart               = Next;
@@ -1126,7 +1125,6 @@ static INT32 MahjongMemIndex()
 
 	DrvZ80Rom              = Next; Next += 0x50000;
 	DrvZ80Code             = Next; Next += 0x50000;
-	MSM6295ROM             = Next; Next += 0x40000;
 	DrvSoundRom            = Next; Next += 0x80000;
 	
 	RamStart               = Next;
@@ -1155,7 +1153,6 @@ static INT32 MstworldMemIndex()
 	DrvZ80Rom              = Next; Next += 0x50000;
 	DrvZ80Code             = Next; Next += 0x50000;
 	DrvZ80Rom2             = Next; Next += 0x08000;
-	MSM6295ROM             = Next; Next += 0x40000;
 	DrvSoundRom            = Next; Next += 0x100000;
 	
 	RamStart               = Next;
@@ -1178,6 +1175,13 @@ static INT32 MstworldMemIndex()
 	return 0;
 }
 
+static void oki_bankswitch(INT32 bank)
+{
+	DrvOkiBank = bank;
+
+	MSM6295SetBank(0, DrvSoundRom + (DrvOkiBank * 0x40000), 0x00000, 0x3ffff);
+}
+
 static INT32 DrvDoReset()
 {
 	ZetOpen(0);
@@ -1193,7 +1197,8 @@ static INT32 DrvDoReset()
 	
 	BurnYM2413Reset();
 	MSM6295Reset(0);
-	
+	oki_bankswitch(0);
+
 	if (DrvHasEEPROM) EEPROMReset();
 	
 	DrvPaletteRamBank = 0;
@@ -1395,13 +1400,10 @@ void __fastcall MitchellZ80PortWrite(UINT16 a, UINT8 d)
 	switch (a) {
 		case 0x00: {
 			DrvFlipScreen = d & 0x04;
-			if (DrvOkiBank != (d & 0x10)) {
-				DrvOkiBank = d & 0x10;
-				if (DrvOkiBank) {
-					memcpy(MSM6295ROM, DrvSoundRom + 0x40000, 0x40000);
-				} else {
-					memcpy(MSM6295ROM, DrvSoundRom + 0x00000, 0x40000);
-				}
+			if (DrvOkiBank != (d & 0x10)>>4) {
+				DrvOkiBank = (d & 0x10)>>4;
+
+				oki_bankswitch(DrvOkiBank);
 			}
 			DrvPaletteRamBank = d & 0x20;
 			return;
@@ -1484,7 +1486,7 @@ void __fastcall MitchellZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
+			//bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
 		}
 	}
 }
@@ -1565,13 +1567,14 @@ void __fastcall MstworldZ80PortWrite(UINT16 a, UINT8 d)
 		
 		case 0x08:
 		case 0x10:
-		case 0x18: {
+		case 0x18:
+		case 0x27: {
 			// ???
 			return;
 		}
 		
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
+		default: { // block block seems to write to random ports quite often
+			//bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
 		}
 	}
 }
@@ -1601,7 +1604,8 @@ void __fastcall MstworldSoundZ80Write(UINT16 a, UINT8 d)
 	switch (a) {
 		case 0x9000: {
 			DrvOkiBank = d & 0x03;
-			memcpy(MSM6295ROM, DrvSoundRom + (DrvOkiBank * 0x40000), 0x40000);
+
+			oki_bankswitch(DrvOkiBank);
 			return;
 		}
 		
@@ -1686,7 +1690,6 @@ static void MitchellMachineInit()
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
-	MSM6295ROM = DrvSoundRom;
 	
 	EEPROMInit(&MitchellEEPROMIntf);
 	DrvHasEEPROM = 1;
@@ -1722,7 +1725,6 @@ static void MahjongMachineInit()
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 990000 / 132, 1);
 	MSM6295SetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
-	memcpy(MSM6295ROM, DrvSoundRom, 0x40000);
 	
 	EEPROMInit(&MitchellEEPROMIntf);
 	DrvHasEEPROM = 1;
@@ -1794,7 +1796,6 @@ static INT32 MgakuenInit()
 	BurnYM2413SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 	MSM6295Init(0, 990000 / 132, 1);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	memcpy(MSM6295ROM, DrvSoundRom, 0x40000);
 	
 	GenericTilesInit();
 	
@@ -2454,7 +2455,6 @@ static INT32 MstworldInit()
 	
 	MSM6295Init(0, 990000 / 132, 0);
 	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	memcpy(MSM6295ROM, DrvSoundRom, 0x40000);
 	
 	DrvHasEEPROM = 0;
 
@@ -2936,12 +2936,9 @@ static INT32 DrvFrame()
 		ZetOpen(nCurrentCPU);
 		nCyclesSegment = nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 0 || i == 237) { // Needs to be ACK'd for one full scanline twice per frame. -dink
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			DrvInput5Toggle = (i == 237);
-		}
-		if (i == 1 || i == 238) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == 0 || i == 240) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			DrvInput5Toggle = (i == 240);
 		}
 		ZetClose();
 		
@@ -2993,9 +2990,7 @@ static INT32 MstworldFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 9) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-			nCyclesDone[nCurrentCPU] += ZetRun(500);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 		
@@ -3085,9 +3080,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 		ZetClose();
 		
-		if (DrvOkiBank) {
-			memcpy(MSM6295ROM, DrvSoundRom + 0x40000, 0x40000);
-		}
+		oki_bankswitch(DrvOkiBank);
 	}
 
 	return 0;
@@ -3129,7 +3122,7 @@ static INT32 MstworldScan(INT32 nAction, INT32 *pnMin)
 		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Code + 0x10000 + (DrvRomBank * 0x4000), DrvZ80Rom + 0x10000 + (DrvRomBank * 0x4000));
 		ZetClose();
 		
-		memcpy(MSM6295ROM, DrvSoundRom + (DrvOkiBank * 0x40000), 0x40000);
+		oki_bankswitch(DrvOkiBank);
 	}
 
 	return 0;

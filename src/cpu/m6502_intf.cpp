@@ -413,6 +413,8 @@ void M6502SetWriteHandler(void (*pHandler)(UINT16, UINT8))
 	pCurrentCPU->WriteByte = pHandler;
 }
 
+#if 0
+// disabled - see m6502/ops02.h for more info (RDMEM_ID)
 void M6502SetReadMemIndexHandler(UINT8 (*pHandler)(UINT16))
 {
 #if defined FBA_DEBUG
@@ -432,6 +434,7 @@ void M6502SetWriteMemIndexHandler(void (*pHandler)(UINT16, UINT8))
 
 	pCurrentCPU->WriteMemIndex = pHandler;
 }
+#endif
 
 void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16))
 {

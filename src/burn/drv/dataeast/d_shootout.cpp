@@ -25,7 +25,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 bankdata;
-static INT32 coin_nmi;
 static INT32 soundcpu_mhz;
 
 static UINT32 *DrvPalette;
@@ -247,7 +246,7 @@ static UINT8 shootout_main_read(UINT16 address)
 			return DrvInputs[1];
 
 		case 0x1003:
-			return (DrvDips[1] & 0x3f) | (coin_nmi ? 0x40 : 0) | (vblank ? 0x80 : 0);
+			return (DrvDips[1] & 0x3f) | (vblank ? 0 : 0x80);
 
 		case 0x2800:
 		case 0x2801:
@@ -351,12 +350,11 @@ static INT32 DrvDoReset()
 	M6502Open(1);
 	M6502Reset();
 	BurnYM2203Reset();
-	M6502Run(100);
 	M6502Close();
 
 	soundlatch = 0;
 	flipscreen = 0;
-	coin_nmi = 0;
+	vblank = 1; // 248 on, 8 off
 
 	ym2203portainit = 0;
 	ym2203portbinit = 0;
@@ -722,23 +720,21 @@ static INT32 ShootoutFrame()
 		}
 
 
-		if ((DrvInputs[1] & 0xc0) != previous_coin) {
-			coin_nmi = 1;
+		if ((DrvInputs[1] & 0xc0) && (DrvInputs[1] & 0xc0) != previous_coin) {
 			M6502Open(0);
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
-		} else {
-			coin_nmi = 0;
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[2] =  { 2000000 / 60, 1500000 / 60 };
-
-	vblank = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		if (i == 248) vblank = 1;
+		if (i == 8) vblank = 0;
+
 		M6502Open(0);
 		M6502Run(nCyclesTotal[0] / nInterleave);
 		M6502Close();
@@ -746,8 +742,6 @@ static INT32 ShootoutFrame()
 		M6502Open(1);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		M6502Close();
-
-		if (i == 239) vblank = 1;
 	}
 
 	M6502Open(1);
@@ -784,28 +778,24 @@ static INT32 ShootoujFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 
-
-		if ((DrvInputs[1] & 0xc0) != previous_coin) {
-			coin_nmi = 1;
+		if ((DrvInputs[1] & 0xc0) && (DrvInputs[1] & 0xc0) != previous_coin) {
 			M6502Open(0);
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
-		} else {
-			coin_nmi = 0;
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 	INT32 nCyclesTotal[1] =  { 2000000 / 60 };
-
-	vblank = 0;
 
 	M6502Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		if (i == 248) vblank = 1;
+		if (i == 8) vblank = 0;
+
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
-		if (i == 239) vblank = 1;
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -847,7 +837,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(bankdata);
-		SCAN_VAR(coin_nmi);
 	}
 
 	if (nAction & ACB_WRITE) {

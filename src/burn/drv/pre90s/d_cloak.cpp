@@ -423,8 +423,6 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502ROM0 + 0x4000,	0x4000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(cloak_main_write);
 	M6502SetReadHandler(cloak_main_read);
-	M6502SetWriteMemIndexHandler(cloak_main_write);
-	M6502SetReadMemIndexHandler(cloak_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
@@ -435,8 +433,6 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502ROM1 + 0x2000,	0x2000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(cloak_sub_write);
 	M6502SetReadHandler(cloak_sub_read);
-	M6502SetWriteMemIndexHandler(cloak_sub_write);
-	M6502SetReadMemIndexHandler(cloak_sub_read);
 	M6502Close();
 
 	PokeyInit(1250000, 2, 1.00, 0);

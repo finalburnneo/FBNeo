@@ -441,11 +441,8 @@ static INT32 DrvInit()
 	// map all memory reads/writes in the read/write handlers, and set all these
 	// below.  or else. :)    don't use M6502MapMemory().
 #endif
-	M6502SetWriteMemIndexHandler(ssozumo_main_write);
-	M6502SetReadMemIndexHandler(ssozumo_main_read);
 	M6502SetReadOpArgHandler(ssozumo_main_read);
 	M6502SetReadOpHandler(ssozumo_main_read);
-
 	M6502SetWriteHandler(ssozumo_main_write);
 	M6502SetReadHandler(ssozumo_main_read);
 	M6502Close();
@@ -458,9 +455,6 @@ static INT32 DrvInit()
 #endif
 	M6502SetWriteHandler(ssozumo_sound_write);
 	M6502SetReadHandler(ssozumo_sound_read);
-
-	M6502SetWriteMemIndexHandler(ssozumo_sound_write);
-	M6502SetReadMemIndexHandler(ssozumo_sound_read);
 	M6502SetReadOpArgHandler(ssozumo_sound_read);
 	M6502SetReadOpHandler(ssozumo_sound_read);
 

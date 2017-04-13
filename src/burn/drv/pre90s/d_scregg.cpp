@@ -299,8 +299,6 @@ static void scregg6502Init()
 	M6502MapMemory(DrvColRAM,           0x1400, 0x17ff, MAP_RAM);
 	M6502MapMemory(Drv6502ROM + 0x3000, 0x3000, 0x7fff, MAP_ROM);
 	M6502MapMemory(Drv6502ROM + 0x7000, 0xf000, 0xffff, MAP_ROM);
-	M6502SetWriteMemIndexHandler(eggs_write);
-	M6502SetReadMemIndexHandler(eggs_read);
 	M6502SetReadOpArgHandler(eggs_read);
 	M6502SetWriteHandler(eggs_write);
 	M6502SetReadOpHandler(eggs_read);
@@ -316,8 +314,6 @@ static void dommy6502Init()
 	M6502MapMemory(DrvVidRAM,           0x2000, 0x23ff, MAP_RAM);
 	M6502MapMemory(DrvColRAM,           0x2400, 0x27ff, MAP_RAM);
 	M6502MapMemory(Drv6502ROM + 0xa000, 0xa000, 0xffff, MAP_ROM);
-	M6502SetWriteMemIndexHandler(dommy_write);
-	M6502SetReadMemIndexHandler(dommy_read);
 	M6502SetReadOpArgHandler(dommy_read);
 	M6502SetWriteHandler(dommy_write);
 	M6502SetReadOpHandler(dommy_read);

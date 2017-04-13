@@ -6331,8 +6331,6 @@ static void downtown68kInit()
 		M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
 		M6502SetWriteHandler(downtown_sub_write);
 		M6502SetReadHandler(downtown_sub_read);
-		M6502SetWriteMemIndexHandler(downtown_sub_write);
-		M6502SetReadMemIndexHandler(downtown_sub_read);
 		M6502Close();
 		m65c02_mode = 1;
 
@@ -6388,8 +6386,6 @@ static void metafox68kInit()
 	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(downtown_sub_write);
 	M6502SetReadHandler(metafox_sub_read);
-	M6502SetWriteMemIndexHandler(downtown_sub_write);
-	M6502SetReadMemIndexHandler(metafox_sub_read);
 	M6502Close();
 	m65c02_mode = 1;
 
@@ -6453,8 +6449,6 @@ static void tndrcade68kInit()
 	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(tndrcade_sub_write);
 	M6502SetReadHandler(tndrcade_sub_read);
-	M6502SetWriteMemIndexHandler(tndrcade_sub_write);
-	M6502SetReadMemIndexHandler(tndrcade_sub_read);
 	M6502Close();
 	m65c02_mode = 1;
 
@@ -6544,8 +6538,6 @@ static void twineagle68kInit()
 	M6502MapMemory(DrvSubROM + 0xc000,	0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(downtown_sub_write);
 	M6502SetReadHandler(twineagl_sub_read);
-	M6502SetWriteMemIndexHandler(downtown_sub_write);
-	M6502SetReadMemIndexHandler(twineagl_sub_read);
 	M6502Close();
 	m65c02_mode = 1;
 }
@@ -6638,8 +6630,6 @@ static void calibr5068kInit()
 	BurnLoadRom(DrvSubROM + 0xc000, 4, 1);
 	M6502SetWriteHandler(calibr50_sub_write);
 	M6502SetReadHandler(calibr50_sub_read);
-	M6502SetWriteMemIndexHandler(calibr50_sub_write);
-	M6502SetReadMemIndexHandler(calibr50_sub_read);
 	M6502Close();
 	m65c02_mode = 1;
 
@@ -6673,8 +6663,6 @@ static void usclssic68kInit()
 	BurnLoadRom(DrvSubROM + 0xc000, 4, 1);
 	M6502SetWriteHandler(calibr50_sub_write);
 	M6502SetReadHandler(calibr50_sub_read);
-	M6502SetWriteMemIndexHandler(calibr50_sub_write);
-	M6502SetReadMemIndexHandler(calibr50_sub_read);
 	M6502Close();
 	m65c02_mode = 1;
 }

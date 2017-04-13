@@ -739,8 +739,6 @@ static INT32 DrvInit()
 	M6502MapMemory(Drv6502ROM + 0x4000,	0x4000, 0x7fff, MAP_ROM);
 	M6502SetWriteHandler(millipede_write);
 	M6502SetReadHandler(millipede_read);
-	M6502SetWriteMemIndexHandler(millipede_write);
-	M6502SetReadMemIndexHandler(millipede_read);
 	M6502SetReadOpArgHandler(millipede_read);
 	M6502SetReadOpHandler(millipede_read);
 	M6502Close();
@@ -790,8 +788,6 @@ static INT32 DrvInitcentiped()
 	M6502MapMemory(Drv6502ROM + 0x2000,	0x2000, 0x3fff, MAP_ROM);
 	M6502SetWriteHandler(centipede_write);
 	M6502SetReadHandler(centipede_read);
-	M6502SetWriteMemIndexHandler(centipede_write);
-	M6502SetReadMemIndexHandler(centipede_read);
 	M6502SetReadOpArgHandler(centipede_read);
 	M6502SetReadOpHandler(centipede_read);
 	M6502Close();

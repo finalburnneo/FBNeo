@@ -5684,8 +5684,6 @@ static INT32 CsilverInit()
 	M6502MapMemory(DrvM6502ROM + 0x8000, 0x8000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(csilver_sound_read);
 	M6502SetWriteHandler(csilver_sound_write);
-	M6502SetWriteMemIndexHandler(csilver_sound_write);
-	M6502SetReadMemIndexHandler(csilver_sound_read);
 	M6502Close();
 
 	BurnSetRefreshRate(58.00);

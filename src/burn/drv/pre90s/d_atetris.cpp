@@ -316,9 +316,7 @@ static INT32 CommonInit(INT32 boot)
 	M6502SetReadHandler(atetris_read);
 	M6502SetReadOpHandler(atetris_read);
 	M6502SetReadOpArgHandler(atetris_read);
-	M6502SetReadMemIndexHandler(atetris_read);
 	M6502SetWriteHandler(atetris_write);
-	M6502SetWriteMemIndexHandler(atetris_write);
 	M6502Close();
 
 	SlapsticInit(101);

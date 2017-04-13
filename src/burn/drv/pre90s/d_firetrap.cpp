@@ -684,8 +684,6 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502ROM,	0x8000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(firetrap_sound_write);
 	M6502SetReadHandler(firetrap_sound_read);
-	M6502SetWriteMemIndexHandler(firetrap_sound_write);
-	M6502SetReadMemIndexHandler(firetrap_sound_read);
 	M6502SetReadOpArgHandler(firetrap_sound_read);
 	M6502SetReadOpHandler(firetrap_sound_read);
 	M6502Close();

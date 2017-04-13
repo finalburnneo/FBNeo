@@ -2069,8 +2069,6 @@ static INT32 DrvInit()
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
-	M6502SetReadMemIndexHandler(GauntletSoundRead);
-	M6502SetWriteMemIndexHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_SlapsticInit(0x038000, 104);
@@ -2185,8 +2183,6 @@ static INT32 Gaunt2pInit()
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
-	M6502SetReadMemIndexHandler(GauntletSoundRead);
-	M6502SetWriteMemIndexHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_SlapsticInit(0x038000, 107);
@@ -2311,8 +2307,6 @@ static INT32 Gaunt2Init()
 	M6502MapMemory(DrvM6502Rom            , 0x4000, 0xffff, MAP_ROM);
 	M6502SetReadHandler(GauntletSoundRead);
 	M6502SetWriteHandler(GauntletSoundWrite);
-	M6502SetReadMemIndexHandler(GauntletSoundRead);
-	M6502SetWriteMemIndexHandler(GauntletSoundWrite);
 	M6502Close();
 	
 	atarigen_SlapsticInit(0x038000, 106);

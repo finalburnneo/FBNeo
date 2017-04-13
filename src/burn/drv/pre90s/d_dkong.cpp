@@ -1562,8 +1562,6 @@ static INT32 Dkong3Init()
 	M6502Open(0);
 	//M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, MAP_RAM); // handled below
 	//M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, MAP_ROM);
-	M6502SetWriteMemIndexHandler(dkong3_sound0_write);
-	M6502SetReadMemIndexHandler(dkong3_sound0_read);
 	M6502SetReadOpArgHandler(dkong3_sound0_read);
 	M6502SetReadOpHandler(dkong3_sound0_read);
 	M6502SetWriteHandler(dkong3_sound0_write);
@@ -1574,8 +1572,6 @@ static INT32 Dkong3Init()
 	M6502Open(1);
 	//M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, MAP_RAM); // handled below
 	//M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, MAP_ROM);
-	M6502SetWriteMemIndexHandler(dkong3_sound1_write);
-	M6502SetReadMemIndexHandler(dkong3_sound1_read);
 	M6502SetReadOpArgHandler(dkong3_sound1_read);
 	M6502SetReadOpHandler(dkong3_sound1_read);
 	M6502SetWriteHandler(dkong3_sound1_write);

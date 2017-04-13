@@ -720,8 +720,6 @@ static INT32 DrvInit()
 	M6502Open(0);
 	M6502SetWriteHandler(audio_write);
 	M6502SetReadHandler(audio_read);
-	M6502SetWriteMemIndexHandler(audio_write);
-	M6502SetReadMemIndexHandler(audio_read);
 	M6502SetReadOpArgHandler(audio_read);
 	M6502SetReadOpHandler(audio_read);
 	M6502Close();

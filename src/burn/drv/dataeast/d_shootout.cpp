@@ -473,8 +473,6 @@ static INT32 ShootoutInit()
 	M6502MapMemory(DrvM6502ROM1,		0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(shootout_sound_write);
 	M6502SetReadHandler(shootout_sound_read);
-	M6502SetWriteMemIndexHandler(shootout_sound_write);
-	M6502SetReadMemIndexHandler(shootout_sound_read);
 	M6502Close();
 
 	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);

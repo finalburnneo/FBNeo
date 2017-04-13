@@ -318,8 +318,6 @@ static INT32 DrvInit()
 	M6502MapMemory(Rom + 0x5000, 0xd000, 0xffff, MAP_ROM); // Rom Mirror
 	M6502SetReadHandler(mole_read_byte);
 	M6502SetWriteHandler(mole_write_byte);
-	M6502SetReadMemIndexHandler(mole_read_byte);
-	M6502SetWriteMemIndexHandler(mole_write_byte);
 	M6502SetReadOpHandler(mole_read_byte);
 	M6502SetReadOpArgHandler(mole_read_byte);
 	M6502Close();

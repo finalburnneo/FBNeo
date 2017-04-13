@@ -647,8 +647,6 @@ static INT32 LassoInit()
 	M6502MapMemory(DrvM6502ROM0,		0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_main_write);
 	M6502SetReadHandler(lasso_main_read);
-	M6502SetWriteMemIndexHandler(lasso_main_write);
-	M6502SetReadMemIndexHandler(lasso_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
@@ -658,8 +656,6 @@ static INT32 LassoInit()
 	M6502MapMemory(DrvM6502ROM1 + 0x7000,	0xf000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_sound_write);
 	M6502SetReadHandler(lasso_sound_read);
-	M6502SetWriteMemIndexHandler(lasso_sound_write);
-	M6502SetReadMemIndexHandler(lasso_sound_read);
 	M6502Close();
 
 	M6502Init(2, TYPE_M6502);
@@ -745,8 +741,6 @@ static INT32 ChameleoInit()
 	M6502MapMemory(DrvM6502ROM0 + 0x6000,	0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_main_write);
 	M6502SetReadHandler(lasso_main_read);
-	M6502SetWriteMemIndexHandler(lasso_main_write);
-	M6502SetReadMemIndexHandler(lasso_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
@@ -756,8 +750,6 @@ static INT32 ChameleoInit()
 	M6502MapMemory(DrvM6502ROM1 + 0x7000,	0xf000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_sound_write);
 	M6502SetReadHandler(lasso_sound_read);
-	M6502SetWriteMemIndexHandler(lasso_sound_write);
-	M6502SetReadMemIndexHandler(lasso_sound_read);
 	M6502Close();
 
 	SN76489Init(0, 2000000, 0);
@@ -840,8 +832,6 @@ static INT32 WwjgtinInit()
 	M6502MapMemory(DrvM6502ROM0 + 0x4000,	0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_main_write);
 	M6502SetReadHandler(lasso_main_read);
-	M6502SetWriteMemIndexHandler(lasso_main_write);
-	M6502SetReadMemIndexHandler(lasso_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
@@ -851,8 +841,6 @@ static INT32 WwjgtinInit()
 	M6502MapMemory(DrvM6502ROM1 + 0x4000,	0xc000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_sound_write);
 	M6502SetReadHandler(lasso_sound_read);
-	M6502SetWriteMemIndexHandler(lasso_sound_write);
-	M6502SetReadMemIndexHandler(lasso_sound_read);
 	M6502Close();
 
 	SN76489Init(0, 2000000, 0);
@@ -954,8 +942,6 @@ static INT32 PinboInit()
 	M6502MapMemory(DrvM6502ROM0 + 0xa000,	0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(lasso_main_write);
 	M6502SetReadHandler(lasso_main_read);
-	M6502SetWriteMemIndexHandler(lasso_main_write);
-	M6502SetReadMemIndexHandler(lasso_main_read);
 	M6502Close();
 
 	ZetInit(0);

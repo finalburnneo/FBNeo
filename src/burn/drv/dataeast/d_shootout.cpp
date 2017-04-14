@@ -177,14 +177,6 @@ static void bankswitch(INT32 data)
 	M6502MapMemory(DrvM6502ROM0 + bank, 0x4000, 0x7fff, MAP_ROM);
 }
 
-static void soundcpuSync()
-{
-	INT32 todo = ((M6502TotalCycles() * 3) / 2);
-	if (todo > 0) {
-		BurnTimerUpdate(todo);
-	}
-}
-
 static void shootout_main_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x1004 && address <= 0x17ff) {
@@ -211,7 +203,6 @@ static void shootout_main_write(UINT16 address, UINT8 data)
 			M6502Close();
 			M6502Open(1);
 			M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
-			soundcpuSync();
 			M6502Close();
 			M6502Open(0);
 		return;

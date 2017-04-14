@@ -296,22 +296,32 @@ void M6502SetIRQLine(INT32 vector, INT32 status)
 
 	if (status == CPU_IRQSTATUS_NONE) {
 		pCurrentCPU->set_irq_line(vector, 0);
+		return;
 	}
 	
 	if (status == CPU_IRQSTATUS_ACK) {
 		pCurrentCPU->set_irq_line(vector, 1);
+		return;
 	}
 	
 	if (status == CPU_IRQSTATUS_AUTO) {
-		pCurrentCPU->set_irq_line(vector, 1);
-		pCurrentCPU->execute(0);
-		pCurrentCPU->set_irq_line(vector, 0);
-		pCurrentCPU->execute(0);
+		if (vector == CPU_IRQLINE_NMI /* 0x20 */) {
+			pCurrentCPU->set_irq_line(vector, 1);
+			pCurrentCPU->set_irq_line(vector, 0);
+			return;
+		} else {
+			pCurrentCPU->set_irq_line(vector, 1);
+			pCurrentCPU->execute(0);
+			pCurrentCPU->set_irq_line(vector, 0);
+			pCurrentCPU->execute(0);
+			return;
+		}
 	}
 
 	if (status == CPU_IRQSTATUS_HOLD) {
 		m6502_set_irq_hold();
 		pCurrentCPU->set_irq_line(vector, 1);
+		return;
 	}
 }
 

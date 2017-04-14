@@ -76,67 +76,42 @@ STDINPUTINFO(Ssozumo)
 
 static struct BurnDIPInfo SsozumoDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xfd, NULL			},
-	{0x12, 0xff, 0xff, 0x0f, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Difficulty"		},
-	{0x11, 0x01, 0x01, 0x01, "Normal"		},
-	{0x11, 0x01, 0x01, 0x00, "Hard"			},
-
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x11, 0x01, 0x02, 0x02, "Off"			},
-	{0x11, 0x01, 0x02, 0x00, "On"			},
-
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
-	{0x12, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
+	{0x11, 0xff, 0xff, 0x1f, NULL			},
+	{0x12, 0xff, 0xff, 0xfd, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
-	{0x12, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
-	{0x12, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
-	{0x12, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
-	{0x12, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+	{0x11, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"	},
+	{0x11, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"	},
+	{0x11, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"	},
+	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"	},
+	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"	},
+	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"	},
+	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x12, 0x01, 0x20, 0x00, "Upright"		},
-	{0x12, 0x01, 0x20, 0x20, "Cocktail"		},
+	{0x11, 0x01, 0x20, 0x00, "Upright"		},
+	{0x11, 0x01, 0x20, 0x20, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Controls"		},
-	{0x12, 0x01, 0x40, 0x00, "Single"		},
-	{0x12, 0x01, 0x40, 0x40, "Dual"			},
+	{0x11, 0x01, 0x40, 0x00, "Single"		},
+	{0x11, 0x01, 0x40, 0x40, "Dual"			},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x12, 0x01, 0x01, 0x01, "Normal"		},
+	{0x12, 0x01, 0x01, 0x00, "Hard"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x12, 0x01, 0x02, 0x02, "Off"			},
+	{0x12, 0x01, 0x02, 0x00, "On"			},
 };
 
 STDDIPINFO(Ssozumo)
 
 static void ssozumo_main_write(UINT16 address, UINT8 data)
 {
-	if (address <= 0x07ff) {
-		DrvSprRAM[address] = data;
-		return;
-	}
-
-	if (address >= 0x2000 && address <= 0x23ff) {
-		DrvVidRAM1[address - 0x2000] = data;
-		return;
-	}
-
-	if (address >= 0x2400 && address <= 0x27ff) {
-		DrvColRAM1[address - 0x2400] = data;
-		return;
-	}
-
-	if (address >= 0x3000 && address <= 0x31ff) {
-		DrvVidRAM0[address - 0x3000] = data;
-		return;
-	}
-
-	if (address >= 0x3200 && address <= 0x37ff) {
-		DrvColRAM0[address - 0x3200] = data;
-		return;
-	}
-
 	if (address >= 0x4050 && address <= 0x407f) {
 		if (DrvPalRAM[address - 0x4050] != data) {
 			palette_written = 1;
@@ -172,30 +147,6 @@ static void ssozumo_main_write(UINT16 address, UINT8 data)
 
 static UINT8 ssozumo_main_read(UINT16 address)
 {
-	if (address <= 0x07ff) {
-		return DrvSprRAM[address];
-	}
-
-	if (address >= 0x2000 && address <= 0x23ff) {
-		return DrvVidRAM1[address - 0x2000];
-	}
-
-	if (address >= 0x2400 && address <= 0x27ff) {
-		return DrvColRAM1[address - 0x2400];
-	}
-
-	if (address >= 0x3000 && address <= 0x31ff) {
-		return DrvVidRAM0[address - 0x3000];
-	}
-
-	if (address >= 0x3200 && address <= 0x37ff) {
-		return DrvColRAM0[address - 0x3200];
-	}
-
-	if (address >= 0x6000) {
-		return Drv6502ROM0[address - 0x6000];
-	}
-
 	if (address >= 0x4050 && address <= 0x407f) {
 		return DrvPalRAM[address - 0x4050];
 	}
@@ -220,11 +171,6 @@ static UINT8 ssozumo_main_read(UINT16 address)
 
 static void ssozumo_sound_write(UINT16 address, UINT8 data)
 {
-	if (address <= 0x01ff) {
-		Drv6502RAM1[address] = data;
-		return;
-	}
-
 	switch (address)
 	{
 		case 0x2000:
@@ -246,14 +192,6 @@ static void ssozumo_sound_write(UINT16 address, UINT8 data)
 
 static UINT8 ssozumo_sound_read(UINT16 address)
 {
-	if (address <= 0x01ff) {
-		return Drv6502RAM1[address];
-	}
-
-	if (address >= 0x4000) {
-		return Drv6502ROM1[address - 0x4000];
-	}
-
 	switch (address)
 	{
 		case 0x2007:
@@ -430,33 +368,22 @@ static INT32 DrvInit()
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-#if 0
 	M6502MapMemory(DrvSprRAM,	0x0000, 0x07ff, MAP_RAM);
 	M6502MapMemory(DrvVidRAM1,	0x2000, 0x23ff, MAP_RAM);
 	M6502MapMemory(DrvColRAM1,	0x2400, 0x27ff, MAP_RAM);
 	M6502MapMemory(DrvVidRAM0,	0x3000, 0x31ff, MAP_RAM);
 	M6502MapMemory(DrvColRAM0,	0x3200, 0x37ff, MAP_RAM);
 	M6502MapMemory(Drv6502ROM0,	0x6000, 0xffff, MAP_ROM);
-	// note to future 6502 developments:
-	// map all memory reads/writes in the read/write handlers, and set all these
-	// below.  or else. :)    don't use M6502MapMemory().
-#endif
-	M6502SetReadOpArgHandler(ssozumo_main_read);
-	M6502SetReadOpHandler(ssozumo_main_read);
 	M6502SetWriteHandler(ssozumo_main_write);
 	M6502SetReadHandler(ssozumo_main_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_M6502);
 	M6502Open(1);
-#if 0
 	M6502MapMemory(Drv6502RAM1,	0x0000, 0x01ff, MAP_RAM);
 	M6502MapMemory(Drv6502ROM1,	0x4000, 0xffff, MAP_ROM);
-#endif
 	M6502SetWriteHandler(ssozumo_sound_write);
 	M6502SetReadHandler(ssozumo_sound_read);
-	M6502SetReadOpArgHandler(ssozumo_sound_read);
-	M6502SetReadOpHandler(ssozumo_sound_read);
 
 	M6502Close();
 
@@ -698,13 +625,12 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += M6502Run(nSegment);
-
-		if (i == (nInterleave - 16)) {
+		if (i == 240) {
 			vblank = 1;
 			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
+		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+		nCyclesDone[0] += M6502Run(nSegment);
 		M6502Close();
 
 		M6502Open(1);

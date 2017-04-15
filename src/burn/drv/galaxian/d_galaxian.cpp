@@ -14705,7 +14705,7 @@ static INT32 FroggerEncGfxInit()
 	GalPostLoadCallbackFunction = FroggerEncGfxPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	FroggerAdjust = 1;	
@@ -14739,7 +14739,7 @@ static INT32 FroggermcInit()
 	GalPostLoadCallbackFunction = FroggermcPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 	
-	nRet = GalInit();	
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
@@ -14757,7 +14757,7 @@ static INT32 FroggersInit()
 	GalPostLoadCallbackFunction = MapTheend;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 	
-	nRet = GalInit();	
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	KonamiPPIInit();
@@ -14795,7 +14795,7 @@ static INT32 FrogfInit()
 	GalPostLoadCallbackFunction = FrogfPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 
-	nRet = GalInit();	
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	KonamiPPIInit();
@@ -14852,7 +14852,7 @@ static INT32 FroggrsInit()
 	GalPostLoadCallbackFunction = FroggrsPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 	
-	nRet = GalInit();	
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	KonamiPPIInit();
@@ -16833,7 +16833,7 @@ static INT32 TheendInit()
 	GalPostLoadCallbackFunction = MapTheend;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = GalaxianDrawBackground;
@@ -16890,7 +16890,7 @@ static INT32 ScrambleInit()
 	GalPostLoadCallbackFunction = MapTheend;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -16923,7 +16923,7 @@ static INT32 ExplorerInit()
 	GalPostLoadCallbackFunction = ExplorerPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -16941,7 +16941,7 @@ static INT32 AtlantisInit()
 	GalPostLoadCallbackFunction = MapTheend;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -16990,7 +16990,7 @@ static INT32 CkongsInit()
 	GalPostLoadCallbackFunction = CkongsPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	KonamiPPIInit();
@@ -17046,7 +17046,7 @@ static INT32 MarsInit()
 	GalPostLoadCallbackFunction = MarsPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -17064,7 +17064,7 @@ static INT32 DevilfshInit()
 	GalPostLoadCallbackFunction = MarsPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalNumChars = 0x100;
@@ -17126,7 +17126,7 @@ static INT32 Newsin7Init()
 	GalPostLoadCallbackFunction = Newsin7PostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalNumChars = 0x100;
@@ -17191,7 +17191,7 @@ static INT32 MrkougarInit()
 	GalPostLoadCallbackFunction = MrkougarPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	INT32 MrkougarPlaneOffsets[2] = {0, 4};
@@ -17221,7 +17221,7 @@ static INT32 MrkougbInit()
 	GalPostLoadCallbackFunction = MapMrkougar;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -17251,7 +17251,7 @@ static INT32 HotshockInit()
 	GalPostLoadCallbackFunction = HotshockPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	ZetOpen(1);
@@ -17284,7 +17284,7 @@ static INT32 ConquerInit()
 	GalPostLoadCallbackFunction = ConquerPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	ZetOpen(1);
@@ -17314,7 +17314,7 @@ static INT32 CavelonInit()
 	GalPostLoadCallbackFunction = CavelonPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -17366,7 +17366,7 @@ static INT32 MimonscrInit()
 	GalPostLoadCallbackFunction = MimonscrPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -18259,7 +18259,7 @@ static INT32 ScorpionInit()
 	GalPostLoadCallbackFunction = ScorpionPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	ZetOpen(1);
@@ -18525,7 +18525,7 @@ static INT32 Ad2083Init()
 	GalPostLoadCallbackFunction = Ad2083PostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_AD2083AY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	ZetOpen(1);
@@ -18790,7 +18790,7 @@ static INT32 SfxInit()
 	GalPostLoadCallbackFunction = SfxPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -18853,7 +18853,7 @@ static INT32 SkelagonInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC;
 	GalZ80Rom1Size = 0x1000;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -18915,7 +18915,7 @@ static INT32 MonsterzInit()
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC;
 	GalZ80Rom3Size = 0x1000;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20323,7 +20323,7 @@ static INT32 ScobraInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20341,7 +20341,7 @@ static INT32 ScobraeInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	for (INT32 Offs = 0; Offs < 0x6000; Offs++) {
@@ -20376,7 +20376,7 @@ static INT32 LosttombInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
@@ -20438,7 +20438,7 @@ static INT32 Tazmani2Init()
 	GalPostLoadCallbackFunction = MapTazmani2;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20456,7 +20456,7 @@ static INT32 AnteaterInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
@@ -20529,7 +20529,7 @@ static INT32 AnteatergInit()
 	GalPostLoadCallbackFunction = AnteatergPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = AnteaterDrawBackground;
@@ -20583,7 +20583,7 @@ static INT32 AnteaterukInit()
 	GalPostLoadCallbackFunction = AnteaterukPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20622,7 +20622,7 @@ static INT32 SuperbonInit()
 	GalPostLoadCallbackFunction = SuperbonPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20647,7 +20647,7 @@ static INT32 CalipsoInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20701,7 +20701,7 @@ static INT32 MoonwarInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20741,7 +20741,7 @@ static INT32 StratgyxInit()
 	GalPostLoadCallbackFunction = StratgyxPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalCalcPaletteFunction = StratgyxCalcPalette;
@@ -20788,7 +20788,7 @@ static INT32 DarkplntInit()
 	GalPostLoadCallbackFunction = DarkplntPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalCalcPaletteFunction = DarkplntCalcPalette;
@@ -20814,7 +20814,7 @@ static INT32 RescueInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
@@ -20857,7 +20857,7 @@ static INT32 MinefldInit()
 	GalPostLoadCallbackFunction = MapScobra;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
@@ -20929,7 +20929,7 @@ static INT32 HustlerInit()
 	GalPostLoadCallbackFunction = HustlerPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -20980,7 +20980,7 @@ static INT32 BilliardInit()
 	GalPostLoadCallbackFunction = BilliardPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -21086,7 +21086,7 @@ static INT32 MimonkeyInit()
 	GalPostLoadCallbackFunction = MimonkeyPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -21113,7 +21113,7 @@ static INT32 MimonscoInit()
 	GalPostLoadCallbackFunction = MapMimonkey;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;	
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -21727,7 +21727,7 @@ static INT32 DambustrInit()
 	
 	GalPostLoadCallbackFunction = DambustrPostLoad;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	UINT8 Temp[16];
@@ -22979,7 +22979,7 @@ static INT32 HunchbksInit()
 	GalPostLoadCallbackFunction = HunchbksPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	HunchbksSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
@@ -23011,7 +23011,7 @@ static INT32 HncholmsInit()
 	GalPostLoadCallbackFunction = HncholmsPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	HunchbksSoundInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;

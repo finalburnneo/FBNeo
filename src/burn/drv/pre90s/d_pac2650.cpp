@@ -580,7 +580,7 @@ STD_ROM_FN(_8bpm)
 
 struct BurnDriver BurnDrv_8bpm = {
 	"8bpm", "8ballact", NULL, NULL, "1985",
-	"Eight Ball Action (Pac-Man conversion)\0", NULL, "Seatongrove Ltd (Magic Eletronics USA license)", "Pac-man",
+	"Eight Ball Action (Pac-Man conversion)\0", "imperfect graphics", "Seatongrove Ltd (Magic Eletronics USA license)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_SPORTSMISC, 0,
 	NULL, _8bpmRomInfo, _8bpmRomName, NULL, NULL, _8bpmInputInfo, _8bpmDIPInfo,

@@ -978,7 +978,7 @@ struct BurnDriver BurnDrvtopsecrt = {
 };
 
 
-// Bionic Commandos (bootleg)
+// Bionic Commandos (bootleg, set 1)
 
 static struct BurnRomInfo bioniccblRomDesc[] = {
 	{ "02l.bin",		0x10000, 0xb2fe1ddb, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -1017,10 +1017,58 @@ STD_ROM_FN(bioniccbl)
 
 struct BurnDriver BurnDrvbioniccbl = {
 	"bioniccbl", "bionicc", NULL, NULL, "1987",
-	"Bionic Commandos (bootleg)\0", NULL, "Capcom", "Miscellaneous",
+	"Bionic Commandos (bootleg, set 1)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, bioniccblRomInfo, bioniccblRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Bionic Commandos (bootleg, set 2)
+
+static struct BurnRomInfo bioniccbl2RomDesc[] = {
+	{ "2",				0x10000, 0xc03d3424, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
+	{ "4",				0x10000, 0x9f13eb9d, 1 | BRF_PRG | BRF_ESS },	//  1
+	{ "3",				0x10000, 0xa909ec2c, 1 | BRF_PRG | BRF_ESS },	//  2
+	{ "5",				0x10000, 0x4e6b75ce, 1 | BRF_PRG | BRF_ESS },	//  3
+
+	{ "01.bin",			0x08000, 0x8ea07917, 2 | BRF_PRG | BRF_ESS },	//  4 Z80 Code
+
+	{ "06.bin",			0x04000, 0x4e6b81d9, 3 | BRF_GRA },				//  5 Characters
+
+	{ "05.bin",			0x08000, 0x9bf8dc7f, 4 | BRF_GRA },				//  6 Background Tiles
+	{ "04.bin",			0x08000, 0x1b43bf63, 4 | BRF_GRA },				//  7
+
+	{ "ts_12.17f",		0x08000, 0xe4b4619e, 5 | BRF_GRA },				//  8 Foreground Tiles
+	{ "ts_11.15f",		0x08000, 0xab30237a, 5 | BRF_GRA },				//  9
+	{ "ts_17.17g",		0x08000, 0xdeb657e4, 5 | BRF_GRA },				// 10
+	{ "ts_16.15g",		0x08000, 0xd363b5f9, 5 | BRF_GRA },				// 11 
+	{ "ts_13.18f",		0x08000, 0xa8f5a004, 5 | BRF_GRA },				// 12
+	{ "ts_18.18g",		0x08000, 0x3b36948c, 5 | BRF_GRA },				// 13
+	{ "ts_23.18j",		0x08000, 0xbbfbe58a, 5 | BRF_GRA },				// 14
+	{ "ts_24.18k",		0x08000, 0xf156e564, 5 | BRF_GRA },				// 15
+
+	{ "07.bin",			0x10000, 0xa0e78996, 6 | BRF_GRA },				// 16 Sprites 
+	{ "11.bin",			0x10000, 0x37cb11c2, 6 | BRF_GRA },				// 17
+	{ "15.bin",			0x10000, 0x4e0354ce, 6 | BRF_GRA },				// 18
+	{ "16.bin",			0x10000, 0xac89e5cc, 6 | BRF_GRA },				// 19
+	
+	{ "63s141.18f",		0x00100, 0xb58d0023, 0 | BRF_OPT },				// 20 Priority (not used)
+	
+	{ "c8751h-88",     	0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+};
+
+STD_ROM_PICK(bioniccbl2)
+STD_ROM_FN(bioniccbl2)
+
+struct BurnDriver BurnDrvbioniccbl2 = {
+	"bioniccbl2", "bionicc", NULL, NULL, "1987",
+	"Bionic Commandos (bootleg, set 2)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
+	NULL, bioniccbl2RomInfo, bioniccbl2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

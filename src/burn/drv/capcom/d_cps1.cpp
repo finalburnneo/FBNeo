@@ -13098,7 +13098,7 @@ static struct BurnRomInfo WofsjcRomDesc[] = {
 	{ "5.bin",         0x080000, 0x291f0f0b, BRF_GRA | CPS1_TILES },
 	{ "6.bin",         0x080000, 0x3edeb949, BRF_GRA | CPS1_TILES },
 	{ "7.bin",         0x080000, 0x1abd14d6, BRF_GRA | CPS1_TILES },
-	{ "9.bin",         0x080000, 0xb27948e3, BRF_GRA | CPS1_TILES },
+	{ "8.bin",         0x080000, 0xb27948e3, BRF_GRA | CPS1_TILES },
 	
 	{ "9.bin",         0x010000, 0x210c376f, BRF_PRG | CPS1_Z80_PROGRAM },
 

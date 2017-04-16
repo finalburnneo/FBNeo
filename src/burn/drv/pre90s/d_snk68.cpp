@@ -1191,6 +1191,8 @@ static INT32 DrvExit()
 	BurnFree (Mem);
 
 	game_select = 0;
+	game_rotates = 0;
+	game_rotates_inverted = 0;
 
 	return 0;
 }

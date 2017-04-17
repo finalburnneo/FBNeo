@@ -2067,7 +2067,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nSegment);
 		if (microcontroller_id == 0x8803) { // goldmedl
 
-			if (i == (nInterleave * (240-16)) / 253) {
+			if (i == (nInterleave * (240-18)) / 253) {
 				SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			}
 
@@ -2075,7 +2075,7 @@ static INT32 DrvFrame()
 				SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			}
 		} else {
-			if (i == (nInterleave * (240-16)) / 253) {
+			if (i == (nInterleave * (240-18)) / 253) {
 				SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 			}
 		}	

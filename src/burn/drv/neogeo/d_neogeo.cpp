@@ -15113,7 +15113,7 @@ static INT32 Samsho2spExit()
     return NeoExit();
 }
 
-struct BurnDriverD BurnDrvSamsho2sp = {
+struct BurnDriver BurnDrvSamsho2sp = {
 	"samsho2sp", "samsho2", "neogeo", NULL, "2017",
 	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017)\0", NULL, "SNK", "Neo Geo MVS",
 	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Special 2017)\0", NULL, NULL, NULL,

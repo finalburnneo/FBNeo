@@ -4001,7 +4001,7 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 		BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
 
 		MSM6295Init(0, 1056000 / 132, 1);
-		MSM6295SetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 	}
 
 	if (sound_system == 3)

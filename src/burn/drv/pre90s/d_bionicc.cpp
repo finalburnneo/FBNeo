@@ -925,7 +925,7 @@ struct BurnDriver BurnDrvbionicc2 = {
 };
 
 
-// Top Secret (Japan set 1)
+// Top Secret (Japan)
 
 static struct BurnRomInfo topsecrtRomDesc[] = {
 	{ "ts_02.1a",		0x10000, 0xb2fe1ddb, 1 | BRF_PRG | BRF_ESS },	//  0 68k Code
@@ -969,7 +969,7 @@ STD_ROM_FN(topsecrt)
 
 struct BurnDriver BurnDrvtopsecrt = {
 	"topsecrt", "bionicc", NULL, NULL, "1987",
-	"Top Secret (Japan set 1)\0", NULL, "Capcom", "Miscellaneous",
+	"Top Secret (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM, 0,
 	NULL, topsecrtRomInfo, topsecrtRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

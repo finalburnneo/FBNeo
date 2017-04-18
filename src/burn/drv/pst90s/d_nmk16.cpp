@@ -5255,8 +5255,8 @@ static INT32 BioshipDraw()
 	DrvPaletteRecalc();
 
 	UINT16 *scroll = (UINT16*)DrvScrollRAM;
-	INT32 bgscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[0x02]) & 0x100) | (BURN_ENDIAN_SWAP_INT16(scroll[0x03]) >> 8);
-	INT32 bgscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[0x00]) & 0xf00) | (BURN_ENDIAN_SWAP_INT16(scroll[0x01]) >> 8);
+	INT32 bgscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[0x08 + 0x02]) & 0x100) | (BURN_ENDIAN_SWAP_INT16(scroll[0x08 + 0x03]) >> 8);
+	INT32 bgscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[0x08 + 0x00]) & 0xf00) | (BURN_ENDIAN_SWAP_INT16(scroll[0x08 + 0x01]) >> 8);
 	INT32 fgscrolly = (BURN_ENDIAN_SWAP_INT16(scroll[0x02]) & 0x100) | (BURN_ENDIAN_SWAP_INT16(scroll[0x03]) >> 8);
 	INT32 fgscrollx = (BURN_ENDIAN_SWAP_INT16(scroll[0x00]) & 0xf00) | (BURN_ENDIAN_SWAP_INT16(scroll[0x01]) >> 8);
 

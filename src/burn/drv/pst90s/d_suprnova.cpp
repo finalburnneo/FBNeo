@@ -1117,6 +1117,8 @@ static INT32 DrvInit(INT32 bios)
 	if (!sixtyhz) BurnSetRefreshRate(59.5971);
 
 	YMZ280BInit(16666666, NULL);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 
 	skns_init();
 	skns_sprite_kludge(sprite_kludge_x, sprite_kludge_y);
@@ -1781,7 +1783,7 @@ static INT32 SknsInit() {
 
 struct BurnDriver BurnDrvSkns = {
 	"skns", NULL, NULL, NULL, "1996",
-	"Super Kaneko Nova System BIOS\0", "BIOS only", "Kaneko", "Miscellaneous",
+	"Super Kaneko Nova System BIOS\0", "BIOS only", "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_BOARDROM, 0, HARDWARE_KANEKO_SKNS, GBF_BIOS, 0,
 	NULL, sknsRomInfo, sknsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
@@ -1822,7 +1824,7 @@ static INT32 CyvernInit()
 
 struct BurnDriver BurnDrvCyvern = {
 	"cyvern", NULL, "skns", NULL, "1998",
-	"Cyvern (US)\0", NULL, "Kaneko", "Miscellaneous",
+	"Cyvern (US)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, cyvernRomInfo, cyvernRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
@@ -1863,7 +1865,7 @@ static INT32 CyvernJInit()
 
 struct BurnDriver BurnDrvCyvernJ = {
 	"cyvernj", "cyvern", "skns", NULL, "1998",
-	"Cyvern (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Cyvern (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, cyvernjRomInfo, cyvernjRomName, NULL, NULL, CyvernInputInfo, CyvernDIPInfo,
@@ -1899,7 +1901,7 @@ static INT32 GutsnInit()
 
 struct BurnDriver BurnDrvGutsn = {
 	"gutsn", NULL, "skns", NULL, "2000",
-	"Guts'n (Japan)\0", NULL, "Kaneko / Kouyousha", "Miscellaneous",
+	"Guts'n (Japan)\0", NULL, "Kaneko / Kouyousha", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, gutsnRomInfo, gutsnRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
@@ -1944,7 +1946,7 @@ static INT32 SengekisInit()
 
 struct BurnDriver BurnDrvSengekis = {
 	"sengekis", NULL, "skns", NULL, "1997",
-	"Sengeki Striker (Asia)\0", NULL, "Kaneko / Warashi", "Miscellaneous",
+	"Sengeki Striker (Asia)\0", NULL, "Kaneko / Warashi", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, sengekisRomInfo, sengekisRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
@@ -1988,7 +1990,7 @@ static INT32 SengekisjInit()
 
 struct BurnDriver BurnDrvSengekisj = {
 	"sengekisj", "sengekis", "skns", NULL, "1997",
-	"Sengeki Striker (Japan)\0", NULL, "Kaneko / Warashi", "Miscellaneous",
+	"Sengeki Striker (Japan)\0", NULL, "Kaneko / Warashi", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_VERSHOOT, 0,
 	NULL, sengekisjRomInfo, sengekisjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo,
@@ -2028,7 +2030,7 @@ static INT32 PuzzloopInit()
 
 struct BurnDriver BurnDrvPuzzloop = {
 	"puzzloop", NULL, "skns", NULL, "1998",
-	"Puzz Loop (Europe, v0.94)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (Europe, v0.94)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopRomInfo, puzzloopRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
@@ -2057,7 +2059,7 @@ STD_ROM_FN(puzzloope)
 
 struct BurnDriver BurnDrvPuzzloope = {
 	"puzzloope", "puzzloop", "skns", NULL, "1998",
-	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (Europe, v0.93)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopeRomInfo, puzzloopeRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
@@ -2097,7 +2099,7 @@ static INT32 PuzzloopjInit()
 
 struct BurnDriver BurnDrvPuzzloopj = {
 	"puzzloopj", "puzzloop", "skns", NULL, "1998",
-	"Puzz Loop (Japan)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (Japan)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopjRomInfo, puzzloopjRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
@@ -2137,7 +2139,7 @@ static INT32 PuzzloopaInit()
 
 struct BurnDriver BurnDrvPuzzloopa = {
 	"puzzloopa", "puzzloop", "skns", NULL, "1998",
-	"Puzz Loop (Asia)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (Asia)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopaRomInfo, puzzloopaRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
@@ -2177,7 +2179,7 @@ static INT32 PuzzloopkInit()
 
 struct BurnDriver BurnDrvPuzzloopk = {
 	"puzzloopk", "puzzloop", "skns", NULL, "1998",
-	"Puzz Loop (Korea)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (Korea)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopkRomInfo, puzzloopkRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
@@ -2217,7 +2219,7 @@ static INT32 PuzzloopuInit()
 
 struct BurnDriver BurnDrvPuzzloopu = {
 	"puzzloopu", "puzzloop", "skns", NULL, "1998",
-	"Puzz Loop (USA)\0", NULL, "Mitchell", "Miscellaneous",
+	"Puzz Loop (USA)\0", NULL, "Mitchell", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, puzzloopuRomInfo, puzzloopuRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //PuzzloopInputInfo, PuzzloopDIPInfo,
@@ -2257,7 +2259,7 @@ static INT32 TeljanInit()
 
 struct BurnDriver BurnDrvTeljan = {
 	"teljan",  NULL, "skns",NULL, "1999",
-	"Tel Jan\0", NULL, "Electro Design", "Miscellaneous",
+	"Tel Jan\0", NULL, "Electro Design", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, teljanRomInfo, teljanRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
@@ -2296,7 +2298,7 @@ static INT32 PanicstrInit()
 
 struct BurnDriver BurnDrvPanicstr = {
 	"panicstr", NULL, "skns", NULL, "1999",
-	"Panic Street (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Panic Street (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, panicstrRomInfo, panicstrRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2333,7 +2335,7 @@ static INT32 Galpani4Init()
 
 struct BurnDriver BurnDrvGalpani4 = {
 	"galpani4", NULL, "skns", NULL, "1996",
-	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic 4 (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpani4RomInfo, galpani4RomName, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
@@ -2371,7 +2373,7 @@ static INT32 Galpani4kInit()
 
 struct BurnDriver BurnDrvGalpani4k = {
 	"galpani4k", "galpani4", "skns", NULL, "1996",
-	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic 4 (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpani4kRomInfo, galpani4kRomName, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
@@ -2408,7 +2410,7 @@ static INT32 GalpanidxInit()
 
 struct BurnDriver BurnDrvGalpanidx = {
 	"galpanidx", "galpani4", "skns", NULL, "2001",
-	"Gals Panic DX (Asia)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic DX (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanidxRomInfo, galpanidxRomName, NULL, NULL, CyvernInputInfo, CyvernNoSpeedhackDIPInfo,
@@ -2446,7 +2448,7 @@ static INT32 GalpanisInit()
 
 struct BurnDriver BurnDrvGalpanis = {
 	"galpanis", NULL, "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S - Extra Edition (Europe)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisRomInfo, galpanisRomName, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
@@ -2484,7 +2486,7 @@ static INT32 GalpanisjInit()
 
 struct BurnDriver BurnDrvGalpanisj = {
 	"galpanisj", "galpanis", "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S - Extra Edition (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpanisjRomInfo, galpanisjRomName, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
@@ -2522,7 +2524,7 @@ static INT32 GalpaniskInit()
 
 struct BurnDriver BurnDrvGalpanisk = {
 	"galpanisk", "galpanis", "skns", NULL, "1997",
-	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S - Extra Edition (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpaniskRomInfo, galpaniskRomName, NULL, NULL, SknsInputInfo, SknsNoSpeedhackDIPInfo,
@@ -2567,7 +2569,7 @@ static INT32 Galpans2Init()
 
 struct BurnDriver BurnDrvGalpans2 = {
 	"galpans2", NULL, "skns", NULL, "1999",
-	"Gals Panic S2 (Europe)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S2 (Europe)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2RomInfo, galpans2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2611,7 +2613,7 @@ static INT32 Galpans2jInit()
 
 struct BurnDriver BurnDrvGalpans2j = {
 	"galpans2j", "galpans2", "skns", NULL, "1999",
-	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S2 (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2jRomInfo, galpans2jRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2655,7 +2657,7 @@ static INT32 Galpans2aInit()
 
 struct BurnDriver BurnDrvGalpans2a = {
 	"galpans2a", "galpans2", "skns", NULL, "1999",
-	"Gals Panic S2 (Asia)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S2 (Asia)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans2aRomInfo, galpans2aRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2703,7 +2705,7 @@ static INT32 GalpansuInit()
 
 struct BurnDriver BurnDrvGalpansu = {
 	"galpansu", "galpans2", "skns", NULL, "1999",
-	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic SU (Korea)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpansuRomInfo, galpansuRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2738,7 +2740,7 @@ static INT32 Galpans3Init()
 
 struct BurnDriver BurnDrvGalpans3 = {
 	"galpans3", NULL, "skns", NULL, "2002",
-	"Gals Panic S3 (Japan)\0", NULL, "Kaneko", "Miscellaneous",
+	"Gals Panic S3 (Japan)\0", NULL, "Kaneko", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, galpans3RomInfo, galpans3RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //GalpanisInputInfo, GalpanisDIPInfo,
@@ -2778,7 +2780,7 @@ static INT32 JjparadsInit()
 
 struct BurnDriver BurnDrvJjparads = {
 	"jjparads", NULL, "skns", NULL, "1996",
-	"Jan Jan Paradise\0", NULL, "Electro Design", "Miscellaneous",
+	"Jan Jan Paradise\0", NULL, "Electro Design", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, jjparadsRomInfo, jjparadsRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
@@ -2819,7 +2821,7 @@ static INT32 Jjparad2Init()
 
 struct BurnDriver BurnDrvJjparad2 = {
 	"jjparad2", NULL, "skns", NULL, "1997",
-	"Jan Jan Paradise 2\0", NULL, "Electro Design", "Miscellaneous",
+	"Jan Jan Paradise 2\0", NULL, "Electro Design", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, jjparad2RomInfo, jjparad2RomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
@@ -2861,7 +2863,7 @@ static INT32 SenknowInit()
 
 struct BurnDriver BurnDrvSenknow = {
 	"senknow", NULL, "skns", NULL, "1999",
-	"Sen-Know (Japan)\0", NULL, "Kaneko / Kouyousha", "Miscellaneous",
+	"Sen-Know (Japan)\0", NULL, "Kaneko / Kouyousha", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_PUZZLE, 0,
 	NULL, senknowRomInfo, senknowRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //SknsInputInfo, SknsDIPInfo,
@@ -2902,7 +2904,7 @@ static INT32 RyouranInit()
 
 struct BurnDriver BurnDrvRyouran = {
 	"ryouran", NULL, "skns", NULL, "1998",
-	"VS Mahjong Otome Ryouran\0", NULL, "Electro Design", "Miscellaneous",
+	"VS Mahjong Otome Ryouran\0", NULL, "Electro Design", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_KANEKO_SKNS, GBF_MAHJONG, 0,
 	NULL, ryouranRomInfo, ryouranRomName, NULL, NULL, SknsInputInfo, SknsDIPInfo, //Skns_1pInputInfo, Skns_1pDIPInfo,
@@ -2941,7 +2943,7 @@ static INT32 VblokbrkInit()
 
 struct BurnDriver BurnDrvVblokbrk = {
 	"vblokbrk", NULL, "skns", NULL, "1997",
-	"VS Block Breaker (Europe)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	"VS Block Breaker (Europe)\0", NULL, "Kaneko / Mediaworks", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
 	NULL, vblokbrkRomInfo, vblokbrkRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo,
@@ -2980,7 +2982,7 @@ static INT32 VblokbrkaInit()
 
 struct BurnDriver BurnDrvVblokbrka = {
 	"vblokbrka", "vblokbrk", "skns", NULL, "1997",
-	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	"VS Block Breaker (Asia)\0", NULL, "Kaneko / Mediaworks", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
 	NULL, vblokbrkaRomInfo, vblokbrkaRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo,
@@ -3019,7 +3021,7 @@ static INT32 SarukaniInit()
 
 struct BurnDriver BurnDrvSarukani = {
 	"sarukani", "vblokbrk", "skns", NULL, "1997",
-	"Saru-Kani-Hamu-Zou (Japan)\0", NULL, "Kaneko / Mediaworks", "Miscellaneous",
+	"Saru-Kani-Hamu-Zou (Japan)\0", NULL, "Kaneko / Mediaworks", "Super Kaneko Nova System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_KANEKO_SKNS, GBF_BALLPADDLE, 0,
 	NULL, sarukaniRomInfo, sarukaniRomName, NULL, NULL, VblokbrkInputInfo, VblokbrkDIPInfo,

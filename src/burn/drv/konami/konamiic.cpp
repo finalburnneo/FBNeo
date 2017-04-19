@@ -16,6 +16,9 @@ UINT32 *konami_bitmap32 = NULL;
 UINT8  *konami_priority_bitmap = NULL;
 UINT32 *konami_palette32;
 
+static INT32 previous_depth = 0;
+static UINT16 *palette_lut = NULL;
+
 //static UINT16 *konami_blendpal16;
 
 static INT32 highlight_mode = 0;  // set in driver init.
@@ -158,6 +161,12 @@ void KonamiICExit()
 		konami_priority_bitmap = NULL;
 	}
 
+	previous_depth = 0;
+	if (palette_lut) {
+		BurnFree(palette_lut);
+	}
+	palette_lut = NULL;
+
 	if (KonamiIC_K051960InUse) K051960Exit();
 	if (KonamiIC_K052109InUse) K052109Exit();
 	if (KonamiIC_K051316InUse) K051316Exit();
@@ -233,6 +242,18 @@ void KonamiBlendCopy(UINT32 *pPalette)
 
 	UINT32 *bmp = konami_bitmap32;
 
+	if (previous_depth != 2 && nBurnBpp == 2) {
+		if (palette_lut == NULL) {
+			palette_lut = (UINT16*)BurnMalloc((1 << 24) * 2);
+
+			for (INT32 i = 0; i < (1 << 24); i++) {
+				palette_lut[i] = BurnHighCol(i / 0x10000, (i / 0x100) & 0xff, i & 0xff, 0);
+			}
+		}
+	}
+
+	previous_depth = nBurnBpp;
+
 	switch (nBurnBpp)
 	{
 		case 4:
@@ -241,7 +262,15 @@ void KonamiBlendCopy(UINT32 *pPalette)
 		}
 		break;
 
-#if 0
+		case 2:
+		{
+			UINT16 *dst = (UINT16*)pBurnDraw;
+			for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++, dst++, bmp++) {
+				*dst = palette_lut[*bmp];
+			}
+		}
+		break;
+
 		case 3:
 		{
 			UINT8 *dst = pBurnDraw;
@@ -252,7 +281,7 @@ void KonamiBlendCopy(UINT32 *pPalette)
 			}
 		}
 		break;
-
+#if 0
 		case 2:
 		{
 			UINT16 *dst = (UINT16*)pBurnDraw;

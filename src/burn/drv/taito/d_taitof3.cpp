@@ -2,8 +2,12 @@
 // Based on MAME driver by Bryan McPhail and MANY others.
 
 /*
-    version .00001c ;)
+    version .00001d ;)
 
+	- known issues and workarounds -
+	scfinals & scfinalso coin inputs do not work, therefore a kludge is used.
+	  -> if a coin is pressed, it instead presses the service coin :)
+	  -> scfinals also displays a weird/corrupt version string in service mode(!!)
 
 	no attempt at speed-ups
 	no attempt at cleaning at all
@@ -40,6 +44,7 @@ static INT32 sound_cpu_in_reset = 0;
 static INT32 watchdog;
 
 INT32 f3_game = 0;
+static INT32 supercupkludge = 0;
 
 static struct BurnInputInfo F3InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy5 + 4,	"p1 coin"},
@@ -1256,6 +1261,7 @@ static INT32 DrvExit()
 	TaitoClearVariables(); // from taito.cpp
 
 	pPaletteUpdateCallback = NULL;
+	supercupkludge = 0;
 
 	return 0;
 }
@@ -1373,9 +1379,13 @@ static INT32 DrvFrame()
 
 		INT32 cur_coin = ((DrvJoy5[4] & 1) << 4) | ((DrvJoy5[5] & 1) << 5) | ((DrvJoy5[6] & 1) << 6) | ((DrvJoy5[7] & 1) << 7);
 
-		for (INT32 i = 0x10; i < 0x100; i <<= 1) {
-			if ((cur_coin & i) == i && (previous_coin & i) == 0) {
-				DrvInputs[4] &= ~i;
+		if (supercupkludge) {
+			if (cur_coin) DrvInputs[0] = 0xffff & ~0x200;
+		} else {
+			for (INT32 i = 0x10; i < 0x100; i <<= 1) {
+				if ((cur_coin & i) == i && (previous_coin & i) == 0) {
+					DrvInputs[4] &= ~i;
+				}
 			}
 		}
 
@@ -2616,6 +2626,8 @@ static INT32 scfinalsCallback()
 
 	ROM[0x5af0/4] = 0x4e754e71;
 	ROM[0xdd0/4] = 0x4e714e75;
+
+	supercupkludge = 1;
 
 	return 0;
 }

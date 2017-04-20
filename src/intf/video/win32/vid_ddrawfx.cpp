@@ -201,7 +201,7 @@ static int BlitFXInit()
 	RECT rect = { 0, 0, 0, 0 };
 	GetClientScreenRect(hVidWnd, &rect);
 	if (!nVidFullscreen) {
-		rect.top += 0 /*nMenuHeight*/;
+		rect.top += nMenuHeight;
 	}
 
 	if (nUseBlitter >= FILTER_SUPEREAGLE && nUseBlitter <= FILTER_SUPER_2XSAI) {
@@ -256,7 +256,7 @@ static int Init()
 		return 1;
 	}
 
-	hVidWnd = nVidFullscreen ? hScrnWnd : hVideoWindow;								// Use Screen window for video
+	hVidWnd = hScrnWnd;								// Use Screen window for video
 
 	nUseBlitter = nVidBlitterOpt[nVidSelect] & 0xFF;
 
@@ -468,7 +468,7 @@ static int Paint(int bValidate)
 
 	GetClientScreenRect(hVidWnd, &Dest);
 	if (!nVidFullscreen) {
-		Dest.top += 0 /*nMenuHeight*/;
+		Dest.top += nMenuHeight;
 	}
 
 	if (bVidArcaderes && nVidFullscreen) {

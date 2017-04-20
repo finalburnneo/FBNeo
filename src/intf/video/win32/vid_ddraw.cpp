@@ -222,7 +222,7 @@ static int DtosInit()
 
 	RECT rect = { 0, 0, 0, 0 };
 	GetClientScreenRect(hVidWnd, &rect);
-	rect.top += 0 /*nMenuHeight*/;
+	rect.top += nMenuHeight;
 
 	VidSScaleImage(&rect, nGameWidth, nGameHeight, bVidScanRotate);
 
@@ -283,7 +283,7 @@ static BOOL PASCAL MyEnumDisplayDrivers(GUID FAR* pGuid, LPSTR pszDesc, LPSTR /*
 
 static int vidInit()
 {
-	hVidWnd = nVidFullscreen ? hScrnWnd : hVideoWindow;						// Use Screen window for video
+	hVidWnd = hScrnWnd;								// Use Screen window for video
 
 #ifdef PRINT_DEBUG_INFO
 	dprintf(_T("  * Enumerating available drivers:\n"));
@@ -891,7 +891,7 @@ static int vidBurnToSurf()
 	GetClientScreenRect(hVidWnd, &Dest);
 
 	if (!nVidFullscreen) {
-		Dest.top += 0 /*nMenuHeight*/;
+		Dest.top += nMenuHeight;
 	}
 
 	if (bVidArcaderes && nVidFullscreen) {
@@ -1007,7 +1007,7 @@ static int vidPaint(int bValidate)
 		RECT rect = { 0, 0, 0, 0 };
 
 		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += 0 /*nMenuHeight*/;
+		rect.top += nMenuHeight;
 
 		VidSScaleImage(&rect, nGameWidth, nGameHeight, bVidScanRotate);
 

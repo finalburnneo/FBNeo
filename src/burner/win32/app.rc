@@ -961,7 +961,6 @@ BEGIN
         MENUITEM "Force 60Hz refresh rate",						MENU_FORCE60HZ
         MENUITEM "Enable &Triple Buffering (Fullscreen)",			MENU_TRIPLE
 		MENUITEM "Enable VSync (Windowed)",						MENU_VIDEOVSYNC
-		MENUITEM "Enable Win7 DWM Fix (Windowed)",				MENU_DWMFIX
 		MENUITEM "Auto Frameskip",								MENU_AUTOFRAMESKIP
     END
     POPUP "Audio"

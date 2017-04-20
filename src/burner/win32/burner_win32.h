@@ -29,7 +29,6 @@
 #include <mmsystem.h>
 #include <shellapi.h>
 #include <shlwapi.h>
-#include "dwmapi_core.h"
 
 INT32 DSCore_Init();
 INT32 DICore_Init();
@@ -227,14 +226,6 @@ int RunIdle();
 int RunMessageLoop();
 int RunReset();
 void ToggleLayer(unsigned char thisLayer);
-
-// mdi.cpp
-#define ID_MDI_START_CHILD		2990
-extern HWND hWndChildFrame;
-extern HWND hVideoWindow;
-BOOL RegNewMDIChild();
-int InitBurnerMDI(HWND hParentWnd);
-void DestroyBurnerMDI(int nAction);
 
 // scrn.cpp
 extern HWND hScrnWnd;								// Handle to the screen window

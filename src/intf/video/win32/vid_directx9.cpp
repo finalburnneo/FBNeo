@@ -811,7 +811,7 @@ static int dx9Init()
 	dprintf(_T("*** Initialising Direct3D 9 blitter.\n"));
 #endif
 
-	hVidWnd = nVidFullscreen ? hScrnWnd : hVideoWindow;								// Use Screen window for video
+	hVidWnd = hScrnWnd;								// Use Screen window for video
 
 	// Get pointer to Direct3D
 	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
@@ -944,7 +944,7 @@ static int dx9Init()
 		RECT rect;
 
 		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += 0 /*nMenuHeight*/; rect.bottom += 0 /*nMenuHeight*/;
+		rect.top += nMenuHeight; rect.bottom += nMenuHeight;
 		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
 		pD3DDevice->Present(&rect, &rect, NULL, NULL);
 	}
@@ -1018,7 +1018,7 @@ static int dx9MemToSurf()
 	GetClientScreenRect(hVidWnd, &Dest);
 
 	if (nVidFullscreen == 0) {
-		Dest.top += 0 /*nMenuHeight*/;
+		Dest.top += nMenuHeight;
 	}
 
 	if (bVidArcaderes && nVidFullscreen) {
@@ -1315,7 +1315,7 @@ static int dx9Paint(int bValidate)
 
 	if (!nVidFullscreen) {
 		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += 0 /*nMenuHeight*/;
+		rect.top += nMenuHeight;
 
 		dx9Scale(&rect, nGameWidth, nGameHeight);
 

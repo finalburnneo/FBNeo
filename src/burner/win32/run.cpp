@@ -415,9 +415,6 @@ int RunMessageLoop()
 		GameInpCheckLeftAlt();
 		GameInpCheckMouse();															// Hide the cursor
 
-		if(bVidDWMCore) {
-			DWM_StutterFix();
-		}
 
 		while (1) {
 			if (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {

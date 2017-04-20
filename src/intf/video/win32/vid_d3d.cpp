@@ -1233,7 +1233,7 @@ static int vidInit()
 
 	bUseTriplebuffer = false;
 
-	hVidWnd = nVidFullscreen ? hScrnWnd : hVideoWindow;								// Use Screen window for video
+	hVidWnd = hScrnWnd;								// Use Screen window for video
 
 	nWantDriver = 0;
 #if 1 && defined(PRINT_DEBUG_INFO)
@@ -1402,7 +1402,7 @@ static int vidInit()
 
 			GetClientScreenRect(hVidWnd, &rect);
 			if (!nVidFullscreen) {
-				rect.top += 0 /*nMenuHeight*/;
+				rect.top += nMenuHeight;
 			}
 			VidImageSize(&rect, nGameWidth, nGameHeight);
 
@@ -1735,7 +1735,7 @@ static int vidRenderImageA()
 	GetClientScreenRect(hVidWnd, &Dest);
 
 	if (nVidFullscreen == 0) {
-		Dest.top += 0 /*nMenuHeight*/;
+		Dest.top += nMenuHeight;
 	}
 
 	if (bVidArcaderes && nVidFullscreen) {
@@ -2311,7 +2311,7 @@ int vidPaint(int bValidate)
 
 	if (!bUsePageflip) {
 		GetClientScreenRect(hVidWnd, &rect);
-		rect.top += 0 /*nMenuHeight*/;
+		rect.top += nMenuHeight;
 
 		vidScale(&rect, nGameWidth, nGameHeight);
 

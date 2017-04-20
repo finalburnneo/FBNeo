@@ -409,8 +409,7 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		HANDLE_MSG(hWnd, WM_DISPLAYCHANGE,	OnDisplayChange);
 	}
 
-	//return DefWindowProc(hWnd, Msg, wParam, lParam);
-	return nVidFullscreen ? DefWindowProc(hWnd, Msg, wParam, lParam) : DefFrameProc(hWnd, hWndChildFrame, Msg, wParam, lParam);
+	return DefWindowProc(hWnd, Msg, wParam, lParam);
 }
 
 static int OnDisplayChange(HWND, UINT, UINT, UINT)
@@ -551,11 +550,8 @@ static int OnLButtonDblClk(HWND hwnd, BOOL, int, int, UINT)
 	return 1;
 }
 
-static int OnCreate(HWND hWnd, LPCREATESTRUCT /*lpCreateStruct*/)	// HWND hwnd, LPCREATESTRUCT lpCreateStruct
+static int OnCreate(HWND, LPCREATESTRUCT)	// HWND hwnd, LPCREATESTRUCT lpCreateStruct
 {
-	if(!nVidFullscreen) {
-		InitBurnerMDI(hWnd);
-	}
 	return 1;
 }
 
@@ -626,8 +622,6 @@ static void OnDestroy(HWND)
 {
     VidExit();							// Stop using video with the Window
     hScrnWnd = NULL;					// Make sure handle is not used again
-
-	DestroyBurnerMDI(0);
 }
 
 OPENFILENAME	bgFn;
@@ -1223,11 +1217,6 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_TRIPLE:
 			bVidTripleBuffer = !bVidTripleBuffer;
-			POST_INITIALISE_MESSAGE;
-			break;
-
-		case MENU_DWMFIX:
-			bVidDWMCore = !bVidDWMCore;
 			POST_INITIALISE_MESSAGE;
 			break;
 
@@ -2887,10 +2876,6 @@ static void OnSize(HWND, UINT state, int cx, int cy)
 		bool bSizeChanged = false;
 
 		MoveWindow(hRebar, 0, 0, cx, nMenuHeight, TRUE);
-
-		SetWindowPos(hWndChildFrame, NULL, 0, nMenuHeight, cx, bMenuEnabled ? (cy-nMenuHeight) : cy, SWP_NOREDRAW | SWP_NOACTIVATE | SWP_NOSENDCHANGING | SWP_NOZORDER);
-		
-		//MoveWindow(hWndChildFrame, 0, nMenuHeight, cx, bMenuEnabled ? (cy-nMenuHeight) : cy, TRUE );
 		
 		if (hwndChat) {
 			MoveWindow(hwndChat, 0, cy - 32, cx, 32, FALSE);
@@ -3229,8 +3214,6 @@ int ScrnInit()
 		}
 	}
 
-	RegNewMDIChild();
-
 	hScrnWnd = CreateWindowEx(nWindowExStyles, szClass, _T(APP_TITLE), nWindowStyles,
 		0, 0, 0, 0,									   			// size of window
 		NULL, NULL, hAppInst, NULL);
@@ -3291,8 +3274,6 @@ int ScrnExit()
 {
 	// Ensure the window is destroyed
 	DeActivateChat();
-
-	DestroyBurnerMDI(1);
 
 	if (hRebar) {
 		DestroyWindow(hRebar);

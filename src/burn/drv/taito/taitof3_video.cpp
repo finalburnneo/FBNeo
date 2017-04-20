@@ -1524,7 +1524,7 @@ static void init_alpha_blend_func()
 }
 
 #define UPDATE_PIXMAP_SP(pf_num)	\
-if(cx>=clip_als && cx<clip_ars && !(cx>=clip_bls && cx<clip_brs)) \
+if(cx>=clip_als && cx<clip_ars-1 && !(cx>=clip_bls && cx<clip_brs)) \
 	{ \
 		sprite_pri=sprite[pf_num]&m_pval; \
 		if(sprite_pri) \
@@ -1540,7 +1540,7 @@ if(cx>=clip_als && cx<clip_ars && !(cx>=clip_bls && cx<clip_brs)) \
 	}
 
 #define UPDATE_PIXMAP_LP(pf_num) \
-	if (cx>=m_clip_al##pf_num && cx<m_clip_ar##pf_num && !(cx>=m_clip_bl##pf_num && cx<m_clip_br##pf_num)) 	\
+	if (cx>=m_clip_al##pf_num && cx<m_clip_ar##pf_num-1 && !(cx>=m_clip_bl##pf_num && cx<m_clip_br##pf_num)) 	\
 	{ \
 		m_tval=*m_tsrc##pf_num; \
 		if(m_tval&0xf0) \

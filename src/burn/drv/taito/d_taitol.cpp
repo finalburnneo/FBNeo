@@ -1904,8 +1904,10 @@ static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min,
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
-static UINT16 ananice(UINT16 anaval)
+static UINT16 ananice(INT16 anaval)
 {
+	if (anaval > 1024) anaval = 1024;
+	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion
 	UINT8 Temp = 0x7f - (anaval >> 4);
 	if (Temp < 0x01) Temp = 0x01;
 	if (Temp > 0xfe) Temp = 0xfe;
@@ -4321,7 +4323,7 @@ static struct BurnRomInfo horshoesRomDesc[] = {
 STD_ROM_PICK(horshoes)
 STD_ROM_FN(horshoes)
 
-struct BurnDriverD BurnDrvHorshoes = {
+struct BurnDriver BurnDrvHorshoes = {
 	"horshoes", NULL, NULL, NULL, "1990",
 	"American Horseshoes (US)\0", NULL, "Taito America Corporation", "L-System",
 	NULL, NULL, NULL, NULL,

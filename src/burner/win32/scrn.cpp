@@ -543,13 +543,12 @@ static int OnLButtonUp(HWND hwnd, int x, int y, UINT)
 
 static int OnLButtonDblClk(HWND hwnd, BOOL, int, int, UINT)
 {
-	if(nVidFullscreen) {
-		if (hwnd == hScrnWnd && bDrvOkay) {
-			nVidFullscreen = !nVidFullscreen;
-			POST_INITIALISE_MESSAGE;
-			return 0;
-		}
+	if (bDrvOkay) {
+		nVidFullscreen = !nVidFullscreen;
+		POST_INITIALISE_MESSAGE;
+		return 0;
 	}
+	
 	return 1;
 }
 

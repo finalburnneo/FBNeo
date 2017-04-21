@@ -9,17 +9,8 @@
 #include "dac.h"
 #include "burn_pal.h"
 
-// to do:
-//	goldmedl sound cpu clocked at 4000000 * 2 
-//
-//	goldmedl	- color issues?
-//	goldmedlb	- good!
-//	gangwars	- all sets good!
-//	skyadvnt	- all sets good!
-//	skysoldr	- all sets good!
-//	timesold/u	- all good!
-//	btlfield/b	- all good
-//  sbasebal    - all good
+// Todo:
+//   fix goldmedl color issue(s)
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -3441,12 +3432,17 @@ static struct BurnRomInfo sbasebaljRomDesc[] = {
 STD_ROM_PICK(sbasebalj)
 STD_ROM_FN(sbasebalj)
 
+static INT32 SbasebaljInit()
+{
+	return Drv5Init(SbasebalRomCb, 0, 0x8512, 0x2423, 5);
+}
+
 struct BurnDriver BurnDrvSbasebalj = {
 	"sbasebalj", "sbasebal", NULL, NULL, "1989",
 	"Super Champion Baseball (Japan)\0", NULL, "Alpha Denshi Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, sbasebaljRomInfo, sbasebaljRomName, NULL, NULL, SbasebalInputInfo, SbasebalDIPInfo /*wrong*/,
-	SbasebalInit, DrvExit, DrvFrame, SbasebalDraw, DrvScan, &DrvRecalc, 0x1000,
+	SbasebaljInit, DrvExit, DrvFrame, SbasebalDraw, DrvScan, &DrvRecalc, 0x1000,
 	256, 224, 4, 3
 };

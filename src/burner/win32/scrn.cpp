@@ -468,11 +468,7 @@ static int OnRButtonUp(HWND hwnd, int, int, UINT)
 
 static int OnMouseMove(HWND hwnd, int x, int y, UINT keyIndicators)
 {
-	//if(hwnd != hScrnWnd) {
-	//	return 1;
-	//}
-
-	if (bDrag && keyIndicators == MK_LBUTTON && !nVidFullscreen && !bMenuEnabled) {
+	if (bDrag && hwnd == hScrnWnd && keyIndicators == MK_LBUTTON && !nVidFullscreen && !bMenuEnabled) {
 		RECT clientRect;
 
 		GetWindowRect(hScrnWnd, &clientRect);
@@ -494,11 +490,7 @@ static int OnMouseMove(HWND hwnd, int x, int y, UINT keyIndicators)
 
 static int OnLButtonDown(HWND hwnd, BOOL, int x, int y, UINT)
 {
-	//if(hwnd != hScrnWnd) {
-	//	return 1;
-	//}
-
-	if (!nVidFullscreen && !bMenuEnabled) {
+	if (hwnd == hScrnWnd && !nVidFullscreen && !bMenuEnabled) {
 		RECT clientRect;
 
 		GetWindowRect(hScrnWnd, &clientRect);
@@ -519,27 +511,30 @@ static int OnLButtonDown(HWND hwnd, BOOL, int x, int y, UINT)
 
 static int OnLButtonUp(HWND hwnd, int x, int y, UINT)
 {
-	//if (hwnd != hScrnWnd) {
-	//	return 1;
-	//}
-
 	bDrag = false;
 
-	if (UseDialogs()) {
-		RECT clientRect;
-		GetWindowRect(hScrnWnd, &clientRect);
+	if (nVidFullscreen) {
 
-		TrackPopupMenuEx(hMenuPopup, TPM_LEFTALIGN | TPM_TOPALIGN, clientRect.left + x, clientRect.top + y, hScrnWnd, NULL);
-		return 0;
-	}
+		if (hwnd != hScrnWnd) {
+			return 1;
+		}
 
-	if (!bMenuEnabled) {
-		RECT clientRect;
-		GetWindowRect(hScrnWnd, &clientRect);
+		if (UseDialogs()) {
+			RECT clientRect;
+			GetWindowRect(hScrnWnd, &clientRect);
 
-		if ((nLeftButtonX - (clientRect.left + x)) < nDragX && (nLeftButtonX - (clientRect.left + x)) > -nDragX && (nLeftButtonY - (clientRect.top + y)) < nDragY && (nLeftButtonY - (clientRect.top + y)) > -nDragY) {
 			TrackPopupMenuEx(hMenuPopup, TPM_LEFTALIGN | TPM_TOPALIGN, clientRect.left + x, clientRect.top + y, hScrnWnd, NULL);
 			return 0;
+		}
+	} else {
+		if (!bMenuEnabled) {
+			RECT clientRect;
+			GetWindowRect(hScrnWnd, &clientRect);
+
+			if ((nLeftButtonX - (clientRect.left + x)) < nDragX && (nLeftButtonX - (clientRect.left + x)) > -nDragX && (nLeftButtonY - (clientRect.top + y)) < nDragY && (nLeftButtonY - (clientRect.top + y)) > -nDragY) {
+				TrackPopupMenuEx(hMenuPopup, TPM_LEFTALIGN | TPM_TOPALIGN, clientRect.left + x, clientRect.top + y, hScrnWnd, NULL);
+				return 0;
+			}
 		}
 	}
 

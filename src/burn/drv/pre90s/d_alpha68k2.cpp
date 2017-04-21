@@ -2682,19 +2682,19 @@ static INT32 SkysoldrblRomCb()
 	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 30, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x110000, 31, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x120000, 32, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 33, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x130000, 33, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x140000, 34, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 35, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x150000, 35, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x160000, 36, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 37, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x170000, 37, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 38, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 39, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x190000, 39, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x1a0000, 40, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 41, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x1b0000, 41, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x1c0000, 42, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 43, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x1d0000, 43, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x1e0000, 44, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 45, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x1f0000, 45, 1)) return 1;
 
 	return 0;
 }

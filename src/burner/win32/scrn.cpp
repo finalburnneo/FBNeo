@@ -39,10 +39,10 @@ WNDPROC pOldWndProc = NULL;
 
 bool bRescanRoms = false;
 
-//static bool bDrag = false;
+static bool bDrag = false;
 static int nDragX, nDragY;
-//static int nOldWindowX, nOldWindowY;
-//static int nLeftButtonX, nLeftButtonY;
+static int nOldWindowX, nOldWindowY;
+static int nLeftButtonX, nLeftButtonY;
 
 static int OnCreate(HWND, LPCREATESTRUCT);
 static void OnActivateApp(HWND, BOOL, DWORD);
@@ -57,9 +57,9 @@ static void OnExitSizeMove(HWND);
 static void OnEnterIdle(HWND, UINT, HWND);
 static void OnEnterMenuLoop(HWND, BOOL);
 static void OnExitMenuLoop(HWND, BOOL);
-//static int OnMouseMove(HWND, int, int, UINT);
-//static int OnLButtonUp(HWND, int, int, UINT);
-//static int OnLButtonDown(HWND, BOOL, int, int, UINT);
+static int OnMouseMove(HWND, int, int, UINT);
+static int OnLButtonUp(HWND, int, int, UINT);
+static int OnLButtonDown(HWND, BOOL, int, int, UINT);
 static int OnLButtonDblClk(HWND, BOOL, int, int, UINT);
 static int OnRButtonUp(HWND, int, int, UINT);
 static int OnRButtonDown(HWND, BOOL, int, int, UINT);
@@ -389,9 +389,9 @@ static LRESULT CALLBACK ScrnProc(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lPar
 		HANDLE_MSG(hWnd, WM_EXITSIZEMOVE,	OnExitSizeMove);
 		HANDLE_MSG(hWnd, WM_ENTERIDLE,		OnEnterIdle);
 
-		//HANDLE_MSG(hWnd, WM_MOUSEMOVE,		OnMouseMove);
-		//HANDLE_MSG(hWnd, WM_LBUTTONUP,		OnLButtonUp);
-		//HANDLE_MSG(hWnd, WM_LBUTTONDOWN,	OnLButtonDown);
+		HANDLE_MSG(hWnd, WM_MOUSEMOVE,		OnMouseMove);
+		HANDLE_MSG(hWnd, WM_LBUTTONUP,		OnLButtonUp);
+		HANDLE_MSG(hWnd, WM_LBUTTONDOWN,	OnLButtonDown);
 
 		HANDLE_MSG(hWnd, WM_LBUTTONDBLCLK,	OnLButtonDblClk);
 
@@ -453,12 +453,20 @@ static int OnRButtonUp(HWND hwnd, int, int, UINT)
 			POST_INITIALISE_MESSAGE;
 			return 0;
 		}		
-	} 
+	}
+	
+	// If not fullscreen and this event is not related to 'toggle fullscreen' right double-click event
+	if (!nVidFullscreen && !bRDblClick) {
+		bMenuEnabled = !bMenuEnabled;
+		POST_INITIALISE_MESSAGE;
+		return 0;
+	}
+	
 	return 1;
 }
 /*************************************************************************/
 
-/*static int OnMouseMove(HWND hwnd, int x, int y, UINT keyIndicators)
+static int OnMouseMove(HWND hwnd, int x, int y, UINT keyIndicators)
 {
 	//if(hwnd != hScrnWnd) {
 	//	return 1;
@@ -536,7 +544,7 @@ static int OnLButtonUp(HWND hwnd, int x, int y, UINT)
 	}
 
 	return 1;
-}*/
+}
 
 static int OnLButtonDblClk(HWND hwnd, BOOL, int, int, UINT)
 {

@@ -2098,6 +2098,8 @@ static void get_vram_info(INT32 sx, INT32 sy)
 		else
 			line_enable=1;
 
+		if (f3_game == ARABIANM) line_enable = 1; // kludge: arabianm missing cutscene text
+
 		line_t->pri[y]=pri;
 
 		/* Evaluate clipping */

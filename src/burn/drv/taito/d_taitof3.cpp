@@ -351,6 +351,17 @@ static UINT8 __fastcall f3_main_read_byte(UINT32 a)
 	return 0;
 }
 
+static void f3_palette_landmakr_onreset()
+{
+	for (INT32 i = 0; i < 0x8000/4; i++) {
+		UINT8 r = ((i & 1) ? 0xff : 0);
+		UINT8 g = ((i & 2) ? 0xff : 0);
+		UINT8 b = ((i & 4) ? 0xff : 0);
+
+		*((UINT32*)(TaitoPaletteRam + (i * 4))) =  r | (g << 24) | (b << 16);
+	}
+}
+
 static void __fastcall f3_palette_write_long(UINT32 a, UINT32 d)
 {
 	if ((a & 0xff8000) == 0x440000) {
@@ -713,6 +724,11 @@ static INT32 DrvDoReset(INT32 full_reset)
 	f3_reset_dirtybuffer();
 
 	TaitoF3VideoReset();
+
+	if (f3_game == LANDMAKR)
+	{ // init landmakr's palette with rainbow, needed for text on the "you win" / "you lose" screen.
+		f3_palette_landmakr_onreset();
+	}
 
 	sound_cpu_in_reset = 1;
 	watchdog = 0;

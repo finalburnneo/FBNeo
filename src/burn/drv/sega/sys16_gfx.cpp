@@ -3001,12 +3001,12 @@ void System16PaletteInit()
 {
 	static const INT32 resistances_normal[6] = { 3900, 2000, 1000, 1000/2, 1000/4, 0 };
 	double weights_normal[6];
-	compute_resistor_weights(0, 255, -1.0, 6, resistances_normal, weights_normal, 0, 0, 0, nullptr, nullptr, 0, 0, 0, nullptr, nullptr, 0, 0);
+	compute_resistor_weights(0, 255, -1.0, 6, resistances_normal, weights_normal, 0, 0, 0, NULL, NULL, 0, 0, 0, NULL, NULL, 0, 0);
 
 	// compute weight table for shadow/hilight palette entries
 	static const INT32 resistances_sh[6]     = { 3900, 2000, 1000, 1000/2, 1000/4, 470 };
 	double weights_sh[6];
-	compute_resistor_weights(0, 255, -1.0, 6, resistances_sh, weights_sh, 0, 0, 0, nullptr, nullptr, 0, 0, 0, nullptr, nullptr, 0, 0);
+	compute_resistor_weights(0, 255, -1.0, 6, resistances_sh, weights_sh, 0, 0, 0, NULL, NULL, 0, 0, 0, NULL, NULL, 0, 0);
 
 	// compute R, G, B for each weight
 	for (INT32 value = 0; value < 32; value++) {

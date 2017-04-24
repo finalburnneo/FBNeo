@@ -26,6 +26,7 @@ static INT32 coin_control = 0;
 static UINT8 color_config[4];
 static INT32 irq_config[2];
 static INT32 sound_config = 0;
+static INT32 game_config = 0; // for disable opposites
 static INT32 cpu_speed[2];
 static UINT8 nTaitoInputConfig[5] = { 0, 0, 0, 0, 0 };
 
@@ -1618,6 +1619,16 @@ static UINT8 __fastcall taitob_sound_read_ym2203(UINT16 a)
 	return 0;
 }
 
+static inline void DrvClearOppositesCommon(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static void DrvMakeInputs()
 {
 	memset (TC0220IOCInput, 0xff, 3);
@@ -1638,6 +1649,12 @@ static void DrvMakeInputs()
 	TC0220IOCInput[1] ^= nTaitoInputConfig[1];
 	TC0220IOCInput[2] ^= nTaitoInputConfig[2];
 	TaitoInput[3] ^= nTaitoInputConfig[3];
+
+	if (game_config == 1) {
+		// Clear Opposites
+		DrvClearOppositesCommon(&TC0220IOCInput[0]);
+		DrvClearOppositesCommon(&TC0220IOCInput[1]);
+	}
 
 	// set up coin lockout
 	switch (nTaitoInputConfig[4]) {
@@ -1932,6 +1949,8 @@ static INT32 DrvExit()
 	memset (nTaitoInputConfig, 0, 5);
 
 	TaitoExit();
+
+	game_config = 0;
 
 	return 0;
 }
@@ -3155,6 +3174,7 @@ STD_ROM_FN(nastar)
 
 static INT32 NastarInit()
 {
+	game_config = 1; // CommonInputInfo
 	return CommonInit(NastarInitCallback, 0, 0, 0, 2, 4);
 }
 

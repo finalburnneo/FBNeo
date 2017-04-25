@@ -1945,9 +1945,12 @@ static void get_line_ram_info(INT32 which_map, INT32 sx, INT32 sy, INT32 pos, UI
 		_y_zoom[y] = (line_zoom&0xff) << 9;
 
 		/* Evaluate clipping */
-		if (pri&0x0800)
+		if (pri&0x0800 && f3_game != QUIZHUHU && f3_game != LANDMAKR)
+		{ // kludge: line-disable breaks quizhuhu text & landmakr "you win / you lose" text. [april 23, 2017 -dink]
+		  // somehow I think 0x0800 has nothing to do with line-disable.
 			line_enable=0;
-		else if (pri&0x0330)
+		}
+		else if (pri&0x0330 && f3_game != PBOBBLE4) // kludge: clipping breaks win/lose animation [april 23, 2017 -dink]
 		{
 			//fast path todo - remove line enable
 			calculate_clip(y, pri&0x0330, &line_t->clip0[y], &line_t->clip1[y], &line_enable);

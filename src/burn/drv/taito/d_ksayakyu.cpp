@@ -195,7 +195,7 @@ static tilemap_callback( foreground )
 	INT32 attr  = DrvVidRAM[offs * 2 + 0];
 	INT32 code  = DrvVidRAM[offs * 2 + 1] + ((attr & 3) << 8);
 
-	TILE_SET_INFO(0, code, (attr >> 2) & 0xf, TILE_FLIPXY(attr >> 6));
+	TILE_SET_INFO(0, code, (attr >> 2) & 0xf, (attr & 0x80) ? TILE_FLIPX : 0);
 }
 
 static UINT8 ay8910_0_portA_r(UINT32)

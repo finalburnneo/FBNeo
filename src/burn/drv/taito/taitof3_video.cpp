@@ -2106,7 +2106,7 @@ static void get_vram_info(INT32 sx, INT32 sy)
 		else
 			line_enable=1;
 
-		if (f3_game == ARABIANM) line_enable = 1; // kludge: arabianm missing cutscene text
+		if (f3_game == ARABIANM || f3_game == GSEEKER) line_enable = 1; // kludge: arabianm missing cutscene text, gseeker missing continue screen
 
 		line_t->pri[y]=pri;
 
@@ -2378,9 +2378,10 @@ static void scanline_draw()
 				{
 					if(alpha_type==1)
 					{
-						if (m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255 && f3_game == GSEEKER) {
-							alpha_mode[i]=3; alpha_mode_flag[i] |= 0x80;} /* will display continue screen in gseeker (mt 00026) */
-						else if(m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255) alpha_mode[i]=0;
+						//if (m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255 && f3_game == GSEEKER) {
+						//	alpha_mode[i]=3; alpha_mode_flag[i] |= 0x80;} /* will display continue screen in gseeker (mt 00026) */
+						//else
+						if     (m_f3_alpha_level_2as==0   && m_f3_alpha_level_2ad==255) alpha_mode[i]=0;
 						else if(m_f3_alpha_level_2as==255 && m_f3_alpha_level_2ad==0  ) alpha_mode[i]=1;
 					}
 					else if(alpha_type==2)

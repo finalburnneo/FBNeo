@@ -235,6 +235,8 @@ static UINT8 scale_accel(UINT32 PaddlePortnum) {
 
 	Temp = PaddlePortnum >> 4;
 	if (Temp < 0x08) Temp = 0x00; // sometimes default for digital button -> analog is "1"
+	if (Temp > 0x30) Temp = 0xff;
+
 	return Temp;
 }
 

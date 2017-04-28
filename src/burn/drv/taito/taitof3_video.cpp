@@ -2106,7 +2106,10 @@ static void get_vram_info(INT32 sx, INT32 sy)
 		else
 			line_enable=1;
 
-		if (f3_game == ARABIANM || f3_game == GSEEKER) line_enable = 1; // kludge: arabianm missing cutscene text, gseeker missing continue screen
+		if ((f3_game == ARABIANM || f3_game == GSEEKER) && line_enable)
+		{ // force opaque vram & pixel kludge: fixes arabianm missing cutscene text, gseeker missing continue screen april.21&28.2017_dink
+			line_enable = 1;
+		}
 
 		line_t->pri[y]=pri;
 

@@ -1100,6 +1100,8 @@ void __fastcall Darius2d68KWriteWord(UINT32 a, UINT16 d)
 
 UINT8 __fastcall Warriorb68KReadByte(UINT32 a)
 {
+	TC0510NIOHalfWordRead_Map(0x800000)
+
 	switch (a) {
 		default: {
 			bprintf(PRINT_NORMAL, _T("68K #1 Read byte => %06X\n"), a);

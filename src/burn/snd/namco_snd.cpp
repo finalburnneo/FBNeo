@@ -1,17 +1,3 @@
-// Based on MAME sources by Nicola Salmoria,Aaron Giles
-/***************************************************************************
-
-    NAMCO sound driver.
-
-    This driver handles the four known types of NAMCO wavetable sounds:
-
-        - 3-voice mono (PROM-based design: Pac-Man, Pengo, Dig Dug, etc)
-        - 8-voice quadrophonic (Pole Position 1, Pole Position 2)
-        - 8-voice mono (custom 15XX: Mappy, Dig Dug 2, etc)
-        - 8-voice stereo (System 1)
-
-***************************************************************************/
-
 #include "burnint.h"
 #include "burn_sound.h"
 #include "namco_snd.h"
@@ -181,15 +167,11 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 					INT32 cnt;
 
 					if (voice->noise_state) {
-						*mix = BURN_SND_CLIP(*mix + noise_data);
-						mix++;
-						*mix = BURN_SND_CLIP(*mix + noise_data);
-						mix++;
+						*(mix++) = BURN_SND_CLIP(*mix + noise_data);
+						*(mix++) = BURN_SND_CLIP(*mix + noise_data);
 					} else {
-						*mix = BURN_SND_CLIP(*mix - noise_data);
-						mix++;
-						*mix = BURN_SND_CLIP(*mix - noise_data);
-						mix++;
+						*(mix++) = BURN_SND_CLIP(*mix - noise_data);
+						*(mix++) = BURN_SND_CLIP(*mix - noise_data);
 					}
 
 					if (hold)
@@ -451,6 +433,65 @@ static void namcos1_sound_write(INT32 offset, INT32 data)
 	}
 }
 
+void namco_15xx_write(INT32 offset, UINT8 data)
+{
+	if (offset > 63)
+	{
+	//	logerror("NAMCO 15XX sound: Attempting to write past the 64 registers segment\n");
+		return;
+	}
+
+	if (namco_soundregs[offset] == data)
+		return;
+
+	/* set the register */
+	namco_soundregs[offset] = data;
+
+	INT32 ch = offset / 8;
+	if (ch >= chip->num_voices)
+		return;
+
+	/* recompute the voice parameters */
+	sound_channel *voice = chip->channel_list + ch;
+	switch (offset - ch * 8)
+	{
+	case 0x03:
+		voice->volume[0] = data & 0x0f;
+		break;
+
+	case 0x06:
+		voice->waveform_select = (data >> 4) & 7;
+	case 0x04:
+	case 0x05:
+		/* the frequency has 20 bits */
+		voice->frequency = namco_soundregs[ch * 8 + 0x04];
+		voice->frequency += namco_soundregs[ch * 8 + 0x05] << 8;
+		voice->frequency += (namco_soundregs[ch * 8 + 0x06] & 15) << 16;    /* high bits are from here */
+		break;
+	}
+}
+
+void namco_15xx_sharedram_write(INT32 offset, UINT8 data)
+{
+	offset &= 0x3ff;
+
+	if (offset < 0x40) {
+		namco_15xx_write(offset, data);
+	} else {
+		namco_soundregs[offset] = data;
+	}
+}
+
+UINT8 namco_15xx_sharedram_read(INT32 offset)
+{
+	return namco_soundregs[offset & 0x3ff];
+}
+
+void namco_15xx_sound_enable(INT32 value)
+{
+	chip->sound_enable = (value) ? 1 : 0;
+}
+
 void namcos1_custom30_write(INT32 offset, INT32 data)
 {
 #if defined FBA_DEBUG
@@ -567,8 +608,8 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd)
 	chip = (struct namco_sound*)malloc(sizeof(*chip));
 	memset(chip, 0, sizeof(*chip));
 
-	namco_soundregs = (UINT8*)malloc(0x40);
-	memset(namco_soundregs, 0, 0x40);
+	namco_soundregs = (UINT8*)malloc(0x400);
+	memset(namco_soundregs, 0, 0x400);
 
 	chip->num_voices = num_voices;
 	chip->last_channel = chip->channel_list + chip->num_voices;
@@ -694,7 +735,7 @@ void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
 	memset(&ba, 0, sizeof(ba));
 	sprintf(szName, "NamcoSoundRegs");
 	ba.Data		= namco_soundregs;
-	ba.nLen		= 0x40;
+	ba.nLen		= 0x400;
 	ba.nAddress = 0;
 	ba.szName	= szName;
 	BurnAcb(&ba);

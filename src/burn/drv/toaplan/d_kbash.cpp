@@ -716,7 +716,7 @@ struct BurnDriver BurnDrvKBash = {
 
 struct BurnDriver BurnDrvKBashk = {
 	"kbashk", "kbash", NULL, NULL, "1993",
-	"Knuckle Bash (Korean PCB\0", NULL, "Toaplan / Taito", "Toaplan GP9001 based",
+	"Knuckle Bash (Korean PCB)\0", NULL, "Toaplan / Taito", "Toaplan GP9001 based",
 	L"Knuckle Bash\0Knuckle Bash \u30CA\u30C3\u30AF\u30EB\u30D0\u30C3\u30B7\u30E5 (Korean PCB)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_SCRFIGHT, 0,
 	NULL, drvkRomInfo, drvkRomName, NULL, NULL, kbashInputInfo,kbashkDIPInfo,

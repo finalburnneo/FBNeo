@@ -167,11 +167,15 @@ void NamcoSoundUpdate(INT16* buffer, INT32 length)
 					INT32 cnt;
 
 					if (voice->noise_state) {
-						*(mix++) = BURN_SND_CLIP(*mix + noise_data);
-						*(mix++) = BURN_SND_CLIP(*mix + noise_data);
+						*mix = BURN_SND_CLIP(*mix + noise_data);
+						mix++;
+						*mix = BURN_SND_CLIP(*mix + noise_data);
+						mix++;
 					} else {
-						*(mix++) = BURN_SND_CLIP(*mix - noise_data);
-						*(mix++) = BURN_SND_CLIP(*mix - noise_data);
+						*mix = BURN_SND_CLIP(*mix - noise_data);
+						mix++;
+						*mix = BURN_SND_CLIP(*mix - noise_data);
+						mix++;
 					}
 
 					if (hold)

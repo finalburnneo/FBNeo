@@ -2723,14 +2723,12 @@ static void pal16_check_init()
 
 void TaitoF3VideoExit()
 {
-
 	BurnFree (m_spritelist);
 
 	if (pal16) {
 		BurnFree(pal16);
 		pal16 = NULL;
 	}
-
 }
 
 void TaitoF3DrawCommon(INT32 scanline_start)
@@ -2751,8 +2749,8 @@ void TaitoF3DrawCommon(INT32 scanline_start)
 
 	/* Setup scroll */
 	sy_fix[0]=((m_f3_control_0[4]&0xffff)<< 9) + (1<<16);
-	sy_fix[1]=((m_f3_control_0[5]&0xffff)<< 9) + (1<<16);
-	sy_fix[2]=((m_f3_control_0[6]&0xffff)<< 9) + (1<<16);
+	sy_fix[1]=((m_f3_control_0[5]&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
+	sy_fix[2]=((m_f3_control_0[6]&0xffff)<< 9) + ((f3_game==LANDMAKR) ? 0 : 1<<16);
 	sy_fix[3]=((m_f3_control_0[7]&0xffff)<< 9) + (1<<16);
 	sx_fix[0]=((m_f3_control_0[0]&0xffc0)<<10) - (6<<16);
 	sx_fix[1]=((m_f3_control_0[1]&0xffc0)<<10) - (10<<16);

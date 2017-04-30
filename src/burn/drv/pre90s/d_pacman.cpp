@@ -2867,7 +2867,7 @@ static INT32 DrvFrame()
 
 //------------------------------------------------------------------------------------------------------
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -2875,7 +2875,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029693;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
@@ -2905,6 +2905,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
 		if (game_select == MSCHAMP) {
 			mschamp_set_bank();
 		}
@@ -2912,6 +2913,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (game_select == EPOS) {
 			epos_hardware_set_bank(nPacBank);
 		}
+		ZetClose();
 	}
 
 	return 0;

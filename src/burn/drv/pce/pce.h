@@ -16,6 +16,7 @@ INT32 PCEInit();
 INT32 TG16Init();
 INT32 SGXInit();
 INT32 populousInit();
+INT32 wondermomoInit();
 
 INT32 PCEExit();
 INT32 PCEDraw();

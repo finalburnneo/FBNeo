@@ -61,6 +61,7 @@ static UINT8 system_identify;
 static INT32 pce_sf2 = 0;
 static INT32 pce_sf2_bank;
 static UINT8 bram_locked = 1;
+static INT32 wondermomohack = 0;
 
 INT32 PceGetZipName(char** pszName, UINT32 i)
 {
@@ -560,6 +561,12 @@ INT32 populousInit()
 	return nRet;
 }
 
+INT32 wondermomoInit()
+{
+	wondermomohack = 1;
+	return PCEInit();
+}
+
 INT32 PCEExit()
 {
 	GenericTilesExit();
@@ -572,6 +579,7 @@ INT32 PCEExit()
 	BurnFree (AllMem);
 
 	pce_sf2 = 0;
+	wondermomohack = 0;
 
 	return 0;
 }
@@ -584,9 +592,9 @@ INT32 PCEDraw()
 	}
 
 	{
-		UINT16 *src = vdc_tmp_draw + (14 * 684) + 86;
+		UINT16 *src = vdc_tmp_draw + ((14+2) * 684) + 86;
 		UINT16 *dst = pTransDraw;
-	
+
 		for (INT32 y = 0; y < nScreenHeight; y++) {
 			for (INT32 x = 0; x < nScreenWidth; x++) {
 				dst[x] = src[x];
@@ -625,6 +633,7 @@ INT32 PCEFrame()
 	PCECompileInputs();
 
 	INT32 nCyclesTotal = (INT32)((INT64)7159090 * nBurnCPUSpeedAdjust / (0x0100 * 60));
+	if (wondermomohack) nCyclesTotal += 1000;
 	INT32 nCyclesDone = 0;
 	INT32 nCyclesSegment = 0;
 

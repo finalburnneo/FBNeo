@@ -98,12 +98,20 @@
 			 !(h6280.irq_mask & 0x2) )							\
 		{														\
 			DO_INTERRUPT(H6280_IRQ1_VEC);						\
-			if (h6280.irq_callback) (*h6280.irq_callback)(0);	\
+        	if (h6280.irq_hold) {                               \
+                h6280.irq_hold = 0;                             \
+				h6280_set_irq_line(0, CPU_IRQSTATUS_NONE);      \
+            }                                                   \
+            if (h6280.irq_callback) (*h6280.irq_callback)(0);	\
 		} else													\
 		if ( h6280.irq_state[1] != CLEAR_LINE &&				\
 			 !(h6280.irq_mask & 0x1) )							\
 		{														\
 			DO_INTERRUPT(H6280_IRQ2_VEC);						\
+        	if (h6280.irq_hold) {                               \
+                h6280.irq_hold = 0;                             \
+				h6280_set_irq_line(1, CPU_IRQSTATUS_NONE);      \
+            }                                                   \
 			if (h6280.irq_callback) (*h6280.irq_callback)(1);	\
         }                                                       \
     }

@@ -340,6 +340,10 @@ void h6280_set_irq_line(int irqline, int state)
 	}
 	else if (irqline < 3)
 	{
+		if (state == CPU_IRQSTATUS_HOLD) {
+			state = CPU_IRQSTATUS_ACK;
+			h6280.irq_hold = 1;
+		}
 		/* If the state has not changed, just return */
 		if ( h6280.irq_state[irqline] == state )
 			return;

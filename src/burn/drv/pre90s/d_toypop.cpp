@@ -1,6 +1,8 @@
 // FB Alpha "Universal System 16" hardware driver module
 // Based on MAME driver by Angelo Salese
 
+// todo: fix bad (black) sprites in liblrabl, also, some color ones are wrong too.
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #undef TRUE
@@ -110,7 +112,7 @@ STDINPUTINFO(Toypop)
 static struct BurnDIPInfo LiblrablDIPList[]=
 {
 	{0x18, 0xff, 0xff, 0xff, NULL				},
-	{0x19, 0xff, 0xff, 0xff, NULL				},
+	{0x19, 0xff, 0xff, 0xdf, NULL				},
 	{0x1a, 0xff, 0xff, 0x0f, NULL				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
@@ -247,7 +249,7 @@ static void toypop_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf000) == 0x8000) {
 		slave_in_reset = address & 0x800;
-		if (slave_in_reset) {
+		if (!slave_in_reset) {
 			SekReset();
 		}
 		return;
@@ -296,7 +298,7 @@ static void toypop_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xf000) == 0x7000) {
-		master_irq_enable = (~address >> 11) & 1;
+		master_irq_enable = (address & 0x0800) ? 0 : 1;
 		return;
 	}
 }
@@ -321,7 +323,7 @@ static UINT8 toypop_main_read(UINT16 address)
 		return namcoio_read(2, address & 0xf); // 5600
 	}
 
-	if ((address & 0xf000) == 0x7000) {
+	if ((address & 0xf000) == 0x7000 && (address_xor == 0x800)) {   // nop for liblrabl
 		master_irq_enable = 1;
 		return 0;
 	}
@@ -344,20 +346,20 @@ static void __fastcall toypop_slave_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xf00000) == 0x300000) {
-		slave_irq_enable = (~address >> 19) & 1;
+		slave_irq_enable = (address & 0x40000) ? 0 : 1;
 		return;
 	}
 }
 
 static void __fastcall toypop_slave_write_byte(UINT32 address, UINT8 data)
 {
-	if ((address & 0xfff000) == 0x100000) {
+	if ((address & 0xfff001) == 0x100001) {
 		DrvShareRAM[(address / 2) & 0x7ff] = data;
 		return;
 	}
 
 	if ((address & 0xf00000) == 0x300000) {
-		slave_irq_enable = (~address >> 19) & 1;
+		slave_irq_enable = (address & 0x40000) ? 0 : 1;
 		return;
 	}
 }
@@ -384,7 +386,7 @@ static UINT16 __fastcall toypop_slave_read_word(UINT32 address)
 
 static UINT8 __fastcall toypop_slave_read_byte(UINT32 address)
 {
-	if ((address & 0xfff000) == 0x100000) {
+	if ((address & 0xfff001) == 0x100001) {
 		return DrvShareRAM[(address / 2) & 0x7ff];
 	}
 
@@ -425,7 +427,7 @@ static tilemap_scan( foreground )
 static tilemap_callback( foreground )
 {
 	UINT8 attr = DrvFgRAM[offs + 0x400] & 0x3f;
-	UINT8 code = DrvFgRAM[offs];
+	UINT8 code = DrvFgRAM[offs] & 0x1ff;
 
 	TILE_SET_INFO(0, code, attr + palette_bank * 0x40, 0);
 }
@@ -480,7 +482,7 @@ static INT32 MemIndex()
 	DrvM6809ROM1		= Next; Next += 0x002000;
 	Drv68KROM		= Next; Next += 0x008000;
 
-	DrvGfxROM0		= Next; Next += 0x004000;
+	DrvGfxROM0		= Next; Next += 0x008000;
 	DrvGfxROM1		= Next; Next += 0x010000;
 
 	DrvColPROM		= Next; Next += 0x000600;
@@ -518,7 +520,7 @@ static INT32 DrvGfxDecode()
 
 	memcpy (tmp, DrvGfxROM0, 0x2000);
 
-	GfxDecode(0x0100, 2,  8,  8, Plane, XOffs0, YOffs, 0x080, tmp, DrvGfxROM0);
+	GfxDecode(0x0200, 2,  8,  8, Plane, XOffs0, YOffs, 0x080, tmp, DrvGfxROM0);
 
 	memcpy (tmp, DrvGfxROM1, 0x4000);
 
@@ -599,7 +601,7 @@ static INT32 DrvInit(INT32 addr_xor)
 
 	GenericTilesInit();
 	GenericTilemapInit(0, foreground_map_scan, foreground_map_callback, 8, 8, 36, 28);
-	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x2000*4, 0, 0x7f);
+	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x8000, 0, 0x7f);
 	GenericTilemapSetTransparent(0, 0);
 
 	DrvDoReset();
@@ -692,6 +694,11 @@ static void draw_sprites()
 
 	for (INT32 count = 0x780; count < 0x800; count+=2)
 	{
+		static const uint8_t gfx_offs[2][2] =
+		{
+			{ 0, 1 },
+			{ 2, 3 }
+		};
 		bool enabled = (base_spriteram[count+bank2+1] & 2) == 0;
 
 		if (enabled == false)
@@ -699,7 +706,7 @@ static void draw_sprites()
 
 		UINT8 tile = base_spriteram[count];
 		UINT8 color = base_spriteram[count+1];
-		int x = base_spriteram[count+bank1+1] + (base_spriteram[count+bank2+1] << 8);
+		INT32 x = base_spriteram[count+bank1+1] + (base_spriteram[count+bank2+1] << 8);
 		x -= 71;
 
 		INT32 y = 224 - (base_spriteram[count+bank1+0] + 7);
@@ -708,14 +715,18 @@ static void draw_sprites()
 		UINT8 width = ((base_spriteram[count+bank2] & 4) >> 2) + 1;
 		UINT8 height = ((base_spriteram[count+bank2] & 8) >> 3) + 1;
 
+		tile &= ~width;
+	    tile &= ~(height << 1);
+
 		if (height == 2) y -=16;
 
 		for (INT32 yi = 0; yi < height; yi++)
 		{
 			for (INT32 xi = 0; xi < width; xi++)
 			{
-				UINT16 code = tile + (xi ^ ((width - 1) & fx)) + yi * 2;
-
+				//UINT16 code = tile + (xi ^ ((width - 1) & fx)) + yi * 2;
+				//code &= 0xff;
+				UINT16 code = tile + gfx_offs[yi ^ (height * fy)][xi ^ (width * fx)];
 				if (fy) {
 					if (fx) {
 						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, x + xi*16, y + yi *16, color, 2, 0/*wrong!*/, 0x200, DrvGfxROM1);
@@ -741,11 +752,13 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	GenericTilemapSetFlip(0, flipscreen);
 
-	draw_bg_layer();
-	GenericTilemapDraw(0, pTransDraw, 0);
-	draw_sprites();
+	if (nBurnLayer & 1) draw_bg_layer();
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -814,7 +827,8 @@ static INT32 DrvFrame()
 		if (slave_in_reset) {
 			SekIdle((nSegment * 4) - SekTotalCycles());
 		} else {
-			nCyclesDone[1] += SekRun((nSegment * 4) - SekTotalCycles());
+			//nCyclesDone[1] += SekRun((nSegment * 4) - SekTotalCycles());
+			nCyclesDone[1] += SekRun(nCyclesTotal[1] / nInterleave);
 			if (i == 223 && slave_irq_enable) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 		}
 
@@ -822,7 +836,7 @@ static INT32 DrvFrame()
 			nCyclesDone[2] += nSegment - nCyclesDone[2];
 		} else {
 			M6809Open(1);
-			nCyclesDone[2] += M6809Run(nSegment - nCyclesDone[2]);
+			nCyclesDone[2] += M6809Run(nCyclesTotal[2] / nInterleave);
 			if (i == 223) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			M6809Close();
 		}

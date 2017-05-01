@@ -175,8 +175,8 @@ void namcoio_set_reset_line(INT32 chip, INT32 state)
 
 void namcoio_reset(INT32 chip)
 {
-	namcoio_set_reset_line(chip, 1);
-	namcoio_set_reset_line(chip, 0);
+	namcoio_set_reset_line(chip, ASSERT_LINE);
+	namcoio_set_reset_line(chip, CLEAR_LINE);
 }
 
 /*****************************************************************************
@@ -260,7 +260,7 @@ static void handle_coins( INT32 chip, int swap )
 }
 
 
-void namco_customio_run(INT32 chip)
+void namco56xx_customio_run(INT32 chip)
 {
 	ChipData *ptr = &Chips[chip];
 

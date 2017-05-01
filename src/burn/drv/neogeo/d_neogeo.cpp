@@ -14732,9 +14732,9 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2017/03/03 version */
+/* Ivex hack - 2017/04/08 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x93ef2538, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p1.p1", 	0x100000, 0xc7732878, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
 	{ "242cb-p2.sp2", 	0x400000, 0x58fb0e49, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -14761,7 +14761,7 @@ STD_ROM_FN(kof98cb)
 
 struct BurnDriver BurnDrvkof98cb = {
 	"kof98cb", "kof98", "neogeo", NULL, "2015",
-	"The King of Fighters '98 (Combo)\0", NULL, "bootleg", "Neo Geo MVS",
+	"The King of Fighters '98 (Combo, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
 	NULL, kof98cbRomInfo, kof98cbRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
@@ -15054,8 +15054,8 @@ struct BurnDriver BurnDrvSamShoa = {
 	0x1000, 320, 224, 4, 3
 };
 
-// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017)
-// Modified by GSC2007	
+// Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)
+// Modified by: GSC2007	
 // Version number: Ver 1.0.0320
 
 static struct BurnRomInfo samsho2spRomDesc[] = {
@@ -15115,11 +15115,50 @@ static INT32 Samsho2spExit()
 
 struct BurnDriver BurnDrvSamsho2sp = {
 	"samsho2sp", "samsho2", "neogeo", NULL, "2017",
-	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017)\0", NULL, "SNK", "Neo Geo MVS",
-	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Special 2017)\0", NULL, NULL, NULL,
+	"Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
+	L"Samurai Shodown II\0\u771F Samurai Spirits - \u8987\u738B\u4E38\u5730\u7344\u5909 (Special 2017, hack)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho2spRomInfo, samsho2spRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	Samsho2spInit, Samsho2spExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+// Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack)
+// Modified by: GSC2007 
+// Version number: Ver 1.0.0501
+
+static struct BurnRomInfo samsho4spRomDesc[] = {
+	{ "222-p1sp.p1",  0x100000, 0x6e98579a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "222-p2sp.sp2", 0x400000, 0x2c9c64db, 1 | BRF_ESS | BRF_PRG }, //  1 					
+
+	{ "222-s1.s1",    0x020000, 0x8d3d3bf9, 2 | BRF_GRA },           //  2 Text layer tiles /* TC531000 */
+
+	{ "222-c1.c1",    0x400000, 0x68f2ed95, 3 | BRF_GRA },           //  3 Sprite data		/* TC5332205 */
+	{ "222-c2.c2",    0x400000, 0xa6e9aff0, 3 | BRF_GRA },           //  4 					/* TC5332205 */
+	{ "222-c3.c3",    0x400000, 0xc91b40f4, 3 | BRF_GRA },           //  5 					/* TC5332205 */
+	{ "222-c4.c4",    0x400000, 0x359510a4, 3 | BRF_GRA },           //  6 					/* TC5332205 */
+	{ "222-c5.c5",    0x400000, 0x9cfbb22d, 3 | BRF_GRA },           //  7 					/* TC5332205 */
+	{ "222-c6.c6",    0x400000, 0x685efc32, 3 | BRF_GRA },           //  8 					/* TC5332205 */
+	{ "222-c7sp.c7",  0x400000, 0xecb13c24, 3 | BRF_GRA },           //  9 					
+	{ "222-c8sp.c8",  0x400000, 0x0f9a0bda, 3 | BRF_GRA },           // 10 					
+
+	{ "222-m1.m1",    0x020000, 0x7615bc1b, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code			/* TC531001 */
+
+	{ "222-v1.v1",    0x400000, 0x7d6ba95f, 5 | BRF_SND },           // 12 Sound data		/* TC5332204 */
+	{ "222-v2.v2",    0x400000, 0x6c33bb5d, 5 | BRF_SND },           // 13 					/* TC5332204 */
+	{ "222-v3.v3",    0x200000, 0x831ea8c0, 5 | BRF_SND },           // 14 					/* TC5316200 */
+};
+
+STDROMPICKEXT(samsho4sp, samsho4sp, neogeo)
+STD_ROM_FN(samsho4sp)
+
+struct BurnDriver BurnDrvSamSho4sp = {
+	"samsho4sp", "samsho4", "neogeo", NULL, "1996",
+	"Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
+	L"Samurai Shodown IV - Amakusa's Revenge\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4 - \u5929\u8349\u964D\u81E8 (Special 2017, hack)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho4spRomInfo, samsho4spRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
 };
 

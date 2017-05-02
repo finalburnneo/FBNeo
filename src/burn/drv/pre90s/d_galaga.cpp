@@ -760,7 +760,7 @@ static void Namco54XXWrite(INT32 Data)
 	}
 }
 
-UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
+static UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 {
 	if (a >= 0xb800 && a <= 0xb83f && digdugmode) { // EAROM Read
 		return earom_read(a - 0xb800);
@@ -911,7 +911,7 @@ UINT8 __fastcall GalagaZ80ProgRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
+static void __fastcall GalagaZ80ProgWrite(UINT16 a, UINT8 d)
 {
 	if (a >= 0x6800 && a <= 0x681f) {
 		NamcoSoundWrite(a - 0x6800, d);
@@ -1456,28 +1456,6 @@ static void DrvCalcPaletteDigdug()
 	}
 }
 
-UINT32 transpen_mask(INT32 color, INT32 transcolor) // from MAME
-{
-	UINT32 entry = 0x200 + color; //gfx.colorbase() + (color % gfx.colors()) * gfx.granularity();
-
-	// make sure we are in range
-	//assert(entry < m_indirect_pens.count());
-	//assert(gfx.depth() <= 32);
-
-	// either gfx->color_depth entries or as many as we can get up until the end
-	INT32 count = 0x200 - entry;//MIN(gfx.depth(), m_indirect_pens.count() - entry);
-
-	// set a bit anywhere the transcolor matches
-	UINT32 mask = 0;
-	UINT8 *m_indirect_pens = DrvPromSpriteLookup; // sprites in digdug
-	for (INT32 bit = 0; bit < count; bit++)
-		if (m_indirect_pens[entry++] == transcolor)
-			mask |= 1 << bit;
-
-	// return the final mask
-	return mask;
-}
-
 struct Star {
 	UINT16 x, y;
 	UINT8 Colour, Set;
@@ -1986,7 +1964,6 @@ static void digdug_Sprites()
 				INT32 Code = Sprite + GfxOffset[y ^ (sSize * yFlip)][x ^ (sSize * xFlip)];
 				INT32 xPos = (sx + 16 * x);
 				INT32 yPos = sy + 16 * y;
-				INT32 tmask = transpen_mask(Colour, 0x1f);
 
 				if (xPos < 8) xPos += 0x100; // that's a wrap!
 				if (xPos >= nScreenWidth || yPos >= nScreenHeight) continue;
@@ -1995,29 +1972,29 @@ static void digdug_Sprites()
 				if (xPos > 0 && xPos < 288-16 && yPos > 0 && yPos < 224-16) {
 					if (xFlip) {
 						if (yFlip) {
-							Render16x16Tile_Mask_FlipXY(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_FlipXY(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						} else {
-							Render16x16Tile_Mask_FlipX(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_FlipX(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						}
 					} else {
 						if (yFlip) {
-							Render16x16Tile_Mask_FlipY(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_FlipY(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						} else {
-							Render16x16Tile_Mask(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						}
 					}
 				} else {
 					if (xFlip) {
 						if (yFlip) {
-							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						} else {
-							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_FlipX_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						}
 					} else {
 						if (yFlip) {
-							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_FlipY_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						} else {
-							Render16x16Tile_Mask_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, tmask, 0x200, DrvSprites);
+							Render16x16Tile_Mask_Clip(pTransDraw, Code, xPos, yPos, Colour, 2, 0, 0x200, DrvSprites);
 						}
 					}
 				}

@@ -111,6 +111,7 @@ TODO:
 ***************************************************************************/
 
 #include "burnint.h"
+#include "namcoio.h"
 #include "driver.h"
 
 struct ChipData
@@ -121,6 +122,8 @@ struct ChipData
 	UINT8 (*in_3_cb)(UINT8);
 	void (*out_0_cb)(UINT8, UINT8);
 	void (*out_1_cb)(UINT8, UINT8);
+	void (*run_func)(INT32);
+	INT32 type;
 
 	UINT8	ram[16];
 	INT32	reset;
@@ -138,9 +141,11 @@ static struct ChipData Chips[5];
 static UINT8 fakeIn(UINT8) { return 0; }
 static void fakeOut(UINT8,UINT8) { }
 
-void namcoio_init(INT32 chip, UINT8 (*in0)(UINT8), UINT8 (*in1)(UINT8), UINT8 (*in2)(UINT8), UINT8 (*in3)(UINT8), void (*out0)(UINT8, UINT8), void (*out1)(UINT8, UINT8))
+void namcoio_init(INT32 chip, INT32 type, UINT8 (*in0)(UINT8), UINT8 (*in1)(UINT8), UINT8 (*in2)(UINT8), UINT8 (*in3)(UINT8), void (*out0)(UINT8, UINT8), void (*out1)(UINT8, UINT8))
 {
 	ChipData *ptr = &Chips[chip];
+
+	ptr->type = type;
 
 	ptr->in_0_cb = (in0 == NULL) ? fakeIn : in0;
 	ptr->in_1_cb = (in1 == NULL) ? fakeIn : in1;
@@ -148,6 +153,13 @@ void namcoio_init(INT32 chip, UINT8 (*in0)(UINT8), UINT8 (*in1)(UINT8), UINT8 (*
 	ptr->in_3_cb = (in3 == NULL) ? fakeIn : in3;
 	ptr->out_0_cb = (out0 == NULL) ? fakeOut : out0;
 	ptr->out_1_cb = (out1 == NULL) ? fakeOut : out1;
+
+	switch (type)
+	{
+		case NAMCO56xx: ptr->run_func = namco56xx_customio_run; break;
+		case NAMCO58xx: ptr->run_func = namco58xx_customio_run; break;
+		case NAMCO59xx: ptr->run_func = namco59xx_customio_run; break;
+	}
 }
 
 //-------------------------------------------------
@@ -415,6 +427,12 @@ void namco58xx_customio_run(INT32 chip)
 	}
 }
 
+void namcoio_run(INT32 chip)
+{
+	ChipData *ptr = &Chips[chip];
+
+	ptr->run_func(chip);
+}	
 
 UINT8 namcoio_read(INT32 chip, UINT8 offset)
 {

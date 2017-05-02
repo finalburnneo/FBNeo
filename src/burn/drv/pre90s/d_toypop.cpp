@@ -283,12 +283,12 @@ static void toypop_main_write(UINT16 address, UINT8 data)
 	}
 
 	if ((address & 0xfff0) == 0x6800) {
-		namcoio_write(0, address & 0xf, data); // 5800
+		namcoio_write(0, address & 0xf, data);
 		return;
 	}
 
 	if ((address & 0xfff0) == 0x6810) {
-		namcoio_write(1, address & 0xf, data); // 5600
+		namcoio_write(1, address & 0xf, data);
 		return;
 	}
 
@@ -312,15 +312,15 @@ static UINT8 toypop_main_read(UINT16 address)
 	}
 
 	if ((address & 0xfff0) == 0x6800) {
-		return namcoio_read(0, address & 0xf); // 5800
+		return namcoio_read(0, address & 0xf);
 	}
 
 	if ((address & 0xfff0) == 0x6810) {
-		return namcoio_read(1, address & 0xf); // 5600
+		return namcoio_read(1, address & 0xf);
 	}
 
 	if ((address & 0xfff0) == 0x6820) {
-		return namcoio_read(2, address & 0xf); // 5600
+		return namcoio_read(2, address & 0xf);
 	}
 
 	if ((address & 0xf000) == 0x7000 && (address_xor == 0x800)) { // only toypop!
@@ -599,9 +599,9 @@ static INT32 DrvInit(INT32 addr_xor)
 	NamcoSoundInit(24000, 8, 0);
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
-	namcoio_init(0, nio0_i0, nio0_i1, nio0_i2, nio0_i3, NULL,    NULL);
-	namcoio_init(1, nio1_i0, nio1_i1, nio1_i2, nio1_i3, nio1_o0, NULL);
-	namcoio_init(2, NULL,    nio2_i1, nio2_i2, nio2_i3, NULL,    NULL);
+	namcoio_init(0, NAMCO58xx, nio0_i0, nio0_i1, nio0_i2, nio0_i3, NULL,    NULL);
+	namcoio_init(1, NAMCO56xx, nio1_i0, nio1_i1, nio1_i2, nio1_i3, nio1_o0, NULL);
+	namcoio_init(2, NAMCO56xx, NULL,    nio2_i1, nio2_i2, nio2_i3, NULL,    NULL);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, foreground_map_scan, foreground_map_callback, 8, 8, 36, 28);
@@ -756,13 +756,13 @@ static void master_scanline_callback(INT32 scanline)
 	if (scanline == 0)
 	{
 		if (!namcoio_read_reset_line(0))
-			namco58xx_customio_run(0);
+			namcoio_run(0);
 
 		if (!namcoio_read_reset_line(1))
-			namco56xx_customio_run(1);
+			namcoio_run(1);
 
 		if (!namcoio_read_reset_line(2))
-			namco56xx_customio_run(2);
+			namcoio_run(2);
 	}
 }
 

@@ -1,8 +1,6 @@
 // FB Alpha "Universal System 16" hardware driver module
 // Based on MAME driver by Angelo Salese
 
-// todo: fix bad (black) sprites in liblrabl, also, some color ones are wrong too.
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #undef TRUE
@@ -52,26 +50,26 @@ static UINT8 DrvReset;
 static struct BurnInputInfo LiblrablInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy6 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy5 + 2,	"p1 start"	},
-	{"P1 Right Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Right Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Right Left",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
-	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p3 up"		},
-	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy3 + 2,	"p3 down"	},
-	{"P1 Left Left",	BIT_DIGITAL,	DrvJoy3 + 3,	"p3 left"	},
-	{"P1 Left Right",	BIT_DIGITAL,	DrvJoy3 + 1,	"p3 right"	},
+	{"P1 Left Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 up"		},
+	{"P1 Left Down",	BIT_DIGITAL,	DrvJoy3 + 2,	"p1 down"	},
+	{"P1 Left Left",	BIT_DIGITAL,	DrvJoy3 + 3,	"p1 left"	},
+	{"P1 Left Right",	BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"	},
+	{"P1 Right Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p3 up"		},
+	{"P1 Right Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p3 down"	},
+	{"P1 Right Left",	BIT_DIGITAL,	DrvJoy1 + 3,	"p3 left"	},
+	{"P1 Right Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p3 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy5 + 0,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy6 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy5 + 3,	"p2 start"	},
-	{"P2 Right Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Right Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Right Left",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
-	{"P2 Right Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Left Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p4 up"		},
-	{"P2 Left Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p4 down"	},
-	{"P2 Left Left",	BIT_DIGITAL,	DrvJoy4 + 3,	"p4 left"	},
-	{"P2 Left Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p4 right"	},
+	{"P2 Left Up",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 up"		},
+	{"P2 Left Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p2 down"	},
+	{"P2 Left Left",	BIT_DIGITAL,	DrvJoy4 + 3,	"p2 left"	},
+	{"P2 Left Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"	},
+	{"P2 Right Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p4 up"		},
+	{"P2 Right Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p4 down"	},
+	{"P2 Right Left",	BIT_DIGITAL,	DrvJoy2 + 3,	"p4 left"	},
+	{"P2 Right Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p4 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
@@ -464,6 +462,10 @@ static INT32 DrvDoReset()
 	NamcoSoundReset();
 	M6809Close();
 
+	namcoio_reset(0);
+	namcoio_reset(1);
+	namcoio_reset(2);
+
 	slave_in_reset = 1;	// start with slave turned off
 	sound_in_reset = 1;	// start with sound turned off
 	palette_bank = 0;
@@ -694,11 +696,6 @@ static void draw_sprites()
 
 	for (INT32 count = 0x780; count < 0x800; count+=2)
 	{
-		static const uint8_t gfx_offs[2][2] =
-		{
-			{ 0, 1 },
-			{ 2, 3 }
-		};
 		bool enabled = (base_spriteram[count+bank2+1] & 2) == 0;
 
 		if (enabled == false)
@@ -715,31 +712,15 @@ static void draw_sprites()
 		UINT8 width = ((base_spriteram[count+bank2] & 4) >> 2) + 1;
 		UINT8 height = ((base_spriteram[count+bank2] & 8) >> 3) + 1;
 
-		tile &= ~width;
-	    tile &= ~(height << 1);
-
 		if (height == 2) y -=16;
 
 		for (INT32 yi = 0; yi < height; yi++)
 		{
 			for (INT32 xi = 0; xi < width; xi++)
 			{
-				//UINT16 code = tile + (xi ^ ((width - 1) & fx)) + yi * 2;
-				//code &= 0xff;
-				UINT16 code = tile + gfx_offs[yi ^ (height * fy)][xi ^ (width * fx)];
-				if (fy) {
-					if (fx) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, x + xi*16, y + yi *16, color, 2, 0/*wrong!*/, 0x200, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, x + xi*16, y + yi *16, color, 2, 0/*wrong!*/, 0x200, DrvGfxROM1);
-					}
-				} else {
-					if (fx) {
-						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, x + xi*16, y + yi *16, color, 2, 0/*wrong!*/, 0x200, DrvGfxROM1);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, x + xi*16, y + yi *16, color, 2, 0/*wrong!*/, 0x200, DrvGfxROM1);
-					}
-				}
+				UINT16 code = tile + (xi ^ ((width - 1) & fx)) + yi * 2;
+
+				RenderTileTranstab(pTransDraw, DrvGfxROM1, code, (color << 2) + 0x200, 0xff, x + xi*16, y + yi *16, fx, fy, 16, 16, DrvColPROM + 0x300); // sprites starts at DrvColPROM + 0x200, but must deduct the color offset in this case.
 			}
 		}
 	}

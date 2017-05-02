@@ -83,7 +83,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 
 		if (nFlags & LD_INVERT) {
 			for (INT32 n = 0; n < nLen; n++) {
-				Dest[i] ^= 0xff;
+				Dest[n] ^= 0xff;
 			}
 		}
 

@@ -52,8 +52,12 @@
 
 #if M68K_COMPILE_FOR_MAME == OPT_OFF
 
-#define FALSE		0
-#define TRUE		1
+#ifndef FALSE
+#    define FALSE 0
+#endif
+#ifndef TRUE
+#    define TRUE (!FALSE)
+#endif
 
 #include "driver.h"
 

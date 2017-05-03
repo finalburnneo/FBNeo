@@ -307,7 +307,7 @@ static struct BurnDIPInfo MappyDIPList[]=
 	{0x0e, 0x01, 0x07, 0x05, "1 Coin  3 Credits"		},
 	{0x0e, 0x01, 0x07, 0x04, "1 Coin  6 Credits"		},
 
-	{0   , 0xfe, 0   ,   15, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
 	{0x0e, 0x01, 0x38, 0x18, "20k Only"			},
 	{0x0e, 0x01, 0x38, 0x30, "20k & 60k Only"		},
 	{0x0e, 0x01, 0x38, 0x38, "20k & 70k Only"		},
@@ -315,6 +315,7 @@ static struct BurnDIPInfo MappyDIPList[]=
 	{0x0e, 0x01, 0x38, 0x28, "20k & 80k Only"		},
 	{0x0e, 0x01, 0x38, 0x08, "20k, 80k & Every 80k"		},
 	{0x0e, 0x01, 0x38, 0x20, "30k & 100k Only"		},
+#if 0
 	{0x0e, 0x01, 0x38, 0x20, "30k Only"			},
 	{0x0e, 0x01, 0x38, 0x38, "30k & 80k Only"		},
 	{0x0e, 0x01, 0x38, 0x30, "30k & 100k Only"		},
@@ -322,6 +323,7 @@ static struct BurnDIPInfo MappyDIPList[]=
 	{0x0e, 0x01, 0x38, 0x28, "30k & 120k Only"		},
 	{0x0e, 0x01, 0x38, 0x18, "40k Only"			},
 	{0x0e, 0x01, 0x38, 0x08, "40k, 120k & Every 120k"	},
+#endif
 	{0x0e, 0x01, 0x38, 0x00, "None"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
@@ -510,7 +512,7 @@ static struct BurnDIPInfo SuperpacDIPList[]=
 	{0x12, 0x01, 0x07, 0x04, "1 Coin  6 Credits"		},
 	{0x12, 0x01, 0x07, 0x03, "1 Coin  7 Credits"		},
 
-	{0   , 0xfe, 0   ,   15, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
 	{0x12, 0x01, 0x38, 0x08, "30k Only"			},
 	{0x12, 0x01, 0x38, 0x30, "30k & 80k Only"		},
 	{0x12, 0x01, 0x38, 0x20, "30k, 80k & Every 80k"		},
@@ -519,6 +521,7 @@ static struct BurnDIPInfo SuperpacDIPList[]=
 	{0x12, 0x01, 0x38, 0x28, "30k & 120k Only"		},
 	{0x12, 0x01, 0x38, 0x10, "30k, 120k & Every 120k"	},
 	{0x12, 0x01, 0x38, 0x00, "None"				},
+#if 0
 	{0x12, 0x01, 0x38, 0x10, "30k Only"			},
 	{0x12, 0x01, 0x38, 0x38, "30k & 100k Only"		},
 	{0x12, 0x01, 0x38, 0x20, "30k, 100k & Every 100k"	},
@@ -526,6 +529,7 @@ static struct BurnDIPInfo SuperpacDIPList[]=
 	{0x12, 0x01, 0x38, 0x08, "40k Only"			},
 	{0x12, 0x01, 0x38, 0x28, "40k & 120k Only"		},
 	{0x12, 0x01, 0x38, 0x18, "40k, 120k & Every 120k"	},
+#endif
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
 	{0x12, 0x01, 0xc0, 0x80, "1"				},
@@ -539,7 +543,7 @@ STDDIPINFO(Superpac)
 static struct BurnDIPInfo PacnpalDIPList[]=
 {
 	{0x10, 0xff, 0xff, 0x0f, NULL				},
-	{0x11, 0xff, 0xff, 0xff, NULL				},
+	{0x11, 0xff, 0xff, 0x77, NULL				},
 	{0x12, 0xff, 0xff, 0xff, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"			},
@@ -556,7 +560,7 @@ static struct BurnDIPInfo PacnpalDIPList[]=
 	{0x11, 0x01, 0x07, 0x04, "1 Coin  6 Credits"		},
 	{0x11, 0x01, 0x07, 0x03, "1 Coin  7 Credits"		},
 
-	{0   , 0xfe, 0   ,   15, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
 	{0x11, 0x01, 0x38, 0x20, "20k & 70k Only"		},
 	{0x11, 0x01, 0x38, 0x30, "20k, 70k & Every 70k"		},
 	{0x11, 0x01, 0x38, 0x00, "30k Only"			},
@@ -564,6 +568,7 @@ static struct BurnDIPInfo PacnpalDIPList[]=
 	{0x11, 0x01, 0x38, 0x10, "30k & 80k Only"		},
 	{0x11, 0x01, 0x38, 0x28, "30k, 100k & Every 80k"	},
 	{0x11, 0x01, 0x38, 0x08, "30k & 100k Only"		},
+#if 0
 	{0x11, 0x01, 0x38, 0x08, "30k Only"			},
 	{0x11, 0x01, 0x38, 0x00, "40k Only"			},
 	{0x11, 0x01, 0x38, 0x20, "30k & 80k Only"		},
@@ -571,6 +576,7 @@ static struct BurnDIPInfo PacnpalDIPList[]=
 	{0x11, 0x01, 0x38, 0x18, "30k & 100k Only"		},
 	{0x11, 0x01, 0x38, 0x10, "40k & 120k Only"		},
 	{0x11, 0x01, 0x38, 0x28, "40k, 100k & Every 100k"	},
+#endif
 	{0x11, 0x01, 0x38, 0x38, "None"				},
 
 	{0   , 0xfe, 0   ,    4, "Lives"			},
@@ -597,8 +603,8 @@ STDDIPINFO(Pacnpal)
 static struct BurnDIPInfo GrobdaDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0x0f, NULL				},
-	{0x13, 0xff, 0xff, 0xff, NULL				},
-	{0x14, 0xff, 0xff, 0xff, NULL				},
+	{0x13, 0xff, 0xff, 0xc9, NULL				},
+	{0x14, 0xff, 0xff, 0x3f, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"			},
 	{0x12, 0x01, 0x04, 0x04, "Upright"			},
@@ -705,19 +711,21 @@ static struct BurnDIPInfo PhozonDIPList[]=
 	{0x12, 0x01, 0x03, 0x01, "4"				},
 	{0x12, 0x01, 0x03, 0x00, "5"				},
 
-	{0   , 0xfe, 0   ,   13, "Bonus Life"			},
+	{0   , 0xfe, 0   ,    7, "Bonus Life"			},
 	{0x12, 0x01, 0x1c, 0x08, "20k & 80k Only"		},
 	{0x12, 0x01, 0x1c, 0x10, "20k, 80k & Every 80k"		},
 	{0x12, 0x01, 0x1c, 0x04, "30k Only"			},
 	{0x12, 0x01, 0x1c, 0x18, "30k & 60k Only"		},
 	{0x12, 0x01, 0x1c, 0x1c, "30k & 100k Only"		},
 	{0x12, 0x01, 0x1c, 0x0c, "30k, 120k & Every 120k"	},
+#if 0
 	{0x12, 0x01, 0x1c, 0x0c, "20k & 80k Only"		},
 	{0x12, 0x01, 0x1c, 0x08, "30k"				},
 	{0x12, 0x01, 0x1c, 0x10, "30k, 100k & Every 100k"	},
 	{0x12, 0x01, 0x1c, 0x1c, "30k & 100k Only"		},
 	{0x12, 0x01, 0x1c, 0x18, "40k & 80k Only"		},
 	{0x12, 0x01, 0x1c, 0x04, "100k Only"			},
+#endif
 	{0x12, 0x01, 0x1c, 0x00, "None"				},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"			},
@@ -1887,21 +1895,6 @@ static INT32 PhozonDraw()
 	return 0;
 }
 
-static void scanline_callback(INT32 scanline)
-{
-	if (scanline == 224 + 16 && main_irq_mask)
-		M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
-
-	if (scanline == 225 + 16)
-	{
-		if (!namcoio_read_reset_line(0))
-			namcoio_run(0);
-
-		if (!namcoio_read_reset_line(1))
-			namcoio_run(1);
-	}
-}
-
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1927,7 +1920,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 264;
-	INT32 nCyclesTotal[3] = { 1536000 / 60, 1536000 / 60, 1536000 / 60 };
+	INT32 nCyclesTotal[3] = { (INT32)((double)1536000 / 60.606061), (INT32)((double)1536000 / 60.606061), (INT32)((double)1536000 / 60.606061) };
 	INT32 nCyclesDone[3] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -1935,8 +1928,17 @@ static INT32 DrvFrame()
 		INT32 nSegment = 0;
 
 		M6809Open(0);
-		scanline_callback(i);
-		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += M6809Run((nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i));//nCyclesTotal[0] / nInterleave);
+		if (i == nInterleave-1) {
+			if (main_irq_mask)
+				M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+
+			if (!namcoio_read_reset_line(0))
+				namcoio_run(0);
+
+			if (!namcoio_read_reset_line(1))
+				namcoio_run(1);
+		}
 		nSegment = M6809TotalCycles();
 		M6809Close();
 
@@ -1945,7 +1947,7 @@ static INT32 DrvFrame()
 		} else {
 			M6809Open(1);
 			nCyclesDone[1] += M6809Run(nSegment - nCyclesDone[1]);
-			if (i == 223 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == nInterleave-1 && sub_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
 
@@ -1954,7 +1956,7 @@ static INT32 DrvFrame()
 		} else {
 			M6809Open(2);
 			nCyclesDone[2] += M6809Run(nSegment - nCyclesDone[2]);
-			if (i == 223 && sub2_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			if (i == nInterleave-1 && sub2_irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 		}
 	}

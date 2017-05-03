@@ -1889,10 +1889,10 @@ static INT32 PhozonDraw()
 
 static void scanline_callback(INT32 scanline)
 {
-	if (scanline == 224 && main_irq_mask)
+	if (scanline == 224 + 16 && main_irq_mask)
 		M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 
-	if (scanline == 225)
+	if (scanline == 225 + 16)
 	{
 		if (!namcoio_read_reset_line(0))
 			namcoio_run(0);

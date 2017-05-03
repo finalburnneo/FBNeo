@@ -1748,7 +1748,6 @@ static void mappy_draw_sprites(INT32 depth, INT32 priority)
 					if (priority) // pens 0 & 1 are over the char layer in superpac hardware
 					{
 						UINT8 *gfx = DrvGfxROM1 + (code * 0x100);
-						color = (color + 0x100);
 						INT32 flip = (flipy ? 0xf0 : 0) | (flipx ? 0x0f : 0);
 
 						INT32 dy = sy + 16 * y;
@@ -1763,10 +1762,10 @@ static void mappy_draw_sprites(INT32 depth, INT32 priority)
 
 								INT32 pxl = gfx[((yy*16)+xx)^flip] + color;
 
-								INT32 col = DrvColPROM[0x20 + pxl];
+								INT32 col = DrvColPROM[0x120 + pxl];
 
-								if (col < 2) {
-									pTransDraw[(dy + yy) * nScreenWidth + dx + xx] = pxl;
+								if (pxl && col < 2) {
+									pTransDraw[(dy + yy) * nScreenWidth + dx + xx] = pxl + 0x100;
 								}
 							}
 						}

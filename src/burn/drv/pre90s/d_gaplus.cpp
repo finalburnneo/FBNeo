@@ -426,7 +426,7 @@ static INT32 DrvGfxDecode()
 	INT32 XOffs1[16] = { STEP4(0,1), STEP4(64,1), STEP4(128,1), STEP4(192,1) };
 	INT32 YOffs[16]  = { STEP8(0,8), STEP8(256,8) };
 
-	UINT8 *tmp = (UINT8*)BurnMalloc(0xc000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x10000); // 2nd decode tries to access out of bounds w/0xc000
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -519,7 +519,7 @@ static INT32 DrvInit(INT32 gaplusd)
 	NacmoSoundSetAllRoutes(0.50 * 10.0 / 16.0, BURN_SND_ROUTE_BOTH);
 
 	BurnSampleInit(1);
-	BurnSampleSetAllRoutesAllSamples(0.80, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
 
 	namcoio_init(0, gaplusd ? NAMCO58xx : NAMCO56xx, nio0_i0, nio0_i1, nio0_i2, nio0_i3, NULL, NULL); // lamps not hooked up
 	namcoio_init(1, gaplusd ? NAMCO56xx : NAMCO58xx, nio1_i0, nio1_i1, nio1_i2, nio1_i3, NULL, NULL);

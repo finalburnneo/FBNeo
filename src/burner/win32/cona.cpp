@@ -234,6 +234,7 @@ int ConfigAppLoad()
 		STR(szAppCabinetsPath);
 		STR(szAppPCBsPath);
 		STR(szAppHistoryPath);
+		STR(szAppEEPROMPath);
 		
 		VAR(bNoChangeNumLock);
 		VAR(bAlwaysCreateSupportFolders);
@@ -600,6 +601,7 @@ int ConfigAppSave()
 	STR(szAppCabinetsPath);
 	STR(szAppPCBsPath);
 	STR(szAppHistoryPath);
+	STR(szAppEEPROMPath);
 	
 	_ftprintf(h, _T("\n// The cartridges to use for emulation of an MVS system\n"));
 	DRV(nBurnDrvSelect[0]);

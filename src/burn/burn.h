@@ -20,6 +20,7 @@
 extern TCHAR szAppHiscorePath[MAX_PATH];
 extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];
+extern TCHAR szAppEEPROMPath[MAX_PATH];
 
 // Alignment macro, to keep savestates compatible between 32/64bit platforms.
 #ifdef _MSC_VER

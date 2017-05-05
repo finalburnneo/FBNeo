@@ -1498,6 +1498,44 @@ struct BurnDriver BurnDrvBuckyea = {
 };
 
 
+// Bucky O'Hare (ver JAA)
+
+static struct BurnRomInfo buckyjaaRomDesc[] = {
+	{ "173_ja_a01.05",	0x040000, 0x0a32bde7, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "173_ja_a02.06",	0x040000, 0x3e6f3955, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "173a03.t5",		0x020000, 0xcd724026, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "173a04.t6",		0x020000, 0x7dd54d6f, 1 | BRF_PRG | BRF_ESS }, //  3
+	
+	{ "173a07.f5",		0x040000, 0x4cdaee71, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "173a05.t8",		0x100000, 0xd14333b4, 3 | BRF_GRA },           //  5 K056832 Characters
+	{ "173a06.t10",		0x100000, 0x6541a34f, 3 | BRF_GRA },           //  6
+
+	{ "173a10.b8",		0x200000, 0x42fb0a0c, 4 | BRF_GRA },           //  7 K053247 Sprites
+	{ "173a11.a8",		0x200000, 0xb0d747c4, 4 | BRF_GRA },           //  8
+	{ "173a12.b10",		0x200000, 0x0fc2ad24, 4 | BRF_GRA },           //  9
+	{ "173a13.a10",		0x200000, 0x4cf85439, 4 | BRF_GRA },           // 10
+
+	{ "173a08.b6",		0x200000, 0xdcdded95, 5 | BRF_SND },           // 11 K054539 Samples
+	{ "173a09.a6",		0x200000, 0xc93697c4, 5 | BRF_SND },           // 12
+
+	{ "buckyja.nv",		0x000080, 0x2f280a74, 6 | BRF_OPT },           // 13 eeprom data
+};
+
+STD_ROM_PICK(buckyjaa)
+STD_ROM_FN(buckyjaa)
+
+struct BurnDriver BurnDrvBuckyjaa = {
+	"buckyjaa", "bucky", NULL, NULL, "1992",
+	"Bucky O'Hare (ver JAA)\0", NULL, "Konami", "GX173",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, buckyjaaRomInfo, buckyjaaRomName, NULL, NULL, BuckyInputInfo, BuckyDIPInfo,
+	BuckyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
+	384, 224, 4, 3
+};
+
+
 // Bucky O'Hare (ver UAB)
 
 static struct BurnRomInfo buckyuabRomDesc[] = {

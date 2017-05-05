@@ -3187,7 +3187,7 @@ STD_ROM_FN(dankuga)
 
 struct BurnDriver BurnDrvDankuga = {
 	"dankuga", NULL, NULL, NULL, "1994",
-	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
+	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", "Missing graphics are normal in this prototype", "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, dankugaRomInfo, dankugaRomName, NULL, NULL, KnInputInfo, NULL,
@@ -5300,7 +5300,7 @@ static INT32 kiramekiInit()
 
 struct BurnDriver BurnDrvKirameki = {
 	"kirameki", NULL, NULL, NULL, "1997",
-	"Kirameki Star Road (Ver 2.10J 1997/08/29)\0", NULL, "Taito Corporation", "F3 System",
+	"Kirameki Star Road (Ver 2.10J 1997/08/29)\0", "No sound", "Taito Corporation", "F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_QUIZ, 0,
 	NULL, kiramekiRomInfo, kiramekiRomName, NULL, NULL, F3InputInfo, NULL,

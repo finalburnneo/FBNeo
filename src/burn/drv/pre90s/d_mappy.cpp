@@ -1083,7 +1083,7 @@ static INT32 DrvDoReset()
 	M6809Open(0);
 	M6809Reset();
 	for (INT32 i = 0; i < 0x10; i+=2) {
-		M6809WriteRom(0x2000 + i, 0);
+		M6809WriteRom(0x2000 + i, 0); // send through the game's write handler
 	}
 	M6809Close();
 
@@ -1622,6 +1622,7 @@ static INT32 PhozonInit()
 	GenericTilesInit();
 	GenericTilemapInit(0, superpac_bg_map_scan, superpac_bg_map_callback, 8, 8, 36, 28);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x2000*4, 0, 0x3f);
+	GenericTilemapSetTransparent(0, 0x00);
 
 	DrvDoReset();
 
@@ -1841,15 +1842,17 @@ static INT32 MappyDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	GenericTilemapSetFlip(0, flipscreen);
 
 	for (INT32 offs = 2; offs < 34; offs++) {
 		GenericTilemapSetScrollCol(0, offs, scroll);
 	}
 
-	GenericTilemapDraw(0, pTransDraw, 0);
-	mappy_draw_sprites(4, 0);
-	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nSpriteEnable & 1) mappy_draw_sprites(4, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1863,12 +1866,14 @@ static INT32 SuperpacDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	GenericTilemapSetFlip(0, flipscreen);
 
-	GenericTilemapDraw(0, pTransDraw, 0);
-	mappy_draw_sprites(2, 0);
-	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
-	mappy_draw_sprites(2, 1);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nSpriteEnable & 1) mappy_draw_sprites(2, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
+	if (nSpriteEnable & 2) mappy_draw_sprites(2, 1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1884,11 +1889,13 @@ static INT32 PhozonDraw()
 
 	flipscreen = DrvSprRAM[0x1f7f-0x800] & 1;
 
+	BurnTransferClear();
+
 	GenericTilemapSetFlip(0, flipscreen);
 
-	GenericTilemapDraw(0, pTransDraw, 0);
-	phozon_draw_sprites();
-	GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nSpriteEnable & 1) phozon_draw_sprites();
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 
 	BurnTransferCopy(DrvPalette);
 

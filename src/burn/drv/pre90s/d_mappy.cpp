@@ -1893,7 +1893,7 @@ static INT32 PhozonDraw()
 
 	GenericTilemapSetFlip(0, flipscreen);
 
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_FORCEOPAQUE);
 	if (nSpriteEnable & 1) phozon_draw_sprites();
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1));
 

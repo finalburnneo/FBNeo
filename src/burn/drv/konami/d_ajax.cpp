@@ -593,14 +593,14 @@ static INT32 DrvInit(INT32 type)
 
 	K052109Init(DrvGfxROM0, DrvGfxROMExp0, 0x7ffff);
 	K052109SetCallback(K052109Callback);
-	K052109AdjustScroll(8, 0);
+	K052109AdjustScroll(4, 0);
 
 	K051960Init(DrvGfxROM1, DrvGfxROMExp1, 0xfffff);
 	K051960SetCallback(K051960Callback);
-	K051960SetSpriteOffset(8, 0);
+	K051960SetSpriteOffset(4, 0);
 
 	K051316Init(0, DrvGfxROM2, DrvGfxROM2, 0x7ffff, K051316Callback, 7, 0);
-	K051316SetOffset(0, -112, -16);
+	K051316SetOffset(0, -112 + 4, -16);
 
 	DrvDoReset();
 
@@ -840,7 +840,7 @@ struct BurnDriver BurnDrvAjax = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, ajaxRomInfo, ajaxRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
 	ajaxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	224, 288, 3, 4
+	224, 304, 3, 4
 };
 
 
@@ -886,7 +886,7 @@ struct BurnDriver BurnDrvTyphoon = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, typhoonRomInfo, typhoonRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
 	typhoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	224, 288, 3, 4
+	224, 304, 3, 4
 };
 
 
@@ -927,5 +927,5 @@ struct BurnDriver BurnDrvAjaxj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, ajaxjRomInfo, ajaxjRomName, NULL, NULL, AjaxInputInfo, AjaxDIPInfo,
 	typhoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	224, 288, 3, 4
+	224, 304, 3, 4
 };

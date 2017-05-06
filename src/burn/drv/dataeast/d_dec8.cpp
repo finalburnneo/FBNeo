@@ -5858,7 +5858,7 @@ struct BurnDriver BurnDrvCsilver = {
 };
 
 
-// Captain Silver (Japan)
+// Captain Silver (Japan revision 3)
 
 static struct BurnRomInfo csilverjRomDesc[] = {
 	{ "dx03-3.a4",		0x08000, 0x02dd8cfc, 1 }, //  0 maincpu
@@ -5890,10 +5890,52 @@ STD_ROM_FN(csilverj)
 
 struct BurnDriver BurnDrvCsilverj = {
 	"csilverj", "csilver", NULL, NULL, "1987",
-	"Captain Silver (Japan)\0", "imperfect sound", "Data East Corporation", "DEC8",
+	"Captain Silver (Japan revision 3)\0", "imperfect sound", "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, csilverjRomInfo, csilverjRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
+	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
+	256, 240, 4, 3
+};
+
+
+// Captain Silver (Japan revision 1)
+/* Same IC positions to World set */
+
+static struct BurnRomInfo csilverjaRomDesc[] = {
+	{ "dx03-1.18d",		0x08000, 0xd42905be, 1 }, //  0 maincpu
+	{ "dx01.12d",		0x10000, 0x570fb50c, 1 }, //  1
+	{ "dx02.13d",		0x10000, 0x58625890, 1 }, //  2
+
+	{ "dx04-1.19d",		0x10000, 0x29432691, 2 }, //  3 sub
+
+	{ "dx05.3f",		0x10000, 0xeb32cf25, 3 }, //  4 audiocpu
+
+	{ "dx00.3d",		0x08000, 0xf01ef985, 4 }, //  5 gfx1
+
+	{ "dx14.15k",		0x10000, 0x80f07915, 5 }, //  6 gfx2
+	{ "dx13.13k",		0x10000, 0xd32c02e7, 5 }, //  7
+	{ "dx12.10k",		0x10000, 0xac78b76b, 5 }, //  8
+
+	{ "dx06.5f",		0x10000, 0xb6fb208c, 6 }, //  9 gfx3
+	{ "dx07.7f",		0x10000, 0xee3e1817, 6 }, // 10
+	{ "dx08.8f",		0x10000, 0x705900fe, 6 }, // 11
+	{ "dx09.10f",		0x10000, 0x3192571d, 6 }, // 12
+	{ "dx10.12f",		0x10000, 0x3ef77a32, 6 }, // 13
+	{ "dx11.13f",		0x10000, 0x9cf3d5b8, 6 }, // 14
+
+	{ "id8751h.mcu",	0x01000, 0xca663965, 7 }, // 15 mcu
+};
+
+STD_ROM_PICK(csilverja)
+STD_ROM_FN(csilverja)
+
+struct BurnDriver BurnDrvCsilverja = {
+	"csilverja", "csilver", NULL, NULL, "1987",
+	"Captain Silver (Japan revision 1)\0", "imperfect sound", "Data East Corporation", "DEC8",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	NULL, csilverjaRomInfo, csilverjaRomName, NULL, NULL, CsilverInputInfo, CsilverDIPInfo,
 	CsilverInit, CsilverExit, CsilverFrame, LastmissDraw, CsilverScan, &DrvRecalc, 0x400,
 	256, 240, 4, 3
 };

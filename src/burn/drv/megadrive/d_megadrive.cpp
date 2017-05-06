@@ -41398,3 +41398,21 @@ struct BurnDriver BurnDrvmd_miniplanets = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Ultimate Mortal Kombat Trilogy Hack r.5149
+static struct BurnRomInfo md_umk3tRomDesc[] = {
+	{ "UMKT_5149.bin", 0xA00000, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3t)
+STD_ROM_FN(md_umk3t)
+
+struct BurnDriver BurnDrvmd_umk3t = {
+	"md_umk3t", NULL, NULL, NULL, "2017",
+	"Ultimate Mortal Kombat Trilogy Hack rev.5149\0", NULL, "2017 KABAL_MK", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_umk3tRomInfo, md_umk3tRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

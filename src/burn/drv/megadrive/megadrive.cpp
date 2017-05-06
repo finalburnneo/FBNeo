@@ -3007,7 +3007,7 @@ INT32 MegadriveInit()
 		SekOpen(0);
 
 		// Map 68000 memory:
-		SekMapMemory(RomMain,		0x000000, 0x3FFFFF, MAP_ROM);	// 68000 ROM
+		SekMapMemory(RomMain,		0x000000, 0x9FFFFF, MAP_ROM);	// 68000 ROM
 
 		// RAM and it's mirrors (Fix Xaio Monv: Magic Girl)
 		for (INT32 a = 0xe00000; a < 0x1000000; a += 0x010000) {

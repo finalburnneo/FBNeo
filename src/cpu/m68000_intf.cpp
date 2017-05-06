@@ -1261,9 +1261,14 @@ INT32 SekGetActive()
 }
 
 // For Megadrive - check if the vdp controlport should set IRQ
-INT32 SekShouldInterrupt(void)
+INT32 SekShouldInterrupt()
 {
 	return m68k_check_shouldinterrupt();
+}
+
+void SekBurnUntilInt()
+{
+	m68k_burn_until_irq(1);
 }
 
 // Set the status of an IRQ line on the active CPU

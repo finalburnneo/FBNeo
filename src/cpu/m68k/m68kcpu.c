@@ -788,6 +788,10 @@ int m68k_check_shouldinterrupt(void)
 /* ASG: removed per-instruction interrupt checks */
 int m68k_execute(int num_cycles)
 {
+	if (m68ki_cpu.sleepuntilint) {
+		return num_cycles;
+	}
+
 	/* Set our pool of clock cycles available */
 	SET_CYCLES(num_cycles);
 	m68ki_initial_cycles = num_cycles;
@@ -860,6 +864,10 @@ void m68k_end_timeslice(void)
 	SET_CYCLES(0);
 }
 
+void m68k_burn_until_irq(int enabled)
+{
+	m68ki_cpu.sleepuntilint = enabled;
+}
 
 /* ASG: rewrote so that the int_level is a mask of the IPL0/IPL1/IPL2 bits */
 /* KS: Modified so that IPL* bits match with mask positions in the SR
@@ -874,6 +882,8 @@ void m68k_set_irq(unsigned int int_level)
 	/* Note: Level 7 can also level trigger like a normal IRQ */
 	if(old_level != 0x0700 && CPU_INT_LEVEL == 0x0700)
 		m68ki_cpu.nmi_pending = TRUE;
+
+	m68ki_cpu.sleepuntilint = 0;
 }
 
 void m68k_set_virq(unsigned int level, unsigned int active)

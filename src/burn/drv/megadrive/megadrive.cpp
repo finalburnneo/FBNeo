@@ -3384,7 +3384,7 @@ static void DrawStrip(struct TileStrip *ts, INT32 sh)
 	*ts->hc = 0;
 }
 
-static void DrawStripVSRam(struct TileStrip *ts, INT32 plane)
+static void DrawStripVSRam(struct TileStrip *ts, INT32 plane, INT32 sh)
 {
 	INT32 tilex=0,dx=0,ty=0,code=0,addr=0,cell=0,nametabadd=0;
 	INT32 oldcode=-1,blank=-1; // The tile we know is blank
@@ -3432,7 +3432,7 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane)
 			// Get tile address/2:
 			addr=(code&0x7ff)<<4;
 			if (code&0x1000) addr+=14-ty; else addr+=ty; // Y-flip
-			pal=((code>>9)&0x30);
+			pal=((code>>9)&0x30)|(sh<<6);
 		}
 
 		if (code&0x0800) zero=TileFlip(dx,addr,pal);
@@ -3533,10 +3533,10 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 
 		DrawStripInterlace(&ts);
 	} else if( RamVReg->reg[11]&4) {
-		// e have 2-cell column based vscroll
+		// we have 2-cell column based vscroll
 		// luckily this doesn't happen too often
 		ts.line = ymask | (shift[width]<<24); // save some stuff instead of line
-		DrawStripVSRam(&ts, plane);
+		DrawStripVSRam(&ts, plane, sh);
 	} else {
 		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]); // Get vertical scroll value
 

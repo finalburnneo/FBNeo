@@ -778,7 +778,7 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 
 int StartFromReset(TCHAR *szDriverName)
 {
-	if (!bDrvOkay) {
+	if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME))) ) {
 		BurnerLoadDriver(szDriverName);
 		return 1;
 	}

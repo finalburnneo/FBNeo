@@ -3171,13 +3171,13 @@ static INT32 SrdarwinDraw()
 			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
 	}
+	BurnTransferClear();
+	if (nBurnLayer & 1) Srdarwin_draw_layer(0);
+	if (nSpriteEnable & 1) srdarwin_draw_sprites(0);
+	if (nBurnLayer & 2) Srdarwin_draw_layer(1);
+	if (nSpriteEnable & 2) srdarwin_draw_sprites(1);
 
-	Srdarwin_draw_layer(1);
-	srdarwin_draw_sprites(0);
-	Srdarwin_draw_layer(0);
-	srdarwin_draw_sprites(1);
-
-	srdarwin_txt_draw();
+	if (nBurnLayer & 4) srdarwin_txt_draw();
 
 	BurnTransferCopy(DrvPalette);
 

@@ -482,6 +482,33 @@ static struct BurnRomInfo GallagRomDesc[] = {
 STD_ROM_PICK(Gallag)
 STD_ROM_FN(Gallag)
 
+static struct BurnRomInfo NebulbeeRomDesc[] = {
+	{ "nebulbee.01",   0x01000, 0xf405f2c4, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "nebulbee.02",   0x01000, 0x31022b60, BRF_ESS | BRF_PRG }, //	 1
+	{ "gg1_3.2m",      0x01000, 0x753ce503, BRF_ESS | BRF_PRG }, //	 2
+	{ "nebulbee.04",   0x01000, 0xd76788a5, BRF_ESS | BRF_PRG }, //	 3
+	
+	{ "gg1-5",         0x01000, 0x3102fccd, BRF_ESS | BRF_PRG }, //  4	Z80 #2 Program Code
+	
+	{ "gg1-7",         0x01000, 0x8995088d, BRF_ESS | BRF_PRG }, //  5	Z80 #3 Program Code
+	
+	{ "nebulbee.07",   0x01000, 0x035e300c, BRF_ESS | BRF_PRG }, //  6	Z80 #4 Program Code
+	
+	{ "gg1_9.4l",      0x01000, 0x58b2f47c, BRF_GRA },	     //  7	Characters
+	
+	{ "gg1_11.4d",     0x01000, 0xad447c80, BRF_GRA },	     //  8	Sprites
+	{ "gg1_10.4f",     0x01000, 0xdd6f1afc, BRF_GRA },	     //  9
+	
+	{ "prom-5.5n",     0x00020, 0x54603c6b, BRF_GRA },	     //  10	PROMs
+	{ "2n.bin",        0x00100, 0xa547d33b, BRF_GRA },	     //  11
+	{ "1c.bin",        0x00100, 0xb6f585fb, BRF_GRA },	     //  12
+	{ "5c.bin",        0x00100, 0x8bd565f6, BRF_GRA },	     //  13
+	{ "1d.bin",        0x00100, 0x86d92b24, BRF_GRA },	     //  14
+};
+
+STD_ROM_PICK(Nebulbee)
+STD_ROM_FN(Nebulbee)
+
 // Dig Dug (rev 2)
 
 static struct BurnRomInfo digdugRomDesc[] = {
@@ -2275,6 +2302,16 @@ struct BurnDriver BurnDrvGallag = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, GallagRomInfo, GallagRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
+	GallagInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
+	224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrvNebulbee = {
+	"nebulbee", "galaga", NULL, "galaga", "1981",
+	"Nebulous Bee\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	NULL, NebulbeeRomInfo, NebulbeeRomName, GalagaSampleInfo, GalagaSampleName, DrvInputInfo, DrvDIPInfo,
 	GallagInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 576,
 	224, 288, 3, 4
 };

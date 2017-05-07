@@ -15,7 +15,7 @@
 
 */
 
-#define USE_CPU_SPEEDHACKS
+//#define USE_CPU_SPEEDHACKS
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"

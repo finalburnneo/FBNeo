@@ -1139,6 +1139,50 @@ static struct BurnRomInfo jackaljRomDesc[] = {
 STD_ROM_PICK(jackalj)
 STD_ROM_FN(jackalj)
 
+// Jackal (bootleg, Rotary Joystick)
+// This is based on jackalr. Was dumped from 2 different PCBs.
+
+static struct BurnRomInfo jackalblRomDesc[] = {
+	{ "EPR-A-3.BIN",	0x8000, 0x5fffee27, 0 | BRF_PRG | BRF_ESS }, 		// 0 - M6809 #0 Code
+	{ "EPR-A-4.BIN",	0x8000, 0x976c8431, 0 | BRF_PRG | BRF_ESS }, 		// 1
+	{ "EPR-A-2.BIN",	0x4000, 0xae2a290a, 0 | BRF_PRG | BRF_ESS }, 		// 2
+
+	{ "EPR-A-1.BIN",	0x8000, 0x54aa2d29, 1 | BRF_PRG | BRF_ESS }, 		// 3 - M6809 #1 Code
+
+	{ "EPR-A-17.BIN",	0x8000, 0xa96720b6, 2 | BRF_GRA },           		// 4 - Graphics Tiles
+	{ "EPR-A-18.BIN",	0x8000, 0x932d0ecb, 2 | BRF_GRA },           		// 5
+	{ "EPR-A-19.BIN",	0x8000, 0x1e3412e7, 2 | BRF_GRA },           		// 6
+	{ "EPR-A-20.BIN",	0x8000, 0x4b0d15be, 2 | BRF_GRA },           		// 7
+	{ "EPR-A-6.BIN",	0x8000, 0xec7141ad, 2 | BRF_GRA },           		// 8
+	{ "EPR-A-5.BIN",	0x8000, 0xc6375c74, 2 | BRF_GRA },           		// 9
+	{ "EPR-A-7.BIN",	0x8000, 0x03e1de04, 2 | BRF_GRA },           		// 10
+	{ "EPR-A-8.BIN",	0x8000, 0xf946ada7, 2 | BRF_GRA },           		// 11
+	{ "EPR-A-13.BIN",	0x8000, 0x7c29c59e, 2 | BRF_GRA },           		// 12
+	{ "EPR-A-14.BIN",	0x8000, 0xf2bbff39, 2 | BRF_GRA },           		// 13
+	{ "EPR-A-15.BIN",	0x8000, 0x594dbaaf, 2 | BRF_GRA },           		// 14
+	{ "EPR-A-16.BIN",	0x8000, 0x069bf945, 2 | BRF_GRA },           		// 15
+	{ "EPR-A-9.BIN",	0x8000, 0xc00cef79, 2 | BRF_GRA },           		// 16
+	{ "EPR-A-10.BIN",	0x8000, 0x0aed6cd7, 2 | BRF_GRA },           		// 17
+	{ "EPR-A-11.BIN",	0x8000, 0xa48e9f60, 2 | BRF_GRA },           		// 18
+	{ "EPR-A-12.BIN",	0x8000, 0x79b7c71c, 2 | BRF_GRA },           		// 19
+
+	{ "n82s129n.prom2",	0x0100, 0x7553a172, 3 | BRF_GRA },           		// 20 - Color PROMs
+	{ "n82s129n.prom1",	0x0100, 0xa74dd86c, 3 | BRF_GRA },           		// 21
+	
+	/* currently not used by the emulation */
+	{ "pal16r6cn.pal1", 	0x0104, 0x9bba948f, 4 | BRF_OPT },		 		// 22 - Pals
+	{ "ampal16l8pc.pal2", 	0x0104, 0x17c9de2f, 4 | BRF_OPT },		 		// 23
+	{ "ampal16r4pc.pal3", 	0x0104, 0xe54cd288, 4 | BRF_OPT },		 		// 24
+	{ "pal16r8acn.pal4", 	0x0104, 0x5cc45e00, 4 | BRF_OPT },		 		// 25
+	{ "pal20l8a-2cns.pal5", 0x0144, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 26
+	{ "pal20l8acns.pal6", 	0x0144, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 27
+	{ "pal16l8pc.pal7", 	0x0104, 0xe8cdc259, 4 | BRF_OPT },		 		// 28
+	{ "dsc121.e91200", 		0x0200, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 29
+};
+
+STD_ROM_PICK(jackalbl)
+STD_ROM_FN(jackalbl)
+
 // Top Gunner (US, 8-way Joystick)
 
 static struct BurnRomInfo topgunrRomDesc[] = {
@@ -1234,6 +1278,16 @@ struct BurnDriver BurnDrvJackalj = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, jackaljRomInfo, jackaljRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 240, 3, 4
+};
+
+struct BurnDriver BurnDrvJackalbl = {
+	"jackalbl", "jackal", NULL, NULL, "1986",
+	"Jackal (bootleg, Rotary Joystick)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, jackalblRomInfo, jackalblRomName, NULL, NULL, DrvrotateInputInfo, DrvrotateDIPInfo,
+	DrvInitbl, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 240, 3, 4
 };
 

@@ -2440,45 +2440,14 @@ static INT32 DariusDoReset()
 
 static INT32 RbislandDoReset()
 {
-#if 0
-	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
 	TaitoDoReset();
-#else
-	SekOpen(0);
-	SekReset();
-	SekClose();
-	
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-	
-	ZetOpen(0);
-	BurnYM2151Reset();
-	ZetClose();
-#endif
 	
 	return 0;
 }
 
 static INT32 OpwolfDoReset()
 {
-#if 0
-	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
 	TaitoDoReset();
-#else
-	SekOpen(0);
-	SekReset();
-	SekClose();
-	
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-	
-	ZetOpen(0);
-	BurnYM2151Reset();
-	ZetClose();
-	MSM5205Reset();
-#endif
 	
 	memset(OpwolfADPCM_B, 0, 8);
 	memset(OpwolfADPCM_C, 0, 8);
@@ -2731,6 +2700,8 @@ UINT8 __fastcall Opwolf68KReadByte(UINT32 a)
 			return TC0140SYTCommRead();
 		}
 	}
+
+	bprintf(PRINT_NORMAL, _T("68K #1 Read byte => %06X\n"), a);
 	
 	return 0;
 }
@@ -2753,6 +2724,7 @@ void __fastcall Opwolf68KWriteByte(UINT32 a, UINT8 d)
 			return;
 		}
 	}
+	bprintf(PRINT_NORMAL, _T("68K #1 Write byte => %06X, %02X\n"), a, d);
 }
 
 UINT16 __fastcall Opwolf68KReadWord(UINT32 a)
@@ -2787,6 +2759,8 @@ UINT16 __fastcall Opwolf68KReadWord(UINT32 a)
 			return TaitoDip[1];
 		}
 	}
+
+	bprintf(PRINT_NORMAL, _T("68K #1 Read word => %06X\n"), a);
 	
 	return 0;
 }
@@ -2836,6 +2810,7 @@ void __fastcall Opwolf68KWriteWord(UINT32 a, UINT16 d)
 			return;
 		}
 	}
+	bprintf(PRINT_NORMAL, _T("68K #1 Write word => %06X, %04X\n"), a, d);
 }
 
 UINT8 __fastcall Opwolfb68KReadByte(UINT32 a)
@@ -4287,6 +4262,8 @@ inline static double TaitoGetTime()
 
 static void RbislandBankSwitch(UINT32, UINT32 Data)
 {
+	if (ZetGetActive() == -1) return;
+
 	TaitoZ80Bank = (Data - 1) & 3;
 	
 	ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + 0x4000 + (TaitoZ80Bank * 0x4000));
@@ -4295,6 +4272,7 @@ static void RbislandBankSwitch(UINT32, UINT32 Data)
 
 static void RastanBankSwitch(UINT32, UINT32 Data)
 {
+	if (ZetGetActive() == -1) return;
 	Data &= 3;
 	if (Data != 0) {
 		TaitoZ80Bank = Data - 1;

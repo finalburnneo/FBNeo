@@ -1,8 +1,8 @@
 #include "burner.h"
 
-bool bIsWindowsXPorGreater = FALSE;
-bool bIsWindowsXP = FALSE;
-int bHighResolutionTimerActive = 1;
+bool bIsWindowsXPorGreater = false;
+bool bIsWindowsXP = false;
+bool bIsWindows8OrGreater = false;
 
 // Detect if we are using Windows XP/Vista/7
 BOOL DetectWindowsVersion()
@@ -19,8 +19,9 @@ BOOL DetectWindowsVersion()
     // osvi.dwMinorVersion returns the minor version, XP and 7 = 1, Vista = 0
     bIsWindowsXPorLater = ((osvi.dwMajorVersion > 5) || ( (osvi.dwMajorVersion == 5) && (osvi.dwMinorVersion >= 1)));
 	bIsWindowsXP = (osvi.dwMajorVersion == 5 && osvi.dwMinorVersion == 1);
-
-    return bIsWindowsXPorLater;
+	bIsWindows8OrGreater = ((osvi.dwMajorVersion > 6) || ((osvi.dwMajorVersion == 6) && (osvi.dwMinorVersion >= 2)));
+	
+	return bIsWindowsXPorLater;
 }
 
 // Set the current directory to be the application's directory
@@ -260,33 +261,30 @@ int WndInMid(HWND hMid, HWND hBase)
 
 // Set-up high resolution timing
 
-static int nHighResolutionTimer = 0;
+static int bHighResolutionTimerActive = 0;
 
 void EnableHighResolutionTiming()
 {
 	TIMECAPS hTCaps;
 
-	nHighResolutionTimer = 0;
-
-	if (!bHighResolutionTimerActive) return;
-
+	bHighResolutionTimerActive = 0;
+	
+	if (bIsWindows8OrGreater) {
 #ifdef PRINT_DEBUG_INFO
-	dprintf(_T(" ** Enabling High-Resolution system timer.\n"));
+		dprintf(_T(" ** Enabling High-Resolution system timer.\n"));
 #endif
 
-	if (timeGetDevCaps(&hTCaps, sizeof(hTCaps)) == TIMERR_NOERROR) {
-		nHighResolutionTimer = hTCaps.wPeriodMin;
-		timeBeginPeriod(hTCaps.wPeriodMin);
+		if (timeGetDevCaps(&hTCaps, sizeof(hTCaps)) == TIMERR_NOERROR) {
+			bHighResolutionTimerActive = hTCaps.wPeriodMin;
+			timeBeginPeriod(hTCaps.wPeriodMin);
+		}
 	}
-
 }
 
 void DisableHighResolutionTiming()
 {
-	if (!bHighResolutionTimerActive) return;
-
-	if (nHighResolutionTimer) {
-		timeEndPeriod(nHighResolutionTimer);
-		nHighResolutionTimer = 0;
+	if (bHighResolutionTimerActive) {
+		timeEndPeriod(bHighResolutionTimerActive);
+		bHighResolutionTimerActive = 0;
 	}
 }

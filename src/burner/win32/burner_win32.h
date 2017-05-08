@@ -198,7 +198,6 @@ int MediaExit();
 // misc_win32.cpp
 extern bool bIsWindowsXPorGreater; 
 extern bool bIsWindowsXP;
-extern int bHighResolutionTimerActive;
 BOOL DetectWindowsVersion();
 int AppDirectory();
 void UpdatePath(TCHAR* path);

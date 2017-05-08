@@ -595,8 +595,6 @@ static int AppInit()
 		bIconsLoaded = 1;
 	}
 
-	EnableHighResolutionTiming();
-
 	return 0;
 }
 
@@ -955,6 +953,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE, LPSTR lpCmdLine, int nShowCmd
 		if (bAlwaysCreateSupportFolders) CreateSupportFolders();
 		if (!(ProcessCmdLine())) {
 			DetectWindowsVersion();
+			EnableHighResolutionTiming();
 
 			MediaInit();
 

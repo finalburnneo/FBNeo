@@ -2,6 +2,7 @@
 
 bool bIsWindowsXPorGreater = FALSE;
 bool bIsWindowsXP = FALSE;
+int bHighResolutionTimerActive = 1;
 
 // Detect if we are using Windows XP/Vista/7
 BOOL DetectWindowsVersion()
@@ -259,16 +260,22 @@ int WndInMid(HWND hMid, HWND hBase)
 
 // Set-up high resolution timing
 
-static int nHighResolutionTimerActive = 0;
+static int nHighResolutionTimer = 0;
 
 void EnableHighResolutionTiming()
 {
 	TIMECAPS hTCaps;
 
-	nHighResolutionTimerActive = 0;
+	nHighResolutionTimer = 0;
+
+	if (!bHighResolutionTimerActive) return;
+
+#ifdef PRINT_DEBUG_INFO
+	dprintf(_T(" ** Enabling High-Resolution system timer.\n"));
+#endif
 
 	if (timeGetDevCaps(&hTCaps, sizeof(hTCaps)) == TIMERR_NOERROR) {
-		nHighResolutionTimerActive = hTCaps.wPeriodMin;
+		nHighResolutionTimer = hTCaps.wPeriodMin;
 		timeBeginPeriod(hTCaps.wPeriodMin);
 	}
 
@@ -276,8 +283,10 @@ void EnableHighResolutionTiming()
 
 void DisableHighResolutionTiming()
 {
-	if (nHighResolutionTimerActive) {
-		timeEndPeriod(nHighResolutionTimerActive);
-		nHighResolutionTimerActive = 0;
+	if (!bHighResolutionTimerActive) return;
+
+	if (nHighResolutionTimer) {
+		timeEndPeriod(nHighResolutionTimer);
+		nHighResolutionTimer = 0;
 	}
 }

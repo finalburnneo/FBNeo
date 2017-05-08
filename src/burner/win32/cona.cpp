@@ -175,6 +175,7 @@ int ConfigAppLoad()
 
 		VAR(bDrvSaveAll);
 		VAR(nAppThreadPriority);
+		VAR(bHighResolutionTimerActive);
 		VAR(bAlwaysProcessKeyboardInput);
 		VAR(bAutoPause);
 		VAR(bSaveInputs);
@@ -519,6 +520,8 @@ int ConfigAppSave()
 	VAR(bDrvSaveAll);
 	_ftprintf(h, _T("\n// The thread priority for the application. Do *NOT* edit this manually\n"));
 	VAR(nAppThreadPriority);
+	_ftprintf(h, _T("\n// High Resolution Timer, some systems need this for smooth framerate\n"));
+	VAR(bHighResolutionTimerActive);
 	_ftprintf(h, _T("\n// If non-zero, process keyboard input even when the application loses focus\n"));
 	VAR(bAlwaysProcessKeyboardInput);
 	_ftprintf(h, _T("\n// If non-zero, pause when the application loses focus\n"));

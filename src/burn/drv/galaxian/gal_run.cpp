@@ -1631,7 +1631,7 @@ INT32 GalFrame()
 	
 	INT32 nIrqInterleaveFire = nInterleave / 4;
 
-	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) { nInterleave = 8; nIrqInterleaveFire = nInterleave - 1; }
+	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_RACKNROLSN76496 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) { nInterleave = 8; nIrqInterleaveFire = nInterleave - 1; }
 
 	if (GameIsBagmanmc) nIrqInterleaveFire = 0;
 

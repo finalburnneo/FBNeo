@@ -5933,7 +5933,7 @@ STD_ROM_FN(_3kokushi)
 
 struct BurnDriver BurnDrv_3kokushi = {
 	"3kokushi", NULL, NULL, NULL, "1996",
-	"Sankokushi (Japan)\0", NULL, "Mitchell", "Miscellaneous",
+	"Sankokushi (Japan)\0", "Graphics corruption on score/bonus screen is normal", "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, _3kokushiRomInfo, _3kokushiRomName, NULL, NULL, PuzzliInputInfo, _3kokushiDIPInfo,

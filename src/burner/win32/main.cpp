@@ -595,6 +595,8 @@ static int AppInit()
 		bIconsLoaded = 1;
 	}
 
+	EnableHighResolutionTiming();
+
 	return 0;
 }
 
@@ -612,6 +614,8 @@ static int AppExit()
 	FreeROMInfo();
 	MediaExit();
 	BurnLibExit();					// Exit the Burn library
+
+	DisableHighResolutionTiming();
 
 #ifdef USE_SDL
 	SDL_Quit();

@@ -205,6 +205,8 @@ void RegisterExtensions(bool bCreateKeys);
 int GetClientScreenRect(HWND hWnd, RECT* pRect);
 int WndInMid(HWND hMid, HWND hBase);
 char* DecorateGameName(unsigned int nBurnDrv);
+void EnableHighResolutionTiming();
+void DisableHighResolutionTiming();
 
 
 // drv.cpp

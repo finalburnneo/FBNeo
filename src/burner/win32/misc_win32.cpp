@@ -254,3 +254,30 @@ int WndInMid(HWND hMid, HWND hBase)
 
 	return 0;
 }
+
+// ---------------------------------------------------------------------------
+
+// Set-up high resolution timing
+
+static int nHighResolutionTimerActive = 0;
+
+void EnableHighResolutionTiming()
+{
+	TIMECAPS hTCaps;
+
+	nHighResolutionTimerActive = 0;
+
+	if (timeGetDevCaps(&hTCaps, sizeof(hTCaps)) == TIMERR_NOERROR) {
+		nHighResolutionTimerActive = hTCaps.wPeriodMin;
+		timeBeginPeriod(hTCaps.wPeriodMin);
+	}
+
+}
+
+void DisableHighResolutionTiming()
+{
+	if (nHighResolutionTimerActive) {
+		timeEndPeriod(nHighResolutionTimerActive);
+		nHighResolutionTimerActive = 0;
+	}
+}

@@ -1,6 +1,9 @@
 // FB Alpha Mappy driver module
 // Based on MAME driver by Nicola Salmoria
 
+// Todo:
+// Superpac, Pacnpal, todruaga, digdug2 need 4-way joyprocess.
+
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "namco_snd.h"
@@ -171,6 +174,7 @@ static struct BurnInputInfo SuperpacInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy4 + 3,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
 STDINPUTINFO(Superpac)

@@ -44,7 +44,18 @@ INT64 nVidBlitterOpt[VID_LEN] = {0, };			// Options for the blitter module (mean
 
 static InterfaceInfo VidInfo = { NULL, NULL, NULL };
 
+#if defined (BUILD_WIN32)
+#if defined BUILD_X64_EXE
+// set D3D9 Experimental blitter as default for 64-bit builds
+UINT32 nVidSelect = 3;					// Which video output is selected
+#else
+// sec D3D7 Enhanced blitter as default
+UINT32 nVidSelect = 1;					// Which video output is selected
+#endif
+#else
 UINT32 nVidSelect = 0;					// Which video output is selected
+#endif
+
 static UINT32 nVidActive = 0;
 
 bool bVidOkay = false;

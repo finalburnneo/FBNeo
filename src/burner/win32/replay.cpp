@@ -445,6 +445,7 @@ INT32 StartReplay(const TCHAR* szFileName)					// const char* szFileName = NULL
 		const char szFileHeader[] = "FB1 ";					// File identifier
 		char ReadHeader[] = "    ";
 		fp = _tfopen(szChoice, _T("r+b"));
+		if (!fp) return 1;
 		memset(ReadHeader, 0, 4);
 		fread(ReadHeader, 1, 4, fp);						// Read identifier
 		if (memcmp(ReadHeader, szFileHeader, 4)) {			// Not the right file type

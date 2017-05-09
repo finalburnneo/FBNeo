@@ -125,7 +125,7 @@ static void update_de000()
 
 }
 
-static void _fastcall xexex_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall xexex_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffc0) == 0x0c0000) {
 		K056832WordWrite(address & 0x3e, data);
@@ -166,7 +166,7 @@ static void _fastcall xexex_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static void _fastcall xexex_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall xexex_main_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffc0) == 0x0c0000) {
 		K056832ByteWrite(address & 0x3f, data);
@@ -246,7 +246,7 @@ static void _fastcall xexex_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-static UINT16 _fastcall xexex_main_read_word(UINT32 address)
+static UINT16 __fastcall xexex_main_read_word(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x0c8000) {
 		return K053250RegRead(0, address);
@@ -288,7 +288,7 @@ static UINT16 _fastcall xexex_main_read_word(UINT32 address)
 	return 0;
 }
 
-static UINT8 _fastcall xexex_main_read_byte(UINT32 address)
+static UINT8 __fastcall xexex_main_read_byte(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x0c8000) {
 		return K053250RegRead(0, address);	

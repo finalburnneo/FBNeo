@@ -134,7 +134,7 @@ static void reset_spritebank()
 	spritebanks[3] = (spritebank <<  3) & 0x7000;
 }
 
-static void _fastcall asterix_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall asterix_main_write_word(UINT32 address, UINT16 data)
 {
 //bprintf (0, _T("WW %5.5x, %4.4x\n"), address, data);
 
@@ -186,7 +186,7 @@ static void _fastcall asterix_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-static void _fastcall asterix_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall asterix_main_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfff000) == 0x400000) {
 		K056832HalfRamWriteByte(address & 0xfff, data);
@@ -238,7 +238,7 @@ static void _fastcall asterix_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-static UINT16 _fastcall asterix_main_read_word(UINT32 address)
+static UINT16 __fastcall asterix_main_read_word(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x200000) {
 		return (K053244Read(0, address & 0xe) << 8) | K053244Read(0, (address & 0xe) + 1);
@@ -268,7 +268,7 @@ static UINT16 _fastcall asterix_main_read_word(UINT32 address)
 	return 0;
 }
 
-static UINT8 _fastcall asterix_main_read_byte(UINT32 address)
+static UINT8 __fastcall asterix_main_read_byte(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x200000) {
 		return K053244Read(0, address & 0xf);

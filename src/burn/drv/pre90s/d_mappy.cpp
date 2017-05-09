@@ -1,9 +1,6 @@
 // FB Alpha Mappy driver module
 // Based on MAME driver by Nicola Salmoria
 
-// Todo:
-// Superpac, Pacnpal, todruaga, digdug2 need 4-way joyprocess.
-
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "namco_snd.h"
@@ -48,6 +45,8 @@ static UINT8 DrvJoy5[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvInputs[7];
 static UINT8 DrvReset;
+
+static INT32 fourwaymode = 0;
 
 static struct BurnInputInfo MappyInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
@@ -1295,6 +1294,8 @@ static INT32 Digdug2Init()
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x1000*4, 0, 0x3f);
 	GenericTilemapSetScrollCols(0, 36);
 
+	fourwaymode = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -1421,6 +1422,8 @@ static INT32 SuperpacInit()
 	GenericTilemapInit(0, superpac_bg_map_scan, superpac_bg_map_callback, 8, 8, 36, 28);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x1000*4, 0, 0x3f);
 
+	fourwaymode = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -1483,6 +1486,8 @@ static INT32 PacnpalInit()
 	GenericTilesInit();
 	GenericTilemapInit(0, superpac_bg_map_scan, superpac_bg_map_callback, 8, 8, 36, 28);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 2, 8, 8, 0x1000*4, 0, 0x3f);
+
+	fourwaymode = 1;
 
 	DrvDoReset();
 
@@ -1645,6 +1650,8 @@ static INT32 DrvExit()
 	DACExit();
 
 	BurnFree(AllMem);
+
+	fourwaymode = 0;
 
 	return 0;
 }
@@ -1927,6 +1934,14 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
+		}
+
+		if (fourwaymode) {
+			DrvInputs[0] ^= 0xff; // make active-high for ProcessJoystick()
+			DrvInputs[1] ^= 0xff;
+
+			ProcessJoystick(&DrvInputs[0], 0, 0,2,3,1, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+			ProcessJoystick(&DrvInputs[1], 1, 0,2,3,1, INPUT_4WAY | INPUT_MAKEACTIVELOW);
 		}
 	}
 

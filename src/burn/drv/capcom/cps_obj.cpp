@@ -2,6 +2,7 @@
 // CPS Objs (sprites)
 
 INT32 nCpsObjectBank;
+INT32 Sfa2ObjHack = 0;
 
 UINT8 *CpsBootlegSpriteRam = NULL;
 
@@ -457,6 +458,14 @@ INT32 Cps2ObjDraw(INT32 nLevelFrom, INT32 nLevelTo)
 
 //				nCpstTile = n + (dy << 4) + dx;								// normal version
 				nCpstTile = (n & ~0x0F) + (dy << 4) + ((n + dx) & 0x0F);	// pgear fix
+				
+				if (Sfa2ObjHack) {
+					// hack to not render blue squares on high score screen after name entry - they should be hidden by priority from what I can see
+					if (nCpstTile == 0x1a410 && (a & 0x1f) == 0 && (nCpstX == 0x40 || nCpstX == 0x100) && nCpstY == 0x50 && v == 0 && nLevelFrom == 0 && nLevelTo == 0) continue;
+					if (nCpstTile == 0x1a411 && (a & 0x1f) == 0 && (nCpstX == 0x50 || nCpstX == 0x110) && nCpstY == 0x50 && v == 0 && nLevelFrom == 0 && nLevelTo == 0) continue;
+					//if (ps[2] == 0xa410) bprintf(PRINT_NORMAL, _T("%x, %x, %x, %x, %x, %x, %x\n"), nCpstTile, a & 0x1f, nCpstX, nCpstY, v, nLevelFrom, nLevelTo);
+				}
+				
 				nCpsBlend = (blendtable) ? blendtable[nCpstTile] : 0;
 				nCpstTile <<= 7;						// Find real tile address					
 

@@ -45,7 +45,7 @@ struct namco_sound
 
 	INT16 *waveform[MAX_VOLUME];
 	
-	INT32 update_step;
+	double update_step;
 	
 	double gain[2];
 	INT32 output_dir[2];
@@ -99,7 +99,7 @@ static inline UINT32 namco_update_one(INT16 *buffer, INT32 length, const INT16 *
 		*buffer = BURN_SND_CLIP(*buffer + nLeftSample); buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + nRightSample); buffer++;
 
-		counter += freq * chip->update_step;
+		counter += (UINT32)((double)freq * chip->update_step);
 	}
 
 	return counter;
@@ -116,7 +116,7 @@ static inline UINT32 namco_stereo_update_one(INT16 *buffer, INT32 length, const 
 
 		*buffer = BURN_SND_CLIP(*buffer + BURN_SND_CLIP(nSample));
 
-		counter += freq * chip->update_step;
+		counter += (UINT32)((double)freq * chip->update_step);
 		buffer += 2;
 	}
 
@@ -651,8 +651,8 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd)
 		voice->noise_hold = 0;
 	}
 
-	chip->update_step = INTERNAL_RATE / nBurnSoundRate;
-	
+	chip->update_step = ((double)INTERNAL_RATE / nBurnSoundRate);
+
 	chip->gain[BURN_SND_NAMCOSND_ROUTE_1] = 1.00;
 	chip->gain[BURN_SND_NAMCOSND_ROUTE_2] = 1.00;
 	chip->output_dir[BURN_SND_NAMCOSND_ROUTE_1] = BURN_SND_ROUTE_BOTH;

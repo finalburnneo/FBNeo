@@ -45,7 +45,7 @@ int MediaInit()
 			// Make sure the error will be visible
 			SplashDestroy(1);
 
-			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_MODULE), VidGetModuleName());
+			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_VID_MODULE), VidGetModuleName());
 			FBAPopupDisplay(PUF_TYPE_ERROR);
 		}
 

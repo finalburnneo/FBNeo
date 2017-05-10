@@ -1103,6 +1103,8 @@ static INT32 DrvDoReset()
 	namcoio_reset(0);
 	namcoio_reset(1);
 
+	HiscoreReset();
+
 	scroll = 0;
 	out_mux = 0;
 	watchdog = 0;
@@ -2064,7 +2066,7 @@ struct BurnDriver BurnDrvMappy = {
 	"mappy", NULL, NULL, NULL, "1983",
 	"Mappy (US)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, mappyRomInfo, mappyRomName, NULL, NULL, MappyInputInfo, MappyDIPInfo,
 	MappyInit, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2099,7 +2101,7 @@ struct BurnDriver BurnDrvMappyj = {
 	"mappyj", "mappy", NULL, NULL, "1983",
 	"Mappy (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, mappyjRomInfo, mappyjRomName, NULL, NULL, MappyInputInfo, MappyDIPInfo,
 	MappyInit, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2133,7 +2135,7 @@ struct BurnDriver BurnDrvDigdug2 = {
 	"digdug2", NULL, NULL, NULL, "1985",
 	"Dig Dug II (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, digdug2RomInfo, digdug2RomName, NULL, NULL, Digdug2InputInfo, Digdug2DIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2167,7 +2169,7 @@ struct BurnDriver BurnDrvDigdug2o = {
 	"digdug2o", "digdug2", NULL, NULL, "1985",
 	"Dig Dug II (Old Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, digdug2oRomInfo, digdug2oRomName, NULL, NULL, Digdug2InputInfo, Digdug2DIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2201,7 +2203,7 @@ struct BurnDriver BurnDrvTodruaga = {
 	"todruaga", NULL, NULL, NULL, "1984",
 	"The Tower of Druaga (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, todruagaRomInfo, todruagaRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
@@ -2235,7 +2237,7 @@ struct BurnDriver BurnDrvTodruagao = {
 	"todruagao", "todruaga", NULL, NULL, "1984",
 	"The Tower of Druaga (Old Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, todruagaoRomInfo, todruagaoRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
@@ -2269,7 +2271,7 @@ struct BurnDriver BurnDrvTodruagas = {
 	"todruagas", "todruaga", NULL, NULL, "1984",
 	"The Tower of Druaga (Sidam)\0", NULL, "bootleg? (Sidam)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, todruagasRomInfo, todruagasRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
@@ -2303,7 +2305,7 @@ struct BurnDriver BurnDrvMotos = {
 	"motos", NULL, NULL, NULL, "1985",
 	"Motos\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, motosRomInfo, motosRomName, NULL, NULL, MotosInputInfo, MotosDIPInfo,
 	MotosInit, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2336,7 +2338,7 @@ struct BurnDriver BurnDrvSuperpac = {
 	"superpac", NULL, NULL, NULL, "1982",
 	"Super Pac-Man\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, superpacRomInfo, superpacRomName, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
 	SuperpacInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2369,7 +2371,7 @@ struct BurnDriver BurnDrvSuperpacm = {
 	"superpacm", "superpac", NULL, NULL, "1982",
 	"Super Pac-Man (Midway)\0", NULL, "Namco (Bally Midway license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, superpacmRomInfo, superpacmRomName, NULL, NULL, SuperpacInputInfo, SuperpacDIPInfo,
 	SuperpacInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2403,7 +2405,7 @@ struct BurnDriver BurnDrvPacnpal = {
 	"pacnpal", NULL, NULL, NULL, "1983",
 	"Pac & Pal\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, pacnpalRomInfo, pacnpalRomName, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2437,7 +2439,7 @@ struct BurnDriver BurnDrvPacnpal2 = {
 	"pacnpal2", "pacnpal", NULL, NULL, "1983",
 	"Pac & Pal (older)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, pacnpal2RomInfo, pacnpal2RomName, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2471,7 +2473,7 @@ struct BurnDriver BurnDrvPacnchmp = {
 	"pacnchmp", "pacnpal", NULL, NULL, "1983",
 	"Pac-Man & Chomp Chomp\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, pacnchmpRomInfo, pacnchmpRomName, NULL, NULL, PacnpalInputInfo, PacnpalDIPInfo,
 	PacnpalInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2506,7 +2508,7 @@ struct BurnDriver BurnDrvGrobda = {
 	"grobda", NULL, NULL, NULL, "1984",
 	"Grobda (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, grobdaRomInfo, grobdaRomName, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
 	GrobdaInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2541,7 +2543,7 @@ struct BurnDriver BurnDrvGrobda2 = {
 	"grobda2", "grobda", NULL, NULL, "1984",
 	"Grobda (Old Ver. set 1)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, grobda2RomInfo, grobda2RomName, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
 	GrobdaInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2576,7 +2578,7 @@ struct BurnDriver BurnDrvGrobda3 = {
 	"grobda3", "grobda", NULL, NULL, "1984",
 	"Grobda (Old Ver. set 2)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, grobda3RomInfo, grobda3RomName, NULL, NULL, GrobdaInputInfo, GrobdaDIPInfo,
 	GrobdaInit, DrvExit, DrvFrame, SuperpacDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2617,7 +2619,7 @@ struct BurnDriver BurnDrvPhozon = {
 	"phozon", NULL, NULL, NULL, "1983",
 	"Phozon (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phozonRomInfo, phozonRomName, NULL, NULL, PhozonInputInfo, PhozonDIPInfo,
 	PhozonInit, DrvExit, DrvFrame, PhozonDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -2658,7 +2660,7 @@ struct BurnDriver BurnDrvPhozons = {
 	"phozons", "phozon", NULL, NULL, "1983",
 	"Phozon (Sidam)\0", NULL, "Namco (Sidam license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, phozonsRomInfo, phozonsRomName, NULL, NULL, PhozonInputInfo, PhozonDIPInfo,
 	PhozonInit, DrvExit, DrvFrame, PhozonDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

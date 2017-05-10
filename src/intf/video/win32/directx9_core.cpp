@@ -150,7 +150,7 @@ INT32 Dx9Core_Init()
 	
 	nDx9CoreInit = TRUE;
 	if(!Dx9Core_GetFunctions()) {
-		MessageBox(NULL, _T("There was a problem while loading functions from D3D9.DLL and D3DX9_43.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
+		//MessageBox(NULL, _T("There was a problem while loading functions from D3D9.DLL and D3DX9_43.DLL"), _T("Error"), MB_OK | MB_ICONERROR);
 		return 0;
 	}
 

@@ -1076,7 +1076,7 @@ static void draw_chars()
 
 		sy -= 16;
 
-		sy -= (fastfred_scroll[sx]+((fastfred_hardware_type == 1) ? 2 : 0));
+		sy -= fastfred_scroll[sx];
 		if (sy < -15) sy += 0x100;
 
 		sx <<= 3;
@@ -1197,9 +1197,9 @@ static INT32 DrvDraw()
 		}
 	}
 
-	draw_chars();
+	if (nBurnLayer & 1) draw_chars();
 
-	draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

@@ -1,6 +1,9 @@
 // FB Alpha Snow Bros. driver module
 // Based on MAME driver by David Haywood, Mike Coates
 
+// Todo:
+//   Figure out why the spriteram is spilling into the z80 ram for 4in1boot, see Memindex()
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -1626,11 +1629,7 @@ UINT8 __fastcall HyperpacZ80Read(UINT16 a)
 		}
 
 		case 0xf008: {
-			if (Fourin1boot) {
-				if (HyperpacSoundLatch != 0xff) return HyperpacSoundLatch;
-			} else {
-				return HyperpacSoundLatch;
-			}
+			return HyperpacSoundLatch;
 		}
 		
 		default: {
@@ -1981,7 +1980,7 @@ static INT32 MemIndex()
 	} else {
 		HyperpacPaletteRam   = Next; Next += 0x00200;
 	}
-	HyperpacSpriteRam    = Next; Next += 0x02000;
+	HyperpacSpriteRam    = Next; Next += 0x02000 * 2; // why is this spilling into z80 ram below? *2 to fix soundcpu for 4in1boot
 	HyperpacZ80Ram       = Next; Next += 0x00800;
 
 	RamEnd = Next;

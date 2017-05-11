@@ -502,8 +502,8 @@ static struct BurnRomInfo NebulbeeRomDesc[] = {
 	{ "prom-5.5n",     0x00020, 0x54603c6b, BRF_GRA },	     //  10	PROMs
 	{ "2n.bin",        0x00100, 0xa547d33b, BRF_GRA },	     //  11
 	{ "1c.bin",        0x00100, 0xb6f585fb, BRF_GRA },	     //  12
-	{ "5c.bin",        0x00100, 0x8bd565f6, BRF_GRA },	     //  13
 	{ "1d.bin",        0x00100, 0x86d92b24, BRF_GRA },	     //  14
+	{ "5c.bin",        0x00100, 0x8bd565f6, BRF_GRA },	     //  13
 };
 
 STD_ROM_PICK(Nebulbee)

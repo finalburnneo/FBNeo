@@ -471,11 +471,6 @@ int LocaliseDownloadCreate(HWND hParentWND);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 #define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)
 
-// numpluscommas.cpp
-TCHAR* FormatCommasNumber(__int64);
-#define _uInt64ToCommaFormattedTCHAR(szOUT, nIN)	\
-	_stprintf(szOUT, _T("%s"), FormatCommasNumber(nIN));
-
 #ifdef INCLUDE_AVI_RECORDING
 // ----------------------------------------------------------------------------
 // AVI recording

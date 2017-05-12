@@ -2442,7 +2442,7 @@ static int MVSpreviewUpdateSlot(int nSlot, HWND hDlg)
 {
 	int nOldSelect = nBurnDrvActive;
 
-	if (nSlot >= 0 && nSlot <= 6) {
+	if (nSlot >= 0 && nSlot < 6) {
 		hInfoLabel[0] = 0; hInfoLabel[1] = 0; hInfoLabel[2] = 0; hInfoLabel[3] = 0;
 		hInfoText[0] = GetDlgItem(hDlg, IDC_MVS_TEXTROMNAME1 + nSlot);
 		hInfoText[1] = 0;

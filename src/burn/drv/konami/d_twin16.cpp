@@ -684,7 +684,7 @@ UINT16 __fastcall twin16_main_read_word(UINT32 address)
 		case 0x0a0002:
 		case 0x0a0004:
 		case 0x0a0006:
-			return DrvInputs[(address - 0xa0000)/2];
+			return DrvInputs[(address - 0x0a0000)/2];
 
 		case 0x0a0010:
 			return DrvDips[1];
@@ -718,7 +718,7 @@ UINT8 __fastcall twin16_main_read_byte(UINT32 address)
 		case 0x0a0005:
 		case 0x0a0006:
 		case 0x0a0007:
-			return DrvInputs[(address - 0xa0000)/2];
+			return DrvInputs[(address - 0x0a0000)/2];
 
 		case 0x0a0010:
 		case 0x0a0011:

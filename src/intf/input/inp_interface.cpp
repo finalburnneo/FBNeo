@@ -431,7 +431,7 @@ INT32 InputFind(const INT32 nFlags)
 				}
 
 				// While the movement is within the threshold, treat it as no movement
-				if (nJoyDelta > -0x0100 || nJoyDelta < 0x0100) {
+				if (nJoyDelta > -0x0100 && nJoyDelta < 0x0100) {
 					nDelay++;
 					if (nDelay > 64) {
 						return -1;

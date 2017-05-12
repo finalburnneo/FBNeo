@@ -1344,7 +1344,7 @@ static INT32 DrvExit()
 static void draw_background_layer(INT32 type, INT32 priority)
 {                    //fg      bg      fg      bg
 	INT32 masks[4] = { 0x3fff, 0xc000, 0x8000, 0x7fff };
-	INT32 mask = masks[type];
+	INT32 mask = masks[type & 0x03];
 
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{

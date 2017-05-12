@@ -823,7 +823,7 @@ void __fastcall Amazon68KWriteByte(UINT32 a, UINT8 d)
 {
 	switch (a) {
 		case 0x070001: {
-			if (AmazonProtCmd >= 32 && AmazonProtCmd <= 0x37) {
+			if (AmazonProtCmd >= 0x32 && AmazonProtCmd <= 0x37) {
 				AmazonProtReg[AmazonProtCmd - 0x32] = d;
 			}
 			return;

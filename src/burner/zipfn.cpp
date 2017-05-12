@@ -97,7 +97,7 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 		memset(List, 0, nListLen * sizeof(struct ZipEntry));
 
 		INT32 nRet = unzGoToFirstFile(Zip);
-		if (nRet != UNZ_OK) { unzClose(Zip); return 1; }
+		if (nRet != UNZ_OK) { unzClose(Zip); free(List); List = NULL; return 1; }
 
 		// Step through all of the files, until we get to the end
 		INT32 nNextRet = 0;
@@ -155,6 +155,8 @@ INT32 ZipGetList(struct ZipEntry** pList, INT32* pnListCount)
 				tempSize = len;
 				temp = (UInt16 *)SZipAlloc(NULL, tempSize * sizeof(temp[0]));
 				if (temp == 0) {
+					free(List);
+					List = NULL;
 					return 1; // memory error
 				}
 			}

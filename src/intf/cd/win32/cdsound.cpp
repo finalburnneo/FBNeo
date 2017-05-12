@@ -271,6 +271,9 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	count = fread(waveData, 1, waveFileHeader.dataSize, filePtr);
 	if(count != waveFileHeader.dataSize)
 	{
+		delete [] waveData;
+		waveData = 0;
+		
 		fclose(filePtr);
 		return false;
 	}
@@ -279,7 +282,8 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	int error = fclose(filePtr);
 	if(error != 0)
 	{
-
+		delete [] waveData;
+		waveData = 0;
 		return false;
 	}
 
@@ -287,6 +291,8 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	result = (*secondaryBuffer)->Lock(0, waveFileHeader.dataSize, (void**)&bufferPtr, (DWORD*)&bufferSize, NULL, 0, 0);
 	if(FAILED(result))
 	{
+		delete [] waveData;
+		waveData = 0;
 		return false;
 	}
 
@@ -297,6 +303,8 @@ bool WavClass::LoadWaveFile(TCHAR* filename, IDirectSoundBuffer** secondaryBuffe
 	result = (*secondaryBuffer)->Unlock((void*)bufferPtr, bufferSize, NULL, 0);
 	if(FAILED(result))
 	{
+		delete [] waveData;
+		waveData = 0;
 		return false;
 	}
 	

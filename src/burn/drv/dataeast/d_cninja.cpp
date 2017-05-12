@@ -1435,7 +1435,7 @@ static INT32 CninjablInit()
 
 		if (BurnLoadRom(DrvZ80ROM  + 0x00000,  2, 1)) return 1;
 
-		UINT8 *tmp = (UINT8*)malloc(0x400000);
+		UINT8 *tmp = (UINT8*)BurnMalloc(0x400000);
 
 		if (BurnLoadRom(tmp + 0x00000,  3, 2)) return 1;
 		if (BurnLoadRom(tmp + 0x00001,  4, 2)) return 1;
@@ -1449,10 +1449,7 @@ static INT32 CninjablInit()
 		memcpy (DrvGfxROM2 + 0x080000, tmp + 0x100000, 0x080000);
 		memcpy (DrvGfxROM3 + 0x000000, tmp + 0x200000, 0x200000);
 
-		if (tmp) {
-			free (tmp);
-			tmp = NULL;
-		}
+		BurnFree(tmp);
 
 		if (BurnLoadRom(DrvSndROM0  + 0x00000,  5, 1)) return 1;
 

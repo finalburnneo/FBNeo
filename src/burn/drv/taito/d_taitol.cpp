@@ -3022,7 +3022,7 @@ static INT32 HorshoesRomLoad()
 {
 	if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 
-	UINT8 *tmp = (UINT8*)malloc(0x80000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x80000);
 	if (tmp == NULL) {
 		return 1;
 	}

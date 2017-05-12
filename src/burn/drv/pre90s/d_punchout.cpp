@@ -560,7 +560,7 @@ static INT32 MemIndex()
 
 static void DrvGfxDecode(UINT8 *rom, INT32 len, UINT8 xor1, INT32 depth) // 0x100, 0, 0x100, 0 (mod 0x40 always)
 {
-	UINT8 *tmp = (UINT8*)malloc(len);
+	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL || len == 0) return;
 
 	for (INT32 i = 0; i < len; i++) tmp[i] = rom[i] ^ xor1; // copy & invert
@@ -575,7 +575,7 @@ static void DrvGfxDecode(UINT8 *rom, INT32 len, UINT8 xor1, INT32 depth) // 0x10
 		rom[i] &= depth;
 	}
 
-	free (tmp);
+	BurnFree (tmp);
 }
 
 static void DrvPaletteInit(INT32 off, INT32 bank, INT32 reverse)
@@ -601,7 +601,7 @@ static INT32 CommonInit(INT32 (*pInitCallback)(), INT32 punchout, INT32 reverse_
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -700,8 +700,7 @@ static INT32 DrvExit()
 	vlm5030Exit();
 	nesapuExit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	return 0;
 }

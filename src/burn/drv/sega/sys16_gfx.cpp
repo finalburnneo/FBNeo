@@ -2439,7 +2439,7 @@ static void YBoardSystem16BRenderSpriteLayer()
 inline static void YBoardDrawPixel(INT32 x, UINT32 ind, UINT32 colourpri, UINT16* pPixel)
 {
 	if (x >= 0 && x <= 511 && ind < 0x1fe) {
-		pPixel[x] = (ind | colourpri | 0x1000)/* & (System16PaletteEntries - 1)*/;
+		pPixel[x] = (ind | colourpri)/* & (System16PaletteEntries - 1)*/;
 	}
 }
 

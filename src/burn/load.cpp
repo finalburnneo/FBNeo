@@ -26,14 +26,14 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 	if ((nGap>1) || (nFlags & LD_NIBBLES) || (nFlags & LD_XOR))
 	{
 		INT32 nLoadLen=0;
-		UINT8 *Load=(UINT8 *)malloc(nLen);
+		UINT8 *Load=(UINT8 *)BurnMalloc(nLen);
 		if (Load==NULL) return 1;
 		memset(Load,0,nLen);
 
 		// Load in the file
 		nRet=BurnExtLoadRom(Load,&nLoadLen,i);
 		if (bDoIpsPatch) IpsApplyPatches(Load, RomName);
-		if (nRet!=0) { if (Load) { free(Load); Load = NULL; } return 1; }
+		if (nRet!=0) { if (Load) { BurnFree(Load); Load = NULL; } return 1; }
 
 		if (nLoadLen<0) nLoadLen=0;
 		if (nLoadLen>nLen) nLoadLen=nLen;
@@ -70,7 +70,7 @@ INT32 BurnLoadRomExt(UINT8 *Dest, INT32 i, INT32 nGap, INT32 nFlags)
 		}
 
 		if (Load) {
-			free(Load);
+			BurnFree(Load);
 			Load = NULL;
 		}
 	}

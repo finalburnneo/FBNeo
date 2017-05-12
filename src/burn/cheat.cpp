@@ -301,13 +301,9 @@ void CheatExit()
 		do {
 			pNextCheat = pCurrentCheat->pNext;
 			for (INT32 i = 0; i < CHEAT_MAX_OPTIONS; i++) {
-				if (pCurrentCheat->pOption[i]) {
-					free(pCurrentCheat->pOption[i]);
-				}
+				BurnFree(pCurrentCheat->pOption[i]);
 			}
-			if (pCurrentCheat) {
-				free(pCurrentCheat);
-			}
+			BurnFree(pCurrentCheat);
 		} while ((pCurrentCheat = pNextCheat) != 0);
 	}
 
@@ -340,14 +336,8 @@ INT32 CheatSearchInit()
 
 void CheatSearchExit()
 {
-	if (MemoryValues) {
-		free(MemoryValues);
-		MemoryValues = NULL;
-	}
-	if (MemoryStatus) {
-		free(MemoryStatus);
-		MemoryStatus = NULL;
-	}
+	BurnFree(MemoryValues);
+	BurnFree(MemoryStatus);
 	
 	nMemorySize = 0;
 	
@@ -369,8 +359,8 @@ void CheatSearchStart()
 	cheat_subptr->open(cheat_ptr->nCPU);
 	nMemorySize = cheat_subptr->nMemorySize;
 
-	MemoryValues = (UINT8*)malloc(nMemorySize);
-	MemoryStatus = (UINT8*)malloc(nMemorySize);
+	MemoryValues = (UINT8*)BurnMalloc(nMemorySize);
+	MemoryStatus = (UINT8*)BurnMalloc(nMemorySize);
 	
 	memset(MemoryStatus, IN_RESULTS, nMemorySize);
 	

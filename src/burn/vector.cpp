@@ -92,7 +92,7 @@ void vector_init()
 {
 	GenericTilesInit();
 
-	vector_table = (struct vector_line*)malloc(TABLE_SIZE * sizeof(vector_line));
+	vector_table = (struct vector_line*)BurnMalloc(TABLE_SIZE * sizeof(vector_line));
 
 	memset (vector_table, 0, TABLE_SIZE * sizeof(vector_line));
 
@@ -103,8 +103,7 @@ void vector_exit()
 {
 	GenericTilesExit();
 
-	free (vector_table);
-	vector_table = NULL;
+	BurnFree (vector_table);
 	vector_ptr = NULL;
 }
 

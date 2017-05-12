@@ -191,15 +191,8 @@ void BurnTransferExit()
 	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnTransferExit called without init\n"));
 #endif
 
-	if (pTransDraw) {
-		free(pTransDraw);
-		pTransDraw = NULL;
-	}
-
-	if (pPrioDraw) {
-		free(pPrioDraw);
-		pPrioDraw = NULL;
-	}
+	BurnFree(pTransDraw);
+	BurnFree(pPrioDraw);
 
 	Debug_BurnTransferInitted = 0;
 }
@@ -216,12 +209,12 @@ INT32 BurnTransferInit()
 		BurnDrvGetVisibleSize(&nTransWidth, &nTransHeight);
 	}
 
-	pTransDraw = (UINT16*)malloc(nTransWidth * (nTransHeight + nTransOverflow) * sizeof(UINT16));
+	pTransDraw = (UINT16*)BurnMalloc(nTransWidth * (nTransHeight + nTransOverflow) * sizeof(UINT16));
 	if (pTransDraw == NULL) {
 		return 1;
 	}
 
-	pPrioDraw = (UINT8*)malloc(nTransWidth * (nTransHeight + nTransOverflow));
+	pPrioDraw = (UINT8*)BurnMalloc(nTransWidth * (nTransHeight + nTransOverflow));
 	if (pPrioDraw == NULL) {
 		return 1;
 	}

@@ -387,7 +387,7 @@ void HiscoreInit()
 						HiscoreMemRange[nHiscoreNumRanges].EndValue = hexstr2num(&pBuf);
 						HiscoreMemRange[nHiscoreNumRanges].ApplyNextFrame = 0;
 						HiscoreMemRange[nHiscoreNumRanges].Applied = 0;
-						HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)malloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
+						HiscoreMemRange[nHiscoreNumRanges].Data = (UINT8*)BurnMalloc(HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 						memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 					
 #if 1 && defined FBA_DEBUG
@@ -424,7 +424,7 @@ void HiscoreInit()
 			nSize++;
 		}
 		
-		UINT8 *Buffer = (UINT8*)malloc(nSize);
+		UINT8 *Buffer = (UINT8*)BurnMalloc(nSize);
 		rewind(fp);
 
 		fread((char *)Buffer, 1, nSize, fp);
@@ -442,10 +442,7 @@ void HiscoreInit()
 #endif
 		}
 		
-		if (Buffer) {
-			free(Buffer);
-			Buffer = NULL;
-		}
+		BurnFree(Buffer);
 
 		fclose(fp);
 	}
@@ -617,7 +614,7 @@ void HiscoreExit()
 		FILE *fp = _tfopen(szFilename, _T("wb"));
 		if (fp) {
 			for (UINT32 i = 0; i < nHiscoreNumRanges; i++) {
-				UINT8 *Buffer = (UINT8*)malloc(HiscoreMemRange[i].NumBytes + 10);
+				UINT8 *Buffer = (UINT8*)BurnMalloc(HiscoreMemRange[i].NumBytes + 10);
 				memset(Buffer, 0, HiscoreMemRange[i].NumBytes + 10);
 
 				cpu_open(HiscoreMemRange[i].nCpu);
@@ -628,10 +625,7 @@ void HiscoreExit()
 
 				fwrite(Buffer, 1, HiscoreMemRange[i].NumBytes, fp);
 
-				if (Buffer) {
-					free(Buffer);
-					Buffer = NULL;
-				}
+				BurnFree(Buffer);
 			}
 		}
 		fclose(fp);
@@ -655,8 +649,7 @@ void HiscoreExit()
 		HiscoreMemRange[i].ApplyNextFrame = 0;
 		HiscoreMemRange[i].Applied = 0;
 
-		free(HiscoreMemRange[i].Data);
-		HiscoreMemRange[i].Data = NULL;
+		BurnFree(HiscoreMemRange[i].Data);
 	}
 
 	Debug_HiscoreInitted = 0;

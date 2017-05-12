@@ -890,7 +890,7 @@ static BurnPostloadFunction BurnPostload[8];
 static void BurnStateRegister(const char* module, INT32 instance, const char* name, void* val, UINT32 size)
 {
 	// Allocate new node
-	BurnStateEntry* pNewEntry = (BurnStateEntry*)malloc(sizeof(BurnStateEntry));
+	BurnStateEntry* pNewEntry = (BurnStateEntry*)BurnMalloc(sizeof(BurnStateEntry));
 	if (pNewEntry == NULL) {
 		return;
 	}
@@ -918,9 +918,7 @@ void BurnStateExit()
 
 		do {
 			pNextEntry = pCurrentEntry->pNext;
-			if (pCurrentEntry) {
-				free(pCurrentEntry);
-			}
+			BurnFree(pCurrentEntry);
 		} while ((pCurrentEntry = pNextEntry) != 0);
 	}
 

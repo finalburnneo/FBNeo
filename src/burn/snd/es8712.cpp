@@ -253,7 +253,7 @@ void es8712Init(INT32 device, UINT8 *rom, INT32 sample_rate, INT32 addSignal)
 	chip->addSignal = addSignal;
 
 	if (tbuf[device] == NULL) {
-		tbuf[device] = (INT16*)malloc(sample_rate * sizeof(INT16));
+		tbuf[device] = (INT16*)BurnMalloc(sample_rate * sizeof(INT16));
 	}
 }
 
@@ -290,11 +290,8 @@ void es8712Exit(INT32 device)
 
 	memset (chip, 0, sizeof(_es8712_state));
 
-	if (tbuf[device] != NULL) {
-		free (tbuf[device]);
-		tbuf[device] = NULL;
-	}
-	
+	BurnFree (tbuf[device]);
+		
 	DebugSnd_ES8712Initted = 0;
 }
 

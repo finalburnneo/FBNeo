@@ -210,7 +210,7 @@ void x1010_sound_init(UINT32 base_clock, INT32 address)
 {
 	DebugSnd_X1010Initted = 1;
 	
-	x1_010_chip = (struct x1_010_info *) malloc( sizeof(struct x1_010_info) );
+	x1_010_chip = (struct x1_010_info *) BurnMalloc( sizeof(struct x1_010_info) );
 
 	memset(x1_010_chip, 0, sizeof(struct x1_010_info));
 
@@ -263,10 +263,7 @@ void x1010_exit()
 	if (!DebugSnd_X1010Initted) bprintf(PRINT_ERROR, _T("x1010_exit called without init\n"));
 #endif
 
-	if (x1_010_chip) {
-		free(x1_010_chip);
-		x1_010_chip = NULL;
-	}
+	BurnFree(x1_010_chip);
 	
 	DebugSnd_X1010Initted = 0;
 }

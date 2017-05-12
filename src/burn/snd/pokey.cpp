@@ -621,10 +621,10 @@ int PokeyInit(int clock, int num, double vol, int addtostream)
 	intf.baseclock = (clock) ? clock : FREQ_17_EXACT;
 	intf.addtostream = addtostream;
 
-	poly9 = (UINT8 *)malloc(0x1ff+1);
-	rand9 = (UINT8 *)malloc(0x1ff+1);
-    poly17 = (UINT8 *)malloc(0x1ffff+1);
-    rand17 = (UINT8 *)malloc(0x1ffff+1);
+	poly9 = (UINT8 *)BurnMalloc(0x1ff+1);
+	rand9 = (UINT8 *)BurnMalloc(0x1ff+1);
+    poly17 = (UINT8 *)BurnMalloc(0x1ffff+1);
+    rand17 = (UINT8 *)BurnMalloc(0x1ffff+1);
 	if( !poly9 || !rand9 || !poly17 || !rand17 )
 	{
 		PokeyExit();	/* free any allocated memory again */
@@ -686,14 +686,10 @@ int PokeyInit(int clock, int num, double vol, int addtostream)
 
 void PokeyExit(void)
 {
-	if( rand17 ) free(rand17);
-	rand17 = NULL;
-	if( poly17 ) free(poly17);
-	poly17 = NULL;
-	if( rand9 )  free(rand9);
-	rand9 = NULL;
-	if( poly9 )  free(poly9);
-	poly9 = NULL;
+	BurnFree(rand17);
+	BurnFree(poly17);
+	BurnFree(rand9);
+	BurnFree(poly9);
 }
 
 /*static void pokey_timer_expire(int param)

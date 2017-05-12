@@ -260,7 +260,7 @@ static void k054539_init_chip(INT32 clock, UINT8 *rom, INT32 nLen)
 	info->k054539_flags |= K054539_UPDATE_AT_KEYON; // make it default until proven otherwise
 
 	// Real size of 0x4000, the addon is to simplify the reverb buffer computations
-	info->ram = (UINT8*)malloc(0x4000*2+clock/50*2);
+	info->ram = (UINT8*)BurnMalloc(0x4000*2+clock/50*2);
 	info->reverb_pos = 0;
 	info->cur_ptr = 0;
 	memset(info->ram, 0, 0x4000*2+clock/50*2);
@@ -317,8 +317,8 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 	k054539_init_chip(clock, rom, nLen);
 
-	if (soundbuf[0] == NULL) soundbuf[0] = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
-	if (soundbuf[1] == NULL) soundbuf[1] = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
+	if (soundbuf[0] == NULL) soundbuf[0] = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
+	if (soundbuf[1] == NULL) soundbuf[1] = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
 	
 	nNumChips = chip;
 }
@@ -345,22 +345,12 @@ void K054539Exit()
 
 	if (!DebugSnd_K054539Initted) return;
 
-	if (soundbuf[0] != NULL) {
-		free (soundbuf[0]);
-		soundbuf[0] = NULL;
-	}
-
-	if (soundbuf[1] != NULL) {
-		free (soundbuf[1]);
-		soundbuf[1] = NULL;
-	}
+	BurnFree (soundbuf[0]);
+	BurnFree (soundbuf[1]);
 
 	for (INT32 i = 0; i < 2; i++) {
 		info = &Chips[i];
-		if (info->ram) {
-			free (info->ram);
-			info->ram = NULL;
-		}
+		BurnFree (info->ram);
 	}
 	
 	DebugSnd_K054539Initted = 0;

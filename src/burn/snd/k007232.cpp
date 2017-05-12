@@ -261,11 +261,11 @@ void K007232Init(INT32 chip, INT32 clock, UINT8 *pPCMData, INT32 PCMDataSize)
 	memset(Ptr,	0, sizeof(kdacPointers));
 
 	if (Left == NULL) {
-		Left = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
+		Left = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
 	}
 
 	if (Right == NULL) {
-		Right = (INT32*)malloc(nBurnSoundLen * sizeof(INT32));
+		Right = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
 	}
 
 	Ptr->pcmbuf[0] = pPCMData;
@@ -320,15 +320,8 @@ void K007232Exit()
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Exit called without init\n"));
 #endif
 
-	if (Left) {
-		free(Left);
-		Left = NULL;
-	}	
-
-	if (Right) {
-		free(Right);
-		Right = NULL;
-	}
+	BurnFree(Left);
+	BurnFree(Right);
 	
 	DebugSnd_K007232Initted = 0;
 	nNumChips = 0;

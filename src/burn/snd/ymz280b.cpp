@@ -148,14 +148,11 @@ INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32))
 
 	YMZ280BIRQCallback = IRQCallback;
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
-	pBuffer = (INT32*)malloc(nYMZ280BSampleRate *  2 * sizeof(INT32));
+	BurnFree(pBuffer);
+	pBuffer = (INT32*)BurnMalloc(nYMZ280BSampleRate *  2 * sizeof(INT32));
 
 	for (INT32 j = 0; j < 8; j++) {
-		YMZ280BChannelData[j] = (INT32*)malloc(0x1000 * sizeof(INT32));
+		YMZ280BChannelData[j] = (INT32*)BurnMalloc(0x1000 * sizeof(INT32));
 	}
 
 	// default routes
@@ -195,15 +192,10 @@ void YMZ280BExit()
 
 	if (!DebugSnd_YMZ280BInitted) return;
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
+	BurnFree(pBuffer);
 
 	for (INT32 j = 0; j < 8; j++) {
-		if (YMZ280BChannelData[j])
-			free(YMZ280BChannelData[j]);
-		YMZ280BChannelData[j] = NULL;
+		BurnFree(YMZ280BChannelData[j]);
 	}
 
 	YMZ280BIRQCallback = NULL;

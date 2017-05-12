@@ -606,7 +606,7 @@ void phoenix_sound_init()
 	int i, j;
 	UINT32 shiftreg;
 
-	poly18 = (UINT32 *)malloc((1ul << (18-5)) * sizeof(UINT32));
+	poly18 = (UINT32 *)BurnMalloc((1ul << (18-5)) * sizeof(UINT32));
 
 	if( !poly18 )
 		return;
@@ -640,10 +640,7 @@ void phoenix_sound_deinit()
 
 	phoenixsnd_initted = 0;
 
-	if (poly18) {
-		free(poly18);
-		poly18 = NULL;
-	}
+	BurnFree(poly18);
 
 	tms36xx_deinit();
 }

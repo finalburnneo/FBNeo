@@ -463,7 +463,7 @@ void tms36xx_init(int clock, int subtype, double *decay, double speed)
 {
 	int enable;
 
-	tms = (TMS36XX *)malloc(sizeof(TMS36XX));
+	tms = (TMS36XX *)BurnMalloc(sizeof(TMS36XX));
 	memset(tms, 0, sizeof(*tms));
 
 	tms->samplerate = nBurnSoundRate;
@@ -485,9 +485,6 @@ void tms36xx_init(int clock, int subtype, double *decay, double speed)
 
 void tms36xx_deinit()
 {
-	if (tms) {
-		free(tms);
-		tms = NULL;
-	}
+	BurnFree(tms);
 }
 

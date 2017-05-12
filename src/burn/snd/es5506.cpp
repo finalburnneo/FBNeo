@@ -266,7 +266,7 @@ static void compute_tables()
 
 	/* allocate ulaw lookup table */
 	//chip->ulaw_lookup = auto_alloc_array(chip->device->machine, INT16, 1 << ULAW_MAXBITS);
-	chip->ulaw_lookup = (INT16*)malloc((1 << ULAW_MAXBITS) * sizeof(INT16));
+	chip->ulaw_lookup = (INT16*)BurnMalloc((1 << ULAW_MAXBITS) * sizeof(INT16));
 
 	/* generate ulaw lookup table */
 	for (i = 0; i < (1 << ULAW_MAXBITS); i++)
@@ -286,7 +286,7 @@ static void compute_tables()
 
 	/* allocate volume lookup table */
 	//chip->volume_lookup = auto_alloc_array(chip->device->machine, UINT16, 4096);
-	chip->volume_lookup = (UINT16*)malloc(4096 * sizeof(UINT16));
+	chip->volume_lookup = (UINT16*)BurnMalloc(4096 * sizeof(UINT16));
 
 	/* generate volume lookup table */
 	for (i = 0; i < 4096; i++)
@@ -950,7 +950,7 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 		eslog = fopen("es.log", "w");
 
 	/* create the struct */
-	chip = (struct _es5506_state*)malloc(sizeof(_es5506_state));
+	chip = (struct _es5506_state*)BurnMalloc(sizeof(_es5506_state));
 	memset(chip, 0, sizeof(_es5506_state));
 
 	chip->chiptype = sndtype;
@@ -973,7 +973,7 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 	init_voices();
 
 	/* allocate memory */
-	chip->scratch = (INT32*)malloc(2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
+	chip->scratch = (INT32*)BurnMalloc(2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
 
 	/* set volume */
 	chip->volume[0] = 1.00;
@@ -1070,10 +1070,10 @@ void ES5506Exit()
 	}
 #endif
 
-	free(chip->ulaw_lookup);
-	free(chip->volume_lookup);
-	free(chip->scratch);
-	free(chip);
+	BurnFree(chip->ulaw_lookup);
+	BurnFree(chip->volume_lookup);
+	BurnFree(chip->scratch);
+	BurnFree(chip);
 	chip = NULL;
 
 	ES550X_twincobra2_pan_fix = 0;

@@ -164,10 +164,7 @@ void BurnYM2151Exit()
 
 	YM2151Shutdown();
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
+	BurnFree(pBuffer);
 	
 	DebugSnd_YM2151Initted = 0;
 }
@@ -197,7 +194,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency)
 
 	YM2151Init(1, nClockFrequency, nBurnYM2151SoundRate);
 
-	pBuffer = (INT16*)malloc(65536 * 2 * sizeof(INT16));
+	pBuffer = (INT16*)BurnMalloc(65536 * 2 * sizeof(INT16));
 	memset(pBuffer, 0, 65536 * 2 * sizeof(INT16));
 
 	nSampleSize = (UINT32)nBurnYM2151SoundRate * (1 << 16) / nBurnSoundRate;

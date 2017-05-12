@@ -64,7 +64,7 @@ static void make_raw(UINT8 *src, UINT32 len)
 	UINT32 converted_len = (UINT32)((float)(data_length * (nBurnSoundRate * 1.00000 / sample_rate) / (bits * channels)));
 	if (converted_len == 0) return; 
 
-	sample_ptr->data = (UINT8*)malloc(converted_len * 4);
+	sample_ptr->data = (UINT8*)BurnMalloc(converted_len * 4);
 
 //	up/down sample everything and convert to raw 16 bit stereo
 	{
@@ -293,7 +293,7 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 		if (si.nFlags) nTotalSamples++;
 	} while (si.nFlags);
 
-	samples = (sample_format*)malloc(sizeof(sample_format) * nTotalSamples);
+	samples = (sample_format*)BurnMalloc(sizeof(sample_format) * nTotalSamples);
 	memset (samples, 0, sizeof(sample_format) * nTotalSamples);
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
@@ -335,10 +335,7 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 		sample_ptr->output_dir[BURN_SND_SAMPLE_ROUTE_2] = BURN_SND_ROUTE_BOTH;
 
-		if (destination) {
-			free (destination);
-			destination = NULL;
-		}
+		BurnFree (destination);
 
 		BurnSetProgressRange(1.0 / nTotalSamples);
 		BurnUpdateProgress((double)1.0 / i * nTotalSamples, _T("Loading samples..."), 0);
@@ -358,7 +355,7 @@ void BurnSampleInitOne(INT32 sample)
 		while (i < nTotalSamples) {
 			
 			if (clr_ptr->data != NULL && i != sample && (clr_ptr->flags & SAMPLE_NOSTORE)) {
-				free(clr_ptr->data);
+				BurnFree(clr_ptr->data);
 				clr_ptr->playing = 0;
 				clr_ptr->data = NULL;
 			}
@@ -408,10 +405,7 @@ void BurnSampleInitOne(INT32 sample)
 		make_raw((UINT8*)destination, length);
 	}
 
-	if (destination) {
-		free (destination);
-		destination = NULL;
-	}
+	BurnFree (destination);
 }
 
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir)
@@ -452,16 +446,10 @@ void BurnSampleExit()
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];
-		if (sample_ptr->data != NULL) {
-			free (sample_ptr->data);
-			sample_ptr->data = NULL;
-		}
+		BurnFree (sample_ptr->data);
 	}
 
-	if (samples) {
-		free (samples);
-		samples = NULL;
-	}
+	BurnFree (samples);
 
 	sample_ptr = NULL;
 	nTotalSamples = 0;

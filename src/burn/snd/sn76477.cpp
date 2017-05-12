@@ -959,15 +959,12 @@ void SN76477_sound_update(int param, INT16 *buffer, int length)
 
 void SN76477_exit(int num) // yea, needs work. I know..
 {
-	if (sn76477[num]) {
-		free(sn76477[num]);
-		sn76477[num] = NULL;
-	}
+	BurnFree(sn76477[num]);
 }
 
 void SN76477_init(int num)
 {
-	sn76477[num] = (SN76477 *)malloc(sizeof(struct SN76477));
+	sn76477[num] = (SN76477 *)BurnMalloc(sizeof(struct SN76477));
 	if( !sn76477[num] )
 	{
 		LOG(0,("%s failed to malloc struct SN76477\n", name));

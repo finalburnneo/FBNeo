@@ -336,14 +336,8 @@ void BurnYM2608Exit()
 
 	BurnTimerExit();
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
-	if (pAYBuffer) {
-		free(pAYBuffer);
-		pAYBuffer = NULL;
-	}
+	BurnFree(pBuffer);
+	BurnFree(pAYBuffer);
 	
 	bYM2608AddSignal = 0;
 	
@@ -389,10 +383,10 @@ INT32 BurnYM2608Init(INT32 nClockFrequency, UINT8* YM2608ADPCMROM, INT32* nYM260
 	AY8910InitYM(0, nClockFrequency, nBurnYM2608SoundRate, NULL, NULL, NULL, NULL, BurnAY8910UpdateRequest);
 	YM2608Init(1, nClockFrequency, nBurnYM2608SoundRate, (void**)(&YM2608ADPCMROM), nYM2608ADPCMSize, YM2608IROM, &BurnOPNTimerCallback, IRQCallback);
 
-	pBuffer = (INT16*)malloc(4096 * 6 * sizeof(INT16));
+	pBuffer = (INT16*)BurnMalloc(4096 * 6 * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * 6 * sizeof(INT16));
 
-	pAYBuffer = (INT32*)malloc(4096 * sizeof(INT32));
+	pAYBuffer = (INT32*)BurnMalloc(4096 * sizeof(INT32));
 	memset(pAYBuffer, 0, 4096 * sizeof(INT32));
 
 	nYM2608Position = 0;

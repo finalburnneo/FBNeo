@@ -552,7 +552,7 @@ static INT32 build_decoded_waveform()
 
 	namco_waveformdatasize = size * MAX_VOLUME * sizeof (INT16);
 
-	p = (INT16*)malloc(namco_waveformdatasize);
+	p = (INT16*)BurnMalloc(namco_waveformdatasize);
 	namco_waveformdata = (UINT8*)p; //strictly for savestates.
 
 	memset(p, 0, namco_waveformdatasize);
@@ -565,7 +565,7 @@ static INT32 build_decoded_waveform()
 
 	if (namco_wavedata == NULL) {
 		enable_ram = 1;
-		namco_wavedata = (UINT8*)malloc(0x400);
+		namco_wavedata = (UINT8*)BurnMalloc(0x400);
 		memset(namco_wavedata, 0, 0x400);
 	}
 
@@ -609,10 +609,10 @@ void NamcoSoundInit(INT32 clock, INT32 num_voices, INT32 bAdd)
 	INT32 clock_multiple;
 	sound_channel *voice;
 	
-	chip = (struct namco_sound*)malloc(sizeof(*chip));
+	chip = (struct namco_sound*)BurnMalloc(sizeof(*chip));
 	memset(chip, 0, sizeof(*chip));
 
-	namco_soundregs = (UINT8*)malloc(0x400);
+	namco_soundregs = (UINT8*)BurnMalloc(0x400);
 	memset(namco_soundregs, 0, 0x400);
 
 	chip->num_voices = num_voices;
@@ -678,19 +678,10 @@ void NamcoSoundExit()
 
 	if (!DebugSnd_NamcoSndInitted) return;
 
-	if (chip) {
-		free(chip);
-		chip = NULL;
-	}
-	
-	if (namco_soundregs) {
-		free(namco_soundregs);
-		namco_soundregs = NULL;
-	}
-
+	BurnFree(chip);
+	BurnFree(namco_soundregs);
 	if (enable_ram) {
-		free (namco_wavedata);
-		namco_wavedata = NULL;
+		BurnFree(namco_wavedata);
 	}
 
 	enable_ram = 0;

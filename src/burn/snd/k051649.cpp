@@ -66,7 +66,7 @@ static void make_mixer_table(INT32 voices)
 	INT32 gain = 8;
 
 	/* allocate memory */
-	info->mixer_table = (INT16 *)malloc(512 * voices * sizeof(INT16));
+	info->mixer_table = (INT16 *)BurnMalloc(512 * voices * sizeof(INT16));
 
 	/* find the middle of the table */
 	info->mixer_lookup = info->mixer_table + (256 * voices);
@@ -163,7 +163,7 @@ void K051649Init(INT32 clock)
 	nUpdateStep = (INT32)(((float)info->rate / nBurnSoundRate) * 32768);
 
 	/* allocate a buffer to mix into - 1 second's worth should be more than enough */
-	info->mixer_buffer = (INT16 *)malloc(2 * sizeof(INT16) * info->rate);
+	info->mixer_buffer = (INT16 *)BurnMalloc(2 * sizeof(INT16) * info->rate);
 	memset(info->mixer_buffer, 0, 2 * sizeof(INT16) * info->rate);
 	
 	/* build the mixer table */
@@ -190,15 +190,8 @@ void K051649Exit()
 
 	info = &Chips[0];
 
-	if (info->mixer_buffer) {
-		free (info->mixer_buffer);
-		info->mixer_buffer = NULL;
-	}
-
-	if (info->mixer_table) {
-		free (info->mixer_table);
-		info->mixer_table = NULL;
-	}
+	BurnFree (info->mixer_buffer);
+	BurnFree (info->mixer_table);
 	
 	nUpdateStep = 0;
 	

@@ -295,7 +295,7 @@ void K053260Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 	for ( i = 0; i < 0x30; i++ )
 		ic->regs[i] = 0;
 
-	ic->delta_table = (UINT32* )malloc( 0x1000 * sizeof(UINT32) );
+	ic->delta_table = (UINT32* )BurnMalloc( 0x1000 * sizeof(UINT32) );
 
 	InitDeltaTable( rate, clock );
 	
@@ -336,10 +336,7 @@ void K053260Exit()
 	for (INT32 i = 0; i < 2; i++) {
 		ic = &Chips[i];
 
-		if (ic->delta_table) {
-			free (ic->delta_table);
-			ic->delta_table = NULL;
-		}
+		BurnFree (ic->delta_table);
 	}
 	
 	nUpdateStep = 0;

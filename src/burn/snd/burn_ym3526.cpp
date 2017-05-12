@@ -499,10 +499,7 @@ void BurnYM3526Exit()
 
 	BurnTimerExitYM3526();
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
+	BurnFree(pBuffer);
 	
 	bYM3526AddSignal = 0;
 	
@@ -549,7 +546,7 @@ INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*
 	YM3526SetTimerHandler(0, &BurnOPLTimerCallbackYM3526, 0);
 	YM3526SetUpdateHandler(0, &BurnYM3526UpdateRequest, 0);
 
-	pBuffer = (INT16*)malloc(4096 * sizeof(INT16));
+	pBuffer = (INT16*)BurnMalloc(4096 * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * sizeof(INT16));
 
 	nYM3526Position = 0;

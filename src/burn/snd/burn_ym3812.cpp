@@ -555,10 +555,7 @@ void BurnYM3812Exit()
 
 	BurnTimerExitYM3812();
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
+	BurnFree(pBuffer);
 	
 	nNumChips = 0;
 	bYM3812AddSignal = 0;
@@ -608,7 +605,7 @@ INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallbac
 	YM3812SetTimerHandler(0, &BurnOPLTimerCallbackYM3812, 0);
 	YM3812SetUpdateHandler(0, &BurnYM3812UpdateRequest, 0);
 
-	pBuffer = (INT16*)malloc(4096 * num * sizeof(INT16));
+	pBuffer = (INT16*)BurnMalloc(4096 * num * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * num * sizeof(INT16));
 
 	nYM3812Position = 0;

@@ -464,7 +464,7 @@ void pleiads_sound_init(int naughtybpopflamer)
 {
 	UINT32 shiftreg;
 
-	poly18 = (UINT32 *)malloc((1ul << (18-5)) * sizeof(UINT32));
+	poly18 = (UINT32 *)BurnMalloc((1ul << (18-5)) * sizeof(UINT32));
 
 	if( !poly18 )
 		return;
@@ -498,10 +498,7 @@ void pleiads_sound_deinit()
 {
 	if (!pleiadssound_initted) return;
 
-	if (poly18) {
-		free(poly18);
-		poly18 = NULL;
-	}
+	BurnFree(poly18);
 
 	tms36xx_deinit();
 	pleiadssound_initted = 0;

@@ -425,7 +425,7 @@ void UPD7759Init(INT32 chip, INT32 clock, UINT8* pSoundData)
 {
 	DebugSnd_UPD7759Initted = 1;
 	
-	Chips[chip] = (struct upd7759_chip*)malloc(sizeof(*Chip));
+	Chips[chip] = (struct upd7759_chip*)BurnMalloc(sizeof(*Chip));
 	Chip = Chips[chip];
 
 	memset(Chip, 0, sizeof(*Chip));
@@ -583,14 +583,8 @@ void UPD7759Exit()
 	if (!DebugSnd_UPD7759Initted) bprintf(PRINT_ERROR, _T("UPD7759Exit called without init\n"));
 #endif
 
-	if (Chips[0]) {
-		free(Chips[0]);
-		Chips[0] = NULL;
-	}
-	if (Chips[1]) {
-		free(Chips[1]);
-		Chips[1] = NULL;
-	}
+	BurnFree(Chips[0]);
+	BurnFree(Chips[1]);
 	SlaveMode = 0;
 	
 	DebugSnd_UPD7759Initted = 0;

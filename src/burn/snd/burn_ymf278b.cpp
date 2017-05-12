@@ -205,10 +205,7 @@ void BurnYMF278BExit()
 
 	BurnTimerExit();
 
-	if (pBuffer) {
-		free(pBuffer);
-		pBuffer = NULL;
-	}
+	BurnFree(pBuffer);
 	
 	DebugSnd_YMF278BInitted = 0;
 }
@@ -229,7 +226,7 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, nClockFrequency, nBurnSoundRate);
 	BurnTimerInit(ymf278b_timer_over, NULL);
 
-	pBuffer = (INT16*)malloc(4096 * 2 * sizeof(INT16));
+	pBuffer = (INT16*)BurnMalloc(4096 * 2 * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * 2 * sizeof(INT16));
 
 	nYMF278BPosition = 0;

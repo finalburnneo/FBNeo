@@ -401,7 +401,7 @@ void ics2115_update(INT16 *outputs, int samples)
 	INT32 sample_per_frame = (33075 * 100) / nBurnFPS;
 
 	if (stream == NULL) {
-		stream = (INT16*)malloc(sample_per_frame * 4); // * 4 -> (16 bits, 2 channels)
+		stream = (INT16*)BurnMalloc(sample_per_frame * 4); // * 4 -> (16 bits, 2 channels)
 	}
 
 //	memset(outputs, 0, samples * sizeof(INT16) * 2);

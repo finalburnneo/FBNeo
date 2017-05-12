@@ -390,7 +390,7 @@ UINT8 __fastcall dealer_read_port(UINT16 port)
 			return ppi8255_r(0, port & 3);
 
 		case 0x38:
-			return DrvDips[0];
+			return AY8910Read(0); //DrvDips[0];
 	}
 	bprintf(0, _T("unmapped port %X. "), port);
 	return 0;
@@ -597,6 +597,11 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static UINT8 AY8910_0_portA(UINT32)
+{
+	return DrvDips[0];
+}
+
 static INT32 DealerInit()
 {
 	AllMem = NULL;
@@ -627,7 +632,7 @@ static INT32 DealerInit()
 	ZetSetOutHandler(dealer_write_port);
 	ZetClose();
 
-	AY8910Init(0, 2750000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init(0, 2750000, nBurnSoundRate, AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	ppi8255_init(1);

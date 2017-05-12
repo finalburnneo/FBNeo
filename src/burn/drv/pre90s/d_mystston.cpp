@@ -418,7 +418,7 @@ static INT32 MemIndex()
 // we call it during the frame function.
 static void SoundBufferAlloc()
 {
-	pAY8910Buf = (INT16*)malloc(nBurnSoundLen * 6 * sizeof(INT16));
+	pAY8910Buf = (INT16*)BurnMalloc(nBurnSoundLen * 6 * sizeof(INT16));
 
 	for (INT32 i = 0; i < 6; i++) {
 		pAY8910Buffer[i] = pAY8910Buf + i * nBurnSoundLen;

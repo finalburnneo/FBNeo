@@ -336,7 +336,7 @@ static INT32 DrvGfxDecode()
 	INT32 charXOffs[8] = { STEP8(7,-1) };
 	INT32 charYOffs[8] = { STEP8(0,8) };
 
-	UINT8 *tmp = (UINT8*)malloc(0x20000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x20000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -352,7 +352,7 @@ static INT32 DrvGfxDecode()
 	GfxDecode(0x100, 3, 16, 16, spritePlane8, sprXOffs, sprYOffs, 0x100, tmp + 0x0000, DrvSprite8GFX);
 	GfxDecode(0x400, 3, 8, 8, charPlane8, charXOffs, charYOffs, 0x040, tmp + 0x0000, DrvChar8GFX);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }

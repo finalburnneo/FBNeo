@@ -307,7 +307,7 @@ GFXDECODE_END
 	INT32 YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,// <--- 0 - 7 is used for both types, so we can repeat this and save a few lines
 	 16*8,17*8,18*8,19*8,20*8,21*8,22*8,23*8 };
 
-	UINT8 *tmp = (UINT8*)malloc(0x1000); // ROM_REGION( 0x1000, "gfx1", 0 ), ROM_REGION( 0x1000, "gfx2", 0 ) whichever is larger...
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x1000); // ROM_REGION( 0x1000, "gfx1", 0 ), ROM_REGION( 0x1000, "gfx2", 0 ) whichever is larger...
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -322,8 +322,7 @@ GFXDECODE_END
 
 	GfxDecode(32*2, 2, 16, 16, Plane, XOffs, YOffs, 32 * 8, tmp, DrvGfxROM1);
 
-
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -388,7 +387,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -484,8 +483,7 @@ static INT32 DrvExit()
 
 	AY8910Exit(0); // exit ay8910 cpu
 
-	free (AllMem); // Free all RAM
-	AllMem = NULL;
+	BurnFree (AllMem); // Free all RAM
 
 	return 0;
 }

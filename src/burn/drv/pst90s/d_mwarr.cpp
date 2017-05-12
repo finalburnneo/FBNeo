@@ -553,7 +553,7 @@ static INT32 MwarrInit()
 	AllMem = NULL;
 	MemIndex(1);
 	int nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex(1);
 
@@ -658,7 +658,7 @@ static INT32 CommonInit(INT32 select, INT32 xoffset)
 	AllMem = NULL;
 	MemIndex(0);
 	int nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex(0);
 
@@ -769,8 +769,7 @@ static INT32 DrvExit()
 	else
 		EEPROMExit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	MSM6295ROM = NULL;
 

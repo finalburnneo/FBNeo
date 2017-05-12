@@ -199,7 +199,7 @@ static void DrvGfxDecode()
 	INT32 XOffs16x16[16] = { STEP4(8*8,1), STEP4(16*8,1), STEP4(24*8,1), STEP4(0*8,1) };
 	INT32 YOffs16x16[16] = { STEP8(0*8,8), STEP8(32*8,8) };
 
-	UINT8 *tmp = (UINT8*)malloc( 0x2000 );
+	UINT8 *tmp = (UINT8*)BurnMalloc( 0x2000 );
 
 	memcpy (tmp, DrvGfxROM0, 0x2000);
 
@@ -209,7 +209,7 @@ static void DrvGfxDecode()
 
 	GfxDecode(0x080, 2, 16, 16, Planes, XOffs16x16, YOffs16x16, 0x200, tmp, DrvGfxROM1);
 
-	free (tmp);
+	BurnFree (tmp);
 }
 
 static void DrvPaletteInit()
@@ -341,7 +341,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -401,8 +401,7 @@ static INT32 DrvExit()
 
 	NamcoSoundExit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	return 0;
 }

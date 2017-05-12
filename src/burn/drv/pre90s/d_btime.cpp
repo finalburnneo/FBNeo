@@ -1378,7 +1378,7 @@ static INT32 DrvBnjGfxDecode()
 	INT32 t16XOffs[16] = { STEP8(16*8,1), STEP8(0,1) };
 	INT32 t16YOffs[16] = { STEP16(0,8) };
 
-	UINT8 *tmp = (UINT8*)malloc(gfx0len + gfx1len); // more = more happy-fun. yay!
+	UINT8 *tmp = (UINT8*)BurnMalloc(gfx0len + gfx1len); // more = more happy-fun. yay!
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -1392,7 +1392,7 @@ static INT32 DrvBnjGfxDecode()
 
 	GfxDecode(0x0040, 3, 16, 16, Plane_t16bnj, t16bnjXOffs, t16bnjYOffs, 0x200, tmp, DrvGfxROM2);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -1426,7 +1426,7 @@ static INT32 DrvGfxDecode()
 	INT32 t16XOffs[16] = { STEP8(16*8,1), STEP8(0,1) };
 	INT32 t16YOffs[16] = { STEP16(0,8) };
 
-	UINT8 *tmp = (UINT8*)malloc(gfx0len + gfx1len); // more = more happy-fun. yay!
+	UINT8 *tmp = (UINT8*)BurnMalloc(gfx0len + gfx1len); // more = more happy-fun. yay!
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -1440,7 +1440,7 @@ static INT32 DrvGfxDecode()
 
 	GfxDecode(0x0040, 3, 16, 16, Plane_t16, t16XOffs, t16YOffs, 0x100, tmp, DrvGfxROM2);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -1457,7 +1457,7 @@ static INT32 ZoarGfxDecode()
 	INT32 t16XOffs[16] = { STEP8(16*8,1), STEP8(0,1) };
 	INT32 t16YOffs[16] = { STEP16(0,8) };
 
-	UINT8 *tmp = (UINT8*)malloc(gfx0len + gfx1len + 0x3000); // more = more happy-fun. yay!
+	UINT8 *tmp = (UINT8*)BurnMalloc(gfx0len + gfx1len + 0x3000); // more = more happy-fun. yay!
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -1474,7 +1474,7 @@ static INT32 ZoarGfxDecode()
 
 	GfxDecode(0x0040, 3, 16, 16, Plane_t16, t16XOffs, t16YOffs, 0x100, tmp, DrvGfxROM2);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }

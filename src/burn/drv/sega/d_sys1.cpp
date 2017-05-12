@@ -5694,11 +5694,11 @@ static INT32 WbmlInit()
 
 	DecodeFunction = wbml_decode;
 
-	System1MC8123Key = (UINT8*)malloc(0x2000);
+	System1MC8123Key = (UINT8*)BurnMalloc(0x2000);
 	BurnLoadRom(System1MC8123Key, 15, 1);
 
 	nRet = System2Init(3, 0x8000, 1, 0x8000, 3, 0x8000, 4, 0x8000, 1);
-	free(System1MC8123Key);
+	BurnFree(System1MC8123Key);
 	System1MC8123Key = NULL;
 
 	return nRet;

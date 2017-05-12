@@ -476,7 +476,7 @@ static INT32 DrvGfxDecode()
 	INT32 XOffs[16] = { STEP8(16*8, 1), STEP8(0, 1) };
 	INT32 YOffs[16] = { STEP16(0, 8) };
 
-	UINT8 *tmp = (UINT8*)malloc(0x60000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x60000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -493,7 +493,7 @@ static INT32 DrvGfxDecode()
 
 	GfxDecode(0x0800, 4, 16, 16, Plane2, XOffs + 0, YOffs, 0x100, tmp, DrvGfxROM2);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -528,7 +528,7 @@ static INT32 ActfanInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -592,7 +592,7 @@ static INT32 TriothepInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -664,8 +664,7 @@ static INT32 DrvExit()
 	h6280Exit();
 	M6502Exit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	return 0;
 }

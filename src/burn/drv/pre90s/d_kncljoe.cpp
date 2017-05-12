@@ -301,7 +301,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx, INT32 len, INT32 size)
 	INT32 XOffs[16] = { STEP8(0,1), STEP8(64,1) };
 	INT32 YOffs[16] = { STEP8(0,8), STEP8(128,8) };
 
-	UINT8 *tmp = (UINT8*)malloc(len);
+	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -310,7 +310,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx, INT32 len, INT32 size)
 
 	GfxDecode(((len / 3) * 8) / (size * size), 3, size, size, Planes, XOffs, YOffs, size * size, tmp, gfx);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -398,7 +398,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -484,8 +484,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	SN76496Exit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	return 0;
 }

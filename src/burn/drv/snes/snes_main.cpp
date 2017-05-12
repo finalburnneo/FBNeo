@@ -394,6 +394,7 @@ INT32 SnesExit()
 	{
 		memlookup[i]=NULL;
 	}
+	exitspc();
 	BurnFree (AllMem);
 	return 0;
 }

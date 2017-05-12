@@ -252,7 +252,7 @@ static void DrvGfxDecode(UINT8 *src, INT32 len, INT32 size)
 	INT32 YOffs[16] = { 0x000, 0x020, 0x040, 0x060, 0x080, 0x0a0, 0x0c0, 0x0e0,
 			  0x100, 0x120, 0x140, 0x160, 0x180, 0x1a0, 0x1c0, 0x1e0 };
 
-	UINT8 *tmp = (UINT8*)malloc(len);
+	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
 		return;
 	}
@@ -261,10 +261,7 @@ static void DrvGfxDecode(UINT8 *src, INT32 len, INT32 size)
 
 	GfxDecode((len * 2) / (size * size), 4, size, size, Planes, XOffs, YOffs, (size * size * 4), tmp, src);
 
-	if (tmp) {
-		free (tmp);
-		tmp = NULL;
-	}
+	BurnFree (tmp);
 }
 
 static INT32 DrvDoReset()

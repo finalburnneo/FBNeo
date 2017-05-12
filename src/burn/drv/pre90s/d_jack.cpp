@@ -1049,7 +1049,7 @@ static INT32 DrvInit()
 		return 1;
 	}
 
-	pFMBuffer = (INT16 *)malloc (nBurnSoundLen * 3 * sizeof(INT16));
+	pFMBuffer = (INT16 *)BurnMalloc (nBurnSoundLen * 3 * sizeof(INT16));
 	if (pFMBuffer == NULL) {
 		return 1;
 	}

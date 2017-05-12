@@ -109,8 +109,13 @@ unsigned char readspcregs(unsigned short a)
 
 void initspc()
 {
-	spcram=(unsigned char*)malloc(65536);
+	spcram=(UINT8*)BurnMalloc(65536);
 	memset(spcram,0,65536);
+}
+
+void exitspc()
+{
+	BurnFree(spcram);
 }
 
 void resetspc()

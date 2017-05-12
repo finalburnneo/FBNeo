@@ -1067,7 +1067,7 @@ static INT32 DrvInit(INT32 bios)
 	DrvLoad(0);
 	MemIndex(nGfxLen0);
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex(nGfxLen0);
 
@@ -1140,8 +1140,7 @@ static INT32 DrvExit()
 	YMZ280BExit();
 	YMZ280BROM = NULL;
 
-	free(AllMem);
-	AllMem = NULL;
+	BurnFree(AllMem);
 
 	suprnova_alt_enable_background = 0;
 	Vblokbrk = 0;

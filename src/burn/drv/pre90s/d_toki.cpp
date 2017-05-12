@@ -507,7 +507,7 @@ static INT32 TokibDoReset()
 
 static void tokib_rom_decode()
 {
-	UINT8 *temp = (UINT8*)malloc(65536 * 2);
+	UINT8 *temp = (UINT8*)BurnMalloc(65536 * 2);
 	INT32 i, offs, len;
 	UINT8 *rom;
 
@@ -544,10 +544,7 @@ static void tokib_rom_decode()
 		}
 	}
 
-	if (temp) {
-		free (temp);
-		temp = NULL;
-	}
+	BurnFree (temp);
 }
 
 
@@ -919,7 +916,7 @@ static INT32 TokibInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 

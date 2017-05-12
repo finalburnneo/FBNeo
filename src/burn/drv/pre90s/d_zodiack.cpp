@@ -679,7 +679,7 @@ static INT32 DrvGfxDecode()
 	INT32 XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
 	INT32 YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
 
-	UINT8 *tmp = (UINT8*)malloc(0x20000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x20000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -690,7 +690,7 @@ static INT32 DrvGfxDecode()
 	GfxDecode(0x40, 2, 16, 16, spritePlane, XOffs, YOffs, 0x100, tmp + 0x0800, DrvSpriteGFX);
 	GfxDecode(0x100, 2, 8, 8, charPlane, XOffs, YOffs, 0x40, tmp + 0x1000, DrvChar2GFX);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }

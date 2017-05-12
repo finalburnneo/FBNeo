@@ -729,8 +729,8 @@ static void DrvGfxDecode(UINT32 type)
 	INT32 XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
 	INT32 YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
 
-	UINT8 *tmp0 = (UINT8*)malloc(0x6000);
-	UINT8 *tmp1 = (UINT8*)malloc(0xc000);
+	UINT8 *tmp0 = (UINT8*)BurnMalloc(0x6000);
+	UINT8 *tmp1 = (UINT8*)BurnMalloc(0xc000);
 
 	memcpy (tmp0, DrvGfxROM0, 0x6000);
 	memcpy (tmp1, DrvGfxROM1, 0xc000);
@@ -754,8 +754,8 @@ static void DrvGfxDecode(UINT32 type)
 	GfxDecode(256, 3, 16, 16, Plane, XOffs, YOffs, 0x100, tmp1 + 0x0000, DrvGfxROM1 + 1 * 16 * 16 * 256);
 	GfxDecode(256, 3, 16, 16, Plane, XOffs, YOffs, 0x100, tmp1 + 0x6000, DrvGfxROM1 + 2 * 16 * 16 * 256);
 
-	free (tmp0);
-	free (tmp1);
+	BurnFree (tmp0);
+	BurnFree (tmp1);
 }
 
 static INT32 WizLoadRoms()
@@ -844,7 +844,7 @@ static INT32 DrvInit(int (*RomLoadCallback)())
 	AllMem = NULL;
 	MemIndex();
 	UINT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -906,8 +906,7 @@ static INT32 DrvExit()
 	AY8910Exit(2);
 	BurnSampleExit();
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	Wizmode = 0;
 	Scionmodeoffset = 0;

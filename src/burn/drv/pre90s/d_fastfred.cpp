@@ -728,7 +728,7 @@ static INT32 GraphicsDecode()
 	static INT32 SharYOffs[16] = { 0x00, 0x08, 0x10, 0x18, 0x20, 0x28, 0x30, 0x38,
 				     0x80, 0x88, 0x90, 0x98, 0xa0, 0xa8, 0xb0, 0xb8 };
 
-	UINT8 *tmp = (UINT8*)malloc(0x6000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x6000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -739,7 +739,7 @@ static INT32 GraphicsDecode()
 	memcpy (tmp, Gfx1, 0x03000);
 	GfxDecode(0x080, 3, 16, 16, SpriPlanes, SharXOffs, SharYOffs, 0x100, tmp, Gfx1);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -754,7 +754,7 @@ static INT32 ImagoGraphicsDecode()
 	INT32 imago1bppxoffs[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
 	INT32 imago1bppyoffs[8] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8 };
 
-	UINT8 *tmp = (UINT8*)malloc(0x6000);
+	UINT8 *tmp = (UINT8*)BurnMalloc(0x6000);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -768,7 +768,7 @@ static INT32 ImagoGraphicsDecode()
 	memcpy (tmp, Gfx3, 0x01000);
 	GfxDecode(0x200, 1,  8,  8, imago1bppplanes, imago1bppxoffs, imago1bppyoffs, 0x040, tmp, Gfx3);
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }

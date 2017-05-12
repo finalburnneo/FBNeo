@@ -712,7 +712,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx_base, UINT8 *gfx_dest, INT32 len, INT32 siz
 	INT32 YOffs[16] = {  0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
 			16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
 
-	UINT8 *tmp = (UINT8*)malloc(len);
+	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
 		return 1;
 	}
@@ -724,7 +724,7 @@ static INT32 DrvGfxDecode(UINT8 *gfx_base, UINT8 *gfx_dest, INT32 len, INT32 siz
 		GfxDecode(((len * 8) / 2) / (size * size), 2, size, size, Plane, XOffs, YOffs, (size * size), tmp, gfx_dest);
 	}
 
-	free (tmp);
+	BurnFree (tmp);
 
 	return 0;
 }
@@ -1032,7 +1032,7 @@ static INT32 DrvInit()
 	AllMem = NULL;
 	MemIndex();
 	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
@@ -1113,8 +1113,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	AY8910Exit(1);
 
-	free (AllMem);
-	AllMem = NULL;
+	BurnFree (AllMem);
 
 	game_select = 0;
 	uses_sub = 0;

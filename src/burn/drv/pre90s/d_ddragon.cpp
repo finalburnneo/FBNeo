@@ -1613,7 +1613,7 @@ static INT32 Drv2MemInit()
 	Mem = NULL;
 	Drv2MemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	Drv2MemIndex();
 	
@@ -1628,7 +1628,7 @@ static INT32 DarktowrMemInit()
 	Mem = NULL;
 	DarktowrMemIndex();
 	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)malloc(nLen)) == NULL) return 1;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	DarktowrMemIndex();
 	

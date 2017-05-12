@@ -5873,7 +5873,7 @@ static INT32 NMK004Frame()
 
 static void decryptcode(INT32 len, INT32 a17, INT32 a16, INT32 a15, INT32 a14, INT32 a13)
 {
-	UINT8 *buf = (UINT8*)malloc(len);
+	UINT8 *buf = (UINT8*)BurnMalloc(len);
 
 	memcpy (buf, Drv68KROM, len);
 
@@ -5881,10 +5881,7 @@ static void decryptcode(INT32 len, INT32 a17, INT32 a16, INT32 a15, INT32 a14, I
 		Drv68KROM[i] = buf[BITSWAP24(i, 23,22,21,20,19,18,a17,a16,a15,a14,a13,12,11,10,9,8,7,6,5,4,3,2,1,0)];
 	}
 
-	if (buf) {
-		free (buf);
-		buf = NULL;
-	}
+	BurnFree (buf);
 }
 
 static UINT32 bjtwin_address_map_bg0(UINT32 addr)

@@ -196,6 +196,7 @@ void snemlog( TCHAR *format, ...);
 void resetppu();
 void initppu();
 void initspc();
+void exitspc();
 void makeopcodetable();
 unsigned char readppu(unsigned short addr);
 void writeppu(unsigned short addr, unsigned char val);

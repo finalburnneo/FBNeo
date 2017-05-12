@@ -126,7 +126,7 @@ void pandora_init(UINT8 *ram, UINT8 *gfx, INT32 gfx_mod, INT32 color_offset, INT
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
 	}
 
-	pandora_temp = (UINT16*)malloc(nScreenWidth * nScreenHeight * sizeof(UINT16));
+	pandora_temp = (UINT16*)BurnMalloc(nScreenWidth * nScreenHeight * sizeof(UINT16));
 	pandora_clear = 1;
 }
 
@@ -136,10 +136,7 @@ void pandora_exit()
 	if (!DebugDev_PandoraInitted) bprintf(PRINT_ERROR, _T("pandora_exit called without init\n"));
 #endif
 
-	if (pandora_temp) {
-		free (pandora_temp);
-		pandora_temp = NULL;
-	}
+	BurnFree (pandora_temp);
 
 	pandora_ram = pandora_gfx = NULL;
 	

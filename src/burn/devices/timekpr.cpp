@@ -348,7 +348,7 @@ void TimeKeeperInit(INT32 type, UINT8 *data)
 
 	if( data == NULL )
 	{
-		data = (UINT8*)malloc(Chip.size);
+		data = (UINT8*)BurnMalloc(Chip.size);
 		memset(data, 0xff, Chip.size );
 		AllocatedOwnDataArea = 1;
 	}
@@ -375,8 +375,7 @@ void TimeKeeperExit()
 #endif
 
 	if (AllocatedOwnDataArea) {
-		free (Chip.data);
-		Chip.data = NULL;
+		BurnFree (Chip.data);
 	}
 	AllocatedOwnDataArea = 0;
 	memset(&Chip, 0, sizeof(Chip));

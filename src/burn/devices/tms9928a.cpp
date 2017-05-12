@@ -184,10 +184,10 @@ void TMS9928AInit(INT32 model, INT32 vram, INT32 borderx, INT32 bordery, void (*
 	tms.vertical_size   = TMS9928A_TOTAL_VERT_NTSC;
 
 	tms.vramsize = vram;
-	tms.vMem = (UINT8*)malloc(tms.vramsize);
+	tms.vMem = (UINT8*)BurnMalloc(tms.vramsize);
 
 	tms.tmpbmpsize = TMS9928A_TOTAL_HORZ * TMS9928A_TOTAL_VERT_PAL * sizeof(short) * 2;
-	tms.tmpbmp = (UINT16*)malloc(tms.tmpbmpsize);
+	tms.tmpbmp = (UINT16*)BurnMalloc(tms.tmpbmpsize);
 
 	TMS9928AReset ();
 	tms.LimitSprites = 1;
@@ -202,8 +202,8 @@ void TMS9928AExit()
 
 	GenericTilesExit();
 
-	free (tms.tmpbmp);
-	free (tms.vMem);
+	BurnFree (tms.tmpbmp);
+	BurnFree (tms.vMem);
 }
 
 void TMS9928APostLoad()

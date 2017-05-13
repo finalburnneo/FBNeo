@@ -36,6 +36,7 @@
 #define SYS16_ROM_RF5C68DATA	19
 #define SYS16_ROM_I8751			20
 #define SYS16_ROM_MSM6295		21
+#define SYS16_ROM_TILES_20000	22
 
 // sys16_run.cpp
 extern UINT8 System16InputPort0[8];

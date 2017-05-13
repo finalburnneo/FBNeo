@@ -1067,6 +1067,10 @@ INT32 System16LoadRoms(bool bLoad)
 				System16TileRomSize += ri.nLen;
 				System16TileRomNum++;
 			}
+			if ((ri.nType & 0xff) == SYS16_ROM_TILES_20000) {
+				System16TileRomSize += 0x20000;
+				System16TileRomNum++;
+			}
 			if ((ri.nType & 0xff) == SYS16_ROM_SPRITES) {
 				System16SpriteRomSize += ri.nLen;
 				System16SpriteRomNum++;
@@ -1225,7 +1229,12 @@ INT32 System16LoadRoms(bool bLoad)
 			nRet = BurnLoadRom(System16TempGfx + Offset, i, 1); if (nRet) return 1;
 			
 			BurnDrvGetRomInfo(&ri, i + 0);
-			Offset += ri.nLen;
+			
+			if ((ri.nType & 0xff) == SYS16_ROM_TILES_20000) {
+				Offset += 0x20000;
+			} else {
+				Offset += ri.nLen;
+			}
 		}
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_INVERT_TILES) {
 			for (i = 0; i < System16TileRomSize; i++) {

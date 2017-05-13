@@ -25,9 +25,9 @@ typedef struct
 	INT32 waveform_select;
 } sound_channel;
 
-static UINT8 *namco_soundregs;
-static UINT8 *namco_wavedata;
-static UINT8 *namco_waveformdata;
+static UINT8 *namco_soundregs = NULL;
+static UINT8 *namco_wavedata = NULL;
+static UINT8 *namco_waveformdata = NULL;
 static INT32 namco_waveformdatasize = 0;
 
 struct namco_sound
@@ -683,12 +683,16 @@ void NamcoSoundExit()
 	if (enable_ram) {
 		BurnFree(namco_wavedata);
 	}
+	BurnFree(namco_waveformdata);
+
+	NamcoSoundProm = NULL;
+	namco_wavedata = NULL; // this is important.
 
 	enable_ram = 0;
 	DebugSnd_NamcoSndInitted = 0;
 }
 
-void NamcoSoundScan(INT32 nAction,INT32 *pnMin)
+void NamcoSoundScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 	char szName[30];

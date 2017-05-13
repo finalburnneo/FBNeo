@@ -727,7 +727,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -735,7 +735,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
@@ -750,9 +750,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 			ppi8255_scan();
 
 			if (nAction & ACB_WRITE) {
-				// watch me crash!
+				ZetOpen(0);
 				dealer_set_bank();
 				dealer_bankswitch2(*DealerZ80Bank2);
+				ZetClose();
 			}
 		}
 	}

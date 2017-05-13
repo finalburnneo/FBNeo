@@ -219,8 +219,8 @@ static struct BurnInputInfo theglobpInputList[] = {
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
 	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
 	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
-	{"P1 Button 1",		  BIT_DIGITAL,	DrvJoy2 + 4, "p2 fire 1"},
-	{"P1 Button 2",		  BIT_DIGITAL,	DrvJoy1 + 7, "p2 fire 2"},
+	{"P2 Button 1",		  BIT_DIGITAL,	DrvJoy2 + 4, "p2 fire 1"},
+	{"P2 Button 2",		  BIT_DIGITAL,	DrvJoy1 + 7, "p2 fire 2"},
 
 	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 7,	"diag"},

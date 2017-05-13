@@ -2570,12 +2570,12 @@ static struct BurnRomInfo MutantwarrRomDesc[] = {
 	{ "3.bin",          0x10000, 0x40b0afec, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "5.bin",          0x10000, 0x2a9ef382, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
-	{ "16.bin",         0x10000, 0xa4967d10, SYS16_ROM_TILES | BRF_GRA }, 
-	{ "15.bin",         0x10000, 0xe091ae2c, SYS16_ROM_TILES | BRF_GRA }, 
-	{ "14.bin",         0x10000, 0x1a26cf3f, SYS16_ROM_TILES | BRF_GRA }, 
-	{ "13.bin",         0x10000, 0x277ef086, SYS16_ROM_TILES | BRF_GRA }, 
-	{ "12.bin",         0x10000, 0x661225af, SYS16_ROM_TILES | BRF_GRA }, 
-	{ "11.bin",         0x10000, 0xd7019da7, SYS16_ROM_TILES | BRF_GRA }, 
+	{ "16.bin",         0x10000, 0xa4967d10, SYS16_ROM_TILES_20000 | BRF_GRA }, 
+	{ "15.bin",         0x10000, 0xe091ae2c, SYS16_ROM_TILES_20000 | BRF_GRA }, 
+	{ "14.bin",         0x10000, 0x1a26cf3f, SYS16_ROM_TILES_20000 | BRF_GRA }, 
+	{ "13.bin",         0x10000, 0x277ef086, SYS16_ROM_TILES_20000 | BRF_GRA }, 
+	{ "12.bin",         0x10000, 0x661225af, SYS16_ROM_TILES_20000 | BRF_GRA }, 
+	{ "11.bin",         0x10000, 0xd7019da7, SYS16_ROM_TILES_20000 | BRF_GRA }, 
 	
 	{ "20.bin",         0x10000, 0xf8b3684e, SYS16_ROM_SPRITES | BRF_GRA }, 
 	{ "10.bin",         0x10000, 0xae3c2793, SYS16_ROM_SPRITES | BRF_GRA }, 

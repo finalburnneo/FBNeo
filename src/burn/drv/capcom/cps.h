@@ -25,8 +25,8 @@ extern UINT8 *CpsGfx;  extern UINT32 nCpsGfxLen;		// All the graphics
 extern UINT8 *CpsRom;  extern UINT32 nCpsRomLen;		// Program Rom (as in rom)
 extern UINT8 *CpsCode; extern UINT32 nCpsCodeLen;		// Program Rom (decrypted)
 extern UINT8 *CpsZRom; extern UINT32 nCpsZRomLen;		// Z80 Roms
-extern          INT8 *CpsQSam; extern UINT32 nCpsQSamLen;		// QSound Sample Roms
-extern UINT8 *CpsAd;   extern UINT32 nCpsAdLen;		// ADPCM Data
+extern  INT8 *CpsQSam; extern UINT32 nCpsQSamLen;		// QSound Sample Roms
+extern UINT8 *CpsAd;   extern UINT32 nCpsAdLen;		    // ADPCM Data
 extern UINT8 *CpsKey; extern UINT32 nCpsKeyLen;
 extern UINT32 nCpsGfxScroll[4];								// Offset to Scroll tiles
 extern UINT32 nCpsGfxMask;									// Address mask
@@ -247,6 +247,7 @@ CPSINPEX
 // For the Forgotten Worlds analog controls
 extern UINT16 CpsInp055, CpsInp05d;
 extern UINT16 CpsInpPaddle1, CpsInpPaddle2;
+extern UINT8 CpsDigUD[4];
 
 extern INT32 PangEEP;
 extern INT32 Forgottn;

@@ -332,7 +332,9 @@ static struct BurnInputInfo ForgottnInputList[] =
 	{"P1 Left"          , BIT_DIGITAL,    CpsInp001+1, "p1 left"  },
 	{"P1 Right"         , BIT_DIGITAL,    CpsInp001+0, "p1 right" },
 	{"P1 Attack"        , BIT_DIGITAL,    CpsInp001+4, "p1 fire 1"},
-	A("P1 Turn"         , BIT_ANALOG_REL, &CpsInp055,  "p1 z-axis"),
+	A("P1 Turn (analog)", BIT_ANALOG_REL, &CpsInp055,  "p1 z-axis"),
+	{"P1 Turn - (digital)", BIT_DIGITAL,  CpsDigUD+0,  "p1 fire 2"},
+	{"P1 Turn + (digital)", BIT_DIGITAL,  CpsDigUD+1,  "p1 fire 3"},
 
 	{"P2 Coin"          , BIT_DIGITAL,    CpsInp018+1, "p2 coin"  },
 	{"P2 Start"         , BIT_DIGITAL,    CpsInp018+5, "p2 start" },
@@ -341,7 +343,9 @@ static struct BurnInputInfo ForgottnInputList[] =
 	{"P2 Left"          , BIT_DIGITAL,    CpsInp000+1, "p2 left"  },
 	{"P2 Right"         , BIT_DIGITAL,    CpsInp000+0, "p2 right" },
 	{"P2 Attack"        , BIT_DIGITAL,    CpsInp000+4, "p2 fire 1"},
-	A("P2 Turn"         , BIT_ANALOG_REL, &CpsInp05d,  "p2 z-axis"),
+	A("P2 Turn (analog)", BIT_ANALOG_REL, &CpsInp05d,  "p2 z-axis"),
+	{"P2 Turn - (digital)", BIT_DIGITAL,  CpsDigUD+2,  "p2 fire 2"},
+	{"P2 Turn + (digital)", BIT_DIGITAL,  CpsDigUD+3,  "p2 fire 3"},
 
 	{"Reset"            , BIT_DIGITAL,    &CpsReset,   "reset"    },
 	{"Service"          , BIT_DIGITAL,    CpsInp018+2, "service"  },
@@ -2062,37 +2066,37 @@ STDDIPINFO(Ffight)
 static struct BurnDIPInfo ForgottnDIPList[]=
 {
 	// Defaults
-	{0x12, 0xff, 0xff, 0x00, NULL                     },
-	{0x13, 0xff, 0xff, 0x03, NULL                     },
-	{0x14, 0xff, 0xff, 0x00, NULL                     },
-	{0x15, 0xff, 0xff, 0x00, NULL                     },
+	{0x16, 0xff, 0xff, 0x00, NULL                     },
+	{0x17, 0xff, 0xff, 0x03, NULL                     },
+	{0x18, 0xff, 0xff, 0x00, NULL                     },
+	{0x19, 0xff, 0xff, 0x00, NULL                     },
 	
 	// Dip A
-	CPS1_COINAGE_1(0x12)
+	CPS1_COINAGE_1(0x16)
 
 	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
-	{0x12, 0x01, 0x40, 0x40, "Off"                    },
-	{0x12, 0x01, 0x40, 0x00, "On"                     },
+	{0x16, 0x01, 0x40, 0x40, "Off"                    },
+	{0x16, 0x01, 0x40, 0x00, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Flip"                   },
-	{0x12, 0x01, 0x80, 0x00, "Off"                    },
-	{0x12, 0x01, 0x80, 0x80, "On"                     },
+	{0x16, 0x01, 0x80, 0x00, "Off"                    },
+	{0x16, 0x01, 0x80, 0x80, "On"                     },
 	
 	// Dip B
-	CPS1_DIFFICULTY_1(0x13)
+	CPS1_DIFFICULTY_1(0x17)
 	
 	{0   , 0xfe, 0   , 2   , "Service Mode"           },
-	{0x13, 0x01, 0x40, 0x00, "Off"                    },
-	{0x13, 0x01, 0x40, 0x40, "On"                     },
+	{0x17, 0x01, 0x40, 0x00, "Off"                    },
+	{0x17, 0x01, 0x40, 0x40, "On"                     },
 
 	{0   , 0xfe, 0   , 2   , "Freeze"                 },
-	{0x13, 0x01, 0x80, 0x00, "Off"                    },
-	{0x13, 0x01, 0x80, 0x80, "On"                     },
+	{0x17, 0x01, 0x80, 0x00, "Off"                    },
+	{0x17, 0x01, 0x80, 0x80, "On"                     },
 
 	// Fake dip for "turn"-input inversion
 	{0   , 0xfe, 0   , 2   , "Invert \"Turn\" inputs" },
-	{0x15, 0x01, 0x80, 0x00, "Off"                    },
-	{0x15, 0x01, 0x80, 0x80, "On"                     },
+	{0x19, 0x01, 0x80, 0x00, "Off"                    },
+	{0x19, 0x01, 0x80, 0x80, "On"                     },
 };
 
 STDDIPINFO(Forgottn)

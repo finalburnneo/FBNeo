@@ -9,7 +9,6 @@
 #include "burn_ym2203.h"
 #include "bitswap.h"
 
-
 static INT32 game = 0;
 
 static UINT8 DrvJoy1[8];
@@ -27,9 +26,10 @@ static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvGfxROM3;
-static UINT8 *DrvGfx0Transp;
-static UINT8 *DrvGfx1Transp;
-static UINT8 *DrvGfx2Transp;
+
+static UINT16 *bitmap[3];
+static UINT32 *output;
+static INT32 sprite_sizey = 0;
 
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
@@ -58,7 +58,10 @@ static INT32 fg_scroll_x;
 static INT32 fg_scroll_y;
 static INT32 bg_scroll_x;
 static INT32 bg_scroll_y;
-
+static INT32 tx_offset_y;
+static INT32 fg_offset_y;
+static INT32 bg_offset_y;
+static INT32 sproffsety;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"Coin 1"       , BIT_DIGITAL  , DrvJoy1 + 6,	"p1 coin"  },
@@ -470,27 +473,16 @@ static void protection_w(UINT8 data)
 	}
 }
 
-static UINT8 protection_r()
-{
-	return prot;
-}
-
-
 static void palette_write(INT32 offset, UINT16 pal)
 {
 	UINT8 b = (pal >> 8) & 0x0f;
 	UINT8 g = (pal >> 4) & 0x0f;
 	UINT8 r = (pal >> 0) & 0x0f;
 
-	r = (r << 4) | r;
-	g = (g << 4) | g;
-	b = (b << 4) | b;
-
-	Palette[offset] = (r << 16) | (g << 8) | b;
-	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
+	Palette[offset] = (r<<8) | (g<<4) | b;
 }
 
-UINT8 __fastcall gaiden_read_byte(UINT32 address)
+static UINT8 __fastcall gaiden_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -510,13 +502,13 @@ UINT8 __fastcall gaiden_read_byte(UINT32 address)
 			return DrvDips[0];
 
 		case 0x07a007: // Raiga, Wild Fang
-			return protection_r();
+			return prot;
 	}
 
 	return 0;
 }
 
-UINT16 __fastcall gaiden_read_word(UINT32 address)
+static UINT16 __fastcall gaiden_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -533,7 +525,7 @@ UINT16 __fastcall gaiden_read_word(UINT32 address)
 	return 0;
 }
 
-void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
+static void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffe000) == 0x78000) {
 		address &= 0x1fff;
@@ -547,6 +539,12 @@ void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
 
 	switch (address)
 	{
+		case 0x7a002:
+		case 0x7a003:
+			bprintf (0, _T("wb: %5.5x, %2.2x\n"), address, data);
+			sproffsety = data;
+		return;
+
 		case 0x7a00e: // Dragon Bowl
 			soundlatch = data;
 			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
@@ -565,7 +563,7 @@ void __fastcall gaiden_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
+static void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffe000) == 0x78000) {
 		address &= 0x1ffe;
@@ -579,8 +577,16 @@ void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
 
 	switch (address & 0xfffffffe)
 	{
+		case 0x7a002:
+			sproffsety = data;
+		return;
+
 		case 0x7a104:
 			tx_scroll_y = data & 0x1ff;
+		return;
+
+		case 0x7a108:
+			tx_offset_y = data & 0x1ff;
 		return;
 
 		case 0x7a10c:
@@ -591,6 +597,10 @@ void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
 			fg_scroll_y = data & 0x1ff;
 		return;
 
+		case 0x7a208:
+			fg_offset_y = data & 0x1ff;
+		return;
+
 		case 0x7a20c:
 			fg_scroll_x = data & 0x3ff;
 		return;
@@ -599,10 +609,13 @@ void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
 			bg_scroll_y = data & 0x1ff;
 		return;
 
+		case 0x7a308:
+			bg_offset_y = data & 0x1ff;
+		return;
+
 		case 0x7a30c:
 			bg_scroll_x = data & 0x3ff;
 		return;
-
 
 		case 0x7a808:
 			flipscreen = data & 1;
@@ -627,8 +640,7 @@ void __fastcall gaiden_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-
-void __fastcall gaiden_sound_write(UINT16 address, UINT8 data)
+static void __fastcall gaiden_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -654,7 +666,7 @@ void __fastcall gaiden_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall gaiden_sound_read(UINT16 address)
+static UINT8 __fastcall gaiden_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -671,8 +683,7 @@ UINT8 __fastcall gaiden_sound_read(UINT16 address)
 	return 0;
 }
 
-
-void __fastcall drgnbowl_sound_write(UINT16 address, UINT8 data)
+static void __fastcall drgnbowl_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address & 0xff)
 	{
@@ -690,7 +701,7 @@ void __fastcall drgnbowl_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall drgnbowl_sound_read(UINT16 address)
+static UINT8 __fastcall drgnbowl_sound_read(UINT16 address)
 {
 	switch (address & 0xff)
 	{
@@ -719,9 +730,11 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += 0x0100000;
 	DrvGfxROM3	= Next; Next += 0x0200000;
 
-	DrvGfx0Transp	= Next; Next += 0x0000800;
-	DrvGfx1Transp	= Next; Next += 0x0001000;
-	DrvGfx2Transp	= Next; Next += 0x0001000;
+	bitmap[0]	= (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	bitmap[1]	= (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	bitmap[2]	= (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+
+	output		= (UINT32*)Next; Next += 256 * 256 * sizeof(UINT32);
 
 	MSM6295ROM	= Next; Next += 0x0040000;
 
@@ -758,6 +771,10 @@ static INT32 DrvDoReset()
 	fg_scroll_y = 0;
 	bg_scroll_x = 0;
 	bg_scroll_y = 0;
+	tx_offset_y = 0;
+	fg_offset_y = 0;
+	bg_offset_y = 0;
+	sproffsety = 0;
 
 	flipscreen = 0;
 
@@ -835,24 +852,6 @@ static INT32 DrvGfxDecode()
 
 	BurnFree (tmp);
 
-	// Make transparency tables
-	{
-		memset(DrvGfx0Transp, 2, 0x0800);
-		for (INT32 i = 0; i < 0x20000; i++) {
-			if (DrvGfxROM0[i] != 0) DrvGfx0Transp[i>>6] |= 1;
-			if (DrvGfxROM0[i] == 0) DrvGfx0Transp[i>>6] &= ~2;
-		}
-
-		memset(DrvGfx1Transp, 2, 0x1000);
-		memset(DrvGfx2Transp, 2, 0x1000);
-		for (INT32 i = 0; i < 0x100000; i++) {
-			if (DrvGfxROM1[i] != 0) DrvGfx1Transp[i>>8] |= 1;
-			if (DrvGfxROM1[i] == 0) DrvGfx1Transp[i>>8] &= ~2;
-			if (DrvGfxROM2[i] != 0) DrvGfx2Transp[i>>8] |= 1;
-			if (DrvGfxROM2[i] == 0) DrvGfx2Transp[i>>8] &= ~2;	
-		}
-	}
-
 	return 0;
 }
 
@@ -896,23 +895,6 @@ static INT32 drgnbowlDecode(INT32 decode_cpu)
 	GfxDecode(0x00800, 4,  8,  8, CharPlanes, CharXOffsets, CharYOffsets, 0x100, buf, DrvGfxROM0);
 
 	BurnFree (buf);
-
-	// Make transparency tables
-	{
-		memset(DrvGfx0Transp, 2, 0x0800);
-		for (INT32 i = 0; i < 0x20000; i++) {
-			if (DrvGfxROM0[i] != 0xf) DrvGfx0Transp[i>>6] |= 1;
-			if (DrvGfxROM0[i] == 0xf) DrvGfx0Transp[i>>6] &= ~2;
-		}
-
-		memset(DrvGfx1Transp, 3, 0x1000);
-		memset(DrvGfx2Transp, 2, 0x1000);
-		for (INT32 i = 0; i < 0x100000; i++) {
-			if (DrvGfxROM2[i] != 0xf) DrvGfx2Transp[i>>8] |= 1;
-			if (DrvGfxROM2[i] == 0xf) DrvGfx2Transp[i>>8] &= ~2;
-
-		}
-	}
 
 	return 0;
 }
@@ -998,7 +980,6 @@ inline static double DrvGetTime()
 {
 	return (double)ZetTotalCycles() / 4000000;
 }
-
 
 static INT32 DrvInit()
 {
@@ -1100,123 +1081,9 @@ static INT32 DrvExit()
 	BurnFree (Mem);
 
 	game = 0;
+	sprite_sizey = 0;
 
 	return 0;
-}
-
-static void gaiden_draw_sprites(INT32 prior)
-{
-	static const UINT8 layout[8][8] =
-	{
-		{ 0, 1, 4, 5,16,17,20,21},
-		{ 2, 3, 6, 7,18,19,22,23},
-		{ 8, 9,12,13,24,25,28,29},
-		{10,11,14,15,26,27,30,31},
-		{32,33,36,37,48,49,52,53},
-		{34,35,38,39,50,51,54,55},
-		{40,41,44,45,56,57,60,61},
-		{42,43,46,47,58,59,62,63}
-	};
-
-	INT32 count = 0;
-	const UINT16 *source = (UINT16*)DrvSprRAM;
-
-	while (count < 256)
-	{
-		INT32 attributes = BURN_ENDIAN_SWAP_INT16(source[0]);
-		INT32 col,row;
-
-		if (attributes & 0x04)
-		{
-			INT32 priority = (attributes >> 6) & 3;
-
-			if (priority != prior) goto skip_sprite; 
-
-			INT32 flipx = (attributes & 1);
-			INT32 flipy = (attributes & 2);
-
-			INT32 color = BURN_ENDIAN_SWAP_INT16(source[2]);
-			INT32 sizex = 1 << (color & 3);
-			INT32 sizey = 1 << ((color >> (game & 2)) & 3);
-
-			INT32 number = (BURN_ENDIAN_SWAP_INT16(source[1]) & (sizex > 2 ? 0x7ff8 : 0x7ffc));	// raiga
-
-			INT32 ypos = BURN_ENDIAN_SWAP_INT16(source[3]) & 0x01ff;
-			INT32 xpos = BURN_ENDIAN_SWAP_INT16(source[4]) & 0x01ff;
-
-			if ((attributes & 0x20) && (GetCurrentFrame() & 1))
-				goto skip_sprite;
-
-			color = (color >> 4) & 0x0f;
-
-			if (xpos >= 256)
-				xpos -= 512;
-
-			if (ypos >= 256)
-				ypos -= 512;
-
-			if (flipscreen)
-			{
-				flipx = !flipx;
-				flipy = !flipy;
-
-				xpos = 256 - (sizex << 3) - xpos;
-				ypos = 256 - (sizey << 3) - ypos;
-
-				if (xpos <= -256)
-					xpos += 512;
-
-				if (ypos <= -256)
-					ypos += 512;
-			}
-
-			for (row = 0; row < sizey; row++)
-			{
-				for (col = 0; col < sizex; col++)
-				{
-					INT32 sx = xpos + ((flipx ? (sizex - 1 - col) : col) << 3);
-					INT32 sy = ypos + ((flipy ? (sizey - 1 - row) : row) << 3);
-
-					sy -= 16;
-
-					if (sx < -15 || sx > 255 || sy < - 15 || sy > 223) continue;
-
-					if (sx >= 0 && sx <= 240 && sy >= 0 && sy <= 208) {
-						if (flipy) {
-							if (flipx) {
-								Render8x8Tile_Mask_FlipXY(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							} else {
-								Render8x8Tile_Mask_FlipY(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							}
-						} else {
-							if (flipx) {
-								Render8x8Tile_Mask_FlipX(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							} else {
-								Render8x8Tile_Mask(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							}
-						}
-					} else {
-						if (flipy) {
-							if (flipx) {
-								Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							} else {
-								Render8x8Tile_Mask_FlipY_Clip(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							}
-						} else {
-							if (flipx) {
-								Render8x8Tile_Mask_FlipX_Clip(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							} else {
-								Render8x8Tile_Mask_Clip(pTransDraw, number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
-							}
-						}
-					}
-				}
-			}
-		}
-skip_sprite:
-		source += 8;
-		count++;
-	}
 }
 
 static void drgnbowl_draw_sprites(INT32 priority)
@@ -1264,7 +1131,7 @@ static void drgnbowl_draw_sprites(INT32 priority)
 	}
 }
 
-static void draw_layer(UINT16 *vidram, UINT8 *gfxbase, INT32 palette_offset, UINT16 scrollx, UINT16 scrolly, UINT8 *transptab, INT32 transp)
+static void draw_layer(UINT16 *dest, UINT16 *vidram, UINT8 *gfxbase, INT32 palette_offset, UINT16 scrollx, UINT16 scrolly, INT32 transp)
 {
 	for (INT32 offs = 0; offs < 0x800; offs++)
 	{
@@ -1284,47 +1151,41 @@ static void draw_layer(UINT16 *vidram, UINT8 *gfxbase, INT32 palette_offset, UIN
 			sx -= 0x310;
 		}
 
-		sy -= 16;
+		sy -= 32;
 
 		INT32 code = BURN_ENDIAN_SWAP_INT16(vidram[0x0800 + offs]) & 0x0fff;
 		INT32 color = (BURN_ENDIAN_SWAP_INT16(vidram[offs]) >> 4) & 0x0f;
 
-		if (game == 2) { //raiga
-			if (palette_offset == 0x300) {
-				color |= (BURN_ENDIAN_SWAP_INT16(vidram[offs]) & 0x08) << 4;
-			}
+		if (game == 2 && gfxbase == DrvGfxROM2) { //raiga
+			color |= (BURN_ENDIAN_SWAP_INT16(vidram[offs]) & 0x08) << 1;
 		}
 
 		if (sy >= 0 && sy <= 208 && sx >= 0 && sx <= 240) {
-			if (transptab[code] & 1) {
-				if (transptab[code] & 2) {
-					if (flipscreen) {
-						Render16x16Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, palette_offset, gfxbase);
-					} else {
-						Render16x16Tile(pTransDraw, code, sx, sy, color, 4, palette_offset, gfxbase);
-					}
+			if (transp == -1) {
+				if (flipscreen) {
+					Render16x16Tile_FlipXY(dest, code, sx, sy, color, 4, palette_offset, gfxbase);
 				} else {
-					if (flipscreen) {
-						Render16x16Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
-					} else {
-						Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
-					}
+					Render16x16Tile(dest, code, sx, sy, color, 4, palette_offset, gfxbase);
+				}
+			} else {
+				if (flipscreen) {
+					Render16x16Tile_Mask_FlipXY(dest, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
+				} else {
+					Render16x16Tile_Mask(dest, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
 				}
 			}
 		} else {
-			if (transptab[code] & 1) {
-				if (transptab[code] & 2) {
-					if (flipscreen) {
-						Render16x16Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, palette_offset, gfxbase);
-					} else {
-						Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, palette_offset, gfxbase);
-					}
+			if (transp == -1) {
+				if (flipscreen) {
+					Render16x16Tile_FlipXY_Clip(dest, code, sx, sy, color, 4, palette_offset, gfxbase);
 				} else {
-					if (flipscreen) {
-						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
-					} else {
-						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
-					}
+					Render16x16Tile_Clip(dest, code, sx, sy, color, 4, palette_offset, gfxbase);
+				}
+			} else {
+				if (flipscreen) {
+					Render16x16Tile_Mask_FlipXY_Clip(dest, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
+				} else {
+					Render16x16Tile_Mask_Clip(dest, code, sx, sy, color, 4, transp, palette_offset, gfxbase);
 				}
 			}
 		}
@@ -1346,49 +1207,332 @@ static void draw_text(INT32 paloffset, INT32 transp)
 		}
 
 		sx -= tx_scroll_x;
-		sy -= tx_scroll_y + 16;
-
-		// tx_scroll is used?
+		sy -= (tx_scroll_y - tx_offset_y) + ((game == 1) ? 16 : 32);
 
 		INT32 code  = BURN_ENDIAN_SWAP_INT16(vidram[0x400 + offs]) & 0x07ff;
 		INT32 color = (BURN_ENDIAN_SWAP_INT16(vidram[0x000 + offs]) >> 4) & 0x0f;
 
-		if (!code) continue;
-
 		if (sy >= 0 && sy <= 216 && sx >= 0 && sx <= 248) {
-			if (DrvGfx0Transp[code] & 1) {
-				if (DrvGfx0Transp[code] & 2) {
-					if (flipscreen) {
-						Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
-					} else {
-						Render8x8Tile(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
-					}
+			if (transp == -1) {
+				if (flipscreen) {
+					Render8x8Tile_FlipXY(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
 				} else {
-					if (flipscreen) {
-						Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
-					} else {
-						Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
-					}
+					Render8x8Tile(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
+				}
+			} else {
+				if (flipscreen) {
+					Render8x8Tile_Mask_FlipXY(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
+				} else {
+					Render8x8Tile_Mask(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
 				}
 			}
 		} else {
-			if (DrvGfx0Transp[code] & 1) {
-				if (DrvGfx0Transp[code] & 2) {
-					if (flipscreen) {
-						Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
-					} else {
-						Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
-					}
+			if (transp == -1) {
+				if (flipscreen) {
+					Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
 				} else {
-					if (flipscreen) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
-					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
-					}
+					Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, paloffset, DrvGfxROM0);
+				}
+			} else {
+				if (flipscreen) {
+					Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
+				} else {
+					Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, transp, paloffset, DrvGfxROM0);
 				}
 			}
 		}
 	}
+}
+
+static void gaiden_draw_sprites(INT32 sprite_sizey, INT32 spr_offset_y)
+{
+	static const UINT8 layout[8][8] = {
+		{  0,  1,  4,  5, 16, 17, 20, 21 },
+		{  2,  3,  6,  7, 18, 19, 22, 23 },
+		{  8,  9, 12, 13, 24, 25, 28, 29 },
+		{ 10, 11, 14, 15, 26, 27, 30, 31 },
+		{ 32, 33, 36, 37, 48, 49, 52, 53 },
+		{ 34, 35, 38, 39, 50, 51, 54, 55 },
+		{ 40, 41, 44, 45, 56, 57, 60, 61 },
+		{ 42, 43, 46, 47, 58, 59, 62, 63 }
+	};
+
+	INT32 count = 256;
+	UINT16 *source = (UINT16*)DrvSprRAM;
+
+	while (count--)
+	{
+		UINT32 attributes = source[0];
+
+		if (attributes & 0x04)
+		{
+			UINT32 flipx = (attributes & 1);
+			UINT32 flipy = (attributes & 2);
+
+			UINT32 color = source[2];
+			UINT32 sizex = 1 << ((color >> 0) & 3);
+			UINT32 sizey = 1 << ((color >> sprite_sizey) & 3);
+
+			UINT32 number = (source[1]);
+			if (sizex >= 2) number &= ~0x01;
+			if (sizey >= 2) number &= ~0x02;
+			if (sizex >= 4) number &= ~0x04;
+			if (sizey >= 4) number &= ~0x08;
+			if (sizex >= 8) number &= ~0x10;
+			if (sizey >= 8) number &= ~0x20;
+
+			int ypos = (source[3] + spr_offset_y) & 0x1ff;
+			int xpos = source[4] & 0x1ff;
+
+			color = (color >> 4) & 0x0f;
+
+			if (xpos >= 256) xpos -= 512;
+			if (ypos >= 256) ypos -= 512;
+
+			if (flipscreen)
+			{
+				flipx = !flipx;
+				flipy = !flipy;
+
+				xpos = 256 - (8 * sizex) - xpos;
+				ypos = 256 - (8 * sizey) - ypos;
+
+				if (xpos <= -256) xpos += 512;
+				if (ypos <= -256) ypos += 512;
+			}
+
+			color |= attributes & 0x03f0;
+
+			for (INT32 row = 0; row < (INT32)sizey; row++)
+			{
+				for (INT32 col = 0; col < (INT32)sizex; col++)
+				{
+					INT32 sx = xpos + 8 * (flipx ? (sizex - 1 - col) : col);
+					INT32 sy =(ypos + 8 * (flipy ? (sizey - 1 - row) : row)) - 32;
+
+					if (flipy) {
+						if (flipx) {
+							Render8x8Tile_Mask_FlipXY_Clip(bitmap[2], number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
+						} else {
+							Render8x8Tile_Mask_FlipY_Clip(bitmap[2], number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
+						}
+					} else {
+						if (flipx) {
+							Render8x8Tile_Mask_FlipX_Clip(bitmap[2], number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
+						} else {
+							Render8x8Tile_Mask_Clip(bitmap[2], number + layout[row][col], sx, sy, color, 4, 0, 0, DrvGfxROM3);
+						}
+					}
+				}
+			}
+		}
+
+		source += 8;
+	}
+}
+
+static void mix_bitmaps(UINT32 *paldata, UINT16* bitmap_bg, UINT16* bitmap_fg, UINT16* bitmap_tx, UINT16* bitmap_sp)
+{
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		UINT16 *sd2 = bitmap_sp + y * 256;
+		UINT16 *fg =  bitmap_fg + y * 256;
+		UINT16 *bg =  bitmap_bg + y * 256;
+		UINT16 *tx =  bitmap_tx + y * 256;
+
+		UINT8 *pdst = pBurnDraw + (y * nScreenWidth * nBurnBpp);
+
+		for (INT32 x = 0; x < nScreenWidth; x++)
+		{
+			UINT16 sprpixel = (sd2[x]);
+
+			UINT16 m_sprpri = (sprpixel >> 10) & 0x3;
+			UINT16 m_sprbln = (sprpixel >> 9) & 0x1;
+			UINT16 m_sprcol = (sprpixel >> 4) & 0xf;
+
+			UINT32 dest = paldata[0x200];
+
+			sprpixel = (sprpixel & 0xf) | (m_sprcol << 4);
+
+			UINT16 fgpixel = (fg[x]);
+			UINT16 fgbln = (fgpixel & 0x0100) >> 8;
+			fgpixel &= 0xff;
+
+			UINT16 bgpixel = (bg[x]);
+			bgpixel &= 0xff;
+
+			if (sprpixel&0xf)
+			{
+				if (m_sprpri == 3)
+				{
+					if (fgpixel & 0xf)
+					{
+						if (fgbln)
+						{
+							dest = rand();
+						}
+						else
+						{
+							dest = paldata[fgpixel + 0x200];
+						}
+					}
+					else if (bgpixel & 0x0f)
+					{
+						dest = paldata[bgpixel + 0x300];
+					}
+					else
+					{
+						if (m_sprbln)
+						{
+							dest = rand();
+						}
+						else
+						{
+							dest = paldata[sprpixel];
+						}
+
+					}
+				}
+				else  if (m_sprpri == 2)
+				{
+					if (fgpixel & 0xf)
+					{
+						if (fgbln)
+						{
+							if (m_sprbln)
+							{
+								dest = paldata[bgpixel + 0x700] + paldata[sprpixel + 0x800];
+							}
+							else
+							{
+								dest = paldata[fgpixel + 0xa00] + paldata[sprpixel + 0x400];
+							}
+						}
+						else
+						{
+							dest = paldata[fgpixel + 0x200];
+						}
+
+					}
+					else
+					{
+						if (m_sprbln)
+						{
+							dest = paldata[bgpixel + 0x700] + paldata[sprpixel + 0x800];
+						}
+						else
+						{
+							dest = paldata[sprpixel];
+						}
+					}
+
+
+				}
+				else if (m_sprpri == 1)
+				{
+					if (m_sprbln)
+					{
+						if (fgpixel & 0xf)
+						{
+							if (fgbln)
+							{
+								dest =  rand();
+							}
+							else
+							{
+								dest = paldata[fgpixel + 0x600] + paldata[sprpixel + 0x800];
+							}
+						}
+						else
+						{
+							dest = paldata[bgpixel + 0x700] + paldata[sprpixel + 0x800];
+						}
+					}
+					else
+					{
+						dest = paldata[sprpixel];
+					}
+				}
+
+				else if (m_sprpri == 0)
+				{
+					if (m_sprbln)
+					{
+						dest = rand();
+					}
+					else
+					{
+						dest = paldata[sprpixel];
+					}
+
+				}
+			}
+			else
+			{
+				if (fgpixel & 0x0f)
+				{
+					if (fgbln)
+					{
+						dest = paldata[fgpixel + 0xa00] + paldata[bgpixel + 0x700];
+
+					}
+					else
+					{
+						dest = paldata[fgpixel + 0x200];
+					}
+
+				}
+				else if (bgpixel & 0x0f)
+				{
+					dest = paldata[bgpixel + 0x300];
+				}
+			}
+
+			if (tx[x] & 0xf) {
+				dest = paldata[tx[x]];
+			}
+
+			// draw screen
+			PutPix(pdst + x * nBurnBpp, DrvPalette[dest & 0xfff]);
+		}
+	}
+}
+
+static void DrvPaletteInit()
+{
+	for (INT32 i = 0; i < 0x1000; i++)
+	{
+		INT32 r = (i >> 8) & 0xf;
+		INT32 g = (i >> 4) & 0xf;
+		INT32 b = (i >> 0) & 0xf;
+
+		r += r * 16;
+		g += g * 16;
+		b += b * 16;
+
+		DrvPalette[i] = BurnHighCol(r,g,b,0);
+	}
+}
+
+static INT32 DrvDraw()
+{
+	if (DrvRecalc) {
+		DrvPaletteInit();
+		DrvRecalc = 0;
+	}
+
+	pBurnDrvPalette = DrvPalette;
+
+	memset (bitmap[2], 0, 256 * 256 * sizeof(UINT16)); // clear sprite bitmap
+
+	if (nBurnLayer & 1) draw_layer(bitmap[0], (UINT16*)DrvVidRAM2, DrvGfxROM1, 0x000, bg_scroll_x, (bg_scroll_y - bg_offset_y) & 0x1ff, -1);
+	if (nBurnLayer & 2) draw_layer(bitmap[1], (UINT16*)DrvVidRAM1, DrvGfxROM2, 0x000, fg_scroll_x, (fg_scroll_y - fg_offset_y) & 0x1ff, -1);
+	if (nBurnLayer & 4) gaiden_draw_sprites(sprite_sizey, sproffsety);
+	if (nBurnLayer & 8) draw_text(0x100,-1);
+
+	mix_bitmaps(Palette, bitmap[0], bitmap[1], pTransDraw, bitmap[2]);
+
+	return 0;
 }
 
 static INT32 DrgnbowlDraw()
@@ -1396,49 +1540,24 @@ static INT32 DrgnbowlDraw()
 	if (DrvRecalc) {
 		for (INT32 i = 0; i < 0x1000; i++) {
 			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
+
+			UINT8 r = (rgb >> 8);
+			UINT8 g = (rgb >> 4) & 0xf;
+			UINT8 b = (rgb) & 0xf;
+
+			r = (r << 4) | r;
+			g = (g << 4) | g;
+			b = (b << 4) | b;
+
+			DrvPalette[i] = BurnHighCol(r, g, b, 0);
 		}
 	}
 
-	{
-		for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {
-			pTransDraw[offs] = 0;
-		}
-	}
-
-	draw_layer((UINT16*)DrvVidRAM2, DrvGfxROM1, 0x300, bg_scroll_x, bg_scroll_y, DrvGfx1Transp, -1); // no transp
+	draw_layer(pTransDraw, (UINT16*)DrvVidRAM2, DrvGfxROM1, 0x300, bg_scroll_x, (bg_scroll_y - 16) & 0x1ff,  -1); // no transp
 	drgnbowl_draw_sprites(0x20);
-	draw_layer((UINT16*)DrvVidRAM1, DrvGfxROM2, 0x200, fg_scroll_x, fg_scroll_y, DrvGfx2Transp, 0xf);
+	draw_layer(pTransDraw, (UINT16*)DrvVidRAM1, DrvGfxROM2, 0x200, fg_scroll_x, (fg_scroll_y - 16) & 0x1ff, 0xf);
 	drgnbowl_draw_sprites(0x00);
 	draw_text(0, 0x0f);
-
-	BurnTransferCopy(DrvPalette);
-
-	return 0;
-}
-
-static INT32 DrvDraw()
-{
-	if (DrvRecalc) {
-		for (INT32 i = 0; i < 0x1000; i++) {
-			INT32 rgb = Palette[i];
-			DrvPalette[i] = BurnHighCol(rgb >> 16, rgb >> 8, rgb, 0);
-		}
-	}
-
-	{
-		for (INT32 offs = 0; offs < nScreenWidth * nScreenHeight; offs++) {
-			pTransDraw[offs] = 0x200;
-		}
-	}
-
-	gaiden_draw_sprites(3);
-	draw_layer((UINT16*)DrvVidRAM2, DrvGfxROM1, 0x300, bg_scroll_x, bg_scroll_y, DrvGfx1Transp, 0);
-	gaiden_draw_sprites(2);
-	draw_layer((UINT16*)DrvVidRAM1, DrvGfxROM2, 0x200, fg_scroll_x, fg_scroll_y, DrvGfx2Transp, 0);
-	gaiden_draw_sprites(1);
-	draw_text(0x100,0);
-	gaiden_draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1521,11 +1640,7 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnDraw) {
-		if (game == 1) {
-			DrgnbowlDraw();
-		} else {
-			DrvDraw();
-		}
+		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -1569,6 +1684,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(fg_scroll_y);
 		SCAN_VAR(bg_scroll_x);
 		SCAN_VAR(bg_scroll_y);
+
+		SCAN_VAR(tx_offset_y);
+		SCAN_VAR(fg_offset_y);
+		SCAN_VAR(bg_offset_y);
+		SCAN_VAR(sproffsety);
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
@@ -1921,6 +2041,7 @@ STD_ROM_FN(stratof)
 static INT32 stratofInit()
 {
 	game = 2;
+	sprite_sizey = 2;
 
 	return DrvInit();
 }

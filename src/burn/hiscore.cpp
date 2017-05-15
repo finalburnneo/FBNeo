@@ -1,3 +1,37 @@
+/*
+Todo: add support for new-style hiscore.dat (google: leezer hiscore.dat)
+
+1st cpu in new format can be any of the following: (all others cpu#++)
+maincpu
+cpu1
+master
+fgcpu
+cpua
+master_cpu
+
+new format
+~~~~~~~~~~
+puzznic:
+puzznicj:
+puzznici:
+puzznicb:
+puzznicba:
+@:maincpu,program,8f23,32,00,49
+@:maincpu,program,8d37,3,00,00
+
+old format
+~~~~~~~~~~
+puzznic:
+puzznicj:
+puzznici:
+puzznicb:
+puzznicba:
+0:8f23:32:00:49
+0:8d37:3:00:00
+
+*/
+
+
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -375,6 +409,13 @@ void HiscoreInit()
 					mode = FIND_DATA;
 				}
 			} else {
+				if (buffer[0] == '@' && buffer[1] == ':') {
+					bprintf(0, _T("Bad format - Please use the \"old format\" hiscore.dat instead.\n"));
+					fclose(fp);
+
+					return;
+				}
+
 				if (is_mem_range(buffer)) {
 					if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {
 						const char *pBuf = buffer;

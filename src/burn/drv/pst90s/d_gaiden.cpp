@@ -1244,7 +1244,7 @@ static void draw_text(INT32 paloffset, INT32 transp)
 	}
 }
 
-static void gaiden_draw_sprites(INT32 sprite_sizey, INT32 spr_offset_y)
+static void gaiden_draw_sprites(INT32 spr_sizey, INT32 spr_offset_y)
 {
 	static const UINT8 layout[8][8] = {
 		{  0,  1,  4,  5, 16, 17, 20, 21 },
@@ -1271,7 +1271,7 @@ static void gaiden_draw_sprites(INT32 sprite_sizey, INT32 spr_offset_y)
 
 			UINT32 color = source[2];
 			UINT32 sizex = 1 << ((color >> 0) & 3);
-			UINT32 sizey = 1 << ((color >> sprite_sizey) & 3);
+			UINT32 sizey = 1 << ((color >> spr_sizey) & 3);
 
 			UINT32 number = (source[1]);
 			if (sizex >= 2) number &= ~0x01;

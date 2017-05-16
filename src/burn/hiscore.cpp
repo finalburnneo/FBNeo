@@ -353,7 +353,7 @@ static INT32 is_mem_range_new (const char *pBuf)
 	}
 	c = *pBuf; /* character following first ',' */
 	
-	// address space - ingore for now
+	// address space - ignore for now
 	for(;;)
 	{
 		c = *pBuf++;
@@ -365,6 +365,16 @@ static INT32 is_mem_range_new (const char *pBuf)
 	return	(c>='0' && c<='9') ||
 			(c>='a' && c<='f') ||
 			(c>='A' && c<='F');
+}
+
+static INT32 cpustr2num(char *pCpu)
+{ // all known versions of the first cpu as of May 15, 2017
+	return (strstr(pCpu, "maincpu") ||
+		    strstr(pCpu, "cpu1") ||
+			strstr(pCpu, "master") ||
+			strstr(pCpu, "fgcpu") ||
+			strstr(pCpu, "cpua") ||
+			strstr(pCpu, "master_cpu")) ? 0 : 1;
 }
 
 static INT32 matching_game_name (const char *pBuf, const char *name)
@@ -413,7 +423,9 @@ void HiscoreInit()
 					if (is_mem_range_new(buffer)) {
 						if (nHiscoreNumRanges < HISCORE_MAX_RANGES) {
 							const char *pBuf = buffer;
-							
+							char cCpu[80];
+							char *pCpu = &cCpu[0];
+
 							// increment pBuf to the address
 							char c;
 							
@@ -424,25 +436,26 @@ void HiscoreInit()
 							
 							c = *pBuf; /* character following first ':' */
 	
-							// cpu id - ignore for now
+							// cpu id -> cCpu
 							for(;;)
 							{
 								c = *pBuf++;
-								if (c == ',') break;
+								if (c == ',') { *pCpu++ = '\0'; break; }
+								else *pCpu++ = c;
 							}
 							c = *pBuf; /* character following first ',' */
 							
-							// address space - ingore for now
+							// address space - ignore for now
 							for(;;)
 							{
 								c = *pBuf++;
 								if (c == ',') break;
 							}
 							c = *pBuf; /* character following second ',' */
-							
+
 							// now set the high score data
 							HiscoreMemRange[nHiscoreNumRanges].Loaded = 0;
-							HiscoreMemRange[nHiscoreNumRanges].nCpu = 0;
+							HiscoreMemRange[nHiscoreNumRanges].nCpu = cpustr2num(&cCpu[0]);
 							HiscoreMemRange[nHiscoreNumRanges].Address = hexstr2num(&pBuf);
 							HiscoreMemRange[nHiscoreNumRanges].NumBytes = hexstr2num(&pBuf);
 							HiscoreMemRange[nHiscoreNumRanges].StartValue = hexstr2num(&pBuf);
@@ -453,7 +466,7 @@ void HiscoreInit()
 							memset(HiscoreMemRange[nHiscoreNumRanges].Data, 0, HiscoreMemRange[nHiscoreNumRanges].NumBytes);
 							
 #if 1 && defined FBA_DEBUG
-							bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded (New Format) - CPU %i, Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
+							bprintf(PRINT_IMPORTANT, _T("Hi Score Memory Range %i Loaded (New Format) - CPU %i (%S), Address %x, Bytes %02x, Start Val %x, End Val %x\n"), nHiscoreNumRanges, HiscoreMemRange[nHiscoreNumRanges].nCpu, cCpu, HiscoreMemRange[nHiscoreNumRanges].Address, HiscoreMemRange[nHiscoreNumRanges].NumBytes, HiscoreMemRange[nHiscoreNumRanges].StartValue, HiscoreMemRange[nHiscoreNumRanges].EndValue);
 #endif
 							
 							nHiscoreNumRanges++;

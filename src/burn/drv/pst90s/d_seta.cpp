@@ -9507,7 +9507,7 @@ static void gundhara68kInit()
 
 static INT32 gundharaInit()
 {
-	DrvSetVideoOffsets(0, 0, -2, -2);
+	DrvSetVideoOffsets(0, 0, 0, 0);
 	DrvSetColorOffsets(0, 0x200, 0xa00);
 
 	INT32 nRet = DrvInit(gundhara68kInit, 16000000, SET_IRQLINES(2, 4), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 3, 3));

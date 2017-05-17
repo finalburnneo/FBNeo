@@ -24,7 +24,7 @@ static UINT8 DrvRecalc;
 static UINT8 bankdata[3];
 static UINT8 soundlatch;
 static UINT8 flipscreen;
-static INT32 toggle;
+static INT32 adpcm_toggle;
 static UINT8 adpcm_data;
 
 static UINT16 palrambank;
@@ -267,7 +267,7 @@ static void __fastcall yunsung8_main_write_port(UINT16 port, UINT8 data)
 			ZetOpen(1);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 			ZetClose();
-			ZetOpen(0);			
+			ZetOpen(0);
 		return;
 
 		case 0x06:
@@ -315,7 +315,7 @@ static void __fastcall yunsung8_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xe400:
-			MSM5205DataWrite(0, toggle ? (adpcm_data >> 4) : (adpcm_data & 0xf));
+			adpcm_data = ((data&0xf)<<4) | ((data >>4)&0xf);
 		return;
 
 		case 0xec00:
@@ -355,11 +355,11 @@ static tilemap_callback( foreground )
 
 static void DrvMSM5205Int()
 {
-	//if (!state) return; // ??
+	MSM5205DataWrite(0, adpcm_data >> 4);
+	adpcm_data <<= 4;
+	adpcm_toggle = !adpcm_toggle;
 
-	toggle = !toggle;
-
-	Z80SetIrqLine(Z80_INPUT_LINE_NMI, (toggle) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	if (adpcm_toggle) ZetNmi();
 }
 
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
@@ -391,7 +391,7 @@ static INT32 DrvDoReset()
 
 	soundlatch = 0;
 	flipscreen = 0;
-	toggle = 0;
+	adpcm_toggle = 0;
 	adpcm_data = 0;
 
 	return 0;
@@ -513,16 +513,17 @@ static INT32 DrvDraw()
 
 	GenericTilemapSetFlip(TMAP_GLOBAL, flipscreen ? TMAP_FLIPXY : 0);
 
-	if ((bankdata[0] & 0x40) == 0x40) {
-		BurnTransferClear();
-	} else {
+	INT32 layerctrl = (~(bankdata[0] & 0x30) >> 4);
+
+	if (layerctrl & 1) {
 		GenericTilemapDraw(0, pTransDraw, 0);
+	} else {
+		BurnTransferClear();
 	}
 
-	if ((bankdata[0] & 0x80) == 0) {
+	if (layerctrl & 2) {
 		GenericTilemapDraw(1, pTransDraw, 0);
 	}
-
 	BurnTransferCopy(BurnPalette);
 
 	return 0;
@@ -586,7 +587,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -594,7 +595,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -609,7 +610,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(bankdata);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);
-		SCAN_VAR(toggle);
+		SCAN_VAR(adpcm_toggle);
 		SCAN_VAR(adpcm_data);
 	}
 
@@ -621,7 +622,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetClose();
 
 		ZetOpen(1);
-		sound_bankswitch(bankdata[1]);
+		sound_bankswitch(bankdata[2]);
 		ZetClose();
 	}
 

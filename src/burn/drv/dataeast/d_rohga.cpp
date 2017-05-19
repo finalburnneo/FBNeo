@@ -1471,9 +1471,9 @@ static void wizdfire_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 coloff, INT32 mo
 	}
 }
 
-static void nitrobal_draw_sprites(UINT8 *ram, INT32 gfxbank, INT32 /*bpp*/)
+static void nitrobal_draw_sprites(UINT8 *ram, INT32 gfxbank, INT32 alpha_on)
 {
-//	if (bpp != (nBurnBpp & 0x04)) return;
+	//if (bpp != (nBurnBpp & 0x04)) return;
 
 	UINT16 *spriteptr = (UINT16*)ram;
 
@@ -1584,11 +1584,11 @@ static void nitrobal_draw_sprites(UINT8 *ram, INT32 gfxbank, INT32 /*bpp*/)
 		{
 			for (y = 0; y < h; y++)
 			{
-				//if (!bpp) {
-					deco16_draw_prio_sprite(pTransDraw, gfx, sprite + y + h * x, (colour << 4) + coloff, sx + x_mult * (w-x), sy + y_mult * (h-y), fx, fy, tilemap_pri, sprite_pri);
-				//} else {
-				//	deco16_draw_alphaprio_sprite(DrvPalette, gfx, sprite + y + h * x, (colour << 4) + coloff, sx + x_mult * (w-x), sy + y_mult * (h-y), fx, fy, tilemap_pri, sprite_pri, alpha);
-				//}
+				if (!alpha_on) {
+					deco16_draw_prio_sprite_nitrobal(pTransDraw, gfx, sprite + y + h * x, (colour << 4) + coloff, sx + x_mult * (w-x), sy + y_mult * (h-y), fx, fy, tilemap_pri, sprite_pri);
+				} else {
+					deco16_draw_alphaprio_sprite(DrvPalette, gfx, sprite + y + h * x, (colour << 4) + coloff, sx + x_mult * (w-x), sy + y_mult * (h-y), fx, fy, tilemap_pri, sprite_pri, alpha);
+				}
 			}
 		}
 
@@ -1748,25 +1748,27 @@ static INT32 NitrobalDraw()
 		pTransDraw[i] = 0x200;
 	}
 
-	draw_combined_playfield_step1();
-
 	deco16_clear_prio_map();
+
+	draw_combined_playfield_step1();
 
 	draw_combined_playfield(0x200, 0);
 
-//	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
-
 	deco16_draw_layer(1, pTransDraw, 16);
 
-	nitrobal_draw_sprites(DrvSprBuf , 3, 0);
-	nitrobal_draw_sprites(DrvSprBuf2, 4, 0);
+	if (nBurnBpp != 4) { // regular (non-alpha) draw for anything !32bpp
+		nitrobal_draw_sprites(DrvSprBuf , 3, 0);
+		nitrobal_draw_sprites(DrvSprBuf2, 4, 0);
+	}
 
-	deco16_draw_layer(0, pTransDraw, DECO16_LAYER_PRIORITY(0xff)); 
+	deco16_draw_layer(0, pTransDraw, DECO16_LAYER_PRIORITY(0xff));
 
 	BurnTransferCopy(DrvPalette);
 
-//	nitrobal_draw_sprites(DrvSprBuf , 3, 4);
-//	nitrobal_draw_sprites(DrvSprBuf2, 4, 4);
+	if (nBurnBpp == 4) { // draw alpha sprites if 32bpp
+		nitrobal_draw_sprites(DrvSprBuf , 3, 1);
+		nitrobal_draw_sprites(DrvSprBuf2, 4, 1);
+	}
 
 	return 0;
 }

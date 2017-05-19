@@ -90,7 +90,7 @@ void deco16_draw_prio_sprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, 
 
 			if (pri != -1) {
 				INT32 bpriority = deco16_prio_map[(sy * 512) + sx];
-	
+
 				if (spri == -1) {
 					if ((pri & (1 << (bpriority & 0x1f))) || (bpriority & 0x80)) continue;
 					deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
@@ -104,6 +104,43 @@ void deco16_draw_prio_sprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, 
 			dest[sy * nScreenWidth + sx] = pxl | color;
 
 			deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
+		}
+
+		sx -= 16;
+	}
+}
+
+void deco16_draw_prio_sprite_nitrobal(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 pri, INT32 spri)
+{
+	gfx += code * 0x100;
+
+	INT32 flip = 0;
+	if (flipx) flip |= 0x0f;
+	if (flipy) flip |= 0xf0;
+
+	sy -= deco16_global_y_offset;
+	sx -= deco16_global_x_offset;
+
+	for (INT32 yy = 0; yy < 16; yy++, sy++) {
+
+		if (sy < 0 || sy >= nScreenHeight) continue;
+
+		for (INT32 xx = 0; xx < 16; xx++, sx++) {
+			if (sx < 0 || sx >= nScreenWidth) continue;
+
+			INT32 pxl = gfx[((yy * 16) + xx) ^ flip];
+
+			if (!pxl) continue;
+
+			if (pri != -1) {
+				INT32 bpriority = deco16_prio_map[(sy * 512) + sx];
+
+				if (pri > bpriority && spri > deco16_sprite_prio_map[sy * 512 + sx]) {
+					dest[sy * nScreenWidth + sx] = pxl | color;
+					deco16_prio_map[sy * 512 + sx] |= pri; // right?
+				}
+				deco16_sprite_prio_map[sy * 512 + sx] |= spri;
+			}
 		}
 
 		sx -= 16;

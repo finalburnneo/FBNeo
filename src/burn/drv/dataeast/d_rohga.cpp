@@ -1,6 +1,9 @@
 // FB Alpha Rohga Armor Force / Wizard Fire / Nitro Ball / Schmeiser Robo driver module
 // Based on MAME driver by Bryan McPhail
 
+// todo: port proper protection emu.
+// re: dataeast logo too fast or missing in rohga caused by bad protection sim. (104/146)
+
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "h6280_intf.h"
@@ -1651,7 +1654,7 @@ static void update_rohga(INT32 is_schmeisr)
 		case 0:
 			if (deco16_priority & 4)
 			{
-				draw_combined_playfield(0x300, DECO16_LAYER_PRIORITY(3));
+				draw_combined_playfield(0x200, DECO16_LAYER_PRIORITY(3));
 			}
 			else
 			{

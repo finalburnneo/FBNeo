@@ -114,7 +114,7 @@ depobj	:= 	$(drvobj) \
 			\
 			cps3run.o cps3snd.o \
 			\
-			deco16ic.o \
+			deco16ic.o deco146.o \
 			\
 			gal_gfx.o gal_run.o gal_sound.o gal_stars.o \
 			\

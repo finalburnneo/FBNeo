@@ -32,7 +32,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprRAM2;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvSprBuf2;
-static UINT8 *DrvPrtRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -754,10 +753,6 @@ static INT32 MemIndex()
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvSprBuf2	= Next; Next += 0x000800;
 	DrvSprBuf	= Next; Next += 0x000800;
-
-	deco16_prot_ram	= (UINT16*)Next;
-	DrvPrtRAM	= Next; Next += 0x000800;
-	deco16_buffer_ram = (UINT16*)Next; Next += 0x000800;
 
 	DrvPalRAM	= Next; Next += 0x002000;
 	DrvPalBuf	= Next; Next += 0x002000;
@@ -1814,7 +1809,6 @@ static INT32 DrvFrame()
 	}
 
 	{
-		deco16_prot_inputs = DrvInputs;
 		memset (DrvInputs, 0xff, 4 * sizeof(UINT16)); 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;

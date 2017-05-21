@@ -37,7 +37,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprRAM1;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvSprBuf1;
-static UINT8 *DrvPrtRAM;
 static UINT8 *DrvZ80RAM;
 
 static UINT32 *DrvPalette;
@@ -488,20 +487,6 @@ static struct BurnDIPInfo Robocop2DIPList[]=
 
 STDDIPINFO(Robocop2)
 
-static UINT16 edrandy_deco146prot_r(UINT32 region, UINT32 offset, UINT16 mem_mask)
-{
-	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
-	UINT8 cs = 0;
-	return deco_146_104_read_data(deco146_addr, mem_mask, cs);
-}
-
-static void edrandy_deco146prot_w(UINT32 region, UINT32 offset, UINT16 data, UINT16 mem_mask)
-{
-	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
-	UINT8 cs = 0;
-	deco_146_104_write_data(deco146_addr, data, mem_mask, cs);
-}
-
 void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x140000, data)
@@ -547,17 +532,17 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
-		edrandy_deco146prot_w(0x198000, address&0x3fff, data, 0xffff);
+		deco146_104_prot_ww(0x198000, address, data);
 		return;
 	}
 
 	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
-		edrandy_deco146prot_w(0x1a0000, address&0x3fff, data, 0xffff);
+		deco146_104_prot_ww(0x1a0000, address, data);
 		return;
 	}
 
 	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
-		edrandy_deco146prot_w(0x000000, address&0x3fff, data, 0xffff);
+		deco146_104_prot_ww(0, address, data);
 		return;
 	}
 }
@@ -614,17 +599,17 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
-		edrandy_deco146prot_w(0x198000, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+		deco146_104_prot_wb(0x198000, address, data);
 		return;
 	}
 
 	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
-		edrandy_deco146prot_w(0x1a0000, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+		deco146_104_prot_wb(0x1a0000, address, data);
 		return;
 	}
 
 	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
-		edrandy_deco146prot_w(0x000000, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+		deco146_104_prot_wb(0, address, data);
 		return;
 	}
 	
@@ -656,15 +641,15 @@ UINT16 __fastcall cninja_main_read_word(UINT32 address)
 	}
 
 	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
-		return edrandy_deco146prot_r(0x198000, address&0x3fff, 0xffff);
+		return deco146_104_prot_rw(0x198000, address);
 	}
 
 	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
-		return edrandy_deco146prot_r(0x1a0000, address&0x3fff, 0xffff);
+		return deco146_104_prot_rw(0x1a0000, address);
 	}
 
 	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
-		return edrandy_deco146prot_r(0x000000, address&0x3fff, 0xffff);
+		return deco146_104_prot_rw(0, address);
 	}
 	
 	//bprintf(PRINT_NORMAL, _T("Read Word %x, %x\n"), address);
@@ -708,15 +693,15 @@ UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 	}
 
 	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
-		return edrandy_deco146prot_r(0x198000, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+		return deco146_104_prot_rb(0x198000, address);
 	}
 
 	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
-		return edrandy_deco146prot_r(0x1a0000, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+		return deco146_104_prot_rb(0x1a0000, address);
 	}
 
 	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
-		return edrandy_deco146prot_r(0x000000, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+		return deco146_104_prot_rb(0, address);
 	}
 	
 	//bprintf(PRINT_NORMAL, _T("Read Byte %x, %x\n"), address);
@@ -749,9 +734,8 @@ void __fastcall mutantf_main_write_word(UINT32 address, UINT16 data)
 		return;
 	}
 
-	if ((address & 0xfffff800) == 0x1a0000) {
-		deco16_66_prot_w(address, data, 0xffff);
-		return;
+	if (address >= 0x1a0000 && address <= 0x1a3fff) {
+		deco146_104_prot_ww(0, address, data);
 	}
 }
 
@@ -780,16 +764,15 @@ void __fastcall mutantf_main_write_byte(UINT32 address, UINT8 data)
 		break;
 	}
 
-	if ((address & 0xfffff800) == 0x1a0000) {
-		deco16_66_prot_w(address, data, 0x00ff << ((address & 1) << 3));
-		return;
+	if (address >= 0x1a0000 && address <= 0x1a3fff) {
+		deco146_104_prot_wb(0, address, data);
 	}
 }
 
 UINT16 __fastcall mutantf_main_read_word(UINT32 address)
 {
-	if ((address & 0xfffff800) == 0x1a0000) {
-		return deco16_66_prot_r(address);
+	if (address >= 0x1a0000 && address <= 0x1a3fff) {
+		return deco146_104_prot_rw(0, address);
 	}
 
 	return 0;
@@ -799,8 +782,8 @@ UINT8 __fastcall mutantf_main_read_byte(UINT32 address)
 {
 	if (address == 0x1c0001) return deco16ic_71_read() & 0xff;
 
-	if ((address & 0xfffff800) == 0x1a0000) {
-		return deco16_66_prot_r(address) >> ((~address & 1) << 3);
+	if (address >= 0x1a0000 && address <= 0x1a3fff) {
+		return deco146_104_prot_rb(0, address);
 	}
 
 	return 0;
@@ -841,6 +824,11 @@ void __fastcall robocop2_main_write_word(UINT32 address, UINT16 data)
 			deco16_priority = data;
 		return;
 	}
+
+	if (address >= 0x18c000 && address <= 0x18ffff) {
+		deco146_104_prot_ww(0, address, data);
+	}
+
 }
 
 void __fastcall robocop2_main_write_byte(UINT32 address, UINT8 data)
@@ -879,24 +867,16 @@ void __fastcall robocop2_main_write_byte(UINT32 address, UINT8 data)
 			deco16_priority = data;
 		return;
 	}
+
+	if (address >= 0x18c000 && address <= 0x18ffff) {
+		deco146_104_prot_wb(0, address, data);
+	}
 }
 
 UINT16 __fastcall robocop2_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
-		case 0x18c41a:
-			return DrvInputs[0];
-
-		case 0x18c320:
-			return (DrvInputs[1] & 0x07) | (deco16_vblank & 0x08);
-
-		case 0x18c4e6:
-			return (DrvDips[1] << 8) | (DrvDips[0] << 0);
-
-		case 0x18c504:
-			return 0x0084;
-
 		case 0x1b0002:
 			return scanline;
 
@@ -909,6 +889,10 @@ UINT16 __fastcall robocop2_main_read_word(UINT32 address)
 			return DrvDips[2];
 	}
 
+	if (address >= 0x18c000 && address <= 0x18ffff) {
+		return deco146_104_prot_rw(0, address);
+	}
+
 	return 0;
 }
 
@@ -916,26 +900,6 @@ UINT8 __fastcall robocop2_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
-		case 0x18c41a:
-			return DrvInputs[0] >> 8;
-
-		case 0x18c41b:
-			return DrvInputs[0] >> 0;
-
-		case 0x18c320:
-		case 0x18c321:
-			return (DrvInputs[1] & 0x07) | (deco16_vblank & 0x08);
-
-		case 0x18c4e6:
-			return DrvDips[0];
-
-		case 0x18c4e7:
-			return DrvDips[1];
-
-		case 0x18c504:
-		case 0x18c505:
-			return 0x0084;
-
 		case 0x1b0002:
 		case 0x1b0003:
 			return scanline;
@@ -949,6 +913,10 @@ UINT8 __fastcall robocop2_main_read_byte(UINT32 address)
 		case 0x1f8000:
 		case 0x1f8001:
 			return DrvDips[2];
+	}
+
+	if (address >= 0x18c000 && address <= 0x18ffff) {
+		return deco146_104_prot_rb(0, address);
 	}
 
 	return 0;
@@ -1106,9 +1074,6 @@ static INT32 MemIndex()
 	DrvSprRAM1	= Next; Next += 0x000800;
 	DrvSprBuf1	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x002000;
-
-	deco16_prot_ram	= (UINT16*)Next;
-	DrvPrtRAM	= Next; Next += 0x000800;
 
 	DrvZ80RAM	= Next; Next += 0x000800;
 
@@ -1448,6 +1413,13 @@ static INT32 MutantfInit()
 	deco16_set_bank_callback(2, mutantf_1_bank_callback);
 	deco16_set_bank_callback(3, mutantf_1_bank_callback);
 
+	// 146_104 prot
+	deco_146_init();
+	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
+	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
+	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
+
 	SekInit(0, 0x68000);
 	SekOpen(0);
 	SekMapMemory(Drv68KROM,			0x000000, 0x07ffff, MAP_ROM);
@@ -1771,6 +1743,14 @@ static INT32 Robocop2Init()
 	deco16_set_bank_callback(1, robocop2_bank_callback);
 	deco16_set_bank_callback(2, robocop2_bank_callback);
 	deco16_set_bank_callback(3, robocop2_bank_callback);
+
+	// 146_104 prot
+	deco_146_init();
+	deco_146_104_set_use_magic_read_address_xor(1);
+	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
+	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
+	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2284,7 +2264,6 @@ static INT32 CninjaFrame()
 	}
 
 	{
-		deco16_prot_inputs = DrvInputs;
 		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2361,7 +2340,6 @@ static INT32 EdrandyFrame()
 	}
 
 	{
-		deco16_prot_inputs = DrvInputs;
 		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2459,7 +2437,6 @@ static INT32 Robocop2Frame()
 	}
 
 	{
-		deco16_prot_inputs = DrvInputs;
 		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2545,7 +2522,6 @@ static INT32 MutantfFrame()
 	}
 
 	{
-		deco16_prot_inputs = DrvInputs;
 		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -2609,8 +2585,7 @@ static INT32 StoneageFrame()
 	}
 
 	{
-		deco16_prot_inputs = DrvInputs;
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;

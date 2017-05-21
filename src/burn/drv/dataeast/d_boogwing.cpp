@@ -5,6 +5,7 @@
 #include "m68000_intf.h"
 #include "h6280_intf.h"
 #include "deco16ic.h"
+#include "deco146.h"
 #include "msm6295.h"
 #include "burn_ym2151.h"
 
@@ -31,8 +32,6 @@ static UINT8 *DrvSprRAM1;
 static UINT8 *DrvPalBuf;
 static UINT8 *DrvSprBuf;
 static UINT8 *DrvSprBuf1;
-static UINT8 *DrvProtRAM;
-static UINT8 *DrvUnkRAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -50,28 +49,28 @@ static UINT16 *tempdraw[2];
 static INT32 DrvOkiBank;
 
 static struct BurnInputInfo BoogwingInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 3"	},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -157,20 +156,14 @@ void __fastcall boogwing_main_write_byte(UINT32 address, UINT8 data)
 			memcpy (DrvSprBuf1, DrvSprRAM1, 0x800);
 		return;
 
-		case 0x24e151:
-			deco16_soundlatch = data;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		break;
-
 		case 0x282008:
 		case 0x282009:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
 		return;
 	}
 
-	if ((address & 0xffff800) == 0x24e000) {
-		DrvProtRAM[(address & 0x7ff) ^ 1] = data;
-		return;
+	if (address >= 0x24e000 && address <= 0x24efff) {
+		deco146_104_prot_wb(0, address & 0xfff, data);
 	}
 }
 
@@ -193,41 +186,20 @@ void __fastcall boogwing_main_write_word(UINT32 address, UINT16 data)
 			memcpy (DrvSprBuf1, DrvSprRAM1, 0x800);
 		return;
 
-		case 0x24e150:
-			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		break;
-
 		case 0x282008:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
 		return;
 	}
 
-	if ((address & 0xffff800) == 0x24e000) {
-		*((UINT16*)(DrvProtRAM + (address & 0x7fe))) = BURN_ENDIAN_SWAP_INT16(data);
-		return;
+	if (address >= 0x24e000 && address <= 0x24efff) {
+		deco146_104_prot_ww(0, address & 0xfff, data);
 	}
 }
 
 UINT8 __fastcall boogwing_main_read_byte(UINT32 address)
 {
-	switch (address)
-	{
-		case 0x24e6c0:
-			return DrvDips[1];
-
-		case 0x24e6c1:
-			return DrvDips[0];
-
-		case 0x24e138:
-		case 0x24e139:
-			return (DrvInputs[0] & 0x07) | (deco16_vblank & 0x08);
-
-		case 0x24e344:
-			return DrvInputs[1] >> 8;
-
-		case 0x24e345:
-			return DrvInputs[1] >> 0;
+	if (address >= 0x24e000 && address <= 0x24efff) {
+		return deco146_104_prot_rb(0, address & 0xfff);
 	}
 
 	return 0;
@@ -235,16 +207,8 @@ UINT8 __fastcall boogwing_main_read_byte(UINT32 address)
 
 UINT16 __fastcall boogwing_main_read_word(UINT32 address)
 {
-	switch (address)
-	{
-		case 0x24e6c0:
-			return (DrvDips[1] << 8) | (DrvDips[0] << 0);
-
-		case 0x24e138:
-			return (DrvInputs[0] & 0x07) | (deco16_vblank & 0x08);
-
-		case 0x24e344:
-			return DrvInputs[1];
+	if (address >= 0x24e000 && address <= 0x24efff) {
+		return deco146_104_prot_rw(0, address & 0xfff);
 	}
 
 	return 0;
@@ -274,6 +238,27 @@ static void DrvYM2151WritePort(UINT32, UINT32 data)
 	DrvOkiBank = data;	
 }
 
+static UINT16 inputs_read()
+{
+	return DrvInputs[0];
+}
+
+static UINT16 system_read()
+{
+	return (DrvInputs[1] & 7) | deco16_vblank;
+}
+
+static UINT16 dips_read()
+{
+	return (DrvDips[1] << 8) | (DrvDips[0] << 0);
+}
+
+static void soundlatch_write(UINT16 data)
+{
+	deco16_soundlatch = data & 0xff;
+	h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -284,6 +269,8 @@ static INT32 DrvDoReset()
 
 	deco16SoundReset();
 	DrvYM2151WritePort(0, 1);
+
+	deco_146_104_reset();
 
 	deco16Reset();
 
@@ -324,9 +311,6 @@ static INT32 MemIndex()
 	DrvSprBuf1	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x002000;
 	DrvPalBuf	= Next; Next += 0x002000;
-
-	DrvProtRAM	= Next; Next += 0x000800;
-	DrvUnkRAM	= Next; Next += 0x000400;
 
 	flipscreen	= Next; Next += 0x000001;
 
@@ -429,6 +413,15 @@ static INT32 DrvInit()
 	deco16_set_bank_callback(1, boogwing_bank_callback);
 	deco16_set_bank_callback(2, boogwing_bank_callback2);
 	deco16_set_bank_callback(3, boogwing_bank_callback2);
+
+	// 146_104 prot
+	deco_104_init();
+	deco_146_104_set_port_a_cb(inputs_read); // inputs
+	deco_146_104_set_port_b_cb(system_read); // system
+	deco_146_104_set_port_c_cb(dips_read); // dips
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
+	deco_146_104_set_interface_scramble_reverse();
+	deco_146_104_set_use_magic_read_address_xor(1);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -776,7 +769,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-		
+
+		deco_146_104_scan();
+
 		SCAN_VAR(DrvOkiBank);
 
 		INT32 bank = DrvOkiBank;

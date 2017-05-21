@@ -7,7 +7,6 @@
 #include "deco16ic.h"
 #include "burn_ym2151.h"
 #include "msm6295.h"
-#include "bitswap.h"
 #include "deco146.h"
 
 static UINT8 *AllMem;
@@ -22,6 +21,8 @@ static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
 static UINT8 *DrvSndROM0;
 static UINT8 *Drv68KRAM;
+static UINT8 *DrvUnkRAM0;
+static UINT8 *DrvUnkRAM1;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM;
 static UINT8 *DrvPalRAM;
@@ -134,41 +135,25 @@ STDDIPINFO(Dblewing)
 static void __fastcall dblewing_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffc000) == 0x280000) {
-		INT32 addr = BITSWAP32(address & 0x3ffe, 31,30,29,28,27,26,25,24,23,22,21,20,19,18,13,12,11,17,16,15,14,10,9,8,7,6,5,4,3,2,1,0) & 0x7fff;
-		UINT8 cs = 0;
-		deco_146_104_write_data(addr, data, 0xffff, cs);
+		deco146_104_prot_ww(0, address, data);
 		return;
 	}
 
 	deco16_write_control_word(0, address, 0x28c000, data);
-
-	switch (address)
-	{
-		case 0x284000:
-		case 0x288000:
-			// ?
-		return;
-	}
 }
 
-static void __fastcall dblewing_write_byte(UINT32 , UINT8 )
+static void __fastcall dblewing_write_byte(UINT32 address, UINT8 data)
 {
-
+	if ((address & 0xffc000) == 0x280000) {
+		deco146_104_prot_wb(0, address, data);
+		return;
+	}
 }
 
 static UINT16 __fastcall dblewing_read_word(UINT32 address)
 {
 	if ((address & 0xffc000) == 0x280000) {	
-		INT32 addr = BITSWAP32(address & 0x3ffe, 31,30,29,28,27,26,25,24,23,22,21,20,19,18,13,12,11,17,16,15,14,10,9,8,7,6,5,4,3,2,1,0) & 0x7fff;
-		UINT8 cs = 0;
-		return deco_146_104_read_data(addr, 0xffff, cs);
-	}
-
-	switch (address)
-	{
-		case 0x284000:	// ?
-		case 0x288000:
-			return 0;
+		return deco146_104_prot_rw(0, address);
 	}
 
 	return 0;
@@ -176,8 +161,8 @@ static UINT16 __fastcall dblewing_read_word(UINT32 address)
 
 static UINT8 __fastcall dblewing_read_byte(UINT32 address)
 {
-	if (address == 0x280299) { // actually read through protection device
-		return (DrvInputs[1] & 7) | deco16_vblank;
+	if ((address & 0xffc000) == 0x280000) {	
+		return deco146_104_prot_rb(0, address);
 	}
 
 	return 0;
@@ -308,13 +293,15 @@ static INT32 MemIndex()
 	DrvGfxROM2	= Next; Next += 0x400000;
 
 	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x040000;
+	DrvSndROM0	= Next; Next += 0x080000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
 	AllRam		= Next;
 
 	Drv68KRAM	= Next; Next += 0x004000;
+	DrvUnkRAM0	= Next; Next += 0x000400;
+	DrvUnkRAM1	= Next; Next += 0x000400;
 	DrvSprRAM	= Next; Next += 0x000800;
 	DrvPalRAM	= Next; Next += 0x000800;
 	DrvZ80RAM	= Next; Next += 0x000800;
@@ -378,6 +365,8 @@ static INT32 DrvInit()
 	SekMapMemory(deco16_pf_ram[1],		0x102000, 0x102fff, MAP_RAM);
 	SekMapMemory(deco16_pf_rowscroll[0],	0x104000, 0x104fff, MAP_RAM);
 	SekMapMemory(deco16_pf_rowscroll[1],	0x106000, 0x106fff, MAP_RAM);
+	SekMapMemory(DrvUnkRAM0,		0x284000, 0x284400, MAP_RAM);
+	SekMapMemory(DrvUnkRAM1,		0x288000, 0x288400, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x300000, 0x3007ff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,			0x320000, 0x3207ff, MAP_RAM);
 	SekMapMemory(Drv68KRAM,			0xff0000, 0xff3fff, MAP_RAM);
@@ -561,7 +550,7 @@ static INT32 DrvDraw()
 
 	flipscreen = 1; //~deco16_pf_control[0][0] & 0x80;
 
-	bprintf (0, _T("%4.4x\n"), deco16_pf_control[0][0]);
+	//bprintf (0, _T("%4.4x\n"), deco16_pf_control[0][0]);
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0;
@@ -598,6 +587,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 3580000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -611,14 +601,27 @@ static INT32 DrvFrame()
 		if (i == 240) deco16_vblank = 0x08;
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+
+		if (nSegmentLength) {
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			MSM6295Render(0, pSoundBuf, nSegmentLength);
+		}
 	}
 
 	ZetClose();

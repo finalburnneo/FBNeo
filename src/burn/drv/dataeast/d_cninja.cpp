@@ -10,6 +10,7 @@
 #include "h6280_intf.h"
 #include "bitswap.h"
 #include "deco16ic.h"
+#include "deco146.h"
 #include "burn_ym2203.h"
 #include "burn_ym2151.h"
 #include "msm6295.h"
@@ -487,6 +488,20 @@ static struct BurnDIPInfo Robocop2DIPList[]=
 
 STDDIPINFO(Robocop2)
 
+static UINT16 edrandy_deco146prot_r(UINT32 region, UINT32 offset, UINT16 mem_mask)
+{
+	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
+	UINT8 cs = 0;
+	return deco_146_104_read_data(deco146_addr, mem_mask, cs);
+}
+
+static void edrandy_deco146prot_w(UINT32 region, UINT32 offset, UINT16 data, UINT16 mem_mask)
+{
+	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
+	UINT8 cs = 0;
+	deco_146_104_write_data(deco146_addr, data, mem_mask, cs);
+}
+
 void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x140000, data)
@@ -505,8 +520,7 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 			scanline = data & 0xff;
 
 		//	bprintf (0, _T("ACTUAL: %d, WRITTEN: %d\n"), global_scanline, scanline);
-
-			if ((!BIT(scanline,1))) {
+			if ((!BIT(irq_mask,1)) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;
@@ -532,14 +546,18 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 		break;
 	}
 
-	if ((address & 0xfffff800) == 0x198000) {
-		deco16_66_prot_w(address, data, 0xffff);
+	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
+		edrandy_deco146prot_w(0x198000, address&0x3fff, data, 0xffff);
 		return;
 	}
 
-	if ((address & 0xffffff00) == 0x1bc000) {
-		UINT16 *ProtRam = (UINT16*)deco16_prot_ram;
-		ProtRam[(address - 0x1bc000) >> 1] = data;
+	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
+		edrandy_deco146prot_w(0x1a0000, address&0x3fff, data, 0xffff);
+		return;
+	}
+
+	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
+		edrandy_deco146prot_w(0x000000, address&0x3fff, data, 0xffff);
 		return;
 	}
 }
@@ -568,7 +586,7 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 
 			//bprintf (0, _T("ACTUAL: %d, WRITTEN: %d\n"), global_scanline, scanline);
 
-			if ((~irq_mask & 0x02)) {
+			if ((!BIT(irq_mask,1)) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;
@@ -595,14 +613,18 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 		break;
 	}
 
-	if ((address & 0xfffff800) == 0x198000) { 
-		deco16_66_prot_w(address, data, 0x00ff << ((address & 1) << 3));
+	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
+		edrandy_deco146prot_w(0x198000, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
 		return;
 	}
 
-	if ((address & 0xffffff00) == 0x1bc000) {
-		DrvPrtRAM[(address & 0xff)^1] = data;
+	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
+		edrandy_deco146prot_w(0x1a0000, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+		return;
+	}
 
+	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
+		edrandy_deco146prot_w(0x000000, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
 		return;
 	}
 	
@@ -633,12 +655,16 @@ UINT16 __fastcall cninja_main_read_word(UINT32 address)
 			return 0;
 	}
 
-	if ((address & 0xfffffc00) == 0x1bc000) {
-		return deco16_104_cninja_prot_r(address);
+	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
+		return edrandy_deco146prot_r(0x198000, address&0x3fff, 0xffff);
 	}
 
-	if ((address & 0xfffff800) == 0x198000) {
-		return deco16_60_prot_r(address);
+	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
+		return edrandy_deco146prot_r(0x1a0000, address&0x3fff, 0xffff);
+	}
+
+	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
+		return edrandy_deco146prot_r(0x000000, address&0x3fff, 0xffff);
 	}
 	
 	//bprintf(PRINT_NORMAL, _T("Read Word %x, %x\n"), address);
@@ -681,12 +707,16 @@ UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 			return 0;
 	}
 
-	if ((address & 0xfffff800) == 0x198000) {
-		return deco16_60_prot_r(address) >> ((~address & 1) << 3);
+	if (address >= 0x198000 && address <= 0x19bfff) { // edrandy
+		return edrandy_deco146prot_r(0x198000, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
 	}
 
-	if ((address & 0xfffffc00) == 0x1bc000) {
-		return deco16_104_cninja_prot_r(address) >> ((~address & 1) << 3);
+	if (address >= 0x1a0000 && address <= 0x1a3fff) { // edrandy
+		return edrandy_deco146prot_r(0x1a0000, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+	}
+
+	if (address >= 0x1bc000 && address <= 0x1bffff) { // cninja
+		return edrandy_deco146prot_r(0x000000, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
 	}
 	
 	//bprintf(PRINT_NORMAL, _T("Read Byte %x, %x\n"), address);
@@ -1018,6 +1048,8 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
+	deco_146_104_reset();
+
 	scanline = 0;
 	irq_mask = 0;
 	irq_timer = -1;
@@ -1090,6 +1122,21 @@ static INT32 MemIndex()
 	MemEnd		= Next;
 
 	return 0;
+}
+
+static UINT16 deco_104_port_a_cb()
+{
+	return DrvInputs[0];
+}
+
+static UINT16 deco_104_port_b_cb()
+{
+	return (DrvInputs[1] & ~8) | deco16_vblank;
+}
+
+static UINT16 deco_104_port_c_cb()
+{
+	return DrvInputs[2];
 }
 
 static void cninja_patch()
@@ -1175,6 +1222,14 @@ static INT32 CninjaInit()
 	deco16_set_color_base(3, 0x200 + 0x300);
 	deco16_set_bank_callback(2, cninja_bank_callback);
 	deco16_set_bank_callback(3, cninja_bank_callback);
+
+	// 146_104 prot
+	deco_104_init();
+	deco_146_104_set_use_magic_read_address_xor(1);
+	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
+	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
+	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1275,6 +1330,13 @@ static INT32 EdrandyInit()
 	deco16_set_color_base(3, 0x200 + 0x300);
 	deco16_set_bank_callback(2, cninja_bank_callback);
 	deco16_set_bank_callback(3, cninja_bank_callback);
+
+	// 146_104 prot
+	deco_146_init();
+	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
+	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
+	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1827,7 +1889,8 @@ static void cninja_draw_sprites(int xoffset)
 
 		while (multi >= 0)
 		{
-			deco16_draw_prio_sprite(pTransDraw, DrvGfxROM3, sprite - multi * inc, (color << 4) + 0x300, x+xoffset, y + mult * multi, flipx, flipy, pri);
+			deco16_draw_prio_sprite_nitrobal(pTransDraw, DrvGfxROM3, sprite - multi * inc, (color << 4) + 0x300, x+xoffset, y + mult * multi, flipx, flipy, pri, -1);
+			//deco16_draw_prio_sprite(pTransDraw, DrvGfxROM3, sprite - multi * inc, (color << 4) + 0x300, x+xoffset, y + mult * multi, flipx, flipy, pri);
 
 			multi--;
 		}
@@ -2255,10 +2318,12 @@ static INT32 CninjaFrame()
 		}
 		if (i == 206) deco16_vblank = 0x08;
 		
-		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
-		deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
@@ -2316,12 +2381,12 @@ static INT32 EdrandyFrame()
 	SekOpen(0);
 	h6280Open(0);
 
-	deco16_vblank = 0x08;
+	deco16_vblank = 0x00;
 	EdrandyStartDraw();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-	global_scanline = i;
+		global_scanline = i;
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
@@ -2330,23 +2395,34 @@ static INT32 EdrandyFrame()
 			irq_timer = -1;
 		}
 
-		if (i < 8) deco16_vblank = 0;
-
-		//if (i >= 8 && i < 248) {
-		if (i > 16) {
-			deco16_vblank = 8;
+		if (i >= 16 && i < 248) {
+			deco16_vblank = 0;
+			//Robocop2DrawScanline(i-8);
 			EdrandyDrawScanline(i-16);
 		}
 
-		if (i == 255) {
+		//if (i == 248) {
+		//	deco16_vblank = 0x08;
+
+		//if (i < 8) deco16_vblank = 0;
+
+		//if (i >= 8 && i < 248) {
+//		if (i > 16) {
+			//deco16_vblank = 8;
+  //  		EdrandyDrawScanline(i-16);
+   // 	}
+
+		if (i == 248) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
-		//	deco16_vblank = 0x00;
+			deco16_vblank = 0x08;
 		}
 
-		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
-		deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
@@ -2425,11 +2501,13 @@ static INT32 Robocop2Frame()
 		if (i == 248) {
 			deco16_vblank = 0x08;
 		}
-		
-		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
-		deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
@@ -2616,6 +2694,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
+
+		deco_146_104_scan();
 
 		SCAN_VAR(scanline);
 		SCAN_VAR(irq_mask);

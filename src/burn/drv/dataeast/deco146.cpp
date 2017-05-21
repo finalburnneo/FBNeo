@@ -2395,6 +2395,42 @@ UINT16 deco_146_104_read_data(UINT16 address, UINT16 mem_mask, UINT8 &csflags)
 	return retdata;
 }
 
+// handy handlers
+
+static UINT16 deco146_104prot_r(UINT32 region, UINT32 offset, UINT16 mem_mask)
+{
+	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
+	UINT8 cs = 0;
+	return deco_146_104_read_data(deco146_addr, mem_mask, cs);
+}
+
+static void deco146_104prot_w(UINT32 region, UINT32 offset, UINT16 data, UINT16 mem_mask)
+{
+	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
+	UINT8 cs = 0;
+	deco_146_104_write_data(deco146_addr, data, mem_mask, cs);
+}
+
+void deco146_104_prot_wb(UINT32 region, UINT32 address, UINT8 data)
+{
+	deco146_104prot_w(region, address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+}
+
+UINT8 deco146_104_prot_rb(UINT32 region, UINT32 address)
+{
+	return deco146_104prot_r(region, address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+}
+
+void deco146_104_prot_ww(UINT32 region, UINT32 address, UINT16 data)
+{
+	deco146_104prot_w(region, address&0x3fff, data, 0xffff);
+}
+
+UINT16 deco146_104_prot_rw(UINT32 region, UINT32 address)
+{
+	return deco146_104prot_r(region, address&0x3fff, 0xffff);
+}
+
 
 static UINT16 deco_146_port_dummy_cb()
 {

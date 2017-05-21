@@ -5,6 +5,12 @@
 
 void deco_146_104_write_data(UINT16 address, UINT16 data, UINT16 mem_mask, UINT8 &csflags);
 UINT16 deco_146_104_read_data(UINT16 address, UINT16 mem_mask, UINT8 &csflags);
+
+void deco146_104_prot_wb(UINT32 region, UINT32 address, UINT8 data);
+void deco146_104_prot_ww(UINT32 region, UINT32 address, UINT16 data);
+UINT8 deco146_104_prot_rb(UINT32 region, UINT32 address);
+UINT16 deco146_104_prot_rw(UINT32 region, UINT32 address);
+
 void deco_146_104_set_port_a_cb(UINT16 (*port_cb)()); // inputs
 void deco_146_104_set_port_b_cb(UINT16 (*port_cb)()); // system
 void deco_146_104_set_port_c_cb(UINT16 (*port_cb)()); // dips

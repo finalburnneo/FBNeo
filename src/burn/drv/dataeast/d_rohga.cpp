@@ -452,20 +452,6 @@ static struct BurnDIPInfo HangzoDIPList[]=
 
 STDDIPINFO(Hangzo)
 
-static UINT16 rohga_deco104prot_r(UINT32 offset, UINT16 mem_mask)
-{
-	INT32 deco146_addr = BITSWAP32(offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
-	UINT8 cs = 0;
-	return deco_146_104_read_data(deco146_addr, mem_mask, cs);
-}
-
-static void rohga_deco104prot_w(UINT32 offset, UINT16 data, UINT16 mem_mask)
-{
-	INT32 deco146_addr = BITSWAP32(offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
-	UINT8 cs = 0;
-	deco_146_104_write_data(deco146_addr, data, mem_mask, cs);
-}
-
 void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x200000, data)
@@ -497,7 +483,7 @@ void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 	}
 
 	if (address >= 0x280000 && address <= 0x283fff) {
-		rohga_deco104prot_w(address&0x3fff, data, 0xffff);
+		deco146_104_prot_ww(0, address, data);
 		return;
 	}
 }
@@ -534,7 +520,7 @@ void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if (address >= 0x280000 && address <= 0x283fff) {
-		rohga_deco104prot_w(address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+		deco146_104_prot_wb(0, address, data);
 		return;
 	}
 }
@@ -556,7 +542,7 @@ UINT16 __fastcall rohga_main_read_word(UINT32 address)
 	}
 
 	if (address >= 0x280000 && address <= 0x283fff) {
-		return rohga_deco104prot_r(address&0x3fff, 0xffff);
+		return deco146_104_prot_rw(0, address);
 	}
 
 	return 0;
@@ -583,7 +569,7 @@ UINT8 __fastcall rohga_main_read_byte(UINT32 address)
 	}
 
 	if (address >= 0x280000 && address <= 0x283fff) {
-		return rohga_deco104prot_r(address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+		return deco146_104_prot_rb(0, address);
 	}
 
 	return 0;
@@ -626,7 +612,7 @@ void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
 	    (address >= 0xfe4000 && address <= 0xfe7fff)) { // nitrobal
-		rohga_deco104prot_w(address&0x3fff, data, 0xffff);
+		deco146_104_prot_ww(0, address, data);
 		return;
 	}
 }
@@ -671,7 +657,7 @@ void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
 	    (address >= 0xfe4000 && address <= 0xfe7fff)) { // nitrobal
-		rohga_deco104prot_w(address&0x3fff, data, 0xff00 >> ((address & 1) << 3));
+		deco146_104_prot_wb(0, address, data);
 		return;
 	}
 }
@@ -682,7 +668,7 @@ UINT16 __fastcall wizdfire_main_read_word(UINT32 address)
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
 	    (address >= 0xfe4000 && address <= 0xfe7fff)) { // nitrobal
-		return rohga_deco104prot_r(address&0x3fff, 0xffff);
+		return deco146_104_prot_rw(0, address);
 	}
 
 	return 0;
@@ -694,7 +680,7 @@ UINT8 __fastcall wizdfire_main_read_byte(UINT32 address)
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
 	    (address >= 0xfe4000 && address <= 0xfe7fff)) { // nitrobal
-		return rohga_deco104prot_r(address&0x3fff, 0xff00 >> ((address & 1) << 3)) >> ((~address & 1) << 3);
+		return deco146_104_prot_rb(0, address);
 	}
 
 	return 0;

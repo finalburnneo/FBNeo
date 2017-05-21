@@ -1910,6 +1910,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		deco16Scan();
 
+		deco_146_104_scan();
+
 		SCAN_VAR(DrvOkiBank);
 
 		INT32 bank = DrvOkiBank;

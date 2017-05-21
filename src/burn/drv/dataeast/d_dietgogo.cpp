@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "deco16ic.h"
+#include "deco146.h"
 #include "msm6295.h"
 #include "h6280_intf.h"
 
@@ -36,28 +37,28 @@ static UINT8 DrvReset;
 static UINT16 DrvInputs[2];
 
 static struct BurnInputInfo DietgoInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 7,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p1 fire 3"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p2 fire 3"	},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 15,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -120,39 +121,22 @@ void __fastcall dietgogo_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x200000, data)
 
-	switch (address)
-	{
-		case 0x340380:
-			deco16_soundlatch = data;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		return;
+	if (address >= 0x340000 && address <= 0x343fff) {
+		deco146_104_prot_ww(0, address, data);
 	}
 }
 
 void __fastcall dietgogo_main_write_byte(UINT32 address, UINT8 data)
 {
-	switch (address)
-	{
-		case 0x340380:
-		case 0x340381:
-			deco16_soundlatch = data;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		return;
+	if (address >= 0x340000 && address <= 0x343fff) {
+		deco146_104_prot_wb(0, address, data);
 	}
 }
 
 UINT16 __fastcall dietgogo_main_read_word(UINT32 address)
 {
-	switch (address)
-	{
-		case 0x340298:
-			return (DrvInputs[0] & 0x07) | (deco16_vblank & 0x0008);
-
-		case 0x340342:
-			return DrvInputs[1];
-
-		case 0x340506:
-			return (DrvDips[1] << 8) | (DrvDips[0] << 0);
+	if (address >= 0x340000 && address <= 0x343fff) {
+		return deco146_104_prot_rw(0, address);
 	}
 
 	return 0;
@@ -160,21 +144,8 @@ UINT16 __fastcall dietgogo_main_read_word(UINT32 address)
 
 UINT8 __fastcall dietgogo_main_read_byte(UINT32 address)
 {
-	switch (address)
-	{
-		case 0x340298:
-		case 0x340299:
-			return (DrvInputs[0] & 0x07) | (deco16_vblank & 0x0008);
-
-		case 0x340342:
-		case 0x340343:
-			return DrvInputs[1] >> ((~address & 1) << 3);
-
-		case 0x340506:
-			return DrvDips[1];
-
-		case 0x340507:
-			return DrvDips[0];
+	if (address >= 0x340000 && address <= 0x343fff) {
+		return deco146_104_prot_rb(0, address);
 	}
 
 	return 0;
@@ -183,6 +154,27 @@ UINT8 __fastcall dietgogo_main_read_byte(UINT32 address)
 static INT32 dietgo_bank_callback(const INT32 bank)
 {
 	return ((bank >> 4) & 0x7) * 0x1000;
+}
+
+static UINT16 inputs_read()
+{
+	return DrvInputs[0];
+}
+
+static UINT16 system_read()
+{
+	return (DrvInputs[1] & 7) | deco16_vblank;
+}
+
+static UINT16 dips_read()
+{
+	return (DrvDips[1] << 8) | (DrvDips[0] << 0);
+}
+
+static void soundlatch_write(UINT16 data)
+{
+	deco16_soundlatch = data & 0xff;
+	h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 static INT32 DrvDoReset()
@@ -194,6 +186,8 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	deco16SoundReset();
+
+	deco_146_104_reset();
 
 	deco16Reset();
 
@@ -272,6 +266,15 @@ static INT32 DrvInit()
 	deco16_set_global_offsets(0, 8);
 	deco16_set_bank_callback(0, dietgo_bank_callback);
 	deco16_set_bank_callback(1, dietgo_bank_callback);
+
+	// 146_104 prot
+	deco_104_init();
+	deco_146_104_set_port_a_cb(inputs_read); // inputs
+	deco_146_104_set_port_b_cb(system_read); // system
+	deco_146_104_set_port_c_cb(dips_read); // dips
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
+	deco_146_104_set_interface_scramble_interleave();
+	deco_146_104_set_use_magic_read_address_xor(1);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -491,6 +494,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 	
 		deco16SoundScan(nAction, pnMin);
+
+		deco_146_104_scan();
 
 		deco16Scan();
 	}

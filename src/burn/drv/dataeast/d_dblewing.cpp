@@ -213,7 +213,7 @@ static UINT8 __fastcall dblewing_sound_read(UINT16 address)
 
 static void sound_callback(UINT16 data)
 {
-	soundlatch = data;
+	soundlatch = data & 0xff;
 	sound_irq |=  0x02;
 
 	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -591,14 +591,17 @@ static INT32 DrvFrame()
 	SekOpen(0);
 	ZetOpen(0);
 
-	deco16_vblank = 0;
+	deco16_vblank = 8;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		if (i == 29) deco16_vblank = 0;
+		if (i == 248) {
+			deco16_vblank = 0x08;
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		}
+
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-
-		if (i == 240) deco16_vblank = 0x08;
-
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 
 		if (pBurnSoundOut) {
@@ -609,9 +612,6 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
-
-
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

@@ -270,7 +270,6 @@ static INT32 DrvDoReset()
 	MSM6295Reset(0);
 
 	deco16Reset();
-	deco_146_104_reset();
 
 	flipscreen = 0;
 	soundlatch = 0;
@@ -657,7 +656,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction);
 		MSM6295Scan(0, nAction);
-		deco_146_104_scan();
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);

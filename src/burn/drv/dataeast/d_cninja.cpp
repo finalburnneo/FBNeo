@@ -1016,8 +1016,6 @@ static INT32 DrvDoReset()
 
 	deco16Reset();
 
-	deco_146_104_reset();
-
 	scanline = 0;
 	irq_mask = 0;
 	irq_timer = -1;
@@ -2664,12 +2662,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	
+
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-
-		deco_146_104_scan();
 
 		SCAN_VAR(scanline);
 		SCAN_VAR(irq_mask);
@@ -2704,7 +2700,7 @@ static INT32 StoneageScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2151Scan(nAction);
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
-	
+
 		deco16Scan();
 
 		SCAN_VAR(scanline);

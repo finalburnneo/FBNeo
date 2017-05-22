@@ -1,12 +1,13 @@
 /*
 TO DO!
 
-1   Double Wings                MBE     102     52              141             104
+    DECO32 :)
 */
 
 
 #include "tiles_generic.h"
 #include "bitswap.h"
+#include "deco146.h"
 
 static INT32 deco16_layer_size[4];
 static INT32 deco16_layer_size_select[4];
@@ -560,21 +561,29 @@ void deco16Reset()
 	}
 
 	deco16_priority = 0;
+
+	if (deco_146_104_inuse)
+		deco_146_104_reset();
 }
 
 void deco16Exit()
 {
-	BurnFree(deco16_prio_map);
+	BurnFree (deco16_prio_map);
 
 	BurnFree (deco16_sprite_prio_map);
 
 	for (INT32 i = 0; i < 4; i++) {
 		BurnFree (deco16_pf_rowscroll[i]);
+		deco16_pf_rowscroll[i] = NULL;
 		BurnFree (deco16_pf_ram[i]);
+		deco16_pf_ram[i] = NULL;
 	}
-	
-	BurnFree (deco16_pf_control[0]);	
+
+	BurnFree (deco16_pf_control[0]);
 	BurnFree (deco16_pf_control[1]);
+
+	if (deco_146_104_inuse)
+		deco_146_104_exit();
 }
 
 static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscroll, INT32 control0, INT32 control1)
@@ -710,19 +719,19 @@ void deco16Scan()
 	struct BurnArea ba;
 
 	{
-		char name[128];
+		char name[32];
 
 		for (INT32 i = 0; i < 4; i++) {
 			if (deco16_pf_ram[i] == NULL) continue;
 
-		//	memset(&ba, 0, sizeof(ba));
+			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = deco16_pf_ram[i];
 			ba.nLen	  = 0x2000;
 			sprintf (name, "Deco16ic RAM %d", i);
 			ba.szName = name;
 			BurnAcb(&ba);
 
-		//	memset(&ba, 0, sizeof(ba));
+			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = deco16_pf_rowscroll[i];
 			ba.nLen	  = 0x1000;
 			sprintf (name, "Deco16ic Rowscroll %d", i);
@@ -744,6 +753,9 @@ void deco16Scan()
 
 		SCAN_VAR(deco16_priority);
 		SCAN_VAR(deco16_vblank);
+
+		if (deco_146_104_inuse)
+			deco_146_104_scan();
 	}
 }
 

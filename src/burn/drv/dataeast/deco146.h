@@ -3,14 +3,17 @@
 
 #include "bitswap.h"
 
-void deco_146_104_write_data(UINT16 address, UINT16 data, UINT16 mem_mask, UINT8 &csflags);
-UINT16 deco_146_104_read_data(UINT16 address, UINT16 mem_mask, UINT8 &csflags);
-
+// handy handlers
 void deco146_104_prot_wb(UINT32 region, UINT32 address, UINT8 data);
 void deco146_104_prot_ww(UINT32 region, UINT32 address, UINT16 data);
 UINT8 deco146_104_prot_rb(UINT32 region, UINT32 address);
 UINT16 deco146_104_prot_rw(UINT32 region, UINT32 address);
 
+// raw handlers
+void deco_146_104_write_data(UINT16 address, UINT16 data, UINT16 mem_mask, UINT8 &csflags);
+UINT16 deco_146_104_read_data(UINT16 address, UINT16 mem_mask, UINT8 &csflags);
+
+// configuration
 void deco_146_104_set_port_a_cb(UINT16 (*port_cb)()); // inputs
 void deco_146_104_set_port_b_cb(UINT16 (*port_cb)()); // system
 void deco_146_104_set_port_c_cb(UINT16 (*port_cb)()); // dips
@@ -19,17 +22,21 @@ void deco_146_104_set_interface_scramble(UINT8 a9, UINT8 a8, UINT8 a7, UINT8 a6,
 void deco_146_104_set_interface_scramble_reverse();
 void deco_146_104_set_interface_scramble_interleave();
 void deco_146_104_set_use_magic_read_address_xor(INT32 use_xor);
+
+// init, etc.
 void deco_146_init();
 void deco_104_init();
+// these 3 autoatically called from deco16Scan(), deco16Reset(), deco16Exit()
 void deco_146_104_scan();
 void deco_146_104_reset();
+void deco_146_104_exit();
 
+extern INT32 deco_146_104_inuse;
 
 #define BLK (0xff)
 #define INPUT_PORT_A (-1)
 #define INPUT_PORT_B (-2)
 #define INPUT_PORT_C (-3)
-
 
 #define NIB3__ 0xc, 0xd, 0xe, 0xf
 #define NIB3R1 0xd, 0xe, 0xf, 0xc
@@ -60,7 +67,3 @@ struct deco146port_xx
 	INT32 use_xor;
 	INT32 use_nand;
 };
-
-//#define DECO146__PORT(p) (prot_ram[p/2])
-
-

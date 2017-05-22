@@ -88,7 +88,6 @@
 #include "tiles_generic.h"
 #include "deco146.h"
 
-
 deco146port_xx port_table_146[] = {
 /* 0x000 */ { 0x08a,           {  NIB1__, NIB2__, NIB3__, BLANK_ },  0, 1 },
 /* 0x002 */ { 0x0aa,           {  NIB3__, NIB2__, NIB0__, NIB1__ },  0, 0 },
@@ -2143,11 +2142,13 @@ deco146port_xx port_table_104[] = {
 	/* 0x7fe */ { 0xd8,          { NIB2R2, NIB3__, NIB0__, NIB1__ } , 1, 1 }
 };
 
+// callbacks
 static UINT16 (*m_port_a_r)();
 static UINT16 (*m_port_b_r)();
 static UINT16 (*m_port_c_r)();
 static void (*m_soundlatch_w)(UINT16 sl);
 
+// configuration
 static UINT8 m_bankswitch_swap_read_address;
 static UINT16 m_magic_read_address_xor;
 static INT32 m_magic_read_address_xor_enabled;
@@ -2157,6 +2158,7 @@ static UINT8 m_soundlatch_port;
 static UINT8 m_external_addrswap[10];
 static deco146port_xx* m_lookup_table;
 
+// vars
 static UINT16 m_rambank0[0x80];
 static UINT16 m_rambank1[0x80];
 static INT32 m_current_rambank;
@@ -2168,6 +2170,8 @@ static UINT16 m_latchdata;
 static UINT8 m_configregion; // which value of upper 4 address lines accesses the config region
 static INT32 m_latchflag;
 static UINT8 region_selects[6];
+
+INT32 deco_146_104_inuse = 0;
 
 static UINT16 reorder(UINT16 input, UINT8 *weights)
 {
@@ -2258,8 +2262,6 @@ static UINT16 read_protport(UINT16 address, UINT16 mem_mask)
 	if (mem_mask == 0xff00) { *(varptr) = (*(varptr) & ~mem_mask) | ((data << 8) & mem_mask); } else \
 	{ *(varptr) = (*(varptr) & ~mem_mask) | (data & mem_mask); }
 
-//static void sek_wd(void *derp
-
 static void write_protport(UINT16 address, UINT16 data, UINT16 mem_mask)
 {
 	m_latchaddr = address;
@@ -2296,7 +2298,7 @@ static void write_protport(UINT16 address, UINT16 data, UINT16 mem_mask)
 	}
 
 }
-//#undef COMBINE_DATA
+#undef COMBINE_DATA
 
 void deco_146_104_write_data(UINT16 address, UINT16 data, UINT16 mem_mask, UINT8 &csflags)
 {
@@ -2399,14 +2401,14 @@ UINT16 deco_146_104_read_data(UINT16 address, UINT16 mem_mask, UINT8 &csflags)
 
 static UINT16 deco146_104prot_r(UINT32 region, UINT32 offset, UINT16 mem_mask)
 {
-	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
+	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11, 17,16,15,14, 10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
 	UINT8 cs = 0;
 	return deco_146_104_read_data(deco146_addr, mem_mask, cs);
 }
 
 static void deco146_104prot_w(UINT32 region, UINT32 offset, UINT16 data, UINT16 mem_mask)
 {
-	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11,/**/      17,16,15,14,    10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
+	INT32 deco146_addr = BITSWAP32(region + offset, 31,30,29,28,27,26,25,24,23,22,21,20,19,18, 13,12,11, 17,16,15,14, 10,9,8, 7,6,5,4, 3,2,1,0) & 0x7fff;
 	UINT8 cs = 0;
 	deco_146_104_write_data(deco146_addr, data, mem_mask, cs);
 }
@@ -2441,31 +2443,6 @@ static void deco_146_soundlatch_dummy(UINT16 data)
 {
 }
 
-#if 0
-// for reference
-UINT16 deco_146_base_device::port_a_default(int unused)
-{
-	return ioport(":INPUTS")->read();
-}
-
-UINT16 deco_146_base_device::port_b_default(int unused)
-{
-	return ioport(":SYSTEM")->read();
-}
-
-UINT16 deco_146_base_device::port_c_default(int unused)
-{
-	return ioport(":DSW")->read();
-}
-void deco_146_base_device::soundlatch_default(address_space &space, UINT16 data, UINT16 mem_mask)
-{
-	if (m_sound_latch != nullptr)
-		m_sound_latch->write(space, 0, data & 0xff);
-	cpu_device* cpudev = (cpu_device*)machine().device(":audiocpu");
-	if (cpudev) cpudev->set_input_line(0, HOLD_LINE);
-}
-#endif
-
 void deco_146_104_set_port_a_cb(UINT16 (*port_cb)()) { m_port_a_r = port_cb; }
 void deco_146_104_set_port_b_cb(UINT16 (*port_cb)()) { m_port_b_r = port_cb; }
 void deco_146_104_set_port_c_cb(UINT16 (*port_cb)()) { m_port_c_r = port_cb; }
@@ -2499,26 +2476,11 @@ void deco_146_104_set_interface_scramble_interleave()
 	deco_146_104_set_interface_scramble(4,5,3,6,2,7,1,8,0,9);
 }
 
-void deco_146_104_base_init() // called internally!
+static void deco_146_104_base_init() // called internally!
 {
-	for (INT32 i=0;i<0x80;i++)
-	{
-		// the mutant fighter old sim assumes 0x0000
-		m_rambank0[i] = 0xffff;
-		m_rambank1[i] = 0xffff;
-	}
-
-	m_external_addrswap[0] = 0;
-	m_external_addrswap[1] = 1;
-	m_external_addrswap[2] = 2;
-	m_external_addrswap[3] = 3;
-	m_external_addrswap[4] = 4;
-	m_external_addrswap[5] = 5;
-	m_external_addrswap[6] = 6;
-	m_external_addrswap[7] = 7;
-	m_external_addrswap[8] = 8;
-	m_external_addrswap[9] = 9;
-
+	deco_146_104_inuse = 1;
+	// default addressing
+	deco_146_104_set_interface_scramble(9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
 
 	// bind our handler
 	deco_146_104_set_port_a_cb(deco_146_port_dummy_cb);
@@ -2555,6 +2517,11 @@ void deco_104_init() // called from driver
 	m_configregion = 0xc;
 }
 
+void deco_146_104_exit()
+{
+	deco_146_104_inuse = 0;
+}
+
 void deco_146_104_scan()
 {
 	SCAN_VAR(m_xor);
@@ -2574,6 +2541,13 @@ void deco_146_104_scan()
 
 void deco_146_104_reset()
 {
+	for (INT32 i = 0; i < 0x80; i++)
+	{
+		// the mutant fighter old sim assumes 0x0000
+		m_rambank0[i] = 0xffff;
+		m_rambank1[i] = 0xffff;
+	}
+
 	region_selects[0] = 0;
 	region_selects[1] = 0;
 	region_selects[2] = 0;
@@ -2589,9 +2563,8 @@ void deco_146_104_reset()
 	m_latchdata = 0x0000;
 	m_latchflag = 0;
 
-	m_xor=0;
-//  m_nand=0xffff;
-	m_nand=0x0; // wizard fire doesn't initialize it, but accesses addresses rohga needs the mask applied on
+	m_xor = 0;
+	m_nand = 0x0;
 }
 
 

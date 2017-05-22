@@ -187,8 +187,6 @@ static INT32 DrvDoReset()
 
 	deco16SoundReset();
 
-	deco_146_104_reset();
-
 	deco16Reset();
 
 	return 0;
@@ -492,10 +490,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	
-		deco16SoundScan(nAction, pnMin);
 
-		deco_146_104_scan();
+		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
 	}

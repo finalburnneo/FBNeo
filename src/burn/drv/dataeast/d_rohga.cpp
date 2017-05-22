@@ -458,11 +458,6 @@ void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 
 	switch (address)
 	{
-		case 0x2800a8:
-			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		break; //return;
-
 		case 0x300000:
 			memcpy (DrvSprBuf2, DrvSprBuf, 0x800);
 			memcpy (DrvSprBuf,  DrvSprRAM, 0x800);
@@ -491,11 +486,6 @@ void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
-		case 0x2800a9:
-			deco16_soundlatch = data;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		break; //return;
-
 		case 0x300000:
 		case 0x300001:
 			memcpy (DrvSprBuf2, DrvSprBuf, 0x800);
@@ -600,13 +590,6 @@ void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 		case 0x320004:
 			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 		return;
-
-		case 0xfe4150:
-		case 0xff4260: // nitrobal
-		case 0xff4a60:
-			deco16_soundlatch = data & 0xff;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		return;
 	}
 
 	if ((address >= 0xff4000 && address <= 0xff7fff) || // wizdfire
@@ -644,13 +627,6 @@ void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 		case 0x320004:
 		case 0x320005:
 			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
-		return;
-
-		case 0xfe4151:
-		case 0xff4261: // nitrobal
-		case 0xff4a61:
-			deco16_soundlatch = data;
-			h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
 
@@ -714,8 +690,6 @@ static INT32 DrvDoReset()
 	deco16SoundReset();
 
 	deco16Reset();
-
-	deco_146_104_reset();
 
 	DrvOkiBank = -1;
 	DrvYM2151WritePort(0, (DrvHangzo) ? 0 : 3);
@@ -801,6 +775,12 @@ static UINT16 deco_104_port_c_cb()
 	return DrvInputs[2];
 }
 
+static void soundlatch_write(UINT16 data)
+{
+	deco16_soundlatch = data & 0xff;
+	h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+}
+
 static INT32 RohgaInit()
 {
 	BurnSetRefreshRate(58.00);
@@ -864,7 +844,7 @@ static INT32 RohgaInit()
 	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
 	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
 	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
-	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -976,7 +956,7 @@ static INT32 WizdfireInit()
 	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
 	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
 	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
-	//deco_146_104_set_soundlatch_cb(deco_146_soundlatch_dummy);
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1074,6 +1054,7 @@ static INT32 SchmeisrInit()
 	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
 	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
 	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1165,6 +1146,13 @@ static INT32 HangzoInit()
 	deco16_set_bank_callback(1, rohga_bank_callback);
 	deco16_set_bank_callback(2, rohga_bank_callback);
 	deco16_set_bank_callback(3, rohga_bank_callback);
+
+	// 146_104 prot
+	deco_104_init();
+	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
+	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
+	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1277,6 +1265,7 @@ static INT32 NitrobalInit()
 	deco_146_104_set_port_a_cb(deco_104_port_a_cb);
 	deco_146_104_set_port_b_cb(deco_104_port_b_cb);
 	deco_146_104_set_port_c_cb(deco_104_port_c_cb);
+	deco_146_104_set_soundlatch_cb(soundlatch_write);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -1321,11 +1310,11 @@ static INT32 DrvExit()
 	deco16Exit();
 
 	SekExit();
-	
+
 	deco16SoundExit();
 
 	BurnFree (AllMem);
-	
+
 	DrvIsWizdfireEnglish = 0;
 	DrvHangzo = 0;
 
@@ -1885,12 +1874,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	
+
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-
-		deco_146_104_scan();
 
 		SCAN_VAR(DrvOkiBank);
 

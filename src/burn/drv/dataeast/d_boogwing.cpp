@@ -270,8 +270,6 @@ static INT32 DrvDoReset()
 	deco16SoundReset();
 	DrvYM2151WritePort(0, 1);
 
-	deco_146_104_reset();
-
 	deco16Reset();
 
 	return 0;
@@ -765,12 +763,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		
+
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-
-		deco_146_104_scan();
 
 		SCAN_VAR(DrvOkiBank);
 

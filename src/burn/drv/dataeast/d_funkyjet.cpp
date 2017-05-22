@@ -318,7 +318,7 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	deco16SoundReset();
-	deco_146_104_reset();
+
 	deco16Reset();
 
 	return 0;
@@ -638,8 +638,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();
-
-		deco_146_104_scan();
 	}
 
 	return 0;

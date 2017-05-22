@@ -1531,11 +1531,11 @@ static void nitrobal_draw_sprites(UINT8 *ram, INT32 gfxbank, INT32 alpha_on)
 			switch (BURN_ENDIAN_SWAP_INT16(spriteptr[offs + 2]) & 0xe0)
 			{
 				case 0xc0: tilemap_pri = 8;   break;
-				case 0x80: tilemap_pri = 32;  break;
+				case 0x80: tilemap_pri = 64;  break; // was 32, fixes horseshoe "ring" under bouncers in first level
 				case 0x20: tilemap_pri = 32;  break;
 				case 0x40: tilemap_pri = 8;   break;
-				case 0xa0: tilemap_pri = 32;  break;
-				case 0x00: tilemap_pri = 128; break;
+				case 0xa0: tilemap_pri = 8;  break; // was 32
+				case 0x00: tilemap_pri = 72; break; // was 128, this and above fixes the archways over the player in alien world
 				default:   tilemap_pri = 128; break;
 			}
 

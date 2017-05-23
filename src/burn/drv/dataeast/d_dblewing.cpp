@@ -436,7 +436,6 @@ static void draw_sprites()
 		INT32 inc, mult;
 
 		INT32 sprite = BURN_ENDIAN_SWAP_INT16(spriteram[offs+1]);
-		if (!sprite) continue;
 
 		INT32 y = BURN_ENDIAN_SWAP_INT16(spriteram[offs]);
 

@@ -1,9 +1,6 @@
 // FB Alpha Caveman Ninja driver module
 // Based on MAME driver by Bryan McPhail
 
-// Todo:
-//  Fix Edrandy road in stage 2 / attract mode
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -60,8 +57,6 @@ static INT32 irq_timer;
 static INT32 DrvOkiBank;
 
 static INT32 has_z80 = 0;
-
-static INT32 global_scanline = 0;
 
 static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
@@ -504,7 +499,6 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 		{
 			scanline = data & 0xff;
 
-		//	bprintf (0, _T("ACTUAL: %d, WRITTEN: %d\n"), global_scanline, scanline);
 			if ((!BIT(irq_mask,1)) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
 			} else {
@@ -568,8 +562,6 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 		case 0x1a4003:
 		{
 			scanline = data & 0xff;
-
-			//bprintf (0, _T("ACTUAL: %d, WRITTEN: %d\n"), global_scanline, scanline);
 
 			if ((!BIT(irq_mask,1)) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
@@ -2338,7 +2330,7 @@ static INT32 EdrandyFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -2361,31 +2353,16 @@ static INT32 EdrandyFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		global_scanline = i;
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
-
 		if (irq_timer == i) {
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, CPU_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (i >= 16 && i < 248) {
-			deco16_vblank = 0;
-			//Robocop2DrawScanline(i-8);
-			EdrandyDrawScanline(i-16);
+		if (i >= 8) {
+			EdrandyDrawScanline(i-8);
 		}
-
-		//if (i == 248) {
-		//	deco16_vblank = 0x08;
-
-		//if (i < 8) deco16_vblank = 0;
-
-		//if (i >= 8 && i < 248) {
-//		if (i > 16) {
-			//deco16_vblank = 8;
-  //  		EdrandyDrawScanline(i-16);
-   // 	}
 
 		if (i == 248) {
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
@@ -2435,7 +2412,7 @@ static INT32 Robocop2Frame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;

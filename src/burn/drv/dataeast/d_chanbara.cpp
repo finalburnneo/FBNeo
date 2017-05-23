@@ -3,8 +3,6 @@
 // Todo:
 // 1) Figure out the sprite banking issue (strange blob of broken
 //    sprites appears sporatically - usually when the floor pattern changes.
-// 2) Patch up CompileInput() to use DrvJoy[3][8] and variants thereof, then
-//    update all the games in pre90s that use CompileInput() to use this style -dink
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -405,7 +403,6 @@ static void draw_fg_layer()
 		Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 2, 0, 0, DrvGfxROM0);
 	}
 }
-extern int counter;
 
 static void draw_sprites()
 {

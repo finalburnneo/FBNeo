@@ -2277,7 +2277,6 @@ static INT32 CninjaFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		//nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 
 		if (irq_timer == i) {
@@ -2286,8 +2285,8 @@ static INT32 CninjaFrame()
 		}
 		if (i == 206) deco16_vblank = 0x08;
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%4 == 3) { // this fixes small tempo fluxuations in cninja
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
@@ -2369,8 +2368,8 @@ static INT32 EdrandyFrame()
 			deco16_vblank = 0x08;
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%4 == 3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
@@ -2450,18 +2449,18 @@ static INT32 Robocop2Frame()
 		}
 
 		if (i == 248) {
+			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			deco16_vblank = 0x08;
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%8 == 7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
-	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
@@ -2524,8 +2523,8 @@ static INT32 MutantfFrame()
 
 		if (i == 240) deco16_vblank = 0x08;
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%4 == 3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
@@ -2589,8 +2588,8 @@ static INT32 StoneageFrame()
 		}
 		if (i == 248) deco16_vblank = 0x08;
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%4 == 3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);

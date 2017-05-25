@@ -1829,8 +1829,8 @@ static INT32 DrvFrame()
 			deco16_vblank = 0x08;
 		}
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%8==7) { // rohga is really picky regarding ym2151 timing.
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

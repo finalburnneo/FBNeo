@@ -893,14 +893,16 @@ static INT32 DrvFrame()
 		if (i == (nInterleave - 1)) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
-		nCyclesDone[1] += h6280Run(nCyclesTotal[2] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
 
 		if (i == 248) deco16_vblank = 0x08;
-		
-		INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
-		deco16SoundUpdate(pSoundBuf, nSegmentLength);
-		nSoundBufferPos += nSegmentLength;
+
+		if (pBurnSoundOut && i%7 == 6) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 7);
+			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			deco16SoundUpdate(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[2]);

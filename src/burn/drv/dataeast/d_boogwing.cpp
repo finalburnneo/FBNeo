@@ -229,13 +229,9 @@ static INT32 boogwing_bank_callback2( const INT32 bank )
 
 static void DrvYM2151WritePort(UINT32, UINT32 data)
 {
-	if ((data & 0x02) != (UINT32)(DrvOkiBank & 0x02))
-		memcpy (DrvSndROM1, DrvSndROM1 + 0x40000 + ((data & 0x02) >> 1) * 0x40000, 0x40000);
-
-	if ((data & 0x01) != (UINT32)(DrvOkiBank & 0x01))
-		memcpy (DrvSndROM0, DrvSndROM0 + 0x40000 + ((data & 0x01) >> 0) * 0x40000, 0x40000);
-
-	DrvOkiBank = data;	
+	MSM6295SetBank(1, DrvSndROM1 + ((data & 0x02) >> 1) * 0x40000, 0, 0x3ffff);
+	MSM6295SetBank(0, DrvSndROM0 + (data & 1) * 0x40000, 0, 0x3ffff);
+	DrvOkiBank = data;
 }
 
 static UINT16 inputs_read()
@@ -268,7 +264,7 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	deco16SoundReset();
-	DrvYM2151WritePort(0, 1);
+	DrvYM2151WritePort(0, 0);
 
 	deco16Reset();
 
@@ -290,9 +286,8 @@ static INT32 MemIndex()
 	DrvGfxROM3	= Next; Next += 0x800000;
 	DrvGfxROM4	= Next; Next += 0x800000;
 
-	MSM6295ROM	= Next;
-	DrvSndROM0	= Next; Next += 0x100000;
-	DrvSndROM1	= Next; Next += 0x0c0000;
+	DrvSndROM0	= Next; Next += 0x080000;
+	DrvSndROM1	= Next; Next += 0x080000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
@@ -381,9 +376,9 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvGfxROM4 + 0x000001, 14, 2)) return 1;
 		if (BurnLoadRom(DrvGfxROM4 + 0x000000, 15, 2)) return 1;
 
-		if (BurnLoadRom(DrvSndROM0 + 0x040000, 16, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM0 + 0x000000, 16, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM1 + 0x040000, 17, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM1 + 0x000000, 17, 1)) return 1;
 
 		deco56_decrypt_gfx(DrvGfxROM0, 0x020000);
 		deco56_decrypt_gfx(DrvGfxROM1, 0x300000);
@@ -692,14 +687,14 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
 
-	INT32 nInterleave = 232;
+	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -714,18 +709,19 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (i == 206) deco16_vblank = 0x08;
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (i == 248) {
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+			deco16_vblank = 0x08;
+		}
+
+		if (pBurnSoundOut && i%8 == 7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -770,9 +766,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(DrvOkiBank);
 
-		INT32 bank = DrvOkiBank;
-		DrvOkiBank = -1;
-		DrvYM2151WritePort(0, bank);
+		DrvYM2151WritePort(0, DrvOkiBank);
 	}
 
 	return 0;
@@ -806,7 +800,6 @@ static struct BurnRomInfo boogwingRomDesc[] = {
 	{ "mbd-08.19b",		0x200000, 0xf13b1e56,  7 | BRF_GRA },           // 15
 
 	{ "mbd-10.17p",		0x080000, 0xf159f76a,  9 | BRF_SND },           // 16 OKI M6295 Samples 0
-
 	{ "mbd-09.16p",		0x080000, 0xf44f2f87, 10 | BRF_SND },           // 17 OKI M6295 Samples 1
 
 	{ "kj-00.15n",		0x000400, 0xadd4d50b, 11 | BRF_OPT },           // 18 Unknown PROMs
@@ -853,7 +846,6 @@ static struct BurnRomInfo boogwinguRomDesc[] = {
 	{ "mbd-08.19b",		0x200000, 0xf13b1e56,  7 | BRF_GRA },           // 15
 
 	{ "mbd-10.17p",		0x080000, 0xf159f76a,  8 | BRF_SND },           // 16 OKI M6295 Samples 0
-
 	{ "mbd-09.16p",		0x080000, 0xf44f2f87,  9 | BRF_SND },           // 17 OKI M6295 Samples 1
 
 	{ "kj-00.15n",		0x000400, 0xadd4d50b, 10 | BRF_OPT },           // 18 Unknown PROMs
@@ -900,7 +892,6 @@ static struct BurnRomInfo boogwingaRomDesc[] = {
 	{ "mbd-08.19b",		0x200000, 0xf13b1e56,  7 | BRF_GRA },           // 15
 
 	{ "mbd-10.17p",		0x080000, 0xf159f76a,  8 | BRF_SND },           // 16 OKI M6295 Samples 0
-
 	{ "mbd-09.16p",		0x080000, 0xf44f2f87,  9 | BRF_SND },           // 17 OKI M6295 Samples 1
 
 	{ "kj-00.15n",		0x000400, 0xadd4d50b, 10 | BRF_OPT },           // 18 Unknown PROMs
@@ -947,7 +938,6 @@ static struct BurnRomInfo ragtimeRomDesc[] = {
 	{ "mbd-08.19b",		0x200000, 0xf13b1e56,  7 | BRF_GRA },           // 15
 
 	{ "mbd-10.17p",		0x080000, 0xf159f76a,  9 | BRF_SND },           // 16 OKI M6295 Samples 0
-
 	{ "mbd-09.16p",		0x080000, 0xf44f2f87, 10 | BRF_SND },           // 17 OKI M6295 Samples 1
 
 	{ "kj-00.15n",		0x000400, 0xadd4d50b, 11 | BRF_OPT },           // 18 Unknown PROMs
@@ -994,7 +984,6 @@ static struct BurnRomInfo ragtimeaRomDesc[] = {
 	{ "mbd-08.19b",		0x200000, 0xf13b1e56,  7 | BRF_GRA },           // 15
 
 	{ "mbd-10.17p",		0x080000, 0xf159f76a,  9 | BRF_SND },           // 16 OKI M6295 Samples 0
-
 	{ "mbd-09.16p",		0x080000, 0xf44f2f87, 10 | BRF_SND },           // 17 OKI M6295 Samples 1
 
 	{ "kj-00.15n",		0x000400, 0xadd4d50b, 11 | BRF_OPT },           // 18 Unknown PROMs

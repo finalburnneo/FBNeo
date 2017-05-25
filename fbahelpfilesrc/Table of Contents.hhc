@@ -60,6 +60,10 @@
 				<param name="Local" value="dialog_game_select.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Game Information Dialog">
+				<param name="Local" value="dialog_game_info.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="NeoGeo MVS Multislot Game Select Dialog">
 				<param name="Local" value="dialog_multislot.htm">
 				</OBJECT>
@@ -90,6 +94,10 @@
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Support File Path Dialog">
 				<param name="Local" value="dialog_support_path.htm">
+				</OBJECT>
+			<LI> <OBJECT type="text/sitemap">
+				<param name="Name" value="Palette Viewer Dialog">
+				<param name="Local" value="dialog_palette_viewer.htm">
 				</OBJECT>
 			<LI> <OBJECT type="text/sitemap">
 				<param name="Name" value="Shot Factory Dialog">

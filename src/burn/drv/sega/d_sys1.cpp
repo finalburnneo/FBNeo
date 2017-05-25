@@ -5881,7 +5881,7 @@ static void System1DrawSprites()
 	INT32 i, SpriteBottomY, SpriteTopY;
 	UINT8 *SpriteBase;
 
-	if (System1SpriteRam[0] == 0xff) return; // 0xff in first byte of spriteram is sprite-disable mode
+	if (System1SpriteRam[0] == 0xff) return; // 0xff in first byte of spriteram is all-sprite-disable mode
 
 	memset(SpriteOnScreenMap, 255, 256 * 256);
 	

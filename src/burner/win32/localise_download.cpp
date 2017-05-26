@@ -27,7 +27,7 @@ static INT32 LocaliseDownloadInit()
 		return 1;
 	}
    
-	HINTERNET OpenAddress = InternetOpenUrl(connect, _T("http://www.fbalpha.com/localisationinfo/"), NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
+	HINTERNET OpenAddress = InternetOpenUrl(connect, _T("https://www.fbalpha.com/localisationinfo/"), NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
 	if (!OpenAddress) {
 		MessageBox(hLocalDownDlg, FBALoadStringEx(hAppInst, IDS_ERR_LOCAL_FAIL_OPEN_URL, true), FBALoadStringEx(hAppInst, IDS_ERR_ERROR, true), MB_OK);
 		InternetCloseHandle(connect);
@@ -103,7 +103,7 @@ static int LocaliseDownloadOkay()
 	}
 	
 	TCHAR url[256];
-	_sntprintf(url, 256, _T("http://www.fbalpha.com/localisation/downloadtemplates/%i/"), langCodes[nIndex]);
+	_sntprintf(url, 256, _T("https://www.fbalpha.com/localisation/downloadtemplates/%i/"), langCodes[nIndex]);
    
 	HINTERNET OpenAddress = InternetOpenUrl(connect, url, NULL, 0, INTERNET_FLAG_PRAGMA_NOCACHE | INTERNET_FLAG_KEEP_CONNECTION, 0);
 	if (!OpenAddress) {

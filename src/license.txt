@@ -8,7 +8,7 @@ You may freely use, modify, and distribute both the FB Alpha source code and bin
  - You may use dynamic linked libraries (dlls) for network play only (all other use is prohibited);
  - You may not ask for donations to support your work on any project that uses the FB Alpha source code.
 
-FB Alpha can currently be obtained from http://www.fbalpha.com.
+FB Alpha can currently be obtained from https://www.fbalpha.com.
 
 FB Alpha would not exist without a lot of code from the MAME project. The MAME project is subject to it's own license, which can be found at http://mamedev.org/legal.html. Due to the use of MAME code in FB Alpha, FB Alpha is also subject to the terms of the MAME license.
 

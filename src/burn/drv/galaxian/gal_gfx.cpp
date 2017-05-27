@@ -731,7 +731,7 @@ void FroggerDrawBackground()
 		}
 	} else {
 		for (INT32 y = 0; y < nScreenHeight; y++) {
-			for (INT32 x = 0; x < 128 + 8; x++) {
+			for (INT32 x = 0; x < 128; x++) {
 				pTransDraw[(y * nScreenWidth) + x] = GAL_PALETTE_BACKGROUND_OFFSET;
 			}
 		}

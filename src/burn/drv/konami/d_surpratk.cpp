@@ -550,7 +550,7 @@ struct BurnDriver BurnDrvSuratk = {
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT | GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, suratkRomInfo, suratkRomName, NULL, NULL, SurpratkInputInfo, SurpratkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
+	304, 224, 4, 3
 };
 
 
@@ -577,7 +577,7 @@ struct BurnDriver BurnDrvSuratka = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT | GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, suratkaRomInfo, suratkaRomName, NULL, NULL, SurpratkInputInfo, SurpratkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
+	304, 224, 4, 3
 };
 
 
@@ -604,5 +604,5 @@ struct BurnDriver BurnDrvSuratkj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT | GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, suratkjRomInfo, suratkjRomName, NULL, NULL, SurpratkInputInfo, SuratkjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	288, 224, 4, 3
+	304, 224, 4, 3
 };

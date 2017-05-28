@@ -25,6 +25,7 @@ static INT32 (*irqcallback)(INT32);
 
 void konami_set_irq_line(INT32 irqline, INT32 state);
 void konami_init(INT32 (*irqcallback)(INT32));
+void konami_set_irq_hold(INT32 irq);
 
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type)
 {
@@ -147,6 +148,10 @@ void konamiSetIrqLine(INT32 line, INT32 state)
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiSetIrqLine called without init\n"));
 #endif
 
+	if (state == CPU_IRQSTATUS_HOLD) {
+		konami_set_irq_line(line, CPU_IRQSTATUS_ACK);
+		konami_set_irq_hold(line);
+	} else
 	if (state == CPU_IRQSTATUS_AUTO) {
 		konami_set_irq_line(line, CPU_IRQSTATUS_ACK);
 		konamiRun(0);

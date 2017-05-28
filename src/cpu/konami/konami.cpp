@@ -62,6 +62,7 @@ typedef struct
 	UINT8   int_state;  /* SYNC and CWAI flags */
 	UINT8	nmi_state;
 	int	nTotalCycles;
+	int hold_irq;
 	ALIGN_VAR(8) int     (*irq_callback)(int irqline);
 	ALIGN_VAR(8) void 	(*setlines_callback)( int lines ); /* callback called when A16-A23 are set */
 } konami_Regs;
@@ -138,7 +139,11 @@ static int nCyclesToDo = 0;
 		CC |= CC_IF | CC_II;			/* inhibit FIRQ and IRQ */		\
 		PCD = RM16(0xfff6); 											\
 		change_pc(PC);					/* TS 971002 */ 				\
-		(void)(*konami.irq_callback)(KONAMI_FIRQ_LINE);					\
+	    if (konami.hold_irq == (1 << KONAMI_FIRQ_LINE)) {               \
+		    konami.hold_irq = 0;                                        \
+		    konami.irq_state[KONAMI_FIRQ_LINE] = 0;                     \
+	    }                                                               \
+        (void)(*konami.irq_callback)(KONAMI_FIRQ_LINE);					\
 	}																	\
 	else																\
 	if( konami.irq_state[KONAMI_IRQ_LINE]!=CPU_IRQSTATUS_NONE && !(CC & CC_II) )\
@@ -166,6 +171,10 @@ static int nCyclesToDo = 0;
 		CC |= CC_II;					/* inhibit IRQ */				\
 		PCD = RM16(0xfff8); 											\
 		change_pc(PC);					/* TS 971002 */ 				\
+	    if (konami.hold_irq == (1 << KONAMI_IRQ_LINE)) {                \
+		    konami.hold_irq = 0;                                        \
+		    konami.irq_state[KONAMI_IRQ_LINE] = 0;                      \
+	    }                                                               \
 		(void)(*konami.irq_callback)(KONAMI_IRQ_LINE);					\
 	}
 
@@ -435,6 +444,11 @@ static void konami_exit(void)
 /****************************************************************************
  * Set IRQ line state
  ****************************************************************************/
+void konami_set_irq_hold(INT32 irq)
+{
+	konami.hold_irq = 1 << irq;
+}
+
 void konami_set_irq_line(int irqline, int state)
 {
 #if defined FBA_DEBUG

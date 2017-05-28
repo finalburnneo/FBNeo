@@ -2112,8 +2112,8 @@ STD_ROM_PICK(Mwalkbl2)
 STD_ROM_FN(Mwalkbl2)
 
 static struct BurnRomInfo ShdancerRomDesc[] = {
-	{ "shdancer.a6",    0x40000, 0x3d5b3fa9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "shdancer.a5",    0x40000, 0x2596004e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12774b.a6",  0x40000, 0x3d5b3fa9, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12773b.a5",  0x40000, 0x2596004e, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
 	{ "mpr-12712.b1",   0x40000, 0x9bdabe3d, SYS16_ROM_TILES | BRF_GRA },
 	{ "mpr-12713.b2",   0x40000, 0x852d2b1c, SYS16_ROM_TILES | BRF_GRA },
@@ -2128,7 +2128,7 @@ static struct BurnRomInfo ShdancerRomDesc[] = {
 	{ "epr-12716.b8",   0x40000, 0xa870e629, SYS16_ROM_SPRITES | BRF_GRA },
 	{ "epr-12723.a8",   0x40000, 0xc606cf90, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "epr-12720.a4",   0x20000, 0x7a0d8de1, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "epr-12987.a4",   0x20000, 0xd1c020cc, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
 	{ "mpr-12715.b4",   0x40000, 0x07051a52, SYS16_ROM_RF5C68DATA | BRF_SND },	
 };

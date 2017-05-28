@@ -247,3 +247,23 @@ struct BurnDriver BurnDrvdotriku2 = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
 	256, 192, 4, 3
 };
+
+
+// Dottori-Man Jr. 
+
+static struct BurnRomInfo dotrimanRomDesc[] = {
+	{ "14479a.mpr",	0x4000, 0x4ba6d2f5, BRF_ESS | BRF_PRG }, //  Z80 code
+};
+
+STD_ROM_PICK(dotriman)
+STD_ROM_FN(dotriman)
+
+struct BurnDriver BurnDrvdotriman = {
+	"dotriman", "dotrikun", NULL, NULL, "2016",
+	"Dottori-Man Jr.\0", NULL, "hack (Chris Covell)", "Test Hardware",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SEGA_MISC, GBF_MAZE, 0,
+	NULL, dotrimanRomInfo, dotrimanRomName, NULL, NULL, DrvInputInfo, NULL,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x02,
+	256, 192, 4, 3
+};

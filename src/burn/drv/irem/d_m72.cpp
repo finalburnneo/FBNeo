@@ -1710,7 +1710,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 			video_offsets[0] = video_offsets[1] = -4;
 		break;
 
-		case 2: // hharry
+		case 2: // hharry, xmultipl
 		case 7: // cosmccop (layer offsets of type 2, flipxy of type 1)
 			video_offsets[0] = -4;
 			video_offsets[1] = -6;
@@ -2468,7 +2468,7 @@ STD_ROM_FN(xmultipl)
 
 static INT32 xmultiplInit()
 {
-	return DrvInit(common_080000_09c000, sound_rom_map, NULL, Z80_REAL_NMI, 0);
+	return DrvInit(common_080000_09c000, sound_rom_map, NULL, Z80_REAL_NMI, 2);
 }
 
 struct BurnDriver BurnDrvXmultipl = {

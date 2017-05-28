@@ -1,6 +1,12 @@
+// FBAlpha YM-2151 sound core interface
 #include "burnint.h"
 #include "burn_sound.h"
 #include "burn_ym2151.h"
+
+// Irq Callback timing notes..
+// Due to the way the internal timing of the ym2151 works, BurnYM2151Render()
+// should not be called more than ~65 times per frame.  See DrvFrame() in
+// drv/konami/d_surpratk.cpp for a simple and effective work-around.
 
 void (*BurnYM2151Render)(INT16* pSoundBuf, INT32 nSegmentLength);
 

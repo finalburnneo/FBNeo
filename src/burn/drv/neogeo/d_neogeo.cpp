@@ -14213,6 +14213,74 @@ struct BurnDriver BurnDrvkf2k4pls = {
 	0x1000,	304, 224, 4, 3
 };
 
+// The King of Fighters '95 (Special 2017)
+// Modified by: GSC2007	
+// Version number: Ver 1.0.0601 
+
+static struct BurnRomInfo kof95spRomDesc[] = {
+	{ "084-p1sp.p1",  0x100000, 0x904e53b9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "084-p2sp.p2",  0x100000, 0xbfcf5b8f, 1 | BRF_ESS | BRF_PRG }, //  1			
+	{ "084-p3sp.p3",  0x020000, 0x19ab9dad, 1 | BRF_ESS | BRF_PRG }, //  2			
+
+	{ "084-s1sp.s1",  0x020000, 0x83cbae60, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
+
+	{ "084-c1.c1",    0x400000, 0xfe087e32, 3 | BRF_GRA },           //  4 Sprite data		/ TC5332202
+	{ "084-c2.c2",    0x400000, 0x07864e09, 3 | BRF_GRA },           //  5 					/ TC5332202
+	{ "084-c3.c3",    0x400000, 0xa4e65d1b, 3 | BRF_GRA },           //  6					/ TC5332202
+	{ "084-c4.c4",    0x400000, 0xc1ace468, 3 | BRF_GRA },           //  7 					/ TC5332202
+	{ "084-c5.c5",    0x200000, 0x8a2c1edc, 3 | BRF_GRA },           //  8 					/ TC5316200
+	{ "084-c6.c6",    0x200000, 0xf593ac35, 3 | BRF_GRA },           //  9 					/ TC5316200
+	{ "084-c7.c7",    0x100000, 0x9904025f, 3 | BRF_GRA },           // 10 					/ TC538200
+	{ "084-c8.c8",    0x100000, 0x78eb0f9b, 3 | BRF_GRA },           // 11 					/ TC538200
+
+	{ "084-m1.m1",    0x020000, 0x6f2d7429, 4 | BRF_ESS | BRF_PRG }, // 12 Z80 code			/ TC531001
+
+	{ "084-v1.v1",    0x400000, 0x84861b56, 5 | BRF_SND },           // 13 Sound data		/ TC5332201
+	{ "084-v2.v2",    0x200000, 0xb38a2803, 5 | BRF_SND },           // 14 					/ TC5316200
+	{ "084-v3.v3",    0x100000, 0xd683a338, 5 | BRF_SND },           // 15 					/ TC538200
+};
+
+STDROMPICKEXT(kof95sp, kof95sp, neogeo)
+STD_ROM_FN(kof95sp)
+
+static UINT8 *kof95spExtraROM;
+
+static INT32 Kof95spInit()
+{
+    INT32 nRet = NeoInit();
+
+    if (nRet == 0) {
+        kof95spExtraROM = (UINT8*)BurnMalloc(0x20000);
+
+        if (BurnLoadRom(kof95spExtraROM, 2, 1)) return 1;
+
+        BurnByteswap(kof95spExtraROM, 0x20000); // necessary?
+
+        SekOpen(0);
+        SekMapMemory(kof95spExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+        SekClose();
+    }
+
+    return nRet;
+}
+
+static INT32 Kof95spExit()
+{
+    BurnFree (kof95spExtraROM);
+
+    return NeoExit();
+}
+
+struct BurnDriverD BurnDrvKof95sp = {
+	"kof95sp", "kof95", "neogeo", NULL, "2017",
+	"The King of Fighters '95 (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof95spRomInfo, kof95spRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	Kof95spInit, Kof95spExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // The King of Fighters '96 (NGM-214, alternate board)
 /* MVS VERSION */
 

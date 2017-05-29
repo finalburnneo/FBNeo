@@ -2449,7 +2449,6 @@ static INT32 Robocop2Frame()
 		}
 
 		if (i == 248) {
-			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			deco16_vblank = 0x08;
 		}
 
@@ -2460,6 +2459,7 @@ static INT32 Robocop2Frame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
+	SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 

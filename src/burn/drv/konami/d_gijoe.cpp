@@ -685,7 +685,6 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -725,23 +724,11 @@ static INT32 DrvFrame()
 				}
 			}
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
-			K054539Update(0, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
-			K054539Update(0, pSoundBuf, nSegmentLength);
-		}
+		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * 2);
+		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

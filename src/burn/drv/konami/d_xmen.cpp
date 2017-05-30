@@ -603,7 +603,6 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K054539Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -615,8 +614,8 @@ static INT32 DrvFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K054539Update(0, pSoundBuf, nSegmentLength);
 		}
+		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -629,7 +628,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -637,7 +636,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

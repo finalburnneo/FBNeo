@@ -909,11 +909,7 @@ static INT32 MooInit()
 
 	EEPROMInit(&moo_eeprom_interface);
 
-	if (nBurnSoundRate == 44100) {
-		BurnYM2151Init(3700000); // 3.7mhz here to match the tuning of the 48000khz k054539 chip, otherwise the music sounds horrible! - dink Nov.7.2014
-	} else {
-		BurnYM2151Init(4000000);
-	}
+	BurnYM2151Init(4000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 
@@ -1001,11 +997,7 @@ static INT32 BuckyInit()
 
 	EEPROMInit(&moo_eeprom_interface);
 
-	if (nBurnSoundRate == 44100) {
-		BurnYM2151Init(3700000); // 3.7mhz here to match the tuning of the 48000khz k054539 chip, otherwise the music sounds horrible! - dink Nov.7.2014
-	} else {
-		BurnYM2151Init(4000000);
-	}
+	BurnYM2151Init(4000000);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.50, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.50, BURN_SND_ROUTE_RIGHT);
 
@@ -1161,7 +1153,6 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K054539Update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1171,8 +1162,8 @@ static INT32 DrvFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			K054539Update(0, pSoundBuf, nSegmentLength);
 		}
+		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

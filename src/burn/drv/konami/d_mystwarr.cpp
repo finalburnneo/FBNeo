@@ -101,25 +101,25 @@ static struct BurnInputInfo MystwarrInputList[] = {
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p3 coin"},
-	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 right"},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p3 fire 1"},
-	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
+	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
+	{"P3 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
+	{"P3 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
+	{"P3 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
 
 	{"P4 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
@@ -2698,6 +2698,7 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 	if (pMystwarrRozBitmap) {
 		BurnFree (pMystwarrRozBitmap);
+		pMystwarrRozBitmap = NULL;
 	}
 	return 0;
 }
@@ -2795,7 +2796,6 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 60;
-	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -2805,19 +2805,14 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nNext, nCyclesSegment;
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = SekRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
-
 		if (nGame == 1)
 		{
 			if (mw_irq_control & 1)
 			{
 				if (i == 0)
 					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-	
-				if (i == ((nInterleave * 240)/256))
+
+				if (i == ((nInterleave * (240+10))/256)) // +10 otherwise flickers on char.selection screen (mystwarr)
 					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			}
 		}
@@ -2852,6 +2847,12 @@ static INT32 DrvFrame()
 				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		}
 
+		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesSegment = nNext - nCyclesDone[0];
+		nCyclesSegment = SekRun(nCyclesSegment);
+		nCyclesDone[0] += nCyclesSegment;
+
+
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[1];
 		nCyclesSegment = ZetRun(nCyclesSegment);
@@ -2860,25 +2861,12 @@ static INT32 DrvFrame()
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {// && sound_nmi_enable && sound_control) { // iq_132
 			ZetNmi();
 		}
-
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			memset(pSoundBuf, 0, nSegmentLength * 2 * 2);
-			K054539Update(0, pSoundBuf, nSegmentLength);
-			K054539Update(1, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			memset(pSoundBuf, 0, nSegmentLength * 2 * 2);
-			K054539Update(0, pSoundBuf, nSegmentLength);
-			K054539Update(1, pSoundBuf, nSegmentLength);
-		}
+		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * 2);
+		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
+		K054539Update(1, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

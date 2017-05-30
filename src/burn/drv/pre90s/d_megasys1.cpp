@@ -2246,7 +2246,7 @@ static UINT8 __fastcall megasys1z_sound_read_port(UINT16 port)
 	{
 		case 0x00:
 		case 0x01:
-			return BurnYM2203Read(0, 0);
+			return BurnYM2203Read(0, port & 1);
 	}
 
 	return 0;
@@ -3252,10 +3252,8 @@ static INT32 System1ZFrame()
 		}
 	}
 
-	INT32 nSegment;
 	INT32 nInterleave = 256;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 3000000 / 60 };
+	INT32 nCyclesTotal[2] = { 6000000 / 56, 3000000 / 56 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -3263,36 +3261,20 @@ static INT32 System1ZFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
+		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
 		if (i ==   0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
-		nSegment = (nCyclesTotal[1] * (i + 1)) / nInterleave;
-	//	if (sound_cpu_reset) {
-	//		nCyclesDone[1] += ZetIdle(nSegment - nCyclesDone[1]);
-	//	} else {
-			BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
-			nCyclesDone[1] += nSegment - nCyclesDone[1];
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // fix music in Legend of Makai (lomakai).  why is this needed? are irq's getting lost? -dink
-
-	//	}
-
-	//	if (pBurnSoundOut) {
-	//		nSegment = nBurnSoundLen / nInterleave;
-	//		BurnYM2203Update(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-	//		nSoundBufferPos += nSegment;
-	//	}
+		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
+		ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // fix music in Legend of Makai (lomakai).  why is this needed? are irq's getting lost? -dink
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		nSegment = nBurnSoundLen - nSoundBufferPos;
-		if (nSegment > 0) {
-			BurnYM2203Update(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-		}
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -3346,8 +3328,8 @@ static INT32 System1AFrame()
 			nCyclesDone[1] += SekRun(nSegment - nCyclesDone[1]);
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%8 == 7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
@@ -3420,8 +3402,8 @@ static INT32 System1BFrame()
 			nCyclesDone[1] += SekRun(nSegment - nCyclesDone[1]);
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%8 == 7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);
@@ -3494,8 +3476,8 @@ static INT32 System1CFrame()
 			nCyclesDone[1] += SekRun(nSegment - nCyclesDone[1]);
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%8 == 7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			MSM6295Render(0, pSoundBuf, nSegmentLength);

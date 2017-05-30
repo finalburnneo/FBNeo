@@ -24,6 +24,8 @@ static HBRUSH hWhiteBGBrush;
 static HBITMAP hBmp			= NULL;
 static HBITMAP hPreview		= NULL;
 
+static TCHAR szDriverName[32];
+
 TCHAR szIpsActivePatches[MAX_ACTIVE_PATCHES][MAX_PATH];
 
 // GCC doesn't seem to define these correctly.....
@@ -46,7 +48,7 @@ static TCHAR* GameIpsConfigName()
 {
 	// Return the path of the config file for this game
 	static TCHAR szName[64];
-	_stprintf(szName, _T("config\\ips\\%s.ini"), BurnDrvGetText(DRV_NAME));
+	_stprintf(szName, _T("config\\ips\\%s.ini"), szDriverName);
 	return szName;
 }
 
@@ -176,7 +178,7 @@ static void FillListBox()
 	TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 	TvItem.hInsertAfter = TVI_LAST;
 
-	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, BurnDrvGetText(DRV_NAME));
+	_stprintf(szFilePath, _T("%s%s\\"), szAppIpsPath, szDriverName);
 	_stprintf(szFilePathSearch, _T("%s*.dat"), szFilePath);
 	
 	hSearch = FindFirstFile(szFilePathSearch, &wfd);
@@ -331,7 +333,7 @@ void LoadIpsActivePatches()
 			if (!_tcsnicmp(szLine, _T("//"), 2)) continue;
 			if (!_tcsicmp(szLine, _T(""))) continue;
 			
-			_stprintf(szIpsActivePatches[nActivePatches], _T("%s%s\\%s"), szAppIpsPath, BurnDrvGetText(DRV_NAME), szLine);
+			_stprintf(szIpsActivePatches[nActivePatches], _T("%s%s\\%s"), szAppIpsPath, szDriverName, szLine);
 			nActivePatches++;
 		}		
 		
@@ -412,6 +414,8 @@ static int IpsManagerInit()
 	SendDlgItemMessage(hIpsDlg, IDC_CHOOSE_LIST, CB_SETCURSEL, (WPARAM)nIpsSelectedLanguage, (LPARAM)0);
 	
 	hIpsList = GetDlgItem(hIpsDlg, IDC_TREE1);
+	
+	_tcscpy(szDriverName, BurnDrvGetText(DRV_NAME));
 	
 	FillListBox();
 	
@@ -496,7 +500,7 @@ static void SavePatches()
 	FILE* fp = _tfopen(GameIpsConfigName(), _T("wt"));
 	
 	if (fp) {
-		_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, BurnDrvGetText(DRV_NAME), ANSIToTCHAR(BurnDrvGetTextA(DRV_FULLNAME), NULL, 0));
+		_ftprintf(fp, _T("// ") _T(APP_TITLE) _T(" v%s --- IPS Config File for %s (%s)\n\n"), szAppBurnVer, szDriverName, szFullName);
 		for (int i = 0; i < nActivePatches; i++) {
 			TCHAR *Tokens;
 			TCHAR szFileName[MAX_PATH];

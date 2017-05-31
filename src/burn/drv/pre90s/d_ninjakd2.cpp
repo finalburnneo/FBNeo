@@ -1901,6 +1901,16 @@ static INT32 OmegafDraw()
 	return 0;
 }
 
+static inline void DrvClearOpposites(UINT8* nJoystickInputs)
+{ // for active LOW
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1915,6 +1925,9 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+
+		DrvClearOpposites(&DrvInputs[1]);
+		DrvClearOpposites(&DrvInputs[2]);
 
 		previous_coin[0] = (DrvInputs[0] & 0x40) ? 0 : (previous_coin[0] + 1);
 		previous_coin[1] = (DrvInputs[0] & 0x80) ? 0 : (previous_coin[1] + 1);

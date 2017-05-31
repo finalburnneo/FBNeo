@@ -1177,7 +1177,7 @@ static struct BurnRomInfo jackalblRomDesc[] = {
 	{ "pal20l8a-2cns.pal5", 0x0144, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 26
 	{ "pal20l8acns.pal6", 	0x0144, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 27
 	{ "pal16l8pc.pal7", 	0x0104, 0xe8cdc259, 4 | BRF_OPT },		 		// 28
-	{ "dsc121.e91200", 		0x0200, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 29
+	{ "d5c121.ep1200", 		0x0200, 0x00000000, 4 | BRF_OPT | BRF_NODUMP },	// 29
 };
 
 STD_ROM_PICK(jackalbl)

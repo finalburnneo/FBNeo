@@ -1989,11 +1989,11 @@ struct BurnDriver BurnDrvGhostb3 = {
 // The Real Ghostbusters (US 3 Players) from caius
 
 static struct BurnRomInfo ghostb3aRomDesc[] = {
-	{ "dz01.1d",		0x08000, 0x1b16890e, 1 }, //  0 maincpu
-	{ "dz02.3d",		0x10000, 0x8e117541, 1 }, //  1
-	{ "dz03.4d",		0x10000, 0x5606a8f4, 1 }, //  2
-	{ "dz04.6d",		0x10000, 0x490b4525, 1 }, //  3
-	{ "dz05.7d",		0x10000, 0xb4971d33, 1 }, //  4
+	{ "dz01-2.1d",		0x08000, 0x1b16890e, 1 }, //  0 maincpu
+	{ "dz02-.3d",		0x10000, 0x8e117541, 1 }, //  1
+	{ "dz03-.4d",		0x10000, 0x5606a8f4, 1 }, //  2
+	{ "dz04-.6d",		0x10000, 0x490b4525, 1 }, //  3
+	{ "dz05-.7d",		0x10000, 0xb4971d33, 1 }, //  4
 
 	{ "dz06.5f",		0x08000, 0x798f56df, 2 }, //  5 audiocpu
 

@@ -919,6 +919,8 @@ static struct BurnRomInfo bloodbroRomDesc[] = {
 	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	
+	{ "cb006.u083.6c",	0x000100, 0xb2b89a74, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(bloodbro)
@@ -953,6 +955,8 @@ static struct BurnRomInfo bloodbroaRomDesc[] = {
 	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	
+	{ "cb006.u083.6c",	0x000100, 0xb2b89a74, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(bloodbroa)
@@ -987,6 +991,8 @@ static struct BurnRomInfo bloodbrobRomDesc[] = {
 	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	
+	{ "cb006.u083.6c",	0x000100, 0xb2b89a74, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(bloodbrob)
@@ -1071,6 +1077,8 @@ static struct BurnRomInfo skysmashRomDesc[] = {
 	{ "rom10",	0x080000, 0x1bbcda5d, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "rom1",	0x020000, 0xe69986f6, 6 | BRF_SND },           //  9 Samples
+	
+	{ "ss006.u083.4j",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(skysmash)

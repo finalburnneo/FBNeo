@@ -11087,10 +11087,10 @@ struct BurnDriver BurnDrvHthero = {
 };
 
 struct BurnDriver BurnDrvEuroch92 = {
-	"euroch92", "footchmp", NULL, NULL, "1992",
+	"euroch92", NULL, NULL, NULL, "1992",
 	"Euro Champ '92 (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
 	NULL, Euroch92RomInfo, Euroch92RomName, NULL, NULL, FootchmpInputInfo, FootchmpDIPInfo,
 	FootchmpInit, TaitoF2Exit, TaitoF2Frame, NULL, TaitoF2Scan,
 	NULL, 0x2000, 320, 224, 4, 3

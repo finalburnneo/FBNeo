@@ -1569,7 +1569,7 @@ STDROMPICKEXT(kov114, kov114, pgm)
 STD_ROM_FN(kov114)
 
 struct BurnDriver BurnDrvKov114 = {
-	"kov114", "kov", "pgm", NULL, "1999",
+	"kov100hk", "kov", "pgm", NULL, "1999",
 	"Knights of Valour - Sangoku Senki (V114, Hong Kong)\0", NULL, "IGS", "PolyGameMaster",
 	L"Knights of Valour\0\u4E09\u56FD\u6226\u7D00\0\u4E09\u56FD\u6218\u7EAA (V114, Hong Kong)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
@@ -1607,7 +1607,7 @@ STDROMPICKEXT(kov111, kov111, pgm)
 STD_ROM_FN(kov111)
 
 struct BurnDriver BurnDrvKov111 = {
-	"kov111", "kov", "pgm", NULL, "1999",
+	"kov100", "kov", "pgm", NULL, "1999",
 	"Knights of Valour - Sangoku Senki (V111, Japan)\0", NULL, "IGS (Alta Co., LTD License)", "PolyGameMaster",
 	L"Knights of Valour\0\u4E09\u56FD\u6226\u7D00\0\u4E09\u56FD\u6218\u7EAA (V111, Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,

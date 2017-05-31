@@ -804,6 +804,9 @@ static struct BurnRomInfo dyndukeRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dynduke)
@@ -863,6 +866,9 @@ static struct BurnRomInfo dyndukeaRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dyndukea)
@@ -917,6 +923,9 @@ static struct BurnRomInfo dyndukejRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dyndukej)
@@ -971,6 +980,9 @@ static struct BurnRomInfo dyndukejaRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dyndukeja)
@@ -1025,6 +1037,9 @@ static struct BurnRomInfo dyndukeuRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dyndukeu)
@@ -1079,6 +1094,9 @@ static struct BurnRomInfo dbldynjRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dbldynj)
@@ -1138,6 +1156,9 @@ static struct BurnRomInfo dbldynuRomDesc[] = {
 	{ "dd.f2",		0x40000, 0x3eb5783f, 7 | BRF_GRA },           // 26
 
 	{ "7.x10",		0x10000, 0x9cbc7b41, 8 | BRF_SND },           // 27 Samples
+	
+	{ "26.n2",		0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "61-d.u3",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(dbldynu)

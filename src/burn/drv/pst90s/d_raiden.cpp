@@ -959,6 +959,9 @@ static struct BurnRomInfo raidenRomDesc[] = {
 	{ "sei440",         0x080000, 0x946d7bde, BRF_GRA },
 
 	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
+	
+	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raiden)
@@ -999,6 +1002,9 @@ static struct BurnRomInfo raidenaRomDesc[] = {
 	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
 	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
+	
+	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidena)
@@ -1035,6 +1041,9 @@ static struct BurnRomInfo raidentRomDesc[] = {
 	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
 	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
+	
+	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raident)
@@ -1071,6 +1080,9 @@ static struct BurnRomInfo raidenuRomDesc[] = {
 	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
 	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
+	
+	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenu)
@@ -1107,6 +1119,9 @@ static struct BurnRomInfo raidenkRomDesc[] = {
 	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
 	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
+	
+	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenk)
@@ -1156,6 +1171,8 @@ static struct BurnRomInfo raidenkbRomDesc[] = {
 	{ "rkb22obj.bin",   0x020000, 0x82ee78a0, BRF_GRA },
 
 	{ "7.u203",     	0x010000, 0x8f927822, BRF_SND },        	// Sound
+	
+	{ "82s147.h7",		0x000200, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenkb)
@@ -1234,6 +1251,9 @@ static struct BurnRomInfo raidenuaRomDesc[] = {
 	{ "sei440",     	0x080000, 0x946d7bde, BRF_GRA },
 
 	{ "7.x10",      	0x010000, 0x2051263e, BRF_SND },        	// Sound
+	
+	{ "prom.n2",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "prom.u3",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenua)

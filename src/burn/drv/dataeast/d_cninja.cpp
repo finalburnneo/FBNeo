@@ -5,7 +5,6 @@
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "h6280_intf.h"
-#include "bitswap.h"
 #include "deco16ic.h"
 #include "deco146.h"
 #include "burn_ym2203.h"
@@ -494,12 +493,12 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 			irq_mask = data & 0xff;
 		return;
 
-		case 0x190002:	// to do - get actual timing right, is this what's wrong with edrandy?
+		case 0x190002:
 		case 0x1a4002:
 		{
 			scanline = data & 0xff;
 
-			if ((!BIT(irq_mask,1)) && (scanline > 0) && (scanline < 240)) {
+			if ((~irq_mask & 0x02) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;
@@ -563,7 +562,7 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 		{
 			scanline = data & 0xff;
 
-			if ((!BIT(irq_mask,1)) && (scanline > 0) && (scanline < 240)) {
+			if ((~irq_mask & 0x02) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;
@@ -795,7 +794,7 @@ void __fastcall robocop2_main_write_word(UINT32 address, UINT16 data)
 		case 0x1b0002: {
 			scanline = data & 0xff;
 
-			if ((!BIT(scanline,1)) && (scanline > 0) && (scanline < 240)) {
+			if ((~irq_mask & 0x02) && (scanline > 0) && (scanline < 240)) {
 				irq_timer = scanline;
 			} else {
 				irq_timer = -1;

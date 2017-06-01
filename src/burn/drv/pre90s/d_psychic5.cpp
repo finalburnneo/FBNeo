@@ -34,8 +34,8 @@ static UINT8 *DrvChars             = NULL;
 static UINT8 *DrvBgTiles           = NULL;
 static UINT8 *DrvSprites           = NULL;
 static UINT8 *DrvTempRom           = NULL;
-static UINT8 *DrvBlendTable	   = NULL;
-static UINT16 *DrvTempDraw	   = NULL;
+static UINT8 *DrvBlendTable	       = NULL;
+static UINT16 *DrvTempDraw	       = NULL;
 static UINT32 *DrvPalette          = NULL;
 
 static UINT8 DrvSoundLatch         = 0;
@@ -46,13 +46,13 @@ static UINT8 DrvTitleScreen        = 0;
 static UINT8 DrvBgStatus           = 0;
 static UINT16 DrvBgScrollX         = 0;
 static UINT16 DrvBgScrollY         = 0;
-static INT32 DrvBgClipMode 	   = 0;
+static INT32 DrvBgClipMode         = 0;
 static INT32 DrvBgClipMinX  	   = 0;
 static INT32 DrvBgClipMaxX  	   = 0;
 static INT32 DrvBgClipMinY  	   = 0;
 static INT32 DrvBgClipMaxY  	   = 0;
 static UINT8 DrvBgSx1  	    	   = 0;
-static UINT8 DrvBgSy1  	   	   = 0;
+static UINT8 DrvBgSy1  	   	       = 0;
 static UINT8 DrvBgSy2  	    	   = 0;
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
@@ -235,11 +235,16 @@ static INT32 MemIndex()
 	DrvSprites             = Next; Next += 1024 * 16 * 16;
 	DrvPalette             = (UINT32*)Next; Next += 0x301 * sizeof(UINT32);
 
-	DrvTempDraw	       = (UINT16*)Next; Next += 224 * 256 * sizeof(UINT16);
+	DrvTempDraw	           = (UINT16*)Next; Next += 224 * 256 * sizeof(UINT16);
 
 	MemEnd                 = Next;
 
 	return 0;
+}
+
+static void bankswitch_main()
+{
+	ZetMapMemory(DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000, 0x8000, 0xbfff, MAP_ROM);
 }
 
 static INT32 DrvDoReset()
@@ -247,6 +252,8 @@ static INT32 DrvDoReset()
 	memset (RamStart, 0, RamEnd - RamStart);
 
 	ZetOpen(0);
+	DrvRomBank = 0;
+	bankswitch_main();
 	ZetReset();
 	ZetClose();
 	
@@ -293,7 +300,7 @@ UINT8 __fastcall DrvZ80Read1(UINT16 a)
 			}
 		}
 
-		return PagedRAM[offset];		
+		return PagedRAM[offset];
 	}
 	
 	switch (a) {
@@ -320,11 +327,11 @@ void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
 		PagedRAM[offset] = d;
 		
 		if (offset == BG_SCROLLX_LSB || offset == BG_SCROLLX_MSB) {
-			DrvBgScrollX = DrvPagedRam[0x2000 + BG_SCROLLX_LSB] | (DrvPagedRam[0x2000 + BG_SCROLLX_MSB] << 8);
+			DrvBgScrollX = (DrvPagedRam[0x2000 + BG_SCROLLX_LSB] + ((DrvPagedRam[0x2000 + BG_SCROLLX_MSB] & 0x03) << 8)) & 0x3ff;
 		}
 		
 		if (offset == BG_SCROLLY_LSB || offset == BG_SCROLLY_MSB) {
-			DrvBgScrollY = DrvPagedRam[0x2000 + BG_SCROLLY_LSB] | (DrvPagedRam[0x2000 + BG_SCROLLY_MSB] << 8);
+			DrvBgScrollY = (DrvPagedRam[0x2000 + BG_SCROLLY_LSB] + ((DrvPagedRam[0x2000 + BG_SCROLLY_MSB] & 0x01) << 8)) & 0x1ff;
 		}
 		
 		if (offset == BG_SCREEN_MODE) {
@@ -364,8 +371,7 @@ void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
 		
 		case 0xf002: {
 			DrvRomBank = d & 0x03;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000 );
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000 );
+			bankswitch_main();
 			return;
 		}
 		
@@ -380,7 +386,7 @@ void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
 		}
 		
 		case 0xf005: {
-			DrvTitleScreen = d;
+			DrvTitleScreen = d & 0x01;
 			return;
 		}
 		
@@ -491,11 +497,7 @@ static INT32 SpriteYOffsets[16]     = { 0, 32, 64, 96, 128, 160, 192, 224, 256, 
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
@@ -554,19 +556,11 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(DrvZ80Write1);
 	ZetSetInHandler(DrvZ80PortRead1);
 	ZetSetOutHandler(DrvZ80PortWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMapArea(0xf200, 0xf7ff, 0, DrvSpriteRam           );
-	ZetMapArea(0xf200, 0xf7ff, 1, DrvSpriteRam           );
-	ZetMapArea(0xf200, 0xf7ff, 2, DrvSpriteRam           );
-	ZetMapArea(0xf800, 0xffff, 0, DrvZ80Ram1 + 0x1000    );
-	ZetMapArea(0xf800, 0xffff, 1, DrvZ80Ram1 + 0x1000    );
-	ZetMapArea(0xf800, 0xffff, 2, DrvZ80Ram1 + 0x1000    );
+	ZetMapMemory(DrvZ80Rom1 + 0x00000, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Rom1 + 0x10000, 0x8000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram1          , 0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvSpriteRam        , 0xf200, 0xf7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80Ram1 + 0x1000 , 0xf800, 0xffff, MAP_RAM);
 	ZetClose();
 
 	ZetInit(1);
@@ -575,23 +569,20 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(DrvZ80Write2);
 	ZetSetInHandler(DrvZ80PortRead2);
 	ZetSetOutHandler(DrvZ80PortWrite2);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
+	ZetMapMemory(DrvZ80Rom2, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram2, 0xc000, 0xc7ff, MAP_RAM);
 	ZetClose();
-	
+
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(6000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	
@@ -644,7 +635,7 @@ static inline UINT32 DrvBlendFunction(UINT32 dest, UINT32 addMe, UINT8 alpha)
 
 static void DrvSetBgColourIntensity()
 {
-	UINT16 intensity = DrvPagedRam[0x25fe] | (DrvPagedRam[0x25ff]<<8);
+	UINT16 intensity = DrvPagedRam[0x2400 + BG_PAL_INTENSITY_BU] | (DrvPagedRam[0x2400 + BG_PAL_INTENSITY_RG] << 8);
 
 	UINT8 ir = pal4bit(intensity >> 12);
 	UINT8 ig = pal4bit(intensity >>  8);
@@ -681,14 +672,15 @@ static void DrvSetBgColourIntensity()
 
 static void DrvEnableBgClipMode()
 {
+	DrvBgClipMinX = 0;
+	DrvBgClipMinY = 0;
+	DrvBgClipMaxX = nScreenWidth;
+	DrvBgClipMaxY = nScreenHeight;
+
 	if (!(DrvTitleScreen & 1))
 	{
 		DrvBgClipMode = 0;
 		DrvBgSx1 = DrvBgSy1 = DrvBgSy2 = 0;
-		DrvBgClipMinX = 0;
-		DrvBgClipMinY = 0;
-		DrvBgClipMaxX = nScreenWidth;
-		DrvBgClipMaxY = nScreenHeight;
 	}
 	else
 	{
@@ -715,11 +707,11 @@ static void DrvEnableBgClipMode()
 
 		switch (DrvBgClipMode)
 		{
-			case  0: case  4: case  8: case 12: case 16:
+			case  0: case  4: case  8: case 12: case 16: // bg "off" mode
 				DrvBgClipMinX = 0;
 				DrvBgClipMinY = 0;
-				DrvBgClipMaxX = nScreenWidth;
-				DrvBgClipMaxY = nScreenHeight;
+				DrvBgClipMaxX = 0;
+				DrvBgClipMaxY = 0;
 			break;
 
 			case  1: DrvBgClipMinY = DrvBgSy1; break;
@@ -771,52 +763,20 @@ static void DrvRenderBgLayer()
 				yFlip = !yFlip;
 			}
 
-			if (x > DrvBgClipMinX && x < (DrvBgClipMaxX - 16) && y > DrvBgClipMinY && y < (DrvBgClipMaxY - 16)) {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					} else {
-						Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					} else {
-						Render16x16Tile(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					}
-				}
-			} else {
-#if 1
-				UINT8 *gfx = DrvBgTiles + (Code * 0x100);
-				INT32 flip = ((xFlip) ? 0x0f : 0) + ((yFlip) ? 0xf0 : 0);
-				Colour = (Colour * 16) + 0x100;
+			UINT8 *gfx = DrvBgTiles + (Code * 0x100);
+			INT32 flip = ((xFlip) ? 0x0f : 0) + ((yFlip) ? 0xf0 : 0);
+			Colour = (Colour * 16) + 0x100;
 
-				for (INT32 sy = 0; sy < 16; sy++) {
-					if ((sy + y) >= DrvBgClipMinY && (sy + y) < DrvBgClipMaxY) {
-						for (INT32 sx = 0; sx < 16; sx++) {
-							if ((sx + x) >= DrvBgClipMinX && (sx + x) < DrvBgClipMaxX) {
-								pTransDraw[((sy+y)*nScreenWidth) + (sx+x)] = gfx[((sy*16)+sx)^flip] + Colour;
-							}
+			for (INT32 sy = 0; sy < 16; sy++) {
+				if ((sy + y) >= DrvBgClipMinY && (sy + y) < DrvBgClipMaxY) {
+					for (INT32 sx = 0; sx < 16; sx++) {
+						if ((sx + x) >= DrvBgClipMinX && (sx + x) < DrvBgClipMaxX) {
+							pTransDraw[((sy+y)*nScreenWidth) + (sx+x)] = gfx[((sy*16)+sx)^flip] + Colour;
 						}
 					}
 				}
-#else
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					} else {
-						Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					} else {
-						Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 256, DrvBgTiles);
-					}
-				}
-#endif
 			}
-			
+
 			TileIndex++;
 		}
 	}
@@ -1008,12 +968,12 @@ static void DrvDraw()
 	}
 
 	if (DrvBgStatus & 0x01)
-		DrvRenderBgLayer();
+		if (nBurnLayer & 1) DrvRenderBgLayer();
 
 	if (!(DrvTitleScreen & 0x01))
-		DrvRenderSprites();
+		if (nSpriteEnable & 1) DrvRenderSprites();
 
-	DrvRenderCharLayer();
+	if (nBurnLayer & 2) DrvRenderCharLayer();
 
 	if (nBurnBpp > 2)
 	{
@@ -1051,7 +1011,7 @@ static void DrvDraw()
 				}
 			}
 		}
-	} else {			// skip alpha for now on anything less than 24-bit
+	} else { // skip alpha for now on anything less than 24-bit
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 			if (pTransDraw[i] & 0x8000) {
 				pTransDraw[i] = DrvTempDraw[i] & 0x3ff;
@@ -1088,33 +1048,31 @@ static INT32 DrvFrame()
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == 0) {
-			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetVector(0xcf);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		if (i == 240) {
-			ZetSetVector(0xcf);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetVector(0xd7);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		ZetClose();
 	}
 	
 	ZetOpen(1);
 	BurnTimerEndFrame(nCyclesTotal[1]);
-	ZetClose();
-	
+
 	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		ZetOpen(1);
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
-	
+	ZetClose();
+
 	if (pBurnDraw) DrvDraw();
 
 	return 0;
@@ -1161,8 +1119,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000 );
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x4000 );
+		bankswitch_main();
 		ZetClose();
 	}
 

@@ -1383,6 +1383,7 @@ BEGIN
 		MENUITEM SEPARATOR
 		POPUP "Advanced settings"
 		BEGIN
+			MENUITEM "Force &16-bit emulation",             	MENU_DX9_ALT_FORCE_16BIT
 			MENUITEM "Hardware vertex processing",              MENU_DX9_ALT_HARDWAREVERTEX
 			MENUITEM "Motion blur",                             MENU_DX9_ALT_MOTIONBLUR
 		END

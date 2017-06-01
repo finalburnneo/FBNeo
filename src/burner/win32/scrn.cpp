@@ -2822,6 +2822,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 					bVidMotionBlur = !bVidMotionBlur;
 					POST_INITIALISE_MESSAGE;
 					break;
+					
+				case MENU_DX9_ALT_FORCE_16BIT:
+					bVidForce16bitDx9Alt = !bVidForce16bitDx9Alt;
+					POST_INITIALISE_MESSAGE;
+					break;
 			}
 			break;
 	}

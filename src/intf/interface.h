@@ -200,6 +200,7 @@ extern INT32 nVidRotationAdjust;
 extern INT32 bVidUseHardwareGamma;
 extern INT32 bVidAutoSwitchFull;
 extern INT32 bVidForce16bit;
+extern INT32 bVidForce16bitDx9Alt;
 extern INT32 bVidForceFlip;
 extern INT32 nVidTransferMethod;
 extern float fVidScreenAngle;

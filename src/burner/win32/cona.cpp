@@ -149,6 +149,7 @@ int ConfigAppLoad()
 		VAR(bVidDX9Bilinear);
 		VAR(bVidHardwareVertex);
 		VAR(bVidMotionBlur);
+		VAR(bVidForce16bitDx9Alt);
 
 		// Sound
 		VAR(nAudSelect);
@@ -466,6 +467,8 @@ int ConfigAppSave()
 	VAR(bVidHardwareVertex);
 	_ftprintf(h, _T("\n// If non-zero, use motion blur to display the image\n"));
 	VAR(bVidMotionBlur);
+	_ftprintf(h, _T("\n// If non-zero, force 16 bit emulation even in 32-bit screenmodes\n"));
+	VAR(bVidForce16bitDx9Alt);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Sound ------------------------------------------------------------------\n"));

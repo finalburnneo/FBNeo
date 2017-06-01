@@ -1577,7 +1577,7 @@ static int dx9AltTextureInit()
 	nVidImageDepth = nVidScrnDepth;
 
 	// Determine if we should use a texture format different from the screen format
-	if ((bDrvOkay && VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32) || (bDrvOkay && bVidForce16bit)) {
+	if ((bDrvOkay && VidSoftFXCheckDepth(nPreScaleEffect, 32) != 32) || (bDrvOkay && bVidForce16bitDx9Alt)) {
 		nVidImageDepth = 16;
 	}
 

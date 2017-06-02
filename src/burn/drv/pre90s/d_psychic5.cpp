@@ -38,6 +38,7 @@ static UINT8 *DrvBlendTable	       = NULL;
 static UINT16 *DrvTempDraw	       = NULL;
 static UINT32 *DrvPalette          = NULL;
 
+static UINT8 DrvRecalc             = 0;
 static UINT8 DrvSoundLatch         = 0;
 static UINT8 DrvFlipScreen         = 0;
 static UINT8 DrvRomBank            = 0;
@@ -283,7 +284,27 @@ static void DrvChangePalette(INT32 color, UINT32 offset)
 	DrvPalette[color] = BurnHighCol(pal4bit(lo >> 4), pal4bit(lo), pal4bit(hi >> 4), 0);
 }
 
-UINT8 __fastcall DrvZ80Read1(UINT16 a)
+static void DrvRecalcPalette()
+{
+	for (INT32 offset = 0x400; offset <= 0x5ff; offset++) {
+		// Sprite color
+		DrvChangePalette(((offset >> 1) & 0xff) + 0x000, offset - 0x400);
+	}
+
+	for (INT32 offset = 0x800; offset <= 0x9ff; offset++) {
+		// BG color
+		DrvChangePalette(((offset >> 1) & 0xff) + 0x100, offset - 0x400);
+	}
+
+	for (INT32 offset = 0xa00; offset <= 0xbff; offset++) {
+		// Text color
+		DrvChangePalette(((offset >> 1) & 0xff) + 0x200, offset - 0x400);
+	}
+
+	DrvRecalc = 0;
+}
+
+static UINT8 __fastcall DrvZ80Read1(UINT16 a)
 {
 	if (a >= 0xc000 && a <= 0xdfff) {
 		UINT8* PagedRAM = (UINT8*)DrvPagedRam;
@@ -317,7 +338,7 @@ UINT8 __fastcall DrvZ80Read1(UINT16 a)
 	return 0;
 }
 
-void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
+static void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
 {
 	if (a >= 0xc000 && a <= 0xdfff) {
 		UINT8* PagedRAM = (UINT8*)DrvPagedRam;
@@ -396,7 +417,7 @@ void __fastcall DrvZ80Write1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall DrvZ80PortRead1(UINT16 a)
+static UINT8 __fastcall DrvZ80PortRead1(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -409,7 +430,7 @@ UINT8 __fastcall DrvZ80PortRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall DrvZ80PortWrite1(UINT16 a, UINT8 d)
+static void __fastcall DrvZ80PortWrite1(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -420,7 +441,7 @@ void __fastcall DrvZ80PortWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall DrvZ80Read2(UINT16 a)
+static UINT8 __fastcall DrvZ80Read2(UINT16 a)
 {
 	switch (a) {
 		case 0xe000: {
@@ -435,7 +456,7 @@ UINT8 __fastcall DrvZ80Read2(UINT16 a)
 	return 0;
 }
 
-void __fastcall DrvZ80Write2(UINT16 a, UINT8 d)
+static void __fastcall DrvZ80Write2(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		default: {
@@ -444,7 +465,7 @@ void __fastcall DrvZ80Write2(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall DrvZ80PortRead2(UINT16 a)
+static UINT8 __fastcall DrvZ80PortRead2(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -457,7 +478,7 @@ UINT8 __fastcall DrvZ80PortRead2(UINT16 a)
 	return 0;
 }
 
-void __fastcall DrvZ80PortWrite2(UINT16 a, UINT8 d)
+static void __fastcall DrvZ80PortWrite2(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -502,12 +523,12 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(ZetTotalCycles() * nSoundRate / 6000000);
+	return (INT64)(ZetTotalCycles() * nSoundRate / 5000000);
 }
 
 inline static double DrvGetTime()
 {
-	return (double)ZetTotalCycles() / 6000000;
+	return (double)ZetTotalCycles() / 5000000;
 }
 
 static INT32 DrvInit()
@@ -574,15 +595,15 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(6000000);
+	BurnTimerAttachZet(5000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.08, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.08, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.08, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.08, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	
@@ -962,6 +983,10 @@ static void DrvRenderSprites()
 
 static void DrvDraw()
 {
+	if (DrvRecalc) {
+		DrvRecalcPalette();
+	}
+
 	DrvPalette[0x300] = 0; // black
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x300; // black
@@ -1033,7 +1058,7 @@ static INT32 DrvFrame()
 	DrvMakeInputs();
 
 	nCyclesTotal[0] = 6000000 / 54;
-	nCyclesTotal[1] = 6000000 / 54;
+	nCyclesTotal[1] = 5000000 / 54;
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 	
 	ZetNewFrame();
@@ -1133,7 +1158,7 @@ struct BurnDriver BurnDrvPsychic5 = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x300, 224, 256, 3, 4
+	&DrvRecalc, 0x300, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvPsychic5j = {
@@ -1143,6 +1168,6 @@ struct BurnDriver BurnDrvPsychic5j = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, Psychic5jRomInfo, Psychic5jRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x300, 224, 256, 3, 4
+	&DrvRecalc, 0x300, 224, 256, 3, 4
 };
 

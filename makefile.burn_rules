@@ -62,7 +62,7 @@ drvobj	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_1945kiii.o d_aerofgt.o d_airbustr.o d_aquarium.o d_bestleag.o d_bigstrkb.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_dcon.o \
 			d_ddragon3.o d_deniam.o d_diverboy.o d_dooyong.o d_dreamwld.o d_drgnmst.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_funybubl.o d_fuukifg2.o \
 			d_fuukifg3.o d_gaelco.o d_gaelco2.o d_gaiden.o d_galpanic.o d_galspnbl.o d_gotcha.o d_gumbo.o d_hyperpac.o d_jchan.o d_kaneko16.o d_lordgun.o \
-			d_macrossp.o d_mcatadv.o d_metro.o d_midas.o d_mugsmash.o d_mwarr.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_onetwo.o d_pass.o d_pirates.o \
+			d_macrossp.o d_mcatadv.o d_metro.o d_midas.o d_mugsmash.o d_mwarr.o d_namcos2.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_onetwo.o d_pass.o d_pirates.o \
 			d_playmark.o d_powerins.o d_pushman.o d_raiden.o d_raiden2.o d_sandscrp.o d_seta.o d_seta2.o d_shadfrce.o d_silkroad.o d_silvmil.o d_speedspn.o \
 			d_ssv.o d_suna16.o d_suprnova.o d_taotaido.o d_tecmo16.o d_tecmosys.o d_tetrisp2.o d_tumbleb.o d_unico.o d_vmetal.o d_welltris.o d_wwfwfest.o \
 			d_xorworld.o d_yunsun16.o d_yunsung8.o d_zerozone.o \
@@ -92,8 +92,8 @@ depobj	:= 	$(drvobj) \
 			burn.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o burn_sound.o burn_sound_c.o cheat.o debug_track.o hiscore.o load.o \
 			tilemap_generic.o tiles_generic.o timer.o vector.o \
 			\
-			6821pia.o 8255ppi.o 8257dma.o eeprom.o gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o kaneko_tmap.o mb87078.o mermaid.o \
-			namcoio.o pandora.o resnet.o seibusnd.o sknsspr.o slapstic.o st0020.o t5182.o timekpr.o tms34061.o v3021.o vdc.o tms9928a.o \
+			6821pia.o 8255ppi.o 8257dma.o c169.0 eeprom.o gaelco_crypt.o joyprocess.o nb1414m4.o nb1414m4_8bit.o nmk004.o nmk112.o kaneko_tmap.o mb87078.o \
+			mermaid.o namco_c45.o namcoio.o pandora.o resnet.o seibusnd.o sknsspr.o slapstic.o st0020.o t5182.o timekpr.o tms34061.o v3021.o vdc.o tms9928a.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o \
 			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o flt_rc.o fm.o fmopl.o gaelco.o ics2115.o iremga20.o \

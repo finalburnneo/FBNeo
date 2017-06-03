@@ -135,7 +135,6 @@ static struct BurnInputInfo DefaultInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 6,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
 };
@@ -144,16 +143,16 @@ STDINPUTINFO(Default)
 
 static struct BurnDIPInfo DefaultDIPList[]=
 {
+	{0x14, 0xff, 0xff, 0xff, NULL			},
 	{0x15, 0xff, 0xff, 0xff, NULL			},
-	{0x16, 0xff, 0xff, 0xff, NULL			},
 	
 	{0   , 0xfe, 0   ,    2, "Video Display"	},
-	{0x15, 0x01, 0x01, 0x01, "Normal"		},
-	{0x15, 0x01, 0x01, 0x00, "Frozen"		},
+	{0x14, 0x01, 0x01, 0x01, "Normal"		},
+	{0x14, 0x01, 0x01, 0x00, "Frozen"		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x80, 0x80, "Off"			},
-	{0x15, 0x01, 0x80, 0x00, "On"			},
+	{0x15, 0x01, 0x40, 0x40, "Off"			},
+	{0x15, 0x01, 0x40, 0x00, "On"			},
 };
 
 STDDIPINFO(Default)
@@ -778,7 +777,7 @@ static UINT8 namcos2_mcu_read(UINT16 address)
 			return DrvInputs[0]; // mcub
 
 		case 0x0002:
-			return DrvInputs[1]; // mcuc
+			return (DrvInputs[1] & ~0x40) | (DrvDips[1] & 0x40); // mcuc
 
 		case 0x0003:
 			return mcu_port_d_r();

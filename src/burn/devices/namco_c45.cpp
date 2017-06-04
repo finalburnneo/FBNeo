@@ -215,8 +215,8 @@ void c45RoadDraw(int pri)
 
 		// skip if we don't have a valid source increment
 		unsigned sourcey = m_lineram[0x200/2 + y + 15] + yscroll;
-//		const uint16_t *source_gfx = &source_bitmap.pix(sourcey & (ROAD_TILEMAP_HEIGHT - 1));
-		const uint16_t *source_gfx = c45RoadBitmap + (sourcey & (ROAD_TILEMAP_HEIGHT - 1)) * ROAD_TILEMAP_WIDTH;
+//		const UINT16 *source_gfx = &source_bitmap.pix(sourcey & (ROAD_TILEMAP_HEIGHT - 1));
+		const UINT16 *source_gfx = c45RoadBitmap + (sourcey & (ROAD_TILEMAP_HEIGHT - 1)) * ROAD_TILEMAP_WIDTH;
 		unsigned dsourcex = (ROAD_TILEMAP_WIDTH << 16) / zoomx;
 		if (dsourcex == 0)
 			continue;
@@ -249,8 +249,8 @@ void c45RoadDraw(int pri)
 		// TBA: work out palette mapping for Final Lap, Suzuka
 
 		// BUT: support transparent color for Thunder Ceptor
-	//	uint16_t *dest = &bitmap.pix(y);
-		uint16_t *dest = pTransDraw + y * nScreenWidth;
+	//	UINT16 *dest = &bitmap.pix(y);
+		UINT16 *dest = pTransDraw + y * nScreenWidth;
 		if (m_transparent_color != ~0)
 		{
 			while (numpixels-- > 0)

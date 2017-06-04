@@ -453,6 +453,47 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
+static struct BurnDIPInfo DngrtrckDIPList[]=
+{
+	// Default Values
+	{0x10, 0xff, 0xff, 0x01, NULL                     },
+	{0x11, 0xff, 0xff, 0xcb, NULL                     },
+	
+	// Dip 1
+	{0   , 0xfe, 0   , 2   , "Cabinet"                },
+	{0x10, 0x01, 0x01, 0x00, "Cocktail"               },
+	{0x10, 0x01, 0x01, 0x01, "Upright"                },
+	
+	// Dip 2
+	{0   , 0xfe, 0   , 2   , "Service Mode"           },
+	{0x11, 0x01, 0x01, 0x01, "Off"                    },
+	{0x11, 0x01, 0x01, 0x00, "On"                     },
+	
+	{0   , 0xfe, 0   , 4   , "Bonus Life"             }, // This is conditional on difficulty
+	{0x11, 0x01, 0x06, 0x02, "15000"                  },
+	{0x11, 0x01, 0x06, 0x04, "30000"                  },
+	{0x11, 0x01, 0x06, 0x06, "40000"                  },
+	{0x11, 0x01, 0x06, 0x00, "None"                   },
+	
+	{0   , 0xfe, 0   , 8   , "Difficulty"             },
+	{0x11, 0x01, 0x38, 0x10, "1 Car,  Medium"         },
+	{0x11, 0x01, 0x38, 0x28, "1 Car,  Hard"           },
+	{0x11, 0x01, 0x38, 0x00, "2 Cars, Easy"           },
+	{0x11, 0x01, 0x38, 0x18, "2 Cars, Medium"         },
+	{0x11, 0x01, 0x38, 0x30, "2 Cars, Hard"           },
+	{0x11, 0x01, 0x38, 0x08, "3 Cars, Easy"           },
+	{0x11, 0x01, 0x38, 0x20, "3 Cars, Medium"         },
+	{0x11, 0x01, 0x38, 0x38, "3 Cars, Hard"           },
+	
+	{0   , 0xfe, 0   , 4   , "Coinage"                				},
+	{0x11, 0x01, 0xc0, 0x00, "1 Coin  1 Play"        				},
+	{0x11, 0x01, 0xc0, 0x40, "1st Coin/1 Coin  2nd Coin/2 Plays"	},
+	{0x11, 0x01, 0xc0, 0x80, "1 Coin  2 Plays"        				},
+	{0x11, 0x01, 0xc0, 0xc0, "1st Coin/2 Coins  2nd Coin/3 plays"	},
+};
+
+STDDIPINFO(Dngrtrck)
+
 static struct BurnDIPInfo JunglerDIPList[]=
 {
 	// Default Values
@@ -587,6 +628,33 @@ static struct BurnRomInfo RallyxmrRomDesc[] = {
 
 STD_ROM_PICK(Rallyxmr)
 STD_ROM_FN(Rallyxmr)
+
+static struct BurnRomInfo DngrtrckRomDesc[] = {
+	{ "1B-2716.BIN",   0x00800, 0xb6180a12, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "1C-2716.BIN",   0x00800, 0x7cbeb656, BRF_ESS | BRF_PRG }, //	 1
+	{ "1D-2716.BIN",   0x00800, 0x594207b1, BRF_ESS | BRF_PRG }, //	 2
+	{ "1E-2716.BIN",   0x00800, 0xae447251, BRF_ESS | BRF_PRG }, //	 3
+	{ "1H-2716.BIN",   0x00800, 0xe0d4b534, BRF_ESS | BRF_PRG }, //	 4
+	{ "1J-2716.BIN",   0x00800, 0xe9740f16, BRF_ESS | BRF_PRG }, //	 5
+	{ "1K-2716.BIN",   0x00800, 0x843109f2, BRF_ESS | BRF_PRG }, //	 6
+	{ "1L-2716.BIN",   0x00800, 0x17759749, BRF_ESS | BRF_PRG }, //	 7
+	
+	{ "8E-2716.BIN",   0x00800, 0x50a224e2, BRF_GRA },	     //  8	Characters & Sprites
+	{ "8D-2716.BIN",   0x00800, 0x68dff552, BRF_GRA },	     //  9
+	
+	{ "rx1-6.8m",      0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
+	
+	{ "rx1-1.11n",     0x00020, 0xc7865434, BRF_GRA },	     //  11	Palette PROM
+	{ "rx1-7.8p",      0x00100, 0x834d4fda, BRF_GRA },	     //  12	Lookup PROM
+	{ "rx1-2.4n",      0x00020, 0x8f574815, BRF_GRA },	     //  13	Video Layout PROM
+	{ "rx1-3.7k",      0x00020, 0xb8861096, BRF_GRA },	     //  14	Video Timing PROM
+	
+	{ "rx1-5.3p",      0x00100, 0x4bad7017, BRF_SND },	     //  15	Sound PROMs
+	{ "rx1-4.2m",      0x00100, 0x77245b66, BRF_SND },	     //  16
+};
+
+STD_ROM_PICK(Dngrtrck)
+STD_ROM_FN(Dngrtrck)
 
 static struct BurnRomInfo NrallyxRomDesc[] = {
 	{ "nrx_prg1.1d",   0x01000, 0xba7de9fc, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
@@ -2230,10 +2298,20 @@ struct BurnDriver BurnDrvRallyxm = {
 
 struct BurnDriver BurnDrvRallyxmr = {
 	"rallyxmr", "rallyx", NULL, "rallyx", "1980",
-	"Rally X (Model Racing)\0", NULL, "bootleg", "Miscellaneous",
+	"Rally X (Model Racing)\0", NULL, "bootleg (Petaco)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmrRomInfo, RallyxmrRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
+	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NULL, 260, 288, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvDngrtrck = {
+	"dngrtrck", "rallyx", NULL, "rallyx", "1980",
+	"Danger Track (Rally X bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, DngrtrckRomInfo, DngrtrckRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DngrtrckDIPInfo,
 	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };

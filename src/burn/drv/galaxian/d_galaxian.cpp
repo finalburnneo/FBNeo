@@ -15610,6 +15610,29 @@ static struct BurnRomInfo ScramrfRomDesc[] = {
 STD_ROM_PICK(Scramrf)
 STD_ROM_FN(Scramrf)
 
+static struct BurnRomInfo OffensivRomDesc[] = {
+	{ "2716-9C.bin",   0x00800, 0xcc2ee7f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9E.bin",   0x00800, 0x66ebc070, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9F.bin",   0x00800, 0x317548fd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9H.bin",   0x00800, 0xdd380a22, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9J.bin",   0x00800, 0xfa4f1a70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9L.bin",   0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9M.bin",   0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9P.bin",   0x00800, 0xfe2866f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "2716-5C.bin",   0x00800, 0xbe037cf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2716-5D.bin",   0x00800, 0xde7912da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2716-5E.bin",   0x00800, 0xad833f7e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+
+	{ "2716-6F.bin",   0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "2716-6H.bin",   0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "82s123-NMI6331-1J-5E.bin",  	0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Offensiv)
+STD_ROM_FN(Offensiv)
+
 static struct BurnRomInfo ScramblebbRomDesc[] = {
 	{ "1",             0x00800, 0x8ba174c4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2",             0x00800, 0x43cb40a4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -17472,6 +17495,16 @@ struct BurnDriver BurnDrvScramrf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScramrfRomInfo, ScramrfRomName, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
+	ScrambleInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvOffensiv = {
+	"offensiv", "scramble", NULL, NULL, "1981",
+	"Offensive (Spanish bootleg of Scramble)\0", NULL, "bootleg (Video Dens)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, OffensivRomInfo, OffensivRomName, NULL, NULL, ScrambleInputInfo, ScrambleDIPInfo,
 	ScrambleInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

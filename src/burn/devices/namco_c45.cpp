@@ -190,13 +190,7 @@ void c45RoadDraw(int pri)
 	static int ROAD_TILEMAP_HEIGHT = ROAD_TILE_SIZE * ROAD_ROWS;
 
 	static UINT8 *m_clut = c45RoadClut;
-#define nullptr		NULL
-
 	static UINT32 m_transparent_color = c45_road_transparent_color;
-
-
-
-
 
 	unsigned yscroll = m_lineram[0x3fe/2];
 
@@ -258,7 +252,7 @@ void c45RoadDraw(int pri)
 				int pen = source_gfx[sourcex >> 16];
 			//	if (palette().pen_indirect(pen) != m_transparent_color)
 				{
-					if (m_clut != nullptr)
+					if (m_clut != NULL)
 						pen = (pen & ~0xff) | m_clut[pen & 0xff];
 					dest[screenx] = pen;
 				}
@@ -271,7 +265,7 @@ void c45RoadDraw(int pri)
 			while (numpixels-- > 0)
 			{
 				int pen = source_gfx[sourcex >> 16];
-				if (m_clut != nullptr)
+				if (m_clut != NULL)
 					pen = (pen & ~0xff) | m_clut[pen & 0xff];
 				dest[screenx++] = pen;
 				sourcex += dsourcex;

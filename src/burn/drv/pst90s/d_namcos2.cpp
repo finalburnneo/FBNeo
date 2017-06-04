@@ -89,6 +89,8 @@ static UINT16 c355_obj_position[4];
 static INT32 audio_cpu_in_reset;
 static INT32 sub_cpu_in_reset; // mcu & slave
 
+static UINT16 sound_bank = 0;
+
 static INT32 layer_color;
 static UINT8 *roz_dirty_tile; // 0x10000
 static UINT16 *roz_bitmap; // (256 * 8) * (256 * 8)
@@ -109,6 +111,8 @@ static UINT32 maincpu_run_ended = 0;
 static INT32 key_sendval;
 static UINT16 (*key_prot_read)(UINT8 offset) = NULL;
 static void (*key_prot_write)(UINT8 offset, UINT16 data) = NULL;
+
+static INT32 finallap_prot_count = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -161,7 +165,6 @@ static struct BurnDIPInfo DefaultDIPList[]=
 };
 
 STDDIPINFO(Default)
-
 
 
 static void clear_all_irqs()
@@ -584,8 +587,6 @@ static UINT8 __fastcall metlhawk_68k_read_byte(UINT32 address)
 	return namcos2_68k_read_byte(address);
 }
 
-static INT32 m_finallap_prot_count = 0;
-
 static UINT16 namcos2_finallap_prot_read(INT32 offset)
 {
 	static const UINT16 table0[8] = { 0x0000,0x0040,0x0440,0x2440,0x2480,0xa080,0x8081,0x8041 };
@@ -604,24 +605,24 @@ static UINT16 namcos2_finallap_prot_read(INT32 offset)
 			break;
 
 		case 2:
-			data = table1[m_finallap_prot_count&7];
+			data = table1[finallap_prot_count&7];
 			data = (data&0xff00)>>8;
 			break;
 
 		case 3:
-			data = table1[m_finallap_prot_count&7];
-			m_finallap_prot_count++;
+			data = table1[finallap_prot_count&7];
+			finallap_prot_count++;
 			data = data&0x00ff;
 			break;
 
 		case 0x3fffc/2:
-			data = table0[m_finallap_prot_count&7];
+			data = table0[finallap_prot_count&7];
 			data = data&0xff00;
 			break;
 
 		case 0x3fffe/2:
-			data = table0[m_finallap_prot_count&7];
-			m_finallap_prot_count++;
+			data = table0[finallap_prot_count&7];
+			finallap_prot_count++;
 			data = (data&0x00ff)<<8;
 			break;
 
@@ -724,7 +725,7 @@ static UINT8 mcu_port_d_r()
 //	if(ioport("AN6")->read() > threshold) data |= 0x40;
 //	if(ioport("AN7")->read() > threshold) data |= 0x80;
 
-	threshold &= 0xff; // iq_132
+	threshold &= 0xff; // iq_132      ?? dink
 
 	return data;
 }
@@ -823,6 +824,7 @@ static UINT8 namcos2_mcu_read(UINT16 address)
 
 static void sound_bankswitch(INT32 data)
 {
+	sound_bank = data;
 	INT32 bank = (data >> 4);
 
 	M6809MapMemory(DrvM6809ROM + (bank * 0x4000), 0x0000, 0x3fff, MAP_ROM);
@@ -1098,6 +1100,8 @@ static INT32 DrvDoReset()
 	mcu_analog_ctrl = 0;
 	mcu_analog_data = 0xaa;
 	mcu_analog_complete = 0;
+
+	finallap_prot_count = 0;
 
 	c355_obj_position[0] = c355_obj_position[1] = 0;
 	c355_obj_position[2] = c355_obj_position[3] = 0;
@@ -1607,12 +1611,12 @@ static INT32 MetlhawkInit()
 		if (BurnLoadRom(DrvGfxROM0 + 0x100000, 11, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x100001, 12, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x100002, 13, 4)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x100003, 14, 4)) return 1; 
+		if (BurnLoadRom(DrvGfxROM0 + 0x100003, 14, 4)) return 1;
 
 
 		for (INT32 i = 0; i < 8; i++) {
 			BurnLoadRom(DrvGfxROM3 + i * 0x40000, 19+i, 1);
-		} 
+		}
 
 		metal_hawk_sprite_decode();
 		decode_layer_tiles();
@@ -1877,11 +1881,11 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 			{
 				if ((sy+y) < min_y) continue;
 				if ((sy+y) > max_y) break;
-	
+
 				for (INT32 x = 0; x < 8; x++)
 				{
 					if ((sx + x) < min_x || (sx + x) > max_x) continue;
-	
+
 					if (*msk & (0x01 << x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[7 - x] + color;
@@ -1893,11 +1897,11 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 			{
 				if ((sy+y) < min_y) continue;
 				if ((sy+y) > max_y) break;
-	
+
 				for (INT32 x = 0; x < 8; x++)
 				{
 					if ((sx + x) < min_x || (sx + x) > max_x) continue;
-	
+
 					if (*msk & (0x80 >> x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[x] + color;
@@ -1952,11 +1956,6 @@ static void predraw_roz_layer()
 static void zdrawgfxzoom(UINT8 *gfx,INT32 tile_size, uint32_t code,uint32_t color,int flipx,int flipy,int sx,int sy,int scalex, int scaley, int zpos )
 {
 	if (!scalex || !scaley) return;
-
-/*	INT32 min_x = 0; // now part of global clipping vars.
-	INT32 max_x = nScreenWidth - 1;
-	INT32 min_y = 0;
-	INT32 max_y = nScreenHeight - 1;*/
 
 	{
 		{
@@ -2278,11 +2277,6 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, int de
 
 static void draw_roz_helper(const struct roz_param *rozInfo )
 {
-/*	int min_x = 0; // see global clipping vars at top
-	int min_y = 0;
-	int max_y = nScreenHeight - 1;
-	int max_x = nScreenWidth - 1;
-*/
 	{
 
 #define ROZ_BLOCK_SIZE 8
@@ -2942,7 +2936,7 @@ static INT32 DrvFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -2950,7 +2944,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin =  0x029702;
 	}
 
-	if (nAction & ACB_MEMORY_ROM) {	
+	if (nAction & ACB_MEMORY_ROM) {
 		ba.Data		= Drv68KROM[0];
 		ba.nLen		= 0x40000;
 		ba.nAddress	= 0;
@@ -3055,8 +3049,48 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 	
 		SekScan(nAction);
+		m6805Scan(nAction);
+		M6809Scan(nAction);
 
+		BurnYM2151Scan(nAction);
+		c140_scan();
 
+		SCAN_VAR(gfx_ctrl);
+
+		SCAN_VAR(irq_reg);
+		SCAN_VAR(irq_cpu);
+		SCAN_VAR(irq_vblank);
+		SCAN_VAR(irq_ex);
+		SCAN_VAR(irq_pos);
+		SCAN_VAR(irq_sci);
+		SCAN_VAR(bus_reg);
+
+		SCAN_VAR(c355_obj_position);
+
+		SCAN_VAR(audio_cpu_in_reset);
+		SCAN_VAR(sub_cpu_in_reset);
+		SCAN_VAR(sound_bank);
+
+		SCAN_VAR(min_x);
+		SCAN_VAR(max_x);
+		SCAN_VAR(min_y);
+		SCAN_VAR(max_y);
+
+		SCAN_VAR(mcu_analog_ctrl);
+		SCAN_VAR(mcu_analog_complete);
+		SCAN_VAR(mcu_analog_data);
+
+		SCAN_VAR(finallap_prot_count);
+
+		SCAN_VAR(key_sendval);
+
+		if (nAction & ACB_WRITE) {
+			roz_update_tiles = 1;
+
+			M6809Open(0);
+			sound_bankswitch(sound_bank);
+			M6809Close();
+		}
 	}
 
  	return 0;

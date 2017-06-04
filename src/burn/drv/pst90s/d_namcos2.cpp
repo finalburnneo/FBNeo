@@ -1,10 +1,10 @@
-// clipping not implimented
+// clipping implimented, but not externally (devices c169/namco_c45 needs verification etc)
 // only default inputs set up
 
 
 // assault	- 
 // bubbletr	- ok, missing artwork (flipped)
-// burnforc	- roz layer not aligned correctly?
+// burnforc	- 2nd tmap layer not aligned correctly
 // cosmogng	- 
 // dsaber	- 
 // dirtfoxj	-
@@ -19,7 +19,7 @@
 // marvland	- 
 // metlhawk     -
 // mirninja	- 
-// ordyne	- flipped!
+// ordyne	- flipped! (normal)
 // phelious	-
 // rthun2	- 
 // sgunner      - 
@@ -93,6 +93,11 @@ static INT32 layer_color;
 static UINT8 *roz_dirty_tile; // 0x10000
 static UINT16 *roz_bitmap; // (256 * 8) * (256 * 8)
 static INT32 roz_update_tiles = 0; // 
+
+static INT32 min_x = 0; // screen clipping
+static INT32 max_x = 0;
+static INT32 min_y = 0;
+static INT32 max_y = 0;
 
 static UINT8 mcu_analog_ctrl;
 static UINT8 mcu_analog_complete;
@@ -1759,14 +1764,26 @@ static INT32 Namcos2Exit()
 	return 0;
 }
 
-#if 0
+static UINT16 get_palette_register( int which )
+{
+	const UINT16 *source = (UINT16 *)(DrvPalRAM + 0x3000);
+	return ((source[which*2]&0xff)<<8) | (source[which*2+1]&0xff);
+}
+
 static void apply_clip()
 {
-	UINT16 *p = (UINT16*)(DrvPalRAM + 0x3000);
+	min_x = get_palette_register(0) - 0x4a;
+	max_x = get_palette_register(1) - 0x4a - 1;
+	min_y = get_palette_register(2) - 0x21;
+	max_y = get_palette_register(3) - 0x21 - 1;
 
-	GenericTilesSetClip(p[0] - 0x4a, p[1] - 0x4a, p[2] - 0x21, p[3] - 0x21);
+	if (min_x < 0) min_x = 0;
+	if (min_y < 0) min_y = 0;
+	if (max_x > nScreenWidth) max_x = nScreenWidth - 1;
+	if (max_y > nScreenHeight) max_y = nScreenHeight - 1;
+	//bprintf(0, _T("%.02X %.02X %.02X %.02X\n"), min_x, max_x, min_y, max_y);
+	GenericTilesSetClip(min_x, max_x, min_y, max_y);
 }
-#endif
 
 static void DrvRecalcPalette()
 {
@@ -1858,12 +1875,12 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 
 			for (INT32 y = 0; y < 8; y++, msk--, gfx-=8)
 			{
-				if ((sy+y) < 0) continue;
-				if ((sy+y) >= nScreenHeight) break;
+				if ((sy+y) < min_y) continue;
+				if ((sy+y) > max_y) break;
 	
 				for (INT32 x = 0; x < 8; x++)
 				{
-					if ((sx + x) < 0 || (sx + x) >= nScreenWidth) continue;
+					if ((sx + x) < min_x || (sx + x) > max_x) continue;
 	
 					if (*msk & (0x01 << x))
 					{
@@ -1874,12 +1891,12 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 		} else {
 			for (INT32 y = 0; y < 8; y++, msk++, gfx+=8)
 			{
-				if ((sy+y) < 0) continue;
-				if ((sy+y) >= nScreenHeight) break;
+				if ((sy+y) < min_y) continue;
+				if ((sy+y) > max_y) break;
 	
 				for (INT32 x = 0; x < 8; x++)
 				{
-					if ((sx + x) < 0 || (sx + x) >= nScreenWidth) continue;
+					if ((sx + x) < min_x || (sx + x) > max_x) continue;
 	
 					if (*msk & (0x80 >> x))
 					{
@@ -1936,10 +1953,10 @@ static void zdrawgfxzoom(UINT8 *gfx,INT32 tile_size, uint32_t code,uint32_t colo
 {
 	if (!scalex || !scaley) return;
 
-	INT32 min_x = 0;
+/*	INT32 min_x = 0; // now part of global clipping vars.
 	INT32 max_x = nScreenWidth - 1;
 	INT32 min_y = 0;
-	INT32 max_y = nScreenHeight - 1;
+	INT32 max_y = nScreenHeight - 1;*/
 
 	{
 		{
@@ -2261,11 +2278,11 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, int de
 
 static void draw_roz_helper(const struct roz_param *rozInfo )
 {
-	int min_x = 0;
+/*	int min_x = 0; // see global clipping vars at top
 	int min_y = 0;
 	int max_y = nScreenHeight - 1;
 	int max_x = nScreenWidth - 1;
-
+*/
 	{
 
 #define ROZ_BLOCK_SIZE 8
@@ -2450,7 +2467,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 1;
 	}
 
-//	apply_clip();
+	apply_clip();
 
 	INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
 
@@ -2673,7 +2690,7 @@ static INT32 SgunnerDraw()
 		DrvRecalc = 1;
 	}
 
-//	apply_clip();
+	apply_clip();
 
 	INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
 
@@ -2702,7 +2719,7 @@ static INT32 FinallapDraw()
 		DrvRecalc = 1;
 	}
 
-//	apply_clip();
+	apply_clip();
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x4000;
@@ -2731,7 +2748,7 @@ static INT32 LuckywldDraw()
 		DrvRecalc = 1;
 	}
 
-//	apply_clip();
+	apply_clip();
 
 	predraw_c169_roz_bitmap();
 
@@ -2764,7 +2781,7 @@ static INT32 Suzuka8hDraw()
 		DrvRecalc = 1;
 	}
 
-//	apply_clip();
+	apply_clip();
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x4000;
@@ -2794,7 +2811,7 @@ static INT32 MetlhawkDraw()
 		DrvRecalc = 1;
 	}
 
-//	apply_clip();
+	apply_clip();
 
 	predraw_c169_roz_bitmap();
 

@@ -1768,10 +1768,10 @@ static INT32 Namcos2Exit()
 	return 0;
 }
 
-static UINT16 get_palette_register( int which )
+static UINT16 get_palette_register(INT32 reg)
 {
-	const UINT16 *source = (UINT16 *)(DrvPalRAM + 0x3000);
-	return ((source[which*2]&0xff)<<8) | (source[which*2+1]&0xff);
+	UINT16 *ctrl = (UINT16*)(DrvPalRAM + 0x3000);
+	return ((ctrl[reg*2] & 0xff) * 256 + (ctrl[reg*2+1] & 0xff));
 }
 
 static void apply_clip()
@@ -2966,7 +2966,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 264;
+	INT32 nInterleave = 264*2;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
@@ -2987,14 +2987,14 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
-		if (i == 240) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
-		if (i == position) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
+		if (i == 240*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
+		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
 		segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
 		maincpu_run_ended = maincpu_run_cycles = 0;
 		SekClose();
 
-		if (pBurnDraw)
-			DrvDrawLine(i);
+		if (pBurnDraw && i&1)
+			DrvDrawLine(i/2);
 
 		SekOpen(1);
 		if (sub_cpu_in_reset) {
@@ -3002,8 +3002,8 @@ static INT32 DrvFrame()
 			SekIdle(segment - SekTotalCycles());
 		} else {			
 			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
-			if (i == 240) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
-			if (i == position) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
+			if (i == 240*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
+			if (i == position*2) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
 		}
 		SekClose();
 
@@ -3011,10 +3011,10 @@ static INT32 DrvFrame()
 			nCyclesDone[3] += ((segment / 6) - m6805TotalCycles());
 		} else {
 			nCyclesDone[3] += m6805Run(((segment / 6) - m6805TotalCycles()));
-			if (i == 240) {
+			if (i == 240*2) {
 				hd63705SetIrqLine(0, CPU_IRQSTATUS_ACK);
 			}
-			if (i == 16) {
+			if (i == 16*2) {
 				hd63705SetIrqLine(0, CPU_IRQSTATUS_NONE);
 			}
 		}
@@ -3023,17 +3023,17 @@ static INT32 DrvFrame()
 			nCyclesDone[2] += segment / 6;
 		} else {
 			nCyclesDone[2] += M6809Run((segment / 6) - M6809TotalCycles());
-			if (i == 127 || i == 255) {
+			if (i == 127*2 || i == 255*2) {
 				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 			}
 
-			if (i == 64 || i == 192) {
+			if (i == 64*2 || i == 192*2) {
 				M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); // not right!
 			}
 		}
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i%8 == 7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

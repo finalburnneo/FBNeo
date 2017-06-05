@@ -608,37 +608,37 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Vulgus (set 1)
 
 static struct BurnRomInfo vulgusRomDesc[] = {
-	{ "vulgus.002",   0x2000, 0xe49d6c5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "vulgus.003",   0x2000, 0x51acef76, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "vulgus.004",   0x2000, 0x489e7f60, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "vulgus.005",   0x2000, 0xde3a24a8, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "1-8n.bin",     0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "vulgus.002",   	0x2000, 0xe49d6c5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "vulgus.003",   	0x2000, 0x51acef76, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "vulgus.004",   	0x2000, 0x489e7f60, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "vulgus.005",   	0x2000, 0xde3a24a8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1-8n.bin",     	0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "1-11c.bin",    0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "1-11c.bin",    	0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
 
-	{ "1-3d.bin",     0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
+	{ "1-3d.bin",     	0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
 
-	{ "2-2a.bin",     0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
-	{ "2-3a.bin",     0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
-	{ "2-4a.bin",     0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
-	{ "2-5a.bin",     0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
-	{ "2-6a.bin",     0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
-	{ "2-7a.bin",     0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
+	{ "2-2a.bin",     	0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
+	{ "2-3a.bin",     	0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
+	{ "2-4a.bin",     	0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
+	{ "2-5a.bin",     	0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
+	{ "2-6a.bin",     	0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
+	{ "2-7a.bin",     	0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
 
-	{ "2-2n.bin",     0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
-	{ "2-3n.bin",     0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
-	{ "2-4n.bin",     0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
-	{ "2-5n.bin",     0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
+	{ "2-2n.bin",     	0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
+	{ "2-3n.bin",     	0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
+	{ "2-4n.bin",     	0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
+	{ "2-5n.bin",     	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
 
-	{ "e8.bin",       0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
-	{ "e9.bin",       0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
-	{ "e10.bin",      0x0100, 0xde1fb621, 6 | BRF_GRA },	       // 19
-	{ "d1.bin",       0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
-	{ "j2.bin",       0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
-	{ "c9.bin",       0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
+	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
+	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "e10.bin",      	0x0100, 0xde1fb621, 6 | BRF_GRA },	       // 19
+	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
+	{ "j2.bin",       	0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
+	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
 
-	{ "82s126.9k",    0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
-	{ "82s129.8n",    0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
+	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
+	{ "82s129.8n",    	0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
 };
 
 STD_ROM_PICK(vulgus)
@@ -658,37 +658,37 @@ struct BurnDriver BurnDrvvulgus = {
 // Vulgus (set 2)
 
 static struct BurnRomInfo vulgusaRomDesc[] = {
-	{ "v2",           0x2000, 0x3e18ff62, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "v3",           0x2000, 0xb4650d82, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "v4",           0x2000, 0x5b26355c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "v5",           0x2000, 0x4ca7f10e, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "1-8n.bin",     0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "v2",           	0x2000, 0x3e18ff62, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "v3",           	0x2000, 0xb4650d82, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "v4",           	0x2000, 0x5b26355c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "v5",           	0x2000, 0x4ca7f10e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1-8n.bin",     	0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "1-11c.bin",    0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "1-11c.bin",    	0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
 
-	{ "1-3d.bin",     0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
+	{ "1-3d.bin",     	0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
 
-	{ "2-2a.bin",     0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
-	{ "2-3a.bin",     0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
-	{ "2-4a.bin",     0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
-	{ "2-5a.bin",     0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
-	{ "2-6a.bin",     0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
-	{ "2-7a.bin",     0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
+	{ "2-2a.bin",     	0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
+	{ "2-3a.bin",     	0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
+	{ "2-4a.bin",     	0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
+	{ "2-5a.bin",     	0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
+	{ "2-6a.bin",     	0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
+	{ "2-7a.bin",     	0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
 
-	{ "2-2n.bin",     0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
-	{ "2-3n.bin",     0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
-	{ "2-4n.bin",     0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
-	{ "2-5n.bin",     0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
+	{ "2-2n.bin",     	0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
+	{ "2-3n.bin",     	0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
+	{ "2-4n.bin",     	0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
+	{ "2-5n.bin",     	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
 
-	{ "e8.bin",       0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
-	{ "e9.bin",       0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
-	{ "e10.bin",      0x0100, 0xde1fb621, 6 | BRF_GRA },	       // 19
-	{ "d1.bin",       0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
-	{ "j2.bin",       0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
-	{ "c9.bin",       0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
+	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
+	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "e10.bin",      	0x0100, 0xde1fb621, 6 | BRF_GRA },	       // 19
+	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
+	{ "j2.bin",       	0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
+	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
 
-	{ "82s126.9k",    0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
-	{ "82s129.8n",    0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
+	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
+	{ "82s129.8n",    	0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
 };
 
 STD_ROM_PICK(vulgusa)
@@ -708,37 +708,37 @@ struct BurnDriver BurnDrvvulgusa = {
 // Vulgus (Japan)
 
 static struct BurnRomInfo vulgusjRomDesc[] = {
-	{ "1-4n.bin",     0x2000, 0xfe5a5ca5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "1-5n.bin",     0x2000, 0x847e437f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "1-6n.bin",     0x2000, 0x4666c436, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "1-7n.bin",     0x2000, 0xff2097f9, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "1-8n.bin",     0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "1-4n.bin",     	0x2000, 0xfe5a5ca5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "1-5n.bin",     	0x2000, 0x847e437f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1-6n.bin",     	0x2000, 0x4666c436, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1-7n.bin",     	0x2000, 0xff2097f9, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1-8n.bin",     	0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "1-11c.bin",    0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+	{ "1-11c.bin",    	0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
 
-	{ "1-3d.bin",     0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
+	{ "1-3d.bin",     	0x2000, 0x8bc5d7a5, 3 | BRF_GRA },	       //  6 Foreground Tiles
 
-	{ "2-2a.bin",     0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
-	{ "2-3a.bin",     0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
-	{ "2-4a.bin",     0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
-	{ "2-5a.bin",     0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
-	{ "2-6a.bin",     0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
-	{ "2-7a.bin",     0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
+	{ "2-2a.bin",     	0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
+	{ "2-3a.bin",     	0x2000, 0x8da520da, 4 | BRF_GRA },	       //  8
+	{ "2-4a.bin",     	0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
+	{ "2-5a.bin",     	0x2000, 0xb6d81984, 4 | BRF_GRA },	       // 10
+	{ "2-6a.bin",     	0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
+	{ "2-7a.bin",     	0x2000, 0x1e1ca773, 4 | BRF_GRA },	       // 12 
 
-	{ "2-2n.bin",     0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
-	{ "2-3n.bin",     0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
-	{ "2-4n.bin",     0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
-	{ "2-5n.bin",     0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
+	{ "2-2n.bin",     	0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
+	{ "2-3n.bin",     	0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
+	{ "2-4n.bin",     	0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
+	{ "2-5n.bin",     	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
 
-	{ "e8.bin",       0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
-	{ "e9.bin",       0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
-	{ "e10.bin",      0x0100, 0xde1fb621, 6 | BRF_GRA },	       // 19
-	{ "d1.bin",       0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
-	{ "j2.bin",       0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
-	{ "c9.bin",       0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
+	{ "e8.bin",       	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
+	{ "e9.bin",       	0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "e10.bin",      	0x0100, 0xde1fb621, 6 | BRF_GRA },	       // 19
+	{ "d1.bin",       	0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
+	{ "j2.bin",       	0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
+	{ "c9.bin",       	0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
 
-	{ "82s126.9k",    0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
-	{ "82s129.8n",    0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
+	{ "82s126.9k",    	0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
+	{ "82s129.8n",    	0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
 };
 
 STD_ROM_PICK(vulgusj)
@@ -750,6 +750,56 @@ struct BurnDriver BurnDrvvulgusj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, vulgusjRomInfo, vulgusjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	224, 256, 3, 4
+};
+
+
+// Mach-9 (bootleg of Vulgus)
+
+static struct BurnRomInfo mach9RomDesc[] = {
+	{ "02_4n.bin",    	0x2000, 0xb3310b0c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "03_5n.bin",    	0x2000, 0x51acef76, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "04_6n.bin",    	0x2000, 0x489e7f60, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "05_7n.bin",    	0x2000, 0xef3e4278, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "06_8n.bin",    	0x2000, 0x6ca5ca41, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "07_11c.bin",   	0x2000, 0x3bd2acf4, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 #1 Code
+
+	{ "01_3d.bin",    	0x2000, 0xbe556775, 3 | BRF_GRA },	       //  6 Foreground Tiles
+
+	{ "08_2a.bin",    	0x2000, 0xe10aaca1, 4 | BRF_GRA },	       //  7 Background Tiles
+	{ "09_3a.bin",    	0x2000, 0x9193f2f1, 4 | BRF_GRA },	       //  8
+	{ "10_4a.bin",    	0x2000, 0x206a13f1, 4 | BRF_GRA },	       //  9
+	{ "11_5a.bin",    	0x2000, 0xd729b5b7, 4 | BRF_GRA },	       // 10
+	{ "12_6a.bin",    	0x2000, 0x5a26b38f, 4 | BRF_GRA },	       // 11 
+	{ "13_7a.bin",    	0x2000, 0x8033cd4f, 4 | BRF_GRA },	       // 12 
+
+	{ "14_2n.bin",    	0x2000, 0x6db1b10d, 5 | BRF_GRA },	       // 13 Sprites
+	{ "15_3n.bin",    	0x2000, 0x5d8c34ec, 5 | BRF_GRA },	       // 14
+	{ "16_4n.bin",    	0x2000, 0x0071a2e3, 5 | BRF_GRA },	       // 15
+	{ "17_5n.bin",    	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
+
+	{ "82s129_8e.bin",	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
+	{ "82s129_9a.bin",  0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "82s129_10e.bin", 0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19
+	{ "82s129_1d.bin",  0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
+	{ "82s129_2j.bin",  0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21
+	{ "82s129_9c.bin",  0x0100, 0x7a1f0bd6, 6 | BRF_GRA },	       // 22
+
+	{ "82s129_9k.bin",  0x0100, 0x32b10521, 0 | BRF_OPT },	       // 23 Misc. DrvColPROMs
+	{ "82s129_8n.bin",  0x0100, 0x4921635c, 0 | BRF_OPT },	       // 24
+};
+
+STD_ROM_PICK(mach9)
+STD_ROM_FN(mach9)
+
+struct BurnDriver BurnDrvmach9 = {
+	"mach9", "vulgus", NULL, NULL, "1984",
+	"Mach-9 (bootleg of Vulgus)\0", NULL, "bootleg (ITISA)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, mach9RomInfo, mach9RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
 };

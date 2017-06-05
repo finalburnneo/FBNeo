@@ -1813,7 +1813,7 @@ static void DrvRecalcPalette()
 
 static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line)
 {
-	if (line < 0 || line >= nScreenHeight) return;
+	if (line < min_y || line > max_y) return;
 
 	if (layer >= 6) return;
 
@@ -1985,8 +1985,22 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 	}
 }
 
+//draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line)
 
 
+static void draw_layer_line(INT32 line, INT32 pri)
+{
+	UINT16 *ctrl = (UINT16*)DrvC123Ctrl;
+
+	for (INT32 i = 0; i < 6; i++)
+	{
+		if((ctrl[0x10+i] & 0xf) == pri)
+		{
+			layer_color = ctrl[0x18 + i];
+			draw_layer_with_masking_by_line(i, layer_color, line);
+		}
+	}
+}
 
 static void draw_layer(INT32 pri)
 {
@@ -2530,7 +2544,7 @@ static void draw_sprites(int pri, int control )
 	}
 } /* namcos2_draw_sprites */
 
-static INT32 DrvDraw()
+static void DrvDrawBegin()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
@@ -2547,19 +2561,46 @@ static INT32 DrvDraw()
 		pTransDraw[i] = 0x4000;
 		pPrioDraw[i] = 0;
 	}
+}
+
+#define PUSH_Y(); \
+	INT32 oldmin_y = min_y; \
+    INT32 oldmax_y = max_y; \
+	min_y = (line >= min_y) ? line : 0; \
+	max_y = (line <= max_y) ? line+1 : 0;
+
+#define POP_Y(); \
+	min_y = oldmin_y; \
+	max_y = oldmax_y;
+
+
+static void DrvDrawLine(INT32 line)
+{
+	INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
 
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
-		draw_layer(pri);
+		draw_layer_line(line, pri);
 
 		if (((gfx_ctrl & 0x7000) >> 12) == pri )
 		{
-			if (roz_enable) draw_roz();
+			if (roz_enable) {
+				PUSH_Y();
+				draw_roz();
+				POP_Y();
+			}
 		}
 
-		draw_sprites(pri, gfx_ctrl);
-	}
+		PUSH_Y();
 
+		draw_sprites(pri, gfx_ctrl);
+
+		POP_Y();
+	}
+}
+
+static INT32 DrvDraw()
+{
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -2905,7 +2946,7 @@ static INT32 MetlhawkDraw()
 
 	return 0;
 }
-
+					extern int counter;
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -2927,7 +2968,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 264;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[4] = { 12288000 / 60, 12288000 / 60, 2048000 / 60, 2048000 / 1 / 60 };
+	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	M6809Open(0);
@@ -2935,19 +2976,26 @@ static INT32 DrvFrame()
 
 	UINT16 *ctrl = (UINT16*)(DrvPalRAM + 0x3000);
 
+	if (pBurnDraw) {
+		DrvDrawBegin();
+	}
+
 	for (INT32 i = 0; i < nInterleave; i++) {
 
 		INT32 segment;
 
 		SekOpen(0);
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 32) & 0xff;
+		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 		if (i == 240) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
 		segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
 		maincpu_run_ended = maincpu_run_cycles = 0;
 		SekClose();
-	
+
+		if (pBurnDraw && i>(counter-1))
+			DrvDrawLine(i-counter);
+
 		SekOpen(1);
 		if (sub_cpu_in_reset) {
 			nCyclesDone[1] += segment - SekTotalCycles();

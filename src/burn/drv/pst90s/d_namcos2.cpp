@@ -1811,6 +1811,79 @@ static void DrvRecalcPalette()
 	}
 }
 
+static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line)
+{
+	if (line < 0 || line >= nScreenHeight) return;
+
+	if (layer >= 6) return;
+
+	if ((nSpriteEnable & (1<<layer)) == 0) return;
+
+	INT32 x_offset_table[6] = { 44+4, 44+2, 44+1, 44+0, 0, 0 };
+	INT32 offset[6] = { 0, 0x2000, 0x4000, 0x6000, 0x8010, 0x8810 };
+
+	UINT16 *ctrl = (UINT16*)DrvC123Ctrl;
+	UINT16 *ram = (UINT16*)(DrvC123RAM + offset[layer]);
+
+	INT32 sizex = (layer < 4) ? 64 : 36;
+	INT32 sizey = (layer < 4) ? 64 : 28;
+
+	INT32 sizex_full = sizex * 8;
+	INT32 sizey_full = sizey * 8;
+
+	INT32 flipscreen = (ctrl[1] & 0x8000) ? 0xffff : 0;
+
+	INT32 x_offset = x_offset_table[layer];
+	INT32 y_offset = (layer < 4) ? 24 : 0;
+
+	INT32 scrollx = ((ctrl[1 + layer * 4] + x_offset) ^ flipscreen) % sizex_full;
+	INT32 scrolly = ((ctrl[3 + layer * 4] + y_offset) ^ flipscreen) % sizey_full;
+
+	if (flipscreen) {
+		scrolly += 256 + 16;
+		scrollx += 256;
+
+		scrollx %= sizex_full;
+		scrolly %= sizey_full;
+	}
+
+	if (layer >= 4) {
+		scrollx = scrolly = 0;
+	}
+
+	color = ((color & 7) * 256) + 0x1000;
+
+	INT32 sy = (scrolly + line) % sizey_full;
+
+	UINT16 *dst = pTransDraw + (line * nScreenWidth);
+
+	for (INT32 x = 0; x < nScreenWidth + 7; x+=8)
+	{
+		INT32 sx = (scrollx + x) % sizex_full;
+
+		INT32 offs = (sx / 8) + ((sy / 8) * sizex);
+
+		INT32 code = ram[offs];
+		UINT8 *gfx = DrvGfxROM2 + (code * 8 * 8);
+		UINT8 *msk = DrvGfxROM4 + (code * 8);
+
+		gfx += (sy & 7) * 8;
+		msk += (sy & 7);
+
+		INT32 zx = x - (sx & 7);
+
+		for (INT32 xx = 0; xx < 8; xx++, zx++)
+		{
+			if (zx < min_x || zx > max_x) continue;
+	
+			if (*msk & (0x80 >> xx))
+			{
+				dst[zx] = gfx[xx] + color;
+			}
+		}
+	}
+}
+
 static void draw_layer_with_masking(INT32 layer, INT32 color)
 {
 	if (layer >= 6) return;
@@ -1911,6 +1984,9 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 		}
 	}
 }
+
+
+
 
 static void draw_layer(INT32 pri)
 {

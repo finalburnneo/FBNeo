@@ -2946,7 +2946,7 @@ static INT32 MetlhawkDraw()
 
 	return 0;
 }
-					extern int counter;
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -2993,8 +2993,8 @@ static INT32 DrvFrame()
 		maincpu_run_ended = maincpu_run_cycles = 0;
 		SekClose();
 
-		if (pBurnDraw && i>(counter-1))
-			DrvDrawLine(i-counter);
+		if (pBurnDraw)
+			DrvDrawLine(i);
 
 		SekOpen(1);
 		if (sub_cpu_in_reset) {

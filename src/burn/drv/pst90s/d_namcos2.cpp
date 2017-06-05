@@ -1,6 +1,10 @@
 // clipping implimented, but not externally (devices c169/namco_c45 needs verification etc)
 // only default inputs set up
 
+// todo for tonight (dink):
+// ordyne: make default eeprom with flipping on (fixes alignment issues)
+// hook up linesdraw to fourtrax to see if it fixes the video
+// hook up analog & gun controls
 
 // assault	- 
 // bubbletr	- ok, missing artwork (flipped)
@@ -19,7 +23,7 @@
 // marvland	- 
 // metlhawk     -
 // mirninja	- 
-// ordyne	- flipped! (normal)
+// ordyne	- flipped! (normal) (things out-of-alignment fixed by making a default eeprom with flipping on)
 // phelious	-
 // rthun2	- 
 // sgunner      - 

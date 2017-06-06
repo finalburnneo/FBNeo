@@ -197,6 +197,7 @@ extern UINT16* pTransDraw;
 extern UINT8* pPrioDraw;
 
 void BurnTransferClear();
+void BurnTransferClear(UINT16 nFillPattern);
 INT32 BurnTransferCopy(UINT32* pPalette);
 void BurnTransferExit();
 INT32 BurnTransferInit();

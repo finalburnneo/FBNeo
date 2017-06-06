@@ -177,9 +177,14 @@ void c45RoadDraw(int pri)
 
 	INT32 min_x, min_y, max_x, max_y;
 
-	min_x = min_y = 0;
-	max_y = nScreenHeight - 1;
-	max_x = nScreenWidth - 1;
+	GenericTilesGetClip(&min_x, &max_x, &min_y, &max_y);
+
+	max_x--;
+	max_y--;
+
+//	min_x = min_y = 0;
+//	max_y = nScreenHeight - 1;
+//	max_x = nScreenWidth - 1;
 
 	UINT16 *m_lineram = (UINT16*)(c45RoadRAM + 0x1fa00);
 

@@ -2,15 +2,21 @@
 // only default inputs set up
 
 // todo for tonight (dink):
-// ordyne: make default eeprom with flipping on (fixes alignment issues)
 // hook up linesdraw to fourtrax to see if it fixes the video
 // hook up analog & gun controls
 
-// assault	- 
+// assault	- needs new inpts
 // bubbletr	- ok, missing artwork (flipped)
-// burnforc	- 2nd tmap layer not aligned correctly
-// cosmogng	- 
-// dsaber	- 
+// burnforc	- good
+// cosmogng	- good
+// dsaber	- good
+// mirninja	- good
+// valkyrie	- good
+// ordyne	- flipped! (normal) (things out-of-alignment fixed by making a default eeprom with flipping on, or fixing flipped mode in tmap)
+// phelious	- good
+// rthun2	- good
+// marvland	- good
+
 // dirtfoxj	-
 // finallap	- some bad gfx (sprites), bad sound
 // finalap2	- bad sound
@@ -20,17 +26,11 @@
 // gollygho	- ok, missing artwork (flipped)
 // kyukaidk	- 
 // luckywld	- road layer not wide enough?
-// marvland	- 
 // metlhawk     -
-// mirninja	- 
-// ordyne	- flipped! (normal) (things out-of-alignment fixed by making a default eeprom with flipping on)
-// phelious	-
-// rthun2	- 
 // sgunner      - 
 // sgunner2	- broken? was working...
 // suzuk8h	-
 // suzuk8h2	-
-// valkyrie	- 
 // sws & clones	- 
 
 
@@ -99,6 +99,9 @@ static INT32 layer_color;
 static UINT8 *roz_dirty_tile; // 0x10000
 static UINT16 *roz_bitmap; // (256 * 8) * (256 * 8)
 static INT32 roz_update_tiles = 0; // 
+
+static void (*pDrvDrawBegin)() = NULL; // optional line-drawing
+static void (*pDrvDrawLine)(INT32) = NULL;
 
 static INT32 min_x = 0; // screen clipping
 static INT32 max_x = 0;
@@ -1713,6 +1716,9 @@ static INT32 Finalap2Init()
 	return 0;
 }
 
+static void FinallapDrawBegin(); // forwards
+static void FinallapDrawLine(INT32 line); // ""
+
 static INT32 FourtraxInit()
 {
 	AllMem = NULL;
@@ -1748,6 +1754,9 @@ static INT32 FourtraxInit()
 
 	DrvDoReset();
 
+	pDrvDrawBegin = FinallapDrawBegin;
+	pDrvDrawLine = FinallapDrawLine;
+
 	return 0;
 }
 
@@ -1768,6 +1777,9 @@ static INT32 Namcos2Exit()
 
 	key_prot_read = NULL;
 	key_prot_write = NULL;
+
+	pDrvDrawBegin = NULL;
+	pDrvDrawLine = NULL;
 
 	return 0;
 }
@@ -2596,9 +2608,7 @@ static void DrvDrawLine(INT32 line)
 		}
 
 		PUSH_Y();
-
 		draw_sprites(pri, gfx_ctrl);
-
 		POP_Y();
 	}
 }
@@ -2827,7 +2837,7 @@ static INT32 SgunnerDraw()
 	return 0;
 }
 
-static INT32 FinallapDraw()
+static void FinallapDrawBegin()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
@@ -2840,17 +2850,31 @@ static INT32 FinallapDraw()
 		pTransDraw[i] = 0x4000;
 		pPrioDraw[i] = 0;
 	}
+}
 
+static void FinallapDrawLine(INT32 line)
+{
 	for(INT32 pri=0; pri<16; pri++ )
 	{
 		if( (pri&1)==0 )
 		{
-			draw_layer(pri/2);
+			draw_layer_line(line, pri/2);
 		}
-		if (nBurnLayer & 1) c45RoadDraw(pri);
-		if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
+		if (nBurnLayer & 1) {
+			//PUSH_Y(); (gets clipping internally)
+			c45RoadDraw(pri);
+			//POP_Y();
+		}
+		if (nBurnLayer & 2) {
+			PUSH_Y();
+			draw_sprites(pri, gfx_ctrl);
+			POP_Y();
+		}
 	}
+}
 
+static INT32 FinallapDraw()
+{
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -2980,8 +3004,8 @@ static INT32 DrvFrame()
 
 	UINT16 *ctrl = (UINT16*)(DrvPalRAM + 0x3000);
 
-	if (pBurnDraw) {
-		DrvDrawBegin();
+	if (pBurnDraw && pDrvDrawBegin) {
+		pDrvDrawBegin();
 	}
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -2997,8 +3021,8 @@ static INT32 DrvFrame()
 		maincpu_run_ended = maincpu_run_cycles = 0;
 		SekClose();
 
-		if (pBurnDraw && i&1)
-			DrvDrawLine(i/2);
+		if (pBurnDraw && pDrvDrawLine && i&1)
+			pDrvDrawLine(i/2);
 
 		SekOpen(1);
 		if (sub_cpu_in_reset) {
@@ -3892,7 +3916,7 @@ static INT32 MarvlandInit()
 
 struct BurnDriver BurnDrvMarvland = {
 	"marvland", NULL, NULL, NULL, "1989",
-	"Marvel Land (US)\0", NULL, "Namco", "System 2",
+	"Marvel Land (US)\0", "Bad music - use the Japan version", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, marvlandRomInfo, marvlandRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
@@ -4363,7 +4387,13 @@ static UINT16 burnforc_key_read(UINT8 offset)
 
 static INT32 BurnforcInit()
 {
-	return Namcos2Init(NULL, burnforc_key_read);
+	INT32 rc = Namcos2Init(NULL, burnforc_key_read);
+	if (!rc) {
+		pDrvDrawBegin = DrvDrawBegin;
+		pDrvDrawLine = DrvDrawLine;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvBurnforc = {

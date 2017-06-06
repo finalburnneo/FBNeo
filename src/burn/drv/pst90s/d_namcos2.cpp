@@ -1063,6 +1063,15 @@ static void namcos2_mcu_init()
 	m6805Close();
 }
 
+#if 0
+static void OrdyneEEPROMCheck()
+{
+	if (!DrvEEPROM[0]) {
+
+	}
+}
+#endif
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -2575,10 +2584,7 @@ static void DrvDrawBegin()
 
 	if (roz_enable) predraw_roz_layer();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x4000;
-		pPrioDraw[i] = 0;
-	}
+	BurnTransferClear(0x4000);
 }
 
 #define PUSH_Y(); \
@@ -2617,6 +2623,35 @@ static void DrvDrawLine(INT32 line)
 
 static INT32 DrvDraw()
 {
+	if (!pDrvDrawBegin) { // not line based, fall back to default
+		if (DrvRecalc) {
+			DrvRecalcPalette();
+			DrvRecalc = 1;
+		}
+
+		apply_clip();
+
+		INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
+
+		if (roz_enable) predraw_roz_layer();
+
+		BurnTransferClear(0x4000);
+
+		for (INT32 pri = 0; pri < 8; pri++)
+		{
+			draw_layer(pri);
+
+			if (((gfx_ctrl & 0x7000) >> 12) == pri )
+			{
+				if (roz_enable) {
+					draw_roz();
+				}
+			}
+
+			draw_sprites(pri, gfx_ctrl);
+		}
+	}
+
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -3506,7 +3541,7 @@ struct BurnDriver BurnDrvOrdyne = {
 	"ordyne", NULL, NULL, NULL, "1988",
 	"Ordyne (Japan, English Version)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, ordyneRomInfo, ordyneRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	OrdyneInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -3565,7 +3600,7 @@ struct BurnDriver BurnDrvOrdynej = {
 	"ordynej", "ordyne", NULL, NULL, "1988",
 	"Ordyne (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, ordynejRomInfo, ordynejRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	OrdyneInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

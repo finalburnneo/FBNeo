@@ -1,10 +1,10 @@
 // clipping implimented, but not externally (devices c169/namco_c45 needs verification etc)
 // only default inputs set up
 
-// todo for tonight (dink):
-// hook up linesdraw to fourtrax to see if it fixes the video
+// todo
 // hook up analog & gun controls
 
+//tested good:
 // assault	- needs new inpts
 // bubbletr	- ok, missing artwork (flipped)
 // burnforc	- good
@@ -17,18 +17,20 @@
 // rthun2	- good
 // marvland	- good
 
+//working on:
+// sgunner  -
+// sgunner2	- needs old mcu
+// fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
+
 // dirtfoxj	-
 // finallap	- some bad gfx (sprites), bad sound
 // finalap2	- bad sound
 // finalap3	- bad sound
 // finehour	- missing graphics
-// fourtrax	- bad sound, road layer not wide enough??
 // gollygho	- ok, missing artwork (flipped)
 // kyukaidk	- 
 // luckywld	- road layer not wide enough?
-// metlhawk     -
-// sgunner      - 
-// sgunner2	- broken? was working...
+// metlhawk -
 // suzuk8h	-
 // suzuk8h2	-
 // sws & clones	- 

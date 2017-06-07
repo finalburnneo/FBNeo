@@ -123,7 +123,7 @@ static struct BurnDIPInfo OthunderDIPList[]=
 	{0x0f, 0x01, 0x30, 0x30, "40"                             },
 	{0x0f, 0x01, 0x30, 0x20, "50"                             },
 	
-	{0   , 0xfe, 0   , 2   , "Flip Screen"                    },
+	{0   , 0xfe, 0   , 2   , "Language"                    },
 	{0x0f, 0x01, 0x80, 0x00, "English"                        },
 	{0x0f, 0x01, 0x80, 0x80, "Japanese"                       },
 	
@@ -188,7 +188,7 @@ static struct BurnDIPInfo OthunderjDIPList[]=
 	{0x0f, 0x01, 0x30, 0x30, "40"                             },
 	{0x0f, 0x01, 0x30, 0x20, "50"                             },
 	
-	{0   , 0xfe, 0   , 2   , "Flip Screen"                    },
+	{0   , 0xfe, 0   , 2   , "language"                    },
 	{0x0f, 0x01, 0x80, 0x00, "English"                        },
 	{0x0f, 0x01, 0x80, 0x80, "Japanese"                       },
 	
@@ -257,7 +257,7 @@ static struct BurnDIPInfo OthunderuDIPList[]=
 	{0x0f, 0x01, 0x40, 0x00, "1 Coin 1 Credit"                },
 	{0x0f, 0x01, 0x40, 0x40, "Same as Start"                  },
 	
-	{0   , 0xfe, 0   , 2   , "Flip Screen"                    },
+	{0   , 0xfe, 0   , 2   , "language"                    },
 	{0x0f, 0x01, 0x80, 0x00, "English"                        },
 	{0x0f, 0x01, 0x80, 0x80, "Japanese"                       },
 	
@@ -430,6 +430,39 @@ static struct BurnRomInfo OthunderjRomDesc[] = {
 
 STD_ROM_PICK(Othunderj)
 STD_ROM_FN(Othunderj)
+
+static struct BurnRomInfo OthunderjscRomDesc[] = {
+	// SC stands for Shopping Center. It was put in a smaller, single player cabinet aimed at children
+	{ "b67-24.ic63",           0x20000, 0x18670e0b, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b67-25.ic64",           0x20000, 0x3d422991, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b67-14.ic61",           0x20000, 0x7f3dd724, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b67-15.ic62",           0x20000, 0xe84f62d0, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "b67-13.ic40",           0x10000, 0x2936b4b1, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "b67-06.ic66",           0x80000, 0xb9a38d64, BRF_GRA | TAITO_CHARS},
+	
+	{ "b67-01.ic1",            0x80000, 0x81ad9acb, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b67-02.ic2",            0x80000, 0xc20cd2fb, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b67-03.ic3",            0x80000, 0xbc9019ed, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	{ "b67-04.ic4",            0x80000, 0x2af4c8af, BRF_GRA | TAITO_SPRITESA_BYTESWAP32 },
+	
+	{ "b67-05.ic43",           0x80000, 0x9593e42b, BRF_GRA | TAITO_SPRITEMAP },
+	
+	{ "b67-08.ic67",           0x80000, 0x458f41fb, BRF_SND | TAITO_YM2610A },
+	
+	{ "b67-07.ic44",           0x80000, 0x4f834357, BRF_SND | TAITO_YM2610B },
+	
+	{ "93c46_eeprom-othunder.ic86",   0x00080, 0x3729b844, BRF_PRG | TAITO_DEFAULT_EEPROM },
+	
+	{ "plhs18p8b-b67-09.ic15", 0x00149, 0x62035487, BRF_OPT },
+	{ "pal16l8a-b67-11.ic36",  0x00104, 0x3177fb06, BRF_OPT },
+	{ "pal20l8b-b67-12.ic37",  0x00144, 0xa47c2798, BRF_OPT },
+	{ "pal20l8b-b67-10.ic33",  0x00144, 0x4ced09c7, BRF_OPT },
+};
+
+STD_ROM_PICK(Othunderjsc)
+STD_ROM_FN(Othunderjsc)
 
 static INT32 MemIndex()
 {
@@ -1239,6 +1272,16 @@ struct BurnDriver BurnDrvOthunderj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, OthunderjRomInfo, OthunderjRomName, NULL, NULL, OthunderInputInfo, OthunderjDIPInfo,
+	OthunderInit, OthunderExit, OthunderFrame, NULL, OthunderScan,
+	NULL, 0x1000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvOthunderjsc = {
+	"othunderjsc", "othunder", NULL, NULL, "1988",
+	"Operation Thunderbolt (Japan, SC)\0", NULL, "Taito Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, OthunderjscRomInfo, OthunderjscRomName, NULL, NULL, OthunderInputInfo, OthunderjDIPInfo,
 	OthunderInit, OthunderExit, OthunderFrame, NULL, OthunderScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

@@ -14215,12 +14215,12 @@ struct BurnDriver BurnDrvkf2k4pls = {
 
 // The King of Fighters '95 (Special 2017)
 // Modified by: GSC2007	
-// Version number: Ver 1.0.0601 
+// Version number: Ver 1.0.0607 
 
 static struct BurnRomInfo kof95spRomDesc[] = {
-	{ "084-p1sp.p1",  0x100000, 0x904e53b9, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
-	{ "084-p2sp.p2",  0x100000, 0xbfcf5b8f, 1 | BRF_ESS | BRF_PRG }, //  1			
-	{ "084-p3sp.p3",  0x020000, 0x19ab9dad, 1 | BRF_ESS | BRF_PRG }, //  2			
+	{ "084-p1sp.p1",  0x100000, 0x54f7316a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "084-p2sp.p2",  0x100000, 0x5cb1af9e, 1 | BRF_ESS | BRF_PRG }, //  1			
+	{ "084-p3sp.p3",  0x020000, 0xed123ab4, 1 | BRF_ESS | BRF_PRG }, //  2			
 
 	{ "084-s1sp.s1",  0x020000, 0x83cbae60, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
 
@@ -14247,21 +14247,36 @@ static UINT8 *kof95spExtraROM;
 
 static INT32 Kof95spInit()
 {
-    INT32 nRet = NeoInit();
+ 	INT32 nRet = NeoInit();
 
-    if (nRet == 0) {
-        kof95spExtraROM = (UINT8*)BurnMalloc(0x20000);
+	if (nRet == 0) {
+        	kof95spExtraROM = (UINT8*)BurnMalloc(0x20000);
 
-        if (BurnLoadRom(kof95spExtraROM, 2, 1)) return 1;
+		if (BurnLoadRom(kof95spExtraROM, 2, 1)) return 1;
 
-        BurnByteswap(kof95spExtraROM, 0x20000); // necessary?
+		UINT16 *rom = (UINT16*)kof95spExtraROM;
+		for (INT32 i = 0; i < 0x20000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
 
-        SekOpen(0);
-        SekMapMemory(kof95spExtraROM, 0x900000, 0x91ffff, MAP_ROM);
-        SekClose();
-    }
+		rom = (UINT16*)Neo68KROMActive;
 
-    return nRet;
+		for (INT32 i = 0; i < 0x100000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		rom[0x1f3a8] = 0x2b7c; // 4ef9
+		rom[0x1f3a9] = 0x0003; // 0090
+		rom[0x1f3aa] = 0xe7fa; // 16be
+
+        	SekOpen(0);
+        	SekMapMemory(kof95spExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+        	SekClose();
+	}
+
+	return nRet;
 }
 
 static INT32 Kof95spExit()
@@ -14271,7 +14286,7 @@ static INT32 Kof95spExit()
     return NeoExit();
 }
 
-struct BurnDriverD BurnDrvKof95sp = {
+struct BurnDriver BurnDrvKof95sp = {
 	"kof95sp", "kof95", "neogeo", NULL, "2017",
 	"The King of Fighters '95 (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,

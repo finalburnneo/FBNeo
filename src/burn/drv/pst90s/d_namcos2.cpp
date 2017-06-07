@@ -5,32 +5,34 @@
 // hook up analog & gun controls
 
 //tested good:
-// assault	- needs new inpts
-// bubbletr	- ok, missing artwork (flipped)
 // burnforc	- good
 // cosmogng	- good
 // dsaber	- good
 // mirninja	- good
 // valkyrie	- good
-// ordyne	- flipped! (normal) (things out-of-alignment fixed by making a default eeprom with flipping on, or fixing flipped mode in tmap)
+// ordyne	- good
 // phelious	- good
 // rthun2	- good
 // marvland	- good
 
 //working on:
+// finehour	- missing graphics
+// luckywld	- road layer not wide enough?
+
+//need inputs for: (iq_132? :)
 // sgunner  -
 // sgunner2	- needs old mcu
-// fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
+// metlhawk -
+// assault	- needs new inpts
 
+// bubbletr	- ok, missing artwork (flipped)
 // dirtfoxj	-
 // finallap	- some bad gfx (sprites), bad sound
 // finalap2	- bad sound
 // finalap3	- bad sound
-// finehour	- missing graphics
 // gollygho	- ok, missing artwork (flipped)
+// fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
 // kyukaidk	- 
-// luckywld	- road layer not wide enough?
-// metlhawk -
 // suzuk8h	-
 // suzuk8h2	-
 // sws & clones	- 
@@ -129,6 +131,8 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[3];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+
+static INT32 ordynenvram = 0; // @ init 1 ordyne, 2 ordynej, 0 after set!
 
 static struct BurnInputInfo DefaultInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -1063,14 +1067,36 @@ static void namcos2_mcu_init()
 	m6805Close();
 }
 
-#if 0
 static void OrdyneEEPROMCheck()
 {
-	if (!DrvEEPROM[0]) {
+	UINT8 ordyneeeprom[] = {
+		0x96,0x44,0x01,0x01,0x00,0x18,0x00,0x80,0x4f,0x52,0x44,0x41,0x01,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+		0x04,0x9d,0x01,0x01,0x01,0x01,0x00,0x01,0x00,0x01,0x01,0x01,0x01,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00 };
 
+	UINT8 ordynejeeprom[] = {
+		0x96,0x44,0x01,0x01,0x00,0x18,0x00,0x80,0x4f,0x52,0x44,0x41,0x01,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+		0x05,0xeb,0x01,0x01,0x01,0x01,0x00,0x01,0x00,0x01,0x01,0x01,0x01,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x10,0x00,0x3e };
+
+	if (DrvEEPROM[0] == 0xff && ordynenvram) {
+		bprintf(0, _T("Setting default NVRAM for Ordyne%S!\n"), (ordynenvram == 2) ? "j" : "");
+
+		memset(DrvEEPROM, 0xff, 0x2000);
+		switch (ordynenvram) {
+			case 1: memcpy(DrvEEPROM, ordyneeeprom, 6*16); break;
+			case 2: memcpy(DrvEEPROM, ordynejeeprom, 6*16); break;
+		}
 	}
+
+	ordynenvram = 0;
 }
-#endif
 
 static INT32 DrvDoReset()
 {
@@ -1791,6 +1817,8 @@ static INT32 Namcos2Exit()
 
 	pDrvDrawBegin = NULL;
 	pDrvDrawLine = NULL;
+
+	ordynenvram = 0;
 
 	return 0;
 }
@@ -2610,13 +2638,13 @@ static void DrvDrawLine(INT32 line)
 		{
 			if (roz_enable) {
 				PUSH_Y();
-				draw_roz();
+				if (nBurnLayer & 1) draw_roz();
 				POP_Y();
 			}
 		}
 
 		PUSH_Y();
-		draw_sprites(pri, gfx_ctrl);
+		if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
 		POP_Y();
 	}
 }
@@ -3016,6 +3044,10 @@ static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
+	}
+
+	if (ordynenvram) {
+		OrdyneEEPROMCheck();
 	}
 
 	SekNewFrame();
@@ -3534,7 +3566,24 @@ static UINT16 ordyne_key_read(UINT8 offset)
 
 static INT32 OrdyneInit()
 {
-	return Namcos2Init(NULL, ordyne_key_read);
+	INT32 rc = Namcos2Init(NULL, ordyne_key_read);
+
+	if (!rc) {
+		ordynenvram = 1;
+	}
+
+	return rc;
+}
+
+static INT32 OrdynejInit()
+{
+	INT32 rc = Namcos2Init(NULL, ordyne_key_read);
+
+	if (!rc) {
+		ordynenvram = 2;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvOrdyne = {
@@ -3602,7 +3651,7 @@ struct BurnDriver BurnDrvOrdynej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, ordynejRomInfo, ordynejRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
-	OrdyneInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	OrdynejInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
 
@@ -4111,7 +4160,6 @@ static struct BurnRomInfo rthun2RomDesc[] = {
 	{ "voi1.bin",		0x80000, 0xe42027cd, 0x0a | BRF_SND },           // 19 C140 Samples Samples
 	{ "voi2.bin",		0x80000, 0x0c4c2b66, 0x0a | BRF_SND },           // 20
 };
-
 STD_ROM_PICK(rthun2)
 STD_ROM_FN(rthun2)
 
@@ -4556,7 +4604,15 @@ static UINT16 finehour_key_read(UINT8 offset)
 
 static INT32 FinehourInit()
 {
-	return Namcos2Init(NULL, finehour_key_read);
+	INT32 rc = Namcos2Init(NULL, finehour_key_read);
+
+	if (!rc) {
+		bprintf(0, _T("linedrawmode\n"));
+		pDrvDrawBegin = DrvDrawBegin;
+		pDrvDrawLine = DrvDrawLine;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvFinehour = {
@@ -4566,7 +4622,8 @@ struct BurnDriver BurnDrvFinehour = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, finehourRomInfo, finehourRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	FinehourInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	288, 224, 4, 3
+	//288, 224, 4, 3
+	1024, 1024, 4, 3
 };
 
 

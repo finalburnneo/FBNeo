@@ -10,10 +10,6 @@ my $FontSize = 16;
 
 my $escape = 0;
 
-my %FontFamilies = ("Tahoma",			"swiss",
-					"Times New Roman",	"roman"
-);
-
 # Process command line arguments
 for ( my $i = 0; $i < scalar @ARGV; $i++ ) {{
 
@@ -73,7 +69,7 @@ open( OUTFILE, ">$Outfile" ) or die "\nError: Couldn't open OUTPUT file $Outfile
 
 print "Generating $Outfile...\n";
 
-print OUTFILE "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl(\\f0\\f$FontFamilies{$Font}\\fprq2 $Font;)}{\\colortbl\\red0\\green0\\blue0;\\red255\\green0\\blue0;\\red0\\green0\\blue191;}\\deflang1033\\horzdoc\\fromtext\\pard\\plain\\f0\\fs$FontSize";
+print OUTFILE "{\\rtf1\\ansi\\ansicpg1252\\deff0{\\fonttbl(\\f0\\fnil\\fcharset0 $Font;)}{\\colortbl\\red0\\green0\\blue0;\\red255\\green0\\blue0;\\red0\\green0\\blue191;}\\deflang1033\\horzdoc\\fromtext\\pard\\plain\\f0\\fs$FontSize";
 
 while ( my $line = <INFILE> ) {
 

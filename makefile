@@ -18,6 +18,9 @@ export
 # Include Unicode support
 UNICODE = 1
 
+# Use Segoe Fonts (installed by default on Windows Vista and newer)
+#USE_SEGOE = 1
+
 # Build A68K ASM 68000 core
 #BUILD_A68K = 1
 

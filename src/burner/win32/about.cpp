@@ -10,6 +10,10 @@ static void myDrawText(HDC hDC, RECT* pRect, TCHAR* szText, int nSizeDelta, int 
 	RECT rect;
 	HFONT hFont, myFont;
 	TEXTMETRIC myMetric;
+	
+#ifdef USE_SEGOE
+	nSizeDelta += 2;
+#endif
 
 	GetTextFace(hDC, 32, szName);
 	GetTextMetrics(hDC, &myMetric);

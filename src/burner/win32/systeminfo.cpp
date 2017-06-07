@@ -161,7 +161,7 @@ int PrintOSInfo()
 		GetVersionEx((OSVERSIONINFO*)&osvi);
 	}
 	
-	bprintf(PRINT_NORMAL, _T("%i, %i\n"), osvi.dwMajorVersion, osvi.dwMinorVersion);
+//	bprintf(PRINT_NORMAL, _T("%i, %i\n"), osvi.dwMajorVersion, osvi.dwMinorVersion);
 	
 	AddText(_T("OS:  "));
 	{

@@ -3313,9 +3313,9 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
-		//nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
-		if (i == 240*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
+		if (i == (240-1)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
 		segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
 		maincpu_run_ended = maincpu_run_cycles = 0;
@@ -3330,7 +3330,7 @@ static INT32 DrvFrame()
 			SekIdle(segment - SekTotalCycles());
 		} else {			
 			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
-			if (i == 240*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
+			if (i == (240-1)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
 			if (i == position*2) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
 		}
 		SekClose();

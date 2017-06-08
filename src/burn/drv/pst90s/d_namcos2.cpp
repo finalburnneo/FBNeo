@@ -1,10 +1,10 @@
-// clipping implimented, but not externally (devices c169/namco_c45 needs verification etc)
 // only default inputs set up
 
-// todo
-// hook up analog & gun controls
+// Later Todo:
+//   Make single-joy hack for Assault with fake-dip for normal or single mode.
 
 //tested good:
+// assault	- good
 // burnforc	- good
 // cosmogng	- good
 // dsaber	- good
@@ -14,28 +14,31 @@
 // phelious	- good
 // rthun2	- good
 // marvland	- good
+// metlhawk - good
+// kyukaidk	- good (baseball)
+// sws & clones	- good (baseball)
 
 //working on:
-// finehour	- missing graphics
-// luckywld	- road layer not wide enough?
+// palette update
 
-//need inputs for: (iq_132? :)
+//super bugged:
+// finehour	- missing graphics [this is driving me bonkers - dink]
+
+//need input structs for the following...
+// luckywld	- needs inputs
 // sgunner  -
-// sgunner2	- needs old mcu
-// metlhawk -
-// assault	- needs new inpts
+// sgunner2	- (needs old mcu)
+// dirtfoxj	- ""
 
+//eek.
 // bubbletr	- ok, missing artwork (flipped)
-// dirtfoxj	-
+// gollygho	- ok, missing artwork (flipped)
 // finallap	- some bad gfx (sprites), bad sound
 // finalap2	- bad sound
 // finalap3	- bad sound
-// gollygho	- ok, missing artwork (flipped)
 // fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
-// kyukaidk	- 
 // suzuk8h	-
 // suzuk8h2	-
-// sws & clones	- 
 
 
 #include "tiles_generic.h"
@@ -128,9 +131,14 @@ static INT32 finallap_prot_count = 0;
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
-static UINT8 DrvInputs[3];
+static UINT8 DrvJoy4[8];
+static UINT8 DrvInputs[4];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static INT32 DrvAnalogPort2 = 0;
 
 static INT32 ordynenvram = 0; // @ init 1 ordyne, 2 ordynej, 0 after set!
 
@@ -179,6 +187,106 @@ static struct BurnDIPInfo DefaultDIPList[]=
 
 STDDIPINFO(Default)
 
+static struct BurnInputInfo AssaultInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Left Stick Up",	BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"		},
+	{"P1 Left Stick Down",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
+	{"P1 Left Stick Left",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Left Stick Right",	BIT_DIGITAL,	DrvJoy3 + 7,	"p1 right"	},
+	{"P3 Right Stick Up",	BIT_DIGITAL,	DrvJoy3 + 3,	"p3 up"		},
+	{"P3 Right Stick Down",	BIT_DIGITAL,	DrvJoy3 + 1,	"p3 down"	},
+	{"P3 Right Stick Left",	BIT_DIGITAL,	DrvJoy4 + 3,	"p3 left"	},
+	{"P3 Right Stick Right",BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
+	{"P2 Left Stick Up",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 up"		},
+	{"P2 Left Stick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p2 down"	},
+	{"P2 Left Stick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p2 left"	},
+	{"P2 Left Stick Right",	BIT_DIGITAL,	DrvJoy3 + 6,	"p2 right"	},
+	{"P4 Right Stick Up",	BIT_DIGITAL,	DrvJoy3 + 2,	"p4 up"		},
+	{"P4 Right Stick Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"p4 down"	},
+	{"P4 Right Stick Left",	BIT_DIGITAL,	DrvJoy4 + 2,	"p4 left"	},
+	{"P4 Right Stick Right",BIT_DIGITAL,	DrvJoy4 + 0,	"p4 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
+};
+
+STDINPUTINFO(Assault)
+
+static struct BurnDIPInfo AssaultDIPList[]=
+{
+	{0x18, 0xff, 0xff, 0xff, NULL			},
+	{0x19, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x18, 0x01, 0x01, 0x01, "Normal"		},
+	{0x18, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x19, 0x01, 0x40, 0x40, "Off"			},
+	{0x19, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Assault)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo MetlhawkInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 2"	},
+
+	A("P1 X Axis",          BIT_ANALOG_REL, &DrvAnalogPort1 , "mouse x-axis"),
+	A("P1 Y Axis",          BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse y-axis"),
+	A("P1 Up/Down Axis",      BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 x-axis"),
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
+};
+
+STDINPUTINFO(Metlhawk)
+
+static struct BurnDIPInfo MetlhawkDIPList[]=
+{
+	{0x09, 0xff, 0xff, 0xff, NULL			},
+	{0x0a, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x09, 0x01, 0x01, 0x01, "Normal"		},
+	{0x09, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0a, 0x01, 0x40, 0x40, "Off"			},
+	{0x0a, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Metlhawk)
+
+static void palette_write(INT32 address)
+{
+	return; // remove when fixed
+
+	INT32 offset = (address & 0xcffe)/2;
+	INT32 entry = (offset & 0x7ff) | ((offset & 0x6000) >> 2);
+
+	UINT16 *ram = (UINT16*)DrvPalRAM;
+
+	UINT8 r = ram[offset + 0x0000];
+	UINT8 g = ram[offset + 0x0800];
+	UINT8 b = ram[offset + 0x1000];
+
+	DrvPalette[entry] = BurnHighCol(r,g,b,0);
+	DrvPalette[entry + 0x2000] = BurnHighCol(r/2,g/2,b/2,0); // shadow
+}
 
 static void clear_all_irqs()
 {
@@ -392,11 +500,12 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 
 	if ((address & 0xff0000) == 0x440000) {
 		*((UINT16*)(DrvPalRAM + (address & 0x301e))) = data & 0xff;
+		palette_write(address & 0x301e);
 		return;
 	}
 
 	if ((address & 0xff0000) == 0x460000) {
-		DrvDPRAM[(address & 0xffe)/2] = data;
+		DrvDPRAM[(address & 0xffe)/2] = data & 0xff;
 		return;
 	}
 
@@ -430,6 +539,7 @@ static void __fastcall namcos2_68k_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xff0000) == 0x440000) {
 		*((UINT16*)(DrvPalRAM + (address & 0x301e))) = data;
+		palette_write(address & 0x301e);
 		return;
 	}
 
@@ -701,9 +811,9 @@ static void mcu_analog_ctrl_write(UINT8 data)
 			case 2: mcu_analog_data = 0; break; // an2
 			case 3: mcu_analog_data = 0; break; // an3
 			case 4: mcu_analog_data = 0; break; // an4
-			case 5: mcu_analog_data = 0; break; // an5
-			case 6: mcu_analog_data = 0; break; // an6
-			case 7: mcu_analog_data = 0; break; // an7
+			case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
+			case 6: mcu_analog_data = 0x7f + (DrvAnalogPort1 >> 4); break; // an6
+			case 7: mcu_analog_data = 0x7f + (DrvAnalogPort2 >> 4); break; // an7
 		}
 	}
 
@@ -814,7 +924,7 @@ static UINT8 namcos2_mcu_read(UINT16 address)
 			return DrvDips[0]; // dsw
 
 		case 0x3000:
-			return 0xff; // MCUDI0
+			return DrvInputs[3]; // MCUDI0
 
 		case 0x3001:
 			return 0xff; // MCUDI1
@@ -949,7 +1059,7 @@ static void default_68k_map(INT32 cpu)
 	SekSetReadWordHandler(0,		namcos2_68k_read_word);
 	SekSetReadByteHandler(0,		namcos2_68k_read_byte);
 
-	SekMapHandler(1,			0xc80000, 0xc9ffff, MAP_WRITE);
+	SekMapHandler(1,			0xc80000, 0xcbffff, MAP_WRITE);
 	SekSetWriteByteHandler(1, roz_write_byte);
 	SekSetWriteWordHandler(1, roz_write_word);
 
@@ -1681,6 +1791,9 @@ static INT32 MetlhawkInit()
 	return 0;
 }
 
+static void FinallapDrawBegin(); // forwards
+static void FinallapDrawLine(INT32 line); // ""
+
 static INT32 FinallapInit()
 {
 	AllMem = NULL;
@@ -1707,6 +1820,9 @@ static INT32 FinallapInit()
 	GenericTilesInit();
 
 	DrvDoReset();
+
+	pDrvDrawBegin = FinallapDrawBegin;
+	pDrvDrawLine = FinallapDrawLine;
 
 	return 0;
 }
@@ -1750,11 +1866,11 @@ static INT32 Finalap2Init()
 
 	DrvDoReset();
 
+	pDrvDrawBegin = FinallapDrawBegin;
+	pDrvDrawLine = FinallapDrawLine;
+
 	return 0;
 }
-
-static void FinallapDrawBegin(); // forwards
-static void FinallapDrawLine(INT32 line); // ""
 
 static INT32 FourtraxInit()
 {
@@ -3055,11 +3171,12 @@ static INT32 DrvFrame()
 	m6805NewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 3);
+		memset (DrvInputs, 0xff, 4);
 		for (INT32 i = 0; i < 8; i++) { 
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
 	}
 
@@ -3082,7 +3199,9 @@ static INT32 DrvFrame()
 		INT32 segment;
 
 		SekOpen(0);
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
+		//nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 		if (i == 240*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
@@ -3374,7 +3493,7 @@ struct BurnDriver BurnDrvAssault = {
 	"Assault (Rev B)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, assaultRomInfo, assaultRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //AssaultInputInfo, AssaultDIPInfo,
+	NULL, assaultRomInfo, assaultRomName, NULL, NULL, AssaultInputInfo, AssaultDIPInfo,
 	AssaultInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
 };
@@ -3431,7 +3550,7 @@ struct BurnDriver BurnDrvAssaultj = {
 	"Assault (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, assaultjRomInfo, assaultjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,// AssaultInputInfo, AssaultDIPInfo,
+	NULL, assaultjRomInfo, assaultjRomName, NULL, NULL, AssaultInputInfo, AssaultDIPInfo,
 	AssaultInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
 };
@@ -3495,7 +3614,7 @@ struct BurnDriver BurnDrvAssaultp = {
 	"Assault Plus (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, assaultpRomInfo, assaultpRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
+	NULL, assaultpRomInfo, assaultpRomName, NULL, NULL, AssaultInputInfo, AssaultDIPInfo,
 	AssaultpInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
 };
@@ -4622,8 +4741,7 @@ struct BurnDriver BurnDrvFinehour = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, finehourRomInfo, finehourRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	FinehourInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
-	//288, 224, 4, 3
-	1024, 1024, 4, 3
+	288, 224, 4, 3
 };
 
 
@@ -5524,7 +5642,7 @@ struct BurnDriver BurnDrvMetlhawk = {
 	"Metal Hawk (Rev C)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, metlhawkRomInfo, metlhawkRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, // MetlhawkInputInfo, MetlhawkDIPInfo,
+	NULL, metlhawkRomInfo, metlhawkRomName, NULL, NULL, MetlhawkInputInfo, MetlhawkDIPInfo,
 	MetlhawkInit, Namcos2Exit, DrvFrame, MetlhawkDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
 };
@@ -5594,7 +5712,7 @@ struct BurnDriver BurnDrvMetlhawkj = {
 	"Metal Hawk (Japan, Rev F)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, metlhawkjRomInfo, metlhawkjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, // MetlhawkInputInfo, MetlhawkDIPInfo,
+	NULL, metlhawkjRomInfo, metlhawkjRomName, NULL, NULL, MetlhawkInputInfo, MetlhawkDIPInfo,
 	MetlhawkInit, Namcos2Exit, DrvFrame, MetlhawkDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
 };

@@ -17,6 +17,7 @@
 // metlhawk - good
 // kyukaidk	- good (baseball)
 // sws & clones	- good (baseball)
+// sgunner  - good
 
 //Need help!
 // palette update [dink failed.]
@@ -24,7 +25,6 @@
 
 //need input structs for the following...
 // luckywld	- needs inputs
-// sgunner  -
 // sgunner2	- (needs old mcu)
 
 //eek.
@@ -277,7 +277,6 @@ static struct BurnDIPInfo MetlhawkDIPList[]=
 
 STDDIPINFO(Metlhawk)
 
-#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SgunnerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -290,7 +289,7 @@ static struct BurnInputInfo SgunnerInputList[] = {
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
 	A("P2 Gun X",    	BIT_ANALOG_REL, &LethalGun2,    "p2 x-axis"	),
 	A("P2 Gun Y",    	BIT_ANALOG_REL, &LethalGun3,    "p2 y-axis"	),
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 1"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 2"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
@@ -892,10 +891,10 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 1: mcu_analog_data = 0; break; // an1
 				case 2: mcu_analog_data = 0; break; // an2
 				case 3: mcu_analog_data = 0; break; // an3
-				case 4: mcu_analog_data = 0; break; // an4
-				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
-				case 6: mcu_analog_data = 0x7f + (DrvAnalogPort1 >> 4); break; // an6
-				case 7: mcu_analog_data = 0x7f + (DrvAnalogPort2 >> 4); break; // an7
+				case 4: mcu_analog_data = BurnGunReturnX(0); break; // an4
+				case 5: mcu_analog_data = BurnGunReturnX(1); break; // an5
+				case 6: mcu_analog_data = BurnGunReturnY(0); break; // an6
+				case 7: mcu_analog_data = BurnGunReturnY(1); break; // an7
 			}
 		} else {
 			switch ((data >> 2) & 7)
@@ -904,10 +903,10 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 1: mcu_analog_data = 0; break; // an1
 				case 2: mcu_analog_data = 0; break; // an2
 				case 3: mcu_analog_data = 0; break; // an3
-				case 4: mcu_analog_data = BurnGunReturnX(0); break; // an4
-				case 5: mcu_analog_data = BurnGunReturnX(1); break; // an5
-				case 6: mcu_analog_data = BurnGunReturnY(0); break; // an6
-				case 7: mcu_analog_data = BurnGunReturnY(1); break; // an7
+				case 4: mcu_analog_data = 0; break; // an4
+				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
+				case 6: mcu_analog_data = 0x7f + (DrvAnalogPort1 >> 4); break; // an6
+				case 7: mcu_analog_data = 0x7f + (DrvAnalogPort2 >> 4); break; // an7
 			}
 		}
 	}
@@ -1652,7 +1651,7 @@ static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_rea
 	GenericTilesInit();
 
 	uses_gun = 1;
-	BurnGunInit(2, true);
+	BurnGunInit(2, false);
 
 	DrvDoReset();
 

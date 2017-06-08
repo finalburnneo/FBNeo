@@ -252,6 +252,16 @@ extern UINT32 *pBurnDrvPalette;
 #define PRINT_UI		(1)
 #define PRINT_IMPORTANT (2)
 #define PRINT_ERROR		(3)
+#define PRINT_LEVEL1	(4)
+#define PRINT_LEVEL2	(5)
+#define PRINT_LEVEL3	(6)
+#define PRINT_LEVEL4	(7)
+#define PRINT_LEVEL5	(8)
+#define PRINT_LEVEL6	(9)
+#define PRINT_LEVEL7	(10)
+#define PRINT_LEVEL8	(11)
+#define PRINT_LEVEL9	(12)
+#define PRINT_LEVEL10	(13)
 
 #ifndef bprintf
 extern INT32 (__cdecl *bprintf) (INT32 nStatus, TCHAR* szFormat, ...);

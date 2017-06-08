@@ -235,13 +235,43 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 		if (nStatus != nPrevConsoleStatus) {
 			switch (nStatus) {
 				case PRINT_ERROR:
-					_ftprintf(DebugLog, _T("</font><font color=#FF3F3F>"));
+					_ftprintf(DebugLog, _T("</div><div class=\"error\">"));
 					break;
 				case PRINT_IMPORTANT:
-					_ftprintf(DebugLog, _T("</font><font color=#000000>"));
+					_ftprintf(DebugLog, _T("</div><div class=\"important\">"));
+					break;
+				case PRINT_LEVEL1:
+					_ftprintf(DebugLog, _T("</div><div class=\"level1\">"));
+					break;
+				case PRINT_LEVEL2:
+					_ftprintf(DebugLog, _T("</div><div class=\"level2\">"));
+					break;
+				case PRINT_LEVEL3:
+					_ftprintf(DebugLog, _T("</div><div class=\"level3\">"));
+					break;
+				case PRINT_LEVEL4:
+					_ftprintf(DebugLog, _T("</div><div class=\"level4\">"));
+					break;
+				case PRINT_LEVEL5:
+					_ftprintf(DebugLog, _T("</div><div class=\"level5\">"));
+					break;
+				case PRINT_LEVEL6:
+					_ftprintf(DebugLog, _T("</div><div class=\"level6\">"));
+					break;
+				case PRINT_LEVEL7:
+					_ftprintf(DebugLog, _T("</div><div class=\"level7\">"));
+					break;
+				case PRINT_LEVEL8:
+					_ftprintf(DebugLog, _T("</div><div class=\"level8\">"));
+					break;
+				case PRINT_LEVEL9:
+					_ftprintf(DebugLog, _T("</div><div class=\"level9\">"));
+					break;
+				case PRINT_LEVEL10:
+					_ftprintf(DebugLog, _T("</div><div class=\"level10\">"));
 					break;
 				default:
-					_ftprintf(DebugLog, _T("</font><font color=#009F00>"));
+					_ftprintf(DebugLog, _T("</div><div class=\"normal\">"));
 			}
 		}
 		_vftprintf(DebugLog, pszFormat, vaFormat);
@@ -257,6 +287,16 @@ static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
 					SetConsoleTextAttribute(DebugBuffer,                                                       FOREGROUND_INTENSITY);
 					break;
 				case PRINT_IMPORTANT:
+				case PRINT_LEVEL1:
+				case PRINT_LEVEL2:
+				case PRINT_LEVEL3:
+				case PRINT_LEVEL4:
+				case PRINT_LEVEL5:
+				case PRINT_LEVEL6:
+				case PRINT_LEVEL7:
+				case PRINT_LEVEL8:
+				case PRINT_LEVEL9:
+				case PRINT_LEVEL10:
 					SetConsoleTextAttribute(DebugBuffer, FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY);
 					break;
 				case PRINT_ERROR:
@@ -289,7 +329,7 @@ int dprintf(TCHAR* pszFormat, ...)
 
 	if (nPrevConsoleStatus != PRINT_UI) {
 		if (DebugLog) {
-			_ftprintf(DebugLog, _T("</font><font color=#9F9F9F>"));
+			_ftprintf(DebugLog, _T("</div><div class=\"ui\">"));
 		}
 		SetConsoleTextAttribute(DebugBuffer, FOREGROUND_INTENSITY);
 		nPrevConsoleStatus = PRINT_UI;
@@ -351,7 +391,9 @@ int OpenDebugLog()
 			WRITE_UNICODE_BOM(DebugLog);
 
 			_ftprintf(DebugLog, _T("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0 Transitional//EN\">"));
-			_ftprintf(DebugLog, _T("<html><head><meta http-equiv=Content-Type content=\"text/html; charset=unicode\"></head><body><pre>"));
+			_ftprintf(DebugLog, _T("<html><head><meta http-equiv=Content-Type content=\"text/html; charset=unicode\"><script src=\"https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js\"></script>"));
+			_ftprintf(DebugLog, _T("<style>body{color:#333333;}.error,.error_chb{color:#ff3f3f;}.important,.important_chb{color:#000000;}.normal,.level1,.level2,.level3,.level4,.level5,.level6,.level7,.level8,.level9,.level10,.normal_chb,.level1_chb,.level2_chb,.level3_chb,.level4_chb,.level5_chb,.level6_chb,.level7_chb,.level8_chb,.level9_chb,.level10_chb{color:#009f00;}.ui{color:9f9f9f;}</style>"));
+			_ftprintf(DebugLog, _T("</head><body><pre>"));
 		}
   #else
 		DebugLog = _tfopen(_T("zzBurnDebug.html"), _T("wt"));
@@ -362,8 +404,23 @@ int OpenDebugLog()
 		}
   #endif
 
-		_ftprintf(DebugLog, _T("</font><font size=larger color=#000000>"));
-		_ftprintf(DebugLog, _T("Debug log created by ") _T(APP_TITLE) _T(" v%.20s on %s\n<br>"), szAppBurnVer, _tasctime(tmTime));
+		_ftprintf(DebugLog, _T("<div style=\"font-size:16px;font-weight:bold;\">"));
+		_ftprintf(DebugLog, _T("Debug log created by ") _T(APP_TITLE) _T(" v%.20s on %s"), szAppBurnVer, _tasctime(tmTime));
+		
+		_ftprintf(DebugLog, _T("</div><div style=\"margin-top:12px;\"><input type=\"checkbox\" id=\"chb_ui\" onclick=\"if(this.checked==true){$(\'.ui\').show();}else{$(\'.ui\').hide();}\" checked>&nbsp;<label for=\"chb_ui\" class=\"ui_chb\">UI</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_normal\" onclick=\"if(this.checked==true){$(\'.normal\').show();}else{$(\'.normal\').hide();}\" checked>&nbsp;<label for=\"chb_normal\" class=\"normal_chb\">Normal</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_important\" onclick=\"if(this.checked==true){$(\'.important\').show();}else{$(\'.important\').hide();}\" checked>&nbsp;<label for=\"chb_important\" class=\"important_chb\">Important</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_error\" onclick=\"if(this.checked==true){$(\'.error\').show();}else{$(\'.error\').hide();}\" checked>&nbsp;<label for=\"chb_error\" class=\"error_chb\">Error</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level1\" onclick=\"if(this.checked==true){$(\'.level1\').show();}else{$(\'.level1\').hide();}\" checked>&nbsp;<label for=\"chb_level1\" class=\"level1_chb\">Level 1</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level2\" onclick=\"if(this.checked==true){$(\'.level2\').show();}else{$(\'.level2\').hide();}\" checked>&nbsp;<label for=\"chb_level2\" class=\"level2_chb\">Level 2</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level3\" onclick=\"if(this.checked==true){$(\'.level3\').show();}else{$(\'.level3\').hide();}\" checked>&nbsp;<label for=\"chb_level3\" class=\"level3_chb\">Level 3</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level4\" onclick=\"if(this.checked==true){$(\'.level4\').show();}else{$(\'.level4\').hide();}\" checked>&nbsp;<label for=\"chb_level4\" class=\"level4_chb\">Level 4</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level5\" onclick=\"if(this.checked==true){$(\'.level5\').show();}else{$(\'.level5\').hide();}\" checked>&nbsp;<label for=\"chb_level5\" class=\"level5_chb\">Level 5</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level6\" onclick=\"if(this.checked==true){$(\'.level6\').show();}else{$(\'.level6\').hide();}\" checked>&nbsp;<label for=\"chb_level6\" class=\"level6_chb\">Level 6</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level7\" onclick=\"if(this.checked==true){$(\'.level7\').show();}else{$(\'.level7\').hide();}\" checked>&nbsp;<label for=\"chb_level7\" class=\"level7_chb\">Level 7</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level8\" onclick=\"if(this.checked==true){$(\'.level8\').show();}else{$(\'.level8\').hide();}\" checked>&nbsp;<label for=\"chb_level8\" class=\"level8_chb\">Level 8</label>"));
+		_ftprintf(DebugLog, _T("</div><div><input type=\"checkbox\" id=\"chb_level9\" onclick=\"if(this.checked==true){$(\'.level9\').show();}else{$(\'.level9\').hide();}\" checked>&nbsp;<label for=\"chb_level9\" class=\"level9_chb\">Level 9</label>"));
+		_ftprintf(DebugLog, _T("</div><div style=\"margin-bottom:20px;\"><input type=\"checkbox\" id=\"chb_level10\" onclick=\"if(this.checked==true){$(\'.level10\').show();}else{$(\'.level10\').hide();}\" checked>&nbsp;<label for=\"chb_level10\" class=\"level10_chb\">Level 10</label>"));
 	}
  #endif
 

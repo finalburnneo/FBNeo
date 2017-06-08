@@ -8,17 +8,17 @@
 int nIniVersion = 0;
 
 struct VidPresetData VidPreset[4] = {
-	{ 400, 300},
 	{ 640, 480},
 	{ 1024, 768},
 	{ 1280, 960},
+	// last one set at desktop resolution
 };
 
 struct VidPresetDataVer VidPresetVer[4] = {
-	{ 400, 300},
 	{ 640, 480},
 	{ 1024, 768},
 	{ 1280, 960},
+	// last one set at desktop resolution
 };
 
 static void CreateConfigName(TCHAR* szConfig)

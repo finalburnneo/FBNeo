@@ -445,6 +445,18 @@ void MonitorAutoCheck()
 
 	x = GetSystemMetrics(SM_CXSCREEN);
 	y = GetSystemMetrics(SM_CYSCREEN);
+	
+	// default full-screen resolution to this size
+	nVidHorWidth = x;
+	nVidHorHeight = y;
+	nVidVerWidth = x;
+	nVidVerHeight = y;
+	
+	// also add this to the presets
+	VidPreset[3].nWidth = x;
+	VidPreset[3].nHeight = y;
+	VidPresetVer[3].nWidth = x;
+	VidPresetVer[3].nHeight = y;
 
 	TCHAR szResXY[256] = _T("");
 	_stprintf(szResXY, _T("%dx%d"), x, y);

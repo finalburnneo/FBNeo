@@ -1,5 +1,3 @@
-// only default inputs set up
-
 // Later Todo:
 //   Make single-joy hack for Assault with fake-dip for normal or single mode.
 
@@ -18,14 +16,14 @@
 // kyukaidk	- good (baseball)
 // sws & clones	- good (baseball)
 // sgunner  - good
+// sgunner2	- good (needs old mcu)
 
 //Need help!
-// palette update [dink failed.]
+// fast palette update [dink failed.]
 // finehour	- missing graphics [this is driving me bonkers - dink]
 
 //need input structs for the following...
 // luckywld	- needs inputs
-// sgunner2	- (needs old mcu)
 
 //eek.
 // bubbletr	- ok, missing artwork (flipped)
@@ -39,6 +37,10 @@
 // suzuk8h2	-
 // dirtfoxj	- can't be controlled, not even in mame
 
+//-timing notes- 240+8 fixes both
+//vbl@240 sgunner after coin up, add more coins and coins# flickers
+//vbl@240 sgunner2 attract mode before title screen, when its drawing the '2',
+//        it will flicker a frame (w/wrong palette) from previous scene.
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -3315,7 +3317,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
 
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
-		if (i == (240-1)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
+		if (i == (240+8)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
 		segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
 		maincpu_run_ended = maincpu_run_cycles = 0;
@@ -3330,7 +3332,7 @@ static INT32 DrvFrame()
 			SekIdle(segment - SekTotalCycles());
 		} else {			
 			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
-			if (i == (240-1)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
+			if (i == (240+8)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
 			if (i == position*2) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
 		}
 		SekClose();
@@ -5387,7 +5389,7 @@ struct BurnDriver BurnDrvSgunner2 = {
 	"Steel Gunner 2 (US)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, sgunner2RomInfo, sgunner2RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Sgunner2InputInfo, Sgunner2DIPInfo,
+	NULL, sgunner2RomInfo, sgunner2RomName, NULL, NULL, SgunnerInputInfo, SgunnerDIPInfo,
 	Sgunner2Init, Namcos2Exit, DrvFrame, SgunnerDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -5445,7 +5447,7 @@ struct BurnDriver BurnDrvSgunner2j = {
 	"Steel Gunner 2 (Japan, Rev A)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, sgunner2jRomInfo, sgunner2jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Sgunner2InputInfo, Sgunner2DIPInfo,
+	NULL, sgunner2jRomInfo, sgunner2jRomName, NULL, NULL, SgunnerInputInfo, SgunnerDIPInfo,
 	Sgunner2Init, Namcos2Exit, DrvFrame, SgunnerDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };

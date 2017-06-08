@@ -18,27 +18,26 @@
 // kyukaidk	- good (baseball)
 // sws & clones	- good (baseball)
 
-//working on:
-// palette update
-
-//super bugged:
+//Need help!
+// palette update [dink failed.]
 // finehour	- missing graphics [this is driving me bonkers - dink]
 
 //need input structs for the following...
 // luckywld	- needs inputs
 // sgunner  -
 // sgunner2	- (needs old mcu)
-// dirtfoxj	- ""
 
 //eek.
 // bubbletr	- ok, missing artwork (flipped)
 // gollygho	- ok, missing artwork (flipped)
+//
 // finallap	- some bad gfx (sprites), bad sound
 // finalap2	- bad sound
 // finalap3	- bad sound
 // fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
 // suzuk8h	-
 // suzuk8h2	-
+// dirtfoxj	- can't be controlled, not even in mame
 
 
 #include "tiles_generic.h"
@@ -49,6 +48,7 @@
 #include "c140.h"
 #include "c169.h"
 #include "namco_c45.h"
+#include "burn_gun.h"
 #include "bitswap.h"
 
 // https://git.redump.net/mame/plain/src/mame/drivers/namcos2.cpp
@@ -139,6 +139,12 @@ static UINT8 DrvReset;
 static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static INT32 DrvAnalogPort2 = 0;
+
+static INT32 uses_gun = 0;
+static INT32 LethalGun0 = 0;
+static INT32 LethalGun1 = 0;
+static INT32 LethalGun2 = 0;
+static INT32 LethalGun3 = 0;
 
 static INT32 ordynenvram = 0; // @ init 1 ordyne, 2 ordynej, 0 after set!
 
@@ -270,6 +276,81 @@ static struct BurnDIPInfo MetlhawkDIPList[]=
 };
 
 STDDIPINFO(Metlhawk)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo SgunnerInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	A("P1 Gun X",    	BIT_ANALOG_REL, &LethalGun0,    "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &LethalGun1,    "mouse y-axis"	),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &LethalGun2,    "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &LethalGun3,    "p2 y-axis"	),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
+};
+
+STDINPUTINFO(Sgunner)
+
+static struct BurnDIPInfo SgunnerDIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0xff, NULL			},
+	{0x0f, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x0e, 0x01, 0x01, 0x01, "Normal"		},
+	{0x0e, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0f, 0x01, 0x40, 0x40, "Off"			},
+	{0x0f, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Sgunner)
+
+static struct BurnInputInfo DirtfoxInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 2"	},
+	{"P1 Button 3 (Gear Up)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
+	{"P1 Button 4 (Gear Down)",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 4"	},
+
+	A("P1 Steering",          BIT_ANALOG_REL, &DrvAnalogPort0 , "p1 x-axis"),
+	A("P1 Break",          BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"),
+	A("P1 Accelerator",      BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 fire 6"),
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
+};
+
+STDINPUTINFO(Dirtfox)
+
+static struct BurnDIPInfo DirtfoxDIPList[]=
+{
+	{0x0a, 0xff, 0xff, 0xff, NULL			},
+	{0x0b, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x0a, 0x01, 0x01, 0x01, "Normal"		},
+	{0x0a, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0b, 0x01, 0x40, 0x40, "Off"			},
+	{0x0b, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Dirtfox)
 
 static void palette_write(INT32 address)
 {
@@ -804,16 +885,30 @@ static void mcu_analog_ctrl_write(UINT8 data)
 	{
 		mcu_analog_complete = 2;
 
-		switch ((data >> 2) & 7)
-		{
-			case 0: mcu_analog_data = 0; break; // an0
-			case 1: mcu_analog_data = 0; break; // an1
-			case 2: mcu_analog_data = 0; break; // an2
-			case 3: mcu_analog_data = 0; break; // an3
-			case 4: mcu_analog_data = 0; break; // an4
-			case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
-			case 6: mcu_analog_data = 0x7f + (DrvAnalogPort1 >> 4); break; // an6
-			case 7: mcu_analog_data = 0x7f + (DrvAnalogPort2 >> 4); break; // an7
+		if (uses_gun) {
+			switch ((data >> 2) & 7)
+			{
+				case 0: mcu_analog_data = 0; break; // an0
+				case 1: mcu_analog_data = 0; break; // an1
+				case 2: mcu_analog_data = 0; break; // an2
+				case 3: mcu_analog_data = 0; break; // an3
+				case 4: mcu_analog_data = 0; break; // an4
+				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
+				case 6: mcu_analog_data = 0x7f + (DrvAnalogPort1 >> 4); break; // an6
+				case 7: mcu_analog_data = 0x7f + (DrvAnalogPort2 >> 4); break; // an7
+			}
+		} else {
+			switch ((data >> 2) & 7)
+			{
+				case 0: mcu_analog_data = 0; break; // an0
+				case 1: mcu_analog_data = 0; break; // an1
+				case 2: mcu_analog_data = 0; break; // an2
+				case 3: mcu_analog_data = 0; break; // an3
+				case 4: mcu_analog_data = BurnGunReturnX(0); break; // an4
+				case 5: mcu_analog_data = BurnGunReturnX(1); break; // an5
+				case 6: mcu_analog_data = BurnGunReturnY(0); break; // an6
+				case 7: mcu_analog_data = BurnGunReturnY(1); break; // an7
+			}
 		}
 	}
 
@@ -1556,6 +1651,9 @@ static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_rea
 
 	GenericTilesInit();
 
+	uses_gun = 1;
+	BurnGunInit(2, true);
+
 	DrvDoReset();
 
 	return 0;
@@ -1927,6 +2025,11 @@ static INT32 Namcos2Exit()
 	c45RoadExit();
 
 	BurnFree (AllMem);
+
+	if (uses_gun) {
+		BurnGunExit();
+		uses_gun = 0;
+	}
 
 	key_prot_read = NULL;
 	key_prot_write = NULL;
@@ -3015,6 +3118,10 @@ static INT32 SgunnerDraw()
 
 	BurnTransferCopy(DrvPalette);
 
+	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
+		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
+	}
+
 	return 0;
 }
 
@@ -3178,6 +3285,12 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
 		}
+
+		if (uses_gun) {
+			BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
+			BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
+		}
+
 	}
 
 	INT32 nInterleave = 264*2;
@@ -3394,6 +3507,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction);
 		c140_scan();
+
+		if (uses_gun) {
+			BurnGunScan();
+		}
 
 		SCAN_VAR(gfx_ctrl);
 
@@ -5150,7 +5267,7 @@ struct BurnDriver BurnDrvSgunner = {
 	"Steel Gunner (Rev B)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, sgunnerRomInfo, sgunnerRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, // incorrect inputs
+	NULL, sgunnerRomInfo, sgunnerRomName, NULL, NULL, SgunnerInputInfo, SgunnerDIPInfo,
 	SgunnerInit, Namcos2Exit, DrvFrame, SgunnerDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -5201,7 +5318,7 @@ struct BurnDriver BurnDrvSgunnerj = {
 	"Steel Gunner (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, sgunnerjRomInfo, sgunnerjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, // incorrect inputs
+	NULL, sgunnerjRomInfo, sgunnerjRomName, NULL, NULL, SgunnerInputInfo, SgunnerDIPInfo,
 	SgunnerInit, Namcos2Exit, DrvFrame, SgunnerDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -5396,7 +5513,7 @@ struct BurnDriver BurnDrvDirtfoxj = {
 	"Dirt Fox (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
-	NULL, dirtfoxjRomInfo, dirtfoxjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //DirtfoxInputInfo, DirtfoxDIPInfo,
+	NULL, dirtfoxjRomInfo, dirtfoxjRomName, NULL, NULL, DirtfoxInputInfo, DirtfoxDIPInfo,
 	DirtfoxjInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
 };

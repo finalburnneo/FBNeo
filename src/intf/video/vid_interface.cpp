@@ -103,6 +103,9 @@ INT32 bVidDX9Bilinear = 1;							// 1 = enable bi-linear filtering (D3D9 Alt bli
 INT32 bVidHardwareVertex = 0;			// 1 = use hardware vertex processing
 INT32 bVidMotionBlur = 0;				// 1 = motion blur
 
+wchar_t HorScreen[32] = L"";
+wchar_t VerScreen[32] = L"";
+
 #ifdef BUILD_WIN32
  HWND hVidWnd = NULL;							// Actual window used for video
 #endif

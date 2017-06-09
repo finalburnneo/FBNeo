@@ -106,6 +106,8 @@ int ConfigAppLoad()
 		VAR(bVidCorrectAspect);
 		
 		VAR(bVidAutoSwitchFull);
+		STR(HorScreen);
+		STR(VerScreen);
 
 		VAR(bVidTripleBuffer);
 		VAR(bVidVSync);
@@ -394,6 +396,10 @@ int ConfigAppSave()
 	FLT(nGamma);
 	_ftprintf(h, _T("\n// If non-zero, auto-switch to fullscreen after loading game\n"));
 	VAR(bVidAutoSwitchFull);
+	_ftprintf(h, _T("\n// Monitor for Horizontal Games (GDI Identifier)\n"));
+	STR(HorScreen);
+	_ftprintf(h, _T("\n// Monitor for Vertical Games (GDI Identifier)\n"));
+	STR(VerScreen);
 	_ftprintf(h, _T("\n// If non-zero, allow stretching of the image to any size\n"));
 	VAR(bVidFullStretch);
 	_ftprintf(h, _T("\n// If non-zero, stretch the image to the largest size preserving aspect ratio\n"));

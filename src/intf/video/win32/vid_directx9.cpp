@@ -87,6 +87,8 @@ static int nImageWidth, nImageHeight/*, nImageZoom*/;
 
 static RECT Dest;
 
+static unsigned int nD3DAdapter;
+
 // ----------------------------------------------------------------------------
 #ifdef PRINT_DEBUG_INFO
 static TCHAR* TextureFormatString(D3DFORMAT nFormat)
@@ -150,6 +152,22 @@ static void PutPixel(unsigned char** ppSurface, unsigned int nColour)
 }
 */
 
+static UINT dx9GetAdapter(wchar_t* name)
+{
+	for (int a = pD3D->GetAdapterCount() - 1; a >= 0; a--)
+	{
+		D3DADAPTER_IDENTIFIER9 identifier;
+
+		pD3D->GetAdapterIdentifier(a, 0, &identifier);
+		
+		if (identifier.DeviceName[11] == name[11]) {
+			return a;
+		}
+	}
+
+	return 0;
+}
+
 // Select optimal full-screen resolution
 int dx9SelectFullscreenMode(VidSDisplayScoreInfo* pScoreInfo)
 {
@@ -169,8 +187,8 @@ int dx9SelectFullscreenMode(VidSDisplayScoreInfo* pScoreInfo)
 			VidSInitScoreInfo(pScoreInfo);
 
 			// Enumerate the available screenmodes
-			for (int i = pD3D->GetAdapterModeCount(D3DADAPTER_DEFAULT, nFormat) - 1; i >= 0; i--) {
-				if (FAILED(pD3D->EnumAdapterModes(D3DADAPTER_DEFAULT, nFormat, i, &dm))) {
+			for (int i = pD3D->GetAdapterModeCount(nD3DAdapter, nFormat) - 1; i >= 0; i--) {
+				if (FAILED(pD3D->EnumAdapterModes(nD3DAdapter, nFormat, i, &dm))) {
 					return 1;
 				}
 				pScoreInfo->nModeWidth = dm.Width;
@@ -821,6 +839,15 @@ static int dx9Init()
 		dx9Exit();
 		return 1;
 	}
+	
+	nD3DAdapter = D3DADAPTER_DEFAULT;
+	if (nRotateGame & 1 && VerScreen[0]) {
+		nD3DAdapter = dx9GetAdapter(VerScreen);
+	} else {
+		if (HorScreen[0]) {
+			nD3DAdapter = dx9GetAdapter(HorScreen);
+		}
+	}
 
 	memset(&d3dpp, 0, sizeof(d3dpp));
 	if (nVidFullscreen) {
@@ -854,7 +881,7 @@ static int dx9Init()
 	dwBehaviorFlags |= D3DCREATE_DISABLE_DRIVER_MANAGEMENT;
 #endif
 
-	if (FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
+	if (FAILED(pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
 //	if (FAILED(pD3D->CreateDevice(pD3D->GetAdapterCount() - 1, D3DDEVTYPE_REF, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
 
 #ifdef PRINT_DEBUG_INFO
@@ -875,7 +902,7 @@ static int dx9Init()
 
 	{
 		D3DDISPLAYMODE dm;
-		pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &dm);
+		pD3D->GetAdapterDisplayMode(nD3DAdapter, &dm);
 		nVidScrnWidth = dm.Width; nVidScrnHeight = dm.Height;
 		nVidScrnDepth = (dm.Format == D3DFMT_R5G6B5) ? 16 : 32;
 	}
@@ -1015,7 +1042,7 @@ static int dx9Scale(RECT* pRect, int nWidth, int nHeight)
 // Copy BlitFXsMem to pddsBlitFX
 static int dx9MemToSurf()
 {
-	GetClientScreenRect(hVidWnd, &Dest);
+	GetClientRect(hVidWnd, &Dest);
 
 	if (nVidFullscreen == 0) {
 		Dest.top += nMenuHeight;
@@ -1770,7 +1797,7 @@ static int dx9AltInit()
 
 	// check selected atapter
 	D3DDISPLAYMODE dm;
-	pD3D->GetAdapterDisplayMode(D3DADAPTER_DEFAULT, &dm);
+	pD3D->GetAdapterDisplayMode(nD3DAdapter, &dm);
 
 	memset(&d3dpp, 0, sizeof(d3dpp));
 	if (nVidFullscreen) {
@@ -1813,7 +1840,7 @@ static int dx9AltInit()
 		dwBehaviorFlags |= D3DCREATE_SOFTWARE_VERTEXPROCESSING;
 	}
 
-	if (FAILED(pD3D->CreateDevice(D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
+	if (FAILED(pD3D->CreateDevice(nD3DAdapter, D3DDEVTYPE_HAL, hVidWnd, dwBehaviorFlags, &d3dpp, &pD3DDevice))) {
 		if (nVidFullscreen) {
 			FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_ERR_UI_FULL_PROBLEM), d3dpp.BackBufferWidth, d3dpp.BackBufferHeight, d3dpp.BackBufferFormat, d3dpp.FullScreen_RefreshRateInHz);
 			if (bVidArcaderes && (d3dpp.BackBufferWidth != 320 && d3dpp.BackBufferHeight != 240)) {
@@ -1986,7 +2013,7 @@ static void VidSCpyImg16(unsigned char* dst, unsigned int dstPitch, unsigned cha
 // Copy BlitFXsMem to pddsBlitFX
 static int dx9AltRender()
 {
-	GetClientScreenRect(hVidWnd, &Dest);
+	GetClientRect(hVidWnd, &Dest);
 
 	if (bVidArcaderes && nVidFullscreen) {
 		Dest.left = (Dest.right + Dest.left) / 2;

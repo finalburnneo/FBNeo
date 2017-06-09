@@ -214,6 +214,8 @@ extern double dVidCubicC;
 extern INT32 bVidDX9Bilinear;
 extern INT32 bVidHardwareVertex;
 extern INT32 bVidMotionBlur;
+extern wchar_t HorScreen[32];
+extern wchar_t VerScreen[32];
 extern INT32 nVidScrnWidth, nVidScrnHeight;
 extern INT32 nVidScrnDepth;
 

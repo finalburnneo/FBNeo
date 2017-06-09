@@ -840,6 +840,21 @@ static int dx9Init()
 		return 1;
 	}
 	
+	nRotateGame = 0;
+	if (bDrvOkay) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+			if (nVidRotationAdjust & 1) {
+				nRotateGame |= (nVidRotationAdjust & 2);
+			} else {
+				nRotateGame |= 1;
+			}
+		}
+
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+			nRotateGame ^= 2;
+		}
+	}
+	
 	nD3DAdapter = D3DADAPTER_DEFAULT;
 	if (nRotateGame & 1 && VerScreen[0]) {
 		nD3DAdapter = dx9GetAdapter(VerScreen);
@@ -1793,6 +1808,30 @@ static int dx9AltInit()
 	if ((pD3D = _Direct3DCreate9(D3D_SDK_VERSION)) == NULL) {
 		dx9AltExit();
 		return 1;
+	}
+	
+	nRotateGame = 0;
+	if (bDrvOkay) {
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
+			if (nVidRotationAdjust & 1) {
+				nRotateGame |= (nVidRotationAdjust & 2);
+			} else {
+				nRotateGame |= 1;
+			}
+		}
+
+		if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+			nRotateGame ^= 2;
+		}
+	}
+	
+	nD3DAdapter = D3DADAPTER_DEFAULT;
+	if (nRotateGame & 1 && VerScreen[0]) {
+		nD3DAdapter = dx9GetAdapter(VerScreen);
+	} else {
+		if (HorScreen[0]) {
+			nD3DAdapter = dx9GetAdapter(HorScreen);
+		}
 	}
 
 	// check selected atapter

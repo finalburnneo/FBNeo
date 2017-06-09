@@ -927,6 +927,25 @@ BEGIN
     CONTROL         "Record From Power-On",IDC_REPLAYRESET,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,55,79,106,14
 END
 
+IDD_CHOOSEMONITOR DIALOGEX 0, 0, 242, 77
+STYLE DS_MODALFRAME | DS_CENTER | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "Choose Monitor for Full Screen"
+#ifdef USE_SEGOE
+FONT 8, "Segoe UI", 0, 0, 0x1
+#else
+FONT 8, "MS Shell Dlg", 0, 0, 0x1
+#endif
+BEGIN
+	GROUPBOX        "",IDC_STATIC1,2,0,236,56
+	LTEXT           "These only apply to the DirectX Graphics 9 blitters.",IDC_CHOOSE_MONITOR_TEXT,8,4,210,15,SS_CENTERIMAGE
+	LTEXT           "Horizontal Games:", IDC_CHOOSE_MONITOR_HOR, 8, 21, 60, 10, SS_CENTERIMAGE
+    COMBOBOX        IDC_CHOOSE_MONITOR_HOR_LIST, 80, 20, 150, 128, CBS_DROPDOWNLIST | WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_VSCROLL
+	LTEXT           "Vertical Games:", IDC_CHOOSE_MONITOR_VER, 8, 39, 60, 10, SS_CENTERIMAGE
+    COMBOBOX        IDC_CHOOSE_MONITOR_VER_LIST, 80, 38, 150, 128, CBS_DROPDOWNLIST | WS_CHILD | WS_VISIBLE | WS_TABSTOP | WS_VSCROLL
+    CONTROL         "Cancel",IDCANCEL,"Button",WS_TABSTOP,117,59,58,14
+    CONTROL         "OK",IDOK,"Button",WS_TABSTOP,180,59,58,14
+END
+
 /////////////////////////////////////////////////////////////////////////////
 //
 // Menu
@@ -1082,6 +1101,7 @@ BEGIN
             MENUITEM "&24bit",						MENU_24
             MENUITEM "&32bit",						MENU_32
         END
+		MENUITEM "Choose Fullscreen Monitor",		MENU_FULLSCREEN_MONITOR
         MENUITEM SEPARATOR
         POPUP "&Monitor properties"
         BEGIN

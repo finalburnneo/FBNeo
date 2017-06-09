@@ -1361,6 +1361,14 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			ResCreate(HORIZONTAL_ORIENTED_RES);
 			GameInpCheckMouse();
 			break;
+			
+		case MENU_FULLSCREEN_MONITOR:
+			if (UseDialogs()) {
+				AudBlankSound();
+				ChooseMonitorCreate();
+				GameInpCheckMouse();
+			}
+			break;
 
 		// Vertical 
 		case MENU_RES_ARCADE_VERTICAL:

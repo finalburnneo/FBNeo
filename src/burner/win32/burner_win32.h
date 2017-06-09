@@ -467,6 +467,9 @@ void IpsPatchExit();
 // localise_download.cpp
 int LocaliseDownloadCreate(HWND hParentWND);
 
+// choose_monitor.cpp
+int ChooseMonitorCreate();
+
 // Misc
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 #define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)

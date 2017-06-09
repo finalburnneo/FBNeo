@@ -1973,7 +1973,6 @@ struct BurnDriver BurnDrvGenpeitd = {
 };
 
 
-
 // Rolling Thunder (rev 3)
 
 static struct BurnRomInfo rthunderRomDesc[] = {
@@ -2035,7 +2034,8 @@ struct BurnDriver BurnDrvRthunder = {
 	288, 224, 4, 3
 };
 
-// Rolling Thunder (rev 3, alternate?)
+
+// Rolling Thunder (rev 3, hack)
 
 static struct BurnRomInfo rthunderaRomDesc[] = {
 	{ "1.9c",			0x08000, 0x13c92678, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 #0 Code
@@ -2081,7 +2081,7 @@ STD_ROM_FN(rthundera)
 
 struct BurnDriver BurnDrvRthundera = {
 	"rthundera", "rthunder", NULL, NULL, "1986",
-	"Rolling Thunder (rev 3, alternate?)\0", NULL, "Namco", "System 86",
+	"Rolling Thunder (rev 3, hack)\0", NULL, "bootleg", "System 86",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, rthunderaRomInfo, rthunderaRomName, NULL, NULL, CommonInputInfo, Rthunder1DIPInfo,

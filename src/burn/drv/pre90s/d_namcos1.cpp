@@ -3097,6 +3097,52 @@ struct BurnDriver BurnDrvMmaze = {
 };
 
 
+// Marchen Maze (Japan, hack?)
+
+static struct BurnRomInfo mmaze2RomDesc[] = {
+	{ "mm_snd-0.bin",	0x10000, 0x25d25e07, 1 | BRF_PRG | BRF_ESS }, //  0 Sound m6809 Code
+	{ "mm_snd-1.bin",	0x10000, 0x2c5849c8, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "mm_prg-0.bin",	0x20000, 0xe169a911, 2 | BRF_PRG | BRF_ESS }, //  2 Main and Sub m6809 Code
+	{ "mm_prg-1.bin",	0x20000, 0x6ba14e41, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "mm_prg-2.bin",	0x20000, 0x91bde09f, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "mm1_p6.bin",		0x10000, 0xeaf530d8, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "prg7.bin",		0x10000, 0x463d8c95, 2 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "cus64-64a1.mcu",	0x01000, 0xffb5c0bd, 3 | BRF_PRG | BRF_ESS }, //  7 Internal MCU Code
+
+	{ "mm_voi-0.bin",	0x20000, 0xee974cff, 4 | BRF_PRG | BRF_ESS }, //  8 External MCU Code
+	{ "mm_voi-1.bin",	0x20000, 0xd09b5830, 4 | BRF_PRG | BRF_ESS }, //  9
+
+	{ "mm_chr-8.bin",	0x20000, 0xa3784dfe, 5 | BRF_GRA },           // 10 Character Pixel Masks
+
+	{ "mm_chr-0.bin",	0x20000, 0x43ff2dfc, 6 | BRF_GRA },           // 11 Characters
+	{ "mm_chr-1.bin",	0x20000, 0xb9b4b72d, 6 | BRF_GRA },           // 12
+	{ "mm_chr-2.bin",	0x20000, 0xbee28425, 6 | BRF_GRA },           // 13
+	{ "mm_chr-3.bin",	0x20000, 0xd9f41e5c, 6 | BRF_GRA },           // 14
+	{ "mm_chr-4.bin",	0x20000, 0x3484f4ae, 6 | BRF_GRA },           // 15
+	{ "mm_chr-5.bin",	0x20000, 0xc863deba, 6 | BRF_GRA },           // 16
+
+	{ "mm_obj-0.bin",	0x20000, 0xd4b7e698, 7 | BRF_GRA },           // 17 Sprites
+	{ "mm_obj-1.bin",	0x20000, 0x1ce49e04, 7 | BRF_GRA },           // 18
+	{ "mm_obj-2.bin",	0x20000, 0x3d3d5de3, 7 | BRF_GRA },           // 19
+	{ "mm_obj-3.bin",	0x20000, 0xdac57358, 7 | BRF_GRA },           // 20
+};
+
+STD_ROM_PICK(mmaze2)
+STD_ROM_FN(mmaze2)
+
+struct BurnDriver BurnDrvMmaze2 = {
+	"mmaze2", "mmaze", NULL, NULL, "1988",
+	"Marchen Maze (Japan, hack?)\0", "Error on first boot is normal", "Namco", "System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	NULL, mmaze2RomInfo, mmaze2RomName, NULL, NULL, DrvInputInfo, MmazeDIPInfo,
+	MmazeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
+	288, 224, 4, 3
+};
+
+
 // Bakutotsu Kijuutei
 
 static struct BurnRomInfo bakutotuRomDesc[] = {

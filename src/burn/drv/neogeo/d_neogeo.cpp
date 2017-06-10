@@ -13617,6 +13617,88 @@ struct BurnDriver BurnDrvbangbedp = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Double Dragon (Special 2017, hack)
+// Modified by: GSC2007	
+// Version number: Ver 1.0.0311
+
+static struct BurnRomInfo doubledrspRomDesc[] = {
+	{ "082-p1sp.p1",  0x100000, 0x8ea8ee3d, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "082-p2sp.p2",  0x100000, 0x0e2616ab, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "082-p3sp.p3",  0x020000, 0x8b4839c4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code	
+
+	{ "082-s1.s1",    0x020000, 0xbef995c5, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "082-c1.c1",    0x200000, 0xb478c725, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "082-c2.c2",    0x200000, 0x2857da32, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "082-c3.c3",    0x200000, 0x8b0d378e, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "082-c4.c4",    0x200000, 0xc7d2f596, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "082-c5sp.c5",  0x200000, 0xb9c799fe, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "082-c6sp.c6",  0x200000, 0x11569bc9, 3 | BRF_GRA },           //  7 					/ TC5316200
+	{ "082-c7.c7",    0x100000, 0x727c4d02, 3 | BRF_GRA },           //  8 					/ TC538200
+	{ "082-c8.c8",    0x100000, 0x69a5fa37, 3 | BRF_GRA },           //  9 					/ TC538200
+
+	{ "082-m1.m1",    0x020000, 0x10b144de, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code			/ TC531001
+
+	{ "082-v1.v1",    0x200000, 0xcc1128e4, 5 | BRF_SND },           // 11 Sound data		/ TC5316200
+	{ "082-v2.v2",    0x200000, 0xc3ff5554, 5 | BRF_SND },           // 12 					/ TC5316200
+};
+
+STDROMPICKEXT(doubledrsp, doubledrsp, neogeo)
+STD_ROM_FN(doubledrsp)
+
+static UINT8 *doubledrspExtraROM;
+
+static INT32 DoubledrspInit()
+{
+ 	INT32 nRet = NeoInit();
+
+	if (nRet == 0) {
+        	doubledrspExtraROM = (UINT8*)BurnMalloc(0x20000);
+
+		if (BurnLoadRom(doubledrspExtraROM, 2, 1)) return 1;
+
+		UINT16 *rom = (UINT16*)doubledrspExtraROM;
+		for (INT32 i = 0; i < 0x20000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		rom = (UINT16*)Neo68KROMActive;
+
+		for (INT32 i = 0; i < 0x100000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		rom[0x1f3a8] = 0x2b7c; // 4ef9
+		rom[0x1f3a9] = 0x0003; // 0090
+		rom[0x1f3aa] = 0xe7fa; // 16be
+
+        	SekOpen(0);
+        	SekMapMemory(doubledrspExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+        	SekClose();
+	}
+
+	return nRet;
+}
+
+static INT32 DoubledrspExit()
+{
+    BurnFree (doubledrspExtraROM);
+
+    return NeoExit();
+}
+
+struct BurnDriverD BurnDrvdoubledrsp = {
+	"doubledrsp", "doubledr", "neogeo", NULL, "2017",
+	"Double Dragon (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, doubledrspRomInfo, doubledrspRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	DoubledrspInit, DoubledrspExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	320, 224, 4, 3
+};
+
 // Fatal Fury 2 / Garou Densetsu 2 - arata-naru tatakai (NGM-047)
 /* MVS VERSION */
 

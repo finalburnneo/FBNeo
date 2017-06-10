@@ -1,4 +1,9 @@
-// Later Todo:
+// FB Alpha Namco System 2 driver module
+// Based on MAME driver by K.Wilkins
+
+// Todo:
+//   sgunner2: figure out priority issue @ start w/building falling down
+//
 //   Make single-joy hack for Assault with fake-dip for normal or single mode.
 
 //tested good:
@@ -18,10 +23,10 @@
 // sgunner  - good
 // sgunner2	- good (needs old mcu)
 // dirtfoxj	- good
+// finehour	- good
 
 //Need help!
 // fast palette update [dink failed.]
-// finehour	- missing graphics [this is driving me bonkers - dink]
 
 //need input structs for the following...
 // luckywld	- needs inputs
@@ -142,6 +147,7 @@ static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static INT32 DrvAnalogPort2 = 0;
 
+static INT32 is_finehour = 0;
 static INT32 is_dirtfox = 0;
 static INT32 uses_gun = 0;
 static INT32 LethalGun0 = 0;
@@ -411,10 +417,12 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 			return irq_vblank[a];
 
 		case 0x10000:
+			if (is_finehour) return 0; // finehour "missing tilemap 0,1 writes" hack/fix 1/2
 			if (w) SekSetIRQLine(irq_cpu[a], CPU_IRQSTATUS_ACK);
 			return 0;
 
 		case 0x16000:
+			if (is_finehour) return 0; // finehour hack/fix 2/2
 			SekSetIRQLine(irq_cpu[a], CPU_IRQSTATUS_NONE);
 			return 0;
 
@@ -2068,6 +2076,7 @@ static INT32 Namcos2Exit()
 
 	nvramcheck = 0;
 	is_dirtfox = 0;
+	is_finehour = 0;
 
 	return 0;
 }
@@ -4872,8 +4881,9 @@ static INT32 FinehourInit()
 {
 	INT32 rc = Namcos2Init(NULL, finehour_key_read);
 
+	is_finehour = 1;
+
 	if (!rc) {
-		bprintf(0, _T("linedrawmode\n"));
 		pDrvDrawBegin = DrvDrawBegin;
 		pDrvDrawLine = DrvDrawLine;
 	}

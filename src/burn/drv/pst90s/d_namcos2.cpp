@@ -17,6 +17,7 @@
 // sws & clones	- good (baseball)
 // sgunner  - good
 // sgunner2	- good (needs old mcu)
+// dirtfoxj	- good
 
 //Need help!
 // fast palette update [dink failed.]
@@ -35,7 +36,6 @@
 // fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
 // suzuk8h	-
 // suzuk8h2	-
-// dirtfoxj	- can't be controlled, not even in mame
 
 //-timing notes- 240+8 fixes both
 //vbl@240 sgunner after coin up, add more coins and coins# flickers
@@ -142,13 +142,14 @@ static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static INT32 DrvAnalogPort2 = 0;
 
+static INT32 is_dirtfox = 0;
 static INT32 uses_gun = 0;
 static INT32 LethalGun0 = 0;
 static INT32 LethalGun1 = 0;
 static INT32 LethalGun2 = 0;
 static INT32 LethalGun3 = 0;
 
-static INT32 ordynenvram = 0; // @ init 1 ordyne, 2 ordynej, 0 after set!
+static INT32 nvramcheck = 0; // @ init 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
 
 static struct BurnInputInfo DefaultInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -319,15 +320,14 @@ static struct BurnDIPInfo SgunnerDIPList[]=
 STDDIPINFO(Sgunner)
 
 static struct BurnInputInfo DirtfoxInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 fire 2"	},
-	{"P1 Button 3 (Gear Up)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
-	{"P1 Button 4 (Gear Down)",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 4"	},
+	{"P1 Coin",		        BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 
-	A("P1 Steering",          BIT_ANALOG_REL, &DrvAnalogPort0 , "p1 x-axis"),
-	A("P1 Break",          BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"),
-	A("P1 Accelerator",      BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 fire 6"),
+	A("P1 Steering",        BIT_ANALOG_REL, &DrvAnalogPort0 , "p1 x-axis"),
+	A("P1 Break",           BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"),
+	A("P1 Accelerator",     BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 fire 6"),
+
+	{"P1 Button 1 (Gear Up)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
+	{"P1 Button 2 (Gear Down)",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
@@ -339,16 +339,16 @@ STDINPUTINFO(Dirtfox)
 
 static struct BurnDIPInfo DirtfoxDIPList[]=
 {
-	{0x0a, 0xff, 0xff, 0xff, NULL			},
-	{0x0b, 0xff, 0xff, 0xff, NULL			},
+	{0x08, 0xff, 0xff, 0xff, NULL			},
+	{0x09, 0xff, 0xff, 0xff, NULL			},
 	
 	{0   , 0xfe, 0   ,    2, "Video Display"	},
-	{0x0a, 0x01, 0x01, 0x01, "Normal"		},
-	{0x0a, 0x01, 0x01, 0x00, "Frozen"		},
+	{0x08, 0x01, 0x01, 0x01, "Normal"		},
+	{0x08, 0x01, 0x01, 0x00, "Frozen"		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0b, 0x01, 0x40, 0x40, "Off"			},
-	{0x0b, 0x01, 0x40, 0x00, "On"			},
+	{0x09, 0x01, 0x40, 0x40, "Off"			},
+	{0x09, 0x01, 0x40, 0x00, "On"			},
 };
 
 STDDIPINFO(Dirtfox)
@@ -898,6 +898,18 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 6: mcu_analog_data = BurnGunReturnY(0); break; // an6
 				case 7: mcu_analog_data = BurnGunReturnY(1); break; // an7
 			}
+		} if (is_dirtfox) {
+			switch ((data >> 2) & 7)
+			{
+				case 0: mcu_analog_data = 0; break; // an0
+				case 1: mcu_analog_data = 0; break; // an1
+				case 2: mcu_analog_data = 0; break; // an2
+				case 3: mcu_analog_data = 0; break; // an3
+				case 4: mcu_analog_data = 0; break; // an4
+				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
+				case 6: mcu_analog_data = (DrvAnalogPort1 >> 4); break; // an6
+				case 7: mcu_analog_data = (DrvAnalogPort2 >> 4); break; // an7
+			}
 		} else {
 			switch ((data >> 2) & 7)
 			{
@@ -1273,7 +1285,7 @@ static void namcos2_mcu_init()
 	m6805Close();
 }
 
-static void OrdyneEEPROMCheck()
+static void FreshEEPROMCheck()
 {
 	UINT8 ordyneeeprom[] = {
 		0x96,0x44,0x01,0x01,0x00,0x18,0x00,0x80,0x4f,0x52,0x44,0x41,0x01,0x00,0x00,0x00,
@@ -1291,21 +1303,37 @@ static void OrdyneEEPROMCheck()
 		0x05,0xeb,0x01,0x01,0x01,0x01,0x00,0x01,0x00,0x01,0x01,0x01,0x01,0x00,0x00,0x00,
 		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x01,0x00,0x00,0x10,0x00,0x3e };
 
-	if (DrvEEPROM[0] == 0xff && ordynenvram) {
-		bprintf(0, _T("Setting default NVRAM for Ordyne%S!\n"), (ordynenvram == 2) ? "j" : "");
+	UINT8 dirtfoxjeeprom[] = {
+		0x9a,0x49,0x01,0x01,0x00,0x18,0x00,0x80,0x44,0x41,0x52,0x54,0x00,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x01,0x04,0xff,0xff,0x01,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+		0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff,
+		0x84,0xb8,0x01,0x01,0x01,0x01,0x00,0x01,0x01,0x01,0x01,0x00,0x00,0x00,0x00,0x00,
+		0x00,0x00,0x00,0x00,0x01,0x04,0x7f,0x00,0x00,0x00,0x00,0x00,0x00,0x18,0x00,0x00 };
+
+	if (DrvEEPROM[0] == 0xff && nvramcheck) {
+		bprintf(0, _T("Setting default NVRAM for %S!\n"), BurnDrvGetTextA(DRV_NAME));
 
 		memset(DrvEEPROM, 0xff, 0x2000);
-		switch (ordynenvram) {
+
+		switch (nvramcheck) {
 			case 1: memcpy(DrvEEPROM, ordyneeeprom, 6*16); break;
 			case 2: memcpy(DrvEEPROM, ordynejeeprom, 6*16); break;
+			case 3: memcpy(DrvEEPROM, dirtfoxjeeprom, 6*16); break;
 		}
 	}
 
-	ordynenvram = 0;
+	nvramcheck = 0;
 }
 
 static INT32 DrvDoReset()
 {
+#if 1
+	FILE * f = fopen("c:/eeprom.exe", "wb");
+	fwrite(DrvEEPROM, 1, 0x2000, f);
+	fclose(f);
+#endif
+
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	memset (roz_dirty_tile, 1, 0x10000);
@@ -2038,7 +2066,8 @@ static INT32 Namcos2Exit()
 	pDrvDrawBegin = NULL;
 	pDrvDrawLine = NULL;
 
-	ordynenvram = 0;
+	nvramcheck = 0;
+	is_dirtfox = 0;
 
 	return 0;
 }
@@ -3270,8 +3299,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	if (ordynenvram) {
-		OrdyneEEPROMCheck();
+	if (nvramcheck) {
+		FreshEEPROMCheck();
 	}
 
 	SekNewFrame();
@@ -3806,7 +3835,7 @@ static INT32 OrdyneInit()
 	INT32 rc = Namcos2Init(NULL, ordyne_key_read);
 
 	if (!rc) {
-		ordynenvram = 1;
+		nvramcheck = 1;
 	}
 
 	return rc;
@@ -3817,7 +3846,7 @@ static INT32 OrdynejInit()
 	INT32 rc = Namcos2Init(NULL, ordyne_key_read);
 
 	if (!rc) {
-		ordynenvram = 2;
+		nvramcheck = 2;
 	}
 
 	return rc;
@@ -5506,7 +5535,16 @@ static UINT16 dirtfoxj_key_read(UINT8 offset)
 
 static INT32 DirtfoxjInit()
 {
-	return Namcos2Init(NULL, dirtfoxj_key_read);
+	is_dirtfox = 1;
+
+	INT32 rc = Namcos2Init(NULL, dirtfoxj_key_read);
+
+	if (!rc) {
+		nvramcheck = 3;
+	}
+
+	return rc;
+
 }
 
 struct BurnDriver BurnDrvDirtfoxj = {

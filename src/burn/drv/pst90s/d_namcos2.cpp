@@ -1336,8 +1336,8 @@ static void FreshEEPROMCheck()
 
 static INT32 DrvDoReset()
 {
-#if 1
-	FILE * f = fopen("c:/eeprom.exe", "wb");
+#if 0
+	FILE * f = fopen("c:/eeprom.bin", "wb");
 	fwrite(DrvEEPROM, 1, 0x2000, f);
 	fclose(f);
 #endif

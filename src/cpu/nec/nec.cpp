@@ -109,16 +109,8 @@
 #include "state.h"
 #include "nec_intf.h"
 #include "bitswap.h"
-//#include "emu.h"
-//#include "debugger.h"
 
 #define offs_t int //?
-//typedef UINT8 unsigned char
-//typedef UINT16 unsigned short
-//typedef UINT32 unsigned int
-#define INT8 char
-#define INT16 short
-#define INT32 int
 #define INPUT_LINE_NMI	0x20 // nmi
 
 #define NEC_INLINE

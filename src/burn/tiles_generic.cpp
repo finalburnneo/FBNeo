@@ -140,6 +140,15 @@ void BurnTransferClear()
 	memset(pPrioDraw, 0, nTransWidth * nTransHeight);
 }
 
+void BurnPrioClear()
+{
+#if defined FBA_DEBUG
+	if (!Debug_BurnTransferInitted) bprintf(PRINT_ERROR, _T("BurnPrioClear called without init\n"));
+#endif
+
+	memset(pPrioDraw, 0, nTransWidth * nTransHeight);
+}
+
 void BurnTransferClear(UINT16 nFillPattern)
 {
 #if defined FBA_DEBUG

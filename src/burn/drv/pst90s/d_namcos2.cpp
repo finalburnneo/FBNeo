@@ -2,8 +2,6 @@
 // Based on MAME driver by K.Wilkins
 
 // Todo:
-//   sgunner2: figure out priority issue @ start w/building falling down
-//
 //   Make single-joy hack for Assault with fake-dip for normal or single mode.
 
 //tested good:
@@ -147,15 +145,16 @@ static INT32 DrvAnalogPort0 = 0;
 static INT32 DrvAnalogPort1 = 0;
 static INT32 DrvAnalogPort2 = 0;
 
+static INT32 uses_gun = 0;
+static INT32 DrvGun0 = 0;
+static INT32 DrvGun1 = 0;
+static INT32 DrvGun2 = 0;
+static INT32 DrvGun3 = 0;
+
 static INT32 is_finehour = 0;
 static INT32 is_dirtfox = 0;
-static INT32 uses_gun = 0;
-static INT32 LethalGun0 = 0;
-static INT32 LethalGun1 = 0;
-static INT32 LethalGun2 = 0;
-static INT32 LethalGun3 = 0;
 
-static INT32 nvramcheck = 0; // @ init 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
+static INT32 nvramcheck = 0; // nvram init: 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
 
 static struct BurnInputInfo DefaultInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -289,15 +288,15 @@ STDDIPINFO(Metlhawk)
 static struct BurnInputInfo SgunnerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
-	A("P1 Gun X",    	BIT_ANALOG_REL, &LethalGun0,    "mouse x-axis"	),
-	A("P1 Gun Y",    	BIT_ANALOG_REL, &LethalGun1,    "mouse y-axis"	),
+	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    "mouse y-axis"	),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 fire 2"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
-	A("P2 Gun X",    	BIT_ANALOG_REL, &LethalGun2,    "p2 x-axis"	),
-	A("P2 Gun Y",    	BIT_ANALOG_REL, &LethalGun3,    "p2 y-axis"	),
+	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    "p2 y-axis"	),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 fire 2"	},
 
@@ -906,7 +905,7 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 6: mcu_analog_data = BurnGunReturnY(0); break; // an6
 				case 7: mcu_analog_data = BurnGunReturnY(1); break; // an7
 			}
-		} if (is_dirtfox) {
+		} else if (is_dirtfox) {
 			switch ((data >> 2) & 7)
 			{
 				case 0: mcu_analog_data = 0; break; // an0
@@ -1134,7 +1133,7 @@ static void __fastcall roz_write_word(UINT32 address, UINT16 data)
 {		
 	UINT16 *ram = (UINT16*)DrvRozRAM;
 
-	UINT16 offset = address / 2;
+	UINT16 offset = (address & 0x1ffff) / 2;
 
 	if (ram[offset] != data) {
 		roz_dirty_tile[offset] = 1;
@@ -1808,11 +1807,11 @@ static INT32 LuckywldInit()
 static void metal_hawk_sprite_decode()
 {
 	UINT8 *data = DrvGfxROM0;
-	for (int i=0; i<0x200000; i+=32*32)
+	for (INT32 i=0; i<0x200000; i+=32*32)
 	{
-		for (int j=0; j<32*32; j+=32*4)
+		for (INT32 j=0; j<32*32; j+=32*4)
 		{
-			for (int k=0; k<32; k+=4)
+			for (INT32 k=0; k<32; k+=4)
 			{
 				INT32 a = i+j+k+32;
 				UINT8 v = data[a];
@@ -1836,7 +1835,7 @@ static void metal_hawk_sprite_decode()
 				data[a+3] = v;
 
 				a = i+j+k;
-				for (int l=0; l<4; l++)
+				for (INT32 l=0; l<4; l++)
 				{
 					v = data[a+l+32];
 					data[a+l+32] = data[a+l+32*3];
@@ -1846,11 +1845,11 @@ static void metal_hawk_sprite_decode()
 		} 
 	}
 
-	for (int i=0; i<0x200000; i+=32*32)
+	for (INT32 i=0; i<0x200000; i+=32*32)
 	{
-		for (int j=0; j<32; j++)
+		for (INT32 j=0; j<32; j++)
 		{
-			for (int k=0; k<32; k++)
+			for (INT32 k=0; k<32; k++)
 			{
 				data[0x200000+i+j*32+k] = data[i+j+k*32];
 			}
@@ -2087,6 +2086,37 @@ static UINT16 get_palette_register(INT32 reg)
 	return ((ctrl[reg*2] & 0xff) * 256 + (ctrl[reg*2+1] & 0xff));
 }
 
+#define PUSH_XY(); \
+	INT32 oldmin_x = min_x; \
+    INT32 oldmax_x = max_x; \
+	INT32 oldmin_y = min_y; \
+    INT32 oldmax_y = max_y;
+
+
+#define POP_XY(); \
+    min_x = oldmin_x; \
+	max_x = oldmax_x; \
+	min_y = oldmin_y; \
+	max_y = oldmax_y;
+
+#define PUSH_Y(); \
+	INT32 oldmin_y = min_y; \
+    INT32 oldmax_y = max_y; \
+	min_y = (line >= min_y) ? line : 0; \
+	max_y = (line <= max_y) ? line+1 : 0;
+
+#define POP_Y(); \
+	min_y = oldmin_y; \
+	max_y = oldmax_y;
+
+static void adjust_clip()
+{
+	if (min_x > nScreenWidth) min_x = nScreenWidth-1; if (min_x < 0) min_x = 0;
+	if (max_x > nScreenWidth) max_x = nScreenWidth-1; if (max_x < 0) max_x = 0;
+	if (min_y > nScreenHeight) min_y = nScreenHeight-1; if (min_y < 0) min_y = 0;
+	if (max_y > nScreenHeight) max_y = nScreenHeight-1; if (max_y < 0) max_y = 0;
+}
+
 static void apply_clip()
 {
 	min_x = get_palette_register(0) - 0x4a;
@@ -2094,11 +2124,8 @@ static void apply_clip()
 	min_y = get_palette_register(2) - 0x21;
 	max_y = get_palette_register(3) - 0x21 - 1;
 
-	if (min_x < 0) min_x = 0;
-	if (min_y < 0) min_y = 0;
-	if (max_x > nScreenWidth) max_x = nScreenWidth - 1;
-	if (max_y > nScreenHeight) max_y = nScreenHeight - 1;
-	//bprintf(0, _T("%.02X %.02X %.02X %.02X\n"), min_x, max_x, min_y, max_y);
+	adjust_clip();
+
 	GenericTilesSetClip(min_x, max_x, min_y, max_y);
 }
 
@@ -2108,8 +2135,8 @@ static void DrvRecalcPalette()
 
 	for (INT32 bank = 0; bank < 0x20; bank++)
 	{
-		int pen = bank * 256;
-		int offset = ((pen & 0x1800) << 2) | (pen & 0x0700);
+		INT32 pen = bank * 256;
+		INT32 offset = ((pen & 0x1800) << 2) | (pen & 0x0700);
 
 		for (INT32 i = 0; i < 256; i++)
 		{
@@ -2298,9 +2325,6 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 	}
 }
 
-//draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line)
-
-
 static void draw_layer_line(INT32 line, INT32 pri)
 {
 	UINT16 *ctrl = (UINT16*)DrvC123Ctrl;
@@ -2356,28 +2380,28 @@ static void predraw_roz_layer()
 	roz_update_tiles = 0;
 }
 
-static void zdrawgfxzoom(UINT8 *gfx,INT32 tile_size, uint32_t code,uint32_t color,int flipx,int flipy,int sx,int sy,int scalex, int scaley, int zpos )
+static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 zpos)
 {
 	if (!scalex || !scaley) return;
 
 	{
 		{
-			int shadow_offset = (1)?0x2000:0;
+			INT32 shadow_offset = (1)?0x2000:0;
 		//	const pen_t *pal = &m_palette->pen(gfx->colorbase() + gfx->granularity() * (color % gfx->colors()));
-			const uint8_t *source_base = gfx + (code * tile_size * tile_size); //gfx->get_data(code % gfx->elements());
-			int sprite_screen_height = (scaley*tile_size+0x8000)>>16;
-			int sprite_screen_width = (scalex*tile_size+0x8000)>>16;
+			const UINT8 *source_base = gfx + (code * tile_size * tile_size); //gfx->get_data(code % gfx->elements());
+			INT32 sprite_screen_height = (scaley*tile_size+0x8000)>>16;
+			INT32 sprite_screen_width = (scalex*tile_size+0x8000)>>16;
 			if (sprite_screen_width && sprite_screen_height)
 			{
 				/* compute sprite increment per screen pixel */
-				int dx = (tile_size<<16)/sprite_screen_width;
-				int dy = (tile_size<<16)/sprite_screen_height;
+				INT32 dx = (tile_size<<16)/sprite_screen_width;
+				INT32 dy = (tile_size<<16)/sprite_screen_height;
 
-				int ex = sx+sprite_screen_width;
-				int ey = sy+sprite_screen_height;
+				INT32 ex = sx+sprite_screen_width;
+				INT32 ey = sy+sprite_screen_height;
 
-				int x_index_base;
-				int y_index;
+				INT32 x_index_base;
+				INT32 y_index;
 
 				if( flipx )
 				{
@@ -2401,44 +2425,44 @@ static void zdrawgfxzoom(UINT8 *gfx,INT32 tile_size, uint32_t code,uint32_t colo
 
 				if( sx < min_x)
 				{ /* clip left */
-					int pixels = min_x-sx;
+					INT32 pixels = min_x-sx;
 					sx += pixels;
 					x_index_base += pixels*dx;
 				}
 				if( sy < min_y )
 				{ /* clip top */
-					int pixels = min_y-sy;
+					INT32 pixels = min_y-sy;
 					sy += pixels;
 					y_index += pixels*dy;
 				}
 				if( ex > max_x+1 )
 				{ /* clip right */
-					int pixels = ex-max_x-1;
+					INT32 pixels = ex-max_x-1;
 					ex -= pixels;
 				}
 				if( ey > max_y+1 )
 				{ /* clip bottom */
-					int pixels = ey-max_y-1;
+					INT32 pixels = ey-max_y-1;
 					ey -= pixels;
 				}
 
 				if( ex>sx )
 				{ /* skip if inner loop doesn't draw anything */
-					int y;
+					INT32 y;
 					UINT8 *priority_bitmap = pPrioDraw;
 
 					{
 						for( y=sy; y<ey; y++ )
 						{
-							const uint8_t *source = source_base + (y_index>>16) * tile_size;
-							uint16_t *dest = pTransDraw + y * nScreenWidth; //&dest_bmp.pix16(y);
-							uint8_t *pri = priority_bitmap + y * nScreenWidth; //&priority_bitmap.pix8(y);
-							int x, x_index = x_index_base;
+							const UINT8 *source = source_base + (y_index>>16) * tile_size;
+							UINT16 *dest = pTransDraw + y * nScreenWidth; //&dest_bmp.pix16(y);
+							UINT8 *pri = priority_bitmap + y * nScreenWidth; //&priority_bitmap.pix8(y);
+							INT32 x, x_index = x_index_base;
 							if( 0 ) //m_c355_obj_palxor ) // iq_132
 							{
 								for( x=sx; x<ex; x++ )
 								{
-									int c = source[x_index>>16];
+									INT32 c = source[x_index>>16];
 									if( c != 0xff )
 									{
 										if( pri[x]<=zpos )
@@ -2466,7 +2490,7 @@ static void zdrawgfxzoom(UINT8 *gfx,INT32 tile_size, uint32_t code,uint32_t colo
 							{
 								for( x=sx; x<ex; x++ )
 								{
-									int c = source[x_index>>16];
+									INT32 c = source[x_index>>16];
 									if( c != 0xff )
 									{
 										if( pri[x]<=zpos )
@@ -2494,20 +2518,20 @@ static void zdrawgfxzoom(UINT8 *gfx,INT32 tile_size, uint32_t code,uint32_t colo
 	}
 } /* zdrawgfxzoom */
 
-static void draw_sprites_metalhawk(int pri)
+static void draw_sprites_metalhawk(INT32 pri)
 {
-	const uint16_t *pSource = (UINT16*)DrvSprRAM;
+	const UINT16 *pSource = (UINT16*)DrvSprRAM;
 
 	for(INT32 loop=0; loop < 128; loop++ )
 	{
-		int ypos  = pSource[0];
-		int tile  = pSource[1];
-		int xpos  = pSource[3];
-		int flags = pSource[6];
-		int attrs = pSource[7];
-		int sizey = ((ypos>>10)&0x3f)+1;
-		int sizex = (xpos>>10)&0x3f;
-		int sprn  = tile&0x1fff;
+		INT32 ypos  = pSource[0];
+		INT32 tile  = pSource[1];
+		INT32 xpos  = pSource[3];
+		INT32 flags = pSource[6];
+		INT32 attrs = pSource[7];
+		INT32 sizey = ((ypos>>10)&0x3f)+1;
+		INT32 sizex = (xpos>>10)&0x3f;
+		INT32 sprn  = tile&0x1fff;
 
 		if( tile&0x2000 )
 		{
@@ -2520,14 +2544,14 @@ static void draw_sprites_metalhawk(int pri)
 
 		if( (sizey-1) && sizex && (attrs&0xf)==pri )
 		{
-			int bBigSprite = (flags&8);
-			int color = (attrs>>4)&0xf;
-			int sx = (xpos&0x03ff)-0x50+0x07;
-			int sy = (0x1ff-(ypos&0x01ff))-0x50+0x02;
-			int flipx = flags&2;
-			int flipy = flags&4;
-			int scalex = (sizex<<16)/(bBigSprite?0x20:0x10);
-			int scaley = (sizey<<16)/(bBigSprite?0x20:0x10);
+			INT32 bBigSprite = (flags&8);
+			INT32 color = (attrs>>4)&0xf;
+			INT32 sx = (xpos&0x03ff)-0x50+0x07;
+			INT32 sy = (0x1ff-(ypos&0x01ff))-0x50+0x02;
+			INT32 flipx = flags&2;
+			INT32 flipy = flags&4;
+			INT32 scalex = (sizex<<16)/(bBigSprite?0x20:0x10);
+			INT32 scaley = (sizey<<16)/(bBigSprite?0x20:0x10);
 
 			if( (flags&0x01) )
 			{
@@ -2572,7 +2596,6 @@ static void draw_sprites_metalhawk(int pri)
 		pSource += 8;
 	}
 }
-
 
 static void predraw_c169_roz_bitmap()
 {
@@ -2626,31 +2649,30 @@ static void predraw_c169_roz_bitmap()
 
 struct roz_param
 {
-	uint32_t size;
-	uint32_t startx,starty;
-	int incxx,incxy,incyx,incyy;
-	int color;
-	int wrap;
+	UINT32 size;
+	UINT32 startx,starty;
+	INT32 incxx,incxy,incyx,incyy;
+	INT32 color;
+	INT32 wrap;
 };
 
-
-static inline void draw_roz_helper_block(const struct roz_param *rozInfo, int destx, int desty, int srcx, int srcy, int width, int height,uint32_t size_mask)
+static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 destx, INT32 desty, INT32 srcx, INT32 srcy, INT32 width, INT32 height, UINT32 size_mask)
 {
-	int desty_end = desty + height;
+	INT32 desty_end = desty + height;
 
-	int end_incrx = rozInfo->incyx - (width * rozInfo->incxx);
-	int end_incry = rozInfo->incyy - (width * rozInfo->incxy);
+	INT32 end_incrx = rozInfo->incyx - (width * rozInfo->incxx);
+	INT32 end_incry = rozInfo->incyy - (width * rozInfo->incxy);
 
-	uint16_t *dest = pTransDraw + (desty * nScreenWidth) + destx;
-	int dest_rowinc = nScreenWidth - width;
+	UINT16 *dest = pTransDraw + (desty * nScreenWidth) + destx;
+	INT32 dest_rowinc = nScreenWidth - width;
 
 	while (desty < desty_end)
 	{
-		uint16_t *dest_end = dest + width;
+		UINT16 *dest_end = dest + width;
 		while (dest < dest_end)
 		{
-			uint32_t xpos = (srcx >> 16);
-			uint32_t ypos = (srcy >> 16);
+			UINT32 xpos = (srcx >> 16);
+			UINT32 ypos = (srcy >> 16);
 
 			if (rozInfo->wrap)
 			{
@@ -2684,35 +2706,35 @@ static void draw_roz_helper(const struct roz_param *rozInfo )
 
 #define ROZ_BLOCK_SIZE 8
 
-		uint32_t size_mask = rozInfo->size - 1;
-		uint32_t srcx = (rozInfo->startx + (min_x * rozInfo->incxx) +
+		UINT32 size_mask = rozInfo->size - 1;
+		UINT32 srcx = (rozInfo->startx + (min_x * rozInfo->incxx) +
 			(min_y * rozInfo->incyx));
-		uint32_t srcy = (rozInfo->starty + (min_x * rozInfo->incxy) +
+		UINT32 srcy = (rozInfo->starty + (min_x * rozInfo->incxy) +
 			(min_y * rozInfo->incyy));
-		int destx = min_x;
-		int desty = min_y;
+		INT32 destx = min_x;
+		INT32 desty = min_y;
 
-		int row_count = (max_y - desty) + 1;
-		int row_block_count = row_count / ROZ_BLOCK_SIZE;
-		int row_extra_count = row_count % ROZ_BLOCK_SIZE;
+		INT32 row_count = (max_y - desty) + 1;
+		INT32 row_block_count = row_count / ROZ_BLOCK_SIZE;
+		INT32 row_extra_count = row_count % ROZ_BLOCK_SIZE;
 
-		int column_count = (max_x - destx) + 1;
-		int column_block_count = column_count / ROZ_BLOCK_SIZE;
-		int column_extra_count = column_count % ROZ_BLOCK_SIZE;
+		INT32 column_count = (max_x - destx) + 1;
+		INT32 column_block_count = column_count / ROZ_BLOCK_SIZE;
+		INT32 column_extra_count = column_count % ROZ_BLOCK_SIZE;
 
-		int row_block_size_incxx = ROZ_BLOCK_SIZE * rozInfo->incxx;
-		int row_block_size_incxy = ROZ_BLOCK_SIZE * rozInfo->incxy;
-		int row_block_size_incyx = ROZ_BLOCK_SIZE * rozInfo->incyx;
-		int row_block_size_incyy = ROZ_BLOCK_SIZE * rozInfo->incyy;
+		INT32 row_block_size_incxx = ROZ_BLOCK_SIZE * rozInfo->incxx;
+		INT32 row_block_size_incxy = ROZ_BLOCK_SIZE * rozInfo->incxy;
+		INT32 row_block_size_incyx = ROZ_BLOCK_SIZE * rozInfo->incyx;
+		INT32 row_block_size_incyy = ROZ_BLOCK_SIZE * rozInfo->incyy;
 
-		int i,j;
+		INT32 i,j;
 
 		// Do the block rows
 		for (i = 0; i < row_block_count; i++)
 		{
-			int sx = srcx;
-			int sy = srcy;
-			int dx = destx;
+			INT32 sx = srcx;
+			INT32 sy = srcy;
+			INT32 dx = destx;
 			// Do the block columns
 			for (j = 0; j < column_block_count; j++)
 			{
@@ -2758,18 +2780,18 @@ static void draw_roz_helper(const struct roz_param *rozInfo )
 
 static void draw_roz()
 {
-	const int xoffset = 38,yoffset = 0;
+	const INT32 xoffset = 38,yoffset = 0;
 	struct roz_param rozParam;
 
 	UINT16 *m_roz_ctrl = (UINT16*)DrvRozCtrl; 
 
 	rozParam.color = (gfx_ctrl & 0x0f00);
-	rozParam.incxx  = (int16_t)m_roz_ctrl[0];
-	rozParam.incxy  = (int16_t)m_roz_ctrl[1];
-	rozParam.incyx  = (int16_t)m_roz_ctrl[2];
-	rozParam.incyy  = (int16_t)m_roz_ctrl[3];
-	rozParam.startx = (int16_t)m_roz_ctrl[4];
-	rozParam.starty = (int16_t)m_roz_ctrl[5];
+	rozParam.incxx  = (INT16)m_roz_ctrl[0];
+	rozParam.incxy  = (INT16)m_roz_ctrl[1];
+	rozParam.incyx  = (INT16)m_roz_ctrl[2];
+	rozParam.incyy  = (INT16)m_roz_ctrl[3];
+	rozParam.startx = (INT16)m_roz_ctrl[4];
+	rozParam.starty = (INT16)m_roz_ctrl[5];
 	rozParam.size = 2048;
 	rozParam.wrap = 1;
 
@@ -2809,44 +2831,44 @@ static void draw_roz()
 }
 
 
-static void draw_sprites(int pri, int control )
+static void draw_sprites(INT32 pri, INT32 control )
 {
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 
 
-	int offset = (control & 0x000f) * (128*4);
-	int loop;
+	INT32 offset = (control & 0x000f) * (128*4);
+	INT32 loop;
 	if( pri==0 )
 	{
 		//screen.priority().fill(0, cliprect );
 	}
 	for( loop=0; loop <128; loop++ )
 	{
-		int word3 = m_spriteram[offset+(loop*4)+3];
+		INT32 word3 = m_spriteram[offset+(loop*4)+3];
 		if( (word3&0xf)==pri )
 		{
-			int word0 = m_spriteram[offset+(loop*4)+0];
-			int word1 = m_spriteram[offset+(loop*4)+1];
-			int offset4 = m_spriteram[offset+(loop*4)+2];
+			INT32 word0 = m_spriteram[offset+(loop*4)+0];
+			INT32 word1 = m_spriteram[offset+(loop*4)+1];
+			INT32 offset4 = m_spriteram[offset+(loop*4)+2];
 
-			int sizey=((word0>>10)&0x3f)+1;
-			int sizex=(word3>>10)&0x3f;
+			INT32 sizey=((word0>>10)&0x3f)+1;
+			INT32 sizex=(word3>>10)&0x3f;
 
 			if((word0&0x0200)==0) sizex>>=1;
 
 			if((sizey-1) && sizex )
 			{
-				int color  = (word3>>4)&0x000f;
-				int code   = word1 & 0x3fff;
-				int ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
-				int xpos   = (offset4&0x03ff)-0x50+0x07;
-				int flipy  = word1&0x8000;
-				int flipx  = word1&0x4000;
-				int scalex = (sizex<<16)/((word0&0x0200)?0x20:0x10);
-				int scaley = (sizey<<16)/((word0&0x0200)?0x20:0x10);
+				INT32 color  = (word3>>4)&0x000f;
+				INT32 code   = word1 & 0x3fff;
+				INT32 ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
+				INT32 xpos   = (offset4&0x03ff)-0x50+0x07;
+				INT32 flipy  = word1&0x8000;
+				INT32 flipx  = word1&0x4000;
+				INT32 scalex = (sizex<<16)/((word0&0x0200)?0x20:0x10);
+				INT32 scaley = (sizey<<16)/((word0&0x0200)?0x20:0x10);
 				if(scalex && scaley)
 				{
-					int size = (word0 >> 9) & 1; // 1 = 32x32, 0 = 16x16
+					INT32 size = (word0 >> 9) & 1; // 1 = 32x32, 0 = 16x16
 
 					if (size == 1) code >>= 2;
 
@@ -2872,17 +2894,6 @@ static void DrvDrawBegin()
 
 	BurnTransferClear(0x4000);
 }
-
-#define PUSH_Y(); \
-	INT32 oldmin_y = min_y; \
-    INT32 oldmax_y = max_y; \
-	min_y = (line >= min_y) ? line : 0; \
-	max_y = (line <= max_y) ? line+1 : 0;
-
-#define POP_Y(); \
-	min_y = oldmin_y; \
-	max_y = oldmax_y;
-
 
 static void DrvDrawLine(INT32 line)
 {
@@ -2943,33 +2954,32 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-
-static void c355_obj_draw_sprite(const uint16_t *pSource, int pri, int zpos )
+static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 {
-	uint16_t *spriteram16 = (UINT16*)DrvSprRAM; //m_c355_obj_ram;
+	UINT16 *spriteram16 = (UINT16*)DrvSprRAM; //m_c355_obj_ram;
 	unsigned screen_height_remaining, screen_width_remaining;
 	unsigned source_height_remaining, source_width_remaining;
-	int hpos,vpos;
-	uint16_t hsize,vsize;
-	uint16_t palette;
-	uint16_t linkno;
-	uint16_t offset;
-	uint16_t format;
-	int tile_index;
-	int num_cols,num_rows;
-	int dx,dy;
-	int row,col;
-	int sx,sy,tile;
-	int flipx,flipy;
-	uint32_t zoomx, zoomy;
-	int tile_screen_width;
-	int tile_screen_height;
-	const uint16_t *spriteformat16 = &spriteram16[0x4000/2];
-	const uint16_t *spritetile16   = &spriteram16[0x8000/2];
-	int color;
-	const uint16_t *pWinAttr;
+	INT32 hpos,vpos;
+	UINT16 hsize,vsize;
+	UINT16 palette;
+	UINT16 linkno;
+	UINT16 offset;
+	UINT16 format;
+	INT32 tile_index;
+	INT32 num_cols,num_rows;
+	INT32 dx,dy;
+	INT32 row,col;
+	INT32 sx,sy,tile;
+	INT32 flipx,flipy;
+	UINT32 zoomx, zoomy;
+	INT32 tile_screen_width;
+	INT32 tile_screen_height;
+	const UINT16 *spriteformat16 = &spriteram16[0x4000/2];
+	const UINT16 *spritetile16   = &spriteram16[0x8000/2];
+	INT32 color;
+	const UINT16 *pWinAttr;
 
-	int xscroll, yscroll;
+	INT32 xscroll, yscroll;
 
 	/**
 	 * ----xxxx-------- window select
@@ -3024,7 +3034,15 @@ static void c355_obj_draw_sprite(const uint16_t *pSource, int pri, int zpos )
 	hpos -= xscroll;
 	vpos -= yscroll;
 	pWinAttr = &spriteram16[0x2400/2+((palette>>8)&0xf)*4];
-//	clip.set(pWinAttr[0] - xscroll, pWinAttr[1] - xscroll, pWinAttr[2] - yscroll, pWinAttr[3] - yscroll);
+
+	// c355 internal clipping (used by sgunner & sgunner2)
+	PUSH_XY();
+	min_x = pWinAttr[0] - xscroll;
+	max_x = pWinAttr[1] - xscroll;
+	min_y = pWinAttr[2] - yscroll;
+	max_y = pWinAttr[3] - yscroll;
+
+	adjust_clip();
 
 	hpos&=0x7ff; if( hpos&0x400 ) hpos |= ~0x7ff; /* sign extend */
 	vpos&=0x7ff; if( vpos&0x400 ) vpos |= ~0x7ff; /* sign extend */
@@ -3039,7 +3057,7 @@ static void c355_obj_draw_sprite(const uint16_t *pSource, int pri, int zpos )
 	if( num_cols == 0 ) num_cols = 0x10;
 	flipx = (hsize&0x8000)?1:0;
 	hsize &= 0x3ff;//0x1ff;
-	if( hsize == 0 ) return;
+	if( hsize == 0 ) { POP_XY(); return; }
 	zoomx = (hsize<<16)/(num_cols*16);
 	dx = (dx*zoomx+0x8000)>>16;
 	if( flipx )
@@ -3054,7 +3072,7 @@ static void c355_obj_draw_sprite(const uint16_t *pSource, int pri, int zpos )
 	if( num_rows == 0 ) num_rows = 0x10;
 	flipy = (vsize&0x8000)?1:0;
 	vsize &= 0x3ff;
-	if( vsize == 0 ) return;
+	if( vsize == 0 ) { POP_XY(); return; }
 	zoomy = (vsize<<16)/(num_rows*16);
 	dy = (dy*zoomy+0x8000)>>16;
 	if( flipy )
@@ -3111,24 +3129,28 @@ static void c355_obj_draw_sprite(const uint16_t *pSource, int pri, int zpos )
 		screen_height_remaining -= tile_screen_height;
 		source_height_remaining -= 16;
 	} /* next row */
+
+	POP_XY();
 }
 
-static void c355_obj_draw_list(int pri, const uint16_t *pSpriteList16, const uint16_t *pSpriteTable)
+static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
 {
 	for(INT32 i=0; i<256; i++ )
 	{
-		uint16_t which = pSpriteList16[i];
+		UINT16 which = pSpriteList16[i];
 		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i );
 		if( which&0x100 ) break;
 	}
 }
 
-static void c355_obj_draw(int pri)
+static void c355_obj_draw(INT32 pri)
 {
+	if (pri == 0) BurnPrioClear();
+
 	UINT16 *m_c355_obj_ram = (UINT16*)DrvSprRAM;
 
-	c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2]);
-	c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2]);
+	if (nBurnLayer & 1) c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2]);
+	if (nBurnLayer & 2) c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2]);
 }
 
 static INT32 SgunnerDraw()
@@ -3139,10 +3161,6 @@ static INT32 SgunnerDraw()
 	}
 
 	apply_clip();
-
-	INT32 roz_enable = (gfx_ctrl & 0x7000) ? 1 : 0;
-
-	if (roz_enable) predraw_roz_layer();
 
 	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 		pTransDraw[i] = 0x4000;
@@ -3326,8 +3344,8 @@ static INT32 DrvFrame()
 		}
 
 		if (uses_gun) {
-			BurnGunMakeInputs(0, (INT16)LethalGun0, (INT16)LethalGun1);
-			BurnGunMakeInputs(1, (INT16)LethalGun2, (INT16)LethalGun3);
+			BurnGunMakeInputs(0, (INT16)DrvGun0, (INT16)DrvGun1);
+			BurnGunMakeInputs(1, (INT16)DrvGun2, (INT16)DrvGun3);
 		}
 
 	}

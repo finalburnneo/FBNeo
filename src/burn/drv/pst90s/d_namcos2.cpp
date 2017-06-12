@@ -2,7 +2,9 @@
 // Based on MAME driver by K.Wilkins
 
 // Todo:
-//   Make single-joy hack for Assault with fake-dip for normal or single mode.
+//   1: Fast palette update ( palette_write() )
+//   2: iq_132's new c45 code impl.
+//   3: (lowprio) Make single-joy hack for Assault with fake-dip for normal or single mode.
 
 //tested good:
 // assault	- good
@@ -22,10 +24,7 @@
 // sgunner2	- good (needs old mcu)
 // dirtfoxj	- good
 // finehour	- good
-// luckywld	- good, but needs some gfx glitch fixing (probably timing & c45 related)
-
-//Need help!
-// fast palette update [dink failed.]
+// luckywld	- good
 
 //eek.
 // bubbletr	- ok, missing artwork (flipped)
@@ -38,10 +37,12 @@
 // suzuk8h	-
 // suzuk8h2	-
 
-//-timing notes- 240+8 fixes both
+//-timing notes- 240+16 fixes both
 //vbl@240 sgunner after coin up, add more coins and coins# flickers
 //vbl@240 sgunner2 attract mode before title screen, when its drawing the '2',
 //        it will flicker a frame (w/wrong palette) from previous scene.
+//        dsaber: all tmap glitches fixed with 240+16.
+//        dirtfoxj needs 240+8 otherwise sprite glitches
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"

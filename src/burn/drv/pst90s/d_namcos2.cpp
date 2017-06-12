@@ -22,12 +22,10 @@
 // sgunner2	- good (needs old mcu)
 // dirtfoxj	- good
 // finehour	- good
+// luckywld	- good, but needs some gfx glitch fixing (probably timing & c45 related)
 
 //Need help!
 // fast palette update [dink failed.]
-
-//need input structs for the following...
-// luckywld	- needs inputs
 
 //eek.
 // bubbletr	- ok, missing artwork (flipped)
@@ -153,6 +151,7 @@ static INT32 DrvGun3 = 0;
 
 static INT32 is_finehour = 0;
 static INT32 is_dirtfox = 0;
+static INT32 is_luckywld = 0;
 
 static INT32 nvramcheck = 0; // nvram init: 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
 
@@ -284,6 +283,48 @@ static struct BurnDIPInfo MetlhawkDIPList[]=
 };
 
 STDDIPINFO(Metlhawk)
+
+static struct BurnInputInfo LuckywldInputList[] = {
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+
+	A("P1 Steering",    BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
+	A("P1 Break",       BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 5"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort2, "p1 fire 6"),
+
+	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    "mouse y-axis"	),
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
+
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    "p2 y-axis"	),
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
+};
+
+STDINPUTINFO(Luckywld)
+
+static struct BurnDIPInfo LuckywldDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0xff, NULL			},
+	{0x10, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x0f, 0x01, 0x01, 0x01, "Normal"		},
+	{0x0f, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x10, 0x01, 0x40, 0x40, "Off"			},
+	{0x10, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Luckywld)
 
 static struct BurnInputInfo SgunnerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -885,6 +926,20 @@ static UINT8 __fastcall finallap_68k_read_byte(UINT32 address)
 	return namcos2_68k_read_byte(address);
 }
 
+static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+static UINT8 luckywldsteer()
+{
+	UINT8 Temp = 0x7f + (DrvAnalogPort0 >> 4);
+	UINT8 Temp2 = 0;
+
+	Temp2 = scalerange(Temp, 0x3f, 0xc0, 0x00, 0xff);
+
+	return Temp2;
+}
+
 static void mcu_analog_ctrl_write(UINT8 data)
 {
 	mcu_analog_ctrl = data;
@@ -893,7 +948,7 @@ static void mcu_analog_ctrl_write(UINT8 data)
 	{
 		mcu_analog_complete = 2;
 
-		if (uses_gun) {
+		if (uses_gun && !is_luckywld) {
 			switch ((data >> 2) & 7)
 			{
 				case 0: mcu_analog_data = 0; break; // an0
@@ -914,6 +969,18 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 3: mcu_analog_data = 0; break; // an3
 				case 4: mcu_analog_data = 0; break; // an4
 				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
+				case 6: mcu_analog_data = (DrvAnalogPort1 >> 4); break; // an6
+				case 7: mcu_analog_data = (DrvAnalogPort2 >> 4); break; // an7
+			}
+		} else if (is_luckywld) {
+			switch ((data >> 2) & 7)    ////////////////////////////
+			{
+				case 0: mcu_analog_data = 0; break; // an0
+				case 1: mcu_analog_data = BurnGunReturnY(1); break; // an1
+				case 2: mcu_analog_data = BurnGunReturnY(0); break; // an2
+				case 3: mcu_analog_data = BurnGunReturnX(1); break; // an3
+				case 4: mcu_analog_data = BurnGunReturnX(0); break; // an4
+				case 5: mcu_analog_data = luckywldsteer(); break; // an5
 				case 6: mcu_analog_data = (DrvAnalogPort1 >> 4); break; // an6
 				case 7: mcu_analog_data = (DrvAnalogPort2 >> 4); break; // an7
 			}
@@ -1799,6 +1866,11 @@ static INT32 LuckywldInit()
 
 	GenericTilesInit();
 
+	is_luckywld = 1;
+
+	uses_gun = 1;
+	BurnGunInit(2, false);
+
 	DrvDoReset();
 
 	return 0;
@@ -2076,6 +2148,7 @@ static INT32 Namcos2Exit()
 	nvramcheck = 0;
 	is_dirtfox = 0;
 	is_finehour = 0;
+	is_luckywld = 0;
 
 	return 0;
 }
@@ -5960,7 +6033,7 @@ struct BurnDriver BurnDrvLuckywld = {
 	"Lucky & Wild\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, luckywldRomInfo, luckywldRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //LuckywldInputInfo, LuckywldDIPInfo,
+	NULL, luckywldRomInfo, luckywldRomName, NULL, NULL, LuckywldInputInfo, LuckywldDIPInfo,
 	LuckywldInit, Namcos2Exit, DrvFrame, LuckywldDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
@@ -6024,7 +6097,7 @@ struct BurnDriver BurnDrvLuckywldj = {
 	"Lucky & Wild (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, luckywldjRomInfo, luckywldjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //LuckywldInputInfo, LuckywldDIPInfo,
+	NULL, luckywldjRomInfo, luckywldjRomName, NULL, NULL, LuckywldInputInfo, LuckywldDIPInfo,
 	LuckywldInit, Namcos2Exit, DrvFrame, LuckywldDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };

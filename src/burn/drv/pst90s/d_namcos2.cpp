@@ -150,7 +150,7 @@ static INT32 DrvGun2 = 0;
 static INT32 DrvGun3 = 0;
 
 static INT32 is_finehour = 0;
-static INT32 is_dirtfox = 0;
+static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
 
 static INT32 nvramcheck = 0; // nvram init: 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
@@ -960,7 +960,7 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 6: mcu_analog_data = BurnGunReturnY(0); break; // an6
 				case 7: mcu_analog_data = BurnGunReturnY(1); break; // an7
 			}
-		} else if (is_dirtfox) {
+		} else if (is_dirtfoxj) {
 			switch ((data >> 2) & 7)
 			{
 				case 0: mcu_analog_data = 0; break; // an0
@@ -1850,7 +1850,7 @@ static INT32 LuckywldInit()
 			DrvGfxROM5[i] = BITSWAP08(DrvGfxROM5[i], 0,1,2,3,4,5,6,7);
 		}
 
-		memcpy (DrvGfxROM3 + 0x1c0000, DrvGfxROM3 + 0x180000, 0x080000);
+		memcpy (DrvGfxROM3 + 0x1c0000, DrvGfxROM3 + 0x100000, 0x080000);
 
 		luckywld_roz_decode();
 	}
@@ -2146,7 +2146,7 @@ static INT32 Namcos2Exit()
 	pDrvDrawLine = NULL;
 
 	nvramcheck = 0;
-	is_dirtfox = 0;
+	is_dirtfoxj = 0;
 	is_finehour = 0;
 	is_luckywld = 0;
 
@@ -3427,6 +3427,7 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
+	INT32 vbloffs = (is_dirtfoxj) ? 8 : 16;
 
 	M6809Open(0);
 	m6805Open(0);
@@ -3446,7 +3447,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
 
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
-		if (i == (240+8)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
+		if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
 		segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
 		maincpu_run_ended = maincpu_run_cycles = 0;
@@ -3461,7 +3462,7 @@ static INT32 DrvFrame()
 			SekIdle(segment - SekTotalCycles());
 		} else {			
 			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
-			if (i == (240+8)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
+			if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
 			if (i == position*2) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
 		}
 		SekClose();
@@ -3672,6 +3673,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(key_sendval);
 
 		if (nAction & ACB_WRITE) {
+			memset (roz_dirty_tile, 1, 0x10000);
 			roz_update_tiles = 1;
 
 			M6809Open(0);
@@ -5636,7 +5638,7 @@ static UINT16 dirtfoxj_key_read(UINT8 offset)
 
 static INT32 DirtfoxjInit()
 {
-	is_dirtfox = 1;
+	is_dirtfoxj = 1;
 
 	INT32 rc = Namcos2Init(NULL, dirtfoxj_key_read);
 

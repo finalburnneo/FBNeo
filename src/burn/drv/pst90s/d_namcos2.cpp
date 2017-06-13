@@ -2,11 +2,10 @@
 // Based on MAME driver by K.Wilkins
 
 // Todo:
-//   1: Fast palette update ( palette_write() )
 //   3: (lowprio) Make single-joy hack for Assault with fake-dip for normal or single mode.
 // xx final lap inputs
 // x2 fourtrax timing flashy stuff
-// x3 cleanup
+// x3 fourtrax missing lines in linedraw c45 (on hills)
 
 //tested good:
 // assault	- good
@@ -56,8 +55,6 @@
 #include "namco_c45.h"
 #include "burn_gun.h"
 #include "bitswap.h"
-
-// https://git.redump.net/mame/plain/src/mame/drivers/namcos2.cpp
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -155,6 +152,8 @@ static INT32 DrvGun3 = 0;
 static INT32 is_finehour = 0;
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
+
+static INT32 long_vbl = 0;
 
 static INT32 nvramcheck = 0; // nvram init: 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
 
@@ -2135,6 +2134,8 @@ static INT32 FourtraxInit()
 	pDrvDrawBegin = FinallapDrawBegin;
 	pDrvDrawLine = FinallapDrawLine;
 
+	long_vbl = 1;
+
 	return 0;
 }
 
@@ -2168,6 +2169,8 @@ static INT32 Namcos2Exit()
 	is_dirtfoxj = 0;
 	is_finehour = 0;
 	is_luckywld = 0;
+
+	long_vbl = 0;
 
 	return 0;
 }
@@ -3227,11 +3230,11 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 
 static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
 {
-	for(INT32 i=0; i<256; i++ )
+	for (INT32 i = 0; i < 256; i++)
 	{
 		UINT16 which = pSpriteList16[i];
-		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i );
-		if( which&0x100 ) break;
+		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i);
+		if (which&0x100) break;
 	}
 }
 
@@ -3271,7 +3274,6 @@ static INT32 SgunnerDraw()
 	return 0;
 }
 
-#if 1
 static void FinallapDrawBegin()
 {
 	if (DrvRecalc) {
@@ -3286,25 +3288,21 @@ static void FinallapDrawBegin()
 
 static void FinallapDrawLine(INT32 line)
 {
-	for(INT32 pri=0; pri<16; pri++ )
+	for (INT32 pri=0; pri < 16; pri++)
 	{
-		if( (pri&1)==0 )
+		if ((pri&1) == 0)
 		{
 			draw_layer_line(line, pri/2);
 		}
-		if (nBurnLayer & 1) {
-			PUSH_Y();
-			c45RoadDraw(pri, min_y, max_y);
-			POP_Y();
-		}
-		if (nBurnLayer & 2) {
-			PUSH_Y();
-			draw_sprites(pri, gfx_ctrl);
-			POP_Y();
-		}
+
+		PUSH_Y();
+
+		if (nBurnLayer & 1) c45RoadDraw(pri, min_y, max_y);
+		if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
+
+		POP_Y();
 	}
 }
-#endif
 
 static INT32 FinallapDraw()
 {
@@ -3320,16 +3318,13 @@ static INT32 FinallapDraw()
 
 		for (INT32 pri = 0; pri < 16; pri++)
 		{
-			if ((pri&1)==0)
+			if ((pri&1) == 0)
 			{
 				draw_layer(pri/2);
 			}
-			if (nBurnLayer & 1) {
-				c45RoadDraw(pri, -1, -1);
-			}
-			if (nBurnLayer & 2) {
-				draw_sprites(pri, gfx_ctrl);
-			}
+
+			if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
+			if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
 		}
 	}
 
@@ -3353,7 +3348,7 @@ static INT32 LuckywldDraw()
 
 	for (INT32 pri = 0; pri < 16; pri++)
 	{
-		if ((pri&1)==0 )
+		if ((pri&1) == 0)
 		{
 			draw_layer(pri/2);
 		}
@@ -3381,7 +3376,7 @@ static INT32 Suzuka8hDraw()
 
 	for (INT32 pri = 0; pri < 16; pri++)
 	{
-		if ((pri&1)==0 )
+		if ((pri&1) == 0)
 		{
 			draw_layer(pri/2);
 		}
@@ -3410,7 +3405,7 @@ static INT32 MetlhawkDraw()
 
 	for (INT32 pri = 0; pri < 16; pri++)
 	{
-		if ((pri&1)==0 )
+		if ((pri&1) == 0)
 		{
 			draw_layer(pri/2);
 		}
@@ -3458,7 +3453,7 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
-	INT32 vbloffs = (is_dirtfoxj) ? 8 : 16;
+	INT32 vbloffs = (long_vbl) ? 8 : 16;
 
 	M6809Open(0);
 	m6805Open(0);
@@ -3702,10 +3697,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(finallap_prot_count);
 
 		SCAN_VAR(key_sendval);
+		c45RoadState(nAction); // here
 
 		if (nAction & ACB_WRITE) {
 			memset (roz_dirty_tile, 1, 0x10000);
 			roz_update_tiles = 1;
+
+			c45RoadState(nAction); // and here!
 
 			M6809Open(0);
 			sound_bankswitch(sound_bank);
@@ -5670,6 +5668,7 @@ static UINT16 dirtfoxj_key_read(UINT8 offset)
 static INT32 DirtfoxjInit()
 {
 	is_dirtfoxj = 1;
+	long_vbl = 1;
 
 	INT32 rc = Namcos2Init(NULL, dirtfoxj_key_read);
 

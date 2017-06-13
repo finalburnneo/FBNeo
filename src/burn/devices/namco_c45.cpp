@@ -164,13 +164,16 @@ static void predraw_c45_road_tiles()
 	c45_road_tiles_changed = 0;
 }
 
-void c45RoadDraw(int pri)
+void c45RoadDraw(int pri, int min_y_ovrride, int max_y_ovrride)
 {
 	predraw_c45_road_tiles();
 
 	INT32 min_x, min_y, max_x, max_y;
 
 	GenericTilesGetClip(&min_x, &max_x, &min_y, &max_y);
+
+	if (min_y_ovrride != -1) min_y = min_y_ovrride;
+	if (max_y_ovrride != -1) max_y = max_y_ovrride;
 
 	UINT16 *m_lineram = (UINT16*)(c45RoadRAM + 0x1fa00);
 

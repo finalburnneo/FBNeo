@@ -260,17 +260,25 @@ void c45RoadDraw(int pri, int min_y_ovrride, int max_y_ovrride)
 }
 
 
-
-#if 0
 // call from save state
-static void c45RoadGfxDecode()
+void c45RoadState(INT32 nAction)
 {
 	if (c45RoadRAM == NULL) return;
 
-	INT32 Planes[2] = { 0, 8 };
-	INT32 XOffs[16] = { STEP8(0, 1), STEP8(16, 1) };
-	INT32 YOffs[16] = { STEP16(0, 32) };
+	c45RoadReset();
 
-	GfxDecode(0x0400, 2, 16, 16, Planes, XOffs, YOffs, 0x200, c45RoadRAM + 0x10000, c45RoadTiles);
+	struct BurnArea ba;
+	memset(&ba, 0, sizeof(ba));
+	ba.Data		= c45RoadRAM;
+	ba.nLen		= 0x20000;
+	ba.szName	= "C45 Road RAM";
+	BurnAcb(&ba);
+
+	if (nAction & ACB_WRITE) {
+		INT32 Planes[2] = { 0, 8 };
+		INT32 XOffs[16] = { STEP8(0, 1), STEP8(16, 1) };
+		INT32 YOffs[16] = { STEP16(0, 32) };
+
+		GfxDecode(0x0400, 2, 16, 16, Planes, XOffs, YOffs, 0x200, c45RoadRAM + 0x10000, c45RoadTiles);
+	}
 }
-#endif

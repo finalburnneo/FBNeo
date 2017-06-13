@@ -1296,12 +1296,15 @@ static void luckywld_68k_map(INT32 cpu)
 	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_RAM);
 	SekMapMemory(DrvC139RAM,		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x800000, 0x8141ff, MAP_RAM);
-	SekMapMemory(c45RoadRAM,		0xa00000, 0xa1ffff, MAP_RAM);
+	SekMapMemory(c45RoadRAM,		0xa00000, 0xa1ffff, MAP_ROM); // handler in c45roadmap68k
 	SekMapMemory(DrvRozRAM,			0xc00000, 0xc0ffff, MAP_RAM);
 	SekSetWriteWordHandler(0,		luckywld_68k_write_word);
 	SekSetWriteByteHandler(0,		luckywld_68k_write_byte);
 	SekSetReadWordHandler(0,		luckywld_68k_read_word);
 	SekSetReadByteHandler(0,		luckywld_68k_read_byte);
+
+	c45RoadMap68k(0xa00000);
+
 	SekClose();
 }
 
@@ -1320,11 +1323,14 @@ static void finallap_68k_map(INT32 cpu)
 	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_RAM);
 	SekMapMemory(DrvC139RAM,		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x800000, 0x80ffff, MAP_RAM);
-	SekMapMemory(c45RoadRAM,		0x880000, 0x89ffff, MAP_RAM);
+	SekMapMemory(c45RoadRAM,		0x880000, 0x89ffff, MAP_ROM); // handler in c45roadmap68k
 	SekSetWriteWordHandler(0,		finallap_68k_write_word);
 	SekSetWriteByteHandler(0,		finallap_68k_write_byte);
 	SekSetReadWordHandler(0,		finallap_68k_read_word);
 	SekSetReadByteHandler(0,		finallap_68k_read_byte);
+
+	c45RoadMap68k(0x880000);
+
 	SekClose();
 }
 

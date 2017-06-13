@@ -2004,8 +2004,8 @@ static INT32 MetlhawkInit()
 	return 0;
 }
 
-static void FinallapDrawBegin(); // forwards
-static void FinallapDrawLine(INT32 line); // ""
+//static void FinallapDrawBegin(); // forwards
+//static void FinallapDrawLine(INT32 line); // ""
 
 static INT32 FinallapInit()
 {
@@ -2034,8 +2034,8 @@ static INT32 FinallapInit()
 
 	DrvDoReset();
 
-	pDrvDrawBegin = FinallapDrawBegin;
-	pDrvDrawLine = FinallapDrawLine;
+	//pDrvDrawBegin = FinallapDrawBegin;
+	//pDrvDrawLine = FinallapDrawLine;
 
 	return 0;
 }
@@ -2079,8 +2079,8 @@ static INT32 Finalap2Init()
 
 	DrvDoReset();
 
-	pDrvDrawBegin = FinallapDrawBegin;
-	pDrvDrawLine = FinallapDrawLine;
+	//pDrvDrawBegin = FinallapDrawBegin;
+	//pDrvDrawLine = FinallapDrawLine;
 
 	return 0;
 }
@@ -2120,8 +2120,8 @@ static INT32 FourtraxInit()
 
 	DrvDoReset();
 
-	pDrvDrawBegin = FinallapDrawBegin;
-	pDrvDrawLine = FinallapDrawLine;
+	//pDrvDrawBegin = FinallapDrawBegin;
+	//pDrvDrawLine = FinallapDrawLine;
 
 	return 0;
 }
@@ -3242,10 +3242,7 @@ static INT32 SgunnerDraw()
 
 	apply_clip();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x4000;
-		pPrioDraw[i] = 0;
-	}
+	BurnTransferClear(0x4000);
 
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
@@ -3262,6 +3259,7 @@ static INT32 SgunnerDraw()
 	return 0;
 }
 
+#if 0
 static void FinallapDrawBegin()
 {
 	if (DrvRecalc) {
@@ -3271,10 +3269,7 @@ static void FinallapDrawBegin()
 
 	apply_clip();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x4000;
-		pPrioDraw[i] = 0;
-	}
+	BurnTransferClear(0x4000);
 }
 
 static void FinallapDrawLine(INT32 line)
@@ -3297,9 +3292,35 @@ static void FinallapDrawLine(INT32 line)
 		}
 	}
 }
+#endif
 
 static INT32 FinallapDraw()
 {
+	if (!pDrvDrawBegin) { // not line based, fall back to default
+		if (DrvRecalc) {
+			DrvRecalcPalette();
+			DrvRecalc = 1;
+		}
+
+		apply_clip();
+
+		BurnTransferClear(0x4000);
+
+		for (INT32 pri = 0; pri < 16; pri++)
+		{
+			if ((pri&1)==0)
+			{
+				draw_layer(pri/2);
+			}
+			if (nBurnLayer & 1) {
+				c45RoadDraw(pri);
+			}
+			if (nBurnLayer & 2) {
+				draw_sprites(pri, gfx_ctrl);
+			}
+		}
+	}
+
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
@@ -3316,10 +3337,7 @@ static INT32 LuckywldDraw()
 
 	predraw_c169_roz_bitmap();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x4000;
-		pPrioDraw[i] = 0;
-	}
+	BurnTransferClear(0x4000);
 
 	for (INT32 pri = 0; pri < 16; pri++)
 	{
@@ -3347,10 +3365,7 @@ static INT32 Suzuka8hDraw()
 
 	apply_clip();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x4000;
-		pPrioDraw[i] = 0;
-	}
+	BurnTransferClear(0x4000);
 
 	for (INT32 pri = 0; pri < 16; pri++)
 	{
@@ -3379,10 +3394,7 @@ static INT32 MetlhawkDraw()
 
 	predraw_c169_roz_bitmap();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x4000;
-		pPrioDraw[i] = 0;
-	}
+	BurnTransferClear(0x4000);
 
 	for (INT32 pri = 0; pri < 16; pri++)
 	{

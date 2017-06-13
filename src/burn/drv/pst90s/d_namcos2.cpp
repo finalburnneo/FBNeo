@@ -402,21 +402,23 @@ static struct BurnDIPInfo DirtfoxDIPList[]=
 
 STDDIPINFO(Dirtfox)
 
-static void palette_write(INT32 address)
+static inline void palette_write(UINT16 offset)
 {
-	return; // remove when fixed
+	offset /= 2;
 
-	INT32 offset = (address & 0xcffe)/2;
-	INT32 entry = (offset & 0x7ff) | ((offset & 0x6000) >> 2);
+	INT32 ofst = (offset & 0x67ff);
+
+	offset = (offset & 0x7ff) | ((offset & 0x6000) >> 2);
 
 	UINT16 *ram = (UINT16*)DrvPalRAM;
 
-	UINT8 r = ram[offset + 0x0000];
-	UINT8 g = ram[offset + 0x0800];
-	UINT8 b = ram[offset + 0x1000];
+	UINT8 r = ram[ofst + 0x0000];
+	UINT8 g = ram[ofst + 0x0800];
+	UINT8 b = ram[ofst + 0x1000];
 
-	DrvPalette[entry] = BurnHighCol(r,g,b,0);
-	DrvPalette[entry + 0x2000] = BurnHighCol(r/2,g/2,b/2,0); // shadow
+	DrvPalette[offset] = BurnHighCol(r,g,b,0);
+
+	DrvPalette[offset + 0x2000] = BurnHighCol(r/2,g/2,b/2,0); // shadow
 }
 
 static void clear_all_irqs()
@@ -632,8 +634,12 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 	}
 
 	if ((address & 0xff0000) == 0x440000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x301e))) = data & 0xff;
-		palette_write(address & 0x301e);
+		if ((address & 0x3000) >= 0x3000) {
+			*((UINT16*)(DrvPalRAM + (address & 0x301e))) = data & 0xff;
+		} else {
+			*((UINT16*)(DrvPalRAM + (address & 0xfffe))) = data;
+			palette_write(address);
+		}
 		return;
 	}
 
@@ -671,8 +677,12 @@ static void __fastcall namcos2_68k_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if ((address & 0xff0000) == 0x440000) {
-		*((UINT16*)(DrvPalRAM + (address & 0x301e))) = data;
-		palette_write(address & 0x301e);
+		if ((address & 0x3000) >= 0x3000) {
+			*((UINT16*)(DrvPalRAM + (address & 0x301e))) = data;
+		} else {
+			DrvPalRAM[(address & 0xffff)^1] = data;
+			palette_write(address);
+		}
 		return;
 	}
 
@@ -1231,10 +1241,10 @@ static void default_68k_map(INT32 cpu)
 	SekMapMemory(Drv68KRAM[cpu],		0x100000, 0x13ffff, MAP_RAM);
 	SekMapMemory(Drv68KData,		0x200000, 0x3fffff, MAP_ROM);
 	SekMapMemory(DrvC123RAM,		0x400000, 0x41ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_RAM);
+	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_ROM);
 	SekMapMemory(DrvC139RAM,		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0xc00000, 0xc03fff, MAP_RAM);
 	SekMapMemory(DrvRozRAM,			0xc80000, 0xc9ffff, MAP_RAM);
@@ -1270,10 +1280,10 @@ static void metlhawk_68k_map(INT32 cpu)
 	SekMapMemory(Drv68KRAM[cpu],		0x100000, 0x13ffff, MAP_RAM);
 	SekMapMemory(Drv68KData,		0x200000, 0x3fffff, MAP_ROM);
 	SekMapMemory(DrvC123RAM,		0x400000, 0x41ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_RAM);
+	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_ROM);
 	SekMapMemory(DrvC139RAM,		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0xc00000, 0xc03fff, MAP_RAM);
 	SekMapMemory(DrvRozRAM,			0xc40000, 0xc4ffff, MAP_RAM);
@@ -1292,10 +1302,10 @@ static void luckywld_68k_map(INT32 cpu)
 	SekMapMemory(Drv68KRAM[cpu],		0x100000, 0x13ffff, MAP_RAM);
 	SekMapMemory(Drv68KData,		0x200000, 0x3fffff, MAP_ROM);
 	SekMapMemory(DrvC123RAM,		0x400000, 0x41ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_RAM);
+	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_ROM);
 	SekMapMemory(DrvC139RAM,		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x800000, 0x8141ff, MAP_RAM);
 	SekMapMemory(c45RoadRAM,		0xa00000, 0xa1ffff, MAP_ROM); // handler in c45roadmap68k
@@ -1319,10 +1329,10 @@ static void finallap_68k_map(INT32 cpu)
 //	SekMapMemory(Drv68KData,		0x200000, 0x2fffff, MAP_ROM);
 //	SekMapMemory(Drv68KData + 0x140000,	0x340000, 0x3fffff, MAP_ROM);
 	SekMapMemory(DrvC123RAM,		0x400000, 0x41ffff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_RAM);
-	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_RAM);
+	SekMapMemory(DrvPalRAM + 0x0000,	0x440000, 0x442fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x4000,	0x444000, 0x446fff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0x8000,	0x448000, 0x44afff, MAP_ROM);
+	SekMapMemory(DrvPalRAM + 0xc000,	0x44c000, 0x44efff, MAP_ROM);
 	SekMapMemory(DrvC139RAM,		0x480000, 0x483fff, MAP_RAM);
 	SekMapMemory(DrvSprRAM,			0x800000, 0x80ffff, MAP_RAM);
 	SekMapMemory(c45RoadRAM,		0x880000, 0x89ffff, MAP_ROM); // handler in c45roadmap68k
@@ -2965,7 +2975,7 @@ static void DrvDrawBegin()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
 	apply_clip();
@@ -3005,7 +3015,7 @@ static INT32 DrvDraw()
 	if (!pDrvDrawBegin) { // not line based, fall back to default
 		if (DrvRecalc) {
 			DrvRecalcPalette();
-			DrvRecalc = 1;
+			DrvRecalc = 0;
 		}
 
 		apply_clip();
@@ -3239,7 +3249,7 @@ static INT32 SgunnerDraw()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
 	apply_clip();
@@ -3266,7 +3276,7 @@ static void FinallapDrawBegin()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
 	apply_clip();
@@ -3301,7 +3311,7 @@ static INT32 FinallapDraw()
 	if (!pDrvDrawBegin) { // not line based, fall back to default
 		if (DrvRecalc) {
 			DrvRecalcPalette();
-			DrvRecalc = 1;
+			DrvRecalc = 0;
 		}
 
 		apply_clip();
@@ -3332,7 +3342,7 @@ static INT32 LuckywldDraw()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
 	apply_clip();
@@ -3362,7 +3372,7 @@ static INT32 Suzuka8hDraw()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
 	apply_clip();
@@ -3389,7 +3399,7 @@ static INT32 MetlhawkDraw()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
 	apply_clip();

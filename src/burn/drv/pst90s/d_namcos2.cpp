@@ -3,8 +3,10 @@
 
 // Todo:
 //   1: Fast palette update ( palette_write() )
-//   2: iq_132's new c45 code impl.
 //   3: (lowprio) Make single-joy hack for Assault with fake-dip for normal or single mode.
+// xx final lap inputs
+// x2 fourtrax timing flashy stuff
+// x3 cleanup
 
 //tested good:
 // assault	- good
@@ -2004,8 +2006,8 @@ static INT32 MetlhawkInit()
 	return 0;
 }
 
-//static void FinallapDrawBegin(); // forwards
-//static void FinallapDrawLine(INT32 line); // ""
+static void FinallapDrawBegin(); // forwards
+static void FinallapDrawLine(INT32 line); // ""
 
 static INT32 FinallapInit()
 {
@@ -2120,8 +2122,8 @@ static INT32 FourtraxInit()
 
 	DrvDoReset();
 
-	//pDrvDrawBegin = FinallapDrawBegin;
-	//pDrvDrawLine = FinallapDrawLine;
+	pDrvDrawBegin = FinallapDrawBegin;
+	pDrvDrawLine = FinallapDrawLine;
 
 	return 0;
 }
@@ -3259,7 +3261,7 @@ static INT32 SgunnerDraw()
 	return 0;
 }
 
-#if 0
+#if 1
 static void FinallapDrawBegin()
 {
 	if (DrvRecalc) {
@@ -3281,9 +3283,9 @@ static void FinallapDrawLine(INT32 line)
 			draw_layer_line(line, pri/2);
 		}
 		if (nBurnLayer & 1) {
-			//PUSH_Y(); (gets clipping internally)
-			c45RoadDraw(pri);
-			//POP_Y();
+			PUSH_Y();
+			c45RoadDraw(pri, min_y, max_y);
+			POP_Y();
 		}
 		if (nBurnLayer & 2) {
 			PUSH_Y();
@@ -3313,7 +3315,7 @@ static INT32 FinallapDraw()
 				draw_layer(pri/2);
 			}
 			if (nBurnLayer & 1) {
-				c45RoadDraw(pri);
+				c45RoadDraw(pri, -1, -1);
 			}
 			if (nBurnLayer & 2) {
 				draw_sprites(pri, gfx_ctrl);
@@ -3346,7 +3348,7 @@ static INT32 LuckywldDraw()
 			draw_layer(pri/2);
 		}
 
-		if (nBurnLayer & 1) c45RoadDraw(pri);
+		if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
 		if (nBurnLayer & 2) c169_roz_draw(pri);
 		if (nBurnLayer & 4) c355_obj_draw(pri);
 	}
@@ -3374,7 +3376,7 @@ static INT32 Suzuka8hDraw()
 			draw_layer(pri/2);
 		}
 
-		if (nBurnLayer & 1) c45RoadDraw(pri);
+		if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
 		if (nBurnLayer & 4) c355_obj_draw(pri);
 	}
 

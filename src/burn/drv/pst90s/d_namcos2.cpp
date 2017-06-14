@@ -2203,7 +2203,7 @@ static UINT16 get_palette_register(INT32 reg)
 
 #define PUSH_Y(); \
 	INT32 oldmin_y = min_y; \
-    INT32 oldmax_y = max_y; \
+	INT32 oldmax_y = max_y; \
 	min_y = (line >= min_y) ? line : 0; \
 	max_y = (line <= max_y) ? line+1 : 0;
 
@@ -3148,13 +3148,16 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 #endif
 
 	if (min_y_ovrride != -1 && max_y_ovrride != -1) {
-		if (min_y <= min_y_ovrride && max_y >= max_y_ovrride) {
+		if (min_y < min_y_ovrride) min_y = min_y_ovrride;
+
+		if (max_y > max_y_ovrride) max_y = max_y_ovrride;
+		/*if (min_y <= min_y_ovrride && max_y >= max_y_ovrride) {
 			min_y = min_y_ovrride;
 			max_y = max_y_ovrride;
 		} else {
 			min_y = 0;
 			max_y = 0;
-		}
+		}*/
 	}
 
 	hpos&=0x7ff; if( hpos&0x400 ) hpos |= ~0x7ff; /* sign extend */
@@ -3258,12 +3261,12 @@ static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UIN
 
 static void c355_obj_draw(INT32 pri, int min_y_ovrride, int max_y_ovrride)
 {
-	if (pri == 0) BurnPrioClear();
+	//if (pri == 0) BurnPrioClear();
 
 	UINT16 *m_c355_obj_ram = (UINT16*)DrvSprRAM;
 
-	if (nBurnLayer & 1) c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2], min_y_ovrride, max_y_ovrride);
-	if (nBurnLayer & 2) c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2], min_y_ovrride, max_y_ovrride);
+	c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2], min_y_ovrride, max_y_ovrride);
+	c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2], min_y_ovrride, max_y_ovrride);
 }
 
 static INT32 SgunnerDraw()
@@ -3378,13 +3381,21 @@ static void LuckywldDrawLine(INT32 line)
 			draw_layer_line(line, pri/2);
 		}
 
-		PUSH_Y();
-
-		if (nBurnLayer & 1) c45RoadDraw(pri, min_y, max_y);
-		if (nBurnLayer & 2) c169_roz_draw(pri, min_y, max_y);
-		if (nBurnLayer & 4) c355_obj_draw(pri, min_y, max_y);
-
-		POP_Y();
+		if (nBurnLayer & 1) {
+			PUSH_Y();
+			c45RoadDraw(pri, min_y, max_y);
+			POP_Y();
+		}
+		if (nBurnLayer & 2) {
+			PUSH_Y();
+			c169_roz_draw(pri, min_y, max_y);
+			POP_Y();
+		}
+		if (nBurnLayer & 4) {
+			PUSH_Y();
+			c355_obj_draw(pri, min_y, max_y);
+			POP_Y();
+		}
 	}
 }
 
@@ -3528,7 +3539,6 @@ static INT32 DrvFrame()
 		SekOpen(0);
 		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
-
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 		if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);

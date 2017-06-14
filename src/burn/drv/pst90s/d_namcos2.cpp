@@ -1713,8 +1713,6 @@ static INT32 Namcos2Init(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UIN
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	memset (DrvEEPROM, 0xff, 0x2000); // iq_132 remove me!
-
 	{
 		if (Namcos2GetRoms(0)) return 1;
 
@@ -1753,8 +1751,6 @@ static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_rea
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	memset (DrvEEPROM, 0xff, 0x2000); // iq_132 remove me!
-
 	{
 		if (Namcos2GetRoms(0)) return 1;
 
@@ -1788,8 +1784,6 @@ static INT32 Suzuka8hCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_re
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
-
-	memset (DrvEEPROM, 0xff, 0x2000); // iq_132 remove me!
 
 	{
 		if (Namcos2GetRoms(0)) return 1;
@@ -1860,8 +1854,6 @@ static INT32 LuckywldInit()
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
-
-	memset (DrvEEPROM, 0xff, 0x2000); // iq_132 remove me!
 
 	{
 		if (Namcos2GetRoms(0)) return 1;
@@ -2253,7 +2245,7 @@ static void DrvRecalcPalette()
 	}
 }
 
-static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line)
+static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line, INT32 priority)
 {
 	if (line < min_y || line > max_y) return;
 
@@ -2298,6 +2290,7 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 	INT32 sy = (scrolly + line) % sizey_full;
 
 	UINT16 *dst = pTransDraw + (line * nScreenWidth);
+	UINT8 *pri = pPrioDraw + (line * nScreenWidth);
 
 	for (INT32 x = 0; x < nScreenWidth + 7; x+=8)
 	{
@@ -2321,12 +2314,13 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 			if (*msk & (0x80 >> xx))
 			{
 				dst[zx] = gfx[xx] + color;
+				pri[zx] = priority;
 			}
 		}
 	}
 }
 
-static void draw_layer_with_masking(INT32 layer, INT32 color)
+static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 {
 	if (layer >= 6) return;
 
@@ -2404,6 +2398,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 					if (*msk & (0x01 << x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[7 - x] + color;
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = priority;
 					}
 				}
 			}
@@ -2420,6 +2415,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color)
 					if (*msk & (0x80 >> x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[x] + color;
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = priority;
 					}
 				}
 			}
@@ -2436,7 +2432,7 @@ static void draw_layer_line(INT32 line, INT32 pri)
 		if((ctrl[0x10+i] & 0xf) == pri)
 		{
 			layer_color = ctrl[0x18 + i];
-			draw_layer_with_masking_by_line(i, layer_color, line);
+			draw_layer_with_masking_by_line(i, layer_color, line, pri);
 		}
 	}
 }
@@ -2450,7 +2446,7 @@ static void draw_layer(INT32 pri)
 		if((ctrl[0x10+i] & 0xf) == pri)
 		{
 			layer_color = ctrl[0x18 + i];
-			draw_layer_with_masking(i, layer_color);
+			draw_layer_with_masking(i, layer_color, pri);
 		}
 	}
 }
@@ -2595,7 +2591,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 									INT32 c = source[x_index>>16];
 									if( c != 0xff )
 									{
-										if( pri[x]<=zpos )
+										if( pri[x] <= zpos )
 										{
 											if( color == 0xf00 && c==0xfe )
 											{
@@ -2603,9 +2599,9 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 											}
 											else
 											{
-												dest[x] = c | color;;
+												dest[x] = c | color;
 											}
-											pri[x] = zpos;
+											pri[x] = 0x80; //zpos;
 										}
 									}
 									x_index += dx;
@@ -2766,6 +2762,7 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 
 	INT32 end_incry = rozInfo->incyy - (width * rozInfo->incxy);
 
 	UINT16 *dest = pTransDraw + (desty * nScreenWidth) + destx;
+	UINT8 *prio = pPrioDraw + (desty * nScreenWidth) + destx;
 	INT32 dest_rowinc = nScreenWidth - width;
 
 	while (desty < desty_end)
@@ -2786,6 +2783,7 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 
 				srcx += rozInfo->incxx;
 				srcy += rozInfo->incxy;
 				dest++;
+				prio++;
 				continue;
 			}
 
@@ -2794,10 +2792,12 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 
 			srcx += rozInfo->incxx;
 			srcy += rozInfo->incxy;
 			dest++;
+			prio++;
 		}
 		srcx += end_incrx;
 		srcy += end_incry;
 		dest += dest_rowinc;
+		prio += dest_rowinc;
 		desty++;
 	}
 }
@@ -2897,7 +2897,6 @@ static void draw_roz()
 	rozParam.size = 2048;
 	rozParam.wrap = 1;
 
-
 	switch( m_roz_ctrl[7] )
 	{
 	case 0x4400: /* (2048x2048) */
@@ -2936,18 +2935,17 @@ static void draw_roz()
 static void draw_sprites(INT32 pri, INT32 control )
 {
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
-
-
 	INT32 offset = (control & 0x000f) * (128*4);
 	INT32 loop;
 	if( pri==0 )
 	{
 		//screen.priority().fill(0, cliprect );
 	}
-	for( loop=0; loop <128; loop++ )
+//	for( loop=0; loop <128; loop++ )
+	for (loop = 127; loop >= 0; loop--)
 	{
 		INT32 word3 = m_spriteram[offset+(loop*4)+3];
-		if( (word3&0xf)==pri )
+	//	if( (word3&0xf)==pri )
 		{
 			INT32 word0 = m_spriteram[offset+(loop*4)+0];
 			INT32 word1 = m_spriteram[offset+(loop*4)+1];
@@ -2974,7 +2972,7 @@ static void draw_sprites(INT32 pri, INT32 control )
 
 					if (size == 1) code >>= 2;
 
-					zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, loop );
+					zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, (word3&0xf)/*loop*/ );
 				}
 			}
 		}
@@ -3014,9 +3012,9 @@ static void DrvDrawLine(INT32 line)
 			}
 		}
 
-		PUSH_Y();
-		if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
-		POP_Y();
+	//	PUSH_Y();
+
+	//	POP_Y();
 	}
 }
 
@@ -3046,10 +3044,10 @@ static INT32 DrvDraw()
 					draw_roz();
 				}
 			}
-
-			draw_sprites(pri, gfx_ctrl);
 		}
 	}
+
+	draw_sprites(0, gfx_ctrl);
 
 	BurnTransferCopy(DrvPalette);
 

@@ -18,6 +18,8 @@ static INT32 starty=0;
 static INT32 clip_min_y;
 static INT32 clip_max_y;
 
+static INT32 global_priority = 0;
+
 static UINT8 *roz_ram;
 static UINT8 *roz_ctrl;
 static UINT16 *roz_bitmap;
@@ -86,13 +88,16 @@ static void c169_roz_draw_helper()
 		UINT32 cx = hstartx;
 		UINT32 cy = hstarty;
 		UINT16 *dest = pTransDraw + (sy * nScreenWidth) + sx;
+		UINT8 *prio = pPrioDraw + (sy * nScreenWidth) + sx;
 		while (x < nScreenWidth)
 		{
 			UINT32 xpos = (((cx >> 16) & size_mask) + left) & 0xfff;
 			UINT32 ypos = (((cy >> 16) & size_mask) + top) & 0xfff;
 			INT32 pxl = srcbitmap[(ypos * 0x1000) + xpos];
-			if ((pxl & 0x8000) == 0)
+			if ((pxl & 0x8000) == 0) {
 				*dest = srcbitmap[(ypos * 0x1000) + xpos] + color;
+				*prio = global_priority;
+			}
 			cx += incxx;
 			cy += incxy;
 			x++;
@@ -141,6 +146,8 @@ void c169_roz_draw(int pri, int min_y_ovrride, int max_y_ovrride)
 	const UINT16 *source = (UINT16*)roz_ctrl;
 
 	INT32 mode = source[0]; // 0x8000 or 0x1000
+
+	global_priority = pri;
 
 	for (INT32 which = 1; which >= 0; which--)
 	{

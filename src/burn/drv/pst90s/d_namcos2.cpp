@@ -1847,6 +1847,11 @@ static void luckywld_roz_decode()
 	BurnFree(tmp);
 }
 
+static void FinallapDrawBegin(); // forwards
+static void FinallapDrawLine(INT32 line); // ""
+static void LuckywldDrawBegin(); // forwards
+static void LuckywldDrawLine(INT32 line); // ""
+
 static INT32 LuckywldInit()
 {
 	AllMem = NULL;
@@ -1886,8 +1891,13 @@ static INT32 LuckywldInit()
 
 	is_luckywld = 1;
 
+	long_vbl = 1;
+
 	uses_gun = 1;
 	BurnGunInit(2, false);
+
+	pDrvDrawBegin = LuckywldDrawBegin;
+	pDrvDrawLine = LuckywldDrawLine;
 
 	DrvDoReset();
 
@@ -2014,9 +2024,6 @@ static INT32 MetlhawkInit()
 
 	return 0;
 }
-
-static void FinallapDrawBegin(); // forwards
-static void FinallapDrawLine(INT32 line); // ""
 
 static INT32 FinallapInit()
 {
@@ -3049,7 +3056,7 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
+static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, int min_y_ovrride, int max_y_ovrride)
 {
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM; //m_c355_obj_ram;
 	unsigned screen_height_remaining, screen_width_remaining;
@@ -3132,12 +3139,23 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 
 	// c355 internal clipping (used by sgunner & sgunner2)
 	PUSH_XY();
+#if 1
 	min_x = pWinAttr[0] - xscroll;
 	max_x = pWinAttr[1] - xscroll;
 	min_y = pWinAttr[2] - yscroll;
 	max_y = pWinAttr[3] - yscroll;
-
 	adjust_clip();
+#endif
+
+	if (min_y_ovrride != -1 && max_y_ovrride != -1) {
+		if (min_y <= min_y_ovrride && max_y >= max_y_ovrride) {
+			min_y = min_y_ovrride;
+			max_y = max_y_ovrride;
+		} else {
+			min_y = 0;
+			max_y = 0;
+		}
+	}
 
 	hpos&=0x7ff; if( hpos&0x400 ) hpos |= ~0x7ff; /* sign extend */
 	vpos&=0x7ff; if( vpos&0x400 ) vpos |= ~0x7ff; /* sign extend */
@@ -3228,24 +3246,24 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 	POP_XY();
 }
 
-static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
+static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UINT16 *pSpriteTable, int min_y_ovrride, int max_y_ovrride)
 {
 	for (INT32 i = 0; i < 256; i++)
 	{
 		UINT16 which = pSpriteList16[i];
-		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i);
+		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i, min_y_ovrride, max_y_ovrride);
 		if (which&0x100) break;
 	}
 }
 
-static void c355_obj_draw(INT32 pri)
+static void c355_obj_draw(INT32 pri, int min_y_ovrride, int max_y_ovrride)
 {
 	if (pri == 0) BurnPrioClear();
 
 	UINT16 *m_c355_obj_ram = (UINT16*)DrvSprRAM;
 
-	if (nBurnLayer & 1) c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2]);
-	if (nBurnLayer & 2) c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2]);
+	if (nBurnLayer & 1) c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2], min_y_ovrride, max_y_ovrride);
+	if (nBurnLayer & 2) c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2], min_y_ovrride, max_y_ovrride);
 }
 
 static INT32 SgunnerDraw()
@@ -3262,7 +3280,7 @@ static INT32 SgunnerDraw()
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
 		draw_layer(pri);
-		c355_obj_draw(pri);
+		c355_obj_draw(pri, -1, -1);
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -3295,12 +3313,16 @@ static void FinallapDrawLine(INT32 line)
 			draw_layer_line(line, pri/2);
 		}
 
-		PUSH_Y();
-
-		if (nBurnLayer & 1) c45RoadDraw(pri, min_y, max_y);
-		if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
-
-		POP_Y();
+		if (nBurnLayer & 1) {
+			PUSH_Y();
+			c45RoadDraw(pri, min_y, max_y);
+			POP_Y();
+		}
+		if (nBurnLayer & 2) {
+			PUSH_Y();
+			draw_sprites(pri, gfx_ctrl);
+			POP_Y();
+		}
 	}
 }
 
@@ -3333,7 +3355,7 @@ static INT32 FinallapDraw()
 	return 0;
 }
 
-static INT32 LuckywldDraw()
+static void LuckywldDrawBegin()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
@@ -3345,17 +3367,52 @@ static INT32 LuckywldDraw()
 	predraw_c169_roz_bitmap();
 
 	BurnTransferClear(0x4000);
+}
 
-	for (INT32 pri = 0; pri < 16; pri++)
+static void LuckywldDrawLine(INT32 line)
+{
+	for (INT32 pri=0; pri < 16; pri++)
 	{
 		if ((pri&1) == 0)
 		{
-			draw_layer(pri/2);
+			draw_layer_line(line, pri/2);
 		}
 
-		if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
-		if (nBurnLayer & 2) c169_roz_draw(pri);
-		if (nBurnLayer & 4) c355_obj_draw(pri);
+		PUSH_Y();
+
+		if (nBurnLayer & 1) c45RoadDraw(pri, min_y, max_y);
+		if (nBurnLayer & 2) c169_roz_draw(pri, min_y, max_y);
+		if (nBurnLayer & 4) c355_obj_draw(pri, min_y, max_y);
+
+		POP_Y();
+	}
+}
+
+static INT32 LuckywldDraw()
+{
+	if (!pDrvDrawBegin) { // not line based, fall back to default
+		if (DrvRecalc) {
+			DrvRecalcPalette();
+			DrvRecalc = 0;
+		}
+
+		apply_clip();
+
+		predraw_c169_roz_bitmap();
+
+		BurnTransferClear(0x4000);
+
+		for (INT32 pri = 0; pri < 16; pri++)
+		{
+			if ((pri&1) == 0)
+			{
+				draw_layer(pri/2);
+			}
+
+			if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
+			if (nBurnLayer & 2) c169_roz_draw(pri, min_y, max_y);
+			if (nBurnLayer & 4) c355_obj_draw(pri, -1, -1);
+		}
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -3382,7 +3439,7 @@ static INT32 Suzuka8hDraw()
 		}
 
 		if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
-		if (nBurnLayer & 4) c355_obj_draw(pri);
+		if (nBurnLayer & 4) c355_obj_draw(pri, -1, -1);
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -3410,7 +3467,7 @@ static INT32 MetlhawkDraw()
 			draw_layer(pri/2);
 		}
 
-		c169_roz_draw(pri);
+		c169_roz_draw(pri, min_y, max_y);
 		draw_sprites_metalhawk(pri);
 	}
 

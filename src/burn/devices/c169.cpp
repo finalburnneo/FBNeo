@@ -76,7 +76,7 @@ static void c169_roz_draw_helper()
 {
 	UINT32 size_mask = size - 1;
 	UINT16 *srcbitmap = roz_bitmap;
-	UINT32 hstartx = startx + 0 * incxx + clip_min_y * incyx;
+	UINT32 hstartx = startx + 0 * incxx + 0/*clip_min_y*/ * incyx;
 	UINT32 hstarty = starty + 0 * incxy + clip_min_y * incyy;
 	INT32 sx = 0;
 	INT32 sy = clip_min_y;
@@ -118,17 +118,26 @@ static void c169_roz_draw_scanline(int line, int pri)
 			{
 				c169_roz_unpack_params(source);
 
+				INT32 oldmin = clip_min_y;
+				INT32 oldmax = clip_max_y;
+
 				clip_min_y = line;
 				clip_max_y = line+1;
 
 				c169_roz_draw_helper();
+
+				clip_min_y = oldmin;
+				clip_max_y = oldmax;
 			}
 		}
 	}
 }
 
-void c169_roz_draw(int pri)
+void c169_roz_draw(int pri, int min_y_ovrride, int max_y_ovrride)
 {
+	clip_min_y = min_y_ovrride;
+	clip_max_y = max_y_ovrride;
+
 	const UINT16 *source = (UINT16*)roz_ctrl;
 
 	INT32 mode = source[0]; // 0x8000 or 0x1000
@@ -140,13 +149,13 @@ void c169_roz_draw(int pri)
 		{
 			if (which == 1 && mode == 0x8000)
 			{
-				for (INT32 line = 0; line < 224; line++)
+				for (INT32 line = clip_min_y; line < clip_max_y; line++)
 					c169_roz_draw_scanline(line, pri);
 			}
 			else
 			{
-				clip_min_y = 0;
-				clip_max_y = nScreenHeight;
+				//clip_min_y = 0;
+				//clip_max_y = nScreenHeight;
 	
 				c169_roz_unpack_params(source + (which*8));
 				if (priority == pri)

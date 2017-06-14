@@ -5,29 +5,23 @@ UINT8 *c45RoadRAM = NULL; // external
 
 static UINT8 *c45RoadTiles = NULL;
 static UINT16 *c45RoadBitmap = NULL;
-static UINT8 *c45RoadBuffer = NULL;
 static UINT8 *c45RoadClut = NULL;
-static INT32 c45_road_force_update = 0;
-static INT32 c45_road_tiles_changed = 0;
 static UINT32 c45_road_transparent_color = 0;
 static UINT8 c45_temp_clut[0x100];
 
 void c45RoadReset()
 {
-	c45_road_force_update = 1;
-	c45_road_tiles_changed = 1;
+	// nothing
 }
 
 void c45RoadInit(UINT32 trans_color, UINT8 *clut)
 {
 	c45RoadRAM = (UINT8*)BurnMalloc(0x20000);
-	c45RoadBuffer = (UINT8*)BurnMalloc(0x10000);
 	c45RoadTiles = (UINT8*)BurnMalloc(0x40000);
 
 	c45RoadClut = clut;
-	c45RoadBitmap = (UINT16*)BurnMalloc(0x2000 * 0x400 * sizeof(UINT16));
+	c45RoadBitmap = (UINT16*)BurnMalloc(0x400 * sizeof(UINT16));
 
-	c45_road_force_update = 1;
 	c45_road_transparent_color = trans_color;
 
 	if (c45RoadClut == NULL) {
@@ -39,7 +33,6 @@ void c45RoadInit(UINT32 trans_color, UINT8 *clut)
 void c45RoadExit()
 {
 	if (c45RoadRAM != NULL) BurnFree(c45RoadRAM);
-	if (c45RoadBuffer != NULL) BurnFree(c45RoadBuffer);
 	if (c45RoadTiles != NULL) BurnFree(c45RoadTiles);
 	if (c45RoadBitmap != NULL) BurnFree(c45RoadBitmap);
 
@@ -56,8 +49,6 @@ static inline void update_tile_pixel(INT32 offset)
 	for (INT32 x = 0; x < 8; x++) {
 		pxl[x] = (((s >> ((7 - (x & 7)) + 8)) & 1) << 1) | (((s >> (7 - (x & 7))) & 1) << 0);
 	}
-
-	c45_road_force_update = 1;
 }
 
 static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
@@ -66,15 +57,7 @@ static void __fastcall c45_road_write_word(UINT32 address, UINT16 data)
 
 	INT32 offset = (address & 0x1ffff) / 2;
 
-	if (offset < (0x10000 / 2)) // tile map
-	{
-		if (data != ram[offset]) {
-			ram[offset] = data;
-			c45RoadBuffer[offset] = 1;
-			c45_road_tiles_changed = 1;
-		}
-	}
-	else if (offset < (0x1fa00 / 2)) // tiles
+	if (offset < (0x1fa00 / 2)) // tiles
 	{
 		if (data != ram[offset]) {
 			ram[offset] = data;
@@ -93,15 +76,7 @@ static void __fastcall c45_road_write_byte(UINT32 address, UINT8 data)
 
 	INT32 offset = (address & 0x1ffff) ^ 1;
 
-	if (offset < 0x10000)	// tile map
-	{
-		if (data != ram[offset]) {
-			c45RoadRAM[offset] = data;
-			c45RoadBuffer[offset/2] = 1;
-			c45_road_tiles_changed = 1;
-		}
-	}
-	else if (offset < 0x1fa00)	// tiles
+	if (offset < 0x1fa00)	// tiles
 	{
 		if (data != ram[offset]) {
 			c45RoadRAM[offset] = data;
@@ -119,55 +94,36 @@ void c45RoadMap68k(UINT32 address)
 	SekMapHandler(7,		address, address | 0x1ffff, MAP_WRITE);
 	SekSetWriteWordHandler(7,	c45_road_write_word);
 	SekSetWriteByteHandler(7,	c45_road_write_byte);
+
+	SekMapMemory(c45RoadRAM,	address, address | 0x0ffff, MAP_WRITE);
 }
 
-static void predraw_c45_road_tiles()
+static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixels_wide, UINT32 incx)
 {
-	// tiles not dirty
-	if (c45_road_tiles_changed == 0 && c45_road_force_update == 0)
-	{
-		return;
-	}
-
 	UINT16 *ram = (UINT16*)c45RoadRAM;
+	UINT16 *dst = c45RoadBitmap;// + (line * (64 * 16));
 
-	for (INT32 offs = 0; offs < 64 * 512; offs++)
+	INT32 startx_shift = (startx >> 16) >> 4;
+	INT32 endx_shift = (((pixels_wide * incx) >> 20) + 1) + startx_shift;
+
+	INT32 offs = ((line/16) * 0x40) + startx_shift;
+
+	for (INT32 sx = startx_shift; sx < endx_shift; sx++, offs++)
 	{
-		if (c45RoadBuffer[offs] == 0 && c45_road_force_update == 0) {
-			continue;
-		}
-		c45RoadBuffer[offs] = 0;
-
-		INT32 sx = (offs & 0x3f) * 16;
-		INT32 sy = (offs / 0x40) * 16;
-
-		INT32 code  = (ram[offs] & 0x3ff) * 0x100;
+		INT32 code  = (ram[offs] & 0x3ff) * (16 * 16) + ((line & 0xf) * 16);
 		INT32 color = ((ram[offs] >> 10) << 2);
 		UINT8 *gfx = c45RoadTiles + code;
-		UINT16 *dst = c45RoadBitmap + (sy * 0x400) + sx;
-
 		UINT8 *clut = c45RoadClut + color;
 
-		for (INT32 y = 0; y < 16; y++)
+		for (INT32 x = 0; x < 16; x++)
 		{
-			for (INT32 x = 0; x < 16; x++)
-			{
-				dst[x] = clut[gfx[x]] + 0xf00;
-			}
-
-			gfx += 16;
-			dst += 0x400;
+			dst[((sx*16)+x)&0x3ff] = clut[gfx[x]] + 0xf00;
 		}
 	}
-
-	c45_road_force_update = 0;
-	c45_road_tiles_changed = 0;
 }
 
 void c45RoadDraw(int pri, int min_y_ovrride, int max_y_ovrride)
 {
-	predraw_c45_road_tiles();
-
 	INT32 min_x, min_y, max_x, max_y;
 
 	GenericTilesGetClip(&min_x, &max_x, &min_y, &max_y);
@@ -200,7 +156,7 @@ void c45RoadDraw(int pri, int min_y_ovrride, int max_y_ovrride)
 
 		// skip if we don't have a valid source increment
 		unsigned sourcey = m_lineram[0x200/2 + y + 15] + yscroll;
-		const uint16_t *source_gfx = c45RoadBitmap + ((sourcey & (ROAD_TILEMAP_HEIGHT - 1))) * 0x400;
+		const uint16_t *source_gfx = c45RoadBitmap;// + (sourcey & (ROAD_TILEMAP_HEIGHT - 1)) * 0x400;
 		unsigned dsourcex = (ROAD_TILEMAP_WIDTH << 16) / zoomx;
 		if (dsourcex == 0)
 			continue;
@@ -234,6 +190,8 @@ void c45RoadDraw(int pri, int min_y_ovrride, int max_y_ovrride)
 
 		// BUT: support transparent color for Thunder Ceptor
 		UINT16 *dest = pTransDraw + y * nScreenWidth;
+
+		predraw_c45_road_tiles_line(sourcey & (ROAD_TILEMAP_HEIGHT - 1), sourcex, numpixels, dsourcex);
 
 		if (c45_road_transparent_color != (UINT32)~0)
 		{

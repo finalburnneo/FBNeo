@@ -2616,11 +2616,13 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 	}
 } /* zdrawgfxzoom */
 
-static void draw_sprites_metalhawk(INT32 pri)
+static void draw_sprites_metalhawk(INT32 )
 {
 	const UINT16 *pSource = (UINT16*)DrvSprRAM;
 
-	for(INT32 loop=0; loop < 128; loop++ )
+//	pSource += 127 * 8;
+
+	for (INT32 loop=0; loop < 128; loop++)
 	{
 		INT32 ypos  = pSource[0];
 		INT32 tile  = pSource[1];
@@ -2640,7 +2642,7 @@ static void draw_sprites_metalhawk(INT32 pri)
 			sprn|=0x1000;
 		}
 
-		if( (sizey-1) && sizex && (attrs&0xf)==pri )
+		if( (sizey-1) && sizex )
 		{
 			INT32 bBigSprite = (flags&8);
 			INT32 color = (attrs>>4)&0xf;
@@ -2689,8 +2691,9 @@ static void draw_sprites_metalhawk(INT32 pri)
 				sprn >>= 2;
 			}
 
-			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx,flipy, sx, sy, scalex, scaley, loop );
+			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx,flipy, sx, sy, scalex, scaley, attrs&0xf );
 		}
+//		pSource -= 8;
 		pSource += 8;
 	}
 }
@@ -3477,8 +3480,9 @@ static INT32 MetlhawkDraw()
 		}
 
 		c169_roz_draw(pri, min_y, max_y);
-		draw_sprites_metalhawk(pri);
 	}
+
+	draw_sprites_metalhawk(0);
 
 	BurnTransferCopy(DrvPalette);
 

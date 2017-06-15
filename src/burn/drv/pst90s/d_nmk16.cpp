@@ -6460,7 +6460,7 @@ struct BurnDriver BurnDrvMacross2g = {
 };
 
 // Macross II (Korea)
-/* Title screen only shows Macross II, no Kanji. Suspected Korean version - Language dip still used for Stange info screens */
+/* Title screen only shows Macross II, no Kanji. Suspected Korean version - Language dip still used for Stage info screens */
 
 static struct BurnRomInfo macross2kRomDesc[] = {
 	{ "1.3",			0x080000, 0x1506fcfc, 1 | BRF_PRG | BRF_ESS }, //  0 68k code

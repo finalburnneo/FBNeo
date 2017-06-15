@@ -17,6 +17,8 @@ static INT32 starty=0;
 
 static INT32 clip_min_y;
 static INT32 clip_max_y;
+static INT32 clip_min_x;
+static INT32 clip_max_x;
 
 static INT32 global_priority = 0;
 
@@ -78,11 +80,11 @@ static void c169_roz_draw_helper()
 {
 	UINT32 size_mask = size - 1;
 	UINT16 *srcbitmap = roz_bitmap;
-	UINT32 hstartx = startx + 0 * incxx + 0/*clip_min_y*/ * incyx;
+	UINT32 hstartx = startx + 0 * incxx + clip_min_y * incyx;
 	UINT32 hstarty = starty + 0 * incxy + clip_min_y * incyy;
 	INT32 sx = 0;
 	INT32 sy = clip_min_y;
-	while (sy < clip_max_y)
+	while (sy <= clip_max_y)
 	{
 		INT32 x = sx;
 		UINT32 cx = hstartx;
@@ -141,8 +143,10 @@ static void c169_roz_draw_scanline(int line, int pri)
 
 void c169_roz_draw(int pri, int min_y_ovrride, int max_y_ovrride)
 {
-	clip_min_y = min_y_ovrride;
-	clip_max_y = max_y_ovrride;
+	GenericTilesGetClip(&clip_min_x, &clip_max_x, &clip_min_y, &clip_max_y);
+
+	if (clip_min_y != -1) clip_min_y = min_y_ovrride;
+	if (clip_max_y != -1) clip_max_y = max_y_ovrride;
 
 	const UINT16 *source = (UINT16*)roz_ctrl;
 

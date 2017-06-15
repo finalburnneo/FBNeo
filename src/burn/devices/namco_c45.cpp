@@ -147,8 +147,9 @@ void c45RoadDraw(INT32 pri, INT32 min_y_ovrride, INT32 max_y_ovrride)
 	{
 		// skip if we are not the right priority
 		INT32 screenx = m_lineram[y + 15];
-		if (pri != ((screenx & 0xf000) >> 12))
-			continue;
+		//if (pri != ((screenx & 0xf000) >> 12))
+		//	continue;
+		pri = (screenx & 0xf000) >> 12;
 
 		// skip if we don't have a valid zoom factor
 		UINT32 zoomx = m_lineram[0x400/2 + y + 15] & 0x3ff;
@@ -194,8 +195,11 @@ void c45RoadDraw(INT32 pri, INT32 min_y_ovrride, INT32 max_y_ovrride)
 
 		while (numpixels-- > 0)
 		{
-			dest[screenx] = source_gfx[sourcex >> 16];
-			pdest[screenx++] = pri;
+			if (pdest[screenx] <= pri) {
+				dest[screenx] = source_gfx[sourcex >> 16];
+				pdest[screenx] = pri;
+			}
+			screenx++;
 			sourcex += dsourcex;
 		}
 	}

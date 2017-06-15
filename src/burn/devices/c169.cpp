@@ -102,6 +102,7 @@ static void c169_roz_draw_helper()
 			cy += incxy;
 			x++;
 			dest++;
+			prio++;
 		}
 		hstartx += incyx;
 		hstarty += incyy;

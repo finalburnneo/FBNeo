@@ -1,3 +1,7 @@
+// new todo:
+// c169: make respect min/max_x for clipping
+// finallap title tiles broken
+
 // FB Alpha Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
@@ -25,7 +29,7 @@
 // sgunner2	- good (needs old mcu)
 // dirtfoxj	- good
 // finehour	- good
-// luckywld	- good
+// luckywld	- good (finally!)
 
 //eek.
 // bubbletr	- ok, missing artwork (flipped)
@@ -2314,7 +2318,7 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 			if (*msk & (0x80 >> xx))
 			{
 				dst[zx] = gfx[xx] + color;
-				pri[zx] = priority;
+				pri[zx] = (priority&0x1000) ? priority*2 : priority;
 			}
 		}
 	}
@@ -2398,7 +2402,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x01 << x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[7 - x] + color;
-						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = priority;
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority&0x1000) ? priority*2 : priority;
 					}
 				}
 			}
@@ -2415,7 +2419,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x80 >> x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[x] + color;
-						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = priority;
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority&0x1000) ? priority*2 : priority;
 					}
 				}
 			}
@@ -2429,7 +2433,7 @@ static void draw_layer_line(INT32 line, INT32 pri)
 
 	for (INT32 i = 0; i < 6; i++)
 	{
-		if((ctrl[0x10+i] & 0xf) == pri)
+		if((ctrl[0x10+i] & 0xf) == (pri & 0xf))
 		{
 			layer_color = ctrl[0x18 + i];
 			draw_layer_with_masking_by_line(i, layer_color, line, pri);
@@ -2443,7 +2447,7 @@ static void draw_layer(INT32 pri)
 
 	for (INT32 i = 0; i < 6; i++)
 	{
-		if((ctrl[0x10+i] & 0xf) == pri)
+		if((ctrl[0x10+i] & 0xf) == (pri & 0xf))
 		{
 			layer_color = ctrl[0x18 + i];
 			draw_layer_with_masking(i, layer_color, pri);
@@ -2563,7 +2567,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 									INT32 c = source[x_index>>16];
 									if( c != 0xff )
 									{
-										if( pri[x]<=zpos )
+										if( pri[x]<=(zpos&0xf) )
 										{
 											switch( c )
 											{
@@ -2591,7 +2595,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 									INT32 c = source[x_index>>16];
 									if( c != 0xff )
 									{
-										if( pri[x] <= zpos )
+										if( pri[x] <= (zpos&0xf) )
 										{
 											if( color == 0xf00 && c==0xfe )
 											{
@@ -2601,7 +2605,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 											{
 												dest[x] = c | color;
 											}
-											pri[x] = 0x80; //zpos;
+											pri[x] = (zpos & 0x100) ? zpos&0xf : 0x80; //0x80; //zpos;
 										}
 									}
 									x_index += dx;
@@ -2935,7 +2939,7 @@ static void draw_roz()
 }
 
 
-static void draw_sprites(INT32 pri, INT32 control )
+static void draw_sprites(INT32 pri, INT32 control, INT32 halfpri)
 {
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 	INT32 offset = (control & 0x000f) * (128*4);
@@ -2975,7 +2979,7 @@ static void draw_sprites(INT32 pri, INT32 control )
 
 					if (size == 1) code >>= 2;
 
-					zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, (word3&0xf)/*loop*/ );
+					zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, (halfpri) ? (word3&0xf)/2 : (word3&0xf)/*loop*/ );
 				}
 			}
 		}
@@ -3014,10 +3018,6 @@ static void DrvDrawLine(INT32 line)
 				POP_Y();
 			}
 		}
-
-	//	PUSH_Y();
-
-	//	POP_Y();
 	}
 }
 
@@ -3050,7 +3050,7 @@ static INT32 DrvDraw()
 		}
 	}
 
-	draw_sprites(0, gfx_ctrl);
+	draw_sprites(0, gfx_ctrl, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3090,10 +3090,11 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 	 * ------------xxxx palette select
 	 */
 	palette = pSource[6];
-	if( pri != ((palette>>4)&0xf) )
+	/*if( pri != ((palette>>4)&0xf) )
 	{
 		return;
-	}
+		} */
+	pri = (palette>>4)&0xf;
 
 	linkno      = pSource[0]; /* LINKNO */
 	offset      = pSource[1]; /* OFFSET */
@@ -3140,13 +3141,17 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 
 	// c355 internal clipping (used by sgunner & sgunner2)
 	PUSH_XY();
-#if 1
 	min_x = pWinAttr[0] - xscroll;
 	max_x = pWinAttr[1] - xscroll;
 	min_y = pWinAttr[2] - yscroll;
 	max_y = pWinAttr[3] - yscroll;
-	adjust_clip();
-#endif
+	adjust_clip(); // make sane
+
+	// global clipping overrides sprite clipping
+	if (min_x < oldmin_x) min_x = oldmin_x;
+	if (max_x > oldmax_x) max_x = oldmax_x;
+	if (min_y < oldmin_y) min_y = oldmin_y;
+	if (max_y > oldmax_y) max_y = oldmax_y;
 
 	if (min_y_ovrride != -1 && max_y_ovrride != -1) {
 		if (min_y < min_y_ovrride) min_y = min_y_ovrride;
@@ -3230,7 +3235,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 			{
 				INT32 size = 0;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, zpos );
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, 0x100 | (pri) );
 			}
 			if( !flipx )
 			{
@@ -3252,7 +3257,8 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 
 static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UINT16 *pSpriteTable, int min_y_ovrride, int max_y_ovrride)
 {
-	for (INT32 i = 0; i < 256; i++)
+    //for (INT32 i = 255; i > -1; i--) // this doesn't work w/luckywld (no sprites)
+    for (INT32 i=0;i<256;i++)
 	{
 		UINT16 which = pSpriteList16[i];
 		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i, min_y_ovrride, max_y_ovrride);
@@ -3308,24 +3314,15 @@ static void FinallapDrawBegin()
 	BurnTransferClear(0x4000);
 }
 
+//#define DRAW_LAYER_WRITE_2x_PRI 0x1000
+
 static void FinallapDrawLine(INT32 line)
 {
 	for (INT32 pri=0; pri < 16; pri++)
 	{
 		if ((pri&1) == 0)
 		{
-			draw_layer_line(line, pri/2);
-		}
-
-		if (nBurnLayer & 1) {
-			PUSH_Y();
-			c45RoadDraw(pri, min_y, max_y);
-			POP_Y();
-		}
-		if (nBurnLayer & 2) {
-			PUSH_Y();
-			draw_sprites(pri, gfx_ctrl);
-			POP_Y();
+			draw_layer_line(line, pri/2 | 0x1000);
 		}
 	}
 }
@@ -3346,13 +3343,12 @@ static INT32 FinallapDraw()
 		{
 			if ((pri&1) == 0)
 			{
-				draw_layer(pri/2);
+				draw_layer(pri/2 | 0x1000);
 			}
-
-			if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
-			if (nBurnLayer & 2) draw_sprites(pri, gfx_ctrl);
 		}
 	}
+	if (nBurnLayer & 1) c45RoadDraw(0, -1, -1);
+	if (nBurnLayer & 2) draw_sprites(0, gfx_ctrl, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3379,22 +3375,12 @@ static void LuckywldDrawLine(INT32 line)
 	{
 		if ((pri&1) == 0)
 		{
-			draw_layer_line(line, pri/2);
+			draw_layer_line(line, pri/2 | 0x1000); // 0x1000 = write pri*2 to priobuf
 		}
 
-		if (nBurnLayer & 1) {
-			PUSH_Y();
-			c45RoadDraw(pri, min_y, max_y);
-			POP_Y();
-		}
 		if (nBurnLayer & 2) {
 			PUSH_Y();
-			c169_roz_draw(pri, min_y, max_y);
-			POP_Y();
-		}
-		if (nBurnLayer & 4) {
-			PUSH_Y();
-			c355_obj_draw(pri, min_y, max_y);
+			c169_roz_draw(pri, min_y, max_y);     // guys in mirror
 			POP_Y();
 		}
 	}
@@ -3418,14 +3404,15 @@ static INT32 LuckywldDraw()
 		{
 			if ((pri&1) == 0)
 			{
-				draw_layer(pri/2);
+				draw_layer(pri/2 | 0x1000);
 			}
 
-			if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
 			if (nBurnLayer & 2) c169_roz_draw(pri, min_y, max_y);
-			if (nBurnLayer & 4) c355_obj_draw(pri, -1, -1);
 		}
 	}
+
+	if (nBurnLayer & 1) c45RoadDraw(0, -1, -1);
+	if (nBurnLayer & 4) c355_obj_draw(0, -1, -1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3449,10 +3436,10 @@ static INT32 Suzuka8hDraw()
 		{
 			draw_layer(pri/2);
 		}
-
-		if (nBurnLayer & 1) c45RoadDraw(pri, -1, -1);
-		if (nBurnLayer & 4) c355_obj_draw(pri, -1, -1);
 	}
+
+	if (nBurnLayer & 1) c45RoadDraw(0, -1, -1);
+	if (nBurnLayer & 4) c355_obj_draw(0, -1, -1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3476,13 +3463,13 @@ static INT32 MetlhawkDraw()
 	{
 		if ((pri&1) == 0)
 		{
-			draw_layer(pri/2);
+			draw_layer(pri/2 | 0x1000);
 		}
 
-		c169_roz_draw(pri, min_y, max_y);
+		if (nBurnLayer & 1) c169_roz_draw(pri, min_y, max_y);
 	}
 
-	draw_sprites_metalhawk(0);
+	if (nBurnLayer & 2) draw_sprites_metalhawk(0);
 
 	BurnTransferCopy(DrvPalette);
 

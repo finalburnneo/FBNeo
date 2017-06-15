@@ -329,6 +329,76 @@ int CreateDatfileWindows(int bType)
 	return create_datfile(szChoice, bType);
 }
 
+int CreateAllDatfilesWindows()
+{
+	INT32 nRet = 0;
+
+	LPMALLOC pMalloc = NULL;
+	BROWSEINFO bInfo;
+	ITEMIDLIST* pItemIDList = NULL;
+	TCHAR buffer[MAX_PATH];
+	TCHAR szFilename[MAX_PATH];
+	TCHAR szProgramString[25];	
+	
+	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
+	
+	SHGetMalloc(&pMalloc);
+
+	memset(&bInfo, 0, sizeof(bInfo));
+	bInfo.hwndOwner = hScrnWnd;
+	bInfo.pszDisplayName = buffer;
+	bInfo.lpszTitle = FBALoadStringEx(hAppInst, IDS_ROMS_SELECT_DIR, true);
+	bInfo.ulFlags = BIF_EDITBOX | BIF_RETURNONLYFSDIRS;
+
+	pItemIDList = SHBrowseForFolder(&bInfo);
+	
+	if (pItemIDList) {
+		if (SHGetPathFromIDList(pItemIDList, buffer)) {
+			int strLen = _tcslen(buffer);
+			if (strLen) {
+				if (buffer[strLen - 1] != _T('\\')) {
+					buffer[strLen]		= _T('\\');
+					buffer[strLen + 1]	= _T('\0');
+				}
+			}
+		}
+		pMalloc->Free(pItemIDList);
+	}
+	pMalloc->Release();
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(""));
+	create_datfile(szFilename, DAT_ARCADE_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Megadrive only"));
+	create_datfile(szFilename, DAT_MEGADRIVE_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", PC-Engine only"));
+	create_datfile(szFilename, DAT_PCENGINE_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", TurboGrafx16 only"));
+	create_datfile(szFilename, DAT_TG16_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", SuprGrafx only"));
+	create_datfile(szFilename, DAT_SGX_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Sega SG-1000 only"));
+	create_datfile(szFilename, DAT_SG1000_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", ColecoVision only"));
+	create_datfile(szFilename, DAT_COLECO_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Master System only"));
+	create_datfile(szFilename, DAT_MASTERSYSTEM_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Game Gear only"));
+	create_datfile(szFilename, DAT_GAMEGEAR_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", MSX 1 Games only"));
+	create_datfile(szFilename, DAT_MSX_ONLY);
+	
+	return nRet;
+}
+
 // Returns true if a VidInit is needed when the window is resized
 static bool VidInitNeeded()
 {
@@ -2095,6 +2165,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_MSX_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_MSX_ONLY);
+			}
+			break;
+			
+		case MENU_CLRMAME_PRO_ALL_DATS:
+			if (UseDialogs()) {
+				CreateAllDatfilesWindows();
 			}
 			break;
 

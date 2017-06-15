@@ -1209,8 +1209,9 @@ BEGIN
 			MENUITEM "Generate dat (Sega SG-1000 only)...",		MENU_CLRMAME_PRO_XML_SG1000_ONLY
 			MENUITEM "Generate dat (ColecoVision only)...",		MENU_CLRMAME_PRO_XML_COLECO_ONLY
 			MENUITEM "Generate dat (Master System only)...",	MENU_CLRMAME_PRO_XML_SMS_ONLY
-			MENUITEM "Generate dat (Game Gear only)...",	MENU_CLRMAME_PRO_XML_GG_ONLY
-			MENUITEM "Generate dat (MSX 1 Games only)...",	MENU_CLRMAME_PRO_XML_MSX_ONLY
+			MENUITEM "Generate dat (Game Gear only)...",		MENU_CLRMAME_PRO_XML_GG_ONLY
+			MENUITEM "Generate dat (MSX 1 Games only)...",		MENU_CLRMAME_PRO_XML_MSX_ONLY
+			MENUITEM "Generate all dats...",					MENU_CLRMAME_PRO_ALL_DATS
 	END
         MENUITEM SEPARATOR
         MENUITEM "Configure ROM paths...",				MENU_ROMDIRS

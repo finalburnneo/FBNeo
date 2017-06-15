@@ -648,6 +648,7 @@
 #define MENU_AVI3X							10726
 #define MENU_GEARSHIFT						10727
 #define MENU_FULLSCREEN_MONITOR				10728
+#define MENU_CLRMAME_PRO_ALL_DATS			10729
 
 #define MENU_BASIC_NORMAL          	    	11001
 #define MENU_BASIC_SCAN                	    11002

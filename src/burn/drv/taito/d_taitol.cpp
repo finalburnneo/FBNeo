@@ -3839,10 +3839,10 @@ struct BurnDriver BurnDrvKurikinta = {
 // Plotting (World set 1)
 
 static struct BurnRomInfo plottingRomDesc[] = {
-	{ "ic10",		0x10000, 0xbe240921, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "ic10",				0x10000, 0xbe240921, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "b96-07.ic9",		0x10000, 0x0713a387, 4 | BRF_GRA },           //  1 graphics data
-	{ "b96-08.ic8",		0x10000, 0x55b8e294, 4 | BRF_GRA },           //  2
+	{ "b96-07.ic9",			0x10000, 0x0713a387, 4 | BRF_GRA },           //  1 graphics data
+	{ "b96-08.ic8",			0x10000, 0x55b8e294, 4 | BRF_GRA },           //  2
 
 	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
 };
@@ -3864,10 +3864,10 @@ struct BurnDriver BurnDrvPlotting = {
 // Plotting (World set 2, protected)
 
 static struct BurnRomInfo plottingaRomDesc[] = {
-	{ "plot01.ic10",	0x10000, 0x5b30bc25, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "plot01.ic10",		0x10000, 0x5b30bc25, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "b96-02.ic9",		0x10000, 0x6e0bad2a, 4 | BRF_GRA },           //  1 graphics data
-	{ "b96-03.ic8",		0x10000, 0xfb5f3ca4, 4 | BRF_GRA },           //  2
+	{ "b96-02.ic9",			0x10000, 0x6e0bad2a, 4 | BRF_GRA },           //  1 graphics data
+	{ "b96-03.ic8",			0x10000, 0xfb5f3ca4, 4 | BRF_GRA },           //  2
 
 	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
 };
@@ -3889,10 +3889,10 @@ struct BurnDriver BurnDrvPlottinga = {
 // Plotting (World set 3, earliest version)
 
 static struct BurnRomInfo plottingbRomDesc[] = {
-	{ "b96-06.ic10",	0x10000, 0xf89a54b1, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b96-06.ic10",		0x10000, 0xf89a54b1, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "b96-02.ic9",		0x10000, 0x6e0bad2a, 4 | BRF_GRA },           //  1 graphics data
-	{ "b96-03.ic8",		0x10000, 0xfb5f3ca4, 4 | BRF_GRA },           //  2
+	{ "b96-02.ic9",			0x10000, 0x6e0bad2a, 4 | BRF_GRA },           //  1 graphics data
+	{ "b96-03.ic8",			0x10000, 0xfb5f3ca4, 4 | BRF_GRA },           //  2
 
 	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
 };
@@ -3939,10 +3939,10 @@ struct BurnDriver BurnDrvPlottingu = {
 // Flipull (Japan)
 
 static struct BurnRomInfo flipullRomDesc[] = {
-	{ "b96-01.ic10",	0x10000, 0x65993978, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "b96-01.ic10",		0x10000, 0x65993978, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "b96-07.ic9",		0x10000, 0x0713a387, 4 | BRF_GRA },           //  1 graphics data
-	{ "b96-08.ic8",		0x10000, 0x55b8e294, 4 | BRF_GRA },           //  2
+	{ "b96-07.ic9",			0x10000, 0x0713a387, 4 | BRF_GRA },           //  1 graphics data
+	{ "b96-08.ic8",			0x10000, 0x55b8e294, 4 | BRF_GRA },           //  2
 
 	{ "gal16v8-b86-04.bin",	0x00117, 0xbf8c0ea0, 0 | BRF_OPT },           //  3 plds
 };
@@ -4045,10 +4045,10 @@ struct BurnDriver BurnDrvPuzznicj = {
 // Puzznic (Italian bootleg)
 
 static struct BurnRomInfo puzzniciRomDesc[] = {
-	{ "1.ic11",		0x20000, 0x4612f5e0, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "1.ic11",			0x20000, 0x4612f5e0, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
 	{ "u10.ic10",		0x20000, 0x4264056c, 4 | BRF_GRA },           //  1 graphics data
-	{ "3.ic9",		0x20000, 0x2bf5232a, 4 | BRF_GRA },           //  2
+	{ "3.ic9",			0x20000, 0x2bf5232a, 4 | BRF_GRA },           //  2
 };
 
 STD_ROM_PICK(puzznici)
@@ -4093,8 +4093,8 @@ struct BurnDriver BurnDrvPuzznicb = {
 static struct BurnRomInfo puzznicbaRomDesc[] = {
 	{ "18.ic10",		0x20000, 0x8349eb3b, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "19.ic9",		0x20000, 0x4264056c, 4 | BRF_GRA },           //  1 graphics data
-	{ "20.ic8",		0x20000, 0x3c115f8b, 4 | BRF_GRA },           //  2
+	{ "19.ic9",			0x20000, 0x4264056c, 4 | BRF_GRA },           //  1 graphics data
+	{ "20.ic8",			0x20000, 0x3c115f8b, 4 | BRF_GRA },           //  2
 };
 
 STD_ROM_PICK(puzznicba)
@@ -4111,13 +4111,14 @@ struct BurnDriver BurnDrvPuzznicba = {
 };
 
 
-// Palamedes (Japan)
+// Palamedes (US)
+/* Prototype or location test?? - Line 5 of notice screen says "Territory" later sets say "Territories" */
 
 static struct BurnRomInfo palamedRomDesc[] = {
-	{ "c63.02",		0x20000, 0x55a82bb2, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "palamedes_prg_ic6.ic6",	0x20000, 0xee957b0e, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "c63.04",		0x20000, 0xc7bbe460, 4 | BRF_GRA },           //  1 graphics data
-	{ "c63.03",		0x20000, 0xfcd86e44, 4 | BRF_GRA },           //  2
+	{ "chr-l_ic9.ic9",			0x20000, 0xc7bbe460, 4 | BRF_GRA },           //  1 graphics data
+	{ "chr-h_ic7.ic7",			0x20000, 0xfcd86e44, 4 | BRF_GRA },           //  2
 };
 
 STD_ROM_PICK(palamed)
@@ -4125,7 +4126,7 @@ STD_ROM_FN(palamed)
 
 struct BurnDriver BurnDrvPalamed = {
 	"palamed", NULL, NULL, NULL, "1990",
-	"Palamedes (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Palamedes (US)\0", NULL, "Hot-B Co., Ltd.", "L-System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, palamedRomInfo, palamedRomName, NULL, NULL, PalamedInputInfo, PalamedDIPInfo,
@@ -4134,15 +4135,38 @@ struct BurnDriver BurnDrvPalamed = {
 };
 
 
+// Palamedes (Japan)
+
+static struct BurnRomInfo palamedjRomDesc[] = {
+	{ "c63-02.ic6",				0x20000, 0x55a82bb2, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+
+	{ "c63-04.ic9",				0x20000, 0xc7bbe460, 4 | BRF_GRA },           //  1 graphics data
+	{ "c63-03.ic7",				0x20000, 0xfcd86e44, 4 | BRF_GRA },           //  2
+};
+
+STD_ROM_PICK(palamedj)
+STD_ROM_FN(palamedj)
+
+struct BurnDriver BurnDrvPalamedj = {
+	"palamedj", "palamed", NULL, NULL, "1990",
+	"Palamedes (Japan)\0", NULL, "Taito Corporation", "L-System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
+	NULL, palamedjRomInfo, palamedjRomName, NULL, NULL, PalamedInputInfo, PalamedDIPInfo,
+	PalamedInit, DrvExit, Z80x1Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	320, 224, 4, 3
+};
+
+
 // Cachat (Japan)
 
 static struct BurnRomInfo cachatRomDesc[] = {
-	{ "cac6",		0x20000, 0x8105cf5f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "cac6",				0x20000, 0x8105cf5f, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "cac9",		0x20000, 0xbc462914, 4 | BRF_GRA },           //  1 graphics data
-	{ "cac10",		0x20000, 0xecc64b31, 4 | BRF_GRA },           //  2
-	{ "cac7",		0x20000, 0x7fb71578, 4 | BRF_GRA },           //  3
-	{ "cac8",		0x20000, 0xd2a63799, 4 | BRF_GRA },           //  4
+	{ "cac9",				0x20000, 0xbc462914, 4 | BRF_GRA },           //  1 graphics data
+	{ "cac10",				0x20000, 0xecc64b31, 4 | BRF_GRA },           //  2
+	{ "cac7",				0x20000, 0x7fb71578, 4 | BRF_GRA },           //  3
+	{ "cac8",				0x20000, 0xd2a63799, 4 | BRF_GRA },           //  4
 
 	{ "pal20l8b-c63-01.14",	0x00144, 0x14a7dd2a, 0 | BRF_OPT },           //  5 plds
 };
@@ -4167,7 +4191,7 @@ static struct BurnRomInfo cubybopRomDesc[] = {
 	{ "cb06.6",		0x40000, 0x66b89a85, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
 	{ "cb09.9",		0x40000, 0x5f831e59, 4 | BRF_GRA },           //  1 graphics data
-	{ "cb10.10",		0x40000, 0x430510fc, 4 | BRF_GRA },           //  2
+	{ "cb10.10",	0x40000, 0x430510fc, 4 | BRF_GRA },           //  2
 	{ "cb07.7",		0x40000, 0x3582de99, 4 | BRF_GRA },           //  3
 	{ "cb08.8",		0x40000, 0x09e18a51, 4 | BRF_GRA },           //  4
 };
@@ -4177,7 +4201,7 @@ STD_ROM_FN(cubybop)
 
 struct BurnDriver BurnDrvCubybop = {
 	"cubybop", NULL, NULL, NULL, "199?",
-	"Cuby Bop (location test)\0", NULL, "Hot-B", "L-System",
+	"Cuby Bop (location test)\0", NULL, "Hot-B Co., Ltd.", "L-System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, cubybopRomInfo, cubybopRomName, NULL, NULL, CubybopInputInfo, CubybopDIPInfo,
@@ -4189,10 +4213,10 @@ struct BurnDriver BurnDrvCubybop = {
 // Tube-It
 
 static struct BurnRomInfo tubeitRomDesc[] = {
-	{ "t-i_02.6",		0x20000, 0x54730669, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
+	{ "t-i_02.6",			0x20000, 0x54730669, 1 | BRF_PRG | BRF_ESS }, //  0 main z80 code
 
-	{ "t-i_04.9",		0x40000, 0xb4a6e31d, 4 | BRF_GRA },           //  1 graphics data
-	{ "t-i_03.7",		0x40000, 0xe1c3fed0, 4 | BRF_GRA },           //  2
+	{ "t-i_04.9",			0x40000, 0xb4a6e31d, 4 | BRF_GRA },           //  1 graphics data
+	{ "t-i_03.7",			0x40000, 0xe1c3fed0, 4 | BRF_GRA },           //  2
 
 	{ "pal20l8b-c63-01.14",	0x00144, 0x14a7dd2a, 0 | BRF_OPT },           //  3 plds
 };
@@ -4225,7 +4249,7 @@ STD_ROM_FN(plgirls)
 
 struct BurnDriver BurnDrvPlgirls = {
 	"plgirls", NULL, NULL, NULL, "1992",
-	"Play Girls\0", NULL, "Hot-B", "L-System",
+	"Play Girls\0", NULL, "Hot-B Co., Ltd.", "L-System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, plgirlsRomInfo, plgirlsRomName, NULL, NULL, PlgirlsInputInfo, PlgirlsDIPInfo,
@@ -4273,7 +4297,7 @@ STD_ROM_FN(plgirls2)
 
 struct BurnDriver BurnDrvPlgirls2 = {
 	"plgirls2", NULL, NULL, NULL, "1993",
-	"Play Girls 2\0", NULL, "Hot-B", "L-System",
+	"Play Girls 2\0", NULL, "Hot-B Co., Ltd.", "L-System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, plgirls2RomInfo, plgirls2RomName, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,

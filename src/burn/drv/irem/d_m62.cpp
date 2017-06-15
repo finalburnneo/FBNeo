@@ -5157,7 +5157,7 @@ struct BurnDriver BurnDrvSpelunkrj = {
 
 struct BurnDriver BurnDrvSpelunk2 = {
 	"spelunk2", NULL, NULL, "tr606drumkit", "1986",
-	"Spelunker II\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
+	"Spelunker II - 23 no Kagi (Japan)\0", NULL, "Irem (licensed from Broderbund)", "Irem M62",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_PLATFORM, 0,
 	NULL, Spelunk2RomInfo, Spelunk2RomName, M62SampleInfo, M62SampleName, M62InputInfo, Spelunk2DIPInfo,

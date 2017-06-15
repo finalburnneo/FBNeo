@@ -14298,12 +14298,12 @@ struct BurnDriver BurnDrvkf2k4pls = {
 
 // The King of Fighters '95 (Special 2017)
 // Modified by: GSC2007	
-// Version number: Ver 1.0.0607 
+// Version number: Ver 1.0.0613 
 
 static struct BurnRomInfo kof95spRomDesc[] = {
-	{ "084-p1sp.p1",  0x100000, 0x54f7316a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
+	{ "084-p1sp.p1",  0x100000, 0x1dea5b42, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			
 	{ "084-p2sp.p2",  0x100000, 0x5cb1af9e, 1 | BRF_ESS | BRF_PRG }, //  1			
-	{ "084-p3sp.p3",  0x020000, 0xed123ab4, 1 | BRF_ESS | BRF_PRG }, //  2			
+	{ "084-p3sp.p3",  0x020000, 0x46db6f4a, 1 | BRF_ESS | BRF_PRG }, //  2			
 
 	{ "084-s1sp.s1",  0x020000, 0x83cbae60, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
 

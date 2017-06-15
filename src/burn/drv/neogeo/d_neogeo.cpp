@@ -13670,9 +13670,10 @@ static INT32 DoubledrspInit()
 			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
 		}
 
-		rom[0x1f3a8] = 0x2b7c; // 4ef9
-		rom[0x1f3a9] = 0x0003; // 0090
-		rom[0x1f3aa] = 0xe7fa; // 16be
+		rom[0xbff2] = 0x2b7c; // 4ef9
+		rom[0xbff3] = 0x0001; // 0091
+		rom[0xbff4] = 0x7fee; // 0206
+		rom[0xbff5] = 0xa26a; // 4e7d
 
         	SekOpen(0);
         	SekMapMemory(doubledrspExtraROM, 0x900000, 0x91ffff, MAP_ROM);

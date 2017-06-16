@@ -1,31 +1,28 @@
-// new todo:
-// c169: make respect min/max_x for clipping
-
 // FB Alpha Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
 // Todo:
 //   3: (lowprio) Make single-joy hack for Assault with fake-dip for normal or single mode.
 
-//tested good:
-// assault	- good
-// burnforc	- good
-// cosmogng	- good
-// dsaber	- good
-// mirninja	- good
-// valkyrie	- good
-// ordyne	- good
-// phelious	- good
-// rthun2	- good
-// marvland	- good
-// metlhawk - good
+//tested: old code|june.15 version
+// assault	- good good
+// burnforc	- good tested good
+// cosmogng	- good tested good
+// dsaber	- good tested good
+// mirninja	- good tested good (yea! awesome game!)
+// valkyrie	- good tested good
+// ordyne	- good tested good
+// phelious	- good tested good
+// rthun2	- good tested good
+// marvland	- good tested good
+// metlhawk - good tested good
 // kyukaidk	- good (baseball)
 // sws & clones	- good (baseball)
-// sgunner  - good
-// sgunner2	- good (needs old mcu)
-// dirtfoxj	- good
-// finehour	- good
-// luckywld	- good (finally!)
+// sgunner  - good tested good
+// sgunner2	- good (needs old mcu) tested good
+// dirtfoxj	- good tested good
+// finehour	- good tested good
+// luckywld	- good tested good
 
 //eek.
 // bubbletr	- ok, missing artwork (flipped)
@@ -43,7 +40,8 @@
 //vbl@240 sgunner2 attract mode before title screen, when its drawing the '2',
 //        it will flicker a frame (w/wrong palette) from previous scene.
 //        dsaber: all tmap glitches fixed with 240+16.
-//        dirtfoxj needs 240+8 otherwise sprite glitches
+//        dirtfoxj, cosmogng, rthun2, phelios needs 240+8 otherwise sprite glitches
+//vbl@224 rthun2 needs vbl@224 or flickery explosion in intro is wrong, also signs/sprites flicker sometimes when they shouldn't
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -153,7 +151,7 @@ static INT32 is_finehour = 0;
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
 
-static INT32 long_vbl = 0;
+static INT32 weird_vbl = 0;
 
 static INT32 nvramcheck = 0; // nvram init: 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
 
@@ -689,6 +687,8 @@ static void __fastcall namcos2_68k_write_byte(UINT32 address, UINT8 data)
 		DrvDPRAM[(address & 0xffe)/2] = data;
 		return;
 	}
+
+	if (address == 0x0074) return; // NOP (phelios writes here in-game)
 
 	bprintf (0, _T("WB: %5.5x, %2.2x\n"),address,data);
 }
@@ -1771,6 +1771,8 @@ static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_rea
 	uses_gun = 1;
 	BurnGunInit(2, false);
 
+	weird_vbl = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -1882,8 +1884,6 @@ static INT32 LuckywldInit()
 	GenericTilesInit();
 
 	is_luckywld = 1;
-
-	long_vbl = 1;
 
 	uses_gun = 1;
 	BurnGunInit(2, false);
@@ -2012,8 +2012,6 @@ static INT32 MetlhawkInit()
 
 	GenericTilesInit();
 
-	long_vbl = 1;
-
 	DrvDoReset();
 
 	return 0;
@@ -2135,8 +2133,6 @@ static INT32 FourtraxInit()
 	pDrvDrawBegin = FinallapDrawBegin;
 	pDrvDrawLine = FinallapDrawLine;
 
-	long_vbl = 1;
-
 	return 0;
 }
 
@@ -2171,7 +2167,7 @@ static INT32 Namcos2Exit()
 	is_finehour = 0;
 	is_luckywld = 0;
 
-	long_vbl = 0;
+	weird_vbl = 0;
 
 	return 0;
 }
@@ -2579,7 +2575,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 												dest[x] = c|color;
 												break;
 											}
-											pri[x] = (priority & 0x100) ? priority & 0xf : 0x80;
+											pri[x] = priority & 0xf; //(priority & 0x100) ? priority & 0xf : 0x80;
 										}
 									}
 									x_index += dx;
@@ -2603,7 +2599,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 											{
 												dest[x] = c | color;
 											}
-											pri[x] = (priority & 0x100) ? priority & 0xf : 0x80;
+											pri[x] = priority & 0xf; //(priority & 0x100) ? priority & 0xf : 0x80;
 										}
 									}
 									x_index += dx;
@@ -2693,7 +2689,7 @@ static void draw_sprites_metalhawk()
 				sprn >>= 2;
 			}
 
-			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf) | 0x100);
+			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf));
 		}
 //		pSource -= 8;
 		pSource += 8;
@@ -2759,7 +2755,7 @@ struct roz_param
 	INT32 wrap;
 };
 
-static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 destx, INT32 desty, INT32 srcx, INT32 srcy, INT32 width, INT32 height, UINT32 size_mask)
+static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 destx, INT32 desty, INT32 srcx, INT32 srcy, INT32 width, INT32 height, UINT32 size_mask, INT32 pri)
 {
 	INT32 desty_end = desty + height;
 
@@ -2793,7 +2789,13 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 
 			}
 
 			INT32 pxl = roz_bitmap[(ypos * 256 * 8) + xpos];
-			if (pxl != 0xff) *dest = pxl + rozInfo->color;
+
+			if (pxl != 0xff)
+			{
+				*dest = pxl + rozInfo->color;
+				*prio = pri;
+			}
+
 			srcx += rozInfo->incxx;
 			srcy += rozInfo->incxy;
 			dest++;
@@ -2807,7 +2809,7 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 
 	}
 }
 
-static void draw_roz_helper(const struct roz_param *rozInfo )
+static void draw_roz_helper(const struct roz_param *rozInfo, INT32 pri)
 {
 	{
 
@@ -2846,7 +2848,7 @@ static void draw_roz_helper(const struct roz_param *rozInfo )
 			for (j = 0; j < column_block_count; j++)
 			{
 				draw_roz_helper_block(rozInfo, dx, desty, sx, sy, ROZ_BLOCK_SIZE,
-					ROZ_BLOCK_SIZE, size_mask);
+					ROZ_BLOCK_SIZE, size_mask, pri);
 				// Increment to the next block column
 				sx += row_block_size_incxx;
 				sy += row_block_size_incxy;
@@ -2856,7 +2858,7 @@ static void draw_roz_helper(const struct roz_param *rozInfo )
 			if (column_extra_count)
 			{
 				draw_roz_helper_block(rozInfo, dx, desty, sx, sy, column_extra_count,
-					ROZ_BLOCK_SIZE,size_mask);
+					ROZ_BLOCK_SIZE,size_mask, pri);
 			}
 			// Increment to the next row block
 			srcx += row_block_size_incyx;
@@ -2870,7 +2872,7 @@ static void draw_roz_helper(const struct roz_param *rozInfo )
 			for (i = 0; i < column_block_count; i++)
 			{
 				draw_roz_helper_block(rozInfo, destx, desty, srcx, srcy, ROZ_BLOCK_SIZE,
-					row_extra_count, size_mask);
+					row_extra_count, size_mask, pri);
 				srcx += row_block_size_incxx;
 				srcy += row_block_size_incxy;
 				destx += ROZ_BLOCK_SIZE;
@@ -2879,18 +2881,18 @@ static void draw_roz_helper(const struct roz_param *rozInfo )
 			if (column_extra_count)
 			{
 				draw_roz_helper_block(rozInfo, destx, desty, srcx, srcy, column_extra_count,
-					row_extra_count, size_mask);
+					row_extra_count, size_mask, pri);
 			}
 		}
 	}
 }
 
-static void draw_roz()
+static void draw_roz(INT32 pri)
 {
 	const INT32 xoffset = 38,yoffset = 0;
 	struct roz_param rozParam;
 
-	UINT16 *m_roz_ctrl = (UINT16*)DrvRozCtrl; 
+	UINT16 *m_roz_ctrl = (UINT16*)DrvRozCtrl;
 
 	rozParam.color = (gfx_ctrl & 0x0f00);
 	rozParam.incxx  = (INT16)m_roz_ctrl[0];
@@ -2933,52 +2935,46 @@ static void draw_roz()
 	rozParam.incyx<<=8;
 	rozParam.incyy<<=8;
 
-	draw_roz_helper(&rozParam );
+	draw_roz_helper(&rozParam, pri);
 }
 
 
-static void draw_sprites(INT32 pri, INT32 control, INT32 halfpri)
+static void draw_sprites(INT32 control)
 {
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 	INT32 offset = (control & 0x000f) * (128*4);
-	INT32 loop;
-	if( pri==0 )
-	{
-		//screen.priority().fill(0, cliprect );
-	}
-//	for( loop=0; loop <128; loop++ )
-	for (loop = 127; loop >= 0; loop--)
+
+	for (INT32 loop=0; loop < 128; loop++)
 	{
 		INT32 word3 = m_spriteram[offset+(loop*4)+3];
-	//	if( (word3&0xf)==pri )
+		INT32 priority = word3 & 0xf;
+
+		INT32 word0 = m_spriteram[offset+(loop*4)+0];
+		INT32 word1 = m_spriteram[offset+(loop*4)+1];
+		INT32 offset4 = m_spriteram[offset+(loop*4)+2];
+
+		INT32 sizey=((word0>>10)&0x3f)+1;
+		INT32 sizex=(word3>>10)&0x3f;
+
+		if((word0&0x0200)==0) sizex>>=1;
+
+		if((sizey-1) && sizex )
 		{
-			INT32 word0 = m_spriteram[offset+(loop*4)+0];
-			INT32 word1 = m_spriteram[offset+(loop*4)+1];
-			INT32 offset4 = m_spriteram[offset+(loop*4)+2];
-
-			INT32 sizey=((word0>>10)&0x3f)+1;
-			INT32 sizex=(word3>>10)&0x3f;
-
-			if((word0&0x0200)==0) sizex>>=1;
-
-			if((sizey-1) && sizex )
+			INT32 color  = (word3>>4)&0x000f;
+			INT32 code   = word1 & 0x3fff;
+			INT32 ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
+			INT32 xpos   = (offset4&0x03ff)-0x50+0x07;
+			INT32 flipy  = word1&0x8000;
+			INT32 flipx  = word1&0x4000;
+			INT32 scalex = (sizex<<16)/((word0&0x0200)?0x20:0x10);
+			INT32 scaley = (sizey<<16)/((word0&0x0200)?0x20:0x10);
+			if(scalex && scaley)
 			{
-				INT32 color  = (word3>>4)&0x000f;
-				INT32 code   = word1 & 0x3fff;
-				INT32 ypos   = (0x1ff-(word0&0x01ff))-0x50+0x02;
-				INT32 xpos   = (offset4&0x03ff)-0x50+0x07;
-				INT32 flipy  = word1&0x8000;
-				INT32 flipx  = word1&0x4000;
-				INT32 scalex = (sizex<<16)/((word0&0x0200)?0x20:0x10);
-				INT32 scaley = (sizey<<16)/((word0&0x0200)?0x20:0x10);
-				if(scalex && scaley)
-				{
-					INT32 size = (word0 >> 9) & 1; // 1 = 32x32, 0 = 16x16
+				INT32 size = (word0 >> 9) & 1; // 1 = 32x32, 0 = 16x16
 
-					if (size == 1) code >>= 2;
+				if (size == 1) code >>= 2;
 
-					zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, (halfpri) ? (word3&0xf)/2 : (word3&0xf)/*loop*/ );
-				}
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, priority);
 			}
 		}
 	}
@@ -3012,7 +3008,7 @@ static void DrvDrawLine(INT32 line)
 		{
 			if (roz_enable) {
 				PUSH_Y();
-				if (nBurnLayer & 1) draw_roz();
+				if (nBurnLayer & 1) draw_roz(pri);
 				POP_Y();
 			}
 		}
@@ -3042,13 +3038,13 @@ static INT32 DrvDraw()
 			if (((gfx_ctrl & 0x7000) >> 12) == pri)
 			{
 				if (roz_enable) {
-					draw_roz();
+					if (nBurnLayer & 1) draw_roz(pri);
 				}
 			}
 		}
 	}
 
-	draw_sprites(0, gfx_ctrl, 0);
+	if (nBurnLayer & 2) draw_sprites(gfx_ctrl);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3219,7 +3215,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 			{
 				INT32 size = 0;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, 0x100 | (pri) );
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, pri);
 			}
 			if( !flipx )
 			{
@@ -3330,7 +3326,7 @@ static INT32 FinallapDraw()
 		}
 	}
 	if (nBurnLayer & 1) c45RoadDraw();
-	if (nBurnLayer & 2) draw_sprites(0, gfx_ctrl, 0);
+	if (nBurnLayer & 2) draw_sprites(gfx_ctrl);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3488,7 +3484,12 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[4] = { (INT32)((double)12288000 / 60.606061), (INT32)((double)12288000 / 60.606061), (INT32)((double)2048000 / 60.606061), (INT32)((double)2048000 / 1 / 60.606061) };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
-	INT32 vbloffs = (long_vbl) ? 8 : 16;
+	INT32 vbloffs = 8;
+
+	switch (weird_vbl) {
+		case 1: vbloffs = 16; break;
+		case 2: vbloffs = -16; break;
+	}
 
 	M6809Open(0);
 	m6805Open(0);
@@ -4618,6 +4619,8 @@ static UINT16 rthun2_key_read(UINT8 offset)
 
 static INT32 Rthun2Init()
 {
+	weird_vbl = 2;
+
 	return Namcos2Init(rthun2_key_write, rthun2_key_read);
 }
 
@@ -4731,6 +4734,8 @@ static UINT16 dsaber_key_read(UINT8 offset)
 
 static INT32 DsaberInit()
 {
+	weird_vbl = 1;
+
 	return Namcos2Init(NULL, dsaber_key_read);
 }
 
@@ -5702,7 +5707,6 @@ static UINT16 dirtfoxj_key_read(UINT8 offset)
 static INT32 DirtfoxjInit()
 {
 	is_dirtfoxj = 1;
-	long_vbl = 1;
 
 	INT32 rc = Namcos2Init(NULL, dirtfoxj_key_read);
 

@@ -1,15 +1,11 @@
 // new todo:
 // c169: make respect min/max_x for clipping
-// finallap title tiles broken
 
 // FB Alpha Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
 // Todo:
 //   3: (lowprio) Make single-joy hack for Assault with fake-dip for normal or single mode.
-// xx final lap inputs
-// x2 fourtrax timing flashy stuff
-// x3 fourtrax missing lines in linedraw c45 (on hills)
 
 //tested good:
 // assault	- good
@@ -35,12 +31,12 @@
 // bubbletr	- ok, missing artwork (flipped)
 // gollygho	- ok, missing artwork (flipped)
 //
-// finallap	- some bad gfx (sprites), bad sound
-// finalap2	- bad sound
-// finalap3	- bad sound
-// fourtrax	- bad fps(18?), bad sound, road layer bad priorites??
-// suzuk8h	-
-// suzuk8h2	-
+// finallap	- some bad gfx (title sprites), bad sound, no inputs
+// finalap2	- "...all finallap-based games (incl. fourtrax & suzuka) are bugged and unplayable, even in mame"
+// finalap3	- ""
+// fourtrax	- ""
+// suzuk8h	- ""
+// suzuk8h2	- ""
 
 //-timing notes- 240+16 fixes both
 //vbl@240 sgunner after coin up, add more coins and coins# flickers
@@ -2016,6 +2012,8 @@ static INT32 MetlhawkInit()
 
 	GenericTilesInit();
 
+	long_vbl = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -2482,7 +2480,7 @@ static void predraw_roz_layer()
 	roz_update_tiles = 0;
 }
 
-static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 zpos)
+static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 priority)
 {
 	if (!scalex || !scaley) return;
 
@@ -2562,14 +2560,14 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 							INT32 x, x_index = x_index_base;
 							if( 0 ) //m_c355_obj_palxor ) // iq_132
 							{
-								for( x=sx; x<ex; x++ )
+								for (x = sx; x < ex; x++)
 								{
 									INT32 c = source[x_index>>16];
-									if( c != 0xff )
+									if (c != 0xff)
 									{
-										if( pri[x]<=(zpos&0xf) )
+										if (pri[x] <= (priority & 0xf))
 										{
-											switch( c )
+											switch (c)
 											{
 											case 0:
 												dest[x] = 0x4000|(dest[x]&0x1fff);
@@ -2581,7 +2579,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 												dest[x] = c|color;
 												break;
 											}
-											pri[x] = zpos;
+											pri[x] = (priority & 0x100) ? priority & 0xf : 0x80;
 										}
 									}
 									x_index += dx;
@@ -2590,14 +2588,14 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 							}
 							else
 							{
-								for( x=sx; x<ex; x++ )
+								for (x = sx; x < ex; x++)
 								{
 									INT32 c = source[x_index>>16];
-									if( c != 0xff )
+									if (c != 0xff)
 									{
-										if( pri[x] <= (zpos&0xf) )
+										if (pri[x] <= (priority & 0xf))
 										{
-											if( color == 0xf00 && c==0xfe )
+											if (color == 0xf00 && c==0xfe)
 											{
 												dest[x] |= shadow_offset;
 											}
@@ -2605,7 +2603,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 											{
 												dest[x] = c | color;
 											}
-											pri[x] = (zpos & 0x100) ? zpos&0xf : 0x80; //0x80; //zpos;
+											pri[x] = (priority & 0x100) ? priority & 0xf : 0x80;
 										}
 									}
 									x_index += dx;
@@ -2620,7 +2618,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 	}
 } /* zdrawgfxzoom */
 
-static void draw_sprites_metalhawk(INT32 )
+static void draw_sprites_metalhawk()
 {
 	const UINT16 *pSource = (UINT16*)DrvSprRAM;
 
@@ -2695,7 +2693,7 @@ static void draw_sprites_metalhawk(INT32 )
 				sprn >>= 2;
 			}
 
-			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx,flipy, sx, sy, scalex, scaley, attrs&0xf );
+			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf) | 0x100);
 		}
 //		pSource -= 8;
 		pSource += 8;
@@ -3041,7 +3039,7 @@ static INT32 DrvDraw()
 		{
 			draw_layer(pri);
 
-			if (((gfx_ctrl & 0x7000) >> 12) == pri )
+			if (((gfx_ctrl & 0x7000) >> 12) == pri)
 			{
 				if (roz_enable) {
 					draw_roz();
@@ -3057,7 +3055,7 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, int min_y_ovrride, int max_y_ovrride)
+static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 {
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM; //m_c355_obj_ram;
 	unsigned screen_height_remaining, screen_width_remaining;
@@ -3084,17 +3082,16 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 
 	INT32 xscroll, yscroll;
 
+	INT32 pri;
+
 	/**
 	 * ----xxxx-------- window select
 	 * --------xxxx---- priority
 	 * ------------xxxx palette select
 	 */
-	palette = pSource[6];
-	/*if( pri != ((palette>>4)&0xf) )
-	{
-		return;
-		} */
-	pri = (palette>>4)&0xf;
+	palette     = pSource[6];
+
+	pri         = (palette >> 4) & 0xf; // priority
 
 	linkno      = pSource[0]; /* LINKNO */
 	offset      = pSource[1]; /* OFFSET */
@@ -3105,7 +3102,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 	/* pSource[6] contains priority/palette */
 	/* pSource[7] is used in Lucky & Wild, possibly for sprite-road priority */
 
-	if( linkno*4>=0x4000/2 ) return; /* avoid garbage memory reads */
+	if (linkno*4>=0x4000/2) return; /* avoid garbage memory reads */
 
 	xscroll = (INT16)c355_obj_position[1];
 	yscroll = (INT16)c355_obj_position[0];
@@ -3152,19 +3149,6 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 	if (max_x > oldmax_x) max_x = oldmax_x;
 	if (min_y < oldmin_y) min_y = oldmin_y;
 	if (max_y > oldmax_y) max_y = oldmax_y;
-
-	if (min_y_ovrride != -1 && max_y_ovrride != -1) {
-		if (min_y < min_y_ovrride) min_y = min_y_ovrride;
-
-		if (max_y > max_y_ovrride) max_y = max_y_ovrride;
-		/*if (min_y <= min_y_ovrride && max_y >= max_y_ovrride) {
-			min_y = min_y_ovrride;
-			max_y = max_y_ovrride;
-		} else {
-			min_y = 0;
-			max_y = 0;
-		}*/
-	}
 
 	hpos&=0x7ff; if( hpos&0x400 ) hpos |= ~0x7ff; /* sign extend */
 	vpos&=0x7ff; if( vpos&0x400 ) vpos |= ~0x7ff; /* sign extend */
@@ -3255,25 +3239,22 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos, i
 	POP_XY();
 }
 
-static void c355_obj_draw_list(INT32 pri, const UINT16 *pSpriteList16, const UINT16 *pSpriteTable, int min_y_ovrride, int max_y_ovrride)
+static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
 {
-    //for (INT32 i = 255; i > -1; i--) // this doesn't work w/luckywld (no sprites)
-    for (INT32 i=0;i<256;i++)
+    for (INT32 i = 0; i < 256; i++)
 	{
 		UINT16 which = pSpriteList16[i];
-		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i, min_y_ovrride, max_y_ovrride);
+		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], i);
 		if (which&0x100) break;
 	}
 }
 
-static void c355_obj_draw(INT32 pri, int min_y_ovrride, int max_y_ovrride)
+static void c355_obj_draw()
 {
-	//if (pri == 0) BurnPrioClear();
-
 	UINT16 *m_c355_obj_ram = (UINT16*)DrvSprRAM;
 
-	c355_obj_draw_list(pri, &m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2], min_y_ovrride, max_y_ovrride);
-	c355_obj_draw_list(pri, &m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2], min_y_ovrride, max_y_ovrride);
+	c355_obj_draw_list(&m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2]);
+	c355_obj_draw_list(&m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2]);
 }
 
 static INT32 SgunnerDraw()
@@ -3290,8 +3271,9 @@ static INT32 SgunnerDraw()
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
 		draw_layer(pri);
-		c355_obj_draw(pri, -1, -1);
 	}
+
+	c355_obj_draw();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3347,7 +3329,7 @@ static INT32 FinallapDraw()
 			}
 		}
 	}
-	if (nBurnLayer & 1) c45RoadDraw(0, -1, -1);
+	if (nBurnLayer & 1) c45RoadDraw();
 	if (nBurnLayer & 2) draw_sprites(0, gfx_ctrl, 0);
 
 	BurnTransferCopy(DrvPalette);
@@ -3371,18 +3353,14 @@ static void LuckywldDrawBegin()
 
 static void LuckywldDrawLine(INT32 line)
 {
-	for (INT32 pri=0; pri < 16; pri++)
+	for (INT32 pri = 0; pri < 16; pri++)
 	{
 		if ((pri&1) == 0)
 		{
 			draw_layer_line(line, pri/2 | 0x1000); // 0x1000 = write pri*2 to priobuf
 		}
 
-		if (nBurnLayer & 2) {
-			PUSH_Y();
-			c169_roz_draw(pri, min_y, max_y);     // guys in mirror
-			POP_Y();
-		}
+		if (nBurnLayer & 2) c169_roz_draw(pri, line); // guys in mirror
 	}
 }
 
@@ -3407,12 +3385,12 @@ static INT32 LuckywldDraw()
 				draw_layer(pri/2 | 0x1000);
 			}
 
-			if (nBurnLayer & 2) c169_roz_draw(pri, min_y, max_y);
+			if (nBurnLayer & 2) c169_roz_draw(pri, -1);
 		}
 	}
 
-	if (nBurnLayer & 1) c45RoadDraw(0, -1, -1);
-	if (nBurnLayer & 4) c355_obj_draw(0, -1, -1);
+	if (nBurnLayer & 1) c45RoadDraw();
+	if (nBurnLayer & 4) c355_obj_draw();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3438,8 +3416,8 @@ static INT32 Suzuka8hDraw()
 		}
 	}
 
-	if (nBurnLayer & 1) c45RoadDraw(0, -1, -1);
-	if (nBurnLayer & 4) c355_obj_draw(0, -1, -1);
+	if (nBurnLayer & 1) c45RoadDraw();
+	if (nBurnLayer & 4) c355_obj_draw();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3466,10 +3444,10 @@ static INT32 MetlhawkDraw()
 			draw_layer(pri/2 | 0x1000);
 		}
 
-		if (nBurnLayer & 1) c169_roz_draw(pri, min_y, max_y);
+		if (nBurnLayer & 1) c169_roz_draw(pri, -1);
 	}
 
-	if (nBurnLayer & 2) draw_sprites_metalhawk(0);
+	if (nBurnLayer & 2) draw_sprites_metalhawk();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -6246,9 +6224,9 @@ static INT32 Suzuka8hInit()
 	return nRet;
 }
 
-struct BurnDriver BurnDrvSuzuka8h = {
+struct BurnDriverD BurnDrvSuzuka8h = {
 	"suzuka8h", NULL, NULL, NULL, "1992",
-	"Suzuka 8 Hours (World, Rev C)\0", NULL, "Namco", "System 2",
+	"Suzuka 8 Hours (World, Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuka8hRomInfo, suzuka8hRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
@@ -6299,9 +6277,9 @@ static struct BurnRomInfo suzuka8hjRomDesc[] = {
 STD_ROM_PICK(suzuka8hj)
 STD_ROM_FN(suzuka8hj)
 
-struct BurnDriver BurnDrvSuzuka8hj = {
+struct BurnDriverD BurnDrvSuzuka8hj = {
 	"suzuka8hj", "suzuka8h", NULL, NULL, "1992",
-	"Suzuka 8 Hours (Japan, Rev B)\0", NULL, "Namco", "System 2",
+	"Suzuka 8 Hours (Japan, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuka8hjRomInfo, suzuka8hjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
@@ -6374,9 +6352,9 @@ static INT32 Suzuka8h2Init()
 	return Suzuka8hCommonInit(NULL, suzuka8h2_key_read);
 }
 
-struct BurnDriver BurnDrvSuzuk8h2 = {
+struct BurnDriverD BurnDrvSuzuk8h2 = {
 	"suzuk8h2", NULL, NULL, NULL, "1993",
-	"Suzuka 8 Hours 2 (World, Rev B)\0", NULL, "Namco", "System 2",
+	"Suzuka 8 Hours 2 (World, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuk8h2RomInfo, suzuk8h2RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
@@ -6433,9 +6411,9 @@ static struct BurnRomInfo suzuk8h2jRomDesc[] = {
 STD_ROM_PICK(suzuk8h2j)
 STD_ROM_FN(suzuk8h2j)
 
-struct BurnDriver BurnDrvSuzuk8h2j = {
+struct BurnDriverD BurnDrvSuzuk8h2j = {
 	"suzuk8h2j", "suzuk8h2", NULL, NULL, "1993",
-	"Suzuka 8 Hours 2 (Japan, Rev B)\0", NULL, "Namco", "System 2",
+	"Suzuka 8 Hours 2 (Japan, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuk8h2jRomInfo, suzuk8h2jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
@@ -6482,9 +6460,9 @@ static struct BurnRomInfo finallapRomDesc[] = {
 STD_ROM_PICK(finallap)
 STD_ROM_FN(finallap)
 
-struct BurnDriver BurnDrvFinallap = {
+struct BurnDriverD BurnDrvFinallap = {
 	"finallap", NULL, NULL, NULL, "1987",
-	"Final Lap (Rev E)\0", NULL, "Namco", "System 2",
+	"Final Lap (Rev E)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapRomInfo, finallapRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
@@ -6531,9 +6509,9 @@ static struct BurnRomInfo finallapdRomDesc[] = {
 STD_ROM_PICK(finallapd)
 STD_ROM_FN(finallapd)
 
-struct BurnDriver BurnDrvFinallapd = {
+struct BurnDriverD BurnDrvFinallapd = {
 	"finallapd", "finallap", NULL, NULL, "1987",
-	"Final Lap (Rev D)\0", NULL, "Namco", "System 2",
+	"Final Lap (Rev D)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapdRomInfo, finallapdRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
@@ -6580,9 +6558,9 @@ static struct BurnRomInfo finallapcRomDesc[] = {
 STD_ROM_PICK(finallapc)
 STD_ROM_FN(finallapc)
 
-struct BurnDriver BurnDrvFinallapc = {
+struct BurnDriverD BurnDrvFinallapc = {
 	"finallapc", "finallap", NULL, NULL, "1987",
-	"Final Lap (Rev C)\0", NULL, "Namco", "System 2",
+	"Final Lap (Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapcRomInfo, finallapcRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
@@ -6629,9 +6607,9 @@ static struct BurnRomInfo finallapjcRomDesc[] = {
 STD_ROM_PICK(finallapjc)
 STD_ROM_FN(finallapjc)
 
-struct BurnDriver BurnDrvFinallapjc = {
+struct BurnDriverD BurnDrvFinallapjc = {
 	"finallapjc", "finallap", NULL, NULL, "1987",
-	"Final Lap (Japan, Rev C)\0", NULL, "Namco", "System 2",
+	"Final Lap (Japan, Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapjcRomInfo, finallapjcRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
@@ -6678,9 +6656,9 @@ static struct BurnRomInfo finallapjbRomDesc[] = {
 STD_ROM_PICK(finallapjb)
 STD_ROM_FN(finallapjb)
 
-struct BurnDriver BurnDrvFinallapjb = {
+struct BurnDriverD BurnDrvFinallapjb = {
 	"finallapjb", "finallap", NULL, NULL, "1987",
-	"Final Lap (Japan, Rev B)\0", NULL, "Namco", "System 2",
+	"Final Lap (Japan, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapjbRomInfo, finallapjbRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
@@ -6737,9 +6715,9 @@ static struct BurnRomInfo finalap2RomDesc[] = {
 STD_ROM_PICK(finalap2)
 STD_ROM_FN(finalap2)
 
-struct BurnDriver BurnDrvFinalap2 = {
+struct BurnDriverD BurnDrvFinalap2 = {
 	"finalap2", NULL, NULL, NULL, "1990",
-	"Final Lap 2\0", NULL, "Namco", "System 2",
+	"Final Lap 2\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap2RomInfo, finalap2RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinalapInputInfo, FinallapDIPInfo,
@@ -6796,9 +6774,9 @@ static struct BurnRomInfo finalap2jRomDesc[] = {
 STD_ROM_PICK(finalap2j)
 STD_ROM_FN(finalap2j)
 
-struct BurnDriver BurnDrvFinalap2j = {
+struct BurnDriverD BurnDrvFinalap2j = {
 	"finalap2j", "finalap2", NULL, NULL, "1990",
-	"Final Lap 2 (Japan)\0", NULL, "Namco", "System 2",
+	"Final Lap 2 (Japan)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap2jRomInfo, finalap2jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinalapInputInfo, FinallapDIPInfo,
@@ -6857,9 +6835,9 @@ static struct BurnRomInfo finalap3RomDesc[] = {
 STD_ROM_PICK(finalap3)
 STD_ROM_FN(finalap3)
 
-struct BurnDriver BurnDrvFinalap3 = {
+struct BurnDriverD BurnDrvFinalap3 = {
 	"finalap3", NULL, NULL, NULL, "1992",
-	"Final Lap 3 (World, set 1)\0", NULL, "Namco", "System 2",
+	"Final Lap 3 (World, set 1)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3RomInfo, finalap3RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinalapInputInfo, FinallapDIPInfo,
@@ -6920,9 +6898,9 @@ static struct BurnRomInfo finalap3aRomDesc[] = {
 STD_ROM_PICK(finalap3a)
 STD_ROM_FN(finalap3a)
 
-struct BurnDriver BurnDrvFinalap3a = {
+struct BurnDriverD BurnDrvFinalap3a = {
 	"finalap3a", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (World, set 2)\0", NULL, "Namco", "System 2",
+	"Final Lap 3 (World, set 2)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3aRomInfo, finalap3aRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
@@ -6981,9 +6959,9 @@ static struct BurnRomInfo finalap3jRomDesc[] = {
 STD_ROM_PICK(finalap3j)
 STD_ROM_FN(finalap3j)
 
-struct BurnDriver BurnDrvFinalap3j = {
+struct BurnDriverD BurnDrvFinalap3j = {
 	"finalap3j", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (Japan)\0", NULL, "Namco", "System 2",
+	"Final Lap 3 (Japan)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3jRomInfo, finalap3jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
@@ -7042,9 +7020,9 @@ static struct BurnRomInfo finalap3jcRomDesc[] = {
 STD_ROM_PICK(finalap3jc)
 STD_ROM_FN(finalap3jc)
 
-struct BurnDriver BurnDrvFinalap3jc = {
+struct BurnDriverD BurnDrvFinalap3jc = {
 	"finalap3jc", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (Japan - Rev C)\0", NULL, "Namco", "System 2",
+	"Final Lap 3 (Japan - Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3jcRomInfo, finalap3jcRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
@@ -7103,9 +7081,9 @@ static struct BurnRomInfo finalap3blRomDesc[] = {
 STD_ROM_PICK(finalap3bl)
 STD_ROM_FN(finalap3bl)
 
-struct BurnDriver BurnDrvFinalap3bl = {
+struct BurnDriverD BurnDrvFinalap3bl = {
 	"finalap3bl", "finalap3", NULL, NULL, "1992",
-	"Final Lap 3 (bootleg)\0", NULL, "Namco", "System 2",
+	"Final Lap 3 (bootleg)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3blRomInfo, finalap3blRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
@@ -7169,9 +7147,9 @@ static struct BurnRomInfo fourtraxRomDesc[] = {
 STD_ROM_PICK(fourtrax)
 STD_ROM_FN(fourtrax)
 
-struct BurnDriver BurnDrvFourtrax = {
+struct BurnDriverD BurnDrvFourtrax = {
 	"fourtrax", NULL, NULL, NULL, "1989",
-	"Four Trax\0", NULL, "Namco", "System 2",
+	"Four Trax\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, fourtraxRomInfo, fourtraxRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FourtraxInputInfo, Fourtrax3DIPInfo,

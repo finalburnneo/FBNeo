@@ -123,14 +123,11 @@ static void predraw_c45_road_tiles_line(UINT32 line, UINT32 startx, UINT32 pixel
 	}
 }
 
-void c45RoadDraw(INT32 pri, INT32 min_y_ovrride, INT32 max_y_ovrride)
+void c45RoadDraw()
 {
 	INT32 min_x, min_y, max_x, max_y;
 
 	GenericTilesGetClip(&min_x, &max_x, &min_y, &max_y);
-
-	if (min_y_ovrride != -1) min_y = min_y_ovrride;
-	if (max_y_ovrride != -1) max_y = max_y_ovrride;
 
 	UINT16 *m_lineram = (UINT16*)(c45RoadRAM + 0x1fa00);
 
@@ -147,9 +144,8 @@ void c45RoadDraw(INT32 pri, INT32 min_y_ovrride, INT32 max_y_ovrride)
 	{
 		// skip if we are not the right priority
 		INT32 screenx = m_lineram[y + 15];
-		//if (pri != ((screenx & 0xf000) >> 12))
-		//	continue;
-		pri = (screenx & 0xf000) >> 12;
+
+		INT32 pri = (screenx & 0xf000) >> 12;
 
 		// skip if we don't have a valid zoom factor
 		UINT32 zoomx = m_lineram[0x400/2 + y + 15] & 0x3ff;
@@ -184,7 +180,7 @@ void c45RoadDraw(INT32 pri, INT32 min_y_ovrride, INT32 max_y_ovrride)
 		}
 
 		// crop right
-		clip_pixels = (screenx + numpixels) - (max_x);
+		clip_pixels = (screenx + numpixels) - (max_x+1);
 		if (clip_pixels > 0)
 			numpixels -= clip_pixels;
 

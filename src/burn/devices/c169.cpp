@@ -1,6 +1,5 @@
 #include "tiles_generic.h"
 
-
 static UINT32 size;
 static INT32 color;
 static INT32 priority;
@@ -26,7 +25,7 @@ static UINT8 *roz_ram;
 static UINT8 *roz_ctrl;
 static UINT16 *roz_bitmap;
 
-void c169_roz_init(UINT8 *ram, UINT8 *control,UINT16 *bitmap)
+void c169_roz_init(UINT8 *ram, UINT8 *control, UINT16 *bitmap)
 {
 	roz_ram = ram;
 	roz_ctrl = control;
@@ -80,9 +79,9 @@ static void c169_roz_draw_helper()
 {
 	UINT32 size_mask = size - 1;
 	UINT16 *srcbitmap = roz_bitmap;
-	UINT32 hstartx = startx + 0 * incxx + clip_min_y * incyx;
-	UINT32 hstarty = starty + 0 * incxy + clip_min_y * incyy;
-	INT32 sx = 0;
+	UINT32 hstartx = startx + clip_min_x * incxx + clip_min_y * incyx;
+	UINT32 hstarty = starty + clip_min_x * incxy + clip_min_y * incyy;
+	INT32 sx = clip_min_x;
 	INT32 sy = clip_min_y;
 	while (sy <= clip_max_y)
 	{
@@ -91,7 +90,7 @@ static void c169_roz_draw_helper()
 		UINT32 cy = hstarty;
 		UINT16 *dest = pTransDraw + (sy * nScreenWidth) + sx;
 		UINT8 *prio = pPrioDraw + (sy * nScreenWidth) + sx;
-		while (x < nScreenWidth)
+		while (x <= clip_max_x)
 		{
 			UINT32 xpos = (((cx >> 16) & size_mask) + left) & 0xfff;
 			UINT32 ypos = (((cy >> 16) & size_mask) + top) & 0xfff;
@@ -112,12 +111,12 @@ static void c169_roz_draw_helper()
 	}
 }
 
-static void c169_roz_draw_scanline(int line, int pri)
+static void c169_roz_draw_scanline(INT32 line, INT32 pri)
 {
-	if (line >= 0 && line < nScreenHeight)
+	if (line >= 0 && line <= clip_max_y) // namco's clipping is 1 less for max_*
 	{
-		int row = line / 8;
-		int offs = row * 0x100 + (line & 7) * 0x10 + 0xe080;
+		INT32 row = line / 8;
+		INT32 offs = row * 0x100 + (line & 7) * 0x10 + 0xe080;
 		UINT16 *source = (UINT16*)(roz_ram + offs);
 
 		if ((source[1] & 0x8000) == 0)
@@ -141,12 +140,18 @@ static void c169_roz_draw_scanline(int line, int pri)
 	}
 }
 
-void c169_roz_draw(int pri, int min_y_ovrride, int max_y_ovrride)
+void c169_roz_draw(INT32 pri, INT32 line)
 {
 	GenericTilesGetClip(&clip_min_x, &clip_max_x, &clip_min_y, &clip_max_y);
 
-	if (clip_min_y != -1) clip_min_y = min_y_ovrride;
-	if (clip_max_y != -1) clip_max_y = max_y_ovrride;
+	if (line != -1) {
+		if (line >= clip_min_y && line <= clip_max_y) {
+			clip_min_y = line;
+			clip_max_y = line+1;
+		} else {
+			return; // nothing to draw due to clipping
+		}
+	}
 
 	const UINT16 *source = (UINT16*)roz_ctrl;
 
@@ -161,14 +166,11 @@ void c169_roz_draw(int pri, int min_y_ovrride, int max_y_ovrride)
 		{
 			if (which == 1 && mode == 0x8000)
 			{
-				for (INT32 line = clip_min_y; line < clip_max_y; line++)
-					c169_roz_draw_scanline(line, pri);
+				for (INT32 scanline = clip_min_y; scanline <= clip_max_y; scanline++)
+					c169_roz_draw_scanline(scanline, pri);
 			}
 			else
 			{
-				//clip_min_y = 0;
-				//clip_max_y = nScreenHeight;
-	
 				c169_roz_unpack_params(source + (which*8));
 				if (priority == pri)
 					c169_roz_draw_helper();

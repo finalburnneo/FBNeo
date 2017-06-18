@@ -153,6 +153,11 @@ static INT32 weird_vbl = 0;
 
 static INT32 nvramcheck = 0; // nvram init: 1 ordyne, 2 ordynej, 3 dirtfoxj.  0 after set!
 
+static void FinallapDrawBegin(); // forwards
+static void FinallapDrawLine(INT32 line); // ""
+static void LuckywldDrawBegin(); // forwards
+static void LuckywldDrawLine(INT32 line); // ""
+
 static struct BurnInputInfo DefaultInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -181,22 +186,6 @@ static struct BurnInputInfo DefaultInputList[] = {
 };
 
 STDINPUTINFO(Default)
-
-static struct BurnDIPInfo DefaultDIPList[]=
-{
-	{0x14, 0xff, 0xff, 0xff, NULL			},
-	{0x15, 0xff, 0xff, 0xff, NULL			},
-	
-	{0   , 0xfe, 0   ,    2, "Video Display"	},
-	{0x14, 0x01, 0x01, 0x01, "Normal"		},
-	{0x14, 0x01, 0x01, 0x00, "Frozen"		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x15, 0x01, 0x40, 0x40, "Off"			},
-	{0x15, 0x01, 0x40, 0x00, "On"			},
-};
-
-STDDIPINFO(Default)
 
 static struct BurnInputInfo AssaultInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -231,22 +220,6 @@ static struct BurnInputInfo AssaultInputList[] = {
 
 STDINPUTINFO(Assault)
 
-static struct BurnDIPInfo AssaultDIPList[]=
-{
-	{0x18, 0xff, 0xff, 0xff, NULL			},
-	{0x19, 0xff, 0xff, 0xff, NULL			},
-	
-	{0   , 0xfe, 0   ,    2, "Video Display"	},
-	{0x18, 0x01, 0x01, 0x01, "Normal"		},
-	{0x18, 0x01, 0x01, 0x00, "Frozen"		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x19, 0x01, 0x40, 0x40, "Off"			},
-	{0x19, 0x01, 0x40, 0x00, "On"			},
-};
-
-STDDIPINFO(Assault)
-
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo MetlhawkInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -266,63 +239,31 @@ static struct BurnInputInfo MetlhawkInputList[] = {
 
 STDINPUTINFO(Metlhawk)
 
-static struct BurnDIPInfo MetlhawkDIPList[]=
-{
-	{0x09, 0xff, 0xff, 0xff, NULL			},
-	{0x0a, 0xff, 0xff, 0xff, NULL			},
-	
-	{0   , 0xfe, 0   ,    2, "Video Display"	},
-	{0x09, 0x01, 0x01, 0x01, "Normal"		},
-	{0x09, 0x01, 0x01, 0x00, "Frozen"		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x0a, 0x01, 0x40, 0x40, "Off"			},
-	{0x0a, 0x01, 0x40, 0x00, "On"			},
-};
-
-STDDIPINFO(Metlhawk)
-
 static struct BurnInputInfo LuckywldInputList[] = {
-	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 
-	A("P1 Steering",    BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"),
-	A("P1 Break",       BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 5"),
-	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort2, "p1 fire 6"),
+	A("P1 Steering",	BIT_ANALOG_REL, &DrvAnalogPort0, "p1 x-axis"	),
+	A("P1 Break",		BIT_ANALOG_REL, &DrvAnalogPort1, "p1 fire 5"	),
+	A("P1 Accelerator",	BIT_ANALOG_REL, &DrvAnalogPort2, "p1 fire 6"	),
 
 	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
 	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    "mouse y-axis"	),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
 
-	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
 	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    "p2 x-axis"	),
 	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    "p2 y-axis"	),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
 };
 
 STDINPUTINFO(Luckywld)
-
-static struct BurnDIPInfo LuckywldDIPList[]=
-{
-	{0x0f, 0xff, 0xff, 0xff, NULL			},
-	{0x10, 0xff, 0xff, 0xff, NULL			},
-	
-	{0   , 0xfe, 0   ,    2, "Video Display"	},
-	{0x0f, 0x01, 0x01, 0x01, "Normal"		},
-	{0x0f, 0x01, 0x01, 0x00, "Frozen"		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x10, 0x01, 0x40, 0x40, "Off"			},
-	{0x10, 0x01, 0x40, 0x00, "On"			},
-};
-
-STDDIPINFO(Luckywld)
 
 static struct BurnInputInfo SgunnerInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
@@ -347,6 +288,88 @@ static struct BurnInputInfo SgunnerInputList[] = {
 
 STDINPUTINFO(Sgunner)
 
+static struct BurnInputInfo DirtfoxInputList[] = {
+	{"Coin",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
+
+	A("Steering",        BIT_ANALOG_REL, &DrvAnalogPort0 , "p1 x-axis"	),
+	A("Break",           BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"	),
+	A("Accelerator",     BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 fire 6"	),
+
+	{"Gear Up",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
+	{"Gear Down",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
+};
+
+STDINPUTINFO(Dirtfox)
+
+static struct BurnDIPInfo DefaultDIPList[]=
+{
+	{0x14, 0xff, 0xff, 0xff, NULL			},
+	{0x15, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x14, 0x01, 0x01, 0x01, "Normal"		},
+	{0x14, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x15, 0x01, 0x40, 0x40, "Off"			},
+	{0x15, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Default)
+
+static struct BurnDIPInfo AssaultDIPList[]=
+{
+	{0x18, 0xff, 0xff, 0xff, NULL			},
+	{0x19, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x18, 0x01, 0x01, 0x01, "Normal"		},
+	{0x18, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x19, 0x01, 0x40, 0x40, "Off"			},
+	{0x19, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Assault)
+
+static struct BurnDIPInfo MetlhawkDIPList[]=
+{
+	{0x09, 0xff, 0xff, 0xff, NULL			},
+	{0x0a, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x09, 0x01, 0x01, 0x01, "Normal"		},
+	{0x09, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0a, 0x01, 0x40, 0x40, "Off"			},
+	{0x0a, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Metlhawk)
+
+static struct BurnDIPInfo LuckywldDIPList[]=
+{
+	{0x0f, 0xff, 0xff, 0xff, NULL			},
+	{0x10, 0xff, 0xff, 0xff, NULL			},
+	
+	{0   , 0xfe, 0   ,    2, "Video Display"	},
+	{0x0f, 0x01, 0x01, 0x01, "Normal"		},
+	{0x0f, 0x01, 0x01, 0x00, "Frozen"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x10, 0x01, 0x40, 0x40, "Off"			},
+	{0x10, 0x01, 0x40, 0x00, "On"			},
+};
+
+STDDIPINFO(Luckywld)
+
 static struct BurnDIPInfo SgunnerDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0xff, NULL			},
@@ -362,24 +385,6 @@ static struct BurnDIPInfo SgunnerDIPList[]=
 };
 
 STDDIPINFO(Sgunner)
-
-static struct BurnInputInfo DirtfoxInputList[] = {
-	{"P1 Coin",		        BIT_DIGITAL,	DrvJoy2 + 5,	"p1 coin"	},
-
-	A("P1 Steering",        BIT_ANALOG_REL, &DrvAnalogPort0 , "p1 x-axis"),
-	A("P1 Break",           BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 5"),
-	A("P1 Accelerator",     BIT_ANALOG_REL, &DrvAnalogPort2 , "p1 fire 6"),
-
-	{"P1 Button 1 (Gear Up)",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
-	{"P1 Button 2 (Gear Down)",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy2 + 7,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Debug",		BIT_DIPSWITCH,  DrvDips + 1,    "dip"           },
-};
-
-STDINPUTINFO(Dirtfox)
 
 static struct BurnDIPInfo DirtfoxDIPList[]=
 {
@@ -534,7 +539,7 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 		return DrvEEPROM[(address / 2) & 0x1fff];
 	}
 
-	if ((address & 0xfc0000) == 0x1c0000) {	// c148
+	if ((address & 0xfc0000) == 0x1c0000) {
 		return c148_read_write(address, 0, 0);
 	}
 
@@ -573,8 +578,6 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 			return gfx_ctrl;
 	}
 
-//	bprintf (0, _T("RW: %5.5x\n"), address);
-
 	return 0;
 }
 
@@ -597,11 +600,9 @@ static UINT8 __fastcall namcos2_68k_read_byte(UINT32 address)
 		return DrvDPRAM[(address & 0xffe)/2];
 	}
 
-	if ((address & 0xfc0000) == 0x1c0000) {	// c148
+	if ((address & 0xfc0000) == 0x1c0000) {
 		return c148_read_write(address, 0, 0);
 	}
-
-	bprintf (0, _T("RB: %5.5x\n"), address);
 
 	return 0;
 }
@@ -655,8 +656,6 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 			gfx_ctrl = data;
 		return;
 	}
-
-//	bprintf (0, _T("WW: %5.5x %4.4x\n"), address,data);
 }
 
 static void __fastcall namcos2_68k_write_byte(UINT32 address, UINT8 data)
@@ -682,8 +681,6 @@ static void __fastcall namcos2_68k_write_byte(UINT32 address, UINT8 data)
 	}
 
 	if (address == 0x0074) return; // NOP (phelios writes here in-game)
-
-	bprintf (0, _T("WB: %5.5x, %2.2x\n"),address,data);
 }
 
 
@@ -978,7 +975,7 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 7: mcu_analog_data = (DrvAnalogPort2 >> 4); break; // an7
 			}
 		} else if (is_luckywld) {
-			switch ((data >> 2) & 7)    ////////////////////////////
+			switch ((data >> 2) & 7)
 			{
 				case 0: mcu_analog_data = 0; break; // an0
 				case 1: mcu_analog_data = BurnGunReturnY(1); break; // an1
@@ -1021,8 +1018,8 @@ static UINT8 mcu_analog_ctrl_read()
 	return data | (mcu_analog_ctrl & 0x3f);
 }
 
-static UINT8 mcu_port_d_r()
-{ // no games use this, but keep just in-case
+static UINT8 mcu_port_d_r() // no games use this, but keep just in-case
+{
 	//INT32 threshold = 0x7f;
 	INT32 data = 0;
 
@@ -1188,7 +1185,6 @@ static UINT8 namcos2_sound_read(UINT16 address)
 
 	return 0;
 }
-
 
 static void __fastcall roz_write_word(UINT32 address, UINT16 data)
 {		
@@ -1598,6 +1594,7 @@ static INT32 Namcos2GetRoms(INT32 gfx0_offset)
 			if (BurnLoadRom(DrvC45PROM, i, 1)) return 1;
 			continue;
 		}
+
 		if ((ri.nType & BRF_GRA) && ((ri.nType & 0x0f) == 13)) {
 			if (BurnLoadRom(DrvGfxROM5, i, 1)) return 1;
 			continue;
@@ -1680,111 +1677,11 @@ static void decode_layer_tiles_finalap2()
 	BurnFree(tmp);
 }
 
-static INT32 Namcos2Init(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UINT8))
-{
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		if (Namcos2GetRoms(0)) return 1;
-
-		DrvGfxDecode(); // decode sprites
-		decode_layer_tiles();
-	}
-
-	default_68k_map(0);
-	default_68k_map(1);
-	namcos2_sound_init();
-	namcos2_mcu_init();
-
-	key_prot_read = key_read;
-	key_prot_write = key_write;
-
-	GenericTilesInit();
-
-	DrvDoReset();
-
-	return 0;
-}
-
 static void LuckywldGfxDecode()
 {
 	for (INT32 i = 0 ; i < 0x400000; i++) {
 		DrvGfxROM1[i] = DrvGfxROM0[(i / 4) | ((i & 3) << 20)];
 	}
-}
-
-static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UINT8))
-{
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		if (Namcos2GetRoms(0)) return 1;
-
-		LuckywldGfxDecode();
-		decode_layer_tiles();
-	}
-
-	sgunner_68k_map(0);
-	sgunner_68k_map(1);
-	namcos2_sound_init();
-	namcos2_mcu_init();
-
-	key_prot_read = key_read;
-	key_prot_write = key_write;
-
-	GenericTilesInit();
-
-	uses_gun = 1;
-	BurnGunInit(2, false);
-
-	weird_vbl = 1;
-
-	DrvDoReset();
-
-	return 0;
-}
-
-static INT32 Suzuka8hCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UINT8))
-{
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		if (Namcos2GetRoms(0)) return 1;
-
-		LuckywldGfxDecode();
-		decode_layer_tiles();
-	}
-
-	c45RoadInit(~0, DrvC45PROM);
-
-	luckywld_68k_map(0);
-	luckywld_68k_map(1);
-	namcos2_sound_init();
-	namcos2_mcu_init();
-
-	key_prot_read = key_read;
-	key_prot_write = key_write;
-
-	GenericTilesInit();
-
-	DrvDoReset();
-
-	return 0;
 }
 
 static void luckywld_roz_decode()
@@ -1817,59 +1714,6 @@ static void luckywld_roz_decode()
 	memcpy (DrvGfxROM3, tmp, 0x400000);
 
 	BurnFree(tmp);
-}
-
-static void FinallapDrawBegin(); // forwards
-static void FinallapDrawLine(INT32 line); // ""
-static void LuckywldDrawBegin(); // forwards
-static void LuckywldDrawLine(INT32 line); // ""
-
-static INT32 LuckywldInit()
-{
-	AllMem = NULL;
-	MemIndex();
-	INT32 nLen = MemEnd - (UINT8 *)0;
-	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(AllMem, 0, nLen);
-	MemIndex();
-
-	{
-		if (Namcos2GetRoms(0)) return 1;
-
-		LuckywldGfxDecode();
-		decode_layer_tiles();
-
-		for (INT32 i = 0; i < 0x80000; i++) {
-			DrvGfxROM5[i] = BITSWAP08(DrvGfxROM5[i], 0,1,2,3,4,5,6,7);
-		}
-
-		memcpy (DrvGfxROM3 + 0x1c0000, DrvGfxROM3 + 0x100000, 0x080000);
-
-		luckywld_roz_decode();
-	}
-
-	c45RoadInit(~0, DrvC45PROM);
-
-	luckywld_68k_map(0);
-	luckywld_68k_map(1);
-	namcos2_sound_init();
-	namcos2_mcu_init();
-
-	c169_roz_init(DrvRozRAM, DrvRozCtrl, roz_bitmap);
-
-	GenericTilesInit();
-
-	is_luckywld = 1;
-
-	uses_gun = 1;
-	BurnGunInit(2, false);
-
-	pDrvDrawBegin = LuckywldDrawBegin;
-	pDrvDrawLine = LuckywldDrawLine;
-
-	DrvDoReset();
-
-	return 0;
 }
 
 static void metal_hawk_sprite_decode()
@@ -1946,6 +1790,154 @@ static void metal_hawk_roz_decode()
 	memcpy (DrvGfxROM3, tmp, 0x200000);
 
 	BurnFree(tmp);
+}
+
+static INT32 Namcos2Init(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UINT8))
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (Namcos2GetRoms(0)) return 1;
+
+		DrvGfxDecode(); // decode sprites
+		decode_layer_tiles();
+	}
+
+	default_68k_map(0);
+	default_68k_map(1);
+	namcos2_sound_init();
+	namcos2_mcu_init();
+
+	key_prot_read = key_read;
+	key_prot_write = key_write;
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UINT8))
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (Namcos2GetRoms(0)) return 1;
+
+		LuckywldGfxDecode();
+		decode_layer_tiles();
+	}
+
+	sgunner_68k_map(0);
+	sgunner_68k_map(1);
+	namcos2_sound_init();
+	namcos2_mcu_init();
+
+	key_prot_read = key_read;
+	key_prot_write = key_write;
+
+	GenericTilesInit();
+
+	uses_gun = 1;
+	BurnGunInit(2, false);
+
+	weird_vbl = 1;
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 Suzuka8hCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_read)(UINT8))
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (Namcos2GetRoms(0)) return 1;
+
+		LuckywldGfxDecode();
+		decode_layer_tiles();
+	}
+
+	c45RoadInit(~0, DrvC45PROM);
+
+	luckywld_68k_map(0);
+	luckywld_68k_map(1);
+	namcos2_sound_init();
+	namcos2_mcu_init();
+
+	key_prot_read = key_read;
+	key_prot_write = key_write;
+
+	GenericTilesInit();
+
+	DrvDoReset();
+
+	return 0;
+}
+
+static INT32 LuckywldInit()
+{
+	AllMem = NULL;
+	MemIndex();
+	INT32 nLen = MemEnd - (UINT8 *)0;
+	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(AllMem, 0, nLen);
+	MemIndex();
+
+	{
+		if (Namcos2GetRoms(0)) return 1;
+
+		LuckywldGfxDecode();
+		decode_layer_tiles();
+
+		for (INT32 i = 0; i < 0x80000; i++) {
+			DrvGfxROM5[i] = BITSWAP08(DrvGfxROM5[i], 0,1,2,3,4,5,6,7);
+		}
+
+		memcpy (DrvGfxROM3 + 0x1c0000, DrvGfxROM3 + 0x100000, 0x080000);
+
+		luckywld_roz_decode();
+	}
+
+	c45RoadInit(~0, DrvC45PROM);
+
+	luckywld_68k_map(0);
+	luckywld_68k_map(1);
+	namcos2_sound_init();
+	namcos2_mcu_init();
+
+	c169_roz_init(DrvRozRAM, DrvRozCtrl, roz_bitmap);
+
+	GenericTilesInit();
+
+	is_luckywld = 1;
+
+	uses_gun = 1;
+	BurnGunInit(2, false);
+
+	pDrvDrawBegin = LuckywldDrawBegin;
+	pDrvDrawLine = LuckywldDrawLine;
+
+	DrvDoReset();
+
+	return 0;
 }
 
 static INT32 MetlhawkInit()
@@ -2148,36 +2140,19 @@ static INT32 Namcos2Exit()
 	return 0;
 }
 
-static UINT16 get_palette_register(INT32 reg)
+static inline UINT16 get_palette_register(INT32 reg)
 {
 	UINT16 *ctrl = (UINT16*)(DrvPalRAM + 0x3000);
 	return ((ctrl[reg*2] & 0xff) * 256 + (ctrl[reg*2+1] & 0xff));
 }
 
-#define PUSH_XY(); \
-	INT32 oldmin_x = min_x; \
-    INT32 oldmax_x = max_x; \
-	INT32 oldmin_y = min_y; \
-    INT32 oldmax_y = max_y;
-
-
-#define POP_XY(); \
-    min_x = oldmin_x; \
+#define restore_XY_clip(); \
+	min_x = oldmin_x; \
 	max_x = oldmax_x; \
 	min_y = oldmin_y; \
 	max_y = oldmax_y;
 
-#define PUSH_Y(); \
-	INT32 oldmin_y = min_y; \
-	INT32 oldmax_y = max_y; \
-	min_y = (line >= min_y) ? line : 0; \
-	max_y = (line <= max_y) ? line+1 : 0;
-
-#define POP_Y(); \
-	min_y = oldmin_y; \
-	max_y = oldmax_y;
-
-static void adjust_clip()
+static inline void adjust_clip()
 {
 	if (min_x > nScreenWidth) min_x = nScreenWidth-1; if (min_x < 0) min_x = 0;
 	if (max_x > nScreenWidth) max_x = nScreenWidth-1; if (max_x < 0) max_x = 0;
@@ -2456,145 +2431,105 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 {
 	if (!scalex || !scaley) return;
 
+	INT32 shadow_offset = (1)?0x2000:0;
+	const UINT8 *source_base = gfx + (code * tile_size * tile_size);
+	INT32 sprite_screen_height = (scaley*tile_size+0x8000)>>16;
+	INT32 sprite_screen_width = (scalex*tile_size+0x8000)>>16;
+	if (sprite_screen_width && sprite_screen_height)
 	{
+		INT32 dx = (tile_size<<16)/sprite_screen_width;
+		INT32 dy = (tile_size<<16)/sprite_screen_height;
+
+		INT32 ex = sx+sprite_screen_width;
+		INT32 ey = sy+sprite_screen_height;
+
+		INT32 x_index_base;
+		INT32 y_index;
+
+		if( flipx )
 		{
-			INT32 shadow_offset = (1)?0x2000:0;
-		//	const pen_t *pal = &m_palette->pen(gfx->colorbase() + gfx->granularity() * (color % gfx->colors()));
-			const UINT8 *source_base = gfx + (code * tile_size * tile_size); //gfx->get_data(code % gfx->elements());
-			INT32 sprite_screen_height = (scaley*tile_size+0x8000)>>16;
-			INT32 sprite_screen_width = (scalex*tile_size+0x8000)>>16;
-			if (sprite_screen_width && sprite_screen_height)
+			x_index_base = (sprite_screen_width-1)*dx;
+			dx = -dx;
+		}
+		else
+		{
+			x_index_base = 0;
+		}
+
+		if( flipy )
+		{
+			y_index = (sprite_screen_height-1)*dy;
+			dy = -dy;
+		}
+		else
+		{
+			y_index = 0;
+		}
+
+		if( sx < min_x)
+		{ // clip left
+			INT32 pixels = min_x-sx;
+			sx += pixels;
+			x_index_base += pixels*dx;
+		}
+		if( sy < min_y )
+		{ // clip top
+			INT32 pixels = min_y-sy;
+			sy += pixels;
+			y_index += pixels*dy;
+		}
+		if( ex > max_x+1 )
+		{ // clip right
+			INT32 pixels = ex-max_x-1;
+			ex -= pixels;
+		}
+		if( ey > max_y+1 )
+		{ // clip bottom
+			INT32 pixels = ey-max_y-1;
+			ey -= pixels;
+		}
+
+		if( ex>sx )
+		{
+			INT32 y;
+			UINT8 *priority_bitmap = pPrioDraw;
+
+			for( y=sy; y<ey; y++ )
 			{
-				/* compute sprite increment per screen pixel */
-				INT32 dx = (tile_size<<16)/sprite_screen_width;
-				INT32 dy = (tile_size<<16)/sprite_screen_height;
+				const UINT8 *source = source_base + (y_index>>16) * tile_size;
+				UINT16 *dest = pTransDraw + y * nScreenWidth;
+				UINT8 *pri = priority_bitmap + y * nScreenWidth;
+				INT32 x, x_index = x_index_base;
 
-				INT32 ex = sx+sprite_screen_width;
-				INT32 ey = sy+sprite_screen_height;
-
-				INT32 x_index_base;
-				INT32 y_index;
-
-				if( flipx )
+				for (x = sx; x < ex; x++)
 				{
-					x_index_base = (sprite_screen_width-1)*dx;
-					dx = -dx;
-				}
-				else
-				{
-					x_index_base = 0;
-				}
-
-				if( flipy )
-				{
-					y_index = (sprite_screen_height-1)*dy;
-					dy = -dy;
-				}
-				else
-				{
-					y_index = 0;
-				}
-
-				if( sx < min_x)
-				{ /* clip left */
-					INT32 pixels = min_x-sx;
-					sx += pixels;
-					x_index_base += pixels*dx;
-				}
-				if( sy < min_y )
-				{ /* clip top */
-					INT32 pixels = min_y-sy;
-					sy += pixels;
-					y_index += pixels*dy;
-				}
-				if( ex > max_x+1 )
-				{ /* clip right */
-					INT32 pixels = ex-max_x-1;
-					ex -= pixels;
-				}
-				if( ey > max_y+1 )
-				{ /* clip bottom */
-					INT32 pixels = ey-max_y-1;
-					ey -= pixels;
-				}
-
-				if( ex>sx )
-				{ /* skip if inner loop doesn't draw anything */
-					INT32 y;
-					UINT8 *priority_bitmap = pPrioDraw;
-
+					INT32 c = source[x_index>>16];
+					if (c != 0xff)
 					{
-						for( y=sy; y<ey; y++ )
+						if (pri[x] <= (priority & 0xf))
 						{
-							const UINT8 *source = source_base + (y_index>>16) * tile_size;
-							UINT16 *dest = pTransDraw + y * nScreenWidth; //&dest_bmp.pix16(y);
-							UINT8 *pri = priority_bitmap + y * nScreenWidth; //&priority_bitmap.pix8(y);
-							INT32 x, x_index = x_index_base;
-							if( 0 ) //m_c355_obj_palxor ) // iq_132
+							if (color == 0xf00 && c==0xfe)
 							{
-								for (x = sx; x < ex; x++)
-								{
-									INT32 c = source[x_index>>16];
-									if (c != 0xff)
-									{
-										if (pri[x] <= (priority & 0xf))
-										{
-											switch (c)
-											{
-											case 0:
-												dest[x] = 0x4000|(dest[x]&0x1fff);
-												break;
-											case 1:
-												dest[x] = 0x6000|(dest[x]&0x1fff);
-												break;
-											default:
-												dest[x] = c|color;
-												break;
-											}
-											pri[x] = priority & 0xf;
-										}
-									}
-									x_index += dx;
-								}
-								y_index += dy;
+								dest[x] |= shadow_offset;
 							}
 							else
 							{
-								for (x = sx; x < ex; x++)
-								{
-									INT32 c = source[x_index>>16];
-									if (c != 0xff)
-									{
-										if (pri[x] <= (priority & 0xf))
-										{
-											if (color == 0xf00 && c==0xfe)
-											{
-												dest[x] |= shadow_offset;
-											}
-											else
-											{
-												dest[x] = c | color;
-											}
-											pri[x] = priority & 0xf;
-										}
-									}
-									x_index += dx;
-								}
-								y_index += dy;
+								dest[x] = c | color;
 							}
+							pri[x] = priority & 0xf;
 						}
 					}
+					x_index += dx;
 				}
+				y_index += dy;
 			}
 		}
 	}
-} /* zdrawgfxzoom */
+}
 
 static void draw_sprites_metalhawk()
 {
 	const UINT16 *pSource = (UINT16*)DrvSprRAM;
-
-//	pSource += 127 * 8;
 
 	for (INT32 loop=0; loop < 128; loop++)
 	{
@@ -2627,26 +2562,20 @@ static void draw_sprites_metalhawk()
 			INT32 scalex = (sizex<<16)/(bBigSprite?0x20:0x10);
 			INT32 scaley = (sizey<<16)/(bBigSprite?0x20:0x10);
 
-			if( (flags&0x01) )
+			if (flags&0x01)
 			{
 				sprn |= 0x2000;
 			}
 
-			if( bBigSprite )
+			if (bBigSprite)
 			{
-				if( sizex < 0x20 )
-				{
-					sx -= (0x20-sizex)/0x8;
-				}
-				if( sizey < 0x20 )
-				{
-					sy += (0x20-sizey)/0xC;
-				}
+				if( sizex < 0x20 ) sx -= (0x20-sizex)/0x8;
+				if( sizey < 0x20 ) sy += (0x20-sizey)/0xC;
 			}
 
 			UINT8 *gfx;
 
-			if( !bBigSprite )
+			if (!bBigSprite)
 			{
 				gfx = DrvGfxROM1;
 
@@ -2661,13 +2590,11 @@ static void draw_sprites_metalhawk()
 			else
 			{
 				gfx = DrvGfxROM0;
-
 				sprn >>= 2;
 			}
 
 			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf));
 		}
-//		pSource -= 8;
 		pSource += 8;
 	}
 }
@@ -2787,78 +2714,61 @@ static inline void draw_roz_helper_block(const struct roz_param *rozInfo, INT32 
 
 static void draw_roz_helper(const struct roz_param *rozInfo, INT32 pri)
 {
+	UINT32 size_mask = rozInfo->size - 1;
+	UINT32 srcx = (rozInfo->startx + (min_x * rozInfo->incxx) + (min_y * rozInfo->incyx));
+	UINT32 srcy = (rozInfo->starty + (min_x * rozInfo->incxy) + (min_y * rozInfo->incyy));
+	INT32 destx = min_x;
+	INT32 desty = min_y;
+
+	INT32 row_count = (max_y - desty) + 1;
+	INT32 row_block_count = row_count / 8;
+	INT32 row_extra_count = row_count % 8;
+
+	INT32 column_count = (max_x - destx) + 1;
+	INT32 column_block_count = column_count / 8;
+	INT32 column_extra_count = column_count % 8;
+
+	INT32 row_block_size_incxx = 8 * rozInfo->incxx;
+	INT32 row_block_size_incxy = 8 * rozInfo->incxy;
+	INT32 row_block_size_incyx = 8 * rozInfo->incyx;
+	INT32 row_block_size_incyy = 8 * rozInfo->incyy;
+
+	for (INT32 i = 0; i < row_block_count; i++)
 	{
+		INT32 sx = srcx;
+		INT32 sy = srcy;
+		INT32 dx = destx;
 
-#define ROZ_BLOCK_SIZE 8
-
-		UINT32 size_mask = rozInfo->size - 1;
-		UINT32 srcx = (rozInfo->startx + (min_x * rozInfo->incxx) +
-			(min_y * rozInfo->incyx));
-		UINT32 srcy = (rozInfo->starty + (min_x * rozInfo->incxy) +
-			(min_y * rozInfo->incyy));
-		INT32 destx = min_x;
-		INT32 desty = min_y;
-
-		INT32 row_count = (max_y - desty) + 1;
-		INT32 row_block_count = row_count / ROZ_BLOCK_SIZE;
-		INT32 row_extra_count = row_count % ROZ_BLOCK_SIZE;
-
-		INT32 column_count = (max_x - destx) + 1;
-		INT32 column_block_count = column_count / ROZ_BLOCK_SIZE;
-		INT32 column_extra_count = column_count % ROZ_BLOCK_SIZE;
-
-		INT32 row_block_size_incxx = ROZ_BLOCK_SIZE * rozInfo->incxx;
-		INT32 row_block_size_incxy = ROZ_BLOCK_SIZE * rozInfo->incxy;
-		INT32 row_block_size_incyx = ROZ_BLOCK_SIZE * rozInfo->incyx;
-		INT32 row_block_size_incyy = ROZ_BLOCK_SIZE * rozInfo->incyy;
-
-		INT32 i,j;
-
-		// Do the block rows
-		for (i = 0; i < row_block_count; i++)
+		for (INT32 j = 0; j < column_block_count; j++)
 		{
-			INT32 sx = srcx;
-			INT32 sy = srcy;
-			INT32 dx = destx;
-			// Do the block columns
-			for (j = 0; j < column_block_count; j++)
-			{
-				draw_roz_helper_block(rozInfo, dx, desty, sx, sy, ROZ_BLOCK_SIZE,
-					ROZ_BLOCK_SIZE, size_mask, pri);
-				// Increment to the next block column
-				sx += row_block_size_incxx;
-				sy += row_block_size_incxy;
-				dx += ROZ_BLOCK_SIZE;
-			}
-			// Do the extra columns
-			if (column_extra_count)
-			{
-				draw_roz_helper_block(rozInfo, dx, desty, sx, sy, column_extra_count,
-					ROZ_BLOCK_SIZE,size_mask, pri);
-			}
-			// Increment to the next row block
-			srcx += row_block_size_incyx;
-			srcy += row_block_size_incyy;
-			desty += ROZ_BLOCK_SIZE;
+			draw_roz_helper_block(rozInfo, dx, desty, sx, sy, 8, 8, size_mask, pri);
+			sx += row_block_size_incxx;
+			sy += row_block_size_incxy;
+			dx += 8;
 		}
-		// Do the extra rows
-		if (row_extra_count)
+
+		if (column_extra_count)
 		{
-			// Do the block columns
-			for (i = 0; i < column_block_count; i++)
-			{
-				draw_roz_helper_block(rozInfo, destx, desty, srcx, srcy, ROZ_BLOCK_SIZE,
-					row_extra_count, size_mask, pri);
-				srcx += row_block_size_incxx;
-				srcy += row_block_size_incxy;
-				destx += ROZ_BLOCK_SIZE;
-			}
-			// Do the extra columns
-			if (column_extra_count)
-			{
-				draw_roz_helper_block(rozInfo, destx, desty, srcx, srcy, column_extra_count,
-					row_extra_count, size_mask, pri);
-			}
+			draw_roz_helper_block(rozInfo, dx, desty, sx, sy, column_extra_count, 8,size_mask, pri);
+		}
+		srcx += row_block_size_incyx;
+		srcy += row_block_size_incyy;
+		desty += 8;
+	}
+
+	if (row_extra_count)
+	{
+		for (INT32 i = 0; i < column_block_count; i++)
+		{
+			draw_roz_helper_block(rozInfo, destx, desty, srcx, srcy, 8, row_extra_count, size_mask, pri);
+			srcx += row_block_size_incxx;
+			srcy += row_block_size_incxy;
+			destx += 8;
+		}
+
+		if (column_extra_count)
+		{
+			draw_roz_helper_block(rozInfo, destx, desty, srcx, srcy, column_extra_count, row_extra_count, size_mask, pri);
 		}
 	}
 }
@@ -2882,20 +2792,20 @@ static void draw_roz(INT32 pri)
 
 	switch( m_roz_ctrl[7] )
 	{
-	case 0x4400: /* (2048x2048) */
+		case 0x4400: // (2048x2048)
 		break;
 
-	case 0x4488: /* attract mode */
-		rozParam.wrap = 0;
+		case 0x4488: // attract mode
+			rozParam.wrap = 0;
 		break;
 
-	case 0x44cc: /* stage1 demo */
-		rozParam.wrap = 0;
+		case 0x44cc: // stage1 demo
+			rozParam.wrap = 0;
 		break;
 
-	case 0x44ee: /* (256x256) used in Dragon Saber */
-		rozParam.wrap = 0;
-		rozParam.size = 256;
+		case 0x44ee: // (256x256) used in Dragon Saber
+			rozParam.wrap = 0;
+			rozParam.size = 256;
 		break;
 	}
 
@@ -2982,9 +2892,13 @@ static void DrvDrawLine(INT32 line)
 		if (((gfx_ctrl & 0x7000) >> 12) == pri )
 		{
 			if (roz_enable) {
-				PUSH_Y();
+				INT32 oldmin_y = min_y;
+				INT32 oldmax_y = max_y;
+				min_y = (line >= min_y) ? line : 0;
+				max_y = (line <= max_y) ? line+1 : 0;
 				if (nBurnLayer & 1) draw_roz(pri);
-				POP_Y();
+				min_y = oldmin_y;
+				max_y = oldmax_y;
 			}
 		}
 	}
@@ -3026,96 +2940,46 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
+static void c355_obj_draw_sprite(const UINT16 *pSource)
 {
-	UINT16 *spriteram16 = (UINT16*)DrvSprRAM; //m_c355_obj_ram;
-	unsigned screen_height_remaining, screen_width_remaining;
-	unsigned source_height_remaining, source_width_remaining;
-	INT32 hpos,vpos;
-	UINT16 hsize,vsize;
-	UINT16 palette;
-	UINT16 linkno;
-	UINT16 offset;
-	UINT16 format;
-	INT32 tile_index;
-	INT32 num_cols,num_rows;
-	INT32 dx,dy;
-	INT32 row,col;
-	INT32 sx,sy,tile;
-	INT32 flipx,flipy;
-	UINT32 zoomx, zoomy;
-	INT32 tile_screen_width;
-	INT32 tile_screen_height;
+	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
 	const UINT16 *spriteformat16 = &spriteram16[0x4000/2];
 	const UINT16 *spritetile16   = &spriteram16[0x8000/2];
-	INT32 color;
-	const UINT16 *pWinAttr;
 
-	INT32 xscroll, yscroll;
+	UINT16 palette     = pSource[6];
 
-	INT32 pri;
+	INT32 pri   = (palette >> 4) & 0xf; // priority
 
-	/**
-	 * ----xxxx-------- window select
-	 * --------xxxx---- priority
-	 * ------------xxxx palette select
-	 */
-	palette     = pSource[6];
+	UINT16 linkno      = pSource[0];
+	UINT16 offset      = pSource[1];
+	INT32 hpos        = pSource[2];
+	INT32 vpos        = pSource[3];
+	UINT16 hsize       = pSource[4];
+	UINT16 vsize       = pSource[5];
 
-	pri         = (palette >> 4) & 0xf; // priority
+	if (linkno*4>=0x4000/2) return;
 
-	linkno      = pSource[0]; /* LINKNO */
-	offset      = pSource[1]; /* OFFSET */
-	hpos        = pSource[2]; /* HPOS       0x000..0x7ff (signed) */
-	vpos        = pSource[3]; /* VPOS       0x000..0x7ff (signed) */
-	hsize       = pSource[4]; /* HSIZE      max 0x3ff pixels */
-	vsize       = pSource[5]; /* VSIZE      max 0x3ff pixels */
-	/* pSource[6] contains priority/palette */
-	/* pSource[7] is used in Lucky & Wild, possibly for sprite-road priority */
-
-	if (linkno*4>=0x4000/2) return; /* avoid garbage memory reads */
-
-	xscroll = (INT16)c355_obj_position[1];
-	yscroll = (INT16)c355_obj_position[0];
-
+	INT32 xscroll = (INT16)c355_obj_position[1];
+	INT32 yscroll = (INT16)c355_obj_position[0];
 	xscroll &= 0x1ff; if( xscroll & 0x100 ) xscroll |= ~0x1ff;
 	yscroll &= 0x1ff; if( yscroll & 0x100 ) yscroll |= ~0x1ff;
-
-	if(nScreenWidth > 384 )
-	{ /* Medium Resolution: System21 adjust */
-			xscroll = (INT16)c355_obj_position[1];
-			xscroll &= 0x3ff; if( xscroll & 0x200 ) xscroll |= ~0x3ff;
-			if( yscroll<0 )
-			{ /* solvalou */
-				yscroll += 0x20;
-			}
-			yscroll += 0x10;
-	}
-	else
-	{
-	//	if ((m_gametype == NAMCOFL_SPEED_RACER) || (m_gametype == NAMCOFL_FINAL_LAP_R))
-	//	{ /* Namco FL: don't adjust and things line up fine */
-	//	}
-	//	else
-	//	{ /* Namco NB1, Namco System 2 */
-			xscroll += 0x26;
-			yscroll += 0x19;
-	//	}
-	}
+	xscroll += 0x26;
+	yscroll += 0x19;
 
 	hpos -= xscroll;
 	vpos -= yscroll;
-	pWinAttr = &spriteram16[0x2400/2+((palette>>8)&0xf)*4];
+	const UINT16 *pWinAttr = &spriteram16[0x2400/2+((palette>>8)&0xf)*4];
 
-	// c355 internal clipping (used by sgunner & sgunner2)
-	PUSH_XY();
+	INT32 oldmin_x = min_x;
+	INT32 oldmax_x = max_x;
+	INT32 oldmin_y = min_y;
+	INT32 oldmax_y = max_y;
 	min_x = pWinAttr[0] - xscroll;
 	max_x = pWinAttr[1] - xscroll;
 	min_y = pWinAttr[2] - yscroll;
 	max_y = pWinAttr[3] - yscroll;
 	adjust_clip(); // make sane
 
-	// global clipping overrides sprite clipping
 	if (min_x < oldmin_x) min_x = oldmin_x;
 	if (max_x > oldmax_x) max_x = oldmax_x;
 	if (min_y < oldmin_y) min_y = oldmin_y;
@@ -3124,18 +2988,18 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 	hpos&=0x7ff; if( hpos&0x400 ) hpos |= ~0x7ff; /* sign extend */
 	vpos&=0x7ff; if( vpos&0x400 ) vpos |= ~0x7ff; /* sign extend */
 
-	tile_index      = spriteformat16[linkno*4+0];
-	format          = spriteformat16[linkno*4+1];
-	dx              = spriteformat16[linkno*4+2];
-	dy              = spriteformat16[linkno*4+3];
-	num_cols        = (format>>4)&0xf;
-	num_rows        = (format)&0xf;
+	INT32 tile_index      = spriteformat16[linkno*4+0];
+	INT32 format          = spriteformat16[linkno*4+1];
+	INT32 dx              = spriteformat16[linkno*4+2];
+	INT32 dy              = spriteformat16[linkno*4+3];
+	INT32 num_cols        = (format>>4)&0xf;
+	INT32 num_rows        = (format)&0xf;
 
 	if( num_cols == 0 ) num_cols = 0x10;
-	flipx = (hsize&0x8000)?1:0;
-	hsize &= 0x3ff;//0x1ff;
-	if( hsize == 0 ) { POP_XY(); return; }
-	zoomx = (hsize<<16)/(num_cols*16);
+	INT32 flipx = (hsize&0x8000)?1:0;
+	hsize &= 0x3ff;
+	if( hsize == 0 ) { restore_XY_clip(); return; }
+	UINT32 zoomx = (hsize<<16)/(num_cols*16);
 	dx = (dx*zoomx+0x8000)>>16;
 	if( flipx )
 	{
@@ -3147,10 +3011,10 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 	}
 
 	if( num_rows == 0 ) num_rows = 0x10;
-	flipy = (vsize&0x8000)?1:0;
+	INT32 flipy = (vsize&0x8000)?1:0;
 	vsize &= 0x3ff;
-	if( vsize == 0 ) { POP_XY(); return; }
-	zoomy = (vsize<<16)/(num_rows*16);
+	if( vsize == 0 ) { restore_XY_clip(); return; }
+	UINT32 zoomy = (vsize<<16)/(num_rows*16);
 	dy = (dy*zoomy+0x8000)>>16;
 	if( flipy )
 	{
@@ -3161,31 +3025,31 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 		vpos -= dy;
 	}
 
-	color = (palette&0xf);//^m_c355_obj_palxor;
+	INT32 color = palette&0xf;
 
-	source_height_remaining = num_rows*16;
-	screen_height_remaining = vsize;
-	sy = vpos;
-	for( row=0; row<num_rows; row++ )
+	UINT32 source_height_remaining = num_rows*16;
+	UINT32 screen_height_remaining = vsize;
+	INT32 sy = vpos;
+	for(INT32 row=0; row<num_rows; row++)
 	{
-		tile_screen_height = 16*screen_height_remaining/source_height_remaining;
+		INT32 tile_screen_height = 16*screen_height_remaining/source_height_remaining;
 		zoomy = (screen_height_remaining<<16)/source_height_remaining;
 		if( flipy )
 		{
 			sy -= tile_screen_height;
 		}
-		source_width_remaining = num_cols*16;
-		screen_width_remaining = hsize;
-		sx = hpos;
-		for( col=0; col<num_cols; col++ )
+		UINT32 source_width_remaining = num_cols*16;
+		UINT32 screen_width_remaining = hsize;
+		INT32 sx = hpos;
+		for(INT32 col=0; col<num_cols; col++)
 		{
-			tile_screen_width = 16*screen_width_remaining/source_width_remaining;
+			INT32 tile_screen_width = 16*screen_width_remaining/source_width_remaining;
 			zoomx = (screen_width_remaining<<16)/source_width_remaining;
 			if( flipx )
 			{
 				sx -= tile_screen_width;
 			}
-			tile = spritetile16[tile_index++];
+			INT32 tile = spritetile16[tile_index++];
 			if( (tile&0x8000)==0 )
 			{
 				INT32 size = 0;
@@ -3198,24 +3062,24 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 			}
 			screen_width_remaining -= tile_screen_width;
 			source_width_remaining -= 16;
-		} /* next col */
+		}
 		if( !flipy )
 		{
 			sy += tile_screen_height;
 		}
 		screen_height_remaining -= tile_screen_height;
 		source_height_remaining -= 16;
-	} /* next row */
+	}
 
-	POP_XY();
+	restore_XY_clip();
 }
 
 static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
 {
-    for (INT32 i = 0; i < 256; i++)
+	for (INT32 i = 0; i < 256; i++)
 	{
 		UINT16 which = pSpriteList16[i];
-		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], i);
+		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8]);
 		if (which&0x100) break;
 	}
 }
@@ -3266,8 +3130,6 @@ static void FinallapDrawBegin()
 
 	BurnTransferClear(0x4000);
 }
-
-//#define DRAW_LAYER_WRITE_2x_PRI 0x1000
 
 static void FinallapDrawLine(INT32 line)
 {

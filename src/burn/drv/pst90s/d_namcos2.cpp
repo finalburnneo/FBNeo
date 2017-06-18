@@ -1,33 +1,31 @@
 // FB Alpha Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
-// Todo:
-//   3: (lowprio) Make single-joy hack for Assault with fake-dip for normal or single mode.
+//tested / good:
+// assault
+// burnforc
+// cosmogng
+// dsaber
+// mirninja
+// valkyrie
+// ordyne
+// phelious
+// rthun2
+// marvland
+// metlhawk
+// kyukaidk
+// sws & clones
+// sgunner
+// sgunner2 (needs old mcu)
+// dirtfoxj
+// finehour
+// luckywld
 
-//tested: old code|june.15 version
-// assault	- good good
-// burnforc	- good tested good
-// cosmogng	- good tested good
-// dsaber	- good tested good
-// mirninja	- good tested good (yea! awesome game!)
-// valkyrie	- good tested good
-// ordyne	- good tested good
-// phelious	- good tested good
-// rthun2	- good tested good
-// marvland	- good tested good
-// metlhawk - good tested good
-// kyukaidk	- good (baseball)
-// sws & clones	- good (baseball)
-// sgunner  - good tested good
-// sgunner2	- good (needs old mcu) tested good
-// dirtfoxj	- good tested good
-// finehour	- good tested good
-// luckywld	- good tested good
-
-//eek.
+//wip:
 // bubbletr	- ok, missing artwork (flipped)
 // gollygho	- ok, missing artwork (flipped)
-//
+
+//forget:
 // finallap	- some bad gfx (title sprites), bad sound, no inputs
 // finalap2	- "...all finallap-based games (incl. fourtrax & suzuka) are bugged and unplayable, even in mame"
 // finalap3	- ""
@@ -487,11 +485,9 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 		case 0x20000:
 			return 0xffff; // eeprom ready
 
-		case 0x22000:  // ext1_w -- callback
+		case 0x22000:
 			if (w && a == 0)
 			{
-			//	if (data & 1) bprintf (0, _T("audio CPU on!\n"));
-			//	if (!data & 1)  bprintf (0, _T("audio CPU off!\n"));
 				audio_cpu_in_reset = ~data & 1;
 				if (audio_cpu_in_reset) M6809Reset();
 				else {
@@ -502,7 +498,7 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 			}
 			return 0;
 
-		case 0x24000: // ext2_w -- callback
+		case 0x24000:
 			if (w && a == 0)
 			{
 				sub_cpu_in_reset = ~data & 1;
@@ -515,12 +511,9 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 					SekReset();
 					SekClose();
 					SekOpen(0);
-
-				//	bprintf (0, _T("SUB CPUS off!\n"));
 				}
 				else
 				{
-				//	bprintf (0, _T("SUB CPUS on!\n"));
 					maincpu_run_cycles = SekTotalCycles();
 					maincpu_run_ended = 1;
 					SekRunEnd();
@@ -1029,20 +1022,9 @@ static UINT8 mcu_analog_ctrl_read()
 }
 
 static UINT8 mcu_port_d_r()
-{
-	INT32 threshold = 0x7f;
+{ // no games use this, but keep just in-case
+	//INT32 threshold = 0x7f;
 	INT32 data = 0;
-
-//	if(ioport("AN0")->read() > threshold) data |= 0x01;
-//	if(ioport("AN1")->read() > threshold) data |= 0x02;
-//	if(ioport("AN2")->read() > threshold) data |= 0x04;
-//	if(ioport("AN3")->read() > threshold) data |= 0x08;
-//	if(ioport("AN4")->read() > threshold) data |= 0x10;
-//	if(ioport("AN5")->read() > threshold) data |= 0x20;
-//	if(ioport("AN6")->read() > threshold) data |= 0x40;
-//	if(ioport("AN7")->read() > threshold) data |= 0x80;
-
-	threshold &= 0xff; // iq_132      ?? dink
 
 	return data;
 }
@@ -1420,12 +1402,6 @@ static void FreshEEPROMCheck()
 
 static INT32 DrvDoReset()
 {
-#if 0
-	FILE * f = fopen("c:/eeprom.bin", "wb");
-	fwrite(DrvEEPROM, 1, 0x2000, f);
-	fclose(f);
-#endif
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	memset (roz_dirty_tile, 1, 0x10000);
@@ -2312,7 +2288,7 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 			if (*msk & (0x80 >> xx))
 			{
 				dst[zx] = gfx[xx] + color;
-				pri[zx] = (priority&0x1000) ? priority*2 : priority;
+				pri[zx] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 			}
 		}
 	}
@@ -2396,7 +2372,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x01 << x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[7 - x] + color;
-						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority&0x1000) ? priority*2 : priority;
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 					}
 				}
 			}
@@ -2413,7 +2389,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x80 >> x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[x] + color;
-						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority&0x1000) ? priority*2 : priority;
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 					}
 				}
 			}
@@ -2575,7 +2551,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 												dest[x] = c|color;
 												break;
 											}
-											pri[x] = priority & 0xf; //(priority & 0x100) ? priority & 0xf : 0x80;
+											pri[x] = priority & 0xf;
 										}
 									}
 									x_index += dx;
@@ -2599,7 +2575,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 											{
 												dest[x] = c | color;
 											}
-											pri[x] = priority & 0xf; //(priority & 0x100) ? priority & 0xf : 0x80;
+											pri[x] = priority & 0xf;
 										}
 									}
 									x_index += dx;
@@ -2938,7 +2914,6 @@ static void draw_roz(INT32 pri)
 	draw_roz_helper(&rozParam, pri);
 }
 
-
 static void draw_sprites(INT32 control)
 {
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
@@ -2978,7 +2953,7 @@ static void draw_sprites(INT32 control)
 			}
 		}
 	}
-} /* namcos2_draw_sprites */
+}
 
 static void DrvDrawBegin()
 {
@@ -3915,8 +3890,6 @@ STD_ROM_FN(assaultp)
 
 static INT32 AssaultpInit()
 {
-	// overclock HD68705 Code 4x & boost interleave!
-
 	return Namcos2Init(NULL, NULL);
 }
 
@@ -5604,11 +5577,11 @@ static struct BurnRomInfo sgunner2jRomDesc[] = {
 
 	{ "sns_snd0.bin",	0x20000, 0xf079cd32, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
-//	correct HD68705 Code!
+//	correct HD68705 Code! JacKc & Barry - please do not change these next 3 lines (5, 6, 7) or the game will break.
 	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS }, //  5 c68
 //	use this instead!
-	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
-	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
 
 	{ "sns_obj0.bin",	0x80000, 0xc762445c, 0x05 | BRF_GRA },           //  8 Sprites
 	{ "sns_obj4.bin",	0x80000, 0x0b1be894, 0x05 | BRF_GRA },           //  9

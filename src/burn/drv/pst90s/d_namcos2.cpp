@@ -3521,7 +3521,7 @@ static INT32 DrvFrame()
 		if (sub_cpu_in_reset) {
 			nCyclesDone[1] += segment - SekTotalCycles();
 			SekIdle(segment - SekTotalCycles());
-		} else {			
+		} else {
 			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
 			if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
 			if (i == position*2) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
@@ -3544,12 +3544,10 @@ static INT32 DrvFrame()
 			nCyclesDone[2] += segment / 6;
 		} else {
 			nCyclesDone[2] += M6809Run((segment / 6) - M6809TotalCycles());
-			if (i == 127*2 || i == 255*2) {
-				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
-			}
 
-			if (i == 64*2 || i == 192*2) {
-				M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO); // not right!
+			if (i == 1*2 || i == 133*2) {
+				M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 			}
 		}
 

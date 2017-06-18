@@ -20,6 +20,7 @@ typedef struct
     UINT8   cc;
 	UINT8	ireg;		/* First opcode */
 	UINT8	irq_state[2];
+	UINT8	irq_hold[2];
     int     extra_cycles; /* cycles used up by interrupts */
 	ALIGN_VAR(8) int (*irq_callback)(int irqline);
     UINT8   int_state;  /* SYNC and CWAI flags */

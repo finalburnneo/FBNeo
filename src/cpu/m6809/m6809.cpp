@@ -165,6 +165,8 @@ static m6809_Regs m6809;
 		CC |= CC_IF | CC_II;			/* inhibit FIRQ and IRQ */		\
 		PCD=RM16(0xfff6);												\
 		CHANGE_PC;														\
+	    if (m6809.irq_hold[M6809_FIRQ_LINE])                            \
+            m6809_set_irq_line(M6809_FIRQ_LINE, 0);                     \
 	}																	\
 	else																\
 	if( m6809.irq_state[M6809_IRQ_LINE]!=M6809_CLEAR_LINE && !(CC & CC_II) )	\
@@ -192,6 +194,8 @@ static m6809_Regs m6809;
 		CC |= CC_II;					/* inhibit IRQ */				\
 		PCD=RM16(0xfff8);												\
 		CHANGE_PC;														\
+	    if (m6809.irq_hold[M6809_IRQ_LINE])                             \
+            m6809_set_irq_line(M6809_IRQ_LINE, 0);                      \
 	}
 
 /* public globals */
@@ -457,6 +461,10 @@ static void m6809_exit(void)
  ****************************************************************************/
 void m6809_set_irq_line(int irqline, int state)
 {
+	int hold = 0;
+
+	if (state == 2) { hold = 1; state = 1; }
+
 	if (irqline == M6809_INPUT_LINE_NMI)
 	{
 		if (m6809.nmi_state == state) return;
@@ -495,6 +503,7 @@ void m6809_set_irq_line(int irqline, int state)
 	{
 //	    LOG(("M6809#%d set_irq_line %d, %d\n", cpu_getactivecpu(), irqline, state));
 		m6809.irq_state[irqline] = state;
+		m6809.irq_hold[irqline] = hold;
 		if (state == M6809_CLEAR_LINE) return;
 		CHECK_IRQ_LINES;
 	}

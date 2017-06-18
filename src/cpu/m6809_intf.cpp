@@ -189,6 +189,10 @@ void M6809SetIRQLine(INT32 vector, INT32 status)
 	if (status == CPU_IRQSTATUS_ACK) {
 		m6809_set_irq_line(vector, 1);
 	}
+
+	if (status == CPU_IRQSTATUS_HOLD) {
+		m6809_set_irq_line(vector, 2);
+	}
 	
 	if (status == CPU_IRQSTATUS_AUTO) {
 		m6809_set_irq_line(vector, 1);

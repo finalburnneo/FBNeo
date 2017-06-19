@@ -4876,6 +4876,7 @@ static INT32 FinehourInit()
 	INT32 rc = Namcos2Init(NULL, finehour_key_read);
 
 	is_finehour = 1;
+	weird_vbl = 1;
 
 	if (!rc) {
 		pDrvDrawBegin = DrvDrawBegin;
@@ -4887,7 +4888,7 @@ static INT32 FinehourInit()
 
 struct BurnDriver BurnDrvFinehour = {
 	"finehour", NULL, NULL, NULL, "1989",
-	"Finest Hour (Japan)\0", NULL, "Namco", "System 2",
+	"Finest Hour (Japan)\0", "Some color issues", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, finehourRomInfo, finehourRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,

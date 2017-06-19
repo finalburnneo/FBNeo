@@ -1,6 +1,8 @@
 // FB Alpha Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
+// metlhawk: red arrow is off by 16x 16y
+
 //tested / good:
 // assault
 // burnforc
@@ -148,6 +150,7 @@ static INT32 DrvGun3 = 0;
 static INT32 is_finehour = 0;
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
+static INT32 is_metlhawk = 0;
 
 static INT32 weird_vbl = 0;
 
@@ -928,13 +931,56 @@ static UINT8 __fastcall finallap_68k_read_byte(UINT32 address)
 	return namcos2_68k_read_byte(address);
 }
 
+static INT32 AnalogClip(INT16 p)
+{
+	if (p > 1023) p = 1023;
+	else if (p < -1023) p = -1023;
+	return p;
+}
+
+static INT16 AnalogClipExDelay = 0;
+
+static INT32 AnalogClipEx(INT16 p)
+{
+	if (is_metlhawk) // for the up/down axis & mouse wheel playability
+	{
+		if (p > 255) p = 1023;
+		else if (p < -255) p = -1023;
+
+		if (p) AnalogClipExDelay = p;
+
+		if (!p) // no change on wheel - use last value and decrement it
+		{
+			if (AnalogClipExDelay > 0)
+			{
+				AnalogClipExDelay -= 50;
+				if (AnalogClipExDelay < 0) AnalogClipExDelay = 0;
+
+			}
+			else if (AnalogClipExDelay < 0)
+			{
+				AnalogClipExDelay += 50;
+				if (AnalogClipExDelay > 0) AnalogClipExDelay = 0;
+			}
+
+			p = AnalogClipExDelay;
+		}
+
+	} else {
+		if (p > 1023) p = 1023;
+		else if (p < -1023) p = -1023;
+	}
+
+	return p;
+}
+
 static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
 	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
 }
 
 static UINT8 luckywldsteer()
 {
-	UINT8 Temp = 0x7f + (DrvAnalogPort0 >> 4);
+	UINT8 Temp = 0x7f + (AnalogClip(DrvAnalogPort0) >> 4);
 	UINT8 Temp2 = 0;
 
 	Temp2 = scalerange(Temp, 0x3f, 0xc0, 0x00, 0xff);
@@ -970,9 +1016,9 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 2: mcu_analog_data = 0; break; // an2
 				case 3: mcu_analog_data = 0; break; // an3
 				case 4: mcu_analog_data = 0; break; // an4
-				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
-				case 6: mcu_analog_data = (DrvAnalogPort1 >> 4); break; // an6
-				case 7: mcu_analog_data = (DrvAnalogPort2 >> 4); break; // an7
+				case 5: mcu_analog_data = 0x7f + (AnalogClip(DrvAnalogPort0) >> 4); break; // an5
+				case 6: mcu_analog_data = (AnalogClip(DrvAnalogPort1) >> 4); break; // an6
+				case 7: mcu_analog_data = (AnalogClip(DrvAnalogPort2) >> 4); break; // an7
 			}
 		} else if (is_luckywld) {
 			switch ((data >> 2) & 7)
@@ -983,8 +1029,8 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 3: mcu_analog_data = BurnGunReturnX(1); break; // an3
 				case 4: mcu_analog_data = BurnGunReturnX(0); break; // an4
 				case 5: mcu_analog_data = luckywldsteer(); break; // an5
-				case 6: mcu_analog_data = (DrvAnalogPort1 >> 4); break; // an6
-				case 7: mcu_analog_data = (DrvAnalogPort2 >> 4); break; // an7
+				case 6: mcu_analog_data = (AnalogClip(DrvAnalogPort1) >> 4); break; // an6
+				case 7: mcu_analog_data = (AnalogClip(DrvAnalogPort2) >> 4); break; // an7
 			}
 		} else {
 			switch ((data >> 2) & 7)
@@ -994,10 +1040,11 @@ static void mcu_analog_ctrl_write(UINT8 data)
 				case 2: mcu_analog_data = 0; break; // an2
 				case 3: mcu_analog_data = 0; break; // an3
 				case 4: mcu_analog_data = 0; break; // an4
-				case 5: mcu_analog_data = 0x7f + (DrvAnalogPort0 >> 4); break; // an5
-				case 6: mcu_analog_data = 0x7f + (DrvAnalogPort1 >> 4); break; // an6
-				case 7: mcu_analog_data = 0x7f + (DrvAnalogPort2 >> 4); break; // an7
+				case 5: mcu_analog_data = 0x7f + (AnalogClip(DrvAnalogPort0) >> 4); break; // an5
+				case 6: mcu_analog_data = 0x7f + (AnalogClip(DrvAnalogPort1) >> 4); break; // an6
+				case 7: mcu_analog_data = 0x7f + (AnalogClipEx(DrvAnalogPort2) >> 4); break; // an7
 			}
+			//bprintf(0, _T("Port 0: %.06d  Port 1: %.06d  Port 2: %.06d       \n"), DrvAnalogPort0, DrvAnalogPort1, DrvAnalogPort2);
 		}
 	}
 
@@ -1980,6 +2027,8 @@ static INT32 MetlhawkInit()
 
 	GenericTilesInit();
 
+	is_metlhawk = 1;
+
 	DrvDoReset();
 
 	return 0;
@@ -2134,6 +2183,7 @@ static INT32 Namcos2Exit()
 	is_dirtfoxj = 0;
 	is_finehour = 0;
 	is_luckywld = 0;
+	is_metlhawk = 0;
 
 	weird_vbl = 0;
 
@@ -4876,7 +4926,7 @@ static INT32 FinehourInit()
 	INT32 rc = Namcos2Init(NULL, finehour_key_read);
 
 	is_finehour = 1;
-	weird_vbl = 1;
+	weird_vbl = 0;
 
 	if (!rc) {
 		pDrvDrawBegin = DrvDrawBegin;

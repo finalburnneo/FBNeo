@@ -2636,9 +2636,6 @@ static void draw_sprites_metalhawk()
 				sizey = 16;
 				scalex = 1<<16;
 				scaley = 1<<16;
-
-				//sx -= (tile&1)?16:0; // not needed in fba(?) -dink
-				//sy -= (tile&2)?16:0; // causes offset issues with some sprites, f.ex. red arrow
 			}
 			else
 			{

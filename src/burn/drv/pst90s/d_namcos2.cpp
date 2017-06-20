@@ -87,6 +87,7 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT16 gfx_ctrl;
+static UINT32 sprite_bank[0x10];
 
 static UINT8 irq_reg[2];
 static UINT8 irq_cpu[2];
@@ -657,6 +658,7 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 	{
 		case 0xc40000:
 			gfx_ctrl = data;
+			sprite_bank[gfx_ctrl & 0xf] = 1;
 		return;
 	}
 }
@@ -803,6 +805,7 @@ static void __fastcall metlhawk_68k_write_word(UINT32 address, UINT16 data)
 	{
 		case 0xe00000:
 			gfx_ctrl = data;
+			sprite_bank[gfx_ctrl & 0xf] = 1;
 		return;
 	}
 
@@ -896,6 +899,7 @@ static void __fastcall finallap_68k_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x840000:
 			gfx_ctrl = data;
+			sprite_bank[gfx_ctrl & 0xf] = 1;
 		return;
 	}
 
@@ -1472,6 +1476,7 @@ static INT32 DrvDoReset()
 	c45RoadReset();
 
 	gfx_ctrl = 0;
+	memset(&sprite_bank, 0, sizeof(sprite_bank));
 
 	irq_reg[1] = irq_reg[0] = 0;
 	irq_cpu[1] = irq_cpu[0] = 0;
@@ -2874,10 +2879,10 @@ static void draw_roz(INT32 pri)
 	draw_roz_helper(&rozParam, pri);
 }
 
-static void draw_sprites(INT32 control)
+static void draw_sprites_bank(INT32 spritebank)
 {
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
-	INT32 offset = (control & 0x000f) * (128*4);
+	INT32 offset = (spritebank & 0xf) * (128*4);
 
 	for (INT32 loop=0; loop < 128; loop++)
 	{
@@ -2913,6 +2918,18 @@ static void draw_sprites(INT32 control)
 			}
 		}
 	}
+}
+
+static void draw_sprites()
+{
+	for (INT32 i = 0; i < 0x10; i++)
+	{
+		if (sprite_bank[i]) {
+			draw_sprites_bank(i);
+			sprite_bank[i] = 0;
+		}
+	}
+	sprite_bank[gfx_ctrl&0xf] = 1;
 }
 
 static void DrvDrawBegin()
@@ -2983,7 +3000,7 @@ static INT32 DrvDraw()
 		}
 	}
 
-	if (nBurnLayer & 2) draw_sprites(gfx_ctrl);
+	if (nBurnLayer & 2) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3213,7 +3230,7 @@ static INT32 FinallapDraw()
 		}
 	}
 	if (nBurnLayer & 1) c45RoadDraw();
-	if (nBurnLayer & 2) draw_sprites(gfx_ctrl);
+	if (nBurnLayer & 2) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

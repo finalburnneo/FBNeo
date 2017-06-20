@@ -1,8 +1,6 @@
 // FB Alpha Namco System 2 driver module
 // Based on MAME driver by K.Wilkins
 
-// metlhawk: red arrow is off by 16x 16y
-
 //tested / good:
 // assault
 // burnforc
@@ -2639,8 +2637,8 @@ static void draw_sprites_metalhawk()
 				scalex = 1<<16;
 				scaley = 1<<16;
 
-				sx -= (tile&1)?16:0;
-				sy -= (tile&2)?16:0;
+				//sx -= (tile&1)?16:0; // not needed in fba(?) -dink
+				//sy -= (tile&2)?16:0; // causes offset issues with some sprites, f.ex. red arrow
 			}
 			else
 			{

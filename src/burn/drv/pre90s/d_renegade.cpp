@@ -49,8 +49,7 @@ static INT32 nCyclesTotal[3];
 
 // MCU Simulation Variables
 #define MCU_TYPE_NONE		0
-#define MCU_TYPE_RENEGADE	1
-#define MCU_TYPE_KUNIOKUN	2
+#define MCU_TYPE_MCU		1
 
 #define MCU_BUFFER_MAX 6
 static UINT8 mcu_buffer[MCU_BUFFER_MAX];
@@ -58,14 +57,9 @@ static UINT8 mcu_input_size;
 static UINT8 mcu_output_byte;
 static INT8 mcu_key;
 
-static INT32 mcu_type;
-static const UINT8 *mcu_encrypt_table;
-static INT32 mcu_encrypt_table_len;
-
 static INT32 DisableMCUEmulation = 0;
 
 // MCU Emulation Variables
-static INT32 nSimulateMCU;
 static INT32 MCUFromMain;
 static INT32 MCUFromMcu;
 static INT32 MCUMainSent;
@@ -241,7 +235,7 @@ static struct BurnRomInfo DrvjRomDesc[] = {
 	{ "ta18-08.bin",   0x08000, 0xc9312613, BRF_GRA },	     //  23
 	{ "ta18-07.bin",   0x08000, 0x02e3f3ed, BRF_GRA },	     //  24
 	
-	{ "mcu",           0x08000, 0x00000000, BRF_PRG | BRF_NODUMP },	// 25 MCU
+	{ "nz-0.bin",      0x00800, 0x650bb5f0, BRF_ESS | BRF_PRG },	// 25 MCU
 };
 
 STD_ROM_PICK(Drvj)
@@ -315,226 +309,35 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static const UINT8 kuniokun_xor_table[0x2a] =
-{
-	0x48, 0x8a, 0x48, 0xa5, 0x01, 0x48, 0xa9, 0x00,
-	0x85, 0x01, 0xa2, 0x10, 0x26, 0x10, 0x26, 0x11,
-	0x26, 0x01, 0xa5, 0x01, 0xc5, 0x00, 0x90, 0x04,
-	0xe5, 0x00, 0x85, 0x01, 0x26, 0x10, 0x26, 0x11,
-	0xca, 0xd0, 0xed, 0x68, 0x85, 0x01, 0x68, 0xaa,
-	0x68, 0x60
-};
-
 static UINT8 mcu_reset_r()
 {
-	if (nSimulateMCU) {
-		mcu_key = -1;
-		mcu_input_size = 0;
-		mcu_output_byte = 0;
-	} else {
-		m6805Open(0);
-		m68705Reset();
-		m6805Close();
-	}
+	m6805Open(0);
+	m68705Reset();
+	m6805Close();
 	
 	return 0;
 }
 
 static void mcu_w(UINT8 data)
 {
-	if (nSimulateMCU) {
-		mcu_output_byte = 0;
-
-		if (mcu_key < 0) {
-			mcu_key = 0;
-			mcu_input_size = 1;
-			mcu_buffer[0] = data;
-		} else {
-			data ^= mcu_encrypt_table[mcu_key++];
-			if (mcu_key == mcu_encrypt_table_len)
-				mcu_key = 0;
-			if (mcu_input_size < MCU_BUFFER_MAX)
-				mcu_buffer[mcu_input_size++] = data;
-		}
-	} else {
-		MCUFromMain = data;
-		MCUMainSent = 1;
-		m6805Open(0);
-		m68705SetIrqLine(0, 1);
-		m6805Close();
-	}
-}
-
-static void mcu_process_command(void)
-{
-	mcu_input_size = 0;
-	mcu_output_byte = 0;
-
-	switch (mcu_buffer[0]) {
-		case 0x10:
-			mcu_buffer[0] = mcu_type;
-			break;
-
-		case 0x26: {
-			INT32 sound_code = mcu_buffer[1];
-			static const UINT8 sound_command_table[256] = {
-				0xa0, 0xa1, 0xa2, 0x80, 0x81, 0x82, 0x83, 0x84,
-				0x85, 0x86, 0x87, 0x88, 0x89, 0x8a, 0x8b, 0x8c,
-				0x8d, 0x8e, 0x8f, 0x97, 0x96, 0x9b, 0x9a, 0x95,
-				0x9e, 0x98, 0x90, 0x93, 0x9d, 0x9c, 0xa3, 0x91,
-				0x9f, 0x99, 0xa6, 0xae, 0x94, 0xa5, 0xa4, 0xa7,
-				0x92, 0xab, 0xac, 0xb0, 0xb1, 0xb2, 0xb3, 0xb4,
-				0xb5, 0xb6, 0xb7, 0xb8, 0xb9, 0xba, 0xbb, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x20, 0x20, 0x20,
-				0x50, 0x50, 0x90, 0x30, 0x30, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x80, 0xa0, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x40, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x20, 0x00, 0x00, 0x10, 0x10, 0x00, 0x00, 0x90,
-				0x30, 0x30, 0x30, 0xb0, 0xb0, 0xb0, 0xb0, 0xf0,
-				0xf0, 0xf0, 0xf0, 0xd0, 0xf0, 0x00, 0x00, 0x00,
-				0x00, 0x10, 0x10, 0x50, 0x30, 0xb0, 0xb0, 0xf0,
-				0xf0, 0xf0, 0xf0, 0xf0, 0xf0, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x10,
-				0x10, 0x10, 0x30, 0x30, 0x20, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
-				0x00, 0x00, 0x00, 0x00, 0x00, 0x0f, 0x0f, 0x0f,
-				0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f,
-				0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x8f, 0x8f, 0x0f,
-				0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0x0f,
-				0x0f, 0x0f, 0x0f, 0x0f, 0x0f, 0xff, 0xff, 0xff,
-				0xef, 0xef, 0xcf, 0x8f, 0x8f, 0x0f, 0x0f, 0x0f
-			};
-			mcu_buffer[0] = 1;
-			mcu_buffer[1] = sound_command_table[sound_code];
-			break;
-		}
-		
-
-		case 0x33: {
-			INT32 joy_bits = mcu_buffer[2];
-			static const UINT8 joy_table[0x10] = {
-				0, 3, 7, 0, 1, 2, 8, 0, 5, 4, 6, 0, 0, 0, 0, 0
-			};
-			mcu_buffer[0] = 1;
-			mcu_buffer[1] = joy_table[joy_bits & 0xf];
-			break;
-		}
-		
-
-		case 0x44: {
-			INT32 difficulty = mcu_buffer[2] & 0x3;
-			INT32 stage = mcu_buffer[3];
-			static const UINT8 difficulty_table[4] = { 5, 3, 1, 2 };
-			INT32 result = difficulty_table[difficulty];
-
-			if (stage == 0)
-				result--;
-			result += stage / 4;
-			if (result > 0x21)
-				result += 0xc0;
-
-			mcu_buffer[0] = 1;
-			mcu_buffer[1] = result;
-			break;
-		}
-		
-		case 0x55: {
-			INT32 difficulty = mcu_buffer[4] & 0x3;
-			static const UINT16 table[4] = {
-				0x4001, 0x5001, 0x1502, 0x0002
-			};
-
-			mcu_buffer[0] = 3;
-			mcu_buffer[2] = table[difficulty] >> 8;
-			mcu_buffer[3] = table[difficulty] & 0xff;
-			break;
-		}
-		
-
-		case 0x41: {
-			mcu_buffer[0] = 2;
-			mcu_buffer[1] = 0x20;
-			mcu_buffer[2] = 0x78;
-			break;
-		}
-		
-
-		case 0x40: {
-			INT32 difficulty = mcu_buffer[2];
-			INT32 enemy_type = mcu_buffer[3];
-			INT32 health;
-
-			if (enemy_type <= 4) {
-				health = 0x18 + difficulty * 2;
-				if (health > 0x40)
-					health = 0x40;	/* max 0x40 */
-			} else {
-				health = 0x06 + difficulty * 2;
-				if (health > 0x20)
-					health = 0x20;	/* max 0x20 */
-			}
-			mcu_buffer[0] = 1;
-			mcu_buffer[1] = health;
-			break;
-		}
-		
-
-		case 0x42: {
-			INT32 stage = mcu_buffer[2] & 0x3;
-			INT32 indx = mcu_buffer[3];
-			INT32 enemy_type=0;
-
-			static const INT32 table[] = {
-				0x01, 0x06, 0x06, 0x05, 0x05, 0x05, 0x05, 0x05,	/* for stage#: 0 */
-				0x02, 0x0a, 0x0a, 0x09, 0x09, 0x09, 0x09,	/* for stage#: 1 */
-				0x03, 0x0e, 0x0e, 0x0e, 0x0d, 0x0d, 0x0d, 0x0d,	/* for stage#: 2 */
-				0x04, 0x12, 0x12, 0x12, 0x12, 0x12, 0x12, 0x12,	/* for stage#: 3 */
-				0x3d, 0x23, 0x26, 0x0a, 0xb6, 0x11, 0xa4, 0x0f,	/* strange data (maybe out of table) */
-			};
-			INT32 offset = stage * 8 + indx;
-
-			if (stage >= 2)
-				offset--;
-
-			enemy_type = table[offset];
-
-			mcu_buffer[0] = 1;
-			mcu_buffer[1] = enemy_type;
-			break;
-		}
-	}
+	MCUFromMain = data;
+	MCUMainSent = 1;
+	m6805Open(0);
+	m68705SetIrqLine(0, 1);
+	m6805Close();
 }
 
 static UINT8 mcu_r()
 {
-	if (nSimulateMCU) {
-		INT32 result = 1;
-
-		if (mcu_input_size)
-			mcu_process_command();
-
-		if (mcu_output_byte < MCU_BUFFER_MAX)
-			result = mcu_buffer[mcu_output_byte++];
-
-		return result;
-	} else {
-		MCUMcuSent = 0;
-		return MCUFromMcu;
-	}
+	MCUMcuSent = 0;
+	return MCUFromMcu;
 }
 
 static UINT8 mcu_status_r()
 {
 	UINT8 Res = 0;
 
-	if (nSimulateMCU || DisableMCUEmulation) {
+	if (DisableMCUEmulation) {
 		Res = 1;
 	} else {
 		if (!MCUMainSent)
@@ -562,7 +365,7 @@ static INT32 DrvDoReset()
 	M6809Reset();
 	M6809Close();
 	
-	if (!nSimulateMCU && !DisableMCUEmulation) {
+	if (!DisableMCUEmulation) {
 		m6805Open(0);
 		m68705Reset();
 		m6805Close();
@@ -969,9 +772,7 @@ static INT32 DrvInit(INT32 nMcuType)
 	MSM5205Init(0, DrvSynchroniseStream, 12000000 / 32, DrvMSM5205Int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 	
-	if (nMcuType == MCU_TYPE_RENEGADE) {
-		nSimulateMCU = 0;
-		
+	if (nMcuType == MCU_TYPE_MCU) {
 		nRet = BurnLoadRom(DrvM68705Rom, 25, 1); if (nRet != 0) return 1;
 		
 		m6805Init(1, 0x800);
@@ -981,13 +782,6 @@ static INT32 DrvInit(INT32 nMcuType)
 		m6805SetWriteHandler(MCUWriteByte);
 		m6805SetReadHandler(MCUReadByte);
 		m6805Close();
-	}
-	
-	if (nMcuType == MCU_TYPE_KUNIOKUN) {
-		mcu_type = 0x85;
-		mcu_encrypt_table = kuniokun_xor_table;
-		mcu_encrypt_table_len = 0x2a;
-		nSimulateMCU = 1;
 	}
 	
 	if (nMcuType == MCU_TYPE_NONE) {
@@ -1007,12 +801,7 @@ static INT32 DrvInit(INT32 nMcuType)
 
 static INT32 RenegadeInit()
 {
-	return DrvInit(MCU_TYPE_RENEGADE);
-}
-
-static INT32 KuniokunInit()
-{
-	return DrvInit(MCU_TYPE_KUNIOKUN);
+	return DrvInit(MCU_TYPE_MCU);
 }
 
 static INT32 KuniokunbInit()
@@ -1024,7 +813,7 @@ static INT32 DrvExit()
 {
 	M6502Exit();
 	M6809Exit();
-	if (!nSimulateMCU && !DisableMCUEmulation) m6805Exit();
+	if (!DisableMCUEmulation) m6805Exit();
 	
 	BurnYM3526Exit();
 	MSM5205Exit();
@@ -1033,10 +822,6 @@ static INT32 DrvExit()
 	
 	BurnFree(Mem);
 	
-	mcu_type = 0;
-	mcu_encrypt_table = NULL;
-	mcu_encrypt_table_len = 0;
-	
 	memset(mcu_buffer, 0, MCU_BUFFER_MAX);
 	mcu_input_size = 0;
 	mcu_output_byte = 0;
@@ -1044,7 +829,6 @@ static INT32 DrvExit()
 	
 	DisableMCUEmulation = 0;
 	
-	nSimulateMCU = 0;
 	MCUFromMain = 0;
 	MCUFromMcu = 0;
 	MCUMainSent = 0;
@@ -1265,7 +1049,7 @@ static INT32 DrvFrame()
 		if (i == (nInterleave / 2) || i == ((nInterleave / 10) * 9)) DrvInterrupt();
 		M6502Close();
 		
-		if (!nSimulateMCU && !DisableMCUEmulation) {
+		if (!DisableMCUEmulation) {
 			m6805Open(0);
 			nCurrentCPU = 2;
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -1327,7 +1111,7 @@ struct BurnDriver BurnDrvKuniokun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	KuniokunInit, DrvExit, DrvFrame, NULL, DrvScan,
+	RenegadeInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x100, 240, 240, 4, 3
 };
 

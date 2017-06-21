@@ -14,7 +14,7 @@
 // marvland
 // metlhawk
 // kyukaidk
-// sws & clones
+// sws & clones - bug: kanji text is solid blue when it should be white with black outline
 // sgunner
 // sgunner2 (needs old mcu)
 // dirtfoxj
@@ -148,7 +148,6 @@ static INT32 DrvGun1 = 0;
 static INT32 DrvGun2 = 0;
 static INT32 DrvGun3 = 0;
 
-static INT32 is_finehour = 0;
 static INT32 is_dirtfoxj = 0;
 static INT32 is_luckywld = 0;
 static INT32 is_metlhawk = 0;
@@ -466,7 +465,6 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 			return irq_vblank[a];
 
 		case 0x10000:
-			//if (is_finehour) return 0; // finehour "missing tilemap 0,1 writes" hack/fix 1/2
 			if (w) {
 				SekClose();
 				SekOpen((a) ? 0 : 1);
@@ -477,13 +475,11 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 			return 0;
 
 		case 0x16000:
-			//if (is_finehour) return 0; // finehour hack/fix 2/2
-				SekClose();
-				SekOpen((a) ? 0 : 1);
-				SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
-				SekClose();
-				SekOpen(a);
-//			SekSetIRQLine(irq_cpu[a], CPU_IRQSTATUS_NONE);
+			SekClose();
+			SekOpen((a) ? 0 : 1);
+			SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
+			SekClose();
+			SekOpen(a);
 			return 0;
 
 		case 0x18000:
@@ -2198,7 +2194,6 @@ static INT32 Namcos2Exit()
 
 	nvramcheck = 0;
 	is_dirtfoxj = 0;
-	is_finehour = 0;
 	is_luckywld = 0;
 	is_metlhawk = 0;
 
@@ -4983,7 +4978,6 @@ static INT32 FinehourInit()
 {
 	INT32 rc = Namcos2Init(NULL, finehour_key_read);
 
-	is_finehour = 1;
 	weird_vbl = 0;
 
 	if (!rc) {

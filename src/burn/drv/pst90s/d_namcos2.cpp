@@ -466,13 +466,24 @@ static UINT16 c148_read_write(UINT32 offset, UINT16 data, INT32 w)
 			return irq_vblank[a];
 
 		case 0x10000:
-			if (is_finehour) return 0; // finehour "missing tilemap 0,1 writes" hack/fix 1/2
-			if (w) SekSetIRQLine(irq_cpu[a], CPU_IRQSTATUS_ACK);
+			//if (is_finehour) return 0; // finehour "missing tilemap 0,1 writes" hack/fix 1/2
+			if (w) {
+				SekClose();
+				SekOpen((a) ? 0 : 1);
+				SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_ACK);
+				SekClose();
+				SekOpen(a);
+			}
 			return 0;
 
 		case 0x16000:
-			if (is_finehour) return 0; // finehour hack/fix 2/2
-			SekSetIRQLine(irq_cpu[a], CPU_IRQSTATUS_NONE);
+			//if (is_finehour) return 0; // finehour hack/fix 2/2
+				SekClose();
+				SekOpen((a) ? 0 : 1);
+				SekSetIRQLine(irq_cpu[(a) ? 0 : 1], CPU_IRQSTATUS_NONE);
+				SekClose();
+				SekOpen(a);
+//			SekSetIRQLine(irq_cpu[a], CPU_IRQSTATUS_NONE);
 			return 0;
 
 		case 0x18000:

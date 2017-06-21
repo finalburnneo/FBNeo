@@ -84,6 +84,8 @@ static UINT8 *DrvRozCtrl;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 draw_layer_no_prio = 0;
+
 static UINT16 gfx_ctrl;
 static UINT32 sprite_bank[0x10];
 
@@ -1903,6 +1905,7 @@ static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_rea
 	BurnGunInit(2, false);
 
 	weird_vbl = 1;
+	draw_layer_no_prio = 1; // c355 sprites uses zpos for priority, conflicts with tilemap priority stuff.
 
 	DrvDoReset();
 
@@ -2190,6 +2193,8 @@ static INT32 Namcos2Exit()
 
 	weird_vbl = 0;
 
+	draw_layer_no_prio = 0;
+
 	return 0;
 }
 
@@ -2316,7 +2321,8 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 			if (*msk & (0x80 >> xx))
 			{
 				dst[zx] = gfx[xx] + color;
-				pri[zx] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
+				if (!draw_layer_no_prio)
+					pri[zx] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 			}
 		}
 	}
@@ -2400,7 +2406,8 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x01 << x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[7 - x] + color;
-						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
+						if (!draw_layer_no_prio)
+							pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 					}
 				}
 			}
@@ -2417,7 +2424,8 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x80 >> x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[x] + color;
-						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
+						if (!draw_layer_no_prio)
+							pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 					}
 				}
 			}
@@ -2559,7 +2567,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 					INT32 c = source[x_index>>16];
 					if (c != 0xff)
 					{
-						if (pri[x] <= (priority & 0xf))
+						if (pri[x] <= (priority))
 						{
 							if (color == 0xf00 && c==0xfe)
 							{
@@ -2569,7 +2577,8 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 							{
 								dest[x] = c | color;
 							}
-							pri[x] = priority & 0xf;
+							pri[x] = priority;
+							//pri[x] = priority & 0xf;
 						}
 					}
 					x_index += dx;
@@ -3002,7 +3011,7 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void c355_obj_draw_sprite(const UINT16 *pSource)
+static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 {
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
 	const UINT16 *spriteformat16 = &spriteram16[0x4000/2];
@@ -3010,7 +3019,14 @@ static void c355_obj_draw_sprite(const UINT16 *pSource)
 
 	UINT16 palette     = pSource[6];
 
-	INT32 pri   = (palette >> 4) & 0xf; // priority
+	INT32 usepri = 0;
+
+	if (pri == -1) {
+		pri = (palette >> 4) & 0xf;
+		usepri = 1;
+	} else {
+		if (pri != ((palette >> 4) & 0xf)) return; // priority
+	}
 
 	UINT16 linkno      = pSource[0];
 	UINT16 offset      = pSource[1];
@@ -3116,7 +3132,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource)
 			{
 				INT32 size = 0;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, pri);
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, (usepri) ? pri : zpos);
 			}
 			if( !flipx )
 			{
@@ -3136,22 +3152,42 @@ static void c355_obj_draw_sprite(const UINT16 *pSource)
 	restore_XY_clip();
 }
 
-static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
+/*static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
+{
+	INT32 endpos = 255;
+
+	for (INT32 i = 0; i < 256; i++)
+	{
+		UINT16 which = pSpriteList16[i];
+		//c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8]);
+		if (which&0x100) { endpos = i-1; break; }
+
+	}
+	//for (INT32 i = 0; i < 256; i++)
+	for (INT32 i=endpos;i>=0;i--)
+	{
+		UINT16 which = pSpriteList16[i];
+		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], i);
+		if (which&0x100) break;
+	}
+}*/
+
+static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable, INT32 pri)
 {
 	for (INT32 i = 0; i < 256; i++)
 	{
 		UINT16 which = pSpriteList16[i];
-		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8]);
+		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i);
 		if (which&0x100) break;
 	}
 }
 
-static void c355_obj_draw()
+static void c355_obj_draw(INT32 pri)
 {
 	UINT16 *m_c355_obj_ram = (UINT16*)DrvSprRAM;
 
-	c355_obj_draw_list(&m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2]);
-	c355_obj_draw_list(&m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2]);
+	c355_obj_draw_list(&m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2], pri);
+	c355_obj_draw_list(&m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2], pri);
 }
 
 static INT32 SgunnerDraw()
@@ -3168,9 +3204,8 @@ static INT32 SgunnerDraw()
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
 		draw_layer(pri);
+		c355_obj_draw(pri);
 	}
-
-	c355_obj_draw();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3285,7 +3320,7 @@ static INT32 LuckywldDraw()
 	}
 
 	if (nBurnLayer & 1) c45RoadDraw();
-	if (nBurnLayer & 4) c355_obj_draw();
+	if (nBurnLayer & 4) c355_obj_draw(-1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3312,7 +3347,7 @@ static INT32 Suzuka8hDraw()
 	}
 
 	if (nBurnLayer & 1) c45RoadDraw();
-	if (nBurnLayer & 4) c355_obj_draw();
+	if (nBurnLayer & 4) c355_obj_draw(-1);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -5503,7 +5538,7 @@ static struct BurnRomInfo sgunner2jRomDesc[] = {
 	{ "sns_snd0.bin",	0x20000, 0xf079cd32, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 //	correct HD68705 Code! JacKc & Barry - please do not change these next 3 lines (5, 6, 7) or the game will break.
-	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS }, //  5 c68
+//	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS }, //  5 c68
 //	use this instead!
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7

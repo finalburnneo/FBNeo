@@ -1,7 +1,7 @@
 // FB Alpha Sauro driver module
 // Based on MAME driver by Zsolt Vasvari
 
-// needs sp0256 core ported & hooked up
+// missing speech (sp0256 core)
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -72,6 +72,10 @@ static struct BurnDIPInfo TecfriDIPList[]=
 	{0x11, 0xff, 0xff, 0x66, NULL			},
 	{0x12, 0xff, 0xff, 0x2f, NULL			},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x11, 0x01, 0x01, 0x00, "Off"			},
+	{0x11, 0x01, 0x01, 0x01, "On"			},
+
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x11, 0x01, 0x02, 0x00, "Off"			},
 	{0x11, 0x01, 0x02, 0x02, "On"			},
@@ -124,6 +128,10 @@ static struct BurnDIPInfo TrckydocaDIPList[]=
 	{0x11, 0xff, 0xff, 0x66, NULL			},
 	{0x12, 0xff, 0xff, 0x2f, NULL			},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x11, 0x01, 0x01, 0x00, "Off"			},
+	{0x11, 0x01, 0x01, 0x01, "On"			},
+
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x11, 0x01, 0x02, 0x00, "Off"			},
 	{0x11, 0x01, 0x02, 0x02, "On"			},
@@ -173,8 +181,12 @@ STDDIPINFO(Trckydoca)
 
 static struct BurnDIPInfo SaurobDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x98, NULL			},
+	{0x11, 0xff, 0xff, 0x99, NULL			},
 	{0x12, 0xff, 0xff, 0xd0, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x11, 0x01, 0x01, 0x01, "Off"			},
+	{0x11, 0x01, 0x01, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x11, 0x01, 0x02, 0x00, "On"			},
@@ -659,7 +671,7 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 	for (INT32 offs = 3; offs < 0x400 - 1; offs += 4)
 	{
 		INT32 sy = DrvSprRAM[offs];
-		INT32 sx = DrvSprRAM[offs+2] - x_offset;
+		INT32 sx = DrvSprRAM[offs+2];
 		INT32 code = DrvSprRAM[offs+1] + ((DrvSprRAM[offs+3] & 0x03) << 8);
 		INT32 color = ((DrvSprRAM[offs+3] >> 4) & 0x0f) | color_bank;
 
@@ -674,6 +686,8 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 		{
 			if (sx < 0x40) continue;
 		}
+
+		sx -= x_offset;
 
 		if (ext_bit == 2) {
 			if (DrvSprRAM[offs + 3] & 0x08) {
@@ -693,6 +707,9 @@ static void draw_sprites(INT32 ext_bit, INT32 color_bank, INT32 x_offset) // ext
 			sx = (235 - sx) & 0xff;
 			sy = 240 - sy;
 		}
+
+		if (sx < -15 || sx > nScreenWidth) continue;
+		if (sy < -15 || sy > nScreenHeight) continue;
 
 		if (flipy) {
 			if (flipx) {
@@ -799,12 +816,12 @@ static INT32 SauroFrame()
 		ZetOpen(0);
 		nCyclesSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
 		nCyclesDone[0] += ZetRun(nCyclesSegment - nCyclesDone[0]);
-		if (i == 120) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO); // vblank
+		if (i == 120) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // vblank
 		ZetClose();
 
 		ZetOpen(1);
 		nCyclesSegment = (nCyclesTotal[1] / nInterleave) * (i + 1);
-		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment - nCyclesDone[1]);
+		nCyclesDone[1] += BurnTimerUpdateYM3812(nCyclesSegment);
 		if ((i & 0xf) == 0xf) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD); // 8x per frame
 		ZetClose();
 	}
@@ -878,7 +895,7 @@ static INT32 TrckydocFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -886,7 +903,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

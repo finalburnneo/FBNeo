@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"
+#include "watchdog.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -43,8 +44,6 @@ static UINT8 *bg_scrollx;
 static UINT8 *bg_select;
 static UINT8 *bg_priority;
 static UINT8 *bg_bank;
-
-static INT32 watchdog;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -159,7 +158,7 @@ void __fastcall momoko_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xd404:
-			watchdog = 0;
+			BurnWatchogWrite();
 		return;
 
 		case 0xd406:
@@ -293,7 +292,7 @@ static INT32 DrvDoReset(INT32 clear)
 
 	BurnYM2203Reset();
 
-	watchdog = 0;
+	BurnWatchdogReset();
 
 	return 0;
 }
@@ -472,6 +471,8 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(momoko_sound_write);
 	ZetSetReadHandler(momoko_sound_read);
 	ZetClose();
+
+	BurnWatchdogInit(DrvDoReset, 180);
 
 	BurnYM2203Init(2, 1250000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(1, momoko_sound_read_port_A, NULL, NULL, NULL);
@@ -665,10 +666,7 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	watchdog++;
-	if (watchdog >= 180) {
-		DrvDoReset(0);
-	}
+	BurnWatchdogUpdate();
 
 	if (DrvReset) {
 		DrvDoReset(1);
@@ -739,6 +737,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
+
+		BurnWatchdogScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE)

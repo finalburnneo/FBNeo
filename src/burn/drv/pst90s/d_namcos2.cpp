@@ -2457,6 +2457,8 @@ static void draw_layer(INT32 pri)
 {
 	UINT16 *ctrl = (UINT16*)DrvC123Ctrl;
 
+	if (!max_x && !max_y) return;
+
 	for (INT32 i = 0; i < 6; i++)
 	{
 		if((ctrl[0x10+i] & 0xf) == (pri & 0xf))
@@ -2497,6 +2499,8 @@ static void predraw_roz_layer()
 static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 priority)
 {
 	if (!scalex || !scaley) return;
+
+	if (!max_x && !max_y) return; //nothing to draw (zdrawgfxzoom draws a 1x1 pixel at 0,0 if max_x and max_y are 0)
 
 	INT32 shadow_offset = (1)?0x2000:0;
 	const UINT8 *source_base = gfx + (code * tile_size * tile_size);
@@ -2844,6 +2848,8 @@ static void draw_roz(INT32 pri)
 	struct roz_param rozParam;
 
 	UINT16 *m_roz_ctrl = (UINT16*)DrvRozCtrl;
+
+	if (!max_x && !max_y) return;
 
 	rozParam.color = (gfx_ctrl & 0x0f00);
 	rozParam.incxx  = (INT16)m_roz_ctrl[0];
@@ -3441,16 +3447,15 @@ static INT32 DrvFrame()
 	}
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-
-		INT32 segment;
+		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 
 		SekOpen(0);
-		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
-		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 		if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148
 		if (i == position*2) SekSetIRQLine(irq_pos[0], CPU_IRQSTATUS_ACK);
-		segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
+
+		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
+		INT32 segment = (maincpu_run_ended) ? maincpu_run_cycles : SekTotalCycles();
 		maincpu_run_ended = maincpu_run_cycles = 0;
 		SekClose();
 
@@ -3462,9 +3467,9 @@ static INT32 DrvFrame()
 			nCyclesDone[1] += segment - SekTotalCycles();
 			SekIdle(segment - SekTotalCycles());
 		} else {
-			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
 			if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[1], CPU_IRQSTATUS_AUTO); // should ack in c148
 			if (i == position*2) SekSetIRQLine(irq_pos[1], CPU_IRQSTATUS_ACK);
+			nCyclesDone[1] += SekRun(segment - SekTotalCycles());
 		}
 		SekClose();
 
@@ -4978,7 +4983,7 @@ static INT32 FinehourInit()
 {
 	INT32 rc = Namcos2Init(NULL, finehour_key_read);
 
-	weird_vbl = 0;
+	weird_vbl = 1;
 
 	if (!rc) {
 		pDrvDrawBegin = DrvDrawBegin;
@@ -4990,7 +4995,7 @@ static INT32 FinehourInit()
 
 struct BurnDriver BurnDrvFinehour = {
 	"finehour", NULL, NULL, NULL, "1989",
-	"Finest Hour (Japan)\0", "Some color issues", "Namco", "System 2",
+	"Finest Hour (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, finehourRomInfo, finehourRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,

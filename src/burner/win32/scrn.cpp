@@ -366,34 +366,34 @@ int CreateAllDatfilesWindows()
 	}
 	pMalloc->Release();
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(""));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(""));
 	create_datfile(szFilename, DAT_ARCADE_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Megadrive only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Megadrive only"));
 	create_datfile(szFilename, DAT_MEGADRIVE_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", PC-Engine only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", PC-Engine only"));
 	create_datfile(szFilename, DAT_PCENGINE_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", TurboGrafx16 only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", TurboGrafx16 only"));
 	create_datfile(szFilename, DAT_TG16_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", SuprGrafx only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", SuprGrafx only"));
 	create_datfile(szFilename, DAT_SGX_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Sega SG-1000 only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Sega SG-1000 only"));
 	create_datfile(szFilename, DAT_SG1000_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", ColecoVision only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", ColecoVision only"));
 	create_datfile(szFilename, DAT_COLECO_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Master System only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Master System only"));
 	create_datfile(szFilename, DAT_MASTERSYSTEM_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", Game Gear only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", Game Gear only"));
 	create_datfile(szFilename, DAT_GAMEGEAR_ONLY);
 	
-	_sntprintf(szFilename, MAX_PATH, _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), szAppBurnVer, szProgramString, _T(", MSX 1 Games only"));
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", MSX 1 Games only"));
 	create_datfile(szFilename, DAT_MSX_ONLY);
 	
 	return nRet;

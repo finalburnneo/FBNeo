@@ -6081,12 +6081,12 @@ static struct BurnRomInfo luckywldjRomDesc[] = {
 	{ "c68.3d",		0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
 
 	{ "lw1obj0.3p",		0x80000, 0x21485830, 0x05 | BRF_GRA },           //  6 Sprites
-	{ "lw1obj2.3t",		0x80000, 0xceb6f516, 0x05 | BRF_GRA },           //  7
 	{ "lw1obj4.3s",		0x80000, 0x0050458a, 0x05 | BRF_GRA },           //  8
-	{ "lw1obj6.3u",		0x80000, 0x29740c88, 0x05 | BRF_GRA },           //  9
 	{ "lw1obj1.3w",		0x80000, 0xd6437a82, 0x05 | BRF_GRA },           // 10
-	{ "lw1obj3.3y",		0x80000, 0x5d32c7e9, 0x05 | BRF_GRA },           // 11
 	{ "lw1obj5.3x",		0x80000, 0xcbc08f46, 0x05 | BRF_GRA },           // 12
+	{ "lw1obj2.3t",		0x80000, 0xceb6f516, 0x05 | BRF_GRA },           //  7
+	{ "lw1obj6.3u",		0x80000, 0x29740c88, 0x05 | BRF_GRA },           //  9
+	{ "lw1obj3.3y",		0x80000, 0x5d32c7e9, 0x05 | BRF_GRA },           // 11
 	{ "lw1obj7.3z",		0x80000, 0x8cbd62b4, 0x05 | BRF_GRA },           // 13
 
 	{ "lw1chr0.11n",	0x80000, 0xa0da15fd, 0x06 | BRF_GRA },           // 14 Layer Tiles
@@ -6190,7 +6190,7 @@ struct BurnDriverD BurnDrvSuzuka8h = {
 	"suzuka8h", NULL, NULL, NULL, "1992",
 	"Suzuka 8 Hours (World, Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuka8hRomInfo, suzuka8hRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
 	Suzuka8hInit, Namcos2Exit, DrvFrame, Suzuka8hDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6243,7 +6243,7 @@ struct BurnDriverD BurnDrvSuzuka8hj = {
 	"suzuka8hj", "suzuka8h", NULL, NULL, "1992",
 	"Suzuka 8 Hours (Japan, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuka8hjRomInfo, suzuka8hjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
 	Suzuka8hInit, Namcos2Exit, DrvFrame, Suzuka8hDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6318,7 +6318,7 @@ struct BurnDriverD BurnDrvSuzuk8h2 = {
 	"suzuk8h2", NULL, NULL, NULL, "1993",
 	"Suzuka 8 Hours 2 (World, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuk8h2RomInfo, suzuk8h2RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
 	Suzuka8h2Init, Namcos2Exit, DrvFrame, Suzuka8hDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6377,7 +6377,7 @@ struct BurnDriverD BurnDrvSuzuk8h2j = {
 	"suzuk8h2j", "suzuk8h2", NULL, NULL, "1993",
 	"Suzuka 8 Hours 2 (Japan, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, suzuk8h2jRomInfo, suzuk8h2jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //SuzukaInputInfo, SuzukaDIPInfo,
 	Suzuka8h2Init, Namcos2Exit, DrvFrame, Suzuka8hDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6426,7 +6426,7 @@ struct BurnDriverD BurnDrvFinallap = {
 	"finallap", NULL, NULL, NULL, "1987",
 	"Final Lap (Rev E)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapRomInfo, finallapRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
 	FinallapInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6475,7 +6475,7 @@ struct BurnDriverD BurnDrvFinallapd = {
 	"finallapd", "finallap", NULL, NULL, "1987",
 	"Final Lap (Rev D)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapdRomInfo, finallapdRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
 	FinallapInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6524,7 +6524,7 @@ struct BurnDriverD BurnDrvFinallapc = {
 	"finallapc", "finallap", NULL, NULL, "1987",
 	"Final Lap (Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapcRomInfo, finallapcRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
 	FinallapInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6573,7 +6573,7 @@ struct BurnDriverD BurnDrvFinallapjc = {
 	"finallapjc", "finallap", NULL, NULL, "1987",
 	"Final Lap (Japan, Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapjcRomInfo, finallapjcRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
 	FinallapInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6622,7 +6622,7 @@ struct BurnDriverD BurnDrvFinallapjb = {
 	"finallapjb", "finallap", NULL, NULL, "1987",
 	"Final Lap (Japan, Rev B)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, finallapjbRomInfo, finallapjbRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinallapInputInfo, FinallapDIPInfo,
 	FinallapInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6681,7 +6681,7 @@ struct BurnDriverD BurnDrvFinalap2 = {
 	"finalap2", NULL, NULL, NULL, "1990",
 	"Final Lap 2\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap2RomInfo, finalap2RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinalapInputInfo, FinallapDIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6740,7 +6740,7 @@ struct BurnDriverD BurnDrvFinalap2j = {
 	"finalap2j", "finalap2", NULL, NULL, "1990",
 	"Final Lap 2 (Japan)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap2jRomInfo, finalap2jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinalapInputInfo, FinallapDIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6801,7 +6801,7 @@ struct BurnDriverD BurnDrvFinalap3 = {
 	"finalap3", NULL, NULL, NULL, "1992",
 	"Final Lap 3 (World, set 1)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3RomInfo, finalap3RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FinalapInputInfo, FinallapDIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6864,7 +6864,7 @@ struct BurnDriverD BurnDrvFinalap3a = {
 	"finalap3a", "finalap3", NULL, NULL, "1992",
 	"Final Lap 3 (World, set 2)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3aRomInfo, finalap3aRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6925,7 +6925,7 @@ struct BurnDriverD BurnDrvFinalap3j = {
 	"finalap3j", "finalap3", NULL, NULL, "1992",
 	"Final Lap 3 (Japan)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3jRomInfo, finalap3jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -6986,7 +6986,7 @@ struct BurnDriverD BurnDrvFinalap3jc = {
 	"finalap3jc", "finalap3", NULL, NULL, "1992",
 	"Final Lap 3 (Japan - Rev C)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3jcRomInfo, finalap3jcRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -7047,7 +7047,7 @@ struct BurnDriverD BurnDrvFinalap3bl = {
 	"finalap3bl", "finalap3", NULL, NULL, "1992",
 	"Final Lap 3 (bootleg)\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, finalap3blRomInfo, finalap3blRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //Finalap3InputInfo, Finalap3DIPInfo,
 	Finalap2Init, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -7113,7 +7113,7 @@ struct BurnDriverD BurnDrvFourtrax = {
 	"fourtrax", NULL, NULL, NULL, "1989",
 	"Four Trax\0", "Imperfect graphics, sound and inputs", "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, fourtraxRomInfo, fourtraxRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo, //FourtraxInputInfo, Fourtrax3DIPInfo,
 	FourtraxInit, Namcos2Exit, DrvFrame, FinallapDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

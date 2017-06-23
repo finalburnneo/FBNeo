@@ -81,10 +81,10 @@ static UINT8 *DrvM6809RAM;
 static UINT8 *DrvC123Ctrl;
 static UINT8 *DrvRozCtrl;
 
+static UINT8 *SpritePrio;
+
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-
-static INT32 draw_layer_no_prio = 0;
 
 static UINT16 gfx_ctrl;
 static UINT32 sprite_bank[0x10];
@@ -1537,6 +1537,8 @@ static INT32 MemIndex()
 	roz_dirty_tile		= Next; Next += 0x020000;
 	roz_bitmap		= (UINT16*)Next; Next += ((256 * 16) * (256 * 16) * 2);
 
+	SpritePrio      = Next; Next += (300 * 300);
+
 	DrvPalette		= (UINT32*)Next; Next += 0x4001 * sizeof(UINT32);
 
 	AllRam			= Next;
@@ -1912,7 +1914,6 @@ static INT32 SgunnerCommonInit(void (*key_write)(UINT8,UINT16), UINT16 (*key_rea
 	BurnGunInit(2, false);
 
 	weird_vbl = 1;
-	draw_layer_no_prio = 1; // c355 sprites uses zpos for priority, conflicts with tilemap priority stuff.
 
 	DrvDoReset();
 
@@ -2199,8 +2200,6 @@ static INT32 Namcos2Exit()
 
 	weird_vbl = 0;
 
-	draw_layer_no_prio = 0;
-
 	return 0;
 }
 
@@ -2327,8 +2326,7 @@ static void draw_layer_with_masking_by_line(INT32 layer, INT32 color, INT32 line
 			if (*msk & (0x80 >> xx))
 			{
 				dst[zx] = gfx[xx] + color;
-				if (!draw_layer_no_prio)
-					pri[zx] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
+				pri[zx] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 			}
 		}
 	}
@@ -2412,8 +2410,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x01 << x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[7 - x] + color;
-						if (!draw_layer_no_prio)
-							pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 					}
 				}
 			}
@@ -2430,8 +2427,7 @@ static void draw_layer_with_masking(INT32 layer, INT32 color, INT32 priority)
 					if (*msk & (0x80 >> x))
 					{
 						pTransDraw[(sy + y) * nScreenWidth + (sx + x)] = gfx[x] + color;
-						if (!draw_layer_no_prio)
-							pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
+						pPrioDraw[(sy + y) * nScreenWidth + (sx + x)] = (priority & 0x1000) ? ((priority * 2) & 0xff) : (priority & 0xff);
 					}
 				}
 			}
@@ -2496,7 +2492,7 @@ static void predraw_roz_layer()
 	roz_update_tiles = 0;
 }
 
-static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 priority)
+static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 priority, INT32 priority2)
 {
 	if (!scalex || !scaley) return;
 
@@ -2560,7 +2556,9 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 			ey -= pixels;
 		}
 
-		if( ex>sx )
+		if (!(ex > sx)) return;
+
+		if (priority2 == -1)
 		{
 			INT32 y;
 			UINT8 *priority_bitmap = pPrioDraw;
@@ -2588,7 +2586,44 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 								dest[x] = c | color;
 							}
 							pri[x] = priority;
-							//pri[x] = priority & 0xf;
+						}
+					}
+					x_index += dx;
+				}
+				y_index += dy;
+			}
+		} else
+		{ // 2-priority mode. "priority" sprite:tile, "priority2" sprite:sprite
+			// Marvel Land needs this for things like the end-of-level door, which is a lower prio than the player sprite - but the player sprite needs to be ontop of the door.
+			INT32 y;
+			UINT8 *priority_bitmap = pPrioDraw;
+			UINT8 *priority_bitmap2 = SpritePrio;
+
+			for( y=sy; y<ey; y++ )
+			{
+				const UINT8 *source = source_base + (y_index>>16) * tile_size;
+				UINT16 *dest = pTransDraw + y * nScreenWidth;
+				UINT8 *pri = priority_bitmap + y * nScreenWidth;
+				UINT8 *pri2 = priority_bitmap2 + y * nScreenWidth;
+				INT32 x, x_index = x_index_base;
+
+				for (x = sx; x < ex; x++)
+				{
+					INT32 c = source[x_index>>16];
+					if (c != 0xff)
+					{
+						if (pri[x] <= priority && pri2[x] <= priority2)
+						{
+							if (color == 0xf00 && c==0xfe)
+							{
+								dest[x] |= shadow_offset;
+							}
+							else
+							{
+								dest[x] = c | color;
+							}
+
+							pri2[x] = priority2; // only write sprite:sprite prio bitmap
 						}
 					}
 					x_index += dx;
@@ -2662,7 +2697,7 @@ static void draw_sprites_metalhawk()
 				sprn >>= 2;
 			}
 
-			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf));
+			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf), -1);
 		}
 		pSource += 8;
 	}
@@ -2930,14 +2965,21 @@ static void draw_sprites_bank(INT32 spritebank)
 
 				if (size == 1) code >>= 2;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, priority);
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, priority, loop);
 			}
 		}
 	}
 }
 
+static void DrvPrio2Clear()
+{
+	memset(SpritePrio, 0, 300 * 300);
+}
+
 static void draw_sprites()
 {
+	DrvPrio2Clear();
+
 	for (INT32 i = 0; i < 0x10; i++)
 	{
 		if (sprite_bank[i]) {
@@ -3023,7 +3065,7 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
+static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 {
 	UINT16 *spriteram16 = (UINT16*)DrvSprRAM;
 	const UINT16 *spriteformat16 = &spriteram16[0x4000/2];
@@ -3031,14 +3073,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 
 	UINT16 palette     = pSource[6];
 
-	INT32 usepri = 0;
-
-	if (pri == -1) {
-		pri = (palette >> 4) & 0xf;
-		usepri = 1;
-	} else {
-		if (pri != ((palette >> 4) & 0xf)) return; // priority
-	}
+	INT32 pri = (palette >> 4) & 0xf;
 
 	UINT16 linkno      = pSource[0];
 	UINT16 offset      = pSource[1];
@@ -3144,7 +3179,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 			{
 				INT32 size = 0;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, (usepri) ? pri : zpos);
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, pri, zpos);
 			}
 			if( !flipx )
 			{
@@ -3164,42 +3199,24 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 pri, INT32 zpos)
 	restore_XY_clip();
 }
 
-/*static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
+static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable)
 {
-	INT32 endpos = 255;
-
 	for (INT32 i = 0; i < 256; i++)
-	{
-		UINT16 which = pSpriteList16[i];
-		//c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8]);
-		if (which&0x100) { endpos = i-1; break; }
-
-	}
-	//for (INT32 i = 0; i < 256; i++)
-	for (INT32 i=endpos;i>=0;i--)
 	{
 		UINT16 which = pSpriteList16[i];
 		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], i);
 		if (which&0x100) break;
 	}
-}*/
-
-static void c355_obj_draw_list(const UINT16 *pSpriteList16, const UINT16 *pSpriteTable, INT32 pri)
-{
-	for (INT32 i = 0; i < 256; i++)
-	{
-		UINT16 which = pSpriteList16[i];
-		c355_obj_draw_sprite(&pSpriteTable[(which&0xff)*8], pri, i);
-		if (which&0x100) break;
-	}
 }
 
-static void c355_obj_draw(INT32 pri)
+static void c355_draw_sprites()
 {
 	UINT16 *m_c355_obj_ram = (UINT16*)DrvSprRAM;
 
-	c355_obj_draw_list(&m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2], pri);
-	c355_obj_draw_list(&m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2], pri);
+	DrvPrio2Clear();
+
+	c355_obj_draw_list(&m_c355_obj_ram[0x02000/2], &m_c355_obj_ram[0x00000/2]);
+	c355_obj_draw_list(&m_c355_obj_ram[0x14000/2], &m_c355_obj_ram[0x10000/2]);
 }
 
 static INT32 SgunnerDraw()
@@ -3216,9 +3233,9 @@ static INT32 SgunnerDraw()
 	for (INT32 pri = 0; pri < 8; pri++)
 	{
 		draw_layer(pri);
-		c355_obj_draw(pri);
 	}
 
+	c355_draw_sprites();
 	BurnTransferCopy(DrvPalette);
 
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
@@ -3332,7 +3349,7 @@ static INT32 LuckywldDraw()
 	}
 
 	if (nBurnLayer & 1) c45RoadDraw();
-	if (nBurnLayer & 4) c355_obj_draw(-1);
+	if (nBurnLayer & 4) c355_draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3359,7 +3376,7 @@ static INT32 Suzuka8hDraw()
 	}
 
 	if (nBurnLayer & 1) c45RoadDraw();
-	if (nBurnLayer & 4) c355_obj_draw(-1);
+	if (nBurnLayer & 4) c355_draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

@@ -22,7 +22,6 @@ static INT32 nProtectIndex;
 
 static UINT8 GetStarType = 0;
 #define GETSTAR		1
-#define GETSTARJ	2
 #define GETSTARB1	3
 #define GETSTARB2	4
 
@@ -1311,8 +1310,7 @@ static INT32 tigerhInit()
 	}
 	if (strcmp(BurnDrvGetTextA(DRV_NAME), "grdian") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb2") == 0) {
 		nWhichGame = 1;
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "grdian") == 0) GetStarType = GETSTAR;
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0) GetStarType = GETSTARJ;
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "grdian") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0) GetStarType = GETSTAR;
 		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb1") == 0) GetStarType = GETSTARB1;
 		if (strcmp(BurnDrvGetTextA(DRV_NAME), "getstarb2") == 0) GetStarType = GETSTARB2;
 	}
@@ -1428,7 +1426,7 @@ static INT32 tigerhInit()
 
 		if (use_mcu) {
 			if (nWhichGame == 0) m67805_taito_init(Rom03, Ram03, &tigerh_m68705_interface);
-			if (nWhichGame == 1) m67805_taito_init(Rom03, Ram03, &slapfigh_m68705_interface);
+			if (nWhichGame == 1 && GetStarType == GETSTAR) m67805_taito_init(Rom03, Ram03, &slapfigh_m68705_interface);
 			if (nWhichGame == 2) m67805_taito_init(Rom03, Ram03, &slapfigh_m68705_interface);
 		}
 	}

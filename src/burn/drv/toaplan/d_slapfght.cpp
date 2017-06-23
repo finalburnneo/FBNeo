@@ -20,6 +20,12 @@ static bool bVBlank;
 static INT32 nStatusIndex;
 static INT32 nProtectIndex;
 
+static UINT8 GetStarType = 0;
+#define GETSTAR		1
+#define GETSTARJ	2
+#define GETSTARB1	3
+#define GETSTARB2	4
+
 static UINT8 getstar_e803_r();
 static void getstar_e803_w();
 
@@ -442,7 +448,7 @@ UINT8 __fastcall tigerhReadCPU0(UINT16 a)
 				return standard_taito_mcu_read();
 			}
 			
-			if (nWhichGame == 1) return getstar_e803_r();
+			if (GetStarType == GETSTARB1 || GetStarType == GETSTARB2) return getstar_e803_r();
 
 			UINT8 nProtectSequence[3] = { 0, 1, (0 + 5) ^ 0x56 };
 
@@ -503,7 +509,7 @@ void __fastcall tigerhWriteCPU0(UINT16 a, UINT8 d)
 				if (nWhichGame == 0) mcu_sent = 0;
 				m68705SetIrqLine(0, 1 /*ASSERT_LINE*/);
 			}
-			if (nWhichGame == 1) getstar_e803_w();
+			if (GetStarType == GETSTARB1 || GetStarType == GETSTARB2) getstar_e803_w();
 			break;
 
 //		default:
@@ -825,13 +831,6 @@ static m68705_interface slapfigh_m68705_interface = {
 //----------------------------------------------------------------------------
 // Get Star MCU Simulation
 
-#define GETSTAR		1
-#define GETSTARJ	2
-#define GETSTARB1	3
-#define GETSTARB2	4
-
-static UINT8 GetStarType = 0;
-
 static UINT8 GSa = 0;
 static UINT8 GSd = 0;
 static UINT8 GSe = 0;
@@ -847,73 +846,11 @@ static UINT8 GSCommand = 0;
 							
 static UINT8 getstar_e803_r()
 {
-	UINT16 tmp = 0;  /* needed for values computed on 16 bits */
 	UINT8 getstar_val = 0;
-	UINT8 phase_lookup_table[] = {0x00, 0x01, 0x03, 0xff, 0xff, 0x02, 0x05, 0xff, 0xff, 0x05}; /* table at 0x0e05 in 'gtstarb1' */
 	UINT8 lives_lookup_table[] = {0x03, 0x05, 0x01, 0x02};                                     /* table at 0x0e62 in 'gtstarb1' */
 	UINT8 lgsb2_lookup_table[] = {0x00, 0x03, 0x04, 0x05};                                     /* fake tanle for "test mode" in 'gtstarb2' */
 
 	switch (GetStarType) {
-		case GETSTAR:
-		case GETSTARJ: {
-			switch (GSCommand) {
-				case 0x20:  /* continue play */
-					getstar_val = ((GSa & 0x30) == 0x30) ? 0x20 : 0x80;
-					break;
-				case 0x21:  /* lose life */
-					getstar_val = (GSa << 1) | (GSa >> 7);
-					break;
-				case 0x22:  /* starting difficulty */
-					getstar_val = ((GSa & 0x0c) >> 2) + 1;
-					break;
-					case 0x23:  /* starting lives */
-					getstar_val = lives_lookup_table[GSa];
-					break;
-				case 0x24:  /* game phase */
-					getstar_val = phase_lookup_table[((GSa & 0x18) >> 1) | (GSa & 0x03)];
-					break;
-				case 0x25:  /* players inputs */
-					getstar_val = BITSWAP08(GSa, 3, 2, 1, 0, 7, 5, 6, 4);
-					break;
-				case 0x26:  /* background (1st read) */
-					tmp = 0x8800 + (0x001f * GSa);
-					getstar_val = (tmp & 0x00ff) >> 0;
-					GSCommand |= 0x80;     /* to allow a second consecutive read */
-					break;
-				case 0xa6:  /* background (2nd read) */
-					tmp = 0x8800 + (0x001f * GSa);
-					getstar_val = (tmp & 0xff00) >> 8;
-					break;
-				case 0x29:  /* unknown effect */
-					getstar_val = 0x00;
-					break;
-				case 0x2a:  /* change player (if 2 players game) */
-					getstar_val = (GSa ^ 0x40);
-					break;
-				case 0x37:  /* foreground (1st read) */
-					tmp = ((0xd0 + ((GSe >> 2) & 0x0f)) << 8) | (0x40 * (GSe & 03) + GSd);
-					getstar_val = (tmp & 0x00ff) >> 0;
-					GSCommand |= 0x80;     /* to allow a second consecutive read */
-					break;
-				case 0xb7:  /* foreground (2nd read) */
-					tmp = ((0xd0 + ((GSe >> 2) & 0x0f)) << 8) | (0x40 * (GSe & 03) + GSd);
-					getstar_val = (tmp & 0xff00) >> 8;
-					break;
-				case 0x38:  /* laser position (1st read) */
-					tmp = 0xf740 - (((GSe >> 4) << 8) | ((GSe & 0x08) ? 0x80 : 0x00)) + (0x02 + (GSd >> 2));
-					getstar_val = (tmp & 0x00ff) >> 0;
-					GSCommand |= 0x80;     /* to allow a second consecutive read */
-					break;
-				case 0xb8:  /* laser position (2nd read) */
-					tmp = 0xf740 - (((GSe >> 4) << 8) | ((GSe & 0x08) ? 0x80 : 0x00)) + (0x02 + (GSd >> 2));
-					getstar_val = (tmp & 0xff00) >> 8;
-					break;
-				case 0x73:  /* avoid "BAD HW" message */
-					getstar_val = 0x76;
-					break;
-			}
-		}
-		
 		case GETSTARB1: {
 			/* value isn't computed by the bootleg but we want to please the "test mode" */
 			if (ZetGetPC(-1) == 0x6b04) return (lives_lookup_table[GSa]);
@@ -946,378 +883,6 @@ static UINT8 getstar_e803_r()
 static void getstar_e803_w()
 {
 	switch (GetStarType) {
-		case GETSTAR: {
-			/* unknown effect - not read back */
-			if (ZetGetPC(-1) == 0x00bf)
-			{
-				GSCommand = 0x00;
-				GS_RESET_REGS
-			}
-			/* players inputs */
-			if (ZetGetPC(-1) == 0x0560)
-			{
-				GSCommand = 0x25;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x056d)
-			{
-				GSCommand = 0x25;
-				GS_SAVE_REGS
-			}
-			/* lose life */
-			if (ZetGetPC(-1) == 0x0a0a)
-			{
-				GSCommand = 0x21;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0a17)
-			{
-				GSCommand = 0x21;
-				GS_SAVE_REGS
-			}
-			/* unknown effect */
-			if (ZetGetPC(-1) == 0x0a51)
-			{
-				GSCommand = 0x29;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0a6e)
-			{
-				GSCommand = 0x29;
-				GS_SAVE_REGS
-			}
-			/* continue play */
-			if (ZetGetPC(-1) == 0x0ae3)
-			{
-				GSCommand = 0x20;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0af0)
-			{
-				GSCommand = 0x20;
-				GS_SAVE_REGS
-			}
-			/* unknown effect - not read back */
-			if (ZetGetPC(-1) == 0x0b62)
-			{
-				GSCommand = 0x00;     /* 0x1f */
-				GS_RESET_REGS
-			}
-			/* change player (if 2 players game) */
-			if (ZetGetPC(-1) == 0x0bab)
-			{
-				GSCommand = 0x2a;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0bb8)
-			{
-				GSCommand = 0x2a;
-				GS_SAVE_REGS
-			}
-			/* game phase */
-			if (ZetGetPC(-1) == 0x0d37)
-			{
-				GSCommand = 0x24;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0d44)
-			{
-				GSCommand = 0x24;
-				GS_SAVE_REGS
-			}
-			/* starting lives */
-			if (ZetGetPC(-1) == 0x0d79)
-			{
-				GSCommand = 0x23;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0d8a)
-			{
-				GSCommand = 0x23;
-				GS_SAVE_REGS
-			}
-			/* starting difficulty */
-			if (ZetGetPC(-1) == 0x0dc1)
-			{
-				GSCommand = 0x22;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0dd0)
-			{
-				GSCommand = 0x22;
-				GS_SAVE_REGS
-			}
-			/* starting lives (again) */
-			if (ZetGetPC(-1) == 0x1011)
-			{
-				GSCommand = 0x23;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x101e)
-			{
-				GSCommand = 0x23;
-				GS_SAVE_REGS
-			}
-			/* hardware test */
-			if (ZetGetPC(-1) == 0x107a)
-			{
-				GSCommand = 0x73;
-				GS_RESET_REGS
-			}
-			/* game phase (again) */
-			if (ZetGetPC(-1) == 0x10c6)
-			{
-				GSCommand = 0x24;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x10d3)
-			{
-				GSCommand = 0x24;
-				GS_SAVE_REGS
-			}
-			/* background */
-			if (ZetGetPC(-1) == 0x1910)
-			{
-				GSCommand = 0x26;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x191d)
-			{
-				GSCommand = 0x26;
-				GS_SAVE_REGS
-			}
-			/* foreground */
-			if (ZetGetPC(-1) == 0x19d5)
-			{
-				GSCommand = 0x37;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x19e4)
-			{
-				GSCommand = 0x37;
-				GS_SAVE_REGS
-			}
-			if (ZetGetPC(-1) == 0x19f1)
-			{
-				GSCommand = 0x37;
-				/* do NOT update the registers because there are 2 writes before 2 reads ! */
-			}
-			/* laser position */
-			if (ZetGetPC(-1) == 0x26af)
-			{
-				GSCommand = 0x38;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x26be)
-			{
-				GSCommand = 0x38;
-				GS_SAVE_REGS
-			}
-			if (ZetGetPC(-1) == 0x26cb)
-			{
-				GSCommand = 0x38;
-				/* do NOT update the registers because there are 2 writes before 2 reads ! */
-			}
-			/* starting lives (for "test mode") */
-			if (ZetGetPC(-1) == 0x6a27)
-			{
-				GSCommand = 0x23;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x6a38)
-			{
-				GSCommand = 0x23;
-				GS_SAVE_REGS
-			}
-			break;
-		}
-		
-		case GETSTARJ: {
-			/* unknown effect - not read back */
-			if (ZetGetPC(-1) == 0x00bf)
-			{
-				GSCommand = 0x00;
-				GS_RESET_REGS
-			}
-			/* players inputs */
-			if (ZetGetPC(-1) == 0x0560)
-			{
-				GSCommand = 0x25;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x056d)
-			{
-				GSCommand = 0x25;
-				GS_SAVE_REGS
-			}
-			/* lose life */
-			if (ZetGetPC(-1) == 0x0ad5)
-			{
-				GSCommand = 0x21;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0ae2)
-			{
-				GSCommand = 0x21;
-				GS_SAVE_REGS
-			}
-			/* unknown effect */
-			if (ZetGetPC(-1) == 0x0b1c)
-			{
-				GSCommand = 0x29;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0b29)
-			{
-				GSCommand = 0x29;
-				GS_SAVE_REGS
-			}
-			/* continue play */
-			if (ZetGetPC(-1) == 0x0bae)
-			{
-				GSCommand = 0x20;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0bbb)
-			{
-				GSCommand = 0x20;
-				GS_SAVE_REGS
-			}
-			/* unknown effect - not read back */
-			if (ZetGetPC(-1) == 0x0c2d)
-			{
-				GSCommand = 0x00;     /* 0x1f */
-				GS_RESET_REGS
-			}
-			/* change player (if 2 players game) */
-			if (ZetGetPC(-1) == 0x0c76)
-			{
-				GSCommand = 0x2a;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0c83)
-			{
-				GSCommand = 0x2a;
-				GS_SAVE_REGS
-			}
-			/* game phase */
-			if (ZetGetPC(-1) == 0x0e02)
-			{
-				GSCommand = 0x24;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0e0f)
-			{
-				GSCommand = 0x24;
-				GS_SAVE_REGS
-			}
-			/* starting lives */
-			if (ZetGetPC(-1) == 0x0e44)
-			{
-				GSCommand = 0x23;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0e55)
-			{
-				GSCommand = 0x23;
-				GS_SAVE_REGS
-			}
-			/* starting difficulty */
-			if (ZetGetPC(-1) == 0x0e8c)
-			{
-				GSCommand = 0x22;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x0e9b)
-			{
-				GSCommand = 0x22;
-				GS_SAVE_REGS
-			}
-			/* starting lives (again) */
-			if (ZetGetPC(-1) == 0x10d6)
-			{
-				GSCommand = 0x23;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x10e3)
-			{
-				GSCommand = 0x23;
-				GS_SAVE_REGS
-			}
-			/* hardware test */
-			if (ZetGetPC(-1) == 0x113f)
-			{
-				GSCommand = 0x73;
-				GS_RESET_REGS
-			}
-			/* game phase (again) */
-			if (ZetGetPC(-1) == 0x118b)
-			{
-				GSCommand = 0x24;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x1198)
-			{
-				GSCommand = 0x24;
-				GS_SAVE_REGS
-			}
-			/* background */
-			if (ZetGetPC(-1) == 0x19f8)
-			{
-				GSCommand = 0x26;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x1a05)
-			{
-				GSCommand = 0x26;
-				GS_SAVE_REGS
-			}
-			/* foreground */
-			if (ZetGetPC(-1) == 0x1abd)
-			{
-				GSCommand = 0x37;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x1acc)
-			{
-				GSCommand = 0x37;
-				GS_SAVE_REGS
-			}
-			if (ZetGetPC(-1) == 0x1ad9)
-			{
-				GSCommand = 0x37;
-				/* do NOT update the registers because there are 2 writes before 2 reads ! */
-			}
-			/* laser position */
-			if (ZetGetPC(-1) == 0x2792)
-			{
-				GSCommand = 0x38;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x27a1)
-			{
-				GSCommand = 0x38;
-				GS_SAVE_REGS
-			}
-			if (ZetGetPC(-1) == 0x27ae)
-			{
-				GSCommand = 0x38;
-				/* do NOT update the registers because there are 2 writes before 2 reads ! */
-			}
-			/* starting lives (for "test mode") */
-			if (ZetGetPC(-1) == 0x6ae2)
-			{
-				GSCommand = 0x23;
-				GS_RESET_REGS
-			}
-			if (ZetGetPC(-1) == 0x6af3)
-			{
-				GSCommand = 0x23;
-				GS_SAVE_REGS
-			}
-			break;
-		}
-		
 		case GETSTARB1: {
 			/* "Test mode" doesn't compute the lives value :
                 6ADA: 3E 23         ld   a,$23
@@ -1674,6 +1239,14 @@ static INT32 tigerhLoadROMs()
 
 			use_mcu = 1;
 		}
+		
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "grdian") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "getstarj") == 0) {
+			if (BurnLoadRom(Rom03, 17, 1)) {
+				return 1;
+			}
+
+			use_mcu = 1;
+		}
 
 	}
 
@@ -1855,6 +1428,7 @@ static INT32 tigerhInit()
 
 		if (use_mcu) {
 			if (nWhichGame == 0) m67805_taito_init(Rom03, Ram03, &tigerh_m68705_interface);
+			if (nWhichGame == 1) m67805_taito_init(Rom03, Ram03, &slapfigh_m68705_interface);
 			if (nWhichGame == 2) m67805_taito_init(Rom03, Ram03, &slapfigh_m68705_interface);
 		}
 	}
@@ -2592,7 +2166,7 @@ static struct BurnRomInfo getstarRomDesc[] = {
 
 	{ "a68-03.12d",   0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
 
-	{ "a68_14.6a",    0x000800, 0x00000000, BRF_NODUMP | BRF_OPT | BRF_PRG }, // 17 MCU ROM
+	{ "a68_14.6a",    0x000800, 0x87c4ca48, BRF_ESS | BRF_PRG }, // 17 MCU ROM
 };
 
 
@@ -2623,7 +2197,7 @@ static struct BurnRomInfo getstarjRomDesc[] = {
 
 	{ "a68-03.12d",   0x002000, 0x18daa44c, BRF_ESS | BRF_PRG }, // 16
 
-	{ "68705.6a",     0x000800, 0x00000000, BRF_NODUMP | BRF_OPT | BRF_PRG }, // 17 MCU ROM
+	{ "a68_14.6a",    0x000800, 0x87c4ca48, BRF_ESS | BRF_PRG }, // 17 MCU ROM
 };
 
 

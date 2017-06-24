@@ -2,6 +2,7 @@
 // Based on MAME driver by BUT
 
 #include "tiles_generic.h"
+#include "taito_m68705.h"
 #include "z80_intf.h"
 #include "driver.h"
 extern "C" {
@@ -18,6 +19,7 @@ static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvZ80RAM;
+static UINT8 *DrvRAM;
 static UINT8 *DrvMcuRAM;
 static UINT8 *DrvTxtRAM;
 static UINT8 *DrvSprRAM;
@@ -36,10 +38,6 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
-
-static UINT8 mcu_seed;
-static UINT8 mcu_result;
-static UINT8 mcu_select;
 
 static struct BurnInputInfo ChaknpopInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 coin"	},
@@ -175,98 +173,22 @@ static struct BurnDIPInfo ChaknpopDIPList[]=
 
 STDDIPINFO(Chaknpop)
 
-static const UINT8 mcu_data[256] = {
-	0x3a, 0xe6, 0x80, 0xc6, 0x0e, 0xdd, 0x77, 0xfd,
-	0x7e, 0xfe, 0x10, 0x38, 0x10, 0xdd, 0x7e, 0x03,
-	0xc6, 0x08, 0xdd, 0x77, 0x03, 0xdd, 0x7e, 0xff,
-	0xc6, 0x08, 0xdd, 0x77, 0xff, 0x34, 0x23, 0xc9,
-	0x06, 0x10, 0xdd, 0xe5, 0xe1, 0x23, 0x23, 0x23,
-	0x4e, 0x23, 0x5e, 0x23, 0x56, 0x23, 0x23, 0x7b,
-	0xb2, 0x28, 0x02, 0x79, 0x12, 0x10, 0xf1, 0xc9,
-	0xe6, 0x03, 0x87, 0x87, 0x6f, 0x26, 0x00, 0x29,
-	0x29, 0x29, 0xe5, 0x29, 0x29, 0x29, 0xc1, 0x09,
-	0x01, 0xc3, 0x81, 0x09, 0xe5, 0xdd, 0xe1, 0xc9,
-	0x10, 0x00, 0x08, 0x10, 0x20, 0x64, 0x50, 0x00,
-	0x08, 0x50, 0xb0, 0x01, 0x34, 0xa0, 0x13, 0x34,
-	0xb0, 0x05, 0x34, 0xc0, 0x04, 0x34, 0xd0, 0x02,
-	0x34, 0xf0, 0x02, 0x34, 0x00, 0x60, 0x00, 0x00,
-	0x3f, 0x00, 0x0c, 0x1f, 0xa0, 0x3f, 0x1e, 0xa2,
-	0x01, 0x1e, 0xa1, 0x0a, 0x1e, 0xa2, 0x07, 0x1e,
-	0x92, 0x05, 0x1e, 0x02, 0x04, 0x1e, 0x12, 0x09,
-	0x3f, 0x22, 0x06, 0x3f, 0x21, 0x03, 0x3f, 0x20,
-	0x02, 0x00, 0x00, 0x3f, 0x00, 0x04, 0x02, 0xa0,
-	0x40, 0x12, 0xa1, 0x06, 0x12, 0xa2, 0x02, 0x12,
-	0xa1, 0x0a, 0x12, 0xa2, 0x07, 0x10, 0x92, 0x05,
-	0x10, 0x02, 0x04, 0x12, 0x12, 0x09, 0x12, 0x22,
-	0x06, 0x12, 0x21, 0x03, 0x12, 0x20, 0x02, 0x26,
-	0x00, 0x14, 0x12, 0x00, 0x00, 0x00, 0x3f, 0x00,
-	0x04, 0x1a, 0xa0, 0x40, 0x3f, 0x00, 0x00, 0x00,
-	0x3e, 0x3a, 0x87, 0x83, 0x3c, 0x32, 0x87, 0x83,
-	0x0f, 0x0f, 0xe6, 0x07, 0xfe, 0x02, 0x20, 0x01,
-	0xaf, 0x11, 0x40, 0x98, 0x1d, 0x12, 0x1d, 0x20,
-	0xfb, 0x2a, 0x89, 0x83, 0x2b, 0x22, 0x89, 0x83,
-	0xc9, 0x3a, 0x5b, 0x81, 0xa7, 0xc0, 0x21, 0x80,
-	0x81, 0x11, 0x04, 0x00, 0x06, 0x09, 0x34, 0x19,
-	0x10, 0xfc, 0x3e, 0x01, 0x32, 0x5b, 0x81, 0xc9
-};
-
-static void mcu_update_seed(UINT8 data)
-{
-	if (!(data & 0x80))
-	{
-		mcu_seed += 0x83;
-		mcu_seed = (mcu_seed & 0x80) | (mcu_seed >> 1);
-	}
-
-	mcu_seed += 0x19;
-}
-
-static void chaknpop_mcu_port_a_write(UINT8 data)
-{
-	UINT8 mcu_command = data + mcu_seed;
-	mcu_result = 0;
-
-	if (mcu_command < 0x08)
-	{
-		mcu_update_seed(data);
-
-		mcu_result = DrvMcuRAM[mcu_select * 8 + mcu_command] - mcu_seed;
-
-		mcu_update_seed(mcu_result);
-	}
-	else if (mcu_command >= 0x28 && mcu_command <= 0x2a)
-	{
-		mcu_update_seed(data);
-
-		mcu_result = DrvMcuRAM[0x380 + mcu_command] - mcu_seed;
-
-		mcu_update_seed(mcu_result);
-	}
-	else if (mcu_command < 0x80)
-	{
-		mcu_update_seed(data);
-
-		if (mcu_command >= 0x40 && mcu_command < 0x60)
-		{
-			mcu_select = mcu_command - 0x40;
-		}
-	}
-	else if (mcu_command == 0x9c|| mcu_command == 0xde)
-	{
-		mcu_update_seed(data);
-	}
-}
-
 UINT8 __fastcall chaknpop_read(UINT16 address)
 {
 	switch (address)
 	{
 		case 0x8800:
-			return mcu_result;
+			return standard_taito_mcu_read();
 
-		case 0x8801:
+		case 0x8801: {
+			INT32 res = 0;
+			if (!main_sent) res |= 0x01;
+			if (mcu_sent) res |= 0x02;
+			return res;
+		}
+			
 		case 0x8802:
-			return 0xff; // MCU port b & c
+			return 0xff;
 
 		case 0x8804:
 		case 0x8805:
@@ -313,7 +235,7 @@ void __fastcall chaknpop_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x8800:
-			chaknpop_mcu_port_a_write(data);
+			standard_taito_mcu_write(data);
 		return;
 
 		case 0x8801:
@@ -360,13 +282,11 @@ static INT32 DrvDoReset()
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
+	
+	m67805_taito_reset();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
-
-	mcu_seed = 0x81;
-	mcu_result = 0;
-	mcu_select = 0;
 
 	rambank[0] = 0xff;
 	ZetOpen(0);
@@ -451,6 +371,7 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
+	DrvRAM			= Next; Next += 0x000800;
 	DrvZ80RAM		= Next; Next += 0x008000;
 	DrvTxtRAM		= Next; Next += 0x000400;
 	DrvSprRAM		= Next; Next += 0x000100;
@@ -483,7 +404,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvZ80ROM  + 0x6000,  3, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM  + 0xa000,  4, 1)) return 1;
 
-	//	if (BurnLoadRom(DrvMcuROM  + 0x0000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvMcuROM  + 0x0000,  5, 1)) return 1;
 
 		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  6, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x2000,  7, 1)) return 1;
@@ -502,9 +423,9 @@ static INT32 DrvInit()
 	ZetOpen(0);
 	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
 	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvMcuRAM);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvMcuRAM);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvMcuRAM);
+	ZetMapArea(0x8000, 0x87ff, 0, DrvRAM);
+	ZetMapArea(0x8000, 0x87ff, 1, DrvRAM);
+	ZetMapArea(0x8000, 0x87ff, 2, DrvRAM);
 	ZetMapArea(0x9000, 0x93ff, 0, DrvTxtRAM);
 	ZetMapArea(0x9000, 0x93ff, 1, DrvTxtRAM);
 	ZetMapArea(0x9000, 0x93ff, 2, DrvTxtRAM);
@@ -517,6 +438,8 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(chaknpop_write);
 	ZetSetReadHandler(chaknpop_read);
 	ZetClose();
+	
+	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
 	AY8910Init(0, 1536000, nBurnSoundRate, &ay8910_0_read_port_A, &ay8910_0_read_port_B, NULL, NULL);
 	AY8910Init(1, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
@@ -534,6 +457,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 	ZetExit();
+	m67805_taito_exit();
 	AY8910Exit(0);
 	AY8910Exit(1);
 
@@ -676,12 +600,28 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
 	}
+	
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[2] = { 2350000 / 60, 3072000 / 60 };
+	INT32 nCyclesDone[2]  = { 0, 0 };
+	
+	ZetNewFrame();
+	
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		INT32 nSegment = nCyclesTotal[0] / nInterleave;
 
-	ZetOpen(0);
-	ZetRun(2350000 / 60);
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-	ZetClose();
-
+		ZetOpen(0);
+		nCyclesDone[0] += ZetRun(nSegment);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		ZetClose();
+		
+		m6805Open(0);
+		nSegment = nCyclesTotal[1] / nInterleave;
+		nCyclesDone[1] += m6805Run(nSegment);
+		m6805Close();
+	}
+	
 	if (pBurnSoundOut) {
 		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
 	}
@@ -710,11 +650,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
+		m68705_taito_scan(nAction);
 		AY8910Scan(nAction, pnMin);
-
-		SCAN_VAR(mcu_seed);
-		SCAN_VAR(mcu_result);
-		SCAN_VAR(mcu_select);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -738,7 +675,7 @@ static struct BurnRomInfo chaknpopRomDesc[] = {
 	{ "ao4_04.ic25",	0x2000, 0x5209c7d4, 1 | BRF_ESS | BRF_PRG }, //  3
 	{ "ao4_05.ic3",		0x2000, 0x8720e024, 1 | BRF_ESS | BRF_PRG }, //  4
 
-	{ "ao4_06.ic23",	0x0800, 0x00000000, 2 | BRF_NODUMP },        //  5 m68705 code (not dumped)
+	{ "ao4_06.ic23",	0x0800, 0x9c78c24c, 2 | BRF_ESS | BRF_PRG }, //  5 m68705 code
 
 	{ "ao4_08.ic14",	0x2000, 0x5575a021, 3 | BRF_GRA },           //  6 Sprites
 	{ "ao4_07.ic15",	0x2000, 0xae687c18, 3 | BRF_GRA },           //  7

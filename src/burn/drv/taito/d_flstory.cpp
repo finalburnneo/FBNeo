@@ -688,7 +688,7 @@ void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 		case 0xd000:
 			if (select_game == 2) {
 				victnine_mcu_write(data);
-			} else if (select_game == 1) {
+			} else if (select_game == 10) {
 				onna34ro_mcu_write(data);
 			} else {
 				standard_taito_mcu_write(data);
@@ -722,7 +722,7 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 1) {
+			if (select_game == 10) {
 				return from_mcu;
 			}
 			if (select_game == 2) {
@@ -759,7 +759,7 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 			if (mcu_sent) res |= 0x02;
 
 			if (select_game == 2) res |= DrvInputs[3];
-			if (select_game == 1) res = 0x03; // onna always returns 3
+			if (select_game == 10) res = 0x03; // onna always returns 3
 			return res;
 		}
 
@@ -1037,6 +1037,8 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x14000, 13, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x18000, 14, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x1c000, 15, 1)) return 1;
+			
+			if (BurnLoadRom(DrvMcuROM  + 0x00000, 16, 1)) return 1;
 		} else if (select_game == 2) {
 			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM0 + 0x02000,  1, 1)) return 1;
@@ -1075,6 +1077,25 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x06000,  9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x04000, 10, 1)) return 1;
+		} else if (select_game == 10) {
+			if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
+
+			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x02000,  4, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x04000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x06000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM1 + 0x08000,  7, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x04000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x08000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x0c000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x10000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x14000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x18000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x1c000, 15, 1)) return 1;
 		}
 
 		DrvGfxDecode();
@@ -1472,7 +1493,7 @@ static INT32 DrvFrame()
 		if (i == (nInterleave / 1) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
-		if (select_game == 0 || select_game == 3) {
+		if (select_game == 0 || select_game == 1 || select_game == 3) {
 			m6805Open(0);
 			nSegment = nCyclesTotal[2] / nInterleave;
 			nCyclesDone[2] += m6805Run(nSegment);
@@ -1599,7 +1620,7 @@ static struct BurnRomInfo onna34roRomDesc[] = {
 	{ "a52-09.33v",		0x4000, 0x39c543b5, 3 | BRF_GRA }, // 14
 	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 | BRF_GRA }, // 15
 
-	{ "a52-17.54c",		0x0800, 0x00000000, 4 | BRF_NODUMP }, // 16 cpu2
+	{ "a52_17.54c",		0x0800, 0x0ab2612e, 4 | BRF_PRG | BRF_ESS }, // 16 cpu2
 };
 
 STD_ROM_PICK(onna34ro)
@@ -1614,7 +1635,7 @@ static INT32 onna34roInit()
 
 struct BurnDriver BurnDrvOnna34ro = {
 	"onna34ro", NULL, NULL, NULL, "1985",
-	"Onna Sansirou - Typhoon Gal (set 1)\0", NULL, "Taito", "Miscellaneous",
+	"Onna Sansirou - Typhoon Gal\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34roRomInfo, onna34roRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
@@ -1644,20 +1665,25 @@ static struct BurnRomInfo onna34raRomDesc[] = {
 	{ "a52-07.34v",		0x4000, 0x0bf420f2, 3 | BRF_GRA }, // 13
 	{ "a52-09.33v",		0x4000, 0x39c543b5, 3 | BRF_GRA }, // 14
 	{ "a52-11.32v",		0x4000, 0xd1dda6b3, 3 | BRF_GRA }, // 15
-
-	{ "a52-17.54c",		0x0800, 0x00000000, 4 | BRF_NODUMP }, // 16 cpu2
 };
 
 STD_ROM_PICK(onna34ra)
 STD_ROM_FN(onna34ra)
 
+static INT32 onna34roaInit()
+{
+	select_game = 10;
+
+	return DrvInit();
+}
+
 struct BurnDriver BurnDrvOnna34ra = {
 	"onna34roa", "onna34ro", NULL, NULL, "1985",
-	"Onna Sansirou - Typhoon Gal (set 2)\0", NULL, "Taito", "Miscellaneous",
+	"Onna Sansirou - Typhoon Gal (bootleg)\0", NULL, "Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, onna34raRomInfo, onna34raRomName, NULL, NULL, Onna34roInputInfo, Onna34roDIPInfo,
-	onna34roInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	onna34roaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

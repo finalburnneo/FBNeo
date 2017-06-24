@@ -60,15 +60,6 @@ static INT32 m_vol_ctrl[16];
 static UINT8 m_snd_ctrl0;
 static UINT8 m_snd_ctrl1;
 static UINT8 m_snd_ctrl2;
-static UINT8 m_mcu_cmd;
-static UINT8 m_mcu_counter;
-static UINT8 m_mcu_b4_cmd;
-static UINT8 m_mcu_param;
-static UINT8 m_mcu_b2_res;
-static UINT8 m_mcu_b1_res;
-static UINT8 m_mcu_bb_res;
-static UINT8 m_mcu_b5_res;
-static UINT8 m_mcu_b6_res;
 
 static struct BurnInputInfo FlstoryInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
@@ -586,117 +577,6 @@ static void gfxctrl_write(INT32 data)
 	if (data & 4) *flipscreen = (~data & 0x01);
 }
 
-static UINT8 rumba_mcu_read()
-{
-	if((m_mcu_cmd & 0xf0) == 0x00) // end packet cmd, value returned is meaningless (probably used for main <-> mcu comms syncronization)
-		return 0;
-
-	switch(m_mcu_cmd)
-	{
-		case 0x73: return 0xa4; //initial MCU check
-		case 0x33: return m_mcu_b2_res; //0xb2 result
-		case 0x31: return m_mcu_b1_res; //0xb1 result
-
-		case 0x35: m_mcu_b5_res = 1; m_mcu_b6_res = 1; return 0;
-		case 0x36: return m_mcu_b4_cmd; //0xb4 command, extra protection for lives (first play only), otherwise game gives one extra life at start-up (!)
-		case 0x37: return m_mcu_b5_res; //0xb4 / 0xb5 / 0xb6 result y value
-		case 0x38: return m_mcu_b6_res; //x value
-
-		case 0x3b: return m_mcu_bb_res; //0xbb result
-		case 0x40: return 0;
-		case 0x41: return 0;
-		case 0x42:
-		{
-			return 0;
-		}
-	}
-
-	return 0;
-}
-
-static void rumba_mcu_write(UINT8 data)
-{
-	if(m_mcu_param)
-	{
-		m_mcu_param = 0; // clear param
-
-		switch(m_mcu_cmd)
-		{
-			case 0xb0: // counter, used by command 0xb1 (and something else?
-			{
-				m_mcu_counter = data;
-				break;
-			}
-			case 0xb1: // player death sequence, controls X position
-			{
-				m_mcu_b1_res = data;
-
-				/* TODO: this is pretty hard to simulate ... */
-				if(m_mcu_counter >= 0x10)
-					m_mcu_b1_res++; // left
-				else if(m_mcu_counter >= 0x08)
-					m_mcu_b1_res--; // right
-				else
-					m_mcu_b1_res++; // left again
-
-				break;
-			}
-			case 0xb2: // player sprite hook-up param when he throws the wheel
-			{
-				switch(data)
-				{
-					case 1: m_mcu_b2_res = 0xaa; break; //left
-					case 2: m_mcu_b2_res = 0xaa; break; //right
-					case 4: m_mcu_b2_res = 0xab; break; //down
-					case 8: m_mcu_b2_res = 0xa9; break; //up
-				}
-				break;
-			}
-			case 0xbb: // when you start a level, lives
-			{
-				m_mcu_bb_res = data;
-				break;
-			}
-			case 0xb4: // when the bird touches the top / bottom / left / right of the screen, for correct repositioning
-			{
-				m_mcu_b4_cmd = data;
-				break;
-			}
-			case 0xb5: // bird X coord
-			{
-				m_mcu_b5_res = data;
-
-				if(m_mcu_b4_cmd == 3) // from right to left
-					m_mcu_b5_res = 0x0d;
-
-				if(m_mcu_b4_cmd == 2) // from left to right
-					m_mcu_b5_res = 0xe4;
-
-				break;
-			}
-			case 0xb6: // bird Y coord
-			{
-				m_mcu_b6_res = data;
-
-				if(m_mcu_b4_cmd == 1) // from up to down
-					m_mcu_b6_res = 0x04;
-
-				if(m_mcu_b4_cmd == 4) // from down to up
-					m_mcu_b6_res = 0xdc;
-
-				break;
-			}
-		}
-
-		return;
-	}
-
-	m_mcu_cmd = data;
-
-	if(((data & 0xf0) == 0xb0 || (data & 0xf0) == 0xc0) && m_mcu_param == 0)
-		m_mcu_param = 1;
-}
-
 static void onna34ro_mcu_write(INT32 data)
 {
 	INT32 score_adr = (ZetReadByte(0xe29e) << 8) + ZetReadByte(0xe29d);
@@ -806,9 +686,7 @@ void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xd000:
-			if (select_game == 3) {
-				rumba_mcu_write(data);
-			} else if (select_game == 2) {
+			if (select_game == 2) {
 				victnine_mcu_write(data);
 			} else if (select_game == 1) {
 				onna34ro_mcu_write(data);
@@ -845,10 +723,9 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 	{
 		case 0xd000:
 			if (select_game == 1) {
-				return from_mcu; }
-			else if (select_game == 3) {
-				return rumba_mcu_read();
-			} else if (select_game == 2) {
+				return from_mcu;
+			}
+			if (select_game == 2) {
 				return from_mcu - ZetReadByte(0xe685);
 			} else {
 				return standard_taito_mcu_read();
@@ -882,7 +759,7 @@ UINT8 __fastcall flstory_main_read(UINT16 address)
 			if (mcu_sent) res |= 0x02;
 
 			if (select_game == 2) res |= DrvInputs[3];
-			if (select_game == 3 || select_game == 1) res = 0x03; // rumba and onna always returns 3
+			if (select_game == 1) res = 0x03; // onna always returns 3
 			return res;
 		}
 
@@ -1051,17 +928,6 @@ static INT32 DrvDoReset()
 	char_bank = 0;
 	mcu_select = 0;
 
-	// below for Rumba mcu sim
-	m_mcu_cmd = 0;
-	m_mcu_counter = 0;
-	m_mcu_b4_cmd = 0;
-	m_mcu_param = 0;
-	m_mcu_b2_res = 0;
-	m_mcu_b1_res = 0;
-	m_mcu_bb_res = 0;
-	m_mcu_b5_res = 0;
-	m_mcu_b6_res = 0;
-
 	return 0;
 }
 
@@ -1202,7 +1068,9 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  3, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM1 + 0x02000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM1 + 0x04000,  5, 1)) return 1;
-			// 6 == undumped mcu
+			
+			if (BurnLoadRom(DrvMcuROM  + 0x00000,  6, 1)) return 1;
+
 			if (BurnLoadRom(DrvGfxROM0 + 0x02000,  7, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x00000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x06000,  9, 1)) return 1;
@@ -1308,16 +1176,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(m_snd_ctrl0);
 		SCAN_VAR(m_snd_ctrl1);
 		SCAN_VAR(m_snd_ctrl2);
-		// below for Rumba mcu sim
-		SCAN_VAR(m_mcu_cmd);
-		SCAN_VAR(m_mcu_counter);
-		SCAN_VAR(m_mcu_b4_cmd);
-		SCAN_VAR(m_mcu_param);
-		SCAN_VAR(m_mcu_b2_res);
-		SCAN_VAR(m_mcu_b1_res);
-		SCAN_VAR(m_mcu_bb_res);
-		SCAN_VAR(m_mcu_b5_res);
-		SCAN_VAR(m_mcu_b6_res);
 
 		DrvRecalc = 1;
 	}
@@ -1614,7 +1472,7 @@ static INT32 DrvFrame()
 		if (i == (nInterleave / 1) - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		ZetClose();
 
-		if (select_game == 0) {
+		if (select_game == 0 || select_game == 3) {
 			m6805Open(0);
 			nSegment = nCyclesTotal[2] / nInterleave;
 			nCyclesDone[2] += m6805Run(nSegment);
@@ -1877,7 +1735,7 @@ static struct BurnRomInfo rumbaRomDesc[] = {
 	{ "a23_09.bin",		0x2000, 0xd0a101d3, 2 | BRF_PRG | BRF_ESS }, //  4
 	{ "a23_10.bin",		0x2000, 0xf9447bd4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "a23-11.mc68705p5s",	0x0800, 0x00000000, 3 | BRF_NODUMP }, //  6 mcu
+	{ "a23_11.bin",		0x0800, 0xfddc99ce, 3 | BRF_PRG | BRF_ESS }, //  6 mcu
 
 	{ "a23_07.bin",		0x2000, 0xc98fbea6, 4 | BRF_GRA }, //  7 gfx1
 	{ "a23_06.bin",		0x2000, 0xbf1e3a7f, 4 | BRF_GRA }, //  8

@@ -15017,6 +15017,86 @@ struct BurnDriver BurnDrvlastblada = {
 	0x1000, 320, 224, 4, 3
 };
 
+// // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
+
+static struct BurnRomInfo lastbladspRomDesc[] = {
+	{ "234-p1sp.p1",  0x100000, 0x2cbe10af, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "234-p2sp.sp2", 0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "234-p3sp.sp2", 0x020000, 0x88eb8cf5, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "234-s1.s1",    0x020000, 0x95561412, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "234-c1.c1",    0x800000, 0x9f7e2bd3, 3 | BRF_GRA },           //  3 Sprite data
+	{ "234-c2.c2",    0x800000, 0x80623d3c, 3 | BRF_GRA },           //  4 
+	{ "234-c3.c3",    0x800000, 0x91ab1a30, 3 | BRF_GRA },           //  5 
+	{ "234-c4.c4",    0x800000, 0x3d60b037, 3 | BRF_GRA },           //  6 
+	{ "234-c5sp.c5",  0x400000, 0x4ea22fe0, 3 | BRF_GRA },           //  7 
+	{ "234-c6sp.c6",  0x400000, 0xa863c882, 3 | BRF_GRA },           //  8 
+
+	{ "234-m1.m1",    0x020000, 0x087628ea, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+
+	{ "234-v1.v1",    0x400000, 0xed66b76f, 5 | BRF_SND },           // 10 Sound data
+	{ "234-v2.v2",    0x400000, 0xa0e7f6e2, 5 | BRF_SND },           // 11 
+	{ "234-v3.v3",    0x400000, 0xa506e1e2, 5 | BRF_SND },           // 12 
+	{ "234-v4.v4",    0x400000, 0x0e34157f, 5 | BRF_SND },           // 13 
+};
+
+STDROMPICKEXT(lastbladsp, lastbladsp, neogeo)
+STD_ROM_FN(lastbladsp)
+
+static UINT8 *lastbladspExtraROM;
+
+static INT32 LastbladspInit()
+{
+ 	INT32 nRet = NeoInit();
+
+	if (nRet == 0) {
+        	lastbladspExtraROM = (UINT8*)BurnMalloc(0x20000);
+
+		if (BurnLoadRom(lastbladspExtraROM, 2, 1)) return 1;
+
+		UINT16 *rom = (UINT16*)lastbladspExtraROM;
+		for (INT32 i = 0; i < 0x20000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		rom = (UINT16*)Neo68KROMActive;
+
+		for (INT32 i = 0; i < 0x100000/2; i++) {
+			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
+			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
+		}
+
+		rom[0xbff2] = 0x2b7c; // 4ef9
+		rom[0xbff3] = 0x0001; // 0091
+		rom[0xbff4] = 0x7fee; // 0206
+		rom[0xbff5] = 0xa26a; // 4e7d
+
+        	SekOpen(0);
+        	SekMapMemory(lastbladspExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+        	SekClose();
+	}
+
+	return nRet;
+}
+
+static INT32 LastbladspExit()
+{
+    BurnFree (lastbladspExtraROM);
+
+    return NeoExit();
+}
+struct BurnDriver BurnDrvlastbladsp = {
+	"lastbladsp", "lastblad", "neogeo", NULL, "2017",
+	"The Last Soldier (Special 2017, hack)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, lastbladspRomInfo, lastbladspRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	LastbladspInit, LastbladspExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // The Last Blade 2 / Bakumatsu Roman - Dai Ni Maku Gekka no Kenshi (Enhanced Hack)
 // Hackers: Dodowang, Eddids
 // Unlock "EX" mode (highlight Speed and press C) & Enable hidden characters

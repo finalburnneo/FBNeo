@@ -1659,7 +1659,7 @@ static struct BurnRomInfo flstoryRomDesc[] = {
 	{ "vid-a45.09",		0x4000, 0x8336be58, 3 | BRF_GRA }, // 11
 	{ "vid-a45.21",		0x4000, 0xfc382bd1, 3 | BRF_GRA }, // 12
 
-	{ "a45.mcu",		0x0800, 0x5378253c, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
+	{ "a45-20.mcu",		0x0800, 0x7d2cdd9b, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
 };
 
 STD_ROM_PICK(flstory)
@@ -1702,7 +1702,7 @@ static struct BurnRomInfo flstoryjRomDesc[] = {
 	{ "vid-a45.09",		0x4000, 0x8336be58, 3 | BRF_GRA }, // 11
 	{ "vid-a45.21",		0x4000, 0xfc382bd1, 3 | BRF_GRA }, // 12
 
-	{ "a45.mcu",		0x0800, 0x5378253c, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
+	{ "a45-20.mcu",		0x0800, 0x7d2cdd9b, 4 | BRF_PRG | BRF_ESS }, // 13 mcu
 };
 
 STD_ROM_PICK(flstoryj)

@@ -1680,6 +1680,24 @@ static struct BurnRomInfo OpwolfjRomDesc[] = {
 STD_ROM_PICK(Opwolfj)
 STD_ROM_FN(Opwolfj)
 
+static struct BurnRomInfo OpwolfjscRomDesc[] = {
+	{ "b20_27.ic40.27512",  0x10000, 0x6bd02046, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b20_26.ic30.27512",  0x10000, 0x644dd415, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b20-04.39",     		0x10000, 0x216b4838, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b20-18.29",     		0x10000, 0xfd202470, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+
+	{ "b20-07.10",     		0x10000, 0x45c7ace3, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+
+	{ "b20-13.13",     		0x80000, 0xf6acdab1, BRF_GRA | TAITO_CHARS },
+	
+	{ "b20-14.72",     		0x80000, 0x89f889e5, BRF_GRA | TAITO_SPRITESA },
+
+	{ "b20-08.21",     		0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
+};
+
+STD_ROM_PICK(Opwolfjsc)
+STD_ROM_FN(Opwolfjsc)
+
 static struct BurnRomInfo OpwolfuRomDesc[] = {
 	{ "b20-05-02.40",  0x10000, 0x3ffbfe3a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b20-03-02.30",  0x10000, 0xfdabd8a5, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -6294,6 +6312,16 @@ struct BurnDriver BurnDrvOpwolfj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
 	NULL, OpwolfjRomInfo, OpwolfjRomName, NULL, NULL, OpwolfInputInfo, OpwolfDIPInfo,
+	OpwolfInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	NULL, 0x2000, 320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvOpwolfjsc = {
+	"opwolfjsc", "opwolf", NULL, NULL, "1987",
+	"Operation Wolf (Japan, SC)\0", NULL, "Taito Corporation", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, OpwolfjscRomInfo, OpwolfjscRomName, NULL, NULL, OpwolfInputInfo, OpwolfDIPInfo,
 	OpwolfInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };

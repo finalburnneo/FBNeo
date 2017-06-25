@@ -87,7 +87,11 @@ static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT16 gfx_ctrl;
-static UINT32 sprite_bank[0x10];
+// ...to keep track of spritebank changes & lines to draw them between
+static UINT32 scanline, lastscanline;
+static UINT32 sprite_bankSL[0x10][0x2];
+static UINT32 sprite_bankL;
+static UINT32 lastsprite_bank;
 
 static UINT8 irq_reg[2];
 static UINT8 irq_cpu[2];
@@ -405,6 +409,15 @@ static struct BurnDIPInfo DirtfoxDIPList[]=
 
 STDDIPINFO(Dirtfox)
 
+static UINT64 rand_seed = 0;
+
+static UINT16 fb_rand()
+{
+	if (!rand_seed) rand_seed = time(NULL);
+	rand_seed = rand_seed * 1103515245 + 12345;
+	return (UINT32)(rand_seed / 65536) % 32768;
+}
+
 static inline void palette_write(UINT16 offset)
 {
 	offset /= 2;
@@ -575,20 +588,20 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return rand();
+		return fb_rand();
 	}
 
 	switch (address)
 	{
 		case 0x4a0000:
-		case 0x4a0001:
+		//case 0x4a0001:
 			return 0x04; // c139 status
 
 		case 0xc40000:
-		case 0xc40001:
+		//case 0xc40001:
 			return gfx_ctrl;
 	}
-
+	bprintf(0, _T("unmap rw %X.\n"), address);
 	return 0;
 }
 
@@ -665,7 +678,27 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 	{
 		case 0xc40000:
 			gfx_ctrl = data;
-			sprite_bank[gfx_ctrl & 0xf] = 1;
+
+			// notes: finehour is the only game that takes advantage of this technique
+			// from game (finehour)   / what we do
+			// scanline 188: 0xf        draw bank 0xf from 188 to end of screen. note: things will look terrible if 0xf is drawn above line 188!
+			// scanline 251 & 261: 0    draw bank 0x0 from 0 to end of screen. note: really should draw from 0 - 188, but its not needed and the extra logic is cumbersome
+
+			if ((gfx_ctrl&0xf) != 0)
+				bprintf(0, _T("Spritebank change: %X @ %d. \n"), gfx_ctrl&0xf, scanline);
+
+			sprite_bankL |= 1<<(gfx_ctrl&0xf);
+			sprite_bankSL[gfx_ctrl & 0xf][0] = (scanline>=nScreenHeight) ? 0 : scanline; // spritebank set past nScreenHeight means to use for next frame.
+			sprite_bankSL[gfx_ctrl & 0xf][1] = nScreenHeight;
+
+#if 0
+			if (sprite_bankSL[gfx_ctrl & 0xf][0] && (sprite_bankL & (sprite_bankL - 1))) {
+				sprite_bankSL[lastsprite_bank][1] = sprite_bankSL[gfx_ctrl & 0xf][0];
+			}
+#endif
+
+			lastscanline = scanline;
+			lastsprite_bank = gfx_ctrl & 0xf;
 		return;
 	}
 }
@@ -702,7 +735,7 @@ static UINT16 __fastcall sgunner_68k_read_word(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return rand();
+		return fb_rand();
 	}
 
 	return namcos2_68k_read_word(address);
@@ -714,7 +747,7 @@ static UINT8 __fastcall sgunner_68k_read_byte(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return rand();
+		return fb_rand();
 	}
 
 	return namcos2_68k_read_byte(address);
@@ -786,7 +819,7 @@ static UINT16 __fastcall luckywld_68k_read_word(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return rand();
+		return fb_rand();
 	}
 
 	if ((address & 0xfffff8) == 0x900000) {
@@ -812,7 +845,7 @@ static void __fastcall metlhawk_68k_write_word(UINT32 address, UINT16 data)
 	{
 		case 0xe00000:
 			gfx_ctrl = data;
-			sprite_bank[gfx_ctrl & 0xf] = 1;
+			sprite_bankL |= 1<<(gfx_ctrl&0xf);
 		return;
 	}
 
@@ -906,7 +939,7 @@ static void __fastcall finallap_68k_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x840000:
 			gfx_ctrl = data;
-			sprite_bank[gfx_ctrl & 0xf] = 1;
+			sprite_bankL |= 1<<(gfx_ctrl&0xf);
 		return;
 	}
 
@@ -1483,7 +1516,8 @@ static INT32 DrvDoReset()
 	c45RoadReset();
 
 	gfx_ctrl = 0;
-	memset(&sprite_bank, 0, sizeof(sprite_bank));
+	//memset(&sprite_bank, 0, sizeof(sprite_bank));
+	sprite_bankL = 0;
 
 	irq_reg[1] = irq_reg[0] = 0;
 	irq_cpu[1] = irq_cpu[0] = 0;
@@ -2043,6 +2077,8 @@ static INT32 MetlhawkInit()
 
 	is_metlhawk = 1;
 
+	weird_vbl = 1; // fix incorrect flashing in continue screen
+
 	DrvDoReset();
 
 	return 0;
@@ -2238,7 +2274,7 @@ static void apply_clip()
 static void DrvRecalcPalette()
 {
 	UINT16 *ram = (UINT16*)DrvPalRAM;
-
+	bprintf(0, _T("RECALC!\n"));
 	for (INT32 bank = 0; bank < 0x20; bank++)
 	{
 		INT32 pen = bank * 256;
@@ -2980,14 +3016,30 @@ static void draw_sprites()
 {
 	DrvPrio2Clear();
 
+	if (!sprite_bankL) { // game didn't select sprite bank for frame(rare), default to first bank.
+		sprite_bankL = 1<<0;
+		sprite_bankSL[0][0] = 0;
+		sprite_bankSL[0][1] = nScreenHeight;
+	}
+
 	for (INT32 i = 0; i < 0x10; i++)
 	{
-		if (sprite_bank[i]) {
+		if (sprite_bankL & 1<<i) {
+			INT32 oldmin_y = min_y;
+			INT32 oldmax_y = max_y;
+			min_y = sprite_bankSL[i][0];
+			max_y = sprite_bankSL[i][1];
+			if (min_y < oldmin_y) min_y = oldmin_y;
+			if (max_y > oldmax_y) max_y = oldmax_y;
+
+			//bprintf(0, _T("draw spritebank %X, min_y %d max_y %d.\n"), i, min_y, max_y); /*keep!*/
 			draw_sprites_bank(i);
-			sprite_bank[i] = 0;
+
+			min_y = oldmin_y;
+			max_y = oldmax_y;
 		}
 	}
-	sprite_bank[gfx_ctrl&0xf] = 1;
+	sprite_bankL = 0;
 }
 
 static void DrvDrawBegin()
@@ -3019,8 +3071,8 @@ static void DrvDrawLine(INT32 line)
 			if (roz_enable) {
 				INT32 oldmin_y = min_y;
 				INT32 oldmax_y = max_y;
-				min_y = (line >= min_y) ? line : 0;
-				max_y = (line <= max_y) ? line+1 : 0;
+				min_y = (line >= min_y && line <= max_y) ? line : 255;
+				max_y = (line+1 <= max_y) ? line+1 : 0;
 				if (nBurnLayer & 1) draw_roz(pri);
 				min_y = oldmin_y;
 				max_y = oldmax_y;
@@ -3463,7 +3515,11 @@ static INT32 DrvFrame()
 		pDrvDrawBegin();
 	}
 
+	lastscanline = 0;
+
 	for (INT32 i = 0; i < nInterleave; i++) {
+		scanline = i / 2;
+
 		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 
 		SekOpen(0);
@@ -3692,6 +3748,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(finallap_prot_count);
 
 		SCAN_VAR(key_sendval);
+
+		SCAN_VAR(rand_seed);
+
 		c45RoadState(nAction); // here
 
 		if (nAction & ACB_WRITE) {
@@ -3951,7 +4010,7 @@ static UINT16 ordyne_key_read(UINT8 offset)
 		case 7: return 0x00B0;
 	}
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 OrdyneInit()
@@ -4088,7 +4147,7 @@ static UINT16 cosmogng_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014a;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 CosmogngInit()
@@ -4158,7 +4217,7 @@ static UINT16 mirninja_key_read(UINT8 offset)
 {
 	if (offset == 7) return 0x00b1;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 MirninjaInit()
@@ -4240,7 +4299,7 @@ static UINT16 phelios_key_read(UINT8 offset)
 		case 7: return 0x00b2;
 	}
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 PheliosInit()
@@ -4382,7 +4441,7 @@ static UINT16 marvland_key_read(UINT8 offset)
 		case 7: return (key_sendval == 1) ? 0xbe : 1;
 	}
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 MarvlandInit()
@@ -4502,7 +4561,16 @@ STD_ROM_FN(valkyrie)
 
 static INT32 ValkyrieInit()
 {
-	return Namcos2Init(NULL, NULL);
+	INT32 rc = Namcos2Init(NULL, NULL);
+
+	if (!rc) {
+		weird_vbl = 1;
+
+		pDrvDrawBegin = DrvDrawBegin; // needs linedraw for some effects (end of boss fight / fall through floor)
+		pDrvDrawLine = DrvDrawLine;
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvValkyrie = {
@@ -4572,7 +4640,7 @@ static UINT16 rthun2_key_read(UINT8 offset)
 
 	if (offset == 2) return 0;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 Rthun2Init()
@@ -4687,7 +4755,7 @@ static UINT16 dsaber_key_read(UINT8 offset)
 {
 	if (offset == 2) return 0x00c0;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 DsaberInit()
@@ -4861,7 +4929,7 @@ static UINT16 burnforc_key_read(UINT8 offset)
 {
 	if (offset == 1) return 0xbd;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 BurnforcInit()
@@ -4993,14 +5061,14 @@ static UINT16 finehour_key_read(UINT8 offset)
 {
 	if (offset == 7) return 0xbc;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 FinehourInit()
 {
 	INT32 rc = Namcos2Init(NULL, finehour_key_read);
 
-	weird_vbl = 1;
+	weird_vbl = 0;
 
 	if (!rc) {
 		pDrvDrawBegin = DrvDrawBegin;
@@ -5061,7 +5129,7 @@ static UINT16 sws_key_read(UINT8 offset)
 {
 	if (offset == 4) return 0x0142;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 SwsInit()
@@ -5122,7 +5190,7 @@ static UINT16 sws92_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014b;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 Sws92Init()
@@ -5185,7 +5253,7 @@ static UINT16 sws92g_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014c;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 Sws92gInit()
@@ -5246,7 +5314,7 @@ static UINT16 sws93_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014e;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 Sws93Init()
@@ -5534,7 +5602,7 @@ static UINT16 sgunner2_key_read(UINT8 offset)
 {
 	if (offset == 0x04) return 0x15a;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 Sgunner2Init()
@@ -5659,7 +5727,7 @@ static UINT16 dirtfoxj_key_read(UINT8 offset)
 {
 	if (offset == 0x01) return 0x00b4;
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 DirtfoxjInit()
@@ -5732,7 +5800,7 @@ static UINT16 gollygho_key_read(UINT8 offset)
 		case 4: return 0x0143;
 	}
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 GollyghoInit()
@@ -5797,7 +5865,7 @@ static UINT16 bubbletr_key_read(UINT8 offset)
 		case 4: return 0x0141;
 	}
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 BubbletrInit()
@@ -6306,7 +6374,7 @@ static UINT16 suzuka8h2_key_read(UINT8 offset)
 		case 2: return 0x0000;
 	}
 
-	return rand();
+	return fb_rand();
 }
 
 static INT32 Suzuka8h2Init()

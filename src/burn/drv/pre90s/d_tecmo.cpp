@@ -1532,6 +1532,50 @@ struct BurnDriver BurnDrvSilkwrmj = {
 	256, 224, 4, 3
 };
 
+// Silk Worm (prototype?)
+// 6217A
+// SILKWORM H T737
+// board have Japanese label "ADONO"
+
+static struct BurnRomInfo silkwrmpRomDesc[] = {
+	{ "silkworm_pr4ma.4.4",	0x10000, 0x5e2a39cc, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "silkworm.5",			0x10000, 0xa6c7bb51, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "silkworm_sound.3",	0x08000, 0xc67c5644, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code
+
+	{ "sw.2",				0x08000, 0x1acc54be, 3 | BRF_GRA },	      //  3 - Characters
+
+	{ "silkworm.6",			0x10000, 0x1138d159, 4 | BRF_GRA },	      //  4 - Sprites
+	{ "silkworm.7",			0x10000, 0xd96214f7, 4 | BRF_GRA },	      //  5
+	{ "silkworm.8",			0x10000, 0x0494b38e, 4 | BRF_GRA },	      //  6
+	{ "silkworm.9",			0x10000, 0x8ce3cdf5, 4 | BRF_GRA },	      //  7
+
+	{ "silkworm.10",		0x10000, 0x8c7138bb, 5 | BRF_GRA },	      //  8 - Foreground Tiles
+	{ "silkworm.11",		0x10000, 0x6c03c476, 5 | BRF_GRA },	      //  9
+	{ "silkworm.12",		0x10000, 0xbb0f568f, 5 | BRF_GRA },	      // 10
+	{ "silkworm.13",		0x10000, 0x773ad0a4, 5 | BRF_GRA },	      // 11
+
+	{ "silkworm.14",		0x10000, 0x409df64b, 6 | BRF_GRA },	      // 12 - Background Tiles
+	{ "silkworm.15",		0x10000, 0x6e4052c9, 6 | BRF_GRA },	      // 13
+	{ "silkworm.16",		0x10000, 0x9292ed63, 6 | BRF_GRA },	      // 14
+	{ "silkworm.17",		0x10000, 0x3fa4563d, 6 | BRF_GRA },	      // 15
+
+	{ "silkworm.1",			0x08000, 0x5b553644, 7 | BRF_SND },	      // 16 - Samples
+};
+
+STD_ROM_PICK(silkwrmp)
+STD_ROM_FN(silkwrmp)
+
+struct BurnDriver BurnDrvSilkwrmp = {
+	"silkwormp", "silkworm", NULL, NULL, "1988",
+	"Silk Worm (prototype?)\0", NULL, "Tecmo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, silkwrmpRomInfo, silkwrmpRomName, NULL, NULL, SilkwormInputInfo, SilkwormDIPInfo,
+	SilkwormInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
 // Silk Worm (bootleg)
 
 static struct BurnRomInfo silkwormbRomDesc[] = {

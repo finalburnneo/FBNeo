@@ -620,8 +620,9 @@ extern "C" INT32 BurnDrvInit()
 
 	CheatInit();
 	HiscoreInit();
-	BurnStateInit();	
+	BurnStateInit();
 	BurnInitMemoryManager();
+	BurnRandomInit();
 
 	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
 
@@ -850,6 +851,34 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 	}
 
 	return nRet;
+}
+
+// ----------------------------------------------------------------------------
+// State-able random generator
+static UINT64 nBurnRandSeed = 0;
+
+UINT16 BurnRandom()
+{
+	if (!nBurnRandSeed) {
+		nBurnRandSeed = time(NULL);
+	}
+
+	nBurnRandSeed = nBurnRandSeed * 1103515245 + 12345;
+
+	return (UINT32)(nBurnRandSeed / 65536) % 0x10000;
+}
+
+void BurnRandomScan(INT32 nAction, INT32* pnMin)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		SCAN_VAR(nBurnRandSeed);
+	}
+}
+
+void BurnRandomInit()
+{ // for states & input recordings - init before emulation starts
+	nBurnRandSeed = 0;
+	BurnRandom();
 }
 
 // ----------------------------------------------------------------------------

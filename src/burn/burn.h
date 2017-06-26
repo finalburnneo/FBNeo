@@ -285,6 +285,10 @@ INT32 BurnUpdateProgress(double dProgressStep, const TCHAR* pszText, bool bAbs);
 
 void BurnLocalisationSetName(char *szName, TCHAR *szLongName);
 
+UINT16 BurnRandom();                                // State-able Random Number Generator (0-32767)
+void BurnRandomScan(INT32 nAction, INT32* pnMin);   // Must be called in driver's DrvScan() if BurnRandom() is used
+void BurnRandomInit();                              // Called automatically in BurnDrvInit() / Internal use only
+
 // ---------------------------------------------------------------------------
 // Retrieve driver information
 

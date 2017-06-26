@@ -2652,6 +2652,8 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 							}
 
 							pri2[x] = priority2; // only write sprite:sprite prio bitmap
+						} else {
+							pri[x] = 0xff; // for masking effects in rthun2 (enemy rides down wall-chute)
 						}
 					}
 					x_index += dx;
@@ -2963,7 +2965,8 @@ static void draw_sprites_bank(INT32 spritebank)
 	UINT16 *m_spriteram = (UINT16*)DrvSprRAM;
 	INT32 offset = (spritebank & 0xf) * (128*4);
 
-	for (INT32 loop=0; loop < 128; loop++)
+	//for (INT32 loop=0; loop < 128; loop++)
+	for (INT32 loop=127; loop>=0; loop--) // fix rthun2 masking issue
 	{
 		INT32 word3 = m_spriteram[offset+(loop*4)+3];
 		INT32 priority = word3 & 0xf;

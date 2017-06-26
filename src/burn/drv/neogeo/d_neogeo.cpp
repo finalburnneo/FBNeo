@@ -15022,7 +15022,7 @@ struct BurnDriver BurnDrvlastblada = {
 static struct BurnRomInfo lastbladspRomDesc[] = {
 	{ "234-p1sp.p1",  0x100000, 0x2cbe10af, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "234-p2sp.sp2", 0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "234-p3sp.sp2", 0x020000, 0x88eb8cf5, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "234-p3sp.sp2", 0x020000, 0x88eb8cf5, 0 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "234-s1.s1",    0x020000, 0x95561412, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -15068,10 +15068,10 @@ static INT32 LastbladspInit()
 			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
 		}
 
-		rom[0xbff2] = 0x2b7c; // 4ef9
-		rom[0xbff3] = 0x0001; // 0091
-		rom[0xbff4] = 0x7fee; // 0206
-		rom[0xbff5] = 0xa26a; // 4e7d
+		rom[0x69c10/2] = 0x303c; // 4ef9
+		rom[0x69c12/2] = 0x0b37; // 0091
+		rom[0x69c14/2] = 0x323c; // 03c4
+		rom[0x69c16/2] = 0x0013; // 4e7d
 
         	SekOpen(0);
         	SekMapMemory(lastbladspExtraROM, 0x900000, 0x91ffff, MAP_ROM);

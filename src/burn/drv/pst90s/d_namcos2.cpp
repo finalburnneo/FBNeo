@@ -409,15 +409,6 @@ static struct BurnDIPInfo DirtfoxDIPList[]=
 
 STDDIPINFO(Dirtfox)
 
-static UINT64 rand_seed = 0;
-
-static UINT16 fb_rand()
-{
-	if (!rand_seed) rand_seed = time(NULL);
-	rand_seed = rand_seed * 1103515245 + 12345;
-	return (UINT32)(rand_seed / 65536) % 32768;
-}
-
 static inline void palette_write(UINT16 offset)
 {
 	offset /= 2;
@@ -588,7 +579,7 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return fb_rand();
+		return BurnRandom();
 	}
 
 	switch (address)
@@ -727,7 +718,7 @@ static UINT16 __fastcall sgunner_68k_read_word(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return fb_rand();
+		return BurnRandom();
 	}
 
 	return namcos2_68k_read_word(address);
@@ -739,7 +730,7 @@ static UINT8 __fastcall sgunner_68k_read_byte(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return fb_rand();
+		return BurnRandom();
 	}
 
 	return namcos2_68k_read_byte(address);
@@ -811,7 +802,7 @@ static UINT16 __fastcall luckywld_68k_read_word(UINT32 address)
 		if (key_prot_read != NULL)
 			return key_prot_read(address/2);
 
-		return fb_rand();
+		return BurnRandom();
 	}
 
 	if ((address & 0xfffff8) == 0x900000) {
@@ -2653,7 +2644,7 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 
 							pri2[x] = priority2; // only write sprite:sprite prio bitmap
 						} else {
-							pri[x] = 0xff; // for masking effects in rthun2 (enemy rides down wall-chute)
+							pri2[x] = 0xff; // for masking effects in rthun2 (enemy rides down wall-chute)
 						}
 					}
 					x_index += dx;
@@ -3742,7 +3733,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(key_sendval);
 
-		SCAN_VAR(rand_seed);
+		BurnRandomScan(nAction, pnMin);
 
 		c45RoadState(nAction); // here
 
@@ -4003,7 +3994,7 @@ static UINT16 ordyne_key_read(UINT8 offset)
 		case 7: return 0x00B0;
 	}
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 OrdyneInit()
@@ -4140,7 +4131,7 @@ static UINT16 cosmogng_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014a;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 CosmogngInit()
@@ -4210,7 +4201,7 @@ static UINT16 mirninja_key_read(UINT8 offset)
 {
 	if (offset == 7) return 0x00b1;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 MirninjaInit()
@@ -4292,7 +4283,7 @@ static UINT16 phelios_key_read(UINT8 offset)
 		case 7: return 0x00b2;
 	}
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 PheliosInit()
@@ -4434,7 +4425,7 @@ static UINT16 marvland_key_read(UINT8 offset)
 		case 7: return (key_sendval == 1) ? 0xbe : 1;
 	}
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 MarvlandInit()
@@ -4633,7 +4624,7 @@ static UINT16 rthun2_key_read(UINT8 offset)
 
 	if (offset == 2) return 0;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 Rthun2Init()
@@ -4748,7 +4739,7 @@ static UINT16 dsaber_key_read(UINT8 offset)
 {
 	if (offset == 2) return 0x00c0;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 DsaberInit()
@@ -4922,7 +4913,7 @@ static UINT16 burnforc_key_read(UINT8 offset)
 {
 	if (offset == 1) return 0xbd;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 BurnforcInit()
@@ -5054,7 +5045,7 @@ static UINT16 finehour_key_read(UINT8 offset)
 {
 	if (offset == 7) return 0xbc;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 FinehourInit()
@@ -5122,7 +5113,7 @@ static UINT16 sws_key_read(UINT8 offset)
 {
 	if (offset == 4) return 0x0142;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 SwsInit()
@@ -5183,7 +5174,7 @@ static UINT16 sws92_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014b;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 Sws92Init()
@@ -5246,7 +5237,7 @@ static UINT16 sws92g_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014c;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 Sws92gInit()
@@ -5307,7 +5298,7 @@ static UINT16 sws93_key_read(UINT8 offset)
 {
 	if (offset == 3) return 0x014e;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 Sws93Init()
@@ -5595,7 +5586,7 @@ static UINT16 sgunner2_key_read(UINT8 offset)
 {
 	if (offset == 0x04) return 0x15a;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 Sgunner2Init()
@@ -5720,7 +5711,7 @@ static UINT16 dirtfoxj_key_read(UINT8 offset)
 {
 	if (offset == 0x01) return 0x00b4;
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 DirtfoxjInit()
@@ -5793,7 +5784,7 @@ static UINT16 gollygho_key_read(UINT8 offset)
 		case 4: return 0x0143;
 	}
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 GollyghoInit()
@@ -5858,7 +5849,7 @@ static UINT16 bubbletr_key_read(UINT8 offset)
 		case 4: return 0x0141;
 	}
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 BubbletrInit()
@@ -6367,7 +6358,7 @@ static UINT16 suzuka8h2_key_read(UINT8 offset)
 		case 2: return 0x0000;
 	}
 
-	return fb_rand();
+	return BurnRandom();
 }
 
 static INT32 Suzuka8h2Init()

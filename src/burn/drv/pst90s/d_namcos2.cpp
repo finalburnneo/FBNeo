@@ -88,7 +88,7 @@ static UINT8 DrvRecalc;
 
 static UINT16 gfx_ctrl;
 // ...to keep track of spritebank changes & lines to draw them between
-static UINT32 scanline, lastscanline;
+static UINT32 scanline;
 static UINT32 sprite_bankSL[0x10][0x2];
 static UINT32 sprite_bankL;
 static UINT32 lastsprite_bank;
@@ -594,14 +594,12 @@ static UINT16 __fastcall namcos2_68k_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x4a0000:
-		//case 0x4a0001:
 			return 0x04; // c139 status
 
 		case 0xc40000:
-		//case 0xc40001:
 			return gfx_ctrl;
 	}
-	bprintf(0, _T("unmap rw %X.\n"), address);
+
 	return 0;
 }
 
@@ -684,21 +682,15 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 			// scanline 188: 0xf        draw bank 0xf from 188 to end of screen. note: things will look terrible if 0xf is drawn above line 188!
 			// scanline 251 & 261: 0    draw bank 0x0 from 0 to end of screen. note: really should draw from 0 - 188, but its not needed and the extra logic is cumbersome
 
-			if ((gfx_ctrl&0xf) != 0)
-				bprintf(0, _T("Spritebank change: %X @ %d. \n"), gfx_ctrl&0xf, scanline);
-
-			sprite_bankL |= 1<<(gfx_ctrl&0xf);
-			sprite_bankSL[gfx_ctrl & 0xf][0] = (scanline>=nScreenHeight) ? 0 : scanline; // spritebank set past nScreenHeight means to use for next frame.
-			sprite_bankSL[gfx_ctrl & 0xf][1] = nScreenHeight;
-
-#if 0
-			if (sprite_bankSL[gfx_ctrl & 0xf][0] && (sprite_bankL & (sprite_bankL - 1))) {
-				sprite_bankSL[lastsprite_bank][1] = sprite_bankSL[gfx_ctrl & 0xf][0];
+			if ((gfx_ctrl & 0xf) != 0 && lastsprite_bank != (gfx_ctrl & 0xf)) {
+				// ..to help dink find other games that change the spritebank *keep*
+				bprintf(0, _T("Spritebank change: %X @ %d. \n"), gfx_ctrl & 0xf, scanline);
+				lastsprite_bank = gfx_ctrl & 0xf;
 			}
-#endif
 
-			lastscanline = scanline;
-			lastsprite_bank = gfx_ctrl & 0xf;
+			sprite_bankL |= 1 << (gfx_ctrl & 0xf);
+			sprite_bankSL[gfx_ctrl & 0xf][0] = (scanline >= nScreenHeight) ? 0 : scanline; // spritebank set past nScreenHeight means to use for next frame.
+			sprite_bankSL[gfx_ctrl & 0xf][1] = nScreenHeight;
 		return;
 	}
 }
@@ -1516,8 +1508,8 @@ static INT32 DrvDoReset()
 	c45RoadReset();
 
 	gfx_ctrl = 0;
-	//memset(&sprite_bank, 0, sizeof(sprite_bank));
 	sprite_bankL = 0;
+	lastsprite_bank = 0;
 
 	irq_reg[1] = irq_reg[0] = 0;
 	irq_cpu[1] = irq_cpu[0] = 0;
@@ -2274,7 +2266,7 @@ static void apply_clip()
 static void DrvRecalcPalette()
 {
 	UINT16 *ram = (UINT16*)DrvPalRAM;
-	bprintf(0, _T("RECALC!\n"));
+
 	for (INT32 bank = 0; bank < 0x20; bank++)
 	{
 		INT32 pen = bank * 256;
@@ -3514,8 +3506,6 @@ static INT32 DrvFrame()
 	if (pBurnDraw && pDrvDrawBegin) {
 		pDrvDrawBegin();
 	}
-
-	lastscanline = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		scanline = i / 2;

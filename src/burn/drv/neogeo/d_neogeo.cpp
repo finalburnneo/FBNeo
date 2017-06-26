@@ -15017,7 +15017,9 @@ struct BurnDriver BurnDrvlastblada = {
 	0x1000, 320, 224, 4, 3
 };
 
-// // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
+// The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
+// Modified by: GSC2007	
+// Version number: Ver 1.0.0621 
 
 static struct BurnRomInfo lastbladspRomDesc[] = {
 	{ "234-p1sp.p1",  0x100000, 0x2cbe10af, 1 | BRF_ESS | BRF_PRG }, //  0 68K code

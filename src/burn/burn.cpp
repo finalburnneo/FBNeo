@@ -854,13 +854,13 @@ INT32 BurnAreaScan(INT32 nAction, INT32* pnMin)
 }
 
 // ----------------------------------------------------------------------------
-// State-able random generator
+// State-able random generator, based on early BSD LCG rand
 static UINT64 nBurnRandSeed = 0;
 
 UINT16 BurnRandom()
 {
-	if (!nBurnRandSeed) {
-		nBurnRandSeed = time(NULL);
+	if (!nBurnRandSeed) { // for the rare rollover-to-0 occurance
+		nBurnRandSeed = 0x2d1e0f;
 	}
 
 	nBurnRandSeed = nBurnRandSeed * 1103515245 + 12345;
@@ -877,8 +877,7 @@ void BurnRandomScan(INT32 nAction, INT32* pnMin)
 
 void BurnRandomInit()
 { // for states & input recordings - init before emulation starts
-	nBurnRandSeed = 0;
-	BurnRandom();
+	nBurnRandSeed = time(NULL);
 }
 
 // ----------------------------------------------------------------------------

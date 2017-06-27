@@ -2513,7 +2513,7 @@ static void predraw_roz_layer()
 	roz_update_tiles = 0;
 }
 
-static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 priority, INT32 priority2)
+static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32 sx, INT32 sy, INT32 scalex, INT32 scaley, INT32 priority, INT32 priority2, INT32 is_c355)
 {
 	if (!scalex || !scaley) return;
 
@@ -2646,7 +2646,8 @@ static void zdrawgfxzoom(UINT8 *gfx, INT32 tile_size, UINT32 code, UINT32 color,
 
 							pri2[x] = priority2; // only write sprite:sprite prio bitmap
 						} else {
-							pri2[x] = 0xff; // for masking effects in rthun2 (enemy rides down wall-chute)
+							if (!is_c355)
+								pri2[x] = 0xff; // for masking effects in rthun2 (enemy rides down wall-chute)
 						}
 					}
 					x_index += dx;
@@ -2720,7 +2721,7 @@ static void draw_sprites_metalhawk()
 				sprn >>= 2;
 			}
 
-			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf), -1);
+			zdrawgfxzoom(gfx, bBigSprite ? 32 : 16, sprn, color * 256, flipx, flipy, sx, sy, scalex, scaley, (attrs & 0xf), -1, 0);
 		}
 		pSource += 8;
 	}
@@ -2989,7 +2990,7 @@ static void draw_sprites_bank(INT32 spritebank)
 
 				if (size == 1) code >>= 2;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, priority, loop);
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, code, color * 256, flipx,flipy, xpos,ypos, scalex,scaley, priority, loop, 0);
 			}
 		}
 	}
@@ -3219,7 +3220,7 @@ static void c355_obj_draw_sprite(const UINT16 *pSource, INT32 zpos)
 			{
 				INT32 size = 0;
 
-				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, pri, zpos);
+				zdrawgfxzoom( size ? DrvGfxROM0 : DrvGfxROM1, size ? 32 : 16, tile + offset, color * 256, flipx,flipy, sx, sy, zoomx, zoomy, pri, zpos, 1);
 			}
 			if( !flipx )
 			{

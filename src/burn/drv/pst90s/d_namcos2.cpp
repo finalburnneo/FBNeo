@@ -88,7 +88,7 @@ static UINT8 DrvRecalc;
 
 static UINT16 gfx_ctrl;
 // ...to keep track of spritebank changes & lines to draw them between
-static UINT32 scanline;
+static UINT32 scanline, position; // current scanline, "pos-irq" position
 static UINT32 sprite_bankSL[0x10][0x2];
 static UINT32 sprite_bankL;
 static UINT32 lastsprite_bank;
@@ -666,21 +666,23 @@ static void __fastcall namcos2_68k_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0xc40000:
+			INT32 startpos = (scanline == position) ? scanline : 0;
 			gfx_ctrl = data;
 
-			// notes: finehour is the only game that takes advantage of this technique
+			// notes: finehour is the only game that takes advantage of this technique.
 			// from game (finehour)   / what we do
 			// scanline 188: 0xf        draw bank 0xf from 188 to end of screen. note: things will look terrible if 0xf is drawn above line 188!
 			// scanline 251 & 261: 0    draw bank 0x0 from 0 to end of screen. note: really should draw from 0 - 188, but its not needed and the extra logic is cumbersome
 
-			if ((gfx_ctrl & 0xf) != 0 && lastsprite_bank != (gfx_ctrl & 0xf)) {
+			if ((gfx_ctrl & 0xf) != 0 && lastsprite_bank != (gfx_ctrl & 0xf))
+			{
 				// ..to help dink find other games that change the spritebank *keep*
-				bprintf(0, _T("Spritebank change: %X @ %d. \n"), gfx_ctrl & 0xf, scanline);
+				bprintf(0, _T("Spritebank change: %X @ %d. \n"), gfx_ctrl & 0xf, startpos);
 				lastsprite_bank = gfx_ctrl & 0xf;
 			}
 
 			sprite_bankL |= 1 << (gfx_ctrl & 0xf);
-			sprite_bankSL[gfx_ctrl & 0xf][0] = (scanline >= nScreenHeight) ? 0 : scanline; // spritebank set past nScreenHeight means to use for next frame.
+			sprite_bankSL[gfx_ctrl & 0xf][0] = (startpos >= nScreenHeight) ? 0 : startpos; // spritebank set past nScreenHeight means to use for next frame.
 			sprite_bankSL[gfx_ctrl & 0xf][1] = nScreenHeight;
 		return;
 	}
@@ -3504,7 +3506,7 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		scanline = i / 2;
 
-		INT32 position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
+		position = (((ctrl[0xa] & 0xff) * 256 + (ctrl[0xb] & 0xff)) - 35) & 0xff;
 
 		SekOpen(0);
 		if (i == (240+vbloffs)*2) SekSetIRQLine(irq_vblank[0], CPU_IRQSTATUS_AUTO); // should ack in c148

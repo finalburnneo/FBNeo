@@ -230,6 +230,8 @@ void pokey_scan(INT32 nAction, INT32* pnMin)
 			pokey[i].serout_w = serout_w;
 			pokey[i].interrupt_cb = interrupt_cb;
 		}
+
+		BurnRandomScan(nAction);
 	}
 }
 
@@ -920,7 +922,7 @@ int pokey_register_r(int chip, int offs)
 		 ****************************************************************/
 		if( p->SKCTL & SK_RESET )
 		{
-			UINT32 adjust = (UINT32)(/*timer_timeelapsed(p->rtimer)*/rand() /*dink*/ * intf.baseclock);
+			UINT32 adjust = (UINT32)(/*timer_timeelapsed(p->rtimer)*/BurnRandom() /*dink*/ * intf.baseclock);
 			p->r9 = (p->r9 + adjust) % 0x001ff;
 			p->r17 = (p->r17 + adjust) % 0x1ffff;
 			if( p->AUDCTL & POLY9 )

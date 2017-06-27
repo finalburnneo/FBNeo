@@ -868,7 +868,7 @@ UINT16 BurnRandom()
 	return (UINT32)(nBurnRandSeed / 65536) % 0x10000;
 }
 
-void BurnRandomScan(INT32 nAction, INT32* pnMin)
+void BurnRandomScan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(nBurnRandSeed);

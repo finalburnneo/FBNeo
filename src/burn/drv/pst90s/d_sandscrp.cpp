@@ -210,7 +210,7 @@ static UINT16 galpanib_calc_read(UINT32 offset) // Simulation of the CALC1 MCU
 
 
 		case 0x14/2:
-			return rand(); // really rand
+			return BurnRandom(); // really rand
 	}
 
 	return 0;
@@ -748,7 +748,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -756,7 +756,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -783,6 +783,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(latch1_full);
 		SCAN_VAR(latch2_full);
 		SCAN_VAR(nDrvZ80Bank);
+
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {

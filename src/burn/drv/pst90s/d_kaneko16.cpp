@@ -2096,7 +2096,7 @@ static UINT16 BloodwarCalcRead(INT32 offset)
 			return data;
 
 		case 0x14/2:
-			return rand() & 0xffff;
+			return BurnRandom() & 0xffff;
 
 		case 0x20/2: return hit.x1p;
 		case 0x22/2: return hit.x1s;
@@ -2154,7 +2154,7 @@ static UINT16 BonkadvCalcRead(INT32 offset)
 			return (((UINT32)hit.mult_a * (UINT32)hit.mult_b) & 0xffff);
 
 		case 0x14/2:
-			return rand() & 0xffff;
+			return BurnRandom() & 0xffff;
 	}
 
 	return 0;
@@ -2402,7 +2402,7 @@ static UINT16 kaneko_hit_type2_read(INT32 offset)
 			return hit3.flags;
 
 		case 0x28:
-			return (rand() & 0xffff);
+			return (BurnRandom() & 0xffff);
 
 		case 0x40: return hit3.x1po;
 		case 0x44: return hit3.x1so;
@@ -3776,7 +3776,7 @@ UINT8 __fastcall GtmrReadByte(UINT32 a)
 {
 	switch (a) {
 		case 0x900014: {
-			if (Gtmr) return rand() & 0xff;
+			if (Gtmr) return BurnRandom() & 0xff;
 			return 0;
 		}
 		
@@ -3944,7 +3944,7 @@ UINT16 __fastcall GtmrReadWord(UINT32 a)
 		case 0x900038: {
 			if (Bloodwar) return BloodwarCalcRead((a - 0x900000) >> 1);
 			if (Bonkadv) return BonkadvCalcRead((a - 0x900000) >> 1);
-			if (Gtmr) return rand() & 0xffff;
+			if (Gtmr) return BurnRandom() & 0xffff;
 			return 0;
 		}
 		
@@ -7335,7 +7335,7 @@ static INT32 ShogwarrFrame()
 Scan Driver
 ===============================================================================================*/
 
-static INT32 Kaneko16Scan(INT32 nAction,INT32 *pnMin)
+static INT32 Kaneko16Scan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -7372,7 +7372,9 @@ static INT32 Kaneko16Scan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(Kaneko16Layer0Regs);
 		SCAN_VAR(Kaneko16Layer1Regs);
 		SCAN_VAR(Kaneko16Brightness);
-		
+
+		BurnRandomScan(nAction);
+
 		if (Kaneko16Bg15) {
 			SCAN_VAR(Kaneko16Bg15Reg);
 			SCAN_VAR(Kaneko16Bg15Select);
@@ -7382,7 +7384,7 @@ static INT32 Kaneko16Scan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
-static INT32 BlazeonScan(INT32 nAction,INT32 *pnMin)
+static INT32 BlazeonScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin != NULL) {
 		*pnMin =  0x029672;
@@ -7396,7 +7398,7 @@ static INT32 BlazeonScan(INT32 nAction,INT32 *pnMin)
 	return Kaneko16Scan(nAction, pnMin);;
 }
 
-static INT32 WingforcScan(INT32 nAction,INT32 *pnMin)
+static INT32 WingforcScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin != NULL) {
 		*pnMin =  0x029672;
@@ -7417,7 +7419,7 @@ static INT32 WingforcScan(INT32 nAction,INT32 *pnMin)
 	return Kaneko16Scan(nAction, pnMin);;
 }
 
-static INT32 ExplbrkrScan(INT32 nAction,INT32 *pnMin)
+static INT32 ExplbrkrScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin != NULL) {
 		*pnMin =  0x029672;
@@ -7436,7 +7438,7 @@ static INT32 ExplbrkrScan(INT32 nAction,INT32 *pnMin)
 	return Kaneko16Scan(nAction, pnMin);;
 }
 
-static INT32 GtmrScan(INT32 nAction,INT32 *pnMin)
+static INT32 GtmrScan(INT32 nAction, INT32 *pnMin)
 {
 	if (pnMin != NULL) {
 		*pnMin =  0x029672;
@@ -7458,7 +7460,7 @@ static INT32 GtmrScan(INT32 nAction,INT32 *pnMin)
 	return Kaneko16Scan(nAction, pnMin);;
 }
 
-static INT32 ShogwarrScan(INT32 nAction,INT32 *pnMin)
+static INT32 ShogwarrScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 

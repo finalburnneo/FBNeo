@@ -722,7 +722,7 @@ static UINT8 key_type3_read(INT32 offset)
 	INT32 op = (offset & 0x70) >> 4;
 
 	if (op == namcos1_key_reg)     return namcos1_key_id;
-	if (op == namcos1_key_rng)     return rand();
+	if (op == namcos1_key_rng)     return BurnRandom();
 	if (op == namcos1_key_swap4)   return (namcos1_key[namcos1_key_swap4_arg] << 4) | (namcos1_key[namcos1_key_swap4_arg] >> 4);
 	if (op == namcos1_key_bottom4) return (offset << 4) | (namcos1_key[namcos1_key_swap4_arg] & 0x0f);
 	if (op == namcos1_key_top4)    return (offset << 4) | (namcos1_key[namcos1_key_swap4_arg] >> 4);
@@ -2092,6 +2092,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dac1_value);
 		SCAN_VAR(dac0_gain);
 		SCAN_VAR(dac1_gain);
+
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {

@@ -3733,7 +3733,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(key_sendval);
 
-		BurnRandomScan(nAction, pnMin);
+		BurnRandomScan(nAction);
 
 		c45RoadState(nAction); // here
 

@@ -766,7 +766,7 @@ static void K055550_word_write(INT32 offset, UINT16 data, UINT16 mask)
 				else
 					if (dy < 0) i = 0x80;
 				else
-					i = rand() & 0xff; // vector direction indeterminate
+					i = BurnRandom() & 0xff; // vector direction indeterminate
 
 				prot_data[0x10] = i;
 			break;
@@ -2879,7 +2879,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -2912,6 +2912,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(cbparam);
 		SCAN_VAR(oinprion);
 		SCAN_VAR(z80_bank);
+
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {

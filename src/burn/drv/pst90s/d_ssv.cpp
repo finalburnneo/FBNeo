@@ -2262,7 +2262,7 @@ static UINT16 common_main_read_word(UINT32 address)
 		case 0x510001:
 		case 0x520000:
 		case 0x520001:
-			return rand();
+			return BurnRandom();
 	}
 
 	bprintf (0, _T("RW Unmapped: %5.5x\n"), address);
@@ -2323,7 +2323,7 @@ static UINT8 common_main_read_byte(UINT32 address)
 		case 0x510001:
 		case 0x520000:
 		case 0x520001:
-			return rand();
+			return BurnRandom();
 	}
 
 	bprintf (0, _T("RB Unmapped: %5.5x\n"), address);
@@ -3775,6 +3775,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sexyreact_serial_read);
 
 		if (is_gdfs) EEPROMScan(nAction, pnMin);
+
+		BurnRandomScan(nAction);
 	}
 
 	return 0;

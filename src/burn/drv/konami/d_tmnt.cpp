@@ -3955,7 +3955,7 @@ UINT8 __fastcall Punkshot68KReadByte(UINT32 a)
 		case 0xfffffd:
 		case 0xfffffe:
 		case 0xffffff:
-			return rand();
+			return BurnRandom();
 	}
 
 	return 0;
@@ -5438,8 +5438,6 @@ static INT32 PunkshotInit()
 	K053260Init(0, 3579545, DrvSoundRom, 0x80000);
 	K053260PCMSetAllRoutes(0, 0.70, BURN_SND_ROUTE_BOTH);
 
-	srand ( time(NULL) );
-
 	// Reset the driver
 	PunkshotDoReset();
 
@@ -6346,7 +6344,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		
-		BurnYM2151Scan(nAction);		
+		BurnYM2151Scan(nAction);
 
 		// Scan critical driver variables
 		SCAN_VAR(nCyclesDone);
@@ -6359,6 +6357,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(PlayTitleSample);
 		SCAN_VAR(TitleSamplePos);
 		SCAN_VAR(PriorityFlag);
+
+		BurnRandomScan(nAction);
 	}
 
 	return 0;

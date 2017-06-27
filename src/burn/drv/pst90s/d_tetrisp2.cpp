@@ -538,7 +538,7 @@ static UINT16 __fastcall tetrisp2_read_word(UINT32 address)
 		case 0xbe0004:
 			if (game == 3) return DrvInputs[1]; // nndmseal
 			if (game == 1) return (DrvInputs[1] & ~0x0010) | (DrvDips[2] & 0x10);
-			return (DrvInputs[1] & 0xfcff) | (rand() & 0x0300) | (1 << ((rand() & 1) + 8));
+			return (DrvInputs[1] & 0xfcff) | (BurnRandom() & 0x0300) | (1 << ((BurnRandom() & 1) + 8));
 
 		case 0xbe0006:
 			return (DrvInputs[2] & 0xfffb); // nndmseal, bit 2 must be high!
@@ -703,8 +703,6 @@ static INT32 Tetrisp2Init()
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	srand(0x9a89810f);
-
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16,  64,  64);
@@ -792,8 +790,6 @@ static INT32 RocknInit()
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	srand(0x9a89810f);
-
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16, 256,  16);
@@ -858,8 +854,6 @@ static INT32 NndmsealInit()
 	MSM6295Init(0, 2000000 / 132, 0);
 	MSM6295SetRoute(0, 1.0, BURN_SND_ROUTE_BOTH);
 
-	srand(0x9a89810f);
-
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bglayer_map_callback, 16, 16,  64,  64);
@@ -922,8 +916,6 @@ static INT32 NndmsealaInit()
 
 	MSM6295Init(0, 2000000 / 132, 0);
 	MSM6295SetRoute(0, 1.0, BURN_SND_ROUTE_BOTH);
-
-	srand(0x9a89810f);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
@@ -999,8 +991,6 @@ static INT32 Rockn2CommonInit(INT32 nSoundRoms)
 	YMZ280BInit(16934400, NULL);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-
-	srand(0x9a89810f);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, rtlayer_map_callback, 16, 16, 128, 128);
@@ -1339,6 +1329,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(rockn_14_timer);
 		SCAN_VAR(rockn_14_timer_countdown);
 
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {

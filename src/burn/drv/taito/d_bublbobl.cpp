@@ -1411,7 +1411,7 @@ UINT8 __fastcall BoblboblRead1(UINT16 a)
 		case 0xfe01:
 		case 0xfe02:
 		case 0xfe03: {
-			return rand() & 0xff;
+			return BurnRandom() & 0xff;
 		}
 		
 		case 0xfe80: {
@@ -1825,7 +1825,7 @@ void bublbobl_68705_portB_out(UINT8 *bytevalue)
 		ZetOpen(0);
 
 		/* hack to get random EXTEND letters (who is supposed to do this? 68705? PAL?) */
-		DrvZ80Ram1[0x7c] = (ZetTotalCycles() ^ ZetGetPC(-1)) % 6;
+		DrvZ80Ram1[0x7c] = BurnRandom() % 6;
 
 		ZetSetVector(DrvZ80Ram1[0]);
 		ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
@@ -2861,6 +2861,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(port4_out);
 		SCAN_VAR(mcu_latch);
 		SCAN_VAR(mcu_address);
+
+		BurnRandomScan(nAction);
 	}
 	
 	if (nAction & ACB_WRITE) {

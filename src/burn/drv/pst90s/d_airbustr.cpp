@@ -248,7 +248,7 @@ UINT8 __fastcall airbustr_main_read(UINT16 address)
 			}
 	
 			case 0xff4:
-				return rand();
+				return BurnRandom();
 		}
 	
 		return DrvDevRAM[offset];
@@ -440,8 +440,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 	interrupt_vectors[1] = 0xfd;
 
 	watchdog = 180;
-
-	srand(time(NULL));
 
 	return 0;
 }
@@ -792,7 +790,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -800,7 +798,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -814,6 +812,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		MSM6295Scan(0, nAction);
 
 		SCAN_VAR(interrupt_vectors);
+
+		BurnRandomScan(nAction);
 	}
 
 	return 0;

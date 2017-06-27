@@ -961,11 +961,11 @@ UINT8 __fastcall ComadReadByte(UINT32 sekAddress)
 
 	  case 0x80000a:
 		case 0x80000c:
-		return rand() & 0xffff;
+		return BurnRandom() & 0xffff;
 
 	  case 0x800006:
 		case 0x800008:
-		return rand() & 0xffff;
+		return BurnRandom() & 0xffff;
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
 	}
@@ -2114,9 +2114,9 @@ static INT32 GalhustlFrame()
 	return 0;
 }
 
-static INT32 GalpanicScan(INT32 nAction,INT32 *pnMin)
+static INT32 GalpanicScan(INT32 nAction, INT32 *pnMin)
 {
-struct BurnArea ba;
+	struct BurnArea ba;
 
 	if (pnMin != NULL) {			// Return minimum compatible version
 		*pnMin = 0x029671;
@@ -2138,6 +2138,8 @@ struct BurnArea ba;
 		SCAN_VAR(DrvInput);
 		SCAN_VAR(RamCurPal);
 		SCAN_VAR(RamCTB64k);
+
+		BurnRandomScan(nAction);
 
 		if (nAction & ACB_WRITE) {
 			memcpy(&RomSnd[0x30000], &RomSnd[0x40000 + SndBank * 0x10000], 0x10000);

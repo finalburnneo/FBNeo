@@ -1845,7 +1845,7 @@ UINT16 __fastcall Tumbleb68KReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x100004: {
-			return rand() % 0x10000;
+			return BurnRandom() % 0x10000;
 		}
 		
 		case 0x180000: {
@@ -4546,6 +4546,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(Tumbleb2MusicCommand);
 		SCAN_VAR(Tumbleb2MusicBank);
 		SCAN_VAR(Tumbleb2MusicIsPlaying);
+
+		BurnRandomScan(nAction);
 	}
 	
 	if (nAction & ACB_WRITE) {

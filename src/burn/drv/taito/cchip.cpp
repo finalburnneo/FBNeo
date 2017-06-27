@@ -807,7 +807,7 @@ static void RequestWorldData(void)
 
 static void RequestGoalinData(void)
 {
-	INT32 n = rand() % 15;
+	INT32 n = BurnRandom() % 15;
 
 	CRAM[1][0x14B] = 0x00; /* x coordinates */
 	CRAM[1][0x14D] = 0x10;
@@ -923,6 +923,8 @@ void RainbowCChipScan(INT32 nAction)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(CurrentBank);
+
+		BurnRandomScan(nAction);
 	}
 }
 

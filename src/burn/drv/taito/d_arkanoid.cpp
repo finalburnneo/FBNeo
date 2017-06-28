@@ -1375,7 +1375,7 @@ static struct BurnRomInfo arkanoiduRomDesc[] = {
 	{ "a75-19.ic17",  0x8000, 0xd3ad37d7, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75-18.ic16",  0x8000, 0xcdc08301, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-20.ic14",  0x0800, 0xde518e47, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__20.ic14", 0x0800, 0x3994ee92, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -1440,7 +1440,7 @@ static struct BurnRomInfo arkatourRomDesc[] = {
 	{ "a75-27.ic17",  0x8000, 0xe3b8faf5, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75-28.ic16",  0x8000, 0x326aca4d, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-32.ic14",  0x0800, 0xd3249559, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__32.ic14", 0x0800, 0x8c20d15c, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-29.ic64",  0x8000, 0x5ddea3cf, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-30.ic63",  0x8000, 0x5fcf2e85, 3 | BRF_GRA },	       //  4
@@ -1471,7 +1471,7 @@ static struct BurnRomInfo arkanoidjRomDesc[] = {
 	{ "a75_24.ic17",  0x8000, 0x3f2b27e9, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75_25.ic16",  0x8000, 0xc13b2038, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "a75-26.ic14",  0x0800, 0x962960d4, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__26.ic14", 0x0800, 0x9c382c67, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4
@@ -2012,6 +2012,8 @@ static struct BurnRomInfo tetrsarkRomDesc[] = {
 	{ "a75-07.bpr",   0x0200, 0x0af8b289, 4 | BRF_GRA },	       //  5 Color Proms
 	{ "a75-08.bpr",   0x0200, 0xabb002fb, 4 | BRF_GRA },	       //  6
 	{ "a75-09.bpr",   0x0200, 0xa7c6c277, 4 | BRF_GRA },	       //  7
+	
+	{ "14_mc68705p5_rom.bin", 0x0800, 0xdfbc4239, 0 | BRF_OPT },	// 8 MCU
 };
 
 STD_ROM_PICK(tetrsark)

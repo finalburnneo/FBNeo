@@ -781,7 +781,7 @@ static struct BurnRomInfo mach9RomDesc[] = {
 	{ "17_5n.bin",    	0x2000, 0x4023a1ec, 5 | BRF_GRA },	       // 16
 
 	{ "82s129_8e.bin",	0x0100, 0x06a83606, 6 | BRF_GRA },	       // 17 Color DrvColPROMs
-	{ "82s129_9a.bin",  0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
+	{ "82s129_9e.bin",  0x0100, 0xbeacf13c, 6 | BRF_GRA },	       // 18
 	{ "82s129_10e.bin", 0x0100, 0x8404067c, 6 | BRF_GRA },	       // 19
 	{ "82s129_1d.bin",  0x0100, 0x7179080d, 6 | BRF_GRA },	       // 20
 	{ "82s129_2j.bin",  0x0100, 0xd0842029, 6 | BRF_GRA },	       // 21

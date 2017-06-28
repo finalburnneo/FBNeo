@@ -3767,7 +3767,7 @@ static struct BurnDIPInfo GmgalaxDIPList[]=
 
 STDDIPINFO(Gmgalax)
 
-static struct BurnDIPInfo GteikokbDIPList[]=
+static struct BurnDIPInfo GteikokubDIPList[]=
 {
 	// Default Values
 	{0x0b, 0xff, 0xff, 0x00, NULL                     },
@@ -3799,9 +3799,9 @@ static struct BurnDIPInfo GteikokbDIPList[]=
 	{0x0d, 0x01, 0x08, 0x08, "Cocktail"               },
 };
 
-STDDIPINFO(Gteikokb)
+STDDIPINFO(Gteikokub)
 
-static struct BurnDIPInfo Gteikob2DIPList[]=
+static struct BurnDIPInfo Gteikokub2DIPList[]=
 {
 	// Default Values
 	{0x0b, 0xff, 0xff, 0x00, NULL                     },
@@ -3833,7 +3833,7 @@ static struct BurnDIPInfo Gteikob2DIPList[]=
 	{0x0d, 0x01, 0x08, 0x00, "Cocktail"               },
 };
 
-STDDIPINFO(Gteikob2)
+STDDIPINFO(Gteikokub2)
 
 static struct BurnDIPInfo AsideralDIPList[]=
 {
@@ -8399,7 +8399,7 @@ static struct BurnRomInfo GteikokuRomDesc[] = {
 STD_ROM_PICK(Gteikoku)
 STD_ROM_FN(Gteikoku)
 
-static struct BurnRomInfo GteikokbRomDesc[] = {
+static struct BurnRomInfo GteikokubRomDesc[] = {
 	{ "1.bin",         0x00800, 0xbf00252f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "2.bin",         0x00800, 0xf712b7d5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "k07_3a.bin",    0x00800, 0x945f4160, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8417,10 +8417,10 @@ static struct BurnRomInfo GteikokbRomDesc[] = {
 	{ "l06_prom.bin",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Gteikokb)
-STD_ROM_FN(Gteikokb)
+STD_ROM_PICK(Gteikokub)
+STD_ROM_FN(Gteikokub)
 
-static struct BurnRomInfo Gteikob2RomDesc[] = {
+static struct BurnRomInfo Gteikokub2RomDesc[] = {
 	{ "94gnog.bin",    0x00800, 0x67ec3235, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "92gnog.bin",    0x00800, 0x813c41f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "k07_3a.bin",    0x00800, 0x945f4160, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8438,8 +8438,8 @@ static struct BurnRomInfo Gteikob2RomDesc[] = {
 	{ "l06_prom.bin",  0x00020, 0x6a0c7d87, BRF_GRA | GAL_ROM_PROM },
 };
 
-STD_ROM_PICK(Gteikob2)
-STD_ROM_FN(Gteikob2)
+STD_ROM_PICK(Gteikokub2)
+STD_ROM_FN(Gteikokub2)
 
 static struct BurnRomInfo SpacbattRomDesc[] = {
 	{ "sb1",           0x00800, 0xd975af10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -8759,22 +8759,22 @@ struct BurnDriver BurnDrvGteikoku = {
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvGteikokb = {
-	"gteikokb", "uniwars", NULL, NULL, "1980",
+struct BurnDriver BurnDrvGteikokub = {
+	"gteikokub", "uniwars", NULL, NULL, "1980",
 	"Gingateikoku No Gyakushu (bootleg set 1)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, GteikokbRomInfo, GteikokbRomName, NULL, NULL, OmegabInputInfo, GteikokbDIPInfo,
+	NULL, GteikokubRomInfo, GteikokubRomName, NULL, NULL, OmegabInputInfo, GteikokubDIPInfo,
 	PiscesInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvGteikob2 = {
-	"gteikob2", "uniwars", NULL, NULL, "1980",
+struct BurnDriver BurnDrvGteikokub2 = {
+	"gteikokub2", "uniwars", NULL, NULL, "1980",
 	"Gingateikoku No Gyakushu (bootleg set 2)\0", NULL, "bootleg", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
-	NULL, Gteikob2RomInfo, Gteikob2RomName, NULL, NULL, OmegabInputInfo, Gteikob2DIPInfo,
+	NULL, Gteikokub2RomInfo, Gteikokub2RomName, NULL, NULL, OmegabInputInfo, Gteikokub2DIPInfo,
 	PiscesInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

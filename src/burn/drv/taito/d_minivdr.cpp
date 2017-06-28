@@ -180,7 +180,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Minivader
 
 static struct BurnRomInfo minivadrRomDesc[] = {
-	{ "d26-01.bin",	0x2000, 0xa96c823d, BRF_ESS | BRF_PRG }, //  Z80 code
+	{ "d26-01.ic7",	0x2000, 0xa96c823d, BRF_ESS | BRF_PRG }, //  Z80 code
 };
 
 STD_ROM_PICK(minivadr)

@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 8.00
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "visualstudio-2003-libretro-xbox1", "fba_vs2003_libretro_xbox1.vcproj", "{812368D1-1F0C-4480-81F1-7FB1EC247E58}"
+	ProjectSection(ProjectDependencies) = postProject
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfiguration) = preSolution
+		Debug = Debug
+		Profile = Profile
+		Profile_FastCap = Profile_FastCap
+		Release = Release
+		Release_LTCG = Release_LTCG
+	EndGlobalSection
+	GlobalSection(ProjectConfiguration) = postSolution
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Debug.ActiveCfg = Debug|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Debug.Build.0 = Debug|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Profile.ActiveCfg = Profile|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Profile.Build.0 = Profile|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Profile_FastCap.ActiveCfg = Profile_FastCap|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Profile_FastCap.Build.0 = Profile_FastCap|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Release.ActiveCfg = Release|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Release.Build.0 = Release|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Release_LTCG.ActiveCfg = Release_LTCG|Xbox
+		{812368D1-1F0C-4480-81F1-7FB1EC247E58}.Release_LTCG.Build.0 = Release_LTCG|Xbox
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+	EndGlobalSection
+	GlobalSection(ExtensibilityAddIns) = postSolution
+	EndGlobalSection
+EndGlobal

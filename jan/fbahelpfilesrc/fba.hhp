@@ -1,0 +1,42 @@
+[OPTIONS]
+Compatibility=1.1 or later
+Compiled file=fba.chm
+Contents file=Table of Contents.hhc
+Default topic=intro.htm
+Display compile progress=No
+Index file=fba.hhk
+Language=0x809 English (United Kingdom)
+
+
+[FILES]
+sysreq.htm
+acknowledgments.htm
+cheat_format.htm
+command.htm
+dialog_cheats.htm
+dialog_dips.htm
+dialog_game_select.htm
+dialog_inputs.htm
+dialog_rom_paths.htm
+dialog_shot_factory.htm
+dialog_support_path.htm
+intro.htm
+keys.htm
+localise_app.htm
+menu_audio.htm
+menu_game.htm
+menu_help.htm
+menu_input.htm
+menu_misc.htm
+menu_video.htm
+presets.htm
+dialog_ips_manager.htm
+dialog_multislot.htm
+dialog_neocdz.htm
+localise_gamelist.htm
+dialog_palette_viewer.htm
+dialog_game_info.htm
+dialog_choose_monitor.htm
+
+[INFOTYPES]
+

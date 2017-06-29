@@ -225,8 +225,8 @@ static void __fastcall wiping_sound_write(UINT16 address, UINT8 data)
 
 static tilemap_scan( background )
 {
-	if (col <= 0x01) return row + (col + 0x1e) * 0x20;
-	if (col >= 0x22) return row + (col - 0x22) * 0x20;
+	if (col <= 0x01) return (row + 2) + (col + 0x1e) * 0x20;
+	if (col >= 0x22) return (row + 2) + (col - 0x22) * 0x20;
 
 	return (col - 2) + (row + 2) * 0x20;
 }
@@ -379,7 +379,7 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	wipingsnd_init(DrvSndROM, DrvSndPROM);
-	wipingsnd_wipingmode(); // you'll thank me for this later... :)
+	wipingsnd_wipingmode(); // lowers the volume of sample 0x1800 (game start: superloud noise)
 
 	GenericTilesInit();
 	GenericTilemapInit(0, background_map_scan, background_map_callback, 8, 8, 36, 32);

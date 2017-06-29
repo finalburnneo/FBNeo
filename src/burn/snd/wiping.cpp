@@ -40,6 +40,8 @@ static INT16 *m_mixer_table;
 static INT16 *m_mixer_lookup;
 static INT16 *m_mixer_buffer;
 
+static INT32 game_is_wiping = 0;
+
 static UINT8 m_soundregs[0x4000];
 
 static void make_mixer_table(INT32 voices, INT32 gain);
@@ -62,10 +64,16 @@ void wipingsnd_init(UINT8 *rom, UINT8 *prom)
 	wipingsnd_reset();
 }
 
+void wipingsnd_wipingmode() // lowers the volume of "that noise"
+{
+	game_is_wiping = 1;
+}
+
 void wipingsnd_exit()
 {
 	BurnFree(m_mixer_buffer);
 	BurnFree(m_mixer_table);
+	game_is_wiping = 0;
 }
 
 void wipingsnd_reset()
@@ -129,8 +137,14 @@ void wipingsnd_write(INT32 offset, UINT8 data)
 			voice->frequency = voice->frequency * 16 + ((m_soundregs[0x00 + base]) & 0x0f);
 
 			voice->volume = m_soundregs[0x07 + base] & 0x0f;
+
 			if (m_soundregs[0x5 + base] & 0x0f)
 			{
+				// hack :)
+				if (128 * (16 * (m_soundregs[0x5 + base] & 0x0f) + (m_soundregs[0x2005 + base] & 0x0f)) == 0x1800
+					&& game_is_wiping) voice->volume = 0x06;
+				// end of hack
+
 				voice->wave = &m_sound_rom[128 * (16 * (m_soundregs[0x5 + base] & 0x0f)
 						+ (m_soundregs[0x2005 + base] & 0x0f))];
 				voice->oneshot = 1;

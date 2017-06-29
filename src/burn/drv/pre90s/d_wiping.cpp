@@ -379,6 +379,7 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	wipingsnd_init(DrvSndROM, DrvSndPROM);
+	wipingsnd_wipingmode(); // you'll thank me for this later... :)
 
 	GenericTilesInit();
 	GenericTilemapInit(0, background_map_scan, background_map_callback, 8, 8, 36, 32);

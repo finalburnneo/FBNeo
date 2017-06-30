@@ -2571,7 +2571,7 @@ static INT32 CobraFrame()
 	return 0;
 }
 
-// Cobra-Command (World revision 5)
+// Cobra-Command (World/US revision 5)
 
 static struct BurnRomInfo cobracomRomDesc[] = {
 	{ "el11-5.bin",	0x08000, 0xaf0a8b05, 1 }, //  0 maincpu
@@ -2625,10 +2625,49 @@ static INT32 CobraScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvCobracom = {
 	"cobracom", NULL, NULL, NULL, "1988",
-	"Cobra-Command (World revision 5)\0", NULL, "Data East Corporation", "DEC8",
+	"Cobra-Command (World/US revision 5)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, cobracomRomInfo, cobracomRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
+	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
+	256, 240, 4, 3
+};
+
+
+// Cobra-Command (World/US revision 4)
+
+static struct BurnRomInfo cobracomaRomDesc[] = {
+	{ "el11-4.bin",	0x08000, 0x6dca6734, 1 }, //  0 maincpu
+	{ "el12-4.bin",	0x10000, 0x7a44ef38, 1 }, //  1
+	{ "el13.bin",	0x10000, 0x04505acb, 1 }, //  2
+
+	{ "el10-4.bin",	0x08000, 0xedfad118, 2 }, //  3 audiocpu
+
+	{ "el14.bin",	0x08000, 0x47246177, 3 }, //  4 gfx1
+
+	{ "el00-4.bin",	0x10000, 0x122da2a8, 4 }, //  5 gfx2
+	{ "el01-4.bin",	0x10000, 0x27bf705b, 4 }, //  6
+	{ "el02-4.bin",	0x10000, 0xc86fede6, 4 }, //  7
+	{ "el03-4.bin",	0x10000, 0x1d8a855b, 4 }, //  8
+
+	{ "el08.bin",	0x10000, 0xcb0dcf4c, 5 }, //  9 gfx4
+	{ "el09.bin",	0x10000, 0x1fae5be7, 5 }, // 10
+
+	{ "el05.bin",	0x10000, 0x1c4f6033, 6 }, // 11 gfx3
+	{ "el06.bin",	0x10000, 0xd24ba794, 6 }, // 12
+	{ "el04.bin",	0x10000, 0xd80a49ce, 6 }, // 13
+	{ "el07.bin",	0x10000, 0x6d771fc3, 6 }, // 14
+};
+
+STD_ROM_PICK(cobracoma)
+STD_ROM_FN(cobracoma)
+
+struct BurnDriver BurnDrvCobracoma = {
+	"cobracoma", "cobracom", NULL, NULL, "1988",
+	"Cobra-Command (World/US revision 4)\0", NULL, "Data East Corporation", "DEC8",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, cobracomaRomInfo, cobracomaRomName, NULL, NULL, CobracomInputInfo, CobracomDIPInfo,
 	CobraInit, CobraExit, CobraFrame, CobraDraw, CobraScan, &DrvRecalc, 0x100,
 	256, 240, 4, 3
 };

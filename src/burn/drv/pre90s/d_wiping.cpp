@@ -500,6 +500,23 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
+		{ // 4-Way conversion...
+			UINT8 *DrvJoy[2] = { DrvJoy1, DrvJoy2 };
+			UINT32 DrvJoyInit[2] = { 0x00, 0x00 };
+
+			CompileInput(DrvJoy, (void*)DrvInputs, 2, 8, DrvJoyInit);
+
+			// Convert to 4-way
+			ProcessJoystick(&DrvInputs[0], 0, 0,1,3,2, INPUT_4WAY);
+			ProcessJoystick(&DrvInputs[1], 1, 0,1,3,2, INPUT_4WAY);
+
+			// ..and back again - game needs a very strange DrvInputs layout - below this block
+			for (INT32 i = 0; i < 8; i++) {
+				DrvJoy1[i] = (DrvInputs[0] & 1<<i) ? 1 : 0;
+				DrvJoy2[i] = (DrvInputs[1] & 1<<i) ? 1 : 0;
+			}
+		}
+
 		memset (DrvInputs, 0, 8);
 
 		for (INT32 i = 0; i < 8; i++) {

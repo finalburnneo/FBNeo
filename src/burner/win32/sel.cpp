@@ -483,7 +483,7 @@ static int DoExtraFilters()
 // Make a tree-view control with all drivers
 static int SelListMake()
 {
-	unsigned int i, j;
+	int i, j;
 	unsigned int nMissingDrvCount = 0;
 	
 	if (nBurnDrv) {
@@ -509,7 +509,7 @@ static int SelListMake()
 
 	// Add all the driver names to the list
 	// 1st: parents
-	for (i = 0; i < nBurnDrvCount; i++) {
+	for (i = nBurnDrvCount-1; i >= 0; i--) {
 		TV_INSERTSTRUCT TvItem;
 
 		nBurnDrvActive = i;																// Switch to driver i
@@ -565,7 +565,7 @@ static int SelListMake()
 
 		memset(&TvItem, 0, sizeof(TvItem));
 		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-		TvItem.hInsertAfter = TVI_SORT;
+		TvItem.hInsertAfter = TVI_FIRST;
 		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 		TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
@@ -576,7 +576,7 @@ static int SelListMake()
 	}
 
 	// 2nd: clones
-	for (i = 0; i < nBurnDrvCount; i++) {
+	for (i = nBurnDrvCount-1; i >= 0; i--) {
 		TV_INSERTSTRUCT TvItem;
 
 		nBurnDrvActive = i;																// Switch to driver i
@@ -632,7 +632,7 @@ static int SelListMake()
 
 		memset(&TvItem, 0, sizeof(TvItem));
 		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-		TvItem.hInsertAfter = TVI_SORT;
+		TvItem.hInsertAfter = TVI_FIRST;
 		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 
 		// Find the parent's handle
@@ -656,7 +656,7 @@ static int SelListMake()
 					TV_INSERTSTRUCT TempTvItem;
 					memset(&TempTvItem, 0, sizeof(TempTvItem));
 					TempTvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-					TempTvItem.hInsertAfter = TVI_SORT;
+					TempTvItem.hInsertAfter = TVI_FIRST;
 					TempTvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 					TempTvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 					nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TempTvItem);

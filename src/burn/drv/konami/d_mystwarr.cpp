@@ -7,7 +7,8 @@
 			background layer #2 on intro (bad guy on motorcycle), bottom clipped??
 
 		metamorphic force
-			background in lava level is too fast. (irq?)
+			level 1 boss "fire" circle around boss priority issue
+		    background in lava level is too fast. (irq?)
 
 		martial champ
 		1: missing graphics in intro & title screens. On blank screens
@@ -1681,11 +1682,26 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 }
 
 //--------------------------------------------------------------------------------------------------------------
+//extern int counter;         // countblendykludgekludge
+static INT32 superblend = 0;
 
 static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 *flags)
 {
-	if (layer == 1 && (*code & 0xff00) + (*color) == 0x4101) *flags = (*flags)|(0x808000); //* water hack
+	if (layer == 1) {
+		/**/ if ((*code & 0xff00) + (*color) == 0x4101) superblend++; // water
+		else if ((*code & 0xff00) + (*color) == 0xA30D) superblend++; // giant cargo plane
+		else if ((*code & 0xff00) + (*color) == 0xA40D) superblend++; // giant cargo plane
+		else if ((*code & 0xff00) + (*color) == 0xA50D) superblend++; // giant cargo plane
+		else if ((*code & 0xff00) + (*color) == 0xFA01) superblend++; // intro "but behind the scenes..." part 1/x
+		else if ((*code & 0xff00) + (*color) == 0xFA05) superblend++; // intro "but behind the scenes..." part 2
+		else if ((*code & 0xff00) + (*color) == 0xFB01) superblend++; // part 3.
+		else if ((*code & 0xff00) + (*color) == 0xFB05) superblend++; // part 4.
+		else if ((*code & 0xff00) + (*color) == 0xFC05) superblend++; // part 5.
+		else if ((*code & 0xff00) + (*color) == 0xD001) superblend++; // Title Screen
+		else if (superblend > 0) superblend--;
 
+		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color));
+	}
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
 
@@ -1977,16 +1993,17 @@ static INT32 MystwarrInit()
 
 	K056832Init(DrvGfxROM0, DrvGfxROMExp0, 0x400000, mystwarr_tile_callback);
 	K056832SetGlobalOffsets(24, 16);
-	K056832SetLayerOffsets(0, -2-4, 0);
-	K056832SetLayerOffsets(1,  0-4, 0);
-	K056832SetLayerOffsets(2,  2-4, 0);
-	K056832SetLayerOffsets(3,  3-4, 0);
+	K056832SetLayerOffsets(0, -2-3, 0);
+	K056832SetLayerOffsets(1,  0-3, 0);
+	K056832SetLayerOffsets(2,  2-3, 0);
+	K056832SetLayerOffsets(3,  3-3, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, mystwarr_sprite_callback, 3);
-	K053247SetSpriteOffset(-24-48, -16-24);
+	K053247SetSpriteOffset(-25-48, -15-24);
 	K053247SetBpp(5);
 
 	konamigx_mixer_init(0);
+	konamigx_mystwarr_kludge = 1; // konamigx_mixer
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2306,6 +2323,7 @@ static INT32 MartchmpInit()
 	K053247SetBpp(5);
 
 	konamigx_mixer_init(0);
+	K054338_invert_alpha(0);
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2458,7 +2476,6 @@ static INT32 GaiapolisInit()
 	K053247SetSpriteOffset(7+(-24-79), -16-24);
 
 	konamigx_mixer_init(0);
-//	K054338_invert_alpha(0); // otherwise alpha blended roz is too light - sept.2.2016 - this breaks the "elevator/going down" level
 
 	SekInit(0, 0x68000);
 	SekOpen(0);
@@ -2717,6 +2734,9 @@ static void DrvPaletteRecalc()
 	}
 }
 
+// NOTE: SCAN superblend, tile_layer1_2335! (only)
+static INT32 tile_layer1_2335 = 0;
+
 static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
@@ -2732,7 +2752,33 @@ static INT32 DrvDraw()
 	if (nGame == 1) { // mystwarr
 		blendmode = 0;
 		cbparam = 0; // ?
+
+		INT32 oldtile_layer1_2335 = tile_layer1_2335;
+
+		switch (Drv68KRAM[0x2335]) {
+			case 0x0A:
+			case 0x11:
+			case 0x18: tile_layer1_2335 = 1; break;
+
+			case 0x09:
+			case 0x10:
+			case 0x12: superblend = 0; /* no break */
+			default: tile_layer1_2335 = 0; break;
+		}
+		if (tile_layer1_2335) superblend = 0xfff;
+		if (oldtile_layer1_2335 == 1 && tile_layer1_2335 == 0) superblend = 0;
+
+		//if (counter) superblend = 1;
+		if (superblend) blendmode = (1<<16|GXMIX_BLEND_FORCE)<<2;
+
+		//bprintf(0, _T("%X (%X), "), superblend, Drv68KRAM[0x2335]);
+
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
+
+		konamigx_mixer(enable_sub, 0, 0, 0, blendmode, 0, 0);
+		KonamiBlendCopy(DrvPalette);
+
+		return 0;
 	}
 
 	if (nGame == 2 || nGame == 3) { // viostorm / metamrph

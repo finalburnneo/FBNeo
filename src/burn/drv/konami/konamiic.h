@@ -391,9 +391,10 @@ void K054338_fill_solid_bg();
 void K054338_fill_backcolor(int palette_offset, int mode);
 INT32 K054338_set_alpha_level(int pblend);
 void K054338_invert_alpha(int invert);
-void K054338_update_all_shadows();
+void K054338_update_all_shadows(INT32 rushingheroes_hack);
 void K054338_export_config(int **shdRGB);
 
+extern INT32 m_shd_rgb[9];
 
 // k055555.cpp
 //------------------------------------------------------------------------------------------
@@ -499,3 +500,4 @@ void konamigx_mixer_init(int objdma);
 void konamigx_mixer_exit();
 void konamigx_mixer_primode(int mode);
 void konamigx_mixer(int sub1 /*extra tilemap 1*/, int sub1flags, int sub2 /*extra tilemap 2*/, int sub2flags, int mixerflags, int extra_bitmap /*extra tilemap 3*/, int rushingheroes_hack);
+extern INT32 konamigx_mystwarr_kludge;

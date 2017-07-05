@@ -537,8 +537,24 @@ static inline UINT32 alpha_blend_r32(UINT32 d, UINT32 s, UINT32 p)
 		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
 }
 
+static inline UINT32 shadow_blend_338(UINT32 d) // for k054338
+{
+	INT32 r = ((d&0xff0000) >> 16) + m_shd_rgb[0];
+	if (r > 0xff) r = 0xff;
+	r = r << 16;
+
+	INT32 g = ((d&0x00ff00) >> 8) + m_shd_rgb[1];
+	if (g > 0xff) g = 0xff;
+	g = g << 8;
+
+	INT32 b = ((d&0x0000ff) >> 0) + m_shd_rgb[2];
+	if (b > 0xff) b = 0xff;
+	return r|g|b;
+}
+
 static inline UINT32 shadow_blend(UINT32 d)
 {
+	if (KonamiIC_K054338InUse) return shadow_blend_338(d);
 	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
 }
 

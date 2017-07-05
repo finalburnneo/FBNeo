@@ -4245,7 +4245,7 @@ static struct BurnRomInfo Goldnaxe2RomDesc[] = {
 	
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0112.c2",    0x01000, 0xd8f2f1c0, BRF_OPT }, // Intel i8751 protection MCU
+	{ "317-01112.c2",   0x01000, 0xbda31044, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
 };
 
 
@@ -8005,72 +8005,11 @@ static INT32 FpointblInit()
 	return nRet;
 }
 
-static void Goldnaxe_Sim8751()
-{
-	// Protection MCU
-	UINT16 temp1 = (System16Ram[0x2cd8 + 1] << 8) | System16Ram[0x2cd8 + 0];
-	UINT16 temp2 = (System16Ram[0x2cda + 1] << 8) | System16Ram[0x2cda + 0];
-	UINT16 temp3 = (System16Ram[0x2cdc + 1] << 8) | System16Ram[0x2cdc + 0];
-	UINT16 temp4 = (System16Ram[0x2cde + 1] << 8) | System16Ram[0x2cde + 0];
-	if (temp1 == 0 && temp2 == 0 && temp3 == 0 && temp4 == 0) {
-		*((UINT16*)(System16Ram + 0x2cd8)) = BURN_ENDIAN_SWAP_INT16(0x048c);
-		*((UINT16*)(System16Ram + 0x2cda)) = BURN_ENDIAN_SWAP_INT16(0x159d);
-		*((UINT16*)(System16Ram + 0x2cdc)) = BURN_ENDIAN_SWAP_INT16(0x26ae);
-		*((UINT16*)(System16Ram + 0x2cde)) = BURN_ENDIAN_SWAP_INT16(0x37bf);
-	}
-	
-	// Sound command
-	UINT16 temp = (System16Ram[0x2cfc + 1] << 8) | System16Ram[0x2cfc + 0];
-	if ((temp & 0xff00) != 0x0000) {
-		System16SoundLatch = temp >> 8;
-		ZetOpen(0);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		ZetClose();
-		*((UINT16*)(System16Ram + 0x2cfc)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
-	}
-	
-	// Inputs
-	*((UINT16*)(System16Ram + 0x2cd0)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~((System16Input[1] << 8) | System16Input[2])));
-	*((UINT16*)(System16Ram + 0x2c96)) = BURN_ENDIAN_SWAP_INT16((UINT16)(~System16Input[0] << 8));
-}
-
 static INT32 GoldnaxeInit()
 {
 	// Start off with some sprite rom and let the load routine add on the rest
 	System16SpriteRomSize = 0x1c0000 - 0x180000;
 
-	INT32 nRet = System16Init();
-	
-	if (!nRet) {
-		UINT8 *pTemp = (UINT8*)BurnMalloc(0x1c0000);
-		if (pTemp) {
-			memcpy(pTemp, System16Sprites, 0x1c0000);
-			memset(System16Sprites, 0, 0x1c0000);
-			memcpy(System16Sprites + 0x000000, pTemp + 0x000000, 0x40000);
-			memcpy(System16Sprites + 0x100000, pTemp + 0x040000, 0x40000);
-			memcpy(System16Sprites + 0x040000, pTemp + 0x080000, 0x40000);
-			memcpy(System16Sprites + 0x140000, pTemp + 0x0c0000, 0x40000);
-			memcpy(System16Sprites + 0x080000, pTemp + 0x100000, 0x40000);
-			memcpy(System16Sprites + 0x180000, pTemp + 0x140000, 0x40000);
-		} else {
-			nRet = 1;
-		}
-		BurnFree(pTemp);
-	}
-	
-	return nRet;
-}
-
-static INT32 Goldnaxe2Init()
-{
-	Simulate8751 = Goldnaxe_Sim8751;
-	
-	UINT8 memory_control_5704[0x10] = { 0x02,0x00, 0x02,0x08, 0x00,0x1f, 0x00,0xff, 0x00,0x20, 0x01,0x10, 0x00,0x14, 0x00,0xc4 };
-	System16I8751InitialConfig = memory_control_5704;
-	
-	// Start off with some sprite rom and let the load routine add on the rest
-	System16SpriteRomSize = 0x1c0000 - 0x180000;
-	
 	INT32 nRet = System16Init();
 	
 	if (!nRet) {
@@ -9427,7 +9366,7 @@ struct BurnDriver BurnDrvGoldnaxe2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_SCRFIGHT, 0,
 	NULL, Goldnaxe2RomInfo, Goldnaxe2RomName, NULL, NULL, System16bfire3InputInfo, GoldnaxeDIPInfo,
-	Goldnaxe2Init, System16Exit, System16BFrame, NULL, System16Scan,
+	GoldnaxeInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

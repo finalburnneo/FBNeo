@@ -81,7 +81,7 @@ static UINT8 DrvJoy4[16];
 static UINT8 DrvJoy5[16];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[6];
-static UINT8 DrvDips[1];
+static UINT8 DrvDips[2];
 
 static INT32 sound_nmi_enable = 0;
 static UINT8 sound_control = 0;
@@ -134,6 +134,7 @@ static struct BurnInputInfo MystwarrInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Mystwarr)
@@ -329,6 +330,7 @@ STDINPUTINFO(Martchmp)
 static struct BurnDIPInfo MystwarrDIPList[]=
 {
 	{0x25, 0xff, 0xff, 0xe4, NULL			},
+	{0x26, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"		},
 	{0x25, 0x01, 0x04, 0x04, "Off"			},
@@ -345,6 +347,10 @@ static struct BurnDIPInfo MystwarrDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Number of Players"	},
 	{0x25, 0x01, 0x40, 0x00, "4"			},
 	{0x25, 0x01, 0x40, 0x40, "2"			},
+
+	{0   , 0xfe, 0   ,    2, "Debug Alpha Mode (debug console/logfile)"		},
+	{0x26, 0x01, 0x01, 0x00, "Off"			},
+	{0x26, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Mystwarr)
@@ -1682,8 +1688,8 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 }
 
 //--------------------------------------------------------------------------------------------------------------
-//extern int counter;         // countblendykludgekludge
 static INT32 superblend = 0;
+static INT32 oldsuperblend = 0;
 
 static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 *flags)
 {
@@ -1698,9 +1704,8 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 		else if ((*code & 0xff00) + (*color) == 0xFB05) superblend++; // part 4.
 		else if ((*code & 0xff00) + (*color) == 0xFC05) superblend++; // part 5.
 		else if ((*code & 0xff00) + (*color) == 0xD001) superblend++; // Title Screen
-		else if (superblend > 0) superblend--;
 
-		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color));
+		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
 	}
 	*color = layer_colorbase[layer] | ((*color >> 1) & 0x1e);
 }
@@ -1824,6 +1829,9 @@ static INT32 DrvDoReset()
 	cbparam = 0;
 	oinprion = 0;
 	sound_nmi_enable = 0;
+
+	superblend = 0; // for mystwarr alpha tile count
+	oldsuperblend = 0;
 
 	return 0;
 }
@@ -2734,9 +2742,6 @@ static void DrvPaletteRecalc()
 	}
 }
 
-// NOTE: SCAN superblend, tile_layer1_2335! (only)
-static INT32 tile_layer1_2335 = 0;
-
 static INT32 DrvDraw()
 {
 	DrvPaletteRecalc();
@@ -2753,28 +2758,38 @@ static INT32 DrvDraw()
 		blendmode = 0;
 		cbparam = 0; // ?
 
-		INT32 oldtile_layer1_2335 = tile_layer1_2335;
+		{ // "Superblend and the Survival of Alpha (in Mystwarr)"
+			switch (Drv68KRAM[0x2335]) {
+				case 0x0A:
+				case 0x11:
+				case 0x18: { // alpha on for sure
+					superblend = 0xfff;
+					break;
+				}
 
-		switch (Drv68KRAM[0x2335]) {
-			case 0x0A:
-			case 0x11:
-			case 0x18: tile_layer1_2335 = 1; break;
+				case 0x09:
+				case 0x10:
+				case 0x12:
+			    default: { // alpha off, but only if tilecount isn't rising
+					if (superblend < oldsuperblend) {
+						superblend = 0;
+					}
+					break;
+				}
+			}
 
-			case 0x09:
-			case 0x10:
-			case 0x12: superblend = 0; /* no break */
-			default: tile_layer1_2335 = 0; break;
+			if (superblend || oldsuperblend) {
+				blendmode = (1 << 16 | GXMIX_BLEND_FORCE) << 2; // using "|| oldsuperblend" for 1 frame latency, to avoid flickers on the water level when he gets "flushed" into the boss part
+			}
+
+			if (DrvDips[1] & 1) // debug alpha
+				bprintf(0, _T("%X %X (%X), "), superblend, oldsuperblend, Drv68KRAM[0x2335]);
+
+			oldsuperblend = superblend;
+			if (superblend) superblend = 1;
 		}
-		if (tile_layer1_2335) superblend = 0xfff;
-		if (oldtile_layer1_2335 == 1 && tile_layer1_2335 == 0) superblend = 0;
-
-		//if (counter) superblend = 1;
-		if (superblend) blendmode = (1<<16|GXMIX_BLEND_FORCE)<<2;
-
-		//bprintf(0, _T("%X (%X), "), superblend, Drv68KRAM[0x2335]);
 
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
-
 		konamigx_mixer(enable_sub, 0, 0, 0, blendmode, 0, 0);
 		KonamiBlendCopy(DrvPalette);
 
@@ -2958,6 +2973,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(cbparam);
 		SCAN_VAR(oinprion);
 		SCAN_VAR(z80_bank);
+		SCAN_VAR(superblend);
+		SCAN_VAR(oldsuperblend);
 
 		BurnRandomScan(nAction);
 	}

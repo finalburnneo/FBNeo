@@ -70,6 +70,16 @@
     }
 
     h3 {
+        color: #FFFFFF;
+        font-size: 1.2em;
+		margin-top: 3em;
+		background-color: #aaaaaa;
+		width: 6.0em;
+		padding: 0.5em;
+		border-radius: 10px;
+    }
+	
+	h4 {
         color: #C03029;
         font-size: 1.0em;
     }
@@ -104,54 +114,38 @@
 <p><a href="https://www.fbalpha.com">https://www.fbalpha.com</a><br />
 <a href="http://neosource.1emu.net/forums">http://neosource.1emu.net/forums</a></p>
 
+
 <h3>v0.2.97.41</h3>
-<h2>Fixes and new features</h2>
-<ul>
 <!-- fixes and features -->
-<li>Add driver for Time Soldiers/Battle Field, Sky Soldiers, Sky Adventure, Gang Wars, Super Champion Baseball on Alpha68k II and VI hardware [iq_132, dink]</li>
-<li>Fixed missing background layer in Bio-ship Paladin level 2 [dink]</li>
-<li>Fixed an issue with Pururun's sound [dink]</li>
-<li>Added clone of Gals Panic DX (Asia) [arcade mod bios]</li>
+<h4>Fixes and new features</h4>
+<ul>
 <li>Fixed 16-bit rendering for most games on Konami and Metro hardware [iq_132]</li>
 <li>Fixed 16-bit RGB555 rendering in Taito F3 [dink]</li>
 <li>Separate Force 16-Bit Video option between D3D Enhanced blitter and DX9 Alt blitter [Barry]</li>
 <li>Fixed scfinals coin-up issue with a kludge [dink]</li>
-<li>Added American Horseshoes (Taito-L) - was missing from the .40 release by accident [dink]</li>
+<li>Fixed missing background layer in Bio-ship Paladin level 2 [dink]</li>
+<li>Fixed an issue with Pururun's sound [dink]</li>
 <li>Massive Taito-F3 video fix-a-thon<ul>
-        <li>Arabian Magic: ugly line down the screen at stage start, caused by off-by-one clipping</li>
-        <li>Arabian Magic: missing text in the cutscenes</li>
-        <li>Puzzle Bobble 4: missing end-of-round you won/lost animations</li>
-        <li>Land Maker: missing you won/lost text</li>
-        <li>Land Maker: tilemap alignment issues</li>
-        <li>Grid Seeker: missing continue screen</li>
+	<li>Arabian Magic: ugly line down the screen at stage start, caused by off-by-one clipping</li>
+	<li>Arabian Magic: missing text in the cutscenes</li>
+	<li>Puzzle Bobble 4: missing end-of-round you won/lost animations</li>
+	<li>Land Maker: missing you won/lost text</li>
+	<li>Land Maker: tilemap alignment issues</li>
+	<li>Grid Seeker: missing continue screen</li>
 </ul></li>
 <li>Remove unneeded DWM and MDI code, causes issues in Win10 [Barry]</li>
 <li>Updated modern Windows builds to use the Segoe font recommended by Microsoft [Barry]</li>
 <li>Fixed broken background issue in Ashura Blaster [dink]</li>
 <li>Fixed animated background in Universal's Space Raider [dink]</li>
-<li>Added driver for Toypop and Libble Rabble on misc. Namco Hardware [iq_132]</li>
-<li>Added Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack) [GSC2007, JacKc]</li>
-<li>Updated The King of Fighters '98 (Combo) to Ver. 2017/04/08 [JacKc]</li>
-<li>Add driver for Mappy, Dig Dug II, Super Pacman, Pac &amp; Pal, Grobda and The Tower of Druaga [iq_132, dink]</li>
-<li>Add driver for Gaplus / Galaga 3 [iq_132]</li>
-<li>EEPROM saves path now configurable [Barry]</li>
-<li>Added clone of Bucky O'Hare (ver JA) [ShouTime, The Dumping Union, JacKc]</li>
 <li>Added experimental SekBurnUntilInt() code to the 68k core [dink]</li>
 <li>Fixed layer alignments and screensize in Ajax / Typhoon [dink]</li>
-<li>Added clone of Rastan Saga (Japan Rev 1) [Michel BLANCO, JacKc]</li>
-<li>Added clone of Captain Silver (Japan, revision 1) [Apocalypse, The Dumping Union, JacKc]</li>
-<li>Added clone of Super Street Fighter II to the CPS-2 driver [Barry, idc/Team Avalaunch]</li>
-<li>Added Ultimate Mortal Kombat Trilogy Hack r.5149 to Megadrive [dink]</li>
 <li>Fix shadow/highlights for 2-cell column vscroll in Megadrive, in particular fixes the intro to Trouble Shooter / Battle Mania [dink]</li>
 <li>Fix Super Real Darwin sprite:tile priorities [dink]</li>
-<li>Added Nebulous Bee, clone of Galaga [JacKc]</li>
-<li>Added clone of Jackal (bootleg, Rotary Joystick) [f205v, The Iron Goat, JacKc]</li>
 <li>Fix timing inconsistencies / framerate issues on some Win 10 machines (high precision timer) [dink]</li>
 <li>Fix Galaxian-custom sound that dink broke [Barry]</li>
 <li>Add ability to rotate player digitally in Forgotten Worlds [dink]</li>
 <li>Fix layer priorities in G-Loc (gloc) [Barry]</li>
 <li>Fix cutscene crystal ball in some sets of Altered Beast [Barry]</li>
-<li>Added Revenger '84 to the EPOS driver [dink]</li>
 <li>Fixed broken sound in Puzzle King (4in1boot) [dink]</li>
 <li>Disabled Force 16-bit emulation by default, can still be enabled by user, but causes issues with some systems, eg, Taito F3 [Barry]</li>
 <li>Made the Enhanced blitter the default for normal builds [Barry]</li>
@@ -160,17 +154,9 @@
 <li>Fixed blue squares in Street Fighter Alpha 2 high score entry screen [Barry]</li>
 <li>Added a message to install the Direct X runtimes if the DLLs are missing when starting the DirectX9 blitters, removed the message that showed at every FB Alpha start [Barry]</li>
 <li>Added ability to choose which monitor (separated for Horizontal and Vertical games) to use for fullscreen in the DirectX 9 blitters [Barry]</li>
-<li>General source tidy-up/maintenance, and conversion to BurnMalloc/BurnFree [Barry]</li>
-<li>Add support for the new format hiscore.dat file [Barry]</li>
-<li>Documentation Update [Barry]</li>
-<li>Fix issue with IPS Manager sometimes saving ini file incorrectly [Barry]</li>
-<li>Sync sets with MAME 0.186 [Barry]</li>
 <li>Added alpha transparencies to Raiga Strato Fighter [iq_132]</li>
-<li>Added driver for Cannon Ball, Magix / Rock and Rock Tris on Yun Sung 8 hardware [iq_132]</li>
 <li>Fixed video offset issue in Gundhara [dink]</li>
-<li>Added driver for US Games trivia [iq_132]</li>
 <li>Fixed alpha blending and many sprite:tile priority issues in Nitro Ball [dink]</li>
-<li>Added driver for Double Wings on Data East 16-bit Hardware [iq_132]</li>
 <li>Fixed MSM6295 Banking in Boogie Wings [dink]</li>
 <li>For debug builds: show negative numbers with the debug counter ('m' and 'n') [dink]</li>
 <li>Fixed the road and sky levels (broken raster effects) in Ed Randy / The Cliffhanger [dink]</li>
@@ -179,37 +165,71 @@
 <li>Fixed strange music tempo in Route 16 [dink]</li>
 <li>Fixed un-smooth scrolling and cut-off end-of-level message in Konami's Surprise Attack [dink]</li>
 <li>Fixed video offset issue in X-Multiply m81 version [dink]</li>
-<li>Added Dottori-Man Jr. to the Dottori Kun driver [hap, JacKc]</li>
 <li>Ported the Namco C140 sound core to FBAlpha [dink]</li>
 <li>Added resampling to the Konami K054539 Soundcore, now most later Konami games (Xexex, Moo Mesa, Bucky O'Hare, etc) will sound great at any user-selected soundrate [dink]</li>
 <li>Fixed occasional sprite flickering in Mystic Warriors [dink]</li>
 <li>Fixed occasional freeze in Atomic Robo-Kid when playing via keyboard and up+down or left+right is pressed at the same time [dink]</li>
 <li>Fixed music, graphics, timing and color issues in Psychic 5 [dink]</li>
-<li>Added checkbox filters to the HTML debug log, and added ten new output levels [Barry]</li>
-<li>Added driver for Assault, Burning Force, Cosmo Gang: The Video, Dragon Saber, Mirai Ninja, Valkyrie no Densetsu, Ordyne, Phelios, Rolling Thunder 2, Marvel Land, Metal Hawk, Kyuukai Douchuuki, Super World Stadium 92 and 93, Steel Gunner, Steel Gunner 2, Dirt Fox, Finest Hour and Lucky and Wild on Namco System 2 Hardware [iq_132, dink]</li>
-<li>Added clone of Macross II (Korea) [CoolMod, CS, The Dumping Union, JacKc]</li>
-<li>Added Generate All .DAT-file function [Barry]</li>
-<li>Added clone of Double Dragon (Special 2017, hack) [JacKc, iq_132]</li>
-<li>Added clone of Palamedes (US) [caius, The Dumping Union, JacKc]</li>
-<li>Added driver for Sauro and Tricky Doc [iq_132]</li>
-<li>Updated the documentation [Barry]</li>
 <li>Added CPU_IRQSTATUS_HOLD support to m6809 cpu core [dink]</li>
 <li>Add watchdog device. Hook it up to Momoko 120% driver as an example. [iq_132]</li>
-<li>Use real MCU for Nekketsu Kouha Kunio-kun, Guardian/Get Star, Fairy Land Story, Rumba Lumber, Onna Sansirou - Typhoon Gal, Chack'n Pop [Barry]</li>
+<li>Use real MCU for Nekketsu Kouha Kunio-kun, Guardian/Get Star, Fairy Land Story, Rumba Lumber, Onna Sansirou - Typhoon Gal, Chack'n Pop, Golden Axe (set 2, US) [Barry]</li>
+<li>Added BurnRandom() / BurnRandomScan(), a predictable random number generator based on old BSD LCG [dink]</li>
+<li>Hooked up BurnRandom() to games using rand() to allow for reliable input recordings and states [dink]</li>
+<li>EEPROM saves path now configurable [Barry]</li>
+<li>Restore MSVC full optimisation (should see slightly faster performance) [Barry]</li>
+<li>General source tidy-up/maintenance, and conversion to BurnMalloc/BurnFree [Barry]</li>
+<li>Add support for the new format hiscore.dat file [Barry]</li>
+<li>Fix issue with IPS Manager sometimes saving ini file incorrectly [Barry]</li>
+<li>Added Generate All .dat file function [Barry]</li>
+<li>Added checkbox filters to the HTML debug log, and added ten new output levels [Barry]</li>
+<li>Updated the documentation [Barry]</li>
+</ul>
+<!-- new drivers -->
+<h4>New drivers</h4>
+<ul>
+<li>Add driver for Mappy, Dig Dug II, Super Pacman, Pac &amp; Pal, Grobda and The Tower of Druaga [iq_132, dink]</li>
+<li>Add driver for Gaplus / Galaga 3 [iq_132]</li>
+<li>Added driver for Toypop and Libble Rabble on misc. Namco Hardware [iq_132]</li>
+<li>Added driver for Cannon Ball, Magix / Rock and Rock Tris on Yun Sung 8 hardware [iq_132]</li>
+<li>Added driver for US Games trivia [iq_132]</li>
+<li>Added driver for Double Wings on Data East 16-bit Hardware [iq_132]</li>
+<li>Added driver for Assault, Burning Force, Cosmo Gang: The Video, Dragon Saber, Mirai Ninja, Valkyrie no Densetsu, Ordyne, Phelios, Rolling Thunder 2, Marvel Land, Metal Hawk, Kyuukai Douchuuki, Super World Stadium 92 and 93, Steel Gunner, Steel Gunner 2, Dirt Fox, Finest Hour and Lucky and Wild on Namco System 2 Hardware [iq_132, dink]</li>
+<li>Add driver for Time Soldiers/Battle Field, Sky Soldiers, Sky Adventure, Gang Wars, Super Champion Baseball on Alpha68k II and VI hardware [iq_132, dink]</li>
+<li>Added driver for Sauro and Tricky Doc [iq_132]</li>
+</ul>
+<!-- new game additions to existing drivers -->
+<h4>New additions to existing drivers</h4>
+<ul>
+<li>Added Dottori-Man Jr. to the Dottori Kun driver [hap, JacKc]</li>
+<li>Added Revenger '84 to the EPOS driver [dink]</li>
+<li>Added Ultimate Mortal Kombat Trilogy Hack r.5149 to Megadrive [dink]</li>
+</ul>
+<!-- clones and updated romsets in drivers -->
+<h4>Clones and updated romsets in existing drivers</h4>
+<ul>
+<li>Added clone of Gals Panic DX (Asia) [arcade mod bios]</li>
+<li>Added American Horseshoes (Taito-L) - was missing from the .40 release by accident [dink]</li>
+<li>Added clone of Macross II (Korea) [CoolMod, CS, The Dumping Union, JacKc]</li>
 <li>Added clone of The Last Blade (Special 2017, hack) [GSC20017, JacKc, iq_132]</li>
 <li>Added clone of Street Fighter II: The World Warrior (Japan 911210, CPS-B-17) [ShouTime, Bonky, MetalliC, JacKc]</li>
 <li>Added clone of Operation Wolf (Japan, SC) [ShouTime, JacKc]</li>
 <li>Added clone of Silk Worm (prototype?) [frsj8112, JacKc]</li>
-<li>Added BurnRandom() / BurnRandomScan(), a predictable random number generator based on old BSD LCG [dink]</li>
-<li>Hooked up BurnRandom() to games using rand() to allow for reliable input recordings and states [dink]</li>
+<li>Added clone of Double Dragon (Special 2017, hack) [JacKc, iq_132]</li>
+<li>Added clone of Palamedes (US) [caius, The Dumping Union, JacKc]</li>
+<li>Added Nebulous Bee, clone of Galaga [JacKc]</li>
+<li>Added clone of Jackal (bootleg, Rotary Joystick) [f205v, The Iron Goat, JacKc]</li>
+<li>Added clone of Rastan Saga (Japan Rev 1) [Michel BLANCO, JacKc]</li>
+<li>Added clone of Captain Silver (Japan, revision 1) [Apocalypse, The Dumping Union, JacKc]</li>
+<li>Added clone of Super Street Fighter II to the CPS-2 driver [Barry, idc/Team Avalaunch]</li>
+<li>Added clone of Bucky O'Hare (ver JA) [ShouTime, The Dumping Union, JacKc]</li>
+<li>Added Samurai Shodown IV - Amakusa's Revenge / Samurai Spirits - Amakusa Kourin (Special 2017, hack) [GSC2007, JacKc]</li>
+<li>Updated The King of Fighters '98 (Combo) to Ver. 2017/04/08 [JacKc]</li>
 <li>Sync. romsets with MAME 0.187 [Barry]</li>
-<li> []</li>
-<li> []</li>
-<li> []</li>
 </ul>
 
+
 <h3>v0.2.97.40</h3>
-<h2>Fixes and new features</h2>
+<h4>Fixes and new features</h4>
 <ul>
 <!-- fixes and features -->
 <li>Added Favorites feature: mark games as favorite from the Game Info window, or right-click in the list.  Toggle favorites mode in the "Filters" section [dink]</li>
@@ -361,7 +381,7 @@
 <li>Improved M6502 core by properly handling indexed read/writes, fixed pulsing the nmi line with CPU_IRQSTATUS_AUTO [dink]</li>
 <!-- new drivers -->
 </ul>
-<h2>New drivers</h2>
+<h4>New drivers</h4>
 <ul>
 <li>Konami's The Main Event and Cosmo Police Galivan / Ninja Emaki / UFO Robo Dangar were accidentally left out of the last release, sorry!</li>
 <li>Added driver for Twin Cobra, Flying Shark / Sky Shark / Gulf War II [iq_132]</li>
@@ -396,7 +416,7 @@
 <li>Added driver for Paddle Mania and The Next Space on Alpha 68k I hardware [iq_132]</li>
 <!-- new game additions to existing drivers -->
 </ul>
-<h2>New additions to existing drivers</h2>
+<h4>New additions to existing drivers</h4>
 <ul>
 <li>Added Mini Planets (REV02) to the Megadrive driver [dink]</li>
 <li>Added Miss World 2002 [NeoGeo de Ahuizotla, Artemio Urbina, The Dumping Union, JacKc]</li>
@@ -409,7 +429,7 @@
 <li>Added Ken Sei Mogura: Street Fighter II (Japan 940418, Ver 1.00) [Barry]</li>
 <!-- clones and updated romsets in drivers -->
 </ul>
-<h2>Clones and updated romsets in existing drivers</h2>
+<h4>Clones and updated romsets in existing drivers</h4>
 <ul>
 <li>Update kof98cb to 20170108 version [JacKc]</li>
 <li>Replaced Mutant Night (mnight) with World version, Kawakus license now mnightj [JacKc]</li>
@@ -453,7 +473,7 @@
 </ul>
 
 <h3>v0.2.97.39</h3>
-<h2>Fixes and new features</h2>
+<h4>Fixes and new features</h4>
 <ul>
 <!-- fixes and features -->
 <li>Shots Factory update: esc to close window, change "All Sprites" to "Layer 1" [dink]</li>
@@ -539,7 +559,7 @@
 <li>Added configurable clipping to generic tile drawing [iq_132]</li>
 <!-- clones and updated romsets in drivers -->
 </ul>
-<h2>Clones and updated romsets in existing drivers</h2>
+<h4>Clones and updated romsets in existing drivers</h4>
 <ul>
 <li>Added clone of Street Fighter II' - Magic Delta Turbo (bootleg set 4 (with YM2151 + 2xMSM5205), 920313 etc) [f205v, maru79, JacKc]</li>
 <li>Added clone of Street Fighter II' - Champion Edition (920313 etc bootleg set 3) [f205v, maru79, JacKc]</li>
@@ -564,7 +584,7 @@
 <li>Added clone of Teenage Mutant Ninja Turtles (Asia 4 Players, version ?) [Abelardo Vidal, The Dumping Union, JacKc]</li>
 <!-- new game additions to existing drivers -->
 </ul>
-<h2>New additions to existing drivers</h2>
+<h4>New additions to existing drivers</h4>
 <ul>
 <li>Added Triki Triki (Lover Boy bootleg) [Rafael Alonso (from ARCADE VINTAGE), JacKc]</li>
 <li>Added Mercenario (Commando bootleg) [Rockman, JacKc]</li>
@@ -584,7 +604,7 @@
 <li>Added Super UWOL! SG-1000 to the SG-1000 driver [dink]</li>
 <!-- new drivers -->
 </ul>
-<h2>New drivers</h2>
+<h4>New drivers</h4>
 <ul>
 <li>Added driver for Parallel Turn [iq_132, dink]</li>
 <li>Added driver for Breakthru and Darwin 4078 [iq_132, dink]</li>
@@ -618,7 +638,7 @@
 </ul>
 
 <h3>v0.2.97.38</h3>
-<h2>Fixes and new features</h2>
+<h4>Fixes and new features</h4>
 <ul>
 <!-- fixes and features -->
 <li>Fixed BurnSamplesSetLoop() in the sample core [dink]</li>
@@ -682,7 +702,7 @@
 <li>Updated the libpng library to v1.6.21 [Barry]</li>
 <!-- clones and updated romsets in drivers -->
 </ul>
-<h2>Clones and updated romsets in existing drivers</h2>
+<h4>Clones and updated romsets in existing drivers</h4>
 <ul>
 <li>Sync. romsets with current MAME [Barry, JacKc]</li>
 <li>Added clone of Sengoku Ace (Japan, set 2) [Alex Cmaylo, JacKc]</li>
@@ -731,7 +751,7 @@
 <li>Updated the NeoGeo driver with the latest Unibios [JacKc]</li>
 <!-- new game additions to existing drivers -->
 </ul>
-<h2>New additions to existing drivers</h2>
+<h4>New additions to existing drivers</h4>
 <ul>
 <li>Added Fix-it Felix Jr. to the Megadrive driver [dink]</li>
 <li>Added Waimanu: Scary Monsters Saga to SMS driver [dink]</li>
@@ -747,7 +767,7 @@
 <li>Added Unknown Neo-Geo Vs. Fighter (prototype) [Brian Hargrove, JacKc] to the NeoGeo driver</li>
 <!-- new drivers -->
 </ul>
-<h2>New drivers</h2>
+<h4>New drivers</h4>
 <ul>
 <li>Added driver for Appoooh [vbt]</li>
 <li>Added driver for Cabal [iq_132, dink]</li>

@@ -7,18 +7,24 @@
 #include "konamiic.h"
 
 static UINT16 k54338_regs[32];
-INT32 m_shd_rgb[9];
+INT32 m_shd_rgb[12];
 
 static INT32 k054338_alphainverted;
+
+static void reset_shadows()
+{
+	m_shd_rgb[0] = m_shd_rgb[1] = m_shd_rgb[2] = -80;   // shadow bank 0
+	m_shd_rgb[3] = m_shd_rgb[4] = m_shd_rgb[5] = -80;   // shadow bank 1
+	m_shd_rgb[6] = m_shd_rgb[7] = m_shd_rgb[8] = -80;   // shadow bank 2
+	m_shd_rgb[9] = m_shd_rgb[10] = m_shd_rgb[11] = -80; // shadow bank 3 (static)
+}
 
 void K054338Reset()
 {
 	memset(k54338_regs, 0, sizeof(k54338_regs));
 	memset(m_shd_rgb, 0, sizeof(m_shd_rgb));
 
-	m_shd_rgb[0] = m_shd_rgb[1] = m_shd_rgb[2] = -80;
-	m_shd_rgb[3] = m_shd_rgb[4] = m_shd_rgb[5] = -80;
-	m_shd_rgb[6] = m_shd_rgb[7] = m_shd_rgb[8] = -80;
+	reset_shadows();
 }
 
 void K054338Exit()
@@ -30,7 +36,7 @@ void K054338Scan(INT32 nAction)
 {
 	struct BurnArea ba;
 	
-	if (nAction & ACB_DRIVER_DATA) {
+	if (nAction & ACB_MEMORY_RAM) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = (UINT8*)k54338_regs;
 		ba.nLen	  = sizeof(k54338_regs);
@@ -78,20 +84,9 @@ void K054338_update_all_shadows(INT32 rushingheroes_hack)
 		m_shd_rgb[i] = d;
 	}
 
-#if 0
-	if (!rushingheroes_hack)
-	{
-		palette.set_shadow_dRGB32(0, m_shd_rgb[0], m_shd_rgb[1], m_shd_rgb[2], noclip);
-		palette.set_shadow_dRGB32(1, m_shd_rgb[3], m_shd_rgb[4], m_shd_rgb[5], noclip);
-		palette.set_shadow_dRGB32(2, m_shd_rgb[6], m_shd_rgb[7], m_shd_rgb[8], noclip);
+	if (rushingheroes_hack) {
+		reset_shadows();
 	}
-	else // rushing heroes seems to specify shadows in another format, or it's not being interpreted properly.
-	{
-		palette.set_shadow_dRGB32(0, -80, -80, -80, 0);
-		palette.set_shadow_dRGB32(1, -80, -80, -80, 0);
-		palette.set_shadow_dRGB32(2, -80, -80, -80, 0);
-	}
-#endif
 }
 
 void K054338_export_config(INT32 **shd_rgb)

@@ -394,7 +394,7 @@ void K054338_invert_alpha(int invert);
 void K054338_update_all_shadows(INT32 rushingheroes_hack);
 void K054338_export_config(int **shdRGB);
 
-extern INT32 m_shd_rgb[9];
+extern INT32 m_shd_rgb[12];
 
 // k055555.cpp
 //------------------------------------------------------------------------------------------

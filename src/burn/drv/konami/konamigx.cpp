@@ -100,7 +100,7 @@ void konamigx_mixer_init(INT32 objdma)
 	else
 		gx_spriteram = (UINT16*)K053247Ram;
 
-//	m_palette->set_shadow_dRGB32(3,-80,-80,-80, 0);
+//	m_palette->set_shadow_dRGB32(3,-80,-80,-80, 0); // in k054338 -dink
 	K054338_invert_alpha(1);
 }
 
@@ -120,8 +120,8 @@ static void gx_wipezbuf(INT32 noshadow)
 {
 #define GX_ZBUFW	512
 
-	INT32 w = (nScreenWidth); // - 1);  - sept.2.2016, fixes lines of pixels
-	INT32 h = (nScreenHeight); // - 1); -  around gaiapolis's intro  - dink
+	INT32 w = (nScreenWidth);
+	INT32 h = (nScreenHeight);
 
 	UINT8 *zptr = gx_objzbuf;
 	INT32 ecx = h;

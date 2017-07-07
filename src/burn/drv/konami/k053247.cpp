@@ -537,24 +537,27 @@ static inline UINT32 alpha_blend_r32(UINT32 d, UINT32 s, UINT32 p)
 		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
 }
 
-static inline UINT32 shadow_blend_338(UINT32 d) // for k054338
+static inline UINT32 shadow_blend_338(UINT32 d, INT32 shadow_bank) // for k054338
 {
-	INT32 r = ((d&0xff0000) >> 16) + m_shd_rgb[0];
+	INT32 r = ((d&0xff0000) >> 16) + m_shd_rgb[0 + (shadow_bank * 3)];
 	if (r > 0xff) r = 0xff;
+	if (r < 0) r = 0;
 	r = r << 16;
 
-	INT32 g = ((d&0x00ff00) >> 8) + m_shd_rgb[1];
+	INT32 g = ((d&0x00ff00) >> 8) + m_shd_rgb[1 + (shadow_bank * 3)];
 	if (g > 0xff) g = 0xff;
+	if (g < 0) g = 0;
 	g = g << 8;
 
-	INT32 b = ((d&0x0000ff) >> 0) + m_shd_rgb[2];
+	INT32 b = ((d&0x0000ff) >> 0) + m_shd_rgb[2 + (shadow_bank * 3)];
 	if (b > 0xff) b = 0xff;
+	if (b < 0) b = 0;
 	return r|g|b;
 }
 
-static inline UINT32 shadow_blend(UINT32 d)
+static inline UINT32 shadow_blend(UINT32 d, INT32 shadow_bank)
 {
-	if (KonamiIC_K054338InUse) return shadow_blend_338(d);
+	if (KonamiIC_K054338InUse) return shadow_blend_338(d, shadow_bank);
 	return ((((d & 0xff00ff) * 0x9d) & 0xff00ff00) + (((d & 0x00ff00) * 0x9d) & 0x00ff0000)) / 0x100;
 }
 
@@ -608,6 +611,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 	INT32 src_pitch, dst_pitch;
 
 	INT32 highlight_enable = (drawmode >> 4) && (K053247Flags & 2);// for fba
+	if (highlight_enable) highlight_enable = (drawmode >> 4) & 0x7;
 	//INT32 highlight_enable = drawmode >> 4;// for fba
 	drawmode &= 0xf;
 
@@ -864,7 +868,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							if (highlight_enable) {
 								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
 							} else {
-								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx]); //shd_base[pix.as_rgb15()];
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], highlight_enable); //shd_base[pix.as_rgb15()];
 							}
 							//dst_ptr[ecx] =(eax>>3&0x001f);lend_r32( eax, 0x00000000, 128);
 						}
@@ -1005,7 +1009,7 @@ void zdrawgfxzoom32GP(UINT32 code, UINT32 color, INT32 flipx, INT32 flipy, INT32
 							if (highlight_enable) {
 								dst_ptr[ecx] = highlight_blend(dst_ptr[ecx]); 
 							} else {
-								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx]); //shd_base[pix.as_rgb15()];
+								dst_ptr[ecx] = shadow_blend(dst_ptr[ecx], highlight_enable); //shd_base[pix.as_rgb15()];
 							}
 						}
 						while (++ecx);

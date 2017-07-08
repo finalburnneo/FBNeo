@@ -1690,6 +1690,7 @@ static UINT8 __fastcall mystwarr_sound_read(UINT16 address)
 //--------------------------------------------------------------------------------------------------------------
 static INT32 superblend = 0;
 static INT32 oldsuperblend = 0;
+static INT32 superblendoff = 0;
 
 static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 *flags)
 {
@@ -1704,6 +1705,7 @@ static void mystwarr_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32
 		else if ((*code & 0xff00) + (*color) == 0xFB05) superblend++; // part 4.
 		else if ((*code & 0xff00) + (*color) == 0xFC05) superblend++; // part 5.
 		else if ((*code & 0xff00) + (*color) == 0xD001) superblend++; // Title Screen
+		else if ((*code & 0xff00) + (*color) == 0xC700) superblendoff++; // End Boss death scene (anti superblend)
 
 		//if (counter) bprintf(0, _T("%X %X (%X), "), *code, *color, (*code & 0xff00) + (*color)); /* save this! -dink */
 	}
@@ -1832,6 +1834,7 @@ static INT32 DrvDoReset()
 
 	superblend = 0; // for mystwarr alpha tile count
 	oldsuperblend = 0;
+	superblendoff = 0;
 
 	return 0;
 }
@@ -2762,7 +2765,7 @@ static INT32 DrvDraw()
 			switch (Drv68KRAM[0x2335]) {
 				case 0x0A:
 				case 0x11:
-				case 0x18: { // alpha on for sure
+				case 0x18: { // alpha on for sure, except endboss death scene (see: superblendoff)
 					superblend = 0xfff;
 					break;
 				}
@@ -2778,7 +2781,7 @@ static INT32 DrvDraw()
 				}
 			}
 
-			if (superblend || oldsuperblend) {
+			if ((superblend || oldsuperblend) && !superblendoff) {
 				blendmode = (1 << 16 | GXMIX_BLEND_FORCE) << 2; // using "|| oldsuperblend" for 1 frame latency, to avoid flickers on the water level when he gets "flushed" into the boss part
 			}
 
@@ -2787,6 +2790,8 @@ static INT32 DrvDraw()
 
 			oldsuperblend = superblend;
 			if (superblend) superblend = 1;
+
+			superblendoff = 0; // frame-based.
 		}
 
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
@@ -2975,6 +2980,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(z80_bank);
 		SCAN_VAR(superblend);
 		SCAN_VAR(oldsuperblend);
+		SCAN_VAR(superblendoff);
 
 		BurnRandomScan(nAction);
 	}

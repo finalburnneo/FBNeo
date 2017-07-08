@@ -580,6 +580,46 @@ static struct BurnRomInfo NinjawRomDesc[] = {
 STD_ROM_PICK(Ninjaw)
 STD_ROM_FN(Ninjaw)
 
+static struct BurnRomInfo Ninjaw1RomDesc[] = {
+	{ "b31_30.35",     0x10000, 0x056edd9f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_43.32",     0x10000, 0x56ae37a6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_29.34",     0x10000, 0xf2941a37, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_27.31",     0x10000, 0x2f3ff642, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_41.5",      0x20000, 0x0daef28a, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_39.2",      0x20000, 0xe9197c3c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_40.6",      0x20000, 0x2ce0f24e, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	{ "b31_38.3",      0x20000, 0xbc68cd99, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
+	
+	{ "b31_33.87",     0x10000, 0x6ce9af44, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b31_36.97",     0x10000, 0xba20b0d4, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b31_32.86",     0x10000, 0xe6025fec, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b31_35.96",     0x10000, 0x70d9a89f, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b31_31.85",     0x10000, 0x837f47e2, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+	{ "b31_34.95",     0x10000, 0xd6b5fb2a, BRF_ESS | BRF_PRG | TAITO_68KROM2_BYTESWAP },
+
+	{ "b31_37.11",     0x20000, 0x0ca5799d, BRF_ESS | BRF_PRG | TAITO_Z80ROM1 },
+	
+	{ "b31-01.23",     0x80000, 0x8e8237a7, BRF_GRA | TAITO_CHARS },
+	{ "b31-02.24",     0x80000, 0x4c3b4e33, BRF_GRA | TAITO_CHARS },
+	
+	{ "b31-07.176",    0x80000, 0x33568cdb, BRF_GRA | TAITO_SPRITESA },
+	{ "b31-06.175",    0x80000, 0x0d59439e, BRF_GRA | TAITO_SPRITESA },
+	{ "b31-05.174",    0x80000, 0x0a1fc9fb, BRF_GRA | TAITO_SPRITESA },
+	{ "b31-04.173",    0x80000, 0x2e1e4cb5, BRF_GRA | TAITO_SPRITESA },
+	
+	{ "b31-09.18",     0x80000, 0x60a73382, BRF_SND | TAITO_YM2610A },
+	{ "b31-10.17",     0x80000, 0xc6434aef, BRF_SND | TAITO_YM2610A },
+	{ "b31-11.16",     0x80000, 0x8da531d4, BRF_SND | TAITO_YM2610A },
+	
+	{ "b31-08.19",     0x80000, 0xa0a1f87d, BRF_SND | TAITO_YM2610B },
+	
+	{ "b31-25.38",     0x00200, 0xa0b4ba48, BRF_OPT },
+	{ "b31-26.58",     0x00200, 0x13e5fe15, BRF_OPT },
+};
+
+STD_ROM_PICK(Ninjaw1)
+STD_ROM_FN(Ninjaw1)
+
 static struct BurnRomInfo NinjawjRomDesc[] = {
 	{ "b31_30.35",     0x10000, 0x056edd9f, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "b31_28.32",     0x10000, 0xcfa7661c, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -2049,10 +2089,20 @@ struct BurnDriver BurnDrvDarius2do = {
 
 struct BurnDriver BurnDrvNinjaw = {
 	"ninjaw", NULL, NULL, NULL, "1987",
-	"The Ninja Warriors (World)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	"The Ninja Warriors (World, later version)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, NinjawRomInfo, NinjawRomName, NULL, NULL, Darius2InputInfo, NinjawDIPInfo,
+	NinjawInit, Darius2Exit, Darius2Frame, NULL, Darius2Scan,
+	NULL, 0x3000, 864, 224, 12, 3
+};
+
+struct BurnDriver BurnDrvNinjaw1 = {
+	"ninjaw1", "ninjaw", NULL, NULL, "1987",
+	"The Ninja Warriors (World, earlier version)\0", NULL, "Taito Corporation Japan", "Taito Misc",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, Ninjaw1RomInfo, Ninjaw1RomName, NULL, NULL, Darius2InputInfo, NinjawDIPInfo,
 	NinjawInit, Darius2Exit, Darius2Frame, NULL, Darius2Scan,
 	NULL, 0x3000, 864, 224, 12, 3
 };
@@ -2069,7 +2119,7 @@ struct BurnDriver BurnDrvNinjawj = {
 
 struct BurnDriver BurnDrvNinjawu = {
 	"ninjawu", "ninjaw", NULL, NULL, "1987",
-	"The Ninja Warriors (US)\0", NULL, "Taito Corporation America (licensed to Romstar)", "Taito Misc",
+	"The Ninja Warriors (US, Romstar license)\0", NULL, "Taito Corporation America (licensed to Romstar)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, NinjawuRomInfo, NinjawuRomName, NULL, NULL, Darius2InputInfo, NinjawjDIPInfo,

@@ -693,8 +693,8 @@ static void draw_bg_layer()
 static void draw_sprites()
 {
 	UINT8 *base_spriteram = (DrvFgRAM + 0x800);
-	const uint16_t bank1 = 0x0800;
-	const uint16_t bank2 = 0x1000;
+	const UINT16 bank1 = 0x0800;
+	const UINT16 bank2 = 0x1000;
 
 	for (INT32 count = 0x780; count < 0x800; count+=2)
 	{

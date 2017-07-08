@@ -14898,9 +14898,9 @@ struct BurnDriver BurnDrvkof98ae2016 = {
 };
 
 // The King of Fighters '98 (Combo)
-/* Ivex hack - 2017/06/01 version */
+/* Ivex hack - 2017/06/12 version */
 static struct BurnRomInfo kof98cbRomDesc[] = {
-	{ "242cb-p1.p1", 	0x100000, 0x1faa94ee, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
+	{ "242cb-p1.p1", 	0x100000, 0xb00433fb, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 
 	{ "242cb-p2.sp2", 	0x400000, 0x69b7f51c, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "242cb-s1.s1", 	0x020000, 0x7333d8b0, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -15019,12 +15019,12 @@ struct BurnDriver BurnDrvlastblada = {
 
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
 // Modified by: GSC2007	
-// Version number: Ver 1.0.0621 
+// Version number: Ver 1.0.0701 
 
 static struct BurnRomInfo lastbladspRomDesc[] = {
-	{ "234-p1sp.p1",  0x100000, 0x2cbe10af, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "234-p1sp.p1",  0x100000, 0xb902e73e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "234-p2sp.sp2", 0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "234-p3sp.sp2", 0x020000, 0x88eb8cf5, 0 | BRF_ESS | BRF_PRG }, //  1 
+	{ "234-p3sp.sp2", 0x020000, 0xfbd011f7, 0 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "234-s1.s1",    0x020000, 0x95561412, 2 | BRF_GRA },           //  2 Text layer tiles
 

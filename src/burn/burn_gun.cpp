@@ -127,8 +127,8 @@ void BurnGunInit(INT32 nNumPlayers, bool bDrawTargets)
 	}
 	
 	for (INT32 i = 0; i < MAX_GUNS; i++) {
-		BurnGunX[i] = ((nBurnGunMaxX / 2) - 7) << 8;
-		BurnGunY[i] = ((nBurnGunMaxY / 2) - 8) << 8;
+		BurnGunX[i] = ((nBurnGunMaxX >> 1) - 7) << 8;
+		BurnGunY[i] = ((nBurnGunMaxY >> 1) - 8) << 8;
 	}
 }
 

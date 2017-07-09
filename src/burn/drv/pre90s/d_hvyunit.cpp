@@ -567,10 +567,10 @@ static void DrvRecalcPalette()
 {
 	for (INT32 i = 0; i < 0x400/2; i++) {
 		INT32 r = DrvPalRAM[0x200+i] & 0xf;
-		INT32 g = DrvPalRAM[i] >> 4;
-		INT32 b = DrvPalRAM[i] & 0x0f;
+		INT32 g = (DrvPalRAM[i] >> 4) & 0xf;
+		INT32 b = DrvPalRAM[i] & 0xf;
 
-		DrvPalette[i] = BurnHighCol(r+r*16, g+g*16, b+b*16, 0);
+		DrvPalette[i] = BurnHighCol(r|r*16, g|g*16, b|b*16, 0);
 	}
 }
 
@@ -627,7 +627,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[4] =  { 6000000 / 58, 6000000 / 58, 6000000 / 58, 6000000 / 58 };
+	INT32 nCyclesTotal[4] =  { 6000000 / 58, 6000000 / 58, 6000000 / 58, 6000000 / 12 / 58 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -635,7 +635,6 @@ static INT32 DrvFrame()
 		INT32 nSegment = nCyclesTotal[0] / nInterleave;
 
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
 		if (i == 64) {
 			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
@@ -644,30 +643,35 @@ static INT32 DrvFrame()
 			ZetSetVector(0xfd);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		nSegment = ZetTotalCycles();
+		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+		nCyclesDone[0] += ZetRun(nSegment);
 		ZetClose();
 
 		ZetOpen(1);
-		nSegment -= ZetTotalCycles();
 		if (mermaid_sub_z80_reset) {
-			nCyclesDone[1] += nSegment;
-			ZetIdle(nSegment);
+			nCyclesDone[1] += ZetIdle(nSegment);
 		} else {
-			nCyclesDone[1] += ZetRun(nSegment);
 			if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
+			nCyclesDone[1] += ZetRun(nSegment);
 		}
-		nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdate(nSegment);
 		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
 		ZetClose();
 
-		nCyclesDone[3] += mermaidRun(nSegment - nCyclesDone[3]);
+		nSegment = (nCyclesTotal[3] - nCyclesDone[3]) / (nInterleave - i);
+		nCyclesDone[3] += mcs51Run(nSegment);
 
-		if (i == 239)
+		if (i == 239) {
 			pandora_buffer_sprites();
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+		}
 	}
 
 	ZetOpen(2);
@@ -678,10 +682,6 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
-	
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }

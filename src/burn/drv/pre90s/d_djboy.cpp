@@ -770,7 +770,7 @@ struct BurnDriver BurnDrvDjboya = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_KANEKO_MISC, GBF_SCRFIGHT, 0,
 	NULL, djboyaRomInfo, djboyaRomName, NULL, NULL, DjboyInputInfo, DjboyDIPInfo,
 	DjboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	256, 244, 4, 3
+	256, 224, 4, 3
 };
 
 

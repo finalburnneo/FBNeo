@@ -57,6 +57,7 @@ static BublboblCallbackFunc BublboblCallbackFunction;
 static UINT8 DrvMCUInUse;
 
 static INT32 bublbobl2 = 0;
+static INT32 tokiob = 0;
 
 static INT32 mcu_address, mcu_latch;
 static UINT8 ddr1, ddr2, ddr3, ddr4;
@@ -1305,6 +1306,10 @@ static INT32 TokioDoReset()
 		ZetReset();
 		ZetClose();
 	}
+	
+	if (DrvMCUInUse == 2) {
+		m67805_taito_reset();
+	}
 
 	BurnYM2203Reset();
 		
@@ -1845,6 +1850,27 @@ static m68705_interface bub68705_m68705_interface = {
 	NULL, NULL, bublbobl_68705_portC_in
 };
 
+void tokio_68705_portA_out(UINT8 *data)
+{
+	from_mcu = *data;
+	mcu_sent = 1;
+}
+	
+static void tokio_68705_portC_in()
+{
+	portC_in = 0;
+
+	if (!main_sent) portC_in |= 0x01;
+	if (mcu_sent) portC_in |= 0x02;
+
+	portC_in ^= 0x3; // inverted logic compared to tigerh
+}
+
+static m68705_interface tokio_m68705_interface = {
+	tokio_68705_portA_out, standard_m68705_portB_out, NULL,
+	NULL, NULL, NULL,
+	NULL, NULL, tokio_68705_portC_in
+};
 
 void __fastcall TokioWrite1(UINT16 a, UINT8 d)
 {
@@ -1874,6 +1900,15 @@ void __fastcall TokioWrite1(UINT16 a, UINT8 d)
 		case 0xfc00: {
 			DrvSoundLatch = d;
 			DrvSoundNmiPending = 1;
+			return;
+		}
+		
+		case 0xfe00: {
+			if (DrvMCUInUse == 2) {
+				from_main = d;
+				main_sent = 1;
+				m68705SetIrqLine(0, 1 /*ASSERT_LINE*/);
+			}
 			return;
 		}
 	}
@@ -1908,7 +1943,12 @@ UINT8 __fastcall TokioRead1(UINT16 a)
 		}
 
 		case 0xfe00: {
-			return 0xbf; // Mcu read...
+			if (DrvMCUInUse == 2) {
+				mcu_sent = false;
+				return from_mcu;
+			}
+			
+			return 0xbf;
 		}
 	}
 
@@ -2362,6 +2402,12 @@ static INT32 TokioInit()
 {
 	INT32 nLen, nRet;
 	
+	if (tokiob) {
+		DrvMCUInUse = 0;
+	} else {
+		DrvMCUInUse = 2;
+	}
+	
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
@@ -2369,7 +2415,7 @@ static INT32 TokioInit()
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
-
+	
 	{
 		DrvTempRom = (UINT8 *)BurnMalloc(0x80000);
 
@@ -2410,7 +2456,7 @@ static INT32 TokioInit()
 		nRet = BurnLoadRom(DrvProm + 0x00000,  23, 1); if (nRet != 0) return 1;
 
 		// Load MCU Rom
-		//BurnLoadRom(DrvMcuRom  + 0x00000, 24, 1);
+		if (DrvMCUInUse) BurnLoadRom(DrvMcuRom  + 0x00000, 24, 1);
 
 		BurnFree(DrvTempRom);
 	}
@@ -2458,6 +2504,8 @@ static INT32 TokioInit()
 	ZetMapArea(0x8000, 0x8fff, 2, DrvZ80Ram3             );	
 	ZetClose();
 	
+	if (DrvMCUInUse == 2) m67805_taito_init(DrvMcuRom, DrvMcuRam, &tokio_m68705_interface);
+	
 	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
@@ -2468,12 +2516,18 @@ static INT32 TokioInit()
 	GenericTilesInit();
 
 	DrvVideoEnable = 1;
-	DrvMCUInUse = 0;
 
 	// Reset the driver
 	TokioDoReset();
 
 	return 0;
+}
+
+static INT32 TokiobInit()
+{
+	tokiob = 1;
+	
+	return TokioInit();
 }
 
 static INT32 DrvExit()
@@ -2503,6 +2557,7 @@ static INT32 DrvExit()
 	DrvMCUInUse = 0;
 
 	bublbobl2 = 0;
+	tokiob = 0;
 
 	mcu_latch = 0;
 	mcu_address = 0;
@@ -2751,7 +2806,8 @@ static INT32 TokioFrame()
 	nCyclesTotal[0] = 6000000 / 60;
 	nCyclesTotal[1] = 6000000 / 60;
 	nCyclesTotal[2] = 3000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
+	nCyclesTotal[3] = (DrvMCUInUse == 2) ? (4000000 / 60) : 0;
+	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = nCyclesDone[3] = 0;
 	
 	ZetNewFrame();
 
@@ -2791,6 +2847,14 @@ static INT32 TokioFrame()
 			}
 		}
 		ZetClose();
+		
+		if (DrvMCUInUse) {
+			nCurrentCPU = 3;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
+			nCyclesSegment = m6805Run(nCyclesSegment);
+			nCyclesDone[nCurrentCPU] += nCyclesSegment;
+		}
 	}
 
 	ZetOpen(2);
@@ -3077,7 +3141,7 @@ struct BurnDriver BurnDrvBublcave10 = {
 
 struct BurnDriver BurnDrvTokio = {
 	"tokio", NULL, NULL, NULL, "1986",
-	"Tokio / Scramble Formation (newer)\0", "Use tokiob instead!", "Taito Corporation", "Taito Misc",
+	"Tokio / Scramble Formation (newer)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokioRomInfo, tokioRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
@@ -3085,9 +3149,9 @@ struct BurnDriver BurnDrvTokio = {
 	NULL, 0x100, 224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvTokioo = {
+struct BurnDriver BurnDrvTokioo = {
 	"tokioo", "tokio", NULL, NULL, "1986",
-	"Tokio / Scramble Formation (older)\0", "Use tokiob instead!", "Taito Corporation", "Taito Misc",
+	"Tokio / Scramble Formation (older)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiooRomInfo, tokiooRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
@@ -3095,9 +3159,9 @@ struct BurnDriverD BurnDrvTokioo = {
 	NULL, 0x100, 224, 256, 3, 4
 };
 
-struct BurnDriverD BurnDrvTokiou = {
+struct BurnDriver BurnDrvTokiou = {
 	"tokiou", "tokio", NULL, NULL, "1986",
-	"Tokio / Scramble Formation (US)\0", "Use tokiob instead!", "Taito America Corporation (Romstar license)", "Taito Misc",
+	"Tokio / Scramble Formation (US)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiouRomInfo, tokiouRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
@@ -3111,6 +3175,6 @@ struct BurnDriver BurnDrvTokiob = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiobRomInfo, tokiobRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
-	TokioInit, DrvExit, TokioFrame, NULL, DrvScan,
+	TokiobInit, DrvExit, TokioFrame, NULL, DrvScan,
 	NULL, 0x100, 224, 256, 3, 4
 };

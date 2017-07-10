@@ -271,6 +271,7 @@ struct NODEINFO {
 	bool bIsParent;
 	char* pszROMName;
 	HTREEITEM hTreeHandle;
+	TV_INSERTSTRUCT TvItem;
 };
 
 static NODEINFO* nBurnDrv;
@@ -480,6 +481,13 @@ static int DoExtraFilters()
 	return 0;
 }
 
+static int ZipNames_qs_cmp(const void *p0, const void *p1) {
+	struct NODEINFO *ni0 = (struct NODEINFO*) p0;
+	struct NODEINFO *ni1 = (struct NODEINFO*) p1;
+
+	return stricmp(ni0->pszROMName, ni1->pszROMName);
+}
+
 // Make a tree-view control with all drivers
 static int SelListMake()
 {
@@ -510,8 +518,6 @@ static int SelListMake()
 	// Add all the driver names to the list
 	// 1st: parents
 	for (i = nBurnDrvCount-1; i >= 0; i--) {
-		TV_INSERTSTRUCT TvItem;
-
 		nBurnDrvActive = i;																// Switch to driver i
 
 		if (BurnDrvGetFlags() & BDF_BOARDROM) {
@@ -563,16 +569,28 @@ static int SelListMake()
 			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
 		}
 
-		memset(&TvItem, 0, sizeof(TvItem));
-		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-		TvItem.hInsertAfter = TVI_FIRST;
-		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
-		TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
-		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
+		memset(&nBurnDrv[nTmpDrvCount].TvItem, 0, sizeof(nBurnDrv[nTmpDrvCount].TvItem));
+		nBurnDrv[nTmpDrvCount].TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
+		nBurnDrv[nTmpDrvCount].TvItem.hInsertAfter = TVI_FIRST;
+		nBurnDrv[nTmpDrvCount].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+		nBurnDrv[nTmpDrvCount].TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
+		if (!(nLoadMenuShowY & SHOWSHORT)) { // "Use Zipnames" gets deferred, sorted and then added in the block below
+			nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[nTmpDrvCount].TvItem);
+		}
 		nBurnDrv[nTmpDrvCount].nBurnDrvNo = i;
 		nBurnDrv[nTmpDrvCount].pszROMName = BurnDrvGetTextA(DRV_NAME);
 		nBurnDrv[nTmpDrvCount].bIsParent = true;
 		nTmpDrvCount++;
+	}
+
+	if (nLoadMenuShowY & SHOWSHORT)	{
+		// "Use Zipnames", we have to sort since the gamelist is pre-sorted by the game's long name
+		qsort(nBurnDrv, nTmpDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp);
+
+		for (i = nTmpDrvCount-1; i >= 0; i--) {
+			nBurnDrv[i].TvItem.item.lParam = (LPARAM)&nBurnDrv[i];
+			nBurnDrv[i].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[i].TvItem);
+		}
 	}
 
 	// 2nd: clones

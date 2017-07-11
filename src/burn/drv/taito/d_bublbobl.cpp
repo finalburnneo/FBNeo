@@ -1238,8 +1238,9 @@ static INT32 MemIndex()
 	DrvZ80Rom2             = Next; Next += 0x08000;
 	DrvZ80Rom3             = Next; Next += 0x0a000;
 	DrvProm                = Next; Next += 0x00100;
+
 	if (DrvMCUInUse) {
-		DrvMcuRom      = Next; Next += 0x01000;
+		DrvMcuRom          = Next; Next += 0x01000;
 	}
 
 	RamStart               = Next;
@@ -1927,7 +1928,11 @@ UINT8 __fastcall TokioRead1(UINT16 a)
 		}
 
 		case 0xfa05: {
-			return DrvInput[0] & ~0x20;
+			if (DrvMCUInUse) {
+				return (DrvInput[0] & ~0x30) | ((!main_sent) ? 0x10 : 0x00) | ((!mcu_sent) ? 0x20 : 0x00);
+			} else {
+				return (DrvInput[0] & ~0x30);
+			}
 		}
 
 		case 0xfa06: {
@@ -3143,7 +3148,7 @@ struct BurnDriver BurnDrvTokio = {
 	"tokio", NULL, NULL, NULL, "1986",
 	"Tokio / Scramble Formation (newer)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokioRomInfo, tokioRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
 	TokioInit, DrvExit, TokioFrame, NULL, DrvScan,
 	NULL, 0x100, 224, 256, 3, 4
@@ -3153,7 +3158,7 @@ struct BurnDriver BurnDrvTokioo = {
 	"tokioo", "tokio", NULL, NULL, "1986",
 	"Tokio / Scramble Formation (older)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiooRomInfo, tokiooRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
 	TokioInit, DrvExit, TokioFrame, NULL, DrvScan,
 	NULL, 0x100, 224, 256, 3, 4
@@ -3163,7 +3168,7 @@ struct BurnDriver BurnDrvTokiou = {
 	"tokiou", "tokio", NULL, NULL, "1986",
 	"Tokio / Scramble Formation (US)\0", NULL, "Taito America Corporation (Romstar license)", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tokiouRomInfo, tokiouRomName, NULL, NULL, TokioInputInfo, TokioDIPInfo,
 	TokioInit, DrvExit, TokioFrame, NULL, DrvScan,
 	NULL, 0x100, 224, 256, 3, 4

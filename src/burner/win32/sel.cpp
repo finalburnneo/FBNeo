@@ -588,6 +588,8 @@ static int SelListMake()
 		qsort(nBurnDrv, nTmpDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp);
 
 		for (i = nTmpDrvCount-1; i >= 0; i--) {
+			nBurnDrvActive = nBurnDrv[i].nBurnDrvNo;
+			nBurnDrv[i].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
 			nBurnDrv[i].TvItem.item.lParam = (LPARAM)&nBurnDrv[i];
 			nBurnDrv[i].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[i].TvItem);
 		}

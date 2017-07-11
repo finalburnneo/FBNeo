@@ -417,6 +417,23 @@ static TCHAR* MangleGamename(const TCHAR* szOldName, bool /*bRemoveArticle*/)
 	return szNewName;
 }
 
+static TCHAR* RemoveSpace(const TCHAR* szOldName)
+{
+	static TCHAR szNewName[256] = _T("");
+	int j = 0;
+	int i = 0;
+
+	for (i = 0; szOldName[i]; i++) {
+		if (!iswspace(szOldName[i])) {
+			szNewName[j++] = szOldName[i];
+		}
+	}
+
+	szNewName[j] = _T('\0');
+
+	return szNewName;
+}
+
 static int DoExtraFilters()
 {
 	if (nLoadMenuFavoritesFilter) {
@@ -572,7 +589,7 @@ static int SelListMake()
 		memset(&nBurnDrv[nTmpDrvCount].TvItem, 0, sizeof(nBurnDrv[nTmpDrvCount].TvItem));
 		nBurnDrv[nTmpDrvCount].TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 		nBurnDrv[nTmpDrvCount].TvItem.hInsertAfter = TVI_FIRST;
-		nBurnDrv[nTmpDrvCount].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+		nBurnDrv[nTmpDrvCount].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 		nBurnDrv[nTmpDrvCount].TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 		if (!(nLoadMenuShowY & SHOWSHORT)) { // "Use Zipnames" gets deferred, sorted and then added in the block below
 			nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[nTmpDrvCount].TvItem);
@@ -589,7 +606,7 @@ static int SelListMake()
 
 		for (i = nTmpDrvCount-1; i >= 0; i--) {
 			nBurnDrvActive = nBurnDrv[i].nBurnDrvNo;
-			nBurnDrv[i].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+			nBurnDrv[i].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 			nBurnDrv[i].TvItem.item.lParam = (LPARAM)&nBurnDrv[i];
 			nBurnDrv[i].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[i].TvItem);
 		}
@@ -653,7 +670,7 @@ static int SelListMake()
 		memset(&TvItem, 0, sizeof(TvItem));
 		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 		TvItem.hInsertAfter = TVI_FIRST;
-		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 
 		// Find the parent's handle
 		for (j = 0; j < nTmpDrvCount; j++) {
@@ -677,7 +694,7 @@ static int SelListMake()
 					memset(&TempTvItem, 0, sizeof(TempTvItem));
 					TempTvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
 					TempTvItem.hInsertAfter = TVI_FIRST;
-					TempTvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : MangleGamename(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME), true);
+					TempTvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 					TempTvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 					nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TempTvItem);
 					nBurnDrv[nTmpDrvCount].nBurnDrvNo = j;

@@ -258,9 +258,9 @@ static INT32 MemIndex()
 
 	t5182SharedRAM	= Next; Next += 0x000100;
 
-	layer_enable	= Next; Next += 0x000001;
-	z80_bank	= Next; Next += 0x000001;
-	sprite_bank	= Next; Next += 0x000001;
+	layer_enable	= Next; Next += 0x000004; // round up to 4 for alignment
+	z80_bank	= Next; Next += 0x000004;
+	sprite_bank	= Next; Next += 0x000004;
 
 	RamEnd		= Next;
 
@@ -556,7 +556,6 @@ static void draw_bg_layer()
 
 	scrolly = (scrolly + 16) & 0x3ff;
 
-#if 1
 	INT32 scrx0 = scrollx >> 4;
 	INT32 scry0 = scrolly >> 4;
 	INT32 scrx1 = scrollx & 0x0f;
@@ -582,26 +581,6 @@ static void draw_bg_layer()
 				Render16x16Tile(pTransDraw, code, (x*16) - scrx1, (y*16) - scry1, color, 4, 0x000, DrvGfxROM1);
 		}
 	}
-#else
-	for (INT32 offs = 0; offs < 512 * 64; offs++)
-	{
-		INT32 sx = (offs & 0x1ff) * 16;
-		INT32 sy = (offs / 0x200) * 16;
-
-		sx -= scrollx;
-		if (sx < -15) sx += 512 * 16;
-		sy -= scrolly;
-		if (sy < -15) sy += 64 * 16;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 attr  = DrvGfxROM3[offs + 0x8000];
-		INT32 code  = DrvGfxROM3[offs] + ((attr & 0x03) * 256);
-		INT32 color = attr >> 4;
-
-		Render16x16Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
-	}
-#endif
 }
 
 static void draw_fg_layer()
@@ -611,7 +590,6 @@ static void draw_fg_layer()
 
 	scrolly = (scrolly + 16) & 0xfff;
 
-#if 1
 	INT32 scrx0 = scrollx >> 4;
 	INT32 scry0 = scrolly >> 4;
 	INT32 scrx1 = scrollx & 0x0f;
@@ -637,26 +615,6 @@ static void draw_fg_layer()
 				Render16x16Tile_Mask(pTransDraw, code, (x*16) - scrx1, (y*16) - scry1, color, 4, 0, 0x100, DrvGfxROM1);
 		}
 	}
-#else
-	for (INT32 offs = 0; offs < 64 * 256; offs++)
-	{
-		INT32 sx = (offs & 0x3f) * 16;
-		INT32 sy = (offs / 0x40) * 16;
-
-		sx -= scrollx;
-		if (sx < -15) sx += 64 * 16;
-		sy -= scrolly;
-		if (sy < -15) sy += 256 * 16;
-
-		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-		INT32 attr  = DrvGfxROM4[offs + 0x4000];
-		INT32 code  = DrvGfxROM4[offs] + ((attr & 0x03) * 256) + 0x400;
-		INT32 color = attr >> 4;
-
-		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0x100, DrvGfxROM1);
-	}
-#endif
 }
 
 static void draw_txt_layer()
@@ -670,9 +628,7 @@ static void draw_txt_layer()
 		INT32 code  = DrvVidRAM[offs] + ((attr & 0x01) * 256);
 		INT32 color = attr >> 1;
 
-		if (code == 0) continue; // not thoroughly tested...
-
-		Render8x8Tile_Mask(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x300, DrvGfxROM0);
+		RenderTileTranstab(pTransDraw, DrvGfxROM0, code, (color << 4) + 0x300, 0x4f, sx, sy - 16, 0, 0, 8, 8, DrvColPROM);
 	}
 }
 
@@ -693,20 +649,17 @@ static void draw_sprites()
 
 		if (attr & 0x01) color = rand() & 0x0f; // ?
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			}
-		}
+		RenderTileTranstab(pTransDraw, DrvGfxROM2, code, (color << 4) + 0x200, 0x4f, sx, sy - 16, flipx, flipy, 16, 16, DrvColPROM);
 	}
+}
+
+static INT32 FindBlackPal()
+{
+	for (INT32 i = 0; i < 0x100; i++) {
+		if (DrvPalette[i] == 0x00) return i;
+	}
+
+	return 0x7f; // this is most likely usually black
 }
 
 static INT32 DrvDraw()
@@ -716,14 +669,12 @@ static INT32 DrvDraw()
 		DrvPaletteUpdate();
 	}
 
-	if ((*layer_enable & 0x04) == 0) {
-		BurnTransferClear();
-	}
+	BurnTransferClear(FindBlackPal());
 
-	if (*layer_enable & 0x04) draw_bg_layer();
-	if (*layer_enable & 0x02) draw_fg_layer();
-	if (*layer_enable & 0x01) draw_sprites();
-	if (*layer_enable & 0x10) draw_txt_layer();
+	if (*layer_enable & 0x04 && nBurnLayer & 1) draw_bg_layer();
+	if (*layer_enable & 0x02 && nBurnLayer & 2) draw_fg_layer();
+	if (*layer_enable & 0x01 && nSpriteEnable & 1) draw_sprites();
+	if (*layer_enable & 0x10 && nBurnLayer & 4) draw_txt_layer();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -834,7 +785,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		DrvRecalc = 1;
+		ZetOpen(0);
+		bankswitch(*z80_bank);
+		ZetClose();
 	}
 
 	return 0;

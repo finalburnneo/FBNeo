@@ -956,7 +956,7 @@ struct BurnDriver BurnDrvHypersptb = {
 	"hypersptb", "hyperspt", NULL, NULL, "1984",
 	"Hyper Sports (bootleg)\0", "imcomplete sound", "bootleg", "GX330",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, hypersptbRomInfo, hypersptbRomName, NULL, NULL, HypersptInputInfo, HypersptDIPInfo,
 	HypersptbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

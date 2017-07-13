@@ -482,11 +482,6 @@ static INT32 DrvInit(INT32 select)
 		if (BurnLoadRom(DrvZ80ROM + 0x6000,   6, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM + 0x7000,   7, 1)) return 1;
 
-		if (!strcmp(BurnDrvGetTextA(DRV_NAME), "radradj") ==0) {
-			if (BurnLoadRom(DrvZ80ROM + 0x7000,   7, 1)) return 1;
-			memcpy (DrvZ80ROM + 0x7800, DrvGfxROM0 + 0x7000, 0x0800);
-		}
-		
 		if (BurnLoadRom(DrvGfxROM0 + 0x0000,  8, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x1000,  9, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x2000, 10, 1)) return 1;
@@ -500,7 +495,7 @@ static INT32 DrvInit(INT32 select)
 				DrvMCUOps[i] = BITSWAP08(DrvZ80ROM[i], 6, 7, 5, 4, 3, 2, 0, 1);
 			}
 		}
-				
+
 		DrvGfxDecode();
 	}
 
@@ -524,7 +519,7 @@ static INT32 DrvInit(INT32 select)
 		NSC8105MapMemory(DrvNVRAM,	0x1000, 0x10ff, MAP_RAM);
 	NSC8105MapMemory(DrvZ80ROM,	0x8000, 0xf7ff, MAP_ROM);
 	if (game_select == 1)
-		NSC8105MapMemory(DrvMCUOps,	0x8000, 0xf7ff, MAP_FETCH);
+		NSC8105MapMemory(DrvMCUOps,	0x8000, 0xf7ff, MAP_ROM);
 	NSC8105MapMemory(DrvShareRAM,	0xf800, 0xffff, MAP_RAM);
 	NSC8105SetWriteHandler(seicross_mcu_write);
 	NSC8105SetReadHandler(seicross_mcu_read);
@@ -913,7 +908,7 @@ struct BurnDriver BurnDrvFriskytb = {
 	"friskytb", "friskyt", NULL, NULL, "1981",
 	"Frisky Tom (set 3, encrypted)\0", "Broken, please use parent romset!", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, friskytbRomInfo, friskytbRomName, NULL, NULL, FriskytInputInfo, FriskytDIPInfo,
 	friskytbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

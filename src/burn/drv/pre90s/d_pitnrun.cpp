@@ -4,6 +4,7 @@
 //
 // pitnrun todo: hook up "heed" clipping (search in code)
 // hook up spotlight drawing
+// interleave the ay
 
 #include "tiles_generic.h"
 #include "z80_intf.h"

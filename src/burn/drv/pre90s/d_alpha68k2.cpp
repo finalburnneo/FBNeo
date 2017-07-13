@@ -2767,7 +2767,7 @@ static INT32 GoldmedlRomCb()
 	if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x080000, 12, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 13, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 24, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 14, 1)) return 1;
 
 	return 0;
 }
@@ -2839,7 +2839,7 @@ static INT32 GoldmedlaRomCb()
 	if (BurnLoadRom(DrvGfxROM1 + 0x000000, 11, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x080000, 12, 1)) return 1;
 	if (BurnLoadRom(DrvGfxROM1 + 0x100000, 13, 1)) return 1;
-	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 24, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x180000, 14, 1)) return 1;
 
 	return 0;
 }

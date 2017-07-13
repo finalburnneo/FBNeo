@@ -1332,7 +1332,7 @@ UINT8 __fastcall MegadriveZ80ProgRead(UINT16 a)
 	if (a >= 0x8000) {
 		UINT32 addr68k = RamMisc->Bank68k;
 		addr68k += a & 0x7fff;
-		if (addr68k <= 0x3fffff) return RomMain[addr68k ^ 1];
+		if (addr68k < MAX_CARTRIDGE_SIZE) return RomMain[addr68k ^ 1];
 		
 		//bprintf(PRINT_NORMAL, _T("Z80 trying to read 68k address %06X\n"), addr68k);
 		return 0;

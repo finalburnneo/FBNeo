@@ -26,6 +26,7 @@ typedef struct
 	UINT8	nmi_state;			/* nmi line state */
 	UINT8	nmi_pending;		/* nmi pending */
 	UINT8	irq_state;			/* irq line state */
+	UINT8   vector;             /* vector */
 	UINT8	after_ei;			/* are we in the EI shadow? */
 	INT32 cycles_left;
 	INT32 hold_irq;
@@ -96,6 +97,8 @@ int ActiveZ80GetI();
 int ActiveZ80GetIM();
 int ActiveZ80GetPrevPC();
 void ActiveZ80SetIRQHold();
+int ActiveZ80GetVector();
+void ActiveZ80SetVector(INT32 vector);
 
 #endif
 

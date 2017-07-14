@@ -2,9 +2,7 @@
 
 // Jump Kun fully working.
 //
-// pitnrun todo: hook up "heed" clipping (search in code)
-// hook up spotlight drawing
-// interleave the ay
+// pitnrun todo: hook up "heed" clipping, hook up spotlight drawing
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -385,14 +383,14 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM0	= Next; Next += 0x0080000;
-	DrvZ80ROM1	= Next; Next += 0x0020000;
+	DrvZ80ROM0	= Next; Next += 0x0010000;
+	DrvZ80ROM1	= Next; Next += 0x0010000;
 
 	DrvMCUROM	= Next; Next += 0x0008000;
 
-	DrvGfxROM0	= Next; Next += 0x0100000;
-	DrvGfxROM1	= Next; Next += 0x0080000;
-	DrvGfxROM2	= Next; Next += 0x0040000;
+	DrvGfxROM0	= Next; Next += 0x0020000;
+	DrvGfxROM1	= Next; Next += 0x0020000;
+	DrvGfxROM2	= Next; Next += 0x0020000;
 	DrvGfxROM3	= Next; Next += 0x0020000;
 
 	DrvColPROM	= Next; Next += 0x0000600;
@@ -401,11 +399,11 @@ static INT32 MemIndex()
 
 	AllRam		= Next;
 
-	DrvZ80RAM0	= Next; Next += 0x0008000;
-	DrvVidRAM0	= Next; Next += 0x0008000;
-	DrvVidRAM1	= Next; Next += 0x0010000;
+	DrvZ80RAM0	= Next; Next += 0x0000800;
+	DrvVidRAM0	= Next; Next += 0x0001000;
+	DrvVidRAM1	= Next; Next += 0x0001000;
 	DrvSprRAM	= Next; Next += 0x0001000;
-	DrvZ80RAM1	= Next; Next += 0x0004000;
+	DrvZ80RAM1	= Next; Next += 0x0000400;
 
 	DrvMCURAM	= Next; Next += 0x0000800;
 
@@ -425,22 +423,13 @@ static INT32 MemIndex()
 
 static void DrvGfxDecode()
 {
-#if 0
-	static INT32 Plane0[4]  = { 0x2000*8, 0x2000*8+4, 0, 4 };
-	static INT32 XOffs0[8]  = { STEP4(0,1), STEP4(8,1) };
-	static INT32 YOffs0[8]  = { STEP8(0,16) };
+	static INT32 Plane0[4]  = { RGN_FRAC(0x4000, 1, 2), RGN_FRAC(0x4000, 1, 2) + 4, 0, 4 };
+	static INT32 XOffs0[8]  = { STEP4(0, 1), STEP4(8, 1) };
+	static INT32 YOffs0[8]  = { STEP8(0, 16) };
 
-	static INT32 Plane1[3]  = { 0, 0x2000*8*1, 0x2000*8*2 };
-	static INT32 XOffs1[16] = { STEP8(0,1), STEP4(64,1) };
-	static INT32 YOffs1[16] = { STEP8(0,8), STEP8(128,8) };
-#endif
-	static INT32 Plane0[4]  = { RGN_FRAC(0x4000, 1,2),RGN_FRAC(0x4000, 1,2)+4,0,4 };
-	static INT32 XOffs0[8]  = { STEP4(0,1), STEP4(8,1) };
-	static INT32 YOffs0[8]  = { STEP8(0,16) };
-
-	static INT32 Plane1[3]  = { 0,RGN_FRAC(0x6000, 1,3), RGN_FRAC(0x6000, 2,3) };
-	static INT32 XOffs1[16] = { 0, 1, 2, 3, 4, 5, 6, 7,	8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
-	static INT32 YOffs1[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
+	static INT32 Plane1[3]  = { 0, RGN_FRAC(0x6000, 1, 3), RGN_FRAC(0x6000, 2, 3) };
+	static INT32 XOffs1[16] = { STEP8(0, 1), STEP8(64, 1) };
+	static INT32 YOffs1[16] = { STEP8(0, 8), STEP8(128, 8) };
 
 	UINT8 *tmp = (UINT8 *)BurnMalloc(0x6000);
 	if (tmp == NULL) {
@@ -494,7 +483,7 @@ static INT32 DrvInit(INT32 game)
 		if (BurnLoadRom(DrvGfxROM2 + 0x0000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM2 + 0x2000, 12, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM3 + 0x2000, 13, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x0000, 13, 1)) return 1;
 
 		if (BurnLoadRom(DrvColPROM + 0x0000, 14, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x0020, 15, 1)) return 1;
@@ -707,9 +696,10 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 512;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 3072000 / 60, 2500000 / 60, 3072000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -728,10 +718,22 @@ static INT32 DrvFrame()
 			nCyclesDone[2] += m6805Run(nCyclesTotal[2] / nInterleave);
 			m6805Close();
 		}
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			nSoundBufferPos += nSegmentLength;
+		}
+
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+		}
 	}
 
 	if (pBurnDraw) {
@@ -815,7 +817,7 @@ static INT32 PitnrunInit()
 
 struct BurnDriver BurnDrvPitnrun = {
 	"pitnrun", NULL, NULL, NULL, "1984",
-	"Pit & Run - F-1 Race (set 1)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Pit & Run - F-1 Race (set 1)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MISC, 0,
 	NULL, pitnrunRomInfo, pitnrunRomName, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,
@@ -858,7 +860,7 @@ STD_ROM_FN(pitnruna)
 
 struct BurnDriver BurnDrvPitnruna = {
 	"pitnruna", "pitnrun", NULL, NULL, "1984",
-	"Pit & Run - F-1 Race (set 2)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Pit & Run - F-1 Race (set 2)\0", "Missing analog sounds and some gfx effects", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MISC, 0,
 	NULL, pitnrunaRomInfo, pitnrunaRomName, NULL, NULL, PitnrunInputInfo, PitnrunDIPInfo,

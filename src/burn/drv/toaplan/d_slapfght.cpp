@@ -1594,12 +1594,18 @@ static INT32 tigerhScan(INT32 nAction, INT32* pnMin)
 
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data	  = RamStart;
+		ba.Data	  = RamStart;
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
 		ZetScan(nAction);							// Scan Z80
+
+		if (use_mcu) {
+			m68705_taito_scan(nAction);
+		}
+
+		AY8910Scan(nAction, pnMin);
 
 		// Scan critical driver variables
 		SCAN_VAR(bInterruptEnable);

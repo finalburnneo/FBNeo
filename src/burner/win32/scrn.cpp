@@ -2008,7 +2008,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			szGamelistLocalisationTemplate[0] = _T('\0');
 			nGamelistLocalisationActive = false;
 			break;
-		
+
 		case MENU_ENABLEICONS: {
 			bEnableIcons = !bEnableIcons;
 			if(!bEnableIcons && bIconsLoaded) {
@@ -2017,6 +2017,19 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 				bIconsLoaded = 0;
 			} 
 			if(bEnableIcons && !bIconsLoaded) {
+				// load icons
+				LoadDrvIcons();
+				bIconsLoaded = 1;
+			}
+			break;
+		}
+
+		case MENU_ICONS_PARENTSONLY: {
+			bIconsOnlyParents = !bIconsOnlyParents;
+			if(bEnableIcons && bIconsLoaded) {
+				// unload icons
+				UnloadDrvIcons();
+				bIconsLoaded = 0;
 				// load icons
 				LoadDrvIcons();
 				bIconsLoaded = 1;

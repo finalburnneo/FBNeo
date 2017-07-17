@@ -1035,6 +1035,7 @@ void MenuUpdate()
 	}
 	CheckMenuRadioItem(hMenu, MENU_ICONS_SIZE_16, MENU_ICONS_SIZE_32, var, MF_BYCOMMAND);
 	CheckMenuItem(hMenu, MENU_ENABLEICONS, bEnableIcons ? MF_CHECKED : MF_UNCHECKED);
+	CheckMenuItem(hMenu, MENU_ICONS_PARENTSONLY, bIconsOnlyParents ? MF_CHECKED : MF_UNCHECKED);
 	
 	// Previous games list
 	for (int i = 0; i < SHOW_PREV_GAMES; i++) {

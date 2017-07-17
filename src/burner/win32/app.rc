@@ -1235,6 +1235,7 @@ BEGIN
         POPUP    "Icons"
         BEGIN
 			MENUITEM "Enable driver icons display",					MENU_ENABLEICONS
+			MENUITEM "Parents only (use if you have problems)",					MENU_ICONS_PARENTSONLY
 			POPUP	"Icon size"
 			BEGIN
 				MENUITEM "16 x 16 pixels",							MENU_ICONS_SIZE_16

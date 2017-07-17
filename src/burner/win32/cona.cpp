@@ -256,6 +256,7 @@ int ConfigAppLoad()
 		VAR(nIpsSelectedLanguage);
 		
 		VAR(bEnableIcons);
+		VAR(bIconsOnlyParents);
 		VAR(nIconsSize);
 		
 		STR(szPrevGames[0]);
@@ -658,6 +659,9 @@ int ConfigAppSave()
 	
 	_ftprintf(h, _T("\n// If non-zero, display drivers icons.\n"));
 	VAR(bEnableIcons);
+
+	_ftprintf(h, _T("\n// If non-zero, display drivers icons for parents only (use if all icons causes UI issues).\n"));
+	VAR(bIconsOnlyParents);
 
 	_ftprintf(h, _T("\n// Specify icons display size, 0 = 16x16 , 1 = 24x24, 2 = 32x32.\n"));
 	VAR(nIconsSize);

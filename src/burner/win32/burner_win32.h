@@ -307,6 +307,7 @@ void UnloadDrvIcons();
 #define		ICON_32x32			2
 extern bool bEnableIcons;
 extern bool bIconsLoaded;
+extern bool bIconsOnlyParents;
 extern int nIconsSize, nIconsSizeXY, nIconsYDiff;
 extern bool bGameInfoOpen;
 

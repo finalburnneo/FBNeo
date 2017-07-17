@@ -7,6 +7,7 @@
 #include "konamiic.h"
 #include "burn_ym2151.h"
 #include "k054539.h"
+#include "msm6295.h"
 #include "eeprom.h"
 
 static UINT8 *AllMem;
@@ -56,6 +57,8 @@ static INT32 enable_alpha = 0;
 static UINT8 z80_bank;
 
 static UINT16 zmask;
+
+static INT32 moomesabl = 0;
 
 static struct BurnInputInfo MooInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -256,8 +259,16 @@ static void moo_prot_write(INT32 offset)
 	}
 }
 
+static void moomesabl_sndbank(INT32 bank)
+{
+	if (!moomesabl) return;
+
+	MSM6295SetBank(0, DrvSndROM + ((bank&0xf) * 0x40000), 0, 0x3ffff);
+}
+
 static inline void sync_sound()
 {
+	if (moomesabl) return;
 	INT32 cycles = (SekTotalCycles() / 2) - ZetTotalCycles();
 	if (cycles > 0) {
 		ZetRun(cycles);
@@ -298,6 +309,15 @@ static void __fastcall moo_main_write_word(UINT32 address, UINT16 data)
 	}
 	switch (address)
 	{
+		case 0x0d6ffc:
+			moomesabl_sndbank(data);
+			return;
+
+		case 0x0d6ffe:
+			if (!moomesabl) return;
+			MSM6295Command(0, data);
+			return;
+
 		case 0x0de000:
 			control_data = data;
 			K053246_set_OBJCHA_line((data & 0x100) >> 8);
@@ -339,6 +359,17 @@ static void __fastcall moo_main_write_byte(UINT32 address, UINT8 data)
 
 	switch (address)
 	{
+		case 0x0d6ffc:
+		case 0x0d6ffd:
+			moomesabl_sndbank(data);
+			return;
+
+		case 0x0d6ffe:
+		case 0x0d6fff:
+			if (!moomesabl) return;
+			MSM6295Command(0, data);
+			return;
+
 		case 0x0d4000:
 		case 0x0d4001:
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
@@ -381,6 +412,11 @@ static UINT16 __fastcall moo_main_read_word(UINT32 address)
 
 	switch (address)
 	{
+		case 0x0d6ffe:
+		case 0x0d6fff:
+			if (!moomesabl) return 0;
+			return MSM6295ReadStatus(0);
+
 		case 0x0c4000:
 			sync_sound();
 			return K053246Read(1) + (K053246Read(0) << 8);
@@ -418,6 +454,11 @@ static UINT8 __fastcall moo_main_read_byte(UINT32 address)
 
 	switch (address)
 	{
+		case 0x0d6ffe:
+		case 0x0d6fff:
+			if (!moomesabl) return 0;
+			return MSM6295ReadStatus(0);
+
 		case 0x0c4000:
 		case 0x0c4001:
 			sync_sound();
@@ -848,7 +889,64 @@ static INT32 MooInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	{
+	if (moomesabl)
+	{ // bootleg
+		if (BurnLoadRom(Drv68KROM  + 0x000000,  0, 1)) return 1;
+		if (BurnLoadRom(Drv68KROM  + 0x080000,  1, 1)) return 1;
+
+		// ignore 2,3 (repeat of 0,1)
+
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000000,  4, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x000002,  5, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x100000,  6, 4, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM0 + 0x100002,  7, 4, 2)) return 1;
+
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000000,  8, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000002,  9, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000004, 10, 8, 2)) return 1;
+		if (BurnLoadRomExt(DrvGfxROM1 + 0x000006, 11, 8, 2)) return 1;
+
+		{
+			UINT8 *tmp = (UINT8 *)BurnMalloc(0x100000);
+
+			if (BurnLoadRom(tmp + 0x000000, 12, 1)) return 1;
+			if (BurnLoadRom(tmp + 0x080000, 13, 1)) return 1;
+			memcpy(DrvSndROM + 0x000000, tmp + 0x000000, 0x40000);
+
+			memcpy(DrvSndROM + 0x040000+0x30000, tmp + 0x040000, 0x10000);
+			memcpy(DrvSndROM + 0x080000+0x30000, tmp + 0x050000, 0x10000);
+			memcpy(DrvSndROM + 0x0c0000+0x30000, tmp + 0x060000, 0x10000);
+			memcpy(DrvSndROM + 0x100000+0x30000, tmp + 0x070000, 0x10000);
+
+			memcpy(DrvSndROM + 0x040000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x080000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x0c0000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x100000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x140000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x180000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x1c0000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x200000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x240000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x280000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x2c0000, tmp + 0x000000, 0x30000);
+			memcpy(DrvSndROM + 0x300000, tmp + 0x000000, 0x30000);
+
+			memcpy(DrvSndROM + 0x140000+0x30000, tmp + 0x080000, 0x10000);
+			memcpy(DrvSndROM + 0x180000+0x30000, tmp + 0x090000, 0x10000);
+			memcpy(DrvSndROM + 0x1c0000+0x30000, tmp + 0x0a0000, 0x10000);
+			memcpy(DrvSndROM + 0x200000+0x30000, tmp + 0x0b0000, 0x10000);
+			memcpy(DrvSndROM + 0x240000+0x30000, tmp + 0x0c0000, 0x10000);
+			memcpy(DrvSndROM + 0x280000+0x30000, tmp + 0x0d0000, 0x10000);
+			memcpy(DrvSndROM + 0x2c0000+0x30000, tmp + 0x0e0000, 0x10000);
+			memcpy(DrvSndROM + 0x300000+0x30000, tmp + 0x0f0000, 0x10000);
+
+			BurnFree(tmp);
+		}
+
+		if (BurnLoadRom(DrvEeprom  + 0x000000, 14, 1)) return 1;
+	}
+	else
+	{ // regular
 		if (BurnLoadRom(Drv68KROM  + 0x000001,  0, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM  + 0x000000,  1, 2)) return 1;
 		if (BurnLoadRom(Drv68KROM  + 0x080001,  2, 2)) return 1;
@@ -867,10 +965,10 @@ static INT32 MooInit()
 		if (BurnLoadRom(DrvSndROM  + 0x000000, 11, 1)) return 1;
 
 		if (BurnLoadRom(DrvEeprom  + 0x000000, 12, 1)) return 1;
-
-		K053247GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
-		K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x800000);
 	}
+
+	K053247GfxDecode(DrvGfxROM0, DrvGfxROMExp0, 0x200000);
+	K053247GfxDecode(DrvGfxROM1, DrvGfxROMExp1, 0x800000);
 
 	K054338Init();
 
@@ -916,6 +1014,11 @@ static INT32 MooInit()
 	K054539Init(0, 48000, DrvSndROM, 0x200000);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 	K054539SetRoute(0, BURN_SND_K054539_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+
+	if (moomesabl) {
+		MSM6295Init(0, 1056000 / MSM6295_PIN7_HIGH, 0);
+		MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	}
 
 	DrvDoReset();
 
@@ -1024,7 +1127,13 @@ static INT32 DrvExit()
 	BurnYM2151Exit();
 	K054539Exit();
 
+	if (moomesabl) {
+		MSM6295Exit(0);
+	}
+
 	BurnFree (AllMem);
+
+	moomesabl = 0;
 
 	return 0;
 }
@@ -1114,6 +1223,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 120;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
+	if (moomesabl) nCyclesTotal[0] = 16100000 / 60;  // weird
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -1127,13 +1237,19 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nCyclesSegment);
 
 		if (i == (nInterleave - 1)) {
-			if (K053246_is_IRQ_enabled()) {
+			if (moomesabl) {
 				moo_objdma();
 				irq5_timer = 5; // guess
-			}
-
-			if (control_data & 0x20) {
 				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			} else {
+				if (K053246_is_IRQ_enabled()) {
+					moo_objdma();
+					irq5_timer = 5; // guess
+				}
+
+				if (control_data & 0x20) {
+					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+				}
 			}
 		}
 
@@ -1146,24 +1262,30 @@ static INT32 DrvFrame()
 			} 
 		}
 
-		nCyclesSegment = (SekTotalCycles() / 2) - ZetTotalCycles();
-		if (nCyclesSegment > 0) nCyclesDone[1] += ZetRun(nCyclesSegment); // sync sound cpu to main cpu
+		if (!moomesabl) {
+			nCyclesSegment = (SekTotalCycles() / 2) - ZetTotalCycles();
+			if (nCyclesSegment > 0) nCyclesDone[1] += ZetRun(nCyclesSegment); // sync sound cpu to main cpu
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
+			if (pBurnSoundOut) {
+				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				BurnYM2151Render(pSoundBuf, nSegmentLength);
+				nSoundBufferPos += nSegmentLength;
+			}
 		}
 	}
 
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnYM2151Render(pSoundBuf, nSegmentLength);
+		if (!moomesabl) {
+			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			if (nSegmentLength) {
+				BurnYM2151Render(pSoundBuf, nSegmentLength);
+			}
+			K054539Update(0, pBurnSoundOut, nBurnSoundLen);
+		} else {
+			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 		}
-		K054539Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -1197,6 +1319,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		BurnYM2151Scan(nAction);
 		K054539Scan(nAction);
+
+		if (moomesabl) {
+			MSM6295Scan(0,nAction);
+		}
 
 		KonamiICScan(nAction);
 
@@ -1399,14 +1525,16 @@ STD_ROM_FN(moomesabl)
 
 static INT32 moomesablInit()
 {
-	return 1;
+	moomesabl = 1;
+
+	return MooInit();
 }
 
 struct BurnDriverD BurnDrvMoomesabl = {
 	"moomesabl", "moomesa", NULL, NULL, "1992",
 	"Wild West C.O.W.-Boys of Moo Mesa (bootleg)\0", NULL, "bootleg", "GX151",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
 	NULL, moomesablRomInfo, moomesablRomName, NULL, NULL, MooInputInfo, MooDIPInfo,
 	moomesablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	384, 224, 4, 3

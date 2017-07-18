@@ -2308,7 +2308,7 @@ static UINT8 ds5002fp_sfr_read(INT32 offset)
 		case ADDR_MCON: 	DS5_LOGR(MCON, data);		break;
 		case ADDR_TA:		DS5_LOGR(TA, data);			break;
 		case ADDR_RNR:		DS5_LOGR(RNR, data);		break;
-		case ADDR_RPCTL:	DS5_LOGR(RPCTL, data);		break;
+		case ADDR_RPCTL:	DS5_LOGR(RPCTL, data);		return 0x80; break; // 7/17/17 fix touchgo
 		case ADDR_RPS:		DS5_LOGR(RPS, data);		break;
 		case ADDR_PCON:
 			SET_PFW(0);		/* reset PFW flag */

@@ -1,4 +1,5 @@
 #include "gal.h"
+#include "resnet.h"
 
 GalRenderBackground GalRenderBackgroundFunction;
 GalCalcPalette GalCalcPaletteFunction;
@@ -295,141 +296,15 @@ void HardCodeMooncrstPROM()
 	GalProm[0x1f]= 0xff;
 }
 
-// Pallet generation
+// Palette generation
 #define RGB_MAXIMUM			224
-#define MAX_NETS			3
-#define MAX_RES_PER_NET			18
-#define Combine2Weights(tab,w0,w1)	((INT32)(((tab)[0]*(w0) + (tab)[1]*(w1)) + 0.5))
-#define Combine3Weights(tab,w0,w1,w2)	((INT32)(((tab)[0]*(w0) + (tab)[1]*(w1) + (tab)[2]*(w2)) + 0.5))
-
-static double ComputeResistorWeights(INT32 MinVal, INT32 MaxVal, double Scaler, INT32 Count1, const INT32 *Resistances1, double *Weights1, INT32 PullDown1, INT32 PullUp1,	INT32 Count2, const INT32 *Resistances2, double *Weights2, INT32 PullDown2, INT32 PullUp2, INT32 Count3, const INT32 *Resistances3, double *Weights3, INT32 PullDown3, INT32 PullUp3)
-{
-	INT32 NetworksNum;
-
-	INT32 ResCount[MAX_NETS];
-	double r[MAX_NETS][MAX_RES_PER_NET];
-	double w[MAX_NETS][MAX_RES_PER_NET];
-	double ws[MAX_NETS][MAX_RES_PER_NET];
-	INT32 r_pd[MAX_NETS];
-	INT32 r_pu[MAX_NETS];
-
-	double MaxOut[MAX_NETS];
-	double *Out[MAX_NETS];
-
-	INT32 i, j, n;
-	double Scale;
-	double Max;
-
-	NetworksNum = 0;
-	for (n = 0; n < MAX_NETS; n++) {
-		INT32 Count, pd, pu;
-		const INT32 *Resistances;
-		double *Weights;
-
-		switch (n) {
-			case 0: {
-				Count = Count1;
-				Resistances = Resistances1;
-				Weights = Weights1;
-				pd = PullDown1;
-				pu = PullUp1;
-				break;
-			}
-			
-			case 1: {
-				Count = Count2;
-				Resistances = Resistances2;
-				Weights = Weights2;
-				pd = PullDown2;
-				pu = PullUp2;
-				break;
-			}
-		
-			case 2:
-			default: {
-				Count = Count3;
-				Resistances = Resistances3;
-				Weights = Weights3;
-				pd = PullDown3;
-				pu = PullUp3;
-				break;
-			}
-		}
-
-		if (Count > 0) {
-			ResCount[NetworksNum] = Count;
-			for (i = 0; i < Count; i++) {
-				r[NetworksNum][i] = 1.0 * Resistances[i];
-			}
-			Out[NetworksNum] = Weights;
-			r_pd[NetworksNum] = pd;
-			r_pu[NetworksNum] = pu;
-			NetworksNum++;
-		}
-	}
-
-	for (i = 0; i < NetworksNum; i++) {
-		double R0, R1, Vout, Dst;
-
-		for (n = 0; n < ResCount[i]; n++) {
-			R0 = (r_pd[i] == 0) ? 1.0 / 1e12 : 1.0 / r_pd[i];
-			R1 = (r_pu[i] == 0) ? 1.0 / 1e12 : 1.0 / r_pu[i];
-
-			for (j = 0; j < ResCount[i]; j++) {
-				if (j == n) {
-					if (r[i][j] != 0.0) R1 += 1.0 / r[i][j];
-				} else {
-					if (r[i][j] != 0.0) R0 += 1.0 / r[i][j];
-				}
-			}
-
-			R0 = 1.0/R0;
-			R1 = 1.0/R1;
-			Vout = (MaxVal - MinVal) * R0 / (R1 + R0) + MinVal;
-
-			Dst = (Vout < MinVal) ? MinVal : (Vout > MaxVal) ? MaxVal : Vout;
-
-			w[i][n] = Dst;
-		}
-	}
-
-	j = 0;
-	Max = 0.0;
-	for (i = 0; i < NetworksNum; i++) {
-		double Sum = 0.0;
-
-		for (n = 0; n < ResCount[i]; n++) Sum += w[i][n];
-
-		MaxOut[i] = Sum;
-		if (Max < Sum) {
-			Max = Sum;
-			j = i;
-		}
-	}
-
-	if (Scaler < 0.0) {
-		Scale = ((double)MaxVal) / MaxOut[j];
-	} else {
-		Scale = Scaler;
-	}
-
-	for (i = 0; i < NetworksNum; i++) {
-		for (n = 0; n < ResCount[i]; n++) {
-			ws[i][n] = w[i][n] * Scale;
-			(Out[i])[n] = ws[i][n];
-		}
-	}
-
-	return Scale;
-
-}
 
 void GalaxianCalcPalette()
 {
 	static const INT32 RGBResistances[3] = {1000, 470, 220};
 	double rWeights[3], gWeights[3], bWeights[2];
 	
-	ComputeResistorWeights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
+	compute_resistor_weights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
 			
 	// Colour PROM
 	for (INT32 i = 0; i < 32; i++) {
@@ -438,16 +313,16 @@ void GalaxianCalcPalette()
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],0);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],1);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],2);
-		r = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+		r = combine_3_weights(rWeights, Bit0, Bit1, Bit2);
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],3);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],4);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],5);
-		g = Combine3Weights(gWeights, Bit0, Bit1, Bit2);
+		g = combine_3_weights(gWeights, Bit0, Bit1, Bit2);
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],6);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],7);
-		b = Combine2Weights(bWeights, Bit0, Bit1);
+		b = combine_2_weights(bWeights, Bit0, Bit1);
 
 		GalPalette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -479,7 +354,7 @@ void RockclimCalcPalette()
 	static const INT32 RGBResistances[3] = {1000, 470, 220};
 	double rWeights[3], gWeights[3], bWeights[2];
 	
-	ComputeResistorWeights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
+	compute_resistor_weights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
 			
 	// Colour PROM
 	for (INT32 i = 0; i < 64; i++) {
@@ -488,16 +363,16 @@ void RockclimCalcPalette()
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],0);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],1);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],2);
-		r = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+		r = combine_3_weights(rWeights, Bit0, Bit1, Bit2);
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],3);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],4);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],5);
-		g = Combine3Weights(gWeights, Bit0, Bit1, Bit2);
+		g = combine_3_weights(gWeights, Bit0, Bit1, Bit2);
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],6);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],7);
-		b = Combine2Weights(bWeights, Bit0, Bit1);
+		b = combine_2_weights(bWeights, Bit0, Bit1);
 
 		GalPalette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -573,7 +448,7 @@ void DarkplntCalcPalette()
 	static const INT32 RGBResistances[3] = {1000, 470, 220};
 	double rWeights[3], gWeights[3], bWeights[2];
 	
-	ComputeResistorWeights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
+	compute_resistor_weights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
 			
 	// Colour PROM
 	for (INT32 i = 0; i < 32; i++) {
@@ -582,14 +457,14 @@ void DarkplntCalcPalette()
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],0);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],1);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],2);
-		r = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+		r = combine_3_weights(rWeights, Bit0, Bit1, Bit2);
 
 		g = 0;
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],3);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],4);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],5);
-		b = Combine2Weights(bWeights, Bit0, Bit1);
+		b = combine_2_weights(bWeights, Bit0, Bit1);
 
 		GalPalette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -619,7 +494,7 @@ void DambustrCalcPalette()
 	static const INT32 RGBResistances[3] = {1000, 470, 220};
 	double rWeights[3], gWeights[3], bWeights[2];
 	
-	ComputeResistorWeights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
+	compute_resistor_weights(0, RGB_MAXIMUM, -1.0, 3, &RGBResistances[0], rWeights, 470, 0, 3, &RGBResistances[0], gWeights, 470, 0, 2, &RGBResistances[1], bWeights, 470, 0);
 			
 	// Colour PROM
 	for (INT32 i = 0; i < 32; i++) {
@@ -628,16 +503,16 @@ void DambustrCalcPalette()
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],0);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],1);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],2);
-		b = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+		b = combine_3_weights(rWeights, Bit0, Bit1, Bit2);
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],3);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],4);
 		Bit2 = BIT(GalProm[i + (GalPaletteBank * 0x20)],5);
-		r = Combine3Weights(gWeights, Bit0, Bit1, Bit2);
+		r = combine_3_weights(gWeights, Bit0, Bit1, Bit2);
 
 		Bit0 = BIT(GalProm[i + (GalPaletteBank * 0x20)],6);
 		Bit1 = BIT(GalProm[i + (GalPaletteBank * 0x20)],7);
-		g = Combine2Weights(bWeights, Bit0, Bit1);
+		g = combine_2_weights(bWeights, Bit0, Bit1);
 
 		GalPalette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -672,10 +547,6 @@ void DambustrCalcPalette()
 }
 
 #undef RGB_MAXIMUM
-#undef MAX_NETS
-#undef MAX_RES_PER_NET
-#undef Combine_2Weights
-#undef Combine_3Weights
 
 // Background and Stars rendering
 void GalaxianDrawBackground()

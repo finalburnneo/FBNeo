@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "pokey.h"
+#include "resnet.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -456,138 +457,12 @@ static INT32 DrvExit()
 	return 0;
 }
 
-#define MAX_NETS        3
-#define MAX_RES_PER_NET 18
-#define Combine2Weights(tab,w0,w1)	((int)(((tab)[0]*(w0) + (tab)[1]*(w1)) + 0.5))
-#define Combine3Weights(tab,w0,w1,w2)	((int)(((tab)[0]*(w0) + (tab)[1]*(w1) + (tab)[2]*(w2)) + 0.5))
-
-static double ComputeResistorWeights(INT32 MinVal, INT32 MaxVal, double Scaler, INT32 Count1, const INT32 *Resistances1, double *Weights1, INT32 PullDown1, INT32 PullUp1,	INT32 Count2, const INT32 *Resistances2, double *Weights2, INT32 PullDown2, INT32 PullUp2, INT32 Count3, const INT32 *Resistances3, double *Weights3, INT32 PullDown3, INT32 PullUp3)
-{
-	INT32 NetworksNum;
-
-	INT32 ResCount[MAX_NETS];
-	double r[MAX_NETS][MAX_RES_PER_NET];
-	double w[MAX_NETS][MAX_RES_PER_NET];
-	double ws[MAX_NETS][MAX_RES_PER_NET];
-	INT32 r_pd[MAX_NETS];
-	INT32 r_pu[MAX_NETS];
-
-	double MaxOut[MAX_NETS];
-	double *Out[MAX_NETS];
-
-	INT32 i, j, n;
-	double Scale;
-	double Max;
-
-	NetworksNum = 0;
-	for (n = 0; n < MAX_NETS; n++) {
-		INT32 Count, pd, pu;
-		const INT32 *Resistances;
-		double *Weights;
-
-		switch (n) {
-			case 0: {
-				Count = Count1;
-				Resistances = Resistances1;
-				Weights = Weights1;
-				pd = PullDown1;
-				pu = PullUp1;
-				break;
-			}
-			
-			case 1: {
-				Count = Count2;
-				Resistances = Resistances2;
-				Weights = Weights2;
-				pd = PullDown2;
-				pu = PullUp2;
-				break;
-			}
-		
-			case 2:
-			default: {
-				Count = Count3;
-				Resistances = Resistances3;
-				Weights = Weights3;
-				pd = PullDown3;
-				pu = PullUp3;
-				break;
-			}
-		}
-
-		if (Count > 0) {
-			ResCount[NetworksNum] = Count;
-			for (i = 0; i < Count; i++) {
-				r[NetworksNum][i] = 1.0 * Resistances[i];
-			}
-			Out[NetworksNum] = Weights;
-			r_pd[NetworksNum] = pd;
-			r_pu[NetworksNum] = pu;
-			NetworksNum++;
-		}
-	}
-
-	for (i = 0; i < NetworksNum; i++) {
-		double R0, R1, Vout, Dst;
-
-		for (n = 0; n < ResCount[i]; n++) {
-			R0 = (r_pd[i] == 0) ? 1.0 / 1e12 : 1.0 / r_pd[i];
-			R1 = (r_pu[i] == 0) ? 1.0 / 1e12 : 1.0 / r_pu[i];
-
-			for (j = 0; j < ResCount[i]; j++) {
-				if (j == n) {
-					if (r[i][j] != 0.0) R1 += 1.0 / r[i][j];
-				} else {
-					if (r[i][j] != 0.0) R0 += 1.0 / r[i][j];
-				}
-			}
-
-			R0 = 1.0/R0;
-			R1 = 1.0/R1;
-			Vout = (MaxVal - MinVal) * R0 / (R1 + R0) + MinVal;
-
-			Dst = (Vout < MinVal) ? MinVal : (Vout > MaxVal) ? MaxVal : Vout;
-
-			w[i][n] = Dst;
-		}
-	}
-
-	j = 0;
-	Max = 0.0;
-	for (i = 0; i < NetworksNum; i++) {
-		double Sum = 0.0;
-
-		for (n = 0; n < ResCount[i]; n++) Sum += w[i][n];
-
-		MaxOut[i] = Sum;
-		if (Max < Sum) {
-			Max = Sum;
-			j = i;
-		}
-	}
-
-	if (Scaler < 0.0) {
-		Scale = ((double)MaxVal) / MaxOut[j];
-	} else {
-		Scale = Scaler;
-	}
-
-	for (i = 0; i < NetworksNum; i++) {
-		for (n = 0; n < ResCount[i]; n++) {
-			ws[i][n] = w[i][n] * Scale;
-			(Out[i])[n] = ws[i][n];
-		}
-	}
-
-	return Scale;
-}
-
 static void palette_update()
 {
 	static const int resistances_rgb[3] = { 10000, 4700, 2200 };
 	double weights_rgb[3];
 
-	ComputeResistorWeights(0, 0xff, -1.0,
+	compute_resistor_weights(0, 0xff, -1.0,
 						   3, &resistances_rgb[0], weights_rgb, 0, 1000,
 						   0,0,0,0,0,
 						   0,0,0,0,0);
@@ -597,25 +472,21 @@ static void palette_update()
 		INT32 bit0 = (~DrvPalRAM[i] >> 6) & 0x01;
 		INT32 bit1 = (~DrvPalRAM[i] >> 7) & 0x01;
 		INT32 bit2 = (~DrvPalRAM[i] >> 8) & 0x01;
-		INT32 r = Combine3Weights(weights_rgb, bit0, bit1, bit2);
+		INT32 r = combine_3_weights(weights_rgb, bit0, bit1, bit2);
 
 		bit0 = (~DrvPalRAM[i] >> 3) & 0x01;
 		bit1 = (~DrvPalRAM[i] >> 4) & 0x01;
 		bit2 = (~DrvPalRAM[i] >> 5) & 0x01;
-		INT32 g = Combine3Weights(weights_rgb, bit0, bit1, bit2);
+		INT32 g = combine_3_weights(weights_rgb, bit0, bit1, bit2);
 
 		bit0 = (~DrvPalRAM[i] >> 0) & 0x01;
 		bit1 = (~DrvPalRAM[i] >> 1) & 0x01;
 		bit2 = (~DrvPalRAM[i] >> 2) & 0x01;
-		INT32 b = Combine3Weights(weights_rgb, bit0, bit1, bit2);
+		INT32 b = combine_3_weights(weights_rgb, bit0, bit1, bit2);
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }
-#undef MAX_NETS
-#undef MAX_RES_PER_NET
-#undef Combine2Weights
-#undef Combine3Weights
 
 static void draw_layer()
 {

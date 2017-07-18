@@ -8,6 +8,7 @@
 #include "namco_snd.h"
 #include "timeplt_snd.h"
 #include "samples.h"
+#include "resnet.h"
 
 static UINT8 DrvInputPort0[8]     = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8]     = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -1523,133 +1524,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-#define MAX_NETS			3
-#define MAX_RES_PER_NET			18
-#define Combine2Weights(tab,w0,w1)	((int)(((tab)[0]*(w0) + (tab)[1]*(w1)) + 0.5))
-#define Combine3Weights(tab,w0,w1,w2)	((int)(((tab)[0]*(w0) + (tab)[1]*(w1) + (tab)[2]*(w2)) + 0.5))
-
-static double ComputeResistorWeights(INT32 MinVal, INT32 MaxVal, double Scaler, INT32 Count1, const INT32 *Resistances1, double *Weights1, INT32 PullDown1, INT32 PullUp1,	INT32 Count2, const INT32 *Resistances2, double *Weights2, INT32 PullDown2, INT32 PullUp2, INT32 Count3, const INT32 *Resistances3, double *Weights3, INT32 PullDown3, INT32 PullUp3)
-{
-	INT32 NetworksNum;
-
-	INT32 ResCount[MAX_NETS];
-	double r[MAX_NETS][MAX_RES_PER_NET];
-	double w[MAX_NETS][MAX_RES_PER_NET];
-	double ws[MAX_NETS][MAX_RES_PER_NET];
-	INT32 r_pd[MAX_NETS];
-	INT32 r_pu[MAX_NETS];
-
-	double MaxOut[MAX_NETS];
-	double *Out[MAX_NETS];
-
-	INT32 i, j, n;
-	double Scale;
-	double Max;
-
-	NetworksNum = 0;
-	for (n = 0; n < MAX_NETS; n++) {
-		INT32 Count, pd, pu;
-		const INT32 *Resistances;
-		double *Weights;
-
-		switch (n) {
-			case 0: {
-				Count = Count1;
-				Resistances = Resistances1;
-				Weights = Weights1;
-				pd = PullDown1;
-				pu = PullUp1;
-				break;
-			}
-			
-			case 1: {
-				Count = Count2;
-				Resistances = Resistances2;
-				Weights = Weights2;
-				pd = PullDown2;
-				pu = PullUp2;
-				break;
-			}
-		
-			case 2:
-			default: {
-				Count = Count3;
-				Resistances = Resistances3;
-				Weights = Weights3;
-				pd = PullDown3;
-				pu = PullUp3;
-				break;
-			}
-		}
-
-		if (Count > 0) {
-			ResCount[NetworksNum] = Count;
-			for (i = 0; i < Count; i++) {
-				r[NetworksNum][i] = 1.0 * Resistances[i];
-			}
-			Out[NetworksNum] = Weights;
-			r_pd[NetworksNum] = pd;
-			r_pu[NetworksNum] = pu;
-			NetworksNum++;
-		}
-	}
-
-	for (i = 0; i < NetworksNum; i++) {
-		double R0, R1, Vout, Dst;
-
-		for (n = 0; n < ResCount[i]; n++) {
-			R0 = (r_pd[i] == 0) ? 1.0 / 1e12 : 1.0 / r_pd[i];
-			R1 = (r_pu[i] == 0) ? 1.0 / 1e12 : 1.0 / r_pu[i];
-
-			for (j = 0; j < ResCount[i]; j++) {
-				if (j == n) {
-					if (r[i][j] != 0.0) R1 += 1.0 / r[i][j];
-				} else {
-					if (r[i][j] != 0.0) R0 += 1.0 / r[i][j];
-				}
-			}
-
-			R0 = 1.0/R0;
-			R1 = 1.0/R1;
-			Vout = (MaxVal - MinVal) * R0 / (R1 + R0) + MinVal;
-
-			Dst = (Vout < MinVal) ? MinVal : (Vout > MaxVal) ? MaxVal : Vout;
-
-			w[i][n] = Dst;
-		}
-	}
-
-	j = 0;
-	Max = 0.0;
-	for (i = 0; i < NetworksNum; i++) {
-		double Sum = 0.0;
-
-		for (n = 0; n < ResCount[i]; n++) Sum += w[i][n];
-
-		MaxOut[i] = Sum;
-		if (Max < Sum) {
-			Max = Sum;
-			j = i;
-		}
-	}
-
-	if (Scaler < 0.0) {
-		Scale = ((double)MaxVal) / MaxOut[j];
-	} else {
-		Scale = Scaler;
-	}
-
-	for (i = 0; i < NetworksNum; i++) {
-		for (n = 0; n < ResCount[i]; n++) {
-			ws[i][n] = w[i][n] * Scale;
-			(Out[i])[n] = ws[i][n];
-		}
-	}
-
-	return Scale;
-
-}
-
 static void DrvCalcPalette()
 {
 	static const INT32 ResistancesRG[3] = { 1000, 470, 220 };
@@ -1658,7 +1532,7 @@ static void DrvCalcPalette()
 	UINT32 Palette[32];
 	UINT32 i;
 	
-	ComputeResistorWeights(0, 255, -1.0, 3, &ResistancesRG[0], rWeights, 0, 0, 3, &ResistancesRG[0], gWeights, 0, 0, 2, &ResistancesB[0], bWeights, 1000, 0);
+	compute_resistor_weights(0, 255, -1.0, 3, &ResistancesRG[0], rWeights, 0, 0, 3, &ResistancesRG[0], gWeights, 0, 0, 2, &ResistancesB[0], bWeights, 1000, 0);
 	
 	for (i = 0; i < 32; i++) {
 		INT32 Bit0, Bit1, Bit2;
@@ -1667,18 +1541,18 @@ static void DrvCalcPalette()
 		Bit0 = (DrvPromPalette[i] >> 0) & 0x01;
 		Bit1 = (DrvPromPalette[i] >> 1) & 0x01;
 		Bit2 = (DrvPromPalette[i] >> 2) & 0x01;
-		r = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+		r = combine_3_weights(rWeights, Bit0, Bit1, Bit2);
 
 		/* green component */
 		Bit0 = (DrvPromPalette[i] >> 3) & 0x01;
 		Bit1 = (DrvPromPalette[i] >> 4) & 0x01;
 		Bit2 = (DrvPromPalette[i] >> 5) & 0x01;
-		g = Combine3Weights(gWeights, Bit0, Bit1, Bit2);
+		g = combine_3_weights(gWeights, Bit0, Bit1, Bit2);
 
 		/* blue component */
 		Bit0 = (DrvPromPalette[i] >> 6) & 0x01;
 		Bit1 = (DrvPromPalette[i] >> 7) & 0x01;
-		b = Combine2Weights(bWeights, Bit0, Bit1);
+		b = combine_2_weights(bWeights, Bit0, Bit1);
 
 		Palette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -1704,12 +1578,12 @@ static void DrvCalcPaletteJungler()
 	UINT32 i;
 	
 	double scale =
-		ComputeResistorWeights(0, 255, -1.0,
+		compute_resistor_weights(0, 255, -1.0,
 							   2, &ResistancesSTAR[0], rWeightsSTAR, 0, 0,
 							   2, &ResistancesSTAR[0], gWeightsSTAR, 0, 0,
 							   2, &ResistancesSTAR[0], bWeightsSTAR, 0, 0);
 
-	ComputeResistorWeights(0, 255, scale,
+	compute_resistor_weights(0, 255, scale,
 						   3, &ResistancesRG[0], rWeights, 1000, 0,
 						   3, &ResistancesRG[0], gWeights, 1000, 0,
 						   2, &ResistancesB[0],  bWeights, 1000, 0);
@@ -1721,18 +1595,18 @@ static void DrvCalcPaletteJungler()
 		Bit0 = (DrvPromPalette[i] >> 0) & 0x01;
 		Bit1 = (DrvPromPalette[i] >> 1) & 0x01;
 		Bit2 = (DrvPromPalette[i] >> 2) & 0x01;
-		r = Combine3Weights(rWeights, Bit0, Bit1, Bit2);
+		r = combine_3_weights(rWeights, Bit0, Bit1, Bit2);
 
 		/* green component */
 		Bit0 = (DrvPromPalette[i] >> 3) & 0x01;
 		Bit1 = (DrvPromPalette[i] >> 4) & 0x01;
 		Bit2 = (DrvPromPalette[i] >> 5) & 0x01;
-		g = Combine3Weights(gWeights, Bit0, Bit1, Bit2);
+		g = combine_3_weights(gWeights, Bit0, Bit1, Bit2);
 
 		/* blue component */
 		Bit0 = (DrvPromPalette[i] >> 6) & 0x01;
 		Bit1 = (DrvPromPalette[i] >> 7) & 0x01;
-		b = Combine2Weights(bWeights, Bit0, Bit1);
+		b = combine_2_weights(bWeights, Bit0, Bit1);
 
 		Palette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -1744,17 +1618,17 @@ static void DrvCalcPaletteJungler()
 		/* red component */
 		bit0 = ((i - 0x20) >> 0) & 0x01;
 		bit1 = ((i - 0x20) >> 1) & 0x01;
-		r = Combine2Weights(rWeightsSTAR, bit0, bit1);
+		r = combine_2_weights(rWeightsSTAR, bit0, bit1);
 
 		/* green component */
 		bit0 = ((i - 0x20) >> 2) & 0x01;
 		bit1 = ((i - 0x20) >> 3) & 0x01;
-		g = Combine2Weights(gWeightsSTAR, bit0, bit1);
+		g = combine_2_weights(gWeightsSTAR, bit0, bit1);
 
 		/* blue component */
 		bit0 = ((i - 0x20) >> 4) & 0x01;
 		bit1 = ((i - 0x20) >> 5) & 0x01;
-		b = Combine2Weights(bWeightsSTAR, bit0, bit1);
+		b = combine_2_weights(bWeightsSTAR, bit0, bit1);
 
 		Palette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -1772,11 +1646,6 @@ static void DrvCalcPaletteJungler()
 		DrvPalette[i] = Palette[(i - 0x104) + 0x20];
 	}
 }
-
-#undef MAX_NETS
-#undef MAX_RES_PER_NET
-#undef Combine2Weights
-#undef Combine3Weights
 
 static void DrvRenderBgLayer(INT32 priority)
 {

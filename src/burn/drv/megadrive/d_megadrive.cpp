@@ -19517,6 +19517,24 @@ struct BurnDriver BurnDrvmd_mk2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Mortal Kombat II (World) Unlimited Hack by Smoke
+static struct BurnRomInfo md_mk2wuRomDesc[] = {
+	{ "Mortal Kombat II Unlimited (V1.0) (Hack By Smoke).bin", 0x3f1f88, 0x53206165, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mk2wu)
+STD_ROM_FN(md_mk2wu)
+
+struct BurnDriver BurnDrvmd_mk2wu = {
+	"md_mk2wu", "md_mk2", NULL, NULL, "1994",
+	"Mortal Kombat II (World) Unlimited (Hack, v1.0)\0", NULL, "2011 Smoke", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mk2wuRomInfo, md_mk2wuRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mortal Kombat 3 (Euro)
 static struct BurnRomInfo md_mk3RomDesc[] = {
 	{ "mortal_kombat_3_pal.bin", 0x400000, 0xaf6de3e8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -30227,6 +30245,24 @@ struct BurnDriver BurnDrvmd_sor2u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sor2uRomInfo, md_sor2uRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 (USA) Syndicate Wars 2016 Hack by Gsaurus
+static struct BurnRomInfo md_sor2uswRomDesc[] = {
+	{ "sor2 sw.bin", 0x31b5ce, 0xb49b4a9b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2usw)
+STD_ROM_FN(md_sor2usw)
+
+struct BurnDriver BurnDrvmd_sor2usw = {
+	"md_sor2usw", "md_sor2", NULL, NULL, "1992",
+	"Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack)\0", NULL, "2016 Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sor2uswRomInfo, md_sor2uswRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -26,7 +26,7 @@
 #include "burnint.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
-#include "burn_ym2612.h"
+#include "burn_md2612.h"
 #include "sn76496.h"
 #include "megadrive.h"
 #include "bitswap.h"
@@ -374,7 +374,7 @@ UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 		case 0xa04002:
 		case 0xa04003: {
 			if (!Z80HasBus && !MegadriveZ80Reset) {
-				return BurnYM2612Read(0, 0);
+				return BurnMD2612Read(0, 0);
 			} else {
 				return 0;
 			}
@@ -414,28 +414,28 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	switch (sekAddress) {
 		case 0xa04000: {
 			if (!Z80HasBus && !MegadriveZ80Reset) {
-				BurnYM2612Write(0, 0, byteValue);
+				BurnMD2612Write(0, 0, byteValue);
 			}
 			return;
 		}
 	
 		case 0xa04001: {
 			if (!Z80HasBus && !MegadriveZ80Reset) {
-				BurnYM2612Write(0, 1, byteValue);
+				BurnMD2612Write(0, 1, byteValue);
 			}
 			return;
 		}
 	
 		case 0xa04002: {
 			if (!Z80HasBus && !MegadriveZ80Reset) {
-				BurnYM2612Write(0, 2, byteValue);
+				BurnMD2612Write(0, 2, byteValue);
 			}
 			return;
 		}
 	
 		case 0xa04003: {
 			if (!Z80HasBus && !MegadriveZ80Reset) {
-				BurnYM2612Write(0, 3, byteValue);
+				BurnMD2612Write(0, 3, byteValue);
 			}
 			return;
 		}
@@ -455,7 +455,7 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			if (!(byteValue & 1)) {
 				ZetReset();
 
-				BurnYM2612Reset();
+				BurnMD2612Reset();
 				MegadriveZ80Reset = 1;	
 			} else {
 				MegadriveZ80Reset = 0;
@@ -494,7 +494,7 @@ void __fastcall MegadriveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			if (!(wordValue & 0x100)) {
 				ZetReset();
 
-				BurnYM2612Reset();
+				BurnMD2612Reset();
 				MegadriveZ80Reset = 1;
 			} else {
 				MegadriveZ80Reset = 0;
@@ -1213,7 +1213,7 @@ static INT32 MegadriveResetDo()
 	ZetReset();
 	ZetClose();
 
-	BurnYM2612Reset();
+	BurnMD2612Reset();
 	
 	MegadriveZ80Reset = 1;
 	Z80HasBus = 1;
@@ -1230,13 +1230,13 @@ static INT32 MegadriveResetDo()
 		BurnSetRefreshRate(50.0);
 		Reinitialise();
 		
-		BurnYM2612Exit();
-		BurnYM2612Init(1, OSC_PAL / 7, NULL, MegadriveSynchroniseStreamPAL, MegadriveGetTimePAL, 0);
+		BurnMD2612Exit();
+		BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, MegadriveGetTimePAL, 0);
 		BurnTimerAttachSek(OSC_PAL / 7);
-		BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-		BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 		
-		BurnYM2612Reset();
+		BurnMD2612Reset();
 		
 		SN76496Exit();
 		SN76496Init(0, OSC_PAL / 15, 1);
@@ -1245,13 +1245,13 @@ static INT32 MegadriveResetDo()
 		BurnSetRefreshRate(60.0);
 		Reinitialise();
 		
-		BurnYM2612Exit();
-		BurnYM2612Init(1, OSC_NTSC / 7, NULL, MegadriveSynchroniseStream, MegadriveGetTime, 0);
+		BurnMD2612Exit();
+		BurnMD2612Init(1, 0, MegadriveSynchroniseStream, MegadriveGetTime, 0);
 		BurnTimerAttachSek(OSC_NTSC / 7);
-		BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-		BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 		
-		BurnYM2612Reset();
+		BurnMD2612Reset();
 		
 		SN76496Exit();
 		SN76496Init(0, OSC_NTSC / 15, 1);
@@ -1342,7 +1342,7 @@ UINT8 __fastcall MegadriveZ80ProgRead(UINT16 a)
 		case 0x4000:
 		case 0x4001:
 		case 0x4002: {
-			return BurnYM2612Read(0, 0);
+			return BurnMD2612Read(0, 0);
 		}
 		
 		default: {
@@ -1397,22 +1397,22 @@ void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x4000: {
-			BurnYM2612Write(0, 0, d);
+			BurnMD2612Write(0, 0, d);
 			return;
 		}
 		
 		case 0x4001: {
-			BurnYM2612Write(0, 1, d);
+			BurnMD2612Write(0, 1, d);
 			return;
 		}
 		
 		case 0x4002: {
-			BurnYM2612Write(0, 2, d);
+			BurnMD2612Write(0, 2, d);
 			return;
 		}
 		
 		case 0x4003: {
-			BurnYM2612Write(0, 3, d);
+			BurnMD2612Write(0, 3, d);
 			return;
 		}
 		
@@ -3074,10 +3074,10 @@ INT32 MegadriveInit()
 
 	bNoDebug = 0;
 	DrvSECAM = 0;
-	BurnYM2612Init(1, OSC_NTSC / 7, NULL, MegadriveSynchroniseStream, MegadriveGetTime, 0);
+	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, MegadriveGetTime, 0);
 	BurnTimerAttachSek(OSC_NTSC / 7);
-	BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
-	BurnYM2612SetRoute(0, BURN_SND_YM2612_YM2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
+	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
+	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 	
 	SN76496Init(0, OSC_NTSC / 15, 1);
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
@@ -3109,7 +3109,7 @@ INT32 MegadriveExit()
 	SekExit();
 	ZetExit();
 
-	BurnYM2612Exit();
+	BurnMD2612Exit();
 	SN76496Exit();
 	
 	if (Mem) {
@@ -4411,7 +4411,7 @@ INT32 MegadriveFrame()
 	}
 
 	if (pBurnSoundOut) {
-		BurnYM2612Update(pBurnSoundOut, nBurnSoundLen);
+		BurnMD2612Update(pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -4444,7 +4444,7 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);
 		ZetScan(nAction);
-		BurnYM2612Scan(nAction, pnMin);
+		BurnMD2612Scan(nAction, pnMin);
 		SN76496Scan(nAction, pnMin);
 
 		SCAN_VAR(Scanline); //

@@ -30259,7 +30259,7 @@ STD_ROM_FN(md_sor2usw)
 
 struct BurnDriver BurnDrvmd_sor2usw = {
 	"md_sor2usw", "md_sor2", NULL, NULL, "1992",
-	"Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack)\0", NULL, "2016 Gsaurus", "Sega Megadrive",
+	"Streets of Rage 2 (USA) Syndicate Wars 2016 (Hack, April 30, 2016)\0", NULL, "2016 Gsaurus", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sor2uswRomInfo, md_sor2uswRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -30317,6 +30317,24 @@ struct BurnDriver BurnDrvmd_sor3k = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sor3kRomInfo, md_sor3kRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 3 - The Bare Knuckle 3 Project by Gsaurus July 1, 2017
+static struct BurnRomInfo md_sor3bk3pRomDesc[] = {
+	{ "The Bare Knuckle 3 Project.bin", 0x3b3eca, 0x3f8f40b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor3bk3p)
+STD_ROM_FN(md_sor3bk3p)
+
+struct BurnDriver BurnDrvmd_sor3bk3p = {
+	"md_sor3bk3p", "md_sor3", NULL, NULL, "1994",
+	"Streets of Rage 3 - The Bare Knuckle 3 Project (Hack, July 1, 2017)\0", NULL, "2017 Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sor3bk3pRomInfo, md_sor3bk3pRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

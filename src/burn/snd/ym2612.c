@@ -779,8 +779,6 @@ INLINE void INTERNAL_TIMER_A()
     ym2612.OPN.ST.TAC--;
     if (ym2612.OPN.ST.TAC <= 0)
 	{
-		//if (!in_reset)
-		//BurnMD2612UpdateRequest();
       /* set status (if enabled) */
       if (ym2612.OPN.ST.mode & 0x04)
         ym2612.OPN.ST.status |= 0x01;
@@ -1974,14 +1972,16 @@ void MDYM2612Write(unsigned int a, unsigned int v)
     default:  /* data port */
     {
       int addr = ym2612.OPN.ST.address; /* verified by Nemesis on real YM2612 */
+
+	  if (!in_reset)
+		BurnMD2612UpdateRequest();
+
       switch( addr & 0x1f0 )
       {
         case 0x20:  /* 0x20-0x2f Mode */
           switch( addr )
           {
             case 0x2a:  /* DAC data (ym2612) */
-			  if (!in_reset)
-			    BurnMD2612UpdateRequest();
 			  ym2612.dacout = ((int)v - 0x80) << 6; /* convert to 14-bit output */
               break;
             case 0x2b:  /* DAC Sel  (ym2612) */
@@ -1989,15 +1989,11 @@ void MDYM2612Write(unsigned int a, unsigned int v)
               ym2612.dacen = v & 0x80;
               break;
 		    default:  /* OPN section */
-			  if (!in_reset)
-			    BurnMD2612UpdateRequest();
               /* write register */
               OPNWriteMode(addr,v);
           }
           break;
         default:  /* 0x30-0xff OPN section */
-		  if (!in_reset)
-		    BurnMD2612UpdateRequest();
           /* write register */
           OPNWriteReg(addr,v);
       }
@@ -2008,6 +2004,8 @@ void MDYM2612Write(unsigned int a, unsigned int v)
 
 unsigned int MDYM2612Read(void)
 {
+  if (!in_reset)
+    BurnMD2612UpdateRequest();
   return ym2612.OPN.ST.status & 0xff;
 }
 
@@ -2162,7 +2160,6 @@ int MDYM2612LoadContext()
 {
   int c,s;
   UINT8 index;
-  int bufferptr = 0;
 
   /* restore YM2612 context */
   SCAN_VAR(ym2612);
@@ -2173,7 +2170,6 @@ int MDYM2612LoadContext()
     for (s=0; s<4; s++)
     {
 	  SCAN_VAR(index);
-      bufferptr += sizeof(index);
       ym2612.CH[c].SLOT[s].DT = ym2612.OPN.ST.dt_tab[index&7];
     }
   }
@@ -2186,14 +2182,13 @@ int MDYM2612LoadContext()
   setup_connection(&ym2612.CH[4],4);
   setup_connection(&ym2612.CH[5],5);
 
-  return bufferptr;
+  return 0;
 }
 
 int MDYM2612SaveContext()
 {
   int c,s;
   UINT8 index;
-  int bufferptr = 0;
 
   /* save YM2612 context */
   SCAN_VAR(ym2612);
@@ -2205,9 +2200,8 @@ int MDYM2612SaveContext()
     {
       index = (ym2612.CH[c].SLOT[s].DT - ym2612.OPN.ST.dt_tab[0]) >> 5;
 	  SCAN_VAR(index);
-      bufferptr += sizeof(index);
     }
   }
 
-  return bufferptr;
+  return 0;
 }

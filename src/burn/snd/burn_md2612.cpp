@@ -3,8 +3,6 @@
 #include "burn_sound.h"
 #include "burn_md2612.h"
 
-#define MAX_MD2612  1
-
 void (*BurnMD2612Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
 
 static INT32 (*BurnMD2612StreamCallback)(INT32 nSoundRate);
@@ -12,7 +10,7 @@ static INT32 (*BurnMD2612StreamCallback)(INT32 nSoundRate);
 static INT32 nBurnMD2612SoundRate;
 
 static INT16* pBuffer;
-static INT16* pMD2612Buffer[2 * MAX_MD2612];
+static INT16* pMD2612Buffer[2];
 
 static INT32 nMD2612Position;
 
@@ -22,8 +20,8 @@ static INT32 nFractionalPosition;
 static INT32 nNumChips = 0;
 static INT32 bMD2612AddSignal;
 
-static double MD2612Volumes[2 * MAX_MD2612];
-static INT32 MD2612RouteDirs[2 * MAX_MD2612];
+static double MD2612Volumes[2];
+static INT32 MD2612RouteDirs[2];
 
 // ----------------------------------------------------------------------------
 // Dummy functions
@@ -156,7 +154,6 @@ void BurnMD2612UpdateRequest()
 	MD2612Render(BurnMD2612StreamCallback(nBurnMD2612SoundRate));
 }
 
-
 // ----------------------------------------------------------------------------
 // Initialisation, etc.
 
@@ -194,7 +191,7 @@ void BurnMD2612Exit()
 INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
 	if (num > 1) {
-		bprintf(0, _T("MD2612 only supports 1 chip!\n"));
+		bprintf(0, _T("BurnMD2612Init(): MD2612 only supports 1 chip!\n"));
 		return 0;
 	}
 
@@ -254,11 +251,6 @@ void BurnMD2612SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteD
 		MD2612Volumes[nIndex] = nVolume;
 		MD2612RouteDirs[nIndex] = nRouteDir;
 	}
-	
-	if (nChip == 1) {
-		MD2612Volumes[2 + nIndex] = nVolume;
-		MD2612RouteDirs[2 + nIndex] = nRouteDir;
-	}
 }
 
 void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
@@ -278,5 +270,3 @@ void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
 		}
 	}
 }
-
-#undef MAX_MD2612

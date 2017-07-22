@@ -16,7 +16,7 @@
  draw_no_32col_border, external_ym2612
 
  tofix:
- .) Notice the hung notes when Sonic jumps out of the water? (Sonic & Knuckles & Sonic 3). [probably not related to irq handling]
+ .) FIXED July 22 2017: Sonic 3/S&K: Hung notes(music) when Sonic jumps in the water under the waterfall
  .) FIXED Dec. 31 2015: Battle Squadron - loses sound after weapon upgrade [x] pickup
 
  ********************************************************************************
@@ -4387,15 +4387,6 @@ INT32 MegadriveFrame()
 		if ((!(RamVReg->reg[1]&8) && y<=224) || ((RamVReg->reg[1]&8) && y<240))
 				PicoLine(y);
 
-		// Run scanline
-		if (y == lines_vis) {
-			BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
-		} else {
-			line_base_cycles = SekTotalCycles();
-			SekIdle(DMABURN());
-			BurnTimerUpdate((y + 1) * cycles_68k);
-		}
-
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			INT32 nSegment = ((y + 1) * cycles_z80) - done_z80;
 			done_z80 += ZetRun(nSegment + Z80CyclesPrev);
@@ -4404,6 +4395,15 @@ INT32 MegadriveFrame()
 			if (y == line_sample) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
+		}
+
+		// Run scanline
+		if (y == lines_vis) {
+			BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
+		} else {
+			line_base_cycles = SekTotalCycles();
+			SekIdle(DMABURN());
+			BurnTimerUpdate((y + 1) * cycles_68k);
 		}
 	}
 	

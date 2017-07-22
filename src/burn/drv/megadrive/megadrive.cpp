@@ -400,6 +400,7 @@ UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if(sekAddress >= 0xA13004 && sekAddress < 0xA13040) {
+		bprintf(0, _T("---------dumb 12-in-1 banking stuff.\n"));
 		// dumb 12-in-1 or 4-in-1 banking support
 		sekAddress &= 0x3f; 
 		sekAddress <<= 16;
@@ -2707,35 +2708,44 @@ void __fastcall NbajamEEPROMWriteWord(UINT32 /*sekAddress*/, UINT16 wordValue)
 }
 
 UINT8 __fastcall NbajamteEEPROMReadByte(UINT32 sekAddress)
-{
-	if (sekAddress & 1) return RamMisc->I2CMem & 1;
-	
-	bprintf(PRINT_NORMAL, _T("Nbajamte Read Byte %x\n"), sekAddress);
-	
-	return 0;
+{ // this is enough to get the game booting and working, but with no real serial eeprom handling
+	if (sekAddress >= 0x200000 && sekAddress <= 0x200001) {
+		if (sekAddress & 1) return RamMisc->I2CMem & 1;
+		return 0;
+	}
+
+	if (sekAddress < 0x300000) {
+		return RomMain[sekAddress^1];
+	} else {
+		return 0xff;
+	}
 }
 
 UINT16 __fastcall NbajamteEEPROMReadWord(UINT32 sekAddress)
 {
-	bprintf(PRINT_NORMAL, _T("Nbajamte Read Word %x\n"), sekAddress);
-
-	return 0;
+	if (sekAddress < 0x300000) {
+		UINT16 *Rom = (UINT16*)RomMain;
+		return Rom[sekAddress >> 1];
+	} else {
+		return 0xffff;
+	}
 }
 
 void __fastcall NbajamteEEPROMWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	if (sekAddress & 1) {
+	if (sekAddress == 0x200001) {
 //		RamMisc->I2CClk = (wordValue & 0x0002) >> 1;
 		RamMisc->I2CMem = (byteValue & 0x0001);
 		return;
 	}
-	
-	bprintf(PRINT_NORMAL, _T("Nbajamte write byte value %02x to location %08x\n"), byteValue, sekAddress);
 }
 
 void __fastcall NbajamteEEPROMWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	bprintf(PRINT_NORMAL, _T("Nbajamte write word value %04x to location %08x\n"), wordValue, sekAddress);
+	if (sekAddress == 0x200001) {
+		RamMisc->I2CMem = (wordValue & 0x0001);
+		return;
+	}
 }
 
 UINT8 __fastcall EANhlpaEEPROMReadByte(UINT32 sekAddress)

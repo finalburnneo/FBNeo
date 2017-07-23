@@ -391,6 +391,7 @@ void Arm7Init( INT32 nCPU ) // only one cpu supported
 	
 	for (INT32 i = 0; i < 3; i++) {
 		membase[i] = (UINT8**)malloc(PAGE_COUNT * sizeof(UINT8*));
+		memset(membase[i], 0, PAGE_COUNT * sizeof(UINT8*));
 	}
 
 	CpuCheatRegister(nCPU, &Arm7CheatCpuConfig);

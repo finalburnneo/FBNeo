@@ -392,6 +392,8 @@ UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 			return retVal;
 		}
 
+		case 0xa12000: return 0; // NOP (cd-stuff, called repeatedly by rnrracin)
+
 		default: {
 			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
 		}
@@ -465,6 +467,8 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			}
 			return;
 		}
+
+		case 0xa12000: return; // NOP (cd-stuff, called repeatedly by rnrracin)
 	
 //		case 0xA130F1: {
 			// sram access register

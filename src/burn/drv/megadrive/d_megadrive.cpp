@@ -129,6 +129,10 @@ static struct BurnDIPInfo JNTSCRegionDIPList[] = {
 	{0x19,	0xff,  0xff,	0x20,   NULL},
 };
 
+static struct BurnDIPInfo UNTSCRegionDIPList[] = {
+	{0x19,	0xff,  0xff,	0x20|0x80,   NULL},
+};
+
 static struct BurnDIPInfo Megadrive4pDIPList[] = {
 	{0x32,	0xff, 0xff, 0x01,  NULL               },
 
@@ -156,6 +160,7 @@ static struct BurnDIPInfo AutoDetectRegion4pDIPList[] = {
 STDDIPINFOEXT(Megadrive, AutoDetectRegion, Megadrive)
 STDDIPINFOEXT(MegadrivePAL, PALRegion, Megadrive)
 STDDIPINFOEXT(MegadriveJNTSC, JNTSCRegion, Megadrive)
+STDDIPINFOEXT(MegadriveUSANTSC, UNTSCRegion, Megadrive)
 STDDIPINFOEXT(Megadrive4p, AutoDetectRegion4p, Megadrive4p)
 
 INT32 MegadriveGetZipName(char** pszName, UINT32 i)
@@ -9270,7 +9275,7 @@ struct BurnDriver BurnDrvmd_dstrike = {
 	"Desert Strike (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_dstrikeRomInfo, md_dstrikeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_dstrikeRomInfo, md_dstrikeRomName, NULL, NULL, MegadriveInputInfo, MegadriveUSANTSCDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

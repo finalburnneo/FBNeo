@@ -1214,8 +1214,24 @@ static void CreateFilters()
 	TreeView_SelectSetFirstVisible(hFilterList, hRoot);
 }
 
+#define ICON_MAXCONSOLES 7
+
+enum {
+	ICON_MEGADRIVE = 0,
+	ICON_PCEFAM = 1,
+	ICON_SG1000 = 2,
+	ICON_COLECO = 3,
+	ICON_SMS = 4,
+	ICON_GG = 5,
+	ICON_MSX = 6
+};
+
+static HICON hConsDrvIcon[ICON_MAXCONSOLES];
+
 void LoadDrvIcons() 
 {
+	TCHAR szIcon[MAX_PATH];
+
 	if(nIconsSize == ICON_16x16) {
 		nIconsSizeXY	= 16;
 		nIconsYDiff		= 4;
@@ -1229,13 +1245,35 @@ void LoadDrvIcons()
 		nIconsYDiff		= 12;
 	}
 
+	{ // load default console images
+		_stprintf(szIcon, _T("%smegadrive_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_MEGADRIVE] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%spce_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_PCEFAM] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%ssg1000_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_SG1000] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%scolecovision_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_COLECO] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%ssms_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_SMS] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%sgamegear_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_GG] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+
+		_stprintf(szIcon, _T("%smsx_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_MSX] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+	}
+
 	unsigned int nOldDrvSel = nBurnDrvActive;
 
 	for(unsigned int nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) 
 	{		
 		nBurnDrvActive = nDrvIndex;	
-		TCHAR szIcon[MAX_PATH];
-
+#if 0
 		if ((((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16)
@@ -1247,6 +1285,43 @@ void LoadDrvIcons()
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX)
 			)) {
 			continue; // Skip everything but arcade
+		}
+#endif
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_MEGADRIVE];
+			continue;
+		}
+
+		if (((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_PCENGINE) ||
+			((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_TG16) ||
+			((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_PCENGINE_SGX)) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_PCEFAM];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SG1000) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SG1000];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_COLECO) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_COLECO];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SMS];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_GG];
+			continue;
+		}
+
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_MSX];
+			continue;
 		}
 
 		if (bIconsOnlyParents && BurnDrvGetText(DRV_PARENT) != NULL && (BurnDrvGetFlags() & BDF_CLONE)) {	// Skip clones
@@ -1270,7 +1345,7 @@ void UnloadDrvIcons() {
 	nIconsSizeXY	= 16;
 	nIconsYDiff		= 4;
 
-	for(unsigned int nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++) 
+	for(unsigned int nDrvIndex = 0; nDrvIndex < nBurnDrvCount; nDrvIndex++)
 	{		
 		DestroyIcon(hDrvIcon[nDrvIndex]);
 		hDrvIcon[nDrvIndex] = NULL;

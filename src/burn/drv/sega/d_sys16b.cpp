@@ -4245,7 +4245,7 @@ static struct BurnRomInfo Goldnaxe2RomDesc[] = {
 	
 	{ "mpr-12384.a11",  0x20000, 0x6218d8e7, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-01112.c2",   0x01000, 0xbda31044, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
+	{ "317-0112.c2",    0x01000, 0xbda31044, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG },
 };
 
 

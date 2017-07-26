@@ -8368,6 +8368,11 @@ static struct BurnRomInfo victroadRomDesc[] = {
 
 	{ "p4.ef5",		0x10000, 0xe10fb8cc, 15 | BRF_SND },          // 20 Samples
 	{ "p5.g5",		0x10000, 0x93e5f110, 15 | BRF_SND },          // 21
+	
+	{ "pal20l8",	0x00144, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "a6002-3.p2",	0x00104, 0x036b1a16, 0 | BRF_OPT },
+	{ "a5004-1.d6",	0x00104, 0x311e5ae6, 0 | BRF_OPT },
+	{ "a5004-4.s8",	0x00104, 0xfad4c493, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(victroad)

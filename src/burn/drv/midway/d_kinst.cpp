@@ -542,6 +542,11 @@ static struct BurnRomInfo kinstRomDesc[] = {
     { "u34-l1",             0x80000, 0xb2e73603, 2 | BRF_SND | BRF_ESS }, //  6
     { "u35-l1",             0x80000, 0x0aaef4fc, 2 | BRF_SND | BRF_ESS }, //  7
     { "u36-l1",             0x80000, 0x0577bb60, 2 | BRF_SND | BRF_ESS }, //  8
+	
+	{ "ki-p47.u98",			0x80000, 0x05e67bcb, 0 | BRF_OPT },
+	{ "ki_l15di.u98",		0x80000, 0x230f55fb, 0 | BRF_OPT },
+	{ "ki-l13.u98",			0x80000, 0x65f7ea31, 0 | BRF_OPT },
+	{ "ki-l14.u98",			0x80000, 0xafedb75f, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(kinst)
@@ -567,6 +572,11 @@ static struct BurnRomInfo kinst2RomDesc[] = {
     { "ki2_l1.u34",			0x80000, 0x5db48206, 2 | BRF_SND | BRF_ESS }, //  6
     { "ki2_l1.u35",			0x80000, 0x7245ce69, 2 | BRF_SND | BRF_ESS }, //  7
     { "ki2_l1.u36",			0x80000, 0x8920acbb, 2 | BRF_SND | BRF_ESS }, //  8
+	
+	{ "ki2-l11.u98",		0x80000, 0x0cb8de1e, 0 | BRF_OPT },
+	{ "ki2-l13.u98",		0x80000, 0x25ebde3b, 0 | BRF_OPT },
+	{ "ki2-l10.u98",		0x80000, 0xb17b4b3d, 0 | BRF_OPT },
+	{ "ki2_l14p.u98",		0x80000, 0xd80c937a, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(kinst2)

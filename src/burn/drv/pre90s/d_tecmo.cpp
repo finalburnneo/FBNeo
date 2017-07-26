@@ -1538,7 +1538,7 @@ struct BurnDriver BurnDrvSilkwrmj = {
 // board have Japanese label "ADONO"
 
 static struct BurnRomInfo silkwrmpRomDesc[] = {
-	{ "silkworm_pr4ma.4.4",	0x10000, 0x5e2a39cc, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "silkworm_pr4ma.4",	0x10000, 0x5e2a39cc, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
 	{ "silkworm.5",			0x10000, 0xa6c7bb51, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "silkworm_sound.3",	0x08000, 0xc67c5644, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code

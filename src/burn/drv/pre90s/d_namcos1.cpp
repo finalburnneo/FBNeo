@@ -3075,6 +3075,8 @@ static struct BurnRomInfo mmazeRomDesc[] = {
 	{ "mm_obj-1.bin",	0x20000, 0x1ce49e04, 7 | BRF_GRA },           // 18
 	{ "mm_obj-2.bin",	0x20000, 0x3d3d5de3, 7 | BRF_GRA },           // 19
 	{ "mm_obj-3.bin",	0x20000, 0xdac57358, 7 | BRF_GRA },           // 20
+	
+	{ "mmaze.nv",		0x00800, 0x73e62b56, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mmaze)
@@ -3129,6 +3131,8 @@ static struct BurnRomInfo mmaze2RomDesc[] = {
 	{ "mm_obj-1.bin",	0x20000, 0x1ce49e04, 7 | BRF_GRA },           // 18
 	{ "mm_obj-2.bin",	0x20000, 0x3d3d5de3, 7 | BRF_GRA },           // 19
 	{ "mm_obj-3.bin",	0x20000, 0xdac57358, 7 | BRF_GRA },           // 20
+	
+	{ "mmaze.nv",		0x00800, 0x73e62b56, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mmaze2)

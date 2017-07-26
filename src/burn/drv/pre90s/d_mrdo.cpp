@@ -546,6 +546,8 @@ static struct BurnRomInfo mrdoRomDesc[] = {
 	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
 	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdo)
@@ -583,6 +585,8 @@ static struct BurnRomInfo mrdotRomDesc[] = {
 	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
 	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdot)
@@ -619,6 +623,8 @@ static struct BurnRomInfo mrdofixRomDesc[] = {
 	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
 	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdofix)
@@ -693,6 +699,8 @@ static struct BurnRomInfo mrduRomDesc[] = {
 	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
 	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdu)
@@ -730,6 +738,8 @@ static struct BurnRomInfo mrdoyRomDesc[] = {
 	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
 	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(mrdoy)
@@ -767,6 +777,8 @@ static struct BurnRomInfo yankeedoRomDesc[] = {
 	{ "t02--3.bin",   0x0020, 0xae263dc0, 5 | BRF_GRA },	       // 11 Palette (low bits)
 	{ "f10--1.bin",   0x0020, 0x16ee4ca2, 5 | BRF_GRA },	       // 12 Sprite color lookup table
 	{ "j10--4.bin",   0x0020, 0xff7fe284, 5 | BRF_GRA },	       // 13 Timing (not used)
+	
+	{ "j2-u001.bin",  0x0117, 0xbadf5876, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(yankeedo)

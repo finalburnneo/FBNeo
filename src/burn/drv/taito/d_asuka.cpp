@@ -2221,6 +2221,8 @@ static struct BurnRomInfo bonzeadvRomDesc[] = {
 	{ "b41-02.7",			0x80000, 0x29f205d9, BRF_GRA | TAITO_SPRITESA },			//  7 Sprites
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
+	
+	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(bonzeadv)
@@ -2258,6 +2260,8 @@ static struct BurnRomInfo bonzeadvoRomDesc[] = {
 	{ "b41-02.7",			0x80000, 0x29f205d9, BRF_GRA | TAITO_SPRITESA },			//  7 Sprites
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
+	
+	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(bonzeadvo)
@@ -2290,6 +2294,8 @@ static struct BurnRomInfo bonzeadvuRomDesc[] = {
 	{ "b41-02.7",			0x80000, 0x29f205d9, BRF_GRA | TAITO_SPRITESA },			//  7 Sprites
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
+	
+	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(bonzeadvu)
@@ -2334,6 +2340,8 @@ static struct BurnRomInfo bonzeadvpRomDesc[] = {
 	{ "2e1f.ic14",			0x20000, 0xdf1f87c0, BRF_SND | TAITO_YM2610A },				// 18
 	{ "f66e.ic11",			0x20000, 0xc6df1b3e, BRF_SND | TAITO_YM2610A },				// 19
 	{ "49d7.ic7",			0x20000, 0x5584c02c, BRF_SND | TAITO_YM2610A },				// 20
+	
+	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(bonzeadvp)
@@ -2366,6 +2374,8 @@ static struct BurnRomInfo jigkmgriRomDesc[] = {
 	{ "b41-02.7",			0x80000, 0x29f205d9, BRF_GRA | TAITO_SPRITESA },			//  7 Sprites
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
+	
+	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(jigkmgri)

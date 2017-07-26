@@ -675,7 +675,7 @@ static struct BurnRomInfo timelimtRomDesc[] = {
 
 	{ "clr.35",	0x0020, 0x9c9e6073, 5 | BRF_GRA },           // 11 Color proms
 	{ "clr.48",	0x0020, 0xa0bcac59, 5 | BRF_GRA },           // 12
-	{ "clr.57",	0x0020, 0x00000000, 5 | BRF_NODUMP | BRF_GRA },           // 13
+	{ "clr.57",	0x0020, 0x3a9f5394, 5 | BRF_GRA },           // 13
 
 	{ "tl5",	0x1000, 0x5b782e4a, 6 | BRF_PRG | BRF_ESS }, // 14 Z80 #1 code
 	{ "tl4",	0x1000, 0xa32883a9, 6 | BRF_PRG | BRF_ESS }, // 15

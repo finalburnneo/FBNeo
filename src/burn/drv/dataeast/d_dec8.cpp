@@ -3341,7 +3341,7 @@ static struct BurnRomInfo srdarwnjRomDesc[] = {
 	{ "dy03.b4",		0x10000, 0x44f2a4f9, 5 }, // 10 gfx3
 	{ "dy02.b5",		0x10000, 0x522d9a9e, 5 }, // 11
 
-	{ "id8751h.mcu",	0x01000, 0x11cd6ca4, 6  }, // 12 mcu
+	{ "id8751h_japan.mcu",	0x01000, 0x4ac2ca9d, 6  }, // 12 mcu
 
 	{ "dy12.f4",		0x00100, 0xebfaaed9, 7 }, // 13 proms
 };

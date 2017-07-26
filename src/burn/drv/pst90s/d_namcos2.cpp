@@ -5623,13 +5623,14 @@ static struct BurnRomInfo sgunner2jRomDesc[] = {
 	{ "sns_snd0.bin",	0x20000, 0xf079cd32, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 #ifdef ROM_VERIFY
+	// note - this define is only enabled for rom verification and is omitted completely from normal builds
 //	correct M37450 Code, unemulated/doesn't work. JacKc & Barry - please do not change these next 3 lines (5, 6, 7) or the game will break.
-	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS }, //  5 c68
-#else
+	{ "sys2_c68.3f",	0x08000, 0xca64550a, 0x00 | BRF_PRG | BRF_ESS }, //	5 c68 Code (unused for now)
+#endif
+
 //	not actually on this hw, but works
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  6 HD68705 Code
 	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  7
-#endif
 
 	{ "sns_obj0.bin",	0x80000, 0xc762445c, 0x05 | BRF_GRA },           //  8 Sprites
 	{ "sns_obj4.bin",	0x80000, 0x0b1be894, 0x05 | BRF_GRA },           //  9

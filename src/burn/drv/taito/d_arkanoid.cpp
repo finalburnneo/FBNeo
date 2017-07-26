@@ -1661,7 +1661,7 @@ struct BurnDriver BurnDrvarkanoidjbla = {
 
 static struct BurnRomInfo ark1ballRomDesc[] = {
 	{ "a-1.7d",       0x8000, 0xdd4f2b72, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
-	{ "2palline.7f",  0x8000, 0xed6b62ab, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "ark_2__1_palline.7f",  0x8000, 0xed6b62ab, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "a75-06__bootleg_68705.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 

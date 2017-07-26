@@ -1639,6 +1639,8 @@ static struct BurnRomInfo OpwolfRomDesc[] = {
 	{ "b20-14.72",     0x80000, 0x89f889e5, BRF_GRA | TAITO_SPRITESA },
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
+	
+	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolf)
@@ -1657,6 +1659,8 @@ static struct BurnRomInfo OpwolfaRomDesc[] = {
 	{ "b20-14.72",     0x80000, 0x89f889e5, BRF_GRA | TAITO_SPRITESA },
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
+	
+	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolfa)
@@ -1675,6 +1679,8 @@ static struct BurnRomInfo OpwolfjRomDesc[] = {
 	{ "b20-14.72",     0x80000, 0x89f889e5, BRF_GRA | TAITO_SPRITESA },
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
+	
+	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolfj)
@@ -1693,6 +1699,8 @@ static struct BurnRomInfo OpwolfjscRomDesc[] = {
 	{ "b20-14.72",     		0x80000, 0x89f889e5, BRF_GRA | TAITO_SPRITESA },
 
 	{ "b20-08.21",     		0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
+	
+	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolfjsc)
@@ -1711,6 +1719,8 @@ static struct BurnRomInfo OpwolfuRomDesc[] = {
 	{ "b20-14.72",     0x80000, 0x89f889e5, BRF_GRA | TAITO_SPRITESA },
 
 	{ "b20-08.21",     0x80000, 0xf3e19c64, BRF_SND | TAITO_MSM5205 },
+	
+	{ "cchip_b20-18",  0x02000, 0x57165ffb, BRF_OPT },
 };
 
 STD_ROM_PICK(Opwolfu)
@@ -2310,6 +2320,8 @@ static struct BurnRomInfo VolfiedRomDesc[] = {
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
+	
+	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Volfied)
@@ -2338,6 +2350,8 @@ static struct BurnRomInfo VolfiedjRomDesc[] = {
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
+	
+	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Volfiedj)
@@ -2366,6 +2380,8 @@ static struct BurnRomInfo VolfiedjoRomDesc[] = {
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
+	
+	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Volfiedjo)
@@ -2394,6 +2410,8 @@ static struct BurnRomInfo VolfieduRomDesc[] = {
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
+	
+	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Volfiedu)

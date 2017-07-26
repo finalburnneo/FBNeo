@@ -4236,6 +4236,8 @@ static struct BurnRomInfo MegablstRomDesc[] = {
 	{ "palce16v8-b89-04.ic27", 0x000117, 0xfc136ae2, BRF_OPT },
 	{ "pal16l8b-c11-13.ic13",  0x000104, 0x421d7ea8, BRF_OPT },
 	{ "pal16l8b-c11-14.ic23",  0x000104, 0x5c740aee, BRF_OPT },
+	
+	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 };
 
 STD_ROM_PICK(Megablst)
@@ -4256,6 +4258,8 @@ static struct BurnRomInfo MegablstjRomDesc[] = {
 	
 	{ "c11-01.29",             0x080000, 0xfd1ea532, BRF_SND | TAITO_YM2610A },
 	{ "c11-02.30",             0x080000, 0x451cc187, BRF_SND | TAITO_YM2610B },
+	
+	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 };
 
 STD_ROM_PICK(Megablstj)
@@ -4276,6 +4280,8 @@ static struct BurnRomInfo MegablstuRomDesc[] = {
 	
 	{ "c11-01.29",             0x080000, 0xfd1ea532, BRF_SND | TAITO_YM2610A },
 	{ "c11-02.30",             0x080000, 0x451cc187, BRF_SND | TAITO_YM2610B },
+	
+	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 };
 
 STD_ROM_PICK(Megablstu)

@@ -8118,27 +8118,27 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 //  Visco Roulette
 
 static struct BurnRomInfo setaroulRomDesc[] = {
-	{ "uf1002.u14",		0x10000, 0xb3a622b0, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "uf1003.u16",		0x10000, 0xa6afd769, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "uf1-002.u14",	0x10000, 0xb3a622b0, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "uf1-003.u16",	0x10000, 0xa6afd769, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "uf0005.u3",		0x08000, 0x383c2d57, 0x03 | BRF_GRA },           //  2 Sprites
-	{ "uf0006.u4",		0x08000, 0x90c9dae6, 0x03 | BRF_GRA },           //  3
-	{ "uf0007.u5",		0x08000, 0xe72c3dba, 0x03 | BRF_GRA },           //  4
-	{ "uf0008.u6",		0x08000, 0xe198e602, 0x03 | BRF_GRA },           //  5
+	{ "uf0-005.u3",		0x08000, 0x383c2d57, 0x03 | BRF_GRA },           //  2 Sprites
+	{ "uf0-006.u4",		0x08000, 0x90c9dae6, 0x03 | BRF_GRA },           //  3
+	{ "uf0-007.u5",		0x08000, 0xe72c3dba, 0x03 | BRF_GRA },           //  4
+	{ "uf0-008.u6",		0x08000, 0xe198e602, 0x03 | BRF_GRA },           //  5
 
-	{ "uf0010.u15",		0x80000, 0x0af13a56, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
-	{ "uf0009.u13",		0x80000, 0x20f2d7f5, 0x04 | BRF_GRA },           //  7
-	{ "uf0012.u29",		0x80000, 0xcba2a6b7, 0x04 | BRF_GRA },           //  8
-	{ "uf0011.u22",		0x80000, 0xaf60adf9, 0x04 | BRF_GRA },           //  9
-	{ "uf0014.u38",		0x80000, 0xda2bd4e4, 0x04 | BRF_GRA },           // 10
-	{ "uf0013.u37",		0x80000, 0x645ec3c3, 0x04 | BRF_GRA },           // 11
-	{ "uf0015.u40",		0x80000, 0x11dc19fa, 0x04 | BRF_GRA },           // 12
-	{ "uf0016.u48",		0x80000, 0x10f99fa8, 0x04 | BRF_GRA },           // 13
+	{ "uf0-010.u15",	0x80000, 0x0af13a56, 0x04 | BRF_GRA },           //  6 Layer 1 tiles
+	{ "uf0-009.u13",	0x80000, 0x20f2d7f5, 0x04 | BRF_GRA },           //  7
+	{ "uf0-012.u29",	0x80000, 0xcba2a6b7, 0x04 | BRF_GRA },           //  8
+	{ "uf0-011.u22",	0x80000, 0xaf60adf9, 0x04 | BRF_GRA },           //  9
+	{ "uf0-014.u38",	0x80000, 0xda2bd4e4, 0x04 | BRF_GRA },           // 10
+	{ "uf0-013.u37",	0x80000, 0x645ec3c3, 0x04 | BRF_GRA },           // 11
+	{ "uf0-015.u40",	0x80000, 0x11dc19fa, 0x04 | BRF_GRA },           // 12
+	{ "uf0-016.u48",	0x80000, 0x10f99fa8, 0x04 | BRF_GRA },           // 13
 
-	{ "uf1004.u52",		0x20000, 0xd63ea334, 0x06 | BRF_SND },           // 14 x1-010 Samples
+	{ "uf1-004.u52",	0x20000, 0x6638054d, 0x06 | BRF_SND },           // 14 x1-010 Samples
 
-	{ "ufo017.bin",		0x00200, 0xbf50c303, 0x00 | BRF_GRA },           // 15 Color Proms
-	{ "ufo018.bin",		0x00200, 0x1c584d5f, 0x00 | BRF_GRA },           // 16
+	{ "uf0-017.u50",	0x00200, 0xbf50c303, 0x00 | BRF_GRA },           // 15 Color Proms
+	{ "uf0-018.u51",	0x00200, 0x1c584d5f, 0x00 | BRF_GRA },           // 16
 };
 
 STD_ROM_PICK(setaroul)

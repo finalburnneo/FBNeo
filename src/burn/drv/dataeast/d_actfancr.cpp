@@ -967,12 +967,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Act-Fancer Cybernetick Hyper Weapon (World revision 2)
+// Act-Fancer Cybernetick Hyper Weapon (World revision 3)
 
 static struct BurnRomInfo actfancrRomDesc[] = {
-	{ "fe08-2.bin",	0x10000, 0x0d36fbfa, 1 | BRF_PRG | BRF_ESS }, //  0 h6280 Code
-	{ "fe09-2.bin",	0x10000, 0x27ce2bb1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "10",		0x10000, 0xcabad137, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "fe08-3.bin", 0x10000, 0x35f1999d, 1 | BRF_PRG | BRF_ESS }, //  0 h6280 Code
+	{ "fe09-3.bin",	0x10000, 0xd21416ca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "fe10-3.bin",	0x10000, 0x85535fcc, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "17-1",	0x08000, 0x289ad106, 2 | BRF_PRG | BRF_ESS }, //  3 m6502 Code
 
@@ -1001,7 +1001,7 @@ STD_ROM_FN(actfancr)
 
 struct BurnDriver BurnDrvActfancr = {
 	"actfancr", NULL, NULL, NULL, "1989",
-	"Act-Fancer Cybernetick Hyper Weapon (World revision 2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Act-Fancer Cybernetick Hyper Weapon (World revision 3)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, actfancrRomInfo, actfancrRomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
@@ -1048,6 +1048,49 @@ struct BurnDriver BurnDrvActfancr1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, actfancr1RomInfo, actfancr1RomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
+	ActfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	256, 240, 4, 3
+};
+
+
+// Act-Fancer Cybernetick Hyper Weapon (World revision 2)
+
+static struct BurnRomInfo actfancr2RomDesc[] = {
+	{ "fe08-2.bin",	0x10000, 0x0d36fbfa, 1 | BRF_PRG | BRF_ESS }, //  0 h6280 Code
+	{ "fe09-2.bin",	0x10000, 0x27ce2bb1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "10",		0x10000, 0xcabad137, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "17-1",	0x08000, 0x289ad106, 2 | BRF_PRG | BRF_ESS }, //  3 m6502 Code
+
+	{ "15",		0x10000, 0xa1baf21e, 3 | BRF_GRA },           //  4 Characters
+	{ "16",		0x10000, 0x22e64730, 3 | BRF_GRA },           //  5
+
+	{ "02",		0x10000, 0xb1db0efc, 4 | BRF_GRA },           //  6 Sprites
+	{ "03",		0x08000, 0xf313e04f, 4 | BRF_GRA },           //  7
+	{ "06",		0x10000, 0x8cb6dd87, 4 | BRF_GRA },           //  8
+	{ "07",		0x08000, 0xdd345def, 4 | BRF_GRA },           //  9
+	{ "00",		0x10000, 0xd50a9550, 4 | BRF_GRA },           // 10
+	{ "01",		0x08000, 0x34935e93, 4 | BRF_GRA },           // 11
+	{ "04",		0x10000, 0xbcf41795, 4 | BRF_GRA },           // 12
+	{ "05",		0x08000, 0xd38b94aa, 4 | BRF_GRA },           // 13
+
+	{ "14",		0x10000, 0xd6457420, 5 | BRF_GRA },           // 14 Background Layer
+	{ "12",		0x10000, 0x08787b7a, 5 | BRF_GRA },           // 15
+	{ "13",		0x10000, 0xc30c37dc, 5 | BRF_GRA },           // 16
+	{ "11",		0x10000, 0x1f006d9f, 5 | BRF_GRA },           // 17
+
+	{ "18",		0x10000, 0x5c55b242, 6 | BRF_SND },           // 18 Samples
+};
+
+STD_ROM_PICK(actfancr2)
+STD_ROM_FN(actfancr2)
+
+struct BurnDriver BurnDrvActfancr2 = {
+	"actfancr2", "actfancr", NULL, NULL, "1989",
+	"Act-Fancer Cybernetick Hyper Weapon (World revision 2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
+	NULL, actfancr2RomInfo, actfancr2RomName, NULL, NULL, ActfancrInputInfo, ActfancrDIPInfo,
 	ActfanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	256, 240, 4, 3
 };

@@ -2482,13 +2482,13 @@ struct BurnDriver BurnDrvDrtopplj = {
 };
 
 
-// Kageki (US)
+// Kageki (World)
 
 static struct BurnRomInfo kagekiRomDesc[] = {
-	{ "b35-16.11c",		0x10000, 0xa4e6fd58, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b35-13.bin",		0x10000, 0xdc4b025f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "b35-10.9c",		0x10000, 0xb150457d, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b35-17.43e",		0x10000, 0xfdd9c246, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "b35-14.bin",		0x10000, 0x8adef2d0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "b35__01.13a",	0x20000, 0x01d83a69, 4 | BRF_GRA },	      	  //  3 Graphics
 	{ "b35__02.12a",	0x20000, 0xd8af47ac, 4 | BRF_GRA },	      	  //  4
@@ -2518,10 +2518,50 @@ static INT32 KagekiInit()
 
 struct BurnDriver BurnDrvKageki = {
 	"kageki", NULL, NULL, NULL, "1988",
-	"Kageki (US)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
+	"Kageki (World)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kagekiRomInfo, kagekiRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
+	KagekiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+
+// Kageki (US)
+
+static struct BurnRomInfo kagekiuRomDesc[] = {
+	{ "b35-16.11c",		0x10000, 0xa4e6fd58, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b35-10.9c",		0x10000, 0xb150457d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b35-17.43e",		0x10000, 0xfdd9c246, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	{ "b35__01.13a",	0x20000, 0x01d83a69, 4 | BRF_GRA },	      	  //  3 Graphics
+	{ "b35__02.12a",	0x20000, 0xd8af47ac, 4 | BRF_GRA },	      	  //  4
+	{ "b35__03.10a",	0x20000, 0x3cb68797, 4 | BRF_GRA },	      	  //  5
+	{ "b35__04.8a",		0x20000, 0x71c03f91, 4 | BRF_GRA },	      	  //  6
+	{ "b35__05.7a",		0x20000, 0xa4e20c08, 4 | BRF_GRA },	      	  //  7
+	{ "b35__06.5a",		0x20000, 0x3f8ab658, 4 | BRF_GRA },	      	  //  8
+	{ "b35__07.4a",		0x20000, 0x1b4af049, 4 | BRF_GRA },	      	  //  9
+	{ "b35__08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
+
+	{ "b35-15.98g",		0x10000, 0xe6212a0f, 6 | BRF_SND },	      	  // 11 Samples
+	
+	/* these are shared with extermination except d9 */
+	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
+};
+
+STD_ROM_PICK(kagekiu)
+STD_ROM_FN(kagekiu)
+
+struct BurnDriver BurnDrvKagekiu = {
+	"kagekiu", "kageki", NULL, NULL, "1988",
+	"Kageki (US)\0", NULL, "Taito America Corporation (Romstar license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
+	NULL, kagekiuRomInfo, kagekiuRomName, NULL, NULL, CommonInputInfo, KagekiDIPInfo,
 	KagekiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };

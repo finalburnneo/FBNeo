@@ -363,7 +363,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x010000;
 	DrvGfxROM2		= Next; Next += 0x008000;
 
-	DrvColPROM		= Next; Next += 0x000b00; 
+	DrvColPROM		= Next; Next += 0x001000; 
 
 	AllRam			= Next;
 
@@ -448,7 +448,13 @@ static void DrvPaletteInit()
 	}
 
 	for (INT32 i = 0; i < 0x800; i++) { // everything else
-		DrvColTable[i + 0x200] = BITSWAP08(DrvColPROM[i + 0x300],4,5,6,7,3,2,1,0);
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofinv") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "retofinvb3") == 0) {
+			INT32 j = BITSWAP16(i,15,14,13,12,11,10,9,8,7,6,5,4,3,0,1,2);
+			DrvColTable[i + 0x200] = DrvColPROM[j + 0x300];
+		} else {
+			DrvColTable[i + 0x200] = BITSWAP08(DrvColPROM[i + 0x300],4,5,6,7,3,2,1,0);
+		}
+		
 		Palette[i + 0x200] = DrvPalette[DrvColTable[i + 0x200]];
 		DrvColTable[i + 0x200] = (DrvColTable[i + 0x200] == 0xff) ? 0 : 1;
 	}
@@ -470,20 +476,21 @@ static void DrvCalculateOffsets()
 	}
 }
 
-static INT32 DecodeBoot3PROMs()
+static INT32 DecodeClut(INT32 nStart)
 {
-	UINT8 *tmp = DrvGfxROM2 + 0x8000; // empty before gfx decode
+	UINT8 *tmp = (UINT8 *)BurnMalloc(0x1000);
 
-	if (BurnLoadRom(tmp + 0x000, 16, 1)) return 1;
-	if (BurnLoadRom(tmp + 0x400, 18, 1)) return 1;
-	if (BurnLoadRom(tmp + 0x800, 15, 1)) return 1;
-	if (BurnLoadRom(tmp + 0xc00, 17, 1)) return 1;
-
-	for (INT32 i = 0; i < 0x800; i++) {
-		DrvColPROM[i + 0x300] = (tmp[i] & 0x0f) | (tmp[i + 0x800] << 4);
+	if (BurnLoadRom(tmp + 0x000, nStart + 0, 1)) return 1;
+	if (BurnLoadRom(tmp + 0x400, nStart + 1, 1)) return 1;
+	if (BurnLoadRom(tmp + 0x800, nStart + 2, 1)) return 1;
+	if (BurnLoadRom(tmp + 0xc00, nStart + 3, 1)) return 1;
+	
+	for (INT32 i = 0; i < 0x400; i++) {
+		DrvColPROM[i + 0x300] = ((tmp[i + 0x000] & 0x0f) << 4) | (tmp[i + 0x400] & 0x0f);
+		DrvColPROM[i + 0x700] = ((tmp[i + 0x800] & 0x0f) << 4) | (tmp[i + 0xc00] & 0x0f);
 	}
-
-	memset (tmp, 0, 0x1000);
+	
+	BurnFree(tmp);
 
 	return 0;
 }
@@ -519,13 +526,25 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvColPROM + 0x00000, 12, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00100, 13, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00200, 14, 1)) return 1;
-
-		if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofin3") == 0) {
-			DecodeBoot3PROMs();
-		} else {
+		
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofinv") == 0) {
+			if (DecodeClut(15)) return 1;
+			
+			if (BurnLoadRom(DrvMcuROM  + 0x00000, 19, 1)) return 1;
+		}
+		
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofinvb") == 0) {
 			if (BurnLoadRom(DrvColPROM + 0x00300, 15, 1)) return 1;
-	
+			
 			if (BurnLoadRom(DrvMcuROM  + 0x00000, 16, 1)) return 1;
+		}
+		
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofinvb1") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "retofinvb2") == 0) {
+			if (BurnLoadRom(DrvColPROM + 0x00300, 15, 1)) return 1;
+		}
+
+		if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofinvb3") == 0) {
+			if (DecodeClut(15)) return 1;
 		}
 
 		DrvCalculateOffsets();
@@ -583,6 +602,7 @@ static INT32 DrvInit()
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
 	use_mcu = ~BurnDrvGetFlags() & BDF_BOOTLEG;
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "retofinvb") == 0) use_mcu = 1;
 
 	SN76496Init(0, 18432000 / 6, 0);
 	SN76496Init(1, 18432000 / 6, 1);
@@ -868,6 +888,53 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Return of the Invaders
 
 static struct BurnRomInfo retofinvRomDesc[] = {
+	{ "a37__03.ic70",	0x2000, 0xeae7459d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a37__02.ic71",	0x2000, 0x72895e37, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a37__01.ic72",	0x2000, 0x505dd20b, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a37__04.ic62",	0x2000, 0xd2899cc1, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "a37__05.ic17",	0x2000, 0x9025abea, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "a37__16.gfxboard.ic61",	0x2000, 0x4e3f501c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "a37__10.gfxboard.ic8",	0x2000, 0x6afdeec8, 5 | BRF_GRA },           //  6 Sprites
+	{ "a37__11.gfxboard.ic9",	0x2000, 0xd3dc9da3, 5 | BRF_GRA },           //  7
+	{ "a37__12.gfxboard.ic10",	0x2000, 0xd10b2eed, 5 | BRF_GRA },           //  8
+	{ "a37__13.gfxboard.ic11",	0x2000, 0x00ca6b3d, 5 | BRF_GRA },           //  9
+
+	{ "a37__14.gfxboard.ic55",	0x2000, 0xef7f8651, 6 | BRF_GRA },           // 10 Tiles
+	{ "a37__15.gfxboard.ic56",	0x2000, 0x03b40905, 6 | BRF_GRA },           // 11
+
+	{ "a37-06.ic13",	0x0100, 0xe9643b8b, 7 | BRF_GRA },           // 12 Color Proms
+	{ "a37-07.ic4",		0x0100, 0xe8f34e11, 7 | BRF_GRA },           // 13
+	{ "a37-08.ic3",		0x0100, 0x50030af0, 7 | BRF_GRA },           // 14
+	
+	{ "a37-17.gfxboard.ic36",	0x0400, 0xc63cf10e, 7 | BRF_GRA },           // 15 Color Proms
+	{ "a37-18.gfxboard.ic37",	0x0400, 0x6db07bd1, 7 | BRF_GRA },           // 16
+	{ "a37-19.gfxboard.ic83",	0x0400, 0xa92aea27, 7 | BRF_GRA },           // 17
+	{ "a37-20.gfxboard.ic84",	0x0400, 0x77a7aaf6, 7 | BRF_GRA },           // 18
+
+	{ "a37__09.ic37",	0x0800, 0x6a6d008d, 8 | BRF_PRG | BRF_ESS }, // 19 68705 Code
+};
+
+STD_ROM_PICK(retofinv)
+STD_ROM_FN(retofinv)
+
+struct BurnDriver BurnDrvRetofinv = {
+	"retofinv", NULL, NULL, NULL, "1985",
+	"Return of the Invaders\0", NULL, "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, retofinvRomInfo, retofinvRomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
+	224, 288, 3, 4
+};
+
+
+// Return of the Invaders (bootleg w/MCU)
+
+static struct BurnRomInfo retofinvbRomDesc[] = {
 	{ "a37-03.70",	0x2000, 0xeae7459d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "a37-02.71",	0x2000, 0x72895e37, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "a37-01.72",	0x2000, 0x505dd20b, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -891,26 +958,26 @@ static struct BurnRomInfo retofinvRomDesc[] = {
 	{ "a37-08.3",	0x0100, 0x50030af0, 7 | BRF_GRA },           // 14
 	{ "82s191n",	0x0800, 0x93c891e3, 7 | BRF_GRA },           // 15
 
-	{ "a37-09.37",	0x0800, 0x79bd6ded, 8 | BRF_PRG | BRF_ESS }, // 16 68705 Code
+	{ "a37-09_bootleg.37",	0x0800, 0x79bd6ded, 8 | BRF_PRG | BRF_ESS }, // 16 68705 Code
 };
 
-STD_ROM_PICK(retofinv)
-STD_ROM_FN(retofinv)
+STD_ROM_PICK(retofinvb)
+STD_ROM_FN(retofinvb)
 
-struct BurnDriver BurnDrvRetofinv = {
-	"retofinv", NULL, NULL, NULL, "1985",
-	"Return of the Invaders\0", NULL, "Taito Corporation", "Miscellaneous",
+struct BurnDriver BurnDrvRetofinvb = {
+	"retofinvb", "retofinv", NULL, NULL, "1985",
+	"Return of the Invaders (bootleg w/MCU)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofinvRomInfo, retofinvRomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, retofinvbRomInfo, retofinvbRomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };
 
 
-// Return of the Invaders (bootleg set 1)
+// Return of the Invaders (bootleg no MCU set 1)
 
-static struct BurnRomInfo retofin1RomDesc[] = {
+static struct BurnRomInfo retofinvb1RomDesc[] = {
 	{ "roi.02",	0x2000, 0xd98fd462, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "roi.01b",	0x2000, 0x3379f930, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "roi.01",	0x2000, 0x57679062, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -935,23 +1002,23 @@ static struct BurnRomInfo retofin1RomDesc[] = {
 	{ "82s191n",	0x0800, 0x93c891e3, 7 | BRF_GRA },           // 15
 };
 
-STD_ROM_PICK(retofin1)
-STD_ROM_FN(retofin1)
+STD_ROM_PICK(retofinvb1)
+STD_ROM_FN(retofinvb1)
 
-struct BurnDriver BurnDrvRetofin1 = {
-	"retofinv1", "retofinv", NULL, NULL, "1985",
-	"Return of the Invaders (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
+struct BurnDriver BurnDrvRetofinvb1 = {
+	"retofinvb1", "retofinv", NULL, NULL, "1985",
+	"Return of the Invaders (bootleg no MCU set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofin1RomInfo, retofin1RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvb1RomInfo, retofinvb1RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };
 
 
-// Return of the Invaders (bootleg set 2)
+// Return of the Invaders (bootleg no MCU set 2)
 
-static struct BurnRomInfo retofin2RomDesc[] = {
+static struct BurnRomInfo retofinvb2RomDesc[] = {
 	{ "ri-c.1e",	0x2000, 0xe3c31260, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "roi.01b",	0x2000, 0x3379f930, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ri-a.1c",	0x2000, 0x3ae7c530, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -976,15 +1043,59 @@ static struct BurnRomInfo retofin2RomDesc[] = {
 	{ "82s191n",	0x0800, 0x93c891e3, 7 | BRF_GRA },           // 15
 };
 
-STD_ROM_PICK(retofin2)
-STD_ROM_FN(retofin2)
+STD_ROM_PICK(retofinvb2)
+STD_ROM_FN(retofinvb2)
 
-struct BurnDriver BurnDrvRetofin2 = {
-	"retofinv2", "retofinv", NULL, NULL, "1985",
-	"Return of the Invaders (bootleg set 2)\0", NULL, "bootleg", "Miscellaneous",
+struct BurnDriver BurnDrvRetofinvb2 = {
+	"retofinvb2", "retofinv", NULL, NULL, "1985",
+	"Return of the Invaders (bootleg no MCU set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, retofin2RomInfo, retofin2RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	NULL, retofinvb2RomInfo, retofinvb2RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
+	224, 288, 3, 4
+};
+
+// Return of the Invaders (bootleg no MCU set 3)
+
+static struct BurnRomInfo retofinvb3RomDesc[] = {
+	{ "1.11",		0x2000, 0x71c216ca, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "2.10",		0x2000, 0x3379f930, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.9",		0x2000, 0x92d79fa8, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "4.15",		0x2000, 0xd2899cc1, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "5.BIN",		0x2000, 0x9025abea, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "16.7",		0x2000, 0x4e3f501c, 4 | BRF_GRA },           //  5 Characters
+
+	{ "10.1",		0x2000, 0x6afdeec8, 5 | BRF_GRA },           //  6 Sprites
+	{ "11.2",		0x2000, 0xd3dc9da3, 5 | BRF_GRA },           //  7
+	{ "12.3",		0x2000, 0xd10b2eed, 5 | BRF_GRA },           //  8
+	{ "13.4",		0x2000, 0x00ca6b3d, 5 | BRF_GRA },           //  9
+
+	{ "14.5",		0x2000, 0xef7f8651, 6 | BRF_GRA },           // 10 Tiles
+	{ "15.6",		0x2000, 0x03b40905, 6 | BRF_GRA },           // 11
+
+	{ "74s287.b",	0x0100, 0xe9643b8b, 7 | BRF_GRA },           // 12 Color Proms
+	{ "74s287.c",	0x0100, 0xe8f34e11, 7 | BRF_GRA },           // 13
+	{ "74s287.a",	0x0100, 0x50030af0, 7 | BRF_GRA },           // 14
+	
+	{ "6353-1.a",	0x0400, 0xc63cf10e, 7 | BRF_GRA },           // 15 Color Proms
+	{ "6353-1.b",	0x0400, 0x6db07bd1, 7 | BRF_GRA },           // 16
+	{ "6353-1.d",	0x0400, 0xa92aea27, 7 | BRF_GRA },           // 17
+	{ "6353-1.c",	0x0400, 0x77a7aaf6, 7 | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(retofinvb3)
+STD_ROM_FN(retofinvb3)
+
+struct BurnDriver BurnDrvRetofinvb3 = {
+	"retofinvb3", "retofinv", NULL, NULL, "1985",
+	"Return of the Invaders (bootleg no MCU set 3)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
+	NULL, retofinvb3RomInfo, retofinvb3RomName, NULL, NULL, RetofinvInputInfo, RetofinvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xa00,
 	224, 288, 3, 4
 };

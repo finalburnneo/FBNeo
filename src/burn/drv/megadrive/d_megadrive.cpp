@@ -41511,3 +41511,347 @@ struct BurnDriver BurnDrvmd_rnrracinh = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Sonic Hacks from Combone
+
+// Sonic the Hedgehog 3 in 1 (Compilation By vladikcomper)
+static struct BurnRomInfo md_sonic31RomDesc[] = {
+	{ "Sonic the Hedgehog 3 in 1.bin", 0x398D82, 0x2D169E08, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic31)
+STD_ROM_FN(md_sonic31)
+
+struct BurnDriver BurnDrvmd_sonic31 = {
+	"md_sonic31", NULL, NULL, NULL, "2011",
+	"Sonic the Hedgehog 3 in 1 (World, Hack)\0", NULL, "2011 vladikcomper", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonic31RomInfo, md_sonic31RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Megamix (Hack By Team Megamix V3.0)
+static struct BurnRomInfo md_sonicmmixRomDesc[] = {
+	{ "Sonic Megamix V3.0 (Hack By Team Megamix).bin", 0x139498, 0x66ECB4F4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonicmmix)
+STD_ROM_FN(md_sonicmmix)
+
+struct BurnDriver BurnDrvmd_sonicmmix = {
+	"md_sonicmmix", "md_sonic", NULL, NULL, "2007",
+	"Sonic Megamix (Hack By Team Megamix V3.0)\0", NULL, "2007 Team Megamix", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonicmmixRomInfo, md_sonicmmixRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Metal Sonic Hyperdrive (Hack By Darkon)
+static struct BurnRomInfo md_msonichdRomDesc[] = {
+	{ "Metal Sonic Hyperdrive (V4.2) (Hack By Darkon).bin", 0x100000, 0x195219E0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_msonichd)
+STD_ROM_FN(md_msonichd)
+
+struct BurnDriver BurnDrvmd_msonichd = {
+	"md_msonichd", "md_sonic", NULL, NULL, "2014",
+	"Metal Sonic Hyperdrive (Hack V4.2)\0", NULL, "2014 Darkon", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_msonichdRomInfo, md_msonichdRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// The S Factor - Sonia And Silver (Hack By Aquaslash & Pals)
+static struct BurnRomInfo md_tsfssRomDesc[] = {
+	{ "The S Factor - Sonia And Silver (Hack By Aquaslash & Pals).bin", 0x13D655, 0x366E8CD4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tsfss)
+STD_ROM_FN(md_tsfss)
+
+struct BurnDriver BurnDrvmd_tsfss = {
+	"md_tsfss", "md_sonic", NULL, NULL, "2013",
+	"The S Factor - Sonia And Silver (Hack)\0", NULL, "2013 Aquaslash & Pals", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tsfssRomInfo, md_tsfssRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mobius Evolution V3.6 (Hack By Abyssal Leopard)
+static struct BurnRomInfo md_mevoRomDesc[] = {
+	{ "Mobius Evolution V3.6 (Hack By Abyssal Leopard).bin", 0x1B8900, 0xF2A974F4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mevo)
+STD_ROM_FN(md_mevo)
+
+struct BurnDriver BurnDrvmd_mevo = {
+	"md_mevo", "md_sonic", NULL, NULL, "2015",
+	"Mobius Evolution (Hack V3.6)\0", NULL, "2015 Abyssal Leopard", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mevoRomInfo, md_mevoRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Somari The Adventurer (Hack By Darkon360,Lone Devil)
+static struct BurnRomInfo md_somaritaRomDesc[] = {
+	{ "Somari The Adventurer (Hack).bin", 0x100000, 0x6AB80FCA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_somarita)
+STD_ROM_FN(md_somarita)
+
+struct BurnDriver BurnDrvmd_somarita = {
+	"md_somarita", "md_sonic", NULL, NULL, "2015",
+	"Somari The Adventurer (Hack V1.1)\0", NULL, "2015 Darkon360, Lone Devil", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_somaritaRomInfo, md_somaritaRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Classic Heroes (Hack By flamewing,ColinC10)
+static struct BurnRomInfo md_scheroesRomDesc[] = {
+	{ "Sonic Classic Heroes.bin", 0x400000, 0xC27093DA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_scheroes)
+STD_ROM_FN(md_scheroes)
+
+struct BurnDriver BurnDrvmd_scheroes = {
+	"md_scheroes", "md_sonic2", NULL, NULL, "2013",
+	"Sonic Classic Heroes (Hack)\0", NULL, "2013 flamewing, ColinC10", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_scheroesRomInfo, md_scheroesRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Bash V2 (Hack By redhotsonic)
+static struct BurnRomInfo md_sbashRomDesc[] = {
+	{ "Sonic Bash V2.bin", 0x80000, 0x627D1CA8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sbash)
+STD_ROM_FN(md_sbash)
+
+struct BurnDriver BurnDrvmd_sbash = {
+	"md_sbash", "md_sonic2", NULL, NULL, "2016",
+	"Sonic Bash (Hack V2)\0", NULL, "2016 redhotsonic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sbashRomInfo, md_sbashRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic 2 Battle Race (Hack By ColinC10)
+static struct BurnRomInfo md_sonic2brcRomDesc[] = {
+	{ "Sonic2BattleRace.bin", 0x200000, 0xBE6D9178, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic2brc)
+STD_ROM_FN(md_sonic2brc)
+
+struct BurnDriver BurnDrvmd_sonic2brc = {
+	"md_sonic2brc", "md_sonic2", NULL, NULL, "2012",
+	"Sonic 2 Battle Race (Hack)\0", NULL, "2012 ColinC10", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonic2brcRomInfo, md_sonic2brcRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic 2 Recreation - Part One (Hack By redhotsonic)
+static struct BurnRomInfo md_s2rpt1RomDesc[] = {
+	{ "Sonic 2 Recreation - Part One.bin", 0x222628, 0x771FD4EA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s2rpt1)
+STD_ROM_FN(md_s2rpt1)
+
+struct BurnDriver BurnDrvmd_s2rpt1 = {
+	"md_s2rpt1", "md_sonic2", NULL, NULL, "2013",
+	"Sonic 2 Recreation - Part One (Hack, Contest Build)\0", NULL, "2013 redhotsonic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_s2rpt1RomInfo, md_s2rpt1RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Yoshi in Sonic The Hedgehog 2 (Beta) (Hack By Xenowhirl)
+static struct BurnRomInfo md_ysonic2RomDesc[] = {
+	{ "Yoshi_Sonic2beta.bin", 0x100000, 0x5F19712A, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ysonic2)
+STD_ROM_FN(md_ysonic2)
+
+struct BurnDriver BurnDrvmd_ysonic2 = {
+	"md_ysonic2", "md_sonic2", NULL, NULL, "2017",
+	"Yoshi in Sonic the Hedgehog 2 (Hack, Beta)\0", NULL, "2017 Xenowhirl", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ysonic2RomInfo, md_ysonic2RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Winter Adventures (Hack By vladikcomper)
+static struct BurnRomInfo md_sonicwaRomDesc[] = {
+	{ "Sonic Winter Adventures (Hack).bin", 0xE8000, 0x795D6603, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonicwa)
+STD_ROM_FN(md_sonicwa)
+
+struct BurnDriver BurnDrvmd_sonicwa = {
+	"md_sonicwa", "md_sonic", NULL, NULL, "2013",
+	"Sonic Winter Adventures (Hack)\0", NULL, "2013 vladikcomper", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonicwaRomInfo, md_sonicwaRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Pixel Perfect (Ultimate Version) (Hack By JcFerggy,NovaWizard/2013 Jk.Fox)
+static struct BurnRomInfo md_sonicppuRomDesc[] = {
+	{ "Sonic Pixel Perfect (Ultimate Version).bin", 0xC26D4, 0x6D776301, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonicppu)
+STD_ROM_FN(md_sonicppu)
+
+struct BurnDriver BurnDrvmd_sonicppu = {
+	"md_sonicppu", "md_sonic", NULL, NULL, "2013",
+	"Sonic Pixel Perfect (Hack, Ultimate Version)\0", NULL, "2008 JcFerggy, NovaWizard/2013 Jk.Fox", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonicppuRomInfo, md_sonicppuRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic the Hedgehog - The Lost Worlds (Hack By ExecByte)
+static struct BurnRomInfo md_sonictlwRomDesc[] = {
+	{ "Sonic the Hedgehog - The Lost Worlds.bin", 0x100000, 0x47004E22, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonictlw)
+STD_ROM_FN(md_sonictlw)
+
+struct BurnDriver BurnDrvmd_sonictlw = {
+	"md_sonictlw", "md_sonic", NULL, NULL, "2009",
+	"Sonic the Hedgehog - The Lost Worlds (Hack)\0", NULL, "2009 ExecByte", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonictlwRomInfo, md_sonictlwRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// South Island Adventure V0.3 (Hack By Hivebrain)
+static struct BurnRomInfo md_southiaRomDesc[] = {
+	{ "South Island Adventure V0.3.bin", 0x8CED0, 0xCED56180, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_southia)
+STD_ROM_FN(md_southia)
+
+struct BurnDriver BurnDrvmd_southia = {
+	"md_southia", "md_sonic", NULL, NULL, "2004",
+	"South Island Adventure (Hack, V0.3)\0", NULL, "2004 Hivebrain", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_southiaRomInfo, md_southiaRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Knuckles the Echidna in Sonic the Hedgehog (Hack By Stealth)
+static struct BurnRomInfo md_ktesonicRomDesc[] = {
+	{ "ktesonic.bin", 0x9FF80, 0x57A6DDB3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ktesonic)
+STD_ROM_FN(md_ktesonic)
+
+struct BurnDriver BurnDrvmd_ktesonic = {
+	"md_ktesonic", "md_sonic", NULL, NULL, "2005",
+	"Knuckles the Echidna in Sonic the Hedgehog (Hack)\0", NULL, "2005 Stealth", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ktesonicRomInfo, md_ktesonicRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic Boom (Hack By snkenjoi,iojnekns)
+static struct BurnRomInfo md_sboomRomDesc[] = {
+	{ "Sonic Boom (Hack).bin", 0x16FDA0, 0xAA903C50, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sboom)
+STD_ROM_FN(md_sboom)
+
+struct BurnDriver BurnDrvmd_sboom = {
+	"md_sboom", "md_sonic2", NULL, NULL, "2009",
+	"Sonic Boom (Hack)\0", NULL, "2009 snkenjoi, iojnekns", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sboomRomInfo, md_sboomRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic 3 & Knuckles - The Challenges (Hack By ColinC10)
+static struct BurnRomInfo md_s3ktcRomDesc[] = {
+	{ "S3K_TheChallenges.bin", 0x400000, 0x04179928, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s3ktc)
+STD_ROM_FN(md_s3ktc)
+
+struct BurnDriver BurnDrvmd_s3ktc = {
+	"md_s3ktc", NULL, NULL, NULL, "2009",
+	"Sonic 3 & Knuckles - The Challenges (Hack)\0", NULL, "2009 ColinC10", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_s3ktcRomInfo, md_s3ktcRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic the Hedgehog 3 Complete (Hack By Tiddles,Neo,That One Jig,ValleyBell,Flamewing,Hayate)
+static struct BurnRomInfo md_s3compRomDesc[] = {
+	{ "S3Complete.bin", 0x3C0000, 0x2BD564B1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s3comp)
+STD_ROM_FN(md_s3comp)
+
+struct BurnDriver BurnDrvmd_s3comp = {
+	"md_s3comp", NULL, NULL, NULL, "2013",
+	"Sonic the Hedgehog 3 Complete (World, Hack)\0", NULL, "2013, Hack - See full Credits in Game", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_s3compRomInfo, md_s3compRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

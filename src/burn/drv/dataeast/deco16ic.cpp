@@ -310,7 +310,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 	for (INT32 y = draw_start; y < draw_end; y++)
 	{
-		INT32 xoff = deco16_scroll_x[tmap][((y + deco16_yscroll[tmap] + deco16_global_y_offset)&0x1ff)/deco16_scroll_rows[tmap]] & wmask;
+		INT32 xoff = deco16_scroll_x[tmap][((y + deco16_yscroll[tmap] + deco16_global_y_offset)&hmask)/deco16_scroll_rows[tmap]] & wmask;
 
 		for (INT32 x = 0; x < nScreenWidth + size; x+=size)
 		{

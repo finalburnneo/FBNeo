@@ -161,6 +161,7 @@ static INT32 RomNoByteswap;
 static UINT32 Z80BankPartial = 0;
 static UINT32 Z80BankPos = 0;
 static INT32 Z80CyclesPrev = 0;
+static INT32 nExtraCycles = 0; // 68k (sek) roll-over cycles
 
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
@@ -352,7 +353,7 @@ UINT16 __fastcall MegadriveReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0xa11100: {
-			UINT16 retVal = rand() & 0xffff;
+			UINT16 retVal = BurnRandom() & 0xffff;
 			if (Z80HasBus || MegadriveZ80Reset) {
 				retVal |= 0x100;
 			} else {
@@ -383,7 +384,7 @@ UINT8 __fastcall MegadriveReadByte(UINT32 sekAddress)
 		}
 				
 		case 0xa11100: {
-			UINT8 retVal = rand() & 0xff;
+			UINT8 retVal = BurnRandom() & 0xff;
 			if (Z80HasBus || MegadriveZ80Reset) {
 				retVal |= 0x01;
 			} else {
@@ -1076,30 +1077,13 @@ void __fastcall MegadriveZ80RamWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 // -- I/O Read Write ------------------------------------------
 
-static INT32 PadRead3btn(INT32 i)
-{
-  INT32 pad = ~(JoyPad->pad[i]); // Get inverse of pad MXYZ SACB RLDU
-  INT32 value;
-
-  if (RamIO[i+1] & 0x40) // TH
-    value = pad & 0x3f;                      // ?1CB RLDU
-  else
-    value = ((pad & 0xc0) >> 2) | (pad & 3); // ?0SA 00DU
-
-  value |= RamIO[i+1] & 0x40;
-  return value;
-}
-
 static INT32 PadRead(INT32 i)
 {
-	if (bForce3Button) return // get that out of the way... (Forgotten Worlds...)
-		PadRead3btn(i);
-
 	INT32 pad=0,value=0,TH;
 	pad = ~(JoyPad->pad[i]);					// Get inverse of pad MXYZ SACB RLDU
 	TH = RamIO[i+1] & 0x40;
 
-	/*if(PicoOpt & 0x20)*/ {					// 6 button gamepad enabled
+	if (!bForce3Button) {					    // 6 button gamepad enabled
 		INT32 phase = JoyPad->padTHPhase[i];
 
 		if(phase == 2 && !TH) {
@@ -1283,10 +1267,12 @@ static INT32 MegadriveResetDo()
 	Z80BankPos = 0;
 	Z80CyclesPrev = 0;
 
-	dma_xfers = rand() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
+	dma_xfers = BurnRandom() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
 	Scanline = 0;
 	rendstatus = 0;
 	bMegadriveRecalcPalette = 1;
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -1884,11 +1870,11 @@ UINT8 __fastcall Chinfi3ProtReadByte(UINT32 /*sekAddress*/)
 	}
 	else if (SekGetPC(0) == 0x10c4a) // unknown
 	{
-		return rand() & 0xff;//space->machine().rand();
+		return BurnRandom() & 0xff;//space->machine().rand();
 	}
 	else if (SekGetPC(0) == 0x10c50) // unknown
 	{
-		return rand() & 0xff;//space->machine().rand();
+		return BurnRandom() & 0xff;//space->machine().rand();
 	}
 	else if (SekGetPC(0) == 0x10c52) // relates to the game speed..
 	{
@@ -3107,8 +3093,7 @@ INT32 MegadriveInit()
 	
 	MegadriveResetDo();
 
-	if (   (strstr(BurnDrvGetTextA(DRV_NAME), "dstrik"))
-		|| (strstr(BurnDrvGetTextA(DRV_NAME), "issdx"))
+	if (   (strstr(BurnDrvGetTextA(DRV_NAME), "issdx"))
 		|| (strstr(BurnDrvGetTextA(DRV_NAME), "dinho98"))  ) {
 		bprintf(0, _T("Alt. Timing hack activated!\n"));
 		MegadriveAltTimingHack = 1;
@@ -4312,7 +4297,7 @@ INT32 MegadriveFrame()
 	INT32 vcnt_wrap = 0;
 
 	if( Hardware & 0x40 ) {
-		lines  = 313;
+		lines  = 312;
 		line_sample = 68;
 		if( RamVReg->reg[1]&8 ) lines_vis = 240;
 		total_68k_cycles = (INT32)(INT64)(TOTAL_68K_CYCLES_PAL * nBurnCPUSpeedAdjust / 0x100);
@@ -4324,16 +4309,24 @@ INT32 MegadriveFrame()
 		total_z80_cycles = (INT32)TOTAL_Z80_CYCLES;
 	}
 
+	lines_vis--; // make 0-based. w/o we're running 1 visible line too many.  causes trouble with ronaldino98 though(?)
+
 	INT32 cycles_68k = total_68k_cycles / lines;
 	INT32 cycles_z80 = total_z80_cycles / lines;
 
-	if (MegadriveAltTimingHack) {
+	//if (MegadriveAltTimingHack)
+	{ // this is how picodrive does it, much better this way.
 		total_68k_cycles = lines * CYCLES_M68K_LINE;
 		cycles_68k = CYCLES_M68K_LINE;
 	}
 
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
 	RamVReg->v_counter = 0;
+
+	if (nExtraCycles > 0) {
+		SekIdle(nExtraCycles);
+		nExtraCycles = 0;
+	}
 
 	BurnTimerUpdate(CYCLES_M68K_ASD); // needed for Double Dragon II
 
@@ -4372,7 +4365,7 @@ INT32 MegadriveFrame()
 			RamVReg->v_counter &= 0xff;
 		}
 
-		/*if(PicoOpt&0x20)*/ {
+		if (!bForce3Button) {
 			// pad delay (for 6 button pads)
 			if(JoyPad->padDelay[0]++ > 25) JoyPad->padTHPhase[0] = 0;
 			if(JoyPad->padDelay[1]++ > 25) JoyPad->padTHPhase[1] = 0;
@@ -4429,8 +4422,13 @@ INT32 MegadriveFrame()
 	
 	if (pBurnDraw) MegadriveDraw();
 
-	BurnTimerEndFrame(total_68k_cycles);
-	
+	if (SekTotalCycles() < total_68k_cycles)
+		BurnTimerEndFrame(total_68k_cycles);
+
+	//bprintf(0, _T("cyc %d  aim %d.\n"), SekTotalCycles(), total_68k_cycles);
+
+	nExtraCycles = SekTotalCycles() - total_68k_cycles;
+
 	if (Z80HasBus && !MegadriveZ80Reset) {
 		if (done_z80 < total_z80_cycles) {
 			done_z80 += ZetRun(total_z80_cycles - done_z80);
@@ -4477,8 +4475,6 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		BurnMD2612Scan(nAction, pnMin);
 		SN76496Scan(nAction, pnMin);
 
-		SCAN_VAR(Scanline); //
-		SCAN_VAR(Scanline); // Yes, let's scan Scanline 3x. (maintain compatibility with earlier savestates)
 		SCAN_VAR(Scanline);
 		SCAN_VAR(Z80HasBus);
 		SCAN_VAR(MegadriveZ80Reset);
@@ -4486,6 +4482,9 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(rendstatus);
 		SCAN_VAR(Z80BankPartial);
 		SCAN_VAR(Z80BankPos);
+		SCAN_VAR(nExtraCycles);
+
+		BurnRandomScan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {

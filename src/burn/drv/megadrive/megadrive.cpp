@@ -4323,10 +4323,10 @@ INT32 MegadriveFrame()
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
 	RamVReg->v_counter = 0;
 
-	if (nExtraCycles > 0) {
+	/*if (nExtraCycles > 0) {
 		SekIdle(nExtraCycles);
 		nExtraCycles = 0;
-	}
+	}*/
 
 	BurnTimerUpdate(CYCLES_M68K_ASD); // needed for Double Dragon II
 
@@ -4422,8 +4422,7 @@ INT32 MegadriveFrame()
 	
 	if (pBurnDraw) MegadriveDraw();
 
-	if (SekTotalCycles() < total_68k_cycles)
-		BurnTimerEndFrame(total_68k_cycles);
+	BurnTimerEndFrame(total_68k_cycles);
 
 	//bprintf(0, _T("cyc %d  aim %d.\n"), SekTotalCycles(), total_68k_cycles);
 

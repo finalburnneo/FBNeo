@@ -3937,11 +3937,11 @@ struct BurnDriver BurnDrvAssaultp = {
 };
 
 
-// Ordyne (Japan, English Version)
+// Ordyne (World)
 
 static struct BurnRomInfo ordyneRomDesc[] = {
-	{ "or1_mp0e.bin",	0x20000, 0x5e2f9052, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "or1_mp1e.bin",	0x20000, 0x367a8fcf, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "or2_mp0.mpr0",	0x20000, 0x31a1742b, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "or2_mp1.mpr1",	0x20000, 0xc80c6b73, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "or1_sp0.bin",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
 	{ "or1_sp1.bin",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
@@ -4024,7 +4024,7 @@ static INT32 OrdynejInit()
 
 struct BurnDriver BurnDrvOrdyne = {
 	"ordyne", NULL, NULL, NULL, "1988",
-	"Ordyne (Japan, English Version)\0", NULL, "Namco", "System 2",
+	"Ordyne (World)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, ordyneRomInfo, ordyneRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
@@ -4088,6 +4088,65 @@ struct BurnDriver BurnDrvOrdynej = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, ordynejRomInfo, ordynejRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	OrdynejInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
+	288, 224, 4, 3
+};
+
+
+// Ordyne (Japan, English Version)
+
+static struct BurnRomInfo ordynejeRomDesc[] = {
+	{ "or1_mp0e.bin",	0x20000, 0x5e2f9052, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "or1_mp1e.bin",	0x20000, 0x367a8fcf, 0x01 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "or1_sp0.bin",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "or1_sp1.bin",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "or1_sd0.bin",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+
+	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
+	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "or1_ob0.bin",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "or1_ob1.bin",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
+	{ "or1_ob2.bin",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
+	{ "or1_ob3.bin",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
+	{ "or1_ob4.bin",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
+	{ "or1_ob5.bin",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
+	{ "or1_ob6.bin",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
+	{ "or1_ob7.bin",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
+
+	{ "or1_ch0.bin",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
+	{ "or1_ch1.bin",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
+	{ "or1_ch3.bin",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
+	{ "or1_ch5.bin",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
+	{ "or1_ch6.bin",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
+	{ "or1_ch7e.bin",	0x20000, 0x8c0d2ab7, 0x06 | BRF_GRA },           // 20
+
+	{ "or1_rz0.bin",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
+	{ "or1_rz1.bin",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
+	{ "or1_rz2.bin",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
+	{ "or1_rz3.bin",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
+	{ "or1_rz4.bin",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
+
+	{ "or1_sha.bin",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
+
+	{ "or1_dt0.bin",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_dt1.bin",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+
+	{ "or1_vo1.bin",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
+	{ "or1_vo2.bin",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+};
+
+STD_ROM_PICK(ordyneje)
+STD_ROM_FN(ordyneje)
+
+struct BurnDriver BurnDrvOrdyneje = {
+	"ordyneje", "ordyne", NULL, NULL, "1988",
+	"Ordyne (Japan, English Version)\0", NULL, "Namco", "System 2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
+	NULL, ordynejeRomInfo, ordynejeRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
+	OrdyneInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
 };
 

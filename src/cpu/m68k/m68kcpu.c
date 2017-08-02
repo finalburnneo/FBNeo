@@ -47,6 +47,7 @@ int  m68ki_initial_cycles;
 int  m68ki_remaining_cycles = 0;                     /* Number of clocks remaining */
 uint m68ki_tracing = 0;
 uint m68ki_address_space;
+int  irq_latency = 0;
 
 #ifdef M68K_LOG_ENABLE
 const char *const m68ki_cpu_names[] =
@@ -859,7 +860,7 @@ int m68k_executeMD(int num_cycles)
 		m68ki_set_address_error_trap(); /* auto-disable (see m68kcpu.h) */
 
 		/* Main loop.  Keep going until we run out of clock cycles */
-		while (GET_CYCLES() >= 0)
+		while (GET_CYCLES() > 0)
 		{
 			/* Set tracing accodring to T1. (T0 is done inside instruction) */
 			m68ki_trace_t1(); /* auto-disable (see m68kcpu.h) */
@@ -905,7 +906,7 @@ int m68k_cycles_remaining(void)
 
 void m68k_cycles_remaining_set(int cycles)
 {
-	GET_CYCLES() = cycles;
+	SET_CYCLES(cycles);
 }
 
 /* Change the timeslice */
@@ -942,6 +943,38 @@ void m68k_set_irq(unsigned int int_level)
 		m68ki_cpu.nmi_pending = TRUE;
 
 	m68ki_cpu.sleepuntilint = 0;
+}
+
+/* Megadrive: IRQ latency (Fatal Rewind, Sesame's Street Counting Cafe)*/
+void m68k_set_irq_delay(unsigned int int_level)
+{
+  /* Prevent reentrance */
+  if (!irq_latency)
+  {
+    /* This is always triggered from MOVE instructions (VDP CTRL port write) */
+    /* We just make sure this is not a MOVE.L instruction as we could be in */
+    /* the middle of its execution (first memory write).                   */
+    if ((REG_IR & 0xF000) != 0x2000)
+    {
+      /* Finish executing current instruction */
+      USE_CYCLES(CYC_INSTRUCTION[REG_IR]);
+
+      /* One instruction delay before interrupt */
+      irq_latency = 1;
+      m68ki_trace_t1() /* auto-disable (see m68kcpu.h) */
+      m68ki_use_data_space() /* auto-disable (see m68kcpu.h) */
+      REG_IR = m68ki_read_imm_16();
+      m68ki_instruction_jump_table[REG_IR]();
+      m68ki_exception_if_trace() /* auto-disable (see m68kcpu.h) */
+      irq_latency = 0;
+    }
+
+    /* Set IRQ level */
+    CPU_INT_LEVEL = int_level << 8;
+  }
+  
+  /* Check interrupt mask to process IRQ  */
+  m68ki_check_interrupts(); /* Level triggered (IRQ) */
 }
 
 void m68k_set_virq(unsigned int level, unsigned int active)
@@ -994,6 +1027,8 @@ void m68k_pulse_reset(void)
 	/* Clear all stop levels and eat up all remaining cycles */
 	CPU_STOPPED = 0;
 	SET_CYCLES(0);
+
+	irq_latency = 0;
 
 	CPU_RUN_MODE = RUN_MODE_BERR_AERR_RESET;
 

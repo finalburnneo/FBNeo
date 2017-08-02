@@ -15,13 +15,7 @@
  alt_renderer, 6button_gamepad, accurate_timing, accurate_sprites,
  draw_no_32col_border, external_ym2612
 
- todo:
- 1  better sync of z80 (sonic3 almost perfect, but still some water spots that hang the sound for a moment)
- 2  sonic3 flickery palette at the bottom of area 2.
- 3  port new vdp (probably will fix #2!)
- 4  obligitory cleanup
-
- fixed:
+ tofix:
  .) FIXED July 22 2017: Sonic 3/S&K: Hung notes(music) when Sonic jumps in the water under the waterfall
  .) FIXED Dec. 31 2015: Battle Squadron - loses sound after weapon upgrade [x] pickup
 
@@ -40,46 +34,11 @@
 
 #define OSC_NTSC 53693175
 #define OSC_PAL  53203424
-#define TOTAL_68K_CYCLES	((488 * 262) * 60)  //((double)OSC_NTSC / 7) / 60
-#define TOTAL_68K_CYCLES_PAL ((488 * 313) * 50)   //((double)OSC_PAL / 7) / 50
 
 #define MAX_CARTRIDGE_SIZE	0xc00000
 #define MAX_SRAM_SIZE		0x010000
 
 static INT32 dma_xfers = 0;
-
-// PicoDrive Sek interface
-static UINT32 SekCycleCnt, SekCycleAim, SekCycleCntDELTA, SekCycleBurnt;
-
-#define SekCyclesDone()     ((SekCycleCnt - SekCycleCntDELTA) - m68k_cycles_remaining())
-#define SekCyclesBurn(c)    SekCycleCnt += c
-#define SekCyclesBurnRun(c) { \
-	m68k_cycles_remaining_set(m68k_cycles_remaining() - c); \
-	SekCycleBurnt += c; \
-}
-#define SekEndRun(after) { \
-	SekCycleBurnt += m68k_cycles_remaining() - after; \
-	SekCycleCnt -= m68k_cycles_remaining() - (after); \
-	m68k_cycles_remaining_set(after); \
-}
-
-static void SekSyncM68k(void) // sync m68k to SekCycleAim
-{
-	INT32 cyc_do;
-
-	while ((cyc_do = SekCycleAim - SekCycleCnt) > 0) {
-		SekCycleCnt += cyc_do;
-		SekCycleCnt += m68k_executeMD(cyc_do) - cyc_do;
-	}
-
-	m68k_cycles_remaining_set(0); //SekCyclesLeft = 0;
-}
-
-static inline void SekRunM68k(INT32 cyc)
-{
-	SekCycleAim += cyc;
-	SekSyncM68k();
-}
 
 typedef void (*MegadriveCb)();
 static MegadriveCb MegadriveCallback;
@@ -629,6 +588,11 @@ static inline int DMABURN() { // add cycles to the 68k cpu
     } else return 0;
 }
 
+static void SekBurn(INT32 burn)
+{
+	m68k_ICount = m68k_ICount - burn;
+}
+
 static void DmaSlow(INT32 len)
 {
 	UINT16 *pd=0, *pdend, *r;
@@ -654,8 +618,13 @@ static void DmaSlow(INT32 len)
 	
 	dma_xfers += len;
 
-	SekCyclesBurnRun(DMABURN());
+	//INT32 dmab = DMABURN();
+	SekBurn(CheckDMA());
+	//SekRunAdjust(0 - dmab); // might be wrong!
+	//SekIdle(dmab);
 
+	//if(!(RamVReg->status & 8))
+    //    SekRunEnd();
 	// overflow protection, might break something..
 	if (len > pdend - pd) {
 		len = pdend - pd;
@@ -908,7 +877,7 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 	case 0x04:	// command
 		{
 			UINT16 d = RamVReg->status; //xxxxxxxxxxx
-			if (SekCyclesDone() - line_base_cycles >= 488-88)
+			if (SekTotalCycles() - line_base_cycles >= (488-88))
 				d|=0x0004; // H-Blank (Sonic3 vs)
 
 			d |= ((RamVReg->reg[1]&0x40)^0x40) >> 3;  // set V-Blank if display is disabled
@@ -924,7 +893,7 @@ UINT16 __fastcall MegadriveVideoReadWord(UINT32 sekAddress)
 		{
 			UINT32 d;
 
-			d = (SekCyclesDone() - line_base_cycles) & 0x1ff; // FIXME
+			d = (SekTotalCycles() - line_base_cycles) & 0x1ff; // FIXME
 
 			if (RamVReg->reg[12]&1)
 				d = hcounts_40[d];
@@ -976,7 +945,9 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 				RamVReg->lwrite_cnt++;
 				if (RamVReg->lwrite_cnt >= 4) RamVReg->status|=0x100; // FIFO full
 				if (RamVReg->lwrite_cnt >  4) {
-					SekCyclesBurnRun(32);
+					//SekRunAdjust(0-80);
+					//SekIdle(80);
+					SekBurn(32);
 				}
 				//elprintf(EL_ASVDP, "VDP data write: %04x [%06x] {%i} #%i @ %06x", d, Pico.video.addr,
 				//		 Pico.video.type, pvid->lwrite_cnt, SekPc);
@@ -1038,8 +1009,10 @@ void __fastcall MegadriveVideoWriteWord(UINT32 sekAddress, UINT16 wordValue)
 					else if (pints & 0x10) irq = 4;
 
 					if (pints) {
-						SekSetIRQLine(irq, CPU_IRQSTATUS_ACK);
-						SekEndRun(24); // make it delayed
+						m68k_set_irq_delay(irq);
+						//SekSetIRQLine(irq, CPU_IRQSTATUS_ACK);
+						//SekRunAdjust(0-4);   // delay irq, fixes Sesame Street
+						//SekIdle(4);
 					} else {
 						SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 					}
@@ -1207,22 +1180,22 @@ void __fastcall MegadriveIOWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 inline static INT32 MegadriveSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)SekCyclesDone() * nSoundRate / TOTAL_68K_CYCLES;//(OSC_NTSC / 7);
+	return (INT64)SekTotalCycles() * nSoundRate / (OSC_NTSC / 7);
 }
 
 inline static double MegadriveGetTime()
 {
-	return (double)SekCyclesDone() / TOTAL_68K_CYCLES;//(OSC_NTSC / 7);
+	return (double)SekTotalCycles() / (OSC_NTSC / 7);
 }
 
 inline static INT32 MegadriveSynchroniseStreamPAL(INT32 nSoundRate)
 {
-	return (INT64)SekCyclesDone() * nSoundRate / TOTAL_68K_CYCLES_PAL;//(OSC_PAL / 7);
+	return (INT64)SekTotalCycles() * nSoundRate / (OSC_PAL / 7);
 }
 
 inline static double MegadriveGetTimePAL()
 {
-	return (double)SekCyclesDone() / TOTAL_68K_CYCLES_PAL;//(OSC_PAL / 7);
+	return (double)SekTotalCycles() / (OSC_PAL / 7);
 }
 
 // ---------------------------------------------------------------
@@ -1307,7 +1280,6 @@ static INT32 MegadriveResetDo()
 	rendstatus = 0;
 	bMegadriveRecalcPalette = 1;
 
-	SekCycleCnt = SekCycleAim = 0;
 	nExtraCycles = 0;
 
 	return 0;
@@ -1320,7 +1292,7 @@ INT32 __fastcall MegadriveIrqCallback(INT32 irq)
 	case 6:	RamVReg->pending_ints &= ~0x20; break;
 	}
 	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
-	return -1;
+	return M68K_INT_ACK_AUTOVECTOR;
 }
 
 // ----------------------------------------------------------------
@@ -4287,7 +4259,9 @@ static void MegadriveDraw()
 	memset(LineBuf, 0, 320 * 320 * sizeof(UINT16));
 }
 
+#define TOTAL_68K_CYCLES	((double)OSC_NTSC / 7) / 60
 #define TOTAL_Z80_CYCLES	((double)OSC_NTSC / 15) / 60
+#define TOTAL_68K_CYCLES_PAL	((double)OSC_PAL / 7) / 50
 #define TOTAL_Z80_CYCLES_PAL	((double)OSC_PAL / 15) / 50
 #define CYCLES_M68K_LINE     488 // suitable for both PAL/NTSC
 #define CYCLES_M68K_VINT_LAG  68
@@ -4319,9 +4293,6 @@ INT32 MegadriveFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	SekCycleCntDELTA = SekCycleCnt;
-	SekCycleBurnt = 0;
-
 	SekOpen(0);
 	ZetOpen(0);
 
@@ -4334,26 +4305,36 @@ INT32 MegadriveFrame()
 	INT32 vcnt_wrap = 0;
 
 	if( Hardware & 0x40 ) {
-		lines  = 313;
+		lines  = 312;
 		line_sample = 68;
 		if( RamVReg->reg[1]&8 ) lines_vis = 240;
-		total_68k_cycles = lines * CYCLES_M68K_LINE;
+		total_68k_cycles = (INT32)(INT64)(TOTAL_68K_CYCLES_PAL * nBurnCPUSpeedAdjust / 0x100);
 		total_z80_cycles = (INT32)TOTAL_Z80_CYCLES_PAL;
 	} else {
 		lines  = 262;
 		line_sample = 93;
-		total_68k_cycles = lines * CYCLES_M68K_LINE;
+		total_68k_cycles = (INT32)(INT64)(TOTAL_68K_CYCLES * nBurnCPUSpeedAdjust / 0x100);
 		total_z80_cycles = (INT32)TOTAL_Z80_CYCLES;
 	}
 
-	lines_vis--; // make 0-based. w/o we're running 1 visible line too many.  causes trouble with ronaldino98 though(?)
-
+	INT32 cycles_68k = total_68k_cycles / lines;
 	INT32 cycles_z80 = total_z80_cycles / lines;
+
+	//if (MegadriveAltTimingHack)
+	{ // this is how picodrive does it, much better this way.
+		total_68k_cycles = lines * CYCLES_M68K_LINE;
+		cycles_68k = CYCLES_M68K_LINE;
+	}
 
 	RamVReg->status &= ~0x88; // clear V-Int, come out of vblank
 	RamVReg->v_counter = 0;
 
-	SekRunM68k(CYCLES_M68K_ASD);
+	/*if (nExtraCycles > 0) {
+		SekIdle(nExtraCycles);
+		nExtraCycles = 0;
+	}*/
+
+	BurnTimerUpdate(CYCLES_M68K_ASD); // needed for Double Dragon II
 
 	for (INT32 y=0; y<lines; y++) {
 
@@ -4409,16 +4390,16 @@ INT32 MegadriveFrame()
 		if (y == lines_vis) {
 			RamVReg->status |= 0x08; // V-Int
 			
-			line_base_cycles = SekCyclesDone();
+			line_base_cycles = SekTotalCycles();
 			// there must be a gap between H and V ints, also after vblank bit set (Mazin Saga, Bram Stoker's Dracula)
-			SekCyclesBurn(DMABURN());
-			SekRunM68k(CYCLES_M68K_VINT_LAG);
+			SekIdle(DMABURN());
+			BurnTimerUpdate(((y + 1) * cycles_68k) + CYCLES_M68K_VINT_LAG - cycles_68k);
 
 			RamVReg->pending_ints |= 0x20;
 			if(RamVReg->reg[1] & 0x20) {
 				SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			}
-			RamVReg->status |= 0x80; // VBL (some games wont boot without this, Mega-lo-Mania is one of them)
+			RamVReg->status |= 0x88; // VBL (some games wont boot without this, Mega-lo-Mania is one of them)
 		}
 
 		// decide if we draw this line
@@ -4433,25 +4414,28 @@ INT32 MegadriveFrame()
 			if (y == line_sample) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
-		} else {
-			INT32 nSegment = ((y + 1) * cycles_z80) - done_z80;
-			done_z80 += ZetIdle(nSegment + Z80CyclesPrev);
-			Z80CyclesPrev = 0;
 		}
 
 		// Run scanline
 		if (y == lines_vis) {
-			SekRunM68k(CYCLES_M68K_LINE - CYCLES_M68K_VINT_LAG - CYCLES_M68K_ASD);
+			BurnTimerUpdate((y + 1) * cycles_68k - CYCLES_M68K_ASD - CYCLES_M68K_VINT_LAG);
 		} else {
-			line_base_cycles = SekCyclesDone();
-			SekCyclesBurn(DMABURN());
-			SekRunM68k(CYCLES_M68K_LINE);
+			line_base_cycles = SekTotalCycles();
+			//bprintf(0, _T("line %d: 0: %d "), y, SekTotalCycles() - line_base_cycles);
+			SekIdle(DMABURN());
+			//bprintf(0, _T("1: %d "), SekTotalCycles() - line_base_cycles);
+			BurnTimerUpdate((y + 1) * cycles_68k);
+			//bprintf(0, _T("2: %d \n"), SekTotalCycles() - line_base_cycles);
 		}
 	}
 	
 	if (pBurnDraw) MegadriveDraw();
 
-	//bprintf(0, _T("delta cyc %d done %d.  burnt %d.\n"), SekCycleCnt - SekCycleCntDELTA, SekCyclesDone(), SekCycleBurnt);
+	BurnTimerEndFrame(total_68k_cycles);
+
+	//bprintf(0, _T("cyc %d  aim %d.\n"), SekTotalCycles(), total_68k_cycles);
+
+	nExtraCycles = SekTotalCycles() - total_68k_cycles;
 
 	if (Z80HasBus && !MegadriveZ80Reset) {
 		if (done_z80 < total_z80_cycles) {

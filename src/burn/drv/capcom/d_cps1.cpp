@@ -3297,6 +3297,81 @@ static struct BurnDIPInfo Sf2DIPList[]=
 
 STDDIPINFO(Sf2)
 
+static struct BurnDIPInfo Sf2accp2DIPList[]=
+{
+	// Defaults
+	{0x1b, 0xff, 0xff, 0x80, NULL                     },
+	{0x1c, 0xff, 0xff, 0x1a, NULL                     },
+	{0x1d, 0xff, 0xff, 0x60, NULL                     },
+	
+	// Dip A
+	CPS1_COINAGE_1(0x1b)
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x1b, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1b, 0x01, 0x40, 0x40, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Shot Type" },
+	{0x1b, 0x01, 0x80, 0x00, "Directional shots curve up or down" },
+	{0x1b, 0x01, 0x80, 0x80, "3D wave shots slow-med-fast" },
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x1c)
+	
+	{0   , 0xfe, 0   , 8   , "Game speed"             },
+	{0x1c, 0x01, 0x38, 0x00, "Extremely fast"         },
+	{0x1c, 0x01, 0x38, 0x08, "Very fast"              },
+	{0x1c, 0x01, 0x38, 0x10, "Fast"                   },
+	{0x1c, 0x01, 0x38, 0x18, "Normal"                 },
+	{0x1c, 0x01, 0x38, 0x20, "Slow"                   },
+	{0x1c, 0x01, 0x38, 0x28, "Very slow"              },
+	{0x1c, 0x01, 0x38, 0x38, "Slowest"                },
+	{0x1c, 0x01, 0x38, 0x30, "Speed test mode"        },
+	
+	{0   , 0xfe, 0   , 2   , "Guile special rapid multiple shots" },
+	{0x1c, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x40, 0x40, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Blank special rapid multiple shots" },
+	{0x1c, 0x01, 0x80, 0x00, "Off"                    },
+	{0x1c, 0x01, 0x80, 0x80, "On"                     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Ken special rapid multiple shots" },
+	{0x1d, 0x01, 0x01, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x01, 0x01, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Ryu special rapid multiple shots" },
+	{0x1d, 0x01, 0x02, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x02, 0x02, "On"                     },
+	
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x40, 0x40, "On"                     },
+        
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
+	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Sf2accp2)
+
 static struct BurnDIPInfo Sf2amfDIPList[]=
 {
 	// Defaults
@@ -19550,7 +19625,7 @@ struct BurnDriver BurnDrvCpsSf2accp2 = {
 	"Street Fighter II' - Champion Edition (Accelerator Pt.II bootleg, 920313 Testron)\0", NULL, "bootleg", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2accp2RomInfo, Sf2accp2RomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
+	NULL, Sf2accp2RomInfo, Sf2accp2RomName, NULL, NULL, Sf2InputInfo, Sf2accp2DIPInfo,
 	Sf2accp2Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

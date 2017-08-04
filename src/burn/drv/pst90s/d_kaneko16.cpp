@@ -1688,18 +1688,19 @@ static struct BurnRomInfo brapboysRomDesc[] = {
 
 STD_ROM_PICK(brapboys)
 STD_ROM_FN(brapboys)
-static struct BurnRomInfo brapboysjRomDesc[] = {
-	{ "rb-004.u61",			0x020000, 0x5432442c, BRF_ESS | BRF_PRG }, //  0 68000 Program Code 
-	{ "rb-005.u62",			0x020000, 0x118b3cfb, BRF_ESS | BRF_PRG }, //  1 
 
-	{ "rb-006.u33",			0x020000, 0xf1d76b20, BRF_ESS | BRF_PRG }, //  2 MCU Data
+static struct BurnRomInfo brapboyspRomDesc[] = {
+	{ "rb-030.a0.u61",		0x020000, 0xfed2ecea, BRF_ESS | BRF_PRG }, //  0 68000 Program Code 
+	{ "rb-031.a0.u62",		0x020000, 0xf64b9763, BRF_ESS | BRF_PRG }, //  1 
+
+	{ "rb-040.a0.u33",		0x020000, 0x7b856d27, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
 	{ "rb-020.u100",		0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
 	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4 
 	{ "rb-022.u77",			0x100000, 0xcb3f42dc, BRF_GRA },	       //  5 
 	{ "rb-023.u78",			0x100000, 0x0e6530c5, BRF_GRA },	       //  6 
 	{ "rb-024.u79",			0x080000, 0x65fa6447, BRF_GRA },	       //  7 
-	{ "rb-025.u80a",		0x080000, 0xaa795ba5, BRF_GRA },	       //  8 
+	{ "rb-025.a0.u80a",		0x080000, 0xaa795ba5, BRF_GRA },	       //  8 
 
 	{ "rb-010.u65",			0x100000, 0xffd73f87, BRF_GRA },	       //  9 Tiles (scrambled)
 	{ "rb-011.u66",			0x100000, 0xd9325f78, BRF_GRA },	       // 10 
@@ -1712,13 +1713,43 @@ static struct BurnRomInfo brapboysjRomDesc[] = {
 	{ "rb-001.u44",			0x100000, 0x7cf774b3, BRF_SND },	       // 15 Samples
 	{ "rb-002.u45",			0x100000, 0xe4b30444, BRF_SND },	       // 16 
 
-	{ "rb-026.u80b",		0x080000, 0xbb7604d4, BRF_GRA },	       // 17 Sprites (Extra)
+	{ "rb-026.10.u80b",		0x080000, 0xbb7604d4, BRF_GRA },	       // 17 Sprites (Extra)
 };
 
-STD_ROM_PICK(brapboysj)
-STD_ROM_FN(brapboysj)
+STD_ROM_PICK(brapboysp)
+STD_ROM_FN(brapboysp)
 
-static struct BurnRomInfo brapboysuRomDesc[] = {
+static struct BurnRomInfo brapboyspjRomDesc[] = {
+	{ "rb-004.u61",			0x020000, 0x5432442c, BRF_ESS | BRF_PRG }, //  0 68000 Program Code 
+	{ "rb-005.u62",			0x020000, 0x118b3cfb, BRF_ESS | BRF_PRG }, //  1 
+
+	{ "rb-006.u33",			0x020000, 0xf1d76b20, BRF_ESS | BRF_PRG }, //  2 MCU Data
+
+	{ "rb-020.u100",		0x100000, 0xce220d38, BRF_GRA },	       //  3 Sprites
+	{ "rb-021.u76",			0x100000, 0x74001407, BRF_GRA },	       //  4 
+	{ "rb-022.u77",			0x100000, 0xcb3f42dc, BRF_GRA },	       //  5 
+	{ "rb-023.u78",			0x100000, 0x0e6530c5, BRF_GRA },	       //  6 
+	{ "rb-024.u79",			0x080000, 0x65fa6447, BRF_GRA },	       //  7 
+	{ "rb-025.a0.u80a",		0x080000, 0xaa795ba5, BRF_GRA },	       //  8 
+
+	{ "rb-010.u65",			0x100000, 0xffd73f87, BRF_GRA },	       //  9 Tiles (scrambled)
+	{ "rb-011.u66",			0x100000, 0xd9325f78, BRF_GRA },	       // 10 
+	{ "rb-012.u67",			0x100000, 0xbfdbe0d1, BRF_GRA },	       // 11 
+	{ "rb-013.u68",			0x100000, 0x28c37fe8, BRF_GRA },	       // 12 
+
+	{ "rb-000.u43",			0x080000, 0x58ad1a62, BRF_SND },	       // 13 Samples
+	{ "rb-003.00.u101",		0x080000, 0x2cac25d7, BRF_SND },	       // 14 					
+
+	{ "rb-001.u44",			0x100000, 0x7cf774b3, BRF_SND },	       // 15 Samples
+	{ "rb-002.u45",			0x100000, 0xe4b30444, BRF_SND },	       // 16 
+
+	{ "rb-026.10.u80b",		0x080000, 0xbb7604d4, BRF_GRA },	       // 17 Sprites (Extra)
+};
+
+STD_ROM_PICK(brapboyspj)
+STD_ROM_FN(brapboyspj)
+
+static struct BurnRomInfo brapboyspuRomDesc[] = {
 	{ "rb-030.10.u61",		0x020000, 0x527eb92a, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "rb-031.10.u62",		0x020000, 0xd5962bdd, BRF_ESS | BRF_PRG }, //  1 
 
@@ -1745,8 +1776,8 @@ static struct BurnRomInfo brapboysuRomDesc[] = {
 	{ "rb-026.10.u80b",		0x080000, 0xbb7604d4, BRF_GRA },	       // 17 Sprites (Extra)
 };
 
-STD_ROM_PICK(brapboysu)
-STD_ROM_FN(brapboysu)
+STD_ROM_PICK(brapboyspu)
+STD_ROM_FN(brapboyspu)
 
 
 /*==============================================================================================
@@ -7787,22 +7818,32 @@ struct BurnDriver BurnDrvBrapboys = {
 	NULL, 0x800, 256, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvBrapboysj = {
-	"brapboysj", "brapboys", NULL, NULL, "1992",
-	"B.Rap Boys Special (Japan)\0", NULL, "Kaneko", "Kaneko16",
+struct BurnDriver BurnDrvBrapboysp = {
+	"brapboysp", "brapboys", NULL, NULL, "1992",
+	"B.Rap Boys Special (World)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_KANEKO16, GBF_SCRFIGHT, 0,
-	NULL, brapboysjRomInfo, brapboysjRomName, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
+	NULL, brapboyspRomInfo, brapboyspRomName, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
 	BrapboysInit, GtmrMachineExit, ShogwarrFrame, NULL, ShogwarrScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvBrapboysu = {
-	"brapboysu", "brapboys", NULL, NULL, "1992",
+struct BurnDriver BurnDrvBrapboyspj = {
+	"brapboyspj", "brapboys", NULL, NULL, "1992",
+	"B.Rap Boys Special (Japan)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_KANEKO16, GBF_SCRFIGHT, 0,
+	NULL, brapboyspjRomInfo, brapboyspjRomName, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
+	BrapboysInit, GtmrMachineExit, ShogwarrFrame, NULL, ShogwarrScan,
+	NULL, 0x800, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvBrapboyspu = {
+	"brapboyspu", "brapboys", NULL, NULL, "1992",
 	"B.Rap Boys Special (US)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_KANEKO16, GBF_SCRFIGHT, 0,
-	NULL, brapboysuRomInfo, brapboysuRomName, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
+	NULL, brapboyspuRomInfo, brapboyspuRomName, NULL, NULL, BrapboysInputInfo, BrapboysDIPInfo,
 	BrapboysInit, GtmrMachineExit, ShogwarrFrame, NULL, ShogwarrScan,
 	NULL, 0x800, 256, 224, 4, 3
 };

@@ -4148,10 +4148,10 @@ struct BurnDriverD BurnDrvSvgtw = {
 // PCB Versions
 
 
-// DoDonPachi Dai-Ou-Jou (V101, Japan)
+// DoDonPachi III (World, 2002.05.15 Master Ver)
 
 static struct BurnRomInfo ddp3RomDesc[] = {
-	{ "ddp3_v101.u36",			0x200000, 0x195b5c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+	{ "ddp3_v101_16m.u36",		0x200000, 0xfba2180e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
 
@@ -4179,8 +4179,8 @@ static INT32 ddp3Init()
 }
 
 struct BurnDriver BurnDrvDdp3 = {
-	"ddpdoj", NULL, NULL,  NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou (V101, Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	"ddp3", NULL, NULL,  NULL, "2002",
+	"DoDonPachi III (World, 2002.05.15 Master Ver)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
 	NULL, ddp3RomInfo, ddp3RomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
@@ -4189,9 +4189,42 @@ struct BurnDriver BurnDrvDdp3 = {
 };
 
 
-// DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)
+// DoDonPachi Dai-Ou-Jou (V101, Japan)
 
 static struct BurnRomInfo ddp3aRomDesc[] = {
+	{ "ddp3_v101.u36",			0x200000, 0x195b5c1e, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
+
+	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
+
+	{ "a04401w064.u7",			0x800000, 0xed229794, 3 | BRF_GRA },			//  2 Sprite Color Data
+	{ "a04402w064.u8",			0x800000, 0x752167b0, 3 | BRF_GRA },			//  3
+
+	{ "b04401w064.u1",			0x800000, 0x8cbff066, 4 | BRF_GRA },			//  4 Sprite Masks & Color Indexes
+
+	{ "m04401b032.u17",			0x400000, 0x5a0dbd76, 5 | BRF_SND },			//  5 Samples
+
+	{ "ddp3_igs027a.bin",		0x004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },  //  6 Internal ARM7 Rom
+	
+	{ "ddp3_defaults.nv",		0x020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
+};
+
+STDROMPICKEXT(ddp3a, ddp3a, ddp3Bios) // custom bios
+STD_ROM_FN(ddp3a)
+
+struct BurnDriver BurnDrvDdp3a = {
+	"ddpdoj", "ddp3", NULL,  NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou (V101, Japan)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
+	NULL, ddp3aRomInfo, ddp3aRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	ddp3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	224, 448, 3, 4
+};
+
+
+// DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)
+
+static struct BurnRomInfo ddp3bRomDesc[] = {
 	{ "ddp3_d_d_1_0.u36",		0x200000, 0x5D3F85BA, 1 | BRF_PRG | BRF_ESS },	//  0 68K Code
 
 	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
@@ -4208,15 +4241,15 @@ static struct BurnRomInfo ddp3aRomDesc[] = {
 	{ "ddp3_defaults.nv",		0x020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
 };
 
-STDROMPICKEXT(ddp3a, ddp3a, ddp3Bios) // custom bios
-STD_ROM_FN(ddp3a)
+STDROMPICKEXT(ddp3b, ddp3b, ddp3Bios) // custom bios
+STD_ROM_FN(ddp3b)
 
-struct BurnDriver BurnDrvDdp3a = {
-	"ddpdoja", "ddpdoj", NULL,  NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+struct BurnDriver BurnDrvDdp3b = {
+	"ddpdoja", "ddp3", NULL,  NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou (V100 (second version), Japan)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
-	NULL, ddp3aRomInfo, ddp3aRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ddp3bRomInfo, ddp3bRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ddp3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4224,7 +4257,7 @@ struct BurnDriver BurnDrvDdp3a = {
 
 // DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)
 
-static struct BurnRomInfo ddp3bRomDesc[] = {
+static struct BurnRomInfo ddp3cRomDesc[] = {
 	{ "dd v100.bin",			0x200000, 0x7da0c1e4, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t04401w064.u19",			0x800000, 0x3a95f19c, 2 | BRF_GRA },			//  1 Tile data
@@ -4241,15 +4274,15 @@ static struct BurnRomInfo ddp3bRomDesc[] = {
 	{ "ddp3_defaults.nv",		0x020000, 0x571e96c0, 0 | BRF_OPT },			//  7 NV RAM
 };
 
-STDROMPICKEXT(ddp3b, ddp3b, ddp3Bios) // custom bios
-STD_ROM_FN(ddp3b)
+STDROMPICKEXT(ddp3c, ddp3c, ddp3Bios) // custom bios
+STD_ROM_FN(ddp3c)
 
-struct BurnDriver BurnDrvDdp3b = {
-	"ddpdojb", "ddpdoj", NULL,  NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+struct BurnDriver BurnDrvDdp3c = {
+	"ddpdojb", "ddp3", NULL,  NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou (V100 (first version), Japan)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
-	NULL, ddp3bRomInfo, ddp3bRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
+	NULL, ddp3cRomInfo, ddp3cRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
 	ddp3Init, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	224, 448, 3, 4
 };
@@ -4303,8 +4336,8 @@ static INT32 ddp3blkInit()
 }
 
 struct BurnDriver BurnDrvDdp3blk = {
-	"ddpdojblk", "ddpdoj", NULL, NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou Black Label (V100, (2002.10.07.Black Ver), Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	"ddpdojblk", "ddp3", NULL, NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou Black Label (V100, (2002.10.07.Black Ver), Japan)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (V100 (2002.10.07.Black Ver), Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
 	NULL, ddp3blkRomInfo, ddp3blkRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
@@ -4336,8 +4369,8 @@ STDROMPICKEXT(ddp3blka, ddp3blka, ddp3Bios) // custom bios
 STD_ROM_FN(ddp3blka)
 
 struct BurnDriver BurnDrvDdp3blka = {
-	"ddpdojblka", "ddpdoj", NULL, NULL, "2002",
-	"DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Black Ver), Japan)\0", NULL, "Cave / AMI", "PolyGameMaster",
+	"ddpdojblka", "ddp3", NULL, NULL, "2002",
+	"DoDonPachi Dai-Ou-Jou Black Label (V100 (2002.10.07 Black Ver), Japan)\0", NULL, "Cave (AMI license)", "PolyGameMaster",
 	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (V100 (2002.10.07 Black Ver), Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 4, HARDWARE_IGS_PGM /* | HARDWARE_IGS_USE_ARM_CPU */, GBF_VERSHOOT, 0,
 	NULL, ddp3blkaRomInfo, ddp3blkaRomName, NULL, NULL, pgmInputInfo, jammaDIPInfo,
@@ -5603,7 +5636,7 @@ STDROMPICKEXT(ddpdojblkbl, ddpdojblkbl, pgm) // custom bios
 STD_ROM_FN(ddpdojblkbl)
 
 struct BurnDriver BurnDrvDdpdojblkbl = {
-	"ddpdojblkbl", "ddpdoj", NULL, NULL, "2002",
+	"ddpdojblkbl", "ddp3", NULL, NULL, "2002",
 	"DoDonPachi Dai-Ou-Jou Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, "bootleg", "PolyGameMaster",
 	L"DoDonPachi Dai-Ou-Jou Black Label\0\u6012\u9996\u9818\u8702 \u5927\u5F80\u751F Black Label (2002.10.07 Black Ver., bootleg Knights of Valour Super Heroes conversion)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_VERSHOOT, 0,

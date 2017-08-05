@@ -138,8 +138,6 @@ static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		nFractionalPosition &= 0xFFFF;
 
 		nMD2612Position = nExtraSamples;
-
-		dTime += 100.0 / nBurnFPS;
 	}
 }
 
@@ -163,8 +161,6 @@ void BurnMD2612Reset()
 	if (!DebugSnd_YM2612Initted) bprintf(PRINT_ERROR, _T("BurnMD2612Reset called without init\n"));
 #endif
 
-	BurnTimerReset();
-	
 	MDYM2612Reset();
 }
 
@@ -178,8 +174,6 @@ void BurnMD2612Exit()
 
 	MDYM2612Exit();
 
-	BurnTimerExit();
-
 	BurnFree(pBuffer);
 	
 	nNumChips = 0;
@@ -188,7 +182,7 @@ void BurnMD2612Exit()
 	DebugSnd_YM2612Initted = 0;
 }
 
-INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
+INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)
 {
 	if (num > 1) {
 		bprintf(0, _T("BurnMD2612Init(): MD2612 only supports 1 chip!\n"));
@@ -196,8 +190,6 @@ INT32 BurnMD2612Init(INT32 num, INT32 bIsPal, INT32 (*StreamCallback)(INT32), do
 	}
 
 	DebugSnd_YM2612Initted = 1;
-
-	BurnTimerInit(NULL, GetTimeCallback);
 
 	if (nBurnSoundRate <= 0) {
 		BurnMD2612StreamCallback = MD2612StreamCallbackDummy;
@@ -260,7 +252,6 @@ void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
 #endif
 
 	if (nAction & ACB_DRIVER_DATA) {
-		BurnTimerScan(nAction, pnMin);
 		SCAN_VAR(nMD2612Position);
 
 		if (nAction & ACB_WRITE) {

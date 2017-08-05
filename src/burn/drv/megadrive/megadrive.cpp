@@ -4351,6 +4351,7 @@ INT32 MegadriveFrame()
 	INT32 lines, lines_vis = 224, line_sample;
 	INT32 hint = RamVReg->reg[10]; // Hint counter
 	INT32 vcnt_wrap = 0;
+	INT32 zirq_skipped = 0;
 #ifdef CYCDBUG
 	INT32 burny = 0;
 #endif
@@ -4450,10 +4451,16 @@ INT32 MegadriveFrame()
 		if (Z80HasBus && !MegadriveZ80Reset) {
 			z80CyclesSync(1);
 
-			if (y == line_sample) {
+			if (y == line_sample || (y == lines_vis && zirq_skipped)) {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				zirq_skipped = 0;
 			}
-		} else z80CyclesSync(0);
+		} else {
+			if (y == line_sample) {
+				zirq_skipped = 1; // if the irq gets skipped, try again @ vbl
+			}
+			z80CyclesSync(0);
+		}
 
 		// Run scanline
 		if (y == lines_vis) {

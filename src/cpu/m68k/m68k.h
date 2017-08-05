@@ -304,6 +304,7 @@ void m68k_pulse_reset(void);
 /* execute num_cycles worth of instructions.  returns number of cycles used */
 int m68k_execute(int num_cycles);
 int m68k_executeMD(int num_cycles);     /* slight modification for Megadrive */
+void m68k_megadrive_sr_checkint_mode(int onoff); /* enable check cycles before servicing interrupts in m68ki_set_sr() */
 
 /* These functions let you read/write/modify the number of cycles left to run
  * while m68k_execute() is running.

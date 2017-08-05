@@ -1502,6 +1502,8 @@ INLINE void m68ki_set_ccr(uint value)
 	FLAG_C = BIT_0(value)  << 8;
 }
 
+int megadrive_sr_checkint_mode = 0;
+
 /* Set the status register but don't check for interrupts */
 INLINE void m68ki_set_sr_noint(uint value)
 {
@@ -1536,7 +1538,12 @@ INLINE void m68ki_set_sr_noint_nosp(uint value)
 INLINE void m68ki_set_sr(uint value)
 {
 	m68ki_set_sr_noint(value);
-	m68ki_check_interrupts();
+	if (megadrive_sr_checkint_mode) {
+		if (GET_CYCLES() >= 0)
+			m68ki_check_interrupts();
+	} else {
+			m68ki_check_interrupts();
+	}
 }
 
 

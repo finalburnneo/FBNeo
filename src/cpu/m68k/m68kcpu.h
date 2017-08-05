@@ -933,6 +933,7 @@ extern const uint8    m68ki_ea_idx_cycle_table[];
 extern uint           m68ki_aerr_address;
 extern uint           m68ki_aerr_write_mode;
 extern uint           m68ki_aerr_fc;
+extern int            megadrive_sr_checkint_mode;
 
 /* Read data immediately after the program counter */
 INLINE uint m68ki_read_imm_16(void);
@@ -1501,8 +1502,6 @@ INLINE void m68ki_set_ccr(uint value)
 	FLAG_V = BIT_1(value)  << 6;
 	FLAG_C = BIT_0(value)  << 8;
 }
-
-int megadrive_sr_checkint_mode = 0;
 
 /* Set the status register but don't check for interrupts */
 INLINE void m68ki_set_sr_noint(uint value)

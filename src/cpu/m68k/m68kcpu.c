@@ -48,6 +48,8 @@ int  m68ki_initial_cycles = 0;
 uint m68ki_tracing = 0;
 uint m68ki_address_space;
 
+int megadrive_sr_checkint_mode = 0;
+
 #ifdef M68K_LOG_ENABLE
 const char *const m68ki_cpu_names[] =
 {

@@ -98,7 +98,7 @@ static struct BurnInputInfo Megadrive4pInputList[] = {
 STDINPUTINFO(Megadrive4p)
 
 static struct BurnDIPInfo MegadriveDIPList[] = {
-	{0x1a,	0xff, 0xff, 0x01,  NULL               },
+	{0x1a,	0xff, 0xff, 0x02,  NULL               },
 
 	{0,	0xfe, 0,       5, "Hardware"          },
 	{0x19,	0x01, 0xc1, 0x01, "Auto Detect"       },
@@ -106,11 +106,11 @@ static struct BurnDIPInfo MegadriveDIPList[] = {
 	{0x19,	0x01, 0xc1, 0x40, "Japan PAL"         },
 	{0x19,	0x01, 0xc1, 0x80, "USA"               },
 	{0x19,	0x01, 0xc1, 0xc0, "Europe"            },
-
+#if 0
 	{0,	0xfe, 0,       2, "CD-ROM"            },
 	{0x19,	0x01, 0x20, 0x20, "No"                },
 	{0x19,	0x01, 0x20, 0x00, "Yes"               },
-
+#endif
 	{0,	0xfe, 0,       3, "32-Col Mode Draw"  },
 	{0x1a,	0x01, 0x03, 0x00, "No Change"         },
 	{0x1a,	0x01, 0x03, 0x01, "Center"            },
@@ -142,11 +142,11 @@ static struct BurnDIPInfo Megadrive4pDIPList[] = {
 	{0x31,	0x01, 0xc1, 0x40, "Japan PAL"         },
 	{0x31,	0x01, 0xc1, 0x80, "USA"               },
 	{0x31,	0x01, 0xc1, 0xc0, "Europe"            },
-
+#if 0
 	{0,	0xfe, 0,       2, "CD-ROM"            },
 	{0x31,	0x01, 0x20, 0x20, "No"                },
 	{0x31,	0x01, 0x20, 0x00, "Yes"               },
-
+#endif
 	{0,	0xfe, 0,       3, "32-Col Mode Draw"  },
 	{0x32,	0x01, 0x03, 0x00, "No Change"         },
 	{0x32,	0x01, 0x03, 0x01, "Center"            },
@@ -10913,7 +10913,7 @@ struct BurnDriver BurnDrvmd_empsteel = {
 	"Empire of Steel (Euro)\0", NULL, "Flying Edge", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_empsteelRomInfo, md_empsteelRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveGetZipName, md_empsteelRomInfo, md_empsteelRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

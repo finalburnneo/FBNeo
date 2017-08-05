@@ -43,10 +43,10 @@
 #define MAX_SRAM_SIZE           0x010000
 
 // PicoDrive Sek interface
-static UINT32 SekCycleCnt, SekCycleAim, SekCycleCntDELTA;
+static UINT64 SekCycleCnt, SekCycleAim, SekCycleCntDELTA, line_base_cycles;
 
 #define SekCyclesReset()        { SekCycleCnt = SekCycleAim = SekCycleCntDELTA = 0; }
-#define SekCyclesNewFrame()     { SekCycleCntDELTA = SekCycleCnt; }
+#define SekCyclesNewFrame()     { SekCycleCntDELTA = line_base_cycles = SekCycleCnt; }
 #define SekCyclesDoneFrame()    ( (SekCycleCnt - SekCycleCntDELTA) - m68k_ICount )
 #define SekCyclesDone()         ( SekCycleCnt - m68k_ICount )
 #define SekCyclesLine()         ( (SekCyclesDone() - line_base_cycles) )
@@ -68,8 +68,7 @@ static void SekRunM68k(INT32 cyc)
 	m68k_ICount = 0;
 }
 
-static UINT32 last_z80_sync; /* in 68k cycles */
-static INT32 z80_cycle_cnt, z80_cycle_aim;
+static UINT64 z80_cycle_cnt, z80_cycle_aim, last_z80_sync;
 
 #define z80CyclesReset()        { last_z80_sync = SekCyclesDone(); z80_cycle_cnt = z80_cycle_aim = 0; }
 #define cycles_68k_to_z80(x)    ((x)*957 >> 11)
@@ -77,7 +76,7 @@ static INT32 z80_cycle_cnt, z80_cycle_aim;
 /* sync z80 to 68k */
 static void z80CyclesSync(INT32 bRun)
 {
-	INT32 m68k_cycles_done = SekCyclesDone();
+	INT64 m68k_cycles_done = SekCyclesDone();
 
 	INT32 m68k_cnt = m68k_cycles_done - last_z80_sync;
 	z80_cycle_aim += cycles_68k_to_z80(m68k_cnt);
@@ -218,8 +217,6 @@ static INT32 dma_xfers = 0; // vdp dma
 static INT32 rendstatus = 0; // status of vdp renderer
 static INT32 BlankedLine = 0;
 
-static UINT32 line_base_cycles = 0;
-
 static UINT8 Hardware;
 static UINT8 DrvSECAM = 0;	// NTSC
 static UINT8 bNoDebug = 0;
@@ -314,27 +311,27 @@ void MegadriveCheckHardware()
 			bprintf(PRINT_IMPORTANT, _T("USA NTSC supported\n"));
 		}
 		
-		if ((Hardware & 0xc0) == 0xc0) {
-			bprintf(PRINT_IMPORTANT, _T("Emulating Europe PAL Machine\n"));
-		} else {
-			if ((Hardware & 0x80) == 0x80) {
-				bprintf(PRINT_IMPORTANT, _T("Emulating USA NTSC Machine\n"));
-			} else {
-				if ((Hardware & 0x40) == 0x40) {
-					bprintf(PRINT_IMPORTANT, _T("Emulating Japan PAL Machine ???\n"));
-				} else {
-					if ((Hardware & 0x00) == 0x00) {
-						bprintf(PRINT_IMPORTANT, _T("Emulating Japan NTSC Machine\n"));
-					}
-				}
-			}
-		}
-		
 		// CD-ROM
 		Hardware |= MegadriveDIP[0] & 0x20;
 	}
+
+	if ((Hardware & 0xc0) == 0xc0) {
+		bprintf(PRINT_IMPORTANT, _T("Emulating Europe PAL Machine\n"));
+	} else {
+		if ((Hardware & 0x80) == 0x80) {
+			bprintf(PRINT_IMPORTANT, _T("Emulating USA NTSC Machine\n"));
+		} else {
+			if ((Hardware & 0x40) == 0x40) {
+				bprintf(PRINT_IMPORTANT, _T("Emulating Japan PAL Machine ???\n"));
+			} else {
+				if ((Hardware & 0x00) == 0x00) {
+					bprintf(PRINT_IMPORTANT, _T("Emulating Japan NTSC Machine\n"));
+				}
+			}
+		}
+	}
 	
-	if ((Hardware & 0x20) != 0x20) bprintf(PRINT_IMPORTANT, _T("Emulating Mega-CD Add-on\n"));
+	//if ((Hardware & 0x20) != 0x20) bprintf(PRINT_IMPORTANT, _T("Emulating Mega-CD Add-on\n")); // no we're not!
 }
 
 //-----------------------------------------------------------------
@@ -1232,19 +1229,9 @@ inline static INT32 MegadriveSynchroniseStream(INT32 nSoundRate)
 	return (INT64)SekCyclesDoneFrame() * nSoundRate / TOTAL_68K_CYCLES;
 }
 
-inline static double MegadriveGetTime()
-{
-	return (double)SekCyclesDoneFrame() / TOTAL_68K_CYCLES;
-}
-
 inline static INT32 MegadriveSynchroniseStreamPAL(INT32 nSoundRate)
 {
 	return (INT64)SekCyclesDoneFrame() * nSoundRate / TOTAL_68K_CYCLES_PAL;
-}
-
-inline static double MegadriveGetTimePAL()
-{
-	return (double)SekCyclesDoneFrame() / TOTAL_68K_CYCLES_PAL;
 }
 
 // ---------------------------------------------------------------
@@ -1279,8 +1266,7 @@ static INT32 MegadriveResetDo()
 		Reinitialise();
 		
 		BurnMD2612Exit();
-		BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, MegadriveGetTimePAL, 0);
-		BurnTimerAttachSek(OSC_PAL / 7);
+		BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, 0);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 		
@@ -1294,8 +1280,7 @@ static INT32 MegadriveResetDo()
 		Reinitialise();
 		
 		BurnMD2612Exit();
-		BurnMD2612Init(1, 0, MegadriveSynchroniseStream, MegadriveGetTime, 0);
-		BurnTimerAttachSek(OSC_NTSC / 7);
+		BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 0);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 		
@@ -1323,7 +1308,7 @@ static INT32 MegadriveResetDo()
 	Z80BankPartial = 0;
 	Z80BankPos = 0;
 
-	dma_xfers = BurnRandom() & 0x1fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
+	dma_xfers = BurnRandom() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
 	Scanline = 0;
 	rendstatus = 0;
 	bMegadriveRecalcPalette = 1;
@@ -3132,8 +3117,7 @@ INT32 MegadriveInit()
 
 	bNoDebug = 0;
 	DrvSECAM = 0;
-	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, MegadriveGetTime, 0);
-	BurnTimerAttachSek(OSC_NTSC / 7);
+	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 0);
 	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 	
@@ -4544,6 +4528,9 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(rendstatus);
 		SCAN_VAR(Z80BankPartial);
 		SCAN_VAR(Z80BankPos);
+		SCAN_VAR(SekCycleCnt);
+		SCAN_VAR(SekCycleAim);
+		SCAN_VAR(dma_xfers);
 
 		BurnRandomScan(nAction);
 	}

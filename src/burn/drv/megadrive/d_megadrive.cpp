@@ -41855,3 +41855,75 @@ struct BurnDriver BurnDrvmd_s3comp = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Mortal Kombat Revelations v1.0 Hack By Smoke
+static struct BurnRomInfo md_mkrRomDesc[] = {
+	{ "Mortal Kombat Revelations (Hack Ver. 1.0 By Smoke).bin", 0x987A70, 0x318B81F2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mkr)
+STD_ROM_FN(md_mkr)
+
+struct BurnDriver BurnDrvmd_mkr = {
+	"md_mkr", "md_umk3t", NULL, NULL, "2012",
+	"Mortal Kombat Revelations (Hack, Version 1.0)\0", NULL, "2012 SMOKE", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mkrRomInfo, md_mkrRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 Mini-Hack By Nemesis_c,r57shell
+static struct BurnRomInfo md_umk3mhRomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 Mini-V13.bin", 0x400000, 0x4F2A5B98, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3mh)
+STD_ROM_FN(md_umk3mh)
+
+struct BurnDriver BurnDrvmd_umk3mh = {
+	"md_umk3mh", "md_umk3u", NULL, NULL, "2011",
+	"Ultimate Mortal Kombat 3 Mini V13 (Hack)\0", NULL, "2011 Nemesis_c, r57shell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_umk3mhRomInfo, md_umk3mhRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat 3 Hack Version 0.6 (By Nemesis_c)
+static struct BurnRomInfo md_umk3hRomDesc[] = {
+	{ "Ultimate Mortal Kombat 3 Hack Ver. 0.6 (By Nemesis_c).bin", 0x5F59DA, 0xD8C152FF, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3h)
+STD_ROM_FN(md_umk3h)
+
+struct BurnDriver BurnDrvmd_umk3h = {
+	"md_umk3h", "md_umk3", NULL, NULL, "2012",
+	"Ultimate Mortal Kombat 3 (Hack, V0.6)\0", NULL, "2012 Nemesis_c", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_umk3hRomInfo, md_umk3hRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mortal Kombat 3 Mini-Hack By Nemesis_c,r57shell
+static struct BurnRomInfo md_mk3mRomDesc[] = {
+	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mk3m)
+STD_ROM_FN(md_mk3m)
+
+struct BurnDriver BurnDrvmd_mk3m = {
+	"md_mk3m", "md_mk3u", NULL, NULL, "2011",
+	"Mortal Kombat 3 Mini (Hack)\0", NULL, "2011 Nemesis_c, r57shell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_mk3mRomInfo, md_mk3mRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

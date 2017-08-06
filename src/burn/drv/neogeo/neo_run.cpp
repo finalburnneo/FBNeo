@@ -1626,27 +1626,25 @@ void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			nSoundReply = nValue;
 
 #if 1 && defined USE_SPEEDHACKS
-			if (1) {
-				if (nSoundPrevReply != nValue) {
-					nSoundPrevReply = nValue;
+			if (nSoundPrevReply != nValue) {
+				nSoundPrevReply = nValue;
 
-					// s1945p replies a 0x00, then an 0xFF;
-					// the 68K loops until it has read both
-					if (nSoundReply == 0) {
-						nSoundStatus &= ~2;
-					} else {
-						nSoundStatus |=  2;
-					}
+				// s1945p replies a 0x00, then an 0xFF;
+				// the 68K loops until it has read both
+				if (nSoundReply == 0) {
+					nSoundStatus &= ~2;
 				} else {
-					nSoundStatus |= 2;
+					nSoundStatus |=  2;
 				}
+			} else {
+				nSoundStatus |= 2;
+			}
 
-				if (ZetTotalCycles() > nCycles68KSync) {
+			if (ZetTotalCycles() > nCycles68KSync) {
 
-					//				bprintf(PRINT_NORMAL, _T("    %i\n"), ZetTotalCycles());
-					BurnTimerUpdateEnd();
-					//				bprintf(PRINT_NORMAL, _T("    %i - %i\n"), ZetTotalCycles(), nCycles68KSync);
-				}
+				//				bprintf(PRINT_NORMAL, _T("    %i\n"), ZetTotalCycles());
+				BurnTimerUpdateEnd();
+				//				bprintf(PRINT_NORMAL, _T("    %i - %i\n"), ZetTotalCycles(), nCycles68KSync);
 			}
 #endif
 

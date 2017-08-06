@@ -1242,6 +1242,7 @@ static INT32 MegadriveResetDo()
 
 	SekOpen(0);
 	SekReset();
+	m68k_megadrive_sr_checkint_mode(1);
 	SekClose();
 	
 	ZetOpen(0);
@@ -3135,7 +3136,7 @@ INT32 MegadriveInit()
 
 	if (   (strstr(BurnDrvGetTextA(DRV_NAME), "issdx"))
 		|| (strstr(BurnDrvGetTextA(DRV_NAME), "dinho98"))  ) {
-		bprintf(0, _T("Alt. Timing hack activated!\n"));
+		//bprintf(0, _T("Alt. Timing hack activated!\n")); // not really.
 		MegadriveAltTimingHack = 1;
 	}
 
@@ -4186,7 +4187,7 @@ static INT32 DrawDisplay(INT32 sh)
 		DrawWindow((win&0x80) ? edge : 0, (win&0x80) ? maxcells>>1 : edge, 0, sh); // HighCacheW
 	} else
 		DrawLayer(0, HighCacheA, maxcells, sh);
-	DrawAllSprites(HighCacheS, maxw, 0, sh);
+	if (nSpriteEnable & 1) DrawAllSprites(HighCacheS, maxw, 0, sh);
 	
 	if(HighCacheB[0]) 
 		DrawTilesFromCache(HighCacheB, sh);
@@ -4197,7 +4198,7 @@ static INT32 DrawDisplay(INT32 sh)
 		DrawWindow((win&0x80) ? edge : 0, (win&0x80) ? maxcells>>1 : edge, 1, sh);
 	} else
 		if(HighCacheA[0]) DrawTilesFromCache(HighCacheA, sh);
-	DrawAllSprites(HighCacheS, maxw, 1, sh);
+	if (nSpriteEnable & 2) DrawAllSprites(HighCacheS, maxw, 1, sh);
 
 	return 0;
 }
@@ -4206,7 +4207,7 @@ static void PicoFrameStart()
 {
 	// prepare to do this frame
 	rendstatus = 0x80 >> 5;							// accurate sprites
-	RamVReg->status &= ~0x0020;
+	RamVReg->status &= ~0x0020;                     // mask collision bit
 	if((RamVReg->reg[12]&6) == 6) rendstatus |= 8;	// interlace mode
 	Scanline = 0;
 	BlankedLine = 0;

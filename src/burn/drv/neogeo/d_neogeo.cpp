@@ -11461,6 +11461,7 @@ STD_ROM_FN(s1945p)
 static INT32 s1945pInit()
 {
 	nNeoProtectionXor = 0x05;
+	s1945pmode = 1;
 
 	return NeoInit();
 }

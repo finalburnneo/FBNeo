@@ -225,6 +225,8 @@ static UINT32 nSoundStatus;
 static INT32 nSoundPrevReply;
 #endif
 
+INT32 s1945pmode = 0;
+
 static INT32 nInputSelect;
 static UINT8* NeoInputBank;
 static UINT32 nAnalogAxis[2];
@@ -1624,25 +1626,27 @@ void __fastcall neogeoZ80Out(UINT16 nAddress, UINT8 nValue)
 			nSoundReply = nValue;
 
 #if 1 && defined USE_SPEEDHACKS
-			if (nSoundPrevReply != nValue) {
-				nSoundPrevReply = nValue;
+			if (1) {
+				if (nSoundPrevReply != nValue) {
+					nSoundPrevReply = nValue;
 
-				// s1945p replies a 0x00, then an 0xFF;
-				// the 68K loops until it has read both
-				if (nSoundReply == 0) {
-					nSoundStatus &= ~2;
+					// s1945p replies a 0x00, then an 0xFF;
+					// the 68K loops until it has read both
+					if (nSoundReply == 0) {
+						nSoundStatus &= ~2;
+					} else {
+						nSoundStatus |=  2;
+					}
 				} else {
-					nSoundStatus |=  2;
+					nSoundStatus |= 2;
 				}
-			} else {
-				nSoundStatus |= 2;
-			}
 
-			if (ZetTotalCycles() > nCycles68KSync) {
+				if (ZetTotalCycles() > nCycles68KSync) {
 
-//				bprintf(PRINT_NORMAL, _T("    %i\n"), ZetTotalCycles());
-				BurnTimerUpdateEnd();
-//				bprintf(PRINT_NORMAL, _T("    %i - %i\n"), ZetTotalCycles(), nCycles68KSync);
+					//				bprintf(PRINT_NORMAL, _T("    %i\n"), ZetTotalCycles());
+					BurnTimerUpdateEnd();
+					//				bprintf(PRINT_NORMAL, _T("    %i - %i\n"), ZetTotalCycles(), nCycles68KSync);
+				}
 			}
 #endif
 
@@ -1745,7 +1749,7 @@ static inline void SendSoundCommand(const UINT8 nCommand)
 	ZetNmi();
 
 #if 1 && defined USE_SPEEDHACKS
-	neogeoSynchroniseZ80(0x0200);
+	neogeoSynchroniseZ80((s1945pmode) ? 0x60 : 0x0200);
 #endif
 }
 
@@ -1807,7 +1811,7 @@ UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 #if 1 && defined USE_SPEEDHACKS
 				// nSoundStatus: &1 = sound latch read, &2 = response written
 				if (nSoundStatus != 3) {
-					neogeoSynchroniseZ80(0x0100);
+					neogeoSynchroniseZ80((s1945pmode) ? 0x60 : 0x0100);
 				}
 #else
 				neogeoSynchroniseZ80(0);
@@ -4280,6 +4284,8 @@ INT32 NeoExit()
 
 	// release the NeoGeo CD information object if needed
 	NeoCDInfo_Exit();
+
+	s1945pmode = 0;
 
 	return 0;
 }

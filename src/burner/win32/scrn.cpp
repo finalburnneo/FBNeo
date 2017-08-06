@@ -811,6 +811,8 @@ static void UpdatePreviousGameList()
 	}
 }
 
+static bool bSramLoad = true; // always true, unless BurnerLoadDriver() is called from StartFromReset()
+
 // Compact driver loading module
 int BurnerLoadDriver(TCHAR *szDriverName)
 {
@@ -829,7 +831,7 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 			StopReplay();
 			
 			DrvExit();
-			DrvInit(j, true);	// Init the game driver
+			DrvInit(j, bSramLoad);	// Init the game driver
 			MenuEnableItems();
 			bAltPause = 0;
 			AudSoundPlay();			// Restart sound
@@ -849,7 +851,9 @@ int BurnerLoadDriver(TCHAR *szDriverName)
 int StartFromReset(TCHAR *szDriverName)
 {
 	if (!bDrvOkay || (szDriverName && _tcscmp(szDriverName, BurnDrvGetText(DRV_NAME))) ) {
+		bSramLoad = false;
 		BurnerLoadDriver(szDriverName);
+		bSramLoad = true;
 		return 1;
 	}
 	//if(nBurnDrvActive < 1) return 0;

@@ -23,7 +23,7 @@
  Port by OopsWare overhaul by dink
  ********************************************************************************/
 
-#include "tiles_generic.h"
+#include "burnint.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
 #include "burn_md2612.h"
@@ -3116,8 +3116,6 @@ INT32 MegadriveInit()
 	// OSC_NTSC / 7
 	BurnSetRefreshRate(60.0);
 
-	GenericTilesInit();
-
 	bNoDebug = 0;
 	DrvSECAM = 0;
 	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 0);
@@ -3162,9 +3160,7 @@ INT32 MegadriveExit()
 
 	BurnMD2612Exit();
 	SN76496Exit();
-
-	GenericTilesExit();
-
+	
 	if (Mem) {
 		BurnFree(Mem);
 		Mem = NULL;
@@ -4241,7 +4237,7 @@ static INT32 PicoLine(INT32 /*scan*/)
 			UINT8 *pSrc = HighColFull + (Scanline + offset)*(8+320+8) + 8;
 
 			for (INT32 i = 0; i < 320; i++)
-				pDest[i] = pSrc[i];
+				pDest[i] = MegadriveCurPal[pSrc[i]];
 
 		}
 	}
@@ -4260,7 +4256,7 @@ static INT32 PicoLine(INT32 /*scan*/)
 			UINT8 *pSrc = HighColFull + (Scanline + offset)*(8+320+8) + 8;
 
 			for (INT32 i = 0; i < 320; i++)
-				pDest[i] = pSrc[i];
+				pDest[i] = MegadriveCurPal[pSrc[i]];
 
 		}
 	}
@@ -4268,7 +4264,7 @@ static INT32 PicoLine(INT32 /*scan*/)
 	return 0;
 }
 
-INT32 MegadriveDraw()
+static void MegadriveDraw()
 {
 	if (bMegadriveRecalcPalette) {
 		for (INT32 i=0; i< 0x40; i++)
@@ -4276,32 +4272,32 @@ INT32 MegadriveDraw()
 		bMegadriveRecalcPalette = 0;
 	}
 
-	UINT16 *pDest = (UINT16 *)pTransDraw;
+	UINT16 *pDest = (UINT16 *)pBurnDraw;
 
 	if ((RamVReg->reg[12]&1) || !(MegadriveDIP[1] & 0x03)) {
-
+	
 		for (INT32 j=0; j < 224; j++) {
 			UINT16 *pSrc = LineBuf + (j * 320);
 			for (INT32 i = 0; i < 320; i++)
 				pDest[i] = pSrc[i];
 			pDest += 320;
 		}
-
+	
 	} else {
-
+		
 		if (( MegadriveDIP[1] & 0x03 ) == 0x01 ) {
-			// Center
+			// Center 
 			pDest += 32;
 			for (INT32 j = 0; j < 224; j++) {
 				UINT16 *pSrc = LineBuf + (j * 320);
 
 				memset((UINT8 *)pDest -  32*2, 0, 64);
-
+				
 				for (INT32 i = 0; i < 256; i++)
 					pDest[i] = pSrc[i];
-
+				
 				memset((UINT8 *)pDest + 256*2, 0, 64);
-
+				
 				pDest += 320;
 			}
 		} else {
@@ -4316,10 +4312,9 @@ INT32 MegadriveDraw()
 				pDest += 320;
 			}
 		}
-
+		
 	}
-	BurnTransferCopy(MegadriveCurPal);
-	return 0;
+	//memset(LineBuf, 0, 320 * 320 * sizeof(UINT16));
 }
 
 #define CYCLES_M68K_LINE     488 // suitable for both PAL/NTSC
@@ -4341,6 +4336,7 @@ INT32 MegadriveFrame()
 		JoyPad->pad[2] |= (MegadriveJoy3[i] & 1) << i;
 		JoyPad->pad[3] |= (MegadriveJoy4[i] & 1) << i;
 	}
+	
 	
 	SekNewFrame();
 	ZetNewFrame();

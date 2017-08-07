@@ -41820,6 +41820,42 @@ struct BurnDriver BurnDrvmd_sboom = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sonic 2 SMTP (Hack By SMTP)
+static struct BurnRomInfo md_s2smtpRomDesc[] = {
+	{ "s2smtp_v0.5.bin", 0x1fa42a, 0xd116fef0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s2smtp)
+STD_ROM_FN(md_s2smtp)
+
+struct BurnDriver BurnDrvmd_s2smtp = {
+	"md_s2smtp", "md_sonic2", NULL, NULL, "2007",
+	"Sonic 2 SMTP (Hack, v0.5)\0", NULL, "2007 SMTP", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_s2smtpRomInfo, md_s2smtpRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic 2 Delta (Hack By Esrael)
+static struct BurnRomInfo md_s2deltaRomDesc[] = {
+	{ "Sonic2Cl.bin", 0x200000, 0x74abb0af, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s2delta)
+STD_ROM_FN(md_s2delta)
+
+struct BurnDriver BurnDrvmd_s2delta = {
+	"md_s2delta", "md_sonic2", NULL, NULL, "2015",
+	"Sonic 2 Delta (Hack, v0.25a)\0", NULL, "2015 Esrael", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_s2deltaRomInfo, md_s2deltaRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Sonic 3 & Knuckles - The Challenges (Hack By ColinC10)
 static struct BurnRomInfo md_s3ktcRomDesc[] = {
 	{ "S3K_TheChallenges.bin", 0x400000, 0x04179928, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

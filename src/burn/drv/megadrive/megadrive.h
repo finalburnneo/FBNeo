@@ -21,9 +21,10 @@ extern UINT8 MegadriveJoy2[12];
 extern UINT8 MegadriveJoy3[12];
 extern UINT8 MegadriveJoy4[12];
 extern UINT8 MegadriveDIP[2];
-extern UINT16 *MegadriveCurPal;
+extern UINT32 *MegadriveCurPal;
 
 INT32 MegadriveInit();
 INT32 MegadriveExit();
 INT32 MegadriveFrame();
 INT32 MegadriveScan(INT32 nAction, INT32 *pnMin);
+INT32 MegadriveDraw();

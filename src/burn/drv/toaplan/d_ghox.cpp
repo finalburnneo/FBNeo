@@ -1,7 +1,7 @@
 // Based on MAME driver by Quench, Yochizo, David Haywood
 
 #include "toaplan.h"
-#include "samples.h"
+#include "z180.h"
 
 #define REFRESHRATE 60
 #define VBLANK_LINES (32)
@@ -20,6 +20,8 @@ static UINT8 *RamStart, *RamEnd;
 static UINT8 *Rom01;
 static UINT8 *Ram01, *RamPal;
 static UINT8 *ShareRAM;
+static UINT8 *Rom02;
+static UINT8 *Ram02;
 
 static INT8 Paddle[2];
 static INT8 PaddleOld[2];
@@ -148,9 +150,11 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = Mem;
 	Rom01		= Next; Next += 0x040000;		// 68000 ROM
 	GP9001ROM[0]= Next; Next += nGP9001ROMSize[0];	// GP9001 tile data
+	Rom02		= Next; Next += 0x008000;
 	RamStart	= Next;
 	Ram01		= Next; Next += 0x004000;		// CPU #0 work RAM
 	ShareRAM	= Next; Next += 0x001000;
+	Ram02		= Next;	Next += 0x000400;
 	RamPal		= Next; Next += 0x001000;		// palette
 	GP9001RAM[0]= Next; Next += 0x008000;		// Double size, as the game tests too much memory during POST
 	GP9001Reg[0]= (UINT16*)Next; Next += 0x0100 * sizeof(UINT16);
@@ -180,9 +184,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);				// scan 68000 states
 
 		ToaScanGP9001(nAction, pnMin);
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-                BurnSampleScan(nAction, pnMin);
-#endif
+
                 ToaRecalcPalette = 1;
                 bDrawScreen = true; // get background back ?
 	}
@@ -197,173 +199,11 @@ static INT32 LoadRoms()
 
 	// Load GP9001 tile data
 	ToaLoadGP9001Tiles(GP9001ROM[0], 2, 2, nGP9001ROMSize[0]);
+	
+	BurnLoadRom(Rom02, 4, 1);
 
 	return 0;
 }
-
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-static void StopAllSamples()
-{
-	for (INT32 i = 0x00; i <= 79; i++) {
-            BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel0()
-{
-	BurnSampleStop(0x00);
-	BurnSampleSetLoop(0x00, 0);
-	BurnSampleStop(0x42);
-	BurnSampleSetLoop(0x42, 0);
-	BurnSampleStop(0x44);
-	BurnSampleSetLoop(0x44, 0);
-	BurnSampleStop(0x45);
-	BurnSampleSetLoop(0x45, 0);
-	BurnSampleStop(0x47);
-	BurnSampleSetLoop(0x47, 0);
-	BurnSampleStop(0x48);
-	BurnSampleSetLoop(0x48, 0);
-	BurnSampleStop(0x49);
-	BurnSampleSetLoop(0x49, 0);
-	BurnSampleStop(0x4c);
-	BurnSampleSetLoop(0x4c, 0);
-	BurnSampleStop(0x4d);
-	BurnSampleSetLoop(0x4d, 0);
-	BurnSampleStop(0x4e);
-	BurnSampleSetLoop(0x4e, 0);
-	BurnSampleStop(0x4f);
-	BurnSampleSetLoop(0x4f, 0);
-}
-
-static void StopSamplesChannel1()
-{
-	for (INT32 i = 0x02; i <= 0x0f; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel2()
-{
-	for (INT32 i = 0x10; i <= 0x17; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel3()
-{
-	for (INT32 i = 0x18; i <= 0x1f; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel4()
-{
-	for (INT32 i = 0x20; i <= 0x27; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel5()
-{
-	for (INT32 i = 0x28; i <= 0x2f; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel6()
-{
-	for (INT32 i = 0x30; i <= 0x38; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel7()
-{
-	for (INT32 i = 0x3a; i <= 0x3f; i++) {
-		BurnSampleStop(i);
-	}
-}
-
-static void StopSamplesChannel8()
-{
-	BurnSampleStop(0x01);
-	BurnSampleStop(0x39);
-}
-
-static void ghoxSoundCmd(UINT16 d)
-{
-	if (d == 0xfe) {
-		StopSamplesChannel0();
-	}
-	
-	if (d == 0x42 || d == 0x44 || d == 0x45 || d == 0x47 || d == 0x48 || d == 0x4c || d == 0x4d || d == 0x4e) {
-		StopSamplesChannel0();
-		BurnSampleSetLoop(d, 1);
-		BurnSamplePlay(d);
-	}
-
-	if (d == 0xd0) {
-		StopSamplesChannel0();
-		BurnSampleSetLoop(0, 1);
-		BurnSamplePlay(0);
-	}
-
-	if (d == 0x49) {
-		StopSamplesChannel0();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x02 && d <= 0x0f) {
-		StopSamplesChannel1();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x10 && d <= 0x17) {
-		StopSamplesChannel2();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x18 && d <= 0x1f) {
-		StopSamplesChannel3();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x20 && d <= 0x27) {
-		StopSamplesChannel4();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x28 && d <= 0x2f) {
-		StopSamplesChannel5();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x30 && d <= 0x38) {
-		StopSamplesChannel6();
-		BurnSamplePlay(d);
-	}
-	
-	if (d == 0x39) {
-		StopSamplesChannel8();
-		BurnSamplePlay(d);
-	}
-	
-	if (d >= 0x3a && d <= 0x3f) {
-		StopSamplesChannel7();
-		BurnSamplePlay(d);
-	}
-	
-	if (d == 0x01) {
-		StopSamplesChannel8();
-		BurnSamplePlay(d);
-	}
-	
-	if (d == 0x4b) {
-		StopSamplesChannel0();
-		BurnSamplePlay(0x4f);
-	}
-}
-#endif
 
 UINT8 PaddleRead(UINT8 Num)
 {
@@ -379,17 +219,6 @@ UINT8 PaddleRead(UINT8 Num)
 UINT8 __fastcall ghoxReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
-		case 0x18000d:								// Player 1 inputs
-			return DrvInput[0];
-		case 0x18000f:								// Player 2 inputs
-			return DrvInput[1];
-		case 0x180011:								// Other inputs
-			return DrvInput[2];
-
-		case 0x180007:								// Dipswitch 1
-			return DrvInput[3];
-		case 0x180009:			   					// Dipswitch 2
-			return DrvInput[4];
 		case 0x18100d:								// Dipswitch 3 - Territory
 			return DrvInput[5]&0x0f;
 
@@ -403,18 +232,13 @@ UINT8 __fastcall ghoxReadByte(UINT32 sekAddress)
 		case 0x100000:
 		case 0x100001:
 			return PaddleRead(0);
-
-		case 0x180000:
-		case 0x180001:
-			return 0xff;
-
-//		default:
-//			printf("Attempt to read byte value of location %x\n", sekAddress);
 	}
 
-	if ((sekAddress & 0xfff000) == 0x180000) {
-		return ShareRAM[(sekAddress >> 1) & 0x7ff];
+	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
+		return ShareRAM[(sekAddress - 0x180000) >> 1];
 	}
+	
+	//bprintf(PRINT_NORMAL, _T("Read Byte %x\n"), sekAddress);
 
 	return 0;
 }
@@ -422,20 +246,6 @@ UINT8 __fastcall ghoxReadByte(UINT32 sekAddress)
 UINT16 __fastcall ghoxReadWord(UINT32 sekAddress)
 {
 	switch (sekAddress) {
-		case 0x18000c:								// Player 1 inputs
-			return DrvInput[0];
-		case 0x18000e:								// Player 2 inputs
-			return DrvInput[1];
-		case 0x180010:								// Other inputs
-			return DrvInput[2];
-
-		case 0x180006:								// Dipswitch 1
-			return DrvInput[3];
-		case 0x180008:			   					// Dipswitch 2
-			return DrvInput[4];
-		case 0x18100c:								// Dipswitch 3 - Territory
-			return DrvInput[5]&0x0f;
-
 		case 0x140004:
 			return ToaGP9001ReadRAM_Hi(0);
 		case 0x140006:
@@ -449,99 +259,162 @@ UINT16 __fastcall ghoxReadWord(UINT32 sekAddress)
 
 		case 0x100000:
 			return PaddleRead(0);
-
-		case 0x180000:
-		case 0x180001:
-			return 0xffff;
-
-//		default:
-//			printf("Attempt to read word value of location %x\n", sekAddress);
 	}
-
-	if ((sekAddress & 0xfff000) == 0x180000) {
-		return ShareRAM[(sekAddress >> 1) & 0x7ff];
+	
+	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
+		SEK_DEF_READ_WORD(0, sekAddress);
 	}
+	
+//	bprintf(PRINT_NORMAL, _T("Read Word %x\n"), sekAddress);
 
 	return 0;
-}
-
-static void ghox_mcu_write(INT32 data)
-{
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	ghoxSoundCmd(data);
-#endif
-
-	if ((data >= 0xd0) && (data < 0xe0))
-	{
-		INT32 offset = ((data & 0x0f) * 2) + (0x38 / 2);
-		ShareRAM[(0x500 / 2) + offset  ] = 0x05;	// Return address for
-		ShareRAM[(0x500 / 2) + offset-1] = 0x56;	// RTS instruction
-	}
-	if (data == 0xd3) {
-		static const UINT8 prot_data[0x10] = {
-			0x3a, 0x01, 0x08, 0x85, 0x00, 0x00, 0xcb, 0xfc,
-			0x00, 0x03, 0x90, 0x45, 0xe5, 0x09, 0x4e, 0x75
-		};
-
-		memcpy (ShareRAM + (0x556 / 2), prot_data, 0x10);
-	} else {
-		ShareRAM[0x556 / 2] = 0x4e;	// Return an RTS instruction
-		ShareRAM[0x558 / 2] = 0x75;
-	}
 }
 
 void __fastcall ghoxWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
-		case 0x180001:
-			ghox_mcu_write(byteValue);
-			break;
-
-	//	default:
-	//		printf("Attempt to write byte value %x to location %x\n", byteValue, sekAddress);
+		case 0x181001: {
+			// coin counter
+			return;
+		}
+		
+		case 0x1c0001: {
+			// ????
+			return;
+		}
 	}
-
-	if ((sekAddress & 0xfff000) == 0x180000) {
-		ShareRAM[(sekAddress >> 1) & 0x7ff] = byteValue;
+	
+	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
+		if ((sekAddress & 0x01) == 0x01) {
+			ShareRAM[(sekAddress - 0x180000) >> 1] = byteValue;
+		}
 		return;
 	}
+	
+//	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), sekAddress, byteValue);
 }
 
 void __fastcall ghoxWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	switch (sekAddress) {
-
 		case 0x140000:								// Set GP9001 VRAM address-pointer
 			ToaGP9001SetRAMPointer(wordValue);
-			break;
+			return;
 
 		case 0x140004:
 			ToaGP9001WriteRAM(wordValue, 0);
-			break;
+			return;
 		case 0x140006:
 			ToaGP9001WriteRAM(wordValue, 0);
-			break;
+			return;
 
 		case 0x140008:
 			ToaGP9001SelectRegister(wordValue);
-			break;
+			return;
 
 		case 0x14000C:
 			ToaGP9001WriteRegister(wordValue);
-			break;
-
-		case 0x180000:
-			ghox_mcu_write(wordValue);
-			break;
-
-//		default:
-//			printf("Attempt to write word value %x to location %x\n", wordValue, sekAddress);
+			return;
 	}
-
-	if ((sekAddress & 0xfff000) == 0x180000) {
-		ShareRAM[(sekAddress >> 1) & 0x7ff] = wordValue;
+	
+	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
+		SEK_DEF_WRITE_WORD(0, sekAddress, wordValue)
 		return;
 	}
+	
+//	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), sekAddress, wordValue);
+}
+
+static UINT8 __fastcall GhoxMCUReadOp(UINT32 a)
+{
+	if (a <= 0x3fff) return Rom02[a];
+	
+//	bprintf(PRINT_NORMAL, _T("Read Op %x\n"), a);
+	
+	return 0;
+}
+
+static UINT8 __fastcall GhoxMCUReadOpArg(UINT32 a)
+{
+	if (a <= 0x3fff) return Rom02[a];
+	
+//	bprintf(PRINT_NORMAL, _T("Read Op Arg %x\n"), a);
+	
+	return 0;
+}
+
+static UINT8 __fastcall GhoxMCUReadProg(UINT32 a)
+{
+	if (a <= 0x3fff) return Rom02[a];
+	
+	if (a >= 0x3fe00 && a <= 0x3ffff) {
+		return Ram02[(a - 0x3fe00) + 0x200];
+	}
+	
+	if (a >= 0x40000 && a <= 0x407ff) {
+		return ShareRAM[a - 0x40000];
+	}
+	
+	switch (a) {
+		case 0x80002: {
+			return DrvInput[3];
+		}
+		
+		case 0x80004: {
+			return DrvInput[4];
+		}
+		
+		case 0x80006: {
+			return 0x00;
+		}
+		
+		case 0x80008: {
+			return DrvInput[0];
+		}
+		
+		case 0x8000a: {
+			return DrvInput[1];
+		}
+		
+		case 0x8000c: {
+			return DrvInput[2];
+		}
+		
+		case 0x8000f: {
+			return BurnYM2151ReadStatus();
+		}
+	}
+
+//	bprintf(PRINT_NORMAL, _T("Read Prog %x\n"), a);
+	
+	return 0;
+}
+
+static void __fastcall GhoxMCUWriteProg(UINT32 a, UINT8 d)
+{
+	if (a >= 0x3fe00 && a <= 0x3ffff) {
+		Ram02[(a - 0x3fe00) + 0x200] = d;
+		return;
+	}
+	
+	if (a >= 0x40000 && a <= 0x407ff) {
+		ShareRAM[(a - 0x40000)] = d;
+		return;
+	}
+	
+	switch (a) {
+		case 0x8000e: {
+			BurnYM2151SelectRegister(d);
+			return;
+		}
+		
+		case 0x8000f: {
+			BurnYM2151WriteRegister(d);
+			return;
+		}
+	}
+	
+//	bprintf(PRINT_NORMAL, _T("Write Prog %x, %x\n"), a, d);
 }
 
 static INT32 DrvDoReset()
@@ -550,10 +423,9 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 	
-	BurnSampleReset();
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-	StopAllSamples();
-#endif
+	z180_reset();
+	
+	BurnYM2151Reset();
 
 	Paddle[0] = 0;
 	PaddleOld[0] = 0;
@@ -619,12 +491,14 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 	
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-        BurnUpdateProgress(0.0, _T("Loading samples..."), 0);
-
-	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(1.00, BURN_SND_ROUTE_BOTH);
-#endif
+	z180_init(0, 10000000, NULL);
+	Z180SetCPUOpReadHandler(GhoxMCUReadOp);
+	Z180SetCPUOpReadArgHandler(GhoxMCUReadOpArg);
+	Z180SetCPUProgReadHandler(GhoxMCUReadProg);
+	Z180SetCPUProgWriteHandler(GhoxMCUWriteProg);
+	
+	BurnYM2151Init(27000000 / 8);
+	BurnYM2151SetAllRoutes(0.70, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -638,7 +512,10 @@ static INT32 DrvExit()
 
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
-	BurnSampleExit();
+	
+	z180_exit();
+	
+	BurnYM2151Exit();
 
 	BurnFree(Mem);
 
@@ -666,7 +543,8 @@ inline static INT32 CheckSleep(INT32)
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 4;
+	INT32 nInterleave = 100;
+	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) {
 		DrvDoReset();
@@ -693,6 +571,7 @@ static INT32 DrvFrame()
 	SekIdle(nCyclesDone[0]);
 
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
+	nCyclesTotal[1] = (INT32)((INT64)10000000 / REFRESHRATE);
 
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
@@ -728,12 +607,27 @@ static INT32 DrvFrame()
 		} else {
 			SekIdle(nCyclesSegment);
 		}
+		
+		// Run MCU
+		nCyclesDone[1] += z180_execute(nCyclesTotal[1] / nInterleave);
+		
+		// Render sound segment
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = (nBurnSoundLen * i / nInterleave) - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	nCyclesDone[0] = SekTotalCycles() - nCyclesTotal[0];
 	
 	if (pBurnSoundOut) {
-		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+		}
 	}
 
 //	bprintf(PRINT_NORMAL, _T("    %i\n"), nCyclesDone[0]);
@@ -745,98 +639,6 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static struct BurnSampleInfo ghoxSampleDesc[] = {
-#ifdef TOAPLAN_SOUND_SAMPLES_HACK
-#if !defined ROM_VERIFY
-	{ "d0", SAMPLE_NOLOOP },
-	{ "01", SAMPLE_NOLOOP },
-	{ "02", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "04", SAMPLE_NOLOOP },
-	{ "05", SAMPLE_NOLOOP },
-	{ "06", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "08", SAMPLE_NOLOOP },
-	{ "09", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "0b", SAMPLE_NOLOOP },
-	{ "0c", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "0f", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "11", SAMPLE_NOLOOP },
-	{ "12", SAMPLE_NOLOOP },
-	{ "12", SAMPLE_NOLOOP },
-	{ "14", SAMPLE_NOLOOP },
-	{ "15", SAMPLE_NOLOOP },
-	{ "16", SAMPLE_NOLOOP },
-	{ "17", SAMPLE_NOLOOP },
-	{ "18", SAMPLE_NOLOOP },
-	{ "19", SAMPLE_NOLOOP },
-	{ "1a", SAMPLE_NOLOOP },
-	{ "1b", SAMPLE_NOLOOP },
-	{ "1c", SAMPLE_NOLOOP },
-	{ "1c", SAMPLE_NOLOOP },
-	{ "1c", SAMPLE_NOLOOP },
-	{ "1f", SAMPLE_NOLOOP },
-	{ "20", SAMPLE_NOLOOP },
-	{ "21", SAMPLE_NOLOOP },
-	{ "22", SAMPLE_NOLOOP },
-	{ "23", SAMPLE_NOLOOP },
-	{ "24", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "27", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "2a", SAMPLE_NOLOOP },
-	{ "2b", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "2d", SAMPLE_NOLOOP },
-	{ "2e", SAMPLE_NOLOOP },
-	{ "2f", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "33", SAMPLE_NOLOOP },
-	{ "34", SAMPLE_NOLOOP },
-	{ "35", SAMPLE_NOLOOP },
-	{ "36", SAMPLE_NOLOOP },
-	{ "37", SAMPLE_NOLOOP },
-	{ "38", SAMPLE_NOLOOP },
-	{ "39", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "3c", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "3e", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "42", SAMPLE_NOLOOP },
-	{ "43", SAMPLE_NOLOOP },
-	{ "44", SAMPLE_NOLOOP },
-	{ "45", SAMPLE_NOLOOP },
-	{ "43", SAMPLE_NOLOOP },
-	{ "47", SAMPLE_NOLOOP },
-	{ "48", SAMPLE_NOLOOP },
-	{ "49", SAMPLE_NOLOOP },
-	{ "43", SAMPLE_NOLOOP },
-	{ "dm", SAMPLE_NOLOOP },
-	{ "4c", SAMPLE_NOLOOP },
-	{ "4d", SAMPLE_NOLOOP },
-	{ "4e", SAMPLE_NOLOOP },
-	{ "d1", SAMPLE_NOLOOP },
-#endif
-#endif
-	{ "", 0 }
-};
-
-STD_SAMPLE_PICK(ghox)
-STD_SAMPLE_FN(ghox)
-
-
 // Ghox (spinner)
 
 static struct BurnRomInfo ghoxRomDesc[] = {
@@ -846,7 +648,7 @@ static struct BurnRomInfo ghoxRomDesc[] = {
 	{ "tp021-03.u36",	0x80000, 0xa15d8e9d, BRF_GRA },           //  2 GP9001 Tile data
 	{ "tp021-04.u37",	0x80000, 0x26ed1c9a, BRF_GRA },           //  3
 
-	{ "hd647180.021",	0x08000, 0x00000000, BRF_NODUMP },        //  4 CPU #1 code
+	{ "hd647180.021",	0x08000, 0x6ab59e5b, BRF_PRG | BRF_ESS },        //  4 CPU #1 code
 };
 
 STD_ROM_PICK(ghox)
@@ -857,7 +659,7 @@ struct BurnDriver BurnDrvGhox = {
 	"Ghox (spinner)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxRomInfo, ghoxRomName, ghoxSampleInfo, ghoxSampleName, GhoxInputInfo, GhoxDIPInfo,
+	NULL, ghoxRomInfo, ghoxRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };
@@ -872,7 +674,7 @@ static struct BurnRomInfo ghoxjRomDesc[] = {
 	{ "tp021-03.u36",	0x80000, 0xa15d8e9d, BRF_GRA },           //  2 GP9001 Tile data
 	{ "tp021-04.u37",	0x80000, 0x26ed1c9a, BRF_GRA },           //  3
 
-	{ "hd647180.021",	0x08000, 0x00000000, BRF_NODUMP },        //  4 CPU #1 code
+	{ "hd647180.021",	0x08000, 0x6ab59e5b, BRF_PRG | BRF_ESS },        //  4 CPU #1 code
 };
 
 STD_ROM_PICK(ghoxj)
@@ -883,7 +685,7 @@ struct BurnDriver BurnDrvGhoxj = {
 	"Ghox (joystick)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
-	NULL, ghoxjRomInfo, ghoxjRomName, ghoxSampleInfo, ghoxSampleName, GhoxInputInfo, GhoxDIPInfo,
+	NULL, ghoxjRomInfo, ghoxjRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

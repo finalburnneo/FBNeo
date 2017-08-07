@@ -19,7 +19,7 @@ static void CalcBrushes(int nStartColour)
 		if (i + nStartColour < nPaletteEntries) {
 			Colour = pBurnDrvPalette[i + nStartColour];
 
-			if (nVidImageDepth < 16) {
+			if (nVidImageDepth < 16 || (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
 				// 15-bit
 				r = (Colour & 0x7c00) >> 7;
 				g = (Colour & 0x03e0) >> 2;
@@ -126,7 +126,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 					
 					Colour = pBurnDrvPalette[i + nPalettePosition];
 
-					if (nVidImageDepth < 16) {
+					if (nVidImageDepth < 16 || (BurnDrvGetFlags() & BDF_16BIT_ONLY)) {
 						// 15-bit
 						r = (Colour & 0x7c00) >> 7;
 						g = (Colour & 0x03e0) >> 2;

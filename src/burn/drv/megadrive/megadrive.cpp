@@ -4264,13 +4264,13 @@ static INT32 PicoLine(INT32 /*scan*/)
 	return 0;
 }
 
-static void MegadriveDraw()
+INT32 MegadriveDraw()
 {
-	if (bMegadriveRecalcPalette) {
-		for (INT32 i=0; i< 0x40; i++)
+	/*if (bMegadriveRecalcPalette) {
+	    for (INT32 i=0; i< 0x40; i++)
 			CalcCol(i, BURN_ENDIAN_SWAP_INT16(RamPal[i]));
 		bMegadriveRecalcPalette = 0;
-	}
+	}*/
 
 	UINT16 *pDest = (UINT16 *)pBurnDraw;
 
@@ -4314,7 +4314,8 @@ static void MegadriveDraw()
 		}
 		
 	}
-	//memset(LineBuf, 0, 320 * 320 * sizeof(UINT16));
+
+	return 0;
 }
 
 #define CYCLES_M68K_LINE     488 // suitable for both PAL/NTSC

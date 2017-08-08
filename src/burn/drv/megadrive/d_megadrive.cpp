@@ -41919,7 +41919,7 @@ STD_ROM_PICK(md_umk3mh)
 STD_ROM_FN(md_umk3mh)
 
 struct BurnDriver BurnDrvmd_umk3mh = {
-	"md_umk3mh", "md_umk3u", NULL, NULL, "2011",
+	"md_umk3mh", "md_umk3", NULL, NULL, "2011",
 	"Ultimate Mortal Kombat 3 Mini V13 (Hack)\0", NULL, "2011 Nemesis_c, r57shell", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
@@ -41955,7 +41955,7 @@ STD_ROM_PICK(md_mk3m)
 STD_ROM_FN(md_mk3m)
 
 struct BurnDriver BurnDrvmd_mk3m = {
-	"md_mk3m", "md_mk3u", NULL, NULL, "2011",
+	"md_mk3m", "md_mk3", NULL, NULL, "2011",
 	"Mortal Kombat 3 Mini (Hack)\0", NULL, "2011 Nemesis_c, r57shell", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,

@@ -176,17 +176,18 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 	if (nAction & ACB_VOLATILE) {		// Scan volatile ram
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= RamStart;
+		ba.Data		= RamStart;
 		ba.nLen		= RamEnd-RamStart;
 		ba.szName	= "All Ram";
 		BurnAcb(&ba);
 
 		SekScan(nAction);				// scan 68000 states
+		z180_scan();
 
 		ToaScanGP9001(nAction, pnMin);
 
-                ToaRecalcPalette = 1;
-                bDrawScreen = true; // get background back ?
+		ToaRecalcPalette = 1;
+		bDrawScreen = true; // get background back ?
 	}
 
 	return 0;
@@ -498,7 +499,7 @@ static INT32 DrvInit()
 	Z180SetCPUProgWriteHandler(GhoxMCUWriteProg);
 	
 	BurnYM2151Init(27000000 / 8);
-	BurnYM2151SetAllRoutes(0.70, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -656,7 +657,7 @@ STD_ROM_FN(ghox)
 
 struct BurnDriver BurnDrvGhox = {
 	"ghox", NULL, NULL, "ghox", "1991",
-	"Ghox (spinner)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
+	"Ghox (spinner)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
 	NULL, ghoxRomInfo, ghoxRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,
@@ -682,7 +683,7 @@ STD_ROM_FN(ghoxj)
 
 struct BurnDriver BurnDrvGhoxj = {
 	"ghoxj", "ghox", NULL, "ghox", "1991",
-	"Ghox (joystick)\0", "No Sound (undumped MCU)", "Toaplan", "Toaplan GP9001 based",
+	"Ghox (joystick)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
 	NULL, ghoxjRomInfo, ghoxjRomName, NULL, NULL, GhoxInputInfo, GhoxDIPInfo,

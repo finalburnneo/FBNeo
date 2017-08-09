@@ -849,6 +849,16 @@ static UINT8 *SZHVC_add;
 static UINT8 *SZHVC_sub;
 #endif
 
+void z180_scan()
+{
+	void *daisybk = (void*)Z180.daisy;
+	int (*irq_callback)(int irqline);
+	irq_callback = Z180.irq_callback;
+	SCAN_VAR(Z180);
+	Z180.daisy = (const struct z80_irq_daisy_chain *)daisybk;
+	Z180.irq_callback = irq_callback;
+}
+
 /****************************************************************************
  * Burn an odd amount of cycles, that is instructions taking something
  * different from 4 T-states per opcode (and R increment)

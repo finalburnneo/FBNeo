@@ -1410,8 +1410,8 @@ void __fastcall MegadriveZ80ProgWrite(UINT16 a, UINT8 d)
 		
 		if (addr68k <= 0x3fffff) return;
 		
-		if (addr68k == 0xc00011) {
-			SN76496Write(0, d);
+		if (addr68k >= 0xc00010 && addr68k <= 0xc00018) {
+			if (addr68k & 1) SN76496Write(0, d);
 			return;
 		}
 		

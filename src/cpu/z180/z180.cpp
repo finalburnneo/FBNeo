@@ -188,7 +188,7 @@ typedef struct {
 	UINT8	irq_state[3];		/* irq line states (INT0,INT1,INT2) */
 	UINT8	after_EI;			/* are we in the EI shadow? */
 	ALIGN_VAR(8) const struct z80_irq_daisy_chain *daisy;
-	int 	(*irq_callback)(int irqline);
+	ALIGN_VAR(8) int (*irq_callback)(int irqline);
 }	Z180_Regs;
 
 #define CF	0x01

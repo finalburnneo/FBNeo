@@ -1009,7 +1009,7 @@ struct BurnDriver BurnDrvQbert = {
 	"qbert", NULL, NULL, "qbert", "1982",
 	"Q*bert (US set 1)\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, qbertRomInfo, qbertRomName, qbertSampleInfo, qbertSampleName, QbertInputInfo, QbertDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4

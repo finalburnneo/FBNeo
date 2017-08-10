@@ -1047,7 +1047,7 @@ struct BurnDriver BurnDrvMilliped = {
 	"milliped", NULL, NULL, NULL, "1982",
 	"Millipede\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, millipedRomInfo, millipedRomName, NULL, NULL, MillipedInputInfo, MillipedDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1074,7 +1074,7 @@ struct BurnDriver BurnDrvCentiped = {
 	"centiped", NULL, NULL, NULL, "1980",
 	"Centipede (revision 4)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, centipedRomInfo, centipedRomName, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4
@@ -1101,7 +1101,7 @@ struct BurnDriver BurnDrvCentiped3 = {
 	"centiped3", "centiped", NULL, NULL, "1980",
 	"Centipede (revision 3)\0", NULL, "Atari", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_16BIT_ONLY, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, centiped3RomInfo, centiped3RomName, NULL, NULL, CentipedInputInfo, CentipedDIPInfo,
 	DrvInitcentiped, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x600,
 	240, 256, 3, 4

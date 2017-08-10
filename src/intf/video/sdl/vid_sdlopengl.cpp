@@ -289,6 +289,9 @@ static int Frame(bool bRedraw) // bRedraw = 0
 		} else {
 			BurnDrvFrame(); // Run one frame and draw the screen
 		}
+
+		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
+			pVidTransCallback();
 	}
 
 	return 0;

@@ -128,7 +128,9 @@ INT32 nVidImageDepth = 0;							// Memory buffer bits per pixel
 
 UINT32 (__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 static bool bVidRecalcPalette;
-
+												// Translation to native Bpp for games flagged with BDF_16BIT_ONLY
+static void VidDoFrameCallback();
+void (*pVidTransCallback)(void) = NULL;         // Callback for video driver, after BurnDrvFrame() / BurnDrvRedraw() (see win32/vid_d3d.cpp:vidFrame() for example)
 static UINT8* pVidTransImage = NULL;
 static UINT32* pVidTransPalette = NULL;
 static INT32 bSkipNextFrame = 0;
@@ -194,6 +196,7 @@ INT32 VidInit()
 
 				pVidTransPalette = (UINT32*)malloc(32768 * sizeof(UINT32));
 				pVidTransImage = (UINT8*)malloc(nVidImageWidth * nVidImageHeight * sizeof(INT16));
+				pVidTransCallback = VidDoFrameCallback;
 
 				BurnHighCol = HighCol15;
 
@@ -291,6 +294,9 @@ INT32 VidExit()
 			free(pVidTransImage);
 			pVidTransImage = NULL;
 		}
+		if (pVidTransCallback) {
+			pVidTransCallback = NULL;
+		}
 
 		return nRet;
 	} else {
@@ -298,14 +304,39 @@ INT32 VidExit()
 	}
 }
 
+static void VidDoFrameCallback()
+{
+		UINT16* pSrc = (UINT16*)pVidTransImage;
+		UINT8* pDest = pVidImage;
+
+		switch (nVidImageBPP) {
+			case 3: {
+				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
+					for (INT32 x = 0; x < nVidImageWidth; x++) {
+						UINT32 c = pVidTransPalette[pSrc[x]];
+						*(pDest + (x * 3) + 0) = c & 0xFF;
+						*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
+						*(pDest + (x * 3) + 2) = c >> 16;
+					}
+				}
+				break;
+			}
+			case 4: {
+				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
+					for (INT32 x = 0; x < nVidImageWidth; x++) {
+						((UINT32*)pDest)[x] = pVidTransPalette[pSrc[x]];
+					}
+				}
+				break;
+			}
+		}
+}
+
 static INT32 VidDoFrame(bool bRedraw)
 {
 	INT32 nRet;
 	
 	if (pVidTransImage && pVidTransPalette) {
-		UINT16* pSrc = (UINT16*)pVidTransImage;
-		UINT8* pDest = pVidImage;
-
 		if (bVidRecalcPalette) {
 			for (INT32 r = 0; r < 256; r += 8) {
 				for (INT32 g = 0; g < 256; g += 8) {
@@ -332,26 +363,8 @@ static INT32 VidDoFrame(bool bRedraw)
 		pBurnDraw = NULL;
 		nBurnPitch = 0;
 
-		switch (nVidImageBPP) {
-			case 3: {
-				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
-					for (INT32 x = 0; x < nVidImageWidth; x++) {
-						UINT32 c = pVidTransPalette[pSrc[x]];
-						*(pDest + (x * 3) + 0) = c & 0xFF;
-						*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
-						*(pDest + (x * 3) + 2) = c >> 16;
-					}
-				}
-				break;
-			}
-			case 4: {
-				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
-					for (INT32 x = 0; x < nVidImageWidth; x++) {
-						((UINT32*)pDest)[x] = pVidTransPalette[pSrc[x]];
-					}
-				}
-				break;
-			}
+		if (!pVidTransCallback) {
+			VidDoFrameCallback();
 		}
 	} else {
 		pBurnDraw = pVidImage;

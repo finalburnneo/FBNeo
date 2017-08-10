@@ -2180,6 +2180,9 @@ static int vidBurnToSurf()
 	return 0;
 }
 
+INT32 VidDoFrameCallback();
+
+
 // Run one frame and render the screen
 static int vidFrame(bool bRedraw)			// bRedraw = 0
 {
@@ -2255,6 +2258,9 @@ static int vidFrame(bool bRedraw)			// bRedraw = 0
 		} else {
 			BurnDrvFrame();					// Run one frame and draw the screen
 		}
+
+		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
+			pVidTransCallback();
 	}
 #ifdef ENABLE_PROFILING
 	ProfileProfileEnd(0);

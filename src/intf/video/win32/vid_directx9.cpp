@@ -1328,6 +1328,9 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 		} else {
 			BurnDrvFrame();							// Run one frame and draw the screen
 		}
+
+		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
+			pVidTransCallback();
 	}
 
 #ifdef ENABLE_PROFILING
@@ -2206,6 +2209,9 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 		} else {
 			BurnDrvFrame();			// Run one frame and draw the screen
 		}
+
+		if ((BurnDrvGetFlags() & BDF_16BIT_ONLY) && pVidTransCallback)
+			pVidTransCallback();
 	}
 
 	dx9AltRender();

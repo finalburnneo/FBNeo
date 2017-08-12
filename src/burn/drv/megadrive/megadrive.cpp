@@ -516,7 +516,7 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 				ZetReset();
 
 				BurnMD2612Reset();
-				MegadriveZ80Reset = 1;	
+				MegadriveZ80Reset = 1;
 			} else {
 				MegadriveZ80Reset = 0;
 			}
@@ -1267,28 +1267,28 @@ static INT32 MegadriveResetDo()
 		Reinitialise();
 		
 		BurnMD2612Exit();
-		BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, 0);
+		BurnMD2612Init(1, 1, MegadriveSynchroniseStreamPAL, 1);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 		
 		BurnMD2612Reset();
 		
 		SN76496Exit();
-		SN76496Init(0, OSC_PAL / 15, 1);
+		SN76496Init(0, OSC_PAL / 15, 0);
 		SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnSetRefreshRate(60.0);
 		Reinitialise();
 		
 		BurnMD2612Exit();
-		BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 0);
+		BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 1);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 		BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 		
 		BurnMD2612Reset();
 		
 		SN76496Exit();
-		SN76496Init(0, OSC_NTSC / 15, 1);
+		SN76496Init(0, OSC_NTSC / 15, 0);
 		SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -3118,11 +3118,11 @@ INT32 MegadriveInit()
 
 	bNoDebug = 0;
 	DrvSECAM = 0;
-	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 0);
+	BurnMD2612Init(1, 0, MegadriveSynchroniseStream, 1);
 	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_1, 0.75, BURN_SND_ROUTE_LEFT);
 	BurnMD2612SetRoute(0, BURN_SND_MD2612_MD2612_ROUTE_2, 0.75, BURN_SND_ROUTE_RIGHT);
 	
-	SN76496Init(0, OSC_NTSC / 15, 1);
+	SN76496Init(0, OSC_NTSC / 15, 0);
 	SN76496SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	MegadriveSetupSRAM();
@@ -3582,12 +3582,12 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 		ts.line=(vscroll+(Scanline<<1))&((ymask<<1)|1);
 		ts.nametab+=(ts.line>>4)<<shift[width];
 
-		DrawStripInterlace(&ts);
+		if (nBurnLayer & 1) DrawStripInterlace(&ts);
 	} else if( RamVReg->reg[11]&4) {
 		// we have 2-cell column based vscroll
 		// luckily this doesn't happen too often
 		ts.line = ymask | (shift[width]<<24); // save some stuff instead of line
-		DrawStripVSRam(&ts, plane, sh);
+		if (nBurnLayer & 2) DrawStripVSRam(&ts, plane, sh);
 	} else {
 		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]); // Get vertical scroll value
 
@@ -3595,7 +3595,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 		ts.line = (vscroll+Scanline)&ymask;
 		ts.nametab += (ts.line>>3)<<shift[width];
 
-		DrawStrip(&ts, sh);
+		if (nBurnLayer & 4) DrawStrip(&ts, sh);
 	}
 }
 
@@ -4355,6 +4355,7 @@ INT32 MegadriveFrame()
 #ifdef CYCDBUG
 	INT32 burny = 0;
 #endif
+	INT32 nSoundBufferPos = 0;
 
 	if (Hardware & 0x40) { // PAL
 		lines  = 312;
@@ -4483,6 +4484,14 @@ INT32 MegadriveFrame()
 		if (burny)
 			bprintf(0, _T("line cycles[%d]: %d."), Scanline, SekCyclesLine());
 #endif
+		// Afterburner II uses the PSG as a dac, this requires that we update the PSG often. (every other line)
+		if (pBurnSoundOut && y&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (lines / 2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
+
 	}
 	
 	if (pBurnDraw) MegadriveDraw();
@@ -4491,9 +4500,14 @@ INT32 MegadriveFrame()
 		z80CyclesSync(1);
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			SN76496Update(0, pSoundBuf, nSegmentLength);
+		}
 		BurnMD2612Update(pBurnSoundOut, nBurnSoundLen);
-		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();

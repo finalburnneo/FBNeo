@@ -1000,7 +1000,7 @@ struct BurnDriver BurnDrvVendettaz = {
 
 // Vendetta (World, 2 Players ver. W)
 
-static struct BurnRomInfo vendetta2pRomDesc[] = {
+static struct BurnRomInfo vendetta2pwRomDesc[] = {
 	{ "081w01.17c",	0x040000, 0xcee57132, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
 	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
@@ -1018,15 +1018,15 @@ static struct BurnRomInfo vendetta2pRomDesc[] = {
 	{ "vendetta.nv",  0x000080, 0xfbac4e30, BRF_OPT },
 };
 
-STD_ROM_PICK(vendetta2p)
-STD_ROM_FN(vendetta2p)
+STD_ROM_PICK(vendetta2pw)
+STD_ROM_FN(vendetta2pw)
 
-struct BurnDriver BurnDrvVendetta2p = {
-	"vendetta2p", "vendetta", NULL, NULL, "1991",
+struct BurnDriver BurnDrvVendetta2pw = {
+	"vendetta2pw", "vendetta", NULL, NULL, "1991",
 	"Vendetta (World, 2 Players ver. W)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendetta2pRomInfo, vendetta2pRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2pwRomInfo, vendetta2pwRomName, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };
@@ -1169,9 +1169,43 @@ struct BurnDriver BurnDrvVendetta2pd = {
 };
 
 
+// Crime Fighters 2 (Japan, 4 Players ver. N)
+
+static struct BurnRomInfo vendettanRomDesc[] = {
+	{ "081n01.17c",	0x040000, 0xfc766fab, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
+
+	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
+
+	{ "081a09",		0x080000, 0xb4c777a9, 3 | BRF_GRA },           //  2 K052109 Tiles
+	{ "081a08",		0x080000, 0x272ac8d9, 3 | BRF_GRA },           //  3
+
+	{ "081a04",		0x100000, 0x464b9aa4, 4 | BRF_GRA },           //  4 K053247 Tiles
+	{ "081a05",		0x100000, 0x4e173759, 4 | BRF_GRA },           //  5
+	{ "081a06",		0x100000, 0xe9fe6d80, 4 | BRF_GRA },           //  6
+	{ "081a07",		0x100000, 0x8a22b29a, 4 | BRF_GRA },           //  7
+
+	{ "081a03",		0x100000, 0x14b6baea, 5 | BRF_SND },           //  8 K053260 Samples
+
+	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
+};
+
+STD_ROM_PICK(vendettan)
+STD_ROM_FN(vendettan)
+
+struct BurnDriver BurnDrvVendettan = {
+	"vendettan", "vendetta", NULL, NULL, "1991",
+	"Crime Fighters 2 (Japan, 4 Players ver. N)\0", NULL, "Konami", "GX081",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	NULL, vendettanRomInfo, vendettanRomName, NULL, NULL, Vendet4pInputInfo, NULL,
+	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	304, 224, 4, 3
+};
+
+
 // Crime Fighters 2 (Japan, 2 Players ver. P)
 
-static struct BurnRomInfo vendettajRomDesc[] = {
+static struct BurnRomInfo vendetta2ppRomDesc[] = {
 	{ "081p01.17c",	0x040000, 0x5fe30242, 1 | BRF_PRG | BRF_ESS }, //  0 Konami Custom Code
 
 	{ "081b02",		0x010000, 0x4c604d9b, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 Code
@@ -1189,15 +1223,15 @@ static struct BurnRomInfo vendettajRomDesc[] = {
 	{ "vendettaj.nv",  0x000080, 0x3550a54e, BRF_OPT },
 };
 
-STD_ROM_PICK(vendettaj)
-STD_ROM_FN(vendettaj)
+STD_ROM_PICK(vendetta2pp)
+STD_ROM_FN(vendetta2pp)
 
-struct BurnDriver BurnDrvVendettaj = {
-	"vendettaj", "vendetta", NULL, NULL, "1991",
+struct BurnDriver BurnDrvVendetta2pp = {
+	"vendetta2pp", "vendetta", NULL, NULL, "1991",
 	"Crime Fighters 2 (Japan, 2 Players ver. P)\0", NULL, "Konami", "GX081",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
-	NULL, vendettajRomInfo, vendettajRomName, NULL, NULL, VendettaInputInfo, NULL,
+	NULL, vendetta2ppRomInfo, vendetta2ppRomName, NULL, NULL, VendettaInputInfo, NULL,
 	VendettaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	304, 224, 4, 3
 };

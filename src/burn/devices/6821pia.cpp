@@ -14,11 +14,7 @@
 #include "burnint.h"
 #include "6821pia.h"
 
-#ifdef __LP64__
-#define FPTR unsigned long   /* 64bit: sizeof(void *) is sizeof(long)  */
-#else
-#define FPTR unsigned int
-#endif
+#define FPTR uintptr_t
 
 #define VERBOSE 0
 

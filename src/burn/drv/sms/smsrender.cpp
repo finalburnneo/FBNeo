@@ -191,7 +191,7 @@ void render_init(void)
             out |= (j & (0x80 >> x)) ? (UINT32)(8 << (x << 2)) : 0;
             out |= (i & (0x80 >> x)) ? (UINT32)(4 << (x << 2)) : 0;
         }
-#if LSB_FIRST
+#ifdef LSB_FIRST
         bp_lut[(j << 8) | (i)] = out;
 #else
         bp_lut[(i << 8) | (j)] = out;

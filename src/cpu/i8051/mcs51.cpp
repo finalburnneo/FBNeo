@@ -142,6 +142,9 @@
 
 #define VERBOSE 0
 #define CLEAR_LINE	0
+#ifdef INLINE
+#undef INLINE
+#endif
 #define INLINE		inline
 //#define LOG(x)	do { if (VERBOSE) logerror x; } while (0)
 #define LOG(x)

@@ -600,9 +600,10 @@ static UINT8 berabohm_buttons_read(INT32 offset)
 			if (stored_input[0] == 0)
 			{
 				input_count = (input_count + 1) % 5;
-				if (input_count == 3) res |= 0x10;
 			}
 		}
+
+		if (input_count == 3) res |= 0x10;
 
 		return res | stored_input[0];
 	}

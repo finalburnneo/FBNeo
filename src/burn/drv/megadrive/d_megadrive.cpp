@@ -19468,6 +19468,24 @@ struct BurnDriver BurnDrvmd_mworld4 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Monster World IV (Hack, English v1.4)
+static struct BurnRomInfo md_mworld4engRomDesc[] = {
+	{ "Monster World IV (J) [!] [T-Eng].bin", 0x200000, 0xc94a35bf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mworld4eng)
+STD_ROM_FN(md_mworld4eng)
+
+struct BurnDriver BurnDrvmd_mworld4eng = {
+	"md_mworld4eng", "md_mworld4", NULL, NULL, "1994",
+	"Monster World IV (Hack, English v1.4)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_mworld4engRomInfo, md_mworld4engRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Mortal Kombat (World, v1.1)
 static struct BurnRomInfo md_mkRomDesc[] = {
 	{ "mortal kombat (world) (v1.1).bin", 0x200000, 0x33f19ab6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

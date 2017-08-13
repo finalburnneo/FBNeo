@@ -109,13 +109,9 @@ struct PicoVideo {
 };
 
 struct PicoMisc {
-	UINT32 Z80Run;
 	UINT32 Bank68k;
-	UINT8 Rotate;
 
-//	UINT8 Pad[3];
-	
-//	UINT32 SRamReg;
+	//UINT32 SRamReg;
 	UINT32 SRamStart;
 	UINT32 SRamEnd;
 	UINT32 SRamDetected;
@@ -502,10 +498,9 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		
 		case 0xA11100: {
 			if (byteValue & 1) {
-				RamMisc->Z80Run = 0;
+				z80CyclesSync(Z80HasBus && !MegadriveZ80Reset); // synch before disconnecting.  fixes hang in Golden Axe III (z80run)
 				Z80HasBus = 0;
 			} else {
-				RamMisc->Z80Run = 1;
 				Z80HasBus = 1;
 			}
 			return;
@@ -514,7 +509,6 @@ void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xA11200: {
 			if (!(byteValue & 1)) {
 				ZetReset();
-
 				BurnMD2612Reset();
 				MegadriveZ80Reset = 1;
 			} else {
@@ -543,10 +537,9 @@ void __fastcall MegadriveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 	switch (sekAddress) {
 		case 0xa11100: {
 			if (wordValue & 0x100) {
-				RamMisc->Z80Run = 0;
+				z80CyclesSync(Z80HasBus && !MegadriveZ80Reset);
 				Z80HasBus = 0;
 			} else {
-				RamMisc->Z80Run = 1;
 				Z80HasBus = 1;
 			}
 			return;
@@ -555,7 +548,6 @@ void __fastcall MegadriveWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		case 0xa11200: {
 			if (!(wordValue & 0x100)) {
 				ZetReset();
-
 				BurnMD2612Reset();
 				MegadriveZ80Reset = 1;
 			} else {
@@ -1250,10 +1242,7 @@ static INT32 MegadriveResetDo()
 	ZetClose();
 
 	BurnMD2612Reset();
-	
-	MegadriveZ80Reset = 1;
-	Z80HasBus = 1;
-	
+
 #if 0
 	FILE * f = fopen("Megadrive.bin", "wb+");
 	fwrite(RomMain, 1, 0x200000, f);
@@ -1306,6 +1295,8 @@ static INT32 MegadriveResetDo()
 	RamVReg->status = 0x3408 | ((MegadriveDIP[0] & 0x40) >> 6); // 'always set' bits | vblank | collision | pal
 
 	RamMisc->Bank68k = 0;
+	MegadriveZ80Reset = 1;
+	Z80HasBus = 0;
 	Z80BankPartial = 0;
 	Z80BankPos = 0;
 
@@ -4554,10 +4545,6 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(dma_xfers);
 
 		BurnRandomScan(nAction);
-	}
-
-	if (nAction & ACB_WRITE) {
-		bMegadriveRecalcPalette = 1;
 	}
 
 	return 0;

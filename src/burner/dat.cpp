@@ -4,6 +4,9 @@
 
 #include "burner.h"
 
+// If "Generate dat" crashes or hangs, uncomment this next line to find the guilty driver.
+//#define DAT_DEBUG
+
 static void ReplaceAmpersand(char *szBuffer, char *szGameName)
 {
 	UINT32 nStringPos = 0;
@@ -205,6 +208,10 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		strcpy(spName, "");											// make sure this string is empty before we start
 		strcpy(sbName, "");											// make sure this string is empty before we start
 		strcpy(ssName, "");											// make sure this string is empty before we start
+
+#ifdef DAT_DEBUG
+		bprintf(PRINT_IMPORTANT, _T("DAT(FIRSTPART): Processing %S.\n"), sgName);
+#endif
 
 		// Check to see if the game has a parent
 		if (BurnDrvGetTextA(DRV_PARENT))
@@ -551,6 +558,10 @@ INT32 write_datfile(INT32 bType, FILE* fDat)
 		}
 		
 		strcpy(sgName, BurnDrvGetTextA(DRV_NAME));
+
+#ifdef DAT_DEBUG
+		bprintf(PRINT_IMPORTANT, _T("DAT(BOARDROMS): Processing %S.\n"), sgName);
+#endif
 		
 		remove_driver_leader(HARDWARE_SEGA_MEGADRIVE, 3, 0)
 		remove_driver_leader(HARDWARE_PCENGINE_TG16, 3, 0)

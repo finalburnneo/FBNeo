@@ -87,11 +87,11 @@ static struct BurnDIPInfo SkyskiprDIPList[]=
 
 	{0   , 0xfe, 0   ,    16, "Coinage"		},
 	{0x12, 0x01, 0x0f, 0x03, "A 3/1 B 1/2"		},
-	{0x12, 0x01, 0x0f, 0x0e, "2 Coins 1 Credits"		},
+	{0x12, 0x01, 0x0f, 0x0e, "2 Coins 1 Credit"		},
 	{0x12, 0x01, 0x0f, 0x01, "A 2/1 B 2/5"		},
 	{0x12, 0x01, 0x0f, 0x04, "A 2/1 B 1/3"		},
 	{0x12, 0x01, 0x0f, 0x07, "A 1/1 B 2/1"		},
-	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x12, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"		},
 	{0x12, 0x01, 0x0f, 0x0c, "A 1/1 B 1/2"		},
 	{0x12, 0x01, 0x0f, 0x0d, "1 Coin  2 Credits"		},
 	{0x12, 0x01, 0x0f, 0x06, "A 1/2 B 1/4"		},
@@ -180,12 +180,12 @@ static struct BurnDIPInfo PopeyeDIPList[]=
 	{0x11, 0xff, 0xff, 0x3d, NULL		},
 
 	{0   , 0xfe, 0   ,    9, "Coinage"		},
-	{0x10, 0x01, 0x0f, 0x08, "6 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0f, 0x05, "5 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0f, 0x09, "4 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0f, 0x0a, "3 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0f, 0x0d, "2 Coins 1 Credits"		},
-	{0x10, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x10, 0x01, 0x0f, 0x08, "6 Coins 1 Credit"		},
+	{0x10, 0x01, 0x0f, 0x05, "5 Coins 1 Credit"		},
+	{0x10, 0x01, 0x0f, 0x09, "4 Coins 1 Credit"		},
+	{0x10, 0x01, 0x0f, 0x0a, "3 Coins 1 Credit"		},
+	{0x10, 0x01, 0x0f, 0x0d, "2 Coins 1 Credit"		},
+	{0x10, 0x01, 0x0f, 0x0f, "1 Coin  1 Credit"		},
 	{0x10, 0x01, 0x0f, 0x0e, "1 Coin  2 Credits"		},
 	{0x10, 0x01, 0x0f, 0x03, "1 Coin  3 Credits"		},
 	{0x10, 0x01, 0x0f, 0x00, "Free Play"		},
@@ -227,6 +227,67 @@ static struct BurnDIPInfo PopeyeDIPList[]=
 };
 
 STDDIPINFO(Popeye)
+
+static struct BurnDIPInfo PopeyefDIPList[]=
+{
+	{0x10, 0xff, 0xff, 0x5f, NULL		},
+	{0x11, 0xff, 0xff, 0x3d, NULL		},
+
+	{0   , 0xfe, 0   ,    16, "Coinage"		},
+	{0x10, 0x01, 0x0f, 0x03, "A 3/1 B 1/2"		},
+	{0x10, 0x01, 0x0f, 0x0e, "2 Coins 1 Credit"		},
+	{0x10, 0x01, 0x0f, 0x01, "A 2/1 B 2/5"		},
+	{0x10, 0x01, 0x0f, 0x04, "A 2/1 B 1/3"		},
+	{0x10, 0x01, 0x0f, 0x07, "A 1/1 B 2/1"		},
+	{0x10, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"	},
+	{0x10, 0x01, 0x0f, 0x0c, "A 1/1 B 1/2"		},
+	{0x10, 0x01, 0x0f, 0x0d, "1 Coin  2 Credits"	},
+	{0x10, 0x01, 0x0f, 0x06, "A 1/2 B 1/4"		},
+	{0x10, 0x01, 0x0f, 0x0b, "A 1/2 B 1/5"		},
+	{0x10, 0x01, 0x0f, 0x02, "A 2/5 B 1/1"		},
+	{0x10, 0x01, 0x0f, 0x0a, "A 1/3 B 1/1"		},
+	{0x10, 0x01, 0x0f, 0x09, "A 1/4 B 1/1"		},
+	{0x10, 0x01, 0x0f, 0x05, "A 1/5 B 1/1"		},
+	{0x10, 0x01, 0x0f, 0x08, "A 1/6 B 1/1"		},
+	{0x10, 0x01, 0x0f, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"		},
+	{0x10, 0x01, 0x10, 0x10, "Off"		},
+	{0x10, 0x01, 0x10, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    3, "Copyright"		},
+	{0x10, 0x01, 0x60, 0x40, "Nintendo"		},
+	{0x10, 0x01, 0x60, 0x20, "Nintendo Co.,Ltd"		},
+	{0x10, 0x01, 0x60, 0x60, "Nintendo of America"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x11, 0x01, 0x03, 0x03, "1"		},
+	{0x11, 0x01, 0x03, 0x02, "2"		},
+	{0x11, 0x01, 0x03, 0x01, "3"		},
+	{0x11, 0x01, 0x03, 0x00, "4"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x11, 0x01, 0x0c, 0x0c, "Easy"		},
+	{0x11, 0x01, 0x0c, 0x08, "Medium"		},
+	{0x11, 0x01, 0x0c, 0x04, "Hard"		},
+	{0x11, 0x01, 0x0c, 0x00, "Hardest"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x11, 0x01, 0x30, 0x30, "20000"		},
+	{0x11, 0x01, 0x30, 0x20, "30000"		},
+	{0x11, 0x01, 0x30, 0x10, "50000"		},
+	{0x11, 0x01, 0x30, 0x00, "None"		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x11, 0x01, 0x40, 0x40, "Off"		},
+	{0x11, 0x01, 0x40, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x11, 0x01, 0x80, 0x00, "Upright"		},
+	{0x11, 0x01, 0x80, 0x80, "Cocktail"		},
+};
+
+STDDIPINFO(Popeyef)
 
 static void popeye_do_palette()
 {
@@ -924,6 +985,78 @@ struct BurnDriver BurnDrvPopeye = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, popeyeRomInfo, popeyeRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	512, 448, 4, 3
+};
+
+
+// Popeyeu (revision D not protected)
+
+static struct BurnRomInfo popeyeuRomDesc[] = {
+	{ "7a",			0x2000, 0x0bd04389, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "7b",			0x2000, 0xefdf02c3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "7c",			0x2000, 0x8eee859e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "7e",			0x2000, 0xb64aa314, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "tpp2-v.5n",	0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+
+	{ "tpp2-v.1e",	0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "tpp2-v.1f",	0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "tpp2-v.1j",	0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "tpp2-v.1k",	0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+
+	{ "tpp2-c.4a",	0x0020, 0x375e1602, 4 | BRF_GRA }, //  9 proms
+	{ "tpp2-c.3a",	0x0020, 0xe950bea1, 4 | BRF_GRA }, // 10
+	{ "tpp2-c.5b",	0x0100, 0xc5826883, 4 | BRF_GRA }, // 11
+	{ "tpp2-c.5a",	0x0100, 0xc576afba, 4 | BRF_GRA }, // 12
+	{ "tpp2-v.7j",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, // 13
+};
+
+STD_ROM_PICK(popeyeu)
+STD_ROM_FN(popeyeu)
+
+struct BurnDriver BurnDrvPopeyeu = {
+	"popeyeu", "popeye", NULL, NULL, "1982",
+	"Popeye (revision D not protected)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, popeyeuRomInfo, popeyeuRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	512, 448, 4, 3
+};
+
+
+// Popeyef (revision F)
+
+static struct BurnRomInfo popeyefRomDesc[] = {
+	{ "tpp2-c_f.7a",	0x2000, 0x5fc5264d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tpp2-c_f.7b",	0x2000, 0x51de48e8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tpp2-c_f.7c",	0x2000, 0x62df9647, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tpp2-c_f.7e",	0x2000, 0xf31e7916, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "tpp2-v.5n",	0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+
+	{ "tpp2-v.1e",	0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "tpp2-v.1f",	0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "tpp2-v.1j",	0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "tpp2-v.1k",	0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+
+	{ "tpp2-c.4a",	0x0020, 0x375e1602, 4 | BRF_GRA }, //  9 proms
+	{ "tpp2-c.3a",	0x0020, 0xe950bea1, 4 | BRF_GRA }, // 10
+	{ "tpp2-c.5b",	0x0100, 0xc5826883, 4 | BRF_GRA }, // 11
+	{ "tpp2-c.5a",	0x0100, 0xc576afba, 4 | BRF_GRA }, // 12
+	{ "tpp2-v.7j",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, // 13
+};
+
+STD_ROM_PICK(popeyef)
+STD_ROM_FN(popeyef)
+
+struct BurnDriver BurnDrvPopeyef = {
+	"popeyef", "popeye", NULL, NULL, "1982",
+	"Popeye (revision F)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, popeyefRomInfo, popeyefRomName, NULL, NULL, PopeyeInputInfo, PopeyefDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
 };

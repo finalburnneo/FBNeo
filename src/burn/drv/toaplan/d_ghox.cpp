@@ -656,7 +656,7 @@ STD_ROM_PICK(ghox)
 STD_ROM_FN(ghox)
 
 struct BurnDriver BurnDrvGhox = {
-	"ghox", NULL, NULL, "ghox", "1991",
+	"ghox", NULL, NULL, NULL, "1991",
 	"Ghox (spinner)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
@@ -682,7 +682,7 @@ STD_ROM_PICK(ghoxj)
 STD_ROM_FN(ghoxj)
 
 struct BurnDriver BurnDrvGhoxj = {
-	"ghoxj", "ghox", NULL, "ghox", "1991",
+	"ghoxj", "ghox", NULL, NULL, "1991",
 	"Ghox (joystick)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,

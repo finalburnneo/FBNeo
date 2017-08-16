@@ -109,7 +109,9 @@ struct PicoVideo {
 };
 
 struct PicoMisc {
+	UINT32 Z80Run; //unused
 	UINT32 Bank68k;
+	UINT8 Rotate;  //unused (keeping for state compat..)
 
 	//UINT32 SRamReg;
 	UINT32 SRamStart;
@@ -3563,7 +3565,7 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 	htab += plane; // A or B
 
 	// Get horizontal scroll value, will be masked later
-	ts.hscroll = BURN_ENDIAN_SWAP_INT16(RamVid[htab & 0x7fff]);
+	ts.hscroll = BURN_ENDIAN_SWAP_INT16(RamVid[htab & 0x7fff]) & 0x3ff;
 
 	if((RamVReg->reg[12]&6) == 6) {
 		// interlace mode 2
@@ -3595,6 +3597,9 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 	INT32 tilex=0, ty=0, nametab, code=0;
 	INT32 blank = -1; // The tile we know is blank
 
+	if (!(nSpriteEnable&16) && prio == 0) return;
+	if (!(nSpriteEnable&32) && prio == 1) return;
+
 	// Find name table line:
 	if (RamVReg->reg[12] & 1) {
 		nametab  = (RamVReg->reg[3] & 0x3c)<<9;
@@ -3621,7 +3626,7 @@ static void DrawWindow(INT32 tstart, INT32 tend, INT32 prio, INT32 sh)
 		INT32 addr=0, zero=0, pal;
 
 		code = BURN_ENDIAN_SWAP_INT16(RamVid[nametab + tilex]);
-		if(code==blank) continue;
+		//if(code==blank) continue; // this breaks issdx/dinho98 / causes in-game dark tile "overlay" bug
 		if((code>>15) != prio) {
 			rendstatus |= 2;
 			continue;

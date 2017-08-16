@@ -1026,7 +1026,7 @@ struct BurnDriver BurnDrvPopeyeu = {
 };
 
 
-// Popeyef (revision F)
+// Popeye (revision F)
 
 static struct BurnRomInfo popeyefRomDesc[] = {
 	{ "tpp2-c_f.7a",	0x2000, 0x5fc5264d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1034,18 +1034,18 @@ static struct BurnRomInfo popeyefRomDesc[] = {
 	{ "tpp2-c_f.7c",	0x2000, 0x62df9647, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "tpp2-c_f.7e",	0x2000, 0xf31e7916, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "tpp2-v.5n",	0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+	{ "tpp2-v.5n",		0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
 
-	{ "tpp2-v.1e",	0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
-	{ "tpp2-v.1f",	0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
-	{ "tpp2-v.1j",	0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
-	{ "tpp2-v.1k",	0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+	{ "tpp2-v.1e",		0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "tpp2-v.1f",		0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "tpp2-v.1j",		0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "tpp2-v.1k",		0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
 
-	{ "tpp2-c.4a",	0x0020, 0x375e1602, 4 | BRF_GRA }, //  9 proms
-	{ "tpp2-c.3a",	0x0020, 0xe950bea1, 4 | BRF_GRA }, // 10
-	{ "tpp2-c.5b",	0x0100, 0xc5826883, 4 | BRF_GRA }, // 11
-	{ "tpp2-c.5a",	0x0100, 0xc576afba, 4 | BRF_GRA }, // 12
-	{ "tpp2-v.7j",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, // 13
+	{ "tpp2-c.4a",		0x0020, 0x375e1602, 4 | BRF_GRA }, //  9 proms
+	{ "tpp2-c.3a",		0x0020, 0xe950bea1, 4 | BRF_GRA }, // 10
+	{ "tpp2-c.5b",		0x0100, 0xc5826883, 4 | BRF_GRA }, // 11
+	{ "tpp2-c.5a",		0x0100, 0xc576afba, 4 | BRF_GRA }, // 12
+	{ "tpp2-v.7j",		0x0100, 0xa4655e2e, 4 | BRF_GRA }, // 13
 };
 
 STD_ROM_PICK(popeyef)
@@ -1057,6 +1057,124 @@ struct BurnDriver BurnDrvPopeyef = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, popeyefRomInfo, popeyefRomName, NULL, NULL, PopeyeInputInfo, PopeyefDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	512, 448, 4, 3
+};
+
+
+// Popeye (bootleg)
+
+static struct BurnRomInfo popeyeblRomDesc[] = {
+	{ "po1",			0x2000, 0xb14a07ca, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "po2",			0x2000, 0x995475ff, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "po3",			0x2000, 0x99d6a04a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "po4",			0x2000, 0x548a6514, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "v-5n",			0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+
+	{ "v-1e",			0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "v-1f",			0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "v-1j",			0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "v-1k",			0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+
+	{ "popeye.pr1",		0x0020, 0xd138e8a4, 4 | BRF_GRA }, //  9 proms
+	{ "popeye.pr2",		0x0020, 0x0f364007, 4 | BRF_GRA }, // 10
+	{ "popeye.pr3",		0x0100, 0xca4d7b6a, 4 | BRF_GRA }, // 11
+	{ "popeye.pr4",		0x0100, 0xcab9bc53, 4 | BRF_GRA }, // 12
+	{ "po_d1-e1.bin",	0x0020, 0x8de22998, 4 | BRF_GRA }, // 13
+};
+
+STD_ROM_PICK(popeyebl)
+STD_ROM_FN(popeyebl)
+
+struct BurnDriver BurnDrvPopeyebl = {
+	"popeyebl", "popeye", NULL, NULL, "1982",
+	"Popeye (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, popeyeblRomInfo, popeyeblRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	512, 448, 4, 3
+};
+
+
+// Popeye (Japan, Sky Skipper hardware)
+
+static struct BurnRomInfo popeyejRomDesc[] = {
+	{ "TPP1-C.2A.2732",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "TPP1-C.2B.2732",		0x1000, 0x4e0b7f06, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "TPP1-C.2C.2732",		0x1000, 0xb1c18b7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "TPP1-C.2D.2732",		0x1000, 0x79d0e988, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "TPP1-C.2E.2732",		0x1000, 0x74854ca1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "TPP1-C.2F.2732",		0x1000, 0xe2b08891, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "TPP1-C.2G.2732",		0x1000, 0xb74a1a97, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "TPP1-C.2H.2732",		0x1000, 0x30e84104, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "TPP1-V.3H.2716",		0x0800, 0xfa52a752, 2 | BRF_GRA }, 			 //  7 gfx1
+
+	{ "TPP1-E.1E.2763",		0x2000, 0x0f2cd853, 3 | BRF_GRA }, 			 //  8 gfx2
+	{ "TPP1-E.2E.2763",		0x2000, 0x888f3474, 3 | BRF_GRA }, 			 //  9
+	{ "TPP1-E.3E.2763",		0x2000, 0x7e864668, 3 | BRF_GRA }, 			 // 10
+	{ "TPP1-E.5E.2763",		0x2000, 0x49e1d170, 3 | BRF_GRA }, 			 // 11
+
+	{ "TPP1-T.4A.82S123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
+	{ "TPP1-T.1A.82S123",	0x0020, 0x0950bea1, 4 | BRF_GRA }, 			 // 13
+	{ "TPP1-T.3A.82S129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
+	{ "TPP1-T.1A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
+	{ "TPP1-T.3J.82S129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
+};
+
+STD_ROM_PICK(popeyej)
+STD_ROM_FN(popeyej)
+
+struct BurnDriver BurnDrvPopeyej = {
+	"popeyej", "popeye", NULL, NULL, "1981",
+	"Popeye (Japan, Sky Skipper hardware)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, popeyejRomInfo, popeyejRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	512, 448, 4, 3
+};
+
+
+// Popeye (Japan, Sky Skipper hardware, Older)
+
+static struct BurnRomInfo popeyejoRomDesc[] = {
+	{ "tpp1-c.2a.bin",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tpp1-c.2b.bin",		0x1000, 0x2cc76c54, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "TPP1-C.2C.2732",		0x1000, 0xb1c18b7e, 1 | BRF_PRG | BRF_ESS }, //  2
+//  { "tpp1-c.2c.bin",		0x1000, 0xd3061b82, 1 | BRF_PRG | BRF_ESS }, //  2
+//  Actual Dump had Fixed Bits but when compared the stuck bit accounted for all the errors compared to popeyej's 2C, so we use that one.
+	{ "tpp1-c.2d.bin",		0x1000, 0x79d0e988, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tpp1-c.2e.bin",		0x1000, 0x74854ca1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "tpp1-c.2f.bin",		0x1000, 0xe2b08891, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "tpp1-c.2g.bin",		0x1000, 0xb74a1a97, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "tpp1-c.2h.bin",		0x1000, 0xa1dcf54d, 1 | BRF_PRG | BRF_ESS }, //  6
+
+	{ "tpp1-v.3h.bin",		0x0800, 0xfa52a752, 2 | BRF_GRA }, 			 //  7 gfx1
+
+	{ "tpp1-e.1e.bin",		0x2000, 0x90889e1d, 3 | BRF_GRA }, 			 //  8 gfx2
+	{ "tpp1-e.2e.bin",		0x2000, 0xed06af50, 3 | BRF_GRA }, 			 //  9
+	{ "tpp1-e.3e.bin",		0x2000, 0x72b258f2, 3 | BRF_GRA }, 			 // 10
+	{ "tpp1-e.5e.bin",		0x2000, 0x7355ff16, 3 | BRF_GRA }, 			 // 11
+
+	{ "TPP1-T.4A.82S123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
+	{ "TPP1-T.1A.82S123",	0x0020, 0x0950bea1, 4 | BRF_GRA }, 			 // 13
+	{ "TPP1-T.3A.82S129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
+	{ "TPP1-T.1A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
+	{ "TPP1-T.3J.82S129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
+};
+
+STD_ROM_PICK(popeyejo)
+STD_ROM_FN(popeyejo)
+
+struct BurnDriver BurnDrvPopeyejo = {
+	"popeyejo", "popeye", NULL, NULL, "1981",
+	"Popeye (Japan, Sky Skipper hardware, Older)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, popeyejoRomInfo, popeyejoRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
 };

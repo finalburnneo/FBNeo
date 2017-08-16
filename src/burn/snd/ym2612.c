@@ -12,15 +12,26 @@
 ** Additional code & fixes by Eke-Eke for Genesis Plus GX
 **
 ** Huge thanks to Nemesis, most of those fixes came from his tests on Sega Genesis hardware
-** More informations at http://gendev.spritesmind.net/forum/viewtopic.php?t=386
+** Additional info from YM2612 die shot analysis by Sauraen
+** See http://gendev.spritesmind.net/forum/viewtopic.php?t=386
 **
 **  TODO:
 **  - better documentation
 **  - BUSY flag emulation
+**  - accurate DAC output
 */
 
 /*
 **  CHANGELOG:
+**
+** 09-04-2017 Eke-Eke (Genesis Plus GX):
+**  - fixed LFO PM implementation: block & keyscale code should not be modified by LFO (verified on YM2612 die)
+**  - fixed Timer B overflow handling
+**
+** 12-03-2017 Eke-Eke (Genesis Plus GX):
+**  - fixed Op1 self-feedback regression introduced by previous modifications
+**  - removed one-sample extra delay on Op1 calculated output
+**  - refactored chan_calc() function 
 **
 ** 01-09-2012 Eke-Eke (Genesis Plus GX):
 **  - removed input clock / output samplerate frequency ratio, chip now always run at (original) internal sample frequency
@@ -630,6 +641,7 @@ static INT32  mem;        /* one sample delay memory */
 static INT32  out_fm[8];  /* outputs of working channels */
 static UINT32 bitmask;    /* working channels output bitmasking (DAC quantization) */ 
 
+
 INLINE void FM_KEYON(FM_CH *CH , int s )
 {
   FM_SLOT *SLOT = &CH->SLOT[s];
@@ -778,7 +790,7 @@ INLINE void INTERNAL_TIMER_A()
   {
     ym2612.OPN.ST.TAC--;
     if (ym2612.OPN.ST.TAC <= 0)
-	{
+    {
       /* set status (if enabled) */
       if (ym2612.OPN.ST.mode & 0x04)
         ym2612.OPN.ST.status |= 0x01;
@@ -805,10 +817,11 @@ INLINE void INTERNAL_TIMER_B(int step)
         ym2612.OPN.ST.status |= 0x02;
 
       /* reload the counter */
-      if (ym2612.OPN.ST.TBL)
+      do
+      {
         ym2612.OPN.ST.TBC += ym2612.OPN.ST.TBL;
-      else
-        ym2612.OPN.ST.TBC = ym2612.OPN.ST.TBL;
+      }
+      while (ym2612.OPN.ST.TBC <= 0);
     }
   }
 }
@@ -1282,31 +1295,25 @@ INLINE void update_ssg_eg_channels(FM_CH *CH)
   } while (--i);
 }
 
-INLINE void update_phase_lfo_slot(FM_SLOT *SLOT, INT32 pms, UINT32 block_fnum)
+INLINE void update_phase_lfo_slot(FM_SLOT *SLOT, UINT32 pm, UINT8 kc, UINT32 fc)
 {
-  INT32 lfo_fn_table_index_offset = lfo_pm_table[(((block_fnum & 0x7f0) >> 4) << 8) + pms + ym2612.OPN.LFO_PM];
+  INT32 lfo_fn_offset = lfo_pm_table[(((fc & 0x7f0) >> 4) << 8) + pm];
   
-  if (lfo_fn_table_index_offset)  /* LFO phase modulation active */
+  if (lfo_fn_offset)  /* LFO phase modulation active */
   {
-    UINT8 blk;
-    unsigned int kc, fc;
+    /* block is not modified by LFO PM */
+    UINT8 blk = fc >> 11;
 
-    /* there are 2048 FNUMs that can be generated using FNUM/BLK registers
-          but LFO works with one more bit of a precision so we really need 4096 elements */
-    block_fnum = block_fnum*2 + lfo_fn_table_index_offset;
-    blk = (block_fnum&0x7000) >> 12;
-    block_fnum = block_fnum & 0xfff;
+    /* LFO works with one more bit of a precision (12-bit) */
+    fc = ((fc << 1) + lfo_fn_offset) & 0xfff;
 
-    /* keyscale code */
-    kc = (blk<<2) | opn_fktable[block_fnum >> 8];
-
-    /* (frequency) phase increment counter */
-    fc = (((block_fnum << 5) >> (7 - blk)) + SLOT->DT[kc]) & DT_MASK;
+    /* (frequency) phase increment counter (17-bit) */
+    fc = (((fc << 5) >> (7 - blk)) + SLOT->DT[kc]) & DT_MASK;
 
     /* update phase */
-    SLOT->phase += (fc * SLOT->mul) >> 1;
+    SLOT->phase += ((fc * SLOT->mul) >> 1);
   }
-  else  /* LFO phase modulation  = zero */
+  else  /* LFO phase modulation = zero */
   {
     SLOT->phase += SLOT->Incr;
   }
@@ -1314,39 +1321,36 @@ INLINE void update_phase_lfo_slot(FM_SLOT *SLOT, INT32 pms, UINT32 block_fnum)
 
 INLINE void update_phase_lfo_channel(FM_CH *CH)
 {
-  UINT32 block_fnum = CH->block_fnum;
+  UINT32 fc = CH->block_fnum;
   
-  INT32 lfo_fn_table_index_offset = lfo_pm_table[(((block_fnum & 0x7f0) >> 4) << 8) + CH->pms + ym2612.OPN.LFO_PM];
+  INT32 lfo_fn_offset = lfo_pm_table[(((fc & 0x7f0) >> 4) << 8) + CH->pms + ym2612.OPN.LFO_PM];
 
-  if (lfo_fn_table_index_offset)  /* LFO phase modulation active */
+  if (lfo_fn_offset)  /* LFO phase modulation active */
   {
-    UINT8 blk;
-    unsigned int kc, fc, finc;
-   
-    /* there are 2048 FNUMs that can be generated using FNUM/BLK registers
-          but LFO works with one more bit of a precision so we really need 4096 elements */
-    block_fnum = block_fnum*2 + lfo_fn_table_index_offset;
-    blk = (block_fnum&0x7000) >> 12;
-    block_fnum = block_fnum & 0xfff;
-    
-    /* keyscale code */
-    kc = (blk<<2) | opn_fktable[block_fnum >> 8];
+    UINT32 finc;
 
-    /* (frequency) phase increment counter */
-    fc = (block_fnum << 5) >> (7 - blk);
+    /* block & keyscale code are not modified by LFO PM */
+    UINT8 blk = fc >> 11;
+    UINT8 kc = CH->kcode;
+
+    /* LFO works with one more bit of a precision (12-bit) */
+    fc = ((fc << 1) + lfo_fn_offset) & 0xfff;
+
+    /* (frequency) phase increment counter (17-bit) */
+    fc = (fc << 5) >> (7 - blk);
 
     /* apply DETUNE & MUL operator specific values */
     finc = (fc + CH->SLOT[SLOT1].DT[kc]) & DT_MASK;
-    CH->SLOT[SLOT1].phase += (finc*CH->SLOT[SLOT1].mul) >> 1;
+    CH->SLOT[SLOT1].phase += ((finc * CH->SLOT[SLOT1].mul) >> 1);
 
     finc = (fc + CH->SLOT[SLOT2].DT[kc]) & DT_MASK;
-    CH->SLOT[SLOT2].phase += (finc*CH->SLOT[SLOT2].mul) >> 1;
+    CH->SLOT[SLOT2].phase += ((finc * CH->SLOT[SLOT2].mul) >> 1);
 
     finc = (fc + CH->SLOT[SLOT3].DT[kc]) & DT_MASK;
-    CH->SLOT[SLOT3].phase += (finc*CH->SLOT[SLOT3].mul) >> 1;
+    CH->SLOT[SLOT3].phase += ((finc * CH->SLOT[SLOT3].mul) >> 1);
 
     finc = (fc + CH->SLOT[SLOT4].DT[kc]) & DT_MASK;
-    CH->SLOT[SLOT4].phase += (finc*CH->SLOT[SLOT4].mul) >> 1;
+    CH->SLOT[SLOT4].phase += ((finc * CH->SLOT[SLOT4].mul) >> 1);
   }
   else  /* LFO phase modulation  = zero */
   {
@@ -1427,7 +1431,7 @@ INLINE signed int op_calc(UINT32 phase, unsigned int env, unsigned int pm)
 
 INLINE signed int op_calc1(UINT32 phase, unsigned int env, unsigned int pm)
 {
-  UINT32 p = (env<<3) + sin_tab[ ( (phase + pm ) >> SIN_BITS ) & SIN_MASK ];
+  UINT32 p = (env<<3) + sin_tab[ ( ( phase >> SIN_BITS ) + pm ) & SIN_MASK ];
 
   if (p >= TL_TAB_LEN)
     return 0;
@@ -1438,32 +1442,31 @@ INLINE void chan_calc(FM_CH *CH, int num)
 {
   do
   {
+    INT32 out = 0;
     UINT32 AM = ym2612.OPN.LFO_AM >> CH->ams;
     unsigned int eg_out = volume_calc(&CH->SLOT[SLOT1]);
 
     m2 = c1 = c2 = mem = 0;
 
     *CH->mem_connect = CH->mem_value;  /* restore delayed sample (MEM) value to m2 or c2 */
+
+    if( eg_out < ENV_QUIET )  /* SLOT 1 */
     {
-      INT32 out = CH->op1_out[0] + CH->op1_out[1];
-      CH->op1_out[0] = CH->op1_out[1];
+      if (CH->FB < SIN_BITS)
+        out = (CH->op1_out[0] + CH->op1_out[1]) >> CH->FB;
 
-      if( !CH->connect1 ){
-        /* algorithm 5  */
-        mem = c1 = c2 = CH->op1_out[0];
-      }else{
-        /* other algorithms */
-        *CH->connect1 += CH->op1_out[0];
-      }
+      out = op_calc1(CH->SLOT[SLOT1].phase, eg_out, out );
+    }
 
-      CH->op1_out[1] = 0;
-      if( eg_out < ENV_QUIET )  /* SLOT 1 */
-      {
-        if (!CH->FB)
-          out=0;
+    CH->op1_out[0] = CH->op1_out[1];
+    CH->op1_out[1] = out;
 
-        CH->op1_out[1] = op_calc1(CH->SLOT[SLOT1].phase, eg_out, (out<<CH->FB) );
-      }
+    if( !CH->connect1 ){
+      /* algorithm 5  */
+      mem = c1 = c2 = out;
+    }else{
+      /* other algorithms */
+      *CH->connect1 = out;
     }
 
     eg_out = volume_calc(&CH->SLOT[SLOT3]);
@@ -1485,13 +1488,16 @@ INLINE void chan_calc(FM_CH *CH, int num)
     /* update phase counters AFTER output calculations */
     if(CH->pms)
     {
-      /* add support for 3 slot mode */
+      /* 3-slot mode */
       if ((ym2612.OPN.ST.mode & 0xC0) && (CH == &ym2612.CH[2]))
       {
-        update_phase_lfo_slot(&CH->SLOT[SLOT1], CH->pms, ym2612.OPN.SL3.block_fnum[1]);
-        update_phase_lfo_slot(&CH->SLOT[SLOT2], CH->pms, ym2612.OPN.SL3.block_fnum[2]);
-        update_phase_lfo_slot(&CH->SLOT[SLOT3], CH->pms, ym2612.OPN.SL3.block_fnum[0]);
-        update_phase_lfo_slot(&CH->SLOT[SLOT4], CH->pms, CH->block_fnum);
+        /* keyscale code is not modifiedby LFO */
+        UINT8 kc = ym2612.CH[2].kcode;
+        UINT32 pm = ym2612.CH[2].pms + ym2612.OPN.LFO_PM;
+        update_phase_lfo_slot(&ym2612.CH[2].SLOT[SLOT1], pm, kc, ym2612.OPN.SL3.block_fnum[1]);
+        update_phase_lfo_slot(&ym2612.CH[2].SLOT[SLOT2], pm, kc, ym2612.OPN.SL3.block_fnum[2]);
+        update_phase_lfo_slot(&ym2612.CH[2].SLOT[SLOT3], pm, kc, ym2612.OPN.SL3.block_fnum[0]);
+        update_phase_lfo_slot(&ym2612.CH[2].SLOT[SLOT4], pm, kc, ym2612.CH[2].block_fnum);
       }
       else
       {
@@ -1536,11 +1542,11 @@ INLINE void OPNWriteMode(int r, int v)
         ym2612.OPN.LFO_AM = 126;
       }
       break;
-    case 0x24:  /* timer A High 8*/
+    case 0x24:  /* timer A High */
       ym2612.OPN.ST.TA = (ym2612.OPN.ST.TA & 0x03)|(((int)v)<<2);
       ym2612.OPN.ST.TAL = 1024 - ym2612.OPN.ST.TA;
       break;
-    case 0x25:  /* timer A Low 2*/
+    case 0x25:  /* timer A Low */
       ym2612.OPN.ST.TA = (ym2612.OPN.ST.TA & 0x3fc)|(v&3);
       ym2612.OPN.ST.TAL = 1024 - ym2612.OPN.ST.TA;
       break;
@@ -1741,7 +1747,7 @@ INLINE void OPNWriteReg(int r, int v)
         case 0:    /* 0xb0-0xb2 : FB,ALGO */
         {
           CH->ALGO = v&7;
-          CH->FB   = (v>>3)&7;
+          CH->FB   = SIN_BITS - ((v>>3)&7);
           setup_connection( CH, c );
           break;        
         }
@@ -1976,19 +1982,19 @@ void MDYM2612Write(unsigned int a, unsigned int v)
 	  if (!in_reset)
 		BurnMD2612UpdateRequest();
 
-      switch( addr & 0x1f0 )
+	  switch( addr & 0x1f0 )
       {
         case 0x20:  /* 0x20-0x2f Mode */
           switch( addr )
           {
             case 0x2a:  /* DAC data (ym2612) */
-			  ym2612.dacout = ((int)v - 0x80) << 6; /* convert to 14-bit output */
+              ym2612.dacout = ((int)v - 0x80) << 6; /* convert to 14-bit output */
               break;
             case 0x2b:  /* DAC Sel  (ym2612) */
               /* b7 = dac enable */
               ym2612.dacen = v & 0x80;
               break;
-		    default:  /* OPN section */
+            default:  /* OPN section */
               /* write register */
               OPNWriteMode(addr,v);
           }
@@ -2112,7 +2118,7 @@ void MDYM2612Update(INT16 **buffer, int length)
     lt += ((out_fm[5]) & ym2612.OPN.pan[10]);
     rt += ((out_fm[5]) & ym2612.OPN.pan[11]);
 
-	/* buffering */
+    /* buffering */
 	bufL[i] = lt;
 	bufR[i] = rt;
 

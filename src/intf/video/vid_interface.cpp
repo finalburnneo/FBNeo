@@ -313,7 +313,7 @@ static void VidDoFrameCallback()
 			case 3: {
 				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
 					for (INT32 x = 0; x < nVidImageWidth; x++) {
-						UINT32 c = pVidTransPalette[pSrc[x]];
+						UINT32 c = pVidTransPalette[pSrc[x] & 0x7fff];
 						*(pDest + (x * 3) + 0) = c & 0xFF;
 						*(pDest + (x * 3) + 1) = (c >> 8) & 0xFF;
 						*(pDest + (x * 3) + 2) = c >> 16;
@@ -324,7 +324,7 @@ static void VidDoFrameCallback()
 			case 4: {
 				for (INT32 y = 0; y < nVidImageHeight; y++, pSrc += nVidImageWidth, pDest += nVidImagePitch) {
 					for (INT32 x = 0; x < nVidImageWidth; x++) {
-						((UINT32*)pDest)[x] = pVidTransPalette[pSrc[x]];
+						((UINT32*)pDest)[x] = pVidTransPalette[pSrc[x] & 0x7fff];
 					}
 				}
 				break;

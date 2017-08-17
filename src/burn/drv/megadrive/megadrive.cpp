@@ -220,8 +220,6 @@ static UINT8 DrvSECAM = 0;	// NTSC
 static UINT8 bNoDebug = 0;
 static INT32 bForce3Button = 0;
 
-static INT32 MegadriveAltTimingHack = 0;
-
 void MegadriveCheckHardware()
 {
 	Hardware = MegadriveDIP[0] & 0xe0;
@@ -3127,12 +3125,6 @@ INT32 MegadriveInit()
 	
 	MegadriveResetDo();
 
-	if (   (strstr(BurnDrvGetTextA(DRV_NAME), "issdx"))
-		|| (strstr(BurnDrvGetTextA(DRV_NAME), "dinho98"))  ) {
-		//bprintf(0, _T("Alt. Timing hack activated!\n")); // not really.
-		MegadriveAltTimingHack = 1;
-	}
-
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "puggsy")) {
 		bprintf(0, _T("Puggsy protection fix activated!\n"));
 		RamMisc->SRamActive = 0;
@@ -3178,8 +3170,6 @@ INT32 MegadriveExit()
 	HighCol = NULL;
 	bNoDebug = 0;
 	bForce3Button = 0;
-
-	MegadriveAltTimingHack = 0;
 
 	return 0;
 }

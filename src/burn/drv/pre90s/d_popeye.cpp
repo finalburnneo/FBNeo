@@ -479,11 +479,6 @@ static UINT8 __fastcall main_read(UINT16 address)
 		return DrvBGRAM[address - 0xc000];
 	}
 
-	if (address >= 0xe000 && address <= 0xe01f) {
-		bprintf(0, _T("%x: %X, "), address&0x1f, DrvProtPROM[address & 0x1f]);
-		return DrvProtPROM[address & 0x1f];
-	}
-
 	switch (address)
 	{
 		case 0xE000: return ((m_prot1 << m_prot_shift) | (m_prot0 >> (8-m_prot_shift))) & 0xff;
@@ -710,6 +705,7 @@ static INT32 PopeyeblLoad(UINT8 *DrvTempRom)
 	bgbitmapwh = 512;
 
 	bootleg = 1;
+	m_invertmask = 0x00;
 
 	if (BurnLoadRom(DrvTempRom + 0x0000, 0, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x2000, 1, 1)) return 1;
@@ -743,6 +739,8 @@ static INT32 DrvInit(INT32 (*LoadRoms)(UINT8 *DrvTempRom))
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
+
+	m_invertmask = 0xff;
 
 	{   // Load ROMS parse GFX
 		UINT8 *DrvTempRom = (UINT8 *)BurnMalloc(0x10000);
@@ -815,7 +813,7 @@ static void draw_chars()
  		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 1, 0, 0x100, DrvCharGFX);
 	}
 }
-					   extern int counter;
+
 static void draw_background()
 {
 	if (background_pos[1] == 0) {

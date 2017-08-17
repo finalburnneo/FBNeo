@@ -393,7 +393,7 @@ STD_ROM_PICK(Drvj)
 STD_ROM_FN(Drvj)
 
 static struct BurnRomInfo DrvjaRomDesc[] = {
-	{ "bm01.12d",      0x08000, 0xf6935937, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "bm01.12d",      0x08000, 0x232df705, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
@@ -444,8 +444,8 @@ static struct BurnRomInfo DrvjaRomDesc[] = {
 STD_ROM_PICK(Drvja)
 STD_ROM_FN(Drvja)
 
-static struct BurnRomInfo Drvja2RomDesc[] = {
-	{ "bm01.12d",      0x08000, 0x232df705, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+static struct BurnRomInfo DrvjahRomDesc[] = {
+	{ "bm01_hack.12d", 0x08000, 0xf6935937, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "bm02.13d",      0x10000, 0xaf971575, BRF_ESS | BRF_PRG }, //	 1
 	{ "bm03.14d",      0x10000, 0x300ec713, BRF_ESS | BRF_PRG }, //	 2
 	
@@ -493,8 +493,8 @@ static struct BurnRomInfo Drvja2RomDesc[] = {
 	{ "bm.7k",         0x10000, 0x00000000, BRF_NODUMP },	     //  37	MCU
 };
 
-STD_ROM_PICK(Drvja2)
-STD_ROM_FN(Drvja2)
+STD_ROM_PICK(Drvjah)
+STD_ROM_FN(Drvjah)
 
 static struct BurnRomInfo DrvbRomDesc[] = {
 	{ "1.12d",         0x08000, 0x9a2d70ab, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
@@ -2089,12 +2089,12 @@ struct BurnDriver BurnDrvNineteen43ja = {
 	NULL, 0x380, 224, 256, 3, 4
 };
 
-struct BurnDriver BurnDrvNineteen43ja2 = {
-	"1943ja2", "1943", NULL, NULL, "1987",
-	"1943: The Battle of Midway (hack of Japan set)\0", NULL, "Capcom", "Miscellaneous",
+struct BurnDriver BurnDrvNineteen43jah = {
+	"1943jah", "1943", NULL, NULL, "1987",
+	"1943: Midway Kaisen (Japan, no protection hack)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, Drvja2RomInfo, Drvja2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	NULL, DrvjahRomInfo, DrvjahRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
 	NULL, 0x380, 224, 256, 3, 4
 };

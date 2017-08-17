@@ -804,9 +804,9 @@ struct BurnDriver BurnDrvWwfsstar = {
 };
 
 
-// WWF Superstars (US, newer)
+// WWF Superstars (US revision 7)
 
-static struct BurnRomInfo wwfsstaruRomDesc[] = {
+static struct BurnRomInfo wwfsstaru7RomDesc[] = {
 	{ "24ac-06.34",		0x20000, 0x924a50e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "24ad-07.35",		0x20000, 0x9a76a50e, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -828,23 +828,61 @@ static struct BurnRomInfo wwfsstaruRomDesc[] = {
 	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
 };
 
-STD_ROM_PICK(wwfsstaru)
-STD_ROM_FN(wwfsstaru)
+STD_ROM_PICK(wwfsstaru7)
+STD_ROM_FN(wwfsstaru7)
 
-struct BurnDriver BurnDrvWwfsstaru = {
-	"wwfsstaru", "wwfsstar", NULL, NULL, "1989",
-	"WWF Superstars (US, newer)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvWwfsstaru7 = {
+	"wwfsstaru7", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (US revision 7)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaruRomInfo, wwfsstaruRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstaru7RomInfo, wwfsstaru7RomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };
 
 
-// WWF Superstars (US)
+// WWF Superstars (US revision 6)
 
-static struct BurnRomInfo wwfsstaruaRomDesc[] = {
+static struct BurnRomInfo wwfsstaru6RomDesc[] = {
+	{ "24ac-06.34",		0x20000, 0x924a50e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "24ad-06.35",		0x20000, 0xd32eee6d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "24ab-0.12",		0x08000, 0x1e44f8aa, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+
+	{ "24a9-0.46",		0x20000, 0x703ff08f, 3 | BRF_SND },           //  3 oki
+	{ "24j8-0.45",		0x20000, 0x61138487, 3 | BRF_SND },           //  4
+
+	{ "24aa-0.58",		0x20000, 0xcb12ba40, 4 | BRF_GRA },           //  5 Characters
+
+	{ "c951.114",		0x80000, 0xfa76d1f0, 5 | BRF_GRA },           //  6 Sprites
+	{ "24j4-0.115",		0x40000, 0xc4a589a3, 5 | BRF_GRA },           //  7
+	{ "24j5-0.116",		0x40000, 0xd6bca436, 5 | BRF_GRA },           //  8
+	{ "c950.117",		0x80000, 0xcca5703d, 5 | BRF_GRA },           //  9
+	{ "24j2-0.118",		0x40000, 0xdc1b7600, 5 | BRF_GRA },           // 10
+	{ "24j3-0.119",		0x40000, 0x3ba12d43, 5 | BRF_GRA },           // 11
+
+	{ "24j7-0.113",		0x40000, 0xe0a1909e, 6 | BRF_GRA },           // 12 Tiles
+	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
+};
+
+STD_ROM_PICK(wwfsstaru6)
+STD_ROM_FN(wwfsstaru6)
+
+struct BurnDriver BurnDrvWwfsstaru6 = {
+	"wwfsstaru6", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (US revision 6)\0", NULL, "Technos Japan", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
+	NULL, wwfsstaru6RomInfo, wwfsstaru6RomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
+	256, 240, 4, 3
+};
+
+
+// WWF Superstars (US revision 4)
+
+static struct BurnRomInfo wwfsstaru4RomDesc[] = {
 	{ "24ac-04.34",		0x20000, 0xee9b850e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "24ad-04.35",		0x20000, 0x057c2eef, 1 | BRF_PRG | BRF_ESS }, //  1
 
@@ -866,15 +904,15 @@ static struct BurnRomInfo wwfsstaruaRomDesc[] = {
 	{ "24j6-0.112",		0x40000, 0x77932ef8, 6 | BRF_GRA },           // 13
 };
 
-STD_ROM_PICK(wwfsstarua)
-STD_ROM_FN(wwfsstarua)
+STD_ROM_PICK(wwfsstaru4)
+STD_ROM_FN(wwfsstaru4)
 
-struct BurnDriver BurnDrvWwfsstarua = {
-	"wwfsstarua", "wwfsstar", NULL, NULL, "1989",
-	"WWF Superstars (US)\0", NULL, "Technos Japan", "Miscellaneous",
+struct BurnDriver BurnDrvWwfsstaru4 = {
+	"wwfsstaru4", "wwfsstar", NULL, NULL, "1989",
+	"WWF Superstars (US revision 4)\0", NULL, "Technos Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
-	NULL, wwfsstaruaRomInfo, wwfsstaruaRomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
+	NULL, wwfsstaru4RomInfo, wwfsstaru4RomName, NULL, NULL, WwfsstarInputInfo, WwfsstarDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x180,
 	256, 240, 4, 3
 };

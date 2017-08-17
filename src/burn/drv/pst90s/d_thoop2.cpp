@@ -61,8 +61,8 @@ static struct BurnInputInfo Thoop2InputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 1,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy3 + 1,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -606,9 +606,10 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
 
-		if (i == 240) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+		if (i == 232) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
 		nCyclesDone[1] += mcs51Run((SekTotalCycles() / 12) - nCyclesDone[1]);
 	}

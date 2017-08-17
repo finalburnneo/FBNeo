@@ -1,5 +1,5 @@
 // FB Alpha TH Strikes Back strikes back driver module
-// Based on MAME driver by Manuel Abadia and Peter Ferrie
+// Based on MAME driver by Manuel Abadia, Peter Ferrie, and David Haywood
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -14,15 +14,14 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvMCUROM;
-static UINT8 *DrvGfxROM0;
-static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM;
 static UINT8 *DrvSndROM;
 static UINT8 *Drv68KRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvShareRAM;
 static UINT8 *DrvMCURAM;
-static UINT8 *DrvVidRegs;
+static UINT16 *DrvVidRegs;
 static UINT8 *DrvTransTab[3];
 
 static UINT8 DrvRecalc;
@@ -144,7 +143,7 @@ static void __fastcall thoop2_main_write_word(UINT32 address, UINT16 data)
 		case 0x108002:
 		case 0x108004:
 		case 0x108006:
-			*((UINT16*)(DrvVidRegs + (address & 6))) = data;
+			DrvVidRegs[(address/2) & 3] = data;
 		return;
 
 		case 0x10800c:
@@ -195,6 +194,24 @@ static UINT8 __fastcall thoop2_main_read_byte(UINT32 address)
 	return 0;
 }
 
+static void __fastcall thoop2_palette_write_word(UINT32 address, UINT16 data)
+{
+	address &= 0x7fe;
+
+	*((UINT16*)(BurnPalRAM + address)) = data;
+
+	BurnPaletteWrite_xBBBBBGGGGGRRRRR(address);
+}
+
+static void __fastcall thoop2_palette_write_byte(UINT32 address, UINT8 data)
+{
+	address &= 0x7ff;
+
+	BurnPalRAM[address ^ 1] = data;
+
+	BurnPaletteWrite_xBBBBBGGGGGRRRRR(address);
+}
+
 static void dallas_sharedram_write(INT32 address, UINT8 data)
 {
 	if (address >= MCS51_PORT_P0) return;
@@ -219,16 +236,23 @@ static UINT8 dallas_sharedram_read(INT32 address)
 	return 0;
 }
 
+static tilemap_scan( thoop2 )
+{
+	// 16x16 tiles 32x32 to 8x8 tiles 64x64
+	return (((row / 2) * 32) + (col / 2)) * 4 + ((col & 1) * 2) + (row & 1);
+}
+
 static tilemap_callback( screen0 )
 {
-	UINT16 *ram = (UINT16*)DrvVidRAM;
+	UINT16 *ram = (UINT16*)(DrvVidRAM + (offs & ~3));
 
-	UINT16 data = ram[(offs << 1) + 0];
-	UINT16 attr = ram[(offs << 1) + 1];
-	UINT32 code = ((data & 0x03) << 14) | ((data & 0x0fffc) >> 2);
+	UINT16 data = ram[0];
+	UINT16 attr = ram[1];
+
+	UINT32 code = (((data & 0x03) << 14) | ((data & 0xfffc) >> 2)) << 2;
+	code += (offs & 3) ^ TILE_FLIPXY(attr >> 14); // xy flipped?
 
 	INT32 flags = TILE_GROUP((attr >> 6) & 3) | TILE_FLIPYX(attr >> 14);
-
 	flags |= DrvTransTab[transparent_select][code] ? TILE_SKIP : 0;
 
 	TILE_SET_INFO(0, code, attr, flags);
@@ -236,14 +260,15 @@ static tilemap_callback( screen0 )
 
 static tilemap_callback( screen1 )
 {
-	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x1000);
+	UINT16 *ram = (UINT16*)(DrvVidRAM + 0x1000 + (offs & ~3));
 
-	UINT16 data = ram[(offs << 1) + 0];
-	UINT16 attr = ram[(offs << 1) + 1];
-	UINT32 code = ((data & 0x03) << 14) | ((data & 0x0fffc) >> 2);
+	UINT16 data = ram[0];
+	UINT16 attr = ram[1];
+
+	UINT32 code = (((data & 0x03) << 14) | ((data & 0xfffc) >> 2)) << 2;
+	code += (offs & 3) ^ TILE_FLIPXY(attr >> 14); // xy flipped??
 
 	INT32 flags = TILE_GROUP((attr >> 6) & 3) | TILE_FLIPYX(attr >> 14);
-
 	flags |= DrvTransTab[transparent_select][code] ? TILE_SKIP : 0;
 
 	TILE_SET_INFO(0, code, attr, flags);
@@ -278,15 +303,14 @@ static INT32 MemIndex()
 
 	DrvMCUROM	= Next; Next += 0x008000;
 
-	DrvGfxROM0	= Next; Next += 0x1000000;
-	DrvGfxROM1	= Next; Next += 0x1000000;
+	DrvGfxROM	= Next; Next += 0x1000000;
 
 	MSM6295ROM	= Next;
 	DrvSndROM	= Next; Next += 0x100000;
 
-	DrvTransTab[0]	= Next; Next += 0x1000000 / 0x100;
-	DrvTransTab[1]	= Next; Next += 0x1000000 / 0x100;
-	DrvTransTab[2]	= Next; Next += 0x1000000 / 0x040;
+	DrvTransTab[0]	= Next; Next += 0x1000000 / 0x40;
+	DrvTransTab[1]	= Next; Next += 0x1000000 / 0x40;
+	DrvTransTab[2]	= Next; Next += 0x1000000 / 0x40;
 
 	BurnPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
@@ -298,7 +322,7 @@ static INT32 MemIndex()
 	DrvSprRAM	= Next; Next += 0x001000;
 	DrvShareRAM	= Next; Next += 0x008000;
 
-	DrvVidRegs	= Next; Next += 0x000008;
+	DrvVidRegs	= (UINT16*)Next; Next += 0x000004 * sizeof(UINT16);
 
 	RamEnd		= Next;
 
@@ -311,35 +335,21 @@ static INT32 MemIndex()
 
 static void DrvTransTableInit()
 {
-	UINT16 mask0 = 0xff01;
-	UINT16 mask1 = 0x00ff;
+	INT32 tile_size = 8 * 8;
+	UINT16 mask[3] = { 0xff01, 0x00ff, 0x0001 };
 
-	for (INT32 i = 0; i < 0x1000000; i+= 16 * 16)
+	for (INT32 i = 0; i < 0x1000000; i+= tile_size)
 	{
-		DrvTransTab[0][i/(16*16)] = 1;
-		DrvTransTab[1][i/(16*16)] = 1;
-
-		for (INT32 j = 0; j < 16 * 16; j++)
+		for (INT32 k = 0; k < 3; k++)
 		{
-			if ((mask0 & (1 << DrvGfxROM0[i+j])) == 0) {
-				DrvTransTab[0][i/(16*16)] = 0;
-			}
+			DrvTransTab[k][i/tile_size] = 1;
 
-			if ((mask1 & (1 << DrvGfxROM0[i+j])) == 0) {
-				DrvTransTab[1][i/(16*16)] = 0;
-			}
-		}
-	}
-
-	for (INT32 i = 0; i < 0x1000000; i+= 8 * 8)
-	{
-		DrvTransTab[2][i/(8*8)] = 1;
-
-		for (INT32 j = 0; j < 8 * 8; j++)
-		{
-			if (DrvGfxROM1[i+j] != 0) {
-				DrvTransTab[2][i/(8*8)] = 0;
-				break;
+			for (INT32 j = 0; j < tile_size; j++)
+			{
+				if ((mask[k] & (1 << DrvGfxROM[i+j])) == 0) {
+					DrvTransTab[k][i / tile_size] = 0;
+					break;
+				}
 			}
 		}
 	}
@@ -353,10 +363,9 @@ static INT32 DrvGfxDecode()
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x800000);
 
-	memcpy (tmp, DrvGfxROM0, 0x800000);
+	memcpy (tmp, DrvGfxROM, 0x800000);
 
-	GfxDecode(0x10000, 4, 16, 16, Plane, XOffs, YOffs, 0x200, tmp, DrvGfxROM0);
-	GfxDecode(0x40000, 4,  8,  8, Plane, XOffs, YOffs, 0x080, tmp, DrvGfxROM1);
+	GfxDecode(0x40000, 4, 8, 8, Plane, XOffs, YOffs, 0x080, tmp, DrvGfxROM);
 
 	BurnFree(tmp);
 
@@ -373,15 +382,15 @@ static INT32 DrvInit()
 	MemIndex();
 
 	{
-		if (BurnLoadRom(Drv68KROM  + 0x0000001,  0, 2)) return 1;
-		if (BurnLoadRom(Drv68KROM  + 0x0000000,  1, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000001,  0, 2)) return 1;
+		if (BurnLoadRom(Drv68KROM + 0x0000000,  1, 2)) return 1;
 
-		if (BurnLoadRom(DrvMCUROM  + 0x0000000,  2, 1)) return 1;
+		if (BurnLoadRom(DrvMCUROM + 0x0000000,  2, 1)) return 1;
 
-		if (BurnLoadRom(DrvGfxROM0 + 0x0000000,  3, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM0 + 0x0400000,  4, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0000000,  3, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM + 0x0400000,  4, 1)) return 1;
 
-		if (BurnLoadRom(DrvSndROM  + 0x0000000,  5, 1)) return 1;
+		if (BurnLoadRom(DrvSndROM + 0x0000000,  5, 1)) return 1;
 
 		DrvGfxDecode();
 		DrvTransTableInit();
@@ -399,6 +408,10 @@ static INT32 DrvInit()
 	SekSetWriteByteHandler(0,	thoop2_main_write_byte);
 	SekSetReadWordHandler(0,	thoop2_main_read_word);
 	SekSetReadByteHandler(0,	thoop2_main_read_byte);
+
+	SekMapHandler(1,		0x200000, 0x2007ff, MAP_WRITE);
+	SekSetWriteWordHandler(1,	thoop2_palette_write_word);
+	SekSetWriteByteHandler(1,	thoop2_palette_write_byte);
 	SekClose();
 
 	mcs51_program_data = DrvMCUROM;
@@ -412,9 +425,9 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	GenericTilesInit();
-	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, screen0_map_callback, 16, 16, 32, 32);
-	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, screen1_map_callback, 16, 16, 32, 32);
-	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 16, 16, 0x800000*2, 0, 0x3f);
+	GenericTilemapInit(0, thoop2_map_scan, screen0_map_callback, 8, 8, 64, 64);
+	GenericTilemapInit(1, thoop2_map_scan, screen1_map_callback, 8, 8, 64, 64);
+	GenericTilemapSetGfx(0, DrvGfxROM, 4, 8, 8, 0x800000*2, 0, 0x3f);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
 	DrvDoReset(1);
@@ -469,7 +482,8 @@ static void draw_sprites(int pri)
 	static const INT32 x_offset[2] = {0x0,0x2};
 	static const INT32 y_offset[2] = {0x0,0x1};
 
-	for (INT32 j = 0; j < sprite_count[pri]; j++){
+	for (INT32 j = 0; j < sprite_count[pri]; j++)
+	{
 		INT32 i = sprite_table[pri][j];
 		INT32 sx = spriteram[i+2] & 0x01ff;
 		INT32 sy = (240 - (spriteram[i] & 0x00ff)) & 0x00ff;
@@ -499,17 +513,22 @@ static void draw_sprites(int pri)
 
 				if (DrvTransTab[2][code]) continue;
 
+				INT32 sxx = sx-0x0f+x*8;
+				INT32 syy = (sy+y*8)-16;
+
+				if (sxx < -15 || sxx >= nScreenWidth || syy < -15 || syy >= nScreenHeight) continue;
+
 				if (yflip) {
 					if (xflip) {
-						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx-0x0f+x*8,(sy+y*8)-16, color, 4, 0, 0, DrvGfxROM1);
+						Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
 					} else {
-						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx-0x0f+x*8,(sy+y*8)-16, color, 4, 0, 0, DrvGfxROM1);
+						Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
 					}
 				} else {
 					if (xflip) {
-						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx-0x0f+x*8,(sy+y*8)-16, color, 4, 0, 0, DrvGfxROM1);
+						Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
 					} else {
-						Render8x8Tile_Mask_Clip(pTransDraw, code, sx-0x0f+x*8,(sy+y*8)-16, color, 4, 0, 0, DrvGfxROM1);
+						Render8x8Tile_Mask_Clip(pTransDraw, code, sxx, syy, color, 4, 0, 0, DrvGfxROM);
 					}
 				}
 			}
@@ -521,15 +540,13 @@ static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		BurnPaletteUpdate_xBBBBBGGGGGRRRRR();
-		DrvRecalc = 1;
+		DrvRecalc = 0;
 	}
 
-	UINT16 *vreg = (UINT16*)DrvVidRegs;
-
-	GenericTilemapSetScrollY(0, vreg[0]);
-	GenericTilemapSetScrollX(0, vreg[1] + 4);
-	GenericTilemapSetScrollY(1, vreg[2]);
-	GenericTilemapSetScrollX(1, vreg[3]);
+	GenericTilemapSetScrollY(0, DrvVidRegs[0]);
+	GenericTilemapSetScrollX(0, DrvVidRegs[1] + 4);
+	GenericTilemapSetScrollY(1, DrvVidRegs[2]);
+	GenericTilemapSetScrollX(1, DrvVidRegs[3]);
 
 	BurnTransferClear();
 
@@ -593,7 +610,7 @@ static INT32 DrvFrame()
 
 		if (i == 240) SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-		nCyclesDone[1] += mcs51Run(SekTotalCycles() - nCyclesDone[1]);
+		nCyclesDone[1] += mcs51Run((SekTotalCycles() / 12) - nCyclesDone[1]);
 	}
 
 	SekClose();

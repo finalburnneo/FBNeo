@@ -31532,6 +31532,24 @@ struct BurnDriver BurnDrvmd_ssf2u = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Super Street Fighter II (Improvement Hack - Color and Sound)
+static struct BurnRomInfo md_ssf2icsRomDesc[] = {
+	{ "Super Street Fighter II Improvement.bin", 0x500000, 0x021B7403, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssf2ics)
+STD_ROM_FN(md_ssf2ics)
+
+struct BurnDriver BurnDrvmd_ssf2ics = {
+	"md_ssf2ics", "md_ssf2", NULL, NULL, "2014",
+	"Super Street Fighter II (Hack, Color and Sound)\0", NULL, "2014 Pyron (color), Stephane D (sound)", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_MISC, 0,
+	MegadriveGetZipName, md_ssf2icsRomInfo, md_ssf2icsRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Super Thunder Blade (Jpn, Launch Cart)
 static struct BurnRomInfo md_stbladjRomDesc[] = {
 	{ "mpr-11996.bin", 0x080000, 0x8bd77836, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

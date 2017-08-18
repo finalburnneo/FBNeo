@@ -7,6 +7,7 @@
 #include "i8039.h"
 #include "flt_rc.h"
 #include "driver.h"
+#include "resnet.h"
 extern "C" {
 #include "ay8910.h"
 }
@@ -515,10 +516,6 @@ static INT32 DrvInit()
 
 		DrvProgramDecode();
 		DrvGfxDecode();
-
-		for (INT32 i = 0; i < 0x200; i++) {
-			DrvColPROM[i+0x20] &= 0xf;
-		}
 	}
 
 	M6809Init(1);
@@ -591,6 +588,15 @@ static INT32 DrvExit()
 
 static void DrvPaletteInit()
 {
+	static const int resistances_rg[3] = { 1000, 470, 220 };
+	static const int resistances_b [2] = { 470, 220 };
+	double rweights[3], gweights[3], bweights[2];
+
+	compute_resistor_weights(0, 255, -1.0,
+			3, &resistances_rg[0], rweights, 1000, 0,
+			3, &resistances_rg[0], gweights, 1000, 0,
+			2, &resistances_b[0],  bweights, 1000, 0);
+
 	UINT32 pens[32];
 
 	for (INT32 i = 0; i < 32; i++)
@@ -598,22 +604,22 @@ static void DrvPaletteInit()
 		INT32 bit0 = (DrvColPROM[i] >> 0) & 0x01;
 		INT32 bit1 = (DrvColPROM[i] >> 1) & 0x01;
 		INT32 bit2 = (DrvColPROM[i] >> 2) & 0x01;
-		INT32 r = bit2 * 151 + bit1 * 71 + bit0 * 33;
+		INT32 r = combine_3_weights(rweights, bit0, bit1, bit2);
 
 		bit0 = (DrvColPROM[i] >> 3) & 0x01;
 		bit1 = (DrvColPROM[i] >> 4) & 0x01;
 		bit2 = (DrvColPROM[i] >> 5) & 0x01;
-		INT32 g = bit2 * 151 + bit1 * 71 + bit0 * 33;
+		INT32 g = combine_3_weights(gweights, bit0, bit1, bit2);
 
 		bit0 = (DrvColPROM[i] >> 6) & 0x01;
 		bit1 = (DrvColPROM[i] >> 7) & 0x01;
-		INT32 b = bit1 * 174 + bit0 * 81;
+		INT32 b = combine_2_weights(bweights, bit0, bit1);
 
 		pens[i] = BurnHighCol(r,g,b,0);
 	}
 
 	for (INT32 i = 0; i < 0x200; i++) {
-		DrvPalette[i] = pens[DrvColPROM[i+0x20] | ((i >> 4) & 0x10)];
+		DrvPalette[i] = pens[(DrvColPROM[i+0x20] & 0xf) | ((i >> 4) & 0x10)];
 	}
 }
 
@@ -632,7 +638,7 @@ static void draw_layer(UINT8 *cram, UINT8 *vram, INT32 xscroll, UINT8 yscroll, I
 
 		sy -= yscroll;
 		if (sy < -7) sy += 256;
-	
+
 		INT32 attr  = cram[offs];
 		INT32 code  = vram[offs] + ((attr & 0x80) << 1);
 		INT32 color =(attr & 0x0f) + 0x10;
@@ -641,15 +647,15 @@ static void draw_layer(UINT8 *cram, UINT8 *vram, INT32 xscroll, UINT8 yscroll, I
 
 		if (flipy) {
 			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
 			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
 			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
 			}
 		}
 
@@ -657,15 +663,15 @@ static void draw_layer(UINT8 *cram, UINT8 *vram, INT32 xscroll, UINT8 yscroll, I
 
 		if (flipy) {
 			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
 			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
 			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
+				Render8x8Tile_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
 			}
 		}
 	}
@@ -693,9 +699,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer(DrvColRAM0, DrvVidRAM0, scrollx, scrolly+16, 0, 32);
-	draw_sprites();
-	draw_layer(DrvColRAM1, DrvVidRAM1, 0, 16, 5, 0);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer(DrvColRAM0, DrvVidRAM0, scrollx, scrolly+16, 0, 32);
+	if (nBurnLayer & 2) draw_sprites();
+	if (nBurnLayer & 4) draw_layer(DrvColRAM1, DrvVidRAM1, 0, 16, 5, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -728,7 +736,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nSoundBufferPos = 0;
-	INT32 nInterleave = 200;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 2048000 / 60, 3072000 / 60, 477266 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
@@ -739,12 +747,11 @@ static INT32 DrvFrame()
 	{
 		INT32 nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += M6809Run(nSegment - nCyclesDone[0]);
-		if (i == (nInterleave - 1) && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 240 && irq_enable) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 
 		nSegment = (nCyclesTotal[1] * (i + 1)) / nInterleave;
 		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-		if (i == (nInterleave - 2)) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		nSegment = (nCyclesTotal[2] * (i + 1)) / nInterleave;
 		nCyclesDone[2] += I8039Run(nSegment - nCyclesDone[2]);
@@ -821,26 +828,26 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Mega Zone (Konami set 1)
+// Mega Zone (program code L)
 
 static struct BurnRomInfo megazoneRomDesc[] = {
-	{ "319i07.bin",		0x2000, 0x94b22ea8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "319i06.bin",		0x2000, 0x0468b619, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "319i05.bin",		0x2000, 0xac59000c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "319i04.bin",		0x2000, 0x1e968603, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "319i03.bin",		0x2000, 0x0888b803, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "319_107.11h",	0x2000, 0x73b616ca, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "319_106.9h",		0x2000, 0x0ced03f9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "319_105.8h",		0x2000, 0x9dc3b5a1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "319_104.7h",		0x2000, 0x785b983d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "319_103.6h",		0x2000, 0xa5318686, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "319e02.bin",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "319e02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "319e01.bin",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
+	{ "319e01.3a",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
 
-	{ "319e11.bin",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
-	{ "319e09.bin",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
-	{ "319e10.bin",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
-	{ "319e08.bin",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
+	{ "319e11.3e",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
+	{ "319e09.2e",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
+	{ "319e10.3d",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
+	{ "319e08.2d",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
 
-	{ "319e12.bin",		0x2000, 0xe0fb7835, 5 | BRF_GRA },           // 11 Characters
-	{ "319e13.bin",		0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
+	{ "319_g12.8c",		0x2000, 0x07b8b24b, 5 | BRF_GRA },           // 11 Characters
+	{ "319_g13.10c",	0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
 
 	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
 	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
@@ -854,7 +861,7 @@ STD_ROM_FN(megazone)
 
 struct BurnDriver BurnDrvMegazone = {
 	"megazone", NULL, NULL, NULL, "1983",
-	"Mega Zone (Konami set 1)\0", NULL, "Konami", "GX319",
+	"Mega Zone (program code L)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazoneRomInfo, megazoneRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -863,26 +870,69 @@ struct BurnDriver BurnDrvMegazone = {
 };
 
 
-// Mega Zone (Interlogic)
+// Mega Zone (program code J)
+// Interlogic + Kosuka license set
+
+static struct BurnRomInfo megazonejRomDesc[] = {
+	{ "319_j07.11h",	0x2000, 0x5161a523, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "319_j06.9h",		0x2000, 0x7344c3de, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "319_j05.8h",		0x2000, 0xaffa492b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "319_j04.7h",		0x2000, 0x03544ab3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "319_j03.6h",		0x2000, 0x0d95cc0a, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "319e02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+	{ "319e01.3a",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
+
+	{ "319e11.3e",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
+	{ "319e09.2e",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
+	{ "319e10.3d",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
+	{ "319e08.2d",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
+
+	{ "319_g12.8c",		0x2000, 0x07b8b24b, 5 | BRF_GRA },           // 11 Characters
+	{ "319_g13.10c",	0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
+
+	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
+	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
+	{ "319b17.a11",		0x0100, 0x1fbfce73, 6 | BRF_GRA },           // 15
+	{ "319b14.e7",		0x0020, 0x55044268, 6 | BRF_OPT },           // 16
+	{ "319b15.e8",		0x0020, 0x31fd7ab9, 6 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(megazonej)
+STD_ROM_FN(megazonej)
+
+struct BurnDriver BurnDrvMegazonej = {
+	"megazonej", "megazone", NULL, NULL, "1983",
+	"Mega Zone (program code J)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, megazonejRomInfo, megazonejRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Mega Zone (program code I)
 
 static struct BurnRomInfo megazoneiRomDesc[] = {
-	{ "ic59_cpu.bin",	0x2000, 0xf41922a0, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "ic58_cpu.bin",	0x2000, 0x7fd7277b, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ic57_cpu.bin",	0x2000, 0xa4b33b51, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ic56_cpu.bin",	0x2000, 0x2aabcfbf, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ic55_cpu.bin",	0x2000, 0xb33a3c37, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "319_i07.11h",	0x2000, 0x94b22ea8, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "319_i06.9h",		0x2000, 0x0468b619, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "319_i05.8h",		0x2000, 0xac59000c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "319_i04.7h",		0x2000, 0x1e968603, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "319_i03.6h",		0x2000, 0x0888b803, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "319e02.bin",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "319e02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "319e01.bin",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
+	{ "319e01.3a",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
 
-	{ "319e11.bin",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
-	{ "319e09.bin",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
-	{ "319e10.bin",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
-	{ "319e08.bin",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
+	{ "319e11.3e",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
+	{ "319e09.2e",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
+	{ "319e10.3d",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
+	{ "319e08.2d",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
 
-	{ "ic40_vid.bin",	0x2000, 0x07b8b24b, 5 | BRF_GRA },           // 11 Characters
-	{ "319e13.bin",		0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
+	{ "319_e12.8c",		0x2000, 0xe0fb7835, 5 | BRF_GRA },           // 11 Characters
+	{ "319_e13.10c",	0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
 
 	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
 	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
@@ -896,7 +946,7 @@ STD_ROM_FN(megazonei)
 
 struct BurnDriver BurnDrvMegazonei = {
 	"megazonei", "megazone", NULL, NULL, "1983",
-	"Mega Zone (Interlogic)\0", NULL, "Konami (Interlogic license)", "GX319",
+	"Mega Zone (program code I)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
 	NULL, megazoneiRomInfo, megazoneiRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
@@ -905,26 +955,69 @@ struct BurnDriver BurnDrvMegazonei = {
 };
 
 
-// Mega Zone (Konami set 2)
+// Mega Zone (program code H)
+// Kosuka license set
+
+static struct BurnRomInfo megazonehRomDesc[] = {
+	{ "319_h07.11h",	0x2000, 0x8ca47f64, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "319_h06.9h",		0x2000, 0xed35b12e, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "319_h05.8h",		0x2000, 0xc3655ccd, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "319_h04.7h",		0x2000, 0x9e221177, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "319_h03.6h",		0x2000, 0x9048955b, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "319e02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+
+	{ "319h01.3a",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
+
+	{ "319e11.3e",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
+	{ "319e09.2e",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
+	{ "319e10.3d",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
+	{ "319e08.2d",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
+
+	{ "319_g12.8c",		0x2000, 0x07b8b24b, 5 | BRF_GRA },           // 11 Characters
+	{ "319_g13.10c",	0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
+
+	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
+	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
+	{ "319b17.a11",		0x0100, 0x1fbfce73, 6 | BRF_GRA },           // 15
+	{ "319b14.e7",		0x0020, 0x55044268, 6 | BRF_OPT },           // 16
+	{ "prom.48",		0x0020, 0x796dea94, 6 | BRF_OPT },           // 17
+};
+
+STD_ROM_PICK(megazoneh)
+STD_ROM_FN(megazoneh)
+
+struct BurnDriver BurnDrvMegazoneh = {
+	"megazoneh", "megazone", NULL, NULL, "1983",
+	"Mega Zone (program code H)\0", NULL, "Konami (Kosuka license)", "GX319",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
+	NULL, megazonehRomInfo, megazonehRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Mega Zone (unknown program code 1)
 
 static struct BurnRomInfo megazoneaRomDesc[] = {
-	{ "7.12g",		0x2000, 0xd42d67bf, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "6.10g",		0x2000, 0x692398eb, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "5.9g",		0x2000, 0x620ffec3, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.8g",		0x2000, 0x28650971, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "3.6g",		0x2000, 0xf264018f, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "ic59_cpu.bin",	0x2000, 0xf41922a0, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "ic58_cpu.bin",	0x2000, 0x7fd7277b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ic57_cpu.bin",	0x2000, 0xa4b33b51, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ic56_cpu.bin",	0x2000, 0x2aabcfbf, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ic55_cpu.bin",	0x2000, 0xb33a3c37, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "319-h02",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "319e02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "319-h01",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
+	{ "319e01.3a",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
 
-	{ "319e11.bin",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
-	{ "319e09.bin",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
-	{ "319e10.bin",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
-	{ "319e08.bin",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
+	{ "319e11.3e",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
+	{ "319e09.2e",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
+	{ "319e10.3d",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
+	{ "319e08.2d",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
 
-	{ "319e12.bin",		0x2000, 0xe0fb7835, 5 | BRF_GRA },           // 11 Characters
-	{ "319-g13",		0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
+	{ "319_g12.8c",		0x2000, 0x07b8b24b, 5 | BRF_GRA },           // 11 Characters
+	{ "319_g13.10c",	0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
 
 	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
 	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
@@ -938,35 +1031,35 @@ STD_ROM_FN(megazonea)
 
 struct BurnDriver BurnDrvMegazonea = {
 	"megazonea", "megazone", NULL, NULL, "1983",
-	"Mega Zone (Konami set 2)\0", NULL, "Konami", "GX319",
+	"Mega Zone (unknown program code 1)\0", NULL, "Konami (Interlogic / Kosuka license)", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazoneaRomInfo, megazoneaRomName, NULL, NULL, MegazoneInputInfo, MegazonaDIPInfo,
+	NULL, megazoneaRomInfo, megazoneaRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 
 
-// Mega Zone (Kosuka set 1)
+// Mega Zone (unknown program code 2)
 
 static struct BurnRomInfo megazonebRomDesc[] = {
-	{ "319-j07",		0x2000, 0x5161a523, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "319-j06",		0x2000, 0x7344c3de, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "319-j05",		0x2000, 0xaffa492b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "319-j04",		0x2000, 0x03544ab3, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "319-j03",		0x2000, 0x0d95cc0a, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "7.11h",			0x2000, 0xd42d67bf, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "6.9h",			0x2000, 0x692398eb, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5.8h",			0x2000, 0x620ffec3, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.7h",			0x2000, 0x28650971, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "3.6h",			0x2000, 0xf264018f, 1 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "319-h02",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
+	{ "319h02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 
-	{ "319-h01",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
+	{ "319h01.3a",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
 
-	{ "319e11.bin",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
-	{ "319e09.bin",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
-	{ "319e10.bin",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
-	{ "319e08.bin",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
+	{ "319e11.3e",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
+	{ "319e09.2e",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
+	{ "319e10.3d",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
+	{ "319e08.2d",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
 
-	{ "319e12.bin",		0x2000, 0xe0fb7835, 5 | BRF_GRA },           // 11 Characters
-	{ "319-g13",		0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
+	{ "319_e12.8c",		0x2000, 0xe0fb7835, 5 | BRF_GRA },           // 11 Characters
+	{ "319_g13.10c",	0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
 
 	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
 	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
@@ -980,52 +1073,10 @@ STD_ROM_FN(megazoneb)
 
 struct BurnDriver BurnDrvMegazoneb = {
 	"megazoneb", "megazone", NULL, NULL, "1983",
-	"Mega Zone (Kosuka set 1)\0", NULL, "Konami (Kosuka license)", "GX319",
+	"Mega Zone (unknown program code 2)\0", NULL, "Konami", "GX319",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazonebRomInfo, megazonebRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	224, 288, 3, 4
-};
-
-
-// Mega Zone (Kosuka set 2)
-
-static struct BurnRomInfo megazonecRomDesc[] = {
-	{ "319-h07",		0x2000, 0x8ca47f64, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "319-h06",		0x2000, 0xed35b12e, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "319-h05",		0x2000, 0xc3655ccd, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "319-h04",		0x2000, 0x9e221177, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "319-h03",		0x2000, 0x9048955b, 1 | BRF_PRG | BRF_ESS }, //  4
-
-	{ "319-h02",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
-
-	{ "319-h01",		0x1000, 0xed5725a0, 3 | BRF_PRG | BRF_ESS }, //  6 I8039 Code
-
-	{ "319e11.bin",		0x2000, 0x965a7ff6, 4 | BRF_GRA },           //  7 Sprites
-	{ "319e09.bin",		0x2000, 0x5eaa7f3e, 4 | BRF_GRA },           //  8
-	{ "319e10.bin",		0x2000, 0x7bb1aeee, 4 | BRF_GRA },           //  9
-	{ "319e08.bin",		0x2000, 0x6add71b1, 4 | BRF_GRA },           // 10
-
-	{ "319e12.bin",		0x2000, 0xe0fb7835, 5 | BRF_GRA },           // 11 Characters
-	{ "319-g13",		0x2000, 0x3d8f3743, 5 | BRF_GRA },           // 12
-
-	{ "319b18.a16",		0x0020, 0x23cb02af, 6 | BRF_GRA },           // 13 Color PROMs
-	{ "319b16.c6",		0x0100, 0x5748e933, 6 | BRF_GRA },           // 14
-	{ "319b17.a11",		0x0100, 0x1fbfce73, 6 | BRF_GRA },           // 15
-	{ "319b14.e7",		0x0020, 0x55044268, 6 | BRF_OPT },           // 16
-	{ "prom.48",		0x0020, 0x796dea94, 6 | BRF_OPT },           // 17
-};
-
-STD_ROM_PICK(megazonec)
-STD_ROM_FN(megazonec)
-
-struct BurnDriver BurnDrvMegazonec = {
-	"megazonec", "megazone", NULL, NULL, "1983",
-	"Mega Zone (Kosuka set 2)\0", NULL, "Konami (Kosuka license)", "GX319",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_VERSHOOT, 0,
-	NULL, megazonecRomInfo, megazonecRomName, NULL, NULL, MegazoneInputInfo, MegazoneDIPInfo,
+	NULL, megazonebRomInfo, megazonebRomName, NULL, NULL, MegazoneInputInfo, MegazonaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

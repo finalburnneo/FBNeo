@@ -41999,3 +41999,21 @@ struct BurnDriver BurnDrvmd_mk3m = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Mega Cheril Perils
+static struct BurnRomInfo md_cperilsRomDesc[] = {
+	{ "mojon-twins--mega-cheril-perils.bin", 0x1fdf80, 0x77afa0b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cperils)
+STD_ROM_FN(md_cperils)
+
+struct BurnDriver BurnDrvmd_cperils = {
+	"md_cperils", NULL, NULL, NULL, "2016",
+	"Mega Cheril Perils\0", NULL, "2016 The Mojon Twins", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_cperilsRomInfo, md_cperilsRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

@@ -412,9 +412,10 @@ static void draw_sprites()
 		{
 			INT32 attr0 = DrvSprRAM[offs + 0x00];
 			INT32 attr1 = DrvSprRAM[offs + 0x80];
-			INT32 code = DrvSprRAM[offs + 0x01] | ((attr1 & 0x10) << 5) |  ((attr1 & 0x20) << 5) | ((attr1 & 0x40) << 2);
+			INT32 code = DrvSprRAM[offs + 0x01] | ((attr1 & 0x10) << 5) | ((attr1 & 0x20) << 5) | ((attr1 & 0x40) << 2);
 			INT32 color = (attr1 & 0x0f) + (0x80>>3);
 			INT32 flipy = attr0 & 0x2;
+			INT32 flipx = attr0 & 0x4;
 			INT32 sx = 240 - DrvSprRAM[offs + 0x03];
 			INT32 sy = (232 - DrvSprRAM[offs + 0x02]);
 
@@ -422,21 +423,39 @@ static void draw_sprites()
 			{
 				if (flipy)
 				{
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code+0, sx, sy     , color, 3, 0, 0, DrvGfxROM1);
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code+1, sx, sy - 16, color, 3, 0, 0, DrvGfxROM1);
+					if (flipx) {
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code+0, sx, sy     , color, 3, 0, 0, DrvGfxROM1);
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code+1, sx, sy - 16, color, 3, 0, 0, DrvGfxROM1);
+					} else {
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code+0, sx, sy     , color, 3, 0, 0, DrvGfxROM1);
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code+1, sx, sy - 16, color, 3, 0, 0, DrvGfxROM1);
+					}
 				}
 				else
 				{
-					Render16x16Tile_Mask_Clip(pTransDraw, code+0, sx, sy - 16, color, 3, 0, 0, DrvGfxROM1);
-					Render16x16Tile_Mask_Clip(pTransDraw, code+1, sx, sy     , color, 3, 0, 0, DrvGfxROM1);
+					if (flipx) {
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code+0, sx, sy - 16, color, 3, 0, 0, DrvGfxROM1);
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code+1, sx, sy     , color, 3, 0, 0, DrvGfxROM1);
+					} else {
+						Render16x16Tile_Mask_Clip(pTransDraw, code+0, sx, sy - 16, color, 3, 0, 0, DrvGfxROM1);
+						Render16x16Tile_Mask_Clip(pTransDraw, code+1, sx, sy     , color, 3, 0, 0, DrvGfxROM1);
+					}
 				}
 			}
 			else
 			{
 				if (flipy) {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
+					if (flipx) {
+						Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
+					} else {
+						Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
+					}
 				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
+					if (flipx) {
+						Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
+					} else {
+						Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 3, 0, 0, DrvGfxROM1);
+					}
 				}
 			}
 		}

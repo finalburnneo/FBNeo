@@ -641,21 +641,21 @@ static void draw_layer(UINT8 *cram, UINT8 *vram, INT32 xscroll, UINT8 yscroll, I
 
 		INT32 attr  = cram[offs];
 		INT32 code  = vram[offs] + ((attr & 0x80) << 1);
-		INT32 color =(attr & 0x0f) + 0x10;
+		INT32 color =(attr & 0x0f);
 		INT32 flipx = attr & 0x40;
 		INT32 flipy = attr & 0x20;
 
 		if (flipy) {
 			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
 			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
 			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_Clip(pTransDraw, code, sx, sy, color, 4, 0x100, DrvGfxROM1);
 			}
 		}
 
@@ -663,15 +663,15 @@ static void draw_layer(UINT8 *cram, UINT8 *vram, INT32 xscroll, UINT8 yscroll, I
 
 		if (flipy) {
 			if (flipx) {
-				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_FlipXY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
 			} else {
-				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_FlipY_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_FlipX_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
 			} else {
-				Render8x8Tile_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x000, DrvGfxROM1);
+				Render8x8Tile_Clip(pTransDraw, code, sx+256, sy, color, 4, 0x100, DrvGfxROM1);
 			}
 		}
 	}

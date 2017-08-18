@@ -1,4 +1,4 @@
-// FB Alpha Thunder Hoop II: Strikes Back (c) 1994 Gaelco driver module
+// FB Alpha Thunder Hoop II: TH Strikes Back driver module
 // Based on MAME driver by Manuel Abadia, Peter Ferrie, and David Haywood
 
 #include "tiles_generic.h"

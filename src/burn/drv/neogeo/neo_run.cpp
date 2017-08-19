@@ -3705,6 +3705,8 @@ static INT32 neogeoReset()
 	nNeoWatchdog = 0;
 #endif
 
+	HiscoreReset();
+
 	nIRQCycles = NO_IRQ_PENDING;
 	
 	nNeoCDIRQVector = 0;

@@ -27367,3 +27367,22 @@ struct BurnDriver BurnDrvsms_datastorm = {
 	256, 192, 4, 3
 };
 
+// Alex Kidd in Miracle World 2
+
+static struct BurnRomInfo sms_alexkidd2RomDesc[] = {
+	{ "Alex Kidd in Miracle World 2.sms",	0x80000, 0x7de172ff, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_alexkidd2)
+STD_ROM_FN(sms_alexkidd2)
+
+struct BurnDriver BurnDrvsms_alexkidd2 = {
+	"sms_alexkidd2", NULL, NULL, NULL, "2017",
+	"Alex Kidd in Miracle World 2 (Hack)\0", NULL, "2017 Ian Wall", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_alexkidd2RomInfo, sms_alexkidd2RomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+

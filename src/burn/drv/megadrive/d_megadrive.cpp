@@ -8650,6 +8650,24 @@ struct BurnDriver BurnDrvmd_dahnam = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Dahna - Goddess' Birth (E) (Hack)
+static struct BurnRomInfo md_dahnagbRomDesc[] = {
+	{ "Dahna - Goddess' Birth (E).bin", 0x100000, 0xd04d2df7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_dahnagb)
+STD_ROM_FN(md_dahnagb)
+
+struct BurnDriver BurnDrvmd_dahnagb = {
+	"md_dahnagb", "md_dahnam", NULL, NULL, "1991",
+	"Dahna - Goddess' Birth (Hack, English)\0", NULL, "IGS", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_dahnagbRomInfo, md_dahnagbRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Dahna (Kor)
 static struct BurnRomInfo md_dahnamkRomDesc[] = {
 	{ "mpr-14636.bin", 0x100000, 0x10829ea1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42014,6 +42032,24 @@ struct BurnDriver BurnDrvmd_cperils = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_cperilsRomInfo, md_cperilsRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Masiaka by Resistance 2017
+static struct BurnRomInfo md_masiakaRomDesc[] = {
+	{ "Masiaka-by-Resistance-2017.bin", 0x300000, 0xd237b970, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_masiaka)
+STD_ROM_FN(md_masiaka)
+
+struct BurnDriver BurnDrvmd_masiaka = {
+	"md_masiaka", NULL, NULL, NULL, "2017",
+	"Masiaka (Demo)\0", NULL, "2017 Resistance", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_masiakaRomInfo, md_masiakaRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

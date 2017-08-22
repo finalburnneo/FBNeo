@@ -310,7 +310,7 @@ static void K051960Callback(INT32 *, INT32 *color, INT32 *priority, INT32 *)
 
 static void K051316Callback(INT32 *code,INT32 *color,INT32 *flags)
 {
-	*flags = *color & 0x40;
+	*flags = (*color & 0x40) ? 1 : 0;
 	*code |= ((*color & 0x07) << 8);
 	*color = 48 + ((*color & 0x38) >> 3) + ((*color & 0x80) >> 4);
 }

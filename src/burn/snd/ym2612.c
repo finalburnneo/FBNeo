@@ -2015,6 +2015,8 @@ unsigned int MDYM2612Read(void)
   return ym2612.OPN.ST.status & 0xff;
 }
 
+#define CLIP(A) ((A) < -0x8000 ? -0x8000 : (A) > 0x7fff ? 0x7fff : (A))
+
 /* Generate samples for ym2612 */
 void MDYM2612Update(INT16 **buffer, int length)
 {
@@ -2119,8 +2121,8 @@ void MDYM2612Update(INT16 **buffer, int length)
     rt += ((out_fm[5]) & ym2612.OPN.pan[11]);
 
     /* buffering */
-	bufL[i] = lt;
-	bufR[i] = rt;
+	bufL[i] = CLIP(lt);
+	bufR[i] = CLIP(rt);
 
     /* CSM mode: if CSM Key ON has occured, CSM Key OFF need to be sent       */
     /* only if Timer A does not overflow again (i.e CSM Key ON not set again) */

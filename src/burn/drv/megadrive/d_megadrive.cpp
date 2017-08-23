@@ -33804,6 +33804,24 @@ struct BurnDriver BurnDrvmd_turrican = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Turrican (Euro, USA, Modified by Linkuei and Helder)
+static struct BurnRomInfo md_turricanfRomDesc[] = {
+	{ "Turrican (USA, fixed Linkuei and Helder).bin", 0x080000, 0x60f8bbdd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_turricanf)
+STD_ROM_FN(md_turricanf)
+
+struct BurnDriver BurnDrvmd_turricanf = {
+	"md_turricanf", "md_turrican", NULL, NULL, "1991",
+	"Turrican (Color, Lifebar Fix-Hack by Linkuei & Helder)\0", NULL, "Ballistic", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_turricanfRomInfo, md_turricanfRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Twin Cobra (USA)
 static struct BurnRomInfo md_twincobrRomDesc[] = {
 	{ "twin cobra (usa).bin", 0x0a0000, 0x2c708248, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -42055,5 +42073,23 @@ struct BurnDriver BurnDrvmd_masiaka = {
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_masiakaRomInfo, md_masiakaRomName, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Special Champion Edition (Improvement Hack - Color and Sound)
+static struct BurnRomInfo md_sf2icsRomDesc[] = {
+	{ "Street Fighter II' - SCE Improvement.bin", 0x300000, 0x293D2CB1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2ics)
+STD_ROM_FN(md_sf2ics)
+
+struct BurnDriver BurnDrvmd_sf2ics = {
+	"md_sf2ics", "md_sf2", NULL, NULL, "2014",
+	"Street Fighter II' - Special Champion Edition (Hack, Color and Sound)\0", NULL, "2014 Pyron & Stephane.D", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

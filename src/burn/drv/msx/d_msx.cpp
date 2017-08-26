@@ -206,7 +206,7 @@ static INT32 MapCursorToJoy1 = 0; // Map Cursor Keys & space to Joy1
 
 static INT32 VBlankKludge = 0; // For VoidRunner (joystick selection hangs)
 static INT32 SwapRamslot = 0; // For Toshiba-EMI's Break Out!
-static INT32 SwapButton2 = 0; // Swaps Joy button#2 with 'm', for Xenon and Astro Marine Corps
+static INT32 SwapButton2 = 0; // Swaps Joy button#2 with 'm', for Xenon, Astro Marine Corps and Nayade Resistance
 static INT32 SwapSlash = 0; // For Square Dancer, swaps the / key with the Japanese Underscore key
 
 static INT32 CASMode = 0;      // Using .cas file?
@@ -661,6 +661,7 @@ static void Mapper_write(UINT16 address, UINT8 data)
 				}
 				rtype_bank_base[1] = ROMData[PSlot] + rtype_selected_bank * 0x4000;
 			}
+			return;
 
 		case MAP_KONGEN8:
 			if ((address < 0x4000) || (address > 0xbfff)) break;
@@ -817,6 +818,7 @@ static INT32 Mapper_read(UINT16 address, UINT8 *data)
 				  *data = bank_base[address & 0x3fff];
 				  return 1;
 			  }
+			  break;
 		  }
 	  case MAP_DOOLY:
 		  {
@@ -830,6 +832,7 @@ static INT32 Mapper_read(UINT16 address, UINT8 *data)
 				  *data = rb;
 				  return 1;
 			  }
+			  break;
 		  }
 	  case MAP_RTYPE:
 		  {
@@ -838,6 +841,7 @@ static INT32 Mapper_read(UINT16 address, UINT8 *data)
 				  *data = rtype_bank_base[address >> 15][address & 0x3fff];
 				  return 1;
 			  }
+			  break;
 		  }
   }
   return 0;
@@ -19682,11 +19686,11 @@ STD_ROM_FN(MSX_nayade)
 
 struct BurnDriver BurnDrvMSX_nayade = {
 	"msx_nayade", NULL, "msx_msx", NULL, "2013",
-	"Nayade Resistance\0", "Control w/ Arrow-keys, M to select weapon", "Pentacour", "MSX",
+	"Nayade Resistance\0", NULL, "Pentacour", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_nayadeRomInfo, MSX_nayadeRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
-	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
+	MSXGetZipName, MSX_nayadeRomInfo, MSX_nayadeRomName, NULL, NULL, MSXInputInfo, MSXJoyCursorDIPInfo,
+	SwapButton2DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };
 

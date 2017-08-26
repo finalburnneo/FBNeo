@@ -19213,7 +19213,7 @@ struct BurnDriver BurnDrvMSX_crazy = {
 	"Crazy Buggy\0", NULL, "Crappysoft", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
-	MSXGetZipName, MSX_crazyRomInfo, MSX_crazyRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
+	MSXGetZipName, MSX_crazyRomInfo, MSX_crazyRomName, NULL, NULL, MSXInputInfo, MSXJoyCursor60hzDIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, 0x10,
 	272, 228, 4, 3
 };

@@ -161,6 +161,8 @@ static int RunFrame(int bDraw, int bPause)
 				GetInput(false);				// Update burner inputs, but not game inputs
 				if (ReplayInput()) {			// Read input from file
 					SetPauseMode(1);            // Replay has finished
+					bAppDoFast = 0;
+					bAppDoFasttoggled = 0;      // Disable FFWD
 					MenuEnableItems();
 					InputSetCooperativeLevel(false, false);
 					return 0;
@@ -228,6 +230,7 @@ static int RunGetNextSound(int bDraw)
 
 	if (bAppDoFast) {									// do more frames
 		for (int i = 0; i < nFastSpeed; i++) {
+			if (!bAppDoFast) break;                     // break out if no longer in ffwd
 #ifdef INCLUDE_AVI_RECORDING
 			if (nAviStatus) {
 				// Render frame with sound
@@ -314,8 +317,6 @@ int RunIdle()
 		for (int i = 0; i < nFastSpeed; i++) {
 #ifdef INCLUDE_AVI_RECORDING
 			if (nAviStatus) {
-				// Render frame with sound
-				pBurnSoundOut = nAudNextSound;
 				RunFrame(1, 0);
 			} else {
 				RunFrame(0, 0);

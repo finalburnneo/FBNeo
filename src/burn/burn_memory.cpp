@@ -6,7 +6,7 @@
 
 #include "burnint.h"
 
-#define LOG_MEMORY_USASE
+//#define LOG_MEMORY_USAGE
 
 #define MAX_MEM_PTR	0x400 // more than 1024 malloc calls should be insane...
 
@@ -44,7 +44,7 @@ UINT8 *BurnMalloc(INT32 size)
 			mem_allocated += size;
 			memsize[i] = size;
 
-#ifdef LOG_MEMORY_USASE
+#ifdef LOG_MEMORY_USAGE
 			bprintf (0, _T("BurnMalloc allocated %d bytes of memory (%d bytes total allocated)!\n"), size, mem_allocated);
 #endif
 

@@ -1313,6 +1313,8 @@ static INT32 MegadriveResetDo()
 	SekCyclesReset();
 	z80CyclesReset();
 
+	md_eeprom_stm95_reset();
+
 	return 0;
 }
 
@@ -2582,6 +2584,8 @@ static void SetupCustomCartridgeMappers()
 		SekSetWriteWordHandler(8, TopfigWriteWord);
 		SekClose();
 	}
+
+	
 }
 
 // SRAM and EEPROM Handling
@@ -2968,6 +2972,11 @@ static void MegadriveSetupSRAM()
 		SekSetReadWordHandler(6, CodemastersEEPROMReadWord);
 		SekClose();
 	}
+
+	if (RomSize == 0x800000) {
+		md_eeprom_stm95_init(RomMain); // pier solar
+
+	}
 	
 	if (!RamMisc->SRamDetected && !RamMisc->SRamHasSerialEEPROM) {
 		// check if cart has battery save 
@@ -3008,7 +3017,7 @@ static void MegadriveSetupSRAM()
 		}
 
 		// Enable SRAM handlers only if the game does not use EEPROM.
-		if (!RamMisc->SRamHasSerialEEPROM) {
+		if (!RamMisc->SRamHasSerialEEPROM && RomSize != 0x800000 /*pier solar*/) {
 			// Info from DGen: If SRAM does not overlap main ROM, set it active by default since a few games can't manage to properly switch it on/off. 
 			if (RomSize <= RamMisc->SRamStart) {
 				RamMisc->SRamActive = 1;
@@ -4505,7 +4514,6 @@ INT32 MegadriveFrame()
 
 INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 {
-
 	if (pnMin) {						// Return minimum compatible version
 		*pnMin = 0x029738;
 	}
@@ -4545,6 +4553,11 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(last_z80_sync);
 
 		BurnRandomScan(nAction);
+	}
+
+	if (RomSize == 0x800000) // pier solar
+	{
+		md_eeprom_stm95_scan(nAction);
 	}
 
 	return 0;

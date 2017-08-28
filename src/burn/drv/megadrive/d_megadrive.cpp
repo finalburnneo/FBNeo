@@ -42093,3 +42093,22 @@ struct BurnDriver BurnDrvmd_sf2ics = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+
+// Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (Unl)
+static struct BurnRomInfo md_psolarRomDesc[] = {
+	{ "Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (Unl).md", 0x800000, 0xDFB94F1B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_psolar)
+STD_ROM_FN(md_psolar)
+
+struct BurnDriver BurnDrvmd_psolar = {
+	"md_psolar", NULL, NULL, NULL, "2010",
+	"Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (Unl)\0", NULL, "WaterMelon", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_psolarRomInfo, md_psolarRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

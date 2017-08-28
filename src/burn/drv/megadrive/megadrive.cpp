@@ -70,8 +70,8 @@ static void SekRunM68k(INT32 cyc)
 
 static UINT64 z80_cycle_cnt, z80_cycle_aim, last_z80_sync;
 
-#define z80CyclesReset()        { last_z80_sync = SekCyclesDone(); z80_cycle_cnt = z80_cycle_aim = 0; }
-#define cycles_68k_to_z80(x)    ((x)*957 >> 11)
+#define z80CyclesReset()        { last_z80_sync = z80_cycle_cnt = z80_cycle_aim = 0; }
+#define cycles_68k_to_z80(x)    ( (x)*957 >> 11 )
 
 /* sync z80 to 68k */
 static void z80CyclesSync(INT32 bRun)
@@ -1300,12 +1300,18 @@ static INT32 MegadriveResetDo()
 	Z80BankPartial = 0;
 	Z80BankPos = 0;
 
-	dma_xfers = BurnRandom() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
+	if (strstr(BurnDrvGetTextA(DRV_NAME), "bonkers")) {
+		dma_xfers = BurnRandom() & 0x7fff; // random start cycle, so Bonkers has a different boot-up logo each run and possibly affects other games as well.
+	} else {
+		dma_xfers = 0; // the above is bad for "input recording from power on", so we leave it off for everything except bonkers.
+	}
+
 	Scanline = 0;
 	rendstatus = 0;
 	bMegadriveRecalcPalette = 1;
 
 	SekCyclesReset();
+	z80CyclesReset();
 
 	return 0;
 }
@@ -4321,13 +4327,8 @@ INT32 MegadriveFrame()
 		JoyPad->pad[2] |= (MegadriveJoy3[i] & 1) << i;
 		JoyPad->pad[3] |= (MegadriveJoy4[i] & 1) << i;
 	}
-	
-	
-	SekNewFrame();
-	ZetNewFrame();
 
-	SekCyclesNewFrame();
-	z80CyclesReset();
+	SekCyclesNewFrame(); // for sound sync
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -4538,6 +4539,10 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(SekCycleCnt);
 		SCAN_VAR(SekCycleAim);
 		SCAN_VAR(dma_xfers);
+
+		SCAN_VAR(z80_cycle_cnt);
+		SCAN_VAR(z80_cycle_aim);
+		SCAN_VAR(last_z80_sync);
 
 		BurnRandomScan(nAction);
 	}

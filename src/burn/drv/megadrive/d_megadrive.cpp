@@ -42094,6 +42094,12 @@ struct BurnDriver BurnDrvmd_sf2ics = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+static INT32 PsolarInit()
+{
+	psolarmode = 1;
+
+	return MegadriveInit();
+}
 
 // Pier Solar and the Great Architects (World) (En,Es,Pt) (Rev C) (Unl)
 static struct BurnRomInfo md_psolarRomDesc[] = {
@@ -42109,6 +42115,6 @@ struct BurnDriver BurnDrvmd_psolar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_psolarRomInfo, md_psolarRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	PsolarInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

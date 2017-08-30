@@ -180,6 +180,9 @@ static void set_sck_line(INT32 state)
 
 void md_eeprom_stm95_reset()
 {
+	stream_pos = 0;
+	stm_state = IDLE;
+
 	m_rdcnt = 0;
 	m_bank[0] = 0;
 	m_bank[1] = 0;
@@ -217,6 +220,11 @@ static UINT16 __fastcall read_word(UINT32 offset)
 		UINT8 bank = (offset - 0x280000/2) >> 18;
 		return m_rom[(offset & 0x7ffff/2) + (m_bank[bank] * 0x80000)/2];
 	}
+}
+
+UINT16 md_psolar_rw(UINT32 offset) // dmatransaktionizationimmizer
+{
+	return read_word(offset);
 }
 
 static UINT8 __fastcall read_byte(UINT32 offset)
@@ -273,11 +281,11 @@ void md_eeprom_stm95_init(UINT8 *rom)
 	SekOpen(0);
 
 	// unmap everything except vectors
-	for (INT32 i = 0x400; i < 0xa00000; i+= 0x400) {
+	for (INT32 i = 0x000; i < 0xa00000; i+= 0x400) {
 		SekMapMemory(NULL,	i, i+0x3ff, MAP_RAM);
 	}
 
-	SekMapHandler(5,		0x000400, 0x9fffff, MAP_ROM);
+	SekMapHandler(5,		0x000000, 0x9fffff, MAP_ROM);
 	SekSetReadByteHandler (5, 	read_byte);
 	SekSetReadWordHandler (5, 	read_word);
 

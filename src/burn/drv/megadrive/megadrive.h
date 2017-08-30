@@ -21,6 +21,7 @@ extern UINT8 MegadriveJoy2[12];
 extern UINT8 MegadriveJoy3[12];
 extern UINT8 MegadriveJoy4[12];
 extern UINT8 MegadriveDIP[2];
+extern INT32 psolarmode;
 
 INT32 MegadriveInit();
 INT32 MegadriveExit();
@@ -32,3 +33,4 @@ INT32 MegadriveDraw();
 void md_eeprom_stm95_reset();
 void md_eeprom_stm95_init(UINT8 *rom);
 void md_eeprom_stm95_scan(INT32 nAction);
+UINT16 md_psolar_rw(UINT32 offset);

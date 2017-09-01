@@ -1889,6 +1889,8 @@ static INT32 GtmrMemIndex()
 
 	RamEnd = Next;
 
+	DrvPrioBitmap         = Next; Next += 320 * 240;
+
 	Kaneko16Sprites       = Next; Next += (Kaneko16NumSprites * 16 * 16);
 	Kaneko16Tiles         = Next; Next += (Kaneko16NumTiles * 16 * 16);
 	LayerQueueXY[0]       = (UINT32*)Next; Next += nScreenWidth * nScreenHeight * sizeof(UINT32);
@@ -7011,6 +7013,7 @@ static void GtmrFrameRender()
 	
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x10000);
+	memset(DrvPrioBitmap, 0, 320 * 240);
 	
 	if (!Kaneko16DisplayEnable) return;
 	
@@ -7035,13 +7038,10 @@ static void GtmrFrameRender()
 		if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
 		if (Layer2Enabled) { if (vScroll2Enabled) { Kaneko16RenderLayerQueue(2, i); } else { Kaneko16RenderTileLayer(2, i, xScroll2); }}
 		if (Layer3Enabled) { if (vScroll3Enabled) { Kaneko16RenderLayerQueue(3, i); } else { Kaneko16RenderTileLayer(3, i, xScroll3); }}
-	
-		if (i == 0) Kaneko16RenderSprites(0);
-		if (i == 1) Kaneko16RenderSprites(1);
-		if (i == 2) Kaneko16RenderSprites(2);
-		if (i == 7) Kaneko16RenderSprites(3);
 	}
-	
+
+	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
+
 	BurnTransferCopy(Kaneko16Palette);
 }
 

@@ -4308,14 +4308,28 @@ void __fastcall Racingb68K1WriteWord(UINT32 a, UINT16 d)
 	}
 }
 
+static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+static UINT16 ananice_sci(INT16 anaval)
+{
+	if (anaval > 1024) anaval = 1024;
+	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion
+	// for inverted, use 0x7f - (anaval >> 4) :)
+	UINT8 Temp = (anaval >> 4) - 0x7f; // convert to INT8, but store in UINT8
+	if (Temp < 0x01) Temp = 0x01;
+	if (Temp > 0xfe) Temp = 0xfe;
+	UINT16 pad = scalerange_skns(Temp, 0x3f, 0xc0, 0x20, 0xe0);
+	if (pad > 0xff) pad = 0xff;
+	if (pad > 0x75 && pad < 0x85) pad = 0x7f; // dead zone
+	return pad;
+}
+
 static UINT8 SciSteerRead(INT32 Offset)
 {
-	INT32 Steer = TaitoAnalogPort0 >> 4;
-	if (Steer > 0x5f && Steer < 0x80) Steer = 0x5f;
-	if (Steer > 0xf80 && Steer < 0xfa0) Steer = 0xfa0;
-	if ((OldSteer < Steer) && (Steer > 0xfc0)) Steer = 0;
-	OldSteer = Steer;
-	
+	INT32 Steer = ananice_sci(TaitoAnalogPort0) - 0x7f;
+
 	switch (Offset) {
 		case 0x04: {
 			return Steer & 0xff;

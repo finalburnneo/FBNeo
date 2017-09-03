@@ -1431,18 +1431,18 @@ struct BurnDriver BurnDrvManiacsq = {
 };
 
 
-// Alligator Hunt
+// Alligator Hunt (World, protected)
 
 static struct BurnRomInfo aligatorRomDesc[] = {
-	{ "u45",  		0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "u44",  		0x080000, 0xf0be007a, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.u45",  	0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.u44",  	0x080000, 0x96bc77c2, 0 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
 	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
 	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
 	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
 	
-	{ "aligator_ds5002fp.bin", 0x080000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "aligator_ds5002fp.bin", 0x080000, 0x6558f215, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(aligator)
@@ -1455,7 +1455,7 @@ static INT32 aligatorInit()
 
 struct BurnDriver BurnDrvAligator = {
 	"aligator", NULL, NULL, NULL, "1994",
-	"Alligator Hunt\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
+	"Alligator Hunt (World, protected)\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorRomInfo, aligatorRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1464,7 +1464,35 @@ struct BurnDriver BurnDrvAligator = {
 };
 
 
-// Alligator Hunt (unprotected)
+// Alligator Hunt (Spain, protected)
+
+static struct BurnRomInfo aligatorsRomDesc[] = {
+	{ "u45",  		0x080000, 0x61c47c56, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u44",  		0x080000, 0xf0be007a, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+	
+	{ "aligator_ds5002fp.bin", 0x080000, 0x6558f215, BRF_OPT | BRF_NODUMP },
+};
+
+STD_ROM_PICK(aligators)
+STD_ROM_FN(aligators)
+
+struct BurnDriver BurnDrvAligators = {
+	"aligators", "aligator", NULL, NULL, "1994",
+	"Alligator Hunt (Spain, protected)\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, aligatorsRomInfo, aligatorsRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Alligator Hunt (unprotected, set 1)
 
 static struct BurnRomInfo aligatorunRomDesc[] = {
 	{ "ahntu45n.040",	0x080000, 0xfc02cb2d, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1481,7 +1509,7 @@ STD_ROM_FN(aligatorun)
 
 struct BurnDriver BurnDrvAligatorun = {
 	"aligatorun", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (unprotected)\0", NULL, "Gaelco", "Miscellaneous",
+	"Alligator Hunt (unprotected, set 1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorunRomInfo, aligatorunRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1489,6 +1517,31 @@ struct BurnDriver BurnDrvAligatorun = {
 	320, 240, 4, 3
 };
 
+
+// Alligator Hunt (unprotected, set 2)
+
+static struct BurnRomInfo aligatorunaRomDesc[] = {
+	{ "STM27C4001.45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "AM27C040.44",	0x080000, 0xd45a26ed, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3
+	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
+	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(aligatoruna)
+STD_ROM_FN(aligatoruna)
+
+struct BurnDriver BurnDrvAligatoruna = {
+	"aligatoruna", "aligator", NULL, NULL, "1994",
+	"Alligator Hunt (unprotected, set 2)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, aligatorunaRomInfo, aligatorunaRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
+	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
 
 
 // Snow Board Championship (Version 2.0)

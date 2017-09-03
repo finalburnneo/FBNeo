@@ -2647,7 +2647,7 @@ struct BurnDriver BurnDrvKagekih = {
 };
 
 
-// Chuka Taisen (World)
+// Chuka Taisen (World) (P0-028-A PCB)
 
 static struct BurnRomInfo chukataiRomDesc[] = {
 	{ "b44-10",			0x10000, 0x8c69e008, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2684,7 +2684,7 @@ static INT32 ChukataiInit()
 
 struct BurnDriver BurnDrvChukatai = {
 	"chukatai", NULL, NULL, NULL, "1988",
-	"Chuka Taisen (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
+	"Chuka Taisen (World) (P0-028-A PCB)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, chukataiRomInfo, chukataiRomName, NULL, NULL, CommonInputInfo, ChukataiDIPInfo,
@@ -2693,7 +2693,7 @@ struct BurnDriver BurnDrvChukatai = {
 };
 
 
-// Chuka Taisen (US)
+// Chuka Taisen (US) (P0-028-A PCB)
 
 static struct BurnRomInfo chukatauRomDesc[] = {
 	{ "b44-10",			0x10000, 0x8c69e008, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2726,7 +2726,7 @@ STD_ROM_FN(chukatau)
 
 struct BurnDriver BurnDrvChukatau = {
 	"chukataiu", "chukatai", NULL, NULL, "1988",
-	"Chuka Taisen (US)\0", NULL, "Taito America Corporation", "Miscellaneous",
+	"Chuka Taisen (US) (P0-028-A PCB)\0", NULL, "Taito America Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, chukatauRomInfo, chukatauRomName, NULL, NULL, CommonInputInfo, ChukatauDIPInfo,
@@ -2735,7 +2735,7 @@ struct BurnDriver BurnDrvChukatau = {
 };
 
 
-// Chuka Taisen (Japan)
+// Chuka Taisen (Japan) (P0-028-A PCB)
 
 static struct BurnRomInfo chukatajRomDesc[] = {
 	{ "b44-10",			0x10000, 0x8c69e008, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
@@ -2767,11 +2767,60 @@ STD_ROM_FN(chukataj)
 
 struct BurnDriver BurnDrvChukataj = {
 	"chukataij", "chukatai", NULL, NULL, "1988",
-	"Chuka Taisen (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Chuka Taisen (Japan) (P0-028-A PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, chukatajRomInfo, chukatajRomName, NULL, NULL, CommonInputInfo, ChukatauDIPInfo,
 	ChukataiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	256, 224, 4, 3
+};
+
+
+// Chuka Taisen (Japan) (P0-025-A PCB)
+
+static struct BurnRomInfo chukatajaRomDesc[] = {
+	{ "b44-31.11c",		0x10000, 0x134d3c9e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b44-11.9c",		0x10000, 0x32484094, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "b44-32.4e",		0x10000, 0xf52d2f90, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+
+	/* Labeled B06-14 and under printed label "Taito M-001, 128P, 720100", is a mask 8042 */
+	{ "b06__14.1g",		0x00800, 0x28907072, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
+
+	{ "b44-21.a13",		0x20000, 0xaae7b3d5, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "b44-22.a12",		0x20000, 0x7f0b9568, 4 | BRF_GRA },	      	  //  5
+	{ "b44-23.a10",		0x20000, 0x5a54a3b9, 4 | BRF_GRA },	      	  //  6
+	{ "b44-24.a08",		0x20000, 0x3c5f544b, 4 | BRF_GRA },	      	  //  7
+	{ "b44-25.a07",		0x20000, 0xd1b7e314, 4 | BRF_GRA },	      	  //  8
+	{ "b44-26.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
+	{ "b44-27.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
+	{ "b44-28.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
+	
+	{ "b44-30.15f",		0x00200, 0xb3de8312, 5 | BRF_GRA },	      	  // 12 Color PROMs
+	{ "b44-29.17f",		0x00200, 0xae44b8fb, 5 | BRF_GRA },	      	  // 13
+	
+	/* these are shared with extermination */
+	{ "b06-10.pal16l8a.d9.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 Pal
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 16
+	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 17
+};
+
+STD_ROM_PICK(chukataja)
+STD_ROM_FN(chukataja)
+
+static INT32 ChukataijaInit()
+{
+	return Type1Init(MCU_DRTOPPEL);
+}
+
+struct BurnDriver BurnDrvChukataja = {
+	"chukataija", "chukatai", NULL, NULL, "1988",
+	"Chuka Taisen (Japan) (P0-025-A PCB)\0", NULL, "Taito Corporation", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, chukatajaRomInfo, chukatajaRomName, NULL, NULL, CommonInputInfo, ChukatauDIPInfo,
+	ChukataijaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

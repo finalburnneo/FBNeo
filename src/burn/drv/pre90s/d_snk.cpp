@@ -7721,6 +7721,45 @@ struct BurnDriver BurnDrvAthena = {
 };
 
 
+// Super Athena (bootleg)
+
+static struct BurnRomInfo sathenaRomDesc[] = {
+	{ "1.128",			0x04000, 0x26eb2ce1, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "2.256",			0x08000, 0x925f60ce, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "3.128",			0x04000, 0xd0853f62, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "4.256",			0x08000, 0x8c697bca, 2 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "0.128",			0x04000, 0x42dbe029, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "5.256",			0x08000, 0x596f1c8a, 3 | BRF_ESS | BRF_PRG }, //  5
+
+	{ "up02_c2.rom",	0x00400, 0x294279ae, 14 | BRF_GRA },	      //  6 Color Data
+	{ "up02_b1.rom",	0x00400, 0xd25c9099, 14 | BRF_GRA },	      //  7
+	{ "up02_c1.rom",	0x00400, 0xa4a4e7dc, 14 | BRF_GRA },	      //  8
+
+	{ "11.128",			0x04000, 0x18b4bcca, 4 | BRF_GRA },	      //  9 Text Characters
+
+	{ "10.256",			0x08000, 0xf269c0eb, 6 | BRF_GRA },	      // 10 Background Characters
+
+	{ "7.256",			0x08000, 0xc63a871f, 9 | BRF_GRA },	      // 11 Sprites
+	{ "8.256",			0x08000, 0x760568d8, 9 | BRF_GRA },	      // 12
+	{ "9.256",			0x08000, 0x57b35c73, 9 | BRF_GRA },	      // 13
+};
+
+STD_ROM_PICK(sathena)
+STD_ROM_FN(sathena)
+
+struct BurnDriver BurnDrvSathena = {
+	"sathena", "athena", NULL, NULL, "1987",
+	"Super Athena (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, sathenaRomInfo, sathenaRomName, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
+	AthenaInit, DrvExit, AthenaFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
+	288, 216, 4, 3
+};
+
+
 // ASO - Armored Scrum Object
 
 static struct BurnRomInfo asoRomDesc[] = {

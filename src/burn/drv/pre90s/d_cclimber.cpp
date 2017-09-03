@@ -128,6 +128,44 @@ static struct BurnDIPInfo CclimberDIPList[]=
 
 STDDIPINFO(Cclimber)
 
+static struct BurnDIPInfo CclimberjDIPList[]=
+{
+	{0x15, 0xff, 0xff, 0x00, NULL		},
+	{0x16, 0xff, 0xff, 0xf0, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x15, 0x01, 0x03, 0x00, "3"		},
+	{0x15, 0x01, 0x03, 0x01, "4"		},
+	{0x15, 0x01, 0x03, 0x02, "5"		},
+	{0x15, 0x01, 0x03, 0x03, "6"		},
+
+	{0   , 0xfe, 0   ,    2, "Bonus_Life"		},
+	{0x15, 0x01, 0x04, 0x00, "30000"		},
+	{0x15, 0x01, 0x04, 0x04, "50000"		},
+
+	{0   , 0xfe, 0   ,    2, "Rack Test (Cheat)"		},
+	{0x15, 0x01, 0x08, 0x00, "Off"		},
+	{0x15, 0x01, 0x08, 0x08, "On"		},
+	
+	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0x15, 0x01, 0x30, 0x30, "4 Coins 1 Credits"		},
+	{0x15, 0x01, 0x30, 0x20, "3 Coins 1 Credits"		},
+	{0x15, 0x01, 0x30, 0x10, "2 Coins 1 Credits"		},
+	{0x15, 0x01, 0x30, 0x00, "1 Coin  1 Credits"		},
+
+	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0x15, 0x01, 0xc0, 0x00, "1 Coin  1 Credits"		},
+	{0x15, 0x01, 0xc0, 0x40, "1 Coin  2 Credits"		},
+	{0x15, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"		},
+	{0x15, 0x01, 0xc0, 0xc0, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x16, 0x01, 0x10, 0x10, "Upright"		},
+	{0x16, 0x01, 0x10, 0x00, "Cocktail"		},
+};
+
+STDDIPINFO(Cclimberj)
+
 static struct BurnInputInfo RpatrolInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 start"},
@@ -1474,7 +1512,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Crazy Climber (US)
+// Crazy Climber (US set 1)
 
 static struct BurnRomInfo cclimberRomDesc[] = {
 	{ "cc11",		0x1000, 0x217ec4ff, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
@@ -1537,10 +1575,86 @@ static INT32 cclimberInit()
 
 struct BurnDriver BurnDrvCclimber = {
 	"cclimber", NULL, NULL, NULL, "1980",
-	"Crazy Climber (US)\0", NULL, "Nichibutsu", "Miscellaneous",
+	"Crazy Climber (US set 1)\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, cclimberRomInfo, cclimberRomName, NULL, NULL, CclimberInputInfo, CclimberDIPInfo,
+	cclimberInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	256, 224, 4, 3
+};
+
+// Crazy Climber (US set 2)
+
+static struct BurnRomInfo cclimberaRomDesc[] = {
+	{ "cc11",		0x1000, 0x217ec4ff, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "10",			0x1000, 0x983d0bab, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cc9",		0x1000, 0x6db0879c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cc8",		0x1000, 0xf48c5fe3, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "7",			0x1000, 0xc2e06606, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "cc6",		0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
+	{ "cc5",		0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
+	{ "cc4",		0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
+	{ "cc3",		0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
+
+	{ "cc2",		0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
+	{ "cc1",		0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
+
+	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     // 11 - Color Proms
+	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     // 12
+	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     // 13 
+
+	{ "cc13",		0x1000, 0xe0042f75, 7 | BRF_SND },	     	 // 14 - Samples
+	{ "cc12",		0x1000, 0x5da13aaa, 7 | BRF_SND },	     	 // 15
+};
+
+STD_ROM_PICK(cclimbera)
+STD_ROM_FN(cclimbera)
+
+struct BurnDriver BurnDrvCclimbera = {
+	"cclimbera", "cclimber", NULL, NULL, "1980",
+	"Crazy Climber (US set 2)\0", NULL, "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, cclimberaRomInfo, cclimberaRomName, NULL, NULL, CclimberInputInfo, CclimberDIPInfo,
+	cclimberInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
+	256, 224, 4, 3
+};
+
+// Crazy Climber (Japan)
+
+static struct BurnRomInfo cclimberjRomDesc[] = {
+	{ "cc11j.bin",	0x1000, 0x89783959, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "cc10j.bin",	0x1000, 0x14eda506, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "cc09j.bin",	0x1000, 0x26489069, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "cc08j.bin",	0x1000, 0xb33c96f8, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "cc07j.bin",	0x1000, 0xfbc9626c, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "cc06",		0x0800, 0x481b64cc, 2 | BRF_GRA },	     	 //  5 - Sprites & Tiles
+	{ "cc05",		0x0800, 0x2c33b760, 2 | BRF_GRA },	     	 //  6
+	{ "cc04",		0x0800, 0x332347cb, 2 | BRF_GRA },	     	 //  7
+	{ "cc03",		0x0800, 0x4e4b3658, 2 | BRF_GRA },	     	 //  8
+
+	{ "cc02",		0x0800, 0x14f3ecc9, 3 | BRF_GRA },	     	 //  9 - Big Sprites
+	{ "cc01",		0x0800, 0x21c0f9fb, 3 | BRF_GRA },	     	 // 10
+
+	{ "cclimber.pr1", 	0x0020, 0x751c3325, 6 | BRF_GRA },	     // 11 - Color Proms
+	{ "cclimber.pr2", 	0x0020, 0xab1940fa, 6 | BRF_GRA },	     // 12
+	{ "cclimber.pr3", 	0x0020, 0x71317756, 6 | BRF_GRA },	     // 13 
+
+	{ "cc13j.bin",	0x1000, 0x5f0bcdfb, 7 | BRF_SND },	     	 // 14 - Samples
+	{ "cc12j.bin",	0x1000, 0x9003ffbd, 7 | BRF_SND },	     	 // 15
+};
+
+STD_ROM_PICK(cclimberj)
+STD_ROM_FN(cclimberj)
+
+struct BurnDriver BurnDrvCclimberj = {
+	"cclimberj", "cclimber", NULL, NULL, "1980",
+	"Crazy Climber (Japan)\0", NULL, "Nichibutsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, cclimberjRomInfo, cclimberjRomName, NULL, NULL, CclimberInputInfo, CclimberjDIPInfo,
 	cclimberInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	256, 224, 4, 3
 };

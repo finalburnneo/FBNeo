@@ -222,7 +222,6 @@ void x1010_sound_init(UINT32 base_clock, INT32 address)
 	x1_010_chip->gain[BURN_SND_X1010_ROUTE_2] = 1.00;
 	x1_010_chip->output_dir[BURN_SND_X1010_ROUTE_1] = BURN_SND_ROUTE_BOTH;
 	x1_010_chip->output_dir[BURN_SND_X1010_ROUTE_2] = BURN_SND_ROUTE_BOTH;
-	X1010_Arbalester_Mode = 0;
 }
 
 void x1010_set_route(INT32 nIndex, double nVolume, INT32 nRouteDir)
@@ -264,6 +263,8 @@ void x1010_exit()
 #endif
 
 	BurnFree(x1_010_chip);
-	
+
+	X1010_Arbalester_Mode = 0;
+
 	DebugSnd_X1010Initted = 0;
 }

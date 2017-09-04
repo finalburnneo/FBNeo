@@ -2524,8 +2524,13 @@ INT32 System16Init()
 	
 	System16PaletteInit();
 
-	if (System16HasGears)
-		BurnShiftInitDefault();
+	if (System16HasGears) {
+		if (strstr(BurnDrvGetTextA(DRV_NAME), "pdrift")) {
+			BurnShiftInit(SHIFT_POSITION_BOTTOM_LEFT, SHIFT_COLOR_WHITE, 80);
+		} else {
+			BurnShiftInitDefault();
+		}
+	}
 
 	// Reset the driver
 	System16DoReset();

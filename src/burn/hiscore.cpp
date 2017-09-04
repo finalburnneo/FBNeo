@@ -530,7 +530,7 @@ void HiscoreInit()
 		}
 		
 		UINT8 *Buffer = (UINT8*)BurnMalloc(nSize);
-		rewind(fp);
+		fseek(fp, 0, SEEK_SET);
 
 		fread((char *)Buffer, 1, nSize, fp);
 

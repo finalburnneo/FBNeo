@@ -366,7 +366,7 @@ static int NeoCDList_CheckISO(HWND hList, TCHAR* pszFile)
 			fseek(fp, 0, SEEK_END);
 			unsigned int lSize = 0;
 			lSize = ftell(fp);
-			rewind(fp);
+			fseek(fp, 0, SEEK_SET);
 
 			// If it has at least 16 sectors proceed
 			if(lSize > (2048 * 16)) 

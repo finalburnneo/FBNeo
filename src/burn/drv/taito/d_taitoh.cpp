@@ -1972,6 +1972,100 @@ struct BurnDriver BurnDrvSyvalionp = {
 };
 
 
+// Syvalion (US, PS2 Taito Legends 2)
+
+static struct BurnRomInfo syvalionuRomDesc[] = {
+	{ "eng-20.bin",		0x20000, 0x6c1db526, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "eng-22.bin",		0x20000, 0xd386b5dd, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "eng-19.bin",		0x20000, 0x57fa3905, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "usa-21.bin",		0x20000, 0xed27edf7, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "b51-23.bin",		0x10000, 0x734662de, TAITO_Z80ROM1 },          //  4 Z80 Code
+
+	{ "b51-16.bin",		0x20000, 0xc0fcf7a5, TAITO_CHARS_BYTESWAP },   //  5 Background Tiles & Sprites
+	{ "b51-12.bin",		0x20000, 0x6b36d358, TAITO_CHARS_BYTESWAP },   //  6
+	{ "b51-15.bin",		0x20000, 0x30b2ee02, TAITO_CHARS_BYTESWAP },   //  7
+	{ "b51-11.bin",		0x20000, 0xae9a9ac5, TAITO_CHARS_BYTESWAP },   //  8
+	{ "b51-08.bin",		0x20000, 0x9f6a535c, TAITO_CHARS_BYTESWAP },   //  9
+	{ "b51-04.bin",		0x20000, 0x03aea658, TAITO_CHARS_BYTESWAP },   // 10
+	{ "b51-07.bin",		0x20000, 0x764d4dc8, TAITO_CHARS_BYTESWAP },   // 11
+	{ "b51-03.bin",		0x20000, 0x8fd9b299, TAITO_CHARS_BYTESWAP },   // 12
+	{ "b51-14.bin",		0x20000, 0xdea7216e, TAITO_CHARS_BYTESWAP },   // 13
+	{ "b51-10.bin",		0x20000, 0x6aa97fbc, TAITO_CHARS_BYTESWAP },   // 14
+	{ "b51-13.bin",		0x20000, 0xdab28958, TAITO_CHARS_BYTESWAP },   // 15
+	{ "b51-09.bin",		0x20000, 0xcbb4f33d, TAITO_CHARS_BYTESWAP },   // 16
+	{ "b51-06.bin",		0x20000, 0x81bef4f0, TAITO_CHARS_BYTESWAP },   // 17
+	{ "b51-02.bin",		0x20000, 0x906ba440, TAITO_CHARS_BYTESWAP },   // 18
+	{ "b51-05.bin",		0x20000, 0x47976ae9, TAITO_CHARS_BYTESWAP },   // 19
+	{ "b51-01.bin",		0x20000, 0x8dab004a, TAITO_CHARS_BYTESWAP },   // 20
+
+	{ "b51-17.bin",		0x80000, 0xd85096aa, TAITO_YM2610A },          // 21 YM2610 Samples
+
+	{ "b51-18.bin",		0x80000, 0x8b23ac83, TAITO_YM2610B },          // 22 YM2610 DeltaT Region
+
+};
+
+STD_ROM_PICK(syvalionu)
+STD_ROM_FN(syvalionu)
+
+struct BurnDriver BurnDrvSyvalionu = {
+	"syvalionu", "syvalion", NULL, NULL, "1988",
+	"Syvalion (US, PS2 Taito Legends 2)\0", NULL, "Taito America Corporation", "H System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, syvalionuRomInfo, syvalionuRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
+	SyvalionInit, DrvExit, DrvFrame, SyvalionDraw, DrvScan, NULL, 0x210,
+	512, 400, 4, 3
+};
+
+
+// Syvalion (World, PS2 Taito Legends 2)
+
+static struct BurnRomInfo syvalionwRomDesc[] = {
+	{ "eng-20.bin",		0x20000, 0x6c1db526, TAITO_68KROM1_BYTESWAP }, //  0 68k Code
+	{ "eng-22.bin",		0x20000, 0xd386b5dd, TAITO_68KROM1_BYTESWAP }, //  1
+	{ "eng-19.bin",		0x20000, 0x57fa3905, TAITO_68KROM1_BYTESWAP }, //  2
+	{ "eur-21.bin",		0x20000, 0x742ebc4d, TAITO_68KROM1_BYTESWAP }, //  3
+
+	{ "b51-23.bin",		0x10000, 0x734662de, TAITO_Z80ROM1 },          //  4 Z80 Code
+
+	{ "b51-16.bin",		0x20000, 0xc0fcf7a5, TAITO_CHARS_BYTESWAP },   //  5 Background Tiles & Sprites
+	{ "b51-12.bin",		0x20000, 0x6b36d358, TAITO_CHARS_BYTESWAP },   //  6
+	{ "b51-15.bin",		0x20000, 0x30b2ee02, TAITO_CHARS_BYTESWAP },   //  7
+	{ "b51-11.bin",		0x20000, 0xae9a9ac5, TAITO_CHARS_BYTESWAP },   //  8
+	{ "b51-08.bin",		0x20000, 0x9f6a535c, TAITO_CHARS_BYTESWAP },   //  9
+	{ "b51-04.bin",		0x20000, 0x03aea658, TAITO_CHARS_BYTESWAP },   // 10
+	{ "b51-07.bin",		0x20000, 0x764d4dc8, TAITO_CHARS_BYTESWAP },   // 11
+	{ "b51-03.bin",		0x20000, 0x8fd9b299, TAITO_CHARS_BYTESWAP },   // 12
+	{ "b51-14.bin",		0x20000, 0xdea7216e, TAITO_CHARS_BYTESWAP },   // 13
+	{ "b51-10.bin",		0x20000, 0x6aa97fbc, TAITO_CHARS_BYTESWAP },   // 14
+	{ "b51-13.bin",		0x20000, 0xdab28958, TAITO_CHARS_BYTESWAP },   // 15
+	{ "b51-09.bin",		0x20000, 0xcbb4f33d, TAITO_CHARS_BYTESWAP },   // 16
+	{ "b51-06.bin",		0x20000, 0x81bef4f0, TAITO_CHARS_BYTESWAP },   // 17
+	{ "b51-02.bin",		0x20000, 0x906ba440, TAITO_CHARS_BYTESWAP },   // 18
+	{ "b51-05.bin",		0x20000, 0x47976ae9, TAITO_CHARS_BYTESWAP },   // 19
+	{ "b51-01.bin",		0x20000, 0x8dab004a, TAITO_CHARS_BYTESWAP },   // 20
+
+	{ "b51-17.bin",		0x80000, 0xd85096aa, TAITO_YM2610A },          // 21 YM2610 Samples
+
+	{ "b51-18.bin",		0x80000, 0x8b23ac83, TAITO_YM2610B },          // 22 YM2610 DeltaT Region
+
+};
+
+STD_ROM_PICK(syvalionw)
+STD_ROM_FN(syvalionw)
+
+struct BurnDriver BurnDrvSyvalionw = {
+	"syvalionw", "syvalion", NULL, NULL, "1988",
+	"Syvalion (World, PS2 Taito Legends 2)\0", NULL, "Taito Corporation Japan", "H System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	NULL, syvalionwRomInfo, syvalionwRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
+	SyvalionInit, DrvExit, DrvFrame, SyvalionDraw, DrvScan, NULL, 0x210,
+	512, 400, 4, 3
+};
+
+
 // Recordbreaker (World)
 
 static struct BurnRomInfo recordbrRomDesc[] = {
@@ -2005,7 +2099,7 @@ struct BurnDriver BurnDrvRecordbr = {
 	"recordbr", NULL, NULL, NULL, "1988",
 	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "H System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, recordbrRomInfo, recordbrRomName, NULL, NULL, RecordbrInputInfo, RecordbrDIPInfo,
 	SyvalionInit, DrvExit, DrvFrame, RecordbrDraw, NULL, NULL, 0x210,
 	320, 240, 4, 3

@@ -2787,14 +2787,14 @@ static struct BurnRomInfo chukatajaRomDesc[] = {
 	/* Labeled B06-14 and under printed label "Taito M-001, 128P, 720100", is a mask 8042 */
 	{ "b06__14.1g",		0x00800, 0x28907072, 3 | BRF_PRG | BRF_OPT }, //  3 I8742 MCU
 
-	{ "b44-21.a13",		0x20000, 0xaae7b3d5, 4 | BRF_GRA },	      	  //  4 Graphics
-	{ "b44-22.a12",		0x20000, 0x7f0b9568, 4 | BRF_GRA },	      	  //  5
-	{ "b44-23.a10",		0x20000, 0x5a54a3b9, 4 | BRF_GRA },	      	  //  6
-	{ "b44-24.a08",		0x20000, 0x3c5f544b, 4 | BRF_GRA },	      	  //  7
-	{ "b44-25.a07",		0x20000, 0xd1b7e314, 4 | BRF_GRA },	      	  //  8
-	{ "b44-26.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
-	{ "b44-27.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
-	{ "b44-28.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
+	{ "b44-21.rom4l",	0x20000, 0xaae7b3d5, 4 | BRF_GRA },	      	  //  4 Graphics
+	{ "b44-22.rom4h",	0x20000, 0x7f0b9568, 4 | BRF_GRA },	      	  //  5
+	{ "b44-23.rom3l",	0x20000, 0x5a54a3b9, 4 | BRF_GRA },	      	  //  6
+	{ "b44-24.rom3h",	0x20000, 0x3c5f544b, 4 | BRF_GRA },	      	  //  7
+	{ "b44-25.rom2l",	0x20000, 0xd1b7e314, 4 | BRF_GRA },	      	  //  8
+	{ "b44-26.rom2h",	0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
+	{ "b44-27.rom1l",	0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
+	{ "b44-28.rom1h",	0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
 	
 	{ "b44-30.15f",		0x00200, 0xb3de8312, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "b44-29.17f",		0x00200, 0xae44b8fb, 5 | BRF_GRA },	      	  // 13

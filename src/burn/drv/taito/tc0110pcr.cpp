@@ -24,6 +24,54 @@ static inline UINT8 pal4bit(UINT8 bits)
 	return (bits << 4) | (bits);
 }
 
+void TC0110PCRRecalcPalette()
+{
+	for (INT32 i = 0; i < 0x1000; i++)
+	{
+		TC0110PCRWordWrite(0, 0, i); // latch
+
+		UINT16 pal = TC0110PCRWordRead(0); // read
+
+		TC0110PCRWordWrite(0, 1, pal); // write
+	}
+}
+
+void TC0110PCRRecalcPaletteStep1()
+{
+	for (INT32 i = 0; i < 0x1000; i++)
+	{
+		TC0110PCRStep1WordWrite(0, 0, i);
+
+		UINT16 pal = TC0110PCRWordRead(0);
+
+		TC0110PCRStep1WordWrite(0, 1, pal);
+	}
+}
+
+void TC0110PCRRecalcPaletteStep1RBSwap()
+{
+	for (INT32 i = 0; i < 0x1000; i++)
+	{
+		TC0110PCRStep1RBSwapWordWrite(0, 0, i);
+
+		UINT16 pal = TC0110PCRWordRead(0);
+
+		TC0110PCRStep1RBSwapWordWrite(0, 1, pal);
+	}
+}
+
+void TC0110PCRRecalcPaletteStep14rbg()
+{
+	for (INT32 i = 0; i < 0x1000; i++)
+	{
+		TC0110PCRStep14rbgWordWrite(0, 0, i);
+
+		UINT16 pal = TC0110PCRWordRead(0);
+
+		TC0110PCRStep14rbgWordWrite(0, 1, pal);
+	}
+}
+
 UINT16 TC0110PCRWordRead(INT32 Chip)
 {
 	UINT16 *PalRam = (UINT16*)TC0110PCRRam[Chip];
@@ -81,6 +129,57 @@ void TC0110PCRStep1WordWrite(INT32 Chip, INT32 Offset, UINT16 Data)
 		}
 	}
 }
+
+#if 0
+// AquaJack wip/debug stuff for palette issue - save for another day
+void TC0110PCRStep1WordWriteAJ(INT32 Chip, INT32 Offset, UINT16 Data)
+{
+	INT32 PaletteOffset = Chip * 0x1000;
+	
+	switch (Offset) {
+		case 0: {
+			TC0110PCRAddr[Chip] = Data & 0xfff;
+			return;
+		}
+		
+		case 1: {
+			if ((TC0110PCRAddr[Chip]&0xff0) == 0x360) // good line
+				bprintf(0, _T("a %x %X.\n"),TC0110PCRAddr[Chip], Data);
+			if ((TC0110PCRAddr[Chip]&0xff0) == 0x370) // bad line
+				bprintf(0, _T("A %x %X.\n"),TC0110PCRAddr[Chip], Data);
+
+			if (
+				((TC0110PCRAddr[Chip]&0xff0) == 0x370) || // Level 4 Pal Lines, data written here is weird...
+				((TC0110PCRAddr[Chip]&0xff0) == 0x380) ||
+				((TC0110PCRAddr[Chip]&0xff0) == 0x450) ||
+				((TC0110PCRAddr[Chip]&0xff0) == 0x520)) {
+			   // TC0110PCRStep1RBSwapWordWrite(Chip, Offset, Data);
+				//if (Data) Data |= 0x4900;
+				//TC0110PCRStep1RBSwapWordWrite(Chip, Offset, Data);
+				//return;
+			}
+			if (((TC0110PCRAddr[Chip]&0xff0) == 0x560) || // Level 1 fix
+				((TC0110PCRAddr[Chip]&0xff0) == 0x620) ||
+				((TC0110PCRAddr[Chip]&0xff0) == 0x5e0)) { // why are these addresses swapped?
+				TC0110PCRStep1RBSwapWordWrite(Chip, Offset, Data);
+				return;
+			}
+
+			UINT16 *PalRam = (UINT16*)TC0110PCRRam[Chip];
+			INT32 r, g, b;
+			
+			PalRam[TC0110PCRAddr[Chip]] = Data;
+			
+			r = pal5bit(Data >>  0);
+			g = pal5bit(Data >>  5);
+			b = pal5bit(Data >> 10);
+			
+			TC0110PCRPalette[TC0110PCRAddr[Chip] | PaletteOffset] = BurnHighCol(r, g, b, 0);
+			return;
+		}
+	}
+}
+#endif
 
 void TC0110PCRStep14rbgWordWrite(INT32 Chip, INT32 Offset, UINT16 Data)
 {

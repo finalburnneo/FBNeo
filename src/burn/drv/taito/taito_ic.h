@@ -145,8 +145,13 @@ extern INT32 TC0110PCRTotalColours;
 UINT16 TC0110PCRWordRead(INT32 Chip);
 void TC0110PCRWordWrite(INT32 Chip, INT32 Offset, UINT16 Data);
 void TC0110PCRStep1WordWrite(INT32 Chip, INT32 Offset, UINT16 Data);
+void TC0110PCRStep1WordWriteAJ(INT32 Chip, INT32 Offset, UINT16 Data);
 void TC0110PCRStep1RBSwapWordWrite(INT32 Chip, INT32 Offset, UINT16 Data);
 void TC0110PCRStep14rbgWordWrite(INT32 Chip, INT32 Offset, UINT16 Data);
+void TC0110PCRRecalcPalette(); // this is _not_ generic! (choose one based on game requirements)
+void TC0110PCRRecalcPaletteStep1();
+void TC0110PCRRecalcPaletteStep1RBSwap();
+void TC0110PCRRecalcPaletteStep14rbg();
 void TC0110PCRReset();
 void TC0110PCRInit(INT32 Num, INT32 nNumColours);
 void TC0110PCRExit();

@@ -11,7 +11,6 @@
 #include "burn_shift.h"
 
 static INT32 Sci;
-static INT32 OldSteer; // Hack to centre the steering in SCI
 static INT32 SciSpriteFrame;
 static INT32 TaitoZINT6timer = 0;
 static INT32 bUseShifter = 0;
@@ -3302,7 +3301,6 @@ static INT32 TaitoZDoReset()
 		BurnShiftReset();
 
 	SciSpriteFrame = 0;
-	OldSteer = 0;
 
 	return 0;
 }
@@ -5851,7 +5849,6 @@ static INT32 TaitoZExit()
 	TaitoExit();
 
 	SciSpriteFrame = 0;
-	OldSteer = 0;
 	Sci = 0;
 	TaitoZINT6timer = 0;
 
@@ -6595,9 +6592,10 @@ static void SpacegunRenderSprites(INT32 PriorityDraw)
 static void AquajackDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
-	
 	BurnTransferClear();
-	
+
+	TC0110PCRRecalcPaletteStep1();
+
 	if (TC0100SCNBottomLayer(0)) {
 		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
 		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
@@ -6646,6 +6644,7 @@ static void ChasehqDraw()
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
 	BurnTransferClear();
+	TC0110PCRRecalcPaletteStep1();
 
 	memset(TaitoPriorityMap, 0, nScreenWidth * nScreenHeight);
 
@@ -6671,7 +6670,8 @@ static void ContcircDraw()
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
 	BurnTransferClear();
-	
+	TC0110PCRRecalcPaletteStep1RBSwap();
+
 	if (TC0100SCNBottomLayer(0)) {
 		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
 		if (!(Disable & 0x01)) TC0100SCNRenderBgLayer(0, 0, TaitoChars);
@@ -6696,6 +6696,7 @@ static void EnforceDraw()
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
 	BurnTransferClear();
+	TC0110PCRRecalcPaletteStep1RBSwap();
 	
 	if (TC0100SCNBottomLayer(0)) {
 		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 0, TaitoChars);
@@ -6802,6 +6803,7 @@ static void SpacegunDraw()
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
 	BurnTransferClear();
+	TC0110PCRRecalcPaletteStep1RBSwap();
 	
 	if (TC0100SCNBottomLayer(0)) {
 		if (!(Disable & 0x02)) TC0100SCNRenderFgLayer(0, 1, TaitoChars);
@@ -6928,7 +6930,6 @@ static INT32 TaitoZScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(TaitoAnalogPort2);
 		SCAN_VAR(TaitoAnalogPort3);
 		SCAN_VAR(TaitoInput);
-		SCAN_VAR(OldSteer);
 		SCAN_VAR(TaitoCpuACtrl);
 		SCAN_VAR(TaitoZ80Bank);
 		SCAN_VAR(SciSpriteFrame);

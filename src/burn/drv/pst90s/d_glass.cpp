@@ -160,6 +160,10 @@ static void __fastcall glass_write_word(UINT32 address, UINT16 data)
 		case 0x700008:
 			blitter_write(data);
 		return;
+
+		case 0x108008:
+			interrupt_enable = 1;
+		return;
 	}
 }
 
@@ -168,6 +172,7 @@ static void __fastcall glass_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x108008:
+		case 0x108009:
 			interrupt_enable = 1;
 		return;
 
@@ -363,6 +368,8 @@ static INT32 DrvInit()
 
 		has_mcu = BurnLoadRom(DrvMCUROM, 6, 1) ? 0 : 1;
 
+		if (has_mcu) memcpy(DrvMCURAM, DrvMCUROM, 0x8000);
+
 		DrvGfxDecode();
 	}
 
@@ -379,7 +386,7 @@ static INT32 DrvInit()
 	SekClose();
 
 	mcs51_program_data = DrvMCUROM;
-	ds5002fp_init(0x79, 0x00, 0x80);
+	ds5002fp_init(0x29, 0x00, 0x80);
 	mcs51_set_write_handler(dallas_sharedram_write);
 	mcs51_set_read_handler(dallas_sharedram_read);
 
@@ -640,7 +647,7 @@ struct BurnDriver BurnDrvGlass = {
 	"glass", NULL, NULL, NULL, "1994",
 	"Glass (Ver 1.1, Break Edition, Version 1994)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_NOT_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, glassRomInfo, glassRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
@@ -670,7 +677,7 @@ struct BurnDriver BurnDrvGlass10 = {
 	"glass10", "glass", NULL, NULL, "1993",
 	"Glass (Ver 1.0, Break Edition) (set 1)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, glass10RomInfo, glass10RomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
@@ -700,7 +707,7 @@ struct BurnDriver BurnDrvGlass10a = {
 	"glass10a", "glass", NULL, NULL, "1993",
 	"Glass (Ver 1.0, Break Edition) (set 2)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, glass10aRomInfo, glass10aRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3

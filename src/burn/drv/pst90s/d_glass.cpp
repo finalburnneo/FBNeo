@@ -5,12 +5,14 @@
 #include "m68000_intf.h"
 #include "msm6295.h"
 #include "burn_pal.h"
+#include "mcs51.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
+static UINT8 *DrvMCUROM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvBltROM;
 static UINT8 *DrvSndROM;
@@ -18,6 +20,7 @@ static UINT8 *Drv68KRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRegs;
+static UINT8 *DrvMCURAM;
 
 static UINT8 DrvRecalc;
 
@@ -32,6 +35,8 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvDips[2];
 static UINT16 DrvInputs[2];
 static UINT8 DrvReset;
+
+static INT32 has_mcu = 0;
 
 static struct BurnInputInfo GlassInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
@@ -207,6 +212,30 @@ static UINT8 __fastcall glass_read_byte(UINT32 address)
 	return 0;
 }
 
+static void dallas_sharedram_write(INT32 address, UINT8 data)
+{
+	if (address >= MCS51_PORT_P0) return;
+
+	if (address <= 0xffff)
+		Drv68KRAM[(address & 0x3fff) ^ 1] = data;
+
+	if (address >= 0x10000 && address <= 0x17fff)
+		DrvMCURAM[address & 0x7fff] = data;
+}
+
+static UINT8 dallas_sharedram_read(INT32 address)
+{
+	if (address >= MCS51_PORT_P0) return 0;
+
+	if (address <= 0xffff)
+		return Drv68KRAM[(address & 0x3fff) ^ 1];
+
+	if (address >= 0x10000 && address <= 0x17fff)
+		return DrvMCURAM[address & 0x7fff];
+
+	return 0;
+}
+
 static tilemap_callback( screen0 )
 {
 	UINT16 *ram = (UINT16*)DrvVidRAM;
@@ -237,6 +266,8 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
+	mcs51_reset();
+
 	MSM6295Reset(0);
 
 	bankswitch(3);
@@ -254,6 +285,8 @@ static INT32 MemIndex()
 	UINT8 *Next; Next = AllMem;
 
 	Drv68KROM	= Next; Next += 0x100000;
+
+	DrvMCUROM	= Next; Next += 0x008000;
 
 	DrvGfxROM	= Next; Next += 0x800000;
 	DrvBltROM	= Next; Next += 0x100000;
@@ -273,6 +306,8 @@ static INT32 MemIndex()
 	DrvVidRegs	= Next; Next += 0x000008;
 
 	RamEnd		= Next;
+
+	DrvMCURAM	= Next; Next += 0x008000;
 
 	MemEnd		= Next;
 
@@ -326,6 +361,8 @@ static INT32 DrvInit()
 
 		if (BurnLoadRom(DrvSndROM + 0x000000,  5, 1)) return 1;
 
+		has_mcu = BurnLoadRom(DrvMCUROM, 6, 1) ? 0 : 1;
+
 		DrvGfxDecode();
 	}
 
@@ -340,6 +377,11 @@ static INT32 DrvInit()
 	SekSetWriteByteHandler(0,	glass_write_byte);
 	SekSetReadByteHandler(0,	glass_read_byte);
 	SekClose();
+
+	mcs51_program_data = DrvMCUROM;
+	ds5002fp_init(0x79, 0x00, 0x80);
+	mcs51_set_write_handler(dallas_sharedram_write);
+	mcs51_set_read_handler(dallas_sharedram_read);
 
 	MSM6295Init(0, 1000000 / 132, 0);
 	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -364,9 +406,13 @@ static INT32 DrvExit()
 	MSM6295Exit(0);
 	MSM6295ROM = NULL;
 
+	mcs51_exit();
+
 	SekExit();
 
 	BurnFree (AllMem);
+
+	has_mcu = 0;
 
 	return 0;
 }
@@ -456,6 +502,8 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
+	SekNewFrame();
+
 	{
 		memset (DrvInputs, 0xff, 2 * sizeof(UINT16));
 
@@ -465,15 +513,26 @@ static INT32 DrvFrame()
 		}
 	}
 
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { 12000000 / 60, 12000000 / 12 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+
 	SekOpen(0);
 
-	SekRun(((12000000 / 60) * 240) / 256);
-	if (interrupt_enable) {
-		SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
-		interrupt_enable = 0;
-	}
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		INT32 nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
+		nCyclesDone[0] += SekRun(nNext - nCyclesDone[0]);
 
-	SekRun(((12000000 / 60) * 16) / 256);
+		if (i == 240 && interrupt_enable) {
+			SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+			interrupt_enable = 0;
+		}
+
+		if (has_mcu) {
+			nCyclesDone[1] += mcs51Run((SekTotalCycles() / 12) - nCyclesDone[1]);
+		}
+	}
 
 	SekClose();
 
@@ -518,7 +577,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.Data		= Drv68KRAM;
 		ba.nLen		= 0x004000;
 		ba.nAddress	= 0xfec000;
-		ba.szName	= "Palette RAM";
+		ba.szName	= "68K RAM";
 		BurnAcb(&ba);
 
 		ba.Data		= DrvVidRegs;
@@ -528,8 +587,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 
+	if (nAction & ACB_NVRAM) {
+		ba.Data		= DrvMCURAM;
+		ba.nLen		= 0x008000;
+		ba.nAddress	= 0;
+		ba.szName	= "MCU RAM";
+		BurnAcb(&ba);
+	}
+
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
+
+		mcs51_scan(nAction);
 
 		MSM6295Scan(0, nAction);
 
@@ -561,7 +630,7 @@ static struct BurnRomInfo glassRomDesc[] = {
 
 	{ "c1.bin",		0x100000, 0xd9f075a2, 4 | BRF_SND },           //  5 Samples
 
-	{ "glass_ds5002fp.bin",	0x008000, 0x00000000, 5 | BRF_NODUMP },        //  6 Dallas MCU
+	{ "glass_ds5002fp_sram.bin",	0x008000, 0x47c9df4c, 5 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 };
 
 STD_ROM_PICK(glass)
@@ -591,7 +660,7 @@ static struct BurnRomInfo glass10RomDesc[] = {
 
 	{ "c1.bin",		0x100000, 0xd9f075a2, 4 | BRF_SND },           //  5 Samples
 
-	{ "glass_ds5002fp.bin",	0x008000, 0x00000000, 5 | BRF_NODUMP },        //  6 Dallas MCU
+	{ "glass_ds5002fp_sram.bin",	0x008000, 0x47c9df4c, 5 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 };
 
 STD_ROM_PICK(glass10)
@@ -621,7 +690,7 @@ static struct BurnRomInfo glass10aRomDesc[] = {
 
 	{ "c1.bin",		0x100000, 0xd9f075a2, 4 | BRF_SND },           //  5 Samples
 
-	{ "glass_ds5002fp.bin",	0x008000, 0x00000000, 5 | BRF_NODUMP },        //  6 Dallas MCU
+	{ "glass_ds5002fp_sram.bin",	0x008000, 0x47c9df4c, 5 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 };
 
 STD_ROM_PICK(glass10a)

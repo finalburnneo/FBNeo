@@ -1,9 +1,6 @@
 // FB Alpha Break Thru driver module
 // Based on MAME driver by Phil Stroffolino
 
-// Tofix:
-//   background layer in Breakthru has the wrong colors.
-
 // Notes:
 //  Due to our 6809 core being very cycle-inaccurate, our cpu's need an extra
 //  1.5mhz tacked on to match the same performance as MAME running the same
@@ -696,8 +693,8 @@ static INT32 DrvFrame()
 	{
 		M6809Open(0);
 		BurnTimerUpdate((i+1) * (nCyclesTotal[0] / nInterleave));
-		if (i == 248) vblank = 1;
-		if (i == 248 && nmi_mask) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		if (i == (248-2)) vblank = 1;
+		if (i == (248-2) && nmi_mask) M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		M6809Close();
 
 		M6809Open(1);

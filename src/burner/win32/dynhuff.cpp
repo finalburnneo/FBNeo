@@ -347,6 +347,15 @@ static void BuildDHT (unsigned char data)
 	}
 }
 
+static void RemoveLookup(struct DHTNode *node_ptr)
+{ // to aid in cleanup / avoid calling free on a pointer twice in "reset lookup table"
+	for(int i=0; i<257; i++)
+	{
+		if (look_up_table[i] == node_ptr)
+			look_up_table[i] = NULL;
+	}
+}
+
 // clean-ups
 static void DestroyDHT()
 {
@@ -354,10 +363,14 @@ static void DestroyDHT()
 
 	// free all nodes in the dynamic huffman tree
 	// and reset the node list
+	list_idx = 0;
 	while(list_idx < MAX_LIST_LEN-3)
 	{
-		free(node_list[list_idx]);
-		node_list[list_idx] = NULL;
+		if (node_list[list_idx]) {
+			RemoveLookup(node_list[list_idx]);
+			free(node_list[list_idx]);
+			node_list[list_idx] = NULL;
+		}
 		++list_idx;
 	}
 	node_list[MAX_LIST_LEN-2]=NULL;
@@ -367,6 +380,7 @@ static void DestroyDHT()
 	// reset lookup table
 	for(i=0; i<257; i++)
 	{
+		if (look_up_table[i]) free(look_up_table[i]);
 		look_up_table[i] = NULL;
 	}
 

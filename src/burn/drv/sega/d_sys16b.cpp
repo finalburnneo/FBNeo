@@ -5690,7 +5690,7 @@ static struct BurnRomInfo TturfuRomDesc[] = {
 	{ "epr-12274.a10",  0x08000, 0x8207f0c4, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "epr-12275.a11",  0x08000, 0x182f3c3d, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0099.c2",    0x01000, 0xf676e3e4, BRF_OPT }, // Intel i8751 protection MCU
+	{ "317-0099.c2",    0x01000, 0xf676e3e4, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG }, // Intel i8751 protection MCU
 };
 
 
@@ -5931,7 +5931,7 @@ static struct BurnRomInfo WrestwarRomDesc[] = {
 	{ "mpr-12148.a11",  0x20000, 0xfb9a7f29, SYS16_ROM_UPD7759DATA | BRF_SND },
 	{ "mpr-12149.a12",  0x20000, 0xd6617b19, SYS16_ROM_UPD7759DATA | BRF_SND },
 	
-	{ "317-0103.c2",   0x01000, 0xaa0710f5, BRF_OPT } // Intel i8751 protection MCU
+	{ "317-0103.c2",    0x01000, 0xaa0710f5, SYS16_ROM_I8751 | BRF_ESS | BRF_PRG } // Intel i8751 protection MCU
 };
 
 
@@ -8485,9 +8485,27 @@ static INT32 TturfInit()
 
 static INT32 TturfuInit()
 {
-	Simulate8751 = Tturf_Sim8751;
+	// Start off with some sprite rom and let the load routine add on the rest
+	System16SpriteRomSize = 0xe0000 - 0x80000;
+
+	INT32 nRet = System16Init();
 	
-	return System16Init();
+	if (!nRet) {
+		UINT8 *pTemp = (UINT8*)BurnMalloc(0xe0000);
+		if (pTemp) {
+			memcpy(pTemp, System16Sprites, 0x80000);
+			memset(System16Sprites, 0, 0xe0000);
+			memcpy(System16Sprites + 0x000000, pTemp + 0x00000, 0x20000);
+			memcpy(System16Sprites + 0x040000, pTemp + 0x20000, 0x20000);
+			memcpy(System16Sprites + 0x080000, pTemp + 0x40000, 0x20000);
+			memcpy(System16Sprites + 0x0c0000, pTemp + 0x60000, 0x20000);
+		} else {
+			nRet = 1;
+		}
+		BurnFree(pTemp);
+	}
+
+	return nRet;
 }
 
 void Wb3_Sim8751()
@@ -8601,29 +8619,6 @@ static INT32 Wb3bblInit()
 	}
 
 	return nRet;
-}
-
-static void Wrestwar_Sim8751()
-{
-	// System Inputs
-	*((UINT16*)(System16Ram + 0x2082)) = BURN_ENDIAN_SWAP_INT16((UINT16)~System16Input[0]);
-	
-	// Sound command
-	UINT16 temp = (System16Ram[0x208e + 1] << 8) | System16Ram[0x208e + 0];
-	if ((temp & 0xff00) != 0x0000) {
-		System16SoundLatch = temp & 0xff;
-		ZetOpen(0);
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		ZetClose();
-		*((UINT16*)(System16Ram + 0x208e)) = BURN_ENDIAN_SWAP_INT16((UINT16)(temp & 0xff));
-	}
-}
-
-static INT32 WrestwarInit()
-{
-	Simulate8751 = Wrestwar_Sim8751;
-	
-	return System16Init();
 }
 
 /*====================================================
@@ -9976,7 +9971,7 @@ struct BurnDriver BurnDrvWrestwar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5704, GBF_VSFIGHT, 0,
 	NULL, WrestwarRomInfo, WrestwarRomName, NULL, NULL, System16bInputInfo, WrestwarDIPInfo,
-	WrestwarInit, System16Exit, System16BFrame, NULL, System16Scan,
+	System16Init, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 224, 320, 3, 4
 };
 

@@ -38,6 +38,7 @@ static UINT16 i8751_needs_ack;
 static UINT16 i8751_coin_pending;
 static UINT16 i8751_command_queue;
 static INT32 i8751_level;
+static INT32 i8751_reset;
 
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
@@ -732,6 +733,7 @@ static INT32 DrvDoReset()
 	i8751_coin_pending = 0;
 	i8751_command_queue = 0;
 	i8751_level = 0;
+	i8751_reset = 0;
 
 	return 0;
 }
@@ -866,7 +868,7 @@ static INT32 DrvInit()
 			if (BurnLoadRom(DrvColPROM + 0x00400, 17, 1)) return 1;
 
 			// hack to bypass infinite loop waiting for mcu response
-			*((UINT16*)(Drv68KROM + 0x062a)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
+		//	*((UINT16*)(Drv68KROM + 0x062a)) = BURN_ENDIAN_SWAP_INT16(0x4E71);
 		} else {
 			if (BurnLoadRom(DrvGfxROM2 + 0x00000, 12, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM2 + 0x10000, 13, 1)) return 1;
@@ -1178,6 +1180,11 @@ static INT32 DrvFrame()
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
+	if (i8751_reset == 0) {
+		chelnov_i8751_w(0);
+		i8751_reset = 1;
+	}
+
 	SekClose();
 	M6502Close();
 
@@ -1224,6 +1231,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(i8751_coin_pending);
 		SCAN_VAR(i8751_command_queue);
 		SCAN_VAR(i8751_level);
+		SCAN_VAR(i8751_reset);
 	}
 
 	return 0;

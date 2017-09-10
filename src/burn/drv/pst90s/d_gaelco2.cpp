@@ -6,6 +6,7 @@
 #include "eeprom.h"
 #include "gaelco.h"
 #include "burn_gun.h"
+#include "mcs51.h"
 
 // Todo/tofix:
 //	EEPROM save doesn't seem to work in Snowboard
@@ -15,6 +16,7 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
+static UINT8 *DrvMCUROM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvSprRAM;
@@ -22,6 +24,8 @@ static UINT8 *DrvSprBuf;
 static UINT8 *DrvPalRAM;
 static UINT8 *Drv68KRAM;
 static UINT8 *Drv68KRAM2;
+static UINT8 *DrvShareRAM;
+static UINT8 *DrvMCURAM;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -51,6 +55,8 @@ static INT32 LethalGun0 = 0;
 static INT32 LethalGun1 = 0;
 static INT32 LethalGun2 = 0;
 static INT32 LethalGun3 = 0;
+
+static INT32 has_mcu = 0;
 
 static struct BurnInputInfo AlighuntInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -704,6 +710,30 @@ static UINT16 __fastcall gaelco2_sound_read_word(UINT32 address)
 	return *((UINT16*)(DrvSprRAM + (address & 0xfffe)));
 }
 
+static void dallas_sharedram_write(INT32 address, UINT8 data)
+{
+	if (address >= MCS51_PORT_P0) return;
+
+	if (address >= 0x8000 && address <= 0xffff)
+		DrvShareRAM[(address & 0x7fff) ^ 1] = data;
+
+	if (address >= 0x10000 && address <= 0x17fff)
+		DrvMCURAM[address & 0x7fff] = data;
+}
+
+static UINT8 dallas_sharedram_read(INT32 address)
+{
+	if (address >= MCS51_PORT_P0) return 0;
+
+	if (address >= 0x8000 && address <= 0xffff)
+		return DrvShareRAM[(address & 0x7fff) ^ 1];
+
+	if (address >= 0x10000 && address <= 0x17fff)
+		return DrvMCURAM[address & 0x7fff];
+
+	return 0;
+}
+
 static void palette_update(INT32 offset)
 {
 	static const int pen_color_adjust[16] = {
@@ -724,8 +754,6 @@ static void palette_update(INT32 offset)
 
 	DrvPalette[offset/2] = BurnHighCol(r,g,b,0);
 
-	if (offset >= 0x211fe0) return;
-
 #define ADJUST_COLOR(c) ((c < 0) ? 0 : ((c > 255) ? 255 : c))
 
 	for (INT32 i = 1; i < 16; i++) {
@@ -733,7 +761,7 @@ static void palette_update(INT32 offset)
 		INT32 auxg = ADJUST_COLOR(g + pen_color_adjust[i]);
 		INT32 auxb = ADJUST_COLOR(b + pen_color_adjust[i]);
 
-		DrvPalette[0x1000 + (offset/2) * i] = BurnHighCol(auxr,auxg,auxb,0);
+		DrvPalette[0x1000 * i + (offset/2)] = BurnHighCol(auxr,auxg,auxb,0);
 	}
 }
 
@@ -778,6 +806,8 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
+	mcs51_reset();
+
 	EEPROMReset();
 
 	HiscoreReset();
@@ -794,26 +824,32 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	Drv68KROM	= Next; Next += 0x0100000;
+	Drv68KROM		= Next; Next += 0x0100000;
 
-	DrvGfxROM0	= Next; Next += 0x1400000;
-	DrvGfxROM	= Next; Next += 0x2000000;
+	DrvMCURAM		= Next;
+	mcs51_program_data	= Next;
+	DrvMCUROM		= Next; Next += 0x0008000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x10000 * sizeof(UINT32);
+	DrvGfxROM0		= Next; Next += 0x1400000;
+	DrvGfxROM		= Next; Next += 0x2000000;
 
-	AllRam		= Next;
+	DrvPalette		= (UINT32*)Next; Next += 0x10000 * sizeof(UINT32);
 
-	DrvSprRAM	= Next; Next += 0x0010000;
-	DrvSprBuf	= Next; Next += 0x0010000;
-	DrvPalRAM	= Next; Next += 0x0002000;
-	Drv68KRAM	= Next; Next += 0x0020000;
-	Drv68KRAM2	= Next; Next += 0x0002000;
+	AllRam			= Next;
 
-	DrvVidRegs	= (UINT16*)Next; Next += 0x00003 * sizeof(UINT16);
+	DrvSprRAM		= Next; Next += 0x0010000;
+	DrvSprBuf		= Next; Next += 0x0010000;
+	DrvPalRAM		= Next; Next += 0x0002000;
 
-	RamEnd		= Next;
+	DrvShareRAM 		= Next + 0x8000;
+	Drv68KRAM		= Next; Next += 0x0020000;
+	Drv68KRAM2		= Next; Next += 0x0002000;
 
-	MemEnd		= Next;
+	DrvVidRegs		= (UINT16*)Next; Next += 0x00004 * sizeof(UINT16);
+
+	RamEnd			= Next;
+
+	MemEnd			= Next;
 
 	return 0;
 }
@@ -836,7 +872,6 @@ static void gaelco2_split_gfx(UINT8 *src, UINT8 *dst, INT32 start, INT32 length,
 		dst[dest2 + i] = src[start + i*2 + 1];
 	}
 }
-
 
 static const eeprom_interface gaelco2_eeprom_interface =
 {
@@ -861,32 +896,30 @@ static INT32 DrvInit(INT32 game_selector)
 	MemIndex();
 
 	game_select = game_selector;
+	pIRQCallback = pIRQLine6Callback;
+
+	if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
+	if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
 
 	switch (game_select)
 	{
 		case 0:	// aligatorun
 		{
-			if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
-
 			if (BurnLoadRom(DrvGfxROM + 0x000000, 2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x400000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x800000, 4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0xc00000, 5, 1)) return 1;
 
-			memset (DrvGfxROM0, 0, 0x1400000);
+			BurnLoadRom(DrvMCUROM, 6, 1);
 
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0000000, 0x0400000, 0x0000000, 0x0400000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0400000, 0x0400000, 0x0200000, 0x0600000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0800000, 0x0400000, 0x0800000, 0x0c00000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0c00000, 0x0400000, 0x0a00000, 0x0e00000);
 
-			memset (DrvGfxROM, 0, 0x2000000);
-
 			DrvGfxDecode(0x1400000);
 
-			nCPUClockSpeed = 13000000;
-			pIRQCallback = pIRQLine6Callback;
+			nCPUClockSpeed = 12000000;
 
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 2 * 0x0400000, 3 * 0x0400000);
 		}
@@ -894,18 +927,16 @@ static INT32 DrvInit(INT32 game_selector)
 
 		case 1:	// maniacsq
 		{
-			if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
-
 			if (BurnLoadRom(DrvGfxROM0 + 0x000000, 2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x080000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x100000, 4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x180000, 5, 1)) return 1;
 
+			BurnLoadRom(DrvMCUROM, 6, 1);
+
 			DrvGfxDecode(0x280000);
 
 			nCPUClockSpeed = 13000000;
-			pIRQCallback = pIRQLine6Callback;
 
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0080000, 1 * 0x0080000, 0, 0);
 		}
@@ -913,9 +944,6 @@ static INT32 DrvInit(INT32 game_selector)
 
 		case 2:	// snowboara
 		{
-			if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
-
 			if (BurnLoadRom(DrvGfxROM + 0x000000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x400000, 4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x800000, 5, 1)) return 1;
@@ -929,7 +957,6 @@ static INT32 DrvInit(INT32 game_selector)
 			DrvGfxDecode(0x1400000);
 
 			nCPUClockSpeed = 15000000;
-			pIRQCallback = pIRQLine6Callback;
 
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 0, 0);
 		}
@@ -937,9 +964,6 @@ static INT32 DrvInit(INT32 game_selector)
 
 		case 3:	// snowboar
 		{
-			if (BurnLoadRom(Drv68KROM  + 0x000001, 0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x000000, 1, 2)) return 1;
-
 			if (BurnLoadRom(DrvGfxROM0 + 0x0000000, 2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0080000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0100000, 4, 1)) return 1;
@@ -965,12 +989,9 @@ static INT32 DrvInit(INT32 game_selector)
 			if (BurnLoadRom(DrvGfxROM0 + 0x1100000, 24, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x1180000, 25, 1)) return 1;
 
-			// no split needed for this set.
-
 			DrvGfxDecode(0x1400000);
 
 			nCPUClockSpeed = 15000000;
-			pIRQCallback = pIRQLine6Callback;
 
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 0, 0);
 		}
@@ -978,14 +999,13 @@ static INT32 DrvInit(INT32 game_selector)
 
 		case 4: // touchgo
 		{
-			if (BurnLoadRom(Drv68KROM  + 0x0000001, 0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x0000000, 1, 2)) return 1;
-
 			if (BurnLoadRom(DrvGfxROM0 + 0x1000000, 2, 1)) return 1;
 
 			if (BurnLoadRom(DrvGfxROM  + 0x0000000, 3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM  + 0x0400000, 4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM  + 0x0800000, 5, 1)) return 1;
+
+			BurnLoadRom(DrvMCUROM, 6, 1);
 
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0000000, 0x0400000, 0x0000000, 0x0400000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0400000, 0x0200000, 0x0200000, 0x0600000);
@@ -994,7 +1014,6 @@ static INT32 DrvInit(INT32 game_selector)
 			DrvGfxDecode(0x1400000);
 
 			nCPUClockSpeed = 16000000;
-			pIRQCallback = pIRQLine6Callback;
 
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0400000, 1 * 0x0400000, 0, 0);
 		}
@@ -1002,28 +1021,20 @@ static INT32 DrvInit(INT32 game_selector)
 
 		case 6: // bang
 		{
-			if (BurnLoadRom(Drv68KROM  + 0x0000001,  0, 2)) return 1;
-			if (BurnLoadRom(Drv68KROM  + 0x0000000,  1, 2)) return 1;
-
 			if (BurnLoadRom(DrvGfxROM0 + 0x0000000,  2, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0080000,  3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0100000,  4, 1)) return 1;
-			memset (DrvGfxROM0 + 0x180000, 0, 0x80000);
 			if (BurnLoadRom(DrvGfxROM0 + 0x0200000,  5, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0280000,  6, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0300000,  7, 1)) return 1;
-			memset (DrvGfxROM0 + 0x380000, 0, 0x80000);
 			if (BurnLoadRom(DrvGfxROM0 + 0x0400000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0480000,  9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0500000, 10, 1)) return 1;
-			memset (DrvGfxROM0 + 0x580000, 0, 0x80000);
 			if (BurnLoadRom(DrvGfxROM0 + 0x0600000, 11, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0680000, 12, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0700000, 13, 1)) return 1;
-			memset (DrvGfxROM0 + 0x780000, 0, 0x80000);
 			if (BurnLoadRom(DrvGfxROM0 + 0x0800000, 14, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM0 + 0x0880000, 15, 1)) return 1;
-			memset (DrvGfxROM0 + 0x900000, 0, 0x100000);
 
 			DrvGfxDecode(0x0a00000);
 
@@ -1040,9 +1051,8 @@ static INT32 DrvInit(INT32 game_selector)
 	SekMapMemory(Drv68KROM,		0x000000, 0x0fffff, MAP_ROM);
 	SekMapMemory(DrvSprRAM,		0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x210000, 0x211fff, MAP_RAM);
+	SekMapMemory(Drv68KRAM2, 	0x212000, 0x213fff, MAP_RAM); // snowboard champ. extra ram
 	SekMapMemory(Drv68KRAM,		0xfe0000, 0xffffff, MAP_RAM);
-	if (game_select == 2 || game_select == 3) // snowboard champ. extra ram
-		SekMapMemory(Drv68KRAM2, 0x212000, 0x213fff, MAP_RAM);
 
 	SekSetWriteWordHandler(0,	gaelco2_main_write_word);
 	SekSetWriteByteHandler(0,	gaelco2_main_write_byte);
@@ -1060,6 +1070,13 @@ static INT32 DrvInit(INT32 game_selector)
 	SekSetWriteByteHandler(2,	gaelco2_palette_write_byte);
 	SekClose();
 
+	has_mcu = (DrvMCUROM[0] == 0x02) ? 1 : 0;
+//	bprintf (0, _T("Has MCU: %d\n"), has_mcu);
+
+	ds5002fp_init(0x19, 0, 0x80); // defaults
+	mcs51_set_write_handler(dallas_sharedram_write);
+	mcs51_set_read_handler(dallas_sharedram_read);
+
 	EEPROMInit(&gaelco2_eeprom_interface);
 
 	GenericTilesInit();
@@ -1075,6 +1092,8 @@ static INT32 DrvExit()
 
 	SekExit();
 
+	mcs51_exit();
+
 	EEPROMExit();
 
 	if (game_select == 6)
@@ -1084,6 +1103,7 @@ static INT32 DrvExit()
 
 	gaelcosnd_exit();
 	game_select = 0;
+	has_mcu = 0;
 
 	return 0;
 }
@@ -1337,8 +1357,10 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[1] = { (nCPUClockSpeed * 10) / 591 }; // ?? MHZ @ 59.1 HZ
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nCyclesDone[2] = { 0,0 };
 	INT32 nSegment = 0;
+
+	INT32 mcu_speed = nCPUClockSpeed / 1000000; // cpu is 1mhz, we're syncing to main. 
 
 	SekOpen(0);
 
@@ -1349,6 +1371,10 @@ static INT32 DrvFrame()
 
 		pIRQCallback(i);
 
+		if (has_mcu)
+		{
+			nCyclesDone[1] += mcs51Run((SekTotalCycles() / mcu_speed) - nCyclesDone[1]);
+		}
 	}
 
 	if (pBurnSoundOut) {
@@ -1400,16 +1426,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Maniac Square (unprotected)
+// Maniac Square (protected, Version 1.0, Checksum DEEE)
 
 static struct BurnRomInfo maniacsqRomDesc[] = {
-	{ "d8-d15.1m",		0x020000, 0x9121d1b6, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "d0-d7.1m",		0x020000, 0xa95cfd2a, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "tms27c010a.msu45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tms27c010a.msu44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "d0-d7.4m",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
 	{ "d8-d15.4m",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
 	{ "d16-d23.1m",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
 	{ "d24-d31.1m",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+
+	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
 };
 
 STD_ROM_PICK(maniacsq)
@@ -1422,10 +1450,64 @@ static INT32 maniacsqInit()
 
 struct BurnDriver BurnDrvManiacsq = {
 	"maniacsq", NULL, NULL, NULL, "1996",
-	"Maniac Square (unprotected)\0", NULL, "Gaelco", "Miscellaneous",
+	"Maniac Square (protected, Version 1.0, Checksum DEEE)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, maniacsqRomInfo, maniacsqRomName, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Maniac Square (protected, Version 1.0, Checksum CF2D)
+
+static struct BurnRomInfo maniacsqaRomDesc[] = {
+	{ "MS_U_45.U45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "MS_U_44.U44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "d0-d7.4m",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "d8-d15.4m",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "d16-d23.1m",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "d24-d31.1m",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+
+	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
+};
+
+STD_ROM_PICK(maniacsqa)
+STD_ROM_FN(maniacsqa)
+
+struct BurnDriver BurnDrvManiacsqa = {
+	"maniacsqa", "maniacsq", NULL, NULL, "1996",
+	"Maniac Square (protected, Version 1.0, Checksum CF2D)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, maniacsqaRomInfo, maniacsqaRomName, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
+	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
+	320, 240, 4, 3
+};
+
+
+// Maniac Square (unprotected, Version 1.0, Checksum BB73)
+
+static struct BurnRomInfo maniacsquRomDesc[] = {
+	{ "d8-d15.1m",		0x020000, 0x9121d1b6, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "d0-d7.1m",		0x020000, 0xa95cfd2a, 0 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "d0-d7.4m",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "d8-d15.4m",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "d16-d23.1m",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "d24-d31.1m",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+};
+
+STD_ROM_PICK(maniacsqu)
+STD_ROM_FN(maniacsqu)
+
+struct BurnDriver BurnDrvManiacsqu = {
+	"maniacsqu", "maniacsq", NULL, NULL, "1996",
+	"Maniac Square (unprotected, Version 1.0, Checksum BB73)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, maniacsquRomInfo, maniacsquRomName, NULL, NULL, ManiacsqInputInfo, ManiacsqDIPInfo,
 	maniacsqInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
 };
@@ -1442,7 +1524,7 @@ static struct BurnRomInfo aligatorRomDesc[] = {
 	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
 	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
 	
-	{ "aligator_ds5002fp.bin", 0x080000, 0x6558f215, BRF_OPT | BRF_NODUMP },
+	{ "aligator_ds5002fp.bin", 0x08000, 0x6558f215, BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 };
 
 STD_ROM_PICK(aligator)
@@ -1457,7 +1539,7 @@ struct BurnDriver BurnDrvAligator = {
 	"aligator", NULL, NULL, NULL, "1994",
 	"Alligator Hunt (World, protected)\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorRomInfo, aligatorRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -1475,7 +1557,7 @@ static struct BurnRomInfo aligatorsRomDesc[] = {
 	{ "u50",		0x400000, 0x85daecf9, 1 | BRF_GRA },           //  4
 	{ "u49",		0x400000, 0x70a4ee0b, 1 | BRF_GRA },           //  5
 	
-	{ "aligator_ds5002fp.bin", 0x080000, 0x6558f215, BRF_OPT | BRF_NODUMP },
+	{ "aligator_ds5002fp.bin", 0x08000, 0x6558f215, BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 };
 
 STD_ROM_PICK(aligators)
@@ -1485,7 +1567,7 @@ struct BurnDriver BurnDrvAligators = {
 	"aligators", "aligator", NULL, NULL, "1994",
 	"Alligator Hunt (Spain, protected)\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorsRomInfo, aligatorsRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
 	aligatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -1626,7 +1708,6 @@ struct BurnDriver BurnDrvSnowboar = {
 };
 
 
-
 // Touch & Go (World)
 
 static struct BurnRomInfo touchgoRomDesc[] = {
@@ -1638,7 +1719,8 @@ static struct BurnRomInfo touchgoRomDesc[] = {
 	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp.bin", 0x8000, 0x00000000, 4 | BRF_NODUMP },        //  6 Dallas MCU
+	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0xa497e1af, 4 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  6 Dallas MCU
+	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgo)
@@ -1653,7 +1735,7 @@ struct BurnDriver BurnDrvTouchgo = {
 	"touchgo", NULL, NULL, NULL, "1995",
 	"Touch & Go (World)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
@@ -1671,7 +1753,8 @@ static struct BurnRomInfo touchgonRomDesc[] = {
 	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp.bin", 0x8000, 0x00000000, 4 | BRF_NODUMP },        //  6 Dallas MCU
+	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0xa497e1af, 4 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  6 Dallas MCU
+	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgon)
@@ -1681,7 +1764,7 @@ struct BurnDriver BurnDrvTouchgon = {
 	"touchgon", "touchgo", NULL, NULL, "1995",
 	"Touch & Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
@@ -1699,7 +1782,8 @@ static struct BurnRomInfo touchgoeRomDesc[] = {
 	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp.bin", 0x8000, 0x00000000, 4 | BRF_NODUMP },        //  6 Dallas MCU
+	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0xa497e1af, 4 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  6 Dallas MCU
+	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
 STD_ROM_PICK(touchgoe)
@@ -1709,7 +1793,7 @@ struct BurnDriver BurnDrvTouchgoe = {
 	"touchgoe", "touchgo", NULL, NULL, "1995",
 	"Touch & Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
 	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3

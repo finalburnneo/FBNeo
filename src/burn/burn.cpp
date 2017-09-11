@@ -627,13 +627,14 @@ extern "C" INT32 BurnDrvInit()
 	nReturnValue = pDriver[nBurnDrvActive]->Init();	// Forward to drivers function
 
 	nMaxPlayers = pDriver[nBurnDrvActive]->Players;
-	
+
+	nCurrentFrame = 0;
+
 #if defined (FBA_DEBUG)
 	if (!nReturnValue) {
 		starttime = clock();
 		nFramesEmulated = 0;
 		nFramesRendered = 0;
-		nCurrentFrame = 0;
 	} else {
 		starttime = 0;
 	}

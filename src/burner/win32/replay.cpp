@@ -34,7 +34,7 @@ UINT8 *ReplayExternalData = NULL;
 #define MOVIE_FLAG_FROM_POWERON (1<<1)
 
 const UINT8 nMovieVersion = 0x01;
-UINT32 nStartFrame;
+UINT32 nStartFrame = 0;
 static UINT32 nEndFrame;
 
 static FILE* fp = NULL;
@@ -657,6 +657,7 @@ void StopReplay()
 			CloseReplay();
 		}
 		nReplayStatus = 0;
+		nStartFrame = 0;
 		CheckRedraw();
 		MenuEnableItems();
 	}

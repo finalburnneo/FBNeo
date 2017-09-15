@@ -55,6 +55,8 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 	if (Num == 3) R = Chip3;
 	if (Num == 4) R = Chip4;
 	
+#if 0
+	// this hack breaks sounds in time pilot '84 (tp84)
 	/* If the volume is 0, increase the counter */
 	for (i = 0;i < 4;i++)
 	{
@@ -66,6 +68,7 @@ void SN76496Update(INT32 Num, INT16* pSoundBuf, INT32 Length)
 			if (R->Count[i] <= Length*STEP) R->Count[i] += Length*STEP;
 		}
 	}
+#endif
 
 	while (Length > 0)
 	{
@@ -418,7 +421,7 @@ static void SN76496SetGain(struct SN76496 *R,INT32 Gain)
 	Gain &= 0xff;
 
 	/* increase max output basing on gain (0.2 dB per step) */
-	Out = MAX_OUTPUT / 3;
+	Out = MAX_OUTPUT / 4;
 	while (Gain-- > 0)
 		Out *= 1.023292992;	/* = (10 ^ (0.2/20)) */
 
@@ -426,7 +429,7 @@ static void SN76496SetGain(struct SN76496 *R,INT32 Gain)
 	for (i = 0;i < 15;i++)
 	{
 		/* limit volume to avoid clipping */
-		if (Out > MAX_OUTPUT / 3) R->VolTable[i] = MAX_OUTPUT / 3;
+		if (Out > MAX_OUTPUT / 4) R->VolTable[i] = MAX_OUTPUT / 4;
 		else R->VolTable[i] = (INT32)Out;
 
 		Out /= 1.258925412;	/* = 10 ^ (2/20) = 2dB */

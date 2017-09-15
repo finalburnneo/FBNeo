@@ -544,6 +544,7 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	TimepltSndInit(DrvZ80ROM1, DrvZ80RAM1, 1);
+	TimepltSndSrcGain(0.55); // quench distortion when ship blows up
 
 //	tc8830fInit(512000, DrvSndROM, 0x20000, 1);
 //	tc8830fSetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);

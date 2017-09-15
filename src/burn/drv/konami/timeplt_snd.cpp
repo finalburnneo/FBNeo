@@ -199,6 +199,16 @@ void TimepltSndVol(double vol0, double vol1)
 	filter_rc_set_route(5, vol1, BURN_SND_ROUTE_BOTH);
 }
 
+void TimepltSndSrcGain(double vol)
+{
+	filter_rc_set_src_gain(0, vol);
+	filter_rc_set_src_gain(1, vol);
+	filter_rc_set_src_gain(2, vol);
+	filter_rc_set_src_gain(3, vol);
+	filter_rc_set_src_gain(4, vol);
+	filter_rc_set_src_gain(5, vol);
+}
+
 void TimepltSndExit()
 {
 	if (z80_select == 0) ZetExit();

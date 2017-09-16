@@ -1229,6 +1229,7 @@ static void JunglerMachineInit()
 
 	LocomotnSndInit(DrvZ80Rom2, DrvZ80Ram2, 1);
 	TimepltSndVol(0.55, 0.55);
+	TimepltSndSrcGain(0.55);
 
 	GenericTilesInit();
 
@@ -2078,7 +2079,7 @@ static INT32 JunglerFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		nNext = (nCyclesTotal[1] * i) / nInterleave;
+		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += ZetRun(nNext - nCyclesDone[1]);
 		ZetClose();
 

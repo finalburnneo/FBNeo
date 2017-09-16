@@ -122,6 +122,7 @@ static INT32  nRotateTarget[2]      = {0, 0};
 static INT32  nRotateTry[2]         = {0, 0};
 static UINT32 nRotateTime[2]        = {0, 0};
 static UINT8  game_rotates = 0;
+static UINT8  clear_opposites = 0;
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -7176,6 +7177,7 @@ static INT32 DrvExit()
 	watchdog_enable = 0;
 	refresh_rate = 6000;
 	game_rotates = 0;
+	clear_opposites = 0;
 	has_2203 = 0;
 	trackball_mode = 0;
 	usclssic = 0;
@@ -7627,6 +7629,16 @@ static void sprite_buffer()
 	}
 }
 
+inline void ClearOppositesActiveLow(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+}
+
 static INT32 DrvCommonFrame(void (*pFrameCallback)())
 {
 	if (DrvReset) {
@@ -7650,6 +7662,11 @@ static INT32 DrvCommonFrame(void (*pFrameCallback)())
 			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 			DrvInputs[5] ^= (DrvJoy6[i] & 1) << i;
 			DrvInputs[6] ^= (DrvJoy7[i] & 1) << i;
+		}
+
+		if (clear_opposites) {
+			ClearOppositesActiveLow((UINT8*)&DrvInputs[0]);
+			ClearOppositesActiveLow((UINT8*)&DrvInputs[1]);
 		}
 
 		if (game_rotates) {
@@ -10682,6 +10699,8 @@ static INT32 arbalestInit()
 	X1010_Arbalester_Mode = 1;
 	rc = DrvInit(metafox68kInit, 8000000, SET_IRQLINES(3, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 
+	if (!rc) clear_opposites = 1;
+
 	return rc;
 }
 
@@ -10731,6 +10750,7 @@ static INT32 metafoxInit()
 	INT32 nRet = DrvInit(metafox68kInit, 8000000, SET_IRQLINES(3, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 
 	if (nRet == 0) {
+		clear_opposites = 1;
 		*((UINT16*)(Drv68KROM + 0x8ab1c)) = 0x4e71;
 		*((UINT16*)(Drv68KROM + 0x8ab1e)) = 0x4e71;
 		*((UINT16*)(Drv68KROM + 0x8ab20)) = 0x4e71;
@@ -10816,6 +10836,7 @@ static INT32 twineaglInit()
 
 	DrvSetVideoOffsets(0, 0, 0, -3);
 	DrvSetColorOffsets(0, 0, 0);
+	clear_opposites = 1;
 
 	return DrvInit(twineagle68kInit, 8000000, SET_IRQLINES(3, NOIRQ2), NO_SPRITE_BUFFER, SET_GFX_DECODE(0, 1, -1));
 }

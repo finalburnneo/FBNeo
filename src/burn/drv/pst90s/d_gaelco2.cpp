@@ -17,6 +17,7 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *Drv68KROM;
 static UINT8 *DrvMCUROM;
+static UINT8 *DrvMCUiRAM;
 static UINT8 *DrvGfxROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvSprRAM;
@@ -112,7 +113,7 @@ static struct BurnInputInfo SnowboarInputList[] = {
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 3"},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service Mode",	BIT_DIGITAL,	DrvJoy3 + 2,	"service"},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy3 + 2,	"diag"},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 3,	"service"},
 //	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
@@ -191,8 +192,8 @@ static struct BurnInputInfo TouchgoInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy4 + 8,	"service"	},
-	{"Service1",		BIT_DIGITAL,	DrvJoy4 + 10,	"service"	},
-	{"Service2",		BIT_DIGITAL,	DrvJoy4 + 9,	"service"	},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy4 + 10,	"service"	},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy4 + 9,	"diag"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
@@ -807,6 +808,10 @@ static INT32 DrvDoReset()
 	SekClose();
 
 	mcs51_reset();
+	if (DrvMCUiRAM[0]) {
+		//bprintf(0, _T("confucius say: ds5002fp scratch like chicken in summertime\n"));
+		ds5002fp_iram_fill(DrvMCUiRAM, 0x80);
+	}
 
 	EEPROMReset();
 
@@ -829,6 +834,7 @@ static INT32 MemIndex()
 	DrvMCURAM		= Next;
 	mcs51_program_data	= Next;
 	DrvMCUROM		= Next; Next += 0x0008000;
+	DrvMCUiRAM      = Next; Next += 0x00000ff;
 
 	DrvGfxROM0		= Next; Next += 0x1400000;
 	DrvGfxROM		= Next; Next += 0x2000000;
@@ -1006,6 +1012,7 @@ static INT32 DrvInit(INT32 game_selector)
 			if (BurnLoadRom(DrvGfxROM  + 0x0800000, 5, 1)) return 1;
 
 			BurnLoadRom(DrvMCUROM, 6, 1);
+			BurnLoadRom(DrvMCUiRAM, 7, 1);
 
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0000000, 0x0400000, 0x0000000, 0x0400000);
 			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0400000, 0x0200000, 0x0200000, 0x0600000);

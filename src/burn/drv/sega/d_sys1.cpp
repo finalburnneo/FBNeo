@@ -1646,7 +1646,7 @@ static struct BurnDIPInfo WbmlDIPList[]=
 	// Dip 1
 	{0   , 0xfe, 0   ,    2, "Cabinet"                },
 	{0x13, 0x01, 0x01, 0x00, "Upright"                },
-	{0x13, 0x01, 0x01, 0x01, "Cocktail"               },
+	//{0x13, 0x01, 0x01, 0x01, "Cocktail"               }, no screen flipping here :)
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x13, 0x01, 0x02, 0x00, "Off"		},

@@ -132,8 +132,8 @@ void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 
 	AY8910Init(0, 1789772, nBurnSoundRate, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
 	AY8910Init(1, 1789772, nBurnSoundRate,NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.60, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);

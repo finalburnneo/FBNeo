@@ -324,6 +324,7 @@ static INT32 DrvInit()
 	M6809Close();
 
 	TimepltSndInit(DrvZ80ROM, DrvZ80RAM, 0);
+	TimepltSndSrcGain(0.55); // quench distortion when enemy spawns
 
 	GenericTilesInit();
 

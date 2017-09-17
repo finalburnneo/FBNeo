@@ -1472,57 +1472,6 @@ struct BurnDriver BurnDrvBbustersu = {
 	256, 224, 4, 3
 };
 
-// Beast Busters (Japan, Version 2)
-
-static struct BurnRomInfo bbustersjRomDesc[] = {
-	{ "bb3_ver2_j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bb5_ver2_j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
-
-	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
-
-	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
-
-	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
-	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
-	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
-	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
-
-	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
-	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
-	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
-	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
-
-	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
-
-	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
-
-	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
-	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
-	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
-	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
-
-	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
-
-	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
-
-	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
-};
-
-STD_ROM_PICK(bbustersj)
-STD_ROM_FN(bbustersj)
-
-struct BurnDriver BurnDrvBbustersj = {
-	"bbustersj", "bbusters", NULL, NULL, "1989",
-	"Beast Busters (Japan, Version 2)\0", NULL, "SNK", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
-	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
-	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
-	256, 224, 4, 3
-};
-
 // Beast Busters (US, Version 2)
 
 static struct BurnRomInfo bbustersuaRomDesc[] = {
@@ -1570,6 +1519,108 @@ struct BurnDriver BurnDrvBbustersua = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bbustersuaRomInfo, bbustersuaRomName, NULL, NULL, BbustersInputInfo, BbustersDIPInfo,
+	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
+	256, 224, 4, 3
+};
+
+// Beast Busters (Japan, Version 2, 2 Players)
+
+static struct BurnRomInfo bbustersjRomDesc[] = {
+	{ "bb3_ver2_j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb5_ver2_j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
+	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
+	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
+	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
+
+	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
+	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
+	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
+	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
+
+	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
+
+	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
+
+	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
+	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
+	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
+	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
+
+	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+
+	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
+};
+
+STD_ROM_PICK(bbustersj)
+STD_ROM_FN(bbustersj)
+
+struct BurnDriver BurnDrvBbustersj = {
+	"bbustersj", "bbusters", NULL, NULL, "1989",
+	"Beast Busters (Japan, Version 2, 2 Players)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
+	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
+	256, 224, 4, 3
+};
+
+// Beast Busters (Japan, Version 2, 3 Players)
+
+static struct BurnRomInfo bbustersjaRomDesc[] = {
+	{ "bb3_ver2_j3.k10",	0x20000, 0x6a1cd941, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb5_ver2_j3.k12",	0x20000, 0x7b180752, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bb-1.e6",			0x10000, 0x4360f2ee, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 code
+
+	{ "bb-10.l9",			0x20000, 0x490c0d9b, 3 | BRF_GRA },           //  5 Characters
+
+	{ "bb-f11.m16",			0x80000, 0x39fdf9c0, 4 | BRF_GRA },           //  6 Sprite Chip 0
+	{ "bb-f12.m13",			0x80000, 0x69ee046b, 4 | BRF_GRA },           //  7
+	{ "bb-f13.m12",			0x80000, 0xf5ef840e, 4 | BRF_GRA },           //  8
+	{ "bb-f14.m11",			0x80000, 0x1a7df3bb, 4 | BRF_GRA },           //  9
+
+	{ "bb-f21.l10",			0x80000, 0x530f595b, 5 | BRF_GRA },           // 10 Sprite Chip 1
+	{ "bb-f22.l12",			0x80000, 0x889c562e, 5 | BRF_GRA },           // 11
+	{ "bb-f23.l13",			0x80000, 0xc89fe0da, 5 | BRF_GRA },           // 12
+	{ "bb-f24.l15",			0x80000, 0xe0d81359, 5 | BRF_GRA },           // 13
+
+	{ "bb-back1.m4",		0x80000, 0xb5445313, 6 | BRF_GRA },           // 14 Background Tiles
+
+	{ "bb-back2.m6",		0x80000, 0x8be996f6, 7 | BRF_GRA },           // 15 Foreground Tiles
+
+	{ "bb-6.e7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 16 Zoom Tables
+	{ "bb-7.h7",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 17
+	{ "bb-8.a14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 18
+	{ "bb-9.c14",			0x10000, 0x61f3de03, 8 | BRF_GRA },           // 19
+
+	{ "bb-pcma.l5",			0x80000, 0x44cd5bfe, 9 | BRF_GRA },           // 20 YM2610 Samples
+
+	{ "bb-pcmb.l3",			0x80000, 0xc8d5dd53, 10 | BRF_GRA },          // 21 YM2610 Deltat Samples
+
+	{ "bbusters-eeprom.bin",0x00100, 0xa52ebd66, 11 | BRF_GRA },          // 22 EEPROM
+};
+
+STD_ROM_PICK(bbustersja)
+STD_ROM_FN(bbustersja)
+
+struct BurnDriver BurnDrvBbustersja = {
+	"bbustersja", "bbusters", NULL, NULL, "1989",
+	"Beast Busters (Japan, Version 2, 3 Players)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, bbustersjaRomInfo, bbustersjaRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
 	DrvInit, DrvExit, DrvFrame, BbustersDraw, DrvScan, &DrvRecalc, 0x600,
 	256, 224, 4, 3
 };

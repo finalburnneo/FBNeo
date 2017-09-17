@@ -700,10 +700,8 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 
 static void segae_drawtilesline(UINT8 *dest, int line, UINT8 chip, UINT8 pri)
 {
-	/* todo: fix vscrolling (or is it something else causing the glitch on the "game over" screen of hangonjr, seems to be ..  */
-
 	UINT8 hscroll;
-	UINT8 vscroll;
+	UINT8 vscroll, vscroll_line;
 	UINT16 tmbase;
 	UINT8 tilesline, tilesline2;
 	UINT8 coloffset, coloffset2;
@@ -711,13 +709,14 @@ static void segae_drawtilesline(UINT8 *dest, int line, UINT8 chip, UINT8 pri)
 
 	hscroll = (256-segae_vdp_regs[chip][8]);
 	vscroll = segae_vdp_regs[chip][9];
-	if (vscroll > 224) vscroll %= 224;
+	vscroll_line = (line + vscroll) % 224;
 
 	tmbase =  (segae_vdp_regs[chip][2] & 0x0e) << 10;
+	//tmbase =  ((segae_vdp_regs[chip][2]) << 10) & 0x3800; // if other vdp problems, try this instead
 	tmbase += (segae_vdp_vrambank[chip] * 0x4000);
 
-	tilesline = (line + vscroll) >> 3;
-	tilesline2= (line + vscroll) % 8;
+	tilesline = vscroll_line >> 3;
+	tilesline2= vscroll_line % 8;
 
 
 	coloffset = (hscroll >> 3);
@@ -741,7 +740,7 @@ static void segae_drawtilesline(UINT8 *dest, int line, UINT8 chip, UINT8 pri)
 		palette = (vram_word & 0x0800) >> 11;
 		priority= (vram_word & 0x1000) >> 12;
 
-		tilesline2= (line + vscroll) % 8;
+		tilesline2= vscroll_line % 8;
 		if (flipy) tilesline2 = 7-tilesline2;
 
 		if (priority == pri) {

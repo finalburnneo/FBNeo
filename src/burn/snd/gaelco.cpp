@@ -55,6 +55,9 @@ static UINT16 m_sndregs[0x38];
 
 static INT32 gaelcosnd_initted = 0;
 
+static INT32 gaelcosnd_mono = 0;
+static INT32 gaelcosnd_swap_lr = 0;
+
 static INT16 *sample_buffer;
 
 // Table for converting from 8 to 16 bits with volume control
@@ -152,13 +155,25 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 			output_r = BURN_SND_CLIP(output_r + ch_data_r);
 		}
 
-		sample_buffer[j*2+0] = BURN_SND_CLIP(output_l);
-		sample_buffer[j*2+1] = BURN_SND_CLIP(output_r);
+		if (gaelcosnd_mono) {
+			output_l = output_r + output_l;
+			output_r = output_l;
+			output_l = (INT32)(double)(output_l * 0.60); // wrally2 is too loud mono'd
+			output_r = (INT32)(double)(output_r * 0.60);
+		}
+
+		if (gaelcosnd_swap_lr) {
+			sample_buffer[j*2+1] = BURN_SND_CLIP(output_l);
+			sample_buffer[j*2+0] = BURN_SND_CLIP(output_r);
+		} else {
+			sample_buffer[j*2+0] = BURN_SND_CLIP(output_l);
+			sample_buffer[j*2+1] = BURN_SND_CLIP(output_r);
+		}
 	}
 
 	for (INT32 j = 0; j < samples; j++)
 	{
-		INT32 k = ((((8000000 / nBurnFPS) * (j & ~2)) / nBurnSoundLen)) / 10;
+		INT32 k = ((((8000000 / nBurnFPS) * (j&~2)) / nBurnSoundLen)) / 10;
 
 		outputs[0] = sample_buffer[k*2+0];
 		outputs[1] = sample_buffer[k*2+1];
@@ -238,6 +253,16 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 	gaelcosnd_initted = 1;
 }
 
+void gaelcosnd_monoize()
+{
+	gaelcosnd_mono = 1;
+}
+
+void gaelcosnd_swaplr()
+{
+	gaelcosnd_swap_lr = 1;
+}
+
 void gaelcosnd_exit()
 {
 	if (!gaelcosnd_initted) return;
@@ -245,6 +270,8 @@ void gaelcosnd_exit()
 	BurnFree(sample_buffer);
 	sample_buffer = NULL;
 	m_snd_data = NULL;
+	gaelcosnd_mono = 0;
+	gaelcosnd_swap_lr = 0;
 }
 
 void gaelcosnd_scan()

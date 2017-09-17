@@ -6,3 +6,5 @@ void    gaelcosnd_start(UINT8 *soundrom, int offs1, int offs2, int offs3, int of
 void    gaelcosnd_exit();
 void    gaelcosnd_scan();
 void    gaelcosnd_reset();
+void    gaelcosnd_monoize();
+void    gaelcosnd_swaplr();

@@ -1444,16 +1444,17 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 
 // Samurai Nihon-Ichi (set 1)
+// there's a protection device labeled B5 at location l3 on the main board
 
 static struct BurnRomInfo tsamuraiRomDesc[] = {
-	{ "01.3r",		0x4000, 0xd09c8609, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "02.3t",		0x4000, 0xd0f2221c, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "03.3v",		0x4000, 0xeee8b0c9, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "a35-01-1.3r",	0x4000, 0xd09c8609, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a35-02-1.3t",	0x4000, 0xd0f2221c, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a35.03-1.3v",	0x4000, 0xeee8b0c9, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "14.4e",		0x2000, 0x220e9c04, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "a35-14.4e",		0x2000, 0x220e9c04, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 	{ "a35-15.4c",		0x2000, 0x1e0d1e33, 2 | BRF_PRG | BRF_ESS }, //  4
 
-	{ "13.4j",		0x2000, 0x73feb0e2, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 #2 Code
+	{ "a35-13.4j",		0x2000, 0x73feb0e2, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 #2 Code
 
 	{ "a35-04.10a",		0x2000, 0xb97ce9b1, 4 | BRF_GRA },           //  6 Background Tiles
 	{ "a35-05.10b",		0x2000, 0x55a17b08, 4 | BRF_GRA },           //  7
@@ -1577,10 +1578,11 @@ struct BurnDriver BurnDrvTsamuraih = {
 };
 
 
-// Lady Master of Kung Fu
+// Lady Master of Kung Fu (set 1, newer)
+// there's a protection device labeled 6 at location l3 on the main board
 
 static struct BurnRomInfo ladymstrRomDesc[] = {
-	{ "a49-01-1.3r",	0x4000, 0xacbd0b64, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "a49-01-1.3r",	0x4000, 0xacbd0b64, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code // believed to be newer because of the -01 suffix
 	{ "a49-02.3t",		0x4000, 0xb0a9020b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "a49-03.3v",		0x4000, 0x641c94ed, 1 | BRF_PRG | BRF_ESS }, //  2
 
@@ -1611,10 +1613,54 @@ STD_ROM_FN(ladymstr)
 
 struct BurnDriver BurnDrvLadymstr = {
 	"ladymstr", NULL, NULL, NULL, "1985",
-	"Lady Master of Kung Fu\0", NULL, "Kaneko / Taito", "Miscellaneous",
+	"Lady Master of Kung Fu (set 1, newer)\0", NULL, "Kaneko / Taito", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
 	NULL, ladymstrRomInfo, ladymstrRomName, NULL, NULL, TsamuraiInputInfo, LadymstrDIPInfo,
+	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
+// Lady Master of Kung Fu (set 2, older)
+// there's a protection device labeled 6 at location l3 on the main board
+
+static struct BurnRomInfo ladymstr2RomDesc[] = {
+	{ "a49-01.3r",		0x4000, 0x8729e50e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code // believed to be newer because of the -01 suffix
+	{ "a49-02.3t",		0x4000, 0xb0a9020b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "a49-03.3v",		0x4000, 0x641c94ed, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "a49-14.4e",		0x2000, 0xd83a3c02, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "a49-15.4c",		0x2000, 0xd24ee5fd, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "a49-13.4j",		0x2000, 0x7942bd7c, 3 | BRF_PRG | BRF_ESS }, //  5 Z80 #2 Code
+
+	{ "a49-04.10a",		0x2000, 0x1fed96e6, 4 | BRF_GRA },           //  6 Background Tiles
+	{ "a49-05.10c",		0x2000, 0xe0fce676, 4 | BRF_GRA },           //  7
+	{ "a49-06.10d",		0x2000, 0xf895672e, 4 | BRF_GRA },           //  8
+
+	{ "a49-10.11n",		0x1000, 0xa7a361ba, 5 | BRF_GRA },           //  9 Foreground Tiles
+	{ "a49-11.11q",		0x1000, 0x801902e3, 5 | BRF_GRA },           // 10
+	{ "a49-12.11r",		0x1000, 0xcef75565, 5 | BRF_GRA },           // 11
+
+	{ "a49-07.12h",		0x4000, 0x8c749828, 6 | BRF_GRA },           // 12 Sprites
+	{ "a49-08.12j",		0x4000, 0x03c10aed, 6 | BRF_GRA },           // 13
+	{ "a49-09.12k",		0x4000, 0xf61316d2, 6 | BRF_GRA },           // 14
+
+	{ "a49-16.2j",		0x0100, 0xa7b077d4, 7 | BRF_GRA },           // 15 Color Proms
+	{ "a49-17.2l",		0x0100, 0x1c04c087, 7 | BRF_GRA },           // 16
+	{ "a49-18.2m",		0x0100, 0xf5ce3c45, 7 | BRF_GRA },           // 17
+};
+
+STD_ROM_PICK(ladymstr2)
+STD_ROM_FN(ladymstr2)
+
+struct BurnDriver BurnDrvLadymstr2 = {
+	"ladymstr2", "ladymstr", NULL, NULL, "1985",
+	"Lady Master of Kung Fu (set 2, older)\0", NULL, "Kaneko / Taito", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	NULL, ladymstr2RomInfo, ladymstr2RomName, NULL, NULL, TsamuraiInputInfo, LadymstrDIPInfo,
 	tsamuraiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
 };

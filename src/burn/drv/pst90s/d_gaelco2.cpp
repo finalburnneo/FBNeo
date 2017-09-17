@@ -38,7 +38,9 @@ static UINT32 snowboar_latch;
 
 static INT32 game_select = 0;
 static void (*pIRQCallback)(INT32 line);
-static UINT8 m_dual_monitor = 0;
+
+static INT32 bDualMonitor = 0;
+static INT32 wrally2_single = 0;
 static UINT32 gfxmask = ~0;
 static INT32 nCPUClockSpeed = 0;
 static INT32 global_y_offset = -16;
@@ -221,6 +223,39 @@ static struct BurnInputInfo BangInputList[] = {
 
 STDINPUTINFO(Bang)
 #undef A
+
+static struct BurnInputInfo Wrally2InputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 8,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+// placeholder for analog inputs
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 11,	"p1 fire 3"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"	},
+// placeholder for analog inputs
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 11,	"p2 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service 1",		BIT_DIGITAL,	DrvJoy4 + 8,	"service"	},
+	{"Service 2",		BIT_DIGITAL,	DrvJoy4 + 10,	"service"	},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy4 + 9,	"diag"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Wrally2)
 
 static struct BurnDIPInfo TouchgoDIPList[]=
 {
@@ -410,6 +445,72 @@ static struct BurnDIPInfo ManiacsqDIPList[]=
 };
 
 STDDIPINFO(Maniacsq)
+
+static struct BurnDIPInfo Wrally2DIPList[]=
+{
+	{0x16, 0xff, 0xff, 0xfd, NULL				},
+	{0x17, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x16, 0x01, 0x01, 0x01, "Off"				},
+	{0x16, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Coin mechanism"		},
+	{0x16, 0x01, 0x02, 0x00, "Common"			},
+	{0x16, 0x01, 0x02, 0x02, "Independent"			},
+	
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x16, 0x01, 0x04, 0x00, "Off"				},
+	{0x16, 0x01, 0x04, 0x04, "On"				},
+
+	{0   , 0xfe, 0   ,    1, "Cabinet 1 Controls"		},
+	//{0x16, 0x01, 0x08, 0x00, "Pot Wheel"			},
+	{0x16, 0x01, 0x08, 0x08, "Joystick"			},
+
+	{0   , 0xfe, 0   ,    1, "Cabinet 2 Controls"		},
+	//{0x16, 0x01, 0x10, 0x00, "Pot Wheel"			},
+	{0x16, 0x01, 0x10, 0x10, "Joystick"			},
+
+	{0   , 0xfe, 0   ,    2, "Monitors (change requires Restart!)"			},
+	{0x16, 0x01, 0x20, 0x00, "One"				},
+	{0x16, 0x01, 0x20, 0x20, "Two"				},
+	
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x16, 0x01, 0xc0, 0x40, "Easy"				},
+	{0x16, 0x01, 0xc0, 0xc0, "Normal"			},
+	{0x16, 0x01, 0xc0, 0x80, "Hard"				},
+	{0x16, 0x01, 0xc0, 0x00, "Hardest"			},
+
+	{0   , 0xfe, 0   ,    2, "Free Play"			},
+	{0x17, 0x01, 0x01, 0x01, "Off"				},
+	{0x17, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Credit configuration"		},
+	{0x17, 0x01, 0x02, 0x00, "Start 2C/Continue 1C"		},
+	{0x17, 0x01, 0x02, 0x02, "Start 1C/Continue 1C"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"			},
+	{0x17, 0x01, 0x1c, 0x18, "4 Coins 1 Credits"		},
+	{0x17, 0x01, 0x1c, 0x10, "3 Coins 1 Credits"		},
+	{0x17, 0x01, 0x1c, 0x08, "2 Coins 1 Credits"		},
+	{0x17, 0x01, 0x1c, 0x1c, "1 Coin  1 Credits"		},
+	{0x17, 0x01, 0x1c, 0x00, "2 Coins 3 Credits"		},
+	{0x17, 0x01, 0x1c, 0x0c, "1 Coin  2 Credits"		},
+	{0x17, 0x01, 0x1c, 0x14, "1 Coin  3 Credits"		},
+	{0x17, 0x01, 0x1c, 0x04, "1 Coin  4 Credits"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"			},
+	{0x17, 0x01, 0xe0, 0xc0, "4 Coins 1 Credits"		},
+	{0x17, 0x01, 0xe0, 0x80, "3 Coins 1 Credits"		},
+	{0x17, 0x01, 0xe0, 0x40, "2 Coins 1 Credits"		},
+	{0x17, 0x01, 0xe0, 0xe0, "1 Coin  1 Credits"		},
+	{0x17, 0x01, 0xe0, 0x00, "2 Coins 3 Credits"		},
+	{0x17, 0x01, 0xe0, 0x60, "1 Coin  2 Credits"		},
+	{0x17, 0x01, 0xe0, 0xa0, "1 Coin  3 Credits"		},
+	{0x17, 0x01, 0xe0, 0x20, "1 Coin  4 Credits"		},
+};
+
+STDDIPINFO(Wrally2)
 
 // Snowboard protection sim. engineered by Samuel Neves & Peter Wilhelmsen
 
@@ -675,6 +776,87 @@ static UINT16 __fastcall gaelco2_main_read_word(UINT32 address)
 	return 0;
 }
 
+static void  __fastcall wrally2_main_write_word(UINT32 address, UINT16 data)
+{
+	switch (address)
+	{
+		case 0x218004:
+		case 0x218006:
+		case 0x218008:
+			DrvVidRegs[(address - 0x218004) / 2] = data;
+		return;
+
+		case 0x400000:
+		case 0x400002:
+		case 0x400004:
+		case 0x400006:
+		case 0x400008:
+		case 0x40000a:
+		case 0x40000c:
+		case 0x40000e:
+		case 0x400010:
+			// coin counter (ignore for now)
+		return;
+
+		case 0x400028:
+			// wrally2_adc_clk
+		return;
+
+		case 0x400030:
+			// wrally2_adc_cs
+		return;
+	}
+}
+
+static void  __fastcall wrally2_main_write_byte(UINT32 address, UINT8 data)
+{
+	switch (address)
+	{
+		case 0x400029:
+			// adc_clk
+		return;
+
+		case 0x400031:
+			// adc_cs
+		return;
+	}
+
+	bprintf (0, _T("WB: %5.5x, %2.2x\n"), address, data);
+}
+
+static UINT16 __fastcall wrally2_main_read_word(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x300000: // in0,1,2,3
+		case 0x300002:
+		case 0x300004:
+		case 0x300006:
+			return DrvInputs[(address/2) & 3];
+	}
+
+	return 0;
+}
+
+static UINT8 __fastcall wrally2_main_read_byte(UINT32 address)
+{
+	switch (address)
+	{
+		case 0x300000:
+		case 0x300001:
+		case 0x300002:
+		case 0x300003:
+		case 0x300004:
+		case 0x300005:
+		case 0x300006:
+			return DrvInputs[(address/2) & 3] >> ((~address & 1) * 8);
+	}
+
+	bprintf (0, _T("RB: %5.5x\n"), address);
+
+	return 0;
+}
+
 static void __fastcall gaelco2_sound_write_byte(UINT32 address, UINT8 data)
 {
 	DrvSprRAM[(address & 0xffff) ^ 1] = data;
@@ -847,7 +1029,7 @@ static INT32 MemIndex()
 	DrvSprBuf		= Next; Next += 0x0010000;
 	DrvPalRAM		= Next; Next += 0x0002000;
 
-	DrvShareRAM 		= Next + 0x8000;
+	DrvShareRAM 	= Next; Next += 0x0008000;
 	Drv68KRAM		= Next; Next += 0x0020000;
 	Drv68KRAM2		= Next; Next += 0x0002000;
 
@@ -1051,6 +1233,35 @@ static INT32 DrvInit(INT32 game_selector)
 			gaelcosnd_start(DrvGfxROM0, 0 * 0x0200000, 1 * 0x0200000, 2 * 0x0200000, 3 * 0x0200000);
 		}
 		break;
+
+		case 7: // wrally2
+		{
+			if (BurnLoadRom(DrvMCUROM  + 0x000000,  2, 1)) return 1;
+
+			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x080000,  4, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x100000,  5, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x180000,  6, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x200000,  7, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x280000,  8, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x300000,  9, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x380000, 10, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x400000, 11, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x480000, 12, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x600000, 13, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x680000, 14, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x800000, 15, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM0 + 0x880000, 16, 1)) return 1;
+
+			DrvGfxDecode(0x0a00000);
+
+			nCPUClockSpeed = 13000000;
+			bDualMonitor = 1;
+
+			gaelcosnd_start(DrvGfxROM0, 0 * 0x0200000, 1 * 0x0200000, 0, 0);
+			gaelcosnd_swaplr(); // channels swapped in wrally2
+		}
+		break;
 	}
 
 	SekInit(0, 0x68000);
@@ -1059,12 +1270,20 @@ static INT32 DrvInit(INT32 game_selector)
 	SekMapMemory(DrvSprRAM,		0x200000, 0x20ffff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,		0x210000, 0x211fff, MAP_RAM);
 	SekMapMemory(Drv68KRAM2, 	0x212000, 0x213fff, MAP_RAM); // snowboard champ. extra ram
-	SekMapMemory(Drv68KRAM,		0xfe0000, 0xffffff, MAP_RAM);
+	SekMapMemory(Drv68KRAM,		0xfe0000, 0xfe7fff, MAP_RAM);
+	SekMapMemory(DrvShareRAM,	0xfe8000, 0xfeffff, MAP_RAM);
 
-	SekSetWriteWordHandler(0,	gaelco2_main_write_word);
-	SekSetWriteByteHandler(0,	gaelco2_main_write_byte);
-	SekSetReadWordHandler(0,	gaelco2_main_read_word);
-	SekSetReadByteHandler(0,	gaelco2_main_read_byte);
+	if (game_select != 7) {
+		SekSetWriteWordHandler(0,	gaelco2_main_write_word);
+		SekSetWriteByteHandler(0,	gaelco2_main_write_byte);
+		SekSetReadWordHandler(0,	gaelco2_main_read_word);
+		SekSetReadByteHandler(0,	gaelco2_main_read_byte);
+	} else {
+		SekSetWriteWordHandler(0,	wrally2_main_write_word);
+		SekSetWriteByteHandler(0,	wrally2_main_write_byte);
+		SekSetReadWordHandler(0,	wrally2_main_read_word);
+		SekSetReadByteHandler(0,	wrally2_main_read_byte);
+	}
 
 	SekMapHandler(1,		0x202800, 0x202bff, MAP_WRITE | MAP_READ);
 	SekSetWriteWordHandler(1,	gaelco2_sound_write_word);
@@ -1078,15 +1297,37 @@ static INT32 DrvInit(INT32 game_selector)
 	SekClose();
 
 	has_mcu = (DrvMCUROM[0] == 0x02) ? 1 : 0;
-//	bprintf (0, _T("Has MCU: %d\n"), has_mcu);
 
-	ds5002fp_init(0x19, 0, 0x80); // defaults
+	ds5002fp_init(((game_select == 7) ? 0x69 : 0x19), 0, 0x80); // defaults
 	mcs51_set_write_handler(dallas_sharedram_write);
 	mcs51_set_read_handler(dallas_sharedram_read);
 
 	EEPROMInit(&gaelco2_eeprom_interface);
 
 	GenericTilesInit();
+
+	if (game_select == 7) {
+		if ((DrvDips[0] & 0x20) == 0x00) { // Single Screen.
+			bprintf(0, _T("wrally2: single screen mode (hack).\n"));
+			wrally2_single = 1;
+			BurnDrvSetVisibleSize(384-16, 240);
+			BurnDrvSetAspect(4, 3);
+			Reinitialise();     // change window size w/ new size/settings
+			GenericTilesExit();
+			GenericTilesInit(); // recreate pTransDraw w/ new size
+
+			gaelcosnd_monoize(); // sound only comes out 1 speaker in single screen mode.
+		} else {
+			// Q: Why is this needed when the BurnDriver struct is set to 384*2, 240?
+			// A: BurnDrvSetVis* actually changes the value in the BurnDriver Struct.
+			bprintf(0, _T("wrally2: double screen mode.\n"));
+			BurnDrvSetVisibleSize(384*2, 240);
+			BurnDrvSetAspect(8, 3);
+			Reinitialise();
+			GenericTilesExit();
+			GenericTilesInit();
+		}
+	}
 
 	DrvDoReset();
 
@@ -1106,10 +1347,13 @@ static INT32 DrvExit()
 	if (game_select == 6)
 		BurnGunExit();
 
+	gaelcosnd_exit();
+
 	BurnFree (AllMem);
 
-	gaelcosnd_exit();
 	game_select = 0;
+	bDualMonitor = 0;
+	wrally2_single = 0;
 	has_mcu = 0;
 
 	return 0;
@@ -1122,6 +1366,10 @@ static void draw_layer(INT32 layer)
 	UINT16 *ram = (UINT16*)DrvSprRAM;
 
 	INT32 scrolly = (ram[(0x2800 + (layer * 4))/2] + 0x01 - global_y_offset) & 0x1ff;
+
+	INT32 xoffset = 0;
+
+	if (layer && bDualMonitor) xoffset = 384;
 
 	if ((DrvVidRegs[layer] & 0x8000) == 0)
 	{
@@ -1137,6 +1385,8 @@ static void draw_layer(INT32 layer)
 			sy -= scrolly;
 			if (sy < -15) sy += 512;
 
+			sx += xoffset;
+
 			if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
 			INT32 attr0 = ram[offset + (offs * 2) + 0];
@@ -1144,7 +1394,8 @@ static void draw_layer(INT32 layer)
 
 			INT32 code  = (attr1 + ((attr0 & 0x07) << 16)) & gfxmask;
 
-			INT32 color = (attr0 & 0xfe00) >> 9;
+			INT32 color = ((attr0 & 0xfe00) >> 9);
+			if (bDualMonitor) color = (color & 0x3f) | (layer ? 0x40 : 0);
 			INT32 flipx = (attr0 & 0x0080) ? 0xf : 0;
 			INT32 flipy = (attr0 & 0x0040) ? 0xf : 0;
 
@@ -1182,6 +1433,8 @@ static void draw_layer(INT32 layer)
 				}
 			}
 
+			scrollx -= xoffset;
+
 			UINT16 *dst = pTransDraw + sy * nScreenWidth;
 
 			for (INT32 sx = 0; sx < nScreenWidth + 16; sx += 16)
@@ -1196,7 +1449,9 @@ static void draw_layer(INT32 layer)
 
 				INT32 code  = (attr1 + ((attr0 & 0x07) << 16)) & gfxmask;
 
-				INT32 color = ((attr0 >> 9) & 0x7f) * 0x20;
+				INT32 color = ((attr0 >> 9) & 0x7f);
+				if (bDualMonitor) color = (color & 0x3f) | (layer ? 0x40 : 0);
+				color *= 0x20;
 				INT32 flipx = (attr0 & 0x80) ? 0xf : 0;
 				INT32 flipy = (attr0 & 0x40) ? 0xf : 0;
 
@@ -1215,7 +1470,7 @@ static void draw_layer(INT32 layer)
 	}
 }
 
-static void draw_sprites(INT32 mask, INT32 xoffs)
+static void draw_sprites(INT32 xoffs)
 {
 	UINT16 *buffered_spriteram16 = (UINT16*)DrvSprBuf;
 	int j, x, y, ex, ey, px, py;
@@ -1223,7 +1478,11 @@ static void draw_sprites(INT32 mask, INT32 xoffs)
 	INT32 start_offset = (DrvVidRegs[1] & 0x10)*0x100;
 	INT32 end_offset = start_offset + 0x1000;
 
-	INT32 spr_x_adjust = ((nScreenWidth-1) - 320 + 1) - (511 - 320 - 1) - ((DrvVidRegs[0] >> 4) & 0x01) + xoffs;
+	INT32 width = (nScreenWidth > 512) ? (nScreenWidth/2) : nScreenWidth;
+
+	if (wrally2_single) width = 384;
+
+	INT32 spr_x_adjust = ((width-1) - 320 + 1) - (511 - 320 - 1) - ((DrvVidRegs[0] >> 4) & 0x01) + xoffs;
 
 	for (j = start_offset; j < end_offset; j += 8)
 	{
@@ -1241,7 +1500,11 @@ static void draw_sprites(INT32 mask, INT32 xoffs)
 		int xsize = ((data3 >> 12) & 0x0f) + 1;
 		int ysize = ((data2 >> 12) & 0x0f) + 1;
 
-		if (m_dual_monitor && ((data & 0x8000) != mask)) continue;
+		INT32 screen = data >> 15;
+		if (screen && bDualMonitor) {
+			if (wrally2_single) continue;
+			sx += 384;
+		}
 
 		if ((data2 & 0x0200) != 0)
 		{
@@ -1252,26 +1515,42 @@ static void draw_sprites(INT32 mask, INT32 xoffs)
 					int data5 = buffered_spriteram16[((data4/2) + (y*xsize + x)) & 0x7fff];
 					int number = (((data & 0x1ff) << 10) + (data5 & 0x0fff)) & gfxmask;
 					int color = ((data >> 9) & 0x7f) + ((data5 >> 12) & 0x0f);
-					int color_effect = m_dual_monitor ? ((color & 0x3f) == 0x3f) : (color == 0x7f);
+					int color_effect = bDualMonitor ? ((color & 0x3f) == 0x3f) : (color == 0x7f);
 
 					ex = xflip ? (xsize - 1 - x) : x;
 					ey = yflip ? (ysize - 1 - y) : y;
 
 					if (color_effect == 0) // iq_132
 					{
+					// clip
+						INT32 xx = ((sx + ex*16) & 0x3ff) + spr_x_adjust;
+
+						if (bDualMonitor && !wrally2_single) {
+							if (screen) {
+								if (xx < ((nScreenWidth/2)-15) || xx >= nScreenWidth) continue;
+								GenericTilesSetClip(nScreenWidth/2, nScreenWidth, 0, nScreenHeight);
+							} else {
+								if (xx >= (nScreenWidth/2) || xx < -15) continue;
+								GenericTilesSetClip(0, nScreenWidth/2, 0, nScreenHeight);
+							}
+						}
+
 						if (yflip) {
 							if (xflip) {
-								Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, number, ((sx + ex*16) & 0x3ff) + spr_x_adjust, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
+								Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, number, xx, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
 							} else {
-								Render16x16Tile_Mask_FlipY_Clip(pTransDraw, number, ((sx + ex*16) & 0x3ff) + spr_x_adjust, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
+								Render16x16Tile_Mask_FlipY_Clip(pTransDraw, number, xx, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
 							}
 						} else {
 							if (xflip) {
-								Render16x16Tile_Mask_FlipX_Clip(pTransDraw, number, ((sx + ex*16) & 0x3ff) + spr_x_adjust, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
+								Render16x16Tile_Mask_FlipX_Clip(pTransDraw, number, xx, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
 							} else {
-								Render16x16Tile_Mask_Clip(pTransDraw, number, ((sx + ex*16) & 0x3ff) + spr_x_adjust, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
+								Render16x16Tile_Mask_Clip(pTransDraw, number, xx, ((sy + ey*16) & 0x1ff) + global_y_offset, color, 5, 0, 0, DrvGfxROM);
 							}
 						}
+
+						if (bDualMonitor) GenericTilesClearClip();
+
 					} else {
 						const UINT8 *gfx_src = DrvGfxROM + number * 0x100;
 
@@ -1308,6 +1587,36 @@ static void draw_sprites(INT32 mask, INT32 xoffs)
 	}
 }
 
+static INT32 DualDraw()
+{
+	if (DrvRecalc) {
+		for (INT32 i = 0; i < 0x2000; i+=2) {
+			palette_update(i);
+		}
+		DrvRecalc = 0;
+	}
+
+	BurnTransferClear();
+
+	if (wrally2_single) {
+		if (nBurnLayer & 1) draw_layer(0);
+	} else {
+		if (nBurnLayer & 1) draw_layer(1);
+
+		GenericTilesSetClip(0, nScreenWidth/2, 0, nScreenHeight);
+
+		if (nBurnLayer & 2) draw_layer(0);
+
+		GenericTilesClearClip();
+	}
+
+	if (nBurnLayer & 4) draw_sprites(0);
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -1321,7 +1630,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) draw_layer(1);
 	if (nBurnLayer & 2) draw_layer(0);
-	if (nBurnLayer & 4) draw_sprites(0,0);
+	if (nBurnLayer & 4) draw_sprites(0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1391,7 +1700,7 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	memcpy (DrvSprBuf, DrvSprRAM, 0x10000);
@@ -1423,6 +1732,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		if (game_select == 6)
 			BurnGunScan();
+
+		mcs51_scan(nAction);
 
 		SCAN_VAR(snowboar_latch);
 		SCAN_VAR(gun_interrupt);
@@ -1913,4 +2224,47 @@ struct BurnDriver BurnDrvBangj = {
 	NULL, bangjRomInfo, bangjRomName, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
+};
+
+
+// World Rally 2: Twin Racing
+
+static struct BurnRomInfo wrally2RomDesc[] = {
+	{ "wr2.64",		0x80000, 0x4cdf4e1e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "wr2.63",		0x80000, 0x94887c9f, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "wr2_dallas.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
+
+	{ "wr2.16d",		0x80000, 0xad26086b, 3 | BRF_GRA },           //  3 Graphics & Samples
+	{ "wr2.17d",		0x80000, 0xc1ec0745, 3 | BRF_GRA },           //  4
+	{ "wr2.18d",		0x80000, 0xe3617814, 3 | BRF_GRA },           //  5
+	{ "wr2.19d",		0x80000, 0x2dae988c, 3 | BRF_GRA },           //  6
+	{ "wr2.09d",		0x80000, 0x372d70c8, 3 | BRF_GRA },           //  7
+	{ "wr2.10d",		0x80000, 0x5db67eb3, 3 | BRF_GRA },           //  8
+	{ "wr2.11d",		0x80000, 0xae66b97c, 3 | BRF_GRA },           //  9
+	{ "wr2.12d",		0x80000, 0x6dbdaa95, 3 | BRF_GRA },           // 10
+	{ "wr2.01d",		0x80000, 0x753a138d, 3 | BRF_GRA },           // 11
+	{ "wr2.02d",		0x80000, 0x9c2a723c, 3 | BRF_GRA },           // 12
+	{ "wr2.20d",		0x80000, 0x4f7ade84, 3 | BRF_GRA },           // 13
+	{ "wr2.13d",		0x80000, 0xa4cd32f8, 3 | BRF_GRA },           // 14
+	{ "wr2.21d",		0x80000, 0x899b0583, 3 | BRF_GRA },           // 15
+	{ "wr2.14d",		0x80000, 0x6eb781d5, 3 | BRF_GRA },           // 16
+};
+
+STD_ROM_PICK(wrally2)
+STD_ROM_FN(wrally2)
+
+static INT32 wrally2Init()
+{
+	return DrvInit(7);
+}
+
+struct BurnDriver BurnDrvWrally2 = {
+	"wrally2", NULL, NULL, NULL, "1995",
+	"World Rally 2: Twin Racing\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	NULL, wrally2RomInfo, wrally2RomName, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
+	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	384*2, 240, 8, 3
 };

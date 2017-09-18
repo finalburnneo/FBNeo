@@ -1,9 +1,6 @@
 // FB Alpha Backfire! driver module
 // Based on MAME driver by David Haywood
 
-// Notes:
-//   1 / 2 screen autodetect disabled until it can be made to not crash.
-
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "ymz280b.h"
@@ -41,7 +38,7 @@ static UINT16 DrvInputs[3];
 static UINT8 DrvReset;
 
 static UINT32 *priority;
-static INT32 nPreviousDip;
+static INT32 single_screen = 0;
 
 static struct BurnInputInfo BackfireInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -72,6 +69,7 @@ static struct BurnInputInfo BackfireInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"service"	},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy3 + 3,	"diag"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -79,11 +77,11 @@ STDINPUTINFO(Backfire)
 
 static struct BurnDIPInfo BackfireDIPList[]=
 {
-	{0x1a, 0xff, 0xff, 0x08, NULL			},
+	{0x1b, 0xff, 0xff, 0x00, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x1a, 0x01, 0x08, 0x08, "Off"			},
-	{0x1a, 0x01, 0x08, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Screen Width"		},
+	{0x1b, 0x01, 0x01, 0x00, "Single"			},
+	{0x1b, 0x01, 0x01, 0x01, "Double"			},
 };
 
 STDDIPINFO(Backfire)
@@ -259,6 +257,24 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static void backfire_check_eeprominit()
+{
+	// eeprom settings: defaults & set to single screen mode
+	UINT8 BackfireNV[0x80] = {
+		0x49,0x46,0x45,0x52,0xb0,0x60,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x07,0x9d,
+		0x0f,0x1a,0x24,0x15,0x00,0x00,0x22,0x71,0x01,0x05,0x14,0x13,0x00,0x00,0x23,0x32,
+		0x04,0x01,0x10,0x01,0x00,0x00,0x22,0x43,0x09,0x0d,0x13,0x14,0x00,0x00,0x20,0x54,
+		0x01,0x04,0x01,0x14,0x00,0x00,0x24,0x25,0x09,0x17,0x0c,0x0c,0x00,0x00,0x22,0x76,
+		0x0f,0x1a,0x24,0x15,0x00,0x00,0x03,0x60,0x01,0x05,0x14,0x13,0x00,0x00,0x11,0x60,
+		0x04,0x01,0x10,0x01,0x00,0x00,0x11,0x20,0x09,0x0d,0x13,0x14,0x00,0x00,0x20,0x54,
+		0x01,0x04,0x01,0x14,0x00,0x00,0x05,0x50,0x09,0x17,0x0c,0x0c,0x00,0x00,0x11,0x30,
+		0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,0x00,
+	};
+
+	if (!EEPROMAvailable())
+		EEPROMFill(BackfireNV, 0, 128);
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -270,6 +286,8 @@ static INT32 DrvDoReset()
 	YMZ280BReset();
 
 	EEPROMReset();
+
+	backfire_check_eeprominit();
 
 	deco16Reset();
 
@@ -386,9 +404,28 @@ static INT32 DrvInit(UINT32 speedhack)
 	deco16_set_graphics(DrvGfxROM0, 0x800000, DrvGfxROM1, 0x800000, DrvGfxROM2, 0x200000);
 	deco16_set_global_offsets(0, 8);
 
-	GenericTilesInit();
+	if (DrvDips[0] & 1) { // double
+		//bprintf(0, _T("Double screen.\n"));
+		BurnDrvSetVisibleSize(640, 240);
+		BurnDrvSetAspect(8, 3);
+		Reinitialise();
+		GenericTilesInit(); // create pTransDraw w/ new size
+		DrvTmpBitmap0 = DrvTmpBitmap_p;
 
-	nPreviousDip = DrvDips[0] & 0x80;
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	} else {
+		//bprintf(0, _T("Single screen.\n"));
+		single_screen = 1;
+		BurnDrvSetVisibleSize(320, 240);
+		BurnDrvSetAspect(4, 3);
+		Reinitialise();
+		GenericTilesInit(); // create pTransDraw w/ new size
+		DrvTmpBitmap0 = pTransDraw;
+
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
+		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+	}
 
 	DrvDoReset();
 
@@ -409,6 +446,8 @@ static INT32 DrvExit()
 	deco16Exit();
 
 	BurnFree (AllMem);
+
+	single_screen = 0;
 
 	return 0;
 }
@@ -502,34 +541,12 @@ static void draw_sprites(UINT16 *dest, UINT8 *ram, UINT8 *gfx, INT32 coloff)
 
 static INT32 DrvDraw()
 {
-	/*
-	if ((ArmReadByte(0x170784) & 0x20) && !nPreviousDip) { // single screen
-		bprintf(0, _T("single.\n"));
-		DrvTmpBitmap0 = pTransDraw;
-		BurnDrvSetVisibleSize(320, 240);
-		BurnDrvSetAspect(4, 3);
-		Reinitialise();
-
-		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
-		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	} else if (!(ArmReadByte(0x170784) & 0x20) && nPreviousDip) { // two screens
-		bprintf(0, _T("double.\n"));
-		DrvTmpBitmap0 = DrvTmpBitmap_p;
-		BurnDrvSetVisibleSize(640, 240);
-		BurnDrvSetAspect(8, 3);
-		Reinitialise();
-
-		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-		YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-	}*/
-	nPreviousDip = (ArmReadByte(0x170784) & 0x20);
-
 	simpl156_palette_recalc();
 
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	if (nPreviousDip == 0) nScreenWidth = 320;
+	nScreenWidth = 320;
 
 	// left
 	{
@@ -551,7 +568,8 @@ static INT32 DrvDraw()
 	}
 
 	// right
-	if (nPreviousDip == 0) {
+	if (!single_screen)
+	{
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
 			DrvTmpBitmap1[i] = 0x500;
 		}
@@ -610,9 +628,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
 
-		DrvInputs[2] |= DrvDips[0] & 0x0008;
-
-		if (DrvDips[0] & 0x80) DrvInputs[1] |= 0x80;
+		DrvInputs[2] = (DrvInputs[2] & ~0x8) | ((DrvJoy3[3]^1) << 3);
 	}
 
 	INT32 nTotalCycles = 28000000 / 60;

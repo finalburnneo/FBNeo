@@ -7795,7 +7795,7 @@ M68KMAKE_OP(mull, 32, ., .)
 M68KMAKE_OP(nbcd, 8, ., d)
 {
 	uint* r_dst = &DY;
-	uint dst = *r_dst;
+	uint dst = MASK_OUT_ABOVE_8(*r_dst);
 	uint res = -dst - XFLAG_AS_1();
 
 	if(res != 0)

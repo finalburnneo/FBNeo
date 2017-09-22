@@ -1,9 +1,12 @@
 // based on MESS/MAME driver by David Haywood
 
+// Note: opaopa doesn't fully boot.  ideas?
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "sn76496.h"
 #include "bitswap.h"
+#include "mc8123.h"
 
 static UINT8 DrvJoy0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvJoy1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -28,6 +31,10 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvRAM;
 static UINT8 *DrvMainROM;
+static UINT8 *DrvMainROMFetch;
+
+static UINT8 *mc8123key;
+
 static UINT32 *DrvPalette;
 static UINT32 *Palette;
 static UINT8 *cache_bitmap;
@@ -35,6 +42,9 @@ static UINT8 *cache_bitmap;
 static UINT8 segae_8000bank;
 static UINT8 port_fa_last;
 static UINT8 rombank;
+
+static UINT8 mc8123 = 0; // enabled?
+static UINT8 mc8123_banked = 0; // enabled?
 
 static UINT8 hintcount;			/* line interrupt counter, decreased each scanline */
 UINT8 vintpending;
@@ -44,6 +54,8 @@ UINT8 hintpending;
 UINT8 currentLine = 0;
 
 UINT8 leftcolumnblank = 0; // most games need this, except tetris
+UINT8 leftcolumnblank_special = 0; // for fantzn2, move over the screen 16px
+UINT8 sprite_bug = 0; // for fantzn2 & ridleofp
 
 #define CHIPS 2							/* There are 2 VDP Chips */
 
@@ -75,42 +87,71 @@ static struct BurnInputInfo TransfrmInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service",		BIT_DIGITAL,	DrvJoy0 + 3,	"service"},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy0 + 2,	"diag"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
 };
 STDINPUTINFO(Transfrm)
 
+static struct BurnInputInfo Segae2pInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy0 + 0,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy0 + 6,	"p1 start"},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy0 + 1,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy0 + 7,	"p2 start"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service",		BIT_DIGITAL,	DrvJoy0 + 3,	"service"},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy0 + 2,	"diag"},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+};
+
+STDINPUTINFO(Segae2p)
+
 
 static struct BurnDIPInfo TransfrmDIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0xff, NULL		},
-	{0x0d, 0xff, 0xff, 0xfc, NULL		},
+	{0x0d, 0xff, 0xff, 0xff, NULL		},
+	{0x0e, 0xff, 0xff, 0xfc, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "1 Player Only"		},
-	{0x0d, 0x01, 0x01, 0x00, "Off"		},
-	{0x0d, 0x01, 0x01, 0x01, "On"		},
+	{0x0e, 0x01, 0x01, 0x00, "Off"		},
+	{0x0e, 0x01, 0x01, 0x01, "On"		},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x0d, 0x01, 0x02, 0x02, "Off"		},
-	{0x0d, 0x01, 0x02, 0x00, "On"		},
+	{0x0e, 0x01, 0x02, 0x02, "Off"		},
+	{0x0e, 0x01, 0x02, 0x00, "On"		},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x0d, 0x01, 0x0c, 0x0c, "3"		},
-	{0x0d, 0x01, 0x0c, 0x08, "4"		},
-	{0x0d, 0x01, 0x0c, 0x04, "5"		},
-	{0x0d, 0x01, 0x0c, 0x00, "Infinite (Cheat)"		},
+	{0x0e, 0x01, 0x0c, 0x0c, "3"		},
+	{0x0e, 0x01, 0x0c, 0x08, "4"		},
+	{0x0e, 0x01, 0x0c, 0x04, "5"		},
+	{0x0e, 0x01, 0x0c, 0x00, "Infinite (Cheat)"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
-	{0x0d, 0x01, 0x30, 0x20, "10k, 30k, 50k and 70k"		},
-	{0x0d, 0x01, 0x30, 0x30, "20k, 60k, 100k and 140k"		},
-	{0x0d, 0x01, 0x30, 0x10, "30k, 80k, 130k and 180k"		},
-	{0x0d, 0x01, 0x30, 0x00, "50k, 150k and 250k"		},
+	{0x0e, 0x01, 0x30, 0x20, "10k, 30k, 50k and 70k"		},
+	{0x0e, 0x01, 0x30, 0x30, "20k, 60k, 100k and 140k"		},
+	{0x0e, 0x01, 0x30, 0x10, "30k, 80k, 130k and 180k"		},
+	{0x0e, 0x01, 0x30, 0x00, "50k, 150k and 250k"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x0d, 0x01, 0xc0, 0x40, "Easy"		},
-	{0x0d, 0x01, 0xc0, 0xc0, "Medium"		},
-	{0x0d, 0x01, 0xc0, 0x80, "Hard"		},
-	{0x0d, 0x01, 0xc0, 0x00, "Hardest"		},
+	{0x0e, 0x01, 0xc0, 0x40, "Easy"		},
+	{0x0e, 0x01, 0xc0, 0xc0, "Medium"		},
+	{0x0e, 0x01, 0xc0, 0x80, "Hard"		},
+	{0x0e, 0x01, 0xc0, 0x00, "Hardest"		},
 };
 
 STDDIPINFO(Transfrm)
@@ -198,9 +239,69 @@ static struct BurnDIPInfo TetrisseDIPList[]=
 };
 STDDIPINFO(Tetrisse)
 
+static struct BurnDIPInfo Fantzn2DIPList[]=
+{
+	{0x0d, 0xff, 0xff, 0xff, NULL		}, // coinage (missing for now)
+	{0x0e, 0xff, 0xff, 0xfc, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0e, 0x01, 0x02, 0x02, "Off"		},
+	{0x0e, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0e, 0x01, 0x0c, 0x00, "2"		},
+	{0x0e, 0x01, 0x0c, 0x0c, "3"		},
+	{0x0e, 0x01, 0x0c, 0x08, "4"		},
+	{0x0e, 0x01, 0x0c, 0x04, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Timer"		},
+	{0x0e, 0x01, 0x30, 0x20, "90"		},
+	{0x0e, 0x01, 0x30, 0x30, "80"		},
+	{0x0e, 0x01, 0x30, 0x10, "70"		},
+	{0x0e, 0x01, 0x30, 0x00, "60"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x0e, 0x01, 0xc0, 0x80, "Easy"		},
+	{0x0e, 0x01, 0xc0, 0xc0, "Normal"		},
+	{0x0e, 0x01, 0xc0, 0x40, "Hard"		},
+	{0x0e, 0x01, 0xc0, 0x00, "Hardest"		},
+};
+
+STDDIPINFO(Fantzn2)
+
+static struct BurnDIPInfo OpaopaDIPList[]=
+{
+	{0x13, 0xff, 0xff, 0xff, NULL		}, // coinage defs.
+	{0x14, 0xff, 0xff, 0xfc, NULL		},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x14, 0x01, 0x02, 0x02, "Off"		},
+	{0x14, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x14, 0x01, 0x0c, 0x00, "2"		},
+	{0x14, 0x01, 0x0c, 0x0c, "3"		},
+	{0x14, 0x01, 0x0c, 0x08, "4"		},
+	{0x14, 0x01, 0x0c, 0x04, "5"		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x14, 0x01, 0x30, 0x20, "25k, 45k and 70k"		},
+	{0x14, 0x01, 0x30, 0x30, "40k, 60k and 90k"		},
+	{0x14, 0x01, 0x30, 0x10, "50k and 90k"		},
+	{0x14, 0x01, 0x30, 0x00, "None"		},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x14, 0x01, 0xc0, 0x80, "Easy"		},
+	{0x14, 0x01, 0xc0, 0xc0, "Normal"		},
+	{0x14, 0x01, 0xc0, 0x40, "Hard"		},
+	{0x14, 0x01, 0xc0, 0x00, "Hardest"		},
+};
+
+STDDIPINFO(Opaopa)
+
 static UINT8 __fastcall systeme_main_read(UINT16 address)
 {
-//	bprintf(0, _T("systeme_main_read adr %X.\n"), address);
+	bprintf(0, _T("systeme_main_read adr %X.\n"), address);
 
 	return 0;
 }
@@ -263,7 +364,13 @@ static inline void __fastcall hangonjr_port_fa_write (UINT8 data)
 
 static void segae_bankswitch (void)
 {
-	ZetMapMemory(DrvMainROM + 0x10000 + ( rombank * 0x4000), 0x8000, 0xbfff, MAP_ROM);
+	UINT32 bankloc = 0x10000 + rombank * 0x4000;
+
+	ZetMapArea(0x8000, 0xbfff, 0, DrvMainROM + bankloc); // read
+	ZetMapArea(0x8000, 0xbfff, 2, DrvMainROM + bankloc); // read
+	if (mc8123_banked) {
+		ZetMapArea(0x8000, 0xbfff, 2, DrvMainROMFetch + bankloc, DrvMainROM + bankloc); // fetch ops(encrypted), opargs(unencrypted)
+	}
 }
 
 static void __fastcall bank_write(UINT8 data)
@@ -284,6 +391,20 @@ static void segae_vdp_setregister ( UINT8 chip, UINT16 cmd )
 	regdata   = (cmd & 0x00ff);
 	if (regnumber < 11) {
 		segae_vdp_regs[chip][regnumber] = regdata;
+		if (regnumber == 1 && chip == 1) {
+			if ((segae_vdp_regs[chip][0x1]&0x20) && vintpending) {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			} else {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			}
+		}
+		if (regnumber == 0 && chip == 1) {
+			if ((segae_vdp_regs[chip][0x0]&0x10) && hintpending) { // dink
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			} else {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			}
+		}
 	} else {
 		/* Illegal, there aren't this many registers! */
 	}
@@ -358,6 +479,8 @@ static UINT8 segae_vdp_reg_r ( UINT8 chip )
 	temp |= (vintpending << 7);
 	temp |= (hintpending << 6);
 
+	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+
 	hintpending = vintpending = 0;
 
 	return temp;
@@ -393,7 +516,7 @@ static void segae_vdp_data_w ( UINT8 chip, UINT8 data )
 
 		segae_vdp_accessaddr[chip] += 1;
 		segae_vdp_accessaddr[chip] &= 0x1f;
-	} else { /* VRAM Accesses */
+	} else if (segae_vdp_accessmode[chip]==0x01) { /* VRAM Accesses */
 		segae_vdp_vram[chip][ segae_vdp_vrambank[chip]*0x4000 + segae_vdp_accessaddr[chip] ] = data;
 		segae_vdp_accessaddr[chip] += 1;
 		segae_vdp_accessaddr[chip] &= 0x3fff;
@@ -433,12 +556,12 @@ static UINT8 __fastcall systeme_main_in(UINT16 port)
 
 		case 0xe0: return 0xff - DrvInput[0];
 		case 0xe1: return 0xff - DrvInput[1];
-//		case 0xe2: return input_r(port); // AM_RANGE(0xe2, 0xe2) AM_READ_PORT( "e2" )
-		case 0xf2: return DrvDip[0];//input_r(port); // AM_RANGE(0xf2, 0xf2) AM_READ_PORT( "f2" ) /* DSW0 */
-		case 0xf3: return DrvDip[1];//input_r(port); // AM_RANGE(0xf3, 0xf3) AM_READ_PORT( "f3" ) /* DSW1 */
-		case 0xf8: return hangonjr_port_f8_read(port); // m_maincpu->space(AS_IO).install_read_handler(0xf8, 0xf8, read8_delegate(FUNC(systeme_state::hangonjr_port_f8_read), this));
+		case 0xe2: return 0xff - DrvInput[2];
+		case 0xf2: return DrvDip[0];
+		case 0xf3: return DrvDip[1];
+		case 0xf8: return hangonjr_port_f8_read(port);
 	}	
-	////bprintf(PRINT_NORMAL, _T("IO Read %x\n"), a);
+	bprintf(PRINT_NORMAL, _T("IO Read %x\n"), port);
 	return 0;
 }
 
@@ -447,37 +570,41 @@ static void __fastcall systeme_main_out(UINT16 port, UINT8 data)
 	switch (port & 0xff)
 	{
 		case 0x7b: SN76496Write(0, data);
-		break;
+		return;
 
 		case 0x7f: SN76496Write(1, data);
-		break;
+		return;
 
 		case 0xba: segae_vdp_data_w(0, data);
-		break;
+		return;
 
 		case 0xbb: segae_vdp_reg_w(0, data);
-		break;
+		return;
 
 		case 0xbe: segae_vdp_data_w(1, data);
-		break;
+		return;
 
 		case 0xbf:	segae_vdp_reg_w(1, data);
-		break;
+		return;
 
 		case 0xf7:	bank_write(data);
-		break;
+		return;
 
 		case 0xfa:	hangonjr_port_fa_write(data);
-		break;
+		return;
 	}
+	bprintf(PRINT_NORMAL, _T("IO Write %x %X\n"), port, data);
 }
 
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainROM	 	    = Next; Next += 0x40000;
-	
+	DrvMainROM	 	    = Next; Next += 0x80000;
+	DrvMainROMFetch     = Next; Next += 0x80000;
+
+	mc8123key           = Next; Next += 0x02000;
+
 	AllRam				= Next;
 	DrvRAM			    = Next; Next += 0x10000;
 
@@ -510,6 +637,10 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	leftcolumnblank = 0;
+	leftcolumnblank_special = 0;
+	sprite_bug = 0;
+	mc8123 = 0;
+	mc8123_banked = 0;
 
 	return 0;
 }
@@ -518,6 +649,7 @@ static INT32 DrvDoReset()
 {
 	memset (DrvRAM, 0, RamEnd - DrvRAM);
 
+	rombank = 0;
 	hintcount = 0;
 	vintpending = 0;
 	hintpending = 0;
@@ -623,8 +755,7 @@ static void segae_draw8pix(UINT8 *dest, UINT8 chip, UINT16 tile, UINT8 line, UIN
 
 static void segae_draw8pixsprite(UINT8 *dest, UINT8 chip, UINT16 tile, UINT8 line)
 {
-
-	UINT32 pix8 = *(UINT32 *)&segae_vdp_vram[chip][(32)*tile + (4)*line + (0x4000) * segae_vdp_vrambank[chip]];
+	UINT32 pix8 = *(UINT32 *)&segae_vdp_vram[chip][(((32)*tile + (4)*line)&0x3fff) + (0x4000) * segae_vdp_vrambank[chip]];
 	UINT8  pix;
 
 	if (!pix8) return; /*note only the colour 0 of each vdp is transparent NOT colour 16, fixes sky in HangonJr */
@@ -650,6 +781,14 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 	UINT16 spritebase;
 
 	nosprites = 0;
+	if (segae_vdp_regs[chip][1] & 0x1) {
+		bprintf(0, _T("double-size spr. not supported. "));
+		return;
+	}
+   /* if (segae_vdp_regs[chip][1] & 0x2) {
+		bprintf(0, _T("8x16 spr. not supported. "));
+		return;
+	}*/
 
 	spritebase =  (segae_vdp_regs[chip][5] & 0x7e) << 7;
 	spritebase += (segae_vdp_vrambank[chip] * 0x4000);
@@ -668,7 +807,8 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 	}
 
 //	if (!strcmp(Machine->gamedrv->name,"ridleofp")) nosprites = 63; /* why, there must be a bug elsewhere i guess ?! */
-
+	if (sprite_bug)
+		nosprites = 63;
 	/*- draw sprites IN REVERSE ORDER -*/
 
 	for (loopcount = nosprites; loopcount >= 0;loopcount--) {
@@ -681,7 +821,7 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 
 		if ( (line >= ypos) && (line < ypos+sheight) ) {
 			int xpos;
-			UINT8 sprnum;
+			UINT16 sprnum;
 			UINT8 spline;
 
 			spline = line - ypos;
@@ -690,7 +830,9 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 			sprnum = segae_vdp_vram[chip][spritebase+0x81+ (2*loopcount)];
 
 			if (segae_vdp_regs[chip][6] & 0x04)
-				sprnum += 0x100;
+				sprnum |= 0x100;
+			if (segae_vdp_regs[chip][1] & 0x02)
+				sprnum &= 0x01FE;
 
 			segae_draw8pixsprite(dest+xpos, chip, sprnum, spline);
 
@@ -753,28 +895,29 @@ static void segae_drawtilesline(UINT8 *dest, int line, UINT8 chip, UINT8 pri)
 
 static void segae_drawscanline(int line)
 {
-	UINT8* dest;
-
-	dest = cache_bitmap + (16+256+16) * line;
+	UINT8 *dest = cache_bitmap + (16+256+16) * line;
+	UINT32 offset = (leftcolumnblank_special) ? 0 : 16;
 
 	/* This should be cleared to bg colour, but which vdp determines that !, neither seems to be right, maybe its always the same col? */
 	memset(dest, 0, 16+256+16);
 
-	if (segae_vdp_regs[0][1] & 0x40) {
-		segae_drawtilesline (dest+16, line, 0,0);
-		segae_drawspriteline(dest+16, 0, line);
-		segae_drawtilesline (dest+16, line, 0,1);
+	if (segae_vdp_regs[0][1] & 0x40 && nBurnLayer & 1)
+	{
+		segae_drawtilesline (dest+offset, line, 0,0);
+		segae_drawspriteline(dest+offset, 0, line);
+		segae_drawtilesline (dest+offset, line, 0,1);
 	}
 
 	{
-		if (segae_vdp_regs[1][1] & 0x40) {
-			segae_drawtilesline (dest+16, line, 1,0);
-			segae_drawspriteline(dest+16, 1, line);
-			segae_drawtilesline (dest+16, line, 1,1);
+		if (segae_vdp_regs[1][1] & 0x40 && nBurnLayer & 2)
+		{
+			segae_drawtilesline (dest+offset, line, 1,0);
+			segae_drawspriteline(dest+offset, 1, line);
+			segae_drawtilesline (dest+offset, line, 1,1);
 		}
 	}
 
-	if (leftcolumnblank) memset(dest+16, 32+16, 8); /* Clear Leftmost column, there should be a register for this like on the SMS i imagine    */
+	if (leftcolumnblank && !leftcolumnblank_special) memset(dest+16, 32+16, 8); /* Clear Leftmost column, there should be a register for this like on the SMS i imagine    */
 							   			  /* on the SMS this is bit 5 of register 0 (according to CMD's SMS docs) for system E this  */
 							   			  /* appears to be incorrect, most games need it blanked 99% of the time so we blank it      */
 
@@ -825,8 +968,10 @@ static void segae_interrupt ()
 			hintpending = 1;
 
 			if  ((segae_vdp_regs[1][0] & 0x10)) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 				return;
+			} else {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 
 		} else {
@@ -838,7 +983,11 @@ static void segae_interrupt ()
 		hintcount = segae_vdp_regs[1][10];
 
 		if ( (currentLine<0xe0) && (vintpending) ) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			if (segae_vdp_regs[1][0x1]&0x20) {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			} else {
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			}
 		}
 	}
 }
@@ -892,20 +1041,53 @@ static INT32 DrvInit(UINT8 game)
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;	// ( "rom5.ic7",   0x00000, 0x08000, CRC(d63925a7) SHA1(699f222d9712fa42651c753fe75d7b60e016d3ad) ) /* Fixed Code */
-	if (BurnLoadRom(DrvMainROM + 0x10000,  1, 1)) return 1;	// ( "rom4.ic5",   0x10000, 0x08000, CRC(ee3caab3) SHA1(f583cf92c579d1ca235e8b300e256ba58a04dc90) )
-	if (BurnLoadRom(DrvMainROM + 0x18000,  2, 1)) return 1;	// ( "rom3.ic4",   0x18000, 0x08000, CRC(d2ba9bc9) SHA1(85cf2a801883bf69f78134fc4d5075134f47dc03) )
+	switch (game) {
+		case 0:
+			if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;	// ( "rom5.ic7",   0x00000, 0x08000, CRC(d63925a7) SHA1(699f222d9712fa42651c753fe75d7b60e016d3ad) ) /* Fixed Code */
+			if (BurnLoadRom(DrvMainROM + 0x10000,  1, 1)) return 1;	// ( "rom4.ic5",   0x10000, 0x08000, CRC(ee3caab3) SHA1(f583cf92c579d1ca235e8b300e256ba58a04dc90) )
+			if (BurnLoadRom(DrvMainROM + 0x18000,  2, 1)) return 1;	// ( "rom3.ic4",   0x18000, 0x08000, CRC(d2ba9bc9) SHA1(85cf2a801883bf69f78134fc4d5075134f47dc03) )
+			break;
+		case 1:
+		case 2:
+			if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;	// ( "rom5.ic7",   0x00000, 0x08000, CRC(d63925a7) SHA1(699f222d9712fa42651c753fe75d7b60e016d3ad) ) /* Fixed Code */
+			if (BurnLoadRom(DrvMainROM + 0x10000,  1, 1)) return 1;	// ( "rom4.ic5",   0x10000, 0x08000, CRC(ee3caab3) SHA1(f583cf92c579d1ca235e8b300e256ba58a04dc90) )
+			if (BurnLoadRom(DrvMainROM + 0x18000,  2, 1)) return 1;	// ( "rom3.ic4",   0x18000, 0x08000, CRC(d2ba9bc9) SHA1(85cf2a801883bf69f78134fc4d5075134f47dc03) )
+			if (BurnLoadRom(DrvMainROM + 0x20000,  3, 1)) return 1;	// ( "rom2.ic3",   0x20000, 0x08000, CRC(e14da070) SHA1(f8781f65be5246a23c1f492905409775bbf82ea8) )
+			if (BurnLoadRom(DrvMainROM + 0x28000,  4, 1)) return 1; // ( "rom1.ic2",   0x28000, 0x08000, CRC(3810cbf5) SHA1(c8d5032522c0c903ab3d138f62406a66e14a5c69) )
+			break;
+		case 3: // fantzn2
+			if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x10000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x20000,  2, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x30000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x40000,  4, 1)) return 1;
+			if (BurnLoadRom(mc8123key  + 0x00000,  5, 1)) return 1;
+			mc8123_decrypt_rom(0, 0, DrvMainROM, DrvMainROMFetch, mc8123key);
+			mc8123 = 1;
 
-	if(game)
-	{
-		if (BurnLoadRom(DrvMainROM + 0x20000,  3, 1)) return 1;	// ( "rom2.ic3",   0x20000, 0x08000, CRC(e14da070) SHA1(f8781f65be5246a23c1f492905409775bbf82ea8) )
-		if (BurnLoadRom(DrvMainROM + 0x28000,  4, 1)) return 1; // ( "rom1.ic2",   0x28000, 0x08000, CRC(3810cbf5) SHA1(c8d5032522c0c903ab3d138f62406a66e14a5c69) )
+			break;
+		case 4: // opaopa
+			bprintf(0, _T("opaopa.\n"));
+			if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x10000,  1, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x18000,  2, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x20000,  3, 1)) return 1;
+			if (BurnLoadRom(DrvMainROM + 0x28000,  4, 1)) return 1;
+			if (BurnLoadRom(mc8123key  + 0x00000,  5, 1)) return 1;
+			mc8123_decrypt_rom(1, 16, DrvMainROM, DrvMainROMFetch, mc8123key);
+			mc8123 = 1;
+			mc8123_banked = 1;
+			break;
+
 	}
 
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvMainROM, 0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvRAM, 0xc000, 0xffff, MAP_RAM);
+	if (mc8123) {
+		ZetMapArea(0x0000, 0x7fff, 2, DrvMainROMFetch, DrvMainROM);
+	}
 
 	ZetSetWriteHandler(systeme_main_write);
 	ZetSetReadHandler(systeme_main_read);
@@ -1012,6 +1194,22 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
+static INT32 DrvFantzn2Init()
+{
+	leftcolumnblank = 1;
+	leftcolumnblank_special = 1;
+	sprite_bug = 1;
+
+	return DrvInit(3);
+}
+
+static INT32 DrvOpaopaInit()
+{
+	leftcolumnblank = 1;
+
+	return DrvInit(4);
+}
+
 static INT32 DrvTransfrmInit()
 {
 	leftcolumnblank = 1;
@@ -1073,7 +1271,7 @@ STD_ROM_FN(Transfrm)
 
 struct BurnDriver BurnDrvHangonjr = {
 	"hangonjr", NULL, NULL, NULL, "1985",
-	"Hang-On Jr.\0", "Graphics issues on the Game Over screen", "Sega", "System E",
+	"Hang-On Jr.\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, hangonjrRomInfo, hangonjrRomName, NULL, NULL, HangonjrInputInfo, HangonjrDIPInfo,
@@ -1100,3 +1298,56 @@ struct BurnDriver BurnDrvTransfrm = {
 	DrvTransfrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	256, 192, 4, 3
 };
+
+// Fantasy Zone II - The Tears of Opa-Opa (MC-8123, 317-0057)
+
+static struct BurnRomInfo fantzn2RomDesc[] = {
+	{ "epr-11416.ic7",	0x08000, 0x76db7b7b, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu (encr)
+	{ "epr-11415.ic5",	0x10000, 0x57b45681, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "epr-11413.ic3",	0x10000, 0xa231dc85, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "epr-11414.ic4",	0x10000, 0x6f7a9f5f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "epr-11412.ic2",	0x10000, 0xb14db5af, 1 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "317-0057.key",	0x02000, 0xee43d0f0, 2 | BRF_GRA },           //  5 key
+};
+
+STD_ROM_PICK(fantzn2)
+STD_ROM_FN(fantzn2)
+
+struct BurnDriver BurnDrvFantzn2 = {
+	"fantzn2", NULL, NULL, NULL, "1988",
+	"Fantasy Zone II - The Tears of Opa-Opa (MC-8123, 317-0057)\0", NULL, "Sega", "System E",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, fantzn2RomInfo, fantzn2RomName, NULL, NULL, TransfrmInputInfo, Fantzn2DIPInfo,
+	DrvFantzn2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	240, 192, 4, 3
+};
+
+
+// Opa Opa (MC-8123, 317-0042)
+
+static struct BurnRomInfo opaopaRomDesc[] = {
+	{ "epr-11054.ic7",	0x8000, 0x024b1244, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu  (encr)
+	{ "epr-11053.ic5",	0x8000, 0x6bc41d6e, 1 | BRF_PRG | BRF_ESS }, //  1          ""
+	{ "epr-11052.ic4",	0x8000, 0x395c1d0a, 1 | BRF_PRG | BRF_ESS }, //  2          ""
+	{ "epr-11051.ic3",	0x8000, 0x4ca132a2, 1 | BRF_PRG | BRF_ESS }, //  3          ""
+	{ "epr-11050.ic2",	0x8000, 0xa165e2ef, 1 | BRF_PRG | BRF_ESS }, //  4          ""
+
+	{ "317-0042.key",	0x2000, 0xd6312538, 2 | BRF_GRA },           //  5 key
+};
+
+STD_ROM_PICK(opaopa)
+STD_ROM_FN(opaopa)
+
+struct BurnDriver BurnDrvOpaopa = {
+	"opaopa", NULL, NULL, NULL, "1987",
+	"Opa Opa (MC-8123, 317-0042)\0", NULL, "Sega", "System E",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
+	DrvOpaopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	240, 192, 4, 3
+};
+
+

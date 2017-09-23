@@ -301,7 +301,7 @@ STDDIPINFO(Opaopa)
 
 static UINT8 __fastcall systeme_main_read(UINT16 address)
 {
-	bprintf(0, _T("systeme_main_read adr %X.\n"), address);
+	//bprintf(0, _T("systeme_main_read adr %X.\n"), address);
 
 	return 0;
 }
@@ -393,14 +393,14 @@ static void segae_vdp_setregister ( UINT8 chip, UINT16 cmd )
 		segae_vdp_regs[chip][regnumber] = regdata;
 		if (regnumber == 1 && chip == 1) {
 			if ((segae_vdp_regs[chip][0x1]&0x20) && vintpending) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
 		}
 		if (regnumber == 0 && chip == 1) {
 			if ((segae_vdp_regs[chip][0x0]&0x10) && hintpending) { // dink
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}
@@ -561,7 +561,7 @@ static UINT8 __fastcall systeme_main_in(UINT16 port)
 		case 0xf3: return DrvDip[1];
 		case 0xf8: return hangonjr_port_f8_read(port);
 	}	
-	bprintf(PRINT_NORMAL, _T("IO Read %x\n"), port);
+	//bprintf(PRINT_NORMAL, _T("IO Read %x\n"), port);
 	return 0;
 }
 
@@ -593,7 +593,7 @@ static void __fastcall systeme_main_out(UINT16 port, UINT8 data)
 		case 0xfa:	hangonjr_port_fa_write(data);
 		return;
 	}
-	bprintf(PRINT_NORMAL, _T("IO Write %x %X\n"), port, data);
+	//bprintf(PRINT_NORMAL, _T("IO Write %x %X\n"), port, data);
 }
 
 static INT32 MemIndex()
@@ -785,10 +785,6 @@ static void segae_drawspriteline(UINT8 *dest, UINT8 chip, UINT8 line)
 		bprintf(0, _T("double-size spr. not supported. "));
 		return;
 	}
-   /* if (segae_vdp_regs[chip][1] & 0x2) {
-		bprintf(0, _T("8x16 spr. not supported. "));
-		return;
-	}*/
 
 	spritebase =  (segae_vdp_regs[chip][5] & 0x7e) << 7;
 	spritebase += (segae_vdp_vrambank[chip] * 0x4000);
@@ -968,7 +964,7 @@ static void segae_interrupt ()
 			hintpending = 1;
 
 			if  ((segae_vdp_regs[1][0] & 0x10)) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				return;
 			} else {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
@@ -984,7 +980,7 @@ static void segae_interrupt ()
 
 		if ( (currentLine<0xe0) && (vintpending) ) {
 			if (segae_vdp_regs[1][0x1]&0x20) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
 				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			}

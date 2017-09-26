@@ -26,6 +26,8 @@ static inline UINT8 pal4bit(UINT8 bits)
 
 void TC0110PCRRecalcPalette()
 {
+	UINT16 Addr = TC0110PCRAddr[0];
+
 	for (INT32 i = 0; i < 0x1000; i++)
 	{
 		TC0110PCRWordWrite(0, 0, i); // latch
@@ -34,10 +36,13 @@ void TC0110PCRRecalcPalette()
 
 		TC0110PCRWordWrite(0, 1, pal); // write
 	}
+	TC0110PCRAddr[0] = Addr;
 }
 
 void TC0110PCRRecalcPaletteStep1()
 {
+	UINT16 Addr = TC0110PCRAddr[0];
+
 	for (INT32 i = 0; i < 0x1000; i++)
 	{
 		TC0110PCRStep1WordWrite(0, 0, i);
@@ -46,10 +51,13 @@ void TC0110PCRRecalcPaletteStep1()
 
 		TC0110PCRStep1WordWrite(0, 1, pal);
 	}
+	TC0110PCRAddr[0] = Addr;
 }
 
 void TC0110PCRRecalcPaletteStep1RBSwap()
 {
+	UINT16 Addr = TC0110PCRAddr[0];
+
 	for (INT32 i = 0; i < 0x1000; i++)
 	{
 		TC0110PCRStep1RBSwapWordWrite(0, 0, i);
@@ -58,10 +66,13 @@ void TC0110PCRRecalcPaletteStep1RBSwap()
 
 		TC0110PCRStep1RBSwapWordWrite(0, 1, pal);
 	}
+	TC0110PCRAddr[0] = Addr;
 }
 
 void TC0110PCRRecalcPaletteStep14rbg()
 {
+	UINT16 Addr = TC0110PCRAddr[0];
+
 	for (INT32 i = 0; i < 0x1000; i++)
 	{
 		TC0110PCRStep14rbgWordWrite(0, 0, i);
@@ -70,6 +81,7 @@ void TC0110PCRRecalcPaletteStep14rbg()
 
 		TC0110PCRStep14rbgWordWrite(0, 1, pal);
 	}
+	TC0110PCRAddr[0] = Addr;
 }
 
 UINT16 TC0110PCRWordRead(INT32 Chip)

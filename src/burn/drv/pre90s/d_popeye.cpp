@@ -1220,7 +1220,7 @@ static struct BurnRomInfo popeyejRomDesc[] = {
 	{ "TPP1-T.4A.82S123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
 	{ "TPP1-T.1A.82S123",	0x0020, 0xe950bea1, 4 | BRF_GRA }, 			 // 13
 	{ "TPP1-T.3A.82S129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
-	{ "TPP1-T.1A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
+	{ "TPP1-T.2A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
 	{ "TPP1-T.3J.82S129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
 };
 
@@ -1262,7 +1262,7 @@ static struct BurnRomInfo popeyejoRomDesc[] = {
 	{ "TPP1-T.4A.82S123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
 	{ "TPP1-T.1A.82S123",	0x0020, 0xe950bea1, 4 | BRF_GRA }, 			 // 13
 	{ "TPP1-T.3A.82S129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
-	{ "TPP1-T.1A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
+	{ "TPP1-T.2A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
 	{ "TPP1-T.3J.82S129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
 };
 

@@ -1243,9 +1243,9 @@ STD_ROM_FN(hangonjr)
 
 static struct BurnRomInfo TetrisseRomDesc[] = {
 
-	{ "epr12213.7", 0x8000, 0xef3c7a38, BRF_ESS | BRF_PRG }, // 0 maincpu
-	{ "epr12212.5", 0x8000, 0x28b550bf, BRF_ESS | BRF_PRG }, // 1
-	{ "epr12211.4", 0x8000, 0x5aa114e9, BRF_ESS | BRF_PRG }, // 2
+	{ "epr-12213.7", 0x8000, 0xef3c7a38, BRF_ESS | BRF_PRG }, // 0 maincpu
+	{ "epr-12212.5", 0x8000, 0x28b550bf, BRF_ESS | BRF_PRG }, // 1
+	{ "epr-12211.4", 0x8000, 0x5aa114e9, BRF_ESS | BRF_PRG }, // 2
 };
 
 STD_ROM_PICK(Tetrisse)
@@ -1255,10 +1255,10 @@ STD_ROM_FN(Tetrisse)
 
 static struct BurnRomInfo TransfrmRomDesc[] = {
 
-	{ "ic7.top", 0x8000, 0xccf1d123, BRF_ESS | BRF_PRG }, // 0 maincpu
+	{ "epr-7605.ic7", 0x8000, 0xccf1d123, BRF_ESS | BRF_PRG }, // 0 maincpu
 	{ "epr-7347.ic5", 0x8000, 0xdf0f639f, BRF_ESS | BRF_PRG }, // 1
 	{ "epr-7348.ic4", 0x8000, 0x0f38ea96, BRF_ESS | BRF_PRG }, // 2
-	{ "ic3.top", 0x8000, 0x9d485df6, BRF_ESS | BRF_PRG }, // 3
+	{ "epr-7606.ic3", 0x8000, 0x9d485df6, BRF_ESS | BRF_PRG }, // 3
 	{ "epr-7350.ic2", 0x8000, 0x0052165d, BRF_ESS | BRF_PRG }, // 4
 };
 

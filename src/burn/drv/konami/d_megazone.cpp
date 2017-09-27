@@ -831,11 +831,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 // Mega Zone (program code L)
 
 static struct BurnRomInfo megazoneRomDesc[] = {
-	{ "319_107.11h",	0x2000, 0x73b616ca, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "319_106.9h",		0x2000, 0x0ced03f9, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "319_105.8h",		0x2000, 0x9dc3b5a1, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "319_104.7h",		0x2000, 0x785b983d, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "319_103.6h",		0x2000, 0xa5318686, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "319_l07.11h",	0x2000, 0x73b616ca, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "319_l06.9h",		0x2000, 0x0ced03f9, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "319_l05.8h",		0x2000, 0x9dc3b5a1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "319_l04.7h",		0x2000, 0x785b983d, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "319_l03.6h",		0x2000, 0xa5318686, 1 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "319e02.6d",		0x2000, 0xd5d45edb, 2 | BRF_PRG | BRF_ESS }, //  5 Z80 Code
 

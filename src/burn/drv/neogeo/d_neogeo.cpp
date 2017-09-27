@@ -11738,7 +11738,7 @@ struct BurnDriver BurnDrvstakwin2 = {
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo shocktroRomDesc[] = {
-	{ "238-p1.p1",    0x100000, 0x5677456f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "238-pg1.p1",   0x100000, 0xefedf8dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "238-p2.sp2",   0x400000, 0x5b4a09c5, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "238-s1.s1",    0x020000, 0x1f95cedb, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -11776,7 +11776,7 @@ struct BurnDriver BurnDrvshocktro = {
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo shocktroaRomDesc[] = {
-	{ "238-pg1.p1",   0x100000, 0xefedf8dc, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "238-p1.p1",    0x100000, 0x5677456f, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	{ "238-p2.sp2",   0x400000, 0x5b4a09c5, 1 | BRF_ESS | BRF_PRG }, //  1 
 
 	{ "238-s1.s1",    0x020000, 0x1f95cedb, 2 | BRF_GRA },           //  2 Text layer tiles
@@ -12334,7 +12334,7 @@ struct BurnDriver BurnDrvdragonsh = {
 // Tecmo World Soccer '96
 /* MVS ONLY RELEASE */
 
-static struct BurnRomInfo tws96RomDesc[] = {
+static struct BurnRomInfo twsoc96RomDesc[] = {
 	{ "086-p1.p1",    0x100000, 0x03e20ab6, 1 | BRF_ESS | BRF_PRG }, //  0 68K code			/ mask rom TC538200
 
 	{ "086-s1.s1",    0x020000, 0x6f5e2b3a, 2 | BRF_GRA },           //  1 Text layer tiles / mask rom TC531000
@@ -12350,15 +12350,15 @@ static struct BurnRomInfo tws96RomDesc[] = {
 	{ "086-v2.v2",    0x200000, 0xb7eb05df, 5 | BRF_SND },           //  8 					/ mask rom TC5316200
 };
 
-STDROMPICKEXT(tws96, tws96, neogeo)
-STD_ROM_FN(tws96)
+STDROMPICKEXT(twsoc96, twsoc96, neogeo)
+STD_ROM_FN(twsoc96)
 
-struct BurnDriver BurnDrvtws96 = {
-	"tws96", NULL, "neogeo", NULL, "1996",
+struct BurnDriver BurnDrvtwsoc96 = {
+	"twsoc96", NULL, "neogeo", NULL, "1996",
 	"Tecmo World Soccer '96\0", NULL, "Tecmo", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSFOOTBALL, 0,
-	NULL, tws96RomInfo, tws96RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NULL, twsoc96RomInfo, twsoc96RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

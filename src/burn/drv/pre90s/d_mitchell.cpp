@@ -572,19 +572,23 @@ STD_ROM_PICK(Pkladiesl)
 STD_ROM_FN(Pkladiesl)
 
 static struct BurnRomInfo PkladieslaRomDesc[] = {
-	{ "05.14f",        0x08000, 0xfa18e16a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "06.15f",        0x10000, 0xa2fb7646, BRF_ESS | BRF_PRG }, //	 1
+	{ "pk05.14f",        0x08000, 0xfa18e16a, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "pk06.15f",        0x10000, 0xa2fb7646, BRF_ESS | BRF_PRG }, //	 1
 	
-	{ "pko-001.8h",    0x80000, 0x1ead5d9b, BRF_GRA },	     //  2	Characters
-	{ "pko-003.8j",    0x80000, 0x339ab4e6, BRF_GRA },	     //  3
-	{ "pko-002.9h",    0x80000, 0x1cf02586, BRF_GRA },	     //  4
-	{ "pko-004.9j",    0x80000, 0x09ccb442, BRF_GRA },	     //  5
+	{ "pk0-001-t18.8h",    0x80000, 0x1ead5d9b, BRF_GRA },	     //  2	Characters
+	{ "pk0-003-t20.8j",    0x80000, 0x339ab4e6, BRF_GRA },	     //  3
+	{ "pk0-002-t19.9h",    0x80000, 0x1cf02586, BRF_GRA },	     //  4
+	{ "pk0-004-t21.9j",    0x80000, 0x09ccb442, BRF_GRA },	     //  5
 	
-	{ "pko-chr1.2j",   0x20000, 0x31ce33cd, BRF_GRA },	     //  6	Sprites
-	{ "pko-chr2.3j",   0x20000, 0xad7e055f, BRF_GRA },	     //  7
+	{ "pk16.2j",   0x20000, 0x31ce33cd, BRF_GRA },	     //  6	Sprites
+	{ "pk17.3j",   0x20000, 0xad7e055f, BRF_GRA },	     //  7
 	
-	{ "pko-voi1.2d",   0x20000, 0x07e0f531, BRF_SND },	     //  8	Samples
-	{ "pko-voi2.3d",   0x20000, 0x18398bf6, BRF_SND },	     //  9
+	{ "pk01.2d",   0x20000, 0x07e0f531, BRF_SND },	     //  8	Samples
+	{ "pk02.3d",   0x20000, 0x18398bf6, BRF_SND },	     //  9
+	
+	{ "93c46.14a", 0x00080, 0x6856c4aa, BRF_OPT },
+	{ "epl16p8bp.pl-c4.5j", 0x00117, 0x6cae00f7, BRF_OPT },
+	{ "pal16l8cn.poker.10g", 0x00117, 0x8e592f22, BRF_OPT },
 };
 
 STD_ROM_PICK(Pkladiesla)

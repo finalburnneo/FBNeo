@@ -1085,7 +1085,7 @@ static struct BurnRomInfo BublboblpRomDesc[] = {
 	{ "maincpu.ic4",   		0x08000, 0x874ddd6c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "maincpu.ic5",   		0x08000, 0x588cc602, BRF_ESS | BRF_PRG }, //  1
 	
-	{ "slave.ic1",     		0x08000, 0xe8187e8f, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program 
+	{ "subcpu.ic1",    		0x08000, 0xe8187e8f, BRF_ESS | BRF_PRG }, //  2	Z80 #2 Program 
 	
 	{ "audiocpu.ic10",		0x08000, 0xc516c26e, BRF_ESS | BRF_PRG }, //  3	Z80 #3 Program 
 	
@@ -1104,7 +1104,7 @@ static struct BurnRomInfo BublboblpRomDesc[] = {
 	
 	{ "a71-25.ic41",   		0x00100, 0x2d0f8545, BRF_GRA },	     	  // 16	PROMs
 	
-	{ "a71-26.ic19",   		0x00117, 0x4e1f119c, BRF_OPT | BRF_NODUMP }, //  17	PLDs
+	{ "bublboblp.pal16l8.ic19",	0x00117, 0x4e1f119c, BRF_OPT }, //  17	PLDs
 };
 
 STD_ROM_PICK(Bublboblp)

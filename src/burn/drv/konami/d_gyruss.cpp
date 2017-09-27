@@ -1111,23 +1111,23 @@ struct BurnDriver BurnDrvGyruss = {
 // Gyruss (Centuri)
 
 static struct BurnRomInfo gyrussceRomDesc[] = {
-	{ "gya-1.bin",		0x2000, 0x85f8b7c2, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "gya-2.bin",		0x2000, 0x1e1a970f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gya-3.bin",		0x2000, 0xf6dbb33b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "gya-1.11j",		0x2000, 0x85f8b7c2, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "gya-2.12j",		0x2000, 0x1e1a970f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "gya-3.13j",		0x2000, 0xf6dbb33b, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "gyrussk.9",		0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
+	{ "gy-5.19e",		0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
 
-	{ "gyrussk.1a",		0x2000, 0xf4ae1c17, 3 | BRF_PRG | BRF_ESS }, //  4 Audio Z80 Code
-	{ "gyrussk.2a",		0x2000, 0xba498115, 3 | BRF_PRG | BRF_ESS }, //  5
+	{ "gy-11.7a",		0x2000, 0xf4ae1c17, 3 | BRF_PRG | BRF_ESS }, //  4 Audio Z80 Code
+	{ "gy-12.8a",		0x2000, 0xba498115, 3 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "gyrussk.3a",		0x1000, 0x3f9b5dea, 4 | BRF_PRG | BRF_ESS }, //  6 Audio i8039
+	{ "gy-13.11h",		0x1000, 0x3f9b5dea, 4 | BRF_PRG | BRF_ESS }, //  6 Audio i8039
 
-	{ "gyrussk.6",		0x2000, 0xc949db10, 5 | BRF_GRA },           //  7 Sprites
-	{ "gyrussk.5",		0x2000, 0x4f22411a, 5 | BRF_GRA },           //  8
-	{ "gyrussk.8",		0x2000, 0x47cd1fbc, 5 | BRF_GRA },           //  9
-	{ "gyrussk.7",		0x2000, 0x8e8d388c, 5 | BRF_GRA },           // 10
+	{ "gy-10.9d",		0x2000, 0xc949db10, 5 | BRF_GRA },           //  7 Sprites
+	{ "gy-9.8d",		0x2000, 0x4f22411a, 5 | BRF_GRA },           //  8
+	{ "gy-8.7d",		0x2000, 0x47cd1fbc, 5 | BRF_GRA },           //  9
+	{ "gy-7.6d",		0x2000, 0x8e8d388c, 5 | BRF_GRA },           // 10
 
-	{ "gyrussk.4",		0x2000, 0x27d8329b, 6 | BRF_GRA },           // 11 Background Tiles
+	{ "gy-6.1g",		0x2000, 0x27d8329b, 6 | BRF_GRA },           // 11 Background Tiles
 
 	{ "gyrussk.pr3",	0x0020, 0x98782db3, 7 | BRF_GRA },           // 12 Color Proms
 	{ "gyrussk.pr1",	0x0100, 0x7ed057de, 7 | BRF_GRA },           // 13
@@ -1151,23 +1151,23 @@ struct BurnDriver BurnDrvGyrussce = {
 // Gyruss (bootleg)
 
 static struct BurnRomInfo gyrussbRomDesc[] = {
-	{ "1.bin",			0x2000, 0x6bc21c10, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
-	{ "gyrussk.2",		0x2000, 0xa4ec03e4, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "gyrussk.3",		0x2000, 0x27454a98, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.bin",		0x2000, 0x6bc21c10, 1 | BRF_PRG | BRF_ESS }, //  0 Main Z80 Code
+	{ "2.bin",		0x2000, 0xa4ec03e4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",		0x2000, 0x27454a98, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "gyrussk.9",		0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
+	{ "9.bin",		0x2000, 0x822bf27e, 2 | BRF_PRG | BRF_ESS }, //  3 Sub M6809 Code
 
-	{ "gyrussk.1a",		0x2000, 0xf4ae1c17, 3 | BRF_PRG | BRF_ESS }, //  4 Audio Z80 Code
-	{ "gyrussk.2a",		0x2000, 0xba498115, 3 | BRF_PRG | BRF_ESS }, //  5
+	{ "11.bin",		0x2000, 0xf4ae1c17, 3 | BRF_PRG | BRF_ESS }, //  4 Audio Z80 Code
+	{ "12.bin",		0x2000, 0xba498115, 3 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "gyrussk.3a",		0x1000, 0x3f9b5dea, 4 | BRF_PRG | BRF_ESS }, //  6 Audio i8039
+	{ "13.bin",		0x1000, 0x3f9b5dea, 4 | BRF_PRG | BRF_ESS }, //  6 Audio i8039
 
-	{ "gyrussk.6",		0x2000, 0xc949db10, 5 | BRF_GRA },           //  7 Sprites
-	{ "gyrussk.5",		0x2000, 0x4f22411a, 5 | BRF_GRA },           //  8
-	{ "gyrussk.8",		0x2000, 0x47cd1fbc, 5 | BRF_GRA },           //  9
-	{ "gyrussk.7",		0x2000, 0x8e8d388c, 5 | BRF_GRA },           // 10
+	{ "6.bin",		0x2000, 0xc949db10, 5 | BRF_GRA },           //  7 Sprites
+	{ "5.bin",		0x2000, 0x4f22411a, 5 | BRF_GRA },           //  8
+	{ "8.bin",		0x2000, 0x47cd1fbc, 5 | BRF_GRA },           //  9
+	{ "7.bin",		0x2000, 0x8e8d388c, 5 | BRF_GRA },           // 10
 
-	{ "gyrussk.4",		0x2000, 0x27d8329b, 6 | BRF_GRA },           // 11 Background Tiles
+	{ "4.bin",		0x2000, 0x27d8329b, 6 | BRF_GRA },           // 11 Background Tiles
 
 	{ "gyrussk.pr3",	0x0020, 0x98782db3, 7 | BRF_GRA },           // 12 Color Proms
 	{ "gyrussk.pr1",	0x0100, 0x7ed057de, 7 | BRF_GRA },           // 13

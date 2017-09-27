@@ -7901,30 +7901,30 @@ struct BurnDriver BurnDrvArian = {
 // Fighting Golf (World?)
 
 static struct BurnRomInfo fitegolfRomDesc[] = {
-	{ "gu2",		0x04000, 0x19be7ad6, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "gu1",		0x08000, 0xbc32568f, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "gu2.4p",		0x04000, 0x19be7ad6, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "gu1.4m",		0x08000, 0xbc32568f, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "gu6",		0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
-	{ "gu5",		0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
+	{ "gu6.8p",		0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "gu5.8m",		0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "gu3",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
-	{ "gu4",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
+	{ "gu3.6g",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "gu4.6k",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "82s137.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
-	{ "82s137.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
-	{ "82s137.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
+	{ "3.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
+	{ "1.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
+	{ "2.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
 
-	{ "gu8",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      //  9 Text Characters
+	{ "gu8.2d",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      //  9 Text Characters
 
-	{ "gu7",		0x08000, 0x4655f94e, 6 | BRF_GRA },	      // 10 Background Characters
+	{ "gu7.2b",		0x08000, 0x4655f94e, 6 | BRF_GRA },	      // 10 Background Characters
 
-	{ "gu9",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      // 11 Sprites
-	{ "gu10",		0x08000, 0xb3acdac2, 9 | BRF_GRA },	      // 12
-	{ "gu11",		0x08000, 0xb99cf73b, 9 | BRF_GRA },	      // 13
+	{ "gu9.2p",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      // 11 Sprites
+	{ "gu10.2rs",	0x08000, 0xb3acdac2, 9 | BRF_GRA },	      // 12
+	{ "gu11.2t",	0x08000, 0xb99cf73b, 9 | BRF_GRA },	      // 13
 
-	{ "pal16r6a.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      // 14 PLDs
-	{ "pal16l8a.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      // 15
-	{ "pal20l8a.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      // 16
+	{ "a6001-1.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      // 14 PLDs
+	{ "a6001-3.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      // 15
+	{ "a6001-2.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      // 16
 };
 
 STD_ROM_PICK(fitegolf)
@@ -7944,30 +7944,30 @@ struct BurnDriver BurnDrvFitegolf = {
 // Fighting Golf (US)
 
 static struct BurnRomInfo fitegolfuRomDesc[] = {
-	{ "np45.128",		0x04000, 0x16e8e763, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
-	{ "mn45.256",		0x08000, 0xa4fa09d5, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "np45.4p",	0x04000, 0x16e8e763, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "mn45.4m",	0x08000, 0xa4fa09d5, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	{ "gu6",		0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
-	{ "gu5",		0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
+	{ "gu6.8p",		0x04000, 0x2b9978c5, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "gu5.8m",		0x08000, 0xea3d138c, 2 | BRF_ESS | BRF_PRG }, //  3
 
-	{ "gu3",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
-	{ "gu4",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
+	{ "gu3.6g",		0x04000, 0x811b87d7, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "gu4.6k",		0x08000, 0x2d998e2b, 3 | BRF_ESS | BRF_PRG }, //  5
 
-	{ "82s137.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
-	{ "82s137.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
-	{ "82s137.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
+	{ "3.2c",		0x00400, 0x6e4c7836, 14 | BRF_GRA },	      //  6 Color Data
+	{ "1.1b",		0x00400, 0x29e7986f, 14 | BRF_GRA },	      //  7
+	{ "2.1c",		0x00400, 0x27ba9ff9, 14 | BRF_GRA },	      //  8
 
-	{ "gu8",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      //  9 Text Characters
+	{ "gu8.2d",		0x04000, 0xf1628dcf, 4 | BRF_GRA },	      //  9 Text Characters
 
-	{ "gu7",		0x08000, 0x4655f94e, 6 | BRF_GRA },	      // 10 Background Characters
+	{ "gu7.2b",		0x08000, 0x4655f94e, 6 | BRF_GRA },	      // 10 Background Characters
 
-	{ "gu9",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      // 11 Sprites
-	{ "gu10",		0x08000, 0xb3acdac2, 9 | BRF_GRA },	      // 12
-	{ "gu11",		0x08000, 0xb99cf73b, 9 | BRF_GRA },	      // 13
+	{ "gu9.2p",		0x08000, 0xd4957ec5, 9 | BRF_GRA },	      // 11 Sprites
+	{ "gu10.2rs",	0x08000, 0xb3acdac2, 9 | BRF_GRA },	      // 12
+	{ "gu11.2t",	0x08000, 0xb99cf73b, 9 | BRF_GRA },	      // 13
 
-	{ "pal16r6a.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      // 14 PLDs
-	{ "pal16l8a.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      // 15
-	{ "pal20l8a.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      // 16
+	{ "a6001-1.6c",	0x00104, 0xde291f4e, 0 | BRF_OPT },	      // 14 PLDs
+	{ "a6001-3.3f",	0x00104, 0xc5f1c1da, 0 | BRF_OPT },	      // 15
+	{ "a6001-2.6r",	0x00144, 0x0f011673, 0 | BRF_OPT },	      // 16
 };
 
 STD_ROM_PICK(fitegolfu)

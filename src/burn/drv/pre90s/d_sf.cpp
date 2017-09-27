@@ -1810,8 +1810,8 @@ static struct BurnRomInfo sfwRomDesc[] = {
 
 	{ "sf-02.7k",  		0x08000, 0x4a9ac534, 2 | BRF_PRG | BRF_ESS }, //  6 Z80 #0 Code
 
-	{ "sf-00.1h",  		0x20000, 0x4b733845, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
-	{ "sf-01.1k",  		0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
+	{ "sfu-00.1h", 		0x20000, 0xa7cce903, 3 | BRF_PRG | BRF_ESS }, //  7 Z80 #1 Code
+	{ "sf-01.2k",  		0x20000, 0x86e0f0d5, 3 | BRF_PRG | BRF_ESS }, //  8
 
 	{ "sf-39.2k",  		0x20000, 0xcee3d292, 4 | BRF_GRA },           //  9 Background Tiles
 	{ "sf-38.1k",  		0x20000, 0x2ea99676, 4 | BRF_GRA },           // 10

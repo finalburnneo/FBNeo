@@ -2075,10 +2075,10 @@ struct BurnDriver BurnDrvExtrmatu = {
 // Extermination (US, Romstar)
 
 static struct BurnRomInfo extrmaturRomDesc[] = {
-	{ "b06_15",			0x10000, 0x4b3ee597, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "b06_16",			0x10000, 0x86175ea4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b06-15.11c",		0x10000, 0x4b3ee597, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "b06-16.9c",		0x10000, 0x86175ea4, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "b06_17",			0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "b06-17.4e",		0x10000, 0x744f2c84, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
 
 	{ "b06__14.1g",		0x00800, 0x28907072, 3 },        //  3 I8742 MCU
 

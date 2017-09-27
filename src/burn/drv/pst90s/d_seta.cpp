@@ -11316,25 +11316,25 @@ static INT32 jockeycFrame()
 // Jockey Club
 
 static struct BurnRomInfo jockeycRomDesc[] = {
-	{ "ya-007-002-u23.bin",	0x10000, 0xc499bf4d, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "ya-007-003-u33.bin",	0x10000, 0xe7b0677e, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "ya_002_001.u18",	0x80000, 0xdd108016, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "ya_007_002.u23",	0x10000, 0xc499bf4d, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ya_007_003.u33",	0x10000, 0xe7b0677e, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ya-002-001.u18",	0x80000, 0xdd108016, 0x01 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "ya_011_004.u10",	0x80000, 0xeb74d2e0, 0x03 | BRF_GRA },           //  3 Sprites
-	{ "ya_011_005.u17",	0x80000, 0x4a6c804b, 0x03 | BRF_GRA },           //  4
-	{ "ya_011_006.u22",	0x80000, 0xbfae01a5, 0x03 | BRF_GRA },           //  5
-	{ "ya_011_007.u27",	0x80000, 0x2dc7a294, 0x03 | BRF_GRA },           //  6
+	{ "ya-001-004-t74.u10",	0x80000, 0xeb74d2e0, 0x03 | BRF_GRA },           //  3 Sprites
+	{ "ya-001-005-t75.u17",	0x80000, 0x4a6c804b, 0x03 | BRF_GRA },           //  4
+	{ "ya-001-006-t76.u22",	0x80000, 0xbfae01a5, 0x03 | BRF_GRA },           //  5
+	{ "ya-001-007-t77.u27",	0x80000, 0x2dc7a294, 0x03 | BRF_GRA },           //  6
 
-	{ "ya_011_008.u35",	0x40000, 0x4b890f83, 0x04 | BRF_GRA },           //  7 Layer 1 tiles
-	{ "ya_011_009.u41",	0x40000, 0xcaa5e3c1, 0x04 | BRF_GRA },           //  8
+	{ "ya-001-008-t59.u35",	0x40000, 0x4b890f83, 0x04 | BRF_GRA },           //  7 Layer 1 tiles
+	{ "ya-001-009-t60.u41",	0x40000, 0xcaa5e3c1, 0x04 | BRF_GRA },           //  8
 // double this so that we can use the graphics decoding routines...
-	{ "ya_011_009.u41",	0x40000, 0xcaa5e3c1, 0x04 | BRF_GRA },           //  9
+	{ "ya-001-009-t60.u41",	0x40000, 0xcaa5e3c1, 0x04 | BRF_GRA },           //  9
 
-	{ "ya_011_013.u71",	0x80000, 0x2bccaf47, 0x06 | BRF_SND },           // 10 x1snd
-	{ "ya_011_012.u64",	0x80000, 0xa8015ce6, 0x06 | BRF_SND },           // 11
+	{ "ya-001-013.u71",	0x80000, 0x2bccaf47, 0x06 | BRF_SND },           // 10 x1snd
+	{ "ya-001-012.u64",	0x80000, 0xa8015ce6, 0x06 | BRF_SND },           // 11
 
-	{ "ya-011.prom",	0x00200, 0xbd4fe2f6, 0x0f | BRF_GRA },           // 13
-	{ "ya-010.prom",	0x00200, 0x778094b3, 0x0f | BRF_GRA },           // 12 Color PROMs
+	{ "ya1-011.prom",	0x00200, 0xbd4fe2f6, 0x0f | BRF_GRA },           // 13
+	{ "ya1-010.prom",	0x00200, 0x778094b3, 0x0f | BRF_GRA },           // 12 Color PROMs
 };
 
 STD_ROM_PICK(jockeyc)

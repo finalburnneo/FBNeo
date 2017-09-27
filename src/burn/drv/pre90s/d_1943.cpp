@@ -451,7 +451,7 @@ static struct BurnRomInfo DrvjahRomDesc[] = {
 	
 	{ "bm05.4k",       0x08000, 0xee2bd2d7, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program
 
-	{ "4.5h",          0x08000, 0x0aba2096, BRF_GRA },	     	 //  4	Characters
+	{ "bm04.5h",       0x08000, 0x46cb9d3d, BRF_GRA },	     	 //  4	Characters
 	
 	{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     	 //  5	BG Tiles
 	{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     	 //  6

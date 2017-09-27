@@ -3943,43 +3943,45 @@ static struct BurnRomInfo ordyneRomDesc[] = {
 	{ "or2_mp0.mpr0",	0x20000, 0x31a1742b, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
 	{ "or2_mp1.mpr1",	0x20000, 0xc80c6b73, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "or1_sp0.bin",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "or1_sp1.bin",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "or1_sp0.spr0",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "or1_sp1.spr1",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "or1_sd0.bin",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "or1_sd.snd0",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
-	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+	{ "sys2_c65b.3f",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "or1_ob0.bin",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
-	{ "or1_ob1.bin",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
-	{ "or1_ob2.bin",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
-	{ "or1_ob3.bin",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
-	{ "or1_ob4.bin",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
-	{ "or1_ob5.bin",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
-	{ "or1_ob6.bin",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
-	{ "or1_ob7.bin",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
+	{ "or_obj-0.obj0",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "or_obj-1.obj1",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
+	{ "or_obj-2.obj2",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
+	{ "or_obj-3.obj3",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
+	{ "or_obj-4.obj4",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
+	{ "or_obj-5.obj5",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
+	{ "or_obj-6.obj6",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
+	{ "or_obj-7.obj7",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
 
-	{ "or1_ch0.bin",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
-	{ "or1_ch1.bin",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
-	{ "or1_ch3.bin",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
-	{ "or1_ch5.bin",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
-	{ "or1_ch6.bin",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
-	{ "or1_ch7e.bin",	0x20000, 0x8c0d2ab7, 0x06 | BRF_GRA },           // 20
+	{ "or_chr-0.chr0",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
+	{ "or_chr-1.chr1",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
+	{ "or_chr-3.chr3",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
+	{ "or_chr-5.chr5",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
+	{ "or_chr-6.chr6",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
+	{ "or2_chr7.chr7",	0x20000, 0x8c0d2ab7, 0x06 | BRF_GRA },           // 20
 
-	{ "or1_rz0.bin",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
-	{ "or1_rz1.bin",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
-	{ "or1_rz2.bin",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
-	{ "or1_rz3.bin",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
-	{ "or1_rz4.bin",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
+	{ "or_roz-0.roz0",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
+	{ "or_roz-1.roz1",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
+	{ "or_roz-2.roz2",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
+	{ "or_roz-3.roz3",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
+	{ "or_roz-4.roz4",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
 
-	{ "or1_sha.bin",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
+	{ "or_shape.shape",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
 
-	{ "or1_dt0.bin",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
-	{ "or1_dt1.bin",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+	{ "or1_d0.data0",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_d1.data1",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
 
-	{ "or1_vo1.bin",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
-	{ "or1_vo2.bin",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+	{ "or_voi1.voice1",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
+	{ "or_voi2.voice2",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+	
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(ordyne)
@@ -4036,46 +4038,48 @@ struct BurnDriver BurnDrvOrdyne = {
 // Ordyne (Japan)
 
 static struct BurnRomInfo ordynejRomDesc[] = {
-	{ "or1_mp0.bin",	0x20000, 0xf5929ed3, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "or1_mp1.bin",	0x20000, 0xc1c8c1e2, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "or1_mp0.mpr0",	0x20000, 0xf5929ed3, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "or1_mp1.mpr1",	0x20000, 0xc1c8c1e2, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "or1_sp0.bin",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "or1_sp1.bin",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "or1_sp0.spr0",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "or1_sp1.spr1",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "or1_sd0.bin",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "or1_sd.snd0",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
-	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+	{ "sys2_c65b.3f",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "or1_ob0.bin",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
-	{ "or1_ob1.bin",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
-	{ "or1_ob2.bin",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
-	{ "or1_ob3.bin",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
-	{ "or1_ob4.bin",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
-	{ "or1_ob5.bin",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
-	{ "or1_ob6.bin",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
-	{ "or1_ob7.bin",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
+	{ "or_obj-0.obj0",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "or_obj-1.obj1",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
+	{ "or_obj-2.obj2",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
+	{ "or_obj-3.obj3",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
+	{ "or_obj-4.obj4",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
+	{ "or_obj-5.obj5",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
+	{ "or_obj-6.obj6",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
+	{ "or_obj-7.obj7",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
 
-	{ "or1_ch0.bin",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
-	{ "or1_ch1.bin",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
-	{ "or1_ch3.bin",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
-	{ "or1_ch5.bin",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
-	{ "or1_ch6.bin",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
-	{ "or1_ch7.bin",	0x20000, 0xf050a152, 0x06 | BRF_GRA },           // 20
+	{ "or_chr-0.chr0",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
+	{ "or_chr-1.chr1",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
+	{ "or_chr-3.chr3",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
+	{ "or_chr-5.chr5",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
+	{ "or_chr-6.chr6",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
+	{ "or_chr-7.chr7",	0x20000, 0xf050a152, 0x06 | BRF_GRA },           // 20
 
-	{ "or1_rz0.bin",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
-	{ "or1_rz1.bin",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
-	{ "or1_rz2.bin",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
-	{ "or1_rz3.bin",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
-	{ "or1_rz4.bin",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
+	{ "or_roz-0.roz0",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
+	{ "or_roz-1.roz1",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
+	{ "or_roz-2.roz2",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
+	{ "or_roz-3.roz3",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
+	{ "or_roz-4.roz4",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
 
-	{ "or1_sha.bin",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
+	{ "or_shape.shape",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
 
-	{ "or1_dt0.bin",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
-	{ "or1_dt1.bin",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+	{ "or1_d0.data0",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_d1.data1",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
 
-	{ "or1_vo1.bin",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
-	{ "or1_vo2.bin",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+	{ "or_voi1.voice1",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
+	{ "or_voi2.voice2",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+	
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(ordynej)
@@ -4095,46 +4099,48 @@ struct BurnDriver BurnDrvOrdynej = {
 // Ordyne (Japan, English Version)
 
 static struct BurnRomInfo ordynejeRomDesc[] = {
-	{ "or1_mp0e.bin",	0x20000, 0x5e2f9052, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
-	{ "or1_mp1e.bin",	0x20000, 0x367a8fcf, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "or1_mp0e.mpr0",	0x20000, 0x5e2f9052, 0x01 | BRF_PRG | BRF_ESS }, //  0 Main 68K Code
+	{ "or1_mp1e.mpr1",	0x20000, 0x367a8fcf, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "or1_sp0.bin",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
-	{ "or1_sp1.bin",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
+	{ "or1_sp0.spr0",	0x10000, 0x01ef6638, 0x02 | BRF_PRG | BRF_ESS }, //  2 Sub 68K Code
+	{ "or1_sp1.spr1",	0x10000, 0xb632adc3, 0x02 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "or1_sd0.bin",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
+	{ "or1_sd.snd0",	0x20000, 0xc41e5d22, 0x03 | BRF_PRG | BRF_ESS }, //  4 M6809 Code
 
 	{ "sys2mcpu.bin",	0x02000, 0xa342a97e, 0x04 | BRF_PRG | BRF_ESS }, //  5 HD68705 Code
-	{ "sys2c65c.bin",	0x08000, 0xa5b2a4ff, 0x04 | BRF_PRG | BRF_ESS }, //  6
+	{ "sys2_c65b.3f",	0x08000, 0xe9f2922a, 0x04 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "or1_ob0.bin",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
-	{ "or1_ob1.bin",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
-	{ "or1_ob2.bin",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
-	{ "or1_ob3.bin",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
-	{ "or1_ob4.bin",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
-	{ "or1_ob5.bin",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
-	{ "or1_ob6.bin",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
-	{ "or1_ob7.bin",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
+	{ "or_obj-0.obj0",	0x20000, 0x67b2b9e4, 0x05 | BRF_GRA },           //  7 Sprites
+	{ "or_obj-1.obj1",	0x20000, 0x8a54fa5e, 0x05 | BRF_GRA },           //  8
+	{ "or_obj-2.obj2",	0x20000, 0xa2c1cca0, 0x05 | BRF_GRA },           //  9
+	{ "or_obj-3.obj3",	0x20000, 0xe0ad292c, 0x05 | BRF_GRA },           // 10
+	{ "or_obj-4.obj4",	0x20000, 0x7aefba59, 0x05 | BRF_GRA },           // 11
+	{ "or_obj-5.obj5",	0x20000, 0xe4025be9, 0x05 | BRF_GRA },           // 12
+	{ "or_obj-6.obj6",	0x20000, 0xe284c30c, 0x05 | BRF_GRA },           // 13
+	{ "or_obj-7.obj7",	0x20000, 0x262b7112, 0x05 | BRF_GRA },           // 14
 
-	{ "or1_ch0.bin",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
-	{ "or1_ch1.bin",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
-	{ "or1_ch3.bin",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
-	{ "or1_ch5.bin",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
-	{ "or1_ch6.bin",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
-	{ "or1_ch7e.bin",	0x20000, 0x8c0d2ab7, 0x06 | BRF_GRA },           // 20
+	{ "or_chr-0.chr0",	0x20000, 0xe7c47934, 0x06 | BRF_GRA },           // 15 Layer Tiles
+	{ "or_chr-1.chr1",	0x20000, 0x874b332d, 0x06 | BRF_GRA },           // 16
+	{ "or_chr-3.chr3",	0x20000, 0x5471a834, 0x06 | BRF_GRA },           // 17
+	{ "or_chr-5.chr5",	0x20000, 0xa7d3a296, 0x06 | BRF_GRA },           // 18
+	{ "or_chr-6.chr6",	0x20000, 0x3adc09c8, 0x06 | BRF_GRA },           // 19
+	{ "or1_ch7e.chr7",	0x20000, 0x8c0d2ab7, 0x06 | BRF_GRA },           // 20
 
-	{ "or1_rz0.bin",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
-	{ "or1_rz1.bin",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
-	{ "or1_rz2.bin",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
-	{ "or1_rz3.bin",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
-	{ "or1_rz4.bin",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
+	{ "or_roz-0.roz0",	0x20000, 0xc88a9e6b, 0x07 | BRF_GRA },           // 21 Roz Layer Tiles
+	{ "or_roz-1.roz1",	0x20000, 0xc20cc749, 0x07 | BRF_GRA },           // 22
+	{ "or_roz-2.roz2",	0x20000, 0x148c9866, 0x07 | BRF_GRA },           // 23
+	{ "or_roz-3.roz3",	0x20000, 0x4e727b7e, 0x07 | BRF_GRA },           // 24
+	{ "or_roz-4.roz4",	0x20000, 0x17b04396, 0x07 | BRF_GRA },           // 25
 
-	{ "or1_sha.bin",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
+	{ "or_shape.shape",	0x20000, 0x7aec9dee, 0x08 | BRF_GRA },           // 26 Layer Tiles Mask Data
 
-	{ "or1_dt0.bin",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
-	{ "or1_dt1.bin",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
+	{ "or1_d0.data0",	0x20000, 0xde214f7a, 0x09 | BRF_PRG | BRF_ESS }, // 27 Shared 68K Data
+	{ "or1_d1.data1",	0x20000, 0x25e3e6c8, 0x09 | BRF_PRG | BRF_ESS }, // 28
 
-	{ "or1_vo1.bin",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
-	{ "or1_vo2.bin",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+	{ "or_voi1.voice1",	0x80000, 0x369e0bca, 0x0a | BRF_SND },           // 29 C140 Samples
+	{ "or_voi2.voice2",	0x80000, 0x9f4cd7b5, 0x0a | BRF_SND },           // 30
+	
+	{ "lh5762.6n",		0x02000, 0x90db1bf6, 0x00 | BRF_OPT },
 };
 
 STD_ROM_PICK(ordyneje)

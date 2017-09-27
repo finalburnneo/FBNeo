@@ -6293,13 +6293,13 @@ struct BurnDriver BurnDrvdremshpr = {
 // Boardwalk Casino
 
 static struct BurnRomInfo bwcasinoRomDesc[] = {
-	{ "bwc_u2.bin",   0x2000, 0xe2eea868, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "bwc_u3.bin",   0x2000, 0xa935571e, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "u_2_boardwalk_casino_pp09144.u2",   0x2000, 0xe2eea868, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "u_3_boardwalk_casino_pp09144.u3",   0x2000, 0xa935571e, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "bwc_5e.bin",   0x1000, 0xe334c01e, 2 | BRF_GRA },			//  2 Graphics
+	{ "5_e_boardwalk_casino_pp09144.5e",   0x1000, 0xe334c01e, 2 | BRF_GRA },			//  2 Graphics
 
-	{ "aca_7f.bin",   0x0020, 0x133bb744, 3 | BRF_GRA },			//  3 Color Proms
-	{ "aca_4a.bin",   0x0100, 0x8e29208f, 3 | BRF_GRA },			//  4
+	{ "7_f_b.w.c.7f",   0x0020, 0x133bb744, 3 | BRF_GRA },			//  3 Color Proms
+	{ "4_a_b.w.c.4a",   0x0100, 0x8e29208f, 3 | BRF_GRA },			//  4
 
 	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  5 Sound Prom
 	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  6 Timing Prom (not used)

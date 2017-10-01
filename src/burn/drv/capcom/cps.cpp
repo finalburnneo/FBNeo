@@ -1444,6 +1444,16 @@ INT32 CpsLoadTilesPunisherb(INT32 nStart)
 	return 0;
 }
 
+INT32 CpsLoadTilesKnightsb2(INT32 nStart)
+{
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 0, 0, 0);
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 1, 0, 1);
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 2, 0, 2);
+	CpsLoadOneBootlegType2(CpsGfx + 0x000000, nStart + 3, 0, 3);
+	
+	return 0;
+}
+
 INT32 CpsLoadStars(UINT8* pStar, INT32 nStart)
 {
 	UINT8* pTemp[2] = { NULL, NULL};

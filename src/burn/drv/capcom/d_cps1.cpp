@@ -6795,22 +6795,17 @@ STD_ROM_PICK(Knightsb)
 STD_ROM_FN(Knightsb)
 
 static struct BurnRomInfo Knightsb2RomDesc[] = {
-	{ "040-z.02",      0x080000, 0x95d00a7e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
-	{ "040-r.02",      0x080000, 0x5a9d0b64, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "left.code.040",                 0x080000, 0x95d00a7e, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "right.code.040",                0x080000, 0x5a9d0b64, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	
+	{ "spe-a.japan9207d.mask1.801",    0x100000, 0x14a15fcd, BRF_GRA | CPS1_TILES },
+	{ "spe-b.japan9207d.mask2.801",    0x100000, 0x250d2957, BRF_GRA | CPS1_TILES },
+	{ "spe-c.japan9207d.mask4.801",    0x100000, 0x0721c26d, BRF_GRA | CPS1_TILES },
+	{ "spe-d.japan9207d.mask3.801",    0x100000, 0xdb97f56a, BRF_GRA | CPS1_TILES },
 
-	{ "kr_gfx1.rom",   0x080000, 0x9e36c1a4, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx3.rom",   0x080000, 0xc5832cae, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx2.rom",   0x080000, 0xf095be2d, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx4.rom",   0x080000, 0x179dfd96, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx5.rom",   0x080000, 0x1f4298d2, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx7.rom",   0x080000, 0x37fa8751, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx6.rom",   0x080000, 0x0200bc3d, BRF_GRA | CPS1_TILES },
-	{ "kr_gfx8.rom",   0x080000, 0x0bb2b4e7, BRF_GRA | CPS1_TILES },
+	{ "sound.code.512",                0x010000, 0x5e44d9ee, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "kr_09.rom",     0x010000, 0x5e44d9ee, BRF_PRG | CPS1_Z80_PROGRAM },
-
-	{ "kr_18.rom",     0x020000, 0xda69d15f, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "kr_19.rom",     0x020000, 0xbfc654e9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "spe-e.japan9208d.snd.mask.020", 0x040000, 0x85f837a0, BRF_SND | CPS1_OKIM6295_SAMPLES },
 };
 
 STD_ROM_PICK(Knightsb2)
@@ -15229,6 +15224,7 @@ static INT32 Knightsb2Init()
 {
 	CpsDrawSpritesInReverse = 1;
 	Cps1DetectEndSpriteList8000 = 1;
+	Cps1GfxLoadCallbackFunction = CpsLoadTilesKnightsb2;
 	
 	return DrvInit();
 }

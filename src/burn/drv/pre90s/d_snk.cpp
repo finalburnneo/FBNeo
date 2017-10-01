@@ -7721,6 +7721,46 @@ struct BurnDriver BurnDrvAthena = {
 };
 
 
+// Athena (bootleg)
+// is this really a bootleg?
+
+static struct BurnRomInfo athenabRomDesc[] = {
+	{ "p4.bin",			0x04000, 0xa341677e, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 #0 Code
+	{ "m4.bin",			0x08000, 0x26e2b14f, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "p8.bin",			0x04000, 0xdf50af7e, 2 | BRF_ESS | BRF_PRG }, //  2 Z80 #1 Code
+	{ "m8.bin",			0x08000, 0xf3c933df, 2 | BRF_ESS | BRF_PRG }, //  3
+
+	{ "g6.bin",			0x04000, 0x42dbe029, 3 | BRF_ESS | BRF_PRG }, //  4 Z80 #2 Code
+	{ "k6.bin",			0x08000, 0x596f1c8a, 3 | BRF_ESS | BRF_PRG }, //  5
+
+	{ "c2.bin",			0x00400, 0x294279ae, 14 | BRF_GRA },	      //  6 Color Data
+	{ "b1.bin",			0x00400, 0xd25c9099, 14 | BRF_GRA },	      //  7
+	{ "c1.bin",			0x00400, 0xa4a4e7dc, 14 | BRF_GRA },	      //  8
+
+	{ "d2.bin",			0x04000, 0x18b4bcca, 4 | BRF_GRA },	      //  9 Text Characters
+
+	{ "b2.bin",			0x08000, 0xf269c0eb, 6 | BRF_GRA },	      // 10 Background Characters
+
+	{ "p2.bin",			0x08000, 0xc63a871f, 9 | BRF_GRA },	      // 11 Sprites
+	{ "s2.bin",			0x08000, 0x760568d8, 9 | BRF_GRA },	      // 12
+	{ "t2.bin",			0x08000, 0x57b35c73, 9 | BRF_GRA },	      // 13
+};
+
+STD_ROM_PICK(athenab)
+STD_ROM_FN(athenab)
+
+struct BurnDriver BurnDrvAthenab = {
+	"athenab", "athena", NULL, NULL, "1986",
+	"Athena (bootleg)\0", NULL, "SNK", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, athenabRomInfo, athenabRomName, NULL, NULL, AthenaInputInfo, AthenaDIPInfo,
+	AthenaInit, DrvExit, AthenaFrame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
+	288, 216, 4, 3
+};
+
+
 // Super Athena (bootleg)
 
 static struct BurnRomInfo sathenaRomDesc[] = {

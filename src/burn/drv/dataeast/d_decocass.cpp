@@ -38,7 +38,7 @@ static UINT8 *DrvDongle;
 static UINT8 *DrvGfxData;
 static UINT8 *DrvMCUROM;
 static UINT8 *DrvCharExp;
-static UINT8 *DrvSprExp;
+//static UINT8 *DrvSprExp;
 static UINT8 *DrvTileExp;
 static UINT8 *DrvObjExp;
 static UINT8 *DrvMainRAM;
@@ -1860,8 +1860,6 @@ static UINT8 decocass_e5xx_read(UINT8 offset)
 {
 	if (2 == (offset & E5XX_MASK))
 	{
-		//uint8_t bot_eot = (cassette_get_status_bits() >> 5) & 1;
-
 		return  (BIT(i8041_p1, 7)   << 0) |   /* D0 = P17 - REQ/ */
 			(BIT(i8041_p2, 0)   << 1) |   /* D1 = P20 - FNO/ */
 			(BIT(i8041_p2, 1)   << 2) |   /* D2 = P21 - EOT/ */
@@ -1953,6 +1951,19 @@ static inline void decode_obj_one(INT32 offset)
 	}
 }
 
+static void decode_ram_tiles()
+{
+	for (INT32 i = 0; i < 0x2000; i++)
+		decode_chars_one(i);
+
+	for (INT32 i = 0; i < 0x400; i++)
+		decode_tiles_one(i);
+
+	for (INT32 i = 0; i < 0x400; i++)
+		decode_obj_one(i);
+
+}
+
 static void set_gfx_bank(INT32 bank)
 {
 	if (bank == 3) return;
@@ -2014,7 +2025,9 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 		b = (b << 6) | (b << 4) | (b << 2) | (b << 0);
 
 		DrvPaletteTable[offset] = (r << 16) + (g << 8) + b;
+
 		DrvPalette[DrvPalLut[offset]] = BurnHighCol(r,g,b,0);
+		DrvPalette[DrvPalLut[offset + 0x20] + 0x20] = BurnHighCol(r,g,b,0);
 		return;
 	}
 
@@ -2519,9 +2532,8 @@ static INT32 MemIndex()
 	I8x41Mem		= Next;
 	DrvMCUROM		= Next; Next += 0x0009000; // 0x400 + 0x500 for ram, for now
 
-
+	//DrvSprExp		= Next; Next += 0x0100000; // these are decoded on the fly
 	DrvCharExp		= Next; Next += 0x0100000;
-	DrvSprExp		= Next; Next += 0x0100000;
 	DrvTileExp		= Next; Next += 0x0011000;
 	DrvObjExp		= Next; Next += 0x0008000;
 
@@ -2543,6 +2555,7 @@ static INT32 MemIndex()
 	DrvObjRAM		= Next; Next += 0x0004000;
 
 	DrvPalRAM		= Next; Next += 0x0001000;
+	DrvPaletteTable = (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 
 	DrvSoundRAM		= Next; Next += 0x0010000;
 
@@ -2828,11 +2841,10 @@ static void draw_sprites(int color, int sprite_y_adjust, int sprite_y_adjust_fli
 			}
 		} else {
 			if (flipx) {
-
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
 			} else {
 				Render8x8Tile_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
 				Render8x8Tile_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
@@ -2858,10 +2870,10 @@ static void draw_sprites(int color, int sprite_y_adjust, int sprite_y_adjust_fli
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
 			} else {
 				Render8x8Tile_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
 				Render8x8Tile_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
@@ -2955,7 +2967,10 @@ static void predraw_bg()
 
 	color = (color * 4) + 1;
 
-	color &= 7;
+	color = (color << 3);
+
+	if (~nSpriteEnable & 2) memset(pTempDraw[0], 0, 512*512*sizeof(UINT16));
+	if (~nSpriteEnable & 4) memset(pTempDraw[1], 0, 512*512*sizeof(UINT16));
 
 	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
@@ -2968,7 +2983,6 @@ static void predraw_bg()
 		INT32 code = DrvTileRAM[ofst] >> 4;
 
 		{
-			color <<= 3;
 			UINT8 *gfx0 = DrvTileExp + (code * 0x100);
 			UINT8 *gfx1 = DrvTileExp + (code * 0x100) + (15 * 16);
 
@@ -3044,7 +3058,6 @@ static INT32 DrvFrame()
 
 	watchdog++;
 	if (watchdog > 180) {
-		bprintf(0, _T("watchdog.\n"));
 		M6502Open(0);
 		M6502Reset();
 		M6502Close();
@@ -3243,6 +3256,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(firsttime);
 		SCAN_VAR(tape_bot_eot);
+	}
+
+	if (nAction & ACB_WRITE) {
+		decode_ram_tiles();
 	}
 
 	return 0;

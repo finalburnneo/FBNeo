@@ -70,6 +70,8 @@ static UINT8 sound_ack;
 static UINT8 audio_nmi_enabled;
 static UINT8 audio_nmi_state;
 
+static INT32 burgertime_mode = 0; // for sound-fix
+
 static INT32 e900_enable = 0;
 static INT32 e900_gfxbank = 0;
 
@@ -159,6 +161,9 @@ static UINT8 DrvJoy11[8];
 static UINT8 DrvInputs[11];
 static UINT8 DrvDips[3]; // #2 is bios dip
 static UINT8 DrvReset;
+
+static INT32 fourway_mode = 0;
+
 // analog inputs
 
 
@@ -2234,6 +2239,35 @@ static UINT8 decocass_main_read(UINT16 address)
 
 	return 0;
 }
+// BurgerTime Anti-migraine 8910fixer Hack.  See d_btime.cpp for notes.
+static UINT8 last01[3] = {0xff,0xff};
+static UINT8 last02[3] = {0xff,0xff};
+static UINT8 ignext = 0;
+
+static void checkhiss_add02(UINT8 data)
+{
+	last02[1] = last02[0];
+	last02[0] = data;
+}
+
+static void checkhiss_and_add01(UINT8 data)
+{
+	last01[1] = last01[0];
+	last01[0] = data;
+
+	if (last01[0] == 0 && last02[0] == 1 && last01[1] == 0 && last02[1] == 0)
+	{
+		ignext = 1; // next command will be VolA
+	}
+	if (last01[0] == 0 && last02[0] == 3 && last01[1] == 0 && last02[1] == 2)
+	{
+		ignext = 1; // next command will be VolB
+	}
+	if (last01[0] == 0 && last02[0] == 5 && last01[1] == 0 && last02[1] == 4)
+	{
+		ignext = 1; // next command will be VolC
+	}
+}
 
 static void decocass_sound_write(UINT16 address, UINT8 data)
 {
@@ -2251,11 +2285,18 @@ static void decocass_sound_write(UINT16 address, UINT8 data)
 	switch (address & 0xf000)
 	{
 		case 0x2000:
+			if (ignext) {
+				if (burgertime_mode)
+					data = 0; // set volume to 0
+				ignext = 0;
+			}
 			AY8910Write(0, 1, data);
+			checkhiss_and_add01(data);
 		return;
 
 		case 0x4000:
 			AY8910Write(0, 0, data);
+			checkhiss_add02(data);
 		return;
 
 		case 0x6000:
@@ -2722,6 +2763,10 @@ static INT32 DrvExit()
 	type1_inmap = 0;
 	type1_outmap = 0;
 
+	burgertime_mode = 0;
+
+	fourway_mode = 0;
+
 	e900_enable = 0;
 
 	return 0;
@@ -3093,6 +3138,11 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+		}
+
+		if (fourway_mode) {
+			ProcessJoystick(&DrvInputs[0], 0, 2,3,1,0, INPUT_4WAY | INPUT_CLEAROPPOSITES );
+			ProcessJoystick(&DrvInputs[1], 1, 2,3,1,0, INPUT_4WAY | INPUT_CLEAROPPOSITES );
 		}
 
 		if (BurnDrvGetGenreFlags() & GBF_MAHJONG) {
@@ -3861,6 +3911,8 @@ static INT32 CtislandInit()
 
 	e900_enable = 1;
 
+	fourway_mode = 1;
+
 	return DecocassInit(decocass_type1_read,NULL);
 }
 
@@ -4195,6 +4247,9 @@ STD_ROM_FN(cbtime)
 static INT32 CbtimeInit()
 {
 	type3_swap = TYPE3_SWAP_12;
+
+	burgertime_mode = 1;
+	fourway_mode = 1;
 
 	return DecocassInit(decocass_type3_read,decocass_type3_write);
 }

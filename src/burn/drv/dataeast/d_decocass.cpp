@@ -70,6 +70,9 @@ static UINT8 sound_ack;
 static UINT8 audio_nmi_enabled;
 static UINT8 audio_nmi_state;
 
+static INT32 e900_enable = 0;
+static INT32 e900_gfxbank = 0;
+
 static UINT8 mux_data;
 
 static UINT8 color_missiles;
@@ -1966,9 +1969,11 @@ static void decode_ram_tiles()
 
 static void set_gfx_bank(INT32 bank)
 {
-	if (bank == 3) return;
+	e900_gfxbank = bank;
 
-	UINT8 *ptr = DrvCharRAM;
+	if (bank == 3 || !e900_enable) return;
+
+	UINT8 *ptr = DrvCharRAM; // bank == 0
 
 	if (bank == 1) ptr = DrvGfxData;
 	if (bank == 2) ptr = DrvGfxData + 0x5000;
@@ -2717,6 +2722,8 @@ static INT32 DrvExit()
 	type1_inmap = 0;
 	type1_outmap = 0;
 
+	e900_enable = 0;
+
 	return 0;
 }
 
@@ -2901,7 +2908,7 @@ static void draw_center()
 	if (color_center_bot & 0x80)
 		color = (color & 4) + ((color << 1) & 2) + ((color >> 1) & 1);
 
-	sy = center_v_shift;
+	sy = center_v_shift - 8;
 	sx = (center_h_shift_space >> 2) & 0x3c;
 
 	for (y = 0; y < 4; y++)
@@ -3042,7 +3049,7 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 1) draw_sprites((color_center_bot >> 1) & 1, 8, 0, DrvFgRAM, 0x20);
 
-	if (nBurnLayer & 8) draw_missiles(1, 0, DrvColRAM, 0x20);
+	if (nBurnLayer & 8) draw_missiles(1+8, 0, DrvColRAM, 0x20);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3260,6 +3267,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_WRITE) {
 		decode_ram_tiles();
+		M6502Open(0);
+		set_gfx_bank(e900_gfxbank);
+		M6502Close();
 	}
 
 	return 0;
@@ -3849,6 +3859,8 @@ static INT32 CtislandInit()
 	type1_inmap = MAKE_MAP(2,1,0,3,4,5,6,7);
 	type1_outmap = MAKE_MAP(2,1,0,3,4,5,6,7);
 
+	e900_enable = 1;
+
 	return DecocassInit(decocass_type1_read,NULL);
 }
 
@@ -3944,6 +3956,8 @@ static UINT8 type1_latch_26_pass_5_inv_2_table[8] = { T1PROM,T1PROM,T1LATCHINV,T
 static INT32 CexploreInit()
 {
 	type1_map = type1_latch_26_pass_5_inv_2_table;
+
+	e900_enable = 1;
 
 	return DecocassInit(decocass_type1_read,NULL);
 }

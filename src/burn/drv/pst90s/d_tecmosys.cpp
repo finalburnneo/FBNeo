@@ -1064,7 +1064,7 @@ static INT32 DrvFrame()
 	{
 		if (i == 240) {
 			vblank = 0;
-			SekSetIRQLine(1, CPU_IRQSTATUS_ACK);
+			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
 		nSegment = nCyclesTotal[0] / nInterleave;
@@ -1083,7 +1083,7 @@ static INT32 DrvFrame()
 #endif
 	}
 
-	SekSetIRQLine(1, CPU_IRQSTATUS_NONE);
+	//SekSetIRQLine(1, CPU_IRQSTATUS_NONE);
 
 #ifdef ENABLE_SOUND_HARDWARE
 	if (pBurnSoundOut) {

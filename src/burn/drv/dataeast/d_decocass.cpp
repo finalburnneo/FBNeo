@@ -2,6 +2,11 @@
 note -- 
 cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
 
+-- need japanese bios default dips --
+cprogolfj, cprogolf18
+cfishing
+
+
 
 ctisland & cdanglr, castfant background colors completely wrong...
 cpsoccer backgrounds broken
@@ -531,6 +536,32 @@ static struct BurnDIPInfo CprogolfDIPList[]=
 
 STDDIPINFOEXT(Cprogolf,	Decocass,	Cprogolf)
 
+static struct BurnDIPInfo CprogolfjDIPList[]=
+{
+	{0x16, 0xff, 0xff, 0xff, NULL			},
+	{0x17, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x16, 0x01, 0x01, 0x01, "2"			},
+	{0x16, 0x01, 0x01, 0x00, "3"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x16, 0x01, 0x06, 0x00, "None"			},
+	{0x16, 0x01, 0x06, 0x02, "6 Under"		},
+	{0x16, 0x01, 0x06, 0x04, "3 Under"		},
+	{0x16, 0x01, 0x06, 0x06, "1 Under"		},
+
+	{0   , 0xfe, 0   ,    2, "Number of Strokes"	},
+	{0x16, 0x01, 0x08, 0x00, "Par +2"		},
+	{0x16, 0x01, 0x08, 0x08, "Par +3"		},
+
+	{0   , 0xfe, 0   ,    2, "Stroke Power/Ball Direction"		},
+	{0x16, 0x01, 0x10, 0x10, "Off"			},
+	{0x16, 0x01, 0x10, 0x00, "On"			},
+};
+
+STDDIPINFOEXT(Cprogolfj,	Decocass,	Cprogolfj)
+
 static struct BurnDIPInfo CexploreDIPList[]=
 {
 	{0x16, 0xff, 0xff, 0xff, NULL			},
@@ -1054,6 +1085,28 @@ static struct BurnDIPInfo CfishingDIPList[]=
 };
 
 STDDIPINFOEXT(Cfishing,	Decocass,	Cfishing)
+
+static struct BurnDIPInfo CfishingjDIPList[]=
+{
+	{0x16, 0xff, 0xff, 0xef, NULL			},
+	{0x17, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x16, 0x01, 0x01, 0x01, "3"			},
+	{0x16, 0x01, 0x01, 0x00, "5"			},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x16, 0x01, 0x06, 0x00, "None"			},
+	{0x16, 0x01, 0x06, 0x06, "10000"		},
+	{0x16, 0x01, 0x06, 0x04, "20000"		},
+	{0x16, 0x01, 0x06, 0x02, "30000"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x16, 0x01, 0x08, 0x08, "Easy"			},
+	{0x16, 0x01, 0x08, 0x00, "Difficult"		},
+};
+
+STDDIPINFOEXT(Cfishingj,	Decocass,	Cfishingj)
 
 static struct BurnDIPInfo Cfboy0a1DIPList[]=
 {
@@ -2344,13 +2397,6 @@ static UINT8 decocass_sound_read(UINT16 address)
 
 static void i8041_p1_write(UINT8 data)
 {
-	static int i8041_p1_old;
-
-	if (data != i8041_p1_old)
-	{
-		i8041_p1_old = data;
-	}
-
 	if ((data ^ i8041_p1) & 0x10)
 	{
 		tape_stop(); // iq_132
@@ -2411,42 +2457,19 @@ static void i8041_p1_write(UINT8 data)
 
 static UINT8 i8041_p1_read()
 {
-	UINT8 data = i8041_p1;
-	static int i8041_p1_old;
-
-	if (data != i8041_p1_old)
-	{
-		i8041_p1_old = data;
-	}
-	return data;
+	return i8041_p1;
 }
 
 static void i8041_p2_write(UINT8 data)
 {
-	static int i8041_p2_old;
-
-	if (data != i8041_p2_old)
-	{
-		i8041_p2_old = data;
-	}
 	i8041_p2 = data;
 }
 
 static UINT8 i8041_p2_read()
 {
-	UINT8 data;
-	static int i8041_p2_old;
-
 	tape_update();
 
-	data = i8041_p2;
-
-	if (data != i8041_p2_old)
-	{
-		i8041_p2_old = data;
-	}
-
-	return data;
+	return i8041_p2;
 }
 
 static UINT8 i8x41_read_ports(UINT16 port)
@@ -3693,8 +3716,8 @@ static UINT8 type1_map_clocknchj[8] = { T1PROM,T1PROM,T1DIRECT,T1LATCHINV,T1PROM
 static INT32 ClocknchjInit()
 {
 	type1_map = type1_map_clocknchj;
-	type1_inmap = MAKE_MAP(0,1,3,2,4,5,6,7);
-	type1_outmap = MAKE_MAP(0,1,3,2,4,5,6,7);
+	type1_inmap = MAKE_MAP(0,1,2,3,4,5,6,7);
+	type1_outmap = MAKE_MAP(0,1,2,3,4,5,6,7);
 
 	return DecocassInit(decocass_type1_read,NULL);
 }
@@ -3799,7 +3822,7 @@ struct BurnDriver BurnDrvCprogolfj = {
 	"Tournament Pro Golf (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cprogolfjRomInfo, cprogolfjRomName, NULL, NULL, DecocassInputInfo, CprogolfDIPInfo,
+	NULL, cprogolfjRomInfo, cprogolfjRomName, NULL, NULL, DecocassInputInfo, CprogolfjDIPInfo,
 	CprogolfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -3821,7 +3844,7 @@ struct BurnDriver BurnDrvCprogolf18 = {
 	"18 Challenge Pro Golf (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cprogolf18RomInfo, cprogolf18RomName, NULL, NULL, DecocassInputInfo, CprogolfDIPInfo,
+	NULL, cprogolf18RomInfo, cprogolf18RomName, NULL, NULL, DecocassInputInfo, CprogolfjDIPInfo,
 	CprogolfjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4063,18 +4086,13 @@ static struct BurnRomInfo csweethtRomDesc[] = {
 STDROMPICKEXT(csweetht, csweetht, decocass)
 STD_ROM_FN(csweetht)
 
-static INT32 CsweethtInit()
-{
-	return DecocassInit(NULL,NULL);
-}
-
 struct BurnDriver BurnDrvCsweetht = {
 	"csweetht", "cdiscon1", "decocass", NULL, "1982",
 	"Sweet Heart (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, csweethtRomInfo, csweethtRomName, NULL, NULL, DecocassInputInfo, CsweethtDIPInfo,
-	CsweethtInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 
@@ -4227,7 +4245,7 @@ struct BurnDriver BurnDrvCfishing = {
 	"Fishing (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
-	NULL, cfishingRomInfo, cfishingRomName, NULL, NULL, DecocassInputInfo, CfishingDIPInfo,
+	NULL, cfishingRomInfo, cfishingRomName, NULL, NULL, DecocassInputInfo, CfishingjDIPInfo,
 	CadanglrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
@@ -4400,13 +4418,20 @@ static struct BurnRomInfo cgraplop2RomDesc[] = {
 STDROMPICKEXT(cgraplop2, cgraplop2, decocass)
 STD_ROM_FN(cgraplop2)
 
+static INT32 Cgraplop2Init()
+{
+	type3_swap = TYPE3_SWAP_67;
+
+	return DecocassInit(decocass_type3_read,decocass_type3_write);
+}
+
 struct BurnDriver BurnDrvCgraplop2 = {
-	"cgraplop2", "cgraplop", NULL, NULL, "1983",
+	"cgraplop2", "cgraplop", "decocass", NULL, "1983",
 	"Graplop (no title screen) (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_BREAKOUT, 0,
 	NULL, cgraplop2RomInfo, cgraplop2RomName, NULL, NULL, DecocassInputInfo, CgraplopDIPInfo,
-	CgraplopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	Cgraplop2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };
 

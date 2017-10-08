@@ -869,6 +869,61 @@ struct BurnDriver BurnDrvCabaluk = {
 };
 
 
+// Cabal (UK, Joystick)
+
+static struct BurnRomInfo cabalukjRomDesc[] = {
+	{ "13.7h",    		0x10000, 0x00abbe0c, 1 | BRF_PRG | BRF_ESS }, //  0 M68k Codc
+	{ "14.6h",			0x10000, 0x5b04b101, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12.7j",			0x10000, 0xd763a47c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "10.6j",			0x10000, 0x96d5e8af, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "4-3n",			0x02000, 0x4038eff2, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+	{ "3-3p",			0x08000, 0xd9defcbf, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "5-6s",			0x04000, 0x6a76955a, 3 | BRF_GRA },           //  6 Characters
+
+	{ "bg_rom1.bin",	0x10000, 0x1023319b, 4 | BRF_GRA },           //  7 Background Tiles
+	{ "bg_rom2.bin",	0x10000, 0x3b6d2b09, 4 | BRF_GRA },           //  8
+	{ "bg_rom3.bin",	0x10000, 0x420b0801, 4 | BRF_GRA },           //  9
+	{ "bg_rom4.bin",	0x10000, 0x77bc7a60, 4 | BRF_GRA },           // 10
+	{ "bg_rom5.bin",	0x10000, 0x543fcb37, 4 | BRF_GRA },           // 11
+	{ "bg_rom6.bin",	0x10000, 0x0bc50075, 4 | BRF_GRA },           // 12
+	{ "bg_rom7.bin",	0x10000, 0xd28d921e, 4 | BRF_GRA },           // 13
+	{ "bg_rom8.bin",	0x10000, 0x67e4fe47, 4 | BRF_GRA },           // 14
+
+	{ "sp_rom1.bin",	0x10000, 0x34d3cac8, 5 | BRF_GRA },           // 15 Sprites
+	{ "sp_rom2.bin",	0x10000, 0x4e49c28e, 5 | BRF_GRA },           // 16
+	{ "sp_rom3.bin",	0x10000, 0x7065e840, 5 | BRF_GRA },           // 17
+	{ "sp_rom4.bin",	0x10000, 0x6a0e739d, 5 | BRF_GRA },           // 18
+	{ "sp_rom5.bin",	0x10000, 0x0e1ec30e, 5 | BRF_GRA },           // 19
+	{ "sp_rom6.bin",	0x10000, 0x581a50c1, 5 | BRF_GRA },           // 20
+	{ "sp_rom7.bin",	0x10000, 0x55c44764, 5 | BRF_GRA },           // 21
+	{ "sp_rom8.bin",	0x10000, 0x702735c9, 5 | BRF_GRA },           // 22
+
+	{ "2-1s",			0x10000, 0x850406b4, 6 | BRF_SND },           // 23 ADPCM #0 Code
+
+	{ "1-1u",			0x10000, 0x8b3e0789, 7 | BRF_SND },           // 24 ADPCM #1 Code
+};
+
+STD_ROM_PICK(cabalukj)
+STD_ROM_FN(cabalukj)
+
+static INT32 CabalukjInit()
+{
+	return DrvInit(0);
+}
+
+struct BurnDriver BurnDrvCabalukj = {
+	"cabalukj", "cabal", NULL, NULL, "1988",
+	"Cabal (UK, Joystick)\0", NULL, "TAD Corporation (Electrocoin license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, cabalukjRomInfo, cabalukjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	CabalukjInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 256, 4, 3
+};
+
+
 // Cabal (US set 1, Trackball)
 
 static struct BurnRomInfo cabalusRomDesc[] = {

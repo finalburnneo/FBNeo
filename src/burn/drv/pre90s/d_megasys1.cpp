@@ -4623,11 +4623,64 @@ static INT32 rodlandInit()
 
 struct BurnDriver BurnDrvRodland = {
 	"rodland", NULL, NULL, NULL, "1990",
-	"Rod-Land (World)\0", NULL, "Jaleco", "Mega System 1",
+	"Rod-Land (World, set 1)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, rodlandRomInfo, rodlandRomName, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
 	rodlandInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+
+// Rod-Land (Japan)
+// JALECO MB-M02A EB-88003-3001-1, with jumper wire from a PAL to one of the connectors
+
+static struct BurnRomInfo rodlandaRomDesc[] = {
+	{ "JALECO_ROD_LAND_2.ROM2",		0x20000, 0x797ad124, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "JALECO_ROD_LAND_1.ROM1",		0x20000, 0x030b116f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "JALECO_ROD_LAND_3.ROM3",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "JALECO_ROD_LAND_4.ROM4",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "JALECO_ROD_LAND_5.ROM5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "JALECO_ROD_LAND_6.ROM6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "LH534H31.ROM14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+
+	{ "LH534H32.ROM18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+
+	{ "LH2311J0.ROM19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+
+	{ "LH534H33.ROM23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
+
+	{ "LH5321T5.ROM10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+
+	{ "S202000DR.ROM8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+
+	{ "PS89013A.M14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+};
+
+STD_ROM_PICK(rodlanda)
+STD_ROM_FN(rodlanda)
+
+static void rodlandaCallback()
+{
+	astyanax_rom_decode();
+	rodland_gfx_unmangle(DrvGfxROM[0], 0x80000);
+	rodland_gfx_unmangle(DrvGfxROM[3], 0x80000);
+}
+
+static INT32 rodlandaInit()
+{
+	return SystemInit(0xA, rodlandaCallback);
+}
+
+struct BurnDriver BurnDrvRodlanda = {
+	"rodlanda", "rodland", NULL, NULL, "1990",
+	"Rod-Land (World, set 2)\0", NULL, "Jaleco", "Mega System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, rodlandaRomInfo, rodlandaRomName, NULL, NULL, CommonInputInfo, RodlandDIPInfo,
+	rodlandaInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 

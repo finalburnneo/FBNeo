@@ -79,82 +79,23 @@ Hitachi HD647180 series:
 #include "burnint.h"
 #define Z180_INLINE			static inline
 
-#include "z180.h"
+#include "z180_intf.h"
 
-Z180ReadOpHandler Z180CPUReadOp;
-Z180ReadOpArgHandler Z180CPUReadOpArg;
-Z180ReadProgHandler Z180CPUReadProg;
-Z180WriteProgHandler Z180CPUWriteProg;
-Z180ReadIOHandler Z180CPUReadIO;
-Z180WriteIOHandler Z180CPUWriteIO;
+// in z180_intf.cpp
+extern void __fastcall z180_cpu_write_handler(UINT32 address, UINT8 data);
+extern UINT8 __fastcall z180_cpu_fetchop_handler(UINT32 address);
+extern UINT8 __fastcall z180_cpu_fetcharg_handler(UINT32 address);
+extern UINT8 __fastcall z180_cpu_read_handler(UINT32 address);
+extern void __fastcall z180_cpu_write_port_handler(UINT32 address, UINT8 data);
+extern UINT8 __fastcall z180_cpu_read_port_handler(UINT32 address);
 
-static UINT8 __fastcall Z180DummyReadOp(UINT32)
-{
-	return 0;
-}
+#define cpu_readop(a)				z180_cpu_fetchop_handler(a)
+#define cpu_readop_arg(a)			z180_cpu_fetcharg_handler(a)
+#define program_read_byte_8le(a)		z180_cpu_read_handler(a)
+#define program_write_byte_8le(a,d)		z180_cpu_write_handler(a,d)
+#define io_read_byte_8le(a)			z180_cpu_read_port_handler(a)
+#define io_write_byte_8le(a,d)			z180_cpu_write_port_handler(a,d)
 
-static UINT8 __fastcall Z180DummyReadOpArg(UINT32)
-{
-	return 0;
-}
-
-static UINT8 __fastcall Z180DummyReadProg(UINT32)
-{
-	return 0;
-}
-
-static void __fastcall Z180DummyWriteProg(UINT32, UINT8)
-{
-	
-}
-
-static UINT8 __fastcall Z180DummyReadIO(UINT32)
-{
-	return 0;
-}
-
-static void __fastcall Z180DummyWriteIO(UINT32, UINT8)
-{
-	
-}
-
-void Z180SetCPUOpReadHandler(Z180ReadOpHandler handler)
-{
-	Z180CPUReadOp = handler;
-}
-
-void Z180SetCPUOpReadArgHandler(Z180ReadOpArgHandler handler)
-{
-	Z180CPUReadOpArg = handler;
-}
-
-void Z180SetCPUProgReadHandler(Z180ReadProgHandler handler)
-{
-	Z180CPUReadProg = handler;
-}
-
-void Z180SetCPUProgWriteHandler(Z180WriteProgHandler handler)
-{
-	Z180CPUWriteProg = handler;
-}
-
-void Z180SetCPUIOReadHandler(Z180ReadIOHandler handler)
-{
-	Z180CPUReadIO = handler;
-}
-
-void Z180SetCPUIOWriteHandler(Z180WriteIOHandler handler)
-{
-	Z180CPUWriteIO = handler;
-}
-
-#define cpu_readop(a)					Z180CPUReadOp(a)
-#define cpu_readop_arg(a)				Z180CPUReadOpArg(a)
-#define program_read_byte_8le(a)		Z180CPUReadProg(a)
-#define program_write_byte_8le(a,d)		Z180CPUWriteProg(a,d)
-#define io_read_byte_8le(a)				Z180CPUReadIO(a)
-#define io_write_byte_8le(a,d)			Z180CPUWriteIO(a,d)
- 
 #include "z80daisy.h"
 
 
@@ -848,6 +789,9 @@ static UINT8 SZHV_dec[256]; /* zero, sign, half carry and overflow flags DEC r8 
 static UINT8 *SZHVC_add;
 static UINT8 *SZHVC_sub;
 #endif
+
+static UINT32 total_cycles;
+static UINT32 current_cycles;
 
 void z180_scan()
 {
@@ -1849,13 +1793,6 @@ void z180_init(int index, int clock, /*const void *config,*/ int (*irqcallback)(
 	SZHVC_add = (UINT8 *)BurnMalloc(2*256*256*sizeof(UINT8));
 	SZHVC_sub = (UINT8 *)BurnMalloc(2*256*256*sizeof(UINT8));
 #endif
-
-	Z180CPUReadOp = Z180DummyReadOp;
-	Z180CPUReadOpArg = Z180DummyReadOpArg;
-	Z180CPUReadProg = Z180DummyReadProg;
-	Z180CPUWriteProg = Z180DummyWriteProg;
-	Z180CPUReadIO = Z180DummyReadIO;
-	Z180CPUWriteIO = Z180DummyWriteIO;
 }
 
 void z180_exit()
@@ -2039,6 +1976,9 @@ void z180_reset(void)
 	if (Z180.daisy)
 		z80daisy_reset(Z180.daisy);
 	z180_mmu();
+
+	total_cycles = 0;
+	current_cycles = 0;
 }
 
 /* Handle PRT timers, decreasing them after 20 clocks and returning the new icount base that needs to be used for the next check */
@@ -2126,6 +2066,7 @@ int z180_execute(int cycles)
 {
 	int old_icount = cycles;
 	z180_icount = cycles;
+	current_cycles = cycles;
 
 	/* check for NMIs on the way in; they can only be set externally */
 	/* via timers, and can't be dynamically enabled, so it is safe */
@@ -2189,19 +2130,38 @@ again:
 		{
 			check_interrupts();
 			Z180.after_EI = 0;
-
 			_PPC = _PCD;
 			_R++;
+
 			EXEC_Z180_INLINE(op,ROP());
+
 			old_icount = handle_timers(z180_icount, old_icount);
 
 			/* If DMA is started go to check the mode */
 			if ((IO_DSTAT & Z180_DSTAT_DME) == Z180_DSTAT_DME)
 				goto again;
+
         } while( z180_icount > 0 );
 	}
 
+	total_cycles += cycles - z180_icount;
+
 	return cycles - z180_icount;
+}
+
+void z180_run_end()
+{
+	z180_icount = 0;
+}
+
+INT32 z180_total_cycles()
+{
+	return total_cycles + (current_cycles - z180_icount);
+}
+
+void z180_new_frame()
+{
+	total_cycles = 0;
 }
 
 /****************************************************************************

@@ -1,7 +1,7 @@
 // Based on MAME driver by Quench, Yochizo, David Haywood
 
 #include "toaplan.h"
-#include "z180.h"
+#include "z180_intf.h"
 
 #define REFRESHRATE 60
 #define VBLANK_LINES (32)
@@ -182,11 +182,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnAcb(&ba);
 
 		SekScan(nAction);				// scan 68000 states
-		z180_scan();
 
 		ToaScanGP9001(nAction, pnMin);
 
-		ToaRecalcPalette = 1;
 		bDrawScreen = true; // get background back ?
 	}
 
@@ -236,10 +234,11 @@ UINT8 __fastcall ghoxReadByte(UINT32 sekAddress)
 	}
 
 	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
-		return ShareRAM[(sekAddress - 0x180000) >> 1];
+		nCyclesDone[1] += Z180Run(SekTotalCycles() - nCyclesDone[1]);
+		return ShareRAM[((sekAddress - 0x180000) >> 1)];
 	}
 	
-	//bprintf(PRINT_NORMAL, _T("Read Byte %x\n"), sekAddress);
+	bprintf(PRINT_NORMAL, _T("Read Byte %x\n"), sekAddress);
 
 	return 0;
 }
@@ -261,12 +260,18 @@ UINT16 __fastcall ghoxReadWord(UINT32 sekAddress)
 		case 0x100000:
 			return PaddleRead(0);
 	}
-	
+
+	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
+//	bprintf(PRINT_NORMAL, _T("Read Word %x\n"), sekAddress);
+		nCyclesDone[1] += Z180Run(SekTotalCycles() - nCyclesDone[1]);
+		return ShareRAM[((sekAddress - 0x180000) >> 1)] + (ShareRAM[((sekAddress - 0x180000) >> 1)] * 256);
+	}
+
+	/*
 	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
 		SEK_DEF_READ_WORD(0, sekAddress);
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Read Word %x\n"), sekAddress);
+	*/
 
 	return 0;
 }
@@ -287,12 +292,15 @@ void __fastcall ghoxWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	
 	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
 		if ((sekAddress & 0x01) == 0x01) {
-			ShareRAM[(sekAddress - 0x180000) >> 1] = byteValue;
+		nCyclesDone[1] += Z180Run(SekTotalCycles() - nCyclesDone[1]); // iq_132
+			ShareRAM[((sekAddress - 0x180000) >> 1)] = byteValue;
+		} else {
+			bprintf(0, _T("%X, "), sekAddress);
 		}
 		return;
 	}
 	
-//	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), sekAddress, byteValue);
+	bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), sekAddress, byteValue);
 }
 
 void __fastcall ghoxWriteWord(UINT32 sekAddress, UINT16 wordValue)
@@ -317,45 +325,22 @@ void __fastcall ghoxWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			ToaGP9001WriteRegister(wordValue);
 			return;
 	}
-	
+	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
+//	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), sekAddress, wordValue);
+		nCyclesDone[1] += Z180Run(SekTotalCycles() - nCyclesDone[1]); // iq_132
+		ShareRAM[(sekAddress - 0x180000) >> 1] = wordValue&0xff;
+		return;
+	}
+/*
 	if (sekAddress >= 0x180000 && sekAddress <= 0x180fff) {
 		SEK_DEF_WRITE_WORD(0, sekAddress, wordValue)
 		return;
 	}
-	
-//	bprintf(PRINT_NORMAL, _T("Write Word %x, %x\n"), sekAddress, wordValue);
+  */
 }
 
-static UINT8 __fastcall GhoxMCUReadOp(UINT32 a)
+static UINT8 __fastcall GhoxMCURead(UINT32 a)
 {
-	if (a <= 0x3fff) return Rom02[a];
-	
-//	bprintf(PRINT_NORMAL, _T("Read Op %x\n"), a);
-	
-	return 0;
-}
-
-static UINT8 __fastcall GhoxMCUReadOpArg(UINT32 a)
-{
-	if (a <= 0x3fff) return Rom02[a];
-	
-//	bprintf(PRINT_NORMAL, _T("Read Op Arg %x\n"), a);
-	
-	return 0;
-}
-
-static UINT8 __fastcall GhoxMCUReadProg(UINT32 a)
-{
-	if (a <= 0x3fff) return Rom02[a];
-	
-	if (a >= 0x3fe00 && a <= 0x3ffff) {
-		return Ram02[(a - 0x3fe00) + 0x200];
-	}
-	
-	if (a >= 0x40000 && a <= 0x407ff) {
-		return ShareRAM[a - 0x40000];
-	}
-	
 	switch (a) {
 		case 0x80002: {
 			return DrvInput[3];
@@ -386,23 +371,13 @@ static UINT8 __fastcall GhoxMCUReadProg(UINT32 a)
 		}
 	}
 
-//	bprintf(PRINT_NORMAL, _T("Read Prog %x\n"), a);
+	bprintf(PRINT_NORMAL, _T("Read Prog %x\n"), a);
 	
 	return 0;
 }
 
-static void __fastcall GhoxMCUWriteProg(UINT32 a, UINT8 d)
+static void __fastcall GhoxMCUWrite(UINT32 a, UINT8 d)
 {
-	if (a >= 0x3fe00 && a <= 0x3ffff) {
-		Ram02[(a - 0x3fe00) + 0x200] = d;
-		return;
-	}
-	
-	if (a >= 0x40000 && a <= 0x407ff) {
-		ShareRAM[(a - 0x40000)] = d;
-		return;
-	}
-	
 	switch (a) {
 		case 0x8000e: {
 			BurnYM2151SelectRegister(d);
@@ -415,7 +390,7 @@ static void __fastcall GhoxMCUWriteProg(UINT32 a, UINT8 d)
 		}
 	}
 	
-//	bprintf(PRINT_NORMAL, _T("Write Prog %x, %x\n"), a, d);
+	bprintf(PRINT_NORMAL, _T("Write Prog %x, %x\n"), a, d);
 }
 
 static INT32 DrvDoReset()
@@ -423,8 +398,10 @@ static INT32 DrvDoReset()
 	SekOpen(0);
 	SekReset();
 	SekClose();
-	
-	z180_reset();
+
+	Z180Open(0);
+	Z180Reset();
+	Z180Close();
 	
 	BurnYM2151Reset();
 
@@ -448,7 +425,7 @@ static INT32 DrvInit()
 
 	BurnSetRefreshRate(REFRESHRATE);
 
-	nGP9001ROMSize[0] = 0x100000;
+	nGP9001ROMSize[0] = 0x800000;
 
 	// Find out how much memory is needed
 	Mem = NULL;
@@ -492,14 +469,18 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 	
-	z180_init(0, 10000000, NULL);
-	Z180SetCPUOpReadHandler(GhoxMCUReadOp);
-	Z180SetCPUOpReadArgHandler(GhoxMCUReadOpArg);
-	Z180SetCPUProgReadHandler(GhoxMCUReadProg);
-	Z180SetCPUProgWriteHandler(GhoxMCUWriteProg);
+	Z180Init(10000000);
+	Z180Open(0);
+	Z180MapMemory(Rom02,		0x00000, 0x03fff, MAP_ROM);
+	Z180MapMemory(Ram02,		0x0fe00, 0x0ffff, MAP_RAM);
+	Z180MapMemory(Ram02 + 0x200,	0x3fe00, 0x3ffff, MAP_RAM);
+	Z180MapMemory(ShareRAM,		0x40000, 0x407ff, MAP_RAM);
+	Z180SetReadHandler(GhoxMCURead);
+	Z180SetWriteHandler(GhoxMCUWrite);
+	Z180Close();
 	
 	BurnYM2151Init(27000000 / 8);
-	BurnYM2151SetAllRoutes(0.35, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.55, BURN_SND_ROUTE_BOTH);
 
 	bDrawScreen = true;
 
@@ -514,7 +495,7 @@ static INT32 DrvExit()
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
 	
-	z180_exit();
+	Z180Exit();
 	
 	BurnYM2151Exit();
 
@@ -537,14 +518,9 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-inline static INT32 CheckSleep(INT32)
-{
-	return 0;
-}
-
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 400;
 	INT32 nSoundBufferPos = 0;
 
 	if (DrvReset) {
@@ -568,11 +544,14 @@ static INT32 DrvFrame()
 	SekNewFrame();
 
 	SekOpen(0);
+	Z180Open(0);
 
 	SekIdle(nCyclesDone[0]);
 
 	nCyclesTotal[0] = (INT32)((INT64)10000000 * nBurnCPUSpeedAdjust / (0x0100 * REFRESHRATE));
-	nCyclesTotal[1] = (INT32)((INT64)10000000 / REFRESHRATE);
+	nCyclesTotal[1] = nCyclesTotal[0];
+
+	nCyclesDone[1] = 0;
 
 	SekSetCyclesScanline(nCyclesTotal[0] / 262);
 	nToaCyclesDisplayStart = nCyclesTotal[0] - ((nCyclesTotal[0] * (TOA_VBLANK_LINES + 240)) / 262);
@@ -589,7 +568,7 @@ static INT32 DrvFrame()
 		if (nNext > nToaCyclesVBlankStart) {
 			if (SekTotalCycles() < nToaCyclesVBlankStart) {
 				nCyclesSegment = nToaCyclesVBlankStart - SekTotalCycles();
-				SekRun(nCyclesSegment);
+				SekRun(nCyclesSegment); // bring us to vbl
 			}
 
 			if (pBurnDraw) {
@@ -603,14 +582,11 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - SekTotalCycles();
-		if (bVBlank || (!CheckSleep(0))) {
-			SekRun(nCyclesSegment);
-		} else {
-			SekIdle(nCyclesSegment);
-		}
+
+		SekRun(nCyclesSegment);
 		
 		// Run MCU
-		nCyclesDone[1] += z180_execute(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += Z180Run(SekTotalCycles() - nCyclesDone[1]);
 		
 		// Render sound segment
 		if (pBurnSoundOut) {
@@ -635,6 +611,7 @@ static INT32 DrvFrame()
 
 //	ToaBufferFCU2Sprites();
 
+	Z180Close();
 	SekClose();
 
 	return 0;
@@ -656,7 +633,7 @@ STD_ROM_PICK(ghox)
 STD_ROM_FN(ghox)
 
 struct BurnDriver BurnDrvGhox = {
-	"ghox", NULL, NULL, NULL, "1991",
+	"ghox", NULL, NULL, "ghox", "1991",
 	"Ghox (spinner)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
@@ -682,7 +659,7 @@ STD_ROM_PICK(ghoxj)
 STD_ROM_FN(ghoxj)
 
 struct BurnDriver BurnDrvGhoxj = {
-	"ghoxj", "ghox", NULL, NULL, "1991",
+	"ghoxj", "ghox", NULL, "ghox", "1991",
 	"Ghox (joystick)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,

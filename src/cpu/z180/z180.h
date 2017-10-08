@@ -7,6 +7,8 @@
 #define Z180_ASSERT_LINE		1
 #define Z180_INPUT_LINE_NMI		32
 
+#if 0
+
 typedef UINT8 (__fastcall *Z180ReadOpHandler)(UINT32 a);
 typedef UINT8 (__fastcall *Z180ReadOpArgHandler)(UINT32 a);
 typedef UINT8 (__fastcall *Z180ReadProgHandler)(UINT32 a);
@@ -27,6 +29,8 @@ void Z180SetCPUProgReadHandler(Z180ReadProgHandler handler);
 void Z180SetCPUProgWriteHandler(Z180WriteProgHandler handler);
 void Z180SetCPUIOReadHandler(Z180ReadIOHandler handler);
 void Z180SetCPUIOWriteHandler(Z180WriteIOHandler handler);
+
+#endif
 
 enum
 {
@@ -161,5 +165,9 @@ void z180_set_irq_line(int irqline, int state);
 void z180_write_iolines(UINT32 data);
 void z180_write_internal_io(UINT32 port, UINT8 data);
 void z180_scan();
+
+INT32 z180_total_cycles();
+void z180_new_frame();
+void z180_run_end();
 
 #endif /* __Z180_H__ */

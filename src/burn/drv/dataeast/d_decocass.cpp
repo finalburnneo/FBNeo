@@ -2,10 +2,11 @@
 note -- 
 cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
 
-cocean6b - needs us dips
-cpsoccerj - needs japan dips
+// cpsoccer* is fixed with a kludge for now. d'oh!
 
-cpsoccer backgrounds broken
+todo:
+	decode_object_one() broken, fall back to GfxDecode()
+	*maybe* add prio bitmap, update to modern palette & priority special object draw
 */
 #include "tiles_generic.h"
 #include "m6502_intf.h"
@@ -62,6 +63,7 @@ static UINT8 audio_nmi_enabled;
 static UINT8 audio_nmi_state;
 
 static INT32 burgertime_mode = 0; // for sound-fix
+static INT32 cpsoccer_mode = 0; // for palette kludge
 
 static INT32 e900_enable = 0;
 static INT32 e900_gfxbank = 0;
@@ -371,7 +373,7 @@ STDDIPINFOEXT(Ctisland, Decocass, Ctisland)
 static struct BurnDIPInfo Cocean1aDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x02, NULL			},
+	{0x13, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "1 Coin Credit"	},
 	{0x11, 0x01, 0x07, 0x07, "1"			},
@@ -411,7 +413,7 @@ STDDIPINFOEXT(Cocean1a,	Decocass,	Cocean1a)
 static struct BurnDIPInfo Cocean6bDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0x00, NULL			},
+	{0x13, 0xff, 0xff, 0x02, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "1 Coin Credit"	},
 	{0x11, 0x01, 0x07, 0x07, "1"			},
@@ -874,6 +876,32 @@ static struct BurnDIPInfo CpsoccerDIPList[]=
 
 STDDIPINFOEXT(Cpsoccer,	Decocass,	Cpsoccer)
 
+static struct BurnDIPInfo CpsoccerjDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x12, 0x01, 0x01, 0x01, "3"			},
+	{0x12, 0x01, 0x01, 0x00, "5"			},
+
+	{0   , 0xfe, 0   ,    4, "Number of Nice Goal"	},
+	{0x12, 0x01, 0x06, 0x00, "None"			},
+	{0x12, 0x01, 0x06, 0x06, "5"			},
+	{0x12, 0x01, 0x06, 0x04, "10"			},
+	{0x12, 0x01, 0x06, 0x02, "20"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x12, 0x01, 0x08, 0x00, "Off"			},
+	{0x12, 0x01, 0x08, 0x08, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x12, 0x01, 0x10, 0x10, "Easy"			},
+	{0x12, 0x01, 0x10, 0x00, "Difficult"		},
+};
+
+STDDIPINFOEXT(Cpsoccerj,	Decocass,	Cpsoccerj)
+
 static struct BurnDIPInfo CsdtenisDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL			},
@@ -1327,8 +1355,8 @@ static void tape_crc16(UINT8 data)
 
 static void tape_update(void)
 {
-	static int last_byte;
-	int offset, rclk, rdata, tape_bit, tape_byte, tape_block;
+	static INT32 last_byte;
+	INT32 offset, rclk, rdata, tape_bit, tape_byte, tape_block;
 	double tape_time = tape_time0;
 
 	if (tape_timer) tape_time += tape_dir * tapetimer();
@@ -1459,7 +1487,7 @@ static void tape_stop(void)
 static void decocass_init_common()
 {
 	UINT8 *image = DrvCassette;
-	int i, offs;
+	INT32 i, offs;
 
 	tape_dir = 0;
 	tape_speed = 0;
@@ -1555,9 +1583,9 @@ static UINT8 decocass_type1_read(UINT16 offset)
 		save = data;    /* save the unmodifed data for the latch */
 
 		promaddr = 0;
-		int promshift = 0;
+		INT32 promshift = 0;
 
-		for (int i=0;i<8;i++)
+		for (INT32 i=0;i<8;i++)
 		{
 			if (type1_map[i] == T1PROM) { promaddr |= (((data >> T1MAP(i,type1_inmap)) & 1) << promshift); promshift++; }
 		}
@@ -1565,7 +1593,7 @@ static UINT8 decocass_type1_read(UINT16 offset)
 		data = 0;
 		promshift = 0;
 
-		for (int i=0;i<8;i++)
+		for (INT32 i=0;i<8;i++)
 		{
 			if (type1_map[i] == T1PROM)     { data |= (((prom[promaddr] >> promshift) & 1)               << T1MAP(i,type1_outmap)); promshift++; }
 			if (type1_map[i] == T1LATCHINV) { data |= ((1 - ((latch1 >> T1MAP(i,type1_inmap)) & 1)) << T1MAP(i,type1_outmap)); }
@@ -1959,7 +1987,7 @@ static inline void decode_tiles_one(INT32 offset)
 {
 	offset &= 0x3ff;
 
-	int i = offset * 8;
+	INT32 i = offset * 8;
 
 	UINT8 a = DrvTileRAM[0x0000 + offset];
 	UINT8 b = DrvTileRAM[0x0400 + offset] >> 4;
@@ -1978,8 +2006,20 @@ static inline void decode_tiles_one(INT32 offset)
 	}
 }
 
+static void decode_ram_object()
+{
+	INT32 Plane3[1] = { 0 };
+	INT32 XOffs3[64] = { STEP8(7*8,1), STEP8(6*8,1), STEP8(5*8,1), STEP8(4*8,1),
+				STEP8(3*8,1), STEP8(2*8,1), STEP8(1*8,1), STEP8(0*8,1) };
+	INT32 YOffs3[64] = { STEP32(63*2*64, -1*2*64), STEP32(31*2*64, -1*2*64) };
+
+	GfxDecode(0x002, 1, 64, 64, Plane3, XOffs3, YOffs3, 0x040, DrvObjRAM, DrvObjExp);
+}
+
 static inline void decode_obj_one(INT32 offset)
 {
+	decode_ram_object();
+#if 0
 	for (INT32 bit = 0; bit < 8; bit++)
 	{
 		INT32 z = (offset * 8) + bit;
@@ -1988,6 +2028,7 @@ static inline void decode_obj_one(INT32 offset)
 
 		DrvObjExp[z] = (DrvObjRAM[offset] >> bit) & 1;
 	}
+#endif
 }
 
 static void decode_ram_tiles()
@@ -2067,8 +2108,9 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 		DrvPaletteTable[offset] = (r << 16) + (g << 8) + b;
 
-		DrvPalette[DrvPalLut[offset]] = BurnHighCol(r,g,b,0);
-		DrvPalette[DrvPalLut[offset + 0x20] + 0x20] = BurnHighCol(r,g,b,0);
+		//DrvPalette[DrvPalLut[offset]] = BurnHighCol(r,g,b,0);
+		DrvRecalc = 1; // needs to traverse the entire table for duplicates etc.
+
 		return;
 	}
 
@@ -2270,6 +2312,7 @@ static UINT8 decocass_main_read(UINT16 address)
 
 	return 0;
 }
+
 // BurgerTime Anti-migraine 8910fixer Hack.  See d_btime.cpp for notes.
 static UINT8 last01[3] = {0xff,0xff};
 static UINT8 last02[3] = {0xff,0xff};
@@ -2621,10 +2664,27 @@ static INT32 MemIndex()
 
 static void BurnPaletteLut()
 {
-	for (INT32 i = 0; i < 32; i++) {
+	for (INT32 i = 0; i < 32; i++) { // char/sprite layer
 		DrvPalLut[i] = i;
-		DrvPalLut[i+32] = BITSWAP08(i, 7,6,5,4,3,1,2,0);
+		//DrvPalLut[i+32] = BITSWAP08(i, 7,6,5,4,3,1,2,0); // for newer mame style video. needs priorities & "special priority" object draw
 	}
+
+	for (INT32 i = 0; i < 8; i++) { // edge layers
+		DrvPalLut[32+i] = 3*8+i;
+		DrvPalLut[40+i] = 3*8+((i << 1) & 0x04) + ((i >> 1) & 0x02) + (i & 0x01);
+	}
+
+	{ // "object"
+		DrvPalLut[48+0*2+0] = 0;
+		DrvPalLut[48+0*2+1] = 25;
+		DrvPalLut[48+1*2+0] = 0;
+		DrvPalLut[48+1*2+1] = 28;
+		DrvPalLut[48+2*2+0] = 0;
+		DrvPalLut[48+2*2+1] = 26;
+		DrvPalLut[48+3*2+0] = 0;
+		DrvPalLut[48+3*2+1] = 23;
+	}
+
 }
 
 static INT32 DecocassGetRoms()
@@ -2764,6 +2824,7 @@ static INT32 DrvExit()
 	type1_outmap = 0;
 
 	burgertime_mode = 0;
+	cpsoccer_mode = 0;
 
 	fourway_mode = 0;
 
@@ -2789,22 +2850,22 @@ static void draw_object()
 	INT32 color = (color_center_bot >> 4) & 15;
 
 	INT32 sx;
-	INT32 sy = 192 - (part_v_shift & 0x7f);
+	INT32 sy = 192 - (part_v_shift & 0x7f) - 8;
 
 	if (part_h_shift & 0x80)
 		sx = (part_h_shift & 0x7f) + 1;
 	else
 		sx = 91 - (part_h_shift & 0x7f);
 
-	RenderCustomTile_Mask_Clip(pTransDraw, 64, 64, 0, sx + 64, sy -  0, color, 1, 0, 0x30, DrvObjExp);
-	RenderCustomTile_Mask_Clip(pTransDraw, 64, 64, 1, sx +  0, sy -  0, color, 1, 0, 0x30, DrvObjExp);
+	      RenderCustomTile_Mask_Clip(pTransDraw, 64, 64, 0, sx + 64, sy -  0, color, 1, 0, 0x30, DrvObjExp);
+	      RenderCustomTile_Mask_Clip(pTransDraw, 64, 64, 1, sx +  0, sy -  0, color, 1, 0, 0x30, DrvObjExp);
 	RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 64, 64, 0, sx + 64, sy - 64, color, 1, 0, 0x30, DrvObjExp);
 	RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 64, 64, 1, sx +  0, sy - 64, color, 1, 0, 0x30, DrvObjExp);
 }
 
-static void draw_missiles(int missile_y_adjust, int missile_y_adjust_flip_screen,uint8_t *missile_ram, int interleave)
+static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_screen,uint8_t *missile_ram, INT32 interleave)
 {
-	int x;
+	INT32 x;
 
 	INT32 min_y = 0;
 	INT32 max_y = nScreenHeight - 1;
@@ -2813,7 +2874,7 @@ static void draw_missiles(int missile_y_adjust, int missile_y_adjust_flip_screen
 
 	for (INT32 i = 0, offs = 0; i < 8; i++, offs += 4 * interleave)
 	{
-		int sx, sy;
+		INT32 sx, sy;
 
 		sy = 255 - missile_ram[offs + 0 * interleave];
 		sx = 255 - missile_ram[offs + 2 * interleave];
@@ -2849,11 +2910,11 @@ static void draw_missiles(int missile_y_adjust, int missile_y_adjust_flip_screen
 	}
 }
 
-static void draw_sprites(int color, int sprite_y_adjust, int sprite_y_adjust_flip_screen, uint8_t *sprite_ram, int interleave)
+static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adjust_flip_screen, uint8_t *sprite_ram, INT32 interleave)
 {
 	for (INT32 i = 0, offs = 0; i < 8; i++, offs += 4 * interleave)
 	{
-		int sx, sy, flipx, flipy;
+		INT32 sx, sy, flipx, flipy;
 
 		if (!(sprite_ram[offs + 0] & 0x01))
 			continue;
@@ -2941,7 +3002,7 @@ static void draw_center()
 	INT32 min_y = 0;
 	INT32 max_y = nScreenHeight - 1;
 
-	int sx, sy, x, y, color;
+	INT32 sx, sy, x, y, color;
 
 	color = 0;
 	if (color_center_bot & 0x10)
@@ -2966,10 +3027,10 @@ static void draw_center()
 		}
 }
 
-static void draw_edge(int which, bool opaque)
+static void draw_edge(INT32 which, bool opaque)
 {
-	int scrolly_l = back_vl_shift + 8;
-	int scrolly_r = 256 - back_vr_shift + 8;
+	INT32 scrolly_l = back_vl_shift + 8;
+	INT32 scrolly_r = 256 - back_vr_shift + 8;
 
 	// bit 0x04 of the mode select effectively selects between two banks of data
 	if (0 == (mode_set & 0x04))
@@ -2977,7 +3038,7 @@ static void draw_edge(int which, bool opaque)
 	else
 		scrolly_l += 256;
 
-	int scrollx = 256 - back_h_shift;
+	INT32 scrollx = 256 - back_h_shift;
 	INT32 scrolly = (which) ? scrolly_r : scrolly_l;
 
 	INT32 miny = (which) ? (nScreenHeight/2) : 0;
@@ -2985,13 +3046,13 @@ static void draw_edge(int which, bool opaque)
 
 	for (INT32 y=miny; y<maxy;y++)
 	{
-		int srcline = (y + scrolly) & 0x1ff;
+		INT32 srcline = (y + scrolly) & 0x1ff;
 		UINT16* src = pTempDraw[which] + srcline * 512;
 		UINT16* dst = pTransDraw + y * nScreenWidth;
 
 		for (INT32 x=0; x<nScreenWidth;x++)
 		{
-			int srccol = 0;
+			INT32 srccol = 0;
 
 			// 2 bits control the x scroll mode, allowing it to wrap either half of the tilemap, or transition one way or the other between the two halves
 
@@ -3007,7 +3068,7 @@ static void draw_edge(int which, bool opaque)
 
 			if ((pix & 0x3) || opaque)
 			{
-				dst[x] = pix;
+				dst[x] = pix + ((cpsoccer_mode) ? 0x20 : 0);
 			}
 		}
 	}
@@ -3166,7 +3227,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 272;
-	INT32 nCyclesTotal[3] = { 750000 / 60, 500000 / 60, 500000 / 60 }; //1.5mhz -> .75mhz?
+	INT32 nCyclesTotal[3] = { (INT32)((double)750000 / 57.444853), (INT32)((double)500000 / 57.444853), (INT32)((double)500000 / 57.444853) }; //1.5mhz -> .75mhz?
 	INT32 nCyclesDone[3]  = { 0, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 
@@ -4587,6 +4648,7 @@ STD_ROM_FN(cpsoccer)
 static INT32 CpsoccerInit()
 {
 	type3_swap = TYPE3_SWAP_24;
+	cpsoccer_mode = 1;
 
 	return DecocassInit(decocass_type3_read,decocass_type3_write);
 }
@@ -4618,7 +4680,7 @@ struct BurnDriver BurnDrvCpsoccerj = {
 	"Pro Soccer (DECO Cassette) (Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSFOOTBALL, 0,
-	NULL, cpsoccerjRomInfo, cpsoccerjRomName, NULL, NULL, DecocassInputInfo, CpsoccerDIPInfo,
+	NULL, cpsoccerjRomInfo, cpsoccerjRomName, NULL, NULL, DecocassInputInfo, CpsoccerjDIPInfo,
 	CpsoccerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
 };

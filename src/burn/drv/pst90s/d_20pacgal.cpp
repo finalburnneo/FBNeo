@@ -1,9 +1,6 @@
 // FB Alpha Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion / Pac-Man - 25th Anniversary Edition driver module
 // Based on MAME driver by Nicola Salmoria
 
-// to do
-//	20pacgal Galaga missing tiles (text / enemy point values in attract) and bad colors
-
 #include "tiles_generic.h"
 #include "z180_intf.h"
 #include "namco_snd.h"
@@ -45,8 +42,8 @@ static UINT32 sprite_pal_base = 0;
 
 static struct BurnInputInfo Pacgal20InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"P1 Start (right)",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
-	{"P1 Start (left)",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 start"	},
+	{"P1 Start (right)",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
+	{"P1 Start (left)",	BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
@@ -54,8 +51,8 @@ static struct BurnInputInfo Pacgal20InputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
-	{"P2 Start (right)",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
-	{"P2 Start (left)",		BIT_DIGITAL,	DrvJoy2 + 7,	"p4 start"	},
+	{"P2 Start (right)",	BIT_DIGITAL,	DrvJoy2 + 6,	"p4 start"	},
+	{"P2 Start (left)",	BIT_DIGITAL,	DrvJoy2 + 7,	"p3 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
@@ -63,11 +60,10 @@ static struct BurnInputInfo Pacgal20InputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service Mode",	BIT_DIGITAL,    DrvJoy3 + 7,     "diag"},
+	{"Service Mode",	BIT_DIGITAL,    DrvJoy3 + 7,    "diag"		},
 };
 
 STDINPUTINFO(Pacgal20)
-
 
 static void set_bank(INT32 select)
 {
@@ -233,7 +229,7 @@ static INT32 MemIndex()
 
 	DrvColPROM	= Next; Next += 0x008000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x1040 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x3040 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -335,7 +331,7 @@ static INT32 DrvExit()
 
 static void DrvPaletteInit()
 {
-	for (INT32 offs = 0; offs < 0x1000 ;offs++)
+	for (INT32 offs = 0; offs < 0x2000 ;offs++)
 	{
 		INT32 bit0 = (DrvColPROM[offs] >> 0) & 0x01;
 		INT32 bit1 = (DrvColPROM[offs] >> 1) & 0x01;
@@ -362,21 +358,22 @@ static void DrvPaletteInit()
 		INT32 g = map[(offs >> 2) & 0x03];
 		INT32 b = map[(offs >> 4) & 0x03];
 
-		DrvPalette[0x1000 + offs] = BurnHighCol(r, g, b, 0);
+		DrvPalette[0x2000 + offs] = BurnHighCol(r, g, b, 0);
+		DrvPalette[0x3000 + offs] = DrvPalette[0x2000 + offs];
 	}
 }
 
 static void draw_stars()
 {
-	if ((stars_ctrl >> 5) & 1 )
+	if ((stars_ctrl >> 5) & 1)
 	{
-		UINT16 lfsr =   stars_seed[0] + stars_seed[1]*256;
+		UINT16 lfsr =   stars_seed[0] + stars_seed[1] * 256;
 		UINT8 feedback = (stars_ctrl >> 6) & 1;
 		UINT16 star_seta = 0x3fc0 | (((stars_ctrl >> 3) & 0x01) << 14);
 		UINT16 star_setb = 0x3fc0 | (((stars_ctrl >> 3) & 0x02) << 14);
 		INT32 cnt = 0;
 
-		for (INT32 clock = 0; clock < nScreenWidth*nScreenHeight; clock++)
+		for (INT32 clock = 0; clock < nScreenWidth * nScreenHeight; clock++)
 		{
 			INT32 x = clock % nScreenWidth;
 			INT32 y = clock / nScreenWidth;
@@ -388,7 +385,7 @@ static void draw_stars()
 			if (((lfsr & 0xffc0) == star_seta) || ((lfsr & 0xffc0) == star_setb))
 			{
 				if (y >= 0 && y < nScreenHeight)
-					pTransDraw[(y * nScreenWidth) + x] = 0x1000 + (lfsr & 0x3f);
+					pTransDraw[(y * nScreenWidth) + x] = 0x2000 + (lfsr & 0x3f);
 				cnt++;
 			}
 		}
@@ -404,7 +401,7 @@ static void draw_chars()
 		INT32 y, x;
 
 		UINT8 *gfx = DrvCharRAM + (DrvVidRAM[offs] << 4);
-		UINT32 color_base = (DrvVidRAM[0x0400 | offs] & 0x3f) << 2;
+		UINT32 color_base = ((DrvVidRAM[0x0400 | offs] & 0x3f) << 2);
 
 		if ((offs & 0x03c0) == 0)
 		{
@@ -570,7 +567,7 @@ static INT32 DrvDraw()
 	draw_chars();
 	draw_sprites();
 
-	BurnTransferCopy(DrvPalette);
+	BurnTransferCopy(DrvPalette + (game_selected * 0x1000));
 
 	return 0;
 }
@@ -598,7 +595,7 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= 0x7e;
 	}
 
-	INT32 nInterleave = 224; // ?
+	INT32 nInterleave = 224;
 	INT32 nCyclesTotal[1] = { 18432000 / 60 };
 	INT32 nCyclesDone[1] = { 0 };
 
@@ -608,7 +605,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += Z180Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == (nInterleave - 1) && irq_mask) Z180SetIRQLine(0, CPU_IRQSTATUS_ACK); // hold?
+		if (i == (nInterleave - 1) && irq_mask) Z180SetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 
 	if (pBurnSoundOut) {
@@ -684,7 +681,7 @@ struct BurnDriver BurnDrvPacman25 = {
 	"Pac-Man - 25th Anniversary Edition (Rev 3.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacman25RomInfo, Pacman25RomName, NULL, NULL, Pacgal20InputInfo, NULL,//Pacman25InputInfo, Pacman25DIPInfo,
+	NULL, Pacman25RomInfo, Pacman25RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	Pacman25Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };

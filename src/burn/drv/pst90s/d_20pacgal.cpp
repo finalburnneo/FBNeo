@@ -2,8 +2,7 @@
 // Based on MAME driver by Nicola Salmoria
 
 // to do
-//	20pacgal cannot select Galaga :/
-//	20pacgal pacman sounds bad...
+//	20pacgal Galaga missing tiles (text / enemy point values in attract) and bad colors
 
 #include "tiles_generic.h"
 #include "z180_intf.h"
@@ -40,14 +39,14 @@ static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
 static UINT8 DrvInputs[3];
-static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 
 static UINT32 sprite_pal_base = 0;
 
 static struct BurnInputInfo Pacgal20InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
+	{"P1 Start (right)",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
+	{"P1 Start (left)",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
@@ -55,7 +54,8 @@ static struct BurnInputInfo Pacgal20InputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Start (right)",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
+	{"P2 Start (left)",		BIT_DIGITAL,	DrvJoy2 + 7,	"p4 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
@@ -63,21 +63,11 @@ static struct BurnInputInfo Pacgal20InputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Service Mode",	BIT_DIGITAL,    DrvJoy3 + 7,     "diag"},
 };
 
 STDINPUTINFO(Pacgal20)
 
-static struct BurnDIPInfo Pacgal20DIPList[]=
-{
-	{0x0f, 0xff, 0xff, 0x80, NULL		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"	},
-	{0x0f, 0x01, 0x80, 0x80, "Off"		},
-	{0x0f, 0x01, 0x80, 0x00, "On"		},
-};
-
-STDDIPINFO(Pacgal20)
 
 static void set_bank(INT32 select)
 {
@@ -166,7 +156,7 @@ static void __fastcall pacgal20_write_port(UINT32 address, UINT8 data)
 		return;
 
 		case 0x89:
-			DACWrite(0,data);
+			DACSignedWrite(0,data);
 		return;
 
 		case 0x8a:
@@ -205,7 +195,7 @@ static UINT8 __fastcall pacgal20_read_port(UINT32 address)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (Z180TotalCycles() / (18432000 / 60)));
+	return (INT32)(float)(nBurnSoundLen * (Z180TotalCycles() / (18432000.000 / (nBurnFPS / 100.000))));
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -290,7 +280,7 @@ static INT32 DrvInit()
 		if (BurnLoadRom(DrvColPROM,  1, 1)) return 1;
 	}
 
-	Z180Init(18432000);
+	Z180Init(0);
 	Z180Open(0);
 	Z180MapMemory(DrvZ180ROM,		0x00000, 0x3ffff, MAP_ROM);
 	Z180MapMemory(DrvVidRAM,		0x44000, 0x447ff, MAP_RAM);
@@ -308,7 +298,7 @@ static INT32 DrvInit()
 	Z180SetWritePortHandler(pacgal20_write_port); 
 	Z180Close();
 
-	NamcoSoundInit(18432000 / 4 / 6 / 32, 3, 0);
+	NamcoSoundInit(73728000 / 4 / 6 / 32, 3, 0);
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
@@ -598,8 +588,6 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0xff, 3);
 
-		DrvInputs[2] = (DrvDips[0] & 0x80) | (DrvInputs[2] & 0x7f);
-
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -696,7 +684,7 @@ struct BurnDriver BurnDrvPacman25 = {
 	"Pac-Man - 25th Anniversary Edition (Rev 3.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacman25RomInfo, Pacman25RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,//Pacman25InputInfo, Pacman25DIPInfo,
+	NULL, Pacman25RomInfo, Pacman25RomName, NULL, NULL, Pacgal20InputInfo, NULL,//Pacman25InputInfo, Pacman25DIPInfo,
 	Pacman25Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -718,7 +706,7 @@ struct BurnDriver BurnDrvPacman25o = {
 	"Pac-Man - 25th Anniversary Edition (Rev 2.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacman25oRomInfo, Pacman25oRomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacman25oRomInfo, Pacman25oRomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	Pacman25Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -740,7 +728,7 @@ struct BurnDriver BurnDrvPacgal20 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.08)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacgal20RomInfo, Pacgal20RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacgal20RomInfo, Pacgal20RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -762,7 +750,7 @@ struct BurnDriver BurnDrvPacgal20r4 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.04)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacgal20r4RomInfo, Pacgal20r4RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacgal20r4RomInfo, Pacgal20r4RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -784,7 +772,7 @@ struct BurnDriver BurnDrvPacgal20r3 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.03)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacgal20r3RomInfo, Pacgal20r3RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacgal20r3RomInfo, Pacgal20r3RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -806,7 +794,7 @@ struct BurnDriver BurnDrvPacgal20r2 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.02)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacgal20r2RomInfo, Pacgal20r2RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacgal20r2RomInfo, Pacgal20r2RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -828,7 +816,7 @@ struct BurnDriver BurnDrvPacgal20r1 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.01)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacgal20r1RomInfo, Pacgal20r1RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacgal20r1RomInfo, Pacgal20r1RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };
@@ -850,7 +838,7 @@ struct BurnDriver BurnDrvPacgal20r0 = {
 	"Ms. Pac-Man/Galaga - 20th Anniversary Class of 1981 Reunion (V1.00)\0", NULL, "Namco / Cosmodog", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
-	NULL, Pacgal20r0RomInfo, Pacgal20r0RomName, NULL, NULL, Pacgal20InputInfo, Pacgal20DIPInfo,
+	NULL, Pacgal20r0RomInfo, Pacgal20r0RomName, NULL, NULL, Pacgal20InputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1040,
 	224, 288, 3, 4
 };

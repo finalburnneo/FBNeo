@@ -183,6 +183,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SekScan(nAction);				// scan 68000 states
 
+		Z180Scan();
+
 		ToaScanGP9001(nAction, pnMin);
 
 		bDrawScreen = true; // get background back ?
@@ -469,7 +471,7 @@ static INT32 DrvInit()
 	ToaPalSrc = RamPal;
 	ToaPalInit();
 	
-	Z180Init(10000000);
+	Z180Init(1);
 	Z180Open(0);
 	Z180MapMemory(Rom02,		0x00000, 0x03fff, MAP_ROM);
 	Z180MapMemory(Ram02,		0x0fe00, 0x0ffff, MAP_RAM);
@@ -633,7 +635,7 @@ STD_ROM_PICK(ghox)
 STD_ROM_FN(ghox)
 
 struct BurnDriver BurnDrvGhox = {
-	"ghox", NULL, NULL, "ghox", "1991",
+	"ghox", NULL, NULL, NULL, "1991",
 	"Ghox (spinner)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,
@@ -659,7 +661,7 @@ STD_ROM_PICK(ghoxj)
 STD_ROM_FN(ghoxj)
 
 struct BurnDriver BurnDrvGhoxj = {
-	"ghoxj", "ghox", NULL, "ghox", "1991",
+	"ghoxj", "ghox", NULL, NULL, "1991",
 	"Ghox (joystick)\0", NULL, "Toaplan", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_BREAKOUT, 0,

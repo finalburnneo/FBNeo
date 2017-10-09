@@ -298,7 +298,7 @@ static INT32 DrvInit()
 	NacmoSoundSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.30, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.90, BURN_SND_ROUTE_BOTH);
 
 	BurnWatchdogInit(DrvDoReset, 180);
 

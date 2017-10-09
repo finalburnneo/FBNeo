@@ -2006,20 +2006,10 @@ static inline void decode_tiles_one(INT32 offset)
 	}
 }
 
-static void decode_ram_object()
-{
-	INT32 Plane3[1] = { 0 };
-	INT32 XOffs3[64] = { STEP8(7*8,1), STEP8(6*8,1), STEP8(5*8,1), STEP8(4*8,1),
-				STEP8(3*8,1), STEP8(2*8,1), STEP8(1*8,1), STEP8(0*8,1) };
-	INT32 YOffs3[64] = { STEP32(63*2*64, -1*2*64), STEP32(31*2*64, -1*2*64) };
-
-	GfxDecode(0x002, 1, 64, 64, Plane3, XOffs3, YOffs3, 0x040, DrvObjRAM, DrvObjExp);
-}
-
 static inline void decode_obj_one(INT32 offset)
 {
-	decode_ram_object();
-#if 0
+	offset &= 0x3ff;
+
 	for (INT32 bit = 0; bit < 8; bit++)
 	{
 		INT32 z = (offset * 8) + bit;
@@ -2028,7 +2018,6 @@ static inline void decode_obj_one(INT32 offset)
 
 		DrvObjExp[z] = (DrvObjRAM[offset] >> bit) & 1;
 	}
-#endif
 }
 
 static void decode_ram_tiles()

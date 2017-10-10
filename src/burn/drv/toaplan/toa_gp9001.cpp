@@ -96,6 +96,8 @@ static void RenderSpriteQueue(INT32 i, INT32 nPriority)
 	UINT32 nSpriteNumber;
 	INT32 x, y, xoff, yoff;
 	INT32 nFlip;
+	INT32 nMultiConnectorX = GP9001Reg[i][6] & 0x1ff;
+	INT32 nMultiConnectorY = GP9001Reg[i][7] & 0x1ff;
 
 	UINT8*** pMySpriteQueue = &pSpriteQueue[i << 4];
 
@@ -117,6 +119,14 @@ static void RenderSpriteQueue(INT32 i, INT32 nPriority)
 		nSpriteYSize = pSpriteInfo[6] & 0x0F;
 		nSpriteYPos = ((pSpriteInfo[7] << 1) | (pSpriteInfo[6] >> 7)) + GP9001Reg[i][7] + nSpriteYOffset;
 		nSpriteYPos &= 0x01FF;
+
+		if (pSpriteInfo[1] & 0x40) { // Multi-Connected sprite mode.
+			nSpriteXPos = (nMultiConnectorX + (((pSpriteInfo[5] << 1) | (pSpriteInfo[4] >> 7)))) & 0x1ff;
+			nSpriteYPos = (nMultiConnectorY + (((pSpriteInfo[7] << 1) | (pSpriteInfo[6] >> 7)))) & 0x1ff;
+		}
+
+		nMultiConnectorX = nSpriteXPos;
+		nMultiConnectorY = nSpriteYPos;
 
 		if (nFlip & 2) {
 			xoff = -8;

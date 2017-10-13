@@ -4094,6 +4094,8 @@ STD_ROM_FN(cdiscon1)
 
 static INT32 Cdiscon1Init()
 {
+	fourway_mode = 1;
+
 	return DecocassInit(decocass_type2_read, decocass_type2_write);
 }
 

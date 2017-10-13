@@ -1,19 +1,18 @@
+// FB Alpha Deco Cassette driver module
+// Based on MAME driver by Juergen Buchmueller, David Haywood, Ajrhacker
+// Uses tape loader & protection code by Juergen Buchmueller, David Haywood
+// Some graphics routines by Juergen Buchmueller, David Haywood, Ajrhacker
+
 /*
 note -- 
 cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
-
-// cpsoccer* is fixed with a kludge for now. d'oh!
-
-todo:
-	decode_object_one() broken, fall back to GfxDecode()
-	*maybe* add prio bitmap, update to modern palette & priority special object draw
 */
+
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"
 #include "driver.h"
 #include "flt_rc.h"
-#include "m68000_intf.h"//debug
 #include "i8x41.h"
 extern "C" {
     #include "ay8910.h"
@@ -63,7 +62,6 @@ static UINT8 audio_nmi_enabled;
 static UINT8 audio_nmi_state;
 
 static INT32 burgertime_mode = 0; // for sound-fix
-static INT32 cpsoccer_mode = 0; // for palette kludge
 
 static INT32 e900_enable = 0;
 static INT32 e900_gfxbank = 0;
@@ -1272,17 +1270,10 @@ static struct BurnDIPInfo CdsteljnDIPList[]=
 
 STDDIPINFO(Cdsteljn)
 
-#define TAPE_CLOCKRATE	4800	/* clock pulses per second */
-
-/* duration of the clear LEADER (and trailer) of the tape */
-#define TAPE_LEADER 	TAPE_CLOCKRATE		/* 1s */
-/* duration of the GAP between leader and BOT/EOT */
-#define TAPE_GAP		TAPE_CLOCKRATE*3/2	/* 1.5s */
-/* duration of BOT/EOT holes */
-#define TAPE_HOLE		TAPE_CLOCKRATE/400	/* 0.0025s */
-
-/* byte offset of the tape chunks (8 clocks per byte = 16 samples) */
-/* 300 ms GAP between BOT and first data block (doesn't work.. thus /2) */
+#define TAPE_CLOCKRATE	4800
+#define TAPE_LEADER 	TAPE_CLOCKRATE
+#define TAPE_GAP		TAPE_CLOCKRATE*3/2
+#define TAPE_HOLE		TAPE_CLOCKRATE/400
 #define TAPE_PRE_GAP	34
 #define TAPE_LEADIN 	(TAPE_PRE_GAP + 1)
 #define TAPE_HEADER 	(TAPE_LEADIN + 1)
@@ -1293,8 +1284,6 @@ STDDIPINFO(Cdsteljn)
 #define TAPE_LEADOUT	(TAPE_TRAILER + 1)
 #define TAPE_LONGCLOCK	(TAPE_LEADOUT + 1)
 #define TAPE_POST_GAP	(TAPE_LONGCLOCK + 34)
-
-/* size of a tape chunk (block) including gaps */
 #define TAPE_CHUNK		TAPE_POST_GAP
 
 static double tape_time0 = 0;
@@ -1931,10 +1920,10 @@ static UINT8 decocass_e5xx_read(UINT8 offset)
 			(BIT(i8041_p2, 0)   << 1) |   /* D1 = P20 - FNO/ */
 			(BIT(i8041_p2, 1)   << 2) |   /* D2 = P21 - EOT/ */
 			(BIT(i8041_p2, 2)   << 3) |   /* D3 = P22 - ERR/ */
-			((tape_bot_eot)            << 4) |   /* D4 = BOT/EOT (direct from drive) */
-			(1                    << 5) |   /* D5 floating input */
-			(1                    << 6) |   /* D6 floating input */
-			((/*1-1*/0) << 7);    /* D7 = cassette present */
+			((tape_bot_eot)     << 4) |   /* D4 = BOT/EOT (direct from drive) */
+			(1                  << 5) |   /* D5 floating input */
+			(1                  << 6) |   /* D6 floating input */
+			((0) << 7);                   /* D7 = cassette present (active low) */
 	}
 	else
 	{
@@ -2097,7 +2086,6 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 		DrvPaletteTable[offset] = (r << 16) + (g << 8) + b;
 
-		//DrvPalette[DrvPalLut[offset]] = BurnHighCol(r,g,b,0);
 		DrvRecalc = 1; // needs to traverse the entire table for duplicates etc.
 
 		return;
@@ -2183,7 +2171,7 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xe413:
-			// coin_counter (not emulated)
+			// coin counter (not emulated)
 			mux_data = (data & 0xc) >> 2; // cdsteljn
 		return;
 
@@ -2202,7 +2190,7 @@ static void decocass_main_write(UINT16 address, UINT8 data)
 
 		case 0xe415:
 		case 0xe416:
-			// quadrature_decoder_reset_w (analog inputs) - iq_132
+			// Unused analog stuff.
 		return;
 
 		case 0xe417:
@@ -2251,7 +2239,7 @@ static UINT8 input_read(INT32 offset)
 		case 4:
 		case 5:
 		case 6:
-			return 0; //data = quadrature_decoder[(offset & 7) - 3]; // iq_132! analog inputs
+			return 0; // Unused analog stuff.
 	}
 
 	return 0xff;
@@ -2655,25 +2643,8 @@ static void BurnPaletteLut()
 {
 	for (INT32 i = 0; i < 32; i++) { // char/sprite layer
 		DrvPalLut[i] = i;
-		//DrvPalLut[i+32] = BITSWAP08(i, 7,6,5,4,3,1,2,0); // for newer mame style video. needs priorities & "special priority" object draw
+		DrvPalLut[i+32] = BITSWAP08(i, 7,6,5,4,3,1,2,0);
 	}
-
-	for (INT32 i = 0; i < 8; i++) { // edge layers
-		DrvPalLut[32+i] = 3*8+i;
-		DrvPalLut[40+i] = 3*8+((i << 1) & 0x04) + ((i >> 1) & 0x02) + (i & 0x01);
-	}
-
-	{ // "object"
-		DrvPalLut[48+0*2+0] = 0;
-		DrvPalLut[48+0*2+1] = 25;
-		DrvPalLut[48+1*2+0] = 0;
-		DrvPalLut[48+1*2+1] = 28;
-		DrvPalLut[48+2*2+0] = 0;
-		DrvPalLut[48+2*2+1] = 26;
-		DrvPalLut[48+3*2+0] = 0;
-		DrvPalLut[48+3*2+1] = 23;
-	}
-
 }
 
 static INT32 DecocassGetRoms()
@@ -2813,7 +2784,6 @@ static INT32 DrvExit()
 	type1_outmap = 0;
 
 	burgertime_mode = 0;
-	cpsoccer_mode = 0;
 
 	fourway_mode = 0;
 
@@ -2833,23 +2803,57 @@ static void DrvPaletteUpdate()
 
 static void draw_object()
 {
-	if ((mode_set & 0x80) == 0)
+	INT32 crossing = mode_set & 3;
+
+	if ((crossing == 0 || BIT(mode_set, 6)) && !BIT(mode_set, 5)) // in daylight or during explosion
 		return;
 
-	INT32 color = (color_center_bot >> 4) & 15;
+	INT32 color = (BITSWAP08(color_center_bot, 0, 1, 7, 2, 3, 4, 5, 6) & 0x27) | 0x08;
 
-	INT32 sx;
-	INT32 sy = 192 - (part_v_shift & 0x7f) - 8;
+	INT32 sy = 64 - part_v_shift;
+	if (sy < 0)
+		sy += 256;
+	INT32 sx = part_h_shift - 128 + 1;
 
-	if (part_h_shift & 0x80)
-		sx = (part_h_shift & 0x7f) + 1;
-	else
-		sx = 91 - (part_h_shift & 0x7f);
+	const UINT8 *objdata0 = DrvObjExp + 0 * (64 * 64);
+	const UINT8 *objdata1 = DrvObjExp + 1 * (64 * 64);
 
-	      RenderCustomTile_Mask_Clip(pTransDraw, 64, 64, 0, sx + 64, sy -  0, color, 1, 0, 0x30, DrvObjExp);
-	      RenderCustomTile_Mask_Clip(pTransDraw, 64, 64, 1, sx +  0, sy -  0, color, 1, 0, 0x30, DrvObjExp);
-	RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 64, 64, 0, sx + 64, sy - 64, color, 1, 0, 0x30, DrvObjExp);
-	RenderCustomTile_Mask_FlipY_Clip(pTransDraw, 64, 64, 1, sx +  0, sy - 64, color, 1, 0, 0x30, DrvObjExp);
+	for (INT32 y = 0; y < nScreenHeight; y++)
+	{
+		const INT32 dy = y - sy + 8;
+		for (INT32 x = 0; x < nScreenWidth; x++)
+		{
+			const INT32 dx = x - sx;
+
+			bool pri2 = false;
+			INT32 scroll = back_h_shift;
+
+			switch (crossing)
+			{
+				case 0: pri2 = true; break; // outside tunnel (for reference; not usually handled in this loop)
+				case 1: pri2 = (x >= scroll); break; // exiting tunnel
+				case 2: break; // inside tunnel
+				case 3: pri2 = (x < scroll); break; // entering tunnel
+			}
+
+			if (BIT(mode_set, 7))
+			{
+				// check coordinates against object data
+				if ((dy >= -64 && dy < 0 && dx >= 64 && dx < 128 && objdata0[((-1 - dy) * 64 + dx - 64) & 0xfff] != 0) ||
+					(dy >= 0 && dy < 64 && dx >= 64 && dx < 128 && objdata0[(dy * 64 + dx - 64) & 0xfff] != 0) ||
+					(dy >= -64 && dy < 0 && dx >= 0 && dx < 64 && objdata1[((-1 - dy) * 64 + dx) & 0xfff] != 0) ||
+					(dy >= 0 && dy < 64 && dx >= 0 && dx < 64 && objdata1[(dy * 64 + dx) & 0xfff] != 0))
+				{
+					pri2 = true;
+					if (BIT(mode_set, 5) && pPrioDraw[(y * nScreenWidth) + x] == 0) //priority.pix8(y, x) == 0) // least priority?
+						pTransDraw[(y * nScreenWidth) + x] = color;
+				}
+			}
+
+			if (!pri2)
+				pTransDraw[(y * nScreenWidth) + x] |= 0x10;
+		}
+	}
 }
 
 static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_screen,uint8_t *missile_ram, INT32 interleave)
@@ -2876,8 +2880,10 @@ static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_sc
 		if (sy >= min_y && sy <= max_y)
 			for (x = 0; x < 4; x++)
 			{
-				if (sx >= min_x && sx <= max_x)
+				if (sx >= min_x && sx <= max_x) {
 					pTransDraw[(sy * nScreenWidth) + sx] = (color_missiles & 7) | 8;
+					pPrioDraw[(sy * nScreenWidth) + sx] |= 1 << 2;
+				}
 				sx++;
 			}
 
@@ -2892,8 +2898,10 @@ static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_sc
 		if (sy >= min_y && sy <= max_y)
 			for (x = 0; x < 4; x++)
 			{
-				if (sx >= min_x && sx <= max_x)
+				if (sx >= min_x && sx <= max_x) {
 					pTransDraw[(sy * nScreenWidth) + sx] = ((color_missiles >> 4) & 7) | 8;
+					pPrioDraw[(sy * nScreenWidth) + sx] |= 1 << 3;
+				}
 				sx++;
 			}
 	}
@@ -2931,27 +2939,27 @@ static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adju
 
 		if (flipy) {
 			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 3, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 1, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 3, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 1, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			}
 		}
 
@@ -2960,27 +2968,27 @@ static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adju
 		// Wrap around
 		if (flipy) {
 			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 1, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 3, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 0, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pTransDraw, code + 2, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 3, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 1, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 2, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pTransDraw, code + 0, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			}
 		} else {
 			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 0, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 2, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 1, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pTransDraw, code + 3, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 3, sx + 0, sy + 8, color, 3, 0, 0, DrvCharExp);
-				Render8x8Tile_Mask_Clip(pTransDraw, code + 1, sx + 8, sy + 8, color, 3, 0, 0, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 2, sx + 0, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 0, sx + 8, sy + 0, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 3, sx + 0, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
+				Render8x8Tile_Prio_Mask_Clip(pTransDraw, code + 1, sx + 8, sy + 8, color, 3, 0, 0, 1 << 1, DrvCharExp);
 			}
 		}
 	}
@@ -3057,7 +3065,7 @@ static void draw_edge(INT32 which, bool opaque)
 
 			if ((pix & 0x3) || opaque)
 			{
-				dst[x] = pix + ((cpsoccer_mode) ? 0x20 : 0);
+				if (pix!=0) dst[x] = pix; // if (pix!=0) because it needs to inherit the background fill from underneath it.
 			}
 		}
 	}
@@ -3114,29 +3122,27 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	BurnTransferClear();
+	BurnTransferClear(8);
 
 	predraw_bg();
 
 	if (mode_set & 0x08)
 	{
-		draw_edge(0,true);
-		draw_edge(1,true);
+		draw_edge(0, true);
+		draw_edge(1, true);
 	}
 
 	if (mode_set & 0x20)
 	{
-		if (nBurnLayer & 1) draw_object();
 		if (nBurnLayer & 2) draw_center();
 	}
 	else
 	{
-		if (nBurnLayer & 1) draw_object();
 		if (nBurnLayer & 2) draw_center();
-		if (mode_set & 0x08)  /* bkg_ena on ? */
+		if (mode_set & 0x08)
 		{
-			draw_edge(0,false);
-			draw_edge(1,false);
+			draw_edge(0, false);
+			draw_edge(1, false);
 		}
 	}
 
@@ -3145,6 +3151,8 @@ static INT32 DrvDraw()
 	if (nSpriteEnable & 1) draw_sprites((color_center_bot >> 1) & 1, 8, 0, DrvFgRAM, 0x20);
 
 	if (nBurnLayer & 8) draw_missiles(1+8, 0, DrvColRAM, 0x20);
+
+	if (nBurnLayer & 1) draw_object();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3336,8 +3344,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sound_ack);
 		SCAN_VAR(soundlatch2);
 		SCAN_VAR(mux_data);
-
-		//SCAN_VAR(quad_decoder[4]);
 
 		SCAN_VAR(decocass_reset);
 		SCAN_VAR(audio_nmi_enabled);
@@ -4637,7 +4643,6 @@ STD_ROM_FN(cpsoccer)
 static INT32 CpsoccerInit()
 {
 	type3_swap = TYPE3_SWAP_24;
-	cpsoccer_mode = 1;
 
 	return DecocassInit(decocass_type3_read,decocass_type3_write);
 }

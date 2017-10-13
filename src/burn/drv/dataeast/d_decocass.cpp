@@ -62,6 +62,7 @@ static UINT8 audio_nmi_enabled;
 static UINT8 audio_nmi_state;
 
 static INT32 burgertime_mode = 0; // for sound-fix
+static INT32 skater_mode = 0;
 
 static INT32 e900_enable = 0;
 static INT32 e900_gfxbank = 0;
@@ -2784,6 +2785,7 @@ static INT32 DrvExit()
 	type1_outmap = 0;
 
 	burgertime_mode = 0;
+	skater_mode = 0;
 
 	fourway_mode = 0;
 
@@ -2810,7 +2812,7 @@ static void draw_object()
 
 	INT32 color = (BITSWAP08(color_center_bot, 0, 1, 7, 2, 3, 4, 5, 6) & 0x27) | 0x08;
 
-	INT32 sy = 64 - part_v_shift;
+	INT32 sy = 64 - part_v_shift + ((skater_mode) ? 1 : 0);
 	if (sy < 0)
 		sy += 256;
 	INT32 sx = part_h_shift - 128 + 1;
@@ -3146,7 +3148,7 @@ static INT32 DrvDraw()
 		}
 	}
 
-	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, (skater_mode) ? 1 : 0);
 
 	if (nSpriteEnable & 1) draw_sprites((color_center_bot >> 1) & 1, 8, 0, DrvFgRAM, 0x20);
 
@@ -4536,6 +4538,7 @@ STD_ROM_FN(cskater)
 static INT32 CskaterInit()
 {
 	type3_swap = TYPE3_SWAP_45;
+	skater_mode = 1; // object "under tilemap" + 1px correction
 
 	return DecocassInit(decocass_type3_read,decocass_type3_write);
 }

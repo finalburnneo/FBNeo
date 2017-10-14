@@ -25,6 +25,8 @@ static HWND hSelList			= NULL;
 static HWND hParent				= NULL;
 static HWND hInfoLabel[6]		= { NULL, NULL, NULL, NULL, NULL };			// 4 things in our Info-box
 static HWND hInfoText[6]		= { NULL, NULL, NULL, NULL, NULL };			// 4 things in our Info-box
+TCHAR szSearchString[256]       = { _T("") };                               // Stores the search text between game loads
+bool bSearchStringInit          = false;                                    // Used (internally) while dialog is initting
 
 static HBRUSH hWhiteBGBrush;
 static HICON hExpand, hCollapse;
@@ -528,7 +530,6 @@ static int SelListMake()
 	LoadFavorites();
 
 	// Get dialog search string
-	TCHAR szSearchString[256] = { _T("") };
 	j = GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
 	for (UINT32 k = 0; k < j; k++)
 		szSearchString[k] = _totlower(szSearchString[k]);
@@ -1410,6 +1411,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		EnableWindow(GetDlgItem(hDlg, IDC_SEL_ASCIIONLY), FALSE);
 #endif
 
+		bSearchStringInit = true; // so we don't set off the search timer during init w/SetDlgItemText() below
+		SetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString); // Re-populate the search text
+
 		bool bFoundROMs = false;
 		for (unsigned int i = 0; i < nBurnDrvCount; i++) {
 			if (gameAv[i]) {
@@ -1748,6 +1752,11 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 
 	if (Msg == WM_COMMAND) {
 		if (HIWORD(wParam) == EN_CHANGE && LOWORD(wParam) == IDC_SEL_SEARCH) {
+			if (bSearchStringInit) {
+				bSearchStringInit = false;
+				return 0;
+			}
+
 			KillTimer(hDlg, IDC_SEL_SEARCHTIMER);
 			SetTimer(hDlg, IDC_SEL_SEARCHTIMER, 300, (TIMERPROC)NULL);
 		}

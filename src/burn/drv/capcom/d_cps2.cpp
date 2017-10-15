@@ -325,8 +325,8 @@ static struct BurnInputInfo DdsomInputList[] = {
 	{"P1 Right"         , BIT_DIGITAL  , CpsInp001+0, "p1 right"  },
 	{"P1 Attack"        , BIT_DIGITAL  , CpsInp001+4, "p1 fire 1" },
 	{"P1 Jump"          , BIT_DIGITAL  , CpsInp001+5, "p1 fire 2" },
-	{"P1 Select"        , BIT_DIGITAL  , CpsInp001+6, "p1 fire 3" },
-	{"P1 Use"           , BIT_DIGITAL  , CpsInp001+7, "p1 fire 4" },
+	{"P1 Select"        , BIT_DIGITAL  , CpsInp001+7, "p1 fire 3" },
+	{"P1 Use"           , BIT_DIGITAL  , CpsInp001+6, "p1 fire 4" },
 
 	{"P2 Coin"          , BIT_DIGITAL  , CpsInp020+5, "p2 coin"   },
 	{"P2 Start"         , BIT_DIGITAL  , CpsInp020+1, "p2 start"  },
@@ -336,8 +336,8 @@ static struct BurnInputInfo DdsomInputList[] = {
 	{"P2 Right"         , BIT_DIGITAL  , CpsInp000+0, "p2 right"  },
 	{"P2 Attack"        , BIT_DIGITAL  , CpsInp000+4, "p2 fire 1" },
 	{"P2 Jump"          , BIT_DIGITAL  , CpsInp000+5, "p2 fire 2" },
-	{"P2 Select"        , BIT_DIGITAL  , CpsInp000+6, "p2 fire 3" },
-	{"P2 Use"           , BIT_DIGITAL  , CpsInp000+7, "p2 fire 4" },
+	{"P2 Select"        , BIT_DIGITAL  , CpsInp000+7, "p2 fire 3" },
+	{"P2 Use"           , BIT_DIGITAL  , CpsInp000+6, "p2 fire 4" },
 
 	{"P3 Coin"          , BIT_DIGITAL  , CpsInp020+6, "p3 coin"   },
 	{"P3 Start"         , BIT_DIGITAL  , CpsInp020+2, "p3 start"  },
@@ -347,8 +347,8 @@ static struct BurnInputInfo DdsomInputList[] = {
 	{"P3 Right"         , BIT_DIGITAL  , CpsInp011+0, "p3 right"  },
 	{"P3 Attack"        , BIT_DIGITAL  , CpsInp011+4, "p3 fire 1" },
 	{"P3 Jump"          , BIT_DIGITAL  , CpsInp011+5, "p3 fire 2" },
-	{"P3 Select"        , BIT_DIGITAL  , CpsInp011+6, "p3 fire 3" },
-	{"P3 Use"           , BIT_DIGITAL  , CpsInp011+7, "p3 fire 4" },
+	{"P3 Select"        , BIT_DIGITAL  , CpsInp011+7, "p3 fire 3" },
+	{"P3 Use"           , BIT_DIGITAL  , CpsInp011+6, "p3 fire 4" },
 
 	{"P4 Coin"          , BIT_DIGITAL  , CpsInp020+7, "p4 coin"   },
 	{"P4 Start"         , BIT_DIGITAL  , CpsInp020+3, "p4 start"  },
@@ -358,8 +358,8 @@ static struct BurnInputInfo DdsomInputList[] = {
 	{"P4 Right"         , BIT_DIGITAL  , CpsInp010+0, "p4 right"  },
 	{"P4 Attack"        , BIT_DIGITAL  , CpsInp010+4, "p4 fire 1" },
 	{"P4 Jump"          , BIT_DIGITAL  , CpsInp010+5, "p4 fire 2" },
-	{"P4 Select"        , BIT_DIGITAL  , CpsInp010+6, "p4 fire 3" },
-	{"P4 Use"           , BIT_DIGITAL  , CpsInp010+7, "p4 fire 4" },
+	{"P4 Select"        , BIT_DIGITAL  , CpsInp010+7, "p4 fire 3" },
+	{"P4 Use"           , BIT_DIGITAL  , CpsInp010+6, "p4 fire 4" },
 
 	{"Reset"            , BIT_DIGITAL  , &CpsReset  , "reset"     },
 	{"Diagnostic"       , BIT_DIGITAL  , CpsInp021+1, "diag"      },

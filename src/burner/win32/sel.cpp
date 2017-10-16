@@ -568,24 +568,19 @@ static int SelListMake()
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
 			TCHAR *StringFound3 = NULL;
-			TCHAR *StringFound4 = NULL;
 			TCHAR szDriverName[256] = { _T("") };
 			TCHAR szManufacturerName[256] = { _T("") };
-			TCHAR szSystemName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
-			wcscpy(szManufacturerName, BurnDrvGetText(DRV_MANUFACTURER));
-			wcscpy(szSystemName, BurnDrvGetText(DRV_SYSTEM));
+			swprintf(szManufacturerName, _T("%s %s"), BurnDrvGetText(DRV_MANUFACTURER), BurnDrvGetText(DRV_SYSTEM));
 			for (int k = 0; k < 256; k++) {
 				szDriverName[k] = _totlower(szDriverName[k]);
 				szManufacturerName[k] = _totlower(szManufacturerName[k]);
-				szSystemName[k] = _totlower(szSystemName[k]);
 			}
 			StringFound = wcsstr(szDriverName, szSearchString);
 			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
 			StringFound3 = wcsstr(szManufacturerName, szSearchString);
-			StringFound4 = wcsstr(szSystemName, szSearchString);
 
-			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
+			if (!StringFound && !StringFound2 && !StringFound3) continue;
 		}
 
 		memset(&nBurnDrv[nTmpDrvCount].TvItem, 0, sizeof(nBurnDrv[nTmpDrvCount].TvItem));
@@ -649,24 +644,19 @@ static int SelListMake()
 			TCHAR *StringFound = NULL;
 			TCHAR *StringFound2 = NULL;
 			TCHAR *StringFound3 = NULL;
-			TCHAR *StringFound4 = NULL;
 			TCHAR szDriverName[256] = { _T("") };
 			TCHAR szManufacturerName[256] = { _T("") };
-			TCHAR szSystemName[256] = { _T("") };
 			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
-			wcscpy(szManufacturerName, BurnDrvGetText(DRV_MANUFACTURER));
-			wcscpy(szSystemName, BurnDrvGetText(DRV_SYSTEM));
+			swprintf(szManufacturerName, _T("%s %s"), BurnDrvGetText(DRV_MANUFACTURER), BurnDrvGetText(DRV_SYSTEM));
 			for (int k =0; k < 256; k++) {
 				szDriverName[k] = _totlower(szDriverName[k]);
 				szManufacturerName[k] = _totlower(szManufacturerName[k]);
-				szSystemName[k] = _totlower(szSystemName[k]);
 			}
 			StringFound = wcsstr(szDriverName, szSearchString);
 			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
 			StringFound3 = wcsstr(szManufacturerName, szSearchString);
-			StringFound4 = wcsstr(szSystemName, szSearchString);
 
-			if (!StringFound && !StringFound2 && !StringFound3 && !StringFound4) continue;
+			if (!StringFound && !StringFound2 && !StringFound3) continue;
 		}
 
 		memset(&TvItem, 0, sizeof(TvItem));

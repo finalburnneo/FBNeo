@@ -30,6 +30,8 @@ static INT32 game_config = 0; // for disable opposites
 static INT32 cpu_speed[2];
 static UINT8 nTaitoInputConfig[5] = { 0, 0, 0, 0, 0 };
 
+static INT32 spritelag_disable = 0;
+
 static INT32 LastScrollX = 0; // hitice
 
 static struct BurnInputInfo CommonInputList[] = {
@@ -1951,6 +1953,7 @@ static INT32 DrvExit()
 	TaitoExit();
 
 	game_config = 0;
+	spritelag_disable = 0;
 
 	return 0;
 }
@@ -2007,6 +2010,8 @@ static INT32 DrvDraw()
 		return 0;
 	}
 
+	if (spritelag_disable) TC0180VCUBufferSprites();
+
 	if (~nBurnLayer & 1) BurnTransferClear();
 
 	if (nBurnLayer & 1) TC0180VCUDrawLayer(color_config[0], 1, -1);
@@ -2023,7 +2028,7 @@ static INT32 DrvDraw()
 
 	BurnTransferCopy(TaitoPalette);
 
-	TC0180VCUBufferSprites();
+	if (!spritelag_disable) TC0180VCUBufferSprites();
 
 	return 0;
 }
@@ -3989,13 +3994,20 @@ static struct BurnRomInfo ryujinRomDesc[] = {
 STD_ROM_PICK(ryujin)
 STD_ROM_FN(ryujin)
 
+static INT32 RyujinInit()
+{
+	spritelag_disable = 1;
+
+	return SelfeenaInit();
+}
+
 struct BurnDriver BurnDrvRyujin = {
 	"ryujin", NULL, NULL, NULL, "1993",
 	"Ryu Jin (Japan)\0", NULL, "Taito Corporation", "Taito B System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_TAITOB, GBF_VERSHOOT, 0,
 	NULL, ryujinRomInfo, ryujinRomName, NULL, NULL, SelfeenaInputInfo, RyujinDIPInfo,
-	SelfeenaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
+	RyujinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, NULL, 0x1000,
 	224, 320, 3, 4
 };
 

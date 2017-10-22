@@ -1186,6 +1186,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(ball_h);
 		SCAN_VAR(ball_v);
 		SCAN_VAR(geebee_bgw);
+		SCAN_VAR(Paddle);
 	}
 
 	return 0;

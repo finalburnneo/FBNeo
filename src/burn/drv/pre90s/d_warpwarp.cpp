@@ -943,9 +943,18 @@ static INT32 DrvInit()
 
 	if (!strncmp(BurnDrvGetTextA(DRV_NAME), "geebee", 6)) {
 		bprintf(0, _T("geebee mode"));
-		if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
-		if (BurnLoadRom(DrvGFX1ROM        , 1, 1)) return 1;
-		if (BurnLoadRom(DrvGFX1ROM + 0x0400, 2, 1)) return 1;
+		if (!strncmp(BurnDrvGetTextA(DRV_NAME), "geebeeb", 7)) { // US version
+			if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x0400, 1, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x0800, 2, 1)) return 1;
+			if (BurnLoadRom(DrvZ80ROM + 0x0c00, 3, 1)) return 1;
+			if (BurnLoadRom(DrvGFX1ROM        , 4, 1)) return 1;
+			if (BurnLoadRom(DrvGFX1ROM + 0x0400, 4, 1)) return 1;
+		} else {
+			if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
+			if (BurnLoadRom(DrvGFX1ROM        , 1, 1)) return 1;
+			if (BurnLoadRom(DrvGFX1ROM + 0x0400, 1, 1)) return 1;
+		}
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 	} else
 	if (bombbeemode) {
@@ -970,7 +979,7 @@ static INT32 DrvInit()
 			bprintf(0, _T("original navalone/kaitein mode.\n"));
 			if (BurnLoadRom(DrvZ80ROM + 0x0000, 0, 1)) return 1;
 			if (BurnLoadRom(DrvZ80ROM + 0x0800, 1, 1)) return 1;
-			if (BurnLoadRom(DrvGFX1ROM        , 2 + rockola, 1)) return 1;
+			if (BurnLoadRom(DrvGFX1ROM        , 2, 1)) return 1;
 		}
 		GfxDecode(0x100, 1, 8, 8, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvGFX1ROM, DrvCharGFX);
 
@@ -1281,7 +1290,7 @@ INT32 GeebeeInit()
 	return DrvInit();
 }
 
-// Gee Bee
+// Gee Bee (Japan)
 
 static struct BurnRomInfo geebeeRomDesc[] = {
 	{ "geebee.1k",	0x1000, 0x8a5577e0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1294,7 +1303,7 @@ STD_ROM_FN(geebee)
 
 struct BurnDriver BurnDrvGeebee = {
 	"geebee", NULL, NULL, NULL, "1978",
-	"Gee Bee\0", NULL, "Namco", "Miscellaneous",
+	"Gee Bee (Japan)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, geebeeRomInfo, geebeeRomName, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
@@ -1302,8 +1311,7 @@ struct BurnDriver BurnDrvGeebee = {
 	224, 272, 3, 4
 };
 
-
-// Gee Bee (Gremlin)
+// Gee Bee (US)
 
 static struct BurnRomInfo geebeegRomDesc[] = {
 	{ "geebee.1k",	0x1000, 0x8a5577e0, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -1316,10 +1324,34 @@ STD_ROM_FN(geebeeg)
 
 struct BurnDriver BurnDrvGeebeeg = {
 	"geebeeg", "geebee", NULL, NULL, "1978",
-	"Gee Bee (Gremlin)\0", NULL, "[Namco] (Gremlin license)", "Miscellaneous",
+	"Gee Bee (US)\0", NULL, "Namco (Gremlin license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, geebeegRomInfo, geebeegRomName, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
+	GeebeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
+	224, 272, 3, 4
+};
+
+// Gee Bee (Europe)
+
+static struct BurnRomInfo geebeebRomDesc[] = {
+	{ "1.1m",	0x0400, 0x23252fc7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.1p",	0x0400, 0x0bc4d4ca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.1s",	0x0400, 0x7899b4c1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.1t",	0x0400, 0x0b6e6fcb, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "geebee.3a",	0x0400, 0xf257b21b, 2 | BRF_GRA },           //  4 gfx1
+};
+
+STD_ROM_PICK(geebeeb)
+STD_ROM_FN(geebeeb)
+
+struct BurnDriver BurnDrvGeebeeb = {
+	"geebeeb", "geebee", NULL, NULL, "1978",
+	"Gee Bee (Europe)\0", NULL, "Namco (F.lli Bertolino license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	NULL, geebeebRomInfo, geebeebRomName, NULL, NULL, GeebeeInputInfo, GeebeeDIPInfo,
 	GeebeeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	224, 272, 3, 4
 };

@@ -488,3 +488,21 @@ void tms36xx_deinit()
 	BurnFree(tms);
 }
 
+void tms36xx_scan()
+{
+	SCAN_VAR(tms->octave);
+	SCAN_VAR(tms->tune_counter);
+	SCAN_VAR(tms->note_counter);
+	SCAN_VAR(tms->voices);
+	SCAN_VAR(tms->shift);
+	SCAN_VAR(tms->vol);
+	SCAN_VAR(tms->vol_counter);
+	SCAN_VAR(tms->counter);
+	SCAN_VAR(tms->frequency);
+	SCAN_VAR(tms->output);
+	SCAN_VAR(tms->enable);
+	SCAN_VAR(tms->tune_num);
+	SCAN_VAR(tms->tune_ofs);
+	SCAN_VAR(tms->tune_max);
+}
+

@@ -9,10 +9,8 @@
 	  -> if a coin is pressed, it instead presses the service coin :)
 	  -> scfinals also displays a weird/corrupt version string in service mode(!!)
 
-	no attempt at speed-ups
-	no attempt at cleaning at all
-	ROM sets might be out of date!!!
-
+	- todo -
+	kirameki sound banking
 */
 
 //#define USE_CPU_SPEEDHACKS

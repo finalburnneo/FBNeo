@@ -16,7 +16,7 @@ UINT8 *TaitoF3SharedRam = NULL;
 UINT8 *TaitoES5510DSPRam = NULL;
 UINT32 *TaitoES5510GPR = NULL;
 UINT16 *TaitoES5510DRAM = NULL;
-double TaitoF3VolumeOffset = 0.0;
+double TaitoF3VolumeOffset = 1.0;
 
 static INT32 TaitoF3Counter;
 static INT32 TaitoF3VectorReg;
@@ -318,7 +318,7 @@ void TaitoF3SoundExit()
 	TaitoF3SharedRam = NULL;
 	TaitoES5510DSPRam = NULL;
 	TaitoES5510GPR = NULL;
-	TaitoF3VolumeOffset = 0.0;
+	TaitoF3VolumeOffset = 1.0;
 
 	TaitoF3ES5506RomSize = 0;
 

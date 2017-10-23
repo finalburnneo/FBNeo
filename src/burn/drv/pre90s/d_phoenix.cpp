@@ -25,6 +25,7 @@
 
 #endif
 
+#include "tms36xx.h"
 #include "phoenixsound.h"
 #include "pleiadssound.h"
 
@@ -855,7 +856,7 @@ static INT32 DrvFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -863,15 +864,16 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
-
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
 		i8080Scan(nAction);
+
+		tms36xx_scan();
 
 		SCAN_VAR(scrollx);
 		SCAN_VAR(ram_bank);

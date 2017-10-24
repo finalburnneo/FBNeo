@@ -972,7 +972,7 @@ STD_ROM_FN(wilytowr)
 
 struct BurnDriver BurnDrvWilytowr = {
 	"wilytowr", NULL, NULL, NULL, "1984",
-	"Wily Tower\0", NULL, "Irem", "M63",
+	"Wily Tower\0", NULL, "Irem", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, wilytowrRomInfo, wilytowrRomName, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
@@ -1020,7 +1020,7 @@ STD_ROM_FN(atomboy)
 
 struct BurnDriver BurnDrvAtomboy = {
 	"atomboy", "wilytowr", NULL, NULL, "1985",
-	"Atomic Boy (revision B)\0", NULL, "Irem (Memetron license)", "M63",
+	"Atomic Boy (revision B)\0", NULL, "Irem (Memetron license)", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, atomboyRomInfo, atomboyRomName, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
@@ -1068,7 +1068,7 @@ STD_ROM_FN(atomboya)
 
 struct BurnDriver BurnDrvAtomboya = {
 	"atomboya", "wilytowr", NULL, NULL, "1985",
-	"Atomic Boy (revision A)\0", NULL, "Irem (Memetron license)", "M63",
+	"Atomic Boy (revision A)\0", NULL, "Irem (Memetron license)", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_IREM_M63, GBF_PLATFORM, 0,
 	NULL, atomboyaRomInfo, atomboyaRomName, NULL, NULL, WilytowrInputInfo, WilytowrDIPInfo,
@@ -1119,7 +1119,7 @@ STD_ROM_FN(fghtbskt)
 
 struct BurnDriver BurnDrvFghtbskt = {
 	"fghtbskt", NULL, NULL, NULL, "1984",
-	"Fighting Basketball\0", NULL, "Paradise Co. Ltd.", "M63",
+	"Fighting Basketball\0", NULL, "Paradise Co. Ltd.", "Irem M63",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M63, GBF_SPORTSMISC, 0,
 	NULL, fghtbsktRomInfo, fghtbsktRomName, NULL, NULL, FghtbsktInputInfo, FghtbsktDIPInfo,

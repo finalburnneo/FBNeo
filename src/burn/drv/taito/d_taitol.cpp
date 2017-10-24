@@ -3508,7 +3508,7 @@ STD_ROM_FN(raimais)
 
 struct BurnDriver BurnDrvRaimais = {
 	"raimais", NULL, NULL, NULL, "1988",
-	"Raimais (World)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Raimais (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, raimaisRomInfo, raimaisRomName, NULL, NULL, FhawkInputInfo, RaimaisDIPInfo,
@@ -3538,7 +3538,7 @@ STD_ROM_FN(raimaisj)
 
 struct BurnDriver BurnDrvRaimaisj = {
 	"raimaisj", "raimais", NULL, NULL, "1988",
-	"Raimais (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Raimais (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, raimaisjRomInfo, raimaisjRomName, NULL, NULL, FhawkInputInfo, RaimaisjDIPInfo,
@@ -3568,7 +3568,7 @@ STD_ROM_FN(raimaisjo)
 
 struct BurnDriver BurnDrvRaimaisjo = {
 	"raimaisjo", "raimais", NULL, NULL, "1988",
-	"Raimais (Japan, first revision)\0", NULL, "Taito Corporation", "L-System",
+	"Raimais (Japan, first revision)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, raimaisjoRomInfo, raimaisjoRomName, NULL, NULL, FhawkInputInfo, RaimaisjDIPInfo,
@@ -3596,7 +3596,7 @@ STD_ROM_FN(fhawk)
 
 struct BurnDriver BurnDrvFhawk = {
 	"fhawk", NULL, NULL, NULL, "1988",
-	"Fighting Hawk (World)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Fighting Hawk (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, fhawkRomInfo, fhawkRomName, NULL, NULL, FhawkInputInfo, FhawkDIPInfo,
@@ -3624,7 +3624,7 @@ STD_ROM_FN(fhawkj)
 
 struct BurnDriver BurnDrvFhawkj = {
 	"fhawkj", "fhawk", NULL, NULL, "1988",
-	"Fighting Hawk (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Fighting Hawk (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, fhawkjRomInfo, fhawkjRomName, NULL, NULL, FhawkInputInfo, FhawkjDIPInfo,
@@ -3655,7 +3655,7 @@ STD_ROM_FN(champwr)
 
 struct BurnDriver BurnDrvChampwr = {
 	"champwr", NULL, NULL, NULL, "1989",
-	"Champion Wrestler (World)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Champion Wrestler (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, champwrRomInfo, champwrRomName, NULL, NULL, ChampwrInputInfo, ChampwrDIPInfo,
@@ -3686,7 +3686,7 @@ STD_ROM_FN(champwru)
 
 struct BurnDriver BurnDrvChampwru = {
 	"champwru", "champwr", NULL, NULL, "1989",
-	"Champion Wrestler (US)\0", NULL, "Taito America Corporation", "L-System",
+	"Champion Wrestler (US)\0", NULL, "Taito America Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, champwruRomInfo, champwruRomName, NULL, NULL, ChampwrInputInfo, ChampwruDIPInfo,
@@ -3717,7 +3717,7 @@ STD_ROM_FN(champwrj)
 
 struct BurnDriver BurnDrvChampwrj = {
 	"champwrj", "champwr", NULL, NULL, "1989",
-	"Champion Wrestler (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Champion Wrestler (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, champwrjRomInfo, champwrjRomName, NULL, NULL, ChampwrInputInfo, ChampwrjDIPInfo,
@@ -3743,7 +3743,7 @@ STD_ROM_FN(kurikint)
 
 struct BurnDriver BurnDrvKurikint = {
 	"kurikint", NULL, NULL, NULL, "1988",
-	"Kuri Kinton (World)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Kuri Kinton (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kurikintRomInfo, kurikintRomName, NULL, NULL, FhawkInputInfo, KurikintDIPInfo,
@@ -3769,7 +3769,7 @@ STD_ROM_FN(kurikintu)
 
 struct BurnDriver BurnDrvKurikintu = {
 	"kurikintu", "kurikint", NULL, NULL, "1988",
-	"Kuri Kinton (US)\0", NULL, "Taito America Corporation", "L-System",
+	"Kuri Kinton (US)\0", NULL, "Taito America Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kurikintuRomInfo, kurikintuRomName, NULL, NULL, FhawkInputInfo, KurikintjDIPInfo,
@@ -3795,7 +3795,7 @@ STD_ROM_FN(kurikintj)
 
 struct BurnDriver BurnDrvKurikintj = {
 	"kurikintj", "kurikint", NULL, NULL, "1988",
-	"Kuri Kinton (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Kuri Kinton (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kurikintjRomInfo, kurikintjRomName, NULL, NULL, FhawkInputInfo, KurikintjDIPInfo,
@@ -3827,7 +3827,7 @@ STD_ROM_FN(kurikinta)
 
 struct BurnDriver BurnDrvKurikinta = {
 	"kurikinta", "kurikint", NULL, NULL, "1988",
-	"Kuri Kinton (World, prototype?)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Kuri Kinton (World, prototype?)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kurikintaRomInfo, kurikintaRomName, NULL, NULL, FhawkInputInfo, KurikintaDIPInfo,
@@ -3852,7 +3852,7 @@ STD_ROM_FN(plotting)
 
 struct BurnDriver BurnDrvPlotting = {
 	"plotting", NULL, NULL, NULL, "1989",
-	"Plotting (World set 1)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Plotting (World set 1)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, plottingRomInfo, plottingRomName, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
@@ -3877,7 +3877,7 @@ STD_ROM_FN(plottinga)
 
 struct BurnDriver BurnDrvPlottinga = {
 	"plottinga", "plotting", NULL, NULL, "1989",
-	"Plotting (World set 2, protected)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Plotting (World set 2, protected)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, plottingaRomInfo, plottingaRomName, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
@@ -3902,7 +3902,7 @@ STD_ROM_FN(plottingb)
 
 struct BurnDriver BurnDrvPlottingb = {
 	"plottingb", "plotting", NULL, NULL, "1989",
-	"Plotting (World set 3, earliest version)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Plotting (World set 3, earliest version)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, plottingbRomInfo, plottingbRomName, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
@@ -3927,7 +3927,7 @@ STD_ROM_FN(plottingu)
 
 struct BurnDriver BurnDrvPlottingu = {
 	"plottingu", "plotting", NULL, NULL, "1989",
-	"Plotting (US)\0", NULL, "Taito America Corporation", "L-System",
+	"Plotting (US)\0", NULL, "Taito America Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, plottinguRomInfo, plottinguRomName, NULL, NULL, PlottingInputInfo, PlottinguDIPInfo,
@@ -3952,7 +3952,7 @@ STD_ROM_FN(flipull)
 
 struct BurnDriver BurnDrvFlipull = {
 	"flipull", "plotting", NULL, NULL, "1989",
-	"Flipull (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Flipull (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, flipullRomInfo, flipullRomName, NULL, NULL, PlottingInputInfo, PlottingDIPInfo,
@@ -3979,7 +3979,7 @@ STD_ROM_FN(puzznic)
 
 struct BurnDriver BurnDrvPuzznic = {
 	"puzznic", NULL, NULL, NULL, "1989",
-	"Puzznic (World)\0", NULL, "Taito Corporation Japan", "L-System",
+	"Puzznic (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puzznicRomInfo, puzznicRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
@@ -4006,7 +4006,7 @@ STD_ROM_FN(puzznicu)
 
 struct BurnDriver BurnDrvPuzznicu = {
 	"puzznicu", "puzznic", NULL, NULL, "1989",
-	"Puzznic (US)\0", NULL, "Taito America Corporation", "L-System",
+	"Puzznic (US)\0", NULL, "Taito America Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puzznicuRomInfo, puzznicuRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
@@ -4033,7 +4033,7 @@ STD_ROM_FN(puzznicj)
 
 struct BurnDriver BurnDrvPuzznicj = {
 	"puzznicj", "puzznic", NULL, NULL, "1989",
-	"Puzznic (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Puzznic (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puzznicjRomInfo, puzznicjRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
@@ -4056,7 +4056,7 @@ STD_ROM_FN(puzznici)
 
 struct BurnDriver BurnDrvPuzznici = {
 	"puzznici", "puzznic", NULL, NULL, "1989",
-	"Puzznic (Italian bootleg)\0", NULL, "bootleg", "L-System",
+	"Puzznic (Italian bootleg)\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puzzniciRomInfo, puzzniciRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
@@ -4079,7 +4079,7 @@ STD_ROM_FN(puzznicb)
 
 struct BurnDriver BurnDrvPuzznicb = {
 	"puzznicb", "puzznic", NULL, NULL, "1989",
-	"Puzznic (bootleg, set 1)\0", NULL, "bootleg", "L-System",
+	"Puzznic (bootleg, set 1)\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puzznicbRomInfo, puzznicbRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
@@ -4102,7 +4102,7 @@ STD_ROM_FN(puzznicba)
 
 struct BurnDriver BurnDrvPuzznicba = {
 	"puzznicba", "puzznic", NULL, NULL, "1989",
-	"Puzznic (bootleg, set 2)\0", NULL, "bootleg", "L-System",
+	"Puzznic (bootleg, set 2)\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puzznicbaRomInfo, puzznicbaRomName, NULL, NULL, PuzznicInputInfo, PuzznicDIPInfo,
@@ -4126,7 +4126,7 @@ STD_ROM_FN(palamed)
 
 struct BurnDriver BurnDrvPalamed = {
 	"palamed", NULL, NULL, NULL, "1990",
-	"Palamedes (US)\0", NULL, "Hot-B Co., Ltd.", "L-System",
+	"Palamedes (US)\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, palamedRomInfo, palamedRomName, NULL, NULL, PalamedInputInfo, PalamedDIPInfo,
@@ -4149,7 +4149,7 @@ STD_ROM_FN(palamedj)
 
 struct BurnDriver BurnDrvPalamedj = {
 	"palamedj", "palamed", NULL, NULL, "1990",
-	"Palamedes (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Palamedes (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, palamedjRomInfo, palamedjRomName, NULL, NULL, PalamedInputInfo, PalamedDIPInfo,
@@ -4176,7 +4176,7 @@ STD_ROM_FN(cachat)
 
 struct BurnDriver BurnDrvCachat = {
 	"cachat", NULL, NULL, NULL, "1993",
-	"Cachat (Japan)\0", NULL, "Taito Corporation", "L-System",
+	"Cachat (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, cachatRomInfo, cachatRomName, NULL, NULL, CachatInputInfo, CachatDIPInfo,
@@ -4201,7 +4201,7 @@ STD_ROM_FN(cubybop)
 
 struct BurnDriver BurnDrvCubybop = {
 	"cubybop", NULL, NULL, NULL, "199?",
-	"Cuby Bop (location test)\0", NULL, "Hot-B Co., Ltd.", "L-System",
+	"Cuby Bop (location test)\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, cubybopRomInfo, cubybopRomName, NULL, NULL, CubybopInputInfo, CubybopDIPInfo,
@@ -4226,7 +4226,7 @@ STD_ROM_FN(tubeit)
 
 struct BurnDriver BurnDrvTubeit = {
 	"tubeit", "cachat", NULL, NULL, "1993",
-	"Tube-It\0", NULL, "bootleg", "L-System",
+	"Tube-It\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, tubeitRomInfo, tubeitRomName, NULL, NULL, TubeitInputInfo, TubeitDIPInfo,
@@ -4249,7 +4249,7 @@ STD_ROM_FN(plgirls)
 
 struct BurnDriver BurnDrvPlgirls = {
 	"plgirls", NULL, NULL, NULL, "1992",
-	"Play Girls\0", NULL, "Hot-B Co., Ltd.", "L-System",
+	"Play Girls\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, plgirlsRomInfo, plgirlsRomName, NULL, NULL, PlgirlsInputInfo, PlgirlsDIPInfo,
@@ -4274,7 +4274,7 @@ STD_ROM_FN(lagirl)
 
 struct BurnDriver BurnDrvLagirl = {
 	"lagirl", "plgirls", NULL, NULL, "1992",
-	"LA Girl\0", NULL, "bootleg", "L-System",
+	"LA Girl\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, lagirlRomInfo, lagirlRomName, NULL, NULL, PlgirlsInputInfo, PlgirlsDIPInfo,
@@ -4297,7 +4297,7 @@ STD_ROM_FN(plgirls2)
 
 struct BurnDriver BurnDrvPlgirls2 = {
 	"plgirls2", NULL, NULL, NULL, "1993",
-	"Play Girls 2\0", NULL, "Hot-B Co., Ltd.", "L-System",
+	"Play Girls 2\0", NULL, "Hot-B Co., Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, plgirls2RomInfo, plgirls2RomName, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
@@ -4322,7 +4322,7 @@ STD_ROM_FN(plgirls2b)
 
 struct BurnDriver BurnDrvPlgirls2b = {
 	"plgirls2b", "plgirls2", NULL, NULL, "1993",
-	"Play Girls 2 (bootleg)\0", NULL, "bootleg", "L-System",
+	"Play Girls 2 (bootleg)\0", NULL, "bootleg", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, plgirls2bRomInfo, plgirls2bRomName, NULL, NULL, PlgirlsInputInfo, Plgirls2DIPInfo,
@@ -4349,7 +4349,7 @@ STD_ROM_FN(horshoes)
 
 struct BurnDriver BurnDrvHorshoes = {
 	"horshoes", NULL, NULL, NULL, "1990",
-	"American Horseshoes (US)\0", NULL, "Taito America Corporation", "L-System",
+	"American Horseshoes (US)\0", NULL, "Taito America Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, horshoesRomInfo, horshoesRomName, NULL, NULL, HorshoesInputInfo, HorshoesDIPInfo,
@@ -4375,7 +4375,7 @@ STD_ROM_FN(evilston)
 
 struct BurnDriver BurnDrvEvilston = {
 	"evilston", NULL, NULL, NULL, "1990",
-	"Evil Stone\0", NULL, "Spacy Industrial, Ltd.", "L-System",
+	"Evil Stone\0", NULL, "Spacy Industrial, Ltd.", "Taito L System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, evilstonRomInfo, evilstonRomName, NULL, NULL, EvilstonInputInfo, EvilstonDIPInfo,

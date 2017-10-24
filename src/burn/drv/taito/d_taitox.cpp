@@ -1636,7 +1636,7 @@ static INT32 TaitoXScan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvBallbros = {
 	"ballbros", NULL, NULL, NULL, "1992",
-	"Balloon Brothers\0", NULL, "East Technology", "Taito-X",
+	"Balloon Brothers\0", NULL, "East Technology", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOX, GBF_PUZZLE, 0,
 	NULL, BallbrosRomInfo, BallbrosRomName, NULL, NULL, TwinhawkInputInfo, BallbrosDIPInfo,
@@ -1646,7 +1646,7 @@ struct BurnDriver BurnDrvBallbros = {
 
 struct BurnDriver BurnDrvGigandes = {
 	"gigandes", NULL, NULL, NULL, "1989",
-	"Gigandes\0", NULL, "East Technology", "Taito-X",
+	"Gigandes\0", NULL, "East Technology", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOX, GBF_HORSHOOT, 0,
 	NULL, GigandesRomInfo, GigandesRomName, NULL, NULL, TwinhawkInputInfo, GigandesDIPInfo,
@@ -1656,7 +1656,7 @@ struct BurnDriver BurnDrvGigandes = {
 
 struct BurnDriver BurnDrvGigandesa = {
 	"gigandesa", "gigandes", NULL, NULL, "1989",
-	"Gigandes (earlier)\0", NULL, "East Technology", "Taito-X",
+	"Gigandes (earlier)\0", NULL, "East Technology", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOX, GBF_HORSHOOT, 0,
 	NULL, GigandesaRomInfo, GigandesaRomName, NULL, NULL, TwinhawkInputInfo, GigandesDIPInfo,
@@ -1666,7 +1666,7 @@ struct BurnDriver BurnDrvGigandesa = {
 
 struct BurnDriver BurnDrvKyustrkr = {
 	"kyustrkr", NULL, NULL, NULL, "1989",
-	"Last Striker / Kyuukyoku no Striker\0", NULL, "East Technology", "Taito-X",
+	"Last Striker / Kyuukyoku no Striker\0", NULL, "East Technology", "Taito X",
 	L"Last Striker\0Final \u7A76\u6975 \u306E Striker\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_TAITOX, GBF_SPORTSFOOTBALL, 0,
 	NULL, KyustrkrRomInfo, KyustrkrRomName, NULL, NULL, TwinhawkInputInfo, KyustrkrDIPInfo,
@@ -1676,7 +1676,7 @@ struct BurnDriver BurnDrvKyustrkr = {
 
 struct BurnDriver BurnDrvSuperman = {
 	"superman", NULL, NULL, NULL, "1988",
-	"Superman (World)\0", NULL, "Taito Corporation", "Taito-X",
+	"Superman (World)\0", NULL, "Taito Corporation", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOX, GBF_SCRFIGHT, 0,
 	NULL, SupermanRomInfo, SupermanRomName, NULL, NULL, SupermanInputInfo, SupermanDIPInfo,
@@ -1686,7 +1686,7 @@ struct BurnDriver BurnDrvSuperman = {
 
 struct BurnDriver BurnDrvSupermanu = {
 	"supermanu", "superman", NULL, NULL, "1988",
-	"Superman (US)\0", NULL, "Taito Corporation", "Taito-X",
+	"Superman (US)\0", NULL, "Taito Corporation", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOX, GBF_SCRFIGHT, 0,
 	NULL, SupermanuRomInfo, SupermanuRomName, NULL, NULL, SupermanInputInfo, SupermanuDIPInfo,
@@ -1696,7 +1696,7 @@ struct BurnDriver BurnDrvSupermanu = {
 
 struct BurnDriver BurnDrvSupermanj = {
 	"supermanj", "superman", NULL, NULL, "1988",
-	"Superman (Japan)\0", NULL, "Taito Corporation", "Taito-X",
+	"Superman (Japan)\0", NULL, "Taito Corporation", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOX, GBF_SCRFIGHT, 0,
 	NULL, SupermanjRomInfo, SupermanjRomName, NULL, NULL, SupermanInputInfo, SupermanjDIPInfo,
@@ -1706,7 +1706,7 @@ struct BurnDriver BurnDrvSupermanj = {
 
 struct BurnDriver BurnDrvTwinhawk = {
 	"twinhawk", NULL, NULL, NULL, "1989",
-	"Twin Hawk (World)\0", NULL, "Taito Corporation Japan", "Taito-X",
+	"Twin Hawk (World)\0", NULL, "Taito Corporation Japan", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOX, GBF_VERSHOOT, 0,
 	NULL, TwinhawkRomInfo, TwinhawkRomName, NULL, NULL, TwinhawkInputInfo, TwinhawkDIPInfo,
@@ -1716,7 +1716,7 @@ struct BurnDriver BurnDrvTwinhawk = {
 
 struct BurnDriver BurnDrvTwinhawku = {
 	"twinhawku", "twinhawk", NULL, NULL, "1989",
-	"Twin Hawk (US)\0", NULL, "Taito America Corporation", "Taito-X",
+	"Twin Hawk (US)\0", NULL, "Taito America Corporation", "Taito X",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOX, GBF_VERSHOOT, 0,
 	NULL, TwinhawkuRomInfo, TwinhawkuRomName, NULL, NULL, TwinhawkInputInfo, TwinhawkuDIPInfo,
@@ -1726,7 +1726,7 @@ struct BurnDriver BurnDrvTwinhawku = {
 
 struct BurnDriver BurnDrvDaisenpu = {
 	"daisenpu", "twinhawk", NULL, NULL, "1989",
-	"Daisenpu (Japan)\0", NULL, "Taito Corporation", "Taito-X",
+	"Daisenpu (Japan)\0", NULL, "Taito Corporation", "Taito X",
 	L"\u5927\u65CB\u98A8 (Japan)\0Daisenpu\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOX, GBF_VERSHOOT, 0,
 	NULL, DaisenpuRomInfo, DaisenpuRomName, NULL, NULL, TwinhawkInputInfo, DaisenpuDIPInfo,

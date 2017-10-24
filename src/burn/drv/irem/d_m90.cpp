@@ -1445,7 +1445,7 @@ static INT32 hasamuInit()
 
 struct BurnDriver BurnDrvHasamu = {
 	"hasamu", NULL, NULL, NULL, "1991",
-	"Hasamu (Japan)\0", NULL, "Irem", "M90",
+	"Hasamu (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, hasamuRomInfo, hasamuRomName, NULL, NULL, p2commonInputInfo, HasamuDIPInfo,
@@ -1482,7 +1482,7 @@ static INT32 dynablstInit()
 
 struct BurnDriver BurnDrvDynablst = {
 	"dynablst", NULL, NULL, NULL, "1991",
-	"Dynablaster / Bomber Man\0", NULL, "Irem (licensed from Hudson Soft)", "M90",
+	"Dynablaster / Bomber Man\0", NULL, "Irem (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, dynablstRomInfo, dynablstRomName, NULL, NULL, p4commonInputInfo, DynablstDIPInfo,
@@ -1512,7 +1512,7 @@ STD_ROM_FN(bombrman)
 
 struct BurnDriver BurnDrvBombrman = {
 	"bombrman", "dynablst", NULL, NULL, "1991",
-	"Bomber Man (Japan)\0", NULL, "Irem (licensed from Hudson Soft)", "M90",
+	"Bomber Man (Japan)\0", NULL, "Irem (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, bombrmanRomInfo, bombrmanRomName, NULL, NULL, p2commonInputInfo, BombrmanDIPInfo,
@@ -1542,7 +1542,7 @@ STD_ROM_FN(atompunk)
 
 struct BurnDriver BurnDrvAtompunk = {
 	"atompunk", "dynablst", NULL, NULL, "1991",
-	"Atomic Punk (US)\0", NULL, "Irem America (licensed from Hudson Soft)", "M90",
+	"Atomic Punk (US)\0", NULL, "Irem America (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, atompunkRomInfo, atompunkRomName, NULL, NULL, p4commonInputInfo, AtompunkDIPInfo,
@@ -1579,7 +1579,7 @@ static INT32 bbmanwInit()
 
 struct BurnDriver BurnDrvBbmanw = {
 	"bbmanw", NULL, NULL, NULL, "1992",
-	"Bomber Man World / New Dyna Blaster - Global Quest\0", NULL, "Irem", "M90",
+	"Bomber Man World / New Dyna Blaster - Global Quest\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, bbmanwRomInfo, bbmanwRomName, NULL, NULL, p4commonInputInfo, BbmanwDIPInfo,
@@ -1609,7 +1609,7 @@ STD_ROM_FN(bbmanwj)
 
 struct BurnDriver BurnDrvBbmanwj = {
 	"bbmanwj", "bbmanw", NULL, NULL, "1992",
-	"Bomber Man World (Japan)\0", NULL, "Irem", "M90",
+	"Bomber Man World (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, bbmanwjRomInfo, bbmanwjRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
@@ -1639,7 +1639,7 @@ STD_ROM_FN(bbmanwja)
 
 struct BurnDriver BurnDrvBbmanwja = {
 	"bbmanwja", "bbmanw", NULL, NULL, "1992",
-	"Bomber Man World (Japan, revised sound hardware)\0", NULL, "Irem", "M90",
+	"Bomber Man World (Japan, revised sound hardware)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, bbmanwjaRomInfo, bbmanwjaRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
@@ -1669,7 +1669,7 @@ STD_ROM_FN(newapunk)
 
 struct BurnDriver BurnDrvNewapunk = {
 	"newapunk", "bbmanw", NULL, NULL, "1992",
-	"New Atomic Punk - Global Quest (US)\0", NULL, "Irem America", "M90",
+	"New Atomic Punk - Global Quest (US)\0", NULL, "Irem America", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, newapunkRomInfo, newapunkRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
@@ -1709,7 +1709,7 @@ static INT32 quizf1Init()
 
 struct BurnDriver BurnDrvQuizf1 = {
 	"quizf1", NULL, NULL, NULL, "1992",
-	"Quiz F1 1-2 Finish (Japan)\0", NULL, "Irem", "M90",
+	"Quiz F1 1-2 Finish (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, quizf1RomInfo, quizf1RomName, NULL, NULL, Quizf1InputInfo, Quizf1DIPInfo,
@@ -1746,7 +1746,7 @@ static INT32 riskchalInit()
 
 struct BurnDriver BurnDrvRiskchal = {
 	"riskchal", NULL, NULL, NULL, "1993",
-	"Risky Challenge\0", "Unemulated CPU functions", "Irem", "M90",
+	"Risky Challenge\0", "Unemulated CPU functions", "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, riskchalRomInfo, riskchalRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
@@ -1776,7 +1776,7 @@ STD_ROM_FN(gussun)
 
 struct BurnDriver BurnDrvGussun = {
 	"gussun", "riskchal", NULL, NULL, "1993",
-	"Gussun Oyoyo (Japan)\0", "Unemulated CPU functions", "Irem", "M90",
+	"Gussun Oyoyo (Japan)\0", "Unemulated CPU functions", "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, gussunRomInfo, gussunRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
@@ -1811,7 +1811,7 @@ static INT32 matchit2Init()
 
 struct BurnDriver BurnDrvMatchit2 = {
 	"matchit2", NULL, NULL, NULL, "1993",
-	"Match It II\0", NULL, "Tamtex", "M90",
+	"Match It II\0", NULL, "Tamtex", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, matchit2RomInfo, matchit2RomName, NULL, NULL, Matchit2InputInfo, Matchit2DIPInfo,
@@ -1839,7 +1839,7 @@ STD_ROM_FN(shisen2)
 
 struct BurnDriver BurnDrvShisen2 = {
 	"shisen2", "matchit2", NULL, NULL, "1993",
-	"Shisensho II\0", NULL, "Tamtex", "M90",
+	"Shisensho II\0", NULL, "Tamtex", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
 	NULL, shisen2RomInfo, shisen2RomName, NULL, NULL, Matchit2InputInfo, Shisen2DIPInfo,

@@ -10894,7 +10894,7 @@ static INT32 TaitoF2Scan(INT32 nAction, INT32 *pnMin)
 
 struct BurnDriver BurnDrvCameltry = {
 	"cameltry", NULL, NULL, NULL, "1989",
-	"Cameltry (US, YM2610)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Cameltry (US, YM2610)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_MAZE, 0,
 	NULL, CameltryRomInfo, CameltryRomName, NULL, NULL, CameltryInputInfo, CameltryDIPInfo,
@@ -10904,7 +10904,7 @@ struct BurnDriver BurnDrvCameltry = {
 
 struct BurnDriver BurnDrvCameltryau = {
 	"cameltryau", "cameltry", NULL, NULL, "1989",
-	"Cameltry (World, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Cameltry (World, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_MAZE, 0,
 	NULL, CameltryauRomInfo, CameltryauRomName, NULL, NULL, CameltryInputInfo, CameltryDIPInfo,
@@ -10914,7 +10914,7 @@ struct BurnDriver BurnDrvCameltryau = {
 
 struct BurnDriver BurnDrvCameltrya = {
 	"cameltrya", "cameltry", NULL, NULL, "1989",
-	"Cameltry (US, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Cameltry (US, YM2203 + M6295)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_MAZE, 0,
 	NULL, CameltryaRomInfo, CameltryaRomName, NULL, NULL, CameltryInputInfo, CameltryDIPInfo,
@@ -10924,7 +10924,7 @@ struct BurnDriver BurnDrvCameltrya = {
 
 struct BurnDriver BurnDrvCameltryj = {
 	"cameltryj", "cameltry", NULL, NULL, "1989",
-	"Cameltry (Japan, YM2610)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Cameltry (Japan, YM2610)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_MAZE, 0,
 	NULL, CameltryjRomInfo, CameltryjRomName, NULL, NULL, CameltryInputInfo, CameltrjDIPInfo,
@@ -10934,7 +10934,7 @@ struct BurnDriver BurnDrvCameltryj = {
 
 struct BurnDriver BurnDrvDeadconx = {
 	"deadconx", NULL, NULL, NULL, "1992",
-	"Dead Connection (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Dead Connection (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, DeadconxRomInfo, DeadconxRomName, NULL, NULL, DeadconxInputInfo, DeadconxDIPInfo,
@@ -10944,7 +10944,7 @@ struct BurnDriver BurnDrvDeadconx = {
 
 struct BurnDriver BurnDrvDeadconxj = {
 	"deadconxj", "deadconx", NULL, NULL, "1992",
-	"Dead Connection (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Dead Connection (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, DeadconxjRomInfo, DeadconxjRomName, NULL, NULL, DeadconxInputInfo, DeadconxjDIPInfo,
@@ -10954,7 +10954,7 @@ struct BurnDriver BurnDrvDeadconxj = {
 
 struct BurnDriver BurnDrvDinorex = {
 	"dinorex", NULL, NULL, NULL, "1992",
-	"Dino Rex (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Dino Rex (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, DinorexRomInfo, DinorexRomName, NULL, NULL, DinorexInputInfo, DinorexDIPInfo,
@@ -10964,7 +10964,7 @@ struct BurnDriver BurnDrvDinorex = {
 
 struct BurnDriver BurnDrvDinorexj = {
 	"dinorexj", "dinorex", NULL, NULL, "1992",
-	"Dino Rex (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Dino Rex (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, DinorexjRomInfo, DinorexjRomName, NULL, NULL, DinorexInputInfo, DinorexjDIPInfo,
@@ -10974,7 +10974,7 @@ struct BurnDriver BurnDrvDinorexj = {
 
 struct BurnDriver BurnDrvDinorexu = {
 	"dinorexu", "dinorex", NULL, NULL, "1992",
-	"Dino Rex (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Dino Rex (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, DinorexuRomInfo, DinorexuRomName, NULL, NULL, DinorexInputInfo, DinorexDIPInfo,
@@ -10984,7 +10984,7 @@ struct BurnDriver BurnDrvDinorexu = {
 
 struct BurnDriver BurnDrvDondokod = {
 	"dondokod", NULL, NULL, NULL, "1989",
-	"Don Doko Don (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Don Doko Don (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, DondokodRomInfo, DondokodRomName, NULL, NULL, DondokodInputInfo, DondokodDIPInfo,
@@ -10994,7 +10994,7 @@ struct BurnDriver BurnDrvDondokod = {
 
 struct BurnDriver BurnDrvDondokodj = {
 	"dondokodj", "dondokod", NULL, NULL, "1989",
-	"Don Doko Don (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Don Doko Don (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, DondokodjRomInfo, DondokodjRomName, NULL, NULL, DondokodInputInfo, DondokodjDIPInfo,
@@ -11004,7 +11004,7 @@ struct BurnDriver BurnDrvDondokodj = {
 
 struct BurnDriver BurnDrvDondokodu = {
 	"dondokodu", "dondokod", NULL, NULL, "1989",
-	"Don Doko Don (US)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Don Doko Don (US)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, DondokoduRomInfo, DondokoduRomName, NULL, NULL, DondokodInputInfo, DondokoduDIPInfo,
@@ -11014,7 +11014,7 @@ struct BurnDriver BurnDrvDondokodu = {
 
 struct BurnDriver BurnDrvDriftout = {
 	"driftout", NULL, NULL, NULL, "1991",
-	"Drift Out (Europe)\0", NULL, "Visco (Europe)", "Taito-F2",
+	"Drift Out (Europe)\0", NULL, "Visco (Europe)", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriftoutRomInfo, DriftoutRomName, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
@@ -11024,7 +11024,7 @@ struct BurnDriver BurnDrvDriftout = {
 
 struct BurnDriver BurnDrvDriftoutj = {
 	"driftoutj", "driftout", NULL, NULL, "1991",
-	"Drift Out (Japan)\0", NULL, "Visco (Japan)", "Taito-F2",
+	"Drift Out (Japan)\0", NULL, "Visco (Japan)", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriftoutjRomInfo, DriftoutjRomName, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
@@ -11034,7 +11034,7 @@ struct BurnDriver BurnDrvDriftoutj = {
 
 struct BurnDriver BurnDrvDriveout = {
 	"driveout", "driftout", NULL, NULL, "1991",
-	"Drive Out\0", NULL, "bootleg", "Taito-F2",
+	"Drive Out\0", NULL, "bootleg", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_TAITOF2, GBF_RACING, 0,
 	NULL, DriveoutRomInfo, DriveoutRomName, NULL, NULL, DriftoutInputInfo, DriftoutDIPInfo,
@@ -11044,7 +11044,7 @@ struct BurnDriver BurnDrvDriveout = {
 
 struct BurnDriver BurnDrvFinalb = {
 	"finalb", NULL, NULL, NULL, "1988",
-	"Final Blow (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Final Blow (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, FinalbRomInfo, FinalbRomName, NULL, NULL, FinalbInputInfo, FinalbDIPInfo,
@@ -11054,7 +11054,7 @@ struct BurnDriver BurnDrvFinalb = {
 
 struct BurnDriver BurnDrvFinalbj = {
 	"finalbj", "finalb", NULL, NULL, "1988",
-	"Final Blow (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Final Blow (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, FinalbjRomInfo, FinalbjRomName, NULL, NULL, FinalbInputInfo, FinalbjDIPInfo,
@@ -11064,7 +11064,7 @@ struct BurnDriver BurnDrvFinalbj = {
 
 struct BurnDriver BurnDrvFinalbu = {
 	"finalbu", "finalb", NULL, NULL, "1988",
-	"Final Blow (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Final Blow (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, FinalbuRomInfo, FinalbuRomName, NULL, NULL, FinalbInputInfo, FinalbjDIPInfo,
@@ -11074,7 +11074,7 @@ struct BurnDriver BurnDrvFinalbu = {
 
 struct BurnDriver BurnDrvFootchmp = {
 	"footchmp", NULL, NULL, NULL, "1990",
-	"Football Champ (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Football Champ (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
 	NULL, FootchmpRomInfo, FootchmpRomName, NULL, NULL, FootchmpInputInfo, FootchmpDIPInfo,
@@ -11084,7 +11084,7 @@ struct BurnDriver BurnDrvFootchmp = {
 
 struct BurnDriver BurnDrvHthero = {
 	"hthero", "footchmp", NULL, NULL, "1990",
-	"Hat Trick Hero (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Hat Trick Hero (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
 	NULL, HtheroRomInfo, HtheroRomName, NULL, NULL, FootchmpInputInfo, HtheroDIPInfo,
@@ -11094,7 +11094,7 @@ struct BurnDriver BurnDrvHthero = {
 
 struct BurnDriver BurnDrvEuroch92 = {
 	"euroch92", NULL, NULL, NULL, "1992",
-	"Euro Champ '92 (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Euro Champ '92 (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SPORTSFOOTBALL, 0,
 	NULL, Euroch92RomInfo, Euroch92RomName, NULL, NULL, FootchmpInputInfo, FootchmpDIPInfo,
@@ -11104,7 +11104,7 @@ struct BurnDriver BurnDrvEuroch92 = {
 
 struct BurnDriver BurnDrvGrowl = {
 	"growl", NULL, NULL, NULL, "1990",
-	"Growl (World, Rev 1)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Growl (World, Rev 1)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowlRomInfo, GrowlRomName, NULL, NULL, GrowlInputInfo, GrowlDIPInfo,
@@ -11114,7 +11114,7 @@ struct BurnDriver BurnDrvGrowl = {
 
 struct BurnDriver BurnDrvGrowla = {
 	"growla", "growl", NULL, NULL, "1990",
-	"Growl (World)\0", NULL, "Taito America Japan", "Taito-F2",
+	"Growl (World)\0", NULL, "Taito America Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowlaRomInfo, GrowlaRomName, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
@@ -11124,7 +11124,7 @@ struct BurnDriver BurnDrvGrowla = {
 
 struct BurnDriver BurnDrvGrowlu = {
 	"growlu", "growl", NULL, NULL, "1990",
-	"Growl (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Growl (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, GrowluRomInfo, GrowluRomName, NULL, NULL, GrowlInputInfo, GrowluDIPInfo,
@@ -11134,7 +11134,7 @@ struct BurnDriver BurnDrvGrowlu = {
 
 struct BurnDriver BurnDrvRunark = {
 	"runark", "growl", NULL, NULL, "1990",
-	"Runark (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Runark (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, RunarkRomInfo, RunarkRomName, NULL, NULL, GrowlInputInfo, RunarkDIPInfo,
@@ -11144,7 +11144,7 @@ struct BurnDriver BurnDrvRunark = {
 
 struct BurnDriver BurnDrvGunfront = {
 	"gunfront", NULL, NULL, NULL, "1990",
-	"Gun & Frontier (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Gun & Frontier (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_VERSHOOT, 0,
 	NULL, GunfrontRomInfo, GunfrontRomName, NULL, NULL, GunfrontInputInfo, GunfrontDIPInfo,
@@ -11154,7 +11154,7 @@ struct BurnDriver BurnDrvGunfront = {
 
 struct BurnDriver BurnDrvGunfrontj = {
 	"gunfrontj", "gunfront", NULL, NULL, "1990",
-	"Gun Frontier (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Gun Frontier (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_VERSHOOT, 0,
 	NULL, GunfrontjRomInfo, GunfrontjRomName, NULL, NULL, GunfrontInputInfo, GunfrontjDIPInfo,
@@ -11164,7 +11164,7 @@ struct BurnDriver BurnDrvGunfrontj = {
 
 struct BurnDriver BurnDrvKoshien = {
 	"koshien", NULL, NULL, NULL, "1990",
-	"Ah Eikou no Koshien (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Ah Eikou no Koshien (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u7532\u5B50\u5712 \u6804\u5149\u306E \u55DA\u547C (Japan)\0Ah Eikou no Koshien\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_SPORTSMISC, 0,
 	NULL, KoshienRomInfo, KoshienRomName, NULL, NULL, KoshienInputInfo, KoshienDIPInfo,
@@ -11174,7 +11174,7 @@ struct BurnDriver BurnDrvKoshien = {
 
 struct BurnDriver BurnDrvLiquidk = {
 	"liquidk", NULL, NULL, NULL, "1990",
-	"Liquid Kids (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Liquid Kids (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, LiquidkRomInfo, LiquidkRomName, NULL, NULL, LiquidkInputInfo, LiquidkDIPInfo,
@@ -11184,7 +11184,7 @@ struct BurnDriver BurnDrvLiquidk = {
 
 struct BurnDriver BurnDrvLiquidku = {
 	"liquidku", "liquidk", NULL, NULL, "1990",
-	"Liquid Kids (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Liquid Kids (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, LiquidkuRomInfo, LiquidkuRomName, NULL, NULL, LiquidkInputInfo, LiquidkuDIPInfo,
@@ -11194,7 +11194,7 @@ struct BurnDriver BurnDrvLiquidku = {
 
 struct BurnDriver BurnDrvMizubaku = {
 	"mizubaku", "liquidk", NULL, NULL, "1990",
-	"Mizubaku Daibouken (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Mizubaku Daibouken (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u30DF\u30BA\u30D0\u30AF \u5927\u5192\u967A \u30A2\u30C9\u30D9\u30F3\u30C1\u30E3\u30FC (Japan)\0Mizubaku Daibouken\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_PLATFORM, 0,
 	NULL, MizubakuRomInfo, MizubakuRomName, NULL, NULL, LiquidkInputInfo, LiquidkuDIPInfo,
@@ -11204,7 +11204,7 @@ struct BurnDriver BurnDrvMizubaku = {
 
 struct BurnDriver BurnDrvMegablst = {
 	"megablst", NULL, NULL, NULL, "1989",
-	"Mega Blast (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Mega Blast (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
 	NULL, MegablstRomInfo, MegablstRomName, NULL, NULL, MegablstInputInfo, MegablstDIPInfo,
@@ -11214,7 +11214,7 @@ struct BurnDriver BurnDrvMegablst = {
 
 struct BurnDriver BurnDrvMegablstj = {
 	"megablstj", "megablst", NULL, NULL, "1989",
-	"Mega Blast (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Mega Blast (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
 	NULL, MegablstjRomInfo, MegablstjRomName, NULL, NULL, MegablstInputInfo, MegablstjDIPInfo,
@@ -11224,7 +11224,7 @@ struct BurnDriver BurnDrvMegablstj = {
 
 struct BurnDriver BurnDrvMegablstu = {
 	"megablstu", "megablst", NULL, NULL, "1989",
-	"Mega Blast (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Mega Blast (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
 	NULL, MegablstuRomInfo, MegablstuRomName, NULL, NULL, MegablstInputInfo, MegablstuDIPInfo,
@@ -11234,7 +11234,7 @@ struct BurnDriver BurnDrvMegablstu = {
 
 struct BurnDriver BurnDrvMetalb = {
 	"metalb", NULL, NULL, NULL, "1991",
-	"Metal Black (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Metal Black (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
 	NULL, MetalbRomInfo, MetalbRomName, NULL, NULL, MetalbInputInfo, MetalbDIPInfo,
@@ -11244,7 +11244,7 @@ struct BurnDriver BurnDrvMetalb = {
 
 struct BurnDriver BurnDrvMetalbj = {
 	"metalbj", "metalb", NULL, NULL, "1991",
-	"Metal Black (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Metal Black (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
 	NULL, MetalbjRomInfo, MetalbjRomName, NULL, NULL, MetalbInputInfo, MetalbjDIPInfo,
@@ -11254,7 +11254,7 @@ struct BurnDriver BurnDrvMetalbj = {
 
 struct BurnDriver BurnDrvMjnquest = {
 	"mjnquest", NULL, NULL, NULL, "1990",
-	"Mahjong Quest (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Mahjong Quest (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_MAHJONG, 0,
 	NULL, MjnquestRomInfo, MjnquestRomName, NULL, NULL, MjnquestInputInfo, MjnquestDIPInfo,
@@ -11264,7 +11264,7 @@ struct BurnDriver BurnDrvMjnquest = {
 
 struct BurnDriver BurnDrvMjnquestb = {
 	"mjnquestb", "mjnquest", NULL, NULL, "1990",
-	"Mahjong Quest (No Nudity)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Mahjong Quest (No Nudity)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_MAHJONG, 0,
 	NULL, MjnquestbRomInfo, MjnquestbRomName, NULL, NULL, MjnquestInputInfo, MjnquestDIPInfo,
@@ -11274,7 +11274,7 @@ struct BurnDriver BurnDrvMjnquestb = {
 
 struct BurnDriver BurnDrvNinjak = {
 	"ninjak", NULL, NULL, NULL, "1990",
-	"The Ninja Kids (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"The Ninja Kids (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, NinjakRomInfo, NinjakRomName, NULL, NULL, NinjakInputInfo, NinjakDIPInfo,
@@ -11284,7 +11284,7 @@ struct BurnDriver BurnDrvNinjak = {
 
 struct BurnDriver BurnDrvNinjakj = {
 	"ninjakj", "ninjak", NULL, NULL, "1990",
-	"The Ninja Kids (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"The Ninja Kids (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, NinjakjRomInfo, NinjakjRomName, NULL, NULL, NinjakInputInfo, NinjakjDIPInfo,
@@ -11294,7 +11294,7 @@ struct BurnDriver BurnDrvNinjakj = {
 
 struct BurnDriver BurnDrvNinjaku = {
 	"ninjaku", "ninjak", NULL, NULL, "1990",
-	"The Ninja Kids (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"The Ninja Kids (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, NinjakuRomInfo, NinjakuRomName, NULL, NULL, NinjakInputInfo, NinjakuDIPInfo,
@@ -11304,7 +11304,7 @@ struct BurnDriver BurnDrvNinjaku = {
 
 struct BurnDriver BurnDrvPulirula = {
 	"pulirula", NULL, NULL, NULL, "1991",
-	"PuLiRuLa (World)\0", "Some priority problems", "Taito Corporation Japan", "Taito-F2",
+	"PuLiRuLa (World)\0", "Some priority problems", "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, PulirulaRomInfo, PulirulaRomName, NULL, NULL, PulirulaInputInfo, PulirulaDIPInfo,
@@ -11314,7 +11314,7 @@ struct BurnDriver BurnDrvPulirula = {
 
 struct BurnDriver BurnDrvPulirulaj = {
 	"pulirulaj", "pulirula", NULL, NULL, "1991",
-	"PuLiRuLa (Japan)\0", "Some priority problems", "Taito Corporation", "Taito-F2",
+	"PuLiRuLa (Japan)\0", "Some priority problems", "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, PulirulajRomInfo, PulirulajRomName, NULL, NULL, PulirulaInputInfo, PulirulajDIPInfo,
@@ -11324,7 +11324,7 @@ struct BurnDriver BurnDrvPulirulaj = {
 
 struct BurnDriver BurnDrvQcrayon = {
 	"qcrayon", NULL, NULL, NULL, "1993",
-	"Quiz Crayon Shinchan (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Quiz Crayon Shinchan (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u30AF\u30A4\u30BA \u30AF\u30EC\u30E8\u30F3\u3057\u3093\u3061\u3083\u3093 (Japan)\0Quiz Crayon Shinchan\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, QcrayonRomInfo, QcrayonRomName, NULL, NULL, QcrayonInputInfo, QcrayonDIPInfo,
@@ -11334,7 +11334,7 @@ struct BurnDriver BurnDrvQcrayon = {
 
 struct BurnDriver BurnDrvQcrayon2 = {
 	"qcrayon2", NULL, NULL, NULL, "1993",
-	"Crayon Shinchan Orato Asobo (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Crayon Shinchan Orato Asobo (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u30AF\u30EC\u30E8\u30F3\u3057\u3093\u3061\u3083\u3093 \u30AA\u30E9\u3068\u904A\u307C (Japan)\0Crayon Shinchan Orato Asobo\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, Qcrayon2RomInfo, Qcrayon2RomName, NULL, NULL, Qcrayon2InputInfo, Qcrayon2DIPInfo,
@@ -11344,7 +11344,7 @@ struct BurnDriver BurnDrvQcrayon2 = {
 
 struct BurnDriver BurnDrvQjinsei = {
 	"qjinsei", NULL, NULL, NULL, "1992",
-	"Quiz Jinsei Gekijoh (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Quiz Jinsei Gekijoh (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u30AF\u30A4\u30BA \u4EBA\u751F\u5287\u5834 (Japan)\0Quiz Jinsei Gekijoh\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, QjinseiRomInfo, QjinseiRomName, NULL, NULL, QjinseiInputInfo, QjinseiDIPInfo,
@@ -11354,7 +11354,7 @@ struct BurnDriver BurnDrvQjinsei = {
 
 struct BurnDriver BurnDrvQtorimon = {
 	"qtorimon", NULL, NULL, NULL, "1990",
-	"Quiz Torimonochou (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Quiz Torimonochou (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u304F\u3044\u305A \u82E6\u80C3\u982D \u6355\u7269\u5E33 (Japan)\0Quiz Torimonochou\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, QtorimonRomInfo, QtorimonRomName, NULL, NULL, QtorimonInputInfo, QtorimonDIPInfo,
@@ -11364,7 +11364,7 @@ struct BurnDriver BurnDrvQtorimon = {
 
 struct BurnDriver BurnDrvQuizhq = {
 	"quizhq", NULL, NULL, NULL, "1990",
-	"Quiz H.Q. (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Quiz H.Q. (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, QuizhqRomInfo, QuizhqRomName, NULL, NULL, QuizhqInputInfo, QuizhqDIPInfo,
@@ -11374,7 +11374,7 @@ struct BurnDriver BurnDrvQuizhq = {
 
 struct BurnDriver BurnDrvQzchikyu = {
 	"qzchikyu", NULL, NULL, NULL, "1991",
-	"Quiz Chikyu Bouei Gun (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Quiz Chikyu Bouei Gun (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u30AF\u30A4\u30BA \u5730\u7403\u9632\u885B\u8ECD (Japan)\0Quiz Chikyu Bouei Gun\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, QzchikyuRomInfo, QzchikyuRomName, NULL, NULL, QzchikyuInputInfo, QzchikyuDIPInfo,
@@ -11384,7 +11384,7 @@ struct BurnDriver BurnDrvQzchikyu = {
 
 struct BurnDriver BurnDrvQzquest = {
 	"qzquest", NULL, NULL, NULL, "1991",
-	"Quiz Quest - Hime to Yuusha no Monogatari (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Quiz Quest - Hime to Yuusha no Monogatari (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u30AF\u30A4\u30BA \u30AF\u30A8\u30B9\u30C8 \uFF0D\u59EB\u3068\u52C7\u8005\u306E\u7269\u8A9E\uFF0D (Japan)\0Quiz Quest - Hime to Yuusha no Monogatari\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, QzquestRomInfo, QzquestRomName, NULL, NULL, QzquestInputInfo, QzquestDIPInfo,
@@ -11394,7 +11394,7 @@ struct BurnDriver BurnDrvQzquest = {
 
 struct BurnDriver BurnDrvSolfigtr = {
 	"solfigtr", NULL, NULL, NULL, "1991",
-	"Solitary Fighter (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Solitary Fighter (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_VSFIGHT, 0,
 	NULL, SolfigtrRomInfo, SolfigtrRomName, NULL, NULL, SolfigtrInputInfo, SolfigtrDIPInfo,
@@ -11404,7 +11404,7 @@ struct BurnDriver BurnDrvSolfigtr = {
 
 struct BurnDriver BurnDrvSsi = {
 	"ssi", NULL, NULL, NULL, "1990",
-	"Super Space Invaders '91 (World)\0", NULL, "Taito Corporation Japan", "Taito-F2",
+	"Super Space Invaders '91 (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, SsiRomInfo, SsiRomName, NULL, NULL, SsiInputInfo, SsiDIPInfo,
@@ -11414,7 +11414,7 @@ struct BurnDriver BurnDrvSsi = {
 
 struct BurnDriver BurnDrvMajest12u = {
 	"majest12u", "ssi", NULL, NULL, "1990",
-	"Majestic Twelve - The Space Invaders Part IV (US)\0", NULL, "Taito America Corporation", "Taito-F2",
+	"Majestic Twelve - The Space Invaders Part IV (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, Majest12uRomInfo, Majest12uRomName, NULL, NULL, SsiInputInfo, Majest12DIPInfo,
@@ -11424,7 +11424,7 @@ struct BurnDriver BurnDrvMajest12u = {
 
 struct BurnDriver BurnDrvMajest12j = {
 	"majest12j", "ssi", NULL, NULL, "1990",
-	"Majestic Twelve - The Space Invaders Part IV (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Majestic Twelve - The Space Invaders Part IV (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_TAITOF2, GBF_SHOOT, 0,
 	NULL, Majest12jRomInfo, Majest12jRomName, NULL, NULL, SsiInputInfo, Majest12DIPInfo,
@@ -11434,7 +11434,7 @@ struct BurnDriver BurnDrvMajest12j = {
 
 struct BurnDriver BurnDrvThundfox = {
 	"thundfox", NULL, NULL, NULL, "1990",
-	"Thunder Fox (World)\0", "NULL", "Taito Corporation Japan", "Taito-F2",
+	"Thunder Fox (World)\0", "NULL", "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, ThundfoxRomInfo, ThundfoxRomName, NULL, NULL, ThundfoxInputInfo, ThundfoxDIPInfo,
@@ -11444,7 +11444,7 @@ struct BurnDriver BurnDrvThundfox = {
 
 struct BurnDriver BurnDrvThundfoxj = {
 	"thundfoxj", "thundfox", NULL, NULL, "1990",
-	"Thunder Fox (Japan)\0", "NULL", "Taito Corporation", "Taito-F2",
+	"Thunder Fox (Japan)\0", "NULL", "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, ThundfoxjRomInfo, ThundfoxjRomName, NULL, NULL, ThundfoxInputInfo, ThundfoxjDIPInfo,
@@ -11454,7 +11454,7 @@ struct BurnDriver BurnDrvThundfoxj = {
 
 struct BurnDriver BurnDrvThundfoxu = {
 	"thundfoxu", "thundfox", NULL, NULL, "1990",
-	"Thunder Fox (US)\0", "NULL", "Taito America Corporation", "Taito-F2",
+	"Thunder Fox (US)\0", "NULL", "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_SCRFIGHT, 0,
 	NULL, ThundfoxuRomInfo, ThundfoxuRomName, NULL, NULL, ThundfoxInputInfo, ThundfoxuDIPInfo,
@@ -11464,7 +11464,7 @@ struct BurnDriver BurnDrvThundfoxu = {
 
 struct BurnDriver BurnDrvYesnoj = {
 	"yesnoj", NULL, NULL, NULL, "1992",
-	"Yes/No Sinri Tokimeki Chart\0", NULL, "Taito Corporation", "Taito-F2",
+	"Yes/No Sinri Tokimeki Chart\0", NULL, "Taito Corporation", "Taito F2",
 	L"\uFF39\uFF45\uFF53.\uFF2E\uFF4F \u5FC3\u7406 \u30C8\u30AD\u30E1\u30AD\u30C1\u30E3\u30FC\u30C8\0Yes/No Sinri Tokimeki Chart\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, YesnojRomInfo, YesnojRomName, NULL, NULL, YesnojInputInfo, YesnojDIPInfo,
@@ -11474,7 +11474,7 @@ struct BurnDriver BurnDrvYesnoj = {
 
 struct BurnDriver BurnDrvYuyugogo = {
 	"yuyugogo", NULL, NULL, NULL, "1990",
-	"Yuuyu no Quiz de GO!GO! (Japan)\0", NULL, "Taito Corporation", "Taito-F2",
+	"Yuuyu no Quiz de GO!GO! (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	L"\u3086\u3046\u3086 \u306E\u30AF\u30A4\u30BA\u3067 \uFF27\uFF4F!\uFF27\uFF4F! (Japan)\0Yuuyu no Quiz de GO!GO!\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_QUIZ, 0,
 	NULL, YuyugogoRomInfo, YuyugogoRomName, NULL, NULL, YuyugogoInputInfo, YuyugogoDIPInfo,

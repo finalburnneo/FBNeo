@@ -1901,7 +1901,7 @@ STD_ROM_FN(syvalion)
 
 struct BurnDriver BurnDrvSyvalion = {
 	"syvalion", NULL, NULL, NULL, "1988",
-	"Syvalion (Japan)\0", NULL, "Taito Corporation", "H System",
+	"Syvalion (Japan)\0", NULL, "Taito Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionRomInfo, syvalionRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -1963,7 +1963,7 @@ static INT32 SyvalionpInit()
 
 struct BurnDriver BurnDrvSyvalionp = {
 	"syvalionp", "syvalion", NULL, NULL, "1988",
-	"Syvalion (World, prototype)\0", NULL, "Taito Corporation", "H System",
+	"Syvalion (World, prototype)\0", NULL, "Taito Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionpRomInfo, syvalionpRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -2010,7 +2010,7 @@ STD_ROM_FN(syvalionu)
 
 struct BurnDriver BurnDrvSyvalionu = {
 	"syvalionu", "syvalion", NULL, NULL, "1988",
-	"Syvalion (US, PS2 Taito Legends 2)\0", NULL, "Taito America Corporation", "H System",
+	"Syvalion (US, PS2 Taito Legends 2)\0", NULL, "Taito America Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionuRomInfo, syvalionuRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -2057,7 +2057,7 @@ STD_ROM_FN(syvalionw)
 
 struct BurnDriver BurnDrvSyvalionw = {
 	"syvalionw", "syvalion", NULL, NULL, "1988",
-	"Syvalion (World, PS2 Taito Legends 2)\0", NULL, "Taito Corporation Japan", "H System",
+	"Syvalion (World, PS2 Taito Legends 2)\0", NULL, "Taito Corporation Japan", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionwRomInfo, syvalionwRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
@@ -2097,7 +2097,7 @@ STD_ROM_FN(recordbr)
 
 struct BurnDriver BurnDrvRecordbr = {
 	"recordbr", NULL, NULL, NULL, "1988",
-	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "H System",
+	"Recordbreaker (World)\0", NULL, "Taito Corporation Japan", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, recordbrRomInfo, recordbrRomName, NULL, NULL, RecordbrInputInfo, RecordbrDIPInfo,
@@ -2137,7 +2137,7 @@ STD_ROM_FN(gogold)
 
 struct BurnDriver BurnDrvGogold = {
 	"gogold", "recordbr", NULL, NULL, "1988",
-	"Go For The Gold (Japan)\0", NULL, "Taito Corporation", "H System",
+	"Go For The Gold (Japan)\0", NULL, "Taito Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, gogoldRomInfo, gogoldRomName, NULL, NULL, RecordbrInputInfo, GogoldDIPInfo,
@@ -2175,7 +2175,7 @@ STD_ROM_FN(tetristh)
 
 struct BurnDriver BurnDrvTetristh = {
 	"tetristh", "tetris", NULL, NULL, "1988",
-	"Tetris (Japan, Taito H-System)\0", NULL, "Sega", "H System",
+	"Tetris (Japan, Taito H-System)\0", NULL, "Sega", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, tetristhRomInfo, tetristhRomName, NULL, NULL, TetristhInputInfo, TetristhDIPInfo,
@@ -2218,7 +2218,7 @@ STD_ROM_FN(dleague)
 
 struct BurnDriver BurnDrvDleague = {
 	"dleague", NULL, NULL, NULL, "1990",
-	"Dynamite League (US)\0", NULL, "Taito America Corporation", "H System",
+	"Dynamite League (US)\0", NULL, "Taito America Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleagueRomInfo, dleagueRomName, NULL, NULL, DleagueInputInfo, DleagueDIPInfo,
@@ -2260,7 +2260,7 @@ STD_ROM_FN(dleaguej)
 
 struct BurnDriver BurnDrvDleaguej = {
 	"dleaguej", "dleague", NULL, NULL, "1990",
-	"Dynamite League (Japan)\0", NULL, "Taito Corporation", "H System",
+	"Dynamite League (Japan)\0", NULL, "Taito Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleaguejRomInfo, dleaguejRomName, NULL, NULL, DleagueInputInfo, DleaguejDIPInfo,

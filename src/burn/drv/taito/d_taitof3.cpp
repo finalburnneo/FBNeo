@@ -1603,7 +1603,7 @@ static INT32 ringrageInit()
 
 struct BurnDriver BurnDrvRingrage = {
 	"ringrage", NULL, NULL, NULL, "1992",
-	"Ring Rage (Ver 2.3O 1992/08/09)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Ring Rage (Ver 2.3O 1992/08/09)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, ringrageRomInfo, ringrageRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1640,7 +1640,7 @@ STD_ROM_FN(ringrageu)
 
 struct BurnDriver BurnDrvRingrageu = {
 	"ringrageu", "ringrage", NULL, NULL, "1992",
-	"Ring Rage (Ver 2.3A 1992/08/09)\0", NULL, "Taito America Corporation", "F3 System",
+	"Ring Rage (Ver 2.3A 1992/08/09)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, ringrageuRomInfo, ringrageuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1677,7 +1677,7 @@ STD_ROM_FN(ringragej)
 
 struct BurnDriver BurnDrvRingragej = {
 	"ringragej", "ringrage", NULL, NULL, "1992",
-	"Ring Rage (Ver 2.3J 1992/08/09)\0", NULL, "Taito Corporation", "F3 System",
+	"Ring Rage (Ver 2.3J 1992/08/09)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, ringragejRomInfo, ringragejRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1730,7 +1730,7 @@ static INT32 arabianmInit()
 
 struct BurnDriver BurnDrvArabianm = {
 	"arabianm", NULL, NULL, NULL, "1992",
-	"Arabian Magic (Ver 1.0O 1992/07/06)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Arabian Magic (Ver 1.0O 1992/07/06)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabianmRomInfo, arabianmRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1777,7 +1777,7 @@ STD_ROM_FN(arabianmj)
 
 struct BurnDriver BurnDrvArabianmj = {
 	"arabianmj", "arabianm", NULL, NULL, "1992",
-	"Arabian Magic (Ver 1.0J 1992/07/06)\0", NULL, "Taito Corporation", "F3 System",
+	"Arabian Magic (Ver 1.0J 1992/07/06)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabianmjRomInfo, arabianmjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1824,7 +1824,7 @@ STD_ROM_FN(arabianmu)
 
 struct BurnDriver BurnDrvArabianmu = {
 	"arabianmu", "arabianm", NULL, NULL, "1992",
-	"Arabian Magic (Ver 1.0A 1992/07/06)\0", NULL, "Taito America Corporation", "F3 System",
+	"Arabian Magic (Ver 1.0A 1992/07/06)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, arabianmuRomInfo, arabianmuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1864,7 +1864,7 @@ static INT32 ridingfInit()
 
 struct BurnDriver BurnDrvRidingf = {
 	"ridingf", NULL, NULL, NULL, "1992",
-	"Riding Fight (Ver 1.0O)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Riding Fight (Ver 1.0O)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, ridingfRomInfo, ridingfRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1899,7 +1899,7 @@ STD_ROM_FN(ridingfj)
 
 struct BurnDriver BurnDrvRidingfj = {
 	"ridingfj", "ridingf", NULL, NULL, "1992",
-	"Riding Fight (Ver 1.0J)\0", NULL, "Taito Corporation", "F3 System",
+	"Riding Fight (Ver 1.0J)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, ridingfjRomInfo, ridingfjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1934,7 +1934,7 @@ STD_ROM_FN(ridingfu)
 
 struct BurnDriver BurnDrvRidingfu = {
 	"ridingfu", "ridingf", NULL, NULL, "1992",
-	"Riding Fight (Ver 1.0A)\0", NULL, "Taito America Corporation", "F3 System",
+	"Riding Fight (Ver 1.0A)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, ridingfuRomInfo, ridingfuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -1977,7 +1977,7 @@ static INT32 gseekerInit()
 
 struct BurnDriver BurnDrvGseeker = {
 	"gseeker", NULL, NULL, NULL, "1992",
-	"Grid Seeker: Project Storm Hammer (Ver 1.3O)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Grid Seeker: Project Storm Hammer (Ver 1.3O)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gseekerRomInfo, gseekerRomName, NULL, NULL, F3InputInfo, gseekerDIPInfo,
@@ -2014,7 +2014,7 @@ STD_ROM_FN(gseekerj)
 
 struct BurnDriver BurnDrvGseekerj = {
 	"gseekerj", "gseeker", NULL, NULL, "1992",
-	"Grid Seeker: Project Storm Hammer (Ver 1.3J)\0", NULL, "Taito Corporation", "F3 System",
+	"Grid Seeker: Project Storm Hammer (Ver 1.3J)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gseekerjRomInfo, gseekerjRomName, NULL, NULL, F3InputInfo, gseekerDIPInfo,
@@ -2051,7 +2051,7 @@ STD_ROM_FN(gseekeru)
 
 struct BurnDriver BurnDrvGseekeru = {
 	"gseekeru", "gseeker", NULL, NULL, "1992",
-	"Grid Seeker: Project Storm Hammer (Ver 1.3A)\0", NULL, "Taito America Corporation", "F3 System",
+	"Grid Seeker: Project Storm Hammer (Ver 1.3A)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gseekeruRomInfo, gseekeruRomName, NULL, NULL, F3InputInfo, gseekerDIPInfo,
@@ -2096,7 +2096,7 @@ static INT32 commandwInit()
 
 struct BurnDriver BurnDrvCommandw = {
 	"commandw", NULL, NULL, NULL, "1992",
-	"Command War - Super Special Battle & War Game (Ver 0.0J) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
+	"Command War - Super Special Battle & War Game (Ver 0.0J) (Prototype)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
 	NULL, commandwRomInfo, commandwRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2141,7 +2141,7 @@ static INT32 cupfinalInit()
 
 struct BurnDriver BurnDrvCupfinal = {
 	"cupfinal", NULL, NULL, NULL, "1993",
-	"Taito Cup Finals (Ver 1.0O 1993/02/28)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Taito Cup Finals (Ver 1.0O 1993/02/28)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, cupfinalRomInfo, cupfinalRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2181,7 +2181,7 @@ STD_ROM_FN(hthero93)
 
 struct BurnDriver BurnDrvHthero93 = {
 	"hthero93", "cupfinal", NULL, NULL, "1993",
-	"Hat Trick Hero '93 (Ver 1.0J 1993/02/28)\0", NULL, "Taito Corporation", "F3 System",
+	"Hat Trick Hero '93 (Ver 1.0J 1993/02/28)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero93RomInfo, hthero93RomName, NULL, NULL, F3InputInfo, NULL,
@@ -2232,7 +2232,7 @@ STD_ROM_FN(hthero93u)
 
 struct BurnDriver BurnDrvHthero93u = {
 	"hthero93u", "cupfinal", NULL, NULL, "1993",
-	"Hat Trick Hero '93 (Ver 1.0A 1993/02/28)\0", NULL, "Taito Corporation", "F3 System",
+	"Hat Trick Hero '93 (Ver 1.0A 1993/02/28)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero93uRomInfo, hthero93uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2277,7 +2277,7 @@ static INT32 trstarInit()
 
 struct BurnDriver BurnDrvTrstar = {
 	"trstar", NULL, NULL, NULL, "1993",
-	"Top Ranking Stars (Ver 2.1O 1993/05/21) (New Version)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Top Ranking Stars (Ver 2.1O 1993/05/21) (New Version)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, trstarRomInfo, trstarRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2317,7 +2317,7 @@ STD_ROM_FN(trstarj)
 
 struct BurnDriver BurnDrvTrstarj = {
 	"trstarj", "trstar", NULL, NULL, "1993",
-	"Top Ranking Stars (Ver 2.1J 1993/05/21) (New Version)\0", NULL, "Taito Corporation", "F3 System",
+	"Top Ranking Stars (Ver 2.1J 1993/05/21) (New Version)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, trstarjRomInfo, trstarjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2357,7 +2357,7 @@ STD_ROM_FN(prmtmfgt)
 
 struct BurnDriver BurnDrvPrmtmfgt = {
 	"prmtmfgt", "trstar", NULL, NULL, "1993",
-	"Prime Time Fighter (Ver 2.1A 1993/05/21) (New Version)\0", NULL, "Taito America Corporation", "F3 System",
+	"Prime Time Fighter (Ver 2.1A 1993/05/21) (New Version)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, prmtmfgtRomInfo, prmtmfgtRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2397,7 +2397,7 @@ STD_ROM_FN(trstaro)
 
 struct BurnDriver BurnDrvTrstaro = {
 	"trstaro", "trstar", NULL, NULL, "1993",
-	"Top Ranking Stars (Ver 2.1O 1993/05/21) (Old Version)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Top Ranking Stars (Ver 2.1O 1993/05/21) (Old Version)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, trstaroRomInfo, trstaroRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2437,7 +2437,7 @@ STD_ROM_FN(trstaroj)
 
 struct BurnDriver BurnDrvTrstaroj = {
 	"trstaroj", "trstar", NULL, NULL, "1993",
-	"Top Ranking Stars (Ver 2.1J 1993/05/21) (Old Version)\0", NULL, "Taito Corporation", "F3 System",
+	"Top Ranking Stars (Ver 2.1J 1993/05/21) (Old Version)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, trstarojRomInfo, trstarojRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2477,7 +2477,7 @@ STD_ROM_FN(prmtmfgto)
 
 struct BurnDriver BurnDrvPrmtmfgto = {
 	"prmtmfgto", "trstar", NULL, NULL, "1993",
-	"Prime Time Fighter (Ver 2.1A 1993/05/21) (Old Version)\0", NULL, "Taito America Corporation", "F3 System",
+	"Prime Time Fighter (Ver 2.1A 1993/05/21) (Old Version)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, prmtmfgtoRomInfo, prmtmfgtoRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2519,7 +2519,7 @@ static INT32 gunlockInit()
 
 struct BurnDriver BurnDrvGunlock = {
 	"gunlock", NULL, NULL, NULL, "1993",
-	"Gunlock (Ver 2.3O 1994/01/20)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Gunlock (Ver 2.3O 1994/01/20)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gunlockRomInfo, gunlockRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2556,7 +2556,7 @@ STD_ROM_FN(rayforce)
 
 struct BurnDriver BurnDrvRayforce = {
 	"rayforce", "gunlock", NULL, NULL, "1993",
-	"Ray Force (Ver 2.3A 1994/01/20)\0", NULL, "Taito Corporation", "F3 System",
+	"Ray Force (Ver 2.3A 1994/01/20)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforceRomInfo, rayforceRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2593,7 +2593,7 @@ STD_ROM_FN(rayforcej)
 
 struct BurnDriver BurnDrvRayforcej = {
 	"rayforcej", "gunlock", NULL, NULL, "1993",
-	"Ray Force (Ver 2.3J 1994/01/20)\0", NULL, "Taito Corporation", "F3 System",
+	"Ray Force (Ver 2.3J 1994/01/20)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, rayforcejRomInfo, rayforcejRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2653,7 +2653,7 @@ static INT32 scfinalsInit()
 
 struct BurnDriver BurnDrvScfinals = {
 	"scfinals", NULL, NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.2O 1994/01/13)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "F3 System",
+	"Super Cup Finals (Ver 2.2O 1994/01/13)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, scfinalsRomInfo, scfinalsRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2695,7 +2695,7 @@ STD_ROM_FN(scfinalso)
 
 struct BurnDriver BurnDrvScfinalso = {
 	"scfinalso", "scfinals", NULL, NULL, "1993",
-	"Super Cup Finals (Ver 2.1O 1993/11/19)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "F3 System",
+	"Super Cup Finals (Ver 2.1O 1993/11/19)\0", "Use service coin! (game has issues)", "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, scfinalsoRomInfo, scfinalsoRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2740,7 +2740,7 @@ static INT32 lightbrInit()
 
 struct BurnDriver BurnDrvLightbr = {
 	"lightbr", NULL, NULL, NULL, "1993",
-	"Light Bringer (Ver 2.2O 1994/04/08)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Light Bringer (Ver 2.2O 1994/04/08)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, lightbrRomInfo, lightbrRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2780,7 +2780,7 @@ STD_ROM_FN(dungeonm)
 
 struct BurnDriver BurnDrvDungeonm = {
 	"dungeonm", "lightbr", NULL, NULL, "1993",
-	"Dungeon Magic (Ver 2.1O 1994/02/18)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Dungeon Magic (Ver 2.1O 1994/02/18)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, dungeonmRomInfo, dungeonmRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2820,7 +2820,7 @@ STD_ROM_FN(dungeonmu)
 
 struct BurnDriver BurnDrvDungeonmu = {
 	"dungeonmu", "lightbr", NULL, NULL, "1993",
-	"Dungeon Magic (Ver 2.1A 1994/02/18)\0", NULL, "Taito America Corporation", "F3 System",
+	"Dungeon Magic (Ver 2.1A 1994/02/18)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, dungeonmuRomInfo, dungeonmuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2860,7 +2860,7 @@ STD_ROM_FN(lightbrj)
 
 struct BurnDriver BurnDrvLightbrj = {
 	"lightbrj", "lightbr", NULL, NULL, "1993",
-	"Light Bringer (Ver 2.1J 1994/02/18)\0", NULL, "Taito Corporation", "F3 System",
+	"Light Bringer (Ver 2.1J 1994/02/18)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, lightbrjRomInfo, lightbrjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -2900,7 +2900,7 @@ STD_ROM_FN(intcup94)
 
 struct BurnDriver BurnDrvIntcup94 = {
 	"intcup94", NULL, NULL, NULL, "1994",
-	"International Cup '94 (Ver 2.2O 1994/05/26)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"International Cup '94 (Ver 2.2O 1994/05/26)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, intcup94RomInfo, intcup94RomName, NULL, NULL, F3InputInfo, NULL,
@@ -2940,7 +2940,7 @@ STD_ROM_FN(hthero94)
 
 struct BurnDriver BurnDrvHthero94 = {
 	"hthero94", "intcup94", NULL, NULL, "1994",
-	"Hat Trick Hero '94 (Ver 2.2A 1994/05/26)\0", NULL, "Taito America Corporation", "F3 System",
+	"Hat Trick Hero '94 (Ver 2.2A 1994/05/26)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero94RomInfo, hthero94RomName, NULL, NULL, F3InputInfo, NULL,
@@ -2980,7 +2980,7 @@ static INT32 recalhInit()
 
 struct BurnDriver BurnDrvRecalh = {
 	"recalh", NULL, NULL, NULL, "1994",
-	"Recalhorn (Ver 1.42J 1994/5/11) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
+	"Recalhorn (Ver 1.42J 1994/5/11) (Prototype)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, recalhRomInfo, recalhRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3035,7 +3035,7 @@ static INT32 kaiserknInit()
 
 struct BurnDriver BurnDrvKaiserkn = {
 	"kaiserkn", NULL, NULL, NULL, "1994",
-	"Kaiser Knuckle (Ver 2.1O 1994/07/29)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Kaiser Knuckle (Ver 2.1O 1994/07/29)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kaiserknRomInfo, kaiserknRomName, NULL, NULL, KnInputInfo, NULL,
@@ -3085,7 +3085,7 @@ STD_ROM_FN(kaiserknj)
 
 struct BurnDriver BurnDrvKaiserknj = {
 	"kaiserknj", "kaiserkn", NULL, NULL, "1994",
-	"Kaiser Knuckle (Ver 2.1J 1994/07/29)\0", NULL, "Taito Corporation", "F3 System",
+	"Kaiser Knuckle (Ver 2.1J 1994/07/29)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, kaiserknjRomInfo, kaiserknjRomName, NULL, NULL, KnInputInfo, NULL,
@@ -3135,7 +3135,7 @@ STD_ROM_FN(gblchmp)
 
 struct BurnDriver BurnDrvGblchmp = {
 	"gblchmp", "kaiserkn", NULL, NULL, "1994",
-	"Global Champion (Ver 2.1A 1994/07/29)\0", NULL, "Taito America Corporation", "F3 System",
+	"Global Champion (Ver 2.1A 1994/07/29)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, gblchmpRomInfo, gblchmpRomName, NULL, NULL, KnInputInfo, NULL,
@@ -3185,7 +3185,7 @@ STD_ROM_FN(dankuga)
 
 struct BurnDriver BurnDrvDankuga = {
 	"dankuga", NULL, NULL, NULL, "1994",
-	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", "Missing graphics are normal in this prototype", "Taito Corporation", "F3 System",
+	"Dan-Ku-Ga (Ver 0.0J 1994/12/13) (Prototype)\0", "Missing graphics are normal in this prototype", "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_VSFIGHT, 0,
 	NULL, dankugaRomInfo, dankugaRomName, NULL, NULL, KnInputInfo, NULL,
@@ -3227,7 +3227,7 @@ static INT32 dariusgInit()
 
 struct BurnDriver BurnDrvDariusg = {
 	"dariusg", NULL, NULL, NULL, "1994",
-	"Darius Gaiden - Silver Hawk (Ver 2.5O 1994/09/19)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Darius Gaiden - Silver Hawk (Ver 2.5O 1994/09/19)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgRomInfo, dariusgRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3264,7 +3264,7 @@ STD_ROM_FN(dariusgj)
 
 struct BurnDriver BurnDrvDariusgj = {
 	"dariusgj", "dariusg", NULL, NULL, "1994",
-	"Darius Gaiden - Silver Hawk (Ver 2.5J 1994/09/19)\0", NULL, "Taito Corporation", "F3 System",
+	"Darius Gaiden - Silver Hawk (Ver 2.5J 1994/09/19)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgjRomInfo, dariusgjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3301,7 +3301,7 @@ STD_ROM_FN(dariusgu)
 
 struct BurnDriver BurnDrvDariusgu = {
 	"dariusgu", "dariusg", NULL, NULL, "1994",
-	"Darius Gaiden - Silver Hawk (Ver 2.5A 1994/09/19)\0", NULL, "Taito America Corporation", "F3 System",
+	"Darius Gaiden - Silver Hawk (Ver 2.5A 1994/09/19)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusguRomInfo, dariusguRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3338,7 +3338,7 @@ STD_ROM_FN(dariusgx)
 
 struct BurnDriver BurnDrvDariusgx = {
 	"dariusgx", NULL, NULL, NULL, "1994",
-	"Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 1995/03/06) (Official Hack)\0", NULL, "Taito Corporation", "F3 System",
+	"Darius Gaiden - Silver Hawk Extra Version (Ver 2.7J 1995/03/06) (Official Hack)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, dariusgxRomInfo, dariusgxRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3384,7 +3384,7 @@ static INT32 bublbob2Init()
 
 struct BurnDriver BurnDrvBublbob2 = {
 	"bublbob2", NULL, NULL, NULL, "1994",
-	"Bubble Bobble II (Ver 2.6O 1994/12/16)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Bubble Bobble II (Ver 2.6O 1994/12/16)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bublbob2RomInfo, bublbob2RomName, NULL, NULL, F3InputInfo, NULL,
@@ -3421,7 +3421,7 @@ STD_ROM_FN(bublbob2o)
 
 struct BurnDriver BurnDrvBublbob2o = {
 	"bublbob2o", "bublbob2", NULL, NULL, "1994",
-	"Bubble Bobble II (Ver 2.5O 1994/10/05)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Bubble Bobble II (Ver 2.5O 1994/10/05)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bublbob2oRomInfo, bublbob2oRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3458,7 +3458,7 @@ STD_ROM_FN(bubsymphe)
 
 struct BurnDriver BurnDrvBubsymphe = {
 	"bubsymphe", "bublbob2", NULL, NULL, "1994",
-	"Bubble Symphony (Ver 2.5O 1994/10/05)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Bubble Symphony (Ver 2.5O 1994/10/05)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubsympheRomInfo, bubsympheRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3501,7 +3501,7 @@ STD_ROM_FN(bubsymphj)
 
 struct BurnDriver BurnDrvBubsymphj = {
 	"bubsymphj", "bublbob2", NULL, NULL, "1994",
-	"Bubble Symphony (Ver 2.5J 1994/10/05)\0", NULL, "Taito Corporation", "F3 System",
+	"Bubble Symphony (Ver 2.5J 1994/10/05)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubsymphjRomInfo, bubsymphjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3562,7 +3562,7 @@ static INT32 bublbob2pInit()
 
 struct BurnDriver BurnDrvBublbob2p = {
 	"bublbob2p", "bublbob2", NULL, NULL, "1994",
-	"Bubble Bobble II (Ver 0.0J 1993/12/13, prototype)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Bubble Bobble II (Ver 0.0J 1993/12/13, prototype)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bublbob2pRomInfo, bublbob2pRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3837,7 +3837,7 @@ static INT32 bubsymphbInit()
 
 struct BurnDriverD BurnDrvBubsymphb = {
 	"bubsymphb", "bublbob2", NULL, NULL, "1994",
-	"Bubble Symphony (bootleg with OKI6295)\0", NULL, "bootleg", "F3 System",
+	"Bubble Symphony (bootleg with OKI6295)\0", NULL, "bootleg", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubsymphbRomInfo, bubsymphbRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3874,7 +3874,7 @@ STD_ROM_FN(bubsymphu)
 
 struct BurnDriver BurnDrvBubsymphu = {
 	"bubsymphu", "bublbob2", NULL, NULL, "1994",
-	"Bubble Symphony (Ver 2.5A 1994/10/05)\0", NULL, "Taito America Corporation", "F3 System",
+	"Bubble Symphony (Ver 2.5A 1994/10/05)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubsymphuRomInfo, bubsymphuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3916,7 +3916,7 @@ static INT32 spcinvdjInit()
 
 struct BurnDriver BurnDrvSpcinvdj = {
 	"spcinvdj", "spacedx", NULL, NULL, "1994",
-	"Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)\0", NULL, "Taito Corporation", "F3 System",
+	"Space Invaders DX (Ver 2.6J 1994/09/14) (F3 Version)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, spcinvdjRomInfo, spcinvdjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -3964,7 +3964,7 @@ static INT32 pwrgoalInit()
 
 struct BurnDriver BurnDrvPwrgoal = {
 	"pwrgoal", NULL, NULL, NULL, "1994",
-	"Taito Power Goal (Ver 2.5O 1994/11/03)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Taito Power Goal (Ver 2.5O 1994/11/03)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, pwrgoalRomInfo, pwrgoalRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4007,7 +4007,7 @@ STD_ROM_FN(hthero95)
 
 struct BurnDriver BurnDrvHthero95 = {
 	"hthero95", "pwrgoal", NULL, NULL, "1994",
-	"Hat Trick Hero '95 (Ver 2.5J 1994/11/03)\0", NULL, "Taito Corporation", "F3 System",
+	"Hat Trick Hero '95 (Ver 2.5J 1994/11/03)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero95RomInfo, hthero95RomName, NULL, NULL, F3InputInfo, NULL,
@@ -4050,7 +4050,7 @@ STD_ROM_FN(hthero95u)
 
 struct BurnDriver BurnDrvHthero95u = {
 	"hthero95u", "pwrgoal", NULL, NULL, "1994",
-	"Hat Trick Hero '95 (Ver 2.5A 1994/11/03)\0", NULL, "Taito America Corporation", "F3 System",
+	"Hat Trick Hero '95 (Ver 2.5A 1994/11/03)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero95uRomInfo, hthero95uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4090,7 +4090,7 @@ static INT32 qtheaterInit()
 
 struct BurnDriver BurnDrvQtheater = {
 	"qtheater", NULL, NULL, NULL, "1994",
-	"Quiz Theater - 3tsu no Monogatari (Ver 2.3J 1994/11/10)\0", NULL, "Taito Corporation", "F3 System",
+	"Quiz Theater - 3tsu no Monogatari (Ver 2.3J 1994/11/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_QUIZ, 0,
 	NULL, qtheaterRomInfo, qtheaterRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4138,7 +4138,7 @@ static INT32 spcinv95Init()
 
 struct BurnDriver BurnDrvSpcinv95 = {
 	"spcinv95", NULL, NULL, NULL, "1995",
-	"Space Invaders '95: The Attack Of Lunar Loonies (Ver 2.5O 1995/06/14)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Space Invaders '95: The Attack Of Lunar Loonies (Ver 2.5O 1995/06/14)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, spcinv95RomInfo, spcinv95RomName, NULL, NULL, F3InputInfo, NULL,
@@ -4181,7 +4181,7 @@ STD_ROM_FN(spcinv95u)
 
 struct BurnDriver BurnDrvSpcinv95u = {
 	"spcinv95u", "spcinv95", NULL, NULL, "1995",
-	"Space Invaders '95: The Attack Of Lunar Loonies (Ver 2.5A 1995/06/14)\0", NULL, "Taito America Corporation", "F3 System",
+	"Space Invaders '95: The Attack Of Lunar Loonies (Ver 2.5A 1995/06/14)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, spcinv95uRomInfo, spcinv95uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4218,7 +4218,7 @@ STD_ROM_FN(akkanvdr)
 
 struct BurnDriver BurnDrvAkkanvdr = {
 	"akkanvdr", "spcinv95", NULL, NULL, "1995",
-	"Akkanbeder (Ver 2.5J 1995/06/14)\0", NULL, "Taito Corporation", "F3 System",
+	"Akkanbeder (Ver 2.5J 1995/06/14)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, akkanvdrRomInfo, akkanvdrRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4268,7 +4268,7 @@ static INT32 elvactrInit()
 
 struct BurnDriver BurnDrvElvactr = {
 	"elvactr", NULL, NULL, NULL, "1994",
-	"Elevator Action Returns (Ver 2.2O 1995/02/20)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Elevator Action Returns (Ver 2.2O 1995/02/20)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elvactrRomInfo, elvactrRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4305,7 +4305,7 @@ STD_ROM_FN(elvactrj)
 
 struct BurnDriver BurnDrvElvactrj = {
 	"elvactrj", "elvactr", NULL, NULL, "1994",
-	"Elevator Action Returns (Ver 2.2J 1995/02/20)\0", NULL, "Taito Corporation", "F3 System",
+	"Elevator Action Returns (Ver 2.2J 1995/02/20)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elvactrjRomInfo, elvactrjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4342,7 +4342,7 @@ STD_ROM_FN(elvact2u)
 
 struct BurnDriver BurnDrvElvact2u = {
 	"elvact2u", "elvactr", NULL, NULL, "1994",
-	"Elevator Action II (Ver 2.2A 1995/02/20)\0", NULL, "Taito America Corporation", "F3 System",
+	"Elevator Action II (Ver 2.2A 1995/02/20)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, elvact2uRomInfo, elvact2uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4396,7 +4396,7 @@ static INT32 twinqixInit()
 
 struct BurnDriver BurnDrvTwinqix = {
 	"twinqix", NULL, NULL, NULL, "1995",
-	"Twin Qix (Ver 1.0A 1995/01/17) (Prototype)\0", NULL, "Taito America Corporation", "F3 System",
+	"Twin Qix (Ver 1.0A 1995/01/17) (Prototype)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, twinqixRomInfo, twinqixRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4442,7 +4442,7 @@ static INT32 quizhuhuInit()
 
 struct BurnDriver BurnDrvQuizhuhu = {
 	"quizhuhu", NULL, NULL, NULL, "1995",
-	"Moriguchi Hiroko no Quiz de Hyuu!Hyuu! (Ver 2.2J 1995/05/25)\0", NULL, "Taito Corporation", "F3 System",
+	"Moriguchi Hiroko no Quiz de Hyuu!Hyuu! (Ver 2.2J 1995/05/25)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_QUIZ, 0,
 	NULL, quizhuhuRomInfo, quizhuhuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4500,7 +4500,7 @@ static INT32 pbobble23OInit()
 
 struct BurnDriver BurnDrvPbobble2 = {
 	"pbobble2", NULL, NULL, NULL, "1995",
-	"Puzzle Bobble 2 (Ver 2.3O 1995/07/31)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Puzzle Bobble 2 (Ver 2.3O 1995/07/31)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble2RomInfo, pbobble2RomName, NULL, NULL, F3InputInfo, NULL,
@@ -4536,7 +4536,7 @@ STD_ROM_FN(pbobble2o)
 
 struct BurnDriver BurnDrvPbobble2o = {
 	"pbobble2o", "pbobble2", NULL, NULL, "1995",
-	"Puzzle Bobble 2 (Ver 2.2O 1995/07/20)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Puzzle Bobble 2 (Ver 2.2O 1995/07/20)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble2oRomInfo, pbobble2oRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4572,7 +4572,7 @@ STD_ROM_FN(pbobble2j)
 
 struct BurnDriver BurnDrvPbobble2j = {
 	"pbobble2j", "pbobble2", NULL, NULL, "1995",
-	"Puzzle Bobble 2 (Ver 2.2J 1995/07/20)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 2 (Ver 2.2J 1995/07/20)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble2jRomInfo, pbobble2jRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4608,7 +4608,7 @@ STD_ROM_FN(pbobble2u)
 
 struct BurnDriver BurnDrvPbobble2u = {
 	"pbobble2u", "pbobble2", NULL, NULL, "1995",
-	"Bust-A-Move Again (Ver 2.3A 1995/07/31)\0", NULL, "Taito America Corporation", "F3 System",
+	"Bust-A-Move Again (Ver 2.3A 1995/07/31)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble2uRomInfo, pbobble2uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4650,7 +4650,7 @@ STD_ROM_FN(pbobble2x)
 
 struct BurnDriver BurnDrvPbobble2x = {
 	"pbobble2x", "pbobble2", NULL, NULL, "1995",
-	"Puzzle Bobble 2X (Ver 2.2J 1995/11/11)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 2X (Ver 2.2J 1995/11/11)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble2xRomInfo, pbobble2xRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4692,7 +4692,7 @@ static INT32 gekiridnInit()
 
 struct BurnDriver BurnDrvGekiridn = {
 	"gekiridn", NULL, NULL, NULL, "1995",
-	"Gekirindan (Ver 2.3O 1995/09/21)\0", NULL, "Taito Corporation", "F3 System",
+	"Gekirindan (Ver 2.3O 1995/09/21)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gekiridnRomInfo, gekiridnRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4729,7 +4729,7 @@ STD_ROM_FN(gekiridnj)
 
 struct BurnDriver BurnDrvGekiridnj = {
 	"gekiridnj", "gekiridn", NULL, NULL, "1995",
-	"Gekirindan (Ver 2.3J 1995/09/21)\0", NULL, "Taito Corporation", "F3 System",
+	"Gekirindan (Ver 2.3J 1995/09/21)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, gekiridnjRomInfo, gekiridnjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4785,7 +4785,7 @@ static INT32 tcobra2Init()
 
 struct BurnDriver BurnDrvTcobra2 = {
 	"tcobra2", NULL, NULL, NULL, "1995",
-	"Twin Cobra II (Ver 2.1O 1995/11/30)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Twin Cobra II (Ver 2.1O 1995/11/30)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tcobra2RomInfo, tcobra2RomName, NULL, NULL, F3InputInfo, NULL,
@@ -4830,7 +4830,7 @@ STD_ROM_FN(tcobra2u)
 
 struct BurnDriver BurnDrvTcobra2u = {
 	"tcobra2u", "tcobra2", NULL, NULL, "1995",
-	"Twin Cobra II (Ver 2.1A 1995/11/30)\0", NULL, "Taito America Corporation", "F3 System",
+	"Twin Cobra II (Ver 2.1A 1995/11/30)\0", NULL, "Taito America Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, tcobra2uRomInfo, tcobra2uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4875,7 +4875,7 @@ STD_ROM_FN(ktiger2)
 
 struct BurnDriver BurnDrvKtiger2 = {
 	"ktiger2", "tcobra2", NULL, NULL, "1995",
-	"Kyukyoku Tiger II (Ver 2.1J 1995/11/30)\0", NULL, "Taito Corporation", "F3 System",
+	"Kyukyoku Tiger II (Ver 2.1J 1995/11/30)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
 	NULL, ktiger2RomInfo, ktiger2RomName, NULL, NULL, F3InputInfo, NULL,
@@ -4918,7 +4918,7 @@ static INT32 bubblemInit()
 
 struct BurnDriver BurnDrvBubblem = {
 	"bubblem", NULL, NULL, NULL, "1995",
-	"Bubble Memories: The Story Of Bubble Bobble III (Ver 2.4O 1996/02/15)\0", NULL, "Taito Corporation Japan", "F3 System",
+	"Bubble Memories: The Story Of Bubble Bobble III (Ver 2.4O 1996/02/15)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubblemRomInfo, bubblemRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4956,7 +4956,7 @@ STD_ROM_FN(bubblemj)
 
 struct BurnDriver BurnDrvBubblemj = {
 	"bubblemj", "bubblem", NULL, NULL, "1995",
-	"Bubble Memories: The Story Of Bubble Bobble III (Ver 2.3J 1996/02/07)\0", NULL, "Taito Corporation", "F3 System",
+	"Bubble Memories: The Story Of Bubble Bobble III (Ver 2.3J 1996/02/07)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bubblemjRomInfo, bubblemjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -4996,7 +4996,7 @@ static INT32 cleopatrInit()
 
 struct BurnDriver BurnDrvCleopatr = {
 	"cleopatr", NULL, NULL, NULL, "1996",
-	"Cleopatra Fortune (Ver 2.1J 1996/09/05)\0", NULL, "Taito Corporation", "F3 System",
+	"Cleopatra Fortune (Ver 2.1J 1996/09/05)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, cleopatrRomInfo, cleopatrRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5038,7 +5038,7 @@ static INT32 pbobble3Init()
 
 struct BurnDriver BurnDrvPbobble3 = {
 	"pbobble3", NULL, NULL, NULL, "1996",
-	"Puzzle Bobble 3 (Ver 2.1O 1996/09/27)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 3 (Ver 2.1O 1996/09/27)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble3RomInfo, pbobble3RomName, NULL, NULL, F3InputInfo, NULL,
@@ -5075,7 +5075,7 @@ STD_ROM_FN(pbobble3u)
 
 struct BurnDriver BurnDrvPbobble3u = {
 	"pbobble3u", "pbobble3", NULL, NULL, "1996",
-	"Puzzle Bobble 3 (Ver 2.1A 1996/09/27)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 3 (Ver 2.1A 1996/09/27)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble3uRomInfo, pbobble3uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5118,7 +5118,7 @@ STD_ROM_FN(pbobble3j)
 
 struct BurnDriver BurnDrvPbobble3j = {
 	"pbobble3j", "pbobble3", NULL, NULL, "1996",
-	"Puzzle Bobble 3 (Ver 2.1J 1996/09/27)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 3 (Ver 2.1J 1996/09/27)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble3jRomInfo, pbobble3jRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5165,7 +5165,7 @@ static INT32 arkretrnInit()
 
 struct BurnDriver BurnDrvArkretrn = {
 	"arkretrn", NULL, NULL, NULL, "1997",
-	"Arkanoid Returns (Ver 2.02O 1997/02/10)\0", NULL, "Taito Corporation", "F3 System",
+	"Arkanoid Returns (Ver 2.02O 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkretrnRomInfo, arkretrnRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5207,7 +5207,7 @@ STD_ROM_FN(arkretrnu)
 
 struct BurnDriver BurnDrvArkretrnu = {
 	"arkretrnu", "arkretrn", NULL, NULL, "1997",
-	"Arkanoid Returns (Ver 2.02A 1997/02/10)\0", NULL, "Taito Corporation", "F3 System",
+	"Arkanoid Returns (Ver 2.02A 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkretrnuRomInfo, arkretrnuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5249,7 +5249,7 @@ STD_ROM_FN(arkretrnj)
 
 struct BurnDriver BurnDrvArkretrnj = {
 	"arkretrnj", "arkretrn", NULL, NULL, "1997",
-	"Arkanoid Returns (Ver 2.02J 1997/02/10)\0", NULL, "Taito Corporation", "F3 System",
+	"Arkanoid Returns (Ver 2.02J 1997/02/10)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_BREAKOUT, 0,
 	NULL, arkretrnjRomInfo, arkretrnjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5298,7 +5298,7 @@ static INT32 kiramekiInit()
 
 struct BurnDriver BurnDrvKirameki = {
 	"kirameki", NULL, NULL, NULL, "1997",
-	"Kirameki Star Road (Ver 2.10J 1997/08/29)\0", "No sound", "Taito Corporation", "F3 System",
+	"Kirameki Star Road (Ver 2.10J 1997/08/29)\0", "No sound", "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_QUIZ, 0,
 	NULL, kiramekiRomInfo, kiramekiRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5350,7 +5350,7 @@ static INT32 puchicarInit()
 
 struct BurnDriver BurnDrvPuchicar = {
 	"puchicar", NULL, NULL, NULL, "1997",
-	"Puchi Carat (Ver 2.02O 1997/10/29)\0", NULL, "Taito Corporation", "F3 System",
+	"Puchi Carat (Ver 2.02O 1997/10/29)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puchicarRomInfo, puchicarRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5397,7 +5397,7 @@ STD_ROM_FN(puchicarj)
 
 struct BurnDriver BurnDrvPuchicarj = {
 	"puchicarj", "puchicar", NULL, NULL, "1997",
-	"Puchi Carat (Ver 2.02J 1997/10/29)\0", NULL, "Taito Corporation", "F3 System",
+	"Puchi Carat (Ver 2.02J 1997/10/29)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, puchicarjRomInfo, puchicarjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5445,7 +5445,7 @@ static INT32 pbobble4Init()
 
 struct BurnDriver BurnDrvPbobble4 = {
 	"pbobble4", NULL, NULL, NULL, "1997",
-	"Puzzle Bobble 4 (Ver 2.04O 1997/12/19)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 4 (Ver 2.04O 1997/12/19)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble4RomInfo, pbobble4RomName, NULL, NULL, F3InputInfo, NULL,
@@ -5488,7 +5488,7 @@ STD_ROM_FN(pbobble4j)
 
 struct BurnDriver BurnDrvPbobble4j = {
 	"pbobble4j", "pbobble4", NULL, NULL, "1997",
-	"Puzzle Bobble 4 (Ver 2.04J 1997/12/19)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 4 (Ver 2.04J 1997/12/19)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble4jRomInfo, pbobble4jRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5531,7 +5531,7 @@ STD_ROM_FN(pbobble4u)
 
 struct BurnDriver BurnDrvPbobble4u = {
 	"pbobble4u", "pbobble4", NULL, NULL, "1997",
-	"Puzzle Bobble 4 (Ver 2.04A 1997/12/19)\0", NULL, "Taito Corporation", "F3 System",
+	"Puzzle Bobble 4 (Ver 2.04A 1997/12/19)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, pbobble4uRomInfo, pbobble4uRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5579,7 +5579,7 @@ static INT32 popnpopInit()
 
 struct BurnDriver BurnDrvPopnpop = {
 	"popnpop", NULL, NULL, NULL, "1997",
-	"Pop'n Pop (Ver 2.07O 1998/02/09)\0", NULL, "Taito Corporation", "F3 System",
+	"Pop'n Pop (Ver 2.07O 1998/02/09)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, popnpopRomInfo, popnpopRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5622,7 +5622,7 @@ STD_ROM_FN(popnpopj)
 
 struct BurnDriver BurnDrvPopnpopj = {
 	"popnpopj", "popnpop", NULL, NULL, "1997",
-	"Pop'n Pop (Ver 2.07J 1998/02/09)\0", NULL, "Taito Corporation", "F3 System",
+	"Pop'n Pop (Ver 2.07J 1998/02/09)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, popnpopjRomInfo, popnpopjRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5665,7 +5665,7 @@ STD_ROM_FN(popnpopu)
 
 struct BurnDriver BurnDrvPopnpopu = {
 	"popnpopu", "popnpop", NULL, NULL, "1997",
-	"Pop'n Pop (Ver 2.07A 1998/02/09)\0", NULL, "Taito Corporation", "F3 System",
+	"Pop'n Pop (Ver 2.07A 1998/02/09)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, popnpopuRomInfo, popnpopuRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5708,7 +5708,7 @@ static INT32 landmakrInit()
 
 struct BurnDriver BurnDrvLandmakr = {
 	"landmakr", NULL, NULL, NULL, "1998",
-	"Land Maker (Ver 2.01J 1998/06/01)\0", NULL, "Taito Corporation", "F3 System",
+	"Land Maker (Ver 2.01J 1998/06/01)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, landmakrRomInfo, landmakrRomName, NULL, NULL, F3InputInfo, NULL,
@@ -5788,7 +5788,7 @@ static INT32 landmakrpInit()
 
 struct BurnDriver BurnDrvLandmakrp = {
 	"landmakrp", "landmakr", NULL, NULL, "1998",
-	"Land Maker (Ver 2.02O 1998/06/02) (Prototype)\0", NULL, "Taito Corporation", "F3 System",
+	"Land Maker (Ver 2.02O 1998/06/02) (Prototype)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, landmakrpRomInfo, landmakrpRomName, NULL, NULL, F3InputInfo, NULL,

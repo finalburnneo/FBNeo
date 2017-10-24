@@ -2244,7 +2244,7 @@ static INT32 rtypeInit()
 
 struct BurnDriver BurnDrvRtype = {
 	"rtype", NULL, NULL, NULL, "1987",
-	"R-Type (World)\0", NULL, "Irem", "M72",
+	"R-Type (World)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypeRomInfo, rtypeRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
@@ -2286,7 +2286,7 @@ STD_ROM_FN(rtypej)
 
 struct BurnDriver BurnDrvRtypej = {
 	"rtypej", "rtype", NULL, NULL, "1987",
-	"R-Type (Japan)\0", NULL, "Irem", "M72",
+	"R-Type (Japan)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypejRomInfo, rtypejRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
@@ -2328,7 +2328,7 @@ STD_ROM_FN(rtypejp)
 
 struct BurnDriver BurnDrvRtypejp = {
 	"rtypejp", "rtype", NULL, NULL, "1987",
-	"R-Type (Japan prototype)\0", NULL, "Irem", "M72",
+	"R-Type (Japan prototype)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypejpRomInfo, rtypejpRomName, NULL, NULL, CommonInputInfo, RtypepDIPInfo,
@@ -2377,7 +2377,7 @@ STD_ROM_FN(rtypeu)
 
 struct BurnDriver BurnDrvRtypeu = {
 	"rtypeu", "rtype", NULL, NULL, "1987",
-	"R-Type (US)\0", NULL, "Irem (Nintendo of America license)", "M72",
+	"R-Type (US)\0", NULL, "Irem (Nintendo of America license)", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypeuRomInfo, rtypeuRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
@@ -2419,7 +2419,7 @@ STD_ROM_FN(rtypeb)
 
 struct BurnDriver BurnDrvRtypeb = {
 	"rtypeb", "rtype", NULL, NULL, "1987",
-	"R-Type (World bootleg)\0", NULL, "bootleg", "M72",
+	"R-Type (World bootleg)\0", NULL, "bootleg", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtypebRomInfo, rtypebRomName, NULL, NULL, CommonInputInfo, RtypeDIPInfo,
@@ -2473,7 +2473,7 @@ static INT32 xmultiplInit()
 
 struct BurnDriver BurnDrvXmultipl = {
 	"xmultipl", NULL, NULL, NULL, "1989",
-	"X Multiply (World, M81)\0", NULL, "Irem", "M81",
+	"X Multiply (World, M81)\0", NULL, "Irem", "Irem M81",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, xmultiplRomInfo, xmultiplRomName, NULL, NULL, CommonInputInfo, XmultiplDIPInfo,
@@ -2526,7 +2526,7 @@ static INT32 xmultiplm72Init()
 
 struct BurnDriver BurnDrvXmultiplm72 = {
 	"xmultiplm72", "xmultipl", NULL, NULL, "1989",
-	"X Multiply (Japan, M72)\0", NULL, "Irem", "M72",
+	"X Multiply (Japan, M72)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, xmultiplm72RomInfo, xmultiplm72RomName, NULL, NULL, CommonInputInfo, XmultiplDIPInfo,
@@ -2573,7 +2573,7 @@ static INT32 dbreedInit()
 
 struct BurnDriver BurnDrvDbreed = {
 	"dbreed", NULL, NULL, NULL, "1989",
-	"Dragon Breed (M81 PCB version)\0", NULL, "Irem", "M81",
+	"Dragon Breed (M81 PCB version)\0", NULL, "Irem", "Irem M81",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, dbreedRomInfo, dbreedRomName, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
@@ -2629,7 +2629,7 @@ static INT32 dbreedm72Init()
 
 struct BurnDriver BurnDrvDbreedm72 = {
 	"dbreedm72", "dbreed", NULL, NULL, "1989",
-	"Dragon Breed (M72 PCB version)\0", NULL, "Irem", "M72",
+	"Dragon Breed (M72 PCB version)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, dbreedm72RomInfo, dbreedm72RomName, NULL, NULL, CommonInputInfo, DbreedDIPInfo,
@@ -2684,7 +2684,7 @@ static INT32 bchopperInit()
 
 struct BurnDriver BurnDrvBchopper = {
 	"bchopper", NULL, NULL, NULL, "1987",
-	"Battle Chopper\0", NULL, "Irem", "M72",
+	"Battle Chopper\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, bchopperRomInfo, bchopperRomName, NULL, NULL, CommonInputInfo, BchopperDIPInfo,
@@ -2735,7 +2735,7 @@ static INT32 mrheliInit()
 
 struct BurnDriver BurnDrvMrheli = {
 	"mrheli", "bchopper", NULL, NULL, "1987",
-	"Mr. HELI no Dai-Bouken\0", NULL, "Irem", "M72",
+	"Mr. HELI no Dai-Bouken\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, mrheliRomInfo, mrheliRomName, NULL, NULL, CommonInputInfo, BchopperDIPInfo,
@@ -2795,7 +2795,7 @@ static INT32 nspiritInit()
 
 struct BurnDriver BurnDrvNspirit = {
 	"nspirit", NULL, NULL, NULL, "1988",
-	"Ninja Spirit\0", NULL, "Irem", "M72",
+	"Ninja Spirit\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, nspiritRomInfo, nspiritRomName, NULL, NULL, CommonInputInfo, NspiritDIPInfo,
@@ -2848,7 +2848,7 @@ static INT32 nspiritjInit()
 
 struct BurnDriver BurnDrvNspiritj = {
 	"nspiritj", "nspirit", NULL, NULL, "1988",
-	"Saigo no Nindou (Japan)\0", NULL, "Irem", "M72",
+	"Saigo no Nindou (Japan)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, nspiritjRomInfo, nspiritjRomName, NULL, NULL, CommonInputInfo, NspiritDIPInfo,
@@ -2905,7 +2905,7 @@ static INT32 imgfightInit()
 
 struct BurnDriver BurnDrvImgfight = {
 	"imgfight", NULL, NULL, NULL, "1988",
-	"Image Fight (Japan, revision A)\0", NULL, "Irem", "M72",
+	"Image Fight (Japan, revision A)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, imgfightRomInfo, imgfightRomName, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
@@ -2948,7 +2948,7 @@ STD_ROM_FN(imgfightj)
 
 struct BurnDriver BurnDrvImgfightj = {
 	"imgfightj", "imgfight", NULL, NULL, "1988",
-	"Image Fight (Japan)\0", NULL, "Irem", "M72",
+	"Image Fight (Japan)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, imgfightjRomInfo, imgfightjRomName, NULL, NULL, CommonInputInfo, ImgfightDIPInfo,
@@ -2995,7 +2995,7 @@ static INT32 airduelInit()
 
 struct BurnDriver BurnDrvAirduel = {
 	"airduel", NULL, NULL, NULL, "1990",
-	"Air Duel (World, M82-A-A + M82-B-A)\0", NULL, "Irem", "M82",
+	"Air Duel (World, M82-A-A + M82-B-A)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, airduelRomInfo, airduelRomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
@@ -3044,7 +3044,7 @@ static INT32 airduelm72Init()
 
 struct BurnDriver BurnDrvAirduelm72 = {
 	"airduelm72", "airduel", NULL, NULL, "1990",
-	"Air Duel (Japan, M72)\0", NULL, "Irem", "M72",
+	"Air Duel (Japan, M72)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_VERSHOOT, 0,
 	NULL, airduelm72RomInfo, airduelm72RomName, NULL, NULL, CommonInputInfo, AirduelDIPInfo,
@@ -3090,7 +3090,7 @@ static INT32 rtype2Init()
 
 struct BurnDriver BurnDrvRtype2 = {
 	"rtype2", NULL, NULL, NULL, "1989",
-	"R-Type II\0", NULL, "Irem", "M82",
+	"R-Type II\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2RomInfo, rtype2RomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -3134,7 +3134,7 @@ STD_ROM_FN(rtype2j)
 
 struct BurnDriver BurnDrvRtype2j = {
 	"rtype2j", "rtype2", NULL, NULL, "1989",
-	"R-Type II (Japan)\0", NULL, "Irem", "M82",
+	"R-Type II (Japan)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2jRomInfo, rtype2jRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -3175,7 +3175,7 @@ STD_ROM_FN(rtype2jc)
 
 struct BurnDriver BurnDrvRtype2jc = {
 	"rtype2jc", "rtype2", NULL, NULL, "1989",
-	"R-Type II (Japan, revision C)\0", NULL, "Irem", "M82",
+	"R-Type II (Japan, revision C)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, rtype2jcRomInfo, rtype2jcRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -3217,7 +3217,7 @@ static INT32 hharryInit()
 
 struct BurnDriver BurnDrvHharry = {
 	"hharry", NULL, NULL, NULL, "1990",
-	"Hammerin' Harry (World)\0", NULL, "Irem", "M82",
+	"Hammerin' Harry (World)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryRomInfo, hharryRomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3259,7 +3259,7 @@ static INT32 hharryuInit()
 
 struct BurnDriver BurnDrvHharryu = {
 	"hharryu", "hharry", NULL, NULL, "1990",
-	"Hammerin' Harry (US)\0", NULL, "Irem America", "M82",
+	"Hammerin' Harry (US)\0", NULL, "Irem America", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, hharryuRomInfo, hharryuRomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3296,7 +3296,7 @@ STD_ROM_FN(dkgensan)
 
 struct BurnDriver BurnDrvDkgensan = {
 	"dkgensan", "hharry", NULL, NULL, "1990",
-	"Daiku no Gensan (Japan, M82)\0", NULL, "Irem", "M82",
+	"Daiku no Gensan (Japan, M82)\0", NULL, "Irem", "Irem M82",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, dkgensanRomInfo, dkgensanRomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3345,7 +3345,7 @@ static INT32 dkgensanm72Init()
 
 struct BurnDriver BurnDrvDkgensanm72 = {
 	"dkgensanm72", "hharry", NULL, NULL, "1990",
-	"Daiku no Gensan (Japan, M72)\0", NULL, "Irem", "M72",
+	"Daiku no Gensan (Japan, M72)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT | GBF_PLATFORM, 0,
 	NULL, dkgensanm72RomInfo, dkgensanm72RomName, NULL, NULL, CommonInputInfo, HharryDIPInfo,
@@ -3395,7 +3395,7 @@ static INT32 kengoInit()
 
 struct BurnDriver BurnDrvLtswords = {
 	"ltswords", NULL, NULL, NULL, "1991",
-	"Lightning Swords\0", NULL, "Irem", "M84?",
+	"Lightning Swords\0", NULL, "Irem", "Irem M84?",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, ltswordsRomInfo, ltswordsRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
@@ -3430,7 +3430,7 @@ STD_ROM_FN(kengo)
 
 struct BurnDriver BurnDrvKengo = {
 	"kengo", "ltswords", NULL, NULL, "1991",
-	"Ken-Go (set 1)\0", NULL, "Irem", "M84?",
+	"Ken-Go (set 1)\0", NULL, "Irem", "Irem M84?",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoRomInfo, kengoRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
@@ -3468,7 +3468,7 @@ STD_ROM_FN(kengoa)
 
 struct BurnDriver BurnDrvKengoa = {
 	"kengoa", "ltswords", NULL, NULL, "1991",
-	"Ken-Go (set 2)\0", NULL, "Irem", "M84?",
+	"Ken-Go (set 2)\0", NULL, "Irem", "Irem M84?",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, kengoaRomInfo, kengoaRomName, NULL, NULL, CommonInputInfo, KengoDIPInfo,
@@ -3515,7 +3515,7 @@ static INT32 cosmccopInit()
 
 struct BurnDriver BurnDrvCosmccop = {
 	"cosmccop", NULL, NULL, NULL, "1991",
-	"Cosmic Cop (World)\0", NULL, "Irem", "M84",
+	"Cosmic Cop (World)\0", NULL, "Irem", "Irem M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, cosmccopRomInfo, cosmccopRomName, NULL, NULL, CommonInputInfo, GallopDIPInfo,
@@ -3565,7 +3565,7 @@ static INT32 gallopInit()
 
 struct BurnDriver BurnDrvGallop = {
 	"gallop", "cosmccop", NULL, NULL, "1991",
-	"Gallop - Armed police Unit (Japan)\0", NULL, "Irem", "M72",
+	"Gallop - Armed police Unit (Japan)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_HORSHOOT, 0,
 	NULL, gallopRomInfo, gallopRomName, NULL, NULL, CommonInputInfo, GallopDIPInfo,
@@ -3615,7 +3615,7 @@ static INT32 lohtInit()
 
 struct BurnDriver BurnDrvLoht = {
 	"loht", NULL, NULL, NULL, "1989",
-	"Legend of Hero Tonma\0", NULL, "Irem", "M72",
+	"Legend of Hero Tonma\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtRomInfo, lohtRomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
@@ -3657,7 +3657,7 @@ STD_ROM_FN(lohtj)
 
 struct BurnDriver BurnDrvLohtj = {
 	"lohtj", "loht", NULL, NULL, "1989",
-	"Legend of Hero Tonma (Japan)\0", NULL, "Irem", "M72",
+	"Legend of Hero Tonma (Japan)\0", NULL, "Irem", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtjRomInfo, lohtjRomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
@@ -3800,7 +3800,7 @@ static INT32 lohtbInit()
 
 struct BurnDriver BurnDrvLohtb = {
 	"lohtb", "loht", NULL, NULL, "1989",
-	"Legend of Hero Tonma (bootleg, set 1)\0", NULL, "bootleg", "M72",
+	"Legend of Hero Tonma (bootleg, set 1)\0", NULL, "bootleg", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtbRomInfo, lohtbRomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
@@ -3850,7 +3850,7 @@ STD_ROM_FN(lohtb2)
 
 struct BurnDriver BurnDrvLohtb2 = {
 	"lohtb2", "loht", NULL, NULL, "1989",
-	"Legend of Hero Tonma (bootleg, set 2)\0", NULL, "bootleg", "M72",
+	"Legend of Hero Tonma (bootleg, set 2)\0", NULL, "bootleg", "Irem M72",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_IREM_M72, GBF_SCRFIGHT, 0,
 	NULL, lohtb2RomInfo, lohtb2RomName, NULL, NULL, CommonInputInfo, LohtDIPInfo,
@@ -3892,7 +3892,7 @@ static INT32 poundforInit()
 
 struct BurnDriverD BurnDrvPoundfor = {
 	"poundfor", NULL, NULL, NULL, "1990",
-	"Pound for Pound (World)\0", NULL, "Irem", "M85",
+	"Pound for Pound (World)\0", NULL, "Irem", "Irem M85",
 	NULL, NULL, NULL, NULL,
 	BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforRomInfo, poundforRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
@@ -3929,7 +3929,7 @@ STD_ROM_FN(poundforj)
 
 struct BurnDriverD BurnDrvPoundforj = {
 	"poundforj", "poundfor", NULL, NULL, "1990",
-	"Pound for Pound (Japan)\0", NULL, "Irem", "M85",
+	"Pound for Pound (Japan)\0", NULL, "Irem", "Irem M85",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforjRomInfo, poundforjRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
@@ -3966,7 +3966,7 @@ STD_ROM_FN(poundforu)
 
 struct BurnDriverD BurnDrvPoundforu = {
 	"poundforu", "poundfor", NULL, NULL, "1990",
-	"Pound for Pound (US)\0", NULL, "Irem America", "M85",
+	"Pound for Pound (US)\0", NULL, "Irem America", "Irem M85",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, poundforuRomInfo, poundforuRomName, NULL, NULL, PoundforInputInfo, PoundforDIPInfo,
@@ -4013,7 +4013,7 @@ static INT32 majtitleInit()
 
 struct BurnDriver BurnDrvMajtitle = {
 	"majtitle", NULL, NULL, NULL, "1990",
-	"Major Title (World)\0", "Graphics issues", "Irem", "M84",
+	"Major Title (World)\0", "Graphics issues", "Irem", "Irem M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitleRomInfo, majtitleRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -4055,7 +4055,7 @@ STD_ROM_FN(majtitlej)
 
 struct BurnDriver BurnDrvMajtitlej = {
 	"majtitlej", "majtitle", NULL, NULL, "1990",
-	"Major Title (Japan)\0", "Graphics issues", "Irem", "M84",
+	"Major Title (Japan)\0", "Graphics issues", "Irem", "Irem M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitlejRomInfo, majtitlejRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,

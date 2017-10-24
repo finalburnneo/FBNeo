@@ -1855,7 +1855,7 @@ static INT32 aligatorInit()
 
 struct BurnDriver BurnDrvAligator = {
 	"aligator", NULL, NULL, NULL, "1994",
-	"Alligator Hunt (World, protected)\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
+	"Alligator Hunt (World, protected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorRomInfo, aligatorRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,
@@ -1883,7 +1883,7 @@ STD_ROM_FN(aligators)
 
 struct BurnDriver BurnDrvAligators = {
 	"aligators", "aligator", NULL, NULL, "1994",
-	"Alligator Hunt (Spain, protected)\0", "Play the unprotected clone, instead!", "Gaelco", "Miscellaneous",
+	"Alligator Hunt (Spain, protected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, aligatorsRomInfo, aligatorsRomName, NULL, NULL, AlighuntInputInfo, AlighuntDIPInfo,

@@ -4228,7 +4228,7 @@ struct BurnDriver BurnDrvCptennis = {
 static struct BurnRomInfo cptennisjRomDesc[] = {
 	{ "dp-1220-a-0.rom",	0x0800, 0x1c603239, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
 
-	{ "dt-1222-a-0.bin",	0x8000, 0xee29eba7, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{ "dt-1222-a-0.bin",	0x6a00, 0xee29eba7, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
 };
 
 STDROMPICKEXT(cptennisj, cptennisj, decocass)

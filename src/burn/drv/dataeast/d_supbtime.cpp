@@ -573,6 +573,13 @@ static struct BurnRomInfo supbtimeRomDesc[] = {
 	{ "mae01.bin",		0x80000, 0x434af3fb, 4 | BRF_GRA },           //  5
 
 	{ "gc05.bin",		0x20000, 0x2f2246ff, 5 | BRF_SND },           //  6 OKI M6295 Samples
+	
+	{ "tg5.j1",			0x00104, 0x21d02af7, 0 | BRF_OPT },
+	{ "tg3.c13",		0x00104, 0x3d5f0e97, 0 | BRF_OPT },
+	{ "tg1.b15",		0x00104, 0x819c4522, 0 | BRF_OPT },
+	{ "tg2.c12",		0x00104, 0x88f6d299, 0 | BRF_OPT },
+	{ "tg0.a11",		0x00104, 0xac6aa74b, 0 | BRF_OPT },
+	{ "tg4.c14",		0x00104, 0xe9ee3a67, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(supbtime)

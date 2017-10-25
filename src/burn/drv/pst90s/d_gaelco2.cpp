@@ -2037,7 +2037,7 @@ static struct BurnRomInfo touchgoRomDesc[] = {
 	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0xa497e1af, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+	{ "touchgo_ds5002fp_sram.bin",	0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
@@ -2071,7 +2071,7 @@ static struct BurnRomInfo touchgonRomDesc[] = {
 	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0xe977d2db, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 
@@ -2100,7 +2100,7 @@ static struct BurnRomInfo touchgoeRomDesc[] = {
 	{ "ic66",		0x200000, 0x52682953, 2 | BRF_GRA },           //  4
 	{ "ic67",		0x400000, 0xc0a2ce5b, 2 | BRF_GRA },           //  5
 
-	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0xe977d2db, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
+	{ "touchgo_ds5002fp_sram.bin", 0x8000, 0x6a238adb, 4 | BRF_PRG | BRF_ESS }, //  6 Dallas MCU
 	{ "touchgo_scratch",		0x0080, 0xf9ca54ff, 4 | BRF_PRG | BRF_ESS }, //  7 Dallas MCU internal RAM
 };
 

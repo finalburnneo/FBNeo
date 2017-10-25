@@ -674,15 +674,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // TH Strikes Back
 
 static struct BurnRomInfo thoop2RomDesc[] = {
-	{ "th2c23.040",				0x080000, 0x3e465753, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "th2c22.040",				0x080000, 0x837205b7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "th2c23.c23",				0x080000, 0x3e465753, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "th2c22.c22",				0x080000, 0x837205b7, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "thoop2_ds5002fp.bin",	0x008000, 0x6881384d, 2 | BRF_PRG | BRF_ESS }, //  2 MCU Code
 
-	{ "th2-h8.32m",				0x400000, 0x60328a11, 3 | BRF_GRA },           //  3 Graphics
-	{ "th2-h12.32m",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
+	{ "th2-h8.h8",				0x400000, 0x60328a11, 3 | BRF_GRA },           //  3 Graphics
+	{ "th2-h12.h12",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
 
-	{ "th2-c1.080",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
+	{ "th2-c1.c1",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
 };
 
 STD_ROM_PICK(thoop2)

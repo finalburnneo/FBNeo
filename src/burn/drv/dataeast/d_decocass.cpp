@@ -3440,6 +3440,10 @@ static struct BurnRomInfo decocassRomDesc[] = {
 	{ "",             	0x0000, 0x00000000, 0                  }, // 0x9f
 
 	{ "cassmcu.1c", 	0x0400, 0xa6df18fd, BRF_BIOS | BRF_PRG }, // 0xa0 - MCU BIOS (Shared)
+
+#ifdef ROM_VERIFY	
+	{ "v0d-.7e",		0x1000, 0x1e0c22b1, BRF_BIOS | BRF_PRG }, // 0xa1 - handcrafted (single byte changed) because ctisland3 requires region D
+#endif
 };
 
 STD_ROM_PICK(decocass)
@@ -3740,7 +3744,7 @@ struct BurnDriver BurnDrvClocknch = {
 static struct BurnRomInfo clocknchjRomDesc[] = {
 	{ "a-0061.dgl",		0x0020, 0x1bc9fccb, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
 
-	{ "clocknch.cas",	0x6300, 0x9753e815, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
+	{ "dt-1111-a-0.bin",	0x6300, 0x9753e815, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
 };
 
 STDROMPICKEXT(clocknchj, clocknchj, decocass)
@@ -4015,7 +4019,11 @@ struct BurnDriver BurnDrvCtisland2 = {
 // Treasure Island (DECO Cassette) (unk)
 
 static struct BurnRomInfo ctisland3RomDesc[] = {
+#ifdef ROM_VERIFY
+	{ "ctisland3.pro",	0x0020, 0xb87b56a7, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+#else
 	{ "de-0061.pro",	0x0020, 0xe09ae5de, 1 | BRF_PRG | BRF_ESS }, //  0 Dongle data
+#endif
 
 	{ "ctislnd3.cas",	0x8000, 0x45464e1e, 2 | BRF_PRG | BRF_ESS }, //  1 Cassette data
 
@@ -5025,10 +5033,10 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 // Deco Cassette System Multigame (ROM based)
 
 static struct BurnRomInfo decomultRomDesc[] = {
-	{ "widldeco.low",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
-	{ "widldeco.hgh",	0x80000, 0xa8a30112,  1 | BRF_PRG | BRF_ESS },  //  1
+	{ "WIDLDECO.LOW",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
+	{ "WIDLDECO.HGH",	0x80000, 0xa8a30112,  1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "widlbios.v0b",	0x00800, 0x9ad7c451,  8 | BRF_BIOS | BRF_ESS }, //  2 Main M6502 BIOS
+	{ "WIDLBIOS.V0B",	0x00800, 0x9ad7c451,  8 | BRF_BIOS | BRF_ESS }, //  2 Main M6502 BIOS
 
 	{ "v1-.5a",		0x00800, 0xb66b2c2a,  9 | BRF_BIOS | BRF_ESS }, //  3 Sound M6502 BIOS
 

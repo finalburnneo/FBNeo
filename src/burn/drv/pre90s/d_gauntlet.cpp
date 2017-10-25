@@ -875,7 +875,7 @@ static struct BurnRomInfo GauntletsRomDesc[] = {
 	{ "136037-120.16r",       0x04000, 0x6ee7f3cc, BRF_ESS | BRF_PRG }, 	//  6	M6502 Program 
 	{ "136037-119.16s",       0x08000, 0xfa19861f, BRF_ESS | BRF_PRG }, 	//  7
 	
-	{ "136037-104.6p",        0x02000, 0x9e2a5b59, BRF_GRA },		//  8	Characters
+	{ "136037-104.6p",        0x04000, 0x6c276a1d, BRF_GRA },		//  8	Characters
 	
 	{ "136037-111.1a",        0x08000, 0x91700f33, BRF_GRA },		//  9	Motion Objects
 	{ "136037-112.1b",        0x08000, 0x869330be, BRF_GRA },		//  10

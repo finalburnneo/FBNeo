@@ -2858,7 +2858,7 @@ static void draw_object()
 	}
 }
 
-static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_screen,uint8_t *missile_ram, INT32 interleave)
+static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_screen, UINT8 *missile_ram, INT32 interleave)
 {
 	INT32 x;
 
@@ -2909,7 +2909,7 @@ static void draw_missiles(INT32 missile_y_adjust, INT32 missile_y_adjust_flip_sc
 	}
 }
 
-static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adjust_flip_screen, uint8_t *sprite_ram, INT32 interleave)
+static void draw_sprites(INT32 color, INT32 sprite_y_adjust, INT32 sprite_y_adjust_flip_screen, UINT8 *sprite_ram, INT32 interleave)
 {
 	for (INT32 i = 0, offs = 0; i < 8; i++, offs += 4 * interleave)
 	{

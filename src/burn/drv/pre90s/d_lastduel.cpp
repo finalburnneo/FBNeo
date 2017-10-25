@@ -923,7 +923,7 @@ static INT32 CharPlaneOffsets[2]     = { 4, 0 };
 static INT32 CharXOffsets[8]         = { 0, 1, 2, 3, 8, 9, 10, 11 };
 static INT32 CharYOffsets[8]         = { 0, 16, 32, 48, 64, 80, 96, 112 };
 static INT32 BgTilePlaneOffsets[4]   = { 12, 8, 4, 0 };
-static INT32 FgTilePlaneOffsets[4]   = { 4, 12, 0, 8 };
+static INT32 FgTilePlaneOffsets[4]   = { 4, 0, 12, 8 };
 static INT32 TileXOffsets[16]        = { 0, 1, 2, 3, 16, 17, 18, 19, 512, 513, 514, 515, 528, 529, 530, 531 };
 static INT32 TileYOffsets[16]        = { 0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480 };
 static INT32 SpritePlaneOffsets[4]   = { 16, 0, 24, 8 };
@@ -1352,13 +1352,12 @@ static INT32 MadgearExit()
 
 inline static UINT32 CalcCol(UINT16 nColour)
 {
-	static const UINT8 ztable[16] = { 0x0, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xa, 0xb, 0xc, 0xd, 0xe, 0xf, 0x10, 0x11 };
 	INT32 i, r, g, b;
 
-	i = ztable[(nColour >> 0) & 15];
-	r = ((nColour >> 12) & 15) * i;
-	g = ((nColour >>  8) & 15) * i;
-	b = ((nColour >>  4) & 15) * i;
+	i = (nColour & 15) + 0x10;
+	r = ((nColour >> 12) & 15) * i * 0x11 / 0x1f;
+	g = ((nColour >>  8) & 15) * i * 0x11 / 0x1f;
+	b = ((nColour >>  4) & 15) * i * 0x11 / 0x1f;
 	
 	return BurnHighCol(r, g, b, 0);
 }
@@ -1465,41 +1464,6 @@ static void DrvRenderBgLayer(INT32 nTransparent)
 			if (y < -16) y += 512;
 
 			DrvTileDraw(DrvBgTiles, Code, Colour, x - 64, y - 8, xFlip, yFlip, nTransparent, 0xf);
-		}
-	}
-}
-
-static void DrvRenderFgLayer(INT32 Priority)
-{
-	INT32 mx, my, Code, Colour, x, y, TileIndex, Split, Flip, xFlip, yFlip, nTransparent;
-	
-	UINT16 *VideoRam = (UINT16*)DrvScroll1Ram;
-
-	nTransparent = Priority & (1 << 16);
-	Priority &= 1;
-	
-	for (mx = 0; mx < 32; mx++) {
-		for (my = 0; my < 64; my++) {
-			TileIndex = (my * 32) + mx;
-			Code = VideoRam[TileIndex] & 0x1fff;
-			Colour = VideoRam[TileIndex + 0x800];
-			Flip = (Colour & 0x60) >> 5;
-			xFlip = (Flip >> 0) & 0x01;
-			yFlip = (Flip >> 1) & 0x01;
-			Split = (Colour & 0x10) >> 4;
-			Colour &= 0x0f;
-			
-			if (Split != Priority) continue;
-			
-			y = 16 * mx;
-			x = 16 * my;
-			
-			x -= DrvFgScrollX;
-			y -= DrvFgScrollY;
-			if (x < -16) x += 1024;
-			if (y < -16) y += 512;
-
-			DrvTileDraw(DrvFgTiles, Code, Colour + 0x10, x - 64, y - 8, xFlip, yFlip, nTransparent, 0xf);
 		}
 	}
 }
@@ -1636,24 +1600,78 @@ static void DrvRenderCharLayer()
 	}
 }
 
-static void DrvDraw()
+static void DrvRenderFgLayer(INT32 BackLayer)
 {
-//	BurnTransferClear();
+	INT32 mx, my, TileIndex;
+
+	INT32 masks[2][2] = { {0xffff, 0x8000}, {0x80ff, 0xff00} };
+
+	UINT16 *VideoRam = (UINT16*)DrvScroll1Ram;
+
+	for (mx = 0; mx < 32; mx++) {
+		for (my = 0; my < 64; my++) {
+			TileIndex = (my * 32) + mx;
+			INT32 code = VideoRam[TileIndex] & 0x1fff;
+			INT32 color = VideoRam[TileIndex + 0x800];
+			INT32 flip = ((color & 0x40) ? 0xf0 : 0) + ((color & 0x20) ? 0x0f : 0);
+			INT32 group = (color & 0x10) >> 4;
+			color &= 0x0f;
+
+			INT32 sy = 16 * mx;
+			INT32 sx = 16 * my;
+
+			sx -= DrvFgScrollX;
+			sy -= DrvFgScrollY;
+			if (sx < -16) sx += 1024;
+			if (sy < -16) sy += 512;
+
+			sx -= 64; // layer offsets
+			sy -= 8;
+			{
+				color = (color << 4) + 0x100;
+				UINT8 *src = DrvFgTiles + (code << 8);
+				UINT16 *dst;
+
+				for (INT32 y = 0; y < 16; y++, sy++) {
+					if (sy < 0 || sy >= nScreenHeight) continue;
+
+					dst = pTransDraw + sy * nScreenWidth;
+
+					for (INT32 x = 0; x < 16; x++, sx++) {
+						if (sx < 0 || sx >= nScreenWidth) continue;
+
+						INT32 pxl = src[((y << 4) + x) ^ flip];
+
+						if (masks[group][BackLayer] & (1 << pxl)) continue;
+
+						dst[sx] = pxl + color;
+					}
+
+					sx -= 16;
+				}
+			}
+		}
+	}
+}
+
+static void DrvDraw()  // madgear / ledstorm
+{
+	BurnTransferClear();
 	DrvCalcPalette();
 
 	if (DrvTmapPriority) {
-		DrvRenderFgLayer(0|(0<<16));
-		DrvRenderSprites(0);
-		DrvRenderFgLayer(1|(1<<16));
-		DrvRenderBgLayer(1);
+		if (nBurnLayer & 2) DrvRenderFgLayer(1);
+		if (nSpriteEnable & 1) DrvRenderSprites(0);
+		if (nBurnLayer & 4) DrvRenderFgLayer(0);
+		if (nBurnLayer & 1) DrvRenderBgLayer(1);
 	} else {
-		DrvRenderBgLayer(0);
-		DrvRenderFgLayer(0|(1<<16));
-		DrvRenderSprites(0);
-		DrvRenderFgLayer(1|(1<<16));
+		if (nBurnLayer & 1) DrvRenderBgLayer(0);
+		if (nBurnLayer & 2) DrvRenderFgLayer(1);
+		if (nSpriteEnable & 1) DrvRenderSprites(0);
+		if (nBurnLayer & 4) DrvRenderFgLayer(0);
 	}
 
-	DrvRenderSprites(1);
+	if (nSpriteEnable & 2) DrvRenderSprites(1);
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
 }

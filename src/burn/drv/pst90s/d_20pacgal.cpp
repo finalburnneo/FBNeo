@@ -528,8 +528,8 @@ static void draw_sprites()
 		};
 		int x, y;
 
-		uint8_t code = DrvSprRAM[offs + 0x000];
-		uint8_t color = DrvSprRAM[offs + 0x001];
+		UINT8 code = DrvSprRAM[offs + 0x000];
+		UINT8 color = DrvSprRAM[offs + 0x001];
 
 		int sx = DrvSprRAM[offs + 0x081] - 41 + 0x100*(DrvSprRAM[offs + 0x101] & 3);
 		int sy = 256 - DrvSprRAM[offs + 0x080] + 1;

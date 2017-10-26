@@ -1965,8 +1965,6 @@ static void DrvDraw()
 	BurnTransferCopy(DrvPalette);
 }
 
-extern int counter;   int funk = 0;
-
 static void DrvDrawJungler()
 {
 	BurnTransferClear();
@@ -1976,13 +1974,6 @@ static void DrvDrawJungler()
 	if (nBurnLayer & 8) DrvRender8x32Layer();
 	if (nSpriteEnable & 1) DrvRenderSprites();
 	if (nBurnLayer & 2) DrvRenderBullets();
-
-#if 0
-	// for debugging tactician stars. grrr!
-	FILE * f = fopen("c:\\transdraw.bin", "wb+");
-	fwrite(pTransDraw, 1, nScreenWidth * nScreenHeight * 2, f);
-	fclose(f);
-#endif
 
 	if (stars_enable)
 		draw_stars();

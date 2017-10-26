@@ -823,9 +823,6 @@ static INT32 DrvExit()
 }
 
 
-extern int counter;
-
-
 static void draw_bg()
 {
 	UINT8 *videoram = DrvVidRAM;

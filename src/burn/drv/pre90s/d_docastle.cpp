@@ -842,8 +842,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-extern int counter;
-
 static void RenderTileCPMP(INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, INT32 offset, INT32 mode, UINT8 *gfxrom)
 {
 	UINT16 *dest = pTransDraw;

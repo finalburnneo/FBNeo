@@ -9,6 +9,9 @@
 #include "eeprom.h"
 #include "math.h"
 
+// Use for slower systems like rpi & xbox
+// #define SSV_UPD_SPEEDHACK
+
 /*
 	srmp7 - no music/sfx
 	gundam - verify layer should be OVER sprites and not behind
@@ -3700,7 +3703,11 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
+#ifdef SSV_UPD_SPEEDHACK
+	INT32 nCyclesTotal[2] = { (16000000 * 100) / 6018, (1000000 * 100) / 6018 };
+#else
 	INT32 nCyclesTotal[2] = { (16000000 * 100) / 6018, (10000000 * 100) / 6018 };
+#endif
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nSegment = 0;
 

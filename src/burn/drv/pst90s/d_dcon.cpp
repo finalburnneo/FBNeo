@@ -154,7 +154,7 @@ static struct BurnDIPInfo SdgndmpsDIPList[]=
 
 STDDIPINFO(Sdgndmps)
 
-void __fastcall dcon_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall dcon_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff0) == 0x0a0000) {
 		seibu_main_word_write(address & 0xf, data);
@@ -177,10 +177,15 @@ void __fastcall dcon_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT16 __fastcall dcon_main_read_word(UINT32 address)
+static UINT16 __fastcall dcon_main_read_word(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x0a0000) {
-		return seibu_main_word_read(address & 0xf);
+		if (is_sdgndmps) {
+			if ((address & 0xf) == 0xa) return 1; // fix music
+			return seibu_main_word_read(address & 0xf);
+		} else {
+			return seibu_main_word_read(address & 0xf);
+		}
 	}
 
 	switch (address)
@@ -778,29 +783,12 @@ static struct BurnRomInfo sdgndmpsRomDesc[] = {
 STD_ROM_PICK(sdgndmps)
 STD_ROM_FN(sdgndmps)
 
-static INT32 SdgndmpsInit()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0)
-	{
-		// Patch out protection?
-		*((UINT16 *)(Drv68KROM + 0x04de)) = 0x4245;
-		*((UINT16 *)(Drv68KROM + 0x04e0)) = 0x4e71;
-		*((UINT16 *)(Drv68KROM + 0x04e2)) = 0x4e71;
-		*((UINT16 *)(Drv68KROM + 0x1356)) = 0x4e71;
-		*((UINT16 *)(Drv68KROM + 0x1358)) = 0x4e71;
-	}
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvSdgndmps = {
 	"sdgndmps", NULL, NULL, NULL, "1991",
 	"SD Gundam Psycho Salamander no Kyoui\0", NULL, "Banpresto / Bandai", "Miscellaneous",
 	L"\u30AC\u30F3\u30C0\u30E0 \u30B5\u30A4\u30B3\u30B5\u30E9\u30DE\uF303\u30C0\u30FC\u306E\u8105\u5A01\0SD Gundam Psycho Salamander no Kyoui\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_HORSHOOT, 0,
 	NULL, sdgndmpsRomInfo, sdgndmpsRomName, NULL, NULL, DconInputInfo, SdgndmpsDIPInfo,
-	SdgndmpsInit, DrvExit, DrvFrame, SdgndmpsDraw, DrvScan, &DrvRecalc, 0x800,
+	DrvInit, DrvExit, DrvFrame, SdgndmpsDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3
 };

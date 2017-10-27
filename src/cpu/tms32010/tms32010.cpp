@@ -74,6 +74,9 @@
 UINT16 *tms32010_ram = NULL;
 UINT16 *tms32010_rom = NULL;
 
+static UINT32 tms32010_cycles = 0;
+static UINT32 tms32010_current_cycles = 0;
+
 static void (*tms32010_write_port)(INT32,UINT16);
 static UINT16 (*tms32010_read_port)(INT32);
 
@@ -826,6 +829,8 @@ void tms32010_reset (void)
 						/* however other TMS3201x devices   */
 						/* can address up to 0xffff (incase */
 						/* their support is ever added).    */
+
+	tms32010_cycles = 0;
 }
 
 
@@ -864,6 +869,8 @@ int tms32010_execute(int cycles)
 {
 	tms32010_icount = cycles;
 
+	tms32010_current_cycles = cycles;
+
 	do
 	{
 		if (R.INTF) {
@@ -889,7 +896,20 @@ int tms32010_execute(int cycles)
 		}
 	} while (tms32010_icount>0);
 
+	tms32010_current_cycles = 0;
+	tms32010_cycles += cycles - tms32010_icount;
+
 	return cycles - tms32010_icount;
+}
+
+UINT32 tms32010TotalCycles()
+{
+	return tms32010_cycles + (tms32010_current_cycles - tms32010_icount);
+}
+
+void tms32010NewFrame()
+{
+	tms32010_cycles = 0;
 }
 
 void tms32010RunEnd()

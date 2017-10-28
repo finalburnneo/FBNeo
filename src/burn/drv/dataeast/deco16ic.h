@@ -7,7 +7,6 @@ extern UINT8 *deco16_pf_rowscroll[4];
 
 extern UINT16 deco16_priority;
 extern INT32 deco16_vblank;
-extern INT32 deco16_y_skew; // used in vaportrail
 
 void deco16_set_bank_callback(INT32 tmap, INT32 (*callback)(const INT32 bank));
 void deco16_set_color_base(INT32 tmap, INT32 base);
@@ -30,6 +29,8 @@ void deco16_draw_alphaprio_sprite(UINT32 *palette, UINT8 *gfx, INT32 code, INT32
 void deco16_set_graphics(UINT8 *gfx0, INT32 len0, UINT8 *gfx1, INT32 len1, UINT8 *gfx2, INT32 len2);
 void deco16_set_graphics(INT32 num, UINT8 *gfx, INT32 len, INT32 size /*tile size*/); // individual bank
 
+void deco16_create_transtable(INT32 select, INT32 trans); // speedup!
+
 void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width);
 void deco16Reset();
 void deco16Exit();
@@ -47,6 +48,7 @@ void deco16_pf3_update();
 #define DECO16_LAYER_4BITSPERPIXEL	0x000000 	// just to clarify
 #define DECO16_LAYER_TRANSMASK0		0x000100
 #define DECO16_LAYER_TRANSMASK1		0x000000
+#define DECO16_LAYER_CAPTEVEN		0x400000
 
 void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags);
 void deco16_draw_layer_by_line(INT32 start, INT32 end, INT32 tmap, UINT16 *dest, INT32 flags);

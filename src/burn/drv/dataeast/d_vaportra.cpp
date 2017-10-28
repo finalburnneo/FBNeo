@@ -273,7 +273,6 @@ static INT32 DrvDoReset()
 	deco16SoundReset();
 
 	deco16Reset();
-	deco16_y_skew = 8; // HACK! the background is skewed by 8, causing sprite:layer misalignment (spider mini-boss/level 2, etc.)
 
 	return 0;
 }
@@ -384,6 +383,7 @@ static INT32 DrvInit(INT32 type)
 
 	deco16Init(0, 0, 1);
 	deco16_set_graphics(DrvGfxROM0, 0x100000, DrvGfxROM1, 0x100000, DrvGfxROM2, 0x200000);
+	deco16_set_global_offsets(0, 8);
 	deco16_set_color_base(0, 0x000);
 	deco16_set_color_base(1, 0x200);
 	deco16_set_color_base(2, 0x300);
@@ -402,7 +402,7 @@ static INT32 DrvInit(INT32 type)
 	SekMapMemory(deco16_pf_ram[1],		0x282000, 0x283fff, MAP_RAM);
 	SekMapMemory(DrvPalRAM0,		0x300000, 0x3009ff, MAP_RAM);
 	SekMapMemory(DrvPalRAM1,		0x304000, 0x3049ff, MAP_RAM);
-	//SekMapMemory(DrvSprRAM,			0xff8000, 0xff87ff, MAP_RAM); // in handler w/mirroring (fixes gameover animation)
+//	SekMapMemory(DrvSprRAM,			0xff8000, 0xff87ff, MAP_RAM); // in handler w/mirroring (fixes gameover animation)
 	SekMapMemory(Drv68KRAM,			0xffc000, 0xffffff, MAP_RAM);
 	SekSetWriteWordHandler(0,		vaportra_main_write_word);
 	SekSetWriteByteHandler(0,		vaportra_main_write_byte);
@@ -426,7 +426,6 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 	deco16Exit();
-	deco16_y_skew = 0;
 
 	SekExit();
 	

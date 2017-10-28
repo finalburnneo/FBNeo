@@ -307,6 +307,7 @@ static void DrvCpuMap(INT32 cpu)
 {
 	UINT8 *rom = (cpu) ? DrvM6809ROM1 : DrvM6809ROM0;
 
+	M6809Init(cpu);
 	M6809Open(cpu);
 	M6809MapMemory(DrvShareRAM,	0x0000, 0x0fff, MAP_RAM);
 	M6809MapMemory(DrvTileRAM,	0x1000, 0x17ff, MAP_RAM);
@@ -344,7 +345,6 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	M6809Init(2);
 	DrvCpuMap(0);
 	DrvCpuMap(1);
 

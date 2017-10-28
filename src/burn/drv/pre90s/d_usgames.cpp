@@ -242,7 +242,7 @@ static INT32 DrvInit(INT32 game_select)
 		break;
 	}
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvNVRAM,	0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvCharRAM,	0x2800, 0x2fff, MAP_ROM);

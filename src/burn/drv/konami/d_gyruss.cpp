@@ -57,22 +57,22 @@ static INT32 scanline;
 
 static struct BurnInputInfo GyrussInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy2 + 2,	"p1 up"		},
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 down"	},
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"	},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"		},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -718,7 +718,7 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(gyruss_main_write);
 	ZetClose();
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvM6809RAM, 0x4000, 0x47ff, MAP_RAM);
 	M6809MapMemory(DrvShareRAM,	0x6000, 0x67ff, MAP_RAM);

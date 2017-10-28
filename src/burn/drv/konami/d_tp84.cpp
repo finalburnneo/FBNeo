@@ -560,7 +560,7 @@ static INT32 DrvInit()
 		DrvGfxDecode();
 	}
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM0,		0x4000, 0x43ff, MAP_RAM);
 	M6809MapMemory(DrvVidRAM1,		0x4400, 0x47ff, MAP_RAM);
@@ -572,6 +572,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(tp84_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvSprRAM,		0x6000, 0x67ff, MAP_RAM);
 	M6809MapMemory(DrvShareRAM,		0x8000, 0x87ff, MAP_RAM);

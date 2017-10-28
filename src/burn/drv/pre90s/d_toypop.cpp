@@ -570,7 +570,7 @@ static INT32 DrvInit(INT32 addr_xor)
 
 	address_xor = addr_xor;
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvFgRAM,	0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvShareRAM,	0x2800, 0x2fff, MAP_RAM);
@@ -590,6 +590,7 @@ static INT32 DrvInit(INT32 addr_xor)
 	SekSetReadByteHandler(0,	toypop_slave_read_byte);
 	SekClose();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvM6809ROM1,	0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(toypop_sound_write);

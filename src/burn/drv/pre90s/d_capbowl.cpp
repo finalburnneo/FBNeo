@@ -424,7 +424,7 @@ static INT32 DrvInit(INT32 game)
 
 	BurnSetRefreshRate(57.00);
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvNVRAM,		0x5000, 0x57ff, MAP_RAM);
 	M6809MapMemory(DrvMainROM,		0x8000, 0xffff, MAP_ROM);
@@ -432,6 +432,7 @@ static INT32 DrvInit(INT32 game)
 	M6809SetReadHandler(main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvSoundRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSoundROM,		0x8000, 0xffff, MAP_ROM);

@@ -715,7 +715,7 @@ static INT32 DrvInit()
 	DrvGfxDecode();
 	DrvPaletteInit();
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvShareRAM + 0x100,	0x0100, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvVORAM,		0x2000, 0x2fff, MAP_RAM);
@@ -725,6 +725,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(jackal_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvPalRAM,		0x4000, 0x43ff, MAP_RAM);
 	M6809MapMemory(DrvShareRAM,		0x6000, 0x7fff, MAP_RAM);

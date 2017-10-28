@@ -611,7 +611,7 @@ static INT32 DrvInit(INT32 select)
 	Konami1Decode();
 	DrvGfxDecode();
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvSprRAM,		0x1000, 0x10ff, MAP_RAM);
 	M6809MapMemory(DrvVidRAM,		0x2000, 0x27ff, MAP_RAM);

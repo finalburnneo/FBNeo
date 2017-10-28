@@ -466,7 +466,7 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	HD6309SetWriteHandler(DrvContraHD6309WriteByte);
 	HD6309Close();
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvM6809RAM0, 		0x6000, 0x67ff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM0 + 0x08000,	0x8000, 0xffff, MAP_ROM);

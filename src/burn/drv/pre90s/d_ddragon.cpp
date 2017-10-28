@@ -1981,7 +1981,7 @@ static INT32 DrvMachineInit()
 	}
 	
 	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
-		M6809Init(1);
+		M6809Init(0);
 		M6809Open(0);
 		M6809MapMemory(DrvSoundCPURam      , 0x0000, 0x0fff, MAP_RAM);
 		M6809MapMemory(DrvSoundCPURom      , 0x8000, 0xffff, MAP_ROM);

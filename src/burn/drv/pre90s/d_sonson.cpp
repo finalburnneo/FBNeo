@@ -403,7 +403,7 @@ static INT32 DrvInit()
 	DrvPaletteInit();
 	DrvGfxDecode();
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvM6809RAM0,		0x0000, 0x0fff, MAP_RAM);
 	M6809MapMemory(DrvVidRAM,		0x1000, 0x13ff, MAP_RAM);
@@ -414,6 +414,7 @@ static INT32 DrvInit()
 	M6809SetWriteHandler(sonson_main_write);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvM6809RAM1,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvM6809ROM1 + 0x0e000,	0xe000, 0xffff, MAP_ROM);

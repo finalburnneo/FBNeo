@@ -962,7 +962,7 @@ static INT32 DrvInit()
 	BurnFree(DrvTempRom);
 	
 	// Setup the M6809 emulation
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvM6809Ram          , 0x0000, 0x1dff, MAP_RAM);
 	M6809MapMemory(DrvSpriteRam         , 0x1e00, 0x1fff, MAP_RAM);

@@ -1578,8 +1578,7 @@ static INT32 DrvInit()
 
 	if (Namcos1GetRoms()) return 1;
 
-	M6809Init(3);
-
+	M6809Init(0);
 	M6809Open(0);
 	M6809SetWriteHandler(main_write);
 	M6809SetReadHandler(main_read);
@@ -1587,6 +1586,7 @@ static INT32 DrvInit()
 	M6809SetReadOpArgHandler(main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809SetWriteHandler(sub_write);
 	M6809SetReadHandler(sub_read);
@@ -1594,6 +1594,7 @@ static INT32 DrvInit()
 	M6809SetReadOpArgHandler(sub_read);
 	M6809Close();
 
+	M6809Init(2);
 	M6809Open(2);
 	M6809MapMemory(DrvTriRAM,		0x7000, 0x77ff, MAP_RAM);
 	M6809MapMemory(DrvSoundRAM,		0x8000, 0x9fff, MAP_RAM);

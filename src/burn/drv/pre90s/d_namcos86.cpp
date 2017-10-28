@@ -1301,7 +1301,7 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 		DrvPaletteInit();
 	}
 
-	M6809Init(2);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM0, 		0x0000, 0x1fff, MAP_RAM);
 	M6809MapMemory(DrvVidRAM1, 		0x2000, 0x3fff, MAP_RAM);
@@ -1327,6 +1327,8 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 //	HD63701Close();
 
 	set_tile_offsets(4, 2, 5, 3); // rthunder
+
+	M6809Init(1);
 
 	switch (nSubCPUConfig)
 	{

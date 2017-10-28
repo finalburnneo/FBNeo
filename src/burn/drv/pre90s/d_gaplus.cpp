@@ -492,8 +492,7 @@ static INT32 DrvInit(INT32 gaplusd)
 		DrvGfxDecode();
 	}
 
-	M6809Init(3);
-
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
@@ -502,6 +501,7 @@ static INT32 DrvInit(INT32 gaplusd)
 	M6809SetReadHandler(gaplus_main_read);
 	M6809Close();
 
+	M6809Init(1);
 	M6809Open(1);
 	M6809MapMemory(DrvVidRAM,		0x0000, 0x07ff, MAP_RAM);
 	M6809MapMemory(DrvSprRAM,		0x0800, 0x1fff, MAP_RAM);
@@ -509,6 +509,7 @@ static INT32 DrvInit(INT32 gaplusd)
 	M6809SetWriteHandler(gaplus_sub_write);
 	M6809Close();
 
+	M6809Init(2);
 	M6809Open(2);
 	M6809MapMemory(DrvM6809ROM2,		0xe000, 0xffff, MAP_ROM);
 	M6809SetWriteHandler(gaplus_sub2_write);

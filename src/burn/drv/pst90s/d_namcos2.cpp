@@ -1401,7 +1401,7 @@ static void finallap_68k_map(INT32 cpu)
 
 static void namcos2_sound_init()
 {
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 //	M6809MapMemory(DrvDPRAM,	0x7000, 0x77ff, MAP_RAM);
 //	M6809MapMemory(DrvDPRAM,	0x7800, 0x7fff, MAP_RAM);

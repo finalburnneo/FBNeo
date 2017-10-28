@@ -303,12 +303,13 @@ static UINT8 mc8123_decrypt(INT32 addr,UINT8 val,const UINT8 *key,INT32 opcode)
 void mc8123_decrypt_rom(INT32 /*banknum*/, INT32 numbanks, UINT8 *pRom, UINT8 *pFetch, UINT8 *pKey)
 {
 	UINT8 *decrypted1 = pFetch;
-	UINT8 *decrypted2 = numbanks > 1 ? decrypted1 + 0x10000 : decrypted1 + 0x8000;
+	UINT8 *decrypted2 = (numbanks > 1) ? decrypted1 + 0x10000 : decrypted1 + 0x8000;
+	UINT16 main_len = (numbanks == 1) ? 0xc000 : 0x8000;
 	UINT8 *rom = pRom;
 	UINT8 *key = pKey;
 	INT32 A, bank;
 
-	for (A = 0x0000;A < 0x8000;A++)
+	for (A = 0x0000;A < main_len;A++)
 	{
 		UINT8 src = rom[A];
 

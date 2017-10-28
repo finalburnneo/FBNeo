@@ -3980,10 +3980,10 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 		upd7810SetWritePortHandler(metro_upd7810_write_port);
 
 		BurnYM2413Init(3579545);
-		BurnYM2413SetAllRoutes(0.90, BURN_SND_ROUTE_BOTH);
+		BurnYM2413SetAllRoutes(1.40, BURN_SND_ROUTE_BOTH);
 
 		MSM6295Init(0, 1056000 / 132, 1);
-		MSM6295SetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	}
 
 	if (sound_system == 5)
@@ -3998,16 +3998,16 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 
 		BurnYM2151Init(3579545);
 		BurnYM2151SetIrqHandler(&YM2151IrqHandler);
-		BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
+		BurnYM2151SetAllRoutes(1.20, BURN_SND_ROUTE_BOTH);
 
 		MSM6295Init(0, 1056000 / 132, 1);
-		MSM6295SetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
+		MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 
 	if (sound_system == 3)
 	{
 		BurnYMF278BInit(0, DrvYMROMB, 0x280000, &DrvFMIRQHandler, DrvSynchroniseStream);
-		BurnYMF278BSetAllRoutes(0.100, BURN_SND_ROUTE_BOTH);
+		BurnYMF278BSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		BurnTimerAttachSek(16000000);
 	}
 

@@ -1,4 +1,4 @@
-// Gigas / Freekick / Counter Run / Perfect Billiard for FBA, ported by vbt
+// Gigas / Freekick / Counter Run / Perfect Billiard for FBA, ported by vbt, based on driver by Tomasz Slanina and David Haywood
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -168,6 +168,7 @@ static struct BurnInputInfo GigasInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDip + 2,	"dip"},
 };
 
 STDINPUTINFO(Gigas)
@@ -315,6 +316,71 @@ static struct BurnDIPInfo Gigasm2DIPList[]=
 };
 
 STDDIPINFO(Gigasm2)
+
+static struct BurnDIPInfo OmegaDIPList[]=
+{
+	{0x0d, 0xff, 0xff, 0x06, NULL		},
+	{0x0e, 0xff, 0xff, 0xff, NULL		},
+	{0x0f, 0xff, 0xff, 0xc3, NULL		},
+
+	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
+	{0x0d, 0x01, 0x06, 0x06, "20000 & 60000, Every 60000 Points"		},
+	{0x0d, 0x01, 0x06, 0x02, "30000 & 80000, Every 80000 Points"		},
+	{0x0d, 0x01, 0x06, 0x04, "20000 & 60000 Points"		},
+	{0x0d, 0x01, 0x06, 0x00, "Only 20000 Points"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin A"		},
+	{0x0e, 0x01, 0x0f, 0x00, "5 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x0e, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x05, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x06, "3 Coins 2 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x0a, "3 Coins 4 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x09, "2 Coins 3 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x02, "3 Coins/5 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x07, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x01, "2 Coins 5 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x0b, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x03, "1 Coin  4 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x0d, "1 Coin  5 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x0c, "1 Coin/10 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x04, "1 Coin/25 Credits"		},
+	{0x0e, 0x01, 0x0f, 0x08, "1 Coin/50 Credits"		},
+
+	{0   , 0xfe, 0   ,    16, "Coin B"		},
+	{0x0e, 0x01, 0xf0, 0x00, "5 Coins 1 Credits"		},
+	{0x0e, 0x01, 0xf0, 0xe0, "3 Coins 1 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x50, "2 Coins 1 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x60, "3 Coins 2 Credits"		},
+	{0x0e, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x0e, 0x01, 0xf0, 0xa0, "3 Coins 4 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x90, "2 Coins 3 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x20, "3 Coins/5 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x10, "2 Coins 5 Credits"		},
+	{0x0e, 0x01, 0xf0, 0xb0, "1 Coin  3 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x30, "1 Coin  4 Credits"		},
+	{0x0e, 0x01, 0xf0, 0xd0, "1 Coin  5 Credits"		},
+	{0x0e, 0x01, 0xf0, 0xc0, "1 Coin/10 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x40, "1 Coin/25 Credits"		},
+	{0x0e, 0x01, 0xf0, 0x80, "1 Coin/50 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Hopper Status?"		},
+	{0x0f, 0x01, 0x01, 0x01, "Off"		},
+	{0x0f, 0x01, 0x01, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
+	{0x0f, 0x01, 0x02, 0x02, "Off"		},
+	{0x0f, 0x01, 0x02, 0x00, "On"		},
+
+	{0   , 0xfe, 0   ,    4, "Prize Version"		},
+	{0x0f, 0x01, 0xc0, 0xc0, "Off"		},
+	{0x0f, 0x01, 0xc0, 0x80, "On Setting 1"		},
+	{0x0f, 0x01, 0xc0, 0x40, "On Setting 2"		},
+	{0x0f, 0x01, 0xc0, 0x00, "On Setting 3"		},
+};
+
+STDDIPINFO(Omega)
 
 static struct BurnInputInfo FreekckInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"},
@@ -936,7 +1002,7 @@ UINT8 __fastcall gigas_in(UINT16 address)
 		break;
 		
 		case 0x01:
-			return 0;
+			return DrvDip[2];
 		break;
 	}
 
@@ -1079,6 +1145,17 @@ static INT32 LoadRoms()
 		}
 	}
 
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "omega"))
+	{
+		if (BurnLoadRom(DrvMainROM,  rom_number++, 1)) return 1;
+		if (BurnLoadRom(DrvMainROM + 0x04000,  rom_number++, 1)) return 1;
+
+		if (BurnLoadRom(MC8123Key,  rom_number++, 1)) return 1;
+
+		mc8123_decrypt_rom(0, 1, DrvMainROM, DrvMainROMdec, MC8123Key);
+		use_encrypted = 1;
+	}
+
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "gigasb")) 
 	{
 		if (BurnLoadRom(DrvMainROM + 0x10000,  rom_number++, 1)) return 1;
@@ -1217,6 +1294,11 @@ static INT32 DrvInit()
 	} else { // gigas*
 		ZetMapArea(0x0000, 0xbfff, 0, DrvMainROM);
 		ZetMapArea(0x0000, 0xbfff, 2, DrvMainROM + 0x10000, DrvMainROM);
+
+		if (use_encrypted) {
+			ZetMapArea(0x0000, 0xbfff, 0, DrvMainROM);
+			ZetMapArea(0x0000, 0xbfff, 2, DrvMainROMdec, DrvMainROM); // fetch ops(encrypted), opargs(unencrypted)
+		}
 	}
 
 
@@ -1781,3 +1863,42 @@ struct BurnDriver BurnDrvGigas = {
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
 };
+
+// Omega
+
+static struct BurnRomInfo omegaRomDesc[] = {
+	{ "17.m10",		0x4000, 0xc7de0993, BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "8.n10",		0x8000, 0x9bb61910, BRF_PRG | BRF_ESS }, //  1
+
+	{ "omega.key",  0x2000, 0x0a63943f, BRF_PRG | BRF_ESS }, //  2 maincpu:key
+
+	{ "4.f10",		0x4000, 0xbf780a8e, BRF_GRA },           //  3 gfx1
+	{ "5.h10",		0x4000, 0xb491647f, BRF_GRA },           //  4
+	{ "6.j10",		0x4000, 0x65beba5b, BRF_GRA },           //  5
+
+	{ "3.d10",		0x4000, 0xc678b202, BRF_GRA },           //  6 gfx2
+	{ "1.a10",		0x4000, 0xe0aeada9, BRF_GRA },           //  7
+	{ "2.c10",		0x4000, 0xdbc0a47f, BRF_GRA },           //  8
+
+	{ "tbp24s10n.3f",	0x0100, 0x75ec7472, BRF_GRA },           //  9 proms
+	{ "tbp24s10n.4f",	0x0100, 0x5113a114, BRF_GRA },           // 10
+	{ "tbp24s10n.3g",	0x0100, 0xb6b5d4a0, BRF_GRA },           // 11
+	{ "tbp24s10n.4g",	0x0100, 0x931bc299, BRF_GRA },           // 12
+	{ "tbp24s10n.3e",	0x0100, 0x899e089d, BRF_GRA },           // 13
+	{ "tbp24s10n.4e",	0x0100, 0x28321dd8, BRF_GRA },           // 14
+};
+
+STD_ROM_PICK(omega)
+STD_ROM_FN(omega)
+
+struct BurnDriver BurnDrvOmega = {
+	"omega", NULL, NULL, NULL, "1986",
+	"Omega\0", NULL, "Nihon System", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	NULL, omegaRomInfo, omegaRomName, NULL, NULL, GigasInputInfo, OmegaDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 256, 3, 4
+};
+
+

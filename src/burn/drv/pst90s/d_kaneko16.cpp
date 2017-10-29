@@ -55,7 +55,7 @@ static UINT8 *Kaneko16Tiles        = NULL;
 static UINT8 *Kaneko16Tiles2       = NULL;
 static UINT8 *Kaneko16Sprites      = NULL;
 static UINT8 *Kaneko16TempGfx      = NULL;
-static UINT8 *DrvPrioBitmap        = NULL; // Wing Force & BlaZeon
+static UINT8 *DrvPrioBitmap        = NULL; // Wing Force, BlaZeon, mgcrystl
 
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
@@ -1937,6 +1937,8 @@ static INT32 ExplbrkrMemIndex()
 	Kaneko16VScrl3Ram     = Next; Next += 0x001000;
 
 	RamEnd = Next;
+
+	DrvPrioBitmap         = Next; Next += 320 * 240;
 
 	Kaneko16Sprites       = Next; Next += (Kaneko16NumSprites * 16 * 16);
 	Kaneko16Tiles         = Next; Next += (Kaneko16NumTiles * 16 * 16);
@@ -5420,6 +5422,8 @@ static INT32 MgcrystlInit()
 	Kaneko16NumTiles2 = 0x2000;
 	
 	Kaneko16VideoInit();
+
+	Kaneko16SpritePrio(2, 3, 5, 7);
 	
 	// Allocate and Blank all required memory
 	Mem = NULL;
@@ -7070,6 +7074,7 @@ static void MgcrystlFrameRender()
 	
 	BurnTransferClear();
 	Kaneko16CalcPalette(0x1000);
+	memset(DrvPrioBitmap, 0, 320 * 240);
 	
 	if (Kaneko16Layer0Regs[4] & 0x800) {
 		HANDLE_VSCROLL(0)
@@ -7092,13 +7097,10 @@ static void MgcrystlFrameRender()
 		if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
 		if (Layer2Enabled) { if (vScroll2Enabled) { Kaneko16RenderLayerQueue(2, i); } else { Kaneko16RenderTileLayer(2, i, xScroll2); }}
 		if (Layer3Enabled) { if (vScroll3Enabled) { Kaneko16RenderLayerQueue(3, i); } else { Kaneko16RenderTileLayer(3, i, xScroll3); }}
-	
-		if (i == 1) Kaneko16RenderSprites(0);
-		if (i == 2) Kaneko16RenderSprites(1);
-		if (i == 4) Kaneko16RenderSprites(2);
-		if (i == 6) Kaneko16RenderSprites(3);
 	}
-	
+
+	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
+
 	BurnTransferCopy(Kaneko16Palette);
 }
 
@@ -7108,7 +7110,7 @@ Frame functions
 
 static INT32 ExplbrkrFrame()
 {
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	nSoundBufferPos = 0;
 	
 	if (Kaneko16Reset) ExplbrkrDoReset();
@@ -7126,9 +7128,9 @@ static INT32 ExplbrkrFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		if (i == 3) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
-		if (i == 6) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-		if (i == 9) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+		if (i == 144) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
+		if (i == 64) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 224) SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 		SekClose();
 
 		// Render Sound Segment

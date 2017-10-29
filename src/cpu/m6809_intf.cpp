@@ -56,7 +56,7 @@ void M6809NewFrame()
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809NewFrame called without init\n"));
 #endif
 
-	for (INT32 i = 0; i < nM6809Count; i++) {
+	for (INT32 i = 0; i < nM6809Count+1; i++) {
 		nM6809CyclesDone[i] = 0;
 	}
 	nM6809CyclesTotal = 0;
@@ -88,10 +88,10 @@ INT32 M6809Init(INT32 cpu)
 	DebugCPU_M6809Initted = 1;
 
 	nActiveCPU = -1;
-//	nM6809Count = num % MAX_CPU;
+	nM6809Count = cpu;
 
 #if defined FBA_DEBUG
-	if (num >= MAX_CPU) bprintf (0, _T("M6809Init called with greater than maximum (%d) cpu number (%d)\n"), MAX_CPU, cpu);
+	if (cpu >= MAX_CPU-1) bprintf (0, _T("M6809Init called with greater than maximum (%d) cpu number (%d)\n"), MAX_CPU-1, cpu);
 #endif
 
 	if (m6809CPUContext == NULL) {
@@ -99,7 +99,7 @@ INT32 M6809Init(INT32 cpu)
 
 		if (m6809CPUContext == NULL) {
 #if defined FBA_DEBUG
-			if (num >= MAX_CPU) bprintf (0, _T("M6809Init failed to initialize context!\n"));
+			if (cpu >= MAX_CPU-1) bprintf (0, _T("M6809Init failed to initialize context!\n"));
 #endif
 			return 1;
 		}
@@ -151,7 +151,7 @@ void M6809Open(INT32 num)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6809Initted) bprintf(PRINT_ERROR, _T("M6809Open called without init\n"));
-	if (num >= nM6809Count) bprintf(PRINT_ERROR, _T("M6809Open called with invalid index %x\n"), num);
+	if (num > nM6809Count) bprintf(PRINT_ERROR, _T("M6809Open called with invalid index %x\n"), num);
 	if (nActiveCPU != -1) bprintf(PRINT_ERROR, _T("M6809Open called when CPU already open with index %x\n"), num);
 #endif
 
@@ -432,7 +432,7 @@ INT32 M6809Scan(INT32 nAction)
 		return 1;
 	}
 
-	for (INT32 i = 0; i < nM6809Count; i++) {
+	for (INT32 i = 0; i < nM6809Count+1; i++) {
 
 		M6809Ext *ptr = &m6809CPUContext[i];
 

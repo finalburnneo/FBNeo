@@ -55,8 +55,8 @@ static UINT8 *Kaneko16Tiles        = NULL;
 static UINT8 *Kaneko16Tiles2       = NULL;
 static UINT8 *Kaneko16Sprites      = NULL;
 static UINT8 *Kaneko16TempGfx      = NULL;
-static UINT8 *Kaneko16PrioBitmap        = NULL; // Wing Force, BlaZeon, mgcrystl
-static UINT16 *Kaneko16SpriteFbuffer     = NULL; // mgcrystl sprite framebuffer/overdraw mode
+static UINT8 *Kaneko16PrioBitmap   = NULL; // Wing Force, BlaZeon, mgcrystl
+static UINT16 *Kaneko16SpriteFbuffer = NULL; // mgcrystl sprite framebuffer/overdraw mode
 
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
@@ -1940,7 +1940,7 @@ static INT32 ExplbrkrMemIndex()
 	RamEnd = Next;
 
 	Kaneko16PrioBitmap         = Next; Next += 320 * 240;
-	Kaneko16SpriteFbuffer      = (UINT16*)Next; Next += 320 * 240 * 2; // mgcrystl
+	Kaneko16SpriteFbuffer      = (UINT16*)Next; Next += 320 * 240 * sizeof(UINT16); // mgcrystl
 
 	Kaneko16Sprites       = Next; Next += (Kaneko16NumSprites * 16 * 16);
 	Kaneko16Tiles         = Next; Next += (Kaneko16NumTiles * 16 * 16);
@@ -7108,13 +7108,17 @@ static void MgcrystlFrameRender()
 	if (nSpriteEnable & 1) {
 		if (~Kaneko16SpriteRegs[0] & 4) { // sprite framebuffer/overdraw mode
 			Kaneko16RenderSprites_Wingforc();
-			for (INT32 y = 0; y < nScreenHeight; y++)
+			for (INT32 y = 0; y < nScreenHeight; y++) {
+				UINT16 *pPixel = (UINT16*)Kaneko16SpriteFbuffer + (y * nScreenWidth);
+				UINT16 *pDest = (UINT16*)pTransDraw + (y * nScreenWidth);
+
 				for (INT32 x = 0; x < nScreenWidth; x++) {
-					if (Kaneko16SpriteFbuffer[(y * nScreenWidth) + x])
-						pTransDraw[(y * nScreenWidth) + x] = Kaneko16SpriteFbuffer[(y * nScreenWidth) + x];
+					if (pPixel[x])
+						pDest[x] = pPixel[x];
 				}
+			}
 		} else {
-			memset(Kaneko16SpriteFbuffer, 0, 320 * 240);
+			memset(Kaneko16SpriteFbuffer, 0, 320 * 240 * sizeof(UINT16));
 			Kaneko16RenderSprites_Wingforc();
 		}
 	}

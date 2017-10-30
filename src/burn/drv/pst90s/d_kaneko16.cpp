@@ -6176,7 +6176,7 @@ static void Kaneko16RenderSprites(INT32 PriorityDraw)
 	}
 }
 
-static void Kaneko16RenderSprite_Wingforc(UINT32 Code, UINT32 Colour, INT32 FlipX, INT32 FlipY, INT32 sx, INT32 sy, INT32 priority)
+static void Kaneko16RenderSprite_PrioBuffer(UINT32 Code, UINT32 Colour, INT32 FlipX, INT32 FlipY, INT32 sx, INT32 sy, INT32 priority)
 {
 	UINT8 *SourceBase = Kaneko16Sprites + ((Code % Kaneko16NumSprites) * 256);
 	
@@ -6272,7 +6272,7 @@ static void Kaneko16RenderSprite_Wingforc(UINT32 Code, UINT32 Colour, INT32 Flip
 	}
 }
 
-static void Kaneko16RenderSprites_Wingforc()
+static void Kaneko16RenderSprites_PrioBuffer()
 {
 	struct tempsprite *s = spritelist.first_sprite;
 	
@@ -6350,7 +6350,7 @@ static void Kaneko16RenderSprites_Wingforc()
 		INT32 curr_pri = s->priority;
 
 		UINT32 primask = spritepriomask[curr_pri];
-		Kaneko16RenderSprite_Wingforc(s->code, s->color, s->flipx, s->flipy, s->x, s->y, primask);
+		Kaneko16RenderSprite_PrioBuffer(s->code, s->color, s->flipx, s->flipy, s->x, s->y, primask);
 	}
 }
 
@@ -6838,7 +6838,7 @@ static void BlazeonFrameRender() // and Wingforc
 		if (Layer1Enabled) { if (vScroll1Enabled) { Kaneko16RenderLayerQueue(1, i); } else { Kaneko16RenderTileLayer(1, i, xScroll1); }}
 	}
 
-	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
+	if (nSpriteEnable & 1) Kaneko16RenderSprites_PrioBuffer();
 	
 	BurnTransferCopy(Kaneko16Palette);
 }
@@ -7050,7 +7050,7 @@ static void GtmrFrameRender()
 		if (Layer3Enabled) { if (vScroll3Enabled) { Kaneko16RenderLayerQueue(3, i); } else { Kaneko16RenderTileLayer(3, i, xScroll3); }}
 	}
 
-	if (nSpriteEnable & 1) Kaneko16RenderSprites_Wingforc();
+	if (nSpriteEnable & 1) Kaneko16RenderSprites_PrioBuffer();
 
 	BurnTransferCopy(Kaneko16Palette);
 }
@@ -7107,7 +7107,7 @@ static void MgcrystlFrameRender()
 
 	if (nSpriteEnable & 1) {
 		if (~Kaneko16SpriteRegs[0] & 4) { // sprite framebuffer/overdraw mode
-			Kaneko16RenderSprites_Wingforc();
+			Kaneko16RenderSprites_PrioBuffer();
 			for (INT32 y = 0; y < nScreenHeight; y++) {
 				UINT16 *pPixel = (UINT16*)Kaneko16SpriteFbuffer + (y * nScreenWidth);
 				UINT16 *pDest = (UINT16*)pTransDraw + (y * nScreenWidth);
@@ -7119,7 +7119,7 @@ static void MgcrystlFrameRender()
 			}
 		} else {
 			memset(Kaneko16SpriteFbuffer, 0, 320 * 240 * sizeof(UINT16));
-			Kaneko16RenderSprites_Wingforc();
+			Kaneko16RenderSprites_PrioBuffer();
 		}
 	}
 

@@ -2952,6 +2952,10 @@ static UINT8 __fastcall Slyspy68KReadByte(UINT32 a)
 			case 0x02: return 0x13;
 			case 0x04: return 0x00;
 			case 0x06: return 0x02;
+			case 0x0c: {
+				UINT16 *mem = (UINT16*)Drv68KRam;
+				return mem[0x2028/2] >> 8;
+			}
 		}
 		
 		return 0;

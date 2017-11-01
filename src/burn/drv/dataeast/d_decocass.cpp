@@ -6,9 +6,6 @@
 /*
 note -- 
 cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
-
-todo --
-clapapa/rootin' tootin' needs a hiss-fix similar to burgertime (needs some RE / coming soon!)
 */
 
 #include "tiles_generic.h"
@@ -4497,6 +4494,7 @@ STD_ROM_FN(clapapa)
 static INT32 ClapapaInit()
 {
 	type3_swap = TYPE3_SWAP_34_7;
+	burgertime_mode = 1;
 
 	return DecocassInit(decocass_type3_read,decocass_type3_write);
 }

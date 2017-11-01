@@ -6,6 +6,9 @@
 /*
 note -- 
 cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
+
+todo --
+clapapa/rootin' tootin' needs a hiss-fix similar to burgertime (needs some RE / coming soon!)
 */
 
 #include "tiles_generic.h"
@@ -2337,18 +2340,17 @@ static void decocass_sound_write(UINT16 address, UINT8 data)
 	switch (address & 0xf000)
 	{
 		case 0x2000:
-			if (ignext) {
-				if (burgertime_mode)
-					data = 0; // set volume to 0
+			if (burgertime_mode && ignext) {
+				data = 0; // set volume to 0
 				ignext = 0;
 			}
 			AY8910Write(0, 1, data);
-			checkhiss_and_add01(data);
+			if (burgertime_mode) checkhiss_and_add01(data);
 		return;
 
 		case 0x4000:
 			AY8910Write(0, 0, data);
-			checkhiss_add02(data);
+			if (burgertime_mode) checkhiss_add02(data);
 		return;
 
 		case 0x6000:
@@ -2592,11 +2594,11 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainBIOS		= Next; Next += 0x0010000;
-	DrvSoundBIOS		= Next; Next += 0x0010000;
-	DrvCassette		= Next; Next += 0x0100000;
+	DrvMainBIOS		= Next; Next += 0x001000;
+	DrvSoundBIOS		= Next; Next += 0x001000;
+	DrvCassette		= Next; Next += 0x0020000;
 	DrvGfxData		= Next; Next += 0x00a0000;
-	DrvDongle		= Next; Next += 0x0100000; // 1mb
+	DrvDongle		= Next; Next += 0x0100000; // 1mb (needed for widel multi)
 	I8x41Mem		= Next;
 	DrvMCUROM		= Next; Next += 0x0009000; // 0x400 + 0x500 for ram, for now
 
@@ -2614,17 +2616,17 @@ static INT32 MemIndex()
 
 	AllRam			= Next;
 
-	DrvMainRAM		= Next; Next += 0x0060000;
-	DrvCharRAM		= Next; Next += 0x0060000;
-	DrvFgRAM		= Next; Next += 0x0004000;
-	DrvColRAM		= Next; Next += 0x0004000;
-	DrvTileRAM		= Next; Next += 0x0008000;
-	DrvObjRAM		= Next; Next += 0x0004000;
+	DrvMainRAM		= Next; Next += 0x006000;
+	DrvCharRAM		= Next; Next += 0x006000;
+	DrvFgRAM		= Next; Next += 0x000400;
+	DrvColRAM		= Next; Next += 0x000400;
+	DrvTileRAM		= Next; Next += 0x000800;
+	DrvObjRAM		= Next; Next += 0x000400;
 
-	DrvPalRAM		= Next; Next += 0x0001000;
+	DrvPalRAM		= Next; Next += 0x000100;
 	DrvPaletteTable = (UINT32*)Next; Next += 0x00200 * sizeof(UINT32);
 
-	DrvSoundRAM		= Next; Next += 0x0010000;
+	DrvSoundRAM		= Next; Next += 0x001000;
 
 	RamEnd			= Next;
 

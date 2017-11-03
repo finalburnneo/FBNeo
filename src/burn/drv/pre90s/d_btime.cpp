@@ -495,8 +495,8 @@ STDINPUTINFO(Zoar)
 
 static struct BurnDIPInfo ZoarDIPList[]=
 {
-	{0x13, 0xff, 0xff, 0x2f, NULL		},
-	{0x14, 0xff, 0xff, 0x1f, NULL		},
+	{0x13, 0xff, 0xff, 0x2f|0x10, NULL		},
+	{0x14, 0xff, 0xff, 0x0f, NULL		},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"		},
 	{0x13, 0x01, 0x03, 0x00, "2 Coins 1 Credits"		},
@@ -831,6 +831,9 @@ static UINT8 zoar_main_read(UINT16 address)
 
 		case 0x9803:
 			return DrvInputs[1];
+
+		case 0x9804:
+			return DrvInputs[2];
 	}
 	return 0;
 }
@@ -1207,23 +1210,23 @@ static void btime_sound_write(UINT16 address, UINT8 data)
 	{
 		case 0x01:
 			//bprintf(0, _T("0x01: %X. "), data);
-			if (ignext) {
+			if (btimemode && ignext) {
 				data = 0; // set volume to 0
 				ignext = 0;
 			}
-			AY8910Write(0, ~((address>>13)-1) & 1, data);
+			AY8910Write(0, 1, data);
 			checkhiss_and_add01(data);
 			return;
 		case 0x02:
 			//bprintf(0, _T("0x02: %X. "), data);
-			AY8910Write(0, ~((address>>13)-1) & 1, data);
+			AY8910Write(0, 0, data);
 			checkhiss_add02(data);
 			return;
 		case 0x03:
-			AY8910Write(1, ~((address>>13)-1) & 1, data);
+			AY8910Write(1, 1, data);
 			return;
 		case 0x04:
-			AY8910Write(1, ~((address>>13)-1) & 1, data);
+			AY8910Write(1, 0, data);
 			return;
 
 		case 0x06: {
@@ -1279,6 +1282,7 @@ static void ay8910_0_portA_write(UINT32, UINT32 data)
 	if (audio_nmi_type == AUDIO_ENABLE_AY8910)
 	{
 		audio_nmi_enable = ~data & 1;
+		//bprintf(0, _T("data %X. audio_nmi_enable %X.  audio_nmi_state %X.\n"), data, audio_nmi_enable, audio_nmi_state);
 		M6502SetIRQLine(0x20, (audio_nmi_enable && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	}
 
@@ -1906,7 +1910,8 @@ static INT32 ZoarInit()
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
-	audio_nmi_type = AUDIO_ENABLE_AY8910;
+	//audio_nmi_type = AUDIO_ENABLE_AY8910; // this doesn't work always.
+	audio_nmi_type =  AUDIO_ENABLE_DIRECT;
 	zoarmode = 1;
 
 	GenericTilesInit();
@@ -2256,7 +2261,7 @@ static INT32 LncDraw()
 	BurnTransferClear();
 
 	if (nBurnLayer & 2) draw_chars(0, 0, -1);
-	if (nBurnLayer & 4) draw_sprites(0, 1, 2, DrvVidRAM, 0x20); // for eggs
+	if (nBurnLayer & 4) draw_sprites(0, 1, 2, DrvVidRAM, 0x20);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2333,7 +2338,7 @@ static INT32 BtimeFrame()
 
 	INT32 nInterleave = 272;
 
-	INT32 nCyclesTotal[2] = { ((discomode) ? 750000 : 1500000) / 60, ((zippysoundinit) ? 6500000 : 500000) / 60 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)((discomode|bnjskew) ? 750000 : 1500000) / 57.444853), (INT32)((double)((zippysoundinit) ? 6500000 : 500000) / 57.444853) };
 	INT32 nCyclesDone[2]  = { 0, 0 };
 	INT32 nSoundBufferPos = 0;
 
@@ -2356,26 +2361,22 @@ static INT32 BtimeFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6502Open(0);
-		INT32 nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
+		INT32 nSegment = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
 		nCyclesDone[0] += M6502Run(nSegment);
 		M6502Close();
 
 		if (i == 248) vblank = 0x80;
-		if (i == 8) {
-			vblank = 0x00;
-
-			if (pBurnDraw) {
-				BurnDrvRedraw();
-			}
-
-		}
+		if (i == 8)   vblank = 0x00;
 
 		M6502Open(1);
-		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
+		nSegment = ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
 		nCyclesDone[1] += M6502Run(nSegment);
 
-		audio_nmi_state = (i + 1) & 8;
-		M6502SetIRQLine(0x20, (audio_nmi_enable && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+		if ((i+1)%8 == 7)
+		{
+			audio_nmi_state = (i+1) & 8;
+			M6502SetIRQLine(0x20, (audio_nmi_enable && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+		}
 
 		M6502Close();
 
@@ -2419,6 +2420,10 @@ static INT32 BtimeFrame()
 			filter_rc_update(4, pAY8910Buffer[4], pSoundBuf, nSegmentLength);
 			filter_rc_update(5, pAY8910Buffer[5], pSoundBuf, nSegmentLength);
 		}
+	}
+
+	if (pBurnDraw) {
+		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -2859,7 +2864,7 @@ STD_ROM_FN(zoar)
 
 struct BurnDriver BurnDrvZoar = {
 	"zoar", NULL, NULL, NULL, "1982",
-	"Zoar\0", "Sound issues..", "Data East USA", "Miscellaneous",
+	"Zoar\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, zoarRomInfo, zoarRomName, NULL, NULL, ZoarInputInfo, ZoarDIPInfo,

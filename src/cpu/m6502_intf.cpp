@@ -66,7 +66,7 @@ static UINT8 M6502CheatRead(UINT32 a)
 	return M6502ReadByte(a);
 }
 
-static UINT8 deco222Decode(UINT16 /*address*/,UINT8 op)
+static UINT8 decocpu7Decode(UINT16 /*address*/,UINT8 op)
 {
 	return (op & 0x13) | ((op & 0x80) >> 5) | ((op & 0x64) << 1) | ((op & 0x08) << 2);
 }
@@ -195,7 +195,7 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 
 	if (type == TYPE_DECOCPU7) {
 		M6502Open(cpu);
-		DecoCpu7SetDecode(deco222Decode);
+		DecoCpu7SetDecode(decocpu7Decode);
 		M6502Close();
 	}
 

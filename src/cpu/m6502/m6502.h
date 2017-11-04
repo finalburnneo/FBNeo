@@ -57,6 +57,7 @@ typedef struct
 	UINT8	irq_state;
 	UINT8   so_state;
 	UINT8   hold_irq;
+	UINT8   cpu7written;
 	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);	/* IRQ callback */
 //	read8_machine_func rdmem_id;					/* readmem callback for indexed instructions */
 //	write8_machine_func wrmem_id;				/* writemem callback for indexed instructions */

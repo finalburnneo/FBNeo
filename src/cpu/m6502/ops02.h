@@ -65,7 +65,7 @@
 #define PPC m6502.ppc.d
 
 #define RDMEM_ID(a)		M6502ReadByte(a)
-#define WRMEM_ID(a,d)	M6502WriteByte(a, d); Cpu7Written[M6502GetActive()] = 1
+#define WRMEM_ID(a,d)	M6502WriteByte(a, d); m6502.cpu7written = 1
 
 #define CHANGE_PC change_pc(PCD)
 
@@ -92,7 +92,7 @@
  *  WRMEM   write memory
  ***************************************************************/
 //#define WRMEM(addr,data) program_write_byte_8le(addr,data); m6502_ICount -= 1
-#define WRMEM(addr,data) M6502WriteByte(addr, data); m6502_ICount -= 1; Cpu7Written[M6502GetActive()] = 1
+#define WRMEM(addr,data) M6502WriteByte(addr, data); m6502_ICount -= 1; m6502.cpu7written = 1
 
 /***************************************************************
  *  BRA  branch relative

@@ -41,7 +41,6 @@ void	(*const *insnActive)(void);
 
 typedef UINT8 (*deco_function)(UINT16 address, UINT8 opcode);
 
-static INT32 Cpu7Written[8];
 static deco_function Cpu7Write[8] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
 
 extern INT32 M6502GetActive();
@@ -66,7 +65,7 @@ extern INT32 M6502GetActive();
  * The 6502 registers.
  ****************************************************************************/
 
- static int m6502_IntOccured = 0;
+static int m6502_IntOccured = 0;
 static int m6502_ICount = 0;
 
 static m6502_Regs m6502;
@@ -172,7 +171,7 @@ void m6502_reset(void)
 	m6502.after_cli = 0;	/* pending IRQ and last insn cleared I */
 	m6502.irq_state = 0;
 	m6502.nmi_state = 0;
-	Cpu7Written[M6502GetActive()] = 0;
+	m6502.cpu7written = 0;
 
 	change_pc(PCD);
 }
@@ -231,7 +230,7 @@ M6502_INLINE void m6502_take_irq(void)
 		if (m6502.irq_callback) (*m6502.irq_callback)(0);
 		change_pc(PCD);
 
-		Cpu7Written[M6502GetActive()] = 0;
+		m6502.cpu7written = 0;
 	}
 	m6502.pending_irq = 0;
 }
@@ -317,11 +316,11 @@ int decocpu7_execute(int cycles)
 
 		op = RDOP();
 
-		if (Cpu7Written[M6502GetActive()]) {
+		if (m6502.cpu7written) {
 			if ((PPC & 0x0104) == 0x0104) {
 				op = Cpu7Write[M6502GetActive()](PPC,op);
 			}
-			Cpu7Written[M6502GetActive()] = 0;
+			m6502.cpu7written = 0;
 		}
 
 		//(*m6502.insn[op])();

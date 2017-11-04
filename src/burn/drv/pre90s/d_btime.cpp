@@ -1,9 +1,5 @@
 // BurgerTime emu-layer for FB Alpha by dink & iq_132, based on the MAME driver by Zsolt Vasvari.
 
-// Todo:
-// Zoar - Sound and Input issues, after coining-up it starts automatically.
-//        Also missing sounds in some places...
-
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"
@@ -72,10 +68,10 @@ static UINT8 btime_palette; // disco, zoar
 static UINT8 zippysoundinit;
 
 // mmonkey protection stuff
-INT32 protection_command;
-INT32 protection_status;
-INT32 protection_value;
-INT32 protection_ret;
+static INT32 protection_command;
+static INT32 protection_status;
+static INT32 protection_value;
+static INT32 protection_ret;
 
 static UINT8 btimemode = 0;
 static UINT8 btime3mode = 0;
@@ -1047,8 +1043,11 @@ static void zoar_main_write(UINT16 address, UINT8 data)
 
 		case 0x9806:
 			soundlatch = data;
+			UINT32 main_tot = M6502TotalCycles();
 			M6502Close();
 			M6502Open(1);
+			INT32 cyc = (main_tot / 3) - M6502TotalCycles();
+			if (cyc > 0) M6502Run(cyc);
 			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6502Close();
 			M6502Open(0);
@@ -2032,7 +2031,7 @@ static void draw_chars(UINT8 transparency, UINT8 color, int priority)
 		}
 
 		y -= 1;
-		x -= (bnjskew) ? 0 : 1;
+		x -= (bnjskew|zoarmode) ? 0 : 1;
 
 		if (transparency) {
 			Render8x8Tile_Mask_Clip(pTransDraw, code, x * 8, y * 8, color, 3, 0, 0, DrvGfxROM0);
@@ -2070,7 +2069,7 @@ static void draw_sprites(UINT8 color, UINT8 sprite_y_adjust, UINT8 sprite_y_adju
 		INT32 code = sprite_ram[offs + interleave];
 
 		y -= 8;
-		x -= (bnjskew) ? 0 : 8;
+		x -= (bnjskew|zoarmode) ? 0 : 8;
 
 		y = y - sprite_y_adjust;
 

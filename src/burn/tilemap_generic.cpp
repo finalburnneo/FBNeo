@@ -1025,6 +1025,8 @@ void GenericTilemapDumpToBitmap()
 		return;
 	}	
 
+	GenericTilemap *tmp_map = cur_map;
+
 #define SET_FILE_SIZE(x)	\
 	bmp_data[2] = (x);	\
 	bmp_data[3] = (x)>>8;	\
@@ -1065,16 +1067,16 @@ void GenericTilemapDumpToBitmap()
 
 	for (INT32 i = 0; i < MAX_TILEMAPS; i++)
 	{
-		GenericTilemap *ptr = &maps[i];
-		if (ptr->initialized == 0) continue;
+		cur_map = &maps[i];
+		if (cur_map->initialized == 0) continue;
 
 		char tmp[256];
 		sprintf (tmp, "%s_layer%2.2d_dump.bmp", BurnDrvGetTextA(DRV_NAME), i);
 
 		FILE *fa = fopen(tmp, "wb");
 
-		INT32 wide = ptr->mwidth * ptr->twidth;
-		INT32 high = ptr->mheight * ptr->theight;
+		INT32 wide = cur_map->mwidth * cur_map->twidth;
+		INT32 high = cur_map->mheight * cur_map->theight;
 
 		SET_FILE_SIZE((wide*high*4)+54);
 		SET_BITMAP_SIZE(wide*high*4);
@@ -1086,19 +1088,19 @@ void GenericTilemapDumpToBitmap()
 		UINT32 *bitmap = (UINT32*)BurnMalloc(wide*high*4);
 
 		{
-			INT32 tmap_width = (ptr->mwidth * ptr->twidth);
+			INT32 tmap_width = (cur_map->mwidth * cur_map->twidth);
 
-			for (INT32 y = (INT32)ptr->mheight-1; y >= 0; y--)	// upside down due to bitmap format
+			for (INT32 row = (INT32)cur_map->mheight-1; row >= 0; row--)	// upside down due to bitmap format
 			{
-				INT32 sy = y * ptr->theight;
+				INT32 sy = row * cur_map->theight;
 
-				for (UINT32 x = 0; x < ptr->mwidth; x++)
+				for (UINT32 col = 0; col < cur_map->mwidth; col++)
 				{
-					INT32 sx = x * ptr->twidth;
+					INT32 sx = col * cur_map->twidth;
 					INT32 code = 0, color = 0, gfxnum = 0;
 					UINT32 flags = 0;
 
-					ptr->pTile(ptr->pScan(x,y), &gfxnum, &code, &color, &flags);
+					cur_map->pTile(cur_map->pScan(col, row), &gfxnum, &code, &color, &flags);
 
 					{
 						GenericTilemapGfx *gfxptr = &gfxdata[gfxnum];
@@ -1133,6 +1135,8 @@ void GenericTilemapDumpToBitmap()
 		fclose (fa);
 		BurnFree (bitmap);
 	}
+
+	cur_map = tmp_map;
 }
 
 tilemap_scan( scan_rows )

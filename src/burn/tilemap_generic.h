@@ -139,3 +139,6 @@ void GenericTilemapSetEnable(INT32 which, INT32 enable);
 // Bitmap	- pointer to the bitmap to draw the tilemap
 // priority	- this will be used to set priority data, group is data passed in this variable using TILE_GROUP(x)
 void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority);
+
+// Dump all tilemaps to bitmap files
+void GenericTilemapDumpToBitmap();

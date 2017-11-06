@@ -1012,6 +1012,129 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 	}
 }
 
+
+void GenericTilemapDumpToBitmap()
+{
+	if (pBurnDrvPalette == NULL) {
+		bprintf (0, _T("GenericTilemapDumptoBitmap called with pBurnDrvPalette == NULL\n"));
+		return;
+	}
+
+	if (nBurnBpp < 3) {
+		bprintf (0, _T("GenericTilemapDumptoBitmap called with pBurnBpp < 24 bit\n"));
+		return;
+	}	
+
+#define SET_FILE_SIZE(x)	\
+	bmp_data[2] = (x);	\
+	bmp_data[3] = (x)>>8;	\
+	bmp_data[4] = (x)>>16
+
+#define SET_BITMAP_SIZE(x)	\
+	bmp_data[0x22] = (x);	\
+	bmp_data[0x23] = (x)>>8;	\
+	bmp_data[0x24] = (x)>>16
+
+#define SET_BITMAP_WIDTH(x)	\
+	bmp_data[0x12] = (x);	\
+	bmp_data[0x13] = (x)>>8;	\
+	bmp_data[0x14] = (x)>>16
+
+#define SET_BITMAP_HEIGHT(x)	\
+	bmp_data[0x16] = (x);	\
+	bmp_data[0x17] = (x)>>8;	\
+	bmp_data[0x18] = (x)>>16
+
+	UINT8 bmp_data[0x36] = {
+		0x42, 0x4D, 		// 'BM' (leave alone)
+		0x00, 0x00, 0x00, 0x00, // file size
+		0x00, 0x00, 0x00, 0x00, // padding
+		0x36, 0x00, 0x00, 0x00, // offset to data (leave alone)
+		0x28, 0x00, 0x00, 0x00, // windows mode (leave alone)
+		0x00, 0x00, 0x00, 0x00, // bitmap width
+		0x00, 0x00, 0x00, 0x00, // bitmap height
+		0x01, 0x00,		// planes (1) always!
+		0x20, 0x00, 		// bits per pixel (let's do 32 so no conversion!)
+		0x00, 0x00, 0x00, 0x00, // compression (none)
+		0x00, 0x00, 0x00, 0x00, // size of bitmap data
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00,
+		0x00, 0x00, 0x00, 0x00
+	};
+
+	for (INT32 i = 0; i < MAX_TILEMAPS; i++)
+	{
+		GenericTilemap *ptr = &maps[i];
+		if (ptr->initialized == 0) continue;
+
+		char tmp[256];
+		sprintf (tmp, "%s_layer%2.2d_dump.bmp", BurnDrvGetTextA(DRV_NAME), i);
+
+		FILE *fa = fopen(tmp, "wb");
+
+		INT32 wide = ptr->mwidth * ptr->twidth;
+		INT32 high = ptr->mheight * ptr->theight;
+
+		SET_FILE_SIZE((wide*high*4)+54);
+		SET_BITMAP_SIZE(wide*high*4);
+		SET_BITMAP_WIDTH(wide);
+		SET_BITMAP_HEIGHT(high);
+
+		fwrite (bmp_data, 54, 1, fa);
+
+		UINT32 *bitmap = (UINT32*)BurnMalloc(wide*high*4);
+
+		{
+			INT32 tmap_width = (ptr->mwidth * ptr->twidth);
+
+			for (INT32 y = (INT32)ptr->mheight-1; y >= 0; y--)	// upside down due to bitmap format
+			{
+				INT32 sy = y * ptr->theight;
+
+				for (UINT32 x = 0; x < ptr->mwidth; x++)
+				{
+					INT32 sx = x * ptr->twidth;
+					INT32 code = 0, color = 0, gfxnum = 0;
+					UINT32 flags = 0;
+
+					ptr->pTile(ptr->pScan(x,y), &gfxnum, &code, &color, &flags);
+
+					{
+						GenericTilemapGfx *gfxptr = &gfxdata[gfxnum];
+
+						UINT8 *gfx = gfxptr->gfxbase + (code * gfxptr->width * gfxptr->height);
+
+						UINT32 *palette = pBurnDrvPalette + (((color & gfxptr->color_mask) << gfxptr->depth) + gfxptr->color_offset);
+
+						INT32 flipx = (flags & TILE_FLIPX) ? (gfxptr->width-1) : 0;
+						INT32 flipy = (flags & TILE_FLIPY) ? (gfxptr->height-1) : 0;
+
+						UINT32 *dest = bitmap + (sy * tmap_width) + sx;
+
+						for (INT32 yy = 0; yy < gfxptr->height; yy++)
+						{
+							UINT8 *g = gfx + (yy ^ flipy) * gfxptr->width;
+
+							for (INT32 xx = 0; xx < gfxptr->width; xx++)
+							{
+								dest[xx] = palette[g[xx ^ flipx]];
+							}
+
+							dest += tmap_width;
+						}
+					}
+				}
+			}
+		}
+
+		fwrite (bitmap, wide*high*4, 1, fa);
+
+		fclose (fa);
+		BurnFree (bitmap);
+	}
+}
+
 tilemap_scan( scan_rows )
 {
 	return (cur_map->mwidth * row) + col;

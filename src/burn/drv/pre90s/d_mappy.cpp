@@ -22,6 +22,7 @@ static UINT8 *DrvSndPROM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvM6809RAM2;
+static UINT8 *DrvTransTable;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -1064,6 +1065,13 @@ static tilemap_callback( mappy_bg )
 	UINT8 attr = DrvVidRAM[offs + 0x800];
 
 	TILE_SET_INFO(0, code, attr, TILE_GROUP((attr >> 6) & 1));
+
+	// hacky
+	attr = (attr & 0x3f) << 2;
+	GenericTilemapSetTransTable(0, 0, DrvTransTable[attr+0]);
+	GenericTilemapSetTransTable(0, 1, DrvTransTable[attr+1]);
+	GenericTilemapSetTransTable(0, 2, DrvTransTable[attr+2]);
+	GenericTilemapSetTransTable(0, 3, DrvTransTable[attr+3]);
 }
 
 static tilemap_callback( superpac_bg )
@@ -1127,6 +1135,8 @@ static INT32 MemIndex()
 
 	NamcoSoundProm		= Next;
 	DrvSndPROM		= Next; Next += 0x000100;
+
+	DrvTransTable		= Next; Next += 0x000500;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0500 * sizeof(UINT32);
 
@@ -1698,6 +1708,7 @@ static void MappyPaletteInit()
 	for (INT32 i = 0; i < 256; i++)
 	{
 		DrvPalette[i + 0x000] = pal[(DrvColPROM[i + 0x020] & 0xf) + 0x10];
+		DrvTransTable[i] = ((DrvColPROM[i + 0x020] & 0xf) == 0xf) ? 1 : 0;
 	}
 
 	for (INT32 i = 0; i < BurnDrvGetPaletteEntries() - 0x100; i++)

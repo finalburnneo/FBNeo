@@ -123,9 +123,9 @@ static struct BurnInputInfo KnInputList[] = {
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 3"},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 fire 4"},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 fire 5"},
-	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 fire 6"},
+	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 8,	"p2 fire 4"},
+	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 fire 5"},
+	{"P2 Button 6",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 fire 6"},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 9,	"service"},

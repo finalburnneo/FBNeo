@@ -39,6 +39,7 @@ static UINT8 *DrvTempRom          = NULL;
 static UINT32 *DrvPalette          = NULL;
 static INT16* pFMBuffer;
 static INT16* pAY8910Buffer[6];
+static UINT8 DrvRecalc;
 
 static UINT8 DrvRomBank;
 static UINT8 DrvPaletteBank;
@@ -468,15 +469,16 @@ static INT32 MemIndex()
 
 static INT32 DrvDoReset()
 {
-	for (INT32 i = 0; i < 2; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
+
+	ZetOpen(1);
+	ZetReset();
+	ZetClose();
 	
-	for (INT32 i = 0; i < 2; i++) {
-		AY8910Reset(i);
-	}
+	AY8910Reset(0);
+	AY8910Reset(1);
 
 	DrvPaletteBank = 0;
 	DrvBgScroll[0] = 0;
@@ -490,7 +492,7 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-UINT8 __fastcall Drv1942Read1(UINT16 a)
+static UINT8 __fastcall Drv1942Read1(UINT16 a)
 {
 	switch (a) {
 		case 0xc000: {
@@ -521,7 +523,7 @@ UINT8 __fastcall Drv1942Read1(UINT16 a)
 	return 0;
 }
 
-void __fastcall Drv1942Write1(UINT16 a, UINT8 d)
+static void __fastcall Drv1942Write1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc800: {
@@ -570,7 +572,7 @@ void __fastcall Drv1942Write1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Drv1942Read2(UINT16 a)
+static UINT8 __fastcall Drv1942Read2(UINT16 a)
 {
 	switch (a) {
 		case 0x6000: {
@@ -585,7 +587,7 @@ UINT8 __fastcall Drv1942Read2(UINT16 a)
 	return 0;
 }
 
-void __fastcall Drv1942Write2(UINT16 a, UINT8 d)
+static void __fastcall Drv1942Write2(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0x8000: {
@@ -614,6 +616,23 @@ void __fastcall Drv1942Write2(UINT16 a, UINT8 d)
 	}
 }
 
+static tilemap_callback( bg )
+{
+	offs = (offs & 0x0f) | ((offs & 0x01f0) << 1);
+
+	INT32 color = DrvBgVideoRam[offs + 0x10];
+	INT32 code  = DrvBgVideoRam[offs] + ((color & 0x80) << 1);
+
+	TILE_SET_INFO(0, code, (color & 0x1f) + (0x20 * DrvPaletteBank), TILE_FLIPYX(color >> 5));
+}
+
+static tilemap_callback( fg )
+{
+	INT32 color = DrvFgVideoRam[offs + 0x400];
+	INT32 code  = DrvFgVideoRam[offs] + ((color & 0x80) << 1);
+
+	TILE_SET_INFO(1, code, color, 0);
+}
 
 static INT32 CharPlaneOffsets[2]   = { 4, 0 };
 static INT32 CharXOffsets[8]       = { 0, 1, 2, 3, 8, 9, 10, 11 };
@@ -674,6 +693,12 @@ static void MachineInit()
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH); // Whistle/Snare
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 32, 16);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, fg_map_callback,  8,  8, 32, 32);
+	GenericTilemapSetGfx(0, DrvTiles, 3, 16, 16, 0x20000, 0x100, 0x7f);
+	GenericTilemapSetGfx(1, DrvChars, 2,  8,  8, 0x08000, 0x000, 0x3f);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 	
 	// Reset the driver
 	DrvDoReset();
@@ -802,9 +827,8 @@ static INT32 DrvExit()
 {
 	ZetExit();
 	
-	for (INT32 i = 0; i < 2; i++) {
-		AY8910Exit(i);
-	}
+	AY8910Exit(0);
+	AY8910Exit(1);
 
 	GenericTilesExit();
 	
@@ -865,65 +889,6 @@ static void DrvCalcPalette()
 	}
 }
 
-static void DrvRenderBgLayer()
-{
-	INT32 mx, my, Code, Colour, x, y, TileIndex, xScroll, Flip, xFlip, yFlip;
-	
-	xScroll = DrvBgScroll[0] | (DrvBgScroll[1] << 8);
-	xScroll &= 0x1ff;
-	
-	for (mx = 0; mx < 16; mx++) {
-		for (my = 0; my < 32; my++) {
-			TileIndex = (my * 16) + mx;
-			TileIndex = (TileIndex & 0x0f) | ((TileIndex & 0x01f0) << 1);
-			
-			Code = DrvBgVideoRam[TileIndex];
-			Colour = DrvBgVideoRam[TileIndex + 0x10];
-			Code += (Colour & 0x80) << 1;
-			Flip = (Colour & 0x60) >> 5;
-			xFlip = (Flip >> 0) & 0x01;
-			yFlip = (Flip >> 1) & 0x01;
-			Colour &= 0x1f;
-			
-			y = 16 * mx;
-			x = 16 * my;
-			x -= xScroll;
-			if (x < -16) x += 512;
-			y -= 16;
-
-			if (x > 0 && x < 240 && y > 0 && y < 208) {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_FlipXY(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					} else {
-						Render16x16Tile_FlipX(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_FlipY(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					} else {
-						Render16x16Tile(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					}
-				}
-			} else {
-				if (xFlip) {
-					if (yFlip) {
-						Render16x16Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					} else {
-						Render16x16Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					}
-				} else {
-					if (yFlip) {
-						Render16x16Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					} else {
-						Render16x16Tile_Clip(pTransDraw, Code, x, y, Colour, 3, 256 + (0x100 * DrvPaletteBank), DrvTiles);
-					}
-				}
-			}
-		}
-	}
-}
-
 static void DrvRenderSpriteLayer()
 {
 	INT32 Offset;
@@ -948,41 +913,24 @@ static void DrvRenderSpriteLayer()
 	}
 }
 
-static void DrvRenderCharLayer()
+static INT32 DrvDraw()
 {
-	INT32 mx, my, Code, Colour, x, y, TileIndex = 0;
-
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Code = DrvFgVideoRam[TileIndex];
-			Colour = DrvFgVideoRam[TileIndex + 0x400];
-			Code += (Colour & 0x80) << 1;
-			Colour &= 0x3f;
-			
-			x = 8 * mx;
-			y = 8 * my;
-			
-			y -= 16;
-
-			if (x > 0 && x < 248 && y > 0 && y < 216) {
-				Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 2, 0, 0, DrvChars);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 2, 0, 0, DrvChars);
-			}
-
-			TileIndex++;
-		}
+	if (DrvRecalc) {
+		DrvCalcPalette();
+		DrvRecalc = 0;
 	}
-}
 
-static void DrvDraw()
-{
-	BurnTransferClear();
-	DrvCalcPalette();
-	DrvRenderBgLayer();
+	GenericTilemapSetScrollX(0, DrvBgScroll[0] | (DrvBgScroll[1] << 8));
+
+	GenericTilemapDraw(0, pTransDraw, 0);
+
 	DrvRenderSpriteLayer();
-	DrvRenderCharLayer();
+
+	GenericTilemapDraw(1, pTransDraw, 0);
+
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1043,7 +991,9 @@ static INT32 DrvFrame()
 		}
 	}
 
-	if (pBurnDraw) DrvDraw();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	return 0;
 }
@@ -1096,8 +1046,8 @@ struct BurnDriver BurnDrvNineteen42 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen42a = {
@@ -1106,8 +1056,8 @@ struct BurnDriver BurnDrvNineteen42a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvaRomInfo, DrvaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen42abl = {
@@ -1116,8 +1066,8 @@ struct BurnDriver BurnDrvNineteen42abl = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvablRomInfo, DrvablRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvablInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvablInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen42b = {
@@ -1126,8 +1076,8 @@ struct BurnDriver BurnDrvNineteen42b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen42w = {
@@ -1136,8 +1086,8 @@ struct BurnDriver BurnDrvNineteen42w = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvwRomInfo, DrvwRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen42h = {
@@ -1146,8 +1096,8 @@ struct BurnDriver BurnDrvNineteen42h = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvhRomInfo, DrvhRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen42c64 = {
@@ -1156,6 +1106,6 @@ struct BurnDriver BurnDrvNineteen42c64 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, Drvc64RomInfo, Drvc64RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x600, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x600, 224, 256, 3, 4
 };

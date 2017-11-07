@@ -2235,44 +2235,33 @@ static void DrvPaletteUpdate()
 	}
 }
 
-
-
-
-
-
-
 static INT32 default_col_cb(INT32 col)
 {
 	return (col >> 9) & 0x1f;
 }
 
-
-static INT32 m_y_offset = 0;
-static INT32 m_x_offset = 0;
-
-static INT32 m_is_bootleg = 0;
-static INT32 m_bootleg_type = 0;
-
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
 
-static INT32 m_flipallx = 0;
-static INT32 m_alt_format = 0;
-
-static INT32 m_raw_shift = 4; // set to 8 on tattass / nslashers for the custom mixing (because they have 5bpp sprites, and shifting by 4 isn't good enough)
-
-static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, int sizewords, bool invert_flip )
+static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, int sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format )
 {
+	INT32 m_y_offset = 0;
+	INT32 m_x_offset = 8;
+
 	int offs, end, incr;
+
+	int bitmap_is_null = 0;
 
 	if (bitmap) {
 		memset (bitmap, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
+	} else {
+		bitmap_is_null = 1;
+		bitmap = pTransDraw;
 	}
-
 
 	UINT16 *spriteram = (UINT16*)ram;
 
-	bool flipscreen = false; //(machine().driver_data()->flip_screen() != 0);
+	bool flipscreen = false;
 
 	if (invert_flip)
 		flipscreen = !flipscreen;
@@ -2299,23 +2288,15 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 			sprite = spriteram[offs + 1];
 			y = spriteram[offs];
 
-			if (m_is_bootleg && (m_bootleg_type == 1))
-			{
-				flash = y & 0x0400;
-			}
-			else
-			{
-				flash = y & 0x1000;
-			}
+			flash = y & 0x1000;
 
 			w = y & 0x0800;
-
 
 			if (!(flash && (nCurrentFrame & 1)))
 			{
 				x = spriteram[offs + 2];
 
-				if (bitmap == NULL)
+				if (bitmap_is_null)
 				{
 					colour = m_col_cb(x);
 				}
@@ -2333,25 +2314,13 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 				fx = y & 0x2000;
 				fy = y & 0x4000;
 
-				int tempwidth = 0;
-
-				if (m_is_bootleg && (m_bootleg_type==1))  // puzzlove
-				{
-					tempwidth = (y & 0x1000) >> 12;
-					tempwidth |= (y & 0x0200) >> 8;
-				}
-				else
-				{
-					tempwidth |= (y & 0x0600) >> 9;
-				}
+				int tempwidth = (y & 0x0600) >> 9;
 
 				multi = (1 << (tempwidth)) - 1; /* 1x, 2x, 4x, 8x height */
 
-				/* bootleg support (esd16.c) */
 				if (flipscreen) x = ((x&0x1ff) - m_x_offset)&0x1ff;
 				else x = ((x&0x1ff) + m_x_offset)&0x1ff;
 				y = ((y&0x1ff) + m_y_offset)&0x1ff;
-
 
 				if (nScreenWidth>256)
 				{
@@ -2372,10 +2341,8 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 					x = 240 - x;
 				}
 
-				//if (x <= 320)
 				{
-					if (!m_is_bootleg) // several of the clone / bootleg chips don't do this, see jumpkids
-						sprite &= ~multi;
+					sprite &= ~multi;
 
 					if (fy)
 						inc = -1;
@@ -2394,7 +2361,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 					else
 						mult = -16;
 
-					if (flipscreen ^ m_flipallx)
+					if (flipscreen)
 					{
 						if (nScreenWidth>256)
 							x = 304 - x;
@@ -2404,13 +2371,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 						if (fx) fx = 0; else fx = 1;
 					}
 
-
 					mult2 = multi + 1;
-
-
-y -= 8;
-
-
 
 					while (multi >= 0)
 					{
@@ -2418,24 +2379,22 @@ y -= 8;
 						ypos = y + mult * multi;
 						if ((ypos < nScreenHeight) && (ypos>=0-16))
 						{
-							if(bitmap == NULL)
 							{
-//bprintf (0, _T("null bitmap\n"));
 								{
 									if (m_pri_cb)
-										deco16_draw_prio_sprite(pTransDraw, gfx, (sprite - multi * inc)&0xffff, (colour<<m_raw_shift)+colbase, x,ypos, fx, fy, pri);
+										deco16_draw_prio_sprite(bitmap, gfx, (sprite - multi * inc)&0xffff, (colour<<m_raw_shift)+colbase, x,ypos, fx, fy, pri);
 									else
 										if (fy) {
 											if (fx) {
-												Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_FlipXY_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											} else {
-												Render16x16Tile_Mask_FlipY_Clip(pTransDraw, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_FlipY_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											}
 										} else{
 											if (fx) {
-												Render16x16Tile_Mask_FlipX_Clip(pTransDraw, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_FlipX_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											} else {
-												Render16x16Tile_Mask_Clip(pTransDraw, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											}
 										}
 								}
@@ -2444,55 +2403,21 @@ y -= 8;
 								if (w)
 								{
 									if (m_pri_cb)
-										deco16_draw_prio_sprite(pTransDraw, gfx, ((sprite - multi * inc)-mult2)&0xffff, (colour<<m_raw_shift)+colbase, !flipscreen ? x-16 : x+16,ypos, fx, fy, pri);
+										deco16_draw_prio_sprite(bitmap, gfx, ((sprite - multi * inc)-mult2)&0xffff, (colour<<m_raw_shift)+colbase, !flipscreen ? x-16 : x+16,ypos, fx, fy, pri);
 									else
 										if (fy) {
 											if (fx) {
-												Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_FlipXY_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											} else {
-												Render16x16Tile_Mask_FlipY_Clip(pTransDraw, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_FlipY_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											}
 										} else{
 											if (fx) {
-												Render16x16Tile_Mask_FlipX_Clip(pTransDraw, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_FlipX_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											} else {
-												Render16x16Tile_Mask_Clip(pTransDraw, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
+												Render16x16Tile_Mask_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
 											}
 										}
-								}
-							}
-							else
-							{
-//bprintf (0, _T("do draw %4.4x, %d, %d\n"), (sprite - multi * inc), x, ypos);
-
-								if (fy) {
-									if (fx) {
-										Render16x16Tile_Mask_FlipXY_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
-									} else {
-										Render16x16Tile_Mask_FlipY_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
-									}
-								} else{
-									if (fx) {
-										Render16x16Tile_Mask_FlipX_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
-									} else {
-										Render16x16Tile_Mask_Clip(bitmap, (sprite - multi * inc)&0xffff, x,ypos, colour, m_raw_shift, 0, colbase, gfx);
-									}
-								}
-
-								if (w) {
-									if (fy) {
-										if (fx) {
-											Render16x16Tile_Mask_FlipXY_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
-										} else {
-											Render16x16Tile_Mask_FlipY_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
-										}
-									} else{
-										if (fx) {
-											Render16x16Tile_Mask_FlipX_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
-										} else {
-											Render16x16Tile_Mask_Clip(bitmap, ((sprite - multi * inc)-mult2)&0xffff, !flipscreen ? x-16 : x+16,ypos, colour, m_raw_shift, 0, colbase, gfx);
-										}
-									}
 								}
 							}
 						}
@@ -2504,7 +2429,6 @@ y -= 8;
 		}
 		else // m_alt_format
 		{
-//bprintf (0, _T("alt format\n"));
 			int h=0;
 			y = spriteram[offs+0];
 			sprite = spriteram[offs+3] & 0xffff;
@@ -2518,11 +2442,7 @@ y -= 8;
 
 			if (!((y&0x2000) && (nCurrentFrame & 1)))
 			{
-				if (bitmap == NULL)
-					colour = (spriteram[offs+2] >>0) & 0x1f;
-				else
-					colour = (spriteram[offs+2] >>0) & 0xff; // store all bits for manual mixing
-
+				colour = (spriteram[offs+2] >>0) & 0x1f;
 
 				h = (spriteram[offs+2]&0xf000)>>12;
 				w = (spriteram[offs+2]&0x0f00)>> 8;
@@ -2558,7 +2478,6 @@ y -= 8;
 				{
 					for (int yy=0; yy<h; yy++)
 					{
-						if (bitmap == NULL)
 						{
 							if (m_pri_cb)
 							{
@@ -2566,14 +2485,14 @@ y -= 8;
 
 								if ((ypos<nScreenHeight) && (ypos>=0-16))
 								{
-									deco16_draw_prio_sprite(pTransDraw, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
+									deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
 								}
 
 								ypos -= 512; // wrap-around y
 
 								if ((ypos<nScreenHeight) && (ypos>=(0-16)))
 								{
-									deco16_draw_prio_sprite(pTransDraw, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
+									deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
 								}
 
 							}
@@ -2585,15 +2504,15 @@ y -= 8;
 								{
 									if (fy) {
 										if (fx) {
-											Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_FlipXY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										} else {
-											Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_FlipY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										}
 									} else{
 										if (fx) {
-											Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_FlipX_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										} else {
-											Render16x16Tile_Mask_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										}
 									}
 								}
@@ -2604,56 +2523,16 @@ y -= 8;
 								{
 									if (fy) {
 										if (fx) {
-											Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_FlipXY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										} else {
-											Render16x16Tile_Mask_FlipY_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_FlipY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										}
 									} else{
 										if (fx) {
-											Render16x16Tile_Mask_FlipX_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_FlipX_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										} else {
-											Render16x16Tile_Mask_Clip(pTransDraw, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
+											Render16x16Tile_Mask_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 										}
-									}
-								}
-							}
-						}
-						else
-						{
-							ypos = y + mult2 * (h-yy);
-
-							if ((ypos<nScreenHeight) && (ypos>=(0-16)))
-							{
-								if (fy) {
-									if (fx) {
-										Render16x16Tile_Mask_FlipXY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									} else {
-										Render16x16Tile_Mask_FlipY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									}
-								} else{
-									if (fx) {
-										Render16x16Tile_Mask_FlipX_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									} else {
-										Render16x16Tile_Mask_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									}
-								}
-							}
-
-							ypos -= 512; // wrap-around y
-
-							if ((ypos<nScreenHeight) && (ypos>=(0-16)))
-							{
-								if (fy) {
-									if (fx) {
-										Render16x16Tile_Mask_FlipXY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									} else {
-										Render16x16Tile_Mask_FlipY_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									}
-								} else{
-									if (fx) {
-										Render16x16Tile_Mask_FlipX_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
-									} else {
-										Render16x16Tile_Mask_Clip(bitmap, sprite + yy + h * xx, x + mult * (w-xx),ypos, colour, m_raw_shift, 0, colbase, gfx);
 									}
 								}
 							}
@@ -2688,15 +2567,11 @@ static INT32 captaven_pri_callback(INT32 pri, INT32)
 
 static INT32 CaptavenStartDraw()
 {
-	m_alt_format = 1;
-	m_raw_shift = 4;
 	m_pri_cb = captaven_pri_callback;
 	m_col_cb = default_col_cb;
 
 	DrvPaletteUpdate();
 
-	deco16_pf12_update();
-	deco16_pf34_update();
 	deco16_clear_prio_map();
 
 	BurnTransferClear();
@@ -2733,7 +2608,7 @@ static INT32 CaptavenDraw()
 	DrvPaletteUpdate(); // needed to fix 1-frame sprite flashes on scene change during fade-in
 	// palette could theoretically be changed mid-frame, or even many times per frame, etc, so dynamic palette updates would be a preferred opti (hint) :)
 
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false );
+	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 4, 1 );
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2789,8 +2664,6 @@ static INT32 fghthist_col_cb(INT32 col)
 
 static INT32 FghthistDraw()
 {
-	m_alt_format = 0;
-	m_raw_shift = 4;	
 	m_col_cb = fghthist_col_cb;
 	m_pri_cb = fghthist_pri_callback;
 
@@ -2819,7 +2692,7 @@ static INT32 FghthistDraw()
 
 	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 8);
 
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0x400, 0xf, 0x800, true );
+	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0x400, 0xf, 0x800, true, 4, 0 );
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2869,13 +2742,30 @@ static void draw_combined_playfield(INT32 color, INT32 priority) // opaque
 	}
 }
 
-
-static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+static inline UINT32 alphablend32(UINT32 d, UINT32 s, UINT32 p)
 {
 	INT32 a = 255 - p;
 
 	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
 		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+}
+
+static UINT32 alphablend16(UINT32 s, UINT32 d, UINT32 p)
+{
+	p = (p + 2) >> 2;
+	UINT8 a = 63 - p;
+
+	return (((((s & 0x00f81f) * p) + ((d & 0x00f81f) * a)) & 0x003e07c0) +
+		((((s & 0x0007e0) * p) + ((d & 0x0007e0) * a)) & 0x0001f800)) >> 6;
+}
+
+static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
+{
+	p = (p + 4) >> 3;
+	UINT8 a = 31 - p;
+
+	return (((((s & 0x007c1f) * p) + ((d & 0x007c1f) * a)) & 0x00f83e0) +
+		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
 
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
@@ -2888,13 +2778,32 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 	INT32 granularity0 = 1<<5;
 	INT32 granularity1 = 1<<4;
 
+	int depth = BurnHighCol(0,0xff,0,0);
+
+	switch (depth)
+	{
+		case 0x00ff00:
+			depth = nBurnBpp * 8;
+		break;
+
+		case 0x007e0:
+			depth = 16;
+		break;
+
+		case 0x003e0:
+			depth = 15;
+		break;
+	}
+
 	/* Mix sprites into main bitmap, based on priority & alpha */
 	for (y=0; y<nScreenHeight; y++) {
 		uint8_t* tilemapPri=deco16_prio_map + (y * 512);
 		UINT16* sprite0=pTempDraw[0] + (y * nScreenWidth);
 		UINT16* sprite1=pTempDraw[1] + (y * nScreenWidth);
-		uint32_t* destLine=(UINT32*)pBurnDraw;
-		destLine += y * nScreenWidth;
+		UINT32 *destLine32 = (UINT32*)pBurnDraw;
+		UINT16 *destLine16 = (UINT16*)pBurnDraw;
+		destLine32 += y * nScreenWidth;
+		destLine16 += y * nScreenWidth;
 
 		for (x=0; x<nScreenWidth; x++) {
 			if (tilemapPri[x] == 8) {
@@ -2905,55 +2814,67 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 			UINT16 priColAlphaPal1=sprite1[x];
 			UINT16 pri0=(priColAlphaPal0&0x6000)>>13;
 			UINT16 pri1=(priColAlphaPal1&0x6000)>>13;
-			UINT16 col0=((priColAlphaPal0&0x1f00)>>8);// % 0x10; iq_132
-			UINT16 col1=((priColAlphaPal1&0x0f00)>>8);// % 0x10; iq_132
+			UINT16 col0=((priColAlphaPal0&0x1f00)>>8);
+			UINT16 col1=((priColAlphaPal1&0x0f00)>>8);
 			UINT16 alpha1=priColAlphaPal1&0x8000;
 
 			if ((priColAlphaPal0&0xff)!=0)
 			{
-				if ((pri0&0x3)==0 || (pri0&0x3)==1 || ((pri0&0x3)==2 && mixAlphaTilemap)) // Spri0 on top of everything, or under alpha playfield
+				if ((pri0&0x3)==0 || (pri0&0x3)==1 || ((pri0&0x3)==2 && mixAlphaTilemap))
 				{
-					destLine[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+					if (depth == 32)
+						destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+					else if (depth < 24)
+						destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 				}
 				else if ((pri0&0x3)==2) // Spri0 under top playfield
 				{
 					if (tilemapPri[x]<4)
-						destLine[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						if (depth == 32)
+							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						else if (depth < 24)
+							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 				}
 				else // Spri0 under top & middle playfields
 				{
 					if (tilemapPri[x]<2)
-						destLine[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						if (depth == 32)
+							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						else if (depth < 24)
+							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 				}
 			}
 
 			// Apply sprite bitmap 1 according to priority rules
-			if ((priColAlphaPal1&0xff)!=0)
+			if (priColAlphaPal1&0xff)
 			{
 				if (alpha1)
 				{
 					if (pri1==0 && (((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
 					{
 						if ((global_priority&1)==0 || ((global_priority&1)==1 && tilemapPri[x]<4) || ((global_priority&1)==1 && mixAlphaTilemap))
-							destLine[x]=alpha_blend(destLine[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+							if (depth == 32)
+								destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+							else if (depth == 16)
+								destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+							else if (depth == 15)
+								destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 					}
-					else if (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2)))
-						destLine[x]=alpha_blend(destLine[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
-					else if (pri1==2)// TOdo
-						destLine[x]=alpha_blend(destLine[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
-					else if (pri1==3)// TOdo
-						destLine[x]=alpha_blend(destLine[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
+						if (depth == 32)
+							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+						else if (depth == 16)
+							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+						else if (depth == 15)
+							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 				}
 				else
 				{
-					if (pri1==0 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0)))
-						destLine[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
-					else if (pri1==1) // todo
-						destLine[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
-					else if (pri1==2) // todo
-						destLine[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
-					else if (pri1==3) // todo
-						destLine[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
+					if ((pri1==0 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0))) || (pri1>=1))
+						if (depth == 32)
+							destLine32[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
+						else if (depth < 24)
+							destLine16[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
 				}
 			}
 
@@ -2974,7 +2895,13 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 						if (alpha<0)
 							alpha=0;
 
-						destLine[x]=alpha_blend(destLine[x], pal2[p], 255-alpha);
+						if (depth == 32)
+							destLine32[x]=alphablend32(destLine32[x], pal2[p], 255-alpha);
+						else if (depth == 16)
+							destLine16[x]=alphablend16(destLine16[x], pal2[p], 255-alpha);
+						else if (depth == 15)
+							destLine16[x]=alphablend15(destLine16[x], pal2[p], 255-alpha);
+
 					}
 				}
 			}
@@ -2990,9 +2917,7 @@ static INT32 NslasherDraw()
 	deco16_pf34_update();
 	deco16_clear_prio_map();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x200;
-	}
+	BurnTransferClear(0x200);
 
 	UINT32 *ace = (UINT32*)DrvAceRAM;
 
@@ -3022,18 +2947,17 @@ static INT32 NslasherDraw()
 	if ((nSpriteEnable & 1) == 0) memset (pTempDraw[0], 0, nScreenWidth * nScreenHeight*2);
 	if ((nSpriteEnable & 2) == 0) memset (pTempDraw[1], 0, nScreenWidth * nScreenHeight*2);
 
-	m_alt_format = 0;
 	m_col_cb = default_col_cb;
 	m_pri_cb = NULL;
-	m_raw_shift = 8;
-	if (nSpriteEnable & 1) draw_sprites_common(pTempDraw[0], DrvSprBuf2, DrvGfxROM3, 0, 0, 0x800, true);
-	if (nSpriteEnable & 2) draw_sprites_common(pTempDraw[1], DrvSprBuf,  DrvGfxROM4, 0, 0, 0x800, true);
+
+	if (nSpriteEnable & 1) draw_sprites_common(pTempDraw[0], DrvSprBuf2, DrvGfxROM3, 0, 0, 0x800, true, 8, 0);
+	if (nSpriteEnable & 2) draw_sprites_common(pTempDraw[1], DrvSprBuf,  DrvGfxROM4, 0, 0, 0x800, true, 8, 0);
 
 	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 8);
 
 	BurnTransferCopy(DrvPalette);
 
-	if (nBurnBpp == 4) mixDualAlphaSprites(has_alpha);
+	mixDualAlphaSprites(has_alpha);
 
 	return 0;
 }
@@ -3047,6 +2971,23 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 
 	color = (color & 0x1f) * 16;
 	UINT32 *pal = DrvPalette + color;
+
+	int depth = BurnHighCol(0,0xff,0,0);
+
+	switch (depth)
+	{
+		case 0x00ff00:
+			depth = nBurnBpp * 8;
+		break;
+
+		case 0x007e0:
+			depth = 16;
+		break;
+
+		case 0x003e0:
+			depth = 15;
+		break;
+	}
 
 	const UINT8 *code_base = DrvGfxROM3 + ((code & 0x7fff) * 0x100);
 
@@ -3111,28 +3052,83 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 		{
 			for (INT32 y = sy; y < ey; y++)
 			{
-				const UINT8 *source = code_base + (y_index >> 16) * 16;
-				UINT32 *dest = ((UINT32*)pBurnDraw) + (y * nScreenWidth);
-				UINT8 *pri = deco16_prio_map + (y * 512);
-
-				INT32 x_index = x_index_base;
-				for (INT32 x = sx; x < ex; x++)
+				if (depth == 32)
 				{
-					int c = (source[x_index >> 16] >> shift) & 0xf;
-					if (c != 0xf)
-					{
-						if (priority >= pri[x])
+						const UINT8 *source = code_base + (y_index >> 16) * 16;
+						UINT32 *dest = ((UINT32*)pBurnDraw) + (y * nScreenWidth);
+						UINT8 *pri = deco16_prio_map + (y * 512);
+		
+						INT32 x_index = x_index_base;
+						for (INT32 x = sx; x < ex; x++)
 						{
-							if (alpha == 0xff) {
-								dest[x] = pal[c];
-							} else {
-								dest[x] = alpha_blend(dest[x], pal[c], 0x80);
+							int c = (source[x_index >> 16] >> shift) & 0xf;
+							if (c != 0xf)
+							{
+								if (priority >= pri[x])
+								{
+									if (alpha == 0xff) {
+										dest[x] = pal[c];
+									} else {
+										dest[x] = alphablend32(dest[x], pal[c], 0x80);
+									}
+								}
+								pri[x] |= 0x80;
 							}
+		
+							x_index += dx;
 						}
-						pri[x] |= 0x80;
-					}
-
-					x_index += dx;
+				}
+				else if (depth == 16)
+				{
+						const UINT8 *source = code_base + (y_index >> 16) * 16;
+						UINT16 *dest = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
+						UINT8 *pri = deco16_prio_map + (y * 512);
+		
+						INT32 x_index = x_index_base;
+						for (INT32 x = sx; x < ex; x++)
+						{
+							int c = (source[x_index >> 16] >> shift) & 0xf;
+							if (c != 0xf)
+							{
+								if (priority >= pri[x])
+								{
+									if (alpha == 0xff) {
+										dest[x] = pal[c];
+									} else {
+										dest[x] = alphablend16(dest[x], pal[c], 0x80);
+									}
+								}
+								pri[x] |= 0x80;
+							}
+		
+							x_index += dx;
+						}
+				}
+				else if (depth == 15)
+				{
+						const UINT8 *source = code_base + (y_index >> 16) * 16;
+						UINT16 *dest = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
+						UINT8 *pri = deco16_prio_map + (y * 512);
+		
+						INT32 x_index = x_index_base;
+						for (INT32 x = sx; x < ex; x++)
+						{
+							int c = (source[x_index >> 16] >> shift) & 0xf;
+							if (c != 0xf)
+							{
+								if (priority >= pri[x])
+								{
+									if (alpha == 0xff) {
+										dest[x] = pal[c];
+									} else {
+										dest[x] = alphablend15(dest[x], pal[c], 0x80);
+									}
+								}
+								pri[x] |= 0x80;
+							}
+		
+							x_index += dx;
+						}
 				}
 
 				y_index += dy;

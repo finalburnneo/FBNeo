@@ -1,3 +1,10 @@
+// FB Alpha Deco32 driver module
+// Based on MAME driver by Bryan McPhail
+
+// todo stuff:
+//   fast palette updates or recalc on palbuf change for games that use palbuf instead(?)
+//   fighters history service mode "sorta" crashes
+//   fix bsmt (later :)
 
 //#define USE_BSMT
 

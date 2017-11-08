@@ -788,10 +788,10 @@ static void tattass_control_write(UINT32 data)
 		if (m_lastClock==0 && data&0x20 && data&0x40) {
 			/* Handle pending read */
 			if (m_pendingCommand==1) {
-				int d=m_readBitCount/8;
-				int m=7-(m_readBitCount%8);
-				int a=(m_byteAddr+d)%1024;
-				int b=m_eeprom[a]; //m_eeprom->internal_read(a);
+				INT32 d=m_readBitCount/8;
+				INT32 m=7-(m_readBitCount%8);
+				INT32 a=(m_byteAddr+d)%1024;
+				INT32 b=m_eeprom[a]; //m_eeprom->internal_read(a);
 
 				m_tattass_eprom_bit=(b>>m)&1;
 
@@ -805,7 +805,7 @@ static void tattass_control_write(UINT32 data)
 				m_buffer[m_bufPtr++]=(data&0x10)>>4;
 
 				if (m_bufPtr==32) {
-					int b=(m_buffer[24]<<7)|(m_buffer[25]<<6)|(m_buffer[26]<<5)|(m_buffer[27]<<4)
+					INT32 b=(m_buffer[24]<<7)|(m_buffer[25]<<6)|(m_buffer[26]<<5)|(m_buffer[27]<<4)
 						|(m_buffer[28]<<3)|(m_buffer[29]<<2)|(m_buffer[30]<<1)|(m_buffer[31]<<0);
 
 					m_eeprom[m_byteAddr] = b; //m_eeprom->internal_write(m_byteAddr, b);
@@ -2243,14 +2243,14 @@ static INT32 default_col_cb(INT32 col)
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
 
-static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, int sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format )
+static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, INT32 sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format )
 {
 	INT32 m_y_offset = 0;
-	INT32 m_x_offset = 8;
+	INT32 m_x_offset = 0;
 
-	int offs, end, incr;
+	INT32 offs, end, incr;
 
-	int bitmap_is_null = 0;
+	INT32 bitmap_is_null = 0;
 
 	if (bitmap) {
 		memset (bitmap, 0, nScreenWidth * nScreenHeight * sizeof(UINT16));
@@ -2281,7 +2281,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 
 	while (offs!=end)
 	{
-		int x, y, sprite, colour, multi, mult2, fx, fy, inc, flash, mult, w, pri;
+		INT32 x, y, sprite, colour, multi, mult2, fx, fy, inc, flash, mult, w, pri;
 
 		if (!m_alt_format)
 		{
@@ -2314,7 +2314,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 				fx = y & 0x2000;
 				fy = y & 0x4000;
 
-				int tempwidth = (y & 0x0600) >> 9;
+				INT32 tempwidth = (y & 0x0600) >> 9;
 
 				multi = (1 << (tempwidth)) - 1; /* 1x, 2x, 4x, 8x height */
 
@@ -2373,9 +2373,11 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 
 					mult2 = multi + 1;
 
+					y -= 8;
+
 					while (multi >= 0)
 					{
-						int ypos;
+						INT32 ypos;
 						ypos = y + mult * multi;
 						if ((ypos < nScreenHeight) && (ypos>=0-16))
 						{
@@ -2429,7 +2431,7 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 		}
 		else // m_alt_format
 		{
-			int h=0;
+			INT32 h=0;
 			y = spriteram[offs+0];
 			sprite = spriteram[offs+3] & 0xffff;
 
@@ -2472,11 +2474,11 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 					if (fx) { mult=-16; x+=16; } else { mult=16; x-=16*w; }
 					if (fy) { mult2=-16; y+=16; } else { mult2=16; y-=16*h; }
 				}
-				int ypos;
+				INT32 ypos;
 
-				for (int xx=0; xx<w; xx++)
+				for (INT32 xx=0; xx<w; xx++)
 				{
-					for (int yy=0; yy<h; yy++)
+					for (INT32 yy=0; yy<h; yy++)
 					{
 						{
 							if (m_pri_cb)
@@ -2773,12 +2775,12 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? 0x400 : 0x600);
 	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? 0x600 : 0x500);
 	UINT32 *pal2 = DrvPalette;
-	int x,y;
+	INT32 x,y;
 
 	INT32 granularity0 = 1<<5;
 	INT32 granularity1 = 1<<4;
 
-	int depth = BurnHighCol(0,0xff,0,0);
+	INT32 depth = BurnHighCol(0,0xff,0,0);
 
 	switch (depth)
 	{
@@ -2797,7 +2799,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 
 	/* Mix sprites into main bitmap, based on priority & alpha */
 	for (y=0; y<nScreenHeight; y++) {
-		uint8_t* tilemapPri=deco16_prio_map + (y * 512);
+		UINT8* tilemapPri=deco16_prio_map + (y * 512);
 		UINT16* sprite0=pTempDraw[0] + (y * nScreenWidth);
 		UINT16* sprite1=pTempDraw[1] + (y * nScreenWidth);
 		UINT32 *destLine32 = (UINT32*)pBurnDraw;
@@ -2829,19 +2831,21 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				}
 				else if ((pri0&0x3)==2) // Spri0 under top playfield
 				{
-					if (tilemapPri[x]<4)
+					if (tilemapPri[x]<4) {
 						if (depth == 32)
 							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 						else if (depth < 24)
 							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+					}
 				}
 				else // Spri0 under top & middle playfields
 				{
-					if (tilemapPri[x]<2)
+					if (tilemapPri[x]<2) {
 						if (depth == 32)
 							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 						else if (depth < 24)
 							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+					}
 				}
 			}
 
@@ -2852,29 +2856,32 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				{
 					if (pri1==0 && (((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
 					{
-						if ((global_priority&1)==0 || ((global_priority&1)==1 && tilemapPri[x]<4) || ((global_priority&1)==1 && mixAlphaTilemap))
+						if ((global_priority&1)==0 || ((global_priority&1)==1 && tilemapPri[x]<4) || ((global_priority&1)==1 && mixAlphaTilemap)) {
 							if (depth == 32)
 								destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 							else if (depth == 16)
 								destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 							else if (depth == 15)
 								destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+						}
 					}
-					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
+					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2)))) {
 						if (depth == 32)
 							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 						else if (depth == 16)
 							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 						else if (depth == 15)
 							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+					}
 				}
 				else
 				{
-					if ((pri1==0 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0))) || (pri1>=1))
+					if ((pri1==0 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0))) || (pri1>=1)) {
 						if (depth == 32)
 							destLine32[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
 						else if (depth < 24)
 							destLine16[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
+					}
 				}
 			}
 
@@ -2891,7 +2898,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 						&& ((priColAlphaPal1&0xff)==0 || (pri1&0x3)==2 || (pri1&0x3)==3 || alpha1))
 					{
 						/* Alpha values are tied to ACE ram */
-						int alpha=((m_ace_ram[0x17 + (((p&0xf0)>>4)/2)]) * 8)-1;
+						INT32 alpha=((m_ace_ram[0x17 + (((p&0xf0)>>4)/2)]) * 8)-1;
 						if (alpha<0)
 							alpha=0;
 
@@ -2962,8 +2969,8 @@ static INT32 NslasherDraw()
 	return 0;
 }
 
-static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,int sx,int sy,
-		int scalex, int scaley, int sprite_screen_width, int  sprite_screen_height, UINT8 alpha,int priority)
+static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy,
+		INT32 scalex, INT32 scaley, INT32 sprite_screen_width, INT32  sprite_screen_height, UINT8 alpha,INT32 priority)
 {
 	if (!scalex || !scaley) return;
 
@@ -2972,7 +2979,7 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 	color = (color & 0x1f) * 16;
 	UINT32 *pal = DrvPalette + color;
 
-	int depth = BurnHighCol(0,0xff,0,0);
+	INT32 depth = BurnHighCol(0,0xff,0,0);
 
 	switch (depth)
 	{
@@ -3024,27 +3031,27 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 
 		if( sx < 0)
 		{
-			int pixels = 0-sx;
+			INT32 pixels = 0-sx;
 			sx += pixels;
 			x_index_base += pixels*dx;
 		}
 
 		if( sy <0 )
 		{
-			int pixels = 0-sy;
+			INT32 pixels = 0-sy;
 			sy += pixels;
 			y_index += pixels*dy;
 		}
 
 		if( ex > nScreenWidth )
 		{
-			int pixels = ex-(nScreenWidth-1)-1;
+			INT32 pixels = ex-(nScreenWidth-1)-1;
 			ex -= pixels;
 		}
 
 		if( ey > nScreenHeight )
 		{
-			int pixels = ey-(nScreenHeight-1)-1;
+			INT32 pixels = ey-(nScreenHeight-1)-1;
 			ey -= pixels;
 		}
 
@@ -3061,7 +3068,7 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 						INT32 x_index = x_index_base;
 						for (INT32 x = sx; x < ex; x++)
 						{
-							int c = (source[x_index >> 16] >> shift) & 0xf;
+							INT32 c = (source[x_index >> 16] >> shift) & 0xf;
 							if (c != 0xf)
 							{
 								if (priority >= pri[x])
@@ -3087,7 +3094,7 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 						INT32 x_index = x_index_base;
 						for (INT32 x = sx; x < ex; x++)
 						{
-							int c = (source[x_index >> 16] >> shift) & 0xf;
+							INT32 c = (source[x_index >> 16] >> shift) & 0xf;
 							if (c != 0xf)
 							{
 								if (priority >= pri[x])
@@ -3113,7 +3120,7 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,int flipx,int flipy,i
 						INT32 x_index = x_index_base;
 						for (INT32 x = sx; x < ex; x++)
 						{
-							int c = (source[x_index >> 16] >> shift) & 0xf;
+							INT32 c = (source[x_index >> 16] >> shift) & 0xf;
 							if (c != 0xf)
 							{
 								if (priority >= pri[x])

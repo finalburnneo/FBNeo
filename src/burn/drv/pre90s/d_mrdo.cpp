@@ -10,18 +10,19 @@ static UINT8 *MemEnd;
 static UINT8 *AllRam;
 static UINT8 *RamEnd;
 
-static UINT8 *DrvROM;
-static UINT8 *DrvRAM;
+static UINT8 *DrvZ80ROM;
+static UINT8 *DrvZ80RAM;
 static UINT8 *DrvFGVidRAM;
 static UINT8 *DrvBGVidRAM;
 static UINT8 *DrvSpriteRAM;
-static UINT8 *Gfx0;
-static UINT8 *Gfx1;
-static UINT8 *Gfx2;
-static UINT8 *Prom;
+static UINT8 *DrvGfxROM0;
+static UINT8 *DrvGfxROM1;
+static UINT8 *DrvGfxROM2;
+static UINT8 *DrvColPROM;
 static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
+static UINT8 DrvInput[2];
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvReset;
@@ -120,7 +121,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 
 STDDIPINFO(Drv)
 
-void __fastcall mrdo_write(UINT16 address, UINT8 data)
+static void __fastcall mrdo_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf000) == 0xf000) address &= 0xf800;
 
@@ -130,11 +131,11 @@ void __fastcall mrdo_write(UINT16 address, UINT8 data)
 			flipscreen = data & 1;
 		break;
 
-		case 0x9801: 
+		case 0x9801:
 			SN76496Write(0, data);
 		break;
 
-		case 0x9802:		
+		case 0x9802:
 			SN76496Write(1, data);
 		break;
 
@@ -148,26 +149,18 @@ void __fastcall mrdo_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall mrdo_read(UINT16 address)
+static UINT8 __fastcall mrdo_read(UINT16 address)
 {
-	UINT8 ret = 0xff;
-
 	switch (address)
 	{
 		case 0x9803: // Protection
-			return DrvROM[ZetHL(-1)];
+			return DrvZ80ROM[ZetHL(-1)];
 
 		case 0xa000:
-		{
-			for (INT32 i = 0; i < 8; i++) ret ^= DrvJoy1[i] << i;
-			return ret;
-		}
+			return DrvInput[0];
 
 		case 0xa001:
-		{
-			for (INT32 i = 0; i < 8; i++) ret ^= DrvJoy2[i] << i;
-			return ret;
-		}
+			return DrvInput[1];
 
 		case 0xa002:
 			return DrvDips[0];
@@ -199,16 +192,16 @@ static INT32 DrvDoReset()
 
 static void mrdo_palette_init()
 {
-	const UINT8 *color_prom = Prom;
-	int i;
+	const UINT8 *color_prom = DrvColPROM;
+	INT32 i;
 
-	const int R1 = 150;
-	const int R2 = 120;
-	const int R3 = 100;
-	const int R4 = 75;
-	const int pull = 220;
+	const INT32 R1 = 150;
+	const INT32 R2 = 120;
+	const INT32 R3 = 100;
+	const INT32 R4 = 75;
+	const INT32 pull = 220;
 	float pot[16];
-	int weight[16];
+	INT32 weight[16];
 	const float potadjust = 0.7f;
 
 	for (i = 0x0f; i >= 0; i--)
@@ -232,24 +225,22 @@ static void mrdo_palette_init()
 
 	for (i = 0; i < 0x100; i++)
 	{
-		int a1,a2;
-		int bits0, bits2;
-		int r, g, b;
+		INT32 bits0, bits2;
 
-		a1 = ((i >> 3) & 0x1c) + (i & 0x03) + 0x20;
-		a2 = ((i >> 0) & 0x1c) + (i & 0x03);
+		INT32 a1 = ((i >> 3) & 0x1c) + (i & 0x03) + 0x20;
+		INT32 a2 = ((i >> 0) & 0x1c) + (i & 0x03);
 
 		bits0 = (color_prom[a1] >> 0) & 0x03;
 		bits2 = (color_prom[a2] >> 0) & 0x03;
-		r = weight[bits0 + (bits2 << 2)];
+		INT32 r = weight[bits0 + (bits2 << 2)];
 
 		bits0 = (color_prom[a1] >> 2) & 0x03;
 		bits2 = (color_prom[a2] >> 2) & 0x03;
-		g = weight[bits0 + (bits2 << 2)];
+		INT32 g = weight[bits0 + (bits2 << 2)];
 
 		bits0 = (color_prom[a1] >> 4) & 0x03;
 		bits2 = (color_prom[a2] >> 4) & 0x03;
-		b = weight[bits0 + (bits2 << 2)];
+		INT32 b = weight[bits0 + (bits2 << 2)];
 
 		Palette[i] = BurnHighCol(r, g, b, 0);
 	}
@@ -282,17 +273,17 @@ static void mrdo_gfx_decode()
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x2000);
 	if (!tmp) return;
 
-	memcpy (tmp, Gfx0, 0x2000);
+	memcpy (tmp, DrvGfxROM0, 0x2000);
 
-	GfxDecode(0x200, 2,  8,  8, CharPlane, CharXOffs, CharYOffs, 0x040, tmp, Gfx0);
+	GfxDecode(0x200, 2,  8,  8, CharPlane, CharXOffs, CharYOffs, 0x040, tmp, DrvGfxROM0);
 
-	memcpy (tmp, Gfx1, 0x2000);
+	memcpy (tmp, DrvGfxROM1, 0x2000);
 
-	GfxDecode(0x200, 2,  8,  8, CharPlane, CharXOffs, CharYOffs, 0x040, tmp, Gfx1);
+	GfxDecode(0x200, 2,  8,  8, CharPlane, CharXOffs, CharYOffs, 0x040, tmp, DrvGfxROM1);
 
-	memcpy (tmp, Gfx2, 0x2000);
+	memcpy (tmp, DrvGfxROM2, 0x2000);
 
-	GfxDecode(0x080, 2, 16, 16, SpriPlane, SpriXOffs, SpriYOffs, 0x200, tmp, Gfx2);
+	GfxDecode(0x080, 2, 16, 16, SpriPlane, SpriXOffs, SpriYOffs, 0x200, tmp, DrvGfxROM2);
 
 	BurnFree (tmp);
 }
@@ -301,19 +292,19 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvROM          = Next; Next += 0x10000;
+	DrvZ80ROM       = Next; Next += 0x10000;
 
-	Gfx0            = Next; Next += 0x08000;
-	Gfx1            = Next; Next += 0x08000;
-	Gfx2            = Next; Next += 0x08000;
+	DrvGfxROM0      = Next; Next += 0x08000;
+	DrvGfxROM1      = Next; Next += 0x08000;
+	DrvGfxROM2      = Next; Next += 0x08000;
 
-	Prom            = Next; Next += 0x00080;
+	DrvColPROM      = Next; Next += 0x00080;
 
 	Palette	        = (UINT32 *)Next; Next += 0x00140 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvRAM          = Next; Next += 0x01000;
+	DrvZ80RAM       = Next; Next += 0x01000;
 	DrvFGVidRAM     = Next; Next += 0x00800;
 	DrvBGVidRAM     = Next; Next += 0x00800;
 	DrvSpriteRAM    = Next; Next += 0x00100;
@@ -337,14 +328,14 @@ static INT32 DrvInit()
 
 	{
 		for (INT32 i = 0; i < 4; i++) {
-			if(BurnLoadRom(DrvROM + (i * 0x2000),  0 + i, 1)) return 1;
-			if(BurnLoadRom(Prom + (i * 0x0020), 10 + i, 1)) return 1;
+			if(BurnLoadRom(DrvZ80ROM + (i * 0x2000),  0 + i, 1)) return 1;
+			if(BurnLoadRom(DrvColPROM + (i * 0x0020), 10 + i, 1)) return 1;
 		}
 
 		for (INT32 i = 0; i < 2; i++) {
-			if(BurnLoadRom(Gfx0 + (i * 0x1000),  4 + i, 1)) return 1;
-			if(BurnLoadRom(Gfx1 + (i * 0x1000),  6 + i, 1)) return 1;
-			if(BurnLoadRom(Gfx2 + (i * 0x1000),  8 + i, 1)) return 1;
+			if(BurnLoadRom(DrvGfxROM0 + (i * 0x1000),  4 + i, 1)) return 1;
+			if(BurnLoadRom(DrvGfxROM1 + (i * 0x1000),  6 + i, 1)) return 1;
+			if(BurnLoadRom(DrvGfxROM2 + (i * 0x1000),  8 + i, 1)) return 1;
 		}
 
 		mrdo_palette_init();
@@ -355,11 +346,11 @@ static INT32 DrvInit()
 	ZetOpen(0);
 	ZetSetReadHandler(mrdo_read);
 	ZetSetWriteHandler(mrdo_write);
-	ZetMapMemory(DrvROM,            0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM,         0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvBGVidRAM,       0x8000, 0x87ff, MAP_RAM);
 	ZetMapMemory(DrvFGVidRAM,       0x8800, 0x8fff, MAP_RAM);
 	ZetMapMemory(DrvSpriteRAM,      0x9000, 0x90ff, MAP_RAM);
-	ZetMapMemory(DrvRAM,            0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM,         0xe000, 0xefff, MAP_RAM);
 	ZetClose();
 
 	SN76489Init(0, 4000000, 0);
@@ -368,7 +359,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(1, 0.45, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
- 
+
 	DrvDoReset();
 
 	return 0;
@@ -409,15 +400,15 @@ static void draw_sprites()
 
 			if (flipy) {
 				if (flipx) {
-					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
+					Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM2);
 				} else {
-					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
+					Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM2);
 				}
 			} else {
 				if (flipx) {
-					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
+					Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM2);
 				} else {
-					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, Gfx2);
+					Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM2);
 				}
 			}
 		}
@@ -460,8 +451,8 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 2) draw_8x8_tiles(DrvBGVidRAM, Gfx1, scroll_x, scroll_y);
-	if (nBurnLayer & 4) draw_8x8_tiles(DrvFGVidRAM, Gfx0, 0, 0);
+	if (nBurnLayer & 2) draw_8x8_tiles(DrvBGVidRAM, DrvGfxROM1, scroll_x, scroll_y);
+	if (nBurnLayer & 4) draw_8x8_tiles(DrvFGVidRAM, DrvGfxROM0, 0, 0);
 	if (nBurnLayer & 8) draw_sprites();
 
 	BurnTransferCopy(Palette);
@@ -473,6 +464,15 @@ static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
+	}
+
+	{
+		DrvInput[0] = DrvInput[1] = 0xff; // active low
+
+		for (INT32 i = 0; i < 8; i++) {
+			DrvInput[0] ^= (DrvJoy1[i] << i);
+			DrvInput[1] ^= (DrvJoy2[i] << i);
+		}
 	}
 
 	INT32 nInterleave = 10;

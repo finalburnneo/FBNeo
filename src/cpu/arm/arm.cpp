@@ -28,7 +28,7 @@
 #define READ32(addr)		cpu_read32(addr)
 #define WRITE32(addr,data)	cpu_write32(addr,data)
 
-#define change_pc(x)	R15 = (R15&~ADDRESS_MASK)|((x)&ADDRESS_MASK)
+//#define change_pc(x)
 
 #define ARM_DEBUG_CORE 0
 #define ARM_DEBUG_COPRO 0
@@ -307,8 +307,16 @@ inline UINT32 GetRegister( int rIndex )
 inline void SetRegister( int rIndex, UINT32 value )
 {
 	arm.sArmRegister[sRegisterTable[MODE][rIndex]] = value;
-	if (rIndex == eR15)
-		change_pc(value & ADDRESS_MASK);
+}
+
+inline UINT32 GetModeRegister( int mode, int rIndex )
+{
+	return arm.sArmRegister[sRegisterTable[mode][rIndex]];
+}
+
+inline void SetModeRegister( int mode, int rIndex, UINT32 value )
+{
+	arm.sArmRegister[sRegisterTable[mode][rIndex]] = value;
 }
 
 /***************************************************************************/
@@ -319,7 +327,6 @@ void ArmReset(void)
 
 	/* start up in SVC mode with interrupts disabled. */
 	R15 = eARM_MODE_SVC|I_MASK|F_MASK;
-	change_pc(R15 & ADDRESS_MASK);
 }
 
 int ArmRun( int cycles )
@@ -418,7 +425,6 @@ int ArmRun( int cycles )
 			R15 = eARM_MODE_SVC;	/* Set SVC mode so PC is saved to correct R14 bank */
 			SetRegister( 14, pc );	/* save PC */
 			R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x8|eARM_MODE_SVC|I_MASK|(pc&MODE_MASK);
-			change_pc(pc&ADDRESS_MASK);
 			arm_icount -= 2 * S_CYCLE + N_CYCLE;
 		}
 		else /* Undefined */
@@ -455,7 +461,6 @@ static void arm_check_irq_state(void)
 		R15 = eARM_MODE_FIQ;	/* Set FIQ mode so PC is saved to correct R14 bank */
 		SetRegister( 14, pc );	/* save PC */
 		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x1c|eARM_MODE_FIQ|I_MASK|F_MASK; /* Mask both IRQ & FIRQ, set PC=0x1c */
-		change_pc(R15 & ADDRESS_MASK);
 		arm.pendingFiq=0;
 		return;
 	}
@@ -464,7 +469,6 @@ static void arm_check_irq_state(void)
 		R15 = eARM_MODE_IRQ;	/* Set IRQ mode so PC is saved to correct R14 bank */
 		SetRegister( 14, pc );	/* save PC */
 		R15 = (pc&PSR_MASK)|(pc&IRQ_MASK)|0x18|eARM_MODE_IRQ|I_MASK|(pc&F_MASK); /* Mask only IRQ, set PC=0x18 */
-		change_pc(R15 & ADDRESS_MASK);
 		arm.pendingIrq=0;
 		return;
 	}
@@ -511,13 +515,12 @@ static void HandleBranch(  UINT32 insn )
 	/* Sign-extend the 24-bit offset in our calculations */
 	if (off & 0x2000000u)
 	{
-		R15 -= ((~(off | 0xfc000000u)) + 1) - 8;
+		R15 = ((R15 - (((~(off | 0xfc000000u)) + 1) - 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
 	}
 	else
 	{
-		R15 += off + 8;
+		R15 = ((R15 + (off + 8)) & ADDRESS_MASK) | (R15 & ~ADDRESS_MASK);
 	}
-	change_pc(R15 & ADDRESS_MASK);
 	arm_icount -= 2 * S_CYCLE + N_CYCLE;
 }
 
@@ -556,11 +559,11 @@ static void HandleMemSingle( UINT32 insn )
 				rnv = (R15 & ADDRESS_MASK) - off;
 		}
 
-		if (insn & INSN_SDT_W)
+		/*if (insn & INSN_SDT_W)
 		{
 			SetRegister(rn,rnv);
 		}
-		else if (rn == eR15)
+		else*/ if (rn == eR15)
 		{
 			rnv = rnv + 8;
 		}
@@ -593,7 +596,6 @@ static void HandleMemSingle( UINT32 insn )
 			if (rd == eR15)
 			{
 				R15 = (READ32(rnv) & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & IRQ_MASK) | (R15 & MODE_MASK);
-				change_pc(R15 & ADDRESS_MASK);
 
 				/*
 		                The docs are explicit in that the bottom bits should be masked off
@@ -626,6 +628,15 @@ static void HandleMemSingle( UINT32 insn )
 		{
 			WRITE32(rnv, rd == eR15 ? R15 + 8 : GetRegister(rd));
 		}
+	}
+
+	/* Do pre-indexing writeback */
+	if ((insn & INSN_SDT_P) && (insn & INSN_SDT_W))
+	{
+		if ((insn & INSN_SDT_L) && rd == rn)
+			SetRegister(rn, GetRegister(rd));
+		else
+			SetRegister(rn, rnv);
 	}
 
 	/* Do post-indexing writeback */
@@ -662,38 +673,38 @@ static void HandleMemSingle( UINT32 insn )
 /* Set NZCV flags for ADDS / SUBS */
 
 #define HandleALUAddFlags(rd, rn, op2) \
-  if (insn & INSN_S) \
-    R15 = \
-      ((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
-      | (((!SIGN_BITS_DIFFER(rn, op2)) && SIGN_BITS_DIFFER(rn, rd)) \
-          << V_BIT) \
-      | (((~(rn)) < (op2)) << C_BIT) \
-      | HandleALUNZFlags(rd)) \
-      + 4; \
-  else R15 += 4;
+	if (insn & INSN_S) \
+	R15 = \
+		((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
+		| (((!SIGN_BITS_DIFFER(rn, op2)) && SIGN_BITS_DIFFER(rn, rd)) \
+			<< V_BIT) \
+		| (((~(rn)) < (op2)) << C_BIT) \
+		| HandleALUNZFlags(rd)) \
+		+ 4; \
+	else R15 += 4;
 
 #define HandleALUSubFlags(rd, rn, op2) \
-  if (insn & INSN_S) \
-    R15 = \
-      ((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
-      | ((SIGN_BITS_DIFFER(rn, op2) && SIGN_BITS_DIFFER(rn, rd)) \
-          << V_BIT) \
-      | (((IsNeg(rn) & IsPos(op2)) | (IsNeg(rn) & IsPos(rd)) | (IsPos(op2) & IsPos(rd))) ? C_MASK : 0) \
-      | HandleALUNZFlags(rd)) \
-      + 4; \
-  else R15 += 4;
+	if (insn & INSN_S) \
+	R15 = \
+		((R15 &~ (N_MASK | Z_MASK | V_MASK | C_MASK)) \
+		| ((SIGN_BITS_DIFFER(rn, op2) && SIGN_BITS_DIFFER(rn, rd)) \
+			<< V_BIT) \
+		| (((IsNeg(rn) & IsPos(op2)) | (IsNeg(rn) & IsPos(rd)) | (IsPos(op2) & IsPos(rd))) ? C_MASK : 0) \
+		| HandleALUNZFlags(rd)) \
+		+ 4; \
+	else R15 += 4;
 
 /* Set NZC flags for logical operations. */
 
 #define HandleALUNZFlags(rd) \
-  (((rd) & SIGN_BIT) | ((!(rd)) << Z_BIT))
+	(((rd) & SIGN_BIT) | ((!(rd)) << Z_BIT))
 
 #define HandleALULogicalFlags(rd, sc) \
-  if (insn & INSN_S) \
-    R15 = ((R15 &~ (N_MASK | Z_MASK | C_MASK)) \
-                     | HandleALUNZFlags(rd) \
-                     | (((sc) != 0) << C_BIT)) + 4; \
-  else R15 += 4;
+	if (insn & INSN_S) \
+	R15 = ((R15 &~ (N_MASK | Z_MASK | C_MASK)) \
+						| HandleALUNZFlags(rd) \
+						| (((sc) != 0) << C_BIT)) + 4; \
+	else R15 += 4;
 
 static void HandleALU( UINT32 insn )
 {
@@ -775,7 +786,6 @@ static void HandleALU( UINT32 insn )
 		rd = (rn + op2);
 		HandleALUAddFlags(rd, rn, op2);
 		break;
-
 	/* Logical operations */
 	case OPCODE_AND:
 	case OPCODE_TST:
@@ -813,7 +823,6 @@ static void HandleALU( UINT32 insn )
 		{
 			/* Merge the old NZCV flags into the new PC value */
 			R15 = (rd & ADDRESS_MASK) | (R15 & PSR_MASK) | (R15 & IRQ_MASK) | (R15&MODE_MASK);
-			change_pc(R15 & ADDRESS_MASK);
 			arm_icount -= S_CYCLE + N_CYCLE;
 		}
 		else
@@ -995,10 +1004,21 @@ static void HandleMemBlock( UINT32 insn)
 		/* Loading */
 		if (insn & INSN_BDT_U)
 		{
+			int mode = MODE;
+
 			/* Incrementing */
 			if (!(insn & INSN_BDT_P)) rbp = rbp + (- 4);
 
-			result = loadInc( insn & 0xffff, rbp, insn&INSN_BDT_S );
+			// S Flag Set, but R15 not in list = Transfers to User Bank
+			if ((insn & INSN_BDT_S) && !(insn & 0x8000))
+			{
+				int curmode = MODE;
+				R15 = R15 & ~MODE_MASK;
+				result = loadInc( insn & 0xffff, rbp, insn&INSN_BDT_S );
+				R15 = R15 | curmode;
+			}
+			else
+				result = loadInc( insn & 0xffff, rbp, insn&INSN_BDT_S );
 
 			if (insn & 0x8000) {
 				R15-=4;
@@ -1018,7 +1038,7 @@ static void HandleMemBlock( UINT32 insn)
 		                implementations (the results are officially undefined).
 		                */
 				if ((insn&(1<<rb))==0)
-					SetRegister(rb,GetRegister(rb)+result*4);
+					SetModeRegister(mode, rb, GetModeRegister(mode, rb) + result * 4);
 			}
 		}
 		else
@@ -1032,7 +1052,16 @@ static void HandleMemBlock( UINT32 insn)
 				rbp = rbp - (- 4);
 			}
 
-			result = loadDec( insn&0xffff, rbp, insn&INSN_BDT_S, &deferredR15, &defer );
+			// S Flag Set, but R15 not in list = Transfers to User Bank
+			if ((insn & INSN_BDT_S) && !(insn & 0x8000))
+			{
+				int curmode = MODE;
+				R15 = R15 & ~MODE_MASK;
+				result = loadDec( insn&0xffff, rbp, insn&INSN_BDT_S, &deferredR15, &defer );
+				R15 = R15 | curmode;
+			}
+			else
+				result = loadDec( insn&0xffff, rbp, insn&INSN_BDT_S, &deferredR15, &defer );
 
 			if (insn & INSN_BDT_W)
 			{
@@ -1073,7 +1102,18 @@ static void HandleMemBlock( UINT32 insn)
 			{
 				rbp = rbp + (- 4);
 			}
-			result = storeInc( insn&0xffff, rbp );
+
+			// S bit set = Transfers to User Bank
+			if (insn & INSN_BDT_S)
+			{
+				int curmode = MODE;
+				R15 = R15 & ~MODE_MASK;
+				result = storeInc( insn&0xffff, rbp );
+				R15 = R15 | curmode;
+			}
+			else
+				result = storeInc( insn&0xffff, rbp );
+
 			if( insn & INSN_BDT_W )
 			{
 				SetRegister(rb,GetRegister(rb)+result*4);
@@ -1086,7 +1126,18 @@ static void HandleMemBlock( UINT32 insn)
 			{
 				rbp = rbp - (- 4);
 			}
-			result = storeDec( insn&0xffff, rbp );
+
+			// S bit set = Transfers to User Bank
+			if (insn & INSN_BDT_S)
+			{
+				int curmode = MODE;
+				R15 = R15 & ~MODE_MASK;
+				result = storeDec( insn&0xffff, rbp );
+				R15 = R15 | curmode;
+			}
+			else
+				result = storeDec( insn&0xffff, rbp );
+
 			if( insn & INSN_BDT_W )
 			{
 				SetRegister(rb,GetRegister(rb)-result*4);
@@ -1120,8 +1171,8 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 	/* All shift types ending in 1 are Rk, not #k */
 	if( t & 1 )
 	{
-		//see p35 for check on this
-		k = GetRegister(k >> 1)&0x1f;
+		// Only the least significant byte of the contents of Rs is used to determine the shift amount
+		k = GetRegister(k >> 1) & 0xff;
 		arm_icount -= S_CYCLE;
 		if( k == 0 ) /* Register shift by 0 is a no-op */
 		{
@@ -1132,15 +1183,20 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 	/* Decode the shift type and perform the shift */
 	switch (t >> 1)
 	{
-	case 0:						/* LSL */
-		if (pCarry)
+	case 0:                     /* LSL */
+		if (k >= 32)
+		{
+			if (pCarry)
+				*pCarry = (k == 32) ? rm & 1 : 0;
+			return 0;
+		}
+		else if (pCarry)
 		{
 			*pCarry = k ? (rm & (1 << (32 - k))) : (R15 & C_MASK);
 		}
 		return k ? LSL(rm, k) : rm;
-		break;
 
-	case 1:			       			/* LSR */
+	case 1:                         /* LSR */
 		if (k == 0 || k == 32)
 		{
 			if (pCarry) *pCarry = rm & SIGN_BIT;
@@ -1156,7 +1212,6 @@ static UINT32 decodeShift( UINT32 insn, UINT32 *pCarry)
 			if (pCarry) *pCarry = (rm & (1 << (k - 1)));
 			return LSR(rm, k);
 		}
-		break;
 
 	case 2:						/* ASR */
 		if (k == 0 || k > 32)

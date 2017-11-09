@@ -128,7 +128,7 @@ static UINT32 sh2_GetTotalCycles()
 	return sh2->cycle_counts + sh2->sh2_cycles_to_run - sh2->sh2_icount;
 }
 
-static const int div_tab[4] = { 3, 5, 7, 0 };
+static const int div_tab[4] = { 3, 5, 3, 0 }; // 3, 5, 7, 0 breaks music in sol divide -dink
 
 enum {
 	ICF  = 0x00800000,

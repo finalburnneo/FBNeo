@@ -128,7 +128,7 @@ static UINT32 sh2_GetTotalCycles()
 	return sh2->cycle_counts + sh2->sh2_cycles_to_run - sh2->sh2_icount;
 }
 
-static const int div_tab[4] = { 3, 5, 3, 0 }; // 3, 5, 7, 0 breaks music in sol divide -dink
+static const int div_tab[4] = { 3, 5, 7, 0 };
 
 enum {
 	ICF  = 0x00800000,
@@ -2759,11 +2759,16 @@ SH2_INLINE void op1111(UINT16 /*opcode*/)
 static void sh2_timer_resync(void)
 {
 	int divider = div_tab[(sh2->m[5] >> 8) & 3];
-	UINT32 cur_time = sh2_GetTotalCycles();
+	UINT64 cur_time = sh2_GetTotalCycles();
+	UINT64 add = (cur_time - sh2->frc_base) >> divider;
 
-	if(divider)
-		sh2->frc += (cur_time - sh2->frc_base) >> divider;
-	sh2->frc_base = cur_time;
+	if (add > 0)
+	{
+		if(divider)
+			sh2->frc += add;
+
+		sh2->frc_base = cur_time;
+	}
 }
 
 static void sh2_timer_activate(void)
@@ -2862,7 +2867,8 @@ static void sh2_timer_callback()
 {
 	UINT16 frc;
 //	int cpunum = param;
-//	cpuintrf_push_context(cpunum);
+	//	cpuintrf_push_context(cpunum);
+	//bprintf(0, _T(" - timer callback\n"));
 	sh2_timer_resync();
 
 	frc = sh2->frc;
@@ -3034,7 +3040,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 	case 0x04: // TIER, FTCSR, FRC
 		if((mem_mask & 0x00ffffff) != 0xffffff)
 			sh2_timer_resync();
-		//logerror("SH2.%d: TIER write %04x @ %04x\n", sh2->cpu_number, data >> 16, mem_mask>>16);
+		//bprintf(0, _T("SH2: TIER write %04x @ %04x\n"), data >> 16, mem_mask>>16);
 		sh2->m[4] = (sh2->m[4] & ~(ICF|OCFA|OCFB|OVF)) | (old & sh2->m[4] & (ICF|OCFA|OCFB|OVF));
 		COMBINE_DATA(&sh2->frc);
 		if((mem_mask & 0x00ffffff) != 0xffffff)
@@ -3042,7 +3048,7 @@ static void sh2_internal_w(UINT32 offset, UINT32 data, UINT32 mem_mask)
 		sh2_recalc_irq();
 		break;
 	case 0x05: // OCRx, TCR, TOCR
-		//logerror("SH2.%d: TCR write %08x @ %08x\n", sh2->cpu_number, data, mem_mask);
+		//bprintf(0, _T("SH2: TCR write %08x @ %08x\n"), data, mem_mask);
 		sh2_timer_resync();
 		if(sh2->m[5] & 0x10)
 			sh2->ocrb = (sh2->ocrb & (mem_mask >> 16)) | ((data & ~mem_mask) >> 16);
@@ -3211,8 +3217,8 @@ static UINT32 sh2_internal_r(UINT32 offset, UINT32 /*mem_mask*/)
 		return (sh2->m[0x38] & 0x7fffffff) | 0x80000000;
 
 	case 0x78: // BCR1
-//		return sh2->is_slave ? 0x00008000 : 0;
-		return 0;
+		return /*(m_is_slave ? 0x00008000 : 0)*/ 0 | (sh2->m[0x78] & 0x7fff);
+		//return 0;
 
 	case 0x41: // dvdntl mirrors
 	case 0x47:

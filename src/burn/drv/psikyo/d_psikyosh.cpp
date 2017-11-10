@@ -34,6 +34,8 @@ static INT32 previous_graphics_bank;
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[4] = { 0, 0, 0, 0 };
 
+static UINT32 cpu_rate = 0; // cpu speed of game.
+
 static UINT8 DrvReset;
 static UINT32 DrvInputs;
 static UINT8 DrvDips[2];
@@ -549,7 +551,7 @@ UINT8 __fastcall hack_read_byte(UINT32 a)
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)Sh2TotalCycles() * nSoundRate / 28636350;
+	return (INT64)Sh2TotalCycles() * nSoundRate / cpu_rate;
 }
 
 static void DrvIRQCallback(INT32, INT32 nStatus)
@@ -716,6 +718,12 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 type, INT32 gfx_max, INT32 g
 		Sh2SetWriteLongHandler(0,		psx_write_long);
 	}
 
+	cpu_rate = 28636350;
+
+	if (strcmp(BurnDrvGetTextA(DRV_NAME), "soldivid") == 0 || strcmp(BurnDrvGetTextA(DRV_NAME), "soldividk") == 0) {
+		cpu_rate = 28636350/2; // sol divide plays the music at the right speed this way.
+	}
+
 	Sh2MapHandler(1, 0x06000000 | speedhack_address, 0x0600ffff | speedhack_address, MAP_ROM);
 	Sh2SetReadByteHandler (1,		hack_read_byte);
 	Sh2SetReadWordHandler (1,		hack_read_word);
@@ -723,7 +731,7 @@ static INT32 DrvInit(INT32 (*LoadCallback)(), INT32 type, INT32 gfx_max, INT32 g
 
 	BurnYMF278BInit(0, DrvSndROM, 0x400000, &DrvIRQCallback, DrvSynchroniseStream);
 	BurnYMF278BSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
-	BurnTimerAttachSh2(28636350);
+	BurnTimerAttachSh2(cpu_rate);
 
 	EEPROMInit(&eeprom_interface_93C56);
 
@@ -766,7 +774,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	BurnTimerEndFrame(28636350 / 60);
+	BurnTimerEndFrame(cpu_rate / 60);
 
 	Sh2SetIRQLine(4, CPU_IRQSTATUS_ACK);
 

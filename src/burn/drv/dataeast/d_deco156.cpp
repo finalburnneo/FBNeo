@@ -154,9 +154,10 @@ static UINT8 hvysmsh_read_byte(UINT32 address)
 
 	switch (address)
 	{
-		case 0x120000:
+		case 0x120000: {
 			UINT32 ret = (DrvInputs[0] & ~0x01100000) | (deco16_vblank ? 0x00100000 : 0) | (EEPROMRead() ? 0x01000000 : 0);
 			return ret >> ((address & 3) * 8);
+		}
 
 		case 0x140000:
 			return MSM6295ReadStatus(0);
@@ -293,9 +294,10 @@ static UINT8 wcvol95_read_byte(UINT32 address)
 
 	switch (address)
 	{
-		case 0x140000:
+		case 0x140000: {
 			UINT32 ret = (DrvInputs[0] & ~0x01100000) | (deco16_vblank ? 0x00100000 : 0) | (EEPROMRead() ? 0x01000000 : 0);
 			return ret >> ((address & 3) * 8);
+		}
 
 		case 0x1a0000:
 		case 0x1a0001:

@@ -4017,7 +4017,7 @@ struct BurnDriver BurnDrvFghthistb = {
 };
 
 
-// Fighter's History (US ver 42-06, DE-0395-1 PCB)
+// Fighter's History (US ver 42-09, DE-0396-0 PCB)
 
 static struct BurnRomInfo fghthistuRomDesc[] = {
 	{ "lj00-3.1f",		0x080000, 0x17543d60, 1 | BRF_PRG | BRF_ESS }, //  0 ARM Code
@@ -4054,7 +4054,7 @@ static INT32 FghthistuInit()
 
 struct BurnDriver BurnDrvFghthistu = {
 	"fghthistu", "fghthist", NULL, NULL, "1993",
-	"Fighter's History (US ver 42-06, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Fighter's History (US ver 42-09, DE-0396-0 PCB)\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistuRomInfo, fghthistuRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
@@ -4505,8 +4505,6 @@ struct BurnDriver BurnDrvNslasheru = {
 	NslasheruInit, DrvExit, DrvFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
-
-
 
 
 // Tattoo Assassins (US prototype)

@@ -58,7 +58,7 @@ static struct BurnInputInfo HvysmshInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 18,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 19,	"diag"		},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy1 + 19,	"diag"		},
 };
 
 STDINPUTINFO(Hvysmsh)
@@ -570,8 +570,6 @@ static INT32 Wcvol95Init()
 
 static INT32 DrvExit()
 {
-	GenericTilesExit();
-
 	EEPROMExit();
 
 	ArmExit();
@@ -674,6 +672,8 @@ static INT32 DrvDraw()
 {
 	palette_update();
 
+	BurnTransferClear();
+
 	deco16_pf12_update();
 	deco16_clear_prio_map();
 
@@ -685,6 +685,23 @@ static INT32 DrvDraw()
 	BurnTransferCopy(DrvPalette);
 
 	return 0;
+}
+
+inline static void ClearOpposites32(UINT32* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+
+	if ((*nJoystickInputs & 0x0300) == 0x0000) {
+		*nJoystickInputs |= 0x0300;
+	}
+	if ((*nJoystickInputs & 0x0c00) == 0x0000) {
+		*nJoystickInputs |= 0x0c00;
+	}
 }
 
 static INT32 DrvFrame()
@@ -699,6 +716,8 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 32; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
+
+		ClearOpposites32(&DrvInputs[0]);
 	}
 
 	INT32 nTotalCycles = 28000000 / 58;

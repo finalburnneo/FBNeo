@@ -14091,7 +14091,7 @@ static struct BurnRomInfo KingballRomDesc[] = {
 	
 	{ "kbe1.ic4",      0x00800, 0x5be2c80a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 	{ "kbe2.ic5",      0x00800, 0xbb59e965, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "kbe3.ic6",      0x00800, 0x1c94dd31, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "kbe3.ic6",      0x00800, 0xfbc7d286, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 	{ "kbe2.ic7",      0x00800, 0xbb59e965, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 	
 	{ "chg1.1h",       0x00800, 0x9cd550e7, BRF_GRA | GAL_ROM_TILES_SHARED },

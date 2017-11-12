@@ -5883,19 +5883,21 @@ struct BurnDriver BurnDrvponpokov = {
 
 
 // The Glob (Pac-Man hardware)
+// Distributed by:  Eagle Conversions, 25 Eagle St., Bldg #5, Providence, RI 02908
+// Pac-Man PCB conversion kit. Includes a small daughtercard (2 roms + 4 PLDs, plugs in through the Z80 socket), 2 roms + 2 BPROMs
 
 static struct BurnRomInfo theglobpRomDesc[] = {
-	{ "glob.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "glob.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "u_2_the_glob_pg02284_eagle.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "u_3_the_glob_pg02284_eagle.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "glob.5e",      0x1000, 0x53688260, 2 | BRF_GRA },			//  2 Graphics
-	{ "glob.5f",      0x1000, 0x051f59c7, 2 | BRF_GRA },			//  3
+	{ "5_e_the_glob_pg02284_eagle.5e",      0x1000, 0x53688260, 2 | BRF_GRA },				//  2 Graphics
+	{ "5_f_the_glob_pg02284_eagle.5f",      0x1000, 0x051f59c7, 2 | BRF_GRA },				//  3
 
-	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },			//  4 Color Proms
-	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },			//  5
+	{ "7_f_the_glob.7f",      				0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Proms
+	{ "4_a_the_glob.4a",      				0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
-	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
+	{ "82s126.1m",    						0x0100, 0xa9cc86bf, 4 | BRF_SND },				//  6 Sound Prom
+	{ "82s126.3m"  ,  						0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 };
 
 STD_ROM_PICK(theglobp)
@@ -5930,17 +5932,17 @@ struct BurnDriver BurnDrvtheglobp = {
 // Super Glob (Pac-Man hardware)
 
 static struct BurnRomInfo sprglobpRomDesc[] = {
-	{ "glob.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "glob.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "u_2_the_glob_pg02284_eagle.u2",      0x2000, 0x829d0bea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "u_3_the_glob_pg02284_eagle.u3",      0x2000, 0x31de6628, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "5e_2532.dat",  0x1000, 0x1aa16109, 2 | BRF_GRA },			//  2 Graphics
-	{ "5f_2532.dat",  0x1000, 0xafe72a89, 2 | BRF_GRA },			//  3
+	{ "5e_2532.dat",  						0x1000, 0x1aa16109, 2 | BRF_GRA },				//  2 Graphics
+	{ "5f_2532.dat",  						0x1000, 0xafe72a89, 2 | BRF_GRA },				//  3
 
-	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },			//  4 Color Prom
-	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },			//  5
+	{ "7_f_the_glob.7f",      				0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Prom
+	{ "4_a_the_glob.4a",      				0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
-	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
+	{ "82s126.1m",    						0x0100, 0xa9cc86bf, 4 | BRF_SND },				//  6 Sound Prom
+	{ "82s126.3m"  ,  						0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 };
 
 STD_ROM_PICK(sprglobp)
@@ -5965,7 +5967,7 @@ static struct BurnRomInfo sprglbpgRomDesc[] = {
 	{ "ic15.3",       0x1000, 0xa252047f, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "ic14.4",       0x1000, 0x7efa81f1, 1 | BRF_ESS | BRF_PRG },	//  3
 
-	{ "ic92.5",       0x2000, 0xE54F484D, 2 | BRF_GRA },			//  4 Graphics
+	{ "ic92.5",       0x2000, 0xe54f484d, 2 | BRF_GRA },			//  4 Graphics
 
 	{ "ic78.prm",     0x0020, 0x1f617527, 3 | BRF_GRA },			//  5 Color Prom
 	{ "ic88.prm",     0x0100, 0x28faa769, 3 | BRF_GRA },			//  6
@@ -5991,19 +5993,19 @@ struct BurnDriver BurnDrvsprglbpg = {
 // Beastie Feastie
 
 static struct BurnRomInfo beastfpRomDesc[] = {
-	{ "bf-u2.bin",    0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "bf-u3.bin",    0x2000, 0x8dbd76d0, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "bf-u2.bin",    			0x2000, 0x3afc517b, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "bf-u3.bin",    			0x2000, 0x8dbd76d0, 1 | BRF_ESS | BRF_PRG },	//  1
 
-	{ "beastf.5e",    0x1000, 0x5654dc34, 2 | BRF_GRA },			//  2 Graphics
-	{ "beastf.5f",    0x1000, 0x1b30ca61, 2 | BRF_GRA },			//  3
+	{ "beastf.5e",    			0x1000, 0x5654dc34, 2 | BRF_GRA },				//  2 Graphics
+	{ "beastf.5f",    			0x1000, 0x1b30ca61, 2 | BRF_GRA },				//  3
 
-	{ "glob.7f",      0x0020, 0x1f617527, 3 | BRF_GRA },			//  4 Color Proms
-	{ "glob.4a",      0x0100, 0x28faa769, 3 | BRF_GRA },			//  5
+	{ "7_f_the_glob.7f",      	0x0020, 0x1f617527, 3 | BRF_GRA },				//  4 Color Proms
+	{ "4_a_the_glob.4a",      	0x0100, 0x28faa769, 3 | BRF_GRA },				//  5
 
-	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  6 Sound Prom
-	{ "82s126.3m"  ,  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
+	{ "82s126.1m",    			0x0100, 0xa9cc86bf, 4 | BRF_SND },				//  6 Sound Prom
+	{ "82s126.3m"  ,  			0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  7 Timing Prom (not used)
 	
-	{ "beastf.ic4",   0x002c, 0xa6ab926d, 0 | BRF_OPT },			//  8 PAL
+	{ "beastf.ic4",   			0x002c, 0xa6ab926d, 0 | BRF_OPT },				//  8 PAL
 };
 
 STD_ROM_PICK(beastfp)

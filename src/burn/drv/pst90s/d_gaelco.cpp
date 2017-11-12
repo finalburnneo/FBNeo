@@ -1194,6 +1194,7 @@ struct BurnDriver BurnDrvManiacsp = {
 
 
 // Biomechanical Toy (Ver. 1.0.1885)
+/* PCB - REF.922804/2 */
 
 static struct BurnRomInfo biomtoyRomDesc[] = {
 	{ "d18",		0x80000, 0x4569ce64, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1227,22 +1228,23 @@ struct BurnDriver BurnDrvBiomtoy = {
 
 
 // Biomechanical Toy (Ver. 1.0.1884)
+/* PCB - REF.922804/2 */
 
 static struct BurnRomInfo biomtoyaRomDesc[] = {
 	{ "biomtoya.d18",	0x80000, 0x39b6cdbd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "biomtoya.d16",	0x80000, 0xab340671, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "h6",			0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "j6",			0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
-	{ "h7",			0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
-	{ "j7",			0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
-	{ "h9",			0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
-	{ "j9",			0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
-	{ "h10",		0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
-	{ "j10",		0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
+	{ "h6",				0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "j6",				0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
+	{ "h7",				0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
+	{ "j7",				0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
+	{ "h9",				0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
+	{ "j9",				0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
+	{ "h10",			0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
+	{ "j10",			0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
 
-	{ "c1",			0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
-	{ "c3",			0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+	{ "c1",				0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",				0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(biomtoya)
@@ -1259,7 +1261,42 @@ struct BurnDriver BurnDrvBiomtoya = {
 };
 
 
+// Biomechanical Toy (Ver. 1.0.1878)
+/* PCB - REF.922804/2 */
+
+static struct BurnRomInfo biomtoybRomDesc[] = {
+	{ "18.d18",			0x80000, 0x2dfadee3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "16.d16",			0x80000, 0xb35e3ca6, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "h6",				0x80000, 0x9416a729, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "j6",				0x80000, 0xe923728b, 2 | BRF_GRA },           //  3
+	{ "h7",				0x80000, 0x9c984d7b, 2 | BRF_GRA },           //  4
+	{ "j7",				0x80000, 0x0e18fac2, 2 | BRF_GRA },           //  5
+	{ "h9",				0x80000, 0x8c1f6718, 2 | BRF_GRA },           //  6
+	{ "j9",				0x80000, 0x1c93f050, 2 | BRF_GRA },           //  7
+	{ "h10",			0x80000, 0xaca1702b, 2 | BRF_GRA },           //  8
+	{ "j10",			0x80000, 0x8e3e96cc, 2 | BRF_GRA },           //  9
+
+	{ "c1",				0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",				0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+};
+
+STD_ROM_PICK(biomtoyb)
+STD_ROM_FN(biomtoyb)
+
+struct BurnDriver BurnDrvBiomtoyb = {
+	"biomtoyb", "biomtoy", NULL, NULL, "1995",
+	"Biomechanical Toy (Ver. 1.0.1878)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, biomtoybRomInfo, biomtoybRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
+	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
 // Squash (Ver. 1.0)
+/* PCB - REF.922804/1 */
 
 static struct BurnRomInfo squashRomDesc[] = {
 	{ "squash.d18",		0x20000, 0xce7aae96, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
@@ -1288,6 +1325,7 @@ struct BurnDriver BurnDrvSquash = {
 
 
 // Thunder Hoop (Ver. 1)
+/* PCB - REF.922804/1 */
 
 static struct BurnRomInfo thoopRomDesc[] = {
 	{ "th18dea1.040",	0x080000, 0x59bad625, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code

@@ -671,7 +671,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// TH Strikes Back
+// TH Strikes Back (Non North America, Version 1.0, Checksum 020E0867)
+/* REF.940411 PCB */
 
 static struct BurnRomInfo thoop2RomDesc[] = {
 	{ "th2c23.c23",				0x080000, 0x3e465753, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -690,10 +691,39 @@ STD_ROM_FN(thoop2)
 
 struct BurnDriver BurnDrvThoop2 = {
 	"thoop2", NULL, NULL, NULL, "1994",
-	"TH Strikes Back\0", NULL, "Gaelco", "Miscellaneous",
+	"TH Strikes Back (Non North America, Version 1.0, Checksum 020E0867)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, thoop2RomInfo, thoop2RomName, NULL, NULL, Thoop2InputInfo, Thoop2DIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// TH Strikes Back (Non North America, Version 1.0, Checksum 020EB356)
+/* REF.940411 PCB */
+
+static struct BurnRomInfo thoop2aRomDesc[] = {
+	{ "3.c23",					0x080000, 0x6cd4a8dc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "2.c22",					0x080000, 0x59ba9b43, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "thoop2_ds5002fp.bin",	0x008000, 0x6881384d, 2 | BRF_PRG | BRF_ESS }, //  2 MCU Code
+
+	{ "th2-h8.h8",				0x400000, 0x60328a11, 3 | BRF_GRA },           //  3 Graphics
+	{ "th2-h12.h12",			0x400000, 0xb25c2d3e, 3 | BRF_GRA },           //  4
+
+	{ "th2-c1.c1",				0x100000, 0x8fac8c30, 4 | BRF_SND },           //  5 Samples
+};
+
+STD_ROM_PICK(thoop2a)
+STD_ROM_FN(thoop2a)
+
+struct BurnDriver BurnDrvThoop2a = {
+	"thoop2a", "thoop2", NULL, NULL, "1994",
+	"TH Strikes Back (Non North America, Version 1.0, Checksum 020EB356)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, thoop2aRomInfo, thoop2aRomName, NULL, NULL, Thoop2InputInfo, Thoop2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

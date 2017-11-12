@@ -1070,6 +1070,41 @@ static struct BurnRomInfo Lstwrk99RomDesc[] = {
 STD_ROM_PICK(Lstwrk99)
 STD_ROM_FN(Lstwrk99)
 
+static struct BurnRomInfo Lstwrb99RomDesc[] = {
+	// copyright blanked, seems based on 99lstwara, given it has a second shot type instead of the shields.
+	// bg_tilemap is wrong in some levels
+	{ "15.2764",       0x02000, 0xf9367b9d, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "16.2764",       0x02000, 0x04c3316a, BRF_ESS | BRF_PRG }, //  1
+	{ "17.2764",       0x02000, 0x02aa4de5, BRF_ESS | BRF_PRG }, //  2
+	
+	{ "11.2764",       0x02000, 0xaa3e0996, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "12.2764",       0x02000, 0xa59d3d1b, BRF_ESS | BRF_PRG }, //  4
+	{ "13.2764",       0x02000, 0xfe31975e, BRF_ESS | BRF_PRG }, //  5
+	{ "14.2764",       0x02000, 0x683481a5, BRF_ESS | BRF_PRG }, //  6
+	
+	{ "1.2732",   	   0x01000, 0x8ed6855b, BRF_GRA },	     //  7	Characters
+	
+	{ "8.2764",        0x02000, 0xb161c853, BRF_GRA },	     //  8	Tiles
+	{ "9.2764",        0x02000, 0x44fd4c31, BRF_GRA },	     //  9
+	{ "10.2764",       0x02000, 0xb3dbc16b, BRF_GRA },	     //  10
+	
+	{ "2.27128",       0x04000, 0x34dba8f9, BRF_GRA },	     //  11	Sprites
+	{ "3.27128",       0x04000, 0x8bd7d5b6, BRF_GRA },	     //  12
+	{ "4.27128",       0x04000, 0x64036ea0, BRF_GRA },	     //  13
+	{ "5.27128",       0x04000, 0x2f7352e4, BRF_GRA },	     //  14
+	{ "6.27128",       0x04000, 0x7d9e1e7e, BRF_GRA },	     //  15
+	{ "7.27128",       0x04000, 0x8b6fa1c4, BRF_GRA },	     //  16
+	
+	// not dumped for this PCB
+	{ "b.1j",          0x00100, 0x3ea35431, BRF_GRA },	     //  17	PROMs
+	{ "g.1h",          0x00100, 0xacd7a69e, BRF_GRA },	     //  18
+	{ "r.1f",          0x00100, 0xb7f48b41, BRF_GRA },	     //  19
+	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  20
+};
+
+STD_ROM_PICK(Lstwrb99)
+STD_ROM_FN(Lstwrb99)
+
 static struct BurnRomInfo SrdmissnRomDesc[] = {
 	{ "5.t2",          0x04000, 0xa682b48c, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
 	{ "7.t3",          0x04000, 0x1719c58c, BRF_ESS | BRF_PRG }, //  1
@@ -1712,7 +1747,7 @@ static INT32 KyugoInit()
 		 KyugoSizeZ80Rom1 = 0x4000;
 		 KyugoSizeZ80Rom2 = 0x2000;
 	}
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sonofphx") || !strcmp(BurnDrvGetTextA(DRV_NAME), "repulse") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwar") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwara") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwark")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sonofphx") || !strcmp(BurnDrvGetTextA(DRV_NAME), "repulse") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwar") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwara") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwark") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwarb")) {
 		KyugoNumZ80Rom1 = 3;
 	}
 	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "skywolf") || !strcmp(BurnDrvGetTextA(DRV_NAME), "srdmissn") || !strcmp(BurnDrvGetTextA(DRV_NAME), "fx")) {
@@ -1916,7 +1951,7 @@ static INT32 KyugoInit()
 		ZetClose();
 	}
 	
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sonofphx") || !strcmp(BurnDrvGetTextA(DRV_NAME), "repulse") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwar") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwara") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwark")) {
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "sonofphx") || !strcmp(BurnDrvGetTextA(DRV_NAME), "repulse") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwar") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwara") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwark") || !strcmp(BurnDrvGetTextA(DRV_NAME), "99lstwarb")) {
 		ZetOpen(0);
 		ZetSetOutHandler(GyrodinePortWrite1);
 		ZetClose();
@@ -2615,7 +2650,7 @@ struct BurnDriver BurnDrvRepulse = {
 
 struct BurnDriver BurnDrv99lstwar = {
 	"99lstwar", "repulse", NULL, NULL, "1985",
-	"'99: The Last War\0", NULL, "Proma", "Kyugo",
+	"'99: The Last War (set 1)\0", NULL, "Crux / Proma", "Kyugo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, Lstwar99RomInfo, Lstwar99RomName, NULL, NULL, KyugoInputInfo, SonofphxDIPInfo,
@@ -2625,7 +2660,7 @@ struct BurnDriver BurnDrv99lstwar = {
 
 struct BurnDriver BurnDrv99lstwara = {
 	"99lstwara", "repulse", NULL, NULL, "1985",
-	"'99: The Last War (alternate)\0", NULL, "Proma", "Kyugo",
+	"'99: The Last War (set 2)\0", NULL, "Crux / Proma", "Kyugo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, Lstwra99RomInfo, Lstwra99RomName, NULL, NULL, KyugoInputInfo, SonofphxDIPInfo,
@@ -2635,10 +2670,20 @@ struct BurnDriver BurnDrv99lstwara = {
 
 struct BurnDriver BurnDrv99lstwark = {
 	"99lstwark", "repulse", NULL, NULL, "1985",
-	"'99: The Last War (Kyugo)\0", NULL, "Kyugo", "Kyugo",
+	"'99: The Last War (Kyugo)\0", NULL, "Crux / Kyugo", "Kyugo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, Lstwrk99RomInfo, Lstwrk99RomName, NULL, NULL, KyugoInputInfo, SonofphxDIPInfo,
+	KyugoInit, KyugoExit, KyugoFrame, NULL, KyugoScan,
+	NULL, 0x100, 224, 288, 3, 4
+};
+
+struct BurnDriver BurnDrv99lstwarb = {
+	"99lstwarb", "repulse", NULL, NULL, "1985",
+	"'99: The Last War (bootleg)\0", NULL, "bootleg", "Kyugo",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, Lstwrb99RomInfo, Lstwrb99RomName, NULL, NULL, KyugoInputInfo, SonofphxDIPInfo,
 	KyugoInit, KyugoExit, KyugoFrame, NULL, KyugoScan,
 	NULL, 0x100, 224, 288, 3, 4
 };

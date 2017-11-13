@@ -2,11 +2,7 @@
 // Based on MAME driver by Bryan McPhail
 
 // todo stuff:
-//   fast palette updates or recalc on palbuf change for games that use palbuf instead(?)
-//   fighters history service mode "sorta" crashes
-//   fix bsmt (later :)
-
-//#define USE_BSMT
+//   debug bsmt, some crackles in audio. see text @ top of devices/decobsmt.cpp
 
 #include "tiles_generic.h"
 #include "arm_intf.h"
@@ -18,9 +14,7 @@
 #include "burn_ym2151.h"
 #include "burn_gun.h"
 #include "eeprom.h"
-#ifdef USE_BSMT
 #include "decobsmt.h"
-#endif
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -325,21 +319,11 @@ static struct BurnInputInfo TattassInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"},
+	{"Service Mode",		BIT_DIGITAL,	DrvJoy2 + 3,	"diag"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(Tattass)
-
-static struct BurnDIPInfo TattassDIPList[]=
-{
-	{0x1a, 0xff, 0xff, 0x08, NULL		},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode (No Toggle)"		},
-	{0x1a, 0x01, 0x08, 0x08, "Off"		},
-	{0x1a, 0x01, 0x08, 0x00, "On"			},
-};
-
-STDDIPINFO(Tattass)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo DragngunInputList[] = {
@@ -853,16 +837,16 @@ static void tattass_control_write(UINT32 data)
 	/* Playfield control - Only written in full word memory accesses */
 //	global_priority = data & 3;
 
-#ifdef USE_BSMT
 	if (data & 0x80) {
 		bsmt_in_reset = 0;
-	//	bprintf (0, _T("Snd reset 0\n"));
+		//bprintf (0, _T("Snd reset 0\n"));
 	} else {
+		M6809Open(0);
+		decobsmt_reset_line(1);
+		M6809Close();
 		bsmt_in_reset = 1;
-		decobsmt_reset();
-	//	bprintf (0, _T("Snd reset 1\n"));
+		bprintf (0, _T("Snd reset 1\n"));
 	}
-#endif
 }
 
 static UINT16 tattass_read_B()
@@ -880,6 +864,10 @@ static void fghthist_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xffffff;
 
+	if (game_select == 3 && address >= 0x200000 && address <= 0x207fff) {
+		return deco146_104_prot_wb(0, ((address & 0x7ffc) >> 1) | (address & 1), data);
+	}
+
 	switch (address)
 	{
 		case 0x1201fc:
@@ -892,9 +880,16 @@ static void fghthist_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x150000:
-#ifdef USE_BSMT
-			if (use_bsmt) tattass_sound_cb(data);
-#endif
+			if (game_select == 3) {
+				tattass_control_write(data);
+			}
+		return;
+
+		case 0x120000:
+		case 0x120001:
+		case 0x120002:
+		case 0x120003: // tattass nop's
+		case 0x150001: // tattass vol (unused)
 		return;
 	}
 
@@ -908,6 +903,10 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 	if (address >= 0x200000 && address <= 0x207fff) {
 		deco146_104_prot_ww(0, (address & 0x7ffc) >> 1, data >> 16);
 		return;
+	}
+
+	if (game_select == 3 && address >= 0xf8000 && address <= 0xfffff) {
+		return; // nop;
 	}
 
 	Write16Long(DrvSprRAM2,				0x170000, 0x171fff) // 16-bit - nslasher
@@ -954,6 +953,15 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 		case 0x140000:
 			ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		return;
+
+		case 0x164000:
+		case 0x164004:
+		case 0x164008:
+		case 0x16400c:
+		case 0x16c000:
+		case 0x174000:
+		case 0x17c000:
+			return; // nop (tattass)
 
 		case 0x16c008:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
@@ -1317,13 +1325,11 @@ static INT32 DrvDoReset()
 
 	if (use_bsmt)
 	{
-#ifdef USE_BSMT
 		bsmt_in_reset = 0;
-	//	decobsmt_reset();
+		decobsmt_reset();
 		M6809Open(0);
 		M6809Reset();
 		M6809Close();
-#endif
 	}
 	else if (use_z80)
 	{
@@ -1334,15 +1340,11 @@ static INT32 DrvDoReset()
 		deco16SoundReset();
 	}
 
-	DrvYM2151WritePort(0, 0);
+	if (game_select != 3) DrvYM2151WritePort(0, 0);
 
 	if (game_select == 4) MSM6295Reset(2);
 
 	EEPROMReset();
-
-	if (EEPROMAvailable() == 0) {
-		//EEPROMFill(DrvEEPROM, (charlienmode) ? 0xff : 0x00, 0x80);
-	}
 
 	deco16Reset();
 
@@ -1908,7 +1910,7 @@ static INT32 TattassInit()
 		if (BurnLoadRom(DrvGfxROM3 + 0x880000,	 20, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x100000,	 21, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x300000,	 22, 1)) return 1;
-		if (BurnLoadRom(DrvGfxROM3 + 0x500000,	 33, 1)) return 1;
+		if (BurnLoadRom(DrvGfxROM3 + 0x500000,	 23, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x700000,	 24, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x900000,	 25, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x180000,	 26, 1)) return 1;
@@ -1945,6 +1947,8 @@ static INT32 TattassInit()
 
 		if (BurnLoadRom(DrvTMSROM  + 0x000000,   52, 1)) return 1;
 
+		//BurnByteswap(DrvTMSROM, 0x2000);
+
 		deco56_decrypt_gfx(DrvGfxROM1, 0x200000);
 		deco56_decrypt_gfx(DrvGfxROM2, 0x200000);
 
@@ -1974,9 +1978,7 @@ static INT32 TattassInit()
 	deco_146_104_set_port_a_cb(fghthist_read_A); // inputs 0
 	deco_146_104_set_port_b_cb(tattass_read_B); // eeprom
 	deco_146_104_set_port_c_cb(fghthist_read_C); // inputs 1
-#ifdef USE_BSMT
 	deco_146_104_set_soundlatch_cb(tattass_sound_cb);
-#endif
 	deco_146_104_set_interface_scramble_interleave();
 
 	deco16Init(0, 0, 1);
@@ -1991,10 +1993,8 @@ static INT32 TattassInit()
 	deco16_set_bank_callback(2, tattass_bank_callback);
 	deco16_set_bank_callback(3, tattass_bank_callback);
 
-#ifdef USE_BSMT
-	use_bsmt = 1;
-	decobsmt_init(DrvHucROM, DrvHucRAM, DrvTMSROM, DrvTMSRAM, DrvSndROM0, 0x800000);
-#endif
+	use_bsmt = 1; // needs this set regardless of USE_BSMT define!
+	decobsmt_init(DrvHucROM, DrvHucRAM, DrvTMSROM, DrvTMSRAM, DrvSndROM0, 0x200000);
 
 	DrvDoReset();
 
@@ -2169,9 +2169,7 @@ static INT32 DrvExit()
 	if (use_bsmt)
 	{
 		use_bsmt = 0;
-#ifdef USE_BSMT
-		// iq_132
-#endif
+		decobsmt_exit();
 	}
 	else if (use_z80)
 	{
@@ -3437,15 +3435,11 @@ static INT32 DrvBSMTFrame()
 	}
 
 	ArmNewFrame();
-#ifdef USE_BSMT
 	decobsmt_new_frame();
-#endif
 	{
 		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
 
-		if (game_select == 1 || game_select == 2 || game_select == 3) {
-			DrvInputs[1] = (DrvInputs[1] & ~0x18) | (DrvDips[0] & 8);
-		}
+		DrvInputs[1] = (DrvInputs[1] & ~0x10);
 
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -3456,25 +3450,23 @@ static INT32 DrvBSMTFrame()
 
 	INT32 nInterleave = 274;
 //	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[3] = { 7000000 / 58, 4027500 / 58, 6000000 / 58 };
+	INT32 nCyclesTotal[3] = { 7000000 / 58, 1789790 / 58, 24000000/4 / 58 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	ArmOpen(0);
-#ifdef USE_BSMT
-	M6809Open(0);
-#endif
 	deco16_vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += ArmRun(nCyclesTotal[0] / nInterleave);
-#ifdef USE_BSMT
 		if (bsmt_in_reset == 0) {
+			M6809Open(0);
 			nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
 			if ((i & 0x1f) == 0x1f) decobsmt_firq_interrupt();
 			nCyclesDone[2] += tms32010_execute(nCyclesTotal[2] / nInterleave);
+			M6809Close();
 		}
-#endif
+
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
 		if (i == 8) deco16_vblank = 0;
@@ -3484,9 +3476,11 @@ static INT32 DrvBSMTFrame()
 			deco16_vblank = 1;
 		}
 	}
-#ifdef USE_BSMT
-	M6809Close();
-#endif
+
+	if (pBurnSoundOut) {
+		decobsmt_update();
+	}
+
 	ArmClose();
 
 	if (pBurnDraw) {
@@ -3519,6 +3513,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		deco16Scan();
 
+		if (game_select == 3) {
+			decobsmt_scan(nAction, pnMin);
+		}
+
 		if (uses_gun) {
 			BurnGunScan();
 		}
@@ -3530,7 +3528,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		DrvYM2151WritePort(0, DrvOkiBank);
+		if (game_select != 3) {
+			DrvYM2151WritePort(0, DrvOkiBank);
+		}
 	}
 
 	return 0;
@@ -4581,7 +4581,7 @@ struct BurnDriver BurnDrvTattass = {
 	"Tattoo Assassins (US prototype)\0", NULL, "Data East Pinball", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, tattassRomInfo, tattassRomName, NULL, NULL, TattassInputInfo, TattassDIPInfo,
+	NULL, tattassRomInfo, tattassRomName, NULL, NULL, TattassInputInfo, NULL,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4661,7 +4661,7 @@ struct BurnDriver BurnDrvTattassa = {
 	"Tattoo Assassins (Asia prototype)\0", NULL, "Data East Pinball", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, TattassInputInfo, TattassDIPInfo,
+	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, TattassInputInfo, NULL,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };

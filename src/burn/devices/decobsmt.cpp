@@ -1,13 +1,8 @@
 // FBAlpha "deco pinball bsmt" emulation
-//
-// tofix: clicks in sounds (voices), probably due to firq callback timing
-// tofix2: fix derpy in tatass_sound_cb, use instead of bitswap for niceness? (it returns diff. value than bitswap08!)
-//
 #include "burnint.h"
-//#include "m6809_intf.h"
+//#include "m6809_intf.h" // in decobsmt.h
 #include "bsmt2000.h"
 #include "decobsmt.h"
-#include "bitswap.h"
 
 static UINT8 bsmt_latch = 0;
 static UINT8 bsmt_reset = 0;
@@ -17,17 +12,14 @@ INT32 bsmt_in_reset = 0;
 
 void tattass_sound_cb(UINT16 data)
 {
-	UINT8 derpy = (data & 0xf6) | ((data & 1) << 3) | ((data & 8) >> 3); // this is wrong, fix later.
-	bsmt_comms = BITSWAP08(data&0xff,7,6,5,4,0,2,1,3);
-	bprintf(0, _T("sound CB: %X [derpy %X].\n"), data, derpy);
+	bsmt_comms = (data & 0xf6) | ((data & 1) << 3) | ((data & 8) >> 3);
 }
 
 static void decobsmt_write(UINT16 address, UINT8 data)
 {
-//bprintf (0, _T("M6809 Write:  %4.4x, %2.2x\n"), address, data);
 	if ((address & 0xff00) == 0xa000) {
 		bsmt2k_write_reg((address & 0xff) ^ 0xff);
-		bsmt2k_write_data((bsmt_latch<<8)|data);
+		bsmt2k_write_data((bsmt_latch << 8) | data);
 		M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 	}
@@ -39,7 +31,6 @@ static void decobsmt_write(UINT16 address, UINT8 data)
 			UINT8 r = data ^ bsmt_reset;
 			bsmt_reset = data;
 			if ((r & 0x80) && (data & 0x80) == 0) {
-				bprintf(0, _T("- decoBSMT Reset!\n"));
 				bsmt2kResetCpu();
 			}
 		}
@@ -53,7 +44,6 @@ static void decobsmt_write(UINT16 address, UINT8 data)
 
 static UINT8 decobsmt_read(UINT16 address)
 {
-//bprintf (0, _T("M6809 read:  %4.4x\n"), address);
 	switch (address)
 	{
 		case 0x2002:
@@ -81,7 +71,7 @@ void decobsmt_firq_interrupt() // 489 times per second (58hz) - 8.5 times
 
 static void decobsmt_ready_callback()
 {
-	M6809SetIRQLine(0, CPU_IRQSTATUS_ACK); /* BSMT is ready */
+	M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 void decobsmt_reset()

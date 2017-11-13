@@ -156,7 +156,7 @@ void bsmt2kInit(INT32 clock, UINT8 *tmsrom, UINT8 *tmsram, UINT8 *data, INT32 si
 	tms32010_set_read_port_handler(bsmt2k_read_port);
 
 	DACInit(0, 0, 0, BSMTSyncDAC);
-	DACSetRoute(0, 2.00, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 4.00, BURN_SND_ROUTE_BOTH);
 	DACStereoMode(0);
 }
 

@@ -1,9 +1,6 @@
 // FB Alpha Deco32 driver module
 // Based on MAME driver by Bryan McPhail
 
-// todo stuff:
-//   debug bsmt, some crackles in audio. see text @ top of devices/decobsmt.cpp
-
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "h6280_intf.h"
@@ -445,7 +442,7 @@ void deco32_z80_soundlatch_write(UINT16 data)
 
 	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
-			
+
 void deco32_z80_sound_reset()
 {
 	ZetOpen(0);
@@ -519,14 +516,6 @@ void deco32_z80_sound_scan(INT32 nAction, INT32 */*pnMin*/)
 		SCAN_VAR(deco32_sound_irq);
 	}
 }
-
-
-
-
-
-
-
-
 
 static void (*raster1_irq_cb)(INT32 param) = NULL;
 static void (*raster2_irq_cb)(INT32 param) = NULL;
@@ -839,13 +828,11 @@ static void tattass_control_write(UINT32 data)
 
 	if (data & 0x80) {
 		bsmt_in_reset = 0;
-		//bprintf (0, _T("Snd reset 0\n"));
 	} else {
 		M6809Open(0);
 		decobsmt_reset_line(1);
 		M6809Close();
 		bsmt_in_reset = 1;
-		bprintf (0, _T("Snd reset 1\n"));
 	}
 }
 
@@ -853,11 +840,6 @@ static UINT16 tattass_read_B()
 {
 	return m_tattass_eprom_bit;
 }
-
-
-
-
-
 
 
 static void fghthist_write_byte(UINT32 address, UINT8 data)
@@ -1854,6 +1836,9 @@ static INT32 TattassInit()
 {
 	game_select = 3;
 	has_ace = 1;
+
+	BurnSetRefreshRate(58.0); // 58hz for bsmt
+
 	GenericTilesInit(); // for allocating memory for pTempDraw;
 
 	gfxlen[0] = 0x400000;
@@ -3449,7 +3434,6 @@ static INT32 DrvBSMTFrame()
 	}
 
 	INT32 nInterleave = 274;
-//	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 7000000 / 58, 1789790 / 58, 24000000/4 / 58 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
@@ -3462,7 +3446,13 @@ static INT32 DrvBSMTFrame()
 		if (bsmt_in_reset == 0) {
 			M6809Open(0);
 			nCyclesDone[1] += M6809Run(nCyclesTotal[1] / nInterleave);
-			if ((i & 0x1f) == 0x1f) decobsmt_firq_interrupt();
+
+			if (nCurrentFrame&1) { // needs 8.43 firq's per frame, to simplify, we'll do an extra firq every other frame.
+				if ((i%34) == 33) decobsmt_firq_interrupt(); // 8 (per frame)
+			} else {
+				if ((i%30) == 29) decobsmt_firq_interrupt(); // 9
+			}
+
 			nCyclesDone[2] += tms32010_execute(nCyclesTotal[2] / nInterleave);
 			M6809Close();
 		}
@@ -3525,6 +3515,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(global_priority);
 		SCAN_VAR(DrvOkiBank);
+		SCAN_VAR(raster_irq_target);
+		SCAN_VAR(raster_irq_masked);
+		SCAN_VAR(raster_irq);
+		SCAN_VAR(vblank_irq);
+		SCAN_VAR(lightgun_irq);
+		SCAN_VAR(raster_irq_scanline);
+		SCAN_VAR(lightgun_latch);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -3535,7 +3532,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	return 0;
 }
-
 
 
 // Captain America and The Avengers (Asia Rev 1.4)

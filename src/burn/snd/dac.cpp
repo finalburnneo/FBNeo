@@ -6,6 +6,8 @@
 struct dac_info
 {
 	INT16	Output;
+	INT16	Output2;
+	INT32   Stereo;
 	double 	nVolume;
 	INT32 	nCurrentPosition;
 	INT32	Initialized;
@@ -49,7 +51,7 @@ static void UpdateStream(INT32 chip, INT32 length)
 	INT16 *rbuf = rBuffer + ptr->nCurrentPosition;
 
 	INT16 lOut = ((ptr->OutputDir & BURN_SND_ROUTE_LEFT ) == BURN_SND_ROUTE_LEFT ) ? ptr->Output : 0;
-	INT16 rOut = ((ptr->OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? ptr->Output : 0;
+	INT16 rOut = ((ptr->OutputDir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) ? ((ptr->Stereo) ? ptr->Output2 : ptr->Output) : 0;
 
 	ptr->nCurrentPosition += length;
 
@@ -148,6 +150,24 @@ void DACWrite16(INT32 Chip, INT16 Data)
 	}
 }
 
+void DACWrite16Stereo(INT32 Chip, INT16 Data, INT16 Data2)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACWrite16Stereo called without init\n"));
+	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACWrite16Stereo called with invalid chip number %x\n"), Chip);
+#endif
+
+	struct dac_info *ptr;
+
+	ptr = &dac_table[Chip];
+
+	if (Data != ptr->Output || Data2 != ptr->Output2) {
+		UpdateStream(Chip, ptr->pSyncCallback());
+		ptr->Output = Data;
+		ptr->Output2 = Data2;
+	}
+}
+
 void DACSignedWrite(INT32 Chip, UINT8 Data)
 {
 #if defined FBA_DEBUG
@@ -171,6 +191,19 @@ static void DACBuildVolTables()
 	}
 }
 
+void DACStereoMode(INT32 Chip)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACStereoMode called without init\n"));
+	if (Chip > NumChips) bprintf(PRINT_ERROR, _T("DACStereoMode called with invalid chip number %x\n"), Chip);
+#endif
+
+	struct dac_info *ptr;
+	ptr = &dac_table[Chip];
+
+	ptr->Stereo = 1;
+}
+
 void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
 {
 #if defined FBA_DEBUG
@@ -191,6 +224,7 @@ void DACInit(INT32 Num, UINT32 /*Clock*/, INT32 bAdd, INT32 (*pSyncCB)())
 	ptr->Initialized = 1;
 	ptr->nVolume = 1.00;
 	ptr->OutputDir = BURN_SND_ROUTE_BOTH;
+	ptr->Stereo = 0;
 	ptr->pSyncCallback = pSyncCB;
 
 	DACBuildVolTables(); // necessary to build for every chip?

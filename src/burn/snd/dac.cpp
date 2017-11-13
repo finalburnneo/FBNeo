@@ -144,6 +144,8 @@ void DACWrite16(INT32 Chip, INT16 Data)
 
 	ptr = &dac_table[Chip];
 
+	Data = (INT32)(Data * ptr->nVolume);
+
 	if (Data != ptr->Output) {
 		UpdateStream(Chip, ptr->pSyncCallback());
 		ptr->Output = Data;
@@ -160,6 +162,9 @@ void DACWrite16Stereo(INT32 Chip, INT16 Data, INT16 Data2)
 	struct dac_info *ptr;
 
 	ptr = &dac_table[Chip];
+
+	Data = (INT32)(Data * ptr->nVolume);
+	Data2 = (INT32)(Data2 * ptr->nVolume);
 
 	if (Data != ptr->Output || Data2 != ptr->Output2) {
 		UpdateStream(Chip, ptr->pSyncCallback());

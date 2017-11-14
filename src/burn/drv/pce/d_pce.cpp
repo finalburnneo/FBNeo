@@ -8663,3 +8663,22 @@ struct BurnDriver BurnDrvpce_santatlantean = {
 	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
 	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
 };
+
+// Contra (NES Mod Version 3.0)
+
+static struct BurnRomInfo pce_contranesRomDesc[] = {
+	{ "Contra.pce", 0x80000, 0xAAF5AEB4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(pce_contranes)
+STD_ROM_FN(pce_contranes)
+
+struct BurnDriver BurnDrvpce_contranes = {
+	"pce_contranes", NULL, NULL, NULL, "1988",
+	"Contra (NES Mod Version 3.0)\0", NULL, "Konami", "PC Engine",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 5, HARDWARE_PCENGINE_PCENGINE, GBF_MISC, 0,
+	PceGetZipName, pce_contranesRomInfo, pce_contranesRomName, NULL, NULL, pceInputInfo, pceDIPInfo,
+	PCEInit, PCEExit, PCEFrame, PCEDraw, PCEScan,
+	&PCEPaletteRecalc, 0x400, 512, 240, 4, 3
+};

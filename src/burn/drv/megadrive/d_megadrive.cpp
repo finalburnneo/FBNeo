@@ -42136,3 +42136,129 @@ struct BurnDriver BurnDrvmd_bcdverifier = {
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
+
+// Teenage Mutant Ninja Turtles - Tournament Fighters Hack (Color & Boss)
+static struct BurnRomInfo md_tmnttficbRomDesc[] = {
+	{ "TMNT Tournament Fighters (Hack).bin", 0x207C14, 0x8DC38DC4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmnttficb)
+STD_ROM_FN(md_tmnttficb)
+
+struct BurnDriver BurnDrvmd_tmnttficb = {
+	"md_tmnttficb", "md_tmhttf", NULL, NULL, "2014",
+	"Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)\0", NULL, "2014, Color By fusaru, Boss by Nemesis_c", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_tmnttficbRomInfo, md_tmnttficbRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1) (Hack By Kratus)
+static struct BurnRomInfo md_sor2bk3bRomDesc[] = {
+	{ "SoR2_BK3Boss_Hack.bin", 0x356842, 0x5C152787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2bk3b)
+STD_ROM_FN(md_sor2bk3b)
+
+struct BurnDriver BurnDrvmd_sor2bk3b = {
+	"md_sor2bk3b", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Bare Knuckle 3 Boss Edition (V1.1) (Hack)\0", NULL, "2017 Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sor2bk3bRomInfo, md_sor2bk3bRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - TMNT Hack By Carzj (M3tro GFX Fix)
+static struct BurnRomInfo md_sor2tmntRomDesc[] = {
+	{ "SoR2_TMNT_Hack.bin", 0x2C4DB0, 0x50E3C7C3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tmnt)
+STD_ROM_FN(md_sor2tmnt)
+
+struct BurnDriver BurnDrvmd_sor2tmnt = {
+	"md_sor2tmnt", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)\0", NULL, "2017, Hack By Carzj, Fix By M3tro", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sor2tmntRomInfo, md_sor2tmntRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 3 - Extreme Edition (V0.42) (Hack By Gsaurus)
+static struct BurnRomInfo md_sor3exRomDesc[] = {
+	{ "SoR3_Extreme_v042_Hack.bin", 0x300000, 0xD2135A13, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor3ex)
+STD_ROM_FN(md_sor3ex)
+
+struct BurnDriver BurnDrvmd_sor3ex = {
+	"md_sor3ex", "md_sor3", NULL, NULL, "2012",
+	"Streets of Rage 3 - Extreme Edition (V0.42) (Hack)\0", NULL, "2012 Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sor3exRomInfo, md_sor3exRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Golden Axe III - New Character (Ver. 8) (Hack By Ti)
+static struct BurnRomInfo md_goldnax3ncRomDesc[] = {
+	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0xB157F06C, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_goldnax3nc)
+STD_ROM_FN(md_goldnax3nc)
+
+struct BurnDriver BurnDrvmd_goldnax3nc = {
+	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2013",
+	"Golden Axe III - New Character (Ver. 8) (Hack)\0", NULL, "2013 Ti", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_goldnax3ncRomInfo, md_goldnax3ncRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// International Superstar Soccer Deluxe - Real Names+Extras (Hack By Sprill)
+static struct BurnRomInfo md_issdxrneRomDesc[] = {
+	{ "issdx_real_hack.bin", 0x200000, 0xAD08D78E, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_issdxrne)
+STD_ROM_FN(md_issdxrne)
+
+struct BurnDriver BurnDrvmd_issdxrne = {
+	"md_issdxrne", "md_issdx", NULL, NULL, "2016",
+	"International Superstar Soccer Deluxe - Real Names+Extras (Hack)\0", NULL, "2016 Sprill", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_issdxrneRomInfo, md_issdxrneRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// UEFA Euro 2004 Portugal (International Super Star Soccer Deluxe Hack By Glorysun)
+static struct BurnRomInfo md_euro2004RomDesc[] = {
+	{ "UEFA_Euro_2004_Portugal.bin", 0x200000, 0xBEA68ADA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_euro2004)
+STD_ROM_FN(md_euro2004)
+
+struct BurnDriver BurnDrvmd_euro2004 = {
+	"md_Euro2004", "md_issdx", NULL, NULL, "2004",
+	"UEFA Euro 2004 Portugal (ISSDX, Hack)\0", NULL, "2004 Glorysun", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_euro2004RomInfo, md_euro2004RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};

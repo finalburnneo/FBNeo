@@ -3003,9 +3003,9 @@ static void sh2_dmac_check(int dma)
 					if(incd == 2)
 						dst -= 16;
 					WL(dst, RL(src));
-					WL(dst+4, RL(src)+4);
-					WL(dst+8, RL(src)+8);
-					WL(dst+12, RL(src)+12);
+					WL(dst+4, RL(src+4));
+					WL(dst+8, RL(src+8));
+					WL(dst+12, RL(src+12));
 					//program_write_dword_32be(dst, program_read_dword_32be(src));
 					//program_write_dword_32be(dst+4, program_read_dword_32be(src+4));
 					//program_write_dword_32be(dst+8, program_read_dword_32be(src+8));

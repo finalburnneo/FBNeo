@@ -1,9 +1,6 @@
 // FB Alpha Data East MLC Hardware driver module
 // Based on MAME driver by Bryan Mcphail
 
-// to do:
-//	line in stadium heroes (likely a timing issue)
-
 #include "tiles_generic.h"
 #include "sh2_intf.h"
 #include "arm_intf.h"
@@ -107,9 +104,9 @@ static inline void palette_write(INT32 offset)
 
 	UINT32 *p = (UINT32*)DrvPalRAM;
 
-	UINT8 b = (p[offset] >> 10);
-	UINT8 g = (p[offset] >>  5);
-	UINT8 r = (p[offset] >>  0);
+	UINT8 b = (p[offset] >> 10) & 0x1f;
+	UINT8 g = (p[offset] >>  5) & 0x1f;
+	UINT8 r = (p[offset] >>  0) & 0x1f;
 
 	r = (r << 3) | (r >> 2);
 	g = (g << 3) | (g >> 2);
@@ -1115,11 +1112,9 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		global_scanline = i;
+		global_scanline = ((i > 0) ? i - 1 : 0);
 
-		nCyclesDone += (use_sh2) ? Sh2Run(nCyclesTotal / nInterleave) : ArmRun(nCyclesTotal / nInterleave);
-
-		if (i == scanline_timer) {
+		if (global_scanline == scanline_timer) {
 			if (use_sh2) {
 				Sh2SetIRQLine(1, CPU_IRQSTATUS_ACK);
 			} else {
@@ -1127,6 +1122,8 @@ static INT32 DrvFrame()
 			}
 			scanline_timer = ~0;
 		}
+
+		nCyclesDone += (use_sh2) ? Sh2Run(nCyclesTotal / nInterleave) : ArmRun(nCyclesTotal / nInterleave);
 
 		if (i >= 8 && i < 248) draw_sprites(i);
 	}

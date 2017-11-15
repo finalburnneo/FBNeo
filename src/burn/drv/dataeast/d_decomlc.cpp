@@ -42,6 +42,7 @@ static INT32 sprite_mask;
 static INT32 use_sh2 = 0;
 static UINT32 vblank_flip;
 static INT32 global_scanline;
+static INT32 game_select;
 
 static struct BurnInputInfo MlcInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 16,	"p1 coin"	},
@@ -141,6 +142,11 @@ static void mlc_irq_write(INT32 offset)
 
 static void decomlc_write_byte(UINT32 address, UINT8 data)
 {
+	if (address < 0xfffff) {
+		// NOP
+		return;
+	}
+
 	if ((address & 0xff8000) == 0x300000) {
 		DrvPalRAM[address & 0x7fff] = data;
 		palette_write(address);
@@ -171,8 +177,8 @@ static void decomlc_write_byte(UINT32 address, UINT8 data)
 		return;		// nop
 
 		case 0x500000:
-			YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, (255.00 - data) / 255.00, BURN_SND_ROUTE_LEFT);
-			YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, (255.00 - data) / 255.00, BURN_SND_ROUTE_RIGHT);
+			YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, (255.00 - data) / 255.00, (game_select == 2) ? BURN_SND_ROUTE_BOTH : BURN_SND_ROUTE_LEFT);
+			YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, (255.00 - data) / 255.00, (game_select == 2) ? BURN_SND_ROUTE_BOTH : BURN_SND_ROUTE_RIGHT);
 		return;
 
 		case 0x500001: 
@@ -198,6 +204,11 @@ static void decomlc_write_byte(UINT32 address, UINT8 data)
 
 static void decomlc_write_long(UINT32 address, UINT32 data)
 {
+	if (address < 0xfffff) {
+		// NOP
+		return;
+	}
+
 	if ((address & 0xff8000) == 0x300000) {
 		*((UINT32*)(DrvPalRAM + (address & 0x7ffc))) = data;
 		palette_write(address);
@@ -224,7 +235,9 @@ static void decomlc_write_long(UINT32 address, UINT32 data)
 
 	switch (address & ~3)
 	{
+		case 0x44000c:
 		case 0x44001c:
+		case 0x708004:
 		return;		// nop
 
 		case 0x500000:
@@ -260,6 +273,7 @@ static UINT8 decomlc_read_byte(UINT32 address)
 		case 0x200000:
 		case 0x200004:
 		case 0x20007c:
+		case 0x321a34:
 		case 0x440008:
 		case 0x44001c:
 			return ~0;
@@ -311,6 +325,18 @@ static UINT32 decomlc_read_long(UINT32 address)
 		case 0x440008:
 		case 0x44000c: // ?
 		case 0x44001c:
+		case 0x314304: // skullfang weird reads
+		case 0x2f94e8:
+		case 0x2d333c:
+		case 0x18f690:
+		case 0x206ddfc:
+		case 0x39e6d4:
+		case 0x342fe0:
+		case 0x321a30:
+		case 0x33db50:
+		case 0x353718:
+		case 0x2d2f6c:
+		case 0x222b1c:
 			return ~0;
 
 		case 0x200070:
@@ -472,8 +498,9 @@ static void decode_plane(UINT8 *src, UINT8 *dst, INT32 plane, INT32 ofst, INT32 
 	}
 }
 
-static INT32 CommonArmInit(INT32 game_select)
+static INT32 CommonArmInit(INT32 game)
 {
+	game_select = game;
 	use_sh2 = (game_select == 3) ? 1 : 0;
 	YMZ280BROMSIZE = (game_select == 0 || game_select == 3) ? 0x600000 : 0x400000;
 
@@ -655,8 +682,8 @@ static INT32 CommonArmInit(INT32 game_select)
 	EEPROMInit(&eeprom_interface_93C46);
 
 	YMZ280BInit(14000000, NULL);
-	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
-	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, (game_select == 2) ? BURN_SND_ROUTE_BOTH : BURN_SND_ROUTE_LEFT);
+	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, (game_select == 2) ? BURN_SND_ROUTE_BOTH : BURN_SND_ROUTE_RIGHT);
 
 	GenericTilesInit();
 

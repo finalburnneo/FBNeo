@@ -2680,7 +2680,7 @@ struct BurnDriver BurnDrv99lstwark = {
 
 struct BurnDriver BurnDrv99lstwarb = {
 	"99lstwarb", "repulse", NULL, NULL, "1985",
-	"'99: The Last War (bootleg)\0", NULL, "bootleg", "Kyugo",
+	"'99: The Last War (bootleg)\0", "Bad colors in some scenes", "bootleg", "Kyugo",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, Lstwrb99RomInfo, Lstwrb99RomName, NULL, NULL, KyugoInputInfo, SonofphxDIPInfo,

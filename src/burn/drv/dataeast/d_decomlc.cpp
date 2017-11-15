@@ -1211,7 +1211,7 @@ static INT32 AvengrgsInit()
 
 struct BurnDriver BurnDrvAvengrgs = {
 	"avengrgs", NULL, NULL, NULL, "1995",
-	"Avengers In Galactic Storm (US)\0", NULL, "Data East Corporation", "MLC",
+	"Avengers In Galactic Storm (US)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsRomInfo, avengrgsRomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1253,7 +1253,7 @@ STD_ROM_FN(avengrgsj)
 
 struct BurnDriver BurnDrvAvengrgsj = {
 	"avengrgsj", "avengrgs", NULL, NULL, "1995",
-	"Avengers In Galactic Storm (Japan)\0", NULL, "Data East Corporation", "MLC",
+	"Avengers In Galactic Storm (Japan)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, avengrgsjRomInfo, avengrgsjRomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1293,7 +1293,7 @@ static INT32 SkullfngInit()
 
 struct BurnDriver BurnDrvSkullfng = {
 	"skullfng", NULL, NULL, NULL, "1996",
-	"Skull Fang (World)\0", NULL, "Data East Corporation", "MLC",
+	"Skull Fang (World)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 4, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, skullfngRomInfo, skullfngRomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1402,7 +1402,7 @@ static INT32 Stadhr96Init()
 
 struct BurnDriver BurnDrvStadhr96 = {
 	"stadhr96", NULL, NULL, NULL, "1996",
-	"Stadium Hero '96 (World, EAJ)\0", NULL, "Data East Corporation", "MLC",
+	"Stadium Hero '96 (World, EAJ)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96RomInfo, stadhr96RomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1436,7 +1436,7 @@ STD_ROM_FN(stadhr96u)
 
 struct BurnDriver BurnDrvStadhr96u = {
 	"stadhr96u", "stadhr96", NULL, NULL, "1996",
-	"Stadium Hero '96 (USA, EAH)\0", NULL, "Data East Corporation", "MLC",
+	"Stadium Hero '96 (USA, EAH)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96uRomInfo, stadhr96uRomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1470,7 +1470,7 @@ STD_ROM_FN(stadhr96j)
 
 struct BurnDriver BurnDrvStadhr96j = {
 	"stadhr96j", "stadhr96", NULL, NULL, "1996",
-	"Stadium Hero '96 (Japan, EAD)\0", NULL, "Data East Corporation", "MLC",
+	"Stadium Hero '96 (Japan, EAD)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, stadhr96jRomInfo, stadhr96jRomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1508,7 +1508,7 @@ static INT32 Hoops96Init()
 
 struct BurnDriver BurnDrvHoops96 = {
 	"hoops96", NULL, NULL, NULL, "1996",
-	"Hoops '96 (Europe/Asia 2.0)\0", NULL, "Data East Corporation", "MLC",
+	"Hoops '96 (Europe/Asia 2.0)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hoops96RomInfo, hoops96RomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1541,7 +1541,7 @@ STD_ROM_FN(hoops95)
 
 struct BurnDriver BurnDrvHoops95 = {
 	"hoops95", "hoops96", NULL, NULL, "1995",
-	"Hoops (Europe/Asia 1.7)\0", NULL, "Data East Corporation", "MLC",
+	"Hoops (Europe/Asia 1.7)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hoops95RomInfo, hoops95RomName, NULL, NULL, MlcInputInfo, NULL,
@@ -1574,7 +1574,7 @@ STD_ROM_FN(ddream95)
 
 struct BurnDriver BurnDrvDdream95 = {
 	"ddream95", "hoops96", NULL, NULL, "1995",
-	"Dunk Dream '95 (Japan 1.4, EAM)\0", NULL, "Data East Corporation", "MLC",
+	"Dunk Dream '95 (Japan 1.4, EAM)\0", NULL, "Data East Corporation", "DECO MLC",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, ddream95RomInfo, ddream95RomName, NULL, NULL, MlcInputInfo, NULL,

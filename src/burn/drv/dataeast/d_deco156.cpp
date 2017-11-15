@@ -805,7 +805,7 @@ STD_ROM_FN(hvysmsh)
 
 struct BurnDriver BurnDrvHvysmsh = {
 	"hvysmsh", NULL, NULL, NULL, "1993",
-	"Heavy Smash (Europe version -2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Heavy Smash (Europe version -2)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshRomInfo, hvysmshRomName, NULL, NULL, HvysmshInputInfo, NULL,
@@ -835,7 +835,7 @@ STD_ROM_FN(hvysmshj)
 
 struct BurnDriver BurnDrvHvysmshj = {
 	"hvysmshj", "hvysmsh", NULL, NULL, "1993",
-	"Heavy Smash (Japan version -2)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Heavy Smash (Japan version -2)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshjRomInfo, hvysmshjRomName, NULL, NULL, HvysmshInputInfo, NULL,
@@ -865,7 +865,7 @@ STD_ROM_FN(hvysmsha)
 
 struct BurnDriver BurnDrvHvysmsha = {
 	"hvysmsha", "hvysmsh", NULL, NULL, "1993",
-	"Heavy Smash (Asia version -4)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"Heavy Smash (Asia version -4)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, hvysmshaRomInfo, hvysmshaRomName, NULL, NULL, HvysmshInputInfo, NULL,
@@ -896,7 +896,7 @@ STD_ROM_FN(wcvol95)
 
 struct BurnDriver BurnDrvWcvol95 = {
 	"wcvol95", NULL, NULL, NULL, "1995",
-	"World Cup Volley '95 (Japan v1.0)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"World Cup Volley '95 (Japan v1.0)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, wcvol95RomInfo, wcvol95RomName, NULL, NULL, HvysmshInputInfo, NULL,
@@ -927,7 +927,7 @@ STD_ROM_FN(wcvol95x)
 
 struct BurnDriver BurnDrvWcvol95x = {
 	"wcvol95x", "wcvol95", NULL, NULL, "1995",
-	"World Cup Volley '95 Extra Version (Asia v2.0B)\0", NULL, "Data East Corporation", "Miscellaneous",
+	"World Cup Volley '95 Extra Version (Asia v2.0B)\0", NULL, "Data East Corporation", "DECO 156",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, wcvol95xRomInfo, wcvol95xRomName, NULL, NULL, HvysmshInputInfo, NULL,

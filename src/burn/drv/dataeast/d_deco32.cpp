@@ -943,6 +943,11 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 		case 0x16c000:
 		case 0x174000:
 		case 0x17c000:
+		case 0x17a000:
+		case 0x17a004:
+		case 0x17a008:
+		case 0x17a00c:
+		case 0x20c800:
 			return; // nop (tattass)
 
 		case 0x16c008:
@@ -1333,6 +1338,14 @@ static INT32 DrvDoReset()
 	global_priority = 0;
 	sprite_ctrl = 0;
 	lightgun_port = 0;
+
+	raster_irq_target = 0;
+	raster_irq_masked = 0;
+	raster_irq = 0;
+	vblank_irq = 0;
+	lightgun_irq = 0;
+	raster_irq_scanline = 0;
+	lightgun_latch = 0;
 
 	return 0;
 }
@@ -2226,7 +2239,9 @@ static INT32 default_col_cb(INT32 col)
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
 
-static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, INT32 sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format )
+extern int counter; // dink debug stuff
+
+static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, INT32 sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format, INT32 layerID )
 {
 	INT32 m_y_offset = 0;
 	INT32 m_x_offset = 0;
@@ -2357,6 +2372,12 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 					mult2 = multi + 1;
 
 					y -= 8;
+					if (game_select == 2) {
+						// Hack for nslasher bad trans.
+						//if (counter && layerID && sprite) bprintf(0, _T("%X, "), sprite);
+						if (layerID && (sprite == 0x3cd || sprite == 0x3d0)) colour |= 0x80; // black message boxes
+						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1)) colour |= 0x80; // level 2 carriage buggy
+					}
 
 					while (multi >= 0)
 					{
@@ -2593,7 +2614,7 @@ static INT32 CaptavenDraw()
 	DrvPaletteUpdate(); // needed to fix 1-frame sprite flashes on scene change during fade-in
 	// palette could theoretically be changed mid-frame, or even many times per frame, etc, so dynamic palette updates would be a preferred opti (hint) :)
 
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 4, 1 );
+	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 4, 1, 0 );
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2629,7 +2650,7 @@ static INT32 CaptavenDraw() // non-scanline mode, saved here "just incase"
 
 	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 4);
 
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false );
+	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 0 );
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2677,7 +2698,7 @@ static INT32 FghthistDraw()
 
 	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 8);
 
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0x400, 0xf, 0x800, true, 4, 0 );
+	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0x400, 0xf, 0x800, true, 4, 0, 0 );
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2758,7 +2779,6 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? 0x400 : 0x600);
 	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? 0x600 : 0x500);
 	UINT32 *pal2 = DrvPalette;
-	INT32 x,y;
 
 	INT32 granularity0 = 1<<5;
 	INT32 granularity1 = 1<<4;
@@ -2781,7 +2801,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 	}
 
 	/* Mix sprites into main bitmap, based on priority & alpha */
-	for (y=0; y<nScreenHeight; y++) {
+	for (INT32 y=0; y<nScreenHeight; y++) {
 		UINT8* tilemapPri=deco16_prio_map + (y * 512);
 		UINT16* sprite0=pTempDraw[0] + (y * nScreenWidth);
 		UINT16* sprite1=pTempDraw[1] + (y * nScreenWidth);
@@ -2790,7 +2810,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 		destLine32 += y * nScreenWidth;
 		destLine16 += y * nScreenWidth;
 
-		for (x=0; x<nScreenWidth; x++) {
+		for (INT32 x=0; x<nScreenWidth; x++) {
 			if (tilemapPri[x] == 8) {
 				continue;
 			}
@@ -2807,6 +2827,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 			{
 				if ((pri0&0x3)==0 || (pri0&0x3)==1 || ((pri0&0x3)==2 && mixAlphaTilemap))
 				{
+					//if (counter==1) continue;
 					if (depth == 32)
 						destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 					else if (depth < 24)
@@ -2815,6 +2836,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				else if ((pri0&0x3)==2) // Spri0 under top playfield
 				{
 					if (tilemapPri[x]<4) {
+						//if (counter==2) continue;
 						if (depth == 32)
 							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 						else if (depth < 24)
@@ -2824,6 +2846,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				else // Spri0 under top & middle playfields
 				{
 					if (tilemapPri[x]<2) {
+						//if (counter==3) continue;
 						if (depth == 32)
 							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 						else if (depth < 24)
@@ -2840,21 +2863,28 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 					if (pri1==0 && (((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
 					{
 						if ((global_priority&1)==0 || ((global_priority&1)==1 && tilemapPri[x]<4) || ((global_priority&1)==1 && mixAlphaTilemap)) {
+							// usually "shadows" under characters (nslasher)
 							if (depth == 32)
 								destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 							else if (depth == 16)
 								destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
 							else if (depth == 15)
 								destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+
 						}
 					}
 					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2)))) {
+						UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
+						INT32 alpha = (mixAlphaTilemap) ? ((m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)]) * 8)-1 : 0x7f;
+						if (alpha<0)
+							alpha=0;
+
 						if (depth == 32)
-							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
 						else if (depth == 16)
-							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
 						else if (depth == 15)
-							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
 					}
 				}
 				else
@@ -2877,6 +2907,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				if (p&0xf)
 				{
 					/* Alpha tilemap under top two sprite 0 priorities */
+
 					if (((priColAlphaPal0&0xff)==0 || (pri0&0x3)==2 || (pri0&0x3)==3)
 						&& ((priColAlphaPal1&0xff)==0 || (pri1&0x3)==2 || (pri1&0x3)==3 || alpha1))
 					{
@@ -2926,11 +2957,13 @@ static INT32 NslasherDraw()
 		{
 			if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
 			if (nBurnLayer & 4) deco16_draw_layer(2, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
+			if ((nBurnLayer & 4) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
 		}
 		else
 		{
 			if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2);
 			if (nBurnLayer & 2) deco16_draw_layer(1, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
+			if ((nBurnLayer & 2) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
 		}
 	}
 
@@ -2940,8 +2973,8 @@ static INT32 NslasherDraw()
 	m_col_cb = default_col_cb;
 	m_pri_cb = NULL;
 
-	if (nSpriteEnable & 1) draw_sprites_common(pTempDraw[0], DrvSprBuf2, DrvGfxROM3, 0, 0, 0x800, true, 8, 0);
-	if (nSpriteEnable & 2) draw_sprites_common(pTempDraw[1], DrvSprBuf,  DrvGfxROM4, 0, 0, 0x800, true, 8, 0);
+	if (nSpriteEnable & 1) draw_sprites_common(pTempDraw[0], DrvSprBuf2, DrvGfxROM3, 0, 0, 0x800, true, 8, 0, 0);
+	if (nSpriteEnable & 2) draw_sprites_common(pTempDraw[1], DrvSprBuf,  DrvGfxROM4, 0, 0, 0x800, true, 8, 0, 1);
 
 	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 8);
 

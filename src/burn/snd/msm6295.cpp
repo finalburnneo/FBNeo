@@ -88,6 +88,8 @@ static INT32* MSM6295ChannelData[MAX_MSM6295][4];
 static INT32* pLeftBuffer = NULL;
 static INT32* pRightBuffer = NULL;
 
+static INT32 nPreviousSample[MAX_MSM6295], nCurrentSample[MAX_MSM6295];
+
 static bool bAdd;
 
 void MSM6295Reset(INT32 nChip)
@@ -101,6 +103,9 @@ void MSM6295Reset(INT32 nChip)
 	MSM6295[nChip].bIsCommand = false;
 
 	MSM6295[nChip].nFractionalPosition = 0;
+
+	memset(&nPreviousSample, 0, sizeof(nPreviousSample));
+	memset(&nCurrentSample, 0, sizeof(nCurrentSample));
 
 	for (INT32 nChannel = 0; nChannel < 4; nChannel++) {
 		MSM6295[nChip].ChannelInfo[nChannel].nPlaying = 0;
@@ -136,7 +141,6 @@ INT32 MSM6295Scan(INT32 nChip, INT32 )
 
 static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, INT32 nSegmentLength)
 {
-	static INT32 nPreviousSample[MAX_MSM6295], nCurrentSample[MAX_MSM6295];
 	INT32 nVolume = MSM6295[nChip].nVolume;
 	INT32 nFractionalPosition = MSM6295[nChip].nFractionalPosition;
 
@@ -494,6 +498,10 @@ INT32 MSM6295Init(INT32 nChip, INT32 nSamplerate, bool bAddSignal)
 		if (pRightBuffer == NULL) {
 			pRightBuffer = (INT32*)BurnMalloc(nBurnSoundRate * sizeof(INT32));
 		}
+	}
+
+	if (nChip == 0) {
+		memset(&MSM6295, 0, sizeof(MSM6295));
 	}
 
 	bAdd = bAddSignal;

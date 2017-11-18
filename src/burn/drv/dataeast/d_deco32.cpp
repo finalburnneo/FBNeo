@@ -2488,25 +2488,16 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 							if (m_pri_cb)
 							{
 								ypos = y + mult2 * (h-yy);
-
-								if ((ypos<nScreenHeight) && (ypos>=0-16))
-								{
-									deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
-								}
+								deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
 
 								ypos -= 512; // wrap-around y
-
-								if ((ypos<nScreenHeight) && (ypos>=(0-16)))
-								{
-									deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
-								}
-
+								deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
 							}
 							else
 							{
 								ypos = y + mult2 * (h-yy);
 
-								if ((ypos<nScreenHeight) && (ypos>=(0-16)))
+								if ((ypos<nScreenHeight) && (ypos>=(0-16))) // if it's not rendering the last couple lines somewhere, remove this.
 								{
 									if (fy) {
 										if (fx) {
@@ -2624,8 +2615,6 @@ static INT32 CaptavenDraw()
 #if 0
 static INT32 CaptavenDraw() // non-scanline mode, saved here "just incase"
 {
-	m_alt_format = 1;
-	m_raw_shift = 4;
 	m_pri_cb = captaven_pri_callback;
 	m_col_cb = default_col_cb;
 
@@ -2650,7 +2639,7 @@ static INT32 CaptavenDraw() // non-scanline mode, saved here "just incase"
 
 	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 4);
 
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 0 );
+	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 4, 1, 0 );
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3334,7 +3323,7 @@ static INT32 DrvFrame()
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
-		if (game_select == 0 && i>16) CaptavenDrawScanline(i-16);
+		if (game_select == 0 && i>=8) CaptavenDrawScanline(i-8);
 
 		if (i == 8) deco16_vblank = 0;
 

@@ -3318,8 +3318,8 @@ static INT32 DrvFrame()
 			deco16_vblank = 1;
 		}
 
-		if (pBurnSoundOut && (i&1)) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
+		if (pBurnSoundOut && (i%4==3)) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			if (game_select == 4) MSM6295Render(2, pSoundBuf, nSegmentLength);
@@ -3393,8 +3393,8 @@ static INT32 DrvZ80Frame()
 			deco16_vblank = 1;
 		}
 
-		if (pBurnSoundOut && (i&1)) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
+		if (pBurnSoundOut && (i%4)==3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco32_z80_sound_update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

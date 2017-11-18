@@ -372,15 +372,31 @@ static void DrvYM2151WritePort(UINT32, UINT32 data)
 	DrvOkiBank = data;
 }
 
-
-static void captaven_soundlatch_write(UINT16 data)
-{
-	deco16_soundlatch = data;
-	h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-}
-
 static UINT8 deco32_sound_irq;
 static UINT8 *deco32_sound_rom;
+
+static void deco32_soundlatch_write(UINT16 data)
+{
+	deco16_soundlatch = data & 0xff;
+	deco32_sound_irq |= 0x02;
+	//bprintf(0, _T("slatch: %X.\n"), data);
+	if (use_z80) {
+		ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	} else {
+		h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
+	}
+}
+
+static void deco32_z80_YM2151_irq_handler(INT32 state)
+{
+	if (state) {
+		deco32_sound_irq |= 0x01;
+	} else {
+		deco32_sound_irq &= ~0x01;
+	}
+
+	ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
 
 static void __fastcall deco32_z80_sound_write(UINT16 address, UINT8 data)
 {
@@ -419,7 +435,9 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 			return MSM6295ReadStatus(1);
 
 		case 0xd000:
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			//bprintf(0, _T("read slatch: %X.\n"), deco16_soundlatch);
+			deco32_sound_irq &= ~0x02;
+			ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			return deco16_soundlatch; 
 	}
 
@@ -428,19 +446,8 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 
 static UINT8 __fastcall deco32_z80_sound_read_port(UINT16 port)
 {
+	if (port > 0xffff) return 0;
 	return deco32_sound_rom[port];
-}
-
-static void deco32_z80_YM2151_irq_handler(INT32 state)
-{
-	ZetSetIRQLine(0, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-}
-
-void deco32_z80_soundlatch_write(UINT16 data)
-{
-	deco16_soundlatch = data & 0xff;
-
-	ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 }
 
 void deco32_z80_sound_reset()
@@ -454,6 +461,7 @@ void deco32_z80_sound_reset()
 	MSM6295Reset(1);
 
 	deco32_sound_irq = 0;
+	deco16_soundlatch = 0xff;
 }
 
 void deco32_z80_sound_init(UINT8 *rom, UINT8 *ram)
@@ -764,7 +772,7 @@ static void tattass_control_write(UINT32 data)
 				INT32 d=m_readBitCount/8;
 				INT32 m=7-(m_readBitCount%8);
 				INT32 a=(m_byteAddr+d)%1024;
-				INT32 b=m_eeprom[a]; //m_eeprom->internal_read(a);
+				INT32 b=m_eeprom[a];
 
 				m_tattass_eprom_bit=(b>>m)&1;
 
@@ -781,7 +789,7 @@ static void tattass_control_write(UINT32 data)
 					INT32 b=(m_buffer[24]<<7)|(m_buffer[25]<<6)|(m_buffer[26]<<5)|(m_buffer[27]<<4)
 						|(m_buffer[28]<<3)|(m_buffer[29]<<2)|(m_buffer[30]<<1)|(m_buffer[31]<<0);
 
-					m_eeprom[m_byteAddr] = b; //m_eeprom->internal_write(m_byteAddr, b);
+					m_eeprom[m_byteAddr] = b;
 				}
 				m_lastClock=data&0x20;
 				return;
@@ -846,21 +854,13 @@ static void fghthist_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xffffff;
 
-	if (game_select == 3 && address >= 0x200000 && address <= 0x207fff) {
-		return deco146_104_prot_wb(0, ((address & 0x7ffc) >> 1) | (address & 1), data);
+	if (address >= 0x200000 && address <= 0x207fff) {
+		deco146_104_prot_wb(0, ((address & 0x7ffc) >> 1) | (address & 1), data);
+		return;
 	}
 
 	switch (address)
 	{
-		case 0x1201fc:
-			if (use_z80) {
-				deco32_z80_soundlatch_write(data);
-			} else {
-				deco16_soundlatch = data;
-				h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			}
-		return;
-
 		case 0x150000:
 			if (game_select == 3) {
 				tattass_control_write(data);
@@ -918,37 +918,27 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 			// eeprom_w (0x00ff), volume_w (0xff00)
 		return;
 
-		case 0x1201fc:
-		case 0x130000: // fhistu
-			if (address == 0x130000) {
-				if (game_select != 1) return;
-				data >>= 16;
-			}
-			if (use_z80) {
-				deco32_z80_soundlatch_write(data);
-			} else {
-				deco16_soundlatch = data;
-				h6280SetIRQLine(0, CPU_IRQSTATUS_ACK);
-			}
-		return;
-
 		case 0x140000:
 			ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		return;
 
+		case 0x130000: // palette buffer (unused)
+		case 0x148000:
 		case 0x164000:
 		case 0x164004:
 		case 0x164008:
 		case 0x16400c:
 		case 0x16c000:
+		case 0x16c00c:
 		case 0x174000:
 		case 0x17c000:
+		case 0x17c018:
 		case 0x17a000:
 		case 0x17a004:
 		case 0x17a008:
 		case 0x17a00c:
 		case 0x20c800:
-			return; // nop (tattass)
+			return; // nops (tattass, fghthist, etc)
 
 		case 0x16c008:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
@@ -972,20 +962,18 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 
 static UINT8 fghthist_read_byte(UINT32 address)
 {
-//	bprintf (0, _T("RB: %5.5x\n"), address);
-
-	switch (address)
-	{
-		case 0x200988: // nslasher sound status
-			return 0xff;
+	if (address >= 0x200000 && address <= 0x207fff) {
+		return deco146_104_prot_rb(0, ((address & 0x7ffc) >> 1) | (address & 1));
 	}
+
+	bprintf (0, _T("RB: %5.5x\n"), address);
 
 	return 0;
 }
 
 static UINT32 fghthist_read_long(UINT32 address)
 {
-//	bprintf (0, _T("RW: %5.5x\n"), address);
+//	bprintf (0, _T("RL: %5.5x\n"), address);
 
 	if (address >= 0x200000 && address <= 0x207fff) {
 		return (deco146_104_prot_rw(0, (address & 0x7ffc) >> 1) << 16) | 0xffff;
@@ -1023,10 +1011,6 @@ static UINT32 fghthist_read_long(UINT32 address)
 
 	return 0;
 }
-
-
-
-
 
 
 
@@ -1492,6 +1476,8 @@ static INT32 FghthistCommonInit(INT32 z80_sound)
 	deco_146_104_set_port_a_cb(fghthist_read_A); // inputs 0
 	deco_146_104_set_port_b_cb(fghthist_read_B); // eeprom
 	deco_146_104_set_port_c_cb(fghthist_read_C); // inputs 1
+	deco_146_104_set_soundlatch_cb(deco32_soundlatch_write);
+
 	deco_146_104_set_interface_scramble_interleave();
 	deco_146_104_set_use_magic_read_address_xor(1);
 
@@ -1645,7 +1631,7 @@ static INT32 CaptavenInit()
 	deco_146_104_set_port_a_cb(captaven_read_A); // inputs
 	deco_146_104_set_port_b_cb(captaven_read_B); // system
 	deco_146_104_set_port_c_cb(captaven_read_C); // dsw
-	deco_146_104_set_soundlatch_cb(captaven_soundlatch_write);
+	deco_146_104_set_soundlatch_cb(deco32_soundlatch_write);
 
 	deco16Init(0, 0, 1|2);
 	deco16_set_graphics(DrvGfxROM0, 0x080000 * 2, DrvGfxROM1, 0x080000 * 2, DrvGfxROM2, 0x500000 * 1);
@@ -1796,7 +1782,7 @@ static INT32 NslasherCommonInit(INT32 has_z80)
 	deco_146_104_set_port_a_cb(fghthist_read_A); // inputs 0
 	deco_146_104_set_port_b_cb(fghthist_read_B); // eeprom
 	deco_146_104_set_port_c_cb(fghthist_read_C); // inputs 1
-	deco_146_104_set_soundlatch_cb(has_z80 ? deco32_z80_soundlatch_write : captaven_soundlatch_write);
+	deco_146_104_set_soundlatch_cb(deco32_soundlatch_write);
 	deco_146_104_set_interface_scramble_interleave();
 
 	deco16Init(0, 0, 1);
@@ -1945,8 +1931,6 @@ static INT32 TattassInit()
 
 		if (BurnLoadRom(DrvTMSROM  + 0x000000,   52, 1)) return 1;
 
-		//BurnByteswap(DrvTMSROM, 0x2000);
-
 		deco56_decrypt_gfx(DrvGfxROM1, 0x200000);
 		deco56_decrypt_gfx(DrvGfxROM2, 0x200000);
 
@@ -1991,7 +1975,7 @@ static INT32 TattassInit()
 	deco16_set_bank_callback(2, tattass_bank_callback);
 	deco16_set_bank_callback(3, tattass_bank_callback);
 
-	use_bsmt = 1; // needs this set regardless of USE_BSMT define!
+	use_bsmt = 1;
 	decobsmt_init(DrvHucROM, DrvHucRAM, DrvTMSROM, DrvTMSRAM, DrvSndROM0, 0x200000);
 
 	DrvDoReset();
@@ -2114,7 +2098,7 @@ static INT32 DragngunInit()
 	deco_146_104_set_port_a_cb(dragngun_read_A); // inputs 0
 	deco_146_104_set_port_b_cb(dragngun_read_B); // system
 	deco_146_104_set_port_c_cb(dragngun_read_C); // dips
-	deco_146_104_set_soundlatch_cb(captaven_soundlatch_write);
+	deco_146_104_set_soundlatch_cb(deco32_soundlatch_write);
 	deco_146_104_set_interface_scramble_reverse();
 
 	deco16Init(0, 0, 1);
@@ -2172,10 +2156,12 @@ static INT32 DrvExit()
 	else if (use_z80)
 	{
 		use_z80 = 0;
+		bprintf(0, _T("z80 exit\n"));
 		deco32_z80_sound_exit();
 	}
 	else
 	{
+		bprintf(0, _T("huc exit\n"));
 		deco16SoundExit();
 	}
 
@@ -3332,13 +3318,12 @@ static INT32 DrvFrame()
 			deco16_vblank = 1;
 		}
 
-		if (pBurnSoundOut && (i%8) == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
+		if (pBurnSoundOut && (i&1)) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			if (game_select == 4) MSM6295Render(2, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
-
 		}
 	}
 
@@ -3386,7 +3371,7 @@ static INT32 DrvZ80Frame()
 
 	INT32 nInterleave = 274;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 7800000 / 60, 4027500 / 60 };
+	INT32 nCyclesTotal[2] = { 7800000 / 60, 3580000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ArmOpen(0);
@@ -3408,8 +3393,8 @@ static INT32 DrvZ80Frame()
 			deco16_vblank = 1;
 		}
 
-		if (pBurnSoundOut && (i%8) == 7) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
+		if (pBurnSoundOut && (i&1)) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco32_z80_sound_update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

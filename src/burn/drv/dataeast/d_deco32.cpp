@@ -903,7 +903,6 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 			} else {
 				EEPROMWrite(data & 0x20, data & 0x40, data & 0x10);
 			}
-			//bprintf(0, _T("%X, "), data);
 			global_priority = data & 3;
 		return;
 
@@ -2742,8 +2741,9 @@ static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
 		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
 
-// TODO: make a alpha-bitmap, so things don't get alpha'd twice.
-// this will fix the silly double-alpha'd shadow effect during the level 2 buggy scene.
+// TODO: come up with a way to fix the silly double-alpha'd shadow effect during the level 2 buggy scene.
+// Buggy wheels shadows cover up the players shadows - both are 2nd sprite bank - maybe needs a priority logic?
+// Maybe draw the wheels and shadows to separate bitmaps and mix them?
 
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 {
@@ -2798,7 +2798,6 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 			{
 				if ((pri0&0x3)==0 || (pri0&0x3)==1 || ((pri0&0x3)==2 && mixAlphaTilemap))
 				{
-					//if (counter==1) continue;
 					if (depth == 32)
 						destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 					else if (depth < 24)
@@ -2807,7 +2806,6 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				else if ((pri0&0x3)==2) // Spri0 under top playfield
 				{
 					if (tilemapPri[x]<4) {
-						//if (counter==2) continue;
 						if (depth == 32)
 							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 						else if (depth < 24)
@@ -2817,7 +2815,6 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				else // Spri0 under top & middle playfields
 				{
 					if (tilemapPri[x]<2) {
-						//if (counter==3) continue;
 						if (depth == 32)
 							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
 						else if (depth < 24)

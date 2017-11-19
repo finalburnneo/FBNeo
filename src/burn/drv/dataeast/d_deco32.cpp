@@ -379,7 +379,7 @@ static void deco32_soundlatch_write(UINT16 data)
 {
 	deco16_soundlatch = data & 0xff;
 	deco32_sound_irq |= 0x02;
-	//bprintf(0, _T("slatch: %X.\n"), data);
+
 	if (use_z80) {
 		ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 	} else {
@@ -435,7 +435,6 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 			return MSM6295ReadStatus(1);
 
 		case 0xd000:
-			//bprintf(0, _T("read slatch: %X.\n"), deco16_soundlatch);
 			deco32_sound_irq &= ~0x02;
 			ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 			return deco16_soundlatch; 
@@ -757,7 +756,6 @@ static UINT8 m_tattass_eprom_bit = 0;
 static void tattass_control_write(UINT32 data)
 {
 	/* Eprom in low byte */
-//	if (ACCESSING_BITS_0_7)
 	{
 		if ((data&0x40)==0) {
 			m_bufPtr=0;
@@ -824,15 +822,6 @@ static void tattass_control_write(UINT32 data)
 
 		m_lastClock=data&0x20;
 	}
-
-	/* Volume in high byte */
-	//if (ACCESSING_BITS_8_15) {
-	//	//TODO:  volume attenuation == ((data>>8)&0xff);
-	//	// TODO: is it really there?
-	//}
-
-	/* Playfield control - Only written in full word memory accesses */
-//	global_priority = data & 3;
 
 	if (data & 0x80) {
 		bsmt_in_reset = 0;
@@ -907,15 +896,15 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 
 	switch (address & ~3)
 	{
-		case 0x12002c:
+		case 0x12002c: if (game_select != 1) return; // fghthist only
 		case 0x150000: // fghthist / nslasher
 			if (game_select == 3) {
 				tattass_control_write(data);
 			} else {
 				EEPROMWrite(data & 0x20, data & 0x40, data & 0x10);
 			}
+			//bprintf(0, _T("%X, "), data);
 			global_priority = data & 3;
-			// eeprom_w (0x00ff), volume_w (0xff00)
 		return;
 
 		case 0x140000:
@@ -2156,12 +2145,10 @@ static INT32 DrvExit()
 	else if (use_z80)
 	{
 		use_z80 = 0;
-		bprintf(0, _T("z80 exit\n"));
 		deco32_z80_sound_exit();
 	}
 	else
 	{
-		bprintf(0, _T("huc exit\n"));
 		deco16SoundExit();
 	}
 
@@ -2225,7 +2212,9 @@ static INT32 default_col_cb(INT32 col)
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
 
-extern int counter; // dink debug stuff
+#if defined FBA_DEBUG
+extern int counter; // dink debug stuff, to be removed when driver 100%.  (or slightly less)
+#endif
 
 static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, INT32 sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format, INT32 layerID )
 {
@@ -2359,10 +2348,14 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 
 					y -= 8;
 					if (game_select == 2) {
-						// Hack for nslasher bad trans.
-						//if (counter && layerID && sprite) bprintf(0, _T("%X, "), sprite);
-						if (layerID && (sprite == 0x3cd || sprite == 0x3d0)) colour |= 0x80; // black message boxes
-						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1)) colour |= 0x80; // level 2 carriage buggy
+						// Hack for nslasher bad trans.  alpha prio's: 0x80 pri0, 0xa0 pri1, 0xc0 pri2, pri3 0xe0
+						UINT32 *ace_ram = (UINT32*)DrvAceRAM;
+
+						//if (counter && layerID && sprite) bprintf(0, _T("%X - %X (%X:%X), "), sprite, colour, global_priority, ace_ram[0]);
+						if (layerID && (sprite == 0x3cd || sprite == 0x3d0))
+							colour |= (ace_ram[0] == 0x17) ? 0x00 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
+						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1))
+							colour |= 0xc0; // level 2 carriage buggy
 					}
 
 					while (multi >= 0)
@@ -2748,6 +2741,9 @@ static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
 	return (((((s & 0x007c1f) * p) + ((d & 0x007c1f) * a)) & 0x00f83e0) +
 		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
+
+// TODO: make a alpha-bitmap, so things don't get alpha'd twice.
+// this will fix the silly double-alpha'd shadow effect during the level 2 buggy scene.
 
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 {

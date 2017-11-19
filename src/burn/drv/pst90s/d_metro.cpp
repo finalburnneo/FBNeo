@@ -1948,6 +1948,11 @@ static UINT16 __fastcall metro_common_read_word(UINT32 address)
 	}
 // end
 
+	// mirror or due to chip revision?
+	if ((address >= 0x078800 && address <= 0x078813) || (address >= 0x079700 && address <= 0x079713)) {
+		return *((UINT16*)(DrvVidRegs + (address & 0x1e)));
+	}
+
 	switch (address)
 	{
 		case 0x0788a2:

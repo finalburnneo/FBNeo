@@ -810,7 +810,7 @@ void deco16Scan()
 #include "msm6295.h"
 
 static INT32 deco16_sound_enable[4]; // ym2203, ym2151, msm6295 0, msm6295 1
-static INT32 deco16_sound_cpuclock = 0;
+INT32 deco16_sound_cpuclock = 0;
 
 INT32 deco16_soundlatch;
 

@@ -83,6 +83,7 @@ void deco16_palette_recalculate(UINT32 *palette, UINT8 *pal);
 
 // common sound hardware...
 
+extern INT32 deco16_sound_cpuclock;
 extern INT32 deco16_soundlatch;
 extern INT32 deco16_music_tempofix;
 

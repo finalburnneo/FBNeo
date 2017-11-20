@@ -1,6 +1,25 @@
 // FB Alpha Deco32 driver module
 // Based on MAME driver by Bryan McPhail
+/*
+ captaven
+ 28/4 = 7
+ huc 32220000 / 4 / 3 = 2685000
 
+ fghthist 28/4 = 7
+ huc 32220000 / 8 = 4027500
+
+ fghthistu 28/4 = 7
+ huc 32220000 / 9 = 3580000
+
+ dragngun 28/4 = 7
+ huc 32220000/8 = 4027500
+
+ nslasher 28322000/4 = 7080500
+ z80 32220000/9 = 3580000
+ nslasheru huc 32220000/8 = 4027500
+
+
+*/
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "h6280_intf.h"
@@ -910,7 +929,7 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 			ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		return;
 
-		case 0x130000: // palette buffer (unused)
+		case 0x130000:
 		case 0x148000:
 		case 0x164000:
 		case 0x164004:
@@ -926,7 +945,7 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 		case 0x17a008:
 		case 0x17a00c:
 		case 0x20c800:
-			return; // nops (tattass, fghthist, etc)
+			return; // nops (tattass, fghthist, nslasher, etc)
 
 		case 0x16c008:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
@@ -1488,7 +1507,7 @@ static INT32 FghthistCommonInit(INT32 z80_sound)
 	else
 	{
 		use_z80 = 0;
-		deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
+		deco16SoundInit(DrvHucROM, DrvHucRAM, 3580000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 	}
@@ -1791,7 +1810,7 @@ static INT32 NslasherCommonInit(INT32 has_z80)
 	}
 	else
 	{
-		deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
+		deco16SoundInit(DrvHucROM, DrvHucRAM, 3580000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 	}
@@ -2104,7 +2123,7 @@ static INT32 DragngunInit()
 	deco16_set_bank_callback(3, dragngun_bank_callback);
 
 	use_z80 = 0;
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 
@@ -2353,8 +2372,8 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 						//if (counter && layerID && sprite) bprintf(0, _T("%X - %X (%X:%X), "), sprite, colour, global_priority, ace_ram[0]);
 						if (layerID && (sprite == 0x3cd || sprite == 0x3d0))
 							colour |= (ace_ram[0] == 0x17) ? 0x00 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
-						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1))
-							colour |= 0xc0; // level 2 carriage buggy
+						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
+							colour |= 0xe0; // level 2 carriage buggy
 					}
 
 					while (multi >= 0)
@@ -2466,10 +2485,19 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 							if (m_pri_cb)
 							{
 								ypos = y + mult2 * (h-yy);
-								deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
+
+								if ((ypos<nScreenHeight+16) && (ypos>=0-16))
+								{
+									deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
+								}
 
 								ypos -= 512; // wrap-around y
-								deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
+
+								if ((ypos<nScreenHeight+16) && (ypos>=(0-16)))
+								{
+									deco16_draw_prio_sprite(bitmap, gfx, sprite + yy + h * xx, (colour<<m_raw_shift)+colbase, x + mult * (w-xx),ypos, fx, fy, pri);
+								}
+
 							}
 							else
 							{
@@ -2741,10 +2769,6 @@ static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
 		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
 
-// TODO: come up with a way to fix the silly double-alpha'd shadow effect during the level 2 buggy scene.
-// Buggy wheels shadows cover up the players shadows - both are 2nd sprite bank - maybe needs a priority logic?
-// Maybe draw the wheels and shadows to separate bitmaps and mix them?
-
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 {
 	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? 0x400 : 0x600);
@@ -2842,17 +2866,21 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 						}
 					}
 					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2)))) {
-						UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
-						INT32 alpha = (mixAlphaTilemap) ? ((m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)]) * 8)-1 : 0x7f;
-						if (alpha<0)
-							alpha=0;
+						INT32 alpha = 0x7f;
+
+						if (game_select == 2 && (pri1 == 1 || pri1 == 3)) { // nslasher: carriage buggy wheels behind / in front of object
+							UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
+							alpha = (mixAlphaTilemap) ? ((m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)]) * 8)-1 : 0x7f;
+							if (alpha<0)
+								alpha=0;
+						}
 
 						if (depth == 32)
 							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
 						else if (depth == 16)
 							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
 						else if (depth == 15)
-							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
 					}
 				}
 				else
@@ -3284,7 +3312,8 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 274;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 7800000 / 60, 2685000 / 60 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)deco16_sound_cpuclock / 57.799650) };
+	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ArmOpen(0);
@@ -3364,7 +3393,8 @@ static INT32 DrvZ80Frame()
 
 	INT32 nInterleave = 274;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 7800000 / 60, 3580000 / 60 };
+	INT32 nCyclesTotal[2] = { 7000000 / 60, 3580000 / 60 };
+	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ArmOpen(0);

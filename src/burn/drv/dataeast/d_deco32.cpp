@@ -2370,8 +2370,8 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 						UINT32 *ace_ram = (UINT32*)DrvAceRAM;
 
 						//if (counter && layerID && sprite) bprintf(0, _T("%X - %X (%X:%X), "), sprite, colour, global_priority, ace_ram[0]);
-						if (layerID && (sprite == 0x3cd || sprite == 0x3d0))
-							colour |= (ace_ram[0] == 0x17) ? 0x00 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
+						if (layerID && (sprite == 0x3cd || sprite == 0x3d0) && !(colour&0x80))
+							colour |= (ace_ram[0] == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
 						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
 							colour |= 0xe0; // level 2 carriage buggy
 					}

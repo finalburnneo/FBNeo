@@ -390,6 +390,7 @@ INT32 K054338_read_register(int reg);
 void K054338_fill_solid_bg();
 void K054338_fill_backcolor(int palette_offset, int mode);
 INT32 K054338_set_alpha_level(int pblend);
+INT32 K054338_alpha_level_moo(INT32 pblend);
 void K054338_invert_alpha(int invert);
 void K054338_update_all_shadows(INT32 rushingheroes_hack);
 void K054338_export_config(int **shdRGB);

@@ -56,7 +56,7 @@ static UINT16 control_data = 0;
 static INT32 enable_alpha = 0;
 static UINT8 z80_bank;
 
-static UINT16 zmask;
+static UINT16 zmask; // 0xffff moomesa, 0x00ff bucky
 
 static INT32 moomesabl = 0;
 
@@ -206,9 +206,9 @@ static void moo_objdma()
 	UINT16 *dst = (UINT16*)K053247Ram;
 	UINT16 *src = (UINT16*)DrvSprRAM;
 
-	INT32 counter = 23;
+	INT32 dmacntr = 23;
 
-	num_inactive = counter = 256;
+	num_inactive = dmacntr = 256;
 
 	do
 	{
@@ -220,7 +220,7 @@ static void moo_objdma()
 		}
 		src += 0x80;
 	}
-	while (--counter);
+	while (--dmacntr);
 
 	if (num_inactive)
 	{
@@ -232,6 +232,10 @@ static void moo_objdma()
 		while (--num_inactive);
 	}
 }
+
+#ifdef FBA_DEBUG
+extern int counter;
+#endif
 
 static void moo_prot_write(INT32 offset)
 {
@@ -340,6 +344,11 @@ static void __fastcall moo_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xfffff8) == 0x0c2000) {
 		K053246Write((address & 0x07) ^ 0, data);
+		return;
+	}
+
+	if ((address & 0xffffe0) == 0x0ca000) {
+		K054338WriteByte(address, data);
 		return;
 	}
 
@@ -562,6 +571,11 @@ static void __fastcall bucky_main_write_byte(UINT32 address, UINT8 data)
 
 	if ((address & 0xfffff8) == 0x0c2000) {
 		K053246Write((address & 0x07) ^ 0, data);
+		return;
+	}
+
+	if ((address & 0xffffe0) == 0x0ca000) {
+		K054338WriteByte(address, data);
 		return;
 	}
 
@@ -1184,11 +1198,10 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & (1<<layers[1])) K056832Draw(layers[1], 0, 2);
 
-	enable_alpha = K054338_read_register(K338_REG_CONTROL) & K338_CTL_MIXPRI;
-	alpha = (enable_alpha) ? K054338_set_alpha_level(1) : 255;
+	alpha = (zmask == 0xffff) ? K054338_alpha_level_moo(1) : K054338_set_alpha_level(1);
 
-	if (alpha > 0)
-		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(alpha), 4);
+	if (255-alpha > 0)
+		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(255-alpha), 4);
 
 	if (nSpriteEnable & 1) K053247SpritesRender();
 

@@ -10,6 +10,7 @@ static UINT16 k54338_regs[32];
 INT32 m_shd_rgb[12];
 
 static INT32 k054338_alphainverted;
+static INT32 alpha_cache; // for moomesa
 
 static void reset_shadows()
 {
@@ -25,6 +26,7 @@ void K054338Reset()
 	memset(m_shd_rgb, 0, sizeof(m_shd_rgb));
 
 	reset_shadows();
+	alpha_cache = 0;
 }
 
 void K054338Exit()
@@ -42,6 +44,8 @@ void K054338Scan(INT32 nAction)
 		ba.nLen	  = sizeof(k54338_regs);
 		ba.szName = "K054338 Regs";
 		BurnAcb(&ba);
+
+		SCAN_VAR(alpha_cache);
 	}
 }
 
@@ -212,6 +216,66 @@ INT32 K054338_set_alpha_level(INT32 pblend)
 	mixpri = ctrl & K338_CTL_MIXPRI;
 	mixset = regs[K338_REG_PBLEND + (pblend>>1 & 1)] >> (~pblend<<3 & 8);
 	mixlv  = mixset & 0x1f;
+
+	if (k054338_alphainverted) mixlv = 0x1f - mixlv;
+
+	if (!(mixset & 0x20))
+	{
+		mixlv = mixlv<<3 | mixlv>>2;
+	//	alpha_set_level(mixlv); // source x alpha/255  +  target x (255-alpha)/255
+	}
+	else
+	{
+		if (!mixpri)
+		{
+			// source x alpha  +  target (clipped at 255)
+		}
+		else
+		{
+			// source  +  target x alpha (clipped at 255)
+		}
+
+		// DUMMY
+		if (mixlv && mixlv<0x1f) mixlv = 0x10;
+		mixlv = mixlv<<3 | mixlv>>2;
+	//	alpha_set_level(mixlv);
+	}
+
+	return(mixlv);
+}
+
+//#define DEBUGMOO
+
+INT32 K054338_alpha_level_moo(INT32 pblend)
+{
+	UINT16 *regs;
+	INT32 ctrl, mixpri, mixset, mixlv;
+
+	if (pblend <= 0 || pblend > 3)
+	{
+	//	alpha_set_level(255);
+		return(255);
+	}
+
+	regs   = k54338_regs;
+	ctrl   = k54338_regs[K338_REG_CONTROL];
+	mixpri = ctrl & K338_CTL_MIXPRI;
+	mixset = regs[K338_REG_PBLEND + (pblend>>1 & 1)] >> (~pblend<<3 & 8);
+	mixlv  = mixset & 0x1f;
+
+#ifdef DEBUGMOO
+	bprintf(0, _T("%X   - %X"), mixlv, mixpri);
+#endif
+	if (mixlv == 0 && alpha_cache == 0x1f) {
+		mixlv = 0x1f;
+#ifdef DEBUGMOO
+		bprintf(0, _T(" (cached) -> 0x1f"));
+#endif
+	} // 0x1f -> 0x00 transition cache [dink]
+#ifdef DEBUGMOO
+	bprintf(0, _T("\n"));
+#endif
+	alpha_cache = mixlv;
 
 	if (k054338_alphainverted) mixlv = 0x1f - mixlv;
 

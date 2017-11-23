@@ -1,25 +1,6 @@
 // FB Alpha Deco32 driver module
 // Based on MAME driver by Bryan McPhail
-/*
- captaven
- 28/4 = 7
- huc 32220000 / 4 / 3 = 2685000
 
- fghthist 28/4 = 7
- huc 32220000 / 8 = 4027500
-
- fghthistu 28/4 = 7
- huc 32220000 / 9 = 3580000
-
- dragngun 28/4 = 7
- huc 32220000/8 = 4027500
-
- nslasher 28322000/4 = 7080500
- z80 32220000/9 = 3580000
- nslasheru huc 32220000/8 = 4027500
-
-
-*/
 #include "tiles_generic.h"
 #include "arm_intf.h"
 #include "h6280_intf.h"
@@ -54,7 +35,7 @@ static UINT8 *DrvSprBuf;
 static UINT8 *DrvSprRAM2;
 static UINT8 *DrvSprBuf2;
 static UINT8 *DrvPalRAM;
-static UINT8 *DrvPalBuf;
+static UINT8 *DrvPalBuf; // active palette
 static UINT8 *DrvAceRAM;
 static UINT8 *DrvJackRAM;
 static UINT8 *DrvTMSRAM;
@@ -62,7 +43,6 @@ static UINT8 *DrvTMSRAM;
 static UINT16 *pTempDraw[4];
 
 static UINT32 *DrvPalette;
-static UINT32 *DrvPalette32;
 static UINT8 DrvRecalc;
 
 static INT32 DrvOkiBank;
@@ -648,6 +628,20 @@ static void deco_irq_scanline_callback(INT32 y)
 	}
 }
 
+static inline void palette_write(UINT32 offs) // for captaven, only game to not use buffered palette
+{
+	offs = (offs & 0x1fff) / 4;
+
+	UINT32 *p = (UINT32*)DrvPalBuf;
+
+	UINT8 r = (p[offs] >>  0) & 0xff;
+	UINT8 g = (p[offs] >>  8) & 0xff;
+	UINT8 b = (p[offs] >> 16) & 0xff;
+
+	DrvPalette[offs] = BurnHighCol(r,g,b,0);
+}
+
+
 static void captaven_write_byte(UINT32 address, UINT8 data)
 {
 	address &= 0xffffff;
@@ -660,6 +654,12 @@ static void captaven_write_long(UINT32 address, UINT32 data)
 	address &= 0xffffff;
 
 //	bprintf (0, _T("WL: %5.5x, %8.8x\n"), address, data);
+
+	if (address >= 0x130000 && address <= 0x131fff) {
+		UINT32 *p = (UINT32*)DrvPalBuf;
+		p[(address & 0x1fff) / 4] = data;
+		palette_write(address);
+	}
 
 	if (address >= 0x128000 && address <= 0x12ffff) {
 		deco146_104_prot_ww(0, (address & 0x7ffc) >> 1, data);
@@ -725,6 +725,10 @@ static UINT32 captaven_read_long(UINT32 address)
 	address &= 0xffffff;
 
 //	bprintf (0, _T("RW: %5.5x\n"), address);
+	if (address >= 0x130000 && address <= 0x131fff) {
+		UINT32 *p = (UINT32*)DrvPalBuf;
+		return p[(address & 0x1fff) / 4];
+	}
 
 	if (address >= 0x128000 && address <= 0x12ffff) {
 		UINT16 ret = deco146_104_prot_rw(0, (address & 0x7ffc) >> 1);
@@ -771,6 +775,18 @@ static INT32 m_lastClock = 0;
 static UINT8 m_buffer[0x20];
 static UINT8 m_eeprom[0x400];
 static UINT8 m_tattass_eprom_bit = 0;
+
+static void tattass_eeprom_scan()
+{
+	SCAN_VAR(m_bufPtr);
+	SCAN_VAR(m_pendingCommand);
+	SCAN_VAR(m_readBitCount);
+	SCAN_VAR(m_byteAddr);
+	SCAN_VAR(m_lastClock);
+	SCAN_VAR(m_buffer);
+	SCAN_VAR(m_eeprom);
+	SCAN_VAR(m_tattass_eprom_bit);
+}
 
 static void tattass_control_write(UINT32 data)
 {
@@ -1365,7 +1381,6 @@ static INT32 MemIndex()
 	DrvTMSROM	= Next; Next += 0x002000;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
-	DrvPalette32	= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -1621,7 +1636,7 @@ static INT32 CaptavenInit()
 	ArmOpen(0);	
 	ArmMapMemory(DrvARMROM,			0x000000, 0x0fffff, MAP_ROM);
 	ArmMapMemory(DrvSysRAM,			0x120000, 0x127fff, MAP_RAM); // 32-bit
-	ArmMapMemory(DrvPalBuf,			0x130000, 0x131fff, MAP_RAM); // 32-bit (point to buffer as this isn't buffered)
+//	ArmMapMemory(DrvPalBuf,			0x130000, 0x131fff, MAP_RAM); // 32-bit (point to buffer as this isn't buffered)
 	ArmMapMemory(DrvSysRAM + 0x8000,	0x160000, 0x167fff, MAP_RAM); // 32-bit
 	ArmSetWriteByteHandler(captaven_write_byte);
 	ArmSetWriteLongHandler(captaven_write_long);
@@ -2217,7 +2232,6 @@ static void DrvPaletteUpdate()
 			r = (UINT8)((float)r + (((float)ptr - (float)r) * (float)psr/255.0f));
 		}
 
-		DrvPalette32[i] = r * 0x10000 + g * 0x100 + b;
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
 }
@@ -2568,12 +2582,19 @@ static INT32 captaven_pri_callback(INT32 pri, INT32)
 	}
 }
 
+static INT32 lastline;
+
 static INT32 CaptavenStartDraw()
 {
 	m_pri_cb = captaven_pri_callback;
 	m_col_cb = default_col_cb;
 
-	DrvPaletteUpdate();
+	lastline = 0;
+
+	if (DrvRecalc) {
+		DrvPaletteUpdate();
+		DrvRecalc = 0;
+	}
 
 	deco16_clear_prio_map();
 
@@ -2591,25 +2612,28 @@ static INT32 CaptavenDrawScanline(INT32 line)
 
 	if (global_priority & 1)
 	{
-		if (nBurnLayer & 2) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, 1);
-		if (nBurnLayer & 4) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, 2 | DECO16_LAYER_CAPTEVEN | DECO16_LAYER_8BITSPERPIXEL);
+		if (nBurnLayer & 2) deco16_draw_layer_by_line(lastline, line, 1, pTransDraw, 1);
+		if (nBurnLayer & 4) deco16_draw_layer_by_line(lastline, line, 2, pTransDraw, 2 | DECO16_LAYER_CAPTAVEN | DECO16_LAYER_8BITSPERPIXEL);
 	}
 	else
 	{
-		if (nBurnLayer & 4) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, 1 | DECO16_LAYER_CAPTEVEN | DECO16_LAYER_8BITSPERPIXEL);
-		if (nBurnLayer & 2) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, 2);
+		if (nBurnLayer & 4) deco16_draw_layer_by_line(lastline, line, 2, pTransDraw, 1 | DECO16_LAYER_CAPTAVEN | DECO16_LAYER_8BITSPERPIXEL);
+		if (nBurnLayer & 2) deco16_draw_layer_by_line(lastline, line, 1, pTransDraw, 2);
 	}
 
-	if (nBurnLayer & 1) deco16_draw_layer_by_line(line, line+1, 0, pTransDraw, 4);
+	if (nBurnLayer & 1) deco16_draw_layer_by_line(lastline, line, 0, pTransDraw, 4);
 
+	lastline = line;
 
 	return 0;
 }
 
 static INT32 CaptavenDraw()
 {
-	DrvPaletteUpdate(); // needed to fix 1-frame sprite flashes on scene change during fade-in
-	// palette could theoretically be changed mid-frame, or even many times per frame, etc, so dynamic palette updates would be a preferred opti (hint) :)
+	if (DrvRecalc) {
+		DrvPaletteUpdate();
+		DrvRecalc = 0;
+	}
 
 	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 4, 1, 0 );
 
@@ -2617,41 +2641,6 @@ static INT32 CaptavenDraw()
 
 	return 0;
 }
-
-#if 0
-static INT32 CaptavenDraw() // non-scanline mode, saved here "just incase"
-{
-	m_pri_cb = captaven_pri_callback;
-	m_col_cb = default_col_cb;
-
-	DrvPaletteUpdate();
-
-	deco16_pf12_update();
-	deco16_pf34_update();
-	deco16_clear_prio_map();
-
-	BurnTransferClear();
-
-	if (global_priority & 1)
-	{
-		if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 1);
-		if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2 | DECO16_LAYER_CAPTEVEN | DECO16_LAYER_8BITSPERPIXEL);
-	}
-	else
-	{
-		if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 1 | DECO16_LAYER_CAPTEVEN | DECO16_LAYER_8BITSPERPIXEL);
-		if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
-	}
-
-	if (nBurnLayer & 1) deco16_draw_layer(0, pTransDraw, 4);
-
-	if (nSpriteEnable & 1) draw_sprites_common(NULL, DrvSprBuf, DrvGfxROM3, 0, 0, 0x400, false, 4, 1, 0 );
-
-	BurnTransferCopy(DrvPalette);
-
-	return 0;
-}
-#endif
 
 static INT32 fghthist_pri_callback(INT32, INT32 pri)
 {
@@ -3331,11 +3320,12 @@ static INT32 DrvFrame()
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
-		if (game_select == 0 && i>=8) CaptavenDrawScanline(i-8);
+		if (game_select == 0 && i>=8 && raster_irq) CaptavenDrawScanline(i-8);
 
 		if (i == 8) deco16_vblank = 0;
 
 		if (i == 248) {
+			if (game_select == 0) CaptavenDrawScanline(i-8);
 			if (game_select == 1 || game_select == 2) irq_callback(1);
 			deco16_vblank = 1;
 		}
@@ -3534,6 +3524,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		deco16Scan();
 
 		if (game_select == 3) {
+			tattass_eeprom_scan();
 			decobsmt_scan(nAction, pnMin);
 		}
 

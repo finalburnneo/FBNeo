@@ -90,6 +90,8 @@ static INT32 has_zoom = 0;
 static UINT32 main_cpu_cycles = 12000000 / 60;
 static INT32 ymf278bint = 0;
 
+static INT32 bangballmode = 0;
+
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
@@ -4321,6 +4323,7 @@ static INT32 bangballInit()
 	m_tilemap_scrolldx[1] = -2;
 	m_tilemap_scrolldx[2] = -2;
 	ymf278bint = 1;
+	bangballmode = 1;
 
 	return nRet;
 }
@@ -4401,6 +4404,7 @@ static INT32 DrvExit()
 	m_sprite_yoffs_dx = 0;
 	m_sprite_yoffs_dx = 0;
 	ymf278bint = 0;
+	bangballmode = 0;
 
 	return 0;
 }
@@ -4951,6 +4955,11 @@ static INT32 YMF278bFrame()
 
 		if ((i % sound_int_mod) == 0) {
 			requested_int[4] = 1;
+			update_irq_state();
+		}
+
+		if (bangballmode && i < 224 && ~irq_enable & 2) {
+			requested_int[1] = 1;
 			update_irq_state();
 		}
 

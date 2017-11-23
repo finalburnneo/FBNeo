@@ -48,7 +48,7 @@ void deco16_pf3_update();
 #define DECO16_LAYER_4BITSPERPIXEL	0x000000 	// just to clarify
 #define DECO16_LAYER_TRANSMASK0		0x000100
 #define DECO16_LAYER_TRANSMASK1		0x000000
-#define DECO16_LAYER_CAPTEVEN		0x400000
+#define DECO16_LAYER_CAPTAVEN		0x400000
 
 void deco16_draw_layer(INT32 tmap, UINT16 *dest, INT32 flags);
 void deco16_draw_layer_by_line(INT32 start, INT32 end, INT32 tmap, UINT16 *dest, INT32 flags);

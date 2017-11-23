@@ -275,7 +275,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 
 	INT32 bpp = (flags & DECO16_LAYER_8BITSPERPIXEL) ? 8 : ((flags & DECO16_LAYER_5BITSPERPIXEL) ? 5 : 4);
 	
-	INT32 deco16_captaven = flags & DECO16_LAYER_CAPTEVEN;
+	INT32 deco16_captaven = flags & DECO16_LAYER_CAPTAVEN;
 
 	UINT8 *gfx	= deco16_graphics[select];
 	UINT8 *transtab	= deco16_graphics_transtab[select];

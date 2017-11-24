@@ -1137,7 +1137,7 @@ static INT32 HangzoInit()
 		DrvSpriteDecode();
 	}
 
-	deco16Init(0, 0, 1);
+	deco16Init(0, 0, 1|4); // full width & height
 	deco16_set_graphics(DrvGfxROM0, 0x40000 * 2, DrvGfxROM1, 0x100000 * 2, DrvGfxROM2, 0x200000 * 2);
 	deco16_set_color_base(2, 512);
 	deco16_set_color_base(3, 768);

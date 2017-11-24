@@ -4,6 +4,7 @@
 #include "deco16ic.h"
 
 static INT32 deco16_layer_size[4];
+static INT32 deco16_layer_height[4];
 static INT32 deco16_layer_size_select[4];
 
 static INT32 (*deco16_bank_callback[4])(const INT32 bank);
@@ -267,7 +268,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	if (~control0&0x80) return; // layer disabled
 
 	INT32 size	= deco16_layer_size_select[tmap];
-	if (size == -1) return;
+	if (size == -1) return; // layer diabled (from pf_update, only for tmap 0, 1?)
 
 	INT32 control	= deco16_pf_control[tmap / 2][6];
 	if (tmap & 1) control >>= 8; 
@@ -295,7 +296,7 @@ void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UIN
 	INT32 colmask	= deco16_pf_colormask[tmap];
 	INT32 colbank	= deco16_pf_colorbank[tmap] >> bpp;
 
-	INT32 hmask	= (32 * size) - 1;
+	INT32 hmask	= (deco16_layer_height[tmap] * size) - 1;
 	INT32 wmask	= (deco16_layer_size[tmap] * size) - 1;
 	INT32 shift	= (wmask & 0x100) ? 6 : 5;
 	INT32 smask	= size - 1;
@@ -543,6 +544,12 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 
 	deco16_layer_size[2] = (!no_pf34) ? (pf34_width ? 64 : 32) : 0;
 	deco16_layer_size[3] = (!no_pf34) ? (pf34_width ? 64 : 32) : 0;
+
+	deco16_layer_height[0] = (full_width & 4) ? 64 : 32;
+	deco16_layer_height[1] = 32;
+	deco16_layer_height[2] = 32;
+	deco16_layer_height[3] = 32;
+	bprintf(0, _T("layer height[0] = %X.\n"), deco16_layer_height[0]);
 
 	deco16_pf_colormask[0] = 15;
 	deco16_pf_colormask[1] = 15;

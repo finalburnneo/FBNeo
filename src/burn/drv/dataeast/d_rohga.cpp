@@ -579,7 +579,7 @@ void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 			memcpy (DrvSprBuf2, DrvSprRAM2, 0x800);
 		return;
 
-		case 0x380008:
+		case 0x390008:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
 		return;
 
@@ -613,8 +613,8 @@ void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 			memcpy (DrvSprBuf2, DrvSprRAM2, 0x800);
 		return;
 
-		case 0x380008:
-		case 0x380009:
+		case 0x390008:
+		case 0x390009:
 			memcpy (DrvPalBuf, DrvPalRAM, 0x2000);
 		return;
 
@@ -829,7 +829,7 @@ static INT32 RohgaInit()
 		DrvSpriteDecode();
 	}	
 
-	deco16Init(0, 0, 1);
+	deco16Init(0, 0, 1|2);
 	deco16_set_graphics(DrvGfxROM0, 0x20000 * 2, DrvGfxROM1, 0x100000 * 2, DrvGfxROM2, 0x200000 * 2);
 	deco16_set_color_base(2, 512);
 	deco16_set_color_base(3, 768);
@@ -1645,7 +1645,7 @@ static void draw_combined_playfield(INT32 color, INT32 priority) // opaque
 static void update_rohga(INT32 is_schmeisr)
 {
 //	if (DrvRecalc) {
-		deco16_palette_recalculate(DrvPalette, DrvPalRAM);
+		deco16_palette_recalculate(DrvPalette, DrvPalBuf);
 		DrvRecalc = 0;
 //	}
 
@@ -1714,7 +1714,7 @@ static INT32 SchmeisrDraw()
 static INT32 WizdfireDraw()
 {
 //	if (DrvRecalc) {
-		deco16_palette_recalculate(DrvPalette, DrvPalRAM);
+		deco16_palette_recalculate(DrvPalette, DrvPalBuf);
 		DrvRecalc = 0;
 //	}
 
@@ -1753,7 +1753,7 @@ static INT32 WizdfireDraw()
 static INT32 NitrobalDraw()
 {
 //	if (DrvRecalc) {
-		deco16_palette_recalculate(DrvPalette, DrvPalRAM);
+		deco16_palette_recalculate(DrvPalette, DrvPalBuf);
 		DrvRecalc = 0;
 //	}
 

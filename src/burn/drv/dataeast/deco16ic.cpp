@@ -549,7 +549,6 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 	deco16_layer_height[1] = 32;
 	deco16_layer_height[2] = 32;
 	deco16_layer_height[3] = 32;
-	bprintf(0, _T("layer height[0] = %X.\n"), deco16_layer_height[0]);
 
 	deco16_pf_colormask[0] = 15;
 	deco16_pf_colormask[1] = 15;

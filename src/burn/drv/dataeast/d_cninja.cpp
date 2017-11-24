@@ -2055,9 +2055,7 @@ static INT32 CninjaDraw()
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x200;
-	}
+	BurnTransferClear(0x200);
 
 	deco16_clear_prio_map();
 
@@ -2085,9 +2083,7 @@ static INT32 CninjablDraw()
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x200;
-	}
+	BurnTransferClear(0x200);
 
 	deco16_clear_prio_map();
 
@@ -2105,25 +2101,31 @@ static INT32 CninjablDraw()
 	return 0;
 }
 
+static INT32 lastline;
+
 static INT32 EdrandyStartDraw()
 {
 	deco16_clear_prio_map();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0;
-	}
+	BurnTransferClear();
+
+	lastline = 0;
 
 	return 0;
 }
 
 static INT32 EdrandyDrawScanline(INT32 line)
 {
+	if (line > nScreenHeight) return 0;
+	bprintf(0, _T("%X, "), line);
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	if (nSpriteEnable &  1) deco16_draw_layer_by_line(line, line+1, 3, pTransDraw, DECO16_LAYER_PRIORITY(0x01) | DECO16_LAYER_OPAQUE);
-	if (nSpriteEnable &  2) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
-	if (nSpriteEnable &  4) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
+	if (nSpriteEnable &  1) deco16_draw_layer_by_line(lastline, line, 3, pTransDraw, DECO16_LAYER_PRIORITY(0x01) | DECO16_LAYER_OPAQUE);
+	if (nSpriteEnable &  2) deco16_draw_layer_by_line(lastline, line, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
+	if (nSpriteEnable &  4) deco16_draw_layer_by_line(lastline, line, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
+
+	lastline = line;
 
 	return 0;
 }
@@ -2148,15 +2150,17 @@ static INT32 Robocop2StartDraw()
 {
 	deco16_clear_prio_map();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x200;
-	}
+	BurnTransferClear(0x200);
+
+	lastline = 0;
 
 	return 0;
 }
 
 static INT32 Robocop2DrawScanline(INT32 line)
 {
+	if (line > nScreenHeight) return 0;
+
 	deco16_pf12_update();
 	deco16_pf34_update();
 
@@ -2175,16 +2179,18 @@ static INT32 Robocop2DrawScanline(INT32 line)
 		deco16_set_color_mask(3, 0xf);
 		deco16_set_graphics(2, DrvGfxROM2, 0x300000, 16);
 
-		if (nSpriteEnable &  1) deco16_draw_layer_by_line(line, line+1, 3, pTransDraw, DECO16_LAYER_OPAQUE | DECO16_LAYER_PRIORITY(0x01));
+		if (nSpriteEnable &  1) deco16_draw_layer_by_line(lastline, line, 3, pTransDraw, DECO16_LAYER_OPAQUE | DECO16_LAYER_PRIORITY(0x01));
 	}
 
 	if (deco16_priority & 8) {
-		if (nSpriteEnable &  2) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
-		if (nSpriteEnable &  4) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x04) | layer_8bpp);
+		if (nSpriteEnable &  2) deco16_draw_layer_by_line(lastline, line, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x02));
+		if (nSpriteEnable &  4) deco16_draw_layer_by_line(lastline, line, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x04) | layer_8bpp);
 	} else {
-		if (nSpriteEnable &  2) deco16_draw_layer_by_line(line, line+1, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x02) | layer_8bpp);
-		if (nSpriteEnable &  4) deco16_draw_layer_by_line(line, line+1, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
+		if (nSpriteEnable &  2) deco16_draw_layer_by_line(lastline, line, 2, pTransDraw, DECO16_LAYER_PRIORITY(0x02) | layer_8bpp);
+		if (nSpriteEnable &  4) deco16_draw_layer_by_line(lastline, line, 1, pTransDraw, DECO16_LAYER_PRIORITY(0x04));
 	}
+
+	lastline = line;
 
 	return 0;
 }
@@ -2216,9 +2222,7 @@ static INT32 MutantfDraw()
 	deco16_pf12_update();
 	deco16_pf34_update();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x400;
-	}
+	BurnTransferClear(0x400);
 
 	if (nSpriteEnable &  1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
 	if (nSpriteEnable &  2) deco16_draw_layer(1, pTransDraw, 0);
@@ -2352,17 +2356,15 @@ static INT32 EdrandyFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		if (irq_timer == i) {
+			if (i >= 8 && i < 248) EdrandyDrawScanline(i-8);
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, CPU_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (i >= 8) {
-			EdrandyDrawScanline(i-8);
-		}
-
 		if (i == 248) {
+			EdrandyDrawScanline(i-8);
 			SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 			deco16_vblank = 0x08;
 		}
@@ -2438,16 +2440,17 @@ static INT32 Robocop2Frame()
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (irq_timer == i) {
+			if (i >= 8 && i < 248) Robocop2DrawScanline(i-8);
 			SekSetIRQLine((irq_mask & 0x10) ? 3 : 4, CPU_IRQSTATUS_ACK);
 			irq_timer = -1;
 		}
 
-		if (i >= 8 && i < 248) {
+		if (i >= 8) {
 			deco16_vblank = 0;
-			Robocop2DrawScanline(i-8);
 		}
 
 		if (i == 248) {
+			Robocop2DrawScanline(i-8);
 			deco16_vblank = 0x08;
 		}
 

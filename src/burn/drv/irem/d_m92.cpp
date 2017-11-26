@@ -2086,12 +2086,12 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 {
 	if (m92_sprite_buffer_timer) {
 		memcpy (DrvSprBuf, DrvSprRAM, 0x800);
-		if (m92_kludge != 4) nCyclesDone[0] += VezRun(347); // nbbatman: fix for random lockups during gameplay
+		if (~m92_kludge & 4) nCyclesDone[0] += VezRun(347); // nbbatman: fix for random lockups during gameplay
 		m92_sprite_buffer_busy = 0x80;
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, CPU_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 4)/4, CPU_IRQSTATUS_NONE);
-		if (m92_kludge != 4) nCyclesDone[0] += VezRun(segment - (VezTotalCycles() - prev));
+		if (~m92_kludge & 4) nCyclesDone[0] += VezRun(segment - (VezTotalCycles() - prev));
 
 		m92_sprite_buffer_timer = 0;
 	}
@@ -2105,7 +2105,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 		}
 
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, CPU_IRQSTATUS_ACK);
-		nCyclesDone[0] += VezRun((m92_kludge == 4) ? 20 : 10); // nbbatman: gets rid of flashes in intro sequence
+		nCyclesDone[0] += VezRun((m92_kludge & 4) ? 20 : 10); // nbbatman: gets rid of flashes in intro sequence
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 8)/4, CPU_IRQSTATUS_NONE);
 
 	}
@@ -2120,7 +2120,7 @@ static void scanline_interrupts(INT32 prev, INT32 segment, INT32 scanline)
 			DrvDraw();
 		}
 
-		if (m92_kludge == 4) nCyclesDone[0] += VezRun(1200); // nbbatman: gets rid of flash after IREM logo fades out
+		if (m92_kludge & 4) nCyclesDone[0] += VezRun(1200); // nbbatman: gets rid of flash after IREM logo fades out
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, CPU_IRQSTATUS_ACK);
 		nCyclesDone[0] += VezRun(10);
 		VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 0)/4, CPU_IRQSTATUS_NONE);
@@ -2662,7 +2662,8 @@ static INT32 rtypeleoRomLoad()
 
 static INT32 rtypeleoInit()
 {
-	m92_kludge = 4; // fix for sporatic tilemap corruption in the first attract-mode stage (stage 2)
+	m92_kludge = 4+1; // fix for sporatic tilemap corruption in the first attract-mode stage (stage 2)
+	// same as nbbatman, but without scroll offset.
 
 	return DrvInit(rtypeleoRomLoad, rtypeleo_decryption_table, 1, 0x200000, 0x400000);
 }
@@ -3333,9 +3334,9 @@ static INT32 nbbatmanInit()
 	INT32 nRet;
 	const UINT8 *decrtab = leagueman_decryption_table;
 
-	m92_kludge = 4;
+	m92_kludge = 4; // tilemap offset(for the "roz"-like map at beginning of stage) + cycle hacks
 
-	if (DrvInput[8] & 1) // dip option, use old soundCPU emulation "style", for weirdos!
+	if (DrvInput[8] & 1) // dip option, use old soundCPU emulation "style", for weirdos! :)
 		decrtab = leagueman_OLD_decryption_table;
 
 	nRet = DrvInit(gunforc2RomLoad, decrtab, 1, 0x200000, 0x400000);

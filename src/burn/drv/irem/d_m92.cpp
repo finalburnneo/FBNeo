@@ -64,6 +64,8 @@ static INT32 m92_kludge = 0;
 static INT32 nPrevScreenPos = 0;
 static INT32 nScreenOffsets[2] = { 0, 0 }; // x,y (ppan)
 
+static UINT16 m92_video_reg = 0;
+
 static INT32 msm6295_bank;
 
 typedef struct _m92_layer m92_layer;
@@ -1336,6 +1338,11 @@ void __fastcall m92WriteByte(UINT32 address, UINT8 data)
 
 		case 0xf9800:
 			PalBank = (data & 0x02) ? 0x0800 : 0x0000;
+			m92_video_reg = (m92_video_reg & 0xff00) | (data << 0);
+			return;
+
+		case 0xf9801:
+			m92_video_reg = (m92_video_reg & 0x00ff) | (data << 8);
 			return;
 
 //		default:
@@ -1590,6 +1597,7 @@ static INT32 DrvDoReset()
 	m92_sprite_buffer_busy = 0x80;
 	m92_sprite_buffer_timer = 0;
 	PalBank	= 0;
+	m92_video_reg = 0;
 
 	{
 		struct _m92_layer *ptr;
@@ -2001,6 +2009,16 @@ static void DrawLayers(INT32 start, INT32 finish)
 	if (nBurnLayer & 4) draw_layer_byline(start, finish, 0, 0);
 }
 
+static UINT32 PalFindBlack()
+{
+	for (INT32 i = 0; i < 0x800; i++) {
+		if (DrvPalette[i] == 0) {
+			return i;
+		}
+	}
+	return 0;
+}
+
 static INT32 DrvDraw()
 {
 	if (bRecalcPalette) {
@@ -2012,6 +2030,8 @@ static INT32 DrvDraw()
 //	DrawLayers(0, nScreenHeight);
 
 	if (nBurnLayer & 8) draw_sprites();
+
+	if (m92_video_reg & 0x80) BurnTransferClear(PalFindBlack()); // most-likely probably screen disable (fixes bad fades in nbbatman)
 
 	BurnTransferCopy(DrvPalette);
 
@@ -2642,6 +2662,8 @@ static INT32 rtypeleoRomLoad()
 
 static INT32 rtypeleoInit()
 {
+	m92_kludge = 4; // fix for sporatic tilemap corruption in the first attract-mode stage (stage 2)
+
 	return DrvInit(rtypeleoRomLoad, rtypeleo_decryption_table, 1, 0x200000, 0x400000);
 }
 

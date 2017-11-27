@@ -1689,7 +1689,7 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 
 	RamEnd		= Next;
 
-	DrvPalette	= (UINT32 *) Next; Next += 0x0800 * sizeof(UINT32);
+	DrvPalette	= (UINT32 *) Next; Next += 0x0801 * sizeof(UINT32);
 
 	MemEnd		= Next;
 	return 0;
@@ -2009,16 +2009,6 @@ static void DrawLayers(INT32 start, INT32 finish)
 	if (nBurnLayer & 4) draw_layer_byline(start, finish, 0, 0);
 }
 
-static UINT32 PalFindBlack()
-{
-	for (INT32 i = 0; i < 0x800; i++) {
-		if (DrvPalette[i] == 0) {
-			return i;
-		}
-	}
-	return 0;
-}
-
 static INT32 DrvDraw()
 {
 	if (bRecalcPalette) {
@@ -2031,7 +2021,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 8) draw_sprites();
 
-	if (m92_video_reg & 0x80) BurnTransferClear(PalFindBlack()); // most-likely probably screen disable (fixes bad fades in nbbatman)
+	if (m92_video_reg & 0x80) BurnTransferClear(0x800); // most-likely probably screen disable (fixes bad fades in nbbatman)
 
 	BurnTransferCopy(DrvPalette);
 

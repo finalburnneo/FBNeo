@@ -45,7 +45,6 @@ static UINT8 *video_disable;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-static INT32 ym2151_previous = 0;
 static UINT8 irqvector;
 static INT32 sample_address;
 static INT32 irq_raster_position;
@@ -1042,7 +1041,7 @@ void __fastcall rtype2_main_write(UINT32 address, UINT8 data)
 
 void __fastcall m72_main_write_port(UINT32 port, UINT8 data)
 {
-//	bprintf (0, _T("%2.2x, %2.2x wp\n"), port, data);
+	//if (port!=0) bprintf (0, _T("%2.2x, %2.2x wp\n"), port, data);
 
 	switch (port)
 	{
@@ -1279,9 +1278,7 @@ static INT32 DrvDoReset()
 	ZetOpen(0);
 	ZetReset();
 	setvector_callback(VECTOR_INIT);
-	if (enable_z80_reset) {
-		z80_reset = 1;
-	}
+	z80_reset = (enable_z80_reset) ? 1 : 0;
 	ZetClose();
 
 	BurnYM2151Reset();
@@ -1289,10 +1286,10 @@ static INT32 DrvDoReset()
 
 	HiscoreReset();
 
-	ym2151_previous = 0;
 	sample_address = 0;
 	irq_raster_position = -1;
 	if (!CosmicCop) m72_irq_base = 0;
+	majtitle_rowscroll_enable = 0;
 
 	return 0;
 }
@@ -2195,12 +2192,20 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(irq_raster_position);
 		SCAN_VAR(m72_irq_base);
+
+		SCAN_VAR(sample_address);
+		SCAN_VAR(irqvector);
+		SCAN_VAR(z80_reset);
+		SCAN_VAR(majtitle_rowscroll_enable);
 	}
 	
 	if (nAction & ACB_WRITE) {
+#if 0
+		// this probably isn't needed anymore - keeping for a while just incase. -dink Nov 27, 2017
 		ZetOpen(0); // Kick-start the ym2151 after state load.
 		m72YM2151IRQHandler(1);
 		ZetClose();
+#endif
 	}
 
 	return 0;

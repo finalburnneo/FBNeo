@@ -2117,7 +2117,7 @@ static INT32 EdrandyStartDraw()
 static INT32 EdrandyDrawScanline(INT32 line)
 {
 	if (line > nScreenHeight) return 0;
-	bprintf(0, _T("%X, "), line);
+
 	deco16_pf12_update();
 	deco16_pf34_update();
 

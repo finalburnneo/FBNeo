@@ -1789,7 +1789,7 @@ static void draw_layer(INT32 layer, INT32 forcelayer, INT32 type, INT32 start, I
 	INT32 scrollx = scroll[layer * 4 + 2] | (scroll[layer * 4 + 3] << 8);
 
 	scrolly = (scrolly + 128) & 0x1ff;
-	scrollx = (scrollx + 64 + video_offsets[layer]) & 0x1ff;
+	scrollx = (scrollx + 64 + video_offsets[layer]) & ((0x200 << (type == 3 && layer == 1)) - 1);
 
 	UINT16 *xscroll = (UINT16*)DrvRowScroll;
 
@@ -4020,7 +4020,7 @@ static INT32 majtitleInit()
 
 struct BurnDriver BurnDrvMajtitle = {
 	"majtitle", NULL, NULL, NULL, "1990",
-	"Major Title (World)\0", "Graphics issues", "Irem", "Irem M84",
+	"Major Title (World)\0", NULL, "Irem", "Irem M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitleRomInfo, majtitleRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,
@@ -4062,7 +4062,7 @@ STD_ROM_FN(majtitlej)
 
 struct BurnDriver BurnDrvMajtitlej = {
 	"majtitlej", "majtitle", NULL, NULL, "1990",
-	"Major Title (Japan)\0", "Graphics issues", "Irem", "Irem M84",
+	"Major Title (Japan)\0", NULL, "Irem", "Irem M84",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED | BDF_CLONE, 2, HARDWARE_IREM_M72, GBF_SPORTSMISC, 0,
 	NULL, majtitlejRomInfo, majtitlejRomName, NULL, NULL, CommonInputInfo, Rtype2DIPInfo,

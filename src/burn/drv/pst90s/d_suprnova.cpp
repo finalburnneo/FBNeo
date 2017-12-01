@@ -987,7 +987,7 @@ static INT32 DrvDoReset()
 
 	HiscoreReset();
 
-	sh2_suprnova_speedhack = (DrvDips[1] & 1);
+	Sh2SetEatCycles((DrvDips[1] & 1) ? 4 : 1);
 
  	return 0;
 }

@@ -34,7 +34,6 @@
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
-INT32 sh2_suprnova_speedhack;
 INT32 sh2_busyloop_speedhack_mode2;
 
 #define BUSY_LOOP_HACKS     1
@@ -116,7 +115,8 @@ typedef struct
 	UINT32	sh2_cycles_to_run;
 	INT32	sh2_icount;
 	int     sh2_total_cycles; // used externally (drivers/etc)
-	
+	INT32   sh2_eat_cycles;
+
 	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);
 
 } SH2;
@@ -480,8 +480,8 @@ int Sh2Init(int nCount)
 	DebugCPU_SH2Initted = 1;
 
 	has_sh2 = 1;
+
 	cps3speedhack = 0;
-	sh2_suprnova_speedhack = 0;
 	sh2_busyloop_speedhack_mode2 = 0;
 
 	Sh2Ext = (SH2EXT *)malloc(sizeof(SH2EXT) * nCount);
@@ -494,7 +494,9 @@ int Sh2Init(int nCount)
 	// init default memory handler
 	for (int i=0; i<nCount; i++) {
 		pSh2Ext = Sh2Ext + i;
-		//sh2 = & pSh2Ext->sh2;
+		sh2 = & (pSh2Ext->sh2);
+
+		sh2->sh2_eat_cycles = 1;
 
 		Sh2MapHandler(SH2_MAXHANDLER - 1, 0xE0000000, 0xFFFFFFFF, 0x07);
 		Sh2MapHandler(SH2_MAXHANDLER - 2, 0x40000000, 0xBFFFFFFF, 0x07);
@@ -535,6 +537,15 @@ void Sh2Close()
 #if defined FBA_DEBUG
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Close called without init\n"));
 #endif
+}
+
+void Sh2SetEatCycles(int i)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2SetEatCycles called without init\n"));
+#endif
+
+	sh2->sh2_eat_cycles = i;
 }
 
 int Sh2GetActive()
@@ -3297,7 +3308,7 @@ int Sh2Run(int cycles)
 		}
 
 		sh2->sh2_total_cycles++;
-		sh2->sh2_icount -= (sh2_suprnova_speedhack) ? 4 : 1;
+		sh2->sh2_icount -= sh2->sh2_eat_cycles;
 		
 		// timer check 
 		

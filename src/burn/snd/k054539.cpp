@@ -30,6 +30,8 @@ struct k054539_channel {
 	UINT32 pfrac;
 	INT32 val;
 	INT32 pval;
+	double lvol;
+	double rvol;
 };
 
 struct k054539_info {
@@ -368,7 +370,12 @@ void K054539Exit()
 	nNumChips = 0;
 }
 
-void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf, INT32 length)
+static INT32 signdiff(INT32 a, INT32 b)
+{
+	return ((a >= 0 && b < 0) || (a < 0 && b >= 0));
+}
+
+void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Update called without init\n"));
@@ -380,7 +387,8 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf,
 
 	static const INT16 dpcm[16] = {
 		0<<8, 1<<8, 4<<8, 9<<8, 16<<8, 25<<8, 36<<8, 49<<8,
-		-64<<8, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8
+		0, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8
+		//-64<<8, -49<<8, -36<<8, -25<<8, -16<<8, -9<<8, -4<<8, -1<<8
 	};
 
 	INT16 *rbase = (INT16 *)(info->ram);
@@ -458,7 +466,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf,
 					pdelta = +1;
 				}
 
-				int cur_pfrac, cur_val, cur_pval;
+				int cur_pfrac, cur_val, cur_pval, cur_pval2;
 				if(cur_pos != (INT32)chan->pos) {
 					chan->pos = cur_pos;
 					cur_pfrac = 0;
@@ -528,6 +536,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf,
 						cur_pfrac += fdelta;
 						cur_pos += pdelta;
 
+						cur_pval2 = cur_pval;
 						cur_pval = cur_val;
 						cur_val = rom[cur_pos>>1];
 						if(cur_val == 0x88 && (base2[1] & 1)) {
@@ -536,7 +545,11 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf,
 						}
 						if(cur_val == 0x88) {
 							k054539_keyoff(ch);
-							cur_val = 0;
+							//bprintf(0, _T("4bit dpcm off ch %X. cur_val %X cur_pval %X cur_pval2 %X\n"), ch, cur_val, cur_pval, cur_pval2);
+							// at the end of the sample: if there's a huge jump between pval and pval2, use pval2
+							if (signdiff(cur_pval, cur_pval2))
+								cur_pval = cur_pval2;
+							cur_val = cur_pval;
 							break;
 						}
 						if(cur_pos & 1)
@@ -564,6 +577,9 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf,
 				rval += cur_val * rvol;
 				rbase[(rdelta + info->reverb_pos) & 0x1fff] += INT16(cur_val*rbvol);
 
+				chan->lvol = lvol;
+				chan->rvol = rvol;
+
 				chan->pos = cur_pos;
 				chan->pfrac = cur_pfrac;
 				chan->pval = cur_pval;
@@ -574,6 +590,17 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len) //INT16 *pBuf,
 					base1[0x0d] = cur_pos>> 8 & 0xff;
 					base1[0x0e] = cur_pos>>16 & 0xff;
 				}
+			} else { // get rampy to remove dc offset clicks -dink [Dec. 1, 2017]
+				struct k054539_channel *chan = info->channels + ch;
+
+				if (chan->val > 0) {
+					chan->val -= ((chan->val > 1) ? 1 : 0);
+				} else {
+					chan->val += ((chan->val < -1) ? 1 : 0);
+				}
+
+				lval += chan->val * chan->lvol;
+				rval += chan->val * chan->rvol;
 			}
 		info->reverb_pos = (info->reverb_pos + 1) & 0x1fff;
 

@@ -1200,10 +1200,15 @@ static INT32 DrvDraw()
 
 	alpha = (zmask == 0xffff) ? K054338_alpha_level_moo(1) : K054338_set_alpha_level(1);
 
-	if (255-alpha > 0)
+	if (255-alpha > 0 && K053251GetPriority(2) != 0x07) { // normal draw
 		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(255-alpha), 4);
+	}
 
 	if (nSpriteEnable & 1) K053247SpritesRender();
+
+	if (255-alpha > 0 && K053251GetPriority(2) == 0x07) { // Bucky title, draw layer after sprites for alpha over sprites effect
+		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(255-alpha), 4);
+	}
 
 	if (nBurnLayer & 1) K056832Draw(0, 0, 0);
 

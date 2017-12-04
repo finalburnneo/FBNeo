@@ -10,6 +10,7 @@
 #include "sh2_intf.h"
 #include "h6280_intf.h"
 #include "tlcs90_intf.h"
+#include "z180_intf.h"
 
 #define MAX_TIMER_VALUE ((1 << 30) - 65536)
 
@@ -469,6 +470,7 @@ INT32 BurnTimerAttachH6280(INT32 nClockspeed)
 
 	return 0;
 }
+
 INT32 BurnTimerAttachTlcs90(INT32 nClockspeed)
 {
 	nCPUClockspeed = nClockspeed;
@@ -483,3 +485,16 @@ INT32 BurnTimerAttachTlcs90(INT32 nClockspeed)
 	return 0;
 }
 
+INT32 BurnTimerAttachZ180(INT32 nClockspeed)
+{
+	nCPUClockspeed = nClockspeed;
+	pCPUTotalCycles = Z180TotalCycles;
+	pCPURun = Z180Run;
+	pCPURunEnd = Z180RunEnd;
+
+	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+
+	return 0;
+}

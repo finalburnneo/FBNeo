@@ -897,7 +897,7 @@ static void draw_sprites(INT32 scanline)
 			sprite |= (index_ptr8[4]&3)<<16;
 
 			if (use8bppMode) {
-				uint8_t* index_ptr28=rom + indx2*8;
+				UINT8* index_ptr28=rom + indx2*8;
 				sprite2=(index_ptr28[7]<<8)|index_ptr28[6];
 			}
 
@@ -925,7 +925,7 @@ static void draw_sprites(INT32 scanline)
 			if (!w) w=16;
 
 			if (use8bppMode) {
-				uint32_t* index_ptr2=m_mlc_vram + ((indx2*4)&0x7fff);
+				UINT32* index_ptr2=m_mlc_vram + ((indx2*4)&0x7fff);
 				sprite2=((index_ptr2[2]&0x3)<<16) | (index_ptr2[3]&0xffff);
 			}
 
@@ -1046,11 +1046,11 @@ static void draw_sprites(INT32 scanline)
 			if (blockIsTilemapIndex) {
 				if (useIndicesInRom)
 				{
-					const uint8_t* ptr=rawrom+(tile*2);
+					const UINT8* ptr=rawrom+(tile*2);
 					tile=(*ptr) + ((*(ptr+1))<<8);
 
 					if (use8bppMode) {
-						const uint8_t* ptr2=rawrom+(tile2*2);
+						const UINT8* ptr2=rawrom+(tile2*2);
 						tile2=(*ptr2) + ((*(ptr2+1))<<8);
 					}
 					else

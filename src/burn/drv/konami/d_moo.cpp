@@ -53,7 +53,7 @@ static UINT8 DrvDips[1];
 static INT32 sound_nmi_enable = 0;
 static INT32 irq5_timer = 0;
 static UINT16 control_data = 0;
-static INT32 enable_alpha = 0;
+static INT32 fogcnt = 0;
 static UINT8 z80_bank;
 
 static UINT16 zmask; // 0xffff moomesa, 0x00ff bucky
@@ -324,6 +324,7 @@ static void __fastcall moo_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x0de000:
 			control_data = data;
+			bprintf(0, _T("control %X.\n"), data);
 			K053246_set_OBJCHA_line((data & 0x100) >> 8);
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
@@ -807,9 +808,10 @@ static void moo_sprite_callback(INT32 */*code*/, INT32 *color, INT32 *priority)
 	*color = sprite_colorbase | (*color & 0x001f);
 }
 
-static void moo_tile_callback(INT32 layer, INT32 */*code*/, INT32 *color, INT32 */*flags*/)
+static void moo_tile_callback(INT32 layer, INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*color = layer_colorbase[layer] | (*color >> 2 & 0x0f);
+	if (layer == 1 && *code == 0xda02 && zmask == 0xffff) fogcnt = 10; // moomesa only
 }
 
 static INT32 DrvDoReset()
@@ -847,6 +849,8 @@ static INT32 DrvDoReset()
 
 	sound_nmi_enable = 0;
 	z80_bank = 0;
+
+	fogcnt = 0;
 
 	return 0;
 }
@@ -1174,7 +1178,8 @@ static INT32 DrvDraw()
 
 	static const INT32 K053251_CI[4] = { 1, 2, 3, 4 };
 	INT32 layers[3];
-	INT32 plane, alpha = 0xff;
+	INT32 plane, alpha = 0;
+	INT32 enable_alpha = 0;
 
 	sprite_colorbase = K053251GetPaletteIndex(0);
 	layer_colorbase[0] = 0x70;
@@ -1199,6 +1204,18 @@ static INT32 DrvDraw()
 	if (nBurnLayer & (1<<layers[1])) K056832Draw(layers[1], 0, 2);
 
 	alpha = (zmask == 0xffff) ? K054338_alpha_level_moo(1) : K054338_set_alpha_level(1);
+	enable_alpha = K054338_read_register(K338_REG_CONTROL) & K338_CTL_MIXPRI;
+
+	if (zmask == 0xffff) { // moo mesa
+		if (fogcnt) {
+			enable_alpha = 1;
+			fogcnt--;
+		}
+	}
+
+	alpha = (enable_alpha) ? alpha : 0x00;
+
+	//bprintf(0, _T("enab %X  alpha %X.  fogcnt %X\n"), enable_alpha, alpha, fogcnt);
 
 	if (255-alpha > 0 && K053251GetPriority(2) != 0x07) { // normal draw
 		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(255-alpha), 4);
@@ -1206,7 +1223,7 @@ static INT32 DrvDraw()
 
 	if (nSpriteEnable & 1) K053247SpritesRender();
 
-	if (255-alpha > 0 && K053251GetPriority(2) == 0x07) { // Bucky title, draw layer after sprites for alpha over sprites effect
+	if (255-alpha > -1 && ((K053251GetPriority(2) == 0x07) || (fogcnt)) ) { // Bucky title, draw layer after sprites for alpha over sprites effect
 		if (nBurnLayer & (1<<layers[2])) K056832Draw(layers[2], K056832_SET_ALPHA(255-alpha), 4);
 	}
 
@@ -1350,7 +1367,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(irq5_timer);
 
 		SCAN_VAR(control_data);
-		SCAN_VAR(enable_alpha);
+		SCAN_VAR(fogcnt);
 	}
 
 	if (nAction & ACB_WRITE) {

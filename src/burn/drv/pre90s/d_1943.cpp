@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2203.h"
+#include "watchdog.h"
 
 static UINT8 DrvInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 DrvInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};
@@ -40,7 +41,9 @@ static UINT8 *DrvBg2Tiles          = NULL;
 static UINT8 *DrvBgTiles           = NULL;
 static UINT8 *DrvSprites           = NULL;
 static UINT8 *DrvTempRom           = NULL;
-static UINT32 *DrvPalette           = NULL;
+static UINT32 *DrvPalette          = NULL;
+
+static UINT8 DrvRecalc;
 
 static UINT8 DrvSoundLatch;
 static UINT8 DrvRomBank;
@@ -52,9 +55,6 @@ static UINT8 DrvBg1On;
 static UINT8 DrvSpritesOn;
 static UINT8 DrvCharsOn;
 static UINT8 DrvProtValue;
-
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 
 static struct BurnInputInfo DrvInputList[] =
 {
@@ -83,33 +83,6 @@ static struct BurnInputInfo DrvInputList[] =
 };
 
 STDINPUTINFO(Drv)
-
-static inline void DrvClearOpposites(UINT8* nJoystickInputs)
-{
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
-	}
-	if ((*nJoystickInputs & 0x0c) == 0x0c) {
-		*nJoystickInputs &= ~0x0c;
-	}
-}
-
-static inline void DrvMakeInputs()
-{
-	// Reset Inputs
-	DrvInput[0] = DrvInput[1] = DrvInput[2] = 0x00;
-
-	// Compile Digital Inputs
-	for (INT32 i = 0; i < 8; i++) {
-		DrvInput[0] |= (DrvInputPort0[i] & 1) << i;
-		DrvInput[1] |= (DrvInputPort1[i] & 1) << i;
-		DrvInput[2] |= (DrvInputPort2[i] & 1) << i;
-	}
-
-	// Clear Opposites
-	DrvClearOpposites(&DrvInput[1]);
-	DrvClearOpposites(&DrvInput[2]);
-}
 
 static struct BurnDIPInfo DrvDIPList[]=
 {
@@ -740,74 +713,6 @@ static struct BurnRomInfo DrvmiiRomDesc[] = {
 STD_ROM_PICK(Drvmii)
 STD_ROM_FN(Drvmii)
 
-static INT32 MemIndex()
-{
-	UINT8 *Next; Next = Mem;
-
-	DrvZ80Rom1             = Next; Next += 0x30000;
-	DrvZ80Rom2             = Next; Next += 0x08000;
-	DrvPromRed             = Next; Next += 0x00100;
-	DrvPromGreen           = Next; Next += 0x00100;
-	DrvPromBlue            = Next; Next += 0x00100;
-	DrvPromCharLookup      = Next; Next += 0x00100;
-	DrvPromBg2Lookup       = Next; Next += 0x00100;
-	DrvPromBg2PalBank      = Next; Next += 0x00100;
-	DrvPromBgLookup        = Next; Next += 0x00100;
-	DrvPromBgPalBank       = Next; Next += 0x00100;
-	DrvPromSpriteLookup    = Next; Next += 0x00100;
-	DrvPromSpritePalBank   = Next; Next += 0x00100;
-	DrvBgTilemap           = Next; Next += 0x08000;
-	DrvBg2Tilemap          = Next; Next += 0x08000;
-
-	RamStart               = Next;
-
-	DrvZ80Ram1             = Next; Next += 0x01000;
-	DrvZ80Ram2             = Next; Next += 0x00800;
-	DrvVideoRam            = Next; Next += 0x00400;
-	DrvPaletteRam          = Next; Next += 0x00400;
-	DrvSpriteRam           = Next; Next += 0x01000;
-
-	RamEnd                 = Next;
-
-	DrvChars               = Next; Next += 2048 * 8 * 8;
-	DrvBg2Tiles            = Next; Next += 128 * 32 * 32;
-	DrvBgTiles             = Next; Next += 512 * 32 * 32;
-	DrvSprites             = Next; Next += 2048 * 16 * 16;
-	DrvPalette             = (UINT32*)Next; Next += 0x00380 * sizeof(UINT32);
-
-	MemEnd                 = Next;
-
-	return 0;
-}
-
-static INT32 DrvDoReset()
-{
-	for (INT32 i = 0; i < 2; i++) {
-		ZetOpen(i);
-		ZetReset();
-		ZetClose();
-	}
-	
-	BurnYM2203Reset();
-	
-	DrvRomBank = 0;
-	DrvSoundLatch = 0;
-	DrvBg2ScrollX[0] = 0;
-	DrvBg2ScrollX[1] = 0;
-	DrvBgScrollX[0] = 0;
-	DrvBgScrollX[1] = 0;
-	DrvBgScrollY = 0;
-	DrvBg2On = 0;
-	DrvBg1On = 0;
-	DrvSpritesOn = 0;
-	DrvCharsOn = 0;
-	DrvProtValue = 0;
-
-	HiscoreReset();
-
-	return 0;
-}
-
 static UINT8 Drv1943ProtRead()
 {
 	// This data comes from a table at $21a containing 64 entries, even is "case", odd is return value.
@@ -846,22 +751,22 @@ static UINT8 Drv1943ProtRead()
 		case 0x25: return 0x04;
 	}
 
-	return 0;
+	return 0; // bootlegs expect 0
 }
 
-UINT8 __fastcall Drv1943Read1(UINT16 a)
+static UINT8 __fastcall Drv1943Read1(UINT16 a)
 {
 	switch (a) {
 		case 0xc000: {
-			return 0xff - DrvInput[0];
+			return DrvInput[0];
 		}
 		
 		case 0xc001: {
-			return 0xff - DrvInput[1];
+			return DrvInput[1];
 		}
 		
 		case 0xc002: {
-			return 0xff - DrvInput[2];
+			return DrvInput[2];
 		}
 		
 		case 0xc003: {
@@ -884,42 +789,7 @@ UINT8 __fastcall Drv1943Read1(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall Drvb1943Read1(UINT16 a)
-{
-	switch (a) {
-		case 0xc000: {
-			return 0xff - DrvInput[0];
-		}
-		
-		case 0xc001: {
-			return 0xff - DrvInput[1];
-		}
-		
-		case 0xc002: {
-			return 0xff - DrvInput[2];
-		}
-		
-		case 0xc003: {
-			return DrvDip[0];
-		}
-		
-		case 0xc004: {
-			return DrvDip[1];
-		}
-		
-		case 0xc007: { // Always return 0 for protection reads
-			return 0x00;
-		}
-	
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Read => %04X\n"), a);
-		}
-	}
-
-	return 0;
-}
-
-void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
+static void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc800: {
@@ -929,17 +799,15 @@ void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
 		
 		case 0xc804: {
 			DrvRomBank = d & 0x1c;
-			ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x1000 );
-			ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x1000 );
-			
-			if (d & 0x40) bprintf(PRINT_NORMAL, _T("c804 write %x\n"), d);
+
+			ZetMapMemory(DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x1000), 0x8000, 0xbfff, MAP_ROM);
 			
 			DrvCharsOn = d & 0x80;
 			return;
 		}
 		
 		case 0xc806: {
-			// Watchdog
+			BurnWatchogWrite();
 			return;
 		}
 		
@@ -986,31 +854,7 @@ void __fastcall Drv1943Write1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Drv1943PortRead1(UINT16 a)
-{
-	a &= 0xff;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Read => %02X\n"), a);
-		}
-	}
-
-	return 0;
-}
-
-void __fastcall Drv1943PortWrite1(UINT16 a, UINT8 d)
-{
-	a &= 0xff;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
-		}
-	}
-}
-
-UINT8 __fastcall Drv1943Read2(UINT16 a)
+static UINT8 __fastcall Drv1943Read2(UINT16 a)
 {
 	switch (a) {
 		case 0xc800: {
@@ -1025,26 +869,18 @@ UINT8 __fastcall Drv1943Read2(UINT16 a)
 	return 0;
 }
 
-void __fastcall Drv1943Write2(UINT16 a, UINT8 d)
+static void __fastcall Drv1943Write2(UINT16 a, UINT8 d)
 {
 	switch (a) {
-		case 0xe000: {
-			BurnYM2203Write(0, 0, d);
-			return;
-		}
-		
+		case 0xe000:
 		case 0xe001: {
-			BurnYM2203Write(0, 1, d);
+			BurnYM2203Write(0, a & 1, d);
 			return;
 		}
 		
-		case 0xe002: {
-			BurnYM2203Write(1, 0, d);
-			return;
-		}
-		
+		case 0xe002:
 		case 0xe003: {
-			BurnYM2203Write(1, 1, d);
+			BurnYM2203Write(1, a & 1, d);
 			return;
 		}
 		
@@ -1054,40 +890,40 @@ void __fastcall Drv1943Write2(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall Drv1943PortRead2(UINT16 a)
-{
-	a &= 0xff;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #2 Port Read => %02X\n"), a);
-		}
-	}
-
-	return 0;
-}
-
-void __fastcall Drv1943PortWrite2(UINT16 a, UINT8 d)
-{
-	a &= 0xff;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #2 Port Write => %02X, %02X\n"), a, d);
-		}
-	}
-}
-
 static INT32 CharPlaneOffsets[2]    = { 4, 0 };
-static INT32 CharXOffsets[8]        = { 0, 1, 2, 3, 8, 9, 10, 11 };
-static INT32 CharYOffsets[8]        = { 0, 16, 32, 48, 64, 80, 96, 112 };
+static INT32 CharXOffsets[8]        = { STEP4(0,1), STEP4(8,1) };
+static INT32 CharYOffsets[8]        = { STEP8(0,16) };
 static INT32 Bg2TilePlaneOffsets[4] = { 0x40004, 0x40000, 4, 0 };
 static INT32 BgTilePlaneOffsets[4]  = { 0x100004, 0x100000, 4, 0 };
-static INT32 TileXOffsets[32]       = { 0, 1, 2, 3, 8, 9, 10, 11, 512, 513, 514, 515, 520, 521, 522, 523, 1024, 1025, 1026, 1027, 1032, 1033, 1034, 1035, 1536, 1537, 1538, 1539, 1544, 1545, 1546, 1547 };
-static INT32 TileYOffsets[32]       = { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496 };
+static INT32 TileXOffsets[32]       = { STEP4(0,1), STEP4(8,1), STEP4(512,1), STEP4(520,1), STEP4(1024,1), STEP4(1032,1), STEP4(1536,1), STEP4(1544,1) };
+static INT32 TileYOffsets[32]       = { STEP32(0,16) };
 static INT32 SpritePlaneOffsets[4]  = { 0x100004, 0x100000, 4, 0 };
-static INT32 SpriteXOffsets[16]     = { 0, 1, 2, 3, 8, 9, 10, 11, 256, 257, 258, 259, 264, 265, 266, 267 };
-static INT32 SpriteYOffsets[16]     = { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240 };
+static INT32 SpriteXOffsets[16]     = { STEP4(0,1), STEP4(8,1), STEP4(256,1), STEP4(264,1) };
+static INT32 SpriteYOffsets[16]     = { STEP16(0,16) };
+
+static tilemap_callback( bg2 )
+{
+	INT32 Attr = DrvBg2Tilemap[offs * 2 + 1];
+	INT32 Code = DrvBg2Tilemap[offs * 2 + 0];
+
+	TILE_SET_INFO(0, Code, ((Attr >> 2) & 0xf) + 0x18, TILE_FLIPYX(Attr >> 6));
+}
+
+static tilemap_callback( bg1 )
+{
+	INT32 Attr = DrvBgTilemap[offs * 2 + 1];
+	INT32 Code = DrvBgTilemap[offs * 2 + 0] + ((Attr & 0x01) << 8);
+
+	TILE_SET_INFO(1, Code, ((Attr >> 2) & 0xf) + 0x08, TILE_FLIPYX(Attr >> 6));
+}
+
+static tilemap_callback( fg )
+{
+	INT32 Attr = DrvPaletteRam[offs];
+	INT32 Code = DrvVideoRam[offs] + ((Attr & 0xe0) << 3);
+
+	TILE_SET_INFO(2, Code, Attr, 0);
+}
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
@@ -1099,17 +935,145 @@ inline static double DrvGetTime()
 	return (double)ZetTotalCycles() / 3000000;
 }
 
-static INT32 DrvInit()
+static INT32 DrvDoReset(INT32 clear_mem)
 {
-	INT32 nRet = 0, nLen;
+	ZetOpen(0);
+	ZetReset();
+	ZetClose();
 
+	ZetOpen(1);
+	ZetReset();
+	BurnYM2203Reset();
+	ZetClose();
+
+	BurnWatchdogReset();
+
+	if (clear_mem) {
+		DrvRomBank = 0;
+		DrvSoundLatch = 0;
+		DrvBg2ScrollX[0] = 0;
+		DrvBg2ScrollX[1] = 0;
+		DrvBgScrollX[0] = 0;
+		DrvBgScrollX[1] = 0;
+		DrvBgScrollY = 0;
+		DrvBg2On = 0;
+		DrvBg1On = 0;
+		DrvSpritesOn = 0;
+		DrvCharsOn = 0;
+		DrvProtValue = 0;
+
+		HiscoreReset();
+	}
+
+	return 0;
+}
+
+static INT32 MemIndex()
+{
+	UINT8 *Next; Next = Mem;
+
+	DrvZ80Rom1             = Next; Next += 0x30000;
+	DrvZ80Rom2             = Next; Next += 0x08000;
+	DrvPromRed             = Next; Next += 0x00100;
+	DrvPromGreen           = Next; Next += 0x00100;
+	DrvPromBlue            = Next; Next += 0x00100;
+	DrvPromCharLookup      = Next; Next += 0x00100;
+	DrvPromBg2Lookup       = Next; Next += 0x00100;
+	DrvPromBg2PalBank      = Next; Next += 0x00100;
+	DrvPromBgLookup        = Next; Next += 0x00100;
+	DrvPromBgPalBank       = Next; Next += 0x00100;
+	DrvPromSpriteLookup    = Next; Next += 0x00100;
+	DrvPromSpritePalBank   = Next; Next += 0x00100;
+	DrvBgTilemap           = Next; Next += 0x08000;
+	DrvBg2Tilemap          = Next; Next += 0x08000;
+
+	RamStart               = Next;
+
+	DrvZ80Ram1             = Next; Next += 0x01000;
+	DrvZ80Ram2             = Next; Next += 0x00800;
+	DrvVideoRam            = Next; Next += 0x00400;
+	DrvPaletteRam          = Next; Next += 0x00400;
+	DrvSpriteRam           = Next; Next += 0x01000;
+
+	RamEnd                 = Next;
+
+	DrvChars               = Next; Next += 2048 * 8 * 8;
+	DrvBg2Tiles            = Next; Next += 128 * 32 * 32;
+	DrvBgTiles             = Next; Next += 512 * 32 * 32;
+	DrvSprites             = Next; Next += 2048 * 16 * 16;
+	DrvPalette             = (UINT32*)Next; Next += 0x00380 * sizeof(UINT32);
+
+	MemEnd                 = Next;
+
+	return 0;
+}
+
+static INT32 CommonInit(INT32 (*load)())
+{
 	// Allocate and Blank all required memory
 	Mem = NULL;
 	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
+	INT32 nLen = MemEnd - (UINT8 *)0;
 	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(Mem, 0, nLen);
 	MemIndex();
+
+	if (load()) return 1;
+
+	// Setup the Z80 emulation
+	ZetInit(0);
+	ZetOpen(0);
+	ZetMapMemory(DrvZ80Rom1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Rom1 + 0x10000,	0x8000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvVideoRam,		0xd000, 0xd3ff, MAP_RAM);
+	ZetMapMemory(DrvPaletteRam,		0xd400, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvZ80Ram1,		0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvSpriteRam,		0xf000, 0xffff, MAP_RAM);
+	ZetSetReadHandler(Drv1943Read1);
+	ZetSetWriteHandler(Drv1943Write1);
+	ZetClose();
+	
+	ZetInit(1);
+	ZetOpen(1);
+	ZetMapMemory(DrvZ80Rom2,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80Ram2,		0xc000, 0xc7ff, MAP_RAM);
+	ZetSetReadHandler(Drv1943Read2);
+	ZetSetWriteHandler(Drv1943Write2);
+	ZetClose();
+
+	BurnWatchdogInit(DrvDoReset, 180);
+
+	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnTimerAttachZet(3000000);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
+
+	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg2_map_callback, 32, 32, 2048,  8);
+	GenericTilemapInit(1, TILEMAP_SCAN_COLS, bg1_map_callback, 32, 32, 2048,  8);
+	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, fg_map_callback,   8,  8,   32, 32);
+	GenericTilemapSetGfx(0, DrvBg2Tiles, 4, 32, 32, 0x20000, 0x000, 0x3f);
+	GenericTilemapSetGfx(1, DrvBgTiles,  4, 32, 32, 0x80000, 0x000, 0x3f);
+	GenericTilemapSetGfx(2, DrvChars,    2,  8,  8, 0x20000, 0x000, 0x1f);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapSetTransparent(2, 0);
+
+	// Reset the driver
+	DrvDoReset(1);
+
+	return 0;
+}
+
+static INT32 DrvLoad()
+{
+	INT32 nRet = 0;
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 
@@ -1172,75 +1136,18 @@ static INT32 DrvInit()
 	nRet = BurnLoadRom(DrvPromSpritePalBank, 34, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
-	
-	// Setup the Z80 emulation
-	ZetInit(0);
-	ZetOpen(0);
-	ZetSetReadHandler(Drv1943Read1);
-	ZetSetWriteHandler(Drv1943Write1);
-	ZetSetInHandler(Drv1943PortRead1);
-	ZetSetOutHandler(Drv1943PortWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0xd000, 0xd3ff, 0, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 1, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 2, DrvVideoRam            );
-	ZetMapArea(0xd400, 0xd7ff, 0, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 1, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 2, DrvPaletteRam          );
-	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetClose();
 
-	ZetInit(1);
-	ZetOpen(1);
-	ZetSetReadHandler(Drv1943Read2);
-	ZetSetWriteHandler(Drv1943Write2);
-	ZetSetInHandler(Drv1943PortRead2);
-	ZetSetOutHandler(Drv1943PortWrite2);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetClose();
-	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(3000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
-
-	// Reset the driver
-	DrvDoReset();
-
-	return 0;
+	return nRet;
 }
 
-static INT32 DrvbInit()
+static INT32 DrvInit()
 {
-	INT32 nRet = 0, nLen;
+	return CommonInit(DrvLoad);
+}
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+static INT32 DrvbLoad()
+{
+	INT32 nRet = 0;
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 
@@ -1300,74 +1207,17 @@ static INT32 DrvbInit()
 	
 	BurnFree(DrvTempRom);
 	
-	// Setup the Z80 emulation
-	ZetInit(0);
-	ZetOpen(0);
-	ZetSetReadHandler(Drvb1943Read1);
-	ZetSetWriteHandler(Drv1943Write1);
-	ZetSetInHandler(Drv1943PortRead1);
-	ZetSetOutHandler(Drv1943PortWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0xd000, 0xd3ff, 0, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 1, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 2, DrvVideoRam            );
-	ZetMapArea(0xd400, 0xd7ff, 0, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 1, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 2, DrvPaletteRam          );
-	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetClose();
-	
-	ZetInit(1);
-	ZetOpen(1);
-	ZetSetReadHandler(Drv1943Read2);
-	ZetSetWriteHandler(Drv1943Write2);
-	ZetSetInHandler(Drv1943PortRead2);
-	ZetSetOutHandler(Drv1943PortWrite2);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetClose();
-	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(3000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
-
-	// Reset the driver
-	DrvDoReset();
-
-	return 0;
+	return nRet;
 }
 
-static INT32 DrvbjInit()
+static INT32 DrvbInit()
 {
-	INT32 nRet = 0, nLen;
+	return CommonInit(DrvbLoad);
+}
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+static INT32 DrvbjLoad()
+{
+	INT32 nRet = 0;
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 
@@ -1388,23 +1238,7 @@ static INT32 DrvbjInit()
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  9, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(128, 4, 32, 32, Bg2TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x800, DrvTempRom, DrvBg2Tiles);
-	
-	// Load and decode the bg tiles
-	
-	//{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     //  5	BG Tiles
-	//{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     //  6
-	//{ "bm17.12f",      0x08000, 0x46bcdd07, BRF_GRA },	     //  7
-	//{ "bm18.14f",      0x08000, 0xe6ae7ba0, BRF_GRA },	     //  8
-	//{ "bm19.10j",      0x08000, 0x868ababc, BRF_GRA },	     //  9
-	//{ "bm20.11j",      0x08000, 0x0917e5d4, BRF_GRA },	     //  10
-	//{ "bm21.12j",      0x08000, 0x9bfb0d89, BRF_GRA },	     //  11
-	//{ "bm22.14j",      0x08000, 0x04f3c274, BRF_GRA },	     //  12
-	
-	// 0x00000, 0x10000
-	// 0x08000, 0x18000
-	// 0x20000, 0x30000
-	// 0x28000, 0x38000
-	
+
 	memset(DrvTempRom, 0, 0x40000);
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
 	nRet = BurnLoadRom(pTemp + 0x00000,  5, 1); if (nRet != 0) return 1;
@@ -1455,75 +1289,18 @@ static INT32 DrvbjInit()
 	nRet = BurnLoadRom(DrvPromSpritePalBank, 30, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
-	
-	// Setup the Z80 emulation
-	ZetInit(0);
-	ZetOpen(0);
-	ZetSetReadHandler(Drvb1943Read1);
-	ZetSetWriteHandler(Drv1943Write1);
-	ZetSetInHandler(Drv1943PortRead1);
-	ZetSetOutHandler(Drv1943PortWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0xd000, 0xd3ff, 0, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 1, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 2, DrvVideoRam            );
-	ZetMapArea(0xd400, 0xd7ff, 0, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 1, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 2, DrvPaletteRam          );
-	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetClose();
-	
-	ZetInit(1);
-	ZetOpen(1);
-	ZetSetReadHandler(Drv1943Read2);
-	ZetSetWriteHandler(Drv1943Write2);
-	ZetSetInHandler(Drv1943PortRead2);
-	ZetSetOutHandler(Drv1943PortWrite2);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetClose();
-	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(3000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 
-	GenericTilesInit();
-
-	// Reset the driver
-	DrvDoReset();
-
-	return 0;
+	return nRet;
 }
 
-static INT32 Drvb2Init()
+static INT32 DrvbjInit()
 {
-	INT32 nRet = 0, nLen;
+	return CommonInit(DrvbjLoad);
+}
 
-	// Allocate and Blank all required memory
-	Mem = NULL;
-	MemIndex();
-	nLen = MemEnd - (UINT8 *)0;
-	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
-	memset(Mem, 0, nLen);
-	MemIndex();
+static INT32 Drvb2Load()
+{
+	INT32 nRet = 0;
 
 	DrvTempRom = (UINT8 *)BurnMalloc(0x40000);
 
@@ -1544,22 +1321,6 @@ static INT32 Drvb2Init()
 	nRet = BurnLoadRom(DrvTempRom + 0x00000,  9, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(DrvTempRom + 0x08000, 10, 1); if (nRet != 0) return 1;
 	GfxDecode(128, 4, 32, 32, Bg2TilePlaneOffsets, TileXOffsets, TileYOffsets, 0x800, DrvTempRom, DrvBg2Tiles);
-	
-	// Load and decode the bg tiles
-	
-	//{ "bm15.10f",      0x08000, 0x6b1a0443, BRF_GRA },	     //  5	BG Tiles
-	//{ "bm16.11f",      0x08000, 0x23c908c2, BRF_GRA },	     //  6
-	//{ "bm17.12f",      0x08000, 0x46bcdd07, BRF_GRA },	     //  7
-	//{ "bm18.14f",      0x08000, 0xe6ae7ba0, BRF_GRA },	     //  8
-	//{ "bm19.10j",      0x08000, 0x868ababc, BRF_GRA },	     //  9
-	//{ "bm20.11j",      0x08000, 0x0917e5d4, BRF_GRA },	     //  10
-	//{ "bm21.12j",      0x08000, 0x9bfb0d89, BRF_GRA },	     //  11
-	//{ "bm22.14j",      0x08000, 0x04f3c274, BRF_GRA },	     //  12
-	
-	// 0x00000, 0x10000
-	// 0x08000, 0x18000
-	// 0x20000, 0x30000
-	// 0x28000, 0x38000
 	
 	memset(DrvTempRom, 0, 0x40000);
 	UINT8 *pTemp = (UINT8*)BurnMalloc(0x40000);
@@ -1609,62 +1370,13 @@ static INT32 Drvb2Init()
 	nRet = BurnLoadRom(DrvPromSpritePalBank, 28, 1); if (nRet != 0) return 1;
 	
 	BurnFree(DrvTempRom);
-	
-	// Setup the Z80 emulation
-	ZetInit(0);
-	ZetOpen(0);
-	ZetSetReadHandler(Drvb1943Read1);
-	ZetSetWriteHandler(Drv1943Write1);
-	ZetSetInHandler(Drv1943PortRead1);
-	ZetSetOutHandler(Drv1943PortWrite1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom1             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom1             );
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000   );
-	ZetMapArea(0xd000, 0xd3ff, 0, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 1, DrvVideoRam            );
-	ZetMapArea(0xd000, 0xd3ff, 2, DrvVideoRam            );
-	ZetMapArea(0xd400, 0xd7ff, 0, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 1, DrvPaletteRam          );
-	ZetMapArea(0xd400, 0xd7ff, 2, DrvPaletteRam          );
-	ZetMapArea(0xe000, 0xefff, 0, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 1, DrvZ80Ram1             );
-	ZetMapArea(0xe000, 0xefff, 2, DrvZ80Ram1             );
-	ZetMapArea(0xf000, 0xffff, 0, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 1, DrvSpriteRam           );
-	ZetMapArea(0xf000, 0xffff, 2, DrvSpriteRam           );
-	ZetClose();
-	
-	ZetInit(1);
-	ZetOpen(1);
-	ZetSetReadHandler(Drv1943Read2);
-	ZetSetWriteHandler(Drv1943Write2);
-	ZetSetInHandler(Drv1943PortRead2);
-	ZetSetOutHandler(Drv1943PortWrite2);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80Rom2             );
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80Rom2             );
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80Ram2             );
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram2             );
-	ZetClose();
-	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnTimerAttachZet(3000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_2, 0.15, BURN_SND_ROUTE_BOTH);
-	BurnYM2203SetRoute(1, BURN_SND_YM2203_AY8910_ROUTE_3, 0.15, BURN_SND_ROUTE_BOTH);
 
-	GenericTilesInit();
+	return nRet;
+}
 
-	// Reset the driver
-	DrvDoReset();
-
-	return 0;
+static INT32 Drvb2Init()
+{
+	return CommonInit(Drvb2Load);
 }
 
 static INT32 DrvExit()
@@ -1738,143 +1450,9 @@ static void DrvCalcPalette()
 	}
 }
 
-static void DrvRenderBg2Layer()
-{
-	INT32 mx, my, Offs, Attr, Code, Colour, x, y, TileIndex, xScroll, Flip, xFlip, yFlip;
-	
-	xFlip = 0;
-	yFlip = 0;
-	
-	xScroll = DrvBg2ScrollX[0] + (256 * DrvBg2ScrollX[1]);
-	
-	for (mx = 0; mx < 8; mx++) {
-		for (my = 0; my < 2048; my++) {
-			TileIndex = (my * 8) + mx;
-				
-			Offs = TileIndex * 2;
-			Attr = DrvBg2Tilemap[Offs + 1];
-			Code = DrvBg2Tilemap[Offs] & 0x7f;
-			Colour = ((Attr & 0x3c) >> 2) + 0x18;
-			Flip = (Attr & 0xc0) >> 6;
-			xFlip = (Flip >> 0) & 0x01;
-			yFlip = (Flip >> 1) & 0x01;
-						
-			y = 32 * mx;
-			x = 32 * my;
-			
-			x -= xScroll;
-			y -= 16;
-			
-			if (x < -31) x += 65536;
-			
-			if (x > 256) continue;
-			if (y > 240) continue;
-
-			if (x > 0 && x < 224 && y > 0 && y < 192) {
-				if (xFlip) {
-					if (yFlip) {
-						Render32x32Tile_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					} else {
-						Render32x32Tile_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					}
-				} else {
-					if (yFlip) {
-						Render32x32Tile_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					} else {
-						Render32x32Tile(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					}
-				}
-			} else {
-				if (xFlip) {
-					if (yFlip) {
-						Render32x32Tile_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					} else {
-						Render32x32Tile_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					}
-				} else {
-					if (yFlip) {
-						Render32x32Tile_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					} else {
-						Render32x32Tile_Clip(pTransDraw, Code, x, y, Colour, 4, 0, DrvBg2Tiles);
-					}
-				}
-			}
-		}
-	}
-}
-
-static void DrvRenderBgLayer()
-{
-	INT32 mx, my, Offs, Attr, Code, Colour, x, y, TileIndex, xScroll, yScroll, Flip, xFlip, yFlip;
-	
-	xFlip = 0;
-	yFlip = 0;
-
-	yScroll = (DrvBgScrollY + 16) & 0xff;
-	xScroll = DrvBgScrollX[0] + (256 * DrvBgScrollX[1]);
-	
-	for (mx = 0; mx < 8; mx++) {
-		for (my = 0; my < 2048; my++) {
-			TileIndex = (my * 8) + mx;
-			
-			Offs = TileIndex * 2;
-			Attr = DrvBgTilemap[Offs + 1];
-			Code = DrvBgTilemap[Offs] + ((Attr & 0x01) << 8);
-			Colour = ((Attr & 0x3c) >> 2) + 0x08;
-			Flip = (Attr & 0xc0) >> 6;
-			xFlip = (Flip >> 0) & 0x01;
-			yFlip = (Flip >> 1) & 0x01;
-			
-			y = 32 * mx;
-			x = 32 * my;
-			
-			x -= xScroll;
-			y -= yScroll;
-			
-			if (x < -31) x += 65536;
-			if (y < -31) y +=   256;
-			
-			if (x > 256) continue;
-			if (y > 240) continue;
-			
-			if (x > 0 && x < 224 && y > 0 && y < 192) {
-				if (xFlip) {
-					if (yFlip) {
-						Render32x32Tile_Mask_FlipXY(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					} else {
-						Render32x32Tile_Mask_FlipX(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					}
-				} else {
-					if (yFlip) {
-						Render32x32Tile_Mask_FlipY(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					} else {
-						Render32x32Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					}
-				}
-			} else {
-				if (xFlip) {
-					if (yFlip) {
-						Render32x32Tile_Mask_FlipXY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					} else {
-						Render32x32Tile_Mask_FlipX_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					}
-				} else {
-					if (yFlip) {
-						Render32x32Tile_Mask_FlipY_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					} else {
-						Render32x32Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, DrvBgTiles);
-					}
-				}
-			}
-		}
-	}
-}
-
 static void DrvRenderSprites(INT32 Priority)
-{
-	INT32 Offs;
-	
-	for (Offs = 0x1000 - 32; Offs >= 0; Offs -= 32) {
+{	
+	for (INT32 Offs = 0x1000 - 32; Offs >= 0; Offs -= 32) {
 		INT32 Attr = DrvSpriteRam[Offs + 1];
 		INT32 Code = DrvSpriteRam[Offs + 0] + ((Attr & 0xe0) << 3);
 		INT32 Colour = Attr & 0x0f;
@@ -1904,56 +1482,75 @@ static void DrvRenderSprites(INT32 Priority)
 	}
 }
 
-static void DrvRenderCharLayer()
+static INT32 DrvDraw()
 {
-	INT32 mx, my, Attr, Code, Colour, x, y, TileIndex = 0;
+	if (DrvRecalc) {
+		DrvCalcPalette();
+		DrvRecalc = 0;
+	}
 
-	for (my = 0; my < 32; my++) {
-		for (mx = 0; mx < 32; mx++) {
-			Attr = DrvPaletteRam[TileIndex];
-			Code = DrvVideoRam[TileIndex] + ((Attr & 0xe0) << 3);
-			Colour = Attr & 0x1f;
-			
-			x = 8 * mx;
-			y = 8 * my;
-			
-			y -= 16;
-			
-			if (x > 0 && x < 248 && y > 0 && y < 216) {
-				Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 2, 0, 0, DrvChars);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 2, 0, 0, DrvChars);
-			}
+	GenericTilemapSetScrollX(0, DrvBg2ScrollX[0] + (256 * DrvBg2ScrollX[1]));
+	GenericTilemapSetScrollX(1, DrvBgScrollX[0] + (256 * DrvBgScrollX[1]));
+	GenericTilemapSetScrollY(1, DrvBgScrollY + 16);
 
-			TileIndex++;
-		}
+	if (DrvBg2On && nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	else BurnTransferClear();
+
+	if (DrvSpritesOn) DrvRenderSprites(0);
+
+	if (DrvBg1On && nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
+
+	if (DrvSpritesOn) DrvRenderSprites(1);
+
+	if (DrvCharsOn && nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
+
+	BurnTransferCopy(DrvPalette);
+
+	return 0;
+}
+
+static inline void DrvClearOpposites(UINT8* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
 	}
 }
 
-static void DrvDraw()
+static inline void DrvMakeInputs()
 {
-	BurnTransferClear();
-	DrvCalcPalette();
-	if (DrvBg2On && nBurnLayer & 1) DrvRenderBg2Layer();
-	if (DrvSpritesOn) DrvRenderSprites(0);
-	if (DrvBg1On && nBurnLayer & 2) DrvRenderBgLayer();
-	if (DrvSpritesOn) DrvRenderSprites(1);
-	if (DrvCharsOn && nBurnLayer & 4) DrvRenderCharLayer();
-	BurnTransferCopy(DrvPalette);
+	// Reset Inputs
+	DrvInput[0] = DrvInput[1] = DrvInput[2] = 0xff;
+
+	// Compile Digital Inputs
+	for (INT32 i = 0; i < 8; i++) {
+		DrvInput[0] ^= (DrvInputPort0[i] & 1) << i;
+		DrvInput[1] ^= (DrvInputPort1[i] & 1) << i;
+		DrvInput[2] ^= (DrvInputPort2[i] & 1) << i;
+	}
+
+	// Clear Opposites
+	DrvClearOpposites(&DrvInput[1]);
+	DrvClearOpposites(&DrvInput[2]);
 }
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 100;
+	BurnWatchdogUpdate();
 
-	if (DrvReset) DrvDoReset();
+	if (DrvReset) {
+		DrvDoReset(1);
+	}
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 3000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
-	
+	INT32 nInterleave = 100;
+	INT32 nCyclesTotal[2] = { 6000000 / 60, 3000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesSegment;
+
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
@@ -1989,7 +1586,9 @@ static INT32 DrvFrame()
 		ZetClose();
 	}
 	
-	if (pBurnDraw) DrvDraw();
+	if (pBurnDraw) {
+		DrvDraw();
+	}
 
 	return 0;
 }
@@ -1998,7 +1597,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 	
-	if (pnMin != NULL) {			// Return minimum compatible version
+	if (pnMin != NULL) {
 		*pnMin = 0x029672;
 	}
 
@@ -2012,6 +1611,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
+
+		BurnWatchdogScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
 
@@ -2031,8 +1632,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
-		ZetMapArea(0x8000, 0xbfff, 0, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x1000 );
-		ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Rom1 + 0x10000 + DrvRomBank * 0x1000 );
+		ZetMapMemory(DrvZ80Rom1 + 0x10000 + (DrvRomBank * 0x1000), 0x8000, 0xbfff, MAP_ROM);
 		ZetClose();
 	}
 
@@ -2045,8 +1645,8 @@ struct BurnDriver BurnDrvNineteen43 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43u = {
@@ -2055,8 +1655,8 @@ struct BurnDriver BurnDrvNineteen43u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43ua = {
@@ -2065,8 +1665,8 @@ struct BurnDriver BurnDrvNineteen43ua = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43j = {
@@ -2075,8 +1675,8 @@ struct BurnDriver BurnDrvNineteen43j = {
 	L"1943: \u30DF\u30C3\u30C9\u30A6\u30A7\u30A4\u6D77\u6226 (Japan, Rev B)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43ja = {
@@ -2085,8 +1685,8 @@ struct BurnDriver BurnDrvNineteen43ja = {
 	L"1943: \u30DF\u30C3\u30C9\u30A6\u30A7\u30A4\u6D77\u6226 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvjaRomInfo, DrvjaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43jah = {
@@ -2095,8 +1695,8 @@ struct BurnDriver BurnDrvNineteen43jah = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvjahRomInfo, DrvjahRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43b = {
@@ -2105,8 +1705,8 @@ struct BurnDriver BurnDrvNineteen43b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvbInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43b2 = {
@@ -2115,8 +1715,8 @@ struct BurnDriver BurnDrvNineteen43b2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	Drvb2Init, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	Drvb2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43bj = {
@@ -2125,8 +1725,8 @@ struct BurnDriver BurnDrvNineteen43bj = {
 	L"1943: \u30DF\u30C3\u30C9\u30A6\u30A7\u30A4\u6D77\u6226 (bootleg)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvbjRomInfo, DrvbjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvbjInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvbjInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43kai = {
@@ -2135,8 +1735,8 @@ struct BurnDriver BurnDrvNineteen43kai = {
 	L"1943 \u6539: \u30DF\u30C3\u30C9\u30A6\u30A7\u30A4\u6D77\u6226 (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvkaiRomInfo, DrvkaiRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };
 
 struct BurnDriver BurnDrvNineteen43mii = {
@@ -2145,6 +1745,6 @@ struct BurnDriver BurnDrvNineteen43mii = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, DrvmiiRomInfo, DrvmiiRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
-	NULL, 0x380, 224, 256, 3, 4
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x380, 224, 256, 3, 4
 };

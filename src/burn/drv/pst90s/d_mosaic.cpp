@@ -1,9 +1,6 @@
 // FB Alpha Mosaic / Gold Fire II driver module
 // Based on MAME driver by Nicola Salmoria
 
-// to do:
-//	z180 needs hooked up to burntimer
-
 #include "tiles_generic.h"
 #include "z180_intf.h"
 #include "burn_ym2203.h"
@@ -339,7 +336,7 @@ static INT32 DrvInit(INT32 select)
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, fg_map_callback, 8, 8, 64, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 8, 8, 8, (select) ? 0x100000 : 0x40000, 0, 0);
-	GenericTilemapSetGfx(1, DrvGfxROM0, 8, 8, 8, (select) ? 0x080000 : 0x40000, 0, 0);
+	GenericTilemapSetGfx(1, DrvGfxROM1, 8, 8, 8, (select) ? 0x080000 : 0x40000, 0, 0);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, -64, -16);
 	GenericTilemapSetTransparent(0, 0xff);
 

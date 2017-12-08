@@ -45,9 +45,6 @@ static UINT8 DrvSoundLatch;
 
 static bool bFirstOpCodeEncrypted = false;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
-
 static struct BurnInputInfo DrvInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort0 + 6, "p1 coin"   },
@@ -1033,15 +1030,15 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	INT32 nInterleave = 278;
+	INT32 nInterleave = 256;
 
 	if (DrvReset) DrvDoReset();
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = 4000000 / 60;
-	nCyclesTotal[1] = 3000000 / 60;
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { 4000000 / 60, 3000000 / 60 };
+	INT32 nCyclesSegment;
 
 	ZetNewFrame();
 
@@ -1054,22 +1051,19 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 274) { // vblank rising edge
-			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x180);
+		if (i == 240) {
+			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x180); // copy on rising edge of vblank
 			ZetSetVector(0xd7);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		if (i == 276) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
-		// execute IRQ quarterly 68.5 (or 69) is 25% of 278 (nInterleave)
-		if (i%69 == 0 && i>0) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		// execute CPU_IRQSTATUS_NONE 1 interleave past the last one
-		if ((i-1)%69 == 0 && i>1) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		// execute IRQ quarterly
+		if (i%(nInterleave/4) == (nInterleave/4)-1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 
@@ -1107,14 +1101,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(nCyclesDone);
-		SCAN_VAR(nCyclesSegment);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvBgScrollX);
 		SCAN_VAR(DrvBgScrollY);
 		SCAN_VAR(DrvFlipScreen);
-		SCAN_VAR(DrvDip);
-		SCAN_VAR(DrvInput);
 	}
 
 	return 0;

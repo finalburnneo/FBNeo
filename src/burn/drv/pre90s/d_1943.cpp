@@ -1546,7 +1546,7 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	INT32 nInterleave = 100;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nCyclesSegment;
@@ -1562,16 +1562,15 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 95) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 96) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate(i * (nCyclesTotal[1] / nInterleave));
-		if (i == 20 || i == 40 || i == 60 || i == 80) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 21 || i == 41 || i == 61 || i == 81) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
+		// execute IRQ quarterly
+		if (i%(nInterleave/4) == (nInterleave/4)-1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 	

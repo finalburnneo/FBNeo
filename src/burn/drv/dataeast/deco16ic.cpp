@@ -264,11 +264,11 @@ void deco16_sprite_decode(UINT8 *gfx, INT32 len)
 
 void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UINT16 *dest, INT32 flags)
 {
-	UINT8 control0 = deco16_pf_control[tmap >> 1][5] >> ((tmap >> 1) << 3) & 0xff;
-	if (~control0&0x80) return; // layer disabled
+	UINT8 control0 = deco16_pf_control[tmap >> 1][5] >> ((tmap & 1) << 3) & 0xff;
+	if (~control0 & 0x80) return; // layer disabled
 
 	INT32 size	= deco16_layer_size_select[tmap];
-	if (size == -1) return; // layer diabled (from pf_update, only for tmap 0, 1?)
+	if (size == -1) return; // layer disabled (from pf_update, only for tmap 0, 1?)
 
 	INT32 control	= deco16_pf_control[tmap / 2][6];
 	if (tmap & 1) control >>= 8; 

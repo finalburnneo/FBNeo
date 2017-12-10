@@ -2388,6 +2388,11 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 							colour |= (ace_ram[0] == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
 						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
 							colour |= 0xe0; // level 2 carriage buggy
+						if (layerID && (sprite == 0x7e0 || sprite == 0x7e4 || sprite == 0x7e8 || sprite == 0x7ec ||
+										sprite == 0x7f0 || sprite == 0x7f4 || sprite == 0x7f8 || sprite == 0x7fc ||
+										sprite == 0x800 || sprite == 0x804)) {
+							colour &= ~0x20; // level 5 mid-boss "hole in plane" wrong priority (doesn't show up until after character goes through the hole w/o this)
+						}
 					}
 
 					while (multi >= 0)

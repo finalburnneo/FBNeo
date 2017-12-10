@@ -563,7 +563,13 @@ void Sh2Reset(unsigned int pc, unsigned r15)
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2Reset called without init\n"));
 #endif
 
-	memset(sh2, 0, sizeof(SH2) - 4);
+	INT32 tmp_eat_cycles = sh2->sh2_eat_cycles;
+	int (*tmp_irq_callback)(int irqline) = sh2->irq_callback;
+
+	memset(sh2, 0, sizeof(SH2));
+
+	sh2->sh2_eat_cycles = tmp_eat_cycles; // save & restore init-time variables
+	sh2->irq_callback = tmp_irq_callback;
 
 	sh2->pc = pc;
 	sh2->r[15] = r15;

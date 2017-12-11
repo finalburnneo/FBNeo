@@ -574,7 +574,7 @@ static INT32 DrvFrame()
 	{
 		DrvInputs[0] = 0x00;
 		DrvInputs[1] = 0x00;
-		DrvInputs[1] = 0x00;
+		DrvInputs[2] = 0x00;
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;

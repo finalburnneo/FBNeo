@@ -2668,9 +2668,7 @@ static INT32 FghthistDraw()
 	deco16_pf34_update();
 	deco16_clear_prio_map();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x300;
-	}
+	BurnTransferClear(0x300);
 
 	if (nBurnLayer & 8) deco16_draw_layer(3, pTransDraw, 1);
 
@@ -3254,9 +3252,7 @@ static INT32 DragngunDraw()
 	deco16_pf34_update();
 	deco16_clear_prio_map();
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x800; // black
-	}
+	BurnTransferClear(0x800);
 
 	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, 1 | DECO16_LAYER_8BITSPERPIXEL);
 	if (nBurnLayer & 2) deco16_draw_layer(2, pTransDraw, 2 | DECO16_LAYER_8BITSPERPIXEL);

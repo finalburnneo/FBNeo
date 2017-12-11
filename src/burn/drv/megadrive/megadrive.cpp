@@ -3464,22 +3464,18 @@ static void DrawStripVSRam(struct TileStrip *ts, INT32 plane, INT32 sh)
 	// Draw tiles across screen:
 	tilex=(-ts->hscroll)>>3;
 	dx=((ts->hscroll-1)&7)+1;
-	if(dx != 8) {
-		INT32 vscroll, line;
-		cell--; // have hscroll, start with negative cell
-		// also calculate intial VS stuff
-		vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane]);
 
-		// Find the line in the name table
-		line = (vscroll+scan)&ts->line&0xffff;		// ts->line is really ymask ..
-		nametabadd = (line>>3)<<(ts->line>>24);		// .. and shift[width]
-		ty = (line&7)<<1;							// Y-Offset into tile
+	if (ts->hscroll & 0x0f) {
+		int adj = ((ts->hscroll ^ dx) >> 3) & 1;
+		cell -= adj + 1;
+		ts->cells -= adj;
 	}
 
 	for (; cell < ts->cells; dx+=8,tilex++,cell++) {
 		INT32 zero=0;
 
-		if((cell&1)==0) {
+		//if((cell&1)==0)
+		{
 			INT32 line,vscroll;
 			vscroll = BURN_ENDIAN_SWAP_INT16(RamSVid[plane+(cell&~1)]);
 
@@ -3579,8 +3575,13 @@ static void DrawLayer(INT32 plane, INT32 *hcache, INT32 maxcells, INT32 sh)
 
 	ts.xmask=(1<<shift[width])-1; // X Mask in tiles (0x1f-0x7f)
 	ymask=(height<<8)|0xff;       // Y Mask in pixels
-	if(width == 1)   ymask&=0x1ff;
-	else if(width>1) ymask =0x0ff;
+	//if(width == 1)   ymask&=0x1ff;
+	//else if(width>1) ymask =0x0ff;
+	switch (width) {
+		case 1: ymask &= 0x1ff; break;
+		case 2: ymask =  0x007; break;
+		case 3: ymask =  0x0ff; break;
+	}
 
 	// Find name table:
 	if (plane==0) ts.nametab=(RamVReg->reg[2] & 0x38)<< 9; // A
@@ -4071,11 +4072,11 @@ static void DrawAllSprites(INT32 *hcache, INT32 maxwidth, INT32 prio, INT32 sh)
 		DrawAllSpritesInterlace(prio, maxwidth);
 		return;
 	}
-	if(rs&0x11) {
+/*	if(rs&0x11) {
 		//dprintf("PrepareSprites(%i) [%i]", (rs>>4)&1, scan);
 		PrepareSprites(rs&0x10);
 		rendstatus=rs&~0x11;
-	}
+	}*/
 	if (!(SpriteBlocks & (1<<(scan>>3)))) return;
 
 	if(((rs&4)||sh)&&prio==0)
@@ -4174,6 +4175,12 @@ static INT32 DrawDisplay(INT32 sh)
 {
 	INT32 maxw, maxcells;
 	INT32 win=0, edge=0, hvwind=0;
+
+	if(rendstatus&0x11) { // 0x01 sprites moved, 0x10: sprites dirty
+		//dprintf("PrepareSprites(%i) [%i]", (rs>>4)&1, scan);
+		PrepareSprites(rendstatus&0x10);
+		rendstatus=rendstatus&~0x11;
+	}
 	
 	if(RamVReg->reg[12] & 1) {
 		maxw = 328; maxcells = 40;

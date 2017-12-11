@@ -1491,7 +1491,7 @@ static INT32 DrvDraw()
 
 	GenericTilemapSetScrollX(0, DrvBg2ScrollX[0] + (256 * DrvBg2ScrollX[1]));
 	GenericTilemapSetScrollX(1, DrvBgScrollX[0] + (256 * DrvBgScrollX[1]));
-	GenericTilemapSetScrollY(1, DrvBgScrollY + 16);
+	GenericTilemapSetScrollY(1, DrvBgScrollY);
 
 	if (DrvBg2On && nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 	else BurnTransferClear();

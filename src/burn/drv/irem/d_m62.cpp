@@ -5182,5 +5182,5 @@ struct BurnDriver BurnDrvHorizon = {
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M62, GBF_HORSHOOT, 0,
 	NULL, HorizonRomInfo, HorizonRomName, M62SampleInfo, M62SampleName, M62InputInfo, HorizonDIPInfo,
 	HorizonInit, M62Exit, M62Frame, NULL, M62Scan,
-	NULL, 0x200, 256, 256, 4, 3
+	NULL, 0x200, 256, 246, 4, 3
 };

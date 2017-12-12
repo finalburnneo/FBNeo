@@ -341,7 +341,7 @@ static void __fastcall pipedrm_sound_write_port(UINT16 port, UINT8 data)
 		case 0x08:
 		case 0x09:
 		case 0x0a:
-		case 0x0b:
+		case 0x0b: if (!nmi_enable)
 			BurnYM2608Write(port & 0x03, data);
 		return;
 
@@ -358,7 +358,7 @@ static void __fastcall pipedrm_sound_write_port(UINT16 port, UINT8 data)
 		case 0x18: // pipedrm
 		case 0x19:
 		case 0x1a:
-		case 0x1b:
+		case 0x1b: if (nmi_enable)
 			BurnYM2610Write(port & 3, data);
 		return;
 	}
@@ -378,7 +378,8 @@ static UINT8 __fastcall pipedrm_sound_read_port(UINT16 port)
 		case 0x09:
 		case 0x0a:
 		case 0x0b:
-			return BurnYM2608Read(port & 3);
+			return (!nmi_enable) ? BurnYM2608Read(port & 3) : 0;
+
 
 		case 0x04:
 		case 0x16:
@@ -391,7 +392,7 @@ static UINT8 __fastcall pipedrm_sound_read_port(UINT16 port)
 		case 0x19:
 		case 0x1a:
 		case 0x1b:
-			return BurnYM2610Read(port & 3);
+			return (nmi_enable) ? BurnYM2610Read(port & 3) : 0;
 	}
 
 	return 0;
@@ -440,8 +441,11 @@ static INT32 DrvDoReset()
 	ZetOpen(1);
 	sound_bankswitch(0);
 	ZetReset();
-	BurnYM2608Reset();
-	BurnYM2610Reset();
+	if (nmi_enable) {
+		BurnYM2610Reset();
+	} else {
+		BurnYM2608Reset();
+	}
 	ZetClose();
 
 	memset (scroll, 0, 4);
@@ -525,7 +529,7 @@ static INT32 DrvInit(INT32 game_select)
 	MemIndex();
 
 	if (game_select)
-	{
+	{   // pipedrm
 		if (BurnLoadRom(DrvZ80ROM0 + 0x000000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x010000,  1, 1)) return 1;
 
@@ -548,7 +552,7 @@ static INT32 DrvInit(INT32 game_select)
 		nmi_enable = 1;
 	}
 	else
-	{
+	{   // hatris
 		if (BurnLoadRom(DrvZ80ROM0 + 0x000000,  0, 1)) return 1;
 
 		if (BurnLoadRom(DrvZ80ROM1 + 0x000000,  1, 1)) return 1;
@@ -592,18 +596,20 @@ static INT32 DrvInit(INT32 game_select)
 	ZetSetInHandler(pipedrm_sound_read_port);
 	ZetClose();
 
-	INT32 nSndROMLen0 = 0x20000;
-	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
-	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
-
-	nSndROMLen0 = 0x80000;
-	INT32 nSndROMLen1 = 0x80000;
-	BurnYM2610Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &nSndROMLen1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
-	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
+	if (nmi_enable) {
+		INT32 nSndROMLen0 = 0x80000;
+		INT32 nSndROMLen1 = 0x80000;
+		BurnYM2610Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &nSndROMLen1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
+		BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+		BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
+	} else {
+		INT32 nSndROMLen0 = 0x20000;
+		BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
+		BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
+		BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
+	}
 
 	BurnTimerAttachZet(3579500);
 
@@ -626,8 +632,11 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetOpen(1);
-	BurnYM2608Exit();
-	BurnYM2610Exit();
+	if (nmi_enable) {
+		BurnYM2610Exit();
+	} else {
+		BurnYM2608Exit();
+	}
 	ZetClose();
 
 	ZetExit();
@@ -666,16 +675,16 @@ static void draw_sprites(INT32 pri_param)
 	{
 		if ((ram[offs+2] & 0x0080) == 0)	// sprite disabled
 			continue;
-	
-		INT32 oy    =  (ram[offs+0] & 0x01ff) + -13;
+
+		INT32 oy    =  (ram[offs+0] & 0x01ff) - 6;
 		INT32 zoomy =  (ram[offs+0] & 0xf000) >> 12;
-		INT32 ox =     (ram[offs+1] & 0x01ff) + -6;
+		INT32 ox =     (ram[offs+1] & 0x01ff) - 13;
 		INT32 zoomx =  (ram[offs+1] & 0xf000) >> 12;
 		INT32 xsize =  (ram[offs+2] & 0x0700) >> 8;
 		INT32 flipx =  (ram[offs+2] & 0x0800);
 		INT32 ysize =  (ram[offs+2] & 0x7000) >> 12;
 		INT32 flipy =  (ram[offs+2] & 0x8000);
-		INT32 color =  (ram[offs+2] & 0x000f) + 0x40;
+		INT32 color = ((ram[offs+2] & 0x000f) << 4) + 0x400;
 		INT32 pri =    (ram[offs+2] & 0x0010) >> 4;
 		INT32 map =    (ram[offs+3]);
 
@@ -701,10 +710,10 @@ static void draw_sprites(INT32 pri_param)
 				else
 					sx = ((ox + zoomx * x / 2 + 16) & 0x1ff) - 16;
 
-				RenderZoomedTile(pTransDraw, DrvGfxROM2, map, color, 0xf, sx-0x000, sy-0x000, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
-				RenderZoomedTile(pTransDraw, DrvGfxROM2, map, color, 0xf, sx-0x200, sy-0x000, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
-				RenderZoomedTile(pTransDraw, DrvGfxROM2, map, color, 0xf, sx-0x000, sy-0x200, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
-				RenderZoomedTile(pTransDraw, DrvGfxROM2, map, color, 0xf, sx-0x200, sy-0x200, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
+				RenderZoomedTile(pTransDraw, DrvGfxROM2, map&0xfff, color, 0xf, sx-0x000, sy-0x000, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
+				RenderZoomedTile(pTransDraw, DrvGfxROM2, map&0xfff, color, 0xf, sx-0x200, sy-0x000, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
+				RenderZoomedTile(pTransDraw, DrvGfxROM2, map&0xfff, color, 0xf, sx-0x000, sy-0x200, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
+				RenderZoomedTile(pTransDraw, DrvGfxROM2, map&0xfff, color, 0xf, sx-0x200, sy-0x200, flipx, flipy, 16, 16, zoomx << 11, zoomy << 11);
 			}
 
 			if (xsize == 2) map += 1;
@@ -779,7 +788,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6000000 / 60, 3579500 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -788,14 +796,14 @@ static INT32 DrvFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave-1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
 		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
 		if (crtc_timer_enable) {
 			if ((i & crtc_timer) == crtc_timer) {
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			}
 		}
 		ZetClose();
@@ -837,7 +845,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA)
 	{
 		ZetScan(nAction);
@@ -875,7 +883,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// YM2608 ROM for Mechanized Attack
+// YM2608 ROM
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };

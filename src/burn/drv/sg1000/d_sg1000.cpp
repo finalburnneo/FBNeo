@@ -210,6 +210,8 @@ static INT32 DrvLoadRoms()
 	INT32 len0 = 0;
 	UINT8 *Load0 = DrvZ80ROM;
 
+	memset(DrvZ80ROM, 0xff, 0x10000); // unmapped romspace = 0xff, fixes safari hunting - thanks Eke! :)
+
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 		BurnDrvGetRomInfo(&ri, i);
 
@@ -3338,7 +3340,7 @@ struct BurnDriver BurnDrvsg1k_safarihu = {
 	"sg1k_safarihu", NULL, NULL, NULL, "1983",
 	"Safari Hunting (Jpn)\0", NULL, "Sega", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_safarihuRomInfo, sg1k_safarihuRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3
@@ -3358,7 +3360,7 @@ struct BurnDriver BurnDrvsg1k_safarihut = {
 	"sg1k_safarihut", "sg1k_safarihu", NULL, NULL, "1983?",
 	"Safari Hunting (Tw)\0", NULL, "Aaronix", "Sega SG-1000",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_SG1000, GBF_MISC, 0,
 	SG1KGetZipName, sg1k_safarihutRomInfo, sg1k_safarihutRomName, NULL, NULL, Sg1000InputInfo, Sg1000DIPInfo,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 228, 4, 3

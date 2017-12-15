@@ -27386,3 +27386,21 @@ struct BurnDriver BurnDrvsms_alexkidd2 = {
 	256, 192, 4, 3
 };
 
+// Weka Invaders (Version 1.0)
+
+static struct BurnRomInfo sms_wekainvadersRomDesc[] = {
+	{ "WekaInvaders.sms",	0x48000, 0x54b2fcf8, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_wekainvaders)
+STD_ROM_FN(sms_wekainvaders)
+
+struct BurnDriver BurnDrvsms_wekainvaders = {
+	"sms_wekainvaders10", NULL, NULL, NULL, "2017",
+	"Weka Invaders (Version 1.0)\0", NULL, "Disjointed Studio", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_wekainvadersRomInfo, sms_wekainvadersRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};

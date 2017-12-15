@@ -1413,6 +1413,53 @@ static struct BurnDIPInfo PeekabooDIPList[]=
 
 STDDIPINFO(Peekaboo)
 
+static struct BurnDIPInfo InyourfaDIPList[]=
+{
+	{0x12, 0xff, 0xff, 0xff, NULL			},
+	{0x13, 0xff, 0xff, 0xff, NULL			},
+
+	{0   , 0xfe, 0   ,    4, "Game Time"		},
+	{0x12, 0x01, 0x03, 0x02, "00:50"		},
+	{0x12, 0x01, 0x03, 0x01, "01:00"		},
+	{0x12, 0x01, 0x03, 0x03, "01:10"		},
+	{0x12, 0x01, 0x03, 0x00, "01:20"		},
+
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x12, 0x01, 0x80, 0x80, "Off"			},
+	{0x12, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0x13, 0x01, 0x07, 0x04, "3 Coins 1 Credits"	},
+	{0x13, 0x01, 0x07, 0x02, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0x07, 0x03, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0x07, 0x01, "1 Coin  4 Credits"	},
+	{0x13, 0x01, 0x07, 0x06, "1 Coin  5 Credits"	},
+	{0x13, 0x01, 0x07, 0x00, "Free Play"		},
+
+	{0   , 0xfe, 0   ,    8, "Coin B"		},
+	{0x13, 0x01, 0x38, 0x00, "4 Coins 1 Credits"	},
+	{0x13, 0x01, 0x38, 0x20, "3 Coins 1 Credits"	},
+	{0x13, 0x01, 0x38, 0x10, "2 Coins 1 Credits"	},
+	{0x13, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x13, 0x01, 0x38, 0x18, "1 Coin  2 Credits"	},
+	{0x13, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x13, 0x01, 0x38, 0x08, "1 Coin  4 Credits"	},
+	{0x13, 0x01, 0x38, 0x30, "1 Coin  5 Credits"	},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x13, 0x01, 0x40, 0x40, "On"			},
+	{0x13, 0x01, 0x40, 0x00, "Off"			},
+
+	{0   , 0xfe, 0   ,    2, "Freeze Screen (Cheat)"},
+	{0x13, 0x01, 0x80, 0x80, "Off"			},
+	{0x13, 0x01, 0x80, 0x00, "On"			},
+};
+
+STDDIPINFO(Inyourfa)
+
+
 static UINT8 __fastcall mcu_prot_read_byte(UINT32 address)
 {
 	return Drv68KROM0[(address & 0x3ffff) ^ 1];
@@ -1574,7 +1621,6 @@ static void update_video_regs(INT32 offset)
 				if (system_select == 0) { // system Z
 					ZetReset();
 				} else {
-
 					SekClose();
 					SekOpen(1);
 					SekReset();
@@ -1590,7 +1636,7 @@ static void update_video_regs(INT32 offset)
 			soundlatch = data;
 
 			if (system_select == 0) {	// system Z
-				ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
 				SekClose();
 				SekOpen(1);
@@ -2347,11 +2393,6 @@ static INT32 MemIndex()
 
 	DrvPrioBitmap	= Next; Next += 256 * 256;
 
-	DrvSprBuf0	= Next; Next += 0x002000;
-	DrvObjBuf0	= Next; Next += 0x002000;
-	DrvSprBuf1	= Next; Next += 0x002000;
-	DrvObjBuf1	= Next; Next += 0x002000;
-
 	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
 	AllRam		= Next;
@@ -2371,6 +2412,11 @@ static INT32 MemIndex()
 	DrvVidRegs	= Next; Next += 0x010000;
 
 	DrvSprRAM	= Drv68KRAM0 + 0x8000;
+
+	DrvSprBuf0	= Next; Next += 0x002000;
+	DrvObjBuf0	= Next; Next += 0x002000;
+	DrvSprBuf1	= Next; Next += 0x002000;
+	DrvObjBuf1	= Next; Next += 0x002000;
 
 	RamEnd		= Next;
 
@@ -3226,12 +3272,15 @@ static INT32 DrvDraw()
 
 	BurnTransferCopy(DrvPalette);
 
+	return 0;
+}
+
+static void DrvBufferSprites()
+{
 	memcpy (DrvSprBuf1, DrvSprBuf0, 0x2000);
 	memcpy (DrvObjBuf1, DrvObjBuf0, 0x2000);
 	memcpy (DrvSprBuf0, DrvSprRAM , 0x2000);
 	memcpy (DrvObjBuf0, DrvObjRAM , 0x2000);
-
-	return 0;
 }
 
 static INT32 System1ZFrame()
@@ -3284,6 +3333,8 @@ static INT32 System1ZFrame()
 		DrvDraw();
 	}
 
+	DrvBufferSprites();
+
 	return 0;
 }
 
@@ -3305,7 +3356,7 @@ static INT32 System1AFrame()
 	}
 
 	INT32 nSegment;
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { ((tshingen) ? 8000000 : 6000000) / 60, 7000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -3315,7 +3366,7 @@ static INT32 System1AFrame()
 		SekOpen(0);
 		nSegment = (nCyclesTotal[0] * (i + 1)) / nInterleave;
 		nCyclesDone[0] += SekRun(nSegment - nCyclesDone[0]);
-		if (i ==   0) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
+		if (i ==  16) SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		if (i == 128) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 240) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		SekClose();
@@ -3357,6 +3408,8 @@ static INT32 System1AFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+
+	DrvBufferSprites();
 
 	return 0;
 }
@@ -3432,6 +3485,8 @@ static INT32 System1BFrame()
 		DrvDraw();
 	}
 
+	DrvBufferSprites();
+
 	return 0;
 }
 
@@ -3506,6 +3561,8 @@ static INT32 System1CFrame()
 		DrvDraw();
 	}
 
+	DrvBufferSprites();
+
 	return 0;
 }
 
@@ -3538,6 +3595,8 @@ static INT32 System1DFrame()
 	if (pBurnDraw) {
 		DrvDraw();
 	}
+
+	DrvBufferSprites();
 
 	return 0;
 }
@@ -5929,5 +5988,70 @@ struct BurnDriver BurnDrvPeekaboou = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, peekaboouRomInfo, peekaboouRomName, NULL, NULL, PeekabooInputInfo, PeekabooDIPInfo,
 	peekabooInit, DrvExit, System1DFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	256, 224, 4, 3
+};
+
+// In Your Face (World, prototype)
+
+static struct BurnRomInfo inyourfaRomDesc[] = {
+	{ "02.27C1001",		0x020000, 0xae77e5b7, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "01.27C1001",		0x020000, 0xe5ea92ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "03.27C512",		0x010000, 0xa1efe9be, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "04.27C512",		0x010000, 0xf786cf3e, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "05.27C512", 		0x010000, 0x1737ed64, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "06.27C512", 		0x010000, 0x9f12bcb9, 2 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "m50747", 		0x001000, 0x00000000, 0 | BRF_NODUMP },        //  6 MCU Code
+
+	{ "11.27C1001",		0x020000, 0x451a1428, 3 | BRF_GRA },           //  7 Tilemap #0 Tiles
+	{ "12.27C1001",		0x020000, 0x9ead7432, 3 | BRF_GRA },           //  8
+	{ "13.27C1001",		0x020000, 0x7e39842a, 3 | BRF_GRA },           //  9
+	{ "14.27C1001",		0x020000, 0xa91a3569, 3 | BRF_GRA },           // 10
+
+	{ "15.27C1001",		0x020000, 0x420081b6, 4 | BRF_GRA },           // 11 Tilemap #1 Tiles
+	{ "16.27C1001",		0x020000, 0x87b1a582, 4 | BRF_GRA },           // 12
+	{ "17.27C1001",		0x020000, 0x00857146, 4 | BRF_GRA },           // 13
+
+	{ "19.27C1001", 	0x020000, 0xb82c94ec, 5 | BRF_GRA },           // 14 Tilemap #2 Tiles
+
+	{ "20.27C1001",		0x020000, 0x4a322d18, 6 | BRF_GRA },           // 15 Sprites
+	{ "21.27C1001",		0x020000, 0x7bb4b35d, 6 | BRF_GRA },           // 16
+	{ "22.27C1001",		0x020000, 0x1dc040d2, 6 | BRF_GRA },           // 17
+	{ "23.27C1001",		0x020000, 0x50478530, 6 | BRF_GRA },           // 18
+
+	{ "09.27C1001",		0x020000, 0x27f4bfb4, 7 | BRF_SND },           // 19 OKI #0 Samples
+	{ "10.27C1001",		0x020000, 0xcf5430ff, 7 | BRF_SND },           // 20
+
+	{ "07.27C1001",		0x020000, 0xdc254c7c, 8 | BRF_SND },           // 21 OKI #1 Samples
+	{ "08.27C1001",		0x020000, 0xcadd4731, 8 | BRF_SND },           // 22
+
+	{ "prom.14m",    	0x000200, 0x1341ba02, 9 | BRF_GRA },           // 23 Priority PROM
+};
+
+STD_ROM_PICK(inyourfa)
+STD_ROM_FN(inyourfa)
+
+static INT32 inyourfaInit()
+{
+	INT32 nRet = SystemInit(0xA, phantasm_rom_decode);
+
+	if (nRet == 0)
+	{
+		//memset (DrvGfxROM[1] + 0xc0000, 0xf, 0x40000);
+
+		//install_mcu_protection(mcu_config_type2, 0x2f000); // necessary?
+	}
+
+	return nRet;
+}
+
+struct BurnDriver BurnDrvInyourfa = {
+	"inyourfa", NULL, NULL, NULL, "1991",
+	"In Your Face (World, prototype)\0", NULL, "Jaleco", "Mega System 1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
+	NULL, inyourfaRomInfo, inyourfaRomName, NULL, NULL, CommonInputInfo, InyourfaDIPInfo,
+	inyourfaInit, DrvExit, System1AFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };

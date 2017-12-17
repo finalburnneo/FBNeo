@@ -1748,7 +1748,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 			}
 
 			KillTimer(hDlg, IDC_SEL_SEARCHTIMER);
-			SetTimer(hDlg, IDC_SEL_SEARCHTIMER, 300, (TIMERPROC)NULL);
+			SetTimer(hDlg, IDC_SEL_SEARCHTIMER, 500, (TIMERPROC)NULL);
 		}
 
 		if (HIWORD(wParam) == BN_CLICKED) {

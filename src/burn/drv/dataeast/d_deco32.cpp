@@ -2712,7 +2712,7 @@ static void draw_combined_playfield(INT32 color, INT32 priority) // opaque
 		for (INT32 y = 0; y < nScreenHeight; y++) {
 			for (INT32 x = 0; x < nScreenWidth; x++) {
 				INT32 pxl = (src0[x] & 0x0f) | ((src1[x] & 0x0f) << 4);
-				dest[x] = color | pxl;
+				dest[x] = (pxl) ? color | pxl : 0x300; // color at 0x300 is better for bg fill @ 8bpp mode. fixes green background on dataeast screen and ending scenes.
 				prio[x] = priority;
 			}
 			src0 += nScreenWidth;

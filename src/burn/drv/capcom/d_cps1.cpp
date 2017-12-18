@@ -4218,7 +4218,7 @@ static struct BurnRomInfo NTFOJDrvRomDesc[] = {
 	
 	A_BOARD_PLDS
 	
-	{ "yi22b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+	{ "yi22b.1a",      0x000117, 0xb5cad2a0, BRF_OPT }, // b-board PLDs
 	{ "lwio.12e",      0x000117, 0xad52b90c, BRF_OPT },
 };
 

@@ -591,7 +591,7 @@ static INT32 DrvInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "weststry"))
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "weststory") || !strcmp(BurnDrvGetTextA(DRV_NAME), "westorya"))
 	{
 		{
 			if (BurnLoadRom(Drv68KROM + 0x000000, 0, 2)) return 1;
@@ -901,13 +901,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Blood Bros. (set 1)
+// Blood Bros. (World?)
 
 static struct BurnRomInfo bloodbroRomDesc[] = {
-	{ "2j.u021.7n",		0x020000, 0xc0fdc3e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "1j.u022.8n",		0x020000, 0x2d7e0fdf, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.u023.7l",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.u024.8l",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "2.u021.7n",		0x020000, 0x204dca6e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1.u022.8n",		0x020000, 0xac6719e7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.u023.7l",		0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.u024.8l",		0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
@@ -928,7 +928,7 @@ STD_ROM_FN(bloodbro)
 
 struct BurnDriver BurnDrvBloodbro = {
 	"bloodbro", NULL, NULL, NULL, "1990",
-	"Blood Bros. (set 1)\0", NULL, "Tad", "Miscellaneous",
+	"Blood Bros. (World?)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bloodbroRomInfo, bloodbroRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
@@ -937,13 +937,13 @@ struct BurnDriver BurnDrvBloodbro = {
 };
 
 
-// Blood Bros. (set 2)
+// Blood Bros. (Japan, rev A)
 
-static struct BurnRomInfo bloodbroaRomDesc[] = {
+static struct BurnRomInfo bloodbrojRomDesc[] = {
 	{ "2j_a.u021.7n",	0x020000, 0xe8ca21b8, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "1j_a.u022.8n",	0x020000, 0x6b28cfc7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.u023.7l",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.u024.8l",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.u023.7l",		0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.u024.8l",		0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
@@ -959,27 +959,27 @@ static struct BurnRomInfo bloodbroaRomDesc[] = {
 	{ "cb006.u083.6c",	0x000100, 0xb2b89a74, 0 | BRF_OPT },
 };
 
-STD_ROM_PICK(bloodbroa)
-STD_ROM_FN(bloodbroa)
+STD_ROM_PICK(bloodbroj)
+STD_ROM_FN(bloodbroj)
 
-struct BurnDriver BurnDrvBloodbroa = {
-	"bloodbroa", "bloodbro", NULL, NULL, "1990",
-	"Blood Bros. (set 2)\0", NULL, "Tad", "Miscellaneous",
+struct BurnDriver BurnDrvBloodbroj = {
+	"bloodbroj", "bloodbro", NULL, NULL, "1990",
+	"Blood Bros. (Japan, rev A)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bloodbroaRomInfo, bloodbroaRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	NULL, bloodbrojRomInfo, bloodbrojRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
 
-// Blood Bros. (set 3)
+// Blood Bros. (Japan)
 
-static struct BurnRomInfo bloodbrobRomDesc[] = {
-	{ "bloodbros02.u021.7n",	0x020000, 0x204dca6e, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bloodbros01.u022.8n",	0x020000, 0xac6719e7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.u023.7l",	0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.u024.8l",	0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+static struct BurnRomInfo bloodbrojaRomDesc[] = {
+	{ "2j.u021.7n",		0x020000, 0xc0fdc3e4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1j.u022.8n",		0x020000, 0x2d7e0fdf, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.u023.7l",		0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.u024.8l",		0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
@@ -995,27 +995,63 @@ static struct BurnRomInfo bloodbrobRomDesc[] = {
 	{ "cb006.u083.6c",	0x000100, 0xb2b89a74, 0 | BRF_OPT },
 };
 
-STD_ROM_PICK(bloodbrob)
-STD_ROM_FN(bloodbrob)
+STD_ROM_PICK(bloodbroja)
+STD_ROM_FN(bloodbroja)
 
-struct BurnDriver BurnDrvBloodbrob = {
-	"bloodbrob", "bloodbro", NULL, NULL, "1990",
-	"Blood Bros. (set 3)\0", NULL, "Tad", "Miscellaneous",
+struct BurnDriver BurnDrvBloodbroja = {
+	"bloodbroja", "bloodbro", NULL, NULL, "1990",
+	"Blood Bros. (Japan)\0", NULL, "TAD Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, bloodbrobRomInfo, bloodbrobRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	NULL, bloodbrojaRomInfo, bloodbrojaRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
 
 
-// West Story
+// Blood Bros. (US)
 
-static struct BurnRomInfo weststryRomDesc[] = {
+static struct BurnRomInfo bloodbrouRomDesc[] = {
+	{ "2u.u021.7n",		0x020000, 0x45186bd3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "1u.u022.8n",		0x020000, 0xf2cb95c1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.u023.7l",		0x020000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3.u024.8l",		0x020000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "bb_07.u1016.6a",	0x010000, 0x411b94e8, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
+	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
+
+	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+
+	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+
+	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
+	
+	{ "cb006.u083.6c",	0x000100, 0xb2b89a74, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(bloodbrou)
+STD_ROM_FN(bloodbrou)
+
+struct BurnDriver BurnDrvBloodbrou = {
+	"bloodbrou", "bloodbro", NULL, NULL, "1990",
+	"Blood Bros. (US)\0", NULL, "TAD Corporation (Fabtek license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, bloodbrouRomInfo, bloodbrouRomName, NULL, NULL, BloodbroInputInfo, BloodbroDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
+// West Story (bootleg of Blood Bros., set 1)
+
+static struct BurnRomInfo weststoryRomDesc[] = {
 	{ "ws13.bin",	0x20000, 0x158e302a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "ws15.bin",	0x20000, 0x672e9027, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "bb_04.bin",	0x20000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "bb_03.bin",	0x20000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "ws14.bin",	0x20000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ws16.bin",	0x20000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "ws17.bin",	0x10000, 0xe00a8f09, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 
@@ -1042,18 +1078,68 @@ static struct BurnRomInfo weststryRomDesc[] = {
 	{ "ws19.bin",	0x20000, 0xc5dd0a96, 5 | BRF_GRA },           // 23
 	{ "ws20.bin",	0x20000, 0xf1245c16, 5 | BRF_GRA },           // 24
 
-	{ "bb_08.bin",	0x20000, 0xdeb1b975, 6 | BRF_SND },           // 25 Samples
+	{ "ws18.bin",	0x20000, 0xdeb1b975, 6 | BRF_SND },           // 25 Samples
 };
 
-STD_ROM_PICK(weststry)
-STD_ROM_FN(weststry)
+STD_ROM_PICK(weststory)
+STD_ROM_FN(weststory)
 
-struct BurnDriverD BurnDrvWeststry = {
-	"weststry", "bloodbro", NULL, NULL, "1991",
-	"West Story (bootleg of Blood Bros.)\0", NULL, "Datsu", "Miscellaneous",
+struct BurnDriverD BurnDrvWeststory = {
+	"weststory", "bloodbro", NULL, NULL, "1991",
+	"West Story (bootleg of Blood Bros., set 1)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, weststryRomInfo, weststryRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
+	NULL, weststoryRomInfo, weststoryRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	256, 224, 4, 3
+};
+
+
+// West Story (bootleg of Blood Bros., set 2)
+
+static struct BurnRomInfo weststoryaRomDesc[] = {
+	{ "13.bin",		0x20000, 0xd50e1dfd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "15.bin",		0x20000, 0xfd419c7b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "ws14.bin",	0x20000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "ws16.bin",	0x20000, 0x18d3c460, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "ws17.bin",	0x10000, 0xe00a8f09, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
+
+	{ "ws09.bin",	0x10000, 0xf05b2b3e, 3 | BRF_GRA },           //  5 Characters
+	{ "ws11.bin",	0x10000, 0x2b10e3d2, 3 | BRF_GRA },           //  6
+	{ "ws10.bin",	0x10000, 0xefdf7c82, 3 | BRF_GRA },           //  7
+	{ "ws12.bin",	0x10000, 0xaf993578, 3 | BRF_GRA },           //  8
+
+	{ "ws05.bin",	0x20000, 0x007c8dc0, 4 | BRF_GRA },           //  9 Tiles
+	{ "ws07.bin",	0x20000, 0x0f0c8d9a, 4 | BRF_GRA },           // 10
+	{ "ws06.bin",	0x20000, 0x459d075e, 4 | BRF_GRA },           // 11
+	{ "ws08.bin",	0x20000, 0x4d6783b3, 4 | BRF_GRA },           // 12
+	{ "ws01.bin",	0x20000, 0x32bda4bc, 4 | BRF_GRA },           // 13
+	{ "ws03.bin",	0x20000, 0x046b51f8, 4 | BRF_GRA },           // 14
+	{ "ws02.bin",	0x20000, 0xed9d682e, 4 | BRF_GRA },           // 15
+	{ "ws04.bin",	0x20000, 0x75f082e5, 4 | BRF_GRA },           // 16
+
+	{ "ws25.bin",	0x20000, 0x8092e8e9, 5 | BRF_GRA },           // 17 Sprites
+	{ "ws26.bin",	0x20000, 0xf6a1f42c, 5 | BRF_GRA },           // 18
+	{ "ws23.bin",	0x20000, 0x43d58e24, 5 | BRF_GRA },           // 19
+	{ "ws24.bin",	0x20000, 0x20a867ea, 5 | BRF_GRA },           // 20
+	{ "ws21.bin",	0x20000, 0xe23d7296, 5 | BRF_GRA },           // 21
+	{ "ws22.bin",	0x20000, 0x7150a060, 5 | BRF_GRA },           // 22
+	{ "ws19.bin",	0x20000, 0xc5dd0a96, 5 | BRF_GRA },           // 23
+	{ "ws20.bin",	0x20000, 0xf1245c16, 5 | BRF_GRA },           // 24
+
+	{ "ws18.bin",	0x20000, 0xdeb1b975, 6 | BRF_SND },           // 25 Samples
+};
+
+STD_ROM_PICK(weststorya)
+STD_ROM_FN(weststorya)
+
+struct BurnDriverD BurnDrvWeststorya = {
+	"weststorya", "bloodbro", NULL, NULL, "1991",
+	"West Story (bootleg of Blood Bros., set 2)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
+	NULL, weststoryaRomInfo, weststoryaRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };

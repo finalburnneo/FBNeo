@@ -1073,7 +1073,7 @@ static struct BurnRomInfo weststoryRomDesc[] = {
 	{ "ws26.bin",	0x20000, 0xf6a1f42c, 5 | BRF_GRA },           // 18
 	{ "ws23.bin",	0x20000, 0x43d58e24, 5 | BRF_GRA },           // 19
 	{ "ws24.bin",	0x20000, 0x20a867ea, 5 | BRF_GRA },           // 20
-	{ "ws21.bin",	0x20000, 0xe23d7296, 5 | BRF_GRA },           // 21
+	{ "ws21.bin",	0x20000, 0x5ef55779, 5 | BRF_GRA },           // 21
 	{ "ws22.bin",	0x20000, 0x7150a060, 5 | BRF_GRA },           // 22
 	{ "ws19.bin",	0x20000, 0xc5dd0a96, 5 | BRF_GRA },           // 23
 	{ "ws20.bin",	0x20000, 0xf1245c16, 5 | BRF_GRA },           // 24
@@ -1123,7 +1123,7 @@ static struct BurnRomInfo weststoryaRomDesc[] = {
 	{ "ws26.bin",	0x20000, 0xf6a1f42c, 5 | BRF_GRA },           // 18
 	{ "ws23.bin",	0x20000, 0x43d58e24, 5 | BRF_GRA },           // 19
 	{ "ws24.bin",	0x20000, 0x20a867ea, 5 | BRF_GRA },           // 20
-	{ "ws21.bin",	0x20000, 0xe23d7296, 5 | BRF_GRA },           // 21
+	{ "ws21.bin",	0x20000, 0x5ef55779, 5 | BRF_GRA },           // 21
 	{ "ws22.bin",	0x20000, 0x7150a060, 5 | BRF_GRA },           // 22
 	{ "ws19.bin",	0x20000, 0xc5dd0a96, 5 | BRF_GRA },           // 23
 	{ "ws20.bin",	0x20000, 0xf1245c16, 5 | BRF_GRA },           // 24

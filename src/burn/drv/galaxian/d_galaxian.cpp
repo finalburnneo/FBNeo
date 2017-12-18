@@ -6776,6 +6776,20 @@ static struct BurnRomInfo GalaxrfggRomDesc[] = {
 STD_ROM_PICK(Galaxrfgg)
 STD_ROM_FN(Galaxrfgg)
 
+static struct BurnRomInfo GalaxrcggRomDesc[] = {
+	{ "7f.bin",        0x01000, 0xc06eeb10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7j.bin",        0x01000, 0x182ff334, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7l.bin",        0x00800, 0x420dbbf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+		
+	{ "1hj.bin",       0x00800, 0x23e627ff, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "1kl.bin",       0x00800, 0x0dbcee5b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "gxrf.6l",       0x00020, 0x992350e5, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Galaxrcgg)
+STD_ROM_FN(Galaxrcgg)
+
 static INT32 SupergxInit()
 {
 	INT32 nRet;
@@ -6975,6 +6989,16 @@ struct BurnDriver BurnDrvGalaxrfgg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, GalaxrfggRomInfo, GalaxrfggRomName, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
+	GalInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvGalaxrcgg = {
+	"galaxrcgg", "galaxian", NULL, NULL, "1980",
+	"Galaxian Growing Galaxip / Galaxian Nave Creciente (Recreativos Covadonga Spanish bootleg)\0", NULL, "bootleg (Recreativos Covadonga)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, GalaxrcggRomInfo, GalaxrcggRomName, NULL, NULL, GalaxianInputInfo, GalaxrfDIPInfo,
 	GalInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };

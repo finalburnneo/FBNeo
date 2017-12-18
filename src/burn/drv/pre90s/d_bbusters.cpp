@@ -1523,11 +1523,11 @@ struct BurnDriver BurnDrvBbustersua = {
 	256, 224, 4, 3
 };
 
-// Beast Busters (Japan, Version 2, 2 Players)
+// Beast Busters (Japan, Version 2, 3 Players)
 
 static struct BurnRomInfo bbustersjRomDesc[] = {
-	{ "bb3_ver2_j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bb5_ver2_j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb3_ver2_j3.k10",	0x20000, 0x6a1cd941, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb5_ver2_j3.k12",	0x20000, 0x7b180752, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
 
@@ -1566,7 +1566,7 @@ STD_ROM_FN(bbustersj)
 
 struct BurnDriver BurnDrvBbustersj = {
 	"bbustersj", "bbusters", NULL, NULL, "1989",
-	"Beast Busters (Japan, Version 2, 2 Players)\0", NULL, "SNK", "Miscellaneous",
+	"Beast Busters (Japan, Version 2, 3 Players)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bbustersjRomInfo, bbustersjRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,
@@ -1574,11 +1574,11 @@ struct BurnDriver BurnDrvBbustersj = {
 	256, 224, 4, 3
 };
 
-// Beast Busters (Japan, Version 2, 3 Players)
+// Beast Busters (Japan, Version 2, 2 Players)
 
 static struct BurnRomInfo bbustersjaRomDesc[] = {
-	{ "bb3_ver2_j3.k10",	0x20000, 0x6a1cd941, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "bb5_ver2_j3.k12",	0x20000, 0x7b180752, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "bb3_ver2_j2.k10",	0x20000, 0x605eb62f, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "bb5_ver2_j2.k12",	0x20000, 0x9deea26f, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "bb-2.k8",			0x20000, 0x20141805, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "bb-4.k11",			0x20000, 0xd482e0e9, 1 | BRF_PRG | BRF_ESS }, //  3
 
@@ -1617,7 +1617,7 @@ STD_ROM_FN(bbustersja)
 
 struct BurnDriver BurnDrvBbustersja = {
 	"bbustersja", "bbusters", NULL, NULL, "1989",
-	"Beast Busters (Japan, Version 2, 3 Players)\0", NULL, "SNK", "Miscellaneous",
+	"Beast Busters (Japan, Version 2, 2 Players)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, bbustersjaRomInfo, bbustersjaRomName, NULL, NULL, Bbusters2pInputInfo, Bbusters2pDIPInfo,

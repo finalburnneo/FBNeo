@@ -2928,6 +2928,8 @@ static INT32 NslasherDraw()
 
 	BurnTransferClear(0x200);
 
+	memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2); // fix alpha issue when layer disabled in level 5 after airoplane fades-out
+
 	UINT32 *ace = (UINT32*)DrvAceRAM;
 
 	INT32 has_alpha = (ace[0x17] && global_priority) ? 1 : 0;
@@ -2945,13 +2947,13 @@ static INT32 NslasherDraw()
 		{
 			if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
 			if (nBurnLayer & 4) deco16_draw_layer(2, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			if ((nBurnLayer & 4) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
+			//if ((nBurnLayer & 4) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
 		}
 		else
 		{
 			if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2);
 			if (nBurnLayer & 2) deco16_draw_layer(1, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			if ((nBurnLayer & 2) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
+			//if ((nBurnLayer & 2) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
 		}
 	}
 

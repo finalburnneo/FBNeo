@@ -1438,14 +1438,14 @@ static INT32 DrvRidleOfpInit()
 }
 //-----------------------
 
-// Hang-On Jr.
+// Hang-On Jr. Rev.B
 
 static struct BurnRomInfo hangonjrRomDesc[] = {
-	{ "rom5.ic7",	0x8000, 0xd63925a7, 1 }, //  0 maincpu
-	{ "rom4.ic5",	0x8000, 0xee3caab3, 1 }, //  1
-	{ "rom3.ic4",	0x8000, 0xd2ba9bc9, 1 }, //  2
-	{ "rom2.ic3",	0x8000, 0xe14da070, 1 }, //  3
-	{ "rom1.ic2",	0x8000, 0x3810cbf5, 1 }, //  4
+	{ "epr-7257b.ic7",	0x8000, 0xd63925a7, 1 }, //  0 maincpu
+	{ "epr-7258.ic5",	0x8000, 0xee3caab3, 1 }, //  1
+	{ "epr-7259.ic4",	0x8000, 0xd2ba9bc9, 1 }, //  2
+	{ "epr-7260.ic3",	0x8000, 0xe14da070, 1 }, //  3
+	{ "epr-7261.ic2",	0x8000, 0x3810cbf5, 1 }, //  4
 };
 
 STD_ROM_PICK(hangonjr)
@@ -1479,7 +1479,7 @@ STD_ROM_FN(Transfrm)
 
 struct BurnDriver BurnDrvHangonjr = {
 	"hangonjr", NULL, NULL, NULL, "1985",
-	"Hang-On Jr.\0", NULL, "Sega", "System E",
+	"Hang-On Jr. Rev.B\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, hangonjrRomInfo, hangonjrRomName, NULL, NULL, HangonjrInputInfo, HangonjrDIPInfo,

@@ -2147,9 +2147,9 @@ static struct BurnRomInfo earthjkrRomDesc[] = {
 
 	{ "ej_2.ic27",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "ej_chr.ic3",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "ej_chr-0.ic3",		0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "ej_obj.ic6",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "ej_obj-0.ic6",		0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
 	{ "ej_1.ic5",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
 	{ "ej_0.ic4",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 	
@@ -2170,22 +2170,24 @@ struct BurnDriver BurnDrvEarthjkr = {
 	240, 320, 3, 4
 };
 
+// Known to exist (not dumped) a US version of Earth Joker, title screen shows "DISTRIBUTED BY ROMSTAR, INC."
+//  ROMs number from 0 through 4 and the fix rom at IC30 is labeled 1 even though IC5 is also labled as 1
 
 // U.N. Defense Force: Earth Joker (Japan, prototype?)
 // was production PCB complete with MASK rom, could just be an early revision, not proto
 
 static struct BurnRomInfo earthjkrpRomDesc[] = {
-	{ "4.ic8",			0x20000, 0xe9b1ef0c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
-	{ "3.ic23",			0x20000, 0x26c33225, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
-	{ "5.ic30",			0x80000, 0xbf760b2d, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
+	{ "4.ic8",				0x20000, 0xe9b1ef0c, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  0 68K Code
+	{ "3.ic23",				0x20000, 0x26c33225, BRF_PRG | BRF_ESS | TAITO_68KROM1_BYTESWAP },	//  1
+	{ "5.ic30",				0x80000, 0xbf760b2d, BRF_PRG | BRF_ESS | TAITO_68KROM1 },		//  2
 
-	{ "ej_2.ic27",			0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
+	{ "2.ic27",				0x10000, 0x42ba2566, BRF_PRG | BRF_ESS | TAITO_Z80ROM1 },		//  3 Z80 Code
 
-	{ "ej_chr.ic3",			0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
+	{ "ej_chr-0.ic3",		0x80000, 0xac675297, BRF_GRA | TAITO_CHARS },				//  4 Characters
 
-	{ "ej_obj.ic6",			0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
-	{ "ej_1.ic5",			0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
-	{ "ej_0.ic4",			0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
+	{ "ej_obj-0.ic6",		0x80000, 0x5f21ac47, BRF_GRA | TAITO_SPRITESA },			//  5 Sprites
+	{ "1.ic5",				0x10000, 0xcb4891db, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  6
+	{ "0.ic4",				0x10000, 0xb612086f, BRF_GRA | TAITO_SPRITESA_BYTESWAP },		//  7
 	
 	{ "b68-04.ic32",		0x00144, 0x9be618d1, BRF_OPT },						//  8 plds
 	{ "b68-05.ic43",		0x00104, 0xd6524ccc, BRF_OPT },						//  9

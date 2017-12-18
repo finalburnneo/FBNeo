@@ -989,6 +989,7 @@ STD_ROM_PICK(pzlbowl)
 STD_ROM_FN(pzlbowl)
 
 static struct BurnRomInfo ablastRomDesc[] = {
+	// Genuine P0-142A PCB
 	{ "a-blast_twn_u06.u06",	  0x080000, 0xe62156d7, BRF_ESS | BRF_PRG },	// 68000 code
 	{ "a-blast_twn_u07.u07",	  0x080000, 0xd4ddc16b, BRF_ESS | BRF_PRG },
 
@@ -1003,14 +1004,15 @@ STD_ROM_PICK(ablast)
 STD_ROM_FN(ablast)
 
 static struct BurnRomInfo penbrosRomDesc[] = {
-	{ "u06.bin",	  0x080000, 0x7bbdffac, BRF_ESS | BRF_PRG },	// 68000 code
-	{ "u07.bin",	  0x080000, 0xd50cda5f, BRF_ESS | BRF_PRG },
+	// Genuine P0-142A PCB - Original or hack?
+	{ "a-blast_jpn_u06.u06",	  0x080000, 0x7bbdffac, BRF_ESS | BRF_PRG },	// 68000 code
+	{ "a-blast_jpn_u07.u07",	  0x080000, 0xd50cda5f, BRF_ESS | BRF_PRG },
 
-	{ "u38.bin",	  0x400000, 0x4247b39e,	BRF_GRA },				// GFX
-	{ "u39.bin",	  0x400000, 0xf9f07faf,	BRF_GRA },
-	{ "u40.bin",	  0x400000, 0xdc9e0a96,	BRF_GRA },
+	{ "a-blast_jpn_u38.u38",	  0x400000, 0x4247b39e,	BRF_GRA },				// GFX
+	{ "a-blast_jpn_u39.u39",	  0x400000, 0xf9f07faf,	BRF_GRA },
+	{ "a-blast_jpn_u40.u40",	  0x400000, 0xdc9e0a96,	BRF_GRA },
 
-	{ "u18.bin",	  0x200000, 0xde4e65e2, BRF_SND },				// PCM
+	{ "a-blast_jpn_u18.u18",	  0x200000, 0xde4e65e2, BRF_SND },				// PCM
 };
 
 STD_ROM_PICK(penbros)

@@ -10139,6 +10139,38 @@ struct BurnDriver BurnDrvbjourney = {
 	320, 224, 4, 3
 };
 
+// Blue's Journey / Raguy (ALH-001)
+/* AES VERSION */
+
+static struct BurnRomInfo bjourneyhRomDesc[] = {
+	{ "022-hp1.p1",   0x100000, 0x62cbe7b2, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC538200
+
+	{ "022-s1.s1",    0x020000, 0x843c3624, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "022-c1.c1",    0x100000, 0x4d47a48c, 3 | BRF_GRA },           //  2 Sprite data 		/ TC538200
+	{ "022-c2.c2",    0x100000, 0xe8c1491a, 3 | BRF_GRA },           //  3 					/ TC538200
+	{ "022-c3.c3",    0x080000, 0x66e69753, 3 | BRF_GRA },           //  4 					/ TC538200
+	{ "022-c4.c4",    0x080000, 0x71bfd48a, 3 | BRF_GRA },           //  5 					/ TC538200
+
+	{ "022-m1.m1",    0x020000, 0x8e1d4ab6, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code 		/ TC531001
+
+	{ "022-v11.v11",  0x100000, 0x2cb4ad91, 5 | BRF_SND },           //  7 Sound data 		/ TC538200
+	{ "022-v22.v22",  0x100000, 0x65a54d13, 5 | BRF_SND },           //  8 					/ TC538200
+};
+
+STDROMPICKEXT(bjourneyh, bjourneyh, neogeo)
+STD_ROM_FN(bjourneyh)
+
+struct BurnDriver BurnDrvbjourneyh = {
+	"bjourneyh", "bjourney", "neogeo", NULL, "1990",
+	"Blue's Journey / Raguy (ALH-001)\0", NULL, "Alpha Denshi Co.", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_PLATFORM, 0,
+	NULL, bjourneyhRomInfo, bjourneyhRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette, 0x1000,
+	320, 224, 4, 3
+};
+
 // Crossed Swords (ALM-002)(ALH-002)
 /* MVS AND AES VERSION */
 

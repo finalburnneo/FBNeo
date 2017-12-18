@@ -21,13 +21,13 @@ static INT32 whoopeemode = 0;
 
 // Rom information
 static struct BurnRomInfo drvRomDesc[] = {
-	{ "tp020-1.bin",  0x010000, 0xD8420BD5, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "tp020-2.bin",  0x010000, 0x7222DE8E, BRF_ESS | BRF_PRG }, //  1
+	{ "tp020-1.bin",  		0x010000, 0xd8420bd5, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "tp020-2.bin",  		0x010000, 0x7222de8e, BRF_ESS | BRF_PRG }, //  1
 
-	{ "tp020-4.bin",  0x080000, 0x3EBBE41E, BRF_GRA },	     //  2 GP9001 Tile data
-	{ "tp020-3.bin",  0x080000, 0x2D5E2201, BRF_GRA },	     //  3
+	{ "tp020-4.bin",  		0x080000, 0x3ebbe41e, BRF_GRA },	       //  2 GP9001 Tile data
+	{ "tp020-3.bin",  		0x080000, 0x2d5e2201, BRF_GRA },	       //  3
 
-	{ "hd647180.020", 0x008000, 0xd5157c12, BRF_PRG },       //  4 Sound CPU
+	{ "hd647180.020", 		0x008000, 0xd5157c12, BRF_PRG },           //  4 Sound CPU
 };
 
 STD_ROM_PICK(drv)
@@ -35,14 +35,29 @@ STD_ROM_FN(drv)
 
 
 // Rom information
+static struct BurnRomInfo drvtRomDesc[] = {
+	{ "e.e5",  		  		0x010000, 0x89affc73, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "o.e6",  		  		0x010000, 0xa2244558, BRF_ESS | BRF_PRG }, //  1
+
+	{ "0-1_4.4_cb45.a16",  	0x080000, 0x35e14729, BRF_GRA },	       //  2 GP9001 Tile data
+	{ "3-4_4.4_547d.a15",  	0x080000, 0x2d5e2201, BRF_GRA },	       //  3
+
+	{ "hd647180.020", 		0x008000, 0xd5157c12, BRF_PRG },           //  4 Sound CPU
+};
+
+STD_ROM_PICK(drvt)
+STD_ROM_FN(drvt)
+
+
+// Rom information
 static struct BurnRomInfo whoopeeRomDesc[] = {
-	{ "whoopee.1",    0x020000, 0x28882e7e, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "whoopee.2",    0x020000, 0x6796f133, BRF_ESS | BRF_PRG }, //  1
+	{ "whoopee.1",    		0x020000, 0x28882e7e, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "whoopee.2",    		0x020000, 0x6796f133, BRF_ESS | BRF_PRG }, //  1
 
-	{ "tp025-4.bin",  0x100000, 0xab97f744, BRF_GRA },	     //  2 GP9001 Tile data
-	{ "tp025-3.bin",  0x100000, 0x7b16101e, BRF_GRA },	     //  3
+	{ "tp025-4.bin",  		0x100000, 0xab97f744, BRF_GRA },	       //  2 GP9001 Tile data
+	{ "tp025-3.bin",  		0x100000, 0x7b16101e, BRF_GRA },	       //  3
 
-	{ "hd647180.025", 0x008000, 0xc02436f6, BRF_PRG }, //  4 Sound CPU
+	{ "hd647180.025", 		0x008000, 0xc02436f6, BRF_PRG },           //  4 Sound CPU
 };
 
 STD_ROM_PICK(whoopee)
@@ -739,6 +754,16 @@ struct BurnDriver BurnDrvTekiPaki = {
 	L"Teki Paki\0\u6D17\u8133\u30B2\u30FC\u30E0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PUZZLE, 0,
 	NULL, drvRomInfo, drvRomName, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
+	320, 240, 4, 3
+};
+
+struct BurnDriver BurnDrvTekiPakit = {
+	"tekipakit", "tekipaki", NULL, NULL, "1991",
+	"Teki Paki (location test)\0", NULL, "Toaplan", "Toaplan GP9001 based",
+	L"Teki Paki\0\u6D17\u8133\u30B2\u30FC\u30E0 (location test)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_68K_Zx80, GBF_PUZZLE, 0,
+	NULL, drvtRomInfo, drvtRomName, NULL, NULL, tekipakiInputInfo, tekipakiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	320, 240, 4, 3
 };

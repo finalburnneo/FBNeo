@@ -624,6 +624,15 @@ static void SaveHardwarePreset()
 		fclose(fp);
 	}
 	
+	// add to dropdown (if not already there)
+	TCHAR szPresetName[MAX_PATH] = _T("");
+	int iCBItem = 0;
+	
+	memcpy(szPresetName, szFileName + 15, (_tcslen(szFileName) - 19) * sizeof(TCHAR));
+	iCBItem = SendMessage(hInpdPci, CB_FINDSTRING, -1, (LPARAM)szPresetName);
+	if (iCBItem == -1) SendMessage(hInpdPci, CB_ADDSTRING, 0, (LPARAM)szPresetName);
+	
+	// confirm to user
 	FBAPopupAddText(PUF_TEXT_DEFAULT, MAKEINTRESOURCE(IDS_PRESET_SAVED), szFileName);
 	FBAPopupDisplay(PUF_TYPE_INFO);
 }

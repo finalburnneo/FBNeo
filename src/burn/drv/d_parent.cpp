@@ -55,35 +55,6 @@ struct BurnDriver BurnDrvBagman = {
 	NULL, 0, 224, 256, 3, 4
 };
 
-static struct BurnRomInfo DockmanRomDesc[] = {
-	{ "pe1.19",             0x01000, 0xeef2ec54, BRF_ESS | BRF_PRG },
-	{ "pe2.18",             0x01000, 0xbc48d16b, BRF_ESS | BRF_PRG },
-	{ "pe3.17",             0x01000, 0x1c923057, BRF_ESS | BRF_PRG },
-	{ "pe4.16",             0x01000, 0x23af1cba, BRF_ESS | BRF_PRG },
-	{ "pe5.15",             0x01000, 0x39dbe429, BRF_ESS | BRF_PRG },
-	
-	{ "pe7.22",             0x00800, 0xd2094e4a, BRF_ESS | BRF_PRG },
-	{ "pe6.23",             0x00800, 0x1cf447f4, BRF_ESS | BRF_PRG },
-
-	{ "pe8.9",              0x01000, 0x4d8c2974, BRF_GRA },
-	{ "pe9.8",              0x01000, 0x4e4ea162, BRF_GRA },
-	
-	{ "mb7051.3",           0x00020, 0x6440dc61, BRF_GRA },
-};
-
-STD_ROM_PICK(Dockman)
-STD_ROM_FN(Dockman)
-
-struct BurnDriver BurnDrvDockman = {
-	"dockman", NULL, NULL, NULL, "1982",
-	"Dock Man\0", "Parent set for working drivers", "Taito Corporation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, DockmanRomInfo, DockmanRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 224, 256, 3, 4
-};
-
 static struct BurnRomInfo EightballactRomDesc[] = {
 	{ "8b-dk.5e",           0x01000, 0x166c1c9b, BRF_ESS | BRF_PRG },
 	{ "8b-dk.5c",           0x01000, 0x9ec87baa, BRF_ESS | BRF_PRG },
@@ -222,32 +193,4 @@ struct BurnDriver BurnDrvHuncholy = {
 	NULL, HuncholyRomInfo, HuncholyRomName, NULL, NULL, ParentInputInfo, NULL,
 	ParentInit, ParentExit, NULL, NULL, NULL,
 	NULL, 0, 224, 256, 3, 4
-};
-
-static struct BurnRomInfo ThepitRomDesc[] = {
-	{ "pit1.bin",           0x01000, 0x71affecc, BRF_ESS | BRF_PRG },
-	{ "pit2.bin",           0x01000, 0x894063cd, BRF_ESS | BRF_PRG },
-	{ "pit3.bin",           0x01000, 0x1b488543, BRF_ESS | BRF_PRG },
-	{ "pit4.bin",           0x01000, 0xe941e848, BRF_ESS | BRF_PRG },
-	{ "pit5.bin",           0x01000, 0xe0643c95, BRF_ESS | BRF_PRG },
-	
-	{ "pit6.bin",           0x00800, 0x1b79dfb6, BRF_ESS | BRF_PRG },
-
-	{ "pit8.bin",           0x00800, 0x69502afc, BRF_GRA },
-	{ "pit7.bin",           0x00800, 0xd901b353, BRF_GRA },
-	
-	{ "82s123.ic4",         0x00020, 0xa758b567, BRF_GRA },
-};
-
-STD_ROM_PICK(Thepit)
-STD_ROM_FN(Thepit)
-
-struct BurnDriver BurnDrvThepit = {
-	"thepit", NULL, NULL, NULL, "1992",
-	"The Pit\0", "Parent set for working drivers", "Taito", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, ThepitRomInfo, ThepitRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 256, 224, 4, 3
 };

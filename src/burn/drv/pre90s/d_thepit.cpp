@@ -372,7 +372,7 @@ STDDIPINFO(Suprmous)
 
 static struct BurnDIPInfo RtrivDIPList[]=
 {
-	{0x0c, 0xff, 0xff, 0x7f, NULL			},
+	{0x0c, 0xff, 0xff, 0xff, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"		},
 	{0x0c, 0x01, 0x02, 0x00, "2 Coins 1 Credits"	},
@@ -394,15 +394,11 @@ static struct BurnDIPInfo RtrivDIPList[]=
 	{0x0c, 0x01, 0x20, 0x20, "Number of Wrong Answer"		},
 	{0x0c, 0x01, 0x20, 0x00, "Number of Good Answer for Bonus Question"		},
 
-	{0   , 0xfe, 0   ,    8, "Gaming Option Number"	},
-	{0x0c, 0x01, 0xc0, 0x00, "2"			},
-	{0x0c, 0x01, 0xc0, 0x40, "3"			},
-	{0x0c, 0x01, 0xc0, 0x80, "4"			},
-	{0x0c, 0x01, 0xc0, 0xc0, "5"			},
-	{0x0c, 0x01, 0xc0, 0x00, "4"			},
-	{0x0c, 0x01, 0xc0, 0x40, "5"			},
-	{0x0c, 0x01, 0xc0, 0x80, "6"			},
-	{0x0c, 0x01, 0xc0, 0xc0, "7"			},
+	{0   , 0xfe, 0   ,    4, "Gaming Option Number"	},
+	{0x0c, 0x01, 0xc0, 0x00, "2 / 4"			},
+	{0x0c, 0x01, 0xc0, 0x40, "3 / 5"			},
+	{0x0c, 0x01, 0xc0, 0x80, "4 / 6"			},
+	{0x0c, 0x01, 0xc0, 0xc0, "5 / 7"			},
 };
 
 STDDIPINFO(Rtriv)
@@ -453,12 +449,12 @@ static UINT8 rtriv_question_read(UINT16 offset)
 		break;
 
 		case 0x800:
-			remap_address[offset & 0xf] = ((offset >> 4) & 0xf) ^ 0xf;
+			remap_address[offset & 0xf] = ((offset & 0xf0) >> 4) ^ 0xf;
 		break;
 
 		case 0xc00:
 		{
-			UINT32 address = (question_rom * 0x8000) + question_address + (offset & 0x3f0) + remap_address[offset & 0xf];
+			UINT32 address = (question_rom * 0x8000) | question_address | (offset & 0x3f0) | remap_address[offset & 0xf];
 			return DrvUsrROM[address];
 		}
 	}
@@ -469,6 +465,7 @@ static UINT8 rtriv_question_read(UINT16 offset)
 static UINT8 __fastcall thepit_main_read(UINT16 address)
 {
 	if ((address & 0xf000) == 0x4000) {
+		bprintf(0, _T("read %X. "), address);
 		return rtriv_question_read(address & 0xfff);
 	}
 
@@ -678,7 +675,7 @@ static INT32 LoadRoms()
 			uLoad += ri.nLen;
 			rtriv = 1;
 			continue;
-		}	
+		}
 	}
 
 	global_color_depth = (gLoad - DrvGfxROM) >> 12;
@@ -727,7 +724,7 @@ static INT32 DrvInit()
 
 	if (rtriv)
 	{
-		ZetMemCallback(0x4000, 0x4fff, MAP_RAM);
+		ZetUnmapMemory(0x4000, 0x4fff, MAP_RAM);
 	}
 
 	ZetClose();
@@ -1469,9 +1466,9 @@ STD_ROM_FN(zaryavos)
 
 struct BurnDriverD BurnDrvZaryavos = {
 	"zaryavos", NULL, NULL, NULL, "1984",
-	"Zarya Vostoka\0", NULL, "Nova Games of Canada", "Miscellaneous",
+	"Zarya Vostoka\0", "undumped/missing roms", "Nova Games of Canada", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, zaryavosRomInfo, zaryavosRomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
@@ -1691,6 +1688,7 @@ static struct BurnRomInfo rtrivRomDesc[] = {
 
 	{ "ngames7.22",		0x0800, 0x871e5a03, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
 
+	{ "ngames9.9",		0x1000, 0xdb553afc, 3 | BRF_GRA },           //  5 Graphics
 	{ "ngames9.9",		0x1000, 0xdb553afc, 3 | BRF_GRA },           //  5 Graphics
 	{ "ngames8.8",		0x1000, 0xf7644e1d, 3 | BRF_GRA },           //  6
 

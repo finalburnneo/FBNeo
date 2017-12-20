@@ -1728,7 +1728,8 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 		break;
 
 		case 6: // airduel m82
-			video_offsets[0] = video_offsets[1] = -6;
+			video_offsets[0] = -4;
+			video_offsets[1] = -6;
 			m72_video_type = 1; // rtype
 		break;
 	}

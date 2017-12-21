@@ -1302,7 +1302,7 @@ static UINT32 dragngun_read_long(UINT32 address)
 
 		case 0x1000000:
 		case 0x1000004:
-			return rand();
+			return BurnRandom();
 
 	}
 	return 0;
@@ -2392,7 +2392,9 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 										sprite == 0x7f0 || sprite == 0x7f4 || sprite == 0x7f8 || sprite == 0x7fc ||
 										sprite == 0x800 || sprite == 0x804)) {
 							colour &= ~0x20; // level 5 mid-boss "hole in plane" wrong priority (doesn't show up until after character goes through the hole w/o this)
-						}
+						} else
+							if (layerID && (sprite >= 0x7a0 && sprite <= 0x829))
+								colour &= ~0x80; // level 5 cargobay with bad alpha
 					}
 
 					while (multi >= 0)
@@ -2926,13 +2928,13 @@ static INT32 NslasherDraw()
 	deco16_pf34_update();
 	deco16_clear_prio_map();
 
-	BurnTransferClear(0x200);
-
-	memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2); // fix alpha issue when layer disabled in level 5 after airoplane fades-out
+	BurnTransferClear(0x300);
 
 	UINT32 *ace = (UINT32*)DrvAceRAM;
 
 	INT32 has_alpha = (ace[0x17] && global_priority) ? 1 : 0;
+
+	if (has_alpha) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2); // fix alpha issue when layer disabled in level 5 after airoplane fades-out
 
 	if (global_priority & 2)
 	{
@@ -2947,13 +2949,11 @@ static INT32 NslasherDraw()
 		{
 			if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
 			if (nBurnLayer & 4) deco16_draw_layer(2, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			//if ((nBurnLayer & 4) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
 		}
 		else
 		{
 			if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2);
 			if (nBurnLayer & 2) deco16_draw_layer(1, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			//if ((nBurnLayer & 2) == 0) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2);
 		}
 	}
 
@@ -3529,6 +3529,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 3) {
 			tattass_eeprom_scan();
 			decobsmt_scan(nAction, pnMin);
+		}
+
+		if (game_select == 4) {
+			BurnRandomScan(nAction);
 		}
 
 		if (uses_gun) {

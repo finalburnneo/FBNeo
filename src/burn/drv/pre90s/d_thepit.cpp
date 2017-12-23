@@ -309,6 +309,43 @@ static struct BurnDIPInfo IntrepidDIPList[]=
 
 STDDIPINFO(Intrepid)
 
+static struct BurnDIPInfo IntrepidbDIPList[]=
+{
+	{0x0e, 0xff, 0xff, 0x4f, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Invulnerability"	},
+	{0x0e, 0x01, 0x01, 0x01, "Off"			},
+	{0x0e, 0x01, 0x01, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0e, 0x01, 0x02, 0x00, "Off"			},
+	{0x0e, 0x01, 0x02, 0x02, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0e, 0x01, 0x04, 0x04, "Upright"		},
+	{0x0e, 0x01, 0x04, 0x00, "Cocktail"		},
+
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x0e, 0x01, 0x08, 0x08, "Easy"			},
+	{0x0e, 0x01, 0x08, 0x00, "Hard"			},
+
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x0e, 0x01, 0x10, 0x00, "10000"		},
+	{0x0e, 0x01, 0x10, 0x10, "30000"		},
+
+	{0   , 0xfe, 0   ,    2, "Lives"		},
+	{0x0e, 0x01, 0x20, 0x20, "2"			},
+	{0x0e, 0x01, 0x20, 0x00, "3"			},
+
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
+	{0x0e, 0x01, 0xc0, 0x80, "2 Coins 1 Credits"	},
+	{0x0e, 0x01, 0xc0, 0x40, "1 Coin  1 Credits"	},
+	{0x0e, 0x01, 0xc0, 0xc0, "1 Coin  2 Credits"	},
+	{0x0e, 0x01, 0xc0, 0x00, "Free Play"		},
+};
+
+STDDIPINFO(Intrepidb)
+
 
 static struct BurnDIPInfo DockmanDIPList[]=
 {
@@ -1378,7 +1415,7 @@ struct BurnDriver BurnDrvIntrepidb = {
 	"Intrepid (Elsys bootleg, set 1)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidbRomInfo, intrepidbRomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
+	NULL, intrepidbRomInfo, intrepidbRomName, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1410,7 +1447,7 @@ struct BurnDriver BurnDrvIntrepidb2 = {
 	"Intrepid (Loris bootleg)\0", NULL, "bootleg (Loris)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidb2RomInfo, intrepidb2RomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
+	NULL, intrepidb2RomInfo, intrepidb2RomName, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };
@@ -1442,7 +1479,7 @@ struct BurnDriver BurnDrvIntrepidb3 = {
 	"Intrepid (Elsys bootleg, set 2)\0", NULL, "bootleg (Elsys)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, intrepidb3RomInfo, intrepidb3RomName, NULL, NULL, IntrepidInputInfo, IntrepidDIPInfo,
+	NULL, intrepidb3RomInfo, intrepidb3RomName, NULL, NULL, IntrepidInputInfo, IntrepidbDIPInfo,
 	IntrepidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x28,
 	224, 256, 3, 4
 };

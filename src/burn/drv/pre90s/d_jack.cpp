@@ -1058,7 +1058,7 @@ static INT32 GetRoms()
 	return 0;
 }
 
-static INT32 DrvInit(INT32 map_type, INT32 timerrate)
+static INT32 DrvInit(INT32 map_type, INT32 timerrate, INT32 alt_volume)
 {
 	AllMem = NULL;
 	MemIndex();
@@ -1109,7 +1109,7 @@ static INT32 DrvInit(INT32 map_type, INT32 timerrate)
 	ZetClose();
 
 	AY8910Init(0, 1500000, nBurnSoundRate, &AY8910_portA, &AY8910_portB, NULL, NULL);
-	AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, (alt_volume) ? 0.20 : 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, background_map_scan, (map_type == 0) ? background_map_callback : joinem_map_callback, 8, 8, 32, 32);
@@ -1283,7 +1283,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
@@ -1379,7 +1378,6 @@ static INT32 JoinemFrame()
 		}
 	}
 
-
 	if (pBurnDraw) {
 		BurnDrvRedraw();
 	}
@@ -1388,7 +1386,7 @@ static INT32 JoinemFrame()
 }
 
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1396,7 +1394,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029521;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -1447,7 +1445,7 @@ STD_ROM_FN(jack)
 
 static INT32 JackInit()
 {
-	return DrvInit(0, 256);
+	return DrvInit(0, 256, 0);
 }
 
 struct BurnDriver BurnDrvJack = {
@@ -1576,7 +1574,7 @@ static void treahunt_decode()
 
 static INT32 TreahuntInit()
 {
-	INT32 nRet = DrvInit(0, 256);
+	INT32 nRet = DrvInit(0, 256, 0);
 
 	if (nRet == 0)
 	{
@@ -1623,7 +1621,7 @@ STD_ROM_FN(zzyzzyxx)
 
 static INT32 ZzyzzyxxInit()
 {
-	return DrvInit(0, 32);
+	return DrvInit(0, 32, 1);
 }
 
 struct BurnDriver BurnDrvZzyzzyxx = {
@@ -1706,6 +1704,10 @@ struct BurnDriver BurnDrvBrix = {
 	224, 256, 3, 4
 };
 
+static INT32 FreezeInit()
+{
+	return DrvInit(0, 256, 1);
+}
 
 // Freeze
 
@@ -1736,7 +1738,7 @@ struct BurnDriver BurnDrvFreeze = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, freezeRomInfo, freezeRomName, NULL, NULL, FreezeInputInfo, FreezeDIPInfo,
-	JackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
+	FreezeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
 };
 
@@ -1897,7 +1899,7 @@ static void strivDecode()
 
 static INT32 StrivInit()
 {
-	INT32 nRet = DrvInit(0, 256);
+	INT32 nRet = DrvInit(0, 256, 0);
 
 	if (nRet == 0)
 	{
@@ -1986,7 +1988,7 @@ STD_ROM_FN(joinem)
 
 static INT32 JoinemInit()
 {
-	return DrvInit(1, 32);
+	return DrvInit(1, 32, 1);
 }
 
 struct BurnDriver BurnDrvJoinem = {
@@ -2055,7 +2057,7 @@ STD_ROM_FN(loverboy)
 
 static INT32 LoverboyInit()
 {
-	INT32 nRet = DrvInit(1, 32);
+	INT32 nRet = DrvInit(1, 32, 1);
 
 	if (nRet == 0)
 	{

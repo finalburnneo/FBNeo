@@ -524,7 +524,7 @@ static UINT8 __fastcall thepit_sound_read_port(UINT16 port)
 static tilemap_callback( layer0 )
 {
 	UINT8 back_color = (DrvColRAM[offs] & 0x70) >> 4;
-	INT32 priority = (back_color != 0) && ((DrvColRAM[offs] & 0x80) == 0);
+	INT32 priority = ((back_color != 0) && ((DrvColRAM[offs] & 0x80) == 0)) ? 1 : 0;
 
 	TILE_SET_INFO(0, 0, back_color, TILE_GROUP(priority));
 }
@@ -858,6 +858,12 @@ static void draw_sprites(INT32 priority)
 
 	INT32 bank = (sprite_bank * 0x100) + (graphics_bank * 0x100);
 
+	if (flipscreen[0]) {
+		GenericTilesSetClip(0*8, 30*8-2, 0*8, 28*8-1);
+	} else {
+		GenericTilesSetClip(2*8+1, 32*8-1, 0*8, 28*8-1);
+	}
+
 	for (INT32 offs = 0x20 - 4; offs >= 0; offs -= 4)
 	{
 		if ((DrvSprRAM[offs + 2] & 0x08) == priority)
@@ -894,6 +900,8 @@ static void draw_sprites(INT32 priority)
 			draw_single_sprite(code, color, sx - 256, sy - 16, flipx, flipy); // wrap
 		}
 	}
+
+	GenericTilesClearClip();
 }
 
 static INT32 DrvDraw()

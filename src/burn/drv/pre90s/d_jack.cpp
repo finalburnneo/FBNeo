@@ -803,7 +803,7 @@ static void __fastcall jack_main_write(UINT16 address, UINT8 data)
 			soundlatch = data;
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 			ZetOpen(0);
 		return;
@@ -897,7 +897,6 @@ static tilemap_scan( background )
 
 static UINT8 AY8910_portA(UINT32)
 {
-	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	return soundlatch;
 }
 
@@ -1287,16 +1286,19 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSegment;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nSegment = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
+		nCyclesDone[0] += ZetRun(nSegment);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nSegment = ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
+		nCyclesDone[1] += ZetRun(nSegment);
 		ZetClose();
 
 		if (pBurnSoundOut && (i%8) == 7) {
@@ -1345,11 +1347,13 @@ static INT32 JoinemFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSegment;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nSegment = ((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0];
+		nCyclesDone[0] += ZetRun(nSegment);
 		if (i == (nInterleave - 1) && nmi_enable) ZetNmi();
 		if (joinem_timer == 61) {
 			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
@@ -1359,7 +1363,8 @@ static INT32 JoinemFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nSegment = ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
+		nCyclesDone[1] += ZetRun(nSegment);
 		ZetClose();
 
 		if (pBurnSoundOut && (i%8) == 7) {

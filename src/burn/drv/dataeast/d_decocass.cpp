@@ -105,6 +105,7 @@ static UINT8 (*prot_read)(UINT16) = NULL;
 
 static UINT32 type1_inmap = 0;
 static UINT32 type1_outmap = 0;
+static UINT8  type1_latch1 = 0;
 static UINT8 *type1_map = NULL;
 
 #define T1PROM 1
@@ -1345,7 +1346,6 @@ static void tape_crc16(UINT8 data)
 
 static void tape_update(void)
 {
-	static INT32 last_byte;
 	INT32 offset, rclk, rdata, tape_bit, tape_byte, tape_block;
 	double tape_time = tape_time0;
 
@@ -1437,7 +1437,6 @@ static void tape_update(void)
 			rclk = 1;
 			rdata = 0;
 		}
-		last_byte = tape_byte;
 	}
 	else if (offset < tape_length - TAPE_LEADER - TAPE_GAP)// during EOT hole
 	{
@@ -1540,7 +1539,6 @@ static UINT8 decocass_type1_read(UINT16 offset)
 {
 	if (!type1_map)
 		return 0x00;
-	static UINT8 latch1;
 
 	UINT8 data;
 
@@ -1562,7 +1560,7 @@ static UINT8 decocass_type1_read(UINT16 offset)
 		if (firsttime)
 		{
 			firsttime = 0;
-			latch1 = 0;    /* reset latch (??) */
+			type1_latch1 = 0;    /* reset latch (??) */
 		}
 
 		if (0 == (offset & E5XX_MASK))
@@ -1586,12 +1584,12 @@ static UINT8 decocass_type1_read(UINT16 offset)
 		for (INT32 i=0;i<8;i++)
 		{
 			if (type1_map[i] == T1PROM)     { data |= (((prom[promaddr] >> promshift) & 1)               << T1MAP(i,type1_outmap)); promshift++; }
-			if (type1_map[i] == T1LATCHINV) { data |= ((1 - ((latch1 >> T1MAP(i,type1_inmap)) & 1)) << T1MAP(i,type1_outmap)); }
-			if (type1_map[i] == T1LATCH)    { data |= (((latch1 >> T1MAP(i,type1_inmap)) & 1)    << T1MAP(i,type1_outmap)); }
+			if (type1_map[i] == T1LATCHINV) { data |= ((1 - ((type1_latch1 >> T1MAP(i,type1_inmap)) & 1)) << T1MAP(i,type1_outmap)); }
+			if (type1_map[i] == T1LATCH)    { data |= (((type1_latch1 >> T1MAP(i,type1_inmap)) & 1)    << T1MAP(i,type1_outmap)); }
 			if (type1_map[i] == T1DIRECT)   { data |= (((save >> T1MAP(i,type1_inmap)) & 1)        << T1MAP(i,type1_outmap)); }
 		}
 
-		latch1 = save;        /* latch the data for the next A0 == 0 read */
+		type1_latch1 = save;        /* latch the data for the next A0 == 0 read */
 	}
 	return data;
 }
@@ -3316,10 +3314,17 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd-AllRam;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = I8x41Mem;
+		ba.nLen	  = 0x900;
+		ba.szName = "MCU Ram";
+		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
 		M6502Scan(nAction);
+		i8x41_scan(nAction);
 
 		AY8910Scan(nAction, pnMin);
 
@@ -3353,9 +3358,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(i8041_p1);
 		SCAN_VAR(i8041_p2);
 
+		SCAN_VAR(type1_latch1);
+
+		SCAN_VAR(type2_d2_latch);
+		SCAN_VAR(type2_xx_latch);
+		SCAN_VAR(type2_promaddr);
+
 		SCAN_VAR(type3_pal_19);
 		SCAN_VAR(type3_ctrs);
-		SCAN_VAR(type3_swap);
 		SCAN_VAR(type3_d0_latch);
 
 		SCAN_VAR(type4_ctrs);

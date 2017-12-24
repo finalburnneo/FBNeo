@@ -609,8 +609,6 @@ void program_write_dword_32be(unsigned int /*A*/, unsigned int /*V*/)
 {
 }
 
-//pSh2Ext->opbase
-
 #if FAST_OP_FETCH
 
 #ifdef LSB_FIRST
@@ -3508,12 +3506,10 @@ int Sh2Scan(int nAction)
 			Sh2Ext[i].sh2.irq_callback = irq_callback;
 			
 			SCAN_VAR (Sh2Ext[i].suspend);
-			SCAN_VAR (Sh2Ext[i].opbase);
-			
+
 #if FAST_OP_FETCH
-			//	Sh2Ext[i].opbase
 			if (nAction & ACB_WRITE) {
-				change_pc(sh2->pc & AM);
+				change_pc(sh2->pc & AM); // re-load the opbase
 			}
 #endif
 		}

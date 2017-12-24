@@ -127,9 +127,6 @@ void i8x41_set_write_port(void (*write)(UINT16, UINT8))
 }
 
 
-
-
-
 #ifndef INLINE
 #define INLINE	inline
 #endif
@@ -150,13 +147,31 @@ typedef struct {
 	UINT8	p1;
 	UINT8	p2;
 	UINT8	p2_hs;
-	UINT8	*ram;
-	int 	(*irq_callback)(int irqline);
+	ALIGN_VAR(8) UINT8	*ram;
+	ALIGN_VAR(8) INT32 	(*irq_callback)(INT32 irqline);
 }	I8X41;
 
 int i8x41_ICount;
 
 static I8X41 i8x41;
+
+void i8x41_scan(INT32 nAction)
+{
+	if (nAction & ACB_DRIVER_DATA) {
+		UINT8 *tmp_ram = i8x41.ram;
+		int	(*tmp_irq_callback)(int irqline) = i8x41.irq_callback;
+
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = &i8x41;
+		ba.nLen	  = sizeof(i8x41);
+		ba.szName = "i8x41 Regs";
+		BurnAcb(&ba);
+
+		i8x41.ram = tmp_ram;
+		i8x41.irq_callback = tmp_irq_callback;
+	}
+}
 
 #define RM(a)	program_read_byte_8(a)
 #define WM(a,v) program_write_byte_8(a,v)

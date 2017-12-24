@@ -99,4 +99,4 @@ void i8x41_exit();
 INT32 i8x41_run(INT32 cycles);
 UINT8 i8x41_get_register(UINT32 reg);
 void i8x41_set_register(UINT32 reg, UINT8 data);
-
+void i8x41_scan(INT32 nAction);

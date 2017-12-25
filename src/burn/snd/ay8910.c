@@ -19,6 +19,7 @@
 #include "driver.h"
 #include "state.h"
 #include "ay8910.h"
+#include <stddef.h>
 
 #if defined FBA_DEBUG
 #ifdef __GNUC__ 
@@ -53,10 +54,6 @@ struct AY8910
 {
 	INT32 Channel;
 	INT32 SampleRate;
-	ALIGN_VAR(8) read8_handler PortAread;
-	ALIGN_VAR(8) read8_handler PortBread;
-	ALIGN_VAR(8) write8_handler PortAwrite;
-	ALIGN_VAR(8) write8_handler PortBwrite;
 	INT32 register_latch;
 	UINT8 Regs[16];
 	INT32 lastEnable;
@@ -70,6 +67,11 @@ struct AY8910
 	UINT8 Hold,Alternate,Attack,Holding;
 	INT32 RNG;
 	UINT32 VolTable[32];
+
+	read8_handler PortAread;
+	read8_handler PortBread;
+	write8_handler PortAwrite;
+	write8_handler PortBwrite;
 };
 
 /* register id's */
@@ -831,25 +833,15 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 
 	for (i = 0; i < num; i++) {
 		struct AY8910 *PSG = &AYPSG[i];
-		read8_handler tempPortAread = PSG->PortAread; // preserve the port handler pointers!
-		read8_handler tempPortBread = PSG->PortBread;
-		write8_handler tempPortAwrite = PSG->PortAwrite;
-		write8_handler tempPortBwrite = PSG->PortBwrite;
 		char szName[16];
 
 		sprintf(szName, "AY8910 #%d", i);
 
 		ba.Data		= &AYPSG[i];
-		ba.nLen		= sizeof(struct AY8910);
+		ba.nLen		= offsetof(struct AY8910, PortAread);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
-
-		PSG->PortAread = tempPortAread;
-		PSG->PortBread = tempPortBread;
-		PSG->PortAwrite = tempPortAwrite;
-		PSG->PortBwrite = tempPortBwrite;
-
 	}
 
 	return 0;

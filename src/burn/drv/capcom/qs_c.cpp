@@ -1,6 +1,7 @@
 // QSound - emulator for the QSound Chip
 
 #include <math.h>
+#include <stddef.h>
 #include "cps.h"
 #include "burn_sound.h"
 
@@ -19,8 +20,6 @@ struct QChan {
 		UINT8 bKey;				// 1 if channel is playing
 		INT8 nBank;						// Bank we are currently playing a sample from
 
-		ALIGN_VAR(8) INT8* PlayBank;		// Pointer to current bank
-
 		INT32 nPlayStart;					// Start of being played
 		INT32 nStart;						// Start of sample 16.12
 		INT32 nEnd;						// End of sample   16.12
@@ -34,6 +33,8 @@ struct QChan {
 		INT32 nPitch;						// Playback frequency
 
 		INT8 nEndBuffer[8];				// Buffer to enable correct cubic interpolation
+
+		INT8* PlayBank;		// Pointer to current bank
 };
 
 static struct QChan QChan[16];
@@ -133,7 +134,18 @@ void QscSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 
 INT32 QscScan(INT32 nAction)
 {
-	SCAN_VAR(QChan);
+	for (INT32 i = 0; i < 16; i++) {
+		struct BurnArea ba;
+		char szName[16];
+
+		sprintf(szName, "QChan #%d", i);
+
+		ba.Data		= &QChan[i];
+		ba.nLen		= offsetof(struct QChan, PlayBank);
+		ba.nAddress = 0;
+		ba.szName	= szName;
+		BurnAcb(&ba);
+	}
 
 	if (nAction & ACB_WRITE) {
 		// Update bank pointers with new banks, and recalc nAdvance

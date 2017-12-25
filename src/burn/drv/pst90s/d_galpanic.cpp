@@ -1065,7 +1065,7 @@ UINT8 __fastcall GalhustlReadByte(UINT32 sekAddress)
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
-  SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
+	SekSetIRQLine(0, CPU_IRQSTATUS_NONE);
 	SekReset();
 	SekClose();
 	SndBank = 0;
@@ -2135,9 +2135,6 @@ static INT32 GalpanicScan(INT32 nAction, INT32 *pnMin)
 
 		// Scan critical driver variables
 		SCAN_VAR(SndBank);
-		SCAN_VAR(DrvInput);
-		SCAN_VAR(RamCurPal);
-		SCAN_VAR(RamCTB64k);
 
 		BurnRandomScan(nAction);
 

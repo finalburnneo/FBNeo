@@ -1136,21 +1136,19 @@ static INT32 powerinsScan(INT32 nAction,INT32 *pnMin)
 
 		if ( game_drv != GAME_POWERINA ) ZetScan(nAction);										// Scan Z80 state
 
-	  if ( game_drv == GAME_POWERINS ) BurnYM2203Scan(nAction, pnMin);
+		if ( game_drv == GAME_POWERINS ) BurnYM2203Scan(nAction, pnMin);
 
 		MSM6295Scan(0, nAction);
 		if ( game_drv != GAME_POWERINA ) MSM6295Scan(1, nAction);
 
-		SCAN_VAR(m6295size);
 		SCAN_VAR(soundlatch);
 		if ( game_drv == GAME_POWERINA ) SCAN_VAR(oki_bank);
 
 		SCAN_VAR(tile_bank);
-		SCAN_VAR(RamCurPal);
 
 		if (nAction & ACB_WRITE) {
 			bRecalcPalette = 1;
-	   if ( game_drv == GAME_POWERINA ) memcpy(&MSM6295ROM[0x30000],&MSM6295ROM[0x40000 + 0x10000*oki_bank],0x10000);
+			if ( game_drv == GAME_POWERINA )  MSM6295SetBank(0, MSM6295ROM + 0x40000 + 0x10000*oki_bank, 0x30000, 0x3ffff);
 		}
 	}
 

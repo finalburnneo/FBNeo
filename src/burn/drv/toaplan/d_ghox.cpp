@@ -183,7 +183,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SekScan(nAction);				// scan 68000 states
 
-		Z180Scan();
+		Z180Scan(nAction);
 
 		ToaScanGP9001(nAction, pnMin);
 

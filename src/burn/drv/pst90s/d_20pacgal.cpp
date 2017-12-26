@@ -639,7 +639,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		Z180Scan();
+		Z180Scan(nAction);
 
 		NamcoSoundScan(nAction, pnMin);
 

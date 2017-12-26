@@ -452,7 +452,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		Z180Scan();
+		Z180Scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
 

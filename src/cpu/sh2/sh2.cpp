@@ -31,6 +31,7 @@
 
 #include "burnint.h"
 #include "sh2_intf.h"
+#include <stddef.h>
 
 int has_sh2;
 INT32 cps3speedhack; // must be set _after_ Sh2Init();
@@ -66,8 +67,8 @@ INT32 sh2_busyloop_speedhack_mode2;
 
 typedef struct
 {
-	int irq_vector;
-	int irq_priority;
+	INT32 irq_vector;
+	INT32 irq_priority;
 } irq_entry;
 
 typedef struct
@@ -95,30 +96,29 @@ typedef struct
 	UINT16 	ocra, ocrb, icr;
 	UINT32 	frc_base;
 
-	int		frt_input;
-	int 	internal_irq_level;
-	int 	internal_irq_vector;
+	INT32	frt_input;
+	INT32 	internal_irq_level;
+	INT32 	internal_irq_vector;
 
 //	emu_timer *timer;
 	UINT32 	timer_cycles;
 	UINT32 	timer_base;
-	int     timer_active;
+	INT32   timer_active;
 	
 //	emu_timer *dma_timer[2];
 	UINT32 	dma_timer_cycles[2];
 	UINT32 	dma_timer_base[2];
-	int     dma_timer_active[2];
+	INT32   dma_timer_active[2];
 
 //	int     is_slave, cpu_number;
 	
 	UINT32	cycle_counts; // used internally for timers / sh2_GetTotalCycles()
 	UINT32	sh2_cycles_to_run;
 	INT32	sh2_icount;
-	int     sh2_total_cycles; // used externally (drivers/etc)
+	INT32   sh2_total_cycles; // used externally (drivers/etc)
 	INT32   sh2_eat_cycles;
 
-	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);
-
+	int 	(*irq_callback)(int irqline);
 } SH2;
 
 static SH2 * sh2;
@@ -3492,19 +3492,19 @@ int Sh2Scan(int nAction)
 #endif
 
 	if (nAction & ACB_DRIVER_DATA) {
-	
 		char szText[] = "SH2 #0";
 
 		for (int i = 0; i < 1 /*nCPUCount*/; i++) {
-			szText[5] = '1' + i;
+			struct BurnArea ba;
 
-			int (*irq_callback)(int irqline);
-			irq_callback = Sh2Ext[i].sh2.irq_callback;
+			szText[5] = '0' + i;
 
-			ScanVar(& ( Sh2Ext[i].sh2 ), sizeof(SH2), szText);
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = &Sh2Ext[i].sh2;
+			ba.nLen	  = offsetof(SH2, irq_callback);
+			ba.szName = szText;
+			BurnAcb(&ba);
 
-			Sh2Ext[i].sh2.irq_callback = irq_callback;
-			
 			SCAN_VAR (Sh2Ext[i].suspend);
 
 #if FAST_OP_FETCH

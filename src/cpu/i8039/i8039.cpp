@@ -104,8 +104,7 @@ typedef struct
 	UINT8	t_flag, timer, timerON, countON, xirq_en, tirq_en;
 	UINT16	A11;
 	UINT8	irq_state, irq_extra_cycles;
-	ALIGN_VAR(8) int (*irq_callback)(int irqline);
-	int		inst_cycles;
+	INT32   inst_cycles;
 	UINT8	Old_T1;
 	double total_cycles;
 } I8039_Regs;
@@ -644,7 +643,7 @@ static int Ext_IRQ(void)
 
 			if (R.timerON)	/* NS990113 */
 				R.masterClock += extra_cycles;
-			if (R.irq_callback) (*R.irq_callback)(0);
+			//if (R.irq_callback) (*R.irq_callback)(0);
 		}
 	}
 
@@ -688,7 +687,7 @@ void I8039Init(int (*irqcallback)(int))
 	
 	RAM = (UINT8*)malloc(128 * sizeof(UINT8));
 	
-	R.irq_callback = irqcallback;
+	//R.irq_callback = irqcallback;
 
 	R.cpu_feature = 0;
 	R.ram_mask = 0x7F;

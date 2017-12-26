@@ -59,7 +59,7 @@ struct _nec_state_t
 	UINT8	no_interrupt;
 	UINT8	halted;
 
-	int		icount;
+	INT32	icount;
 
 	UINT8	prefetch_size;
 	UINT8	prefetch_cycles;

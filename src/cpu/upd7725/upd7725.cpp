@@ -390,7 +390,7 @@ void upd96050Reset()
 INT32 upd96050Scan(INT32 /*nAction*/)
 {
 	SCAN_VAR(regs);
-	
+
 	return 0;
 }
 

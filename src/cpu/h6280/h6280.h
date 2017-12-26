@@ -44,15 +44,15 @@ typedef struct
 	UINT8 irq_pending;
 	INT32 irq_hold;
 
-    ALIGN_VAR(8) int (*irq_callback)(int irqline);
-
-	unsigned int h6280_iCycles;
-	unsigned int h6280_totalcycles;
+	UINT32 h6280_iCycles;
+	UINT32 h6280_totalcycles;
 
 #if LAZY_FLAGS
     INT32 NZ;             /* last value (lazy N and Z flag) */
 #endif
 	UINT8 io_buffer;	/* last value written to the PSG, timer, and interrupt pages */
+
+	int (*irq_callback)(int irqline);
 }   h6280_Regs;
 
 void h6280_set_context(void *ptr);

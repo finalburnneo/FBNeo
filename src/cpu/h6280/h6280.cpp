@@ -186,11 +186,8 @@ void h6280Reset(void)
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280Reset called with no CPU open\n"));
 #endif
 
-	int (*save_irqcallback)(int);
-	int i;
-
 	/* wipe out the h6280 structure */
-	save_irqcallback = h6280.irq_callback;
+	int (*save_irqcallback)(int) = h6280.irq_callback;
 	memset(&h6280, 0, sizeof(h6280_Regs));
 	h6280.irq_callback = save_irqcallback;
 
@@ -213,7 +210,7 @@ void h6280Reset(void)
 	h6280.timer_load = 128 * 1024;
 
     /* clear pending interrupts */
-	for (i = 0; i < 3; i++)
+	for (INT32 i = 0; i < 3; i++)
 		h6280.irq_state[i] = CLEAR_LINE;
 	h6280.nmi_state = CLEAR_LINE;
 

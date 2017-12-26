@@ -37,6 +37,7 @@
 #include "burnint.h"
 #include "konami.h"
 #include "konami_intf.h"
+#include <stddef.h>
 #define VERBOSE 0
 
 #define change_pc(x)	PC=x
@@ -58,13 +59,13 @@ typedef struct
 	UINT8   cc;
 	UINT8	ireg;		/* first opcode */
 	UINT8   irq_state[2];
-	int     extra_cycles; /* cycles used up by interrupts */
+	INT32   extra_cycles; /* cycles used up by interrupts */
 	UINT8   int_state;  /* SYNC and CWAI flags */
 	UINT8	nmi_state;
-	int	nTotalCycles;
-	int hold_irq;
-	ALIGN_VAR(8) int     (*irq_callback)(int irqline);
-	ALIGN_VAR(8) void 	(*setlines_callback)( int lines ); /* callback called when A16-A23 are set */
+	INT32   nTotalCycles;
+	INT32   hold_irq;
+	int     (*irq_callback)(int irqline);
+	void 	(*setlines_callback)( int lines ); /* callback called when A16-A23 are set */
 } konami_Regs;
 
 /* flag bits in the cc register */
@@ -548,27 +549,17 @@ int konamiCpuScan(int nAction)
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konamiCpuScan called without init\n"));
 #endif
 
-	struct BurnArea ba;
-
-	int     (*irq_callback)(int irqline);
-	void 	(*setlines_callback)( int lines );
-
-	irq_callback = konami.irq_callback;
-	setlines_callback = konami.setlines_callback;
-
 	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = (unsigned char*)&konami;
-		ba.nLen	  = sizeof(konami_Regs);
-		ba.szName = "All Registers";
+		ba.nLen	  = offsetof(konami_Regs, irq_callback);
+		ba.szName = "KonamiCPU Registers";
 		BurnAcb(&ba);
 
-		SCAN_VAR(ea.w.l);
-		SCAN_VAR(ea.d);
+		SCAN_VAR(ea);
 	}
-
-	konami.irq_callback = irq_callback;
-	konami.setlines_callback = setlines_callback;
 
 	return 0;
 }

@@ -139,6 +139,7 @@
 
 #include "burnint.h"
 #include "mcs51.h"
+#include "stddef.h"
 
 #define VERBOSE 0
 #define CLEAR_LINE	0
@@ -324,9 +325,17 @@ struct _mcs51_state_t
 	UINT8	internal_ram[0xff+1];	/* 128 RAM (8031/51) + 128 RAM in second bank (8032/52) */
 	UINT8	sfr_ram[0xff];			/* 128 SFR - these are in 0x80 - 0xFF */
 
+	/* DS5002FP */
+	struct {
+		UINT8	previous_ta;		/* Previous Timed Access value */
+		UINT8	ta_window;			/* Limed Access window */
+		UINT8	range;				/* Memory Range */
+		ds5002fp_config config;	/* Bootstrap Configuration */
+	} ds5002fp;
+
 	/* SFR Callbacks */
-	ALIGN_VAR(8) void	(*sfr_write)(INT32 offset, UINT8 data);
-	ALIGN_VAR(8) UINT8	(*sfr_read)(INT32 offset);
+	void	(*sfr_write)(INT32 offset, UINT8 data);
+	UINT8	(*sfr_read)(INT32 offset);
 
 	/* Interrupt Callback */
 	//device_irq_callback irq_callback;
@@ -335,14 +344,6 @@ struct _mcs51_state_t
 	// TODO: Move to special port r/w
 	//mcs51_serial_tx_func serial_tx_callback;	//Call back funciton when sending data out of serial port
 	//mcs51_serial_rx_func serial_rx_callback;	//Call back function to retrieve data when receiving serial port data
-
-	/* DS5002FP */
-	struct {
-		UINT8	previous_ta;		/* Previous Timed Access value */
-		UINT8	ta_window;			/* Limed Access window */
-		UINT8	range;				/* Memory Range */
-		ds5002fp_config config;	/* Bootstrap Configuration */
-	} ds5002fp;
 };
 
 mcs51_state_t mcs51_state;
@@ -2026,21 +2027,12 @@ void mcs51RunEnd(void)
 void mcs51_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		void	(*sfr_write_save)(INT32 offset, UINT8 data);
-		UINT8	(*sfr_read_save)(INT32 offset);
-
-		sfr_write_save = mcs51_state.sfr_write;
-		sfr_read_save = mcs51_state.sfr_read;
-
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &mcs51_state;
-		ba.nLen	  = sizeof(mcs51_state);
+		ba.nLen	  = offsetof(struct _mcs51_state_t, sfr_write);
 		ba.szName = "i8051 Regs";
 		BurnAcb(&ba);
-
-		mcs51_state.sfr_write = sfr_write_save;
-		mcs51_state.sfr_read = sfr_read_save;
 	}
 }
 

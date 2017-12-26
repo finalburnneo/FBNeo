@@ -34,6 +34,7 @@
 #include "driver.h"
 #include "m6805.h"
 #include "m6805_intf.h"
+#include <stddef.h>
 
 #define change_pc(x)	PC = x
 
@@ -51,7 +52,7 @@ enum
 /* 6805 Registers */
 typedef struct
 {
-	int 	subtype;		/* Which sub-type is being emulated */
+	INT32 	subtype;		/* Which sub-type is being emulated */
 	UINT32	sp_mask;		/* Stack pointer address mask */
 	UINT32	sp_low; 		/* Stack pointer low water mark (or floor) */
     PAIR    pc;             /* Program counter */
@@ -61,10 +62,10 @@ typedef struct
 	UINT8	cc; 			/* Condition codes */
 
 	UINT16	pending_interrupts; /* MB */
-	ALIGN_VAR(8) int 	(*irq_callback)(int irqline);
-	int 	irq_state[9];		/* KW Additional lines for HD63705 */
-	int		nmi_state;
-	int	nTotalCycles;
+	INT32 	irq_state[9];		/* KW Additional lines for HD63705 */
+	INT32   nmi_state;
+	INT32   nTotalCycles;
+	int 	(*irq_callback)(int irqline);
 } m6805_Regs;
 
 /* 6805 registers */
@@ -818,18 +819,14 @@ int m6805Scan(int nAction)
 
 	struct BurnArea ba;
 
-	int (*save_irqcallback)(int) = m6805.irq_callback;
-
 	if (nAction & ACB_DRIVER_DATA) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = &m6805;
-		ba.nLen	  = sizeof(m6805);
+		ba.nLen	  = offsetof(m6805_Regs, irq_callback);
 		ba.szName = "m6805 Registers";
 		BurnAcb(&ba);
 	}
-
-	m6805.irq_callback = save_irqcallback;
 
 	return 0;
 }

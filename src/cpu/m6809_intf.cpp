@@ -1,5 +1,6 @@
 #include "burnint.h"
 #include "m6809_intf.h"
+#include <stddef.h>
 
 #define MAX_CPU		8
 
@@ -436,15 +437,12 @@ INT32 M6809Scan(INT32 nAction)
 
 		M6809Ext *ptr = &m6809CPUContext[i];
 
-		INT32 (*Callback)(INT32 irqline);
-
-		Callback = ptr->reg.irq_callback;
-
 		char szName[] = "M6809 #n";
 		szName[7] = '0' + i;
 
+		memset(&ba, 0, sizeof(ba));
 		ba.Data = &m6809CPUContext[i].reg;
-		ba.nLen = sizeof(m6809CPUContext[i].reg);
+		ba.nLen = offsetof(m6809_Regs, irq_callback);
 		ba.szName = szName;
 		BurnAcb(&ba);
 
@@ -452,8 +450,6 @@ INT32 M6809Scan(INT32 nAction)
 		SCAN_VAR(ptr->nCyclesTotal);
 		SCAN_VAR(ptr->nCyclesSegment);
 		SCAN_VAR(ptr->nCyclesLeft);
-
-		ptr->reg.irq_callback = Callback;
 	}
 	
 	return 0;

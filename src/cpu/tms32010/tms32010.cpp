@@ -178,14 +178,14 @@ typedef struct			/* Page 3-6 shows all registers */
 
 	/********************** Status data ****************************/
 	PAIR	opcode;
-	int		INTF;		/* Pending Interrupt flag */
+	INT32	INTF;		/* Pending Interrupt flag */
 } tms32010_Regs;
 
 static tms32010_Regs R;
 static PAIR oldacc;
 static UINT16 memaccess;
-static int tms32010_icount;
-static int addr_mask;
+static INT32 tms32010_icount;
+static INT32 addr_mask;
 typedef void (*opcode_fn) (void);
 
 
@@ -930,7 +930,6 @@ void tms32010_scan(INT32 nAction)
 		SCAN_VAR(oldacc);
 		SCAN_VAR(memaccess);
 		SCAN_VAR(tms32010_icount);
-		SCAN_VAR(addr_mask);
 	}
 }
 

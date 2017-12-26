@@ -164,7 +164,7 @@ void z180_burn(int cycles);
 void z180_set_irq_line(int irqline, int state);
 void z180_write_iolines(UINT32 data);
 void z180_write_internal_io(UINT32 port, UINT8 data);
-void z180_scan();
+void z180_scan(INT32 nAction);
 
 INT32 z180_total_cycles();
 void z180_new_frame();

@@ -63,9 +63,7 @@ enum
     UINT8 pendingAbtD;                  \
     UINT8 pendingAbtP;                  \
     UINT8 pendingUnd;                   \
-    UINT8 pendingSwi;                   \
-    ALIGN_VAR(8) int (*irq_callback)(int);
-
+	UINT8 pendingSwi;
 
 /****************************************************************************************************
  *  VARIOUS INTERNAL STRUCS/DEFINES/ETC..

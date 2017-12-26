@@ -450,7 +450,7 @@ static struct v60info {
 	Flags flags;
 	UINT8 irq_line;
 	UINT8 nmi_line;
-	ALIGN_VAR(8) int (*irq_cb)(int irqline);
+	int (*irq_cb)(int irqline);
 	UINT32 PPC;
 	UINT32 current_cycles;
 	UINT32 cycles;
@@ -826,10 +826,7 @@ INT32 v60Scan(INT32 nAction)
 	ba.szName = "V60 Regs";
 	BurnAcb(&ba);
 
-	SCAN_VAR(v60.flags.CY);
-	SCAN_VAR(v60.flags.OV);
-	SCAN_VAR(v60.flags.S);
-	SCAN_VAR(v60.flags.Z);
+	SCAN_VAR(v60.flags);
 	SCAN_VAR(v60.irq_line);
 	SCAN_VAR(v60.nmi_line);
 	SCAN_VAR(v60.PPC);

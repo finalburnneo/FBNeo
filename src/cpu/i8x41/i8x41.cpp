@@ -92,6 +92,7 @@
 #include "burnint.h"
 #include "i8x41.h"
 #include "driver.h"
+#include <stddef.h>
 
 UINT8 *I8x41Mem = NULL;
 
@@ -147,8 +148,9 @@ typedef struct {
 	UINT8	p1;
 	UINT8	p2;
 	UINT8	p2_hs;
-	ALIGN_VAR(8) UINT8	*ram;
-	ALIGN_VAR(8) INT32 	(*irq_callback)(INT32 irqline);
+
+	UINT8	*ram;
+	INT32 	(*irq_callback)(INT32 irqline);
 }	I8X41;
 
 int i8x41_ICount;
@@ -158,18 +160,12 @@ static I8X41 i8x41;
 void i8x41_scan(INT32 nAction)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		UINT8 *tmp_ram = i8x41.ram;
-		int	(*tmp_irq_callback)(int irqline) = i8x41.irq_callback;
-
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &i8x41;
-		ba.nLen	  = sizeof(i8x41);
+		ba.nLen	  = offsetof(I8X41, ram);
 		ba.szName = "i8x41 Regs";
 		BurnAcb(&ba);
-
-		i8x41.ram = tmp_ram;
-		i8x41.irq_callback = tmp_irq_callback;
 	}
 }
 

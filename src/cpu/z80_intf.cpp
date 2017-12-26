@@ -1,6 +1,7 @@
 // Z80 (Zed Eight-Ty) Interface
 #include "burnint.h"
 #include "z80_intf.h"
+#include <stddef.h>
 
 #define MAX_Z80		8
 static struct ZetExt * ZetCPUContext[MAX_Z80] = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL };
@@ -664,13 +665,13 @@ INT32 ZetScan(INT32 nAction)
 	for (INT32 i = 0; i < nCPUCount; i++) {
 		szText[5] = '1' + i;
 
-		ScanVar(&ZetCPUContext[i]->reg, sizeof(Z80_Regs), szText);
+		ScanVar(&ZetCPUContext[i]->reg, offsetof(Z80_Regs, daisy), szText);
 		SCAN_VAR(Z80EA[i]);
 		SCAN_VAR(nZ80ICount[i]);
 		SCAN_VAR(nZetCyclesDone[i]);
 	}
 	
-	SCAN_VAR(nZetCyclesTotal);	
+	SCAN_VAR(nZetCyclesTotal);
 
 	return 0;
 }

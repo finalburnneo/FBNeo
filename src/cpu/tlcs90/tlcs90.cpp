@@ -8,6 +8,7 @@
 
 #include "burnint.h"
 #include "tlcs90_intf.h"
+#include <stddef.h>
 
 #define T90_IOBASE	0xffc0
 
@@ -51,37 +52,38 @@ struct t90_Regs
 	UINT8       halt, after_EI;
 	UINT16      irq_state, irq_mask;
 
-	INT32     icount;
-	INT32         extra_cycles;       // extra cycles for interrupts
+	INT32       icount;
+	INT32       extra_cycles;       // extra cycles for interrupts
 	UINT8       internal_registers[48];
 	UINT32      ixbase,iybase;
 
 	// Timers: 4 x 8-bit + 1 x 16-bit
-	INT32 timer_enable[4+1];
-	double timer_periods[4+1];
-	double timer_periods_full[4+1];
-	timer_callback	timer_cb[4+1];
+	INT32       timer_enable[4+1];
+	double      timer_periods[4+1];
+	double      timer_periods_full[4+1];
 
 	UINT8       timer_value[4];
 	UINT16      timer4_value;
-	double    timer_period;
+	double      timer_period;
 
 	// Work registers
 	e_op        op;
 
-	e_mode  mode1;
-	e_r     r1,r1b;
+	e_mode      mode1;
+	e_r         r1,r1b;
 
-	e_mode  mode2;
-	e_r     r2,r2b;
+	e_mode      mode2;
+	e_r         r2,r2b;
 
-	INT32 cyc_t,cyc_f;
+	INT32       cyc_t,cyc_f;
 
-	UINT32  addr;
+	UINT32      addr;
 
-	UINT32	total_cycles;
-	INT32 nCycles;
-	INT32 run_end;
+	UINT32	    total_cycles;
+	INT32       nCycles;
+	INT32       run_end;
+
+	timer_callback	timer_cb[4+1];
 };
 
 static struct t90_Regs tlcs90_data[1];
@@ -2763,28 +2765,16 @@ INT32 tlcs90_init(INT32 clock)
 
 INT32 tlcs90Scan(INT32 nAction)
 {
-	struct BurnArea ba;
+	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
 
-	if ((nAction & ACB_DRIVER_DATA) == 0)
-		return 0;
-
-	t90_Regs *cpustate = &tlcs90_data[0];
-
-	if (nAction & ACB_MEMORY_RAM) {
-		ba.Data		= cpustate;
-		ba.nLen		= sizeof(tlcs90_data);
-		ba.nAddress = 0;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= &tlcs90_data[0];
+		ba.nLen		= offsetof(struct t90_Regs, timer_cb);
 		ba.szName	= "tlcs90 CPU Data";
 		BurnAcb(&ba);
 	}
 
-	if (nAction & ACB_WRITE) {
-		for (INT32 i = 0; i < 4; i++)
-			cpustate->timer_cb[i] = t90_timer_callback;
-
-		cpustate->timer_cb[4] = t90_timer4_callback;
-	}
-	
 	return 0;
 }
 

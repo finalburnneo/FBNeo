@@ -1,5 +1,6 @@
 #include "burnint.h"
 #include "m6800_intf.h"
+#include <stddef.h>
 
 #define MAX_CPU		1
 
@@ -635,17 +636,16 @@ INT32 M6800Scan(INT32 nAction)
 #endif
 
 	if (nAction & ACB_DRIVER_DATA) {
-		for (INT32 i = 0; i <= nM6800Count; i++) {
-			m6800_Regs *R = &M6800CPUContext[i].reg;
+		for (INT32 i = 0; i <= nM6800Count; i++) { // this will only work for 1 cpu (that's all this interface currently supports)
+			struct BurnArea ba;
 
 			m6800_get_context((void *)&M6800CPUContext[i].reg);
-			void (* const * insn)(void) = R->insn;	/* instruction table - save pointers */
-			const UINT8 *cycles = R->cycles;	/* clock cycle of instruction table  */
 
-			SCAN_VAR(M6800CPUContext[i].reg);
-
-			R->insn = insn; // restore pointers -dink
-			R->cycles = cycles;
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = &M6800CPUContext[i].reg;
+			ba.nLen	  = offsetof(m6800_Regs, insn);
+			ba.szName = "M6800 Registers";
+			BurnAcb(&ba);
 
 			if (nAction & ACB_WRITE) {
 				m6800_set_context((void *)&M6800CPUContext[i].reg);

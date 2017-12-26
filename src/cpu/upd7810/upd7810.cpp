@@ -1722,7 +1722,7 @@ INT32 upd7810Scan(INT32 nAction)
 		ba.Data		= &upd7810;
 		ba.nLen		= sizeof(upd7810);
 		ba.nAddress = 0;
-		ba.szName	= "Upd Regs";
+		ba.szName	= "Upd7810 Regs";
 		BurnAcb(&ba);
 
 		SCAN_VAR(upd7810_icount);

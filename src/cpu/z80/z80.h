@@ -28,10 +28,11 @@ typedef struct
 	UINT8	irq_state;			/* irq line state */
 	UINT8   vector;             /* vector */
 	UINT8	after_ei;			/* are we in the EI shadow? */
-	INT32 cycles_left;
-	INT32 hold_irq;
-	ALIGN_VAR(8) const struct z80_irq_daisy_chain *daisy;
-	ALIGN_VAR(8) int (*irq_callback)(int irqline);
+	INT32   cycles_left;
+	INT32   hold_irq;
+
+	const struct z80_irq_daisy_chain *daisy;
+	int (*irq_callback)(int irqline);
 } Z80_Regs;
 
 enum {

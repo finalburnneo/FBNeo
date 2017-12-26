@@ -36,6 +36,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stddef.h>
 #include "driver.h"
 #include "state.h"
 #include "nec_intf.h"
@@ -623,16 +624,13 @@ void v25Scan(int cpu, int nAction)
 		struct BurnArea ba;
 		char szText[] = "V25 #0";
 		szText[5] = '1' + cpu;
-		unsigned char *decode_save = nec_state->decode;
 
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = (unsigned char*)nec_state;
-		ba.nLen	  = sizeof(nec_state_t);
+		ba.nLen	  = offsetof(nec_state_t, decode);
 		ba.szName = szText;
 		BurnAcb(&ba);
-
-		nec_state->decode = decode_save;
 	}
 }
 

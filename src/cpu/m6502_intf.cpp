@@ -1,5 +1,6 @@
 #include "burnint.h"
 #include "m6502_intf.h"
+#include <stddef.h>
 
 #define MAX_CPU		8
 
@@ -583,15 +584,11 @@ INT32 M6502Scan(INT32 nAction)
 
 		M6502Ext *ptr = m6502CPUContext[i];
 
-		INT32 (*Callback)(INT32 irqline);
-
-		Callback = ptr->reg.irq_callback;
-
 		char szName[] = "M6502 #n";
 		szName[7] = '0' + i;
 
 		ba.Data = &ptr->reg;
-		ba.nLen = sizeof(m6502_Regs);
+		ba.nLen = offsetof(m6502_Regs, port_read);
 		ba.szName = szName;
 		BurnAcb(&ba);
 
@@ -599,8 +596,6 @@ INT32 M6502Scan(INT32 nAction)
 		SCAN_VAR(ptr->nCyclesTotal);
 		SCAN_VAR(ptr->nCyclesSegment);
 		SCAN_VAR(ptr->nCyclesLeft);
-
-		ptr->reg.irq_callback = Callback;
 	}
 	
 	return 0;

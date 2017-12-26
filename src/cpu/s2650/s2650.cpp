@@ -1478,7 +1478,7 @@ int s2650Scan(int nAction)
 
 		ba.Data	  = &Store;
 		ba.nLen	  = sizeof(S) * MAX_S2650;
-		ba.szName = "All Ram";
+		ba.szName = "s2650 CPU Regs";
 		BurnAcb(&ba);
 	}
 

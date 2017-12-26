@@ -96,6 +96,7 @@
 #include "burnint.h"
 #include "z80.h"
 #include "z80daisy.h"
+#include <stddef.h>
 
 #define	FALSE			0
 #define TRUE			1
@@ -3640,7 +3641,13 @@ int Z80Scan(int nAction)
 		return 0;
 	}
 
-	SCAN_VAR(Z80);
+	struct BurnArea ba;
+
+	memset(&ba, 0, sizeof(ba));
+	ba.Data	  = &Z80;
+	ba.nLen	  = offsetof(Z80_Regs, daisy);
+	ba.szName = "Z80 Registers";
+	BurnAcb(&ba);
 
 	return 0;
 }

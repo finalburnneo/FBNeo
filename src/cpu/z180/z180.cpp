@@ -80,6 +80,7 @@ Hitachi HD647180 series:
 #define Z180_INLINE			static inline
 
 #include "z180_intf.h"
+#include <stddef.h>
 
 // in z180_intf.cpp
 extern void __fastcall z180_cpu_write_handler(UINT32 address, UINT8 data);
@@ -128,8 +129,9 @@ typedef struct {
 	UINT8	nmi_pending;		/* nmi pending */
 	UINT8	irq_state[3];		/* irq line states (INT0,INT1,INT2) */
 	UINT8	after_EI;			/* are we in the EI shadow? */
-	ALIGN_VAR(8) const struct z80_irq_daisy_chain *daisy;
-	ALIGN_VAR(8) int (*irq_callback)(int irqline);
+
+	const struct z80_irq_daisy_chain *daisy;
+	int (*irq_callback)(int irqline);
 }	Z180_Regs;
 
 #define CF	0x01
@@ -793,14 +795,17 @@ static UINT8 *SZHVC_sub;
 static UINT32 total_cycles;
 static UINT32 current_cycles;
 
-void z180_scan()
+void z180_scan(INT32 nAction)
 {
-	void *daisybk = (void*)Z180.daisy;
-	int (*irq_callback)(int irqline);
-	irq_callback = Z180.irq_callback;
-	SCAN_VAR(Z180);
-	Z180.daisy = (const struct z80_irq_daisy_chain *)daisybk;
-	Z180.irq_callback = irq_callback;
+	if (nAction & ACB_DRIVER_DATA) {
+		struct BurnArea ba;
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = &Z180;
+		ba.nLen	  = offsetof(Z180_Regs, daisy);
+		ba.szName = "Z180 Registers";
+		BurnAcb(&ba);
+	}
 }
 
 /****************************************************************************

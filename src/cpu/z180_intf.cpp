@@ -207,12 +207,12 @@ void Z180SetIRQLine(INT32 irqline, INT32 state)
 	z180_set_irq_line(irqline, state); 
 }
 
-void Z180Scan()
+void Z180Scan(INT32 nAction)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_Z180Initted) bprintf(PRINT_ERROR, _T("Z180Scan called without init\n"));
 #endif
-	z180_scan();
+	z180_scan(nAction);
 }
 
 void __fastcall z180_cpu_write_handler(UINT32 address, UINT8 data)

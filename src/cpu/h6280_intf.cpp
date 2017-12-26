@@ -1,6 +1,7 @@
 #include "burnint.h"
 #include "h6280/h6280.h"
 #include "h6280_intf.h"
+#include <stddef.h>
 
 #define MAX_H6280	2	//
 
@@ -345,7 +346,7 @@ INT32 h6280CpuScan(INT32 nAction)
 {
 	struct BurnArea ba;
 
-	char name[128];
+	char szName[64];
 
 	if (nAction & ACB_DRIVER_DATA) {
 		for (INT32 i = 0; i < MAX_H6280; i++)
@@ -355,18 +356,12 @@ INT32 h6280CpuScan(INT32 nAction)
 
 			if (p == NULL) continue;
 
-			int (*irq_callback)(int);
-
-			irq_callback = p->irq_callback;
-
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = p;
-			ba.nLen	  = sizeof(h6280_Regs);
-			sprintf (name, "h6280 Registers for Chip #%d", i);
-			ba.szName = name;
+			ba.nLen	  = offsetof(h6280_Regs, irq_callback);
+			sprintf (szName, "h6280 Registers for Chip #%d", i);
+			ba.szName = szName;
 			BurnAcb(&ba);
-
-			p->irq_callback = irq_callback;
 		}
 	}
 

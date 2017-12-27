@@ -6041,7 +6041,7 @@ static INT32 inyourfaInit()
 
 struct BurnDriver BurnDrvInyourfa = {
 	"inyourfa", NULL, NULL, NULL, "1991",
-	"In Your Face (US, prototype)\0", NULL, "Jaleco", "Mega System 1",
+	"In Your Face (North America, prototype)\0", NULL, "Jaleco", "Mega System 1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, inyourfaRomInfo, inyourfaRomName, NULL, NULL, Common3ButtonInputInfo, InyourfaDIPInfo,

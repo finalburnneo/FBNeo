@@ -31,6 +31,9 @@ static UINT8 palette_2;
 static UINT8 flipscreen;
 static INT32 speakres_vrx;
 static UINT8 ttmahjng_port_select;
+static INT32 protection_data;
+
+static INT32 program_size;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -287,8 +290,8 @@ static void __fastcall route16_main_write(UINT16 address, UINT8 data)
 
 	switch (address)
 	{
-		case 0x3000:
-			// route16 protection
+		case 0x3001:
+			// route16 protection writes -- what are these for?
 		return;
 
 		case 0x4800:
@@ -328,10 +331,28 @@ static UINT8 speakres_in3_read()
 	return ret;
 }
 
+static UINT8 route16_protection_read() // gross hack (IMO less so than patching the roms)
+{
+	INT32 pc = ZetGetPC(-1);
+
+	if (DrvZ80ROM0[pc - 2] == 0xcb && (DrvZ80ROM0[pc] & 0xf7) == 0x20)
+	{
+		INT32 shift = (DrvZ80ROM0[pc - 1] >> 3) & 7;
+		INT32 bit = (DrvZ80ROM0[pc] >> 3) & 1;
+		protection_data = bit << shift;
+	}
+
+	return protection_data;
+}
+
 static UINT8 __fastcall route16_main_read(UINT16 address)
 {
 	switch (address)
 	{
+		case 0x3000:
+		case 0x3001:
+			return route16_protection_read();
+
 		case 0x4800:
 			return DrvDips[0];
 
@@ -345,7 +366,7 @@ static UINT8 __fastcall route16_main_read(UINT16 address)
 			return speakres_in3_read();
 
 		case 0x6400: // routex protection
-			if (ZetGetPC(0) == 0x2f) return 0xfb;
+			if (ZetGetPC(-1) == 0x2f) return 0xfb;
 			return 0;
 	}
 
@@ -449,6 +470,7 @@ static INT32 DrvDoReset()
 	flipscreen = 0;
 	speakres_vrx = 0;
 	ttmahjng_port_select = 0;
+	protection_data = 0;
 
 	return 0;
 }
@@ -512,6 +534,8 @@ static INT32 LoadRoms()
 		}		
 	}
 
+	program_size = pLoad0 - DrvZ80ROM0;
+
 	return 0;
 }
 
@@ -528,7 +552,7 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, program_size - 1, MAP_ROM);
 	ZetMapMemory(DrvShareRAM,		0x4000, 0x43ff, MAP_ROM);
 	ZetMapMemory(DrvVidRAM0,		0x8000, 0xbfff, MAP_RAM);
 	ZetSetWriteHandler(route16_main_write);
@@ -789,6 +813,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(palette_2);		
 		SCAN_VAR(ttmahjng_port_select);
 		SCAN_VAR(speakres_vrx);
+		SCAN_VAR(protection_data);
 	}
 
 	return 0;
@@ -817,38 +842,13 @@ static struct BurnRomInfo route16RomDesc[] = {
 STD_ROM_PICK(route16)
 STD_ROM_FN(route16)
 
-static INT32 route16Init()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0)
-	{
-		// Patch protection
-		DrvZ80ROM0[0x00e9] = 0x3a;
-
-		DrvZ80ROM0[0x0105] = 0x00; // jp nz,$4109 (nirvana) - NOP's in route16c
-		DrvZ80ROM0[0x0106] = 0x00;
-		DrvZ80ROM0[0x0107] = 0x00;
-
-		DrvZ80ROM0[0x072a] = 0x00; // jp nz,$4238 (nirvana)
-		DrvZ80ROM0[0x072b] = 0x00;
-		DrvZ80ROM0[0x072c] = 0x00;
-
-		DrvZ80ROM0[0x0754] = 0xc3;
-		DrvZ80ROM0[0x0755] = 0x63;
-		DrvZ80ROM0[0x0756] = 0x07;
-	}
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvroute16 = {
 	"route16", NULL, NULL, NULL, "1981",
 	"Route 16 (set 1)\0", NULL, "Tehkan/Sun (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16RomInfo, route16RomName, NULL, NULL, Route16InputInfo, Route16DIPInfo,
-	route16Init, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };
 
@@ -875,38 +875,13 @@ static struct BurnRomInfo route16aRomDesc[] = {
 STD_ROM_PICK(route16a)
 STD_ROM_FN(route16a)
 
-static INT32 route16aInit()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0)
-	{
-		// Patch protection
-		DrvZ80ROM0[0x00e9] = 0x3a;
-
-		DrvZ80ROM0[0x0105] = 0x00; // jp nz,$4109 (nirvana) - NOP's in route16c
-		DrvZ80ROM0[0x0106] = 0x00;
-		DrvZ80ROM0[0x0107] = 0x00;
-
-		DrvZ80ROM0[0x0731] = 0x00; // jp nz,$4238 (nirvana)
-		DrvZ80ROM0[0x0732] = 0x00;
-		DrvZ80ROM0[0x0733] = 0x00;
-
-		DrvZ80ROM0[0x0747] = 0xc3;
-		DrvZ80ROM0[0x0748] = 0x56;
-		DrvZ80ROM0[0x0749] = 0x07;
-	}
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvroute16a = {
 	"route16a", "route16", NULL, NULL, "1981",
 	"Route 16 (set 2)\0", NULL, "Tehkan/Sun (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16aRomInfo, route16aRomName, NULL, NULL, Route16InputInfo, Route16DIPInfo,
-	route16aInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };
 
@@ -933,30 +908,13 @@ static struct BurnRomInfo route16cRomDesc[] = {
 STD_ROM_PICK(route16c)
 STD_ROM_FN(route16c)
 
-static INT32 route16cInit()
-{
-	INT32 nRet = DrvInit();
-
-	if (nRet == 0)
-	{
-		// Patch protection
-		DrvZ80ROM0[0x00e9] = 0x3a;
-
-		DrvZ80ROM0[0x0754] = 0xc3;
-		DrvZ80ROM0[0x0755] = 0x63;
-		DrvZ80ROM0[0x0756] = 0x07;
-	}
-
-	return nRet;
-}
-
 struct BurnDriver BurnDrvroute16c = {
 	"route16c", "route16", NULL, NULL, "1981",
 	"Route 16 (set 3, bootleg?)\0", NULL, "Tehkan/Sun (Centuri license)", "Route 16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, route16cRomInfo, route16cRomName, NULL, NULL, Route16InputInfo, Route16DIPInfo,
-	route16cInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
+	DrvInit, DrvExit, DrvFrame, Route16Draw, DrvScan, &DrvRecalc, 0x8,
 	256, 256, 3, 4
 };
 

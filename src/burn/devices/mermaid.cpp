@@ -161,6 +161,8 @@ INT32 mermaidScan(INT32 nAction)
 	SCAN_VAR(z80_to_mermaid_full);
 	SCAN_VAR(mermaid_to_z80_full);
 	SCAN_VAR(mermaid_int0);
+	SCAN_VAR(mermaid_p);
+
 	mcs51_scan(nAction);
 
 	return 0;

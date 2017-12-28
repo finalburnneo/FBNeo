@@ -421,14 +421,10 @@ void i8257Scan()
 	if (!DebugDev_8257DMAInitted) bprintf(PRINT_ERROR, _T("i8257Scan called without init\n"));
 #endif
 
-	for (INT32 i = 0; i < I8257_NUM_CHANNELS; i++) {
-		SCAN_VAR(m_registers[i * 2 + 0]);
-		SCAN_VAR(m_registers[i * 2 + 1]);
-
-		SCAN_VAR(m_address[i]);
-		SCAN_VAR(m_count[i]);
-		SCAN_VAR(m_rwmode[i]);
-	}
+	SCAN_VAR(m_registers);
+	SCAN_VAR(m_address);
+	SCAN_VAR(m_count);
+	SCAN_VAR(m_rwmode);
 
 	SCAN_VAR(m_mode);
 	SCAN_VAR(m_rr);

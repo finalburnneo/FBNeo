@@ -353,7 +353,7 @@ void EEPROMScan(INT32 nAction, INT32* pnMin)
 		}
 
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= serial_buffer;
+		ba.Data		= serial_buffer;
 		ba.nLen		= SERIAL_BUFFER_LENGTH;
 		ba.szName	= "Serial Buffer";
 		BurnAcb(&ba);

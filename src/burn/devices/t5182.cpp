@@ -216,6 +216,8 @@ INT32 t5182Scan(INT32 nAction)
 		SCAN_VAR(t5182_semaphore_snd);
 		SCAN_VAR(t5182_semaphore_main);
 		SCAN_VAR(irqstate);
+		SCAN_VAR(coin_frame);
+		SCAN_VAR(t5182_coin_input);
 	}
 
 	return 0;

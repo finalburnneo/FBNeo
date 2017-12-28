@@ -704,11 +704,11 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 			case 0:
 				BurnYM3812Scan(nAction, pnMin);
 			break;
-	
+
 			case 1:
 				BurnYM2151Scan(nAction);
 			break;
-	
+
 			case 2:
 				BurnYM2203Scan(nAction, pnMin);
 			break;
@@ -722,10 +722,8 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 			}
 		}
 
-		SCAN_VAR(main2sub[0]);
-		SCAN_VAR(main2sub[1]);
-		SCAN_VAR(sub2main[0]);
-		SCAN_VAR(sub2main[1]);
+		SCAN_VAR(main2sub);
+		SCAN_VAR(sub2main);
 		SCAN_VAR(main2sub_pending);
 		SCAN_VAR(sub2main_pending);
 		SCAN_VAR(SeibuSoundBank);

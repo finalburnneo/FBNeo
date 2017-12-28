@@ -595,7 +595,7 @@ INT32 tms34061_scan(INT32 nAction, INT32 *)
 
 	struct BurnArea ba;
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = m_vram;
@@ -609,7 +609,7 @@ INT32 tms34061_scan(INT32 nAction, INT32 *)
 		BurnAcb(&ba);
 
 		ba.Data	  = m_regs;
-		ba.nLen	  = TMS34061_REGCOUNT * sizeof(UINT16);
+		ba.nLen	  = sizeof(m_regs);
 		ba.szName = "tms34061 registers";
 		BurnAcb(&ba);
 

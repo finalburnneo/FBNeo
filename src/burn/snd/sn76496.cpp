@@ -649,22 +649,22 @@ INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)
 			
 			memset(szName, 0, 16);
 			sprintf(szName, "Chip%iVolTable", i);
-			ScanVar(Chip->VolTable, 16 * sizeof(INT32), szName);
+			ScanVar(Chip->VolTable, sizeof(Chip->VolTable), szName);
 			memset(szName, 0, 16);
 			sprintf(szName, "Chip%iRegisters", i);
-			ScanVar(Chip->Register, 8 * sizeof(INT32), szName);
+			ScanVar(Chip->Register, sizeof(Chip->Register), szName);
 			memset(szName, 0, 16);
 			sprintf(szName, "Chip%iVolume", i);
-			ScanVar(Chip->Volume, 4 * sizeof(INT32), szName);
+			ScanVar(Chip->Volume, sizeof(Chip->Volume), szName);
 			memset(szName, 0, 16);
 			sprintf(szName, "Chip%iPeriod", i);
-			ScanVar(Chip->Period, 4 * sizeof(INT32), szName);
+			ScanVar(Chip->Period, sizeof(Chip->Period), szName);
 			memset(szName, 0, 16);
 			sprintf(szName, "Chip%iCount", i);
-			ScanVar(Chip->Count, 4 * sizeof(INT32), szName);
+			ScanVar(Chip->Count, sizeof(Chip->Count), szName);
 			memset(szName, 0, 16);
 			sprintf(szName, "Chip%iOutput", i);
-			ScanVar(Chip->Output, 4 * sizeof(INT32), szName);
+			ScanVar(Chip->Output, sizeof(Chip->Output), szName);
 			
 			SCAN_VAR(Chip->LastRegister);
 			SCAN_VAR(Chip->RNG);

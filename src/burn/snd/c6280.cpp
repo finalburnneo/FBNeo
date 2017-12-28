@@ -425,7 +425,7 @@ void c6280_update(INT16 *pBuffer, INT32 samples)
 		if ((p->output_dir[BURN_SND_C6280_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 			nRightSample += (INT32)(stream_buffer[(i << 1) + 1] * p->gain[BURN_SND_C6280_ROUTE_2]);
 		}
-			
+
 		pBuffer[(i << 1) + 0] = BURN_SND_CLIP(nLeftSample);
 		pBuffer[(i << 1) + 1] = BURN_SND_CLIP(nRightSample);
 	}
@@ -463,7 +463,7 @@ INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
 		*pnMin =  0x029702;
 	}
 
-	if (nAction & ACB_DRIVER_DATA) {	
+	if (nAction & ACB_DRIVER_DATA) {
 		c6280_t *p = &chip[0];
 
 		ba.Data		= p;

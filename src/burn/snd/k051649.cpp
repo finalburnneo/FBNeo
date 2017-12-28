@@ -234,6 +234,7 @@ INT32 K051649Scan(INT32 nAction, INT32 *pnMin)
 		*pnMin = 0x029705;
 	}
 
+	memset(&ba, 0, sizeof(ba));
 	ba.Data		= &info->channel_list;
 	ba.nLen		= sizeof(k051649_sound_channel) * 5;
 	ba.nAddress = 0;

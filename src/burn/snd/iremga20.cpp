@@ -314,9 +314,6 @@ INT32 iremga20_scan(INT32 device, INT32 nAction, INT32 *pnMin)
 	if ((nAction & ACB_DRIVER_DATA)) {
 		SCAN_VAR(chip->channel);
 		SCAN_VAR(chip->regs);
-		SCAN_VAR(chip->frequency);
-		SCAN_VAR(chip->gain);
-		SCAN_VAR(chip->output_dir);
 	}
 
 	return 0;

@@ -107,13 +107,13 @@
 		UINT32 loopaddr;
 		UINT32 endaddr;
 
-		int env_step;
+		INT32 env_step;
 		UINT32 env_vol;
 		UINT32 env_vol_step;
 		UINT32 env_vol_lim;
 		INT8 env_preverb;
 
-		int num;        /* slot number (for debug only) */
+		INT32 num;        /* slot number (for debug only) */
 	} YMF278BSlot;
 
 	// internal state

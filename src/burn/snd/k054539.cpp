@@ -8,7 +8,7 @@
 
 *********************************************************/
 
-// IRQ handling is disabled for now...
+// IRQ handling is disabled (handled in driver) for now...
 
 #include "burnint.h"
 #include "math.h"
@@ -652,16 +652,17 @@ INT32 K054539Scan(INT32 nAction)
 	for (INT32 i = 0; i < nNumChips+1; i++) {
 		info = &Chips[i];
 
+		memset(&ba, 0, sizeof(ba));
 		sprintf(szName, "K054539 Latch %d", i);
 		ba.Data		= info->k054539_posreg_latch;
-		ba.nLen		= 8*3;
+		ba.nLen		= sizeof(info->k054539_posreg_latch);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
 
 		sprintf(szName, "K054539 Regs # %d", i);
 		ba.Data		= info->regs;
-		ba.nLen		= 0x230;
+		ba.nLen		= sizeof(info->regs);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
@@ -675,12 +676,11 @@ INT32 K054539Scan(INT32 nAction)
 
 		sprintf(szName, "K054539 Channels # %d", i);
 		ba.Data		= &info->channels;
-		ba.nLen		= sizeof(k054539_channel) * 8;
+		ba.nLen		= sizeof(info->channels);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
 
-		SCAN_VAR(info->k054539_flags);
 		SCAN_VAR(info->reverb_pos);
 		SCAN_VAR(info->cur_ptr);
 		SCAN_VAR(info->cur_limit);

@@ -43,10 +43,7 @@ struct kdacApcm
 	UINT32			step[KDAC_A_PCM_MAX];
 	UINT32			bank[KDAC_A_PCM_MAX];
 	INT32			play[KDAC_A_PCM_MAX];
-
 	UINT8 			wreg[0x10];
-	
-	INT32			UpdateStep;
 };
 
 // stuff that doesn't need to be saved..
@@ -57,6 +54,7 @@ struct kdacPointers
 	UINT32  		pcmlimit;
 	K07232_PortWrite	K07232PortWriteHandler;
 	
+	INT32			UpdateStep;
 	double			gain[2];
 	INT32			output_dir[2];
 };
@@ -115,7 +113,7 @@ void K007232Update(INT32 chip, INT16* pSoundBuf, INT32 nLength)
 
 				if (Chip->play[i] == 0) break;
 
-				Chip->addr[i] += (Chip->step[i] * Chip->UpdateStep) >> 16;
+				Chip->addr[i] += (Chip->step[i] * Ptr->UpdateStep) >> 16;
 
 				out = (Ptr->pcmbuf[i][addr] & 0x7f) - 0x40;
 
@@ -288,10 +286,10 @@ void K007232Init(INT32 chip, INT32 clock, UINT8 *pPCMData, INT32 PCMDataSize)
 	for (INT32 i = 0; i < 0x10; i++)  Chip->wreg[i] = 0;
 
 	KDAC_A_make_fncode();
-	
+
 	double Rate = (double)clock / 128 / nBurnSoundRate;
-	Chip->UpdateStep = (INT32)(Rate * 0x10000);
-	
+	Ptr->UpdateStep = (INT32)(Rate * 0x10000);
+
 	Ptr->gain[BURN_SND_K007232_ROUTE_1] = 1.00;
 	Ptr->gain[BURN_SND_K007232_ROUTE_2] = 1.00;
 	Ptr->output_dir[BURN_SND_K007232_ROUTE_1] = BURN_SND_ROUTE_BOTH;

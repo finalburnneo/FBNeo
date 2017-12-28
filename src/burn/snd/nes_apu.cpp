@@ -924,58 +924,11 @@ INT32 nesapuScan(INT32 nAction)
 		{
 			struct nesapu_info *info = &nesapu_chips[i];
 
-			for (INT32 j = 0; j < 2; j++)
-			{
-				for (INT32 k = 0; k < 4; k++) {
-					SCAN_VAR(info->APU.squ[j].regs[k]);	// array[4]
-				}
-				SCAN_VAR(info->APU.squ[j].vbl_length);
-				SCAN_VAR(info->APU.squ[j].freq);
-				SCAN_VAR(info->APU.squ[j].phaseacc);
-				SCAN_VAR(info->APU.squ[j].output_vol);
-				SCAN_VAR(info->APU.squ[j].env_phase);
-				SCAN_VAR(info->APU.squ[j].sweep_phase);
-				SCAN_VAR(info->APU.squ[j].adder);
-				SCAN_VAR(info->APU.squ[j].env_vol);
-				SCAN_VAR(info->APU.squ[j].enabled);
-			}
-
-			for (INT32 k = 0; k < 4; k++) {
-				SCAN_VAR(info->APU.tri.regs[k]); // array [4]
-			}
-			SCAN_VAR(info->APU.tri.linear_length);
-			SCAN_VAR(info->APU.tri.vbl_length);
-			SCAN_VAR(info->APU.tri.write_latency);
-			SCAN_VAR(info->APU.tri.phaseacc);
-			SCAN_VAR(info->APU.tri.output_vol);
-			SCAN_VAR(info->APU.tri.adder);
-			SCAN_VAR(info->APU.tri.counter_started);
-			SCAN_VAR(info->APU.tri.enabled);
-			for (INT32 k = 0; k < 4; k++) {
-				SCAN_VAR(info->APU.noi.regs[k]); // array [4]
-			}
-			SCAN_VAR(info->APU.noi.cur_pos);
-			SCAN_VAR(info->APU.noi.vbl_length);
-			SCAN_VAR(info->APU.noi.phaseacc);
-			SCAN_VAR(info->APU.noi.output_vol);
-			SCAN_VAR(info->APU.noi.env_phase);
-			SCAN_VAR(info->APU.noi.env_vol);
-			SCAN_VAR(info->APU.noi.enabled);
-			for (INT32 k = 0; k < 4; k++) {
-				SCAN_VAR(info->APU.dpcm.regs[k]); // array [4]
-			}
-			SCAN_VAR(info->APU.dpcm.address);
-			SCAN_VAR(info->APU.dpcm.length);
-			SCAN_VAR(info->APU.dpcm.bits_left);
-			SCAN_VAR(info->APU.dpcm.phaseacc);
-			SCAN_VAR(info->APU.dpcm.output_vol);
-			SCAN_VAR(info->APU.dpcm.cur_byte);
-			SCAN_VAR(info->APU.dpcm.enabled);
-			SCAN_VAR(info->APU.dpcm.irq_occurred);
-			SCAN_VAR(info->APU.dpcm.vol);
-			for (INT32 k = 0; k < 17; k++) {
-				SCAN_VAR(info->APU.regs[k]); // array [17]
-			}
+			SCAN_VAR(info->APU.squ);
+			SCAN_VAR(info->APU.tri);
+			SCAN_VAR(info->APU.noi);
+			SCAN_VAR(info->APU.dpcm);
+			SCAN_VAR(info->APU.regs);
 			SCAN_VAR(info->APU.buf_pos);
 		}
 	}

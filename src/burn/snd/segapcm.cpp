@@ -193,7 +193,7 @@ void SegaPCMExit()
 	DebugSnd_SegaPCMInitted = 0;
 }
 
-INT32 SegaPCMScan(INT32 nAction,INT32 *pnMin)
+INT32 SegaPCMScan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMScan called without init\n"));
@@ -204,19 +204,19 @@ INT32 SegaPCMScan(INT32 nAction,INT32 *pnMin)
 	if (pnMin != NULL) {
 		*pnMin = 0x029719;
 	}
-	
-	for (INT32 i = 0; i < nNumChips + 1; i++) {
-		if (nAction & ACB_DRIVER_DATA) {
-			ScanVar(Chip[i]->low, 16 * sizeof(UINT8), "SegaPCMlow");
-		
+
+	if (nAction & ACB_DRIVER_DATA) {
+		for (INT32 i = 0; i < nNumChips + 1; i++) {
+			ScanVar(Chip[i]->low, sizeof(Chip[i]->low), "SegaPCMlow");
+
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = Chip[i]->ram;
-			ba.nLen	  = 0x800;
-			ba.szName = "SegaPCMRAM";	
+			ba.nLen	  = sizeof(Chip[i]->ram);
+			ba.szName = "SegaPCMRAM";
 			BurnAcb(&ba);
 		}
 	}
-	
+
 	return 0;
 }
 

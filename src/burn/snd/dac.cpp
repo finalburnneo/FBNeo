@@ -264,6 +264,7 @@ void DACReset()
 
 		ptr->nCurrentPosition = 0;
 		ptr->Output = 0;
+		ptr->Output2 = 0;
 	}
 }
 
@@ -311,6 +312,7 @@ INT32 DACScan(INT32 nAction,INT32 *pnMin)
 			ptr = &dac_table[i];
 
 			SCAN_VAR(ptr->Output);
+			SCAN_VAR(ptr->Output2);
 		}
 	}
 

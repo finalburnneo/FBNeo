@@ -143,6 +143,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdarg.h>
+#include <stddef.h>
 #include <math.h>
 
 #ifndef __RAINE__
@@ -501,10 +502,10 @@ static INT32 lfo_pm_table[128*8*32]; /* 128 combinations of 7 bits meaningful (o
 #define SLOT3 1
 #define SLOT4 3
 
+
 /* struct describing a single operator (SLOT) */
 typedef struct
 {
-  INT32   *DT;        /* detune          :dt_tab[DT]      */
   UINT8   KSR;        /* key scale rate  :3-KSR           */
   UINT32  ar;         /* attack rate                      */
   UINT32  d1r;        /* decay rate                       */
@@ -541,6 +542,7 @@ typedef struct
   /* LFO */
   UINT32  AMmask;     /* AM enable flag */
 
+  INT32   *DT;        /* detune          :dt_tab[DT]      */
 } FM_SLOT;
 
 typedef struct
@@ -551,12 +553,6 @@ typedef struct
   UINT8   FB;           /* feedback shift */
   INT32   op1_out[2];   /* op1 output for feedback */
 
-  INT32   *connect1;    /* SLOT1 output pointer */
-  INT32   *connect3;    /* SLOT3 output pointer */
-  INT32   *connect2;    /* SLOT2 output pointer */
-  INT32   *connect4;    /* SLOT4 output pointer */
-
-  INT32   *mem_connect; /* where to put the delayed sample (MEM) */
   INT32   mem_value;    /* delayed sample (MEM) value */
 
   INT32   pms;          /* channel PMS */
@@ -565,6 +561,13 @@ typedef struct
   UINT32  fc;           /* fnum,blk */
   UINT8   kcode;        /* key code */
   UINT32  block_fnum;   /* blk/fnum value (for LFO PM calculations) */
+
+  INT32   *connect1;    /* SLOT1 output pointer */
+  INT32   *connect3;    /* SLOT3 output pointer */
+  INT32   *connect2;    /* SLOT2 output pointer */
+  INT32   *connect4;    /* SLOT4 output pointer */
+
+  INT32   *mem_connect; /* where to put the delayed sample (MEM) */
 } FM_CH;
 
 
@@ -605,7 +608,7 @@ typedef struct
 {
   FM_ST  ST;                  /* general state */
   FM_3SLOT SL3;               /* 3 slot mode state */
-  unsigned int pan[6*2];      /* fm channels output masks (0xffffffff = enable) */
+  UINT32  pan[6*2];      /* fm channels output masks (0xffffffff = enable) */
 
   /* EG */
   UINT32  eg_cnt;             /* global envelope generator counter */
@@ -2164,13 +2167,47 @@ void MDYM2612Config(unsigned char dac_bits)
   }
 }
 
+static void scan_ym2612_internal()
+{
+	int i, j;
+
+	SCAN_VAR(ym2612.dacen);
+	SCAN_VAR(ym2612.dacout);
+	SCAN_VAR(ym2612.OPN);
+
+	for (i = 0; i < 6; i++) {
+		SCAN_VAR(ym2612.CH[i].ALGO);
+		SCAN_VAR(ym2612.CH[i].FB);
+		SCAN_VAR(ym2612.CH[i].op1_out);
+		SCAN_VAR(ym2612.CH[i].mem_value);
+		SCAN_VAR(ym2612.CH[i].pms);
+		SCAN_VAR(ym2612.CH[i].ams);
+		SCAN_VAR(ym2612.CH[i].fc);
+		SCAN_VAR(ym2612.CH[i].kcode);
+		SCAN_VAR(ym2612.CH[i].block_fnum);
+
+		for (j = 0; j < 4; j++) {
+			struct BurnArea ba;
+			char szName[64];
+
+			sprintf(szName, "ym2612 slot %d", i);
+
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = &ym2612.CH[i].SLOT[j];
+			ba.nLen	  = offsetof(FM_SLOT, DT);
+			BurnAcb(&ba);
+		}
+	}
+}
+
+
 int MDYM2612LoadContext()
 {
   int c,s;
   UINT8 index;
 
   /* restore YM2612 context */
-  SCAN_VAR(ym2612);
+  scan_ym2612_internal();
 
   /* restore DT table address pointer for each channel slots */
   for (c=0; c<6; c++)
@@ -2199,7 +2236,7 @@ int MDYM2612SaveContext()
   UINT8 index;
 
   /* save YM2612 context */
-  SCAN_VAR(ym2612);
+  scan_ym2612_internal();
 
   /* save DT table index for each channel slots */
   for (c=0; c<6; c++)

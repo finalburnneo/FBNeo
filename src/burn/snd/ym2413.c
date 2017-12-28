@@ -205,7 +205,7 @@ typedef struct{
 	UINT8	vib;		/* LFO Phase Modulation enable flag (active high)*/
 
 	/* waveform select */
-	unsigned int wavetable;
+	UINT32 wavetable;
 } YM2413_OPLL_SLOT;
 
 typedef struct{

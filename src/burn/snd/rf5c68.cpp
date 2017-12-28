@@ -180,18 +180,7 @@ void RF5C68PCMScan(INT32 nAction)
 		SCAN_VAR(chip->cbank);
 		SCAN_VAR(chip->wbank);
 		SCAN_VAR(chip->enable);
-		
-		for (INT32 i = 0; i < NUM_CHANNELS; i++) {
-			pcm_channel *Chan = &chip->chan[i];
-			
-			SCAN_VAR(Chan->enable);
-			SCAN_VAR(Chan->env);
-			SCAN_VAR(Chan->pan);
-			SCAN_VAR(Chan->start);
-			SCAN_VAR(Chan->addr);
-			SCAN_VAR(Chan->step);
-			SCAN_VAR(Chan->loopst);
-		}		
+		SCAN_VAR(chip->chan);
 	}
 }
 

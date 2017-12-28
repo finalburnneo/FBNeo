@@ -68,21 +68,22 @@ struct k053260_channel_def {
 	UINT32		start;
 	UINT32		bank;
 	UINT32		volume;
-	INT32					play;
+	INT32		play;
 	UINT32		pan;
 	UINT32		pos;
-	INT32					loop;
-	INT32					ppcm; /* packed PCM ( 4 bit signed ) */
-	INT32					ppcm_data;
+	INT32		loop;
+	INT32		ppcm; /* packed PCM ( 4 bit signed ) */
+	INT32		ppcm_data;
 };
+
 struct k053260_chip_def {
-	INT32								mode;
-	INT32								regs[0x30];
-	UINT8					*rom;
-	INT32								rom_size;
-	UINT32					*delta_table;
+	INT32		mode;
+	INT32		regs[0x30];
+	UINT8		*rom;
+	INT32		rom_size;
+	UINT32		*delta_table;
 	k053260_channel_def channels[4];
-	
+
 	double		gain[2];
 	INT32		output_dir[2];
 };
@@ -537,16 +538,18 @@ INT32 K053260Scan(INT32 nAction)
 	for (INT32 i = 0; i < 2; i++) {
 		ic = &Chips[i];
 
-		sprintf(szName, "k053260 regs %d", 0);
+		memset(&ba, 0, sizeof(ba));
+		sprintf(szName, "k053260 regs %d", i);
 		ba.Data		= ic->regs;
-		ba.nLen		= 0x30 * sizeof(INT32);
+		ba.nLen		= sizeof(ic->regs);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
 
-		sprintf(szName, "k053260 channels # %d", 0);
+		memset(&ba, 0, sizeof(ba));
+		sprintf(szName, "k053260 channels # %d", i);
 		ba.Data		= ic->channels;
-		ba.nLen		= 4 * sizeof(k053260_channel_def);
+		ba.nLen		= sizeof(ic->channels);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);

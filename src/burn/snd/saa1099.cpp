@@ -511,7 +511,7 @@ void saa1099Scan(INT32 chip, INT32 nAction)
 	struct BurnArea ba;
 	saa1099_state *saa = &chips[chip];
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = (UINT8*)saa;

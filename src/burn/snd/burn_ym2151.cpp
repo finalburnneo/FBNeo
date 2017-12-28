@@ -10,7 +10,6 @@
 
 void (*BurnYM2151Render)(INT16* pSoundBuf, INT32 nSegmentLength);
 
-UINT8 BurnYM2151Registers[0x0100];
 UINT32 nBurnCurrentYM2151Register;
 
 static INT32 nBurnYM2151SoundRate;
@@ -153,7 +152,6 @@ void BurnYM2151Reset()
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Reset called without init\n"));
 #endif
 
-	memset(&BurnYM2151Registers, 0, sizeof(BurnYM2151Registers));
 	YM2151ResetChip(0);
 }
 
@@ -207,8 +205,7 @@ INT32 BurnYM2151Init(INT32 nClockFrequency)
 	nFractionalPosition = 4 << 16;
 	nSamplesRendered = 0;
 	nBurnPosition = 0;
-	memset(&BurnYM2151Registers, 0, sizeof(BurnYM2151Registers));
-	
+
 	// default routes
 	YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_1] = 1.00;
 	YM2151Volumes[BURN_SND_YM2151_YM2151_ROUTE_2] = 1.00;
@@ -239,10 +236,7 @@ void BurnYM2151Scan(INT32 nAction)
 		return;
 	}
 
-	{
-		SCAN_VAR(nBurnCurrentYM2151Register);
-		SCAN_VAR(BurnYM2151Registers);
-	}
+	SCAN_VAR(nBurnCurrentYM2151Register);
 
 	BurnYM2151Scan_int(nAction); // Scan the YM2151's internal registers
 }

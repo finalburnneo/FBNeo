@@ -12,14 +12,14 @@
 #define VMIN	0
 #define VMAX	32767
 
-//static int channel;
+//static INT32 channel;
 
-static int sound_latch_a;
-static int sound_latch_b;
-static int sound_latch_c;	/* part of the videoreg_w latch */
+static INT32 sound_latch_a;
+static INT32 sound_latch_b;
+static INT32 sound_latch_c;	/* part of the videoreg_w latch */
 
 static UINT32 *poly18 = NULL;
-static int polybit;
+static INT32 polybit;
 static double custom_volume = 1.00;
 
 static INT32 pleiadssound_initted = 0;
@@ -44,22 +44,22 @@ static double pc4_discharge_time;
 static double pc5_charge_time;
 static double pc5_discharge_time;
 
-static int pa5_resistor;
-static int pc5_resistor;
+static INT32 pa5_resistor;
+static INT32 pc5_resistor;
 
-static int tone2_max_freq;
-static int tone3_max_freq;
-static int tone4_max_freq;
-static int noise_freq;
-static int polybit_resistor;
-static int opamp_resistor;
+static INT32 tone2_max_freq;
+static INT32 tone3_max_freq;
+static INT32 tone4_max_freq;
+static INT32 noise_freq;
+static INT32 polybit_resistor;
+static INT32 opamp_resistor;
 
 /*****************************************************************************
  * Tone #1 is a fixed 8 kHz signal divided by 1 to 15.
  *****************************************************************************/
-static int tone1(int samplerate)
+static INT32 tone1(INT32 samplerate)
 {
-	static int counter, divisor, output;
+	static INT32 counter, divisor, output;
 
 	if( (sound_latch_a & 15) != 15 )
 	{
@@ -82,9 +82,9 @@ static int tone1(int samplerate)
  * It's labelled IC96 in Pop Flamer, 4D(??) in Naughty Boy.
  * C68 controls the frequencies of tones #2 and #3 (V/C inputs)
  *****************************************************************************/
-static int update_pb4(int samplerate)
+static INT32 update_pb4(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 
 	/* bit 4 of latch B: charge 10uF (C28/C68) through 10k (R19/R25) */
 	if( sound_latch_b & 0x10 )
@@ -94,7 +94,7 @@ static int update_pb4(int samplerate)
 			counter -= (int)((VMAX - level) / pb4_charge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX )
 					level = VMAX;
@@ -108,7 +108,7 @@ static int update_pb4(int samplerate)
 			counter -= (int)((level - VMIN) / pb4_discharge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level -= n) < VMIN)
 					level = VMIN;
@@ -118,11 +118,11 @@ static int update_pb4(int samplerate)
 	return level;
 }
 
-static int tone23(int samplerate)
+static INT32 tone23(INT32 samplerate)
 {
-	static int counter2, output2, counter3, output3;
-	int level = VMAX - update_pb4(samplerate);
-	int sum = 0;
+	static INT32 counter2, output2, counter3, output3;
+	INT32 level = VMAX - update_pb4(samplerate);
+	INT32 sum = 0;
 
 	/* bit 5 = low: tone23 disabled */
 	if( (sound_latch_b & 0x20) == 0 )
@@ -134,7 +134,7 @@ static int tone23(int samplerate)
 		counter2 -= tone2_max_freq * level / 32768;
 		if( counter2 <= 0 )
 		{
-			int n = (-counter2 / samplerate) + 1;
+			INT32 n = (-counter2 / samplerate) + 1;
 			counter2 += n * samplerate;
 			output2 = (output2 + n) & 1;
 		}
@@ -142,7 +142,7 @@ static int tone23(int samplerate)
 		counter3 -= tone3_max_freq*1/3 + tone3_max_freq*2/3 * level / 33768;
 		if( counter3 <= 0 )
 		{
-			int n = (-counter2 / samplerate) + 1;
+			INT32 n = (-counter2 / samplerate) + 1;
 			counter3 += samplerate;
 			output3 = (output3 + n) & 1;
 		}
@@ -161,11 +161,11 @@ static int tone23(int samplerate)
  * The tone signal gates two signals (bits 5 of latches A and C), but
  * these are also swept between two levels (C52 and C53 in Pop Flamer).
  *****************************************************************************/
-static int update_c_pc4(int samplerate)
+static INT32 update_c_pc4(INT32 samplerate)
 {
 	#define PC4_MIN (int)(VMAX * 7 / 50)
 
-	static int counter, level = PC4_MIN;
+	static INT32 counter, level = PC4_MIN;
 
 	/* bit 4 of latch C: (part of videoreg_w) hi? */
 	if (sound_latch_c & 0x10)
@@ -175,7 +175,7 @@ static int update_c_pc4(int samplerate)
 			counter -= (int)((VMAX - level) / pc4_charge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX )
 					level = VMAX;
@@ -189,7 +189,7 @@ static int update_c_pc4(int samplerate)
 			counter -= (int)((level - PC4_MIN) / pc4_discharge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level -= n) < PC4_MIN )
 					level = PC4_MIN;
@@ -199,9 +199,9 @@ static int update_c_pc4(int samplerate)
 	return level;
 }
 
-static int update_c_pc5(int samplerate)
+static INT32 update_c_pc5(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 
 	/* bit 5 of latch C: charge or discharge C52 */
 	if (sound_latch_c & 0x20)
@@ -211,7 +211,7 @@ static int update_c_pc5(int samplerate)
 			counter -= (int)((VMAX - level) / pc5_charge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX )
 					level = VMAX;
@@ -225,7 +225,7 @@ static int update_c_pc5(int samplerate)
 			counter -= (int)((level - VMIN) / pc5_discharge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += samplerate;
 				if( (level -= n) < VMIN )
 					level = VMIN;
@@ -235,9 +235,9 @@ static int update_c_pc5(int samplerate)
 	return level;
 }
 
-static int update_c_pa5(int samplerate)
+static INT32 update_c_pa5(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 
 	/* bit 5 of latch A: charge or discharge C63 */
 	if (sound_latch_a & 0x20)
@@ -247,7 +247,7 @@ static int update_c_pa5(int samplerate)
 			counter -= (int)((VMAX - level) / pa5_charge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX )
 					level = VMAX;
@@ -261,7 +261,7 @@ static int update_c_pa5(int samplerate)
 			counter -= (int)((level - VMIN) / pa5_discharge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += samplerate;
 				if( (level -= n) < VMIN )
 					level = VMIN;
@@ -271,13 +271,13 @@ static int update_c_pa5(int samplerate)
 	return level;
 }
 
-static int tone4(int samplerate)
+static INT32 tone4(INT32 samplerate)
 {
-	static int counter, output;
-	int level = update_c_pc4(samplerate);
-	int vpc5 = update_c_pc5(samplerate);
-	int vpa5 = update_c_pa5(samplerate);
-	int sum;
+	static INT32 counter, output;
+	INT32 level = update_c_pc4(samplerate);
+	INT32 vpc5 = update_c_pc5(samplerate);
+	INT32 vpa5 = update_c_pa5(samplerate);
+	INT32 sum;
 
 	/* Two resistors divide the output voltage of the op-amp between
 	 * polybit = 0: 0V and level: x * opamp_resistor / (opamp_resistor + polybit_resistor)
@@ -291,7 +291,7 @@ static int tone4(int samplerate)
 	counter -= tone4_max_freq * level / 32768;
 	if( counter <= 0 )
 	{
-		int n = (-counter / samplerate) + 1;
+		INT32 n = (-counter / samplerate) + 1;
 		counter += n * samplerate;
 		output = (output + n) & 1;
 	}
@@ -309,9 +309,9 @@ static int tone4(int samplerate)
  * bit 4 of latch A. The output of the first shift register can be zapped(?)
  * by some control line (IC87 in Pop Flamer: not yet implemented)
  *****************************************************************************/
-static int update_c_pa6(int samplerate)
+static INT32 update_c_pa6(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 
 	/* bit 6 of latch A: charge or discharge C63 */
 	if (sound_latch_a & 0x40)
@@ -321,7 +321,7 @@ static int update_c_pa6(int samplerate)
 			counter -= (int)((VMAX - level) / pa6_charge_time);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX )
 					level = VMAX;
@@ -337,7 +337,7 @@ static int update_c_pa6(int samplerate)
 			counter -= (int)((level - VMIN) / 0.1);
 			if( counter <= 0 )
 			{
-				int n = (-counter / samplerate) + 1;
+				INT32 n = (-counter / samplerate) + 1;
 				counter += n * samplerate;
 				if( (level -= n) < VMIN )
 					level = VMIN;
@@ -348,11 +348,11 @@ static int update_c_pa6(int samplerate)
 }
 
 
-static int noise(int samplerate)
+static INT32 noise(INT32 samplerate)
 {
-	static int counter, polyoffs;
-	int c_pa6_level = update_c_pa6(samplerate);
-	int sum = 0;
+	static INT32 counter, polyoffs;
+	INT32 c_pa6_level = update_c_pa6(samplerate);
+	INT32 sum = 0;
 
 	/*
 	 * bit 4 of latch A: noise counter rate modulation?
@@ -365,7 +365,7 @@ static int noise(int samplerate)
 
 	if( counter <= 0 )
 	{
-		int n = (-counter / samplerate) + 1;
+		INT32 n = (-counter / samplerate) + 1;
 		counter += n * samplerate;
 		polyoffs = (polyoffs + n) & 0x3ffff;
 		polybit = (poly18[polyoffs>>5] >> (polyoffs & 31)) & 1;
@@ -396,9 +396,9 @@ static int noise(int samplerate)
 	return sum / 2;
 }
 
-void pleiads_sound_update(INT16 *buffer, int length)
+void pleiads_sound_update(INT16 *buffer, INT32 length)
 {
-	int rate = nBurnSoundRate;
+	INT32 rate = nBurnSoundRate;
 
 	INT16 *buffer2 = buffer;
 	INT32 length2 = length;
@@ -433,8 +433,8 @@ void pleiads_sound_control_b_w(INT32 address, UINT8 data)
 	 * (actually 3, because IC2 and IC3 are tied together)
 	 * write note value to TMS3615; voice b1 & b2
 	 */
-	int note = data & 15;
-	int pitch = (data >> 6) & 3;
+	INT32 note = data & 15;
+	INT32 pitch = (data >> 6) & 3;
 
 	if (data == sound_latch_b)
 		return;
@@ -460,7 +460,7 @@ void pleiads_sound_control_c_w(INT32 address, UINT8 data)
 	sound_latch_c = data;
 }
 
-void pleiads_sound_init(int naughtybpopflamer)
+void pleiads_sound_init(INT32 naughtybpopflamer)
 {
 	UINT32 shiftreg;
 
@@ -470,10 +470,10 @@ void pleiads_sound_init(int naughtybpopflamer)
 		return;
 
 	shiftreg = 0;
-	for(int i = 0; i < (1ul << (18-5)); i++ )
+	for(INT32 i = 0; i < (1ul << (18-5)); i++ )
 	{
 		UINT32 bits = 0;
-		for(int j = 0; j < 32; j++ )
+		for(INT32 j = 0; j < 32; j++ )
 		{
 			bits = (bits >> 1) | (shiftreg << 31);
 			if( ((shiftreg >> 16) & 1) == ((shiftreg >> 17) & 1) )

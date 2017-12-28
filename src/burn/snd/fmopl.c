@@ -248,7 +248,7 @@ typedef struct{
 	UINT8	vib;		/* LFO Phase Modulation enable flag (active high)*/
 
 	/* waveform select */
-	unsigned int wavetable;
+	UINT32  wavetable;
 } OPL_SLOT;
 
 typedef struct{
@@ -291,7 +291,7 @@ typedef struct fm_opl_f {
 
 	UINT8	wavesel;				/* waveform select enable flag	*/
 
-	int		T[2];					/* timer counters				*/
+	INT32	T[2];					/* timer counters				*/
 	UINT8	st[2];					/* timer enable					*/
 
 #if BUILD_Y8950
@@ -304,19 +304,19 @@ typedef struct fm_opl_f {
 	UINT8	portLatch;
 	OPL_PORTHANDLER_R porthandler_r;
 	OPL_PORTHANDLER_W porthandler_w;
-	int		port_param;
+	INT32   port_param;
 	OPL_PORTHANDLER_R keyboardhandler_r;
 	OPL_PORTHANDLER_W keyboardhandler_w;
-	int		keyboard_param;
+	INT32   keyboard_param;
 #endif
 
 	/* external event callback handlers */
 	OPL_TIMERHANDLER  TimerHandler;	/* TIMER handler				*/
-	int TimerParam;					/* TIMER parameter				*/
+	INT32 TimerParam;					/* TIMER parameter				*/
 	OPL_IRQHANDLER    IRQHandler;	/* IRQ handler					*/
-	int IRQParam;					/* IRQ parameter				*/
+	INT32 IRQParam;					/* IRQ parameter				*/
 	OPL_UPDATEHANDLER UpdateHandler;/* stream update handler		*/
-	int UpdateParam;				/* stream update parameter		*/
+	INT32 UpdateParam;				/* stream update parameter		*/
 
 	UINT8 type;						/* chip type					*/
 	UINT8 address;					/* address register				*/
@@ -324,13 +324,13 @@ typedef struct fm_opl_f {
 	UINT8 statusmask;				/* status mask					*/
 	UINT8 mode;						/* Reg.08 : CSM,notesel,etc.	*/
 
-	int clock;						/* master clock  (Hz)			*/
-	int rate;						/* sampling rate (Hz)			*/
+	INT32 clock;						/* master clock  (Hz)			*/
+	INT32 rate;						/* sampling rate (Hz)			*/
 	double freqbase;				/* frequency base				*/
 	double TimerBase;				/* Timer base time (==sampling time)*/
 	
-	signed int phase_modulation;	/* phase modulation input (SLOT 2) */
-	signed int output[1];
+	INT32 phase_modulation;	/* phase modulation input (SLOT 2) */
+	INT32 output[1];
 
 #if BUILD_Y8950
 	INT32 output_deltat[4];		/* for Y8950 DELTA-T, chip is mono, that 4 here is just for safety */

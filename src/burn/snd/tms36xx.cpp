@@ -18,29 +18,29 @@
 #define FSCALE	1024
 
 struct TMS36XX {
-	int samplerate; 	/* from Machine->sample_rate */
+	INT32 samplerate; 	/* from Machine->sample_rate */
 
-	int basefreq;		/* chip's base frequency */
-	int octave; 		/* octave select of the TMS3615 */
+	INT32 basefreq;		/* chip's base frequency */
+	INT32 octave; 		/* octave select of the TMS3615 */
 
-	int speed;			/* speed of the tune */
-	int tune_counter;	/* tune counter */
-	int note_counter;	/* note counter */
+	INT32 speed;			/* speed of the tune */
+	INT32 tune_counter;	/* tune counter */
+	INT32 note_counter;	/* note counter */
 
-	int voices; 		/* active voices */
-	int shift;			/* shift toggles between 0 and 6 to allow decaying voices */
-	int vol[12];		/* (decaying) volume of harmonics notes */
-	int vol_counter[12];/* volume adjustment counter */
-	int decay[12];		/* volume adjustment rate - dervied from decay */
+	INT32 voices; 		/* active voices */
+	INT32 shift;			/* shift toggles between 0 and 6 to allow decaying voices */
+	INT32 vol[12];		/* (decaying) volume of harmonics notes */
+	INT32 vol_counter[12];/* volume adjustment counter */
+	INT32 decay[12];		/* volume adjustment rate - dervied from decay */
 
-	int counter[12];	/* tone frequency counter */
-	int frequency[12];	/* tone frequency */
-	int output; 		/* output signal bits */
-	int enable; 		/* mask which harmoics */
+	INT32 counter[12];	/* tone frequency counter */
+	INT32 frequency[12];	/* tone frequency */
+	INT32 output; 		/* output signal bits */
+	INT32 enable; 		/* mask which harmoics */
 
-	int tune_num;		/* tune currently playing */
-	int tune_ofs;		/* note currently playing */
-	int tune_max;		/* end of tune */
+	INT32 tune_num;		/* tune currently playing */
+	INT32 tune_ofs;		/* note currently playing */
+	INT32 tune_max;		/* end of tune */
 };
 
 struct TMS36XX *tms = NULL;
@@ -64,7 +64,7 @@ struct TMS36XX *tms = NULL;
  * trigger sound #1 of the Phoenix PCB sound chip I put just something
  * 'alarming' in here.
  */
-static const int tune1[96*6] = {
+static const INT32 tune1[96*6] = {
 	C(3),	0,		0,		C(2),	0,		0,
 	G(3),	0,		0,		0,		0,		0,
 	C(3),	0,		0,		0,		0,		0,
@@ -103,7 +103,7 @@ static const int tune1[96*6] = {
  * Fuer Elise, Beethoven
  * (Excuse my non-existent musical skill, Mr. B ;-)
  */
-static const int tune2[96*6] = {
+static const INT32 tune2[96*6] = {
 	D(3),	D(4),	D(5),	0,		0,		0,
 	Cx(3),	Cx(4),	Cx(5),	0,		0,		0,
 	D(3),	D(4),	D(5),	0,		0,		0,
@@ -167,7 +167,7 @@ static const int tune2[96*6] = {
  * Magic*:
  *   This song is a classical piece called "ESTUDIO" from M.A.Robira.
  */
-static const int tune3[96*6] = {
+static const INT32 tune3[96*6] = {
 	A(2),	A(3),	A(4),	D(1),	 D(2),	  D(3),
 	0,		0,		0,		0,		 0, 	  0,
 	A(2),	A(3),	A(4),	0,		 0, 	  0,
@@ -282,7 +282,7 @@ static const int tune3[96*6] = {
 };
 
 /* This is used to play single notes for the TMS3615/TMS3617 */
-static const int tune4[13*6] = {
+static const INT32 tune4[13*6] = {
 /*  16'     8'      5 1/3'  4'      2 2/3'  2'      */
 	B(0),	B(1),	Dx(2),	B(2),	Dx(3),	B(3),
 	C(1),	C(2),	E(2),	C(3),	E(3),	C(4),
@@ -299,7 +299,7 @@ static const int tune4[13*6] = {
 	B(1),	B(2),	Dx(3),	B(3),	Dx(4),	B(4)
 };
 
-static const int *tunes[] = {NULL,tune1,tune2,tune3,tune4};
+static const INT32 *tunes[] = {NULL,tune1,tune2,tune3,tune4};
 
 #define DECAY(voice)											\
 	if( tms->vol[voice] > VMIN )								\
@@ -345,7 +345,7 @@ static const int *tunes[] = {NULL,tune1,tune2,tune3,tune4};
 
 void tms36xx_sound_update(INT16 *buffer, INT32 length)
 {
-	int samplerate = tms->samplerate;
+	INT32 samplerate = tms->samplerate;
 
     /* no tune played? */
 	if( !tunes[tms->tune_num] || tms->voices == 0 ) {
@@ -354,7 +354,7 @@ void tms36xx_sound_update(INT16 *buffer, INT32 length)
 
 	while( length-- > 0 )
 	{
-		int sum = 0;
+		INT32 sum = 0;
 
 		/* decay the twelve voices */
 		DECAY( 0) DECAY( 1) DECAY( 2) DECAY( 3) DECAY( 4) DECAY( 5)
@@ -364,7 +364,7 @@ void tms36xx_sound_update(INT16 *buffer, INT32 length)
 		tms->tune_counter -= tms->speed;
 		if( tms->tune_counter <= 0 )
 		{
-			int n = (-tms->tune_counter / samplerate) + 1;
+			INT32 n = (-tms->tune_counter / samplerate) + 1;
 			tms->tune_counter += n * samplerate;
 
 			if( (tms->note_counter -= n) <= 0 )
@@ -408,7 +408,7 @@ void tms36xx_reset()
 	tms->tune_num = 0;
 }
 
-void mm6221aa_tune_w(int tune)
+void mm6221aa_tune_w(INT32 tune)
 {
     /* which tune? */
     tune &= 3;
@@ -422,7 +422,7 @@ void mm6221aa_tune_w(int tune)
     tms->tune_max = 96; /* fixed for now */
 }
 
-void tms36xx_note_w(int octave, int note)
+void tms36xx_note_w(INT32 octave, INT32 note)
 {
 	octave &= 3;
 	note &= 15;
@@ -440,16 +440,16 @@ void tms36xx_note_w(int octave, int note)
 	tms->tune_max = note + 1;
 }
 
-void tms3617_enable(int enable)
+void tms3617_enable(INT32 enable)
 {
-	int bits = 0;
+	INT32 bits = 0;
 
 	/* duplicate the 6 voice enable bits */
     enable = (enable & 0x3f) | ((enable & 0x3f) << 6);
 	if (enable == tms->enable)
 		return;
 
-    for (int i = 0; i < 6; i++) {
+    for (INT32 i = 0; i < 6; i++) {
 		if (enable & (1 << i))
 			bits += 2;	/* each voice has two instances */
 	}
@@ -459,9 +459,9 @@ void tms3617_enable(int enable)
     tms->voices = bits;
 }
 
-void tms36xx_init(int clock, int subtype, double *decay, double speed)
+void tms36xx_init(INT32 clock, INT32 subtype, double *decay, double speed)
 {
-	int enable;
+	INT32 enable;
 
 	tms = (TMS36XX *)BurnMalloc(sizeof(TMS36XX));
 	memset(tms, 0, sizeof(*tms));
@@ -470,7 +470,7 @@ void tms36xx_init(int clock, int subtype, double *decay, double speed)
 	tms->basefreq = clock;
 	enable = 0;
 
-	for (int j = 0; j < 6; j++)
+	for (INT32 j = 0; j < 6; j++)
 	{
 		if( decay[j] > 0 )
 		{

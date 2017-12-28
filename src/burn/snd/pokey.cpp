@@ -36,6 +36,7 @@
 
 #include "burnint.h"
 #include "pokey.h"
+#include <stddef.h>
 
 /*
  * Defining this produces much more (about twice as much)
@@ -173,15 +174,8 @@ struct POKEYregisters {
     UINT32 r17;             /* rand17 index */
 	UINT32 clockmult;		/* clock multiplier */
     int channel;            /* streams channel */
-	void *timer[3]; 		/* timers for channel 1,2 and 4 events */
-    void *rtimer;           /* timer for calculating the random offset */
-	void *ptimer[8];		/* pot timers */
-	int (*pot_r[8])(int offs);
-	int (*allpot_r)(int offs);
-	int (*serin_r)(int offs);
-	void (*serout_w)(int offs, int data);
-	void (*interrupt_cb)(int mask);
-    UINT8 AUDF[4];          /* AUDFx (D200, D202, D204, D206) */
+
+	UINT8 AUDF[4];          /* AUDFx (D200, D202, D204, D206) */
 	UINT8 AUDC[4];			/* AUDCx (D201, D203, D205, D207) */
 	UINT8 POTx[8];			/* POTx   (R/D200-D207) */
 	UINT8 AUDCTL;			/* AUDCTL (W/D208) */
@@ -194,6 +188,15 @@ struct POKEYregisters {
 	UINT8 IRQEN;			/* IRQEN  (W/D20E) */
 	UINT8 SKSTAT;			/* SKSTAT (R/D20F) */
 	UINT8 SKCTL;			/* SKCTL  (W/D20F) */
+
+	void (*interrupt_cb)(int mask);
+	void *timer[3]; 		/* timers for channel 1,2 and 4 events */
+    void *rtimer;           /* timer for calculating the random offset */
+	void *ptimer[8];		/* pot timers */
+	int (*pot_r[8])(int offs);
+	int (*allpot_r)(int offs);
+	int (*serin_r)(int offs);
+	void (*serout_w)(int offs, int data);
 };
 
 static struct POKEYinterface intf;
@@ -208,27 +211,13 @@ void pokey_scan(INT32 nAction, INT32* pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		for (INT32 i = 0; i < MAXPOKEYS; i++)
 		{
-			// save pointers.
-			void *timer[3] = { pokey[i].timer[0], pokey[i].timer[1], pokey[i].timer[2] };
-			void *rtimer = pokey[i].rtimer;
-			void *ptimer[8] = { pokey[i].ptimer[0],pokey[i].ptimer[1],pokey[i].ptimer[2],pokey[i].ptimer[3],pokey[i].ptimer[4],pokey[i].ptimer[5],pokey[i].ptimer[6],pokey[i].ptimer[7] };
-			int (*pot_r[8])(int offs) = { pokey[i].pot_r[0], pokey[i].pot_r[1], pokey[i].pot_r[2], pokey[i].pot_r[3], pokey[i].pot_r[4], pokey[i].pot_r[5], pokey[i].pot_r[6], pokey[i].pot_r[7] };
-			int (*allpot_r)(int offs) = pokey[i].allpot_r;
-			int (*serin_r)(int offs) = pokey[i].serin_r;
-			void (*serout_w)(int offs, int data) = pokey[i].serout_w;
-			void (*interrupt_cb)(int mask) = pokey[i].interrupt_cb;
+			struct BurnArea ba;
 
-			SCAN_VAR(pokey[i]);
-
-			// restore pointers.
-			pokey[i].timer[0] = timer[0]; pokey[i].timer[1] = timer[1]; pokey[i].timer[2] = timer[2];
-			pokey[i].rtimer = rtimer;
-			pokey[i].ptimer[0] = ptimer[0]; pokey[i].ptimer[1] = ptimer[1]; pokey[i].ptimer[2] = ptimer[2]; pokey[i].ptimer[3] = ptimer[3]; pokey[i].ptimer[4] = ptimer[4]; pokey[i].ptimer[5] = ptimer[5]; pokey[i].ptimer[6] = ptimer[6]; pokey[i].ptimer[7] = ptimer[7];
-			pokey[i].pot_r[0] = pot_r[0]; pokey[i].pot_r[1] = pot_r[1]; pokey[i].pot_r[2] = pot_r[2]; pokey[i].pot_r[3] = pot_r[3]; pokey[i].pot_r[4] = pot_r[4]; pokey[i].pot_r[5] = pot_r[5]; pokey[i].pot_r[6] = pot_r[6]; pokey[i].pot_r[7] = pot_r[7];
-			pokey[i].allpot_r = allpot_r;
-			pokey[i].serin_r = serin_r;
-			pokey[i].serout_w = serout_w;
-			pokey[i].interrupt_cb = interrupt_cb;
+			memset(&ba, 0, sizeof(ba));
+			ba.Data	  = &pokey[i];
+			ba.nLen	  = offsetof(struct POKEYregisters, interrupt_cb);
+			ba.szName = "Pokey Registers";
+			BurnAcb(&ba);
 		}
 
 		BurnRandomScan(nAction);

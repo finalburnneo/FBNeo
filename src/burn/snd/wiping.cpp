@@ -8,6 +8,7 @@
 
 #include "burnint.h"
 #include "wiping.h"
+#include <stddef.h>
 
 static const INT32 samplerate = 48000;
 static const INT32 defgain = 48;
@@ -21,9 +22,9 @@ struct sound_channel
 	INT32 frequency;
 	INT32 counter;
 	INT32 volume;
-	const UINT8 *wave;
 	INT32 oneshot;
 	INT32 oneshotplaying;
+	const UINT8 *wave;
 };
 
 /* data about the sound system */
@@ -48,7 +49,18 @@ static void make_mixer_table(INT32 voices, INT32 gain);
 
 void wipingsnd_scan()
 {
-	SCAN_VAR(m_channel_list);
+	for (INT32 i = 0; i < MAX_VOICES; i++) {
+		struct BurnArea ba;
+		char szName[16];
+		sprintf(szName, "Wiping Ch#%d", i);
+
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = &m_channel_list[i];
+		ba.nLen	  = offsetof(struct sound_channel, wave);
+		ba.szName = szName;
+		BurnAcb(&ba);
+	}
+
 	SCAN_VAR(m_soundregs);
 }
 

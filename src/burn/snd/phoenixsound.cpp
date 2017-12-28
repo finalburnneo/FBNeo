@@ -45,20 +45,20 @@
 #define VMIN    0
 #define VMAX	32767
 
-static int sound_latch_a;
-static int sound_latch_b;
+static INT32 sound_latch_a;
+static INT32 sound_latch_b;
 
-static int tone1_vco1_cap;
-static int tone1_level;
-static int tone2_level;
+static INT32 tone1_vco1_cap;
+static INT32 tone1_level;
+static INT32 tone2_level;
 
 static UINT32 *poly18 = NULL;
 
 static INT32 phoenixsnd_initted = 0;
 
-static int tone1_vco1(int samplerate)
+static INT32 tone1_vco1(INT32 samplerate)
 {
-    static int output, counter, level;
+    static INT32 output, counter, level;
 	/*
 	 * L447 (NE555): Ra=47k, Rb=100k, C = 0.01uF, 0.48uF, 1.01uF or 1.48uF
      * charge times = 0.639*(Ra+Rb)*C = 0.0092s, 0.0451s, 0.0949s, 0.1390s
@@ -70,7 +70,7 @@ static int tone1_vco1(int samplerate)
 	#define C18d	1.48e-6
 	#define R40 	47000
 	#define R41 	100000
-    static int rate[2][4] = {
+    static INT32 rate[2][4] = {
 		{
 			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18a)),
 			(int)(double)(VMAX*2/3/(0.693*(R40+R41)*C18b)),
@@ -91,7 +91,7 @@ static int tone1_vco1(int samplerate)
 			counter -= rate[1][tone1_vco1_cap];
 			if( counter <= 0 )
 			{
-				int steps = -counter / samplerate + 1;
+				INT32 steps = -counter / samplerate + 1;
 				counter += steps * samplerate;
 				if( (level -= steps) <= VMAX*1/3 )
 				{
@@ -108,7 +108,7 @@ static int tone1_vco1(int samplerate)
 			counter -= rate[0][tone1_vco1_cap];
 			if( counter <= 0 )
 			{
-                int steps = -counter / samplerate + 1;
+                INT32 steps = -counter / samplerate + 1;
 				counter += steps * samplerate;
 				if( (level += steps) >= VMAX*2/3 )
 				{
@@ -121,9 +121,9 @@ static int tone1_vco1(int samplerate)
 	return output;
 }
 
-static int tone1_vco2(int samplerate)
+static INT32 tone1_vco2(INT32 samplerate)
 {
-	static int output, counter, level;
+	static INT32 output, counter, level;
 
 	/*
 	 * L517 (NE555): Ra=570k, Rb=570k, C=10uF
@@ -141,7 +141,7 @@ static int tone1_vco2(int samplerate)
 			counter -= (int)(VMAX*2/3 / (0.693 * R44 * C20));
 			if( counter <= 0 )
 			{
-				int steps = -counter / samplerate + 1;
+				INT32 steps = -counter / samplerate + 1;
 				counter += steps * samplerate;
 				if( (level -= steps) <= VMAX*1/3 )
 				{
@@ -158,7 +158,7 @@ static int tone1_vco2(int samplerate)
 			counter -= (int)(VMAX*2/3 / (0.693 * (R43 + R44) * C20));
 			if( counter <= 0 )
 			{
-				int steps = -counter / samplerate + 1;
+				INT32 steps = -counter / samplerate + 1;
 				counter += steps * samplerate;
 				if( (level += steps) >= VMAX*2/3 )
 				{
@@ -172,10 +172,10 @@ static int tone1_vco2(int samplerate)
 	return output;
 }
 
-static int tone1_vco(int samplerate, int vco1, int vco2)
+static INT32 tone1_vco(INT32 samplerate, INT32 vco1, INT32 vco2)
 {
-	static int counter, level, rate, charge;
-	int voltage;
+	static INT32 counter, level, rate, charge;
+	INT32 voltage;
 
 	if (level != charge)
     {
@@ -287,12 +287,12 @@ static int tone1_vco(int samplerate, int vco1, int vco2)
 	return 24000*1/3 + 24000*2/3 * voltage / 32768;
 }
 
-static int tone1(int samplerate)
+static INT32 tone1(INT32 samplerate)
 {
-	static int counter, divisor, output;
-	int vco1 = tone1_vco1(samplerate);
-	int vco2 = tone1_vco2(samplerate);
-	int frequency = tone1_vco(samplerate, vco1, vco2);
+	static INT32 counter, divisor, output;
+	INT32 vco1 = tone1_vco1(samplerate);
+	INT32 vco2 = tone1_vco2(samplerate);
+	INT32 frequency = tone1_vco(samplerate, vco1, vco2);
 
 	if( (sound_latch_a & 15) != 15 )
 	{
@@ -311,9 +311,9 @@ static int tone1(int samplerate)
 	return output ? tone1_level : -tone1_level;
 }
 
-static int tone2_vco(int samplerate)
+static INT32 tone2_vco(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 
 	/*
 	 * This is how the tone2 part of the circuit looks like.
@@ -358,7 +358,7 @@ static int tone2_vco(int samplerate)
 		counter -= (C7_MAX - level) * 12 / (R23 * C7) / 5;
 		if( counter <= 0 )
 		{
-			int n = (-counter / samplerate) + 1;
+			INT32 n = (-counter / samplerate) + 1;
 			counter += n * samplerate;
 			if( (level += n) > C7_MAX)
 				level = C7_MAX;
@@ -369,7 +369,7 @@ static int tone2_vco(int samplerate)
 		counter -= (level - C7_MIN) * 12 / (R22pR24 * C7) / 5;
 		if( counter <= 0 )
 		{
-			int n = (-counter / samplerate) + 1;
+			INT32 n = (-counter / samplerate) + 1;
 			counter += n * samplerate;
 			if( (level -= n) < C7_MIN)
 				level = C7_MIN;
@@ -383,10 +383,10 @@ static int tone2_vco(int samplerate)
 	return 10212 * level / 32768;
 }
 
-static int tone2(int samplerate)
+static INT32 tone2(INT32 samplerate)
 {
-	static int counter, divisor, output;
-	int frequency = tone2_vco(samplerate);
+	static INT32 counter, divisor, output;
+	INT32 frequency = tone2_vco(samplerate);
 
 	if( (sound_latch_b & 15) != 15 )
 	{
@@ -404,9 +404,9 @@ static int tone2(int samplerate)
 	return output ? tone2_level : -tone2_level;
 }
 
-static int update_c24(int samplerate)
+static INT32 update_c24(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 	/*
 	 * Noise frequency control (Port B):
 	 * Bit 6 lo charges C24 (6.8u) via R51 (330) and when
@@ -424,7 +424,7 @@ static int update_c24(int samplerate)
 			counter -= (int)((level - VMIN) / (R52 * C24));
 			if( counter <= 0 )
 			{
-				int n = -counter / samplerate + 1;
+				INT32 n = -counter / samplerate + 1;
 				counter += n * samplerate;
 				if( (level -= n) < VMIN)
 					level = VMIN;
@@ -438,7 +438,7 @@ static int update_c24(int samplerate)
 			counter -= (int)((VMAX - level) / ((R51+R49) * C24));
 			if( counter <= 0 )
 			{
-				int n = -counter / samplerate + 1;
+				INT32 n = -counter / samplerate + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX)
 					level = VMAX;
@@ -448,9 +448,9 @@ static int update_c24(int samplerate)
 	return VMAX - level;
 }
 
-static int update_c25(int samplerate)
+static INT32 update_c25(INT32 samplerate)
 {
-	static int counter, level;
+	static INT32 counter, level;
 	/*
 	 * Bit 7 hi charges C25 (6.8u) over a R50 (1k) and R53 (330) and when
 	 * bit 7 is lo, C25 is discharged through R54 (47k)
@@ -468,7 +468,7 @@ static int update_c25(int samplerate)
 			counter -= (int)((VMAX - level) / ((R50+R53) * C25));
 			if( counter <= 0 )
 			{
-				int n = -counter / samplerate + 1;
+				INT32 n = -counter / samplerate + 1;
 				counter += n * samplerate;
 				if( (level += n) > VMAX )
 					level = VMAX;
@@ -482,7 +482,7 @@ static int update_c25(int samplerate)
 			counter -= (int)((level - VMIN) / (R54 * C25));
 			if( counter <= 0 )
 			{
-				int n = -counter / samplerate + 1;
+				INT32 n = -counter / samplerate + 1;
 				counter += n * samplerate;
 				if( (level -= n) < VMIN )
 					level = VMIN;
@@ -493,12 +493,12 @@ static int update_c25(int samplerate)
 }
 
 
-static int noise(int samplerate)
+static INT32 noise(INT32 samplerate)
 {
-	static int counter, polyoffs, polybit, lowpass_counter, lowpass_polybit;
-	int vc24 = update_c24(samplerate);
-	int vc25 = update_c25(samplerate);
-	int sum = 0, level, frequency;
+	static INT32 counter, polyoffs, polybit, lowpass_counter, lowpass_polybit;
+	INT32 vc24 = update_c24(samplerate);
+	INT32 vc25 = update_c25(samplerate);
+	INT32 sum = 0, level, frequency;
 
 	/*
 	 * The voltage levels are added and control I(CE) of transistor TR1
@@ -521,7 +521,7 @@ static int noise(int samplerate)
 	counter -= frequency;
 	if( counter <= 0 )
 	{
-		int n = (-counter / samplerate) + 1;
+		INT32 n = (-counter / samplerate) + 1;
 		counter += n * samplerate;
 		polyoffs = (polyoffs + n) & 0x3ffff;
 		polybit = (poly18[polyoffs>>5] >> (polyoffs & 31)) & 1;
@@ -542,9 +542,9 @@ static int noise(int samplerate)
 	return sum;
 }
 
-void phoenix_sound_update(INT16 *buffer, int length)
+void phoenix_sound_update(INT16 *buffer, INT32 length)
 {
-	int samplerate = nBurnSoundRate;
+	INT32 samplerate = nBurnSoundRate;
 
 	INT16 *buffer2 = buffer;
 	INT32 length2 = length;
@@ -603,7 +603,7 @@ void phoenix_sound_reset()
 
 void phoenix_sound_init()
 {
-	int i, j;
+	INT32 i, j;
 	UINT32 shiftreg;
 
 	poly18 = (UINT32 *)BurnMalloc((1ul << (18-5)) * sizeof(UINT32));

@@ -10742,6 +10742,37 @@ static struct BurnRomInfo metafoxRomDesc[] = {
 STD_ROM_PICK(metafox)
 STD_ROM_FN(metafox)
 
+static void __fastcall metafox_protection_write_byte(UINT32 address, UINT8 data)
+{
+	Drv68KRAM2[(address / 2) & 0x1fff] = data;
+}
+
+static UINT8 __fastcall metafox_protection_read_byte(UINT32 address)
+{
+	switch (address & 0x3ffe)
+	{
+		case 0x0000: // 21c001
+			return Drv68KRAM2[0x0101/2];
+
+		case 0x1000: // 21d001
+			return Drv68KRAM2[0x10a1/2];
+
+		case 0x2000: // 21e001
+			return Drv68KRAM2[0x2149/2];
+	}
+
+	return Drv68KRAM2[(address / 2) & 0x1fff];
+}
+
+static void metafox_protection_install()
+{
+	SekOpen(0);
+	SekMapHandler(4,			0x21c000, 0x21ffff, MAP_READ | MAP_WRITE);
+	SekSetReadByteHandler (4,		metafox_protection_read_byte);
+	SekSetWriteByteHandler(4,		metafox_protection_write_byte);
+	SekClose();
+}
+
 static INT32 metafoxInit()
 {
 	DrvSetVideoOffsets(0, 0, 16, -19);
@@ -10751,9 +10782,7 @@ static INT32 metafoxInit()
 
 	if (nRet == 0) {
 		clear_opposites = 1;
-		*((UINT16*)(Drv68KROM + 0x8ab1c)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x8ab1e)) = 0x4e71;
-		*((UINT16*)(Drv68KROM + 0x8ab20)) = 0x4e71;
+		metafox_protection_install();
 	}
 
 	return nRet;

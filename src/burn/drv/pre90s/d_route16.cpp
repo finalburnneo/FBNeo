@@ -290,8 +290,9 @@ static void __fastcall route16_main_write(UINT16 address, UINT8 data)
 
 	switch (address)
 	{
+		case 0x3000:
 		case 0x3001:
-			// route16 protection writes -- what are these for?
+			bprintf (0, _T("prot w: %4.4x %2.2x, (%4.4x)\n"), address, data, ZetGetPC(-1));
 		return;
 
 		case 0x4800:
@@ -331,8 +332,13 @@ static UINT8 speakres_in3_read()
 	return ret;
 }
 
-static UINT8 route16_protection_read() // gross hack (IMO less so than patching the roms)
+static UINT8 route16_protection_read()
 {
+	// this is enough to bypass the protection
+	protection_data++;
+	return (1 << ((protection_data >> 1) & 7));
+#if 0
+	// This gives exact values we're looking for
 	INT32 pc = ZetGetPC(-1);
 
 	if (DrvZ80ROM0[pc - 2] == 0xcb && (DrvZ80ROM0[pc] & 0xf7) == 0x20)
@@ -340,9 +346,11 @@ static UINT8 route16_protection_read() // gross hack (IMO less so than patching 
 		INT32 shift = (DrvZ80ROM0[pc - 1] >> 3) & 7;
 		INT32 bit = (DrvZ80ROM0[pc] >> 3) & 1;
 		protection_data = bit << shift;
+		return protection_data;
 	}
 
 	return protection_data;
+#endif
 }
 
 static UINT8 __fastcall route16_main_read(UINT16 address)
@@ -351,6 +359,7 @@ static UINT8 __fastcall route16_main_read(UINT16 address)
 	{
 		case 0x3000:
 		case 0x3001:
+			bprintf (0, _T("prot r: %4.4x, %2.2x "), address, DrvShareRAM[0x40]);
 			return route16_protection_read();
 
 		case 0x4800:

@@ -500,11 +500,11 @@ static INT32 DrvFrame()
 		if (*nmi_enable && (i & 0x1f) == 0)
 			M6809SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // 480x/second (8x/frame)
 
-		if (i == 240) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 240) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			SN76496Update(0, pSoundBuf, nSegmentLength);
 			SN76496Update(1, pSoundBuf, nSegmentLength);

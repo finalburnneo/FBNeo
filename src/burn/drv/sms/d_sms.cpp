@@ -27404,3 +27404,22 @@ struct BurnDriver BurnDrvsms_wekainvaders = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
+
+// Silver Valley
+
+static struct BurnRomInfo sms_silvervalleyRomDesc[] = {
+	{ "silvervalley-final.sms",	0x40000, 0x2774b5cc, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_silvervalley)
+STD_ROM_FN(sms_silvervalley)
+
+struct BurnDriver BurnDrvsms_silvervalley = {
+	"sms_silvervalley", NULL, NULL, NULL, "2018",
+	"Silver Valley\0", NULL, "MIKGAMES / Enrique Ruiz", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_silvervalleyRomInfo, sms_silvervalleyRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};

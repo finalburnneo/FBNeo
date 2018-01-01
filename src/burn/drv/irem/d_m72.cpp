@@ -3,7 +3,6 @@
 
 /*
 	to do:
-		majtitle rowscrolling issue (start game, hit a ball and watch the bg)
 	    poundfor inputs
 */
 

@@ -140,7 +140,7 @@ static void __fastcall mrflea_out_port(UINT16 port, UINT8 data)
 
 			ZetClose();
 			ZetOpen(1);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 			ZetOpen(0);
 		}
@@ -382,9 +382,9 @@ static INT32 DrvInit()
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(2, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(2, 0.25, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(2, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -423,15 +423,20 @@ static void draw_layer()
 
 static void draw_sprites()
 {
+	GenericTilesSetClip(16, nScreenWidth-24, 0, nScreenHeight);
+
 	for (INT32 i = 0; i < 0x100; i+=4)
 	{
-		INT32 sx = DrvSprRAM[i + 1];
+		INT32 sx = DrvSprRAM[i + 1] - 3;
 		INT32 sy = DrvSprRAM[i + 0] - 13;
 
 		INT32 code = DrvSprRAM[i + 2] + ((DrvSprRAM[i + 3] & 1) << 8);
 
 		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, 0, 4, 0, 0x10, DrvGfxROM0);
+		Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy + 256, 0, 4, 0, 0x10, DrvGfxROM0);
 	}
+
+	GenericTilesClearClip();
 }
 
 static INT32 DrvDraw()
@@ -443,8 +448,10 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
-	draw_sprites();
+	if (~nBurnLayer & 1) BurnTransferClear();
+
+	if (nBurnLayer & 1) draw_layer();
+	if (nBurnLayer & 2) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -469,32 +476,30 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 200;
-	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesDone[2] = { 0, 0 };
 	INT32 nCyclesTotal[2] = { 4000000 / 60, 6000000 / 60 };
+	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
+		INT32 nCurrentCPU, nNext;
 
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
+		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[nCurrentCPU] += nCyclesSegment;
-		if ((mrflea_status&0x08) || i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
+		if ((i == (nInterleave/2) && (mrflea_status&0x08)) || i == (nInterleave-1))
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
 			nSoundBufferPos += nSegmentLength;
@@ -516,7 +521,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -524,7 +529,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029521;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -537,12 +542,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SCAN_VAR(mrflea_io);
 		SCAN_VAR(mrflea_main);
-		SCAN_VAR(mrflea_status);		
+		SCAN_VAR(mrflea_status);
 		SCAN_VAR(gfx_bank);
-		SCAN_VAR(mrflea_select[0]);
-		SCAN_VAR(mrflea_select[1]);
-		SCAN_VAR(mrflea_select[2]);
-		SCAN_VAR(mrflea_select[3]);
+		SCAN_VAR(mrflea_select);
 	}
 
 	return 0;

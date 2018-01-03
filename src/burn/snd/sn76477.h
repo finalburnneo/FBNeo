@@ -79,4 +79,5 @@ void SN76477_set_mastervol(int chip, double vol);
 void SN76477_sound_update(int param, INT16 *buffer, int length);
 
 void SN76477_init(int num);
+void SN76477_reset(int num);
 void SN76477_exit(int num);

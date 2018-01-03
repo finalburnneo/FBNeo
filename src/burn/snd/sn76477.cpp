@@ -773,7 +773,7 @@ static void SN76477_update_0(int chip, INT16 *buffer, int length)
 	{
 		UPDATE_VCO;
 		UPDATE_VOLUME;
-		INT16 sam = (sn->vco_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP((sn->vco_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -792,7 +792,7 @@ static void SN76477_update_1(int chip, INT16 *buffer, int length)
 	{
 		UPDATE_SLF;
 		UPDATE_VOLUME;
-		INT16 sam = (sn->slf_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP((sn->slf_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -811,7 +811,7 @@ static void SN76477_update_2(int chip, INT16 *buffer, int length)
 	{
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = (sn->noise_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP((sn->noise_out ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -831,7 +831,7 @@ static void SN76477_update_3(int chip, INT16 *buffer, int length)
 		UPDATE_VCO;
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = ((sn->vco_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -851,7 +851,7 @@ static void SN76477_update_4(int chip, INT16 *buffer, int length)
 		UPDATE_SLF;
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = ((sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP(((sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -872,7 +872,7 @@ static void SN76477_update_5(int chip, INT16 *buffer, int length)
 		UPDATE_VCO;
 		UPDATE_NOISE;
 		UPDATE_VOLUME;
-		INT16 sam = ((sn->vco_out & sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->slf_out & sn->noise_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -892,7 +892,7 @@ static void SN76477_update_6(int chip, INT16 *buffer, int length)
 		UPDATE_SLF;
 		UPDATE_VCO;
 		UPDATE_VOLUME;
-		INT16 sam = ((sn->vco_out & sn->slf_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]);// * SNMASTERVOL;
+		INT16 sam = BURN_SND_CLIP(((sn->vco_out & sn->slf_out) ? sn->vol_lookup[sn->vol-VMIN] : -sn->vol_lookup[sn->vol-VMIN]) * sn->mastervol);
 		*buffer = BURN_SND_CLIP(*buffer + sam);
 		buffer++;
 		*buffer = BURN_SND_CLIP(*buffer + sam);
@@ -962,8 +962,21 @@ void SN76477_exit(int num) // yea, needs work. I know..
 	BurnFree(sn76477[num]);
 }
 
+void SN76477_reset(int num)
+{
+	SN76477_mixer_w(num, 0x07);		/* turn off mixing */
+	SN76477_envelope_w(num, 0x03);	/* envelope inputs open */
+	SN76477_enable_w(num, 0x01);		/* enable input open */
+}
+
 void SN76477_init(int num)
 {
+	if (num > MAX_SN76477-1)
+	{
+		bprintf(0, _T("SN76477_init(%d): initted past max.  crashing shortly...\n"));
+		return;
+	}
+
 	sn76477[num] = (SN76477 *)BurnMalloc(sizeof(struct SN76477));
 	if( !sn76477[num] )
 	{
@@ -978,7 +991,5 @@ void SN76477_init(int num)
 	sn76477[num]->oneshot_timer = 0;
 	sn76477[num]->mastervol = 1.00;
 
-	SN76477_mixer_w(num, 0x07);		/* turn off mixing */
-	SN76477_envelope_w(num, 0x03);	/* envelope inputs open */
-	SN76477_enable_w(num, 0x01);		/* enable input open */
+	SN76477_reset(num);
 }

@@ -292,7 +292,7 @@ static void __fastcall route16_main_write(UINT16 address, UINT8 data)
 	{
 		case 0x3000:
 		case 0x3001:
-			bprintf (0, _T("prot w: %4.4x %2.2x, (%4.4x)\n"), address, data, ZetGetPC(-1));
+			//bprintf (0, _T("prot w: %4.4x %2.2x, (%4.4x)\n"), address, data, ZetGetPC(-1));
 		return;
 
 		case 0x4800:
@@ -359,7 +359,7 @@ static UINT8 __fastcall route16_main_read(UINT16 address)
 	{
 		case 0x3000:
 		case 0x3001:
-			bprintf (0, _T("prot r: %4.4x, %2.2x "), address, DrvShareRAM[0x40]);
+			//bprintf (0, _T("prot r: %4.4x, %2.2x "), address, DrvShareRAM[0x40]);
 			return route16_protection_read();
 
 		case 0x4800:
@@ -470,6 +470,7 @@ static INT32 DrvDoReset()
 	ZetOpen(1);
 	ZetReset();
 	DACReset();
+	SN76477_reset(0);
 	ZetClose();
 
 	AY8910Reset(0);
@@ -596,14 +597,14 @@ static INT32 DrvInit()
 	SN76477_set_vco_voltage(0, 5.0*2/(2+10));
 	SN76477_mixer_w(0, 0);
 	SN76477_envelope_w(0, 0);
-	SN76477_set_mastervol(0, 1.00);
+	SN76477_set_mastervol(0, 10.00); // weird
 
 	// call after SN76477!
 	AY8910Init(0, 1250000, nBurnSoundRate, NULL, NULL, &stratvox_sn76477_write, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvDACSync);
-	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

@@ -548,7 +548,6 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 	}
 
 	INT32 opaque = priority & TMAP_FORCEOPAQUE;
-
 	INT32 tgroup = (priority >> 8) & 0xff;
 	priority &= 0xff;
 
@@ -590,13 +589,16 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags);
 
-				if ((flags & TILE_SKIP) && opaque == 0) continue; // skip this tile
+				if (opaque == 0)
+				{
+					if (flags & TILE_SKIP) continue; // skip this tile
 
-				if (flags & TILE_GROUP_ENABLE) {
-					group = (flags >> 16) & 0xff;
+					if (flags & TILE_GROUP_ENABLE) {
+						group = (flags >> 16) & 0xff;
 
-					if (group != tgroup) {
-						continue;
+						if (group != tgroup) {
+							continue;
+						}
 					}
 				}
 
@@ -686,13 +688,16 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 			
 				cur_map->pTile(cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight), &gfxnum, &code, &color, &flags);
 
-				if ((flags & TILE_SKIP) && opaque == 0) continue; // skip this tile
+				if (opaque == 0)
+				{
+					if (flags & TILE_SKIP) continue; // skip this tile
 
-				if (flags & TILE_GROUP_ENABLE) {
-					group = (flags >> 16) & 0xff;
+					if (flags & TILE_GROUP_ENABLE) {
+						group = (flags >> 16) & 0xff;
 	
-					if (group != tgroup) {
-						continue;
+						if (group != tgroup) {
+							continue;
+						}
 					}
 				}
 
@@ -846,13 +851,16 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 			
 		cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags);
 
-		if (flags & TILE_SKIP) continue; // skip this tile
+		if (opaque == 0)
+		{
+			if (flags & TILE_SKIP) continue; // skip this tile
 
-		if (flags & TILE_GROUP_ENABLE) {
-			group = (flags >> 16) & 0xff;
+			if (flags & TILE_GROUP_ENABLE) {
+				group = (flags >> 16) & 0xff;
 
-			if (group != tgroup) {
-				continue;
+				if (group != tgroup) {
+					continue;
+				}
 			}
 		}
 

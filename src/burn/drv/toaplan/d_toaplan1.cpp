@@ -2761,6 +2761,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tiles_offsets_x);
 		SCAN_VAR(tiles_offsets_y);
 		SCAN_VAR(tileram_offs);
+		SCAN_VAR(spriteram_offset);
 		SCAN_VAR(sprite_flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(mcu_command);

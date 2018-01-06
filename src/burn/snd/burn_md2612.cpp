@@ -1,4 +1,6 @@
 // Megadrive ym2612 interface for eke-eke's genplus-gx ym2612, based on MAME's ym2612
+// Note: if a mono route is needed (in the future), uncomment in the main render loop.
+
 #include "burnint.h"
 #include "burn_sound.h"
 #include "burn_md2612.h"
@@ -65,18 +67,18 @@ static void MD2612Render(INT32 nSegmentLength)
 
 #define INTERPOLATE_ADD_SOUND_LEFT(route, buffer)																	\
 	if ((MD2612RouteDirs[route] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {									\
-		nLeftSample[0] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 3] * MD2612Volumes[route]);	\
-		nLeftSample[1] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 2] * MD2612Volumes[route]);	\
-		nLeftSample[2] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 1] * MD2612Volumes[route]);	\
-		nLeftSample[3] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 0] * MD2612Volumes[route]);	\
+		nLeftSample[0] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 3]/* * MD2612Volumes[route]*/);	\
+		nLeftSample[1] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 2]/* * MD2612Volumes[route]*/);	\
+		nLeftSample[2] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 1]/* * MD2612Volumes[route]*/);	\
+		nLeftSample[3] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 0]/* * MD2612Volumes[route]*/);	\
 	}
 
 #define INTERPOLATE_ADD_SOUND_RIGHT(route, buffer)																	\
 	if ((MD2612RouteDirs[route] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {									\
-		nRightSample[0] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 3] * MD2612Volumes[route]);	\
-		nRightSample[1] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 2] * MD2612Volumes[route]);	\
-		nRightSample[2] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 1] * MD2612Volumes[route]);	\
-		nRightSample[3] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 0] * MD2612Volumes[route]);	\
+		nRightSample[0] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 3]/* * MD2612Volumes[route]*/);	\
+		nRightSample[1] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 2]/* * MD2612Volumes[route]*/);	\
+		nRightSample[2] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 1]/* * MD2612Volumes[route]*/);	\
+		nRightSample[3] += (INT32)(pMD2612Buffer[buffer][(nFractionalPosition >> 16) - 0]/* * MD2612Volumes[route]*/);	\
 	}
 
 static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
@@ -108,16 +110,16 @@ static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 		INT32 nTotalLeftSample, nTotalRightSample;
 
 		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_MD2612_MD2612_ROUTE_1, 0)
-		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_MD2612_MD2612_ROUTE_1, 0)
-		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_MD2612_MD2612_ROUTE_2, 1)
+		//INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_MD2612_MD2612_ROUTE_1, 0) // uncomment these to fix MONO, if needed in the future. (unlikely)
+		//INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_MD2612_MD2612_ROUTE_2, 1)
 		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_MD2612_MD2612_ROUTE_2, 1)
-		
-		nTotalLeftSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
 		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
-		
-		nTotalLeftSample = BURN_SND_CLIP(nTotalLeftSample);
-		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
-			
+
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * MD2612Volumes[BURN_SND_MD2612_MD2612_ROUTE_1]);
+		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample * MD2612Volumes[BURN_SND_MD2612_MD2612_ROUTE_2]);
+
 		if (bMD2612AddSignal) {
 			pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
 			pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
@@ -126,7 +128,7 @@ static void MD2612UpdateResample(INT16* pSoundBuf, INT32 nSegmentEnd)
 			pSoundBuf[i + 1] = nTotalRightSample;
 		}
 	}
-	
+
 	if (nSegmentEnd >= nBurnSoundLen) {
 		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
 

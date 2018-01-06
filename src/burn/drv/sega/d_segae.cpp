@@ -55,7 +55,7 @@ static UINT8 hintpending;
 static UINT8 currentLine = 0;
 
 static UINT8 leftcolumnblank = 0; // most games need this, except tetris
-static UINT8 leftcolumnblank_special = 0; // for fantzn2, move over the screen 16px
+static UINT8 leftcolumnblank_special = 0; // for fantzn2, move over the screen 8px
 static UINT8 sprite_bug = 0; // for fantzn2 & ridleofp
 static UINT8 ridleofp = 0;
 
@@ -1058,7 +1058,7 @@ static void segae_drawtilesline(UINT8 *dest, int line, UINT8 chip, UINT8 pri)
 static void segae_drawscanline(int line)
 {
 	UINT8 *dest = cache_bitmap + (16+256+16) * line;
-	UINT32 offset = (leftcolumnblank_special) ? 0 : 16;
+	UINT32 offset = (leftcolumnblank_special) ? 8 : 16;
 
 	/* This should be cleared to bg colour, but which vdp determines that !, neither seems to be right, maybe its always the same col? */
 	memset(dest, 0, 16+256+16);
@@ -1522,7 +1522,7 @@ struct BurnDriver BurnDrvFantzn2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, fantzn2RomInfo, fantzn2RomName, NULL, NULL, TransfrmInputInfo, Fantzn2DIPInfo,
 	DrvFantzn2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
-	240, 192, 4, 3
+	248, 192, 4, 3
 };
 
 

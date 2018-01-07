@@ -570,7 +570,7 @@ struct BurnDriver BurnDrvPuzzl3x3 = {
 };
 
 
-// 3X3 Puzzle (Enterprise)
+// 3X3 Puzzle (Normal)
 
 static struct BurnRomInfo puzzl3x3aRomDesc[] = {
 	{ "1a.bin",		0x20000, 0x425c5896, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
@@ -599,7 +599,7 @@ STD_ROM_FN(puzzl3x3a)
 
 struct BurnDriver BurnDrvPuzzl3x3a = {
 	"3x3puzzla", "3x3puzzl", NULL, NULL, "1998",
-	"3X3 Puzzle (Enterprise)\0", NULL, "Ace Enterprise", "Miscellaneous",
+	"3X3 Puzzle (Normal)\0", NULL, "Ace Enterprise", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, puzzl3x3aRomInfo, puzzl3x3aRomName, NULL, NULL, Puzzle3x3InputInfo, Puzzle3x3DIPInfo,

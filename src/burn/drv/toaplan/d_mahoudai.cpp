@@ -48,7 +48,7 @@ static struct BurnRomInfo sstrikerRomDesc[] = {
 STD_ROM_PICK(sstriker)
 STD_ROM_FN(sstriker)
 
-static struct BurnRomInfo sstrikraRomDesc[] = {
+static struct BurnRomInfo sstrikerkRomDesc[] = {
 	{ "ra-ma-01_01.u65",  0x080000, 0x92259F84, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
 	{ "ra-ma01-rom2.u2",  0x100000, 0x54E2BD95, BRF_GRA },			 //  1 GP9001 Tile data
@@ -62,8 +62,8 @@ static struct BurnRomInfo sstrikraRomDesc[] = {
 };
 
 
-STD_ROM_PICK(sstrikra)
-STD_ROM_FN(sstrikra)
+STD_ROM_PICK(sstrikerk)
+STD_ROM_FN(sstrikerk)
 
 static struct BurnInputInfo mahoudaiInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvButton + 3,	"p1 coin"},
@@ -181,8 +181,25 @@ static struct BurnDIPInfo sstrikerRegionDIPList[] = {
     {0x16,	0x01, 0x0E,	0x00, "Japan"},
 };
 
+static struct BurnDIPInfo sstrikerkRegionDIPList[] = {
+	// Defaults
+	{0x16,	0xFF, 0x0E,	0x0A, NULL},
+
+	// Region
+	{0,		0xFE, 0,	7,	  "Region"},
+    {0x16,	0x01, 0x0E,	0x02, "U.S.A."},
+    {0x16,	0x01, 0x0E,	0x04, "Europe"},
+    {0x16,	0x01, 0x0E,	0x06, "South East Asia"},
+    {0x16,	0x01, 0x0E,	0x08, "China"},
+    {0x16,	0x01, 0x0E,	0x0A, "Korea"},
+    {0x16,	0x01, 0x0E,	0x0C, "Hong Kong"},
+    {0x16,	0x01, 0x0E,	0x0E, "Taiwan"},
+    {0x16,	0x01, 0x0E,	0x00, "Japan"},
+};
+
 STDDIPINFOEXT(mahoudai, mahoudai, mahoudaiRegion)
 STDDIPINFOEXT(sstriker, mahoudai, sstrikerRegion)
+STDDIPINFOEXT(sstrikerk, mahoudai, sstrikerkRegion)
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
 static UINT8 *RamStart, *RamEnd;
@@ -679,7 +696,7 @@ struct BurnDriver BurnDrvMahouDai = {
 
 struct BurnDriver BurnDrvSStriker = {
 	"sstriker", NULL, NULL, NULL, "1993",
-	"Sorcer Striker (World)\0", NULL, "Raizing", "Toaplan GP9001 based",
+	"Sorcer Striker\0", NULL, "Raizing", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
 	NULL, sstrikerRomInfo, sstrikerRomName, NULL, NULL, mahoudaiInputInfo, sstrikerDIPInfo,
@@ -687,12 +704,12 @@ struct BurnDriver BurnDrvSStriker = {
 	240, 320, 3, 4
 };
 
-struct BurnDriver BurnDrvSStrikrA = {
-	"sstrikera", "sstriker", NULL, NULL, "1993",
-	"Sorcer Striker (World, alt)\0", NULL, "Raizing", "Toaplan GP9001 based",
+struct BurnDriver BurnDrvSStrikerk = {
+	"sstrikerk", "sstriker", NULL, NULL, "1993",
+	"Sorcer Striker (Korea)\0", NULL, "Raizing (Unite Trading license)", "Toaplan GP9001 based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | TOA_ROTATE_GRAPHICS_CCW | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TOAPLAN_RAIZING, GBF_VERSHOOT, 0,
-	NULL, sstrikraRomInfo, sstrikraRomName, NULL, NULL, mahoudaiInputInfo, sstrikerDIPInfo,
+	NULL, sstrikerkRomInfo, sstrikerkRomName, NULL, NULL, mahoudaiInputInfo, sstrikerkDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &ToaRecalcPalette, 0x800,
 	240, 320, 3, 4
 };

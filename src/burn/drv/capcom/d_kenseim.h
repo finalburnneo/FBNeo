@@ -140,7 +140,7 @@ static struct BurnRomInfo KenseimRomDesc[] = {
 	{ "knm10b.1a",     0x000117, 0xe40131d4, BRF_OPT },	// b-board PLDs
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
-	{ "ioc1.ic7",      0x000117, 0x0d182081, BRF_OPT },	// c-board PLDs
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 	
 	{ "kensei_mogura_ver1.0.u2", 0x008000, 0x725cfcfc, BRF_PRG | BRF_ESS },

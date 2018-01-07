@@ -591,7 +591,7 @@ static INT32 DrvInit()
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "weststory") || !strcmp(BurnDrvGetTextA(DRV_NAME), "westorya"))
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "weststry") || !strcmp(BurnDrvGetTextA(DRV_NAME), "weststrya"))
 	{
 		{
 			if (BurnLoadRom(Drv68KROM + 0x000000, 0, 2)) return 1;
@@ -1047,7 +1047,7 @@ struct BurnDriver BurnDrvBloodbrou = {
 
 // West Story (bootleg of Blood Bros., set 1)
 
-static struct BurnRomInfo weststoryRomDesc[] = {
+static struct BurnRomInfo weststryRomDesc[] = {
 	{ "ws13.bin",	0x20000, 0x158e302a, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "ws15.bin",	0x20000, 0x672e9027, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ws14.bin",	0x20000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1081,15 +1081,15 @@ static struct BurnRomInfo weststoryRomDesc[] = {
 	{ "ws18.bin",	0x20000, 0xdeb1b975, 6 | BRF_SND },           // 25 Samples
 };
 
-STD_ROM_PICK(weststory)
-STD_ROM_FN(weststory)
+STD_ROM_PICK(weststry)
+STD_ROM_FN(weststry)
 
-struct BurnDriverD BurnDrvWeststory = {
-	"weststory", "bloodbro", NULL, NULL, "1991",
+struct BurnDriverD BurnDrvWeststry = {
+	"weststry", "bloodbro", NULL, NULL, "1991",
 	"West Story (bootleg of Blood Bros., set 1)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, weststoryRomInfo, weststoryRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
+	NULL, weststryRomInfo, weststryRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };
@@ -1097,7 +1097,7 @@ struct BurnDriverD BurnDrvWeststory = {
 
 // West Story (bootleg of Blood Bros., set 2)
 
-static struct BurnRomInfo weststoryaRomDesc[] = {
+static struct BurnRomInfo weststryaRomDesc[] = {
 	{ "13.bin",		0x20000, 0xd50e1dfd, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "15.bin",		0x20000, 0xfd419c7b, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "ws14.bin",	0x20000, 0xfd951c2c, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -1131,15 +1131,15 @@ static struct BurnRomInfo weststoryaRomDesc[] = {
 	{ "ws18.bin",	0x20000, 0xdeb1b975, 6 | BRF_SND },           // 25 Samples
 };
 
-STD_ROM_PICK(weststorya)
-STD_ROM_FN(weststorya)
+STD_ROM_PICK(weststrya)
+STD_ROM_FN(weststrya)
 
-struct BurnDriverD BurnDrvWeststorya = {
-	"weststorya", "bloodbro", NULL, NULL, "1991",
+struct BurnDriverD BurnDrvWeststrya = {
+	"weststrya", "bloodbro", NULL, NULL, "1991",
 	"West Story (bootleg of Blood Bros., set 2)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
-	NULL, weststoryaRomInfo, weststoryaRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
+	NULL, weststryaRomInfo, weststryaRomName, NULL, NULL, WeststryInputInfo, WeststryDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	256, 224, 4, 3
 };

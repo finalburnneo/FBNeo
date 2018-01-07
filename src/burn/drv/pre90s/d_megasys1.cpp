@@ -5991,7 +5991,7 @@ struct BurnDriver BurnDrvPeekaboou = {
 	256, 224, 4, 3
 };
 
-// In Your Face (World, prototype)
+// In Your Face (North America, prototype)
 
 static struct BurnRomInfo inyourfaRomDesc[] = {
 	{ "02.27C1001",		0x020000, 0xae77e5b7, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code

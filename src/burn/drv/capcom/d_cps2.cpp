@@ -7634,6 +7634,37 @@ static struct BurnRomInfo Xmcotaar1RomDesc[] = {
 STD_ROM_PICK(Xmcotaar1)
 STD_ROM_FN(Xmcotaar1)
 
+static struct BurnRomInfo XmcotabRomDesc[] = {
+	{ "xmnb.03c",      0x080000, 0xab48bcb0, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmnb.04c",      0x080000, 0x8d8fcbb1, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmne.05b",      0x080000, 0x87b0ed0f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.06a",       0x080000, 0x1b86a328, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.07a",       0x080000, 0x2c142a44, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.08a",       0x080000, 0xf712d44f, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmn.09a",       0x080000, 0x9241cae8, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "xmne.10b",      0x080000, 0xcb36b0a4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "xmn.13m",       0x400000, 0xbf4df073, CPS2_GFX | BRF_GRA },
+	{ "xmn.15m",       0x400000, 0x4d7e4cef, CPS2_GFX | BRF_GRA },
+	{ "xmn.17m",       0x400000, 0x513eea17, CPS2_GFX | BRF_GRA },
+	{ "xmn.19m",       0x400000, 0xd23897fc, CPS2_GFX | BRF_GRA },
+	{ "xmn.14m",       0x400000, 0x778237b7, CPS2_GFX | BRF_GRA },
+	{ "xmn.16m",       0x400000, 0x67b36948, CPS2_GFX | BRF_GRA },
+	{ "xmn.18m",       0x400000, 0x015a7c4c, CPS2_GFX | BRF_GRA },
+	{ "xmn.20m",       0x400000, 0x9dde2758, CPS2_GFX | BRF_GRA },
+
+	{ "xmn.01a",       0x020000, 0x40f479ea, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "xmn.02a",       0x020000, 0x39d9b5ad, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "xmn.11m",       0x200000, 0xc848a6bc, CPS2_QSND | BRF_SND },
+	{ "xmn.12m",       0x200000, 0x729c188f, CPS2_QSND | BRF_SND },
+	
+	{ "xmcotab.key",   0x000014, 0xbb70f10f, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Xmcotab)
+STD_ROM_FN(Xmcotab)
+
 static struct BurnRomInfo XmcotahRomDesc[] = {
 	{ "xmnh.03f",      0x080000, 0xe4b85a90, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "xmnh.04f",      0x080000, 0x7dfe1406, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -10768,6 +10799,16 @@ struct BurnDriver BurnDrvCpsXmcotaar1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, Xmcotaar1RomInfo, Xmcotaar1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsXmcotab = {
+	"xmcotab", "xmcota", NULL, NULL, "1995",
+	"X-Men - children of the atom (950331 Brazil)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, XmcotabRomInfo, XmcotabRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	XmcotaInit, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

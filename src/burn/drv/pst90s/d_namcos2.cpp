@@ -7280,7 +7280,7 @@ static struct BurnRomInfo fourtraxaRomDesc[] = {
 
 	{ "fx_chr-0.11n",	0x20000, 0x6658c1c3, 0x06 | BRF_GRA },           // 23 Layer Tiles
 	{ "fx_chr-1.11p",	0x20000, 0x3a888943, 0x06 | BRF_GRA },           // 24
-	{ "fx2_ch2.11r",	0x20000, 0xfdf1e86b, 0x06 | BRF_GRA },           // 25
+	{ "fx4_ch2.11r",	0x20000, 0xa5d1ab10, 0x06 | BRF_GRA },           // 25
 	{ "fx_chr-3.11s",	0x20000, 0x47fa7e61, 0x06 | BRF_GRA },           // 26
 	{ "fx_chr-4.9n",	0x20000, 0xc720c5f5, 0x06 | BRF_GRA },           // 27
 	{ "fx_chr-5.9p",	0x20000, 0x9eacdbc8, 0x06 | BRF_GRA },           // 28

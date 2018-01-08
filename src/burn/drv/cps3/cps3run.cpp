@@ -1065,9 +1065,12 @@ static INT32 Cps3Reset()
 		EEPROM[0x29] = 0x000 + (EEPROM[0x29] & 0xff);
 	}
 
-	cps3_current_eeprom_read = 0;	
-	cps3SndReset();	
-	cps3_reset = 0;	
+	cps3_current_eeprom_read = 0;
+	cps3SndReset();
+	cps3_reset = 0;
+
+	HiscoreReset();
+
 	return 0;
 }
 

@@ -200,7 +200,10 @@ UINT16 __fastcall supbtime_main_read_word(UINT32 address)
 			return (DrvInputs[1] & ~0x0008) | (deco16_vblank & 0x0008);
 
 		case 0x18000a:
+			return 0;
+
 		case 0x18000c:
+			SekSetIRQLine(6, CPU_IRQSTATUS_NONE);
 			return 0;
 	}
 
@@ -229,9 +232,22 @@ UINT8 __fastcall supbtime_main_read_byte(UINT32 address)
 	return 0;
 }
 
+static void palette_onreset() // rainbow fill palette, fixes disappearing "Super" on first titlescreen iteration
+{
+	for (INT32 i = 0; i < 0x800/2; i++) {
+		UINT8 r = ((i & 1) ? 0x0f : 0);
+		UINT8 g = ((i & 2) ? 0x0f : 0);
+		UINT8 b = ((i & 4) ? 0x0f : 0);
+
+		*((UINT32*)(DrvPalRAM + (i * 2))) =  r | (g << 4) | (b << 8);
+	}
+}
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
+
+	palette_onreset();
 
 	SekOpen(0);
 	SekReset();
@@ -457,11 +473,11 @@ static INT32 DrvDraw()
 		pTransDraw[i] = 0x300;
 	}
 
-	if (nBurnLayer & 1) deco16_draw_layer(1, pTransDraw, 0x10000 /*opaque*/);
+	if (nBurnLayer & 1) deco16_draw_layer(1, pTransDraw, 0);
 
 	if (nBurnLayer & 2) draw_sprites();
 
-	if (nBurnLayer & 4) deco16_draw_layer(0, pTransDraw, 0x00000 /*transparent*/);
+	if (nBurnLayer & 4) deco16_draw_layer(0, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -499,7 +515,11 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (i == 206) deco16_vblank = 0x08;
+		if (i == 206) {
+			deco16_vblank = 0x08;
+			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
+		}
+
 		
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
@@ -509,7 +529,6 @@ static INT32 DrvFrame()
 		}
 	}
 
-	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 	
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

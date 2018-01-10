@@ -177,6 +177,13 @@ void SN76477_mixer_w(int chip, int data)
 	LOG(1,("SN76477 #%d: MIXER mode %d [%s]\n", chip, sn->mixer, mixer_mode[sn->mixer]));
 }
 
+void SN76477_set_mixer_params(int chip, int a, int b, int c)
+{
+	SN76477_mixer_a_w(chip, a);
+	SN76477_mixer_b_w(chip, b);
+	SN76477_mixer_c_w(chip, c);
+}
+
 void SN76477_mixer_a_w(int chip, int data)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -236,6 +243,13 @@ void SN76477_envelope_w(int chip, int data)
 	LOG(1,("SN76477 #%d: ENVELOPE mode %d [%s]\n", chip, sn->envelope, envelope_mode[sn->envelope]));
 }
 
+void SN76477_set_envelope_params(int chip, int one, int two)
+{
+	SN76477_envelope_1_w(chip, one);
+	SN76477_envelope_2_w(chip, two);
+
+}
+
 void SN76477_envelope_1_w(int chip, int data)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -263,6 +277,11 @@ void SN76477_envelope_2_w(int chip, int data)
 /*****************************************************************************
  * set VCO external/SLF input
  *****************************************************************************/
+void SN76477_set_vco_mode(int chip, int data)
+{
+	SN76477_vco_w(chip, data);
+}
+
 void SN76477_vco_w(int chip, int data)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -277,6 +296,13 @@ void SN76477_vco_w(int chip, int data)
 /*****************************************************************************
  * set VCO enable input
  *****************************************************************************/
+void SN76477_set_enable(int chip, int enable)
+{
+	struct SN76477 *sn = sn76477[chip];
+
+	sn->enable = (enable) ? 1 : 0;
+}
+
 void SN76477_enable_w(int chip, int data)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -364,6 +390,13 @@ void SN76477_noise_clock_w(int chip, int data)
 /*****************************************************************************
  * set NOISE resistor (pin 4)
  *****************************************************************************/
+void SN76477_set_noise_params(int chip, double res, double filtres, double cap)
+{
+	SN76477_set_noise_res(chip, res);
+	SN76477_set_filter_res(chip, filtres);
+	SN76477_set_filter_cap(chip, cap);
+}
+
 void SN76477_set_noise_res(int chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -429,6 +462,12 @@ void SN76477_set_decay_res(int chip, double res)
 /*****************************************************************************
  * set ATTACK/DECAY capacitor (pin 8)
  *****************************************************************************/
+void SN76477_set_attack_params(int chip, double cap, double res)
+{
+	SN76477_set_attack_decay_cap(chip, cap);
+	SN76477_set_attack_res(chip, res);
+}
+
 void SN76477_set_attack_decay_cap(int chip, double cap)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -546,6 +585,13 @@ void SN76477_set_pitch_voltage(int chip, double voltage)
 /*****************************************************************************
  * set VCO resistor (pin 18)
  *****************************************************************************/
+void SN76477_set_vco_params(int chip, double voltage, double cap, double res)
+{
+	SN76477_set_vco_voltage(chip, voltage);
+	SN76477_set_vco_cap(chip, cap);
+	SN76477_set_vco_res(chip, res);
+}
+
 void SN76477_set_vco_res(int chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -604,6 +650,12 @@ void SN76477_set_vco_voltage(int chip, double voltage)
 /*****************************************************************************
  * set SLF resistor (pin 20)
  *****************************************************************************/
+void SN76477_set_slf_params(int chip, double cap, double res)
+{
+	SN76477_set_slf_cap(chip, cap);
+	SN76477_set_slf_res(chip, res);
+}
+
 void SN76477_set_slf_res(int chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
@@ -644,6 +696,12 @@ void SN76477_set_slf_cap(int chip, double cap)
 /*****************************************************************************
  * set ONESHOT resistor (pin 24)
  *****************************************************************************/
+void SN76477_set_oneshot_params(int chip, double cap, double res)
+{
+	SN76477_set_oneshot_cap(chip, cap);
+	SN76477_set_oneshot_res(chip, res);
+}
+
 void SN76477_set_oneshot_res(int chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];

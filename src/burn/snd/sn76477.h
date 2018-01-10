@@ -36,47 +36,56 @@
 #define TIME_IN_HZ(hz) (1.0 / (double)(hz))
 
 /* Noise clock write, useful only if noise_res is zero */
-extern void SN76477_noise_clock_w(int chip, int data);
+void SN76477_noise_clock_w(int chip, int data);
 
 /* Enable (one input line: 0 enabled, 1 inhibited) - resets one shot */
-extern void SN76477_enable_w(int chip, int data);
+void SN76477_enable_w(int chip, int data);
 
 /* Mixer select (three input lines, data 0 to 7) */
-extern void SN76477_mixer_w(int chip, int data);
+void SN76477_mixer_w(int chip, int data);
+void SN76477_set_mixer_params(int chip, int a, int b, int c);
 
 /* Alternatively write the single input lines */
-extern void SN76477_mixer_a_w(int chip, int data);
-extern void SN76477_mixer_b_w(int chip, int data);
-extern void SN76477_mixer_c_w(int chip, int data);
+void SN76477_mixer_a_w(int chip, int data);
+void SN76477_mixer_b_w(int chip, int data);
+void SN76477_mixer_c_w(int chip, int data);
 
 /* Select envelope (two input lines, data 0 to 3) */
-extern void SN76477_envelope_w(int chip, int data);
+void SN76477_envelope_w(int chip, int data);
+void SN76477_set_envelope_params(int chip, int one, int two); // both!
 
 /* Alternatively use the single input lines */
-extern void SN76477_envelope_1_w(int chip, int data);
-extern void SN76477_envelope_2_w(int chip, int data);
+void SN76477_envelope_1_w(int chip, int data);
+void SN76477_envelope_2_w(int chip, int data);
 
 /* VCO select (one input line: 0 external control, 1: SLF control) */
-extern void SN76477_vco_w(int chip, int data);
+void SN76477_vco_w(int chip, int data);
+void SN76477_set_vco_mode(int chip, int data);
 
+void SN76477_set_noise_params(int chip, double res, double filtres, double cap);
 void SN76477_set_noise_res(int chip, double res);
 void SN76477_set_filter_res(int chip, double res);
 void SN76477_set_filter_cap(int chip, double cap);
 void SN76477_set_decay_res(int chip, double res);
+void SN76477_set_attack_params(int chip, double cap, double res);
 void SN76477_set_attack_decay_cap(int chip, double cap);
 void SN76477_set_attack_res(int chip, double res);
 void SN76477_set_amplitude_res(int chip, double res);
 void SN76477_set_feedback_res(int chip, double res);
+void SN76477_set_slf_params(int chip, double cap, double res);
 void SN76477_set_slf_res(int chip, double res);
 void SN76477_set_slf_cap(int chip, double cap);
+void SN76477_set_oneshot_params(int chip, double cap, double res);
 void SN76477_set_oneshot_res(int chip, double res);
 void SN76477_set_oneshot_cap(int chip, double cap);
+void SN76477_set_vco_params(int chip, double voltage, double cap, double res);
 void SN76477_set_vco_res(int chip, double res);
 void SN76477_set_vco_cap(int chip, double cap);
 void SN76477_set_pitch_voltage(int chip, double voltage);
 void SN76477_set_vco_voltage(int chip, double voltage);
 void SN76477_set_mastervol(int chip, double vol);
 void SN76477_sound_update(int param, INT16 *buffer, int length);
+void SN76477_set_enable(int chip, int enable);
 
 void SN76477_init(int num);
 void SN76477_reset(int num);

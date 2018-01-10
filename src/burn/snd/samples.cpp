@@ -182,9 +182,11 @@ void BurnSampleSetLoop(INT32 sample, bool dothis)
 
 INT32 BurnSampleGetStatus(INT32 sample)
 {
-#if defined FBA_DEBUG
-	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetStatus called without init\n"));
-#endif
+//#if defined FBA_DEBUG
+//	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetStatus called without init\n"));
+//#endif
+
+	// this is used to see if samples iniitted & the game has samples.
 
 	if (sample >= nTotalSamples) return -1;
 
@@ -238,8 +240,9 @@ char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 
 void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 {
-	DebugSnd_SamplesInitted = 1;
-	
+	bAddToStream = bAdd;
+	nTotalSamples = 0;
+
 	if (nBurnSoundRate == 0) {
 		nTotalSamples = 0;
 		return;
@@ -281,10 +284,9 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 	}
 #endif
 	
-	bAddToStream = bAdd;
-	nTotalSamples = 0;
-
 	if (!nEnableSamples) return;
+
+	DebugSnd_SamplesInitted = 1;
 
 	struct BurnSampleInfo si;
 	INT32 nSampleOffset = -1;
@@ -428,6 +430,8 @@ void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteAllSamples called without init\n"));
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("BurnSampleSetRouteAllSamples called with invalid index %i\n"), nIndex);
 #endif
+
+	if (!nTotalSamples) return;
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];

@@ -28,10 +28,10 @@
 
 struct TONE
 {
-	int mute;
-	int offset;
-	int base;
-	int mask;
+	INT32 mute;
+	INT32 offset;
+	INT32 base;
+	INT32 mask;
 	INT32   sample_rate;
 	INT32   sample_step;
 	INT32   sample_cur;
@@ -46,12 +46,12 @@ static INT32 last_music_freq;
 static double last_clock_time;
 
 static UINT8 *m_ROM;
-static int m_Sound0StopOnRollover;
+static INT32 m_Sound0StopOnRollover;
 static UINT8 m_LastPort1;
 
-static int m_hd38880_cmd;
+static INT32 m_hd38880_cmd;
 static UINT32 m_hd38880_addr;
-static int m_hd38880_data_bytes;
+static INT32 m_hd38880_data_bytes;
 static double m_hd38880_speed;
 static INT32 speechnum_playing;
 
@@ -82,7 +82,7 @@ void snk6502_sound_init(UINT8 *soundrom)
 	snk6502_set_music_clock(M_LN2 * (RES_K(18) * 2 + RES_K(1)) * CAP_U(1));
 }
 
-static void validate_tone_channel(int channel)
+static void validate_tone_channel(INT32 channel)
 {
 	if (!m_tone_channels[channel].mute)
 	{
@@ -95,11 +95,11 @@ static void validate_tone_channel(int channel)
 	}
 }
 
-static void sasuke_build_waveform(int mask)
+static void sasuke_build_waveform(INT32 mask)
 {
-	int bit0, bit1, bit2, bit3;
-	int base;
-	int i;
+	INT32 bit0, bit1, bit2, bit3;
+	INT32 base;
+	INT32 i;
 
 	mask &= 7;
 
@@ -118,7 +118,7 @@ static void sasuke_build_waveform(int mask)
 
 	for (i = 0; i < 16; i++)
 	{
-		int data = 0;
+		INT32 data = 0;
 
 		if (i & 1)
 			data += bit0;
@@ -137,11 +137,11 @@ static void sasuke_build_waveform(int mask)
 		m_tone_channels[0].form[i] *= 65535 / 16;
 }
 
-static void satansat_build_waveform(int mask)
+static void satansat_build_waveform(INT32 mask)
 {
-	int bit0, bit1, bit2, bit3;
-	int base;
-	int i;
+	INT32 bit0, bit1, bit2, bit3;
+	INT32 base;
+	INT32 i;
 
 	mask &= 7;
 
@@ -156,7 +156,7 @@ static void satansat_build_waveform(int mask)
 
 	for (i = 0; i < 16; i++)
 	{
-		int data = 0;
+		INT32 data = 0;
 
 		if (i & 1)
 			data += bit0;
@@ -175,11 +175,11 @@ static void satansat_build_waveform(int mask)
 		m_tone_channels[1].form[i] *= 65535 / 16;
 }
 
-static void build_waveform(int channel, int mask)
+static void build_waveform(INT32 channel, INT32 mask)
 {
-	int bit0, bit1, bit2, bit3;
-	int base;
-	int i;
+	INT32 bit0, bit1, bit2, bit3;
+	INT32 base;
+	INT32 i;
 
 	mask &= 15;
 
@@ -230,7 +230,7 @@ static void build_waveform(int channel, int mask)
 		}
 		else
 		{
-			int data = 0;
+			INT32 data = 0;
 
 			if (i & 1)
 				data += bit0;
@@ -250,12 +250,12 @@ static void build_waveform(int channel, int mask)
 		m_tone_channels[channel].form[i] *= 65535 / 160;
 }
 
-void snk6502_set_music_freq(int freq)
+void snk6502_set_music_freq(INT32 freq)
 {
 	if (freq == -1) freq = last_music_freq;
 	last_music_freq = freq;
 
-	int i;
+	INT32 i;
 
 	for (i = 0; i < CHANNELS; i++)
 	{
@@ -280,7 +280,7 @@ void snk6502_set_music_clock(double clock_time)
 	m_tone_clock = 0;
 }
 
-int snk6502_music0_playing()
+INT32 snk6502_music0_playing()
 {
 	return m_tone_channels[0].mute;
 }
@@ -550,8 +550,6 @@ void fantasy_sound_w(UINT16 offset, UINT8 data)
 		}
 
 		/* BOMB */
-		//machine().device<discrete_device>("discrete")->write(space, FANTASY_BOMB_EN, data & 0x80);
-		if (data & 0x80) bprintf(0, _T("bomb! %x\n"), data);
 		SN76477_enable_w(0, (data & 0x80) ? 0 : 1);
 
 		m_LastPort1 = data;
@@ -647,7 +645,7 @@ void fantasy_sound_w(UINT16 offset, UINT8 data)
 #define HD38880_CMV 0x20
 #define HD68880_SYBS    0x0f
 
-static int samples_playing()
+static INT32 samples_playing()
 {
 	for (INT32 i = 0; i < 16; i++) {
 		if (BurnSampleGetStatus(i) == 1)
@@ -665,7 +663,7 @@ static void samples_stopall()
 }
 #endif
 
-static void speech_w(UINT8 data, const UINT16 *table, int start)
+static void speech_w(UINT8 data, const UINT16 *table, INT32 start)
 {
 	/*
 	    bit description
@@ -693,7 +691,7 @@ static void speech_w(UINT8 data, const UINT16 *table, int start)
 
 				if (m_hd38880_data_bytes == 5 && !samples_playing())
 				{
-					int i;
+					INT32 i;
 
 					for (i = 0; i < 16; i++)
 					{
@@ -882,9 +880,9 @@ void snk_sound_update(INT16 *buffer, INT32 samples)
 
 			if (!voice->mute && voice->sample_step)
 			{
-				int cur_pos = voice->sample_cur + voice->sample_step;
-				int prev = form[(voice->sample_cur >> FRAC_BITS) & 15];
-				int cur = form[(cur_pos >> FRAC_BITS) & 15];
+				INT32 cur_pos = voice->sample_cur + voice->sample_step;
+				INT32 prev = form[(voice->sample_cur >> FRAC_BITS) & 15];
+				INT32 cur = form[(cur_pos >> FRAC_BITS) & 15];
 
 				/* interpolate */
 				data += ((INT32)prev * (FRAC_ONE - (cur_pos & FRAC_MASK))

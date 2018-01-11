@@ -27,13 +27,7 @@
 
 #define MAX_SN76477 4
 
-/* Little helpers for magnitude conversions */
-#define RES_K(res) ((double)res*1e3)
-#define RES_M(res) ((double)res*1e6)
-#define CAP_U(cap) ((double)cap*1e-6)
-#define CAP_N(cap) ((double)cap*1e-9)
-#define CAP_P(cap) ((double)cap*1e-12)
-#define TIME_IN_HZ(hz) (1.0 / (double)(hz))
+#include "rescap.h"
 
 /* Noise clock write, useful only if noise_res is zero */
 void SN76477_noise_clock_w(int chip, int data);

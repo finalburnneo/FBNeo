@@ -814,7 +814,7 @@ static tilemap_callback( ssbackground )
 
 static tilemap_callback( background )
 {
-	TILE_SET_INFO(1, DrvVidRAM[offs] + (256 * charbank), (DrvColRAM[offs] >> 3), 0);
+	TILE_SET_INFO(1, DrvVidRAM[offs] + (256 * charbank), ((DrvColRAM[offs]&0x38) >> 3), 0);
 }
 
 static tilemap_callback( foreground )
@@ -1036,8 +1036,10 @@ static void DrvSoundInit(INT32 type)
 
 	BurnSampleInit(1);
 	bHasSamples = BurnSampleGetStatus(0) != -1;
-	if (bHasSamples) BurnSampleSetAllRoutesAllSamples(0.30, BURN_SND_ROUTE_BOTH);
-	bprintf(0, _T("Has samples: %S.\n"), (bHasSamples) ? "yes" : "no");
+	if (bHasSamples) {
+		BurnSampleSetAllRoutesAllSamples(0.30, BURN_SND_ROUTE_BOTH);
+		bprintf(0, _T("Loaded samples..\n"));
+	}
 }
 
 static void DrvSoundExit()
@@ -1542,11 +1544,13 @@ static INT32 DrvDraw()
 		DrvRecalc = 1;
 	}
 
+	BurnTransferClear();
+
 	GenericTilemapSetScrollX(0, scrollx);
 	GenericTilemapSetScrollY(0, scrolly);
 
-	GenericTilemapDraw(0, pTransDraw, 0);
-	GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1600,8 +1604,10 @@ static INT32 SatansatDraw()
 		DrvRecalc = 1;
 	}
 
-	GenericTilemapDraw(0, pTransDraw, 0);
-	GenericTilemapDraw(1, pTransDraw, 0);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -1627,7 +1633,7 @@ static INT32 DrvFrame()
 
 		if (prevcoin != (DrvInputs[2] & 3)) {
 			M6502Open(0);
-			M6502SetIRQLine(0x20, (DrvInputs[2] & 3) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK); // yes, really
+ 			if (!(DrvInputs[2] & 3)) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO); // nmi on key up for satansat & sasuke
 			M6502Close();
 		}
 
@@ -1636,12 +1642,12 @@ static INT32 DrvFrame()
 
 	INT32 nCyclesTotal = 705562 / 60;
 	INT32 nCyclesDone = 0;
-	INT32 nInterleave = 256;
+	INT32 nInterleave = 262;
 
 	M6502Open(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone += M6502Run(((i + 1) * nCyclesTotal / nInterleave) - nCyclesDone);
-		if (i == 224 && irqmask) M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1) && irqmask) M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 	M6502Close();
 
@@ -1685,6 +1691,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(scrolly);
 
 		SCAN_VAR(sasuke_counter);
+
+		snk6502_sound_savestate();
+	}
+
+	if (nAction & ACB_WRITE) {
+		for (INT32 i = 0; i < 0x800; i++) { // recalc ram chars
+			character_write(i);
+		}
 	}
 
 	return 0;

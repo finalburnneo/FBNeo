@@ -14,4 +14,4 @@ void fantasy_sound_w(UINT16 offset, UINT8 data);
 void vanguard_speech_w(UINT8 data);
 void fantasy_speech_w(UINT8 data);
 void snk_sound_update(INT16 *buffer, INT32 samples);
-
+void snk6502_sound_savestate();

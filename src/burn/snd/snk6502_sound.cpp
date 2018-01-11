@@ -13,6 +13,7 @@
 
 
 #include "burnint.h"
+#include "rescap.h"
 #include "samples.h"
 #include "sn76477.h"
 #include "snk6502_sound.h"
@@ -32,18 +33,20 @@ struct TONE
 	INT32 offset;
 	INT32 base;
 	INT32 mask;
-	INT32   sample_rate;
-	INT32   sample_step;
-	INT32   sample_cur;
-	INT16   form[16];
+
+	INT32 sample_rate;
+	INT32 sample_step;
+	INT32 sample_cur;
+	INT16 form[16];
 };
 
 // internal state
 static TONE m_tone_channels[CHANNELS];
 static INT32 m_tone_clock_expire;
 static INT32 m_tone_clock;
-static INT32 last_music_freq;
-static double last_clock_time;
+
+static INT32 last_music_freq; // used for _reset()!
+static double last_clock_time; // ""
 
 static UINT8 *m_ROM;
 static INT32 m_Sound0StopOnRollover;
@@ -269,6 +272,29 @@ void snk6502_set_music_freq(INT32 freq)
 
 		build_waveform(i, 1);
 	}
+}
+
+void snk6502_sound_savestate()
+{
+	for (INT32 i = 0; i < CHANNELS; i++)
+	{
+		SCAN_VAR(m_tone_channels[i].mute);
+		SCAN_VAR(m_tone_channels[i].offset);
+		SCAN_VAR(m_tone_channels[i].base);
+		SCAN_VAR(m_tone_channels[i].mask);
+		SCAN_VAR(m_tone_channels[i].form);
+	}
+
+	SCAN_VAR(m_tone_clock);
+	SCAN_VAR(m_Sound0StopOnRollover);
+	SCAN_VAR(m_LastPort1);
+
+	SCAN_VAR(m_hd38880_cmd);
+	SCAN_VAR(m_hd38880_addr);
+	SCAN_VAR(m_hd38880_data_bytes);
+	SCAN_VAR(m_hd38880_speed);
+	SCAN_VAR(speechnum_playing);
+
 }
 
 void snk6502_set_music_clock(double clock_time)

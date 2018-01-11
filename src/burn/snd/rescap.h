@@ -20,4 +20,6 @@
 
 #define RES_2_SERIAL(r1,r2)			    ((r1)+(r2))
 
+#define TIME_IN_HZ(hz) (1.0 / (double)(hz))
+
 #endif

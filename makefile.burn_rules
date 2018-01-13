@@ -47,7 +47,7 @@ drvsrc	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			\
 			d_4enraya.o d_1942.o d_1943.o d_aeroboto.o d_alinvade.o d_alpha68k.o d_alpha68k1.o d_alpha68k2.o d_ambush.o d_arabian.o d_armedf.o d_atetris.o d_aztarac.o \
 			d_baraduke.o d_bbusters.o d_battlane.o d_bionicc.o d_blktiger.o d_blockout.o d_blueprnt.o d_bogeyman.o d_bombjack.o d_btime.o d_brkthru.o \
-			d_cabal.o d_calorie.o d_canyon.o d_capbowl.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_commando.o d_copsnrob.o d_cybertnk.o \
+			d_cabal.o d_calorie.o d_canyon.o d_capbowl.o d_carjmbre.o d_cclimber.o d_cheekyms.o d_chinagat.o d_citycon.o d_cloak.o d_commando.o d_copsnrob.o d_cybertnk.o \
 			d_dacholer.o d_ddragon.o d_djboy.o d_dkong.o d_docastle.o d_dogfgt.o d_drmicro.o d_dynduke.o d_epos.o d_exedexes.o d_fantland.o d_fastfred.o \
 			d_firetrap.o d_freekick.o d_funkybee.o d_galaga.o d_galivan.o d_gaplus.o d_gauntlet.o d_ginganin.o d_gng.o d_gunsmoke.o d_higemaru.o d_himesiki.o \
 			d_hvyunit.o d_ikki.o d_invaders.o d_jack.o d_jrpacman.o d_kangaroo.o d_kncljoe.o d_kyugo.o d_ladybug.o d_lasso.o d_lastduel.o d_lwings.o d_mainsnk.o \

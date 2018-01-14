@@ -262,6 +262,12 @@ void deco16_sprite_decode(UINT8 *gfx, INT32 len)
 	BurnFree (tmp);
 }
 
+INT32 deco16_layer_enabled(INT32 tmap)
+{
+	UINT8 control0 = deco16_pf_control[tmap >> 1][5] >> ((tmap & 1) << 3) & 0xff;
+	return (control0 & 0x80);
+}
+
 void deco16_draw_layer_by_line(INT32 draw_start, INT32 draw_end, INT32 tmap, UINT16 *dest, INT32 flags)
 {
 	UINT8 control0 = deco16_pf_control[tmap >> 1][5] >> ((tmap & 1) << 3) & 0xff;

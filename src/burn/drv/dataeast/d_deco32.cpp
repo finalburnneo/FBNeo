@@ -2763,7 +2763,7 @@ static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
 		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
 }
 
-static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
+static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 {
 	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? 0x400 : 0x600);
 	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? 0x600 : 0x500);
@@ -2888,7 +2888,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap)
 				}
 			}
 
-			if (mixAlphaTilemap)
+			if (mixAlphaTilemap && drawAlphaTilemap)
 			{
 				UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
 				UINT16* alphaTilemap=pTempDraw[2] + y * nScreenWidth;
@@ -2932,9 +2932,8 @@ static INT32 NslasherDraw()
 
 	UINT32 *ace = (UINT32*)DrvAceRAM;
 
+	INT32 draw_alpha_tmap = 0;
 	INT32 has_alpha = (ace[0x17] && global_priority) ? 1 : 0;
-
-	if (has_alpha) memset (pTempDraw[2], 0, nScreenWidth * nScreenHeight*2); // fix alpha issue when layer disabled in level 5 after airoplane fades-out
 
 	if (global_priority & 2)
 	{
@@ -2949,11 +2948,13 @@ static INT32 NslasherDraw()
 		{
 			if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
 			if (nBurnLayer & 4) deco16_draw_layer(2, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
+			draw_alpha_tmap = (has_alpha && deco16_layer_enabled(2));
 		}
 		else
 		{
 			if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2);
 			if (nBurnLayer & 2) deco16_draw_layer(1, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
+			draw_alpha_tmap = (has_alpha && deco16_layer_enabled(1));
 		}
 	}
 
@@ -2970,7 +2971,7 @@ static INT32 NslasherDraw()
 
 	BurnTransferCopy(DrvPalette);
 
-	mixDualAlphaSprites(has_alpha);
+	mixDualAlphaSprites(has_alpha, draw_alpha_tmap);
 
 	return 0;
 }

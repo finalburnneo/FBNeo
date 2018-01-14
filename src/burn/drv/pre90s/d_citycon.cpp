@@ -171,6 +171,9 @@ static UINT8 citycon_sound_read(UINT16 address)
 		case 0x6000:
 		case 0x6001:
 			return BurnYM2203Read(0, address & 1);
+
+		case 0x4002:
+			return BurnYM2203Read(1, 1); // psg status
 	}
 
 	return 0;
@@ -364,6 +367,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(citycon_sound_read);
 	M6809Close();
 
+	// note: 2nd ym2203 is used only for its ay8910 psg
 	BurnYM2203Init(2, 1250000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
 	BurnYM2203SetPorts(0, &citycon_ym2203_portA, &citycon_ym2203_portB, NULL, NULL);
 	BurnTimerAttachM6809(640000);

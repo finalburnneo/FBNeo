@@ -183,6 +183,8 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 	pCurrentCPU->ReadOpArg = M6502ReadOpArgDummyHandler;
 	
 	nM6502CyclesDone[cpu] = 0;
+
+	pCurrentCPU->AddressMask = (1 << 16) - 1; // cpu range
 	
 	for (INT32 j = 0; j < (0x0100 * 3); j++) {
 		pCurrentCPU->pMemMap[j] = NULL;
@@ -252,7 +254,7 @@ void M6502Close()
 #endif
 
 	m6502_get_context(&pCurrentCPU->reg);
-	
+
 	nM6502CyclesDone[nActiveCPU] = nM6502CyclesTotal;
 
 	pCurrentCPU = NULL; // cause problems! 
@@ -370,6 +372,17 @@ INT32 M6502MapMemory(UINT8* pMemory, UINT16 nStart, UINT16 nEnd, INT32 nType)
 		}
 	}
 	return 0;
+}
+
+void M6502SetAddressMask(UINT16 RangeMask)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetAddressMask called without init\n"));
+	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetAddressMask called with no CPU open\n"));
+	if ((RangeMask & 0xff) != 0xff) bprintf (PRINT_ERROR, _T("M6502SetAddressMask with likely bad mask value (%4.4x)!\n"), RangeMask);
+#endif
+
+	pCurrentCPU->AddressMask = RangeMask;
 
 }
 
@@ -379,7 +392,6 @@ void M6502SetReadPortHandler(UINT8 (*pHandler)(UINT16))
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502SetReadPortHandler called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502SetReadPortHandler called with no CPU open\n"));
 #endif
-
 	pCurrentCPU->ReadPort = pHandler;
 }
 
@@ -454,6 +466,8 @@ void M6502WritePort(UINT16 Address, UINT8 Data)
 
 UINT8 M6502ReadByte(UINT16 Address)
 {
+	Address &= pCurrentCPU->AddressMask;
+
 	// check mem map
 	UINT8 * pr = pCurrentCPU->pMemMap[0x000 | (Address >> 8)];
 	if (pr != NULL) {
@@ -470,6 +484,8 @@ UINT8 M6502ReadByte(UINT16 Address)
 
 void M6502WriteByte(UINT16 Address, UINT8 Data)
 {
+	Address &= pCurrentCPU->AddressMask;
+
 	// check mem map
 	UINT8 * pr = pCurrentCPU->pMemMap[0x100 | (Address >> 8)];
 	if (pr != NULL) {
@@ -486,6 +502,8 @@ void M6502WriteByte(UINT16 Address, UINT8 Data)
 
 UINT8 M6502ReadOp(UINT16 Address)
 {
+	Address &= pCurrentCPU->AddressMask;
+
 	// check mem map
 	UINT8 * pr = pCurrentCPU->pMemMap[0x200 | (Address >> 8)];
 	if (pr != NULL) {
@@ -502,6 +520,8 @@ UINT8 M6502ReadOp(UINT16 Address)
 
 UINT8 M6502ReadOpArg(UINT16 Address)
 {
+	Address &= pCurrentCPU->AddressMask;
+
 	// check mem map
 	UINT8 * pr = pCurrentCPU->pMemMap[0x000 | (Address >> 8)];
 	if (pr != NULL) {
@@ -518,6 +538,8 @@ UINT8 M6502ReadOpArg(UINT16 Address)
 
 void M6502WriteRom(UINT32 Address, UINT8 Data)
 {
+	Address &= pCurrentCPU->AddressMask;
+
 #if defined FBA_DEBUG
 	if (!DebugCPU_M6502Initted) bprintf(PRINT_ERROR, _T("M6502WriteRom called without init\n"));
 	if (nActiveCPU == -1) bprintf(PRINT_ERROR, _T("M6502WriteRom called with no CPU open\n"));

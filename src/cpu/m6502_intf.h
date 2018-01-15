@@ -17,6 +17,7 @@ struct M6502Ext {
 	void (*set_irq_line)(INT32 irqline, INT32 state);
 
 	UINT8* pMemMap[0x100 * 3];
+	UINT32 AddressMask;
 	UINT8 opcode_reorder[0x100];
 
 	pReadPortHandler ReadPort;
@@ -71,6 +72,8 @@ void M6502SetWriteHandler(void (*pHandler)(UINT16, UINT8));
 void M6502SetReadOpHandler(UINT8 (*pHandler)(UINT16));
 void M6502SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6502Scan(INT32 nAction);
+
+void M6502SetAddressMask(UINT16 RangeMask);
 
 UINT32 M6502GetPC(INT32);
 UINT32 M6502GetPrevPC(INT32);

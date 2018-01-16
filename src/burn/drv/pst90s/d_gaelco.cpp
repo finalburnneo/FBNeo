@@ -95,6 +95,19 @@ static struct BurnInputInfo BigkarnkInputList[] = {
 
 STDINPUTINFO(Bigkarnk)
 
+static struct BurnInputInfo LastkmInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Lastkm)
+
 static struct BurnDIPInfo BigkarnkDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL				},
@@ -376,6 +389,35 @@ static struct BurnDIPInfo ThoopDIPList[]=
 };
 
 STDDIPINFO(Thoop)
+
+static struct BurnDIPInfo LastkmDIPList[]=
+{
+	{0x05, 0xff, 0xff, 0xff, NULL				},
+	{0x06, 0xff, 0xff, 0xff, NULL				},
+
+	{0   , 0xfe, 0   ,    11, "Coin A"			},
+	{0x05, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x05, 0x01, 0xf0, 0x80, "Free Play"			},
+	{0x05, 0x01, 0xf0, 0xd0, "Free Play (duplicate 1)"	},
+	{0x05, 0x01, 0xf0, 0x00, "Free Play (duplicate 2)"	},
+	{0x05, 0x01, 0xf0, 0xe0, "4 Coins 1 Credits"		},
+	{0x05, 0x01, 0xf0, 0xb0, "3 Coins 2 Credits"		},
+	{0x05, 0x01, 0xf0, 0x90, "2 Coins 1 Credits"		},
+	{0x05, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x05, 0x01, 0xf0, 0x60, "2 Coins 3 Credits"		},
+	{0x05, 0x01, 0xf0, 0xc0, "1 Coin  3 Credits"		},
+	{0x05, 0x01, 0xf0, 0xa0, "1 Coin  6 Credits"		},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x06, 0x01, 0x01, 0x01, "Off"				},
+	{0x06, 0x01, 0x01, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Master"			},
+	{0x06, 0x01, 0x80, 0x80, "No"				},
+	{0x06, 0x01, 0x80, 0x00, "Yes"				},
+};
+
+STDDIPINFO(Lastkm)
 
 static void oki_bankswitch(INT32 data)
 {
@@ -1299,15 +1341,15 @@ struct BurnDriver BurnDrvBiomtoyb = {
 /* PCB - REF.922804/1 */
 
 static struct BurnRomInfo squashRomDesc[] = {
-	{ "squash.d18",		0x20000, 0xce7aae96, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "squash.d16",		0x20000, 0x8ffaedd7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "squash.d18",			0x20000, 0xce7aae96, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "squash.d16",			0x20000, 0x8ffaedd7, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "squash.c12",		0x80000, 0x5c440645, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "squash.c11",		0x80000, 0x9e19694d, 2 | BRF_GRA },           //  3
-	{ "squash.c10",		0x80000, 0x892a035c, 2 | BRF_GRA },           //  4
-	{ "squash.c09",		0x80000, 0x0bb91c69, 2 | BRF_GRA },           //  5 
+	{ "squash.c12",			0x80000, 0x5c440645, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "squash.c11",			0x80000, 0x9e19694d, 2 | BRF_GRA },           //  3
+	{ "squash.c10",			0x80000, 0x892a035c, 2 | BRF_GRA },           //  4
+	{ "squash.c09",			0x80000, 0x0bb91c69, 2 | BRF_GRA },           //  5 
 
-	{ "squash.d01",		0x80000, 0xa1b9651b, 3 | BRF_SND },           //  6 M6295 Samples
+	{ "squash.d01",			0x80000, 0xa1b9651b, 3 | BRF_SND },           //  6 M6295 Samples
 };
 
 STD_ROM_PICK(squash)
@@ -1328,15 +1370,15 @@ struct BurnDriver BurnDrvSquash = {
 /* PCB - REF.922804/1 */
 
 static struct BurnRomInfo thoopRomDesc[] = {
-	{ "th18dea1.040",	0x080000, 0x59bad625, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "th161eb4.020",	0x040000, 0x6add61ed, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "th18dea1.040",		0x080000, 0x59bad625, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "th161eb4.020",		0x040000, 0x6add61ed, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "c09",		0x100000, 0x06f0edbf, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "c10",		0x100000, 0x2d227085, 2 | BRF_GRA },           //  3
-	{ "c11",		0x100000, 0x7403ef7e, 2 | BRF_GRA },           //  4
-	{ "c12",		0x100000, 0x29a5ca36, 2 | BRF_GRA },           //  5
+	{ "c09",			0x100000, 0x06f0edbf, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "c10",			0x100000, 0x2d227085, 2 | BRF_GRA },           //  3
+	{ "c11",			0x100000, 0x7403ef7e, 2 | BRF_GRA },           //  4
+	{ "c12",			0x100000, 0x29a5ca36, 2 | BRF_GRA },           //  5
 
-	{ "sound",		0x100000, 0x99f80961, 3 | BRF_SND },           //  6 M6295 Samples
+	{ "sound",			0x100000, 0x99f80961, 3 | BRF_SND },           //  6 M6295 Samples
 };
 
 STD_ROM_PICK(thoop)
@@ -1349,5 +1391,33 @@ struct BurnDriver BurnDrvThoop = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, thoopRomInfo, thoopRomName, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
 	ThoopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Last KM (Ver 1.0.0275)
+
+static struct BurnRomInfo lastkmRomDesc[] = {
+	{ "prog-bici-E-8.11.95.D18",	0x80000, 0x1fc5fba0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "prog-bici-O-8.11.95.D16",	0x80000, 0xb93e57e3, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "bici-F3.h6",			0x80000, 0x0bf9f213, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "bici-F2.h7",			0x80000, 0xc48d5376, 2 | BRF_GRA },           //  3
+	{ "bici-F1.h9",			0x80000, 0xe7958070, 2 | BRF_GRA },           //  4
+	{ "bici-F0.h10",		0x80000, 0x73d4b29f, 2 | BRF_GRA },           //  5
+
+	{ "sonido-bici-0-8.11.95.C1",	0x80000, 0x7380c963, 3 | BRF_SND },           //  6 M6295 Samples
+};
+
+STD_ROM_PICK(lastkm)
+STD_ROM_FN(lastkm)
+
+struct BurnDriver BurnDrvLastkm = {
+	"lastkm", NULL, NULL, NULL, "1995",
+	"Last KM (Ver 1.0.0275)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	NULL, lastkmRomInfo, lastkmRomName, NULL, NULL, LastkmInputInfo, LastkmDIPInfo,
+	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

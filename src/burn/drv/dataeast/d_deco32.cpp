@@ -53,7 +53,7 @@ static UINT32 lightgun_port;
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
-static UINT8 DrvDips[4];
+static UINT8 DrvDips[5];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
 
@@ -67,6 +67,7 @@ static INT32 game_select = 0; // 0 capt, 1 fhist, 2 nslasher, 3 tattass, 4 dragn
 static INT32 has_ace = 0;
 static INT32 use_z80 = 0;
 static INT32 use_bsmt = 0;
+static INT32 speedhack_address = 0;
 
 static struct BurnInputInfo CaptavenInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -108,6 +109,7 @@ static struct BurnInputInfo CaptavenInputList[] = {
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip D",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Captaven)
@@ -117,6 +119,7 @@ static struct BurnDIPInfo CaptavenDIPList[]=
 	{0x20, 0xff, 0xff, 0xff, NULL			},
 	{0x21, 0xff, 0xff, 0x7f, NULL			},
 	{0x22, 0xff, 0xff, 0xff, NULL			},
+	{0x23, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
 	{0x20, 0x01, 0x07, 0x00, "3 Coins 1 Credits"	},
@@ -189,6 +192,10 @@ static struct BurnDIPInfo CaptavenDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Debug Mode"		},
 	{0x22, 0x01, 0x80, 0x80, "Off"			},
 	{0x22, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Speed Hacks"		},
+	{0x23, 0x01, 0x01, 0x00, "Off"			},
+	{0x23, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Captaven)
@@ -223,6 +230,7 @@ static struct BurnInputInfo FghthistInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"		}, // +3!
 };
 
 STDINPUTINFO(Fghthist)
@@ -230,10 +238,15 @@ STDINPUTINFO(Fghthist)
 static struct BurnDIPInfo FghthistDIPList[]=
 {
 	{0x1a, 0xff, 0xff, 0xef, NULL				},
+	{0x1b, 0xff, 0xff, 0x00, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x1a, 0x01, 0x08, 0x08, "Off"				},
 	{0x1a, 0x01, 0x08, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Speed Hacks"			},
+	{0x1b, 0x01, 0x01, 0x00, "Off"				},
+	{0x1b, 0x01, 0x01, 0x01, "On"				},
 };
 
 STDDIPINFO(Fghthist)
@@ -271,6 +284,7 @@ static struct BurnInputInfo NslasherInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"	},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
 };
 
 STDINPUTINFO(Nslasher)
@@ -278,10 +292,15 @@ STDINPUTINFO(Nslasher)
 static struct BurnDIPInfo NslasherDIPList[]=
 {
 	{0x1c, 0xff, 0xff, 0x08, NULL			},
+	{0x1d, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode "	},
 	{0x1c, 0x01, 0x08, 0x08, "Off"			},
 	{0x1c, 0x01, 0x08, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Speed Hacks"			},
+	{0x1d, 0x01, 0x01, 0x00, "Off"				},
+	{0x1d, 0x01, 0x01, 0x01, "On"				},
 };
 
 STDDIPINFO(Nslasher)
@@ -317,9 +336,22 @@ static struct BurnInputInfo TattassInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"},
 	{"Service Mode",		BIT_DIGITAL,	DrvJoy2 + 3,	"diag"},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
 };
 
 STDINPUTINFO(Tattass)
+
+static struct BurnDIPInfo TattassDIPList[]=
+{
+	{0x1b, 0xff, 0xff, 0x00, NULL			},
+	{0x1c, 0xff, 0xff, 0x00, NULL			},
+
+	{0   , 0xfe, 0   ,    2, "Speed Hacks"			},
+	{0x1c, 0x01, 0x01, 0x00, "Off"				},
+	{0x1c, 0x01, 0x01, 0x01, "On"				},
+};
+
+STDDIPINFO(Tattass)
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo DragngunInputList[] = {
@@ -340,6 +372,7 @@ static struct BurnInputInfo DragngunInputList[] = {
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
 };
 
 STDINPUTINFO(Dragngun)
@@ -348,6 +381,7 @@ STDINPUTINFO(Dragngun)
 static struct BurnDIPInfo DragngunDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0xfe, NULL			},
+	{0x0f, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Reset"		},
 	{0x0e, 0x01, 0x01, 0x00, "Off"			},
@@ -360,6 +394,10 @@ static struct BurnDIPInfo DragngunDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Debug Mode"		},
 	{0x0e, 0x01, 0x80, 0x80, "Off"			},
 	{0x0e, 0x01, 0x80, 0x00, "On"			},
+
+	{0   , 0xfe, 0   ,    2, "Speed Hacks"			},
+	{0x0f, 0x01, 0x01, 0x00, "Off"				},
+	{0x0f, 0x01, 0x01, 0x01, "On"				},
 };
 
 STDDIPINFO(Dragngun)
@@ -1313,6 +1351,10 @@ static UINT32 dragngun_read_long(UINT32 address)
 	return 0;
 }
 
+static void pCommonSpeedhackCallback()
+{
+	ArmIdleCycles(1120); // git r dun!
+}
 
 static INT32 DrvDoReset()
 {
@@ -1320,6 +1362,14 @@ static INT32 DrvDoReset()
 
 	ArmOpen(0);
 	ArmReset();
+	if (DrvDips[3] & 1) {
+		bprintf(0, _T("Speedhack Enabled for 0x%x.\n"), speedhack_address);
+		ArmSetSpeedHack(speedhack_address ? speedhack_address : ~0, pCommonSpeedhackCallback);
+	} else {
+		bprintf(0, _T("Speedhack Disabled.\n"));
+		ArmSetSpeedHack(~0, NULL);
+	}
+
 	ArmClose();
 
 	if (use_bsmt)
@@ -1439,9 +1489,10 @@ static INT32 fghthist_bank_callback(const INT32 data)
 	return bank * 0x1000;
 }
 
-static INT32 FghthistCommonInit(INT32 z80_sound)
+static INT32 FghthistCommonInit(INT32 z80_sound, UINT32 speedhack)
 {
 	game_select = 1;
+	speedhack_address = speedhack;
 
 	gfxlen[0] = 0x200000;
 	gfxlen[1] = 0x200000;
@@ -1576,9 +1627,10 @@ static void decode_8bpp_tiles(UINT8 *dst, INT32 len)
 	BurnFree(tmp);
 }
 
-static INT32 CaptavenInit()
+static INT32 CaptavenCommonInit(INT32 has_z80, UINT32 speedhack)
 {
 	game_select = 0;
+	speedhack_address = speedhack;
 
 	gfxlen[0] = 0x100000;
 	gfxlen[1] = 0x100000;
@@ -1708,10 +1760,11 @@ static INT32 tattass_bank_callback(const INT32 data)
 	return (data & 0xf0) * 0x100;
 }
 
-static INT32 NslasherCommonInit(INT32 has_z80)
+static INT32 NslasherCommonInit(INT32 has_z80, UINT32 speedhack)
 {
 	game_select = 2;
 	has_ace = 1;
+	speedhack_address = speedhack;
 	GenericTilesInit(); // for allocating memory for pTempDraw;
 
 	gfxlen[0] = 0x400000;
@@ -1858,10 +1911,11 @@ static void sprite_decode_5bpp_alt(UINT8 *gfx, INT32 len)
 	BurnFree (tmp);
 }
 
-static INT32 TattassInit()
+static INT32 TattassCommonInit(INT32 has_z80, UINT32 speedhack)
 {
 	game_select = 3;
 	has_ace = 1;
+	speedhack_address = speedhack;
 
 	BurnSetRefreshRate(58.0); // 58hz for bsmt
 
@@ -2032,9 +2086,10 @@ static UINT16 dragngun_read_C()
 	return (DrvDips[1] << 8) | 0xff;
 }
 
-static INT32 DragngunInit()
+static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 {
 	game_select = 4;
+	speedhack_address = speedhack;
 
 	gfxlen[0] = 0x40000;
 	gfxlen[1] = 0x400000;
@@ -2208,6 +2263,7 @@ static INT32 DrvExit()
 	vblank_irq_cb = NULL;
 	lightgun_irq_cb = NULL;
 	has_ace = 0;
+	speedhack_address = 0;
 
 	return 0;
 }
@@ -3607,6 +3663,11 @@ static struct BurnRomInfo captavenRomDesc[] = {
 STD_ROM_PICK(captaven)
 STD_ROM_FN(captaven)
 
+static INT32 CaptavenInit()
+{
+	return CaptavenCommonInit(0, 0x39e8);
+}
+
 struct BurnDriver BurnDrvCaptaven = {
 	"captaven", NULL, NULL, NULL, "1991",
 	"Captain America and The Avengers (Asia Rev 1.4)\0", NULL, "Data East Corporation", "DECO 32",
@@ -3951,7 +4012,7 @@ STD_ROM_FN(fghthist)
 
 static INT32 FghthistInit()
 {
-	return FghthistCommonInit(0);
+	return FghthistCommonInit(0, 0x9cf8);
 }
 
 struct BurnDriver BurnDrvFghthist = {
@@ -3995,13 +4056,18 @@ static struct BurnRomInfo fghthistaRomDesc[] = {
 STD_ROM_PICK(fghthista)
 STD_ROM_FN(fghthista)
 
+static INT32 FghthistaInit()
+{
+	return FghthistCommonInit(0, 0x9ca8);
+}
+
 struct BurnDriver BurnDrvFghthista = {
 	"fghthista", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (World ver 43-07, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistaRomInfo, fghthistaRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4036,13 +4102,18 @@ static struct BurnRomInfo fghthistbRomDesc[] = {
 STD_ROM_PICK(fghthistb)
 STD_ROM_FN(fghthistb)
 
+static INT32 FghthistbInit()
+{
+	return FghthistCommonInit(0, 0x9c84);
+}
+
 struct BurnDriver BurnDrvFghthistb = {
 	"fghthistb", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (World ver 43-05, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistbRomInfo, fghthistbRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistbInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4079,7 +4150,7 @@ STD_ROM_FN(fghthistu)
 
 static INT32 FghthistuInit()
 {
-	return FghthistCommonInit(1);
+	return FghthistCommonInit(1, 0x9cf8);
 }
 
 struct BurnDriver BurnDrvFghthistu = {
@@ -4123,13 +4194,18 @@ static struct BurnRomInfo fghthistuaRomDesc[] = {
 STD_ROM_PICK(fghthistua)
 STD_ROM_FN(fghthistua)
 
+static INT32 FghthistuaInit()
+{
+	return FghthistCommonInit(0, 0x9ce8);
+}
+
 struct BurnDriver BurnDrvFghthistua = {
 	"fghthistua", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-06, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistuaRomInfo, fghthistuaRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistuaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4164,13 +4240,18 @@ static struct BurnRomInfo fghthistubRomDesc[] = {
 STD_ROM_PICK(fghthistub)
 STD_ROM_FN(fghthistub)
 
+static INT32 FghthistubInit()
+{
+	return FghthistCommonInit(0, 0x9cf4);
+}
+
 struct BurnDriver BurnDrvFghthistub = {
 	"fghthistub", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-05, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistubRomInfo, fghthistubRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistubInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4205,13 +4286,18 @@ static struct BurnRomInfo fghthistucRomDesc[] = {
 STD_ROM_PICK(fghthistuc)
 STD_ROM_FN(fghthistuc)
 
+static INT32 FghthistucInit()
+{
+	return FghthistCommonInit(0, 0x9ca8);
+}
+
 struct BurnDriver BurnDrvFghthistuc = {
 	"fghthistuc", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (US ver 42-03, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistucRomInfo, fghthistucRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistucInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4287,13 +4373,18 @@ static struct BurnRomInfo fghthistjaRomDesc[] = {
 STD_ROM_PICK(fghthistja)
 STD_ROM_FN(fghthistja)
 
+static INT32 FghthistjaInit()
+{
+	return FghthistCommonInit(0, 0x9ca8);
+}
+
 struct BurnDriver BurnDrvFghthistja = {
 	"fghthistja", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (Japan ver 41-05, DE-0380-2 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistjaRomInfo, fghthistjaRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistjaInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4328,13 +4419,18 @@ static struct BurnRomInfo fghthistjbRomDesc[] = {
 STD_ROM_PICK(fghthistjb)
 STD_ROM_FN(fghthistjb)
 
+static INT32 FghthistjbInit()
+{
+	return FghthistCommonInit(0, 0x9c84);
+}
+
 struct BurnDriver BurnDrvFghthistjb = {
 	"fghthistjb", "fghthist", NULL, NULL, "1993",
 	"Fighter's History (Japan ver 41-04, DE-0380-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, fghthistjbRomInfo, fghthistjbRomName, NULL, NULL, FghthistInputInfo, FghthistDIPInfo,
-	FghthistInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
+	FghthistjbInit, DrvExit, DrvFrame, FghthistDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4377,7 +4473,7 @@ STD_ROM_FN(nslasher)
 
 static INT32 NslasherInit()
 {
-	return NslasherCommonInit(1);
+	return NslasherCommonInit(1, 0x9c8);
 }
 
 struct BurnDriver BurnDrvNslasher = {
@@ -4427,13 +4523,19 @@ static struct BurnRomInfo nslasherjRomDesc[] = {
 STD_ROM_PICK(nslasherj)
 STD_ROM_FN(nslasherj)
 
+static INT32 NslasherjInit()
+{
+	return NslasherCommonInit(1, 0xa84);
+}
+
+
 struct BurnDriver BurnDrvNslasherj = {
 	"nslasherj", "nslasher", NULL, NULL, "1994",
 	"Night Slashers (Japan Rev 1.2, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, nslasherjRomInfo, nslasherjRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
-	NslasherInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
+	NslasherjInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
 
@@ -4523,7 +4625,7 @@ STD_ROM_FN(nslasheru)
 
 static INT32 NslasheruInit()
 {
-	return NslasherCommonInit(0);
+	return NslasherCommonInit(0, 0x9e0);
 }
 
 struct BurnDriver BurnDrvNslasheru = {
@@ -4606,12 +4708,17 @@ static struct BurnRomInfo tattassRomDesc[] = {
 STD_ROM_PICK(tattass)
 STD_ROM_FN(tattass)
 
+static INT32 TattassInit()
+{
+	return TattassCommonInit(0, 0x1c5ec);
+}
+
 struct BurnDriver BurnDrvTattass = {
 	"tattass", NULL, NULL, NULL, "1994",
 	"Tattoo Assassins (US prototype)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, tattassRomInfo, tattassRomName, NULL, NULL, TattassInputInfo, NULL,
+	NULL, tattassRomInfo, tattassRomName, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4691,7 +4798,7 @@ struct BurnDriver BurnDrvTattassa = {
 	"Tattoo Assassins (Asia prototype)\0", NULL, "Data East Pinball", "DECO 32",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
-	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, TattassInputInfo, NULL,
+	NULL, tattassaRomInfo, tattassaRomName, NULL, NULL, TattassInputInfo, TattassDIPInfo,
 	TattassInit, DrvExit, DrvBSMTFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
 };
@@ -4753,6 +4860,11 @@ static struct BurnRomInfo dragngunRomDesc[] = {
 
 STD_ROM_PICK(dragngun)
 STD_ROM_FN(dragngun)
+
+static INT32 DragngunInit()
+{
+	return DragngunCommonInit(0, 0x628c);
+}
 
 struct BurnDriver BurnDrvDragngun = {
 	"dragngun", NULL, NULL, NULL, "1993",

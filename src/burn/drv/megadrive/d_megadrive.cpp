@@ -28476,6 +28476,24 @@ struct BurnDriver BurnDrvmd_sonic3dp8 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sonic 3D Blast Director's Cut
+static struct BurnRomInfo md_sonic3ddxRomDesc[] = {
+	{ "Sonic 3D Blast  - Directors Cut.bin", 0x3ff5c2, 0x9767e840, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic3ddx)
+STD_ROM_FN(md_sonic3ddx)
+
+struct BurnDriver BurnDrvmd_sonic3ddx = {
+	"md_sonic3ddx", "md_sonic3d", NULL, NULL, "2017",
+	"Sonic 3D Blast Director's Cut\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sonic3ddxRomInfo, md_sonic3ddxRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Sonic 3D Blast (Prototype 814, 19960815, 07.55)
 static struct BurnRomInfo md_sonic3dp7RomDesc[] = {
 	{ "sonic 3d blast (prototype 814 - aug 15, 1996, 07.55).bin", 0x400000, 0xd64e7675, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

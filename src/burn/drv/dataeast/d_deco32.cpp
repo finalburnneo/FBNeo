@@ -885,6 +885,10 @@ static void fghthist_write_byte(UINT32 address, UINT8 data)
 
 	switch (address)
 	{
+		case 0x1201fc:
+			deco32_soundlatch_write(data);
+		return;
+
 		case 0x150000:
 			if (game_select == 3) {
 				tattass_control_write(data);
@@ -931,6 +935,7 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 
 	switch (address & ~3)
 	{
+		case 0x1201fc: deco32_soundlatch_write(data); return;
 		case 0x12002c: if (game_select != 1) return; // fghthist only
 		case 0x150000: // fghthist / nslasher
 			if (game_select == 3) {

@@ -6,6 +6,7 @@
 #include "snk6502_sound.h"
 #include "sn76477.h"
 #include "samples.h"
+#include "lowpass2.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -22,7 +23,7 @@ static UINT8 *DrvVidRAM2;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvColRAM;
 static UINT8 *DrvCharRAM;
-
+static INT16 *FilterBUF;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -45,6 +46,8 @@ static UINT8 DrvReset;
 
 static INT32 numSN = 0; // number of sn76477
 static INT32 bHasSamples = 0;
+
+static class LowPass2 *LP1 = NULL, *LP2 = NULL;
 
 static struct BurnInputInfo SasukeInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -876,6 +879,8 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
+	FilterBUF       = (INT16*)Next; Next += 0x002000;
+
 	MemEnd			= Next;
 
 	return 0;
@@ -1034,6 +1039,20 @@ static void DrvSoundInit(INT32 type)
 		snk6502_set_music_freq(38000);
 	}
 
+	{ // filter (for nibbler)
+#define SampleFreq 44100.0
+#define CutFreq 1000.0
+#define Q 0.4
+#define Gain 1.0
+#define CutFreq2 1000.0
+#define Q2 0.3
+#define Gain2 1.475
+		LP1 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
+						   CutFreq2, Q2, Gain2);
+		LP2 = new LowPass2(CutFreq, SampleFreq, Q, Gain,
+						   CutFreq2, Q2, Gain2);
+	}
+
 	BurnSampleInit(1);
 	bHasSamples = BurnSampleGetStatus(0) != -1;
 	if (bHasSamples) {
@@ -1049,6 +1068,10 @@ static void DrvSoundExit()
 
 	if (bHasSamples) BurnSampleExit();
 
+	delete LP1;
+	delete LP2;
+	LP1 = NULL;
+	LP2 = NULL;
 }
 
 static INT32 SatansatInit()
@@ -1651,6 +1674,7 @@ static INT32 DrvFrame()
 	}
 	M6502Close();
 
+#if 0
 	if (pBurnSoundOut) {
 		snk_sound_update(pBurnSoundOut, nBurnSoundLen);
 		for (INT32 i = 0; i < numSN; i++)
@@ -1658,6 +1682,26 @@ static INT32 DrvFrame()
 		if (bHasSamples)
 			BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
+#endif
+	if (pBurnSoundOut) {
+		snk_sound_update(pBurnSoundOut, nBurnSoundLen);
+		memset(FilterBUF, 0, 0x2000);
+		for (INT32 i = 0; i < numSN; i++)
+			SN76477_sound_update(i, FilterBUF, nBurnSoundLen);
+		if (LP1 && LP2) {
+			LP1->Filter(FilterBUF, nBurnSoundLen);  // Left
+			LP2->Filter(FilterBUF+1, nBurnSoundLen); // Right
+		}
+
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i<<1)+0] = BURN_SND_CLIP(pBurnSoundOut[(i<<1)+0] + FilterBUF[(i<<1)+0]);
+			pBurnSoundOut[(i<<1)+1] = BURN_SND_CLIP(pBurnSoundOut[(i<<1)+1] + FilterBUF[(i<<1)+1]);
+		}
+
+		if (bHasSamples)
+			BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
+	}
+
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

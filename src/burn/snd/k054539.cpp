@@ -10,11 +10,13 @@
 
 // IRQ handling is disabled (handled in driver) for now...
 
+// Jan 19, 2018: added cubic resampling.
+
 #include "burnint.h"
+#include "burn_sound.h"
 #include "math.h"
 #include "k054539.h"
 
-static UINT32 nUpdateStep;
 static INT32 nNumChips = 0;
 
 typedef struct _k054539_interface k054539_interface;
@@ -65,8 +67,11 @@ struct k054539_info {
 static k054539_info Chips[2];
 static k054539_info *info;
 
-static INT32 *soundbuf[2] = { NULL, NULL };
-static INT16 *mixerbuf = NULL; // for native -> nBurnSoundRate conversion
+// for resampling
+static INT16 *soundbuf[2] = { NULL, NULL };
+static UINT32 nSampleSize;
+static INT32 nFractionalPosition[2];
+static INT32 nPosition[2];
 
 void K054539_init_flags(INT32 chip, INT32 flags)
 {
@@ -257,6 +262,8 @@ void K054539Reset(INT32 chip)
 	memset(info->regs, 0, sizeof(info->regs));
 	memset(info->k054539_posreg_latch, 0, sizeof(info->k054539_posreg_latch));
 	memset(info->channels, 0, sizeof(info->channels));
+	memset(soundbuf[0], 0, (800 * sizeof(INT16) * 2) * 4);
+	memset(soundbuf[1], 0, (800 * sizeof(INT16) * 2) * 4);
 }
 
 static void k054539_init_chip(INT32 clock, UINT8 *rom, INT32 nLen)
@@ -308,7 +315,9 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 	info->clock = clock;
 
-	nUpdateStep = (INT32)(((float)clock / nBurnSoundRate) * 32768);
+	nSampleSize = (UINT32)48000 * (1 << 16) / nBurnSoundRate;
+	nFractionalPosition[chip] = 0;
+	nPosition[chip] = 0;
 
 	for (i = 0; i < 8; i++)
 		info->k054539_gain[i] = 1.0;
@@ -323,10 +332,8 @@ void K054539Init(INT32 chip, INT32 clock, UINT8 *rom, INT32 nLen)
 
 	k054539_init_chip(clock, rom, nLen);
 
-	if (soundbuf[0] == NULL) soundbuf[0] = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
-	if (soundbuf[1] == NULL) soundbuf[1] = (INT32*)BurnMalloc(nBurnSoundLen * sizeof(INT32));
-
-	if (mixerbuf == NULL) mixerbuf = (INT16 *)BurnMalloc(clock * 2 * sizeof(INT16));
+	if (soundbuf[0] == NULL) soundbuf[0] = (INT16*)BurnMalloc((800 * sizeof(INT16) * 2) * 4);
+	if (soundbuf[1] == NULL) soundbuf[1] = (INT16*)BurnMalloc((800 * sizeof(INT16) * 2) * 4);
 
 	nNumChips = chip;
 }
@@ -357,9 +364,6 @@ void K054539Exit()
 	BurnFree (soundbuf[1]);
 	soundbuf[0] = NULL;
 	soundbuf[1] = NULL;
-
-	BurnFree (mixerbuf);
-	mixerbuf = NULL;
 
 	for (INT32 i = 0; i < 2; i++) {
 		info = &Chips[i];
@@ -399,13 +403,13 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 		return;
 
 	// re-sampleizer pt.1
-	INT32 length = (((((48000 * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10;
-	INT16 *pBuf = mixerbuf;
+	INT32 nSamplesNeeded = ((((((48000 * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10);
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition[chip] below
 
-	memset(mixerbuf, 0, nBurnSoundLen * 2 * sizeof(INT16));
-	if (length > (info->clock * 100) / nBurnFPS) length = (info->clock * 100) / nBurnFPS;
+	INT16 *pBufL = soundbuf[chip] + 0 * 4096 + 5 + nPosition[chip];
+	INT16 *pBufR = soundbuf[chip] + 1 * 4096 + 5 + nPosition[chip];
 
-	for(int sample = 0; sample < length; sample++) {
+	for (INT32 sample = 0; sample < (nSamplesNeeded - nPosition[chip]); sample++) {
 		double lval, rval;
 
 		if(!(info->k054539_flags & K054539_DISABLE_REVERB))
@@ -414,21 +418,21 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 			lval = rval = 0;
 		rbase[info->reverb_pos] = 0;
 
-		for(int ch=0; ch<8; ch++)
+		for(INT32 ch=0; ch<8; ch++)
 			if(info->regs[0x22c] & (1<<ch)) {
-				unsigned char *base1 = info->regs + 0x20*ch;
-				unsigned char *base2 = info->regs + 0x200 + 0x2*ch;
+				UINT8 *base1 = info->regs + 0x20*ch;
+				UINT8 *base2 = info->regs + 0x200 + 0x2*ch;
 				struct k054539_channel *chan = info->channels + ch;
 
-				int delta = base1[0x00] | (base1[0x01] << 8) | (base1[0x02] << 16);
+				INT32 delta = base1[0x00] | (base1[0x01] << 8) | (base1[0x02] << 16);
 
-				int vol = base1[0x03];
+				INT32 vol = base1[0x03];
 
-				int bval = vol + base1[0x04];
+				INT32 bval = vol + base1[0x04];
 				if (bval > 255)
 					bval = 255;
 
-				int pan = base1[0x05];
+				INT32 pan = base1[0x05];
 				// DJ Main: 81-87 right, 88 middle, 89-8f left
 				if (pan >= 0x81 && pan <= 0x8f)
 					pan -= 0x81;
@@ -451,12 +455,12 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 				if (rbvol > VOL_CAP)
 					rbvol = VOL_CAP;
 
-				int rdelta = (base1[6] | (base1[7] << 8)) >> 3;
+				INT32 rdelta = (base1[6] | (base1[7] << 8)) >> 3;
 				rdelta = (rdelta + info->reverb_pos) & 0x3fff;
 
-				int cur_pos = (base1[0x0c] | (base1[0x0d] << 8) | (base1[0x0e] << 16)) & rom_mask;
+				INT32 cur_pos = (base1[0x0c] | (base1[0x0d] << 8) | (base1[0x0e] << 16)) & rom_mask;
 
-				int fdelta, pdelta;
+				INT32 fdelta, pdelta;
 				if(base2[0] & 0x20) {
 					delta = -delta;
 					fdelta = +0x10000;
@@ -466,7 +470,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 					pdelta = +1;
 				}
 
-				int cur_pfrac, cur_val, cur_pval, cur_pval2;
+				INT32 cur_pfrac, cur_val, cur_pval, cur_pval2;
 				if(cur_pos != (INT32)chan->pos) {
 					chan->pos = cur_pos;
 					cur_pfrac = 0;
@@ -594,9 +598,9 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 				struct k054539_channel *chan = info->channels + ch;
 
 				if (chan->val > 0) {
-					chan->val -= ((chan->val > 1) ? 1 : 0);
+					chan->val -= ((chan->val >  4) ? 4 : 1);
 				} else {
-					chan->val += ((chan->val < -1) ? 1 : 0);
+					chan->val += ((chan->val < -4) ? 4 : 1);
 				}
 
 				lval += chan->val * chan->lvol;
@@ -605,35 +609,67 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 		info->reverb_pos = (info->reverb_pos + 1) & 0x1fff;
 
 		INT32 nLeftSample = 0, nRightSample = 0;
-		
+
 		if ((info->output_dir[BURN_SND_K054539_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
 			nLeftSample += (INT32)(lval * info->volume[BURN_SND_K054539_ROUTE_1]);
 		}
 		if ((info->output_dir[BURN_SND_K054539_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 			nRightSample += (INT32)(rval * info->volume[BURN_SND_K054539_ROUTE_1]);
 		}
-		
+
 		if ((info->output_dir[BURN_SND_K054539_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
 			nLeftSample += (INT32)(lval * info->volume[BURN_SND_K054539_ROUTE_2]);
 		}
 		if ((info->output_dir[BURN_SND_K054539_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 			nRightSample += (INT32)(rval * info->volume[BURN_SND_K054539_ROUTE_2]);
 		}
-		
-		pBuf[0] = BURN_SND_CLIP(nLeftSample);
-		pBuf[1] = BURN_SND_CLIP(nRightSample);
-		pBuf += 2;
+
+		pBufL[0] = nLeftSample;  pBufL++;
+		pBufR[0] = nRightSample; pBufR++;
 	}
 
-	// re-sampleizer pt.2
-	for (INT32 j = 0; j < samples_len; j++)
-	{
-		INT32 k = ((((48000000 / nBurnFPS) * j) / nBurnSoundLen)) / 10;
+	pBufL = soundbuf[chip] + 0 * 4096 + 5;
+	pBufR = soundbuf[chip] + 1 * 4096 + 5;
 
-		outputs[0] = BURN_SND_CLIP(mixerbuf[k*2+0] + outputs[0]);
-		outputs[1] = BURN_SND_CLIP(mixerbuf[k*2+1] + outputs[1]);
-		outputs += 2;
+	for (INT32 i = (nFractionalPosition[chip] & 0xFFFF0000) >> 15; i < (samples_len << 1); i += 2, nFractionalPosition[chip] += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nRightSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample, nTotalRightSample;
+
+		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition[chip] >> 16) - 3]);
+		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition[chip] >> 16) - 2]);
+		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition[chip] >> 16) - 1]);
+		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition[chip] >> 16) - 0]);
+
+		nRightSample[0] += (INT32)(pBufR[(nFractionalPosition[chip] >> 16) - 3]);
+		nRightSample[1] += (INT32)(pBufR[(nFractionalPosition[chip] >> 16) - 2]);
+		nRightSample[2] += (INT32)(pBufR[(nFractionalPosition[chip] >> 16) - 1]);
+		nRightSample[3] += (INT32)(pBufR[(nFractionalPosition[chip] >> 16) - 0]);
+
+		nTotalLeftSample = INTERPOLATE4PS_16BIT((nFractionalPosition[chip] >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition[chip] >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
+
+		nTotalLeftSample = BURN_SND_CLIP(nTotalLeftSample);
+		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample);
+
+		outputs[i + 0] = BURN_SND_CLIP(outputs[i + 0] + nTotalLeftSample);
+		outputs[i + 1] = BURN_SND_CLIP(outputs[i + 1] + nTotalRightSample);
 	}
+
+	if (samples_len >= nBurnSoundLen) {
+		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition[chip] >> 16);
+		//if (nExtraSamples) bprintf(0, _T("%X, "), nExtraSamples);
+
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pBufL[i] = pBufL[(nFractionalPosition[chip] >> 16) + i];
+			pBufR[i] = pBufR[(nFractionalPosition[chip] >> 16) + i];
+		}
+
+		nFractionalPosition[chip] &= 0xFFFF;
+
+		nPosition[chip] = nExtraSamples;
+	}
+	//  -4 -3 -2 -1 0 +1 +2 +3 +4
 }
 
 INT32 K054539Scan(INT32 nAction)
@@ -691,6 +727,11 @@ INT32 K054539Scan(INT32 nAction)
 				data == 0x80 ? info->ram :
 				info->rom + 0x20000*data;
 			info->cur_limit = data == 0x80 ? 0x4000 : 0x20000;
+
+			for (INT32 chip = 0; chip < 2; chip++) {
+				nFractionalPosition[chip] = 0;
+				nPosition[chip] = 0;
+			}
 		}
 	}
 

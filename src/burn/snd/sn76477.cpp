@@ -44,44 +44,44 @@
 
 struct SN76477 {
 	double mastervol;
-	int samplerate; 		/* from Machine->sample_rate */
-	int vol;				/* current volume (attack/decay) */
-	int vol_count;			/* volume adjustment counter */
-	int vol_rate;			/* volume adjustment rate - dervied from attack/decay */
-	int vol_step;			/* volume adjustment step */
+	INT32 samplerate; 		/* from Machine->sample_rate */
+	INT32 vol;				/* current volume (attack/decay) */
+	INT32 vol_count;			/* volume adjustment counter */
+	INT32 vol_rate;			/* volume adjustment rate - dervied from attack/decay */
+	INT32 vol_step;			/* volume adjustment step */
 
 	double slf_count;		/* SLF emulation */
 	double slf_freq;		/* frequency - derived */
 	double slf_level;		/* triangular wave level */
-    int slf_dir;            /* triangular wave direction */
-	int slf_out;			/* rectangular output signal state */
+    INT32 slf_dir;            /* triangular wave direction */
+	INT32 slf_out;			/* rectangular output signal state */
 
 	double vco_count;		/* VCO emulation */
 	double vco_freq;		/* frequency - derived */
 	double vco_step;		/* modulated frequency - derived */
-	int vco_out;			/* rectangular output signal state */
+	INT32 vco_out;			/* rectangular output signal state */
 
-	int noise_count;		/* NOISE emulation */
-	int noise_clock;		/* external clock signal */
-	int noise_freq; 		/* filter frequency - derived */
-	int noise_poly; 		/* polynome */
-	int noise_out;			/* rectangular output signal state */
+	INT32 noise_count;		/* NOISE emulation */
+	INT32 noise_clock;		/* external clock signal */
+	INT32 noise_freq; 		/* filter frequency - derived */
+	INT32 noise_poly; 		/* polynome */
+	INT32 noise_out;			/* rectangular output signal state */
 
 	double envelope_timer;	/* ENVELOPE timer */
-	int envelope_state; 	/* attack / decay toggle */
+	INT32 envelope_state; 	/* attack / decay toggle */
 
 	double attack_time; 	/* ATTACK time (time until vol reaches 100%) */
 	double decay_time;		/* DECAY time (time until vol reaches 0%) */
 	double oneshot_time;	/* ONE-SHOT time */
 	double oneshot_timer;	/* ONE-SHOT timer */
 
-	int envelope;			/* pin	1, pin 28 */
+	INT32 envelope;			/* pin	1, pin 28 */
 	double noise_res;		/* pin	4 */
 	double filter_res;		/* pin	5 */
 	double filter_cap;		/* pin	6 */
 	double decay_res;		/* pin	7 */
 	double attack_decay_cap;/* pin	8 */
-	int enable; 			/* pin	9 */
+	INT32 enable; 			/* pin	9 */
 	double attack_res;		/* pin 10 */
 	double amplitude_res;	/* pin 11 */
 	double feedback_res;	/* pin 12 */
@@ -91,10 +91,10 @@ struct SN76477 {
 	double pitch_voltage;	/* pin 19 */
 	double slf_res; 		/* pin 20 */
 	double slf_cap; 		/* pin 21 */
-	int vco_select; 		/* pin 22 */
+	INT32 vco_select; 		/* pin 22 */
 	double oneshot_cap; 	/* pin 23 */
 	double oneshot_res; 	/* pin 24 */
-	int mixer;				/* pin 25,26,27 */
+	INT32 mixer;				/* pin 25,26,27 */
 
 	INT16 vol_lookup[VMAX+1-VMIN];	/* volume lookup table */
 };
@@ -102,7 +102,7 @@ struct SN76477 {
 //static struct SN76477interface *intf;
 struct SN76477 *sn76477[MAX_SN76477] = {NULL, NULL, NULL, NULL};
 
-static void attack_decay(int param)
+static void attack_decay(INT32 param)
 {
 	struct SN76477 *sn = sn76477[param];
 	sn->envelope_state ^= 1;
@@ -123,30 +123,26 @@ static void attack_decay(int param)
     }
 }
 
-static void vco_envelope_cb(int param)
+static void vco_envelope_cb(INT32 param)
 {
 	attack_decay(param);
 }
 
-static void oneshot_envelope_cb(int param)
+static void oneshot_envelope_cb(INT32 param)
 {
 	attack_decay(param);
 }
 
-static void sntimer_tick(int param)
+static void sntimer_tick(INT32 param)
 {
 	if (sn76477[param]->envelope_timer > 0.0) {
 		vco_envelope_cb(param);
-		sn76477[param]->envelope_timer -= 0.0001;
-		//if (!sn76477[param]->envelope_timer)
-		//	bprintf(0, _T("envtimer done!"));
+		sn76477[param]->envelope_timer -= 1.0;
 	}
 
 	if (sn76477[param]->oneshot_timer > 0.0) {
 		oneshot_envelope_cb(param);
-		sn76477[param]->oneshot_timer -= 0.0001;
-		//if (!sn76477[param]->oneshot_timer)
-		//	bprintf(0, _T("shottimer done!"));
+		sn76477[param]->oneshot_timer -= 1.0;
 	}
 }
 
@@ -166,7 +162,7 @@ static const char *mixer_mode[8] = {
 /*****************************************************************************
  * set MIXER select inputs
  *****************************************************************************/
-void SN76477_mixer_w(int chip, int data)
+void SN76477_mixer_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -177,14 +173,14 @@ void SN76477_mixer_w(int chip, int data)
 	LOG(1,("SN76477 #%d: MIXER mode %d [%s]\n", chip, sn->mixer, mixer_mode[sn->mixer]));
 }
 
-void SN76477_set_mixer_params(int chip, int a, int b, int c)
+void SN76477_set_mixer_params(INT32 chip, INT32 a, INT32 b, INT32 c)
 {
 	SN76477_mixer_a_w(chip, a);
 	SN76477_mixer_b_w(chip, b);
 	SN76477_mixer_c_w(chip, c);
 }
 
-void SN76477_mixer_a_w(int chip, int data)
+void SN76477_mixer_a_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -196,7 +192,7 @@ void SN76477_mixer_a_w(int chip, int data)
 	LOG(1,("SN76477 #%d: MIXER mode %d [%s]\n", chip, sn->mixer, mixer_mode[sn->mixer]));
 }
 
-void SN76477_mixer_b_w(int chip, int data)
+void SN76477_mixer_b_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -208,7 +204,7 @@ void SN76477_mixer_b_w(int chip, int data)
 	LOG(1,("SN76477 #%d: MIXER mode %d [%s]\n", chip, sn->mixer, mixer_mode[sn->mixer]));
 }
 
-void SN76477_mixer_c_w(int chip, int data)
+void SN76477_mixer_c_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -232,7 +228,7 @@ static const char *envelope_mode[4] = {
 /*****************************************************************************
  * set ENVELOPE select inputs
  *****************************************************************************/
-void SN76477_envelope_w(int chip, int data)
+void SN76477_envelope_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -243,14 +239,14 @@ void SN76477_envelope_w(int chip, int data)
 	LOG(1,("SN76477 #%d: ENVELOPE mode %d [%s]\n", chip, sn->envelope, envelope_mode[sn->envelope]));
 }
 
-void SN76477_set_envelope_params(int chip, int one, int two)
+void SN76477_set_envelope_params(INT32 chip, INT32 one, INT32 two)
 {
 	SN76477_envelope_1_w(chip, one);
 	SN76477_envelope_2_w(chip, two);
 
 }
 
-void SN76477_envelope_1_w(int chip, int data)
+void SN76477_envelope_1_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -261,7 +257,7 @@ void SN76477_envelope_1_w(int chip, int data)
 	LOG(1,("SN76477 #%d: ENVELOPE mode %d [%s]\n", chip, sn->envelope, envelope_mode[sn->envelope]));
 }
 
-void SN76477_envelope_2_w(int chip, int data)
+void SN76477_envelope_2_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -277,12 +273,12 @@ void SN76477_envelope_2_w(int chip, int data)
 /*****************************************************************************
  * set VCO external/SLF input
  *****************************************************************************/
-void SN76477_set_vco_mode(int chip, int data)
+void SN76477_set_vco_mode(INT32 chip, INT32 data)
 {
 	SN76477_vco_w(chip, data);
 }
 
-void SN76477_vco_w(int chip, int data)
+void SN76477_vco_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -296,14 +292,14 @@ void SN76477_vco_w(int chip, int data)
 /*****************************************************************************
  * set VCO enable input
  *****************************************************************************/
-void SN76477_set_enable(int chip, int enable)
+void SN76477_set_enable(INT32 chip, INT32 enable)
 {
 	struct SN76477 *sn = sn76477[chip];
 
 	sn->enable = (enable) ? 1 : 0;
 }
 
-void SN76477_enable_w(int chip, int data)
+void SN76477_enable_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -322,7 +318,7 @@ void SN76477_enable_w(int chip, int data)
 		{
 		case 0: /* VCO */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap));
+				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap))) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -337,7 +333,7 @@ void SN76477_enable_w(int chip, int data)
 		default:  /* VCO with alternating polariy */
 			/* huh? */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2);
+				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2)) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -349,7 +345,7 @@ void SN76477_enable_w(int chip, int data)
 		{
 		case 0: /* VCO */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap));
+				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap))) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -362,7 +358,7 @@ void SN76477_enable_w(int chip, int data)
 		default:  /* VCO with alternating polariy */
 			/* huh? */
 			if( sn->vco_res > 0 && sn->vco_cap > 0 )
-				sn->envelope_timer = TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2);
+				sn->envelope_timer = (sn->samplerate * TIME_IN_HZ(0.64/(sn->vco_res * sn->vco_cap)/2)) / 1000;
 			else
 				oneshot_envelope_cb(chip);
 			break;
@@ -374,7 +370,7 @@ void SN76477_enable_w(int chip, int data)
 /*****************************************************************************
  * set NOISE external signal (pin 3)
  *****************************************************************************/
-void SN76477_noise_clock_w(int chip, int data)
+void SN76477_noise_clock_w(INT32 chip, INT32 data)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -390,14 +386,14 @@ void SN76477_noise_clock_w(int chip, int data)
 /*****************************************************************************
  * set NOISE resistor (pin 4)
  *****************************************************************************/
-void SN76477_set_noise_params(int chip, double res, double filtres, double cap)
+void SN76477_set_noise_params(INT32 chip, double res, double filtres, double cap)
 {
 	SN76477_set_noise_res(chip, res);
 	SN76477_set_filter_res(chip, filtres);
 	SN76477_set_filter_cap(chip, cap);
 }
 
-void SN76477_set_noise_res(int chip, double res)
+void SN76477_set_noise_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -407,7 +403,7 @@ void SN76477_set_noise_res(int chip, double res)
 /*****************************************************************************
  * set NOISE FILTER resistor (pin 5)
  *****************************************************************************/
-void SN76477_set_filter_res(int chip, double res)
+void SN76477_set_filter_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -427,7 +423,7 @@ void SN76477_set_filter_res(int chip, double res)
 /*****************************************************************************
  * set NOISE FILTER capacitor (pin 6)
  *****************************************************************************/
-void SN76477_set_filter_cap(int chip, double cap)
+void SN76477_set_filter_cap(INT32 chip, double cap)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -447,7 +443,7 @@ void SN76477_set_filter_cap(int chip, double cap)
 /*****************************************************************************
  * set DECAY resistor (pin 7)
  *****************************************************************************/
-void SN76477_set_decay_res(int chip, double res)
+void SN76477_set_decay_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -462,13 +458,13 @@ void SN76477_set_decay_res(int chip, double res)
 /*****************************************************************************
  * set ATTACK/DECAY capacitor (pin 8)
  *****************************************************************************/
-void SN76477_set_attack_params(int chip, double cap, double res)
+void SN76477_set_attack_params(INT32 chip, double cap, double res)
 {
 	SN76477_set_attack_decay_cap(chip, cap);
 	SN76477_set_attack_res(chip, res);
 }
 
-void SN76477_set_attack_decay_cap(int chip, double cap)
+void SN76477_set_attack_decay_cap(INT32 chip, double cap)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -485,7 +481,7 @@ void SN76477_set_attack_decay_cap(int chip, double cap)
 /*****************************************************************************
  * set ATTACK resistor (pin 10)
  *****************************************************************************/
-void SN76477_set_attack_res(int chip, double res)
+void SN76477_set_attack_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -500,10 +496,10 @@ void SN76477_set_attack_res(int chip, double res)
 /*****************************************************************************
  * set AMP resistor (pin 11)
  *****************************************************************************/
-void SN76477_set_amplitude_res(int chip, double res)
+void SN76477_set_amplitude_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
-	int i;
+	INT32 i;
 
 	if( res == sn->amplitude_res )
 		return;
@@ -512,11 +508,11 @@ void SN76477_set_amplitude_res(int chip, double res)
 	if( sn->amplitude_res > 0 )
 	{
 #if VERBOSE
-		int clip = 0;
+		INT32 clip = 0;
 #endif
 		for( i = 0; i < VMAX+1; i++ )
 		{
-			int vol = (int)((3.4 * sn->feedback_res / sn->amplitude_res) * 32767 * i / (VMAX+1));
+			INT32 vol = (int)((3.4 * sn->feedback_res / sn->amplitude_res) * 32767 * i / (VMAX+1));
 #if VERBOSE
 			if( vol > 32767 && !clip )
 				clip = i;
@@ -536,10 +532,10 @@ void SN76477_set_amplitude_res(int chip, double res)
 /*****************************************************************************
  * set FEEDBACK resistor (pin 12)
  *****************************************************************************/
-void SN76477_set_feedback_res(int chip, double res)
+void SN76477_set_feedback_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
-	int i;
+	INT32 i;
 
 	if( res == sn->feedback_res )
 		return;
@@ -548,11 +544,11 @@ void SN76477_set_feedback_res(int chip, double res)
 	if( sn->amplitude_res > 0 )
 	{
 #if VERBOSE
-		int clip = 0;
+		INT32 clip = 0;
 #endif
 		for( i = 0; i < VMAX+1; i++ )
 		{
-			int vol = (int)((3.4 * sn->feedback_res / sn->amplitude_res) * 32767 * i / (VMAX+1));
+			INT32 vol = (int)((3.4 * sn->feedback_res / sn->amplitude_res) * 32767 * i / (VMAX+1));
 #if VERBOSE
 			if( vol > 32767 && !clip ) clip = i;
 #endif
@@ -571,7 +567,7 @@ void SN76477_set_feedback_res(int chip, double res)
  * set PITCH voltage (pin 19)
  * TODO: fill with live...
  *****************************************************************************/
-void SN76477_set_pitch_voltage(int chip, double voltage)
+void SN76477_set_pitch_voltage(INT32 chip, double voltage)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -585,14 +581,14 @@ void SN76477_set_pitch_voltage(int chip, double voltage)
 /*****************************************************************************
  * set VCO resistor (pin 18)
  *****************************************************************************/
-void SN76477_set_vco_params(int chip, double voltage, double cap, double res)
+void SN76477_set_vco_params(INT32 chip, double voltage, double cap, double res)
 {
 	SN76477_set_vco_voltage(chip, voltage);
 	SN76477_set_vco_cap(chip, cap);
 	SN76477_set_vco_res(chip, res);
 }
 
-void SN76477_set_vco_res(int chip, double res)
+void SN76477_set_vco_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -612,7 +608,7 @@ void SN76477_set_vco_res(int chip, double res)
 /*****************************************************************************
  * set VCO capacitor (pin 17)
  *****************************************************************************/
-void SN76477_set_vco_cap(int chip, double cap)
+void SN76477_set_vco_cap(INT32 chip, double cap)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -632,7 +628,7 @@ void SN76477_set_vco_cap(int chip, double cap)
 /*****************************************************************************
  * set VCO voltage (pin 16)
  *****************************************************************************/
-void SN76477_set_vco_voltage(int chip, double voltage)
+void SN76477_set_vco_voltage(INT32 chip, double voltage)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -650,13 +646,13 @@ void SN76477_set_vco_voltage(int chip, double voltage)
 /*****************************************************************************
  * set SLF resistor (pin 20)
  *****************************************************************************/
-void SN76477_set_slf_params(int chip, double cap, double res)
+void SN76477_set_slf_params(INT32 chip, double cap, double res)
 {
 	SN76477_set_slf_cap(chip, cap);
 	SN76477_set_slf_res(chip, res);
 }
 
-void SN76477_set_slf_res(int chip, double res)
+void SN76477_set_slf_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -676,7 +672,7 @@ void SN76477_set_slf_res(int chip, double res)
 /*****************************************************************************
  * set SLF capacitor (pin 21)
  *****************************************************************************/
-void SN76477_set_slf_cap(int chip, double cap)
+void SN76477_set_slf_cap(INT32 chip, double cap)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -696,13 +692,13 @@ void SN76477_set_slf_cap(int chip, double cap)
 /*****************************************************************************
  * set ONESHOT resistor (pin 24)
  *****************************************************************************/
-void SN76477_set_oneshot_params(int chip, double cap, double res)
+void SN76477_set_oneshot_params(INT32 chip, double cap, double res)
 {
 	SN76477_set_oneshot_cap(chip, cap);
 	SN76477_set_oneshot_res(chip, res);
 }
 
-void SN76477_set_oneshot_res(int chip, double res)
+void SN76477_set_oneshot_res(INT32 chip, double res)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -716,7 +712,7 @@ void SN76477_set_oneshot_res(int chip, double res)
 /*****************************************************************************
  * set ONESHOT capacitor (pin 23)
  *****************************************************************************/
-void SN76477_set_oneshot_cap(int chip, double cap)
+void SN76477_set_oneshot_cap(INT32 chip, double cap)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -727,7 +723,7 @@ void SN76477_set_oneshot_cap(int chip, double cap)
 	//bprintf(0,_T("SN76477 #%d: ONE-SHOT(cap) time %fs\n"), chip, sn->oneshot_time);
 }
 
-void SN76477_set_mastervol(int chip, double vol)
+void SN76477_set_mastervol(INT32 chip, double vol)
 {
 	struct SN76477 *sn = sn76477[chip];
 
@@ -812,7 +808,7 @@ void SN76477_set_mastervol(int chip, double vol)
 	sn->vol_count -= sn->vol_rate;											\
 	if( sn->vol_count <= 0 )												\
 	{																		\
-		int n = - sn->vol_count / sn->samplerate + 1; /* number of steps */ \
+		INT32 n = - sn->vol_count / sn->samplerate + 1; /* number of steps */ \
 		sn->vol_count += n * sn->samplerate;								\
 		sn->vol += n * sn->vol_step;										\
 		if( sn->vol < VMIN ) sn->vol = VMIN;								\
@@ -824,7 +820,7 @@ void SN76477_set_mastervol(int chip, double vol)
 /*****************************************************************************
  * mixer select 0 0 0 : VCO
  *****************************************************************************/
-static void SN76477_update_0(int chip, INT16 *buffer, int length)
+static void SN76477_update_0(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -843,7 +839,7 @@ static void SN76477_update_0(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 0 0 1 : SLF
  *****************************************************************************/
-static void SN76477_update_1(int chip, INT16 *buffer, int length)
+static void SN76477_update_1(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -862,7 +858,7 @@ static void SN76477_update_1(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 0 1 0 : NOISE
  *****************************************************************************/
-static void SN76477_update_2(int chip, INT16 *buffer, int length)
+static void SN76477_update_2(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -881,7 +877,7 @@ static void SN76477_update_2(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 0 1 1 : VCO and NOISE
  *****************************************************************************/
-static void SN76477_update_3(int chip, INT16 *buffer, int length)
+static void SN76477_update_3(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -901,7 +897,7 @@ static void SN76477_update_3(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 1 0 0 : SLF and NOISE
  *****************************************************************************/
-static void SN76477_update_4(int chip, INT16 *buffer, int length)
+static void SN76477_update_4(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -921,7 +917,7 @@ static void SN76477_update_4(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 1 0 1 : VCO, SLF and NOISE
  *****************************************************************************/
-static void SN76477_update_5(int chip, INT16 *buffer, int length)
+static void SN76477_update_5(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -942,7 +938,7 @@ static void SN76477_update_5(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 1 1 0 : VCO and SLF
  *****************************************************************************/
-static void SN76477_update_6(int chip, INT16 *buffer, int length)
+static void SN76477_update_6(INT32 chip, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[chip];
 	while( length-- )
@@ -962,15 +958,16 @@ static void SN76477_update_6(int chip, INT16 *buffer, int length)
 /*****************************************************************************
  * mixer select 1 1 1 : Inhibit
  *****************************************************************************/
-static void SN76477_update_7(int chip, INT16 *buffer, int length)
+static void SN76477_update_7(INT32 chip, INT16 *buffer, INT32 length)
 {
-	/*while( length-- ) {
-		*buffer++ = 0;
-		*buffer++ = 0;
-	}*/
+	while( length-- ) {
+		//*buffer++ = 0;
+		//*buffer++ = 0;
+		sntimer_tick(chip);
+	}
 }
 
-void SN76477_sound_update(int param, INT16 *buffer, int length)
+void SN76477_sound_update(INT32 param, INT16 *buffer, INT32 length)
 {
 	struct SN76477 *sn = sn76477[param];
 	if( sn->enable )
@@ -1007,27 +1004,21 @@ void SN76477_sound_update(int param, INT16 *buffer, int length)
 			break;
 		}
 	}
-#if 0
-	if (sn76477[param]->oneshot_timer > 0.0)
-		bprintf(0, _T("ost: %fs, "), sn76477[param]->oneshot_timer);
-	if (sn76477[param]->envelope_timer > 0.0)
-		bprintf(0, _T("envt: %fs, "), sn76477[param]->envelope_timer);
-#endif
 }
 
-void SN76477_exit(int num) // yea, needs work. I know..
+void SN76477_exit(INT32 num) // yea, needs work. I know..
 {
 	BurnFree(sn76477[num]);
 }
 
-void SN76477_reset(int num)
+void SN76477_reset(INT32 num)
 {
 	SN76477_mixer_w(num, 0x07);		/* turn off mixing */
 	SN76477_envelope_w(num, 0x03);	/* envelope inputs open */
 	SN76477_enable_w(num, 0x01);		/* enable input open */
 }
 
-void SN76477_init(int num)
+void SN76477_init(INT32 num)
 {
 	if (num > MAX_SN76477-1)
 	{

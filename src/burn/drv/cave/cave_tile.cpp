@@ -292,7 +292,7 @@ static void Cave8x8Layer_RowSelect(INT32 nLayer, UINT32 nPriority)
 
 		ry = (ry & 7) << 1;
 
-		for (x = 0; x < mx; x += 1)
+		for (x = 0; x <= mx; x++)
 		{
 			if (do_row_scroll)
 			{

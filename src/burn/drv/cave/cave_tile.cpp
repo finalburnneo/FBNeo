@@ -71,30 +71,29 @@ static void CaveQueue8x8Layer_Normal(INT32 nLayer)
 	cy = (by >> 3) << 8;
 	by &= 0x0007;
 
-	for (y = 0; y < (31 << 8); y += (1 << 8)) {
+	for (y = 0; y < (31 << 8); y += (1 << 8))
+	{
 		nTileRow = (cy + y) & (0x3F << 8);
 		nTileYPos = (y >> 5) - by;
 
-		if (nTileYPos <= -8 || nTileYPos >= nCaveYSize) {
+		if (nTileYPos <= -8 || nTileYPos >= nCaveYSize)
 			continue;
-		}
 
-		for (x = mx; x >= 0; x -= (1 << 2)) {
+		for (x = mx; x >= 0; x -= (1 << 2))
+		{
 			nTileColumn = (cx + x) & (0x3F << 2);
 			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn))) << 16;
 			nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn)));
 
 			nTileNumber |= nTileOffset;
 
-			if (CaveTileAttrib[nLayer][nTileNumber & nTileMask[nLayer]]) {
+			if (CaveTileAttrib[nLayer][nTileNumber & nTileMask[nLayer]])
 				continue;
-			}
 
 			nTileXPos = (x << 1) - bx;
 
-			if (nTileXPos <= -8 || nTileXPos >= nCaveXSize) {
+			if (nTileXPos <= -8 || nTileXPos >= nCaveXSize)
 				continue;
-			}
 
 			CaveTileQueue[nLayer][nTileNumber >> 30]->x = nTileXPos;
 			CaveTileQueue[nLayer][nTileNumber >> 30]->y = nTileYPos;
@@ -112,14 +111,15 @@ static void Cave8x8Layer_Normal(INT32 nLayer, UINT32 nPriority)
 
 	UINT32* pPalette = CavePalette + nPaletteOffset[nLayer];
 	UINT32 nPaletteMask = 0x3F000000;
-	if (nPaletteSize[nLayer] == 6) {
+	if (nPaletteSize[nLayer] == 6)
 		nPaletteMask = 0x0F000000;
-	}
+
 	INT32 nPaletteShift = 24 - nPaletteSize[nLayer];
 
 	CaveTile* TileQueue = CaveTileQueue[nLayer][nPriority];
 
-	while ((nTileXPos = TileQueue->x) < 9999) {
+	while ((nTileXPos = TileQueue->x) < 9999)
+	{
 		nTileYPos = TileQueue->y;
 		nTileNumber = TileQueue->tile;
 		pTilePalette = pPalette + ((nTileNumber & nPaletteMask) >> nPaletteShift);
@@ -129,11 +129,10 @@ static void Cave8x8Layer_Normal(INT32 nLayer, UINT32 nPriority)
 
 		pTileData = (UINT32*)(CaveTileROM[nLayer] + (nTileNumber << 6));
 
-		if (nTileYPos < 0 || nTileYPos > nClipY8 || nTileXPos < 0 || nTileXPos > nClipX8) {
+		if (nTileYPos < 0 || nTileYPos > nClipY8 || nTileXPos < 0 || nTileXPos > nClipX8)
 			RenderTile[1]();
-		} else {
+		else
 			RenderTile[0]();
-		}
 
 		TileQueue++;
 	}
@@ -148,7 +147,7 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 	INT32 nTileColumn, nTileRow;
 	UINT32 nTileNumber;
 
-    UINT8* pTileRAM = CaveTileRAM[nLayer];
+	UINT8* pTileRAM = CaveTileRAM[nLayer];
 	UINT32* pPalette = CavePalette + nPaletteOffset[nLayer];
 	INT32 nPaletteShift = 24 - nPaletteSize[nLayer];
 
@@ -156,14 +155,12 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 
 	INT32 count = CaveTileCount[nLayer];
 
-	if (count >= (64 * 31)) {
+	if (count >= (64 * 31))
 		return;
-	}
 
 	UINT32 nTileOffset = 0;
-	if (nCaveTileBank) {
+	if (nCaveTileBank)
 		nTileOffset = 0x040000;
-	}
 
 	bx = CaveTileReg[nLayer][0] - 0x0A + nLayerXOffset[nLayer];
 	bx &= 0x01FF;
@@ -173,27 +170,31 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 	cy = (by >> 3) << 8;
 	by &= 0x0007;
 
-	if (nPriority == 0) {
+	if (nPriority == 0)
+	{
+		// bprintf(PRINT_NORMAL, L"   Layer %i row-scroll mode enabled (8x 8)\n", nLayer);
+
 		INT32 dy = CaveTileReg[nLayer][1] + 0x12 - nCaveRowModeOffset;
 
-		for (y = 0; y < nCaveYSize; y++) {
+		for (y = 0; y < nCaveYSize; y++)
 			rowscroll[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1000 + (((dy + y) & 0x01FF) << 2)))) + bx;
-		}
 	}
 
-	for (y = 0; y < (31 << 8); y += (1 << 8)) {
+	for (y = 0; y < (31 << 8); y += (1 << 8))
+	{
 		nTileYPos = (y >> 5) - by;
 
 		nTileRow = (cy + y) & (0x3F << 8);
-		pTileRowInfo =  rowscroll + nTileYPos;
+		pTileRowInfo = rowscroll + nTileYPos;
 
-		for (x = 0; x < (64 << 2); x += (1 << 2)) {
+		for (x = 0; x < (64 << 2); x += (1 << 2))
+		{
 			nTileColumn = x & (0x3F << 2);
-			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn))) << 16;
-			if ((nTileNumber >> 30) != nPriority) {
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn)));
+			if ((nTileNumber >> 14) != nPriority)
 				continue;
-			}
-			nTileNumber |= BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn)));
+
+			nTileNumber = (nTileNumber << 16) | BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn)));
 			pTilePalette = pPalette + ((nTileNumber & 0x3F000000) >> nPaletteShift);
 
 			nTileNumber |= nTileOffset;
@@ -201,13 +202,11 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 
 			count++;
 
-			if (nTileYPos <= -8 || nTileYPos >= nCaveYSize) {
+			if (nTileYPos <= -8 || nTileYPos >= nCaveYSize)
 				continue;
-			}
 
-			if (*((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber))) {
+			if (*((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber)))
 				continue;
-			}
 
 			nTileXPos = (x << 1);
 
@@ -215,20 +214,131 @@ static void Cave8x8Layer_RowScroll(INT32 nLayer, UINT32 nPriority)
 
 			pTileData = (UINT32*)(CaveTileROM[nLayer] + (nTileNumber << 6));
 
-			if (nTileYPos < 0 || nTileYPos > nClipY8 || nTileXPos < 0 || nTileXPos > nClipX8) {
+			if (nTileYPos < 0 || nTileYPos > nClipY8 || nTileXPos < 0 || nTileXPos > nClipX8)
 				RenderTile[3]();
-			} else {
+			else
 				RenderTile[2]();
-			}
 		}
 	}
 
-	if (count >= (64 * 31)) {
+	if (count >= (64 * 31))
+	{
 		CaveTileMax[0] -= 0x0123;
 		CaveTileMax[1] -= 0x0123;
 		CaveTileMax[2] -= 0x0123;
 		CaveTileMax[3] -= 0x0123;
 	}
+
+	CaveTileCount[nLayer] = count;
+
+	return;
+}
+
+static void Cave8x8Layer_RowSelect(INT32 nLayer, UINT32 nPriority)
+{
+	INT32 x, y;
+	INT32 bx, rx, ry;
+	INT32 nTileColumn, nTileRow;
+	UINT32 nTileNumber;
+
+	UINT8* pTileRAM = CaveTileRAM[nLayer];
+	UINT32* pPalette = CavePalette + nPaletteOffset[nLayer];
+	INT32 nPaletteShift = 24 - nPaletteSize[nLayer];
+
+	INT32* rowselect = pRowSelect[nLayer];
+	INT32* rowscroll = pRowScroll[nLayer];
+
+	INT32 count = CaveTileCount[nLayer];
+
+	int mx = nCaveXSize >> 3;
+
+	if (count >= nCaveYSize * (mx + 1))
+		return;
+
+	UINT32 nTileOffset = 0;
+	if (nCaveTileBank)
+		nTileOffset = 0x040000;
+
+	bx = CaveTileReg[nLayer][0] - 0x0A + nLayerXOffset[nLayer];
+	bx &= 0x01FF;
+
+	bool do_row_scroll = CaveTileReg[nLayer][0] & 0x4000;
+
+	if (nPriority == 0)
+	{
+		// bprintf(PRINT_NORMAL, L"   Layer %i row-select mode enabled (8x 8)\n", nLayer);
+
+		INT32 by = CaveTileReg[nLayer][1] + 0x12 - nCaveRowModeOffset;
+
+		for (y = 0; y < nCaveYSize; y++)
+		{
+			if (do_row_scroll)
+				rowscroll[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1000 + (((by + y) & 0x01FF) << 2)))) + bx;
+
+			rowselect[y] = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x1002 + (((by + y) & 0x01FF) << 2))));
+		}
+	}
+
+	rx = 0;
+
+	for (y = 0; y < nCaveYSize; y++)
+	{
+		ry = rowselect[y];
+
+		nTileRow = ((ry >> 3) & 0x3F) << 8;
+		nTileYPos = ry;
+
+		pTileRowInfo = rowscroll + y;
+
+		ry = (ry & 7) << 1;
+
+		for (x = 0; x < mx; x += 1)
+		{
+			if (do_row_scroll)
+			{
+				rx = rowscroll[y];
+				nTileColumn = (((rx >> 3) + x) & 0x3F) << 2;
+			}
+			else
+				nTileColumn = (x & 0x3F) << 2;
+
+			nTileNumber = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4000 + nTileRow + nTileColumn)));
+			if ((nTileNumber >> 14) != nPriority)
+				continue;
+
+			nTileNumber = (nTileNumber << 16) | BURN_ENDIAN_SWAP_INT16(*((UINT16*)(pTileRAM + 0x4002 + nTileRow + nTileColumn)));
+			pTilePalette = pPalette + ((nTileNumber & 0x3F000000) >> nPaletteShift);
+
+			nTileNumber |= nTileOffset;
+			nTileNumber &= nTileMask[nLayer];
+
+			count++;
+
+			if (*((UINT32*)(CaveTileAttrib[nLayer] + nTileNumber)))
+				continue;
+
+			nTileXPos = (x << 3) - (rx & 7);
+
+			pTile = pBurnDraw + (y * nBurnPitch) + nTileXPos * nBurnBpp;
+
+			pTileData = (UINT32*)(CaveTileROM[nLayer] + (nTileNumber << 6));
+			pTileData += ry;
+
+			if (nTileXPos < 0 || nTileXPos > nClipX8)
+				RenderTile[5]();
+			else
+				RenderTile[4]();
+		}
+	}
+
+	if (count >= (64 * 31))
+	{
+		CaveTileMax[0] -= 0x0123;
+		CaveTileMax[1] -= 0x0123;
+		CaveTileMax[2] -= 0x0123;
+		CaveTileMax[3] -= 0x0123;
+	}
+
 	CaveTileCount[nLayer] = count;
 
 	return;
@@ -745,27 +855,13 @@ static void Cave16x16Layer(INT32 nLayer, UINT32 nPriority)
 
 static void Cave8x8Layer(INT32 nLayer, UINT32 nPriority)
 {
-#if 0
-	if (CaveTileReg[nLayer][1] & 0x4000) {			// Row-select mode
-		Cave8x8Layer_RowSelect(nLayer, nPriority);
-//		bprintf(PRINT_NORMAL, "   Layer %d row-select mode enabled ( 8x 8)\n", nLayer);
-		return;
-	}
-#else
-	if (CaveTileReg[nLayer][1] & 0x4000) {
-//		bprintf(PRINT_ERROR, "   Layer %d row-select mode enabled ( 8x 8, UNSUPPORTED!)\n", nLayer);
-	}
-#endif
+	if (CaveTileReg[nLayer][1] & 0x4000)
+		return Cave8x8Layer_RowSelect(nLayer, nPriority);
 
-	if (CaveTileReg[nLayer][0] & 0x4000) {			// Row-scroll mode
-		Cave8x8Layer_RowScroll(nLayer, nPriority);
-//		bprintf(PRINT_NORMAL, "   Layer %d row-scroll mode enabled ( 8x 8)\n", nLayer);
-		return;
-	}
+	if (CaveTileReg[nLayer][0] & 0x4000)
+		return Cave8x8Layer_RowScroll(nLayer, nPriority);
 
-	Cave8x8Layer_Normal(nLayer, nPriority);
-
-	return;
+	return Cave8x8Layer_Normal(nLayer, nPriority);
 }
 
 INT32 CaveTileRender(INT32 nMode)
@@ -776,81 +872,86 @@ INT32 CaveTileRender(INT32 nMode)
 	INT32 nOffset = 0;
 
 	CaveTileCount[0] = CaveTileCount[1] = CaveTileCount[2] = CaveTileCount[3] = 0;
-	CaveTileMax[0] = CaveTileMax[1] = CaveTileMax[2] = CaveTileMax[3] = 0;
+	CaveTileMax[0]   = CaveTileMax[1]   = CaveTileMax[2]   = CaveTileMax[3]   = 0;
 
 	nLayerYOffset = 0x12 - nCaveYOffset - nCaveExtraYOffset;
 
-	for (nLayer = 0; nLayer < 4; nLayer++) {
-
+	for (nLayer = 0; nLayer < 4; nLayer++)
+	{
 		nLayerXOffset[nLayer] = nLayer + nOffset - nCaveXOffset - nCaveExtraXOffset;
 		
-		if ((CaveTileReg[nLayer][2] & 0x0010) == 0) {
-
-			for (nPriority = 0; nPriority < 4; nPriority++) {
+		if ((CaveTileReg[nLayer][2] & 0x0010) == 0)
+		{
+			for (nPriority = 0; nPriority < 4; nPriority++)
 				CaveTileQueue[nLayer][nPriority] = &CaveTileQueueMemory[nLayer][nPriority * 1536];
-			}
-			if (nBurnLayer & (8 >> nLayer)) {
-				if (CaveTileReg[nLayer][1] & 0x2000) {
-					if (nMode && ((CaveTileReg[nLayer][0] | CaveTileReg[nLayer][1]) & 0x4000)) {
-						CaveTileMax[0] += 0x0123;
-						CaveTileMax[1] += 0x0123;
-						CaveTileMax[2] += 0x0123;
-						CaveTileMax[3] += 0x0123;
-					} else {
-						CaveQueue16x16Layer_Normal(nLayer);
-					}
-				} else {
-					if (nMode && (CaveTileReg[nLayer][0] & 0x4000)) {
-						CaveTileMax[0] += 0x0123;
-						CaveTileMax[1] += 0x0123;
-						CaveTileMax[2] += 0x0123;
-						CaveTileMax[3] += 0x0123;
-					} else {
-						CaveQueue8x8Layer_Normal(nLayer);
-					}
 
-//					nOffset += 8;
+			if (nBurnLayer & (8 >> nLayer))
+			{
+				if (nMode && ((CaveTileReg[nLayer][0] | CaveTileReg[nLayer][1]) & 0x4000))
+				{
+					// layer data needs to be parsed per scanline for row-scroll / row-select
+
+					CaveTileMax[0] += 0x0123;
+					CaveTileMax[1] += 0x0123;
+					CaveTileMax[2] += 0x0123;
+					CaveTileMax[3] += 0x0123;
+				}
+				else
+				{
+					// layer tiles are parsed once and queued for rendering
+
+					if (CaveTileReg[nLayer][1] & 0x2000)
+						CaveQueue16x16Layer_Normal(nLayer);
+					else
+						CaveQueue8x8Layer_Normal(nLayer);
 				}
 			}
 
-			for (nPriority = 0; nPriority < 4; nPriority++) {
+			for (nPriority = 0; nPriority < 4; nPriority++)
+			{
 				CaveTileQueue[nLayer][nPriority]->x = 9999;
 				CaveTileQueue[nLayer][nPriority] = &CaveTileQueueMemory[nLayer][nPriority * 1536];
-				if (CaveTileQueue[nLayer][nPriority]->x < 9999) {
+			
+				if (CaveTileQueue[nLayer][nPriority]->x < 9999)
 					CaveTileMax[nPriority] += 0x123;
-				}
 			}
 		}
 	}
 
 	nLowPriority = 0;
 
-	for (nPriority = 0; nPriority < 4; nPriority++) {
-
-		if (CaveTileMax[nPriority] || nPriority == 3) {
+	for (nPriority = 0; nPriority < 4; nPriority++)
+	{
+		if (CaveTileMax[nPriority] || nPriority == 3)
+		{
 			CaveSpriteRender(nLowPriority, nPriority);
 			nLowPriority = nPriority + 1;
 		}
 
-		for (UINT32 i = 0; i < 4; i++) {
-			for (nLayer = 0; nLayer < 4; nLayer++) {
-				if ((CaveTileReg[nLayer][2] & 0x0003) == i) {
-					if ((CaveTileReg[nLayer][2] & 0x0010) || (nBurnLayer & (8 >> nLayer)) == 0) {
+		for (UINT32 i = 0; i < 4; i++)
+		{
+			for (nLayer = 0; nLayer < 4; nLayer++)
+			{
+				if ((CaveTileReg[nLayer][2] & 0x0003) == i)
+				{
+					if ((CaveTileReg[nLayer][2] & 0x0010) || (nBurnLayer & (8 >> nLayer)) == 0)
 						continue;
-					}
 
-					if (CaveTileReg[nLayer][1] & 0x2000) {
-						if (nMode) {
+					// render layer / queued tiles
+
+					if (CaveTileReg[nLayer][1] & 0x2000)
+					{
+						if (nMode)
 							Cave16x16Layer(nLayer, nPriority);
-						} else {
+						else
 							Cave16x16Layer_Normal(nLayer, nPriority);
-						}
-					} else {
-						if (nMode) {
+					}
+					else
+					{
+						if (nMode)
 							Cave8x8Layer(nLayer, nPriority);
-						} else {
+						else
 							Cave8x8Layer_Normal(nLayer, nPriority);
-						}
 					}
 				}
 			}

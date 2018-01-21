@@ -76,6 +76,8 @@ static INT32 m_banking_type;
 static INT16 *m_mixer_buffer_left;
 static INT16 *m_mixer_buffer_right;
 
+static INT32 samples_from; // "re"sampler
+
 static INT32 m_baserate;
 static INT8 *m_pRom;
 static UINT8 m_REG[0x200];
@@ -117,7 +119,7 @@ static void init_voice( C140_VOICE *v )
    is done by a small PAL or GAL external to the sound chip, which can be switched
    per-game or at least per-PCB revision as addressing range needs grow.
 */
-static long find_sample(long adrs, long bank, int voice)
+static long find_sample(long adrs, long bank, INT32 voice)
 {
 	long newadr = 0;
 
@@ -155,6 +157,8 @@ static long find_sample(long adrs, long bank, int voice)
 void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom)
 {
 	m_sample_rate = m_baserate = clock;
+
+	samples_from = (INT32)((double)((m_sample_rate * 100) / nBurnFPS) + 0.5);
 
 	m_banking_type = devtype;
 
@@ -196,7 +200,7 @@ void c140_reset()
 	}
 }
 
-void c140_scan()
+void c140_scan(INT32 nAction)
 {
 	SCAN_VAR(m_REG);
 	SCAN_VAR(m_voi);
@@ -207,7 +211,7 @@ void c140_scan()
 //  sound_stream_update - handle a stream update
 //-------------------------------------------------
 
-void c140_update(INT16 *outputs, int samples_len)
+void c140_update(INT16 *outputs, INT32 samples_len)
 {
 	INT32   rvol,lvol;
 	INT32   dt;
@@ -222,15 +226,13 @@ void c140_update(INT16 *outputs, int samples_len)
 
 	INT16   *lmix, *rmix;
 
-	// fingers crossed *dink*
-	INT32 samples = (((((m_sample_rate*1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10; // from gaelco
+	INT32 samples = (samples_from * samples_len) / nBurnSoundLen;
 
 	if(samples>m_sample_rate) samples=m_sample_rate;
 
 	/* zap the contents of the mixer buffer */
-	//memset(m_mixer_buffer_left, 0, samples * sizeof(INT16));
-	//memset(m_mixer_buffer_right, 0, samples * sizeof(INT16));
-	memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate); // full thing.
+	memset(m_mixer_buffer_left, 0, samples * sizeof(INT16));
+	memset(m_mixer_buffer_right, 0, samples * sizeof(INT16));
 
 	/* get the number of voices to update */
 	voicecnt = (m_banking_type == C140_TYPE_ASIC219) ? 16 : 24;
@@ -395,7 +397,7 @@ void c140_update(INT16 *outputs, int samples_len)
 
 	for (INT32 j = 0; j < samples_len; j++)
 	{
-		INT32 k = (((((m_sample_rate*1000) / nBurnFPS) * (j & ~2)) / nBurnSoundLen)) / 10;
+		INT32 k = (samples_from * j) / nBurnSoundLen;
 
 		INT32 l = 8 * lmix[k];
 		INT32 r = 8 * rmix[k];

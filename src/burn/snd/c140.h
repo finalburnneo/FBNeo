@@ -41,9 +41,9 @@ struct C140_VOICE
 void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom);
 void c140_exit();
 void c140_reset();
-void c140_scan();
+void c140_scan(INT32 nAction);
 
-void c140_update(INT16 *outputs, int samples_len);
+void c140_update(INT16 *outputs, INT32 samples_len);
 
 UINT8 c140_read(UINT16 offset);
 void c140_write(UINT16 offset, UINT8 data);

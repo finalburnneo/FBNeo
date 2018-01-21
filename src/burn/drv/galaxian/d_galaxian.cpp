@@ -6779,7 +6779,7 @@ STD_ROM_FN(Galaxrfgg)
 static struct BurnRomInfo GalaxrcggRomDesc[] = {
 	{ "7f.bin",        0x01000, 0xc06eeb10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "7j.bin",        0x01000, 0x182ff334, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "7l.bin",        0x00800, 0x420dbbf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7l.bin",        0x01000, 0x420dbbf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 		
 	{ "1hj.bin",       0x00800, 0x23e627ff, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "1kl.bin",       0x00800, 0x0dbcee5b, BRF_GRA | GAL_ROM_TILES_SHARED },

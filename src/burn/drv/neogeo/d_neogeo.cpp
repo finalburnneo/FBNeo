@@ -8971,7 +8971,7 @@ struct BurnDriver BurnDrvsvcsplus = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Samurai Shodown V / Samurai Spirits Zero (NGM-2700)
+// Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)
 /* Encrypted Set */ /* MVS VERSION */
 
 static struct BurnRomInfo samsho5RomDesc[] = {
@@ -9026,10 +9026,53 @@ static INT32 samsho5Init()
 
 struct BurnDriver BurnDrvsamsho5 = {
 	"samsho5", NULL, "neogeo", NULL, "2003",
-	"Samurai Shodown V / Samurai Spirits Zero (NGM-2700)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
-	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (NGM-2700)\0", NULL, NULL, NULL,
+	"Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 1)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
+	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (NGM-2700, set 1)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_SAMSHO,
 	NULL, samsho5RomInfo, samsho5RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	samsho5Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 2)
+/* Encrypted Set */ /* MVS VERSION */
+/* handwritten labels, possible hack of samsho5h? 
+   p1.bin                  270-p1c.p1              90.607002%
+   p2.bin                  270-p2c.sp2             99.999763% (all bytes that differ do so by only bits 0x20 or 0x02, which is suspicious)
+*/
+
+static struct BurnRomInfo samsho5aRomDesc[] = {
+	{ "p1.bin",    	  0x400000, 0x7795fffe, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "p2.bin",       0x400000, 0x2b844fe9, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "270-c1.c1",    0x800000, 0x14ffffac, 3 | BRF_GRA },           //  2 Sprite data
+	{ "270-c2.c2",    0x800000, 0x401f7299, 3 | BRF_GRA },           //  3 
+	{ "270-c3.c3",    0x800000, 0x838f0260, 3 | BRF_GRA },           //  4 
+	{ "270-c4.c4",    0x800000, 0x041560a5, 3 | BRF_GRA },           //  5 
+	{ "270-c5.c5",    0x800000, 0xbd30b52d, 3 | BRF_GRA },           //  6 
+	{ "270-c6.c6",    0x800000, 0x86a69c70, 3 | BRF_GRA },           //  7 
+	{ "270-c7.c7",    0x800000, 0xd28fbc3c, 3 | BRF_GRA },           //  8 
+	{ "270-c8.c8",    0x800000, 0x02c530a6, 3 | BRF_GRA },           //  9 
+
+	/* Encrypted */
+	{ "270-m1.m1",    0x080000, 0x49c9901a, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	/* Encrypted */
+	{ "270-v1.v1",    0x800000, 0x62e434eb, 5 | BRF_SND },           // 11 Sound data
+	{ "270-v2.v2",    0x800000, 0x180f3c9a, 5 | BRF_SND },           // 12 
+};
+
+STDROMPICKEXT(samsho5a, samsho5a, neogeo)
+STD_ROM_FN(samsho5a)
+
+struct BurnDriver BurnDrvsamsho5a = {
+	"samsho5a", "samsho5", "neogeo", NULL, "2003",
+	"Samurai Shodown V / Samurai Spirits Zero (NGM-2700, set 2)\0", NULL, "Yuki Enterprise / SNK Playmore", "Neo Geo MVS",
+	L"Samurai Shodown V\0\u30B5\u30E0\u30E9\u30A4\u30B9\u30D4\u30EA\u30C3\u30C4\u96F6 (NGM-2700, set 2)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_SAMSHO,
+	NULL, samsho5aRomInfo, samsho5aRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	samsho5Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

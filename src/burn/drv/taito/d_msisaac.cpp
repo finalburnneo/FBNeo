@@ -165,14 +165,14 @@ STDDIPINFO(Msisaac)
 static void ta7630_init()
 {
 	double db 	= 0.0;
-	double db_step 	= 1.50;
+	double db_step 	= 0.50;
 	for (INT32 i = 0; i < 16; i++)
 	{
 		double max = 100.0 / pow(10.0, db/20.0);
 		m_vol_ctrl[15 - i] = (INT32)max;
 
 		db += db_step;
-		db_step += 0.125;
+		db_step += 0.275;
 	}
 }
 
@@ -511,8 +511,8 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
 	MSM5232SetCapacitors(0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6, 0.65e-6);

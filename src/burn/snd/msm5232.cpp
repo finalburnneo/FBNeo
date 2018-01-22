@@ -764,8 +764,8 @@ void MSM5232Update(INT16 *buffer, INT32 samples)
 	
 			sample = BURN_SND_CLIP(sample);
 	
-			buffer[0] += BURN_SND_CLIP(buffer[0]+sample);
-			buffer[1] += BURN_SND_CLIP(buffer[1]+sample);
+			buffer[0] = BURN_SND_CLIP(buffer[0]+sample);
+			buffer[1] = BURN_SND_CLIP(buffer[1]+sample);
 			buffer += 2;
 		}
 	}

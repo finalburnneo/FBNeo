@@ -45,6 +45,9 @@ struct gaelco_sound_channel
 	INT32 active;         // is it playing?
 	INT32 loop;           // = 0 no looping, = 1 looping
 	INT32 chunkNum;       // current chunk if looping
+
+	INT32 ch_data_r;      // for ramp-down -dink
+	INT32 ch_data_l;
 };
 
 //sound_stream *m_stream;                                 /* our stream */
@@ -58,6 +61,10 @@ static INT32 gaelcosnd_initted = 0;
 static INT32 gaelcosnd_mono = 0;
 static INT32 gaelcosnd_swap_lr = 0;
 
+// for resampling
+static UINT32 nSampleSize;
+static INT32 nFractionalPosition;
+static INT32 nPosition;
 static INT16 *sample_buffer;
 
 // Table for converting from 8 to 16 bits with volume control
@@ -79,10 +86,23 @@ static void gaelco_set_bank_offsets(INT32 offs1, INT32 offs2, INT32 offs3, INT32
 
 void gaelcosnd_update(INT16 *outputs, INT32 samples)
 {
-	INT32 samples_mod = ((((8000000 / nBurnFPS) * samples) / nBurnSoundLen)) / 10; // + 5 to round
+	if (samples != nBurnSoundLen) {
+		bprintf(0, _T("gaelcosnd_update(): once per frame, please!\n"));
+		return;
+	}
+
+	INT32 nSamplesNeeded = ((((((8000 * 1000) / nBurnFPS) * samples) / nBurnSoundLen)) / 10) + 1;
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
+
+	INT16 *lmix = sample_buffer + (8000 * 0) + 5 + nPosition;
+	INT16 *rmix = sample_buffer + (8000 * 1) + 5 + nPosition;
+
+	/* zap the contents of the mixer buffer */
+	memset(lmix, 0, nSamplesNeeded * sizeof(INT16));
+	memset(rmix, 0, nSamplesNeeded * sizeof(INT16));
 
 	/* fill all data needed */
-	for(INT32 j = 0; j < samples_mod; j++){
+	for(INT32 j = 0; j < (nSamplesNeeded - nPosition); j++){
 		INT32 output_l = 0, output_r = 0;
 
 		/* for each channel */
@@ -91,12 +111,12 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 			gaelco_sound_channel *channel = &m_channel[ch];
 
 			/* if the channel is playing */
-			if (channel->active == 1){
+			if (channel->active == 1) {
 				INT32 data, chunkNum = 0;
 				INT32 base_offset, type, bank, vol_r, vol_l, end_pos;
 
 				/* if the channel is looping, get current chunk to play */
-				if (channel->loop == 1){
+				if (channel->loop == 1) {
 					chunkNum = channel->chunkNum;
 				}
 
@@ -107,7 +127,7 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 				bank = m_banks[((m_sndregs[base_offset + 1] >> 0) & 0x03)];
 				vol_l = ((m_sndregs[base_offset + 1] >> 12) & 0x0f);
 				vol_r = ((m_sndregs[base_offset + 1] >> 8) & 0x0f);
-				end_pos = m_sndregs[base_offset + 2] << 8;
+				end_pos = (m_sndregs[base_offset + 2] << 8) - 1; // get rid of clicks and pops -dink
 
 				/* generates output data (range 0x00000..0xffff) */
 				if (type == 0x08){
@@ -148,36 +168,87 @@ void gaelcosnd_update(INT16 *outputs, INT32 samples)
 						}
 					}
 				}
+				channel->ch_data_l = ch_data_l; // for ramp.
+				channel->ch_data_r = ch_data_r;
+			} else {
+#if 0
+				// ramp to zero.  games I tested don't seem to need it, keeping just in-case
+				if (channel->ch_data_l > 0) {
+					channel->ch_data_l -= ((channel->ch_data_l >  4) ? 4 : 1);
+				} else if (channel->ch_data_l < 0) {
+					channel->ch_data_l += ((channel->ch_data_l < -4) ? 4 : 1);
+				}
+
+				if (channel->ch_data_r > 0) {
+					channel->ch_data_r -= ((channel->ch_data_r >  4) ? 4 : 1);
+				} else if (channel->ch_data_r < 0) {
+					channel->ch_data_r += ((channel->ch_data_r < -4) ? 4 : 1);
+				}
+
+				ch_data_l = channel->ch_data_l;
+				ch_data_r = channel->ch_data_r;
+#endif
 			}
 
 			/* add the contribution of this channel to the current data output */
-			output_l = BURN_SND_CLIP(output_l + ch_data_l);
-			output_r = BURN_SND_CLIP(output_r + ch_data_r);
+			output_l = (output_l + ch_data_l);
+			output_r = (output_r + ch_data_r);
 		}
+
+		output_l = (INT32)(double)(output_l * 0.50); // lower the volumes so mixing doesn't crackle
+		output_r = (INT32)(double)(output_r * 0.50);
 
 		if (gaelcosnd_mono) {
 			output_l = output_r + output_l;
 			output_r = output_l;
-			output_l = (INT32)(double)(output_l * 0.60); // wrally2 is too loud mono'd
-			output_r = (INT32)(double)(output_r * 0.60);
 		}
 
 		if (gaelcosnd_swap_lr) {
-			sample_buffer[j*2+1] = BURN_SND_CLIP(output_l);
-			sample_buffer[j*2+0] = BURN_SND_CLIP(output_r);
+			*lmix++ = output_r;
+			*rmix++ = output_l;
 		} else {
-			sample_buffer[j*2+0] = BURN_SND_CLIP(output_l);
-			sample_buffer[j*2+1] = BURN_SND_CLIP(output_r);
+			*lmix++ = output_l;
+			*rmix++ = output_r;
 		}
 	}
 
-	for (INT32 j = 0; j < samples; j++)
-	{
-		INT32 k = ((((8000000 / nBurnFPS) * (j&~2)) / nBurnSoundLen)) / 10;
+	INT16 *pBufL = sample_buffer + (8000 * 0) + 5;
+	INT16 *pBufR = sample_buffer + (8000 * 1) + 5;
 
-		outputs[0] = sample_buffer[k*2+0];
-		outputs[1] = sample_buffer[k*2+1];
-		outputs += 2;
+	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (samples << 1); i += 2, nFractionalPosition += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nRightSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample, nTotalRightSample;
+
+		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
+		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
+		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
+		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
+
+		nRightSample[0] += (INT32)(pBufR[(nFractionalPosition >> 16) - 3]);
+		nRightSample[1] += (INT32)(pBufR[(nFractionalPosition >> 16) - 2]);
+		nRightSample[2] += (INT32)(pBufR[(nFractionalPosition >> 16) - 1]);
+		nRightSample[3] += (INT32)(pBufR[(nFractionalPosition >> 16) - 0]);
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
+
+		outputs[i + 0] = BURN_SND_CLIP(nTotalLeftSample);
+		outputs[i + 1] = BURN_SND_CLIP(nTotalRightSample);
+	}
+
+	if (samples >= nBurnSoundLen) {
+		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
+		//bprintf(0, _T("%d, "), nExtraSamples);
+
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
+			pBufR[i] = pBufR[(nFractionalPosition >> 16) + i];
+		}
+
+		nFractionalPosition &= 0xFFFF;
+
+		nPosition = nExtraSamples;
 	}
 }
 
@@ -238,7 +309,6 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 {
 	m_snd_data = soundrom;
 
-	sample_buffer = (INT16 *)BurnMalloc(((8000 / 60)+1) * 4);
 	gaelco_set_bank_offsets(offs1, offs2, offs3, offs4);
 
 	/* init volume table */
@@ -249,6 +319,14 @@ void gaelcosnd_start(UINT8 *soundrom, INT32 offs1, INT32 offs2, INT32 offs3, INT
 	}
 
 	gaelcosnd_reset();
+
+	// for resampling
+	sample_buffer = (INT16 *)BurnMalloc(8000 * sizeof(INT16) * 2); // more than enough :)
+	memset(sample_buffer, 0, 8000 * sizeof(INT16) * 2);
+
+	nSampleSize = (UINT32)8000 * (1 << 16) / nBurnSoundRate;
+	nFractionalPosition = 0;
+	nPosition = 0;
 
 	gaelcosnd_initted = 1;
 }
@@ -274,10 +352,15 @@ void gaelcosnd_exit()
 	gaelcosnd_swap_lr = 0;
 }
 
-void gaelcosnd_scan()
+void gaelcosnd_scan(INT32 nAction)
 {
 	SCAN_VAR(m_channel);
 	SCAN_VAR(m_sndregs);
+
+	if (nAction & ACB_WRITE) {
+		nFractionalPosition = 0;
+		nPosition = 0;
+	}
 }
 
 void gaelcosnd_reset()

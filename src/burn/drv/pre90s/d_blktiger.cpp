@@ -47,8 +47,6 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
-static INT32 nCyclesTotal[2];
-
 static struct BurnInputInfo DrvInputList[] = {
 	{"Coin 1"       	  , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 coin"  },
 	{"Coin 2"       	  , BIT_DIGITAL  , DrvJoy1 + 7,	 "p2 coin"  },
@@ -186,7 +184,7 @@ static void DrvVidRamBankswitch(INT32 bank)
 	ZetMapArea(0xc000, 0xcfff, 2, DrvBgRAM + nBank);
 }
 
-void __fastcall blacktiger_write(UINT16 address, UINT8 data)
+static void __fastcall blacktiger_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf800) == 0xd800) {
 		DrvPalRAM[address & 0x7ff] = data;
@@ -199,30 +197,17 @@ void __fastcall blacktiger_write(UINT16 address, UINT8 data)
 	return;
 }
 
-UINT8 __fastcall blacktiger_read(UINT16 /*address*/)
+static UINT8 __fastcall blacktiger_read(UINT16 /*address*/)
 {
 	return 0;
 }
 
-void __fastcall blacktiger_out(UINT16 port, UINT8 data)
+static void __fastcall blacktiger_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
 		case 0x00:
-		{
-		//	INT64 cycles = ZetTotalCycles();
-		//	ZetClose();
-		//	ZetOpen(1);
-
-		//	INT32 nCycles = ((INT64)cycles * nCyclesTotal[1] / nCyclesTotal[0]);
-		//	if (nCycles <= ZetTotalCycles()) return;
-
-		//	BurnTimerUpdate(nCycles);
-		//	ZetClose();
-		//	ZetOpen(0);
-
 			*soundlatch = data;
-		}
 		return;
 
 		case 0x01:
@@ -284,7 +269,7 @@ void __fastcall blacktiger_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall blacktiger_in(UINT16 port)
+static UINT8 __fastcall blacktiger_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -307,7 +292,7 @@ UINT8 __fastcall blacktiger_in(UINT16 port)
 	return 0;
 }
 
-void __fastcall blacktiger_sound_write(UINT16 address, UINT8 data)
+static void __fastcall blacktiger_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -329,7 +314,7 @@ void __fastcall blacktiger_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall blacktiger_sound_read(UINT16 address)
+static UINT8 __fastcall blacktiger_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -559,7 +544,7 @@ static INT32 DrvExit()
 static void draw_bg(INT32 type, INT32 layer)
 {
 // Priority masks should be enabled, but I don't see anywhere that they are used?
-//#define USE_MASKS
+#define USE_MASKS
 
 #ifdef USE_MASKS
 	UINT16 masks[2][4] = { { 0xffff, 0xfff0, 0xff00, 0xf000 }, { 0x8000, 0x800f, 0x80ff, 0x8fff } };
@@ -604,7 +589,7 @@ static void draw_bg(INT32 type, INT32 layer)
 			flipy = 1;
 
 			sx = 240 - sx;
-			sy = 208 - sy;  
+			sy = 208 - sy;
 		}
 
 #ifdef USE_MASKS
@@ -715,19 +700,19 @@ static INT32 DrvDraw()
 	}
 
 	if (*DrvBgEnable) {
-		if (nSpriteEnable & 1) draw_bg(*DrvScreenLayout, 1);
+		if (nBurnLayer & 1) draw_bg(*DrvScreenLayout, 1);
 	}
 
 	if (*DrvSprEnable) {
-		if (nSpriteEnable & 2) draw_sprites();
+		if (nBurnLayer & 2) draw_sprites();
 	}
 
 	if (*DrvBgEnable) {
-		if (nSpriteEnable & 4) draw_bg(*DrvScreenLayout, 0);
+		if (nBurnLayer & 4) draw_bg(*DrvScreenLayout, 0);
 	}
 
 	if (*DrvFgEnable) {
-		if (nSpriteEnable & 8) draw_text_layer();
+		if (nBurnLayer & 8) draw_text_layer();
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -760,28 +745,25 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
 
-	INT32 nInterleave = 100;
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 3579545 / 60;
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[2] = { 6000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext, nCyclesSegment;
+		INT32 nCurrentCPU, nNext;
 
 		// Run Z80 #1
 		nCurrentCPU = 0;
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
-		if (i == 98) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
+		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		// Run Z80 #2
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		BurnTimerUpdate(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		ZetClose();
 	}
 
@@ -822,10 +804,12 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 	}
 
-	ZetOpen(0);
-	DrvRomBankswitch(*DrvRomBank);
-	DrvVidRamBankswitch(*DrvVidBank);
-	ZetClose();
+	if (nAction & ACB_WRITE) {
+		ZetOpen(0);
+		DrvRomBankswitch(*DrvRomBank);
+		DrvVidRamBankswitch(*DrvVidBank);
+		ZetClose();
+	}
 
 	return 0;
 }
@@ -1041,28 +1025,28 @@ STD_ROM_FN(blktigerb3)
 
 static void blktigerb3SoundDecode()
 {
- UINT8 *buf = (UINT8*)BurnMalloc(0x8000);
+	UINT8 *buf = (UINT8*)BurnMalloc(0x8000);
 
- memcpy (buf, DrvZ80ROM1, 0x8000);
+	memcpy (buf, DrvZ80ROM1, 0x8000);
 
- for (INT32 i = 0; i < 0x8000; i++)
- {
-  DrvZ80ROM1[i] = buf[BITSWAP16(i, 15,14,13,12,11,10,9,8, 3,4,5,6, 7,2,1,0)];
- }
+	for (INT32 i = 0; i < 0x8000; i++)
+	{
+		DrvZ80ROM1[i] = buf[BITSWAP16(i, 15,14,13,12,11,10,9,8, 3,4,5,6, 7,2,1,0)];
+	}
 
- BurnFree(buf);
+	BurnFree(buf);
 }
 
 static INT32 blktigerb3Init()
 {
- INT32 nRet = DrvInit();
+	INT32 nRet = DrvInit();
 
- if (nRet == 0)
- {
-  blktigerb3SoundDecode();
- }
+	if (nRet == 0)
+	{
+		blktigerb3SoundDecode();
+	}
 
- return nRet;
+	return nRet;
 }
 
 struct BurnDriver BurnDrvBlktigerb3 = {

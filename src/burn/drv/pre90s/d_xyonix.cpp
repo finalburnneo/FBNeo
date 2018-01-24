@@ -158,7 +158,7 @@ static UINT8 io_read()
 			case 0xfe: // Dip Switches 1 to 4
 				return DrvDips[0] & 0x0f;
 			case 0xff: //Dip Switches 5 to 8
-				return DrvDips[1] >> 4;
+				return DrvDips[0] >> 4;
 		}
 	}
 
@@ -404,7 +404,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -412,7 +412,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;

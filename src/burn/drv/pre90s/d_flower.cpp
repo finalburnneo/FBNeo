@@ -1,11 +1,9 @@
 // FB Alpha Flower driver module
 // Based on MAME driver by InsideOutBoy
 
-// to do:
-//	custom sound core!
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
+#include "flower.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -216,12 +214,12 @@ static UINT8 __fastcall flower_main_read(UINT16 address)
 static void __fastcall flower_sound_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xffc0) == 0x8000) {
-		// sound1_w flower_sound_device
+		flower_sound1_w(address&0x3f, data);
 		return;
 	}
 
 	if ((address & 0xffc0) == 0xa000) {
-		// sound2_w flower_sound_device
+		flower_sound2_w(address&0x3f, data);
 		return;
 	}
 
@@ -278,6 +276,8 @@ static INT32 DrvDoReset()
 	ZetOpen(2);
 	ZetReset();
 	ZetClose();
+
+	flower_sound_reset();
 
 	nmi_enable = 0;
 	flipscreen = 0;
@@ -400,7 +400,7 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvTxtRAM,			0xe000, 0xe7ff, MAP_RAM);
 	ZetMapMemory(DrvZ80RAMB,		0xe800, 0xefff, MAP_RAM);
 	ZetMapMemory(DrvBgRAM0,			0xf000, 0xf1ff, MAP_RAM);
-	ZetMapMemory(DrvBgRAM1,			0xf800, 0xfaff, MAP_RAM);
+	ZetMapMemory(DrvBgRAM1,			0xf800, 0xf9ff, MAP_RAM);
 	ZetSetWriteHandler(flower_main_write);
 	ZetSetReadHandler(flower_main_read);
 	ZetClose();
@@ -413,7 +413,7 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvTxtRAM,			0xe000, 0xe7ff, MAP_RAM);
 	ZetMapMemory(DrvZ80RAMB,		0xe800, 0xefff, MAP_RAM);
 	ZetMapMemory(DrvBgRAM0,			0xf000, 0xf1ff, MAP_RAM);
-	ZetMapMemory(DrvBgRAM1,			0xf800, 0xfaff, MAP_RAM);
+	ZetMapMemory(DrvBgRAM1,			0xf800, 0xf9ff, MAP_RAM);
 	ZetSetWriteHandler(flower_main_write);
 	ZetSetReadHandler(flower_main_read);
 	ZetClose();
@@ -425,6 +425,8 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(flower_sound_write);
 	ZetSetReadHandler(flower_sound_read);
 	ZetClose();
+
+	flower_sound_init(DrvSndROM0, DrvSndROM1);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg0_map_callback, 16, 16, 16, 16);
@@ -449,6 +451,8 @@ static INT32 DrvExit()
 	ZetExit();
 
 	BurnFree(AllMem);
+
+	flower_sound_exit();
 
 	return 0;
 }
@@ -528,20 +532,22 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	BurnTransferClear();
+
 	GenericTilemapSetScrollY(0, scroll[0] + 16);
 	GenericTilemapSetScrollY(1, scroll[1] + 16);
 	GenericTilemapSetScrollY(2, 16);
 	GenericTilemapSetScrollY(3, 16);
 
-	GenericTilemapDraw(0, pTransDraw, 0);
-	GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
 
-	draw_sprites();
+	if (nSpriteEnable & 1) draw_sprites();
 
-	GenericTilemapDraw(2, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
 
-	GenericTilesSetClip(nScreenWidth-16, nScreenWidth, -1,-1);
-	GenericTilemapDraw(3, pTransDraw, 0);
+	GenericTilesSetClip(nScreenWidth-16, nScreenWidth, -1, -1);
+	if (nBurnLayer & 8) GenericTilemapDraw(3, pTransDraw, 0);
 	GenericTilesClearClip();
 
 	BurnTransferCopy(DrvPalette);
@@ -583,25 +589,24 @@ static INT32 DrvFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		INT32 cycles = ZetTotalCycles();		
+		if (i == 90) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(cycles - ZetTotalCycles());
-		if (i == 49 || i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		if (i == 90 || i == 40) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		nCyclesDone[2] += ZetRun(cycles - ZetTotalCycles());
-		if ((irq_counter % 40) == 39) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		nCyclesDone[2] += ZetRun(nCyclesTotal[2] / nInterleave);
+		if ((irq_counter % 75) == 0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		irq_counter++;
 	}
 
 	if (pBurnSoundOut) {
-		// sound
+		flower_sound_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -628,7 +633,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		// sound
+		flower_sound_scan();
 
 		SCAN_VAR(scroll);
 		SCAN_VAR(soundlatch);

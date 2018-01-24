@@ -599,7 +599,7 @@ static INT32 DrvFrame()
 
 		ZetOpen(2);
 		nCyclesDone[2] += ZetRun(nCyclesTotal[2] / nInterleave);
-		if ((irq_counter % 75) == 0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if ((irq_counter % 67) == 0) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		irq_counter++;

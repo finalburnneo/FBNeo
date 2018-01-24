@@ -87,10 +87,10 @@ static struct BurnDIPInfo XyonixDIPList[]=
 
 STDDIPINFO(Xyonix)
 
-static void handle_coins(int coin)
+static void handle_coins(INT32 coin)
 {
-	static const int coinage_table[4][2] = {{2,3},{2,1},{1,2},{1,1}};
-	int tmp = 0;
+	static const INT32 coinage_table[4][2] = {{2,3},{2,1},{1,2},{1,1}};
+	INT32 tmp = 0;
 
 	if (coin & 1)   // Coin 2 !
 	{
@@ -130,7 +130,7 @@ static UINT8 io_read()
 
 	if (regPC == 0x27c7)
 	{
-		int coin;
+		INT32 coin;
 
 		switch (e0_data)
 		{
@@ -157,7 +157,7 @@ static UINT8 io_read()
 				return 0xff;
 			case 0xfe: // Dip Switches 1 to 4
 				return DrvDips[0] & 0x0f;
-			case 0xff: //Dip Switches 5 to 8
+			case 0xff: // Dip Switches 5 to 8
 				return DrvDips[0] >> 4;
 		}
 	}

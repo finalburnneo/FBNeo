@@ -298,8 +298,8 @@ static INT32 DrvInit()
 
 	SN76496Init(0, 4000000, 0);
 	SN76496Init(1, 4000000, 1);
-	SN76496SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
-	SN76496SetRoute(1, 1.00, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
+	SN76496SetRoute(1, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, xyonix_map_callback, 4, 8, 80, 32);

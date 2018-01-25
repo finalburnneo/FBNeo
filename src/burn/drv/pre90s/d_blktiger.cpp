@@ -427,13 +427,12 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	ZetOpen(1);
 	ZetReset();
+	BurnYM2203Reset();
 	ZetClose();
 
 	if (use_mcu) {
 		mcs51_reset();
 	}
-
-	BurnYM2203Reset();
 
 	watchdog = 0;
 

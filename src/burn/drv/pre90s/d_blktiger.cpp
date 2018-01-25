@@ -169,8 +169,7 @@ static void DrvRomBankswitch(INT32 bank)
 
 	INT32 nBank = 0x10000 + (bank & 0x0f) * 0x4000;
 
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM0 + nBank);
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM0 + nBank);
+	ZetMapMemory(DrvZ80ROM0 + nBank, 0x8000, 0xbfff, MAP_ROM);
 }
 
 static void DrvVidRamBankswitch(INT32 bank)
@@ -179,9 +178,7 @@ static void DrvVidRamBankswitch(INT32 bank)
 
 	INT32 nBank = (bank & 3) * 0x1000;
 
-	ZetMapArea(0xc000, 0xcfff, 0, DrvBgRAM + nBank);
-	ZetMapArea(0xc000, 0xcfff, 1, DrvBgRAM + nBank);
-	ZetMapArea(0xc000, 0xcfff, 2, DrvBgRAM + nBank);
+	ZetMapMemory(DrvBgRAM + nBank, 0xc000, 0xcfff, MAP_RAM);
 }
 
 static void __fastcall blacktiger_write(UINT16 address, UINT8 data)
@@ -255,8 +252,8 @@ static void __fastcall blacktiger_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x0c:
-			*DrvSprEnable = ~data & 0x02;
-			*DrvBgEnable  = ~data & 0x04;
+			*DrvBgEnable  = ~data & 0x02;
+			*DrvSprEnable = ~data & 0x04;
 		return;
 
 		case 0x0d:
@@ -485,20 +482,11 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
-	ZetMapArea(0xd000, 0xd7ff, 0, DrvTxRAM);
-	ZetMapArea(0xd000, 0xd7ff, 1, DrvTxRAM);
-	ZetMapArea(0xd000, 0xd7ff, 2, DrvTxRAM);
-	ZetMapArea(0xd800, 0xdfff, 0, DrvPalRAM);
-//	ZetMapArea(0xd800, 0xdfff, 1, DrvPalRAM);
-	ZetMapArea(0xd800, 0xdfff, 2, DrvPalRAM);
-	ZetMapArea(0xe000, 0xfdff, 0, DrvZ80RAM0);
-	ZetMapArea(0xe000, 0xfdff, 1, DrvZ80RAM0);
-	ZetMapArea(0xe000, 0xfdff, 2, DrvZ80RAM0);
-	ZetMapArea(0xfe00, 0xffff, 0, DrvSprRAM);
-	ZetMapArea(0xfe00, 0xffff, 1, DrvSprRAM);
-	ZetMapArea(0xfe00, 0xffff, 2, DrvSprRAM);
+	ZetMapMemory(DrvZ80ROM0, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvTxRAM,   0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,  0xd800, 0xdfff, MAP_ROM); // write in handler
+	ZetMapMemory(DrvZ80RAM0, 0xe000, 0xfdff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,  0xfe00, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(blacktiger_write);
 	ZetSetReadHandler(blacktiger_read);
 	ZetSetInHandler(blacktiger_in);
@@ -507,11 +495,8 @@ static INT32 DrvInit()
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM1);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM1);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM1);
+	ZetMapMemory(DrvZ80ROM1, 0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1, 0xc000, 0xc7ff, MAP_RAM);
 	ZetSetWriteHandler(blacktiger_sound_write);
 	ZetSetReadHandler(blacktiger_sound_read);
 	ZetClose();
@@ -543,19 +528,11 @@ static INT32 DrvExit()
 
 static void draw_bg(INT32 type, INT32 layer)
 {
-// Priority masks should be enabled, but I don't see anywhere that they are used?
-#define USE_MASKS
-
-#ifdef USE_MASKS
 	UINT16 masks[2][4] = { { 0xffff, 0xfff0, 0xff00, 0xf000 }, { 0x8000, 0x800f, 0x80ff, 0x8fff } };
-#else
-	if (layer == 0) return;
-#endif
-
-	INT32 scrollx = (*DrvScrollx)     & (0x3ff | (0x200 << type));
+	INT32 scrollx = (*DrvScrollx)      & (0x3ff | (0x200 << type));
 	INT32 scrolly = ((*DrvScrolly)+16) & (0x7ff >> type);
 
-	for (INT32 offs = 0; offs < 0x2000; offs++)
+	for (INT32 offs = 0; offs < (128*64 | 64*128); offs++)
 	{
 		INT32 sx, sy, ofst;
 
@@ -592,8 +569,8 @@ static void draw_bg(INT32 type, INT32 layer)
 			sy = 208 - sy;
 		}
 
-#ifdef USE_MASKS
-		INT32 colmask = masks[layer][(color < 2) ? 3 : 0];
+		UINT8 coltab[8] = { 3, 2, 1, 0, 0, 0, 0, 0 };
+		INT32 colmask = masks[layer][coltab[color >> 1]];
 
 		{
 			UINT8 *gfx = DrvGfxROM1 + (code * 0x100);
@@ -607,27 +584,12 @@ static void draw_bg(INT32 type, INT32 layer)
 
 					INT32 pxl = gfx[(y*16+x)^flip];
 
-					if (colmask & (1 << pxl)) continue; // right?
+					if (colmask & (1 << pxl)) continue;
 
 					pTransDraw[sy * nScreenWidth + sx] = pxl + color;
 				}
 			}
 		}
-#else
-		if (*flipscreen) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 4, 0, 0, DrvGfxROM1);
-			}
-		}
-#endif
 	}
 }
 
@@ -695,9 +657,7 @@ static INT32 DrvDraw()
 		}
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x3ff;
-	}
+	BurnTransferClear(0x3ff);
 
 	if (*DrvBgEnable) {
 		if (nBurnLayer & 1) draw_bg(*DrvScreenLayout, 1);

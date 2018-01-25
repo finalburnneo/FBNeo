@@ -3,6 +3,7 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
+#include "mcs51.h"
 #include "burn_ym2203.h"
 #include "bitswap.h"
 
@@ -12,6 +13,7 @@ static UINT8 *AllRam;
 static UINT8 *RamEnd;
 static UINT8 *DrvZ80ROM0;
 static UINT8 *DrvZ80ROM1;
+static UINT8 *DrvMCUROM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
@@ -32,6 +34,8 @@ static UINT8 *DrvSprEnable;
 static UINT8 *DrvVidBank;
 static UINT8 *DrvRomBank;
 
+static UINT8 *DrvZ80Latch;
+static UINT8 *DrvMCULatch;
 static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 static UINT8 *coin_lockout;
@@ -47,12 +51,11 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
+static INT32 use_mcu = 0;
+
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1"       	  , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 coin"  },
-	{"Coin 2"       	  , BIT_DIGITAL  , DrvJoy1 + 7,	 "p2 coin"  },
-
+	{"P1 Coin"       	  , BIT_DIGITAL  , DrvJoy1 + 6,	 "p1 coin"  },
 	{"P1 Start"     	  , BIT_DIGITAL  , DrvJoy1 + 0,	 "p1 start" },
-
 	{"P1 Up"        	  , BIT_DIGITAL  , DrvJoy2 + 3,  "p1 up"    },
 	{"P1 Down"      	  , BIT_DIGITAL  , DrvJoy2 + 2,  "p1 down"  },
 	{"P1 Left"      	  , BIT_DIGITAL  , DrvJoy2 + 1,  "p1 left"  },
@@ -60,8 +63,8 @@ static struct BurnInputInfo DrvInputList[] = {
 	{"P1 Button 1"  	  , BIT_DIGITAL  , DrvJoy2 + 4,  "p1 fire 1"},
 	{"P1 Button 2"  	  , BIT_DIGITAL  , DrvJoy2 + 5,  "p1 fire 2"},
 
+	{"P2 Coin"       	  , BIT_DIGITAL  , DrvJoy1 + 7,	 "p2 coin"  },
 	{"P2 Start"     	  , BIT_DIGITAL  , DrvJoy1 + 1,	 "p2 start" },
-
 	{"P2 Up"        	  , BIT_DIGITAL  , DrvJoy3 + 3,  "p2 up"    },
 	{"P2 Down"      	  , BIT_DIGITAL  , DrvJoy3 + 2,  "p2 down"  },
 	{"P2 Left"      	  , BIT_DIGITAL  , DrvJoy3 + 1,  "p2 left"  },
@@ -187,7 +190,6 @@ static void __fastcall blacktiger_write(UINT16 address, UINT8 data)
 		DrvPalRAM[address & 0x7ff] = data;
 
 		palette_write(address & 0x3ff);
-
 		return;
 	}
 
@@ -233,6 +235,17 @@ static void __fastcall blacktiger_out(UINT16 port, UINT8 data)
 
 		case 0x06:
 			watchdog = 0;
+		return;
+
+		case 0x07:
+			{
+				if (use_mcu) {
+					mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_ACK);
+					*DrvZ80Latch = data;
+				} else {
+					// do nothing
+				}
+			}
 		return;
 
 		case 0x08:
@@ -283,7 +296,7 @@ static UINT8 __fastcall blacktiger_in(UINT16 port)
 			return 0x01;
 
 		case 0x07:
-			return ZetDe(-1) >> 8;
+			return (use_mcu) ? *DrvMCULatch : (ZetDe(-1) >> 8);
 	}
 
 	return 0;
@@ -334,12 +347,29 @@ static UINT8 __fastcall blacktiger_sound_read(UINT16 address)
 	return 0;
 }
 
+static UINT8 mcu_read_port(INT32 port)
+{
+	if (port != MCS51_PORT_P0) return 0;
+
+	mcs51_set_irq_line(MCS51_INT1_LINE, CPU_IRQSTATUS_NONE);
+	return *DrvZ80Latch;
+}
+
+static void mcu_write_port(INT32 port, UINT8 data)
+{
+	if (port != MCS51_PORT_P0) return;
+
+	*DrvMCULatch = data;
+}
+
+
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
 	DrvZ80ROM0	= Next; Next += 0x050000;
 	DrvZ80ROM1	= Next; Next += 0x008000;
+	DrvMCUROM   = Next; Next += 0x001000;
 
 	DrvGfxROM0	= Next; Next += 0x020000;
 	DrvGfxROM1	= Next; Next += 0x080000;
@@ -355,8 +385,8 @@ static INT32 MemIndex()
 	DrvPalRAM	= Next; Next += 0x000800;
 	DrvTxRAM	= Next; Next += 0x000800;
 	DrvBgRAM	= Next; Next += 0x004000;
-	DrvSprRAM	= Next; Next += 0x001200;
-	DrvSprBuf	= Next; Next += 0x001200;
+	DrvSprRAM	= Next; Next += 0x000200;
+	DrvSprBuf	= Next; Next += 0x000200;
 
 	DrvScreenLayout	= Next; Next += 0x000001;
 	DrvBgEnable	= Next; Next += 0x000001;
@@ -372,6 +402,9 @@ static INT32 MemIndex()
 	soundlatch	= Next; Next += 0x000001;
 	flipscreen	= Next; Next += 0x000001;
 	coin_lockout	= Next; Next += 0x000001;
+
+	DrvZ80Latch = Next; Next += 0x000001;
+	DrvMCULatch = Next; Next += 0x000001;
 
 	RamEnd		= Next;
 
@@ -395,6 +428,10 @@ static INT32 DrvDoReset(INT32 full_reset)
 	ZetOpen(1);
 	ZetReset();
 	ZetClose();
+
+	if (use_mcu) {
+		mcs51_reset();
+	}
 
 	BurnYM2203Reset();
 
@@ -501,6 +538,16 @@ static INT32 DrvInit()
 	ZetSetReadHandler(blacktiger_sound_read);
 	ZetClose();
 
+	if (use_mcu) {
+		bprintf(0, _T("Using i8751 Protection MCU.\n"));
+		if (BurnLoadRom(DrvMCUROM + 0x00000, 19, 1)) return 1;
+
+		mcs51_program_data = DrvMCUROM;
+		mcs51_init();
+		mcs51_set_write_handler(mcu_write_port);
+		mcs51_set_read_handler(mcu_read_port);
+	}
+
 	GenericTilesInit();
 
 	BurnYM2203Init(2, 3579545, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
@@ -515,13 +562,26 @@ static INT32 DrvInit()
 	return 0;
 }
 
+static INT32 DrvInitMCU()
+{
+	use_mcu = 1;
+
+	return DrvInit();
+}
+
 static INT32 DrvExit()
 {
 	BurnYM2203Exit();
 	ZetExit();
+
+	if (use_mcu)
+		mcs51_exit();
+
 	GenericTilesExit();
 
 	BurnFree (AllMem);
+
+	use_mcu = 0;
 
 	return 0;
 }
@@ -555,9 +615,9 @@ static void draw_bg(INT32 type, INT32 layer)
 		if (sy < -15) sy += (0x800 >> type);
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 attr  = DrvBgRAM[(ofst << 1) | 1];
+		INT32 attr  = DrvBgRAM[(ofst << 1) + 1];
 		INT32 color = (attr >> 3) & 0x0f;
-		INT32 code  = DrvBgRAM[ofst << 1] | ((attr & 0x07) << 8);
+		INT32 code  = DrvBgRAM[ofst << 1] + ((attr & 0x07) << 8);
 		INT32 flipx = attr & 0x80;
 		INT32 flipy = 0;
 
@@ -595,7 +655,7 @@ static void draw_bg(INT32 type, INT32 layer)
 
 static void draw_sprites()
 {
-	for (INT32 offs = 0x1200 - 4; offs >= 0; offs -= 4)
+	for (INT32 offs = 0x200 - 4; offs >= 0; offs -= 4)
 	{
 		INT32 attr = DrvSprBuf[offs+1];
 		INT32 sx = DrvSprBuf[offs + 3] - ((attr & 0x10) << 4);
@@ -613,7 +673,7 @@ static void draw_sprites()
 
 		sy -= 16;
 
-		if (sy < -15 || sy > 239 || sx < -15 || sx > 255) continue;
+		if (sy < -15 || sy >= nScreenHeight || sx < -15 || sx >= nScreenWidth) continue;
 
 		if (*flipscreen) {
 			if (flipx) {
@@ -706,8 +766,8 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[3] = { 6000000 / 60, 3579545 / 60, 6000000 / 12 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
@@ -717,7 +777,13 @@ static INT32 DrvFrame()
 		ZetOpen(nCurrentCPU);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesDone[nCurrentCPU] += ZetRun(nNext - nCyclesDone[nCurrentCPU]);
-		if (i == 240) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240) {
+			if (pBurnDraw) { // draw here gets rid of artefacts when starting game
+				DrvDraw();
+			}
+			memcpy (DrvSprBuf, DrvSprRAM, 0x200); // buffer at rising vblank
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
 		ZetClose();
 
 		// Run Z80 #2
@@ -725,18 +791,18 @@ static INT32 DrvFrame()
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		ZetClose();
+
+		if (use_mcu) {
+			nCurrentCPU = 2;
+			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
+			nCyclesDone[nCurrentCPU] += mcs51Run(nNext - nCyclesDone[nCurrentCPU]);
+		}
 	}
 
 	ZetOpen(1);
 	BurnTimerEndFrame(nCyclesTotal[1]);
 	if (pBurnSoundOut) BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	ZetClose();
-	
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	memcpy (DrvSprBuf, DrvSprRAM, 0x1200);
 
 	return 0;
 }
@@ -760,6 +826,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
+		if (use_mcu)
+			mcs51_scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
 	}
@@ -803,7 +871,7 @@ static struct BurnRomInfo blktigerRomDesc[] = {
 	{ "bd03.11k",		0x00100, 0x27201c75, 6 | BRF_OPT },           // 17
 	{ "bd04.11l",		0x00100, 0xe5490b68, 6 | BRF_OPT },           // 18
 
-	{ "bd.6k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG | BRF_OPT }, // 19 I8751 Mcu Code
+	{ "bd.6k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG },           // 19 I8751 Mcu Code
 };
 
 STD_ROM_PICK(blktiger)
@@ -815,7 +883,7 @@ struct BurnDriver BurnDrvBlktiger = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, blktigerRomInfo, blktigerRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	DrvInitMCU, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 
@@ -848,7 +916,7 @@ static struct BurnRomInfo blktigeraRomDesc[] = {
 	{ "bd03.11k",		0x00100, 0x27201c75, 6 | BRF_OPT },           // 17
 	{ "bd04.11l",		0x00100, 0xe5490b68, 6 | BRF_OPT },           // 18
 
-	{ "bd.6k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG | BRF_OPT }, // 19 I8751 Mcu Code
+	{ "bd.6k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG },           // 19 I8751 Mcu Code
 };
 
 STD_ROM_PICK(blktigera)
@@ -860,7 +928,7 @@ struct BurnDriver BurnDrvBlktigera = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, blktigeraRomInfo, blktigeraRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	DrvInitMCU, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 
@@ -1048,7 +1116,7 @@ static struct BurnRomInfo blkdrgonRomDesc[] = {
 	{ "bd03.11k",		0x00100, 0x27201c75, 6 | BRF_OPT },           // 17
 	{ "bd04.11l",		0x00100, 0xe5490b68, 6 | BRF_OPT },           // 18
 	
-	{ "bd.6k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG | BRF_OPT }, // 19 I8751 Mcu Code
+	{ "bd.6k",  		0x01000, 0xac7d14f1, 7 | BRF_PRG },           // 19 I8751 Mcu Code
 };
 
 STD_ROM_PICK(blkdrgon)
@@ -1060,7 +1128,7 @@ struct BurnDriver BurnDrvBlkdrgon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, blkdrgonRomInfo, blkdrgonRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	DrvInitMCU, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	256, 224, 4, 3
 };
 

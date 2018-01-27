@@ -128,6 +128,17 @@ void Arm7BurnCycles(int cycles)
 	arm7_icount -= cycles;
 }
 
+INT32 Arm7Idle(int cycles)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7Idle called without init\n"));
+#endif
+
+	total_cycles += cycles;
+
+	return cycles;
+}
+
 void Arm7NewFrame()
 {
 #if defined FBA_DEBUG

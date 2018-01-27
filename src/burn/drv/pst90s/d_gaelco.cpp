@@ -281,6 +281,65 @@ static struct BurnDIPInfo BiomtoyDIPList[]=
 
 STDDIPINFO(Biomtoy)
 
+static struct BurnDIPInfo BioplaycDIPList[]=
+{
+	{0x11, 0xff, 0xff, 0xff, NULL				},
+	{0x12, 0xff, 0xff, 0xf3, NULL				},
+
+	{0   , 0xfe, 0   ,    11, "Coin B"			},
+	{0x11, 0x01, 0x0f, 0x0e, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0a, "3 Coins 2 Credits"		},
+	{0x11, 0x01, 0x0f, 0x09, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0f, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0x0f, 0x07, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x0f, 0x06, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0b, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0x0f, 0x0d, "1 Coin  5 Credits"		},
+	{0x11, 0x01, 0x0f, 0x08, "Free Play (if Coin A too)"	},
+	{0x11, 0x01, 0x0f, 0x0c, "Free Play (if Coin A too)"	},
+	{0x11, 0x01, 0x0f, 0x00, "Free Play (if Coin A too)"	},
+
+	{0   , 0xfe, 0   ,    11, "Coin A"			},
+	{0x11, 0x01, 0xf0, 0xe0, "4 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0xa0, "3 Coins 2 Credits"		},
+	{0x11, 0x01, 0xf0, 0x90, "2 Coins 1 Credits"		},
+	{0x11, 0x01, 0xf0, 0xf0, "1 Coin  1 Credits"		},
+	{0x11, 0x01, 0xf0, 0x70, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0xf0, 0x60, "2 Coins 3 Credits"		},
+	{0x11, 0x01, 0xf0, 0xb0, "1 Coin  3 Credits"		},
+	{0x11, 0x01, 0xf0, 0xd0, "1 Coin  5 Credits"		},
+	{0x11, 0x01, 0xf0, 0x80, "Free Play (if Coin B too)"	},
+	{0x11, 0x01, 0xf0, 0xc0, "Free Play (if Coin B too)"	},
+	{0x11, 0x01, 0xf0, 0x00, "Free Play (if Coin B too)"	},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x12, 0x01, 0x01, 0x00, "Off"				},
+	{0x12, 0x01, 0x01, 0x01, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x12, 0x01, 0x04, 0x00, "Off"				},
+	{0x12, 0x01, 0x04, 0x04, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Unknown"			},
+	{0x12, 0x01, 0x08, 0x08, "Off"				},
+	{0x12, 0x01, 0x08, 0x00, "On"				},
+
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x12, 0x01, 0x30, 0x10, "1"				},
+	{0x12, 0x01, 0x30, 0x30, "2"				},
+	{0x12, 0x01, 0x30, 0x20, "3"				},
+	{0x12, 0x01, 0x30, 0x00, "4"				},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x12, 0x01, 0xc0, 0x40, "Easy"				},
+	{0x12, 0x01, 0xc0, 0xc0, "Normal"			},
+	{0x12, 0x01, 0xc0, 0x80, "Hard"				},
+	{0x12, 0x01, 0xc0, 0x00, "Hardest"			},
+};
+
+STDDIPINFO(Bioplayc)
+
+
 static struct BurnDIPInfo SquashDIPList[]=
 {
 	{0x11, 0xff, 0xff, 0xff, NULL				},
@@ -1332,6 +1391,40 @@ struct BurnDriver BurnDrvBiomtoyb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
 	NULL, biomtoybRomInfo, biomtoybRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
+	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	320, 240, 4, 3
+};
+
+
+// Bioplaything Cop (Ver. 1.0.1823, prototype)
+/* PCB - REF.922804/2??  -  Spanish version */
+
+static struct BurnRomInfo bioplaycRomDesc[] = {
+	{ "T.d18",			0x80000, 0xec518c6c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "T.d16",			0x80000, 0xde4b031d, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "toy-high-3.h6",		0x80000, 0xab19a1ce, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "toy-low-3.j6",		0x80000, 0x927f5cd7, 2 | BRF_GRA },           //  3
+	{ "toy-high-2.h7",		0x80000, 0xfd975d89, 2 | BRF_GRA },           //  4
+	{ "toy-low-2.j7",		0x80000, 0x6cbf9937, 2 | BRF_GRA },           //  5
+	{ "toy-high-1.h9",		0x80000, 0x09de4799, 2 | BRF_GRA },           //  6
+	{ "toy-low-1.j9",		0x80000, 0x57922c41, 2 | BRF_GRA },           //  7
+	{ "toy-high-0.h10",		0x80000, 0x5bee6df7, 2 | BRF_GRA },           //  8
+	{ "toy-low-0.j10",		0x80000, 0x26c49ca2, 2 | BRF_GRA },           //  9
+
+	{ "c1",				0x80000, 0xedf77532, 3 | BRF_SND },           // 10 M6295 Samples
+	{ "c3",				0x80000, 0xc3aea660, 3 | BRF_SND },           // 11
+};
+
+STD_ROM_PICK(bioplayc)
+STD_ROM_FN(bioplayc)
+
+struct BurnDriver BurnDrvBioplayc = {
+	"bioplayc", "biomtoy", NULL, NULL, "1995",
+	"Bioplaything Cop (Ver. 1.0.1823, prototype)\0", NULL, "Gaelco", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	NULL, bioplaycRomInfo, bioplaycRomName, NULL, NULL, DrvInputInfo, BioplaycDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
 };

@@ -7,6 +7,7 @@
 #include "burn_ym2203.h"
 #include "burn_ym3812.h"
 #include "msm6295.h"
+#include "decobac06.h"
 
 static UINT8 *AllMem		= NULL;
 static UINT8 *AllRam		= NULL;
@@ -218,6 +219,7 @@ static inline void palette_update(INT32 offset)
 void actfan_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffe0) == 0x060000) {
+		
 		DrvPfCtrl[0][address & 0x1f] = data;
 		return;
 	}
@@ -432,7 +434,7 @@ static INT32 MemIndex()
 	Drv6502ROM	= Next; Next += 0x010000;
 
 	DrvGfxROM0	= Next; Next += 0x040000;
-	DrvGfxROM1	= Next; Next += 0x0c0000;
+	DrvGfxROM1	= Next; Next += 0x100000;
 	DrvGfxROM2	= Next; Next += 0x080000;
 
 	MSM6295ROM	= Next; Next += 0x040000;
@@ -669,109 +671,6 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_pf1_layer()
-{
-	const INT32 config[4][4][2] = {
-		{ {  64,  16 }, {  32,  32 }, {  16,  64 }, {  32,  32 } }, // type 0
-		{ { 128,  16 }, {  64,  32 }, {  32,  64 }, {  64,  32 } }, // type 1
-		{ { 256,  16 }, { 128,  32 }, {  64,  64 }, { 128,  32 } }, // type 2
-	};
-
-	INT32 type = gfx_config[3];
-
-	INT32 wide = DrvPfCtrl[0][6] & 3;
-
-	INT32 width  = config[type][wide][0];
-	INT32 height = config[type][wide][1];
-
-	INT32 scrollx = (DrvPfCtrl[0][0x10] + (DrvPfCtrl[0][0x11] << 8)) & ((width * 16) - 1);
-	INT32 scrolly = (DrvPfCtrl[0][0x12] + (DrvPfCtrl[0][0x13] << 8)) & ((height * 16) - 1);
-
-	INT32 enable_rowscroll = DrvPfCtrl[0][0] & 0x04;
-
-	if (enable_rowscroll == 0)
-	{
-		for (INT32 offs = 0; offs < width * height; offs++)
-		{
-			INT32 sx = (offs % width);
-			INT32 sy = (offs / width) % height;
-
-			INT32 ofst = (sx & 0x0f) + (sy * 16) + ((sx & 0x1f0) << (4+wide));
-
-			sx = (sx * 16) - scrollx;
-			if (sx < -15) sx += width*16;
-	
-			sy = (sy * 16) - (scrolly + 8);
-			if (sy < -15) sy += height*16;
-	
-			if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
-	
-			INT32 code  = DrvPf1RAM[ofst * 2 + 0] | (DrvPf1RAM[ofst * 2 + 1] << 8);
-
-			if (sx >= 0 && sx <= (nScreenWidth - 16) && sy >= 0 && sy <= (nScreenHeight - 16)) {
-				Render16x16Tile(pTransDraw, code & 0xfff, sx, sy, code >> 12, 4, gfx_config[2], DrvGfxROM2);
-			} else {
-				Render16x16Tile_Clip(pTransDraw, code & 0xfff, sx, sy, code >> 12, 4, gfx_config[2], DrvGfxROM2);
-			}
-		}
-	} else {
-		for (INT32 y = 0; y < nScreenHeight; y++)
-		{
-			UINT16 *dst = pTransDraw + y * nScreenWidth;
-	
-			INT32 sy = (y + scrolly + 8) & ((height * 16) - 1);
-
-			INT32 scrx = ((sy & 0x1ff) >> (DrvPfCtrl[0][0x17] & 0x0f)) + (0x400/2);
-	
-			scrx = (scrollx + (DrvPf1Scr[(scrx * 2)+0] << 0) + (DrvPf1Scr[(scrx * 2)+1] << 8)) & ((width * 16) - 1);
-
-			for (INT32 x = 0; x < nScreenWidth + 16; x+=16)
-			{
-				INT32 sx = (scrx + x) & ((width * 16) - 1);
-	
-				INT32 ofst = ((sx / 16) & 0x0f) + (sy & 0x3f0) + (((sx / 16) & 0x1f0) << (4 + wide));
-	
-				UINT16 code = DrvPf1RAM[ofst * 2 + 0] | (DrvPf1RAM[ofst * 2 + 1] << 8);
-	
-				{
-					UINT8 *gfx = DrvGfxROM2 + ((code & 0x0fff) * 0x100) + ((sy & 0x0f) * 16);
-	
-					INT32 color = ((code >> 12) * 16) + gfx_config[2];
-
-					INT32 xxx = x - (scrx & 0x0f);
-
-					if (xxx >= 0 && xxx <= (nScreenWidth - 16)) {
-						for (INT32 xx = 0; xx < 16; xx++, xxx++) {
-							dst[xxx] = gfx[xx] + color;
-						}
-					} else {
-						for (INT32 xx = 0; xx < 16; xx++, xxx++) {
-							if (xxx >= 0 && xxx < nScreenWidth) {
-								dst[xxx] = gfx[xx] + color;
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
-static void draw_pf2_layer()
-{
-	for (INT32 offs = 32; offs < 32 * 31; offs++)
-	{
-		INT32 sx = (offs & 0x1f) << 3;
-		INT32 sy = (offs >> 5) << 3;
-
-		INT32 code = DrvPf2RAM[offs * 2 + 0] | (DrvPf2RAM[offs * 2 + 1] << 8);
-
-		if (code == 0) continue; // skip transparent tile
-
-		Render8x8Tile_Mask(pTransDraw, code & 0xfff, sx, sy - 8, code >> 12, 4, 0, 0, DrvGfxROM0);
-	}
-}
-
 static void draw_sprites()
 {
 	INT32 offs = 0;
@@ -859,13 +758,35 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	UINT16 control[2][2][4];
+	UINT16 *pf_control0 = (UINT16*)DrvPfCtrl[0];
+	UINT16 *pf_control1 = (UINT16*)DrvPfCtrl[1];
+
+	control[0][0][0] = pf_control0[0];
+	control[0][0][2] = pf_control0[2];
+	control[0][0][3] = pf_control0[3];
+	control[0][1][0] = pf_control0[8];
+	control[0][1][1] = pf_control0[9];
+	control[1][0][0] = pf_control1[0];
+	control[1][0][2] = pf_control1[2];
+	control[1][0][3] = pf_control1[3];
+	control[1][1][0] = pf_control1[8];
+	control[1][1][1] = pf_control1[9];
+
+	bac06_depth = 4;
+	bac06_yadjust = 8;
+
 	if ((nBurnLayer & 1) == 0) {
 		BurnTransferClear();
 	} else {
-		draw_pf1_layer();
+		bac06_draw_layer(DrvPf1RAM, control[0], DrvPf1Scr, NULL, DrvGfxROM2, gfx_config[2], 0x7ff, DrvGfxROM2, gfx_config[2], 0x7ff, 2, 1);
 	}
+
 	if (nBurnLayer & 2) draw_sprites();
-	if (nBurnLayer & 4) draw_pf2_layer();
+
+	if (nBurnLayer & 4) {
+		bac06_draw_layer(DrvPf2RAM, control[1], NULL,      NULL, DrvGfxROM0, gfx_config[0], 0xfff, DrvGfxROM0, gfx_config[0], 0xfff, 0, 0);
+	}
 
 	BurnTransferCopy(DrvPalette);
 

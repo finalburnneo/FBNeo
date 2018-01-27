@@ -8,6 +8,7 @@
 #include "burn_ym2151.h"
 #include "msm6295.h"
 #include "deco16ic.h"
+#include "decobac06.h"
 #include "bitswap.h"
 
 static UINT8 *AllMem;
@@ -190,6 +191,8 @@ static UINT8 __fastcall madmotor_main_read_byte(UINT32 address)
 			return DrvDips[0];
 
 		case 0x3f8006:
+			return 0xff;
+
 		case 0x3f8007:
 			return (DrvInputs[1] & ~8) + (vblank ? 0 : 1);
 	}
@@ -451,195 +454,6 @@ static void draw_sprites()
 	}
 }
 
-static void draw_layer(UINT8 *vram, UINT16 control[2][4], UINT8 *rsram, UINT8 *csram, UINT8 *gfx8, INT32 col8, INT32 mask8, UINT8 *gfx16, INT32 col16, INT32 mask16, INT32 widetype, INT32 opaque)
-{
-	int bank = ( control[0][2] & 1) * 0x1000;
-	int size = (~control[0][0] & 1);
-
-	INT32 dims[4][3][2] = {
-		{ { 128,  32 }, {  64, 64 }, { 32, 128 } },
-		{ {  64,  16 }, {  32, 32 }, { 16,  64 } },
-		{ { 128,  16 }, {  64, 32 }, { 32,  64 } },
-		{ { 256,  16 }, { 128, 32 }, { 64,  64 } }
-	};
-
-	INT32 shape = control[0][3] & 0x3;
-	if (shape == 3) shape = 1; // 3 is invalid / the same as 1?
-
-	INT32 wide = dims[(size) ? (widetype + 1) : 0][shape][0];
-	INT32 high = dims[(size) ? (widetype + 1) : 0][shape][1];
-
-	UINT16 *ram = (UINT16*)vram;
-
-	INT32 scrollx = control[1][0] & ((wide << (3+size)) - 1);
-	INT32 scrolly = (control[1][1] + 8) & ((high << (3+size)) - 1);
-
-	INT32 tsize = (8 << size);
-
-	INT32 rsenable = (control[0][0] & 0x04) && (rsram != NULL);
-	INT32 csenable = (control[0][0] & 0x08) && (csram != NULL);
-
-	if (rsenable || csenable)
-	{
-		UINT16 *scrx = (UINT16*)rsram;
-		UINT16 *scry = (UINT16*)csram;
-		INT32 mwidth  = (wide * tsize)-1;
-		INT32 mheight = (high * tsize)-1;
-		INT32 colbase = size ? col16 : col8;
-		INT32 gfxmask = size ? mask16 : mask8;
-	
-		UINT16 *dst = pTransDraw;
-		UINT8 *gfxbase = size ? gfx16 : gfx8;
-	
-		for (INT32 sy = 0; sy < nScreenHeight; sy++)
-		{
-			for (INT32 sx = 0; sx < nScreenWidth; sx++)
-			{
-				INT32 syy = (sy + scrolly) & mheight;
-				INT32 sxx = (sx + scrollx) & mwidth;
-
-				if (csenable) syy = (syy + scry[syy]) & mheight;
-				if (rsenable) sxx = (sxx + scrx[syy]) & mwidth;
-
-				INT32 row = syy / tsize;
-				INT32 col = sxx / tsize;
-				INT32 zy = syy & (tsize - 1);
-				INT32 zx = sxx & (tsize - 1);
-	
-				INT32 offs = 0;
-	
-				if (size)
-				{
-					switch (shape)
-					{
-						case 0:
-							offs = (col & 0xf) + ((row & 0xf) << 4) + ((col & 0x1f0) << 4);
-						break;
-	
-						case 1:
-							offs = (col & 0xf) + ((row & 0x1f) << 4) + ((col & 0xf0) << 5);
-						break;
-	
-						case 2:
-							offs = (col & 0xf) + ((row & 0x3f) << 4) + ((col & 0x70) << 6);
-						break;
-					}
-				}
-				else
-				{
-					switch (shape)
-					{
-						case 0:
-							offs = (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x60) << 5);
-						break;
-	
-						case 1:
-							offs = (col & 0x1f) + ((row & 0x3f) << 5) + ((col & 0x20) << 6);
-						break;
-	
-						case 2:
-							offs = (col & 0x1f) + ((row & 0x7f) << 5);
-						break;
-					}
-				}
-	
-	
-				INT32 code  = ram[offs];
-				INT32 color = ((code >> 12) << 4) | colbase;
-	
-				code = (((code & 0xfff) + bank) & gfxmask) * (tsize * tsize);
-	
-				INT32 pxl = gfxbase[code + (zy * tsize) + zx];
-	
-				if (pxl | opaque)
-					dst[sx] = pxl + color;
-			}
-	
-			dst += nScreenWidth;
-		}
-	} else {
-		for (INT32 row = 0; row < high; row++)
-		{
-			for (INT32 col = 0; col < wide; col++)
-			{
-				INT32 sy = (row * tsize) - scrolly;
-				INT32 sx = (col * tsize) - scrollx;
-				if (sy <= -tsize) sy += high * tsize;		
-				if (sx <= -tsize) sx += wide * tsize;
-
-				if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
-
-				INT32 offs = 0;
-	
-				if (size)
-				{
-					switch (shape)
-					{
-						case 0:
-							offs = (col & 0xf) + ((row & 0xf) << 4) + ((col & 0x1f0) << 4);
-						break;
-	
-						case 1:
-							offs = (col & 0xf) + ((row & 0x1f) << 4) + ((col & 0xf0) << 5);
-						break;
-	
-						case 2:
-							offs = (col & 0xf) + ((row & 0x3f) << 4) + ((col & 0x70) << 6);
-						break;
-					}
-				}
-				else
-				{
-					switch (shape)
-					{
-						case 0:
-							offs = (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x60) << 5);
-						break;
-	
-						case 1:
-							offs = (col & 0x1f) + ((row & 0x3f) << 5) + ((col & 0x20) << 6);
-						break;
-	
-						case 2:
-							offs = (col & 0x1f) + ((row & 0x7f) << 5);
-						break;
-					}
-				}
-	
-				INT32 code  = ram[offs];
-				INT32 color = (code >> 12);
-	
-				code = (code & 0xfff) + bank;
-
-				if (opaque)
-				{
-					if (size)
-					{
-						Render16x16Tile_Clip(pTransDraw, code & mask16, sx, sy, color, 4, col16, gfx16);
-		
-					}
-					else
-					{
-						Render8x8Tile_Clip(pTransDraw, code & mask8, sx, sy, color, 4, col8, gfx8);
-					}
-				}
-				else
-				{
-					if (size)
-					{
-						Render16x16Tile_Mask_Clip(pTransDraw, code & mask16, sx, sy, color, 4, 0, col16, gfx16);
-		
-					}
-					else
-					{
-						Render8x8Tile_Mask_Clip(pTransDraw, code & mask8, sx, sy, color, 4, 0, col8, gfx8);
-					}
-				}
-			}
-		}
-	}
-}
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -649,12 +463,15 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 4) draw_layer(DrvPfRAM2, pf_control[2], NULL, NULL, DrvGfxROM0, 0x000, 0xfff, DrvGfxROM2, 0x300, 0xfff, 1, 1);
-	if (nBurnLayer & 2) draw_layer(DrvPfRAM1, pf_control[1], NULL, NULL, DrvGfxROM0, 0x000, 0xfff, DrvGfxROM1, 0x200, 0x7ff, 0, 0);
+	bac06_depth = 4;
+	bac06_yadjust = 8;
+
+	if (nBurnLayer & 4) bac06_draw_layer(DrvPfRAM2, pf_control[2], NULL, NULL, DrvGfxROM0, 0x000, 0xfff, DrvGfxROM2, 0x300, 0xfff, 1, 1);
+	if (nBurnLayer & 2) bac06_draw_layer(DrvPfRAM1, pf_control[1], NULL, NULL, DrvGfxROM0, 0x000, 0xfff, DrvGfxROM1, 0x200, 0x7ff, 0, 0);
 
 	draw_sprites();
 
-	if (nBurnLayer & 1) draw_layer(DrvPfRAM0, pf_control[0], DrvRowScroll, DrvColScroll, DrvGfxROM0, 0x000, 0xfff, DrvGfxROM0, 0x000, 0x000, 0, 0);
+	if (nBurnLayer & 1) bac06_draw_layer(DrvPfRAM0, pf_control[0], DrvRowScroll, DrvColScroll, DrvGfxROM0, 0x000, 0xfff, DrvGfxROM0, 0x000, 0x000, 0, 0);
 
 	BurnTransferCopy(DrvPalette);
 

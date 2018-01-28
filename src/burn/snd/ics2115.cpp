@@ -332,9 +332,9 @@ bool ics2115_voice::update_volume_envelope()
 			vol_ctrl.bitflags.invert = !vol_ctrl.bitflags.invert;
 
 		if (osc_conf.bitflags.invert)
-			vol.acc = vol.end + osc.left;
+			vol.acc = vol.end + vol.left;
 		else
-			vol.acc = vol.start - osc.left;
+			vol.acc = vol.start - vol.left;
 	}
 	else
 		vol_ctrl.bitflags.done = true;

@@ -669,6 +669,7 @@ INT32 ZetScan(INT32 nAction)
 		SCAN_VAR(Z80EA[i]);
 		SCAN_VAR(nZ80ICount[i]);
 		SCAN_VAR(nZetCyclesDone[i]);
+		SCAN_VAR(ZetCPUContext[i]->BusReq);
 	}
 	
 	SCAN_VAR(nZetCyclesTotal);

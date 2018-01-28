@@ -2858,8 +2858,6 @@ static INT32 ddp2Init()
 	INT32 nRet = pgmInit();
 
 	if (!nRet) {
-		ICS2115_ddp2beestormmode = 1; // hack to fix volume fadeouts in ddp2 bee storm
-
 		Arm7SetIdleLoopAddress(0x8010998);
 	}
 

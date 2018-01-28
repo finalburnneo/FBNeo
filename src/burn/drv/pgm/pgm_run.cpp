@@ -1,8 +1,9 @@
- 
-#include "pgm.h" 
+
+#include "pgm.h"
 #include "arm7_intf.h"
 #include "v3021.h"
 #include "ics2115.h"
+#include "timer.h"
 
 UINT8 PgmJoy1[8] = {0,0,0,0,0,0,0,0};
 UINT8 PgmJoy2[8] = {0,0,0,0,0,0,0,0};
@@ -57,9 +58,10 @@ INT32 nPGMDisableIRQ4 = 0;
 INT32 nPGMArm7Type = 0;
 UINT32 nPgmAsicRegionHackAddress = 0;
 
+#define Z80_FREQ            8468000
 #define M68K_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
 #define ARM7_CYCS_PER_FRAME	((20000000 * 100) / nBurnFPS)
-#define Z80_CYCS_PER_FRAME	(( 8468000 * 100) / nBurnFPS)
+#define Z80_CYCS_PER_FRAME	((Z80_FREQ * 100) / nBurnFPS)
 
 #define	PGM_INTER_LEAVE	200
 
@@ -255,6 +257,16 @@ static INT32 pgmGetRoms(bool bLoad)
 	return 0;
 }
 
+static inline void pgmSynchroniseZ80(INT32 extra_cycles)
+{
+	INT32 cycles = (UINT64)(SekTotalCycles()) * Z80_CYCS_PER_FRAME / M68K_CYCS_PER_FRAME + extra_cycles;
+
+	if (cycles <= ZetTotalCycles())
+		return;
+
+	BurnTimerUpdate(cycles);
+}
+
 static UINT16 ics2115_soundlatch_r(INT32 i)
 {
 	bSoundlatchRead[i] = 1;
@@ -275,7 +287,7 @@ UINT8 __fastcall PgmReadByte(UINT32 sekAddress)
 			return v3021Read();
 
 		case 0xC08007: // dipswitches - (ddp2)
-			return ~(PgmInput[6]) | 0xe0;
+			return ~(PgmInput[6]);// | 0xe0;
 
 	//	default:
 	//		bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x (PC: %5.5x)\n"), sekAddress, SekGetPC(-1));
@@ -289,6 +301,8 @@ UINT16 __fastcall PgmReadWord(UINT32 sekAddress)
 	switch (sekAddress)
 	{
 		case 0xC00004:
+			pgmSynchroniseZ80(0);
+
 			return ics2115_soundlatch_r(1);
 
 		case 0xC00006:	// ketsui wants this
@@ -304,7 +318,7 @@ UINT16 __fastcall PgmReadWord(UINT32 sekAddress)
 			return ~(PgmInput[4] | (PgmInput[5] << 8));
 
 		case 0xC08006: // dipswitches
-			return ~(PgmInput[6]) | 0xffe0;
+			return ~(PgmInput[6]) | 0xff00; // 0xffe0;
 
 	//	default:
 	//		bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x (PC: %5.5x)\n"), sekAddress, SekGetPC(-1));
@@ -334,11 +348,15 @@ void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 			
 		case 0xC00002:
+			pgmSynchroniseZ80(0);
+
 			ics2115_soundlatch_w(0, wordValue);
 			if (nPgmZ80Work) ZetNmi();
 			break;
 
 		case 0xC00004:
+			pgmSynchroniseZ80(0);
+
 			ics2115_soundlatch_w(1, wordValue);
 			break;
 
@@ -347,22 +365,29 @@ void __fastcall PgmWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0xC00008:
-			if (wordValue == 0x5050) {
+			pgmSynchroniseZ80(0);
+
+			if (wordValue == 0x5050)
+			{
 				ics2115_reset();
+				ZetSetBUSREQLine(0);
 				nPgmZ80Work = 1;
-				
 				ZetReset();
 			} else {
+				ZetSetBUSREQLine(1);
 				nPgmZ80Work = 0;
 			}
+
 			break;
 
 		case 0xC0000A:	// z80_ctrl_w
 			break;
 
 		case 0xC0000C:
+			pgmSynchroniseZ80(0);
+
 			ics2115_soundlatch_w(2, wordValue);
-			break;	
+			break;
 
 		case 0xC08006: // coin counter
 			if (coin_counter_previous == 0xf && wordValue == 0) {
@@ -389,22 +414,26 @@ UINT8 __fastcall PgmZ80ReadByte(UINT32 sekAddress)
 
 UINT16 __fastcall PgmZ80ReadWord(UINT32 sekAddress)
 {
+	pgmSynchroniseZ80(0);
+
 	sekAddress &= 0xffff;
-	return (RamZ80[sekAddress] << 8) | RamZ80[sekAddress+1];
+	return (RamZ80[sekAddress] << 8) | RamZ80[sekAddress + 1];
 }
 
 void __fastcall PgmZ80WriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
+	pgmSynchroniseZ80(0);
+
 	sekAddress &= 0xffff;
-	RamZ80[sekAddress] = wordValue >> 8;
-	RamZ80[sekAddress+1] = wordValue & 0xFF;
+	RamZ80[sekAddress    ] = wordValue >> 8;
+	RamZ80[sekAddress + 1] = wordValue & 0xFF;
 }
 
 inline static UINT32 CalcCol(UINT16 nColour)
 {
 	INT32 r, g, b;
 
-	r = (nColour & 0x7C00) >> 7;	// Red 
+	r = (nColour & 0x7C00) >> 7;	// Red
 	r |= r >> 5;
 	g = (nColour & 0x03E0) >> 2;	// Green
 	g |= g >> 5;
@@ -417,7 +446,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 void __fastcall PgmPaletteWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
 	sekAddress = (sekAddress - 0xa00000) >> 1;
-	PGMPalRAM[sekAddress] =BURN_ENDIAN_SWAP_INT16(wordValue);
+	PGMPalRAM[sekAddress] = BURN_ENDIAN_SWAP_INT16(wordValue);
 	RamCurPal[sekAddress] = CalcCol(wordValue);
 }
 
@@ -435,7 +464,7 @@ UINT8 __fastcall PgmZ80PortRead(UINT16 port)
 	switch (port >> 8)
 	{
 		case 0x80:
-			return ics2115read(port);
+			return ics2115read(port & 0xff);
 
 		case 0x81:
 			return ics2115_soundlatch_r(2) & 0xff;
@@ -457,7 +486,7 @@ void __fastcall PgmZ80PortWrite(UINT16 port, UINT8 data)
 	switch (port >> 8)
 	{
 		case 0x80:
-			ics2115write(port, data);
+			ics2115write(port & 0xff, data);
 			break;
 
 		case 0x81:
@@ -499,6 +528,7 @@ INT32 PgmDoReset()
 
 	ZetOpen(0);
 	nPgmZ80Work = 0;
+	ZetSetBUSREQLine(1);
 	ZetReset();
 	ZetClose();
 
@@ -508,7 +538,19 @@ INT32 PgmDoReset()
 		pPgmResetCallback();
 	}
 
+	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
+
 	return 0;
+}
+
+static bool need_kov_decode()
+{
+	return strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgs")  == 0 ||
+		   strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgsa") == 0 ||
+		   strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsqh2")  == 0 ||
+		   strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjb")   == 0 ||
+		   strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjba")  == 0 ||
+		   strcmp(BurnDrvGetTextA(DRV_NAME), "kovassg")   == 0;
 }
 
 static void expand_tile_gfx()
@@ -516,13 +558,8 @@ static void expand_tile_gfx()
 	UINT8 *src = PGMTileROM;
 	UINT8 *dst = PGMTileROMExp;
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgs") == 0 ||
-	    strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgsa") == 0 ||
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsqh2") == 0 || 
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjb") == 0 || 
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjba") == 0 ||
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovassg") == 0) {
-			pgm_decode_kovqhsgs_tile_data(PGMTileROM + 0x180000);
+	if (need_kov_decode()) {
+		pgm_decode_kovqhsgs_tile_data(PGMTileROM + 0x180000);
 	}
 
 	if (strncmp(BurnDrvGetTextA(DRV_NAME), "happy6", 6) == 0) {
@@ -599,12 +636,7 @@ static void expand_colourdata()
 		}
 	}
 
-	if (strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgs") == 0 ||
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovqhsgsa") == 0 ||
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsqh2") == 0 || 
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjb") == 0 || 
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovlsjba") == 0 ||
-		strcmp(BurnDrvGetTextA(DRV_NAME), "kovassg") == 0) {
+	if (need_kov_decode()) {
 		pgm_decode_kovqhsgs_gfx_block(tmp + 0x0000000);
 		pgm_decode_kovqhsgs_gfx_block(tmp + 0x0800000);
 		pgm_decode_kovqhsgs_gfx_block(tmp + 0x1000000);
@@ -631,7 +663,7 @@ static void expand_colourdata()
 
 static void ics2115_sound_irq(INT32 nState)
 {
-	ZetSetIRQLine(0, (nState) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	ZetSetIRQLine(0, nState);
 }
 
 INT32 pgmInit()
@@ -733,7 +765,8 @@ INT32 pgmInit()
 	pgmInitDraw();
 
 	v3021Init();
-	ics2115_init(8468000, ics2115_sound_irq, ICSSNDROM, nPGMSNDROMLen);
+	ics2115_init(ics2115_sound_irq, ICSSNDROM, nPGMSNDROMLen);
+	BurnTimerAttachZet(Z80_FREQ);
 	
 	pBurnDrvPalette = (UINT32*)PGMPalRAM;
 
@@ -874,19 +907,6 @@ INT32 pgmFrame()
 			}
 		}
 
-		// run sound cpu
-		{
-			INT32 nSegment = nCyclesNext[1] - nCyclesDone[1];
-
-			if (nPgmZ80Work) {
-				nCyclesDone[1] += ZetRun( nSegment );
-			} else {
-				nCyclesDone[1] += nSegment;
-			}
-
-			ics2115_adjust_timer(nSegment);
-		}
-
 		if (i == ((PGM_INTER_LEAVE / 2)-1) && !nPGMDisableIRQ4) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
@@ -894,8 +914,10 @@ INT32 pgmFrame()
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
+	BurnTimerEndFrame(Z80_CYCS_PER_FRAME);
+
 	if (pBurnSoundOut) {
-		ics2115_update(pBurnSoundOut, nBurnSoundLen);
+		ics2115_update(nBurnSoundLen);
 	}
 
 	if (nEnableArm7) Arm7Close();

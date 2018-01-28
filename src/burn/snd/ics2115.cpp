@@ -1334,7 +1334,7 @@ void ics2115_scan(INT32 nAction, INT32* pnMin)
 #endif
 
 	if (pnMin)
-		*pnMin = 0x029904;
+		*pnMin = 0x029743;
 
 	BurnTimerScan(nAction, pnMin);
 

@@ -1,4 +1,4 @@
-// Timers (for Yamaha FM cips and generic)
+// Timers (for Yamaha FM chips and generic)
 #include "burnint.h"
 #include "timer.h"
 #include "m68000_intf.h"
@@ -22,8 +22,9 @@ static INT32 nTimerCount[2], nTimerStart[2];
 static INT32 (*pTimerOverCallback)(INT32, INT32);
 static double (*pTimerTimeCallback)();
 
-static INT32 nCPUClockspeed = 0;
-static INT32 (*pCPUTotalCycles)() = NULL;
+INT32 BurnTimerCPUClockspeed = 0;
+INT32 (*BurnTimerCPUTotalCycles)() = NULL;
+
 static INT32 (*pCPURun)(INT32) = NULL;
 static void (*pCPURunEnd)() = NULL;
 
@@ -49,7 +50,7 @@ INT32 BurnTimerUpdate(INT32 nCycles)
 {
 	INT32 nIRQStatus = 0;
 
-	nTicksTotal = MAKE_TIMER_TICKS(nCycles, nCPUClockspeed);
+	nTicksTotal = MAKE_TIMER_TICKS(nCycles, BurnTimerCPUClockspeed);
 
 //	bprintf(PRINT_NORMAL, _T(" -- Ticks: %08X, cycles %i\n"), nTicksTotal, nCycles);
 
@@ -66,13 +67,13 @@ INT32 BurnTimerUpdate(INT32 nCycles)
 			nTicksSegment = nTicksTotal;
 		}
 
-		nCyclesSegment = MAKE_CPU_CYLES(nTicksSegment + nTicksExtra, nCPUClockspeed);
-//		bprintf(PRINT_NORMAL, _T("  - Timer: %08X, %08X, %08X, cycles %i, %i\n"), nTicksDone, nTicksSegment, nTicksTotal, nCyclesSegment, pCPUTotalCycles());
+		nCyclesSegment = MAKE_CPU_CYLES(nTicksSegment + nTicksExtra, BurnTimerCPUClockspeed);
+//		bprintf(PRINT_NORMAL, _T("  - Timer: %08X, %08X, %08X, cycles %i, %i\n"), nTicksDone, nTicksSegment, nTicksTotal, nCyclesSegment, BurnTimerCPUTotalCycles());
 
-		pCPURun(nCyclesSegment - pCPUTotalCycles());
+		pCPURun(nCyclesSegment - BurnTimerCPUTotalCycles());
 
-		nTicksDone = MAKE_TIMER_TICKS(pCPUTotalCycles() + 1, nCPUClockspeed) - 1;
-//		bprintf(PRINT_NORMAL, _T("  - ticks done -> %08X cycles -> %i\n"), nTicksDone, pCPUTotalCycles());
+		nTicksDone = MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles() + 1, BurnTimerCPUClockspeed) - 1;
+//		bprintf(PRINT_NORMAL, _T("  - ticks done -> %08X cycles -> %i\n"), nTicksDone, BurnTimerCPUTotalCycles());
 
 		nTimer = 0;
 		if (nTicksDone >= nTimerCount[0]) {
@@ -106,7 +107,7 @@ INT32 BurnTimerUpdate(INT32 nCycles)
 
 void BurnTimerEndFrame(INT32 nCycles)
 {
-	INT32 nTicks = MAKE_TIMER_TICKS(nCycles, nCPUClockspeed);
+	INT32 nTicks = MAKE_TIMER_TICKS(nCycles, BurnTimerCPUClockspeed);
 
 	BurnTimerUpdate(nCycles);
 
@@ -126,7 +127,7 @@ void BurnTimerEndFrame(INT32 nCycles)
 
 void BurnTimerUpdateEnd()
 {
-//	bprintf(PRINT_NORMAL, _T("  - end %i\n"), pCPUTotalCycles());
+//	bprintf(PRINT_NORMAL, _T("  - end %i\n"), BurnTimerCPUTotalCycles());
 
 	pCPURunEnd();
 
@@ -153,7 +154,7 @@ void BurnOPLTimerCallback(INT32 c, double period)
 	}
 
 	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
 }
@@ -168,7 +169,7 @@ void BurnOPMTimerCallback(INT32 c, double period)
 	}
 
 	nTimerCount[c]  = (INT32)(period * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 }
 
 void BurnOPNTimerCallback(INT32  /*n */, INT32 c, INT32 cnt, double stepTime)
@@ -184,7 +185,7 @@ void BurnOPNTimerCallback(INT32  /*n */, INT32 c, INT32 cnt, double stepTime)
 	}
 
 	nTimerCount[c]  = (INT32)(stepTime * cnt * (double)TIMER_TICKS_PER_SECOND);
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], stepTime * cnt);
 }
 
@@ -201,7 +202,7 @@ void BurnYMFTimerCallback(INT32 /* n */, INT32 c, double period)
 	}
 
 	nTimerStart[c]  = nTimerCount[c] = (INT32)(period * (double)(TIMER_TICKS_PER_SECOND / 1000000));
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
 }
@@ -219,7 +220,7 @@ void BurnTimerSetRetrig(INT32 c, double period)
 	}
 
 	nTimerStart[c]  = nTimerCount[c] = (INT32)(period * (double)(TIMER_TICKS_PER_SECOND));
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period);
 }
@@ -237,9 +238,45 @@ void BurnTimerSetOneshot(INT32 c, double period)
 	}
 
 	nTimerCount[c]  = (INT32)(period * (double)(TIMER_TICKS_PER_SECOND));
-	nTimerCount[c] += MAKE_TIMER_TICKS(pCPUTotalCycles(), nCPUClockspeed);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
 //	bprintf(PRINT_NORMAL, _T("  - timer %i started, %08X ticks (fires in %lf seconds)\n"), c, nTimerCount[c], period / 1000000.0);
+}
+
+void BurnTimerSetRetrig(INT32 c, UINT64 timer_ticks)
+{
+	pCPURunEnd();
+
+	if (timer_ticks == 0) {
+		nTimerStart[c] = nTimerCount[c] = MAX_TIMER_VALUE;
+
+		// bprintf(PRINT_NORMAL, L"  - timer %i stopped\n", c);
+
+		return;
+	}
+
+	nTimerStart[c] = nTimerCount[c] = static_cast<uint32_t>(timer_ticks);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
+
+	// bprintf(PRINT_NORMAL, L"  - timer %i started, %08X ticks (fires in %lf seconds)\n", c, nTimerCount[c], static_cast<double>(TIMER_TICKS_PER_SECOND) / timer_ticks);
+}
+
+void BurnTimerSetOneshot(INT32 c, UINT64 timer_ticks)
+{
+	pCPURunEnd();
+
+	if (timer_ticks == 0) {
+		nTimerStart[c] = nTimerCount[c] = MAX_TIMER_VALUE;
+
+		// bprintf(PRINT_NORMAL, L"  - timer %i stopped\n", c);
+
+		return;
+	}
+
+	nTimerCount[c] = static_cast<uint32_t>(timer_ticks);
+	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
+
+	// bprintf(PRINT_NORMAL, L"  - timer %i started, %08X ticks (fires in %lf seconds)\n", c, nTimerCount[c], static_cast<double>(TIMER_TICKS_PER_SECOND) / timer_ticks);
 }
 
 // ------------------------------------ ---------------------------------------
@@ -262,8 +299,8 @@ void BurnTimerScan(INT32 nAction, INT32* pnMin)
 
 void BurnTimerExit()
 {
-	nCPUClockspeed = 0;
-	pCPUTotalCycles = NULL;
+	BurnTimerCPUClockspeed = 0;
+	BurnTimerCPUTotalCycles = NULL;
 	pCPURun = NULL;
 	pCPURunEnd = NULL;
 
@@ -318,126 +355,126 @@ void NullRunEnd()
 
 INT32 BurnTimerAttachNull(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = NullTotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = NullTotalCycles;
 	pCPURun = NullRun;
 	pCPURunEnd = NullRunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachSek(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = SekTotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = SekTotalCycles;
 	pCPURun = SekRun;
 	pCPURunEnd = SekRunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachZet(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = ZetTotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = ZetTotalCycles;
 	pCPURun = ZetRun;
 	pCPURunEnd = ZetRunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachM6809(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6809TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = M6809TotalCycles;
 	pCPURun = M6809Run;
 	pCPURunEnd = M6809RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachHD6309(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = HD6309TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = HD6309TotalCycles;
 	pCPURun = HD6309Run;
 	pCPURunEnd = HD6309RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachM6800(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6800TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = M6800TotalCycles;
 	pCPURun = M6800Run;
 	pCPURunEnd = M6800RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachHD63701(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6800TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = M6800TotalCycles;
 	pCPURun = HD63701Run;
 	pCPURunEnd = HD63701RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachM6803(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6800TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = M6800TotalCycles;
 	pCPURun = M6803Run;
 	pCPURunEnd = M6803RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachM6502(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6502TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = M6502TotalCycles;
 	pCPURun = M6502Run;
 	pCPURunEnd = M6502RunEnd; // doesn't do anything...
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
@@ -445,56 +482,56 @@ INT32 BurnTimerAttachM6502(INT32 nClockspeed)
 
 INT32 BurnTimerAttachSh2(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = Sh2TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = Sh2TotalCycles;
 	pCPURun = Sh2Run;
 	pCPURunEnd = Sh2StopRun;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachH6280(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = h6280TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = h6280TotalCycles;
 	pCPURun = h6280Run;
 	pCPURunEnd = h6280RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachTlcs90(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = tlcs90TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = tlcs90TotalCycles;
 	pCPURun = tlcs90Run;
 	pCPURunEnd = tlcs90RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }
 
 INT32 BurnTimerAttachZ180(INT32 nClockspeed)
 {
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = Z180TotalCycles;
+	BurnTimerCPUClockspeed = nClockspeed;
+	BurnTimerCPUTotalCycles = Z180TotalCycles;
 	pCPURun = Z180Run;
 	pCPURunEnd = Z180RunEnd;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed) - 1;
 
-//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, nCPUClockspeed));
+//	bprintf(PRINT_NORMAL, _T("--- timer cpu speed %iHz, one cycle = %i ticks.\n"), nClockspeed, MAKE_TIMER_TICKS(1, BurnTimerCPUClockspeed));
 
 	return 0;
 }

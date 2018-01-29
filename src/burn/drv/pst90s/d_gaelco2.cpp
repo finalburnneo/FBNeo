@@ -664,23 +664,23 @@ static UINT16 bang_analog_read(INT32 port)
 {
 	port = (port / 2) & 3;
 
-	INT32 analog_value = 0x80; // placeholder until analog inputs hooked up!
+	INT32 analog_value = 0x80;
 
-	const INT32 adjust[6] = { 320, 240, 1, -4, 0, 0};
+	const INT32 adjust[4] = { 320, 240, 1, 0 };
 
 	switch (port & 3)
 	{
-		case 0: analog_value = BurnGunReturnX(0);// input 0, x
+		case 0: analog_value = BurnGunReturnX(0);
 		        break;
-		case 1: analog_value = BurnGunReturnX(1);// input 1, x
+		case 1: analog_value = BurnGunReturnX(1);
 		        break;
-		case 2: analog_value = BurnGunReturnY(0);// input 0, y
+		case 2: analog_value = BurnGunReturnY(0);
 		        break;
-		case 3: analog_value = BurnGunReturnY(1);// input 1, y
+		case 3: analog_value = BurnGunReturnY(1);
 		        break;
 	}
 
-	return ((analog_value * adjust[port]) / 256) + adjust[(port)+2];
+	return ((analog_value * adjust[port>>1]) / 256) + adjust[(port>>1) + 2];
 }
 
 static UINT8 __fastcall gaelco2_main_read_byte(UINT32 address)

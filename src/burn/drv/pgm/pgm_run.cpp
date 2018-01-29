@@ -910,6 +910,8 @@ INT32 pgmFrame()
 		if (i == ((PGM_INTER_LEAVE / 2)-1) && !nPGMDisableIRQ4) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
+
+		BurnTimerUpdate((i + 1) * Z80_CYCS_PER_FRAME / PGM_INTER_LEAVE);
 	}
 
 	SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);

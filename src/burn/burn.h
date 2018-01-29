@@ -289,6 +289,10 @@ UINT16 BurnRandom();                                // State-able Random Number 
 void BurnRandomScan(INT32 nAction);                 // Must be called in driver's DrvScan() if BurnRandom() is used
 void BurnRandomInit();                              // Called automatically in BurnDrvInit() / Internal use only
 
+// Handy FM default callbacks
+INT32 BurnSynchroniseStream(INT32 nSoundRate);
+double BurnGetTime();
+
 // ---------------------------------------------------------------------------
 // Retrieve driver information
 

@@ -893,16 +893,6 @@ static INT32 SpritePlaneOffsets[4] = { 0x80004, 0x80000, 4, 0 };
 static INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 8, 9, 10, 11, 256, 257, 258, 259, 264, 265, 266, 267 };
 static INT32 SpriteYOffsets[16]    = { 0, 16, 32, 48, 64, 80, 96, 112, 128, 144, 160, 176, 192, 208, 224, 240 };
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
-}
-
 static INT32 DrvInit()
 {
 	INT32 nRet = 0, nLen;
@@ -988,7 +978,7 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
 	ZetClose();	
 	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, BurnSynchroniseStream, BurnGetTime, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1082,7 +1072,7 @@ static INT32 DiamondInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
 	ZetClose();	
 	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, BurnSynchroniseStream, BurnGetTime, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);

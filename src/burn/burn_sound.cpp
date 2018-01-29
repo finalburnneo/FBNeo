@@ -1,7 +1,8 @@
 #include "burnint.h"
 #include "burn_sound.h"
+#include "timer.h"
 
-INT16 Precalc[4096 *4];
+INT16 Precalc[4096 * 4];
 
 // Routine used to precalculate the table used for interpolation
 INT32 cmc_4p_Precalc()
@@ -21,3 +22,4 @@ INT32 cmc_4p_Precalc()
 
 	return 0;
 }
+

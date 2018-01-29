@@ -589,6 +589,11 @@ void BurnYM2203Exit()
 	DebugSnd_YM2203Initted = 0;
 }
 
+INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnYM2203Init(num, nClockFrequency, IRQCallback, BurnSynchroniseStream, BurnGetTime, bAddSignal);
+}
+
 INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
 	DebugSnd_YM2203Initted = 1;

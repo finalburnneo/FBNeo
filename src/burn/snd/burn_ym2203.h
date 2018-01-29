@@ -9,6 +9,7 @@ extern "C" {
 extern "C" void BurnYM2203UpdateRequest();
 
 INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal);
+INT32 BurnYM2203Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 bAddSignal);
 void BurnYM2203SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM2203SetLeftVolume(INT32 nChip, INT32 nIndex, double nLeftVolume);
 void BurnYM2203SetRightVolume(INT32 nChip, INT32 nIndex, double nRightVolume);

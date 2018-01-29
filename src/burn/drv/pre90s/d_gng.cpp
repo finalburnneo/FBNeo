@@ -978,7 +978,7 @@ static INT32 DrvInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
 	ZetClose();	
 	
-	BurnYM2203Init(2, 1500000, NULL, BurnSynchroniseStream, BurnGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1072,7 +1072,7 @@ static INT32 DiamondInit()
 	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80Ram             );
 	ZetClose();	
 	
-	BurnYM2203Init(2, 1500000, NULL, BurnSynchroniseStream, BurnGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);

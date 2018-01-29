@@ -1178,7 +1178,7 @@ static void ics2115_reg_write(UINT8 data, bool msb) {
 
 
 		case 0x40: // Timer 1 Preset
-		case 0x41: // Timer 2 Preset
+		//case 0x41: // Timer 2 Preset
 			if (!msb)
 			{
 				m_timer[m_reg_select & 0x1].preset = data;
@@ -1187,7 +1187,7 @@ static void ics2115_reg_write(UINT8 data, bool msb) {
 			break;
 
 		case 0x42: // Timer 1 Prescale
-		case 0x43: // Timer 2 Prescale
+		//case 0x43: // Timer 2 Prescale
 			if (!msb)
 			{
 				m_timer[m_reg_select & 0x1].scale = data;

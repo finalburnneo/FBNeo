@@ -38,6 +38,8 @@ static UINT8 DrvRecalc;
 
 static UINT16 pf_control[3][2][4];
 
+static INT16 *SoundBuffer;
+
 static INT32 vblank;
 
 static UINT8 DrvJoy1[16];
@@ -166,7 +168,7 @@ static UINT16 __fastcall madmotor_main_read_word(UINT32 address)
 			return (DrvDips[1] * 256) + DrvDips[0];
 
 		case 0x3f8006:
-			return (DrvInputs[1] & ~8) + (vblank ? 8 : 0);
+			return (DrvInputs[1] & ~8) + (vblank ? 0 : 8);
 	}
 
 	bprintf (0, _T("MRW: %5.5x\n"), address);
@@ -194,7 +196,7 @@ static UINT8 __fastcall madmotor_main_read_byte(UINT32 address)
 			return 0xff;
 
 		case 0x3f8007:
-			return (DrvInputs[1] & ~8) + (vblank ? 0 : 1);
+			return (DrvInputs[1] & ~8) + (vblank ? 0 : 8);
 	}
 
 	bprintf (0, _T("MRB: %5.5x\n"), address);
@@ -212,7 +214,7 @@ static INT32 DrvDoReset()
 
 	deco16SoundReset();
 
-	memset (pf_control, 0, 2*2*4*sizeof(INT16));
+	memset (pf_control, 0, sizeof(pf_control));
 
 	return 0;
 }
@@ -250,6 +252,8 @@ static INT32 MemIndex()
 	DrvRowScroll	= Next; Next += 0x000400;
 
 	RamEnd		= Next;
+
+	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd		= Next;
 
@@ -516,9 +520,9 @@ static INT32 DrvFrame()
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		//nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (pBurnSoundOut && i%4 == 3) { // this fixes small tempo fluxuations in cninja
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
+			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -527,13 +531,19 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
+		
+		for (INT32 i = 0; i < nBurnSoundLen; i++) {
+			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
+			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
+		}
 	}
 
 	h6280Close();

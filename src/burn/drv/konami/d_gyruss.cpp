@@ -211,8 +211,6 @@ static struct BurnDIPInfo GyrussceDIPList[]=
 	{0x11, 0x01, 0x04, 0x00, "Upright"			},
 	{0x11, 0x01, 0x04, 0x04, "Cocktail"			},
 
-	{0   , 0xfe, 0   ,    0, "Bonus Life"			},
-
 	{0   , 0xfe, 0   ,    2, "Bonus Life"			},
 	{0x11, 0x01, 0x08, 0x08, "50k 120k 70k+"		},
 	{0x11, 0x01, 0x08, 0x00, "60k 140k 80k+"		},
@@ -782,8 +780,8 @@ static INT32 DrvInit()
 	filter_rc_set_route(3, 0.25, FLT_RC_PANNEDRIGHT);
 	filter_rc_set_route(4, 0.25, FLT_RC_PANNEDRIGHT);
 	filter_rc_set_route(5, 0.25, FLT_RC_PANNEDRIGHT);
-	filter_rc_set_route(6, 0.25, BURN_SND_ROUTE_LEFT ); // master out l
-	filter_rc_set_route(7, 0.25, BURN_SND_ROUTE_RIGHT); // master out r
+	filter_rc_set_route(6, 0.55, BURN_SND_ROUTE_LEFT ); // master out l
+	filter_rc_set_route(7, 0.55, BURN_SND_ROUTE_RIGHT); // master out r
 
 	GenericTilesInit();
 

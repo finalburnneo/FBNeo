@@ -4625,7 +4625,7 @@ static INT32 MsliderInit()
 {
 	watchdog_disable = 1;
 
-	return DrvCommonInit(MsliderV60Map, NULL, 0, 0, -1, -1, -1, 0.80, 1);
+	return DrvCommonInit(MsliderV60Map, NULL, 0, 0, -1, -1, -1, 2.80, 1);
 }
 
 struct BurnDriver BurnDrvMslider = {

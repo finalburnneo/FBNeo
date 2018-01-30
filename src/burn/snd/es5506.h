@@ -33,7 +33,7 @@ struct _es5506_interface
 
 extern INT32 ES550X_twincobra2_pan_fix;
 
-void ES5506Update(INT16 *pBuffer, INT32 samples);
+void ES5506Update(INT16 *outputs, INT32 samples_len);
 #define ES5505Update ES5506Update
 void ES5506Init(INT32 clock, UINT8 *region0, UINT8 *region1, UINT8 *region2, UINT8 *region3, irq_callback callback);
 void ES5506Exit();

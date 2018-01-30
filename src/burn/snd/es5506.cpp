@@ -87,6 +87,7 @@ Ensoniq OTIS - ES5505                                            Ensoniq OTTO - 
 //
 
 #include "burnint.h"
+#include "burn_sound.h"
 #include "es5506.h"
 
 
@@ -213,6 +214,11 @@ struct _es5506_state
 static struct _es5506_state *chip = NULL;
 
 INT32 ES550X_twincobra2_pan_fix = 0;
+
+// for resampling
+static UINT32 nSampleSize;
+static INT32 nFractionalPosition;
+static INT32 nPosition;
 
 
 /**********************************************************************************************
@@ -864,57 +870,69 @@ static void generate_samples(INT32 *left, INT32 *right, INT32 samples)
 
 ***********************************************************************************************/
 
-void ES5506Update(INT16 *pBuffer, INT32 samples)
+void ES5506Update(INT16 *outputs, INT32 samples_len)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_ES5506Initted) bprintf(PRINT_ERROR, _T("ES5506Update called without init\n"));
 #endif
 
-	INT32 *lsrc = chip->scratch, *rsrc = chip->scratch;
+	if (samples_len != nBurnSoundLen) {
+		bprintf(0, _T("ES550XUpdate(): once per frame, please!\n"));
+		return;
+	}
 
-#if MAKE_WAVS
-	/* start the logging once we have a sample rate */
-	if (chip->sample_rate)
-	{
-		if (!chip->wavraw)
-			chip->wavraw = wav_open("raw.wav", chip->sample_rate, 2);
+#if 0
+	if (chip->sample_rate == 0) { // probably not needed.. but try if garbage sound issues during boot (before chip->sample_rate is set)
+		memset(outputs, 0, nBurnSoundLen * 2 * sizeof(INT16));
+		return;
 	}
 #endif
 
-	INT32 rate = (chip->sample_rate * 100) / nBurnFPS;
-	samples = rate;
+	INT32 nSamplesNeeded = ((((((chip->sample_rate * 1000) / nBurnFPS) * samples_len) / nBurnSoundLen)) / 10) + 1;
+	if (nBurnSoundRate < 44100) nSamplesNeeded += 2; // so we don't end up with negative nPosition below
 
-	/* loop until all samples are output */
-	while (samples)
-	{
-		INT32 length = (samples > MAX_SAMPLE_CHUNK) ? MAX_SAMPLE_CHUNK : samples;
-		INT32 samp;
-		
-		/* determine left/right source data */
-		lsrc = chip->scratch;
-		rsrc = chip->scratch + length;
-		generate_samples(lsrc, rsrc, length);
-		
-		/* copy the data */
-		INT32 len = (length * nBurnSoundLen) / rate;
+	/* determine left/right source data */
+	INT32 *lsrc = chip->scratch + 0    + 5 + nPosition;
+	INT32 *rsrc = chip->scratch + 4096 + 5 + nPosition;
 
-		for (samp = 0; samp < len; samp++)
-		{
-			INT32 k = (samp * rate) / nBurnSoundLen;
+	generate_samples(lsrc, rsrc, nSamplesNeeded - nPosition);
 
-			pBuffer[0] = BURN_SND_CLIP((INT32)((lsrc[k] >> 4) * chip->volume[0]));
-			pBuffer[1] = BURN_SND_CLIP((INT32)((rsrc[k] >> 4) * chip->volume[1]));
-			pBuffer += 2;
+	INT32 *pBufL = chip->scratch + 0    + 5;
+	INT32 *pBufR = chip->scratch + 4096 + 5;
+
+	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < (samples_len << 1); i += 2, nFractionalPosition += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nRightSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample, nTotalRightSample;
+
+		nLeftSample[0] += (INT32)(pBufL[(nFractionalPosition >> 16) - 3]);
+		nLeftSample[1] += (INT32)(pBufL[(nFractionalPosition >> 16) - 2]);
+		nLeftSample[2] += (INT32)(pBufL[(nFractionalPosition >> 16) - 1]);
+		nLeftSample[3] += (INT32)(pBufL[(nFractionalPosition >> 16) - 0]);
+
+		nRightSample[0] += (INT32)(pBufR[(nFractionalPosition >> 16) - 3]);
+		nRightSample[1] += (INT32)(pBufR[(nFractionalPosition >> 16) - 2]);
+		nRightSample[2] += (INT32)(pBufR[(nFractionalPosition >> 16) - 1]);
+		nRightSample[3] += (INT32)(pBufR[(nFractionalPosition >> 16) - 0]);
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0] >> 4, nLeftSample[1] >> 4, nLeftSample[2] >> 4, nLeftSample[3] >> 4);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0] >> 4, nRightSample[1] >> 4, nRightSample[2] >> 4, nRightSample[3] >> 4);
+
+		outputs[i + 0] = BURN_SND_CLIP(nTotalLeftSample * chip->volume[0]);
+		outputs[i + 1] = BURN_SND_CLIP(nTotalRightSample * chip->volume[1]);
+	}
+
+	if (samples_len >= nBurnSoundLen) {
+		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
+
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pBufL[i] = pBufL[(nFractionalPosition >> 16) + i];
+			pBufR[i] = pBufR[(nFractionalPosition >> 16) + i];
 		}
 
-#if MAKE_WAVS
-		/* log the raw data */
-		if (chip->wavraw)
-			wav_add_data_32lr(chip->wavraw, lsrc, rsrc, length, 4);
-#endif
+		nFractionalPosition &= 0xFFFF;
 
-		/* account for these samples */
-		samples -= length;
+		nPosition = nExtraSamples;
 	}
 }
 
@@ -979,6 +997,11 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 	chip->volume[0] = 1.00;
 	chip->volume[1] = 1.00;
 
+	// for resampling
+	nSampleSize = 0; //(UINT32)m_sample_rate * (1 << 16) / nBurnSoundRate;
+	nFractionalPosition = 0;
+	nPosition = 0;
+
 	ES550X_twincobra2_pan_fix = 0; // this can be set after init.
 
 	/* success */
@@ -1008,6 +1031,12 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(chip->lrend);
 		SCAN_VAR(chip->irqv);
 		SCAN_VAR(chip->voice);
+	}
+
+	if (nAction & ACB_WRITE) {
+		nFractionalPosition = 0;
+		nPosition = 0;
+		nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
 	}
 }
 
@@ -1173,6 +1202,8 @@ ES5506_INLINE void es5506_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 		{
 			chip->active_voices = data & 0x1f;
 			chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
+
+			nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
 
 			if (LOG_COMMANDS && eslog)
 				fprintf(eslog, "active voices=%d, sample_rate=%d\n", chip->active_voices, chip->sample_rate);
@@ -1762,7 +1793,8 @@ ES5506_INLINE void es5505_reg_write_low(es5506_voice *voice, UINT32 offset, UINT
 			{
 				chip->active_voices = data & 0x1f;
 				chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
-//				chip->stream->set_sample_rate(chip->sample_rate);
+
+				nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
 
 //				if (LOG_COMMANDS && eslog)
 //					fprintf(eslog, "active voices=%d, sample_rate=%d\n", chip->active_voices, chip->sample_rate);
@@ -1868,7 +1900,8 @@ ES5506_INLINE void es5505_reg_write_high(es5506_voice *voice, UINT32 offset, UIN
 			{
 				chip->active_voices = data & 0x1f;
 				chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
-//				chip->stream->set_sample_rate(chip->sample_rate);
+
+				nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
 
 //				if (LOG_COMMANDS && eslog)
 //					fprintf(eslog, "active voices=%d, sample_rate=%d\n", chip->active_voices, chip->sample_rate);
@@ -1912,6 +1945,8 @@ ES5506_INLINE void es5505_reg_write_test(UINT32 offset, UINT16 data)
 			{
 				chip->active_voices = data & 0x1f;
 				chip->sample_rate = chip->master_clock / (16 * (chip->active_voices + 1));
+
+				nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
 
 //				if (LOG_COMMANDS && eslog)
 //					fprintf(eslog, "active voices=%d, sample_rate=%d\n", chip->active_voices, chip->sample_rate);

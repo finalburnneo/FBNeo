@@ -38,8 +38,6 @@ static UINT8 DrvRecalc;
 
 static UINT16 pf_control[3][2][4];
 
-static INT16 *SoundBuffer;
-
 static INT32 vblank;
 
 static UINT8 DrvJoy1[16];
@@ -252,8 +250,6 @@ static INT32 MemIndex()
 	DrvRowScroll	= Next; Next += 0x000400;
 
 	RamEnd		= Next;
-
-	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd		= Next;
 
@@ -518,11 +514,10 @@ static INT32 DrvFrame()
 		}
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
-		//nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
 
 		if (pBurnSoundOut && i%4 == 3) { // this fixes small tempo fluxuations in cninja
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -531,19 +526,13 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
-			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
-		}
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();

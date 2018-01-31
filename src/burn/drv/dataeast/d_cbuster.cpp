@@ -30,8 +30,6 @@ static UINT8 *DrvSprBuf;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *SoundBuffer;
-
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -122,7 +120,7 @@ static struct BurnDIPInfo CbusterDIPList[]=
 
 STDDIPINFO(Cbuster)
 
-void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0xb5000, data)
 	deco16_write_control_word(1, address, 0xb6000, data)
@@ -141,7 +139,7 @@ void __fastcall cbuster_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall cbuster_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall cbuster_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -176,7 +174,7 @@ void __fastcall cbuster_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall cbuster_main_read_word(UINT32 address)
+static UINT16 __fastcall cbuster_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -200,7 +198,7 @@ UINT16 __fastcall cbuster_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall cbuster_main_read_byte(UINT32 address)
+static UINT8 __fastcall cbuster_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -303,9 +301,6 @@ static INT32 MemIndex()
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
-	
-	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
-
 	MemEnd		= Next;
 
 	return 0;
@@ -624,7 +619,7 @@ static INT32 DrvFrame()
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -634,24 +629,19 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
-			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
-		}
+
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
 	SekClose();
-	
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -677,7 +667,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-		
+
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();

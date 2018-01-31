@@ -458,7 +458,7 @@ static void SidecpcktjI8751Write(UINT8 Data)
 	}
 }
 
-UINT8 SidepcktM6809ReadByte(UINT16 Address)
+static UINT8 SidepcktM6809ReadByte(UINT16 Address)
 {
 	switch (Address) {
 		case 0x3000: {
@@ -494,7 +494,7 @@ UINT8 SidepcktM6809ReadByte(UINT16 Address)
 	return 0;
 }
 
-void SidepcktM6809WriteByte(UINT16 Address, UINT8 Data)
+static void SidepcktM6809WriteByte(UINT16 Address, UINT8 Data)
 {
 	switch (Address) {
 		case 0x3004: {
@@ -519,7 +519,7 @@ void SidepcktM6809WriteByte(UINT16 Address, UINT8 Data)
 	}
 }
 
-UINT8 SidepcktSoundReadByte(UINT16 Address)
+static UINT8 SidepcktSoundReadByte(UINT16 Address)
 {
 	switch (Address) {
 		case 0x3000: {
@@ -534,7 +534,7 @@ UINT8 SidepcktSoundReadByte(UINT16 Address)
 	return 0;
 }
 
-void SidepcktSoundWriteByte(UINT16 Address, UINT8 Data)
+static void SidepcktSoundWriteByte(UINT16 Address, UINT8 Data)
 {
 	switch (Address) {
 		case 0x1000: {
@@ -921,14 +921,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		M6809Scan(nAction);
 		M6502Scan(nAction);
-		
+
 		BurnYM2203Scan(nAction, pnMin);
 		BurnYM3526Scan(nAction, pnMin);
-	
+
 		SCAN_VAR(I8751Return);
 		SCAN_VAR(CurrentPtr);
 		SCAN_VAR(CurrentTable);

@@ -137,7 +137,7 @@ static struct BurnDIPInfo BoogwingDIPList[]=
 
 STDDIPINFO(Boogwing)
 
-void __fastcall boogwing_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall boogwing_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -167,7 +167,7 @@ void __fastcall boogwing_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall boogwing_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall boogwing_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x260000, data)
 	deco16_write_control_word(1, address, 0x270000, data)
@@ -196,7 +196,7 @@ void __fastcall boogwing_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall boogwing_main_read_byte(UINT32 address)
+static UINT8 __fastcall boogwing_main_read_byte(UINT32 address)
 {
 	if (address >= 0x24e000 && address <= 0x24efff) {
 		return deco146_104_prot_rb(0, address & 0xfff);
@@ -205,7 +205,7 @@ UINT8 __fastcall boogwing_main_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall boogwing_main_read_word(UINT32 address)
+static UINT16 __fastcall boogwing_main_read_word(UINT32 address)
 {
 	if (address >= 0x24e000 && address <= 0x24efff) {
 		return deco146_104_prot_rw(0, address & 0xfff);

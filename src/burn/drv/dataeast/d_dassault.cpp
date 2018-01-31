@@ -38,8 +38,6 @@ static UINT8 *DrvShareRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *SoundBuffer;
-
 static UINT8 *flipscreen;
 
 static UINT8 DrvJoy1[16];
@@ -231,7 +229,7 @@ static struct BurnDIPInfo Dassault4DIPList[]=
 
 STDDIPINFO(Dassault4)
 
-void __fastcall dassault_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall dassault_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x220000, data)
 	deco16_write_control_word(1, address, 0x260000, data)
@@ -255,7 +253,7 @@ void __fastcall dassault_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall dassault_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall dassault_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -280,7 +278,7 @@ void __fastcall dassault_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall dassault_main_read_word(UINT32 address)
+static UINT16 __fastcall dassault_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -308,7 +306,7 @@ UINT16 __fastcall dassault_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall dassault_main_read_byte(UINT32 address)
+static UINT8 __fastcall dassault_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -348,7 +346,7 @@ UINT8 __fastcall dassault_main_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall dassault_sub_read_word(UINT32 address)
+static UINT16 __fastcall dassault_sub_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -360,7 +358,7 @@ UINT16 __fastcall dassault_sub_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall dassault_sub_read_byte(UINT32 address)
+static UINT8 __fastcall dassault_sub_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -372,7 +370,7 @@ UINT8 __fastcall dassault_sub_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall dassault_sub_write_word(UINT32 address, UINT16 )
+static void __fastcall dassault_sub_write_word(UINT32 address, UINT16 )
 {
 	switch (address)
 	{
@@ -383,7 +381,7 @@ void __fastcall dassault_sub_write_word(UINT32 address, UINT16 )
 	}
 }
 
-void __fastcall dassault_sub_write_byte(UINT32 address, UINT8 )
+static void __fastcall dassault_sub_write_byte(UINT32 address, UINT8 )
 {
 	switch (address)
 	{
@@ -420,7 +418,7 @@ static void set_cpuB_irq(INT32 state)
 	}
 }
 
-void __fastcall dassault_irq_write_word(UINT32 address, UINT16 data)
+static void __fastcall dassault_irq_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xffffffc) == 0x3feffc) {
 		if (address & 2) {
@@ -433,7 +431,7 @@ void __fastcall dassault_irq_write_word(UINT32 address, UINT16 data)
 	*((UINT16*)(DrvShareRAM + (address & 0xffe))) = BURN_ENDIAN_SWAP_INT16(data);
 }
 
-void __fastcall dassault_irq_write_byte(UINT32 address, UINT8 data)
+static void __fastcall dassault_irq_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffffc) == 0x3feffc) {
 		if (address & 2) {
@@ -446,7 +444,7 @@ void __fastcall dassault_irq_write_byte(UINT32 address, UINT8 data)
 	DrvShareRAM[(address & 0xfff)^1] = data;
 }
 
-UINT16 __fastcall dassault_irq_read_word(UINT32 address)
+static UINT16 __fastcall dassault_irq_read_word(UINT32 address)
 {
 	if ((address & 0xffffffc) == 0x3feffc) {
 		if (address & 2) {
@@ -459,7 +457,7 @@ UINT16 __fastcall dassault_irq_read_word(UINT32 address)
 	return BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvShareRAM + (address & 0xffe))));
 }
 
-UINT8 __fastcall dassault_irq_read_byte(UINT32 address)
+static UINT8 __fastcall dassault_irq_read_byte(UINT32 address)
 {
 	if (SekGetPC(0) == 0x114c && (DrvShareRAM[0] & 0x80) && (address & ~1) == 0x3fe000) SekRunEnd();
 
@@ -547,9 +545,6 @@ static INT32 MemIndex()
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
-	
-	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
-
 	MemEnd		= Next;
 
 	return 0;
@@ -899,7 +894,7 @@ static INT32 DrvFrame()
 
 		if (pBurnSoundOut && i%7 == 6) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 7);
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -908,19 +903,14 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[2]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] += SoundBuffer[(i << 1) + 0];
-			pBurnSoundOut[(i << 1) + 1] += SoundBuffer[(i << 1) + 1];
-		}
+
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
@@ -950,7 +940,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	
+
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();

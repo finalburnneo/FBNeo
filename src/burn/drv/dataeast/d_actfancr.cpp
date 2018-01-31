@@ -216,7 +216,7 @@ static inline void palette_update(INT32 offset)
 	DrvPalette[offset/2] = BurnHighCol((r << 4) | r, (g << 4) | g, (b << 4) | b, 0);
 }
 
-void actfan_main_write(UINT32 address, UINT8 data)
+static void actfan_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffe0) == 0x060000) {
 		
@@ -251,7 +251,7 @@ void actfan_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 actfan_main_read(UINT32 address)
+static UINT8 actfan_main_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -271,7 +271,7 @@ UINT8 actfan_main_read(UINT32 address)
 	return 0;
 }
 
-void triothep_main_write(UINT32 address, UINT8 data)
+static void triothep_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffffe0) == 0x060000) {
 		DrvPfCtrl[0][address & 0x1f] = data;
@@ -320,7 +320,7 @@ void triothep_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 triothep_main_read(UINT32 address)
+static UINT8 triothep_main_read(UINT32 address)
 {
 	switch (address)
 	{
@@ -439,7 +439,7 @@ static INT32 MemIndex()
 
 	MSM6295ROM	= Next; Next += 0x040000;
 
-        DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(INT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x0400 * sizeof(INT32);
 
 	AllRam		= Next;
 
@@ -880,8 +880,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 
-                SCAN_VAR(control_select);
-                DrvRecalc = 1; // April 3, 2014 - Fix palette problem on state load - dink & iq_132
+		SCAN_VAR(control_select);
 	}
 
 	return 0;

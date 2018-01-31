@@ -38,8 +38,6 @@ static UINT8 *DrvZ80RAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *SoundBuffer;
-
 static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 
@@ -481,7 +479,7 @@ static struct BurnDIPInfo Robocop2DIPList[]=
 
 STDDIPINFO(Robocop2)
 
-void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x140000, data)
 	deco16_write_control_word(1, address, 0x150000, data)
@@ -540,7 +538,7 @@ void __fastcall cninja_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 {
 	// need for cliffhanger
 	deco16_write_control_byte(0, address, 0x140000, data)
@@ -607,7 +605,7 @@ void __fastcall cninja_main_write_byte(UINT32 address, UINT8 data)
 	//bprintf(PRINT_NORMAL, _T("Write Byte %x, %x\n"), address, data);
 }
 
-UINT16 __fastcall cninja_main_read_word(UINT32 address)
+static UINT16 __fastcall cninja_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -648,7 +646,7 @@ UINT16 __fastcall cninja_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall cninja_main_read_byte(UINT32 address)
+static UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -700,7 +698,7 @@ UINT8 __fastcall cninja_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall mutantf_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall mutantf_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x300000, data)
 	deco16_write_control_word(1, address, 0x310000, data)
@@ -730,7 +728,7 @@ void __fastcall mutantf_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall mutantf_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall mutantf_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -760,7 +758,7 @@ void __fastcall mutantf_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall mutantf_main_read_word(UINT32 address)
+static UINT16 __fastcall mutantf_main_read_word(UINT32 address)
 {
 	if (address >= 0x1a0000 && address <= 0x1a3fff) {
 		return deco146_104_prot_rw(0, address);
@@ -769,7 +767,7 @@ UINT16 __fastcall mutantf_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall mutantf_main_read_byte(UINT32 address)
+static UINT8 __fastcall mutantf_main_read_byte(UINT32 address)
 {
 	if (address == 0x1c0001) return deco16ic_71_read() & 0xff;
 
@@ -780,7 +778,7 @@ UINT8 __fastcall mutantf_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall robocop2_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall robocop2_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x140000, data)
 	deco16_write_control_word(1, address, 0x150000, data)
@@ -822,7 +820,7 @@ void __fastcall robocop2_main_write_word(UINT32 address, UINT16 data)
 
 }
 
-void __fastcall robocop2_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall robocop2_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -864,7 +862,7 @@ void __fastcall robocop2_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall robocop2_main_read_word(UINT32 address)
+static UINT16 __fastcall robocop2_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -887,7 +885,7 @@ UINT16 __fastcall robocop2_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall robocop2_main_read_byte(UINT32 address)
+static UINT8 __fastcall robocop2_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -913,7 +911,7 @@ UINT8 __fastcall robocop2_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall stoneage_sound_write(UINT16 address, UINT8 data)
+static void __fastcall stoneage_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -931,7 +929,7 @@ void __fastcall stoneage_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall stoneage_sound_read(UINT16 address)
+static UINT8 __fastcall stoneage_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -1070,9 +1068,6 @@ static INT32 MemIndex()
 	flipscreen	= Next; Next += 0x000001;
 
 	RamEnd		= Next;
-	
-	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
-
 	MemEnd		= Next;
 
 	return 0;
@@ -1205,7 +1200,7 @@ static INT32 CninjaInit()
 	SekSetReadByteHandler(0,		cninja_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1312,7 +1307,7 @@ static INT32 EdrandyInit()
 	SekSetReadByteHandler(0,		cninja_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1430,7 +1425,7 @@ static INT32 MutantfInit()
 	SekSetReadByteHandler(0,		mutantf_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 0, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 0, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 
@@ -1761,7 +1756,7 @@ static INT32 Robocop2Init()
 	SekSetReadByteHandler(0,		robocop2_main_read_byte);
 	SekClose();
 
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 8055000, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.45, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
@@ -2227,7 +2222,7 @@ static INT32 MutantfDraw()
 	if (nSpriteEnable &  1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
 	if (nSpriteEnable &  2) deco16_draw_layer(1, pTransDraw, 0);
 	if (nSpriteEnable &  4) deco16_draw_layer(2, pTransDraw, 0);
- 
+
 	if (deco16_priority & 1)
 	{
 		deco16_clear_prio_map();
@@ -2267,11 +2262,11 @@ static INT32 CninjaFrame()
 
 	INT32 nInterleave = 232; //58 * 4
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 4027500 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 
@@ -2290,7 +2285,7 @@ static INT32 CninjaFrame()
 		
 		if (pBurnSoundOut && i%4 == 3) { // this fixes small tempo fluxuations in cninja
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -2300,19 +2295,14 @@ static INT32 CninjaFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
-			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
-		}
+
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
@@ -2342,7 +2332,7 @@ static INT32 EdrandyFrame()
 
 	INT32 nInterleave = 256; // scanlines
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 12000000 / 58, 8055000 / 58 };
+	INT32 nCyclesTotal[2] = { 12000000 / 58, 4027500 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();
@@ -2361,7 +2351,7 @@ static INT32 EdrandyFrame()
 			irq_timer = -1;
 		}
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 
 		if (i == 248) {
 			EdrandyDrawScanline(i-8);
@@ -2371,7 +2361,7 @@ static INT32 EdrandyFrame()
 
 		if (pBurnSoundOut && i%4 == 3) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -2380,19 +2370,14 @@ static INT32 EdrandyFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
-			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
-		}
+
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
@@ -2422,7 +2407,7 @@ static INT32 Robocop2Frame()
 
 	INT32 nInterleave = 256;	// scanlines
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
+	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();
@@ -2437,7 +2422,7 @@ static INT32 Robocop2Frame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 
 		if (irq_timer == i) {
 			if (i >= 8 && i < 248) Robocop2DrawScanline(i-8);
@@ -2456,7 +2441,7 @@ static INT32 Robocop2Frame()
 
 		if (pBurnSoundOut && i%8 == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -2466,19 +2451,14 @@ static INT32 Robocop2Frame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
-			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
-		}
+
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();
@@ -2498,7 +2478,7 @@ static INT32 MutantfFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -2508,11 +2488,11 @@ static INT32 MutantfFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 14000000 / 58, 8055000 / 58 };
+	INT32 nCyclesTotal[2] = { 14000000 / 58, 4027500 / 58 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	h6280NewFrame();
-	
+
 	SekOpen(0);
 	h6280Open(0);
 

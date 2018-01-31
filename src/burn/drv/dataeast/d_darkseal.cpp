@@ -35,8 +35,6 @@ static UINT8 *DrvPfCtrlRAM0;
 static UINT8 *DrvPfCtrlRAM1;
 static UINT32 *DrvPalette;
 
-static INT16 *SoundBuffer;
-
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvDip[2];
@@ -143,7 +141,7 @@ static inline void palette_write(INT32 offset)
 	DrvPalette[offset/2] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall darkseal_write_byte(UINT32 address, UINT8 data)
+static void __fastcall darkseal_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffff0) == 0x180000) {
 		switch (address & 0x0e)
@@ -162,7 +160,7 @@ void __fastcall darkseal_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
+static void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff0) == 0x180000) {
 		switch (address & 0x0f)
@@ -191,7 +189,7 @@ void __fastcall darkseal_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-UINT8 __fastcall darkseal_read_byte(UINT32 address)
+static UINT8 __fastcall darkseal_read_byte(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x180000) {
 		switch (address & 0xf)
@@ -221,7 +219,7 @@ UINT8 __fastcall darkseal_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT16 __fastcall darkseal_read_word(UINT32 address)
+static UINT16 __fastcall darkseal_read_word(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x180000) {
 		switch (address & 0xe)
@@ -290,9 +288,6 @@ static INT32 MemIndex()
 	DrvPfCtrlRAM1	= Next; Next += 0x000010;
 
 	RamEnd		= Next;
-	
-	SoundBuffer = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
-
 	MemEnd		= Next;
 
 	return 0;
@@ -660,7 +655,7 @@ static INT32 DrvFrame()
 
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -670,19 +665,14 @@ static INT32 DrvFrame()
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = SoundBuffer + (nSoundBufferPos << 1);
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 		}
-		
-		for (INT32 i = 0; i < nBurnSoundLen; i++) {
-			pBurnSoundOut[(i << 1) + 0] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 0] + SoundBuffer[(i << 1) + 0]);
-			pBurnSoundOut[(i << 1) + 1] = BURN_SND_CLIP(pBurnSoundOut[(i << 1) + 1] + SoundBuffer[(i << 1) + 1]);
-		}
+
+		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	h6280Close();

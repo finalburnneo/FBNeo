@@ -119,7 +119,7 @@ static struct BurnDIPInfo PktgaldxDIPList[]=
 
 STDDIPINFO(Pktgaldx)
 
-void __fastcall pktgaldx_write_word(UINT32 address, UINT16 data)
+static void __fastcall pktgaldx_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff0) == 0x140000) {
 		MSM6295Command(0, data);
@@ -139,7 +139,7 @@ void __fastcall pktgaldx_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall pktgaldx_write_byte(UINT32 address, UINT8 data)
+static void __fastcall pktgaldx_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfffff0) == 0x140000) {
 		MSM6295Command(0, data);
@@ -159,7 +159,7 @@ void __fastcall pktgaldx_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall pktgaldx_read_word(UINT32 address)
+static UINT16 __fastcall pktgaldx_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -188,7 +188,7 @@ UINT16 __fastcall pktgaldx_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall pktgaldx_read_byte(UINT32 address)
+static UINT8 __fastcall pktgaldx_read_byte(UINT32 address)
 {
 	switch (address)
 	{

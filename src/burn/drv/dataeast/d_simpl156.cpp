@@ -171,7 +171,7 @@ static UINT8 CommonRead8(INT32 address)
 
 static UINT32 map_offsets[3]; // memory, msm0, msm1
 
-void simpl156_write_byte(UINT32 address, UINT8 data)
+static void simpl156_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xf80000) == map_offsets[0]) {
 		CommonWrite8(address & 0x7ffff, data);
@@ -188,7 +188,7 @@ void simpl156_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void simpl156_write_long(UINT32 address, UINT32 data)
+static void simpl156_write_long(UINT32 address, UINT32 data)
 {
 	if ((address & 0xf80000) == map_offsets[0]) {
 		CommonWrite32(address & 0x7ffff, data);
@@ -205,7 +205,7 @@ void simpl156_write_long(UINT32 address, UINT32 data)
 	}
 }
 
-UINT8 simpl156_read_byte(UINT32 address)
+static UINT8 simpl156_read_byte(UINT32 address)
 {
 	if ((address & 0xf80000) == map_offsets[0]) {
 		return CommonRead8(address & 0x7ffff);
@@ -226,7 +226,7 @@ UINT8 simpl156_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT32 simpl156_read_long(UINT32 address)
+static UINT32 simpl156_read_long(UINT32 address)
 {
 	if ((address & 0xf80000) == map_offsets[0]) {
 		return CommonRead32(address & 0x7ffff);

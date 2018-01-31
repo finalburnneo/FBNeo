@@ -997,7 +997,7 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 	}
 
 	if (ym2203) {
-		BurnYM2203Init(1, 4027500, NULL, deco16SynchroniseStream, deco16GetTime, 0);
+		BurnYM2203Init(1, 4027500, NULL, deco16SynchroniseStream, deco16GetTime, 1);
 #ifdef ENABLE_HUC6280
 		BurnTimerAttachH6280(deco16_sound_cpuclock);
 #endif

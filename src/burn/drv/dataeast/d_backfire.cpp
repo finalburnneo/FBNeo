@@ -86,7 +86,7 @@ static struct BurnDIPInfo BackfireDIPList[]=
 
 STDDIPINFO(Backfire)
 
-void backfire_write_byte(UINT32 address, UINT8 data)
+static void backfire_write_byte(UINT32 address, UINT8 data)
 {
 	Write16Byte(((UINT8*)deco16_pf_control[0]),	0x100000, 0x10001f) // 16-bit
 	Write16Byte(deco16_pf_ram[0],		0x110000, 0x111fff) // 16-bit
@@ -111,7 +111,7 @@ void backfire_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-void backfire_write_long(UINT32 address, UINT32 data)
+static void backfire_write_long(UINT32 address, UINT32 data)
 {
 	Write16Long(((UINT8*)deco16_pf_control[0]),	0x100000, 0x10001f) // 16-bit
 	Write16Long(deco16_pf_ram[0],		0x110000, 0x111fff) // 16-bit
@@ -148,7 +148,7 @@ void backfire_write_long(UINT32 address, UINT32 data)
 	}
 }
 
-UINT8 backfire_read_byte(UINT32 address)
+static UINT8 backfire_read_byte(UINT32 address)
 {
 	Read16Byte(((UINT8*)deco16_pf_control[0]),	0x100000, 0x10001f) // 16-bit
 	Read16Byte(deco16_pf_ram[0],		0x110000, 0x111fff) // 16-bit
@@ -174,7 +174,7 @@ UINT8 backfire_read_byte(UINT32 address)
 	return 0;
 }
 
-UINT32 backfire_read_long(UINT32 address)
+static UINT32 backfire_read_long(UINT32 address)
 {
 	Read16Long(((UINT8*)deco16_pf_control[0]),	0x100000, 0x10001f) // 16-bit
 	Read16Long(deco16_pf_ram[0],		0x110000, 0x111fff) // 16-bit

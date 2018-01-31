@@ -604,7 +604,7 @@ static UINT16 karnov_control_r(INT32 offset)
 
 //------------------------------------------------------------------------------------------
 
-void __fastcall karnov_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall karnov_main_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfff800) == 0x0a1800) {
 		UINT16 *ptr = (UINT16*)DrvPfRAM;
@@ -622,7 +622,7 @@ void __fastcall karnov_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall karnov_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall karnov_main_write_byte(UINT32 address, UINT8 data)
 {
 	if ((address & 0xfff800) == 0x0a1800) {
 		INT32 offset = (address >> 1) & 0x3ff;
@@ -638,7 +638,7 @@ void __fastcall karnov_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall karnov_main_read_word(UINT32 address)
+static UINT16 __fastcall karnov_main_read_word(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x0c0000) {
 		return karnov_control_r((address >> 1) & 7);
@@ -647,7 +647,7 @@ UINT16 __fastcall karnov_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall karnov_main_read_byte(UINT32 address)
+static UINT8 __fastcall karnov_main_read_byte(UINT32 address)
 {
 	if ((address & 0xfffff0) == 0x0c0000) {
 		return karnov_control_r((address >> 1) & 7) >> ((~address & 1) << 3);
@@ -656,7 +656,7 @@ UINT8 __fastcall karnov_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void karnov_sound_write(UINT16 address, UINT8 data)
+static void karnov_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{

@@ -1055,7 +1055,7 @@ static void bankswitch(INT32 data)
 	HD6309MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM); // bank
 }
 
-void ghostb_main_write(UINT16 address, UINT8 data)
+static void ghostb_main_write(UINT16 address, UINT8 data)
 {
 //	bprintf (0, _T("%4.4x, %2.2x\n"), address, data);
 
@@ -1087,7 +1087,7 @@ void ghostb_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 ghostb_main_read(UINT16 address)
+static UINT8 ghostb_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -1118,7 +1118,7 @@ UINT8 ghostb_main_read(UINT16 address)
 	return 0;
 }
 
-void ghostb_sound_write(UINT16 address, UINT8 data)
+static void ghostb_sound_write(UINT16 address, UINT8 data)
 {
 //	bprintf (0, _T("%4.4x, %2.2x\n"), address, data);
 
@@ -1136,7 +1136,7 @@ void ghostb_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 ghostb_sound_read(UINT16 address)
+static UINT8 ghostb_sound_read(UINT16 address)
 {
 //	bprintf (0, _T("%4.4x, \n"), address);
 
@@ -2139,7 +2139,7 @@ static void m6809_bankswitch(INT32 data)
 
 
 
-void cobra_main_write(UINT16 address, UINT8 data)
+static void cobra_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -2169,7 +2169,7 @@ void cobra_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 cobra_main_read(UINT16 address)
+static UINT8 cobra_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -2873,7 +2873,7 @@ static void srdarwin_i8751_w(INT32 offset, INT32 data)
 	if (i8751_value == 0x800a) i8751_return = 0xf580 + 42; /* End Game(bad address?) */
 }
 
-void srdarwin_main_write(UINT16 address, UINT8 data)
+static void srdarwin_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -2911,7 +2911,7 @@ void srdarwin_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 srdarwin_main_read(UINT16 address)
+static UINT8 srdarwin_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -3430,7 +3430,7 @@ static void garyoret_i8751_write(INT32 offset, UINT8 data)
 	if ((i8751_value >> 8) == 0x06 && coin1 && !offset) {i8751_return = 0x600; coin1--; } /* Coin 1 clear */
 }
 
-void gondo_main_write(UINT16 address, UINT8 data)
+static void gondo_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -3471,7 +3471,7 @@ void gondo_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 gondo_main_read(UINT16 address)
+static UINT8 gondo_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -3507,7 +3507,7 @@ UINT8 gondo_main_read(UINT16 address)
 	return 0;
 }
 
-UINT8 garyoret_main_read(UINT16 address)
+static UINT8 garyoret_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -3533,7 +3533,7 @@ UINT8 garyoret_main_read(UINT16 address)
 	return 0;
 }
 
-void gondo_sound_write(UINT16 address, UINT8 data)
+static void gondo_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -4113,7 +4113,7 @@ struct BurnDriver BurnDrvGaryoret = {
 
 
 
-UINT8 oscar_main_read(UINT16 address)
+static UINT8 oscar_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -4136,7 +4136,7 @@ UINT8 oscar_main_read(UINT16 address)
 	return 0;
 }
 
-void oscar_main_write(UINT16 address, UINT8 data)
+static void oscar_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -4185,7 +4185,7 @@ void oscar_main_write(UINT16 address, UINT8 data)
 }
 
 
-void oscar_sub_write(UINT16 address, UINT8 )
+static void oscar_sub_write(UINT16 address, UINT8 )
 {
 	switch (address)
 	{
@@ -4714,7 +4714,7 @@ static void shackled_i8751_write(INT32 offset, INT32 data)
 static INT32 stopsubcpu = 0;
 static INT32 nLastMiss = 0;
 
-void lastmiss_main_write(UINT16 address, UINT8 data)
+static void lastmiss_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -4804,7 +4804,7 @@ void lastmiss_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 lastmiss_main_read(UINT16 address)
+static UINT8 lastmiss_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -5497,7 +5497,7 @@ static void csilver_i8751_write(INT32 offset, UINT8 data)
 	}
 }
 
-void csilver_main_write(UINT16 address, UINT8 data)
+static void csilver_main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -5558,7 +5558,7 @@ void csilver_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 csilver_main_read(UINT16 address)
+static UINT8 csilver_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -5594,7 +5594,7 @@ static void csilver_sound_bank(INT32 data)
 	M6502MapMemory(DrvM6502ROM + 0x10000 + SndRomBank * 0x4000, 0x4000, 0x7fff, MAP_ROM);
 }
 
-void csilver_sound_write(UINT16 address, UINT8 data)
+static void csilver_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -5622,7 +5622,7 @@ void csilver_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 csilver_sound_read(UINT16 address)
+static UINT8 csilver_sound_read(UINT16 address)
 {
 	switch (address)
 	{

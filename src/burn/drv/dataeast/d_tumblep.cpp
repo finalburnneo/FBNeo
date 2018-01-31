@@ -117,7 +117,7 @@ static struct BurnDIPInfo TumblepDIPList[]=
 
 STDDIPINFO(Tumblep)
 
-void __fastcall tumblep_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall tumblep_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x300000, data)
 
@@ -130,7 +130,7 @@ void __fastcall tumblep_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall tumblep_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall tumblep_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -142,7 +142,7 @@ void __fastcall tumblep_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall tumblep_main_read_word(UINT32 address)
+static UINT16 __fastcall tumblep_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -159,7 +159,7 @@ UINT16 __fastcall tumblep_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall tumblep_main_read_byte(UINT32 address)
+static UINT8 __fastcall tumblep_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -507,7 +507,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
-	
+
 		deco16SoundScan(nAction, pnMin);
 
 		deco16Scan();

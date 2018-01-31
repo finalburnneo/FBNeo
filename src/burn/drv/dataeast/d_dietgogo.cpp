@@ -117,7 +117,7 @@ static struct BurnDIPInfo DietgoDIPList[]=
 
 STDDIPINFO(Dietgo)
 
-void __fastcall dietgogo_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall dietgogo_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x200000, data)
 
@@ -126,14 +126,14 @@ void __fastcall dietgogo_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall dietgogo_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall dietgogo_main_write_byte(UINT32 address, UINT8 data)
 {
 	if (address >= 0x340000 && address <= 0x343fff) {
 		deco146_104_prot_wb(0, address, data);
 	}
 }
 
-UINT16 __fastcall dietgogo_main_read_word(UINT32 address)
+static UINT16 __fastcall dietgogo_main_read_word(UINT32 address)
 {
 	if (address >= 0x340000 && address <= 0x343fff) {
 		return deco146_104_prot_rw(0, address);
@@ -142,7 +142,7 @@ UINT16 __fastcall dietgogo_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall dietgogo_main_read_byte(UINT32 address)
+static UINT8 __fastcall dietgogo_main_read_byte(UINT32 address)
 {
 	if (address >= 0x340000 && address <= 0x343fff) {
 		return deco146_104_prot_rb(0, address);

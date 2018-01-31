@@ -451,7 +451,7 @@ static struct BurnDIPInfo HangzoDIPList[]=
 
 STDDIPINFO(Hangzo)
 
-void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x200000, data)
 	deco16_write_control_word(1, address, 0x240000, data)
@@ -482,7 +482,7 @@ void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -514,7 +514,7 @@ void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall rohga_main_read_word(UINT32 address)
+static UINT16 __fastcall rohga_main_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -537,7 +537,7 @@ UINT16 __fastcall rohga_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall rohga_main_read_byte(UINT32 address)
+static UINT8 __fastcall rohga_main_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -564,7 +564,7 @@ UINT8 __fastcall rohga_main_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
+static void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 {
 	deco16_write_control_word(0, address, 0x300000, data)
 	deco16_write_control_word(1, address, 0x310000, data)
@@ -599,7 +599,7 @@ void __fastcall wizdfire_main_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
+static void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -637,7 +637,7 @@ void __fastcall wizdfire_main_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall wizdfire_main_read_word(UINT32 address)
+static UINT16 __fastcall wizdfire_main_read_word(UINT32 address)
 {
 	if (address == 0x320000) return DrvInputs[2];
 
@@ -649,7 +649,7 @@ UINT16 __fastcall wizdfire_main_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall wizdfire_main_read_byte(UINT32 address)
+static UINT8 __fastcall wizdfire_main_read_byte(UINT32 address)
 {
 	if (address == 0x320000 || address == 0x320001) return DrvInputs[2] >> ((~address & 1) << 3);
 

@@ -24,22 +24,23 @@ static UINT8 prev_audio;
 static INT32 vblank;
 
 static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvInputs[1];
-static INT32 DrvAnalogPort0 = 0;
-static UINT8 DrvReset;
 
-#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static INT32 Paddle = 0;
+
+static UINT8 DrvReset;
 
 static struct BurnInputInfo MmagicInputList[] = {
 	{"Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"	},
 	{"Start 1",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
-	{"Start 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
-       A("Paddle",              BIT_ANALOG_REL, &DrvAnalogPort0,"mouse x-axis"  ),
+	{"Start 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 start"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"   },
+	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"  },
+	{"P1 Button 1", BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy1 + 7,	"service"	},
 	{"Dips",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
@@ -47,7 +48,7 @@ STDINPUTINFO(Mmagic)
 
 static struct BurnDIPInfo MmagicDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0xfe, NULL		},
+	{0x07, 0xff, 0xff, 0xff, NULL		},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"	},
 	{0x07, 0x01, 0x01, 0x01, "Off"		},
@@ -122,7 +123,7 @@ static UINT8 __fastcall mmagic_read_port(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x85:
-			return 0; // paddle
+			return Paddle & 0xff;
 
 		case 0x86:
 			return DrvInputs[0];
@@ -148,6 +149,7 @@ static INT32 DrvDoReset()
 	ball_pos[1] = 0;
 	prev_audio = 0;
 	video_color = 0;
+	Paddle = 0x70; // middle
 
 	return 0;
 }
@@ -210,7 +212,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(0.50, BURN_SND_ROUTE_BOTH);
+	BurnSampleSetAllRoutesAllSamples(0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -318,6 +320,12 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
+
+		// Paddle stuff
+		if (DrvJoy2[0]) Paddle -= 8;
+		if (DrvJoy2[1]) Paddle += 8;
+		if (Paddle < 0) Paddle = 0;
+		if (Paddle > 0xd8) Paddle = 0xd8;
 	}
 
 	INT32 nInterleave = 262;
@@ -372,6 +380,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(ball_pos);
 		SCAN_VAR(prev_audio);
 		SCAN_VAR(video_color);
+		SCAN_VAR(Paddle);
 	}
 
 	return 0;

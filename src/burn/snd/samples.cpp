@@ -261,7 +261,7 @@ INT32 BurnSampleGetStatus(INT32 sample)
 //	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleGetStatus called without init\n"));
 //#endif
 
-	// this is used to see if samples iniitted & the game has samples.
+	// this is also used to see if samples iniitted and/or the game has samples.
 
 	if (sample >= nTotalSamples) return -1;
 
@@ -313,10 +313,12 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 char* TCHARToANSI(const TCHAR* pszInString, char* pszOutString, INT32 nOutSize);
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 
-void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
+void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 {
 	bAddToStream = bAdd;
 	nTotalSamples = 0;
+
+	DebugSnd_SamplesInitted = 1;
 
 	if (nBurnSoundRate == 0) {
 		nTotalSamples = 0;
@@ -360,8 +362,6 @@ void BurnSampleInit(INT32 bAdd /*add sample to stream?*/)
 #endif
 	
 	if (!nEnableSamples) return;
-
-	DebugSnd_SamplesInitted = 1;
 
 	struct BurnSampleInfo si;
 	INT32 nSampleOffset = -1;

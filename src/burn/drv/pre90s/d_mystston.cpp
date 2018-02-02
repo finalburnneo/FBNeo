@@ -29,9 +29,6 @@ static UINT8 *soundlatch;
 static UINT8 *scrolly;
 static UINT8 *video_control;
 
-static INT16 *pAY8910Buf = NULL;
-static INT16 *pAY8910Buffer[6];
-
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -125,7 +122,7 @@ static void mystston_soundcontrol(UINT8 data)
 	ay8910_select = data;
 }
 
-UINT8 mystston_read(UINT16 address)
+static UINT8 mystston_read(UINT16 address)
 {
 	switch (address & ~0x1f8f)
 	{
@@ -145,7 +142,7 @@ UINT8 mystston_read(UINT16 address)
 	return 0;
 }
 
-void mystston_write(UINT16 address, UINT8 data)
+static void mystston_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xe060) == 0x2060) {
 		DrvPalRAM[address & 0x1f] = data;
@@ -284,18 +281,6 @@ static INT32 MemIndex()
 	return 0;
 }
 
-// nBurnSoundLen changes if the refresh rate is changed, but this only 
-// occurs AFTER the init is called, so we can't allocate this there, so
-// we call it during the frame function.
-static void SoundBufferAlloc()
-{
-	pAY8910Buf = (INT16*)BurnMalloc(nBurnSoundLen * 6 * sizeof(INT16));
-
-	for (INT32 i = 0; i < 6; i++) {
-		pAY8910Buffer[i] = pAY8910Buf + i * nBurnSoundLen;
-	}
-}
-
 static INT32 DrvInit()
 {
 	BurnSetRefreshRate(57.445);
@@ -346,8 +331,8 @@ static INT32 DrvInit()
 	M6502SetReadHandler(mystston_read);
 	M6502Close();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -367,7 +352,6 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 
 	BurnFree(AllMem);
-	BurnFree(pAY8910Buf);
 
 	return 0;
 }
@@ -524,10 +508,6 @@ static INT32 DrvFrame()
 		DrvDoReset();
 	}
 
-	if (pAY8910Buf == NULL) { // Refresh rate != 60
-		SoundBufferAlloc();
-	}
-
 	{
 		memset (DrvInputs, 0xff, 2);
 		for (INT32 i = 0; i < 8; i++) {
@@ -553,7 +533,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -564,7 +544,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

@@ -37,8 +37,6 @@ static UINT8 *DrvTiles            = NULL;
 static UINT8 *DrvSprites          = NULL;
 static UINT8 *DrvTempRom          = NULL;
 static UINT32 *DrvPalette          = NULL;
-static INT16* pFMBuffer;
-static INT16* pAY8910Buffer[6];
 static UINT8 DrvRecalc;
 
 static UINT8 DrvRomBank;
@@ -459,7 +457,6 @@ static INT32 MemIndex()
 	DrvChars               = Next; Next += 0x200 * 8 * 8;
 	DrvTiles               = Next; Next += 0x200 * 16 * 16;
 	DrvSprites             = Next; Next += 0x200 * 16 * 16;
-	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 	DrvPalette             = (UINT32*)Next; Next += 0x00600 * sizeof(UINT32);
 
 	MemEnd                 = Next;
@@ -680,15 +677,8 @@ static void MachineInit()
 	ZetMapArea(0x4000, 0x47ff, 2, DrvZ80Ram2             );
 	ZetClose();
 	
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
-
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH); // Plane Noise/Bass/Shot
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH); // Whistle/Snare
 
@@ -977,7 +967,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -987,7 +977,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

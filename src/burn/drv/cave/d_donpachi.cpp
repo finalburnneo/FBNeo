@@ -123,9 +123,9 @@ UINT8 __fastcall donpachiReadByte(UINT32 sekAddress)
 		}
 
 		case 0xB00001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0xB00011:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xC00000:
 			return (DrvInput[0] >> 8) ^ 0xFF;
@@ -166,9 +166,9 @@ UINT16 __fastcall donpachiReadWord(UINT32 sekAddress)
 		}
 
 		case 0xB00000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0xB00010:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xC00000:
 			return DrvInput[0] ^ 0xFFFF;
@@ -190,13 +190,13 @@ void __fastcall donpachiWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xB00001:
 		case 0xB00002:
 		case 0xB00003:
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 			break;
 		case 0xB00010:
 		case 0xB00011:
 		case 0xB00012:
 		case 0xB00013:
-			MSM6295Command(1, byteValue);
+			MSM6295Write(1, byteValue);
 			break;
 
 		case 0xB00020:
@@ -317,11 +317,11 @@ void __fastcall donpachiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 				}
 			}
 #endif
-			MSM6295Command(0, wordValue);
+			MSM6295Write(0, wordValue);
 			break;
 		case 0xB00010:
 		case 0xB00012:
-			MSM6295Command(1, wordValue);
+			MSM6295Write(1, wordValue);
 			break;
 
 		case 0xB00020:

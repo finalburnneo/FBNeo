@@ -947,7 +947,7 @@ UINT8 __fastcall m90_sound_read_port(UINT16 port)
 		case 0x01:
 		case 0x40: // bbmanw
 		case 0x41:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x42: // bbmanw
 		case 0x80:

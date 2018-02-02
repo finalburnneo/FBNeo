@@ -1286,7 +1286,7 @@ UINT8 __fastcall VigilanteZ80PortRead2(UINT16 a)
 	
 	switch (a) {
 		case 0x01: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x80: {

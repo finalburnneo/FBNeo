@@ -2868,7 +2868,7 @@ UINT8 __fastcall Cuebrick68KReadByte(UINT32 a)
 			return 0xff;
 			
 		case 0x0c0002: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		default: {
@@ -4031,7 +4031,7 @@ UINT8 __fastcall TmntZ80Read(UINT16 a)
 		}
 		
 		case 0xc001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xf000: {
@@ -4106,7 +4106,7 @@ UINT8 __fastcall MiaZ80Read(UINT16 a)
 		}
 		
 		case 0xc001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		default: {
@@ -4150,7 +4150,7 @@ UINT8 __fastcall BlswhstlZ80Read(UINT16 a)
 	
 	switch (a) {
 		case 0xf801: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		default: {
@@ -4228,7 +4228,7 @@ UINT8 __fastcall Thndrx2Z80Read(UINT16 a)
 	{
 		case 0xf801:
 		case 0xf811:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;
@@ -4263,7 +4263,7 @@ UINT8 __fastcall LgtnfghtZ80Read(UINT16 a)
 	switch (a)
 	{
 		case 0xa001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

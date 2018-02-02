@@ -3779,7 +3779,7 @@ static void metro_portB_write(UINT8 data)
 	if (BIT(updportB_data, 2) && !BIT(data, 2))
 	{
 		if (!BIT(data, 4))
-			MSM6295Command(0, updportA_data);
+			MSM6295Write(0, updportA_data);
 	}
 
 	updportB_data = data;
@@ -3810,7 +3810,7 @@ static void ym2151_portB_write(UINT8 data)
 		if (!BIT(data, 3))
 		{
 			/* read */
-			updportA_data = (BIT(data,1) ? BurnYM2151ReadStatus() : 0xff);
+			updportA_data = (BIT(data,1) ? BurnYM2151Read() : 0xff);
 		}
 
 		updportB_data = data;
@@ -3820,13 +3820,13 @@ static void ym2151_portB_write(UINT8 data)
 	if (BIT(updportB_data, 2) && !BIT(data, 2))   /* clock 1->0 */
 	{
 		if (!BIT(data, 4))
-			MSM6295Command(0, updportA_data);
+			MSM6295Write(0, updportA_data);
 	}
 
 	if (BIT(updportB_data, 3) && !BIT(data, 3))   /* clock 1->0 */
 	{
 		if (!BIT(data, 4))
-			updportA_data = MSM6295ReadStatus(0);
+			updportA_data = MSM6295Read(0);
 	}
 
 	updportB_data = data;

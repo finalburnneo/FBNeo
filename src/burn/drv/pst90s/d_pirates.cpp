@@ -130,7 +130,7 @@ void __fastcall pirates_write_byte(UINT32 address, UINT8 data)
 
 		case 0xa00000:
 		case 0xa00001:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -162,7 +162,7 @@ void __fastcall pirates_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0xa00000:
-			MSM6295Command(0, data & 0xff);
+			MSM6295Write(0, data & 0xff);
 		return;
 	}
 }
@@ -182,7 +182,7 @@ UINT8 __fastcall pirates_read_byte(UINT32 address)
 			return DrvInputs[1] >> ((~address & 1) << 3);
 
 		case 0xa00001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

@@ -1326,19 +1326,19 @@ static void Snowbro3PlayMusic(INT32 data)
 
 static void Snowbro3PlaySound(INT32 data)
 {
-	INT32 Status = MSM6295ReadStatus(0);
+	INT32 Status = MSM6295Read(0);
 	
 	if ((Status & 0x01) == 0x00) {
-		MSM6295Command(0, 0x80 | data);
-		MSM6295Command(0, 0x12);
+		MSM6295Write(0, 0x80 | data);
+		MSM6295Write(0, 0x12);
 	} else {
 		if ((Status & 0x02) == 0x00) {
-			MSM6295Command(0, 0x80 | data);
-			MSM6295Command(0, 0x12);
+			MSM6295Write(0, 0x80 | data);
+			MSM6295Write(0, 0x12);
 		} else {
 			if ((Status & 0x04) == 0x00) {
-				MSM6295Command(0, 0x80 | data);
-				MSM6295Command(0, 0x42);
+				MSM6295Write(0, 0x80 | data);
+				MSM6295Write(0, 0x42);
 			}
 		}	
 	}
@@ -1625,7 +1625,7 @@ UINT8 __fastcall HyperpacZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xf001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 
 		case 0xf008: {
@@ -1656,7 +1656,7 @@ void __fastcall HyperpacZ80Write(UINT16 a, UINT8 d)
 		}
 
 		case 0xf002: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
@@ -1676,7 +1676,7 @@ UINT8 __fastcall TwinadvZ80PortRead(UINT16 a)
 		}
 		
 		case 0x06: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 	}
 	
@@ -1702,7 +1702,7 @@ void __fastcall TwinadvZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0x06: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 	}
@@ -1714,7 +1714,7 @@ UINT8 __fastcall HoneydolZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe010: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 	}
 	
@@ -1729,7 +1729,7 @@ void __fastcall HoneydolZ80Write(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0xe010: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 	}
@@ -1875,7 +1875,7 @@ void __fastcall Snowbro3WriteWord(UINT32 a, UINT16 d)
 		case 0x300000: {
 			if (d == 0xfe) {
 				Snowbro3MusicPlaying = 0;
-				MSM6295Command(0, 0x78);
+				MSM6295Write(0, 0x78);
 			} else {
 				d = d >> 8;
 				
@@ -1904,7 +1904,7 @@ void __fastcall Snowbro3WriteByte(UINT32 a, UINT8 d)
 		case 0x300000: {
 			if (d == 0xfe) {
 				Snowbro3MusicPlaying = 0;
-				MSM6295Command(0, 0x78);
+				MSM6295Write(0, 0x78);
 			} else {
 				//d = d >> 8;
 				
@@ -3894,15 +3894,15 @@ static INT32 Snowbro3Frame()
 		if (i == 2) SekSetIRQLine(3, CPU_IRQSTATUS_AUTO);
 		if (i == 3) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		
-		INT32 Status = MSM6295ReadStatus(0);
+		INT32 Status = MSM6295Read(0);
 		if (Snowbro3MusicPlaying) {
 			if ((Status & 0x08) == 0x00) {
-				MSM6295Command(0, 0x80 | Snowbro3Music);
-				MSM6295Command(0, 0x82);
+				MSM6295Write(0, 0x80 | Snowbro3Music);
+				MSM6295Write(0, 0x82);
 			}
 		} else {
 			if ((Status & 0x08) == 0x00) {
-				MSM6295Command(0, 0x40);
+				MSM6295Write(0, 0x40);
 			}
 		}
 	}

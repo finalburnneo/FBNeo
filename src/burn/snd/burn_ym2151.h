@@ -11,6 +11,21 @@ void BurnYM2151Exit();
 extern void (*BurnYM2151Render)(INT16* pSoundBuf, INT32 nSegmentLength);
 void BurnYM2151Scan(INT32 nAction);
 
+inline static void BurnYM2151Write(INT32 offset, const UINT8 nData)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Write called without init\n"));
+#endif
+
+	extern UINT32 nBurnCurrentYM2151Register;
+
+	if (offset & 1) {
+		YM2151WriteReg(0, nBurnCurrentYM2151Register, nData);
+	} else {
+		nBurnCurrentYM2151Register = nData;
+	}
+}
+
 static inline void BurnYM2151SelectRegister(const UINT8 nRegister)
 {
 #if defined FBA_DEBUG
@@ -33,7 +48,7 @@ static inline void BurnYM2151WriteRegister(const UINT8 nValue)
 	YM2151WriteReg(0, nBurnCurrentYM2151Register, nValue);
 }
 
-#define BurnYM2151ReadStatus() YM2151ReadStatus(0)
+#define BurnYM2151Read() YM2151ReadStatus(0)
 
 #if defined FBA_DEBUG
 	#define BurnYM2151SetIrqHandler(h) if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetIrqHandler called without init\n")); YM2151SetIrqHandler(0, h)

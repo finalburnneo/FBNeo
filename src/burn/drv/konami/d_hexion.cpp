@@ -151,7 +151,7 @@ void __fastcall hexion_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf200:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xf480:
@@ -176,7 +176,7 @@ void __fastcall hexion_write(UINT16 address, UINT8 data)
 
 		case 0xf5c0:
 			if (is_bootleg) {
-				MSM6295Command(1, data);
+				MSM6295Write(1, data);
 			}
 		return;
 	}

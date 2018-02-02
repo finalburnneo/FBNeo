@@ -154,7 +154,7 @@ void __fastcall diverboy_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x9800:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -164,7 +164,7 @@ UINT8 __fastcall diverboy_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x9800:
-		return MSM6295ReadStatus(0);
+		return MSM6295Read(0);
 
 		case 0xa000:
 			return *soundlatch;

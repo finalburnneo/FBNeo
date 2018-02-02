@@ -879,13 +879,13 @@ static void deco16_sound_write(UINT32 address, UINT8 data)
 
 		case 0x120000:
 		case 0x120001:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x130000:
 		case 0x130001:
 			if (deco16_sound_enable[3]) {
-				MSM6295Command(1, data);
+				MSM6295Write(1, data);
 			}
 		return;
 
@@ -927,16 +927,16 @@ static UINT8 deco16_sound_read(UINT32 address)
 			return 0xff; 
 
 		case 0x110001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x120000:
 		case 0x120001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x130000:
 		case 0x130001:
 			if (deco16_sound_enable[3]) {
-				return MSM6295ReadStatus(1);
+				return MSM6295Read(1);
 			}
 			return 0;
 
@@ -1047,7 +1047,7 @@ void deco16SoundUpdate(INT16 *buf, INT32 len)
 void deco16SoundScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		h6280CpuScan(nAction);
+		h6280Scan(nAction);
 	
 		SCAN_VAR(deco16_soundlatch);
 		

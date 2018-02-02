@@ -583,7 +583,7 @@ void __fastcall esd16_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x02:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x05:
@@ -597,7 +597,7 @@ UINT8 __fastcall esd16_sound_in(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x02:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x03:
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);

@@ -124,13 +124,13 @@ static UINT8 __fastcall sailormnZIn(UINT16 nAddress)
 
 		case 0x51:
 //			bprintf(PRINT_NORMAL, "YM2151 status read.\n");
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		case 0x60:
 //			bprintf(PRINT_NORMAL, "MSM6295 #0 status read.\n");
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0x80:
 //			bprintf(PRINT_NORMAL, "MSM6295 #1 status read.\n");
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -167,7 +167,7 @@ static void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
 
 		case 0x60:
 //			bprintf(PRINT_NORMAL, "MSM6295 #0 command sent.\n");
-			MSM6295Command(0, nValue);
+			MSM6295Write(0, nValue);
 			break;
 		case 0x70:
 			MSM6295SetBank(0, MSM6295ROM + 0x000000 + (nValue & 0x0f) * 0x20000, 0x00000, 0x1ffff);
@@ -175,7 +175,7 @@ static void __fastcall sailormnZOut(UINT16 nAddress, UINT8 nValue)
 			break;
 		case 0x80:
 //			bprintf(PRINT_NORMAL, "MSM6295 #1 command sent.\n");
-			MSM6295Command(1, nValue);
+			MSM6295Write(1, nValue);
 			break;
 		case 0xC0:
 			MSM6295SetBank(1, MSM6295ROM + 0x200000 + (nValue & 0x0f) * 0x20000, 0x00000, 0x1ffff);

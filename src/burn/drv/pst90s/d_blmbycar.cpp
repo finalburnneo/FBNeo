@@ -299,7 +299,7 @@ UINT8 __fastcall Blmbycar68KReadByte(UINT32 a)
 		}
 		
 		case 0x70000f: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		default: {
@@ -416,7 +416,7 @@ void __fastcall Blmbycar68KWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x70000e: {
-			MSM6295Command(0, d & 0xff);
+			MSM6295Write(0, d & 0xff);
 			return;
 		}
 		

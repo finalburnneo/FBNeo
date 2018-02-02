@@ -147,11 +147,11 @@ static void __fastcall bigstrkb_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0xe00000:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xe00002:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 	}
@@ -182,10 +182,10 @@ static UINT16 __fastcall bigstrkb_read_word(UINT32 address)
 			return DrvInputs[1];
 
 		case 0xe00000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xe00002:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 

@@ -202,7 +202,7 @@ void __fastcall aquarium_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x02:
-			MSM6295Command(0, BITSWAP08(data, 0, 1, 2, 3, 4, 5, 6, 7));
+			MSM6295Write(0, BITSWAP08(data, 0, 1, 2, 3, 4, 5, 6, 7));
 		return;
 
 		case 0x06:
@@ -220,10 +220,10 @@ UINT8 __fastcall aquarium_sound_in(UINT16 port)
 	switch (port & 0xff)
 	{
 		case 0x01:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x02:
-			return BITSWAP08(MSM6295ReadStatus(0), 0, 1, 2, 3, 4, 5, 6, 7);
+			return BITSWAP08(MSM6295Read(0), 0, 1, 2, 3, 4, 5, 6, 7);
 
 		case 0x04:
 			return *soundlatch;

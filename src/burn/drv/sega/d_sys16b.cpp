@@ -6084,7 +6084,7 @@ UINT8 __fastcall BootlegZ80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x01: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x40:
@@ -6946,11 +6946,11 @@ static UINT8 __fastcall LockonphZ80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x01: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x80: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xc0: {
@@ -6985,7 +6985,7 @@ static void __fastcall LockonphZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0x80: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 	}

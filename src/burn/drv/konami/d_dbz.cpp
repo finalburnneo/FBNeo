@@ -431,7 +431,7 @@ static void __fastcall dbz_sound_write(UINT16 address, UINT8 data)
 		case 0xd000:
 		case 0xd002:
 		case 0xd001:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -442,12 +442,12 @@ static UINT8 __fastcall dbz_sound_read(UINT16 address)
 	{
 		case 0xc000:
 		case 0xc001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xd000:
 		case 0xd002:
 		case 0xd001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xe000:
 		case 0xe001:

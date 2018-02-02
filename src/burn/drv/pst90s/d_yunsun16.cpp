@@ -363,7 +363,7 @@ void __fastcall magicbub_main_write_byte(UINT32 address, UINT8 data)
 					Z80SetIrqLine(Z80_INPUT_LINE_NMI, 1);
 				}
 			} else {
-				MSM6295Command(0, data);
+				MSM6295Write(0, data);
 			}
 		return;	
 	}
@@ -405,7 +405,7 @@ UINT8 __fastcall magicbub_main_read_byte(UINT32 address)
 
 		case 0x800188:
 		case 0x800189:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;
@@ -424,7 +424,7 @@ void __fastcall magicbub_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x1c:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -444,7 +444,7 @@ UINT8 __fastcall magicbub_sound_in(UINT16 port)
 			return *soundlatch;
 
 		case 0x1c:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

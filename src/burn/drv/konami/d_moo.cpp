@@ -319,7 +319,7 @@ static void __fastcall moo_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x0d6ffe:
 			if (!moomesabl) return;
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 			return;
 
 		case 0x0de000:
@@ -377,7 +377,7 @@ static void __fastcall moo_main_write_byte(UINT32 address, UINT8 data)
 		case 0x0d6ffe:
 		case 0x0d6fff:
 			if (!moomesabl) return;
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 			return;
 
 		case 0x0d4000:
@@ -425,7 +425,7 @@ static UINT16 __fastcall moo_main_read_word(UINT32 address)
 		case 0x0d6ffe:
 		case 0x0d6fff:
 			if (!moomesabl) return 0;
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x0c4000:
 			sync_sound();
@@ -467,7 +467,7 @@ static UINT8 __fastcall moo_main_read_byte(UINT32 address)
 		case 0x0d6ffe:
 		case 0x0d6fff:
 			if (!moomesabl) return 0;
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x0c4000:
 		case 0x0c4001:
@@ -770,7 +770,7 @@ static UINT8 __fastcall moo_sound_read(UINT16 address)
 	{
 		case 0xec00:
 		case 0xec01:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xf002:
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);

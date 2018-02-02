@@ -752,7 +752,7 @@ static void __fastcall MadgearZ80Write(UINT16 a, UINT8 d)
 		}
 
 		case 0xf004: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 

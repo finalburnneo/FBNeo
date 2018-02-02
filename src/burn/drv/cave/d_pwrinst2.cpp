@@ -264,11 +264,11 @@ UINT8 __fastcall pwrinst2ZIn(UINT16 nAddress)
 
 	switch (nAddress) {
 		case 0x00: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0x08: {
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 		}
 		
 		case 0x40: {
@@ -303,12 +303,12 @@ void __fastcall pwrinst2ZOut(UINT16 nAddress, UINT8 nValue)
 
 	switch (nAddress) {
 		case 0x00: {
-			MSM6295Command(0, nValue);
+			MSM6295Write(0, nValue);
 			return;
 		}
 		
 		case 0x08: {
-			MSM6295Command(1, nValue);
+			MSM6295Write(1, nValue);
 			return;
 		}
 		

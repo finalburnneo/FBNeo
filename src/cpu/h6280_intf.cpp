@@ -342,7 +342,7 @@ void h6280NewFrame()
 	}
 }
 
-INT32 h6280CpuScan(INT32 nAction)
+INT32 h6280Scan(INT32 nAction)
 {
 	struct BurnArea ba;
 

@@ -381,11 +381,11 @@ INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength)
 	return 0;
 }
 
-void MSM6295Command(INT32 nChip, UINT8 nCommand)
+void MSM6295Write(INT32 nChip, UINT8 nCommand)
 {
 #if defined FBA_DEBUG
-	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Command called without init\n"));
-	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Command called with invalid chip number %x\n"), nChip);
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Write called without init\n"));
+	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Write called with invalid chip number %x\n"), nChip);
 #endif
 
 	if (MSM6295[nChip].bIsCommand) {

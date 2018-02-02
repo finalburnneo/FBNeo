@@ -2749,7 +2749,7 @@ static UINT8 Dec0SoundReadByte(UINT16 a)
 		}
 		
 		case 0x3800: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		default: {
@@ -2784,7 +2784,7 @@ static void Dec0SoundWriteByte(UINT16 a, UINT8 d)
 		}
 		
 		case 0x3800: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
@@ -3320,7 +3320,7 @@ static UINT8 SlyspyH6280ReadProg(UINT32 Address)
 		}
 		
 		case 0x0e0000: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0x0f0000: {
@@ -3357,7 +3357,7 @@ static void SlyspyH6280WriteProg(UINT32 Address, UINT8 Data)
 		}
 		
 		case 0x0e0000: {
-			MSM6295Command(0, Data);
+			MSM6295Write(0, Data);
 			return;
 		}
 	}
@@ -3654,7 +3654,7 @@ static UINT8 MidresH6280ReadProg(UINT32 Address)
 {
 	switch (Address) {
 		case 0x130000: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0x138000: {
@@ -3691,7 +3691,7 @@ static void MidresH6280WriteProg(UINT32 Address, UINT8 Data)
 		}
 		
 		case 0x130000: {
-			MSM6295Command(0, Data);
+			MSM6295Write(0, Data);
 			return;
 		}
 	}
@@ -5556,7 +5556,7 @@ static INT32 BaddudesScan(INT32 nAction, INT32 *pnMin)
 static INT32 RobocopScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		h6280CpuScan(nAction);
+		h6280Scan(nAction);
 	}
 
 	return BaddudesScan(nAction, pnMin);
@@ -5565,7 +5565,7 @@ static INT32 RobocopScan(INT32 nAction, INT32 *pnMin)
 static INT32 SlyspyScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
-		h6280CpuScan(nAction);
+		h6280Scan(nAction);
 	}
 
 	return DrvScan(nAction, pnMin);

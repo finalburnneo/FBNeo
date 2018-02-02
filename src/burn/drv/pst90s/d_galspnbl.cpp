@@ -182,7 +182,7 @@ void __fastcall galspnbl_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xf800:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xf810:
@@ -197,7 +197,7 @@ UINT8 __fastcall galspnbl_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xf810:
 		case 0xf811:

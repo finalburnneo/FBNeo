@@ -167,7 +167,7 @@ static void __fastcall puzzle3x3_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x700000:
-			MSM6295Command(0, data & 0xff);
+			MSM6295Write(0, data & 0xff);
 		return;
 
 		case 0x800000:
@@ -199,7 +199,7 @@ static UINT16 __fastcall puzzle3x3_read_word(UINT32 address)
 			return DrvDips[0] + (DrvDips[1] * 256);
 
 		case 0x700000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

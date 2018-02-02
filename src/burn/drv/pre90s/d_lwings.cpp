@@ -870,7 +870,7 @@ static void __fastcall fball_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xe000:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -883,7 +883,7 @@ static UINT8 __fastcall fball_sound_read(UINT16 address)
 			return soundlatch;
 
 		case 0xe000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

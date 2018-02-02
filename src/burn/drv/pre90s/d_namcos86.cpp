@@ -953,7 +953,7 @@ static UINT8 namcos86_mcu_read(UINT16 address)
 		case 0x2801:
 		case 0x3801:
 		case 0x6001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x2020:
 		case 0x2820:

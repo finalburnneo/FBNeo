@@ -373,7 +373,7 @@ UINT8 __fastcall powerinsReadByte(UINT32 sekAddress)
 	switch (sekAddress) {
 		
 		case 0x10003f:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 			
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
@@ -421,7 +421,7 @@ void __fastcall powerinsWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 		case 0x10003f:
 			// powerina only!
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 			break;
 			
 //		default:
@@ -449,7 +449,7 @@ void __fastcall powerinsWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 		case 0x10003e:
 			// powerina only!
-			MSM6295Command(0, wordValue & 0xff);
+			MSM6295Write(0, wordValue & 0xff);
 			break;
 
 		case 0x130000:	RamVReg[0] = wordValue; break;
@@ -518,10 +518,10 @@ UINT8 __fastcall powerinsZ80In(UINT16 p)
 				return 0;
 
 		case 0x80:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x88:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Z80 Attempt to read port %04x\n"), p);
@@ -546,11 +546,11 @@ void __fastcall powerinsZ80Out(UINT16 p, UINT8 v)
 			break;
 
 		case 0x80:
-			MSM6295Command(0, v);
+			MSM6295Write(0, v);
 			break;
 
 		case 0x88:
-			MSM6295Command(1, v);
+			MSM6295Write(1, v);
 			break;
 
 		case 0x90:

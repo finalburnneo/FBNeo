@@ -174,9 +174,9 @@ UINT8 __fastcall truxton2ReadByte(UINT32 sekAddress)
 			return DrvInput[5];
 
 		case 0x700011:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0x700017:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		default: {
 //			printf("Attempt to read byte value of location %x\n", sekAddress);
@@ -218,9 +218,9 @@ UINT16 __fastcall truxton2ReadWord(UINT32 sekAddress)
 			return DrvInput[5];
 
 		case 0x700010:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0x700016:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		default: {
 // 			printf("Attempt to read word value of location %x\n", sekAddress);
@@ -237,7 +237,7 @@ void __fastcall truxton2WriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 		case 0x700011:
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 			break;
 
 		case 0x700015:
@@ -278,7 +278,7 @@ void __fastcall truxton2WriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0x700010:
-			MSM6295Command(0, wordValue & 0xFF);
+			MSM6295Write(0, wordValue & 0xFF);
 			break;
 		case 0x700014:
 			BurnYM2151SelectRegister(wordValue);

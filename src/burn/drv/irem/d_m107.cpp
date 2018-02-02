@@ -530,7 +530,7 @@ static UINT8 __fastcall m107SndReadByte(UINT32 address)
 	switch (address)
 	{
 		case 0xa8042:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xa8044:
 			return sound_latch[0];

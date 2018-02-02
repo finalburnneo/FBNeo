@@ -160,7 +160,7 @@ UINT8 __fastcall deniam16_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0xc40001:
-			return MSM6295ReadStatus(0); // logicpr2
+			return MSM6295Read(0); // logicpr2
 
 		case 0xc40003:
 			return *coin_control;
@@ -194,7 +194,7 @@ void __fastcall deniam16_write_byte(UINT32 address, UINT8 data)
 
 		case 0xc40001:
 			if (nGame == 2) {
-				MSM6295Command(0, data);
+				MSM6295Write(0, data);
 			}
 		return;
 
@@ -229,7 +229,7 @@ void __fastcall deniam16_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x05:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x07:
@@ -246,7 +246,7 @@ UINT8 __fastcall deniam16_sound_in(UINT16 port)
 			return *soundlatch;
 
 		case 0x05:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

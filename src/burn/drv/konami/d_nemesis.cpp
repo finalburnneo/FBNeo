@@ -1888,7 +1888,7 @@ static UINT8 __fastcall salamand_sound_read(UINT16 address)
 
 		case 0xc000:
 		case 0xc001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xe000:
 			static int flipper;

@@ -884,7 +884,7 @@ void __fastcall nmg5_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x1c:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 
@@ -902,7 +902,7 @@ UINT8 __fastcall nmg5_read_port(UINT16 port)
 			return soundlatch;
 
 		case 0x1c:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

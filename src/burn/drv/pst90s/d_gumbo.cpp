@@ -214,7 +214,7 @@ void __fastcall gumbo_write_word(UINT32 address, UINT16 data)
 	{
 		case 0x1b0300:
 		case 0x1c0300:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -233,7 +233,7 @@ UINT16 __fastcall gumbo_read_word(UINT32 address)
 
 		case 0x1b0300:
 		case 0x1c0300:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

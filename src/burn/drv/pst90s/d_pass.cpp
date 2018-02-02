@@ -134,7 +134,7 @@ void __fastcall pass_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x80:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xc0:

@@ -257,7 +257,7 @@ UINT8 __fastcall bionicc_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x8001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xa000:
 			return *soundlatch;

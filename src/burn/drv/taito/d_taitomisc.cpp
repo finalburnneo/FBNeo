@@ -3853,7 +3853,7 @@ UINT8 __fastcall OpwolfZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xa001: {
@@ -3946,7 +3946,7 @@ UINT8 __fastcall RbislandZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xa001: {
@@ -4036,7 +4036,7 @@ UINT8 __fastcall RastanZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xa001: {
@@ -4092,7 +4092,7 @@ UINT8 __fastcall TopspeedZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xa001: {

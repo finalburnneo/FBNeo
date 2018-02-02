@@ -1377,7 +1377,7 @@ UINT8 DrvDdragonM6809ReadByte(UINT16 Address)
 		}
 		
 		case 0x2801: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 	}
 	
@@ -1452,11 +1452,11 @@ UINT8 __fastcall Ddragon2SoundZ80Read(UINT16 Address)
 {
 	switch (Address) {
 		case 0x8801: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x9800: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xa000: {
@@ -1485,7 +1485,7 @@ void __fastcall Ddragon2SoundZ80Write(UINT16 Address, UINT8 Data)
 		}
 		
 		case 0x9800: {
-			MSM6295Command(0, Data);
+			MSM6295Write(0, Data);
 			return;
 		}
 		

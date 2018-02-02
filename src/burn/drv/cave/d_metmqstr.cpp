@@ -239,7 +239,7 @@ UINT8 __fastcall metmqstrZIn(UINT16 nAddress)
 			return SoundLatch >> 8;
 		
 		case 0x51:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 			
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 Port Read %x\n"), nAddress);
@@ -270,7 +270,7 @@ void __fastcall metmqstrZOut(UINT16 nAddress, UINT8 nValue)
 			break;
 			
 		case 0x60: {
-			MSM6295Command(0, nValue);
+			MSM6295Write(0, nValue);
 			return;
 		}
 		
@@ -284,7 +284,7 @@ void __fastcall metmqstrZOut(UINT16 nAddress, UINT8 nValue)
 		}
 		
 		case 0x80: {
-			MSM6295Command(1, nValue);
+			MSM6295Write(1, nValue);
 			return;
 		}
 		

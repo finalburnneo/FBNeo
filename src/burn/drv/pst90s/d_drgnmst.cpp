@@ -340,8 +340,8 @@ static UINT8 drgnmst_snd_command_r()
 
 	switch (drgnmst_oki_control & 0x1f)
 	{
-		case 0x12:	data = MSM6295ReadStatus(1) & 0x0f; break;//(okim6295_status_1_r(machine, 0) & 0x0f); break;
-		case 0x16:	data = MSM6295ReadStatus(0) & 0x0f; break;//(okim6295_status_0_r(machine, 0) & 0x0f); break;
+		case 0x12:	data = MSM6295Read(1) & 0x0f; break;//(okim6295_status_1_r(machine, 0) & 0x0f); break;
+		case 0x16:	data = MSM6295Read(0) & 0x0f; break;//(okim6295_status_0_r(machine, 0) & 0x0f); break;
 		case 0x0b:
 		case 0x0f:      data = drgnmst_snd_command; break;
 		default:	break;
@@ -373,12 +373,12 @@ static void drgnmst_snd_control_w(INT32 data)
 	{
 		case 0x15:
 			bprintf (PRINT_NORMAL, _T("0, %2.2x\n"), drgnmst_oki_command);
-			MSM6295Command(0, drgnmst_oki_command);
+			MSM6295Write(0, drgnmst_oki_command);
 			break;
 
 		case 0x11:
 			bprintf (PRINT_NORMAL, _T("1, %2.2x\n"), drgnmst_oki_command);
-			MSM6295Command(1, drgnmst_oki_command);
+			MSM6295Write(1, drgnmst_oki_command);
 			break;
 	}
 }

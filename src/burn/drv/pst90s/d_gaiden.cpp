@@ -645,7 +645,7 @@ static void __fastcall gaiden_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0xf800:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xf810:
@@ -671,7 +671,7 @@ static UINT8 __fastcall gaiden_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xfc00:
 			return 0;
@@ -696,7 +696,7 @@ static void __fastcall drgnbowl_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x80:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -706,10 +706,10 @@ static UINT8 __fastcall drgnbowl_sound_read(UINT16 address)
 	switch (address & 0xff)
 	{
 		case 0x01:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x80:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xc0:
 			return soundlatch;

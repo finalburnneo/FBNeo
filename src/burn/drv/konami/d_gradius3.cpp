@@ -440,7 +440,7 @@ static UINT8 __fastcall gradius3_sound_read(UINT16 address)
 			return *soundlatch;
 
 		case 0xf031:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

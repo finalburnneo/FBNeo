@@ -678,7 +678,7 @@ INT32 PCEScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		h6280CpuScan(nAction);
+		h6280Scan(nAction);
 
 		vdc_scan(nAction, pnMin);
 		c6280_scan(nAction, pnMin);

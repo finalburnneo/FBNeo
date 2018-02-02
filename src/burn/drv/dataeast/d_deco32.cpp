@@ -448,11 +448,11 @@ static void __fastcall deco32_z80_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xb000:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xc000:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 	}
 }
@@ -463,13 +463,13 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 	{
 		case 0xa000:
 		case 0xa001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xb000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xc000:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xd000:
 			deco32_sound_irq &= ~0x02;
@@ -1247,7 +1247,7 @@ static void dragngun_write_long(UINT32 address, UINT32 data)
 		return;
 
 		case 0x400000:
-			MSM6295Command(2, data & 0xff);
+			MSM6295Write(2, data & 0xff);
 		return;
 
 		case 0x410000:
@@ -1327,7 +1327,7 @@ static UINT32 dragngun_read_long(UINT32 address)
 			return (EEPROMRead() & 1) ? 0xff : 0xfe;
 
 		case 0x400000:
-			return MSM6295ReadStatus(2);
+			return MSM6295Read(2);
 
 		case 0x438000:
 			switch (lightgun_port) {

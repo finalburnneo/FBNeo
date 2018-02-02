@@ -551,7 +551,7 @@ static UINT8 jackal_sub_read(UINT16 address)
 	{
 		case 0x2000:
 		case 0x2001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

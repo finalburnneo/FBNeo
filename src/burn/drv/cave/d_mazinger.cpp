@@ -274,7 +274,7 @@ void __fastcall mazingerZOut(UINT16 nAddress, UINT8 nValue)
 		}
 		
 		case 0x70: {
-			MSM6295Command(0, nValue);
+			MSM6295Write(0, nValue);
 			return;
 		}
 		

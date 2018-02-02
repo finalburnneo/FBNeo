@@ -365,7 +365,7 @@ void __fastcall airbustr_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x04:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x06:
@@ -386,7 +386,7 @@ UINT8 __fastcall airbustr_sound_in(UINT16 port)
 			return BurnYM2203Read(0, 1);
 
 		case 0x04:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x06:
 			*sound_status = 0;

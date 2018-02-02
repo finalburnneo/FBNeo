@@ -1242,7 +1242,7 @@ UINT8 __fastcall m72_sound_read_port(UINT16 port)
 		case 0x01:
 		case 0x40: // poundfor
 		case 0x41: // poundfor
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x80: // rtype2
 		case 0x42: // poundfor

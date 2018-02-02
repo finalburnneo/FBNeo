@@ -193,7 +193,7 @@ UINT8 __fastcall NewsRead(UINT16 a)
 		}
 
 		case 0xc002: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 	}
 
@@ -204,7 +204,7 @@ void __fastcall NewsWrite(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xc002: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 

@@ -425,7 +425,7 @@ UINT8 __fastcall rpunch_sound_read(UINT16 address)
 	{
 		case 0xf000:
 		case 0xf001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xf200:
 			*sound_busy = 0;

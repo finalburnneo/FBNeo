@@ -714,7 +714,7 @@ static UINT8 __fastcall whizz_sound_read_port(UINT16 port)
 	{
 		case 0x00:
 		case 0x01:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xc0:
 			return soundlatch;

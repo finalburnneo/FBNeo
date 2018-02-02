@@ -1878,7 +1878,7 @@ UINT8 GauntletSoundRead(UINT16 Address)
 		}
 		
 		case 0x1811: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		default: {

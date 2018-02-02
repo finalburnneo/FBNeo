@@ -344,7 +344,7 @@ UINT8 __fastcall crimfght_sound_read(UINT16 address)
 	{
 		case 0xa000:
 		case 0xa001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xc000:
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);

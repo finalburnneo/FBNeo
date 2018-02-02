@@ -352,7 +352,7 @@ static UINT8 __fastcall GhoxMCURead(UINT32 a)
 		}
 		
 		case 0x8000f: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 	}
 

@@ -2729,11 +2729,11 @@ void __fastcall bjtwin_main_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x084000:
-			MSM6295Command(0, data & 0xff);
+			MSM6295Write(0, data & 0xff);
 		return;
 
 		case 0x084010:
-			MSM6295Command(1, data & 0xff);
+			MSM6295Write(1, data & 0xff);
 		return;
 
 		case 0x084020:
@@ -2781,11 +2781,11 @@ UINT8 __fastcall bjtwin_main_read_byte(UINT32 address)
 
 		case 0x084000:
 		case 0x084001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x084010:
 		case 0x084011:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -2808,10 +2808,10 @@ UINT16 __fastcall bjtwin_main_read_word(UINT32 address)
 			return 0xff00 | DrvDips[1];
 
 		case 0x084000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x084010:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -3562,11 +3562,11 @@ void __fastcall tharrier_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf400:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xf500:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 		case 0xf600:
@@ -3587,10 +3587,10 @@ UINT8 __fastcall tharrier_sound_read(UINT16 address)
 			return *soundlatch;
 
 		case 0xf400:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xf500:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -3641,7 +3641,7 @@ void __fastcall ssmissin_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x9800:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -3651,7 +3651,7 @@ UINT8 __fastcall ssmissin_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x9800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xa000:
 			ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
@@ -3674,7 +3674,7 @@ void __fastcall afega_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xf80a:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -3689,10 +3689,10 @@ UINT8 __fastcall afega_sound_read(UINT16 address)
 
 		case 0xf808:
 		case 0xf809:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xf80a:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;
@@ -3710,11 +3710,11 @@ void __fastcall firehawk_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xfff8:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 		case 0xfffa:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 
@@ -3733,10 +3733,10 @@ UINT8 __fastcall firehawk_sound_read(UINT16 address)
 			return *soundlatch;
 
 		case 0xfff8:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xfffa:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	if (address >= 0xfe00) {
@@ -3788,11 +3788,11 @@ void __fastcall macross2_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x80:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x88:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 		case 0x90:
@@ -3817,10 +3817,10 @@ UINT8 __fastcall macross2_sound_in(UINT16 port)
 			return BurnYM2203Read(0, 0);
 
 		case 0x80:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x88:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -9919,11 +9919,11 @@ static void raphero_sound_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0xc800:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xc808:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 		case 0xc810:
@@ -9956,10 +9956,10 @@ static UINT8 raphero_sound_read(UINT32 address)
 			return BurnYM2203Read(0, address & 1);
 
 		case 0xc800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xc808:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xd800:
 			return *soundlatch;

@@ -221,7 +221,7 @@ UINT8 __fastcall hotdogstZIn(UINT16 nAddress)
 		}
 		
 		case 0x60: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		default: {
@@ -256,7 +256,7 @@ void __fastcall hotdogstZOut(UINT16 nAddress, UINT8 nValue)
 		}
 		
 		case 0x60: {
-			MSM6295Command(0, nValue);
+			MSM6295Write(0, nValue);
 			return;
 		}
 		

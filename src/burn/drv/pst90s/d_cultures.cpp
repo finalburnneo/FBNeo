@@ -189,7 +189,7 @@ static void __fastcall cultures_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0xc0:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -205,7 +205,7 @@ static UINT8 __fastcall cultures_read_port(UINT16 port)
 	switch (port)
 	{
 		case 0xc0:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xd0:
 		case 0xd1:

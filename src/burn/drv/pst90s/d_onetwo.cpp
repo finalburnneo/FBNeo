@@ -212,7 +212,7 @@ static void __fastcall onetwo_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x40:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xc0:
@@ -229,7 +229,7 @@ static UINT8 __fastcall onetwo_sound_read_port(UINT16 port)
 			return BurnYM3812Read(0,0);
 
 		case 0x40:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

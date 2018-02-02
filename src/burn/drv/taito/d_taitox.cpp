@@ -1045,7 +1045,7 @@ UINT8 __fastcall TwinhawkZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xe001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xe201: {

@@ -268,11 +268,11 @@ void __fastcall seibu_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x6000:
-			if ((seibu_snd_type & 8) == 0) MSM6295Command(0, data);
+			if ((seibu_snd_type & 8) == 0) MSM6295Write(0, data);
 		return;
 
 		case 0x6002:
-			if (seibu_snd_type & 4) MSM6295Command(1, data);
+			if (seibu_snd_type & 4) MSM6295Write(1, data);
 		return;
 
 		case 0x6005:
@@ -312,7 +312,7 @@ UINT8 __fastcall seibu_sound_read(UINT16 address)
 					return BurnYM3812Read(0, 0);
 
 				case 1:
-					return BurnYM2151ReadStatus();
+					return BurnYM2151Read();
 
 				case 2:
 					return BurnYM2203Read(0, 0);
@@ -320,7 +320,7 @@ UINT8 __fastcall seibu_sound_read(UINT16 address)
 			return 0;
 
 		case 0x4009: {
-			if ((seibu_snd_type&3)==1) return BurnYM2151ReadStatus();
+			if ((seibu_snd_type&3)==1) return BurnYM2151Read();
 			if ((seibu_snd_type&3) < 2) return 0;
 			return BurnYM2203Read(0, 1);
 		}
@@ -336,10 +336,10 @@ UINT8 __fastcall seibu_sound_read(UINT16 address)
 			return seibu_coin_input;
 
 		case 0x6000:
-			return (((seibu_snd_type & 8) == 0) ? MSM6295ReadStatus(0) : 0);
+			return (((seibu_snd_type & 8) == 0) ? MSM6295Read(0) : 0);
 
 		case 0x6002:
-			if (seibu_snd_type & 4) return MSM6295ReadStatus(1);
+			if (seibu_snd_type & 4) return MSM6295Read(1);
 	}
 
 	return 0;

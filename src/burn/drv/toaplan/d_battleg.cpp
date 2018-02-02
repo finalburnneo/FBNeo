@@ -561,10 +561,10 @@ UINT8 __fastcall battlegZ80Read(UINT16 nAddress)
 //	bprintf(0, _T("z80 read %4X\n"), nAddress);
 	switch (nAddress) {
 		case 0xE001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xE004:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xE01C:
 			return nSoundCommand;
@@ -588,7 +588,7 @@ void __fastcall battlegZ80Write(UINT16 nAddress, UINT8 nValue)
 			break;
 
 		case 0xE004:
-			MSM6295Command(0, nValue);
+			MSM6295Write(0, nValue);
 			break;
 
 		case 0xE006:

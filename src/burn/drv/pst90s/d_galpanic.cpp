@@ -908,7 +908,7 @@ UINT8 __fastcall GalpanicReadByte(UINT32 sekAddress)
 {
 	switch (sekAddress) {
 		case 0x400001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		//default:
 		//	printf("Attempt to read byte value of location %x\n", sekAddress);
 	}
@@ -938,7 +938,7 @@ void __fastcall GalpanicWriteByte(UINT32 sekAddress, UINT8 byteValue)
 			memcpy(&RomSnd[0x30000], &RomSnd[0x40000 + SndBank * 0x10000], 0x10000);
 			break;
 		case 0x400001:
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 			break;
 		//case 0xB00000:
 		//case 0xC00000:
@@ -957,7 +957,7 @@ UINT8 __fastcall ComadReadByte(UINT32 sekAddress)
 		case 0xD00000:
 		case 0xF00000:
 		case 0xF80000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 	  case 0x80000a:
 		case 0x80000c:
@@ -985,7 +985,7 @@ void __fastcall ComadWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		case 0xD00000:
 		case 0xF00000:
 		case 0xF80000:
-			MSM6295Command(0, byteValue & 0xff);
+			MSM6295Write(0, byteValue & 0xff);
 			break;
 
 //		default:
@@ -1042,7 +1042,7 @@ UINT8 __fastcall GalhustlReadByte(UINT32 sekAddress)
 	switch (sekAddress) {
 		case 0xC00000:
 		case 0xD00000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x800000:
 			return ~(DrvInput[1]);

@@ -1589,7 +1589,7 @@ static void __fastcall taitob_sound_write_ym2203(UINT16 a, UINT8 d)
 
 		case 0xb000:
 		case 0xb001:
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 		return;
 
 		case 0xa000:
@@ -1612,7 +1612,7 @@ static UINT8 __fastcall taitob_sound_read_ym2203(UINT16 a)
 
 		case 0xb000:
 		case 0xb001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xa001:
 			return TC0140SYTSlaveCommRead();

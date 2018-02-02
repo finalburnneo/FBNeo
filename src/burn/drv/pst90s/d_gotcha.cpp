@@ -201,7 +201,7 @@ void __fastcall gotcha_sound_write(UINT16 address, UINT8 data)
 
 		case 0xc002:
 		case 0xc003:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -211,7 +211,7 @@ UINT8 __fastcall gotcha_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xc001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xc006:
 			return *soundlatch;

@@ -87,7 +87,7 @@ static UINT8 __fastcall t5182_port_read(UINT16 p)
 	{
 		case 0x00:
 		case 0x01:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x20:
 			return t5182_semaphore_main | (irqstate & 2);

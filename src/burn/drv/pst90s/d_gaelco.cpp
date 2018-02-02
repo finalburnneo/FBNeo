@@ -535,7 +535,7 @@ static void __fastcall main_write_word(UINT32 address, UINT16 data)
 
 		case 0x70000e:
 		case 0x70000f:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -575,7 +575,7 @@ static void __fastcall main_write_byte(UINT32 address, UINT8 data)
 				*soundlatch = data;
 				M6809SetIRQLine(1, CPU_IRQSTATUS_AUTO);
 			} else {
-				MSM6295Command(0, data);
+				MSM6295Write(0, data);
 			}
 		return;
 	}
@@ -607,7 +607,7 @@ static UINT16 __fastcall main_read_word(UINT32 address)
 
 		case 0x70000e:
 		case 0x70000f:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;
@@ -639,7 +639,7 @@ static UINT8 __fastcall main_read_byte(UINT32 address)
 
 		case 0x70000e:
 		case 0x70000f:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;
@@ -669,7 +669,7 @@ static void sound_write(UINT16 address, UINT8 data)
 	{
 		case 0x0800:
 		case 0x0801:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x0a00:
@@ -685,7 +685,7 @@ static UINT8 sound_read(UINT16 address)
 	{
 		case 0x0800:
 		case 0x0801:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x0a00:
 		case 0x0a01:

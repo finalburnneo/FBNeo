@@ -247,10 +247,10 @@ static UINT8 __fastcall kbash2ReadByte(UINT32 sekAddress)
 			return DrvInput[2];
 
 		case 0x200021:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0x200025:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x20002D:
 			return ToaScanlineRegister();
@@ -284,10 +284,10 @@ static UINT16 __fastcall kbash2ReadWord(UINT32 sekAddress)
 			return DrvInput[2];
 
 		case 0x200020:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0x200024:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x20002c:
 			return ToaScanlineRegister();
@@ -311,11 +311,11 @@ static void __fastcall kbash2WriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 		case 0x200021:
-			MSM6295Command(1, byteValue);
+			MSM6295Write(1, byteValue);
 		return;
 
 		case 0x200025:
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 		return;
 
 		case 0x200029:

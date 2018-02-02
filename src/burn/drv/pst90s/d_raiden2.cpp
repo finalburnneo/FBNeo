@@ -1862,7 +1862,7 @@ static void __fastcall r2dx_main_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0x780: // oki write
-			MSM6295Command(0, dataword & 0xff);
+			MSM6295Write(0, dataword & 0xff);
 		return;
 	}
 }
@@ -1937,7 +1937,7 @@ static UINT8 __fastcall r2dx_main_read(UINT32 address)
 			return dst1 >> 8;
 
 		case 0x780:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return DrvMainRAM[address & 0x7ff];

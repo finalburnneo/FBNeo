@@ -33,10 +33,10 @@ static UINT8 nmk004_tlcs90_read(UINT32 address)
 			return BurnYM2203Read(0, address & 1);
 
 		case 0xf900:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xfa00:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xfb00:
 			return to_nmk004;
@@ -70,11 +70,11 @@ static void nmk004_tlcs90_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0xf900:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0xfa00:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 		case 0xfc00:

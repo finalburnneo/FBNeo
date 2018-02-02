@@ -255,11 +255,11 @@ static void __fastcall mwarr_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x180001:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x190001:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 
 		case 0x110017:
@@ -312,10 +312,10 @@ static UINT8 __fastcall mwarr_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x180001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x190001:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -335,7 +335,7 @@ static void __fastcall stlforce_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x410001:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x400012:
@@ -378,7 +378,7 @@ static UINT8 __fastcall stlforce_read_byte(UINT32 address)
 			return (DrvInps[1] & ~0x58) | (DrvSrv[0] ? 0x00 : 0x08) | (EEPROMRead() ? 0x40 : 0) | vblank;
 
 		case 0x410001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

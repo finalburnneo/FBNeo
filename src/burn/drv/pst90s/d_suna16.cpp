@@ -1147,7 +1147,7 @@ UINT8 __fastcall bssoccer_sound0_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf801:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xfc00:
 			return soundlatch;

@@ -119,7 +119,7 @@ void __fastcall vmetal_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x400001:
 		case 0x400003:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 
@@ -151,7 +151,7 @@ UINT8 __fastcall vmetal_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x400001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

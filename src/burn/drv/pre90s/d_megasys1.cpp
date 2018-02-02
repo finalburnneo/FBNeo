@@ -1923,7 +1923,7 @@ static void __fastcall megasys1B_main_write_byte(UINT32 address, UINT8 data)
 
 		case 0x0e000e: // edf bootleg..
 		case 0x0e000f:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -1955,7 +1955,7 @@ static void __fastcall megasys1B_main_write_word(UINT32 address, UINT16 data)
 
 		case 0x0e000e: // edf bootleg..
 		case 0x0e000f:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -2092,7 +2092,7 @@ static void __fastcall megasys1D_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x0f8000:
-			MSM6295Command(0, data & 0xff);
+			MSM6295Write(0, data & 0xff);
 		return;
 
 		case 0x100000:
@@ -2121,7 +2121,7 @@ static UINT16 __fastcall megasys1D_main_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x0f8000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x100000:
 			return peekaboo_prot_read();
@@ -2151,15 +2151,15 @@ static UINT8 __fastcall megasys_sound_read_byte(UINT32 address)
 		case 0x080001:
 		case 0x080002:
 		case 0x080003:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x0a0000:
 		case 0x0a0001:
-			return (ignore_oki_status_hack) ? 0 : MSM6295ReadStatus(0);
+			return (ignore_oki_status_hack) ? 0 : MSM6295Read(0);
 
 		case 0x0c0000:
 		case 0x0c0001:
-			return (ignore_oki_status_hack) ? 0 : MSM6295ReadStatus(1);
+			return (ignore_oki_status_hack) ? 0 : MSM6295Read(1);
 	}
 
 	return 0;
@@ -2174,15 +2174,15 @@ static UINT16 __fastcall megasys_sound_read_word(UINT32 address)
 			return soundlatch;
 
 		case 0x080002:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x0a0000:
 		case 0x0a0001:
-			return (ignore_oki_status_hack) ? 0 : MSM6295ReadStatus(0);
+			return (ignore_oki_status_hack) ? 0 : MSM6295Read(0);
 
 		case 0x0c0000:
 		case 0x0c0001:
-			return (ignore_oki_status_hack) ? 0 : MSM6295ReadStatus(1);
+			return (ignore_oki_status_hack) ? 0 : MSM6295Read(1);
 	}
 
 	return 0;
@@ -2213,14 +2213,14 @@ static void __fastcall megasys_sound_write_byte(UINT32 address, UINT8 data)
 		case 0x0a0001:
 		case 0x0a0002:
 		case 0x0a0003:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x0c0000:
 		case 0x0c0001:
 		case 0x0c0002:
 		case 0x0c0003:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 	}
 }
@@ -2247,14 +2247,14 @@ static void __fastcall megasys_sound_write_word(UINT32 address, UINT16 data)
 		case 0x0a0001:
 		case 0x0a0002:
 		case 0x0a0003:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x0c0000:
 		case 0x0c0001:
 		case 0x0c0002:
 		case 0x0c0003:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 	}
 }

@@ -208,10 +208,10 @@ UINT16 __fastcall k1945iiiReadWord(UINT32 sekAddress)
 			return DrvInput[4] | (DrvInput[5] << 8);
 
 		case 0x4C0000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x500000:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;
@@ -223,11 +223,11 @@ void __fastcall k1945iiiWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	{
 		case 0x4C0000:
 		case 0x4C0001: // flagrall
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 		return;
 
 		case 0x500000:
-			MSM6295Command(1, byteValue);
+			MSM6295Write(1, byteValue);
 		return;
 
 		case 0x9ce:
@@ -260,7 +260,7 @@ void __fastcall k1945iiiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		return;
 
 		case 0x4C0000: // flagrall
-			MSM6295Command(0, wordValue);
+			MSM6295Write(0, wordValue);
 		return;
 	}
 }

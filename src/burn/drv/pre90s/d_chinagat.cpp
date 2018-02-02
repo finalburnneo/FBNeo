@@ -270,7 +270,7 @@ static void __fastcall chinagat_sound_write(UINT16 address, UINT8 data)
 			if (BurnDrvGetFlags() & BDF_BOOTLEG) {
 			//	bprintf (0, _T("Bootleg MCU Command: %2.2x\n"), data);
 			} else {
-				MSM6295Command(0, data);
+				MSM6295Write(0, data);
 			}
 		return;
 	}
@@ -282,10 +282,10 @@ static UINT8 __fastcall chinagat_sound_read(UINT16 address)
 	{
 		case 0x8800:
 		case 0x8801:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x9800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xa000:
 			ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);

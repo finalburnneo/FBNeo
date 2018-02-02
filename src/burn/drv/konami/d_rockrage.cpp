@@ -233,7 +233,7 @@ static UINT8 rockrage_sound_read(UINT16 address)
 
 		case 0x6000:
 		case 0x6001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

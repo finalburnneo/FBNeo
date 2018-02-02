@@ -1150,7 +1150,7 @@ static UINT8 sound_read(UINT16 address)
 	{
 		case 0x4000:
 		case 0x4001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

@@ -7333,7 +7333,7 @@ UINT8 __fastcall CamltryaZ80Read(UINT16 a)
 		}
 		
 		case 0xb000: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		default: {
@@ -7369,7 +7369,7 @@ void __fastcall CamltryaZ80Write(UINT16 a, UINT8 d)
 		
 		case 0xb000:
 		case 0xb001: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
@@ -7383,7 +7383,7 @@ UINT8 __fastcall DriveoutZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9800: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xa000: {
@@ -7410,7 +7410,7 @@ void __fastcall DriveoutZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0x9800: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		

@@ -123,10 +123,10 @@ static UINT32 hvysmsh_read_long(UINT32 address)
 			return (DrvInputs[0] & ~0x01100000) | (deco16_vblank ? 0x00100000 : 0) | (EEPROMRead() ? 0x01000000 : 0);
 
 		case 0x140000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x160000:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0x1d0010:
 		case 0x1d0014:
@@ -160,10 +160,10 @@ static UINT8 hvysmsh_read_byte(UINT32 address)
 		}
 
 		case 0x140000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x160000:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0x1d0010:
 		case 0x1d0014:
@@ -209,11 +209,11 @@ static void hvysmsh_write_long(UINT32 address, UINT32 data)
 		return;
 
 		case 0x140000:
-			MSM6295Command(0, data & 0xff);
+			MSM6295Write(0, data & 0xff);
 		return;
 
 		case 0x160000:
-			MSM6295Command(1, data & 0xff);
+			MSM6295Write(1, data & 0xff);
 		return;
 	}
 }
@@ -248,11 +248,11 @@ static void hvysmsh_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0x140000:
-			MSM6295Command(0, data & 0xff);
+			MSM6295Write(0, data & 0xff);
 		return;
 
 		case 0x160000:
-			MSM6295Command(1, data & 0xff);
+			MSM6295Write(1, data & 0xff);
 		return;
 	}
 }

@@ -204,7 +204,7 @@ UINT8 __fastcall blockhl_sound_read(UINT16 address)
 			return *soundlatch;
 
 		case 0xc001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

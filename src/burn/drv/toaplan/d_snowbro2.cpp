@@ -202,9 +202,9 @@ UINT8 __fastcall snowbro2ReadByte(UINT32 sekAddress)
 			return DrvInput[5];
 
 		case 0x600001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0x500003:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		default: {
 //			printf("Attempt to read byte value of location %x\n", sekAddress);
@@ -241,9 +241,9 @@ UINT16 __fastcall snowbro2ReadWord(UINT32 sekAddress)
 			return DrvInput[4];
 
 		case 0x600000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		case 0x500002:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		default: {
 // 			printf("Attempt to read word value of location %x\n", sekAddress);
@@ -256,7 +256,7 @@ void __fastcall snowbro2WriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	switch (sekAddress) {
 		case 0x600001:
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 			break;
 
 		case 0x500001:
@@ -293,7 +293,7 @@ void __fastcall snowbro2WriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0x600000:
-			MSM6295Command(0, wordValue & 0xFF);
+			MSM6295Write(0, wordValue & 0xFF);
 			break;
 		case 0x700030: {
 			MSM6295SetBank(0, MSM6295ROM + ((wordValue & 0x01) << 18), 0x00000, 0x3ffff);

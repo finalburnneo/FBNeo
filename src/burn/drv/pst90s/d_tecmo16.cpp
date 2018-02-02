@@ -595,11 +595,11 @@ static UINT8 __fastcall FstarfrcZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xfc00: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 
 		case 0xfc05: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 
 		case 0xfc08: {
@@ -614,7 +614,7 @@ static void __fastcall FstarfrcZ80Write(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xfc00: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 

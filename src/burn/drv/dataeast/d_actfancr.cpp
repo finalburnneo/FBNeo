@@ -361,7 +361,7 @@ static void Dec0_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x3800:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -375,7 +375,7 @@ static UINT8 Dec0_sound_read(UINT16 address)
 			return *soundlatch;
 
 		case 0x3800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;
@@ -873,7 +873,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
-		h6280CpuScan(nAction);
+		h6280Scan(nAction);
 		M6502Scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);

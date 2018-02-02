@@ -182,7 +182,7 @@ static void __fastcall dblewing_sound_write(UINT16 address, UINT8 data)
 
 		case 0xb000:
 		case 0xf000:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -193,11 +193,11 @@ static UINT8 __fastcall dblewing_sound_read(UINT16 address)
 	{
 		case 0xa000:
 		case 0xa001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xb000:
 		case 0xf000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xc000:
 			return soundlatch;

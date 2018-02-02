@@ -340,7 +340,7 @@ static UINT8 __fastcall asterix_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0xf801:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	if (address >= 0xfa00 && address <= 0xfa2f) {

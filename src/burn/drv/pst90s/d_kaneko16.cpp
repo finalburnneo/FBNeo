@@ -3104,7 +3104,7 @@ static void GtmroMCURun()
 		}
 		
 		case 0x04: {
-			/* MCU writes the string 'TOYBOX1994-" ú[GS]žW' to shared ram  - [GS] = ASCII Group Separator */
+			/* MCU writes the string 'TOYBOX1994-" ?[GS]?W' to shared ram  - [GS] = ASCII Group Separator */
 			MCURam[MCUOffset + 0] = 0x544f;
 			MCURam[MCUOffset + 1] = 0x5942;
 			MCURam[MCUOffset + 2] = 0x4f58;
@@ -3313,7 +3313,7 @@ UINT8 __fastcall BerlwallReadByte(UINT32 a)
 		
 		case 0x800400:
 		case 0x800401: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 	
 //		default: {
@@ -3356,7 +3356,7 @@ void __fastcall BerlwallWriteByte(UINT32 a, UINT8 d)
 
 		case 0x800400:
 		case 0x800401: {
-			MSM6295Command(0, d & 0xff);
+			MSM6295Write(0, d & 0xff);
 			return;
 		}
 		
@@ -3396,7 +3396,7 @@ UINT16 __fastcall BerlwallReadWord(UINT32 a)
 		}
 		
 		case 0x800400: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 //		default: {
@@ -3470,7 +3470,7 @@ void __fastcall BerlwallWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x800400: {
-			MSM6295Command(0, d & 0xff);
+			MSM6295Write(0, d & 0xff);
 			return;
 		}
 		
@@ -3600,7 +3600,7 @@ UINT8 __fastcall ExplbrkrReadByte(UINT32 a)
 		}
 		
 		case 0x400401: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xe00000: {
@@ -3654,7 +3654,7 @@ void __fastcall ExplbrkrWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x400401: {
-			MSM6295Command(0, d & 0xff);
+			MSM6295Write(0, d & 0xff);
 			return;
 		}
 		
@@ -3782,7 +3782,7 @@ UINT8 __fastcall MgcrystlReadByte(UINT32 a)
 		}
 		
 		case 0x400401: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xc00000: {
@@ -3919,12 +3919,12 @@ void __fastcall GtmrWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x800001: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
 		case 0x880001: {
-			MSM6295Command(1, d);
+			MSM6295Write(1, d);
 			return;
 		}
 		
@@ -3943,11 +3943,11 @@ UINT16 __fastcall GtmrReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x800000: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0x880000: {
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 		}
 		
 		case 0x900000:
@@ -4051,12 +4051,12 @@ void __fastcall GtmrWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x800000: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
 		case 0x880000: {
-			MSM6295Command(1, d);
+			MSM6295Write(1, d);
 			return;
 		}
 		
@@ -4138,7 +4138,7 @@ UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x03: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x06: {
@@ -4146,7 +4146,7 @@ UINT8 __fastcall Kaneko16Z80PortRead(UINT16 a)
 		}
 
 		case 0x0a: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 	}
 
@@ -4167,7 +4167,7 @@ void __fastcall Kaneko16Z80PortWrite(UINT16 a, UINT8 d)
 			return;
 		}
 		case 0x0a: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		case 0x0c: {
@@ -4237,10 +4237,10 @@ static UINT16 __fastcall ShogwarrReadWord(UINT32 sekAddress)
 	switch (sekAddress)
 	{
 		case 0x400000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x480000:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xa80000:
 			Kaneko16Watchdog = 0;
@@ -4276,12 +4276,12 @@ static void __fastcall ShogwarrWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	{
 		case 0x400000:
 		case 0x400001:
-			MSM6295Command(0, byteValue & 0xff);
+			MSM6295Write(0, byteValue & 0xff);
 		return;
 
 		case 0x480000:
 		case 0x480001:
-			MSM6295Command(1, byteValue & 0xff);
+			MSM6295Write(1, byteValue & 0xff);
 		return;
 
 		case 0xa80000:
@@ -4333,11 +4333,11 @@ static void __fastcall ShogwarrWriteWord(UINT32 sekAddress, UINT16 wordValue)
 		return;
 
 		case 0x400000:
-			MSM6295Command(0, wordValue & 0xff);
+			MSM6295Write(0, wordValue & 0xff);
 		return;
 
 		case 0x480000:
-			MSM6295Command(1, wordValue & 0xff);
+			MSM6295Write(1, wordValue & 0xff);
 		return;
 
 		case 0xa80000:

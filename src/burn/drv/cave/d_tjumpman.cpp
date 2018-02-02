@@ -114,7 +114,7 @@ UINT8 __fastcall tjumpmanReadByte(UINT32 sekAddress)
 		}
 
 		case 0x800001:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		default: {
 //			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of location %x\n"), sekAddress);
@@ -158,7 +158,7 @@ UINT16 __fastcall tjumpmanReadWord(UINT32 sekAddress)
 		}
 
 		case 0x800000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		default: {
 // 			bprintf(PRINT_NORMAL, _T("Attempt to read word value of location %x\n"), sekAddress);
@@ -172,7 +172,7 @@ void __fastcall tjumpmanWriteByte(UINT32 sekAddress, UINT8 byteValue)
 	switch (sekAddress)
 	{
 		case 0x800001:
-			MSM6295Command(0, byteValue);
+			MSM6295Write(0, byteValue);
 			break;
 
 		case 0xc00000:
@@ -222,7 +222,7 @@ void __fastcall tjumpmanWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			break;
 
 		case 0x800000:
-			MSM6295Command(0, wordValue);
+			MSM6295Write(0, wordValue);
 			break;
 
 		case 0xc00000:

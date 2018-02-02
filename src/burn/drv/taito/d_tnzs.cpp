@@ -778,7 +778,7 @@ UINT8 __fastcall tnzs_cpu1_read(UINT16 address)
 
 		case 0xb001:
 			if (tnzs_mcu_type() == MCU_NONE_JPOPNICS)
-				return BurnYM2151ReadStatus();
+				return BurnYM2151Read();
 			return BurnYM2203Read(0, 1);
 
 		case 0xc000:

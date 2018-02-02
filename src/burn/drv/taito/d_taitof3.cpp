@@ -183,7 +183,7 @@ static void control_w(INT32 offset, UINT32 d, INT32 b)
 		case 0x1c:
 		{
 			if (BurnDrvGetFlags() & BDF_BOOTLEG) {
-				if ((offset & 3) == 3) { MSM6295Command(0, d); return; }
+				if ((offset & 3) == 3) { MSM6295Write(0, d); return; }
 			//	bprintf (0, _T("Sound Command: %x, %x %d\n"), offset & 0x1f, d, b); 
 				if ((offset & 3) == 0) { } // banking
 			}
@@ -315,7 +315,7 @@ static UINT32 control_r(INT32 offset, INT32 b)
 		break;
 
 		case 0x1c:
-			ret = MSM6295ReadStatus(0);
+			ret = MSM6295Read(0);
 		break;
 	}
 

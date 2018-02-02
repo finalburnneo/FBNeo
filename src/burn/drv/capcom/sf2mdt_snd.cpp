@@ -39,7 +39,7 @@ UINT8 __fastcall Sf2mdtZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xd801: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xdc00: {

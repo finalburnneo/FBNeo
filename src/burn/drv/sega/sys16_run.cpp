@@ -408,7 +408,7 @@ UINT8 __fastcall System16Z80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x01: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x40:
@@ -437,7 +437,7 @@ UINT8 __fastcall System16PPIZ80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x01: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x40:
@@ -460,7 +460,7 @@ UINT8 __fastcall SystemXZ80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x01: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0x40:

@@ -395,7 +395,7 @@ void __fastcall tecmosys_sound_out(UINT16 port, UINT8 data)
 		return;
 
 		case 0x10:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x20:
@@ -431,7 +431,7 @@ UINT8 __fastcall tecmosys_sound_in(UINT16 port)
 			return 0; // ymf262_r
 
 		case 0x10:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x40:
 			return *soundlatch;

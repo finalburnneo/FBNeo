@@ -341,10 +341,10 @@ static UINT8 __fastcall shadfrceZRead(UINT16 a)
 	switch (a)
 	{
 		case 0xC801:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xD800:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xE000:
 			return nSoundlatch;
@@ -369,7 +369,7 @@ void __fastcall shadfrceZWrite(UINT16 a, UINT8 d)
 		break;
 
 		case 0xD800:
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 		break;
 
 		case 0xE800:

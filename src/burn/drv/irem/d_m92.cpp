@@ -1366,7 +1366,7 @@ UINT8 __fastcall m92ReadPort(UINT32 port)
 		case 0x08: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[0]; 
 		case 0x09: VezSetIRQLineAndVector(0, (m92_irq_vectorbase + 12)/4, CPU_IRQSTATUS_NONE); return sound_status[1];
 
-		case 0x18: return (m92_kludge == 3) ? MSM6295ReadStatus(0) : 0; // ppan
+		case 0x18: return (m92_kludge == 3) ? MSM6295Read(0) : 0; // ppan
 
 //		default:
 //			bprintf(PRINT_NORMAL, _T("Attempt to read byte value of port %x\n"), port);
@@ -1441,7 +1441,7 @@ void __fastcall m92WritePort(UINT32 port, UINT8 data)
 		return;
 
 		case 0x18: // ppan
-			if (m92_kludge == 3) MSM6295Command(0, data);
+			if (m92_kludge == 3) MSM6295Write(0, data);
 		return;
 
 		case 0x20:
@@ -1517,7 +1517,7 @@ UINT8 __fastcall m92SndReadByte(UINT32 address)
 	switch (address)
 	{
 		case 0xa8042:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0xa8044:
 			//VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP1, 0xff/*default*/, CPU_IRQSTATUS_NONE);

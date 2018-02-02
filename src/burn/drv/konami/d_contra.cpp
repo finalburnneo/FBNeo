@@ -307,7 +307,7 @@ UINT8 DrvContraM6809SoundReadByte(UINT16 address)
 			return soundlatch;
 
 		case 0x2001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

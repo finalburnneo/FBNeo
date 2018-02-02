@@ -555,7 +555,7 @@ void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x2000:	// lordgun
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x6000:	// lordgun
@@ -575,11 +575,11 @@ void __fastcall lordgun_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x7400:	// aliencha
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x7800:	// aliencha
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 	}
 }
@@ -589,7 +589,7 @@ UINT8 __fastcall lordgun_sound_read_port(UINT16 port)
 	switch (port)
 	{
 		case 0x2000:	// lordgun
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x3000:
 			return soundlatch[0];
@@ -601,10 +601,10 @@ UINT8 __fastcall lordgun_sound_read_port(UINT16 port)
 			return BurnYMF278BReadStatus();
 
 		case 0x7400:	// aliencha
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x7800:	// aliencha
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 	}
 
 	return 0;

@@ -321,10 +321,10 @@ static UINT8 __fastcall dreamwld_read_byte(UINT32 address)
 			return DrvDips[address & 1];
 
 		case 0xc00018:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0xc00028:
-			return MSM6295ReadStatus(1);
+			return MSM6295Read(1);
 
 		case 0xc00030:
 			protindex++;
@@ -367,7 +367,7 @@ static void __fastcall dreamwld_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0xc00018:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x000001:
@@ -388,7 +388,7 @@ static void __fastcall dreamwld_write_byte(UINT32 address, UINT8 data)
 		return;
 
 		case 0xc00028:
-			MSM6295Command(1, data);
+			MSM6295Write(1, data);
 		return;
 	}
 

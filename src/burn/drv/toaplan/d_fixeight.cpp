@@ -223,7 +223,7 @@ void __fastcall fixeight_v25_write(UINT32 address, UINT8 data)
 		return;
 
 		case 0x0000c:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -236,10 +236,10 @@ UINT8 __fastcall fixeight_v25_read(UINT32 address)
 			return set_region;
 
 		case 0x0000b:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x0000c:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

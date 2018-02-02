@@ -101,7 +101,7 @@ static void __fastcall patapata_write_word(UINT32 address, UINT16 data)
 
 		case 0x150000:
 		case 0x150010:
-			MSM6295Command((address / 0x10) & 1, data & 0xff);
+			MSM6295Write((address / 0x10) & 1, data & 0xff);
 		return;
 
 		case 0x150020:
@@ -131,7 +131,7 @@ static UINT16 __fastcall patapata_read_word(UINT32 address)
 
 		case 0x150000:
 		case 0x150010:
-			return MSM6295ReadStatus((address / 0x10) & 1);
+			return MSM6295Read((address / 0x10) & 1);
 	}
 
 	return 0;

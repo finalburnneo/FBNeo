@@ -574,7 +574,7 @@ UINT8 __fastcall sf_sound_read(UINT16 address)
 			return soundlatch;
 
 		case 0xe001:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 	}
 
 	return 0;

@@ -60,7 +60,7 @@ static void __fastcall dreambal_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x180000:
-			MSM6295Command(0,data & 0xff);
+			MSM6295Write(0,data & 0xff);
 		return;
 
 		case 0x165000:
@@ -110,7 +110,7 @@ static UINT16 __fastcall dreambal_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x180000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

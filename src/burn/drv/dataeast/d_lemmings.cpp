@@ -274,7 +274,7 @@ static void lemmings_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x1000:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x1800:
@@ -289,10 +289,10 @@ static UINT8 lemmings_sound_read(UINT16 address)
 	{
 		case 0x0800:
 		case 0x0801:
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 
 		case 0x1000:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 
 		case 0x1800:
 			return *soundlatch;

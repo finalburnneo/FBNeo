@@ -190,7 +190,7 @@ void __fastcall egghunt_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xe004:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 	}
 }
@@ -207,7 +207,7 @@ UINT8 __fastcall egghunt_sound_read(UINT16 address)
 			return oki_bank;
 
 		case 0xe004:
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 	}
 
 	return 0;

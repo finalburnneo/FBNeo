@@ -929,7 +929,7 @@ UINT8 PlaymarkSoundReadPort(UINT16 Port)
 				Data = DrvSoundCommand;
 			} else {
 				if ((DrvOkiControl & 0x38) == 0x28) {
-					Data = MSM6295ReadStatus(0) & 0x0f;
+					Data = MSM6295Read(0) & 0x0f;
 				}
 			}
 
@@ -981,7 +981,7 @@ void PlaymarkSoundWritePort(UINT16 Port, UINT8 Data)
 			DrvOkiControl = Data;
 
 			if ((Data & 0x38) == 0x18) {
-				MSM6295Command(0, DrvOkiCommand);
+				MSM6295Write(0, DrvOkiCommand);
 			}
 			return;
 		}

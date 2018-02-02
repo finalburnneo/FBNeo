@@ -578,11 +578,11 @@ UINT8 __fastcall WwfwfestZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xc801: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xd800: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xe000: {
@@ -611,7 +611,7 @@ void __fastcall WwfwfestZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xd800: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		

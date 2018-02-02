@@ -1623,13 +1623,13 @@ static const INT32 Tumbleb2SoundLookup[256] = {
 
 static void Tumbleb2PlayMusic()
 {
-	INT32 Status = MSM6295ReadStatus(0);
+	INT32 Status = MSM6295Read(0);
 
 	if (Tumbleb2MusicIsPlaying)
 	{
 		if ((Status & 0x08) == 0) {
-			MSM6295Command(0, 0x80 | Tumbleb2MusicCommand);
-			MSM6295Command(0, 0x00 | 0x82);
+			MSM6295Write(0, 0x80 | Tumbleb2MusicCommand);
+			MSM6295Write(0, 0x00 | 0x82);
 		}
 	}
 }
@@ -1641,19 +1641,19 @@ static void Tumbleb2SetMusicBank(INT32 Bank)
 
 static void Tumbleb2PlaySound(UINT16 data)
 {
-	INT32 Status = MSM6295ReadStatus(0);
+	INT32 Status = MSM6295Read(0);
 	
 	if ((Status & 0x01) == 0) {
-		MSM6295Command(0, 0x80 | data);
-		MSM6295Command(0, 0x00 | 0x12);
+		MSM6295Write(0, 0x80 | data);
+		MSM6295Write(0, 0x00 | 0x12);
 	} else {
 		if ((Status & 0x02) == 0) {
-			MSM6295Command(0, 0x80 | data);
-			MSM6295Command(0, 0x00 | 0x22);
+			MSM6295Write(0, 0x80 | data);
+			MSM6295Write(0, 0x00 | 0x22);
 		} else {
 			if ((Status & 0x04) == 0) {
-				MSM6295Command(0, 0x80 | data);
-				MSM6295Command(0, 0x00 | 0x42);
+				MSM6295Write(0, 0x80 | data);
+				MSM6295Write(0, 0x00 | 0x42);
 			}	
 		}
 	}
@@ -1661,18 +1661,18 @@ static void Tumbleb2PlaySound(UINT16 data)
 
 static void Tumbleb2ProcessMusicCommand(UINT16 data)
 {
-	INT32 Status = MSM6295ReadStatus(0);
+	INT32 Status = MSM6295Read(0);
 	
 	if (data == 1) {
 		if ((Status & 0x08) == 0x08) {
-			MSM6295Command(0, 0x40);
+			MSM6295Write(0, 0x40);
 			Tumbleb2MusicIsPlaying = 0;
 		}
 	} else {
 		if (Tumbleb2MusicIsPlaying != data) {
 			Tumbleb2MusicIsPlaying = data;
 			
-			MSM6295Command(0, 0x40);
+			MSM6295Write(0, 0x40);
 			
 			switch (data) {
 				case 0x04: // map screen
@@ -1815,7 +1815,7 @@ void __fastcall Tumbleb68KWriteByte(UINT32 a, UINT8 d)
 				Tumbleb2SoundMCUCommand(d);
 				return;
 			} else {
-				MSM6295Command(0, d);
+				MSM6295Write(0, d);
 				return;
 			}
 		}
@@ -1936,7 +1936,7 @@ void __fastcall Tumbleb68KWriteWord(UINT32 a, UINT16 d)
 						if (d & 0xff) DrvSoundLatch = d & 0xff;
 						return;
 					} else {
-						MSM6295Command(0, d & 0xff);
+						MSM6295Write(0, d & 0xff);
 						return;
 					}
 				}
@@ -2015,7 +2015,7 @@ UINT8 __fastcall Fncywld68KReadByte(UINT32 a)
 		}
 		
 		case 0x100005: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0x180002: {
@@ -2053,7 +2053,7 @@ void __fastcall Fncywld68KWriteByte(UINT32 a, UINT8 d)
 		}
 		
 		case 0x100005: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
@@ -2187,7 +2187,7 @@ UINT8 __fastcall JumpkidsZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0x9800: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xa000: {
@@ -2212,7 +2212,7 @@ void __fastcall JumpkidsZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0x9800: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
@@ -2226,11 +2226,11 @@ UINT8 __fastcall SemicomZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xf001: {
-			return BurnYM2151ReadStatus();
+			return BurnYM2151Read();
 		}
 		
 		case 0xf002: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0xf008: {
@@ -2259,7 +2259,7 @@ void __fastcall SemicomZ80Write(UINT16 a, UINT8 d)
 		}
 		
 		case 0xf002: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		
@@ -2285,7 +2285,7 @@ UINT8 __fastcall JumppopZ80PortRead(UINT16 a)
 	
 	switch (a) {
 		case 0x02: {
-			return MSM6295ReadStatus(0);
+			return MSM6295Read(0);
 		}
 		
 		case 0x03: {
@@ -2322,7 +2322,7 @@ void __fastcall JumppopZ80PortWrite(UINT16 a, UINT8 d)
 		}
 		
 		case 0x02: {
-			MSM6295Command(0, d);
+			MSM6295Write(0, d);
 			return;
 		}
 		

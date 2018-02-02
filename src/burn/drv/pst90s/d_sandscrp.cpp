@@ -383,7 +383,7 @@ static void __fastcall sandscrp_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x04:
-			MSM6295Command(0, data);
+			MSM6295Write(0, data);
 		return;
 
 		case 0x06:

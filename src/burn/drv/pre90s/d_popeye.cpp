@@ -86,7 +86,7 @@ STDINPUTINFO(Skyskipr)
 static struct BurnDIPInfo SkyskiprDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0x7f, NULL		},
-	{0x13, 0xff, 0xff, 0x7d, NULL		},
+	{0x13, 0xff, 0xff, 0x75, NULL		},
 
 	{0   , 0xfe, 0   ,    16, "Coinage"		},
 	{0x12, 0x01, 0x0f, 0x03, "A 3/1 B 1/2"		},
@@ -124,17 +124,15 @@ static struct BurnDIPInfo SkyskiprDIPList[]=
 	{0x13, 0x01, 0x03, 0x01, "3"		},
 	{0x13, 0x01, 0x03, 0x00, "4"		},
 
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x13, 0x01, 0x04, 0x04, "Off"		},
-	{0x13, 0x01, 0x04, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"		},
-	{0x13, 0x01, 0x08, 0x00, "On"		},
-
-	{0   , 0xfe, 0   ,    2, "Unknown"		},
-	{0x13, 0x01, 0x10, 0x10, "Off"		},
-	{0x13, 0x01, 0x10, 0x00, "On"		},
+	{0   , 0xfe, 0   ,    8, "Difficulty"			},
+	{0x13, 0x01, 0x1c, 0x1c, "Easiest"			},
+	{0x13, 0x01, 0x1c, 0x18, "Very Easy"			},
+	{0x13, 0x01, 0x1c, 0x14, "Easy"				},
+	{0x13, 0x01, 0x1c, 0x10, "Medium Easy"			},
+	{0x13, 0x01, 0x1c, 0x0c, "Medium Hard"			},
+	{0x13, 0x01, 0x1c, 0x08, "Hard"				},
+	{0x13, 0x01, 0x1c, 0x04, "Very Hard"			},
+	{0x13, 0x01, 0x1c, 0x00, "Hardest"			},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
 	{0x13, 0x01, 0x20, 0x20, "15000"		},
@@ -578,10 +576,7 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 
 static void popeye_ayportB_write(UINT32 /*addr*/, UINT32 data)
 {
-	/* bit 0 flips screen */
-	//flip_screen_set(data & 1);
-
-	/* bits 1-3 select DSW1 bit to read */
+	// flipscreen & 1
 	m_dswbit = (data & 0x0e) >> 1;
 }
 
@@ -590,12 +585,24 @@ static UINT8 popeye_ayportA_read(UINT32 /*addr*/)
 	return (DrvDip[0] & 0x7f) | ((DrvDip[1] << (7-m_dswbit)) & 0x80);
 }
 
-static INT32 CharPlaneOffsets[2] = { 0, 0 };
-static INT32 CharXOffsets[16] = { 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1, 0,0 };
-static INT32 CharYOffsets[16] = { 0*8,0*8, 1*8,1*8, 2*8,2*8, 3*8,3*8, 4*8,4*8, 5*8,5*8, 6*8,6*8, 7*8,7*8 };
-static INT32 SpritePlaneOffsets[2] = { 0, RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,2) };
-static INT32 SpriteXOffsets[16] = { RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+7,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+6,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+5,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+4,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+3,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+2,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+1,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+0,7,6,5,4,3,2,1,0};
-static INT32 SpriteYOffsets[16] = { 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8, 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 };
+static void DecodeGfx(INT32 is_chars, UINT8 *data)
+{
+	INT32 CharPlaneOffsets[2] = { 0, 0 };
+	INT32 CharXOffsets[16] = { 7,7, 6,6, 5,5, 4,4, 3,3, 2,2, 1,1, 0,0 };
+	INT32 CharYOffsets[16] = { 0*8,0*8, 1*8,1*8, 2*8,2*8, 3*8,3*8, 4*8,4*8, 5*8,5*8, 6*8,6*8, 7*8,7*8 };
+	INT32 SpritePlaneOffsets[2] = { 0, RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,2) };
+	INT32 SpriteXOffsets[16] = { RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+7,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+6,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+5,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+4,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+3,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+2,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+1,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+0,7,6,5,4,3,2,1,0};
+	INT32 SpriteYOffsets[16] = { 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8, 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 };
+
+	bprintf(0, _T("gfxlenx1: %X\n"), gfxlenx1);
+
+	if (is_chars) {
+		GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, data, DrvCharGFX);
+	} else { // sprites
+		GfxDecode((gfxlenx1) ? 0x100 : 0x200 /*((0x4000*8)/2)/(16*16))*/, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, data, DrvSpriteGFX);
+	}
+
+}
 
 static INT32 SkyskipprLoad(UINT8 *DrvTempRom)
 {
@@ -609,20 +616,20 @@ static INT32 SkyskipprLoad(UINT8 *DrvTempRom)
 	if (BurnLoadRom(DrvTempRom + 0x5000, 5, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x6000, 6, 1)) return 1;
 
-	/* decrypt the program ROMs */
+	// decryption
 	for (INT32 i = 0; i < 0x8000; i++)
 		DrvZ80ROM[i] = BITSWAP08(DrvTempRom[BITSWAP16(i,15,14,13,12,11,10,8,7,0,1,2,4,5,9,3,6) ^ 0xfc],3,4,2,5,1,6,0,7);
 
-	memset(DrvTempRom, 0, 0x08000);
+	memset(DrvTempRom, 0, 0x10000);
 	if (BurnLoadRom(DrvTempRom         , 7, 1)) return 1;
-	GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvCharGFX);
+	DecodeGfx(1, DrvTempRom);
 
-	memset(DrvTempRom, 0, 0x01000);
+	memset(DrvTempRom, 0, 0x10000);
 	if (BurnLoadRom(DrvTempRom + 0x0000, 8, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x1000, 9, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x2000,10, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x3000,11, 1)) return 1;
-	GfxDecode(0x100 /*((0x4000*8)/2)/(16*16))*/, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
+	DecodeGfx(0, DrvTempRom);
 
 	if (BurnLoadRom(DrvColorPROM + 0x0000, 12, 1)) return 1;
 	if (BurnLoadRom(DrvColorPROM + 0x0020, 13, 1)) return 1;
@@ -647,14 +654,14 @@ static INT32 PopeyeLoad(UINT8 *DrvTempRom)
 
 	memset(DrvTempRom, 0, 0x08000);
 	if (BurnLoadRom(DrvTempRom         , 4, 1)) return 1;
-	GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom+0x800, DrvCharGFX);
+	DecodeGfx(1, DrvTempRom + 0x800);
 
 	memset(DrvTempRom, 0, 0x01000);
 	if (BurnLoadRom(DrvTempRom + 0x0000, 5, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x2000, 6, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x4000, 7, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x6000, 8, 1)) return 1;
-	GfxDecode(0x200, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
+	DecodeGfx(0, DrvTempRom);
 
 	if (BurnLoadRom(DrvColorPROM + 0x0000,  9, 1)) return 1;
 	if (BurnLoadRom(DrvColorPROM + 0x0020, 10, 1)) return 1;
@@ -677,20 +684,20 @@ static INT32 PopeyejLoad(UINT8 *DrvTempRom)
 	if (BurnLoadRom(DrvTempRom + 0x6000, 6, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x7000, 7, 1)) return 1;
 
-	/* decrypt the program ROMs */
+	// decryption
 	for (INT32 i = 0; i < 0x8000; i++)
 		DrvZ80ROM[i] = BITSWAP08(DrvTempRom[BITSWAP16(i,15,14,13,12,11,10,8,7,0,1,2,4,5,9,3,6) ^ 0xfc],3,4,2,5,1,6,0,7);
 
 	memset(DrvTempRom, 0, 0x08000);
 	if (BurnLoadRom(DrvTempRom         , 8, 1)) return 1;
-	GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom, DrvCharGFX);
+	DecodeGfx(1, DrvTempRom);
 
 	memset(DrvTempRom, 0, 0x01000);
 	if (BurnLoadRom(DrvTempRom + 0x0000, 9, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x2000, 10, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x4000, 11, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x6000, 12, 1)) return 1;
-	GfxDecode(0x200, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
+	DecodeGfx(0, DrvTempRom);
 
 	if (BurnLoadRom(DrvColorPROM + 0x0000, 13, 1)) return 1;
 	if (BurnLoadRom(DrvColorPROM + 0x0020, 14, 1)) return 1;
@@ -714,14 +721,14 @@ static INT32 PopeyeblLoad(UINT8 *DrvTempRom)
 
 	memset(DrvTempRom, 0, 0x08000);
 	if (BurnLoadRom(DrvTempRom         , 4, 1)) return 1;
-	GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, DrvTempRom+0x800, DrvCharGFX);
+	DecodeGfx(1, DrvTempRom + 0x800);
 
 	memset(DrvTempRom, 0, 0x01000);
 	if (BurnLoadRom(DrvTempRom + 0x0000, 5, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x2000, 6, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x4000, 7, 1)) return 1;
 	if (BurnLoadRom(DrvTempRom + 0x6000, 8, 1)) return 1;
-	GfxDecode(0x200, 2, 16, 16, SpritePlaneOffsets, SpriteXOffsets, SpriteYOffsets, 0x80, DrvTempRom, DrvSpriteGFX);
+	DecodeGfx(0, DrvTempRom);
 
 	if (BurnLoadRom(DrvColorPROM + 0x0000,  9, 1)) return 1;
 	if (BurnLoadRom(DrvColorPROM + 0x0020, 10, 1)) return 1;

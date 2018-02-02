@@ -594,8 +594,6 @@ static void DecodeGfx(INT32 is_chars, UINT8 *data)
 	INT32 SpriteXOffsets[16] = { RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+7,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+6,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+5,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+4,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+3,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+2,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+1,RGN_FRAC(((gfxlenx1) ? 0x4000 : 0x8000), 1,4)+0,7,6,5,4,3,2,1,0};
 	INT32 SpriteYOffsets[16] = { 15*8, 14*8, 13*8, 12*8, 11*8, 10*8, 9*8, 8*8, 7*8, 6*8, 5*8, 4*8, 3*8, 2*8, 1*8, 0*8 };
 
-	bprintf(0, _T("gfxlenx1: %X\n"), gfxlenx1);
-
 	if (is_chars) {
 		GfxDecode(0x100, 1, 16, 16, CharPlaneOffsets, CharXOffsets, CharYOffsets, 0x40, data, DrvCharGFX);
 	} else { // sprites
@@ -765,7 +763,7 @@ static INT32 DrvInit(INT32 (*LoadRoms)(UINT8 *DrvTempRom))
 	ZetMapMemory(DrvVidRAM,		0xa000, 0xa3ff, MAP_RAM);
 	ZetMapMemory(DrvColorRAM,	0xa400, 0xa7ff, MAP_RAM);
 	if (bootleg) {
-		bprintf(0, _T("Bootleg stuff.\n"));
+		//bprintf(0, _T("Bootleg stuff.\n"));
 		ZetMapMemory(DrvProtPROM,	0xe000, 0xe01f | 0xff, MAP_ROM);
 	}
 	ZetSetWriteHandler(main_write);

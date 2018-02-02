@@ -9,10 +9,10 @@ struct AY8910interface
 	INT32 num;	/* total number of 8910 in the machine */
 	INT32 baseclock;
 	INT32 mixing_level[MAX_8910];
-    read8_handler portAread[MAX_8910];
-    read8_handler portBread[MAX_8910];
-    write8_handler portAwrite[MAX_8910];
-    write8_handler portBwrite[MAX_8910];
+	read8_handler portAread[MAX_8910];
+	read8_handler portBread[MAX_8910];
+	write8_handler portAwrite[MAX_8910];
+	write8_handler portBwrite[MAX_8910];
 	void (*handler[MAX_8910])(INT32 irq);	/* IRQ handler for the YM2203 */
 };
 
@@ -41,8 +41,13 @@ INT32 AY8910InitYM(INT32 chip, INT32 clock, INT32 sample_rate,
 
 INT32 AY8910Scan(INT32 nAction, INT32* pnMin);
 
-INT32 AY8910SetPorts(INT32 chip, read8_handler portAread, read8_handler portBread,
-		write8_handler portAwrite, write8_handler portBwrite);
+
+// add signal ignored for any chip but #0
+INT32 AY8910Init2(INT32 chip, INT32 clock, INT32 add_signal);
+void AY8910Render2(INT16* dest, INT32 length);
+
+
+INT32 AY8910SetPorts(INT32 chip, read8_handler portAread, read8_handler portBread,write8_handler portAwrite, write8_handler portBwrite);
 		
 void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal);
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);

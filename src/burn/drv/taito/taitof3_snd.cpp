@@ -6,6 +6,7 @@
 #include "es5506.h"
 #include "mb87078.h"
 #include "taito.h"
+#include "taitof3_snd.h"
 
 // Allocate these externally!
 UINT8 *TaitoF3SoundRom = NULL;
@@ -33,10 +34,12 @@ static UINT32 TaitoES5510DOLLatch;
 static UINT32 TaitoES5510DILLatch;
 static UINT32 TaitoES5510DADRLatch;
 static UINT8  TaitoES5510RAMSelect;
+static UINT32 TaitoF3SoundIRQhz;
 
 #define IRQ_TRIGGER_OFF		0
 #define IRQ_TRIGGER_ONCE	1
 #define IRQ_TRIGGER_PULSE	2
+#define IRQ_DEFAULT_HZ      16000000
 
 static INT32 TaitoF3CpuNum = 2;
 
@@ -169,7 +172,7 @@ static void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
 						//bprintf(PRINT_NORMAL, _T("counter is %04x (/16), so interrupt once in %d cycles\n"), TaitoF3Counter, (16000000 / 2000000) * TaitoF3Counter * 16);
 						TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_ONCE;
 						TaitoF3SoundTriggerIRQCycleCounter = 0;
-						TaitoF3SoundTriggerIRQCycles = (16000000 / 2000000) * TaitoF3Counter * 16;
+						TaitoF3SoundTriggerIRQCycles = (TaitoF3SoundIRQhz / 2000000) * TaitoF3Counter * 16;
 						return;
 					}
 
@@ -185,7 +188,7 @@ static void __fastcall TaitoF3Sound68KWriteByte(UINT32 a, UINT8 d)
 						//bprintf(PRINT_NORMAL, _T("counter is %04x, so interrupt every %d cycles\n"), TaitoF3Counter, (16000000 / 2000000) * TaitoF3Counter);
 						TaitoF3SoundTriggerIRQCyclesMode = IRQ_TRIGGER_PULSE;
 						TaitoF3SoundTriggerIRQPulseCycleCounter = 0;
-						TaitoF3SoundTriggerIRQPulseCycles = (16000000 / 2000000) * TaitoF3Counter;
+						TaitoF3SoundTriggerIRQPulseCycles = (TaitoF3SoundIRQhz / 2000000) * TaitoF3Counter;
 						return;
 					}
 
@@ -349,6 +352,13 @@ void TaitoF3SoundInit(INT32 cpunum)
 	ES5505Init(30476100/2, TaitoF3ES5506Rom, TaitoF3ES5506Rom, NULL);
 
 	mb87078_init(TaitoF3VolumeCallback);
+
+	TaitoF3SoundIRQConfig(0);
+}
+
+void TaitoF3SoundIRQConfig(INT32 bAlternateHz)
+{
+	TaitoF3SoundIRQhz = (!bAlternateHz) ? IRQ_DEFAULT_HZ : (30476100 / 2);
 }
 
 void TaitoF3CpuUpdate(INT32 nInterleave, INT32 nCurrentSlice)

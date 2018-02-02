@@ -1859,7 +1859,13 @@ STD_ROM_FN(ridingf)
 
 static INT32 ridingfInit()
 {
-	return DrvInit(NULL, f3_12bit_palette_update, 1, RIDINGF, 1, 0x417FE4);
+	INT32 rc = DrvInit(NULL, f3_12bit_palette_update, 1, RIDINGF, 1, 0x417FE4);
+
+	if (!rc) {
+		TaitoF3SoundIRQConfig(1);
+	}
+
+	return rc;
 }
 
 struct BurnDriver BurnDrvRidingf = {

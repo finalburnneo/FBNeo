@@ -31,8 +31,6 @@ extern "C" {
 	#include "ay8910.h"
 }
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 *AllMem	= NULL;
 static UINT8 *MemEnd	= NULL;
 static UINT8 *AllRam	= NULL;
@@ -1332,23 +1330,19 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	maincpu		    = Next; Next += 0x020000;
-	game		    = Next; Next += MAX_MSX_CARTSIZE;
-	game2		    = Next; Next += MAX_MSX_CARTSIZE;
-	kanji_rom       = Next; Next += 0x040000;
+	maincpu		    	= Next; Next += 0x020000;
+	game		    	= Next; Next += MAX_MSX_CARTSIZE;
+	game2		    	= Next; Next += MAX_MSX_CARTSIZE;
+	kanji_rom       	= Next; Next += 0x040000;
 
-	game_sram       = Next; Next += 0x004000;
+	game_sram       	= Next; Next += 0x004000;
 
 	AllRam			= Next;
 
 	main_mem		= Next; Next += 0x020000;
-	EmptyRAM        = Next; Next += 0x010000;
+	EmptyRAM       		= Next; Next += 0x010000;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -1452,7 +1446,8 @@ static INT32 DrvInit()
 	ZetSetReadHandler(msx_read);
 	ZetClose();
 
-	AY8910Init(0, 3579545/2, nBurnSoundRate, ay8910portAread, NULL, ay8910portAwrite, ay8910portBwrite);
+	AY8910Init2(0, 3579545/2, 0);
+	AY8910SetPorts(0, ay8910portAread, NULL, ay8910portAwrite, ay8910portBwrite);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	K051649Init(3579545/2);
@@ -1595,7 +1590,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			K051649Update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1608,7 +1603,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			K051649Update(pSoundBuf, nSegmentLength);
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);

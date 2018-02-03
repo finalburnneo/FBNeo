@@ -27,8 +27,6 @@ static UINT8 *DrvVidRAM2;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -432,10 +430,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -615,7 +609,8 @@ static INT32 DrvInit(INT32 load_type)
 	ZetSetInHandler(vastar_sound_read_port);
 	ZetClose();
 
-	AY8910Init(0, 1536000, nBurnSoundRate, &vastar_ay8910_read_A, &vastar_ay8910_read_B, NULL, NULL);
+	AY8910Init2(0, 1536000, 0);
+	AY8910SetPorts(0, &vastar_ay8910_read_A, &vastar_ay8910_read_B, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -846,7 +841,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

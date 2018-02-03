@@ -6,24 +6,21 @@
 #include "tms9928a.h"
 #include "8255ppi.h"
 #include "bitswap.h"
-
 extern "C" {
 	#include "ay8910.h"
 }
-static INT16 *pAY8910Buffer[6];
 
 static UINT8 *AllMem	= NULL;
 static UINT8 *MemEnd	= NULL;
 static UINT8 *AllRam	= NULL;
 static UINT8 *RamEnd	= NULL;
 static UINT8 *maincpu	= NULL;
-static UINT8 *game = NULL;
+static UINT8 *game	= NULL;
 static UINT8 *main_mem	= NULL;
 
 static UINT8 DrvInputs[2];
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 static UINT8 DrvNMI;
 
@@ -32,26 +29,18 @@ static UINT8 mem_map = 0;
 static UINT8 mem_banks[4];
 
 static struct BurnInputInfo PengadvbInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"	},
 };
 
 STDINPUTINFO(Pengadvb)
-
-static struct BurnDIPInfo PengadvbDIPList[]=
-{
-	{0x08, 0xff, 0xff, 0x00, NULL		},
-};
-
-STDDIPINFO(Pengadvb)
 
 static void __fastcall msx_write_port(UINT16 port, UINT8 data)
 {
@@ -255,17 +244,13 @@ static INT32 MemIndex()
 	maincpu		= Next; Next += 0x020000;
 	game		= Next; Next += 0x020000;
 
-	AllRam			= Next;
+	AllRam		= Next;
 
-	main_mem		= Next; Next += 0x010400;
+	main_mem	= Next; Next += 0x010400;
 
-	RamEnd			= Next;
+	RamEnd		= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
-	MemEnd			= Next;
+	MemEnd		= Next;
 
 	return 0;
 }
@@ -358,7 +343,8 @@ static INT32 DrvInit()
 	ZetSetReadHandler(msx_read);
 	ZetClose();
 
-	AY8910Init(0, 3579545/2, nBurnSoundRate, ay8910portAread, NULL, NULL, ay8910portBwrite);
+	AY8910Init2(0, 3579545/2, 0);
+	AY8910SetPorts(0, ay8910portAread, NULL, NULL, ay8910portBwrite);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
@@ -413,7 +399,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[1] = { 0 };
 	INT32 nSoundBufferPos = 0;
 
-    ZetOpen(0);
+	ZetOpen(0);
 
 	if (DrvNMI && !lastnmi) {
 		ZetNmi();
@@ -430,7 +416,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -442,7 +428,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 
@@ -497,7 +483,7 @@ struct BurnDriver BurnDrvPengadvb = {
 	"Penguin Adventure (bootleg of MSX version)\0", NULL, "bootleg (Screen) / Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, pengadvbRomInfo, pengadvbRomName, NULL, NULL, PengadvbInputInfo, PengadvbDIPInfo,
+	NULL, pengadvbRomInfo, pengadvbRomName, NULL, NULL, PengadvbInputInfo, NULL,
 	DrvInit, DrvExit, DrvFrame, TMS9928ADraw, DrvScan, NULL, TMS9928A_PALETTE_SIZE,
 	272, 216, 4, 3
 };

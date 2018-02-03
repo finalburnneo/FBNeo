@@ -26,8 +26,6 @@ static UINT8 *DrvM6502RAM1;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 bankdata;
 static UINT8 flipscreen;
 static UINT8 pixelcolor;
@@ -203,12 +201,13 @@ static UINT8 dogfgt_main_read(UINT16 address)
 	return 0;
 }
 
-static void dogfgt_sub_write(UINT16 address, UINT8 data)
+static void dogfgt_sub_write(UINT16 address, UINT8 /*data*/)
 {
 	switch (address)
 	{
 		case 0x4000:
 			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
+		return;
 	}
 }
 
@@ -246,8 +245,8 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvM6502ROM0	= Next; Next += 0x008000;
-	DrvM6502ROM1	= Next; Next += 0x008000;
+	DrvM6502ROM0		= Next; Next += 0x008000;
+	DrvM6502ROM1		= Next; Next += 0x008000;
 
 	DrvGfxROM0		= Next; Next += 0x010000;
 	DrvGfxROM1		= Next; Next += 0x030000;
@@ -263,16 +262,9 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x000100;
 	DrvBMPRAM		= Next; Next += 0x008000;
 	DrvShareRAM		= Next; Next += 0x000800;
-	DrvM6502RAM1	= Next; Next += 0x000800;
+	DrvM6502RAM1		= Next; Next += 0x000800;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -363,8 +355,8 @@ static INT32 DrvInit()
 	M6502SetWriteHandler(dogfgt_sub_write);
 	M6502Close();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -561,7 +553,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

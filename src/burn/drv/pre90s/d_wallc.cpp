@@ -22,8 +22,6 @@ static UINT8 *DrvVidRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
@@ -33,18 +31,18 @@ static UINT8 DrvReset;
 static UINT8 Dial1;
 
 static struct BurnInputInfo WallcInputList[] = {
-	{"P1 Coin",	    BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
 
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"},
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"},
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
-	{"P1 Button 2",	BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 2"	},
 
-	{"Service",     BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
-	{"Reset",	BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip 1",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip 2",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Service",     	BIT_DIGITAL,	DrvJoy1 + 6,	"service"	},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip 1",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip 2",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Wallc)
@@ -89,7 +87,7 @@ static struct BurnDIPInfo WallcDIPList[]=
 
 STDDIPINFO(Wallc)
 
-void __fastcall wallc_write(UINT16 address, UINT8 data)
+static void __fastcall wallc_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -103,7 +101,7 @@ void __fastcall wallc_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall wallc_read(UINT16 address)
+static UINT8 __fastcall wallc_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -202,10 +200,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -236,19 +230,17 @@ static INT32 DrvInit(INT32 incr)
 
 	ZetInit(0);
 	ZetOpen(0);
-
 	ZetMapMemory(DrvZ80ROM, 0x0000, 0x7fff, MAP_ROM);
 	ZetMapMemory(DrvVidRAM, 0x8000, 0x83ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM, 0x8400, 0x87ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM, 0x8800, 0x8bff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM, 0x8c00, 0x8fff, MAP_RAM);
 	ZetMapMemory(DrvZ80RAM, 0xa000, 0xa3ff, MAP_RAM);
-
 	ZetSetWriteHandler(wallc_write);
 	ZetSetReadHandler(wallc_read);
 	ZetClose();
 
-	AY8910Init(0, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1536000, 0);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -321,7 +313,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

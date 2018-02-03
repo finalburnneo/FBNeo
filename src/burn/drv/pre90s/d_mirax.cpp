@@ -4,11 +4,9 @@
 #include "driver.h"
 #include "z80_intf.h"
 #include "bitswap.h"
-
 extern "C" {
 	#include "ay8910.h"
 }
-static INT16 *pAY8910Buffer[6];
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -42,77 +40,76 @@ static UINT8 DrvReset;
 
 static struct BurnInputInfo MiraxInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 coin"   },
-	{"P1 Start",	BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"  },
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"  },
 	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 up"     },
 	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 down"   },
 	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"   },
-	{"P1 Right",	BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"  },
-	{"P1 Button 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1" },
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"  },
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1" },
 
 	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"   },
-	{"P2 Start",	BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"  },
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"  },
 	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 up"     },
 	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 down"   },
 	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"   },
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"  },
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1" },
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"  },
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1" },
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	    "reset"     },
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	    "dip"       },
-	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	    "dip"       },
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"     },
+	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"       },
+	{"Dip B",		BIT_DIPSWITCH,	DrvDip + 1,	"dip"       },
 };
 
 STDINPUTINFO(Mirax)
 
-
 static struct BurnDIPInfo MiraxDIPList[]=
 {
-	{0x0f, 0xff, 0xff, 0x00, NULL		            },
-	{0x10, 0xff, 0xff, 0x0c, NULL		            },
+	{0x0f, 0xff, 0xff, 0x00, NULL		        },
+	{0x10, 0xff, 0xff, 0x0c, NULL		        },
 
-	{0   , 0xfe, 0   ,    4, "Coinage"		        },
+	{0   , 0xfe, 0   ,    4, "Coinage"		},
 	{0x0f, 0x01, 0x03, 0x03, "2 Coins 1 Credit"	},
 	{0x0f, 0x01, 0x03, 0x00, "1 Coin  1 Credit"	},
 	{0x0f, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
 	{0x0f, 0x01, 0x03, 0x02, "1 Coin  3 Credits"	},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		        },
-	{0x0f, 0x01, 0x04, 0x00, "Upright"		        },
-	{0x0f, 0x01, 0x04, 0x04, "Cocktail"		        },
+	{0   , 0xfe, 0   ,    2, "Cabinet"		},
+	{0x0f, 0x01, 0x04, 0x00, "Upright"		},
+	{0x0f, 0x01, 0x04, 0x04, "Cocktail"		},
 
-	{0   , 0xfe, 0   ,    2, "Flip Screen"		    },
-	{0x0f, 0x01, 0x08, 0x00, "Off"		            },
-	{0x0f, 0x01, 0x08, 0x08, "On"		            },
+	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
+	{0x0f, 0x01, 0x08, 0x00, "Off"		        },
+	{0x0f, 0x01, 0x08, 0x08, "On"		 	},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		        },
-	{0x0f, 0x01, 0x30, 0x30, "2"		            },
-	{0x0f, 0x01, 0x30, 0x00, "3"		            },
-	{0x0f, 0x01, 0x30, 0x10, "4"		            },
-	{0x0f, 0x01, 0x30, 0x20, "5"		            },
+	{0   , 0xfe, 0   ,    4, "Lives"		},
+	{0x0f, 0x01, 0x30, 0x30, "2"		 	},
+	{0x0f, 0x01, 0x30, 0x00, "3"			},
+	{0x0f, 0x01, 0x30, 0x10, "4"			},
+	{0x0f, 0x01, 0x30, 0x20, "5"		   	},
 
-	{0   , 0xfe, 0   ,    2, "Bonus Life"		    },
-	{0x10, 0x01, 0x01, 0x00, "30k 80k 150k"		    },
-	{0x10, 0x01, 0x01, 0x01, "900k 950k 990k"		},
+	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
+	{0x10, 0x01, 0x01, 0x00, "30k 80k 150k"		},
+	{0x10, 0x01, 0x01, 0x01, "900k 950k 990k"	},
 
 	{0   , 0xfe, 0   ,    2, "Flags for Extra Life"	},
-	{0x10, 0x01, 0x02, 0x00, "5"		            },
-	{0x10, 0x01, 0x02, 0x02, "8"		            },
+	{0x10, 0x01, 0x02, 0x00, "5"		        },
+	{0x10, 0x01, 0x02, 0x02, "8"			},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		    },
-	{0x10, 0x01, 0x04, 0x00, "Off"		            },
-	{0x10, 0x01, 0x04, 0x04, "On"		            },
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x10, 0x01, 0x04, 0x00, "Off"			},
+	{0x10, 0x01, 0x04, 0x04, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "Allow Continue"		},
-	{0x10, 0x01, 0x08, 0x00, "No"		            },
-	{0x10, 0x01, 0x08, 0x08, "Yes"		            },
+	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
+	{0x10, 0x01, 0x08, 0x00, "No"			},
+	{0x10, 0x01, 0x08, 0x08, "Yes"			},
 
 	{0   , 0xfe, 0   ,    2, "AutoPlay Mode (Debug)"},
-	{0x10, 0x01, 0x10, 0x00, "No"		            },
-	{0x10, 0x01, 0x10, 0x10, "Yes"		            },
+	{0x10, 0x01, 0x10, 0x00, "No"			},
+	{0x10, 0x01, 0x10, 0x10, "Yes"			},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty"		    },
-	{0x10, 0x01, 0x20, 0x00, "Easy"		            },
-	{0x10, 0x01, 0x20, 0x20, "Hard"		            },
+	{0   , 0xfe, 0   ,    2, "Difficulty"		},
+	{0x10, 0x01, 0x20, 0x00, "Easy"			},
+	{0x10, 0x01, 0x20, 0x20, "Hard"		 	},
 };
 
 STDDIPINFO(Mirax)
@@ -238,9 +235,9 @@ static INT32 MemIndex()
 	DrvZ80ROM1		= Next; Next += 0x10000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x040 * sizeof(UINT32);
-	DrvCharGFX      = Next; Next += 0x40000;
-	DrvSpriteGFX    = Next; Next += 0x40000;
-	DrvColorPROM    = Next; Next += 0x00400;
+	DrvCharGFX      	= Next; Next += 0x40000;
+	DrvSpriteGFX    	= Next; Next += 0x40000;
+	DrvColorPROM    	= Next; Next += 0x00400;
 
 	AllRam			= Next;
 
@@ -248,22 +245,15 @@ static INT32 MemIndex()
 	DrvZ80RAM1		= Next; Next += 0x01000;
 	DrvVidRAM		= Next; Next += 0x00400;
 	DrvColorRAM		= Next; Next += 0x00400;
-	DrvSpriteRAM	= Next; Next += 0x00300;
+	DrvSpriteRAM		= Next; Next += 0x00300;
 
-	nAyCtrl         = Next; Next += 0x00001;
-	nmi_mask        = Next; Next += 0x00001;
-	flipscreen_x    = Next; Next += 0x00001;
-	flipscreen_y    = Next; Next += 0x00001;
-	soundlatch      = Next; Next += 0x00001;
+	nAyCtrl         	= Next; Next += 0x00001;
+	nmi_mask       	 	= Next; Next += 0x00001;
+	flipscreen_x    	= Next; Next += 0x00001;
+	flipscreen_y    	= Next; Next += 0x00001;
+	soundlatch      	= Next; Next += 0x00001;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -279,7 +269,6 @@ static INT32 DrvInit()
 	INT32 c16PlaneOffsets[3] = { RGN_FRAC(0x18000, 2, 3), RGN_FRAC(0x18000, 1, 3), RGN_FRAC(0x18000, 0, 3) };
 	INT32 c16XOffsets[16] = { 0, 1, 2, 3, 4, 5, 6, 7 , 0+8*8, 1+8*8, 2+8*8, 3+8*8, 4+8*8, 5+8*8, 6+8*8, 7+8*8 };
 	INT32 c16YOffsets[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 0*8+8*8*2, 1*8+8*8*2, 2*8+8*8*2, 3*8+8*8*2, 4*8+8*8*2, 5*8+8*8*2, 6*8+8*8*2, 7*8+8*8*2 };
-
 
 	AllMem = NULL;
 	MemIndex();
@@ -353,9 +342,9 @@ static INT32 DrvInit()
 	ZetSetReadHandler(audio_read);
 	ZetClose();
 
-	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 3000000, 0);
+	AY8910Init2(1, 3000000, 1);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -364,7 +353,6 @@ static INT32 DrvInit()
 
 	return 0;
 }
-
 
 static INT32 DrvExit()
 {
@@ -525,7 +513,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

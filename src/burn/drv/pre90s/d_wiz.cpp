@@ -44,8 +44,6 @@ static UINT8 *char_bank_select;
 static UINT8 *screen_flip;
 static UINT8 *background_color;
 
-static INT16 *pAY8910Buffer[9];
-
 static UINT8 DrvInputs[2];
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -712,12 +710,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	{
-		for (INT32 i = 0; i < 9; i++) {
-			pAY8910Buffer[i] = (INT16*)Next; Next += nBurnSoundLen * sizeof(UINT16);
-		}
-	}
-
 	MemEnd			= Next;
 
 	return 0;
@@ -877,16 +869,16 @@ static INT32 DrvInit(int (*RomLoadCallback)())
 	ZetSetReadHandler(wiz_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(2, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1536000, 0);
+	AY8910Init2(1, 1536000, 1);
+	AY8910Init2(2, 1536000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
 
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.05, BURN_SND_ROUTE_BOTH);
-    bHasSamples = BurnSampleGetStatus(0) != -1;
+	bHasSamples = BurnSampleGetStatus(0) != -1;
 
 	GenericTilesInit();
 
@@ -914,7 +906,6 @@ static INT32 DrvExit()
 
 	return 0;
 }
-
 
 static void draw_background(INT16 bank, INT16 palbank, INT16 colortype)
 {
@@ -1117,7 +1108,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1127,7 +1118,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
 		}
 	}

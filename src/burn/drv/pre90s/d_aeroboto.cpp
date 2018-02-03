@@ -28,8 +28,6 @@ static UINT8 *DrvVidRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[9];
-
 static UINT8 *soundlatch;
 static UINT8 counter201;
 static UINT8 disable_irq;
@@ -288,13 +286,6 @@ static INT32 MemIndex()
 
 	RamEnd		= Next;
 
-	pAY8910Buffer[0] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd		= Next;
 
 	return 0;
@@ -383,8 +374,9 @@ static INT32 DrvInit()
 	M6809SetReadHandler(aeroboto_sound_read);
 	M6809Close();
 
-	AY8910Init(0, 1250000, nBurnSoundRate, &aeroboto_AY8910_0_portA, &aeroboto_AY8910_0_portB, NULL, NULL);
-	AY8910Init(1,  625000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1250000, 0);
+	AY8910Init2(1,  625000, 1);
+	AY8910SetPorts(0, &aeroboto_AY8910_0_portA, &aeroboto_AY8910_0_portB, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
@@ -621,7 +613,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -630,7 +622,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

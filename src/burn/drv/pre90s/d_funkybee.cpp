@@ -23,8 +23,6 @@ static UINT8 *DrvColRAM;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 *scroll;
 static UINT8 *flipscreen;
 static UINT8 *gfx_bank;
@@ -370,10 +368,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -416,24 +410,18 @@ static INT32 DrvInit(INT32 game)
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x4fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x4fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
-	ZetMapArea(0xa000, 0xbfff, 0, DrvVidRAM);
-	ZetMapArea(0xa000, 0xbfff, 1, DrvVidRAM);
-	ZetMapArea(0xa000, 0xbfff, 2, DrvVidRAM);
-	ZetMapArea(0xc000, 0xdfff, 0, DrvColRAM);
-	ZetMapArea(0xc000, 0xdfff, 1, DrvColRAM);
-	ZetMapArea(0xc000, 0xdfff, 2, DrvColRAM);
+	ZetMapMemory(DrvZ80ROM,	0x0000, 0x4fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,	0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,	0xa000, 0xbfff, MAP_RAM);
+	ZetMapMemory(DrvColRAM,	0xc000, 0xdfff, MAP_RAM);
 	ZetSetWriteHandler(funkybee_write);
 	ZetSetReadHandler(funkybee_read);
 	ZetSetOutHandler(funkybee_out_port);
 	ZetSetInHandler(funkybee_in_port);
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, &funkybee_ay8910_read_A, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910SetPorts(0, &funkybee_ay8910_read_A, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -575,7 +563,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

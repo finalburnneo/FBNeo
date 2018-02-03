@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-
 #include "driver.h"
 extern "C" {
  #include "ay8910.h"
@@ -39,7 +38,6 @@ static UINT8 *KyugoSprites          = NULL;
 static UINT8 *KyugoTempRom          = NULL;
 static UINT32 *KyugoPalette         = NULL;
 static INT16* pFMBuffer;
-static INT16* pAY8910Buffer[6];
 
 static UINT8 KyugoIRQEnable;
 static UINT8 KyugoSubCPUEnable;
@@ -1250,7 +1248,7 @@ static INT32 KyugoDoReset()
 	return 0;
 }
 
-UINT8 __fastcall KyugoRead1(UINT16 a)
+static UINT8 __fastcall KyugoRead1(UINT16 a)
 {
 	if (a >= 0x9800 && a <= 0x9fff) {
 		return KyugoSprite2Ram[a - 0x9800] | 0xf0;
@@ -1265,7 +1263,7 @@ UINT8 __fastcall KyugoRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall KyugoWrite1(UINT16 a, UINT8 d)
+static void __fastcall KyugoWrite1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xa800: {
@@ -1297,7 +1295,7 @@ void __fastcall KyugoWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall FlashgalPortWrite1(UINT16 a, UINT8 d)
+static void __fastcall FlashgalPortWrite1(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1323,7 +1321,7 @@ void __fastcall FlashgalPortWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall FlashgalaPortWrite1(UINT16 a, UINT8 d)
+static void __fastcall FlashgalaPortWrite1(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1349,7 +1347,7 @@ void __fastcall FlashgalaPortWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall GyrodinePortWrite1(UINT16 a, UINT8 d)
+static void __fastcall GyrodinePortWrite1(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1375,7 +1373,7 @@ void __fastcall GyrodinePortWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall SrdmissnPortWrite1(UINT16 a, UINT8 d)
+static void __fastcall SrdmissnPortWrite1(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1401,7 +1399,7 @@ void __fastcall SrdmissnPortWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall FlashgalRead2(UINT16 a)
+static UINT8 __fastcall FlashgalRead2(UINT16 a)
 {
 	switch (a) {
 		case 0xc000: {
@@ -1424,7 +1422,7 @@ UINT8 __fastcall FlashgalRead2(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall FlashgalaRead2(UINT16 a)
+static UINT8 __fastcall FlashgalaRead2(UINT16 a)
 {
 	switch (a) {
 		case 0xc040: {
@@ -1447,7 +1445,7 @@ UINT8 __fastcall FlashgalaRead2(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall GyrodineRead2(UINT16 a)
+static UINT8 __fastcall GyrodineRead2(UINT16 a)
 {
 	switch (a) {
 		case 0x8000: {
@@ -1470,7 +1468,7 @@ UINT8 __fastcall GyrodineRead2(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall SrdmissnRead2(UINT16 a)
+static UINT8 __fastcall SrdmissnRead2(UINT16 a)
 {
 	switch (a) {
 		case 0xf400: {
@@ -1493,7 +1491,7 @@ UINT8 __fastcall SrdmissnRead2(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall LegendRead2(UINT16 a)
+static UINT8 __fastcall LegendRead2(UINT16 a)
 {
 	switch (a) {
 		case 0xf800: {
@@ -1516,7 +1514,7 @@ UINT8 __fastcall LegendRead2(UINT16 a)
 	return 0;
 }
 
-void __fastcall KyugoWrite2(UINT16 a, UINT8 d)
+static void __fastcall KyugoWrite2(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		default: {
@@ -1525,7 +1523,7 @@ void __fastcall KyugoWrite2(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall KyugoPortRead2(UINT16 a)
+static UINT8 __fastcall KyugoPortRead2(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -1542,7 +1540,7 @@ UINT8 __fastcall KyugoPortRead2(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall FlashgalaPortRead2(UINT16 a)
+static UINT8 __fastcall FlashgalaPortRead2(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -1559,7 +1557,7 @@ UINT8 __fastcall FlashgalaPortRead2(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall SrdmissnPortRead2(UINT16 a)
+static UINT8 __fastcall SrdmissnPortRead2(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -1576,7 +1574,7 @@ UINT8 __fastcall SrdmissnPortRead2(UINT16 a)
 	return 0;
 }
 
-void __fastcall FlashgalPortWrite2(UINT16 a, UINT8 d)
+static void __fastcall FlashgalPortWrite2(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1607,7 +1605,7 @@ void __fastcall FlashgalPortWrite2(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall FlashgalaPortWrite2(UINT16 a, UINT8 d)
+static void __fastcall FlashgalaPortWrite2(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1638,7 +1636,7 @@ void __fastcall FlashgalaPortWrite2(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall GyrodinePortWrite2(UINT16 a, UINT8 d)
+static void __fastcall GyrodinePortWrite2(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1669,7 +1667,7 @@ void __fastcall GyrodinePortWrite2(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall SrdmissnPortWrite2(UINT16 a, UINT8 d)
+static void __fastcall SrdmissnPortWrite2(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -1985,16 +1983,10 @@ static INT32 KyugoInit()
 		ZetMapArea(0x8800, 0x8fff, 2, KyugoZ80Ram2             );
 		ZetClose();
 	}
-	
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
-	AY8910Init(0, 18432000 / 12, nBurnSoundRate, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
-	AY8910Init(1, 18432000 / 12, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 18432000 / 12, 0);
+	AY8910Init2(1, 18432000 / 12, 1);
+	AY8910SetPorts(0, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -2112,16 +2104,10 @@ static INT32 Skywolf3Init()
 	ZetMapArea(0x8000, 0x87ff, 1, KyugoSharedZ80Ram        );
 	ZetMapArea(0x8000, 0x87ff, 2, KyugoSharedZ80Ram        );
 	ZetClose();
-	
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
-	AY8910Init(0, 18432000 / 12, nBurnSoundRate, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
-	AY8910Init(1, 18432000 / 12, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 18432000 / 12, 0);
+	AY8910Init2(1, 18432000 / 12, 1);
+	AY8910SetPorts(0, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 	
@@ -2449,7 +2435,7 @@ static INT32 KyugoFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -2460,7 +2446,7 @@ static INT32 KyugoFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

@@ -22,8 +22,6 @@ static UINT8 *DrvTempBmp;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 *arabian_color;
 static UINT8 *flipscreen;
 
@@ -254,7 +252,7 @@ static void arabian_blitter_w(INT32 offset, UINT8 data)
 	}
 }
 
-void __fastcall arabian_videoram_w(UINT16 offset, UINT8 data)
+static void __fastcall arabian_videoram_w(UINT16 offset, UINT8 data)
 {
 	UINT8 *base;
 	UINT8 x, y;
@@ -299,7 +297,7 @@ void __fastcall arabian_videoram_w(UINT16 offset, UINT8 data)
 	}
 }
 
-void __fastcall arabian_write(UINT16 address, UINT8 data)
+static void __fastcall arabian_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xc000) == 0x8000) {
 		arabian_videoram_w(address & 0x3fff, data);
@@ -312,7 +310,7 @@ void __fastcall arabian_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall arabian_read(UINT16 address)
+static UINT8 __fastcall arabian_read(UINT16 address)
 {
 	if ((address & 0xfe00) == 0xc000) {
 		return DrvInputs[0];
@@ -329,7 +327,7 @@ UINT8 __fastcall arabian_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall arabian_out(UINT16 port, UINT8 data)
+static void __fastcall arabian_out(UINT16 port, UINT8 data)
 {
 	switch (port)
 	{
@@ -343,12 +341,12 @@ void __fastcall arabian_out(UINT16 port, UINT8 data)
 	}
 }
 
-void ay8910_porta_w(UINT32, UINT32 data)
+static void ay8910_porta_w(UINT32, UINT32 data)
 {
 	*arabian_color = data >> 3;
 }
 
-void ay8910_portb_w(UINT32, UINT32 data)
+static void ay8910_portb_w(UINT32, UINT32 data)
 {
 	custom_cpu_reset = ~data & 0x10;
 }
@@ -382,10 +380,6 @@ static INT32 MemIndex()
 	DrvGfxROM		= Next; Next += 0x010000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x2000 * sizeof(UINT32);
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	AllRam			= Next;
 
@@ -494,17 +488,16 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM);
-	ZetMapArea(0xd000, 0xd6ff, 0, DrvZ80RAM);
-	ZetMapArea(0xd000, 0xd7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xd000, 0xd7ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0xd000, 0xd7ff, MAP_WRITE);
+	ZetMapMemory(DrvZ80RAM,		0xd000, 0xd6ff, MAP_ROM); // d700-d7ff read through handler
 	ZetSetWriteHandler(arabian_write);
 	ZetSetReadHandler(arabian_read);
 	ZetSetOutHandler(arabian_out);
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, ay8910_porta_w, ay8910_portb_w);
+	AY8910Init2(0, 1500000, 0);
+	AY8910SetPorts(0, NULL, NULL, ay8910_porta_w, ay8910_portb_w);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -597,7 +590,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

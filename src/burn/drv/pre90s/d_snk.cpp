@@ -39,8 +39,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 *DrvTxtRAM;
 static UINT8 *DrvTransTab;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -4044,13 +4042,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -4693,10 +4684,10 @@ static INT32 MarvinsInit()
 	ZetSetReadHandler(marvins_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	snkwave_volume = 0.50;
@@ -4756,10 +4747,10 @@ static INT32 MadcrashInit()
 	ZetSetReadHandler(marvins_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
 	snkwave_volume = 0.30; // for vangrd2
@@ -4819,10 +4810,10 @@ static INT32 MadcrushInit()
 	ZetSetReadHandler(marvins_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4875,10 +4866,10 @@ static INT32 JcrossInit()
 	ZetSetInHandler(jcross_sound_read_port);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4932,10 +4923,10 @@ static INT32 SgladiatInit()
 	ZetSetInHandler(jcross_sound_read_port);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4988,10 +4979,10 @@ static INT32 Hal21Init()
 	ZetSetReadHandler(jcross_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -6171,7 +6162,7 @@ static INT32 MarvinsFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		snkwave_render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -6235,7 +6226,7 @@ static INT32 JcrossFrame()
 		if (pBurnSoundOut && i%8==7) {
 			INT32 nSegmentLength = nBurnSoundLen / 100; //nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -6245,7 +6236,7 @@ static INT32 JcrossFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

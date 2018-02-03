@@ -29,7 +29,6 @@ static INT32 sound_irq_timer;
 static INT32 sound_status;
 
 static INT32 sound_initialized = 0;
-static INT16 *pFMBuffer[12];
 
 static INT32 xcenter;
 static INT32 ycenter;
@@ -51,19 +50,18 @@ static UINT8 DialInputs[2];
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 
 static struct BurnInputInfo AztaracInputList[] = {
-	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,		"p1 coin"	},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,		"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,		"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 1,		"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 0,		"p1 fire 2"	},
 	
-	A("Left/Right", 	BIT_ANALOG_REL, &DrvAnalogPort0,	"p1 x-axis"  ),
-	A("Up/Down",		BIT_ANALOG_REL, &DrvAnalogPort1,	"p1 y-axis"  ),
+	A("Left/Right", 	BIT_ANALOG_REL, &DrvAnalogPort0,	"p1 x-axis"     ),
+	A("Up/Down",		BIT_ANALOG_REL, &DrvAnalogPort1,	"p1 y-axis"     ),
 	{"Aim Left",		BIT_DIGITAL,	DialInputs + 0,		"p1 fire 3"	},
 	{"Aim Right",		BIT_DIGITAL,	DialInputs + 1,		"p1 fire 4"	},
 	
-
-	{"Reset",			BIT_DIGITAL,	&DrvReset,			"reset"		},
-	{"Service",			BIT_DIGITAL,    DrvJoy1 + 7,  		"service"	},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service",		BIT_DIGITAL,    DrvJoy1 + 7,  		"service"	},
 };
 
 STDINPUTINFO(Aztarac)
@@ -139,7 +137,7 @@ static inline void sync_cpu()
 	if (cycles > 0)	ZetRun(cycles);
 }
 
-void __fastcall aztarac_write_word(UINT32 address, UINT16 data)
+static void __fastcall aztarac_write_word(UINT32 address, UINT16 data)
 {
 	if ((address & 0xfffff00) == 0x022000) {
 		*((UINT16*)(DrvNVRAM + (address & 0xfe))) = data | 0xfff0;
@@ -152,7 +150,7 @@ void __fastcall aztarac_write_word(UINT32 address, UINT16 data)
 	}
 }
 
-void __fastcall aztarac_write_byte(UINT32 address, UINT8 data)
+static void __fastcall aztarac_write_byte(UINT32 address, UINT8 data)
 {
 	if (address == 0x027009) {
 		sync_cpu();
@@ -170,7 +168,7 @@ void __fastcall aztarac_write_byte(UINT32 address, UINT8 data)
 	}
 }
 
-UINT16 __fastcall aztarac_read_word(UINT32 address)
+static UINT16 __fastcall aztarac_read_word(UINT32 address)
 {
 	switch (address)
 	{
@@ -185,7 +183,7 @@ UINT16 __fastcall aztarac_read_word(UINT32 address)
 	return 0;
 }
 
-UINT8 __fastcall aztarac_read_byte(UINT32 address)
+static UINT8 __fastcall aztarac_read_byte(UINT32 address)
 {
 	switch (address)
 	{
@@ -209,7 +207,7 @@ UINT8 __fastcall aztarac_read_byte(UINT32 address)
 	return 0;
 }
 
-void __fastcall aztarac_sound_write(UINT16 address, UINT8 data)
+static void __fastcall aztarac_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -230,7 +228,7 @@ void __fastcall aztarac_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall aztarac_sound_read(UINT16 address)
+static UINT8 __fastcall aztarac_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -287,15 +285,6 @@ static INT32 DrvDoReset(INT32 reset_ram)
 	vector_reset();
 
 	return 0;
-}
-
-static void sound_init() // Changed refresh rate causes crashes
-{
-	for (INT32 i = 0; i < 12; i++) {
-		pFMBuffer[i] = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16));
-	}
-
-	sound_initialized = 1;
 }
 
 static INT32 MemIndex()
@@ -392,19 +381,16 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x1fff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x1fff, 2, DrvZ80ROM);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0x1fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0x8000, 0x87ff, MAP_RAM);
 	ZetSetWriteHandler(aztarac_sound_write);
 	ZetSetReadHandler(aztarac_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(2, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(3, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
+	AY8910Init2(2, 2000000, 1);
+	AY8910Init2(3, 2000000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.15, BURN_SND_ROUTE_BOTH);
@@ -439,9 +425,6 @@ static INT32 DrvExit()
 	BurnFree (AllMem);
 
 	sound_initialized = 0;
-	for (INT32 i = 0; i < 12; i++) {
-		BurnFree (pFMBuffer[i]);
-	}
 
 	return 0;
 }
@@ -460,12 +443,6 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	if (sound_initialized == 0) {
-		if (pBurnSoundOut) {
-			sound_init();
-		}
-	}
-
 	if (DrvReset) {
 		DrvDoReset(1);
 	}
@@ -524,7 +501,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pFMBuffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

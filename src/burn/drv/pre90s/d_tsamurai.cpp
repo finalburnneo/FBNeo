@@ -36,8 +36,6 @@ static UINT8 *DrvSprRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 flipscreen;
 static UINT8 scrollx;
 static UINT8 scrolly;
@@ -778,10 +776,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -973,7 +967,7 @@ static INT32 DrvInit(INT32 game)
 	ZetSetReadHandler(tsamurai_sound1_read);
 	ZetClose();
 
-	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 3000000, 0);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, DrvSyncDAC);
@@ -1098,7 +1092,7 @@ static INT32 m660CommonInit(INT32 game)
 	ZetSetOutHandler(tsamurai_main_out_port); // re-use this since it's the same
 	ZetClose();
 
-	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 3000000, 0);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, DrvSyncDAC);
@@ -1190,7 +1184,7 @@ static INT32 VsgongfCommonInit(INT32 game)
 	ZetSetOutHandler(tsamurai_main_out_port); // re-use this since it's the same
 	ZetClose();
 
-	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 3000000, 0);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 0, DrvSyncDAC);
@@ -1395,7 +1389,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 1);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

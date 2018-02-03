@@ -21,8 +21,6 @@ static UINT8 *DrvVidRAM;
 
 static UINT32  *DrvPalette;
 
-static INT16* pAY8910Buffer[3];
-
 static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
@@ -307,7 +305,7 @@ static struct BurnDIPInfo Revngr84DIPList[]=
 
 STDDIPINFO(Revngr84)
 
-UINT8 __fastcall epos_read_port(UINT16 port)
+static UINT8 __fastcall epos_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -327,7 +325,7 @@ UINT8 __fastcall epos_read_port(UINT16 port)
 	return 0;
 }
 
-void __fastcall epos_write_port(UINT16 port, UINT8 data)
+static void __fastcall epos_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -379,7 +377,7 @@ static void dealer_bankswitch2(INT32 data)
 	ZetMapArea(0x6000, 0x6fff, 2, DrvZ80ROM + nBank);
 }
 
-UINT8 __fastcall dealer_read_port(UINT16 port)
+static UINT8 __fastcall dealer_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -398,7 +396,7 @@ UINT8 __fastcall dealer_read_port(UINT16 port)
 
 static void set_pal(UINT8 offs, UINT8 value);
 
-void __fastcall dealer_write_port(UINT16 port, UINT8 data)
+static void __fastcall dealer_write_port(UINT16 port, UINT8 data)
 {
 	port &= 0xff;
 
@@ -437,7 +435,7 @@ void __fastcall dealer_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 DealerPPIReadA()
+static UINT8 DealerPPIReadA()
 {
 	if (!(*DealerInputMultiplex & 1))
 		return DrvInputs[1];
@@ -448,7 +446,7 @@ UINT8 DealerPPIReadA()
 	return 0xff;
 }
 
-void DealerPPIWriteC(UINT8 data)
+static void DealerPPIWriteC(UINT8 data)
 {
 	dealer_bankswitch2(data);
 	*DealerInputMultiplex = (data >> 5) & 3;
@@ -524,28 +522,24 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM	 = Next; Next += 0x040000;
+	DrvZ80ROM		 = Next; Next += 0x040000;
 
-	DrvColPROM	 = Next; Next += 0x000020;
+	DrvColPROM		 = Next; Next += 0x000020;
 
-	DrvPalette	 = (UINT32*)Next; Next += 0x0020 * sizeof(UINT32);
+	DrvPalette		 = (UINT32*)Next; Next += 0x0020 * sizeof(UINT32);
 
-	pAY8910Buffer[0] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] = (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
+	AllRam			 = Next;
 
-	AllRam		 = Next;
+	DrvZ80RAM		 = Next; Next += 0x001000;
+	DrvVidRAM		 = Next; Next += 0x008000;
 
-	DrvZ80RAM	 = Next; Next += 0x001000;
-	DrvVidRAM	 = Next; Next += 0x008000;
+	DrvPaletteBank		 = Next; Next += 0x000001;
+	DealerZ80Bank		 = Next; Next += 0x000001;
+	DealerZ80Bank2		 = Next; Next += 0x000001;
+	DealerInputMultiplex	 = Next; Next += 0x000001;
 
-	DrvPaletteBank	 = Next; Next += 0x000001;
-	DealerZ80Bank	 = Next; Next += 0x000001;
-	DealerZ80Bank2	 = Next; Next += 0x000001;
-	DealerInputMultiplex = Next; Next += 0x000001;
-
-	RamEnd		 = Next;
-	MemEnd		 = Next;
+	RamEnd			 = Next;
+	MemEnd			 = Next;
 
 	return 0;
 }
@@ -575,19 +569,14 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x77ff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0x77ff, 2, DrvZ80ROM);
-	ZetMapArea(0x7800, 0x7fff, 0, DrvZ80RAM);
-	ZetMapArea(0x7800, 0x7fff, 1, DrvZ80RAM);
-	ZetMapArea(0x7800, 0x7fff, 2, DrvZ80RAM);
-	ZetMapArea(0x8000, 0xffff, 0, DrvVidRAM);
-	ZetMapArea(0x8000, 0xffff, 1, DrvVidRAM);
-	ZetMapArea(0x8000, 0xffff, 2, DrvVidRAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0x77ff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,		0x7800, 0x7fff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,		0x8000, 0xffff, MAP_RAM);
 	ZetSetInHandler(epos_read_port);
 	ZetSetOutHandler(epos_write_port);
 	ZetClose();
 
-	AY8910Init(0, 2750000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2750000, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -632,7 +621,8 @@ static INT32 DealerInit()
 	ZetSetOutHandler(dealer_write_port);
 	ZetClose();
 
-	AY8910Init(0, 2750000, nBurnSoundRate, AY8910_0_portA, NULL, NULL, NULL);
+	AY8910Init2(0, 2750000, 0);
+	AY8910SetPorts(0, AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	ppi8255_init(1);
@@ -717,7 +707,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

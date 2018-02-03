@@ -32,9 +32,9 @@ static UINT8 *DrvBGSprRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvColRAM;
+
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-static INT16 *pAY8910Buffer[6];
 
 static INT32 DrvGfxROM0Len;
 static INT32 DrvGfxROM1Len;
@@ -717,19 +717,12 @@ static INT32 MemIndex()
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	AllRam			= Next;
 
 	DrvZ80RAM0		= Next; Next += 0x0000c00;
 	DrvZ80RAM1		= Next; Next += 0x0000800;
 	DrvZ80RAM2		= Next; Next += 0x0000800;
-	DrvZ80RAM1_0    = Next; Next += 0x0001000;
+	DrvZ80RAM1_0  		= Next; Next += 0x0001000;
 	DrvBGSprRAM		= Next; Next += 0x0000100;
 	DrvSprRAM		= Next; Next += 0x0000400;
 	DrvColRAM		= Next; Next += 0x0000400;
@@ -745,10 +738,8 @@ static INT32 DrvGfxDecode(UINT8 *gfx_base, UINT8 *gfx_dest, INT32 len, INT32 siz
 {
 	INT32 Plane[2] = { 0, (len / 2) * 8 };
 	INT32 PlaneSwimmer[3] = { 0, RGN_FRAC(len, 1, 3), RGN_FRAC(len, 2, 3) };
-	INT32 XOffs[16] = {  0, 1, 2, 3, 4, 5, 6, 7,
-			8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7 };
-	INT32 YOffs[16] = {  0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
-			16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8 };
+	INT32 XOffs[16] = { STEP8(0,1), STEP8(64,1) };
+	INT32 YOffs[16] = { STEP8(0,8), STEP8(128,8) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(len);
 	if (tmp == NULL) {
@@ -958,7 +949,6 @@ static void SwimmerPaletteInit()
 	swimmer_set_background_pen();
 }
 
-
 static void cclimber_decode(const INT8 convtable[8][16])
 {
 	UINT8 *rom = DrvZ80ROM;
@@ -1131,9 +1121,10 @@ static INT32 DrvInit()
 		ZetClose();
 	}
 
-	AY8910Init(0, (game_select == 6) ? 2000000 : 1536000, nBurnSoundRate, NULL, NULL, &cclimber_sample_select_w, NULL);
+	AY8910Init2(0, (game_select == 6) ? 2000000 : 1536000, 0);
+	AY8910SetPorts(0, NULL, NULL, &cclimber_sample_select_w, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910Init(1, (game_select == 6) ? 2000000 : 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, (game_select == 6) ? 2000000 : 1536000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1469,7 +1460,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

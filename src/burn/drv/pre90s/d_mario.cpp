@@ -27,8 +27,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSndRAM;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
@@ -347,7 +345,7 @@ static int MemIndex()
 
 	DrvColPROM		= Next; Next += 0x000200;
 
-	DrvPalette		= (unsigned int*)Next; Next += 0x0200 * sizeof(int);
+	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
 
 	AllRam			= Next;
 
@@ -367,10 +365,6 @@ static int MemIndex()
 	sample_data		= Next; Next += 0x000010;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -495,7 +489,8 @@ static INT32 DrvInit()
 		ZetSetReadHandler(masao_sound_read);
 		ZetClose();
 
-		AY8910Init(0, 2386333, nBurnSoundRate, &masao_ay8910_read_port_A, NULL, NULL, NULL);
+		AY8910Init2(0, 2386333, 0);
+		AY8910SetPorts(0, &masao_ay8910_read_port_A, NULL, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 
@@ -673,7 +668,7 @@ static INT32 MasaoFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

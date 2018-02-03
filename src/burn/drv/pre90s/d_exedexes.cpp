@@ -32,8 +32,6 @@ static UINT8 *DrvTransTable;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 soundlatch;
 static UINT8 txt_enable;
 static UINT8 bg_enable;
@@ -326,10 +324,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -428,13 +422,13 @@ static INT32 DrvInit()
 	ZetSetReadHandler(exedexes_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
-
 	SN76489Init(0, 3000000, 0);
 	SN76489Init(1, 3000000, 1);
 	SN76496SetRoute(0, 0.36, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.36, BURN_SND_ROUTE_BOTH);
+
+	AY8910Init2(0, 1500000, 1);
+	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, background_map_scan, background_map_callback, 32, 32, 64, 64);
@@ -609,7 +603,7 @@ static INT32 DrvFrame()
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 1);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

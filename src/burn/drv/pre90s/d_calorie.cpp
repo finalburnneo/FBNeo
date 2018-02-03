@@ -1,4 +1,5 @@
-// Zodiack emu-layer for FB Alpha by dink/iq_132, based on the MAME driver by David Haywood and Pierpaolo Prazzoli.
+// Calorie Kun vs Moguranian emu-layer for FB Alpha by dink/iq_132
+// Based on the MAME driver by David Haywood and Pierpaolo Prazzoli.
 
 #include "tiles_generic.h"
 #include "driver.h"
@@ -25,10 +26,9 @@ static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
+
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
-
-static INT16 *pAY8910Buffer[6];
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -44,27 +44,27 @@ static UINT8 *calorie_bg;
 static UINT8 UpdatePal;
 
 static struct BurnInputInfo CalorieInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Calorie)
@@ -72,62 +72,62 @@ STDINPUTINFO(Calorie)
 static struct BurnDIPInfo CalorieDIPList[]=
 {
 	// Default Values
-	{0x11, 0xff, 0xff, 0x30, NULL		},
-	{0x12, 0xff, 0xff, 0x40, NULL		},
+	{0x11, 0xff, 0xff, 0x30, NULL				},
+	{0x12, 0xff, 0xff, 0x40, NULL				},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"			},
 	{0x11, 0x01, 0x03, 0x00, "1 Coin 1 Credits "		},
 	{0x11, 0x01, 0x03, 0x01, "1 Coin 2 Credits "		},
 	{0x11, 0x01, 0x03, 0x02, "1 Coin 3 Credits "		},
 	{0x11, 0x01, 0x03, 0x03, "1 Coin 6 Credits "		},
 
-	{0   , 0xfe, 0   ,    4, "Coin B"		},
+	{0   , 0xfe, 0   ,    4, "Coin B"			},
 	{0x11, 0x01, 0x0c, 0x0c, "2 Coins 1 Credits "		},
 	{0x11, 0x01, 0x0c, 0x00, "1 Coin 1 Credits "		},
 	{0x11, 0x01, 0x0c, 0x04, "1 Coin 2 Credits "		},
 	{0x11, 0x01, 0x0c, 0x08, "1 Coin 3 Credits "		},
 
-	{0   , 0xfe, 0   ,    2, "Cabinet"		},
-	{0x11, 0x01, 0x10, 0x10, "Upright"		},
-	{0x11, 0x01, 0x10, 0x00, "Cocktail"		},
+	{0   , 0xfe, 0   ,    2, "Cabinet"			},
+	{0x11, 0x01, 0x10, 0x10, "Upright"			},
+	{0x11, 0x01, 0x10, 0x00, "Cocktail"			},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x11, 0x01, 0x20, 0x00, "Off"		},
-	{0x11, 0x01, 0x20, 0x20, "On"		},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x11, 0x01, 0x20, 0x00, "Off"				},
+	{0x11, 0x01, 0x20, 0x20, "On"				},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x11, 0x01, 0xc0, 0xc0, "2"		},
-	{0x11, 0x01, 0xc0, 0x00, "3"		},
-	{0x11, 0x01, 0xc0, 0x40, "4"		},
-	{0x11, 0x01, 0xc0, 0x80, "5"		},
+	{0   , 0xfe, 0   ,    4, "Lives"			},
+	{0x11, 0x01, 0xc0, 0xc0, "2"				},
+	{0x11, 0x01, 0xc0, 0x00, "3"				},
+	{0x11, 0x01, 0xc0, 0x40, "4"				},
+	{0x11, 0x01, 0xc0, 0x80, "5"				},
 
-	{0   , 0xfe, 0   ,    3, "Bonus Life"		},
-	{0x12, 0x01, 0x03, 0x00, "None"		},
-	{0x12, 0x01, 0x03, 0x01, "20,000 Only"		},
+	{0   , 0xfe, 0   ,    3, "Bonus Life"			},
+	{0x12, 0x01, 0x03, 0x00, "None"				},
+	{0x12, 0x01, 0x03, 0x01, "20,000 Only"			},
 	{0x12, 0x01, 0x03, 0x03, "20,000 and 60,000"		},
 
 	{0   , 0xfe, 0   ,    2, "Number of Bombs"		},
-	{0x12, 0x01, 0x04, 0x00, "3"		},
-	{0x12, 0x01, 0x04, 0x04, "5"		},
+	{0x12, 0x01, 0x04, 0x00, "3"				},
+	{0x12, 0x01, 0x04, 0x04, "5"				},
 
-	{0   , 0xfe, 0   ,    2, "Difficulty - Mogura Nian"		},
-	{0x12, 0x01, 0x08, 0x00, "Normal"		},
-	{0x12, 0x01, 0x08, 0x08, "Hard"		},
+	{0   , 0xfe, 0   ,    2, "Difficulty - Mogura Nian"	},
+	{0x12, 0x01, 0x08, 0x00, "Normal"			},
+	{0x12, 0x01, 0x08, 0x08, "Hard"				},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty - Select of Mogura"		},
-	{0x12, 0x01, 0x30, 0x00, "Easy"		},
-	{0x12, 0x01, 0x30, 0x20, "Normal"		},
-	{0x12, 0x01, 0x30, 0x10, "Hard"		},
-	{0x12, 0x01, 0x30, 0x30, "Hardest"		},
+	{0   , 0xfe, 0   ,    4, "Difficulty - Select of Mogura"},
+	{0x12, 0x01, 0x30, 0x00, "Easy"				},
+	{0x12, 0x01, 0x30, 0x20, "Normal"			},
+	{0x12, 0x01, 0x30, 0x10, "Hard"				},
+	{0x12, 0x01, 0x30, 0x30, "Hardest"			},
 
 	{0   , 0xfe, 0   ,    0, "Infinite Lives"		},
-	{0x12, 0x01, 0x80, 0x00, "Off"		},
-	{0x12, 0x01, 0x80, 0x80, "On"		},
+	{0x12, 0x01, 0x80, 0x00, "Off"				},
+	{0x12, 0x01, 0x80, 0x80, "On"				},
 };
 
 STDDIPINFO(Calorie)
 
-void __fastcall calorie_write(UINT16 address, UINT8 data)
+static void __fastcall calorie_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff00) == 0xdc00) {
 		DrvPalRAM[address & 0x0ff] = data;
@@ -151,7 +151,7 @@ void __fastcall calorie_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall calorie_read(UINT16 address)
+static UINT8 __fastcall calorie_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -174,7 +174,7 @@ UINT8 __fastcall calorie_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall calorie_sound_read(UINT16 address)
+static UINT8 __fastcall calorie_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -187,7 +187,7 @@ UINT8 __fastcall calorie_sound_read(UINT16 address)
 	return 0;
 }
 
-UINT8 __fastcall calorie_sound_in(UINT16 port)
+static UINT8 __fastcall calorie_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -201,17 +201,16 @@ UINT8 __fastcall calorie_sound_in(UINT16 port)
 	return 0;
 }
 
-void __fastcall calorie_sound_out(UINT16 port, UINT8 data)
+static void __fastcall calorie_sound_out(UINT16 port, UINT8 data)
 {
-	port &= 0xff;
-	switch (port)
+	switch (port & 0xff)
 	{
 		case 0x00:
 		case 0x01:
 		case 0x10:
 		case 0x11:
-			AY8910Write(port >> 4, port & 1, data);
-			return;
+			AY8910Write((port >> 4) & 1, port & 1, data);
+		return;
 	}
 }
 
@@ -249,13 +248,6 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
 
-	pAY8910Buffer[0] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	AllRam		= Next;
 
 	DrvSprRAM	= Next; Next += 0x000400;
@@ -281,14 +273,8 @@ static INT32 DrvGfxDecode()
 	INT32 Plane[3] = { RGN_FRAC(0xc000, 0, 3), RGN_FRAC(0xc000, 1, 3), RGN_FRAC(0xc000, 2, 3) };
 	INT32 Plane6000[3] = { RGN_FRAC(0x6000, 0, 3), RGN_FRAC(0x6000, 1, 3), RGN_FRAC(0x6000, 2, 3) };
 
-	INT32 XOffs[32] = { 0, 1, 2, 3, 4, 5, 6, 7,
-			8*8+0, 8*8+1, 8*8+2, 8*8+3, 8*8+4, 8*8+5, 8*8+6, 8*8+7,
-			32*8+0, 32*8+1, 32*8+2, 32*8+3, 32*8+4, 32*8+5, 32*8+6, 32*8+7,
-			40*8+0, 40*8+1, 40*8+2, 40*8+3, 40*8+4, 40*8+5, 40*8+6, 40*8+7 };
-	INT32 YOffs[32] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8,
-			16*8, 17*8, 18*8, 19*8, 20*8, 21*8, 22*8, 23*8,
-			64*8, 65*8, 66*8, 67*8, 68*8, 69*8, 70*8, 71*8,
-			80*8, 81*8, 82*8, 83*8, 84*8, 85*8, 86*8, 87*8 };
+	INT32 XOffs[32] = { STEP8(0,1), STEP8(64,1), STEP8(256,1), STEP8(256+64, 1) };
+	INT32 YOffs[32] = { STEP8(0,8), STEP8(128,8), STEP8(512,8), STEP8(640,8) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0xc000);
 	if (tmp == NULL) {
@@ -352,38 +338,27 @@ static INT32 DrvInit(void (*pInitCallback)())
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvDecROM0, DrvZ80ROM0);
-	ZetMapArea(0x8000, 0xbfff, 0, DrvZ80ROM0 + 0x8000);
-	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM0 + 0x8000);
-	ZetMapArea(0xc000, 0xcfff, 0, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xcfff, 1, DrvZ80RAM0);
-	ZetMapArea(0xc000, 0xcfff, 2, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xd7ff, 0, DrvVidRAM);
-	ZetMapArea(0xd000, 0xd7ff, 1, DrvVidRAM);
-	ZetMapArea(0xd000, 0xd7ff, 2, DrvVidRAM);
-	ZetMapArea(0xd800, 0xdbff, 0, DrvSprRAM);
-	ZetMapArea(0xd800, 0xdbff, 1, DrvSprRAM);
-	ZetMapArea(0xd800, 0xdbff, 2, DrvSprRAM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvDecROM0,		0x0000, 0x7fff, MAP_FETCHOP); // ?
+	ZetMapMemory(DrvZ80RAM0,		0xc000, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,			0xd000, 0xd7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,			0xd800, 0xdbff, MAP_RAM);
 	ZetSetWriteHandler(calorie_write);
 	ZetSetReadHandler(calorie_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x3fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x3fff, 2, DrvZ80ROM1);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM1);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM1);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM1);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,		0x8000, 0x87ff, MAP_RAM);
 	ZetSetReadHandler(calorie_sound_read);
 	ZetSetOutHandler(calorie_sound_out);
 	ZetSetInHandler(calorie_sound_in);
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -603,7 +578,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -612,7 +587,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

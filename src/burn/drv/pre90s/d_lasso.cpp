@@ -37,8 +37,6 @@ static UINT8 *DrvBitmapRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 back_color;
 static UINT8 soundlatch;
 static UINT8 chip_data;
@@ -463,7 +461,6 @@ static INT32 DrvSyncDAC()
 	return (INT32)(float)(nBurnSoundLen * (M6502TotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
 }
 
-
 static INT32 LassoDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -544,13 +541,6 @@ static INT32 MemIndex()
 	DrvBitmapRAM		= Next; Next += 0x002000;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -952,8 +942,8 @@ static INT32 PinboInit()
 	ZetSetOutHandler(pinbo_sound_write);
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -1371,7 +1361,7 @@ static INT32 PinboFrame()
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -25,8 +25,6 @@ static UINT8 *DrvSprRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8  DrvJoy1[8];
 static UINT8  DrvJoy2[8];
 static UINT8  DrvJoy3[8];
@@ -243,8 +241,6 @@ static struct BurnDIPInfo CanvasDIPList[]=
 
 STDDIPINFO(Canvas)
 
-
-
 static void __fastcall main_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -369,13 +365,6 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x000800;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -508,8 +497,8 @@ static INT32 DrvInit(INT32 select)
 	ZetSetReadHandler(sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -678,7 +667,6 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[2] = { 3360000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
-
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
@@ -693,7 +681,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

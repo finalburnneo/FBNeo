@@ -39,8 +39,6 @@ static UINT32 *DrvPalette;
 
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 DrvInputs[3];
 static UINT8 DrvDips[1];
 static UINT8 DrvJoy1[8];
@@ -359,11 +357,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16); // allocate ram for sound output
-	pAY8910Buffer[1]	= (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16); // only really necessary for ay8910
-	pAY8910Buffer[2]	= (INT16 *)Next; Next += nBurnSoundLen * sizeof(INT16);
-
-
 	MemEnd			= Next;
 
 	return 0;
@@ -461,7 +454,7 @@ static INT32 DrvInit()
 
 	ZetClose(); // close cpu to further modifications
 
-	AY8910Init(0, 2500000, nBurnSoundRate, NULL, NULL, NULL, NULL); // MDRV_SOUND_ADD("aysnd", AY8910, 2500000)
+	AY8910Init2(0, 2500000, 0); // MDRV_SOUND_ADD("aysnd", AY8910, 2500000)
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit(); // this must be called for generic tile handling
@@ -626,7 +619,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -641,7 +634,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2( pSoundBuf, nSegmentLength);
 		}
 	}
 

@@ -22,8 +22,8 @@ static UINT8 *DrvScrollRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
+
 static UINT32 *DrvPalette;
-static INT16 *pAY8910Buffer[6];
 
 static UINT8 *watchdog;
 static UINT8 *dipsw;
@@ -66,6 +66,58 @@ static struct BurnInputInfo BlueprntInputList[] = {
 };
 
 STDINPUTINFO(Blueprnt)
+
+static struct BurnInputInfo SaturnInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Saturn)
+
+static struct BurnInputInfo GrasspinInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+};
+
+STDINPUTINFO(Grasspin)
 
 static struct BurnDIPInfo BlueprntDIPList[]=
 {
@@ -113,32 +165,6 @@ static struct BurnDIPInfo BlueprntDIPList[]=
 
 STDDIPINFO(Blueprnt)
 
-static struct BurnInputInfo SaturnInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"	},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"	},
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"	},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"	},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"	},
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-};
-
-STDINPUTINFO(Saturn)
-
 static struct BurnDIPInfo SaturnDIPList[]=
 {
 	{0x11, 0xff, 0xff, 0x00, NULL				},
@@ -165,66 +191,39 @@ static struct BurnDIPInfo SaturnDIPList[]=
 
 STDDIPINFO(Saturn)
 
-static struct BurnInputInfo GrasspinInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 1"},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 2"},
-
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 fire 2"},
-
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-};
-
-STDINPUTINFO(Grasspin)
-
-
 static struct BurnDIPInfo GrasspinDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x61, NULL		},
-	{0x12, 0xff, 0xff, 0x83, NULL		},
+	{0x11, 0xff, 0xff, 0x61, NULL			},
+	{0x12, 0xff, 0xff, 0x83, NULL			},
 
 	{0   , 0xfe, 0   ,    4, "Coinage"		},
-	{0x11, 0x01, 0x60, 0x00, "2 Coins 1 Credits"		},
-	{0x11, 0x01, 0x60, 0x40, "2 Coins 3 Credits"		},
-	{0x11, 0x01, 0x60, 0x60, "1 Coin  1 Credits"		},
-	{0x11, 0x01, 0x60, 0x20, "1 Coin  2 Credits"		},
+	{0x11, 0x01, 0x60, 0x00, "2 Coins 1 Credits"	},
+	{0x11, 0x01, 0x60, 0x40, "2 Coins 3 Credits"	},
+	{0x11, 0x01, 0x60, 0x60, "1 Coin  1 Credits"	},
+	{0x11, 0x01, 0x60, 0x20, "1 Coin  2 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x11, 0x01, 0x80, 0x00, "Off"		},
-	{0x11, 0x01, 0x80, 0x80, "On"		},
+	{0x11, 0x01, 0x80, 0x00, "Off"			},
+	{0x11, 0x01, 0x80, 0x80, "On"			},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x12, 0x01, 0x03, 0x00, "2"		},
-	{0x12, 0x01, 0x03, 0x03, "3"		},
-	{0x12, 0x01, 0x03, 0x02, "4"		},
-	{0x12, 0x01, 0x03, 0x01, "5"		},
+	{0x12, 0x01, 0x03, 0x00, "2"			},
+	{0x12, 0x01, 0x03, 0x03, "3"			},
+	{0x12, 0x01, 0x03, 0x02, "4"			},
+	{0x12, 0x01, 0x03, 0x01, "5"			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x12, 0x01, 0x20, 0x00, "Upright"		},
 	{0x12, 0x01, 0x20, 0x20, "Cocktail"		},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x12, 0x01, 0x40, 0x00, "Off"		},
-	{0x12, 0x01, 0x40, 0x40, "On"		},
+	{0x12, 0x01, 0x40, 0x00, "Off"			},
+	{0x12, 0x01, 0x40, 0x40, "On"			},
 };
 
 STDDIPINFO(Grasspin)
 
-void __fastcall blueprint_write(UINT16 address, UINT8 data)
+static void __fastcall blueprint_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -249,7 +248,7 @@ void __fastcall blueprint_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall blueprint_read(UINT16 address)
+static UINT8 __fastcall blueprint_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -268,7 +267,7 @@ UINT8 __fastcall blueprint_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall blueprint_sound_write(UINT16 address, UINT8 data)
+static void __fastcall blueprint_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -290,7 +289,7 @@ void __fastcall blueprint_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall blueprint_sound_read(UINT16 address)
+static UINT8 __fastcall blueprint_sound_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -304,22 +303,22 @@ UINT8 __fastcall blueprint_sound_read(UINT16 address)
 	return 0;
 }
 
-UINT8 ay8910_0_read_port_1(UINT32)
+static UINT8 ay8910_0_read_port_1(UINT32)
 {
 	return *soundlatch;
 }
 
-void ay8910_0_write_port_0(UINT32, UINT32 data)
+static void ay8910_0_write_port_0(UINT32, UINT32 data)
 {
 	*dipsw = data & 0xff;
 }
 
-UINT8 ay8910_1_read_port_0(UINT32)
+static UINT8 ay8910_1_read_port_0(UINT32)
 {
 	return DrvDips[0];
 }
 
-UINT8 ay8910_1_read_port_1(UINT32)
+static UINT8 ay8910_1_read_port_1(UINT32)
 {
 	return DrvDips[1];
 }
@@ -400,13 +399,6 @@ static INT32 MemIndex()
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0208 * sizeof(UINT32);
 
-	pAY8910Buffer[0] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	AllRam		= Next;
 
 	DrvColRAM	= Next; Next += 0x000400;
@@ -468,43 +460,29 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
-	ZetMapArea(0x8000, 0x87ff, 0, DrvZ80RAM0);
-	ZetMapArea(0x8000, 0x87ff, 1, DrvZ80RAM0);
-	ZetMapArea(0x8000, 0x87ff, 2, DrvZ80RAM0);
-	ZetMapArea(0x9000, 0x93ff, 0, DrvVidRAM);
-	ZetMapArea(0x9000, 0x93ff, 1, DrvVidRAM);
-	ZetMapArea(0x9000, 0x93ff, 2, DrvVidRAM);
-	ZetMapArea(0x9400, 0x97ff, 0, DrvVidRAM);
-	ZetMapArea(0x9400, 0x97ff, 1, DrvVidRAM);
-	ZetMapArea(0x9400, 0x97ff, 2, DrvVidRAM);
-	ZetMapArea(0xa000, 0xa0ff, 0, DrvScrollRAM);
-	ZetMapArea(0xa000, 0xa0ff, 1, DrvScrollRAM);
-	ZetMapArea(0xa000, 0xa0ff, 2, DrvScrollRAM);
-	ZetMapArea(0xb000, 0xb0ff, 0, DrvSprRAM);
-	ZetMapArea(0xb000, 0xb0ff, 1, DrvSprRAM);
-	ZetMapArea(0xb000, 0xb0ff, 2, DrvSprRAM);
-	ZetMapArea(0xf000, 0xf3ff, 0, DrvColRAM);
-	ZetMapArea(0xf000, 0xf3ff, 1, DrvColRAM);
-	ZetMapArea(0xf000, 0xf3ff, 2, DrvColRAM);
+	ZetMapMemory(DrvZ80ROM0,	0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM0,	0x8000, 0x87ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,		0x9000, 0x93ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,		0x9400, 0x97ff, MAP_RAM); // mirror
+	ZetMapMemory(DrvScrollRAM,	0xa000, 0xa0ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xb000, 0xb0ff, MAP_RAM);
+	ZetMapMemory(DrvColRAM,		0xf000, 0xf3ff, MAP_RAM);
 	ZetSetWriteHandler(blueprint_write);
 	ZetSetReadHandler(blueprint_read);
 	ZetClose();
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x2fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x2fff, 2, DrvZ80ROM1);
-	ZetMapArea(0x4000, 0x43ff, 0, DrvZ80RAM1);
-	ZetMapArea(0x4000, 0x43ff, 1, DrvZ80RAM1);
-	ZetMapArea(0x4000, 0x43ff, 2, DrvZ80RAM1);
+	ZetMapMemory(DrvZ80ROM1,	0x0000, 0x3fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM1,	0x4000, 0x43ff, MAP_RAM);
 	ZetSetWriteHandler(blueprint_sound_write);
 	ZetSetReadHandler(blueprint_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 1250000, nBurnSoundRate, NULL, &ay8910_0_read_port_1, &ay8910_0_write_port_0, NULL);
-	AY8910Init(1, 625000, nBurnSoundRate, &ay8910_1_read_port_0, &ay8910_1_read_port_1, NULL, NULL);
+	AY8910Init2(0, 1250000, 0);
+	AY8910Init2(1,  625000, 1);
+	AY8910SetPorts(0, NULL, &ay8910_0_read_port_1, &ay8910_0_write_port_0, NULL);
+	AY8910SetPorts(1, &ay8910_1_read_port_0, &ay8910_1_read_port_1, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
@@ -660,7 +638,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -27,8 +27,6 @@ static UINT8 *DrvM6803RAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 *soundlatch;
 static UINT8 *flipscreen;
 static UINT8 *sprite_bank;
@@ -384,10 +382,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -434,17 +428,10 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xcfff, 0, DrvVidRAM);
-	ZetMapArea(0xc000, 0xcfff, 1, DrvVidRAM);
-	ZetMapArea(0xc000, 0xcfff, 2, DrvVidRAM);
-	ZetMapArea(0xe800, 0xefff, 0, DrvSprRAM);
-	ZetMapArea(0xe800, 0xefff, 1, DrvSprRAM);
-	ZetMapArea(0xe800, 0xefff, 2, DrvSprRAM);
-	ZetMapArea(0xf000, 0xffff, 0, DrvZ80RAM);
-	ZetMapArea(0xf000, 0xffff, 1, DrvZ80RAM);
-	ZetMapArea(0xf000, 0xffff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM,		0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM,		0xc000, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		0xe800, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(kncljoe_main_write);
 	ZetSetReadHandler(kncljoe_main_read);
 	ZetClose();
@@ -459,7 +446,8 @@ static INT32 DrvInit()
 	M6803SetReadPortHandler(kncljoe_sound_read_port);
 //	M6803Close();
 
-	AY8910Init(0, 894886, nBurnSoundRate, &ay8910_port_A_read, NULL, NULL, NULL);
+	AY8910Init2(0, 894886, 0);
+	AY8910SetPorts(0, &ay8910_port_A_read, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	SN76489Init(0, 3579545, 1);
@@ -645,7 +633,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 	}

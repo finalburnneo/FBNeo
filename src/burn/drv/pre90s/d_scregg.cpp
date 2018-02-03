@@ -21,9 +21,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *Drv6502RAM;
 static UINT8 *DrvColRAM;
 
-static INT16 *pAY8910Buffer[6];
-static INT16 *pFMBuffer = NULL;
-
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
@@ -99,22 +96,6 @@ static struct BurnDIPInfo DrvDIPList[]=
 };
 
 STDDIPINFO(Drv)
-
-// Delay allocation of buffer. This allows us to use the proper frames/sec frame rate.
-static inline void DrvDelayAY8910BufferAllocation()
-{
-	if (pFMBuffer == NULL && pBurnSoundOut)
-	{
-		pFMBuffer = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16) * 6);
-
-		pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-		pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-		pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-		pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-		pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-		pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
-	}
-}
 
 static inline INT32 calc_mirror_offset(UINT16 address)
 {
@@ -430,8 +411,8 @@ static INT32 DrvInit(void (*m6502Init)(), INT32 (*pLoadCB)())
 
 	BurnSetRefreshRate(57);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.23, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.23, BURN_SND_ROUTE_BOTH);
 
@@ -451,7 +432,6 @@ static INT32 DrvExit()
 	AY8910Exit(1);
 
 	BurnFree (AllMem);
-	BurnFree (pFMBuffer);
 
 	return 0;
 }
@@ -529,8 +509,6 @@ static INT32 DrvDraw()
 
 static INT32 DrvFrame()
 {
-	DrvDelayAY8910BufferAllocation();
-
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -562,7 +540,7 @@ static INT32 DrvFrame()
 	M6502Close();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -4,11 +4,9 @@
 #include "driver.h"
 #include "z80_intf.h"
 #include "bitswap.h"
-
 extern "C" {
 	#include "ay8910.h"
 }
-static INT16 *pAY8910Buffer[6];
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -589,34 +587,27 @@ static INT32 MemIndex()
 	DrvZ80ROM1		= Next; Next += 0x10000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0100 * sizeof(UINT32);
-	DrvCharGFX      = Next; Next += 0x40000;
-	DrvChar2GFX     = Next; Next += 0x40000;
-	DrvSpriteGFX    = Next; Next += 0x40000;
-	DrvColorPROM    = Next; Next += 0x00400;
+	DrvCharGFX      	= Next; Next += 0x40000;
+	DrvChar2GFX     	= Next; Next += 0x40000;
+	DrvSpriteGFX    	= Next; Next += 0x40000;
+	DrvColorPROM    	= Next; Next += 0x00400;
 
 	AllRam			= Next;
 
 	DrvZ80RAM		= Next; Next += 0x01000;
 	DrvZ80RAM1		= Next; Next += 0x01000;
-	DrvAttrRAM	    = Next; Next += 0x00400;
+	DrvAttrRAM		= Next; Next += 0x00400;
 	DrvVidRAM		= Next; Next += 0x00400;
 	DrvVid2RAM		= Next; Next += 0x00400;
-	DrvBulletRAM	= Next; Next += 0x00400;
-	DrvSpriteRAM	= Next; Next += 0x00400;
-	DrvExtraRAM	    = Next; Next += 0x00400;
+	DrvBulletRAM		= Next; Next += 0x00400;
+	DrvSpriteRAM		= Next; Next += 0x00400;
+	DrvExtraRAM		= Next; Next += 0x00400;
 
-	nmi_mask        = Next; Next += 0x00001;
-	sub_nmi_mask    = Next; Next += 0x00001;
-	soundlatch      = Next; Next += 0x00001;
+	nmi_mask        	= Next; Next += 0x00001;
+	sub_nmi_mask    	= Next; Next += 0x00001;
+	soundlatch      	= Next; Next += 0x00001;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -695,7 +686,6 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-
 static INT32 DrvInit()
 {
 	AllMem = NULL;
@@ -733,9 +723,9 @@ static INT32 DrvInit()
 	ZetSetOutHandler(audio_out);
 	ZetClose();
 
-	AY8910Init(0, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1536000, 0);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	AY8910Init(1, 1536000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(1, 1536000, 1);
 	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -744,7 +734,6 @@ static INT32 DrvInit()
 
 	return 0;
 }
-
 
 static INT32 DrvExit()
 {
@@ -964,7 +953,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

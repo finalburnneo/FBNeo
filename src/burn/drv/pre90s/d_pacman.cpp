@@ -28,7 +28,6 @@ static UINT8 *DrvSprRAM2;
 static UINT8 *DrvColPROM;
 static UINT8 *DrvTransTable;
 
-static INT16 *pAY8910Buffer[3];
 static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
@@ -2420,10 +2419,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -2636,7 +2631,7 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	mapCallback();	
 	ZetClose();
 
-	AY8910Init(0, 1789750, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1789750, 0);
 	AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
 	if (game_select == DREMSHPR) AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
@@ -2824,7 +2819,7 @@ static INT32 DrvFrame()
 			
 			if (nSegmentLength) {
 				if (game_select == DREMSHPR || game_select == CRUSHS) {
-					AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+					AY8910Render2(pSoundBuf, nSegmentLength);
 				} else {
 					if (game_select == VANVAN) {
 						SN76496Update(0, pSoundBuf, nSegmentLength);
@@ -2844,7 +2839,7 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 			if (game_select == DREMSHPR || game_select == CRUSHS) {
-				AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+				AY8910Render2(pSoundBuf, nSegmentLength);
 			} else {
 				if (game_select == VANVAN) {
 					SN76496Update(0, pSoundBuf, nSegmentLength);

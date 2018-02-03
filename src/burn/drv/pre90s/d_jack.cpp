@@ -31,8 +31,6 @@ static UINT8 *DrvScroll;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 palette_bank;
@@ -963,10 +961,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -1107,7 +1101,8 @@ static INT32 DrvInit(INT32 map_type, INT32 timerrate, INT32 alt_volume)
 	ZetSetInHandler(jack_sound_read_port);
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, &AY8910_portA, &AY8910_portB, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910SetPorts(0, &AY8910_portA, &AY8910_portB, NULL, NULL);
 	AY8910SetAllRoutes(0, (alt_volume) ? 0.20 : 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1304,7 +1299,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut && (i%8) == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1313,7 +1308,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 
@@ -1370,7 +1365,7 @@ static INT32 JoinemFrame()
 		if (pBurnSoundOut && (i%8) == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1379,7 +1374,7 @@ static INT32 JoinemFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 	}
 

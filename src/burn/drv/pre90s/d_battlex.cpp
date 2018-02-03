@@ -31,8 +31,6 @@ static UINT8 *tmpbitmap;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 flipscreen;
 static UINT8 scroll[2];
 static UINT8 previous_irq_flip;
@@ -314,13 +312,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	tmpbitmap		= Next; Next += 256 * 224;
 
 	MemEnd			= Next;
@@ -453,8 +444,8 @@ static INT32 DrvInit(INT32 select)
 	ZetSetInHandler(battlex_read_port);
 	ZetClose();
 
-	AY8910Init(0, 1250000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1250000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1250000, 0);
+	AY8910Init2(1, 1250000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -606,7 +597,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

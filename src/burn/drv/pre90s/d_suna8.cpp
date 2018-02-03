@@ -44,7 +44,6 @@ static UINT8 *nmi_enable;
 static UINT8 *mainbank;
 
 static INT16 *DrvSamplesExp;
-static INT16 *pAY8910Buffer[3];
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -1085,10 +1084,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0] 	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] 	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] 	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -1372,7 +1367,8 @@ static INT32 HardheadInit()
 	BurnTimerAttachZetYM3812(3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
+	AY8910Init2(0, 1500000, 1);
+	AY8910SetPorts(0, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1455,7 +1451,8 @@ static INT32 SparkmanInit()
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
+	AY8910Init2(0, 1500000, 1);
+	AY8910SetPorts(0, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1611,7 +1608,8 @@ static INT32 StarfighInit()
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
+	AY8910Init2(0, 1500000, 1);
+	AY8910SetPorts(0, NULL, NULL, &hardhead_ay8910_write_A, &hardhead_ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1812,7 +1810,7 @@ static INT32 Hardhea2Init()
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
@@ -2174,7 +2172,7 @@ static INT32 HardheadFrame()
 
 	if (pBurnSoundOut) {		
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 1);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		sample_render(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();
@@ -2300,7 +2298,7 @@ static INT32 Hardhea2Frame()
 	if (pBurnSoundOut) {
 		ZetOpen(1);	
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 1);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
 		ZetOpen(2);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -2367,7 +2365,7 @@ static INT32 SparkmanFrame() // & starfigh
 
 	if (pBurnSoundOut) {		
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 1);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		sample_render(pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();

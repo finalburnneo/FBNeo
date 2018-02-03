@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-
 #include "driver.h"
 extern "C" {
  #include "ay8910.h"
@@ -42,9 +41,6 @@ static UINT8 DrvFlipScreenX;
 static INT32 DrvInterruptEnable;
 static UINT8 ActiveLowFlipscreen;
 static INT32 hardware;
-
-static INT16 *pAY8910Buffer[6];
-
 
 static struct BurnInputInfo MarinebInputList[] =
 {
@@ -398,27 +394,20 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM			= Next; Next += 0x10000;
-	DrvColPROM    		= Next; Next += 0x200;
-	DrvGfxROM0    		= Next; Next += 1024 * 8 * 8;
-	DrvGfxROM1   		= Next; Next += 64*2 * 16 * 16;
-	DrvGfxROM2    		= Next; Next += 64*2 * 32 * 32;
+	DrvZ80ROM	= Next; Next += 0x10000;
+	DrvColPROM    	= Next; Next += 0x200;
+	DrvGfxROM0    	= Next; Next += 1024 * 8 * 8;
+	DrvGfxROM1   	= Next; Next += 64*2 * 16 * 16;
+	DrvGfxROM2    	= Next; Next += 64*2 * 32 * 32;
 
-	DrvPalette  = (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
+	DrvPalette  	= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
 
 	RamStart	= Next;
 
 	DrvZ80RAM	= Next;  Next += 0x800;
 	DrvVidRAM	= Next;  Next += 0x400;
-	DrvSprRAM   = Next;  Next += 0x100;
-	DrvColRAM   = Next;  Next += 0x400;
+	DrvSprRAM	= Next;  Next += 0x100;
+	DrvColRAM	= Next;  Next += 0x400;
 
 	RamEnd		= Next;
 	MemEnd		= Next;
@@ -441,12 +430,11 @@ static void CleanAndInitStuff()
 	memset(DrvInputPort2, 0, 8);
 	memset(DrvInput, 0, 3);
 
-    DrvDip = 0;
-    DrvReset = 0;
+	DrvDip = 0;
+	DrvReset = 0;
 }
 
-
-UINT8 __fastcall marineb_read(UINT16 address)
+static UINT8 __fastcall marineb_read(UINT16 address)
 {
 	switch (address) {
 		case 0xa800:
@@ -465,11 +453,10 @@ UINT8 __fastcall marineb_read(UINT16 address)
 	return 0;
 }
 
-
-void __fastcall marineb_write(UINT16 address, UINT8 data)
+static void __fastcall marineb_write(UINT16 address, UINT8 data)
 {
-	switch (address) {
-
+	switch (address)
+	{
 		case 0x9800:
 			DrvColumnScroll = data;
 			return;
@@ -497,9 +484,10 @@ void __fastcall marineb_write(UINT16 address, UINT8 data)
 	}
 }
 
-void __fastcall marineb_write_port(UINT16 port, UINT8 data)
+static void __fastcall marineb_write_port(UINT16 port, UINT8 data)
 {
-	switch (port & 0xFF) {
+	switch (port & 0xff)
+	{
 		case 0x00:
 		case 0x01:
 		case 0x08:
@@ -865,9 +853,9 @@ static INT32 DrvInit()
 
 	ZetClose();
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1621,7 +1609,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

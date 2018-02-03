@@ -1165,12 +1165,12 @@ static struct BurnRomInfo popeyeblRomDesc[] = {
 	{ "po3",			0x2000, 0x99d6a04a, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "po4",			0x2000, 0x548a6514, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "v-5n",			0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+	{ "po5",			0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
 
-	{ "v-1e",			0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
-	{ "v-1f",			0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
-	{ "v-1j",			0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
-	{ "v-1k",			0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+	{ "po6",			0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "po7",			0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "po8",			0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "po9",			0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
 
 	{ "popeye.pr1",		0x0020, 0xd138e8a4, 4 | BRF_GRA }, //  9 proms
 	{ "popeye.pr2",		0x0020, 0x0f364007, 4 | BRF_GRA }, // 10

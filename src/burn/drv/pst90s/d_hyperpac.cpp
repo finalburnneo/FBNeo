@@ -756,6 +756,27 @@ static struct BurnRomInfo Cookbib2RomDesc[] = {
 STD_ROM_PICK(Cookbib2)
 STD_ROM_FN(Cookbib2)
 
+static struct BurnRomInfo Cookbib2aRomDesc[] = {
+	{ "uh12.020",      		0x40000, 0xa44ec1f8, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
+	{ "ui12.020",      		0x40000, 0xbdbcd0d1, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
+
+	{ "ua4.040",   			0x80000, 0xf458d52e, BRF_GRA },			 //  2	Sprites
+	{ "ua6.040",   			0x80000, 0x249e89b4, BRF_GRA },			 //  3	Sprites
+	{ "ua8.040",   			0x80000, 0xcaa25138, BRF_GRA },			 //  4	Sprites
+
+	{ "u1.512",   	   		0x10000, 0xf59f1c9a, BRF_SND },			 //  5	Z80 Program Code
+
+	{ "uj15.010",   		0x20000, 0x5e6f76b8, BRF_SND },			 //  6	Samples
+	
+	{ "87c52.mcu",     		0x10000, 0x00000000, BRF_NODUMP },
+	
+	{ "protdata_alt.bin",  	0x00200, 0xbc136ead, BRF_ESS | BRF_PRG }, //  Data from shared RAM
+};
+
+
+STD_ROM_PICK(Cookbib2a)
+STD_ROM_FN(Cookbib2a)
+
 static struct BurnRomInfo Cookbib3RomDesc[] = {
 	{ "u52.bin",       0x40000, 0x65134893, BRF_ESS | BRF_PRG }, //  0	68000 Program Code
 	{ "u74.bin",       0x40000, 0xc4ab8435, BRF_ESS | BRF_PRG }, //  1	68000 Program Code
@@ -2199,6 +2220,48 @@ static INT32 Cookbib2Init()
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
 	nRet = BurnLoadRom(HyperpacTempGfx + 0x100000, 4, 1); if (nRet != 0) return 1;
+	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
+	BurnFree(HyperpacTempGfx);
+
+	// Load Sample Rom
+	nRet = BurnLoadRom(MSM6295ROM, 6, 1); if (nRet != 0) return 1;
+	
+	// Load Shared RAM data
+	nRet = BurnLoadRom(HyperpacProtData, 8, 1); if (nRet) return 1;
+	BurnByteswap(HyperpacProtData, 0x200);
+	
+	nRet = HyperpacMachineInit(); if (nRet) return 1;
+
+	return 0;
+}
+
+static INT32 Cookbib2aInit()
+{
+	INT32 nRet = 0, nLen;
+	
+	HyperpacNumTiles = 10240;
+
+	// Allocate and Blank all required memory
+	Mem = NULL;
+	MemIndex();
+	nLen = MemEnd - (UINT8 *)0;
+	if ((Mem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
+	memset(Mem, 0, nLen);
+	MemIndex();
+
+	HyperpacTempGfx = (UINT8*)BurnMalloc(0x200000);
+	
+	// Load and byte-swap 68000 Program roms
+	nRet = BurnLoadRom(HyperpacRom + 0x00000, 0, 2); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacRom + 0x00001, 1, 2); if (nRet != 0) return 1;
+	
+	// Load Z80 Program Rom
+	nRet = BurnLoadRom(HyperpacZ80Rom, 5, 1); if (nRet != 0) return 1;
+
+	// Load and Decode Sprite Roms
+	nRet = BurnLoadRom(HyperpacTempGfx + 0x000000, 2, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacTempGfx + 0x080000, 3, 1); if (nRet != 0) return 1;
+	nRet = BurnLoadRom(HyperpacTempGfx + 0x180000, 4, 1); if (nRet != 0) return 1;
 	GfxDecode(HyperpacNumTiles, 4, 16, 16, HyperpacSpritePlaneOffsets, HyperpacSpriteXOffsets, HyperpacSpriteYOffsets, 0x400, HyperpacTempGfx, HyperpacSprites);	
 	BurnFree(HyperpacTempGfx);
 
@@ -4037,11 +4100,21 @@ struct BurnDriver BurnDrvHyperpacb = {
 
 struct BurnDriver BurnDrvCookbib2 = {
 	"cookbib2", NULL, NULL, NULL, "1996",
-	"Cookie & Bibi 2\0", NULL, "SemiCom", "Kaneko Pandora based",
+	"Cookie & Bibi 2 (set 1)\0", NULL, "SemiCom", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, Cookbib2RomInfo, Cookbib2RomName, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
 	Cookbib2Init, HyperpacExit, HyperpacFrame, NULL, HyperpacScan,
+	NULL, 0x200, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCookbib2a = {
+	"cookbib2a", "cookbib2", NULL, NULL, "1996",
+	"Cookie & Bibi 2 (set 2)\0", NULL, "SemiCom", "Kaneko Pandora based",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	NULL, Cookbib2aRomInfo, Cookbib2aRomName, NULL, NULL, HyperpacInputInfo, Cookbib2DIPInfo,
+	Cookbib2aInit, HyperpacExit, HyperpacFrame, NULL, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3
 };
 

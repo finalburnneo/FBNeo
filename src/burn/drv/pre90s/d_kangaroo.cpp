@@ -419,7 +419,7 @@ static INT32 DrvInit(INT32 game)
 	ZetSetInHandler(kangaroo_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(0, 1250000, 0);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -534,22 +534,34 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 32;
 	INT32 nCyclesTotal[2] = { 2500000 / 60, 1250000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == 31) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		if (i == 31) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
+
+		if (pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render2(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render2(pSoundBuf, nSegmentLength);
+		}
 	}
 
 	if (pBurnDraw) {

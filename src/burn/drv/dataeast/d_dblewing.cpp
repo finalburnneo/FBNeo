@@ -389,10 +389,10 @@ static INT32 DrvInit()
 
 	BurnYM2151Init(3580000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
-	BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetAllRoutes(0.75, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);
-	MSM6295SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -447,8 +447,6 @@ static void draw_sprites()
 		if (y >= 256) y -= 512;
 		y = 240 - y;
 		x = 304 - x;
-
-		if (x > 320) continue;
 
 		sprite &= ~multi;
 

@@ -38,8 +38,6 @@ static UINT8 *flipscreen;
 static UINT8 *palette_bank;
 static UINT8 *sound_status;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 m63_sound_p1;
 static UINT8 m63_sound_p2;
 static UINT8 sound_irq = 0;
@@ -579,10 +577,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	for (INT32 i = 0; i < 6; i++) {
-		pAY8910Buffer[i]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	}
-
 	MemEnd			= Next;
 
 	return 0;
@@ -610,8 +604,8 @@ static INT32 DrvInit(void (*pMapMainCPU)(), INT32 (*pRomLoadCallback)(), INT32 s
 	I8039SetIOReadHandler(m63_sound_read_port);
 	I8039SetIOWriteHandler(m63_sound_write_port);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -889,7 +883,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 
 		sample_render(pBurnSoundOut, nBurnSoundLen);
 	}

@@ -52,8 +52,6 @@ static UINT8 *M62Chars              = NULL;
 static UINT8 *M62PromData           = NULL;
 static UINT8 *M62TempRom            = NULL;
 static UINT32 *M62Palette           = NULL;
-static INT16* pFMBuffer;
-static INT16* pAY8910Buffer[6];
 
 static INT32 M62BackgroundHScroll;
 static INT32 M62BackgroundVScroll;
@@ -1802,7 +1800,6 @@ static INT32 M62MemIndex()
 	if (M62ScrollRamSize) { M62ScrollRam = Next; Next += M62ScrollRamSize; }
 	M62Z80Ram              = Next; Next += 0x01000;
 	M62M6803Ram            = Next; Next += 0x00080;
-	pFMBuffer              = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 
 	RamEnd                 = Next;
 
@@ -3401,20 +3398,15 @@ static void M62MachineInit()
 	M6803SetReadPortHandler(M62M6803ReadPort);
 	M6803SetWritePortHandler(M62M6803WritePort);
 
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
-
 	MSM5205Init(0, M62SynchroniseStream, 384000, M62MSM5205Vck0, MSM5205_S96_4B, 1);
 	MSM5205Init(1, M62SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
 	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 894886, nBurnSoundRate, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
-	AY8910Init(1, 894886, nBurnSoundRate, NULL, NULL, &AY8910_1PortAWrite, NULL);
+	AY8910Init2(0, 894886, 0);
+	AY8910Init2(1, 894886, 1);
+	AY8910SetPorts(0, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
+	AY8910SetPorts(1, NULL, NULL, &AY8910_1PortAWrite, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 #ifdef USE_SAMPLE_HACK
@@ -4790,7 +4782,7 @@ static INT32 M62Frame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 #ifdef USE_SAMPLE_HACK
 			if(bHasSamples)
 				BurnSampleRender(pSoundBuf, nSegmentLength);
@@ -4812,7 +4804,7 @@ static INT32 M62Frame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 #ifdef USE_SAMPLE_HACK
 			if(bHasSamples)
 				BurnSampleRender(pSoundBuf, nSegmentLength);

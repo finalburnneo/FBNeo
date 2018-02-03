@@ -3161,6 +3161,45 @@ struct BurnDriver BurnDrvpacmanso = {
 };
 
 
+// Pac-Man (bootleg, Video Game SA)
+// very similar to the pacmanso set, it has an accelerator feature
+
+static struct BurnRomInfo pacmanvgRomDesc[] = {
+	{ "PM-1R.6E",     0x0800, 0x76dbed21, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "PM-5R.6K",     0x0800, 0x965bb9b2, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "PM-2R.6F",     0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "PM-6R.6M",     0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "PM-3R.6H",     0x0800, 0xa5af382c, 1 | BRF_ESS | BRF_PRG },	//  4 
+	{ "PM-7R.6N",     0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "PM-4R.6J",     0x0800, 0x7c42d9be, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "PM-8R.6P",     0x0800, 0x68a7300d, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "PM-9S.5E",     0x0800, 0x2229ab07, 2 | BRF_GRA },			//  8 Graphics
+	{ "PM-11S.5H",    0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "PM-10S.5F",    0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "PM-12S.5J",    0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+
+	{ "pm1-1.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "pm1-4.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
+
+	{ "pm1-3.1m",     0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "pm1-2.3m",     0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(pacmanvg)
+STD_ROM_FN(pacmanvg)
+
+struct BurnDriver BurnDrvpacmanvg = {
+	"pacmanvg", "puckman", NULL, NULL, "1980",
+	"Pac-Man (bootleg, Video Game SA)\0", NULL, "bootleg (Video Game SA)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
+	NULL, pacmanvgRomInfo, pacmanvgRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
 // Come Come (Petaco SA bootleg of Puck Man)
 
 static struct BurnRomInfo pacmanpeRomDesc[] = {
@@ -3737,7 +3776,7 @@ static INT32 pacmanspInit()
 
 struct BurnDriver BurnDrvpacmansp = {
 	"pacmansp", "puckman", NULL, NULL, "198?",
-	"Puck Man (Spanish, 'Made in Greece' bootleg)\0", NULL, "hack", "Pac-man",
+	"Puck Man (Spanish, 'Made in Greece' bootleg)\0", NULL, "bootleg (Video Game SA)", "Pac-man",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE, 0,
 	NULL, pacmanspRomInfo, pacmanspRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,

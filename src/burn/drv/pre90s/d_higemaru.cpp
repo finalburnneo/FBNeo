@@ -411,12 +411,15 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 3);
+		DrvInputs[0] = DrvInputs[1] = 0x00; // active low, but ProcessJoy* needs active high to start
+		DrvInputs[2] = 0xff;
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+		ProcessJoystick(&DrvInputs[0], 0, 3,2,1,0, INPUT_4WAY | INPUT_MAKEACTIVELOW);
+		ProcessJoystick(&DrvInputs[1], 1, 3,2,1,0, INPUT_4WAY | INPUT_MAKEACTIVELOW);
 	}
 
 	INT32 nInterleave = 256;
@@ -452,7 +455,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -460,7 +463,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;

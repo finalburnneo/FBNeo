@@ -1330,17 +1330,17 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	maincpu		    	= Next; Next += 0x020000;
-	game		    	= Next; Next += MAX_MSX_CARTSIZE;
-	game2		    	= Next; Next += MAX_MSX_CARTSIZE;
-	kanji_rom       	= Next; Next += 0x040000;
+	maincpu		    = Next; Next += 0x020000;
+	game		   	= Next; Next += MAX_MSX_CARTSIZE;
+	game2		    = Next; Next += MAX_MSX_CARTSIZE;
+	kanji_rom       = Next; Next += 0x040000;
 
-	game_sram       	= Next; Next += 0x004000;
+	game_sram       = Next; Next += 0x004000;
 
 	AllRam			= Next;
 
 	main_mem		= Next; Next += 0x020000;
-	EmptyRAM       		= Next; Next += 0x010000;
+	EmptyRAM       	= Next; Next += 0x010000;
 
 	RamEnd			= Next;
 

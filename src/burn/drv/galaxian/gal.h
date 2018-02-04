@@ -272,8 +272,6 @@ INT32 GalFrame();
 INT32 GalScan(INT32 nAction, INT32 *pnMin);
 
 // gal_sound.cpp
-extern INT16* pFMBuffer;
-extern INT16* pAY8910Buffer[9];
 extern UINT8 GalSoundType;
 extern UINT8 HunchbksSoundIrqFire;
 extern UINT8 GalLastPort2;

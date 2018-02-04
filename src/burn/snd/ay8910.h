@@ -16,6 +16,8 @@ struct AY8910interface
 	void (*handler[MAX_8910])(INT32 irq);	/* IRQ handler for the YM2203 */
 };
 
+extern INT16 *pAY8910Buffer[(MAX_8910 + 1) * 3];
+
 extern INT32 ay8910burgertime_mode;
 
 extern INT32 ay8910_index_ym;

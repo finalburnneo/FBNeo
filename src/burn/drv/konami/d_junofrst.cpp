@@ -31,8 +31,6 @@ static UINT8 *blitterdata;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 soundlatch;
 static UINT8 soundlatch2;
 static UINT8 i8039_status;
@@ -431,10 +429,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -507,7 +501,8 @@ static INT32 DrvInit()
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1789750, nBurnSoundRate, AY8910_0_portA, NULL, NULL, &AY8910_0_portBwrite);
+	AY8910Init2(0, 1789750, 0);
+	AY8910SetPorts(0, &AY8910_0_portA, NULL, NULL, &AY8910_0_portBwrite);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 2200, 200, CAP_P(0), 0);
@@ -644,7 +639,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
@@ -656,8 +651,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
-
+			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
 			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
 			filter_rc_update(2, pAY8910Buffer[2], pSoundBuf, nSegmentLength);

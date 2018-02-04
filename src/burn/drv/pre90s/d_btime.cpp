@@ -40,7 +40,6 @@ static UINT8 *DrvGfxROM3;
 static INT32 gfx0len;
 static INT32 gfx1len;
 
-static INT16 *pAY8910Buffer[6];
 static INT16 *hpfiltbuffer;
 
 static UINT8 DrvJoy1[8];
@@ -712,8 +711,9 @@ static void btimepalettewrite(UINT16 offset, UINT8 data)
 	DrvPalette[offset] = BurnHighCol(r, g, b, 0);
 }
 
-static UINT8 btime_main_read(UINT16 address)
+static UINT8 btime_main_read(UINT16 addr)
 {
+	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x0c00, 0x0c1f, DrvPalRAM);
 	RB(0x1000, 0x13ff, DrvVidRAM);
@@ -753,8 +753,9 @@ static UINT8 btime_main_read(UINT16 address)
 	return 0;
 }
 
-static UINT8 bnj_main_read(UINT16 address)
+static UINT8 bnj_main_read(UINT16 addr)
 {
+	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x5c00, 0x5c1f, DrvPalRAM);
 	RB(0x4000, 0x43ff, DrvVidRAM);
@@ -794,8 +795,9 @@ static UINT8 bnj_main_read(UINT16 address)
 	return 0;
 }
 
-static UINT8 zoar_main_read(UINT16 address)
+static UINT8 zoar_main_read(UINT16 addr)
 {
+	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x8000, 0x83ff, DrvVidRAM);
 	RB(0x8400, 0x87ff, DrvColRAM);
@@ -834,8 +836,9 @@ static UINT8 zoar_main_read(UINT16 address)
 	return 0;
 }
 
-static UINT8 disco_main_read(UINT16 address)
+static UINT8 disco_main_read(UINT16 addr)
 {
+	INT32 address = addr;
 	RB(0x0000, 0x07ff, DrvMainRAM);
 	RB(0x2000, 0x7fff, DrvCharRAM);
 	RB(0x8000, 0x83ff, DrvVidRAM);
@@ -874,8 +877,9 @@ static UINT8 mmonkeyop_main_read(UINT16 address)
 	return DrvMainROMdec[address];
 }
 
-static UINT8 mmonkey_main_read(UINT16 address)
+static UINT8 mmonkey_main_read(UINT16 addr)
 {
+	INT32 address = addr;
 	RB(0x0000, 0x3bff, DrvMainRAM);
 	RB(0x3c00, 0x3fff, DrvVidRAM);
 
@@ -960,8 +964,9 @@ static void mmonkey_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static void btime_main_write(UINT16 address, UINT8 data)
+static void btime_main_write(UINT16 addr, UINT8 data)
 {
+	INT32 address = addr;
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x1000, 0x13ff, DrvVidRAM);
 	WB(0x1400, 0x17ff, DrvColRAM);
@@ -1008,8 +1013,9 @@ static void btime_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static void zoar_main_write(UINT16 address, UINT8 data)
+static void zoar_main_write(UINT16 addr, UINT8 data)
 {
+	INT32 address = addr;
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x8000, 0x83ff, DrvVidRAM);
 	WB(0x8400, 0x87ff, DrvColRAM);
@@ -1055,8 +1061,9 @@ static void zoar_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static void disco_main_write(UINT16 address, UINT8 data)
+static void disco_main_write(UINT16 addr, UINT8 data)
 {
+	INT32 address = addr;
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x2000, 0x7fff, DrvCharRAM);
 	WB(0x8000, 0x83ff, DrvVidRAM);
@@ -1080,9 +1087,9 @@ static void disco_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static void bnj_main_write(UINT16 address, UINT8 data)
+static void bnj_main_write(UINT16 addr, UINT8 data)
 {
-
+	INT32 address = addr;
 	WB(0x0000, 0x07ff, DrvMainRAM);
 	WB(0x4000, 0x43ff, DrvVidRAM);
 	WB(0x4400, 0x47ff, DrvColRAM);
@@ -1127,8 +1134,9 @@ static void bnj_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 btime_sound_read(UINT16 address)
+static UINT8 btime_sound_read(UINT16 addr)
 {
+	INT32 address = addr;
 	if (address <= 0x1fff) {
 		return DrvSoundRAM[address & 0x3ff];
 	}
@@ -1238,8 +1246,9 @@ static void btime_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT8 disco_sound_read(UINT16 address)
+static UINT8 disco_sound_read(UINT16 addr)
 {
+	INT32 address = addr;
 	RB(0x0000, 0x03ff, DrvSoundRAM);
 
 	RB(0xf000, 0xffff, DrvSoundROM);
@@ -1253,8 +1262,9 @@ static UINT8 disco_sound_read(UINT16 address)
 	return 0;
 }
 
-static void disco_sound_write(UINT16 address, UINT8 data)
+static void disco_sound_write(UINT16 addr, UINT8 data)
 {
+	INT32 address = addr;
 	WB(0x0000, 0x03ff, DrvSoundRAM);
 
 	switch (address & 0xf000)
@@ -1304,13 +1314,6 @@ static INT32 MemIndex()
 	DrvColPROM  = Next; Next += 0x000200;
 
 	DrvPalette	= (UINT32*)Next; Next += 0x0200 * sizeof(INT32);
-
-	pAY8910Buffer[0] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5] = (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	AllRam		= Next;
 
@@ -1904,8 +1907,9 @@ static INT32 ZoarInit()
 	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
-	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, &ay8910_0_portA_write, NULL);
-	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 3000000, 0);
+	AY8910Init2(1, 3000000, 1);
+	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
@@ -2382,7 +2386,8 @@ static INT32 BtimeFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
 
 			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);
@@ -2404,7 +2409,8 @@ static INT32 BtimeFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
+			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
 
 			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);

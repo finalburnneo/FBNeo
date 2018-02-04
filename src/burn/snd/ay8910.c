@@ -47,7 +47,7 @@ static INT32 num = 0, ym_num = 0;
 
 static double AY8910Volumes[3 * 6];
 static INT32 AY8910RouteDirs[3 * 6];
-static INT16 *AY8910Buffers[(MAX_8910 + 1) * 3];
+INT16 *pAY8910Buffer[(MAX_8910 + 1) * 3];
 static INT32 nBurnSoundLenSave = 0;
 static INT32 AY8910AddSignal = 0;
 
@@ -726,9 +726,9 @@ void AY8910Exit(INT32 chip)
 		INT32 i;
 		for (i = 0; i < 3; i++)
 		{
-			if (AY8910Buffers[(chip * 3) + i]) {
-				free(AY8910Buffers[(chip * 3) + i]);
-				AY8910Buffers[(chip * 3) + i] = NULL;
+			if (pAY8910Buffer[(chip * 3) + i]) {
+				free(pAY8910Buffer[(chip * 3) + i]);
+				pAY8910Buffer[(chip * 3) + i] = NULL;
 			}
 		}
 	}
@@ -832,7 +832,7 @@ INT32 AY8910Init2(INT32 chip, INT32 clock, INT32 add_signal)
 
 	for (i = 0; i < 3; i++)
 	{
-		AY8910Buffers[(chip * 3) + i] = malloc(nBurnSoundLen * sizeof(INT16));
+		pAY8910Buffer[(chip * 3) + i] = malloc(nBurnSoundLen * sizeof(INT16));
 	}
 
 	num++;
@@ -933,11 +933,11 @@ static inline void check_rate()
 
 		for (i = 0; i < num * 3; i++)
 		{
-			if (AY8910Buffers[i] != NULL) {
-				free (AY8910Buffers[i]);
-				AY8910Buffers[i] = NULL;
+			if (pAY8910Buffer[i] != NULL) {
+				free (pAY8910Buffer[i]);
+				pAY8910Buffer[i] = NULL;
 			}
-			AY8910Buffers[i] = (INT16*)malloc(nBurnSoundLen * sizeof(INT16));
+			pAY8910Buffer[i] = (INT16*)malloc(nBurnSoundLen * sizeof(INT16));
 		}
 	}
 }
@@ -956,7 +956,7 @@ void AY8910Render2(INT16* dest, INT32 length)
 	check_rate();
 
 	for (i = 0; i < num; i++) {
-		AY8910Update(i, AY8910Buffers + (i * 3), length);
+		AY8910Update(i, pAY8910Buffer + (i * 3), length);
 	}
 		
 	for (n = 0; n < length; n++) {
@@ -964,9 +964,9 @@ void AY8910Render2(INT16* dest, INT32 length)
 
 		for (i = 0; i < num * 3; i+=3)
 		{
-			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_1, AY8910Buffers[i + 0])
-			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_2, AY8910Buffers[i + 1])
-			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_3, AY8910Buffers[i + 2])
+			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_1, pAY8910Buffer[i + 0])
+			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_2, pAY8910Buffer[i + 1])
+			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_3, pAY8910Buffer[i + 2])
 		}
 		
 		nLeftSample = BURN_SND_CLIP(nLeftSample);

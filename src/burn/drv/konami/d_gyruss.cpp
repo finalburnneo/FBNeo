@@ -38,8 +38,6 @@ static UINT32 *DrvPalette;
 static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[15];
-
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -511,22 +509,6 @@ static INT32 MemIndex()
 	Palette			= (UINT32*)Next; Next += 0x0140 * sizeof(UINT32);
 	DrvPalette		= (UINT32*)Next; Next += 0x0140 * sizeof(UINT32);
 
-	pAY8910Buffer[ 0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 6]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 7]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 8]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[ 9]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[10]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[11]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[12]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[13]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[14]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	AllRam			= Next;
 
 	flipscreen		= Next; Next += 0x000001;
@@ -745,11 +727,14 @@ static INT32 DrvInit()
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1789750, nBurnSoundRate, NULL, NULL, NULL, &AY8910_0_portBwrite);
-	AY8910Init(1, 1789750, nBurnSoundRate, NULL, NULL, NULL, &AY8910_1_portBwrite);
-	AY8910Init(2, 1789750, nBurnSoundRate, AY8910_3_portA, NULL, NULL, NULL);
-	AY8910Init(3, 1789750, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(4, 1789750, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 1789750, 0);
+	AY8910Init2(1, 1789750, 1);
+	AY8910Init2(2, 1789750, 1);
+	AY8910Init2(3, 1789750, 1);
+	AY8910Init2(4, 1789750, 1);
+	AY8910SetPorts(0, NULL, NULL, NULL, &AY8910_0_portBwrite);
+	AY8910SetPorts(1, NULL, NULL, NULL, &AY8910_1_portBwrite);
+	AY8910SetPorts(1, AY8910_3_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.25, BURN_SND_ROUTE_BOTH);

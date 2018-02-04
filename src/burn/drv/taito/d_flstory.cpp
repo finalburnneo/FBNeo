@@ -32,8 +32,6 @@ static UINT8 *DrvMcuRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[3];
-
 static UINT8 snd_data;
 static UINT8 snd_flag;
 static INT32 nmi_enable;
@@ -671,7 +669,7 @@ static void victnine_mcu_write(INT32 data)
 	}
 }
 
-void __fastcall flstory_main_write(UINT16 address, UINT8 data)
+static void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xff00) == 0xdc00) {
 		DrvSprRAM[address & 0xff] = data;
@@ -717,7 +715,7 @@ void __fastcall flstory_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall flstory_main_read(UINT16 address)
+static UINT8 __fastcall flstory_main_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -828,7 +826,7 @@ static void AY_ayportA_write(UINT32 /*addr*/, UINT32 data)
 	AY8910SetAllRoutes(0, m_vol_ctrl[(m_snd_ctrl2 >> 4) & 15] / ((select_game == 3) ? 1600.0 : 2000.0), BURN_SND_ROUTE_BOTH);
 }
 
-void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
+static void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -886,7 +884,7 @@ void __fastcall flstory_sound_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall flstory_sound_read(UINT16 address)
+static UINT8 __fastcall flstory_sound_read(UINT16 address)
 {
 	if (address == 0xd800) {
 		return *soundlatch;
@@ -959,10 +957,6 @@ static INT32 MemIndex()
 	flipscreen		= Next; Next += 0x000001;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -1139,7 +1133,8 @@ static INT32 DrvInit()
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, AY_ayportA_write, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910SetPorts(0, NULL, NULL, AY_ayportA_write, NULL);
 	AY8910SetAllRoutes(0, 0.05, BURN_SND_ROUTE_BOTH);
 	if (select_game == 3) {
 		AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
@@ -1504,7 +1499,7 @@ static INT32 DrvFrame()
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}

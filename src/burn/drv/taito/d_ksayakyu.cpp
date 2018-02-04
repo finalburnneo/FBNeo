@@ -25,7 +25,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
-static INT16 *pAY8910Buffer[6];
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -252,13 +251,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -350,8 +342,9 @@ static INT32 DrvInit()
 	ZetSetReadHandler(ksayakyu_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 18432000/16, nBurnSoundRate, &ay8910_0_portA_r, NULL, NULL, NULL);
-	AY8910Init(1, 18432000/16, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 18432000/16, 0);
+	AY8910Init2(1, 18432000/16, 1);
+	AY8910SetPorts(0, &ay8910_0_portA_r, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
@@ -512,7 +505,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

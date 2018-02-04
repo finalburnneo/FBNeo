@@ -365,9 +365,6 @@ static UINT32* TigerHeliPalette;
 static UINT8 nPalettebank;
 static UINT8 nFlipscreen;
 
-static INT16* pFMBuffer;
-static INT16* pAY8910Buffer[6];
-
 static INT32 use_mcu = 0;
 
 static INT32 MemIndex()
@@ -388,7 +385,6 @@ static INT32 MemIndex()
 	TigerHeliTileRAM	= Next; Next += 0x001000;
 	Ram03			= Next; Next += 0x000080;
 	RamEnd				= Next;
-	pFMBuffer			= (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 	TigerHeliPaletteROM	= Next; Next += 0x000300;
 	TigerHeliPalette	= (UINT32*)Next; Next += 0x000100 * sizeof(UINT32);
 	MemEnd				= Next;
@@ -433,7 +429,7 @@ static inline void sync_mcu()
 	}
 }
 
-UINT8 __fastcall tigerhReadCPU0(UINT16 a)
+static UINT8 __fastcall tigerhReadCPU0(UINT16 a)
 {
 	if (a >= 0xc800 && a <= 0xcfff) {
 		if (ZetGetPC(-1) == 0x6d34) return 0xff;
@@ -470,7 +466,7 @@ UINT8 __fastcall tigerhReadCPU0(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall tigerhReadCPU0_tigerhb1(UINT16 a)
+static UINT8 __fastcall tigerhReadCPU0_tigerhb1(UINT16 a)
 {
 	if (a >= 0xc800 && a <= 0xcfff) {
 		if (ZetGetPC(-1) == 0x6d34) return 0xff;
@@ -486,8 +482,7 @@ UINT8 __fastcall tigerhReadCPU0_tigerhb1(UINT16 a)
 	return 0;
 }
 
-
-void __fastcall tigerhWriteCPU0(UINT16 a, UINT8 d)
+static void __fastcall tigerhWriteCPU0(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xE800:
@@ -516,7 +511,7 @@ void __fastcall tigerhWriteCPU0(UINT16 a, UINT8 d)
 	}
 }
 
-void __fastcall tigerhWriteCPU0_slapbtuk(UINT16 a, UINT8 d)
+static void __fastcall tigerhWriteCPU0_slapbtuk(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xE800:
@@ -533,7 +528,7 @@ void __fastcall tigerhWriteCPU0_slapbtuk(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall tigerhInCPU0(UINT16 a)
+static UINT8 __fastcall tigerhInCPU0(UINT16 a)
 {
 	a &= 0xFF;
 
@@ -571,7 +566,7 @@ UINT8 __fastcall tigerhInCPU0(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall perfrmanhInCPU0(UINT16 a)
+static UINT8 __fastcall perfrmanhInCPU0(UINT16 a)
 {
 	a &= 0xFF;
 
@@ -586,7 +581,7 @@ UINT8 __fastcall perfrmanhInCPU0(UINT16 a)
 	return 0;
 }
 
-UINT8 __fastcall tigerhInCPU0_gtstarba(UINT16 a)
+static UINT8 __fastcall tigerhInCPU0_gtstarba(UINT16 a)
 {
 	a &= 0xFF;
 
@@ -606,7 +601,7 @@ UINT8 __fastcall tigerhInCPU0_gtstarba(UINT16 a)
 	return 0;
 }
 
-void __fastcall tigerhOutCPU0(UINT16 a, UINT8 /* d */)
+static void __fastcall tigerhOutCPU0(UINT16 a, UINT8 /* d */)
 {
 	a &= 0xFF;
 
@@ -686,7 +681,7 @@ void __fastcall tigerhOutCPU0(UINT16 a, UINT8 /* d */)
 	}
 }
 
-UINT8 __fastcall tigerhReadCPU1(UINT16 a)
+static UINT8 __fastcall tigerhReadCPU1(UINT16 a)
 {
 	switch (a) {
 		case 0xA081:
@@ -703,7 +698,7 @@ UINT8 __fastcall tigerhReadCPU1(UINT16 a)
 	return 0;
 }
 
-void __fastcall tigerhWriteCPU1(UINT16 a, UINT8 d)
+static void __fastcall tigerhWriteCPU1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xA080:
@@ -733,7 +728,7 @@ void __fastcall tigerhWriteCPU1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall tigerhInCPU1(UINT16 /* a */)
+static UINT8 __fastcall tigerhInCPU1(UINT16 /* a */)
 {
 //	bprintf(PRINT_NORMAL, "Attempt by CPU1 to read port %02X.\n", a);
 
@@ -1431,15 +1426,10 @@ static INT32 tigerhInit()
 		}
 	}
 
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
-
-	AY8910Init(0, 1500000, nBurnSoundRate, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
-	AY8910Init(1, 1500000, nBurnSoundRate, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910Init2(1, 1500000, 1);
+	AY8910SetPorts(0, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
+	AY8910SetPorts(1, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -1563,15 +1553,10 @@ static INT32 perfrmanInit()
 		ZetClose();
 	}
 
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
-
-	AY8910Init(0, 2000000, nBurnSoundRate, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
+	AY8910SetPorts(0, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
+	AY8910SetPorts(1, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -1919,7 +1904,7 @@ static INT32 tigerhFrame()
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+				AY8910Render2(pSoundBuf, nSegmentLength);
 				nSoundBufferPos += nSegmentLength;
 			}
 		}
@@ -1931,7 +1916,7 @@ static INT32 tigerhFrame()
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
-				AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+				AY8910Render2(pSoundBuf, nSegmentLength);
 			}
 		}
 	}

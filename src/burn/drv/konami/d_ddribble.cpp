@@ -687,9 +687,6 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-	//	filter_rc_update(0, pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen);
-	//	filter_rc_update(1, pAY8910Buffer[1], pBurnSoundOut, nBurnSoundLen);
-	//	filter_rc_update(2, pAY8910Buffer[2], pBurnSoundOut, nBurnSoundLen);
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
 

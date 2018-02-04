@@ -32,8 +32,6 @@ static UINT8 *DrvSprTmp;
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 nmi_enable;
 static UINT8 last_sound_irq;
 
@@ -382,13 +380,6 @@ static INT32 MemIndex()
 	DrvSprRAM		= Next; Next += 0x000200;
 
 	RamEnd			= Next;
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -763,7 +754,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
+			TimepltSndUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -772,7 +763,7 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
+		TimepltSndUpdate(pSoundBuf, nSegmentLength);
 //		tc8830fUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

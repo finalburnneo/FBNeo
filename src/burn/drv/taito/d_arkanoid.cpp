@@ -21,7 +21,6 @@ static UINT8 *DrvZ80RAM;
 static UINT8 *DrvMcuRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvSprRAM;
-static INT16 *pAY8910Buffer[3];
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -775,7 +774,7 @@ static UINT8 arkanoid_bootleg_d008_read()
 	return 0;
 }
 
-UINT8 __fastcall arkanoid_read(UINT16 address)
+static UINT8 __fastcall arkanoid_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -816,7 +815,7 @@ UINT8 __fastcall arkanoid_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall arkanoid_write(UINT16 address, UINT8 data)
+static void __fastcall arkanoid_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -858,7 +857,7 @@ static void bankswitch(INT32 data)
 	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80ROM + bank);
 }
 
-void __fastcall hexa_write(UINT16 address, UINT8 data)
+static void __fastcall hexa_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -1054,10 +1053,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -1079,18 +1074,11 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xbfff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xbfff, 2, DrvZ80ROM);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvZ80RAM);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvZ80RAM);
-	ZetMapArea(0xe000, 0xe7ff, 0, DrvVidRAM);
-	ZetMapArea(0xe000, 0xe7ff, 1, DrvVidRAM);
-	ZetMapArea(0xe000, 0xe7ff, 2, DrvVidRAM);
-	ZetMapArea(0xe800, 0xefff, 0, DrvSprRAM);
-	ZetMapArea(0xe800, 0xefff, 1, DrvSprRAM);
-	ZetMapArea(0xe800, 0xefff, 2, DrvSprRAM);
-	ZetMapArea(0xf000, 0xffff, 2, DrvZ80ROM + 0xf000);
+	ZetMapMemory(DrvZ80ROM,			0x0000, 0xbfff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM,			0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM,			0xe000, 0xe7ff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,			0xe800, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvZ80ROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
 	if (arkanoid_bootleg_id == HEXA) {
 		ZetSetWriteHandler(hexa_write);
 	} else {
@@ -1101,7 +1089,8 @@ static INT32 DrvInit()
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &arkanoid_m68705_interface);
 
-	AY8910Init(0, 1500000, nBurnSoundRate, &ay8910_read_port_5, &ay8910_read_port_4, NULL, NULL);
+	AY8910Init2(0, 1500000, 0);
+	AY8910SetPorts(0, &ay8910_read_port_5, &ay8910_read_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	if (arkanoid_bootleg_id == HEXA) {
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
@@ -1242,7 +1231,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

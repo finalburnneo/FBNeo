@@ -41,16 +41,14 @@ static UINT8 *mcu_value;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
-static UINT8  DrvJoy1[8];
-static UINT8  DrvJoy2[8];
-static UINT8  DrvJoy3[8];
-static UINT8  DrvJoy4[8];
-static UINT8  DrvJoy5[8];
-static UINT8  DrvDips[3];
-static UINT8  DrvInputs[5];
-static UINT8  DrvReset;
+static UINT8 DrvJoy1[8];
+static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8];
+static UINT8 DrvJoy4[8];
+static UINT8 DrvJoy5[8];
+static UINT8 DrvDips[3];
+static UINT8 DrvInputs[5];
+static UINT8 DrvReset;
 
 static struct BurnInputInfo Wyvernf0InputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
@@ -397,13 +395,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -482,10 +473,9 @@ static INT32 DrvInit()
 	ZetSetReadHandler(wyvernf0_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 3000000, 0);
+	AY8910Init2(1, 3000000, 1);
 	AY8910SetAllRoutes(0, 0.14, BURN_SND_ROUTE_BOTH);
-
-	AY8910Init(1, 3000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
 	AY8910SetAllRoutes(1, 0.14, BURN_SND_ROUTE_BOTH);
 
 	MSM5232Init(2000000, 1);
@@ -674,7 +664,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 	}
 

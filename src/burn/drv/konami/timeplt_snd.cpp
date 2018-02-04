@@ -15,6 +15,9 @@ static UINT8 *z80ram;
 static INT32 z80_select = 0;
 static INT32 locomotnmode = 0;
 
+static INT16 *pFMBuffer = NULL;
+static INT16 *pAY8910Buffer[6];
+
 static void filter_write(INT32 num, UINT8 d)
 {
 	INT32 C = 0;
@@ -111,6 +114,17 @@ void TimepltSndReset()
 	AY8910Reset(0);
 	AY8910Reset(1);
 	soundlatch = 0;
+}
+
+static void TimepltSndAllocateBuffers()
+{
+	if (pFMBuffer != NULL) return;
+
+	pFMBuffer = (INT16*)BurnMalloc(nBurnSoundLen * sizeof(INT16) * 6);
+
+	for (INT32 i = 0; i < 6; i++) {
+		pAY8910Buffer[ 0]	= pFMBuffer + i * nBurnSoundLen;
+	}
 }
 
 void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
@@ -221,11 +235,15 @@ void TimepltSndExit()
 	z80rom = NULL;
 	z80ram = NULL;
 	locomotnmode = 0;
+
+	BurnFree(pFMBuffer);
+	pFMBuffer = NULL;
 }
 
-void TimepltSndUpdate(INT16 **pAY8910Buffer, INT16 *pSoundBuf, INT32 nSegmentLength)
+void TimepltSndUpdate(INT16 *pSoundBuf, INT32 nSegmentLength)
 {
 	if (nSegmentLength <= 0) return;
+	TimepltSndAllocateBuffers();
 
 	AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
 	AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);

@@ -58,9 +58,6 @@ static UINT8 *Kaneko16TempGfx      = NULL;
 static UINT8 *Kaneko16PrioBitmap   = NULL; // Wing Force, BlaZeon, mgcrystl
 static UINT16 *Kaneko16SpriteFbuffer = NULL; // mgcrystl sprite framebuffer/overdraw mode
 
-static INT16* pFMBuffer;
-static INT16* pAY8910Buffer[6];
-
 static INT32 Kaneko16Brightness;
 static UINT32 Kaneko16SoundLatch;
 static INT32 MSM6295Bank0;
@@ -1959,7 +1956,6 @@ static INT32 ExplbrkrMemIndex()
 		LayerQueuePriority[2] = Next; Next += nScreenWidth * nScreenHeight;
 		LayerQueuePriority[3] = Next; Next += nScreenWidth * nScreenHeight;
 	}
-	pFMBuffer             = (INT16*)Next; Next += nBurnSoundLen * 6 * sizeof(INT16);
 	if (Kaneko16Bg15) {
 		Kaneko16Bg15Data     = (UINT16*)Next; Next += (32 * 256 * 256) * sizeof(UINT16); // 32 bitmaps - 256 x 256
 		Kaneko16Palette      = (UINT32*)Next; Next += (0x001000 + 32768) * sizeof(UINT32);
@@ -4535,16 +4531,10 @@ static INT32 BerlwallInit()
 	SekSetWriteByteHandler(0, BerlwallWriteByte);
 	SekSetWriteWordHandler(0, BerlwallWriteWord);
 	SekClose();
-	
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
-	AY8910Init(0, 2000000, nBurnSoundRate, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
+	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 	
@@ -4632,16 +4622,10 @@ static INT32 PackbangInit()
 	SekSetWriteByteHandler(0, BerlwallWriteByte);
 	SekSetWriteWordHandler(0, BerlwallWriteWord);
 	SekClose();
-	
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
-	AY8910Init(0, 2000000, nBurnSoundRate, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
+	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
 	
@@ -5082,19 +5066,13 @@ static INT32 ExplbrkrInit()
 	SekSetWriteByteHandler(0, ExplbrkrWriteByte);
 	SekSetWriteWordHandler(0, ExplbrkrWriteWord);
 	SekClose();
-	
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
 
 	Kaneko16Eeprom = 1;
 	EEPROMInit(&eeprom_interface_93C46);
 	
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
+	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 6) / 132, 1);
@@ -5489,18 +5467,12 @@ static INT32 MgcrystlInit()
 	SekSetWriteWordHandler(0, ExplbrkrWriteWord);
 	SekClose();
 
-	pAY8910Buffer[0] = pFMBuffer + nBurnSoundLen * 0;
-	pAY8910Buffer[1] = pFMBuffer + nBurnSoundLen * 1;
-	pAY8910Buffer[2] = pFMBuffer + nBurnSoundLen * 2;
-	pAY8910Buffer[3] = pFMBuffer + nBurnSoundLen * 3;
-	pAY8910Buffer[4] = pFMBuffer + nBurnSoundLen * 4;
-	pAY8910Buffer[5] = pFMBuffer + nBurnSoundLen * 5;
-
 	Kaneko16Eeprom = 1;
 	EEPROMInit(&eeprom_interface_93C46);
 	
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
+	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
 	MSM6295Init(0, (12000000 / 4) / 165, 1);
@@ -7159,7 +7131,7 @@ static INT32 ExplbrkrFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 			
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -7170,7 +7142,7 @@ static INT32 ExplbrkrFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render(&pAY8910Buffer[0], pSoundBuf, nSegmentLength, 0);
+			AY8910Render2(pSoundBuf, nSegmentLength);
 		}
 		
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);

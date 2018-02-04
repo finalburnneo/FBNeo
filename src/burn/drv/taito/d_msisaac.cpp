@@ -28,8 +28,6 @@ static UINT8 *DrvBgRAM1;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 pending_nmi;
 static UINT8 nmi_enable;
 static UINT8 sound_control[2];
@@ -424,13 +422,6 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-
 	MemEnd			= Next;
 
 	return 0;
@@ -509,8 +500,8 @@ static INT32 DrvInit()
 	ZetSetReadHandler(msisaac_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
-	AY8910Init(1, 2000000, nBurnSoundRate, NULL, NULL, NULL, NULL);
+	AY8910Init2(0, 2000000, 0);
+	AY8910Init2(1, 2000000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 
@@ -675,7 +666,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render(&pAY8910Buffer[0], pBurnSoundOut, nBurnSoundLen, 0);
+		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
 		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -728,21 +719,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Metal Soldier Isaac II
 
 static struct BurnRomInfo msisaacRomDesc[] = {
-	{ "a34_11.bin",		0x4000, 0x40819334, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "a34_11.bin",		0x4000, 0x40819334, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "a34_12.bin",		0x4000, 0x4c50b298, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "a34_13.bin",		0x4000, 0x2e2b09b3, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "a34_10.bin",		0x2000, 0xa2c53dc1, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "a34_01.bin",		0x4000, 0x545e45e7, 2 | BRF_PRG | BRF_ESS }, //  4 audiocpu
+	{ "a34_01.bin",		0x4000, 0x545e45e7, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
 
-	{ "a34.mcu",		0x0800, 0, 3 | BRF_NODUMP | BRF_OPT },       //  5 cpu2
+	{ "a34.mcu",		0x0800, 0, 3 | BRF_NODUMP | BRF_OPT },       //  5 MCU (not dumped)
 
-	{ "a34_02.bin",		0x2000, 0x50da1a81, 4 | BRF_GRA },           //  6 gfx1
+	{ "a34_02.bin",		0x2000, 0x50da1a81, 4 | BRF_GRA },           //  6 Tiles
 	{ "a34_03.bin",		0x2000, 0x728a549e, 4 | BRF_GRA },           //  7
 	{ "a34_04.bin",		0x2000, 0xe7d19f1c, 4 | BRF_GRA },           //  8
 	{ "a34_05.bin",		0x2000, 0xbed2107d, 4 | BRF_GRA },           //  9
 
-	{ "a34_06.bin",		0x2000, 0x4ec71687, 5 | BRF_GRA },           // 10 gfx2
+	{ "a34_06.bin",		0x2000, 0x4ec71687, 5 | BRF_GRA },           // 10 Sprites
 	{ "a34_07.bin",		0x2000, 0x24922abf, 5 | BRF_GRA },           // 11
 	{ "a34_08.bin",		0x2000, 0x3ddbf4c0, 5 | BRF_GRA },           // 12
 	{ "a34_09.bin",		0x2000, 0x23eb089d, 5 | BRF_GRA },           // 13

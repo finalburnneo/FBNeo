@@ -38,8 +38,6 @@ static UINT8 *DrvDots             = NULL;
 static UINT8 *DrvTempRom          = NULL;
 static UINT32 *DrvPalette         = NULL;
 
-static INT16 *pAY8910Buffer[6];
-
 static UINT8 DrvCPUFireIRQ;
 static UINT8 last_sound_irq;
 static UINT8 DrvCPUIRQVector;
@@ -764,13 +762,6 @@ static INT32 JunglerMemIndex()
 	DrvSprites             = Next; Next += 0x180 * 16 * 16;
 	DrvDots                = Next; Next += 0x018 * 4 * 4;
 	DrvPalette             = (UINT32*)Next; Next += 324 * sizeof(UINT32);
-
-	pAY8910Buffer[0]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[1]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[2]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[3]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[4]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
-	pAY8910Buffer[5]	= (INT16*)Next; Next += nBurnSoundLen * sizeof(INT16);
 
 	MemEnd                 = Next;
 
@@ -2078,7 +2069,7 @@ static INT32 JunglerFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
+			TimepltSndUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -2087,7 +2078,7 @@ static INT32 JunglerFrame()
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		TimepltSndUpdate(pAY8910Buffer, pSoundBuf, nSegmentLength);
+		TimepltSndUpdate(pSoundBuf, nSegmentLength);
 	}
 
 	if (pBurnDraw) DrvDrawJungler();

@@ -904,7 +904,7 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 		sprintf(szName, "AY8910 #%d", i);
 
 		ba.Data		= &AYPSG[i];
-		ba.nLen		= offsetof(struct AY8910, PortAread);
+		ba.nLen		= STRUCT_SIZE_HELPER(struct AY8910, VolTable);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);

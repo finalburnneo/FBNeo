@@ -22,12 +22,8 @@ extern TCHAR szAppSamplesPath[MAX_PATH];
 extern TCHAR szAppBlendPath[MAX_PATH];
 extern TCHAR szAppEEPROMPath[MAX_PATH];
 
-// Alignment macro, to keep savestates compatible between 32/64bit platforms.
-#ifdef _MSC_VER
-#define ALIGN_VAR(x)  __declspec(align(x))
-#else
-#define ALIGN_VAR(x)  __attribute__((aligned(x)))
-#endif
+// Macro to determine the size of a struct up to and including "member"
+#define STRUCT_SIZE_HELPER(type, member) offsetof(type, member) + sizeof(((type*)0)->member)
 
 // Enable the MAME logerror() function in debug builds
 // #define MAME_USE_LOGERROR

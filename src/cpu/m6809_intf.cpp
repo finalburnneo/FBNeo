@@ -442,7 +442,7 @@ INT32 M6809Scan(INT32 nAction)
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data = &m6809CPUContext[i].reg;
-		ba.nLen = offsetof(m6809_Regs, irq_callback);
+		ba.nLen = STRUCT_SIZE_HELPER(m6809_Regs, nmi_state);
 		ba.szName = szName;
 		BurnAcb(&ba);
 

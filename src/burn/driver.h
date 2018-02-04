@@ -34,12 +34,8 @@ __extension__ typedef unsigned long long	UINT64;
 __extension__ typedef long long				INT64;
 #endif
 
-// Alignment macro, to keep savestates compatible between 32/64bit platforms.
-#ifdef _MSC_VER
-#define ALIGN_VAR(x)  __declspec(align(x))
-#else
-#define ALIGN_VAR(x)  __attribute__((aligned(x)))
-#endif
+// Macro to determine the size of a struct up to and including "member"
+#define STRUCT_SIZE_HELPER(type, member) offsetof(type, member) + sizeof(((type*)0)->member)
 
 #define OSD_CPU_H
 

@@ -9,6 +9,7 @@
 #include "msm6295.h" // ppan
 #include "irem_cpu.h"
 #include "iremga20.h"
+#include "stddef.h"
 
 static UINT8 *Mem = NULL;
 static UINT8 *MemEnd = NULL;
@@ -1683,11 +1684,12 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 	pf_control[2]	= Next; Next += 0x000008;
 	pf_control[3]	= Next; Next += 0x000008;
 
+	RamEnd		= Next;
+
+	// scanned separately from ram due to pointers in structs
 	m92_layers[0]	= (struct _m92_layer*)Next; Next += sizeof(struct _m92_layer);
 	m92_layers[1]	= (struct _m92_layer*)Next; Next += sizeof(struct _m92_layer);
 	m92_layers[2]	= (struct _m92_layer*)Next; Next += sizeof(struct _m92_layer);
-
-	RamEnd		= Next;
 
 	DrvPalette	= (UINT32 *) Next; Next += 0x0801 * sizeof(UINT32);
 
@@ -2232,9 +2234,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 
-		if (nAction & ACB_WRITE) {
-			bRecalcPalette = 1;
+		ScanVar(m92_layers[0], STRUCT_SIZE_HELPER(_m92_layer, scrolly), "m92 pf0");
+		ScanVar(m92_layers[1], STRUCT_SIZE_HELPER(_m92_layer, scrolly), "m92 pf1");
+		ScanVar(m92_layers[2], STRUCT_SIZE_HELPER(_m92_layer, scrolly), "m92 pf2");
 
+		if (nAction & ACB_WRITE) {
 			struct _m92_layer *ptr;
 			for (INT32 i = 0; i < 3; i++) {
 				ptr = m92_layers[i];

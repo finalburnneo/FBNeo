@@ -802,7 +802,7 @@ void z180_scan(INT32 nAction)
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &Z180;
-		ba.nLen	  = offsetof(Z180_Regs, daisy);
+		ba.nLen	  = STRUCT_SIZE_HELPER(Z180_Regs, after_EI);
 		ba.szName = "Z180 Registers";
 		BurnAcb(&ba);
 	}

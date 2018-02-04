@@ -2030,7 +2030,7 @@ void mcs51_scan(INT32 nAction)
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &mcs51_state;
-		ba.nLen	  = offsetof(struct _mcs51_state_t, sfr_write);
+		ba.nLen	  = STRUCT_SIZE_HELPER(struct _mcs51_state_t, ds5002fp);
 		ba.szName = "i8051 Regs";
 		BurnAcb(&ba);
 	}

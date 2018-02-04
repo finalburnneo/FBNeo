@@ -554,7 +554,7 @@ int konamiCpuScan(int nAction)
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = (unsigned char*)&konami;
-		ba.nLen	  = offsetof(konami_Regs, irq_callback);
+		ba.nLen	  = STRUCT_SIZE_HELPER(konami_Regs, hold_irq);
 		ba.szName = "KonamiCPU Registers";
 		BurnAcb(&ba);
 

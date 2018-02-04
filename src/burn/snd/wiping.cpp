@@ -56,7 +56,7 @@ void wipingsnd_scan()
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &m_channel_list[i];
-		ba.nLen	  = offsetof(struct sound_channel, wave);
+		ba.nLen	  = STRUCT_SIZE_HELPER(struct sound_channel, oneshotplaying);
 		ba.szName = szName;
 		BurnAcb(&ba);
 	}

@@ -163,7 +163,7 @@ void i8x41_scan(INT32 nAction)
 		struct BurnArea ba;
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = &i8x41;
-		ba.nLen	  = offsetof(I8X41, ram);
+		ba.nLen	  = STRUCT_SIZE_HELPER(I8X41, p2_hs);
 		ba.szName = "i8x41 Regs";
 		BurnAcb(&ba);
 	}

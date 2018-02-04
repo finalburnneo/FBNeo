@@ -3501,7 +3501,7 @@ int Sh2Scan(int nAction)
 
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = &Sh2Ext[i].sh2;
-			ba.nLen	  = offsetof(SH2, irq_callback);
+			ba.nLen	  = STRUCT_SIZE_HELPER(SH2, sh2_eat_cycles);
 			ba.szName = szText;
 			BurnAcb(&ba);
 

@@ -3647,7 +3647,7 @@ int Z80Scan(int nAction)
 
 	memset(&ba, 0, sizeof(ba));
 	ba.Data	  = &Z80;
-	ba.nLen	  = offsetof(Z80_Regs, daisy);
+	ba.nLen	  = STRUCT_SIZE_HELPER(Z80_Regs, hold_irq);
 	ba.szName = "Z80 Registers";
 	BurnAcb(&ba);
 

@@ -56,7 +56,6 @@ static inline void write_port_word(unsigned int a, unsigned short d)
 #define cpu_readop cpu_readmem20_op
 #define cpu_readop_arg cpu_readmem20_arg
 
-#define offs_t int
 #define INPUT_LINE_NMI	0x20 // nmi
 
 #define NEC_INLINE
@@ -628,7 +627,7 @@ void v25Scan(int cpu, int nAction)
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = (unsigned char*)nec_state;
-		ba.nLen	  = offsetof(nec_state_t, decode);
+		ba.nLen	  = STRUCT_SIZE_HELPER(nec_state_t, stop_run);
 		ba.szName = szText;
 		BurnAcb(&ba);
 	}

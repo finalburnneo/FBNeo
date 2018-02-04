@@ -643,7 +643,7 @@ INT32 M6800Scan(INT32 nAction)
 
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = &M6800CPUContext[i].reg;
-			ba.nLen	  = offsetof(m6800_Regs, insn);
+			ba.nLen	  = STRUCT_SIZE_HELPER(m6800_Regs, timer_over);
 			ba.szName = "M6800 Registers";
 			BurnAcb(&ba);
 

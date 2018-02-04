@@ -358,7 +358,7 @@ INT32 h6280Scan(INT32 nAction)
 
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = p;
-			ba.nLen	  = offsetof(h6280_Regs, irq_callback);
+			ba.nLen	  = STRUCT_SIZE_HELPER(h6280_Regs, io_buffer);
 			sprintf (szName, "h6280 Registers for Chip #%d", i);
 			ba.szName = szName;
 			BurnAcb(&ba);

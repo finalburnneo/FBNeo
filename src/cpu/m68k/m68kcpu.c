@@ -1056,7 +1056,7 @@ unsigned int m68k_context_size()
 /* Used to calculate the context size minus the system-specific pointers, for savestates */
 unsigned int m68k_context_size_no_pointers()
 {
-	return offsetof(struct _m68ki_cpu_core, pointer_block_divider);
+	return STRUCT_SIZE_HELPER(struct _m68ki_cpu_core, sleepuntilint);
 }
 
 unsigned int m68k_get_context(void* dst)

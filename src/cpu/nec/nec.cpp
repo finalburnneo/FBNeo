@@ -110,7 +110,6 @@
 #include "nec_intf.h"
 #include "bitswap.h"
 
-#define offs_t int //?
 #define INPUT_LINE_NMI	0x20 // nmi
 
 #define NEC_INLINE

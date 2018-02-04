@@ -40,7 +40,7 @@ typedef struct _nec_state_t nec_state_t;
 struct _nec_state_t
 {
 	necbasicregs regs;
-	offs_t	fetch_xor;
+	UINT32	fetch_xor;
 	UINT16	sregs[4];
 
 	UINT16	ip;

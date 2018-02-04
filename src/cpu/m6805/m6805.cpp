@@ -823,7 +823,7 @@ int m6805Scan(int nAction)
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = &m6805;
-		ba.nLen	  = offsetof(m6805_Regs, irq_callback);
+		ba.nLen	  = STRUCT_SIZE_HELPER(m6805_Regs, nTotalCycles);
 		ba.szName = "m6805 Registers";
 		BurnAcb(&ba);
 	}

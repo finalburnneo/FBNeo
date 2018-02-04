@@ -464,7 +464,7 @@ INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= p;
-		ba.nLen		= offsetof(c6280_t, volume_table);
+		ba.nLen		= STRUCT_SIZE_HELPER(c6280_t, channel);
 		ba.szName	= "c6280 Chip #0";
 		BurnAcb(&ba);
 	}

@@ -141,7 +141,7 @@ INT32 QscScan(INT32 nAction)
 		sprintf(szName, "QChan #%d", i);
 
 		ba.Data		= &QChan[i];
-		ba.nLen		= offsetof(struct QChan, PlayBank);
+		ba.nLen		= STRUCT_SIZE_HELPER(struct QChan, nEndBuffer);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);

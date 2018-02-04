@@ -215,7 +215,7 @@ void pokey_scan(INT32 nAction, INT32* pnMin)
 
 			memset(&ba, 0, sizeof(ba));
 			ba.Data	  = &pokey[i];
-			ba.nLen	  = offsetof(struct POKEYregisters, interrupt_cb);
+			ba.nLen	  = STRUCT_SIZE_HELPER(struct POKEYregisters, SKCTL);
 			ba.szName = "Pokey Registers";
 			BurnAcb(&ba);
 		}

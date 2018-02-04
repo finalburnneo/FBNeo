@@ -70,7 +70,7 @@ typedef struct _v25_state_t v25_state_t;
 struct _v25_state_t
 {
 	internalram ram;
-	offs_t	fetch_xor;
+	UINT32	fetch_xor;
 
 	UINT16	ip;
 
@@ -102,9 +102,9 @@ struct _v25_state_t
 	INT32 timer_param[4];
 	INT32 timer_cycles_period[4];
 	INT32 timer_cycles_until_trigger[4];
-	unsigned char timer_enabled[4];
-	unsigned char timer_flags[4];
-	unsigned int clock; // unscaled!
+	UINT8 timer_enabled[4];
+	UINT8 timer_flags[4];
+	UINT32 clock; // unscaled!
 
 	/* system control */
 	UINT8	RAMEN, TB, PCK;	/* PRC register */

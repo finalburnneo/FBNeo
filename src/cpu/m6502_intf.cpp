@@ -610,7 +610,7 @@ INT32 M6502Scan(INT32 nAction)
 		szName[7] = '0' + i;
 
 		ba.Data = &ptr->reg;
-		ba.nLen = offsetof(m6502_Regs, port_read);
+		ba.nLen = STRUCT_SIZE_HELPER(m6502_Regs, port);
 		ba.szName = szName;
 		BurnAcb(&ba);
 

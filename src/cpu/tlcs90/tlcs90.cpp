@@ -2770,7 +2770,7 @@ INT32 tlcs90Scan(INT32 nAction)
 
 		memset(&ba, 0, sizeof(ba));
 		ba.Data		= &tlcs90_data[0];
-		ba.nLen		= offsetof(struct t90_Regs, timer_cb);
+		ba.nLen		= STRUCT_SIZE_HELPER(struct t90_Regs, run_end);
 		ba.szName	= "tlcs90 CPU Data";
 		BurnAcb(&ba);
 	}

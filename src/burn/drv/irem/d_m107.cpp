@@ -7,6 +7,7 @@
 #include "nec_intf.h"
 #include "irem_cpu.h"
 #include "iremga20.h"
+#include "stddef.h"
 
 static UINT8 *Mem;
 static UINT8 *MemEnd;
@@ -641,12 +642,13 @@ static INT32 MemIndex(INT32 gfxlen1, INT32 gfxlen2)
 	pf_control[2]	= Next; Next += 0x000008;
 	pf_control[3]	= Next; Next += 0x000008;
 
+	RamEnd		= Next;
+
+	// scanned separately from ram due to pointers in structs
 	m107_layers[0]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 	m107_layers[1]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 	m107_layers[2]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
 	m107_layers[3]	= (struct _m107_layer*)Next; Next += sizeof(struct _m107_layer);
-
-	RamEnd		= Next;
 
 	DrvPalette	= (UINT32 *) Next; Next += 0x0800 * sizeof(UINT32);
 
@@ -1151,6 +1153,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ba.nLen	  = RamEnd-RamStart;
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
+
+		ScanVar(m107_layers[0], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf0");
+		ScanVar(m107_layers[1], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf1");
+		ScanVar(m107_layers[2], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf2");
+		ScanVar(m107_layers[3], STRUCT_SIZE_HELPER(_m107_layer, scrolly), "m107 pf3");
 	}
 
 	if (nAction & ACB_DRIVER_DATA)
@@ -1167,8 +1174,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	}
 
 	if (nAction & ACB_WRITE) {
-		bRecalcPalette = 1;
-
 		for (INT32 i = 0; i < 4; i++) {
 			set_pf_scroll(i);
 			set_pf_info(i);

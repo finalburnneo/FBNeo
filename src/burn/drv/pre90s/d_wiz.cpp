@@ -869,9 +869,9 @@ static INT32 DrvInit(int (*RomLoadCallback)())
 	ZetSetReadHandler(wiz_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 1536000, 0);
-	AY8910Init2(1, 1536000, 1);
-	AY8910Init2(2, 1536000, 1);
+	AY8910Init(0, 1536000, 0);
+	AY8910Init(1, 1536000, 1);
+	AY8910Init(2, 1536000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
@@ -1108,7 +1108,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1118,7 +1118,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			if (bHasSamples) BurnSampleRender(pSoundBuf, nSegmentLength);
 		}
 	}

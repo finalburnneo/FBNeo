@@ -767,7 +767,7 @@ static INT32 DrvInit(INT32 (*LoadRoms)(UINT8 *DrvTempRom))
 	ZetSetOutHandler(port_write);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetPorts(0, popeye_ayportA_read, NULL, NULL, popeye_ayportB_write);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -954,7 +954,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

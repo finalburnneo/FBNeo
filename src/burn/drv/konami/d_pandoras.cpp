@@ -559,7 +559,7 @@ static INT32 DrvInit()
 	I8039SetIOReadHandler(pandoras_i8039_read_port);
 	I8039SetIOWriteHandler(pandoras_i8039_write_port);
 
-	AY8910Init2(0, 1789772, 0);
+	AY8910Init(0, 1789772, 0);
 	AY8910SetPorts(0, &AY8910_0_port_A_Read, &AY8910_0_port_B_Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 
@@ -717,7 +717,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -726,7 +726,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);

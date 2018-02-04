@@ -473,8 +473,8 @@ static INT32 DrvInit()
 	ZetSetReadHandler(wyvernf0_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 3000000, 0);
-	AY8910Init2(1, 3000000, 1);
+	AY8910Init(0, 3000000, 0);
+	AY8910Init(1, 3000000, 1);
 	AY8910SetAllRoutes(0, 0.14, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.14, BURN_SND_ROUTE_BOTH);
 
@@ -664,7 +664,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 	}
 

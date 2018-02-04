@@ -518,7 +518,7 @@ static INT32 DrvInit(INT32 select)
 	NSC8105SetWriteHandler(seicross_mcu_write);
 	NSC8105SetReadHandler(seicross_mcu_read);
 
-	AY8910Init2(0, 1536000, 0);
+	AY8910Init(0, 1536000, 0);
 	AY8910SetPorts(0, NULL, &ay8910_read_B, NULL, &ay8910_write_B);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
@@ -733,7 +733,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -745,7 +745,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}

@@ -908,8 +908,8 @@ static INT32 PkunwarInit()
 	ZetMapMemory(DrvMainROM + 0xe000,	0xe000, 0xffff, MAP_ROM);
 	ZetClose();
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, &pkunwar_port_0, &pkunwar_port_1, NULL, NULL);
 	AY8910SetPorts(1, &pkunwar_port_2, &pkunwar_port_3, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -963,8 +963,8 @@ static INT32 NovaInit()
 	ZetMapMemory(DrvMainRAM,		0xe000, 0xe7ff, MAP_RAM);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(0, NULL, NULL, &nova2001_scroll_x_w, &nova2001_scroll_y_w);
 	AY8910SetPorts(1, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -1049,8 +1049,8 @@ static INT32 NinjakunInit()
 	ZetMapMemory(DrvMainRAM + 0x0000,	0xe400, 0xe7ff, MAP_RAM);
 	ZetClose();
 
-	AY8910Init2(0, 3000000, 0);
-	AY8910Init2(1, 3000000, 1);
+	AY8910Init(0, 3000000, 0);
+	AY8910Init(1, 3000000, 1);
 	AY8910SetPorts(1, NULL, NULL, &nova2001_scroll_x_w, &nova2001_scroll_y_w);
 	AY8910SetPorts(0, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -1112,8 +1112,8 @@ static INT32 Raiders5Init()
 	ZetMapMemory(DrvMainRAM + 0x0000,	0xa000, 0xa7ff, MAP_RAM);
 	ZetClose();
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, &raiders5_port_0, &pkunwar_port_1, NULL, NULL);
 	AY8910SetPorts(1, &nova2001_port_3, &nova2001_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -1498,7 +1498,7 @@ static INT32 NovaFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1529,7 +1529,7 @@ static INT32 PkunwarFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1577,7 +1577,7 @@ static INT32 Raiders5Frame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1624,7 +1624,7 @@ static INT32 NinjakunFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

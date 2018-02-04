@@ -383,9 +383,9 @@ static INT32 DrvInit(INT32 load_type)
 	ZetSetOutHandler(bombjack_sound_write_port);
 	ZetClose();
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
-	AY8910Init2(2, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
+	AY8910Init(2, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.13, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.13, BURN_SND_ROUTE_BOTH);
@@ -589,7 +589,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

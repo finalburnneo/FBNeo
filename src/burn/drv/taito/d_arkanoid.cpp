@@ -1089,7 +1089,7 @@ static INT32 DrvInit()
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &arkanoid_m68705_interface);
 
-	AY8910Init2(0, 1500000, 0);
+	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, &ay8910_read_port_5, &ay8910_read_port_4, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	if (arkanoid_bootleg_id == HEXA) {
@@ -1231,7 +1231,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

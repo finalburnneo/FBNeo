@@ -2739,8 +2739,8 @@ static INT32 DecocassInit(UINT8 (*read)(UINT16),void (*write)(UINT16,UINT8))
 	i8x41_set_read_port(i8x41_read_ports);
 	i8x41_set_write_port(i8x41_write_ports);
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
@@ -3274,7 +3274,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut && i&1) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -3283,7 +3283,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

@@ -32,9 +32,9 @@ INT32 AY8910Read(INT32 chip);
 
 void AY8910Reset(INT32 chip);
 void AY8910Exit(INT32 chip);
-INT32 AY8910Init(INT32 chip, INT32 clock, INT32 sample_rate,
-		read8_handler portAread, read8_handler portBread,
-		write8_handler portAwrite, write8_handler portBwrite);
+
+// add signal ignored for any chip but #0
+INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal);
 
 INT32 AY8910InitYM(INT32 chip, INT32 clock, INT32 sample_rate,
 		read8_handler portAread, read8_handler portBread,
@@ -43,15 +43,9 @@ INT32 AY8910InitYM(INT32 chip, INT32 clock, INT32 sample_rate,
 
 INT32 AY8910Scan(INT32 nAction, INT32* pnMin);
 
-
-// add signal ignored for any chip but #0
-INT32 AY8910Init2(INT32 chip, INT32 clock, INT32 add_signal);
-void AY8910Render2(INT16* dest, INT32 length);
-
-
 INT32 AY8910SetPorts(INT32 chip, read8_handler portAread, read8_handler portBread,write8_handler portAwrite, write8_handler portBwrite);
-		
-void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal);
+
+void AY8910Render(INT16* dest, INT32 length);
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 
 #define BURN_SND_AY8910_ROUTE_1		0

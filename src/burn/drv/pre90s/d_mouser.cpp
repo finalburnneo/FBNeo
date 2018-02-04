@@ -422,8 +422,8 @@ static INT32 DrvInit()
 	ZetSetOutHandler(mouser_sub_out);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -484,7 +484,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

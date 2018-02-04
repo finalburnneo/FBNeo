@@ -427,7 +427,7 @@ static INT32 DrvInit()
 	SN76496SetRoute(0, 0.36, BURN_SND_ROUTE_BOTH);
 	SN76496SetRoute(1, 0.36, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 1500000, 1);
+	AY8910Init(0, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -603,7 +603,7 @@ static INT32 DrvFrame()
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

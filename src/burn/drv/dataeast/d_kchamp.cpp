@@ -490,8 +490,8 @@ static INT32 KchampInit()
 	ZetSetInHandler(kchamp_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -586,8 +586,8 @@ static INT32 KchampvsInit()
 	ZetSetInHandler(kchampvs_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -742,7 +742,7 @@ static INT32 KchampFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -807,7 +807,7 @@ static INT32 KchampvsFrame()
 
 	ZetOpen(1);
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 	ZetClose();

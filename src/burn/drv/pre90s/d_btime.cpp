@@ -1537,8 +1537,8 @@ static INT32 MmonkeyInit() // and lnc
 	M6502Close();
 
 	M6502Open(1);
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -1615,8 +1615,8 @@ static INT32 DiscoInit()
 	M6502Close();
 
 	M6502Open(1);
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -1714,8 +1714,8 @@ static INT32 BnjInit()
 	M6502Close();
 
 	M6502Open(1);
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -1809,8 +1809,8 @@ static INT32 BtimeInit()
 	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -1911,8 +1911,8 @@ static INT32 ZoarInit()
 	M6502SetReadOpHandler(btime_sound_read);
 	M6502Close();
 
-	AY8910Init2(0, 3000000, 0);
-	AY8910Init2(1, 3000000, 1);
+	AY8910Init(0, 3000000, 0);
+	AY8910Init(1, 3000000, 1);
 	AY8910SetPorts(0, NULL, NULL, &ay8910_0_portA_write, NULL);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);

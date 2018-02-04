@@ -353,7 +353,7 @@ static INT32 DrvInit()
 	ZetSetInHandler(meijinsn_in_port);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetPorts(0, &ay8910_port_a_r, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
 
@@ -458,7 +458,7 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

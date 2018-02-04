@@ -1754,7 +1754,7 @@ INT32 GalFrame()
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				AY8910Render2(pSoundBuf, nSegmentLength);
+				AY8910Render(pSoundBuf, nSegmentLength);
 				nSoundBufferPos += nSegmentLength;
 			}
 		}
@@ -1824,7 +1824,7 @@ INT32 GalFrame()
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
-				AY8910Render2(pSoundBuf, nSegmentLength);
+				AY8910Render(pSoundBuf, nSegmentLength);
  			}
 		}
 	}

@@ -396,8 +396,8 @@ static INT32 DrvInit()
 	ZetSetInHandler(supridr_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1536000, 0);
-	AY8910Init2(1, 1536000, 1);
+	AY8910Init(0, 1536000, 0);
+	AY8910Init(1, 1536000, 1);
 	AY8910SetPorts(1, &ay8910_1_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.05, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.05, BURN_SND_ROUTE_BOTH);
@@ -559,7 +559,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		if (LP1 && LP2) {
 			LP1->Filter(pBurnSoundOut, nBurnSoundLen);  // Left
 			LP2->Filter(pBurnSoundOut+1, nBurnSoundLen); // Right

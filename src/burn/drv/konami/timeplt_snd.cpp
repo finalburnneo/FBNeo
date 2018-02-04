@@ -130,8 +130,8 @@ void TimepltSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 	ZetSetReadHandler(timeplt_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 1789772, 0);
-	AY8910Init2(1, 1789772, 1);
+	AY8910Init(0, 1789772, 0);
+	AY8910Init(1, 1789772, 1);
 	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
@@ -169,8 +169,8 @@ void LocomotnSndInit(UINT8 *rom, UINT8 *ram, INT32 z80number)
 	ZetSetReadHandler(timeplt_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 1789772, 0);
-	AY8910Init2(1, 1789772, 1);
+	AY8910Init(0, 1789772, 0);
+	AY8910Init(1, 1789772, 1);
 	AY8910SetPorts(0, &AY8910_0_portA, &AY8910_0_portB, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);

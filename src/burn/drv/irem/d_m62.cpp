@@ -3403,8 +3403,8 @@ static void M62MachineInit()
 	MSM5205SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 	MSM5205SetRoute(1, 0.20, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 894886, 0);
-	AY8910Init2(1, 894886, 1);
+	AY8910Init(0, 894886, 0);
+	AY8910Init(1, 894886, 1);
 	AY8910SetPorts(0, &M62SoundLatchRead, NULL, NULL, &AY8910_0PortBWrite);
 	AY8910SetPorts(1, NULL, NULL, &AY8910_1PortAWrite, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -4782,7 +4782,7 @@ static INT32 M62Frame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 #ifdef USE_SAMPLE_HACK
 			if(bHasSamples)
 				BurnSampleRender(pSoundBuf, nSegmentLength);
@@ -4804,7 +4804,7 @@ static INT32 M62Frame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 #ifdef USE_SAMPLE_HACK
 			if(bHasSamples)
 				BurnSampleRender(pSoundBuf, nSegmentLength);

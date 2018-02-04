@@ -1330,17 +1330,17 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	maincpu		    = Next; Next += 0x020000;
-	game		   	= Next; Next += MAX_MSX_CARTSIZE;
-	game2		    = Next; Next += MAX_MSX_CARTSIZE;
-	kanji_rom       = Next; Next += 0x040000;
+	maincpu		    	= Next; Next += 0x020000;
+	game		    	= Next; Next += MAX_MSX_CARTSIZE;
+	game2		    	= Next; Next += MAX_MSX_CARTSIZE;
+	kanji_rom       	= Next; Next += 0x040000;
 
-	game_sram       = Next; Next += 0x004000;
+	game_sram       	= Next; Next += 0x004000;
 
 	AllRam			= Next;
 
 	main_mem		= Next; Next += 0x020000;
-	EmptyRAM       	= Next; Next += 0x010000;
+	EmptyRAM       		= Next; Next += 0x010000;
 
 	RamEnd			= Next;
 
@@ -1446,7 +1446,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(msx_read);
 	ZetClose();
 
-	AY8910Init2(0, 3579545/2, 0);
+	AY8910Init(0, 3579545/2, 0);
 	AY8910SetPorts(0, ay8910portAread, NULL, ay8910portAwrite, ay8910portBwrite);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -1590,7 +1590,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			K051649Update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1603,7 +1603,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			K051649Update(pSoundBuf, nSegmentLength);
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
@@ -21337,7 +21337,7 @@ STD_ROM_FN(MSX_splash)
 
 struct BurnDriver BurnDrvMSX_splash = {
 	"msx_splash", NULL, "msx_msx", NULL, "1986",
-	"Splash (Spa)\0", NULL, "Mind Games España", "MSX",
+	"Splash (Spa)\0", NULL, "Mind Games Espa??a", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_splashRomInfo, MSX_splashRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22081,7 +22081,7 @@ STD_ROM_FN(MSX_kingleon)
 
 struct BurnDriver BurnDrvMSX_kingleon = {
 	"msx_kingleon", NULL, "msx_msx", NULL, "1986",
-	"King Leonard (Spa)\0", NULL, "Mind Games España", "MSX",
+	"King Leonard (Spa)\0", NULL, "Mind Games Espa??a", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_kingleonRomInfo, MSX_kingleonRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22481,7 +22481,7 @@ STD_ROM_FN(MSX_heatseek)
 
 struct BurnDriver BurnDrvMSX_heatseek = {
 	"msx_heatseek", NULL, "msx_msx", NULL, "1986",
-	"Heat Seeker - Missil (Spa)\0", NULL, "Mind Games España", "MSX",
+	"Heat Seeker - Missil (Spa)\0", NULL, "Mind Games Espa??a", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_heatseekRomInfo, MSX_heatseekRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22749,7 +22749,7 @@ STD_ROM_FN(MSX_ffruit)
 
 struct BurnDriver BurnDrvMSX_ffruit = {
 	"msx_ffruit", NULL, "msx_msx", NULL, "1985",
-	"Forbidden Fruit (Spa)\0", NULL, "Mind Games España", "MSX",
+	"Forbidden Fruit (Spa)\0", NULL, "Mind Games Espa??a", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_ffruitRomInfo, MSX_ffruitRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,
@@ -22939,7 +22939,7 @@ STD_ROM_FN(MSX_destroyr)
 
 struct BurnDriver BurnDrvMSX_destroyr = {
 	"msx_destroyr", NULL, "msx_msx", NULL, "1986",
-	"Destroyer (Spa)\0", NULL, "Mind Games España", "MSX",
+	"Destroyer (Spa)\0", NULL, "Mind Games Espa??a", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_destroyrRomInfo, MSX_destroyrRomName, NULL, NULL, MSXInputInfo, MSXJoyport2DIPInfo,
@@ -23510,7 +23510,7 @@ STD_ROM_FN(MSX_adel)
 
 struct BurnDriver BurnDrvMSX_adel = {
 	"msx_adel", NULL, "msx_msx", NULL, "1986",
-	"Adel (Spa)\0", NULL, "Mind Games España", "MSX",
+	"Adel (Spa)\0", NULL, "Mind Games Espa??a", "MSX",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MSX, GBF_MISC, 0,
 	MSXGetZipName, MSX_adelRomInfo, MSX_adelRomName, NULL, NULL, MSXInputInfo, MSXDIPInfo,

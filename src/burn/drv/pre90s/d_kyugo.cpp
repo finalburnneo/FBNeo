@@ -1984,8 +1984,8 @@ static INT32 KyugoInit()
 		ZetClose();
 	}
 
-	AY8910Init2(0, 18432000 / 12, 0);
-	AY8910Init2(1, 18432000 / 12, 1);
+	AY8910Init(0, 18432000 / 12, 0);
+	AY8910Init(1, 18432000 / 12, 1);
 	AY8910SetPorts(0, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
@@ -2105,8 +2105,8 @@ static INT32 Skywolf3Init()
 	ZetMapArea(0x8000, 0x87ff, 2, KyugoSharedZ80Ram        );
 	ZetClose();
 
-	AY8910Init2(0, 18432000 / 12, 0);
-	AY8910Init2(1, 18432000 / 12, 1);
+	AY8910Init(0, 18432000 / 12, 0);
+	AY8910Init(1, 18432000 / 12, 1);
 	AY8910SetPorts(0, &KyugoDip0Read, &KyugoDip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
@@ -2435,7 +2435,7 @@ static INT32 KyugoFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -2446,7 +2446,7 @@ static INT32 KyugoFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

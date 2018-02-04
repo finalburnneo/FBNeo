@@ -116,30 +116,30 @@ void GalSoundReset()
 void GalSoundInit()
 {
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910) {
-		AY8910Init2(0, 1789750, 0);
+		AY8910Init(0, 1789750, 0);
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_BONGOAY8910) {
-		AY8910Init2(0, 1789750, 0);
+		AY8910Init(0, 1789750, 0);
 		AY8910SetPorts(0, &BongoDipSwitchRead, NULL, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMAJAY8910) {
-		AY8910Init2(0, 1620000, 0);
+		AY8910Init(0, 1620000, 0);
 		AY8910SetPorts(0, &CheckmajPortARead, NULL, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_MSHUTTLEAY8910) {
 		// Port A Write - cclimber_sample_select_w
-		AY8910Init2(0, 18432000 / 3 / 4, 0);
+		AY8910Init(0, 18432000 / 3 / 4, 0);
 		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_FROGGERAY8910) {
-		AY8910Init2(0, 14318000 / 8, 0);
+		AY8910Init(0, 14318000 / 8, 0);
 		AY8910SetPorts(0, &KonamiSoundLatchRead, &FroggerSoundTimerRead, NULL, NULL);
 
 		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
@@ -156,8 +156,8 @@ void GalSoundInit()
 	}	
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910) {
-		AY8910Init2(0, 14318000 / 8, 0);
-		AY8910Init2(1, 14318000 / 8, 1);
+		AY8910Init(0, 14318000 / 8, 0);
+		AY8910Init(1, 14318000 / 8, 1);
 		AY8910SetPorts(1, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
 		
 		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
@@ -183,8 +183,8 @@ void GalSoundInit()
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_EXPLORERAY8910) {
-		AY8910Init2(0, 14318000 / 8, 0);
-		AY8910Init2(1, 14318000 / 8, 1);
+		AY8910Init(0, 14318000 / 8, 0);
+		AY8910Init(1, 14318000 / 8, 1);
 		AY8910SetPorts(0, &KonamiSoundTimerRead, NULL, NULL, NULL);
 		AY8910SetPorts(1, &KonamiSoundLatchRead, NULL, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -192,9 +192,9 @@ void GalSoundInit()
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SCORPIONAY8910) {
-		AY8910Init2(0, 14318000 / 8, 0);
-		AY8910Init2(1, 14318000 / 8, 1);
-		AY8910Init2(2, 14318000 / 8, 1);
+		AY8910Init(0, 14318000 / 8, 0);
+		AY8910Init(1, 14318000 / 8, 1);
+		AY8910Init(2, 14318000 / 8, 1);
 		AY8910SetPorts(1, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
 
 		filter_rc_init(0, FLT_RC_LOWPASS, 1, 1, 1, 0, 0);
@@ -220,8 +220,8 @@ void GalSoundInit()
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_AD2083AY8910) {
-		AY8910Init2(0, 14318000 / 8, 0);
-		AY8910Init2(1, 14318000 / 8, 1);
+		AY8910Init(0, 14318000 / 8, 0);
+		AY8910Init(1, 14318000 / 8, 1);
 		AY8910SetPorts(0, &KonamiSoundTimerRead, NULL, NULL, NULL);
 		AY8910SetPorts(1, &KonamiSoundLatchRead, NULL, NULL, NULL);
 		AY8910SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -229,15 +229,15 @@ void GalSoundInit()
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_FANTASTCAY8910) {
-		AY8910Init2(0, 1789750, 0);
-		AY8910Init2(1, 1789750, 1);
+		AY8910Init(0, 1789750, 0);
+		AY8910Init(1, 1789750, 1);
 		AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 		AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_SFXAY8910DAC) {
-		AY8910Init2(0, 14318000 / 8, 0);
-		AY8910Init2(1, 14318000 / 8, 1);
+		AY8910Init(0, 14318000 / 8, 0);
+		AY8910Init(1, 14318000 / 8, 1);
 		AY8910SetPorts(0, NULL, NULL, &SfxSoundLatch2Write, &SfxSampleControlWrite);
 		AY8910SetPorts(1, &KonamiSoundLatchRead, &KonamiSoundTimerRead, NULL, NULL);
 		AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
@@ -288,8 +288,8 @@ void GalSoundInit()
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_HUNCHBACKAY8910) {
-		AY8910Init2(0, 14318000 / 8, 0);
-		AY8910Init2(1, 14318000 / 8, 1);
+		AY8910Init(0, 14318000 / 8, 0);
+		AY8910Init(1, 14318000 / 8, 1);
 		AY8910SetPorts(1, &KonamiSoundLatchRead, &HunchbksSoundTimerRead, NULL, NULL);
 		
 		AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);

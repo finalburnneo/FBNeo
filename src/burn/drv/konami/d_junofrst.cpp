@@ -501,7 +501,7 @@ static INT32 DrvInit()
 	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 1789750, 0);
+	AY8910Init(0, 1789750, 0);
 	AY8910SetPorts(0, &AY8910_0_portA, NULL, NULL, &AY8910_0_portBwrite);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 

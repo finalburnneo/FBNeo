@@ -1499,7 +1499,7 @@ static INT32 BestbestInit()
 	BurnTimerAttachZetYM3526(6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
-	AY8910Init2(0, 1500000, 0);
+	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, NULL, NULL, bestbest_ay8910_write_a, NULL);
 	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	AY8910SetRoute(0, BURN_SND_AY8910_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
@@ -1972,7 +1972,7 @@ static INT32 BestbestFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pSoundBuffer + (nSoundBufferPos << 1);
 
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1984,7 +1984,7 @@ static INT32 BestbestFrame()
 		INT16* pSoundBuf = pSoundBuffer + (nSoundBufferPos << 1);
 
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 	

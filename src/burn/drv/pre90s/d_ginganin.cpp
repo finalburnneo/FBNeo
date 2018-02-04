@@ -393,7 +393,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(ginganin_sound_read);
 	M6809Close();
 
-	AY8910Init2(0, 3579545 / 2, 0);
+	AY8910Init(0, 3579545 / 2, 0);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	
 	BurnY8950Init(1, 3579545, DrvSndROM, 0x20000, NULL, 0, NULL, &DrvSynchroniseStream, 1);
@@ -618,7 +618,7 @@ static INT32 DrvFrame()
 	BurnTimerEndFrameY8950(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		
 		BurnY8950Update(pBurnSoundOut, nBurnSoundLen);
 	}

@@ -4532,8 +4532,8 @@ static INT32 BerlwallInit()
 	SekSetWriteWordHandler(0, BerlwallWriteWord);
 	SekClose();
 
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -4623,8 +4623,8 @@ static INT32 PackbangInit()
 	SekSetWriteWordHandler(0, BerlwallWriteWord);
 	SekClose();
 
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(0, &Kaneko16Dip0Read, &Kaneko16Dip1Read, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -5070,8 +5070,8 @@ static INT32 ExplbrkrInit()
 	Kaneko16Eeprom = 1;
 	EEPROMInit(&eeprom_interface_93C46);
 	
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
@@ -5470,8 +5470,8 @@ static INT32 MgcrystlInit()
 	Kaneko16Eeprom = 1;
 	EEPROMInit(&eeprom_interface_93C46);
 	
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(1, &Kaneko16EepromRead, NULL, NULL, &Kaneko16EepromReset);
 	
 	// Setup the OKIM6295 emulation
@@ -7131,7 +7131,7 @@ static INT32 ExplbrkrFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -7142,7 +7142,7 @@ static INT32 ExplbrkrFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 		
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);

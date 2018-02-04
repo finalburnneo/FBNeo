@@ -745,7 +745,7 @@ static void dummy_callback(void)
 	return;
 }
 
-INT32 AY8910Init(INT32 chip, INT32 clock, INT32 sample_rate,
+INT32 AY8910InitCore(INT32 chip, INT32 clock, INT32 sample_rate,
 		read8_handler portAread, read8_handler portBread,
 		write8_handler portAwrite, write8_handler portBwrite)
 {
@@ -789,7 +789,7 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 sample_rate,
 	return 0;
 }
 
-INT32 AY8910Init2(INT32 chip, INT32 clock, INT32 add_signal)
+INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 {
 	INT32 i;
 #if defined FBA_DEBUG
@@ -845,7 +845,7 @@ INT32 AY8910InitYM(INT32 chip, INT32 clock, INT32 sample_rate,
 		write8_handler portAwrite, write8_handler portBwrite,
 		void (*update_callback)(void))
 {
-	INT32 val = AY8910Init(ay8910_index_ym + chip, clock, sample_rate, portAread, portBread, portAwrite, portBwrite);
+	INT32 val = AY8910InitCore(ay8910_index_ym + chip, clock, sample_rate, portAread, portBread, portAwrite, portBwrite);
 
 	AYStreamUpdate = update_callback;
 
@@ -904,7 +904,7 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 		sprintf(szName, "AY8910 #%d", i);
 
 		ba.Data		= &AYPSG[i];
-		ba.nLen		= STRUCT_SIZE_HELPER(struct AY8910, VolTable);
+		ba.nLen		= offsetof(struct AY8910, PortAread);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
@@ -942,7 +942,7 @@ static inline void check_rate()
 	}
 }
 
-void AY8910Render2(INT16* dest, INT32 length)
+void AY8910Render(INT16* dest, INT32 length)
 {
 #if defined FBA_DEBUG
 #ifdef __GNUC__ 
@@ -982,6 +982,7 @@ void AY8910Render2(INT16* dest, INT32 length)
 	}
 }
 
+#if 0 // old, depreciated
 void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 {
 #if defined FBA_DEBUG
@@ -1018,6 +1019,7 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 		}
 	}
 }
+#endif
 
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {

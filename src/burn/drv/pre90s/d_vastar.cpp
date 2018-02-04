@@ -609,7 +609,7 @@ static INT32 DrvInit(INT32 load_type)
 	ZetSetInHandler(vastar_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1536000, 0);
+	AY8910Init(0, 1536000, 0);
 	AY8910SetPorts(0, &vastar_ay8910_read_A, &vastar_ay8910_read_B, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
@@ -841,7 +841,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -191,7 +191,7 @@ static INT32 DrvInit(INT32 select)
 	ZetSetInHandler(quizo_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1342329, 0);
+	AY8910Init(0, 1342329, 0);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -290,7 +290,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

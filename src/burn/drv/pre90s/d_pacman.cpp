@@ -2631,7 +2631,7 @@ static INT32 DrvInit(void (*mapCallback)(), void (*pInitCallback)(), INT32 selec
 	mapCallback();	
 	ZetClose();
 
-	AY8910Init2(0, 1789750, 0);
+	AY8910Init(0, 1789750, 0);
 	AY8910SetAllRoutes(0, 0.75, BURN_SND_ROUTE_BOTH);
 	if (game_select == DREMSHPR) AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
@@ -2819,7 +2819,7 @@ static INT32 DrvFrame()
 			
 			if (nSegmentLength) {
 				if (game_select == DREMSHPR || game_select == CRUSHS) {
-					AY8910Render2(pSoundBuf, nSegmentLength);
+					AY8910Render(pSoundBuf, nSegmentLength);
 				} else {
 					if (game_select == VANVAN) {
 						SN76496Update(0, pSoundBuf, nSegmentLength);
@@ -2839,7 +2839,7 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 			if (game_select == DREMSHPR || game_select == CRUSHS) {
-				AY8910Render2(pSoundBuf, nSegmentLength);
+				AY8910Render(pSoundBuf, nSegmentLength);
 			} else {
 				if (game_select == VANVAN) {
 					SN76496Update(0, pSoundBuf, nSegmentLength);

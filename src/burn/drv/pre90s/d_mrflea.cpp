@@ -367,9 +367,9 @@ static INT32 DrvInit()
 	ZetSetOutHandler(mrflea_cpu1_out_port);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
-	AY8910Init2(2, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
+	AY8910Init(2, 2000000, 1);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.15, BURN_SND_ROUTE_BOTH);
@@ -489,7 +489,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut && i&1) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -498,7 +498,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

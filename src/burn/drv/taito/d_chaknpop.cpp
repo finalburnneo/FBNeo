@@ -433,8 +433,8 @@ static INT32 DrvInit()
 	
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
-	AY8910Init2(0, 1536000, 0);
-	AY8910Init2(1, 1536000, 1);
+	AY8910Init(0, 1536000, 0);
+	AY8910Init(1, 1536000, 1);
 	AY8910SetPorts(0, &ay8910_0_read_port_A, &ay8910_0_read_port_B, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
@@ -616,7 +616,7 @@ static INT32 DrvFrame()
 	}
 	
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -316,7 +316,7 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 	ZetSetWriteHandler(enraya4_write);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 	sound_bit = sbit;
@@ -406,7 +406,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

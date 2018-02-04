@@ -596,9 +596,9 @@ static INT32 DrvInit(INT32 type)
 	ZetSetInHandler(dacholer_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1248000, 0);
-	AY8910Init2(1, 1248000, 1);
-	AY8910Init2(2, 1248000, 1);
+	AY8910Init(0, 1248000, 0);
+	AY8910Init(1, 1248000, 1);
+	AY8910Init(2, 1248000, 1);
 	AY8910SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.10, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(2, 0.10, BURN_SND_ROUTE_BOTH);
@@ -793,7 +793,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 
@@ -804,7 +804,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}

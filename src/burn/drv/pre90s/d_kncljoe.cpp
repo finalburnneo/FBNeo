@@ -446,7 +446,7 @@ static INT32 DrvInit()
 	M6803SetReadPortHandler(kncljoe_sound_read_port);
 //	M6803Close();
 
-	AY8910Init2(0, 894886, 0);
+	AY8910Init(0, 894886, 0);
 	AY8910SetPorts(0, &ay8910_port_A_read, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
@@ -633,7 +633,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(0, pBurnSoundOut, nBurnSoundLen);
 		SN76496Update(1, pBurnSoundOut, nBurnSoundLen);
 	}

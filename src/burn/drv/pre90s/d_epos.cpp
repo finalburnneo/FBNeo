@@ -576,7 +576,7 @@ static INT32 DrvInit()
 	ZetSetOutHandler(epos_write_port);
 	ZetClose();
 
-	AY8910Init2(0, 2750000, 0);
+	AY8910Init(0, 2750000, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -621,7 +621,7 @@ static INT32 DealerInit()
 	ZetSetOutHandler(dealer_write_port);
 	ZetClose();
 
-	AY8910Init2(0, 2750000, 0);
+	AY8910Init(0, 2750000, 0);
 	AY8910SetPorts(0, AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
@@ -707,7 +707,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

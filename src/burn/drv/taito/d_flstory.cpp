@@ -1133,7 +1133,7 @@ static INT32 DrvInit()
 
 	m67805_taito_init(DrvMcuROM, DrvMcuRAM, &standard_m68705_interface);
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetPorts(0, NULL, NULL, AY_ayportA_write, NULL);
 	AY8910SetAllRoutes(0, 0.05, BURN_SND_ROUTE_BOTH);
 	if (select_game == 3) {
@@ -1499,7 +1499,7 @@ static INT32 DrvFrame()
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5232Update(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}

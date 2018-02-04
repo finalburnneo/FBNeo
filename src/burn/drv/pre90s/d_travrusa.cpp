@@ -614,8 +614,8 @@ static INT32 DrvInit(void (*pRomCallback)(), INT32 sndromsmall, INT32 gfxtype)
 	MSM5205Init(0, DrvSynchroniseStream, 384000, adpcm_int, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 3579545/4, 0);
-	AY8910Init2(1, 3579545/4, 1);
+	AY8910Init(0, 3579545/4, 0);
+	AY8910Init(1, 3579545/4, 1);
 	AY8910SetPorts(0, &ay8910_0_read_A, NULL, NULL, &ay8910_0_write_B);
 	AY8910SetPorts(1, NULL, NULL, NULL, &ay8910_1_write_B);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -787,7 +787,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 

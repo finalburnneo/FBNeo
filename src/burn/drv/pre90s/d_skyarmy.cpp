@@ -454,7 +454,7 @@ static INT32 DrvInit()
 
 	ZetClose(); // close cpu to further modifications
 
-	AY8910Init2(0, 2500000, 0); // MDRV_SOUND_ADD("aysnd", AY8910, 2500000)
+	AY8910Init(0, 2500000, 0); // MDRV_SOUND_ADD("aysnd", AY8910, 2500000)
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit(); // this must be called for generic tile handling
@@ -619,7 +619,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -634,7 +634,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2( pSoundBuf, nSegmentLength);
+			AY8910Render( pSoundBuf, nSegmentLength);
 		}
 	}
 

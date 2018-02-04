@@ -1101,7 +1101,7 @@ static INT32 DrvInit(INT32 map_type, INT32 timerrate, INT32 alt_volume)
 	ZetSetInHandler(jack_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 1500000, 0);
+	AY8910Init(0, 1500000, 0);
 	AY8910SetPorts(0, &AY8910_portA, &AY8910_portB, NULL, NULL);
 	AY8910SetAllRoutes(0, (alt_volume) ? 0.20 : 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1299,7 +1299,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut && (i%8) == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1308,7 +1308,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 
@@ -1365,7 +1365,7 @@ static INT32 JoinemFrame()
 		if (pBurnSoundOut && (i%8) == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1374,7 +1374,7 @@ static INT32 JoinemFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

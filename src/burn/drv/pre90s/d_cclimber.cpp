@@ -1121,10 +1121,10 @@ static INT32 DrvInit()
 		ZetClose();
 	}
 
-	AY8910Init2(0, (game_select == 6) ? 2000000 : 1536000, 0);
+	AY8910Init(0, (game_select == 6) ? 2000000 : 1536000, 0);
 	AY8910SetPorts(0, NULL, NULL, &cclimber_sample_select_w, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
-	AY8910Init2(1, (game_select == 6) ? 2000000 : 1536000, 1);
+	AY8910Init(1, (game_select == 6) ? 2000000 : 1536000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1460,7 +1460,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

@@ -2200,8 +2200,8 @@ static void NemesisSoundInit(INT32 konamigtmode)
 	K005289Init(3579545, K005289ROM);
 	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 14318180/8, 0);
-	AY8910Init2(1, 14318180/8, 1);
+	AY8910Init(0, 14318180/8, 0);
+	AY8910Init(1, 14318180/8, 1);
 	AY8910SetPorts(0, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetPorts(1, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
@@ -2243,8 +2243,8 @@ static void Gx400SoundInit(INT32 rf2mode)
 	K005289Init(3579545, K005289ROM);
 	K005289SetRoute(BURN_SND_K005289_ROUTE_1, (rf2mode) ? 0.60 : 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 14318180/8, 0);
-	AY8910Init2(1, 14318180/8, 1);
+	AY8910Init(0, 14318180/8, 0);
+	AY8910Init(1, 14318180/8, 1);
 	AY8910SetPorts(0, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetPorts(1, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
 	AY8910SetAllRoutes(0, (rf2mode) ? 0.80 : 0.20, BURN_SND_ROUTE_BOTH);
@@ -2272,8 +2272,8 @@ static void TwinbeeGx400SoundInit()
 	K005289Init(3579545, K005289ROM);
 	K005289SetRoute(BURN_SND_K005289_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(0, 14318180/8, 0);
-	AY8910Init2(1, 14318180/8, 1);
+	AY8910Init(0, 14318180/8, 0);
+	AY8910Init(1, 14318180/8, 1);
 	AY8910SetPorts(0, &nemesis_AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetPorts(1, NULL, NULL, &k005289_control_A_write, &k005289_control_B_write);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH); // melody & hat
@@ -3165,7 +3165,7 @@ static INT32 NemesisFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -3178,7 +3178,7 @@ static INT32 NemesisFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 		K005289Update(pBurnSoundOut, nBurnSoundLen);
 	}
@@ -3265,7 +3265,7 @@ static INT32 KonamigtFrame()
 	SekClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		K005289Update(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -3569,7 +3569,7 @@ static INT32 Gx400Frame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -3582,7 +3582,7 @@ static INT32 Gx400Frame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 		K005289Update(pBurnSoundOut, nBurnSoundLen);

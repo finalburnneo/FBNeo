@@ -1426,8 +1426,8 @@ static INT32 tigerhInit()
 		}
 	}
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetPorts(0, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
 	AY8910SetPorts(1, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -1553,8 +1553,8 @@ static INT32 perfrmanInit()
 		ZetClose();
 	}
 
-	AY8910Init2(0, 2000000, 0);
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(0, 2000000, 0);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(0, &tigerhReadPort0, &tigerhReadPort1, NULL, NULL);
 	AY8910SetPorts(1, &tigerhReadPort2, &tigerhReadPort3, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
@@ -1904,7 +1904,7 @@ static INT32 tigerhFrame()
 			if (pBurnSoundOut) {
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-				AY8910Render2(pSoundBuf, nSegmentLength);
+				AY8910Render(pSoundBuf, nSegmentLength);
 				nSoundBufferPos += nSegmentLength;
 			}
 		}
@@ -1916,7 +1916,7 @@ static INT32 tigerhFrame()
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
-				AY8910Render2(pSoundBuf, nSegmentLength);
+				AY8910Render(pSoundBuf, nSegmentLength);
 			}
 		}
 	}

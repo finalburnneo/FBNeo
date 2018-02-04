@@ -604,8 +604,8 @@ static INT32 DrvInit(void (*pMapMainCPU)(), INT32 (*pRomLoadCallback)(), INT32 s
 	I8039SetIOReadHandler(m63_sound_read_port);
 	I8039SetIOWriteHandler(m63_sound_write_port);
 
-	AY8910Init2(0, 1500000, 0);
-	AY8910Init2(1, 1500000, 1);
+	AY8910Init(0, 1500000, 0);
+	AY8910Init(1, 1500000, 1);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -883,7 +883,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 
 		sample_render(pBurnSoundOut, nBurnSoundLen);
 	}

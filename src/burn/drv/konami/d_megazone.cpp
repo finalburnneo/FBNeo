@@ -540,7 +540,7 @@ static INT32 DrvInit()
 	I8039SetIOReadHandler(megazone_i8039_read_port);
 	I8039SetIOWriteHandler(megazone_i8039_write_port);
 
-	AY8910Init2(0, 1789750, 0);
+	AY8910Init(0, 1789750, 0);
 	AY8910SetPorts(0, &AY8910_0_port_A_Read, NULL, &AY8910_0_port_A_Write, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 

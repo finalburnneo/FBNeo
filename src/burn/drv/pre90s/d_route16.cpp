@@ -594,7 +594,7 @@ static INT32 DrvInit()
 	SN76477_set_mastervol(0, 10.00); // weird
 
 	// call after SN76477!
-	AY8910Init2(0, 1250000, 0);
+	AY8910Init(0, 1250000, 0);
 	AY8910SetPorts(0, NULL, NULL, &stratvox_sn76477_write, NULL);
 	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 
@@ -770,7 +770,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut && (i%8) == 7) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			SN76477_sound_update(0, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -780,7 +780,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			SN76477_sound_update(0, pSoundBuf, nSegmentLength);
 		}
 

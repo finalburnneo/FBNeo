@@ -767,8 +767,8 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	AY8910Init2(0, 1536000, 0);
-	AY8910Init2(1, 1536000, 1);
+	AY8910Init(0, 1536000, 0);
+	AY8910Init(1, 1536000, 1);
 	AY8910SetPorts(0, &AY8910_0_portA, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
@@ -1009,7 +1009,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		if (sound_enable) {
-			AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+			AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		} else {
 			memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
 		}

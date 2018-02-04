@@ -479,8 +479,8 @@ static INT32 DrvInit()
 	ZetSetReadHandler(blueprint_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 1250000, 0);
-	AY8910Init2(1,  625000, 1);
+	AY8910Init(0, 1250000, 0);
+	AY8910Init(1,  625000, 1);
 	AY8910SetPorts(0, NULL, &ay8910_0_read_port_1, &ay8910_0_write_port_0, NULL);
 	AY8910SetPorts(1, &ay8910_1_read_port_0, &ay8910_1_read_port_1, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
@@ -638,7 +638,7 @@ static INT32 DrvFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

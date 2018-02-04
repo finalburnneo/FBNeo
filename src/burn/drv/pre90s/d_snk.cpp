@@ -4684,10 +4684,10 @@ static INT32 MarvinsInit()
 	ZetSetReadHandler(marvins_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	snkwave_volume = 0.50;
@@ -4747,10 +4747,10 @@ static INT32 MadcrashInit()
 	ZetSetReadHandler(marvins_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
 	snkwave_volume = 0.30; // for vangrd2
@@ -4810,10 +4810,10 @@ static INT32 MadcrushInit()
 	ZetSetReadHandler(marvins_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4866,10 +4866,10 @@ static INT32 JcrossInit()
 	ZetSetInHandler(jcross_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4923,10 +4923,10 @@ static INT32 SgladiatInit()
 	ZetSetInHandler(jcross_sound_read_port);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4979,10 +4979,10 @@ static INT32 Hal21Init()
 	ZetSetReadHandler(jcross_sound_read);
 	ZetClose();
 
-	AY8910Init2(0, 2000000, 0);
+	AY8910Init(0, 2000000, 0);
 	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init2(1, 2000000, 1);
+	AY8910Init(1, 2000000, 1);
 	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -6162,7 +6162,7 @@ static INT32 MarvinsFrame()
 	}
 
 	if (pBurnSoundOut) {
-		AY8910Render2(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(pBurnSoundOut, nBurnSoundLen);
 		snkwave_render(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -6226,7 +6226,7 @@ static INT32 JcrossFrame()
 		if (pBurnSoundOut && i%8==7) {
 			INT32 nSegmentLength = nBurnSoundLen / 100; //nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -6236,7 +6236,7 @@ static INT32 JcrossFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Render2(pSoundBuf, nSegmentLength);
+			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

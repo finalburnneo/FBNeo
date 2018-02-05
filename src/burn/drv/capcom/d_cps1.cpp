@@ -16380,7 +16380,8 @@ void __fastcall Sf2mdtaWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x708114: {
-			// ???
+			// scroll2 x
+			*((UINT16*)(CpsReg + 0x10)) = BURN_ENDIAN_SWAP_INT16(d);
 			return;
 		}
 		

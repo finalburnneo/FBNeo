@@ -23,9 +23,6 @@ extern INT32 ay8910burgertime_mode;
 extern INT32 ay8910_index_ym;
 
 void AY8910_set_clock(INT32 chip, INT32 clock);
-void AY8910Reset(INT32 chip);
-
-void AY8910Update(INT32 chip, INT16** buffer, INT32 length);
 
 void AY8910Write(INT32 chip, INT32 a, INT32 data);
 INT32 AY8910Read(INT32 chip);
@@ -45,7 +42,10 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin);
 
 INT32 AY8910SetPorts(INT32 chip, read8_handler portAread, read8_handler portBread,write8_handler portAwrite, write8_handler portBwrite);
 
-void AY8910Render(INT16* dest, INT32 length);
+void AY8910Render(INT16* dest, INT32 length); // render everything
+void AY8910Update(INT32 chip, INT16** buffer, INT32 length); // render a single chip to buffer
+void AY8910RenderInternal(INT32 length); // render everything to internal buffers (pAY8910Buffer[])
+
 void AY8910SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 
 #define BURN_SND_AY8910_ROUTE_1		0

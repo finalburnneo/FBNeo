@@ -229,8 +229,7 @@ void TimepltSndUpdate(INT16 *pSoundBuf, INT32 nSegmentLength)
 {
 	if (nSegmentLength <= 0) return;
 
-	AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-	AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
+	AY8910RenderInternal(nSegmentLength);
 
 	filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 	filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);

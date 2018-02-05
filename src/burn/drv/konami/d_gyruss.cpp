@@ -968,11 +968,7 @@ static INT32 DrvFrame()
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
-			AY8910Update(2, &pAY8910Buffer[6], nSegmentLength);
-			AY8910Update(3, &pAY8910Buffer[9], nSegmentLength);
-			AY8910Update(4, &pAY8910Buffer[12], nSegmentLength);
+			AY8910RenderInternal(nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 
 			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
@@ -998,11 +994,7 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
-			AY8910Update(0, &pAY8910Buffer[0], nSegmentLength);
-			AY8910Update(1, &pAY8910Buffer[3], nSegmentLength);
-			AY8910Update(2, &pAY8910Buffer[6], nSegmentLength);
-			AY8910Update(3, &pAY8910Buffer[9], nSegmentLength);
-			AY8910Update(4, &pAY8910Buffer[12], nSegmentLength);
+			AY8910RenderInternal(nSegmentLength);
 
 			filter_rc_update(0, pAY8910Buffer[0], pSoundBuf, nSegmentLength);
 			filter_rc_update(1, pAY8910Buffer[1], pSoundBuf, nSegmentLength);

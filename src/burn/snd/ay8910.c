@@ -832,7 +832,7 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 
 	for (i = 0; i < 3; i++)
 	{
-		pAY8910Buffer[(chip * 3) + i] = malloc(nBurnSoundLen * sizeof(INT16));
+		pAY8910Buffer[(chip * 3) + i] = malloc(0x800 * sizeof(INT16)); // enough to handle any supported rate
 	}
 
 	num++;
@@ -904,7 +904,7 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 		sprintf(szName, "AY8910 #%d", i);
 
 		ba.Data		= &AYPSG[i];
-		ba.nLen		= offsetof(struct AY8910, PortAread);
+		ba.nLen		= STRUCT_SIZE_HELPER(struct AY8910, VolTable);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
@@ -921,24 +921,19 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 		nRightSample += (INT32)(output[n] * AY8910Volumes[route]);					\
 	}
 
-static inline void check_rate()
+void AY8910RenderInternal(INT32 length)
 {
-	// check and make sure buffer sizes are good enough!
+#if defined FBA_DEBUG
+#ifdef __GNUC__ 
+	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910RenderInternal called without init\n"));
+	if (num >= 7) bprintf(PRINT_ERROR, _T("AY8910RenderInternal called with invalid number of chips %i (max is 6)\n"), num);
+#endif
+#endif
+
 	INT32 i;
-	extern INT32 nBurnSoundLen;
 
-	if (nBurnSoundLen != nBurnSoundLenSave)
-	{
-		nBurnSoundLenSave = nBurnSoundLen;
-
-		for (i = 0; i < num * 3; i++)
-		{
-			if (pAY8910Buffer[i] != NULL) {
-				free (pAY8910Buffer[i]);
-				pAY8910Buffer[i] = NULL;
-			}
-			pAY8910Buffer[i] = (INT16*)malloc(nBurnSoundLen * sizeof(INT16));
-		}
+	for (i = 0; i < num; i++) {
+		AY8910Update(i, pAY8910Buffer + (i * 3), length);
 	}
 }
 
@@ -946,19 +941,17 @@ void AY8910Render(INT16* dest, INT32 length)
 {
 #if defined FBA_DEBUG
 #ifdef __GNUC__ 
-	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910Render2 called without init\n"));
-	if (num >= 7) bprintf(PRINT_ERROR, _T("AY8910Render2 called with invalid number of chips %i (max is 6)\n"), num);
+	if (!DebugSnd_AY8910Initted) bprintf(PRINT_ERROR, _T("AY8910Render called without init\n"));
+	if (num >= 7) bprintf(PRINT_ERROR, _T("AY8910Render called with invalid number of chips %i (max is 6)\n"), num);
 #endif
 #endif
 
 	INT32 i, n;
 
-	check_rate();
-
 	for (i = 0; i < num; i++) {
 		AY8910Update(i, pAY8910Buffer + (i * 3), length);
 	}
-		
+
 	for (n = 0; n < length; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
 
@@ -968,10 +961,10 @@ void AY8910Render(INT16* dest, INT32 length)
 			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_2, pAY8910Buffer[i + 1])
 			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_3, pAY8910Buffer[i + 2])
 		}
-		
+
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
-			
+
 		if (AY8910AddSignal) {
 			dest[(n << 1) + 0] = BURN_SND_CLIP(dest[(n << 1) + 0] + nLeftSample);
 			dest[(n << 1) + 1] = BURN_SND_CLIP(dest[(n << 1) + 1] + nRightSample);
@@ -997,7 +990,7 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 	for (i = 0; i < num; i++) {
 		AY8910Update(i, buffer + (i * 3), length);
 	}
-	
+
 	for (n = 0; n < length; n++) {
 		INT32 nLeftSample = 0, nRightSample = 0;
 
@@ -1006,10 +999,10 @@ void AY8910Render(INT16** buffer, INT16* dest, INT32 length, INT32 bAddSignal)
 			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_2, buffer[i + 1])
 			AY8910_ADD_SOUND(i + BURN_SND_AY8910_ROUTE_3, buffer[i + 2])
 		}
-		
+
 		nLeftSample = BURN_SND_CLIP(nLeftSample);
 		nRightSample = BURN_SND_CLIP(nRightSample);
-			
+
 		if (bAddSignal) {
 			dest[(n << 1) + 0] = BURN_SND_CLIP(dest[(n << 1) + 0] + nLeftSample);
 			dest[(n << 1) + 1] = BURN_SND_CLIP(dest[(n << 1) + 1] + nRightSample);

@@ -832,7 +832,7 @@ INT32 AY8910Init(INT32 chip, INT32 clock, INT32 add_signal)
 
 	for (i = 0; i < 3; i++)
 	{
-		pAY8910Buffer[(chip * 3) + i] = malloc(0x800 * sizeof(INT16)); // enough to handle any supported rate
+		pAY8910Buffer[(chip * 3) + i] = (INT16 *)malloc(0x800 * sizeof(INT16)); // enough to handle any supported rate
 	}
 
 	num++;
@@ -898,7 +898,6 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 	}
 
 	for (i = 0; i < num; i++) {
-		struct AY8910 *PSG = &AYPSG[i];
 		char szName[16];
 
 		sprintf(szName, "AY8910 #%d", i);

@@ -827,7 +827,7 @@ static inline void update_palette_entry(INT32 entry)
 	DrvPalette[entry / 2] = BurnHighCol(r, g, b, 0);
 }
 
-void __fastcall m90_main_write(UINT32 address, UINT8 data)
+static void __fastcall m90_main_write(UINT32 address, UINT8 data)
 {
 	if ((address & 0xffc00) == 0xe0000) {
 		DrvPalRAM[address & 0x3ff] = data;
@@ -836,15 +836,16 @@ void __fastcall m90_main_write(UINT32 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m90_main_read(UINT32 /*address*/)
+static UINT8 __fastcall m90_main_read(UINT32 /*address*/)
 {
 	return 0;
 }
 
-void __fastcall m90_main_write_port(UINT32 port, UINT8 data)
+static void __fastcall m90_main_write_port(UINT32 port, UINT8 data)
 {
 	if ((port & ~0x0f) == 0x80) {
 		m90_video_control[port & 0x0f] = data;
+		//bprintf(0, _T("%X %X.  "), port, data);
 		return;
 	}
 
@@ -880,7 +881,7 @@ void __fastcall m90_main_write_port(UINT32 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m90_main_read_port(UINT32 port)
+static UINT8 __fastcall m90_main_read_port(UINT32 port)
 {
 	switch (port)
 	{
@@ -901,7 +902,7 @@ UINT8 __fastcall m90_main_read_port(UINT32 port)
 	return 0;
 }
 
-void __fastcall m90_sound_write_port(UINT16 port, UINT8 data)
+static void __fastcall m90_sound_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -939,7 +940,7 @@ void __fastcall m90_sound_write_port(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall m90_sound_read_port(UINT16 port)
+static UINT8 __fastcall m90_sound_read_port(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -954,9 +955,9 @@ UINT8 __fastcall m90_sound_read_port(UINT16 port)
 			ZetSetVector(0xff);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
-	
+
 		case 0x84:
-			return DrvSndROM[sample_address & 0x3fff];
+			return DrvSndROM[sample_address & 0x3ffff];
 	}
 
 	return 0;
@@ -1001,7 +1002,7 @@ static INT32 MemIndex()
 	DrvZ80ROM	= Next; Next += 0x010000;
 	DrvGfxROM0	= Next; Next += 0x400000;
 	DrvGfxROM1	= Next; Next += 0x400000;
-	DrvSndROM	= Next; Next += 0x180000;
+	DrvSndROM	= Next; Next += 0x040000;
 
 	RamPrioBitmap	= Next; Next += nScreenWidth * nScreenHeight;
 
@@ -1099,8 +1100,8 @@ static void map_main_cpu(UINT8 *decrypt_table, INT32 codesize, INT32 spriteram)
 static void DrvGfxDecode()
 {
 	INT32 Plane[4]  = { 0x180000 * 8, 0x100000 * 8, 0x080000 * 8, 0x000000 * 8 };
-	INT32 XOffs[16] = { 0, 1, 2, 3, 4, 5, 6, 7, 16*8+0, 16*8+1, 16*8+2, 16*8+3, 16*8+4, 16*8+5, 16*8+6, 16*8+7 };
-	INT32 YOffs[16] = { 0*8, 1*8, 2*8, 3*8, 4*8, 5*8, 6*8, 7*8, 8*8, 9*8, 10*8, 11*8, 12*8, 13*8, 14*8, 15*8 };
+	INT32 XOffs[16] = { STEP8(0, 1), STEP8(128, 1) };
+	INT32 YOffs[16] = { STEP16(0, 8) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x200000);
 	if (tmp == NULL) {
@@ -1134,11 +1135,8 @@ static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, IN
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0xefff, 0, DrvZ80ROM);
-	ZetMapArea(0x0000, 0xefff, 2, DrvZ80ROM);
-	ZetMapArea(0xf000, 0xffff, 0, DrvZ80RAM);
-	ZetMapArea(0xf000, 0xffff, 1, DrvZ80RAM);
-	ZetMapArea(0xf000, 0xffff, 2, DrvZ80RAM);
+	ZetMapMemory(DrvZ80ROM, 0x0000, 0xefff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM, 0xf000, 0xffff, MAP_RAM);
 	ZetSetOutHandler(m90_sound_write_port);
 	ZetSetInHandler(m90_sound_read_port);
 	ZetClose();
@@ -1248,7 +1246,7 @@ static void draw_layer(INT32 layer)
 
 	INT32 wide = (control & 0x04) ? 128 : 64;
 
-	INT32 trans = layer ? 0xff : 0;
+	INT32 trans = (layer) ? 0xff : 0;
 	
 	INT32 pmask = (wide == 128) ? 2 : 3;
 	UINT16 *vram = (UINT16*)(DrvVidRAM + (control & pmask) * 0x4000);
@@ -1256,7 +1254,7 @@ static void draw_layer(INT32 layer)
 	UINT16  scrollx = ((m90_video_control[(layer*4)+2] << 0) | (m90_video_control[(layer*4)+3] << 8)) + video_offsets[0];
 	UINT16  scrolly = ((m90_video_control[(layer*4)+0] << 0) | (m90_video_control[(layer*4)+1] << 8)) + video_offsets[1];
 
-	scrollx += layer ? -2 : 2;
+	scrollx += (layer) ? -2 : 2;
 	scrollx += ((wide & 0x80) * 2);
 
 	UINT16 *xscroll = (UINT16*)(DrvVidRAM + 0xf000 + (layer * 0x400));
@@ -1291,7 +1289,7 @@ static void draw_layer(INT32 layer)
 			INT32 flipy = color & 0x80;
 			INT32 flipx = color & 0x40;
 			INT32 group =(color & 0x30) ? 0 : 1;
-			color &= 0x0f;	
+			color &= 0x0f;
 
 			{
 				color <<= 4;
@@ -1371,6 +1369,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 128; // nmi pulses for sound cpu
 	INT32 nCyclesTotal[2];
 	INT32 nCyclesDone[2];
+	INT32 nSoundBufferPos = 0;
 
 	// overclocking...
 	nCyclesTotal[0] = (INT32)((INT64)(8000000 / 60) * nBurnCPUSpeedAdjust / 0x0100);
@@ -1400,10 +1399,21 @@ static INT32 DrvFrame()
 		ZetNmi();
 
 		if (i == 124) vblank = 0x80;
+
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	if (pBurnSoundOut) {
-		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			BurnYM2151Render(pSoundBuf, nSegmentLength);
+		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1775,7 +1785,7 @@ static INT32 riskchalInit()
 
 struct BurnDriver BurnDrvRiskchal = {
 	"riskchal", NULL, NULL, NULL, "1993",
-	"Risky Challenge\0", "Unemulated CPU functions", "Irem", "Irem M90",
+	"Risky Challenge\0", "Graphics issues", "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, riskchalRomInfo, riskchalRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
@@ -1805,7 +1815,7 @@ STD_ROM_FN(gussun)
 
 struct BurnDriver BurnDrvGussun = {
 	"gussun", "riskchal", NULL, NULL, "1993",
-	"Gussun Oyoyo (Japan)\0", "Unemulated CPU functions", "Irem", "Irem M90",
+	"Gussun Oyoyo (Japan)\0", "Graphics issues", "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, gussunRomInfo, gussunRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,

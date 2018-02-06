@@ -578,23 +578,23 @@ static INT32 DrvDraw()
 	GenericTilemapDraw(1, pTransDraw, 0 | TMAP_FORCEOPAQUE);
 
 	transparent_select = 0;
-	GenericTilemapSetTransMask(0, 0xff01);
+	GenericTilemapSetTransMask(0, 0, 0xff01);
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(0));
 
 	transparent_select = 1;
-	GenericTilemapSetTransMask(0, 0x00ff);
+	GenericTilemapSetTransMask(0, 0, 0x00ff);
 	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(0));
 
 	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
 	transparent_select = 0;
-	GenericTilemapSetTransMask(0, 0xff01);
+	GenericTilemapSetTransMask(0, 0, 0xff01);
 	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
 	if (nSpriteEnable & 1) draw_sprites(0);
 
 	transparent_select = 1;
-	GenericTilemapSetTransMask(0, 0x00ff);
+	GenericTilemapSetTransMask(0, 0, 0x00ff);
 	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0 | TMAP_SET_GROUP(1));
 
 	if (nSpriteEnable & 2) draw_sprites(1);

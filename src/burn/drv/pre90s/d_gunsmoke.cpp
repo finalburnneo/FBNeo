@@ -23,8 +23,6 @@ static UINT8 *DrvZ80RAM0;
 static UINT8 *DrvZ80RAM1;
 static UINT8 *DrvSprRAM;
 
-static UINT8 *TileTransp;
-
 static UINT32 *DrvPalette;
 static UINT8 DrvCalcPal;
 
@@ -325,13 +323,7 @@ static tilemap_callback( fg )
 	INT32 code = DrvVidRAM[offs] + ((attr & 0xe0) << 2);
 
 	TILE_SET_INFO(1, code, attr & 0x1f, 0);
-
-	attr = (attr & 0x1f) << 2;
-
-	GenericTilemapSetTransTable(1, 0, TileTransp[attr+0]);
-	GenericTilemapSetTransTable(1, 1, TileTransp[attr+1]);
-	GenericTilemapSetTransTable(1, 2, TileTransp[attr+2]);
-	GenericTilemapSetTransTable(1, 3, TileTransp[attr+3]);
+	*category = attr & 0x1f;
 }
 
 static INT32 gunsmokeSynchroniseStream(INT32 nSoundRate)
@@ -355,8 +347,6 @@ static INT32 MemIndex()
 	DrvGfxROM2		= Next; Next += 0x80000;
 	DrvGfxROM3		= Next; Next += 0x08000;
 	DrvColPROM		= Next; Next += 0x00800;
-
-	TileTransp		= Next; Next += 0x00100;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x00300 * sizeof(UINT32);
 
@@ -432,6 +422,10 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(0, DrvGfxROM1, 4, 32, 32, 0x80000, 0x100, 0x0f);
 	GenericTilemapSetGfx(1, DrvGfxROM0, 2,  8,  8, 0x10000, 0x000, 0x1f);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
+	GenericTilemapCategoryConfig(1, 0x20);
+	for (INT32 i = 0; i < 0x20 * 4; i++) {
+		GenericTilemapSetCategoryEntry(1, i / 4, i % 4, (DrvColPROM[0x300 + i] == 0xf) ? 1 : 0);
+	}
 
 	BurnYM2203Init(2, 1500000, NULL, gunsmokeSynchroniseStream, gunsmokeGetTime, 0);
 	BurnTimerAttachZet(3000000);
@@ -479,8 +473,6 @@ static INT32 DrvPaletteInit()
 		DrvPalette[0x000 + i] = tmp[DrvColPROM[0x300 + i] | 0x40];
 		DrvPalette[0x100 + i] = tmp[DrvColPROM[0x400 + i] | ((DrvColPROM[0x500 + i] & 0x03) << 4)];
 		DrvPalette[0x200 + i] = tmp[DrvColPROM[0x600 + i] | ((DrvColPROM[0x700 + i] & 0x07) << 4) | 0x80];
-
-		TileTransp[0x000 + i] = (DrvColPROM[0x300 + i] == 0xf) ? 1 : 0;
 	}
 
 	return 0;

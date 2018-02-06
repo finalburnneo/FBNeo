@@ -628,7 +628,7 @@ static INT32 DrvInit(void (*pRomCallback)(), INT32 sndromsmall, INT32 gfxtype)
 	GenericTilemapSetGfx(1, DrvGfxROM0, 3, 8, 8, 0x10000, 0, 0xf); // this needed? -dink
 	GenericTilemapSetScrollRows(0, 4);
 	GenericTilemapSetScrollRows(1, 4);
-	GenericTilemapSetTransMask(1, 0x3f);
+	GenericTilemapSetTransMask(1, 0, 0x3f);
 	GenericTilemapSetScrollRow(0, 3, 0);
 	GenericTilemapSetScrollRow(1, 3, 0);
 	GenericTilemapSetOffsets(0, -8, 0);

@@ -260,9 +260,9 @@ static tilemap_callback( layer0 )
 	INT32 attr = DrvAttrRAM[offs];
 	INT32 color = (back_color * 0x10) | ((attr >> 3) & 0x0e);
 
-	INT32 category = ((attr & 0x80) >> 7) && (attr & 0x70);
+	INT32 group = ((attr & 0x80) >> 7) && (attr & 0x70);
 
-	TILE_SET_INFO(0, code, color, TILE_GROUP(category));
+	TILE_SET_INFO(0, code, color, TILE_GROUP(group));
 }
 
 static tilemap_callback( layer1 )

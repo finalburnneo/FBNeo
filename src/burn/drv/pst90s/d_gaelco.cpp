@@ -1080,7 +1080,7 @@ static INT32 DrvDraw()
 
 static void draw_layer(INT32 layer, INT32 mask, INT32 category, INT32 priority)
 {
-	GenericTilemapSetTransMask(layer, mask);
+	GenericTilemapSetTransMask(layer, 0, mask);
 
 	GenericTilemapDraw(layer, pTransDraw, priority | TMAP_SET_GROUP(category));
 }

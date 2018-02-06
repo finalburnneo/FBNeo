@@ -27,7 +27,6 @@ static UINT8 *DrvVidRAM;
 static UINT8 *DrvColRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvSprBuf;
-static UINT8 *DrvTransTable;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -249,13 +248,7 @@ static tilemap_callback( text )
 	INT32 attr = DrvColRAM[offs];
 
 	TILE_SET_INFO(0, DrvVidRAM[offs] + ((attr & 0x80) << 1), attr & 0x3f, 0);
-
-	// hacky
-	attr = (attr & 0x3f) << 2;
-	GenericTilemapSetTransTable(2, 0, DrvTransTable[attr+0]);
-	GenericTilemapSetTransTable(2, 1, DrvTransTable[attr+1]);
-	GenericTilemapSetTransTable(2, 2, DrvTransTable[attr+2]);
-	GenericTilemapSetTransTable(2, 3, DrvTransTable[attr+3]);
+	*category = attr & 0x3f;
 }
 
 static tilemap_scan( background )
@@ -308,8 +301,6 @@ static INT32 MemIndex()
 	DrvGfxROM4		= Next; Next += 0x008000;
 
 	DrvColPROM		= Next; Next += 0x000800;
-
-	DrvTransTable		= Next; Next += 0x000100;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0400 * sizeof(UINT32);
 
@@ -439,7 +430,10 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(2, DrvGfxROM2, 4, 16, 16, 0x20000, 0x200, 0x0f);
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 	GenericTilemapSetTransparent(1, 0);
-//	GenericTilemapSetTransparent(2, 0); // wrong
+	GenericTilemapCategoryConfig(2, 0x40);
+	for (INT32 i = 0; i < 0x100; i++) {
+		GenericTilemapSetCategoryEntry(2, i >> 2, i & 3, (DrvColPROM[0x300 + i] == 0xf) ? 1 : 0);
+	}
 
 	DrvDoReset();
 
@@ -479,8 +473,6 @@ static INT32 DrvPaletteInit()
 		DrvPalette[i + 0x100] = tmp[DrvColPROM[i + 0x400]];
 		DrvPalette[i + 0x200] = tmp[DrvColPROM[i + 0x500] | 0x40];
 		DrvPalette[i + 0x300] = tmp[DrvColPROM[i + 0x600] | (DrvColPROM[i + 0x700] << 4) | 0x80];
-
-		DrvTransTable[i] = (DrvColPROM[0x300 + i] == 0xf) ? 1 : 0;
 	}
 
 	return 0;

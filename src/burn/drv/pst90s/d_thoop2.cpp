@@ -555,19 +555,19 @@ static INT32 DrvDraw()
 	for (INT32 priority = 3; priority >= 0; priority--)
 	{
 		transparent_select = 1;
-		GenericTilemapSetTransMask(1, 0x00ff);
+		GenericTilemapSetTransMask(1, 0, 0x00ff);
 		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(priority));
 
-		GenericTilemapSetTransMask(0, 0x00ff);
+		GenericTilemapSetTransMask(0, 0, 0x00ff);
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(priority));
 
 		draw_sprites(priority);
 
 		transparent_select = 0;
-		GenericTilemapSetTransMask(1, 0xff01);
+		GenericTilemapSetTransMask(1, 0, 0xff01);
 		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(priority));
 
-		GenericTilemapSetTransMask(0, 0xff01);
+		GenericTilemapSetTransMask(0, 0, 0xff01);
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(priority));
 	}
 

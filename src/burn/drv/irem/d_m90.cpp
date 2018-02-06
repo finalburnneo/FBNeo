@@ -1417,6 +1417,35 @@ static INT32 DrvFrame()
 	return 0;
 }
 
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
+{
+	struct BurnArea ba;
+	
+	if (pnMin != NULL) {			// Return minimum compatible version
+		*pnMin = 0x029705;
+	}
+
+	if (nAction & ACB_MEMORY_RAM) {
+		memset(&ba, 0, sizeof(ba));
+		ba.Data	  = AllRam;
+		ba.nLen	  = RamEnd-AllRam;
+		ba.szName = "All Ram";
+		BurnAcb(&ba);
+	}
+
+	if (nAction & ACB_DRIVER_DATA) {
+		VezScan(nAction);
+		ZetScan(nAction);
+
+		BurnYM2151Scan(nAction);
+		DACScan(nAction, pnMin);
+
+		SCAN_VAR(sample_address);
+		SCAN_VAR(irqvector);
+	}
+
+	return 0;
+}
 
 
 // Hasamu (Japan)
@@ -1447,9 +1476,9 @@ struct BurnDriver BurnDrvHasamu = {
 	"hasamu", NULL, NULL, NULL, "1991",
 	"Hasamu (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MAHJONG, 0,
 	NULL, hasamuRomInfo, hasamuRomName, NULL, NULL, p2commonInputInfo, HasamuDIPInfo,
-	hasamuInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	hasamuInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 240, 4, 3
 };
 
@@ -1484,9 +1513,9 @@ struct BurnDriver BurnDrvDynablst = {
 	"dynablst", NULL, NULL, NULL, "1991",
 	"Dynablaster / Bomber Man\0", NULL, "Irem (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, dynablstRomInfo, dynablstRomName, NULL, NULL, p4commonInputInfo, DynablstDIPInfo,
-	dynablstInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	dynablstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1514,9 +1543,9 @@ struct BurnDriver BurnDrvBombrman = {
 	"bombrman", "dynablst", NULL, NULL, "1991",
 	"Bomber Man (Japan)\0", NULL, "Irem (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, bombrmanRomInfo, bombrmanRomName, NULL, NULL, p2commonInputInfo, BombrmanDIPInfo,
-	dynablstInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	dynablstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1544,9 +1573,9 @@ struct BurnDriver BurnDrvAtompunk = {
 	"atompunk", "dynablst", NULL, NULL, "1991",
 	"Atomic Punk (US)\0", NULL, "Irem America (licensed from Hudson Soft)", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, atompunkRomInfo, atompunkRomName, NULL, NULL, p4commonInputInfo, AtompunkDIPInfo,
-	dynablstInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	dynablstInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1581,9 +1610,9 @@ struct BurnDriver BurnDrvBbmanw = {
 	"bbmanw", NULL, NULL, NULL, "1992",
 	"Bomber Man World / New Dyna Blaster - Global Quest\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, bbmanwRomInfo, bbmanwRomName, NULL, NULL, p4commonInputInfo, BbmanwDIPInfo,
-	bbmanwInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1611,9 +1640,9 @@ struct BurnDriver BurnDrvBbmanwj = {
 	"bbmanwj", "bbmanw", NULL, NULL, "1992",
 	"Bomber Man World (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, bbmanwjRomInfo, bbmanwjRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
-	bbmanwInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1641,9 +1670,9 @@ struct BurnDriver BurnDrvBbmanwja = {
 	"bbmanwja", "bbmanw", NULL, NULL, "1992",
 	"Bomber Man World (Japan, revised sound hardware)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, bbmanwjaRomInfo, bbmanwjaRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
-	bbmanwInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1671,9 +1700,9 @@ struct BurnDriver BurnDrvNewapunk = {
 	"newapunk", "bbmanw", NULL, NULL, "1992",
 	"New Atomic Punk - Global Quest (US)\0", NULL, "Irem America", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MAZE, 0,
 	NULL, newapunkRomInfo, newapunkRomName, NULL, NULL, p4commonInputInfo, BbmanwjDIPInfo,
-	bbmanwInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	bbmanwInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1711,9 +1740,9 @@ struct BurnDriver BurnDrvQuizf1 = {
 	"quizf1", NULL, NULL, NULL, "1992",
 	"Quiz F1 1-2 Finish (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_QUIZ, 0,
 	NULL, quizf1RomInfo, quizf1RomName, NULL, NULL, Quizf1InputInfo, Quizf1DIPInfo,
-	quizf1Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	quizf1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 240, 4, 3
 };
 
@@ -1748,9 +1777,9 @@ struct BurnDriver BurnDrvRiskchal = {
 	"riskchal", NULL, NULL, NULL, "1993",
 	"Risky Challenge\0", "Unemulated CPU functions", "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, riskchalRomInfo, riskchalRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
-	riskchalInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	riskchalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1778,9 +1807,9 @@ struct BurnDriver BurnDrvGussun = {
 	"gussun", "riskchal", NULL, NULL, "1993",
 	"Gussun Oyoyo (Japan)\0", "Unemulated CPU functions", "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, gussunRomInfo, gussunRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
-	riskchalInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	riskchalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	320, 240, 4, 3
 };
 
@@ -1813,9 +1842,9 @@ struct BurnDriver BurnDrvMatchit2 = {
 	"matchit2", NULL, NULL, NULL, "1993",
 	"Match It II\0", NULL, "Tamtex", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, matchit2RomInfo, matchit2RomName, NULL, NULL, Matchit2InputInfo, Matchit2DIPInfo,
-	matchit2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 240, 4, 3
 };
 
@@ -1841,8 +1870,8 @@ struct BurnDriver BurnDrvShisen2 = {
 	"shisen2", "matchit2", NULL, NULL, "1993",
 	"Shisensho II\0", NULL, "Tamtex", "Irem M90",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, shisen2RomInfo, shisen2RomName, NULL, NULL, Matchit2InputInfo, Shisen2DIPInfo,
-	matchit2Init, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x200,
+	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	384, 240, 4, 3
 };

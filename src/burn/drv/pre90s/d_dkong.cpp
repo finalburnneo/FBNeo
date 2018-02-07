@@ -24,6 +24,7 @@
 #include "i8039.h"
 #include "dac.h"
 #include "nes_apu.h"
+#include <math.h> // for exp()
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -48,6 +49,10 @@ static UINT8 *DrvSndRAM1;
 
 static UINT8 *i8039_t;
 static UINT8 *i8039_p;
+
+static INT16 *dacbuf; // for dc offset removal
+static INT16 dac_lastin;
+static INT16 dac_lastout;
 
 static UINT32 *DrvPalette;
 static UINT8  DrvRecalc;
@@ -1102,20 +1107,20 @@ static INT32 DkongDACSync()
 	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / ((6000000.000 / 15) / (nBurnFPS / 100.000))));
 }
 
-#include <math.h>
-
 static void dkong_sh_p1_write(UINT8 data)
 {
-	double envelope = exp(-envelope_ctr);
-	DACWrite(0,(INT32)(data*envelope));
-	if (decay) envelope_ctr += 0.001;
-	else envelope_ctr = 0;
+	DACWrite(0, (INT32)(data * exp(-envelope_ctr)));
+	if (decay) {
+		envelope_ctr += 0.001;
+	} else {
+		if (envelope_ctr>0.088) envelope_ctr -= 0.088; // bring decay back to 0 nicely to avoid clicks
+		else if (envelope_ctr>0.001) envelope_ctr -= 0.001;
+		else envelope_ctr = 0.0;
+	}
 }
 
 static void __fastcall i8039_sound_write_port(UINT32 port, UINT8 data)
 {
-//bprintf (0, _T("i8039 wp %x %x\n"), port,data);
-
 	switch (port)
 	{
 		case I8039_p1:
@@ -1132,11 +1137,6 @@ static void __fastcall i8039_sound_write_port(UINT32 port, UINT8 data)
 
 static void dkong3_sound0_write(UINT16 a, UINT8 d)
 {
-	if (a <= 0x1ff) {
-		DrvSndRAM0[a] = d;
-		return;
-	}
-
 	if (a >= 0x4000 && a <= 0x4017) {
 		nesapuWrite(0, a - 0x4000, d);
 		return;
@@ -1145,12 +1145,6 @@ static void dkong3_sound0_write(UINT16 a, UINT8 d)
 
 static UINT8 dkong3_sound0_read(UINT16 a)
 {
-	if (a <= 0x1ff) {
-		return DrvSndRAM0[a];
-	}
-	if (a >= 0xe000) {
-		return DrvSndROM0[a - 0xe000];
-	}
 	switch (a) {
 		case 0x4016: return soundlatch[0];
 		case 0x4017: return soundlatch[1];
@@ -1164,10 +1158,6 @@ static UINT8 dkong3_sound0_read(UINT16 a)
 
 static void dkong3_sound1_write(UINT16 a, UINT8 d)
 {
-	if (a <= 0x1ff) {
-		DrvSndRAM1[a] = d;
-		return;
-	}
 	if (a >= 0x4000 && a <= 0x4017) {
 		nesapuWrite(1, a - 0x4000, d);
 		return;
@@ -1176,12 +1166,6 @@ static void dkong3_sound1_write(UINT16 a, UINT8 d)
 
 static UINT8 dkong3_sound1_read(UINT16 a)
 {
-	if (a <= 0x1ff) {
-		return DrvSndRAM1[a];
-	}
-	if (a >= 0xe000) {
-		return DrvSndROM1[a - 0xe000];
-	}
 	if (a >= 0x4000 && a <= 0x4017) {
 		if (a == 0x4016) return soundlatch[2];
 
@@ -1221,6 +1205,9 @@ static INT32 DrvDoReset()
 	envelope_ctr = 0;
 	decay = 0;
 	decrypt_counter = 0x09;
+
+	dac_lastin = 0;
+	dac_lastout = 0;
 
 	if (brazemode) {
 		ZetOpen(0);
@@ -1284,6 +1271,8 @@ static INT32 MemIndex()
 	i8039_p         = Next; Next += 0x000004;
 
 	RamEnd			= Next;
+
+	dacbuf          = (INT16*)Next; Next += 0x800 * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -1561,29 +1550,25 @@ static INT32 Dkong3Init()
 
 	M6502Init(0, TYPE_N2A03);
 	M6502Open(0);
-	//M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, MAP_RAM); // handled below
-	//M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, MAP_ROM);
-	M6502SetReadOpArgHandler(dkong3_sound0_read);
-	M6502SetReadOpHandler(dkong3_sound0_read);
+	M6502MapMemory(DrvSndRAM0, 0x0000, 0x01ff, MAP_RAM);
+	M6502MapMemory(DrvSndROM0, 0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(dkong3_sound0_write);
 	M6502SetReadHandler(dkong3_sound0_read);
 	M6502Close();
 
 	M6502Init(1, TYPE_N2A03);
 	M6502Open(1);
-	//M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, MAP_RAM); // handled below
-	//M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, MAP_ROM);
-	M6502SetReadOpArgHandler(dkong3_sound1_read);
-	M6502SetReadOpHandler(dkong3_sound1_read);
+	M6502MapMemory(DrvSndRAM1, 0x0000, 0x01ff, MAP_RAM);
+	M6502MapMemory(DrvSndROM1, 0xe000, 0xffff, MAP_ROM);
 	M6502SetWriteHandler(dkong3_sound1_write);
 	M6502SetReadHandler(dkong3_sound1_read);
 	M6502Close();
 
 	nesapuInit(0, 1789773, dkong3_nesapu_sync, 0);
-	nesapuSetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	nesapuSetAllRoutes(0, 0.95, BURN_SND_ROUTE_BOTH);
 
 	nesapuInit(1, 1789773, dkong3_nesapu_sync, 1);
-	nesapuSetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+	nesapuSetAllRoutes(1, 0.95, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1875,6 +1860,21 @@ static INT32 pestplceDraw()
 	return 0;
 }
 
+static void dcfilter_dac()
+{
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT16 r = dacbuf[i*2+0]; // dac is mono, ignore 'l'.
+		//INT16 l = dacbuf[i*2+1];
+
+		INT16 out = r - dac_lastin + 0.995 * dac_lastout;
+
+		dac_lastin = r;
+		dac_lastout = out;
+		pBurnSoundOut[i*2+0] = out;
+		pBurnSoundOut[i*2+1] = out;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -1905,7 +1905,8 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		DACUpdate(dacbuf, nBurnSoundLen);
+		dcfilter_dac();
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -2133,6 +2134,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(hunch_prot_ctr); // hunchback (s2650)
 		SCAN_VAR(hunchloopback);
 		SCAN_VAR(main_fo);
+
+		SCAN_VAR(dac_lastin);
+		SCAN_VAR(dac_lastout);
 
 		if (nAction & ACB_WRITE) {
 			if (draktonmode) {

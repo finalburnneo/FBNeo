@@ -7,12 +7,9 @@
 #include "z80_intf.h"
 #include "m6809_intf.h"
 #include "i8039.h"
-#include "driver.h"
 #include "flt_rc.h"
 #include "dac.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

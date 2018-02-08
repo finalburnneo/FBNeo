@@ -6,11 +6,8 @@
 #include "z80_intf.h"
 #include "i8039.h"
 #include "flt_rc.h"
-#include "driver.h"
 #include "resnet.h"
-extern "C" {
 #include "ay8910.h"
-}
 #include "dac.h"
 
 static UINT8 *AllMem;

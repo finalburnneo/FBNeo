@@ -5,16 +5,13 @@
 #include "z80_intf.h"
 #include "m6800_intf.h"
 #include "msm5205.h"
+#include "ay8910.h"
 #define USE_SAMPLE_HACK // allow use of sampled drumkit on Kid Niki, Spelunker 1 & 2, Battle-Road, Horizon
 
 #ifdef USE_SAMPLE_HACK
 #include "samples.h"
 #endif
 
-#include "driver.h"
-extern "C" {
- #include "ay8910.h"
-}
 
 static UINT8 M62InputPort0[8]       = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 M62InputPort1[8]       = {0, 0, 0, 0, 0, 0, 0, 0};

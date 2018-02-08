@@ -6,11 +6,8 @@
 #include "z80_intf.h"
 #include "burn_ym2151.h"
 #include "burn_ym3526.h"
-#include "driver.h"
 #include "dac.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

@@ -3,13 +3,9 @@
 //   sprite clipping in popeye on the thru-way is normal (see pcb vid)
 
 #include "tiles_generic.h"
-#include "driver.h"
 #include "z80_intf.h"
 #include "bitswap.h"
-
-extern "C" {
-	#include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

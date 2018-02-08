@@ -6,10 +6,7 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 #include "msm5232.h"
 
 static UINT8 *AllMem;

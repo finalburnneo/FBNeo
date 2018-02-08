@@ -11,10 +11,7 @@
 #include "vlm5030.h"
 #include "burn_ym2151.h"
 #include "flt_rc.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 #include "burn_shift.h"
 
 static UINT8 *AllMem;

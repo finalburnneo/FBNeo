@@ -9,11 +9,7 @@
 #include "eeprom.h"
 #include "bitswap.h"
 #include "kanekotb.h"
-
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 /*==============================================================================================
 Driver Variables

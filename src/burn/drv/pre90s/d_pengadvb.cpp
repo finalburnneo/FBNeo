@@ -2,13 +2,10 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "driver.h"
 #include "tms9928a.h"
 #include "8255ppi.h"
 #include "bitswap.h"
-extern "C" {
-	#include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 *AllMem	= NULL;
 static UINT8 *MemEnd	= NULL;

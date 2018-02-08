@@ -6,11 +6,7 @@
 #include "s2650_intf.h"
 #include "sn76496.h"
 #include "flt_rc.h"
-
-#include "driver.h"
-extern "C" {
- #include "ay8910.h"
-}
+#include "ay8910.h"
 
 // ROM types
 #define GAL_ROM_Z80_PROG1				1

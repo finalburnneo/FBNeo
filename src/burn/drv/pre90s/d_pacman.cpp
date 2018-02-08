@@ -8,10 +8,7 @@
 #include "bitswap.h"
 #include "sn76496.h"
 #include "namco_snd.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

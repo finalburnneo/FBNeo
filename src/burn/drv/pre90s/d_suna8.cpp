@@ -7,10 +7,7 @@
 #include "burn_ym2203.h"
 #include "burn_ym3812.h"
 #include "dac.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 /*
 	The samples do really sound that bad. Compare to MAME (sparkman has most obvious samples)

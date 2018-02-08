@@ -2,11 +2,8 @@
 // Based on MAME driver by Frank Palazzolo
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "driver.h"
 #include "bitswap.h"
-extern "C" {
-	#include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];

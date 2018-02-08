@@ -2,12 +2,9 @@
 // Based on the MAME driver by David Haywood and Pierpaolo Prazzoli.
 
 #include "tiles_generic.h"
-#include "driver.h"
 #include "bitswap.h"
 #include "z80_intf.h"
-extern "C" {
-    #include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

@@ -7,10 +7,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "dac.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

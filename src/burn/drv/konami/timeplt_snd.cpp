@@ -4,10 +4,7 @@
 #include "burnint.h"
 #include "z80_intf.h"
 #include "flt_rc.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 soundlatch;
 static UINT8 *z80rom;

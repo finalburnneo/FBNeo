@@ -114,7 +114,9 @@
 #include "support.h"		/* use RAINE */
 #endif
 
+#define AY8910_CORE
 #include "ay8910.h"
+#undef AY8910_CORE
 #include "fm.h"
 
 

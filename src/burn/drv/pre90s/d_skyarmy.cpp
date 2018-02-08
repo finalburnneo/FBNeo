@@ -13,11 +13,7 @@
 #include "tiles_generic.h" // either this or burnint.h is required, but not both
 #include "z80_intf.h"
 #include "bitswap.h" // using bitswap functions in this driver...
-
-#include "driver.h" // all part of the ay8910 header
-extern "C" {
 #include "ay8910.h"
-}
 
 // define variables, most of these can be gotten from memindex
 

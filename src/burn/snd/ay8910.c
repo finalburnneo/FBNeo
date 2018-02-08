@@ -18,8 +18,11 @@
 
 #include "driver.h"
 #include "state.h"
-#include "ay8910.h"
 #include <stddef.h>
+
+#define AY8910_CORE
+#include "ay8910.h"
+#undef AY8910_CORE
 
 #if defined FBA_DEBUG
 #ifdef __GNUC__ 
@@ -878,7 +881,7 @@ INT32 AY8910SetPorts(INT32 chip, read8_handler portAread, read8_handler portBrea
 	return 0;
 }
 
-INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
+void AY8910Scan(INT32 nAction, INT32* pnMin)
 {
 	struct BurnArea ba;
 	INT32 i;
@@ -890,7 +893,7 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 #endif
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
+		return;
 	}
 
 	if (pnMin && *pnMin < 0x029496) {			// Return minimum compatible version
@@ -908,8 +911,6 @@ INT32 AY8910Scan(INT32 nAction, INT32* pnMin)
 		ba.szName	= szName;
 		BurnAcb(&ba);
 	}
-
-	return 0;
 }
 
 #define AY8910_ADD_SOUND(route, output)												\

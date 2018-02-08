@@ -6,12 +6,9 @@
 #include "tiles_generic.h"
 #include "taito_m68705.h"
 #include "z80_intf.h"
-#include "driver.h"
 #include "dac.h"
 #include "msm5232.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

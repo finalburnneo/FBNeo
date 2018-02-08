@@ -5,10 +5,7 @@
 #include "z80_intf.h"
 #include "taito_m68705.h"
 #include "bitswap.h"
-#include "driver.h"
-extern "C" {
- #include "ay8910.h"
-}
+#include "ay8910.h"
 
 static INT32 nWhichGame;
 

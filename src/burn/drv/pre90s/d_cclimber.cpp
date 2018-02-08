@@ -6,11 +6,8 @@
 // 2: fix Crazy Kong pt. II offsets and bigsprite flipping issues
 
 #include "tiles_generic.h"
-#include "driver.h"
 #include "z80_intf.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

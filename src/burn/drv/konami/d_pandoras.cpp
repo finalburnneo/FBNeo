@@ -5,10 +5,7 @@
 #include "m6809_intf.h"
 #include "z80_intf.h"
 #include "i8039.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 #include "dac.h"
 
 static UINT8 *AllMem;

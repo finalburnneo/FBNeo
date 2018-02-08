@@ -3,12 +3,8 @@
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"
-#include "driver.h"
 #include "flt_rc.h"
-
-extern "C" {
-    #include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

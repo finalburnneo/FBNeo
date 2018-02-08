@@ -4,10 +4,7 @@
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

@@ -3,10 +3,7 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "driver.h"
-extern "C" {
- #include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 SolomonInputPort0[8] = {0, 0, 0, 0, 0, 0, 0, 0};
 static UINT8 SolomonInputPort1[8] = {0, 0, 0, 0, 0, 0, 0, 0};

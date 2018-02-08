@@ -11,12 +11,9 @@ cflyball, cpsoccer, coozumou, & zeroize overload bios (glitches normal)
 #include "tiles_generic.h"
 #include "m6502_intf.h"
 #include "bitswap.h"
-#include "driver.h"
 #include "flt_rc.h"
 #include "i8x41.h"
-extern "C" {
-    #include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

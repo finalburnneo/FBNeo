@@ -11,10 +11,7 @@
 #include "burn_ym3526.h"
 #include "burn_ym3812.h"
 #include "burn_y8950.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;

@@ -4,10 +4,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6502_intf.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 #include "dac.h"
 
 static UINT8 *AllMem;

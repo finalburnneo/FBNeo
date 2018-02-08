@@ -8,10 +8,7 @@
 #include "tiles_generic.h"
 #include "bitswap.h"
 #include "z80_intf.h"
-#include "driver.h"
-extern "C" {
 #include "ay8910.h"
-}
 #include "samples.h"
 
 static UINT8 *AllMem;

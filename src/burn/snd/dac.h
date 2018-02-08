@@ -8,4 +8,4 @@ void DACSetRoute(INT32 Chip, double nVolume, INT32 nRouteDir);
 void DACStereoMode(INT32 Chip);
 void DACReset();
 void DACExit();
-INT32 DACScan(INT32 nAction,INT32 *pnMin);
+void DACScan(INT32 nAction,INT32 *pnMin);

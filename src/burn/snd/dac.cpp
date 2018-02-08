@@ -295,7 +295,7 @@ void DACExit()
 	rBuffer = NULL;
 }
 
-INT32 DACScan(INT32 nAction,INT32 *pnMin)
+void DACScan(INT32 nAction,INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_DACInitted) bprintf(PRINT_ERROR, _T("DACScan called without init\n"));
@@ -315,6 +315,4 @@ INT32 DACScan(INT32 nAction,INT32 *pnMin)
 			SCAN_VAR(ptr->Output2);
 		}
 	}
-
-	return 0;
 }

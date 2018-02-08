@@ -9,4 +9,4 @@ void es8712Reset(INT32 device);
 void es8712Update(INT32 device, INT16 *buffer, INT32 samples);
 void es8712Exit(INT32 device);
 
-INT32 es8712Scan(INT32 device, INT32 nAction);
+void es8712Scan(INT32 nAction, INT32 *pnMin);

@@ -653,7 +653,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 
-		es8712Scan(0, nAction);
+		es8712Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 
 		SCAN_VAR(blackpen);

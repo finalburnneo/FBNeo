@@ -3,7 +3,6 @@
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
-#include "bitswap.h"
 #include "ay8910.h"
 
 static UINT8 *AllMem;
@@ -107,44 +106,44 @@ STDDIPINFO(Enraya4)
 
 static struct BurnDIPInfo UnkpacgDIPList[]=
 {
-	{0x09, 0xff, 0xff, 0xff, NULL		},
-	{0x0a, 0xff, 0xff, 0x00, NULL		},
+	{0x09, 0xff, 0xff, 0xff, NULL			},
+	{0x0a, 0xff, 0xff, 0x00, NULL			},
 
-	{0   , 0xfe, 0   ,    2, "DIP8"		},
-	{0x09, 0x01, 0x80, 0x00, "Off"		},
-	{0x09, 0x01, 0x80, 0x80, "On"		},
+	{0   , 0xfe, 0   ,    2, "DIP8"			},
+	{0x09, 0x01, 0x80, 0x00, "Off"			},
+	{0x09, 0x01, 0x80, 0x80, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-0"		},
-	{0x0a, 0x01, 0x01, 0x00, "Off"		},
-	{0x0a, 0x01, 0x01, 0x01, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-0"			},
+	{0x0a, 0x01, 0x01, 0x00, "Off"			},
+	{0x0a, 0x01, 0x01, 0x01, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-1"		},
-	{0x0a, 0x01, 0x02, 0x00, "Off"		},
-	{0x0a, 0x01, 0x02, 0x02, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-1"			},
+	{0x0a, 0x01, 0x02, 0x00, "Off"			},
+	{0x0a, 0x01, 0x02, 0x02, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-2"		},
-	{0x0a, 0x01, 0x04, 0x00, "Off"		},
-	{0x0a, 0x01, 0x04, 0x04, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-2"			},
+	{0x0a, 0x01, 0x04, 0x00, "Off"			},
+	{0x0a, 0x01, 0x04, 0x04, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-3"		},
-	{0x0a, 0x01, 0x08, 0x00, "Off"		},
-	{0x0a, 0x01, 0x08, 0x08, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-3"			},
+	{0x0a, 0x01, 0x08, 0x00, "Off"			},
+	{0x0a, 0x01, 0x08, 0x08, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-4"		},
-	{0x0a, 0x01, 0x10, 0x00, "Off"		},
-	{0x0a, 0x01, 0x10, 0x10, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-4"			},
+	{0x0a, 0x01, 0x10, 0x00, "Off"			},
+	{0x0a, 0x01, 0x10, 0x10, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-5"		},
-	{0x0a, 0x01, 0x20, 0x00, "Off"		},
-	{0x0a, 0x01, 0x20, 0x20, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-5"			},
+	{0x0a, 0x01, 0x20, 0x00, "Off"			},
+	{0x0a, 0x01, 0x20, 0x20, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-6"		},
-	{0x0a, 0x01, 0x40, 0x00, "Off"		},
-	{0x0a, 0x01, 0x40, 0x40, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-6"			},
+	{0x0a, 0x01, 0x40, 0x00, "Off"			},
+	{0x0a, 0x01, 0x40, 0x40, "On"			},
 
-	{0   , 0xfe, 0   ,    2, "0-7"		},
-	{0x0a, 0x01, 0x80, 0x00, "Off"		},
-	{0x0a, 0x01, 0x80, 0x80, "On"		},
+	{0   , 0xfe, 0   ,    2, "0-7"			},
+	{0x0a, 0x01, 0x80, 0x00, "Off"			},
+	{0x0a, 0x01, 0x80, 0x80, "On"			},
 };
 
 STDDIPINFO(Unkpacg)
@@ -154,7 +153,6 @@ static void __fastcall enraya4_write(UINT16 address, UINT8 data)
 	if ((address & 0xf000) == 0xd000 || (address & 0xf000) == 0x7000) {
 		DrvVidRAM[((address & 0x3ff) << 1) + 0] = data;
 		DrvVidRAM[((address & 0x3ff) << 1) + 1] = (address >> 10) & 3;
-
 		return;
 	}
 }
@@ -199,6 +197,11 @@ static UINT8 __fastcall enraya4_in_port(UINT16 port)
 	}
 
 	return 0;
+}
+
+static tilemap_callback( bg )
+{
+	TILE_SET_INFO(0, DrvVidRAM[offs * 2] + (DrvVidRAM[offs * 2 + 1] * 256), 0, 0);
 }
 
 static INT32 DrvDoReset()
@@ -266,7 +269,7 @@ static INT32 DrvGfxDecode()
 static void DrvPrgDecode()
 {
 	for (INT32 i = 0x8000; i < 0xa000; i++) {
-		DrvZ80ROM[i] = BITSWAP08(DrvZ80ROM[i], 7,6,5,4,3,2,0,1);
+		DrvZ80ROM[i] = (DrvZ80ROM[i] & 0xfc) | ((DrvZ80ROM[i] & 1) << 1) | ((DrvZ80ROM[i] >> 1) & 1);
 	}
 }
 
@@ -319,6 +322,9 @@ static INT32 DrvInit(INT32 game, INT32 sbit)
 	sound_bit = sbit;
 
 	GenericTilesInit();
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
+	GenericTilemapSetGfx(0, DrvGfxROM, 3, 8, 8, 0x10000, 0, 0);
+	GenericTilemapSetOffsets(0, 0, -16);
 
 	DrvDoReset();
 
@@ -343,19 +349,6 @@ static void DrvPaletteInit()
 	}
 }
 
-static void draw_layer()
-{
-	for (INT32 offs = 0x40; offs < 0x3c0; offs++)
-	{
-		INT32 sx = (offs & 0x1f) * 8;
-		INT32 sy = (offs / 0x20) * 8;
-
-		INT32 code = DrvVidRAM[offs * 2] | (DrvVidRAM[offs * 2 + 1] * 256);
-
-		Render8x8Tile(pTransDraw, code, sx, sy - 16, 0, 0, 0, DrvGfxROM);
-	}
-}
-
 static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
@@ -363,7 +356,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	draw_layer();
+	GenericTilemapDraw(0, pTransDraw, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -387,7 +380,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 4;
 	INT32 nCyclesTotal = 4000000 / 60;
-	INT32 nCyclesDone  = 0;
+	INT32 nCyclesDone = 0;
 
 	ZetOpen(0);
 
@@ -431,7 +424,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
-
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(soundcontrol);

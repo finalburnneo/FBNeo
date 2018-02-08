@@ -447,7 +447,7 @@ void c6280_write(UINT8 offset, UINT8 data)
 	c6280_write_internal(offset, data);
 }
 
-INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
+void c6280_scan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_C6280Initted) bprintf(PRINT_ERROR, _T("c6280_scan called without init\n"));
@@ -456,7 +456,7 @@ INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
 	struct BurnArea ba;
 
 	if (pnMin) {
-		*pnMin =  0x029702;
+		*pnMin = 0x029702;
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
@@ -468,6 +468,4 @@ INT32 c6280_scan(INT32 nAction, INT32 *pnMin)
 		ba.szName	= "c6280 Chip #0";
 		BurnAcb(&ba);
 	}
-
-	return 0;
 }

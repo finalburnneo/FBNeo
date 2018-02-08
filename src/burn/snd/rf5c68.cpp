@@ -166,7 +166,7 @@ void RF5C68PCMExit()
 	DebugSnd_RF5C68Initted = 0;
 }
 
-void RF5C68PCMScan(INT32 nAction)
+void RF5C68PCMScan(INT32 nAction, INT32 *)
 {
 	struct BurnArea ba;
 	

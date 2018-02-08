@@ -3713,7 +3713,7 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_SYSTEM18) {
 			BurnYM3438Scan(nAction, pnMin);
-			RF5C68PCMScan(nAction);
+			RF5C68PCMScan(nAction, pnMin);
 			
 			if (nAction & ACB_WRITE) {
 				ZetOpen(0);

@@ -3,7 +3,7 @@ void RF5C68PCMReset();
 void RF5C68PCMInit(INT32 clock);
 void RF5C68PCMSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void RF5C68PCMExit();
-void RF5C68PCMScan(INT32 nAction);
+void RF5C68PCMScan(INT32 nAction, INT32 *pnMin);
 void RF5C68PCMRegWrite(UINT8 offset, UINT8 data);
 UINT8 RF5C68PCMRead(UINT16 offset);
 void RF5C68PCMWrite(UINT16 offset, UINT8 data);

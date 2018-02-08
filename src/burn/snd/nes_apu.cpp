@@ -912,7 +912,7 @@ void nesapuExit()
 	DebugSnd_NESAPUSndInitted = 0;
 }
 
-INT32 nesapuScan(INT32 nAction)
+void nesapuScan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_NESAPUSndInitted) bprintf(PRINT_ERROR, _T("nesapuScan called without init\n"));
@@ -932,6 +932,4 @@ INT32 nesapuScan(INT32 nAction)
 			SCAN_VAR(info->APU.buf_pos);
 		}
 	}
-
-	return 0;
 }

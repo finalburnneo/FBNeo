@@ -1118,7 +1118,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 		M6502Scan(nAction);
 		vlm5030Scan(nAction);
-		nesapuScan(nAction);
+		nesapuScan(nAction, pnMin);
 
 		SCAN_VAR(spunchout_prot_mode);
 	}

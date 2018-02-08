@@ -4,7 +4,7 @@ void nesapuSetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void nesapuExit();
 void nesapuReset();
 
-INT32 nesapuScan(INT32 nAction);
+void nesapuScan(INT32 nAction, INT32 *nAction);
 
 void nesapuWrite(INT32 chip,INT32 address, UINT8 value);
 UINT8 nesapuRead(INT32 chip,INT32 address);

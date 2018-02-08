@@ -3726,7 +3726,7 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 				BurnYM2203Scan(nAction, pnMin);
 			} else {
 				if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2413) {
-					BurnYM2413Scan(nAction);
+					BurnYM2413Scan(nAction, pnMin);
 				} else {
 					BurnYM2151Scan(nAction, pnMin);
 				}

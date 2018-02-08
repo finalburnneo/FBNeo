@@ -148,7 +148,7 @@ void BurnYM2413SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	YM2413RouteDirs[nIndex] = nRouteDir;
 }
 
-void BurnYM2413Scan(INT32 nAction)
+void BurnYM2413Scan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_YM2413Initted) bprintf(PRINT_ERROR, _T("BurnYM2413Scan called without init\n"));

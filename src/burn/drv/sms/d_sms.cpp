@@ -389,7 +389,7 @@ INT32 SMSScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(sms);
 		SCAN_VAR(cart.fcr);
 		if (sms.use_fm) // put it down here so we keep compatibility with non-fm states.
-			BurnYM2413Scan(nAction);
+			BurnYM2413Scan(nAction, pnMin);
 
 		if (nAction & ACB_WRITE) {
 			ZetOpen(0);

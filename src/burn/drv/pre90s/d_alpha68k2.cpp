@@ -2114,7 +2114,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
-		BurnYM2413Scan(nAction);
+		BurnYM2413Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 
 		SCAN_VAR(bankdata);

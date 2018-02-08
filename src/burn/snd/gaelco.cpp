@@ -352,7 +352,7 @@ void gaelcosnd_exit()
 	gaelcosnd_swap_lr = 0;
 }
 
-void gaelcosnd_scan(INT32 nAction)
+void gaelcosnd_scan(INT32 nAction, INT32 *)
 {
 	SCAN_VAR(m_channel);
 	SCAN_VAR(m_sndregs);

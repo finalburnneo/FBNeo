@@ -298,23 +298,23 @@ void iremga20_exit()
 	nNumChips = 0;
 }
 
-INT32 iremga20_scan(INT32 device, INT32 nAction, INT32 *pnMin)
+void iremga20_scan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_IremGA20Initted) bprintf(PRINT_ERROR, _T("iremga20_scan called without init\n"));
-	if (device > nNumChips) bprintf(PRINT_ERROR, _T("iremga20_scan called with invalid chip %x\n"), device);
 #endif
 
 	if (pnMin != NULL) {
 		*pnMin = 0x029678;
 	}
-	
-	chip = &chips[device];
 
-	if ((nAction & ACB_DRIVER_DATA)) {
-		SCAN_VAR(chip->channel);
-		SCAN_VAR(chip->regs);
+	if (nAction & ACB_DRIVER_DATA)
+	{
+		for (INT32 i = 0; i < MAX_GA20; i++)
+		{
+			chip = &chips[i];
+			SCAN_VAR(chip->channel);
+			SCAN_VAR(chip->regs);
+		}
 	}
-
-	return 0;
 }

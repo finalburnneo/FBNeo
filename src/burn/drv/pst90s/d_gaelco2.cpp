@@ -1737,7 +1737,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(snowboar_latch);
 		SCAN_VAR(gun_interrupt);
-		gaelcosnd_scan(nAction, *pnMin);
+		gaelcosnd_scan(nAction, pnMin);
 	}
 
 	return 0;

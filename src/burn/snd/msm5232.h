@@ -6,7 +6,7 @@ void MSM5232Init(INT32 clock, INT32 bAdd);
 void MSM5232SetClock(INT32 clock);
 void MSM5232Update(INT16 *buffer, INT32 samples);
 void MSM5232Exit();
-INT32 MSM5232Scan(INT32 nAction, INT32 *);
+void MSM5232Scan(INT32 nAction, INT32 *pnMin);
 
 void MSM5232SetRoute(double volume, INT32 route);
 

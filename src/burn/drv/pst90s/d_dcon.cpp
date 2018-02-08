@@ -702,7 +702,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 
-		seibu_sound_scan(pnMin, nAction);
+		seibu_sound_scan(nAction,pnMin);
 
 		SCAN_VAR(gfx_bank);
 		SCAN_VAR(gfx_enable);

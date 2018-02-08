@@ -507,7 +507,7 @@ static INT32 DrvScan(INT32 nAction, INT32* pnMin)
 
 		EEPROMScan(nAction, pnMin);
 
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
                 ToaScanGP9001(nAction, pnMin);

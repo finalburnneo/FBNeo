@@ -825,7 +825,7 @@ static INT32 shadfrceScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(DrvInput);

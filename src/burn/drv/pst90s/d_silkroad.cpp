@@ -647,8 +647,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 
 		BurnYM2151Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 
 		SCAN_VAR(DrvInputs[0]);
 		SCAN_VAR(DrvInputs[1]);

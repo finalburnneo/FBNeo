@@ -1203,7 +1203,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		EEPROMScan(nAction, pnMin);
 
 		BurnYM3812Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(soundlatch);

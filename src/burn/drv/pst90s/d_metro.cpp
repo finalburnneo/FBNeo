@@ -5133,7 +5133,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		{
 			upd7810Scan(nAction);
 			BurnYM2413Scan(nAction, pnMin);
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		}
 
 		if (sound_system == 3)
@@ -5144,14 +5144,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		if (sound_system == 4)
 		{
 			BurnYM2413Scan(nAction, pnMin);
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		}
 
 		if (sound_system == 5)
 		{
 			upd7810Scan(nAction);
 			BurnYM2151Scan(nAction, pnMin);
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		}
 
 		KonamiICScan(nAction);

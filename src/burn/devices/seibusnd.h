@@ -37,4 +37,4 @@ void seibu_sound_update_cabal(INT16 *pbuf, INT32 nLen);
 void seibu_sound_init(INT32 type, INT32 encrypted_len, INT32 freq0 /*cpu*/, INT32 freq1 /*ym*/, INT32 freq2 /*oki*/);
 void seibu_sound_exit();
 
-void seibu_sound_scan(INT32 *pnMin, INT32 nAction);
+void seibu_sound_scan(INT32 nAction, INT32 *pnMin);

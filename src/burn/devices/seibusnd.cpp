@@ -688,7 +688,7 @@ void seibu_sound_update_cabal(INT16 *pbuf, INT32 nLen)
 	adpcm_update(1, pbuf, nLen);
 }
 
-void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
+void seibu_sound_scan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugDev_SeibuSndInitted) bprintf(PRINT_ERROR, _T("seibu_sound_scan called without init\n"));
@@ -716,10 +716,7 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 		ZetClose();
 		
 		if ((seibu_snd_type & 8) == 0) {
-			MSM6295Scan(0, nAction);
-			if (seibu_snd_type & 4) {
-				MSM6295Scan(1, nAction);
-			}
+			MSM6295Scan(nAction, pnMin);
 		}
 
 		SCAN_VAR(main2sub);

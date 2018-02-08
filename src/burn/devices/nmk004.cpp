@@ -203,8 +203,7 @@ INT32 NMK004Scan(INT32 nAction, INT32 *pnMin)
 		tlcs90Scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(to_nmk004);
 		SCAN_VAR(to_main);

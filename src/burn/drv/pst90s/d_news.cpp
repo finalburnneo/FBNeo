@@ -425,7 +425,7 @@ static INT32 NewsScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);			// Scan Z80
 
-		MSM6295Scan(0, nAction);	// Scan OKIM6295
+		MSM6295Scan(nAction, pnMin);	// Scan OKIM6295
 
 		// Scan critical driver variables
 		SCAN_VAR(NewsInput);

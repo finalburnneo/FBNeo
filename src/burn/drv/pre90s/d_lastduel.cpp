@@ -1842,7 +1842,7 @@ static INT32 MadgearScan(INT32 nAction, INT32 *pnMin)
 
 	if (i == 0) {
 		if (nAction & ACB_DRIVER_DATA) {
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		}
 
 		if (nAction & ACB_WRITE) {

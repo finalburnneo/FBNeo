@@ -4001,7 +4001,7 @@ static INT32 HyperpacScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);				// Scan 68000
 		ZetScan(nAction);					// Scan Z80
 
-		MSM6295Scan(0, nAction);			// Scan OKIM6295
+		MSM6295Scan(nAction, pnMin);			// Scan OKIM6295
 		BurnYM2151Scan(nAction, pnMin);
 
 		// Scan critical driver variables
@@ -4065,7 +4065,7 @@ static INT32 Snowbro3Scan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {	
 		SekScan(nAction);				// Scan 68000
 
-		MSM6295Scan(0, nAction);			// Scan OKIM6295
+		MSM6295Scan(nAction, pnMin);			// Scan OKIM6295
 
 		// Scan critical driver variables
 		SCAN_VAR(HyperpacSoundLatch);

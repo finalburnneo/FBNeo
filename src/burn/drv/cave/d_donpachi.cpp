@@ -610,8 +610,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);				// scan 68000 states
 
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 		NMK112_Scan(nAction);
 
 		SCAN_VAR(nVideoIRQ);

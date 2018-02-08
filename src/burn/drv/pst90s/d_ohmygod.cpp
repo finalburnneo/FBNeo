@@ -656,7 +656,7 @@ static INT32 OhmygodScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);					// Scan 68000
 
-		MSM6295Scan(0, nAction);			// Scan OKIM6295
+		MSM6295Scan(nAction, pnMin);			// Scan OKIM6295
 
 		// Scan critical driver variables
 		SCAN_VAR(OhmygodInput);

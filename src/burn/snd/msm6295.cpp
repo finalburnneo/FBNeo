@@ -119,24 +119,24 @@ void MSM6295Reset(INT32 nChip)
 	}
 }
 
-INT32 MSM6295Scan(INT32 nChip, INT32 )
+void MSM6295Scan(INT32 , INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Scan called without init\n"));
-	if (nChip > nLastMSM6295Chip) bprintf(PRINT_ERROR, _T("MSM6295Scan called with invalid chip number %x\n"), nChip);
 #endif
 
-	INT32 nSampleSize = MSM6295[nChip].nSampleSize;
-	SCAN_VAR(MSM6295[nChip]);
-	MSM6295[nChip].nSampleSize = nSampleSize;
+	for (INT32 nChip = 0; nChip < nLastMSM6295Chip; nChip++)
+	{
+		INT32 nSampleSize = MSM6295[nChip].nSampleSize;
+		SCAN_VAR(MSM6295[nChip]);
+		MSM6295[nChip].nSampleSize = nSampleSize;
 
-	SCAN_VAR(nMSM6295Status[nChip]);
+		SCAN_VAR(nMSM6295Status[nChip]);
 
-	for (INT32 i = 0; i < 4; i++) {
-		SCAN_VAR(MSM6295[nChip].ChannelInfo[i].nPlaying);
+		for (INT32 i = 0; i < 4; i++) {
+			SCAN_VAR(MSM6295[nChip].ChannelInfo[i].nPlaying);
+		}
 	}
-
-	return 0;
 }
 
 static void MSM6295Render_Linear(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, INT32 nSegmentLength)

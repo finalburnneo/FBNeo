@@ -8102,7 +8102,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM3438Scan(nAction, pnMin);
 		if (has_2203)
 			BurnYM2203Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(seta_samples_bank);
 		SCAN_VAR(usclssic_port_select);

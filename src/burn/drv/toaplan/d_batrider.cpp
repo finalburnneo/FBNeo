@@ -327,8 +327,8 @@ static INT32 drvScan(INT32 nAction, INT32* pnMin)
 		ZetScan(nAction);				// Scan Z80
 		SCAN_VAR(nCurrentBank);
 
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 		BurnYM2151Scan(nAction, pnMin);
 
 		ToaScanGP9001(nAction, pnMin);

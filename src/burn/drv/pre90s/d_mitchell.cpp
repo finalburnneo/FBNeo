@@ -3054,7 +3054,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		BurnYM2413Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 		
 		if (DrvHasEEPROM) EEPROMScan(nAction, pnMin);
 		
@@ -3108,7 +3108,7 @@ static INT32 MstworldScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 		
 		SCAN_VAR(nCyclesDone[0]);
 		SCAN_VAR(nCyclesDone[1]);

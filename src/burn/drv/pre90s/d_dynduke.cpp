@@ -752,13 +752,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 	}
 	
-	if (nAction & ACB_DRIVER_DATA) {
-
+	if (nAction & ACB_DRIVER_DATA)
+	{
 		VezScan(nAction);
 		ZetScan(nAction);
-		seibu_sound_scan(pnMin, nAction);
-
-		DrvRecalc = 1;
+		seibu_sound_scan(nAction, pnMin);
 	}
 
 	return 0;

@@ -1293,7 +1293,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);					// Scan 68000
 		ZetScan(nAction);					// Scan Z80
 
-		MSM6295Scan(0, nAction);			// Scan OKIM6295
+		MSM6295Scan(nAction, pnMin);			// Scan OKIM6295
 		BurnYM2151Scan(nAction, pnMin);
 
 		// Scan critical driver variables

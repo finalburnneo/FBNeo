@@ -1860,7 +1860,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvSampleBank);
 
 		if (fball) {
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 			oki_bank(0); // wrong
 		} else {
 			BurnYM2203Scan(nAction, pnMin);

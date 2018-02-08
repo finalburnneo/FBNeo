@@ -531,8 +531,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		deco16Scan();
 
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 	}
 
 	return 0;

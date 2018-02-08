@@ -563,8 +563,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);
 
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 		
 		if (nAction & ACB_WRITE) {
 			INT32 bank0 = m6295bank[0];

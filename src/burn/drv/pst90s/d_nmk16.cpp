@@ -5454,9 +5454,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
                     BurnYM2203Scan(nAction, pnMin);
             }
 
-            MSM6295Scan(0, nAction);
+            MSM6295Scan(nAction, pnMin);
             if (!MSM6295x1_only)
-                MSM6295Scan(1, nAction);
+                //MSM6295Scan(1, nAction);
 
             SCAN_VAR(macross2_sound_enable);
             if (NMK004_enabled) {

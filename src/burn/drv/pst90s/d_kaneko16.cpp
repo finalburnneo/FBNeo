@@ -7430,7 +7430,7 @@ static INT32 WingforcScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		BurnYM2151Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 		
 		SCAN_VAR(MSM6295Bank0);
 	}
@@ -7450,7 +7450,7 @@ static INT32 ExplbrkrScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		AY8910Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 		SCAN_VAR(MSM6295Bank0);
 	}
 	
@@ -7468,8 +7468,8 @@ static INT32 GtmrScan(INT32 nAction, INT32 *pnMin)
 	}
 	
 	if (nAction & ACB_DRIVER_DATA) {
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 		SCAN_VAR(ToyboxMCUCom);
 		SCAN_VAR(MSM6295Bank0);
 		SCAN_VAR(MSM6295Bank1);
@@ -7504,8 +7504,8 @@ static INT32 ShogwarrScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "Hit2 Data";
 		BurnAcb(&ba);
 
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 		SCAN_VAR(MSM6295Bank0);
 		SCAN_VAR(MSM6295Bank1);
 	}

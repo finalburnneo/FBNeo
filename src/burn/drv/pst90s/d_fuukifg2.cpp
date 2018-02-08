@@ -937,7 +937,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekClose();
 		ZetClose();
 
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 
 		SCAN_VAR(DrvBank);
 		SCAN_VAR(DrvOkiBank);

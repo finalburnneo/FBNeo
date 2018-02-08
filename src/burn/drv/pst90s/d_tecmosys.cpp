@@ -1237,7 +1237,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		// ymf262
 		YMZ280BScan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
+		MSM6295Scan(nAction, pnMin);
 #endif
 
 		EEPROMScan(nAction, pnMin);

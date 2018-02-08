@@ -723,7 +723,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);
 
-		seibu_sound_scan(pnMin, nAction);
+		seibu_sound_scan(nAction, pnMin);
 
 		DrvRecalc = 1;
 	}

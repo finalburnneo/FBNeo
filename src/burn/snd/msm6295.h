@@ -12,7 +12,7 @@ void MSM6295Exit(INT32 nChip);
 
 INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmenLength);
 void MSM6295Write(INT32 nChip, UINT8 nCommand);
-INT32 MSM6295Scan(INT32 nChip, INT32 nAction);
+void MSM6295Scan(INT32 nAction, INT32 *pnMin);
 
 // for backwards compatibility. Remove when done configuring all banks
 extern UINT8* MSM6295ROM;

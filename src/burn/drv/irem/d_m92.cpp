@@ -2274,7 +2274,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		}
 
 		if (m92_kludge == 3) { // ppan
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 
 			SCAN_VAR(msm6295_bank);
 

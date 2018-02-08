@@ -3471,9 +3471,9 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		VezScan(nAction);
 
 		if (game_select != 4) {
-			seibu_sound_scan(pnMin, nAction);
+			seibu_sound_scan(nAction, pnMin);
 		} else {
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		}
 
 		SCAN_VAR(layer_enable);

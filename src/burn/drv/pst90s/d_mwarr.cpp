@@ -1026,8 +1026,8 @@ static INT32 DrvScan(int nAction,int *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 
-		MSM6295Scan(0, nAction);
-		if (game_select == 0) MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		if (game_select == 0) //MSM6295Scan(1, nAction);
 
 		SCAN_VAR(sprite_command_switch);
 		SCAN_VAR(bright);

@@ -553,8 +553,8 @@ void deco32_z80_sound_scan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		
 		BurnYM2151Scan(nAction, pnMin);
-		MSM6295Scan(0, nAction);
-		MSM6295Scan(1, nAction);
+		MSM6295Scan(nAction, pnMin);
+		//MSM6295Scan(1, nAction);
 
 		SCAN_VAR(deco16_soundlatch);
 		SCAN_VAR(deco32_sound_irq);

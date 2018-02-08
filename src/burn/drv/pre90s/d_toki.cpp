@@ -1436,7 +1436,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			MSM5205Scan(nAction, pnMin);
 			ZetScan(nAction);
 		} else {
-			seibu_sound_scan(pnMin, nAction);
+			seibu_sound_scan(nAction, pnMin);
 		}
 
 		SCAN_VAR(TokibMSM5205Next);

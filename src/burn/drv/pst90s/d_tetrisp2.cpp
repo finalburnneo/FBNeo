@@ -1317,7 +1317,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 
 		if (game == 3) {
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		} else {
 			YMZ280BScan(nAction, pnMin);
 		}

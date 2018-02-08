@@ -3745,7 +3745,7 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		}
 		
 		if (System16MSM6295RomSize) {
-			MSM6295Scan(0, nAction);
+			MSM6295Scan(nAction, pnMin);
 		}
 		
 		if (System167751ProgSize) {

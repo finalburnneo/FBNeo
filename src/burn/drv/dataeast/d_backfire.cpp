@@ -671,7 +671,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ArmScan(nAction);
 
-		YMZ280BScan();
+		YMZ280BScan(nAction, pnMin);
 
 		deco16Scan();
 	}

@@ -9,7 +9,7 @@ void SegaPCMUpdate(INT16* pSoundBuf, INT32 nLength);
 void SegaPCMInit(INT32 nChip, INT32 clock, INT32 bank, UINT8 *pPCMData, INT32 PCMDataSize);
 void SegaPCMSetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void SegaPCMExit();
-INT32 SegaPCMScan(INT32 nAction,INT32 *pnMin);
+void SegaPCMScan(INT32 nAction,INT32 *pnMin);
 UINT8 SegaPCMRead(INT32 nChip, UINT32 Offset);
 void SegaPCMWrite(INT32 nChip, UINT32 Offset, UINT8 Data);
 

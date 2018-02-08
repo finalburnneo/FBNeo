@@ -3675,7 +3675,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (k005289_enable) K005289Scan(nAction, pnMin);
 		if (k007232_enable) K007232Scan(nAction, pnMin);
 		if (k051649_enable) K051649Scan(nAction, pnMin);
-		if (vlm5030_enable) vlm5030Scan(nAction);
+		if (vlm5030_enable) vlm5030Scan(nAction, pnMin);
 		if (bUseShifter) BurnShiftScan(nAction);
 
 		SCAN_VAR(selected_ip);

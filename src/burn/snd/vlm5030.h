@@ -4,7 +4,7 @@ void vlm5030Update(INT32 nChip, INT16 *buf, INT32 samples);
 void vlm5030SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void vlm5030Exit();
 
-INT32 vlm5030Scan(INT32 nAction);
+void vlm5030Scan(INT32 nAction, INT32 *pnMin);
 
 void vlm5030_set_rom(INT32 nChip, void *speech_rom);
 INT32 vlm5030_bsy(INT32 nChip);

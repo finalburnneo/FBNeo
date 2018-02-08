@@ -985,7 +985,7 @@ static INT32 PrehisleScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);			// Scan Z80
 
 		BurnYM3812Scan(nAction, pnMin);
-		UPD7759Scan(0, nAction, pnMin);
+		UPD7759Scan(nAction, pnMin);
 
 		// Scan critical driver variables
 		SCAN_VAR(PrehisleInput);

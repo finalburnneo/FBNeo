@@ -769,7 +769,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(oki_bank);
 
 		if (has_ymz) {
-			YMZ280BScan();
+			YMZ280BScan(nAction, pnMin);
 		} else {
 			MSM6295Scan(0, nAction);
 			MSM6295Scan(1, nAction);

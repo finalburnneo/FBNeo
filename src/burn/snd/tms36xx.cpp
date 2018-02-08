@@ -488,7 +488,7 @@ void tms36xx_deinit()
 	BurnFree(tms);
 }
 
-void tms36xx_scan()
+void tms36xx_scan(INT32, INT32*)
 {
 	SCAN_VAR(tms->octave);
 	SCAN_VAR(tms->tune_counter);

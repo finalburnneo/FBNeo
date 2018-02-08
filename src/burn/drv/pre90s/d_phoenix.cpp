@@ -873,7 +873,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		i8080Scan(nAction);
 
-		tms36xx_scan();
+		tms36xx_scan(nAction, pnMin);
 
 		SCAN_VAR(scrollx);
 		SCAN_VAR(ram_bank);

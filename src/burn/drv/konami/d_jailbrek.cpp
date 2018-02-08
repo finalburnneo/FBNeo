@@ -592,7 +592,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -611,8 +611,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		M6809Scan(nAction);
 
-		vlm5030Scan(nAction);
-		SN76496Scan(nAction,pnMin);
+		vlm5030Scan(nAction, pnMin);
+		SN76496Scan(nAction, pnMin);
 
 		SCAN_VAR(scrolldirection);
 		SCAN_VAR(nmi_enable);

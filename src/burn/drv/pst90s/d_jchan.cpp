@@ -694,7 +694,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 
-		YMZ280BScan();
+		YMZ280BScan(nAction, pnMin);
 
 		SCAN_VAR(enable_sub_irq);
 	}
@@ -705,10 +705,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = 0x80;
 		ba.szName = "NV Ram";
 		BurnAcb(&ba);
-	}
-
-	if (nAction & ACB_WRITE) {
-		DrvRecalc = 1;
 	}
 
 	return 0;

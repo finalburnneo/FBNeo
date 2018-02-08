@@ -6369,7 +6369,7 @@ static INT32 TmntScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		K007232Scan(nAction, pnMin);
-		UPD7759Scan(0, nAction, pnMin);
+		UPD7759Scan(nAction, pnMin);
 	}
 	
 	return DrvScan(nAction, pnMin);

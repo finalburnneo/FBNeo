@@ -582,7 +582,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnWatchdogScan(nAction);
 
-		wipingsnd_scan();
+		wipingsnd_scan(nAction, pnMin);
 
 		SCAN_VAR(sound_irq_mask);
 		SCAN_VAR(main_irq_mask);

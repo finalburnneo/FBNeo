@@ -3734,7 +3734,7 @@ INT32 System16Scan(INT32 nAction,INT32 *pnMin)
 		}
 		
 		if (System16UPD7759DataSize) {
-			UPD7759Scan(0,nAction, pnMin);
+			UPD7759Scan(nAction, pnMin);
 			
 			if (nAction & ACB_WRITE) {
 				ZetOpen(0);

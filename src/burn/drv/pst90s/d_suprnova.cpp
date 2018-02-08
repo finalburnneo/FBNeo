@@ -1723,7 +1723,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		Sh2Scan(nAction);
-		YMZ280BScan();
+		YMZ280BScan(nAction, pnMin);
 
 		SCAN_VAR(hit);
 		SCAN_VAR(suprnova_alt_enable_sprites);

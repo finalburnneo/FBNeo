@@ -838,7 +838,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6809Scan(nAction);
 		ZetScan(nAction);
 
-		vlm5030Scan(nAction);
+		vlm5030Scan(nAction, pnMin);
 		SN76496Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 

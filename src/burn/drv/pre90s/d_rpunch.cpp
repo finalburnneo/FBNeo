@@ -815,7 +815,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2151Scan(nAction, pnMin);
-		UPD7759Scan(0, nAction, pnMin);
+		UPD7759Scan(nAction, pnMin);
 
 		SCAN_VAR(crtc_register);
 		SCAN_VAR(crtc_timer);
@@ -825,8 +825,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		INT32 bank = sound_bank[0];
 		sound_bank[0] = ~0;
 		sound_bankswitch(bank);
-
-		DrvRecalc = 1;
 	}
 
 	return 0;

@@ -700,7 +700,7 @@ void BurnSampleRender(INT16 *pDest, UINT32 pLen)
 	}
 }
 
-INT32 BurnSampleScan(INT32 nAction, INT32 *pnMin)
+void BurnSampleScan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_SamplesInitted) bprintf(PRINT_ERROR, _T("BurnSampleScan called without init\n"));
@@ -718,6 +718,4 @@ INT32 BurnSampleScan(INT32 nAction, INT32 *pnMin)
 			SCAN_VAR(sample_ptr->position);
 		}
 	}
-
-	return 0;
 }

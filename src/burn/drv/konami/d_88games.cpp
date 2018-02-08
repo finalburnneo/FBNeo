@@ -619,8 +619,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM2151Scan(nAction, pnMin);
-		UPD7759Scan(0, nAction, pnMin);
-		UPD7759Scan(0, nAction, pnMin);
+		UPD7759Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
 

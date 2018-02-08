@@ -531,50 +531,50 @@ void UPD7759PortWrite(INT32 chip, UINT8 Data)
 	Chip->fifo_in = Data;
 }
 
-INT32 UPD7759Scan(INT32 chip, INT32 nAction,INT32 *pnMin)
+void UPD7759Scan(INT32 nAction,INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_UPD7759Initted) bprintf(PRINT_ERROR, _T("UPD7759Scan called without init\n"));
-	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("UPD7759Scan called with invalid chip %x\n"), chip);
 #endif
 	
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
+		return;
 	}
 	
 	if (pnMin != NULL) {
 		*pnMin = 0x029680;
 	}
-	
-	Chip = Chips[chip];
 
-	SCAN_VAR(Chip->pos);
-	SCAN_VAR(Chip->step);
-	SCAN_VAR(Chip->fifo_in);
-	SCAN_VAR(Chip->reset);
-	SCAN_VAR(Chip->start);
-	SCAN_VAR(Chip->drq);
-	SCAN_VAR(Chip->state);
-	SCAN_VAR(Chip->clocks_left);
-	SCAN_VAR(Chip->nibbles_left);
-	SCAN_VAR(Chip->repeat_count);
-	SCAN_VAR(Chip->post_drq_state);
-	SCAN_VAR(Chip->post_drq_clocks);
-	SCAN_VAR(Chip->req_sample);
-	SCAN_VAR(Chip->last_sample);
-	SCAN_VAR(Chip->block_header);
-	SCAN_VAR(Chip->sample_rate);
-	SCAN_VAR(Chip->first_valid_header);
-	SCAN_VAR(Chip->offset);
-	SCAN_VAR(Chip->repeat_offset);
-	SCAN_VAR(Chip->adpcm_state);
-	SCAN_VAR(Chip->adpcm_data);
-	SCAN_VAR(Chip->sample);
-	SCAN_VAR(Chip->romoffset);
-	SCAN_VAR(Chip->volume);
-	SCAN_VAR(Chip->output_dir);
+	for (INT32 i = 0; i < nNumChips; i++)
+	{
+		Chip = Chips[i];
 
-	return 0;
+		SCAN_VAR(Chip->pos);
+		SCAN_VAR(Chip->step);
+		SCAN_VAR(Chip->fifo_in);
+		SCAN_VAR(Chip->reset);
+		SCAN_VAR(Chip->start);
+		SCAN_VAR(Chip->drq);
+		SCAN_VAR(Chip->state);
+		SCAN_VAR(Chip->clocks_left);
+		SCAN_VAR(Chip->nibbles_left);
+		SCAN_VAR(Chip->repeat_count);
+		SCAN_VAR(Chip->post_drq_state);
+		SCAN_VAR(Chip->post_drq_clocks);
+		SCAN_VAR(Chip->req_sample);
+		SCAN_VAR(Chip->last_sample);
+		SCAN_VAR(Chip->block_header);
+		SCAN_VAR(Chip->sample_rate);
+		SCAN_VAR(Chip->first_valid_header);
+		SCAN_VAR(Chip->offset);
+		SCAN_VAR(Chip->repeat_offset);
+		SCAN_VAR(Chip->adpcm_state);
+		SCAN_VAR(Chip->adpcm_data);
+		SCAN_VAR(Chip->sample);
+		SCAN_VAR(Chip->romoffset);
+		SCAN_VAR(Chip->volume);
+		SCAN_VAR(Chip->output_dir);
+	}
 }
 
 void UPD7759Exit()

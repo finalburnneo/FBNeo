@@ -603,7 +603,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		K051733Scan(nAction);
 		BurnYM2203Scan(nAction, pnMin);
-		UPD7759Scan(0, nAction, pnMin);
+		UPD7759Scan(nAction, pnMin);
 
 		K007342Scan(nAction);
 

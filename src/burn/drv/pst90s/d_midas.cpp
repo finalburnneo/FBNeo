@@ -632,7 +632,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SekScan(nAction);
 
-		YMZ280BScan();
+		YMZ280BScan(nAction, pnMin);
 	}
 
 	return 0;

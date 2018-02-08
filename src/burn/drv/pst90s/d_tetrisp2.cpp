@@ -1319,7 +1319,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game == 3) {
 			MSM6295Scan(0, nAction);
 		} else {
-			YMZ280BScan();
+			YMZ280BScan(nAction, pnMin);
 		}
 
 		SCAN_VAR(nndmseal_bank_lo);

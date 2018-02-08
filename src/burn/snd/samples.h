@@ -24,7 +24,7 @@ void BurnSampleInit(INT32 bAdd);
 void BurnSampleSetRoute(INT32 sample, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnSampleSetRouteAllSamples(INT32 nIndex, double nVolume, INT32 nRouteDir);
 
-INT32  BurnSampleScan(INT32 nAction, INT32 *pnMin);
+void BurnSampleScan(INT32 nAction, INT32 *pnMin);
 
 void BurnSampleRender(INT16 *pDest, UINT32 pLen);
 void BurnSampleExit();

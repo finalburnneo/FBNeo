@@ -627,7 +627,7 @@ void SN76496Exit()
 	DebugSnd_SN76496Initted = 0;
 }
 
-INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)
+void SN76496Scan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_SN76496Initted) bprintf(PRINT_ERROR, _T("SN76496Scan called without init\n"));
@@ -674,8 +674,6 @@ INT32 SN76496Scan(INT32 nAction,INT32 *pnMin)
 			SCAN_VAR(Chip->WhitenoiseInvert);
 		}
 	}
-	
-	return 0;
 }
 
 #undef MAX_SN76496_CHIPS

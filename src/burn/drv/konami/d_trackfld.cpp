@@ -1771,7 +1771,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 1 || game_select == 3) DACScan(nAction, pnMin);
 
 		SN76496Scan(nAction, pnMin);
-		vlm5030Scan(nAction);
+		vlm5030Scan(nAction, pnMin);
 
 		SCAN_VAR(watchdog);
 		SCAN_VAR(bg_bank);

@@ -47,7 +47,7 @@ static UINT8 m_soundregs[0x4000];
 
 static void make_mixer_table(INT32 voices, INT32 gain);
 
-void wipingsnd_scan()
+void wipingsnd_scan(INT32 , INT32 *)
 {
 	for (INT32 i = 0; i < MAX_VOICES; i++) {
 		struct BurnArea ba;

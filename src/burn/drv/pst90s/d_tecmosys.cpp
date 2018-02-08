@@ -1236,7 +1236,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		// ymf262
-		YMZ280BScan();
+		YMZ280BScan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 #endif
 

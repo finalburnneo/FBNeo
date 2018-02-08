@@ -1191,7 +1191,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	//	EEPROMScan(nAction, pnMin);
 
-		YMZ280BScan();
+		YMZ280BScan(nAction, pnMin);
 
 		SCAN_VAR(scanline_timer);
 	}

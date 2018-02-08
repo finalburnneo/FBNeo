@@ -11,5 +11,5 @@ INT32 UPD7759BusyRead(INT32 chip);
 void UPD7759ResetWrite(INT32 chip, UINT8 Data);
 void UPD7759StartWrite(INT32 chip, UINT8 Data);
 void UPD7759PortWrite(INT32 chip, UINT8 Data);
-INT32 UPD7759Scan(INT32 chip, INT32 nAction,INT32 *pnMin);
+void UPD7759Scan(INT32 nAction, INT32 *pnMin);
 void UPD7759Exit();

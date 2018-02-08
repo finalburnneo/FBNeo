@@ -193,7 +193,7 @@ void SegaPCMExit()
 	DebugSnd_SegaPCMInitted = 0;
 }
 
-INT32 SegaPCMScan(INT32 nAction, INT32 *pnMin)
+void SegaPCMScan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_SegaPCMInitted) bprintf(PRINT_ERROR, _T("SegaPCMScan called without init\n"));
@@ -216,8 +216,6 @@ INT32 SegaPCMScan(INT32 nAction, INT32 *pnMin)
 			BurnAcb(&ba);
 		}
 	}
-
-	return 0;
 }
 
 UINT8 SegaPCMRead(INT32 nChip, UINT32 Offset)

@@ -4,7 +4,7 @@ INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32));
 INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32), INT32 rom_len);
 void YMZ280BSetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void YMZ280BReset();
-INT32 YMZ280BScan();
+void YMZ280BScan(INT32 nAction, INT32 *pnMin);
 void YMZ280BExit();
 INT32 YMZ280BRender(INT16* pSoundBuf, INT32 nSegmenLength);
 void YMZ280BWriteRegister(UINT8 nValue);

@@ -101,7 +101,7 @@ inline void YMZ280BSetSampleSize(const INT32 nChannel)
 	YMZ280BChannelInfo[nChannel].nSampleSize = (UINT32)rate;
 }
 
-INT32 YMZ280BScan()
+void YMZ280BScan(INT32 , INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_YMZ280BInitted) bprintf(PRINT_ERROR, _T("YMZ280BScan called without init\n"));
@@ -121,8 +121,6 @@ INT32 YMZ280BScan()
 		SCAN_VAR(YMZ280BChannelInfo[j]);
 		YMZ280BSetSampleSize(j);
 	}
-
-	return 0;
 }
 
 INT32 YMZ280BInit(INT32 nClock, void (*IRQCallback)(INT32))

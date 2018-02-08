@@ -719,7 +719,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		M6809Scan(nAction);
 
 		BurnYM2203Scan(nAction, pnMin);
-		vlm5030Scan(nAction);
+		vlm5030Scan(nAction, pnMin);
 
 		SCAN_VAR(bankdata);
 	}

@@ -502,21 +502,26 @@ void saa1099DataWrite(INT32 chip, INT32 data)
 	}
 }
 
-void saa1099Scan(INT32 chip, INT32 nAction)
+void saa1099Scan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_SAA1099Initted) bprintf(PRINT_ERROR, _T("saa1099Scan called without init\n"));
 #endif
 
 	struct BurnArea ba;
-	saa1099_state *saa = &chips[chip];
+	saa1099_state *saa ;
 
-	if (nAction & ACB_VOLATILE) {
-		memset(&ba, 0, sizeof(ba));
+	if (nAction & ACB_VOLATILE)
+	{
+		for (INT32 i = 0; i < 2; i++)
+		{
+			saa = &chips[i];
+			memset(&ba, 0, sizeof(ba));
 
-		ba.Data	  = (UINT8*)saa;
-		ba.nLen	  = sizeof(saa1099_state);
-		ba.szName = "SAA data";
-		BurnAcb(&ba);
+			ba.Data	  = (UINT8*)saa;
+			ba.nLen	  = sizeof(saa1099_state);
+			ba.szName = "SAA data";
+			BurnAcb(&ba);
+		}
 	}
 }

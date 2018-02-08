@@ -816,7 +816,7 @@ static void vlm5030_restore_state(INT32 nChip)
 		chip->current_k[i] = chip->old_k[i] + (chip->target_k[i] - chip->old_k[i]) * interp_effect / FR_SIZE;
 }
 
-INT32 vlm5030Scan(INT32 nAction)
+void vlm5030Scan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_VLM5030Initted) bprintf(PRINT_ERROR, _T("vlm5030Scan called without init\n"));
@@ -849,6 +849,4 @@ INT32 vlm5030Scan(INT32 nAction)
 			vlm5030_restore_state(i);
 		}
 	}
-
-	return 0;
 }

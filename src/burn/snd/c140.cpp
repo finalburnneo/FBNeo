@@ -200,7 +200,7 @@ void c140_reset()
 	}
 }
 
-void c140_scan(INT32 nAction)
+void c140_scan(INT32 nAction, INT32 *)
 {
 	SCAN_VAR(m_REG);
 	SCAN_VAR(m_voi);

@@ -6409,7 +6409,7 @@ static INT32 BlswhstlScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		K053260Scan(nAction);
+		K053260Scan(nAction, pnMin);
 				
 		SCAN_VAR(InitEEPROMCount);
 	}
@@ -6423,7 +6423,7 @@ static INT32 SsridersScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		K053260Scan(nAction);
+		K053260Scan(nAction, pnMin);
 				
 		SCAN_VAR(InitEEPROMCount);
 		SCAN_VAR(DrvVBlank);
@@ -6438,7 +6438,7 @@ static INT32 Thndrx2aScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		K053260Scan(nAction);
+		K053260Scan(nAction, pnMin);
 	}
 	
 	return DrvScan(nAction, pnMin);

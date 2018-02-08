@@ -4,7 +4,7 @@ void K051649SetRoute(double nVolume, INT32 nRouteDir);
 void K051649Reset();
 void K051649Exit();
 
-INT32 K051649Scan(INT32 nAction, INT32 *pnMin);
+void K051649Scan(INT32 nAction, INT32 *pnMin);
 
 void K051649WaveformWrite(INT32 offset, INT32 data);
 UINT8 K051649WaveformRead(INT32 offset);

@@ -6,7 +6,7 @@ void K053260Exit();
 void K053260Write(INT32 chip, INT32 offset, UINT8 data);
 UINT8 K053260Read(INT32 chip, INT32 offset);
 
-INT32 K053260Scan(INT32 nAction);
+void K053260Scan(INT32 nAction, INT32 *pnMin);
 
 #define BURN_SND_K053260_ROUTE_1		0
 #define BURN_SND_K053260_ROUTE_2		1

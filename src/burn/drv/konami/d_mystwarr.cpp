@@ -2964,7 +2964,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		K054539Scan(nAction);
+		K054539Scan(nAction, pnMin);
 		KonamiICScan(nAction);
 
 		SCAN_VAR(sound_nmi_enable);

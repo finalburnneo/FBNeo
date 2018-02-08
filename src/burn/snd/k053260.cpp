@@ -522,7 +522,7 @@ UINT8 K053260Read(INT32 chip, INT32 offset)
 	return ic->regs[offset];
 }
 
-INT32 K053260Scan(INT32 nAction)
+void K053260Scan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K053260Initted) bprintf(PRINT_ERROR, _T("K053260Scan called without init\n"));
@@ -532,7 +532,7 @@ INT32 K053260Scan(INT32 nAction)
 	char szName[32];
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
+		return;
 	}
 
 	for (INT32 i = 0; i < 2; i++) {
@@ -556,8 +556,6 @@ INT32 K053260Scan(INT32 nAction)
 
 		SCAN_VAR(ic->mode);
 	}
-
-	return 0;
 }
 
 #undef K053260_INLINE

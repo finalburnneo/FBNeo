@@ -534,7 +534,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM3812Scan(nAction, pnMin);
-		K053260Scan(nAction);
+		K053260Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
 

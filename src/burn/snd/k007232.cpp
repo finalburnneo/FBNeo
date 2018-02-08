@@ -325,7 +325,7 @@ void K007232Exit()
 	nNumChips = 0;
 }
 
-INT32 K007232Scan(INT32 nAction, INT32 *pnMin)
+void K007232Scan(INT32 nAction, INT32 *pnMin)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Scan called without init\n"));
@@ -336,12 +336,10 @@ INT32 K007232Scan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
+		return;
 	}
 
 	SCAN_VAR(Chips);
-
-	return 0;
 }
 
 void K007232SetVolume(INT32 chip, INT32 channel,INT32 volumeA,INT32 volumeB)

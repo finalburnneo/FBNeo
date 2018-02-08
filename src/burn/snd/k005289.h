@@ -6,7 +6,7 @@ void K005289Exit();
 
 void K005289SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 
-INT32 K005289Scan(INT32 nAction, INT32 *pnMin);
+void K005289Scan(INT32 nAction, INT32 *pnMin);
 
 void K005289Update(INT16 *buffer, INT32 samples);
 void K005289ControlAWrite(UINT8 data);

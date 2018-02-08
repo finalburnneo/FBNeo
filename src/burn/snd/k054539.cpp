@@ -672,7 +672,7 @@ void K054539Update(INT32 chip, INT16 *outputs, INT32 samples_len)
 	//  -4 -3 -2 -1 0 +1 +2 +3 +4
 }
 
-INT32 K054539Scan(INT32 nAction)
+void K054539Scan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K054539Initted) bprintf(PRINT_ERROR, _T("K054539Scan called without init\n"));
@@ -682,7 +682,7 @@ INT32 K054539Scan(INT32 nAction)
 	char szName[32];
 
 	if ((nAction & ACB_DRIVER_DATA) == 0) {
-		return 1;
+		return;
 	}
 
 	for (INT32 i = 0; i < nNumChips+1; i++) {
@@ -734,6 +734,4 @@ INT32 K054539Scan(INT32 nAction)
 			}
 		}
 	}
-
-	return 0;
 }

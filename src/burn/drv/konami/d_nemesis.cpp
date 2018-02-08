@@ -3669,7 +3669,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		if (ym2151_enable) BurnYM2151Scan(nAction);
+		if (ym2151_enable) BurnYM2151Scan(nAction, pnMin);
 		if (ym3812_enable) BurnYM3812Scan(nAction, pnMin);
 		if (ay8910_enable) AY8910Scan(nAction, pnMin);
 		if (k005289_enable) K005289Scan(nAction, pnMin);

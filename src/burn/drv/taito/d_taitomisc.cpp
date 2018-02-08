@@ -6212,7 +6212,7 @@ static INT32 TaitoMiscScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		if (TaitoNumYM2151) BurnYM2151Scan(nAction);
+		if (TaitoNumYM2151) BurnYM2151Scan(nAction, pnMin);
 		if (TaitoNumYM2203) BurnYM2203Scan(nAction, pnMin);
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
 		

@@ -9,7 +9,7 @@ void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM2151Reset();
 void BurnYM2151Exit();
 extern void (*BurnYM2151Render)(INT16* pSoundBuf, INT32 nSegmentLength);
-void BurnYM2151Scan(INT32 nAction);
+void BurnYM2151Scan(INT32 nAction, INT32 *pnMin);
 
 inline static void BurnYM2151Write(INT32 offset, const UINT8 nData)
 {

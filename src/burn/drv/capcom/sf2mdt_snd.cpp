@@ -233,7 +233,7 @@ INT32 Sf2mdtScanSound(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);
 		
 		SCAN_VAR(Sf2mdtZ80BankAddress);

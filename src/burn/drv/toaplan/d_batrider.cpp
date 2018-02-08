@@ -329,7 +329,7 @@ static INT32 drvScan(INT32 nAction, INT32* pnMin)
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		ToaScanGP9001(nAction, pnMin);
 

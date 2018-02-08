@@ -1707,7 +1707,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		HD63701Scan(nAction);
 
 		NamcoSoundScan(nAction, pnMin);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(m_voices);
 		SCAN_VAR(buffer_sprites);

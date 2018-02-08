@@ -5445,7 +5445,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
                     // Afega with no YM
                 } else {
                     if (!MSM6295x2_only && !MSM6295x1_only)
-                        BurnYM2151Scan(nAction); // twin action,etc dont use this
+                        BurnYM2151Scan(nAction, pnMin); // twin action,etc dont use this
                                              // and will crash if called.
                 }
             } else {

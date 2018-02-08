@@ -22,4 +22,4 @@ void t5182_setirq_callback(INT32 param);
 void t5182Reset();
 void t5182Init(INT32 nZ80CPU, INT32 clock);
 void t5182Exit();
-INT32 t5182Scan(INT32 nAction);
+INT32 t5182Scan(INT32 nAction, INT32 *pnMin);

@@ -1051,7 +1051,7 @@ void deco16SoundScan(INT32 nAction, INT32 *pnMin)
 	
 		SCAN_VAR(deco16_soundlatch);
 		
-		if (deco16_sound_enable[0]) BurnYM2151Scan(nAction);
+		if (deco16_sound_enable[0]) BurnYM2151Scan(nAction, pnMin);
 		if (deco16_sound_enable[1]) BurnYM2203Scan(nAction, pnMin);
 		if (deco16_sound_enable[2]) MSM6295Scan(0, nAction);
 		if (deco16_sound_enable[3]) MSM6295Scan(1, nAction);

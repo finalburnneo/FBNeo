@@ -2256,7 +2256,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		VezScan(nAction);
 
 		iremga20_scan(0, nAction, pnMin);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(PalBank);
 

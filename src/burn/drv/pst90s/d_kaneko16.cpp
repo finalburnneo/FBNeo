@@ -7415,7 +7415,7 @@ static INT32 BlazeonScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 	}
 	
 	return Kaneko16Scan(nAction, pnMin);;
@@ -7429,7 +7429,7 @@ static INT32 WingforcScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 		
 		SCAN_VAR(MSM6295Bank0);

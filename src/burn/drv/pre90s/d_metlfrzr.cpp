@@ -556,7 +556,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 
-		t5182Scan(nAction);
+		t5182Scan(nAction, pnMin);
 
 
 		SCAN_VAR(z80_bank);

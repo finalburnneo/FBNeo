@@ -566,7 +566,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		HD6309Scan(nAction);
 		M6809Scan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		vlm5030Scan(nAction);
 
 		K007342Scan(nAction);

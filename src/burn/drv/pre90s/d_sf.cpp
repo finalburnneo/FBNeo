@@ -1325,7 +1325,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		MSM5205Scan(nAction, pnMin);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(sf_fg_scroll_x);
 		SCAN_VAR(sf_bg_scroll_x);

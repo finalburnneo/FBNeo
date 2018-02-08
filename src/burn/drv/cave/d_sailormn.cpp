@@ -843,7 +843,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(nVideoIRQ);
 		SCAN_VAR(nSoundIRQ);

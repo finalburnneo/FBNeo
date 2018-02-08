@@ -547,12 +547,12 @@ void deco32_z80_sound_update(INT16 *buf, INT32 len)
 	MSM6295Render(1, buf, len);
 }
 
-void deco32_z80_sound_scan(INT32 nAction, INT32 */*pnMin*/)
+void deco32_z80_sound_scan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		ZetScan(nAction);
 		
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 		MSM6295Scan(1, nAction);
 

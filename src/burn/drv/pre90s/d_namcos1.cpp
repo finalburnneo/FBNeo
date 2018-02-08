@@ -2071,7 +2071,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6809Open(2);
 		NamcoSoundScan(nAction, pnMin);
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		M6809Close();
 
 		SCAN_VAR(bank_offsets);

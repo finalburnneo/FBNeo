@@ -2375,7 +2375,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (DrvHasYM2203) {
 			BurnYM2203Scan(nAction, pnMin);
 		} else {
-			BurnYM2151Scan(nAction);
+			BurnYM2151Scan(nAction, pnMin);
 		}
 		DACScan(nAction, pnMin);
 

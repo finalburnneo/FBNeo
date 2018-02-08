@@ -1062,7 +1062,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		M6809Scan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(DrvZRAMBank);
 		SCAN_VAR(DrvVORAMBank);

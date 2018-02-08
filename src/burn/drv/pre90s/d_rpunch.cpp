@@ -814,7 +814,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		ZetScan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		UPD7759Scan(0, nAction, pnMin);
 
 		SCAN_VAR(crtc_register);

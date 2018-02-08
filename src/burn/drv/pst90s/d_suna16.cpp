@@ -2214,7 +2214,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		DACScan(nAction, pnMin);
 
 		if (game_select) {
-			BurnYM2151Scan(nAction);
+			BurnYM2151Scan(nAction, pnMin);
 		} else {
 			AY8910Scan(nAction, pnMin);
 		}

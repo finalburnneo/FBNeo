@@ -1171,7 +1171,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		ZetScan(nAction);			// Scan Z80
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		MSM6295Scan(0, nAction);
 
 		// Scan critical driver variables

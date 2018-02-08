@@ -184,13 +184,13 @@ INT32 PsndZExit()
 }
 
 // Scan the current PSound z80 state
-INT32 PsndZScan(INT32 nAction)
+INT32 PsndZScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 	ZetScan(nAction);
 
 	MSM6295Scan(0, nAction);
-	BurnYM2151Scan(nAction);
+	BurnYM2151Scan(nAction, pnMin);
 
 	SCAN_VAR(nPsndZBank);
 

@@ -1447,7 +1447,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		VezScan(nAction);
 		ZetScan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		DACScan(nAction, pnMin);
 
 		SCAN_VAR(sample_address);

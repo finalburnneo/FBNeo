@@ -1615,7 +1615,7 @@ static INT32 TaitoXScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
-		if (TaitoNumYM2151) BurnYM2151Scan(nAction);
+		if (TaitoNumYM2151) BurnYM2151Scan(nAction, pnMin);
 		
 		SCAN_VAR(TaitoInput);
 		SCAN_VAR(TaitoZ80Bank);

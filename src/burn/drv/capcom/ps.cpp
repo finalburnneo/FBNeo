@@ -52,11 +52,11 @@ INT32 PsndExit()
 	return 0;
 }
 
-INT32 PsndScan(INT32 nAction)
+INT32 PsndScan(INT32 nAction, INT32 *pnMin)
 {
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(nCyclesDone); SCAN_VAR(nSyncNext);
-		PsndZScan(nAction);							// Scan Z80
+		PsndZScan(nAction, pnMin);							// Scan Z80
 		SCAN_VAR(PsndCode); SCAN_VAR(PsndFade);		// Scan sound info
 	}
 	return 0;

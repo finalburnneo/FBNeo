@@ -226,7 +226,7 @@ void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 	YM2151RouteDirs[nIndex] = nRouteDir;
 }
 
-void BurnYM2151Scan(INT32 nAction)
+void BurnYM2151Scan(INT32 nAction, INT32 *)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151Scan called without init\n"));

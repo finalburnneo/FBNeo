@@ -706,7 +706,7 @@ void seibu_sound_scan(INT32 *pnMin, INT32 nAction)
 			break;
 
 			case 1:
-				BurnYM2151Scan(nAction);
+				BurnYM2151Scan(nAction, pnMin);
 			break;
 
 			case 2:

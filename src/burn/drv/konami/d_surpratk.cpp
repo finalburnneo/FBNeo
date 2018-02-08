@@ -508,7 +508,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		konamiCpuScan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		KonamiICScan(nAction);
 	}

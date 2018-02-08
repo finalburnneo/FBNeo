@@ -4002,7 +4002,7 @@ static INT32 HyperpacScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);					// Scan Z80
 
 		MSM6295Scan(0, nAction);			// Scan OKIM6295
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		// Scan critical driver variables
 		SCAN_VAR(HyperpacSoundLatch);

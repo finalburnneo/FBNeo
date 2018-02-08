@@ -895,7 +895,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (is_bootleg == 2) {
 			BurnYM2203Scan(nAction, pnMin);
 		} else {
-			BurnYM2151Scan(nAction);
+			BurnYM2151Scan(nAction, pnMin);
 			MSM6295Scan(0, nAction);
 		}
 

@@ -985,7 +985,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		HD6309Scan(nAction);
 		M6809Scan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 
 		SCAN_VAR(K007121_flipscreen);
 		SCAN_VAR(soundlatch);

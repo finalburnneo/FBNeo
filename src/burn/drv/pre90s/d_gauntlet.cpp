@@ -2582,7 +2582,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 		M6502Scan(nAction);
 
-		BurnYM2151Scan(nAction);
+		BurnYM2151Scan(nAction, pnMin);
 		pokey_scan(nAction, pnMin);
 
 		SCAN_VAR(DrvVBlank);

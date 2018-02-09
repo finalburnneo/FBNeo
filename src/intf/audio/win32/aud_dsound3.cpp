@@ -52,6 +52,11 @@ static int DxBlankSound()
 	void *pData = NULL, *pData2 = NULL;
 	DWORD cbLen = 0, cbLen2 = 0;
 
+	// blank the nAudNextSound buffer
+	if (nAudNextSound) {
+		memset(nAudNextSound, 0, nAudSegLen << 2);
+	}
+
 	// Lock the Loop buffer
 	if (FAILED(pdsbLoop->Lock(0, cbLoopLen, &pData, &cbLen, &pData2, &cbLen2, 0))) {
 		return 1;
@@ -60,11 +65,6 @@ static int DxBlankSound()
 
 	// Unlock (2nd 0 is because we wrote nothing to second part)
 	pdsbLoop->Unlock(pData, cbLen, pData2, 0);
-
-	// Also blank the nAudNextSound buffer
-	if (nAudNextSound) {
-		memset(nAudNextSound, 0, nAudSegLen << 2);
-	}
 
 	return 0;
 }
@@ -147,9 +147,9 @@ static int DxSoundCheck()
 		nPlaySeg = 0;
 	}
 
-	if (nDSoundNextSeg == nPlaySeg) {                               // Not likely to hit w/semaphore stuff
+	if (nDSoundNextSeg == nPlaySeg) {
 		Sleep(2);													// Don't need to do anything for a bit
-		bRunFrame = true;
+		bRunFrame = false;
 		return 0;
 	}
 

@@ -26,7 +26,7 @@
  *   Add BurnHighCol support, and add BDF_16BIT_ONLY into driver.   thanks to KEV
  *
  *
- *  Priorities and row scroll are not implemented
+ *  Priorities and row scroll are not implemented (except turbofrc, where needed)
  *
  */
 
@@ -2618,9 +2618,11 @@ static INT32 turbofrcDraw()
 	INT32 scrollx0 = BURN_ENDIAN_SWAP_INT16(RamRaster[7]) - 11;
 	INT32 scrollx1 = bg2scrollx;
 
-	if (nBurnLayer & 1) TileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, scrollx0, bg1scrolly, RamGfxBank + 0);
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) TileBackground(RamBg1V, DeRomBg + 0x000000, 0, 0x000, scrollx0, bg1scrolly + 2, RamGfxBank + 0);
 	memset(RamPrioBitmap, 0, 352 * 240); // clear priority
-	if (nBurnLayer & 2) TileBackgroundPrio(RamBg2V, DeRomBg + 0x140000, 1, 0x100, scrollx1, bg2scrolly, RamGfxBank + 4);
+	if (nBurnLayer & 2) TileBackgroundPrio(RamBg2V, DeRomBg + 0x140000, 1, 0x100, scrollx1, bg2scrolly + 2, RamGfxBank + 4);
 
 	// sprite priority-bitmap is only used between the first 2 calls to turbofrc_drawsprites()
 	// it probably could have been implemented better, but it works. -dink

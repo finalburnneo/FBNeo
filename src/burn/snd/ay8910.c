@@ -58,12 +58,9 @@ INT32 ay8910burgertime_mode = 0;
 
 struct AY8910
 {
-	INT32 Channel;
-	INT32 SampleRate;
 	INT32 register_latch;
 	UINT8 Regs[16];
 	INT32 lastEnable;
-	UINT32 UpdateStep;
 	INT32 PeriodA,PeriodB,PeriodC,PeriodN,PeriodE;
 	INT32 CountA,CountB,CountC,CountN,CountE;
 	UINT32 VolA,VolB,VolC,VolE;
@@ -72,6 +69,10 @@ struct AY8910
 	INT8 CountEnv;
 	UINT8 Hold,Alternate,Attack,Holding;
 	INT32 RNG;
+
+	// not scanned
+	UINT32 UpdateStep;
+	INT32 SampleRate;
 	UINT32 VolTable[32];
 
 	read8_handler PortAread;
@@ -906,7 +907,7 @@ void AY8910Scan(INT32 nAction, INT32* pnMin)
 		sprintf(szName, "AY8910 #%d", i);
 
 		ba.Data		= &AYPSG[i];
-		ba.nLen		= STRUCT_SIZE_HELPER(struct AY8910, VolTable);
+		ba.nLen		= STRUCT_SIZE_HELPER(struct AY8910, RNG);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);

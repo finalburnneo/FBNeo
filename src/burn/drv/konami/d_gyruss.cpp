@@ -1,7 +1,7 @@
 // FB Alpha Gyruss driver module
 // Based on MAME driver by Mirko Buffoni, Michael Cuddy, and Nicola Salmoria
 //
-// Massive overhaul by dink on Feb. 9, 2015
+// Massive overhaul by dink on Feb. 9, 2015, sound mixing modification Feb. 9, 2018.
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -329,8 +329,8 @@ static UINT8 __fastcall gyruss_sound0_read(UINT16 address)
 static void filter_write(INT32 num, UINT8 d)
 {
 	INT32 C = 0;
-	if (d & 2) C += 220000;	/* 220000pF = 0.220uF */
-	if (d & 1) C +=  47000;	/*  47000pF = 0.047uF */
+	if (d & 2) C += 220000;	// 220000pF = 0.220uF
+	if (d & 1) C +=  47000;	//  47000pF = 0.047uF
 
 	filter_rc_set_RC(num, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(C));
 }
@@ -341,9 +341,6 @@ static void AY8910_0_portBwrite(UINT32 /*port*/, UINT32 data)
 
 	for (INT32 i = 0; i < 3; i++)
 	{
-		/* low bit: 47000pF = 0.047uF */
-		/* high bit: 220000pF = 0.22uF */
-
 		filter_write(i, data & 3);
 		data >>= 2;
 	}
@@ -355,9 +352,6 @@ static void AY8910_1_portBwrite(UINT32 /*port*/, UINT32 data)
 
 	for (INT32 i = 0; i < 3; i++)
 	{
-		/* low bit: 47000pF = 0.047uF */
-		/* high bit: 220000pF = 0.22uF */
-
 		filter_write(i + 3, data & 3);
 		data >>= 2;
 	}
@@ -559,30 +553,26 @@ static INT32 DrvGfxDecode()
 
 static INT32 DrvPaletteInit()
 {
+	UINT32 tmp[0x20];
 	UINT8 *color_prom = DrvColPROM;
-	UINT32 *tmp = (UINT32*)BurnMalloc(32 * sizeof(UINT32));
-	if (tmp == NULL) {
-		return 1;
-	}
-	
+
 	for (INT32 i = 0; i < 0x20; i++)
 	{
 		INT32 bit0, bit1, bit2;
-		UINT8 r, g, b;
 
 		bit0 = (color_prom[i] >> 0) & 0x01;
 		bit1 = (color_prom[i] >> 1) & 0x01;
 		bit2 = (color_prom[i] >> 2) & 0x01;
-		r = (INT32)(double((bit0 * 33 + bit1 * 70 + bit2 * 151)+0.5));
+		UINT8 r = (INT32)(double((bit0 * 33 + bit1 * 70 + bit2 * 151)+0.5));
 
 		bit0 = (color_prom[i] >> 3) & 0x01;
 		bit1 = (color_prom[i] >> 4) & 0x01;
 		bit2 = (color_prom[i] >> 5) & 0x01;
-		g = (INT32)(double((bit0 * 33 + bit1 * 70 + bit2 * 151)+0.5));
+		UINT8 g = (INT32)(double((bit0 * 33 + bit1 * 70 + bit2 * 151)+0.5));
 
 		bit0 = (color_prom[i] >> 6) & 0x01;
 		bit1 = (color_prom[i] >> 7) & 0x01;
-		b = (INT32)(double((bit0 * 78 + bit1 * 151)+0.5));
+		UINT8 b = (INT32)(double((bit0 * 78 + bit1 * 151)+0.5));
 
 		tmp[i] = (r << 16) | (g << 8) | b;
 	}
@@ -594,7 +584,6 @@ static INT32 DrvPaletteInit()
 		Palette[i] = tmp[ctabentry | ((i >> 4) & 0x10)];
 	}
 
-	BurnFree (tmp);
 	return 0;
 }
 
@@ -615,8 +604,6 @@ static void gyrussDecode()
 
 static INT32 DrvDoReset()
 {
-	DrvReset = 0;
-
 	memset (AllRam, 0, RamEnd - AllRam);
 
 	ZetOpen(0);
@@ -722,21 +709,16 @@ static INT32 DrvInit()
 	I8039SetIOWriteHandler(gyruss_i8039_write_port);
 
 	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
 
-	AY8910Init(0, 1789750, 0);
-	AY8910Init(1, 1789750, 1);
+	AY8910Init(0, 1789772, 0); // these hz are intentional! -dink
+	AY8910Init(1, 1789772, 1);
 	AY8910Init(2, 1789750, 1);
 	AY8910Init(3, 1789750, 1);
 	AY8910Init(4, 1789750, 1);
 	AY8910SetPorts(0, NULL, NULL, NULL, &AY8910_0_portBwrite);
 	AY8910SetPorts(1, NULL, NULL, NULL, &AY8910_1_portBwrite);
 	AY8910SetPorts(2, AY8910_3_portA, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(2, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(3, 0.25, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(4, 0.25, BURN_SND_ROUTE_BOTH);
 
 	filter_rc_init(0, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 0);
 	filter_rc_init(1, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1);
@@ -747,23 +729,23 @@ static INT32 DrvInit()
 	filter_rc_init(6, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1); // master out l
 	filter_rc_init(7, FLT_RC_LOWPASS, 1000, 5100, 0, CAP_P(0), 1); // master out r
 
-	filter_rc_set_src_gain(0, 0.70);
-	filter_rc_set_src_gain(1, 0.60);
-	filter_rc_set_src_gain(2, 0.45);
-	filter_rc_set_src_gain(3, 0.70);
-	filter_rc_set_src_gain(4, 0.60);
-	filter_rc_set_src_gain(5, 0.45);
-	filter_rc_set_src_gain(6, 1.00);
-	filter_rc_set_src_gain(7, 1.00);
+	filter_rc_set_src_gain(0, 0.22);
+	filter_rc_set_src_gain(1, 0.22);
+	filter_rc_set_src_gain(2, 0.22);
+	filter_rc_set_src_gain(3, 0.22);
+	filter_rc_set_src_gain(4, 0.22);
+	filter_rc_set_src_gain(5, 0.22);
+	filter_rc_set_src_gain(6, 0.64);
+	filter_rc_set_src_gain(7, 0.64);
 
-	filter_rc_set_route(0, 0.25, FLT_RC_PANNEDLEFT);
-	filter_rc_set_route(1, 0.25, FLT_RC_PANNEDLEFT);
-	filter_rc_set_route(2, 0.25, FLT_RC_PANNEDLEFT);
-	filter_rc_set_route(3, 0.25, FLT_RC_PANNEDRIGHT);
-	filter_rc_set_route(4, 0.25, FLT_RC_PANNEDRIGHT);
-	filter_rc_set_route(5, 0.25, FLT_RC_PANNEDRIGHT);
-	filter_rc_set_route(6, 0.55, BURN_SND_ROUTE_LEFT ); // master out l
-	filter_rc_set_route(7, 0.55, BURN_SND_ROUTE_RIGHT); // master out r
+	filter_rc_set_route(0, 1.00, FLT_RC_PANNEDLEFT);
+	filter_rc_set_route(1, 1.00, FLT_RC_PANNEDLEFT);
+	filter_rc_set_route(2, 1.00, FLT_RC_PANNEDLEFT);
+	filter_rc_set_route(3, 1.00, FLT_RC_PANNEDRIGHT);
+	filter_rc_set_route(4, 1.00, FLT_RC_PANNEDRIGHT);
+	filter_rc_set_route(5, 1.00, FLT_RC_PANNEDRIGHT);
+	filter_rc_set_route(6, 1.00, BURN_SND_ROUTE_LEFT ); // master out l
+	filter_rc_set_route(7, 1.00, BURN_SND_ROUTE_RIGHT); // master out r
 
 	GenericTilesInit();
 
@@ -917,53 +899,45 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 	I8039NewFrame();
 
-	INT32 nCyclesSegment;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[4] = { 3072000 / 60, 2000000 / 60, 3579545 / 60, 8000000 / 15 / 60 };
 	INT32 nCyclesDone[4] = { 0, 0, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 
-	DrvDraw();
-	memset (pBurnSoundOut,0,nBurnSoundLen*4);
+	if (pBurnDraw) {
+		DrvDraw();
+	}
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nNext;
 		scanline = i + 6;
 
 		ZetOpen(0);
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesDone[0] += ZetRun(nCyclesSegment);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == (nInterleave - 248) && *interrupt_enable0) {
 			ZetSetIRQLine(Z80_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 		}
 		ZetClose();
 		
 		M6809Open(0);
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesDone[1] += M6809Run(nCyclesSegment);
+		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		if (i == (nInterleave - 248) && *interrupt_enable1) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
 		M6809Close();
 
 		ZetOpen(1);
-		nNext = (i + 1) * nCyclesTotal[2] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[2];
-		nCyclesDone[2] += ZetRun(nCyclesSegment);
+		nCyclesDone[2] += ZetRun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 
-		nNext = (nCyclesTotal[3] * (i + 1)) / nInterleave;
-		nCyclesDone[3] += I8039Run(nNext - nCyclesDone[3]);
+		nCyclesDone[3] += I8039Run(((nCyclesTotal[3] * (i + 1)) / nInterleave) - nCyclesDone[3]);
 		ZetClose(); // after I8039Run() for DrvSyncDAC()!
 
 		if (scanline >= 16 && scanline < 240) {
 			draw_sprites(scanline);
 		}
 		// Render Sound Segment
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910RenderInternal(nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

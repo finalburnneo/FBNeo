@@ -2020,8 +2020,8 @@ struct BurnDriver BurnDrvLwings = {
 // Legendary Wings (US set 2)
 
 static struct BurnRomInfo lwings2RomDesc[] = {
-	{ "u13-l",		0x8000, 0x3069c01c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "u14-k",		0x8000, 0x5d91c828, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u13-l",			0x8000, 0x3069c01c, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "u14-k",			0x8000, 0x5d91c828, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "9c_lw03.bin",	0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "11e_lw04.bin",	0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
@@ -2061,7 +2061,7 @@ struct BurnDriver BurnDrvLwings2 = {
 
 // Ares no Tsubasa (Japan)
 
-static struct BurnRomInfo lwingsjpRomDesc[] = {
+static struct BurnRomInfo lwingsjRomDesc[] = {
 	{ "a_06c.rom",		0x8000, 0x2068a738, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 	{ "a_07c.rom",		0x8000, 0xd6a2edc4, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "9c_lw03.bin",	0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
@@ -2087,15 +2087,57 @@ static struct BurnRomInfo lwingsjpRomDesc[] = {
 	{ "63s141.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
 };
 
-STD_ROM_PICK(lwingsjp)
-STD_ROM_FN(lwingsjp)
+STD_ROM_PICK(lwingsj)
+STD_ROM_FN(lwingsj)
 
-struct BurnDriver BurnDrvLwingsjp = {
+struct BurnDriver BurnDrvLwingsj = {
 	"lwingsj", "lwings", NULL, NULL, "1986",
 	"Ares no Tsubasa (Japan)\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
-	NULL, lwingsjpRomInfo, lwingsjpRomName, NULL, NULL, DrvInputInfo, LwingsDIPInfo,
+	NULL, lwingsjRomInfo, lwingsjRomName, NULL, NULL, DrvInputInfo, LwingsDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
+	240, 256, 3, 4
+};
+
+
+// Ares no Tsubasa (Japan, rev. A)
+
+static struct BurnRomInfo lwingsjaRomDesc[] = {
+	{ "AT_01A.6c",		0x8000, 0x568f1ea5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "AT_02.7c",		0x8000, 0xd6a2edc4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "AT_03.9c",		0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
+
+	{ "AT_03.11e",		0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+
+	{ "AT_05.9h",		0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
+
+	{ "AT_14.3e",		0x8000, 0x176e3027, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
+	{ "AT_08.1e",		0x8000, 0xf5d25623, 5 | BRF_GRA },           //  6
+	{ "AT_13.3d",		0x8000, 0x001caa35, 5 | BRF_GRA },           //  7
+	{ "AT_07.1d",		0x8000, 0x0ba008c3, 5 | BRF_GRA },           //  8
+	{ "AT_12.3b",		0x8000, 0x4f8182e9, 5 | BRF_GRA },           //  9
+	{ "AT_06.1b",		0x8000, 0xf1617374, 5 | BRF_GRA },           // 10
+	{ "AT_15.3f",		0x8000, 0x9b374dcc, 5 | BRF_GRA },           // 11
+	{ "AT_09.1f",		0x8000, 0x23654e0a, 5 | BRF_GRA },           // 12
+
+	{ "AT_17.3j",		0x8000, 0x8f3c763a, 6 | BRF_GRA },           // 13 Sprites
+	{ "AT_11.1j",		0x8000, 0x7cc90a1d, 6 | BRF_GRA },           // 14
+	{ "AT_16.3h",		0x8000, 0x7d58f532, 6 | BRF_GRA },           // 15
+	{ "AT_10.1h",		0x8000, 0x3e396eda, 6 | BRF_GRA },           // 16
+
+	{ "SZB01.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
+};
+
+STD_ROM_PICK(lwingsja)
+STD_ROM_FN(lwingsja)
+
+struct BurnDriver BurnDrvLwingsja = {
+	"lwingsja", "lwings", NULL, NULL, "1986",
+	"Ares no Tsubasa (Japan, rev. A)\0", NULL, "Capcom", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
+	NULL, lwingsjaRomInfo, lwingsjaRomName, NULL, NULL, DrvInputInfo, LwingsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };

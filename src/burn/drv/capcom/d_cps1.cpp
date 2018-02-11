@@ -9567,7 +9567,7 @@ theguru@emuunlim.com*/
 STD_ROM_PICK(Sf2b4)
 STD_ROM_FN(Sf2b4)
 
-static struct BurnRomInfo Sf2b5RomDesc[] = {
+static struct BurnRomInfo Sf2rulesRomDesc[] = {
     { "prh2.u222",     0x080000, 0xfff85f9b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "prl1.u196",     0x080000, 0x65c28bc9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	
@@ -9590,8 +9590,8 @@ static struct BurnRomInfo Sf2b5RomDesc[] = {
 	{ "conv.u133",     0x010000, 0x13ea1c44, BRF_OPT }, // unknown
 };
 
-STD_ROM_PICK(Sf2b5)
-STD_ROM_FN(Sf2b5)
+STD_ROM_PICK(Sf2rules)
+STD_ROM_FN(Sf2rules)
 
 static struct BurnRomInfo Sf2ceRomDesc[] = {
 	{ "s92e_23b.8f",   0x080000, 0x0aaa1a3a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
@@ -13702,7 +13702,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2b2"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b3"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2b4"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
-	{ "sf2b5"       , CPS_B_17    , mapper_STF29 , 0, NULL                },
+	{ "sf2rules"    , CPS_B_17    , mapper_STF29 , 0, NULL                },
 	{ "sf2bhh"  	, CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ce"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2ceea"     , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -16036,7 +16036,7 @@ static INT32 Sf2b3Init()
 	return DrvInit();
 }
 
-static INT32 Sf2b5Init()
+static INT32 Sf2rulesInit()
 {
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesSf2koryu;
 	
@@ -19643,13 +19643,13 @@ struct BurnDriver BurnDrvCpsSf2b4 = {
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
-struct BurnDriver BurnDrvCpsSf2b5 = {
-	"sf2b5", "sf2", NULL, NULL, "1991",
-	"Street Fighter II - The World Warrior (bootleg, 910214 etc, set 5)\0", NULL, "Capcom", "CPS1",
+struct BurnDriver BurnDrvCpsSf2rules = {
+	"sf2rules", "sf2", NULL, NULL, "1991",
+	"Street Fighter II - The World Warrior (bootleg with rules screen, 910214 etc)\0", NULL, "Capcom", "CPS1",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
-	NULL, Sf2b5RomInfo, Sf2b5RomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
-	Sf2b5Init, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	NULL, Sf2rulesRomInfo, Sf2rulesRomName, NULL, NULL, Sf2yycInputInfo, Sf2DIPInfo,
+	Sf2rulesInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

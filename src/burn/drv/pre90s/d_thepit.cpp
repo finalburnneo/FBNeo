@@ -37,10 +37,11 @@ static INT32 remap_address[0x10];
 
 static INT32 graphics_size;
 static UINT8 global_color_depth;
-static UINT8 sprite_bank = 0; // desertdn
+static UINT8 sprite_bank = 0; // desertdn, suprmous
 static INT32 color_prom_size; // suprmous
 static INT32 intrepid = 0;
 static INT32 rtriv = 0;
+static INT32 desertdn = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -796,6 +797,7 @@ static INT32 DrvExit()
 	sprite_bank = 0;
 	intrepid = 0;
 	rtriv = 0;
+	desertdn = 0;
 
 	return 0;
 }
@@ -885,9 +887,15 @@ static void draw_sprites(INT32 priority)
 	INT32 bank = (sprite_bank * 0x100) + (graphics_bank * 0x100);
 
 	if (flipscreen[0]) {
-		GenericTilesSetClip(0*8, 30*8-2, 0*8, 28*8-1);
+		if (desertdn)
+			GenericTilesSetClip(0*8+1, 24*8-1, 2*8, 30*8-1);
+		else
+			GenericTilesSetClip(8*8, 32*8-2, 2*8, 30*8-1);
 	} else {
-		GenericTilesSetClip(2*8+1, 32*8-1, 0*8, 28*8-1);
+		if (desertdn)
+			GenericTilesSetClip(0*8, 30*8-2, 0*8, 28*8-1);
+		else
+			GenericTilesSetClip(2*8+1, 32*8-1, 0*8, 28*8-1);
 	}
 
 	for (INT32 offs = 0x20 - 4; offs >= 0; offs -= 4)
@@ -1778,6 +1786,8 @@ STD_ROM_FN(desertdn)
 static INT32 DesertdnInit()
 {
 	sprite_bank = 1;
+	desertdn = 1;
+
 	return DrvInit();
 }
 

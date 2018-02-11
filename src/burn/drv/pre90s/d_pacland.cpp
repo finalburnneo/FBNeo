@@ -1025,8 +1025,8 @@ struct BurnDriver BurnDrvPaclandjo2 = {
 // Pac-Land (Midway)
 
 static struct BurnRomInfo paclandmRomDesc[] = {
-	{ "pl1-1",		0x4000, 0xa938ae99, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
-	{ "pl1-2",		0x4000, 0x3fe43bb5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pl1-1",			0x4000, 0xa938ae99, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "pl1-2",			0x4000, 0x3fe43bb5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "pl1_3.8e",		0x4000, 0xaa9fa739, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "pl1_4.8f",		0x4000, 0x2b895a90, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "pl1_5.8h",		0x4000, 0x7af66200, 1 | BRF_PRG | BRF_ESS }, //  4
@@ -1060,6 +1060,49 @@ struct BurnDriver BurnDrvPaclandm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, paclandmRomInfo, paclandmRomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
+	288, 224, 4, 3
+};
+
+
+// Pac-Land (Bally-Midway)
+
+static struct BurnRomInfo paclandm2RomDesc[] = {
+	{ "pl-8b.bin",		0x4000, 0x93d13fc0, 1 | BRF_PRG | BRF_ESS }, //  0 M6809 Code
+	{ "pl-8d.bin",		0x4000, 0xa761c6aa, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pl1_3.8e",		0x4000, 0xaa9fa739, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pl1_4.8f",		0x4000, 0x2b895a90, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pl1_5.8h",		0x4000, 0x7af66200, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "pl3_6.8j",		0x4000, 0x2ffe3319, 1 | BRF_PRG | BRF_ESS }, //  5
+
+	{ "pl1_7.3e",		0x2000, 0x8c5becae, 2 | BRF_PRG | BRF_ESS }, //  6 HD63701 Code
+	{ "cus60-60a1.mcu",	0x1000, 0x076ea82a, 2 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "pl2_12.6n",		0x2000, 0xa63c8726, 3 | BRF_GRA },           //  8 Foreground Tiles
+
+	{ "pl4_13.6t",		0x2000, 0x3ae582fd, 4 | BRF_GRA },           //  9 Background Tiles
+
+	{ "pl1-9.6f",		0x4000, 0xf5d5962b, 5 | BRF_GRA },           // 10 Sprites
+	{ "pl1-8.6e",		0x4000, 0xa2ebfa4a, 5 | BRF_GRA },           // 11
+	{ "pl1-10.7e",		0x4000, 0xc7cf1904, 5 | BRF_GRA },           // 12
+	{ "pl1-11.7f",		0x4000, 0x6621361a, 5 | BRF_GRA },           // 13
+
+	{ "pl1-2.1t",		0x0400, 0x472885de, 6 | BRF_GRA },           // 14 Color PROMs
+	{ "pl1-1.1r",		0x0400, 0xa78ebdaf, 6 | BRF_GRA },           // 15
+	{ "pl1-5.5t",		0x0400, 0x4b7ee712, 6 | BRF_GRA },           // 16
+	{ "pl1-4.4n",		0x0400, 0x3a7be418, 6 | BRF_GRA },           // 17
+	{ "pl1-3.6l",		0x0400, 0x80558da8, 6 | BRF_GRA },           // 18
+};
+
+STD_ROM_PICK(paclandm2)
+STD_ROM_FN(paclandm2)
+
+struct BurnDriver BurnDrvPaclandm2 = {
+	"paclandm2", "pacland", NULL, NULL, "1984",
+	"Pac-Land (Bally-Midway)\0", NULL, "Namco (Bally Midway license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, paclandm2RomInfo, paclandm2RomName, NULL, NULL, PaclandInputInfo, PaclandDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0xc00 * 4,
 	288, 224, 4, 3
 };

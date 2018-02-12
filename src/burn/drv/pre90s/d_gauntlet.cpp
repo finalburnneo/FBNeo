@@ -6,6 +6,7 @@
 #include "m6502_intf.h"
 #include "burn_ym2151.h"
 #include "pokey.h"
+#include "tms5220.h"
 
 //#define SNDCPUDBG
 
@@ -504,7 +505,8 @@ static INT32 nCyclesSegment;
 
 static UINT8 DrvGameType;
 
-
+static UINT8 speech_val;
+static UINT8 last_speech_write;
 
 
 struct atarigen_modesc
@@ -1657,7 +1659,8 @@ static INT32 DrvDoReset()
 	M6502Close();
 	
 	BurnYM2151Reset();
-	
+	tms5220_reset();
+
 	atarigen_SlapsticReset();
 	atarigen_eeprom_reset();
 	
@@ -1668,7 +1671,8 @@ static INT32 DrvDoReset()
 	DrvSoundtoCPUReady = 0;
 	DrvCPUtoSound = 0;
 	DrvSoundtoCPU = 0;
-	
+	last_speech_write = 0x80;
+
 	return 0;
 }
 
@@ -1682,7 +1686,7 @@ UINT8 __fastcall Gauntlet68KReadByte(UINT32 a)
 	
 	switch (a) {
 		case 0x803009: {
-			UINT8 Res = DrvInput[4] | (DrvVBlank ? 0x40 : 0x00);
+			UINT8 Res = (DrvInput[4] | (DrvVBlank ? 0x00 : 0x40)) & ~0x30;
 			if (DrvCPUtoSoundReady) Res ^= 0x20;
 			if (DrvSoundtoCPUReady) Res ^= 0x10;
 			return Res;
@@ -1744,10 +1748,10 @@ UINT16 __fastcall Gauntlet68KReadWord(UINT32 a)
 		}
 		
 		case 0x803008: {
-			UINT8 Res = DrvInput[4] | (DrvVBlank ? 0x40 : 0x00);
+			UINT8 Res = (DrvInput[4] | (DrvVBlank ? 0x00 : 0x40)) & ~0x30;
 			if (DrvCPUtoSoundReady) Res ^= 0x20;
 			if (DrvSoundtoCPUReady) Res ^= 0x10;
-			return 0xff00 | Res;
+			return 0x0000 | Res;
 		}
 		
 		case 0x80300e: {
@@ -1812,7 +1816,7 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 		}
 		
 		case 0x803140: {
-			// irq_ack
+			SekSetIRQLine(4, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -1826,9 +1830,9 @@ void __fastcall Gauntlet68KWriteWord(UINT32 a, UINT16 d)
 #ifdef SNDCPUDBG
 			if (DrvCPUtoSoundReady) bprintf(0, _T("68k: sound command missed!\n"));
 #endif
-			DrvCPUtoSoundReady = 1;
 			M6502Open(0);
 			soundcpuSync();
+			DrvCPUtoSoundReady = 1;
 			M6502SetIRQLine(M6502_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
 			M6502Close();
 			return;
@@ -1872,7 +1876,7 @@ UINT8 GauntletSoundRead(UINT16 Address)
 			
 			if (DrvCPUtoSoundReady) Res ^= 0x80;
 			if (DrvSoundtoCPUReady) Res ^= 0x40;
-			Res ^= 0x20; // tms5220 ready status, no core yet.
+			if (tms5220_ready()) Res ^= 0x20; // tms5220 ready status
 			if (!(Input & 0x08)) Res ^= 0x10;
 			return Res;
 		}
@@ -1938,8 +1942,41 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 		case 0x1032:
 		case 0x1033:
 		case 0x1034:
-		case 0x1035: {
+		case 0x1035:
+		case 0x1036:
+		case 0x1037:
+		case 0x1038:
+		case 0x1039:
+		case 0x103a:
+		case 0x103b:
+		case 0x103c:
+		case 0x103d:
+		case 0x103e:
+		case 0x103f:
+		{
 			// sound_ctl_w
+			switch (Address & 7)
+			{
+				case 0:
+					if (!Data&0x80) BurnYM2151Reset();
+					break;
+
+				case 1:	/* speech write, bit D7, active low */
+					if (((Data ^ last_speech_write) & 0x80) && (Data & 0x80))
+						tms5220_write(speech_val);
+					last_speech_write = Data;
+					break;
+
+				case 2:	/* speech reset, bit D7, active low */
+					if (((Data ^ last_speech_write) & 0x80) && (Data & 0x80))
+						tms5220_reset();
+					break;
+
+				case 3:	/* speech squeak, bit D7 */
+					Data = 5 | ((Data >> 6) & 2);
+					tms5220_set_frequency(14000000/2 / (16 - Data));
+					break;
+			}
 			return;
 		}
 		
@@ -1953,8 +1990,24 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 			return;
 		}
 		
-		case 0x1820: {
-			// tms5220_w
+		case 0x1820:
+		case 0x1821:
+		case 0x1822:
+		case 0x1823:
+		case 0x1824:
+		case 0x1825:
+		case 0x1826:
+		case 0x1827:
+		case 0x1828:
+		case 0x1829:
+		case 0x182a:
+		case 0x182b:
+		case 0x182c:
+		case 0x182d:
+		case 0x182e:
+		case 0x182f:
+		{
+			speech_val = Data;
 			return;
 		}
 		
@@ -2080,6 +2133,9 @@ static INT32 DrvInit()
 
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
+	tms5220_init();
+	tms5220_set_frequency(14000000/2/11);
+
 	GenericTilesInit();
 	
 	static struct atarigen_modesc gauntlet_modesc =
@@ -2193,6 +2249,9 @@ static INT32 Gaunt2pInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.48, BURN_SND_ROUTE_LEFT);
 
 	PokeyInit(14000000/8, 2, 1.00, 1);
+
+	tms5220_init();
+	tms5220_set_frequency(14000000/2/11);
 	
 	GenericTilesInit();
 	
@@ -2318,6 +2377,9 @@ static INT32 Gaunt2Init()
 	
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
+	tms5220_init();
+	tms5220_set_frequency(14000000/2/11);
+
 	GenericTilesInit();
 	
 	static struct atarigen_modesc gauntlet_modesc =
@@ -2346,6 +2408,7 @@ static INT32 DrvExit()
 	M6502Exit();
 	
 	BurnYM2151Exit();
+	tms5220_exit();
 
 	PokeyExit();
 	
@@ -2504,7 +2567,7 @@ static INT32 DrvFrame()
 		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 		if (i == 11*nMult) DrvVBlank = 0;
 		if (i == 250*nMult) DrvVBlank = 1;
-		if (i == 261*nMult) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+		if (i == 261*nMult) SekSetIRQLine(4, CPU_IRQSTATUS_ACK);
 		SekClose();
 		
 		if (i%nMult==nMult-1 && i/nMult == NextScanline) {
@@ -2529,8 +2592,8 @@ static INT32 DrvFrame()
 			{
 				if ((i/nMult) & 32)
 					M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_ACK);
-				else
-					M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
+//				else
+//					M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 			}
 			M6502Close();
 		} else {
@@ -2555,6 +2618,7 @@ static INT32 DrvFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 		}
 		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
+		tms5220_update(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	if (pBurnDraw) DrvDraw();
@@ -2584,6 +2648,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2151Scan(nAction, pnMin);
 		pokey_scan(nAction, pnMin);
+		tms5220_scan(nAction, pnMin);
 
 		SCAN_VAR(DrvVBlank);
 		SCAN_VAR(DrvSoundResetVal);
@@ -2593,6 +2658,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvCPUtoSound);
 		SCAN_VAR(DrvSoundtoCPU);
 		SCAN_VAR(eeprom_unlocked);
+		SCAN_VAR(speech_val);
+		SCAN_VAR(last_speech_write);
 		// slapstic stuff
 		SCAN_VAR(state);
 		SCAN_VAR(next_bank);

@@ -17912,7 +17912,8 @@ static INT32 TriplepInit()
 	
 	GalPostLoadCallbackFunction = TriplepPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910;
-	
+	GalSoundSubType = 1; // diff. AY8910 clock
+
 	nRet = GalInit();
 	
 	GalRenderBackgroundFunction = ScrambleDrawBackground;

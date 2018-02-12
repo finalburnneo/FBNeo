@@ -1,6 +1,7 @@
 #include "gal.h"
 
 UINT8 GalSoundType;
+UINT8 GalSoundSubType = 0;
 UINT8 HunchbksSoundIrqFire;
 
 #define XTAL				18432000
@@ -116,7 +117,7 @@ void GalSoundReset()
 void GalSoundInit()
 {
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_ZIGZAGAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_CHECKMANAY8910 || GalSoundType == GAL_SOUND_HARDWARE_TYPE_JUMPBUGAY8910) {
-		AY8910Init(0, 1789750, 0);
+		AY8910Init(0, (GalSoundSubType == 1) ? 1536000 : 1789750, 0);
 		AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	}
 	
@@ -463,6 +464,7 @@ void GalSoundExit()
 	GalLfoFreqFrameVar = 0;
 	GalLfoBit[0] = GalLfoBit[1] = GalLfoBit[2] = GalLfoBit[3] = 0;
 	memset(GalToneWave, 0, sizeof(GalToneWave));
+	GalSoundSubType = 0;
 }
 
 void GalSoundScan(INT32 nAction, INT32 *pnMin)

@@ -269,6 +269,7 @@ INT32 GalScan(INT32 nAction, INT32 *pnMin);
 
 // gal_sound.cpp
 extern UINT8 GalSoundType;
+extern UINT8 GalSoundSubType;
 extern UINT8 HunchbksSoundIrqFire;
 extern UINT8 GalLastPort2;
 extern UINT8 GalShootEnable;

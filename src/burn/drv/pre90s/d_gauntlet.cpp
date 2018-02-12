@@ -1660,6 +1660,7 @@ static INT32 DrvDoReset()
 	
 	BurnYM2151Reset();
 	tms5220_reset();
+	tms5220_set_frequency(14318180/2/11);
 
 	atarigen_SlapsticReset();
 	atarigen_eeprom_reset();
@@ -1672,6 +1673,7 @@ static INT32 DrvDoReset()
 	DrvCPUtoSound = 0;
 	DrvSoundtoCPU = 0;
 	last_speech_write = 0x80;
+	speech_val = 0;
 
 	return 0;
 }
@@ -1974,7 +1976,7 @@ void GauntletSoundWrite(UINT16 Address, UINT8 Data)
 
 				case 3:	/* speech squeak, bit D7 */
 					Data = 5 | ((Data >> 6) & 2);
-					tms5220_set_frequency(14000000/2 / (16 - Data));
+					tms5220_set_frequency(14318180/2 / (16 - Data));
 					break;
 			}
 			return;
@@ -2134,7 +2136,6 @@ static INT32 DrvInit()
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
 	tms5220_init();
-	tms5220_set_frequency(14000000/2/11);
 
 	GenericTilesInit();
 	
@@ -2251,7 +2252,6 @@ static INT32 Gaunt2pInit()
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
 	tms5220_init();
-	tms5220_set_frequency(14000000/2/11);
 	
 	GenericTilesInit();
 	
@@ -2378,7 +2378,6 @@ static INT32 Gaunt2Init()
 	PokeyInit(14000000/8, 2, 1.00, 1);
 
 	tms5220_init();
-	tms5220_set_frequency(14000000/2/11);
 
 	GenericTilesInit();
 	

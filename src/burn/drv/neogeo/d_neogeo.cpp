@@ -14289,6 +14289,169 @@ struct BurnDriver BurnDrvkf2k4pls = {
 	0x1000,	304, 224, 4, 3
 };
 
+// Kof2002 (hack omg)
+
+static struct BurnRomInfo kof2k2omgRomDesc[] = {
+	{ "265omg.p1",    0x3bd4c1, 0x62174834, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg.p2",    0x400000, 0x6fadc5c3, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "265omg.s1",    0x020000, 0x6145daf4, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "265xxx.c1",    0x800000, 0x745b343e, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265xxx.c2",    0x800000, 0x2aab7f98, 3 | BRF_GRA },           //  4 
+	{ "265ori.c3",    0x800000, 0xe5074eea, 3 | BRF_GRA },           //  5 
+	{ "265ori.c4",    0x800000, 0xf6eb1ff2, 3 | BRF_GRA },           //  6 
+	{ "265d.c5",      0x800000, 0x74bba7c6, 3 | BRF_GRA },           //  7 
+	{ "265d.c6",      0x800000, 0xe20d2216, 3 | BRF_GRA },           //  8 
+	{ "265ori.c7",    0x800000, 0x0e9f6adb, 3 | BRF_GRA },           //  9 
+	{ "265ori.c8",    0x800000, 0x9961799e, 3 | BRF_GRA },           // 10 
+
+	{ "265ori.m1",    0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "265nu.v1",     0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265nu.v2",     0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265nu.v3",     0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265nu.v4",     0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof2k2omg, kof2k2omg, neogeo)
+STD_ROM_FN(kof2k2omg)
+
+static void kof2k2omgCallback()
+{
+	BurnLoadRom(Neo68KROMActive + 0x000000, 0, 1);
+	BurnLoadRom(Neo68KROMActive + 0x100000, 1, 1);
+}
+
+static INT32 kof2k2omgInit()
+{
+	NeoCallbackActive->pInitialise = kof2k2omgCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvkof2k2omg = {
+	"kof2k2omg", "kof2002", "neogeo", NULL, "2002",
+	"Kof2002 (hack omg)\0", NULL, "bootleg", "KOF-ON Team",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k2omgRomInfo, kof2k2omgRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof2k2omgInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Kof2002 (Omega v0.8)
+
+static struct BurnRomInfo kof2k2omg8RomDesc[] = {
+	{ "265omg8.p1",   0x100000, 0x53086581, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg8.p2",   0x400000, 0x40228fe5, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "265omg8.s1",   0x020000, 0x65351d40, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "265omg8.c1",   0x800000, 0xe144302d, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265omg8.c2",   0x800000, 0xb10c6958, 3 | BRF_GRA },           //  4 
+	{ "265omg8.c3",   0x800000, 0x2367927c, 3 | BRF_GRA },           //  5 
+	{ "265omg8.c4",   0x800000, 0x4ad48c29, 3 | BRF_GRA },           //  6 
+	{ "365ru.c5",     0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
+	{ "365ru.c6",     0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
+	{ "265omg8.c7",   0x800000, 0x890c2a4a, 3 | BRF_GRA },           //  9 
+	{ "265omg8.c8",   0x800000, 0xb726009d, 3 | BRF_GRA },           // 10 
+
+	{ "265omg8.m1",   0x040000, 0x9a3d5c65, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "kf10-v1.bin",  0x800000, 0x0fc9a58d, 5 | BRF_SND },           // 12 Sound data
+	{ "kf10-v2.bin",  0x800000, 0xb8c475a4, 5 | BRF_SND },           // 13
+};
+
+STDROMPICKEXT(kof2k2omg8, kof2k2omg8, neogeo)
+STD_ROM_FN(kof2k2omg8)
+
+struct BurnDriver BurnDrvkof2k2omg8 = {
+	"kof2k2omg8", "kof2002", "neogeo", NULL, "2010",
+	"Kof2002 (Omega v0.8)\0", NULL, "bootleg", "KOF-ON Team",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k2omg8RomInfo, kof2k2omg8RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Kof2002 (Omega v0.9 beta)
+
+static struct BurnRomInfo kof2k2omg9bRomDesc[] = {
+	{ "265-p1.p1",    0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg9b.p2",  0x400000, 0xa171b684, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "265omg9b.s1",  0x020000, 0x7e3f391a, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "265omg9b.c1",  0x800000, 0xc8314ae2, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265omg9b.c2",  0x800000, 0xe0ddced5, 3 | BRF_GRA },           //  4 
+	{ "265omg9b.c3",  0x800000, 0x6898f6e2, 3 | BRF_GRA },           //  5 
+	{ "265omg9b.c4",  0x800000, 0x9232e491, 3 | BRF_GRA },           //  6 
+	{ "365ru.c5",     0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
+	{ "365ru.c6",     0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
+	{ "265omg9b.c7",  0x800000, 0x6954ef57, 3 | BRF_GRA },           //  9 
+	{ "265omg9b.c8",  0x800000, 0x3e394883, 3 | BRF_GRA },           // 10 
+
+	{ "265omg8.m1",   0x040000, 0x9a3d5c65, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "265nu.v1",     0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265nu.v2",     0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265nu.v3",     0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265nu.v4",     0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof2k2omg9b, kof2k2omg9b, neogeo)
+STD_ROM_FN(kof2k2omg9b)
+
+struct BurnDriver BurnDrvkof2k2omg9b = {
+	"kof2k2omg9b", "kof2002", "neogeo", NULL, "2011",
+	"Kof2002 (Omega v0.9 beta)\0", NULL, "bootleg", "KOF-ON Team",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k2omg9bRomInfo, kof2k2omg9bRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Kof2002 (Omega v0.9)
+
+static struct BurnRomInfo kof2k2omg9RomDesc[] = {
+	{ "265-p1.p1",    0x100000, 0x9ede7323, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "265omg9.p2",   0x400000, 0xcd503fcf, 1 | BRF_ESS | BRF_PRG }, //  1 
+
+	{ "265omg9.s1",   0x020000, 0x4562fb20, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "265omg9b.c1",  0x800000, 0xc8314ae2, 3 | BRF_GRA },           //  3 Sprite data
+	{ "265omg9b.c2",  0x800000, 0xe0ddced5, 3 | BRF_GRA },           //  4 
+	{ "265omg9b.c3",  0x800000, 0x6898f6e2, 3 | BRF_GRA },           //  5 
+	{ "265omg9b.c4",  0x800000, 0x9232e491, 3 | BRF_GRA },           //  6 
+	{ "365ru.c5",     0x800000, 0x11126545, 3 | BRF_GRA },           //  7 
+	{ "365ru.c6",     0x800000, 0xd225bb9b, 3 | BRF_GRA },           //  8 
+	{ "265omg9b.c7",  0x800000, 0x6954ef57, 3 | BRF_GRA },           //  9 
+	{ "265omg9b.c8",  0x800000, 0x3e394883, 3 | BRF_GRA },           // 10 
+
+	{ "265ori.m1",    0x020000, 0xab9d360e, 4 | BRF_ESS | BRF_PRG }, // 11 Z80 code
+
+	{ "265nu.v1",     0x400000, 0x13d98607, 5 | BRF_SND },           // 12 Sound data
+	{ "265nu.v2",     0x400000, 0x9cf74677, 5 | BRF_SND },           // 13
+	{ "265nu.v3",     0x400000, 0x8e9448b5, 5 | BRF_SND },           // 14
+	{ "265nu.v4",     0x400000, 0x067271b5, 5 | BRF_SND },           // 15
+};
+
+STDROMPICKEXT(kof2k2omg9, kof2k2omg9, neogeo)
+STD_ROM_FN(kof2k2omg9)
+
+struct BurnDriver BurnDrvkof2k2omg9 = {
+	"kof2k2omg9", "kof2002", "neogeo", NULL, "2012",
+	"Kof2002 (Omega v0.9)\0", NULL, "bootleg", "KOF-ON Team",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2k2omg9RomInfo, kof2k2omg9RomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // The King of Fighters '96 (NGM-214, alternate board)
 /* MVS VERSION */
 

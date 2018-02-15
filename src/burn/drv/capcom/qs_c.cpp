@@ -16,7 +16,7 @@ static INT32* Qs_s = NULL;
 
 static INT32 nPos;
 
-struct QChan {
+struct QChan_s {
 		UINT8 bKey;				// 1 if channel is playing
 		INT8 nBank;						// Bank we are currently playing a sample from
 
@@ -37,14 +37,14 @@ struct QChan {
 		INT8* PlayBank;		// Pointer to current bank
 };
 
-static struct QChan QChan[16];
+static struct QChan_s QChan[16];
 
 static INT32 PanningVolumes[33];
 
 static double QsndGain[2];
 static INT32 QsndOutputDir[2];
 
-static void MapBank(struct QChan* pc)
+static void MapBank(struct QChan_s* pc)
 {
 	UINT32 nBank;
 
@@ -58,7 +58,7 @@ static void MapBank(struct QChan* pc)
 	pc->PlayBank = (INT8*)CpsQSam + nBank;
 }
 
-static void UpdateEndBuffer(struct QChan* pc)
+static void UpdateEndBuffer(struct QChan_s* pc)
 {
 	if (pc->bKey) {
 		// prepare a buffer to correctly interpolate the last 4 samples
@@ -83,7 +83,7 @@ static void UpdateEndBuffer(struct QChan* pc)
 	}
 }
 
-static void CalcAdvance(struct QChan* pc)
+static void CalcAdvance(struct QChan_s* pc)
 {
 	if (nQscRate) {
 		pc->nAdvance = (INT64)pc->nPitch * nQscClock / nQscClockDivider / nQscRate;
@@ -141,7 +141,7 @@ INT32 QscScan(INT32 nAction)
 		sprintf(szName, "QChan #%d", i);
 
 		ba.Data		= &QChan[i];
-		ba.nLen		= STRUCT_SIZE_HELPER(struct QChan, nEndBuffer);
+		ba.nLen		= STRUCT_SIZE_HELPER(struct QChan_s, nEndBuffer);
 		ba.nAddress = 0;
 		ba.szName	= szName;
 		BurnAcb(&ba);
@@ -170,7 +170,7 @@ static inline void QscSyncQsnd()
 
 void QscWrite(INT32 a, INT32 d)
 {
-	struct QChan* pc;
+	struct QChan_s* pc;
 	INT32 nChanNum, r;
 
 	// unknown

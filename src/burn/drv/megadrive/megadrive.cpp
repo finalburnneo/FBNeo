@@ -150,9 +150,9 @@ struct TileStrip
 };
 
 struct MegadriveJoyPad {
-	UINT16 pad[4];
-	UINT8  padTHPhase[4];
-	UINT8  padDelay[4];
+	UINT16 pad[8];
+	UINT8  padTHPhase[8];
+	UINT8  padDelay[8];
 };
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
@@ -220,6 +220,7 @@ static UINT8 DrvSECAM = 0;	// NTSC
 static UINT8 bNoDebug = 0;
 static INT32 bForce3Button = 0;
 INT32 psolarmode = 0; // pier solar
+static INT32 TeamPlayerMode = 0;
 
 void MegadriveCheckHardware()
 {
@@ -1144,6 +1145,7 @@ void __fastcall MegadriveZ80RamWriteWord(UINT32 sekAddress, UINT16 wordValue)
 
 // -- I/O Read Write ------------------------------------------
 
+// Joypad emulation(s)
 static INT32 PadRead(INT32 i)
 {
 	INT32 pad=0,value=0,TH;
@@ -1170,10 +1172,86 @@ static INT32 PadRead(INT32 i)
 
 end:
 
-	// orr the bits, which are set as output
+	// or the bits, which are set as output
 	value |= RamIO[i+1] & RamIO[i+4];
 
 	return value; // will mirror later
+}
+
+static struct {
+	UINT8 State;
+	UINT8 Counter;
+	UINT8 Table[12];
+} teamplayer[2];
+
+static void teamplayer_init()
+{
+	INT32 index = 0;
+	UINT8 port = TeamPlayerMode - 1;
+
+	memset(&teamplayer[port], 0, sizeof(teamplayer[port]));
+
+	for (INT32 i = 0; i < 4; i++)
+	{
+		INT32 padnum = ((port << 2) + i) << 4;
+
+		teamplayer[port].Table[index++] = padnum;
+		teamplayer[port].Table[index++] = padnum | 4;
+
+		if (!bForce3Button)
+		{
+			teamplayer[port].Table[index++] = padnum | 8;
+		}
+	}
+}
+
+static void teamplayer_reset()
+{
+	if (!TeamPlayerMode) return;
+	teamplayer[TeamPlayerMode - 1].State = 0x60;
+	teamplayer[TeamPlayerMode - 1].Counter = 0;
+}
+
+static UINT8 teamplayer_read()
+{
+	UINT8 port = TeamPlayerMode - 1;
+	switch (teamplayer[port].Counter)
+	{
+		case 0: return ((teamplayer[port].State & 0x20) >> 1) | 0x03;
+
+		case 1:	return ((teamplayer[port].State & 0x20) >> 1) | 0x0F;
+
+		case 2:
+		case 3: return ((teamplayer[port].State & 0x20) >> 1);
+
+		case 4:
+		case 5:
+		case 6:
+		case 7: return (((teamplayer[port].State & 0x20) >> 1) | ((bForce3Button) ? 0 : 1));
+
+	    default: {
+			UINT8 padnum = teamplayer[port].Table[teamplayer[port].Counter - 8] >> 4;
+			if (TeamPlayerMode == 2) padnum -= 3;
+			UINT8 retval = 0xf & ~(JoyPad->pad[padnum] >> (teamplayer[port].Table[teamplayer[port].Counter - 8] & 0xf));
+
+			return (((teamplayer[port].State & 0x20) >> 1) | retval);
+		}
+	}
+}
+
+static void teamplayer_write(UINT8 data, UINT8 mask)
+{
+	UINT8 port = TeamPlayerMode - 1;
+	UINT8 state = (teamplayer[port].State & ~mask) | (data & mask);
+
+	if (state & 0x40) {
+		teamplayer[port].Counter = 0;
+	}
+	else if ((teamplayer[port].State ^ state) & 0x60) {
+		teamplayer[port].Counter++;
+	}
+
+	teamplayer[port].State = state;
 }
 
 UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
@@ -1182,18 +1260,43 @@ UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
 		bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
 
 	INT32 offset = (sekAddress >> 1) & 0xf;
-	switch (offset) {
-	case 0:	// Get Hardware 
-		return Hardware;
-	case 1: // Pad 1
-		return (RamIO[1] & 0x80) | PadRead(0);
-	case 2: // Pad 2
-		return (RamIO[2] & 0x80) | PadRead(1);
-	default:
-		//bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
-		return RamIO[offset];
+	if (!TeamPlayerMode) {
+		// 6-Button Support
+		switch (offset) {
+			case 0:	// Get Hardware
+				return Hardware;
+			case 1: // Pad 1
+				return (RamIO[1] & 0x80) | PadRead(0);
+			case 2: // Pad 2
+				return (RamIO[2] & 0x80) | PadRead(1);
+	        default:
+				//bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
+				return RamIO[offset];
+		}
+	} else {
+		// Sega Team Player Support
+		switch (offset) {
+			case 0:	// Get Hardware
+				return Hardware;
+			case 1: // pad 1
+			case 2: // Pad 2
+			case 3: {
+				UINT8 mask = 0x80 | RamIO[offset + 3];
+				UINT8 data = 0x7f;
+				if (offset < 3) {
+					switch (TeamPlayerMode) {
+						case 1: data = (offset==1) ? teamplayer_read() : 0x7f; break; // teamplayer port 1, nothing port 2
+						case 2: data = (offset==2) ? teamplayer_read() : PadRead(0); break; // teamplayer port2, gamepad port 1
+					}
+				}
+				return (RamIO[offset] & mask) | (data & ~mask);
+			}
+	        default:
+				//bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
+				return RamIO[offset];
+		}
 	}
-	return 0;
+	return 0xff;
 }
 
 UINT16 __fastcall MegadriveIOReadWord(UINT32 sekAddress)
@@ -1208,21 +1311,49 @@ UINT16 __fastcall MegadriveIOReadWord(UINT32 sekAddress)
 void __fastcall MegadriveIOWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
 	if (sekAddress > 0xA1001F)
-		bprintf(PRINT_NORMAL, _T("IO Attempt to byte byte value %x to location %x\n"), byteValue, sekAddress);
+		bprintf(PRINT_NORMAL, _T("IO Attempt to write byte value %x to location %x\n"), byteValue, sekAddress);
 
 	INT32 offset = (sekAddress >> 1) & 0xf;
-	// 6-Button Support
-	switch( offset ) {
-	case 1:
-		JoyPad->padDelay[0] = 0;
-		if(!(RamIO[1] & 0x40) && (byteValue&0x40)) 
-			JoyPad->padTHPhase[0] ++;
-		break;
-	case 2:
-		JoyPad->padDelay[1] = 0;
-		if(!(RamIO[2] & 0x40) && (byteValue&0x40)) 
-			JoyPad->padTHPhase[1] ++;
-		break;
+
+	if (!TeamPlayerMode) {
+		// 6-Button Support
+		switch( offset ) {
+			case 1:
+				JoyPad->padDelay[0] = 0;
+				if(!(RamIO[1] & 0x40) && (byteValue&0x40))
+					JoyPad->padTHPhase[0] ++;
+				break;
+		    case 2:
+				JoyPad->padDelay[1] = 0;
+				if(!(RamIO[2] & 0x40) && (byteValue&0x40))
+					JoyPad->padTHPhase[1] ++;
+				break;
+		}
+	} else {
+		// Sega Team Player Support
+		switch (offset) {
+			case 1:
+				if (TeamPlayerMode == 2) { // teamplayer port 2, gamepad port 1
+					JoyPad->padDelay[0] = 0;
+					if(!(RamIO[1] & 0x40) && (byteValue&0x40))
+						JoyPad->padTHPhase[0] ++;
+				} else {
+					teamplayer_write(byteValue, RamIO[offset + 3]);
+				}
+				break;
+			case 2:
+				if (TeamPlayerMode == 2) {
+					teamplayer_write(byteValue, RamIO[offset + 3]);
+				}
+				break;
+
+			case 4:
+			case 5:
+				if (TeamPlayerMode == (offset - 3) && byteValue != RamIO[offset]) {
+					teamplayer_write(RamIO[offset - 3], byteValue);
+				}
+				break;
+		}
 	}
 	RamIO[offset] = byteValue;
 }
@@ -1305,7 +1436,8 @@ static INT32 MegadriveResetDo()
 	// other reset
 	//memset(RamMisc, 0, sizeof(struct PicoMisc)); // do not clear because Mappers/SRam are set up in here when the driver inits
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
-	
+	teamplayer_reset();
+
 	// default VDP register values (based on Fusion)
 	memset(RamVReg, 0, sizeof(struct PicoVideo));
 	RamVReg->reg[0x00] = 0x04;
@@ -1335,6 +1467,11 @@ static INT32 MegadriveResetDo()
 	z80CyclesReset();
 
 	md_eeprom_stm95_reset();
+	{
+		RamIO[0x07] = 0xff;
+		RamIO[0x0a] = 0xff;
+		RamIO[0x0d] = 0xfb;
+	}
 
 	return 0;
 }
@@ -2606,7 +2743,22 @@ static void SetupCustomCartridgeMappers()
 		SekClose();
 	}
 
-	
+	switch ((BurnDrvGetHardwareCode() & 0xff)) {
+		case HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER:
+			TeamPlayerMode = 1;
+			break;
+		case HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2:
+			TeamPlayerMode = 2;
+			break;
+		default:
+			TeamPlayerMode = 0;
+			break;
+	}
+
+	if (TeamPlayerMode) {
+		bprintf(0, _T("Game supports Sega TeamPlayer 4x Pad in Port %d.\n"), TeamPlayerMode);
+		teamplayer_init();
+	}
 }
 
 // SRAM and EEPROM Handling
@@ -3205,6 +3357,7 @@ INT32 MegadriveExit()
 	HighCol = NULL;
 	bNoDebug = 0;
 	bForce3Button = 0;
+	TeamPlayerMode = 0;
 
 	psolarmode = 0;
 
@@ -4580,6 +4733,8 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(z80_cycle_cnt);
 		SCAN_VAR(z80_cycle_aim);
 		SCAN_VAR(last_z80_sync);
+
+		SCAN_VAR(teamplayer);
 
 		BurnRandomScan(nAction);
 	}

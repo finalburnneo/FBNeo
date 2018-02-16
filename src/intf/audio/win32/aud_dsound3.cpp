@@ -91,8 +91,8 @@ static int DxSoundCheck()
 		{
 
 #ifdef PRINT_DEBUG_INFO
-			if (wait_object -= WAIT_TIMEOUT)
-				bprintf(0, _T("*** DirectSound playback stalled.\n"));
+			//if (wait_object == WAIT_TIMEOUT)
+			//	bprintf(0, _T("*** DirectSound playback stalled.\n"));
 #endif
 
 			ResetEvent(hAbortAckEvent);

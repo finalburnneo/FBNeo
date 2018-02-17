@@ -829,7 +829,7 @@ static INT32 RohgaInit()
 		DrvSpriteDecode();
 	}	
 
-	deco16Init(0, 0, 1|2);
+	deco16Init(0, 0, 1|4);
 	deco16_set_graphics(DrvGfxROM0, 0x20000 * 2, DrvGfxROM1, 0x100000 * 2, DrvGfxROM2, 0x200000 * 2);
 	deco16_set_color_base(2, 512);
 	deco16_set_color_base(3, 768);
@@ -853,8 +853,7 @@ static INT32 RohgaInit()
 	SekMapMemory(deco16_pf_ram[1],		0x3c2000, 0x3c2fff, MAP_RAM);
 	SekMapMemory(deco16_pf_ram[2],		0x3c4000, 0x3c4fff, MAP_RAM);
 	SekMapMemory(deco16_pf_ram[3],		0x3c6000, 0x3c6fff, MAP_RAM);
-	SekMapMemory(deco16_pf_rowscroll[0],	0x3c8000, 0x3c8fff, MAP_RAM);
-	SekMapMemory(deco16_pf_rowscroll[0],	0x3c9000, 0x3c9fff, MAP_RAM);
+	SekMapMemory(deco16_pf_rowscroll[0],	0x3c8000, 0x3c9fff, MAP_RAM);
 	SekMapMemory(deco16_pf_rowscroll[1],	0x3ca000, 0x3cafff, MAP_RAM);
 	SekMapMemory(deco16_pf_rowscroll[1],	0x3cb000, 0x3cbfff, MAP_RAM);
 	SekMapMemory(deco16_pf_rowscroll[2],	0x3cc000, 0x3ccfff, MAP_RAM);

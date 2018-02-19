@@ -1,7 +1,7 @@
 // FB Alpha Rohga Armor Force / Wizard Fire / Nitro Ball / Schmeiser Robo driver module
 // Based on MAME driver by Bryan McPhail
 
-// tofix: dataeast logo too fast or missing in rohga
+// todo: fix wonky rhythm in rohga's attract music
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -459,8 +459,7 @@ static void __fastcall rohga_main_write_word(UINT32 address, UINT16 data)
 	switch (address)
 	{
 		case 0x300000:
-			memcpy (DrvSprBuf2, DrvSprBuf, 0x800);
-			memcpy (DrvSprBuf,  DrvSprRAM, 0x800);
+			memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		return;
 
 		case 0x31000a:
@@ -488,8 +487,7 @@ static void __fastcall rohga_main_write_byte(UINT32 address, UINT8 data)
 	{
 		case 0x300000:
 		case 0x300001:
-			memcpy (DrvSprBuf2, DrvSprBuf, 0x800);
-			memcpy (DrvSprBuf,  DrvSprRAM, 0x800);
+			memcpy (DrvSprBuf, DrvSprRAM, 0x800);
 		return;
 
 		case 0x31000a:
@@ -872,6 +870,8 @@ static INT32 RohgaInit()
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 2685000, 0, DrvYM2151WritePort, 0.78, 1006875, 1.00, 2013750, 0.40);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.78, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.78, BURN_SND_ROUTE_RIGHT);
+
+	deco16_music_tempofix = 1;
 
 	GenericTilesInit();
 
@@ -1689,7 +1689,7 @@ static void update_rohga(INT32 is_schmeisr)
 			break;
 	}
 
-	if (nSpriteEnable & 1) rohga_draw_sprites(DrvSprBuf2, is_schmeisr);
+	if (nSpriteEnable & 1) rohga_draw_sprites(DrvSprBuf, is_schmeisr);
 
 	deco16_draw_layer(0, pTransDraw, 0);
 
@@ -1795,7 +1795,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 4 * sizeof(UINT16)); 
+		memset (DrvInputs, 0xff, 4 * sizeof(UINT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -1818,16 +1818,16 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-		nCyclesDone[1] += h6280Run(nCyclesTotal[1] / nInterleave);
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += h6280Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		if (i == 248) {
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			deco16_vblank = 0x08;
 		}
 		
-		if (pBurnSoundOut && i%8==7) { // rohga is really picky regarding ym2151 timing.
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

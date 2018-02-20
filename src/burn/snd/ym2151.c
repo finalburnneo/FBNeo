@@ -142,15 +142,17 @@ typedef struct
 #else
 	UINT8		tim_A;					/* timer A enable (0-disabled) */
 	UINT8		tim_B;					/* timer B enable (0-disabled) */
-	INT32		tim_A_val;				/* current value of timer A */
-	INT32		tim_B_val;				/* current value of timer B */
-	UINT32		tim_A_tab[1024];		/* timer A deltas */
-	UINT32		tim_B_tab[256];			/* timer B deltas */
+	double		tim_A_val;				/* current value of timer A */
+	double		tim_B_val;				/* current value of timer B */
+	double		tim_A_tab[1024];		/* timer A deltas */
+	double		tim_B_tab[256];			/* timer B deltas */
 #endif
 	UINT32		timer_A_index;			/* timer A index */
 	UINT32		timer_B_index;			/* timer B index */
 	UINT32		timer_A_index_old;		/* timer A previous index */
 	UINT32		timer_B_index_old;		/* timer B previous index */
+
+	double      timer_sync;             /* sync to interleave for better timerb resolution */
 
 	/*	Frequency-deltas to get the closest frequency possible.
 	*	There are 11 octaves because of DT2 (max 950 cents over base frequency)
@@ -607,7 +609,6 @@ static void init_tables(void)
 #endif
 }
 
-
 static void init_chip_tables(YM2151 *chip)
 {
 	int i,j;
@@ -731,7 +732,10 @@ static void init_chip_tables(YM2151 *chip)
 		#ifdef USE_MAME_TIMERS
 			chip->timer_B_time[i] = pom;
 		#else
-			chip->tim_B_tab[i] = pom * (double)chip->sampfreq * mult;  /* number of samples that timer period takes (fixed point) */
+			if (chip->timer_sync != 0)
+				chip->tim_B_tab[i] = pom * (double)chip->timer_sync * mult;  /* number of samples that timer period takes (fixed point) */
+			else
+				chip->tim_B_tab[i] = pom * (double)chip->sampfreq * mult;  /* number of samples that timer period takes (fixed point) */
 		#endif
 	}
 
@@ -1622,6 +1626,15 @@ void BurnYM2151Scan_int(INT32 nAction)
 	}
 }
 
+void YM2151SetTimerInterleave(double d)
+{
+	YM2151 *chip = &YMPSG[0];
+
+	chip->timer_sync = d;
+
+	init_chip_tables(chip);
+}
+
 
 /*
 *	Initialize YM2151 emulator(s).
@@ -1654,6 +1667,7 @@ int YM2151Init(int num, int clock, int rate)
 		YMPSG[i].clock = clock;
 		/*rate = clock/64;*/
 		YMPSG[i].sampfreq = rate ? rate : 44100;	/* avoid division by 0 in init_chip_tables() */
+		YMPSG[i].timer_sync = 0;
 		YMPSG[i].irqhandler = NULL;					/* interrupt handler  */
 		YMPSG[i].porthandler = NULL;				/* port write handler */
 		init_chip_tables( &YMPSG[i] );
@@ -2521,7 +2535,10 @@ void YM2151UpdateOne(int num, INT16 **buffers, int length)
 #else
 	if (PSG->tim_B)
 	{
-		PSG->tim_B_val -= ( length << TIMER_SH );
+		if (PSG->timer_sync != 0)
+			PSG->tim_B_val -= ( 1 << TIMER_SH );
+		else
+			PSG->tim_B_val -= ( length << TIMER_SH );
 		if (PSG->tim_B_val<=0)
 		{
 			PSG->tim_B_val += PSG->tim_B_tab[ PSG->timer_B_index ];

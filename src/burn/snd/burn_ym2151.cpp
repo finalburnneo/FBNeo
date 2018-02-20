@@ -215,6 +215,18 @@ INT32 BurnYM2151Init(INT32 nClockFrequency)
 	return 0;
 }
 
+// Some games make heavy use of the B timer, to increase the accuracy of
+// this timer, call this with the number of times per frame BurnYM2151Render()
+// is called.  See drv/dataeast/d_rohga for example usage.
+void BurnYM2151SetInterleave(INT32 nInterleave)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_YM2151Initted) bprintf(PRINT_ERROR, _T("BurnYM2151SetInterleave called without init\n"));
+#endif
+
+	YM2151SetTimerInterleave(nInterleave * (nBurnFPS / 100));
+}
+
 void BurnYM2151SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBA_DEBUG

@@ -53,6 +53,7 @@ int YM2151Init(int num, int clock, int rate);
 
 /* shutdown the YM2151 emulators*/
 void YM2151Shutdown(void);
+void YM2151SetTimerInterleave(double d);
 
 /* reset all chip registers for YM2151 number 'num'*/
 void YM2151ResetChip(int num);

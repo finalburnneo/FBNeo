@@ -1,8 +1,6 @@
 // FB Alpha Rohga Armor Force / Wizard Fire / Nitro Ball / Schmeiser Robo driver module
 // Based on MAME driver by Bryan McPhail
 
-// todo: fix wonky rhythm in rohga's attract music
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "h6280_intf.h"
@@ -871,7 +869,7 @@ static INT32 RohgaInit()
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.78, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.78, BURN_SND_ROUTE_RIGHT);
 
-	deco16_music_tempofix = 1;
+	BurnYM2151SetInterleave(129); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -1825,7 +1823,7 @@ static INT32 DrvFrame()
 			SekSetIRQLine(6, CPU_IRQSTATUS_ACK);
 			deco16_vblank = 0x08;
 		}
-		
+
 		if (pBurnSoundOut && i&1) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);

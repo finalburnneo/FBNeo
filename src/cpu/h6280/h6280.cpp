@@ -307,7 +307,7 @@ int h6280TotalCycles()
 	if (nh6280CpuActive == -1) bprintf(PRINT_ERROR, _T("h6280TotalCycles called with no CPU open\n"));
 #endif
 
-	return h6280.h6280_totalcycles;
+	return h6280.h6280_totalcycles + (h6280.h6280_iCycles - h6280_ICount);;
 }
 
 void h6280RunEnd()

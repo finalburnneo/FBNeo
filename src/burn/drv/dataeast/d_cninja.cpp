@@ -1202,6 +1202,7 @@ static INT32 CninjaInit()
 
 	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 1, DrvYM2151WritePort, 0.45, 1006875, 0.75, 2013750, 0.60);
 	BurnYM2203SetAllRoutes(0, 0.60, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetInterleave(117); // "BurnYM2151Render()" called this many times per frame
 
 	GenericTilesInit();
 
@@ -2252,7 +2253,7 @@ static INT32 CninjaFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 2 * sizeof(INT16)); 
+		memset (DrvInputs, 0xff, 2 * sizeof(INT16));
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -2283,8 +2284,8 @@ static INT32 CninjaFrame()
 		}
 		if (i == 206) deco16_vblank = 0x08;
 		
-		if (pBurnSoundOut && i%4 == 3) { // this fixes small tempo fluxuations in cninja
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

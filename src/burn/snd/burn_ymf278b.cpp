@@ -149,14 +149,14 @@ void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue)
 
 	switch (nRegister) {
 		case 0:
-			BurnYMF278BUpdate(BurnYMF278BStreamCallback(nBurnSoundRate));
+			YMF278BRender(BurnYMF278BStreamCallback(nBurnSoundRate));
 			YMF278B_data_port_0_A_w(nValue);
 			break;
 		case 1:
 			YMF278B_data_port_0_B_w(nValue);
 			break;
 		case 2:
-			BurnYMF278BUpdate(BurnYMF278BStreamCallback(nBurnSoundRate));
+			YMF278BRender(BurnYMF278BStreamCallback(nBurnSoundRate));
 			YMF278B_data_port_0_C_w(nValue);
 			break;
 	}
@@ -168,7 +168,7 @@ UINT8 BurnYMF278BReadStatus()
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReadStatus called without init\n"));
 #endif
 
-	BurnYMF278BUpdate(BurnYMF278BStreamCallback(nBurnSoundRate));
+	YMF278BRender(BurnYMF278BStreamCallback(nBurnSoundRate));
 	return YMF278B_status_port_0_r();
 }
 
@@ -210,6 +210,11 @@ void BurnYMF278BExit()
 	DebugSnd_YMF278BInitted = 0;
 }
 
+INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROMSize, void (*IRQCallback)(INT32, INT32))
+{
+	return BurnYMF278BInit(nClockFrequency, YMF278BROM, YMF278BROMSize, IRQCallback, BurnSynchroniseStream);
+}
+
 INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROMSize, void (*IRQCallback)(INT32, INT32), INT32 (*StreamCallback)(INT32))
 {
 	DebugSnd_YMF278BInitted = 1;
@@ -223,8 +228,8 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 		nClockFrequency = YMF278B_STD_CLOCK;
 	}
 
+	BurnTimerInit(&ymf278b_timer_over, NULL);
 	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, nClockFrequency, nBurnSoundRate);
-	BurnTimerInit(ymf278b_timer_over, NULL);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 2 * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * 2 * sizeof(INT16));

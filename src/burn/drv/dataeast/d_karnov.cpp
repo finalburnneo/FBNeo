@@ -693,21 +693,6 @@ static void DrvYM3526FMIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 DrvYM3526SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
-}
-
-static INT32 DrvYM2203SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)SekTotalCycles() * nSoundRate / 10000000;
-}
-
-static double DrvYM2203GetTime()
-{
-	return (double)SekTotalCycles() / 10000000;
-}
-
 static INT32 DrvDoReset()
 {
 	DrvReset = 0;
@@ -918,11 +903,11 @@ static INT32 DrvInit()
 	M6502SetWriteHandler(karnov_sound_write);
 	M6502Close();
 
-	BurnYM3526Init(3000000, &DrvYM3526FMIRQHandler, &DrvYM3526SynchroniseStream, 0);
+	BurnYM3526Init(3000000, &DrvYM3526FMIRQHandler, 0);
 	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachSek(10000000);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 

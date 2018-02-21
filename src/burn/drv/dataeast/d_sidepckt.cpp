@@ -563,16 +563,6 @@ static void SidepcktSoundWriteByte(UINT16 Address, UINT8 Data)
 	}
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(M6809TotalCycles() * nSoundRate / 2000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 2000000;
-}
-
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
@@ -580,11 +570,6 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 	} else {
 		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
-}
-
-static INT32 DrvYM3526SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
 }
 
 static INT32 CharPlaneOffsets[3]   = { 0, 0x40000, 0x80000 };
@@ -686,11 +671,11 @@ static INT32 DrvInit()
 	M6502SetWriteHandler(SidepcktSoundWriteByte);
 	M6502Close();	
 	
-	BurnYM2203Init(1, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM3526Init(3000000, &DrvFMIRQHandler, &DrvYM3526SynchroniseStream, 1);
+	BurnYM3526Init(3000000, &DrvFMIRQHandler, 1);
 	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	

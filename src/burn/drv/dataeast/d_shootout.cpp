@@ -25,7 +25,6 @@ static UINT8 *DrvSprRAM;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
 static UINT8 bankdata;
-static INT32 soundcpu_mhz;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -301,16 +300,6 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	M6502SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / soundcpu_mhz;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6502TotalCycles() / soundcpu_mhz;
-}
-
 static tilemap_callback( background )
 {
 	INT32 attr  = DrvVidRAM[offs + 0x400];
@@ -475,9 +464,8 @@ static INT32 ShootoutInit()
 	M6502SetReadHandler(shootout_sound_read);
 	M6502Close();
 
-	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachM6502(1500000);
-	soundcpu_mhz = 1500000;
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -543,10 +531,9 @@ static INT32 ShootoujInit()
 	M6502MapMemory(DrvM6502ROM0,	0x8000, 0xffff, MAP_ROM);
 	M6502Close();
 
-	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &ym2203_write_port_A, &ym2203_write_port_B);
 	BurnTimerAttachM6502(2000000);
-	soundcpu_mhz = 2000000;
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

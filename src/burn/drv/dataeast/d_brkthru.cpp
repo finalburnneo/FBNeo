@@ -327,16 +327,6 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 	M6809SetIRQLine(M6809_IRQ_LINE, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / (1500000*2);
-}
-
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / (1500000*2);
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam,	0, RamEnd - AllRam);
@@ -504,12 +494,12 @@ static INT32 DrvInit()
 	M6809SetReadHandler(brkthru_sound_read);
 	M6809Close();
 
-	BurnYM2203Init(1, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachM6809(1500000*2);
 	BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.10);
 
-	BurnYM3526Init(3000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 1);
+	BurnYM3526Init(3000000, &DrvFMIRQHandler, 1);
 	BurnTimerAttachM6809YM3526(1500000*2);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 

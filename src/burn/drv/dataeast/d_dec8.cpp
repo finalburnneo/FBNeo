@@ -1150,56 +1150,6 @@ static UINT8 ghostb_sound_read(UINT16 address)
 	return 0;
 }
 
-static INT32 DrvYM3812SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
-}
-
-static INT32 DrvYM3812SynchroniseStreamCsilver(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / (1500000);
-}
-
-static INT32 DrvYM2203SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)HD6309TotalCycles() * nSoundRate / 12000000;
-}
-
-static double DrvYM2203GetTime()
-{
-	return (double)HD6309TotalCycles() / 12000000;
-}
-
-static INT32 DrvYM2203SynchroniseStream6000000(INT32 nSoundRate)
-{
-	return (INT64)HD6309TotalCycles() * nSoundRate / 6000000;
-}
-
-static double DrvYM2203GetTime6000000()
-{
-	return (double)HD6309TotalCycles() / 6000000;
-}
-
-static INT32 DrvYM2203M6809SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 2000000;
-}
-
-static double DrvYM2203M6809GetTime()
-{
-	return (double)M6809TotalCycles() / 2000000;
-}
-
-static INT32 DrvYM2203M6809SynchroniseStream1500000(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / (1500000);
-}
-
-static double DrvYM2203M6809GetTime1500000()
-{
-	return (double)M6809TotalCycles() / 1500000;
-}
-
 inline static INT32 CsilverMSM5205SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)((double)M6809TotalCycles() * nSoundRate / (1500000));
@@ -1457,11 +1407,11 @@ static INT32 DrvInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
+	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachM6502YM3812(1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
@@ -2368,14 +2318,14 @@ static INT32 CobraInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203M6809SynchroniseStream, DrvYM2203M6809GetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.53, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.53, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
 	BurnTimerAttachM6502YM3812(1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
@@ -3042,14 +2992,14 @@ static INT32 SrdarwinInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203M6809SynchroniseStream, DrvYM2203M6809GetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.23, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.23, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
 	BurnTimerAttachM6502YM3812(1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
@@ -3729,11 +3679,11 @@ static INT32 GondoInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
+	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachHD6309(12000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
@@ -4340,11 +4290,11 @@ static INT32 OscarInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
+	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203SynchroniseStream6000000, DrvYM2203GetTime6000000, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachHD6309(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
@@ -4996,11 +4946,11 @@ static INT32 LastmissInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStream, 0);
+	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203M6809SynchroniseStream, DrvYM2203M6809GetTime, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);
@@ -5729,11 +5679,11 @@ static INT32 CsilverInit()
 
 	BurnSetRefreshRate(58.00);
 
-	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, &DrvYM3812SynchroniseStreamCsilver, 0);
+	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
 	BurnTimerAttachM6502YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, DrvYM2203M6809SynchroniseStream1500000, DrvYM2203M6809GetTime1500000, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.23, BURN_SND_ROUTE_BOTH);

@@ -838,24 +838,6 @@ static void deco16YM2151IrqHandler(INT32 state)
 #endif
 }
 
-static INT32 deco16SynchroniseStream(INT32 nSoundRate)
-{
-#ifdef ENABLE_HUC6280
-	return (INT64)h6280TotalCycles() * nSoundRate / deco16_sound_cpuclock;
-#else
-	return 0 * nSoundRate;
-#endif
-}
-
-static double deco16GetTime()
-{
-#ifdef ENABLE_HUC6280
-	return (double)h6280TotalCycles() / (deco16_sound_cpuclock * 1.0);
-#else
-	return 0;
-#endif
-}
-
 static void deco16_sound_write(UINT32 address, UINT8 data)
 {
 //bprintf (0, _T("%5.5x, %2.2x\n"), address, data);
@@ -997,7 +979,7 @@ void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void
 	}
 
 	if (ym2203) {
-		BurnYM2203Init(1, 4027500, NULL, deco16SynchroniseStream, deco16GetTime, 1);
+		BurnYM2203Init(1, 4027500, NULL, 1);
 #ifdef ENABLE_HUC6280
 		BurnTimerAttachH6280(deco16_sound_cpuclock);
 #endif

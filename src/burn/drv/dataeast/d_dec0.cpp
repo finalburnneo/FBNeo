@@ -3714,16 +3714,6 @@ static INT32 SpritePlaneOffsets[4]       = { 0x100000, 0x300000, 0x000000, 0x200
 static INT32 TileXOffsets[16]            = { 128, 129, 130, 131, 132, 133, 134, 135, 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 TileYOffsets[16]            = { 0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120 };
 
-inline static INT32 Dec0YM2203SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)SekTotalCycles() * nSoundRate / 10000000;
-}
-
-inline static double Dec0YM2203GetTime()
-{
-	return (double)SekTotalCycles() / 10000000;
-}
-
 static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
@@ -3733,11 +3723,6 @@ static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 Dec0YM3812SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
-}
-
 static void Dec1YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
@@ -3745,11 +3730,6 @@ static void Dec1YM3812IRQHandler(INT32, INT32 nStatus)
 	} else {
 		h6280SetIRQLine(1, CPU_IRQSTATUS_NONE);
 	}
-}
-
-static INT32 Dec1YM3812SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)h6280TotalCycles() * nSoundRate / 2000000;
 }
 
 static INT32 Dec0MachineInit()
@@ -3797,11 +3777,11 @@ static INT32 Dec0MachineInit()
 	
 	GenericTilesInit();
 	
-	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, 1);
 	BurnTimerAttachM6502YM3812(1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachSek(10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
@@ -4299,11 +4279,11 @@ static INT32 SlyspyDrvInit()
 	
 	GenericTilesInit();
 	
-	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, 1);
 	BurnTimerAttachH6280YM3812(2000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachSek(10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.90, BURN_SND_ROUTE_BOTH);
@@ -4514,11 +4494,11 @@ static INT32 MidresInit()
 	
 	GenericTilesInit();
 	
-	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, &Dec1YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec1YM3812IRQHandler, 1);
 	BurnTimerAttachH6280YM3812(2000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachSek(10000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.75, BURN_SND_ROUTE_BOTH);

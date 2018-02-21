@@ -237,16 +237,6 @@ static void DrvYM3526IrqHandler(INT32, INT32 nStatus)
 	M6809SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 1500000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 1500000.0;
-}
-
 static tilemap_scan( bg )
 {
 	return  (row & 7) + ((row & ~7) << 4) + ((col & 0xf) << 3) + ((col & ~0xf) << 4);
@@ -404,11 +394,11 @@ static INT32 DrvInit()
 	M6809SetReadHandler(metlclsh_main_read);
 	M6809Close();
 
-	BurnYM3526Init(3000000, &DrvYM3526IrqHandler, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(3000000, &DrvYM3526IrqHandler, 0);
 	BurnTimerAttachM6809YM3526(1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2203Init(1, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 1);
+	BurnYM2203Init(1, 1500000, NULL, 1);
 	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);

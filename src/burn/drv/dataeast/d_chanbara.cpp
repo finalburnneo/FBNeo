@@ -165,16 +165,6 @@ static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	M6809SetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 1500000;
-}
-
-static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 1500000;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -333,7 +323,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(chanbara_read);
 	M6809Close();
 
-	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &chanbara_ay_writeA, &chanbara_ay_writeB);
 	BurnTimerAttachM6809(1500000);
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);

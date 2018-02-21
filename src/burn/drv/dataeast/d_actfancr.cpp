@@ -381,16 +381,6 @@ static UINT8 Dec0_sound_read(UINT16 address)
 	return 0;
 }
 
-inline static INT32 Dec0YM2203SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)h6280TotalCycles() * nSoundRate / 7159066;
-}
-
-inline static double Dec0YM2203GetTime()
-{
-	return (double)h6280TotalCycles() / 7159066.0;
-}
-
 static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 {
 	if (nStatus) {
@@ -398,11 +388,6 @@ static void Dec0YM3812IRQHandler(INT32, INT32 nStatus)
 	} else {
 		M6502SetIRQLine(M6502_IRQ_LINE, CPU_IRQSTATUS_NONE);
 	}
-}
-
-static INT32 Dec0YM3812SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / 1500000;
 }
 
 static INT32 DrvDoReset()
@@ -510,14 +495,14 @@ static void Dec0SoundInit()
 	M6502SetReadHandler(Dec0_sound_read);
 	M6502Close();
 	
-	BurnYM2203Init(1, 1500000, NULL, Dec0YM2203SynchroniseStream, Dec0YM2203GetTime, 0);
+	BurnYM2203Init(1, 1500000, NULL, 0);
 	BurnTimerAttachH6280(7159066);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.90, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.90, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.90, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, &Dec0YM3812SynchroniseStream, 1);
+	BurnYM3812Init(1, 3000000, &Dec0YM3812IRQHandler, 1);
 	BurnTimerAttachM6502YM3812(1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.90, BURN_SND_ROUTE_BOTH);
 

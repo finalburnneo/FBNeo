@@ -19,6 +19,7 @@ INT32 BurnTimerAttachH6280YM3812(INT32 nClockspeed);
 
 extern "C" void BurnYM3812UpdateRequest();
 
+INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal);
 INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal);
 void BurnYM3812SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM3812Reset();

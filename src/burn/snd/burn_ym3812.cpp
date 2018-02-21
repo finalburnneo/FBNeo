@@ -293,6 +293,11 @@ INT32 BurnTimerAttachH6280YM3812(INT32 nClockspeed)
 	return 0;
 }
 
+static INT32 YM3812SynchroniseStream(INT32 nSoundRate)
+{
+	return (INT64)(pCPUTotalCycles() * nSoundRate / nCPUClockspeed);
+}
+
 // Sound Related
 
 void (*BurnYM3812Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
@@ -561,6 +566,11 @@ void BurnYM3812Exit()
 	bYM3812AddSignal = 0;
 	
 	DebugSnd_YM3812Initted = 0;
+}
+
+INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnYM3812Init(num, nClockFrequency, IRQCallback, YM3812SynchroniseStream, bAddSignal);
 }
 
 INT32 BurnYM3812Init(INT32 num, INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)

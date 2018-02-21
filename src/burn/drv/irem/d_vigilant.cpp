@@ -1446,16 +1446,6 @@ inline static void BuccanrsYM2203IRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-inline static INT32 BuccanrsSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / (18432000 / 6);
-}
-
-inline static double BuccanrsGetTime()
-{
-	return (double)ZetTotalCycles() / (18432000 / 6);
-}
-
 static INT32 VigilantSyncDAC()
 {
 	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((nCyclesTotal[1] * 55.0000) / (nBurnFPS / 100.0000))));
@@ -1876,7 +1866,7 @@ static INT32 BuccanrsInit()
 	GenericTilesInit();
 	
 	DrvHasYM2203 = 1;
-	BurnYM2203Init(2, 18432000 / 6, &BuccanrsYM2203IRQHandler, BuccanrsSynchroniseStream, BuccanrsGetTime, 0);
+	BurnYM2203Init(2, 18432000 / 6, &BuccanrsYM2203IRQHandler, 0);
 	BurnTimerAttachZet(18432000 / 6);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);

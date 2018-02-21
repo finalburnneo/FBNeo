@@ -777,16 +777,6 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 8000000;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 8000000;
-}
-
 static INT32 drvZInit()
 {
 	ZetInit(0);
@@ -869,7 +859,7 @@ static INT32 DrvInit()
 	nCaveExtraXOffset = -112;
 	nCaveExtraYOffset = 1;
 	
-	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -954,7 +944,7 @@ static INT32 PlegendsInit()
 	nCaveExtraXOffset = -112;
 	nCaveExtraYOffset = 1;
 	
-	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 4000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.40, BURN_SND_ROUTE_BOTH);

@@ -542,16 +542,6 @@ static void TigeroadIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 TigeroadSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3579545;
-}
-
-static double TigeroadGetTime()
-{
-	return (double)ZetTotalCycles() / 3579545;
-}
-
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)((double)SekTotalCycles() * nSoundRate / 10000000);
@@ -728,7 +718,7 @@ static INT32 DrvInit(INT32 (*pInitCallback)())
 		ZetClose();
 	}
 
-	BurnYM2203Init(2, 3579545, &TigeroadIRQHandler, TigeroadSynchroniseStream, TigeroadGetTime, 0);
+	BurnYM2203Init(2, 3579545, &TigeroadIRQHandler, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);

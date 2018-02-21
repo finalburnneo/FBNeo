@@ -287,17 +287,7 @@ static void DrvYM2203WritePortA(UINT32, UINT32 data)
 
 static void DrvYM2203WritePortB(UINT32, UINT32 data)
 {
-	scrolly = data;	
-}
-
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
+	scrolly = data;
 }
 
 static INT32 DrvDoReset()
@@ -431,7 +421,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(xxmission_read);
 	ZetClose();
 
-	BurnYM2203Init(2,  1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2,  1500000, NULL, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
 	BurnYM2203SetPorts(1, NULL, NULL, &DrvYM2203WritePortA, &DrvYM2203WritePortB);
 	BurnTimerAttachZet(3000000);

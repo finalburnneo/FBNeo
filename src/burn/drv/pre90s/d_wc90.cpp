@@ -337,16 +337,6 @@ static inline void wc90SendSoundCommand(INT32 nCommand)
 	ZetOpen(0);
 }
 
-static INT32 wc90SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-static double wc90GetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
-}
-
 UINT8 __fastcall Wc90Read1(UINT16 a)
 {
 	switch (a) {
@@ -1177,7 +1167,7 @@ static INT32 Wc90Init()
 	BurnSetRefreshRate(59.17);
 
 	INT32 Wc90YM2608RomSize = 0x20000;
-	BurnYM2608Init(8000000, Wc90YM2608Rom, &Wc90YM2608RomSize, Wc90YM2608IRom, &wc90FMIRQHandler, wc90SynchroniseStream, wc90GetTime, 0);
+	BurnYM2608Init(8000000, Wc90YM2608Rom, &Wc90YM2608RomSize, Wc90YM2608IRom, &wc90FMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);

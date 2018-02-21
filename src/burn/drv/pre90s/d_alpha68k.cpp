@@ -671,16 +671,6 @@ static INT32 Kyros2PlaneOffsets[3]      = { 0, 0x80000, 0x80004 };
 static INT32 Kyros2XOffsets[8]          = { 67, 66, 65, 64, 3, 2, 1, 0 };
 static INT32 Kyros2Offsets[8]           = { 0, 8, 16, 24, 32, 40, 48, 56 };
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / nDrvTotalZ80Cycles);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / nDrvTotalZ80Cycles;
-}
-
 static INT32 DrvSyncDAC()
 {
 	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((double)nDrvTotalZ80Cycles / (nBurnFPS / 100.000))));
@@ -753,7 +743,7 @@ static INT32 SstingryInit()
 	nDrvTotal68KCycles = 6000000;
 	nDrvTotalZ80Cycles = 3579545;
 	
-	BurnYM2203Init(3, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(3, 3000000, NULL, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);
@@ -867,7 +857,7 @@ static INT32 KyrosInit()
 	nDrvTotal68KCycles = 6000000;
 	nDrvTotalZ80Cycles = 4000000;
 	
-	BurnYM2203Init(3, 2000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(3, 2000000, NULL, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.35, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.35, BURN_SND_ROUTE_BOTH);

@@ -1003,16 +1003,6 @@ void __fastcall TerracreYM2203Z80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
-}
-
 static INT32 TerracreSyncDAC()
 {
 	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.0000 / (nBurnFPS / 100.0000))));
@@ -1071,14 +1061,14 @@ static INT32 DrvInit()
 	ZetClose();
 	
 	if (DrvUseYM2203) {
-		BurnYM2203Init(1, 4000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2203Init(1, 4000000, NULL, 0);
 		BurnTimerAttachZet(4000000);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.20, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.20, BURN_SND_ROUTE_BOTH);
 	} else {
-		BurnYM3526Init(4000000, NULL, &DrvSynchroniseStream, 0);
+		BurnYM3526Init(4000000, NULL, 0);
 		BurnTimerAttachZetYM3526(4000000);
 		BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
@@ -1133,7 +1123,7 @@ static INT32 DrvAmazonInit()
 	ZetMapArea(0xc000, 0xcfff, 2, DrvZ80Ram);
 	ZetClose();
 	
-	BurnYM3526Init(4000000, NULL, &DrvSynchroniseStream, 0);
+	BurnYM3526Init(4000000, NULL, 0);
 	BurnTimerAttachZetYM3526(4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	

@@ -266,16 +266,6 @@ static UINT8 momoko_sound_read_port_A(UINT32)
 	return *soundlatch;
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 2500000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 2500000.0;
-}
-
 static INT32 DrvDoReset(INT32 clear)
 {
 	if (clear) {
@@ -474,7 +464,7 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	BurnYM2203Init(2, 1250000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1250000, NULL, 0);
 	BurnYM2203SetPorts(1, momoko_sound_read_port_A, NULL, NULL, NULL);
 	BurnTimerAttachZet(2500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);

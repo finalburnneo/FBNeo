@@ -189,16 +189,6 @@ static UINT8 citycon_ym2203_portB(UINT32 )
 	return soundlatch[1];
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 640000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 640000.0;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -368,7 +358,7 @@ static INT32 DrvInit()
 	M6809Close();
 
 	// note: 2nd ym2203 is used only for its ay8910 psg
-	BurnYM2203Init(2, 1250000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1250000, NULL, 0);
 	BurnYM2203SetPorts(0, &citycon_ym2203_portA, &citycon_ym2203_portB, NULL, NULL);
 	BurnTimerAttachM6809(640000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.40, BURN_SND_ROUTE_BOTH);

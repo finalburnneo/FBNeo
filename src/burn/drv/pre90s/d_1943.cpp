@@ -925,16 +925,6 @@ static tilemap_callback( fg )
 	TILE_SET_INFO(2, Code, Attr, 0);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
-}
-
 static INT32 DrvDoReset(INT32 clear_mem)
 {
 	ZetOpen(0);
@@ -1043,7 +1033,7 @@ static INT32 CommonInit(INT32 (*load)())
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.10, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);

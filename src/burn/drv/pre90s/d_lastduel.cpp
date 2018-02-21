@@ -911,16 +911,6 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3579545;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3579545;
-}
-
 static INT32 CharPlaneOffsets[2]     = { 4, 0 };
 static INT32 CharXOffsets[8]         = { 0, 1, 2, 3, 8, 9, 10, 11 };
 static INT32 CharYOffsets[8]         = { 0, 16, 32, 48, 64, 80, 96, 112 };
@@ -1015,7 +1005,7 @@ static INT32 DrvInit() // Madgear, Ledstorm
 	DrvSpritePriMask = 0x10;
 	DrvSpriteFlipYMask = 0x80;
 
-	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1106,7 +1096,7 @@ static INT32 Leds2011Init()
 	DrvSpritePriMask = 0x10;
 	DrvSpriteFlipYMask = 0x80;
 
-	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1196,7 +1186,7 @@ static INT32 LastduelInit()
 	DrvSpritePriMask = 0x00;
 	DrvSpriteFlipYMask = 0x40;
 
-	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.25)
@@ -1300,7 +1290,7 @@ static INT32 LastduelbInit()
 	DrvSpritePriMask = 0x00;
 	DrvSpriteFlipYMask = 0x40;
 
-	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.25)

@@ -326,16 +326,6 @@ static tilemap_callback( fg )
 	*category = attr & 0x1f;
 }
 
-static INT32 gunsmokeSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
-}
-
-static double gunsmokeGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
-}
-
 static INT32 MemIndex()
 {
 	UINT8 *Next; Next = Mem;
@@ -427,7 +417,7 @@ static INT32 DrvInit()
 		GenericTilemapSetCategoryEntry(1, i / 4, i % 4, (DrvColPROM[0x300 + i] == 0xf) ? 1 : 0);
 	}
 
-	BurnYM2203Init(2, 1500000, NULL, gunsmokeSynchroniseStream, gunsmokeGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.14, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.22, BURN_SND_ROUTE_BOTH);

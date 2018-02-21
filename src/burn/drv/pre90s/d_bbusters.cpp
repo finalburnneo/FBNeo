@@ -598,16 +598,6 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000.0;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -796,7 +786,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	INT32 nSoundROMLen = 0x80000;
-	BurnYM2610Init(8000000, DrvSndROM0, &nSoundROMLen, DrvSndROM1, &nSoundROMLen, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2610Init(8000000, DrvSndROM0, &nSoundROMLen, DrvSndROM1, &nSoundROMLen, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 2.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 2.00, BURN_SND_ROUTE_RIGHT);
@@ -879,7 +869,7 @@ static INT32 MechattInit()
 	ZetClose();
 
 	INT32 nSndROMLen = 0x20000;
-	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM1, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
@@ -980,7 +970,7 @@ static INT32 MechattjInit()
 	ZetClose();
 
 	INT32 nSndROMLen = 0x20000;
-	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen, DrvSndROM1, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.45, BURN_SND_ROUTE_BOTH);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);

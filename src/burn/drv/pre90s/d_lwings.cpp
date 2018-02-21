@@ -1008,11 +1008,6 @@ static INT32 DrvGfxDecode()
 	return 0;
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3000000);
-}
-
 inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 {
 	return (INT64)((double)ZetTotalCycles() * nSoundRate / (nCyclesTotal[0] * 130));
@@ -1021,11 +1016,6 @@ inline static INT32 DrvMSM5205SynchroniseStream(INT32 nSoundRate)
 inline static INT32 DrvMSM5205SynchroniseStreamAvengers(INT32 nSoundRate)
 {
 	return (INT64)((double)ZetTotalCycles() * nSoundRate / (nCyclesTotal[0] * 60));
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
 }
 
 static void lwings_main_cpu_init()
@@ -1070,7 +1060,7 @@ static void lwings_sound_init()
 	ZetSetWriteHandler(lwings_sound_write);
 	ZetClose();
 
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.10, BURN_SND_ROUTE_BOTH);

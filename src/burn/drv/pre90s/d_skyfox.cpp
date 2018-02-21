@@ -260,16 +260,6 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 1748000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 1748000.0;
-}
-
 static INT32 DrvInit()
 {
 	AllMem = NULL;
@@ -328,7 +318,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(skyfox_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 1748000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1748000, NULL, 0);
 	BurnTimerAttachZet(1748000);
 	BurnYM2203SetAllRoutes(0, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.80, BURN_SND_ROUTE_BOTH);

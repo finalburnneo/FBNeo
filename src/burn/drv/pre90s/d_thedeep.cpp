@@ -250,16 +250,6 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	M6502SetIRQLine(0, ((nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(M6502TotalCycles() * nSoundRate / 1500000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6502TotalCycles() / 1500000;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -410,7 +400,7 @@ static INT32 DrvInit()
 	M6502SetReadHandler(thedeep_sound_read);
 	M6502Close();
 
-	BurnYM2203Init(1,  3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1,  3000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachM6502(1500000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);

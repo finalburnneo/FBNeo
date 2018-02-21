@@ -302,16 +302,6 @@ static void tail2noseFMIRQHandler(INT32, INT32 status)
 	ZetSetIRQLine(0, (status & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE );
 }
 
-static INT32 tail2noseSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 5000000;
-}
-
-static double tail2noseGetTime()
-{
-	return (double)ZetTotalCycles() / 5000000;
-}
-
 static void tail2nos_zoom_callback(INT32 *code, INT32 *color, INT32 */*flags*/)
 {
 	*code |= ((*color & 0x03) << 8);
@@ -463,7 +453,7 @@ static INT32 DrvInit()
 	ZetSetInHandler(tail2nose_sound_in);
 
 	INT32 nSndROMLen = 0x20000;
-	BurnYM2608Init(8000000, DrvSndROM, &nSndROMLen, DrvISndROM, &tail2noseFMIRQHandler, tail2noseSynchroniseStream, tail2noseGetTime, 0);
+	BurnYM2608Init(8000000, DrvSndROM, &nSndROMLen, DrvISndROM, &tail2noseFMIRQHandler, 0);
 	AY8910SetPorts(0, NULL, NULL, NULL, bankswitch); // Really YM2608
 	BurnTimerAttachZet(5000000);
 	BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);

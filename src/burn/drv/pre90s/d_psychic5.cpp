@@ -521,16 +521,6 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 5000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 5000000;
-}
-
 static INT32 DrvInit()
 {
 	INT32 nRet = 0, nLen;
@@ -594,7 +584,7 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvZ80Ram2, 0xc000, 0xc7ff, MAP_RAM);
 	ZetClose();
 
-	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(5000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);

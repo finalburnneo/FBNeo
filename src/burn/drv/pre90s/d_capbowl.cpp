@@ -278,16 +278,6 @@ static INT32 DrvSyncDAC()
 	return (INT32)(float)(nBurnSoundLen * (M6809TotalCycles() / (2000000.000 / (nBurnFPS / 100.000))));
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 2000000;
-}
-
-static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 2000000;
-}
-
 static void DrvFMIRQCallback(INT32 , INT32 state)
 {
 	M6809SetIRQLine(M6809_FIRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -440,7 +430,7 @@ static INT32 DrvInit(INT32 game)
 	M6809SetReadHandler(sound_read);
 	M6809Close();
 
-	BurnYM2203Init(1, 4000000, DrvFMIRQCallback, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 4000000, DrvFMIRQCallback, 0);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetPorts(0, &capbowl_ym2203_portA, NULL, NULL, &capbowl_ym2203_write_portB);
 

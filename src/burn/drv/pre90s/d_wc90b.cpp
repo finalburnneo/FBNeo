@@ -579,11 +579,6 @@ inline static INT32 Wc90b1SynchroniseStream(INT32 nSoundRate)
 	return (INT64)(double)ZetTotalCycles() * nSoundRate / 5000000;
 }
 
-inline static double Wc90b1GetTime()
-{
-	return (double)ZetTotalCycles() / 5000000;
-}
-
 static void Wc90b1MSM5205Vck0()
 {
 	static INT32 Toggle = 0;
@@ -753,7 +748,7 @@ static INT32 Wc90b1Init()
 
 	GenericTilesInit();
 
-	BurnYM2203Init(1, 1250000, NULL, Wc90b1SynchroniseStream, Wc90b1GetTime, 0);
+	BurnYM2203Init(1, 1250000, NULL, 0);
 	BurnTimerAttachZet(5000000);
 	BurnYM2203SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 	

@@ -2308,16 +2308,6 @@ static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000.0;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -2909,7 +2899,7 @@ static INT32 SystemInit(INT32 nSystem, void (*pRomLoadCallback)())
 		ZetSetInHandler(megasys1z_sound_read_port);
 		ZetClose();
 
-		BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
 		BurnTimerAttachZet(3000000);
 		BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);

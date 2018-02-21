@@ -342,16 +342,6 @@ static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3579545;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3579545;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -528,7 +518,7 @@ static INT32 DrvInit()
 		ZetSetReadHandler(chinagat_bootleg2_sound_read);
 		ZetClose();
 
-		BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2203Init(2, 3579545, &DrvYM2203IRQHandler, 0);
 		BurnTimerAttachZet(3579545);
 		BurnYM2203SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);

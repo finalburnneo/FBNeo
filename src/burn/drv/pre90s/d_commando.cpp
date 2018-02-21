@@ -666,16 +666,6 @@ static tilemap_callback( fg )
 	TILE_SET_INFO(1, Code, Attr, TILE_FLIPYX(Attr >> 4));
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 3000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
-}
-
 static INT32 CharPlaneOffsets[2]   = { 4, 0 };
 static INT32 CharXOffsets[8]       = { 0, 1, 2, 3, 8, 9, 10, 11 };
 static INT32 CharYOffsets[8]       = { 0, 16, 32, 48, 64, 80, 96, 112 };
@@ -778,7 +768,7 @@ static INT32 DrvInit()
 	ZetSetWriteHandler(CommandoWrite2);
 	ZetClose();
 	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
@@ -879,7 +869,7 @@ static INT32 MercenarioInit()
 	ZetSetWriteHandler(CommandoWrite2);
 	ZetClose();
 	
-	BurnYM2203Init(2, 1500000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);

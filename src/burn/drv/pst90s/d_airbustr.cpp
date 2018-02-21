@@ -406,16 +406,6 @@ static UINT8 DrvYM2203PortB(UINT32)
 	return DrvDips[1];
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 6000000;
-}
-
 static INT32 DrvDoReset(INT32 full_reset)
 {
 	if (full_reset) {
@@ -639,7 +629,7 @@ static INT32 DrvInit()
 	ZetSetInHandler(airbustr_sound_in);
 	ZetClose();
 
-	BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, NULL, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203PortA, &DrvYM2203PortB, NULL, NULL);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);

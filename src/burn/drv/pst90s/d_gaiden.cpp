@@ -971,16 +971,6 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
-}
-
 static INT32 DrvInit()
 {
 	INT32 nLen;
@@ -1042,7 +1032,7 @@ static INT32 DrvInit()
 		BurnYM2151Init(4000000);
 		BurnYM2151SetAllRoutes(0.40, BURN_SND_ROUTE_BOTH);
 	} else {
-		BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, 0);
 		BurnTimerAttachZet(4000000);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);

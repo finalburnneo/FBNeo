@@ -7441,31 +7441,7 @@ static INT32 FinalbSpriteYOffsets[16]     = { 0, 64, 128, 192, 256, 320, 384, 44
 
 static void TaitoF2FMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-static INT32 TaitoF2SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / (24000000 / 6);
-}
-
-static double TaitoF2GetTime()
-{
-	return (double)ZetTotalCycles() / (24000000 / 6);
-}
-
-static INT32 CamltryaSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / (24000000 / 4);
-}
-
-static double CamltryaGetTime()
-{
-	return (double)ZetTotalCycles() / (24000000 / 4);
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void TaitoF2SoundInit()
@@ -7484,7 +7460,7 @@ static void TaitoF2SoundInit()
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1                 );
 	ZetClose();
 	
-	BurnYM2610Init(24000000 / 3, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &TaitoF2FMIRQHandler, TaitoF2SynchroniseStream, TaitoF2GetTime, 0);
+	BurnYM2610Init(24000000 / 3, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &TaitoF2FMIRQHandler, 0);
 	BurnTimerAttachZet(24000000 / 6);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
@@ -7682,7 +7658,7 @@ static INT32 CamltryaInit()
 	ZetMapArea(0x8000, 0x8fff, 2, TaitoZ80Ram1                 );
 	ZetClose();
 	
-	BurnYM2203Init(1, 24000000 / 8, &TaitoF2FMIRQHandler, CamltryaSynchroniseStream, CamltryaGetTime, 0);
+	BurnYM2203Init(1, 24000000 / 8, &TaitoF2FMIRQHandler, 0);
 	BurnTimerAttachZet(24000000 / 4);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);

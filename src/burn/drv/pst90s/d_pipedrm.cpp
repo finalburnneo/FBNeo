@@ -419,16 +419,6 @@ static void DrvFMIRQHandler(INT32, INT32 status)
 	ZetSetIRQLine(0, (status & 1) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE );
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3579500;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3579500;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -599,13 +589,13 @@ static INT32 DrvInit(INT32 game_select)
 	if (nmi_enable) {
 		INT32 nSndROMLen0 = 0x80000;
 		INT32 nSndROMLen1 = 0x80000;
-		BurnYM2610Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &nSndROMLen1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2610Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &nSndROMLen1, &DrvFMIRQHandler, 0);
 		BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
 		BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 		BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);
 	} else {
 		INT32 nSndROMLen0 = 0x20000;
-		BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2608Init(8000000, DrvSndROM0, &nSndROMLen0, DrvSndROM1, &DrvFMIRQHandler, 0);
 		BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
 		BurnYM2608SetRoute(BURN_SND_YM2608_YM2608_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 		BurnYM2608SetRoute(BURN_SND_YM2608_AY8910_ROUTE,   1.00, BURN_SND_ROUTE_BOTH);

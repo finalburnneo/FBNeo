@@ -383,16 +383,6 @@ static void DrvIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000.0;
-}
-
 static INT32 DrvDoReset()
 {
 	DrvReset = 0;
@@ -560,7 +550,7 @@ static INT32 DrvInit()
 	m6805SetReadHandler(pushman_mcu_read);
 //	m6805Close();
 
-	BurnYM2203Init(2, 2000000, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 2000000, &DrvIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);

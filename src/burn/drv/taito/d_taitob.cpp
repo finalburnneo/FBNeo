@@ -1692,21 +1692,7 @@ static void DrvMakeInputs()
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / cpu_speed[1];
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / (cpu_speed[1] * 1.0);
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset(INT32 reset_ram)
@@ -1833,7 +1819,7 @@ static void common_ym2610_init()
 	INT32 len0 = TaitoYM2610ARomSize;
 	INT32 len1 = TaitoYM2610BRomSize;
 
-	BurnYM2610Init(8000000, TaitoYM2610ARom, &len0, TaitoYM2610BRom, &len1, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2610Init(8000000, TaitoYM2610ARom, &len0, TaitoYM2610BRom, &len1, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(cpu_speed[1]);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1857,7 +1843,7 @@ static void common_ym2203_init()
 
 	TC0140SYTInit(0);
 
-	BurnYM2203Init(1, 3000000, DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, DrvFMIRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &bankswitch, NULL);
 	BurnTimerAttachZet(cpu_speed[1]);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);

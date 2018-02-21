@@ -1098,30 +1098,12 @@ void __fastcall TwinhawkZ80Write(UINT16 a, UINT8 d)
 
 static void TaitoXFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-static INT32 TaitoXSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-static double TaitoXGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void TaitoXYM2151IRQHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 SpritePlaneOffsets[4]    = { 0x800008, 0x800000, 8, 0 };
@@ -1196,9 +1178,9 @@ static INT32 TaitoXInit(INT32 nSoundType)
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_RIGHT);
 	} else {
 		if (nSoundType == 2) {
-			BurnYM2610Init(8000000, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, NULL, TaitoXSynchroniseStream, TaitoXGetTime, 0);
+			BurnYM2610Init(8000000, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, NULL, 0);
 		} else {
-			BurnYM2610Init(8000000, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, &TaitoXFMIRQHandler, TaitoXSynchroniseStream, TaitoXGetTime, 0);
+			BurnYM2610Init(8000000, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, &TaitoXFMIRQHandler, 0);
 		}
 		BurnTimerAttachZet(4000000);
 		BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);

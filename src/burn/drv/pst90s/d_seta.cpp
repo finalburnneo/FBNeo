@@ -6672,36 +6672,7 @@ static void usclssic68kInit()
 
 static void DrvFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus) {
-		ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
-	}
-}
-
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-static INT32 DrvSynchroniseStream2203(INT32 nSoundRate)
-{
-	return (INT64)M6502TotalCycles() * nSoundRate / 2000000;
-}
-
-static INT32 DrvYM3812SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)SekTotalCycles() * nSoundRate / 16000000;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000.0;
-}
-
-static double DrvGetTime2203()
-{
-	return (double)M6502TotalCycles() / 2000000.0;
+	ZetSetIRQLine(0x20, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static UINT8 DrvYM2203ReadPortA(UINT32)
@@ -7101,11 +7072,11 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 	if (strstr(BurnDrvGetTextA(DRV_NAME), "kamenrid") || strstr(BurnDrvGetTextA(DRV_NAME), "wrofaero") || strstr(BurnDrvGetTextA(DRV_NAME), "sokonuke"))
 		x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3812Init(1, 4000000, NULL, DrvYM3812SynchroniseStream, 0);
+	BurnYM3812Init(1, 4000000, NULL, 0);
 	BurnTimerAttachSekYM3812(16000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, DrvSynchroniseStream, DrvGetTime, 1);
+	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, 1);
 	BurnTimerAttachZet(4000000);
 	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
 	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
@@ -7114,7 +7085,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 		has_2203 = 1;
 
 	if (has_2203) {
-		BurnYM2203Init(1,  4000000, NULL, DrvSynchroniseStream2203, DrvGetTime2203, 1);
+		BurnYM2203Init(1,  4000000, NULL, 1);
 		BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
 		BurnYM2203SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 		BurnTimerAttachM6502(2000000);

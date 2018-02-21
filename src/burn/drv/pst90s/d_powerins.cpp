@@ -580,16 +580,6 @@ static void powerinsIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 powerinsSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
-static double powerinsGetTime()
-{
-	return (double)ZetTotalCycles() / 6000000;
-}
-
 static INT32 DrvDoReset()
 {
 	SekOpen(0);
@@ -849,7 +839,7 @@ static INT32 powerinsInit()
 	}
 	
 	if (game_drv == GAME_POWERINS ) {
-		BurnYM2203Init(1, 12000000 / 8, &powerinsIRQHandler, powerinsSynchroniseStream, powerinsGetTime, 0);
+		BurnYM2203Init(1, 12000000 / 8, &powerinsIRQHandler, 0);
 		BurnTimerAttachZet(6000000);
 		BurnYM2203SetAllRoutes(0, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnSetRefreshRate(56.0);

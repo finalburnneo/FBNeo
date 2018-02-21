@@ -3417,30 +3417,11 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 	SekRun(100); // lame hack for overlapped irq's causing the ymf278b timer to die
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)SekTotalCycles() * nSoundRate / 16000000;
-}
-
 static void blzntrndFMIRQHandler(INT32, INT32 nStatus)
 {
 	if (ZetGetActive() == -1) return;
 
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-}
-
-static INT32 blzntrndSynchroniseStream(INT32 nSoundRate)
-{
-	if (ZetGetActive() == -1) return 0;
-
-	return (INT64)ZetTotalCycles() * nSoundRate / 8000000;
-}
-
-static double blzntrndGetTime()
-{
-	if (ZetGetActive() == -1) return 0;
-
-	return (double)ZetTotalCycles() / 8000000.0;
 }
 
 static INT32 DrvDoReset()
@@ -3626,7 +3607,7 @@ static INT32 blzntrndInit()
 
 	INT32 RomSndSizeA = 0x80000;
 	INT32 RomSndSizeB = 0x400000;
-	BurnYM2610Init(8000000, DrvYMROMB, &RomSndSizeB, DrvYMROMA, &RomSndSizeA, &blzntrndFMIRQHandler, blzntrndSynchroniseStream, blzntrndGetTime, 0);
+	BurnYM2610Init(8000000, DrvYMROMB, &RomSndSizeB, DrvYMROMA, &RomSndSizeA, &blzntrndFMIRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
@@ -3713,7 +3694,7 @@ static INT32 gstrik2Init()
 
 	INT32 RomSndSizeA = 0x200000;
 	INT32 RomSndSizeB = 0x200000;
-	BurnYM2610Init(8000000, DrvYMROMB, &RomSndSizeB, DrvYMROMA, &RomSndSizeA, &blzntrndFMIRQHandler, blzntrndSynchroniseStream, blzntrndGetTime, 0);
+	BurnYM2610Init(8000000, DrvYMROMB, &RomSndSizeB, DrvYMROMA, &RomSndSizeA, &blzntrndFMIRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
@@ -4013,7 +3994,7 @@ static INT32 common_type1_init(INT32 video_type, INT32 gfx_len, INT32 load_roms,
 
 	if (sound_system == 3)
 	{
-		BurnYMF278BInit(0, DrvYMROMB, 0x280000, &DrvFMIRQHandler, DrvSynchroniseStream);
+		BurnYMF278BInit(0, DrvYMROMB, 0x280000, &DrvFMIRQHandler);
 		BurnYMF278BSetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		BurnTimerAttachSek(16000000);
 	}

@@ -1355,21 +1355,7 @@ static INT32 Darius2dSpriteYOffsets[16]    = { 0, 64, 128, 192, 256, 320, 384, 4
 
 static void Darius2FMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-static INT32 Darius2SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / (16000000 / 4);
-}
-
-static double Darius2GetTime()
-{
-	return (double)ZetTotalCycles() / (16000000 / 4);
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 Darius2Init()
@@ -1467,7 +1453,7 @@ static INT32 Darius2Init()
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
 	ZetClose();
 	
-	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
+	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, 0);
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.03);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.03);
@@ -1564,7 +1550,7 @@ static INT32 Darius2dInit()
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
 	ZetClose();
 	
-	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
+	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, 0);
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.03);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.03);
@@ -1676,7 +1662,7 @@ static INT32 WarriorbInit()
 	ZetMapArea(0xc000, 0xdfff, 2, TaitoZ80Ram1               );
 	ZetClose();
 	
-	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, Darius2SynchroniseStream, Darius2GetTime, 0);
+	BurnYM2610Init(16000000 / 2, TaitoYM2610ARom, (INT32*)&TaitoYM2610ARomSize, TaitoYM2610BRom, (INT32*)&TaitoYM2610BRomSize, &Darius2FMIRQHandler, 0);
 	BurnTimerAttachZet(16000000 / 4);
 	BurnYM2610SetLeftVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);
 	BurnYM2610SetRightVolume(BURN_SND_YM2610_AY8910_ROUTE, 0.25);

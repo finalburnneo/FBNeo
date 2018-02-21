@@ -458,21 +458,6 @@ static void DrvFMIRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 DrvYM2203SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)SekTotalCycles() * nSoundRate / 16000000;
-}
-
-static double DrvYM2203GetTime()
-{
-	return (double)SekTotalCycles() / 16000000;
-}
-
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
 static int DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -638,11 +623,11 @@ static INT32 DrvInit(INT32 nGame)
 	ZetSetInHandler(fuuki16_sound_read_port);
 	ZetClose();
 
-	BurnYM3812Init(1, 3580000, &DrvFMIRQHandler, DrvSynchroniseStream, 0);
+	BurnYM3812Init(1, 3580000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2203Init(1, 3580000, NULL, DrvYM2203SynchroniseStream, DrvYM2203GetTime, 1);
+	BurnYM2203Init(1, 3580000, NULL, 1);
 	BurnTimerAttachSek(16000000);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 

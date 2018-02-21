@@ -311,16 +311,6 @@ static void bladestl_ym2203_write_portB(UINT32, UINT32 data)
 	memcpy (DrvUpdROM, DrvUpdROM + 0x20000 + (((data & 0x38) >> 3) * 0x20000), 0x20000);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 2000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 2000000.0;
-}
-
 static INT32 DrvDoReset(INT32 clear_ram)
 {
 	if (clear_ram) {
@@ -448,7 +438,7 @@ static INT32 DrvInit()
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUpdROM);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2203Init(1, 3579545, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3579545, NULL, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &bladestl_ym2203_write_portA, &bladestl_ym2203_write_portB);
 	BurnTimerAttachM6809(2000000);
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);

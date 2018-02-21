@@ -988,16 +988,6 @@ static void neogeoFMIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 neogeoSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / nZ80Clockspeed;
-}
-
-static double neogeoGetTime()
-{
-	return (double)ZetTotalCycles() / nZ80Clockspeed;
-}
-
 // ----------------------------------------------------------------------------
 
 UINT8 __fastcall neogeoReadByteGambling(UINT32 sekAddress)
@@ -3947,9 +3937,9 @@ static INT32 NeoInitCommon()
 #endif
 
 	if (nNeoSystemType & NEO_SYS_CART) {
-		BurnYM2610Init(8000000, YM2610ADPCMAROM[0], &nYM2610ADPCMASize[0], YM2610ADPCMBROM[0], &nYM2610ADPCMBSize[0], &neogeoFMIRQHandler, neogeoSynchroniseStream, neogeoGetTime, 0);
+		BurnYM2610Init(8000000, YM2610ADPCMAROM[0], &nYM2610ADPCMASize[0], YM2610ADPCMBROM[0], &nYM2610ADPCMBSize[0], &neogeoFMIRQHandler, 0);
 	} else {
-		BurnYM2610Init(8000000, YM2610ADPCMBROM[0], &nYM2610ADPCMBSize[0], YM2610ADPCMBROM[0], &nYM2610ADPCMBSize[0], &neogeoFMIRQHandler, neogeoSynchroniseStream, neogeoGetTime, 0);
+		BurnYM2610Init(8000000, YM2610ADPCMBROM[0], &nYM2610ADPCMBSize[0], YM2610ADPCMBROM[0], &nYM2610ADPCMBSize[0], &neogeoFMIRQHandler, 0);
 	}
 	
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);

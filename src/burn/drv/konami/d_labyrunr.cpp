@@ -278,16 +278,6 @@ static UINT8 ym2203_1_read_portB(UINT32 )
 	return DrvDips[2];
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)HD6309TotalCycles() * nSoundRate / 3000000;
-}
-
-static double DrvGetTime()
-{
-	return (double)HD6309TotalCycles() / 3000000;
-}
-
 static INT32 DrvDoReset(INT32 full_reset)
 {
 	if (full_reset) {
@@ -425,7 +415,7 @@ static INT32 CommonInit(INT32 nLoadType)
 	HD6309SetReadHandler(labyrunr_read);
 	HD6309Close();
 
-	BurnYM2203Init(2, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(2, 3000000, NULL, 0);
 	BurnYM2203SetPorts(0, &ym2203_0_read_portA, &ym2203_0_read_portB, NULL, NULL);
 	BurnYM2203SetPorts(1, NULL, &ym2203_1_read_portB, NULL, NULL);
 	BurnTimerAttachHD6309(3000000);

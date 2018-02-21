@@ -1532,49 +1532,12 @@ inline static INT32 PdriftSndGetBank(INT32 Reg86)
 
 inline void System16YM2151IRQHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static void System16YM2203IRQHandler(INT32, INT32 nStatus)
+inline static void System1xFMIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-inline static void System18YM3438IRQHandler(INT32, INT32 nStatus)
-{
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-inline static INT32 System16SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static double System16GetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
-}
-
-inline static INT32 System18SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 8000000;
-}
-
-inline static double System18GetTime()
-{
-	return (double)ZetTotalCycles() / 8000000;
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void System16UPD7759DrqCallback(INT32 state)
@@ -2137,7 +2100,7 @@ INT32 System16Init()
 			mcs51_set_read_handler(sega_315_5195_i8751_read_port);
 		}
 		
-		BurnYM3438Init(2, 8000000, &System18YM3438IRQHandler, System18SynchroniseStream, System18GetTime, 1);
+		BurnYM3438Init(2, 8000000, &System1xFMIRQHandler, 1);
 		BurnTimerAttachZet(8000000);
 		BurnYM3438SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 		BurnYM3438SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -2235,7 +2198,7 @@ INT32 System16Init()
 		ppi8255_init(2);
 		
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
-			BurnYM2203Init(1, 4000000, &System16YM2203IRQHandler, System16SynchroniseStream, System16GetTime, 0);
+			BurnYM2203Init(1, 4000000, &System1xFMIRQHandler, 0);
 			BurnTimerAttachZet(4000000);
 			BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.37, BURN_SND_ROUTE_BOTH);
 			BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.13, BURN_SND_ROUTE_BOTH);

@@ -3850,26 +3850,6 @@ static void DrvYM2151IrqHandler(INT32 nStatus)
 	}
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate) // tharrier & manybloc
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 6000000);
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 6000000;
-}
-
-inline static INT32 Macross2SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(ZetTotalCycles() * nSoundRate / 4000000);
-}
-
-inline static double Macross2GetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
-}
-
 static void MSM6295SetInitialBanks(INT32 chips)
 {
 	if (chips > 0) MSM6295SetBank(0, DrvSndROM0, 0, 0x3ffff);
@@ -4177,7 +4157,7 @@ static INT32 DrvInit(INT32 (*pLoadCallback)()) // tharrier, manybloc
 
 	BurnSetRefreshRate(56.00);
 
-	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, 0);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);
@@ -4313,7 +4293,7 @@ static INT32 Macross2Init()
 
 	BurnSetRefreshRate(56.00);
 
-	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, Macross2SynchroniseStream, Macross2GetTime, 0);
+	BurnYM2203Init(1, 1500000, &DrvYM2203IrqHandler, 0);
 	BurnTimerAttachZet(4000000);
 
 	if (Tdragon2mode) {
@@ -9973,16 +9953,6 @@ static void RapheroYM2203IrqHandler(INT32, INT32 nStatus)
 	tlcs90SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static double RapheroGetTime()
-{
-	return (double)tlcs90TotalCycles() / 8000000;
-}
-
-inline static INT32 RapheroSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(tlcs90TotalCycles() * nSoundRate / 8000000);
-}
-
 static INT32 RapheroDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -10069,7 +10039,7 @@ static INT32 RapheroInit()
 	tlcs90SetReadHandler(raphero_sound_read);
 	tlcs90Close();
 
-	BurnYM2203Init(1, 1500000, &RapheroYM2203IrqHandler, RapheroSynchroniseStream, RapheroGetTime, 0);
+	BurnYM2203Init(1, 1500000, &RapheroYM2203IrqHandler, 0);
 	BurnTimerAttachTlcs90(8000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   1.20, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.50, BURN_SND_ROUTE_BOTH);

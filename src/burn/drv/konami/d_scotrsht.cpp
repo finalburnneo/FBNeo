@@ -230,16 +230,6 @@ UINT8 __fastcall scotrsht_sound_in(UINT16 port)
 	return 0;
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3072000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3072000.0;
-}
-
 static INT32 DrvDoReset()
 {
 	DrvReset = 0;
@@ -393,7 +383,7 @@ static INT32 DrvInit()
 	ZetSetInHandler(scotrsht_sound_in);
 	ZetClose();
 
-	BurnYM2203Init(1, 3072000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3072000, NULL, 0);
 	BurnTimerAttachZet(3072000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 

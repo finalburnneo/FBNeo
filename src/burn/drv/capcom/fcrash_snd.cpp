@@ -114,14 +114,9 @@ void __fastcall FcrashZ80Write(UINT16 a, UINT8 d)
 	}
 }
 
-inline static INT32 FcrashSynchroniseStream(INT32 nSoundRate)
+inline static INT32 FcrashSynchroniseStream(INT32 nSoundRate) // MSM5205
 {
 	return (INT64)((double)ZetTotalCycles() * nSoundRate / (24000000 / 6));
-}
-
-inline static double FcrashGetTime()
-{
-	return (double)ZetTotalCycles() / (24000000 / 6);
 }
 
 static void FcrashMSM5205Vck0()
@@ -158,7 +153,7 @@ INT32 FcrashSoundInit()
 	ZetMapArea(0xd000, 0xd7ff, 2, FcrashZ80Ram     );
 	ZetClose();
 	
-	BurnYM2203Init(2, 24000000 / 6, NULL, FcrashSynchroniseStream, FcrashGetTime, 0);
+	BurnYM2203Init(2, 24000000 / 6, NULL, 0);
 	BurnTimerAttachZet(24000000 / 6);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.07, BURN_SND_ROUTE_BOTH);

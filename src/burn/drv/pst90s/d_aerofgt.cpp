@@ -1218,18 +1218,6 @@ static void aerofgtFMIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 aerofgtSynchroniseStream(INT32 nSoundRate)
-{
-	if (ZetGetActive() == -1) return 0;
-	return (INT64)ZetTotalCycles() * nSoundRate / 5000000;
-}
-
-static double aerofgtGetTime()
-{
-	if (ZetGetActive() == -1) return 0;
-	return (double)ZetTotalCycles() / 5000000.0;
-}
-
 static void aerofgtSndBankSwitch(UINT8 v)
 {
 	v &= 0x03;
@@ -1771,7 +1759,7 @@ static void aerofgt_sound_init()
 	ZetSetOutHandler(aerofgtZ80PortWrite);
 	ZetClose();
 	
-	BurnYM2610Init(8000000, RomSnd2, &RomSndSize2, RomSnd1, &RomSndSize1, &aerofgtFMIRQHandler, aerofgtSynchroniseStream, aerofgtGetTime, 0);
+	BurnYM2610Init(8000000, RomSnd2, &RomSndSize2, RomSnd1, &RomSndSize1, &aerofgtFMIRQHandler, 0);
 	BurnTimerAttachZet(5000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
@@ -1788,7 +1776,7 @@ static void turbofrc_sound_init()
 	ZetSetOutHandler(turbofrcZ80PortWrite);
 	ZetClose();
 
-	BurnYM2610Init(8000000, RomSnd2, &RomSndSize2, RomSnd1, &RomSndSize1, &aerofgtFMIRQHandler, aerofgtSynchroniseStream, aerofgtGetTime, 0);
+	BurnYM2610Init(8000000, RomSnd2, &RomSndSize2, RomSnd1, &RomSndSize1, &aerofgtFMIRQHandler, 0);
 	BurnTimerAttachZet(5000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);

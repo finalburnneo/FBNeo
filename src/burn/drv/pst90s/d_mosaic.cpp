@@ -238,16 +238,6 @@ static UINT8 ym2203_0_read_portA(UINT32 )
 	return DrvDips[0];
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)Z180TotalCycles() * nSoundRate / CPU_SPEED;
-}
-
-static double DrvGetTime()
-{
-	return (double)Z180TotalCycles() / CPU_SPEED;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -324,7 +314,7 @@ static INT32 DrvInit(INT32 select)
 
 	protection_write = (select) ? gfire2_protection_write : mosaic_protection_write;
 
-	BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, NULL, 0);
 	BurnYM2203SetPorts(0, &ym2203_0_read_portA, NULL, NULL, NULL);
 	BurnTimerAttachZ180(7000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);

@@ -4279,21 +4279,12 @@ static void TaitoYM2151IRQHandler(INT32 Irq)
 
 static void TaitoYM2203IRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xFF, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 TaitoSynchroniseStream(INT32 nSoundRate)
+inline static INT32 TaitoSynchroniseStream(INT32 nSoundRate) // 5205
 {
 	return (INT64)((double)ZetTotalCycles() * nSoundRate / 4000000);
-}
-
-inline static double TaitoGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000;
 }
 
 static void RbislandBankSwitch(UINT32, UINT32 Data)
@@ -4621,7 +4612,7 @@ static INT32 DariusInit()
 	ZetMapArea(0x0000, 0xffff, 2, TaitoZ80Rom2               );
 	ZetClose();
 	
-	BurnYM2203Init(2, 4000000, TaitoYM2203IRQHandler, TaitoSynchroniseStream, TaitoGetTime, 0);
+	BurnYM2203Init(2, 4000000, TaitoYM2203IRQHandler, 0);
 	BurnTimerAttachZet(8000000 / 2);
 	BurnYM2203SetPorts(0, NULL, NULL, &DariusWritePortA0, &DariusWritePortB0);
 	BurnYM2203SetPorts(1, NULL, NULL, &DariusWritePortA1, &DariusWritePortB1);
@@ -5048,7 +5039,7 @@ static INT32 JumpingInit()
 	ZetMapArea(0xc000, 0xffff, 2, TaitoZ80Rom1 + 0xc000      );
 	ZetClose();
 	
-	BurnYM2203Init(2, 3579545, NULL, TaitoSynchroniseStream, TaitoGetTime, 0);
+	BurnYM2203Init(2, 3579545, NULL, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
@@ -5344,7 +5335,7 @@ static INT32 VolfiedInit()
 	ZetMapArea(0x8000, 0x87ff, 2, TaitoZ80Ram1               );
 	ZetClose();
 	
-	BurnYM2203Init(1, 4000000, TaitoYM2203IRQHandler, TaitoSynchroniseStream, TaitoGetTime, 0);
+	BurnYM2203Init(1, 4000000, TaitoYM2203IRQHandler, 0);
 	BurnYM2203SetPorts(0, &VolfiedDip1Read, &VolfiedDip2Read, NULL, NULL);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);

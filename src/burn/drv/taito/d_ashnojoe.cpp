@@ -230,25 +230,14 @@ void DrvYM2203WritePortB(UINT32, UINT32 d)
 
 inline static void DrvIRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
+static INT32 DrvSynchroniseStream(INT32 nSoundRate) // msm5205
 {
 	if (ZetGetActive() == -1) return 0;
 
 	return (INT64)(double)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-static double DrvGetTime()
-{
-	if (ZetGetActive() == -1) return 0;
-
-	return (double)ZetTotalCycles() / 4000000.0;
 }
 
 static void ashnojoe_vclk_cb()
@@ -407,7 +396,7 @@ static INT32 DrvInit()
 	MSM5205Init(0, DrvSynchroniseStream, 384000, ashnojoe_vclk_cb, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2203Init(1, 4000000, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 4000000, &DrvIRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &DrvYM2203WritePortA, &DrvYM2203WritePortB);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetAllRoutes(0, 0.10, BURN_SND_ROUTE_BOTH);

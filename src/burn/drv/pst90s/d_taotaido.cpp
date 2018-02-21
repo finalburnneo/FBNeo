@@ -660,16 +660,6 @@ static void taotaidoFMIRQHandler(INT32, INT32 nStatus)
 	}
 }
 
-static INT32 taotaidoSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 5000000;
-}
-
-static double taotaidoGetTime()
-{
-	return (double)ZetTotalCycles() / 5000000.0;
-}
-
 static INT32 DrvInit()
 {
 	AllMem = NULL;
@@ -726,7 +716,7 @@ static INT32 DrvInit()
 
 	INT32 nDrvSndROM0Size = 0x100000;
 	INT32 nDrvSndROM1Size = 0x200000;
-	BurnYM2610Init(8000000, DrvSndROM1, &nDrvSndROM1Size, DrvSndROM0, &nDrvSndROM0Size, &taotaidoFMIRQHandler, taotaidoSynchroniseStream, taotaidoGetTime, 0);
+	BurnYM2610Init(8000000, DrvSndROM1, &nDrvSndROM1Size, DrvSndROM0, &nDrvSndROM0Size, &taotaidoFMIRQHandler, 0);
 	BurnTimerAttachZet(5000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);

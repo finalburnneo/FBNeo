@@ -1357,26 +1357,6 @@ static void DrvYM2151IrqHandler(INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE));
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static INT32 DrvSynchroniseStream8Mhz(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 8000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000.0;
-}
-
-inline static double DrvGetTime8Mhz()
-{
-	return (double)ZetTotalCycles() / 8000000.0;
-}
-
 static INT32 Z80YM2203DoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -1699,7 +1679,7 @@ static INT32 LastdayInit()
 
 	DrvSoundCPUInit(1,0);
 
-	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
+	BurnYM2203Init(2, 4000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);
@@ -1766,7 +1746,7 @@ static INT32 GulfstrmInit()
 
 	DrvSoundCPUInit(1,0);
 
-	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
+	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.20);
@@ -1836,7 +1816,7 @@ static INT32 PolluxInit()
 
 	DrvSoundCPUInit(1,1);
 
-	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, DrvSynchroniseStream8Mhz, DrvGetTime8Mhz, 0);
+	BurnYM2203Init(2, 1500000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(8000000);
 	BurnYM2203SetAllRoutes(0, 0.40, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.40, BURN_SND_ROUTE_BOTH);

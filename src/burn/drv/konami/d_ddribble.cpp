@@ -276,16 +276,6 @@ static tilemap_scan( tilemap )
 	return (col & 0x1f) + ((row & 0x1f) << 5) + ((col & 0x20) << 6);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 1536000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)M6809TotalCycles() / 1536000.0;
-}
-
 static UINT32 DrvVLM5030Sync(INT32 samples_rate)
 {
 	return (samples_rate * M6809TotalCycles()) / 25600;
@@ -473,7 +463,7 @@ static INT32 DrvInit()
 	M6809SetReadHandler(ddribble_sound_read);
 	M6809Close();
 
-	BurnYM2203Init(1, 3579545, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3579545, NULL, 0);
 	BurnYM2203SetPorts(0, NULL, &ddribble_ym2203_read_port_B, &ddribble_ym2203_write_portA, NULL);
 	BurnTimerAttachM6809(1536000);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);

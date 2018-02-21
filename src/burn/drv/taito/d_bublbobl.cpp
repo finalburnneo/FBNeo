@@ -2046,26 +2046,7 @@ UINT8 __fastcall TokioSoundRead3(UINT16 a)
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
-	if (nStatus & 1) {
-		ZetSetIRQLine(0xff, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0,    CPU_IRQSTATUS_NONE);
-	}
-}
-
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
-}
-
-inline static INT32 DrvYM3526SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3000000;
+	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 TilePlaneOffsets[4] = { 0, 4, 0x200000, 0x200004 };
@@ -2140,11 +2121,11 @@ static INT32 MachineInit()
 		m67805_taito_init(DrvMcuRom, DrvMcuRam, &bub68705_m68705_interface);
 	}
 	
-	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
-	BurnYM3526Init(3000000, NULL, &DrvYM3526SynchroniseStream, 1);
+	BurnYM3526Init(3000000, NULL, 1);
 	BurnTimerAttachZetYM3526(6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	
@@ -2522,7 +2503,7 @@ static INT32 BublboblpInit()
 	ZetMapArea(0x8000, 0x8fff, 2, DrvZ80Ram3             );	
 	ZetClose();
 	
-	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);
@@ -2647,7 +2628,7 @@ static INT32 TokioInit()
 	
 	if (DrvMCUInUse == 2) m67805_taito_init(DrvMcuRom, DrvMcuRam, &tokio_m68705_interface);
 	
-	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.08, BURN_SND_ROUTE_BOTH);

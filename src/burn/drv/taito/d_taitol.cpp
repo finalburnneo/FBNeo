@@ -2298,24 +2298,9 @@ inline static void DrvIRQHandler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
+inline static INT32 DrvSynchroniseStream(INT32 nSoundRate) // MSM5205
 {
 	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 4000000.0;
-}
-
-inline static INT32 DrvSynchroniseStream2(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6665280;
-}
-
-inline static double DrvGetTime2()
-{
-	return (double)ZetTotalCycles() / 6665280.0;
 }
 
 static INT32 DrvDoReset()
@@ -2516,7 +2501,7 @@ static INT32 FhawkInit()
 	ZetSetReadHandler(fhawk_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(1, 3000000, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvIRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &ym2203_write_portA, NULL);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.80, BURN_SND_ROUTE_BOTH);
@@ -2598,7 +2583,7 @@ static INT32 ChampwrInit()
 	ZetSetReadHandler(champwr_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(1, 3000000, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvIRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &ym2203_write_portA, &champwr_ym2203_write_portB);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.80, BURN_SND_ROUTE_BOTH);
@@ -2671,7 +2656,7 @@ static INT32 EvilstonInit()
 	ZetSetReadHandler(evilston_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, NULL, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2749,7 +2734,7 @@ static INT32 RaimaisInit()
 
 	has_ym2610 = 1;
 	INT32 DrvSndROMLen = 0x80000;
-	BurnYM2610Init(8000000, DrvSampleROM, &DrvSndROMLen, DrvSampleROM, &DrvSndROMLen, &DrvIRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2610Init(8000000, DrvSampleROM, &DrvSndROMLen, DrvSampleROM, &DrvSndROMLen, &DrvIRQHandler, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2610SetRoute(BURN_SND_YM2610_YM2610_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
@@ -2830,7 +2815,7 @@ static INT32 KurikintCommonInit(INT32 loadtype)
 	ZetSetReadHandler(evilston_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, NULL, 0);
 	BurnTimerAttachZet(4000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2892,7 +2877,7 @@ static INT32 commonSingleZ80(INT32 (*pRomLoadCallback)(), void (*write)(UINT16,U
 	ZetInit(1); // not used
 	ZetInit(2); // not used
 
-	BurnYM2203Init(1, 13330560/4, NULL, DrvSynchroniseStream2, DrvGetTime2, 0);
+	BurnYM2203Init(1, 13330560/4, NULL, 0);
 
 	BurnTimerAttachZet(13330560/2);
 

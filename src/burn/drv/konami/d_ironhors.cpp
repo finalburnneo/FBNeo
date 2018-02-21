@@ -271,16 +271,6 @@ static UINT8 __fastcall ironhors_sound_read_port(UINT16 port)
 	return 0;
 }
 
-static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3072000;
-}
-
-static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 3072000;
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -437,7 +427,7 @@ static INT32 DrvInit()
 	ZetSetInHandler(ironhors_sound_read_port);
 	ZetClose();
 
-	BurnYM2203Init(1, 3072000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3072000, NULL, 0);
 	BurnTimerAttachZet(3072000);
 	BurnYM2203SetAllRoutes(0, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 1.00);

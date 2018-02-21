@@ -915,16 +915,6 @@ inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 	Z80SetIrqLine(Z80_INPUT_LINE_NMI, nStatus & 1);
 }
 
-inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
-inline static double DrvGetTime()
-{
-	return (double)ZetTotalCycles() / 6000000;
-}
-
 static INT32 kabukizSyncDAC()
 {
 	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
@@ -1358,7 +1348,7 @@ static INT32 Type1Init(INT32 mcutype)
 		BurnYM2151Init(3000000); // jpopnics
 		BurnYM2151SetAllRoutes(0.30, BURN_SND_ROUTE_BOTH);
 	} else {
-		BurnYM2203Init(1, 3000000, NULL, DrvSynchroniseStream, DrvGetTime, 0);
+		BurnYM2203Init(1, 3000000, NULL, 0);
 		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
 
 		if (mcutype == MCU_EXTRMATN || mcutype == MCU_DRTOPPEL) {
@@ -1479,7 +1469,7 @@ static INT32 Type2Init()
 	ZetSetInHandler(tnzs_cpu2_in);
 	ZetClose();
 
-	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, DrvSynchroniseStream, DrvGetTime, 0);
+	BurnYM2203Init(1, 3000000, &DrvYM2203IRQHandler, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &kabukiz_sound_bankswitch, &kabukiz_dac_write);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);

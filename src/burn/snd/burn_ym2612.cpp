@@ -309,6 +309,11 @@ void BurnYM2612Exit()
 
 void BurnStateExit();
 
+INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnYM2612Init(num, nClockFrequency, IRQCallback, BurnSynchroniseStream, BurnGetTime, bAddSignal);
+}
+
 INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
 	DebugSnd_YM2612Initted = 1;

@@ -8,6 +8,7 @@ extern "C" {
 extern "C" void BurnYM2612UpdateRequest();
 
 INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal);
+INT32 BurnYM2612Init(INT32 num, INT32 nClockFrequency, FM_IRQHANDLER IRQCallback, INT32 bAddSignal);
 void BurnYM2612SetRoute(INT32 nChip, INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM2612Reset();
 void BurnYM2612Exit();
@@ -36,7 +37,7 @@ void BurnYM2612Scan(INT32 nAction, INT32* pnMin);
 	BurnYM3438SetRoute(i, BURN_SND_YM3438_YM3438_ROUTE_1, v, d);	\
 	BurnYM3438SetRoute(i, BURN_SND_YM3438_YM3438_ROUTE_2, v, d);
 	
-#define BurnYM3438Init(i, n, a, b, c, d) BurnYM2612Init(i, n, a, b, c, d)
+#define BurnYM3438Init(i, n, a, d) BurnYM2612Init(i, n, a, d)
 #define BurnYM3438SetRoute(i, n, v, d) BurnYM2612SetRoute(i, n, v, d)
 #define BurnYM3438Reset() BurnYM2612Reset()
 #define BurnYM3438Exit() BurnYM2612Exit()

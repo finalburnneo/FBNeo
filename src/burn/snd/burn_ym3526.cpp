@@ -278,6 +278,12 @@ INT32 BurnTimerAttachM6502YM3526(INT32 nClockspeed)
 	return 0;
 }
 
+static INT32 YM3526SynchroniseStream(INT32 nSoundRate)
+{
+	return (INT64)(pCPUTotalCycles() * nSoundRate / nCPUClockspeed);
+}
+
+
 // Sound Related
 
 void (*BurnYM3526Update)(INT16* pSoundBuf, INT32 nSegmentEnd);
@@ -504,6 +510,11 @@ void BurnYM3526Exit()
 	bYM3526AddSignal = 0;
 	
 	DebugSnd_YM3526Initted = 0;
+}
+
+INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnYM3526Init(nClockFrequency, IRQCallback, YM3526SynchroniseStream, bAddSignal);
 }
 
 INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal)

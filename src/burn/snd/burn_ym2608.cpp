@@ -344,6 +344,11 @@ void BurnYM2608Exit()
 	DebugSnd_YM2608Initted = 0;
 }
 
+INT32 BurnYM2608Init(INT32 nClockFrequency, UINT8* YM2608ADPCMROM, INT32* nYM2608ADPCMSize, UINT8* YM2608IROM, FM_IRQHANDLER IRQCallback, INT32 bAddSignal)
+{
+	return BurnYM2608Init(nClockFrequency, YM2608ADPCMROM, nYM2608ADPCMSize, YM2608IROM, IRQCallback, BurnSynchroniseStream, BurnGetTime, bAddSignal);
+}
+
 INT32 BurnYM2608Init(INT32 nClockFrequency, UINT8* YM2608ADPCMROM, INT32* nYM2608ADPCMSize, UINT8* YM2608IROM, FM_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), double (*GetTimeCallback)(), INT32 bAddSignal)
 {
 	DebugSnd_YM2608Initted = 1;

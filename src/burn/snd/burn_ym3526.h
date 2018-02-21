@@ -17,6 +17,7 @@ INT32 BurnTimerAttachM6502YM3526(INT32 nClockspeed);
 
 extern "C" void BurnYM3526UpdateRequest();
 
+INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 bAddSignal);
 INT32 BurnYM3526Init(INT32 nClockFrequency, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal);
 void BurnYM3526SetRoute(INT32 nIndex, double nVolume, INT32 nRouteDir);
 void BurnYM3526Reset();

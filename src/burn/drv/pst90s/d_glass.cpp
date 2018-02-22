@@ -491,12 +491,12 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	draw_bitmap();
+	if (nBurnLayer & 1) draw_bitmap();
 
-	GenericTilemapDraw(1, pTransDraw, 0);
-	GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
+	if (nBurnLayer & 4) GenericTilemapDraw(0, pTransDraw, 0);
 
-	draw_sprites();
+	if (nBurnLayer & 8) draw_sprites();
 
 	BurnTransferCopy(BurnPalette);
 

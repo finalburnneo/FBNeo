@@ -1,6 +1,10 @@
 // FB Alpha Irem M90 driver module
 // Based on MAME driver by Bryan McPhail
 
+// Todo: impl. raster effects so bbmanw's titlescreen and gamestart work right
+//       it also should remove the need for a kludge w/riskchal
+// Note: main cpu is actually 16mhz
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"
@@ -47,6 +51,8 @@ static UINT8 DrvReset;
 static INT32 vblank;
 static INT32 code_mask[2];
 static INT32 video_offsets[2] = { 0, 0 };
+
+static INT32 riskchal = 0;
 
 enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, Z80_ASSERT, Z80_CLEAR };
 
@@ -843,9 +849,8 @@ static UINT8 __fastcall m90_main_read(UINT32 /*address*/)
 
 static void __fastcall m90_main_write_port(UINT32 port, UINT8 data)
 {
-	if ((port & ~0x0f) == 0x80) {
+	if ((port & 0xf0) == 0x80) {
 		m90_video_control[port & 0x0f] = data;
-		//bprintf(0, _T("%X %X.  "), port, data);
 		return;
 	}
 
@@ -1169,6 +1174,7 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	video_offsets[0] = video_offsets[1] = 0;
+	riskchal = 0;
 
 	return 0;
 }
@@ -1242,7 +1248,7 @@ static void draw_layer(INT32 layer)
 	if (control & 0x10) return; // disable layer
 
 	INT32 enable_rowscroll = control & 0x20;
-	INT32 enable_colscroll = control & 0x40;
+	INT32 enable_colscroll = (riskchal) ? 0 : control & 0x40;
 
 	INT32 wide = (control & 0x04) ? 128 : 64;
 
@@ -1325,6 +1331,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	if ((nBurnLayer & 0xf) != 0xf) BurnTransferClear();
+
 	if ((m90_video_control[14] & 0x04) == 0) {
 		if (m90_video_control[12] & 0x10) {
 			memset (RamPrioBitmap, 0, nScreenWidth * nScreenHeight);
@@ -1388,8 +1396,9 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += VezRun(nCyclesTotal[0] / nInterleave);
 
-		if (i == (nInterleave - 1))
+		if (i == 124)
 		{
+			vblank = 0x80;
 			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_ACK);
 			VezRun(0);
 			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_NONE);
@@ -1397,8 +1406,6 @@ static INT32 DrvFrame()
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 		ZetNmi();
-
-		if (i == 124) vblank = 0x80;
 
 		if (pBurnSoundOut && i&1) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
@@ -1780,12 +1787,14 @@ static INT32 riskchalInit()
 {
 	video_offsets[0] = 80;
 	video_offsets[1] = 136;
+	riskchal = 1;
+
 	return DrvInit(0x80000, 0x200000, 0x40000, 0, 0, gussun_decryption_table);
 }
 
 struct BurnDriver BurnDrvRiskchal = {
 	"riskchal", NULL, NULL, NULL, "1993",
-	"Risky Challenge\0", "Graphics issues", "Irem", "Irem M90",
+	"Risky Challenge\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, riskchalRomInfo, riskchalRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,
@@ -1815,7 +1824,7 @@ STD_ROM_FN(gussun)
 
 struct BurnDriver BurnDrvGussun = {
 	"gussun", "riskchal", NULL, NULL, "1993",
-	"Gussun Oyoyo (Japan)\0", "Graphics issues", "Irem", "Irem M90",
+	"Gussun Oyoyo (Japan)\0", NULL, "Irem", "Irem M90",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, gussunRomInfo, gussunRomName, NULL, NULL, p2commonInputInfo, RiskchalDIPInfo,

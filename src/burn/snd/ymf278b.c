@@ -147,7 +147,7 @@
 
 	void *m_timer_a, *m_timer_b;
 	const UINT8 *m_rom;
-	UINT32 m_romsize, m_sample_rate;
+	UINT32 m_romsize;
 	int m_clock;
 
 	//sound_stream * m_stream;
@@ -1109,7 +1109,7 @@ static void precompute_rate_tables()
 //  device_start - device-specific startup
 //-------------------------------------------------
 
-int ymf278b_start(int num, UINT8 *rom, INT32 romsize, void (*irq_cb)(INT32, INT32), void (*timer_cb)(INT32, INT32, double), int clock, int rate)
+int ymf278b_start(int num, UINT8 *rom, INT32 romsize, void (*irq_cb)(INT32, INT32), void (*timer_cb)(INT32, INT32, double), int clock)
 {
 	int i;
 
@@ -1126,7 +1126,6 @@ int ymf278b_start(int num, UINT8 *rom, INT32 romsize, void (*irq_cb)(INT32, INT3
 	m_timer_ld = timer_alloc(TIMER_LD_CLEAR); */
 
 	m_clock_ratio = (float)clock / (float)YMF278B_STD_CLOCK;
-	m_sample_rate = rate;
 
 	for (i = 0; i < 24; i++)
 	{

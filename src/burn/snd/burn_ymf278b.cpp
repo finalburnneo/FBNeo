@@ -7,8 +7,13 @@ static INT32 (*BurnYMF278BStreamCallback)(INT32 nSoundRate);
 static INT16* pBuffer;
 static INT16* pYMF278BBuffer[2];
 
+static INT32 bYMF278BAddSignal;
+
+static UINT32 nSampleSize;
 static INT32 nYMF278BPosition;
 static INT32 nFractionalPosition;
+
+static INT32 nBurnYMF278SoundRate;
 
 static double YMF278BVolumes[2];
 static INT32 YMF278BRouteDirs[2];
@@ -50,6 +55,22 @@ static void YMF278BRender(INT32 nSegmentLength)
 // ----------------------------------------------------------------------------
 // Update the sound buffer
 
+#define INTERPOLATE_ADD_SOUND_LEFT(route, buffer)																	\
+	if ((YMF278BRouteDirs[route] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {									\
+		nLeftSample[0] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 3]/* * YMF278BVolumes[route]*/);	\
+		nLeftSample[1] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 2]/* * YMF278BVolumes[route]*/);	\
+		nLeftSample[2] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 1]/* * YMF278BVolumes[route]*/);	\
+		nLeftSample[3] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 0]/* * YMF278BVolumes[route]*/);	\
+	}
+
+#define INTERPOLATE_ADD_SOUND_RIGHT(route, buffer)																	\
+	if ((YMF278BRouteDirs[route] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {									\
+		nRightSample[0] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 3]/* * YMF278BVolumes[route]*/);	\
+		nRightSample[1] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 2]/* * YMF278BVolumes[route]*/);	\
+		nRightSample[2] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 1]/* * YMF278BVolumes[route]*/);	\
+		nRightSample[3] += (INT32)(pYMF278BBuffer[buffer][(nFractionalPosition >> 16) - 0]/* * YMF278BVolumes[route]*/);	\
+	}
+
 void BurnYMF278BUpdate(INT32 nSegmentEnd)
 {
 #if defined FBA_DEBUG
@@ -57,65 +78,66 @@ void BurnYMF278BUpdate(INT32 nSegmentEnd)
 #endif
 
 	INT16* pSoundBuf = pBurnSoundOut;
-	INT32 nSegmentLength = nSegmentEnd;
 
-//	bprintf(PRINT_NORMAL, _T("    YMF278B render %6i -> %6i\n"), nYMF278BPosition, nSegmentEnd);
-
-	if (nBurnSoundRate == 0) {
+	if (nBurnSoundRate == 0 || pBurnSoundOut == NULL) {
 		return;
 	}
 
-	if (nSegmentEnd < nYMF278BPosition) {
-		nSegmentEnd = nYMF278BPosition;
+//	bprintf(PRINT_NORMAL, _T("    YMF278B render %6i -> %6i\n"), nYMF278BPosition, nSegmentEnd);
+
+	INT32 nSegmentLength = nSegmentEnd;
+	INT32 nSamplesNeeded = nSegmentEnd * nBurnYMF278SoundRate / nBurnSoundRate + 1;
+
+	if (nSamplesNeeded < nYMF278BPosition) {
+		nSamplesNeeded = nYMF278BPosition;
 	}
 
 	if (nSegmentLength > nBurnSoundLen) {
 		nSegmentLength = nBurnSoundLen;
 	}
+	nSegmentLength <<= 1;
 
-	YMF278BRender(nSegmentEnd);
+	YMF278BRender(nSamplesNeeded);
 
 	pYMF278BBuffer[0] = pBuffer + 0 * 4096 + 4;
 	pYMF278BBuffer[1] = pBuffer + 1 * 4096 + 4;
 
-	for (INT32 n = nFractionalPosition; n < nSegmentLength; n++) {
-		INT32 nLeftSample = 0, nRightSample = 0;
+	for (INT32 i = (nFractionalPosition & 0xFFFF0000) >> 15; i < nSegmentLength; i += 2, nFractionalPosition += nSampleSize) {
+		INT32 nLeftSample[4] = {0, 0, 0, 0};
+		INT32 nRightSample[4] = {0, 0, 0, 0};
+		INT32 nTotalLeftSample, nTotalRightSample;
 
-		if ((YMF278BRouteDirs[BURN_SND_YMF278B_YMF278B_ROUTE_1] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYMF278BBuffer[0][n] * YMF278BVolumes[BURN_SND_YMF278B_YMF278B_ROUTE_1]);
+		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YMF278B_YMF278B_ROUTE_1, 0)
+		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YMF278B_YMF278B_ROUTE_1, 0)
+		INTERPOLATE_ADD_SOUND_LEFT  (BURN_SND_YMF278B_YMF278B_ROUTE_2, 1)
+		INTERPOLATE_ADD_SOUND_RIGHT (BURN_SND_YMF278B_YMF278B_ROUTE_2, 1)
+
+		nTotalLeftSample  = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nLeftSample[0], nLeftSample[1], nLeftSample[2], nLeftSample[3]);
+		nTotalRightSample = INTERPOLATE4PS_16BIT((nFractionalPosition >> 4) & 0x0fff, nRightSample[0], nRightSample[1], nRightSample[2], nRightSample[3]);
+
+		nTotalLeftSample  = BURN_SND_CLIP(nTotalLeftSample * YMF278BVolumes[BURN_SND_YMF278B_YMF278B_ROUTE_1]);
+		nTotalRightSample = BURN_SND_CLIP(nTotalRightSample * YMF278BVolumes[BURN_SND_YMF278B_YMF278B_ROUTE_2]);
+
+		if (bYMF278BAddSignal) {
+			pSoundBuf[i + 0] = BURN_SND_CLIP(pSoundBuf[i + 0] + nTotalLeftSample);
+			pSoundBuf[i + 1] = BURN_SND_CLIP(pSoundBuf[i + 1] + nTotalRightSample);
+		} else {
+			pSoundBuf[i + 0] = nTotalLeftSample;
+			pSoundBuf[i + 1] = nTotalRightSample;
 		}
-		if ((YMF278BRouteDirs[BURN_SND_YMF278B_YMF278B_ROUTE_1] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYMF278BBuffer[0][n] * YMF278BVolumes[BURN_SND_YMF278B_YMF278B_ROUTE_1]);
-		}
-		
-		if ((YMF278BRouteDirs[BURN_SND_YMF278B_YMF278B_ROUTE_2] & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
-			nLeftSample += (INT32)(pYMF278BBuffer[1][n] * YMF278BVolumes[BURN_SND_YMF278B_YMF278B_ROUTE_2]);
-		}
-		if ((YMF278BRouteDirs[BURN_SND_YMF278B_YMF278B_ROUTE_2] & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
-			nRightSample += (INT32)(pYMF278BBuffer[1][n] * YMF278BVolumes[BURN_SND_YMF278B_YMF278B_ROUTE_2]);
-		}
-		
-		nLeftSample = BURN_SND_CLIP(nLeftSample);
-		nRightSample = BURN_SND_CLIP(nRightSample);
-			
-		pSoundBuf[(n << 1) + 0] = nLeftSample;
-		pSoundBuf[(n << 1) + 1] = nRightSample;
 	}
 
-	nFractionalPosition = nSegmentLength;
-
 	if (nSegmentEnd >= nBurnSoundLen) {
-		INT32 nExtraSamples = nSegmentEnd - nBurnSoundLen;
+		INT32 nExtraSamples = nSamplesNeeded - (nFractionalPosition >> 16);
 
-		for (INT32 i = 0; i < nExtraSamples; i++) {
-			pYMF278BBuffer[0][i] = pYMF278BBuffer[0][nBurnSoundLen + i];
-			pYMF278BBuffer[1][i] = pYMF278BBuffer[1][nBurnSoundLen + i];
+		for (INT32 i = -4; i < nExtraSamples; i++) {
+			pYMF278BBuffer[0][i] = pYMF278BBuffer[0][(nFractionalPosition >> 16) + i];
+			pYMF278BBuffer[1][i] = pYMF278BBuffer[1][(nFractionalPosition >> 16) + i];
 		}
 
-		nFractionalPosition = 0;
+		nFractionalPosition &= 0xFFFF;
 
 		nYMF278BPosition = nExtraSamples;
-
 	}
 }
 
@@ -149,14 +171,14 @@ void BurnYMF278BWriteRegister(INT32 nRegister, UINT8 nValue)
 
 	switch (nRegister) {
 		case 0:
-			YMF278BRender(BurnYMF278BStreamCallback(nBurnSoundRate));
+			YMF278BRender(BurnYMF278BStreamCallback(nBurnYMF278SoundRate));
 			YMF278B_data_port_0_A_w(nValue);
 			break;
 		case 1:
 			YMF278B_data_port_0_B_w(nValue);
 			break;
 		case 2:
-			YMF278BRender(BurnYMF278BStreamCallback(nBurnSoundRate));
+			YMF278BRender(BurnYMF278BStreamCallback(nBurnYMF278SoundRate));
 			YMF278B_data_port_0_C_w(nValue);
 			break;
 	}
@@ -168,7 +190,7 @@ UINT8 BurnYMF278BReadStatus()
 	if (!DebugSnd_YMF278BInitted) bprintf(PRINT_ERROR, _T("BurnYMF278BReadStatus called without init\n"));
 #endif
 
-	YMF278BRender(BurnYMF278BStreamCallback(nBurnSoundRate));
+	YMF278BRender(BurnYMF278BStreamCallback(nBurnYMF278SoundRate));
 	return YMF278B_status_port_0_r();
 }
 
@@ -228,14 +250,17 @@ INT32 BurnYMF278BInit(INT32 nClockFrequency, UINT8* YMF278BROM, INT32 YMF278BROM
 		nClockFrequency = YMF278B_STD_CLOCK;
 	}
 
+	nBurnYMF278SoundRate = 44100; // hw rate
+	nSampleSize = (UINT32)nBurnYMF278SoundRate * (1 << 16) / nBurnSoundRate;
+	bYMF278BAddSignal = 0; // not used by any driver. (yet)
+
 	BurnTimerInit(&ymf278b_timer_over, NULL);
-	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, nClockFrequency, nBurnSoundRate);
+	ymf278b_start(0, YMF278BROM, YMF278BROMSize, IRQCallback, BurnYMFTimerCallback, nClockFrequency);
 
 	pBuffer = (INT16*)BurnMalloc(4096 * 2 * sizeof(INT16));
 	memset(pBuffer, 0, 4096 * 2 * sizeof(INT16));
 
 	nYMF278BPosition = 0;
-
 	nFractionalPosition = 0;
 	
 	// default routes

@@ -887,7 +887,7 @@ void BurnRandomInit()
 
 INT32 BurnSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(BurnTimerCPUTotalCycles() * nSoundRate / BurnTimerCPUClockspeed);
+	return (INT64)BurnTimerCPUTotalCycles() * nSoundRate / BurnTimerCPUClockspeed;
 }
 
 double BurnGetTime()

@@ -1029,24 +1029,9 @@ static void sound_type1_fm_irq_handler(INT32, INT32 nStatus)
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static INT32 hardhead_fm_syncronize(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
-}
-
 static INT32 DrvSyncDAC()
 {
 	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
-}
-
-inline static INT32 rranger_fm_syncronize(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 6000000;
-}
-
-inline static double rranger_get_time()
-{
-	return (double)ZetTotalCycles() / 6000000.0;
 }
 
 static INT32 MemIndex()
@@ -1360,7 +1345,7 @@ static INT32 HardheadInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 3000000, (0 ? &sound_type1_fm_irq_handler : NULL), hardhead_fm_syncronize, 0);
+	BurnYM3812Init(1, 3000000, (0 ? &sound_type1_fm_irq_handler : NULL), 0);
 	BurnTimerAttachZetYM3812(3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1444,7 +1429,7 @@ static INT32 SparkmanInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, NULL, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 4000000, NULL, 0);
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1601,7 +1586,7 @@ static INT32 StarfighInit()
 	ZetSetReadHandler(hardhead_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 4000000, NULL, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 4000000, NULL, 0);
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
@@ -1697,7 +1682,7 @@ static INT32 RrangerInit()
 	ZetSetReadHandler(rranger_sound_read);
 	ZetClose();
 
-	BurnYM2203Init(2, 4000000, NULL, rranger_fm_syncronize, rranger_get_time, 0);
+	BurnYM2203Init(2, 4000000, NULL, 0);
 	BurnYM2203SetPorts(0, NULL, NULL, &rranger_ay8910_write_A, &hardhead_ay8910_write_B);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetAllRoutes(0, 0.90, BURN_SND_ROUTE_BOTH);
@@ -1803,7 +1788,7 @@ static INT32 Hardhea2Init()
 	ZetSetInHandler(hardhea2_pcm_read_port);
 	ZetClose();
 
-	BurnYM3812Init(1, 3000000, sound_type1_fm_irq_handler, rranger_fm_syncronize, 0);
+	BurnYM3812Init(1, 3000000, sound_type1_fm_irq_handler, 0);
 	BurnTimerAttachZetYM3812(6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 

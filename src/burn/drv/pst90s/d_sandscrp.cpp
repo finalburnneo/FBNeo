@@ -658,12 +658,17 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	for (INT32 i = 0; i < 8; i++) {
+	for (INT32 i = 0; i < 4; i++) {
 		kaneko_view2_draw_layer(0, 0, i);
 		kaneko_view2_draw_layer(0, 1, i);
 	}
 
 	pandora_update(pTransDraw);
+
+	for (INT32 i = 4; i < 8; i++) {
+		kaneko_view2_draw_layer(0, 0, i);
+		kaneko_view2_draw_layer(0, 1, i);
+	}
 
 	BurnTransferCopy(DrvPalette);
 
@@ -694,7 +699,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] =  { 20000000 / 60, 4000000 / 60 };
+	INT32 nCyclesTotal[2] =  { 12000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -702,11 +707,9 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		nCyclesDone[0] += SekRun(nSegment);
-
-		if (i == 224) {
+		if (i == 240) {
 			vblank_irq = 1;
 			update_irq_state();
 		}
@@ -716,7 +719,7 @@ static INT32 DrvFrame()
 			update_irq_state();
 		}
 
-		BurnTimerUpdate(SekTotalCycles()/3);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[1]);

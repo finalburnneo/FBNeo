@@ -129,16 +129,6 @@ static void NMK004YM2203IrqHandler(INT32, INT32 nStatus)
 	tlcs90SetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
-inline static double NMK004GetTime()
-{
-	return (double)tlcs90TotalCycles() / 8000000;
-}
-
-inline static INT32 NMK004SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)(tlcs90TotalCycles() * nSoundRate / 8000000);
-}
-
 void NMK004_init()
 {
 	nmk004_initted = 1;
@@ -153,7 +143,7 @@ void NMK004_init()
 	tlcs90SetWritePortHandler(nmk004_tlcs90_write_port);
 	tlcs90Close();
 
-	BurnYM2203Init(1, 1500000, &NMK004YM2203IrqHandler, NMK004SynchroniseStream, NMK004GetTime, 0);
+	BurnYM2203Init(1, 1500000, &NMK004YM2203IrqHandler, 0);
 	BurnTimerAttachTlcs90(8000000);
 	/* reminder: these route#s are opposite of MAME, for example:
 	MCFG_SOUND_ROUTE(0, "mono", 0.50)

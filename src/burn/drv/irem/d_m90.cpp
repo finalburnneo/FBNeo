@@ -1,10 +1,6 @@
 // FB Alpha Irem M90 driver module
 // Based on MAME driver by Bryan McPhail
 
-// Todo: impl. raster effects so bbmanw's titlescreen and gamestart work right
-//       it also should remove the need for a kludge w/riskchal
-// Note: main cpu is actually 16mhz
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym2151.h"
@@ -51,8 +47,6 @@ static UINT8 DrvReset;
 static INT32 vblank;
 static INT32 code_mask[2];
 static INT32 video_offsets[2] = { 0, 0 };
-
-static INT32 riskchal = 0;
 
 enum { VECTOR_INIT, YM2151_ASSERT, YM2151_CLEAR, Z80_ASSERT, Z80_CLEAR };
 
@@ -1174,7 +1168,6 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 
 	video_offsets[0] = video_offsets[1] = 0;
-	riskchal = 0;
 
 	return 0;
 }
@@ -1248,7 +1241,7 @@ static void draw_layer(INT32 layer)
 	if (control & 0x10) return; // disable layer
 
 	INT32 enable_rowscroll = control & 0x20;
-	INT32 enable_colscroll = (riskchal) ? 0 : control & 0x40;
+	INT32 enable_colscroll = control & 0x40;
 
 	INT32 wide = (control & 0x04) ? 128 : 64;
 
@@ -1257,8 +1250,10 @@ static void draw_layer(INT32 layer)
 	INT32 pmask = (wide == 128) ? 2 : 3;
 	UINT16 *vram = (UINT16*)(DrvVidRAM + (control & pmask) * 0x4000);
 
-	UINT16  scrollx = ((m90_video_control[(layer*4)+2] << 0) | (m90_video_control[(layer*4)+3] << 8)) + video_offsets[0];
-	UINT16  scrolly = ((m90_video_control[(layer*4)+0] << 0) | (m90_video_control[(layer*4)+1] << 8)) + video_offsets[1];
+	UINT16 scrollx = ((m90_video_control[(layer*4)+2] << 0) | (m90_video_control[(layer*4)+3] << 8));
+	UINT16 scrolly = ((m90_video_control[(layer*4)+0] << 0) | (m90_video_control[(layer*4)+1] << 8));
+
+	if (enable_rowscroll) scrollx = 0;
 
 	scrollx += (layer) ? -2 : 2;
 	scrollx += ((wide & 0x80) * 2);
@@ -1268,17 +1263,19 @@ static void draw_layer(INT32 layer)
 
 	for (INT32 sy = 0; sy < nScreenHeight; sy++)
 	{
-		INT32 scrollx_1 = scrollx;
-		INT32 scrolly_1 = 0;
+		INT32 scrollx_1 = scrollx + video_offsets[0];
+		INT32 scrolly_1 = video_offsets[1];
 		UINT16 *dest = pTransDraw + (sy * nScreenWidth);
 		UINT8 *pri = RamPrioBitmap + (sy * nScreenWidth);
 
-		if (enable_rowscroll) scrollx_1 += BURN_ENDIAN_SWAP_INT16(xscroll[sy]);
+		if (enable_rowscroll) {
+			scrollx_1 = (scrollx_1 + BURN_ENDIAN_SWAP_INT16(xscroll[sy])) & ((wide * 8) - 1);
+		}
 
 		if (enable_colscroll) {
-			scrolly_1 += (scrolly + sy + BURN_ENDIAN_SWAP_INT16(yscroll[sy]) + 128) & 0x1ff;
+			scrolly_1 = (scrolly_1 + sy + BURN_ENDIAN_SWAP_INT16(yscroll[sy + video_offsets[1]]) + 0x200) & 0x1ff;
 		} else {
-			scrolly_1 += (scrolly + sy) & 0x1ff;
+			scrolly_1 = (scrolly_1 + scrolly + sy) & 0x1ff;
 		}
 
 		INT32 romoff_1 = (scrolly_1 & 0x07) << 3;
@@ -1333,9 +1330,9 @@ static INT32 DrvDraw()
 
 	if ((nBurnLayer & 0xf) != 0xf) BurnTransferClear();
 
-	if ((m90_video_control[14] & 0x04) == 0) {
-		if (m90_video_control[12] & 0x10) {
-			memset (RamPrioBitmap, 0, nScreenWidth * nScreenHeight);
+	if ((m90_video_control[14] & 0x04) == 0) { // video enable
+		memset (RamPrioBitmap, 0, nScreenWidth * nScreenHeight);
+		if (m90_video_control[12] & 0x10) { // pf2 enable
 			BurnTransferClear();
 		} else {
 			if (nBurnLayer & 1) draw_layer(1);
@@ -1396,7 +1393,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += VezRun(nCyclesTotal[0] / nInterleave);
 
-		if (i == 124)
+		if (i == 120)
 		{
 			vblank = 0x80;
 			VezSetIRQLineAndVector(NEC_INPUT_LINE_INTP0, 0xff, CPU_IRQSTATUS_ACK);
@@ -1787,7 +1784,6 @@ static INT32 riskchalInit()
 {
 	video_offsets[0] = 80;
 	video_offsets[1] = 136;
-	riskchal = 1;
 
 	return DrvInit(0x80000, 0x200000, 0x40000, 0, 0, gussun_decryption_table);
 }

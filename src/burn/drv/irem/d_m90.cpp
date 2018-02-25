@@ -1888,5 +1888,5 @@ struct BurnDriver BurnDrvShisen2 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, shisen2RomInfo, shisen2RomName, NULL, NULL, Matchit2InputInfo, Shisen2DIPInfo,
 	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	384, 240, 4, 3
+	384, 256, 4, 3
 };

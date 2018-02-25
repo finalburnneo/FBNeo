@@ -1860,7 +1860,7 @@ struct BurnDriver BurnDrvMatchit2 = {
 	BDF_GAME_WORKING, 2, HARDWARE_IREM_M90, GBF_PUZZLE, 0,
 	NULL, matchit2RomInfo, matchit2RomName, NULL, NULL, Matchit2InputInfo, Matchit2DIPInfo,
 	matchit2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
-	384, 240, 4, 3
+	384, 256, 4, 3
 };
 
 

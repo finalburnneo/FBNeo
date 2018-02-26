@@ -42,6 +42,12 @@
 #define MAX_CARTRIDGE_SIZE      0xc00000
 #define MAX_SRAM_SIZE           0x010000
 
+#if defined (__GNUC__) && defined (__LIBRETRO__)
+#define OPTIMIZE_ATTR __attribute__((optimize("O2")))
+#else
+#define OPTIMIZE_ATTR
+#endif
+
 // PicoDrive Sek interface
 static UINT64 SekCycleCnt, SekCycleAim, SekCycleCntDELTA, line_base_cycles;
 
@@ -149,10 +155,21 @@ struct TileStrip
 	INT32 cells;   // cells (tiles) to draw (32 col mode doesn't need to update whole 320)
 };
 
+struct TeamPlayer {
+	UINT32 state;
+	UINT32 counter;
+	UINT32 table[12];
+};
+
 struct MegadriveJoyPad {
 	UINT16 pad[8];
-	UINT8  padTHPhase[8];
-	UINT8  padDelay[8];
+	UINT32 padTHPhase[8];
+	UINT32 padDelay[8];
+
+	UINT32 fourwaylatch; // EA "4 way play" adapter
+	UINT8 fourway[8];
+
+	TeamPlayer teamplayer[2]; // Sega "team player" 4 port adapter
 };
 
 static UINT8 *Mem = NULL, *MemEnd = NULL;
@@ -195,6 +212,7 @@ UINT8 MegadriveJoy1[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy2[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy3[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveJoy4[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+UINT8 MegadriveJoy5[12] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 UINT8 MegadriveDIP[2] = {0, 0};
 
 static UINT32 RomNum = 0;
@@ -221,6 +239,7 @@ static UINT8 bNoDebug = 0;
 static INT32 bForce3Button = 0;
 INT32 psolarmode = 0; // pier solar
 static INT32 TeamPlayerMode = 0;
+static INT32 FourWayPlayMode = 0;
 
 void MegadriveCheckHardware()
 {
@@ -377,7 +396,9 @@ static INT32 MemIndex()
 	RamSVid		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16);	// VSRam
 	RamVid		= (UINT16 *) Next; Next += 0x008000 * sizeof(UINT16);	// Video Ram
 	RamVReg		= (struct PicoVideo *)Next; Next += sizeof(struct PicoVideo);
-	
+
+	JoyPad		= (struct MegadriveJoyPad *) Next; Next += sizeof(struct MegadriveJoyPad);
+
 	RamEnd		= Next;
 
 	// Keep RamMisc out of the Ram section to keep from getting cleared on reset.
@@ -395,8 +416,6 @@ static INT32 MemIndex()
 	HighPreSpr	= (INT32 *) Next; Next += (80*2+1) * sizeof(INT32);	// slightly preprocessed sprites
 	HighSprZ	= (INT8*) Next; Next += (320+8+8);				// Z-buffer for accurate sprites and shadow/hilight mode
 	
-	JoyPad		= (struct MegadriveJoyPad *) Next; Next += sizeof(struct MegadriveJoyPad);
-
 	MemEnd		= Next;
 	return 0;
 }
@@ -1150,7 +1169,7 @@ static INT32 PadRead(INT32 i)
 {
 	INT32 pad=0,value=0,TH;
 	pad = ~(JoyPad->pad[i]);					// Get inverse of pad MXYZ SACB RLDU
-	TH = RamIO[i+1] & 0x40;
+	TH = (FourWayPlayMode) ? JoyPad->fourway[i & 0x03] : RamIO[i+1] & 0x40;
 
 	if (!bForce3Button) {					    // 6 button gamepad enabled
 		INT32 phase = JoyPad->padTHPhase[i];
@@ -1173,68 +1192,69 @@ static INT32 PadRead(INT32 i)
 end:
 
 	// or the bits, which are set as output
-	value |= RamIO[i+1] & RamIO[i+4];
+	if (!FourWayPlayMode)
+		value |= RamIO[i+1] & RamIO[i+4];
 
 	return value; // will mirror later
 }
 
-static struct {
-	UINT8 State;
-	UINT8 Counter;
-	UINT8 Table[12];
-} teamplayer[2];
-
-static void teamplayer_init()
+static void PadWrite(INT32 port, UINT8 data, UINT8 *ior)
 {
-	INT32 index = 0;
-	UINT8 port = TeamPlayerMode - 1;
-
-	memset(&teamplayer[port], 0, sizeof(teamplayer[port]));
-
-	for (INT32 i = 0; i < 4; i++)
-	{
-		INT32 padnum = ((port << 2) + i) << 4;
-
-		teamplayer[port].Table[index++] = padnum;
-		teamplayer[port].Table[index++] = padnum | 4;
-
-		if (!bForce3Button)
-		{
-			teamplayer[port].Table[index++] = padnum | 8;
-		}
-	}
+	JoyPad->padDelay[port] = 0;
+	if(!(ior[0] & 0x40) && (data & 0x40))
+		JoyPad->padTHPhase[port] ++;
+	ior[0] = data;
 }
 
 static void teamplayer_reset()
 {
 	if (!TeamPlayerMode) return;
-	teamplayer[TeamPlayerMode - 1].State = 0x60;
-	teamplayer[TeamPlayerMode - 1].Counter = 0;
+
+	INT32 index = 0;
+	UINT8 port = TeamPlayerMode - 1;
+
+	memset(&JoyPad->teamplayer[port], 0, sizeof(JoyPad->teamplayer[port]));
+
+	for (INT32 i = 0; i < 4; i++)
+	{
+		INT32 padnum = ((port << 2) + i) << 4;
+
+		JoyPad->teamplayer[port].table[index++] = padnum;
+		JoyPad->teamplayer[port].table[index++] = padnum | 4;
+
+		if (!bForce3Button)
+		{
+			JoyPad->teamplayer[port].table[index++] = padnum | 8;
+		}
+	}
+
+	JoyPad->teamplayer[TeamPlayerMode - 1].state = 0x60;
+	JoyPad->teamplayer[TeamPlayerMode - 1].counter = 0;
 }
 
 static UINT8 teamplayer_read()
 {
 	UINT8 port = TeamPlayerMode - 1;
-	switch (teamplayer[port].Counter)
+	switch (JoyPad->teamplayer[port].counter)
 	{
-		case 0: return ((teamplayer[port].State & 0x20) >> 1) | 0x03;
+		case 0: return ((JoyPad->teamplayer[port].state & 0x20) >> 1) | 0x03;
 
-		case 1:	return ((teamplayer[port].State & 0x20) >> 1) | 0x0F;
+		case 1:	return ((JoyPad->teamplayer[port].state & 0x20) >> 1) | 0x0F;
 
 		case 2:
-		case 3: return ((teamplayer[port].State & 0x20) >> 1);
+		case 3: return ((JoyPad->teamplayer[port].state & 0x20) >> 1);
 
 		case 4:
 		case 5:
 		case 6:
-		case 7: return (((teamplayer[port].State & 0x20) >> 1) | ((bForce3Button) ? 0 : 1));
+		case 7: return (((JoyPad->teamplayer[port].state & 0x20) >> 1) | ((bForce3Button) ? 0 : 1));
 
 	    default: {
-			UINT8 padnum = teamplayer[port].Table[teamplayer[port].Counter - 8] >> 4;
+			UINT8 padnum = JoyPad->teamplayer[port].table[JoyPad->teamplayer[port].counter - 8] >> 4;
 			if (TeamPlayerMode == 2) padnum -= 3;
-			UINT8 retval = 0xf & ~(JoyPad->pad[padnum] >> (teamplayer[port].Table[teamplayer[port].Counter - 8] & 0xf));
+			UINT8 retval = 0xf & ~(JoyPad->pad[padnum] >> (JoyPad->teamplayer[port].table[JoyPad->teamplayer[port].counter - 8] & 0xf));
 
-			return (((teamplayer[port].State & 0x20) >> 1) | retval);
+			return (((JoyPad->teamplayer[port].state & 0x20) >> 1) | retval);
 		}
 	}
 }
@@ -1242,16 +1262,43 @@ static UINT8 teamplayer_read()
 static void teamplayer_write(UINT8 data, UINT8 mask)
 {
 	UINT8 port = TeamPlayerMode - 1;
-	UINT8 state = (teamplayer[port].State & ~mask) | (data & mask);
+	UINT8 state = (JoyPad->teamplayer[port].state & ~mask) | (data & mask);
 
 	if (state & 0x40) {
-		teamplayer[port].Counter = 0;
+		JoyPad->teamplayer[port].counter = 0;
 	}
-	else if ((teamplayer[port].State ^ state) & 0x60) {
-		teamplayer[port].Counter++;
+	else if ((JoyPad->teamplayer[port].state ^ state) & 0x60) {
+		JoyPad->teamplayer[port].counter++;
 	}
 
-	teamplayer[port].State = state;
+	JoyPad->teamplayer[port].state = state;
+}
+
+static UINT8 fourwayplay_read(UINT8 port)
+{
+	switch (port) {
+		case 0:
+			if (JoyPad->fourwaylatch & 0x04) return 0x7c;
+			return PadRead(JoyPad->fourwaylatch & 0x03);
+			break;
+		case 1:
+			return 0x7f;
+			break;
+	}
+
+	return 0;
+}
+
+static void fourwayplay_write(UINT8 port, UINT8 data, UINT8 mask)
+{
+	switch (port) {
+		case 0:
+			PadWrite(JoyPad->fourwaylatch & 0x03, data, &JoyPad->fourway[JoyPad->fourwaylatch & 0x03]);
+			break;
+		case 1:
+			JoyPad->fourwaylatch = ((data & mask) >> 4) & 0x07;
+			break;
+	}
 }
 
 UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
@@ -1260,7 +1307,7 @@ UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
 		bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
 
 	INT32 offset = (sekAddress >> 1) & 0xf;
-	if (!TeamPlayerMode) {
+	if (!TeamPlayerMode && !FourWayPlayMode) {
 		// 6-Button Support
 		switch (offset) {
 			case 0:	// Get Hardware
@@ -1273,8 +1320,8 @@ UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
 				//bprintf(PRINT_NORMAL, _T("IO Attempt to read byte value of location %x\n"), sekAddress);
 				return RamIO[offset];
 		}
-	} else {
-		// Sega Team Player Support
+	} else if (TeamPlayerMode || FourWayPlayMode) {
+		// Sega Team Player & Four Way Play Support
 		switch (offset) {
 			case 0:	// Get Hardware
 				return Hardware;
@@ -1284,9 +1331,19 @@ UINT8 __fastcall MegadriveIOReadByte(UINT32 sekAddress)
 				UINT8 mask = 0x80 | RamIO[offset + 3];
 				UINT8 data = 0x7f;
 				if (offset < 3) {
-					switch (TeamPlayerMode) {
-						case 1: data = (offset==1) ? teamplayer_read() : 0x7f; break; // teamplayer port 1, nothing port 2
-						case 2: data = (offset==2) ? teamplayer_read() : PadRead(0); break; // teamplayer port2, gamepad port 1
+					if (TeamPlayerMode) {
+						switch (TeamPlayerMode) {
+							case 1: data = (offset==1) ? teamplayer_read() : 0x7f; break; // teamplayer port 1, nothing port 2
+							case 2: data = (offset==2) ? teamplayer_read() : PadRead(0); break; // teamplayer port2, gamepad port 1
+						}
+					}
+					if (FourWayPlayMode) {
+						switch (offset) {
+							case 1:
+							case 2:
+								data = fourwayplay_read(offset - 1);
+								break;
+						}
 					}
 				}
 				return (RamIO[offset] & mask) | (data & ~mask);
@@ -1315,28 +1372,28 @@ void __fastcall MegadriveIOWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 	INT32 offset = (sekAddress >> 1) & 0xf;
 
-	if (!TeamPlayerMode) {
+	if (!TeamPlayerMode && !FourWayPlayMode) {
 		// 6-Button Support
 		switch( offset ) {
 			case 1:
-				JoyPad->padDelay[0] = 0;
-				if(!(RamIO[1] & 0x40) && (byteValue&0x40))
-					JoyPad->padTHPhase[0] ++;
-				break;
-		    case 2:
-				JoyPad->padDelay[1] = 0;
-				if(!(RamIO[2] & 0x40) && (byteValue&0x40))
-					JoyPad->padTHPhase[1] ++;
+			case 2:
+				PadWrite(offset - 1, byteValue, &RamIO[offset]);
 				break;
 		}
-	} else {
+	} else if (FourWayPlayMode) {
+		// EA Four Way Play support
+		switch (offset) {
+			case 1:
+		    case 2:
+				fourwayplay_write(offset-1, byteValue, RamIO[offset + 3]);
+				break;
+		}
+	} else if (TeamPlayerMode) {
 		// Sega Team Player Support
 		switch (offset) {
 			case 1:
 				if (TeamPlayerMode == 2) { // teamplayer port 2, gamepad port 1
-					JoyPad->padDelay[0] = 0;
-					if(!(RamIO[1] & 0x40) && (byteValue&0x40))
-						JoyPad->padTHPhase[0] ++;
+					PadWrite(offset - 1, byteValue, &RamIO[offset]);
 				} else {
 					teamplayer_write(byteValue, RamIO[offset + 3]);
 				}
@@ -1360,9 +1417,9 @@ void __fastcall MegadriveIOWriteByte(UINT32 sekAddress, UINT8 byteValue)
 
 void __fastcall MegadriveIOWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	//if (sekAddress > 0xA1001F)	
+	//if (sekAddress > 0xA1001F)
 	//	bprintf(PRINT_NORMAL, _T("IO Attempt to write word value %x to location %x\n"), wordValue, sekAddress);
-		
+
 	MegadriveIOWriteByte(sekAddress, wordValue & 0xff);
 }
 
@@ -2744,6 +2801,9 @@ static void SetupCustomCartridgeMappers()
 	}
 
 	switch ((BurnDrvGetHardwareCode() & 0xff)) {
+		case HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY:
+			FourWayPlayMode = 1;
+			break;
 		case HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER:
 			TeamPlayerMode = 1;
 			break;
@@ -2752,12 +2812,16 @@ static void SetupCustomCartridgeMappers()
 			break;
 		default:
 			TeamPlayerMode = 0;
+			FourWayPlayMode = 0;
 			break;
 	}
 
 	if (TeamPlayerMode) {
 		bprintf(0, _T("Game supports Sega TeamPlayer 4x Pad in Port %d.\n"), TeamPlayerMode);
-		teamplayer_init();
+	}
+
+	if (FourWayPlayMode) {
+		bprintf(0, _T("Game supports EA 4-WayPlay 4x Pad in Port 1 & 2.\n"));
 	}
 }
 
@@ -3358,6 +3422,7 @@ INT32 MegadriveExit()
 	bNoDebug = 0;
 	bForce3Button = 0;
 	TeamPlayerMode = 0;
+	FourWayPlayMode = 0;
 
 	psolarmode = 0;
 
@@ -4132,7 +4197,7 @@ static void DrawSpritesFromCache(INT32 *hc, INT32 sh)
 // Index + 0  :    hhhhvvvv ab--hhvv yyyyyyyy yyyyyyyy // a: offscreen h, b: offs. v, h: horiz. size
 // Index + 4  :    xxxxxxxx xxxxxxxx pccvhnnn nnnnnnnn // x: x coord + 8
 
-static void PrepareSprites(INT32 full)
+static void OPTIMIZE_ATTR PrepareSprites(INT32 full)
 {
 	INT32 u=0,link=0,sblocks=0;
 	INT32 table=0;
@@ -4503,7 +4568,7 @@ INT32 MegadriveDraw()
 #define CYCLES_M68K_VINT_LAG  68
 #define CYCLES_M68K_ASD      148
 
-INT32 MegadriveFrame()
+INT32 OPTIMIZE_ATTR MegadriveFrame()
 {
 	if (MegadriveReset) {
 		MegadriveResetDo();
@@ -4511,12 +4576,13 @@ INT32 MegadriveFrame()
 		return 0xdead; // prevent crash because of a call to Reinitialise() in MegadriveResetDo();
 	}
 
-	JoyPad->pad[0] = JoyPad->pad[1] = JoyPad->pad[2] = JoyPad->pad[3] = 0;
+	JoyPad->pad[0] = JoyPad->pad[1] = JoyPad->pad[2] = JoyPad->pad[3] = JoyPad->pad[4] = 0;
 	for (INT32 i = 0; i < 12; i++) {
 		JoyPad->pad[0] |= (MegadriveJoy1[i] & 1) << i;
 		JoyPad->pad[1] |= (MegadriveJoy2[i] & 1) << i;
 		JoyPad->pad[2] |= (MegadriveJoy3[i] & 1) << i;
 		JoyPad->pad[3] |= (MegadriveJoy4[i] & 1) << i;
+		JoyPad->pad[4] |= (MegadriveJoy5[i] & 1) << i;
 	}
 
 	SekCyclesNewFrame(); // for sound sync
@@ -4588,6 +4654,11 @@ INT32 MegadriveFrame()
 			// pad delay (for 6 button pads)
 			if(JoyPad->padDelay[0]++ > 25) JoyPad->padTHPhase[0] = 0;
 			if(JoyPad->padDelay[1]++ > 25) JoyPad->padTHPhase[1] = 0;
+
+			if (FourWayPlayMode) {
+				if(JoyPad->padDelay[2]++ > 25) JoyPad->padTHPhase[2] = 0; // fourwayplay
+				if(JoyPad->padDelay[3]++ > 25) JoyPad->padTHPhase[3] = 0; // "
+			}
 		}
 
 		// H-Interrupts:
@@ -4733,8 +4804,6 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(z80_cycle_cnt);
 		SCAN_VAR(z80_cycle_aim);
 		SCAN_VAR(last_z80_sync);
-
-		SCAN_VAR(teamplayer);
 
 		BurnRandomScan(nAction);
 	}

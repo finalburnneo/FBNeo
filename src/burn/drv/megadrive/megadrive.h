@@ -20,6 +20,7 @@ extern UINT8 MegadriveJoy1[12];
 extern UINT8 MegadriveJoy2[12];
 extern UINT8 MegadriveJoy3[12];
 extern UINT8 MegadriveJoy4[12];
+extern UINT8 MegadriveJoy5[12];
 extern UINT8 MegadriveDIP[2];
 extern INT32 psolarmode;
 

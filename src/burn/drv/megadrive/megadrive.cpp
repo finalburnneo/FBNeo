@@ -111,15 +111,15 @@ struct PicoVideo {
 	UINT8 pending_ints;	// pending interrupts: ??VH????
 	INT8 lwrite_cnt;        // VDP write count during active display line
 	UINT16 v_counter;       // V-counter
-	UINT8 pad[0x13];	//
 };
 
-struct PicoMisc {
-	UINT32 Z80Run; //unused
-	UINT32 Bank68k;
-	UINT8 Rotate;  //unused (keeping for state compat..)
+#define SR_MAPPED   (1 << 0)
+#define SR_READONLY (1 << 1)
 
-	//UINT32 SRamReg;
+struct PicoMisc {
+	UINT32 Bank68k;
+
+	UINT32 SRamReg;
 	UINT32 SRamStart;
 	UINT32 SRamEnd;
 	UINT32 SRamDetected;
@@ -389,7 +389,6 @@ static INT32 MemIndex()
 
 	Ram68K		= Next; Next += 0x010000;
 	RamZ80		= Next; Next += 0x002000;
-	SRam		= Next; Next += MAX_SRAM_SIZE;		// SRam
 	RamIO		= Next; Next += 0x000010;			// I/O
 
 	RamPal		= (UINT16 *) Next; Next += 0x000040 * sizeof(UINT16);
@@ -401,6 +400,7 @@ static INT32 MemIndex()
 
 	RamEnd		= Next;
 
+	SRam		= Next; Next += MAX_SRAM_SIZE;		// SRam
 	// Keep RamMisc out of the Ram section to keep from getting cleared on reset.
 	RamMisc		= (struct PicoMisc *)Next; Next += sizeof(struct PicoMisc);
 
@@ -539,12 +539,6 @@ static void __fastcall MegadriveWriteByte(UINT32 sekAddress, UINT8 byteValue)
 		}
 
 		case 0xa12000: return; // NOP (cd-stuff, called repeatedly by rnrracin)
-
-//		case 0xA130F1: {
-			// sram access register
-//			RamMisc->SRamReg = byteValue & 0x03;
-//			return;
-//		}
 
 		default: {
 			if (!bNoDebug)
@@ -1492,6 +1486,17 @@ static INT32 MegadriveResetDo()
 
 	// other reset
 	//memset(RamMisc, 0, sizeof(struct PicoMisc)); // do not clear because Mappers/SRam are set up in here when the driver inits
+	if (RamMisc->SRamDetected)
+	{
+		if (RomSize <= RamMisc->SRamStart) {
+			RamMisc->SRamActive = 1;
+			RamMisc->SRamReg = SR_MAPPED;
+		} else {
+			RamMisc->SRamActive = 0;
+			RamMisc->SRamReg = SR_MAPPED;
+		}
+		RamMisc->SRamReadOnly = 0;
+	}
 	memset(JoyPad, 0, sizeof(struct MegadriveJoyPad));
 	teamplayer_reset();
 
@@ -2873,7 +2878,10 @@ static void InstallSRAMHandlers(bool MaskAddr)
 	UINT32 Mask = MaskAddr ? 0x3fffff : 0xffffff;
 
 	memset(SRam, 0xff, MAX_SRAM_SIZE);
-	memcpy((UINT8*)MegadriveBackupRam, SRam, RamMisc->SRamEnd - RamMisc->SRamStart + 1);
+
+	// this breaks "md_thor".  sram is mapped in and out, so this is totally wrong.
+	// leaving this in "just incase / for reference" incase I come across a game that needs it.
+	//memcpy((UINT8*)MegadriveBackupRam, SRam, RamMisc->SRamEnd - RamMisc->SRamStart + 1);
 
 	SekOpen(0);
 	SekMapHandler(6, RamMisc->SRamStart & Mask, RamMisc->SRamEnd & Mask, MAP_READ | MAP_WRITE);
@@ -3081,12 +3089,20 @@ static void __fastcall CodemastersEEPROMWriteWord(UINT32 sekAddress, UINT16 word
 
 static void __fastcall MegadriveSRAMToggleWriteByte(UINT32 sekAddress, UINT8 byteValue)
 {
-	bprintf(PRINT_NORMAL, _T("SRam Toggle byte  %02x to location %08x\n"), byteValue, sekAddress);
+	if (sekAddress == 0xa130f1) {
+		RamMisc->SRamReg &= ~(SR_MAPPED | SR_READONLY);
+		RamMisc->SRamReg |= byteValue;
+		RamMisc->SRamActive = RamMisc->SRamReg & SR_MAPPED;
+		RamMisc->SRamReadOnly = RamMisc->SRamReg & SR_READONLY;
+		bprintf(0, _T("SRam Status: %S%S\n"), RamMisc->SRamActive ? "Active " : "", RamMisc->SRamReadOnly ? "ReadOnly" : "");
+	}
 }
 
 static void __fastcall MegadriveSRAMToggleWriteWord(UINT32 sekAddress, UINT16 wordValue)
 {
-	bprintf(PRINT_NORMAL, _T("SRam Toggle word value %04x to location %08x\n"), wordValue, sekAddress);
+	if (sekAddress == 0xa130f0) {
+		MegadriveSRAMToggleWriteByte(sekAddress | 1, wordValue & 0xff);
+	}
 }
 
 static void MegadriveSetupSRAM()
@@ -3099,6 +3115,7 @@ static void MegadriveSetupSRAM()
 	RamMisc->SRamActive = 0;
 	RamMisc->SRamReadOnly = 0;
 	RamMisc->SRamHasSerialEEPROM = 0;
+	RamMisc->SRamReg = 0;
 	MegadriveBackupRam = NULL;
 
 	if ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00400) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_00800) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_01000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_04000) || (BurnDrvGetHardwareCode() & HARDWARE_SEGA_MEGADRIVE_SRAM_10000)) {
@@ -3119,9 +3136,10 @@ static void MegadriveSetupSRAM()
 		SekSetWriteWordHandler(5, MegadriveSRAMToggleWriteWord);
 		SekClose();
 
+		InstallSRAMHandlers(false);
+
 		if (RomSize <= RamMisc->SRamStart) {
 			RamMisc->SRamActive = 1;
-			InstallSRAMHandlers(false);
 		}
 	}
 
@@ -3265,8 +3283,7 @@ static void MegadriveSetupSRAM()
 			SekSetWriteWordHandler(5, MegadriveSRAMToggleWriteWord);
 			SekClose();
 
-			// Sonic 1 included in Sonic Classics doesn't have SRAM and does lots of ROM access at this range, then only install read write handlers if SRAM is active to not slow down emulation.
-			if (RamMisc->SRamActive) InstallSRAMHandlers(true);
+			InstallSRAMHandlers(true);
 		}
 	}
 }
@@ -4806,6 +4823,16 @@ INT32 MegadriveScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(last_z80_sync);
 
 		BurnRandomScan(nAction);
+	}
+
+	if (nAction & ACB_NVRAM && RamMisc->SRamDetected) {
+		struct BurnArea ba;
+		memset(&ba, 0, sizeof(ba));
+		ba.Data		= SRam;
+		ba.nLen		= MAX_SRAM_SIZE;
+		ba.nAddress	= 0;
+		ba.szName	= "NV RAM";
+		BurnAcb(&ba);
 	}
 
 	if (psolarmode) // pier solar

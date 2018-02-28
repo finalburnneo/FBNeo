@@ -383,19 +383,34 @@ static void DrvPaletteInit()
 	}
 }
 
+#define RenderTile(func, rend_to, code, sx, sy, color, bit, trans, offs, rom)   \
+	if (flipy) {                                                                \
+    	if (flipx) {                                                            \
+            	func ## _FlipXY_Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);  \
+			} else {                                                                        \
+	            func ## _FlipY_Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);   \
+			}                                                                               \
+		} else {                                                                            \
+			if (flipx) {                                                                    \
+	            func ## _FlipX_Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);   \
+			} else {                                                                        \
+	            func ## _Clip(rend_to, code, sx, sy, color, bit, trans, offs, rom);         \
+			}                                                                               \
+		}
+
 static void draw_sprites_16x16()
 {
 	UINT8 *spriteram = DrvZ80RAM0 + 0x400;
 
 	for (INT32 offs = 0; offs < 0x20; offs += 4)
 	{
-		int attr = spriteram[offs + 1];
-		int code = spriteram[offs];
-		int color = attr & 0x3f;
-		int flipx = attr & 0x40;
-		int flipy = attr & 0x80;
-		int sx = spriteram[offs + 3];
-		int sy = ((spriteram[offs + 2] + 8) & 0xff) - 8;
+		INT32 attr = spriteram[offs + 1];
+		INT32 code = spriteram[offs];
+		INT32 color = attr & 0x3f;
+		INT32 flipx = attr & 0x40;
+		INT32 flipy = attr & 0x80;
+		INT32 sx = spriteram[offs + 3];
+		INT32 sy = ((spriteram[offs + 2] + 8) & 0xff) - 8;
 
 		if (flipscreen)
 		{
@@ -407,19 +422,7 @@ static void draw_sprites_16x16()
 
 		sy -= 8;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM1);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM1);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM1);
-			}
-		}
+		RenderTile(Render16x16Tile_Mask, pTransDraw, code, sx, sy, color, 2, 0, 0x100, DrvGfxROM1)
 	}
 }
 
@@ -429,13 +432,13 @@ static void draw_sprites_8x8()
 
 	for (INT32 offs = 0; offs < 0x40; offs += 4)
 	{
-		int attr = spriteram[offs + 1];
-		int code = spriteram[offs];
-		int color = attr & 0x3f;
-		int flipx = attr & 0x40;
-		int flipy = attr & 0x80;
-		int sx = spriteram[offs + 3];
-		int sy = spriteram[offs + 2];
+		INT32 attr = spriteram[offs + 1];
+		INT32 code = spriteram[offs];
+		INT32 color = attr & 0x3f;
+		INT32 flipx = attr & 0x40;
+		INT32 flipy = attr & 0x80;
+		INT32 sx = spriteram[offs + 3];
+		INT32 sy = spriteram[offs + 2];
 
 		if (flipscreen)
 		{
@@ -447,19 +450,7 @@ static void draw_sprites_8x8()
 
 		sy -= 8;
 
-		if (flipy) {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM0);
-			}
-		} else {
-			if (flipx) {
-				Render8x8Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM0);
-			} else {
-				Render8x8Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM0);
-			}
-		}
+		RenderTile(Render8x8Tile_Mask, pTransDraw, code, sx, sy, color, 2, 0, 0, DrvGfxROM0)
 	}
 }
 

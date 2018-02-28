@@ -455,22 +455,21 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 2500000 / 60, 2500000 / 60 };
+	INT32 nInterleave = 262;
+	INT32 nCyclesTotal[2] = { 3500000 / 60, 3500000 / 60 }; // oc'd +1mhz to avoid bg desynchs
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == 248 && nmi_enable[0]) ZetNmi();
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		if (i == 232 && nmi_enable[0]) ZetNmi();
 		if (i == 0 && irq_enable) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		INT32 nSegment = ZetTotalCycles();
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - ZetTotalCycles());
-		if (i == 248 && nmi_enable[1]) ZetNmi();
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		if (i == 232 && nmi_enable[1]) ZetNmi();
 		ZetClose();
 	}
 
@@ -515,13 +514,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 	if (nAction & ACB_WRITE)
 	{
-			ZetOpen(0);
-			bankswitch0(z80_bank[0]);
-			ZetClose();
+		ZetOpen(0);
+		bankswitch0(z80_bank[0]);
+		ZetClose();
 
-			ZetOpen(1);
-			bankswitch1(z80_bank[1]);
-			ZetClose();
+		ZetOpen(1);
+		bankswitch1(z80_bank[1]);
+		ZetClose();
 	}
 
 	return 0;

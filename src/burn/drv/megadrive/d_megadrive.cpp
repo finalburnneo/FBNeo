@@ -4499,7 +4499,7 @@ struct BurnDriver BurnDrvmd_btlmanide = {
 	"md_btlmanide", "md_btlmanid", NULL, NULL, "2006",
 	"Battle Mania Daiginjou (Hack, English)\0", NULL, "Vic Tokai", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_btlmanideRomInfo, md_btlmanideRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -13374,8 +13374,8 @@ struct BurnDriver BurnDrvmd_genchaos = {
 	"md_genchaos", NULL, NULL, NULL, "1994",
 	"General Chaos (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_genchaosRomInfo, md_genchaosRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_MISC, 0,
+	MegadriveGetZipName, md_genchaosRomInfo, md_genchaosRomName, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -13392,8 +13392,8 @@ struct BurnDriver BurnDrvmd_genchaosj = {
 	"md_genchaosj", "md_genchaos", NULL, NULL, "1994",
 	"General Chaos Daikonsen (Jpn)\0", NULL, "Electronic Arts Victor", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_genchaosjRomInfo, md_genchaosjRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_MISC, 0,
+	MegadriveGetZipName, md_genchaosjRomInfo, md_genchaosjRomName, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -13573,7 +13573,7 @@ struct BurnDriver BurnDrvmd_gleylance = {
 	"md_gleylance", "md_gleylanc", NULL, NULL, "2007",
 	"GleyLancer (Hack, English)\0", NULL, "NCS", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_gleylanceRomInfo, md_gleylanceRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -16526,7 +16526,7 @@ struct BurnDriver BurnDrvmd_kingcole = {
 	"md_kingcole", "md_kingcol", NULL, NULL, "2006",
 	"Tougiou King Colossus (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_kingcoleRomInfo, md_kingcoleRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -16995,7 +16995,7 @@ struct BurnDriver BurnDrvmd_langris2e = {
 	"md_langris2e", "md_langris2", NULL, NULL, "2011",
 	"Langrisser II (Hack, English)\0", NULL, "NCS", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_langris2eRomInfo, md_langris2eRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -20092,8 +20092,8 @@ struct BurnDriver BurnDrvmd_mlhockey = {
 	"md_mlhockey", NULL, NULL, NULL, "1994",
 	"Mutant League Hockey (Euro, USA)\0", NULL, "Electronic Arts", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_mlhockeyRomInfo, md_mlhockeyRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY, GBF_MISC, 0,
+	MegadriveGetZipName, md_mlhockeyRomInfo, md_mlhockeyRomName, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -23665,6 +23665,25 @@ struct BurnDriver BurnDrvmd_ps2aa = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Phantasy Star II - Amia's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1530/
+static struct BurnRomInfo md_ps2aaeRomDesc[] = {
+	{ "phantasy star ii - amia's adventure (english translation).bin", 0x040000, 0x7fdb5fe9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2aae)
+STD_ROM_FN(md_ps2aae)
+
+struct BurnDriver BurnDrvmd_ps2aae = {
+	"md_ps2aae", "md_ps2aa", NULL, NULL, "2010",
+	"Phantasy Star II - Amia's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2aaeRomInfo, md_ps2aaeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Phantasy Star II - Anne's Adventure (Jpn, SegaNet)
 static struct BurnRomInfo md_ps2abRomDesc[] = {
 	{ "phantasy star ii - anne's adventure (jpn) (sn).bin", 0x040000, 0xfafa5b6f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -23679,6 +23698,25 @@ struct BurnDriver BurnDrvmd_ps2ab = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_ps2abRomInfo, md_ps2abRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Phantasy Star II - Anne's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1221/
+static struct BurnRomInfo md_ps2abeRomDesc[] = {
+	{ "phantasy star ii - anne's adventure (english translation).bin", 0x040000, 0x355fad11, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2abe)
+STD_ROM_FN(md_ps2abe)
+
+struct BurnDriver BurnDrvmd_ps2abe = {
+	"md_ps2abe", "md_ps2ab", NULL, NULL, "2010",
+	"Phantasy Star II - Anne's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2abeRomInfo, md_ps2abeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -23701,6 +23739,25 @@ struct BurnDriver BurnDrvmd_ps2ac = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Phantasy Star II - Huey's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1337/
+static struct BurnRomInfo md_ps2aceRomDesc[] = {
+	{ "phantasy star ii - huey's adventure (english translation).bin", 0x040000, 0xdb2cce50, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2ace)
+STD_ROM_FN(md_ps2ace)
+
+struct BurnDriver BurnDrvmd_ps2ace = {
+	"md_ps2ace", "md_ps2ac", NULL, NULL, "2010",
+	"Phantasy Star II - Huey's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2aceRomInfo, md_ps2aceRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Phantasy Star II - Kinds's Adventure (Jpn, SegaNet)
 static struct BurnRomInfo md_ps2adRomDesc[] = {
 	{ "phantasy star ii - kinds's adventure (jpn) (sn).bin", 0x040000, 0xc334f308, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -23715,6 +23772,25 @@ struct BurnDriver BurnDrvmd_ps2ad = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_ps2adRomInfo, md_ps2adRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Phantasy Star II - Kinds's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1150/
+static struct BurnRomInfo md_ps2adeRomDesc[] = {
+	{ "phantasy star ii - kinds's adventure (english translation).bin", 0x040000, 0xe91051e3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2ade)
+STD_ROM_FN(md_ps2ade)
+
+struct BurnDriver BurnDrvmd_ps2ade = {
+	"md_ps2ade", "md_ps2ad", NULL, NULL, "2010",
+	"Phantasy Star II - Kinds's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2adeRomInfo, md_ps2adeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -23737,6 +23813,25 @@ struct BurnDriver BurnDrvmd_ps2ae = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Phantasy Star II - Nei's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1532/
+static struct BurnRomInfo md_ps2aeeRomDesc[] = {
+	{ "phantasy star ii - nei's adventure (english translation).bin", 0x040000, 0xb0ce897c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2aee)
+STD_ROM_FN(md_ps2aee)
+
+struct BurnDriver BurnDrvmd_ps2aee = {
+	"md_ps2aee", "md_ps2ae", NULL, NULL, "2010",
+	"Phantasy Star II - Nei's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2aeeRomInfo, md_ps2aeeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Phantasy Star II - Rudger's Adventure (Jpn, SegaNet)
 static struct BurnRomInfo md_ps2afRomDesc[] = {
 	{ "phantasy star ii - rudger's adventure (jpn) (sn).bin", 0x040000, 0x6b5916d2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -23751,6 +23846,25 @@ struct BurnDriver BurnDrvmd_ps2af = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_ps2afRomInfo, md_ps2afRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Phantasy Star II - Rudger's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1533/
+static struct BurnRomInfo md_ps2afeRomDesc[] = {
+	{ "phantasy star ii - rudger's adventure (english translation).bin", 0x040000, 0x3cd3bc1c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2afe)
+STD_ROM_FN(md_ps2afe)
+
+struct BurnDriver BurnDrvmd_ps2afe = {
+	"md_ps2afe", "md_ps2af", NULL, NULL, "2010",
+	"Phantasy Star II - Rudger's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2afeRomInfo, md_ps2afeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -23773,6 +23887,25 @@ struct BurnDriver BurnDrvmd_ps2ag = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Phantasy Star II - Shilka's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1159/
+static struct BurnRomInfo md_ps2ageRomDesc[] = {
+	{ "phantasy star ii - shilka's adventure (english translation).bin", 0x040000, 0x76e56009, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2age)
+STD_ROM_FN(md_ps2age)
+
+struct BurnDriver BurnDrvmd_ps2age = {
+	"md_ps2age", "md_ps2ag", NULL, NULL, "2010",
+	"Phantasy Star II - Shilka's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2ageRomInfo, md_ps2ageRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Phantasy Star II - Yushis's Adventure (Jpn, SegaNet)
 static struct BurnRomInfo md_ps2ahRomDesc[] = {
 	{ "phantasy star ii - yushis's adventure (jpn) (sn).bin", 0x040000, 0xd40c76d6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -23787,6 +23920,25 @@ struct BurnDriver BurnDrvmd_ps2ah = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_ps2ahRomInfo, md_ps2ahRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Phantasy Star II - Yushis's Adventure (Hack, English)
+// Source : http://www.romhacking.net/translations/1531/
+static struct BurnRomInfo md_ps2aheRomDesc[] = {
+	{ "phantasy star ii - yushis's adventure (english translation).bin", 0x040000, 0x5395a7e2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ps2ahe)
+STD_ROM_FN(md_ps2ahe)
+
+struct BurnDriver BurnDrvmd_ps2ahe = {
+	"md_ps2ahe", "md_ps2ah", NULL, NULL, "2010",
+	"Phantasy Star II - Yushis's Adventure (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_ps2aheRomInfo, md_ps2aheRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -24902,7 +25054,7 @@ struct BurnDriver BurnDrvmd_pulsemane = {
 	"md_pulsemane", "md_pulseman", NULL, NULL, "2007",
 	"Pulseman (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_pulsemaneRomInfo, md_pulsemaneRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -34210,7 +34362,7 @@ struct BurnDriver BurnDrvmd_twinklete = {
 	"md_twinklete", "md_twinklet", NULL, NULL, "2007",
 	"Twinkle Tale (Hack, English)\0", NULL, "Toyo Records", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_twinkleteRomInfo, md_twinkleteRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -34517,7 +34669,7 @@ struct BurnDriver BurnDrvmd_undeade = {
 	"md_undeade", "md_undead", NULL, NULL, "2007",
 	"Undead Line (Hack, English)\0", NULL, "Palsoft", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_undeadeRomInfo, md_undeadeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3

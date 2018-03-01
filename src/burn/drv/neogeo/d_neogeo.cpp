@@ -16496,3 +16496,88 @@ struct BurnDriver BurnDrvcphd = {
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };
+
+// Metal Slug 5 (W)
+
+static struct BurnRomInfo mslug5wRomDesc[] = {
+	{ "268w.p1",	0x100000, 0xb0c126da, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "268lvf.p2",	0x400000, 0xf06c589a, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "268l9a.c1",	0x800000, 0x5e2e9087, 3 | BRF_GRA },           //  2 sprites
+	{ "268l9a.c2",	0x800000, 0xd15770e3, 3 | BRF_GRA },           //  3
+	{ "268l9a.c3",	0x800000, 0x3e104b8f, 3 | BRF_GRA },           //  4
+	{ "268l9a.c4",	0x800000, 0x03f32dda, 3 | BRF_GRA },           //  5
+	{ "268l9a.c5",	0x800000, 0xfd3e0f24, 3 | BRF_GRA },           //  6
+	{ "268l9a.c6",	0x800000, 0x3c873aba, 3 | BRF_GRA },           //  7
+	{ "268l9a.c7",	0x800000, 0x0d070c3b, 3 | BRF_GRA },           //  8
+	{ "268l9a.c8",	0x800000, 0x09751dd8, 3 | BRF_GRA },           //  9
+
+	{ "268l9a.m1",  0x080000, 0x464c72ad, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+
+	{ "268l9a.v1",	0x400000, 0xa8e12a92, 5 | BRF_SND },           // 11 ymsnd
+	{ "268lvnc.v2",	0x400000, 0x0608cba3, 5 | BRF_SND },           // 12
+	{ "268nd.v3",	0x400000, 0x02fd519e, 5 | BRF_SND },           // 13
+	{ "268l9a.v4",	0x4002f0, 0x179cbca3, 5 | BRF_SND },           // 14 - weird size!!
+};
+
+STDROMPICKEXT(mslug5w, mslug5w, neogeo)
+STD_ROM_FN(mslug5w)
+
+struct BurnDriver BurnDrvMslug5w = {
+	"mslug5w", "mslug5", "neogeo", NULL, "2003",
+	"Metal Slug 5 (W)\0", NULL, "C.B", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42, GBF_PLATFORM, FBF_MSLUG,
+	NULL, mslug5wRomInfo, mslug5wRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	s1945pInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
+// Kof'98 Mix (2011-10-01)
+
+static struct BurnRomInfo kof98mixRomDesc[] = {
+	{ "242mix.p1",	0x100000, 0x4a0525b1, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "242mix.p2",	0x400000, 0x75aeef82, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "242mix.s1",  0x020000, 0x07999beb, 2 | BRF_GRA },		   //  2 Text data
+
+	{ "242-c1.c1",	0x800000, 0xe564ecd6, 3 | BRF_GRA },           //  3 sprites
+	{ "242-c2.c2",	0x800000, 0xbd959b60, 3 | BRF_GRA },           //  4
+	{ "242-c3.c3",	0x800000, 0x22127b4f, 3 | BRF_GRA },           //  5
+	{ "242-c4.c4",	0x800000, 0x0b4fa044, 3 | BRF_GRA },           //  6
+	{ "242-c5.c5",	0x800000, 0x9d10bed3, 3 | BRF_GRA },           //  7
+	{ "242-c6.c6",	0x800000, 0xda07b6a2, 3 | BRF_GRA },           //  8
+	{ "242mix.c7",	0x800000, 0x374eb904, 3 | BRF_GRA },           //  9
+	{ "242mix.c8",	0x800000, 0xeddd2789, 3 | BRF_GRA },           // 10
+	{ "242mix.c9",	0x800000, 0x83ef6611, 3 | BRF_GRA },           // 11
+	{ "242mix.c10",	0x800000, 0xc22c67f8, 3 | BRF_GRA },           // 12
+
+	{ "242-mg1.m1", 0x040000, 0x4e7a6b1b, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
+
+	{ "242-v1.v1",	0x400000, 0xb9ea8051, 5 | BRF_SND },           // 14 ymsnd
+	{ "242-v2.v2",	0x400000, 0xcc11106e, 5 | BRF_SND },           // 15
+	{ "242-v3.v3",	0x400000, 0x044ea4e1, 5 | BRF_SND },           // 16
+	{ "242-v4.v4",	0x400000, 0x7985ea30, 5 | BRF_SND },           // 17
+};
+
+STDROMPICKEXT(kof98mix, kof98mix, neogeo)
+STD_ROM_FN(kof98mix)
+
+static INT32 kof98mixInit()
+{
+	NeoCallbackActive->pInstallHandlers = kof98InstallHandler;
+//	NeoCallbackActive->pScan = kof98Scan;
+
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvKof98mix = {
+	"kof98mix", "kof98", "neogeo", NULL, "2011",
+	"Kof'98 Mix (2011-10-01)\0", NULL, "hack", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof98mixRomInfo, kof98mixRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof98mixInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};

@@ -644,6 +644,7 @@ static INT32 LoadRoms()
 	if (!strcmp("kotm2p", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x300000;
 	if (!strcmp("sbp", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x800000;
 	if (!strcmp("lasthope", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x600000;
+	if (!strcmp("mslug5w", BurnDrvGetTextA(DRV_NAME))) nYM2610ADPCMASize[nNeoActiveSlot] = 0x10002f0;
 	
 //	bprintf(PRINT_NORMAL, _T("%x\n"), nYM2610ADPCMASize[nNeoActiveSlot]);
 	

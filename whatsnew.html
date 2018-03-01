@@ -250,8 +250,11 @@
 <li>Standardize savestate calls amongst soundcores [iq_132]</li>
 <li>Fixed tilemap and sound synchronization issues in Rohga [dink]</li>
 <li>Hook up sound cpu and fix sprite offsets in Pipi & Bibis / Whoopee!! on Teki Paki hardware [dink]</li>
-<li>Fixed video and audio issues in Risky Challenge, game now playable [iq_132, dink]</li>
+<li>Fixed video and audio issues in Risky Challenge, game now playable [dink, iq_132]</li>
 <li>Updated all FM soundcores using the timer system to require a lot less support code per driver (internalized *GetTime and *Synch.Stream) [dink]</li>
+<li>Fix the SRam implimentation on Megadrive [dink]</li>
+<li>Added EA "Four Way Play" support to Megadrive, enabled for General Chaos and Mutant League Hockey [dink]</li>
+<li>Added resampling to the ymf278b sound core, sounds right regardless of user sound rate [dink]</li>
 <li> []</li>
 </ul>
 <!-- new drivers -->
@@ -286,6 +289,8 @@
 <li>Added driver for Kangaroo, replacing the old one [iq_132]</li>
 <li>Added driver for Pirate Ship Higemaru, replacing the old one [iq_132]</li>
 <li>Added driver for Cop 01 and Mighty Guy, due to protection issues, Mighty Guy is without sound [iq_132]</li>
+<li>Added driver for Oli-Boo-Chu [iq_132]</li>
+<li>Added driver for Super Cross II [iq_132]</li>
 </ul>
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>
@@ -326,6 +331,8 @@
 <li>Added Mario Bros. revision G, making it the new parent [dink]</li>
 <li>Added Pier Solar to the Megadrive driver [iq_132]</li>
 <li>Added KOF2002 OMG and Omega hacks to the Neo-Geo driver [barbudreadmon]</li>
+<li>Added KOF98 mix hack to the Neo-Geo driver [iq_132]</li>
+<li>Added Metal Slug 5W hack to the Neo-Geo driver [iq_132]</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>

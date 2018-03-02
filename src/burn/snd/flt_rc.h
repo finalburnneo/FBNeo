@@ -12,4 +12,5 @@ void filter_rc_init(INT32 num, INT32 type, double R1, double R2, double R3, doub
 void filter_rc_set_src_gain(INT32 num, double gain);
 void filter_rc_set_src_stereo(INT32 num);
 void filter_rc_set_route(INT32 num, double nVolume, INT32 nRouteDir);
+void filter_rc_set_limit(INT32 num, double nVolume);
 void filter_rc_exit();

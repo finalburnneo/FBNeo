@@ -475,7 +475,7 @@ static UINT8 __fastcall gyruss_i8039_read_port(UINT32 port)
 
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / ((8000000 / 15) / (nBurnFPS / 100.0000))));
 }
 
 
@@ -943,9 +943,9 @@ static INT32 DrvFrame()
 
 		ZetOpen(1);
 		nCyclesDone[2] += ZetRun((nCyclesTotal[2] * (i + 1) / nInterleave) - nCyclesDone[2]);
+		ZetClose();
 
 		nCyclesDone[3] += I8039Run((nCyclesTotal[3] * (i + 1) / nInterleave) - nCyclesDone[3]);
-		ZetClose(); // after I8039Run() for DrvSyncDAC()!
 
 		if (pBurnDraw && scanline >= 16 && scanline < 240) {
 			if (nBurnLayer & 2) draw_sprites(scanline);

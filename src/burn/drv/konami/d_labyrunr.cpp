@@ -1,16 +1,12 @@
 // FB Alpha Labyrinth Runner driver module
 // Based on MAME driver by Nicola Salmoria
 
-/*
-	To do:
-		Timing seems a bit off (can hear some gaps in sound due to this)
-		Some graphics modes may be incomplete. Need save states to fix these.
-*/
-
 #include "tiles_generic.h"
 #include "hd6309_intf.h"
 #include "burn_ym2203.h"
 #include "konamiic.h"
+
+//#define DEBUG_LABY
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -42,7 +38,6 @@ static UINT8 DrvDips[3];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
-static INT32 DrvPalWritten = 0;
 static INT32 watchdog = 0;
 
 static struct BurnInputInfo LabyrunrInputList[] = {
@@ -171,8 +166,11 @@ static void bankswitch(INT32 data)
 
 static void labyrunr_write(UINT16 address, UINT8 data)
 {
-	if ((address & 0xfff8) == 0x0000) {
+	if ((address & 0xfff8) == 0x0000) { // 0x0000 - 0x0007
 		K007121CtrlRAM[address & 7] = data;
+#ifdef DEBUG_LABY
+		if ((address&7) == 0 || (address&7) == 2) bprintf(0, _T("cyc %d - 7121ctrl_w: %X: %X.\n"), HD6309TotalCycles(), address, data);
+#endif
 		return;
 	}
 
@@ -189,7 +187,7 @@ static void labyrunr_write(UINT16 address, UINT8 data)
 	if ((address & 0xff00) == 0x1000) {	// Speed-up
 		if (data != DrvPalRAM[address & 0xff]) {
 			DrvPalRAM[address & 0xff] = data;
-			DrvPalWritten = 1;
+			DrvRecalc = 1;
 		}
 		return;
 	}
@@ -293,7 +291,6 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	K051733Reset();
 
-	DrvPalWritten = 1;
 	watchdog = 0;
 
 	HiscoreReset();
@@ -305,32 +302,32 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvHD6309ROM		= Next; Next += 0x028000;
+	DrvHD6309ROM    = Next; Next += 0x028000;
 
-	DrvGfxROM		= Next; Next += 0x080000;
+	DrvGfxROM       = Next; Next += 0x080000;
 
-	DrvLutPROM		= Next; Next += 0x000100;
+	DrvLutPROM      = Next; Next += 0x000100;
 
-	DrvLookUpTable		= Next; Next += 0x000800;
-	DrvSprTranspLut		= Next; Next += 0x000800;
-	DrvTransTab		= Next; Next += 0x002000;
+	DrvLookUpTable  = Next; Next += 0x000800;
+	DrvSprTranspLut = Next; Next += 0x000800;
+	DrvTransTab     = Next; Next += 0x002000;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
+	DrvPalette      = (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
 
-	AllRam			= Next;
+	AllRam          = Next;
 
-	DrvHD6309RAM		= Next; Next += 0x000800;
-	DrvPalRAM		= Next; Next += 0x000100;
+	DrvHD6309RAM    = Next; Next += 0x000800;
+	DrvPalRAM       = Next; Next += 0x000100;
 
-	DrvSprRAM		= Next; Next += 0x001000;
-	DrvVidRAM1		= Next; Next += 0x000800;
-	DrvVidRAM0		= Next; Next += 0x000800;
-	DrvScrollRAM		= Next; Next += 0x000040;
+	DrvSprRAM       = Next; Next += 0x001000;
+	DrvVidRAM0      = Next; Next += 0x000800;
+	DrvVidRAM1      = Next; Next += 0x000800;
+	DrvScrollRAM    = Next; Next += 0x000040;
 
-	K007121CtrlRAM		= Next; Next += 0x000008;
+	K007121CtrlRAM  = Next; Next += 0x000008;
 
-	RamEnd			= Next;
-	MemEnd			= Next;
+	RamEnd          = Next;
+	MemEnd          = Next;
 
 	return 0;
 }
@@ -390,12 +387,12 @@ static INT32 CommonInit(INT32 nLoadType)
 			if (BurnLoadRom(DrvGfxROM + 0x00000,     3, 2)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x20001,     4, 2)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x20000,     5, 2)) return 1;
-	
+
 			if (BurnLoadRom(DrvLutPROM,              6, 1)) return 1;
 		} else {
 			if (BurnLoadRom(DrvGfxROM + 0x00000,     2, 1)) return 1;
 			BurnByteswap(DrvGfxROM, 0x40000);
-	
+
 			if (BurnLoadRom(DrvLutPROM,              3, 1)) return 1;
 		}
 
@@ -418,7 +415,7 @@ static INT32 CommonInit(INT32 nLoadType)
 	BurnYM2203Init(2, 3000000, NULL, 0);
 	BurnYM2203SetPorts(0, &ym2203_0_read_portA, &ym2203_0_read_portB, NULL, NULL);
 	BurnYM2203SetPorts(1, NULL, &ym2203_1_read_portB, NULL, NULL);
-	BurnTimerAttachHD6309(3000000);
+	BurnTimerAttachHD6309(4000000);
 	BurnYM2203SetAllRoutes(0, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetAllRoutes(1, 0.80, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetPSGVolume(0, 0.80);
@@ -447,15 +444,15 @@ static INT32 DrvExit()
 	return 0;
 }
 
-static void draw_layer(INT32 layer)
+static void draw_layer(INT32 layer, INT32 category)
 {
-	UINT8 *vidram;
-
 	INT32 c1 = K007121CtrlRAM[1];
 	INT32 c3 = K007121CtrlRAM[3];
 	INT32 c4 = K007121CtrlRAM[4];
 	INT32 c5 = K007121CtrlRAM[5];
 	INT32 c6 = K007121CtrlRAM[6];
+
+	INT32 colscroll = ((c1&6) == 6);
 
 	INT32 b0 = ((c5 >> 0) & 3) + 2;
 	INT32 b1 = ((c5 >> 2) & 3) + 1;
@@ -463,7 +460,7 @@ static void draw_layer(INT32 layer)
 	INT32 b3 = ((c5 >> 6) & 3) - 1;
 
 	INT32 xscroll_enable = 1;
-	INT32 yscroll_enable = ~c3 & 0x20;
+	INT32 yscroll_enable = 1;
 
 	INT32 scrollx = K007121CtrlRAM[0];
 	INT32 scrolly = K007121CtrlRAM[2];
@@ -475,55 +472,58 @@ static void draw_layer(INT32 layer)
 	INT32 max_x = nScreenWidth;
 	INT32 x_offset = 0;
 
-	if (layer == 1)
-	{
-		vidram = DrvVidRAM1;
+	UINT8 *vidram = (layer) ? DrvVidRAM1 : DrvVidRAM0;
 
-		if (yscroll_enable)
+	if (c3 & 0x20)
+	{ // ------------> game ending mode <------------
+		opaque = 0;
+
+		if (c1 & 0x01)
 		{
-			opaque = 1;
-			yscroll_enable = xscroll_enable = 0;
-			max_x = 40;
+			if (layer == 0) {
+				min_x = nScreenWidth - scrollx + 8;
+			}
+
+			if (layer == 1) {
+				if (scrollx < 40) {
+					min_x = 40 - scrollx;
+					max_x = nScreenWidth - scrollx;
+				} else
+					max_x = nScreenWidth - scrollx + 8;
+			}
 		}
 		else
 		{
-			scrollx -= 40;
-
-			if (c1 & 0x01)
-			{
-				if (scrollx < 40) min_x = (40 - scrollx) - 1;
-				max_x = nScreenWidth - scrollx + 8;
+			if (layer == 0) {
+				if (scrollx < 40) {
+					min_x = 40 - scrollx;
+					max_x = nScreenWidth - scrollx;
+				} else
+					max_x = nScreenWidth - scrollx + 8;
 			}
-			else
-			{
+
+			if (layer == 1) {
 				min_x = nScreenWidth - scrollx + 8;
-				max_x = nScreenWidth;
 			}
 		}
+
+		if (min_x < 16) min_x = 16;
+		if (max_x > nScreenWidth - 16) max_x = nScreenWidth - 16;
+
+		scrollx -= 40;
 	}
 	else
-	{
-		x_offset = 40;
-		min_x = 40;
-		vidram = DrvVidRAM0;
-
-		if (yscroll_enable) {
+	{ // ------------> regular game mode <------------
+		if (layer == 0) { // playfield
+			min_x = 40;
+			max_x = 264; // leave room for bottom HUD (sprites)
+			x_offset = 40;
 			opaque = 1;
-			max_x = 264;	// ?? why?
 		}
-		else
-		{
-			if (c1 & 0x01)
-			{
-				min_x = (nScreenWidth - scrollx + 8) - 1;
-				max_x = nScreenWidth;
-
-			}
-			else
-			{
-				if (scrollx < 40) min_x = (40 - scrollx) - 1;
-				max_x = nScreenWidth - scrollx + 8;
-			}
+		if (layer == 1) { // top HUD
+			yscroll_enable = xscroll_enable = 0;
+			max_x = 40;
+			opaque = 1;
 		}
 	}
 
@@ -533,6 +533,9 @@ static void draw_layer(INT32 layer)
 		INT32 sy = (offs / 0x20) * 8;
 
 		if (yscroll_enable) {
+			if (colscroll && ((sx / 8) - 2) >= 0) {
+			   sy -= DrvScrollRAM[(sx / 8) - 2];
+			}
 			sy -= scrolly;
 			if (sy < -7) sy += 256;
 		}
@@ -549,6 +552,8 @@ static void draw_layer(INT32 layer)
 
 		INT32 attr = vidram[offs];
 		INT32 code = vidram[offs + 0x400];
+
+		if (layer == 0 && (attr&0x40)>>6 != category) continue;
 
 		INT32 bank = ((attr >> 7) & 1) | ((attr >> b0) & 2) | ((attr >> b1) & 4) | ((attr >> b2) & 8) | ((attr >> b3) & 0x10) | ((c3 & 1) << 5);
 
@@ -567,9 +572,10 @@ static void draw_layer(INT32 layer)
 					if ((sy+y) < 0 || (sy+y) >= nScreenHeight || (sx+x) < min_x || (sx+x) >= max_x) continue;
 
 					INT32 pxl = gfx[(y*8)+x];
-			
+
 					if (pxl || opaque) {
 						pTransDraw[(sy+y)*nScreenWidth+(sx+x)] = pxl+color;
+						pPrioDraw[(sy+y)*nScreenWidth+(sx+x)] = (c3 & 0x20) ? 1 : 0;
 					}
 				}
 			}
@@ -577,24 +583,24 @@ static void draw_layer(INT32 layer)
 	}
 }
 
-static void k007121_sprites_draw(UINT8 *gfx, UINT32 */*palette*/, UINT8 *source, int base_color, int global_x_offset, int bank_base, UINT32 /*pri_mask*/)
+static void k007121_sprites_draw(UINT8 *gfx, UINT32 */*palette*/, UINT8 *source, INT32 base_color, INT32 global_x_offset, INT32 bank_base, UINT32 /*priority*/)
 {
 	INT32 flipscreen = K007121CtrlRAM[7] & 0x08;
 
 	for (INT32 i = 0; i < 0x40; i++)
 	{
-		int number = source[0];
-		int sprite_bank = source[1] & 0x0f;
-		int sx = source[3];
-		int sy = source[2];
-		int attr = source[4];
-		int xflip = source[4] & 0x10;
-		int yflip = source[4] & 0x20;
-		int color = base_color + ((source[1] & 0xf0) >> 4);
-		int width, height;
-		static const int x_offset[4] = {0x0,0x1,0x4,0x5};
-		static const int y_offset[4] = {0x0,0x2,0x8,0xa};
-		int x,y, ex, ey, flipx, flipy, destx, desty;
+		INT32 number = source[0];
+		INT32 sprite_bank = source[1] & 0x0f;
+		INT32 sx = source[3];
+		INT32 sy = source[2];
+		INT32 attr = source[4];
+		INT32 xflip = source[4] & 0x10;
+		INT32 yflip = source[4] & 0x20;
+		INT32 color = base_color + ((source[1] & 0xf0) >> 4);
+		INT32 width, height;
+		static const INT32 x_offset[4] = {0x0,0x1,0x4,0x5};
+		static const INT32 y_offset[4] = {0x0,0x2,0x8,0xa};
+		INT32 x, y, ex, ey, flipx, flipy, destx, desty;
 
 		if (attr & 0x01) sx -= 256;
 		if (sy >= 240) sy -= 256;
@@ -677,22 +683,23 @@ static void DrvPaletteInit()
 
 static INT32 DrvDraw()
 {
-	if (DrvPalWritten || DrvRecalc) {
+	if (DrvRecalc) {
 		DrvRecalc = 0;
-		DrvPalWritten = 0;
 		DrvPaletteInit();
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x800;
-	}
-
-	INT32 c3 = K007121CtrlRAM[3] & 0x40;
-
-	if (nBurnLayer & 1) draw_layer(0);
-	if (nSpriteEnable & 1 &&  c3) k007121_sprites_draw(DrvGfxROM, DrvPalette, DrvSprRAM, (K007121CtrlRAM[6] & 0x30) * 2, 40,0, (K007121CtrlRAM[3] & 0x40) >> 5);
-	if (nBurnLayer & 2) draw_layer(1);
-	if (nSpriteEnable & 1 && !c3) k007121_sprites_draw(DrvGfxROM, DrvPalette, DrvSprRAM, (K007121CtrlRAM[6] & 0x30) * 2, 40,0, (K007121CtrlRAM[3] & 0x40) >> 5);
+	BurnTransferClear(0x800);
+#ifdef DEBUG_LABY
+	INT32 c1 = K007121CtrlRAM[1];
+	INT32 c3 = K007121CtrlRAM[3] & 0x20;
+	INT32 scrollx = K007121CtrlRAM[0];
+	INT32 scrolly = K007121CtrlRAM[2];
+	bprintf(0, _T("c1 %X c3 %X scx %X scy %X\n"), c1, c3, scrollx, scrolly);
+#endif
+	if (nBurnLayer & 1) draw_layer(0, 0);
+	if (nSpriteEnable & 1) k007121_sprites_draw(DrvGfxROM, DrvPalette, DrvSprRAM, (K007121CtrlRAM[6] & 0x30) * 2, 40,0, (K007121CtrlRAM[3] & 0x40) >> 5);
+	if (nBurnLayer & 1) draw_layer(0, 1);
+	if (nBurnLayer & 2) draw_layer(1, 0);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -728,18 +735,19 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal = 3000000 / 60;
+	INT32 nCyclesTotal = 4000000 / 60;
 
 	HD6309Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		BurnTimerUpdate((i+1) * (nCyclesTotal / nInterleave));
+		BurnTimerUpdate((i + 1) * (nCyclesTotal / nInterleave));
 
-		// the timings of these is extremely important.. and currently wrong.
-		if ((i & 0x3f) == 0x3f && (K007121CtrlRAM[7] & 0x01)) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		if ((i & 0x3f) == 0x00 && (K007121CtrlRAM[7] & 0x01)) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		if (i == 253 && (K007121CtrlRAM[7] & 0x02)) HD6309SetIRQLine(0x00, CPU_IRQSTATUS_AUTO);
+		if (i == (nInterleave-1)) {
+			if (K007121CtrlRAM[7] & 0x02) HD6309SetIRQLine(0x00, CPU_IRQSTATUS_HOLD);
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal);
@@ -757,7 +765,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -779,6 +787,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 
 		SCAN_VAR(HD6309Bank);
+
+		K051733Scan(nAction);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -813,7 +823,7 @@ STD_ROM_FN(tricktrp)
 
 struct BurnDriver BurnDrvTricktrp = {
 	"tricktrp", NULL, NULL, NULL, "1987",
-	"Trick Trap (World?)\0", "Graphics issues in the ending credits.", "Konami", "GX771",
+	"Trick Trap (World?)\0", NULL, "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, tricktrpRomInfo, tricktrpRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
@@ -838,7 +848,7 @@ STD_ROM_FN(labyrunr)
 
 struct BurnDriver BurnDrvLabyrunr = {
 	"labyrunr", "tricktrp", NULL, NULL, "1987",
-	"Labyrinth Runner (Japan)\0", "Graphics issues in the ending credits.", "Konami", "GX771",
+	"Labyrinth Runner (Japan)\0", NULL, "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, labyrunrRomInfo, labyrunrRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,
@@ -866,7 +876,7 @@ STD_ROM_FN(labyrunrk)
 
 struct BurnDriver BurnDrvLabyrunrk = {
 	"labyrunrk", "tricktrp", NULL, NULL, "1987",
-	"Labyrinth Runner (World Ver. K)\0", "Graphics issues in the ending credits.", "Konami", "GX771",
+	"Labyrinth Runner (World Ver. K)\0", NULL, "Konami", "GX771",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, labyrunrkRomInfo, labyrunrkRomName, NULL, NULL, LabyrunrInputInfo, LabyrunrDIPInfo,

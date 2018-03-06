@@ -187,6 +187,10 @@ void HD6309SetIRQLine(INT32 vector, INT32 status)
 	if (status == CPU_IRQSTATUS_ACK) {
 		hd6309_set_irq_line(vector, 1);
 	}
+
+	if (status == CPU_IRQSTATUS_HOLD) {
+		hd6309_set_irq_line(vector, 2);
+	}
 	
 	if (status == CPU_IRQSTATUS_AUTO) {
 		hd6309_set_irq_line(vector, 1);

@@ -31,6 +31,7 @@ typedef struct
 	UINT8	md; 		/* Special mode register */
 	UINT8	ireg;		/* First opcode */
 	UINT8	irq_state[2];
+	UINT8	irq_hold[2];
 	INT32 	extra_cycles; /* cycles used up by interrupts */
 	UINT8	int_state;	/* SYNC and CWAI flags */
 	UINT8	nmi_state;

@@ -437,6 +437,8 @@ static void CHECK_IRQ_LINES( void )
 		CC |= CC_IF | CC_II;			/* inhibit FIRQ and IRQ */
 		PCD=RM16(0xfff6);
 		CHANGE_PC;
+		if (hd6309.irq_hold[HD6309_FIRQ_LINE])
+			hd6309_set_irq_line(HD6309_FIRQ_LINE, 0);
 //		(void)(*hd6309.irq_callback)(HD6309_FIRQ_LINE);
 	}
 	else
@@ -471,6 +473,8 @@ static void CHECK_IRQ_LINES( void )
 		CC |= CC_II;					/* inhibit IRQ */
 		PCD=RM16(0xfff8);
 		CHANGE_PC;
+		if (hd6309.irq_hold[HD6309_IRQ_LINE])
+			hd6309_set_irq_line(HD6309_IRQ_LINE, 0);
 //		(void)(*hd6309.irq_callback)(HD6309_IRQ_LINE);
 	}
 }
@@ -560,6 +564,10 @@ static void hd6309_exit(void)
  ****************************************************************************/
 void hd6309_set_irq_line(int irqline, int state)
 {
+	int hold = 0;
+
+	if (state == 2) { hold = 1; state = 1; }
+
 	if (irqline == HD6309_INPUT_LINE_NMI)
 	{
 		if (hd6309.nmi_state == state) return;
@@ -605,6 +613,7 @@ void hd6309_set_irq_line(int irqline, int state)
 	{
 //		LOG(("HD6309#%d set_irq_line %d, %d (PC=%4.4X)\n", cpu_getactivecpu(), irqline, state, pPC.d));
 		hd6309.irq_state[irqline] = state;
+		hd6309.irq_hold[irqline] = hold;
 		if (state == HD6309_CLEAR_LINE) return;
 		CHECK_IRQ_LINES();
 	}

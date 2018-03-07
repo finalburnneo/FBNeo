@@ -6,8 +6,6 @@
 #include "burn_ym2203.h"
 #include "konamiic.h"
 
-//#define DEBUG_LABY
-
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
@@ -168,9 +166,6 @@ static void labyrunr_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfff8) == 0x0000) { // 0x0000 - 0x0007
 		K007121CtrlRAM[address & 7] = data;
-#ifdef DEBUG_LABY
-		if ((address&7) == 0 || (address&7) == 2) bprintf(0, _T("cyc %d - 7121ctrl_w: %X: %X.\n"), HD6309TotalCycles(), address, data);
-#endif
 		return;
 	}
 
@@ -533,7 +528,7 @@ static void draw_layer(INT32 layer, INT32 category)
 		INT32 sy = (offs / 0x20) * 8;
 
 		if (yscroll_enable) {
-			if (colscroll && ((sx / 8) - 2) >= 0) {
+			if (colscroll && sx >= 16) {
 			   sy -= DrvScrollRAM[(sx / 8) - 2];
 			}
 			sy -= scrolly;
@@ -689,13 +684,7 @@ static INT32 DrvDraw()
 	}
 
 	BurnTransferClear(0x800);
-#ifdef DEBUG_LABY
-	INT32 c1 = K007121CtrlRAM[1];
-	INT32 c3 = K007121CtrlRAM[3] & 0x20;
-	INT32 scrollx = K007121CtrlRAM[0];
-	INT32 scrolly = K007121CtrlRAM[2];
-	bprintf(0, _T("c1 %X c3 %X scx %X scy %X\n"), c1, c3, scrollx, scrolly);
-#endif
+
 	if (nBurnLayer & 1) draw_layer(0, 0);
 	if (nSpriteEnable & 1) k007121_sprites_draw(DrvGfxROM, DrvPalette, DrvSprRAM, (K007121CtrlRAM[6] & 0x30) * 2, 40,0, (K007121CtrlRAM[3] & 0x40) >> 5);
 	if (nBurnLayer & 1) draw_layer(0, 1);
@@ -745,7 +734,7 @@ static INT32 DrvFrame()
 
 		if ((i & 0x3f) == 0x00 && (K007121CtrlRAM[7] & 0x01)) HD6309SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 
-		if (i == (nInterleave-1)) {
+		if (i == 254) { // any other timing causes junk between scene fades at the beginning of stage 1 and after the centipede is killed in the castle
 			if (K007121CtrlRAM[7] & 0x02) HD6309SetIRQLine(0x00, CPU_IRQSTATUS_HOLD);
 		}
 	}

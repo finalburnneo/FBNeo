@@ -1,5 +1,7 @@
 #include "upd7810.h"
 
+void upd7810SetAnfunc(INT32 select, UINT8 (*func)());
+
 void upd7810SetReadPortHandler(UINT8 (*read_port)(UINT8));
 void upd7810SetWritePortHandler(void (*write_port)(UINT8,UINT8));
 void upd7810SetReadHandler(UINT8 (*read)(UINT16));

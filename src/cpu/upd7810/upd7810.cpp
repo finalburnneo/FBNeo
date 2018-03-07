@@ -403,6 +403,16 @@ STOP            01001000  10111011          12  stop
 //#include "mamedbg.h"
 #include "upd7810.h"
 
+
+static UINT8 (*an0_func)();
+static UINT8 (*an1_func)();
+static UINT8 (*an2_func)();
+static UINT8 (*an3_func)();
+static UINT8 (*an4_func)();
+static UINT8 (*an5_func)();
+static UINT8 (*an6_func)();
+static UINT8 (*an7_func)();
+
 static UINT8 *mem[3][0x100];
 
 static UINT8 (*read_byte_8)(UINT16) = NULL;
@@ -1627,11 +1637,126 @@ static void upd7810_timers(int cycles)
 		}
 		break;
 	}
+
+	/**** ADC ****/
+	upd7810.adcnt += cycles;
+	if (upd7810.PANM != ANM)
+	{
+		/* reset A/D converter */
+		upd7810.adcnt = 0;
+		if (ANM & 0x10)
+			upd7810.adtot = 144;
+		else
+			upd7810.adtot = 192;
+		upd7810.adout = 0;
+		upd7810.shdone = 0;
+		if (ANM & 0x01)
+		{
+			/* select mode */
+			upd7810.adin = (ANM >> 1) & 0x07;
+		}
+		else
+		{
+			/* scan mode */
+			upd7810.adin    = 0;
+			upd7810.adrange = (ANM >> 1) & 0x04;
+		}
+	}
+	upd7810.PANM = ANM;
+	if (ANM & 0x01)
+	{
+		/* select mode */
+		if (upd7810.shdone == 0)
+		{
+			switch (upd7810.adin)
+			{
+				case 0: upd7810.tmpcr = an0_func(); break;
+				case 1: upd7810.tmpcr = an1_func(); break;
+				case 2: upd7810.tmpcr = an2_func(); break;
+				case 3: upd7810.tmpcr = an3_func(); break;
+				case 4: upd7810.tmpcr = an4_func(); break;
+				case 5: upd7810.tmpcr = an5_func(); break;
+				case 6: upd7810.tmpcr = an6_func(); break;
+				case 7: upd7810.tmpcr = an7_func(); break;
+			}
+			upd7810.shdone = 1;
+		}
+		if (upd7810.adcnt > upd7810.adtot)
+		{
+			upd7810.adcnt -= upd7810.adtot;
+			switch (upd7810.adout)
+			{
+				// volfied code checks bit 0x80, old code set bit 0x01, TODO: verify which bits are set on real hw
+				case 0: CR0 = upd7810.tmpcr ? 0xff:0x00; break;
+				case 1: CR1 = upd7810.tmpcr ? 0xff:0x00; break;
+				case 2: CR2 = upd7810.tmpcr ? 0xff:0x00; break;
+				case 3: CR3 = upd7810.tmpcr ? 0xff:0x00; break;
+			}
+			upd7810.adout = (upd7810.adout + 1) & 0x03;
+			if (upd7810.adout == 0)
+				IRR |= INTFAD;
+			upd7810.shdone = 0;
+		}
+	}
+	else
+	{
+		/* scan mode */
+		if (upd7810.shdone == 0)
+		{
+			switch (upd7810.adin | upd7810.adrange)
+			{
+				case 0: upd7810.tmpcr = an0_func(); break;
+				case 1: upd7810.tmpcr = an1_func(); break;
+				case 2: upd7810.tmpcr = an2_func(); break;
+				case 3: upd7810.tmpcr = an3_func(); break;
+				case 4: upd7810.tmpcr = an4_func(); break;
+				case 5: upd7810.tmpcr = an5_func(); break;
+				case 6: upd7810.tmpcr = an6_func(); break;
+				case 7: upd7810.tmpcr = an7_func(); break;
+			}
+			upd7810.shdone = 1;
+		}
+		if (upd7810.adcnt > upd7810.adtot)
+		{
+			upd7810.adcnt -= upd7810.adtot;
+			switch (upd7810.adout)
+			{
+				case 0: CR0 = upd7810.tmpcr ? 0xff:0x00; break;
+				case 1: CR1 = upd7810.tmpcr ? 0xff:0x00; break;
+				case 2: CR2 = upd7810.tmpcr ? 0xff:0x00; break;
+				case 3: CR3 = upd7810.tmpcr ? 0xff:0x00; break;
+			}
+			upd7810.adin  = (upd7810.adin  + 1) & 0x07;
+			upd7810.adout = (upd7810.adout + 1) & 0x03;
+			if (upd7810.adout == 0)
+				IRR |= INTFAD;
+			upd7810.shdone = 0;
+		}
+	}
 }
 
 #include "7810tbl.c"
 #include "7810ops.c"
 
+static UINT8 fake_an_func()
+{
+	return 0;
+}
+
+void upd7810SetAnfunc(INT32 select, UINT8 (*func)())
+{
+	switch (select & 7)
+	{
+		case 0: an0_func = func; break;
+		case 1: an1_func = func; break;
+		case 2: an2_func = func; break;
+		case 3: an3_func = func; break;
+		case 4: an4_func = func; break;
+		case 5: an5_func = func; break;
+		case 6: an6_func = func; break;
+		case 7: an7_func = func; break;
+	}
+}
 
 static void upd7810_init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 {
@@ -1644,6 +1769,14 @@ static void upd7810_init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 
 	memset (mem, 0, 3 * 0x100 * sizeof(UINT8*));
 
+	an0_func = fake_an_func;
+	an1_func = fake_an_func;
+	an2_func = fake_an_func;
+	an3_func = fake_an_func;
+	an4_func = fake_an_func;
+	an5_func = fake_an_func;
+	an6_func = fake_an_func;
+	an7_func = fake_an_func;
 
 #if 0
 	int cpu = cpu_getactivecpu();
@@ -1775,6 +1908,8 @@ void upd7810Reset()
 	upd7810_icount = 0;
 	upd7810_total_cycles = 0;
 	upd7810_current_cycles = 0;
+
+	upd7810.PANM = 0xff; //reset
 }
 
 void upd7810Exit()

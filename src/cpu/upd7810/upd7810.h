@@ -129,6 +129,15 @@ typedef struct {
 	UINT16	irr;	/* interrupt request register */
 	UINT16	itf;	/* interrupt test flag register */
 
+	INT32 adcnt;
+	UINT32 PANM;
+	INT32 adtot;
+	UINT32 adin;
+	UINT32 adout;
+	UINT32 shdone;
+	UINT32 adrange;
+	UINT8 tmpcr;
+
 /* internal helper variables */
 	UINT16	txs;	/* transmitter shift register */
 	UINT16	rxs;	/* receiver shift register */

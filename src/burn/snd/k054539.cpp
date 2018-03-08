@@ -732,6 +732,8 @@ void K054539Scan(INT32 nAction, INT32 *)
 				nFractionalPosition[chip] = 0;
 				nPosition[chip] = 0;
 			}
+			memset(soundbuf[0], 0, (800 * sizeof(INT16) * 2) * 4);
+			memset(soundbuf[1], 0, (800 * sizeof(INT16) * 2) * 4);
 		}
 	}
 }

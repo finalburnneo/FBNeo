@@ -258,6 +258,10 @@ void BurnMD2612Scan(INT32 nAction, INT32* pnMin)
 
 		if (nAction & ACB_WRITE) {
 			MDYM2612LoadContext();
+
+			nMD2612Position = 0;
+			nFractionalPosition = 0;
+			memset(pBuffer, 0, 4096 * 2 * 1 * sizeof(INT16));
 		} else {
 			MDYM2612SaveContext();
 		}

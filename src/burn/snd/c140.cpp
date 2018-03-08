@@ -176,6 +176,7 @@ void c140_init(INT32 clock, INT32 devtype, UINT8 *c140_rom)
 	/* allocate a pair of buffers to mix into - 1 second's worth should be more than enough */
 	m_mixer_buffer_left = (INT16*)BurnMalloc(2 * sizeof(INT16) * m_sample_rate);
 	m_mixer_buffer_right = m_mixer_buffer_left + m_sample_rate;
+	memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);
 
 	// for resampling
 	nSampleSize = (UINT32)m_sample_rate * (1 << 16) / nBurnSoundRate;
@@ -208,6 +209,7 @@ void c140_scan(INT32 nAction, INT32 *)
 	if (nAction & ACB_WRITE) {
 		nFractionalPosition = 0;
 		nPosition = 0;
+		memset(m_mixer_buffer_left, 0, 2 * sizeof(INT16) * m_sample_rate);
 	}
 }
 

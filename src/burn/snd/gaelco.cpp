@@ -360,6 +360,7 @@ void gaelcosnd_scan(INT32 nAction, INT32 *)
 	if (nAction & ACB_WRITE) {
 		nFractionalPosition = 0;
 		nPosition = 0;
+		memset(sample_buffer, 0, 8000 * sizeof(INT16) * 2);
 	}
 }
 

@@ -992,6 +992,7 @@ static void es5506_start_common(INT32 clock, UINT8* region0, UINT8* region1, UIN
 
 	/* allocate memory */
 	chip->scratch = (INT32*)BurnMalloc(2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
+	memset(chip->scratch, 0, 2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
 
 	/* set volume */
 	chip->volume[0] = 1.00;
@@ -1037,6 +1038,7 @@ void ES5506Scan(INT32 nAction, INT32* pnMin)
 		nFractionalPosition = 0;
 		nPosition = 0;
 		nSampleSize = (UINT32)chip->sample_rate * (1 << 16) / nBurnSoundRate;
+		memset(chip->scratch, 0, 2 * MAX_SAMPLE_CHUNK * sizeof(INT32));
 	}
 }
 

@@ -941,8 +941,8 @@ static INT32 TaitoF3GetRoms(bool bLoad)
 	if (!bLoad) TaitoF3ES5506RomSize = 0;
 
 	char* pRomName;
-	struct BurnRomInfo ri;
-	struct BurnRomInfo pi;
+	struct BurnRomInfo ri = { "\0", 0, 0, 0 };
+	struct BurnRomInfo pi = { "\0", 0, 0, 0 };
 
 	UINT8 *sprites = TaitoSpritesA;
 	UINT8 *tiles = TaitoChars;

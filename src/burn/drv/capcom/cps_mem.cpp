@@ -81,22 +81,29 @@ static INT32 AllocateMemory()
 }
 
 // Map the correct bank of obj memory to the 68000 address space (including mirrors).
+void CpsDoMapObjectBanks(INT32 nBank)
+{
+	nCpsObjectBank = nBank;
+
+	if (nCpsObjectBank) {
+		SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, MAP_RAM);
+		SekMapMemory(CpsRam708 + 0x8000, 0x70A000, 0x70BFFF, MAP_RAM);
+		SekMapMemory(CpsRam708 + 0x8000, 0x70C000, 0x70DFFF, MAP_RAM);
+		SekMapMemory(CpsRam708 + 0x8000, 0x70E000, 0x70FFFF, MAP_RAM);
+	} else {
+		SekMapMemory(CpsRam708, 0x708000, 0x709FFF, MAP_RAM);
+		SekMapMemory(CpsRam708, 0x70A000, 0x70BFFF, MAP_RAM);
+		SekMapMemory(CpsRam708, 0x70C000, 0x70DFFF, MAP_RAM);
+		SekMapMemory(CpsRam708, 0x70E000, 0x70FFFF, MAP_RAM);
+	}
+}
+
 void CpsMapObjectBanks(INT32 nBank)
 {
 	if (nBank != nCpsObjectBank) {
 		nCpsObjectBank = nBank;
 
-		if (nCpsObjectBank) {
-			SekMapMemory(CpsRam708 + 0x8000, 0x708000, 0x709FFF, MAP_RAM);
-			SekMapMemory(CpsRam708 + 0x8000, 0x70A000, 0x70BFFF, MAP_RAM);
-			SekMapMemory(CpsRam708 + 0x8000, 0x70C000, 0x70DFFF, MAP_RAM);
-			SekMapMemory(CpsRam708 + 0x8000, 0x70E000, 0x70FFFF, MAP_RAM);
-		} else {
-			SekMapMemory(CpsRam708, 0x708000, 0x709FFF, MAP_RAM);
-			SekMapMemory(CpsRam708, 0x70A000, 0x70BFFF, MAP_RAM);
-			SekMapMemory(CpsRam708, 0x70C000, 0x70DFFF, MAP_RAM);
-			SekMapMemory(CpsRam708, 0x70E000, 0x70FFFF, MAP_RAM);
-		}
+		CpsDoMapObjectBanks(nBank);
 	}
 }
 
@@ -414,7 +421,10 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 	if (nAction & ACB_DRIVER_DATA) {					// Scan volatile variables/registers/RAM
 
 		SekScan(nAction);								// Scan 68000 state
-		
+
+		SCAN_VAR(nCpsCyclesExtra);
+		SCAN_VAR(nCpsObjectBank);
+
 		if (Cps1OverrideLayers) {
 			SCAN_VAR(nCps1Layers);
 			SCAN_VAR(nCps1LayerOffs);
@@ -422,6 +432,9 @@ INT32 CpsAreaScan(INT32 nAction, INT32 *pnMin)
 
 		if (nAction & ACB_WRITE) {						// Palette could have changed
 			CpsRecalcPal = 1;
+			SekOpen(0);
+			CpsDoMapObjectBanks(nCpsObjectBank);        // Re-Map object banks
+			SekClose();
 		}
 	}
 

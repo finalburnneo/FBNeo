@@ -66,6 +66,9 @@ INT32 QsndScan(INT32 nAction)
 	if (nAction & ACB_DRIVER_DATA) {
 		QsndZScan(nAction);				// Scan Z80
 		QscScan(nAction);				// Scan QSound Chip
+
+		BurnTimerScan(nAction, NULL);
+		SCAN_VAR(nQsndCyclesExtra);
 	}
 
 	return 0;

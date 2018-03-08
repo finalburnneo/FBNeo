@@ -11,7 +11,7 @@ static bool bEnableAutoIrq50, bEnableAutoIrq52;				// Trigger an interrupt every
 
 static const INT32 nFirstLine = 0x10;							// The first scanline of the display
 
-static INT32 nCpsCyclesExtra;
+INT32 nCpsCyclesExtra;
 
 INT32 CpsDrawSpritesInReverse = 0;
 

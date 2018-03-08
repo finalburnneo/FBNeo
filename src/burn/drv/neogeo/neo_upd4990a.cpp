@@ -52,7 +52,7 @@ INT32 uPD4990AInit(UINT32 nTicksPerSecond)
 		uPD4990A.nDay     = 1;
 		uPD4990A.nWeekDay = 3;
 		uPD4990A.nMonth   = 6;
-		uPD4990A.nYear    = 2018;
+		uPD4990A.nYear    = 2018 % 100;
 	} else {
 		uPD4990A.nSeconds = tmLocalTime->tm_sec;
 		uPD4990A.nMinutes = tmLocalTime->tm_min;

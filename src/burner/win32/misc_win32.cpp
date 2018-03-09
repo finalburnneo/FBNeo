@@ -1,5 +1,7 @@
 #include "burner.h"
 
+bool bEnableHighResTimer = true; // default value
+
 bool bIsWindowsXPorGreater = false;
 bool bIsWindowsXP = false;
 bool bIsWindows8OrGreater = false;
@@ -269,7 +271,7 @@ void EnableHighResolutionTiming()
 
 	bHighResolutionTimerActive = 0;
 	
-	if (bIsWindows8OrGreater) {
+	if (bEnableHighResTimer) {
 #ifdef PRINT_DEBUG_INFO
 		dprintf(_T(" ** Enabling High-Resolution system timer.\n"));
 #endif

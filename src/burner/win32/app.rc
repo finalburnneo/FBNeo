@@ -1181,6 +1181,7 @@ BEGIN
               MENUITEM "Below normal",					MENU_PRIORITY_BELOW_NORMAL
               MENUITEM "Low",						MENU_PRIORITY_LOW
            END
+           MENUITEM "Enable high resolution system timer",		MENU_HIGHRESTIMER
            MENUITEM SEPARATOR
 #ifdef BUILD_A68K
            MENUITEM "Use assembly MC68000 core (this session only)",				MENU_ASSEMBLYCORE

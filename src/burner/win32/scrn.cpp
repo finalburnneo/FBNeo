@@ -1937,6 +1937,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_NOCHANGENUMLOCK:
 			bNoChangeNumLock = !bNoChangeNumLock;
 			break;
+
+		case MENU_HIGHRESTIMER:
+			bEnableHighResTimer = !bEnableHighResTimer;
+			DisableHighResolutionTiming();  // disable if active
+			EnableHighResolutionTiming();   // use new setting.
+			break;
 			
 		case MENU_CREATEDIRS:
 			bAlwaysCreateSupportFolders = !bAlwaysCreateSupportFolders;

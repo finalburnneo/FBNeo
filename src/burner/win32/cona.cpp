@@ -239,6 +239,7 @@ int ConfigAppLoad()
 		STR(szAppHistoryPath);
 		STR(szAppEEPROMPath);
 		
+		VAR(bEnableHighResTimer);
 		VAR(bNoChangeNumLock);
 		VAR(bAlwaysCreateSupportFolders);
 		
@@ -627,6 +628,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- miscellaneous ---------------------------------------------------------\n"));
+
+	_ftprintf(h, _T("\n// If non-zero, enable the high resolution system timer.\n"));
+	VAR(bEnableHighResTimer);
 
 	_ftprintf(h, _T("\n// If non-zero, don't change the status of the Num Lock key.\n"));
 	VAR(bNoChangeNumLock);

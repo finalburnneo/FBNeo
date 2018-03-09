@@ -45,7 +45,7 @@ static UINT8 DrvJoy4[16];
 static UINT8 DrvJoy5[16];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
-static UINT16 DrvInputs[5];
+static UINT8 DrvInputs[5];
 
 static struct BurnInputInfo VballInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
@@ -265,7 +265,7 @@ static void vball_main_write(UINT16 address, UINT8 data)
 
 		case 0x100d:
 			soundlatch = data;
-			ZetNmi(); // iq_132 -- or hold?
+			ZetNmi();
 		return;
 
 		case 0x100e:
@@ -308,6 +308,7 @@ static void __fastcall vball_sound_write(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x8800:
+		case 0x8801:
 			BurnYM2151Write(address & 1, data);
 		return;
 
@@ -380,7 +381,7 @@ static INT32 DrvDoReset()
 	scrolly = 0;
 	flipscreen = 0;
 	soundlatch = 0;
-	memset (scrollx_store, 0, 256*sizeof(INT32));
+	memset (scrollx_store, 0, sizeof(scrollx_store));
 	bgprom_bank = 0;
 	spprom_bank = 0;
 
@@ -684,6 +685,37 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static inline INT32 scanline_to_vcount(INT32 scanline) // ripped directly from MAME
+{
+	INT32 vcount = scanline + 8;
+
+	if (vcount < 0x100)
+		return vcount;
+	else
+		return (vcount - 0x18) | 0x100;
+}
+
+static void do_scanline(INT32 scanline) // ripped directly from MAME
+{
+	INT32 screen_height = 240;
+	INT32 vcount_old = scanline_to_vcount((scanline == 0) ? screen_height - 1 : scanline - 1);
+	INT32 vcount = scanline_to_vcount(scanline);
+
+	if (!(vcount_old & 8) && (vcount & 8))
+	{
+		M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+	}
+
+	if (vcount == 0xf8)
+	{
+		M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+	}
+
+	vblank = (vcount >= (248 - 1)) ? 1 : 0; // -1 is a hack
+
+	if (scanline < 256) scrollx_store[scanline] = scrollx;
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -695,9 +727,9 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[2] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[3] ^= (DrvJoy2[i] & 1) << i;
-			DrvInputs[4] ^= (DrvJoy2[i] & 1) << i;
+			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
 	}
 
@@ -712,19 +744,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		vblank = (i < 8 || i >= 248) ? 1 : 0;
+		nCyclesDone[0] += M6502Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		do_scanline(i);
 
-		nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += M6502Run(nSegment);
-		if ((i & 7) == 7) M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
-		if (i == 248) M6502SetIRQLine(0x20, CPU_IRQSTATUS_ACK);
-		if (i < 256) scrollx_store[i] = scrollx;
+		nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
 
-		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-		nCyclesDone[1] += ZetRun(nSegment);
-
-		if (pBurnSoundOut) {
-			nSegment = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			nSegment = nBurnSoundLen / (nInterleave / 2);
 
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
 			MSM6295Render(0, pBurnSoundOut + (nSoundBufferPos << 1), nSegment);

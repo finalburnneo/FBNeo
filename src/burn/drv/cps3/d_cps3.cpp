@@ -483,6 +483,19 @@ STD_ROM_PICK(sfiii3u)
 STD_ROM_FN(sfiii3u)
 
 // -------------------------------------------------------------------------
+// Street Fighter III 3rd Strike: Fight for the Future (Japan 990608)
+// -------------------------------------------------------------------------
+static struct BurnRomInfo sfiii3jRomDesc[] = {
+
+	{ "sfiii3_japan.29f400.u2",	0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+	SFIII3_990608_FLASH
+};
+
+STD_ROM_PICK(sfiii3j)
+STD_ROM_FN(sfiii3j)
+
+// -------------------------------------------------------------------------
 // Street Fighter III 3rd Strike: Fight for the Future (Japan 990608, NO CD)
 // -------------------------------------------------------------------------
 static struct BurnRomInfo sfiii3nRomDesc[] = {
@@ -570,6 +583,19 @@ static struct BurnRomInfo sfiii3ur1RomDesc[] = {
 
 STD_ROM_PICK(sfiii3ur1)
 STD_ROM_FN(sfiii3ur1)
+
+// -------------------------------------------------------------------------
+// Street Fighter III 3rd Strike: Fight for the Future (Japan 990512)
+// -------------------------------------------------------------------------
+static struct BurnRomInfo sfiii3jr1RomDesc[] = {
+
+	{ "sfiii3_japan.29f400.u2",	0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
+	
+	SFIII3_990512_FLASH
+};
+
+STD_ROM_PICK(sfiii3jr1)
+STD_ROM_FN(sfiii3jr1)
 
 // -------------------------------------------------------------------------
 // Street Fighter III 3rd Strike: Fight for the Future (Japan 990512, NO CD)
@@ -1332,6 +1358,16 @@ struct BurnDriver BurnDrvSfiii3u = {
 	384, 224, 4, 3
 };
 
+struct BurnDriver BurnDrvSfiii3j = {
+	"sfiii3j", "sfiii3", NULL, NULL, "1999",
+	"Street Fighter III 3rd Strike: Fight for the Future (Japan 990608)\0", NULL, "Capcom", "CPS-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, FBF_SF,
+	NULL, sfiii3jRomInfo, sfiii3jRomName, NULL, NULL, cps3InputInfo, japanDIPInfo,
+	sfiii3Init, cps3Exit, cps3Frame, NULL, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
 struct BurnDriver BurnDrvSfiii3n = {
 	"sfiii3n", "sfiii3", NULL, NULL, "1999",
 	"Street Fighter III 3rd Strike: Fight for the Future (Japan 990608, NO CD)\0", NULL, "Capcom", "CPS-3",
@@ -1358,6 +1394,16 @@ struct BurnDriver BurnDrvSfiii3ur1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3, GBF_VSFIGHT, FBF_SF,
 	NULL, sfiii3ur1RomInfo, sfiii3ur1RomName, NULL, NULL, cps3InputInfo, usaDIPInfo,
+	sfiii3Init, cps3Exit, cps3Frame, NULL, cps3Scan, &cps3_palette_change, 0x40000,
+	384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvSfiii3jr1 = {
+	"sfiii3jr1", "sfiii3", NULL, NULL, "1999",
+	"Street Fighter III 3rd Strike: Fight for the Future (Japan 990512)\0", NULL, "Capcom", "CPS-3",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_CAPCOM_CPS3 | HARDWARE_CAPCOM_CPS3_NO_CD, GBF_VSFIGHT, FBF_SF,
+	NULL, sfiii3jr1RomInfo, sfiii3jr1RomName, NULL, NULL, cps3InputInfo, japanDIPInfo,
 	sfiii3Init, cps3Exit, cps3Frame, NULL, cps3Scan, &cps3_palette_change, 0x40000,
 	384, 224, 4, 3
 };

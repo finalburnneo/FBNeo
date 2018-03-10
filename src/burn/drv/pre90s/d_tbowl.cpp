@@ -782,40 +782,40 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 }
 
 
-// Tecmo Bowl (World?)
+// Tecmo Bowl (World, set 1)
 
 static struct BurnRomInfo tbowlRomDesc[] = {
-	{ "4.11b",	0x08000, 0xdb8a4f5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "6206b.5",	0x10000, 0x133c5c11, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "4.b11",			0x08000, 0xdb8a4f5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "6206b-5.b13",	0x10000, 0x133c5c11, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "6206c.24",	0x10000, 0x040c8138, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
-	{ "6206c.25",	0x10000, 0x92c3cef5, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "6206c-24.h5",	0x10000, 0x040c8138, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "6206c-25.h7",	0x10000, 0x92c3cef5, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "6206a.1",	0x08000, 0x4370207b, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "6206a-1.f11",	0x08000, 0x4370207b, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "14.13l",	0x08000, 0xf9cf60b9, 4 | BRF_GRA },           //  5 Characters
-	{ "15.15l",	0x08000, 0xa23f6c53, 4 | BRF_GRA },           //  6
+	{ "14.13l",			0x08000, 0xf9cf60b9, 4 | BRF_GRA },           //  5 Characters
+	{ "15.15l",			0x08000, 0xa23f6c53, 4 | BRF_GRA },           //  6
 
-	{ "6206b.6",	0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
-	{ "6206b.8",	0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
-	{ "6206b.7",	0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
-	{ "6206b.9",	0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
-	{ "6206b.10",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
-	{ "6206b.12",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
-	{ "6206b.11",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
-	{ "6206b.13",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+	{ "6206b-6.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
+	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
+	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
+	{ "6206b-10.11",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.14",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.12",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.16",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
 
-	{ "6206c.16",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
-	{ "6206c.20",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
-	{ "6206c.17",	0x10000, 0xde16bc10, 6 | BRF_GRA },           // 17
-	{ "6206c.21",	0x10000, 0x41b2a910, 6 | BRF_GRA },           // 18
-	{ "6206c.18",	0x10000, 0x0684e188, 6 | BRF_GRA },           // 19
-	{ "6206c.22",	0x10000, 0xcf660ebc, 6 | BRF_GRA },           // 20
-	{ "6206c.19",	0x10000, 0x71795604, 6 | BRF_GRA },           // 21
-	{ "6206c.23",	0x10000, 0x97fba168, 6 | BRF_GRA },           // 22
+	{ "6206c-16.b11",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
+	{ "6206c-20.d11",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
+	{ "6206c-17.b13",	0x10000, 0xde16bc10, 6 | BRF_GRA },           // 17
+	{ "6206c-21.d13",	0x10000, 0x41b2a910, 6 | BRF_GRA },           // 18
+	{ "6206c-18.b14",	0x10000, 0x0684e188, 6 | BRF_GRA },           // 19
+	{ "6206c-22.d14",	0x10000, 0xcf660ebc, 6 | BRF_GRA },           // 20
+	{ "6206c-19.b16",	0x10000, 0x71795604, 6 | BRF_GRA },           // 21
+	{ "6206c-23.d16",	0x10000, 0x97fba168, 6 | BRF_GRA },           // 22
 
-	{ "6206a.3",	0x10000, 0x3aa24744, 7 | BRF_SND },           // 23 Samples
-	{ "6206a.2",	0x10000, 0x1e9e5936, 7 | BRF_SND },           // 24
+	{ "6206a-3.l18",	0x10000, 0x3aa24744, 7 | BRF_SND },           // 23 Samples
+	{ "6206a-2.l16",	0x10000, 0x1e9e5936, 7 | BRF_SND },           // 24
 };
 
 STD_ROM_PICK(tbowl)
@@ -823,7 +823,7 @@ STD_ROM_FN(tbowl)
 
 struct BurnDriver BurnDrvTbowl = {
 	"tbowl", NULL, NULL, NULL, "1987",
-	"Tecmo Bowl (World?)\0", NULL, "Tecmo", "hardware",
+	"Tecmo Bowl (World, set 1)\0", NULL, "Tecmo", "hardware",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlRomInfo, tbowlRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
@@ -832,40 +832,146 @@ struct BurnDriver BurnDrvTbowl = {
 };
 
 
+// Tecmo Bowl (World, set 2)
+
+static struct BurnRomInfo tbowlaRomDesc[] = {
+	{ "6206b-4.b11",	0x08000, 0x8c4260b1, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "6206b-5.b13",	0x10000, 0x133c5c11, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "6206c-24.h5",	0x10000, 0x040c8138, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "6206c-25.h7",	0x10000, 0x92c3cef5, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "6206a-1.f11",	0x08000, 0x4370207b, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "6206b-14.l13",	0x08000, 0xcf99d0bf, 4 | BRF_GRA },           //  5 Characters
+	{ "6206b-15.l14",	0x08000, 0xd69248cf, 4 | BRF_GRA },           //  6
+
+	{ "6206b-6.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
+	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
+	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
+	{ "6206b-10.11",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.14",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.12",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.16",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+
+	{ "6206c-16.b11",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
+	{ "6206c-20.d11",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
+	{ "6206c-17.b13",	0x10000, 0xde16bc10, 6 | BRF_GRA },           // 17
+	{ "6206c-21.d13",	0x10000, 0x41b2a910, 6 | BRF_GRA },           // 18
+	{ "6206c-18.b14",	0x10000, 0x0684e188, 6 | BRF_GRA },           // 19
+	{ "6206c-22.d14",	0x10000, 0xcf660ebc, 6 | BRF_GRA },           // 20
+	{ "6206c-19.b16",	0x10000, 0x71795604, 6 | BRF_GRA },           // 21
+	{ "6206c-23.d16",	0x10000, 0x97fba168, 6 | BRF_GRA },           // 22
+
+	{ "6206a-3.l18",	0x10000, 0x3aa24744, 7 | BRF_SND },           // 23 Samples
+	{ "6206a-2.l16",	0x10000, 0x1e9e5936, 7 | BRF_SND },           // 24
+};
+
+STD_ROM_PICK(tbowla)
+STD_ROM_FN(tbowla)
+
+struct BurnDriver BurnDrvTbowla = {
+	"tbowla", "tbowl", NULL, NULL, "1987",
+	"Tecmo Bowl (World, set 2)\0", NULL, "Tecmo", "hardware",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, tbowlaRomInfo, tbowlaRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	512, 224, 16, 9
+};
+
+
+// Tecmo Bowl (World, prototype?)
+// same as 'tbowl'
+
+static struct BurnRomInfo tbowlpRomDesc[] = {
+	{ "4.b11",					0x08000, 0xdb8a4f5d, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "main_data_10-25.b13",	0x10000, 0x133c5c11, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	// different to other sets
+	{ "sub_pro_10-29.h5",		0x10000, 0x1933a3f0, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "sub_data_10-25.h7",		0x10000, 0x7277c852, 2 | BRF_PRG | BRF_ESS }, //  3
+
+	// this rom is quite strange, maybe damaged / badly programmed? areas which should be a 0x00 0x00 end up being
+	// a 0x00 / 0xff alternating pattern, and there are some odd sounds at times.  It does however read consistently
+	// and is a different revision of the code to the other sets, so it might be correct and we can't just replace it
+	// with a rom from another set.
+	{ "6206_sound_10-25.f11",	0x08000, 0x2158472d, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+
+	{ "14.13l",					0x08000, 0xf9cf60b9, 4 | BRF_GRA },           //  5 Characters
+	{ "15.15l",					0x08000, 0xa23f6c53, 4 | BRF_GRA },           //  6
+
+	{ "6206b-6.e1",				0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e4",				0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
+	{ "6206b-7.e2",				0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
+	{ "6206b-9.e6",				0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
+	{ "6206b-10.11",			0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.14",			0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.12",			0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.16",			0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+
+	{ "sp_7_10-16.b11",			0x10000, 0x807af46a, 6 | BRF_GRA },           // 15 Sprites
+	{ "sp_6_10-16.d11",			0x10000, 0x3c5654a9, 6 | BRF_GRA },           // 16
+	{ "6206c-17.b13",			0x10000, 0xde16bc10, 6 | BRF_GRA },           // 17
+	{ "6206c-21.d13",			0x10000, 0x41b2a910, 6 | BRF_GRA },           // 18
+	{ "6206c-18.b14",			0x10000, 0x0684e188, 6 | BRF_GRA },           // 19
+	{ "6206c-22.d14",			0x10000, 0xcf660ebc, 6 | BRF_GRA },           // 20
+	{ "6206c-19.b16",			0x10000, 0x71795604, 6 | BRF_GRA },           // 21
+	{ "6206c-23.d16",			0x10000, 0x97fba168, 6 | BRF_GRA },           // 22
+
+	{ "6206a-3.l18",			0x10000, 0x3aa24744, 7 | BRF_SND },           // 23 Samples
+	{ "6206a-2.l16",			0x10000, 0x1e9e5936, 7 | BRF_SND },           // 24
+};
+
+STD_ROM_PICK(tbowlp)
+STD_ROM_FN(tbowlp)
+
+struct BurnDriver BurnDrvTbowlp = {
+	"tbowlp", "tbowl", NULL, NULL, "1987",
+	"Tecmo Bowl (World, prototype?)\0", NULL, "Tecmo", "hardware",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	NULL, tbowlpRomInfo, tbowlpRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	512, 224, 16, 9
+};
+
+
 // Tecmo Bowl (Japan)
 
 static struct BurnRomInfo tbowljRomDesc[] = {
-	{ "6206b.4",	0x08000, 0x7ed3eff7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "6206b.5",	0x10000, 0x133c5c11, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "6206b.4",		0x08000, 0x7ed3eff7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "6206b.5",		0x10000, 0x133c5c11, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "6206c.24",	0x10000, 0x040c8138, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
-	{ "6206c.25",	0x10000, 0x92c3cef5, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "6206c-24.h5",	0x10000, 0x040c8138, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 #1 Code
+	{ "6206c-25.h7",	0x10000, 0x92c3cef5, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "6206a.1",	0x08000, 0x4370207b, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "6206a-1.f11",	0x08000, 0x4370207b, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
-	{ "6206b.14",	0x08000, 0xcf99d0bf, 4 | BRF_GRA },           //  5 Characters
-	{ "6206b.15",	0x08000, 0xd69248cf, 4 | BRF_GRA },           //  6
+	{ "6206b-14.l13",	0x08000, 0xcf99d0bf, 4 | BRF_GRA },           //  5 Characters
+	{ "6206b-15.l14",	0x08000, 0xd69248cf, 4 | BRF_GRA },           //  6
 
-	{ "6206b.6",	0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
-	{ "6206b.8",	0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
-	{ "6206b.7",	0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
-	{ "6206b.9",	0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
-	{ "6206b.10",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
-	{ "6206b.12",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
-	{ "6206b.11",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
-	{ "6206b.13",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+	{ "6206b-6.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
+	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
+	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
+	{ "6206b-10.11",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.14",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.12",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.16",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
 
-	{ "6206c.16",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
-	{ "6206c.20",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
-	{ "6206c.17",	0x10000, 0xde16bc10, 6 | BRF_GRA },           // 17
-	{ "6206c.21",	0x10000, 0x41b2a910, 6 | BRF_GRA },           // 18
-	{ "6206c.18",	0x10000, 0x0684e188, 6 | BRF_GRA },           // 19
-	{ "6206c.22",	0x10000, 0xcf660ebc, 6 | BRF_GRA },           // 20
-	{ "6206c.19",	0x10000, 0x71795604, 6 | BRF_GRA },           // 21
-	{ "6206c.23",	0x10000, 0x97fba168, 6 | BRF_GRA },           // 22
+	{ "6206c-16.b11",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
+	{ "6206c-20.d11",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
+	{ "6206c-17.b13",	0x10000, 0xde16bc10, 6 | BRF_GRA },           // 17
+	{ "6206c-21.d13",	0x10000, 0x41b2a910, 6 | BRF_GRA },           // 18
+	{ "6206c-18.b14",	0x10000, 0x0684e188, 6 | BRF_GRA },           // 19
+	{ "6206c-22.d14",	0x10000, 0xcf660ebc, 6 | BRF_GRA },           // 20
+	{ "6206c-19.b16",	0x10000, 0x71795604, 6 | BRF_GRA },           // 21
+	{ "6206c-23.d16",	0x10000, 0x97fba168, 6 | BRF_GRA },           // 22
 
-	{ "6206a.3",	0x10000, 0x3aa24744, 7 | BRF_SND },           // 23 Samples
-	{ "6206a.2",	0x10000, 0x1e9e5936, 7 | BRF_SND },           // 24
+	{ "6206a-3.l18",	0x10000, 0x3aa24744, 7 | BRF_SND },           // 23 Samples
+	{ "6206a-2.l16",	0x10000, 0x1e9e5936, 7 | BRF_SND },           // 24
 };
 
 STD_ROM_PICK(tbowlj)

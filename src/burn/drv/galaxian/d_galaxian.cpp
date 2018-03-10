@@ -13816,6 +13816,27 @@ static struct BurnRomInfo Mshuttle2RomDesc[] = {
 STD_ROM_PICK(Mshuttle2)
 STD_ROM_FN(Mshuttle2)
 
+static struct BurnRomInfo MshuttleaRomDesc[] = {
+	{ "MY-5A.4L",      0x01000, 0x14fa3e75, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "MY04.4J",       0x01000, 0x1cfae2c8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "MY03.4F",       0x01000, 0xc8b8a368, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "MY-2A.4E", 	   0x01000, 0x51d348b0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "MY-1A.4C", 	   0x01000, 0xc4ad042d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "MY09",          0x01000, 0x3601b380, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "MY11", 		   0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "MY08",          0x01000, 0x992b06cd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "MY10",          0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
+	
+	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
+	
+	{ "MY07.4P",       0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
+	{ "MY06.4S",       0x01000, 0x466415f2, BRF_SND | BRF_OPT },
+};
+
+STD_ROM_PICK(Mshuttlea)
+STD_ROM_FN(Mshuttlea)
+
 static struct BurnRomInfo MshuttlejRomDesc[] = {
 	{ "mcs.5",         0x01000, 0xa5a292b4, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "mcs.4",         0x01000, 0xacdc0f9e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -14069,7 +14090,7 @@ static INT32 MshuttlejInit()
 
 struct BurnDriver BurnDrvMshuttle = {
 	"mshuttle", NULL, NULL, NULL, "1981",
-	"Moon Shuttle (US?)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	"Moon Shuttle (US? set 1)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, MshuttleRomInfo, MshuttleRomName, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
@@ -14083,6 +14104,16 @@ struct BurnDriver BurnDrvMshuttle2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
 	NULL, Mshuttle2RomInfo, Mshuttle2RomName, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
+	MshuttleInit, GalExit, GalFrame, NULL, GalScan,
+	NULL, 392, 256, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvMshuttlea = {
+	"mshuttlea", "mshuttle", NULL, NULL, "1981",
+	"Moon Shuttle (US, version A)\0", "Incomplete Sound", "Nichibutsu", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_GALAXIAN, GBF_VERSHOOT, 0,
+	NULL, MshuttleaRomInfo, MshuttleaRomName, NULL, NULL, MshuttleInputInfo, MshuttleDIPInfo,
 	MshuttleInit, GalExit, GalFrame, NULL, GalScan,
 	NULL, 392, 256, 224, 4, 3
 };

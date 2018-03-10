@@ -1228,8 +1228,8 @@ static INT32 DrvInit(UINT8 game)
 			mc8123 = 1;
 
 			break;
-		case 4: // opaopa
-			bprintf(0, _T("opaopa.\n"));
+		case 4: // opaopap
+			bprintf(0, _T("opaopap.\n"));
 			if (BurnLoadRom(DrvMainROM + 0x00000,  0, 1)) return 1;
 			if (BurnLoadRom(DrvMainROM + 0x10000,  1, 1)) return 1;
 			if (BurnLoadRom(DrvMainROM + 0x18000,  2, 1)) return 1;
@@ -1379,7 +1379,7 @@ static INT32 DrvFantzn2Init()
 	return DrvInit(3);
 }
 
-static INT32 DrvOpaopaInit()
+static INT32 DrvOpaopapInit()
 {
 	leftcolumnblank = 1;
 
@@ -1526,9 +1526,33 @@ struct BurnDriver BurnDrvFantzn2 = {
 };
 
 
-// Opa Opa (MC-8123, 317-0042)
+// Opa Opa (Rev A, unprotected)
 
 static struct BurnRomInfo opaopaRomDesc[] = {
+	{ "epr-11023a.ic7",	0x8000, 0x101c5c6a, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu  
+	{ "epr-11022.ic5",	0x8000, 0x15203a42, 1 | BRF_PRG | BRF_ESS }, //  1          
+	{ "epr-11021.ic4",	0x8000, 0xb4e83340, 1 | BRF_PRG | BRF_ESS }, //  2          
+	{ "epr-11020.ic3",	0x8000, 0xc51aad27, 1 | BRF_PRG | BRF_ESS }, //  3          
+	{ "epr-11019.ic2",	0x8000, 0xbd0a6248, 1 | BRF_PRG | BRF_ESS }, //  4          
+};
+
+STD_ROM_PICK(opaopa)
+STD_ROM_FN(opaopa)
+
+struct BurnDriver BurnDrvOpaopa = {
+	"opaopa", NULL, NULL, NULL, "1987",
+	"Opa Opa (Rev A, unprotected)\0", NULL, "Sega", "System E",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
+	DrvTransfrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	240, 192, 4, 3
+};
+
+
+// Opa Opa (MC-8123, 317-0042)
+
+static struct BurnRomInfo opaopapRomDesc[] = {
 	{ "epr-11054.ic7",	0x8000, 0x024b1244, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu  (encr)
 	{ "epr-11053.ic5",	0x8000, 0x6bc41d6e, 1 | BRF_PRG | BRF_ESS }, //  1          ""
 	{ "epr-11052.ic4",	0x8000, 0x395c1d0a, 1 | BRF_PRG | BRF_ESS }, //  2          ""
@@ -1538,18 +1562,19 @@ static struct BurnRomInfo opaopaRomDesc[] = {
 	{ "317-0042.key",	0x2000, 0xd6312538, 2 | BRF_GRA },           //  5 key
 };
 
-STD_ROM_PICK(opaopa)
-STD_ROM_FN(opaopa)
+STD_ROM_PICK(opaopap)
+STD_ROM_FN(opaopap)
 
-struct BurnDriver BurnDrvOpaopa = {
-	"opaopa", NULL, NULL, NULL, "1987",
+struct BurnDriver BurnDrvOpaopap = {
+	"opaopap", "opaopa", NULL, NULL, "1987",
 	"Opa Opa (MC-8123, 317-0042)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
-	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
-	DrvOpaopaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	NULL, opaopapRomInfo, opaopapRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
+	DrvOpaopapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 192, 4, 3
 };
+
 
 //  Slap Shooter
 

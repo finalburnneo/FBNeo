@@ -655,7 +655,7 @@ static void PausedRedraw(void)
 {
     if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
         INT16 *pBtemp = pBurnSoundOut;
-        pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame
+        pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame (if no driver Redraw function is available)
 
         VidRedraw();
         VidPaint(0);
@@ -1293,6 +1293,11 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_TRIPLE:
 			bVidTripleBuffer = !bVidTripleBuffer;
+			POST_INITIALISE_MESSAGE;
+			break;
+
+		case MENU_DWMFIX:
+			bVidDWMCore = !bVidDWMCore;
 			POST_INITIALISE_MESSAGE;
 			break;
 

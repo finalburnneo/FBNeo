@@ -135,6 +135,9 @@ static int RunFrame(int bDraw, int bPause)
 
 	if (bPrevDraw && !bPause) {
 		VidPaint(0);							// paint the screen (no need to validate)
+
+		if (!nVidFullscreen && bVidDWMCore)     // Sync to DWM (Win7+, windowed)
+			DwmFlushy();
 	}
 
 	if (!bDrvOkay) {
@@ -176,7 +179,7 @@ static int RunFrame(int bDraw, int bPause)
 			RecordInput();						// Write input to file
 		}
 
-		if (bDraw) {
+		if (bDraw || (!bDraw && bVidDWMCore)) { // Draw Frame || DWM: if frame skipping is on - draw frame just do not DwmFlush()
 			nFramesRendered++;
 
 			if (VidFrame()) {					// Do one frame
@@ -262,27 +265,14 @@ static int RunGetNextSound(int bDraw)
 	return 0;
 }
 
-extern bool bRunFrame;
-
 int RunIdle()
 {
 	int nTime, nCount;
 
 	if (bAudPlaying) {
 		// Run with sound
-		
-		if(bRunFrame) {
-			bRunFrame = false;
-			if(bAlwaysDrawFrames) {
-				RunFrame(1, 0);
-			} else {
-				RunGetNextSound(0);
-			}
-			return 0;
-		} else {
-			AudSoundCheck();
-			return 0;
-		}
+		AudSoundCheck();
+		return 0;
 	}
 
 	// Run without sound
@@ -416,6 +406,9 @@ int RunMessageLoop()
 		GameInpCheckLeftAlt();
 		GameInpCheckMouse();															// Hide the cursor
 
+		if (bVidDWMCore) {
+			bprintf(0, _T("[Win7+] Sync to DWM is enabled (if available).\n"));
+		}
 
 		while (1) {
 			if (PeekMessage(&Msg, NULL, 0, 0, PM_REMOVE)) {

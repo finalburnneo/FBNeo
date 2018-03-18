@@ -1136,7 +1136,7 @@ static int vidInitBuffers(bool bTriple)
 		ddsd.dwBackBufferCount = bVidTripleBuffer ? 2 : 1;
 	} else {
 		ddsd.dwFlags = DDSD_CAPS;
-		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_VIDEOMEMORY | DDSCAPS_3DDEVICE;
+		ddsd.ddsCaps.dwCaps = DDSCAPS_PRIMARYSURFACE | DDSCAPS_VIDEOMEMORY; // | DDSCAPS_3DDEVICE;
 	}
 
 	if (FAILED(pDD->CreateSurface(&ddsd, &pPrimarySurf, NULL))) {
@@ -2264,7 +2264,6 @@ static int vidFrame(bool bRedraw)			// bRedraw = 0
 	}
 #ifdef ENABLE_PROFILING
 	ProfileProfileEnd(0);
-
 	ProfileProfileStart(1);
 #endif
 
@@ -2334,7 +2333,7 @@ int vidPaint(int bValidate)
 	// Display OSD text message
 	VidSDisplayOSD(pBackbuffer, &Render, 0);
 
-	if(bVidVSync && !nVidFullscreen) { pDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
+//	if(bVidVSync && !nVidFullscreen) { pDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
 
 	// Display final image
 	if (bUsePageflip) {
@@ -2356,12 +2355,29 @@ int vidPaint(int bValidate)
 		} else {
 			RECT RGBDest = {0, 0, Dest.right - Dest.left, Dest.bottom - Dest.top};
 
+			if (bVidVSync)
+			{
+				pDD->WaitForVerticalBlank(DDWAITVB_BLOCKBEGIN, NULL);
+#if 0
+				GetClientScreenRect(hVidWnd, &rect);
+				rect.top += nMenuHeight;
+
+				vidScale(&rect, nGameImageWidth, nGameImageHeight);
+#endif
+				if (FAILED(pPrimarySurf->Blt(&rect, pBackbuffer, &RGBDest, DDBLT_ASYNC, NULL)))
+					if (FAILED(pPrimarySurf->Blt(&rect, pBackbuffer, &RGBDest, DDBLT_WAIT, NULL)))
+						return 1;
+		   }
+			else
+				if (FAILED(pPrimarySurf->Blt(&rect, pBackbuffer, &RGBDest, DDBLT_WAIT, NULL)))
+					return 1;
+#if 0
 			if (FAILED(pPrimarySurf->Blt(&rect, pBackbuffer, &RGBDest, DDBLT_ASYNC, NULL))) {
 				if (FAILED(pPrimarySurf->Blt(&rect, pBackbuffer, &RGBDest, DDBLT_WAIT, NULL))) {
 					return 1;
 				}
 			}
-			//if(bVidVSync && !nVidFullscreen) { pDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
+#endif
 			
 		}
 

@@ -499,8 +499,6 @@ static int Paint(int bValidate)
 	// Display OSD text message
 	VidSDisplayOSD(pddsBlitFX[nUseSys], &rect, 0);
 
-	if (bVidVSync && !nVidFullscreen) { BlitFXDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
-
 	if (BlitFXBack != NULL) {
 		// Triple bufferring
 		if (BlitFXBack->Blt(&Dest, pddsBlitFX[nUseSys], NULL, DDBLT_WAIT, NULL) < 0) {
@@ -509,6 +507,8 @@ static int Paint(int bValidate)
 		BlitFXPrim->Flip(NULL, DDFLIP_WAIT);
 	} else {
 		// Normal
+		if (bVidVSync && !nVidFullscreen) { BlitFXDD->WaitForVerticalBlank(DDWAITVB_BLOCKBEGIN, NULL); }
+
 		if (BlitFXPrim->Blt(&Dest, pddsBlitFX[nUseSys], NULL, DDBLT_WAIT, NULL) < 0) {
 			return 1;
 		}

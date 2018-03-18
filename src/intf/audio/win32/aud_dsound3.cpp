@@ -73,8 +73,6 @@ static int nDSoundNextSeg = 0;										// We have filled the sound in the loop 
 
 #define WRAP_INC(x) { x++; if (x >= nAudSegCount) x = 0; }
 
-bool bRunFrame = false;
-
 bool bAbortSound = false;
 
 // This function checks the DSound loop, and if necessary does a callback to update the emulation
@@ -148,8 +146,7 @@ static int DxSoundCheck()
 	}
 
 	if (nDSoundNextSeg == nPlaySeg) {
-		Sleep(2);													// Don't need to do anything for a bit
-		bRunFrame = false;
+		//Sleep(2);													// Don't need to do anything for a bit
 		return 0;
 	}
 
@@ -160,7 +157,6 @@ static int DxSoundCheck()
 	while (nDSoundNextSeg != nPlaySeg) {
 		void *pData = NULL, *pData2 = NULL;
 		DWORD cbLen = 0, cbLen2 = 0;
-		int bDraw;
 
 		// fill nNextSeg
 
@@ -173,16 +169,8 @@ static int DxSoundCheck()
 			pdsbLoop->Unlock(pData, cbLen, pData2, 0);
 		}
 
-		bDraw = (nFollowingSeg == nPlaySeg)	|| bAlwaysDrawFrames;	// If this is the last seg of sound, flag bDraw (to draw the graphics)
-
-		if(bDraw) {
-			DSoundGetNextSound(bDraw);									// get more sound into nAudNextSound
-		}
-
-		if(!bDraw) {
-			bRunFrame = true;
-			RunIdle();
-		}
+		// get more sound into nAudNextSound
+		DSoundGetNextSound((nFollowingSeg == nPlaySeg) || bAlwaysDrawFrames); // If this is the last seg of sound, draw the graphics (frameskipping)
 
 		if (nAudDSPModule[0])	{
 			DspDo(nAudNextSound, nAudSegLen);
@@ -239,7 +227,7 @@ static int DxSoundInit()
 	LPDIRECTSOUNDNOTIFY lpDsNotify;
 	LPDSBPOSITIONNOTIFY lpPositionNotify = 0;
 
-	if (nAudSampleRate <= 0) {
+	if (nAudSampleRate[0] <= 0) {
 		return 1;
 	}
 
@@ -319,7 +307,9 @@ static int DxSoundInit()
 
 	for (int i = 0; i < nAudSegCount; i++)
 	{
-		lpPositionNotify[i].dwOffset = (i * nAudSegLen) << 2;
+		int offs = (i * nAudSegLen) << 2;
+		if (offs > 0) offs -= 4;
+		lpPositionNotify[i].dwOffset = offs;
 		lpPositionNotify[i].hEventNotify = hDSoundEvent;
 	}
 

@@ -452,6 +452,7 @@
 #define MENU_STATE_UNDO                         10037
 #define MENU_TRIPLE                     	10100
 #define MENU_FULL                       	10102
+#define MENU_DWMFIX							10103
 #define MENU_NOSTRETCH                  	10110
 #define MENU_STRETCH                    	10111
 #define MENU_ASPECT                     	10112

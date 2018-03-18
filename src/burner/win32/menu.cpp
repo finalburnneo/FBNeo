@@ -653,6 +653,8 @@ void MenuUpdate()
 
 	CheckMenuItem(hMenu, MENU_TRIPLE, bVidTripleBuffer ? MF_CHECKED : MF_UNCHECKED);
 
+	CheckMenuItem(hMenu, MENU_DWMFIX, bVidDWMCore ? MF_CHECKED : MF_UNCHECKED);
+
 	var = nVidSelect + MENU_BLITTER_1;
 	CheckMenuRadioItem(hMenu, MENU_BLITTER_1, MENU_BLITTER_8, var, MF_BYCOMMAND);
 

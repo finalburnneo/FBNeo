@@ -1,6 +1,29 @@
 // FBA DWM API HANDLING FOR WINDOWS 7 by CaptainCPS-X, Jezer Andino, dink
 #include "burner.h"
 
+typedef struct _D3DKMT_OPENADAPTERFROMHDC
+{
+    HDC                     hDc;            // in:  DC that maps to a single display
+    UINT32                  hAdapter;       // out: adapter handle
+    LUID                    AdapterLuid;    // out: adapter LUID
+    UINT32                  VidPnSourceId;  // out: VidPN source ID for that particular display
+} D3DKMT_OPENADAPTERFROMHDC;
+
+typedef struct _D3DKMT_CLOSEADAPTER {
+  UINT32                    hAdapter;
+} D3DKMT_CLOSEADAPTER;
+
+typedef struct _D3DKMT_WAITFORVERTICALBLANKEVENT
+{
+    UINT32                  hAdapter;      // in: adapter handle
+    UINT32                  hDevice;       // in: device handle [Optional]
+    UINT32                  VidPnSourceId; // in: adapter's VidPN Source ID
+} D3DKMT_WAITFORVERTICALBLANKEVENT;
+
+#ifndef DISPLAY_DEVICE_ACTIVE
+    #define DISPLAY_DEVICE_ACTIVE 0x00000001
+#endif
+
 HRESULT (WINAPI *DwmEnableComposition)			(UINT uCompositionAction);
 HRESULT (WINAPI *DwmSetDxFrameDuration)			(HWND hwnd, INT cRefreshes);
 HRESULT (WINAPI *DwmSetPresentParameters)		(HWND hwnd, DWM_PRESENT_PARAMETERS *pPresentParams);
@@ -8,6 +31,9 @@ HRESULT (WINAPI *DwmExtendFrameIntoClientArea)	(HWND hwnd, const MARGINS* pMarIn
 HRESULT (WINAPI *DwmSetWindowAttribute)			(HWND hwnd, DWORD dwAttribute, LPCVOID pvAttribute, DWORD cbAttribute);
 HRESULT (WINAPI *DwmIsCompositionEnabled)		(BOOL*);
 HRESULT (WINAPI *DwmFlush)		                (void);
+LONG (APIENTRY *D3DKMTWaitForVerticalBlankEvent) (D3DKMT_WAITFORVERTICALBLANKEVENT *lpParams);
+LONG (APIENTRY *D3DKMTOpenAdapterFromHdc)        (D3DKMT_OPENADAPTERFROMHDC *lpParams );
+LONG (APIENTRY *D3DKMTCloseAdapter)              (D3DKMT_CLOSEADAPTER *lpParams );
 
 HRESULT WINAPI Empty_DwmEnableComposition				(UINT) { return 0; }
 HRESULT WINAPI Empty_DwmSetDxFrameDuration				(HWND, INT) { return 0; }
@@ -16,20 +42,29 @@ HRESULT WINAPI Empty_DwmExtendFrameIntoClientArea		(HWND, const MARGINS*) { retu
 HRESULT WINAPI Empty_DwmSetWindowAttribute				(HWND, DWORD, LPCVOID, DWORD ) { return 0; }
 HRESULT WINAPI Empty_DwmIsCompositionEnabled			(BOOL*) { return 0; }
 HRESULT WINAPI Empty_DwmFlush			                (void) { return 0; }
+LONG APIENTRY Empty_D3DKMTWaitForVerticalBlankEvent      (D3DKMT_WAITFORVERTICALBLANKEVENT *) { return 0; }
+LONG APIENTRY Empty_D3DKMTOpenAdapterFromHdc             (D3DKMT_OPENADAPTERFROMHDC *) { return 0; }
+LONG APIENTRY Empty_D3DKMTCloseAdapter                   (D3DKMT_CLOSEADAPTER * ) { return 0; }
 
 static HINSTANCE hDwmApi;
+
+static int SuperWaitVBlank_Initialised = 0;
+static int SuperWaitVBlank_DLLsLoaded = 0;
+static HINSTANCE hGdi32;
+static D3DKMT_WAITFORVERTICALBLANKEVENT we = { 0, 0, 0 };
+
 static int DWMAPI_Initialised = 0;
 
 bool bVidDWMCore = true;
 
 void DwmFlushy() {
-	if (DWMAPI_Initialised) // && IsCompositeOn())
+	if (DWMAPI_Initialised)
 	{
 		DwmFlush();
 	}
 }
 
-void GetDllFunctions() {
+void GetDllFunctionsDWM() {
 
 	if(!DWMAPI_Initialised) return;
 
@@ -41,6 +76,10 @@ void GetDllFunctions() {
 	DwmIsCompositionEnabled			= (HRESULT (WINAPI *)(BOOL*))							GetProcAddress(hDwmApi, "DwmIsCompositionEnabled");
 	DwmFlush			            = (HRESULT (WINAPI *)(void))							GetProcAddress(hDwmApi, "DwmFlush");
 
+	D3DKMTWaitForVerticalBlankEvent = (LONG (WINAPI *)(D3DKMT_WAITFORVERTICALBLANKEVENT *)) GetProcAddress(hGdi32, "D3DKMTWaitForVerticalBlankEvent");
+	D3DKMTOpenAdapterFromHdc        = (LONG (WINAPI *)(D3DKMT_OPENADAPTERFROMHDC *))        GetProcAddress(hGdi32, "D3DKMTOpenAdapterFromHdc");
+	D3DKMTCloseAdapter              = (LONG (WINAPI *)(D3DKMT_CLOSEADAPTER *))              GetProcAddress(hGdi32, "D3DKMTCloseAdapter");
+
 	if(!DwmEnableComposition)			DwmEnableComposition			= Empty_DwmEnableComposition;
 	if(!DwmSetDxFrameDuration)			DwmSetDxFrameDuration			= Empty_DwmSetDxFrameDuration;
 	if(!DwmSetPresentParameters)		DwmSetPresentParameters			= Empty_DwmSetPresentParameters;
@@ -48,11 +87,106 @@ void GetDllFunctions() {
 	if(!DwmSetWindowAttribute)			DwmSetWindowAttribute			= Empty_DwmSetWindowAttribute;
 	if(!DwmIsCompositionEnabled)		DwmIsCompositionEnabled			= Empty_DwmIsCompositionEnabled;
 	if(!DwmFlush)		                DwmFlush			            = Empty_DwmFlush;
+
+	if(!D3DKMTWaitForVerticalBlankEvent) bprintf(0, _T("Unable to acquire D3DKMTWaitForVerticalBlankEvent()!\n"));
+	if(!D3DKMTWaitForVerticalBlankEvent) D3DKMTWaitForVerticalBlankEvent = Empty_D3DKMTWaitForVerticalBlankEvent;
+
+	if(!D3DKMTOpenAdapterFromHdc)       bprintf(0, _T("Unable to acquire D3DKMTOpenAdapterFromHdc()!\n"));
+	if(!D3DKMTOpenAdapterFromHdc)       D3DKMTOpenAdapterFromHdc         = Empty_D3DKMTOpenAdapterFromHdc;
+
+	if(!D3DKMTCloseAdapter)             bprintf(0, _T("Unable to acquire D3DKMTCloseAdapter()!\n"));
+	if(!D3DKMTCloseAdapter)             D3DKMTCloseAdapter               = Empty_D3DKMTCloseAdapter;
+}
+
+void GetDllFunctionsGDI() {
+
+	hGdi32 = LoadLibrary(_T("gdi32.dll"));
+
+	if (hGdi32) {
+		bprintf(0, _T("GDI32 loaded.\n"));
+	}
+
+	if(!hGdi32) return;
+
+	D3DKMTWaitForVerticalBlankEvent = (LONG (WINAPI *)(D3DKMT_WAITFORVERTICALBLANKEVENT *)) GetProcAddress(hGdi32, "D3DKMTWaitForVerticalBlankEvent");
+	D3DKMTOpenAdapterFromHdc        = (LONG (WINAPI *)(D3DKMT_OPENADAPTERFROMHDC *))        GetProcAddress(hGdi32, "D3DKMTOpenAdapterFromHdc");
+	D3DKMTCloseAdapter              = (LONG (WINAPI *)(D3DKMT_CLOSEADAPTER *))              GetProcAddress(hGdi32, "D3DKMTCloseAdapter");
+
+	if(!D3DKMTWaitForVerticalBlankEvent) bprintf(0, _T("Unable to acquire D3DKMTWaitForVerticalBlankEvent()!\n"));
+	if(!D3DKMTWaitForVerticalBlankEvent) D3DKMTWaitForVerticalBlankEvent = Empty_D3DKMTWaitForVerticalBlankEvent;
+
+	if(!D3DKMTOpenAdapterFromHdc)       bprintf(0, _T("Unable to acquire D3DKMTOpenAdapterFromHdc()!\n"));
+	if(!D3DKMTOpenAdapterFromHdc)       D3DKMTOpenAdapterFromHdc         = Empty_D3DKMTOpenAdapterFromHdc;
+
+	if(!D3DKMTCloseAdapter)             bprintf(0, _T("Unable to acquire D3DKMTCloseAdapter()!\n"));
+	if(!D3DKMTCloseAdapter)             D3DKMTCloseAdapter               = Empty_D3DKMTCloseAdapter;
+
+	FreeLibrary(hGdi32);
+
+	SuperWaitVBlank_DLLsLoaded = 1;
+}
+
+// This will need re-init every vid init in the case of multiple monitors.
+void SuperWaitVBlankInit()
+{
+	if(!IsWindows7Plus()) return;
+
+	if (!SuperWaitVBlank_DLLsLoaded) {
+		GetDllFunctionsGDI();
+	}
+
+	if (SuperWaitVBlank_Initialised) {
+		SuperWaitVBlankExit();
+	}
+
+	DISPLAY_DEVICE dd;
+	dd.cb = sizeof(dd);
+
+	for (int loop = 0; EnumDisplayDevices(NULL, loop, &dd, 0); ++loop) {
+		if (dd.StateFlags & DISPLAY_DEVICE_ACTIVE) {
+			HDC hDC = CreateDC(NULL, (LPWSTR)dd.DeviceName, NULL, NULL);
+			bprintf(0, _T("SuperWaitVBlankInit(): %s (%s)"), dd.DeviceName, dd.DeviceString);
+			if (hDC) {
+				D3DKMT_OPENADAPTERFROMHDC oa;
+				oa.hDc = hDC;
+				D3DKMTOpenAdapterFromHdc(&oa);
+				DeleteDC( hDC );
+				we.hAdapter = oa.hAdapter;
+				we.hDevice = 0;
+				we.VidPnSourceId = oa.VidPnSourceId;
+				bprintf(0, _T("SuperWaitVBlank: Initialized fine.\n"));
+				SuperWaitVBlank_Initialised = 1;
+
+				break;
+			}
+		}
+	}
+	return;
+}
+
+void SuperWaitVBlankExit()
+{
+	if (SuperWaitVBlank_Initialised) {
+		D3DKMT_CLOSEADAPTER ca = { we.hAdapter };
+		int rc = D3DKMTCloseAdapter(&ca);
+		bprintf(0, _T("SuperWaitVBlank: closing adapter. rc = %X\n"), rc);
+
+		SuperWaitVBlank_Initialised = 0;
+	}
+}
+
+int SuperWaitVBlank()
+{
+	if (SuperWaitVBlank_Initialised) {
+		return D3DKMTWaitForVerticalBlankEvent(&we);
+	} else {
+		return 0xdead;
+	}
 }
 
 int InitDWMAPI() {
 
-	if(!IsWindows7()) return 0;
+	if(!IsWindows7Plus()) return 0;
 
 	hDwmApi = LoadLibrary(_T("dwmapi.dll"));
 
@@ -62,7 +196,7 @@ int InitDWMAPI() {
 		// Try to init DWM API Functions
 		bprintf(PRINT_IMPORTANT, _T("[Win7+] Loading of DWMAPI.DLL was succesfull.\n"));
 
-		GetDllFunctions();
+		GetDllFunctionsDWM();
 
 		FreeLibrary(hDwmApi);
 
@@ -87,7 +221,7 @@ void ExtendIntoClientAll(HWND hwnd) {
 	DwmExtendFrameIntoClientArea(hwnd, &margins);
 }
 
-BOOL IsWindows7() { // is win7+
+BOOL IsWindows7Plus() { // is win7+
 
 	OSVERSIONINFO osvi;
 	memset(&osvi, 0, sizeof(OSVERSIONINFO));
@@ -103,7 +237,7 @@ BOOL IsWindows7() { // is win7+
 void DWM_StutterFix()
 {
 	// Windows 7 found...
-	if(IsWindows7() && !nVidFullscreen)
+	if(IsWindows7Plus() && !nVidFullscreen)
 	{
 		// If the DWM API Functions are loaded, continue.
 		if(DWMAPI_Initialised)

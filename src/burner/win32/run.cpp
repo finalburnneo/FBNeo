@@ -137,7 +137,7 @@ static int RunFrame(int bDraw, int bPause)
 		VidPaint(0);							// paint the screen (no need to validate)
 
 		if (!nVidFullscreen && bVidDWMCore)     // Sync to DWM (Win7+, windowed)
-			DwmFlushy();
+			SuperWaitVBlank();
 	}
 
 	if (!bDrvOkay) {
@@ -408,6 +408,7 @@ int RunMessageLoop()
 
 		if (bVidDWMCore) {
 			bprintf(0, _T("[Win7+] Sync to DWM is enabled (if available).\n"));
+			SuperWaitVBlankInit();
 		}
 
 		while (1) {

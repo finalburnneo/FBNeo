@@ -93,4 +93,8 @@ void DWM_StutterFix();
 BOOL IsCompositeOn();
 void DwmFlushy();
 
+void SuperWaitVBlankInit();
+void SuperWaitVBlankExit();
+int SuperWaitVBlank();
+
 extern bool bVidDWMCore;

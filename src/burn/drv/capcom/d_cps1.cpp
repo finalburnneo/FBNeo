@@ -16086,7 +16086,7 @@ static INT32 Sf2rulesInit()
 
 static INT32 Sf2ceInit()
 {
-	nCPS68KClockspeed = 8880000;
+	nCPS68KClockspeed = 8000000;
 	
 	return DrvInit();
 }

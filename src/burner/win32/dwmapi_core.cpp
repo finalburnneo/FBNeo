@@ -102,12 +102,9 @@ void GetDllFunctionsGDI() {
 
 	hGdi32 = LoadLibrary(_T("gdi32.dll"));
 
-	if (hGdi32) {
-		bprintf(0, _T("GDI32 loaded.\n"));
-	}
-
 	if(!hGdi32) return;
 
+	bprintf(0, _T("GDI32 loaded.\n"));
 	D3DKMTWaitForVerticalBlankEvent = (LONG (WINAPI *)(D3DKMT_WAITFORVERTICALBLANKEVENT *)) GetProcAddress(hGdi32, "D3DKMTWaitForVerticalBlankEvent");
 	D3DKMTOpenAdapterFromHdc        = (LONG (WINAPI *)(D3DKMT_OPENADAPTERFROMHDC *))        GetProcAddress(hGdi32, "D3DKMTOpenAdapterFromHdc");
 	D3DKMTCloseAdapter              = (LONG (WINAPI *)(D3DKMT_CLOSEADAPTER *))              GetProcAddress(hGdi32, "D3DKMTCloseAdapter");
@@ -139,33 +136,25 @@ void SuperWaitVBlankInit()
 		SuperWaitVBlankExit();
 	}
 
-	//DISPLAY_DEVICE dd;
-	//dd.cb = sizeof(dd);
+	MONITORINFOEX mi;
+	memset(&mi, 0, sizeof(MONITORINFOEX));
+	mi.cbSize = sizeof(MONITORINFOEX);
+	HMONITOR hmon = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST); // get the monitor fba is running on
+	GetMonitorInfo(hmon, &mi);
 
-	//for (int loop = 0; EnumDisplayDevices(NULL, loop, &dd, 0); ++loop) {
-	//	if (dd.StateFlags & DISPLAY_DEVICE_ACTIVE) {
-	{
-		MONITORINFOEX mi;
-		memset(&mi, 0, sizeof(MONITORINFOEX));
-		mi.cbSize = sizeof(MONITORINFOEX);
-		HMONITOR hmon = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
-		GetMonitorInfo(hmon, &mi);
+	HDC hDC = CreateDC(NULL, (LPWSTR)mi.szDevice, NULL, NULL);
 
+	if (hDC) {
+		D3DKMT_OPENADAPTERFROMHDC oa;
+		oa.hDc = hDC;
+		D3DKMTOpenAdapterFromHdc(&oa);
+		DeleteDC(hDC);
+		we.hAdapter = oa.hAdapter;
+		we.hDevice = 0;
+		we.VidPnSourceId = oa.VidPnSourceId;
+		bprintf(0, _T("SuperWaitVBlankInit() on %s\n"), mi.szDevice);
 
-		HDC hDC = CreateDC(NULL, (LPWSTR)mi.szDevice, NULL, NULL);
-		bprintf(0, _T("SuperWaitVBlankInit(): %s\n"), mi.szDevice);//, dd.DeviceString);
-			if (hDC) {
-				D3DKMT_OPENADAPTERFROMHDC oa;
-				oa.hDc = hDC;
-				D3DKMTOpenAdapterFromHdc(&oa);
-				DeleteDC( hDC );
-				we.hAdapter = oa.hAdapter;
-				we.hDevice = 0;
-				we.VidPnSourceId = oa.VidPnSourceId;
-				bprintf(0, _T("SuperWaitVBlank: Initialized fine.\n"));
-				SuperWaitVBlank_Initialised = 1;
-
-			}
+		SuperWaitVBlank_Initialised = 1;
 	}
 }
 
@@ -173,8 +162,8 @@ void SuperWaitVBlankExit()
 {
 	if (SuperWaitVBlank_Initialised) {
 		D3DKMT_CLOSEADAPTER ca = { we.hAdapter };
-		int rc = D3DKMTCloseAdapter(&ca);
-		bprintf(0, _T("SuperWaitVBlank: closing adapter. rc = %X\n"), rc);
+		D3DKMTCloseAdapter(&ca);
+		memset(&we, 0, sizeof(we));
 
 		SuperWaitVBlank_Initialised = 0;
 	}
@@ -226,16 +215,16 @@ void ExtendIntoClientAll(HWND hwnd) {
 	DwmExtendFrameIntoClientArea(hwnd, &margins);
 }
 
-BOOL IsWindows7Plus() { // is win7+
+BOOL IsWindows7Plus() {
 
 	OSVERSIONINFO osvi;
 	memset(&osvi, 0, sizeof(OSVERSIONINFO));
 	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
 
-	// Verify if the FBA is running on Windows 7
+	// Verify if the FBA is running on Windows 7 or greater
 	GetVersionEx(&osvi);
 
-	return (osvi.dwMajorVersion >= 6 && osvi.dwMinorVersion >= 0);
+	return (osvi.dwMajorVersion >= 6);
 }
 
 // FIX FOR FRAME STUTTERING ON WINDOWS 7

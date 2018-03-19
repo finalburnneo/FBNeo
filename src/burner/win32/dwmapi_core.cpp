@@ -139,13 +139,21 @@ void SuperWaitVBlankInit()
 		SuperWaitVBlankExit();
 	}
 
-	DISPLAY_DEVICE dd;
-	dd.cb = sizeof(dd);
+	//DISPLAY_DEVICE dd;
+	//dd.cb = sizeof(dd);
 
-	for (int loop = 0; EnumDisplayDevices(NULL, loop, &dd, 0); ++loop) {
-		if (dd.StateFlags & DISPLAY_DEVICE_ACTIVE) {
-			HDC hDC = CreateDC(NULL, (LPWSTR)dd.DeviceName, NULL, NULL);
-			bprintf(0, _T("SuperWaitVBlankInit(): %s (%s)"), dd.DeviceName, dd.DeviceString);
+	//for (int loop = 0; EnumDisplayDevices(NULL, loop, &dd, 0); ++loop) {
+	//	if (dd.StateFlags & DISPLAY_DEVICE_ACTIVE) {
+	{
+		MONITORINFOEX mi;
+		memset(&mi, 0, sizeof(MONITORINFOEX));
+		mi.cbSize = sizeof(MONITORINFOEX);
+		HMONITOR hmon = MonitorFromWindow(hScrnWnd, MONITOR_DEFAULTTONEAREST);
+		GetMonitorInfo(hmon, &mi);
+
+
+		HDC hDC = CreateDC(NULL, (LPWSTR)mi.szDevice, NULL, NULL);
+		bprintf(0, _T("SuperWaitVBlankInit(): %s\n"), mi.szDevice);//, dd.DeviceString);
 			if (hDC) {
 				D3DKMT_OPENADAPTERFROMHDC oa;
 				oa.hDc = hDC;
@@ -157,11 +165,8 @@ void SuperWaitVBlankInit()
 				bprintf(0, _T("SuperWaitVBlank: Initialized fine.\n"));
 				SuperWaitVBlank_Initialised = 1;
 
-				break;
 			}
-		}
 	}
-	return;
 }
 
 void SuperWaitVBlankExit()

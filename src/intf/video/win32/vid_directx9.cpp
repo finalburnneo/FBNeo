@@ -1314,6 +1314,8 @@ static int dx9Frame(bool bRedraw)					// bRedraw = 0
 		if (dx9Reset()) {
 			return 1;
 		}
+
+		return 1;                                   // Skip this frame, pBurnDraw pointer not valid (dx9Reset() -> dx9SurfaceInit -> VidSAllocVidImage())
 	}
 
 #ifdef ENABLE_PROFILING
@@ -2199,6 +2201,9 @@ static int dx9AltFrame(bool bRedraw)	// bRedraw = 0
 		if (dx9AltReset()) {
 			return 1;
 		}
+
+		return 1;                    // Skip this frame, pBurnDraw pointer not valid (dx9AltReset() -> dx9AltTextureInit() -> VidSAllocVidImage())
+
 	}
 
 	if (bDrvOkay) {

@@ -1298,6 +1298,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_DWMFIX:
 			bVidDWMCore = !bVidDWMCore;
+			if (bVidDWMCore && bVidVSync)
+				bVidVSync = 0;
+
 			POST_INITIALISE_MESSAGE;
 			break;
 
@@ -1788,6 +1791,9 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			
 		case MENU_VIDEOVSYNC:
 			bVidVSync = !bVidVSync;
+			if (bVidVSync && bVidDWMCore)
+				bVidDWMCore = 0;
+
 			POST_INITIALISE_MESSAGE;
 			break;
 

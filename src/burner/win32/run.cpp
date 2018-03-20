@@ -179,7 +179,7 @@ static int RunFrame(int bDraw, int bPause)
 			RecordInput();						// Write input to file
 		}
 
-		if (bDraw || (!bDraw && bVidDWMCore)) { // Draw Frame || DWM: if frame skipping is on - draw frame just do not DwmFlush()
+		if (bDraw || (!bDraw && bVidDWMCore)) { // Draw Frame || DWM: if frame skipping is on - draw frame just do not sync for that frame
 			nFramesRendered++;
 
 			if (VidFrame()) {					// Do one frame

@@ -29,7 +29,7 @@
 #include <mmsystem.h>
 #include <shellapi.h>
 #include <shlwapi.h>
-#include "dwmapi_core.h"
+#include "d3dkmt_sync.h"
 
 INT32 DSCore_Init();
 INT32 DICore_Init();

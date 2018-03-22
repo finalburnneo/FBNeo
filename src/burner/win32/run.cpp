@@ -136,7 +136,7 @@ static int RunFrame(int bDraw, int bPause)
 	if (bPrevDraw && !bPause) {
 		VidPaint(0);							// paint the screen (no need to validate)
 
-		if (!nVidFullscreen && bVidDWMCore)     // Sync to DWM (Win7+, windowed)
+		if (!nVidFullscreen && bVidDWMSync)     // Sync to DWM (Win7+, windowed)
 			SuperWaitVBlank();
 	}
 
@@ -406,7 +406,7 @@ int RunMessageLoop()
 		GameInpCheckLeftAlt();
 		GameInpCheckMouse();															// Hide the cursor
 
-		if (bVidDWMCore) {
+		if (bVidDWMSync) {
 			bprintf(0, _T("[Win7+] Sync to DWM is enabled (if available).\n"));
 			SuperWaitVBlankInit();
 		}

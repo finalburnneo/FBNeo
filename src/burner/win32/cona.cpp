@@ -111,7 +111,7 @@ int ConfigAppLoad()
 
 		VAR(bVidTripleBuffer);
 		VAR(bVidVSync);
-		VAR(bVidDWMCore);
+		VAR(bVidDWMSync);
 
 		VAR(bVidScanlines);
 		VAR(nVidScanIntensity);
@@ -412,7 +412,7 @@ int ConfigAppSave()
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise blits with the display\n"));
 	VAR(bVidVSync);
 	_ftprintf(h, _T("\n// If non-zero, try to synchronise to DWM on Windows 7+, this fixes frame stuttering problems.\n"));
-	VAR(bVidDWMCore);
+	VAR(bVidDWMSync);
 	_ftprintf(h, _T("\n// Transfer method:  0 = blit from system memory / use driver/DirectX texture management;\n"));
 	_ftprintf(h, _T("//                   1 = copy to a video memory surface, then use bltfast();\n"));
 	_ftprintf(h, _T("//                  -1 = autodetect for DirectDraw, equals 1 for Direct3D\n"));

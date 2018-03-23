@@ -138,7 +138,7 @@ static int DxSoundCheck()
 
 	nPlaySeg = nPlay / (nAudSegLen << 2);
 
-	if (nPlaySeg > nAudSegCount -1 ) {
+	if (nPlaySeg > nAudSegCount - 1) {
 		nPlaySeg = nAudSegCount - 1;
 	}
 	if (nPlaySeg < 0) {												// important to ensure nPlaySeg clipped for below
@@ -301,27 +301,24 @@ static int DxSoundInit()
 	lpPositionNotify = (LPDSBPOSITIONNOTIFY)malloc(nAudSegCount * sizeof(DSBPOSITIONNOTIFY));
 	if (lpPositionNotify == NULL)
 		goto error;
-	
-	if (FAILED(pdsbLoop->QueryInterface(IID_IDirectSoundNotify,(void**)&lpDsNotify)))
+
+	if (FAILED(pdsbLoop->QueryInterface(IID_IDirectSoundNotify, (void**)&lpDsNotify)))
 		goto error;
 
 	for (int i = 0; i < nAudSegCount; i++)
 	{
-		int offs = (i * nAudSegLen) << 2;
-		if (offs > 0) offs -= 4;
-		lpPositionNotify[i].dwOffset = offs;
+		lpPositionNotify[i].dwOffset = (i * nAudSegLen) << 2;
 		lpPositionNotify[i].hEventNotify = hDSoundEvent;
 	}
 
 	if (FAILED(lpDsNotify->SetNotificationPositions(nAudSegCount, lpPositionNotify)))
 	{
-	    lpDsNotify->Release();
+		lpDsNotify->Release();
 
 		goto error;
 	}
 
-    lpDsNotify->Release();
-
+	lpDsNotify->Release();
 	free(lpPositionNotify);
 
 	nAudNextSound = (short*)malloc(nAudSegLen << 2);		// The next sound block to put in the stream

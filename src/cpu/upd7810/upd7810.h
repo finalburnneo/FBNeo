@@ -126,6 +126,8 @@ typedef struct {
 	UINT8	ci;
 	UINT8	co0;
 	UINT8	co1;
+	UINT8	lv0;
+	UINT8	lv1;
 	UINT16	irr;	/* interrupt request register */
 	UINT16	itf;	/* interrupt test flag register */
 

@@ -1,3 +1,5 @@
+// license:BSD-3-Clause
+// copyright-holders:Juergen Buchmueller
 /*****************************************************************************
  *
  *   Portable uPD7810/11, 7810H/11H, 78C10/C11/C14 emulator V0.2
@@ -6,6 +8,9 @@
  *   7810ops.c  - opcode functions
  *
  *****************************************************************************/
+
+
+
 
 static void illegal(void)
 {
@@ -6808,7 +6813,7 @@ static void ACI_V_xx(void)
 
 	RDOPARG( imm );
 	tmp = V + imm + (PSW & CY);
-	ZHC_SUB( tmp, V, (PSW & CY) );
+	ZHC_ADD( tmp, V, (PSW & CY) );
 	V = tmp;
 }
 
@@ -6819,7 +6824,7 @@ static void ACI_A_xx(void)
 
 	RDOPARG( imm );
 	tmp = A + imm + (PSW & CY);
-	ZHC_SUB( tmp, A, (PSW & CY) );
+	ZHC_ADD( tmp, A, (PSW & CY) );
 	A = tmp;
 }
 
@@ -6830,7 +6835,7 @@ static void ACI_B_xx(void)
 
 	RDOPARG( imm );
 	tmp = B + imm + (PSW & CY);
-	ZHC_SUB( tmp, B, (PSW & CY) );
+	ZHC_ADD( tmp, B, (PSW & CY) );
 	B = tmp;
 }
 
@@ -6841,7 +6846,7 @@ static void ACI_C_xx(void)
 
 	RDOPARG( imm );
 	tmp = C + imm + (PSW & CY);
-	ZHC_SUB( tmp, C, (PSW & CY) );
+	ZHC_ADD( tmp, C, (PSW & CY) );
 	C = tmp;
 }
 
@@ -6852,7 +6857,7 @@ static void ACI_D_xx(void)
 
 	RDOPARG( imm );
 	tmp = D + imm + (PSW & CY);
-	ZHC_SUB( tmp, D, (PSW & CY) );
+	ZHC_ADD( tmp, D, (PSW & CY) );
 	D = tmp;
 }
 
@@ -6863,7 +6868,7 @@ static void ACI_E_xx(void)
 
 	RDOPARG( imm );
 	tmp = E + imm + (PSW & CY);
-	ZHC_SUB( tmp, E, (PSW & CY) );
+	ZHC_ADD( tmp, E, (PSW & CY) );
 	E = tmp;
 }
 
@@ -6874,7 +6879,7 @@ static void ACI_H_xx(void)
 
 	RDOPARG( imm );
 	tmp = H + imm + (PSW & CY);
-	ZHC_SUB( tmp, H, (PSW & CY) );
+	ZHC_ADD( tmp, H, (PSW & CY) );
 	H = tmp;
 }
 
@@ -6885,7 +6890,7 @@ static void ACI_L_xx(void)
 
 	RDOPARG( imm );
 	tmp = L + imm + (PSW & CY);
-	ZHC_SUB( tmp, L, (PSW & CY) );
+	ZHC_ADD( tmp, L, (PSW & CY) );
 	L = tmp;
 }
 
@@ -8828,12 +8833,13 @@ static void PRE_60(void)
 /* 61: 0110 0001 */
 static void DAA(void)
 {
-	UINT8 l = A & 0x0f, h = A >> 4, tmp, adj = 0x00;
+	UINT8 l = A & 0x0f, h = A >> 4, tmp, adj = 0x00, old_cy = PSW & CY;
+
 	if (0 == (PSW & HC))
 	{
 		if (l < 10)
 		{
-		    if (!(h < 10 && 0 == (PSW & CY)))
+			if (!(h < 10 && 0 == (PSW & CY)))
 			adj = 0x60;
 		}
 		else
@@ -8854,6 +8860,7 @@ static void DAA(void)
 	}
 	tmp = A + adj;
 	ZHC_ADD( tmp, A, PSW & CY );
+	PSW |= old_cy;
 	A = tmp;
 }
 
@@ -8917,9 +8924,9 @@ static void MVI_V_xx(void)
 /* 69: 0110 1001 xxxx xxxx */
 static void MVI_A_xx(void)
 {
-	if (PSW & L1) {	/* overlay active? */
+	if (PSW & L1) { /* overlay active? */
 		PC++;
-		return; 	/* NOP */
+		return;     /* NOP */
 	}
 	RDOPARG( A );
 	PSW |= L1;
@@ -8958,9 +8965,9 @@ static void MVI_H_xx(void)
 /* 6f: 0110 1111 xxxx xxxx */
 static void MVI_L_xx(void)
 {
-	if (PSW & L0) {	/* overlay active? */
+	if (PSW & L0) { /* overlay active? */
 		PC++;
-		return; 	/* NOP */
+		return;     /* NOP */
 	}
 	RDOPARG( L );
 	PSW |= L0;
@@ -9054,26 +9061,16 @@ static void CALT(void)
 	PAIR w;
 	w.d = 0;
 
-	switch (upd7810_config_type) {
-	case TYPE_7810_GAMEMASTER:
-	//    logerror ("!!!!!!!%.4x calt %.2x game master table position not known\n",PPC, OP);
-	    break;
-	default:
 	w.w.l = 0x80 + 2 * (OP & 0x1f);
-	}
 
-	if (upd7810_config_type!=TYPE_7810_GAMEMASTER) {
 	SP--;
 	WM( SPD, PCH );
 	SP--;
 	WM( SPD, PCL );
 
-	    PCL=RM(w.w.l);
-	    PCH=RM(w.w.l+1);
-
+	PCL=RM(w.w.l);
+	PCH=RM(w.w.l+1);
 	change_pc( PCD );
-	//    logerror ("!!!!!!!%.4x calt %.2x %.4x; game master table position not known\n",PPC, OP, PCD);
-	}
 }
 
 /* a0: 1010 0000 */
@@ -9279,7 +9276,7 @@ static void RETS(void)
 	SP++;
 	PCH = RM( SPD );
 	SP++;
-	PSW|=SK;	/* skip one instruction */
+	PSW|=SK;    /* skip one instruction */
 	change_pc( PCD );
 }
 

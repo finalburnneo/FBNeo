@@ -5,6 +5,7 @@
 #include "burnint.h"
 #include "msm6295.h"
 #include "burn_sound.h"
+#include <stddef.h>
 
 UINT8* MSM6295ROM;
 
@@ -23,22 +24,24 @@ struct MSM6295ChannelInfo {
 	INT32 nPlaying;
 };
 
-static struct {
-	INT32 nVolume;
-	INT32 nSampleRate;
-	INT32 nSampleSize;
-	INT32 nFractionalPosition;
-
+struct MSM6295Struct {
 	// All current settings for each channel
 	MSM6295ChannelInfo ChannelInfo[4];
 
 	// Used for sending commands
 	bool bIsCommand;
 	INT32 nSampleInfo;
-	
-	INT32 nOutputDir;
 
-} MSM6295[MAX_MSM6295];
+	// Not scanned.
+	INT32 nVolume;
+	INT32 nOutputDir;
+	INT32 nSampleRate;
+	INT32 nSampleSize;
+	INT32 nFractionalPosition;
+
+};
+
+static struct MSM6295Struct MSM6295[MAX_MSM6295];
 
 static UINT8 *pBankPointer[MAX_MSM6295][0x40000/0x100];
 INT32 nLastMSM6295Chip;
@@ -125,17 +128,10 @@ void MSM6295Scan(INT32 , INT32 *)
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Scan called without init\n"));
 #endif
 
-	for (INT32 nChip = 0; nChip < nLastMSM6295Chip; nChip++)
+	for (INT32 nChip = 0; nChip <= nLastMSM6295Chip; nChip++)
 	{
-		INT32 nSampleSize = MSM6295[nChip].nSampleSize;
-		SCAN_VAR(MSM6295[nChip]);
-		MSM6295[nChip].nSampleSize = nSampleSize;
-
+		ScanVar(&MSM6295[nChip], STRUCT_SIZE_HELPER(struct MSM6295Struct, nSampleInfo), "MSM6295 Chip");
 		SCAN_VAR(nMSM6295Status[nChip]);
-
-		for (INT32 i = 0; i < 4; i++) {
-			SCAN_VAR(MSM6295[nChip].ChannelInfo[i].nPlaying);
-		}
 	}
 }
 

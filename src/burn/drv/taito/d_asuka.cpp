@@ -9,6 +9,7 @@
 #include "msm5205.h"
 #include "taito_ic.h"
 #include "taito.h"
+#include "upd7810_intf.h"
 
 static UINT8 TaitoInputConfig;
 static INT32 AsukaADPCMPos;
@@ -84,7 +85,7 @@ static struct BurnInputInfo BonzeadvInputList[] = {
 	{"P2 Start",		BIT_DIGITAL,	TaitoInputPort0 + 5,		"p2 start"	},
 	{"P2 Up",		BIT_DIGITAL,	TaitoInputPort3 + 1,		"p2 up"		},
 	{"P2 Down",		BIT_DIGITAL,	TaitoInputPort3 + 2,		"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	TaitoInputPort3 + 3,		"p2 left"	},
+	{"P2 Left",		BIT_DIGITAL,	TaitoInputPort3 + 7,		"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	TaitoInputPort3 + 4,		"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	TaitoInputPort3 + 5,		"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	TaitoInputPort3 + 6,		"p2 fire 2"	},
@@ -880,6 +881,14 @@ UINT16 __fastcall eto_read_word(UINT32 a)
 
 void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
 {
+	if (a >= (0x800000) && a <= (0x8007ff)) {
+		cchip_68k_write((a & 0x7ff) >> 1, d);
+		return;
+	}
+	if (a >= (0x800800) && a <= (0x800fff)) {
+		cchip_asic_write68k((a & 0x7ff) >> 1, d);
+	}
+
 	TC0100SCN0ByteWrite_Map(0xc00000, 0xc0ffff)
 	
 	switch (a)
@@ -897,23 +906,19 @@ void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
 			TC0140SYTCommWrite(d);
 			ZetOpen(0);
 		return;
-
-		case 0x800803: // CChip Ctrl
-		return;
-
-		case 0x800c01:
-			BonzeWriteCChipBank(d);
-		return;
-	}
-
-	if ((a & 0xffff800) == 0x800000) {
-		BonzeWriteCChipRam(a, d);
-		return;
 	}
 }
 
 void __fastcall bonze_write_word(UINT32 a, UINT16 d)
 {
+	if (a >= (0x800000) && a <= (0x8007ff)) {
+		cchip_68k_write((a & 0x7ff) >> 1, d);
+		return;
+	}
+	if (a >= (0x800800) && a <= (0x800fff)) {
+		cchip_asic_write68k((a & 0x7ff) >> 1, d);
+	}
+
 	TC0100SCN0WordWrite_Map(0xc00000, 0xc0ffff)
 	TC0100SCN0CtrlWordWrite_Map(0xc20000)
 
@@ -935,17 +940,16 @@ void __fastcall bonze_write_word(UINT32 a, UINT16 d)
 
 UINT8 __fastcall bonze_read_byte(UINT32 a)
 {
+	if (a >= (0x800000) && a <= (0x8007ff))
+		return cchip_68k_read((a & 0x7ff) >> 1);
+
+	if (a >= (0x800800) && a <= (0x800fff))
+		return cchip_asic_read((a & 0x7ff) >> 1);
+
 	switch (a)
 	{
 		case 0x3e0003:
 			return TC0140SYTCommRead();
-
-		case 0x800803:
-			return 1; // CChip Status
-	}
-
-	if ((a & 0xfffff800) == 0x800000) {
-		return BonzeReadCChipRam(a);
 	}
 
 	return 0;
@@ -953,6 +957,12 @@ UINT8 __fastcall bonze_read_byte(UINT32 a)
 
 UINT16 __fastcall bonze_read_word(UINT32 a)
 {
+	if (a >= (0x800000) && a <= (0x8007ff))
+		return cchip_68k_read((a & 0x7ff) >> 1);
+
+	if (a >= (0x800800) && a <= (0x800fff))
+		return cchip_asic_read((a & 0x7ff) >> 1);
+
 	if ((a & 0xffffff0) == 0xc20000) return TC0100SCNCtrl[0][(a & 0x0f)/2];
 
 	switch (a)
@@ -968,10 +978,6 @@ UINT16 __fastcall bonze_read_word(UINT32 a)
 
 		case 0x3d0000:
 			return 0; // nop
-	}
-
-	if ((a & 0xfffff800) == 0x800000) {
-		return BonzeReadCChipRam(a);
 	}
 
 	return 0;
@@ -1038,10 +1044,11 @@ UINT8 __fastcall cadash_sound_read(UINT16 a)
 
 static void DrvSoundBankSwitch(UINT32, UINT32 bank)
 {
+	if (ZetGetActive() == -1) return; // prevent crash from TaitoDoReset
 	TaitoZ80Bank = bank & 0x03;
 
 	ZetMapArea(0x4000, 0x7fff, 0, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
-        ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
+	ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
 }
 
 void __fastcall bonze_sound_write(UINT16 a, UINT8 d)
@@ -1132,30 +1139,11 @@ static INT32 DrvDoReset()
 {
 	memset (TaitoRamStart, 0, TaitoRamEnd - TaitoRamStart);
 
-#if 0
-	// This resets the YM2151 which calls DrvSoundBankSwitch via the port callback
 	TaitoDoReset();
-#else
-	SekOpen(0);
-	SekReset();
-	SekClose();
-	
-	ZetOpen(0);
-	ZetReset();
-	ZetClose();
-	
-	if (TaitoNumYM2610) BurnYM2610Reset();
-	if (TaitoNumMSM5205) MSM5205Reset();
-	ZetOpen(0);
-	if (TaitoNumYM2151) BurnYM2151Reset();
-	ZetClose();	
-#endif
 
 	ZetOpen(0);
 	DrvSoundBankSwitch(0, 1);
 	ZetClose();
-
-	BonzeCChipReset();
 
 	AsukaADPCMPos = 0;
 	AsukaADPCMData = -1;
@@ -1170,7 +1158,10 @@ static INT32 MemIndex()
 	Taito68KRom1		= Next; Next += 0x100000;
 	TaitoZ80Rom1		= Next; Next += 0x010000;
 
-	TaitoChars		= Next; Next += TaitoCharRomSize * 2;
+	cchip_rom           = Next; Next += TaitoCCHIPBIOSSize;
+	cchip_eeprom        = Next; Next += TaitoCCHIPEEPROMSize;
+
+	TaitoChars		    = Next; Next += TaitoCharRomSize * 2;
 	TaitoSpritesA		= Next; Next += TaitoSpriteARomSize * 2;
 
 	TaitoMSM5205Rom		= Next; Next += TaitoMSM5205RomSize;
@@ -1260,6 +1251,8 @@ static void Bonze68KSetup()
 	SekSetReadByteHandler(0,		bonze_read_byte);
 	SekSetReadWordHandler(0,		bonze_read_word);
 	SekClose();
+
+	cchip_init();
 }
 
 static void CadashZ80Setup()
@@ -1532,18 +1525,35 @@ static INT32 BonzeFrame()
 			TaitoInput[2] ^= (TaitoInputPort2[i] & 1) << i;
 			TaitoInput[3] ^= (TaitoInputPort3[i] & 1) << i;
 		}
+
+		cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);
 	}
 
 	SekNewFrame();
 	ZetNewFrame();
-	
+	upd7810NewFrame();
+
 	SekOpen(0);
 	ZetOpen(0);
 
-	SekRun(8000000 / 60);
-	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 8000000 / 60, 4000000 / 60, 12000000 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
-	BurnTimerEndFrame(4000000 / 60);
+	for (INT32 i = 0; i < nInterleave; i++)
+	{
+		nCyclesDone[0] += SekRun(((nCyclesTotal[0] / nInterleave) * (i + 1)) - nCyclesDone[0]);
+		if (i == 248) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
+
+		BurnTimerUpdate((nCyclesTotal[1] / nInterleave) * (i + 1));
+
+		if (cchip_active) {
+			nCyclesDone[2] += cchip_run(((nCyclesTotal[2] / nInterleave) * (i + 1)) - nCyclesDone[2]);
+			if (i == 248) cchip_interrupt();
+		}
+	}
+
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM2610Update(pBurnSoundOut, nBurnSoundLen);
@@ -1579,15 +1589,14 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		ZetScan(nAction);
 
 		TaitoICScan(nAction);
-		BonzeCChipScan(nAction);
 
-                ZetOpen(0); // ZetOpen() here because it uses ZetMapArea() in the PortHandler of the YM
+		ZetOpen(0); // ZetOpen() here because it uses ZetMapArea() in the PortHandler of the YM
 		if (TaitoNumYM2151) BurnYM2151Scan(nAction, pnMin);
 		if (TaitoNumYM2610) BurnYM2610Scan(nAction, pnMin);
 		if (TaitoNumMSM5205) MSM5205Scan(nAction, pnMin);
 
 		SCAN_VAR(TaitoZ80Bank);
-                ZetClose();
+		ZetClose();
         }
 
 	if (nAction & ACB_WRITE) {
@@ -1599,6 +1608,15 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 	return 0;
 }
 
+// Taito C-Chip BIOS
+
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "",                    0,          0, 0 },
+};
+
+static struct BurnRomInfo cchipRomDesc[] = {
+	{ "cchip_upd78c11.bin",		0x01000, 0x43021521, BRF_BIOS | TAITO_CCHIP_BIOS},
+};
 
 // Cadash (World)
 
@@ -2248,10 +2266,10 @@ static struct BurnRomInfo bonzeadvRomDesc[] = {
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
 	
-	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "cchip_b41-05.43",	0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(bonzeadv)
+STDROMPICKEXT(bonzeadv, bonzeadv, cchip)
 STD_ROM_FN(bonzeadv)
 
 static INT32 BonzeInit()
@@ -2260,7 +2278,7 @@ static INT32 BonzeInit()
 }
 
 struct BurnDriver BurnDrvBonzeadv = {
-	"bonzeadv", NULL, NULL, NULL, "1988",
+	"bonzeadv", NULL, "cchip", NULL, "1988",
 	"Bonze Adventure (World, Newer)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
@@ -2287,14 +2305,14 @@ static struct BurnRomInfo bonzeadvoRomDesc[] = {
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
 	
-	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "cchip_b41-05.43",	0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(bonzeadvo)
+STDROMPICKEXT(bonzeadvo, bonzeadvo, cchip)
 STD_ROM_FN(bonzeadvo)
 
 struct BurnDriver BurnDrvBonzeadvo = {
-	"bonzeadvo", "bonzeadv", NULL, NULL, "1988",
+	"bonzeadvo", "bonzeadv", "cchip", NULL, "1988",
 	"Bonze Adventure (World, Older)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
@@ -2321,14 +2339,14 @@ static struct BurnRomInfo bonzeadvuRomDesc[] = {
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
 	
-	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "cchip_b41-05.43",	0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(bonzeadvu)
+STDROMPICKEXT(bonzeadvu, bonzeadvu, cchip)
 STD_ROM_FN(bonzeadvu)
 
 struct BurnDriver BurnDrvBonzeadvu = {
-	"bonzeadvu", "bonzeadv", NULL, NULL, "1988",
+	"bonzeadvu", "bonzeadv", "cchip", NULL, "1988",
 	"Bonze Adventure (US)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
@@ -2367,14 +2385,14 @@ static struct BurnRomInfo bonzeadvpRomDesc[] = {
 	{ "f66e.ic11",			0x20000, 0xc6df1b3e, BRF_SND | TAITO_YM2610A },				// 19
 	{ "49d7.ic7",			0x20000, 0x5584c02c, BRF_SND | TAITO_YM2610A },				// 20
 	
-	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "cchip_b41-05.43",	0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(bonzeadvp)
+STDROMPICKEXT(bonzeadvp, bonzeadvp, cchip)
 STD_ROM_FN(bonzeadvp)
 
 struct BurnDriver BurnDrvBonzeadvp = {
-	"bonzeadvp", "bonzeadv", NULL, NULL, "1988",
+	"bonzeadvp", "bonzeadv", "cchip", NULL, "1988",
 	"Bonze Adventure (World, prototype)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
@@ -2401,14 +2419,14 @@ static struct BurnRomInfo jigkmgriRomDesc[] = {
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
 	
-	{ "cchip_b41-05.43",	0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "cchip_b41-05.43",	0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(jigkmgri)
+STDROMPICKEXT(jigkmgri, jigkmgri, cchip)
 STD_ROM_FN(jigkmgri)
 
 struct BurnDriver BurnDrvJigkmgri = {
-	"jigkmgri", "bonzeadv", NULL, NULL, "1988",
+	"jigkmgri", "bonzeadv", "cchip", NULL, "1988",
 	"Jigoku Meguri (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
@@ -2435,13 +2453,15 @@ static struct BurnRomInfo jigkmgriaRomDesc[] = {
 	{ "b41-02.7",			0x80000, 0x29f205d9, BRF_GRA | TAITO_SPRITESA },			//  7 Sprites
 
 	{ "b41-04.48",			0x80000, 0xc668638f, BRF_SND | TAITO_YM2610A },				//  8 YM2610 Samples
+
+	{ "cchip_b41-05.43",	0x02000, 0x75c52553, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 };
 
-STD_ROM_PICK(jigkmgria)
+STDROMPICKEXT(jigkmgria, jigkmgria, cchip)
 STD_ROM_FN(jigkmgria)
 
 struct BurnDriver BurnDrvJigkmgria = {
-	"jigkmgria", "bonzeadv", NULL, NULL, "19??",
+	"jigkmgria", "bonzeadv", "cchip", NULL, "19??",
 	"Jigoku Meguri (Japan, hack?)\0", NULL, "Taito Corporation", "Taito Misc",
 	L"\u5730\u7344\u3081\u3050\u308A\0Jigoku Meguri (Japan, hack?)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,

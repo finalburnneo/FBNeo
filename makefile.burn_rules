@@ -132,7 +132,7 @@ depobj	= 	burn.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o bur
 			\
 			fd1089.o fd1094.o genesis_vid.o mc8123.o sega_315_5195.o sys16_fd1094.o sys16_gfx.o sys16_run.o \
 			\
-			cchip.o pc080sn.o pc090oj.o taito.o taito_ic.o taitof3_snd.o taitof3_video.o taito_m68705.o tc0100scn.o tc0110pcr.o tc0140syt.o tc0150rod.o \
+			cchip.o cc.o pc080sn.o pc090oj.o taito.o taito_ic.o taitof3_snd.o taitof3_video.o taito_m68705.o tc0100scn.o tc0110pcr.o tc0140syt.o tc0150rod.o \
 			tc0180vcu.o tc0220ioc.o tc0280grd.o tc0360pri.o tc0480scp.o tc0510nio.o tc0640fio.o tnzs_prot.o \
 			\
 			toa_bcu2.o toa_extratext.o toa_gp9001.o toa_palette.o toaplan1.o toaplan.o \

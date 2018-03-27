@@ -1922,7 +1922,7 @@ void OpwolfCChipScan(INT32 nAction)
 #undef OPWOLF_REGION_WORLD
 #undef OPWOLF_REGION_OTHER
 
-
+#if 0
 /*************************************************************************
 
   Bonze Adventure C-Chip
@@ -2269,6 +2269,7 @@ void BonzeCChipScan(INT32 nAction)
 		SCAN_VAR(restart_status);
 	}
 }
+#endif
 
 /*************************************************************************
 

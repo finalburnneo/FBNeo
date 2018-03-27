@@ -1,0 +1,221 @@
+// Based on C-Chip emulation by Jonathan Gevaryahu, David Haywood
+// Ultra-super double thanks to Caps0ff for dumping the C-Chips
+
+#include "burnint.h"
+#include "taito_ic.h"
+#include "taito.h"
+#include "upd7810_intf.h"
+#include "bitswap.h"
+
+static INT32 bank;
+static INT32 bank68k;
+static UINT8 asic_ram[4];
+UINT8 *cchip_rom;
+UINT8 *cchip_eeprom;
+UINT8 cchip_active = 0;
+
+static UINT8 *cchip_ram; // 0x2000, 0x400 chunks, double-banked.
+static UINT8 *cchip_updram; // 0x100
+
+static UINT8 porta, portb, portc, portadc;
+
+void cchip_interrupt()
+{
+	upd7810SetIRQLine(UPD7810_INTF1, CPU_IRQSTATUS_ACK); // core auto un-acks
+}
+
+void cchip_loadports(UINT8 pa, UINT8 pb, UINT8 pc, UINT8 padc)
+{
+	porta = pa; portb = pb; portc = pc; portadc = padc;
+}
+
+INT32 cchip_run(INT32 cyc)
+{
+	return upd7810Run(cyc);
+}
+
+void cchip_reset()
+{
+	upd7810Reset();
+	bank = 0;
+	bank68k = 0;
+	memset(&asic_ram, 0, 4);
+	memset(cchip_ram, 0, 0x2000);
+	memset(cchip_updram, 0, 0x100);
+	porta = portb = portc = portadc = 0;
+}
+
+UINT8 cchip_asic_read(UINT32 offset)
+{
+	if (offset < 0x200)
+		return asic_ram[offset & 3];
+
+	return 0x00;
+}
+
+void cchip_asic_write(UINT32 offset, UINT8 data)
+{
+	if (offset == 0x200)
+	{
+		bank = data & 7;
+	}
+	else
+		asic_ram[offset & 3] = data;
+}
+
+void cchip_asic_write68k(UINT32 offset, UINT16 data)
+{
+	if (offset == 0x200)
+	{
+		bank68k = data & 7;
+	}
+	else
+		asic_ram[offset & 3] = data;
+}
+
+static UINT8 upd7810_read_port(UINT8 port)
+{
+	//bprintf (0, _T("IOR: %4.4x\n"), port);
+	switch (port)
+	{
+		case UPD7810_PORTA:
+			return porta;
+
+		case UPD7810_PORTB:
+			return portb;
+
+		case UPD7810_PORTC:
+			return portc;
+	}
+
+	return 0;
+}
+
+static void upd7810_write_port(UINT8 port, UINT8 data)   // not impl yet.
+{
+	//bprintf (0, _T("IOW: %4.4x, %2.2x\n"), port, data);
+	switch (port)
+	{
+		case UPD7810_PORTA:
+		return;
+
+		case UPD7810_PORTB:
+		return;
+
+		case UPD7810_PORTC:
+		return;
+	}
+}
+
+static UINT8 upd7810_read(UINT16 address)
+{
+	if (address >= 0x1000 && address <= 0x13ff) {
+		return cchip_ram[(bank * 0x400) + (address & 0x3ff)];
+	}
+
+	if (address >= 0x1400 && address <= 0x17ff) {
+		return cchip_asic_read(address & 0x3ff);
+	}
+	//bprintf (0, _T("cchip_r: %4.4x\n"), address);
+
+	return 0;
+}
+
+static void upd7810_write(UINT16 address, UINT8 data)
+{
+	if (address >= 0x1000 && address <= 0x13ff) {
+		cchip_ram[(bank * 0x400) + (address & 0x3ff)] = data;
+	}
+
+	if (address >= 0x1400 && address <= 0x17ff) {
+		cchip_asic_write(address & 0x3ff, data);
+	}
+	//bprintf (0, _T("cchip_w: %4.4x, %2.2x\n"), address, data);
+}
+
+void cchip_68k_write(UINT16 address, UINT8 data)
+{
+	cchip_ram[(bank68k * 0x400) + (address & 0x3ff)] = data;
+}
+
+UINT8 cchip_68k_read(UINT16 address)
+{
+	return cchip_ram[(bank68k * 0x400) + (address & 0x3ff)];
+}
+
+static UINT8 cchip_an0_read() {	return BIT(portadc, 0); }
+static UINT8 cchip_an1_read() {	return BIT(portadc, 1); }
+static UINT8 cchip_an2_read() {	return BIT(portadc, 2); }
+static UINT8 cchip_an3_read() {	return BIT(portadc, 3); }
+static UINT8 cchip_an4_read() {	return BIT(portadc, 4); }
+static UINT8 cchip_an5_read() {	return BIT(portadc, 5); }
+static UINT8 cchip_an6_read() {	return BIT(portadc, 6); }
+static UINT8 cchip_an7_read() {	return BIT(portadc, 7); }
+
+void cchip_init()
+{
+	cchip_ram = (UINT8 *)BurnMalloc(0x2000);
+	cchip_updram = (UINT8 *)BurnMalloc(0x100);
+
+	upd7810Init(NULL);
+	upd7810MapMemory(cchip_rom,     0x0000, 0x0fff, MAP_ROM);
+	upd7810MapMemory(cchip_eeprom,  0x2000, 0x3fff, MAP_ROM);
+	upd7810MapMemory(cchip_updram,  0xff00, 0xffff, MAP_RAM);
+
+	upd7810SetReadPortHandler(upd7810_read_port);
+	upd7810SetWritePortHandler(upd7810_write_port);
+	upd7810SetReadHandler(upd7810_read);
+	upd7810SetWriteHandler(upd7810_write);
+
+	upd7810SetAnfunc(0, cchip_an0_read);
+	upd7810SetAnfunc(1, cchip_an1_read);
+	upd7810SetAnfunc(2, cchip_an2_read);
+	upd7810SetAnfunc(3, cchip_an3_read);
+	upd7810SetAnfunc(4, cchip_an4_read);
+	upd7810SetAnfunc(5, cchip_an5_read);
+	upd7810SetAnfunc(6, cchip_an6_read);
+	upd7810SetAnfunc(7, cchip_an7_read);
+
+	cchip_active = 1;
+
+	cchip_reset();
+
+	bprintf(0, _T("\n-- c-chippy debug --\ncc eeprom: \n"));
+	for (INT32 rc = 0; rc < 16; rc++)
+		bprintf(0, _T("%X, "), cchip_eeprom[rc]);
+
+	bprintf(0, _T("\ncc biosrom: \n"));
+	for (INT32 rc = 0; rc < 16; rc++)
+		bprintf(0, _T("%X, "), cchip_rom[rc]);
+	bprintf(0, _T("\n"));
+
+
+}
+
+void cchip_exit()
+{
+	upd7810Exit();
+	BurnFree(cchip_ram);
+	BurnFree(cchip_updram);
+	cchip_active = 0;
+}
+
+INT32 cchip_scan(INT32 nAction)
+{
+	if (nAction & ACB_VOLATILE)	{
+		upd7810Scan(nAction);
+
+		ScanVar(cchip_updram, 0x100, "cchip_updram");
+		SCAN_VAR(bank);
+		SCAN_VAR(bank68k);
+		SCAN_VAR(asic_ram);
+
+		SCAN_VAR(porta);
+		SCAN_VAR(portb);
+		SCAN_VAR(portc);
+		SCAN_VAR(portadc);
+	}
+
+	return 0;
+}
+

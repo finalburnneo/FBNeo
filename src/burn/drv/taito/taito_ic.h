@@ -25,7 +25,10 @@ void TaitoICReset();
 void TaitoICExit();
 void TaitoICScan(INT32 nAction);
 
-// C-Chip
+// Emulated C-Chip
+#include "cc.h"
+
+// Simulated C-Chip
 UINT16 SupermanCChipCtrlRead();
 UINT16 SupermanCChipRamRead(UINT32 Offset, UINT8 Input1, UINT8 Input2, UINT8 Input3);
 void SupermanCChipCtrlWrite();

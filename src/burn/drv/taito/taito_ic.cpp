@@ -47,6 +47,8 @@ void TaitoICReset()
 	if (TaitoIC_TC0510NIOInUse) TC0510NIOReset();
 	if (TaitoIC_TC0640FIOInUse) TC0640FIOReset();
 
+	if (cchip_active) cchip_reset();
+
 	TaitoWatchdog = 0;
 }
 
@@ -71,7 +73,9 @@ void TaitoICExit()
 	if (TaitoIC_TC0430GRWInUse) TC0430GRWExit();
 	if (TaitoIC_TC0480SCPInUse) TC0480SCPExit();
 	if (TaitoIC_TC0510NIOInUse) TC0510NIOExit();
-	if (TaitoIC_TC0640FIOInUse) TC0640FIOExit();	
+	if (TaitoIC_TC0640FIOInUse) TC0640FIOExit();
+
+	if (cchip_active) cchip_exit();
 	
 	TaitoIC_SupermanCChipInUse = 0;
 	TaitoIC_MegabCChipInUse = 0;
@@ -119,6 +123,8 @@ void TaitoICScan(INT32 nAction)
 	if (TaitoIC_TC0480SCPInUse) TC0480SCPScan(nAction);
 	if (TaitoIC_TC0510NIOInUse) TC0510NIOScan(nAction);
 	if (TaitoIC_TC0640FIOInUse) TC0640FIOScan(nAction);
+
+	if (cchip_active) cchip_scan(nAction);
 
 	if (nAction & ACB_DRIVER_DATA) {
 		SCAN_VAR(TaitoWatchdog);

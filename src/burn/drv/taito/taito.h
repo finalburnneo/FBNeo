@@ -101,6 +101,8 @@ extern INT32 TaitoDoReset();
 #define TAITO_ES5505_BYTESWAP		31
 #define TAITO_DEFAULT_EEPROM		32
 #define TAITO_CHARS_BYTESWAP32		33
+#define TAITO_CCHIP_BIOS        34
+#define TAITO_CCHIP_EEPROM      35
 
 extern UINT8 *Taito68KRom1;
 extern UINT8 *Taito68KRom2;
@@ -119,6 +121,8 @@ extern UINT8 *TaitoMSM5205Rom;
 extern UINT8 *TaitoMSM6295Rom;
 extern UINT8 *TaitoES5505Rom;
 extern UINT8 *TaitoDefaultEEProm;
+extern UINT8 *cchip_rom;
+extern UINT8 *cchip_eeprom;
 
 extern UINT32 Taito68KRom1Num;
 extern UINT32 Taito68KRom2Num;
@@ -138,6 +142,8 @@ extern UINT32 TaitoMSM5205RomNum;
 extern UINT32 TaitoMSM6295RomNum;
 extern UINT32 TaitoES5505RomNum;
 extern UINT32 TaitoDefaultEEPromNum;
+extern UINT32 TaitoCCHIPBIOSNum;
+extern UINT32 TaitoCCHIPEEPROMNum;
 
 extern UINT32 Taito68KRom1Size;
 extern UINT32 Taito68KRom2Size;
@@ -157,6 +163,8 @@ extern UINT32 TaitoMSM5205RomSize;
 extern UINT32 TaitoMSM6295RomSize;
 extern UINT32 TaitoES5505RomSize;
 extern UINT32 TaitoDefaultEEPromSize;
+extern UINT32 TaitoCCHIPBIOSSize;
+extern UINT32 TaitoCCHIPEEPROMSize;
 
 extern UINT32 TaitoCharModulo;
 extern UINT32 TaitoCharNumPlanes;

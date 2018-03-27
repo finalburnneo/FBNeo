@@ -989,7 +989,7 @@ static void upd7810_take_irq(void)
 		IFF = 0;
 		PSW &= ~(SK|L0|L1);
 		PC = vector;
-		change_pc( PCD );
+		//change_pc( PCD );
 	}
 }
 
@@ -1959,7 +1959,6 @@ INT32 upd7810Run(INT32 cycles)
 
 	INT32 ret = cycles - upd7810_icount;
 
-	upd7810_total_cycles = 0;
 	upd7810_current_cycles = 0;
 	upd7810_icount = 0;
 
@@ -1968,7 +1967,7 @@ INT32 upd7810Run(INT32 cycles)
 
 INT32 upd7810TotalCycles()
 {
-	return upd7810_total_cycles; // + (upd7810_current_cycles - upd7810_icount);
+	return upd7810_total_cycles + (upd7810_current_cycles - upd7810_icount);
 }
 
 void upd7810NewFrame()

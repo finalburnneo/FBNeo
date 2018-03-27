@@ -571,7 +571,7 @@ INT32 TaitoLoadRoms(INT32 bLoad)
 			
 			Offset = 0;
 			i = Taito68KRom1Num + Taito68KRom2Num + Taito68KRom3Num + TaitoZ80Rom1Num + TaitoZ80Rom2Num + TaitoCharRomNum + TaitoCharBRomNum;
-			
+
 			while (i < Taito68KRom1Num + Taito68KRom2Num + Taito68KRom3Num + TaitoZ80Rom1Num + TaitoZ80Rom2Num + TaitoCharRomNum + TaitoCharBRomNum + TaitoSpriteARomNum) {
 				BurnDrvGetRomInfo(&ri, i + 0);
 				

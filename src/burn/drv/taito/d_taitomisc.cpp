@@ -225,7 +225,7 @@ static struct BurnInputInfo VolfiedInputList[] =
 	
 	{"P2 Up"             , BIT_DIGITAL   , TaitoInputPort3 + 1, "p2 up"     },
 	{"P2 Down"           , BIT_DIGITAL   , TaitoInputPort3 + 2, "p2 down"   },
-	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 3, "p2 left"   },
+	{"P2 Left"           , BIT_DIGITAL   , TaitoInputPort3 + 7, "p2 left"   },
 	{"P2 Right"          , BIT_DIGITAL   , TaitoInputPort3 + 4, "p2 right"  },
 	{"P2 Fire 1"         , BIT_DIGITAL   , TaitoInputPort3 + 5, "p2 fire 1" },
 	
@@ -528,6 +528,8 @@ static void VolfiedMakeInputs()
 	if (TaitoInputPort3[5]) TaitoInput[3] -= 0x20;
 	if (TaitoInputPort3[6]) TaitoInput[3] -= 0x40;
 	if (TaitoInputPort3[7]) TaitoInput[3] -= 0x80;
+
+	cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);
 }
 
 static struct BurnDIPInfo DariusDIPList[]=
@@ -2326,14 +2328,14 @@ static struct BurnRomInfo VolfiedRomDesc[] = {
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "cchip_c04-23",  0x02000, 0x46b0b479, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
-	
-	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Volfied)
+STDROMPICKEXT(Volfied, Volfied, cchip)
 STD_ROM_FN(Volfied)
 
 static struct BurnRomInfo VolfiedjRomDesc[] = {
@@ -2356,14 +2358,14 @@ static struct BurnRomInfo VolfiedjRomDesc[] = {
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "cchip_c04-23",  0x02000, 0x46b0b479, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
-	
-	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Volfiedj)
+STDROMPICKEXT(Volfiedj, Volfiedj, cchip)
 STD_ROM_FN(Volfiedj)
 
 static struct BurnRomInfo VolfiedjoRomDesc[] = {
@@ -2386,14 +2388,14 @@ static struct BurnRomInfo VolfiedjoRomDesc[] = {
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "cchip_c04-23",  0x02000, 0x46b0b479, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
-	
-	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Volfiedjo)
+STDROMPICKEXT(Volfiedjo, Volfiedjo, cchip)
 STD_ROM_FN(Volfiedjo)
 
 static struct BurnRomInfo VolfieduRomDesc[] = {
@@ -2416,14 +2418,14 @@ static struct BurnRomInfo VolfieduRomDesc[] = {
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-10.15",     0x10000, 0x429b6b49, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
 	{ "c04-09.14",     0x10000, 0xc78cf057, BRF_GRA | TAITO_SPRITESA_BYTESWAP },
+
+	{ "cchip_c04-23",  0x02000, 0x46b0b479, BRF_ESS | BRF_PRG | TAITO_CCHIP_EEPROM },
 	
 	{ "c04-4-1.3",     0x00200, 0xab9fae65, BRF_OPT },
 	{ "c04-5.75",      0x00200, 0x2763ec89, BRF_OPT },
-	
-	{ "cchip_c04-23",  0x02000, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
-STD_ROM_PICK(Volfiedu)
+STDROMPICKEXT(Volfiedu, Volfiedu, cchip)
 STD_ROM_FN(Volfiedu)
 
 static int MemIndex()
@@ -3431,10 +3433,7 @@ void __fastcall Topspeed68K2WriteWord(UINT32 a, UINT16 d)
 
 UINT8 __fastcall Volfied68KReadByte(UINT32 a)
 {
-	if (a >= 0xf00000 && a <= 0xf007ff) {
-		INT32 Offset = (a - 0xf00000) >> 1;
-		return VolfiedCChipRamRead(Offset);
-	}
+	CCHIP_READ(0xf00000)
 	
 	switch (a) {
 		case 0xd00001: {
@@ -3443,10 +3442,6 @@ UINT8 __fastcall Volfied68KReadByte(UINT32 a)
 		
 		case 0xe00003: {
 			return TC0140SYTCommRead();
-		}
-		
-		case 0xf00803: {
-			return VolfiedCChipCtrlRead() & 0xff;
 		}
 		
 		default: {
@@ -3471,11 +3466,7 @@ void __fastcall Volfied68KWriteByte(UINT32 a, UINT8 d)
 		return;
 	}
 	
-	if (a >= 0xf00000 && a <= 0xf007ff) {
-		INT32 Offset = (a - 0xf00000) >> 1;
-		VolfiedCChipRamWrite(Offset, d);
-		return;
-	}
+	CCHIP_WRITE(0xf00000)
 	
 	switch (a) {
 		case 0x700001: {
@@ -3488,16 +3479,6 @@ void __fastcall Volfied68KWriteByte(UINT32 a, UINT8 d)
 			return;
 		}
 		
-		case 0xf00803: {
-			// cchip ctrl write - ignored
-			return;
-		}
-		
-		case 0xf00c01: {
-			VolfiedCChipBankWrite(d);
-			return;
-		}
-		
 		default: {
 			bprintf(PRINT_NORMAL, _T("68K Write byte => %06X, %02X\n"), a, d);
 		}
@@ -3506,11 +3487,8 @@ void __fastcall Volfied68KWriteByte(UINT32 a, UINT8 d)
 
 UINT16 __fastcall Volfied68KReadWord(UINT32 a)
 {
-	if (a >= 0xf00000 && a <= 0xf007ff) {
-		INT32 Offset = (a - 0xf00000) >> 1;
-		return VolfiedCChipRamRead(Offset);
-	}
-	
+	CCHIP_READ(0xf00000)
+
 	switch (a) {
 		case 0xd00000: {
 			return 0x60;
@@ -3537,11 +3515,7 @@ void __fastcall Volfied68KWriteWord(UINT32 a, UINT16 d)
 		return;
 	}
 
-	if (a >= 0xf00000 && a <= 0xf007ff) {
-		INT32 Offset = (a - 0xf00000) >> 1;
-		VolfiedCChipRamWrite(Offset, d & 0xff);
-		return;
-	}
+	CCHIP_WRITE(0xf00000)
 
 	switch (a) {
 		case 0x600000: {
@@ -3561,11 +3535,6 @@ void __fastcall Volfied68KWriteWord(UINT32 a, UINT16 d)
 		
 		case 0xe00002: {
 			TC0140SYTCommWrite(d & 0xff);
-			return;
-		}
-		
-		case 0xf00c00: {
-			VolfiedCChipBankWrite(d);
 			return;
 		}
 		
@@ -5353,7 +5322,7 @@ static INT32 VolfiedInit()
 	nTaitoCyclesTotal[0] = 8000000 / 60;
 	nTaitoCyclesTotal[1] = 4000000 / 60;
 	
-	VolfiedCChipInit();
+	cchip_init();
 
 	// Reset the driver
 	TaitoResetFunction = VolfiedDoReset;
@@ -6086,6 +6055,11 @@ static INT32 JumpingFrame()
 		ZetOpen(0);
 		BurnTimerUpdate(i * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
+
+		if (cchip_active) { // volfied
+			cchip_run(12000000 / 60 / nInterleave);
+			if (i == 9) cchip_interrupt();
+		}
 	}
 	
 	ZetOpen(0);
@@ -6542,7 +6516,7 @@ struct BurnDriver BurnDrvFullthrl = {
 };
 
 struct BurnDriver BurnDrvVolfied = {
-	"volfied", NULL, NULL, NULL, "1989",
+	"volfied", NULL, "cchip", NULL, "1989",
 	"Volfied (World, revision 1)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
@@ -6552,7 +6526,7 @@ struct BurnDriver BurnDrvVolfied = {
 };
 
 struct BurnDriver BurnDrvVolfiedj = {
-	"volfiedj", "volfied", NULL, NULL, "1989",
+	"volfiedj", "volfied", "cchip", NULL, "1989",
 	"Volfied (Japan, revision 1)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
@@ -6562,7 +6536,7 @@ struct BurnDriver BurnDrvVolfiedj = {
 };
 
 struct BurnDriver BurnDrvVolfiedjo = {
-	"volfiedjo", "volfied", NULL, NULL, "1989",
+	"volfiedjo", "volfied", "cchip", NULL, "1989",
 	"Volfied (Japan)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
@@ -6572,7 +6546,7 @@ struct BurnDriver BurnDrvVolfiedjo = {
 };
 
 struct BurnDriver BurnDrvVolfiedu = {
-	"volfiedu", "volfied", NULL, NULL, "1989",
+	"volfiedu", "volfied", "cchip", NULL, "1989",
 	"Volfied (US, revision 1)\0", NULL, "Taito America Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,

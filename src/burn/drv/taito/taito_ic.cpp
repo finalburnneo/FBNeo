@@ -26,11 +26,11 @@ INT32 TaitoWatchdog;
 
 void TaitoICReset()
 {
-	if (TaitoIC_SupermanCChipInUse) SupermanCChipReset();
+	//if (TaitoIC_SupermanCChipInUse) SupermanCChipReset();
 	if (TaitoIC_MegabCChipInUse) MegabCChipReset();
-	if (TaitoIC_RainbowCChipInUse) RainbowCChipReset();
+	//if (TaitoIC_RainbowCChipInUse) RainbowCChipReset();
 	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipReset();
-	if (TaitoIC_VolfiedCChipInUse) VolfiedCChipReset();
+	//if (TaitoIC_VolfiedCChipInUse) VolfiedCChipReset();
 
 	if (TaitoIC_PC080SNInUse) PC080SNReset();
 	if (TaitoIC_PC090OJInUse) PC090OJReset();
@@ -54,11 +54,11 @@ void TaitoICReset()
 
 void TaitoICExit()
 {
-	if (TaitoIC_SupermanCChipInUse) SupermanCChipExit();
+	//if (TaitoIC_SupermanCChipInUse) SupermanCChipExit();
 	if (TaitoIC_MegabCChipInUse) MegabCChipExit();
-	if (TaitoIC_RainbowCChipInUse) RainbowCChipExit();
+	//if (TaitoIC_RainbowCChipInUse) RainbowCChipExit();
 	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipExit();
-	if (TaitoIC_VolfiedCChipInUse) VolfiedCChipExit();
+	//if (TaitoIC_VolfiedCChipInUse) VolfiedCChipExit();
 
 	if (TaitoIC_PC080SNInUse) PC080SNExit();
 	if (TaitoIC_PC090OJInUse) PC090OJExit();
@@ -103,11 +103,11 @@ void TaitoICExit()
 
 void TaitoICScan(INT32 nAction)
 {
-	if (TaitoIC_SupermanCChipInUse) SupermanCChipScan(nAction);
+	//if (TaitoIC_SupermanCChipInUse) SupermanCChipScan(nAction);
 	if (TaitoIC_MegabCChipInUse) MegabCChipScan(nAction);
-	if (TaitoIC_RainbowCChipInUse) RainbowCChipScan(nAction);
+	//if (TaitoIC_RainbowCChipInUse) RainbowCChipScan(nAction);
 	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipScan(nAction);
-	if (TaitoIC_VolfiedCChipInUse) VolfiedCChipScan(nAction);
+	//if (TaitoIC_VolfiedCChipInUse) VolfiedCChipScan(nAction);
 
 	if (TaitoIC_PC080SNInUse) PC080SNScan(nAction);
 	if (TaitoIC_PC090OJInUse) PC090OJScan(nAction);

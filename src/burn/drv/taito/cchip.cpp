@@ -6,6 +6,7 @@
 
 static UINT8 CurrentBank;
 
+#if 0
 // Superman C-Chip
 static UINT8 SupermanPort = 0;
 
@@ -104,6 +105,7 @@ void SupermanCChipScan(INT32 nAction)
 		SCAN_VAR(SupermanPort);
 	}
 }
+#endif
 
 // Mega Blast
 
@@ -154,6 +156,7 @@ void MegabCChipScan(INT32 nAction)
 	}
 }
 
+#if 0
 // Rainbow Islands C-Chip
 
 static UINT8 *CRAM[8];
@@ -927,6 +930,7 @@ void RainbowCChipScan(INT32 nAction)
 		BurnRandomScan(nAction);
 	}
 }
+#endif
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -2271,6 +2275,7 @@ void BonzeCChipScan(INT32 nAction)
 }
 #endif
 
+#if 0
 /*************************************************************************
 
   Volfied C-Chip Protection
@@ -2683,8 +2688,9 @@ void VolfiedCChipRamWrite(INT32 offset, UINT8 data)
 		}
 	}
 }
+#endif
 
-
+#if 0
 /*************************************
  *
  * Reads from C-Chip
@@ -2794,3 +2800,4 @@ void VolfiedCChipScan(INT32 nAction)
 		SCAN_VAR(volfied_current_cmd);
 	}
 }
+#endif

@@ -887,13 +887,7 @@ UINT16 __fastcall eto_read_word(UINT32 a)
 
 void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
 {
-	if (a >= (0x800000) && a <= (0x8007ff)) {
-		cchip_68k_write((a & 0x7ff) >> 1, d);
-		return;
-	}
-	if (a >= (0x800800) && a <= (0x800fff)) {
-		cchip_asic_write68k((a & 0x7ff) >> 1, d);
-	}
+	CCHIP_WRITE(0x800000)
 
 	TC0100SCN0ByteWrite_Map(0xc00000, 0xc0ffff)
 	
@@ -917,13 +911,7 @@ void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
 
 void __fastcall bonze_write_word(UINT32 a, UINT16 d)
 {
-	if (a >= (0x800000) && a <= (0x8007ff)) {
-		cchip_68k_write((a & 0x7ff) >> 1, d);
-		return;
-	}
-	if (a >= (0x800800) && a <= (0x800fff)) {
-		cchip_asic_write68k((a & 0x7ff) >> 1, d);
-	}
+	CCHIP_WRITE(0x800000)
 
 	TC0100SCN0WordWrite_Map(0xc00000, 0xc0ffff)
 	TC0100SCN0CtrlWordWrite_Map(0xc20000)
@@ -946,11 +934,7 @@ void __fastcall bonze_write_word(UINT32 a, UINT16 d)
 
 UINT8 __fastcall bonze_read_byte(UINT32 a)
 {
-	if (a >= (0x800000) && a <= (0x8007ff))
-		return cchip_68k_read((a & 0x7ff) >> 1);
-
-	if (a >= (0x800800) && a <= (0x800fff))
-		return cchip_asic_read((a & 0x7ff) >> 1);
+	CCHIP_READ(0x800000)
 
 	switch (a)
 	{
@@ -964,17 +948,12 @@ UINT8 __fastcall bonze_read_byte(UINT32 a)
 			return TaitoDip[1];
 	}
 
-	bprintf(0, _T("rb.%X <------------------"), a);
 	return 0;
 }
 
 UINT16 __fastcall bonze_read_word(UINT32 a)
 {
-	if (a >= (0x800000) && a <= (0x8007ff))
-		return cchip_68k_read((a & 0x7ff) >> 1);
-
-	if (a >= (0x800800) && a <= (0x800fff))
-		return cchip_asic_read((a & 0x7ff) >> 1);
+	CCHIP_READ(0x800000)
 
 	if ((a & 0xffffff0) == 0xc20000) return TC0100SCNCtrl[0][(a & 0x0f)/2];
 
@@ -992,7 +971,6 @@ UINT16 __fastcall bonze_read_word(UINT32 a)
 		case 0x3d0000:
 			return 0; // nop
 	}
-	bprintf(0, _T("rw.%X <------------------"), a);
 
 	return 0;
 }
@@ -1522,9 +1500,6 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 	return 0;
 }
 
-void cchip_dumptakedisinhibitorendofframe();
-
-extern int counter;
 static INT32 BonzeFrame()
 {
 	TaitoWatchdog++;
@@ -1560,17 +1535,16 @@ static INT32 BonzeFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(((nCyclesTotal[0] / nInterleave) * (i + 1)) - nCyclesDone[0]);
+		nCyclesDone[0] += SekRun(((nCyclesTotal[0] * (i + 1)) / nInterleave) - nCyclesDone[0]);
 		if (i == 248) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		BurnTimerUpdate((nCyclesTotal[1] / nInterleave) * (i + 1));
+		BurnTimerUpdate((nCyclesTotal[1] * (i + 1)) / nInterleave);
 
 		if (cchip_active) {
-			nCyclesDone[2] += cchip_run(((nCyclesTotal[2] / nInterleave) * (i + 1)) - nCyclesDone[2]);
+			nCyclesDone[2] += cchip_run(((nCyclesTotal[2] * (i + 1)) / nInterleave) - nCyclesDone[2]);
 			if (i == 248) cchip_interrupt();
 		}
 	}
-	if (counter) cchip_dumptakedisinhibitorendofframe();
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 
@@ -1580,11 +1554,11 @@ static INT32 BonzeFrame()
 
 	ZetClose();
 	SekClose();
-	
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
-	
+
 	return 0;
 }
 

@@ -6,6 +6,7 @@
 #include "taito.h"
 #include "upd7810_intf.h"
 #include "bitswap.h"
+#include "m68000_intf.h"
 
 static INT32 bank;
 static INT32 bank68k;
@@ -70,7 +71,7 @@ void cchip_asic_write68k(UINT32 offset, UINT16 data)
 		bank68k = data & 7;
 	}
 	else
-		asic_ram[offset & 3] = data;
+		asic_ram[offset & 3] = data & 0xff;
 }
 
 static UINT8 upd7810_read_port(UINT8 port)
@@ -116,7 +117,7 @@ static UINT8 upd7810_read(UINT16 address)
 	if (address >= 0x1400 && address <= 0x17ff) {
 		return cchip_asic_read(address & 0x3ff);
 	}
-	//bprintf (0, _T("cchip_r: %4.4x\n"), address);
+	bprintf (0, _T("BAD cchip_r: %4.4x\n"), address);
 
 	return 0;
 }
@@ -124,24 +125,58 @@ static UINT8 upd7810_read(UINT16 address)
 static void upd7810_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x1000 && address <= 0x13ff) {
+		//if (!bank && (address&0x3ff) == 0x0e)
+		//	bprintf(0, _T("--- uPD write to 0x000e: %X.\n"), data);
 		cchip_ram[(bank * 0x400) + (address & 0x3ff)] = data;
+		return;
 	}
 
 	if (address >= 0x1400 && address <= 0x17ff) {
 		cchip_asic_write(address & 0x3ff, data);
+		return;
 	}
-	//bprintf (0, _T("cchip_w: %4.4x, %2.2x\n"), address, data);
+	bprintf (0, _T("BAD cchip_w: %4.4x, %2.2x\n"), address, data);
+}
+
+static void cchip_sync()
+{
+	INT32 cyc = ((SekTotalCycles() * 12) / 8) - upd7810TotalCycles();
+	if (cyc > 0) {
+		cchip_run(cyc);
+		//bprintf(0, _T("uPD sync %d <----.\n"), cyc);
+	}
 }
 
 void cchip_68k_write(UINT16 address, UINT8 data)
 {
+	//bprintf(0, _T("cc_68k_w cyc %d (sek %d): %X  data  %X.\n"), upd7810TotalCycles(), SekTotalCycles(), address, data);
+	cchip_sync();
 	cchip_ram[(bank68k * 0x400) + (address & 0x3ff)] = data;
 }
 
 UINT8 cchip_68k_read(UINT16 address)
 {
+	//bprintf(0, _T("cc_68k_r cyc %d (sek %d): %X.\n"), upd7810TotalCycles(), SekTotalCycles(), address);
+	cchip_sync();
 	return cchip_ram[(bank68k * 0x400) + (address & 0x3ff)];
 }
+
+void cchip_dumptakedisinhibitorendofframe()
+{
+	bprintf(0, _T("0x0000: "));
+	for (INT32 rc = 0; rc < 16; rc++)
+		bprintf(0, _T("%02X, "), cchip_ram[rc]);
+
+	bprintf(0, _T("\n0x0010: "));
+	for (INT32 rc = 0; rc < 16; rc++)
+		bprintf(0, _T("%02X, "), cchip_ram[rc+0x10]);
+
+	bprintf(0, _T("\n0x0020: "));
+	for (INT32 rc = 0; rc < 16; rc++)
+		bprintf(0, _T("%02X, "), cchip_ram[rc+0x20]);
+	bprintf(0, _T("\n\n"));
+}
+
 
 static UINT8 cchip_an0_read() {	return BIT(portadc, 0); }
 static UINT8 cchip_an1_read() {	return BIT(portadc, 1); }
@@ -205,7 +240,8 @@ INT32 cchip_scan(INT32 nAction)
 	if (nAction & ACB_VOLATILE)	{
 		upd7810Scan(nAction);
 
-		ScanVar(cchip_updram, 0x100, "cchip_updram");
+		ScanVar(cchip_updram,   0x100,  "cchip_updram");
+		ScanVar(cchip_ram,      0x2000, "cchip_bankram");
 		SCAN_VAR(bank);
 		SCAN_VAR(bank68k);
 		SCAN_VAR(asic_ram);

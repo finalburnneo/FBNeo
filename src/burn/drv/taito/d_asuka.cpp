@@ -525,7 +525,7 @@ STDDIPINFO(Earthjkr)
 static struct BurnDIPInfo BonzeadvDIPList[]=
 {
 	{0x13, 0xff, 0xff, 0xfe, NULL			},
-	{0x14, 0xff, 0xff, 0xbc, NULL			},
+	{0x14, 0xff, 0xff, 0xbf, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"		},
 	{0x13, 0x01, 0x01, 0x00, "Upright"		},
@@ -554,6 +554,12 @@ static struct BurnDIPInfo BonzeadvDIPList[]=
 	{0x13, 0x01, 0xc0, 0x80, "1 Coin  3 Credits"	},
 	{0x13, 0x01, 0xc0, 0x40, "1 Coin  4 Credits"	},
 	{0x13, 0x01, 0xc0, 0x00, "1 Coin  6 Credits"	},
+
+	{0   , 0xfe, 0   ,    4, "Difficulty"		},
+	{0x14, 0x01, 0x03, 0x02, "Easy"			},
+	{0x14, 0x01, 0x03, 0x03, "Medium"		},
+	{0x14, 0x01, 0x03, 0x01, "Hard"			},
+	{0x14, 0x01, 0x03, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    4, "Bonus Life"		},
 	{0x14, 0x01, 0x0c, 0x08, "40k 100k"		},
@@ -950,8 +956,15 @@ UINT8 __fastcall bonze_read_byte(UINT32 a)
 	{
 		case 0x3e0003:
 			return TC0140SYTCommRead();
+
+		case 0x390001:
+			return TaitoDip[0];
+
+		case 0x3b0001:
+			return TaitoDip[1];
 	}
 
+	bprintf(0, _T("rb.%X <------------------"), a);
 	return 0;
 }
 
@@ -979,6 +992,7 @@ UINT16 __fastcall bonze_read_word(UINT32 a)
 		case 0x3d0000:
 			return 0; // nop
 	}
+	bprintf(0, _T("rw.%X <------------------"), a);
 
 	return 0;
 }
@@ -1508,6 +1522,9 @@ static INT32 EtoFrame() // Using for asuka too, but needs msm5205
 	return 0;
 }
 
+void cchip_dumptakedisinhibitorendofframe();
+
+extern int counter;
 static INT32 BonzeFrame()
 {
 	TaitoWatchdog++;
@@ -1517,6 +1534,7 @@ static INT32 BonzeFrame()
 
 	{
 		memset (TaitoInput, 0xff, 4);
+		TaitoInput[0] = 0x80 + 0x20 + 0x40;
 		TaitoInput[1] = 0;
 
 		for (INT32 i = 0; i < 8; i++) {
@@ -1552,6 +1570,7 @@ static INT32 BonzeFrame()
 			if (i == 248) cchip_interrupt();
 		}
 	}
+	if (counter) cchip_dumptakedisinhibitorendofframe();
 
 	BurnTimerEndFrame(nCyclesTotal[1]);
 

@@ -7,26 +7,24 @@
 
 void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags)
 {
-	// Fixed Apr. 26, 2016: Limitation: this only works on the first 4 bits - active high to start with
-	// Note: only works on the first 4 or last 4 bits for udlr - active high to start with
 	// grep ProcessJoystick in drv/pre90s for examples
 
 	static INT32 fourway[4]      = { 0, 0, 0, 0 }; // 4-way buffer
 	static UINT8 DrvInputPrev[4] = { 0, 0, 0, 0 }; // 4-way buffer
 
-	UINT8 mask1 = (up_bit > 3) ? 0xf0 : 0xf;
-	UINT8 mask2 = (up_bit > 3) ? 0xf : 0xf0;
-
 	UINT8 ud = (1 << up_bit) | (1 << down_bit);
 	UINT8 rl = (1 << right_bit) | (1 << left_bit);
+
+	UINT8 udrlmask = ud | rl; // bitmask to process
+	UINT8 othermask = udrlmask ^ 0xff; // bitmask to preserve (invert of udrlmask)
 
 	if (flags & INPUT_4WAY) {
 		playernum &= 3; // just incase.
 		if(*input != DrvInputPrev[playernum]) {
-			fourway[playernum] = *input & mask1; //0xf;
+			fourway[playernum] = *input & udrlmask;
 
 			if((fourway[playernum] & rl) && (fourway[playernum] & ud))
-				fourway[playernum] ^= (fourway[playernum] & (DrvInputPrev[playernum] & 0xf));
+				fourway[playernum] ^= (fourway[playernum] & (DrvInputPrev[playernum] & udrlmask));
 
 			if((fourway[playernum] & rl) && (fourway[playernum] & ud)) // if it starts out diagonally, pick a direction
 				fourway[playernum] &= (rand()&1) ? rl : ud;
@@ -34,7 +32,7 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 
 		DrvInputPrev[playernum] = *input;
 
-		*input = fourway[playernum] | (DrvInputPrev[playernum] & mask2);//0xf0); // preserve the unprocessed/other bits
+		*input = fourway[playernum] | (DrvInputPrev[playernum] & othermask); // preserve the unprocessed/other bits
 	}
 
 	if (flags & INPUT_CLEAROPPOSITES) {

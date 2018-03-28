@@ -10,7 +10,6 @@
 // unfortunatly memory configuration differs with internal rom size
 typedef enum {
 	TYPE_7810,
-	TYPE_7810_GAMEMASTER, // a few modifications until internal rom dumped
 	TYPE_7807
 //  TYPE_78C10, // stop instruction added
 //  TYPE_78IV,

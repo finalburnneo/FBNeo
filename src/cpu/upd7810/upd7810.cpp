@@ -872,6 +872,7 @@ static void upd7810_take_irq(void)
 {
 	UINT16 vector = 0;
 	int irqline = 0;
+
 	/* global interrupt disable? */
 	if (0 == IFF)
 		return;
@@ -885,31 +886,17 @@ static void upd7810_take_irq(void)
 		IRR &= ~INTNMI;
 	}
 	else
-	if ((IRR & INTFT0)	&& 0 == (MKL & 0x02))
+	if ((IRR & INTFT0)  && 0 == (MKL & 0x02))
 	{
-	    switch (upd7810_config_type)
-		{
-			case TYPE_7810_GAMEMASTER:
-				vector = 0xff2a;
-				break;
-			default:
-				vector = 0x0008;
-		}
-	    if (!((IRR & INTFT1)	&& 0 == (MKL & 0x04)))
+		vector = 0x0008;
+		if (!((IRR & INTFT1)    && 0 == (MKL & 0x04)))
 		IRR&=~INTFT0;
 	}
 	else
-	if ((IRR & INTFT1)	&& 0 == (MKL & 0x04))
+	if ((IRR & INTFT1)  && 0 == (MKL & 0x04))
 	{
-	    switch (upd7810_config_type)
-		{
-			case TYPE_7810_GAMEMASTER:
-				vector = 0xff2a;
-				break;
-			default:
-				vector = 0x0008;
-		}
-	    IRR&=~INTFT1;
+		vector = 0x0008;
+		IRR&=~INTFT1;
 	}
 	else
 	if ((IRR & INTF1)	&& 0 == (MKL & 0x08))
@@ -927,31 +914,17 @@ static void upd7810_take_irq(void)
 		IRR&=~INTF2;
 	}
 	else
-	if ((IRR & INTFE0)	&& 0 == (MKL & 0x20))
+	if ((IRR & INTFE0)  && 0 == (MKL & 0x20))
 	{
-	    switch (upd7810_config_type)
-		{
-			case TYPE_7810_GAMEMASTER:
-				vector = 0xff2d;
-				break;
-			default:
-				vector = 0x0018;
-		}
-	    if (!((IRR & INTFE1)	&& 0 == (MKL & 0x40)))
+		vector = 0x0018;
+		if (!((IRR & INTFE1)    && 0 == (MKL & 0x40)))
 		IRR&=~INTFE0;
 	}
 	else
-	if ((IRR & INTFE1)	&& 0 == (MKL & 0x40))
+	if ((IRR & INTFE1)  && 0 == (MKL & 0x40))
 	{
-	    switch (upd7810_config_type)
-		{
-		    case TYPE_7810_GAMEMASTER:
-				vector = 0xff2d;
-				break;
-		    default:
-				vector = 0x0018;
-		}
-	    IRR&=~INTFE1;
+		vector = 0x0018;
+		IRR&=~INTFE1;
 	}
 	else
 	if ((IRR & INTFEIN) && 0 == (MKL & 0x80))
@@ -975,6 +948,7 @@ static void upd7810_take_irq(void)
 		vector = 0x0028;
 	   	IRR&=~INTFST;
 	}
+
 	if (vector)
 	{
 		/* acknowledge external IRQ */
@@ -989,7 +963,6 @@ static void upd7810_take_irq(void)
 		IFF = 0;
 		PSW &= ~(SK|L0|L1);
 		PC = vector;
-		//change_pc( PCD );
 	}
 }
 
@@ -1830,22 +1803,13 @@ void upd7807Init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 void upd7810Reset()
 {
 	memset(&upd7810, 0, sizeof(upd7810));
-	ETMM = 0xff;
-	TMM = 0xff;
 	MA = 0xff;
 	MB = 0xff;
-	switch (upd7810_config_type)
-	{
-		case TYPE_7810_GAMEMASTER:
-		    // needed for lcd screen/ram selection; might be internal in cpu and therefor not needed; 0x10 written in some games
-			MC = 0xff&~0x7;
-			WP( UPD7810_PORTC, 1 ); //hyper space
-			PCD=0x8000;
-			break;
-		default:
-			MC = 0xff;
-	}
+	MC = 0xff;
+
 	MF = 0xff;
+	TMM = 0xff;
+	ETMM = 0xff;
 	// gamemaster falling block "and"s to enable interrupts
 	MKL = 0xff;
 	MKH = 0xff; //?
@@ -1937,7 +1901,7 @@ INT32 upd7810Run(INT32 cycles)
 
 			PSW &= ~SK;
 			upd7810_timers( cc );
-			change_pc( PCD );
+			//change_pc( PCD );
 		}
 		else
 		{

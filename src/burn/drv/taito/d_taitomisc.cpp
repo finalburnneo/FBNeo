@@ -2997,16 +2997,6 @@ void __fastcall Rbisland68KWriteByte(UINT32 a, UINT8 d)
 			TC0140SYTCommWrite(d);
 			return;
 		}
-		
-		case 0x800803: {
-			RainbowCChipCtrlWrite(d);
-			return;
-		}
-		
-		case 0x800c01: {
-			RainbowCChipBankWrite(d);
-			return;
-		}
 	}
 }
 

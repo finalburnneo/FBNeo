@@ -634,13 +634,13 @@ STDDIPINFO(Jigkmgri)
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-void __fastcall cadash_write_byte(UINT32 a, UINT8 d)
+static void __fastcall cadash_write_byte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x900000)
 	TC0100SCN0ByteWrite_Map(0xc00000, 0xc0ffff)
 }
 
-void __fastcall cadash_write_word(UINT32 a, UINT16 d)
+static void __fastcall cadash_write_word(UINT32 a, UINT16 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x900000)
 	TC0100SCN0WordWrite_Map(0xc00000, 0xc0ffff)
@@ -671,14 +671,14 @@ void __fastcall cadash_write_word(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall cadash_read_byte(UINT32 a)
+static UINT8 __fastcall cadash_read_byte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x900000)
 
 	return 0;
 }
 
-UINT16 __fastcall cadash_read_word(UINT32 a)
+static UINT16 __fastcall cadash_read_word(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x900000)
 	if ((a & 0xffffff0) == 0xc20000) return TC0100SCNCtrl[0][(a & 0x0f)/2];
@@ -697,7 +697,7 @@ UINT16 __fastcall cadash_read_word(UINT32 a)
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-void __fastcall asuka_write_byte(UINT32 a, UINT8 d)
+static void __fastcall asuka_write_byte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x400000)
 	TC0100SCN0ByteWrite_Map(0xc00000, 0xc0ffff)
@@ -721,7 +721,7 @@ void __fastcall asuka_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall asuka_write_word(UINT32 a, UINT16 d)
+static void __fastcall asuka_write_word(UINT32 a, UINT16 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x400000)
 	TC0100SCN0WordWrite_Map(0xc00000, 0xc0ffff)
@@ -751,7 +751,7 @@ void __fastcall asuka_write_word(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall asuka_read_byte(UINT32 a)
+static UINT8 __fastcall asuka_read_byte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x400000)
 
@@ -765,7 +765,7 @@ UINT8 __fastcall asuka_read_byte(UINT32 a)
 	return 0;
 }
 
-UINT16 __fastcall asuka_read_word(UINT32 a)
+static UINT16 __fastcall asuka_read_word(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x400000)
 	if ((a & 0xffffff0) == 0xc20000) return TC0100SCNCtrl[0][(a & 0x0f)/2];
@@ -787,7 +787,7 @@ UINT16 __fastcall asuka_read_word(UINT32 a)
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-void __fastcall eto_write_byte(UINT32 a, UINT8 d)
+static void __fastcall eto_write_byte(UINT32 a, UINT8 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x300000)
 	TC0220IOCHalfWordWrite_Map(0x400000)
@@ -812,7 +812,7 @@ void __fastcall eto_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall eto_write_word(UINT32 a, UINT16 d)
+static void __fastcall eto_write_word(UINT32 a, UINT16 d)
 {
 	TC0220IOCHalfWordWrite_Map(0x300000)
 	TC0220IOCHalfWordWrite_Map(0x400000)
@@ -850,7 +850,7 @@ void __fastcall eto_write_word(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall eto_read_byte(UINT32 a)
+static UINT8 __fastcall eto_read_byte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x300000)
 	TC0220IOCHalfWordRead_Map(0x400000)
@@ -865,7 +865,7 @@ UINT8 __fastcall eto_read_byte(UINT32 a)
 	return 0;
 }
 
-UINT16 __fastcall eto_read_word(UINT32 a)
+static UINT16 __fastcall eto_read_word(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x300000)
 	TC0220IOCHalfWordRead_Map(0x400000)
@@ -885,7 +885,7 @@ UINT16 __fastcall eto_read_word(UINT32 a)
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
+static void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
 {
 	CCHIP_WRITE(0x800000)
 
@@ -909,7 +909,7 @@ void __fastcall bonze_write_byte(UINT32 a, UINT8 d)
 	}
 }
 
-void __fastcall bonze_write_word(UINT32 a, UINT16 d)
+static void __fastcall bonze_write_word(UINT32 a, UINT16 d)
 {
 	CCHIP_WRITE(0x800000)
 
@@ -932,7 +932,7 @@ void __fastcall bonze_write_word(UINT32 a, UINT16 d)
 	if ((a & 0xffffc00) == 0xc10000) return; // nop
 }
 
-UINT8 __fastcall bonze_read_byte(UINT32 a)
+static UINT8 __fastcall bonze_read_byte(UINT32 a)
 {
 	CCHIP_READ(0x800000)
 
@@ -951,7 +951,7 @@ UINT8 __fastcall bonze_read_byte(UINT32 a)
 	return 0;
 }
 
-UINT16 __fastcall bonze_read_word(UINT32 a)
+static UINT16 __fastcall bonze_read_word(UINT32 a)
 {
 	CCHIP_READ(0x800000)
 
@@ -977,7 +977,7 @@ UINT16 __fastcall bonze_read_word(UINT32 a)
 
 //--------------------------------------------------------------------------------------------------------------------------
 
-void __fastcall cadash_sound_write(UINT16 a, UINT8 d)
+static void __fastcall cadash_sound_write(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
@@ -1017,7 +1017,7 @@ void __fastcall cadash_sound_write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall cadash_sound_read(UINT16 a)
+static UINT8 __fastcall cadash_sound_read(UINT16 a)
 {
 	switch (a)
 	{
@@ -1043,7 +1043,7 @@ static void DrvSoundBankSwitch(UINT32, UINT32 bank)
 	ZetMapArea(0x4000, 0x7fff, 2, TaitoZ80Rom1 + TaitoZ80Bank * 0x4000);
 }
 
-void __fastcall bonze_sound_write(UINT16 a, UINT8 d)
+static void __fastcall bonze_sound_write(UINT16 a, UINT8 d)
 {
 	switch (a)
 	{
@@ -1068,7 +1068,7 @@ void __fastcall bonze_sound_write(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall bonze_sound_read(UINT16 a)
+static UINT8 __fastcall bonze_sound_read(UINT16 a)
 {
 	switch (a)
 	{

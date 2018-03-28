@@ -15,7 +15,7 @@ UINT8 *cchip_rom;
 UINT8 *cchip_eeprom;
 
 static UINT8 *cchip_ram; // 0x2000, 8 0x400 chunks. separate banking for 68k and uPD
-static UINT8 *cchip_updram; // 0x100
+static UINT8 *cchip_updram; // 0x100, internal uPD ram
 
 static INT32 bank;
 static INT32 bank68k;
@@ -56,7 +56,7 @@ UINT8 cchip_asic_read(UINT32 offset)
 	return 0x00;
 }
 
-void cchip_asic_write(UINT32 offset, UINT8 data)
+static void cchip_asic_write(UINT32 offset, UINT8 data)
 {
 	if (offset == 0x200)
 	{
@@ -74,6 +74,16 @@ void cchip_asic_write68k(UINT32 offset, UINT16 data)
 	}
 	else
 		asic_ram[offset & 3] = data & 0xff;
+}
+
+void cchip_68k_write(UINT16 address, UINT8 data)
+{
+	cchip_ram[(bank68k * 0x400) + (address & 0x3ff)] = data;
+}
+
+UINT8 cchip_68k_read(UINT16 address)
+{
+	return cchip_ram[(bank68k * 0x400) + (address & 0x3ff)];
 }
 
 static UINT8 upd7810_read_port(UINT8 port)
@@ -135,7 +145,7 @@ static void upd7810_write(UINT16 address, UINT8 data)
 }
 
 #if 0
-static void cchip_sync()
+static void cchip_sync() // probably not needed, saving just incase
 {
 	INT32 cyc = ((SekTotalCycles() * 12) / 8) - upd7810TotalCycles();
 	if (cyc > 0) {
@@ -143,16 +153,6 @@ static void cchip_sync()
 	}
 }
 #endif
-
-void cchip_68k_write(UINT16 address, UINT8 data)
-{
-	cchip_ram[(bank68k * 0x400) + (address & 0x3ff)] = data;
-}
-
-UINT8 cchip_68k_read(UINT16 address)
-{
-	return cchip_ram[(bank68k * 0x400) + (address & 0x3ff)];
-}
 
 #ifdef DEBUG_CCHIP
 void cchip_dumptakedisinhibitorendofframe()
@@ -187,9 +187,9 @@ void cchip_init()
 	cchip_updram = (UINT8 *)BurnMalloc(0x100);
 
 	upd7810Init(NULL);
-	upd7810MapMemory(cchip_rom,     0x0000, 0x0fff, MAP_ROM);
-	upd7810MapMemory(cchip_eeprom,  0x2000, 0x3fff, MAP_ROM);
-	upd7810MapMemory(cchip_updram,  0xff00, 0xffff, MAP_RAM);
+	upd7810MapMemory(cchip_rom,     0x0000, 0x0fff, MAP_ROM); // c-chip bios
+	upd7810MapMemory(cchip_eeprom,  0x2000, 0x3fff, MAP_ROM); // pre-game eeprom
+	upd7810MapMemory(cchip_updram,  0xff00, 0xffff, MAP_RAM); // internal uPD ram
 
 	upd7810SetReadPortHandler(upd7810_read_port);
 	upd7810SetWritePortHandler(upd7810_write_port);

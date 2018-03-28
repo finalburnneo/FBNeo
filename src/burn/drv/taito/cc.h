@@ -1,15 +1,16 @@
 // chip dip
-void cchip_interrupt();
-void cchip_loadports(UINT8 pa, UINT8 pb, UINT8 pc, UINT8 padc);
-INT32 cchip_run(INT32 cyc);
-void cchip_reset();
 UINT8 cchip_asic_read(UINT32 offset);
-void cchip_asic_write(UINT32 offset, UINT8 data);
-void cchip_asic_write68k(UINT32 offset, UINT16 data);
-void cchip_68k_write(UINT16 address, UINT8 data);
+void  cchip_asic_write68k(UINT32 offset, UINT16 data);
+void  cchip_68k_write(UINT16 address, UINT8 data);
 UINT8 cchip_68k_read(UINT16 address);
-void cchip_init();
-void cchip_exit();
+
+void  cchip_interrupt();
+void  cchip_loadports(UINT8 pa, UINT8 pb, UINT8 pc, UINT8 padc);
+
+void  cchip_init();
+void  cchip_exit();
+INT32 cchip_run(INT32 cyc);
+void  cchip_reset();
 INT32 cchip_scan(INT32 nAction);
 
 extern UINT8 *cchip_rom;

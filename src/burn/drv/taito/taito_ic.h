@@ -1,8 +1,5 @@
-extern INT32 TaitoIC_SupermanCChipInUse;
 extern INT32 TaitoIC_MegabCChipInUse;
-extern INT32 TaitoIC_RainbowCChipInUse;
 extern INT32 TaitoIC_OpwolfCChipInUse;
-extern INT32 TaitoIC_VolfiedCChipInUse;
 
 extern INT32 TaitoIC_PC080SNInUse;
 extern INT32 TaitoIC_PC090OJInUse;
@@ -29,33 +26,12 @@ void TaitoICScan(INT32 nAction);
 #include "cc.h"
 
 // Simulated C-Chip
-UINT16 SupermanCChipCtrlRead();
-UINT16 SupermanCChipRamRead(UINT32 Offset, UINT8 Input1, UINT8 Input2, UINT8 Input3);
-void SupermanCChipCtrlWrite();
-void SupermanCChipBankWrite(UINT16 Data);
-void SupermanCChipRamWrite(UINT32 Offset, UINT16 Data);
-void SupermanCChipReset();
-void SupermanCChipInit();
-void SupermanCChipExit();
-void SupermanCChipScan(INT32 nAction);
-
 UINT16 MegabCChipRead(UINT32 Offset);
 void MegabCChipWrite(UINT32 Offset, UINT16 Data);
 void MegabCChipReset();
 void MegabCChipInit();
 void MegabCChipExit();
 void MegabCChipScan(INT32 nAction);
-
-void RainbowCChipUpdate(UINT8 Input1, UINT8 Input2, UINT8 Input3, UINT8 Input4);
-UINT16 RainbowCChipCtrlRead();
-UINT16 RainbowCChipRamRead(UINT32 Offset);
-void RainbowCChipCtrlWrite(UINT16);
-void RainbowCChipBankWrite(UINT16 Data);
-void RainbowCChipRamWrite(UINT32 Offset, UINT16 Data);
-void RainbowCChipReset();
-void RainbowCChipInit(INT32 Version);
-void RainbowCChipExit();
-void RainbowCChipScan(INT32 nAction);
 
 void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2);
 UINT16 OpwolfCChipStatusRead();
@@ -67,21 +43,6 @@ void OpwolfCChipReset();
 void OpwolfCChipInit(INT32 Region);
 void OpwolfCChipExit();
 void OpwolfCChipScan(INT32 nAction);
-
-void BonzeWriteCChipRam(INT32 offset, INT32 data);
-void BonzeWriteCChipBank(INT32 data);
-UINT16 BonzeReadCChipRam(INT32 offset);
-void BonzeCChipReset();
-void BonzeCChipScan(INT32 nAction);
-
-void VolfiedCChipBankWrite(UINT16 data);
-void VolfiedCChipRamWrite(INT32 offset, UINT8 data);
-UINT8 VolfiedCChipCtrlRead();
-UINT8 VolfiedCChipRamRead(INT32 offset);
-void VolfiedCChipInit();
-void VolfiedCChipReset();
-void VolfiedCChipExit();
-void VolfiedCChipScan(INT32 nAction);
 
 // PC080SN
 #define PC080SN_MAX_CHIPS 2

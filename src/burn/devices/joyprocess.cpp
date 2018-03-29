@@ -1,16 +1,14 @@
 #include "burnint.h"
 #include "joyprocess.h"
 
-#define INPUT_4WAY              2
-#define INPUT_CLEAROPPOSITES    4
-#define INPUT_MAKEACTIVELOW     8
-
 void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags)
-{
-	// grep ProcessJoystick in drv/pre90s for examples
-
+{ // limitations: 4 players max., processes 8-bit inputs only!
 	static INT32 fourway[4]      = { 0, 0, 0, 0 }; // 4-way buffer
 	static UINT8 DrvInputPrev[4] = { 0, 0, 0, 0 }; // 4-way buffer
+
+	if (flags & INPUT_ISACTIVELOW) {
+		*input ^= 0xff;
+	}
 
 	UINT8 ud = (1 << up_bit) | (1 << down_bit);
 	UINT8 rl = (1 << right_bit) | (1 << left_bit);
@@ -44,8 +42,8 @@ void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, I
 		}
 	}
 
-	if (flags & INPUT_MAKEACTIVELOW) {
-		*input = 0xff - *input;
+	if (flags & INPUT_MAKEACTIVELOW || flags & INPUT_ISACTIVELOW) {
+		*input ^= 0xff;
 	}
 }
 

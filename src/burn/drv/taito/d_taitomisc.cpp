@@ -41,8 +41,6 @@ static double DariusMSM5205RouteMasterVol;
 static UINT16 VolfiedVidCtrl;
 static UINT16 VolfiedVidMask;
 
-static INT32 RainbowCChipVer = 0;
-
 static UINT8 z80ctc_load;
 static INT32 z80ctc_constant;
 static INT32 z80ctc_ctr;
@@ -488,46 +486,13 @@ static void TopspeedMakeInputs()
 static void VolfiedMakeInputs()
 {
 	// Reset Inputs
-	TaitoInput[0] = 0xff;
-	TaitoInput[1] = 0xfc;
-	TaitoInput[2] = 0xff;
-	TaitoInput[3] = 0xff;
+	UINT8 *DrvJoy[4] = { TaitoInputPort0, TaitoInputPort1, TaitoInputPort2, TaitoInputPort3 };
+	UINT32 DrvJoyInit[4] = { 0xff, 0xfc, 0xff, 0xff };
 
-	if (TaitoInputPort0[0]) TaitoInput[0] -= 0x01;
-	if (TaitoInputPort0[1]) TaitoInput[0] -= 0x02;
-	if (TaitoInputPort0[2]) TaitoInput[0] -= 0x04;
-	if (TaitoInputPort0[3]) TaitoInput[0] -= 0x08;
-	if (TaitoInputPort0[4]) TaitoInput[0] -= 0x10;
-	if (TaitoInputPort0[5]) TaitoInput[0] -= 0x20;
-	if (TaitoInputPort0[6]) TaitoInput[0] -= 0x40;
-	if (TaitoInputPort0[7]) TaitoInput[0] -= 0x80;
-	
-	if (TaitoInputPort1[0]) TaitoInput[1] |= 0x01;
-	if (TaitoInputPort1[1]) TaitoInput[1] |= 0x02;
-	if (TaitoInputPort1[2]) TaitoInput[1] -= 0x04;
-	if (TaitoInputPort1[3]) TaitoInput[1] -= 0x08;
-	if (TaitoInputPort1[4]) TaitoInput[1] -= 0x10;
-	if (TaitoInputPort1[5]) TaitoInput[1] -= 0x20;
-	if (TaitoInputPort1[6]) TaitoInput[1] -= 0x40;
-	if (TaitoInputPort1[7]) TaitoInput[1] -= 0x80;
-	
-	if (TaitoInputPort2[0]) TaitoInput[2] -= 0x01;
-	if (TaitoInputPort2[1]) TaitoInput[2] -= 0x02;
-	if (TaitoInputPort2[2]) TaitoInput[2] -= 0x04;
-	if (TaitoInputPort2[3]) TaitoInput[2] -= 0x08;
-	if (TaitoInputPort2[4]) TaitoInput[2] -= 0x10;
-	if (TaitoInputPort2[5]) TaitoInput[2] -= 0x20;
-	if (TaitoInputPort2[6]) TaitoInput[2] -= 0x40;
-	if (TaitoInputPort2[7]) TaitoInput[2] -= 0x80;
-	
-	if (TaitoInputPort3[0]) TaitoInput[3] -= 0x01;
-	if (TaitoInputPort3[1]) TaitoInput[3] -= 0x02;
-	if (TaitoInputPort3[2]) TaitoInput[3] -= 0x04;
-	if (TaitoInputPort3[3]) TaitoInput[3] -= 0x08;
-	if (TaitoInputPort3[4]) TaitoInput[3] -= 0x10;
-	if (TaitoInputPort3[5]) TaitoInput[3] -= 0x20;
-	if (TaitoInputPort3[6]) TaitoInput[3] -= 0x40;
-	if (TaitoInputPort3[7]) TaitoInput[3] -= 0x80;
+	CompileInput(DrvJoy, (void*)TaitoInput, 4, 8, DrvJoyInit);
+
+	ProcessJoystick(&TaitoInput[2], 0, 2,3,4,5, INPUT_4WAY | INPUT_ISACTIVELOW);
+	ProcessJoystick(&TaitoInput[3], 1, 1,2,7,4, INPUT_4WAY | INPUT_ISACTIVELOW);
 
 	cchip_loadports(TaitoInput[0], TaitoInput[1], TaitoInput[2], TaitoInput[3]);
 }
@@ -4921,13 +4886,6 @@ static INT32 RbislandInit()
 	return 0;
 }
 
-static INT32 RbislandeInit()
-{
-	RainbowCChipVer = 1;
-	
-	return RbislandInit();
-}
-
 static INT32 JumpingInit()
 {
 	INT32 nLen;
@@ -5341,7 +5299,6 @@ static INT32 TaitoMiscExit()
 	VolfiedVidCtrl = 0;
 	VolfiedVidMask = 0;
 	
-	RainbowCChipVer = 0;
 	bUseGuns = 0;
 	if (bUseShifter)
 		BurnShiftExit();
@@ -6351,7 +6308,7 @@ struct BurnDriver BurnDrvRbislande = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandeRomInfo, RbislandeRomName, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
-	RbislandeInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
+	RbislandInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3
 };
 

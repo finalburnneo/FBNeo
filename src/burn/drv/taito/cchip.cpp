@@ -6,55 +6,6 @@
 
 static UINT8 CurrentBank;
 
-// Mega Blast
-
-static UINT8 *MegabCChipRam;
-
-UINT16 MegabCChipRead(UINT32 Offset)
-{
-	if (Offset == 0x401) {
-		return 0x01;
-	}
-
-	return MegabCChipRam[Offset];
-}
-
-void MegabCChipWrite(UINT32 Offset, UINT16 Data)
-{
-	MegabCChipRam[Offset] = Data;
-}
-
-void MegabCChipReset()
-{
-	memset(MegabCChipRam, 0, 0x800);
-}
-
-void MegabCChipInit()
-{
-	MegabCChipRam = (UINT8*)BurnMalloc(0x800);
-	memset(MegabCChipRam, 0, 0x800);
-	
-	TaitoIC_MegabCChipInUse = 1;
-}
-
-void MegabCChipExit()
-{
-	BurnFree(MegabCChipRam);
-}
-
-void MegabCChipScan(INT32 nAction)
-{
-	struct BurnArea ba;
-	
-	if (nAction & ACB_MEMORY_RAM) {
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = MegabCChipRam;
-		ba.nLen	  = 0x800;
-		ba.szName = "CChip Ram";
-		BurnAcb(&ba);
-	}
-}
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
 // Operation Wolf C-Chip

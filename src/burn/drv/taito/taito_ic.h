@@ -1,4 +1,3 @@
-extern INT32 TaitoIC_MegabCChipInUse;
 extern INT32 TaitoIC_OpwolfCChipInUse;
 
 extern INT32 TaitoIC_PC080SNInUse;
@@ -24,14 +23,6 @@ void TaitoICScan(INT32 nAction);
 
 // Emulated C-Chip
 #include "cc.h"
-
-// Simulated C-Chip
-UINT16 MegabCChipRead(UINT32 Offset);
-void MegabCChipWrite(UINT32 Offset, UINT16 Data);
-void MegabCChipReset();
-void MegabCChipInit();
-void MegabCChipExit();
-void MegabCChipScan(INT32 nAction);
 
 void OpwolfCChipUpdate(UINT8 Input1, UINT8 Input2);
 UINT16 OpwolfCChipStatusRead();

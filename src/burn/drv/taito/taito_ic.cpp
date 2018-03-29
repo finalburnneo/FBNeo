@@ -1,7 +1,6 @@
 #include "burnint.h"
 #include "taito_ic.h"
 
-INT32 TaitoIC_MegabCChipInUse = 0;
 INT32 TaitoIC_OpwolfCChipInUse = 0;
 
 INT32 TaitoIC_PC080SNInUse = 0;
@@ -23,7 +22,6 @@ INT32 TaitoWatchdog;
 
 void TaitoICReset()
 {
-	if (TaitoIC_MegabCChipInUse) MegabCChipReset();
 	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipReset();
 
 	if (TaitoIC_PC080SNInUse) PC080SNReset();
@@ -48,7 +46,6 @@ void TaitoICReset()
 
 void TaitoICExit()
 {
-	if (TaitoIC_MegabCChipInUse) MegabCChipExit();
 	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipExit();
 
 	if (TaitoIC_PC080SNInUse) PC080SNExit();
@@ -68,7 +65,6 @@ void TaitoICExit()
 
 	if (cchip_active) cchip_exit();
 	
-	TaitoIC_MegabCChipInUse = 0;
 	TaitoIC_OpwolfCChipInUse = 0;
 
 	TaitoIC_PC080SNInUse = 0;
@@ -91,7 +87,6 @@ void TaitoICExit()
 
 void TaitoICScan(INT32 nAction)
 {
-	if (TaitoIC_MegabCChipInUse) MegabCChipScan(nAction);
 	if (TaitoIC_OpwolfCChipInUse) OpwolfCChipScan(nAction);
 
 	if (TaitoIC_PC080SNInUse) PC080SNScan(nAction);

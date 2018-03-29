@@ -4214,6 +4214,15 @@ static struct BurnRomInfo MizubakuRomDesc[] = {
 STD_ROM_PICK(Mizubaku)
 STD_ROM_FN(Mizubaku)
 
+// Taito C-Chip BIOS
+static struct BurnRomInfo emptyRomDesc[] = {
+	{ "",                    0,          0, 0 },
+};
+
+static struct BurnRomInfo cchipRomDesc[] = {
+	{ "cchip_upd78c11.bin",		0x01000, 0x43021521, BRF_BIOS | TAITO_CCHIP_BIOS},
+};
+
 static struct BurnRomInfo MegablstRomDesc[] = {
 	{ "c11-07.55",             0x020000, 0x11d228b6, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
 	{ "c11-08.39",             0x020000, 0xa79d4dca, BRF_ESS | BRF_PRG | TAITO_68KROM1_BYTESWAP },
@@ -4229,6 +4238,8 @@ static struct BurnRomInfo MegablstRomDesc[] = {
 	
 	{ "c11-01.29",             0x080000, 0xfd1ea532, BRF_SND | TAITO_YM2610A },
 	{ "c11-02.30",             0x080000, 0x451cc187, BRF_SND | TAITO_YM2610B },
+
+	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 	
 	{ "pal16l8b-b89-01.ic8",   0x000104, 0x4095b97a, BRF_OPT },
 	{ "pal16l8b-b89-02.ic28",  0x000104, 0x6430b559, BRF_OPT },
@@ -4236,11 +4247,9 @@ static struct BurnRomInfo MegablstRomDesc[] = {
 	{ "palce16v8-b89-04.ic27", 0x000117, 0xfc136ae2, BRF_OPT },
 	{ "pal16l8b-c11-13.ic13",  0x000104, 0x421d7ea8, BRF_OPT },
 	{ "pal16l8b-c11-14.ic23",  0x000104, 0x5c740aee, BRF_OPT },
-	
-	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 };
 
-STD_ROM_PICK(Megablst)
+STDROMPICKEXT(Megablst, Megablst, cchip)
 STD_ROM_FN(Megablst)
 
 static struct BurnRomInfo MegablstjRomDesc[] = {
@@ -4262,7 +4271,7 @@ static struct BurnRomInfo MegablstjRomDesc[] = {
 	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 };
 
-STD_ROM_PICK(Megablstj)
+STDROMPICKEXT(Megablstj, Megablstj, cchip)
 STD_ROM_FN(Megablstj)
 
 static struct BurnRomInfo MegablstuRomDesc[] = {
@@ -4284,7 +4293,7 @@ static struct BurnRomInfo MegablstuRomDesc[] = {
 	{ "cchip_c11",             0x002000, 0x00000000, BRF_OPT },
 };
 
-STD_ROM_PICK(Megablstu)
+STDROMPICKEXT(Megablstu, Megablstu, cchip)
 STD_ROM_FN(Megablstu)
 
 static struct BurnRomInfo MetalbRomDesc[] = {
@@ -4771,6 +4780,9 @@ static INT32 MemIndex()
 	TaitoYM2610BRom                 = Next; Next += TaitoYM2610BRomSize;
 	if (TaitoNumMSM6295) {MSM6295ROM = Next; Next += 0x40000; }
 	TaitoMSM6295Rom                 = Next; Next += TaitoMSM6295RomSize;
+
+	cchip_rom                       = Next; Next += TaitoCCHIPBIOSSize;
+	cchip_eeprom                    = Next; Next += 0x002000; // TaitoCCHIPEEPROMSize - manually allocate ram since megablst does not have a c-chip eeprom
 	
 	TaitoRamStart                   = Next;
 
@@ -5816,9 +5828,7 @@ UINT8 __fastcall Megablst68KReadByte(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x120000)
 	
-	if (a >= 0x180000 && a <= 0x180fff) {
-		return MegabCChipRead((a - 0x180000) >> 1);
-	}
+	CCHIP_READ(0x180000)
 	
 	switch (a) {
 		case 0x100002: {
@@ -5839,10 +5849,7 @@ void __fastcall Megablst68KWriteByte(UINT32 a, UINT8 d)
 	TC0360PRIHalfWordWrite_Map(0x400000)
 	TC0100SCN0ByteWrite_Map(0x600000, 0x60ffff)
 	
-	if (a >= 0x180000 && a <= 0x180fff) {
-		MegabCChipWrite((a - 0x180000) >> 1, d);
-		return;
-	}
+	CCHIP_WRITE(0x180000)
 	
 	switch (a) {
 		case 0x100000: {
@@ -5864,6 +5871,8 @@ void __fastcall Megablst68KWriteByte(UINT32 a, UINT8 d)
 UINT16 __fastcall Megablst68KReadWord(UINT32 a)
 {
 	TC0220IOCHalfWordRead_Map(0x120000)
+
+	CCHIP_READ(0x180000)
 	
 	switch (a) {
 		default: {
@@ -5880,6 +5889,8 @@ void __fastcall Megablst68KWriteWord(UINT32 a, UINT16 d)
 	TC0360PRIHalfWordWrite_Map(0x400000)
 	TC0100SCN0WordWrite_Map(0x600000, 0x60ffff)
 	TC0100SCN0CtrlWordWrite_Map(0x620000)
+
+	CCHIP_WRITE(0x180000)
 	
 	switch (a) {
 		default: {
@@ -8465,8 +8476,8 @@ static INT32 MegablstInit()
 	SekClose();
 	
 	TaitoF2SoundInit();
-	
-	MegabCChipInit();
+
+	cchip_init();
 	
 	TaitoXOffset = 3;
 	
@@ -10731,6 +10742,11 @@ static INT32 TaitoF2Frame()
 		ZetOpen(0);
 		BurnTimerUpdate((i + 1) * (nTaitoCyclesTotal[1] / nInterleave));
 		ZetClose();
+
+		if (cchip_active) {
+			cchip_run(12000000 / 60 / nInterleave);
+			if (i == nInterleave-1) cchip_interrupt();
+		}
 	}
 	
 	ZetOpen(0);
@@ -11179,7 +11195,7 @@ struct BurnDriver BurnDrvMizubaku = {
 };
 
 struct BurnDriver BurnDrvMegablst = {
-	"megablst", NULL, NULL, NULL, "1989",
+	"megablst", NULL, "cchip", NULL, "1989",
 	"Mega Blast (World)\0", NULL, "Taito Corporation Japan", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
@@ -11189,7 +11205,7 @@ struct BurnDriver BurnDrvMegablst = {
 };
 
 struct BurnDriver BurnDrvMegablstj = {
-	"megablstj", "megablst", NULL, NULL, "1989",
+	"megablstj", "megablst", "cchip", NULL, "1989",
 	"Mega Blast (Japan)\0", NULL, "Taito Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,
@@ -11199,7 +11215,7 @@ struct BurnDriver BurnDrvMegablstj = {
 };
 
 struct BurnDriver BurnDrvMegablstu = {
-	"megablstu", "megablst", NULL, NULL, "1989",
+	"megablstu", "megablst", "cchip", NULL, "1989",
 	"Mega Blast (US)\0", NULL, "Taito America Corporation", "Taito F2",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOF2, GBF_HORSHOOT, 0,

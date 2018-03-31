@@ -1,7 +1,7 @@
 // Based on MAME driver by David Graves, Bryan McPhail, Brad Oliver, Andrew Prime, Brian Troha, Nicola Salmoria
 
 // Todo:
-// Metalb: missing the flying Metal Black letters before the titlescreen (in old fba too)
+//  what next?
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -8532,6 +8532,7 @@ static INT32 MetalbInit()
 	
 	TC0480SCPInit(TaitoNumChar, 3, 0x32, -4, 1, 0, 24);
 	TC0480SCPSetColourBase(256);
+	TC0480SCPSetPriMap(TaitoPriorityMap);
 	TC0140SYTInit(0);
 	TC0360PRIInit();
 	TC0510NIOInit();
@@ -8557,7 +8558,10 @@ static INT32 MetalbInit()
 	TaitoF2SoundInit();
 	
 	TaitoXOffset = 3;
-	
+
+	StupidPriMode = 0;
+	PaletteType = METALBPalette;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -9677,7 +9681,7 @@ static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32
 							INT32 Pri = *pri;
 							INT32 TilePri = 0;
 
-							if (TaitoIC_TC0100SCNInUse) {
+							if (TaitoIC_TC0100SCNInUse || PaletteType == METALBPalette) {
 								if (Pri & 0x01) TilePri = TaitoF2TilePriority[0];
 								if (Pri & 0x02) TilePri = TaitoF2TilePriority[1];
 								if (Pri & 0x04) TilePri = TaitoF2TilePriority[2];
@@ -10292,23 +10296,24 @@ static INT32 FootchmpDraw()
 
 static INT32 MetalbDraw()
 {
-	UINT8 Layer[4];
+	UINT8 Layer[4], InvLayer[4];
 	UINT16 Priority = TC0480SCPGetBgPriority();
 	
 	Layer[0] = (Priority & 0xf000) >> 12;
 	Layer[1] = (Priority & 0x0f00) >>  8;
 	Layer[2] = (Priority & 0x00f0) >>  4;
 	Layer[3] = (Priority & 0x000f) >>  0;
+
+	InvLayer[Layer[0]] = 0;
+	InvLayer[Layer[1]] = 1;
+	InvLayer[Layer[2]] = 2;
+	InvLayer[Layer[3]] = 3;
 	
-	TaitoF2TilePriority[Layer[0]] = TC0360PRIRegs[4] & 0x0f;
-	TaitoF2TilePriority[Layer[1]] = TC0360PRIRegs[4] >> 4;
-	TaitoF2TilePriority[Layer[2]] = TC0360PRIRegs[5] & 0x0f;
-	TaitoF2TilePriority[Layer[3]] = TC0360PRIRegs[5] >> 4;
+	TaitoF2TilePriority[InvLayer[0]] = TC0360PRIRegs[4] & 0x0f;
+	TaitoF2TilePriority[InvLayer[1]] = TC0360PRIRegs[4] >> 4;
+	TaitoF2TilePriority[InvLayer[2]] = TC0360PRIRegs[5] & 0x0f;
+	TaitoF2TilePriority[InvLayer[3]] = TC0360PRIRegs[5] >> 4;
 	TaitoF2TilePriority[4] = TC0360PRIRegs[9] & 0x0f;	
-	
-	if (TaitoF2TilePriority[1] < TaitoF2TilePriority[0]) TaitoF2TilePriority[1] = TaitoF2TilePriority[0];	
-	if (TaitoF2TilePriority[2] < TaitoF2TilePriority[1]) TaitoF2TilePriority[2] = TaitoF2TilePriority[1];
-	if (TaitoF2TilePriority[3] < TaitoF2TilePriority[2]) TaitoF2TilePriority[3] = TaitoF2TilePriority[2];
 	
 	TaitoF2SpritePriority[0] = TC0360PRIRegs[6] & 0x0f;
 	TaitoF2SpritePriority[1] = TC0360PRIRegs[6] >> 4;
@@ -10316,28 +10321,20 @@ static INT32 MetalbDraw()
 	TaitoF2SpritePriority[3] = TC0360PRIRegs[7] >> 4;
 	
 	TaitoF2SpriteBlendMode = TC0360PRIRegs[0] & 0xc0;
-	
-//	bprintf(PRINT_IMPORTANT, _T("SPR Bl %x, T0 %x, T1 %x, T2 %x, T3 %x, T4 %x, S0 %x, S1 %x, S2 %x, S3 %x\n"), TaitoF2SpriteBlendMode, TaitoF2TilePriority[0], TaitoF2TilePriority[1], TaitoF2TilePriority[2], TaitoF2TilePriority[3], TaitoF2TilePriority[4], TaitoF2SpritePriority[0], TaitoF2SpritePriority[1], TaitoF2SpritePriority[2], TaitoF2SpritePriority[3]);
-//	bprintf(PRINT_NORMAL, _T("L0 %x %x, L1 %x %x, L2 %x %x, L3 %x %x\n"), Layer[0], TaitoF2TilePriority[0], Layer[1], TaitoF2TilePriority[1], Layer[2], TaitoF2TilePriority[2], Layer[3], TaitoF2TilePriority[3]);
-	
+
 	BurnTransferClear();
 	MetalbCalcPalette();
 	
 	TaitoF2MakeSpriteList();
-	
-	for (INT32 i = 0; i < 16; i++) {
-		if (TaitoF2SpritePriority[3] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[3]);
-		if (TaitoF2SpritePriority[2] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[2]);
-		if (TaitoF2SpritePriority[1] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[1]);		
-		if (TaitoF2SpritePriority[0] == i) TaitoF2RenderSpriteList(TaitoF2SpritePriority[0]);
-		if (TaitoF2TilePriority[0] == i) TC0480SCPTilemapRender(Layer[0], 0, TaitoChars);
-		if (TaitoF2TilePriority[1] == i) TC0480SCPTilemapRender(Layer[1], 0, TaitoChars);
-		if (TaitoF2TilePriority[2] == i) TC0480SCPTilemapRender(Layer[2], 0, TaitoChars);
-		if (TaitoF2TilePriority[3] == i) TC0480SCPTilemapRender(Layer[3], 0, TaitoChars);
-	}
-	
-	TC0480SCPRenderCharLayer();
-	
+
+	if (nBurnLayer & 1) TC0480SCPTilemapRenderPrio(Layer[0], 0, 1, TaitoChars);
+	if (nBurnLayer & 2) TC0480SCPTilemapRenderPrio(Layer[1], 0, 2, TaitoChars);
+	if (nBurnLayer & 4) TC0480SCPTilemapRenderPrio(Layer[2], 0, 4, TaitoChars);
+	if (nBurnLayer & 8) TC0480SCPTilemapRenderPrio(Layer[3], 0, 8, TaitoChars);
+
+	if (nSpriteEnable & 1) TaitoF2RenderSpriteListBackwardsForPriority();
+
+	if (nSpriteEnable & 2) TC0480SCPRenderCharLayer();
 	BurnTransferCopy(TaitoPalette);
 
 	return 0;
@@ -10371,7 +10368,6 @@ static INT32 TaitoF2PriRozDraw()
 	TC0280GRDBaseColour = (TC0360PRIRegs[1] & 0x3f) << 2;
 
 	BurnTransferClear();
-	//QzquestCalcPalette();
 	DynCalcPalette();
 
 	TaitoF2MakeSpriteList();

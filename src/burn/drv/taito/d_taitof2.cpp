@@ -33,7 +33,7 @@ static TaitoF2SpriteBufferUpdate TaitoF2SpriteBufferFunction;
 static INT32 PaletteType = 0;
 enum { TAITOF2Palette = 0, METALBPalette = 1, QZQUESTPalette = 2 };
 
-static INT32 StupidPriMode = 0;
+static INT32 StupidPriMode = 0; // no priority writeback for sprite blender
 
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
@@ -7522,7 +7522,7 @@ static void TaitoF2Init()
 	TaitoF2SpriteBufferFunction = TaitoF2NoBuffer;
 
 	PaletteType = TAITOF2Palette; // 0 taito, 1 metalb, 2 qzquest
-	StupidPriMode = 1;
+	StupidPriMode = 1; // default to no priority writeback for sprite blender
 
 	for (INT32 i = 0; i < 8; i++) {
 		TaitoF2SpriteBankBuffered[i] = 0x400 * i;
@@ -9461,6 +9461,7 @@ static INT32 TaitoF2Exit()
 	TaitoF2SpriteBufferFunction = NULL;
 
 	PaletteType = 0;
+	StupidPriMode = 0;
 
 #ifdef BUILD_A68K
 	// Switch back CPU core if needed

@@ -82,7 +82,7 @@ void TC0100SCNCtrlWordWrite(INT32 Chip, UINT32 Offset, UINT16 Data);
 INT32 TC0100SCNBottomLayer(INT32 Chip);
 void TC0100SCNRenderBgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priority = 1);
 void TC0100SCNRenderFgLayer(INT32 Chip, INT32 Opaque, UINT8 *pSrc, INT32 Priority = 2);
-void TC0100SCNRenderCharLayer(INT32 Chip);
+void TC0100SCNRenderCharLayer(INT32 Chip, INT32 Priority = 4);
 void TC0100SCNReset();
 void TC0100SCNInit(INT32 Chip, INT32 nNumTiles, INT32 xOffset, INT32 yOffset, INT32 xFlip, UINT8 *PriorityMap);
 void TC0100SCNSetColourDepth(INT32 Chip, INT32 ColourDepth);
@@ -184,13 +184,14 @@ void TC0220IOCScan(INT32 nAction);
 extern UINT8 *TC0280GRDRam;
 extern INT32 TC0280GRDBaseColour;
 
-void TC0280GRDRenderLayer();
+void TC0280GRDRenderLayer(INT32 Priority);
 void TC0280GRDCtrlWordWrite(UINT32 Offset, UINT16 Data);
 void TC0280GRDReset();
 void TC0280GRDInit(INT32 xOffs, INT32 yOffs, UINT8 *pSrc);
 void TC0430GRWInit(INT32 xOffs, INT32 yOffs, UINT8 *pSrc);
 void TC0280GRDExit();
 void TC0280GRDScan(INT32 nAction);
+void TC0280GRDSetPriMap(UINT8 *PriMap);
 
 #define TC0430GRWRam		TC0280GRDRam
 #define TC0430GRWRenderLayer	TC0280GRDRenderLayer
@@ -198,6 +199,7 @@ void TC0280GRDScan(INT32 nAction);
 #define TC0430GRWReset		TC0280GRDReset
 #define TC0430GRWExit		TC0280GRDExit
 #define TC0430GRWScan		TC0280GRDScan
+#define TC0430GRDSetPriMap  TC0280GRDSetPriMap
 
 // TC0360PRI
 extern UINT8 TC0360PRIRegs[16];

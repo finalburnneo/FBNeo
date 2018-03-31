@@ -153,13 +153,13 @@ void TC0100SCNCtrlWordWrite(INT32 Chip, UINT32 Offset, UINT16 Data)
 		
 		case 0x06: {
 			TC0100SCNDblWidth[Chip] = (Data & 0x10) >> 4;
-			if (TC0100SCNFlip[Chip]) bprintf(PRINT_NORMAL, _T("Double\n"));
+			//if (TC0100SCNFlip[Chip]) bprintf(PRINT_NORMAL, _T("Double\n"));
 			return;
 		}
 		
 		case 0x07: {
 			TC0100SCNFlip[Chip] = (Data & 0x01) ? 1: 0;
-			if (TC0100SCNFlip[Chip]) bprintf(PRINT_NORMAL, _T("Flipped\n"));
+			//if (TC0100SCNFlip[Chip]) bprintf(PRINT_NORMAL, _T("Flipped\n"));
 			return;
 		}
 	}
@@ -369,7 +369,7 @@ static INT32 TC0100SCNPlaneOffsets[2] = { 8, 0 };
 static INT32 TC0100SCNXOffsets[8]     = { 0, 1, 2, 3, 4, 5, 6, 7 };
 static INT32 TC0100SCNYOffsets[8]     = { 0, 16, 32, 48, 64, 80, 96, 112 };
 
-void TC0100SCNRenderCharLayer(INT32 Chip)
+void TC0100SCNRenderCharLayer(INT32 Chip, INT32 Priority)
 {
 	INT32 mx, my, Attr, Code, Colour, x, y, TileIndex = 0, Flip, xFlip, yFlip;
 	
@@ -467,7 +467,7 @@ void TC0100SCNRenderCharLayer(INT32 Chip)
 							if (xPos >= TC0100SCNClipStartX[Chip] && xPos < TC0100SCNClipStartX[Chip] + TC0100SCNClipWidth[Chip]) {
 								pPixel[xPos] = c | nPalette | TC0100SCNPaletteOffset[Chip];
 //								if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(yPos * TC0100SCNClipWidth[Chip]) + xPos - TC0100SCNClipStartX[Chip]] = 4;
-								if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(yPos * nScreenWidth) + xPos] = 4;
+								if (TC0100SCNPriorityMap[Chip]) TC0100SCNPriorityMap[Chip][(yPos * nScreenWidth) + xPos] = Priority;
 							}
 						}
 					}

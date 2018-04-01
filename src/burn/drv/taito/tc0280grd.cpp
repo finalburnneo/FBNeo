@@ -46,14 +46,15 @@ static void RozRender(UINT32 xStart, UINT32 yStart, INT32 xxInc, INT32 xyInc, IN
 	INT32 mx, my, Attr, Code, Colour, x, y, TileIndex = 0, Pix;
 	UINT16 *Dest = NULL;	
 	UINT16 *VideoRam = (UINT16*)TC0280GRDRam;
-	
+
 	if (xxInc == (1 << 16) && xyInc == 0 && yxInc == 0 && yyInc == (1 << 16)) {
+		// if no roz-ing is needed, render directly (speed-up)
 		for (my = 0; my < 64; my++) {
 			for (mx = 0; mx < 64; mx++) {
 				Attr = BURN_ENDIAN_SWAP_INT16(VideoRam[TileIndex]);
 				Code = (Attr & 0x3fff);
 				Colour = ((Attr & 0xc000) >> 14) + TC0280GRDBaseColour;
-			
+
 				x = 8 * mx;
 				y = 8 * my;
 				
@@ -64,18 +65,26 @@ static void RozRender(UINT32 xStart, UINT32 yStart, INT32 xxInc, INT32 xyInc, IN
 				if (y < -8) y += 512;
 
 				if (x >= 0 && x < (nScreenWidth - 8) && y >= 0 && y < (nScreenHeight - 8)) {
-					Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0, pTC0280GRDSrc);
+					if (TC0280GRDPriMap) { // note, tiles_generic rendering routines write to pPrioDraw instead of TC0280GRDPriMap - which points to pPrioDraw anyhow
+						Render8x8Tile_Prio_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0, Priority, pTC0280GRDSrc);
+					} else {
+						Render8x8Tile_Mask(pTransDraw, Code, x, y, Colour, 4, 0, 0, pTC0280GRDSrc);
+					}
 				} else {
-					Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, pTC0280GRDSrc);
+					if (TC0280GRDPriMap) {
+						Render8x8Tile_Prio_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, Priority, pTC0280GRDSrc);
+					} else {
+						Render8x8Tile_Mask_Clip(pTransDraw, Code, x, y, Colour, 4, 0, 0, pTC0280GRDSrc);
+					}
 				}
-			
+
 				TileIndex++;
 			}
 		}
 		
 		return;
 	}
-	
+
 	memset(pRozTileMapData, 0, 512 * 512 * sizeof(UINT16));
 	
 	for (my = 0; my < 64; my++) {

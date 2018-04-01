@@ -10243,7 +10243,7 @@ static INT32 FinalbDraw()
 	return 0;
 }
 
-static INT32 FootchmpDraw()
+static INT32 FootchmpDraw() // and deadconx
 {
 	UINT8 Layer[4];
 	UINT16 Priority = TC0480SCPGetBgPriority();

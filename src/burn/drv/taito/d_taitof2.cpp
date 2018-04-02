@@ -33,7 +33,7 @@ static TaitoF2SpriteBufferUpdate TaitoF2SpriteBufferFunction;
 static INT32 PaletteType = 0;
 enum { TAITOF2Palette = 0, METALBPalette = 1, QZQUESTPalette = 2 };
 
-static INT32 StupidPriMode = 0; // no priority writeback for sprite blender
+static INT32 SpritePriWritebackMode = 0; // no priority writeback for sprite blender
 
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
@@ -7522,7 +7522,7 @@ static void TaitoF2Init()
 	TaitoF2SpriteBufferFunction = TaitoF2NoBuffer;
 
 	PaletteType = TAITOF2Palette; // 0 taito, 1 metalb, 2 qzquest
-	StupidPriMode = 1; // default to no priority writeback for sprite blender
+	SpritePriWritebackMode = 1; // default to no priority writeback for sprite blender
 
 	for (INT32 i = 0; i < 8; i++) {
 		TaitoF2SpriteBankBuffered[i] = 0x400 * i;
@@ -7592,7 +7592,7 @@ static INT32 CameltryInit()
 	
 	TaitoXOffset = 3;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -7684,7 +7684,7 @@ static INT32 CamltryaInit()
 	nTaitoCyclesTotal[1] = (24000000 / 4) / 60;
 
 	TaitoXOffset = 3;
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -7883,7 +7883,7 @@ static INT32 DondokodInit()
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
 	PaletteType = TAITOF2Palette;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -7950,7 +7950,7 @@ static INT32 DriftoutInit()
 
 	PaletteType = QZQUESTPalette;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8047,7 +8047,7 @@ static INT32 DriveoutInit()
 
 	PaletteType = QZQUESTPalette;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 	
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8268,7 +8268,7 @@ static INT32 GrowlInit()
 	
 	TaitoXOffset = 3;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8324,7 +8324,7 @@ static INT32 GunfrontInit()
 
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 	
 	TaitoXOffset = 3;
 	
@@ -8437,7 +8437,7 @@ static INT32 LiquidkInit()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteBufferFunction = TaitoF2PartialBufferDelayed;
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -8559,7 +8559,7 @@ static INT32 MetalbInit()
 	
 	TaitoXOffset = 3;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 	PaletteType = METALBPalette;
 
 	// Reset the driver
@@ -8746,7 +8746,7 @@ static INT32 PulirulaInit()
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 2;
 	PaletteType = QZQUESTPalette;
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9188,7 +9188,7 @@ static INT32 SolfigtrInit()
 	
 	TaitoXOffset = 3;
 
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 	// Reset the driver
 	TaitoF2DoReset();
@@ -9461,7 +9461,7 @@ static INT32 TaitoF2Exit()
 	TaitoF2SpriteBufferFunction = NULL;
 
 	PaletteType = 0;
-	StupidPriMode = 0;
+	SpritePriWritebackMode = 0;
 
 #ifdef BUILD_A68K
 	// Switch back CPU core if needed
@@ -9716,7 +9716,7 @@ static void RenderSpriteZoom(INT32 Code, INT32 sx, INT32 sy, INT32 Colour, INT32
 									pPixel[x] = c | Colour;
 							}
 
-							*pri |= ((StupidPriMode) ? 0x00 : 0x80);
+							*pri |= ((SpritePriWritebackMode) ? 0x00 : 0x80);
 						} else {
 							pPixel[x] = c | Colour;
 						}

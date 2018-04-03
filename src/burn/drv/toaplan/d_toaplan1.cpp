@@ -2670,12 +2670,14 @@ static INT32 DrvFrame()
 			memcpy (DrvSprSizeBuf , DrvSprSizeRAM , 0x80);
 		}
 
+		if (samesame && i == nVBlankLine + 2) {
+			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+		}
+
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
 
 		if (has_dsp && dsp_on) tms32010_execute(nCyclesTotal[2] / nInterleave);
 	}
-
-	if (samesame) SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 

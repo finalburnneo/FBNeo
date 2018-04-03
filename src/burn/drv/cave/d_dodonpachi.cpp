@@ -15,7 +15,6 @@ static UINT8 *Ram01;
 static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static INT8 nVideoIRQ;
@@ -177,7 +176,6 @@ void __fastcall ddonpachWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			nCaveYOffset = wordValue;
 			return;
 		case 0x800008:
-			CaveSpriteBuffer();
 			nCaveSpriteBank = wordValue;
 			return;
 
@@ -287,24 +285,15 @@ static INT32 DrvDraw()
 	CavePalUpdate8Bit(0, 128);				// Update the palette
 	CaveClearScreen(CavePalette[0x7F00]);
 
-	if (bDrawScreen) {
-//		CaveGetBitmap();
+	CaveTileRender(1);					    // Render tiles
 
-		CaveTileRender(1);					// Render tiles
-	}
-
-	return 0;
-}
-
-inline static INT32 CheckSleep(INT32)
-{
 	return 0;
 }
 
 static INT32 DrvFrame()
 {
 	INT32 nCyclesVBlank;
-	INT32 nInterleave = 8;
+	INT32 nInterleave = 32;
 
 	if (DrvReset) {														// Reset machine
 		DrvDoReset();
@@ -325,7 +314,8 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 	nCyclesDone[0] = 0;
 
-	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
+	// this vbl timing gives 2 frames response time
+	nCyclesVBlank = nCyclesTotal[0] - 1200; //(INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
 
 	INT32 nSoundBufferPos = 0;
@@ -350,32 +340,22 @@ static INT32 DrvFrame()
 		nNext = i * nCyclesTotal[nCurrentCPU] / nInterleave;
 
 		// See if we need to trigger the VBlank interrupt
-		if (!bVBlank && nNext > nCyclesVBlank) {
+		if (!bVBlank && nNext >= nCyclesVBlank) {
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
-			}
-
-			if (pBurnDraw != NULL) {
-				DrvDraw();												// Draw screen if needed
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			bVBlank = true;
 			nVideoIRQ = 0;
 			UpdateIRQStatus();
+
+			CaveSpriteBuffer();
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
-			nCyclesExtra = 0;
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
+		nCyclesExtra = 0;
 
 		nCurrentCPU = -1;
 	}
@@ -393,6 +373,10 @@ static INT32 DrvFrame()
 
 	nCyclesExtra = SekTotalCycles() - nCyclesTotal[0];
 	SekClose();
+
+	if (pBurnDraw != NULL) {
+		DrvDraw();												// Draw screen if needed
+	}
 
 	return 0;
 }
@@ -499,8 +483,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bVBlank);
 
 		CaveScanGraphics();
-
-		SCAN_VAR(DrvInput);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -575,8 +557,6 @@ static INT32 DrvInit()
 	YMZ280BInit(16934400, &TriggerSoundIRQ, 0x400000);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	YMZ280BSetRoute(BURN_SND_YMZ280B_YMZ280B_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
-
-	bDrawScreen = true;
 
 	DrvDoReset(); // Reset machine
 

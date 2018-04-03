@@ -23,7 +23,6 @@ static UINT8 *Ram01;
 static UINT8 *DefaultEEPROM = NULL;
 
 static UINT8 DrvReset = 0;
-static UINT8 bDrawScreen;
 static bool bVBlank;
 
 static INT8 nVideoIRQ;
@@ -269,7 +268,6 @@ void __fastcall donpachiWriteWord(UINT32 sekAddress, UINT16 wordValue)
 			nCaveYOffset = wordValue;
 			return;
 		case 0x900008:
-			CaveSpriteBuffer();
 			nCaveSpriteBank = wordValue;
 			return;
 
@@ -407,11 +405,7 @@ static INT32 DrvDraw()
 	CavePalUpdate4Bit(0, 128);				// Update the palette
 	CaveClearScreen(CavePalette[0x7F00]);
 
-	if (bDrawScreen) {
-//		CaveGetBitmap();
-
-		CaveTileRender(1);					// Render tiles
-	}
+	CaveTileRender(1);					    // Render tiles
 
 	return 0;
 }
@@ -425,18 +419,12 @@ static void CheckDIP()
 		MSM6295SetRoute(0, (bLastSampleDIPMode == 8) ? 0.00 : 1.60, BURN_SND_ROUTE_BOTH);
 		BurnSampleSetAllRoutesAllSamples((bLastSampleDIPMode == 8) ? 0.40 : 0.00, BURN_SND_ROUTE_BOTH);
 	}
-
-}
-
-inline static INT32 CheckSleep(INT32)
-{
-	return 0;
 }
 
 static INT32 DrvFrame()
 {
 	INT32 nCyclesVBlank;
-	INT32 nInterleave = 8;
+	INT32 nInterleave = 32;
 
 	INT32 nCyclesTotal[2];
 	INT32 nCyclesDone[2];
@@ -464,7 +452,8 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = (INT32)((INT64)16000000 * nBurnCPUSpeedAdjust / (0x0100 * CAVE_REFRESHRATE));
 	nCyclesDone[0] = 0;
 
-	nCyclesVBlank = nCyclesTotal[0] - (INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
+	// this vbl timing gives 2 frames response time
+	nCyclesVBlank = nCyclesTotal[0] - 1200; //(INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
 
 	INT32 nSoundBufferPos = 0;
@@ -478,31 +467,21 @@ static INT32 DrvFrame()
 		// Run 68000
 
 		// See if we need to trigger the VBlank interrupt
-		if (!bVBlank && nNext > nCyclesVBlank) {
+		if (!bVBlank && nNext >= nCyclesVBlank) {
 			if (nCyclesDone[nCurrentCPU] < nCyclesVBlank) {
 				nCyclesSegment = nCyclesVBlank - nCyclesDone[nCurrentCPU];
-				if (!CheckSleep(nCurrentCPU)) {							// See if this CPU is busywaiting
-					nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-				} else {
-					nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-				}
-			}
-
-			if (pBurnDraw != NULL) {
-				DrvDraw();												// Draw screen if needed
+				nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 			}
 
 			bVBlank = true;
 			nVideoIRQ = 0;
 			UpdateIRQStatus();
+
+			CaveSpriteBuffer();
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		if (!CheckSleep(nCurrentCPU)) {									// See if this CPU is busywaiting
-			nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
-		} else {
-			nCyclesDone[nCurrentCPU] += SekIdle(nCyclesSegment);
-		}
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment);
 	}
 
 	// Make sure the buffer is entirely filled.
@@ -521,6 +500,10 @@ static INT32 DrvFrame()
 	}
 
 	SekClose();
+
+	if (pBurnDraw != NULL) {
+		DrvDraw();												// Draw screen if needed
+	}
 
 	return 0;
 }
@@ -611,7 +594,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);				// scan 68000 states
 
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 		NMK112_Scan(nAction);
 
 		SCAN_VAR(nVideoIRQ);
@@ -713,8 +695,6 @@ static INT32 DrvInit()
 		BurnSampleSetAllRoutesAllSamples(0.00, BURN_SND_ROUTE_BOTH);
 	}
 #endif
-
-	bDrawScreen = true;
 
 	DrvDoReset(); // Reset machine
 

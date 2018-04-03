@@ -315,7 +315,7 @@ static INT32 DrvFrame()
 	nCyclesDone[0] = 0;
 
 	// this vbl timing gives 2 frames response time
-	nCyclesVBlank = nCyclesTotal[0] - 1200; //(INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
+	nCyclesVBlank = nCyclesTotal[0] - 1300; //(INT32)((nCyclesTotal[0] * CAVE_VBLANK_LINES) / 271.5);
 	bVBlank = false;
 
 	INT32 nSoundBufferPos = 0;
@@ -354,7 +354,7 @@ static INT32 DrvFrame()
 		}
 
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment+nCyclesExtra);
+		nCyclesDone[nCurrentCPU] += SekRun(nCyclesSegment - nCyclesExtra);
 		nCyclesExtra = 0;
 
 		nCurrentCPU = -1;

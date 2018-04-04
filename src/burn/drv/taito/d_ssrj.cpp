@@ -24,16 +24,17 @@ static UINT8 DrvRecalc;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
-static UINT8 DrvInputs[2];
+static UINT8 DrvInputs[3];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo SsrjInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
-//	ANALOG INPUT PLACEHOLDERS!!!
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 4"	},
+
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy2 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 right"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy1 + 3,	"tilt"		},
@@ -45,48 +46,47 @@ STDINPUTINFO(Ssrj)
 
 static struct BurnDIPInfo SsrjDIPList[]=
 {
-	{0x06, 0xff, 0xff, 0xc0, NULL					},
-	{0x07, 0xff, 0xff, 0x48, NULL					},
+	{0x07, 0xff, 0xff, 0xc0, NULL					},
+	{0x08, 0xff, 0xff, 0x48, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
-	{0x06, 0x01, 0x30, 0x10, "Easy"					},
-	{0x06, 0x01, 0x30, 0x00, "Normal"				},
-	{0x06, 0x01, 0x30, 0x20, "Difficult"			},
-	{0x06, 0x01, 0x30, 0x30, "Very Difficult"		},
+	{0x07, 0x01, 0x30, 0x10, "Easy"					},
+	{0x07, 0x01, 0x30, 0x00, "Normal"				},
+	{0x07, 0x01, 0x30, 0x20, "Difficult"			},
+	{0x07, 0x01, 0x30, 0x30, "Very Difficult"		},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"			},
-	{0x06, 0x01, 0x40, 0x40, "Off"					},
-	{0x06, 0x01, 0x40, 0x00, "On"					},
+	{0x07, 0x01, 0x40, 0x40, "Off"					},
+	{0x07, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "No Hit"				},
-	{0x06, 0x01, 0x80, 0x80, "Off"					},
-	{0x06, 0x01, 0x80, 0x00, "On"					},
+	{0x07, 0x01, 0x80, 0x80, "Off"					},
+	{0x07, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    7, "Coinage"				},
-	{0x07, 0x01, 0x07, 0x07, "4 Coins 1 Credits"	},
-	{0x07, 0x01, 0x07, 0x06, "3 Coins 1 Credits"	},
-	{0x07, 0x01, 0x07, 0x05, "2 Coins 1 Credits"	},
-	{0x07, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
-	{0x07, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
-	{0x07, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
-	{0x07, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
+	{0x08, 0x01, 0x07, 0x07, "4 Coins 1 Credits"	},
+	{0x08, 0x01, 0x07, 0x06, "3 Coins 1 Credits"	},
+	{0x08, 0x01, 0x07, 0x05, "2 Coins 1 Credits"	},
+	{0x08, 0x01, 0x07, 0x00, "1 Coin  1 Credits"	},
+	{0x08, 0x01, 0x07, 0x01, "1 Coin  2 Credits"	},
+	{0x08, 0x01, 0x07, 0x02, "1 Coin  3 Credits"	},
+	{0x08, 0x01, 0x07, 0x03, "1 Coin  4 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Freeze"				},
-	{0x07, 0x01, 0x08, 0x08, "Off"					},
-	{0x07, 0x01, 0x08, 0x00, "On"					},
+	{0x08, 0x01, 0x08, 0x08, "Off"					},
+	{0x08, 0x01, 0x08, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Controls"				},
-	{0x07, 0x01, 0x30, 0x00, "Type 1"				},
-	{0x07, 0x01, 0x30, 0x10, "Type 2"				},
-	{0x07, 0x01, 0x30, 0x20, "Type 3"				},
-	{0x07, 0x01, 0x30, 0x30, "Type 4"				},
+	{0x08, 0x01, 0x30, 0x00, "Type 1"				},
+	{0x08, 0x01, 0x30, 0x10, "Type 2"				},
+	{0x08, 0x01, 0x30, 0x20, "Type 3"				},
+	{0x08, 0x01, 0x30, 0x30, "Type 4"				},
 };
 
 STDDIPINFO(Ssrj)
 
 static void __fastcall ssrj_write(UINT16 address, UINT8 data)
 {
-	bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 	switch (address)
 	{
 		case 0xf400:
@@ -103,14 +103,13 @@ static void __fastcall ssrj_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall ssrj_read(UINT16 address)
 {
-	bprintf (0, _T("Mr: %4.4x\n"), address);
 	switch (address)
 	{
 		case 0xf000:
-			return (DrvInputs[0] & 0x1f) | 0; // analong pedal
+			return (DrvInputs[0] & 0x1f) | (DrvJoy2[1] ? 0xe0 : 0x00);
 
 		case 0xf001:
-			return 0; // analog wheel
+			return (DrvJoy2[2] ? 0x01 : 0x00) | (DrvJoy2[3] ? 0xff : 0x00);
 
 		case 0xf002:
 			return (DrvInputs[1] & 0x0f) | (DrvDips[0] & 0xf0);
@@ -245,7 +244,7 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1600000, 0);
 	AY8910SetPorts(0, NULL, &AY8910_read_B, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -439,10 +438,10 @@ STD_ROM_FN(ssrj)
 
 struct BurnDriver BurnDrvSsrj = {
 	"ssrj", NULL, NULL, NULL, "1985",
-	"Super Speed Race Junior (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
+	"Super Speed Race Junior (Japan)\0", "Weird colors", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_TAITO, HARDWARE_PREFIX_TAITO, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, HARDWARE_PREFIX_TAITO, 0,
 	NULL, ssrjRomInfo, ssrjRomName, NULL, NULL, SsrjInputInfo, SsrjDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x80,
-	270, 240, 4, 3
+	240, 270, 3, 4
 };

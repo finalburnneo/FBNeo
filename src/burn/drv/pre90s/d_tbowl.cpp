@@ -28,7 +28,7 @@ static UINT8 *DrvShareRAM;
 static UINT8 *DrvPalRAM;
 static UINT8 *DrvSprRAM;
 
-static UINT32  *DrvPalette;
+static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
 static UINT8 *DrvBank;
@@ -698,36 +698,33 @@ static INT32 DrvFrame()
 
 	ZetNewFrame();
 
-	INT32 nSegment;
-	INT32 nInterleave = MSM5205CalcInterleave(0, 4000000);
-	INT32 nTotalCycles[3] = { 8000000 / 60, 8000000 / 60, 4000000 / 60 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] = { 8000000 / 60, 8000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+
+	MSM5205NewFrame(0, 4000000, nInterleave);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = (nTotalCycles[0] - nCyclesDone[0]) / (nInterleave - i);
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
-		nSegment = (nTotalCycles[1] - nCyclesDone[1]) / (nInterleave - i);
-
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment);
-		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdateYM3812((i + 1) * (nTotalCycles[2] / nInterleave));
-		MSM5205Update();
+		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[2] / nInterleave));
+		MSM5205UpdateScanline(i);
 		ZetClose();
 	}
 
 	ZetOpen(2);
 
-	BurnTimerEndFrameYM3812(nTotalCycles[2]);
+	BurnTimerEndFrameYM3812(nCyclesTotal[2]);
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
@@ -744,7 +741,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -752,7 +749,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 		ba.Data	  = AllRam;
 		ba.nLen	  = RamEnd - AllRam;
@@ -828,7 +825,7 @@ struct BurnDriver BurnDrvTbowl = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlRomInfo, tbowlRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	512, 224, 16, 9
+	512, 224, 8, 3
 };
 
 
@@ -878,7 +875,7 @@ struct BurnDriver BurnDrvTbowla = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlaRomInfo, tbowlaRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	512, 224, 16, 9
+	512, 224, 8, 3
 };
 
 
@@ -934,7 +931,7 @@ struct BurnDriver BurnDrvTbowlp = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowlpRomInfo, tbowlpRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	512, 224, 16, 9
+	512, 224, 8, 3
 };
 
 
@@ -984,5 +981,5 @@ struct BurnDriver BurnDrvTbowlj = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, tbowljRomInfo, tbowljRomName, NULL, NULL, TbowlInputInfo, TbowlDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
-	512, 224, 16, 9
+	512, 224, 8, 3
 };

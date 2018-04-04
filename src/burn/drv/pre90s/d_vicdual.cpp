@@ -3111,7 +3111,7 @@ struct BurnDriver BurnDrvCarnivalc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, carnivalcRomInfo, carnivalcRomName, NULL, NULL, CarnivalcInputInfo, CarnivalcDIPInfo,
-	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
+	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
 

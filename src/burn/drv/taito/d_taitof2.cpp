@@ -7858,6 +7858,7 @@ static INT32 DondokodInit()
 	TC0140SYTInit(0);
 	TC0220IOCInit();
 	TC0280GRDInit(-16, -16, TaitoCharsPivot);
+	TC0280GRDSetPriMap(TaitoPriorityMap);
 	TC0360PRIInit();
 	
 #ifdef BUILD_A68K

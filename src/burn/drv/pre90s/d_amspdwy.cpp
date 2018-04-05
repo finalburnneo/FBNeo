@@ -1,12 +1,5 @@
-// FB Alpha  driver module
-// Based on MAME driver by 
-
-/*
-	TO DO:
-		add analog inputs
-		bug test
-		pie?
-*/
+// FB Alpha American Speedway driver module
+// Based on MAME driver by Luca Elia
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -32,24 +25,25 @@ static UINT8 DrvRecalc;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
 
-static INT32 wheel_return[2];
-static INT32 wheel_old[2];
-
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
+static UINT8 DrvJoy4[8];
+static UINT8 DrvJoy5[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
-static UINT8 DrvInputs[3];
+static UINT8 DrvInputs[5];
 
 static struct BurnInputInfo AmspdwyInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 1"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"	}, // analog placeholder
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy5 + 0,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 2"	}, // analog placeholder
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -60,109 +54,103 @@ STDINPUTINFO(Amspdwy)
 
 static struct BurnDIPInfo AmspdwyDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0x04, NULL						},
-	{0x08, 0xff, 0xff, 0x00, NULL						},
+	{0x09, 0xff, 0xff, 0x04, NULL						},
+	{0x0a, 0xff, 0xff, 0x00, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Character Test"			},
-	{0x07, 0x01, 0x01, 0x00, "Off"						},
-	{0x07, 0x01, 0x01, 0x01, "On"						},
+	{0x09, 0x01, 0x01, 0x00, "Off"						},
+	{0x09, 0x01, 0x01, 0x01, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Show Arrows"				},
-	{0x07, 0x01, 0x02, 0x00, "Off"						},
-	{0x07, 0x01, 0x02, 0x02, "On"						},
+	{0x09, 0x01, 0x02, 0x00, "Off"						},
+	{0x09, 0x01, 0x02, 0x02, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x07, 0x01, 0x04, 0x00, "Off"						},
-	{0x07, 0x01, 0x04, 0x04, "On"						},
+	{0x09, 0x01, 0x04, 0x00, "Off"						},
+	{0x09, 0x01, 0x04, 0x04, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x07, 0x01, 0x08, 0x00, "Off"						},
-	{0x07, 0x01, 0x08, 0x08, "On"						},
+	{0x09, 0x01, 0x08, 0x00, "Off"						},
+	{0x09, 0x01, 0x08, 0x08, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Steering Test"			},
-	{0x07, 0x01, 0x10, 0x00, "Off"						},
-	{0x07, 0x01, 0x10, 0x10, "On"						},
+	{0x09, 0x01, 0x10, 0x00, "Off"						},
+	{0x09, 0x01, 0x10, 0x10, "On"						},
 
 	{0   , 0xfe, 0   ,    3, "Coinage"					},
-	{0x08, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
-	{0x08, 0x01, 0x03, 0x00, "1 Coin  1 Credits"		},
-	{0x08, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
+	{0x0a, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
+	{0x0a, 0x01, 0x03, 0x00, "1 Coin  1 Credits"		},
+	{0x0a, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"				},
-	{0x08, 0x01, 0x0c, 0x00, "Easy"						},
-	{0x08, 0x01, 0x0c, 0x04, "Normal"					},
-	{0x08, 0x01, 0x0c, 0x08, "Hard"						},
-	{0x08, 0x01, 0x0c, 0x0c, "Hardest"					},
+	{0x0a, 0x01, 0x0c, 0x00, "Easy"						},
+	{0x0a, 0x01, 0x0c, 0x04, "Normal"					},
+	{0x0a, 0x01, 0x0c, 0x08, "Hard"						},
+	{0x0a, 0x01, 0x0c, 0x0c, "Hardest"					},
 
 	{0   , 0xfe, 0   ,    4, "Time To Qualify"			},
-	{0x08, 0x01, 0x30, 0x30, "20 sec"					},
-	{0x08, 0x01, 0x30, 0x20, "30 sec"					},
-	{0x08, 0x01, 0x30, 0x10, "45 sec"					},
-	{0x08, 0x01, 0x30, 0x00, "60 sec"					},
+	{0x0a, 0x01, 0x30, 0x30, "20 sec"					},
+	{0x0a, 0x01, 0x30, 0x20, "30 sec"					},
+	{0x0a, 0x01, 0x30, 0x10, "45 sec"					},
+	{0x0a, 0x01, 0x30, 0x00, "60 sec"					},
 };
 
 STDDIPINFO(Amspdwy)
 
 static struct BurnDIPInfo AmspdwyaDIPList[]=
 {
-	{0x07, 0xff, 0xff, 0x04, NULL						},
-	{0x08, 0xff, 0xff, 0x00, NULL						},
+	{0x09, 0xff, 0xff, 0x04, NULL						},
+	{0x0a, 0xff, 0xff, 0x00, NULL						},
 
 	{0   , 0xfe, 0   ,    2, "Character Test"			},
-	{0x07, 0x01, 0x01, 0x00, "Off"						},
-	{0x07, 0x01, 0x01, 0x01, "On"						},
+	{0x09, 0x01, 0x01, 0x00, "Off"						},
+	{0x09, 0x01, 0x01, 0x01, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Show Arrows"				},
-	{0x07, 0x01, 0x02, 0x00, "Off"						},
-	{0x07, 0x01, 0x02, 0x02, "On"						},
+	{0x09, 0x01, 0x02, 0x00, "Off"						},
+	{0x09, 0x01, 0x02, 0x02, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"				},
-	{0x07, 0x01, 0x04, 0x00, "Off"						},
-	{0x07, 0x01, 0x04, 0x04, "On"						},
+	{0x09, 0x01, 0x04, 0x00, "Off"						},
+	{0x09, 0x01, 0x04, 0x04, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x07, 0x01, 0x08, 0x00, "Off"						},
-	{0x07, 0x01, 0x08, 0x08, "On"						},
+	{0x09, 0x01, 0x08, 0x00, "Off"						},
+	{0x09, 0x01, 0x08, 0x08, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Steering Test"			},
-	{0x07, 0x01, 0x10, 0x00, "Off"						},
-	{0x07, 0x01, 0x10, 0x10, "On"						},
+	{0x09, 0x01, 0x10, 0x00, "Off"						},
+	{0x09, 0x01, 0x10, 0x10, "On"						},
 
 	{0   , 0xfe, 0   ,    3, "Coinage"					},
-	{0x08, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
-	{0x08, 0x01, 0x03, 0x00, "1 Coin  1 Credits"		},
-	{0x08, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
+	{0x0a, 0x01, 0x03, 0x03, "2 Coins 1 Credits"		},
+	{0x0a, 0x01, 0x03, 0x00, "1 Coin  1 Credits"		},
+	{0x0a, 0x01, 0x03, 0x01, "1 Coin  2 Credits"		},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"				},
-	{0x08, 0x01, 0x0c, 0x00, "Easy"						},
-	{0x08, 0x01, 0x0c, 0x04, "Normal"					},
-	{0x08, 0x01, 0x0c, 0x08, "Hard"						},
-	{0x08, 0x01, 0x0c, 0x0c, "Hardest"					},
+	{0x0a, 0x01, 0x0c, 0x00, "Easy"						},
+	{0x0a, 0x01, 0x0c, 0x04, "Normal"					},
+	{0x0a, 0x01, 0x0c, 0x08, "Hard"						},
+	{0x0a, 0x01, 0x0c, 0x0c, "Hardest"					},
 
 	{0   , 0xfe, 0   ,    2, "Time To Qualify"			},
-	{0x08, 0x01, 0x10, 0x10, "45 sec"					},
-	{0x08, 0x01, 0x10, 0x00, "60 sec"					},
+	{0x0a, 0x01, 0x10, 0x10, "45 sec"					},
+	{0x0a, 0x01, 0x10, 0x00, "60 sec"					},
 };
 
 STDDIPINFO(Amspdwya)
 
-static INT32 wheel_read(INT32 select)
+static UINT8 steering_read(INT32 select)
 {
-	UINT8 wheel = 0; // analog port 0 or 1
+	UINT8  left[4] = { 0x1c, 0x12, 0x1d, 0x17 };
+	UINT8 right[4] = { 0x09, 0x0f, 0x0c, 0x05 };
 
-	if (wheel != wheel_old[select])
-	{
-		wheel = (wheel & 0x7fff) - (wheel & 0x8000);
+	UINT8 steer;
 
-		if (wheel > wheel_old[select])
-			wheel_return[select] = ((+wheel) & 0xf) | 0x00;
-		else
-			wheel_return[select] = ((-wheel) & 0xf) | 0x10;
+	steer  = ((DrvInputs[3 + select] & 1) ? ( left[nCurrentFrame & 3]) : 0x00);
+	steer |= ((DrvInputs[3 + select] & 2) ? (right[nCurrentFrame & 3]) : 0x00);
 
-		wheel_old[select] = wheel;
-	}
-
-	return wheel_return[select] | DrvInputs[select];
+	return steer | DrvInputs[select];
 }
 
 static void __fastcall amspdwy_main_write(UINT16 address, UINT8 data)
@@ -201,10 +189,10 @@ static UINT8 __fastcall amspdwy_main_read(UINT16 address)
 			return DrvDips[1];
 
 		case 0xa800:
-			return wheel_read(0);
+			return steering_read(0);
 
 		case 0xac00:
-			return wheel_read(1);
+			return steering_read(1);
 
 		case 0xb400:
 			return (BurnYM2151Read() & ~0x30) | (~DrvInputs[2] & 0x30);
@@ -287,9 +275,6 @@ static INT32 DrvDoReset()
 
 	soundlatch = 0;
 	flipscreen = 0;
-
-	wheel_return[1] = wheel_return[0] = 0;
-	wheel_old[1] = wheel_old[0] = 0;
 
 	return 0;
 }
@@ -389,7 +374,7 @@ static INT32 DrvInit()
 	BurnYM2151Init(3000000);
 	BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.55, BURN_SND_ROUTE_RIGHT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.45, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, layer_map_scan, layer_map_callback, 8, 8, 32, 32);
@@ -491,12 +476,14 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0, 3);
+		memset (DrvInputs, 0, 5);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
+			DrvInputs[3] ^= (DrvJoy4[i] & 1) << i;
+			DrvInputs[4] ^= (DrvJoy5[i] & 1) << i;
 		}
 	}
 
@@ -509,25 +496,23 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(((nCyclesTotal[0] * (i + 1)) / nInterleave) - ZetTotalCycles());
-		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[0] += ZetRun(((nCyclesTotal[0] * (i + 1)) / nInterleave) - nCyclesDone[0]);
+		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[0] += ZetRun(((nCyclesTotal[1] * (i + 1)) / nInterleave) - ZetTotalCycles());
+		nCyclesDone[1] += ZetRun(((nCyclesTotal[1] * (i + 1)) / nInterleave) - nCyclesDone[1]);
 
 		if (pBurnSoundOut) {
 			nSegment = nBurnSoundLen / nInterleave;
-
 			BurnYM2151Render(pBurnSoundOut + (nSoundBufferPos << 1), nSegment);
-
 			nSoundBufferPos += nSegment;
 		}
 
 		ZetClose();
 	}
 
-	ZetOpen(1); 
+	ZetOpen(1);
 
 	if (pBurnSoundOut) {
 		nSegment = nBurnSoundLen - nSoundBufferPos;
@@ -566,8 +551,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
-		SCAN_VAR(wheel_return);
-		SCAN_VAR(wheel_old);
 	}
 
 	return 0;

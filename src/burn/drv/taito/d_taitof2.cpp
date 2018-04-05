@@ -7815,7 +7815,9 @@ static INT32 DinorexInit()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
-	
+
+	SpritePriWritebackMode = 0;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8187,6 +8189,7 @@ static INT32 FootchmpInit()
 	} else {
 		TC0480SCPInit(TaitoNumChar, 3, 0x1d, 8, -1, 0, 0);
 	}
+	TC0480SCPSetPriMap(TaitoPriorityMap);
 	TC0140SYTInit(0);
 	TC0360PRIInit();
 	
@@ -8214,7 +8217,8 @@ static INT32 FootchmpInit()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteBufferFunction = TaitoF2FullBufferDelayed;
-	
+	SpritePriWritebackMode = 0;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8382,7 +8386,9 @@ static INT32 KoshienInit()
 	TaitoF2SoundInit();
 	
 	TaitoXOffset = 1;
-	
+
+	SpritePriWritebackMode = 0;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8804,7 +8810,8 @@ static INT32 QcrayonInit()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
-		
+	SpritePriWritebackMode = 0;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -8861,7 +8868,8 @@ static INT32 Qcrayon2Init()
 	
 	TaitoXOffset = 3;
 	TaitoF2SpriteType = 3;
-		
+	SpritePriWritebackMode = 0;
+
 	// Reset the driver
 	TaitoF2DoReset();
 
@@ -10245,13 +10253,14 @@ static INT32 FinalbDraw()
 
 static INT32 FootchmpDraw() // and deadconx
 {
-	UINT8 Layer[4];
+	UINT8 Layer[5];
 	UINT16 Priority = TC0480SCPGetBgPriority();
 	
 	Layer[0] = (Priority & 0xf000) >> 12;
 	Layer[1] = (Priority & 0x0f00) >>  8;
 	Layer[2] = (Priority & 0x00f0) >>  4;
 	Layer[3] = (Priority & 0x000f) >>  0;
+	Layer[4] = 4;
 	
 	TaitoF2TilePriority[0] = TC0360PRIRegs[4] >> 4;
 	TaitoF2TilePriority[1] = TC0360PRIRegs[5] & 0x0f;
@@ -10288,7 +10297,7 @@ static INT32 FootchmpDraw() // and deadconx
 			TaitoF2RenderSpriteListPriMasks((INT32 *)&primasks);
 	}
 
-	TC0480SCPRenderCharLayer();
+	TC0480SCPRenderCharLayer(); // always over
 	
 	BurnTransferCopy(TaitoPalette);
 
@@ -10346,15 +10355,15 @@ static INT32 TaitoF2PriRozDraw()
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	INT32 RozPriority;
 		
-	INT32 layer[3];
-	layer[0] = TC0100SCNBottomLayer(0);
-	layer[1] = layer[0] ^ 1;
-	layer[2] = 2;
+	INT32 layer[3] = { TC0100SCNBottomLayer(0), TC0100SCNBottomLayer(0) ^ 1, 2 };
 
 	TaitoF2TilePriority[layer[0]] = TC0360PRIRegs[5] & 0x0f;
 	TaitoF2TilePriority[layer[1]] = TC0360PRIRegs[5] >> 4;
 	TaitoF2TilePriority[layer[2]] = TC0360PRIRegs[4] >> 4;
 
+	// tileprilayers[] is a copy of TaitoF2TilePriority[], it needs to stay
+	// constant. TaitoF2TilePriority[] gets dynamically altered to suit the
+	// rendition.
 	INT32 tileprilayers[3] = { TaitoF2TilePriority[0], TaitoF2TilePriority[1], TaitoF2TilePriority[2] };
 
 	TaitoF2SpritePriority[0] = TC0360PRIRegs[6] & 0x0f;
@@ -10394,7 +10403,7 @@ static INT32 TaitoF2PriRozDraw()
 		}
 	}
 
-	TaitoF2RenderSpriteListBackwardsForPriority();
+	if (nSpriteEnable & 1) TaitoF2RenderSpriteListBackwardsForPriority();
 
 	BurnTransferCopy(TaitoPalette);
 

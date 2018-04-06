@@ -31,6 +31,8 @@ static UINT8 *video_regs;
 static UINT8 flipscreen;
 static UINT8 sound_reset;
 
+static INT32 nExtraCycles;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
@@ -260,6 +262,8 @@ static INT32 DrvDoReset()
 
 	flipscreen = 0;
 	sound_reset = 0;
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -577,15 +581,21 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3686400 / 60, 3686400 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	INT32 nSndIRQ = (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) ? 127 : 255; // firebatl 2x / frame, clsroad 1x
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == 240 && irq_mask[0]) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		if (i == 240) {
+			if (irq_mask[0]) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			if (pBurnDraw) { // broken sprites on bike legs/pedals when street is on an incline fixed by drawing here
+				BurnDrvRedraw();
+			}
+		}
 		INT32 nCycles = ZetTotalCycles();
 		ZetClose();
 
@@ -600,12 +610,10 @@ static INT32 DrvFrame()
 		ZetClose();
 	}
 
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnSoundOut) {
 		wipingsnd_update(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
 	}
 
 	return 0;

@@ -2430,7 +2430,7 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 
 		case MENU_WWW_NSFORUM:
 			if (!nVidFullscreen) {
-				ShellExecute(NULL, _T("open"), _T("http://neosource.1emu.net/forums/"), NULL, NULL, SW_SHOWNORMAL);
+				ShellExecute(NULL, _T("open"), _T("http://neo-source.com/"), NULL, NULL, SW_SHOWNORMAL);
 			}
 			break;
 

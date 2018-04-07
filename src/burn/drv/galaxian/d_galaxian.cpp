@@ -19162,6 +19162,27 @@ static struct BurnRomInfo ScobraeRomDesc[] = {
 STD_ROM_PICK(Scobrae)
 STD_ROM_FN(Scobrae)
 
+static struct BurnRomInfo ScobragRomDesc[] = {
+	{ "2c_32.bin",     0x01000, 0x04ffab61, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2e_32.bin",     0x01000, 0xf82a52de, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2f_32.bin",     0x01000, 0x9dee81cc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2h_32.bin",     0x01000, 0x99dee0c6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2j_32.bin",     0x01000, 0xdb7fb865, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2l_32.bin",     0x01000, 0x6493d2d3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	
+	{ "c5_16.bin",     0x00800, 0xd4346959, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "d5_16..bin",    0x00800, 0xcc025d95, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "e5_16.bin",     0x00800, 0x1628c53f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+		
+	{ "h5_16.bin",     0x00800, 0x64d113b4, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "f5_16.bin",     0x00800, 0xa96316d3, BRF_GRA | GAL_ROM_TILES_SHARED },
+		
+	{ "super_cobre_288_6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+};
+
+STD_ROM_PICK(Scobrag)
+STD_ROM_FN(Scobrag)
+
 static struct BurnRomInfo SuprheliRomDesc[] = {
 	{ "1.2c",          0x01000, 0xb25141d8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	{ "scobra2e.bin",  0x01000, 0xa270e44d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
@@ -21254,7 +21275,7 @@ struct BurnDriver BurnDrvScobrase = {
 
 struct BurnDriver BurnDrvScobrab = {
 	"scobrab", "scobra", NULL, NULL, "1981",
-	"Super Cobra (bootleg)\0", NULL, "bootleg", "Galaxian",
+	"Super Cobra (bootleg, set 1)\0", NULL, "bootleg (Karateco)", "Galaxian",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScobrabRomInfo, ScobrabRomName, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
@@ -21269,6 +21290,16 @@ struct BurnDriver BurnDrvScobrae = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
 	NULL, ScobraeRomInfo, ScobraeRomName, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
 	ScobraeInit, KonamiExit, GalFrame, NULL, GalScan,
+	NULL, 392, 224, 256, 3, 4
+};
+
+struct BurnDriver BurnDrvScobrag = {
+	"scobrag", "scobra", NULL, NULL, "1981",
+	"Super Cobra (bootleg, set 2)\0", NULL, "bootleg (A.V.G. by Zaccaria)", "Galaxian",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG, 2, HARDWARE_GALAXIAN, GBF_HORSHOOT, 0,
+	NULL, ScobragRomInfo, ScobragRomName, NULL, NULL, SfxInputInfo, ScobrasDIPInfo,
+	ScobraInit, KonamiExit, GalFrame, NULL, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 

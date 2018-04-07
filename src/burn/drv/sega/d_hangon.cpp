@@ -402,6 +402,47 @@ static struct BurnRomInfo Enduror1RomDesc[] = {
 STD_ROM_PICK(Enduror1)
 STD_ROM_FN(Enduror1)
 
+static struct BurnRomInfo EnduroraRomDesc[] = {
+	{ "epr-7640a.ic97",   0x08000, 0x1d1dc5d4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7636a.ic84",   0x08000, 0x84131639, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7641.ic98",    0x08000, 0x2503ae7c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7637.ic85",    0x08000, 0x82a27a8c, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7642.ic99",    0x08000, 0x1c453bea, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "epr-7638.ic86",    0x08000, 0x70544779, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-7634a.ic54",   0x08000, 0xaec83731, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "epr-7635a.ic67",   0x08000, 0xb2fce96f, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+
+	{ "epr-7644.ic31",    0x08000, 0xe7a4ff90, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7645.ic46",    0x08000, 0x4caa0095, SYS16_ROM_TILES | BRF_GRA },
+	{ "epr-7646.ic60",    0x08000, 0x7e432683, SYS16_ROM_TILES | BRF_GRA },
+	
+	// sprites - ASSY ROM BD 837-6004-02 with jumpers J2, J3, J7 & J8 made
+	{ "mpr-10146.ic36",   0x20000, 0x85564401, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10144.ic28",   0x20000, 0x03569803, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10142.ic18",   0x20000, 0x4a72251b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10140.1c8",    0x20000, 0x68ff1691, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10145.ic32",   0x20000, 0x3e64eec0, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10143.ic24",   0x20000, 0xbdad5fd2, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10141.ic14",   0x20000, 0x560360b9, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "mpr-10139.ic4",    0x20000, 0x863c7d9e, SYS16_ROM_SPRITES | BRF_GRA },
+		
+	{ "epr-7633.ic1",     0x08000, 0x6f146210, SYS16_ROM_ROAD | BRF_GRA },
+
+	{ "epr-7682.rom",     0x08000, 0xc4efbf48, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	
+	{ "epr-7681.rom",     0x08000, 0xbc0c4d12, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "epr-7680.rom",     0x08000, 0x627b3c8c, SYS16_ROM_PCMDATA | BRF_SND },
+	
+	{ "epr-6844.ic123",   0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
+	
+	{ "317-0013a.key",    0x02000, 0x295e6737, SYS16_ROM_KEY | BRF_ESS | BRF_PRG },
+};
+
+
+STD_ROM_PICK(Endurora)
+STD_ROM_FN(Endurora)
+
 static struct BurnRomInfo EnduroblRomDesc[] = {
 	{ "7.13j",            0x10000, 0xf1d6b4b7, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	{ "4.13h",            0x10000, 0x43bff873, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
@@ -1488,6 +1529,16 @@ struct BurnDriver BurnDrvEnduror1 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_YM2203, GBF_RACING, 0,
 	NULL, Enduror1RomInfo, Enduror1RomName, NULL, NULL, EndurorInputInfo, EndurorDIPInfo,
 	Enduror1Init, System16Exit, HangonYM2203Frame, NULL, System16Scan,
+	NULL, 0x1800, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvEndurora = {
+	"endurora", "enduror", NULL, NULL, "1986",
+	"Enduro Racer (YM2151) (mask ROM sprites, FD1089B 317-0013A)\0", NULL, "Sega", "Hang-On",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_HANGON | HARDWARE_SEGA_FD1089B_ENC | HARDWARE_SEGA_SPRITE_LOAD32 | HARDWARE_SEGA_YM2203, GBF_RACING, 0,
+	NULL, EnduroraRomInfo, EnduroraRomName, NULL, NULL, EndurorInputInfo, EndurorDIPInfo,
+	EndurorInit, System16Exit, HangonYM2203Frame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
 };
 

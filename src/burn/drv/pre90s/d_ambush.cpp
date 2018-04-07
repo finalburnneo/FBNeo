@@ -507,14 +507,14 @@ static struct BurnRomInfo ambushRomDesc[] = {
 	{ "a3.f7",        0x2000, 0x8db57ab5, BRF_ESS | BRF_PRG }, //  2
 	{ "a4.e7",        0x2000, 0x4a34d2a4, BRF_ESS | BRF_PRG }, //  3
 
-	{ "fa2.n4",       0x2000, 0xe7f134ba, BRF_GRA },	   //  4 Graphics tiles
-	{ "fa1.m4",       0x2000, 0xad10969e, BRF_GRA },	   //  5
+	{ "fa2.n4",       0x2000, 0xe7f134ba, BRF_GRA },	   	   //  4 Graphics tiles
+	{ "fa1.m4",       0x2000, 0xad10969e, BRF_GRA },	       //  5
 
-	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	   //  6 color PROMs
+	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	       //  6 color PROMs
 
-	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	   //  7 Proms - Not used
-	{ "13.bpr",	  0x0100, 0x547e970f, BRF_OPT },	   //  8
-	{ "14.bpr",	  0x0100, 0x622a8ce7, BRF_OPT },	   //  9
+	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	       //  7 Proms - Not used
+	{ "13.bpr",	      0x0100, 0x547e970f, BRF_OPT },	       //  8
+	{ "14.bpr",	      0x0100, 0x622a8ce7, BRF_OPT },	       //  9
 };
 
 STD_ROM_PICK(ambush)
@@ -538,14 +538,14 @@ static struct BurnRomInfo ambushjRomDesc[] = {
 	{ "ambush.f7",    0x2000, 0xd023ca29, BRF_ESS | BRF_PRG }, //  2
 	{ "ambush.e7",    0x2000, 0x6cc2d3ee, BRF_ESS | BRF_PRG }, //  3
 
-	{ "ambush.n4",    0x2000, 0xecc0dc85, BRF_GRA },	   //  4 Graphics tiles
-	{ "ambush.m4",    0x2000, 0xe86ca98a, BRF_GRA },	   //  5
+	{ "ambush.n4",    0x2000, 0xecc0dc85, BRF_GRA },	       //  4 Graphics tiles
+	{ "ambush.m4",    0x2000, 0xe86ca98a, BRF_GRA },	       //  5
 
-	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	   //  6 color PROMs
+	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	       //  6 color PROMs
 
-	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	   //  7 Proms - Not used
-	{ "13.bpr",	  0x0100, 0x547e970f, BRF_OPT },	   //  8
-	{ "14.bpr",	  0x0100, 0x622a8ce7, BRF_OPT },	   //  9
+	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	       //  7 Proms - Not used
+	{ "13.bpr",	  	  0x0100, 0x547e970f, BRF_OPT },	       //  8
+	{ "14.bpr",	      0x0100, 0x622a8ce7, BRF_OPT },	       //  9
 };
 
 STD_ROM_PICK(ambushj)
@@ -570,14 +570,14 @@ static struct BurnRomInfo ambushhRomDesc[] = {
 	{ "a3.f7",        0x2000, 0x8db57ab5, BRF_ESS | BRF_PRG }, //  2
 	{ "a4.e7",        0x2000, 0x4a34d2a4, BRF_ESS | BRF_PRG }, //  3
 
-	{ "fa2.n4",       0x2000, 0xe7f134ba, BRF_GRA },	   //  4 Graphics tiles
-	{ "fa1.m4",       0x2000, 0xad10969e, BRF_GRA },	   //  5
+	{ "fa2.n4",       0x2000, 0xe7f134ba, BRF_GRA },	   	   //  4 Graphics tiles
+	{ "fa1.m4",       0x2000, 0xad10969e, BRF_GRA },	       //  5
 
-	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	   //  6 color PROMs
+	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	       //  6 color PROMs
 
-	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	   //  7 Proms - Not used
-	{ "13.bpr",	  0x0100, 0x547e970f, BRF_OPT },	   //  8
-	{ "14.bpr",	  0x0100, 0x622a8ce7, BRF_OPT },	   //  9
+	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	       //  7 Proms - Not used
+	{ "13.bpr",	      0x0100, 0x547e970f, BRF_OPT },	       //  8
+	{ "14.bpr",	      0x0100, 0x622a8ce7, BRF_OPT },	       //  9
 };
 
 STD_ROM_PICK(ambushh)
@@ -602,14 +602,14 @@ static struct BurnRomInfo ambushvRomDesc[] = {
 	{ "n3.f7",        0x2000, 0xd023ca29, BRF_ESS | BRF_PRG }, //  2
 	{ "n4.e7",        0x2000, 0x6cc2d3ee, BRF_ESS | BRF_PRG }, //  3
 
-	{ "f2.n4",        0x2000, 0xecc0dc85, BRF_GRA },	   //  4 Graphics tiles
-	{ "f1.m4",        0x2000, 0xe86ca98a, BRF_GRA },	   //  5
+	{ "f2.n4",        0x2000, 0xecc0dc85, BRF_GRA },	       //  4 Graphics tiles
+	{ "f1.m4",        0x2000, 0xe86ca98a, BRF_GRA },	       //  5
 
-	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	   //  6 color PROMs
+	{ "a.bpr",        0x0100, 0x5f27f511, BRF_GRA },	       //  6 color PROMs
 
-	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	   //  7 Proms - Not used
-	{ "13.bpr",	  0x0100, 0x547e970f, BRF_OPT },	   //  8
-	{ "14.bpr",	  0x0100, 0x622a8ce7, BRF_OPT },	   //  9
+	{ "b.bpr",        0x0100, 0x1b03fd3b, BRF_OPT },	       //  7 Proms - Not used
+	{ "13.bpr",	      0x0100, 0x547e970f, BRF_OPT },	       //  8
+	{ "14.bpr",	      0x0100, 0x622a8ce7, BRF_OPT },	       //  9
 };
 
 STD_ROM_PICK(ambushv)

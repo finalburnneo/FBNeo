@@ -686,9 +686,9 @@ static struct BurnRomInfo formatzRomDesc[] = {
 	{ "format_z.2",	0x1000, 0x3a821391, 5 | BRF_GRA },           //  7
 	{ "format_z.3",	0x1000, 0x7d1aec79, 5 | BRF_GRA },           //  8
 
-	{ "10c",	0x0100, 0xb756dd6d, 6 | BRF_GRA },           //  9 Color PROMs
-	{ "10b",	0x0100, 0x00df8809, 6 | BRF_GRA },           // 10
-	{ "10a",	0x0100, 0xe8733c8f, 6 | BRF_GRA },           // 11
+	{ "10c",		0x0100, 0xb756dd6d, 6 | BRF_GRA },           //  9 Color PROMs
+	{ "10b",		0x0100, 0x00df8809, 6 | BRF_GRA },           // 10
+	{ "10a",		0x0100, 0xe8733c8f, 6 | BRF_GRA },           // 11
 };
 
 STD_ROM_PICK(formatz)
@@ -722,9 +722,9 @@ static struct BurnRomInfo aerobotoRomDesc[] = {
 	{ "aeroboto.2",	0x1000, 0xc7f81a3c, 5 | BRF_GRA },           //  7
 	{ "aeroboto.3",	0x1000, 0x5203ad04, 5 | BRF_GRA },           //  8
 
-	{ "10c",	0x0100, 0xb756dd6d, 6 | BRF_GRA },           //  9 Color PROMs
-	{ "10b",	0x0100, 0x00df8809, 6 | BRF_GRA },           // 10
-	{ "10a",	0x0100, 0xe8733c8f, 6 | BRF_GRA },           // 11
+	{ "10c",		0x0100, 0xb756dd6d, 6 | BRF_GRA },           //  9 Color PROMs
+	{ "10b",		0x0100, 0x00df8809, 6 | BRF_GRA },           // 10
+	{ "10a",		0x0100, 0xe8733c8f, 6 | BRF_GRA },           // 11
 };
 
 STD_ROM_PICK(aeroboto)

@@ -6587,6 +6587,49 @@ struct BurnDriver BurnDrvgarouh = {
 	0x1000, 320, 224, 4, 3
 };
 
+// Garou - Mark of the Wolves (NGH-2530)
+/* Original Version - Encrypted GFX */ /* AES VERSION */
+
+static struct BurnRomInfo garouhaRomDesc[] = {
+	{ "neo-sma",      0x040000, 0x9aa450e6, 9 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* standard program roms are identical to 'garou' set, only content of custom chip above differs */
+	{ "253-ep1.p1",   0x200000, 0xea3171a4, 1 | BRF_ESS | BRF_PRG }, //  1 
+	{ "253-ep2.p2",   0x200000, 0x382f704b, 1 | BRF_ESS | BRF_PRG }, //  2 
+	{ "253-ep3.p3",   0x200000, 0xe395bfdd, 1 | BRF_ESS | BRF_PRG }, //  3 
+	{ "253-ep4.p4",   0x200000, 0xda92c08e, 1 | BRF_ESS | BRF_PRG }, //  4 
+	
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	/* Encrypted */
+	{ "253-c1.c1",    0x800000, 0x0603e046, 3 | BRF_GRA },           //  5 Sprite data
+	{ "253-c2.c2",    0x800000, 0x0917d2a4, 3 | BRF_GRA },           //  6 
+	{ "253-c3.c3",    0x800000, 0x6737c92d, 3 | BRF_GRA },           //  7 
+	{ "253-c4.c4",    0x800000, 0x5ba92ec6, 3 | BRF_GRA },           //  8 
+	{ "253-c5.c5",    0x800000, 0x3eab5557, 3 | BRF_GRA },           //  9 
+	{ "253-c6.c6",    0x800000, 0x308d098b, 3 | BRF_GRA },           // 10 
+	{ "253-c7.c7",    0x800000, 0xc0e995ae, 3 | BRF_GRA },           // 11 
+	{ "253-c8.c8",    0x800000, 0x21a11303, 3 | BRF_GRA },           // 12 
+
+	{ "253-m1.m1",    0x040000, 0x36a806be, 4 | BRF_ESS | BRF_PRG }, // 13 Z80 code
+
+	{ "253-v1.v1",    0x400000, 0x263e388c, 5 | BRF_SND },           // 14 Sound data
+	{ "253-v2.v2",    0x400000, 0x2c6bc7be, 5 | BRF_SND },           // 15 
+	{ "253-v3.v3",    0x400000, 0x0425b27d, 5 | BRF_SND },           // 16 
+	{ "253-v4.v4",    0x400000, 0xa54be8a9, 5 | BRF_SND },           // 17  
+};
+
+STDROMPICKEXT(garouha, garouha, neogeo)
+STD_ROM_FN(garouha)
+
+struct BurnDriver BurnDrvgarouha = {
+	"garouha", "garou", "neogeo", NULL, "1999",
+	"Garou - Mark of the Wolves (NGH-2530)\0", NULL, "SNK", "Neo Geo MVS",
+	L"Garou\0\u9913\u72FC - mark of the wolves (NGH-2530)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC42 | HARDWARE_SNK_SMA_PROTECTION, GBF_VSFIGHT, 0,
+	NULL, garouhaRomInfo, garouhaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	garouInit, NeoSMAExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
 // Garou - Mark of the Wolves (prototype)
 /* Prototype Version, seems genuine */
 
@@ -12182,16 +12225,13 @@ struct BurnDriver BurnDrvpbobbl2n = {
 	0x1000,	304, 224, 4, 3
 };
 
-// Pochi and Nyaa
+// Pochi and Nyaa (Ver 2.02)
 /* Encrypted Set */ /* MVS ONLY RELEASE */
+// this version does not show the web address on the title screen
 
 static struct BurnRomInfo pnyaaRomDesc[] = {
-	/* also found P1 on eprom with label sticker P N 2.02 on board NEO-MVS PROGBK2 (2000.3.21)
-	   and M1 on eprom with label sticker M1 on board NEO-MVS CHAFIO (1999.6.14) (NEO-CMC 7050)
-	{ "pn2.02.p1",    0x100000, 0x00000000, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ M27C800
-	{ "m1.m1",    	  0x080000, 0x00000000, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code 	/ M27C4001 */
-	{ "267-p1.p1",    0x100000, 0x112fe2c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
-
+	{ "pn202.p1",     0x100000, 0xbf34e71c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ M27C800
+	
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	{ "267-c1.c1",    0x800000, 0x5eebee65, 3 | BRF_GRA },           //  1 Sprite data 	/ mask rom TC534000
 	{ "267-c2.c2",    0x800000, 0x2b67187b, 3 | BRF_GRA },           //  2 				/ mask rom TC534000
@@ -12221,10 +12261,38 @@ INT32 pnyaaInit()
 
 struct BurnDriver BurnDrvpnyaa = {
 	"pnyaa", NULL, "neogeo", NULL, "2003",
-	"Pochi and Nyaa\0", NULL, "Aiky / Taito", "Neo Geo MVS",
-	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E\0", NULL, NULL, NULL,
+	"Pochi and Nyaa (Ver 2.02)\0", NULL, "Aiky / Taito", "Neo Geo MVS",
+	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E (Ver 2.02)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_PUZZLE, 0,
 	NULL, pnyaaRomInfo, pnyaaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	pnyaaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// Pochi and Nyaa (Ver 2.00)
+/* Encrypted Set */ /* MVS ONLY RELEASE */
+
+static struct BurnRomInfo pnyaaaRomDesc[] = {
+	{ "267-p1.p1",    0x100000, 0x112fe2c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
+
+	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
+	{ "267-c1.c1",    0x800000, 0x5eebee65, 3 | BRF_GRA },           //  1 Sprite data 	/ mask rom TC534000
+	{ "267-c2.c2",    0x800000, 0x2b67187b, 3 | BRF_GRA },           //  2 				/ mask rom TC534000
+
+	{ "267-m1.m1",    0x080000, 0xc7853ccd, 4 | BRF_ESS | BRF_PRG }, //  3 Z80 code 	/ mask rom TC534000
+
+	{ "267-v1.v1",    0x400000, 0xe2e8e917, 5 | BRF_SND },           //  4 Sound data 	/ mask rom TC5332204
+};
+
+STDROMPICKEXT(pnyaaa, pnyaaa, neogeo)
+STD_ROM_FN(pnyaaa)
+
+struct BurnDriver BurnDrvpnyaaa = {
+	"pnyaaa", "pnyaa", "neogeo", NULL, "2003",
+	"Pochi and Nyaa (Ver 2.00)\0", NULL, "Aiky / Taito", "Neo Geo MVS",
+	L"Pochi and Nyaa\0\u30DD\u30C1\u30C3\u3068\u306B\u3083\uFF5E (Ver 2.00)\0", NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_PUZZLE, 0,
+	NULL, pnyaaaRomInfo, pnyaaaRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	pnyaaInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

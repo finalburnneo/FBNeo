@@ -1250,6 +1250,25 @@ static struct BurnRomInfo ExplbrkrRomDesc[] = {
 STD_ROM_PICK(Explbrkr)
 STD_ROM_FN(Explbrkr)
 
+static struct BurnRomInfo ExplbrkrkRomDesc[] = {
+	{ "u18",        		0x040000, 0x08267644, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "u19",        		0x040000, 0xf0a243b1, BRF_ESS | BRF_PRG }, //  1	
+	
+	{ "ts001e.u37",        	0x080000, 0x70b66e7e, BRF_GRA },	   	   //  2 Sprites
+	{ "ts000e.u38",        	0x080000, 0xa7a94143, BRF_GRA },	   	   //  3	
+	{ "ts002e.u36",        	0x040000, 0x611271e6, BRF_GRA },	   	   //  4	
+	
+	{ "ts010.u4",          	0x100000, 0xdf935324, BRF_GRA },	   	   //  5 Tiles
+	
+	{ "ts020.u33",         	0x100000, 0xeb58c35d, BRF_GRA },	   	   //  6 Tiles (Layers 2 & 3)
+
+	{ "ts030.u5",          	0x100000, 0x1d68e9d1, BRF_SND },		   //  7 OKI Sample ROM
+};
+
+
+STD_ROM_PICK(Explbrkrk)
+STD_ROM_FN(Explbrkrk)
+
 static struct BurnRomInfo BakubrkrRomDesc[] = {
 	{ "ts100j.u18",        	0x040000, 0x8cc0a4fd, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
 	{ "ts101j.u19",        	0x040000, 0xaea92195, BRF_ESS | BRF_PRG }, //  1	
@@ -7622,7 +7641,7 @@ struct BurnDriver BurnDrvBonkadv = {
 
 struct BurnDriver BurnDrvExplbrkr = {
 	"explbrkr", NULL, NULL, NULL, "1992",
-	"Explosive Breaker\0", NULL, "Kaneko", "Kaneko16",
+	"Explosive Breaker (World)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, ExplbrkrRomInfo, ExplbrkrRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
@@ -7630,9 +7649,19 @@ struct BurnDriver BurnDrvExplbrkr = {
 	NULL, 0x1000, 224, 256, 3, 4
 };
 
+struct BurnDriver BurnDrvExplbrkrk = {
+	"explbrkrk", "explbrkr", NULL, NULL, "1992",
+	"Explosive Breaker (Korea)\0", NULL, "Kaneko", "Kaneko16",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
+	NULL, ExplbrkrkRomInfo, ExplbrkrkRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,
+	ExplbrkrInit, ExplbrkrExit, ExplbrkrFrame, NULL, ExplbrkrScan,
+	NULL, 0x1000, 224, 256, 3, 4
+};
+
 struct BurnDriver BurnDrvBakubrkr = {
 	"bakubrkr", "explbrkr", NULL, NULL, "1992",
-	"Bakuretsu Breaker\0", NULL, "Kaneko", "Kaneko16",
+	"Bakuretsu Breaker (Japan)\0", NULL, "Kaneko", "Kaneko16",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_KANEKO16, GBF_VERSHOOT, 0,
 	NULL, BakubrkrRomInfo, BakubrkrRomName, NULL, NULL, ExplbrkrInputInfo, ExplbrkrDIPInfo,

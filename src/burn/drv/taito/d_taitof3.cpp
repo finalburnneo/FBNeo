@@ -5292,6 +5292,8 @@ static struct BurnRomInfo kiramekiRomDesc[] = {
 
 	{ "e44-07.38",		0x400000, 0xa9e28544, TAITO_ES5505_BYTESWAP },    // 19 Ensoniq Samples
 	{ "e44-08.39",		0x400000, 0x33ba3037, TAITO_ES5505_BYTESWAP },    // 20
+	
+	{ "d77-20.37",		0x000117, 0x6bfbec07, BRF_OPT },
 };
 
 STD_ROM_PICK(kirameki)

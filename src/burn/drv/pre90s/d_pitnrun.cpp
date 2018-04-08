@@ -862,27 +862,27 @@ struct BurnDriver BurnDrvPitnruna = {
 // Jump Kun (prototype)
 
 static struct BurnRomInfo jumpkunRomDesc[] = {
-	{ "PR1.5D.2764",	0x2000, 0xb0eabe9f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "PR2.5C.2764",	0x2000, 0xd9240413, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "PR3.5B.2764",	0x2000, 0x105e3fec, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "PR4.5A.2764",	0x2000, 0x3a17ca88, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pr1.5d.2764",	0x2000, 0xb0eabe9f, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "pr2.5c.2764",	0x2000, 0xd9240413, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pr3.5b.2764",	0x2000, 0x105e3fec, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pr4.5a.2764",	0x2000, 0x3a17ca88, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "SND1.2732",		0x1000, 0x1290f316, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
-	{ "SND2.2732",		0x1000, 0xec5e4489, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "snd1.2732",		0x1000, 0x1290f316, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 #1 Code
+	{ "snd2.2732",		0x1000, 0xec5e4489, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "OBJ1.1K.2764",	0x2000, 0x8929abfd, 3 | BRF_GRA },           //  6 Sprites
-	{ "OBJ2.1M.2764",	0x2000, 0xc7bf5819, 3 | BRF_GRA },           //  7
-	{ "OBJ3.1N.2764",	0x2000, 0x5eeec986, 3 | BRF_GRA },           //  8
+	{ "obj1.1k.2764",	0x2000, 0x8929abfd, 3 | BRF_GRA },           //  6 Sprites
+	{ "obj2.1m.2764",	0x2000, 0xc7bf5819, 3 | BRF_GRA },           //  7
+	{ "obj3.1n.2764",	0x2000, 0x5eeec986, 3 | BRF_GRA },           //  8
 
-	{ "CHR1.6D.2764",	0x2000, 0x3c93d4ee, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "CHR2.6F.2764",	0x2000, 0x154fad33, 4 | BRF_GRA },           // 10
+	{ "chr1.6d.2764",	0x2000, 0x3c93d4ee, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "chr2.6f.2764",	0x2000, 0x154fad33, 4 | BRF_GRA },           // 10
 
-	{ "BSC2.3M.2764",	0x1000, 0x25445f17, 5 | BRF_GRA },           // 11 Foreground Tiles
-	{ "BSC1.3P.2764",	0x1000, 0x39ca2c37, 5 | BRF_GRA },           // 12
+	{ "bsc2.3m.2764",	0x1000, 0x25445f17, 5 | BRF_GRA },           // 11 Foreground Tiles
+	{ "bsc1.3p.2764",	0x1000, 0x39ca2c37, 5 | BRF_GRA },           // 12
 
-	{ "8H.82S123.bin",	0x0020, 0xe54a6fe6, 6 | BRF_GRA },           // 13 Color data
-	{ "8L.82S123.bin",	0x0020, 0x624830d5, 6 | BRF_GRA },           // 14
-	{ "8J.82S123.bin",	0x0020, 0x223a6990, 6 | BRF_GRA },           // 15
+	{ "8h.82s123.bin",	0x0020, 0xe54a6fe6, 6 | BRF_GRA },           // 13 Color data
+	{ "8l.82s123.bin",	0x0020, 0x624830d5, 6 | BRF_GRA },           // 14
+	{ "8j.82s123.bin",	0x0020, 0x223a6990, 6 | BRF_GRA },           // 15
 };
 
 STD_ROM_PICK(jumpkun)

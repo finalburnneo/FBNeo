@@ -5702,17 +5702,17 @@ struct BurnDriver BurnDrvPururun = {
 // The Karate Tournament
 
 static struct BurnRomInfo karatourRomDesc[] = {
-	{ "2.2FAB.8G",			0x040000, 0x199a28d4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "3.0560.10G",			0x040000, 0xb054e683, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.2fab.8g",			0x040000, 0x199a28d4, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "3.0560.10g",			0x040000, 0xb054e683, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "KT001.1I",			0x020000, 0x1dd2008c, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
+	{ "kt001.1i",			0x020000, 0x1dd2008c, 2 | BRF_PRG | BRF_ESS }, //  2 uPD7810 Code
 
-	{ "361A04.15F",			0x100000, 0xf6bf20a5, 3 | BRF_GRA },           //  3 Graphics
-	{ "361A07.17D",			0x100000, 0x794cc1c0, 3 | BRF_GRA },           //  4
-	{ "361A05.17F",			0x100000, 0xea9c11fc, 3 | BRF_GRA },           //  5
-	{ "361A06.15D",			0x100000, 0x7e15f058, 3 | BRF_GRA },           //  6
+	{ "361a04.15f",			0x100000, 0xf6bf20a5, 3 | BRF_GRA },           //  3 Graphics
+	{ "361a07.17d",			0x100000, 0x794cc1c0, 3 | BRF_GRA },           //  4
+	{ "361a05.17f",			0x100000, 0xea9c11fc, 3 | BRF_GRA },           //  5
+	{ "361a06.15d",			0x100000, 0x7e15f058, 3 | BRF_GRA },           //  6
 
-	{ "8.4A06.1D",			0x040000, 0x8d208179, 4 | BRF_SND },           //  7 MSM6295 Samples
+	{ "8.4a06.1d",			0x040000, 0x8d208179, 4 | BRF_SND },           //  7 MSM6295 Samples
 };
 
 STD_ROM_PICK(karatour)

@@ -3449,8 +3449,8 @@ struct BurnDriver BurnDrvKengo = {
 // Ken-Go (set 2)
 
 static struct BurnRomInfo kengoaRomDesc[] = {
-	{ "KEN-D-H0-.IC55",	0x20000, 0xed3da88c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
-	{ "KEN-D-L0-.IC61",	0x20000, 0x92c57d8e, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "ken-d-h0-.ic55",	0x20000, 0xed3da88c, 0x01 | BRF_PRG | BRF_ESS }, //  0 V30 Code
+	{ "ken-d-l0-.ic61",	0x20000, 0x92c57d8e, 0x01 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ken_d-sp.rom",	0x10000, 0x233ca1cf, 0x06 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
@@ -3466,8 +3466,8 @@ static struct BurnRomInfo kengoaRomDesc[] = {
 
 	{ "ken_m14.rom",	0x20000, 0x6651e9b7, 0x05 | BRF_SND },           // 11 DAC Samples
 	
-	{ "KEN_B-4N-.IC23",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 12 Proms
-	{ "KEN_B-4P-.IC24",	0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 13 
+	{ "ken_b-4n-.ic23",	0x00100, 0xb460c438, 0x00 | BRF_OPT },           // 12 Proms
+	{ "ken_b-4p-.ic24",	0x00100, 0x526f10ca, 0x00 | BRF_OPT },           // 13 
 };
 
 STD_ROM_PICK(kengoa)

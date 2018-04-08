@@ -169,16 +169,16 @@ STD_ROM_FN(bgaregtw)
 static struct BurnRomInfo bgareggablRomDesc[] = {
 	{ "xt-8m.bin",    0x100000, 0x4a6657cb, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
 
-	{ "6#-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data // rom4.bin + rom3.bin
-	{ "5#-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2					// rom2.bin + rom1.bin
+	{ "6@-322",       0x400000, 0x37fe48ed, BRF_GRA },			 //  1 GP9001 Tile data // rom4.bin + rom3.bin
+	{ "5@-322",       0x400000, 0x5a06c031, BRF_GRA },			 //  2					// rom2.bin + rom1.bin
 
-	{ "1#-256",       0x008000, 0x760dcd14, BRF_GRA },			 //  3 Extra text layer tile data
+	{ "1@-256",       0x008000, 0x760dcd14, BRF_GRA },			 //  3 Extra text layer tile data
 
 	{ "snd.bin",      0x020000, 0x68632952, BRF_ESS | BRF_PRG }, //  4 Z80 program
 
 	{ "rom5.bin",     0x100000, 0xF6D49863, BRF_SND },			 //  5 MSM6295 ADPCM data
 	
-	{ "2#-256",       0x008000, 0x456dd16e, BRF_GRA },			 //  6 (looks like garbage)
+	{ "2@-256",       0x008000, 0x456dd16e, BRF_GRA },			 //  6 (looks like garbage)
 };
 
 

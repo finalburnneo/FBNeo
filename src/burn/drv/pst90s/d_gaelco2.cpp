@@ -1921,8 +1921,8 @@ struct BurnDriver BurnDrvAligatorun = {
 // Alligator Hunt (unprotected, set 2)
 
 static struct BurnRomInfo aligatorunaRomDesc[] = {
-	{ "STM27C4001.45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "AM27C040.44",	0x080000, 0xd45a26ed, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "stm27c4001.45",	0x080000, 0xa70301b8, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "am27c040.44",	0x080000, 0xd45a26ed, 0 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "u48",		0x400000, 0x19e03bf1, 1 | BRF_GRA },           //  2 Graphics & Samples
 	{ "u47",		0x400000, 0x74a5a29f, 1 | BRF_GRA },           //  3

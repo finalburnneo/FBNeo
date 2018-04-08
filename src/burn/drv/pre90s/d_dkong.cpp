@@ -2288,6 +2288,8 @@ static struct BurnRomInfo dkongRomDesc[] = {
 	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkong)
@@ -2371,6 +2373,8 @@ static struct BurnRomInfo dkonghrdRomDesc[] = {
 	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkonghrd)
@@ -2409,6 +2413,8 @@ static struct BurnRomInfo dkongoRomDesc[] = {
 	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongo)
@@ -2447,6 +2453,8 @@ static struct BurnRomInfo dkongjRomDesc[] = {
 	{ "c-2k.bpr",	0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",	0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",	0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongj)
@@ -2485,6 +2493,8 @@ static struct BurnRomInfo dkongjoRomDesc[] = {
 	{ "c-2k.bpr",	0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",	0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",	0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjo)
@@ -2523,6 +2533,8 @@ static struct BurnRomInfo dkongjo1RomDesc[] = {
 	{ "c-2k.bpr",	0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",	0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",	0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjo1)
@@ -2561,6 +2573,8 @@ static struct BurnRomInfo dkongfRomDesc[] = {
 	{ "c-2k.bpr",	0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",	0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",	0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongf)
@@ -2600,6 +2614,8 @@ static struct BurnRomInfo dkongpeRomDesc[] = {
 	{ "c-2k.bpr",		0x0100, 0xe273ede5, 5 }, // 12 proms
 	{ "c-2j.bpr",		0x0100, 0xd6412358, 5 }, // 13
 	{ "v-5e.bpr",		0x0100, 0xb869b8f5, 5 }, // 14
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongpe)
@@ -2679,6 +2695,8 @@ static struct BurnRomInfo dkongxRomDesc[] = {
 	{ "c-2k.bpr",		0x00100, 0xe273ede5, 6 }, // 13 proms
 	{ "c-2j.bpr",		0x00100, 0xd6412358, 6 }, // 14
 	{ "v-5e.bpr",		0x00100, 0xb869b8f5, 6 }, // 15
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongx)
@@ -2762,6 +2780,8 @@ static struct BurnRomInfo dkongx11RomDesc[] = {
 	{ "c-2k.bpr",		0x00100, 0xe273ede5, 6 }, // 13 proms
 	{ "c-2j.bpr",		0x00100, 0xd6412358, 6 }, // 14
 	{ "v-5e.bpr",		0x00100, 0xb869b8f5, 6 }, // 15
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongx11)
@@ -2798,6 +2818,8 @@ static struct BurnRomInfo dkongjrRomDesc[] = {
 	{ "djr1-c-2e.2e",		0x0100, 0x463dc7ad, 5 }, // 10 proms
 	{ "djr1-c-2f.2f",		0x0100, 0x47ba0042, 5 }, // 11
 	{ "djr1-v-2n.2n",		0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjr)
@@ -2925,6 +2947,8 @@ static struct BurnRomInfo dkongjrjRomDesc[] = {
 	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
 	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
 	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjrj)
@@ -2961,6 +2985,8 @@ static struct BurnRomInfo dkongjnrjRomDesc[] = {
 	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
 	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
 	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjnrj)
@@ -2997,6 +3023,8 @@ static struct BurnRomInfo dkongjrbRomDesc[] = {
 	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
 	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
 	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjrb)
@@ -3033,6 +3061,8 @@ static struct BurnRomInfo jrkingRomDesc[] = {
 	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
 	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
 	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(jrking)
@@ -3071,6 +3101,8 @@ static struct BurnRomInfo dkingjrRomDesc[] = {
 	{ "mb7052.6b",	0x0100, 0xdbf185bf, 5 }, // 12
 
 	{ "mb7051.8j",	0x0020, 0xa5a6f2ca, 5 }, // 13
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkingjr)
@@ -3175,6 +3207,8 @@ static struct BurnRomInfo dkongjrpbRomDesc[] = {
 	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
 	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
 	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(dkongjrpb)

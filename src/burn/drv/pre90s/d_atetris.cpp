@@ -581,6 +581,13 @@ static struct BurnRomInfo atetrisb2RomDesc[] = {
 	{ "k1-01",		0x10000, 0xfa056809, 1 | BRF_ESS | BRF_PRG }, //  0 6502 Code
 
 	{ "136066-1101.35a",	0x10000, 0x84a1939f, 2 | BRF_GRA },           //  1 Graphics Tiles
+	
+	{ "tibpal16l8-25cn.pal2",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "tibpal16l8-25cn.pal4",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
+	{ "tibpal16l8-25cn.pal5",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
+	{ "tibpal16r4-25cn.pal1",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
+	{ "tibpal16r4-25cn.pal3",	0x00104, 0x00000000, 0 | BRF_OPT | BRF_NODUMP  },
+	{ "m3-7603-5.prom1",		0x00020, 0x79656af3, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(atetrisb2)

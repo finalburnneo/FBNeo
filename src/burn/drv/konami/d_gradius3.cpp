@@ -1073,14 +1073,14 @@ static struct BurnRomInfo gradius3jsRomDesc[] = {
 
 	{ "945_m05.d9",		0x10000, 0xc8c45365, 3 | BRF_PRG | BRF_ESS }, // 10 Z80 Code
 
-	{ "945_A02A.K2",	0x20000, 0xfbb81511, 4 | BRF_GRA },           // 11 Sprites
-	{ "945_A02C.M2",	0x20000, 0x031b55e8, 4 | BRF_GRA },           // 12
-	{ "945_A01A.E2",	0x20000, 0xbace5abb, 4 | BRF_GRA },           // 13
-	{ "945_A01C.H2",	0x20000, 0xd91b29a6, 4 | BRF_GRA },           // 14
-	{ "945_A02B.K4",	0x20000, 0xc0fed4ab, 4 | BRF_GRA },           // 15
-	{ "945_A02D.M4",	0x20000, 0xd462817c, 4 | BRF_GRA },           // 16
-	{ "945_A01B.E4",	0x20000, 0xb426090e, 4 | BRF_GRA },           // 17
-	{ "945_A01D.H4",	0x20000, 0x3990c09a, 4 | BRF_GRA },           // 18
+	{ "945_a02a.k2",	0x20000, 0xfbb81511, 4 | BRF_GRA },           // 11 Sprites
+	{ "945_a02c.m2",	0x20000, 0x031b55e8, 4 | BRF_GRA },           // 12
+	{ "945_a01a.e2",	0x20000, 0xbace5abb, 4 | BRF_GRA },           // 13
+	{ "945_a01c.h2",	0x20000, 0xd91b29a6, 4 | BRF_GRA },           // 14
+	{ "945_a02b.k4",	0x20000, 0xc0fed4ab, 4 | BRF_GRA },           // 15
+	{ "945_a02d.m4",	0x20000, 0xd462817c, 4 | BRF_GRA },           // 16
+	{ "945_a01b.e4",	0x20000, 0xb426090e, 4 | BRF_GRA },           // 17
+	{ "945_a01d.h4",	0x20000, 0x3990c09a, 4 | BRF_GRA },           // 18
 	{ "945_l04a.k6",	0x20000, 0x884e21ee, 4 | BRF_GRA },           // 19
 	{ "945_l04c.m6",	0x20000, 0x45bcd921, 4 | BRF_GRA },           // 20
 	{ "945_l03a.e6",	0x20000, 0xa67ef087, 4 | BRF_GRA },           // 21
@@ -1090,8 +1090,8 @@ static struct BurnRomInfo gradius3jsRomDesc[] = {
 	{ "945_l03b.e8",	0x20000, 0x933e68b9, 4 | BRF_GRA },           // 25
 	{ "945_l03d.h8",	0x20000, 0xf375e87b, 4 | BRF_GRA },           // 26
 
-	{ "945_A10A.C14",	0x20000, 0xec717414, 5 | BRF_SND },           // 27 K007232
-	{ "945_A10B.C16",	0x20000, 0x709e30e4, 5 | BRF_SND },           // 28
+	{ "945_a10a.c14",	0x20000, 0xec717414, 5 | BRF_SND },           // 27 K007232
+	{ "945_a10b.c16",	0x20000, 0x709e30e4, 5 | BRF_SND },           // 28
 	{ "945_l11a.c18",	0x20000, 0x6043f4eb, 5 | BRF_SND },           // 29
 	{ "945_l11b.c20",	0x20000, 0x89ea3baf, 5 | BRF_SND },           // 30
 

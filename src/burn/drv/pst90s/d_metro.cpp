@@ -6148,8 +6148,8 @@ struct BurnDriver BurnDrvBalcube = {
 // Bang Bang Ball (v1.05)
 
 static struct BurnRomInfo bangballRomDesc[] = {
-	{ "b-ball_j_rom#006.u18",	0x040000, 0x0e4124bc, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "b-ball_j_rom#005.u19",	0x040000, 0x3fa08587, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "b-ball_j_rom@006.u18",	0x040000, 0x0e4124bc, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "b-ball_j_rom@005.u19",	0x040000, 0x3fa08587, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "bp963a_u30.u30",		0x100000, 0xb0ca8e39, 2 | BRF_GRA },           //  2 Graphics
 	{ "bp963a_u29.u29",		0x100000, 0xd934468f, 2 | BRF_GRA },           //  3
@@ -6157,7 +6157,7 @@ static struct BurnRomInfo bangballRomDesc[] = {
 	{ "bp963a_u27.u27",		0x100000, 0x5e3c7732, 2 | BRF_GRA },           //  5
 
 	{ "yrw801-m",			0x200000, 0x2a9d8d43, 3 | BRF_GRA },           //  6 YMF278b Samples
-	{ "b-ball_j_rom#007.u49",	0x080000, 0x04cc91a9, 3 | BRF_GRA },           //  7
+	{ "b-ball_j_rom@007.u49",	0x080000, 0x04cc91a9, 3 | BRF_GRA },           //  7
 };
 
 STD_ROM_PICK(bangball)

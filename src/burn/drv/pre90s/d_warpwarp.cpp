@@ -1335,10 +1335,10 @@ struct BurnDriver BurnDrvGeebeeg = {
 // Gee Bee (UK)
 
 static struct BurnRomInfo geebeeaRomDesc[] = {
-	{ "1.1m",	0x0400, 0x23252fc7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "2.1p",	0x0400, 0x0bc4d4ca, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.1s",	0x0400, 0x7899b4c1, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "4.1t",	0x0400, 0x0b6e6fcb, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "132",	0x0400, 0x23252fc7, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "133",	0x0400, 0x0bc4d4ca, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "134",	0x0400, 0x7899b4c1, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "135",	0x0400, 0x0b6e6fcb, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "a_136",	0x0400, 0xbd01437d, 2 | BRF_GRA },           //  4 gfx1
 };

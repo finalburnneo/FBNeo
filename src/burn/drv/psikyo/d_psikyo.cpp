@@ -2236,8 +2236,8 @@ struct BurnDriver BurnDrvBtlKRoad = {
 // Battle K-Road (Korean PCB))
 // f205v id 1266
 static struct BurnRomInfo btlkroadkRomDesc[] = {
-	{ "4(dot).u46",   0x040000, 0xe724d429, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
-	{ "5(dot).u39",   0x040000, 0xc0d65765, BRF_ESS | BRF_PRG }, //  1
+	{ "4,dot.u46",   0x040000, 0xe724d429, BRF_ESS | BRF_PRG }, //  0 CPU #0 code
+	{ "5,dot.u39",   0x040000, 0xc0d65765, BRF_ESS | BRF_PRG }, //  1
 
 	{ "u14.bin",      0x200000, 0x282d89c3, BRF_GRA },			 //  2 Sprite data
 	{ "u24.bin",      0x200000, 0xbbe9d3d1, BRF_GRA },			 //  3
@@ -2248,7 +2248,7 @@ static struct BurnRomInfo btlkroadkRomDesc[] = {
 
 	{ "u33.bin",      0x200000, 0x4c8577f1, BRF_GRA },			 //  7 Tile data
 
-	{ "3(k).u71",     0x020000, 0xe0f0c597, BRF_ESS | BRF_PRG }, //  8 CPU #1 code
+	{ "3,k.u71",     0x020000, 0xe0f0c597, BRF_ESS | BRF_PRG }, //  8 CPU #1 code
 
 	{ "u64.bin",      0x080000, 0x0f33049f, BRF_SND },			 //  9 YM2610 ADPCM (delta-t) data
 	{ "u56.bin",      0x100000, 0x51d73682, BRF_SND },			 // 10 YM2610 ADPCM data

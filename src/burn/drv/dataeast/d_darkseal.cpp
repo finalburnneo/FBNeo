@@ -757,15 +757,15 @@ struct BurnDriver BurnDrvDarkseal = {
 // Dark Seal (World revision 1)
 
 static struct BurnRomInfo darksea1RomDesc[] = {
-	{ "FZ_04-4.J12",	0x20000, 0xa1a985a9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "FZ_01-1.H14",	0x20000, 0x98bd2940, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "FZ_00-2.H12",	0x20000, 0xfbf3ac63, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "FZ_05-2.J14",	0x20000, 0xd5e3ae3f, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "fz_04-4.j12",	0x20000, 0xa1a985a9, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "fz_01-1.h14",	0x20000, 0x98bd2940, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "fz_00-2.h12",	0x20000, 0xfbf3ac63, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "fz_05-2.j14",	0x20000, 0xd5e3ae3f, 1 | BRF_PRG | BRF_ESS }, //  3
 	
-	{ "FZ_06-1.J15",	0x10000, 0xc4828a6d, 2 | BRF_PRG | BRF_ESS }, //  4 H6280 Code
+	{ "fz_06-1.j15",	0x10000, 0xc4828a6d, 2 | BRF_PRG | BRF_ESS }, //  4 H6280 Code
 
-	{ "FZ_02-1.J1",		0x10000, 0x3c9c3012, 3 | BRF_GRA },           //  5 Text Tiles
-	{ "FZ_03-1.J2",		0x10000, 0x264b90ed, 3 | BRF_GRA },           //  6
+	{ "fz_02-1.j1",		0x10000, 0x3c9c3012, 3 | BRF_GRA },           //  5 Text Tiles
+	{ "fz_03-1.j2",		0x10000, 0x264b90ed, 3 | BRF_GRA },           //  6
 
 	{ "mac-03.h3",		0x80000, 0x9996f3dc, 4 | BRF_GRA },           //  7 Foreground Tiles
 
@@ -774,9 +774,9 @@ static struct BurnRomInfo darksea1RomDesc[] = {
 	{ "mac-00.b1",		0x80000, 0x52acf1d6, 6 | BRF_GRA },           //  9 Sprite Tiles
 	{ "mac-01.b3",		0x80000, 0xb28f7584, 6 | BRF_GRA },           // 10
 
-	{ "FZ_08-1.K17",	0x20000, 0xc9bf68e1, 7 | BRF_SND },           // 11 Oki6295 #0 Samples
+	{ "fz_08-1.k17",	0x20000, 0xc9bf68e1, 7 | BRF_SND },           // 11 Oki6295 #0 Samples
 
-	{ "FZ_07-.K14",		0x20000, 0x588dd3cb, 8 | BRF_SND },           // 12 Oki6295 #1 Samples 
+	{ "fz_07-.k14",		0x20000, 0x588dd3cb, 8 | BRF_SND },           // 12 Oki6295 #1 Samples 
 };
 
 STD_ROM_PICK(darksea1)

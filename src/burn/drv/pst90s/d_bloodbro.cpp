@@ -914,9 +914,9 @@ static struct BurnRomInfo bloodbroRomDesc[] = {
 	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
 	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__=c=1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__=c=1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 	
@@ -950,9 +950,9 @@ static struct BurnRomInfo bloodbrojRomDesc[] = {
 	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
 	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__=c=1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__=c=1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 	
@@ -986,9 +986,9 @@ static struct BurnRomInfo bloodbrojaRomDesc[] = {
 	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
 	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__=c=1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__=c=1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 	
@@ -1022,9 +1022,9 @@ static struct BurnRomInfo bloodbrouRomDesc[] = {
 	{ "bb_05.u061.6f",	0x010000, 0x04ba6d19, 3 | BRF_GRA },           //  5 Characters
 	{ "bb_06.u063.6d",	0x010000, 0x7092e35b, 3 | BRF_GRA },           //  6
 
-	{ "blood_bros_bk__(c)1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
+	{ "blood_bros_bk__=c=1990_tad_corp.u064.4d",	0x100000, 0x1aa87ee6, 4 | BRF_GRA },           //  7 Tiles
 
-	{ "blood_bros_obj__(c)1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
+	{ "blood_bros_obj__=c=1990_tad_corp.u078.2n",	0x100000, 0xd27c3952, 5 | BRF_GRA },           //  8 Sprites
 
 	{ "bb_08.u095.5a",	0x020000, 0xdeb1b975, 6 | BRF_SND },           //  9 Samples
 	

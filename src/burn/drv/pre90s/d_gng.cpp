@@ -420,7 +420,7 @@ static struct BurnRomInfo DrvblRomDesc[] = {
 	
 	{ "2.8529.13h",    0x08000, 0x55cfb196, BRF_ESS | BRF_PRG }, //  5	Z80 Program 
 	
-	{ "gg11e.bin",   	0x04000, 0xccea9365, BRF_GRA },	     //  6	Characters
+	{ "1.84490.11e",   0x04000, 0xecfccf07, BRF_GRA },	     //  6	Characters
 	
 	{ "13.84490.3e",   0x04000, 0xddd56fa9, BRF_GRA },	     //  7	Tiles
 	{ "12.84490.1e",   0x04000, 0x7302529d, BRF_GRA },	     //  8
@@ -510,7 +510,7 @@ static struct BurnRomInfo DrvprotRomDesc[] = {
 	
 	{ "gg14h.bin",     0x08000, 0x55cfb196, BRF_ESS | BRF_PRG }, //  5	Z80 Program 
 	
-	{ "1.84490.11e",   0x04000, 0xecfccf07, BRF_GRA },	     //  6	Characters
+	{ "gg11e.bin",	   0x04000, 0xccea9365, BRF_GRA },	     //  6	Characters
 	
 	{ "gg3e.bin",      0x04000, 0x68db22c8, BRF_GRA },	     //  7	Tiles
 	{ "gg1e.bin",      0x04000, 0xdad8dd2f, BRF_GRA },	     //  8

@@ -721,23 +721,23 @@ STD_ROM_PICK(Vigilantb)
 STD_ROM_FN(Vigilantb)
 
 static struct BurnRomInfo BuccanrsRomDesc[] = {
-	{ "BC-011_K-163.U58",       0x10000, 0xbf1d7e6f, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
-	{ "BC-012_K-163.U25",       0x10000, 0x87303ba8, BRF_ESS | BRF_PRG },	//  1
+	{ "bc-011_k-163.u58",       0x10000, 0xbf1d7e6f, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "bc-012_k-163.u25",       0x10000, 0x87303ba8, BRF_ESS | BRF_PRG },	//  1
 	
-	{ "BC-001_K-0161.U128",    	0x10000, 0xeb65f8c3, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
+	{ "bc-001_k-0161.u128",    	0x10000, 0xeb65f8c3, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
 	
-	{ "BC-003_K-0161.U212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
-	{ "BC-004_K-0161.U189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
+	{ "bc-003_k-0161.u212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
+	{ "bc-004_k-0161.u189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
 	
-	{ "BC-005_K-0161.U113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
-	{ "BC-006_K-161.U80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
-	{ "BC-008_K-161.U52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
-	{ "BC-007_K-161.U70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
+	{ "bc-005_k-0161.u113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
+	{ "bc-006_k-161.u80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
+	{ "bc-008_k-161.u52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
+	{ "bc-007_k-161.u70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
 	
-	{ "BC-009_K-163.U49",       0x20000, 0x0c6188fb, BRF_GRA },				//  9	Background
-	{ "BC-010_K-163.U27",       0x20000, 0x2d383ff8, BRF_GRA },				// 10
+	{ "bc-009_k-163.u49",       0x20000, 0x0c6188fb, BRF_GRA },				//  9	Background
+	{ "bc-010_k-163.u27",       0x20000, 0x2d383ff8, BRF_GRA },				// 10
 	
-	{ "BC-002_K-0161.U74",      0x10000, 0x36ee1dac, BRF_SND },				// 11	Samples
+	{ "bc-002_k-0161.u74",      0x10000, 0x36ee1dac, BRF_SND },				// 11	Samples
 	
 	{ "prom1.u54",     			0x00100, 0xc324835e, BRF_GRA },				// 12	PROMs
 	{ "prom4.u79",     			0x00100, 0xe6506ef4, BRF_GRA },				// 13
@@ -754,22 +754,22 @@ STD_ROM_FN(Buccanrs)
 
 static struct BurnRomInfo BuccanrsaRomDesc[] = {
 	{ "bc-011",        			0x08000, 0x6b657ef1, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
-	{ "BC-012_K-163.U25",       0x10000, 0x87303ba8, BRF_ESS | BRF_PRG },	//  1
+	{ "bc-012_k-163.u25",       0x10000, 0x87303ba8, BRF_ESS | BRF_PRG },	//  1
 	
-	{ "BC-001_K-0161.U128",    	0x10000, 0xeb65f8c3, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
+	{ "bc-001_k-0161.u128",    	0x10000, 0xeb65f8c3, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
 	
-	{ "BC-003_K-0161.U212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
-	{ "BC-004_K-0161.U189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
+	{ "bc-003_k-0161.u212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
+	{ "bc-004_k-0161.u189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
 	
-	{ "BC-005_K-0161.U113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
-	{ "BC-006_K-161.U80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
-	{ "BC-008_K-161.U52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
-	{ "BC-007_K-161.U70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
+	{ "bc-005_k-0161.u113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
+	{ "bc-006_k-161.u80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
+	{ "bc-008_k-161.u52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
+	{ "bc-007_k-161.u70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
 	
-	{ "BC-009_K-163.U49",       0x20000, 0x0c6188fb, BRF_GRA },				//  9	Background
-	{ "BC-010_K-163.U27",       0x20000, 0x2d383ff8, BRF_GRA },				// 10
+	{ "bc-009_k-163.u49",       0x20000, 0x0c6188fb, BRF_GRA },				//  9	Background
+	{ "bc-010_k-163.u27",       0x20000, 0x2d383ff8, BRF_GRA },				// 10
 	
-	{ "BC-002_K-0161.U74",      0x10000, 0x36ee1dac, BRF_SND },				// 11	Samples
+	{ "bc-002_k-0161.u74",      0x10000, 0x36ee1dac, BRF_SND },				// 11	Samples
 	
 	{ "prom1.u54",     			0x00100, 0xc324835e, BRF_GRA },				// 12	PROMs
 	{ "prom4.u79",     			0x00100, 0xe6506ef4, BRF_GRA },				// 13
@@ -781,23 +781,23 @@ STD_ROM_PICK(Buccanrsa)
 STD_ROM_FN(Buccanrsa)
 
 static struct BurnRomInfo BuccanrsbRomDesc[] = {
-	{ "rr_Du.u58",       		0x08000, 0xdcad3a8b, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
-	{ "BC-012_K-163.U25",       0x10000, 0x87303ba8, BRF_ESS | BRF_PRG },	//  1
+	{ "rr_du.u58",       		0x08000, 0xdcad3a8b, BRF_ESS | BRF_PRG },	//  0	Z80 #1 Program Code
+	{ "bc-012_k-163.u25",       0x10000, 0x87303ba8, BRF_ESS | BRF_PRG },	//  1
 	
-	{ "BC-001_K-0161.U128",    	0x10000, 0xeb65f8c3, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
+	{ "bc-001_k-0161.u128",    	0x10000, 0xeb65f8c3, BRF_ESS | BRF_PRG },	//  2	Z80 #2 Program 
 	
-	{ "BC-003_K-0161.U212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
-	{ "BC-004_K-0161.U189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
+	{ "bc-003_k-0161.u212",    	0x10000, 0x95e3c517, BRF_GRA },				//  3	Characters
+	{ "bc-004_k-0161.u189",     0x10000, 0xfe2377ab, BRF_GRA },				//  4
 	
-	{ "BC-005_K-0161.U113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
-	{ "BC-006_K-161.U80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
-	{ "BC-008_K-161.U52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
-	{ "BC-007_K-161.U70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
+	{ "bc-005_k-0161.u113",     0x20000, 0x16dc435f, BRF_GRA },				//  5	Sprites
+	{ "bc-006_k-161.u80",       0x10000, 0x4fe3bf97, BRF_GRA },				//  6
+	{ "bc-008_k-161.u52",       0x20000, 0x078aef7f, BRF_GRA },				//  7
+	{ "bc-007_k-161.u70",       0x10000, 0xf650fa90, BRF_GRA },				//  8
 	
-	{ "BC-009_K-163.U49",       0x20000, 0x0c6188fb, BRF_GRA },				//  9	Background
-	{ "BC-010_K-163.U27",       0x20000, 0x2d383ff8, BRF_GRA },				// 10
+	{ "bc-009_k-163.u49",       0x20000, 0x0c6188fb, BRF_GRA },				//  9	Background
+	{ "bc-010_k-163.u27",       0x20000, 0x2d383ff8, BRF_GRA },				// 10
 	
-	{ "BC-002_K-0161.U74",      0x10000, 0x36ee1dac, BRF_SND },				// 11	Samples
+	{ "bc-002_k-0161.u74",      0x10000, 0x36ee1dac, BRF_SND },				// 11	Samples
 	
 	{ "prom1.u54",     			0x00100, 0xc324835e, BRF_GRA },				// 12	PROMs
 	{ "prom4.u79",     			0x00100, 0xe6506ef4, BRF_GRA },				// 13

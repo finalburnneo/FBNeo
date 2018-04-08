@@ -629,17 +629,17 @@ STD_ROM_PICK(Rallyxmr)
 STD_ROM_FN(Rallyxmr)
 
 static struct BurnRomInfo DngrtrckRomDesc[] = {
-	{ "1B-2716.BIN",   0x00800, 0xb6180a12, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
-	{ "1C-2716.BIN",   0x00800, 0x7cbeb656, BRF_ESS | BRF_PRG }, //	 1
-	{ "1D-2716.BIN",   0x00800, 0x594207b1, BRF_ESS | BRF_PRG }, //	 2
-	{ "1E-2716.BIN",   0x00800, 0xae447251, BRF_ESS | BRF_PRG }, //	 3
-	{ "1H-2716.BIN",   0x00800, 0xe0d4b534, BRF_ESS | BRF_PRG }, //	 4
-	{ "1J-2716.BIN",   0x00800, 0xe9740f16, BRF_ESS | BRF_PRG }, //	 5
-	{ "1K-2716.BIN",   0x00800, 0x843109f2, BRF_ESS | BRF_PRG }, //	 6
-	{ "1L-2716.BIN",   0x00800, 0x17759749, BRF_ESS | BRF_PRG }, //	 7
+	{ "1b-2716.bin",   0x00800, 0xb6180a12, BRF_ESS | BRF_PRG }, //  0	Z80 Program Code
+	{ "1c-2716.bin",   0x00800, 0x7cbeb656, BRF_ESS | BRF_PRG }, //	 1
+	{ "1d-2716.bin",   0x00800, 0x594207b1, BRF_ESS | BRF_PRG }, //	 2
+	{ "1e-2716.bin",   0x00800, 0xae447251, BRF_ESS | BRF_PRG }, //	 3
+	{ "1h-2716.bin",   0x00800, 0xe0d4b534, BRF_ESS | BRF_PRG }, //	 4
+	{ "1j-2716.bin",   0x00800, 0xe9740f16, BRF_ESS | BRF_PRG }, //	 5
+	{ "1k-2716.bin",   0x00800, 0x843109f2, BRF_ESS | BRF_PRG }, //	 6
+	{ "1l-2716.bin",   0x00800, 0x17759749, BRF_ESS | BRF_PRG }, //	 7
 	
-	{ "8E-2716.BIN",   0x00800, 0x50a224e2, BRF_GRA },	     //  8	Characters & Sprites
-	{ "8D-2716.BIN",   0x00800, 0x68dff552, BRF_GRA },	     //  9
+	{ "8e-2716.bin",   0x00800, 0x50a224e2, BRF_GRA },	     //  8	Characters & Sprites
+	{ "8d-2716.bin",   0x00800, 0x68dff552, BRF_GRA },	     //  9
 	
 	{ "rx1-6.8m",      0x00100, 0x3c16f62c, BRF_GRA },	     //  10	Dots
 	

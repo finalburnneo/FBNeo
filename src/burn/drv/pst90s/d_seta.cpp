@@ -9521,41 +9521,41 @@ struct BurnDriver BurnDrvGundhara = {
 // Gundhara (Chinese, bootleg?)
 
 static struct BurnRomInfo gundharacRomDesc[] = {
-	{ "4.U3",			0x080000, 0x14e9970a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "2.U4",			0x080000, 0x96dfc658, 0x01 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.U103",			0x080000, 0x312f58e2, 0x01 | BRF_PRG | BRF_ESS }, //  2
-	{ "1.U102",			0x080000, 0x8d23a23c, 0x01 | BRF_PRG | BRF_ESS }, //  3
+	{ "4.u3",			0x080000, 0x14e9970a, 0x01 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.u4",			0x080000, 0x96dfc658, 0x01 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.u103",			0x080000, 0x312f58e2, 0x01 | BRF_PRG | BRF_ESS }, //  2
+	{ "1.u102",			0x080000, 0x8d23a23c, 0x01 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "19.U140",		0x080000, 0x32d92c28, 0x0b | BRF_GRA },           //  4 Sprites
-	{ "23.U142",		0x080000, 0xff44db9b, 0x0b | BRF_GRA },           //  5
-	{ "21.U141",		0x080000, 0x1901dc08, 0x0b | BRF_GRA },           //  6
-	{ "25.U143",		0x080000, 0x877289a2, 0x0b | BRF_GRA },           //  7
-	{ "18.U140-B",		0x080000, 0x4f023fb0, 0x0b | BRF_GRA },           //  8
-	{ "22.U142-B",		0x080000, 0x6f3fe7e7, 0x0b | BRF_GRA },           //  9
-	{ "20.U141-B",		0x080000, 0x7f1932e0, 0x0b | BRF_GRA },           // 10
-	{ "24.U143-B",		0x080000, 0x066a2e2b, 0x0b | BRF_GRA },           // 11
-	{ "9.U144",			0x080000, 0x6b4a531f, 0x0b | BRF_GRA },           // 12
-	{ "13.U146",		0x080000, 0x45be3df4, 0x0b | BRF_GRA },           // 13
-	{ "11.U145",		0x080000, 0xf5210aa5, 0x0b | BRF_GRA },           // 14
-	{ "15.U147",		0x080000, 0x17003119, 0x0b | BRF_GRA },           // 15
-	{ "8.U144-B",		0x080000, 0xad9d9338, 0x0b | BRF_GRA },           // 16
-	{ "12.U146-B",		0x080000, 0x0fd4c062, 0x0b | BRF_GRA },           // 17
-	{ "10.U145-B",		0x080000, 0x7c5d12b9, 0x0b | BRF_GRA },           // 18
-	{ "14.U147-B",		0x080000, 0x5a8af50f, 0x0b | BRF_GRA },           // 19
+	{ "19.u140",		0x080000, 0x32d92c28, 0x0b | BRF_GRA },           //  4 Sprites
+	{ "23.u142",		0x080000, 0xff44db9b, 0x0b | BRF_GRA },           //  5
+	{ "21.u141",		0x080000, 0x1901dc08, 0x0b | BRF_GRA },           //  6
+	{ "25.u143",		0x080000, 0x877289a2, 0x0b | BRF_GRA },           //  7
+	{ "18.u140-b",		0x080000, 0x4f023fb0, 0x0b | BRF_GRA },           //  8
+	{ "22.u142-b",		0x080000, 0x6f3fe7e7, 0x0b | BRF_GRA },           //  9
+	{ "20.u141-b",		0x080000, 0x7f1932e0, 0x0b | BRF_GRA },           // 10
+	{ "24.u143-b",		0x080000, 0x066a2e2b, 0x0b | BRF_GRA },           // 11
+	{ "9.u144",			0x080000, 0x6b4a531f, 0x0b | BRF_GRA },           // 12
+	{ "13.u146",		0x080000, 0x45be3df4, 0x0b | BRF_GRA },           // 13
+	{ "11.u145",		0x080000, 0xf5210aa5, 0x0b | BRF_GRA },           // 14
+	{ "15.u147",		0x080000, 0x17003119, 0x0b | BRF_GRA },           // 15
+	{ "8.u144-b",		0x080000, 0xad9d9338, 0x0b | BRF_GRA },           // 16
+	{ "12.u146-b",		0x080000, 0x0fd4c062, 0x0b | BRF_GRA },           // 17
+	{ "10.u145-b",		0x080000, 0x7c5d12b9, 0x0b | BRF_GRA },           // 18
+	{ "14.u147-b",		0x080000, 0x5a8af50f, 0x0b | BRF_GRA },           // 19
 
-	{ "5.U148",			0x080000, 0x0c740f9b, 0x1c | BRF_GRA },           // 20 Layer 1 tiles
-	{ "6.U150",			0x080000, 0xba60eb98, 0x1c | BRF_GRA },           // 21
-	{ "7.U154",			0x080000, 0xb768e666, 0x1c | BRF_GRA },           // 22
+	{ "5.u148",			0x080000, 0x0c740f9b, 0x1c | BRF_GRA },           // 20 Layer 1 tiles
+	{ "6.u150",			0x080000, 0xba60eb98, 0x1c | BRF_GRA },           // 21
+	{ "7.u154",			0x080000, 0xb768e666, 0x1c | BRF_GRA },           // 22
 
-	{ "26.U164",		0x080000, 0xbe3ccaba, 0x1d | BRF_GRA },           // 23 Layer 2 tiles
-	{ "28.U166",		0x080000, 0x8a650a4e, 0x1d | BRF_GRA },		  	  // 24
-	{ "27.U165",		0x080000, 0x47994ff0, 0x1d | BRF_GRA },		  	  // 25
-	{ "29.U167",		0x080000, 0x453c3d3f, 0x1d | BRF_GRA },		  	  // 26
-	{ "16.U152",		0x080000, 0x5ccc500b, 0x1d | BRF_GRA },		  	  // 27
-	{ "17.U153",		0x080000, 0x5586d086, 0x1d | BRF_GRA },		  	  // 28
+	{ "26.u164",		0x080000, 0xbe3ccaba, 0x1d | BRF_GRA },           // 23 Layer 2 tiles
+	{ "28.u166",		0x080000, 0x8a650a4e, 0x1d | BRF_GRA },		  	  // 24
+	{ "27.u165",		0x080000, 0x47994ff0, 0x1d | BRF_GRA },		  	  // 25
+	{ "29.u167",		0x080000, 0x453c3d3f, 0x1d | BRF_GRA },		  	  // 26
+	{ "16.u152",		0x080000, 0x5ccc500b, 0x1d | BRF_GRA },		  	  // 27
+	{ "17.u153",		0x080000, 0x5586d086, 0x1d | BRF_GRA },		  	  // 28
 
-	{ "30.U69",			0x080000, 0x3111a98a, 0x06 | BRF_SND },           // 29 x1-010 Samples
-	{ "31.U70",			0x080000, 0x30cb2524, 0x06 | BRF_SND },           // 30 
+	{ "30.u69",			0x080000, 0x3111a98a, 0x06 | BRF_SND },           // 29 x1-010 Samples
+	{ "31.u70",			0x080000, 0x30cb2524, 0x06 | BRF_SND },           // 30 
 };
 
 STD_ROM_PICK(gundharac)

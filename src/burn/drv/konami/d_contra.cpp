@@ -1363,7 +1363,7 @@ struct BurnDriver BurnDrvContrabj = {
 // Contra (Japan bootleg, set 2)
 
 static struct BurnRomInfo contrabj1RomDesc[] = {
-	{ "2__(contrabtj2).2k",	0x10000, 0xbdb9196d, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
+	{ "2__,contrabtj2.2k",	0x10000, 0xbdb9196d, 1 | BRF_PRG  | BRF_ESS }, //  0 m6809 #0 Code
 	{ "1.2h",		0x10000, 0x5d5f7438, 1 | BRF_PRG  | BRF_ESS }, //  1
 
 	{ "a3.4p",		0x08000, 0xd1549255, 2 | BRF_PRG  | BRF_ESS }, //  2 m6809 #1 Code

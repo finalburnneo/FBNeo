@@ -2617,23 +2617,23 @@ struct BurnDriver BurnDrvBuraiken = {
 // Fire Ball (FM Work)
 
 static struct BurnRomInfo fballRomDesc[] = {
-	{ "D4.bin",		0x20000, 0x6122b3dc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "d4.bin",		0x20000, 0x6122b3dc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "A05.bin",		0x10000, 0x474dd19e, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "a05.bin",		0x10000, 0x474dd19e, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "J03.bin",		0x10000, 0xbe11627f, 3 | BRF_GRA },           //  2 Characters
+	{ "j03.bin",		0x10000, 0xbe11627f, 3 | BRF_GRA },           //  2 Characters
 
-	{ "B15.bin",		0x20000, 0x2169ad3e, 4 | BRF_GRA },           //  3 Background Layer 1 Tiles
-	{ "C15.bin",		0x20000, 0x0f77b03e, 4 | BRF_GRA },           //  4
-	{ "E15.bin",		0x20000, 0x89a761d2, 4 | BRF_GRA },           //  5
-	{ "F15.bin",		0x20000, 0x34b3f9a2, 4 | BRF_GRA },           //  6
+	{ "b15.bin",		0x20000, 0x2169ad3e, 4 | BRF_GRA },           //  3 Background Layer 1 Tiles
+	{ "c15.bin",		0x20000, 0x0f77b03e, 4 | BRF_GRA },           //  4
+	{ "e15.bin",		0x20000, 0x89a761d2, 4 | BRF_GRA },           //  5
+	{ "f15.bin",		0x20000, 0x34b3f9a2, 4 | BRF_GRA },           //  6
 
-	{ "J15.bin",		0x20000, 0xed7be8e7, 5 | BRF_GRA },           //  7 Sprites
-	{ "H15.bin",		0x20000, 0x6ffb5433, 5 | BRF_GRA },           //  8
+	{ "j15.bin",		0x20000, 0xed7be8e7, 5 | BRF_GRA },           //  7 Sprites
+	{ "h15.bin",		0x20000, 0x6ffb5433, 5 | BRF_GRA },           //  8
 
-	{ "A03.bin",		0x40000, 0x22b0d089, 6 | BRF_SND },           //  9 msm6295 Samples
-	{ "A02.bin",		0x40000, 0x951d6579, 6 | BRF_SND },           // 10
-	{ "A01.bin",		0x40000, 0x020b5261, 6 | BRF_SND },           // 11
+	{ "a03.bin",		0x40000, 0x22b0d089, 6 | BRF_SND },           //  9 msm6295 Samples
+	{ "a02.bin",		0x40000, 0x951d6579, 6 | BRF_SND },           // 10
+	{ "a01.bin",		0x40000, 0x020b5261, 6 | BRF_SND },           // 11
 };
 
 STD_ROM_PICK(fball)

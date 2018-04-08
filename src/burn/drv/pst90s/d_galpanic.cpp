@@ -728,7 +728,7 @@ static struct BurnRomInfo Fantsia2nRomDesc[] = {
 	{ "scr8.g20", 	 		0x080000, 0x694ae2b3, BRF_ESS | BRF_PRG },
 	{ "scr7.f20",	   		0x080000, 0x6068712c, BRF_ESS | BRF_PRG },
 
-	{ "23_OBJ1.U5",     	0x080000, 0xB45C9234, BRF_GRA },			  // graphics
+	{ "23_obj1.u5",     	0x080000, 0xB45C9234, BRF_GRA },			  // graphics
 	{ "obj2.2i",     		0x080000, 0xea6e3861, BRF_GRA },
 
 	{ "music2.1b",   		0x080000, 0x23cc4f9c, BRF_SND },			  // PCM

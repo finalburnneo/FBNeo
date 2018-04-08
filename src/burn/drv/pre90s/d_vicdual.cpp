@@ -1796,17 +1796,29 @@ static struct BurnRomInfo depthchRomDesc[] = {
 STD_ROM_PICK(depthch)
 STD_ROM_FN(depthch)
 
+static struct BurnSampleInfo depthchSampleDesc[] = {
+	{ "bonus", SAMPLE_NOLOOP },
+	{ "longex", SAMPLE_NOLOOP },
+	{ "shortex", SAMPLE_NOLOOP },
+	{ "sonar", SAMPLE_NOLOOP },
+	{ "spray", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(depthch)
+STD_SAMPLE_FN(depthch)
+
 static INT32 DepthchInit()
 {
 	return DrvInit(0x4000, 0x8000, 0, depthch_write_port, depthch_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvDepthch = {
-	"depthch", NULL, NULL, NULL, "1977",
+	"depthch", NULL, NULL, "depthch", "1977",
 	"Depthcharge\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, depthchRomInfo, depthchRomName, NULL, NULL, DepthchInputInfo, DepthchDIPInfo,
+	NULL, depthchRomInfo, depthchRomName, depthchSampleInfo, depthchSampleName, DepthchInputInfo, DepthchDIPInfo,
 	DepthchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
 };
@@ -1836,11 +1848,11 @@ STD_ROM_PICK(depthcho)
 STD_ROM_FN(depthcho)
 
 struct BurnDriver BurnDrvDepthcho = {
-	"depthcho", "depthch", NULL, NULL, "1977",
+	"depthcho", "depthch", NULL, "depthch", "1977",
 	"Depthcharge (older)\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, depthchoRomInfo, depthchoRomName, NULL, NULL, DepthchInputInfo, DepthchDIPInfo,
+	NULL, depthchoRomInfo, depthchoRomName, depthchSampleInfo, depthchSampleName, DepthchInputInfo, DepthchDIPInfo,
 	DepthchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
 };
@@ -2012,17 +2024,30 @@ static struct BurnRomInfo frogsRomDesc[] = {
 STD_ROM_PICK(frogs)
 STD_ROM_FN(frogs)
 
+static struct BurnSampleInfo frogsSampleDesc[] = {
+	{ "boing", SAMPLE_NOLOOP },
+	{ "buzzz", SAMPLE_NOLOOP },
+	{ "croak", SAMPLE_NOLOOP },
+	{ "hop", SAMPLE_NOLOOP },
+	{ "splash", SAMPLE_NOLOOP },
+	{ "zip", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(frogs)
+STD_SAMPLE_FN(frogs)
+
 static INT32 FrogsInit()
 {
 	return DrvInit(0x4000, 0x8000, 0, frogs_write_port, frogs_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvFrogs = {
-	"frogs", NULL, NULL, NULL, "1978",
+	"frogs", NULL, NULL, "frogs", "1978",
 	"Frogs\0", "No sound", "Gremlin", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
-	NULL, frogsRomInfo, frogsRomName, NULL, NULL, FrogsInputInfo, FrogsDIPInfo,
+	NULL, frogsRomInfo, frogsRomName, frogsSampleInfo, frogsSampleName, FrogsInputInfo, FrogsDIPInfo,
 	FrogsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
 };
@@ -2686,17 +2711,31 @@ static struct BurnRomInfo brdrlineRomDesc[] = {
 STD_ROM_PICK(brdrline)
 STD_ROM_FN(brdrline)
 
+static struct BurnSampleInfo brdrlineSampleDesc[] = {
+	{ "boot_and_start", SAMPLE_NOLOOP },
+	{ "coin", SAMPLE_NOLOOP },
+	{ "crashes", SAMPLE_NOLOOP },
+	{ "end_level", SAMPLE_NOLOOP },
+	{ "engine_noise", SAMPLE_NOLOOP },
+	{ "field", SAMPLE_NOLOOP },
+	{ "fire", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(brdrline)
+STD_SAMPLE_FN(brdrline)
+
 static INT32 BrdrlineInit()
 {
 	return DrvInit(0x4000, 0x8000, 0, brdrline_write_port, brdrline_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvBrdrline = {
-	"brdrline", NULL, NULL, NULL, "1981",
+	"brdrline", NULL, NULL, "brdrline", "1981",
 	"Borderline\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, brdrlineRomInfo, brdrlineRomName, NULL, NULL, BrdrlineInputInfo, BrdrlineDIPInfo,
+	NULL, brdrlineRomInfo, brdrlineRomName, brdrlineSampleInfo, brdrlineSampleName, BrdrlineInputInfo, BrdrlineDIPInfo,
 	BrdrlineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2737,11 +2776,11 @@ STD_ROM_PICK(brdrlins)
 STD_ROM_FN(brdrlins)
 
 struct BurnDriver BurnDrvBrdrlins = {
-	"brdrlins", "brdrline", NULL, NULL, "1981",
+	"brdrlins", "brdrline", NULL, "brdrline", "1981",
 	"Borderline (Sidam bootleg)\0", "No sound", "bootleg (Sidam)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, brdrlinsRomInfo, brdrlinsRomName, NULL, NULL, BrdrlineInputInfo, BrdrlineDIPInfo,
+	NULL, brdrlinsRomInfo, brdrlinsRomName, brdrlineSampleInfo, brdrlineSampleName, BrdrlineInputInfo, BrdrlineDIPInfo,
 	BrdrlineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2772,11 +2811,11 @@ STD_ROM_PICK(brdrlinb)
 STD_ROM_FN(brdrlinb)
 
 struct BurnDriver BurnDrvBrdrlinb = {
-	"brdrlinb", "brdrline", NULL, NULL, "1981",
+	"brdrlinb", "brdrline", NULL, "brdrline", "1981",
 	"Borderline (Karateco bootleg)\0", "No sound", "bootleg (Karateco)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, brdrlinbRomInfo, brdrlinbRomName, NULL, NULL, BrdrlineInputInfo, BrdrlineDIPInfo,
+	NULL, brdrlinbRomInfo, brdrlinbRomName, brdrlineSampleInfo, brdrlineSampleName, BrdrlineInputInfo, BrdrlineDIPInfo,
 	BrdrlineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2838,7 +2877,7 @@ static struct BurnRomInfo brdrlinetRomDesc[] = {
 	{ "1171a.u33",			0x0400, 0x38dd9880, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 	{ "1172a.u32",			0x0400, 0x1a3adff0, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "1173a.u31",			0x0400, 0xe668734d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "1174a.u30.bad",		0x0400, 0x22c83ae4, 1 | BRF_PRG | BRF_ESS | BRF_NODUMP }, //  3
+	{ "1174a.u30.bad",		0x0400, 0x22c83ae4, 1 | BRF_PRG | BRF_ESS }, //  3
 	{ "1175a.u29",			0x0400, 0x116517b8, 1 | BRF_PRG | BRF_ESS }, //  4
 	{ "1176a.u28",			0x0400, 0x2b2c4ba8, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "1177a.u27",			0x0400, 0xd8cbcc1e, 1 | BRF_PRG | BRF_ESS }, //  6
@@ -2860,12 +2899,27 @@ static struct BurnRomInfo brdrlinetRomDesc[] = {
 STD_ROM_PICK(brdrlinet)
 STD_ROM_FN(brdrlinet)
 
+static struct BurnSampleInfo brdrlinetSampleDesc[] = {
+	{ "animal", SAMPLE_NOLOOP },
+	{ "animalhit", SAMPLE_NOLOOP },
+	{ "cry", SAMPLE_NOLOOP },
+	{ "emar", SAMPLE_NOLOOP },
+	{ "gun", SAMPLE_NOLOOP },
+	{ "jeep", SAMPLE_NOLOOP },
+	{ "point", SAMPLE_NOLOOP },
+	{ "walk", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(brdrlinet)
+STD_SAMPLE_FN(brdrlinet)
+
 struct BurnDriverD BurnDrvBrdrlinet = {
-	"brdrlinet", "brdrline", NULL, NULL, "1981",
+	"brdrlinet", "brdrline", NULL, "brdrlinet", "1981",
 	"Borderline (Tranquillizer Gun conversion)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, brdrlinetRomInfo, brdrlinetRomName, NULL, NULL, TranqgunInputInfo, NULL,
+	NULL, brdrlinetRomInfo, brdrlinetRomName, brdrlinetSampleInfo, brdrlinetSampleName, TranqgunInputInfo, NULL,
 	TranqgunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2986,17 +3040,34 @@ static struct BurnRomInfo carnivalRomDesc[] = {
 STD_ROM_PICK(carnival)
 STD_ROM_FN(carnival)
 
+static struct BurnSampleInfo carnivalSampleDesc[] = {
+	{ "bear", SAMPLE_NOLOOP },
+	{ "bonus1", SAMPLE_NOLOOP },
+	{ "bonus2", SAMPLE_NOLOOP },
+	{ "clang", SAMPLE_NOLOOP },
+	{ "duck1", SAMPLE_NOLOOP },
+	{ "duck2", SAMPLE_NOLOOP },
+	{ "duck3", SAMPLE_NOLOOP },
+	{ "pipehit", SAMPLE_NOLOOP },
+	{ "ranking", SAMPLE_NOLOOP },
+	{ "rifle", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(carnival)
+STD_SAMPLE_FN(carnival)
+
 static INT32 CarnivalInit()
 {
 	return DrvInit(0x4000, 0x8000, 0, carnival_write_port, carnival_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvCarnival = {
-	"carnival", NULL, NULL, NULL, "1980",
+	"carnival", NULL, NULL, "carnival", "1980",
 	"Carnival (upright)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, carnivalRomInfo, carnivalRomName, NULL, NULL, CarnivalInputInfo, CarnivalDIPInfo,
+	NULL, carnivalRomInfo, carnivalRomName, carnivalSampleInfo, carnivalSampleName, CarnivalInputInfo, CarnivalDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -3031,11 +3102,11 @@ static INT32 CarnivalhInit()
 }
 
 struct BurnDriver BurnDrvCarnivalh = {
-	"carnivalh", "carnival", NULL, NULL, "1980",
+	"carnivalh", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 1)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, carnivalhRomInfo, carnivalhRomName, NULL, NULL, CarnivalhInputInfo, NULL,
+	NULL, carnivalhRomInfo, carnivalhRomName, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -3065,11 +3136,11 @@ STD_ROM_PICK(carnivalha)
 STD_ROM_FN(carnivalha)
 
 struct BurnDriver BurnDrvCarnivalha = {
-	"carnivalha", "carnival", NULL, NULL, "1980",
+	"carnivalha", "carnival", NULL, "carnival", "1980",
 	"Carnival (Head On hardware, set 2)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, carnivalhaRomInfo, carnivalhaRomName, NULL, NULL, CarnivalhInputInfo, NULL,
+	NULL, carnivalhaRomInfo, carnivalhaRomName, carnivalSampleInfo, carnivalSampleName, CarnivalhInputInfo, NULL,
 	CarnivalhInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -3106,11 +3177,11 @@ STD_ROM_PICK(carnivalc)
 STD_ROM_FN(carnivalc)
 
 struct BurnDriver BurnDrvCarnivalc = {
-	"carnivalc", "carnival", NULL, NULL, "1980",
+	"carnivalc", "carnival", NULL, "carnival", "1980",
 	"Carnival (cocktail)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, carnivalcRomInfo, carnivalcRomName, NULL, NULL, CarnivalcInputInfo, CarnivalcDIPInfo,
+	NULL, carnivalcRomInfo, carnivalcRomName, carnivalSampleInfo, carnivalSampleName, CarnivalcInputInfo, CarnivalcDIPInfo,
 	CarnivalInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };

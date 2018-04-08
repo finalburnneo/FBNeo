@@ -1843,12 +1843,12 @@ static struct BurnRomInfo gigasRomDesc[] = {
 	{ "3.3l",			0x04000, 0x37df4a4c, BRF_GRA }, 		  //  6
 	{ "2.3n",			0x04000, 0x3a46e354, BRF_GRA }, 		  //  7
 
-	{ "3a.bin",			0x00100, 0xa784e71f, BRF_OPT }, 	 	  //  8 proms
-	{ "4d.bin",			0x00100, 0x376df30c, BRF_OPT }, 		  //  9
-	{ "4a.bin",			0x00100, 0x4edff5bd, BRF_OPT }, 		  // 10
-	{ "3d.bin",			0x00100, 0xfe201a4e, BRF_OPT }, 		  // 11
-	{ "3b.bin",			0x00100, 0x5796cc4a, BRF_OPT }, 	  	  // 12
-	{ "3c.bin",			0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 13
+	{ "tbp24s10n.3a",	0x00100, 0xa784e71f, BRF_OPT }, 	 	  //  8 proms
+	{ "tbp24s10n.4d",	0x00100, 0x376df30c, BRF_OPT }, 		  //  9
+	{ "tbp24s10n.4a",	0x00100, 0x4edff5bd, BRF_OPT }, 		  // 10
+	{ "tbp24s10n.3d",	0x00100, 0xfe201a4e, BRF_OPT }, 		  // 11
+	{ "tbp24s10n.3b",	0x00100, 0x5796cc4a, BRF_OPT }, 	  	  // 12
+	{ "tbp24s10n.3c",	0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 13
 
 	{ "317-5002.key",	0x02000, 0x86a7e5f6, BRF_ESS | BRF_PRG }, // 14
 };
@@ -1880,12 +1880,12 @@ static struct BurnRomInfo gigasm2RomDesc[] = {
 	{ "13.3l",			0x04000, 0xc228df19, BRF_GRA }, 		  //  6
 	{ "12.3n",			0x04000, 0xa6ad9ce2, BRF_GRA }, 		  //  7
 
-	{ "3a.bin",			0x00100, 0xa784e71f, BRF_OPT }, 		  //  8 proms
-	{ "4d.bin",			0x00100, 0x376df30c, BRF_OPT }, 		  //  9
-	{ "4a.bin",			0x00100, 0x4edff5bd, BRF_OPT }, 		  // 10
-	{ "3d.bin",			0x00100, 0xfe201a4e, BRF_OPT }, 		  // 11
-	{ "3b.bin",			0x00100, 0x5796cc4a, BRF_OPT }, 		  // 12
-	{ "3c.bin",			0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 13
+	{ "tbp24s10n.3a",	0x00100, 0xa784e71f, BRF_OPT }, 	 	  //  8 proms
+	{ "tbp24s10n.4d",	0x00100, 0x376df30c, BRF_OPT }, 		  //  9
+	{ "tbp24s10n.4a",	0x00100, 0x4edff5bd, BRF_OPT }, 		  // 10
+	{ "tbp24s10n.3d",	0x00100, 0xfe201a4e, BRF_OPT }, 		  // 11
+	{ "tbp24s10n.3b",	0x00100, 0x5796cc4a, BRF_OPT }, 	  	  // 12
+	{ "tbp24s10n.3c",	0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 13
 
 	{ "317-5002.key",	0x02000, 0x86a7e5f6, BRF_ESS | BRF_PRG }, // 14
 };

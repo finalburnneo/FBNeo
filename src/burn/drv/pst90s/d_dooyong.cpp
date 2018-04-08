@@ -3432,7 +3432,7 @@ struct BurnDriver BurnDrvGulfstrmm = {
 // Gulf Storm (Korea)
 
 static struct BurnRomInfo gulfstrmkRomDesc[] = {
-	{ "18.4L",	0x20000, 0x02bcf56d, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
+	{ "18.4l",	0x20000, 0x02bcf56d, 1 | BRF_PRG | BRF_ESS }, //  0 Main CPU Code
 
 	{ "3.c5",	0x10000, 0xc029b015, 2 | BRF_PRG | BRF_ESS }, //  1 Audio CPU Code
 

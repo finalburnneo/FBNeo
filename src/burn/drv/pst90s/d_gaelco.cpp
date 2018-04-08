@@ -1400,8 +1400,8 @@ struct BurnDriver BurnDrvBiomtoyb = {
 /* PCB - REF.922804/2??  -  Spanish version */
 
 static struct BurnRomInfo bioplaycRomDesc[] = {
-	{ "T.d18",			0x80000, 0xec518c6c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "T.d16",			0x80000, 0xde4b031d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "t.d18",			0x80000, 0xec518c6c, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "t.d16",			0x80000, 0xde4b031d, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "toy-high-3.h6",		0x80000, 0xab19a1ce, 2 | BRF_GRA },           //  2 Tiles and Sprites
 	{ "toy-low-3.j6",		0x80000, 0x927f5cd7, 2 | BRF_GRA },           //  3

@@ -3117,7 +3117,7 @@ static struct BurnRomInfo demonwld1RomDesc[] = {
 	{ "o16n-10.bin",		0x20000, 0xfc38aeaa, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
 	{ "o16n-09.bin",		0x20000, 0x74f66643, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "rom11.v2",			0x08000, 0xdbe08c85, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
+	{ "o16-11.bin",			0x08000, 0xdbe08c85, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 Code
 
 	{ "dsp_21.bin",			0x00800, 0x2d135376, 7 | BRF_PRG | BRF_ESS }, //  3 DSP Code
 	{ "dsp_22.bin",			0x00800, 0x79389a71, 7 | BRF_PRG | BRF_ESS }, //  4

@@ -843,19 +843,19 @@ struct BurnDriver BurnDrvHimesiki = {
 // Android (early build?)
 
 static struct BurnRomInfo androidpoRomDesc[] = {
-	{ "MITSUBISHI__AD1__M5L27256K.toppcb.k1",		0x08000, 0x25ab85eb, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
-	{ "MITSUBISHI__AD-3__M5L27256K.toppcb.g1",		0x08000, 0x6cf5f48a, 1 | BRF_PRG | BRF_ESS }, //  1 
-	{ "MITSUBISHI__AD2__M5L27256K.toppcb.j1",		0x08000, 0xe41426be, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "mitsubishi__ad1__m5l27256k.toppcb.k1",		0x08000, 0x25ab85eb, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "mitsubishi__ad-3__m5l27256k.toppcb.g1",		0x08000, 0x6cf5f48a, 1 | BRF_PRG | BRF_ESS }, //  1 
+	{ "mitsubishi__ad2__m5l27256k.toppcb.j1",		0x08000, 0xe41426be, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "MITSUBISHI__AD-4__M5L27256K.toppcb.n6",		0x08000, 0x13c38fe4, 2 | BRF_PRG | BRF_ESS }, //  3 - Z80 #1 Code
+	{ "mitsubishi__ad-4__m5l27256k.toppcb.n6",		0x08000, 0x13c38fe4, 2 | BRF_PRG | BRF_ESS }, //  3 - Z80 #1 Code
 
-	{ "MITSUBISHI__AD-5__M5L27512K.toppcb.f5",		0x10000, 0x4c72a930, 3 | BRF_GRA },           //  4 - Background Tiles	
+	{ "mitsubishi__ad-5__m5l27512k.toppcb.f5",		0x10000, 0x4c72a930, 3 | BRF_GRA },           //  4 - Background Tiles	
 
-	{ "MITSUBISHI__AD-6__M5L27512K.botpcb.def9",	0x10000, 0x5e42984e, 4 | BRF_GRA },           //  5 - 16x16 Sprites
-	{ "MITSUBISHI__AD-7__M5L27512K.botpcb.bc9",		0x10000, 0x611ff400, 4 | BRF_GRA },           //  6
+	{ "mitsubishi__ad-6__m5l27512k.botpcb.def9",	0x10000, 0x5e42984e, 4 | BRF_GRA },           //  5 - 16x16 Sprites
+	{ "mitsubishi__ad-7__m5l27512k.botpcb.bc9",		0x10000, 0x611ff400, 4 | BRF_GRA },           //  6
 	
-	{ "RICOH_7A2_19__EPL10P8BP_JAPAN_M.j3.jed",		0x00473, 0x807d1553, 0 | BRF_OPT },           //  7
-	{ "RICOH_7A2_19__EPL10P8BP_JAPAN_I.f1.jed",		0x00473, 0xc5e51ea2, 0 | BRF_OPT },           //  8
+	{ "ricoh_7a2_19__epl10p8bp_japan_m.j3.jed",		0x00473, 0x807d1553, 0 | BRF_OPT },           //  7
+	{ "ricoh_7a2_19__epl10p8bp_japan_i.f1.jed",		0x00473, 0xc5e51ea2, 0 | BRF_OPT },           //  8
 };
 
 STD_ROM_PICK(androidpo)
@@ -879,15 +879,15 @@ struct BurnDriver BurnDrvAndroidpo = {
 // Android (later build?)
 
 static struct BurnRomInfo androidpRomDesc[] = {
-	{ "ANDR1.BIN", 0x08000, 0xfff04130, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
-	{ "ANDR3.BIN", 0x08000, 0x112d5123, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "andr1.bin", 0x08000, 0xfff04130, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 #0 Code
+	{ "andr3.bin", 0x08000, 0x112d5123, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "ANDR4.BIN", 0x08000, 0x65f5e98b, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 #1 Code
+	{ "andr4.bin", 0x08000, 0x65f5e98b, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 #1 Code
    
-	{ "ANDR5.BIN", 0x10000, 0x0a0b44c0, 3 | BRF_GRA },           //  3 - Background Tiles
+	{ "andr5.bin", 0x10000, 0x0a0b44c0, 3 | BRF_GRA },           //  3 - Background Tiles
    
-	{ "ANDR6.BIN", 0x10000, 0x122b7dd1, 4 | BRF_GRA },           //  4 - 16x16 Sprites
-	{ "ANDR7.BIN", 0x10000, 0xfc0f9234, 4 | BRF_GRA },           //  5
+	{ "andr6.bin", 0x10000, 0x122b7dd1, 4 | BRF_GRA },           //  4 - 16x16 Sprites
+	{ "andr7.bin", 0x10000, 0xfc0f9234, 4 | BRF_GRA },           //  5
 };
 
 STD_ROM_PICK(androidp)

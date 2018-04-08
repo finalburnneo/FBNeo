@@ -5031,10 +5031,10 @@ static void decocass_widel_write(UINT16 offset, UINT8 data)
 // Deco Cassette System Multigame (ROM based)
 
 static struct BurnRomInfo decomultRomDesc[] = {
-	{ "WIDLDECO.LOW",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
-	{ "WIDLDECO.HGH",	0x80000, 0xa8a30112,  1 | BRF_PRG | BRF_ESS },  //  1
+	{ "widldeco.low",	0x80000, 0xfd4dc36c,  1 | BRF_PRG | BRF_ESS },  //  0 Dongle data
+	{ "widldeco.hgh",	0x80000, 0xa8a30112,  1 | BRF_PRG | BRF_ESS },  //  1
 
-	{ "WIDLBIOS.V0B",	0x00800, 0x9ad7c451,  8 | BRF_BIOS | BRF_ESS }, //  2 Main M6502 BIOS
+	{ "widlbios.v0b",	0x00800, 0x9ad7c451,  8 | BRF_BIOS | BRF_ESS }, //  2 Main M6502 BIOS
 
 	{ "v1-.5a",		0x00800, 0xb66b2c2a,  9 | BRF_BIOS | BRF_ESS }, //  3 Sound M6502 BIOS
 

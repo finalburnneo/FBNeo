@@ -1403,7 +1403,7 @@ static struct BurnRomInfo arkanoiduoRomDesc[] = {
 	{ "a75-08.ic23",  	0x0200, 0xabb002fb, 4 | BRF_GRA },	         //  7
 	{ "a75-09.ic22",  	0x0200, 0xa7c6c277, 4 | BRF_GRA },	         //  8
 	
-	{ "a75__03(alternate).ic64", 0x8000, 0x983d4485, 0 | BRF_PRG | BRF_OPT },  //  10
+	{ "a75__03,alternate.ic64", 0x8000, 0x983d4485, 0 | BRF_PRG | BRF_OPT },  //  10
 };
 
 STD_ROM_PICK(arkanoiduo)

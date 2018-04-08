@@ -1702,7 +1702,7 @@ struct BurnDriver BurnDrvGemini = {
 // f205v id 1293
 
 static struct BurnRomInfo geminibRomDesc[] = {
-	{ "G-2.6d",			0x10000, 0xcd79c5b3, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
+	{ "g-2.6d",			0x10000, 0xcd79c5b3, 1 | BRF_PRG | BRF_ESS }, //  0 - Z80 Code
 	{ "gw05-6s.rom",	0x10000, 0x5a6947a9, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "gw03-5h.rom",	0x08000, 0x9bc79596, 2 | BRF_PRG | BRF_ESS }, //  2 - Z80 Code

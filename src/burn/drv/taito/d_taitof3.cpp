@@ -1709,14 +1709,14 @@ static struct BurnRomInfo arabianmRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    //  12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    //  13
 
-	{ "D29-11.IC15.bin",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "d29-11.ic15.bin",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
 	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
-	{ "D29-13.IC14.bin",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "d29-13.ic14.bin",	0x000157, 0x74d61d36, BRF_OPT }, // 16
 	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
 	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
 	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
 	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
-	{ "D29-14.IC28.bin",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "d29-14.ic28.bin",	0x000157, 0x25d205d5, BRF_OPT }, // 21
 	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
@@ -1761,14 +1761,14 @@ static struct BurnRomInfo arabianmjRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "D29-11.IC15.bin",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "d29-11.ic15.bin",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
 	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
-	{ "D29-13.IC14.bin",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "d29-13.ic14.bin",	0x000157, 0x74d61d36, BRF_OPT }, // 16
 	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
 	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
 	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
 	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
-	{ "D29-14.IC28.bin",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "d29-14.ic28.bin",	0x000157, 0x25d205d5, BRF_OPT }, // 21
 	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 
@@ -1808,14 +1808,14 @@ static struct BurnRomInfo arabianmuRomDesc[] = {
 	{ "d29-01.ic17",	0x200000, 0x545ac4b3, TAITO_ES5505_BYTESWAP },    // 12 Ensoniq Samples
 	{ "d29-02.ic18",	0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 13
 
-	{ "D29-11.IC15.bin",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
+	{ "d29-11.ic15.bin",	0x000157, 0x5dd5c8f9, BRF_OPT }, // 14 plds
 	{ "pal20l8b.2",		0x000144, 0xc91437e2, BRF_OPT }, // 15
-	{ "D29-13.IC14.bin",	0x000157, 0x74d61d36, BRF_OPT }, // 16
+	{ "d29-13.ic14.bin",	0x000157, 0x74d61d36, BRF_OPT }, // 16
 	{ "palce16v8h.11",	0x000117, 0x51088324, BRF_OPT }, // 17
 	{ "pal16l8b.22",	0x000104, 0x3e01e854, BRF_OPT }, // 18
 	{ "palce16v8h.31",	0x000117, 0xe0789727, BRF_OPT }, // 19
 	{ "pal16l8b.62",	0x000104, 0x7093e2f3, BRF_OPT }, // 20
-	{ "D29-14.IC28.bin",	0x000157, 0x25d205d5, BRF_OPT }, // 21
+	{ "d29-14.ic28.bin",	0x000157, 0x25d205d5, BRF_OPT }, // 21
 	{ "pal20l8b.70",	0x000144, 0x92b5b97c, BRF_OPT }, // 22
 };
 

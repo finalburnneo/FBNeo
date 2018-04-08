@@ -350,9 +350,9 @@ STD_ROM_PICK(Drvw)
 STD_ROM_FN(Drvw)
 
 static struct BurnRomInfo DrvhRomDesc[] = {
-	{ "Supercharger_1942_#3.m3", 0x04000, 0xec70785f, BRF_ESS | BRF_PRG }, //  0  Z80 #1 Program Code
-	{ "Supercharger_1942_#4.m4", 0x04000, 0xcc11355f, BRF_ESS | BRF_PRG }, //  1
-	{ "Supercharger_1942_#5.m5", 0x04000, 0x42746d75, BRF_ESS | BRF_PRG }, //  2
+	{ "supercharger_1942_@3.m3", 0x04000, 0xec70785f, BRF_ESS | BRF_PRG }, //  0  Z80 #1 Program Code
+	{ "supercharger_1942_@4.m4", 0x04000, 0xcc11355f, BRF_ESS | BRF_PRG }, //  1
+	{ "supercharger_1942_@5.m5", 0x04000, 0x42746d75, BRF_ESS | BRF_PRG }, //  2
 	{ "srb-06.m6",     			 0x02000, 0x466f8248, BRF_ESS | BRF_PRG }, //  3
 	{ "srb-07.m7",     			 0x04000, 0x0d31038c, BRF_ESS | BRF_PRG }, //  4
 	

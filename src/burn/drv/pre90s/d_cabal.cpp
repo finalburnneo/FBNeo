@@ -831,10 +831,10 @@ struct BurnDriver BurnDrvCabala = {
 // Cabal (UK, Trackball)
 
 static struct BurnRomInfo cabalukRomDesc[] = {
-	{ "9-7H.BIN",    	0x10000, 0xf66378e5, 1 | BRF_PRG | BRF_ESS }, //  0 M68k Codc
-	{ "7-6H.BIN",		0x10000, 0x960991ac, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "8-7K.BIN",		0x10000, 0x82160ab0, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "6-6K.BIN",		0x10000, 0x7ef2ecc7, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "9-7h.bin",    	0x10000, 0xf66378e5, 1 | BRF_PRG | BRF_ESS }, //  0 M68k Codc
+	{ "7-6h.bin",		0x10000, 0x960991ac, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "8-7k.bin",		0x10000, 0x82160ab0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "6-6k.bin",		0x10000, 0x7ef2ecc7, 1 | BRF_PRG | BRF_ESS }, //  3
 
 	{ "4-3n",			0x02000, 0x4038eff2, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code
 	{ "3-3p",			0x08000, 0xd9defcbf, 2 | BRF_PRG | BRF_ESS }, //  5

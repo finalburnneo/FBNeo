@@ -38,6 +38,8 @@ static UINT32 sound_data08;
 
 static INT32 sound_laugh;
 static INT32 sound_laugh_trig;
+static INT32 sound_appear_trig;
+static INT32 sound_appear;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -142,6 +144,19 @@ static void sound_tone_write(UINT8 data)
 	}
 }
 
+static void sound_tone_write_hi(UINT8 data)
+{
+	crbaloon_tone_step = 0;
+	envelope_ctr = 0.0;
+
+	if (data && data != 0xff) {
+		double freq = (640630.0 / (256 - data) + (data >= 0xea ? 13 : 0)) * 0.5;
+
+		crbaloon_tone_freq = freq;
+		crbaloon_tone_step = (UINT32)(freq * 65536.0 * 65536.0 / (double)nBurnSoundRate);
+	}
+}
+
 static void sound_port_write(UINT8 data)
 {
 	irq_mask = data & 0x01;
@@ -150,7 +165,21 @@ static void sound_port_write(UINT8 data)
 	sound_enable = data & 0x02;
 
 	if (sound_enable) {
-		if (data & 0x40) {
+		if (data & 0x20) { // appear (face appears, bird tweet noise)
+			sound_appear_trig = 2;
+		}
+
+		if (sound_appear_trig) {
+			sound_appear_trig--;
+			sound_appear++;
+			UINT16 tone = (0xf0 + ((sound_appear % 5) * 40 + 6)) & 0xff;
+			sound_tone_write_hi(tone);
+			if (sound_appear > 20 || sound_appear_trig == 0) sound_tone_write_hi(0);
+		} else {
+			sound_appear = 0;
+		}
+
+		if (data & 0x40) { // laugh
 			sound_laugh_trig = 3;
 		}
 
@@ -158,7 +187,7 @@ static void sound_port_write(UINT8 data)
 			sound_laugh_trig--;
 			sound_laugh++;
 			sound_tone_write(100 + ((sound_laugh % 7) * 20 + (rand() % 6)));
-			if (sound_laugh>90 || sound_laugh_trig==0) sound_tone_write(0);
+			if (sound_laugh > 90 || sound_laugh_trig == 0) sound_tone_write(0);
 		} else {
 			sound_laugh = 0;
 		}
@@ -577,6 +606,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(last_snd);
 		SCAN_VAR(sound_laugh_trig);
 		SCAN_VAR(sound_laugh);
+		SCAN_VAR(sound_appear_trig);
+		SCAN_VAR(sound_appear);
 		SCAN_VAR(envelope_ctr);
 		SCAN_VAR(sound_data08);
 	}

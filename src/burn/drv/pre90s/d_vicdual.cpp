@@ -1920,17 +1920,32 @@ static struct BurnRomInfo invho2RomDesc[] = {
 STD_ROM_PICK(invho2)
 STD_ROM_FN(invho2)
 
+static struct BurnSampleInfo invdsSampleDesc[] = {
+	{ "fire", SAMPLE_NOLOOP },
+	{ "invhit", SAMPLE_NOLOOP },
+	{ "move1", SAMPLE_NOLOOP },
+	{ "move2", SAMPLE_NOLOOP },
+	{ "move3", SAMPLE_NOLOOP },
+	{ "move4", SAMPLE_NOLOOP },
+	{ "saucer", SAMPLE_NOLOOP },
+	{ "shiphit", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(invds)
+STD_SAMPLE_FN(invds)
+
 static INT32 Invho2Init()
 {
 	return DrvInit(0x4000, 0x8000, 0, invho2_write_port, invho2_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvInvho2 = {
-	"invho2", NULL, NULL, NULL, "1979",
+	"invho2", NULL, NULL, "invds", "1979",
 	"Invinco / Head On 2\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, invho2RomInfo, invho2RomName, NULL, NULL, Invho2InputInfo, Invho2DIPInfo,
+	NULL, invho2RomInfo, invho2RomName, invdsSampleInfo, invdsSampleName, Invho2InputInfo, Invho2DIPInfo,
 	Invho2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2258,11 +2273,11 @@ static INT32 InvdsInit()
 }
 
 struct BurnDriver BurnDrvInvds = {
-	"invds", NULL, NULL, NULL, "1979",
+	"invds", NULL, NULL, "invds", "1979",
 	"Invinco / Deep Scan\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, invdsRomInfo, invdsRomName, NULL, NULL, InvdsInputInfo, InvdsDIPInfo,
+	NULL, invdsRomInfo, invdsRomName, invdsSampleInfo, invdsSampleName, InvdsInputInfo, InvdsDIPInfo,
 	InvdsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2293,11 +2308,11 @@ static INT32 InvincoInit()
 }
 
 struct BurnDriver BurnDrvInvinco = {
-	"invinco", NULL, NULL, NULL, "1979",
+	"invinco", NULL, NULL, "invds", "1979",
 	"Invinco\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, invincoRomInfo, invincoRomName, NULL, NULL, InvincoInputInfo, InvincoDIPInfo,
+	NULL, invincoRomInfo, invincoRomName, invdsSampleInfo, invdsSampleName, InvincoInputInfo, InvincoDIPInfo,
 	InvincoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
 };
@@ -2584,19 +2599,19 @@ struct BurnDriver BurnDrvHeadonmz = {
 // Head On N
 
 static struct BurnRomInfo headonnRomDesc[] = {
-	{ "ROM.E4",				0x0400, 0xa6cd13fc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "ROM.F4",				0x0400, 0xd1cd498f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "ROM.G4",				0x0400, 0x0fb02db2, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "ROM.H4",				0x0400, 0x38db2d02, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "ROM.I4",				0x0400, 0xa04d8522, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "ROM.J4",				0x0400, 0x52bd2151, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "ROM.K4",				0x0400, 0x9488a8b3, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "ROM.L4",				0x0400, 0xa37f0be0, 1 | BRF_PRG | BRF_ESS }, //  7
+	{ "rom.e4",				0x0400, 0xa6cd13fc, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "rom.f4",				0x0400, 0xd1cd498f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "rom.g4",				0x0400, 0x0fb02db2, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "rom.h4",				0x0400, 0x38db2d02, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "rom.i4",				0x0400, 0xa04d8522, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "rom.j4",				0x0400, 0x52bd2151, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "rom.k4",				0x0400, 0x9488a8b3, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "rom.l4",				0x0400, 0xa37f0be0, 1 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "PROM.G2",			0x0020, 0x67104ea9, 1 | BRF_GRA },           //  8 Color data
+	{ "prom.g2",			0x0020, 0x67104ea9, 1 | BRF_GRA },           //  8 Color data
 
-	{ "PROM.B6",			0x0020, 0x67104ea9, 0 | BRF_OPT },           //  9 Unused PROMs
-	{ "PROM.F2",			0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 10
+	{ "prom.b6",			0x0020, 0x67104ea9, 0 | BRF_OPT },           //  9 Unused PROMs
+	{ "prom.f2",			0x0020, 0xa1506b9d, 0 | BRF_OPT },           // 10
 };
 
 STD_ROM_PICK(headonn)

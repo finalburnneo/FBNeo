@@ -2221,16 +2221,16 @@ static struct BurnRomInfo hthero93uRomDesc[] = {
 	{ "d49-04.38",		0x200000, 0x44b365a9, TAITO_ES5505_BYTESWAP },    // 15 Ensoniq Samples
 	{ "d49-05.41",		0x100000, 0xed894fe1, TAITO_ES5505_BYTESWAP },    // 16
 
-	{ "D49-12.IC60.bin",	0x000104, 0xaa4cff37, 0 | BRF_OPT },              // 17 palsgame
-	{ "D49-21.IC17.bin",	0x000104, 0x821775d4, 0 | BRF_OPT },              // 18
+	{ "d49-12.ic60.bin",	0x000104, 0xaa4cff37, 0 | BRF_OPT },              // 17 palsgame
+	{ "d49-21.ic17.bin",	0x000104, 0x821775d4, 0 | BRF_OPT },              // 18
 
-	{ "D29-11.IC15.bin",	0x000157, 0x5dd5c8f9, 0 | BRF_OPT },              // 19 palsbase
-	{ "D29-12.IC12.bin",	0x000144, 0xc872f1fd, 0 | BRF_OPT },              // 20
-	{ "D29-13.IC14.bin",	0x000157, 0x74d61d36, 0 | BRF_OPT },              // 21
-	{ "D29-14.IC28.bin",	0x000157, 0x25d205d5, 0 | BRF_OPT },              // 22
-	{ "D29-15.IC29.bin",	0x000157, 0x692eb582, 0 | BRF_OPT },              // 23
-	{ "D29-16.IC7.bin",	0x000117, 0x11875f52, 0 | BRF_OPT },              // 24
-	{ "D29-17.IC16.bin",	0x000117, 0xa0f74b51, 0 | BRF_OPT },              // 25
+	{ "d29-11.ic15.bin",	0x000157, 0x5dd5c8f9, 0 | BRF_OPT },              // 19 palsbase
+	{ "d29-12.ic12.bin",	0x000144, 0xc872f1fd, 0 | BRF_OPT },              // 20
+	{ "d29-13.ic14.bin",	0x000157, 0x74d61d36, 0 | BRF_OPT },              // 21
+	{ "d29-14.ic28.bin",	0x000157, 0x25d205d5, 0 | BRF_OPT },              // 22
+	{ "d29-15.ic29.bin",	0x000157, 0x692eb582, 0 | BRF_OPT },              // 23
+	{ "d29-16.ic7.bin",	0x000117, 0x11875f52, 0 | BRF_OPT },              // 24
+	{ "d29-17.ic16.bin",	0x000117, 0xa0f74b51, 0 | BRF_OPT },              // 25
 };
 
 STD_ROM_PICK(hthero93u)

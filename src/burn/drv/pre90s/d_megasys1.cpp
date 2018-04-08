@@ -5984,37 +5984,37 @@ struct BurnDriver BurnDrvPeekaboou = {
 // In Your Face (North America, prototype)
 
 static struct BurnRomInfo inyourfaRomDesc[] = {
-	{ "02.27C1001",		0x020000, 0xae77e5b7, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "01.27C1001",		0x020000, 0xe5ea92ef, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "03.27C512",		0x010000, 0xa1efe9be, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "04.27C512",		0x010000, 0xf786cf3e, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "02.27c1001",		0x020000, 0xae77e5b7, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "01.27c1001",		0x020000, 0xe5ea92ef, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "03.27c512",		0x010000, 0xa1efe9be, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "04.27c512",		0x010000, 0xf786cf3e, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "05.27C512", 		0x010000, 0x1737ed64, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
-	{ "06.27C512", 		0x010000, 0x9f12bcb9, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "05.27c512", 		0x010000, 0x1737ed64, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "06.27c512", 		0x010000, 0x9f12bcb9, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "m50747", 		0x001000, 0x00000000, 0 | BRF_NODUMP },        //  6 MCU Code
 
-	{ "11.27C1001",		0x020000, 0x451a1428, 3 | BRF_GRA },           //  7 Tilemap #0 Tiles
-	{ "12.27C1001",		0x020000, 0x9ead7432, 3 | BRF_GRA },           //  8
-	{ "13.27C1001",		0x020000, 0x7e39842a, 3 | BRF_GRA },           //  9
-	{ "14.27C1001",		0x020000, 0xa91a3569, 3 | BRF_GRA },           // 10
+	{ "11.27c1001",		0x020000, 0x451a1428, 3 | BRF_GRA },           //  7 Tilemap #0 Tiles
+	{ "12.27c1001",		0x020000, 0x9ead7432, 3 | BRF_GRA },           //  8
+	{ "13.27c1001",		0x020000, 0x7e39842a, 3 | BRF_GRA },           //  9
+	{ "14.27c1001",		0x020000, 0xa91a3569, 3 | BRF_GRA },           // 10
 
-	{ "15.27C1001",		0x020000, 0x420081b6, 4 | BRF_GRA },           // 11 Tilemap #1 Tiles
-	{ "16.27C1001",		0x020000, 0x87b1a582, 4 | BRF_GRA },           // 12
-	{ "17.27C1001",		0x020000, 0x00857146, 4 | BRF_GRA },           // 13
+	{ "15.27c1001",		0x020000, 0x420081b6, 4 | BRF_GRA },           // 11 Tilemap #1 Tiles
+	{ "16.27c1001",		0x020000, 0x87b1a582, 4 | BRF_GRA },           // 12
+	{ "17.27c1001",		0x020000, 0x00857146, 4 | BRF_GRA },           // 13
 
-	{ "19.27C1001", 	0x020000, 0xb82c94ec, 5 | BRF_GRA },           // 14 Tilemap #2 Tiles
+	{ "19.27c1001", 	0x020000, 0xb82c94ec, 5 | BRF_GRA },           // 14 Tilemap #2 Tiles
 
-	{ "20.27C1001",		0x020000, 0x4a322d18, 6 | BRF_GRA },           // 15 Sprites
-	{ "21.27C1001",		0x020000, 0x7bb4b35d, 6 | BRF_GRA },           // 16
-	{ "22.27C1001",		0x020000, 0x1dc040d2, 6 | BRF_GRA },           // 17
-	{ "23.27C1001",		0x020000, 0x50478530, 6 | BRF_GRA },           // 18
+	{ "20.27c1001",		0x020000, 0x4a322d18, 6 | BRF_GRA },           // 15 Sprites
+	{ "21.27c1001",		0x020000, 0x7bb4b35d, 6 | BRF_GRA },           // 16
+	{ "22.27c1001",		0x020000, 0x1dc040d2, 6 | BRF_GRA },           // 17
+	{ "23.27c1001",		0x020000, 0x50478530, 6 | BRF_GRA },           // 18
 
-	{ "09.27C1001",		0x020000, 0x27f4bfb4, 7 | BRF_SND },           // 19 OKI #0 Samples
-	{ "10.27C1001",		0x020000, 0xcf5430ff, 7 | BRF_SND },           // 20
+	{ "09.27c1001",		0x020000, 0x27f4bfb4, 7 | BRF_SND },           // 19 OKI #0 Samples
+	{ "10.27c1001",		0x020000, 0xcf5430ff, 7 | BRF_SND },           // 20
 
-	{ "07.27C1001",		0x020000, 0xdc254c7c, 8 | BRF_SND },           // 21 OKI #1 Samples
-	{ "08.27C1001",		0x020000, 0xcadd4731, 8 | BRF_SND },           // 22
+	{ "07.27c1001",		0x020000, 0xdc254c7c, 8 | BRF_SND },           // 21 OKI #1 Samples
+	{ "08.27c1001",		0x020000, 0xcadd4731, 8 | BRF_SND },           // 22
 
 	{ "prom.14m",    	0x000200, 0x1341ba02, 9 | BRF_GRA },           // 23 Priority PROM
 };

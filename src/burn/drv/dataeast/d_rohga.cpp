@@ -2361,29 +2361,29 @@ struct BurnDriver BurnDrvSchmeisr = {
 /* Found on a Data East DE-0353-3 PCB */
 
 static struct BurnRomInfo hangzoRomDesc[] = {
-	{ "Pro0H 12.18.2A.27C1001",	0x20000, 0xac8087db, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "Pro0H 12.18.2D.27C1001",	0x20000, 0xa6b7f4f4, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "Pro1H 12.10.4A.27C010",	0x20000, 0x0d04f43d, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "Pro1L 12.10.4D.27C010",	0x20000, 0x2e323918, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "Pro2H 12.10.6A.27C010",	0x20000, 0xbb3185a6, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "Pro2L 12.10.6D.27C010",	0x20000, 0x11ce97bb, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "pro0h 12.18.2a.27c1001",	0x20000, 0xac8087db, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "pro0h 12.18.2d.27c1001",	0x20000, 0xa6b7f4f4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "pro1h 12.10.4a.27c010",	0x20000, 0x0d04f43d, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "pro1l 12.10.4d.27c010",	0x20000, 0x2e323918, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "pro2h 12.10.6a.27c010",	0x20000, 0xbb3185a6, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "pro2l 12.10.6d.27c010",	0x20000, 0x11ce97bb, 1 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "SND 12.18.18P.27C512",	0x10000, 0x97c592dc, 2 | BRF_PRG | BRF_ESS }, //  6 Huc6280 Code
+	{ "snd 12.18.18p.27c512",	0x10000, 0x97c592dc, 2 | BRF_PRG | BRF_ESS }, //  6 Huc6280 Code
 
-	{ "BK1L 12.10.9A.574200",	0x80000, 0x5199729b, 3 | BRF_GRA },           //  7 Foreground Tiles
-	{ "BK1H 12.10.11A.574200",	0x80000, 0x85887bd8, 3 | BRF_GRA },           //  8
+	{ "bk1l 12.10.9a.574200",	0x80000, 0x5199729b, 3 | BRF_GRA },           //  7 Foreground Tiles
+	{ "bk1h 12.10.11a.574200",	0x80000, 0x85887bd8, 3 | BRF_GRA },           //  8
 
-	{ "BK23L 12.10.17D.574200",	0x80000, 0xed4e47c6, 4 | BRF_GRA },           //  9 Background Tiles
-	{ "BK23H 12.10.18D.574200",	0x80000, 0x6a725fb2, 4 | BRF_GRA },           // 10
+	{ "bk23l 12.10.17d.574200",	0x80000, 0xed4e47c6, 4 | BRF_GRA },           //  9 Background Tiles
+	{ "bk23h 12.10.18d.574200",	0x80000, 0x6a725fb2, 4 | BRF_GRA },           // 10
 
-	{ "OBJ01L 12.10.19A.27C4000",	0x80000, 0xc141e310, 5 | BRF_GRA },           // 11 Sprites
-	{ "OBJ01H 12.10.20A.27C4000",	0x80000, 0x6a7b4252, 5 | BRF_GRA },           // 12
-	{ "OBJ23L 12.10.19D.27C4000",	0x80000, 0x0db6df6c, 5 | BRF_GRA },           // 13
-	{ "OBJ23H 12.10.20D.27C4000",	0x80000, 0x165031a1, 5 | BRF_GRA },           // 14
+	{ "obj01l 12.10.19a.27c4000",	0x80000, 0xc141e310, 5 | BRF_GRA },           // 11 Sprites
+	{ "obj01h 12.10.20a.27c4000",	0x80000, 0x6a7b4252, 5 | BRF_GRA },           // 12
+	{ "obj23l 12.10.19d.27c4000",	0x80000, 0x0db6df6c, 5 | BRF_GRA },           // 13
+	{ "obj23h 12.10.20d.27c4000",	0x80000, 0x165031a1, 5 | BRF_GRA },           // 14
 
-	{ "PCM8K 11.5.15P.27C020",	0x40000, 0x02682a9a, 6 | BRF_SND },           // 15 OKI M6295 Samples 0
+	{ "pcm8k 11.5.15p.27c020",	0x40000, 0x02682a9a, 6 | BRF_SND },           // 15 OKI M6295 Samples 0
 
-	{ "PCM16K 11.5.14P.574000",	0x80000, 0x5b95c6c7, 7 | BRF_SND },           // 16 OKI M6295 Samples 1
+	{ "pcm16k 11.5.14p.574000",	0x80000, 0x5b95c6c7, 7 | BRF_SND },           // 16 OKI M6295 Samples 1
 
 	{ "hb-00.11p",		0x00200, 0xb7a7baad, 0 | BRF_OPT },         	      // 17 Unused PROMs
 };

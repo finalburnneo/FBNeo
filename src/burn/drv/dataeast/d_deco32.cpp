@@ -4702,7 +4702,9 @@ static struct BurnRomInfo tattassRomDesc[] = {
 
 	{ "eeprom-tattass.bin",	0x00400, 0x7140f40c, 8 | BRF_PRG | BRF_ESS }, // 51 Default Settings
 
+#if !defined ROM_VERIFY
 	{ "bsmt2000.bin",	0x02000, 0xc2a265af, 9 | BRF_PRG | BRF_ESS }, // 52 DSP Code
+#endif
 };
 
 STD_ROM_PICK(tattass)
@@ -4787,7 +4789,9 @@ static struct BurnRomInfo tattassaRomDesc[] = {
 
 	{ "eeprom-tattass.bin",	0x00400, 0x7140f40c, 8 | BRF_PRG | BRF_ESS }, // 51 Default Settings
 
+#if !defined ROM_VERIFY
 	{ "bsmt2000.bin",	0x02000, 0xc2a265af, 9 | BRF_PRG | BRF_ESS }, // 52 DSP Code
+#endif
 };
 
 STD_ROM_PICK(tattassa)

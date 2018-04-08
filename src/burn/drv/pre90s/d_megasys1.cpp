@@ -4616,27 +4616,27 @@ struct BurnDriver BurnDrvStdragonb = {
 // Rod-Land (World)
 
 static struct BurnRomInfo rodlandRomDesc[] = {
-	{ "JALECO_ROD_LAND_2.ROM2",		0x20000, 0xc7e00593, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "JALECO_ROD_LAND_1.ROM1",		0x20000, 0x2e748ca1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "JALECO_ROD_LAND_3.ROM3",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "JALECO_ROD_LAND_4.ROM4",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "jaleco_rod_land_2.rom2",		0x20000, 0xc7e00593, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "jaleco_rod_land_1.rom1",		0x20000, 0x2e748ca1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jaleco_rod_land_3.rom3",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jaleco_rod_land_4.rom4",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "JALECO_ROD_LAND_5.ROM5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
-	{ "JALECO_ROD_LAND_6.ROM6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "jaleco_rod_land_5.rom5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "jaleco_rod_land_6.rom6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "LH534H31.ROM14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "lh534h31.rom14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "LH534H32.ROM18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "lh534h32.rom18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "LH2311J0.ROM19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+	{ "lh2311j0.rom19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "LH534H33.ROM23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
+	{ "lh534h33.rom23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "LH5321T5.ROM10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "lh5321t5.rom10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "S202000DR.ROM8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "s202000dr.rom8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "PS89013A.M14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "ps89013a.m14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodland)
@@ -4685,27 +4685,27 @@ struct BurnDriver BurnDrvRodland = {
 // JALECO MB-M02A EB-88003-3001-1, with jumper wire from a PAL to one of the connectors
 
 static struct BurnRomInfo rodlandaRomDesc[] = {
-	{ "JALECO_ROD_LAND_2.ROM2",		0x20000, 0x797ad124, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "JALECO_ROD_LAND_1.ROM1",		0x20000, 0x030b116f, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "JALECO_ROD_LAND_3.ROM3",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "JALECO_ROD_LAND_4.ROM4",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "jaleco_rod_land_2.rom2",		0x20000, 0x797ad124, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "jaleco_rod_land_1.rom1",		0x20000, 0x030b116f, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jaleco_rod_land_3.rom3",		0x10000, 0x62fdf6d7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jaleco_rod_land_4.rom4",		0x10000, 0x44163c86, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "JALECO_ROD_LAND_5.ROM5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
-	{ "JALECO_ROD_LAND_6.ROM6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "jaleco_rod_land_5.rom5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "jaleco_rod_land_6.rom6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "LH534H31.ROM14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "lh534h31.rom14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "LH534H32.ROM18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "lh534h32.rom18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "LH2311J0.ROM19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+	{ "lh2311j0.rom19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "LH534H33.ROM23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
+	{ "lh534h33.rom23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "LH5321T5.ROM10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "lh5321t5.rom10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "S202000DR.ROM8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "s202000dr.rom8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "PS89013A.M14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "ps89013a.m14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodlanda)
@@ -4737,27 +4737,27 @@ struct BurnDriver BurnDrvRodlanda = {
 // Rod-Land (Japan)
 
 static struct BurnRomInfo rodlandjRomDesc[] = {
-	{ "JALECO_ROD_LAND_2.ROM2",		0x20000, 0xb1d2047e, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "JALECO_ROD_LAND_1.ROM1",		0x20000, 0x3c47c2a3, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "JALECO_ROD_LAND_3.ROM3",		0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "JALECO_ROD_LAND_4.ROM4",		0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "jaleco_rod_land_2.rom2",		0x20000, 0xb1d2047e, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "jaleco_rod_land_1.rom1",		0x20000, 0x3c47c2a3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "jaleco_rod_land_3.rom3",		0x10000, 0xc5b1075f, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "jaleco_rod_land_4.rom4",		0x10000, 0x9ec61048, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "JALECO_ROD_LAND_5.ROM5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
-	{ "JALECO_ROD_LAND_6.ROM6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "jaleco_rod_land_5.rom5",		0x10000, 0xc1617c28, 2 | BRF_PRG | BRF_ESS }, //  4 68k #1 Code
+	{ "jaleco_rod_land_6.rom6",		0x10000, 0x663392b2, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "LH534H31.ROM14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "lh534h31.rom14",				0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "LH534H32.ROM18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "lh534h32.rom18",				0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "LH2311J0.ROM19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+	{ "lh2311j0.rom19",				0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "LH534H33.ROM23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
+	{ "lh534h33.rom23",				0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "LH5321T5.ROM10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "lh5321t5.rom10",				0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "S202000DR.ROM8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "s202000dr.rom8",				0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "PS89013A.M14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "ps89013a.m14",				0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodlandj)
@@ -4799,19 +4799,19 @@ static struct BurnRomInfo rodlandjbRomDesc[] = {
 	{ "rl02.bin",			0x10000, 0xd26eae8f, 2 | BRF_PRG | BRF_ESS }, //  6 68k #1 Code
 	{ "rl01.bin",			0x10000, 0x04cf24bc, 2 | BRF_PRG | BRF_ESS }, //  7
 
-	{ "LH534H31.ROM14",		0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "lh534h31.rom14",		0x80000, 0x8201e1bb, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
 
-	{ "LH534H32.ROM18",		0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
+	{ "lh534h32.rom18",		0x80000, 0xf3b30ca6, 4 | BRF_GRA },           //  7 Tilemap #1 Tiles
 
-	{ "LH2311J0.ROM19",		0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
+	{ "lh2311j0.rom19",		0x20000, 0x124d7e8f, 5 | BRF_GRA },           //  8 Tilemap #2 Tiles
 
-	{ "LH534H33.ROM23",		0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
+	{ "lh534h33.rom23",		0x80000, 0x936db174, 6 | BRF_GRA },           //  9 Sprites
 
-	{ "LH5321T5.ROM10",		0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
+	{ "lh5321t5.rom10",		0x40000, 0xe1d1cd99, 7 | BRF_SND },           // 10 OKI #0 Samples
 
-	{ "S202000DR.ROM8",		0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
+	{ "s202000dr.rom8",		0x40000, 0x8a49d3a7, 8 | BRF_SND },           // 11 OKI #1 Samples
 
-	{ "PS89013A.M14",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
+	{ "ps89013a.m14",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 12 Priority PROM
 };
 
 STD_ROM_PICK(rodlandjb)
@@ -4843,36 +4843,36 @@ struct BurnDriver BurnDrvRodlandjb = {
 /* probably a prototype, original JP key and unscrambled ROMs, incorrect audio matches PCB */
 
 static struct BurnRomInfo rittamRomDesc[] = {
-	{ "2.ROM2",				0x20000, 0x93085af2, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
-	{ "R+T_1.ROM1",			0x20000, 0x20446C34, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.rom2",				0x20000, 0x93085af2, 1 | BRF_PRG | BRF_ESS }, //  0 68k #0 Code
+	{ "r+t_1.rom1",			0x20000, 0x20446C34, 1 | BRF_PRG | BRF_ESS }, //  1
 	
-	{ "JALECO_5.ROM5",		0x10000, 0xea6600ec, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
-	{ "JALECO_6.ROM6",		0x10000, 0x51c3c0bc, 2 | BRF_PRG | BRF_ESS }, //  3
+	{ "jaleco_5.rom5",		0x10000, 0xea6600ec, 2 | BRF_PRG | BRF_ESS }, //  2 68k #1 Code
+	{ "jaleco_6.rom6",		0x10000, 0x51c3c0bc, 2 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "11.ROM11",			0x20000, 0xad2bf897, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
-	{ "12.ROM12",			0x20000, 0xd0224ed6, 3 | BRF_GRA },           //  7
-	{ "13.ROM13",			0x20000, 0xb1d5d423, 3 | BRF_GRA },           //  8
-	{ "14.ROM14",			0x20000, 0x20f8c361, 3 | BRF_GRA },           //  9
+	{ "11.rom11",			0x20000, 0xad2bf897, 3 | BRF_GRA },           //  6 Tilemap #0 Tiles
+	{ "12.rom12",			0x20000, 0xd0224ed6, 3 | BRF_GRA },           //  7
+	{ "13.rom13",			0x20000, 0xb1d5d423, 3 | BRF_GRA },           //  8
+	{ "14.rom14",			0x20000, 0x20f8c361, 3 | BRF_GRA },           //  9
 
-	{ "15.ROM15",			0x20000, 0x90bc97ac, 4 | BRF_GRA },           // 10 Tilemap #1 Tiles
-	{ "16.ROM16",			0x20000, 0xe38750aa, 4 | BRF_GRA },           // 11 
+	{ "15.rom15",			0x20000, 0x90bc97ac, 4 | BRF_GRA },           // 10 Tilemap #1 Tiles
+	{ "16.rom16",			0x20000, 0xe38750aa, 4 | BRF_GRA },           // 11 
 	// ROM17 not populated - not sure why, missing?
-	{ "18.ROM18",			0x20000, 0x57ccf24f, 4 | BRF_GRA },           // 12 
+	{ "18.rom18",			0x20000, 0x57ccf24f, 4 | BRF_GRA },           // 12 
 
-	{ "19.ROM19",			0x20000, 0x6daa1081, 5 | BRF_GRA },           // 13 Tilemap #2 Tiles
+	{ "19.rom19",			0x20000, 0x6daa1081, 5 | BRF_GRA },           // 13 Tilemap #2 Tiles
 
-	{ "R+T_20.ROM20",		0x20000, 0x23bc2b0b, 6 | BRF_GRA },           // 14 Sprites
-	{ "21.ROM21",			0x20000, 0x9d2b0ec4, 6 | BRF_GRA },           // 15 
-	{ "22.ROM22",			0x20000, 0xbba2e2cf, 6 | BRF_GRA },           // 16
-	{ "23.ROM23",			0x20000, 0x05536a18, 6 | BRF_GRA },           // 17
+	{ "r+t_20.rom20",		0x20000, 0x23bc2b0b, 6 | BRF_GRA },           // 14 Sprites
+	{ "21.rom21",			0x20000, 0x9d2b0ec4, 6 | BRF_GRA },           // 15 
+	{ "22.rom22",			0x20000, 0xbba2e2cf, 6 | BRF_GRA },           // 16
+	{ "23.rom23",			0x20000, 0x05536a18, 6 | BRF_GRA },           // 17
 
-	{ "JALECO_9.ROM9",		0x20000, 0x065364bd, 7 | BRF_SND },           // 18 OKI #0 Samples
-	{ "JALECO_10.ROM10",	0x20000, 0x395df3b2, 7 | BRF_SND },           // 19 
+	{ "jaleco_9.rom9",		0x20000, 0x065364bd, 7 | BRF_SND },           // 18 OKI #0 Samples
+	{ "jaleco_10.rom10",	0x20000, 0x395df3b2, 7 | BRF_SND },           // 19 
 
-	{ "JALECO_7.ROM7",		0x20000, 0x76fd879f, 8 | BRF_SND },           // 20 OKI #1 Samples
-	{ "JALECO_8.ROM8",		0x20000, 0xa771ab00, 8 | BRF_SND },           // 21 OKI #1 Samples
+	{ "jaleco_7.rom7",		0x20000, 0x76fd879f, 8 | BRF_SND },           // 20 OKI #1 Samples
+	{ "jaleco_8.rom8",		0x20000, 0xa771ab00, 8 | BRF_SND },           // 21 OKI #1 Samples
 
-	{ "PS89013A.M14",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 22 Priority PROM
+	{ "ps89013a.m14",		0x00200, 0x8914e72d, 9 | BRF_GRA },           // 22 Priority PROM
 };
 
 STD_ROM_PICK(rittam)

@@ -6604,12 +6604,12 @@ static INT32 Tdragon3Init()
 // Thunder Dragon 3 (bootleg of Thunder Dragon 2)
 
 static struct BurnRomInfo tdragon3hRomDesc[] = {
-	{ "H.27C2001",	0x040000, 0x0091f4a3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
-	{ "L.27C020",	0x040000, 0x4699c313, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "h.27c2001",	0x040000, 0x0091f4a3, 1 | BRF_PRG | BRF_ESS }, //  0 68k code
+	{ "l.27c020",	0x040000, 0x4699c313, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "1.27C1000",	0x020000, 0xb870be61, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
+	{ "1.27c1000",	0x020000, 0xb870be61, 2 | BRF_PRG | BRF_ESS }, //  2 Z80 code
 
-	{ "12.27C1000",	0x020000, 0xf809d616, 3 | BRF_GRA }, //  3 Characters
+	{ "12.27c1000",	0x020000, 0xf809d616, 3 | BRF_GRA }, //  3 Characters
 
 	{ "ww930914.2",	0x200000, 0xf968c65d, 4 | BRF_GRA }, //  4 Tiles
 

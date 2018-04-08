@@ -887,8 +887,8 @@ static struct BurnRomInfo wcvol95RomDesc[] = {
 
 	{ "mbx-03.13j",		0x200000, 0x061632bc, 4 | BRF_GRA },           //  5 YMZ280b Samples
 
-	{ "GAL16V8B.10J.bin",	0x000117, 0x06bbcbd5, 5 | BRF_GRA },           //  6 GALs
-	{ "GAL16V8B.5D.bin",	0x000117, 0x117784f0, 5 | BRF_GRA },           //  7
+	{ "gal16v8b.10j.bin",	0x000117, 0x06bbcbd5, 5 | BRF_GRA },           //  6 GALs
+	{ "gal16v8b.5d.bin",	0x000117, 0x117784f0, 5 | BRF_GRA },           //  7
 };
 
 STD_ROM_PICK(wcvol95)
@@ -918,8 +918,8 @@ static struct BurnRomInfo wcvol95xRomDesc[] = {
 
 	{ "mbx-03.13j",		0x200000, 0x061632bc, 4 | BRF_GRA },           //  5 YMZ280b Samples
 
-	{ "GAL16V8B.10J.bin",	0x000117, 0x06bbcbd5, 5 | BRF_GRA },           //  6 GALs
-	{ "GAL16V8B.5D.bin",	0x000117, 0x117784f0, 5 | BRF_GRA },           //  7
+	{ "gal16v8b.10j.bin",	0x000117, 0x06bbcbd5, 5 | BRF_GRA },           //  6 GALs
+	{ "gal16v8b.5d.bin",	0x000117, 0x117784f0, 5 | BRF_GRA },           //  7
 };
 
 STD_ROM_PICK(wcvol95x)

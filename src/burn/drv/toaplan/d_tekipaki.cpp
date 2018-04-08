@@ -40,7 +40,7 @@ static struct BurnRomInfo drvtRomDesc[] = {
 	{ "o.e6",  		  		0x010000, 0xa2244558, BRF_ESS | BRF_PRG }, //  1
 
 	{ "0-1_4.4_cb45.a16",  	0x080000, 0x35e14729, BRF_GRA },	       //  2 GP9001 Tile data
-	{ "3-4_4.4_547d.a15",  	0x080000, 0x2d5e2201, BRF_GRA },	       //  3
+	{ "3-4_4.4_547d.a15",  	0x080000, 0x41975fcc, BRF_GRA },	       //  3
 
 	{ "hd647180.020", 		0x008000, 0xd5157c12, BRF_PRG },           //  4 Sound CPU
 };

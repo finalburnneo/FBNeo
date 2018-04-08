@@ -585,7 +585,9 @@ static struct BurnRomInfo emptyRomDesc[] = {
 };
 
 static struct BurnRomInfo cchipRomDesc[] = {
+#if !defined ROM_VERIFY
 	{ "cchip_upd78c11.bin",		0x01000, 0x43021521, BRF_BIOS | TAITO_CCHIP_BIOS},
+#endif
 };
 
 static struct BurnRomInfo BallbrosRomDesc[] = {

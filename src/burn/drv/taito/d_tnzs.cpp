@@ -3066,7 +3066,7 @@ static struct BurnRomInfo tnzsopRomDesc[] = {
 
 	{ "e-3__6-24__c4ach.tmm27512d-20.u38",	0x10000, 0xc7662e96, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "b8042h__'88-6-22__0fcc.d8742.u46",	0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
+	{ "b8042h___88-6-22__0fcc.d8742.u46",	0x00800, 0xa4bfce19, 3 | BRF_PRG | BRF_OPT }, //  2 I8742 MCU
 
 	{ "a13__03e8.d27c1000d-15.a13",			0x20000, 0x7e0bd5bb, 4 | BRF_GRA },	      	  //  3 Graphics
 	{ "a12__f4ec.d27c1000d-15.a12",			0x20000, 0x95880726, 4 | BRF_GRA },	      	  //  4

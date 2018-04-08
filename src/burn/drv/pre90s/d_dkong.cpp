@@ -2042,6 +2042,8 @@ static struct BurnRomInfo radarscpRomDesc[] = {
 	{ "rs2-v.1hc",	0x0100, 0x1b828315, 6 }, // 13
 
 	{ "trs2v3ec",	0x0800, 0x0eca8d6b, 5 }, // 14 gfx3
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(radarscp)
@@ -2225,6 +2227,8 @@ static struct BurnRomInfo radarscp1RomDesc[] = {
 	{ "trs-s__4h.4h",	0x0800, 0xd1f1b48c, 3 }, // 16 m58819 speech
 
 	{ "trs01v1d.bin",	0x0100, 0x1b828315, 8 }, // 17 unused proms
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(radarscp1)

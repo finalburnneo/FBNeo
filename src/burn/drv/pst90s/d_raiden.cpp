@@ -1191,11 +1191,11 @@ struct BurnDriver BurnDrvRaidenkb = {
 static struct BurnRomInfo raidenbRomDesc[] = {
 	{ "1.u0253",        	0x010000, 0xa4b12785, BRF_ESS | BRF_PRG },  // CPU 0, V30
 	{ "2.u0252",        	0x010000, 0x17640bd5, BRF_ESS | BRF_PRG },
-	{ "3__(raidenb).u022",  0x020000, 0x9d735bf5, BRF_ESS | BRF_PRG },
-	{ "4__(raidenb).u023",  0x020000, 0x8d184b99, BRF_ESS | BRF_PRG },
+	{ "3__,raidenb.u022",   0x020000, 0x9d735bf5, BRF_ESS | BRF_PRG },
+	{ "4__,raidenb.u023",   0x020000, 0x8d184b99, BRF_ESS | BRF_PRG },
 
-	{ "5__(raidenb).u042",  0x020000, 0x7aca6d61, BRF_ESS | BRF_PRG },  // CPU 1, V30
-	{ "6__(raidenb).u043",  0x020000, 0xe3d35cc2, BRF_ESS | BRF_PRG },
+	{ "5__,raidenb.u042",   0x020000, 0x7aca6d61, BRF_ESS | BRF_PRG },  // CPU 1, V30
+	{ "6__,raidenb.u043",   0x020000, 0xe3d35cc2, BRF_ESS | BRF_PRG },
 
 	{ "rai6.u212",      	0x010000, 0x723a483b, BRF_ESS | BRF_PRG },  // CPU 2, Z80
 

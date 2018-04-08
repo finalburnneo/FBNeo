@@ -2237,20 +2237,20 @@ static struct BurnRomInfo MyheroblRomDesc[] = {
 	{ "2.g2",         	   0x004000, 0x688c9ede, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
 	{ "3.h2",              0x004000, 0x3cbbaf64, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 	
-	{ "6.E10",      	   0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
+	{ "6.e10",      	   0x002000, 0xaf467223, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program Code
 	
-	{ "B13.R10",           0x004000, 0x9a4861b1, BRF_GRA },		  	  //  4 Tiles
-	{ "B11.R7",            0x004000, 0x0d6f248a, BRF_GRA },		  	  //  5 Tiles
-	{ "x.R8",              0x004000, 0x24537709, BRF_GRA },		  	  //  6 Tiles
+	{ "b13.r10",           0x004000, 0x9a4861b1, BRF_GRA },		  	  //  4 Tiles
+	{ "b11.r7",            0x004000, 0x0d6f248a, BRF_GRA },		  	  //  5 Tiles
+	{ "x.r8",              0x004000, 0x24537709, BRF_GRA },		  	  //  6 Tiles
 	
 	{ "4.f4",      		   0x004000, 0xf19e05a1, BRF_GRA },		  	  //  7 Sprites
-	{ "x.H4",              0x004000, 0x7988adc3, BRF_GRA },		  	  //  8 Sprites
-	{ "x.G4",      		   0x004000, 0x37f77a78, BRF_GRA },		  	  //  9 Sprites
-	{ "B7.K4",       	   0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 10 Sprites
+	{ "x.h4",              0x004000, 0x7988adc3, BRF_GRA },		  	  //  8 Sprites
+	{ "x.g4",      		   0x004000, 0x37f77a78, BRF_GRA },		  	  //  9 Sprites
+	{ "b7.k4",       	   0x004000, 0x42bdc8f6, BRF_GRA },		  	  // 10 Sprites
 
 	{ "pr-5317.76",        0x000100, 0x648350b8, BRF_OPT },		  	  // 11 Timing PROM
 	
-	{ "PROM.A2",           0x000200, 0x4fcaf000, BRF_OPT },       	  // 12 Timing PROMBL
+	{ "prom.a2",           0x000200, 0x4fcaf000, BRF_OPT },       	  // 12 Timing PROMBL
 };
 
 STD_ROM_PICK(Myherobl)

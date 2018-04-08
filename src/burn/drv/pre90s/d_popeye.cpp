@@ -1161,7 +1161,7 @@ static struct BurnRomInfo popeyeblRomDesc[] = {
 	{ "po3",			0x2000, 0x99d6a04a, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "po4",			0x2000, 0x548a6514, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "po5",			0x1000, 0xcca61ddd, 2 | BRF_GRA }, //  4 gfx1
+	{ "po5",			0x1000, 0xce6c9f8e, 2 | BRF_GRA }, //  4 gfx1
 
 	{ "po6",			0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
 	{ "po7",			0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
@@ -1198,27 +1198,27 @@ static INT32 DrvInitPopeyej()
 // Popeye (Japan, Sky Skipper hardware)
 
 static struct BurnRomInfo popeyejRomDesc[] = {
-	{ "TPP1-C.2A.2732",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "TPP1-C.2B.2732",		0x1000, 0x4e0b7f06, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "TPP1-C.2C.2732",		0x1000, 0xb1c18b7e, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "TPP1-C.2D.2732",		0x1000, 0x79d0e988, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "TPP1-C.2E.2732",		0x1000, 0x74854ca1, 1 | BRF_PRG | BRF_ESS }, //  4
-	{ "TPP1-C.2F.2732",		0x1000, 0xe2b08891, 1 | BRF_PRG | BRF_ESS }, //  5
-	{ "TPP1-C.2G.2732",		0x1000, 0xb74a1a97, 1 | BRF_PRG | BRF_ESS }, //  6
-	{ "TPP1-C.2H.2732",		0x1000, 0x30e84104, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "tpp1-c.2a,2732",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "tpp1-c.2b,2732",		0x1000, 0x4e0b7f06, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tpp1-c.2c,2732",		0x1000, 0xb1c18b7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tpp1-c.2d,2732",		0x1000, 0x79d0e988, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "tpp1-c.2e,2732",		0x1000, 0x74854ca1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "tpp1-c.2f,2732",		0x1000, 0xe2b08891, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "tpp1-c.2g,2732",		0x1000, 0xb74a1a97, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "tpp1-c.2h,2732",		0x1000, 0x30e84104, 1 | BRF_PRG | BRF_ESS }, //  6
 
-	{ "TPP1-V.3H.2716",		0x0800, 0xfa52a752, 2 | BRF_GRA }, 			 //  7 gfx1
+	{ "tpp1-v.3h,2716",		0x0800, 0xfa52a752, 2 | BRF_GRA }, 			 //  7 gfx1
 
-	{ "TPP1-E.1E.2763",		0x2000, 0x0f2cd853, 3 | BRF_GRA }, 			 //  8 gfx2
-	{ "TPP1-E.2E.2763",		0x2000, 0x888f3474, 3 | BRF_GRA }, 			 //  9
-	{ "TPP1-E.3E.2763",		0x2000, 0x7e864668, 3 | BRF_GRA }, 			 // 10
-	{ "TPP1-E.5E.2763",		0x2000, 0x49e1d170, 3 | BRF_GRA }, 			 // 11
+	{ "tpp1-e.1e,2763",		0x2000, 0x0f2cd853, 3 | BRF_GRA }, 			 //  8 gfx2
+	{ "tpp1-e.2e,2763",		0x2000, 0x888f3474, 3 | BRF_GRA }, 			 //  9
+	{ "tpp1-e.3e,2763",		0x2000, 0x7e864668, 3 | BRF_GRA }, 			 // 10
+	{ "tpp1-e.5e,2763",		0x2000, 0x49e1d170, 3 | BRF_GRA }, 			 // 11
 
-	{ "TPP1-T.4A.82S123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
-	{ "TPP1-T.1A.82S123",	0x0020, 0xe950bea1, 4 | BRF_GRA }, 			 // 13
-	{ "TPP1-T.3A.82S129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
-	{ "TPP1-T.2A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
-	{ "TPP1-T.3J.82S129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
+	{ "tpp1-t.4a,82s123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
+	{ "tpp1-t.1a,82s123",	0x0020, 0xe950bea1, 4 | BRF_GRA }, 			 // 13
+	{ "tpp1-t.3a,82s129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
+	{ "tpp1-t.2a,82s129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
+	{ "tpp1-t.3j,82s129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
 };
 
 STD_ROM_PICK(popeyej)
@@ -1240,7 +1240,7 @@ struct BurnDriver BurnDrvPopeyej = {
 static struct BurnRomInfo popeyejoRomDesc[] = {
 	{ "tpp1-c.2a.bin",		0x1000, 0x4176761e, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
 	{ "tpp1-c.2b.bin",		0x1000, 0x2cc76c54, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "TPP1-C.2C.2732",		0x1000, 0xb1c18b7e, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "tpp1-c.2c,2732",		0x1000, 0xb1c18b7e, 1 | BRF_PRG | BRF_ESS }, //  2
 //  { "tpp1-c.2c.bin",		0x1000, 0xd3061b82, 1 | BRF_PRG | BRF_ESS }, //  2
 //  Actual Dump had Fixed Bits but when compared the stuck bit accounted for all the errors compared to popeyej's 2C, so we use that one.
 	{ "tpp1-c.2d.bin",		0x1000, 0x79d0e988, 1 | BRF_PRG | BRF_ESS }, //  3
@@ -1256,11 +1256,11 @@ static struct BurnRomInfo popeyejoRomDesc[] = {
 	{ "tpp1-e.3e.bin",		0x2000, 0x72b258f2, 3 | BRF_GRA }, 			 // 10
 	{ "tpp1-e.5e.bin",		0x2000, 0x7355ff16, 3 | BRF_GRA }, 			 // 11
 
-	{ "TPP1-T.4A.82S123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
-	{ "TPP1-T.1A.82S123",	0x0020, 0xe950bea1, 4 | BRF_GRA }, 			 // 13
-	{ "TPP1-T.3A.82S129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
-	{ "TPP1-T.2A.82S129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
-	{ "TPP1-T.3J.82S129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
+	{ "tpp1-t.4a.82s123",	0x0020, 0x375e1602, 4 | BRF_GRA }, 			 // 12 proms
+	{ "tpp1-t.1a.82s123",	0x0020, 0xe950bea1, 4 | BRF_GRA }, 			 // 13
+	{ "tpp1-t.3a.82s129",	0x0100, 0xc5826883, 4 | BRF_GRA }, 			 // 14
+	{ "tpp1-t.2a.82s129",	0x0100, 0xc576afba, 4 | BRF_GRA }, 			 // 15
+	{ "tpp1-t.3j.82s129",	0x0100, 0xa4655e2e, 4 | BRF_GRA }, 			 // 16
 };
 
 STD_ROM_PICK(popeyejo)

@@ -629,19 +629,19 @@ STD_ROM_FN(Missw96b)
 
 // Rom information
 static struct BurnRomInfo Missw96cRomDesc[] = {
-	{ "10_PROG2.UE17",   	0x080000, 0x36a7beb6, BRF_ESS | BRF_PRG }, // 68000 code
-	{ "6_PROG1.UD17",   	0x080000, 0xe70b562f, BRF_ESS | BRF_PRG },
-	{ "9_IM1-B.UE16B",   	0x080000, 0xeedc24f8, BRF_ESS | BRF_PRG },
-	{ "5_IM1-A.UE16A",		0x080000, 0xbb0eb7d7, BRF_ESS | BRF_PRG },
-	{ "8_IM2-B.UE15B",   	0x080000, 0x68dd67b2, BRF_ESS | BRF_PRG },
-	{ "4_IM2-A.UE15A",		0x080000, 0x2b39ec56, BRF_ESS | BRF_PRG },
-	{ "7_IM3_B.UE14B", 		0x080000, 0x7fd5ca2c, BRF_ESS | BRF_PRG },
-	{ "3_IM3-A.UE14A",		0x080000, 0x4ba5dab7, BRF_ESS | BRF_PRG },
+	{ "10_prog2.ue17",   	0x080000, 0x36a7beb6, BRF_ESS | BRF_PRG }, // 68000 code
+	{ "6_prog1.ud17",   	0x080000, 0xe70b562f, BRF_ESS | BRF_PRG },
+	{ "9_im1-b.ue16b",   	0x080000, 0xeedc24f8, BRF_ESS | BRF_PRG },
+	{ "5_im1-a.ue16a",		0x080000, 0xbb0eb7d7, BRF_ESS | BRF_PRG },
+	{ "8_im2-b.ue15b",   	0x080000, 0x68dd67b2, BRF_ESS | BRF_PRG },
+	{ "4_im2-a.ue15a",		0x080000, 0x2b39ec56, BRF_ESS | BRF_PRG },
+	{ "7_im3_b.ue14b", 		0x080000, 0x7fd5ca2c, BRF_ESS | BRF_PRG },
+	{ "3_im3-a.ue14a",		0x080000, 0x4ba5dab7, BRF_ESS | BRF_PRG },
 
-	{ "20_OBJ1.U5",   		0x080000, 0x3983152f, BRF_GRA },			  // graphics
+	{ "20_obj1.u5",   		0x080000, 0x3983152f, BRF_GRA },			  // graphics
 
-	{ "1_MUSIC1.UB6",   	0x080000, 0xe78a659e, BRF_SND },			  // PCM
-	{ "2_MUSIC2.UC6",   	0x080000, 0x60fa0c00, BRF_SND },
+	{ "1_music1.ub6",   	0x080000, 0xe78a659e, BRF_SND },			  // PCM
+	{ "2_music2.uc6",   	0x080000, 0x60fa0c00, BRF_SND },
 };
 
 STD_ROM_PICK(Missw96c)

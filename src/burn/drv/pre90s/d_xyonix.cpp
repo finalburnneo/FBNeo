@@ -437,7 +437,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 static struct BurnRomInfo xyonixRomDesc[] = {
 	{ "xyonix3.bin",	0x10000, 0x1960a74e, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
 
-	{ "mc68705p3s.e7",	0x00780, 0xf60cdd86, 2 | BRF_NODUMP },        //  1 Undumped MCU
+	{ "mc68705p3s.e7",	0x00780, 0xf60cdd86, 2 | BRF_OPT },        //  1 Undumped MCU
 
 	{ "xyonix1.bin",	0x08000, 0x3dfa9596, 3 | BRF_GRA },           //  2 Tiles
 	{ "xyonix2.bin",	0x08000, 0xdb87343e, 3 | BRF_GRA },           //  3

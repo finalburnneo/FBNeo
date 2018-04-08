@@ -1592,10 +1592,10 @@ STD_ROM_PICK(shogwarr)
 STD_ROM_FN(shogwarr)
 
 static struct BurnRomInfo shogwarrkRomDesc[] = {
-	{ "fb-030a.U61",		0x020000, 0x32ce7909, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
-	{ "fb-031a.U62",		0x020000, 0xbbffe957, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
+	{ "fb-030a.u61",		0x020000, 0x32ce7909, BRF_ESS | BRF_PRG }, //  0 68000 Program Code
+	{ "fb-031a.u62",		0x020000, 0xbbffe957, BRF_ESS | BRF_PRG }, //  1 68000 Program Code
 
-	{ "fb-040a.U33",		0x020000, 0x299d0746, BRF_ESS | BRF_PRG }, //  2 MCU Data
+	{ "fb-040a.u33",		0x020000, 0x299d0746, BRF_ESS | BRF_PRG }, //  2 MCU Data
 
 	{ "fb-020a.u1",			0x100000, 0x87e55c6d, BRF_GRA },	   	   //  3 Sprites
 	{ "fb020b.u2",			0x100000, 0x276b9d7b, BRF_GRA },	       //  4 
@@ -1604,13 +1604,13 @@ static struct BurnRomInfo shogwarrkRomDesc[] = {
 	{ "fb-22a.u5",			0x100000, 0x9039e5d3, BRF_GRA },	       //  7 
 	{ "fb-22b.u6",			0x100000, 0x96ac9e54, BRF_GRA },	       //  8 
 	{ "fb023.u7",			0x100000, 0x132794bd, BRF_GRA },	       //  9 
-	{ "fb-024.U8",			0x080000, 0x4bf3282d, BRF_GRA },	       //  10
+	{ "fb-024.u8",			0x080000, 0x4bf3282d, BRF_GRA },	       //  10
 
 	{ "fb010.u65",			0x100000, 0x296ffd92, BRF_GRA },	       // 11 Tiles (scrambled) 
 	{ "fb011.u66",			0x080000, 0x500a0367, BRF_GRA },	       // 12 
 
-	{ "fb-000.U43",			0x080000, 0xf524aaa1, BRF_SND },	       // 13 Samples
-	{ "fb-003.U101",		0x080000, 0x969f1465, BRF_SND },	       // 14
+	{ "fb-000.u43",			0x080000, 0xf524aaa1, BRF_SND },	       // 13 Samples
+	{ "fb-003.u101",		0x080000, 0x969f1465, BRF_SND },	       // 14
 
 	{ "fb-002.u45",			0x100000, 0x010acc17, BRF_SND },	       // 15 Samples
 	{ "fb-003.u44",			0x100000, 0x0aea4ac5, BRF_SND },	       // 16 

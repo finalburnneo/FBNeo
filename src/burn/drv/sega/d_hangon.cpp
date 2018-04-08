@@ -773,43 +773,43 @@ STD_ROM_PICK(Shangonrb)
 STD_ROM_FN(Shangonrb)
 
 static struct BurnRomInfo Shangonrb2RomDesc[] = {
-	{ "SHO-Philco-S-30-R9-10.BIN",      0x10000, 0xeccf7004, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "SHO-Philco-S-32-R12-13.BIN",     0x10000, 0x90613f42, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "SHO-Philco-S-29-L9-10.BIN",      0x08000, 0x12ee8716, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "SHO-Philco-S-31-L12-13.BIN",     0x08000, 0x155e0cfd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-30-r9-10.bin",      0x10000, 0xeccf7004, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-32-r12-13.bin",     0x10000, 0x90613f42, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-29-l9-10.bin",      0x08000, 0x12ee8716, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-31-l12-13.bin",     0x08000, 0x155e0cfd, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 	
-	{ "SHO-Philco-S-9-h4.BIN",      	0x10000, 0x070c8059, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "SHO-Philco-S-5-g4.BIN",      	0x10000, 0x9916c54b, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "SHO-Philco-S-8-h3.BIN",      	0x10000, 0x000ad595, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
-	{ "SHO-Philco-S-4-g3.BIN",      	0x10000, 0x8f8f4af0, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-9-h4.bin",      	0x10000, 0x070c8059, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-5-g4.bin",      	0x10000, 0x9916c54b, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-8-h3.bin",      	0x10000, 0x000ad595, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-4-g3.bin",      	0x10000, 0x8f8f4af0, SYS16_ROM_PROG2 | BRF_ESS | BRF_PRG },
 
-	{ "SHO-Philco-S-23-N-P8.BIN",     	0x08000, 0x260286f9, SYS16_ROM_TILES | BRF_GRA },
-	{ "SHO-Philco-S-24-N-P9.BIN",     	0x08000, 0xc609ee7b, SYS16_ROM_TILES | BRF_GRA },
-	{ "SHO-Philco-S-25-N-P10.BIN",      0x08000, 0xb236a403, SYS16_ROM_TILES | BRF_GRA },
+	{ "sho-philco-s-23-n-p8.bin",     	0x08000, 0x260286f9, SYS16_ROM_TILES | BRF_GRA },
+	{ "sho-philco-s-24-n-p9.bin",     	0x08000, 0xc609ee7b, SYS16_ROM_TILES | BRF_GRA },
+	{ "sho-philco-s-25-n-p10.bin",      0x08000, 0xb236a403, SYS16_ROM_TILES | BRF_GRA },
 
-	{ "SHO-Philco-S-21-m6.BIN",     			0x10000, 0xd6ac012b, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-15-l6.BIN",     			0x10000, 0xd9d83250, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-20-m5.BIN",      			0x10000, 0xeef23b3d, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-14-l5.BIN",      			0x10000, 0x0f26d131, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-19-m4.BIN",     			0x10000, 0x8a57b8d6, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-13-l4.BIN",     			0x10000, 0x3aff8910, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-18-m3.BIN",     			0x10000, 0xaf473098, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-12-l3.BIN",     			0x10000, 0x80bafeef, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-17-m2.BIN= epr-10679.4",    0x10000, 0x03bc4878, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-11-l2.BIN",      			0x10000, 0x274b734e, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-16-m1.BIN",     			0x10000, 0x9f0677ed, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-10-l1.BIN",      			0x10000, 0x508a4701, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-7-h2.BIN",     				0x10000, 0xb176ea72, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "SHO-Philco-S-6-h1.BIN",      			0x10000, 0x42fcd51d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-21-m6.bin",     	0x10000, 0xd6ac012b, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-15-l6.bin",     	0x10000, 0xd9d83250, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-20-m5.bin",      	0x10000, 0xeef23b3d, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-14-l5.bin",      	0x10000, 0x0f26d131, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-19-m4.bin",     	0x10000, 0x8a57b8d6, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-13-l4.bin",     	0x10000, 0x3aff8910, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-18-m3.bin",     	0x10000, 0xaf473098, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-12-l3.bin",     	0x10000, 0x80bafeef, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-17-m2.bin",			0x10000, 0x03bc4878, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-11-l2.bin",     	0x10000, 0x274b734e, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-16-m1.bin",     	0x10000, 0x9f0677ed, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-10-l1.bin",     	0x10000, 0x508a4701, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-7-h2.bin",     		0x10000, 0xb176ea72, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "sho-philco-s-6-h1.bin",      	0x10000, 0x42fcd51d, SYS16_ROM_SPRITES | BRF_GRA },
 	
-	{ "SHO-Philco-S-26-T1.BIN",    		0x08000, 0x1bbe4fc8, SYS16_ROM_ROAD | BRF_GRA },
+	{ "sho-philco-s-26-t1.bin",    		0x08000, 0x1bbe4fc8, SYS16_ROM_ROAD | BRF_GRA },
 
-	{ "SHO-Philco-S-3-g12.BIN",    		0x08000, 0x83347dc0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "sho-philco-s-3-g12.bin",    		0x08000, 0x83347dc0, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "SHO-Philco-S-2-a16.BIN",     	0x10000, 0xda08ca2b, SYS16_ROM_PCMDATA | BRF_SND },
-	{ "SHO-Philco-S-1-a14.BIN",     	0x10000, 0x8b10e601, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "sho-philco-s-2-a16.bin",     	0x10000, 0xda08ca2b, SYS16_ROM_PCMDATA | BRF_SND },
+	{ "sho-philco-s-1-a14.bin",     	0x10000, 0x8b10e601, SYS16_ROM_PCMDATA | BRF_SND },
 	
-	{ "SHO-Philco-S-22-C-D2.BIN",     	0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
+	{ "sho-philco-s-22-c-d2.bin",     	0x02000, 0xe3ec7bd6, SYS16_ROM_PROM | BRF_GRA },
 };
 
 

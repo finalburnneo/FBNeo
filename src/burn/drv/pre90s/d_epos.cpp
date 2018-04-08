@@ -980,10 +980,10 @@ struct BurnDriver BurnDrvDealer = {
 // Revenger '84 (set 1)
 
 static struct BurnRomInfo revngr84RomDesc[] = {
-	{ "u_1__revenger__r06254__(c)_epos_corp.m5l2764k.u1",	0x2000, 0x308f231f, BRF_ESS | BRF_PRG },	//  0 Z80 code
-	{ "u_2__revenger__r06254__(c)_epos_corp.m5l2764k.u2",	0x2000, 0xe80bbfb4, BRF_ESS | BRF_PRG },	//  1
-	{ "u_3__revenger__r06254__(c)_epos_corp.m5l2764k.u3",	0x2000, 0xd9270929, BRF_ESS | BRF_PRG },	//  2
-	{ "u_4__revenger__r06254__(c)_epos_corp.m5l2764k.u4",	0x2000, 0xd6e6cfa8, BRF_ESS | BRF_PRG },	//  3
+	{ "u_1__revenger__r06254__=c=_epos_corp.m5l2764k.u1",	0x2000, 0x308f231f, BRF_ESS | BRF_PRG },	//  0 Z80 code
+	{ "u_2__revenger__r06254__=c=_epos_corp.m5l2764k.u2",	0x2000, 0xe80bbfb4, BRF_ESS | BRF_PRG },	//  1
+	{ "u_3__revenger__r06254__=c=_epos_corp.m5l2764k.u3",	0x2000, 0xd9270929, BRF_ESS | BRF_PRG },	//  2
+	{ "u_4__revenger__r06254__=c=_epos_corp.m5l2764k.u4",	0x2000, 0xd6e6cfa8, BRF_ESS | BRF_PRG },	//  3
 
 	{ "dm74s288n.u60",	0x0020, 0xbe2b0641, BRF_GRA },	//  4 Color Prom
 	{ "revngr84.nv",	0x1000, 0xa4417770, BRF_GRA },	//  5 NVRAM

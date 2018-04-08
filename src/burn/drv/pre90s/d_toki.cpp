@@ -1514,7 +1514,7 @@ static struct BurnRomInfo tokiaRomDesc[] = {
 	{ "9.m1",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 12 MSM6295 Samples
 	
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
-	{ "prom26.n6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
+	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(tokia)
@@ -1616,37 +1616,37 @@ struct BurnDriver BurnDrvTokiua = {
 // Toki (US, prototype?)
 
 static struct BurnRomInfo tokipRomDesc[] = {
-	{ "6 10-M",		    	0x20000, 0x91b554a3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "4 10-K",				0x20000, 0x404220f7, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "5 12-M",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "3 12-K",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "6 10-m",		    	0x20000, 0x91b554a3, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "4 10-k",				0x20000, 0x404220f7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "5 12-m",				0x10000, 0xd6a82808, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "3 12-k",				0x10000, 0xa01a5b10, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "8 3-M",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
-	{ "7 7-M",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "8 3-m",				0x02000, 0x6c87c4c5, 2 | BRF_PRG | BRF_ESS }, //  4 Z80 Code (encrypted)
+	{ "7 7-m",				0x10000, 0xa67969c4, 2 | BRF_PRG | BRF_ESS }, //  5
 
-	{ "1 5-C",				0x10000, 0xfd0ff303, 3 | BRF_GRA },           //  6 Characters
-	{ "2 3-C",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
+	{ "1 5-c",				0x10000, 0xfd0ff303, 3 | BRF_GRA },           //  6 Characters
+	{ "2 3-c",				0x10000, 0x86e87e48, 3 | BRF_GRA },           //  7
 
-	{ "OBJ 1-0.ROM10",		0x20000, 0xa027bd8e, 4 | BRF_GRA },           //  8 Background Tiles
-	{ "OBJ 1-1.ROM9",		0x20000, 0x43a767ea, 4 | BRF_GRA },           //  9
-	{ "OBJ 1-2.ROM12",		0x20000, 0x1aecc9d8, 4 | BRF_GRA },           // 10
-	{ "OBJ 1-3.ROM11",		0x20000, 0xd65c0c6d, 4 | BRF_GRA },           // 11
-	{ "OBJ 2-0.ROM14",		0x20000, 0xcedaccaf, 4 | BRF_GRA },           // 12
-	{ "OBJ 2-1.ROM13",		0x20000, 0x013f539b, 4 | BRF_GRA },           // 13
-	{ "OBJ 2-2.ROM16",		0x20000, 0x6a8e6e22, 4 | BRF_GRA },           // 14
-	{ "OBJ 2-3.ROM15",		0x20000, 0x25d9a16c, 4 | BRF_GRA },           // 15
+	{ "obj 1-0.rom10",		0x20000, 0xa027bd8e, 4 | BRF_GRA },           //  8 Background Tiles
+	{ "obj 1-1.rom9",		0x20000, 0x43a767ea, 4 | BRF_GRA },           //  9
+	{ "obj 1-2.rom12",		0x20000, 0x1aecc9d8, 4 | BRF_GRA },           // 10
+	{ "obj 1-3.rom11",		0x20000, 0xd65c0c6d, 4 | BRF_GRA },           // 11
+	{ "obj 2-0.rom14",		0x20000, 0xcedaccaf, 4 | BRF_GRA },           // 12
+	{ "obj 2-1.rom13",		0x20000, 0x013f539b, 4 | BRF_GRA },           // 13
+	{ "obj 2-2.rom16",		0x20000, 0x6a8e6e22, 4 | BRF_GRA },           // 14
+	{ "obj 2-3.rom15",		0x20000, 0x25d9a16c, 4 | BRF_GRA },           // 15
 
-	{ "BACK 1-0.ROM5",		0x20000, 0xfac7e32f, 5 | BRF_GRA },           // 16 Foreground Tiles
-	{ "BACK 1-1.ROM6",		0x20000, 0xee1135d6, 5 | BRF_GRA },           // 17
-	{ "BACK 1-2.ROM7",		0x20000, 0x78db8d57, 5 | BRF_GRA },           // 18
-	{ "BACK 1-3.ROM8",		0x20000, 0xd719de71, 5 | BRF_GRA },           // 19
+	{ "back 1-0.rom5",		0x20000, 0xfac7e32f, 5 | BRF_GRA },           // 16 Foreground Tiles
+	{ "back 1-1.rom6",		0x20000, 0xee1135d6, 5 | BRF_GRA },           // 17
+	{ "back 1-2.rom7",		0x20000, 0x78db8d57, 5 | BRF_GRA },           // 18
+	{ "back 1-3.rom8",		0x20000, 0xd719de71, 5 | BRF_GRA },           // 19
 
-	{ "BACK 2-0.ROM1",		0x20000, 0x949d8025, 6 | BRF_GRA },           // 20 Sprites
-	{ "BACK 2-1.ROM2",		0x20000, 0x4b28b4b4, 6 | BRF_GRA },           // 21
-	{ "BACK 2-2.ROM3",		0x20000, 0x1aa9a5cf, 6 | BRF_GRA },           // 22
-	{ "BACK 2-3.ROM4",		0x20000, 0x6759571f, 6 | BRF_GRA },           // 23
+	{ "back 2-0.rom1",		0x20000, 0x949d8025, 6 | BRF_GRA },           // 20 Sprites
+	{ "back 2-1.rom2",		0x20000, 0x4b28b4b4, 6 | BRF_GRA },           // 21
+	{ "back 2-2.rom3",		0x20000, 0x1aa9a5cf, 6 | BRF_GRA },           // 22
+	{ "back 2-3.rom4",		0x20000, 0x6759571f, 6 | BRF_GRA },           // 23
 
-	{ "9 1-M",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 24 MSM6295 Samples
+	{ "9 1-m",				0x20000, 0xae7a6b8b, 7 | BRF_SND },           // 24 MSM6295 Samples
 	
 	{ "prom27.j3",			0x00100, 0xe616ae85, 0 | BRF_OPT },
 	{ "prom26.b6",			0x00100, 0xea6312c6, 0 | BRF_OPT },

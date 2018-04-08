@@ -515,6 +515,31 @@ static struct BurnSampleInfo fantasySampleDesc[] = {
 STD_SAMPLE_PICK(fantasy)
 STD_SAMPLE_FN(fantasy)
 
+static struct BurnSampleInfo satansatSampleDesc[] = {
+	{"fire", SAMPLE_NOLOOP },
+	{"explsion", SAMPLE_NOLOOP },
+	{"vg_voi-0", SAMPLE_NOLOOP },
+	{"vg_voi-1", SAMPLE_NOLOOP },
+	{"vg_voi-2", SAMPLE_NOLOOP },
+	{"vg_voi-3", SAMPLE_NOLOOP },
+	{"vg_voi-4", SAMPLE_NOLOOP },
+	{"vg_voi-5", SAMPLE_NOLOOP },
+	{"vg_voi-6", SAMPLE_NOLOOP },
+	{"vg_voi-7", SAMPLE_NOLOOP },
+	{"vg_voi-8", SAMPLE_NOLOOP },
+	{"vg_voi-9", SAMPLE_NOLOOP },
+	{"vg_voi-a", SAMPLE_NOLOOP },
+	{"vg_voi-b", SAMPLE_NOLOOP },
+	{"vg_voi-c", SAMPLE_NOLOOP },
+	{"vg_voi-d", SAMPLE_NOLOOP },
+	{"vg_voi-e", SAMPLE_NOLOOP },
+	{"vg_voi-f", SAMPLE_NOLOOP },
+	{"", 0 }
+};
+
+STD_SAMPLE_PICK(satansat)
+STD_SAMPLE_FN(satansat)
+
 static inline void character_write(INT32 offset)
 {
 	offset &= 0x7ff;
@@ -1813,11 +1838,11 @@ STD_ROM_PICK(satansat)
 STD_ROM_FN(satansat)
 
 struct BurnDriver BurnDrvSatansat = {
-	"satansat", NULL, NULL, NULL, "1981",
+	"satansat", NULL, NULL, "satansat", "1981",
 	"Satan of Saturn (set 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, satansatRomInfo, satansatRomName, NULL, NULL, SatansatInputInfo, SatansatDIPInfo,
+	NULL, satansatRomInfo, satansatRomName, satansatSampleInfo, satansatSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1852,11 +1877,11 @@ STD_ROM_PICK(satansata)
 STD_ROM_FN(satansata)
 
 struct BurnDriver BurnDrvSatansata = {
-	"satansata", "satansat", NULL, NULL, "1981",
+	"satansata", "satansat", NULL, "satansat", "1981",
 	"Satan of Saturn (set 2)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, satansataRomInfo, satansataRomName, NULL, NULL, SatansatInputInfo, SatansatDIPInfo,
+	NULL, satansataRomInfo, satansataRomName, satansatSampleInfo, satansatSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1890,11 +1915,11 @@ STD_ROM_PICK(zarzon)
 STD_ROM_FN(zarzon)
 
 struct BurnDriver BurnDrvZarzon = {
-	"zarzon", "satansat", NULL, NULL, "1981",
+	"zarzon", "satansat", NULL, "aatansat", "1981",
 	"Zarzon\0", NULL, "SNK (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, zarzonRomInfo, zarzonRomName, NULL, NULL, SatansatInputInfo, SatansatDIPInfo,
+	NULL, zarzonRomInfo, zarzonRomName, satansatSampleInfo, satansatSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -1929,11 +1954,11 @@ STD_ROM_PICK(satansatind)
 STD_ROM_FN(satansatind)
 
 struct BurnDriver BurnDrvSatansatind = {
-	"satansatind", "satansat", NULL, NULL, "1981",
+	"satansatind", "satansat", NULL, "satansat", "1981",
 	"Satan of Saturn (Inder S.A., bootleg)\0", NULL, "bootleg (Inder S.A.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, satansatindRomInfo, satansatindRomName, NULL, NULL, SatansatInputInfo, SatansatDIPInfo,
+	NULL, satansatindRomInfo, satansatindRomName, satansatSampleInfo, satansatSampleName, SatansatInputInfo, SatansatDIPInfo,
 	SatansatindInit, DrvExit, DrvFrame, SatansatDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

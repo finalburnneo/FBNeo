@@ -657,20 +657,20 @@ struct BurnDriver BurnDrvPirates = {
 // shows 'Copyright 1995' instead of (c)1994 Nix, but isn't unprotected, various changes to the names in the credis + a few other minor alterations
 
 static struct BurnRomInfo piratesbRomDesc[] = {
-	{ "U15",			0x80000, 0x0cfd6415, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "U16",			0x80000, 0x98cece02, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "u15",			0x80000, 0x0cfd6415, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "u16",			0x80000, 0x98cece02, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "U34",			0x80000, 0x89fda216, 2 | BRF_GRA },           //  2 Tiles
-	{ "U35",			0x80000, 0x40e069b4, 2 | BRF_GRA },           //  3
-	{ "U48",			0x80000, 0x26d78518, 2 | BRF_GRA },           //  4
-	{ "U49",			0x80000, 0xf31696ea, 2 | BRF_GRA },           //  5
+	{ "u34",			0x80000, 0x89fda216, 2 | BRF_GRA },           //  2 Tiles
+	{ "u35",			0x80000, 0x40e069b4, 2 | BRF_GRA },           //  3
+	{ "u48",			0x80000, 0x26d78518, 2 | BRF_GRA },           //  4
+	{ "u49",			0x80000, 0xf31696ea, 2 | BRF_GRA },           //  5
 
-	{ "U69",			0x80000, 0xc78a276f, 3 | BRF_GRA },           //  6 Sprites
-	{ "U70",			0x80000, 0x9f0bad96, 3 | BRF_GRA },           //  7
-	{ "U71",			0x80000, 0x0bb7c816, 3 | BRF_GRA },           //  8
-	{ "U72",			0x80000, 0x1c41bd2c, 3 | BRF_GRA },           //  9
+	{ "u69",			0x80000, 0xc78a276f, 3 | BRF_GRA },           //  6 Sprites
+	{ "u70",			0x80000, 0x9f0bad96, 3 | BRF_GRA },           //  7
+	{ "u71",			0x80000, 0x0bb7c816, 3 | BRF_GRA },           //  8
+	{ "u72",			0x80000, 0x1c41bd2c, 3 | BRF_GRA },           //  9
 
-	{ "U31",			0x80000, 0x63a739ec, 4 | BRF_SND },           // 10 Oki Samples
+	{ "u31",			0x80000, 0x63a739ec, 4 | BRF_SND },           // 10 Oki Samples
 };
 
 STD_ROM_PICK(piratesb)

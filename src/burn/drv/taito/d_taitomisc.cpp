@@ -1365,7 +1365,9 @@ static struct BurnRomInfo emptyRomDesc[] = {
 };
 
 static struct BurnRomInfo cchipRomDesc[] = {
+#if !defined ROM_VERIFY
 	{ "cchip_upd78c11.bin",		0x01000, 0x43021521, BRF_BIOS | TAITO_CCHIP_BIOS},
+#endif
 };
 
 static struct BurnRomInfo DariusRomDesc[] = {
@@ -6303,10 +6305,10 @@ struct BurnDriver BurnDrvRbislando = {
 };
 
 struct BurnDriver BurnDrvRbislande = {
-	"rbislande", "rbisland", "cchip", NULL, "1988",
+	"rbislande", NULL, "cchip", NULL, "1988",
 	"Rainbow Islands (Extra)\0", NULL, "Taito Corporation", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, RbislandeRomInfo, RbislandeRomName, NULL, NULL, RbislandInputInfo, RbislandDIPInfo,
 	RbislandInit, TaitoMiscExit, TaitoMiscFrame, NULL, TaitoMiscScan,
 	NULL, 0x2000, 320, 224, 4, 3

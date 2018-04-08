@@ -1747,13 +1747,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 // Maniac Square (protected, Version 1.0, Checksum DEEE)
 
 static struct BurnRomInfo maniacsqRomDesc[] = {
-	{ "TMS27C010A.MSU45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "TMS27C010A.MSU44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "tms27c010a.msu45",   0x020000, 0xfa44c907, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tms27c010a.msu44",   0x020000, 0x42e20121, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "MS1",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "MS2",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "MS3",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "MS4",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ms2",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "ms3",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "ms4",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
 
 	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
 };
@@ -1780,13 +1780,13 @@ struct BurnDriver BurnDrvManiacsq = {
 // Maniac Square (protected, Version 1.0, Checksum CF2D)
 
 static struct BurnRomInfo maniacsqaRomDesc[] = {
-	{ "MS_U_45.U45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "MS_U_44.U44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "ms_u_45.u45",	0x020000, 0x98f4fdc0, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "ms_u_44.u44",	0x020000, 0x1785dd41, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "MS1",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "MS2",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
-	{ "MS3",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
-	{ "MS4",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
+	{ "ms1",		0x080000, 0xd8551b2f, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "ms2",		0x080000, 0xb269c427, 1 | BRF_GRA },           //  3
+	{ "ms3",		0x020000, 0xaf4ea5e7, 1 | BRF_GRA },           //  4
+	{ "ms4",		0x020000, 0x578c3588, 1 | BRF_GRA },           //  5
 
 	{ "maniacsq_ds5002fp_sram.bin",	0x8000, 0xafe9703d, 2 | BRF_PRG | BRF_ESS }, // 6 Dallas MCU
 };
@@ -1947,13 +1947,13 @@ struct BurnDriver BurnDrvAligatoruna = {
 // Snow Board Championship (Version 2.0)
 
 static struct BurnRomInfo snowboaraRomDesc[] = {
-	{ "sb53",		0x080000, 0xe4eaefd4, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "sb55",		0x080000, 0xe2476994, 0 | BRF_PRG | BRF_ESS }, //  1
+	{ "sb_53.ic53",		0x080000, 0xe4eaefd4, 0 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "sb_55.ic55",		0x080000, 0xe2476994, 0 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "sb43",		0x200000, 0xafce54ed, 1 | BRF_GRA },           //  2 Graphics & Samples
-	{ "sb44",		0x400000, 0x1bbe88bc, 1 | BRF_GRA },           //  3
-	{ "sb45",		0x400000, 0x373983d9, 1 | BRF_GRA },           //  4
-	{ "sb46",		0x400000, 0x22e7c648, 1 | BRF_GRA },           //  5
+	{ "sb_ic43.ic43",		0x200000, 0xafce54ed, 1 | BRF_GRA },           //  2 Graphics & Samples
+	{ "sb_ic44.ic44",		0x400000, 0x1bbe88bc, 1 | BRF_GRA },           //  3
+	{ "sb_ic45.ic45",		0x400000, 0x373983d9, 1 | BRF_GRA },           //  4
+	{ "sb_ic46.ic46",		0x400000, 0x22e7c648, 1 | BRF_GRA },           //  5
 };
 
 STD_ROM_PICK(snowboara)
@@ -2121,8 +2121,8 @@ struct BurnDriver BurnDrvTouchgoe = {
 // Touch & Go (Korea, unprotected)
 
 static struct BurnRomInfo touchgokRomDesc[] = {
-	{ "56.IC56",		0x080000, 0xcbb87505, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "57.IC57",		0x080000, 0x36bcc7e7, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "56.ic56",		0x080000, 0xcbb87505, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "57.ic57",		0x080000, 0x36bcc7e7, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "ic69",		0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
 	{ "ic65",		0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3

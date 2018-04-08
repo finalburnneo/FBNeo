@@ -1491,15 +1491,15 @@ struct BurnDriver BurnDrvThoop = {
 // Last KM (Ver 1.0.0275)
 
 static struct BurnRomInfo lastkmRomDesc[] = {
-	{ "prog-bici-E-8.11.95.D18",	0x80000, 0x1fc5fba0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "prog-bici-O-8.11.95.D16",	0x80000, 0xb93e57e3, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "prog-bici-e-8.11.95.d18",	0x80000, 0x1fc5fba0, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "prog-bici-o-8.11.95.d16",	0x80000, 0xb93e57e3, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "bici-F3.h6",			0x80000, 0x0bf9f213, 2 | BRF_GRA },           //  2 Tiles and Sprites
-	{ "bici-F2.h7",			0x80000, 0xc48d5376, 2 | BRF_GRA },           //  3
-	{ "bici-F1.h9",			0x80000, 0xe7958070, 2 | BRF_GRA },           //  4
-	{ "bici-F0.h10",		0x80000, 0x73d4b29f, 2 | BRF_GRA },           //  5
+	{ "bici-f3.h6",			0x80000, 0x0bf9f213, 2 | BRF_GRA },           //  2 Tiles and Sprites
+	{ "bici-f2.h7",			0x80000, 0xc48d5376, 2 | BRF_GRA },           //  3
+	{ "bici-f1.h9",			0x80000, 0xe7958070, 2 | BRF_GRA },           //  4
+	{ "bici-f0.h10",		0x80000, 0x73d4b29f, 2 | BRF_GRA },           //  5
 
-	{ "sonido-bici-0-8.11.95.C1",	0x80000, 0x7380c963, 3 | BRF_SND },           //  6 M6295 Samples
+	{ "sonido-bici-0-8.11.95.c1",	0x80000, 0x7380c963, 3 | BRF_SND },           //  6 M6295 Samples
 };
 
 STD_ROM_PICK(lastkm)

@@ -3123,19 +3123,19 @@ struct BurnDriver BurnDrvpacman = {
 // Pac-Man (SegaSA / Sonic)
 
 static struct BurnRomInfo pacmansoRomDesc[] = {
-	{ "PM-1R.6E",     0x0800, 0x76dbed21, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "PM-5R.6K",     0x0800, 0x965bb9b2, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "PM-2R.6F",     0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "PM-6R.6M",     0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "PM-3R.6H",     0x0800, 0xa5af382c, 1 | BRF_ESS | BRF_PRG },	//  4 
-	{ "PM-7R.6N",     0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "PM-4R.6J",     0x0800, 0xcd03135a, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "PM-8R.6P",     0x0800, 0xfb397ced, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "pm-1r.6e",     0x0800, 0x76dbed21, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pm-5r.6k",     0x0800, 0x965bb9b2, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pm-2r.6f",     0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pm-6r.6m",     0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pm-3r.6h",     0x0800, 0xa5af382c, 1 | BRF_ESS | BRF_PRG },	//  4 
+	{ "pm-7r.6n",     0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pm-4r.6j",     0x0800, 0xcd03135a, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pm-8r.6p",     0x0800, 0xfb397ced, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "PM-9S.5E",     0x0800, 0x2ee076d2, 2 | BRF_GRA },			//  8 Graphics
-	{ "PM-11S.5H",    0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
-	{ "PM-10S.5F",    0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
-	{ "PM-12S.5J",    0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+	{ "pm-9s.5e",     0x0800, 0x2ee076d2, 2 | BRF_GRA },			//  8 Graphics
+	{ "pm-11s.5h",    0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "pm-10s.5f",    0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "pm-12s.5j",    0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
 	{ "pm1-1.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
 	{ "pm1-4.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
@@ -3162,19 +3162,19 @@ struct BurnDriver BurnDrvpacmanso = {
 // very similar to the pacmanso set, it has an accelerator feature
 
 static struct BurnRomInfo pacmanvgRomDesc[] = {
-	{ "PM-1R.6E",     0x0800, 0x76dbed21, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "PM-5R.6K",     0x0800, 0x965bb9b2, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "PM-2R.6F",     0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "PM-6R.6M",     0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "PM-3R.6H",     0x0800, 0xa5af382c, 1 | BRF_ESS | BRF_PRG },	//  4 
-	{ "PM-7R.6N",     0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "PM-4R.6J",     0x0800, 0x7c42d9be, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "PM-8R.6P",     0x0800, 0x68a7300d, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "pm-1r.6e",     0x0800, 0x76dbed21, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pm-5r.6k",     0x0800, 0x965bb9b2, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pm-2r.6f",     0x0800, 0x7d177853, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pm-6r.6m",     0x0800, 0xd3e8914c, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pm-3r.6h",     0x0800, 0xa5af382c, 1 | BRF_ESS | BRF_PRG },	//  4 
+	{ "pm-7r.6n",     0x0800, 0xa948ce83, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pm-4r.6j",     0x0800, 0x7c42d9be, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pm-8r.6p",     0x0800, 0x68a7300d, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "PM-9S.5E",     0x0800, 0x2229ab07, 2 | BRF_GRA },			//  8 Graphics
-	{ "PM-11S.5H",    0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
-	{ "PM-10S.5F",    0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
-	{ "PM-12S.5J",    0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
+	{ "pm-9s.5e",     0x0800, 0x2229ab07, 2 | BRF_GRA },			//  8 Graphics
+	{ "pm-11s.5h",    0x0800, 0x3591b89d, 2 | BRF_GRA },			//  9
+	{ "pm-10s.5f",    0x0800, 0x9e39323a, 2 | BRF_GRA },			// 10
+	{ "pm-12s.5j",    0x0800, 0x1b1d9096, 2 | BRF_GRA },			// 11
 
 	{ "pm1-1.7f",     0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
 	{ "pm1-4.4a",     0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			// 13
@@ -6892,14 +6892,14 @@ struct BurnDriver BurnDrvpengo4 = {
 // PCB has an additional label Bally N.E.
 
 static struct BurnRomInfo pengo5RomDesc[] = {
-	{ "0_OCT6-82.bin",		0x1000, 0x43e45441, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "1_OCT11-82.bin", 	0x1000, 0x30a52a90, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "2_OCT11-82.bin",    	0x1000, 0x09783cc2, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "3_OCT6-82.bin",    	0x1000, 0x452c80c9, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "4_OCT6-82.bin",    	0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "5_OCT11-82.bin",    	0x1000, 0x770570cf, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "6_OCT11-82.bin",    	0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "7_OCT11-82.bin",    	0x1000, 0x1350ca0e, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "0_oct6-82.bin",		0x1000, 0x43e45441, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "1_oct11-82.bin", 	0x1000, 0x30a52a90, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "2_oct11-82.bin",    	0x1000, 0x09783cc2, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "3_oct6-82.bin",    	0x1000, 0x452c80c9, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "4_oct6-82.bin",    	0x1000, 0xb72084ec, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "5_oct11-82.bin",    	0x1000, 0x770570cf, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "6_oct11-82.bin",    	0x1000, 0xaf7b12c4, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "7_oct11-82.bin",    	0x1000, 0x1350ca0e, 1 | BRF_ESS | BRF_PRG },	//  7
 
 	{ "ep1640.92",    		0x2000, 0xd7eec6cd, 2 | BRF_GRA },				//  8 Graphics
 	{ "ep1695.105",   		0x2000, 0x5bfd26e9, 2 | BRF_GRA },				//  9

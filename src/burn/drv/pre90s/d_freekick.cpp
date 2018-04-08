@@ -1502,7 +1502,7 @@ static struct BurnRomInfo pbillrdsaRomDesc[] = {
 	{ "17",				0x8000, 0x9bb3d467, 1 }, //  1
 	{ "19",				0x4000, 0x2335e6dd, 1 }, //  2
 
-	{ "317-0030.key",	0x2000, 0x9223f06d, 2 }, //  3 user1
+	{ "317-5008.key",	0x2000, 0x9223f06d, 2 }, //  3 user1
 
 	{ "pb.4",			0x4000, 0x2f4d4dd3, 3 }, //  4 gfx1
 	{ "pb.5",			0x4000, 0x9dfccbd3, 3 }, //  5

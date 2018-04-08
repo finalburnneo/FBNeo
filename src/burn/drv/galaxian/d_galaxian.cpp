@@ -10488,14 +10488,14 @@ STD_ROM_PICK(Smooncrs)
 STD_ROM_FN(Smooncrs)
 
 static struct BurnRomInfo MooncrstsoRomDesc[] = {
-	{ "1.BIN",         0x00800, 0x0357ab1a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2.BIN",         0x00800, 0xcf6e78f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "3.BIN",         0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "4.BIN",         0x00800, 0xcea864f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "5.BIN",         0x00800, 0x32cd9adc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "6.BIN",         0x00800, 0xf0230048, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "7.BIN",         0x00800, 0x73783cee, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "8.BIN",         0x00800, 0x1644965a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "1.bin",         0x00800, 0x0357ab1a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2.bin",         0x00800, 0xcf6e78f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "3.bin",         0x00800, 0x716eaa10, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "4.bin",         0x00800, 0xcea864f2, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "5.bin",         0x00800, 0x32cd9adc, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "6.bin",         0x00800, 0xf0230048, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "7.bin",         0x00800, 0x73783cee, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "8.bin",         0x00800, 0x1644965a, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	// missing, assuming 'super moon cresta' gfx
 	{ "epr203",        0x00800, 0xbe26b561, BRF_GRA | GAL_ROM_TILES_SHARED },
@@ -13817,21 +13817,21 @@ STD_ROM_PICK(Mshuttle2)
 STD_ROM_FN(Mshuttle2)
 
 static struct BurnRomInfo MshuttleaRomDesc[] = {
-	{ "MY-5A.4L",      0x01000, 0x14fa3e75, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "MY04.4J",       0x01000, 0x1cfae2c8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "MY03.4F",       0x01000, 0xc8b8a368, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "MY-2A.4E", 	   0x01000, 0x51d348b0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "MY-1A.4C", 	   0x01000, 0xc4ad042d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my-5a.4l",      0x01000, 0x14fa3e75, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my04.4j",       0x01000, 0x1cfae2c8, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my03.4f",       0x01000, 0xc8b8a368, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my-2a.4e", 	   0x01000, 0x51d348b0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "my-1a.4c", 	   0x01000, 0xc4ad042d, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "MY09",          0x01000, 0x3601b380, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "MY11", 		   0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "MY08",          0x01000, 0x992b06cd, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "MY10",          0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "my09",          0x01000, 0x3601b380, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "my11",          0x00800, 0xb659e932, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "my08",          0x01000, 0x992b06cd, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "my10",          0x00800, 0xd860e6ce, BRF_GRA | GAL_ROM_TILES_SHARED },
 	
 	{ "mscprom1.bin",  0x00020, 0xea0d1af0, BRF_GRA | GAL_ROM_PROM },
 	
-	{ "MY07.4P",       0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
-	{ "MY06.4S",       0x01000, 0x466415f2, BRF_SND | BRF_OPT },
+	{ "my07.4p",       0x01000, 0x522a2920, BRF_SND | BRF_OPT },	// Samples
+	{ "my06.4s",       0x01000, 0x466415f2, BRF_SND | BRF_OPT },
 };
 
 STD_ROM_PICK(Mshuttlea)
@@ -15666,23 +15666,23 @@ STD_ROM_PICK(Scramrf)
 STD_ROM_FN(Scramrf)
 
 static struct BurnRomInfo OffensivRomDesc[] = {
-	{ "2716-9C.bin",   0x00800, 0xcc2ee7f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9E.bin",   0x00800, 0x66ebc070, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9F.bin",   0x00800, 0x317548fd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9H.bin",   0x00800, 0xdd380a22, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9J.bin",   0x00800, 0xfa4f1a70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9L.bin",   0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9M.bin",   0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
-	{ "2716-9P.bin",   0x00800, 0xfe2866f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9c.bin",   0x00800, 0xcc2ee7f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9e.bin",   0x00800, 0x66ebc070, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9f.bin",   0x00800, 0x317548fd, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9h.bin",   0x00800, 0xdd380a22, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9j.bin",   0x00800, 0xfa4f1a70, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9l.bin",   0x00800, 0x9fd96374, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9m.bin",   0x00800, 0x88ac07a0, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
+	{ "2716-9p.bin",   0x00800, 0xfe2866f5, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
-	{ "2716-5C.bin",   0x00800, 0xbe037cf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "2716-5D.bin",   0x00800, 0xde7912da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "2716-5E.bin",   0x00800, 0xad833f7e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2716-5c.bin",   0x00800, 0xbe037cf6, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2716-5d.bin",   0x00800, 0xde7912da, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "2716-5e.bin",   0x00800, 0xad833f7e, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 
-	{ "2716-6F.bin",   0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
-	{ "2716-6H.bin",   0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "2716-6f.bin",   0x00800, 0x4708845b, BRF_GRA | GAL_ROM_TILES_SHARED },
+	{ "2716-6h.bin",   0x00800, 0x11fd2887, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "82s123-NMI6331-1J-5E.bin",  	0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "82s123-nmi6331-1j-5e.bin",  	0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Offensiv)
@@ -19171,13 +19171,13 @@ static struct BurnRomInfo ScobragRomDesc[] = {
 	{ "2l_32.bin",     0x01000, 0x6493d2d3, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG1 },
 	
 	{ "c5_16.bin",     0x00800, 0xd4346959, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
-	{ "d5_16..bin",    0x00800, 0xcc025d95, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
+	{ "d5_16.bin",     0x00800, 0xcc025d95, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 	{ "e5_16.bin",     0x00800, 0x1628c53f, BRF_ESS | BRF_PRG | GAL_ROM_Z80_PROG2 },
 		
 	{ "h5_16.bin",     0x00800, 0x64d113b4, BRF_GRA | GAL_ROM_TILES_SHARED },
 	{ "f5_16.bin",     0x00800, 0xa96316d3, BRF_GRA | GAL_ROM_TILES_SHARED },
 		
-	{ "super_cobre_288_6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
+	{ "super_cobra_288_6e",     0x00020, 0x4e3caeab, BRF_GRA | GAL_ROM_PROM },
 };
 
 STD_ROM_PICK(Scobrag)

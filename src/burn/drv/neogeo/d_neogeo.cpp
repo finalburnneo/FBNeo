@@ -12230,7 +12230,7 @@ struct BurnDriver BurnDrvpbobbl2n = {
 // this version does not show the web address on the title screen
 
 static struct BurnRomInfo pnyaaRomDesc[] = {
-	{ "pn202.p1",     0x100000, 0xbf34e71c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ M27C800
+	{ "267-p1.p1",    0x100000, 0x112fe2c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
 	
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	{ "267-c1.c1",    0x800000, 0x5eebee65, 3 | BRF_GRA },           //  1 Sprite data 	/ mask rom TC534000
@@ -12273,7 +12273,7 @@ struct BurnDriver BurnDrvpnyaa = {
 /* Encrypted Set */ /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo pnyaaaRomDesc[] = {
-	{ "267-p1.p1",    0x100000, 0x112fe2c0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ mask rom TC538200
+	{ "pn202.p1",     0x100000, 0xbf34e71c, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 	/ M27C800
 
 	/* The Encrypted Boards do not have an s1 rom, data for it comes from the Cx ROMs */
 	{ "267-c1.c1",    0x800000, 0x5eebee65, 3 | BRF_GRA },           //  1 Sprite data 	/ mask rom TC534000

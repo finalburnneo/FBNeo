@@ -1065,7 +1065,7 @@ static struct BurnRomInfo retofinvb3RomDesc[] = {
 
 	{ "4.15",		0x2000, 0xd2899cc1, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "5.BIN",		0x2000, 0x9025abea, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
+	{ "5.bin",		0x2000, 0x9025abea, 3 | BRF_PRG | BRF_ESS }, //  4 Z80 #2 Code
 
 	{ "16.7",		0x2000, 0x4e3f501c, 4 | BRF_GRA },           //  5 Characters
 

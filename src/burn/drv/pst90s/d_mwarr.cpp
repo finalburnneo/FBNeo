@@ -1147,8 +1147,8 @@ struct BurnDriver BurnDrvStlforce = {
 // Twin Brats (set 1)
 
 static struct BurnRomInfo twinbratRomDesc[] = {
-	{ "2.u105",		0x20000, 0x33a9bb82, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "3.u104",		0x20000, 0xb1186a67, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "12.u105",	0x20000, 0x552529b1, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "13.u104",	0x20000, 0x9805ba90, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "11.bin",		0x40000, 0x00eecb03, 2 | BRF_GRA },           //  2 Sprites
 	{ "10.bin",		0x40000, 0x7556bee9, 2 | BRF_GRA },           //  3
@@ -1179,11 +1179,12 @@ struct BurnDriver BurnDrvTwinbrat = {
 };
 
 
+
 // Twin Brats (set 2)
 
 static struct BurnRomInfo twinbrataRomDesc[] = {
-	{ "2.bin",		0x20000, 0x5e75f568, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "3.bin",		0x20000, 0x0e3fa9b0, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "2.u105",		0x20000, 0x33a9bb82, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "3.u104",		0x20000, 0xb1186a67, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "11.bin",		0x40000, 0x00eecb03, 2 | BRF_GRA },           //  2 Sprites
 	{ "10.bin",		0x40000, 0x7556bee9, 2 | BRF_GRA },           //  3
@@ -1209,6 +1210,41 @@ struct BurnDriver BurnDrvTwinbrata = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, twinbrataRomInfo, twinbrataRomName, NULL, NULL, StlforceInputInfo, NULL,
+	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	334, 240, 4, 3
+};
+
+
+// Twin Brats (set 3)
+
+static struct BurnRomInfo twinbratbRomDesc[] = {
+	{ "2.bin",		0x20000, 0x5e75f568, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "3.bin",		0x20000, 0x0e3fa9b0, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "11.bin",		0x40000, 0x00eecb03, 2 | BRF_GRA },           //  2 Sprites
+	{ "10.bin",		0x40000, 0x7556bee9, 2 | BRF_GRA },           //  3
+	{ "9.bin",		0x40000, 0x13194d89, 2 | BRF_GRA },           //  4
+	{ "8.bin",		0x40000, 0x79f14528, 2 | BRF_GRA },           //  5
+
+	{ "6.bin",		0x80000, 0xaf10ddfd, 3 | BRF_GRA },           //  6 Background Tiles
+	{ "7.bin",		0x80000, 0x3696345a, 3 | BRF_GRA },           //  7
+	{ "4.bin",		0x80000, 0x1ae8a751, 3 | BRF_GRA },           //  8
+	{ "5.bin",		0x80000, 0xcf235eeb, 3 | BRF_GRA },           //  9
+
+	{ "1.bin",		0x80000, 0x76296578, 4 | BRF_SND },           // 10 M6295 #0 Samples
+
+	{ "eeprom-twinbrat.bin", 0x0080, 0x9366263d, 5 | BRF_PRG | BRF_ESS }, // 11 Default Eeprom
+};
+
+STD_ROM_PICK(twinbratb)
+STD_ROM_FN(twinbratb)
+
+struct BurnDriver BurnDrvTwinbratb = {
+	"twinbratb", "twinbrat", NULL, NULL, "1995",
+	"Twin Brats (set 3)\0", NULL, "Elettronica Video-Games S.R.L.", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	NULL, twinbratbRomInfo, twinbratbRomName, NULL, NULL, StlforceInputInfo, NULL,
 	TwinbratInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	334, 240, 4, 3
 };

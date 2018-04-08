@@ -767,7 +767,7 @@ static struct BurnRomInfo umk3RomDesc[] = {
 	{ "umk-u111.bin",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "umk-u110.bin",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 	
-	{ "463_MK3_Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3)
@@ -820,7 +820,7 @@ static struct BurnRomInfo umk3r11RomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u111_video_image.u111",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "mortal_kombat_iii_ultimate_u110_video_image.u110",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 	
-	{ "463_MK3_Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3r11)
@@ -873,7 +873,7 @@ static struct BurnRomInfo umk3r10RomDesc[] = {
 	{ "mortal_kombat_iii_ultimate_u111_video_image.u111",	0x100000, 0xa87523c8, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 2) }, // 24
 	{ "mortal_kombat_iii_ultimate_u110_video_image.u110",	0x100000, 0x0038f205, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x14, 3) }, // 25
 	
-	{ "463_MK3_Ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
+	{ "463_mk3_ultimate.u64", 0x1009, 0x4f425218, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(umk3r10)
@@ -1167,7 +1167,7 @@ static struct BurnRomInfo rmpgwtRomDesc[] = {
 	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "465 Rampage WT.u64",	0x001009, 0x5c14d850, 0 | BRF_OPT },
+	{ "465 rampage wt.u64",	0x001009, 0x5c14d850, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(rmpgwt)
@@ -1215,7 +1215,7 @@ static struct BurnRomInfo rmpgwt11RomDesc[] = {
 	{ "1.0_rampage_world_tour_u119_image.u119",	0x100000, 0x4e49c133, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 2) }, // 20
 	{ "1.0_rampage_world_tour_u118_image.u118",	0x100000, 0x43a6f51e, 3 | BRF_GRA | BRF_ESS | WUNIT_GFX(0x0c, 3) }, // 21
 	
-	{ "465 Rampage WT.u64",	0x01009, 0x5c14d850, 0 | BRF_OPT },
+	{ "465 rampage wt.u64",	0x01009, 0x5c14d850, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(rmpgwt11)

@@ -793,14 +793,14 @@ static struct BurnRomInfo tbowlRomDesc[] = {
 	{ "14.13l",			0x08000, 0xf9cf60b9, 4 | BRF_GRA },           //  5 Characters
 	{ "15.15l",			0x08000, 0xa23f6c53, 4 | BRF_GRA },           //  6
 
-	{ "6206b-6.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
 	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
 	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
 	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
-	{ "6206b-10.11",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
-	{ "6206b-12.14",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
-	{ "6206b-11.12",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
-	{ "6206b-13.16",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+	{ "6206b-10.l1",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.l4",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.l2",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.l6",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
 
 	{ "6206c-16.b11",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
 	{ "6206c-20.d11",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
@@ -843,14 +843,14 @@ static struct BurnRomInfo tbowlaRomDesc[] = {
 	{ "6206b-14.l13",	0x08000, 0xcf99d0bf, 4 | BRF_GRA },           //  5 Characters
 	{ "6206b-15.l14",	0x08000, 0xd69248cf, 4 | BRF_GRA },           //  6
 
-	{ "6206b-6.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
 	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
 	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
 	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
-	{ "6206b-10.11",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
-	{ "6206b-12.14",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
-	{ "6206b-11.12",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
-	{ "6206b-13.16",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+	{ "6206b-10.l1",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.l4",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.l2",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.l6",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
 
 	{ "6206c-16.b11",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
 	{ "6206c-20.d11",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16
@@ -899,14 +899,14 @@ static struct BurnRomInfo tbowlpRomDesc[] = {
 	{ "14.13l",					0x08000, 0xf9cf60b9, 4 | BRF_GRA },           //  5 Characters
 	{ "15.15l",					0x08000, 0xa23f6c53, 4 | BRF_GRA },           //  6
 
-	{ "6206b-6.e1",				0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
-	{ "6206b-8.e4",				0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
-	{ "6206b-7.e2",				0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
-	{ "6206b-9.e6",				0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
-	{ "6206b-10.11",			0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
-	{ "6206b-12.14",			0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
-	{ "6206b-11.12",			0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
-	{ "6206b-13.16",			0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+	{ "6206b-8.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
+	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
+	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
+	{ "6206b-10.l1",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.l4",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.l2",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.l6",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
 
 	{ "sp_7_10-16.b11",			0x10000, 0x807af46a, 6 | BRF_GRA },           // 15 Sprites
 	{ "sp_6_10-16.d11",			0x10000, 0x3c5654a9, 6 | BRF_GRA },           // 16
@@ -949,14 +949,14 @@ static struct BurnRomInfo tbowljRomDesc[] = {
 	{ "6206b-14.l13",	0x08000, 0xcf99d0bf, 4 | BRF_GRA },           //  5 Characters
 	{ "6206b-15.l14",	0x08000, 0xd69248cf, 4 | BRF_GRA },           //  6
 
-	{ "6206b-6.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
+	{ "6206b-8.e1",		0x10000, 0xb9615ffa, 5 | BRF_GRA },           //  7 Tiles
 	{ "6206b-8.e4",		0x10000, 0x6389c719, 5 | BRF_GRA },           //  8
 	{ "6206b-7.e2",		0x10000, 0xd139c397, 5 | BRF_GRA },           //  9
 	{ "6206b-9.e6",		0x10000, 0x975ded4c, 5 | BRF_GRA },           // 10
-	{ "6206b-10.11",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
-	{ "6206b-12.14",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
-	{ "6206b-11.12",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
-	{ "6206b-13.16",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
+	{ "6206b-10.l1",	0x10000, 0x9b4fa82e, 5 | BRF_GRA },           // 11
+	{ "6206b-12.l4",	0x10000, 0x7d0030f6, 5 | BRF_GRA },           // 12
+	{ "6206b-11.l2",	0x10000, 0x06bf07bb, 5 | BRF_GRA },           // 13
+	{ "6206b-13.l6",	0x10000, 0x4ad72c16, 5 | BRF_GRA },           // 14
 
 	{ "6206c-16.b11",	0x10000, 0x1a2fb925, 6 | BRF_GRA },           // 15 Sprites
 	{ "6206c-20.d11",	0x10000, 0x70bb38a3, 6 | BRF_GRA },           // 16

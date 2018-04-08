@@ -4922,15 +4922,15 @@ struct BurnDriver BurnDrvR2dx_v33_r2 = {
 // New Zero Team (V33 SYSTEM TYPE_B hardware)
 
 static struct BurnRomInfo nzeroteamRomDesc[] = {
-	{ "SEIBU_1.U0224",		0x080000, 0xce1bcaf4, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
-	{ "SEIBU_2.U0226",		0x080000, 0x03f6e32d, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "seibu_1.u0224",		0x080000, 0xce1bcaf4, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
+	{ "seibu_2.u0226",		0x080000, 0x03f6e32d, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "copx-d3.bin",		0x020000, 0xfa2cf3ad, 2 | BRF_GRA },           //  2 Copx data
 
-	{ "SEIBU_3.U01019",		0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
+	{ "seibu_3.u01019",		0x010000, 0x7ec1fbc3, 3 | BRF_PRG | BRF_ESS }, //  3 Z80 Code
 
-	{ "SEIBU_5.U0616",		0x010000, 0xce68ba3c, 4 | BRF_GRA },           //  4 Characters
-	{ "SEIBU_6.U0617",		0x010000, 0xcf44aea7, 4 | BRF_GRA },           //  5
+	{ "seibu_5.u0616",		0x010000, 0xce68ba3c, 4 | BRF_GRA },           //  4 Characters
+	{ "seibu_6.u0617",		0x010000, 0xcf44aea7, 4 | BRF_GRA },           //  5
 
 	{ "back-1",				0x100000, 0x8b7f9219, 5 | BRF_GRA },           //  6 Tiles
 	{ "back-2",				0x080000, 0xce61c952, 5 | BRF_GRA },           //  7
@@ -4938,10 +4938,10 @@ static struct BurnRomInfo nzeroteamRomDesc[] = {
 	{ "obj-1",				0x200000, 0x45be8029, 6 | BRF_GRA },           //  8 Sprites (Encrypted)
 	{ "obj-2",				0x200000, 0xcb61c19d, 6 | BRF_GRA },           //  9
 
-	{ "SEIBU_4.U099",		0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
+	{ "seibu_4.u099",		0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
 	
-	{ "SYSV33B-2.U0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
-	{ "SYSV33B-1.U0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
+	{ "sysv33b-2.u0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
+	{ "sysv33b-1.u0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(nzeroteam)
@@ -4979,8 +4979,8 @@ static struct BurnRomInfo nzeroteamaRomDesc[] = {
 
 	{ "6.pcm",				0x040000, 0x48be32b1, 7 | BRF_SND },           // 10 OKI Samples
 	
-	{ "SYSV33B-2.U0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
-	{ "SYSV33B-1.U0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
+	{ "sysv33b-2.u0227.bin",	0x0117, 0xd9f4612f, 0 | BRF_OPT },
+	{ "sysv33b-1.u0222.bin",	0x0117, 0xf514a11f, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(nzeroteama)

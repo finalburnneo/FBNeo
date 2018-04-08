@@ -2094,29 +2094,29 @@ struct BurnDriver BurnDrvLwingsj = {
 // Ares no Tsubasa (Japan, rev. A)
 
 static struct BurnRomInfo lwingsjaRomDesc[] = {
-	{ "AT_01A.6c",		0x8000, 0x568f1ea5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
-	{ "AT_02.7c",		0x8000, 0xd6a2edc4, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "AT_03.9c",		0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "at_01a.6c",		0x8000, 0x568f1ea5, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "at_02.7c",		0x8000, 0xd6a2edc4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "at_03.9c",		0x8000, 0xec5cc201, 1 | BRF_PRG | BRF_ESS }, //  2
 
-	{ "AT_03.11e",		0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
+	{ "at_03.11e",		0x8000, 0xa20337a2, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
 
-	{ "AT_05.9h",		0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
+	{ "at_05.9h",		0x4000, 0x091d923c, 4 | BRF_GRA },           //  4 Characters
 
-	{ "AT_14.3e",		0x8000, 0x176e3027, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
-	{ "AT_08.1e",		0x8000, 0xf5d25623, 5 | BRF_GRA },           //  6
-	{ "AT_13.3d",		0x8000, 0x001caa35, 5 | BRF_GRA },           //  7
-	{ "AT_07.1d",		0x8000, 0x0ba008c3, 5 | BRF_GRA },           //  8
-	{ "AT_12.3b",		0x8000, 0x4f8182e9, 5 | BRF_GRA },           //  9
-	{ "AT_06.1b",		0x8000, 0xf1617374, 5 | BRF_GRA },           // 10
-	{ "AT_15.3f",		0x8000, 0x9b374dcc, 5 | BRF_GRA },           // 11
-	{ "AT_09.1f",		0x8000, 0x23654e0a, 5 | BRF_GRA },           // 12
+	{ "at_14.3e",		0x8000, 0x176e3027, 5 | BRF_GRA },           //  5 Background Layer 1 Tiles
+	{ "at_08.1e",		0x8000, 0xf5d25623, 5 | BRF_GRA },           //  6
+	{ "at_13.3d",		0x8000, 0x001caa35, 5 | BRF_GRA },           //  7
+	{ "at_07.1d",		0x8000, 0x0ba008c3, 5 | BRF_GRA },           //  8
+	{ "at_12.3b",		0x8000, 0x4f8182e9, 5 | BRF_GRA },           //  9
+	{ "at_06.1b",		0x8000, 0xf1617374, 5 | BRF_GRA },           // 10
+	{ "at_15.3f",		0x8000, 0x9b374dcc, 5 | BRF_GRA },           // 11
+	{ "at_09.1f",		0x8000, 0x23654e0a, 5 | BRF_GRA },           // 12
 
-	{ "AT_17.3j",		0x8000, 0x8f3c763a, 6 | BRF_GRA },           // 13 Sprites
-	{ "AT_11.1j",		0x8000, 0x7cc90a1d, 6 | BRF_GRA },           // 14
-	{ "AT_16.3h",		0x8000, 0x7d58f532, 6 | BRF_GRA },           // 15
-	{ "AT_10.1h",		0x8000, 0x3e396eda, 6 | BRF_GRA },           // 16
+	{ "at_17.3j",		0x8000, 0x8f3c763a, 6 | BRF_GRA },           // 13 Sprites
+	{ "at_11.1j",		0x8000, 0x7cc90a1d, 6 | BRF_GRA },           // 14
+	{ "at_16.3h",		0x8000, 0x7d58f532, 6 | BRF_GRA },           // 15
+	{ "at_10.1h",		0x8000, 0x3e396eda, 6 | BRF_GRA },           // 16
 
-	{ "SZB01.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
+	{ "szb01.15g",		0x0100, 0xd96bcc98, 0 | BRF_OPT },           // 17 Proms (not used)
 };
 
 STD_ROM_PICK(lwingsja)

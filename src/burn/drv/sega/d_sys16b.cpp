@@ -4509,24 +4509,24 @@ STD_ROM_PICK(Hwchampjd)
 STD_ROM_FN(Hwchampjd)
 
 static struct BurnRomInfo LockonphRomDesc[] = {
-	{ "B4",             0x40000, 0xfbb896f4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "B2",             0x40000, 0xfc1c9f81, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "B3",             0x20000, 0x3f8c0215, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
-	{ "B1",             0x20000, 0xf11a72ac, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "b4",             0x40000, 0xfbb896f4, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "b2",             0x40000, 0xfc1c9f81, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "b3",             0x20000, 0x3f8c0215, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
+	{ "b1",             0x20000, 0xf11a72ac, SYS16_ROM_PROG | BRF_ESS | BRF_PRG },
 
-	{ "B10",            0x20000, 0xd3a8bd15, SYS16_ROM_TILES | BRF_GRA },
-	{ "B7",             0x20000, 0x787c382e, SYS16_ROM_TILES | BRF_GRA },
-	{ "B9",             0x20000, 0xaae2cef1, SYS16_ROM_TILES | BRF_GRA },
-	{ "B8",             0x20000, 0xcd30abe0, SYS16_ROM_TILES | BRF_GRA },
+	{ "b10",            0x20000, 0xd3a8bd15, SYS16_ROM_TILES | BRF_GRA },
+	{ "b7",             0x20000, 0x787c382e, SYS16_ROM_TILES | BRF_GRA },
+	{ "b9",             0x20000, 0xaae2cef1, SYS16_ROM_TILES | BRF_GRA },
+	{ "b8",             0x20000, 0xcd30abe0, SYS16_ROM_TILES | BRF_GRA },
 	
-	{ "B14",            0x40000, 0xaf943525, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "B12",            0x40000, 0x9088d980, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "B13",            0x20000, 0x62f4b64f, SYS16_ROM_SPRITES | BRF_GRA },
-	{ "B11",            0x20000, 0x5da3dfcd, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "b14",            0x40000, 0xaf943525, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "b12",            0x40000, 0x9088d980, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "b13",            0x20000, 0x62f4b64f, SYS16_ROM_SPRITES | BRF_GRA },
+	{ "b11",            0x20000, 0x5da3dfcd, SYS16_ROM_SPRITES | BRF_GRA },
 
-	{ "B6",             0x10000, 0xaa7b1880, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
+	{ "b6",             0x10000, 0xaa7b1880, SYS16_ROM_Z80PROG | BRF_ESS | BRF_PRG },
 	
-	{ "B5",             0x20000, 0xd6369a39, SYS16_ROM_MSM6295 | BRF_SND },
+	{ "b5",             0x20000, 0xd6369a39, SYS16_ROM_MSM6295 | BRF_SND },
 };
 
 

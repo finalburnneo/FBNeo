@@ -1882,11 +1882,11 @@ STD_ROM_PICK(subhunt)
 STD_ROM_FN(subhunt)
 
 struct BurnDriver BurnDrvSubhunt = {
-	"subhunt", "depthch", NULL, NULL, "1977",
+	"subhunt", "depthch", NULL, "depthch", "1977",
 	"Sub Hunter (Gremlin / Taito)\0", "No sound", "Gremlin (Taito license)", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, subhuntRomInfo, subhuntRomName, NULL, NULL, DepthchInputInfo, DepthchDIPInfo,
+	NULL, subhuntRomInfo, subhuntRomName, depthchSampleInfo, depthchSampleName, DepthchInputInfo, DepthchDIPInfo,
 	DepthchInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	256, 224, 4, 3
 };
@@ -2187,17 +2187,36 @@ static struct BurnRomInfo pulsarRomDesc[] = {
 STD_ROM_PICK(pulsar)
 STD_ROM_FN(pulsar)
 
+static struct BurnSampleInfo pulsarSampleDesc[] = {
+	{ "alienhit", SAMPLE_NOLOOP },
+	{ "ashoot", SAMPLE_NOLOOP },
+	{ "birth", SAMPLE_NOLOOP },
+	{ "bonus", SAMPLE_NOLOOP },
+	{ "clang", SAMPLE_NOLOOP },
+	{ "gate", SAMPLE_NOLOOP },
+	{ "hbeat", SAMPLE_NOLOOP },
+	{ "key", SAMPLE_NOLOOP },
+	{ "movmaze", SAMPLE_NOLOOP },
+	{ "phit", SAMPLE_NOLOOP },
+	{ "pshoot", SAMPLE_NOLOOP },
+	{ "sizzle", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(pulsar)
+STD_SAMPLE_FN(pulsar)
+
 static INT32 PulsarInit()
 {
 	return DrvInit(0x4000, 0x8000, 0, pulsar_write_port, pulsar_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvPulsar = {
-	"pulsar", NULL, NULL, NULL, "1981",
+	"pulsar", NULL, NULL, "pulsar", "1981",
 	"Pulsar\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, pulsarRomInfo, pulsarRomName, NULL, NULL, PulsarInputInfo, PulsarDIPInfo,
+	NULL, pulsarRomInfo, pulsarRomName, pulsarSampleInfo, pulsarSampleName, PulsarInputInfo, PulsarDIPInfo,
 	PulsarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2395,17 +2414,32 @@ static struct BurnRomInfo tranqgunRomDesc[] = {
 STD_ROM_PICK(tranqgun)
 STD_ROM_FN(tranqgun)
 
+static struct BurnSampleInfo tranqgunSampleDesc[] = {
+	{ "animal", SAMPLE_NOLOOP },
+	{ "animalhit", SAMPLE_NOLOOP },
+	{ "cry", SAMPLE_NOLOOP },
+	{ "emar", SAMPLE_NOLOOP },
+	{ "gun", SAMPLE_NOLOOP },
+	{ "jeep", SAMPLE_NOLOOP },
+	{ "point", SAMPLE_NOLOOP },
+	{ "walk", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(tranqgun)
+STD_SAMPLE_FN(tranqgun)
+
 static INT32 TranqgunInit()
 {
 	return DrvInit(0x4000, 0x8000, 0, tranqgun_write_port, tranqgun_read_port, NULL, NULL);
 }
 
 struct BurnDriver BurnDrvTranqgun = {
-	"tranqgun", NULL, NULL, NULL, "1980",
+	"tranqgun", NULL, NULL, "tranqgun", "1980",
 	"Tranquillizer Gun\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, tranqgunRomInfo, tranqgunRomName, NULL, NULL, TranqgunInputInfo, NULL,
+	NULL, tranqgunRomInfo, tranqgunRomName, tranqgunSampleInfo, tranqgunSampleName, TranqgunInputInfo, NULL,
 	TranqgunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -2876,11 +2910,11 @@ STD_ROM_PICK(starrkr)
 STD_ROM_FN(starrkr)
 
 struct BurnDriver BurnDrvStarrkr = {
-	"starrkr", "brdrline", NULL, NULL, "1981",
+	"starrkr", "brdrline", NULL, "brdrline", "1981",
 	"Star Raker\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, starrkrRomInfo, starrkrRomName, NULL, NULL, StarrkrInputInfo, StarrkrDIPInfo,
+	NULL, starrkrRomInfo, starrkrRomName, brdrlineSampleInfo, brdrlineSampleName, StarrkrInputInfo, StarrkrDIPInfo,
 	BrdrlineInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };
@@ -3533,6 +3567,26 @@ static struct BurnRomInfo nsubRomDesc[] = {
 STD_ROM_PICK(nsub)
 STD_ROM_FN(nsub)
 
+static struct BurnSampleInfo nsubSampleDesc[] = {
+	{ "SND_BOAT", SAMPLE_NOLOOP },
+	{ "SND_BONUS0", SAMPLE_NOLOOP },
+	{ "SND_BONUS1", SAMPLE_NOLOOP },
+	{ "SND_CODE", SAMPLE_NOLOOP },
+	{ "SND_EXPL_L0", SAMPLE_NOLOOP },
+	{ "SND_EXPL_L1", SAMPLE_NOLOOP },
+	{ "SND_EXPL_S0", SAMPLE_NOLOOP },
+	{ "SND_EXPL_S1", SAMPLE_NOLOOP },
+	{ "SND_LAUNCH0", SAMPLE_NOLOOP },
+	{ "SND_LAUNCH1", SAMPLE_NOLOOP },
+	{ "SND_SONAR", SAMPLE_NOLOOP },
+	{ "SND_WARNING0", SAMPLE_NOLOOP },
+	{ "SND_WARNING1", SAMPLE_NOLOOP },
+	{ "", 0 }
+};
+
+STD_SAMPLE_PICK(nsub)
+STD_SAMPLE_FN(nsub)
+
 static void nsub_callback()
 {
 	for (INT32 i = 0; i < 0x20; i++) { // invert color prom
@@ -3546,11 +3600,11 @@ static INT32 NsubInit()
 }
 
 struct BurnDriver BurnDrvNsub = {
-	"nsub", NULL, NULL, NULL, "1980",
+	"nsub", NULL, NULL, "nsub", "1980",
 	"N-Sub (upright)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, nsubRomInfo, nsubRomName, NULL, NULL, NsubInputInfo, NULL,
+	NULL, nsubRomInfo, nsubRomName, nsubSampleInfo, nsubSampleName, NsubInputInfo, NULL,
 	NsubInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };

@@ -488,8 +488,10 @@ STD_ROM_FN(sfiii3u)
 static struct BurnRomInfo sfiii3jRomDesc[] = {
 
 	{ "sfiii3_japan.29f400.u2",	0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
-	
+
+#if !defined ROM_VERIFY	
 	SFIII3_990608_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii3j)
@@ -591,7 +593,9 @@ static struct BurnRomInfo sfiii3jr1RomDesc[] = {
 
 	{ "sfiii3_japan.29f400.u2",	0x080000, 0x63f23d1f, BRF_ESS | BRF_BIOS },	// SH-2 Bios
 	
+#if !defined ROM_VERIFY
 	SFIII3_990512_FLASH
+#endif
 };
 
 STD_ROM_PICK(sfiii3jr1)

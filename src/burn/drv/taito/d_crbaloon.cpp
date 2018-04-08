@@ -32,7 +32,9 @@ static INT32 collision_address_clear;
 
 static UINT32 crbaloon_tone_step;
 static UINT32 crbaloon_tone_pos;
+static double crbaloon_tone_freq;
 static double envelope_ctr;
+static UINT32 sound_data08;
 
 static INT32 sound_laugh;
 static INT32 sound_laugh_trig;
@@ -118,7 +120,7 @@ static void sound_tone_render(INT16 *buffer, INT32 len)
 			square = crbaloon_tone_pos & 0x80000000 ? 32767 : -32768;
 			square = (INT16)((double)square * 0.05);        // volume
 			square = (INT16)(square * exp(-envelope_ctr));  // envelope volume
-			envelope_ctr += 0.0005;                         // step envelope
+			envelope_ctr += (crbaloon_tone_freq > 1100.0) ? 0.0008 : 0.0005; // step envelope, treat the higher pitched sounds w/ a faster envelope
 			*buffer++ = square;
 			*buffer++ = square;
 
@@ -135,6 +137,7 @@ static void sound_tone_write(UINT8 data)
 	if (data && data != 0xff) {
 		double freq = (13630.0 / (256 - data) + (data >= 0xea ? 13 : 0)) * 0.5;
 
+		crbaloon_tone_freq = freq;
 		crbaloon_tone_step = (UINT32)(freq * 65536.0 * 65536.0 / (double)nBurnSoundRate);
 	}
 }
@@ -145,7 +148,8 @@ static void sound_port_write(UINT8 data)
 	collision_address_clear = (data & 1) ? 0 : 1;
 
 	sound_enable = data & 0x02;
-	if (data & 0x02) {
+
+	if (sound_enable) {
 		if (data & 0x40) {
 			sound_laugh_trig = 3;
 		}
@@ -160,20 +164,27 @@ static void sound_port_write(UINT8 data)
 		}
 
 		// filter dupes for the blowing air guy
-		if (((data&0x38)==0x10) && ((last_snd&0x38)==0x30))  return;
-		if (((data&0x38)==0x30) && ((last_snd&0x38)==0x30))  return;
-		if (((data&0x38)==0x10) && ((last_snd&0x38)==0x10))  return;
+		if (((data & 0x38) == 0x10) && ((last_snd & 0x38) == 0x30)) return;
+		if (((data & 0x38) == 0x30) && ((last_snd & 0x38) == 0x30)) return;
+		if (((data & 0x38) == 0x10) && ((last_snd & 0x38) == 0x10)) return;
 
-		// so the balloon makes a different dieing sound when dies by the blowing air guy
-		if (data & 0x08) data = 0x08;
-		if (last_snd & 0x08) data = 0x00;
+		// so the balloon makes a slightly different dieing sound when killed by the blowing air guy
+		if (data & 0x08) {
+			data = 0x08;
+			sound_data08 = 8;
+		}
+
+		if (sound_data08) {
+			sound_data08--;
+			data &= ~0x30;
+		}
 
 		//bprintf(0, _T("data[%X]last[%X]. "), data, last_snd);
 		//bprintf(0, _T("%S %S %S %S,  "), data&0x08 ? "0x08" : "", data&0x10 ? "0x10" : "", data&0x20 ? "0x20" : "", data&0x40 ? "0x40" : "");
 		SN76477_set_slf_res(0,  ((data & 0x10)) ? RES_K(10) : RES_K(20));
 		SN76477_mixer_b_w(0,    (~data & 0x10)  ? 0 : 1 );
 		SN76477_mixer_c_w(0,    ((data & 0x10)) ? 0 : 1);
-		if (data&0x10) SN76477_enable_w(0, 1);
+		if (data & 0x10) SN76477_enable_w(0, 1);
 		SN76477_envelope_w(0, 1);
 		SN76477_enable_w(0,      (data & 0x08)  ? 1 : 0);
 		last_snd = data;
@@ -290,6 +301,8 @@ static INT32 DrvDoReset()
 
 	sound_laugh = 0;
 	sound_laugh_trig = 0;
+	sound_data08 = 0;
+	envelope_ctr = 0;
 
 	crbaloon_tone_step = 0;
 	crbaloon_tone_pos = 0;
@@ -521,15 +534,11 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		if (sound_enable)
-		{
-			sound_tone_render(pBurnSoundOut, nBurnSoundLen);
-			SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
-		}
-		else
-		{
+		sound_tone_render(pBurnSoundOut, nBurnSoundLen);
+		SN76477_sound_update(0, pBurnSoundOut, nBurnSoundLen);
+
+		if (!sound_enable)
 			memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		}
 	}
 
 	if (pBurnDraw) {
@@ -563,11 +572,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(collision_address_clear);
 		SCAN_VAR(crbaloon_tone_step);
 		SCAN_VAR(crbaloon_tone_pos);
+		SCAN_VAR(crbaloon_tone_freq);
 		SCAN_VAR(sound_enable);
 		SCAN_VAR(last_snd);
 		SCAN_VAR(sound_laugh_trig);
 		SCAN_VAR(sound_laugh);
 		SCAN_VAR(envelope_ctr);
+		SCAN_VAR(sound_data08);
 	}
 
 	return 0;

@@ -1543,7 +1543,7 @@ struct BurnDriver BurnDrvOpaopan = {
 	"opaopan", "opaopa", NULL, NULL, "1987",
 	"Opa Opa (MC-8123, 317-0042)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, opaopanRomInfo, opaopanRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvTransfrmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 192, 4, 3
@@ -1569,7 +1569,7 @@ struct BurnDriver BurnDrvOpaopa = {
 	"opaopa", NULL, NULL, NULL, "1987",
 	"Opa Opa (Rev A, unprotected)\0", NULL, "Sega", "System E",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
+	BDF_GAME_NOT_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_MISC, GBF_MISC, 0,
 	NULL, opaopaRomInfo, opaopaRomName, NULL, NULL, Segae2pInputInfo, OpaopaDIPInfo,
 	DrvOpaopapInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 64,
 	240, 192, 4, 3

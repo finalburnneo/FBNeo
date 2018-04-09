@@ -5,6 +5,7 @@
 #include "burn_ym2151.h"
 #include "m6809_intf.h"
 #include "hd6309_intf.h"
+#include "k007121.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -42,9 +43,6 @@ static UINT8 DrvReset;
 
 static UINT8 soundlatch;
 static UINT8 nBankData;
-
-static UINT8 K007121_ctrlram[2][8];
-static INT32 K007121_flipscreen[2];
 
 static struct BurnInputInfo DrvInputList[] =
 {
@@ -169,13 +167,6 @@ static struct BurnDIPInfo CabinetDIPList[]=
 
 STDDIPINFOEXT(Gryzor, Drv, Cabinet)
 
-static void K007121_ctrl_w(INT32 chip, INT32 offset, INT32 data)
-{
-	if (offset == 7) K007121_flipscreen[chip] = data & 0x08;
-
-	K007121_ctrlram[chip][offset] = data;
-}
-
 static void contra_K007121_ctrl_0_w(INT32 offset, INT32 data)
 {
 	if (offset == 3)
@@ -186,7 +177,7 @@ static void contra_K007121_ctrl_0_w(INT32 offset, INT32 data)
 			memcpy (pDrvSprRAM0, DrvSprRAM + 0x800, 0x800);
 	}
 
-	K007121_ctrl_w(0,offset,data);
+	k007121_ctrl_write(0, offset & 7, data);
 }
 
 static void contra_K007121_ctrl_1_w(INT32 offset, INT32 data)
@@ -199,16 +190,17 @@ static void contra_K007121_ctrl_1_w(INT32 offset, INT32 data)
 			memcpy(pDrvSprRAM1, DrvHD6309RAM1 + 0x1000, 0x800);
 	}
 
-	K007121_ctrl_w(1,offset,data);
+	k007121_ctrl_write(1, offset & 7, data);
 }
 
 void contra_bankswitch_w(INT32 data)
 {
-	nBankData = data & 0x0f;
-	INT32 bankaddress = 0x10000 + nBankData * 0x2000;
+	INT32 bankaddress = 0x10000 + (data & 0x0f) * 0x2000;
 
-	if (bankaddress < 0x28000)
+	if (bankaddress < 0x28000) {
+		nBankData = data & 0x0f;
 		HD6309MapMemory(DrvHD6309ROM0 + bankaddress, 0x6000, 0x7fff, MAP_ROM);
+	}
 }
 
 UINT8 DrvContraHD6309ReadByte(UINT16 address)
@@ -318,11 +310,8 @@ void DrvContraM6809SoundWriteByte(UINT16 address, UINT8 data)
 	switch (address)
 	{
 		case 0x2000:
-			BurnYM2151SelectRegister(data);
-		return;
-
 		case 0x2001:
-			BurnYM2151WriteRegister(data);
+			BurnYM2151Write(address & 1, data);
 		return;
 	}
 }
@@ -334,49 +323,47 @@ static INT32 MemIndex()
 	DrvHD6309ROM0	= Next; Next += 0x030000;
 	DrvM6809ROM0	= Next; Next += 0x010000;
 
-	DrvGfxROM0	= Next; Next += 0x100000;
-	DrvGfxROM1	= Next; Next += 0x100000;
+	DrvGfxROM0		= Next; Next += 0x100000;
+	DrvGfxROM1		= Next; Next += 0x100000;
 
-	DrvPROMs	= Next; Next += 0x000400;
+	DrvPROMs		= Next; Next += 0x000400;
 
-	DrvColTable	= Next; Next += 0x001000;
+	DrvColTable		= Next; Next += 0x001000;
 
-	DrvPalette	= (UINT32*)Next; Next += 0x01000 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x01000 * sizeof(UINT32);
 
-	AllRam		= Next;
+	AllRam			= Next;
 
 	DrvHD6309RAM0	= Next; Next += 0x001000;
 	DrvHD6309RAM1	= Next; Next += 0x001800;
 	DrvM6809RAM0	= Next; Next += 0x000800;
-	DrvPalRAM	= Next; Next += 0x000100;
-	DrvFgCRAM	= Next; Next += 0x000400;
-	DrvFgVRAM	= Next; Next += 0x000400;
-	DrvTxCRAM	= Next; Next += 0x000400;
-	DrvTxVRAM	= Next; Next += 0x000400;
-	DrvBgCRAM	= Next; Next += 0x000400;
-	DrvBgVRAM	= Next; Next += 0x000400;
-	DrvSprRAM	= Next; Next += 0x001000;
+	DrvPalRAM		= Next; Next += 0x000100;
+	DrvFgCRAM		= Next; Next += 0x000400;
+	DrvFgVRAM		= Next; Next += 0x000400;
+	DrvTxCRAM		= Next; Next += 0x000400;
+	DrvTxVRAM		= Next; Next += 0x000400;
+	DrvBgCRAM		= Next; Next += 0x000400;
+	DrvBgVRAM		= Next; Next += 0x000400;
+	DrvSprRAM		= Next; Next += 0x001000;
 
-	pDrvSprRAM0	= Next; Next += 0x000800;
-	pDrvSprRAM1	= Next; Next += 0x000800;
+	pDrvSprRAM0		= Next; Next += 0x000800;
+	pDrvSprRAM1		= Next; Next += 0x000800;
 
-	Palette		= (UINT32*)Next; Next += 0x00080 * sizeof(UINT32);
+	Palette			= (UINT32*)Next; Next += 0x00080 * sizeof(UINT32);
 
-	RamEnd		= Next;
+	RamEnd			= Next;
 
-	MemEnd		= Next;
+	MemEnd			= Next;
 
 	return 0;
 }
 
-static INT32 DrvGfxExpand(UINT8 *src)
+static void DrvGfxExpand(UINT8 *src)
 {
 	for (INT32 i = 0x80000-1; i>=0; i--) {
 		src[i*2+1] = src[i] & 0xf;
 		src[i*2+0] = src[i] >> 4;
 	}
-
-	return 0;
 }
 
 static INT32 DrvColorTableInit()
@@ -408,9 +395,6 @@ static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
 
-	memset (K007121_ctrlram, 0, sizeof(K007121_ctrlram));
-	memset (K007121_flipscreen, 0, sizeof(K007121_flipscreen));
-
 	HD6309Open(0);
 	HD6309Reset();
 	HD6309Close();
@@ -419,6 +403,8 @@ static INT32 DrvDoReset()
 	M6809Reset();
 	BurnYM2151Reset();
 	M6809Close();
+
+	k007121_reset();
 
 	soundlatch = 0;
 	nBankData = 0;
@@ -481,6 +467,9 @@ static INT32 CommonInit(INT32 (*pRomLoad)())
 	DrvDoReset();
 
 	GenericTilesInit();
+
+	k007121_init(0, (0x100000 / (8 * 8)) - 1);
+	k007121_init(1, (0x100000 / (8 * 8)) - 1);
 
 	return 0;
 }
@@ -594,14 +583,14 @@ static INT32 DrvExit()
 
 static void draw_bg()
 {
-	INT32 bit0 = (K007121_ctrlram[1][0x05] >> 0) & 0x03;
-	INT32 bit1 = (K007121_ctrlram[1][0x05] >> 2) & 0x03;
-	INT32 bit2 = (K007121_ctrlram[1][0x05] >> 4) & 0x03;
-	INT32 bit3 = (K007121_ctrlram[1][0x05] >> 6) & 0x03;
-	INT32 mask = (K007121_ctrlram[1][0x04] & 0xf0) >> 4;
-	INT32 scrollx = K007121_ctrlram[1][0x00] & 0xff;
-	INT32 scrolly = K007121_ctrlram[1][0x02] & 0xff;
-	INT32 flipscreen = K007121_flipscreen[1];
+	INT32 bit0 = (k007121_ctrl_read(1, 5) >> 0) & 0x03;
+	INT32 bit1 = (k007121_ctrl_read(1, 5) >> 2) & 0x03;
+	INT32 bit2 = (k007121_ctrl_read(1, 5) >> 4) & 0x03;
+	INT32 bit3 = (k007121_ctrl_read(1, 5) >> 6) & 0x03;
+	INT32 mask = (k007121_ctrl_read(1, 4) & 0xf0) >> 4;
+	INT32 scrollx = k007121_ctrl_read(1, 0) & 0xff;
+	INT32 scrolly = k007121_ctrl_read(1, 2) & 0xff;
+	INT32 flipscreen = (k007121_ctrl_read(1, 7) & 0x08);
 
 	for (INT32 offs = 0; offs < 0x400; offs++)
 	{
@@ -622,11 +611,11 @@ static void draw_bg()
 			((attr >> (bit1+1)) & 0x04) |
 			((attr >> (bit2  )) & 0x08) |
 			((attr >> (bit3-1)) & 0x10) |
-			((K007121_ctrlram[1][0x03] & 0x01) << 5);
+			((k007121_ctrl_read(1, 3) & 0x01) << 5);
 
-		bank = (bank & ~(mask << 1)) | ((K007121_ctrlram[0][0x04] & mask) << 1);
+		bank = (bank & ~(mask << 1)) | ((k007121_ctrl_read(1, 4) & mask) << 1);
 
-		INT32 color = ((K007121_ctrlram[1][6]&0x30)*2+16)+(attr&7);
+		INT32 color = ((k007121_ctrl_read(1, 6)&0x30)*2+16)+(attr&7);
 
 		INT32 code = DrvBgVRAM[offs] | (bank << 8);
 
@@ -640,14 +629,14 @@ static void draw_bg()
 
 static void draw_fg()
 {
-	INT32 bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
-	INT32 bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
-	INT32 bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
-	INT32 bit3 = (K007121_ctrlram[0][0x05] >> 6) & 0x03;
-	INT32 mask = (K007121_ctrlram[0][0x04] & 0xf0) >> 4;
-	INT32 scrollx = K007121_ctrlram[0][0x00] & 0xff;
-	INT32 scrolly = K007121_ctrlram[0][0x02] & 0xff;
-	INT32 flipscreen = K007121_flipscreen[0];
+	INT32 bit0 = (k007121_ctrl_read(0, 5) >> 0) & 0x03;
+	INT32 bit1 = (k007121_ctrl_read(0, 5) >> 2) & 0x03;
+	INT32 bit2 = (k007121_ctrl_read(0, 5) >> 4) & 0x03;
+	INT32 bit3 = (k007121_ctrl_read(0, 5) >> 6) & 0x03;
+	INT32 mask = (k007121_ctrl_read(0, 4) & 0xf0) >> 4;
+	INT32 scrollx = k007121_ctrl_read(0, 0) & 0xff;
+	INT32 scrolly = k007121_ctrl_read(0, 2) & 0xff;
+	INT32 flipscreen = k007121_ctrl_read(0, 7) & 8;
 
 	for (INT32 offs = 0; offs < 0x400; offs++)
 	{
@@ -668,11 +657,11 @@ static void draw_fg()
 			((attr >> (bit1+1)) & 0x04) |
 			((attr >> (bit2  )) & 0x08) |
 			((attr >> (bit3-1)) & 0x10) |
-			((K007121_ctrlram[0][0x03] & 0x01) << 5);
+			((k007121_ctrl_read(0, 3) & 0x01) << 5);
 
-		bank = (bank & ~(mask << 1)) | ((K007121_ctrlram[0][0x04] & mask) << 1);
+		bank = (bank & ~(mask << 1)) | ((k007121_ctrl_read(0, 4) & mask) << 1);
 
-		INT32 color = ((K007121_ctrlram[0][6]&0x30)*2+16)+(attr&7);
+		INT32 color = ((k007121_ctrl_read(0, 6)&0x30)*2+16)+(attr&7);
 
 		INT32 code = DrvFgVRAM[offs] | (bank << 8);
 
@@ -686,11 +675,11 @@ static void draw_fg()
 
 static void draw_tx()
 {
-	INT32 bit0 = (K007121_ctrlram[0][0x05] >> 0) & 0x03;
-	INT32 bit1 = (K007121_ctrlram[0][0x05] >> 2) & 0x03;
-	INT32 bit2 = (K007121_ctrlram[0][0x05] >> 4) & 0x03;
-	INT32 bit3 = (K007121_ctrlram[0][0x05] >> 6) & 0x03;
-	INT32 flipscreen = K007121_flipscreen[0];
+	INT32 bit0 = (k007121_ctrl_read(0, 5) >> 0) & 0x03;
+	INT32 bit1 = (k007121_ctrl_read(0, 5) >> 2) & 0x03;
+	INT32 bit2 = (k007121_ctrl_read(0, 5) >> 4) & 0x03;
+	INT32 bit3 = (k007121_ctrl_read(0, 5) >> 6) & 0x03;
+	INT32 flipscreen = k007121_ctrl_read(0, 7) & 8;
 
 	for (INT32 offs = 0x40; offs < 0x3c0; offs++)
 	{
@@ -706,7 +695,7 @@ static void draw_tx()
 			((attr >> (bit2  )) & 0x08) |
 			((attr >> (bit3-1)) & 0x10);
 
-		INT32 color = ((K007121_ctrlram[0][6]&0x30)*2+16)+(attr&7);
+		INT32 color = ((k007121_ctrl_read(0, 6)&0x30)*2+16)+(attr&7);
 
 		INT32 code = DrvTxVRAM[offs] | (bank << 8);
 
@@ -717,146 +706,6 @@ static void draw_tx()
 		}
 	}
 }
-
-
-static void K007121_sprites_draw(INT32 chip, UINT8 *gfx_base, UINT8 *ctable,
-			const UINT8 *source, INT32 base_color,
-			INT32 global_x_offset, INT32 global_y_offset,
-			INT32 bank_base, INT32 pri_mask, INT32 color_offset)
-{
-	INT32 flipscreen = K007121_flipscreen[chip];
-	INT32 i,num,inc,offs[5],trans;
-	INT32 is_flakatck = (ctable == NULL);
-
-	if (is_flakatck)
-	{
-		num = 0x40;
-		inc = -0x20;
-		source += 0x3f << 5;
-		offs[0] = 0x0e;
-		offs[1] = 0x0f;
-		offs[2] = 0x06;
-		offs[3] = 0x04;
-		offs[4] = 0x08;
-		trans = 0;
-	}
-	else
-	{
-		num = 0x40;
-
-		inc = 5;
-		offs[0] = 0x00;
-		offs[1] = 0x01;
-		offs[2] = 0x02;
-		offs[3] = 0x03;
-		offs[4] = 0x04;
-		trans = 0;
-
-		if (pri_mask != -1)
-		{
-			source += (num-1)*inc;
-			inc = -inc;
-		}
-	}
-
-	for (i = 0;i < num;i++)
-	{
-		INT32 number = source[offs[0]];
-		INT32 sprite_bank = source[offs[1]] & 0x0f;
-		INT32 sx = source[offs[3]];
-		INT32 sy = source[offs[2]];
-		INT32 attr = source[offs[4]];
-		INT32 color = base_color + ((source[offs[1]] & 0xf0) >> 4);
-		INT32 xflip = attr & 0x10;
-		INT32 yflip = attr & 0x20;
-		INT32 width,height;
-		INT32 transparent_color = 0;
-		static const INT32 x_offset[4] = {0x0,0x1,0x4,0x5};
-		static const INT32 y_offset[4] = {0x0,0x2,0x8,0xa};
-		INT32 x,y, ex, ey;
-
-		if (attr & 0x01) sx -= 256;
-		if (sy >= 240) sy -= 256;
-
-		number += ((sprite_bank & 0x3) << 8) + ((attr & 0xc0) << 4);
-		number = number << 2;
-		number += (sprite_bank >> 2) & 3;
-
-		if (!is_flakatck || source[0x00])
-		{
-			number += bank_base;
-
-			switch (attr & 0x0e)
-			{
-				case 0x06: width = height = 1; break;
-				case 0x04: width = 1; height = 2; number &= (~2); break;
-				case 0x02: width = 2; height = 1; number &= (~1); break;
-				case 0x00: width = height = 2; number &= (~3); break;
-				case 0x08: width = height = 4; number &= (~3); break;
-				default: width = 1; height = 1;
-			}
-
-			for (y = 0; y < height; y++)
-			{
-				for (x = 0;x < width;x++)
-				{
-					ex = xflip ? (width-1-x) : x;
-					ey = yflip ? (height-1-y) : y;
-
-					if (flipscreen)
-					{
-						if (pri_mask != -1)
-						;// not implemented
-						else
-							if (yflip) {
-								if (xflip) {
-									Render8x8Tile_Mask_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], 248-(sx+x*8)-global_x_offset+24, 248-(sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								} else {
-									Render8x8Tile_Mask_FlipX_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], 248-(sx+x*8)-global_x_offset+24, 248-(sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								}
-							} else {
-								if (xflip) {
-									Render8x8Tile_Mask_FlipY_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], 248-(sx+x*8)-global_x_offset+24, 248-(sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								} else {
-									Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], 248-(sx+x*8)-global_x_offset+24, 248-(sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								}
-							}
-					}
-					else
-					{
-						if (pri_mask != -1)
-						;// not implemented
-						else
-							if (yflip) {
-								if (xflip) {
-									Render8x8Tile_Mask_FlipXY_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], global_x_offset+sx+x*8, (sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								} else {
-									Render8x8Tile_Mask_FlipY_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], global_x_offset+sx+x*8, (sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								}
-							} else {
-								if (xflip) {
-									Render8x8Tile_Mask_FlipX_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], global_x_offset+sx+x*8, (sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								} else {
-									Render8x8Tile_Mask_Clip(pTransDraw, number + x_offset[ex] + y_offset[ey], global_x_offset+sx+x*8, (sy+y*8)+global_y_offset, color, 4, transparent_color, color_offset, gfx_base);
-								}
-							}
-					}
-				}
-			}
-		}
-
-		source += inc;
-	}
-}
-
-static void draw_sprites(INT32 bank, UINT8 *gfx_base, INT32 color_offset)
-{
-	INT32 base_color = (K007121_ctrlram[bank][6]&0x30)<<1;
-	const UINT8 *source = bank ? pDrvSprRAM1 : pDrvSprRAM0;
-
-	K007121_sprites_draw(bank, gfx_base, DrvColTable, source, base_color, 40, -16, 0, -1, color_offset);
-}
-
 
 static INT32 DrvDraw()
 {
@@ -871,8 +720,10 @@ static INT32 DrvDraw()
 	draw_bg();
 	draw_fg();
 
-	draw_sprites(0, DrvGfxROM0, 0x000);
-	draw_sprites(1, DrvGfxROM1, 0x800);
+	INT32 base_color0 = (k007121_ctrl_read(0, 6) & 0x30) << 1;
+	INT32 base_color1 = (k007121_ctrl_read(1, 6) & 0x30) << 1;
+	k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, pDrvSprRAM0, base_color0, 40, 16, 0, -1);
+	k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, pDrvSprRAM1, base_color1, 40, 16, 0, -1);
 
 	draw_tx();
 
@@ -880,7 +731,6 @@ static INT32 DrvDraw()
 
 	return 0;
 }
-
 
 static INT32 DrvFrame()
 {
@@ -921,7 +771,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += HD6309Run(nCyclesSegment);
-		if (i == 240 && (K007121_ctrlram[0][7] & 0x02)) {
+		if (i == 240 && (k007121_ctrl_read(0, 7) & 0x02)) {
 			HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 
@@ -973,21 +823,16 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.nLen	  = RamEnd - AllRam;
 		ba.szName = "All RAM";
 		BurnAcb(&ba);
-
-		memset(&ba, 0, sizeof(ba));
-		ba.Data	  = K007121_ctrlram;
-		ba.nLen	  = sizeof(K007121_ctrlram);
-		ba.szName = "K007121 Control RAM";
-		BurnAcb(&ba);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
 		HD6309Scan(nAction);
 		M6809Scan(nAction);
 
+		k007121_scan(nAction);
+
 		BurnYM2151Scan(nAction, pnMin);
 
-		SCAN_VAR(K007121_flipscreen);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(nBankData);
 

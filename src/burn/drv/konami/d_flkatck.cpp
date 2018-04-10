@@ -27,7 +27,7 @@ static UINT8 *DrvSprRAM;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
-static UINT8 multiply_register[2];
+static INT32 multiply_register[2];
 static UINT8 main_bank;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
@@ -259,7 +259,7 @@ static UINT8 __fastcall flkatck_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x9000:
-			return (multiply_register[0] * multiply_register[1]);
+			return (multiply_register[0] * multiply_register[1]) & 0xff;
 
 		case 0x9001:
 		case 0x9004:
@@ -317,7 +317,7 @@ static tilemap_callback( bg )
 	if ((attr == 0x0d) && (!ctrl_0) && (!ctrl_2))
 		bank = 0;
 
-	TILE_SET_INFO(0, DrvVidRAM0[offs + 0x400] + (bank * 256), attr, (attr & 0x20) ? TILE_FLIPY : 0);
+	TILE_SET_INFO(0, DrvVidRAM0[offs + 0x400] + (bank * 256), (attr & 0x0f) + 16, (attr & 0x20) ? TILE_FLIPY : 0);
 }
 
 static tilemap_callback( fg )
@@ -327,8 +327,8 @@ static tilemap_callback( fg )
 
 static void DrvK007232VolCallback(INT32 v)
 {
-	K007232SetVolumeF(0, 0, (v >> 4) * 0x11, 0);
-	K007232SetVolumeF(0, 1, 0, (v & 0x0f) * 0x11);
+	K007232SetVolume(0, 0, (v >> 4) * 0x11, 0);
+	K007232SetVolume(0, 1, 0, (v & 0x0f) * 0x11);
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -346,11 +346,12 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetReset();
 	ZetClose();
 
+	BurnYM2151Reset();
+	k007232_set_bank(0, 0, 1);
+
 	k007121_reset();
 
 	BurnWatchdogReset();
-
-	BurnYM2151Reset();
 
 	multiply_register[0] = 0;
 	multiply_register[1] = 0;
@@ -463,7 +464,7 @@ static INT32 DrvInit(INT32 rom_layout)
 
 	K007232Init(0, 3579545, DrvSndROM, 0x40000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
-	K007232PCMSetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
+	K007232PCMSetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -525,7 +526,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprRAM, 0, 40, 16, 0, -1);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprRAM, 0, 40, 16, 0, -1);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
@@ -545,7 +546,7 @@ static INT32 DrvFrame()
 	}
 
 	{
-		memset (DrvInputs, 0xff, 3 * sizeof(INT16));
+		memset (DrvInputs, 0xff, 3 * sizeof(UINT8));
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
@@ -556,7 +557,7 @@ static INT32 DrvFrame()
 
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 12000000 / 60, 3579545 / 60 };
+	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	HD6309Open(0);
@@ -569,8 +570,8 @@ static INT32 DrvFrame()
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
@@ -616,6 +617,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		BurnWatchdogScan(nAction);
 
+		BurnYM2151Scan(nAction, pnMin);
+		K007232Scan(nAction, pnMin);
+
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(multiply_register);
@@ -632,7 +636,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-	
+
 // MX5000
 
 static struct BurnRomInfo mx5000RomDesc[] = {

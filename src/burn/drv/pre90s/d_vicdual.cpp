@@ -1941,7 +1941,7 @@ static INT32 Invho2Init()
 }
 
 struct BurnDriver BurnDrvInvho2 = {
-	"invho2", NULL, NULL, "invds", "1979",
+	"invho2", NULL, NULL, "invinco", "1979",
 	"Invinco / Head On 2\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
@@ -2292,7 +2292,7 @@ static INT32 InvdsInit()
 }
 
 struct BurnDriver BurnDrvInvds = {
-	"invds", NULL, NULL, "invds", "1979",
+	"invds", NULL, NULL, "invinco", "1979",
 	"Invinco / Deep Scan\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
@@ -2948,27 +2948,12 @@ static struct BurnRomInfo brdrlinetRomDesc[] = {
 STD_ROM_PICK(brdrlinet)
 STD_ROM_FN(brdrlinet)
 
-static struct BurnSampleInfo brdrlinetSampleDesc[] = {
-	{ "animal", SAMPLE_NOLOOP },
-	{ "animalhit", SAMPLE_NOLOOP },
-	{ "cry", SAMPLE_NOLOOP },
-	{ "emar", SAMPLE_NOLOOP },
-	{ "gun", SAMPLE_NOLOOP },
-	{ "jeep", SAMPLE_NOLOOP },
-	{ "point", SAMPLE_NOLOOP },
-	{ "walk", SAMPLE_NOLOOP },
-	{ "", 0 }
-};
-
-STD_SAMPLE_PICK(brdrlinet)
-STD_SAMPLE_FN(brdrlinet)
-
 struct BurnDriverD BurnDrvBrdrlinet = {
-	"brdrlinet", "brdrline", NULL, "brdrlinet", "1981",
+	"brdrlinet", "brdrline", NULL, "tranqgun", "1981",
 	"Borderline (Tranquillizer Gun conversion)\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
-	NULL, brdrlinetRomInfo, brdrlinetRomName, brdrlinetSampleInfo, brdrlinetSampleName, TranqgunInputInfo, NULL,
+	NULL, brdrlinetRomInfo, brdrlinetRomName, tranqgunSampleInfo, tranqgunSampleName, TranqgunInputInfo, NULL,
 	TranqgunInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	224, 256, 3, 4
 };

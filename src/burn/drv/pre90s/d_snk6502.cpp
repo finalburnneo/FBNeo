@@ -1915,7 +1915,7 @@ STD_ROM_PICK(zarzon)
 STD_ROM_FN(zarzon)
 
 struct BurnDriver BurnDrvZarzon = {
-	"zarzon", "satansat", NULL, "aatansat", "1981",
+	"zarzon", "satansat", NULL, "satansat", "1981",
 	"Zarzon\0", NULL, "SNK (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

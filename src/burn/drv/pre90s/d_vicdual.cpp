@@ -2327,7 +2327,7 @@ static INT32 InvincoInit()
 }
 
 struct BurnDriver BurnDrvInvinco = {
-	"invinco", NULL, NULL, "invds", "1979",
+	"invinco", NULL, NULL, "invinco", "1979",
 	"Invinco\0", "No sound", "Sega", "Vic Dual",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,

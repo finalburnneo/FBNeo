@@ -463,7 +463,7 @@ endif
 
 ifeq ($(MAKELEVEL),2)
 
-$(objdir)drivers.o:		$(autdrv)
+$(objdir)/drivers.o:		$(autdrv)
 	@echo Linking drivers...
 ifdef BUILD_X64_EXE
 	@$(LD) -m64 -r -nostdlib -o $@ $^

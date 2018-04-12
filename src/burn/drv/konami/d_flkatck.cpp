@@ -23,6 +23,7 @@ static UINT8 *DrvPalRAM;
 static UINT8 *DrvVidRAM0;
 static UINT8 *DrvVidRAM1;
 static UINT8 *DrvSprRAM;
+static UINT8 *DrvSprBUF;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -31,6 +32,8 @@ static INT32 multiply_register[2];
 static UINT8 main_bank;
 static UINT8 soundlatch;
 static UINT8 flipscreen;
+
+static INT32 nExtraCycles;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -300,17 +303,17 @@ static tilemap_callback( bg )
 	UINT8 ctrl_4 = k007121_ctrl_read(0,4);
 	UINT8 ctrl_5 = k007121_ctrl_read(0,5);
 	UINT8 attr = DrvVidRAM0[offs];
-	int bit0 = (ctrl_5 >> 0) & 0x03;
-	int bit1 = (ctrl_5 >> 2) & 0x03;
-	int bit2 = (ctrl_5 >> 4) & 0x03;
-	int bit3 = (ctrl_5 >> 6) & 0x03;
-	int bank = ((attr & 0x80) >> 7) |
+	INT32 bit0 = (ctrl_5 >> 0) & 0x03;
+	INT32 bit1 = (ctrl_5 >> 2) & 0x03;
+	INT32 bit2 = (ctrl_5 >> 4) & 0x03;
+	INT32 bit3 = (ctrl_5 >> 6) & 0x03;
+	INT32 bank = ((attr & 0x80) >> 7) |
 			((attr >> (bit0 + 2)) & 0x02) |
 			((attr >> (bit1 + 1)) & 0x04) |
 			((attr >> (bit2  )) & 0x08) |
 			((attr >> (bit3 - 1)) & 0x10) |
 			((ctrl_3 & 0x01) << 5);
-	int mask = (ctrl_4 & 0xf0) >> 4;
+	INT32 mask = (ctrl_4 & 0xf0) >> 4;
 
 	bank = (bank & ~(mask << 1)) | ((ctrl_4 & mask) << 1);
 
@@ -358,6 +361,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	flipscreen = 0;
 	soundlatch = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -383,6 +388,7 @@ static INT32 MemIndex()
 	DrvVidRAM0		= Next; Next += 0x000800;
 	DrvVidRAM1		= Next; Next += 0x000800;
 	DrvSprRAM		= Next; Next += 0x001000;
+	DrvSprBUF		= Next; Next += 0x001000;
 
 	RamEnd			= Next;
 	MemEnd			= Next;
@@ -526,7 +532,7 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprRAM, 0, 40, 16, 0, -1);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, -1);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
@@ -558,15 +564,26 @@ static INT32 DrvFrame()
 	INT32 nSoundBufferPos = 0;
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	HD6309Open(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += HD6309Run(nCyclesTotal[0] / nInterleave);
-		if (i == 240 && (k007121_ctrl_read(0, 7) & 0x02)) HD6309SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[0] += HD6309Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+		if (i == 240) {
+			if (k007121_ctrl_read(0, 7) & 0x02)
+				HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			// missing text in service mode if drawn after vbl
+			// if irq's are not enabled, draw at end of frame instead (!drawn).
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+
+			memcpy(DrvSprBUF, DrvSprRAM, 0x1000);
+		}
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 
@@ -590,9 +607,7 @@ static INT32 DrvFrame()
 	ZetClose();
 	HD6309Close();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	return 0;
 }
@@ -617,6 +632,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		BurnWatchdogScan(nAction);
 
+		k007121_scan(nAction);
+
 		BurnYM2151Scan(nAction, pnMin);
 		K007232Scan(nAction, pnMin);
 
@@ -624,6 +641,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(flipscreen);
 		SCAN_VAR(multiply_register);
 		SCAN_VAR(main_bank);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE)

@@ -100,7 +100,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 		INT32 attr = source[offs[4]];
 		INT32 xflip = source[offs[4]] & 0x10;
 		INT32 yflip = source[offs[4]] & 0x20;
-		INT32 color = base_color + ((source[offs[1]] & 0xf0) >> 4);
+		INT32 color = ((source[offs[1]] & 0xf0) >> 4);
 		INT32 width, height;
 		static const INT32 x_offset[4] = {0x0,0x1,0x4,0x5};
 		static const INT32 y_offset[4] = {0x0,0x2,0x8,0xa};
@@ -169,7 +169,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 					if (pri_mask != -1)
 					{
 						if (ctable != NULL) {
-							RenderTilePrioTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable - base_color, pri_mask);
+							RenderTilePrioTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable, pri_mask);
 						} else {
 							if (flipy) {
 								if (flipx) {
@@ -189,7 +189,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 					else
 					{
 						if (ctable != NULL) {
-							RenderTileTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable - base_color);
+							RenderTileTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable);
 						} else {
 							if (is_flakatck) {
 								draw_prisprite_flakatck(dest, gfx, code, color << 4, destx, desty, flipx, flipy, 8, 8, flakatck_prio);

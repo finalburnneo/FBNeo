@@ -551,7 +551,6 @@ static INT32 DrvInit()
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvSndROM);
 	UPD7759SetRoute(0, 0.70, BURN_SND_ROUTE_BOTH);
 
-	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg0_map_callback, 8, 8, 32, 32);
 	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, bg1_map_callback, 8, 8, 32, 32);
 	GenericTilemapInit(2, TILEMAP_SCAN_ROWS, txt_map_callback, 8, 8, 32, 32);

@@ -257,13 +257,13 @@ static UINT8 combatsc_main_read(UINT16 address)
 			return DrvInputs[0];
 
 		case 0x0401:
-			return DrvDips[2];
+			return (DrvInputs[2] & 0x0f) | (DrvDips[2] & 0xf0);
 
 		case 0x0402:
 			return DrvDips[0];
 
 		case 0x0403:
-			return DrvInputs[2];
+			return DrvDips[1];
 
 		case 0x0404:
 			return DrvInputs[1]; // trackball inputs here too!!
@@ -706,14 +706,13 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
-		memset (DrvInputs, 0xff, 2);
+		memset (DrvInputs, 0xff, 3);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
-		DrvInputs[2] = (DrvInputs[2] & 0x0f) | (DrvDips[2] & 0xf0);
 	}
 
 	INT32 nInterleave = 256;

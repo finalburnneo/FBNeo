@@ -21,33 +21,6 @@ void k007121_ctrl_write(INT32 chip, UINT8 offset, UINT8 data)
 	k007121_ctrlram[chip][offset] = data;
 }
 
-static void draw_prisprite_flakatck(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT32 priority)
-{
-	INT32 flip = 0;
-	if (flipy) flip |= (height - 1) * width;
-	if (flipx) flip |= width - 1;
-
-	gfx += code * width * height;
-
-	for (INT32 y = 0; y < height; y++, sy++) {
-		if (sy < 0 || sy >= nScreenHeight) continue;
-
-		for (INT32 x = 0; x < width; x++, sx++) {
-			if (sx < 0 || sx >= nScreenWidth) continue;
-
-			INT32 pxl = gfx[((y * width) + x) ^ flip];
-
-			if (pxl != 0) {
-				if (priority >= pPrioDraw[sy * nScreenWidth + sx]) {
-					dest[sy * nScreenWidth + sx] = pxl + (color);
-					pPrioDraw[sy * nScreenWidth + sx] = priority;
-				}
-			}
-		}
-		sx -= width;
-	}
-}
-
 #ifdef FLAK_DEBUG
 extern int counter;
 #endif
@@ -88,7 +61,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 
 #ifdef FLAK_DEBUG
 	if (counter)
-		bprintf(1, L"---sprite----   00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f\n");
+		bprintf(2, L"---sprite----   00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f 10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f\n");
 #endif
 
 	for (INT32 i = 0; i < num; i++)
@@ -102,9 +75,9 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 		INT32 yflip = source[offs[4]] & 0x20;
 		INT32 color = ((source[offs[1]] & 0xf0) >> 4);
 		INT32 width, height;
-		static const INT32 x_offset[4] = {0x0,0x1,0x4,0x5};
-		static const INT32 y_offset[4] = {0x0,0x2,0x8,0xa};
-		INT32 x,y, ex, ey, flipx, flipy, destx, desty;
+		static const INT32 x_offset[4] = { 0x0, 0x1, 0x4, 0x5 };
+		static const INT32 y_offset[4] = { 0x0, 0x2, 0x8, 0xa };
+		INT32 x, y, ex, ey, flipx, flipy, destx, desty;
 
 		if (attr & 0x01) sx -= 256;
 		if (sy >= 240) sy -= 256;
@@ -114,15 +87,17 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 		number = number << 2;
 		number += (sprite_bank >> 2) & 3;
 
-		UINT8 flakatck_prio = 0;
-
-		if (is_flakatck)
-			flakatck_prio = (source[0x1c]==0xff) ? 0x00 : (source[0x1c] & 7);
+		if (is_flakatck) { // source[0x09]&1 is the low-priority enable bit
+			if (((source[0x09] & 1) ^ 1) != pri_mask) {
+				source += inc;
+				continue;
+			}
+		}
 
 #ifdef FLAK_DEBUG
 		if (counter && number) {
 			bprintf(0, L"(%02X)  %04X %02X,  ", i, number, sprite_bank);
-			for (INT32 zz=0;zz<0x20;zz++)
+			for (INT32 zz = 0; zz < 0x20; zz++)
 				bprintf(0, _T("%02X "), source[zz]);
 			bprintf(0, _T("\n"));
 		}
@@ -191,21 +166,17 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 						if (ctable != NULL) {
 							RenderTileTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable);
 						} else {
-							if (is_flakatck) {
-								draw_prisprite_flakatck(dest, gfx, code, color << 4, destx, desty, flipx, flipy, 8, 8, flakatck_prio);
-							} else {
-								if (flipy) {
-									if (flipx) {
-										Render8x8Tile_Mask_FlipXY_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
-									} else {
-										Render8x8Tile_Mask_FlipY_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
-									}
+							if (flipy) {
+								if (flipx) {
+									Render8x8Tile_Mask_FlipXY_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
 								} else {
-									if (flipx) {
-										Render8x8Tile_Mask_FlipX_Clip(dest, code, destx, desty, color, 4, 0, base_color,gfx);
-									} else {
-										Render8x8Tile_Mask_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
-									}
+									Render8x8Tile_Mask_FlipY_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
+								}
+							} else {
+								if (flipx) {
+									Render8x8Tile_Mask_FlipX_Clip(dest, code, destx, desty, color, 4, 0, base_color,gfx);
+								} else {
+									Render8x8Tile_Mask_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
 								}
 							}
 						}

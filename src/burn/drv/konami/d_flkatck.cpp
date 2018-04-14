@@ -532,7 +532,8 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, -1);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 0);
+	if (nSpriteEnable & 2) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 1);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);
@@ -576,9 +577,7 @@ static INT32 DrvFrame()
 			if (k007121_ctrl_read(0, 7) & 0x02)
 				HD6309SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
-			// missing text in service mode if drawn after vbl
-			// if irq's are not enabled, draw at end of frame instead (!drawn).
-			if (pBurnDraw) {
+			if (pBurnDraw) { // missing text in service mode if drawn after vbl
 				DrvDraw();
 			}
 

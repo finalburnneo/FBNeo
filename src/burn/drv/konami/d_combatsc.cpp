@@ -38,6 +38,8 @@ static UINT8 bank_data;
 static UINT8 priority_select;
 static UINT8 video_circuit;
 
+static INT32 nExtraCycles;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -76,7 +78,7 @@ static struct BurnDIPInfo CombatscDIPList[]=
 {
 	{0x11, 0xff, 0xff, 0xff, NULL					},
 	{0x12, 0xff, 0xff, 0x60, NULL					},
-	{0x13, 0xff, 0xff, 0x10, NULL					},
+	{0x13, 0xff, 0xff, 0x50, NULL					},
 
 	{0   , 0xfe, 0   ,    16, "Coin A"				},
 	{0x11, 0x01, 0x0f, 0x02, "4 Coins 1 Credits="	},
@@ -133,8 +135,8 @@ static struct BurnDIPInfo CombatscDIPList[]=
 	{0x13, 0x01, 0x10, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x13, 0x01, 0x40, 0x00, "Off"					},
-	{0x13, 0x01, 0x40, 0x40, "On"					},
+	{0x13, 0x01, 0x40, 0x40, "Off"					},
+	{0x13, 0x01, 0x40, 0x00, "On"					},
 };
 
 STDDIPINFO(Combatsc)
@@ -255,10 +257,10 @@ static UINT8 combatsc_main_read(UINT16 address)
 			return DrvInputs[0];
 
 		case 0x0401:
-			return DrvDips[0];
+			return DrvDips[2];
 
 		case 0x0402:
-			return DrvDips[1];
+			return DrvDips[0];
 
 		case 0x0403:
 			return DrvInputs[2];
@@ -382,6 +384,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	multiply_data[1] = 0;
 	video_reg = 0;
 
+	nExtraCycles = 0;
+
 	return 0;
 }
 
@@ -426,12 +430,37 @@ static void DrvColorTableInit()
 	for (INT32 pal = 0; pal < 8; pal++)
 	{
 		INT32 clut = 1;
+#if 0
 		if (pal & 4) {
 			if (pal & 2) {
 				clut |= 2;
 			} else {
 				clut  = 2;
 			}
+		}
+#endif
+		switch (pal)
+		{
+			default:
+			case 0: /* other sprites */
+			case 2: /* other sprites(alt) */
+			clut = 1;   /* 0 is wrong for Firing Range III targets */
+			break;
+
+			case 4: /* player sprites */
+			case 6: /* player sprites(alt) */
+			clut = 2;
+			break;
+
+			case 1: /* background */
+			case 3: /* background(alt) */
+			clut = 1;
+			break;
+
+			case 5: /* foreground tiles */
+			case 7: /* foreground tiles(alt) */
+			clut = 3;
+			break;
 		}
 
 		for (INT32 i = 0; i < 0x100; i++)
@@ -511,9 +540,10 @@ static INT32 DrvInit()
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	BurnYM2203Init(1, 3579545, NULL, 0);
-	BurnTimerAttachZet(2000000);
+	BurnYM2203Init(1, 3000000, NULL, 0);
+	BurnTimerAttachZet(3579545);
 	BurnYM2203SetAllRoutes(0, 0.45, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetPSGVolume(0, 0.13);
 
 	k007121_init(0, (0x100000 / (8 * 8)) - 1);
 	k007121_init(1, (0x100000 / (8 * 8)) - 1);
@@ -678,28 +708,31 @@ static INT32 DrvFrame()
 	{
 		memset (DrvInputs, 0xff, 2);
 
-		DrvInputs[2] = DrvDips[2] | 0x0f;
-
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[2] ^= (DrvJoy3[i] & 1) << i;
 		}
+		DrvInputs[2] = (DrvInputs[2] & 0x0f) | (DrvDips[2] & 0xf0);
 	}
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 12000000 / 4 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ZetOpen(0);
 	HD6309Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += HD6309Run(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += HD6309Run((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 
 		if (i == 240) {
-			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_AUTO);
+			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_HOLD);
+
+			if (pBurnDraw) {
+				DrvDraw();
+			}
 		}
 
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
@@ -715,14 +748,12 @@ static INT32 DrvFrame()
 	HD6309Close();
 	ZetClose();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -753,6 +784,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(video_reg);
 		SCAN_VAR(bank_data);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

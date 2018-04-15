@@ -230,8 +230,8 @@ static void __fastcall sbasketb_sound_write(UINT16 address, UINT8 data)
 	if ((address & 0xe000) == 0xc000) {
 		UINT16 addr = address ^ previous_sound_address;
 
-		if (addr & 0x0100) vlm5030_st(0, address & 0x0100);
-		if (addr & 0x0200) vlm5030_rst(0, address & 0x0200);
+		if (addr & 0x010) vlm5030_st(0, (address & 0x010)>>4);
+		if (addr & 0x020) vlm5030_rst(0, (address & 0x020)>>5);
 
 		previous_sound_address = address;
 		return;
@@ -616,7 +616,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[2] = { 1400000 / 60,3579545 / 60 };
+	INT32 nCyclesTotal[2] = { 1400000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	M6809Open(0);
@@ -626,7 +626,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += M6809Run(nCyclesTotal[0] / nInterleave);
 
-		if (i == 240 && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == 240 && irq_mask) M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 
@@ -642,8 +642,8 @@ static INT32 DrvFrame()
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		SN76496Update(0, pSoundBuf, nSegmentLength);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		// vlm5030 won't interlace, so just run it at the end of the frame..
 		vlm5030Update(0, pBurnSoundOut, nBurnSoundLen);
 	}
@@ -658,7 +658,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -727,7 +727,7 @@ STD_ROM_FN(sbasketb)
 
 static INT32 SbasketbInit()
 {
-	return DrvInit(0,1);
+	return DrvInit(0, 1);
 }
 
 struct BurnDriver BurnDrvSbasketb = {
@@ -770,7 +770,7 @@ STD_ROM_FN(sbasketh)
 
 static INT32 SbaskethInit()
 {
-	return DrvInit(0,0);
+	return DrvInit(0, 0);
 }
 
 struct BurnDriver BurnDrvSbasketh = {
@@ -818,7 +818,7 @@ STD_ROM_FN(sbasketg)
 
 static INT32 SbasketgInit()
 {
-	return DrvInit(1,1);
+	return DrvInit(1, 1);
 }
 
 struct BurnDriver BurnDrvSbasketg = {

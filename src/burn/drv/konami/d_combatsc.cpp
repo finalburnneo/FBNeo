@@ -636,12 +636,12 @@ static INT32 DrvDraw()
 	INT32 color0 = (k007121_ctrl_read(0, 6) & 0x10) << 1;
 	INT32 color1 = (k007121_ctrl_read(1, 6) & 0x10) << 1;
 
-	if ((nBurnLayer & 3) != 3) BurnTransferClear();
+	BurnTransferClear();
 
 	if (priority_select == 0)
 	{
-		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_FORCEOPAQUE | TMAP_SET_GROUP(0) | 4);
-		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_FORCEOPAQUE | TMAP_SET_GROUP(1) | 8); // OPAQUE??
+		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0) | 4);
+		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1) | 8);
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0) | 1);
 		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1) | 2);
 
@@ -650,14 +650,14 @@ static INT32 DrvDraw()
 	}
 	else
 	{
-		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_FORCEOPAQUE | TMAP_SET_GROUP(1) | 1);
-		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_FORCEOPAQUE | TMAP_SET_GROUP(0) | 2); // OPAQUE??
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(0) | 1);
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_SET_GROUP(1) | 2);
 
 		if (nSpriteEnable & 2) k007121_draw(1, pTransDraw, DrvGfxROM1, color_table, DrvSprRAM[1], (0x40 + color1) * 16, 0, 16, 0, 0x0f00);
 		if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM0, color_table, DrvSprRAM[0], (0x00 + color0) * 16, 0, 16, 0, 0x4444);
 
-		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0) | 4);
-		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1) | 8);
+		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(1) | 4);
+		if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, TMAP_SET_GROUP(0) | 8);
 	}
 
 	{

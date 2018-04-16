@@ -144,7 +144,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 					if (pri_mask != -1)
 					{
 						if (ctable != NULL) {
-							RenderTilePrioTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable, pri_mask);
+							RenderPrioMaskTranstabSprite(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable, pri_mask);
 						} else {
 							if (flipy) {
 								if (flipx) {

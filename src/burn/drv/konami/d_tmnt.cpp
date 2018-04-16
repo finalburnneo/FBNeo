@@ -4112,6 +4112,8 @@ UINT8 __fastcall MiaZ80Read(UINT16 a)
 		case 0xc001: {
 			return BurnYM2151Read();
 		}
+
+		case 0xf000: return 0; // NOP
 		
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 Read => %04X\n"), a);
@@ -4138,6 +4140,8 @@ void __fastcall MiaZ80Write(UINT16 a, UINT8 d)
 			BurnYM2151WriteRegister(d);
 			return;
 		}
+
+		case 0xf000: return; // NOP
 		
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 Write => %04X, %02X\n"), a, d);

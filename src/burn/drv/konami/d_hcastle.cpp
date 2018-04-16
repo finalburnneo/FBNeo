@@ -355,6 +355,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	K007232Reset(0);
 	K051649Reset();
 	BurnYM3812Reset();
 

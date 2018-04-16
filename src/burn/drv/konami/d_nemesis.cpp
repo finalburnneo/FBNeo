@@ -2168,7 +2168,7 @@ static INT32 DrvDoReset()
 	if (ym2151_enable) BurnYM2151Reset();
 	if (ym3812_enable) BurnYM3812Reset();
 	if (vlm5030_enable) vlm5030Reset(0);
-//	if (k007232_enable) K007232Reset();
+	if (k007232_enable) K007232Reset(0);
 	if (k005289_enable) K005289Reset();
 	if (k051649_enable) K051649Reset();
 	ZetClose();

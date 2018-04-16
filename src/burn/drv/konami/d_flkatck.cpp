@@ -350,6 +350,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetClose();
 
 	BurnYM2151Reset();
+	K007232Reset(0);
 	k007232_set_bank(0, 0, 1);
 
 	k007121_reset();

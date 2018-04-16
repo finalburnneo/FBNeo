@@ -429,6 +429,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	ZetClose();
 
 	BurnYM2151Reset();
+	K007232Reset(0);
+	K007232Reset(1);
 
 	KonamiICReset();
 	K051316WrapEnable(1, 1);

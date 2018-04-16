@@ -69,7 +69,7 @@ static struct BurnDIPInfo FastlaneDIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL						},
 	{0x13, 0xff, 0xff, 0x5a, NULL						},
-	{0x14, 0xff, 0xff, 0xfb, NULL						},
+	{0x14, 0xff, 0xff, 0xff, NULL						},
 
 	{0   , 0xfe, 0   ,    16, "Coin A"					},
 	{0x12, 0x01, 0x0f, 0x02, "4 Coins 1 Credits"		},
@@ -142,8 +142,8 @@ static struct BurnDIPInfo FastlaneDIPList[]=
 	{0x14, 0x01, 0x02, 0x00, "Dual"						},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"				},
-	{0x14, 0x01, 0x04, 0x00, "Off"						},
-	{0x14, 0x01, 0x04, 0x04, "On"						},
+	{0x14, 0x01, 0x04, 0x04, "Off"						},
+	{0x14, 0x01, 0x04, 0x00, "On"						},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"			},
 	{0x14, 0x01, 0x08, 0x08, "3 Times"					},
@@ -310,6 +310,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	bankswitch(0);
 	HD6309Reset();
 	HD6309Close();
+
+	K007232Reset(0);
+	K007232Reset(1);
 
 	KonamiICReset();
 
@@ -548,7 +551,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -556,7 +559,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029702;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;

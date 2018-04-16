@@ -433,6 +433,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	K007232Reset(0);
+	K007232Reset(1);
+
 	KonamiICReset();
 
 	bottom9_video_enable = 0;

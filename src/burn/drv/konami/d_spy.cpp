@@ -457,6 +457,8 @@ static int DrvDoReset()
 
 	KonamiICReset();
 
+	K007232Reset(0);
+	K007232Reset(1);
 	BurnYM3812Reset();
 
 	spy_video_enable = 0;

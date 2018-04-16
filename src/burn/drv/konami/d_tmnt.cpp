@@ -69,6 +69,8 @@ static UINT8 DrvVBlank;
 
 static INT32 InitEEPROMCount;
 
+static INT32 uses_k007232 = 0;
+
 static const eeprom_interface BlswhstlEEPROMInterface =
 {
 	7,
@@ -2440,6 +2442,7 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 	
+	if (uses_k007232) K007232Reset(0);
 	BurnYM2151Reset();
 	
 	KonamiICReset();
@@ -2458,6 +2461,7 @@ static INT32 TmntDoReset()
 {
 	INT32 nRet = DrvDoReset();
 	
+	if (uses_k007232) K007232Reset(0);
 	UPD7759Reset();
 	
 	UPD7759StartWrite(0, 0);
@@ -4654,7 +4658,8 @@ static INT32 TmntInit()
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.33, BURN_SND_ROUTE_BOTH);
-	
+	uses_k007232 = 1;
+
 	UPD7759Init(0, UPD7759_STANDARD_CLOCK, DrvUPD7759CRom);
 	UPD7759SetRoute(0, 0.60, BURN_SND_ROUTE_BOTH);
 	
@@ -4754,6 +4759,7 @@ static INT32 MiaInit()
 	K007232Init(0, 3579545, DrvSoundRom, 0x20000);
 	K007232SetPortWriteHandler(0, DrvK007232VolCallback);
 	K007232PCMSetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	uses_k007232 = 1;
 	
 	LayerColourBase[0] = 0;
 	LayerColourBase[1] = 32;
@@ -5471,6 +5477,7 @@ static INT32 CommonExit()
 	BlswhstlTileRomBank = 0;
 	DrvVBlank = 0;
 	InitEEPROMCount = 0;
+	uses_k007232 = 0;
 
 	return 0;
 }

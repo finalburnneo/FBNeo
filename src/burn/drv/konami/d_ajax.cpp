@@ -416,6 +416,8 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
+	K007232Reset(0);
+	K007232Reset(1);
 	BurnYM2151Reset();
 
 	KonamiICReset();

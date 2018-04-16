@@ -13,8 +13,11 @@
 // flip the tilemap on the screen vertically and horizontally (used with GenericTilemapSetFlip )
 #define TMAP_FLIPXY		(TMAP_FLIPX | TMAP_FLIPY)
 
-// force the tilemap to ignore any transparency settings
+// force the tilemap to ignore any transparency settings and any tile skipping
 #define TMAP_FORCEOPAQUE	(1 << 24)
+
+// for the tilemap to ignore transparency, but do not skip tiles
+#define TMAP_DRAWOPAQUE		(1 << 25)
 
 // set tilemap to use transparent color (is set when using GenericTilemapSetTransparent)
 #define TMAP_TRANSPARENT	(1 <<  9)

@@ -4884,6 +4884,40 @@ void RenderTilePrioTranstab(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, I
 	}
 }
 
+void RenderPrioMaskTranstabSprite(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 color, INT32 trans_col, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 width, INT32 height, UINT8 *tab, UINT32 priority)
+{
+#if defined FBA_DEBUG
+	if (!Debug_GenericTilesInitted) bprintf(PRINT_ERROR, _T("RenderPrioMaskTranstabSprite called without init\n"));
+#endif
+
+	INT32 flip = 0;
+	if (flipy) flip |= (height - 1) * width;
+	if (flipx) flip |= width - 1;
+
+	priority |= 1<<31;
+
+	gfx += code * width * height;
+
+	for (INT32 y = 0; y < height; y++, sy++) {
+		if (sy < nScreenHeightMin || sy >= nScreenHeightMax) continue;
+
+		for (INT32 x = 0; x < width; x++, sx++) {
+			if (sx < nScreenWidthMin || sx >= nScreenWidthMax) continue;
+
+			INT32 pxl = gfx[((y * width) + x) ^ flip] | color;
+
+			if (tab[pxl] == trans_col) continue;
+
+			if ((priority & (1 << pPrioDraw[sy * nScreenWidth + sx])) == 0) {
+				dest[sy * nScreenWidth + sx] = pxl;
+				pPrioDraw[sy * nScreenWidth + sx] = 0x1f;
+			}
+		}
+
+		sx -= width;
+	}
+}
+
 /*================================================================================================
 Sprite tile with priorities
 ================================================================================================*/

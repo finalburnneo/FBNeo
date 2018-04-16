@@ -272,6 +272,30 @@ void K007232Init(INT32 chip, INT32 clock, UINT8 *pPCMData, INT32 PCMDataSize)
 
 	Ptr->clock = clock;
 
+	KDAC_A_make_fncode();
+
+	double Rate = (double)clock / 128 / nBurnSoundRate;
+	Ptr->UpdateStep = (INT32)(Rate * 0x10000);
+
+	Ptr->gain[BURN_SND_K007232_ROUTE_1] = 1.00;
+	Ptr->gain[BURN_SND_K007232_ROUTE_2] = 1.00;
+	Ptr->output_dir[BURN_SND_K007232_ROUTE_1] = BURN_SND_ROUTE_BOTH;
+	Ptr->output_dir[BURN_SND_K007232_ROUTE_2] = BURN_SND_ROUTE_BOTH;
+	
+	nNumChips = chip;
+
+	K007232Reset(chip);
+}
+
+void K007232Reset(INT32 chip)
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232Reset called without init\n"));
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K007232Reset called with invalid chip %x\n"), chip);
+#endif
+
+	Chip = &Chips[chip];
+
 	for (INT32 i = 0; i < KDAC_A_PCM_MAX; i++) {
 		Chip->start[i] = 0;
 		Chip->step[i] = 0;
@@ -284,25 +308,13 @@ void K007232Init(INT32 chip, INT32 clock, UINT8 *pPCMData, INT32 PCMDataSize)
 	Chip->vol[1][1] = 255;
 
 	for (INT32 i = 0; i < 0x10; i++)  Chip->wreg[i] = 0;
-
-	KDAC_A_make_fncode();
-
-	double Rate = (double)clock / 128 / nBurnSoundRate;
-	Ptr->UpdateStep = (INT32)(Rate * 0x10000);
-
-	Ptr->gain[BURN_SND_K007232_ROUTE_1] = 1.00;
-	Ptr->gain[BURN_SND_K007232_ROUTE_2] = 1.00;
-	Ptr->output_dir[BURN_SND_K007232_ROUTE_1] = BURN_SND_ROUTE_BOTH;
-	Ptr->output_dir[BURN_SND_K007232_ROUTE_2] = BURN_SND_ROUTE_BOTH;
-	
-	nNumChips = chip;
 }
 
 void K007232SetRoute(INT32 chip, INT32 nIndex, double nVolume, INT32 nRouteDir)
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_K007232Initted) bprintf(PRINT_ERROR, _T("K007232SetRoute called without init\n"));
-	if (chip >nNumChips) bprintf(PRINT_ERROR, _T("K007232SetRoute called with invalid chip %x\n"), chip);
+	if (chip > nNumChips) bprintf(PRINT_ERROR, _T("K007232SetRoute called with invalid chip %x\n"), chip);
 	if (nIndex < 0 || nIndex > 1) bprintf(PRINT_ERROR, _T("K007232SetRoute called with invalid index %i\n"), nIndex);
 #endif
 

@@ -16,7 +16,7 @@
 // force the tilemap to ignore any transparency settings and any tile skipping
 #define TMAP_FORCEOPAQUE	(1 << 24)
 
-// for the tilemap to ignore transparency, but do not skip tiles
+// force the tilemap to ignore transparency
 #define TMAP_DRAWOPAQUE		(1 << 25)
 
 // set tilemap to use transparent color (is set when using GenericTilemapSetTransparent)

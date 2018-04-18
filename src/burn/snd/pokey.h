@@ -105,6 +105,8 @@ void pokey_update(int num, INT16 *buffer, int length);
 
 void pokey_scan(INT32 nAction, INT32* pnMin);
 
+void PokeyPotCallback(int chip, int potnum, int (*pot_cb)(int offs));
+
 int pokey1_r (int offset);
 int pokey2_r (int offset);
 int pokey3_r (int offset);

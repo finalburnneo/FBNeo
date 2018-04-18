@@ -30,30 +30,36 @@ static UINT8 analog_select;
 static UINT8 irq_vector;
 static UINT8 flipscreen;
 
+static INT32 nExtraCycles;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvInputs[1];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static INT32 DrvAnalogPort2 = 0;
+static INT32 DrvAnalogPort3 = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo FoodfInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
+	A("P1 Stick X",     BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",     BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 1"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 start"	},
+	A("P2 Stick X",     BIT_ANALOG_REL, &DrvAnalogPort2,"p2 x-axis"),
+	A("P2 Stick Y",     BIT_ANALOG_REL, &DrvAnalogPort3,"p2 y-axis"),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 fire 1"	},
-
-	// analog input placeholders
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 2"	},
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
-	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 4"	},
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 5"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Foodf)
 
@@ -86,8 +92,8 @@ static struct BurnDIPInfo FoodfDIPList[]=
 	{0x0b, 0x01, 0xc0, 0x40, "Free Play"			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x0c, 0x01, 0x08, 0x00, "On"					},
-	{0x0c, 0x01, 0x08, 0x80, "Off"					},
+	{0x0c, 0x01, 0x80, 0x00, "On"					},
+	{0x0c, 0x01, 0x80, 0x80, "Off"					},
 };
 
 STDDIPINFO(Foodf)
@@ -102,27 +108,31 @@ static inline void update_interrupts()
 
 static void __fastcall foodf_write_word(UINT32 address, UINT16 data)
 {
+		if (address&1) bprintf(0, L"ww: address&1, wtf! %X (%x).\n", address, data);
 	if ((address & 0xfffe00) == 0x900000) {
-		DrvNVRAM[(address / 2) & 0xff] = data;
+		DrvNVRAM[(address >> 1) & 0xff] = data;
 		return;
 	}
 
-	if ((address & 0xffffe0) == 0xa40000) {
-		pokey2_w((address / 2) & 0xf, data);
+	//if ((address & 0xffffe0) == 0xa40000) {
+	if (address >= 0xa40000 && address <= 0xa4001f) {
+		pokey2_w((address & 0x1f) >> 1, data&0xff);
 		return;
 	}
 
-	if ((address & 0xffffe0) == 0xa80000) {
-		pokey1_w((address / 2) & 0xf, data);
+	//if ((address & 0xffffe0) == 0xa80000) {
+	if (address >= 0xa80000 && address <= 0xa8001f) {
+		pokey1_w((address & 0x1f) >> 1, data&0xff);
 		return;
 	}
 
-	if ((address & 0xffffe0) == 0xac0000) {
-		pokey3_w((address / 2) & 0xf, data);
+	//if ((address & 0xffffe0) == 0xac0000) {
+	if (address >= 0xac0000 && address <= 0xac001f) {
+		pokey3_w((address & 0x1f) >> 1, data&0xff);
 		return;
 	}
 
-	switch (address)
+	switch (address & ~0x023ff8)
 	{
 		case 0x944000:
 		case 0x944001:
@@ -134,9 +144,11 @@ static void __fastcall foodf_write_word(UINT32 address, UINT16 data)
 		case 0x944007:
 			analog_select = (~address / 2) & 3;
 		return;
+	}
 
+	switch (address)
+	{
 		case 0x948000:
-		case 0x948001:
 			flipscreen = data & 0x01;
 			if ((data & 0x04) == 0) {
 				irq_vector &= ~1;
@@ -150,159 +162,90 @@ static void __fastcall foodf_write_word(UINT32 address, UINT16 data)
 		return;
 
 		case 0x954000:
-		case 0x954001:
 			// nop
 		return;
 
 		case 0x958000:
-		case 0x958001:
 			BurnWatchdogReset();
 		return;
 	}
+
+	bprintf(0, L"ww %X %x.\n", address, data);
 }
 
-static void __fastcall foodf_write_byte(UINT32 address, UINT8 data)
+static INT32 dip_read(INT32 offset)
 {
-	if ((address & 0xfffe00) == 0x900000) {
-		DrvNVRAM[(address / 2) & 0xff] = data;
-		return;
-	}
-
-	if ((address & 0xffffe0) == 0xa40000) {
-		pokey2_w((address / 2) & 0xf, data);
-		return;
-	}
-
-	if ((address & 0xffffe0) == 0xa80000) {
-		pokey1_w((address / 2) & 0xf, data);
-		return;
-	}
-
-	if ((address & 0xffffe0) == 0xac0000) {
-		pokey3_w((address / 2) & 0xf, data);
-		return;
-	}
-
-	switch (address)
-	{
-		case 0x944000:
-		case 0x944001:
-		case 0x944002:
-		case 0x944003:
-		case 0x944004:
-		case 0x944005:
-		case 0x944006:
-		case 0x944007:
-			analog_select = (~address / 2) & 3;
-		return;
-
-		case 0x948000:
-		case 0x948001:
-			flipscreen = data & 0x01;
-			if ((data & 0x04) == 0) {
-				irq_vector &= ~1;
-				update_interrupts();
-			}
-			if ((data & 0x08) == 0) {
-				irq_vector &= ~2;
-				update_interrupts();
-			}
-			// coin counters = data & 0xc0;
-		return;
-
-		case 0x954000:
-		case 0x954001:
-			// nop
-		return;
-
-		case 0x958000:
-		case 0x958001:
-			BurnWatchdogReset();
-		return;
-	}
+	return ((DrvDips[0] >> (offset & 7))&1) << 7;
 }
 
-static UINT8 dip_read(INT32 offset)
+static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+static UINT8 ananice(INT32 anaval)
 {
-	return (DrvDips[0] >> (offset & 7)) << 7;
+	UINT8 Temp = 0x7f - (anaval >> 4); // - for reversed, + for normal
+	if (Temp < 0x01) Temp = 0x01;
+	if (Temp > 0xfe) Temp = 0xfe;
+	Temp = scalerange(Temp, 0x3f, 0xbe, 0x01, 0xfe);
+
+	// deadzones
+	if (!(Temp < 0x7f-10 || Temp > 0x7f+10)) Temp = 0x7f;
+
+	return Temp;
+}
+
+static UINT16 analog_read()
+{
+	INT32 analog[4] = { DrvAnalogPort0, DrvAnalogPort2, DrvAnalogPort1, DrvAnalogPort3 };
+#if 0
+	switch (analog_select) {
+		case 0: bprintf(0, _T("p1 X: %02X\n"), ananice(analog[analog_select])); break;
+		case 1: bprintf(0, _T("p2 X: %02X\n"), ananice(analog[analog_select])); break;
+		case 2: bprintf(0, _T("p1 Y: %02X\n"), ananice(analog[analog_select])); break;
+		case 3: bprintf(0, _T("p2 Y: %02X\n"), ananice(analog[analog_select])); break;
+	}
+#endif
+	return ananice(analog[analog_select]);
 }
 
 static UINT16 __fastcall foodf_read_word(UINT32 address)
 {
+		if (address&1) bprintf(0, L"rw: address&1, wtf! %X.\n", address);
 	if ((address & 0xfffe00) == 0x900000) {
 		return DrvNVRAM[(address / 2) & 0xff] | 0xfff0;
 	}
 
-	if ((address & 0xffffe0) == 0xa40000) {
-		return 0;	// pokey2_word_r
+	//if ((address & 0xffffe0) == 0xa40000) {
+	if (address >= 0xa40000 && address <= 0xa4001f) {
+		return pokey2_r((address & 0x1f) >> 1);
 	}
 
-	if ((address & 0xffffe0) == 0xa80000) {
-		return dip_read((address / 2));
+	//if ((address & 0xffffe0) == 0xa80000) {
+	if (address >= 0xa80000 && address <= 0xa8001f) {
+		return pokey1_r((address & 0x1f) >> 1);
 	}
 
-	if ((address & 0xffffe0) == 0xac0000) {
-		return 0;	// pokey3_word_r
+	//if ((address & 0xffffe0) == 0xac0000) {
+	if (address >= 0xac0000 && address <= 0xac001f) {
+		return pokey3_r((address & 0x1f) >> 1);
+	}
+
+	switch (address & ~0x023ff8)
+	{
+		case 0x940000:
+		case 0x940001:
+		case 0x940002:
+		case 0x940003:
+		case 0x940004:
+		case 0x940005:
+		case 0x940006:
+		case 0x940007:
+			return analog_read();
 	}
 
 	switch (address)
 	{
-		case 0x944000:
-		case 0x944001:
-		case 0x944002:
-		case 0x944003:
-		case 0x944004:
-		case 0x944005:
-		case 0x944006:
-		case 0x944007:	// analog_r
-			return 0;
-
-		case 0x948000:
-		case 0x948001:
-			return (DrvInputs[0] & 0x7f) | (DrvDips[1] & 0x80);
-
-		case 0x94c000:
-		case 0x94c001:
-			return 0; // nop
-
-		case 0x958000:
-		case 0x958001:
-			return BurnWatchdogRead();
-	}
-
-	return 0;
-}
-
-static UINT8 __fastcall foodf_read_byte(UINT32 address)
-{
-	if ((address & 0xfffe00) == 0x900000) {
-		return DrvNVRAM[(address / 2) & 0xff] | 0xf0;
-	}
-
-	if ((address & 0xffffe0) == 0xa40000) {
-		return 0;	// pokey2_word_r
-	}
-
-	if ((address & 0xffffe0) == 0xa80000) {
-		return dip_read((address / 2));
-	}
-
-	if ((address & 0xffffe0) == 0xac0000) {
-		return 0;	// pokey3_word_r
-	}
-
-	switch (address)
-	{
-		case 0x944000:
-		case 0x944001:
-		case 0x944002:
-		case 0x944003:
-		case 0x944004:
-		case 0x944005:
-		case 0x944006:
-		case 0x944007:	// analog_r
-			return 0;
-
 		case 0x948000:
 		case 0x948001:
 			return (DrvInputs[0] & 0x7f) | (DrvDips[1] & 0x80);
@@ -342,6 +285,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 	SekClose();
 
 	BurnWatchdogReset();
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -436,14 +381,21 @@ static INT32 DrvInit()
 	SekMapMemory(DrvVidRAM,			0x800000, 0x8007ff, MAP_RAM);
 	SekMapMemory(DrvPalRAM,			0x950000, 0x9503ff, MAP_RAM); // 0-1ff
 	SekSetWriteWordHandler(0,		foodf_write_word);
-	SekSetWriteByteHandler(0,		foodf_write_byte);
 	SekSetReadWordHandler(0,		foodf_read_word);
-	SekSetReadByteHandler(0,		foodf_read_byte);
 	SekClose();
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	PokeyInit(600000, 3, 1.00, 0);
+	PokeyInit(604800, 3, 1.00, 0);
+
+	PokeyPotCallback(0, 0, dip_read);
+	PokeyPotCallback(0, 1, dip_read);
+	PokeyPotCallback(0, 2, dip_read);
+	PokeyPotCallback(0, 3, dip_read);
+	PokeyPotCallback(0, 4, dip_read);
+	PokeyPotCallback(0, 5, dip_read);
+	PokeyPotCallback(0, 6, dip_read);
+	PokeyPotCallback(0, 7, dip_read);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, bg_map_callback, 8, 8, 32, 32);
@@ -518,8 +470,8 @@ static void draw_sprites()
 			flipy ^= 0x4000;
 		}
 
-		RenderPrioSprite(pTransDraw, DrvGfxROM1, code, color, 0, sx,       sy, flipx, flipy, 16, 16, pri);
-		RenderPrioSprite(pTransDraw, DrvGfxROM1, code, color, 0, sx - 256, sy, flipx, flipy, 16, 16, pri);
+		RenderPrioSprite(pTransDraw, DrvGfxROM1, code, color << 2, 0, sx,       sy, flipx, flipy, 16, 16, pri);
+		RenderPrioSprite(pTransDraw, DrvGfxROM1, code, color << 2, 0, sx - 256, sy, flipx, flipy, 16, 16, pri);
 	}
 }
 
@@ -556,33 +508,55 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[1] = { 6000000 / 60 };
-	INT32 nCyclesDone[1] = { 0 };
+	INT32 nInterleave = 259; // really
+	INT32 nCyclesTotal[1] = { 6048000 / 60 };
+	INT32 nCyclesDone[1] = { nExtraCycles };
+	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 
-		if ((i & 0x1f) == 0x1f) {
+		if ((i & 0x3f) == 0 && i <= 192) {
 			irq_vector |= 1;
 			update_interrupts();
 		}
-		if (i == 240) { // or 224?
+		if (i == 224) {
 			irq_vector |= 2;
 			update_interrupts();
+		}
+		// Render Sound Segment
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			pokey_update(0, pSoundBuf, nSegmentLength);
+			pokey_update(1, pSoundBuf, nSegmentLength);
+			pokey_update(2, pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
 		}
 	}
 
 	SekClose();
 
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			pokey_update(0, pSoundBuf, nSegmentLength);
+			pokey_update(1, pSoundBuf, nSegmentLength);
+			pokey_update(2, pSoundBuf, nSegmentLength);
+		}
+	}
+/*	if (pBurnSoundOut) {
 		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
 		pokey_update(1, pBurnSoundOut, nBurnSoundLen);
 		pokey_update(2, pBurnSoundOut, nBurnSoundLen);
-	}
+	}*/
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -616,6 +590,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(analog_select);
 		SCAN_VAR(irq_vector);
 		SCAN_VAR(flipscreen);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_NVRAM) {

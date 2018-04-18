@@ -1,10 +1,6 @@
 // FB Alpha Atari Food Fight driver module
 // Based on MAME driver by Aaron Giles
 
-// to do:
-//	bug fix
-//	analog inputs
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "pokey.h"
@@ -108,27 +104,23 @@ static inline void update_interrupts()
 
 static void __fastcall foodf_write_word(UINT32 address, UINT16 data)
 {
-		if (address&1) bprintf(0, L"ww: address&1, wtf! %X (%x).\n", address, data);
 	if ((address & 0xfffe00) == 0x900000) {
 		DrvNVRAM[(address >> 1) & 0xff] = data;
 		return;
 	}
 
-	//if ((address & 0xffffe0) == 0xa40000) {
-	if (address >= 0xa40000 && address <= 0xa4001f) {
-		pokey2_w((address & 0x1f) >> 1, data&0xff);
+	if ((address & 0xffffe0) == 0xa40000) {
+		pokey2_w((address & 0x1f) >> 1, data & 0xff);
 		return;
 	}
 
-	//if ((address & 0xffffe0) == 0xa80000) {
-	if (address >= 0xa80000 && address <= 0xa8001f) {
-		pokey1_w((address & 0x1f) >> 1, data&0xff);
+	if ((address & 0xffffe0) == 0xa80000) {
+		pokey1_w((address & 0x1f) >> 1, data & 0xff);
 		return;
 	}
 
-	//if ((address & 0xffffe0) == 0xac0000) {
-	if (address >= 0xac0000 && address <= 0xac001f) {
-		pokey3_w((address & 0x1f) >> 1, data&0xff);
+	if ((address & 0xffffe0) == 0xac0000) {
+		pokey3_w((address & 0x1f) >> 1, data & 0xff);
 		return;
 	}
 
@@ -169,8 +161,11 @@ static void __fastcall foodf_write_word(UINT32 address, UINT16 data)
 			BurnWatchdogReset();
 		return;
 	}
+}
 
-	bprintf(0, L"ww %X %x.\n", address, data);
+static void __fastcall foodf_write_byte(UINT32 address, UINT8 data)
+{
+	foodf_write_word(address&~1, data);
 }
 
 static INT32 dip_read(INT32 offset)
@@ -209,25 +204,27 @@ static UINT16 analog_read()
 	return ananice(analog[analog_select]);
 }
 
+static UINT8 __fastcall foodf_read_byte(UINT32 address)
+{
+	bprintf(0, _T("read byte %X\n"), address);
+	return 0;
+}
+
 static UINT16 __fastcall foodf_read_word(UINT32 address)
 {
-		if (address&1) bprintf(0, L"rw: address&1, wtf! %X.\n", address);
 	if ((address & 0xfffe00) == 0x900000) {
 		return DrvNVRAM[(address / 2) & 0xff] | 0xfff0;
 	}
 
-	//if ((address & 0xffffe0) == 0xa40000) {
-	if (address >= 0xa40000 && address <= 0xa4001f) {
+	if ((address & 0xffffe0) == 0xa40000) {
 		return pokey2_r((address & 0x1f) >> 1);
 	}
 
-	//if ((address & 0xffffe0) == 0xa80000) {
-	if (address >= 0xa80000 && address <= 0xa8001f) {
+	if ((address & 0xffffe0) == 0xa80000) {
 		return pokey1_r((address & 0x1f) >> 1);
 	}
 
-	//if ((address & 0xffffe0) == 0xac0000) {
-	if (address >= 0xac0000 && address <= 0xac001f) {
+	if ((address & 0xffffe0) == 0xac0000) {
 		return pokey3_r((address & 0x1f) >> 1);
 	}
 
@@ -382,6 +379,8 @@ static INT32 DrvInit()
 	SekMapMemory(DrvPalRAM,			0x950000, 0x9503ff, MAP_RAM); // 0-1ff
 	SekSetWriteWordHandler(0,		foodf_write_word);
 	SekSetReadWordHandler(0,		foodf_read_word);
+	SekSetWriteByteHandler(0,		foodf_write_byte);
+	SekSetReadByteHandler(0,		foodf_read_byte);
 	SekClose();
 
 	BurnWatchdogInit(DrvDoReset, 180);
@@ -482,6 +481,8 @@ static INT32 DrvDraw()
 		DrvRecalc = 1; // force update
 	}
 
+	BurnTransferClear();
+
 	GenericTilemapDraw(0, pTransDraw, 0 | TMAP_FORCEOPAQUE);
 	GenericTilemapDraw(0, pTransDraw, 1);
 
@@ -511,7 +512,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 259; // really
 	INT32 nCyclesTotal[1] = { 6048000 / 60 };
 	INT32 nCyclesDone[1] = { nExtraCycles };
-	INT32 nSoundBufferPos = 0;
 
 	SekOpen(0);
 
@@ -527,36 +527,17 @@ static INT32 DrvFrame()
 			irq_vector |= 2;
 			update_interrupts();
 		}
-		// Render Sound Segment
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			pokey_update(0, pSoundBuf, nSegmentLength);
-			pokey_update(1, pSoundBuf, nSegmentLength);
-			pokey_update(2, pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
 	}
 
 	SekClose();
 
 	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
-	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			pokey_update(0, pSoundBuf, nSegmentLength);
-			pokey_update(1, pSoundBuf, nSegmentLength);
-			pokey_update(2, pSoundBuf, nSegmentLength);
-		}
-	}
-/*	if (pBurnSoundOut) {
 		pokey_update(0, pBurnSoundOut, nBurnSoundLen);
 		pokey_update(1, pBurnSoundOut, nBurnSoundLen);
 		pokey_update(2, pBurnSoundOut, nBurnSoundLen);
-	}*/
+	}
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

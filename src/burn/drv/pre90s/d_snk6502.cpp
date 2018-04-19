@@ -943,7 +943,7 @@ static void DrvSoundInit(INT32 type)
 		numSN = 1;
 		SN76477_init(0);
 		// bomb noise with an envelope for nibbler/pballoon/fantasy -dink
-		SN76477_set_mastervol(0, 3.10); // first, parameters below are calculated from this
+		SN76477_set_mastervol(0, 5.10); // first, parameters below are calculated from this
 		SN76477_set_noise_params(0, RES_K(47), RES_K(150), CAP_U(0.001));
 		SN76477_set_decay_res(0, RES_M(3.3));
 		SN76477_set_attack_params(0, CAP_U(1), RES_K(4.7));

@@ -179,7 +179,7 @@ static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min,
 
 static UINT8 ananice(INT16 anaval)
 {
-	UINT16 Temp = 0x7f - (anaval / 16); // - for reversed, + for normal
+	INT16 Temp = 0x7f - (anaval / 16);  // - for reversed, + for normal
 	if (Temp < 0x3f) Temp = 0x3f;       // clamping for happy scalerange()
 	if (Temp > 0xbf) Temp = 0xbf;
 	Temp = scalerange(Temp, 0x3f, 0xbf, 0x00, 0xff);

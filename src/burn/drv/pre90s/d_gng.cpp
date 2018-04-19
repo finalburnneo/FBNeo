@@ -826,7 +826,7 @@ void DrvGngM6809WriteByte(UINT16 Address, UINT8 Data)
 		}
 	}
 	
-	bprintf(PRINT_NORMAL, _T("M6809 Write Byte -> %04X, %02X\n"), Address, Data);
+	//bprintf(PRINT_NORMAL, _T("M6809 Write Byte -> %04X, %02X\n"), Address, Data);
 }
 
 UINT8 __fastcall DrvGngZ80Read(UINT16 a)
@@ -874,7 +874,7 @@ void __fastcall DrvGngZ80Write(UINT16 a, UINT8 d)
 }
 
 static void DrvRandPalette()
-{ // On first boot we fill the palette with some arbatrary values to see the boot-up messages
+{ // On first boot we fill the palette with some arbitrary values to see the boot-up messages
 	DrvPaletteRam1[0] = 0x00;
 	DrvPaletteRam2[0] = 0x00;
 	for (INT32 i = 1; i < 0x100; i++) {

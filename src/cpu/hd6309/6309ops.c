@@ -274,9 +274,11 @@ HD6309_INLINE void lbra( void )
 	PC += EA;
 	CHANGE_PC;
 
+#if 0
 	if ( EA == 0xfffd )  /* EHC 980508 speed up busy loop */
 		if ( hd6309_ICount > 0)
 			hd6309_ICount = 0;
+#endif
 }
 
 /* $17 LBSR relative ----- */
@@ -481,9 +483,11 @@ HD6309_INLINE void bra( void )
 	IMMBYTE(t);
 	PC += SIGNED(t);
 	CHANGE_PC;
+#if 0
 	/* JB 970823 - speed up busy loops */
 	if( t == 0xfe )
 		if( hd6309_ICount > 0 ) hd6309_ICount = 0;
+#endif
 }
 
 /* $21 BRN relative ----- */

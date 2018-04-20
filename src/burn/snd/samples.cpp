@@ -526,10 +526,12 @@ void BurnSampleExit()
 
 	for (INT32 i = 0; i < nTotalSamples; i++) {
 		sample_ptr = &samples[i];
-		BurnFree (sample_ptr->data);
+		if (sample_ptr)
+			BurnFree (sample_ptr->data);
 	}
 
-	BurnFree (samples);
+	if (samples)
+		BurnFree (samples);
 
 	sample_ptr = NULL;
 	nTotalSamples = 0;

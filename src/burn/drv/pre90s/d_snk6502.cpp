@@ -1066,7 +1066,7 @@ static void DrvSoundExit()
 	for (INT32 i = 0; i < numSN; i++)
 		SN76477_exit(i);
 
-	if (bHasSamples) BurnSampleExit();
+	BurnSampleExit();
 
 	delete LP1;
 	delete LP2;

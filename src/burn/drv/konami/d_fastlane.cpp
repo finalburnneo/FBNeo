@@ -230,10 +230,10 @@ static UINT8 fastlane_read(UINT16 address)
 			return DrvInputs[0];
 
 		case 0x0900:
-			return DrvDips[1];
+			return DrvDips[0];
 
 		case 0x0901:
-			return DrvDips[0];
+			return DrvDips[1];
 	}
 
 	return 0;

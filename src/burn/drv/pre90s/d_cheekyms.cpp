@@ -1,4 +1,4 @@
-// FB Alpha Mr. Do! driver module
+// FB Alpha Cheeky Mouse driver module
 // Based on MAME driver by Nicola Salmoria
 
 #include "tiles_generic.h"
@@ -26,6 +26,10 @@ static UINT8 *Prom;
 static UINT32 *Palette;
 static UINT8 DrvRecalc;
 
+static INT16 *dacbuf; // for dc offset removal
+static INT16 dac_lastin;
+static INT16 dac_lastout;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvReset;
@@ -38,19 +42,19 @@ static INT32 irqmask;
 static UINT32 bHasSamples = 0;
 
 static struct BurnInputInfo CheekymsInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 left"},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"},
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy2 + 0,	"p1 coin"   },
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 start"  },
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy1 + 6,	"p1 left"   },
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 right"  },
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1" },
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 3,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 start"  },
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p2 left"   },
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 right"  },
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 fire 1" },
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDip + 0,	"dip"},
 };
 
 STDINPUTINFO(Cheekyms)
@@ -95,7 +99,7 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 	port &= 0xff;
 
 	if (port >= 0x20 && port <= 0x3f) { // sprite ram
-		DrvSpriteRAM[port - 0x20] = data;
+		DrvSpriteRAM[port & 0x1f] = data;
 		return;
 	}
 
@@ -104,9 +108,6 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 		case 0x40:
 			if (data != lastdata)
 			{
-				//if (data != 0x80 && data != 0x00)
-				//	bprintf(0, _T("%X,"), data & ~0x80);
-
 				if (data & 0x02) // short squeek / mouse counter
 					BurnSamplePlay(0);
 				if (data & 0x04) // squeak
@@ -121,7 +122,8 @@ static void __fastcall port_write(UINT16 port, UINT8 data)
 					BurnSamplePlay(1);
 			}
 			lastdata = data;
-			DACWrite(0, (data ? 0x80 : 0));
+
+			DACWrite(0, data & 0x80);
 		return;
 
 		case 0x80:
@@ -164,6 +166,9 @@ static INT32 DrvDoReset()
 	palettebnk = scrolly = flip = 0;
 	prevcoin = 0;
 
+	dac_lastin = 0;
+	dac_lastout = 0;
+
 	ZetOpen(0);
 	ZetReset();
 	ZetClose();
@@ -181,21 +186,18 @@ static INT32 DrvDoReset()
 static void palette_init()
 {
 	const UINT8 *color_prom = Prom;
-	int i, j, bit, r, g, b;
+	INT32 bit;
 
-	for (i = 0; i < 6; i++)
-	{
-		for (j = 0; j < 0x20; j++)
-		{
-			/* red component */
+	for (INT32 i = 0; i < 6; i++) {
+		for (INT32 j = 0; j < 0x20; j++) {
 			bit = (color_prom[0x20 * (i / 2) + j] >> ((4 * (i & 1)) + 0)) & 0x01;
-			r = 0xff * bit;
-			/* green component */
+			INT32 r = 0xff * bit;
+
 			bit = (color_prom[0x20 * (i / 2) + j] >> ((4 * (i & 1)) + 1)) & 0x01;
-			g = 0xff * bit;
-			/* blue component */
+			INT32 g = 0xff * bit;
+
 			bit = (color_prom[0x20 * (i / 2) + j] >> ((4 * (i & 1)) + 2)) & 0x01;
-			b = 0xff * bit;
+			INT32 b = 0xff * bit;
 
 			Palette[(i * 0x20) + j] = BurnHighCol(r, g, b, 0);
 		}
@@ -247,6 +249,8 @@ static INT32 MemIndex()
 	DrvSpriteRAM    = Next; Next += 0x00100;
 
 	RamEnd			= Next;
+
+	dacbuf          = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd          = Next;
 
@@ -437,6 +441,21 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static void dcfilter_dac()
+{
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT16 r = dacbuf[i*2+0]; // dac is mono, ignore 'l'.
+		//INT16 l = dacbuf[i*2+1];
+
+		INT16 out = r - dac_lastin + 0.995 * dac_lastout;
+
+		dac_lastin = r;
+		dac_lastout = out;
+		pBurnSoundOut[i*2+0] = out;
+		pBurnSoundOut[i*2+1] = out;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -467,7 +486,8 @@ static INT32 DrvFrame()
 	}
 	
 	if (pBurnSoundOut) {
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		DACUpdate(dacbuf, nBurnSoundLen);
+		dcfilter_dac();
 #ifdef USE_SAMPLE_HACK
 		if(bHasSamples)
 			BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
@@ -499,6 +519,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(palettebnk);
 		SCAN_VAR(scrolly);
 		SCAN_VAR(irqmask);
+
+		SCAN_VAR(dac_lastin);
+		SCAN_VAR(dac_lastout);
 	}
 
 	return 0;

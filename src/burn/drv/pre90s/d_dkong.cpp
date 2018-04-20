@@ -1272,7 +1272,7 @@ static INT32 MemIndex()
 
 	RamEnd			= Next;
 
-	dacbuf          = (INT16*)Next; Next += 0x800 * sizeof(INT16);
+	dacbuf          = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd			= Next;
 

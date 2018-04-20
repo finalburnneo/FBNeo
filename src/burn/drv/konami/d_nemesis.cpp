@@ -66,7 +66,7 @@ static UINT8 DrvJoy4[16];
 static UINT8 DrvDips[4];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[4];
-static INT32 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort0 = 0;
 static INT16 DrvDial1;
 
 static INT32 ay8910_enable = 0;
@@ -1249,12 +1249,12 @@ static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min,
 
 static UINT8 konamigt_read_wheel()
 {
-	UINT8 Temp = 0x7f + (DrvAnalogPort0 >> 4);
-	UINT8 Temp2 = 0;
+	INT16 Temp = 0x80 + (DrvAnalogPort0 / 16);  // - for reversed, + for normal
+	if (Temp < 0x3f) Temp = 0x3f;       // clamping for happy scalerange()
+	if (Temp > 0xbf) Temp = 0xbf;
+	Temp = scalerange(Temp, 0x3f, 0xbf, 0x00, 0x7f);
 
-	Temp2 = scalerange(Temp, 0x3f, 0xc0, 0x00, 0x7f); // konami gt scalings
-	//bprintf(0, _T("Port0-temp[%X] scaled[%X]\n"), Temp, Temp2); // debug, do not remove.
-	return Temp2;
+	return Temp;
 }
 
 static UINT16 konamigt_read_analog(int /*Offset*/)

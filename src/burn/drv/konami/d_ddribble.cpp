@@ -32,6 +32,8 @@ static UINT8 *DrvVidRegs[2];
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[9];
 static UINT8 DrvJoy3[8];
@@ -296,7 +298,7 @@ static void ddribble_ym2203_write_portA(UINT32, UINT32 data)
 
 static UINT8 ddribble_ym2203_read_port_B(UINT32)
 {
-	return rand() & 0xff;
+	return BurnRandom() & 0xff;
 }
 
 static INT32 DrvDoReset(INT32 clear_mem)
@@ -322,6 +324,8 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	vlm5030Reset(0);
 
 	watchdog = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -650,25 +654,32 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
+	INT32 MULT = 4; // needs high interleave to avoid contentions between main&sub w/shared ram
+	INT32 nInterleave = 256*MULT;
 	INT32 nCyclesTotal[3] =  { 1536000 / 60, 1536000 / 60, 1536000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		M6809Open(0);
+		if (i == 240*MULT && (DrvVidRegs[0][4] & 2)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
-		if (i == (nInterleave-1) && (DrvVidRegs[0][4] & 2)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 		M6809Close();
 
 		M6809Open(1);
+		if (i == 240*MULT && (DrvVidRegs[1][4] & 2)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 		nCyclesDone[1] += M6809Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-		if (i == (nInterleave-1) && (DrvVidRegs[1][4] & 2)) M6809SetIRQLine(1, CPU_IRQSTATUS_HOLD);
 		M6809Close();
 
-		M6809Open(2);
-		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
-		M6809Close();
+		if ((i%MULT)==0) { // soundcpu doesn't like high sync, run 256 lines instead of 256*MULT
+			M6809Open(2);
+			BurnTimerUpdate(((i/MULT) + 1) * nCyclesTotal[2] / (nInterleave/MULT));
+			M6809Close();
+		}
+
+		if (i == 240*MULT && pBurnDraw) {
+			DrvDraw();
+		}
 	}
 
 	M6809Open(2);
@@ -681,15 +692,14 @@ static INT32 DrvFrame()
 	}
 
 	M6809Close();
-	
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -711,7 +721,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 		vlm5030Scan(nAction, pnMin);
 
+		BurnRandomScan(nAction);
+
 		SCAN_VAR(bankdata);
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

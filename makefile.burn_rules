@@ -103,8 +103,6 @@ depobj	= 	burn.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o bur
 			arm7_intf.o arm_intf.o h6280_intf.o hd6309_intf.o konami_intf.o m6502_intf.o m6800_intf.o m6805_intf.o m6809_intf.o \
 			m68000_intf.o nec_intf.o pic16c5x_intf.o s2650_intf.o tlcs90_intf.o z80_intf.o z180_intf.o  \
 			\
-			burnmap.o \
-			\
 			arm.o arm7.o h6280.o hd6309.o i8039.o i8x41.o mcs51.o konami.o m6502.o m6800.o m6805.o m6809.o nec.o pic16c5x.o s2650.o sh2.o tms32010.o tlcs90.o \
 			upd7725.o upd7810.o v25.o v60.o z80.o z80daisy.o z180.o \
 			\

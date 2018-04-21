@@ -632,6 +632,22 @@ static INT32 DrvDraw()
 	return 0;
 }
 
+static inline void DrvClearOpposites(UINT16* nJoystickInputs)
+{
+	if ((*nJoystickInputs & 0x03) == 0x00) {
+		*nJoystickInputs |= 0x03;
+	}
+	if ((*nJoystickInputs & 0x0c) == 0x00) {
+		*nJoystickInputs |= 0x0c;
+	}
+	if ((*nJoystickInputs & 0x30) == 0x00) {
+		*nJoystickInputs |= 0x30;
+	}
+	if ((*nJoystickInputs & 0xc0) == 0x00) {
+		*nJoystickInputs |= 0xc0;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -651,6 +667,8 @@ static INT32 DrvFrame()
 			DrvInputs[2] ^= (DrvJoy2[i] & 1) << i;
 			DrvInputs[4] ^= (DrvJoy1[i] & 1) << i;
 		}
+
+		DrvClearOpposites(&DrvInputs[2]);
 
 		seibu_coin_input = 0xfc | (DrvJoy3[1] << 1) | DrvJoy3[0];
 	}

@@ -40,8 +40,6 @@ static UINT8 DrvSoundLatch;
 
 static INT32 RomLoadOffset = 0;
 
-static INT32 nCyclesDone[2], nCyclesTotal[2];
-static INT32 nCyclesSegment;
 static INT32 nExtraCycles = 0;
 
 static INT32 Diamond;
@@ -1369,29 +1367,22 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	nCyclesTotal[0] = (UINT32)((double)1500000 / 59.59);
-	nCyclesTotal[1] = (UINT32)((double)3000000 / 59.59);
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	INT32 nCyclesTotal[2] = { (UINT32)((double)1500000 / 59.59), (UINT32)((double)3000000 / 59.59) };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 	
 	ZetNewFrame();
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU, nNext;
-		
 		// Run M6809
-		nCurrentCPU = 0;
 		M6809Open(0);
-		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
-		nCyclesDone[nCurrentCPU] += M6809Run((i == nInterleave-1) ? nCyclesSegment - nExtraCycles : nCyclesSegment );
+		nCyclesDone[0] += M6809Run(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		if (i == 239) {
 			memcpy(DrvSpriteRamBuffer, DrvSpriteRam, 0x200);
 			M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
 		M6809Close();
-		
+
 		// Run Z80
-		nCurrentCPU = 1;
 		ZetOpen(0);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 		if (i % 64 == 63) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);

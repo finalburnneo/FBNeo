@@ -27,8 +27,8 @@ static INT32 DebugCPU_Z180Initted = 0;
 static UINT8 *Mem[NUM_CPUS][4][PROG_PAGES];
 static INT32 nActiveCPU = -1;
 
-typedef UINT8 __fastcall (*read_cb)(UINT32 address);
-typedef void __fastcall (*write_cb)(UINT32 address, UINT8 data);
+typedef UINT8 (__fastcall *read_cb)(UINT32 address);
+typedef void (__fastcall *write_cb)(UINT32 address, UINT8 data);
 
 static write_cb prog_write[NUM_CPUS];
 static read_cb prog_read[NUM_CPUS];
@@ -37,32 +37,32 @@ static read_cb prog_fetcharg[NUM_CPUS];
 static write_cb port_write[NUM_CPUS];
 static read_cb port_read[NUM_CPUS];
 
-void Z180SetWriteHandler(void __fastcall (*write)(UINT32, UINT8))
+void Z180SetWriteHandler(void (__fastcall *write)(UINT32, UINT8))
 {
 	prog_write[nActiveCPU] = write;
 }
 
-void Z180SetReadHandler(UINT8 __fastcall (*read)(UINT32))
+void Z180SetReadHandler(UINT8 (__fastcall *read)(UINT32))
 {
 	prog_read[nActiveCPU] = read;
 }
 
-void Z180SetFetchOpHandler(UINT8 __fastcall (*fetch)(UINT32))
+void Z180SetFetchOpHandler(UINT8 (__fastcall *fetch)(UINT32))
 {
 	prog_fetchop[nActiveCPU] = fetch;
 }
 
-void Z180SetFetchArgHandler(UINT8 __fastcall (*fetch)(UINT32))
+void Z180SetFetchArgHandler(UINT8 (__fastcall *fetch)(UINT32))
 {
 	prog_fetcharg[nActiveCPU] = fetch;
 }
 
-void Z180SetWritePortHandler(void __fastcall (*write)(UINT32, UINT8))
+void Z180SetWritePortHandler(void (__fastcall *write)(UINT32, UINT8))
 {
 	port_write[nActiveCPU] = write;
 }
 
-void Z180SetReadPortHandler(UINT8 __fastcall (*read)(UINT32))
+void Z180SetReadPortHandler(UINT8 (__fastcall *read)(UINT32))
 {
 	port_read[nActiveCPU] = read;
 }

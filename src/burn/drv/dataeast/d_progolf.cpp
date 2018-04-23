@@ -25,7 +25,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 char_pen;
 static UINT8 gfx_bank;
-static UINT8 scrollx;
+static UINT16 scrollx;
 static UINT8 flipscreen;
 static UINT8 soundlatch;
 
@@ -258,7 +258,7 @@ static UINT8 progolf_sound_read(UINT16 address)
 
 static tilemap_callback( bg )
 {
-	TILE_SET_INFO(0, DrvVidRAM[offs^0x1f], 0, TILE_FLIPX|TILE_FLIPY);
+	TILE_SET_INFO(0, DrvVidRAM[offs], 0, TILE_FLIPX);
 }
 
 static tilemap_callback( fg )
@@ -442,9 +442,9 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	GenericTilemapSetScrollX(0, scrollx);
+	GenericTilemapSetFlip(TMAP_GLOBAL, TMAP_FLIPY);
 
-	GenericTilemapSetFlip(1, TMAP_FLIPY);
+	GenericTilemapSetScrollX(0, scrollx);
 
 	GenericTilemapDraw(0, pTransDraw, 0);
 	GenericTilemapDraw(1, pTransDraw, 0);

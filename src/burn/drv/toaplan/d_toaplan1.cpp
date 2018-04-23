@@ -2013,7 +2013,7 @@ static void configure_68k_map(UINT32 mainram, UINT32 palette, UINT32 share, UINT
 	SekClose();
 }
 
-static void common_sound_init(void __fastcall (*write_port)(UINT16, UINT8), UINT8 __fastcall (*read_port)(UINT16))
+static void common_sound_init(void (__fastcall *write_port)(UINT16, UINT8), UINT8 (__fastcall *read_port)(UINT16))
 {
 	ZetInit(0);
 	ZetOpen(0);

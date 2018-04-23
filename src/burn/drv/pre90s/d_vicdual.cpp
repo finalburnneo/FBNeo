@@ -1582,7 +1582,7 @@ static INT32 DrvLoadRoms()
 	return 0;
 }
 
-static INT32 DrvInit(INT32 romsize, INT32 rambase, INT32 has_z80ram, void __fastcall (*wp)(UINT16,UINT8), UINT8 __fastcall (*rp)(UINT16), void (*z80_cb)(), void (*rom_cb)())
+static INT32 DrvInit(INT32 romsize, INT32 rambase, INT32 has_z80ram, void (__fastcall *wp)(UINT16,UINT8), UINT8 (__fastcall *rp)(UINT16), void (*z80_cb)(), void (*rom_cb)())
 {
 	AllMem = NULL;
 	MemIndex();

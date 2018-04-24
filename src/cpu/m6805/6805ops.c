@@ -30,13 +30,6 @@ M6805_INLINE void brset (UINT8 bit)
 	if (r&bit) {
 		SEC;
 		PC+=SIGNED(t);
-
-		if (t==0xfd)
-		{
-			/* speed up busy loops */
-			if(m6805_ICount > 0)
-				m6805_ICount = 0;
-		}
 	}
 }
 
@@ -52,13 +45,6 @@ M6805_INLINE void brclr (UINT8 bit)
 	if (!(r&bit)) {
 		CLC;
 		PC+=SIGNED(t);
-
-		if (t==0xfd)
-		{
-			/* speed up busy loops */
-			if(m6805_ICount > 0)
-				m6805_ICount = 0;
-	    }
 	}
 }
 
@@ -83,12 +69,6 @@ M6805_INLINE void bra( void )
 {
 	UINT8 t;
 	IMMBYTE(t);PC+=SIGNED(t);
-	if (t==0xfe)
-	{
-		/* speed up busy loops */
-		if(m6805_ICount > 0)
-			m6805_ICount = 0;
-    }
 }
 
 /* $21 BRN relative ---- */
@@ -317,7 +297,7 @@ M6805_INLINE void tst_di( void )
 M6805_INLINE void clr_di( void )
 {
 	DIRECT;
-	CLR_NZC; SEZ;
+	CLR_NZ; SEZ;
 	WM(EAD,0);
 }
 
@@ -800,7 +780,7 @@ M6805_INLINE void rti( void )
 	PULLBYTE(A);
 	PULLBYTE(X);
 	PULLWORD(pPC);
-	change_pc(PC);
+
 #if IRQ_LEVEL_DETECT
 	if( m6805.irq_state != CLEAR_LINE && (CC & IFLAG) == 0 )
 		m6805.pending_interrupts |= M6805_INT_IRQ;
@@ -811,7 +791,6 @@ M6805_INLINE void rti( void )
 M6805_INLINE void rts( void )
 {
 	PULLWORD(pPC);
-	change_pc(PC);
 }
 
 /* $82 ILLEGAL */
@@ -825,7 +804,6 @@ M6805_INLINE void swi( void )
 	PUSHBYTE(m6805.cc);
 	SEI;
 	if(SUBTYPE==SUBTYPE_HD63705) RM16( 0x1ffa, &pPC ); else RM16( 0xfffc, &pPC );
-	change_pc(PC);
 }
 
 /* $84 ILLEGAL */
@@ -1164,7 +1142,6 @@ M6805_INLINE void jmp_di( void )
 {
 	DIRECT;
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $bd JSR direct ---- */
@@ -1173,7 +1150,6 @@ M6805_INLINE void jsr_di( void )
 	DIRECT;
 	PUSHWORD(m6805.pc);
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $be LDX direct -**- */
@@ -1321,7 +1297,6 @@ M6805_INLINE void jmp_ex( void )
 {
 	EXTENDED;
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $cd JSR extended ---- */
@@ -1330,7 +1305,6 @@ M6805_INLINE void jsr_ex( void )
 	EXTENDED;
 	PUSHWORD(m6805.pc);
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $ce LDX extended -**- */
@@ -1478,7 +1452,6 @@ M6805_INLINE void jmp_ix2( void )
 {
 	INDEXED2;
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $dd JSR indexed, 2 byte offset ---- */
@@ -1487,7 +1460,6 @@ M6805_INLINE void jsr_ix2( void )
 	INDEXED2;
 	PUSHWORD(m6805.pc);
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $de LDX indexed, 2 byte offset -**- */
@@ -1635,7 +1607,6 @@ M6805_INLINE void jmp_ix1( void )
 {
 	INDEXED1;
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $ed JSR indexed, 1 byte offset ---- */
@@ -1644,7 +1615,6 @@ M6805_INLINE void jsr_ix1( void )
 	INDEXED1;
 	PUSHWORD(m6805.pc);
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $ee LDX indexed, 1 byte offset -**- */
@@ -1792,7 +1762,6 @@ M6805_INLINE void jmp_ix( void )
 {
 	INDEXED;
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $fd JSR indexed ---- */
@@ -1801,7 +1770,6 @@ M6805_INLINE void jsr_ix( void )
 	INDEXED;
 	PUSHWORD(m6805.pc);
 	PC = EA;
-	change_pc(PC);
 }
 
 /* $fe LDX indexed -**- */

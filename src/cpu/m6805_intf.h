@@ -17,6 +17,7 @@ INT32 m6805Scan(INT32 nAction);
 void m6805Reset();
 void m6805SetIrqLine(INT32 , INT32 state);
 INT32 m6805Run(INT32 cycles);
+INT32 m6805Idle(INT32 cycles);
 
 void m6805RunEnd();
 

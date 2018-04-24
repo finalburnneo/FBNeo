@@ -16,6 +16,11 @@ UINT8 portC_in;
 UINT8 portC_out;
 UINT8 ddrC;
 
+UINT8 tdr_reg;
+UINT8 tcr_reg;
+
+void (*tcr_w)(UINT8 data) = NULL;
+
 UINT8 from_main;
 UINT8 from_mcu;
 INT32 mcu_sent;
@@ -68,6 +73,16 @@ void m67805_mcu_write(UINT16 address, UINT8 data)
 			}
 			ddrC = data;
 		return;
+
+		case 0x0008:
+			tdr_reg = data;
+		return;
+
+		case 0x0009:
+			if (tcr_w) {
+				tcr_w(data);
+			}
+		return;
 	}
 }
 
@@ -92,6 +107,12 @@ UINT8 m67805_mcu_read(UINT16 address)
 				ptr->portC_in();
 			}
 			return (portC_out & ddrC) | (portC_in & ~ddrC);
+
+		case 0x0008:
+			return tdr_reg;
+
+		case 0x0009:
+			return tcr_reg & 0xf7;
 	}
 
 	return 0;
@@ -112,6 +133,9 @@ void m67805_taito_reset()
 	portC_in = 0;
 	portC_out = 0;
 	ddrC = 0;
+
+	tdr_reg = 0xff;
+	tcr_reg = 0x7f;
 
 	from_main = 0;
 	from_mcu = 0;
@@ -144,19 +168,23 @@ void m67805_taito_exit()
 	portC_out = 0;
 	ddrC = 0;
 
+	tdr_reg = 0;
+	tcr_reg = 0;
+
 	from_main = 0;
 	from_mcu = 0;
 	mcu_sent = 0;
 	main_sent = 0;
 
 	ptr = NULL;
+	tcr_w = NULL;
 
 	m6805Exit();
 }
 
 INT32 m68705_taito_scan(INT32 nAction)
 {
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		m6805Scan(nAction);
 
 		SCAN_VAR(portA_in);
@@ -169,6 +197,9 @@ INT32 m68705_taito_scan(INT32 nAction)
 		SCAN_VAR(portB_out);
 		SCAN_VAR(portC_out);
 
+		SCAN_VAR(tdr_reg);
+		SCAN_VAR(tcr_reg);
+
 		SCAN_VAR(from_main);
 		SCAN_VAR(from_mcu);
 		SCAN_VAR(mcu_sent);
@@ -177,8 +208,6 @@ INT32 m68705_taito_scan(INT32 nAction)
 
 	return 0;
 }
-
-
 
 
 

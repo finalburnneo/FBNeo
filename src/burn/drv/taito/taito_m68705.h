@@ -12,6 +12,8 @@ struct m68705_interface {
 	void (*portC_in)();
 };
 
+extern void (*tcr_w)(UINT8 data); // tcr_w, for arkanoid
+
 extern UINT8 portA_in;
 extern UINT8 portA_out;
 extern UINT8 ddrA;
@@ -21,6 +23,9 @@ extern UINT8 ddrB;
 extern UINT8 portC_in;
 extern UINT8 portC_out;
 extern UINT8 ddrC;
+
+extern UINT8 tdr_reg;
+extern UINT8 tcr_reg;
 
 extern UINT8 from_main;
 extern UINT8 from_mcu;

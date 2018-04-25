@@ -7,7 +7,6 @@
 #include "z80_intf.h"
 #include "taito_m68705.h"
 #include "ay8910.h"
-#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -1095,7 +1094,6 @@ static INT32 GetRoms()
 	UINT8 *GfxLoad = DrvGfxROM;
 	UINT8 *PrmLoad = DrvColPROM;
 	use_mcu = 0;
-	UINT8 *temp = (UINT8*)BurnMalloc(0x100);
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 
@@ -1116,15 +1114,7 @@ static INT32 GetRoms()
 			use_mcu = 1;
 			continue;
 		}
-#if 0
-		// this isn't needed (yet) -dink
-		if ((ri.nType & 7) == 5) {
-			bprintf(0, _T("* Using protection MCU bootstrap (%X bytes)\n"), ri.nLen);
-			if (BurnLoadRom(temp, i, 1)) return 1;
-			memmove(&DrvMcuROM[0x785], temp, ri.nLen);
-			continue;
-		}
-#endif
+
 		if ((ri.nType & 7) == 3) {
 			if (BurnLoadRom(GfxLoad, i, 1)) return 1;
 			GfxLoad += ri.nLen;
@@ -1137,8 +1127,6 @@ static INT32 GetRoms()
 			continue;
 		}
 	}
-
-	BurnFree(temp);
 
 	return 0;
 }

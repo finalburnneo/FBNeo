@@ -310,6 +310,7 @@ static void m68705_Interrupt(void)
 			}
 		}
 		m6805_ICount -= 11;
+		m6805.nTotalCycles += 11;
 	}
 }
 
@@ -335,7 +336,7 @@ static void Interrupt(void)
 		m6805.pending_interrupts &= ~(1<<HD63705_INT_NMI);
 
 		m6805_ICount -= 11;
-
+		m6805.nTotalCycles += 11;
 	}
 	else if( (m6805.pending_interrupts & ((1<<M6805_IRQ_LINE)|HD63705_INT_MASK)) != 0 ) {
 		if ( (CC & IFLAG) == 0 ) {
@@ -407,6 +408,7 @@ static void Interrupt(void)
 			m6805.pending_interrupts &= ~(1<<M6805_IRQ_LINE);
 		}
 		m6805_ICount -= 11;
+		m6805.nTotalCycles += 11;
 	}
 }
 

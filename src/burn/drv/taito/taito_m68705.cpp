@@ -38,35 +38,35 @@ void m67805_mcu_write(UINT16 address, UINT8 data)
 			}
 			portA_out = data;
 		return;
-		
+
 		case 0x0001:
 			if (ptr->portB_out) {
 				ptr->portB_out(&data);
 			}
 			portB_out = data;
 		return;
-		
+
 		case 0x0002:
 			if (ptr->portC_out) {
 				ptr->portC_out(&data);
 			}
 			portC_out = data;
 		return;
-		
+
 		case 0x0004:
 			if (ptr->ddrA_out) {
 				ptr->ddrA_out(&data);
 			}
 			ddrA = data;
 		return;
-		
+
 		case 0x0005:
 			if (ptr->ddrB_out) {
 				ptr->ddrB_out(&data);
 			}
 			ddrB = data;
 		return;
-		
+
 		case 0x0006:
 			if (ptr->ddrC_out) {
 				ptr->ddrC_out(&data);
@@ -95,13 +95,13 @@ UINT8 m67805_mcu_read(UINT16 address)
 				ptr->portA_in();
 			}
 			return (portA_out & ddrA) | (portA_in & ~ddrA);
-		
+
 		case 0x0001:
 			if (ptr->portB_in) {
 				ptr->portB_in();
 			}
 			return (portB_out & ddrB) | (portB_in & ~ddrB);
-		
+
 		case 0x0002:
 			if (ptr->portC_in) {
 				ptr->portC_in();

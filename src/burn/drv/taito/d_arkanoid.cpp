@@ -1,10 +1,13 @@
 // FB Alpha Arkanoid driver module
 // Based on MAME driver by Brad Oliver and MANY others.
 
+// TODO: hw timer countdown @ bootup runs too fast
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"
 #include "ay8910.h"
+#include "bitswap.h"
 
 static UINT8 *AllMem;
 static UINT8 *RamEnd;
@@ -34,12 +37,19 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvReset;
 static UINT16 DrvAxis[2];
-static UINT32 nAnalogAxis[2] = {0,0};
+static UINT32 nAnalogAxis[2] = { 0, 0 };
+
+static INT32 nCyclesDone[2] = { 0, 0 };
+static INT32 nExtraCycles[2];
 
 static INT32 arkanoid_bootleg_id = 0;
-static INT32 use_mcu;
 
+static INT32 use_mcu;
 static UINT8 arkanoid_bootleg_cmd;
+static UINT8 portC_latch = 0;
+static INT32 mcu_on = 0;
+static UINT32 m68705_timer = 0;
+static UINT32 m68705_timer_count = 0;
 
 enum {
 	ARKUNK=0,
@@ -124,6 +134,10 @@ static struct BurnDIPInfo arkanoidDIPList[]=
 	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
 	{0x0b, 0x01, 0x02, 0x02, "Off"			  },
 	{0x0b, 0x01, 0x02, 0x00, "On"			  },
+
+	{0   , 0xfe, 0   , 2   , "Service Mode"            },
+	{0x0b, 0x01, 0x04, 0x04, "Off"			  },
+	{0x0b, 0x01, 0x04, 0x00, "On"			  },
 
 	{0   , 0xfe, 0   , 2   , "Difficulty"             },
 	{0x0b, 0x01, 0x08, 0x08, "Easy"     		  },
@@ -771,6 +785,9 @@ static UINT8 arkanoid_bootleg_d008_read()
 	return 0;
 }
 
+void arkanoid_taito_mcu_write(INT32 data); // forwards..
+static void arkanoid_mcu_sync();
+
 static UINT8 __fastcall arkanoid_read(UINT16 address)
 {
 	switch (address)
@@ -787,6 +804,8 @@ static UINT8 __fastcall arkanoid_read(UINT16 address)
 			if (use_mcu) {
 				ret &= 0x3f;
 
+				arkanoid_mcu_sync();
+
 				if (!main_sent) ret |= 0x40;
 				if (!mcu_sent ) ret |= 0x80;
 			}
@@ -798,6 +817,7 @@ static UINT8 __fastcall arkanoid_read(UINT16 address)
 
 		case 0xd018:
 			if (use_mcu) {
+				arkanoid_mcu_sync();
 				return standard_taito_mcu_read();
 			} else {
 				return DrvInputs[2];
@@ -823,20 +843,29 @@ static void __fastcall arkanoid_write(UINT16 address, UINT8 data)
 
 		case 0xd008:
 		{
+			arkanoid_mcu_sync();
+			UINT8 last_mcu_on = mcu_on;
 			*flipscreen  = (data >> 0) & 3;
 			*gfxbank     = (data >> 5) & 1;
 			*palettebank = (data >> 6) & 1;
 			*paddleselect= (data >> 2) & 1;
+			mcu_on       = (data >> 7) & 1;
+
+			if (mcu_on && last_mcu_on == 0 && use_mcu) {
+				INT32 tc = m6805TotalCycles();
+				m68705Reset(); // this clears the cycle counter, but we need to preserve it.
+				m6805Idle(tc); // keep arkanoid_mcu_sync() happy. :)
+			}
 		}
 		break;
-	
+
 		case 0xd010: // watchdog
 		break;
 
 		case 0xd018:
 			if (use_mcu) {
-				from_main = data;
-				main_sent = 1;
+				arkanoid_mcu_sync();
+				arkanoid_taito_mcu_write(data);
 			} else {
 				arkanoid_bootleg_d018_write(data);
 			}
@@ -871,26 +900,123 @@ static void __fastcall hexa_write(UINT16 address, UINT8 data)
 	}
 }
 
+#define M68705_INT_TIMER			0x01
+
+static void arkanoid_set_timer(INT32 val)
+{
+	if (val == -1) { // off
+		m68705_timer = 0;
+		m68705_timer_count = 0;
+	} else { // on
+		if (m68705_timer == 0) // if was off, zero counter
+			m68705_timer_count = 0;
+		m68705_timer = (3000000 / 4) / (1 << (val & 0x7));
+	}
+}
+
+static void arkanoid_timer_fire()
+{
+	tdr_reg++;
+	if (tdr_reg == 0x00) tcr_reg |= 0x80; // if we overflowed, set the int bit
+
+	m68705SetIrqLine(M68705_INT_TIMER, ((tcr_reg & 0xc0) == 0x80) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
+static void arkanoid_tcr_write(UINT8 data)
+{
+	if ((tcr_reg ^ data) & 0x20) {
+		arkanoid_set_timer((data & 0x20) ? -1 : (data & 0x7));
+	}
+
+	if ((((tcr_reg & 0x07) != (data & 0x07)) || (data & 0x08)) && ((data & 0x20) == 0)) {
+		arkanoid_set_timer(data & 0x7);
+	}
+
+	tcr_reg = data;
+
+	m68705SetIrqLine(M68705_INT_TIMER, ((tcr_reg & 0xc0) == 0x80) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+}
+
 static void arkanoid_m68705_portC_write(UINT8 *data)
 {
-	if ((ddrC & 0x04) && (~*data & 0x04) && (portC_out & 0x04))
-	{
+	portC_out = *data | 0xf0;
+	UINT8 portC_diff = (portC_latch ^ (portC_out | (~ddrC)));
+	portC_latch = (portC_out | (~ddrC));
+
+	if ((portC_diff & 0x04) && (portC_latch & 0x04)) {
 		main_sent = 0;
-		portA_in = from_main;
+		m68705SetIrqLine(0, CPU_IRQSTATUS_NONE);
 	}
-	if ((ddrC & 0x08) && (~*data & 0x08) && (portC_out & 0x08))
-	{
+
+	portA_in = (~portC_latch & 0x04) ? from_main : 0xff;
+
+	if (~portC_latch & 0x08) {
 		mcu_sent = 1;
 		from_mcu = portA_out;
 	}
-
-	portC_out = *data;
 }
 
 static void arkanoid_m68705_portB_read()
 {
-	ddrB = 0xff;
-	portB_out = (*paddleselect) ? DrvInputs[3] : DrvInputs[2];
+	portB_in = (*paddleselect) ? DrvInputs[3] : DrvInputs[2];
+}
+
+static void arkanoid_m68705_portC_read()
+{
+	portC_in = 0;
+	if (main_sent) portC_in |= 0x01;
+	if (!mcu_sent) portC_in |= 0x02;
+}
+
+static INT32 arkanoid_mcu_run(INT32 cyc)
+{
+	if (cyc < 1) return 0;
+
+	INT32 ran = ((mcu_on) ? m6805Run(cyc) : m6805Idle(cyc));
+
+	nCyclesDone[1] += ran;
+
+	if (m68705_timer && mcu_on) {
+		m68705_timer_count += ran;
+		if (m68705_timer_count >= m68705_timer) {
+			m68705_timer_count -= m68705_timer;
+			arkanoid_timer_fire();
+		}
+	}
+
+	return ran;
+}
+
+static void arkanoid_mcu_sync()
+{
+	INT32 cyc = (ZetTotalCycles() / 2) - m6805TotalCycles();
+	if (cyc > 0) {
+		arkanoid_mcu_run(cyc);
+	}
+}
+
+static void arkanoid_mcu_reset()
+{
+	m67805_taito_reset();
+
+	portC_latch = 0;
+	mcu_on = 0;
+
+	ZetOpen(0);
+	arkanoid_mcu_sync(); // bring the cycle counters in sync (with mcu_on == 0)
+	ZetClose();
+
+	tcr_w = arkanoid_tcr_write;
+
+	arkanoid_set_timer(-1);
+}
+
+
+void arkanoid_taito_mcu_write(INT32 data)
+{
+	from_main = data;
+	main_sent = 1;
+	m68705SetIrqLine(0, CPU_IRQSTATUS_ACK);
 }
 
 static m68705_interface arkanoid_m68705_interface = {
@@ -902,7 +1028,7 @@ static m68705_interface arkanoid_m68705_interface = {
 	NULL,
 	NULL,
 	arkanoid_m68705_portB_read,
-	standard_m68705_portC_in
+	arkanoid_m68705_portC_read
 };
 
 static UINT8 ay8910_read_port_4(UINT32)
@@ -969,9 +1095,11 @@ static INT32 GetRoms()
 	UINT8 *GfxLoad = DrvGfxROM;
 	UINT8 *PrmLoad = DrvColPROM;
 	use_mcu = 0;
+	UINT8 *temp = (UINT8*)BurnMalloc(0x100);
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 
+		memset(&ri, 0, sizeof(ri));
 		BurnDrvGetRomInfo(&ri, i);
 
 		if ((ri.nType & 7) == 1) {
@@ -981,11 +1109,22 @@ static INT32 GetRoms()
 		}
 
 		if ((ri.nType & 7) == 2) {
+			char *szName = NULL;
+			BurnDrvGetRomName(&szName, i, 0);
+			bprintf(0, _T("  * Using protection MCU %S (%X bytes)\n"), szName, ri.nLen);
 			if (BurnLoadRom(DrvMcuROM, i, 1)) return 1;
 			use_mcu = 1;
 			continue;
 		}
-
+#if 0
+		// this isn't needed (yet) -dink
+		if ((ri.nType & 7) == 5) {
+			bprintf(0, _T("* Using protection MCU bootstrap (%X bytes)\n"), ri.nLen);
+			if (BurnLoadRom(temp, i, 1)) return 1;
+			memmove(&DrvMcuROM[0x785], temp, ri.nLen);
+			continue;
+		}
+#endif
 		if ((ri.nType & 7) == 3) {
 			if (BurnLoadRom(GfxLoad, i, 1)) return 1;
 			GfxLoad += ri.nLen;
@@ -999,6 +1138,8 @@ static INT32 GetRoms()
 		}
 	}
 
+	BurnFree(temp);
+
 	return 0;
 }
 
@@ -1011,13 +1152,18 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	m67805_taito_reset();
+	arkanoid_mcu_reset();
+
+	ZetNewFrame(); // z80 doesn't clear cycles in reset
+	m6805NewFrame(); // m6805 clears cycles in reset.  They need to be sync'd or mcu dies.
 
 	AY8910Reset(0);
 
 	nAnalogAxis[0] = 0;
 	nAnalogAxis[1] = 0;
 	arkanoid_bootleg_cmd = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -1045,7 +1191,7 @@ static INT32 MemIndex()
 	flipscreen		= Next; Next += 0x000001;
 	gfxbank			= Next; Next += 0x000001;
 	palettebank		= Next; Next += 0x000001;
-	paddleselect		= Next; Next += 0x000001;
+	paddleselect    = Next; Next += 0x000001;
 	bankselect		= Next; Next += 0x000001;
 
 	RamEnd			= Next;
@@ -1205,27 +1351,30 @@ static INT32 DrvFrame()
 		DrvInputs[3] = (~nAnalogAxis[1] >> 8) & 0xfe;
 	}
 
-	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 3000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nInterleave = 264;
+	INT32 nCyclesTotal[2] = { (INT32)((double)6000000 / 59.185606), (INT32)((double)3000000 / 59.185606) };
+
+	nCyclesDone[0] = nExtraCycles[0];
+	nCyclesDone[1] = nExtraCycles[1];
 
 	ZetOpen(0);
 	m6805Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += ZetRun(nSegment);
+		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
+
+		if (i == 240-1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		if (use_mcu) {
-			nSegment = nCyclesTotal[1] / nInterleave;
-			nCyclesDone[1] += m6805Run(nSegment);
+			arkanoid_mcu_run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
 		}
 	}
 
-	ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-
 	m6805Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
@@ -1238,7 +1387,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -1246,7 +1395,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {		
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -1265,6 +1414,11 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(nAnalogAxis[0]);
 		SCAN_VAR(nAnalogAxis[1]);
 		SCAN_VAR(arkanoid_bootleg_cmd);
+		SCAN_VAR(nExtraCycles);
+		SCAN_VAR(portC_latch);
+		SCAN_VAR(mcu_on);
+		SCAN_VAR(m68705_timer);
+		SCAN_VAR(m68705_timer_count);
 	}
 
 	return 0;
@@ -1324,9 +1478,7 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	{ "a75-01-1.ic17",0x8000, 0x5bcda3b0, 1 | BRF_ESS | BRF_PRG }, //  0 Z80 Code
 	{ "a75-11.ic16",  0x8000, 0xeafd7191, 1 | BRF_ESS | BRF_PRG }, //  1
 
-	// if a75-06.ic14 0x515d77b6 gets replaced with 0x0be83647, the game will boot into a "BAD HARDWARE" message -dink aug29, 2016
-
-	{ "a75-06__bootleg_68705.ic14",  0x0800, 0x515d77b6, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
+	{ "a75__06.ic14", 0x0800, 0x0be83647, 2 | BRF_ESS | BRF_PRG }, //  2 M68705 MCU
 
 	{ "a75-03.ic64",  0x8000, 0x038b74ba, 3 | BRF_GRA },	       //  3 Graphics
 	{ "a75-04.ic63",  0x8000, 0x71fae199, 3 | BRF_GRA },	       //  4

@@ -11289,10 +11289,10 @@ static struct BurnRomInfo Sf2cebRomDesc[] = {
     { "4.ic171",        0x0020000, 0xbd98ff15, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 
 	{ "pf4-sg072.ic90", 0x0100000, 0x446575c7, BRF_GRA | CPS1_TILES }, 
-	{ "pf7-sg088.ic88", 0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
-	{ "pf5-sg095.ic91", 0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
+	{ "pf7-sg103.ic88", 0x0100000, 0xfb78022e, BRF_GRA | CPS1_TILES },
+	{ "pf5-sg063.ic91", 0x0100000, 0x0a6be48b, BRF_GRA | CPS1_TILES },
 	{ "pf8-sg101.ic93", 0x0100000, 0x6258c7cf, BRF_GRA | CPS1_TILES },
-	{ "pf6-sg078.ic86", 0x0100000, 0x9b5b09d7, BRF_GRA | CPS1_TILES },
+	{ "pf6-sg070.ic86", 0x0100000, 0x9b5b09d7, BRF_GRA | CPS1_TILES },
 	{ "pf9-sh001.ic84", 0x0100000, 0x9f25090e, BRF_GRA | CPS1_TILES },
 
 	{ "3.ic28",         0x0020000, 0xd5bee9cc, BRF_PRG | CPS1_Z80_PROGRAM },
@@ -13190,7 +13190,7 @@ static struct BurnRomInfo WofchRomDesc[] = {
 	{ "iob1.12d",      0x000117, 0x3abc0700, BRF_OPT },
 	{ "bprg1.11d",     0x000117, 0x31793da7, BRF_OPT },
 	
-	{ "ioc1.ic1",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
 	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
 	
 	{ "d7l1.7l",       0x000117, 0x27b7410d, BRF_OPT },	// d-board PLDs

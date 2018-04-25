@@ -4450,8 +4450,6 @@ static struct BurnRomInfo oscarRomDesc[] = {
 	{ "ed03",		0x10000, 0x4fc4fb0f, 6 }, // 10
 	{ "ed00",		0x10000, 0xac201f2d, 6 }, // 11
 	{ "ed02",		0x10000, 0x7ddc5651, 6 }, // 12
-
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 };
 
 STD_ROM_PICK(oscar)
@@ -4489,8 +4487,6 @@ static struct BurnRomInfo oscaruRomDesc[] = {
 	{ "ed03",		0x10000, 0x4fc4fb0f, 6 }, // 10
 	{ "ed00",		0x10000, 0xac201f2d, 6 }, // 11
 	{ "ed02",		0x10000, 0x7ddc5651, 6 }, // 12
-
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
 	{ "du-13.bin",		0x00200, 0xbea1f87e, 8 }, // 14 proms
 };
@@ -4531,8 +4527,6 @@ static struct BurnRomInfo oscarj1RomDesc[] = {
 	{ "ed00",		0x10000, 0xac201f2d, 6 }, // 11
 	{ "ed02",		0x10000, 0x7ddc5651, 6 }, // 12
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
-
 	{ "du-13.bin",		0x00200, 0xbea1f87e, 8 }, // 14 proms
 };
 
@@ -4571,8 +4565,6 @@ static struct BurnRomInfo oscarj2RomDesc[] = {
 	{ "ed03",		0x10000, 0x4fc4fb0f, 6 }, // 10
 	{ "ed00",		0x10000, 0xac201f2d, 6 }, // 11
 	{ "ed02",		0x10000, 0x7ddc5651, 6 }, // 12
-
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
 	{ "du-13.bin",		0x00200, 0xbea1f87e, 8 }, // 14 proms
 };
@@ -5332,7 +5324,7 @@ static struct BurnRomInfo shackledRomDesc[] = {
 	{ "dk-09.15k",		0x10000, 0xc1557fac, 7 }, // 19
 	{ "dk-08.17k",		0x10000, 0x5e54e9f5, 7 }, // 20
 
-	{ "dk.18a",			0x01000, 0x00000000, 4 | BRF_NODUMP }, //  7 mcu
+	{ "dk.18a",			0x01000, 0x1af06149, 4 | BRF_OPT }, //  7 mcu
 	
 	{ "dk-20.9c",		0x00100, 0xff3cd588, 0 | BRF_OPT }, // priority PROM
 };
@@ -5380,7 +5372,7 @@ static struct BurnRomInfo breywoodRomDesc[] = {
 	{ "dj09.15k",	0x10000, 0xe37d5dbe, 7 }, // 19
 	{ "dj08.17k",	0x10000, 0xbeee880f, 7 }, // 20
 
-	{ "dj.18a",		0x01000, 0x00000000, 4 | BRF_NODUMP }, //  7 mcu
+	{ "dj.18a",		0x01000, 0x4cb20332, 4 }, //  7 mcu
 	
 	{ "dk-20.9c",		0x00100, 0xff3cd588, 0 | BRF_OPT }, // priority PROM
 };

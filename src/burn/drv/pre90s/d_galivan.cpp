@@ -1186,8 +1186,8 @@ static struct BurnRomInfo dangarjRomDesc[] = {
 	{ "18.4b",			0x4000, 0xdb7f6613, 1 | BRF_PRG | BRF_ESS }, //  2
 
 	{ "21.14b",			0x4000, 0x3e041873, 2 | BRF_PRG | BRF_ESS }, //  3 Z80 #1 Code
-	{ "22.15b",			0x4000, 0x1d484f68, 2 | BRF_PRG | BRF_ESS }, //  4
-
+	{ "14.b15",			0x8000, 0x488e3463, 2 | BRF_PRG | BRF_ESS }, //  4
+	
 	{ "11.13d",			0x4000, 0xe804ffe1, 3 | BRF_GRA },           //  5 Characters
 
 	{ "7.14f",			0x8000, 0xd59ed1f1, 4 | BRF_GRA },           //  6 Background Tiles
@@ -1209,6 +1209,8 @@ static struct BurnRomInfo dangarjRomDesc[] = {
 	{ "82s129.7f",		0x0100, 0x29bc6216, 8 | BRF_GRA },           // 18 Sprite LUT
 
 	{ "dg-3.ic7.2764",	0x2000, 0x84a56d26, 9 | BRF_GRA },           // 19 user2
+	
+	{ "22.15b",			0x4000, 0x1d484f68, 2 | BRF_OPT },
 };
 
 STD_ROM_PICK(dangarj)

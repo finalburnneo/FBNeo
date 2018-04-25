@@ -556,6 +556,7 @@ static struct BurnRomInfo AirwolfRomDesc[] = {
 	{ "pal16l8a.2j",   0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },	     //  13	PLDs
 	{ "epl12p6a.9j",   0x00034, 0x19808f14, BRF_OPT },		     //  14
 	{ "epl12p6a.9k",   0x00034, 0xf5acad85, BRF_OPT },		     //  15
+	{ "74s288-2.bin",  0x00020, 0x190a55ad, BRF_OPT },
 };
 
 STD_ROM_PICK(Airwolf)
@@ -584,6 +585,7 @@ static struct BurnRomInfo AirwolfaRomDesc[] = {
 	{ "pal16l8a.2j",   0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },	     //  13	PLDs
 	{ "epl12p6a.9j",   0x00034, 0x19808f14, BRF_OPT },		     //  14
 	{ "epl12p6a.9k",   0x00034, 0xf5acad85, BRF_OPT },		     //  15
+	{ "74s288-2.bin",  0x00020, 0x190a55ad, BRF_OPT },
 };
 
 STD_ROM_PICK(Airwolfa)
@@ -613,6 +615,7 @@ static struct BurnRomInfo SkywolfRomDesc[] = {
 	{ "01h.bin",       0x00100, 0xec0923d3, BRF_GRA },	     //  13
 	{ "01f.bin",       0x00100, 0xade97052, BRF_GRA },	     //  14
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  15
+	{ "74s288-2.bin",  0x00020, 0x190a55ad, BRF_OPT },
 };
 
 STD_ROM_PICK(Skywolf)
@@ -641,6 +644,7 @@ static struct BurnRomInfo Skywolf2RomDesc[] = {
 	{ "01h.bin",       0x00100, 0xec0923d3, BRF_GRA },	     //  14
 	{ "01f.bin",       0x00100, 0xade97052, BRF_GRA },	     //  15
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  16
+	{ "74s288-2.bin",  0x00020, 0x190a55ad, BRF_OPT },
 };
 
 STD_ROM_PICK(Skywolf2)
@@ -668,6 +672,10 @@ static struct BurnRomInfo Skywolf3RomDesc[] = {
 	{ "82s129-3.bin",  0x00100, 0xade97052, BRF_GRA },	     //  13
 	{ "74s288-2.bin",  0x00020, 0x190a55ad, BRF_GRA },	     //  14
 	{ "74s288-1.bin",  0x00020, 0x5ddb2d15, BRF_GRA },	     //  15
+	
+	{ "pal16l8nc.1",   0x00104, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "pal16l8nc.2",   0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "pal16l8nc.3",   0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Skywolf3)
@@ -702,6 +710,9 @@ static struct BurnRomInfo FlashgalRomDesc[] = {
 	{ "7159.1f",       0x00100, 0x1e0a1cd3, BRF_GRA },	     //  20
 	{ "7162.5j",       0x00020, 0xcce2e29f, BRF_GRA },	     //  21
 	{ "bpr.2c",        0x00020, 0x83a39201, BRF_GRA },	     //  22
+	
+	{ "pal12l6.5n",    0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
 };
 
 STD_ROM_PICK(Flashgal)
@@ -736,6 +747,9 @@ static struct BurnRomInfo FlashgalkRomDesc[] = {
 	{ "7159.1f",       0x00100, 0x1e0a1cd3, BRF_GRA },	     //  20
 	{ "7162.5j",       0x00020, 0xcce2e29f, BRF_GRA },	     //  21
 	{ "bpr.2c",        0x00020, 0x83a39201, BRF_GRA },	     //  22
+	
+	{ "pal12l6.5n",    0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
 };
 
 STD_ROM_PICK(Flashgalk)
@@ -770,6 +784,9 @@ static struct BurnRomInfo FlashgalaRomDesc[] = {
 	{ "7159.1f",       0x00100, 0x1e0a1cd3, BRF_GRA },	     //  20
 	{ "7162.5j",       0x00020, 0xcce2e29f, BRF_GRA },	     //  21
 	{ "bpr.2c",        0x00020, 0x83a39201, BRF_GRA },	     //  22
+	
+	{ "pal12l6.5n",    0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
 };
 
 STD_ROM_PICK(Flashgala)
@@ -995,6 +1012,10 @@ static struct BurnRomInfo Lstwar99RomDesc[] = {
 	{ "g.1h",          0x00100, 0xacd7a69e, BRF_GRA },	     //  18
 	{ "r.1f",          0x00100, 0xb7f48b41, BRF_GRA },	     //  19
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  20
+	
+	{ "pal12l6.5n",	   0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
+	{ "n82s123n.5j",   0x00020, 0xcce2e29f, BRF_OPT },
 };
 
 STD_ROM_PICK(Lstwar99)
@@ -1027,39 +1048,47 @@ static struct BurnRomInfo Lstwra99RomDesc[] = {
 	{ "g.1h",          0x00100, 0xacd7a69e, BRF_GRA },	     //  18
 	{ "r.1f",          0x00100, 0xb7f48b41, BRF_GRA },	     //  19
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  20
+	
+	{ "pal12l6.5n",	   0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
+	{ "n82s123n.5j",   0x00020, 0xcce2e29f, BRF_OPT },
 };
 
 STD_ROM_PICK(Lstwra99)
 STD_ROM_FN(Lstwra99)
 
 static struct BurnRomInfo Lstwrk99RomDesc[] = {
-	{ "1999.4f",       0x02000, 0xe3cfc09f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "1999.4h",       0x02000, 0xfd58c6e1, BRF_ESS | BRF_PRG }, //  1
-	{ "7.j4",          0x02000, 0x57a8e900, BRF_ESS | BRF_PRG }, //  2
+	{ "88.4f",         0x02000, 0xe3cfc09f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "89.4h",         0x02000, 0xfd58c6e1, BRF_ESS | BRF_PRG }, //  1
+	{ "90.j4",         0x02000, 0x57a8e900, BRF_ESS | BRF_PRG }, //  2
 	
-	{ "1.f2",          0x02000, 0xc485c621, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
-	{ "2.h2",          0x02000, 0xb3c6a886, BRF_ESS | BRF_PRG }, //  4
-	{ "3.j2",          0x02000, 0x197e314c, BRF_ESS | BRF_PRG }, //  5
-	{ "repulse.b4",    0x02000, 0x86b267f3, BRF_ESS | BRF_PRG }, //  6
+	{ "84.f2",         0x02000, 0xc485c621, BRF_ESS | BRF_PRG }, //  3	Z80 #2 Program 
+	{ "85.h2",         0x02000, 0xb3c6a886, BRF_ESS | BRF_PRG }, //  4
+	{ "86.j2",         0x02000, 0x197e314c, BRF_ESS | BRF_PRG }, //  5
+	{ "87.k2",         0x02000, 0x86b267f3, BRF_ESS | BRF_PRG }, //  6
 	
-	{ "1999-14.rom",   0x01000, 0xb4995072, BRF_GRA },	     //  7	Characters
+	{ "97.4a",         0x02000, 0x15ad6867, BRF_GRA },	     //  7	Characters
 	
-	{ "15.9h",         0x02000, 0xc9213469, BRF_GRA },	     //  8	Tiles
-	{ "16.10h",        0x02000, 0x7de5d39e, BRF_GRA },	     //  9
-	{ "17.11h",        0x02000, 0x0ba5f72c, BRF_GRA },	     //  10
+	{ "98.9h",         0x02000, 0xc9213469, BRF_GRA },	     //  8	Tiles
+	{ "99.10h",        0x02000, 0x7de5d39e, BRF_GRA },	     //  9
+	{ "00.11h",        0x02000, 0x0ba5f72c, BRF_GRA },	     //  10
 	
-	{ "8.6a",          0x04000, 0x0e9f757e, BRF_GRA },	     //  11	Sprites
-	{ "9.7a",          0x04000, 0xf7d2e650, BRF_GRA },	     //  12
-	{ "10.8a",         0x04000, 0xe717baf4, BRF_GRA },	     //  13
-	{ "11.9a",         0x04000, 0x04b2250b, BRF_GRA },	     //  14
-	{ "12.10a",        0x04000, 0xd110e140, BRF_GRA },	     //  15
-	{ "13.11a",        0x04000, 0x8fdc713c, BRF_GRA },	     //  16
+	{ "91.6a",         0x04000, 0x0e9f757e, BRF_GRA },	     //  11	Sprites
+	{ "92.7a",         0x04000, 0xf7d2e650, BRF_GRA },	     //  12
+	{ "93.8a",         0x04000, 0xe717baf4, BRF_GRA },	     //  13
+	{ "94.9a",         0x04000, 0x04b2250b, BRF_GRA },	     //  14
+	{ "95.10a",        0x04000, 0xd110e140, BRF_GRA },	     //  15
+	{ "96.11a",        0x04000, 0x8fdc713c, BRF_GRA },	     //  16
 	
 	{ "b.1j",          0x00100, 0x3ea35431, BRF_GRA },	     //  17	PROMs
 	{ "g.1h",          0x00100, 0xacd7a69e, BRF_GRA },	     //  18
 	{ "r.1f",          0x00100, 0xb7f48b41, BRF_GRA },	     //  19
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  20
 	{ "1999-00.rom",   0x00800, 0x0c0c449f, BRF_GRA },	     //  21
+	
+	{ "pal12l6.5n",	   0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
+	{ "n82s123n.5j",   0x00020, 0xcce2e29f, BRF_OPT },
 };
 
 STD_ROM_PICK(Lstwrk99)
@@ -1095,6 +1124,10 @@ static struct BurnRomInfo Lstwrb99RomDesc[] = {
 	{ "g.1h",          0x00100, 0xacd7a69e, BRF_GRA },	     //  18
 	{ "r.1f",          0x00100, 0xb7f48b41, BRF_GRA },	     //  19
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  20
+	
+	{ "pal12l6.5n",	   0x00117, 0x453ce64a, BRF_OPT },
+	{ "pal12l6.4m",    0x00117, 0xb52fbcc0, BRF_OPT },
+	{ "n82s123n.5j",   0x00020, 0xcce2e29f, BRF_OPT },
 };
 
 STD_ROM_PICK(Lstwrb99)
@@ -1155,6 +1188,10 @@ static struct BurnRomInfo FxRomDesc[] = {
 	{ "mb.1f",         0x00100, 0xa342890c, BRF_GRA },	     //  16
 	{ "m2.5j",         0x00020, 0x190a55ad, BRF_GRA },	     //  17
 	{ "m1.2c",         0x00020, 0x83a39201, BRF_GRA },	     //  18
+	
+	{ "pal16l8.1",     0x00104, 0x00000000, BRF_OPT | BRF_NODUMP},
+	{ "pal16l8.2",     0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "pal16l8.3",     0x00104, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(Fx)

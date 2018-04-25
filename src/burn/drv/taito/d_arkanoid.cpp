@@ -1479,6 +1479,7 @@ static struct BurnRomInfo arkanoidRomDesc[] = {
 	{ "arkanoid1_68705p3.ic14", 0x0800, 0x1b68e2d8, 0 | BRF_PRG | BRF_OPT },  //  9 Decapped roms
 	{ "arkanoid_mcu.ic14",      0x0800, 0x4e44b50a, 0 | BRF_PRG | BRF_OPT },  // 10
 	{ "a75__06.ic14",  0x0800, 0x0be83647, 0 | BRF_PRG | BRF_OPT },  // 11
+	{ "a75-06__bootleg_68705.ic14", 0x0800, 0x515d77b6, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(arkanoid)

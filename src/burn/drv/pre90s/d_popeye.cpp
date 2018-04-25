@@ -1156,23 +1156,26 @@ static INT32 DrvInitPopeyebl()
 // Popeye (bootleg)
 
 static struct BurnRomInfo popeyeblRomDesc[] = {
-	{ "po1",			0x2000, 0xb14a07ca, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "po2",			0x2000, 0x995475ff, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "po3",			0x2000, 0x99d6a04a, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "po4",			0x2000, 0x548a6514, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "app_exe.3j.2764",0x2000, 0x6e267c48, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.3l.2764",		0x2000, 0x995475ff, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.3m.2764",		0x2000, 0x99d6a04a, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.3p.2764",		0x2000, 0x548a6514, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "po5",			0x1000, 0xce6c9f8e, 2 | BRF_GRA }, //  4 gfx1
+	{ "5.10gh.2732",	0x1000, 0xce6c9f8e, 2 | BRF_GRA }, //  4 gfx1
 
-	{ "po6",			0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
-	{ "po7",			0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
-	{ "po8",			0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
-	{ "po9",			0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
+	{ "6.6n.2764",		0x2000, 0x0f2cd853, 3 | BRF_GRA }, //  5 gfx2
+	{ "7.6r.2764",		0x2000, 0x888f3474, 3 | BRF_GRA }, //  6
+	{ "8.6s.2764",		0x2000, 0x7e864668, 3 | BRF_GRA }, //  7
+	{ "9.6u.2764",		0x2000, 0x49e1d170, 3 | BRF_GRA }, //  8
 
-	{ "popeye.pr1",		0x0020, 0xd138e8a4, 4 | BRF_GRA }, //  9 proms
-	{ "popeye.pr2",		0x0020, 0x0f364007, 4 | BRF_GRA }, // 10
-	{ "popeye.pr3",		0x0100, 0xca4d7b6a, 4 | BRF_GRA }, // 11
-	{ "popeye.pr4",		0x0100, 0xcab9bc53, 4 | BRF_GRA }, // 12
-	{ "po_d1-e1.bin",	0x0020, 0x8de22998, 4 | BRF_GRA }, // 13
+	{ "6.2u.18s030",	0x0020, 0xd138e8a4, 4 | BRF_GRA }, //  9 proms
+	{ "5.2t.18s030",	0x0020, 0x0f364007, 4 | BRF_GRA }, // 10
+	{ "3.2r.24s10",		0x0100, 0xca4d7b6a, 4 | BRF_GRA }, // 11
+	{ "4.2s.24s10",		0x0100, 0xcab9bc53, 4 | BRF_GRA }, // 12
+	
+	{ "7.11s.24s10",	0x0100, 0x1c5c8dea, 0 | BRF_OPT },
+	{ "2.1e.24s10",		0x0100, 0x29d7bd87, 0 | BRF_OPT },
+	{ "1.1d.24s10",		0x0100, 0xbb63b2a6, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(popeyebl)

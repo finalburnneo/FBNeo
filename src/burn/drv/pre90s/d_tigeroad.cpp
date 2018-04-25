@@ -1441,7 +1441,7 @@ static struct BurnRomInfo f1dreamRomDesc[] = {
 
 	{ "09e_tr.bin",	0x00100, 0xec80ae36, 7 | BRF_GRA | BRF_OPT }, // 15 Priority Proms (unused)
 	
-	{ "c8751h-88",  0x01000, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "8751.mcu",   0x01000, 0xc8e6075c, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(f1dream)

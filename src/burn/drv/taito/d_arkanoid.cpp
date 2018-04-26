@@ -1,7 +1,7 @@
 // FB Alpha Arkanoid driver module
 // Based on MAME driver by Brad Oliver and MANY others.
 
-// TODO: hw timer countdown @ bootup runs too fast
+// TODO: hw timer countdown @ bootup runs too slow? (maybe?)
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -899,8 +899,6 @@ static void __fastcall hexa_write(UINT16 address, UINT8 data)
 	}
 }
 
-#define M68705_INT_TIMER			0x01
-
 static void arkanoid_set_timer(INT32 val)
 {
 	if (val == -1) { // off
@@ -988,7 +986,7 @@ static INT32 arkanoid_mcu_run(INT32 cyc)
 
 static void arkanoid_mcu_sync()
 {
-	INT32 cyc = (ZetTotalCycles() / 2) - m6805TotalCycles();
+	INT32 cyc = (ZetTotalCycles() / 8) - m6805TotalCycles();
 	if (cyc > 0) {
 		arkanoid_mcu_run(cyc);
 	}
@@ -1340,7 +1338,7 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 264;
-	INT32 nCyclesTotal[2] = { (INT32)((double)6000000 / 59.185606), (INT32)((double)3000000 / 59.185606) };
+	INT32 nCyclesTotal[2] = { (INT32)((double)6000000 / 59.185606), (INT32)((double)3000000 / 4 / 59.185606) }; // m68705 has a /4 divider!
 
 	nCyclesDone[0] = nExtraCycles[0];
 	nCyclesDone[1] = nExtraCycles[1];
@@ -1351,7 +1349,13 @@ static INT32 DrvFrame()
 	for (INT32 i = 0; i < nInterleave; i++) {
 		nCyclesDone[0] += ZetRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 
-		if (i == 240-1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240-1) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+
+			if (pBurnDraw) { // jets on thusters @ cutscene flicker wrong on one side if drawn at end of frame.
+				DrvDraw();
+			}
+		}
 
 		if (use_mcu) {
 			arkanoid_mcu_run((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
@@ -1366,10 +1370,6 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
-	}
-
-	if (pBurnDraw) {
-		DrvDraw();
 	}
 
 	return 0;

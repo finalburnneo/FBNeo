@@ -1234,7 +1234,7 @@ static INT32 DrvInit(INT32 game_selector)
 		}
 		break;
 
-		case 7: // wrally2
+		case 7: // wrally2a
 		{
 			if (BurnLoadRom(DrvMCUROM  + 0x000000,  2, 1)) return 1;
 
@@ -1262,6 +1262,29 @@ static INT32 DrvInit(INT32 game_selector)
 			gaelcosnd_swaplr(); // channels swapped in wrally2
 		}
 		break;
+		
+		case 8: // wrally2
+		{
+			if (BurnLoadRom(DrvMCUROM  + 0x000000,  2, 1)) return 1;
+			
+			if (BurnLoadRom(DrvGfxROM0 + 0x0800000, 3, 1)) return 1;
+			
+			if (BurnLoadRom(DrvGfxROM  + 0x0000000, 4, 1)) return 1;
+			if (BurnLoadRom(DrvGfxROM  + 0x0400000, 5, 1)) return 1;
+	
+			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0000000, 0x0400000, 0x0000000, 0x0200000);
+			gaelco2_split_gfx(DrvGfxROM, DrvGfxROM0, 0x0400000, 0x0200000, 0x0400000, 0x0600000);
+	
+	
+			DrvGfxDecode(0x0a00000);
+
+			nCPUClockSpeed = 13000000;
+			bDualMonitor = 1;
+
+			gaelcosnd_start(DrvGfxROM0, 0 * 0x0200000, 1 * 0x0200000, 0, 0);
+			gaelcosnd_swaplr(); // channels swapped in wrally2
+		}
+		break;
 	}
 
 	SekInit(0, 0x68000);
@@ -1273,7 +1296,7 @@ static INT32 DrvInit(INT32 game_selector)
 	SekMapMemory(Drv68KRAM,		0xfe0000, 0xfe7fff, MAP_RAM);
 	SekMapMemory(DrvShareRAM,	0xfe8000, 0xfeffff, MAP_RAM);
 
-	if (game_select != 7) {
+	if (game_select != 7 && game_select != 8) {
 		SekSetWriteWordHandler(0,	gaelco2_main_write_word);
 		SekSetWriteByteHandler(0,	gaelco2_main_write_byte);
 		SekSetReadWordHandler(0,	gaelco2_main_read_word);
@@ -1298,7 +1321,7 @@ static INT32 DrvInit(INT32 game_selector)
 
 	has_mcu = (DrvMCUROM[0] == 0x02) ? 1 : 0;
 
-	ds5002fp_init(((game_select == 7) ? 0x69 : 0x19), 0, 0x80); // defaults
+	ds5002fp_init(((game_select == 7 || game_select == 8) ? 0x69 : 0x19), 0, 0x80); // defaults
 	mcs51_set_write_handler(dallas_sharedram_write);
 	mcs51_set_read_handler(dallas_sharedram_read);
 
@@ -1306,7 +1329,7 @@ static INT32 DrvInit(INT32 game_selector)
 
 	GenericTilesInit();
 
-	if (game_select == 7) {
+	if (game_select == 7 || game_select == 8) {
 		if ((DrvDips[0] & 0x20) == 0x00) { // Single Screen.
 			bprintf(0, _T("wrally2: single screen mode (hack).\n"));
 			wrally2_single = 1;
@@ -2235,9 +2258,9 @@ static struct BurnRomInfo wrally2RomDesc[] = {
 
 	{ "wrally2_ds5002fp_sram.bin",	0x08000, 0x4c532e9e, 2 | BRF_PRG | BRF_ESS }, //  2 DS5002FP MCU
 	
-	{ "wr2_ic68.ic68",  0x0100000, 0x4a75ffaa, 0 | BRF_OPT },
-	{ "wr2_ic69.ic69",  0x0400000, 0xa174d196, 0 | BRF_OPT },
-	{ "wr2_ic70.ic70",  0x0200000, 0x8d1e43ba, 0 | BRF_OPT },
+	{ "wr2_ic68.ic68",  0x0100000, 0x4a75ffaa, 3 | BRF_OPT },
+	{ "wr2_ic69.ic69",  0x0400000, 0xa174d196, 3 | BRF_OPT },
+	{ "wr2_ic70.ic70",  0x0200000, 0x8d1e43ba, 3 | BRF_OPT },
 };
 
 STD_ROM_PICK(wrally2)
@@ -2245,14 +2268,14 @@ STD_ROM_FN(wrally2)
 
 static INT32 wrally2Init()
 {
-	return DrvInit(7);
+	return DrvInit(8);
 }
 
 struct BurnDriver BurnDrvWrally2 = {
 	"wrally2", NULL, NULL, NULL, "1995",
 	"World Rally 2: Twin Racing (mask ROM version)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrally2RomInfo, wrally2RomName, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
 	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
 	384*2, 240, 8, 3
@@ -2286,12 +2309,17 @@ static struct BurnRomInfo wrally2aRomDesc[] = {
 STD_ROM_PICK(wrally2a)
 STD_ROM_FN(wrally2a)
 
+static INT32 wrally2aInit()
+{
+	return DrvInit(7);
+}
+
 struct BurnDriver BurnDrvWrally2a = {
 	"wrally2a", "wrally2", NULL, NULL, "1995",
 	"World Rally 2: Twin Racing (EPROM version)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, wrally2aRomInfo, wrally2aRomName, NULL, NULL, Wrally2InputInfo, Wrally2DIPInfo,
-	wrally2Init, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
+	wrally2aInit, DrvExit, DrvFrame, DualDraw, DrvScan, &DrvRecalc, 0x10000,
 	384*2, 240, 8, 3
 };

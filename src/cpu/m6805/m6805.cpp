@@ -32,7 +32,6 @@
 
 #include "burnint.h"
 #include "driver.h"
-#include "m6805.h"
 #include "m6805_intf.h"
 #include <stddef.h>
 

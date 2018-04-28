@@ -432,7 +432,7 @@ UINT8 __fastcall Superchs68K2ReadByte(UINT32 a)
 	if (a >= 0x800000 && a <= 0x80ffff) {
 		INT32 Offset = (a & 0xffff);
 		UINT32 *Ram = (UINT32*)TaitoSharedRam;
-		if ((Offset&1)==0) return (Ram[(Offset/2)^1]&0xffff0000)>>16;
+		if ((Offset&1)==0) return (Ram[(Offset>>1)^1]&0xffff0000)>>16;
 		return (Ram[(Offset/2)^1]&0x0000ffff);
 	}
 

@@ -2,11 +2,8 @@
 // Based on MAME driver by Nicola Salmoria
 
 /*
-	bioattack	- cannot coin up with coin#1
-
 	to do:
-	speed up?
-	play test
+	    Space Seeker (spaceskr) borked graphics
 */
 
 #include "tiles_generic.h"
@@ -93,7 +90,7 @@ static UINT8 DrvReset;
 static UINT8 DrvInputs[7];
 static UINT8 kikstart_gears[2];
 
-static struct BurnInputInfo SpaceskrInputList[] = {
+static struct BurnInputInfo TwoButtonInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
 	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
@@ -119,9 +116,9 @@ static struct BurnInputInfo SpaceskrInputList[] = {
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Spaceskr)
+STDINPUTINFO(TwoButton)
 
-static struct BurnInputInfo SpacecrInputList[] = {
+static struct BurnInputInfo TwoButtonLRInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
 	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
@@ -143,9 +140,9 @@ static struct BurnInputInfo SpacecrInputList[] = {
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Spacecr)
+STDINPUTINFO(TwoButtonLR)
 
-static struct BurnInputInfo JunglekInputList[] = {
+static struct BurnInputInfo OneButtonInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
 	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
@@ -169,7 +166,7 @@ static struct BurnInputInfo JunglekInputList[] = {
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Junglek)
+STDINPUTINFO(OneButton)
 
 static struct BurnInputInfo AlpineInputList[] = {
 	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
@@ -215,35 +212,7 @@ static struct BurnInputInfo TimetunlInputList[] = {
 
 STDINPUTINFO(Timetunl)
 
-static struct BurnInputInfo ElevatorInputList[] = {
-	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
-	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Up",				BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",				BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
-	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Elevator)
-
-static struct BurnInputInfo WwesternInputList[] = {
+static struct BurnInputInfo DualStickInputList[] = {
 	{"Coin 1",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
 	{"Coin 2",				BIT_DIGITAL,	DrvJoy3 + 0,	"p2 coin"	},
 	{"Coin 3",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
@@ -252,10 +221,10 @@ static struct BurnInputInfo WwesternInputList[] = {
 	{"P1 Leftstick Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p1 down"	},
 	{"P1 Leftstick Left",	BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
 	{"P1 Leftstick Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
-	{"P3 Rightstick Up",	BIT_DIGITAL,	DrvJoy1 + 3,	"p3 up"		},
-	{"P3 Rightstick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p3 down"	},
-	{"P3 Rightstick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p3 left"	},
-	{"P3 Rightstick Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p3 right"	},
+	{"P1 Rightstick Up",	BIT_DIGITAL,	DrvJoy1 + 3,	"p3 up"		},
+	{"P1 Rightstick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p3 down"	},
+	{"P1 Rightstick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p3 left"	},
+	{"P1 Rightstick Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p3 right"	},
 	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
@@ -264,10 +233,10 @@ static struct BurnInputInfo WwesternInputList[] = {
 	{"P2 Leftstick Down",	BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
 	{"P2 Leftstick Left",	BIT_DIGITAL,	DrvJoy5 + 0,	"p2 left"	},
 	{"P2 Leftstick Right",	BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
-	{"P4 Rightstick Up",	BIT_DIGITAL,	DrvJoy2 + 3,	"p4 up"		},
-	{"P4 Rightstick Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p4 down"	},
-	{"P4 Rightstick Left",	BIT_DIGITAL,	DrvJoy2 + 0,	"p4 left"	},
-	{"P4 Rightstick Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p4 right"	},
+	{"P2 Rightstick Up",	BIT_DIGITAL,	DrvJoy2 + 3,	"p4 up"		},
+	{"P2 Rightstick Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p4 down"	},
+	{"P2 Rightstick Left",	BIT_DIGITAL,	DrvJoy2 + 0,	"p4 left"	},
+	{"P2 Rightstick Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p4 right"	},
 	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
@@ -278,188 +247,7 @@ static struct BurnInputInfo WwesternInputList[] = {
 	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
 
-STDINPUTINFO(Wwestern)
-
-static struct BurnInputInfo TinstarInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Leftstick Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p1 up"		},
-	{"P1 Leftstick Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p1 down"	},
-	{"P1 Leftstick Left",	BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
-	{"P1 Leftstick Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
-	{"P3 Rightstick Up",	BIT_DIGITAL,	DrvJoy1 + 3,	"p3 up"		},
-	{"P3 Rightstick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p3 down"	},
-	{"P3 Rightstick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p3 left"	},
-	{"P3 Rightstick Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p3 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Leftstick Up",		BIT_DIGITAL,	DrvJoy5 + 3,	"p2 up"		},
-	{"P2 Leftstick Down",	BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
-	{"P2 Leftstick Left",	BIT_DIGITAL,	DrvJoy5 + 0,	"p2 left"	},
-	{"P2 Leftstick Right",	BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
-	{"P4 Rightstick Up",	BIT_DIGITAL,	DrvJoy2 + 3,	"p4 up"		},
-	{"P4 Rightstick Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p4 down"	},
-	{"P4 Rightstick Left",	BIT_DIGITAL,	DrvJoy2 + 0,	"p4 left"	},
-	{"P4 Rightstick Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p4 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Tinstar)
-
-// SAME AS TINSTAR
-static struct BurnInputInfo FrontlinInputList[] = {
-	{"Coin 1",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"Coin 2",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"Coin 3",				BIT_DIGITAL,	DrvJoy4 + 4,	"p3 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Leftstick Up",		BIT_DIGITAL,	DrvJoy4 + 3,	"p1 up"		},
-	{"P1 Leftstick Down",	BIT_DIGITAL,	DrvJoy4 + 2,	"p1 down"	},
-	{"P1 Leftstick Left",	BIT_DIGITAL,	DrvJoy4 + 0,	"p1 left"	},
-	{"P1 Leftstick Right",	BIT_DIGITAL,	DrvJoy4 + 1,	"p1 right"	},
-	{"P3 Rightstick Up",	BIT_DIGITAL,	DrvJoy1 + 3,	"p3 up"		},
-	{"P3 Rightstick Down",	BIT_DIGITAL,	DrvJoy1 + 2,	"p3 down"	},
-	{"P3 Rightstick Left",	BIT_DIGITAL,	DrvJoy1 + 0,	"p3 left"	},
-	{"P3 Rightstick Right",	BIT_DIGITAL,	DrvJoy1 + 1,	"p3 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Leftstick Up",		BIT_DIGITAL,	DrvJoy5 + 3,	"p2 up"		},
-	{"P2 Leftstick Down",	BIT_DIGITAL,	DrvJoy5 + 2,	"p2 down"	},
-	{"P2 Leftstick Left",	BIT_DIGITAL,	DrvJoy5 + 0,	"p2 left"	},
-	{"P2 Leftstick Right",	BIT_DIGITAL,	DrvJoy5 + 1,	"p2 right"	},
-	{"P4 Rightstick Up",	BIT_DIGITAL,	DrvJoy2 + 3,	"p4 up"		},
-	{"P4 Rightstick Down",	BIT_DIGITAL,	DrvJoy2 + 2,	"p4 down"	},
-	{"P4 Rightstick Left",	BIT_DIGITAL,	DrvJoy2 + 0,	"p4 left"	},
-	{"P4 Rightstick Right",	BIT_DIGITAL,	DrvJoy2 + 1,	"p4 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Frontlin)
-
-static struct BurnInputInfo WaterskiInputList[] = {
-	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
-	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
-	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Waterski)
-
-static struct BurnInputInfo BioatackInputList[] = {
-	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	}, // hack! same as p2.
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
-	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
- 
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Up",				BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",				BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
-	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy3 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Bioatack)
-
-static struct BurnInputInfo SfposeidInputList[] = {
-	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
-	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Up",				BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",				BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
-	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Sfposeid)
-
-static struct BurnInputInfo HwraceInputList[] = {
-	{"P1 Coin",				BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
-	{"P1 Start",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 start"	},
-	{"P1 Up",				BIT_DIGITAL,	DrvJoy1 + 3,	"p1 up"		},
-	{"P1 Down",				BIT_DIGITAL,	DrvJoy1 + 2,	"p1 down"	},
-	{"P1 Left",				BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"	},
-	{"P1 Right",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"	},
-	{"P1 Button 1",			BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
-	{"P1 Button 2",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
-
-	{"P2 Coin",				BIT_DIGITAL,	DrvJoy3 + 4,	"p2 coin"	},
-	{"P2 Start",			BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"	},
-	{"P2 Up",				BIT_DIGITAL,	DrvJoy2 + 3,	"p2 up"		},
-	{"P2 Down",				BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
-	{"P2 Left",				BIT_DIGITAL,	DrvJoy2 + 0,	"p2 left"	},
-	{"P2 Right",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
-	{"P2 Button 1",			BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
-	{"P2 Button 2",			BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
-
-	{"Reset",				BIT_DIGITAL,	&DrvReset,		"reset"		},
-	{"Tilt",				BIT_DIGITAL,	DrvJoy4 + 5,	"tilt"		},
-	{"Dip A",				BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",				BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
-	{"Dip C",				BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
-};
-
-STDINPUTINFO(Hwrace)
+STDINPUTINFO(DualStick)
 
 static struct BurnInputInfo KikstartInputList[] = {
 	{"P1 Coin",		        BIT_DIGITAL,	DrvJoy3 + 5,	"p1 coin"	},
@@ -1591,16 +1379,6 @@ static void __fastcall kikstart_main_write(UINT16 address, UINT8 data)
 	taitosj_main_write(address, data);
 }
 
-static UINT8 __fastcall kikstart_main_read(UINT16 address)
-{
-	switch (address)
-	{
-		// different inputs
-	}
-
-	return taitosj_main_read(address);
-}
-
 static void __fastcall taitosj_sound_write(UINT16 address, UINT8 data)
 {
 	switch (address)
@@ -1963,7 +1741,7 @@ static INT32 CommonInit(INT32 coinstate, INT32 charramxor, INT32 kikstart)
 		ZetMapMemory(DrvZ80RAMC,		0xd800, 0xdfff, MAP_RAM);
 		ZetMapMemory(DrvZ80ROM0 + 0xe000,	0xe000, 0xffff, MAP_ROM);
 		ZetSetWriteHandler(kikstart_main_write);
-		ZetSetReadHandler(kikstart_main_read);
+		ZetSetReadHandler(taitosj_main_read);
 		ZetClose();
 	} else {
 		ZetInit(0);
@@ -2654,6 +2432,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 4000000 / 60, 3000000 / 60, 3000000 / 4 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	m6805Open(0);
 
@@ -2679,6 +2458,13 @@ static INT32 DrvFrame()
 		sound_irq_timer++;
 		if (sound_irq_timer == 420)
 			sound_irq_timer = 0;
+
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	m6805Close();
@@ -2686,7 +2472,11 @@ static INT32 DrvFrame()
 	ZetOpen(1);
 
 	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(pSoundBuf, nSegmentLength);
+		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -2795,7 +2585,7 @@ struct BurnDriver BurnDrvSpaceskr = {
 	"Space Seeker\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, spaceskrRomInfo, spaceskrRomName, NULL, NULL, SpaceskrInputInfo, SpaceskrDIPInfo,
+	NULL, spaceskrRomInfo, spaceskrRomName, NULL, NULL, TwoButtonInputInfo, SpaceskrDIPInfo,
 	spaceskrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 3, 4
 };
@@ -2842,7 +2632,7 @@ struct BurnDriver BurnDrvSpacecr = {
 	"Space Cruiser\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, SpacecrInputInfo, SpacecrDIPInfo,
+	NULL, spacecrRomInfo, spacecrRomName, NULL, NULL, TwoButtonLRInputInfo, SpacecrDIPInfo,
 	spacecrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -2890,7 +2680,7 @@ struct BurnDriver BurnDrvJunglek = {
 	"Jungle King (Japan)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, junglekRomInfo, junglekRomName, NULL, NULL, JunglekInputInfo, JunglekDIPInfo,
+	NULL, junglekRomInfo, junglekRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -2933,7 +2723,7 @@ struct BurnDriver BurnDrvJunglekas = {
 	"Jungle King (alternate sound)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, junglekasRomInfo, junglekasRomName, NULL, NULL, JunglekInputInfo, JunglekDIPInfo,
+	NULL, junglekasRomInfo, junglekasRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -2976,7 +2766,7 @@ struct BurnDriver BurnDrvJungleby = {
 	"Jungle Boy (bootleg)\0", NULL, "bootleg", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, junglebyRomInfo, junglebyRomName, NULL, NULL, JunglekInputInfo, JunglekDIPInfo,
+	NULL, junglebyRomInfo, junglebyRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3019,7 +2809,7 @@ struct BurnDriver BurnDrvJunglekj2 = {
 	"Jungle King (Japan, earlier)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, junglekj2RomInfo, junglekj2RomName, NULL, NULL, JunglekInputInfo, JunglekDIPInfo,
+	NULL, junglekj2RomInfo, junglekj2RomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3062,7 +2852,7 @@ struct BurnDriver BurnDrvJungleh = {
 	"Jungle Hunt (US)\0", NULL, "Taito America Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, junglehRomInfo, junglehRomName, NULL, NULL, JunglekInputInfo, JunglekDIPInfo,
+	NULL, junglehRomInfo, junglehRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3107,7 +2897,7 @@ struct BurnDriver BurnDrvJunglehbr = {
 	"Jungle Hunt (Brazil)\0", NULL, "Taito do Brasil", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, junglehbrRomInfo, junglehbrRomName, NULL, NULL, JunglekInputInfo, JunglekDIPInfo,
+	NULL, junglehbrRomInfo, junglehbrRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglehbrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3149,7 +2939,7 @@ struct BurnDriver BurnDrvPiratpet = {
 	"Pirate Pete\0", NULL, "Taito America Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, piratpetRomInfo, piratpetRomName, NULL, NULL, JunglekInputInfo, PiratpetDIPInfo,
+	NULL, piratpetRomInfo, piratpetRomName, NULL, NULL, OneButtonInputInfo, PiratpetDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3323,7 +3113,7 @@ struct BurnDriver BurnDrvWwestern = {
 	"Wild Western (set 1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, wwesternRomInfo, wwesternRomName, NULL, NULL, WwesternInputInfo, WwesternDIPInfo,
+	NULL, wwesternRomInfo, wwesternRomName, NULL, NULL, DualStickInputInfo, WwesternDIPInfo,
 	wwesternInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -3360,7 +3150,7 @@ struct BurnDriver BurnDrvWwestern1 = {
 	"Wild Western (set 2)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, wwestern1RomInfo, wwestern1RomName, NULL, NULL, WwesternInputInfo, WwesternDIPInfo,
+	NULL, wwestern1RomInfo, wwestern1RomName, NULL, NULL, DualStickInputInfo, WwesternDIPInfo,
 	wwesternInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -3412,7 +3202,7 @@ struct BurnDriver BurnDrvFrontlin = {
 	"Front Line\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, frontlinRomInfo, frontlinRomName, NULL, NULL, FrontlinInputInfo, FrontlinDIPInfo,
+	NULL, frontlinRomInfo, frontlinRomName, NULL, NULL, DualStickInputInfo, FrontlinDIPInfo,
 	frontlinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -3462,7 +3252,7 @@ struct BurnDriver BurnDrvElevator = {
 	"Elevator Action (5 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, elevatorRomInfo, elevatorRomName, NULL, NULL, ElevatorInputInfo, ElevatorDIPInfo,
+	NULL, elevatorRomInfo, elevatorRomName, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
 	elevatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3511,7 +3301,7 @@ struct BurnDriver BurnDrvElevatorb = {
 	"Elevator Action (bootleg)\0", NULL, "bootleg", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, elevatorbRomInfo, elevatorbRomName, NULL, NULL, ElevatorInputInfo, ElevatorDIPInfo,
+	NULL, elevatorbRomInfo, elevatorbRomName, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
 	elevatorbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3548,7 +3338,7 @@ struct BurnDriver BurnDrvElevator4 = {
 	"Elevator Action (4 pcb version, 1.1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
-	NULL, elevator4RomInfo, elevator4RomName, NULL, NULL, ElevatorInputInfo, ElevatorDIPInfo,
+	NULL, elevator4RomInfo, elevator4RomName, NULL, NULL, TwoButtonInputInfo, ElevatorDIPInfo,
 	elevatorInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3598,7 +3388,7 @@ struct BurnDriver BurnDrvTinstar = {
 	"The Tin Star (set 1)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, tinstarRomInfo, tinstarRomName, NULL, NULL, TinstarInputInfo, TinstarDIPInfo,
+	NULL, tinstarRomInfo, tinstarRomName, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
 	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3633,7 +3423,7 @@ struct BurnDriver BurnDrvTinstar2 = {
 	"The Tin Star (set 2)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SHOOT, 0,
-	NULL, tinstar2RomInfo, tinstar2RomName, NULL, NULL, TinstarInputInfo, TinstarDIPInfo,
+	NULL, tinstar2RomInfo, tinstar2RomName, NULL, NULL, DualStickInputInfo, TinstarDIPInfo,
 	TinstarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3675,7 +3465,7 @@ struct BurnDriver BurnDrvWaterski = {
 	"Water Ski\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, waterskiRomInfo, waterskiRomName, NULL, NULL, WaterskiInputInfo, WaterskiDIPInfo,
+	NULL, waterskiRomInfo, waterskiRomName, NULL, NULL, TwoButtonLRInputInfo, WaterskiDIPInfo,
 	waterskiInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -3721,7 +3511,7 @@ struct BurnDriver BurnDrvBioatack = {
 	"Bio Attack\0", NULL, "Taito Corporation (Fox Video Games license)", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_VERSHOOT, 0,
-	NULL, bioatackRomInfo, bioatackRomName, NULL, NULL, BioatackInputInfo, BioatackDIPInfo,
+	NULL, bioatackRomInfo, bioatackRomName, NULL, NULL, OneButtonInputInfo, BioatackDIPInfo,
 	bioatackInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
@@ -3762,7 +3552,7 @@ struct BurnDriver BurnDrvSfposeid = {
 	"Sea Fighter Poseidon\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
-	NULL, sfposeidRomInfo, sfposeidRomName, NULL, NULL, SfposeidInputInfo, SfposeidDIPInfo,
+	NULL, sfposeidRomInfo, sfposeidRomName, NULL, NULL, TwoButtonInputInfo, SfposeidDIPInfo,
 	sfposeidInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
 };
@@ -3808,7 +3598,7 @@ struct BurnDriver BurnDrvHwrace = {
 	"High Way Race\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
-	NULL, hwraceRomInfo, hwraceRomName, NULL, NULL, HwraceInputInfo, HwraceDIPInfo,
+	NULL, hwraceRomInfo, hwraceRomName, NULL, NULL, TwoButtonInputInfo, HwraceDIPInfo,
 	hwraceInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };

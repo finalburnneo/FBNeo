@@ -352,8 +352,8 @@ static INT32 DrvInit()
 	AY8910Init(0, 2000000, 0);
 	AY8910Init(1, 2000000, 1);
 	AY8910SetPorts(0, &ay8910_0_read_A, NULL, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.50, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.50, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.14, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.14, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 256, 32);

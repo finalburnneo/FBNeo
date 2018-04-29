@@ -306,7 +306,7 @@ static INT32 MemIndex()
 	DrvZ80ROM0		= Next; Next += 0x0100000;
 	DrvZ80ROM1		= Next; Next += 0x0020000;
 
-	DrvGfxROM0		= Next; Next += 0x0100000;
+	DrvGfxROM0		= Next; Next += 0x0020000;
 	DrvGfxROM1		= Next; Next += 0x0080000;
 
 	DrvColPROM		= Next; Next += 0x0002000;
@@ -598,7 +598,7 @@ static INT32 DrvDraw()
 	GenericTilemapSetFlip(0, flipscreen ? (TMAP_FLIPX | TMAP_FLIPY) : 0);
 
 	for (INT32 i = 0; i < 32; i++) {
-		GenericTilemapSetScrollCol(0, i, DrvScrollRAM[i] - 0x100); // ??
+		GenericTilemapSetScrollCol(0, i, DrvScrollRAM[i]); // ??
 	}
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
@@ -799,5 +799,5 @@ struct BurnDriver BurnDrvNetwars = {
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, netwarsRomInfo, netwarsRomName, NULL, NULL, NetwarsInputInfo, NetwarsDIPInfo,
 	NetwarsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 224, 4, 3
+	224, 256, 3, 4
 };

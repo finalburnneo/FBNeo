@@ -967,11 +967,6 @@ static void m72YM2151IRQHandler(INT32 nStatus)
 	setvector_callback(nStatus ? YM2151_ASSERT : YM2151_CLEAR);
 }
 
-static INT32 m90SyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / (nBurnFPS / 100.000))));
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -1144,7 +1139,7 @@ static INT32 DrvInit(INT32 codesize, INT32 gfxlen, INT32 samples, INT32 bank, IN
 	YM2151SetIrqHandler(0, &m72YM2151IRQHandler);
 	BurnYM2151SetAllRoutes(0.15, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, m90SyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	code_mask[0] = ((gfxlen * 2) - 1) / (8 * 8);

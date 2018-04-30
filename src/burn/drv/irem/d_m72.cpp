@@ -59,6 +59,7 @@ static UINT8 DrvDips[2];
 static UINT8 DrvInputs[5];
 static UINT8 DrvReset;
 
+static INT32 nExtraCycles;
 static INT32 nCurrentCycles;
 static INT32 nCyclesDone[2];
 static INT32 nCyclesTotal[2];
@@ -1261,11 +1262,6 @@ static void m72YM2151IRQHandler(INT32 nStatus)
 	setvector_callback(nStatus ? YM2151_ASSERT : YM2151_CLEAR);
 }
 
-static INT32 m72SyncDAC()
-{   // Note: the FPS is 55, but when calculating the sync, we use 4 less FPS - this gets rid of clicks in the sample output. -dink dec. 2, 2014
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3579545.000 / 51/*(nBurnFPS / 100.000)*/)));
-}
-
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -1289,6 +1285,8 @@ static INT32 DrvDoReset()
 	irq_raster_position = -1;
 	if (!CosmicCop) m72_irq_base = 0;
 	majtitle_rowscroll_enable = 0;
+
+	nExtraCycles = 0;
 
 	return 0;
 }
@@ -1738,7 +1736,7 @@ static INT32 DrvInit(void (*pCPUMapCallback)(), void (*pSNDMapCallback)(), INT32
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 1.00, BURN_SND_ROUTE_LEFT);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 1.00, BURN_SND_ROUTE_RIGHT);
 
-	DACInit(0, 0, 1, m72SyncDAC);
+	DACInit(0, 0, 1, ZetTotalCycles, 3579545);
 	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
@@ -2079,8 +2077,6 @@ static void scanline_interrupts(INT32 scanline)
 
 static INT32 DrvFrame()
 {
-	INT32 nSoundBufferPos = 0;
-	
 	if (DrvReset) {
 		DrvDoReset();
 	}
@@ -2092,13 +2088,16 @@ static INT32 DrvFrame()
 	
 	INT32 multiplier = 3;
 	INT32 nInterleave = 256 * multiplier;
+	INT32 nSoundBufferPos = 0;
+	INT32 z80samplecount = 0;
 
 	if (Clock_16mhz) // Ken-go, Cosmic Cop
 		nCyclesTotal[0] = (INT32)((INT64)(16000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	else
 		nCyclesTotal[0] = (INT32)((INT64)(8000000 / 55) * nBurnCPUSpeedAdjust / 0x0100);
 	nCyclesTotal[1] = (INT32)((INT64)(3579545 / 55) * nBurnCPUSpeedAdjust / 0x0100);
-	nCyclesDone[0] = nCyclesDone[1] = 0;
+	nCyclesDone[0] = 0;
+	nCyclesDone[1] = nExtraCycles;
 
 	if (pBurnDraw) {
 		DrvDrawInitFrame();
@@ -2116,10 +2115,10 @@ static INT32 DrvFrame()
 			scanline_interrupts(i/multiplier);
 
 		if (z80_reset == 0) {
-			nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
-
-			if (i%multiplier==0 && i/multiplier & 1) {
+			nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
+			if (i%multiplier==2 && i/multiplier & 1 && z80samplecount < (128-3)) { // 128-3 times per frame any more/less sounds nasty (test: dbreed coin up, hharry "lets get busy" startup)
 				if (z80_nmi_enable == Z80_FAKE_NMI) {
+					z80samplecount++;
 					if (DrvSndROM[sample_address]) {
 						DACSignedWrite(0, DrvSndROM[sample_address]);
 						sample_address = (sample_address + 1) & 0x3ffff;
@@ -2128,7 +2127,8 @@ static INT32 DrvFrame()
 					}
 
 				} else if (z80_nmi_enable == Z80_REAL_NMI) {
-					 ZetNmi();
+					z80samplecount++;
+					ZetNmi();
 				}
 			}
 		} else {
@@ -2146,6 +2146,7 @@ static INT32 DrvFrame()
 			}
 		}
 	}
+	nExtraCycles = nCyclesDone[1] - nCyclesTotal[1]; // just for sound
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
@@ -2197,15 +2198,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(irqvector);
 		SCAN_VAR(z80_reset);
 		SCAN_VAR(majtitle_rowscroll_enable);
-	}
-	
-	if (nAction & ACB_WRITE) {
-#if 0
-		// this probably isn't needed anymore - keeping for a while just incase. -dink Nov 27, 2017
-		ZetOpen(0); // Kick-start the ym2151 after state load.
-		m72YM2151IRQHandler(1);
-		ZetClose();
-#endif
 	}
 
 	return 0;

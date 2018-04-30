@@ -1,11 +1,6 @@
 // FB Alpha Taito SJ system driver module
 // Based on MAME driver by Nicola Salmoria
 
-/*
-	to do:
-	    Space Seeker (spaceskr) borked graphics
-*/
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "m6805_intf.h"
@@ -567,7 +562,7 @@ static struct BurnDIPInfo AlpineDIPList[]=
 	{0x0c, 0x01, 0x03, 0x01, "800-2000"				},
 	{0x0c, 0x01, 0x03, 0x02, "1000-2500"			},
 	{0x0c, 0x01, 0x03, 0x03, "2000-4000"			},
-	
+
 	{0   , 0xfe, 0   ,    0, "Time"					},
 	{0x0c, 0x01, 0x18, 0x00, "1:00"					},
 	{0x0c, 0x01, 0x18, 0x08, "1:30"					},
@@ -732,7 +727,7 @@ static struct BurnDIPInfo ElevatorDIPList[]=
 	{0x12, 0xff, 0xff, 0x7f, NULL					},
 	{0x13, 0xff, 0xff, 0x00, NULL					},
 	{0x14, 0xff, 0xff, 0xff, NULL					},
-	
+
 	{0   , 0xfe, 0   ,    4, "Bonus Life"			},
 	{0x12, 0x01, 0x03, 0x03, "10000"				},
 	{0x12, 0x01, 0x03, 0x02, "15000"				},
@@ -1469,7 +1464,7 @@ static void m67805_mcu_write(UINT16 address, UINT8 data)
 		case 0x0000:
 			portA_out = data;
 		return;
-		
+
 		case 0x0001:
 			taitosj_68705_portB_w(data);
 		return;
@@ -1484,10 +1479,10 @@ static UINT8 m67805_mcu_read(UINT16 address)
 	{
 		case 0x0000:
 			return portA_in;
-		
+
 		case 0x0001:
 			return 0xff;
-		
+
 		case 0x0002:
 			return (zready << 0) | (zaccept << 1) | (busreq << 2);
 	}
@@ -1495,11 +1490,6 @@ static UINT8 m67805_mcu_read(UINT16 address)
 	if (address < 0x80) return DrvMCURAM[address];
 
 	return 0;
-}
-
-static INT32 DrvDACSync()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3000000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static UINT8 ay8910_0_port_A_r(UINT32)
@@ -1780,7 +1770,7 @@ static INT32 CommonInit(INT32 coinstate, INT32 charramxor, INT32 kikstart)
 
 	BurnWatchdogInit(DrvDoReset, 180);
 
-	DACInit(0, 0, 1, DrvDACSync);
+	DACInit(0, 0, 1, ZetTotalCycles, 3000000);
 	DACSetRoute(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 0);
@@ -2237,10 +2227,10 @@ static INT32 check_sprite_layer_bitpattern(int which, INT32 *sprite_areas)
 	INT32 check_layer_2 = video_mode & 0x20;
 	INT32 check_layer_3 = video_mode & 0x40;
 
-	INT32 minx = sprite_areas[which*4+0]; //min_x;
-	INT32 miny = sprite_areas[which*4+2]; //.min_y;
-	INT32 maxx = sprite_areas[which*4+1] + 1; //.max_x + 1;
-	INT32 maxy = sprite_areas[which*4+3] + 1; //.max_y + 1;
+	INT32 minx = sprite_areas[which*4+0];
+	INT32 miny = sprite_areas[which*4+2];
+	INT32 maxx = sprite_areas[which*4+1] + 1;
+	INT32 maxy = sprite_areas[which*4+3] + 1;
 
 	INT32 code = DrvSprRAM[spriteram_bank + offs + 3] & 0x7f;
 	INT32 flip_x = (DrvSprRAM[spriteram_bank + offs + 2] & 0x01) ^ global_flipx;
@@ -2507,6 +2497,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
+		DACScan(nAction, pnMin);
 		BurnWatchdogScan(nAction);
 
 		SCAN_VAR(video_priority);
@@ -2559,7 +2550,7 @@ static struct BurnRomInfo spaceskrRomDesc[] = {
 	{ "eb06",				0x1000, 0x371d2f7a, 1 | BRF_PRG | BRF_ESS }, //  5
 	{ "eb07",				0x1000, 0x13e667c4, 1 | BRF_PRG | BRF_ESS }, //  6
 	{ "eb08",				0x1000, 0xf2e84015, 1 | BRF_PRG | BRF_ESS }, //  7
-	
+
 	{ "eb13",				0x1000, 0x192f6536, 2 | BRF_PRG | BRF_ESS }, //  8 Sound Z80 Code
 	{ "eb14",				0x1000, 0xd04d0a21, 2 | BRF_PRG | BRF_ESS }, //  9
 	{ "eb15",				0x1000, 0x88194305, 2 | BRF_PRG | BRF_ESS }, // 10

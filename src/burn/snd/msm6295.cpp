@@ -302,7 +302,7 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, 
 					pChannelInfo->nBufPos = 4;
 				}
 
-				nOutput += INTERPOLATE4PS_16BIT(nFractionalPosition,
+				nOutput += INTERPOLATE4PS_16BIT(nFractionalPosition & 0x0FFF,
 												MSM6295ChannelData[nChip][nChannel][pChannelInfo->nBufPos - 4],
 												MSM6295ChannelData[nChip][nChannel][pChannelInfo->nBufPos - 3],
 												MSM6295ChannelData[nChip][nChannel][pChannelInfo->nBufPos - 2],

@@ -3421,7 +3421,7 @@ void Sh2StopRun()
 	sh2->sh2_cycles_to_run = 0;
 }
 
-int Sh2TotalCycles()
+INT32 Sh2TotalCycles()
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_SH2Initted) bprintf(PRINT_ERROR, _T("Sh2TotalCycles called without init\n"));

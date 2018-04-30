@@ -47,7 +47,7 @@ void Sh2SetVBR(unsigned int i);
 
 void Sh2BurnUntilInt(int);
 
-int Sh2TotalCycles();
+INT32 Sh2TotalCycles();
 void Sh2NewFrame();
 void Sh2BurnCycles(int cycles);
 void Sh2Idle(int cycles);

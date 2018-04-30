@@ -22,13 +22,39 @@ static INT32 nScreenWidthMax, nScreenHeightMax, nScreenWidthMin, nScreenHeightMi
 INT32 GenericTilesInit()
 {
 	Debug_GenericTilesInitted = 1;
+
+	INT32 nRet, xAspect, yAspect;
 	
-	INT32 nRet;
+	BurnDrvGetAspect(&xAspect, &yAspect);
+
+#if defined FBA_DEBUG
+	if (xAspect > 4 || yAspect > 4) {
+		bprintf (PRINT_ERROR, _T("Warning: screen aspect ratio may be incorrect (%d:%d)!"), xAspect,yAspect);
+	}
+#endif
 
 	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
+
+#if defined FBA_DEBUG
+		if (nScreenHeight < nScreenWidth) {
+			bprintf (PRINT_ERROR, _T("Warning: screen width greater than height for ORIENTATION_VERTICAL driver (%dx%d)!"),nScreenWidth,nScreenHeight);
+		}
+		if (xAspect > yAspect) {
+			bprintf (PRINT_ERROR, _T("Warning: screen aspect ratio may be incorrect for ORIENTATION_VERTICAL driver (%d:%d)!"), xAspect,yAspect);
+		}
+#endif
 	} else {
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
+
+#if defined FBA_DEBUG
+		if (nScreenWidth < nScreenHeight) {
+			bprintf (PRINT_ERROR, _T("Warning: screen height greater than widtht for horizontally oriented driver (%dx%d)!"),nScreenWidth,nScreenHeight);
+		}
+		if (yAspect > xAspect) {
+			bprintf (PRINT_ERROR, _T("Warning: screen aspect ratio may be incorrect for horizontally oriented driver (%d:%d)!"), xAspect,yAspect);
+		}
+#endif
 	}
 
 	nScreenWidthMax = nScreenWidth;

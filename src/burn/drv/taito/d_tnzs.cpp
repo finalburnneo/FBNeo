@@ -912,12 +912,7 @@ static void kageki_ym2203_write_portB(UINT32, UINT32 data)
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
-	Z80SetIrqLine(Z80_INPUT_LINE_NMI, nStatus & 1);
-}
-
-static INT32 kabukizSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (6000000.000 / (nBurnFPS / 100.000))));
+	ZetSetIRQLine(CPU_IRQLINE_NMI, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static INT32 DrvDoReset()
@@ -1366,7 +1361,7 @@ static INT32 Type1Init(INT32 mcutype)
 		}
 	}	
 
-	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
+	DACInit(0, 0, 1, ZetTotalCycles, 6000000); // kabukiz
 	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -1481,7 +1476,7 @@ static INT32 Type2Init()
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 
-	DACInit(0, 0, 1, kabukizSyncDAC); // kabukiz
+	DACInit(0, 0, 1, ZetTotalCycles, 6000000); // kabukiz
 	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

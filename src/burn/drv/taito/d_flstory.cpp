@@ -890,11 +890,6 @@ static UINT8 __fastcall flstory_sound_read(UINT16 address)
 	return 0;
 }
 
-static INT32 flstoryDACSync()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000.000 / (nBurnFPS / 100.000))));
-}
-
 static INT32 DrvDoReset()
 {
 	DrvReset = 0;
@@ -1148,7 +1143,7 @@ static INT32 DrvInit()
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_6);
 	MSM5232SetRoute(1.00, BURN_SND_MSM5232_ROUTE_7);
 
-	DACInit(0, 0, 1, flstoryDACSync);
+	DACInit(0, 0, 1, ZetTotalCycles, 4000000);
 	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

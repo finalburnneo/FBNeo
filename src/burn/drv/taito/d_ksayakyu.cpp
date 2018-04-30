@@ -173,11 +173,6 @@ static UINT8 __fastcall ksayakyu_sound_read(UINT16 address)
 	return 0;
 }
 
-static INT32 DrvDACSync()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / ((18432000.0000 / 8) / (nBurnFPS / 100.0000))));
-}
-
 static tilemap_callback( background )
 {
 	INT32 attr  = DrvMapROM[offs * 2 + 0];
@@ -339,13 +334,13 @@ static INT32 DrvInit()
 	ZetSetReadHandler(ksayakyu_sound_read);
 	ZetClose();
 
-	AY8910Init(0, 18432000/16, 0);
-	AY8910Init(1, 18432000/16, 1);
+	AY8910Init(0, 18432000 / 16, 0);
+	AY8910Init(1, 18432000 / 16, 1);
 	AY8910SetPorts(0, &ay8910_0_portA_r, NULL, NULL, NULL);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	AY8910SetAllRoutes(1, 0.25, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvDACSync);
+	DACInit(0, 0, 1, ZetTotalCycles, 18432000 / 8);
 	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

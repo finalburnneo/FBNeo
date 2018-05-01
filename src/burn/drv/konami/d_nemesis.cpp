@@ -352,12 +352,12 @@ static struct BurnInputInfo CitybombInputList[] = {
 STDINPUTINFO(Citybomb)
 
 static struct BurnInputInfo KonamigtInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"Accelerator",		BIT_DIGITAL,	DrvJoy4 + 6,	"p1 fire 1"	},
-	{"Brake",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
-	{"Gear Shift",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
+	{"P1 Coin",     BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Accelerator",BIT_DIGITAL,	DrvJoy4 + 6,	"p1 fire 1"	},
+	{"P1 Brake",    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
+	{"P1 Gear Shift",BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 3"	},
 
-	A("Wheel"             , BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+	A("P1 Wheel",   BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
@@ -370,13 +370,13 @@ static struct BurnInputInfo KonamigtInputList[] = {
 STDINPUTINFO(Konamigt)
 
 static struct BurnInputInfo HcrashInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
-	{"Accelerator",		BIT_DIGITAL,	DrvJoy4 + 6,	"p1 fire 1"	},
-	{"Brake",		BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
-	{"Jump",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 3"	},
+	{"P1 Coin",     BIT_DIGITAL,	DrvJoy1 + 4,	"p1 coin"	},
+	{"P1 Start",    BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Accelerator",BIT_DIGITAL,	DrvJoy4 + 6,	"p1 fire 1"	},
+	{"P1 Brake",    BIT_DIGITAL,	DrvJoy4 + 5,	"p1 fire 2"	},
+	{"P1 Jump",		BIT_DIGITAL,	DrvJoy4 + 4,	"p1 fire 3"	},
 
-	A("Wheel"             , BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+	A("P1 Wheel",   BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},

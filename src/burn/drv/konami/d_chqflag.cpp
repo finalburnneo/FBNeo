@@ -45,8 +45,8 @@ static INT32 nDrvRamBank;
 static INT32 nBackgroundBrightness;
 static INT32 k051316_readroms;
 static INT32 analog_ctrl;
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
 static UINT8 accelerator;
 static UINT8 steeringwheel;
 
@@ -54,14 +54,14 @@ static INT32 watchdog;
 
 #define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo ChqflagInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Coin",     BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
+	{"P1 Start",    BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 
-	A("Wheel",          BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
-	A("Accelerator",    BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 1"),
+	A("P1 Wheel",       BIT_ANALOG_REL, &DrvAnalogPort0 , "mouse x-axis"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort1 , "p1 fire 1"),
 
-	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
+	{"P1 Button 1", BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
+	{"P1 Button 2", BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 3"	},
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy1 + 2,	"service"	},
@@ -243,7 +243,10 @@ static inline UINT8 analog_port_read()
 			return accelerator;
 		}
 		case 0x01: {
-			steeringwheel = 0x7f + (DrvAnalogPort0 >> 4);
+			INT16 Temp = 0x7f + (DrvAnalogPort0 / 16);  // - for reversed, + for normal
+			if (Temp < 0x3f) Temp = 0x3f;       // clamping
+			if (Temp > 0xbf) Temp = 0xbf;
+			steeringwheel = Temp;
 			return steeringwheel;
 		}
 		case 0x02: return accelerator; // 0x02,0x03: previous reads

@@ -3,7 +3,7 @@
 
 #include "tiles_generic.h"
 #include "hd6309_intf.h"
-#include "Z80_intf.h"
+#include "z80_intf.h"
 #include "burn_ym2203.h"
 #include "upd7759.h"
 #include "konamiic.h"

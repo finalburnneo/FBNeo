@@ -9,10 +9,10 @@ extern UINT8 TaitoInput[6];
 extern UINT8 TaitoReset;
 extern UINT8 TaitoCoinLockout[4];
 
-extern INT32 TaitoAnalogPort0;
-extern INT32 TaitoAnalogPort1;
-extern INT32 TaitoAnalogPort2;
-extern INT32 TaitoAnalogPort3;
+extern INT16 TaitoAnalogPort0;
+extern INT16 TaitoAnalogPort1;
+extern INT16 TaitoAnalogPort2;
+extern INT16 TaitoAnalogPort3;
 
 extern UINT8 *TaitoMem;
 extern UINT8 *TaitoMemEnd;

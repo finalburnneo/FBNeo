@@ -24,10 +24,10 @@ UINT8 TaitoReset               = 0;
 
 UINT8 TaitoCoinLockout[4]      = { 0, 0, 0, 0 };
 
-INT32 TaitoAnalogPort0         = 0;
-INT32 TaitoAnalogPort1         = 0;
-INT32 TaitoAnalogPort2         = 0;
-INT32 TaitoAnalogPort3         = 0;
+INT16 TaitoAnalogPort0         = 0;
+INT16 TaitoAnalogPort1         = 0;
+INT16 TaitoAnalogPort2         = 0;
+INT16 TaitoAnalogPort3         = 0;
 
 UINT8 *TaitoMem                = NULL;
 UINT8 *TaitoMemEnd             = NULL;

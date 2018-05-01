@@ -3185,8 +3185,7 @@ static UINT8 TopspeedInputBypassRead()
 {
 	UINT8 Port = TC0220IOCPortRead();
 
-	INT16 derp = TaitoAnalogPort0;
-	INT16 Steer = (derp >> 3);
+	INT16 Steer = (TaitoAnalogPort0 >> 3);
 	
 	switch (Port) {
 		case 0x0c: {

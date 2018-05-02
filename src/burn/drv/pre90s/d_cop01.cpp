@@ -684,7 +684,7 @@ static INT32 MightguyInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, NULL, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, DrvSyncDAC);

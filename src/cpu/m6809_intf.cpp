@@ -12,6 +12,22 @@ static M6809Ext *m6809CPUContext = NULL;
 static INT32 nM6809CyclesDone[MAX_CPU];
 INT32 nM6809CyclesTotal;
 
+cpu_core_config M6809Config =
+{
+	M6809Open,
+	M6809Close,
+	M6809CheatRead,
+	M6809WriteRom,
+	M6809GetActive,
+	M6809TotalCycles,
+	M6809NewFrame,
+	M6809Run,
+	M6809RunEnd,
+	M6809Reset,
+	0x10000,
+	0
+};
+
 static UINT8 M6809ReadByteDummyHandler(UINT16)
 {
 	return 0;
@@ -63,26 +79,10 @@ void M6809NewFrame()
 	nM6809CyclesTotal = 0;
 }
 
-static UINT8 M6809CheatRead(UINT32 a)
+UINT8 M6809CheatRead(UINT32 a)
 {
 	return M6809ReadByte(a);
 }
-
-static cpu_core_config M6809CheatCpuConfig =
-{
-	M6809Open,
-	M6809Close,
-	M6809CheatRead,
-	M6809WriteRom,
-	M6809GetActive,
-	M6809TotalCycles,
-	M6809NewFrame,
-	M6809Run,
-	M6809RunEnd,
-	M6809Reset,
-	1<<16,
-	0
-};
 
 INT32 M6809Init(INT32 cpu)
 {
@@ -127,7 +127,7 @@ INT32 M6809Init(INT32 cpu)
 	m6809CPUContext[cpu].ReadOp = M6809ReadOpDummyHandler;
 	m6809CPUContext[cpu].ReadOpArg = M6809ReadOpArgDummyHandler;
 
-	CpuCheatRegister(cpu, &M6809CheatCpuConfig);
+	CpuCheatRegister(cpu, &M6809Config);
 
 	return 0;
 }

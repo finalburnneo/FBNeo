@@ -1,12 +1,6 @@
 #include "burnint.h"
 #include "burn_sound.h"
 #include "burn_ym3526.h"
-#include "m68000_intf.h"
-#include "z80_intf.h"
-#include "m6809_intf.h"
-#include "hd6309_intf.h"
-#include "m6800_intf.h"
-#include "m6502_intf.h"
 
 // Timer Related
 
@@ -182,98 +176,14 @@ INT32 BurnTimerInitYM3526(INT32 (*pOverCallback)(INT32, INT32), double (*pTimeCa
 	return 0;
 }
 
-INT32 BurnTimerAttachSekYM3526(INT32 nClockspeed)
+INT32 BurnTimerAttachYM3526(cpu_core_config *ptr, INT32 nClockspeed)
 {
 	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = SekTotalCycles;
-	pCPURun = SekRun;
-	pCPURunEnd = SekRunEnd;
+	pCPUTotalCycles = ptr->totalcycles;
+	pCPURun = ptr->run;
+	pCPURunEnd = ptr->runend;
 
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachZetYM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = ZetTotalCycles;
-	pCPURun = ZetRun;
-	pCPURunEnd = ZetRunEnd;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachM6809YM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6809TotalCycles;
-	pCPURun = M6809Run;
-	pCPURunEnd = M6809RunEnd;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachHD6309YM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = HD6309TotalCycles;
-	pCPURun = HD6309Run;
-	pCPURunEnd = HD6309RunEnd;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachM6800YM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6800TotalCycles;
-	pCPURun = M6800Run;
-	pCPURunEnd = M6800RunEnd;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachHD63701YM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6800TotalCycles;
-	pCPURun = HD63701Run;
-	pCPURunEnd = HD63701RunEnd;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachM6803YM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6800TotalCycles;
-	pCPURun = M6803Run;
-	pCPURunEnd = M6803RunEnd;
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
-
-	return 0;
-}
-
-INT32 BurnTimerAttachM6502YM3526(INT32 nClockspeed)
-{
-	nCPUClockspeed = nClockspeed;
-	pCPUTotalCycles = M6502TotalCycles;
-	pCPURun = M6502Run;
-	pCPURunEnd = M6502RunEnd; // doesn't do anything...
-
-	nTicksExtra = MAKE_TIMER_TICKS(1, nCPUClockspeed) - 1;
+	nTicksExtra = MAKE_TIMER_TICKS(1, nClockspeed) - 1;
 
 	return 0;
 }

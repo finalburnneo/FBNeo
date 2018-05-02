@@ -26,7 +26,6 @@ struct M6800Ext {
 };
 
 
-
 #define HD63701_INPUT_LINE_NMI	M6800_INPUT_LINE_NMI
 #define HD63701_IRQ_LINE	M6800_IRQ_LINE
 #define HD63701_TIN_LINE	M6800_TIN_LINE
@@ -150,8 +149,6 @@ INT32 M6800Scan(INT32 nAction);
 #define M6801Scan		M6800Scan
 #define NSC8105Scan		M6800Scan
 
-void M6800WriteRom(UINT32 Address, UINT8 Data);
-
 inline static INT32 M6800TotalCycles()
 {
 #if defined FBA_DEBUG
@@ -171,3 +168,30 @@ inline static INT32 M6800Idle(INT32 cycles)
 
 	return cycles;
 }
+
+void M6800WriteRom(UINT32 Address, UINT8 Data); // cheat core
+UINT8 M6800CheatRead(UINT32 Address);
+void M6800Open(INT32 ); // does nothing
+void M6800Close(); // ""
+INT32 M6800GetActive(); // ""
+
+extern struct cpu_core_config M6800Config;
+extern struct cpu_core_config HD63701Config;
+extern struct cpu_core_config M6803Config;
+extern struct cpu_core_config NSC8105Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachM6800(clock)	\
+	BurnTimerAttach(&M6800Config, clock)
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachHD63701(clock)	\
+	BurnTimerAttach(&HD63701Config, clock)
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachM6803(clock)	\
+	BurnTimerAttach(&M6803Config, clock)
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachNSC8105(clock)	\
+	BurnTimerAttach(&NSC8105Config, clock)

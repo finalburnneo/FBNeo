@@ -1069,7 +1069,7 @@ static INT32 DrvInit()
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.20, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnYM3526Init(4000000, NULL, 0);
-		BurnTimerAttachZetYM3526(4000000);
+		BurnTimerAttachYM3526(&ZetConfig, 4000000);
 		BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 	
@@ -1124,7 +1124,7 @@ static INT32 DrvAmazonInit()
 	ZetClose();
 	
 	BurnYM3526Init(4000000, NULL, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	DACInit(0, 0, 1, TerracreSyncDAC);

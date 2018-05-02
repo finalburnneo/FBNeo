@@ -458,7 +458,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)())
 	ZetClose();
 
 	BurnYM3812Init(1, 3579545, &crospangYM3812IrqHandler, crospangSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(3579545);
+	BurnTimerAttachYM3812(&ZetConfig, 3579545);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1056000 / 132, 1);

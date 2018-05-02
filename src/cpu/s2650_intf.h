@@ -30,7 +30,6 @@ void s2650Init(INT32 num);
 
 UINT32 s2650GetPC(INT32);
 
-INT32 s2650GetActive();
 
 INT32 s2650Scan(INT32 nAction);
 
@@ -38,3 +37,17 @@ INT32 s2650Scan(INT32 nAction);
 #define S2650_DATA_PORT 0x101
 #define S2650_EXT_PORT	0xff
 #define S2650_SENSE_PORT 0x102
+
+INT32 s2650GetActive();
+INT32 s2650TotalCycles(); // not functional
+void s2650NewFrame(); // not functional
+void s2650RunEnd(); // not functional
+
+void s2650WriteROM(UINT32 address, UINT8 data); // cheat core
+UINT8 s2650ReadCheat(UINT32 a);
+
+extern struct cpu_core_config s2650Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachS2650(clock)	\
+	BurnTimerAttach(&s2650Config, clock)

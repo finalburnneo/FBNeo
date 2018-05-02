@@ -1408,7 +1408,7 @@ static INT32 DrvInit()
 	BurnSetRefreshRate(58.00);
 
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachM6502YM3812(1500000);
+	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 1);
@@ -2326,7 +2326,7 @@ static INT32 CobraInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.53, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
-	BurnTimerAttachM6502YM3812(1500000);
+	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -3000,7 +3000,7 @@ static INT32 SrdarwinInit()
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.23, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM3812Init(1, 3000000, &DrvYM3812FMIRQHandler, 1);
-	BurnTimerAttachM6502YM3812(1500000);
+	BurnTimerAttachYM3812(&M6502Config, 1500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -3680,7 +3680,7 @@ static INT32 GondoInit()
 	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachM6502YM3526(1500000);
+	BurnTimerAttachYM3526(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 1);
@@ -4291,7 +4291,7 @@ static INT32 OscarInit()
 	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachM6502YM3526(1500000);
+	BurnTimerAttachYM3526(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 1);
@@ -4939,7 +4939,7 @@ static INT32 LastmissInit()
 	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachM6502YM3526(1500000);
+	BurnTimerAttachYM3526(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 1);
@@ -5672,7 +5672,7 @@ static INT32 CsilverInit()
 	BurnSetRefreshRate(58.00);
 
 	BurnYM3526Init(3000000, &DrvYM3812FMIRQHandler, 0);
-	BurnTimerAttachM6502YM3526(1500000);
+	BurnTimerAttachYM3526(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.70, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM2203Init(1, 1500000, NULL, 1);

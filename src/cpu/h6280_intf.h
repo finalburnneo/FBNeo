@@ -44,3 +44,11 @@ void h6280_timer_w(UINT32 offset, UINT8 data);
 // functions for use by the PSG and joypad port only!
 UINT8 h6280io_get_buffer(void);
 void h6280io_set_buffer(UINT8);
+
+void h6280_write_rom(UINT32 address, UINT8 data); // cheat core
+
+extern struct cpu_core_config H6280Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachH6280(clock)	\
+	BurnTimerAttach(&H6280Config, clock)

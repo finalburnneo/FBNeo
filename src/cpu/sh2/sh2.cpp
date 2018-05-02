@@ -186,6 +186,22 @@ typedef struct
 static SH2EXT * pSh2Ext;
 static SH2EXT * Sh2Ext = NULL;
 
+cpu_core_config Sh2Config =
+{
+	Sh2Open,
+	Sh2Close,
+	Sh2CheatReadByte,
+	Sh2CheatWriteByte,
+	Sh2GetActive,
+	Sh2TotalCycles,
+	Sh2NewFrame,
+	Sh2Run,
+	Sh2StopRun,
+	Sh2Reset,
+	0xffffffff,
+	0
+};
+
 /* SH-2 Memory Map:
  * 0x00000000 ~ 0x07ffffff : user
  * 0x08000000 ~ 0x0fffffff : user ( mirror )
@@ -449,31 +465,15 @@ int Sh2Exit()
 	return 0;
 }
 
-static void Sh2CheatWriteByte(UINT32 a, UINT8 d)
+void Sh2CheatWriteByte(UINT32 a, UINT8 d)
 {
 	Sh2WriteByte(a,d);
 }
 
-static UINT8 Sh2CheatReadByte(UINT32 a)
+UINT8 Sh2CheatReadByte(UINT32 a)
 {
 	return Sh2ReadByte(a);
 }
-
-static cpu_core_config Sh2CheatCpuConfig =
-{
-	Sh2Open,
-	Sh2Close,
-	Sh2CheatReadByte,
-	Sh2CheatWriteByte,
-	Sh2GetActive,
-	Sh2TotalCycles,
-	Sh2NewFrame,
-	Sh2Run,
-	Sh2StopRun,
-	Sh2Reset,
-	0xffffffff,
-	0
-};
 
 int Sh2Init(int nCount)
 {
@@ -516,7 +516,7 @@ int Sh2Init(int nCount)
 		Sh2SetWriteWordHandler(SH2_MAXHANDLER - 2, Sh2EmptyWriteWord);
 		Sh2SetWriteLongHandler(SH2_MAXHANDLER - 2, Sh2EmptyWriteLong);
 
-		CpuCheatRegister(i, &Sh2CheatCpuConfig);
+		CpuCheatRegister(i, &Sh2Config);
 	}
 
 	return 0;

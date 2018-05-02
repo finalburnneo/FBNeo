@@ -4237,11 +4237,11 @@ static INT32 PsychosInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4297,11 +4297,11 @@ static INT32 BermudatInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4359,11 +4359,11 @@ static INT32 GwarInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4430,11 +4430,11 @@ static INT32 GwaraInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4489,7 +4489,7 @@ static INT32 Tnk3Init()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4556,7 +4556,7 @@ static INT32 AsoInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -4619,11 +4619,11 @@ static INT32 AthenaInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5036,7 +5036,7 @@ static INT32 FitegolfInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5091,11 +5091,11 @@ static INT32 IkariCommonInit(INT32 game)
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5169,11 +5169,11 @@ static INT32 VictroadInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5231,11 +5231,11 @@ static INT32 Chopper1Init()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5290,11 +5290,11 @@ static INT32 ChopperaInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.80, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0, &DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -5349,11 +5349,11 @@ static INT32 TdfeverInit()
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(4000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, DrvSndROM0, nSampleLen, NULL, 0,&DrvFMIRQHandler, &DrvSynchroniseStream, 1);
-	BurnTimerAttachZetY8950(4000000);
+	BurnTimerAttachY8950(&ZetConfig, 4000000);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

@@ -2025,7 +2025,7 @@ static void common_sound_init(void (__fastcall *write_port)(UINT16, UINT8), UINT
 	ZetClose();
 
 	BurnYM3812Init(1, 3500000, &toaplan1YM3812IrqHandler, toaplan1SynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(3500000);
+	BurnTimerAttachYM3812(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 }
 

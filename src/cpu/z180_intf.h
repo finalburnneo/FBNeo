@@ -25,3 +25,12 @@ void Z180Close();
 INT32 Z180TotalCycles();
 void Z180NewFrame();
 void Z180RunEnd();
+
+void z180_cheat_write(UINT32 address, UINT8 data); // cheat core
+UINT8 z180_cheat_read(UINT32 address);
+
+extern struct cpu_core_config Z180Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachZ180(clock)	\
+	BurnTimerAttach(&Z180Config, clock)

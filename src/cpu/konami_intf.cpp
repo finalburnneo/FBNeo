@@ -27,6 +27,22 @@ void konami_set_irq_line(INT32 irqline, INT32 state);
 void konami_init(INT32 (*irqcallback)(INT32));
 void konami_set_irq_hold(INT32 irq);
 
+cpu_core_config konamiCPUConfig =
+{
+	konamiOpen,
+	konamiClose,
+	konami_cheat_read,
+	konami_write_rom,
+	konamiGetActive,
+	konamiTotalCycles,
+	konamiNewFrame,
+	konamiRun,
+	konamiRunEnd,
+	konamiReset,
+	0x10000,
+	0
+};
+
 void konamiMapMemory(UINT8 *src, UINT16 start, UINT16 finish, INT32 type)
 {
 #if defined FBA_DEBUG
@@ -76,7 +92,7 @@ void konamiSetReadHandler(UINT8 (*read)(UINT16))
 	pkonamiRead = read;
 }
 
-static void konami_write_rom(UINT32 address, UINT8 data)
+void konami_write_rom(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_KonamiInitted) bprintf(PRINT_ERROR, _T("konami_write_rom called without init\n"));
@@ -166,26 +182,10 @@ void konamiRunEnd()
 	// nothing atm
 }
 
-static UINT8 konami_cheat_read(UINT32 a)
+UINT8 konami_cheat_read(UINT32 a)
 {
 	return konamiRead(a);
 }
-
-static cpu_core_config konamiCheatCpuConfig =
-{
-	konamiOpen,
-	konamiClose,
-	konami_cheat_read,
-	konami_write_rom,
-	konamiGetActive,
-	konamiTotalCycles,
-	konamiNewFrame,
-	konamiRun,
-	konamiRunEnd,
-	konamiReset,
-	1<<16,
-	0
-};
 
 #if defined FBA_DEBUG
 void konamiInit(INT32 nCpu) // only 1 cpu (No examples exist of multi-cpu konami games)
@@ -208,7 +208,7 @@ void konamiInit(INT32 /*nCpu*/) // only 1 cpu (No examples exist of multi-cpu ko
 		}
 	}
 
-	CpuCheatRegister(0, &konamiCheatCpuConfig);
+	CpuCheatRegister(0, &konamiCPUConfig);
 }
 
 void konamiExit()

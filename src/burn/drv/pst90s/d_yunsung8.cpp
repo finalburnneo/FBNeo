@@ -470,7 +470,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, DrvMSM5205SynchroniseStream, 400000, DrvMSM5205Int, MSM5205_S96_4B, 1);

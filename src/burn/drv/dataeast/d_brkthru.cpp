@@ -500,7 +500,7 @@ static INT32 DrvInit()
 	BurnYM2203SetPSGVolume(0, 0.10);
 
 	BurnYM3526Init(3000000, &DrvFMIRQHandler, 1);
-	BurnTimerAttachM6809YM3526(1500000*2);
+	BurnTimerAttachYM3526(&M6809Config, 1500000*2);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

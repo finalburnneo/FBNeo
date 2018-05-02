@@ -30,6 +30,22 @@ static UINT32 Arm7IdleLoop = ~0;
 
 extern void arm7_set_irq_line(INT32 irqline, INT32 state);
 
+cpu_core_config Arm7Config =
+{
+	Arm7Open,
+	Arm7Close,
+	Arm7ReadByte,
+	Arm7_write_rom_byte,
+	Arm7GetActive,
+	Arm7TotalCycles,
+	Arm7NewFrame,
+	Arm7Run,
+	Arm7RunEnd,
+	Arm7Reset,
+	0x80000000,
+	0
+};
+
 INT32 Arm7GetActive()
 {
 	return 0;
@@ -348,7 +364,7 @@ void Arm7SetIdleLoopAddress(UINT32 address)
 
 // For cheats/etc
 
-static void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
+ void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ARM7Initted) bprintf(PRINT_ERROR, _T("Arm7_write_rom_byte called without init\n"));
@@ -369,22 +385,6 @@ static void Arm7_write_rom_byte(UINT32 addr, UINT8 data)
 	}
 }
 
-static cpu_core_config Arm7CheatCpuConfig =
-{
-	Arm7Open,
-	Arm7Close,
-	Arm7ReadByte,
-	Arm7_write_rom_byte,
-	Arm7GetActive,
-	Arm7TotalCycles,
-	Arm7NewFrame,
-	Arm7Run,
-	Arm7RunEnd,
-	Arm7Reset,
-	MAX_MEMORY,
-	0
-};
-
 void Arm7Init( INT32 nCPU ) // only one cpu supported
 {
 	DebugCPU_ARM7Initted = 1;
@@ -394,5 +394,5 @@ void Arm7Init( INT32 nCPU ) // only one cpu supported
 		memset(membase[i], 0, PAGE_COUNT * sizeof(UINT8*));
 	}
 
-	CpuCheatRegister(nCPU, &Arm7CheatCpuConfig);
+	CpuCheatRegister(nCPU, &Arm7Config);
 }

@@ -1081,7 +1081,7 @@ static INT32 DrvInit(INT32 game_select)
 	tms32010_rom = (UINT16*)DrvMCUROM;
 
 	BurnYM3812Init(1, 3500000, &DrvFMIRQHandler, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(3500000);
+	BurnTimerAttachYM3812(&ZetConfig, 3500000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();

@@ -463,11 +463,11 @@ static INT32 DrvInit()
 
 	if (nGame != 2) {
 		BurnYM3812Init(1, 3125000, &deniam16YM3812IrqHandler, deniam16ZetSynchroniseStream, 0);
-		BurnTimerAttachZetYM3812(6250000);
+		BurnTimerAttachYM3812(&ZetConfig, 6250000);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	} else {
 		BurnYM3812Init(1, 3125000, NULL, deniam16SekSynchroniseStream, 0);
-		BurnTimerAttachSekYM3812(12500000);
+		BurnTimerAttachYM3812(&SekConfig, 12500000);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.60, BURN_SND_ROUTE_BOTH);
 	}
 

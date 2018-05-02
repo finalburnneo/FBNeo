@@ -624,11 +624,11 @@ static INT32 DrvInit(INT32 nGame)
 	ZetClose();
 
 	BurnYM3812Init(1, 3580000, &DrvFMIRQHandler, 0);
-	BurnTimerAttachZetYM3812(6000000);
+	BurnTimerAttachYM3812(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 0.30, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 3580000, NULL, 1);
-	BurnTimerAttachSek(16000000);
+	BurnTimerAttach(&SekConfig, 16000000);
 	BurnYM2203SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	MSM6295Init(0, 1000000 / 132, 1);

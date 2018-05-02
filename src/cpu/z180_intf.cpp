@@ -1,5 +1,5 @@
 #include "burnint.h"
-#include "z180.h"
+#include "z180_intf.h"
 
 static INT32 DebugCPU_Z180Initted = 0;
 
@@ -23,6 +23,22 @@ static INT32 DebugCPU_Z180Initted = 0;
 
 #define PORT_RANGE		(1 << PORT_ADDRESS_BITS)
 #define PORT_MASK		(PORT_RANGE - 1)
+
+cpu_core_config Z180Config =
+{
+	Z180Open,
+	Z180Close,
+	z180_cheat_read,
+	z180_cheat_write,
+	Z180GetActive,
+	Z180TotalCycles,
+	Z180NewFrame,
+	Z180Run,
+	Z180RunEnd,
+	Z180Reset,
+	0x100000,
+	0
+};
 
 static UINT8 *Mem[NUM_CPUS][4][PROG_PAGES];
 static INT32 nActiveCPU = -1;
@@ -379,22 +395,6 @@ void z180_cheat_write(UINT32 address, UINT8 data)
 	}
 }
 
-static cpu_core_config Z180CheatCpuConfig =
-{
-	Z180Open,
-	Z180Close,
-	z180_cheat_read,
-	z180_cheat_write,
-	Z180GetActive,
-	Z180TotalCycles,
-	Z180NewFrame,
-	Z180Run,
-	Z180RunEnd,
-	Z180Reset,
-	PROG_RANGE,
-	0
-};
-
 void Z180Init(UINT32 nCPU)
 {
 	DebugCPU_Z180Initted = 1;
@@ -417,7 +417,7 @@ void Z180Init(UINT32 nCPU)
 	port_write[nActiveCPU] = NULL;
 	port_read[nActiveCPU] = NULL;
 
-	CpuCheatRegister(nActiveCPU, &Z180CheatCpuConfig);
+	CpuCheatRegister(nActiveCPU, &Z180Config);
 
 	nActiveCPU = -1; // default
 }

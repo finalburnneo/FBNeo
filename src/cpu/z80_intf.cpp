@@ -33,6 +33,22 @@ static INT32 nOpenedCPU = -1;
 static INT32 nCPUCount = 0;
 INT32 nHasZet = -1;
 
+cpu_core_config ZetConfig =
+{
+	ZetOpen,
+	ZetClose,
+	ZetCheatRead,
+	ZetCheatWriteROM,
+	ZetGetActive,
+	ZetTotalCycles,
+	ZetNewFrame,
+	ZetRun,
+	ZetRunEnd,
+	ZetReset,
+	0x10000,
+	0
+};
+
 UINT8 __fastcall ZetDummyReadHandler(UINT16) { return 0; }
 void __fastcall ZetDummyWriteHandler(UINT16, UINT8) { }
 UINT8 __fastcall ZetDummyInHandler(UINT16) { return 0; }
@@ -170,31 +186,15 @@ void ZetNewFrame()
 	nZetCyclesTotal = 0;
 }
 
-static void ZetCheatWriteROM(UINT32 a, UINT8 d)
+void ZetCheatWriteROM(UINT32 a, UINT8 d)
 {
 	ZetWriteRom(a, d);
 }
 
-static UINT8 ZetCheatRead(UINT32 a)
+UINT8 ZetCheatRead(UINT32 a)
 {
 	return ZetReadByte(a);
 }
-
-static cpu_core_config ZetCheatCpuConfig =
-{
-	ZetOpen,
-	ZetClose,
-	ZetCheatRead,
-	ZetCheatWriteROM,
-	ZetGetActive,
-	ZetTotalCycles,
-	ZetNewFrame,
-	ZetRun,
-	ZetRunEnd,
-	ZetReset,
-	(1<<16),	// 0x10000
-	0
-};
 
 INT32 ZetInit(INT32 nCPU)
 {
@@ -239,7 +239,7 @@ INT32 ZetInit(INT32 nCPU)
 
 	nHasZet = nCPU+1;
 
-	CpuCheatRegister(nCPU, &ZetCheatCpuConfig);
+	CpuCheatRegister(nCPU, &ZetConfig);
 
 	return 0;
 }

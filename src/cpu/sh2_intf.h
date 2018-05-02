@@ -55,3 +55,12 @@ void Sh2SetEatCycles(int i);
 
 int Sh2Scan(int);
 
+
+void Sh2CheatWriteByte(UINT32 a, UINT8 d); // cheat core
+UINT8 Sh2CheatReadByte(UINT32 a);
+
+extern struct cpu_core_config Sh2Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachSh2(clock)	\
+	BurnTimerAttach(&Sh2Config, clock)

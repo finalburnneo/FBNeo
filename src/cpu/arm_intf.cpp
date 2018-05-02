@@ -28,6 +28,22 @@ static void (*pArmSpeedHackCallback)();
 
 extern void arm_set_irq_line(INT32 irqline, INT32 state);
 
+cpu_core_config ArmConfig =
+{
+	ArmOpen,
+	ArmClose,
+	ArmReadByte,
+	Arm_write_rom_byte,
+	ArmGetActive,
+	ArmGetTotalCycles,
+	ArmNewFrame,
+	ArmRun,
+	ArmRunEnd,
+	ArmReset,
+	0x04000000,
+	0
+};
+
 void ArmSetSpeedHack(UINT32 address, void (*pCallback)())
 {
 #if defined FBA_DEBUG
@@ -251,7 +267,7 @@ void ArmSetIRQLine(INT32 line, INT32 state)
 
 // For cheats/etc
 
-static void Arm_write_rom_byte(UINT32 addr, UINT8 data)
+void Arm_write_rom_byte(UINT32 addr, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_ARMInitted) bprintf(PRINT_ERROR, _T("Arm_write_rom_byte called without init\n"));
@@ -278,22 +294,6 @@ INT32 ArmGetActive()
 	return 0; // only one cpu supported
 }
 
-static cpu_core_config ArmCheatCpuConfig =
-{
-	ArmOpen,
-	ArmClose,
-	ArmReadByte,
-	Arm_write_rom_byte,
-	ArmGetActive,
-	ArmGetTotalCycles,
-	ArmNewFrame,
-	ArmRun,
-	ArmRunEnd,
-	ArmReset,
-	MAX_MEMORY,
-	0
-};
-
 void ArmInit(INT32 /*CPU*/) // only one cpu supported
 {
 	DebugCPU_ARMInitted = 1;
@@ -308,7 +308,7 @@ void ArmInit(INT32 /*CPU*/) // only one cpu supported
 	pReadLongHandler = NULL;
 	pReadByteHandler = NULL;
 
-	CpuCheatRegister(0, &ArmCheatCpuConfig);
+	CpuCheatRegister(0, &ArmConfig);
 
 	pArmSpeedHackCallback = NULL;
 	ArmSpeedHackAddress = ~0;

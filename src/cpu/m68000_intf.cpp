@@ -16,6 +16,22 @@ INT32 nSekCyclesTotal, nSekCyclesScanline, nSekCyclesSegment, nSekCyclesDone, nS
 
 INT32 nSekCPUType[SEK_MAX], nSekCycles[SEK_MAX], nSekIRQPending[SEK_MAX];
 
+cpu_core_config SekConfig =
+{
+	SekOpen,
+	SekClose,
+	SekCheatRead,
+	SekWriteByteROM,
+	SekGetActive,
+	SekTotalCycles,
+	SekNewFrame,
+	SekRun,
+	SekRunEnd,
+	SekReset,
+	0x1000000,
+	0
+};
+
 #if defined (FBA_DEBUG)
 
 void (*SekDbgBreakpointHandlerRead)(UINT32, INT32);
@@ -936,26 +952,10 @@ void SekSetCyclesScanline(INT32 nCycles)
 	nSekCyclesScanline = nCycles;
 }
 
-static UINT8 SekCheatRead(UINT32 a)
+UINT8 SekCheatRead(UINT32 a)
 {
 	return SekReadByte(a);
 }
-
-static cpu_core_config SekCheatCpuConfig =
-{
-	SekOpen,
-	SekClose,
-	SekCheatRead,
-	SekWriteByteROM,
-	SekGetActive,
-	SekTotalCycles,
-	SekNewFrame,
-	SekRun,
-	SekRunEnd,
-	SekReset,
-	(1<<24),	// 0x1000000
-	0
-};
 
 INT32 SekInit(INT32 nCount, INT32 nCPUType)
 {
@@ -1099,7 +1099,7 @@ INT32 SekInit(INT32 nCount, INT32 nCPUType)
 	nSekCyclesTotal = 0;
 	nSekCyclesScanline = 0;
 
-	CpuCheatRegister(nCount, &SekCheatCpuConfig);
+	CpuCheatRegister(nCount, &SekConfig);
 
 	return 0;
 }

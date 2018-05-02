@@ -667,7 +667,7 @@ static INT32 WheelrunInit()
 	ZetClose();
 
 	BurnYM3526Init(3500000, &DrvYM3526IrqHandler, &SynchroniseStream, 0);
-	BurnTimerAttachZetYM3526(9000000);
+	BurnTimerAttachYM3526(&ZetConfig, 9000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

@@ -11,14 +11,25 @@ void upd7810MapMemory(UINT8 *rom, UINT16 start, UINT16 end, UINT8 map);
 void upd7810Init(INT32 (*io_callback)(INT32 ioline, INT32 state));
 void upd7807Init(INT32 (*io_callback)(INT32 ioline, INT32 state));
 
+void upd7810Open(INT32);
 void upd7810Reset();
 INT32 upd7810Run(INT32 cycles);
 void upd7810Exit();
+void upd7810Close();
 
 void upd7810SetIRQLine(INT32 line, INT32 state);
 
 INT32 upd7810TotalCycles();
 void upd7810NewFrame();
 void upd7810RunEnd();
+INT32 upd7810GetActive();
 
 INT32 upd7810Scan(INT32 nAction);
+
+void upd7810CheatWrite(UINT32 address, UINT8 data); // cheat core
+UINT8 upd7810CheatRead(UINT32 address);
+
+extern struct cpu_core_config upd7810Config;
+
+#define BurnTimerAttachUpd7810(clock)	\
+	BurnTimerAttach(&upd7810Config, clock)

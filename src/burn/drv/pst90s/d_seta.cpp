@@ -7073,11 +7073,11 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 		x1010_set_route(BURN_SND_X1010_ROUTE_2, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachSekYM3812(16000000);
+	BurnTimerAttachYM3812(&SekConfig, 16000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	BurnYM3438Init(1, 16000000/4, &DrvFMIRQHandler, 1);
-	BurnTimerAttachZet(4000000);
+	BurnTimerAttach(&ZetConfig, 4000000);
 	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_1, 0.30, BURN_SND_ROUTE_LEFT);
 	BurnYM3438SetRoute(0, BURN_SND_YM3438_YM3438_ROUTE_2, 0.30, BURN_SND_ROUTE_RIGHT);
 
@@ -7088,7 +7088,7 @@ static INT32 DrvInit(void (*p68kInit)(), INT32 cpu_speed, INT32 irq_type, INT32 
 		BurnYM2203Init(1,  4000000, NULL, 1);
 		BurnYM2203SetPorts(0, &DrvYM2203ReadPortA, &DrvYM2203ReadPortB, NULL, NULL);
 		BurnYM2203SetAllRoutes(0, 0.35, BURN_SND_ROUTE_BOTH);
-		BurnTimerAttachM6502(2000000);
+		BurnTimerAttach(&M6502Config, 2000000);
 	}
 
 	GenericTilesInit();

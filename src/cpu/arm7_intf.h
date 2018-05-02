@@ -13,6 +13,7 @@ void Arm7BurnCycles(INT32 cycles);
 INT32 Arm7Idle(int cycles);
 INT32 Arm7TotalCycles();
 void Arm7NewFrame();
+INT32 Arm7GetActive();
 
 void Arm7Init(INT32 nCPU);
 void Arm7Reset();
@@ -40,3 +41,10 @@ void Arm7SetReadLongHandler(UINT32 (*read)(UINT32));
 // speed hack function
 void Arm7SetIdleLoopAddress(UINT32 address);
 
+void Arm7_write_rom_byte(UINT32 addr, UINT8 data); // for cheating
+
+extern struct cpu_core_config Arm7Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachArm7(clock)	\
+	BurnTimerAttach(&Arm7Config, clock)

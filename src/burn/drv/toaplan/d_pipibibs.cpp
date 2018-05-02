@@ -397,7 +397,7 @@ static INT32 DrvInit()
 
 	nToa1Cycles68KSync = 0;
 	BurnYM3812Init(1, 3375000, &toaplan1FMIRQHandler, pipibibsSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(3375000);
+	BurnTimerAttachYM3812(&ZetConfig, 3375000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	nSpriteYOffset =  0x0001;

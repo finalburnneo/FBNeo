@@ -7,15 +7,7 @@ extern "C" {
 INT32 BurnTimerUpdateY8950(INT32 nCycles);
 void BurnTimerEndFrameY8950(INT32 nCycles);
 void BurnTimerUpdateEndY8950();
-INT32 BurnTimerAttachSekY8950(INT32 nClockspeed);
-INT32 BurnTimerAttachZetY8950(INT32 nClockspeed);
-INT32 BurnTimerAttachM6809Y8950(INT32 nClockspeed);
-INT32 BurnTimerAttachHD6309Y8950(INT32 nClockspeed);
-INT32 BurnTimerAttachM6800Y8950(INT32 nClockspeed);
-INT32 BurnTimerAttachHD63701Y8950(INT32 nClockspeed);
-INT32 BurnTimerAttachM6803Y8950(INT32 nClockspeed);
-INT32 BurnTimerAttachM6502Y8950(INT32 nClockspeed);
-
+INT32 BurnTimerAttachY8950(cpu_core_config *cpuptr, INT32 nClockspeed);
 extern "C" void BurnY8950UpdateRequest();
 
 INT32 BurnY8950Init(INT32 num, INT32 nClockFrequency, UINT8* Y8950ADPCM0ROM, INT32 nY8950ADPCM0Size, UINT8* Y8950ADPCM1ROM, INT32 nY8950ADPCM1Size, OPL_IRQHANDLER IRQCallback, INT32 (*StreamCallback)(INT32), INT32 bAddSignal);

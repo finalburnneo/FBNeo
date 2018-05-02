@@ -579,7 +579,7 @@ static INT32 DrvInit()
 	ToaPalInit();
 
 	BurnYM3812Init(1, 27000000 / 8, &toaplan1FMIRQHandler, &tekipakiSynchroniseStream, 0);
-	BurnTimerAttachZetYM3812(10000000);
+	BurnTimerAttachYM3812(&ZetConfig, 10000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	
 	bDrawScreen = true;

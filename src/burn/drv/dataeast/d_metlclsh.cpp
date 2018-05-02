@@ -395,7 +395,7 @@ static INT32 DrvInit()
 	M6809Close();
 
 	BurnYM3526Init(3000000, &DrvYM3526IrqHandler, 0);
-	BurnTimerAttachM6809YM3526(1500000);
+	BurnTimerAttachYM3526(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 
 	BurnYM2203Init(1, 1500000, NULL, 1);

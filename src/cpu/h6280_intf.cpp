@@ -25,6 +25,22 @@ struct h6280_handler
 	h6280_Regs *h6280;
 };
 
+cpu_core_config H6280Config =
+{
+	h6280Open,
+	h6280Close,
+	h6280Read,
+	h6280_write_rom,
+	h6280GetActive,
+	h6280TotalCycles,
+	h6280NewFrame,
+	h6280Run,
+	h6280RunEnd,
+	h6280Reset,
+	0x200000,
+	0
+};
+
 static struct h6280_handler sHandler[MAX_H6280];
 static struct h6280_handler *sPointer;
 
@@ -96,7 +112,7 @@ void h6280SetReadHandler(UINT8 (*read)(UINT32))
 	sPointer->h6280Read = read;
 }
 
-static void h6280_write_rom(UINT32 address, UINT8 data)
+void h6280_write_rom(UINT32 address, UINT8 data)
 {
 #if defined FBA_DEBUG
 	if (!DebugCPU_H6280Initted) bprintf(PRINT_ERROR, _T("h6280_write_rom called without init\n"));
@@ -221,22 +237,6 @@ void h6280SetIRQLine(INT32 line, INT32 state)
 	}
 }
 
-static cpu_core_config H6280CheatCpuConfig =
-{
-	h6280Open,
-	h6280Close,
-	h6280Read,
-	h6280_write_rom,
-	h6280GetActive,
-	h6280TotalCycles,
-	h6280NewFrame,
-	h6280Run,
-	h6280RunEnd,
-	h6280Reset,
-	MEMORY_SPACE,
-	0
-};
-
 void h6280Init(INT32 nCpu)
 {
 	DebugCPU_H6280Initted = 1;
@@ -261,7 +261,7 @@ void h6280Init(INT32 nCpu)
 	sPointer->h6280Read = NULL;
 	sPointer->h6280WriteIO = NULL;
 
-	CpuCheatRegister(nCpu, &H6280CheatCpuConfig);
+	CpuCheatRegister(nCpu, &H6280Config);
 }
 
 void h6280Exit()

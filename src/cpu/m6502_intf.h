@@ -78,8 +78,6 @@ void M6502SetAddressMask(UINT16 RangeMask);
 UINT32 M6502GetPC(INT32);
 UINT32 M6502GetPrevPC(INT32);
 
-void M6502WriteRom(UINT32 Address, UINT8 Data);
-
 inline static INT32 M6502TotalCycles()
 {
 #if defined FBA_DEBUG
@@ -91,3 +89,12 @@ inline static INT32 M6502TotalCycles()
 
 // m6502.cpp used for Data East encrypted CPUs.
 void DecoCpu7SetDecode(UINT8 (*write)(UINT16,UINT8));
+
+void M6502WriteRom(UINT32 Address, UINT8 Data); // cheat core
+UINT8 M6502CheatRead(UINT32 a);
+
+extern struct cpu_core_config M6502Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachM6502(clock)	\
+	BurnTimerAttach(&M6502Config, clock)

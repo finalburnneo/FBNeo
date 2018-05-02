@@ -230,3 +230,12 @@ INT32 SekSetTASCallback(pSekTASCallback pCallback);
 UINT32 SekGetPC(INT32 n);
 
 INT32 SekScan(INT32 nAction);
+
+
+UINT8 SekCheatRead(UINT32 a); // cheat core
+
+extern struct cpu_core_config SekConfig;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachSek(clock)	\
+	BurnTimerAttach(&SekConfig, clock)

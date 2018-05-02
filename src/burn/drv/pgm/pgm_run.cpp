@@ -1,6 +1,5 @@
 
 #include "pgm.h"
-#include "arm7_intf.h"
 #include "v3021.h"
 #include "ics2115.h"
 #include "timer.h"

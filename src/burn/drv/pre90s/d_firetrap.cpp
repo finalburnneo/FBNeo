@@ -689,7 +689,7 @@ static INT32 DrvInit()
 	M6502Close();
 
 	BurnYM3526Init(3000000, NULL, &SynchroniseStream, 0);
-	BurnTimerAttachM6502YM3526(1500000);
+	BurnTimerAttachYM3526(&M6502Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	MSM5205Init(0, SynchroniseStream, 375000, firetrap_adpcm_interrupt, MSM5205_S48_4B, 1);

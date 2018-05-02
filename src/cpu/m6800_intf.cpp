@@ -12,6 +12,70 @@ static M6800Ext *M6800CPUContext = NULL;
 static INT32 nM6800CyclesDone[MAX_CPU];
 INT32 nM6800CyclesTotal;
 
+cpu_core_config M6800Config =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	M6800Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	0x10000,
+	0
+};
+
+cpu_core_config HD63701Config =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	HD63701Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	0x10000,
+	0
+};
+
+cpu_core_config M6803Config =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	M6803Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	0x10000,
+	0
+};
+
+cpu_core_config NSC8105Config =
+{
+	M6800Open,
+	M6800Close,
+	M6800CheatRead,
+	M6800WriteRom,
+	M6800GetActive,
+	M6800TotalCycles,
+	M6800NewFrame,
+	NSC8105Run,		// different
+	M6800RunEnd,
+	M6800Reset,
+	0x10000,
+	0
+};
+
 static UINT8 M6800ReadByteDummyHandler(UINT16)
 {
 	return 0;
@@ -61,7 +125,7 @@ void M6800NewFrame()
 	nM6800CyclesTotal = 0;
 }
 
-static UINT8 M6800CheatRead(UINT32 a)
+UINT8 M6800CheatRead(UINT32 a)
 {
 	return M6800ReadByte(a);
 }
@@ -73,70 +137,6 @@ INT32 M6800GetActive()
 {
 	return 0;
 }
-
-static cpu_core_config M6800CheatCpuConfig =
-{
-	M6800Open,
-	M6800Close,
-	M6800CheatRead,
-	M6800WriteRom,
-	M6800GetActive,
-	M6800TotalCycles,
-	M6800NewFrame,
-	M6800Run,		// different
-	M6800RunEnd,
-	M6800Reset,
-	1<<16,
-	0
-};
-
-static cpu_core_config HD63701CheatCpuConfig =
-{
-	M6800Open,
-	M6800Close,
-	M6800CheatRead,
-	M6800WriteRom,
-	M6800GetActive,
-	M6800TotalCycles,
-	M6800NewFrame,
-	HD63701Run,		// different
-	M6800RunEnd,
-	M6800Reset,
-	1<<16,
-	0
-};
-
-static cpu_core_config M6803CheatCpuConfig =
-{
-	M6800Open,
-	M6800Close,
-	M6800CheatRead,
-	M6800WriteRom,
-	M6800GetActive,
-	M6800TotalCycles,
-	M6800NewFrame,
-	M6803Run,		// different
-	M6800RunEnd,
-	M6800Reset,
-	1<<16,
-	0
-};
-
-static cpu_core_config NSC8105CheatCpuConfig =
-{
-	M6800Open,
-	M6800Close,
-	M6800CheatRead,
-	M6800WriteRom,
-	M6800GetActive,
-	M6800TotalCycles,
-	M6800NewFrame,
-	NSC8105Run,		// different
-	M6800RunEnd,
-	M6800Reset,
-	1<<16,
-	0
-};
 
 INT32 M6800CoreInit(INT32 num, INT32 type)
 {
@@ -173,35 +173,35 @@ INT32 M6800CoreInit(INT32 num, INT32 type)
 		m6800_init();
 
 		for (INT32 i = 0; i < num; i++)
-			CpuCheatRegister(i, &M6800CheatCpuConfig);
+			CpuCheatRegister(i, &M6800Config);
 	}
 
 	if (type == CPU_TYPE_HD63701) {
 		hd63701_init();
 
 		for (INT32 i = 0; i < num; i++)
-			CpuCheatRegister(i, &HD63701CheatCpuConfig);
+			CpuCheatRegister(i, &HD63701Config);
 	}
 
 	if (type == CPU_TYPE_M6803) {
 		m6803_init();
 
 		for (INT32 i = 0; i < num; i++)
-			CpuCheatRegister(i, &M6803CheatCpuConfig);
+			CpuCheatRegister(i, &M6803Config);
 	}
 
 	if (type == CPU_TYPE_M6801) {
 		m6801_init();
 
 		for (INT32 i = 0; i < num; i++)
-			CpuCheatRegister(i, &M6803CheatCpuConfig);
+			CpuCheatRegister(i, &M6803Config);
 	}
 
 	if (type == CPU_TYPE_NSC8105) {
 		nsc8105_init();
 
 		for (INT32 i = 0; i < num; i++)
-			CpuCheatRegister(i, &NSC8105CheatCpuConfig);
+			CpuCheatRegister(i, &NSC8105Config);
 	}
 
 	return 0;

@@ -401,8 +401,23 @@ STOP            01001000  10111011          12  stop
 #include "driver.h"
 #include "state.h"
 //#include "mamedbg.h"
-#include "upd7810.h"
+#include "upd7810_intf.h"
 
+cpu_core_config upd7810Config =
+{
+	upd7810Open,
+	upd7810Close,
+	upd7810CheatRead,
+	upd7810CheatWrite,
+	upd7810GetActive,
+	upd7810TotalCycles,
+	upd7810NewFrame,
+	upd7810Run,
+	upd7810RunEnd,
+	upd7810Reset,
+	0x10000,
+	0
+};
 
 static UINT8 (*an0_func)();
 static UINT8 (*an1_func)();
@@ -478,6 +493,23 @@ static void program_write_byte_8(UINT16 address, UINT8 data)
 	}
 }
 
+void upd7810CheatWrite(UINT32 address, UINT8 data)
+{
+	if (mem[0][address/0x100]) {
+		mem[0][address/0x100][address & 0xff] = data;
+	}
+	if (mem[1][address/0x100]) {
+		mem[1][address/0x100][address & 0xff] = data;
+	}
+	if (mem[2][address/0x100]) {
+		mem[2][address/0x100][address & 0xff] = data;
+	}
+}
+
+UINT8 upd7810CheatRead(UINT32 address)
+{
+	return program_read_byte_8(address);
+}
 
 void upd7810SetReadPortHandler(UINT8 (*read_port)(UINT8))
 {
@@ -1675,6 +1707,20 @@ void upd7810SetAnfunc(INT32 select, UINT8 (*func)())
        }
 }
 
+void upd7810Open(INT32)
+{
+	// only one CPU supported
+}
+
+void upd7810Close()
+{
+
+}
+
+INT32 upd7810GetActive()
+{
+	return 0; // only one cpu supported
+}
 
 static void upd7810_init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 {
@@ -1695,6 +1741,8 @@ static void upd7810_init(INT32 (*io_callback)(INT32 ioline, INT32 state))
 	an5_func = fake_an_func;
 	an6_func = fake_an_func;
 	an7_func = fake_an_func;
+
+	CpuCheatRegister(0, &upd7810Config);
 
 #if 0
 	int cpu = cpu_getactivecpu();

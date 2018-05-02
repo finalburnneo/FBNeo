@@ -54,3 +54,12 @@ inline static INT32 HD6309TotalCycles()
 
 	return nHD6309CyclesTotal;
 }
+
+void HD6309CheatWriteRom(UINT32 a, UINT8 d); // cheat core
+UINT8 HD6309CheatRead(UINT32 a); // cheat core
+
+extern struct cpu_core_config HD6309Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachHD6309(clock)	\
+	BurnTimerAttach(&HD6309Config, clock)

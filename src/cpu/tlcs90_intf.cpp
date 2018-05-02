@@ -12,6 +12,22 @@ extern void t90_internal_registers_w(UINT16 offset, UINT8 data);
 extern UINT8 t90_internal_registers_r(UINT16 offset);
 INT32 tlcs90_init(INT32 clock);
 
+cpu_core_config tlcs90Config =
+{
+	tlcs90Open,
+	tlcs90Close,
+	tlcs90CheatRead,
+	tlcs90WriteROM, 
+	tlcs90GetActive,
+	tlcs90TotalCycles,
+	tlcs90NewFrame,
+	tlcs90Run,
+	tlcs90RunEnd,
+	tlcs90Reset,
+	0x100000,
+	0
+};
+
 UINT8 tlcs90_program_read_byte(UINT32 address)
 {
 	address &= 0xfffff;
@@ -110,10 +126,35 @@ void tlcs90MapMemory(UINT8 *ptr, UINT32 start, UINT32 end, INT32 flags)
 	}
 }
 
+UINT8 tlcs90CheatRead(UINT32 address)
+{
+	return tlcs90_program_read_byte(address);
+}
+
+void tlcs90WriteROM(UINT32 address, UINT8 data)
+{
+	if (mem[0][(address / 0x100)] != NULL) {
+		mem[0][(address / 0x100)][address & 0xff] = data;
+	}
+
+	if (mem[1][(address / 0x100)] != NULL) {
+		mem[1][(address / 0x100)][address & 0xff] = data;
+	}
+}
+
+INT32 tlcs90GetActive()
+{
+	return 0; // only one for now
+}
 
 void tlcs90Open(INT32)
 {
 	// only one cpu for now
+}
+
+void tlcs90Close()
+{
+
 }
 
 INT32 tlcs90Init(INT32, INT32 clock)
@@ -125,14 +166,10 @@ INT32 tlcs90Init(INT32, INT32 clock)
 	readio = NULL;
 	writeio = NULL;
 
+	CpuCheatRegister(0, &tlcs90Config);
+
 	return tlcs90_init(clock);
 }
-
-void tlcs90Close()
-{
-
-}
-
 
 INT32 tlcs90Exit()
 {

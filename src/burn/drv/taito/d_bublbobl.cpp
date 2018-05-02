@@ -2126,7 +2126,7 @@ static INT32 MachineInit()
 	BurnYM2203SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	BurnYM3526Init(3000000, NULL, 1);
-	BurnTimerAttachZetYM3526(6000000);
+	BurnTimerAttachYM3526(&ZetConfig, 6000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	if (BublboblCallbackFunction()) return 1;

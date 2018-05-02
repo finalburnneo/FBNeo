@@ -6,14 +6,7 @@ extern "C" {
 
 INT32 BurnTimerUpdateYM3526(INT32 nCycles);
 void BurnTimerEndFrameYM3526(INT32 nCycles);
-INT32 BurnTimerAttachSekYM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachZetYM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachM6809YM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachHD6309YM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachM6800YM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachHD63701YM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachM6803YM3526(INT32 nClockspeed);
-INT32 BurnTimerAttachM6502YM3526(INT32 nClockspeed);
+INT32 BurnTimerAttachYM3526(cpu_core_config *ptr, INT32 nClockspeed);
 
 extern "C" void BurnYM3526UpdateRequest();
 

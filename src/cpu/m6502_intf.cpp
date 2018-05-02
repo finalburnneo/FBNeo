@@ -12,6 +12,22 @@ static M6502Ext *pCurrentCPU;
 static INT32 nM6502CyclesDone[MAX_CPU];
 INT32 nM6502CyclesTotal;
 
+cpu_core_config M6502Config =
+{
+	M6502Open,
+	M6502Close,
+	M6502CheatRead,
+	M6502WriteRom,
+	M6502GetActive,
+	M6502TotalCycles,
+	M6502NewFrame,
+	M6502Run,
+	M6502RunEnd,
+	M6502Reset,
+	0x10000,
+	0
+};
+
 static UINT8 M6502ReadPortDummyHandler(UINT16)
 {
 	return 0;
@@ -62,7 +78,7 @@ void M6502NewFrame()
 	nM6502CyclesTotal = 0;
 }
 
-static UINT8 M6502CheatRead(UINT32 a)
+UINT8 M6502CheatRead(UINT32 a)
 {
 	return M6502ReadByte(a);
 }
@@ -71,22 +87,6 @@ static UINT8 decocpu7Decode(UINT16 /*address*/,UINT8 op)
 {
 	return (op & 0x13) | ((op & 0x80) >> 5) | ((op & 0x64) << 1) | ((op & 0x08) << 2);
 }
-
-static cpu_core_config M6502CheatCpuConfig =
-{
-	M6502Open,
-	M6502Close,
-	M6502CheatRead,
-	M6502WriteRom,
-	M6502GetActive,
-	M6502TotalCycles,
-	M6502NewFrame,
-	M6502Run,
-	M6502RunEnd,
-	M6502Reset,
-	1<<16,
-	0
-};
 
 INT32 M6502Init(INT32 cpu, INT32 type)
 {
@@ -202,7 +202,7 @@ INT32 M6502Init(INT32 cpu, INT32 type)
 		M6502Close();
 	}
 
-	CpuCheatRegister(cpu, &M6502CheatCpuConfig);
+	CpuCheatRegister(cpu, &M6502Config);
 
 	return 0;
 }

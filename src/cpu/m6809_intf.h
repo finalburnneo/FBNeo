@@ -44,7 +44,6 @@ void M6809SetReadOpArgHandler(UINT8 (*pHandler)(UINT16));
 INT32 M6809Scan(INT32 nAction);
 UINT16 M6809GetPC();
 
-void M6809WriteRom(UINT32 Address, UINT8 Data);
 
 inline static INT32 M6809TotalCycles()
 {
@@ -65,3 +64,12 @@ inline static INT32 M6809Idle(INT32 cycles)
 
 	return cycles;
 }
+
+void M6809WriteRom(UINT32 Address, UINT8 Data); // cheat core
+UINT8 M6809CheatRead(UINT32 Address);
+
+extern struct cpu_core_config M6809Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachM6809(clock)	\
+	BurnTimerAttach(&M6809Config, clock)

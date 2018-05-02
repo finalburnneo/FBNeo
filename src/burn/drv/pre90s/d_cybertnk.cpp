@@ -583,7 +583,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	BurnY8950Init(2, 3579545, DrvSndROM0, 0x40000, DrvSndROM1, 0x80000, NULL, &DrvSynchroniseStream, 0);
-	BurnTimerAttachZetY8950(3579545);
+	BurnTimerAttachY8950(&ZetConfig, 3579545);
 	BurnY8950SetRoute(0, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	BurnY8950SetRoute(1, BURN_SND_Y8950_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 

@@ -414,6 +414,21 @@ static void program_write_byte_32le(UINT32 a, UINT8 d)
 	}
 }
 
+cpu_core_config v60Config =
+{
+	v60Open,
+	v60Close,
+	v60CheatRead,
+	v60WriteROM,
+	v60GetActive,
+	v60TotalCycles,
+	v60NewFrame,
+	v60Run,
+	v60RunEnd,
+	v60Reset,
+	0x1000000,
+	0
+};
 
 struct cpu_info {
 	UINT8  (*mr8) (offs_t address);
@@ -735,7 +750,12 @@ INT32 v60GetActive()
 	return 0;
 }
 
-static void cheat_write_byte(UINT32 a, UINT8 d)
+UINT8 v60CheatRead(UINT32 a)
+{
+	return program_read_byte_16le(a);
+}
+
+void v60WriteROM(UINT32 a, UINT8 d)
 {
 	if (mem[0][a / page_size]) {
 		mem[0][a / page_size][a & page_mask] = d;
@@ -756,22 +776,6 @@ static void cheat_write_byte(UINT32 a, UINT8 d)
 		return v60_write8(a,d);
 	}
 }
-
-static cpu_core_config v60CheatCpuConfig =
-{
-	v60Open,
-	v60Close,
-	program_read_byte_16le,
-	cheat_write_byte,
-	v60GetActive,
-	v60TotalCycles,
-	v60NewFrame,
-	v60Run,
-	v60RunEnd,
-	v60Reset,
-	1<<24,
-	0
-};
 
 static void base_init()
 {
@@ -801,7 +805,7 @@ void v60Init()
 	PIR = 0x00006000;
 	v60.info = v60_i;
 
-	CpuCheatRegister(0, &v60CheatCpuConfig);
+	CpuCheatRegister(0, &v60Config);
 }
 
 void v70Init()

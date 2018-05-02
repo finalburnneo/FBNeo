@@ -559,7 +559,7 @@ static INT32 SauroInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 2500000, NULL, DrvSynchroniseStream1, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 //	SP0256
@@ -623,7 +623,7 @@ static INT32 TrckydocInit()
 	ZetInit(1); // Just here to let us use same reset routine
 
 	BurnYM3812Init(1, 2500000, NULL, DrvSynchroniseStream2, 0);
-	BurnTimerAttachZetYM3812(4000000);
+	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();

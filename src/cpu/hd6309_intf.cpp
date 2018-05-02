@@ -11,6 +11,22 @@ static HD6309Ext *HD6309CPUContext = NULL;
 static INT32 nHD6309CyclesDone[MAX_CPU];
 INT32 nHD6309CyclesTotal;
 
+cpu_core_config HD6309Config =
+{
+	HD6309Open,
+	HD6309Close,
+	HD6309CheatRead,
+	HD6309CheatWriteRom,
+	HD6309GetActive,
+	HD6309TotalCycles,
+	HD6309NewFrame,
+	HD6309Run,
+	HD6309RunEnd,
+	HD6309Reset,
+	0x10000,
+	0
+};
+
 static UINT8 HD6309ReadByteDummyHandler(UINT16)
 {
 	return 0;
@@ -52,31 +68,15 @@ void HD6309NewFrame()
 }
 
 
-static UINT8 HD6309CheatRead(UINT32 a)
+UINT8 HD6309CheatRead(UINT32 a)
 {
 	return HD6309ReadByte(a);
 }
 
-static void HD6309CheatWriteRom(UINT32 a, UINT8 d)
+void HD6309CheatWriteRom(UINT32 a, UINT8 d)
 {
 	HD6309WriteRom(a, d);
 }
-
-static cpu_core_config HD6309CheatCpuConfig =
-{
-	HD6309Open,
-	HD6309Close,
-	HD6309CheatRead,
-	HD6309CheatWriteRom,
-	HD6309GetActive,
-	HD6309TotalCycles,
-	HD6309NewFrame,
-	HD6309Run,
-	HD6309RunEnd,
-	HD6309Reset,
-	1<<16,
-	0
-};
 
 INT32 HD6309Init(INT32 nCPU)
 {
@@ -113,7 +113,7 @@ INT32 HD6309Init(INT32 nCPU)
 
 	//hd6309_init(); // does nothing.
 
-	CpuCheatRegister(nCPU, &HD6309CheatCpuConfig);
+	CpuCheatRegister(nCPU, &HD6309Config);
 
 	return 0;
 }

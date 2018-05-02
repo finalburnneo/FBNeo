@@ -7,15 +7,7 @@ extern "C" {
 INT32 BurnTimerUpdateYM3812(INT32 nCycles);
 void BurnTimerEndFrameYM3812(INT32 nCycles);
 void BurnTimerUpdateEndYM3812();
-INT32 BurnTimerAttachSekYM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachZetYM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachM6809YM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachHD6309YM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachM6800YM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachHD63701YM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachM6803YM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachM6502YM3812(INT32 nClockspeed);
-INT32 BurnTimerAttachH6280YM3812(INT32 nClockspeed);
+INT32 BurnTimerAttachYM3812(cpu_core_config *ptr, INT32 nClockspeed);
 
 extern "C" void BurnYM3812UpdateRequest();
 

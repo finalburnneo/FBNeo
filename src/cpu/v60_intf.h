@@ -25,3 +25,12 @@ void v60NewFrame();
 INT32 v60GetActive();
 
 INT32 v60Scan(INT32 nAction);
+
+void v60WriteROM(UINT32 a, UINT8 d);
+UINT8 v60CheatRead(UINT32 a);
+
+extern struct cpu_core_config v60Config;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachV60(clock)	\
+	BurnTimerAttach(&v60Config, clock)

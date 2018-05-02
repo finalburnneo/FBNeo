@@ -29,5 +29,14 @@ INT32 konamiCpuScan(INT32 nAction);
 
 INT32 konamiTotalCycles();
 void konamiNewFrame();
-
+void konamiRunEnd(); // not hooked up
 INT32 konamiGetActive();
+
+UINT8 konami_cheat_read(UINT32 a);					// cheat
+void konami_write_rom(UINT32 address, UINT8 data);
+
+extern cpu_core_config konamiCPUConfig;
+
+// depreciate this and use BurnTimerAttach directly!
+#define BurnTimerAttachKonami(clock)	\
+	BurnTimerAttach(&KonamiCPUConfig, clock)

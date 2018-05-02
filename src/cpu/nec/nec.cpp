@@ -103,10 +103,11 @@
 
 ****************************************************************************/
 
-#include <stdlib.h>
-#include <stdio.h>
+#include "burnint.h"
+//#include <stdlib.h>
+//#include <stdio.h>
 #include "driver.h"
-#include "state.h"
+//#include "state.h"
 #include "nec_intf.h"
 #include "bitswap.h"
 

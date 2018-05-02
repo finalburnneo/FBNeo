@@ -852,7 +852,7 @@ static INT32 DrvInit(INT32 (*pRomLoadCallback)(), INT32 encrypted_ram, INT32 sou
 		M6809Close();
 
 		BurnYM3812Init(1, 3580000, NULL, &DrvSynchroniseStream, 0);
-		BurnTimerAttachM6809YM3812(2216750);
+		BurnTimerAttachYM3812(&M6809Config, 2216750);
 		BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 	}
 

@@ -1346,7 +1346,7 @@ static INT32 HardheadInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 3000000, (0 ? &sound_type1_fm_irq_handler : NULL), 0);
-	BurnTimerAttachZetYM3812(3000000);
+	BurnTimerAttachYM3812(&ZetConfig, 3000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -1430,7 +1430,7 @@ static INT32 SparkmanInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachZetYM3812(6000000);
+	BurnTimerAttachYM3812(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -1587,7 +1587,7 @@ static INT32 StarfighInit()
 	ZetClose();
 
 	BurnYM3812Init(1, 4000000, NULL, 0);
-	BurnTimerAttachZetYM3812(6000000);
+	BurnTimerAttachYM3812(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);
@@ -1789,7 +1789,7 @@ static INT32 Hardhea2Init()
 	ZetClose();
 
 	BurnYM3812Init(1, 3000000, sound_type1_fm_irq_handler, 0);
-	BurnTimerAttachZetYM3812(6000000);
+	BurnTimerAttachYM3812(&ZetConfig, 6000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(0, 1500000, 1);

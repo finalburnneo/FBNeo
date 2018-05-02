@@ -5091,7 +5091,7 @@ static INT32 IkariCommonInit(INT32 game)
 	ZetClose();
 
 	BurnYM3526Init(4000000, &DrvFMIRQHandler_CB1, &DrvSynchroniseStream, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 000000);
+	BurnTimerAttachYM3526(&ZetConfig, 4000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 
 	BurnY8950Init(1, 4000000, NULL, 0, NULL, 0,&DrvFMIRQHandler_CB2, &DrvSynchroniseStream, 1);

@@ -16919,12 +16919,12 @@ static INT32 TheendInit()
 	
 	KonamiPPIInit();
 	
-	filter_rc_set_src_gain(0, 0.02);
-	filter_rc_set_src_gain(1, 0.02);
-	filter_rc_set_src_gain(2, 0.02);
-	filter_rc_set_src_gain(3, 0.02);
-	filter_rc_set_src_gain(4, 0.02);
-	filter_rc_set_src_gain(5, 0.02);
+	filter_rc_set_src_gain(0, 0.12);
+	filter_rc_set_src_gain(1, 0.12);
+	filter_rc_set_src_gain(2, 0.12);
+	filter_rc_set_src_gain(3, 0.12);
+	filter_rc_set_src_gain(4, 0.12);
+	filter_rc_set_src_gain(5, 0.12);
 	
 	return nRet;
 }

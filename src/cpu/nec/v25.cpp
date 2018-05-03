@@ -34,11 +34,8 @@
 
 ****************************************************************************/
 #include "burnint.h"
-//#include <stdlib.h>
-//#include <stdio.h>
-//#include <stddef.h>
+#include <stddef.h>
 #include "driver.h"
-//#include "state.h"
 #include "nec_intf.h"
 #include "bitswap.h"
 
@@ -627,7 +624,7 @@ void v25Scan(int cpu, int nAction)
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = (unsigned char*)nec_state;
-	//	ba.nLen	  = STRUCT_SIZE_HELPER(nec_state_t, stop_run); // iq_132???
+		ba.nLen	  = STRUCT_SIZE_HELPER(nec_state_t, stop_run);
 		ba.szName = szText;
 		BurnAcb(&ba);
 	}

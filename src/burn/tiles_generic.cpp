@@ -27,34 +27,10 @@ INT32 GenericTilesInit()
 	
 	BurnDrvGetAspect(&xAspect, &yAspect);
 
-#if defined FBA_DEBUG
-	if (xAspect > 4 || yAspect > 4) {
-		bprintf (PRINT_ERROR, _T("Warning: screen aspect ratio may be incorrect (%d:%d)!"), xAspect,yAspect);
-	}
-#endif
-
 	if (BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) {
 		BurnDrvGetVisibleSize(&nScreenHeight, &nScreenWidth);
-
-#if defined FBA_DEBUG
-		if (nScreenHeight < nScreenWidth) {
-			bprintf (PRINT_ERROR, _T("Warning: screen width greater than height for ORIENTATION_VERTICAL driver (%dx%d)!"),nScreenWidth,nScreenHeight);
-		}
-		if (xAspect > yAspect) {
-			bprintf (PRINT_ERROR, _T("Warning: screen aspect ratio may be incorrect for ORIENTATION_VERTICAL driver (%d:%d)!"), xAspect,yAspect);
-		}
-#endif
 	} else {
 		BurnDrvGetVisibleSize(&nScreenWidth, &nScreenHeight);
-
-#if defined FBA_DEBUG
-		if (nScreenWidth < nScreenHeight) {
-			bprintf (PRINT_ERROR, _T("Warning: screen height greater than widtht for horizontally oriented driver (%dx%d)!"),nScreenWidth,nScreenHeight);
-		}
-		if (yAspect > xAspect) {
-			bprintf (PRINT_ERROR, _T("Warning: screen aspect ratio may be incorrect for horizontally oriented driver (%d:%d)!"), xAspect,yAspect);
-		}
-#endif
 	}
 
 	nScreenWidthMax = nScreenWidth;
@@ -4729,6 +4705,955 @@ void RenderCustomTile_Prio_TransMask_FlipXY_Clip(UINT16* pDestDraw, INT32 nWidth
 #undef PLOTPIXEL_PRIO_FLIPX
 #undef PLOTPIXEL_PRIO_MASK
 #undef PLOTPIXEL_PRIO_MASK_FLIPX
+
+/*================================================================================================
+Merged tile functions (flipping/clipping merged)
+================================================================================================*/
+
+
+void Draw8x8Tile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < -7) || (StartX >= nScreenWidth) || (StartY < -7) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 8) || (StartX >= (nScreenWidth - 7)) || (StartY < 8) | (StartY >= (nScreenHeight - 7)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void Draw8x8MaskTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < -7) || (StartX >= nScreenWidth) || (StartY < -7) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 8) || (StartX >= (nScreenWidth - 7)) || (StartY < 8) | (StartY >= (nScreenHeight - 7)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Mask_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Mask_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Mask_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Mask_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Mask_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Mask_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Mask_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Mask(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void Draw8x8PrioTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < -7) || (StartX >= nScreenWidth) || (StartY < -7) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 8) || (StartX >= (nScreenWidth - 7)) || (StartY < 8) | (StartY >= (nScreenHeight - 7)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void Draw8x8PrioMaskTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < -7) || (StartX >= nScreenWidth) || (StartY < -7) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 8) || (StartX >= (nScreenWidth - 7)) || (StartY < 8) | (StartY >= (nScreenHeight - 7)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_Mask_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_Mask_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_Mask_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_Mask_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_Mask_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_Mask_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render8x8Tile_Prio_Mask_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render8x8Tile_Prio_Mask(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void Draw16x16Tile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < -15) || (StartX >= nScreenWidth) || (StartY < -15) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 16) || (StartX >= (nScreenWidth - 15)) || (StartY < 16) | (StartY >= (nScreenHeight - 15)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void Draw16x16MaskTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < -15) || (StartX >= nScreenWidth) || (StartY < -15) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 16) || (StartX >= (nScreenWidth - 15)) || (StartY < 16) | (StartY >= (nScreenHeight - 15)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Mask_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Mask_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Mask_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Mask_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Mask_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Mask_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Mask_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Mask(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void Draw16x16PrioTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < -15) || (StartX >= nScreenWidth) || (StartY < -15) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 16) || (StartX >= (nScreenWidth - 15)) || (StartY < 16) | (StartY >= (nScreenHeight - 15)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void Draw16x16PrioMaskTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < -15) || (StartX >= nScreenWidth) || (StartY < -15) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 16) || (StartX >= (nScreenWidth - 15)) || (StartY < 16) | (StartY >= (nScreenHeight - 15)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_Mask_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_Mask_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_Mask_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_Mask_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_Mask_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_Mask_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render16x16Tile_Prio_Mask_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render16x16Tile_Prio_Mask(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void Draw32x32Tile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < -31) || (StartX >= nScreenWidth) || (StartY < -31) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 32) || (StartX >= (nScreenWidth - 31)) || (StartY < 32) | (StartY >= (nScreenHeight - 31)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void Draw32x32MaskTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < -31) || (StartX >= nScreenWidth) || (StartY < -31) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 32) || (StartX >= (nScreenWidth - 31)) || (StartY < 32) | (StartY >= (nScreenHeight - 31)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Mask_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Mask_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Mask_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Mask_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Mask_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Mask_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Mask_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Mask(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void Draw32x32PrioTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < -31) || (StartX >= nScreenWidth) || (StartY < -31) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 32) || (StartX >= (nScreenWidth - 31)) || (StartY < 32) | (StartY >= (nScreenHeight - 31)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void Draw32x32PrioMaskTile(UINT16 *pDestDraw, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < -31) || (StartX >= nScreenWidth) || (StartY < -31) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < 32) || (StartX >= (nScreenWidth - 31)) || (StartY < 32) | (StartY >= (nScreenHeight - 31)))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_Mask_FlipXY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_Mask_FlipY_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_Mask_FlipX_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_Mask_Clip(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_Mask_FlipXY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_Mask_FlipY(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				Render32x32Tile_Prio_Mask_FlipX(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				Render32x32Tile_Prio_Mask(pDestDraw, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void DrawCustomTile(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < (1-nWidth)) || (StartX >= nScreenWidth) || (StartY < (1-nHeight)) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < nWidth) || (StartX >= (nScreenWidth - (nWidth - 1))) || (StartY < nHeight) | (StartY >= (nScreenHeight - (nHeight - 1))))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_FlipXY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_FlipY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_FlipX_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_FlipXY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_FlipY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_FlipX(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void DrawCustomMaskTile(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile)
+{
+	if ((StartX < (1-nWidth)) || (StartX >= nScreenWidth) || (StartY < (1-nHeight)) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < nWidth) || (StartX >= (nScreenWidth - (nWidth - 1))) || (StartY < nHeight) | (StartY >= (nScreenHeight - (nHeight - 1))))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Mask_FlipXY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Mask_FlipY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Mask_FlipX_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Mask_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Mask_FlipXY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Mask_FlipY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Mask_FlipX(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Mask(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, pTile);		
+			}
+		}
+	}
+}
+
+void DrawCustomPrioTile(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < (1-nWidth)) || (StartX >= nScreenWidth) || (StartY < (1-nHeight)) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < nWidth) || (StartX >= (nScreenWidth - (nWidth - 1))) || (StartY < nHeight) | (StartY >= (nScreenHeight - (nHeight - 1))))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_FlipXY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_FlipY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_FlipX_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_FlipXY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_FlipY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_FlipX(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
+
+void DrawCustomPrioMaskTile(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 nTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile)
+{
+	if ((StartX < (1-nWidth)) || (StartX >= nScreenWidth) || (StartY < (1-nHeight)) | (StartY >= nScreenHeight))
+	{
+		return;
+	}
+
+	if ((StartX < nWidth) || (StartX >= (nScreenWidth - (nWidth - 1))) || (StartY < nHeight) | (StartY >= (nScreenHeight - (nHeight - 1))))
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_Mask_FlipXY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_Mask_FlipY_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_Mask_FlipX_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_Mask_Clip(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+	else
+	{
+		if (FlipY)
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_Mask_FlipXY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_Mask_FlipY(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+		else
+		{
+			if (FlipX)
+			{
+				RenderCustomTile_Prio_Mask_FlipX(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);	
+			}
+			else
+			{
+				RenderCustomTile_Prio_Mask(pDestDraw, nWidth, nHeight, nTileNumber, StartX, StartY, nTilePalette, nColourDepth, nMaskColour, nPaletteOffset, nPriority, pTile);		
+			}
+		}
+	}
+}
 
 /*================================================================================================
 Zoomed Tile Functions

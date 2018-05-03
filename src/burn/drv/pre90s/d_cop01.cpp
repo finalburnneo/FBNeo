@@ -5,7 +5,6 @@
 #include "z80_intf.h"
 #include "ay8910.h"
 #include "burn_ym3526.h"
-#include "dac.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -14,7 +13,6 @@ static UINT8 *RamEnd;
 static UINT8 *DrvZ80ROM0;
 static UINT8 *DrvZ80ROM1;
 static UINT8 *DrvProtData;
-static UINT8 *DrvProtRAM;
 static UINT8 *DrvGfxROM0;
 static UINT8 *DrvGfxROM1;
 static UINT8 *DrvGfxROM2;
@@ -31,22 +29,8 @@ static UINT8 DrvRecalc;
 static UINT8 video_registers[4];
 static UINT8 soundlatch;
 static UINT8 timer_pulse;
-
-// mightguy protection stuff
-static UINT8  protection_command;
-static UINT8  prot_rom_op;
-static UINT16 prot_rom_address;
-static UINT16 prot_adj_address;
-static UINT16 prot_mgtimer;
-static UINT32 prot_mgtimer_count;
-static UINT8  prot_timer_reg;
-static UINT16 prot_dac_start_address;
-static UINT16 prot_dac_current_address;
-static UINT16 prot_dac_freq;
-static UINT8  prot_dac_playing;
-static UINT8  prot_const90;
-
-static UINT8 *dac_intrl_table; // dac freq table
+static UINT8 protection_command;
+static UINT8 protection_registers[6];
 
 static UINT8 flipscreen;
 static INT32 mightguy = 0;
@@ -306,83 +290,23 @@ static void __fastcall cop01_sound_write_port(UINT16 port, UINT8 data)
 	}	
 }
 
-static void mightguy_prot_mgtimer_cb()
-{
-	prot_timer_reg = 1;
-	prot_mgtimer = 0;
-}
-
-static void mightguy_prot_dac_clk()
-{
-	if (prot_dac_playing) {
-		UINT8 data = DrvProtData[prot_dac_current_address++];
-		DACSignedWrite(0, data);
-		prot_dac_current_address &= 0x1fff;
-		if (data == 0x80) prot_dac_playing = 0;
-	}
-}
-
-static void dac_recalc_freq()
-{
-	INT32 LastIdx = -1;
-	INT32 Idx = 0;
-	const INT32 interleave = 256;
-
-	for (INT32 i = 0; i < interleave; i++)
-	{
-		Idx = (INT32)round(((double)prot_dac_freq / 60 / (double)interleave) * (double)i);
-
-		if (Idx != LastIdx) {
-			dac_intrl_table[i] = 1;
-		} else dac_intrl_table[i] = 0;
-		LastIdx = Idx;
-	}
-}
-
-static void mightguy_prot_data_write(UINT8 data)
-{
-	switch (protection_command)
-	{
-		case 0x32: {
-			prot_rom_op = data;
-			if (data == 2) {
-				prot_dac_current_address = prot_dac_start_address & 0x1fff;
-				prot_dac_playing = 1;
-			};
-			break;
-		}
-		case 0x33: prot_rom_address &= 0x00ff; prot_rom_address |= data << 8; break;
-		case 0x34: prot_rom_address &= 0xff00; prot_rom_address |= data; break;
-		case 0x35: prot_adj_address &= 0x00ff; prot_adj_address |= data << 8; break;
-		case 0x36: prot_adj_address &= 0xff00; prot_adj_address |= data; break;
-		case 0x40: prot_mgtimer = 0x17*160; prot_mgtimer_count = 0; break;
-		case 0x41: prot_mgtimer = 0; prot_timer_reg = 0; break;
-		case 0x51: prot_dac_start_address &= 0x00ff; prot_dac_start_address |= data << 8; break;
-		case 0x52: prot_dac_start_address &= 0xff00; prot_dac_start_address |= data; break;
-		case 0x18: prot_dac_freq = data*18; dac_recalc_freq(); break;
-		case 0x90: prot_const90 = data; break;
-#if 0
-		case 0x42: break;
-		case 0x43: break;
-		case 0x92: break;
-#endif
-	    default: DrvProtRAM[protection_command] = data; bprintf(0, _T("%02X %02X\n"), protection_command, data); break;
-	}
-}
-
 static UINT8 mightguy_prot_data_read()
 {
-	switch (protection_command)
-	{
-		case 0x37: {
-			UINT8 prot_adj = (0x43 - DrvProtData[prot_adj_address]) & 0xff;
-			return DrvProtData[prot_rom_address & 0x1fff] - prot_adj;
-		}
-		case 0x41: return prot_timer_reg;
-		case 0x90: return prot_const90;
+	if (protection_command == 0x41)
+		return (ZetTotalCycles() / 0x34) & 1; // wrong
 
-		default: return DrvProtRAM[protection_command];
+	if (protection_command == 0x37)
+	{
+		UINT32 prot_offset = (protection_registers[1] * 256) + protection_registers[2];
+
+		return DrvProtData[prot_offset & 0x1fff] - 0x82; // minus value correct?
 	}
+
+	if (protection_command == 0x92)
+		return 1;
+
+	if (protection_command == 0x94)
+		return 0;
 
 	return 0;
 }
@@ -425,7 +349,10 @@ static void __fastcall mightguy_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x03:
-			mightguy_prot_data_write(data);
+			if (protection_command > 0x31 && protection_command < 0x38)
+			{
+				protection_registers[protection_command - 0x32] = data;
+			}
 		return;
 	}
 }
@@ -445,6 +372,11 @@ static tilemap_callback( bg )
 static tilemap_callback( fg )
 {
 	TILE_SET_INFO(1, DrvFgRAM[offs], 0, 0);
+}
+
+static INT32 SynchroniseStream(INT32 nSoundRate)
+{
+	return (INT64)ZetTotalCycles() * nSoundRate / 3000000;
 }
 
 static INT32 DrvDoReset()
@@ -467,23 +399,13 @@ static INT32 DrvDoReset()
 	}
 	else
 	{
-		DACReset();
 		BurnYM3526Reset();
 	}
 
-	soundlatch = 0;
+	soundlatch   = 0;
 	timer_pulse = 0;
-
-	protection_command = 0xff;
-	prot_rom_address = 0;
-	prot_adj_address = 0;
-	prot_rom_op = 0;
-	prot_const90 = 0x18; // fixes coin sample if inserted at first title screen
-	prot_dac_current_address = prot_dac_start_address = 0;
-	prot_dac_freq = 4000;
-	prot_dac_playing = 0;
-	prot_timer_reg = 0;
-
+	protection_command = 0;
+	memset (protection_registers, 0, 6);
 	memset (video_registers, 0, 4);
 
 	return 0;
@@ -513,11 +435,8 @@ static INT32 MemIndex()
 	DrvBgRAM		= Next; Next += 0x0010000;
 	DrvFgRAM		= Next; Next += 0x0004000;
 	DrvSprRAM		= Next; Next += 0x0001000;
-	DrvProtRAM      = Next; Next += 0x0000100;
 
 	RamEnd			= Next;
-
-	dac_intrl_table = Next; Next += 0x0000100;
 
 	MemEnd			= Next;
 
@@ -617,11 +536,6 @@ static INT32 Cop01Init()
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (4000000 / (nBurnFPS / 100.0000))));
-}
-
 static INT32 MightguyInit()
 {
 	mightguy = 1;
@@ -683,12 +597,9 @@ static INT32 MightguyInit()
 	ZetSetInHandler(cop01_sound_read_port);
 	ZetClose();
 
-	BurnYM3526Init(4000000, NULL, 0);
-	BurnTimerAttachYM3526(&ZetConfig, 4000000);
+	BurnYM3526Init(3000000, NULL, &SynchroniseStream, 0);
+	BurnTimerAttachZetYM3526(3000000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
-
-	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 64, 32);
@@ -729,7 +640,6 @@ static INT32 DrvExit()
 	}
 	else
 	{
-		DACExit();
 		BurnYM3526Exit();
 	}
 
@@ -783,19 +693,7 @@ static void draw_sprites()
 
 		if (code & 0x80) code += bank;
 
-		if (flipy) {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipXY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_FlipY_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			}
-		} else {
-			if (flipx) {
-				Render16x16Tile_Mask_FlipX_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			} else {
-				Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy - 16, color, 4, 0, 0x200, DrvGfxROM2);
-			}
-		}
+		Draw16x16MaskTile(pTransDraw, code, sx, sy - 16, flipx, flipy, color, 4, 0, 0, DrvGfxROM2);
 	}
 }
 
@@ -888,8 +786,8 @@ static INT32 MightguyFrame()
 		}
 	}
 
-	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 6000000 / 60, 4000000 / 60 };
+	INT32 nInterleave = 10;
+	INT32 nCyclesTotal[2] = { 6000000 / 60, 3000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -900,20 +798,7 @@ static INT32 MightguyFrame()
 		ZetClose();
 
 		ZetOpen(1);
-		INT32 lastcyc = ZetTotalCycles();
 		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[1] / nInterleave));
-
-		if (dac_intrl_table[i]) { // clock-in the dac @ prot_dac_freq (see dac_recalc_freq())
-			mightguy_prot_dac_clk();
-		}
-
-		if (prot_mgtimer) {
-			prot_mgtimer_count += ZetTotalCycles() - lastcyc;
-			if (prot_mgtimer_count >= prot_mgtimer) {
-				mightguy_prot_mgtimer_cb();
-			}
-		}
-
 		ZetClose();
 	}
 
@@ -923,7 +808,6 @@ static INT32 MightguyFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM3526Update(pBurnSoundOut, nBurnSoundLen);
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -959,26 +843,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 		else
 		{
-			DACScan(nAction, pnMin);
 			BurnYM3526Scan(nAction, pnMin);
 		}
 
 		SCAN_VAR(timer_pulse);
+		SCAN_VAR(protection_command);
+		SCAN_VAR(protection_registers);
 		SCAN_VAR(video_registers);
 		SCAN_VAR(soundlatch);
-
-		SCAN_VAR(protection_command);
-		SCAN_VAR(prot_rom_op);
-		SCAN_VAR(prot_rom_address);
-		SCAN_VAR(prot_adj_address);
-		SCAN_VAR(prot_mgtimer);
-		SCAN_VAR(prot_mgtimer_count);
-		SCAN_VAR(prot_timer_reg);
-		SCAN_VAR(prot_dac_start_address);
-		SCAN_VAR(prot_dac_current_address);
-		SCAN_VAR(prot_dac_freq);
-		SCAN_VAR(prot_dac_playing);
-		SCAN_VAR(prot_const90);
 	}
 
 	return 0;
@@ -1111,7 +983,7 @@ STD_ROM_FN(mightguy)
 
 struct BurnDriver BurnDrvMightguy = {
 	"mightguy", NULL, NULL, NULL, "1986",
-	"Mighty Guy\0", "Sound issues", "Nichibutsu", "Miscellaneous",
+	"Mighty Guy\0", "Bad Sound", "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
 	NULL, mightguyRomInfo, mightguyRomName, NULL, NULL, Cop01InputInfo, MightguyDIPInfo,

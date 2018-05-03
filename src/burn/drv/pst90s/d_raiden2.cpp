@@ -802,7 +802,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 			cop_status |= 0x8000;
 			cop_angle = 0;
 		} else {
-			cop_angle = (UINT16)(atan(double(dx)/double(dy)) * 128 / M_PI);
+			cop_angle = (INT32)(atan(double(dx)/double(dy)) * 128 / M_PI);
 			if(dy<0)
 				cop_angle += 0x80;
 		}
@@ -822,7 +822,7 @@ static void cop_cmd_write(INT32 offset, UINT16 data)
 			cop_status |= 0x8000;
 			cop_angle = 0;
 		} else {
-			cop_angle = (UINT16)(atan(double(dx)/double(dy)) * 128 / M_PI);
+			cop_angle = (INT32)(atan(double(dx)/double(dy)) * 128 / M_PI);
 			if(dy<0)
 				cop_angle += 0x80;
 		}

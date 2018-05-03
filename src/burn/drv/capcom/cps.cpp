@@ -1999,7 +1999,7 @@ INT32 CpsInit()
 
 	if (!nCPS68KClockspeed) {
 		if (!(Cps & 1)) {
-			nCPS68KClockspeed = 8850000; // 73.75% of 12MHz to account for wait states, as per MAME
+			nCPS68KClockspeed = 11800000;
 		} else {
 			nCPS68KClockspeed = 10000000;
 		}

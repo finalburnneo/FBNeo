@@ -227,8 +227,8 @@ UINT32 VezReadLong(UINT32 a)
 	if ( p )
 		return *(p + (a / 4));
 	else
-		return VezCurrentCPU->ReadHandler(a) + (VezCurrentCPU->ReadHandler(a+1) * 0x100) + 
-			(VezCurrentCPU->ReadHandler(a+2) * 0x10000) + (VezCurrentCPU->ReadHandler(a+3) * 0x1000000);
+		return VezCurrentCPU->ReadHandler(a) + (VezCurrentCPU->ReadHandler(a+1) << 8) +
+			(VezCurrentCPU->ReadHandler(a+2) << 16) + (VezCurrentCPU->ReadHandler(a+3) << 24);
 }
 
 void VezCheatWrite(UINT32 a, UINT8 d)

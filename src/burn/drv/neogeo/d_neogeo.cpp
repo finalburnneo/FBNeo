@@ -3663,6 +3663,8 @@ static INT32 fatfury2Init()
 	NeoCallbackActive->pInstallHandlers = fatfury2InstallHanders;
 	NeoCallbackActive->pScan = fatfury2Scan;
 
+	fatfury2mode = 1;
+
 	return NeoInit();
 }
 

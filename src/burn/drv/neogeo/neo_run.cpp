@@ -226,6 +226,7 @@ static INT32 nSoundPrevReply;
 #endif
 
 INT32 s1945pmode = 0;
+INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
 
 static INT32 nInputSelect;
 static UINT8* NeoInputBank;
@@ -1489,7 +1490,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 				if (NeoCallbackActive && NeoCallbackActive->pBankswitch) {
 					NeoCallbackActive->pBankswitch();
 				} else {
-					if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) != HARDWARE_SNK_GAMBLING) {
+					if ((BurnDrvGetHardwareCode() & HARDWARE_SNK_CONTROLMASK) != HARDWARE_SNK_GAMBLING && fatfury2mode == 0) {
 						SekOpen(0);
 						SekMapMemory(Neo68KROMActive + nNeo68KROMBank, 0x200000, 0x2FFFFF, MAP_ROM);
 						SekClose();
@@ -4280,6 +4281,7 @@ INT32 NeoExit()
 	NeoCDInfo_Exit();
 
 	s1945pmode = 0;
+	fatfury2mode = 0;
 
 	return 0;
 }

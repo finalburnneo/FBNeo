@@ -89,7 +89,7 @@ static struct BurnInputInfo Drv2bInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"diag"		},
+	{"Test SW",		BIT_DIGITAL,	DrvJoy3 + 2,	"diag"		},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 1,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
@@ -121,7 +121,7 @@ static struct BurnInputInfo Drv3bInputList[] = {
 
 	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
 	{"Service",		BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 2,	"diag"		},
+	{"Test SW",		BIT_DIGITAL,	DrvJoy3 + 2,	"diag"		},
 	{"Tilt",		BIT_DIGITAL,	DrvJoy3 + 1,	"tilt"		},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},

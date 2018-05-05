@@ -3352,10 +3352,8 @@ void OutrunRender()
 
 void ShangonRender()
 {
-	if (!System16VideoEnable) {
-		BurnTransferClear();
-		return;
-	}
+	// System16VideoEnable is ignored for Shangon, enabling it will break attract mode.
+	BurnTransferClear();
 
 	System16BUpdateTileValues();
 	System16BAltCreateTileMaps();

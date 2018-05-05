@@ -4086,14 +4086,23 @@ static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min,
 
 static UINT8 ananice(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax)
 {
+	INT32 DeadZone = (deadzone) ? 10 : 0;
 	INT16 Temp = (reversed) ? (0x7f - (anaval / 16)) : (0x7f + (anaval / 16));  // - for reversed, + for normal
-	if (Temp < 0x3f) Temp = 0x3f;       // clamping for happy scalerange()
-	if (Temp > 0xbf) Temp = 0xbf;
-	Temp = scalerange(Temp, 0x3f, 0xbf, scalemin, scalemax);
 
-	// deadzones
-	// 0x7f is center, 0x01 right, 0xfe left.  0x7f +-10 is noise.
-	if (deadzone && !(Temp < 0x7f-10 || Temp > 0x7f+10)) Temp = 0x7f;
+	if (deadzone) { // deadzones
+		// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
+		if (!(Temp < 0x7f-DeadZone || Temp > 0x7f+DeadZone)) {
+			Temp = 0x7f; // we hit a dead-zone, return mid-range
+		} else {
+			// so we don't jump between 0x7f (center) and next value
+			if (Temp < 0x7f-DeadZone) Temp += DeadZone;
+			else if (Temp > 0x7f+DeadZone) Temp -= DeadZone;
+		}
+    }
+
+	if (Temp < 0x3f + DeadZone) Temp = 0x3f + DeadZone;       // clamping for happy scalerange()
+	if (Temp > 0xbe - DeadZone) Temp = 0xbe - DeadZone;
+	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbe - DeadZone, scalemin, scalemax);
 
 	return Temp;
 }
@@ -4313,7 +4322,7 @@ void __fastcall Racingb68K1WriteWord(UINT32 a, UINT16 d)
 
 static UINT8 SciSteerRead(INT32 Offset)
 {
-	INT32 Steer = ananice(TaitoAnalogPort0, 0, 1, 0x20, 0xe0) - 0x7f;
+	INT32 Steer = 0xFF80 + ananice(TaitoAnalogPort0, 0, 1, 0x20, 0xe0);
 
 	switch (Offset) {
 		case 0x04: {

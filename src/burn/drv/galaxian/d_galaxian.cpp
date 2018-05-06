@@ -15320,7 +15320,7 @@ static INT32 TurtlesInit()
 	GalPostLoadCallbackFunction = MapTurtles;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = TurtlesDrawBackground;
@@ -15348,7 +15348,7 @@ static INT32 TurpinsInit()
 	GalPostLoadCallbackFunction = TurpinsPostLoad;
 	GalSoundType = GAL_SOUND_HARDWARE_TYPE_KONAMIAY8910;
 	
-	nRet = GalInit();
+	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 	
 	GalRenderBackgroundFunction = TurtlesDrawBackground;

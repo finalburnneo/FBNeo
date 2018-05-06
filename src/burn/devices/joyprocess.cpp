@@ -1,6 +1,7 @@
 #include "burnint.h"
 #include "joyprocess.h"
 
+// Digital Processing
 void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags)
 { // limitations: 4 players max., processes 8-bit inputs only!
 	static INT32 fourway[4]      = { 0, 0, 0, 0 }; // 4-way buffer
@@ -60,4 +61,32 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 			if (bits < 9) ((UINT8*)output)[j] ^= (input[j][i] & 1) << i;
 		}
 	}
+}
+
+// Analog Processing
+static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
+	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
+UINT8 ProcessAnalog(INT16 anaval, INT32 reversed, INT32 deadzone, UINT8 scalemin, UINT8 scalemax)
+{
+	INT32 DeadZone = (deadzone) ? 10 : 0;
+	INT16 Temp = (reversed) ? (0x7f - (anaval / 16)) : (0x7f + (anaval / 16));  // - for reversed, + for normal
+
+	if (deadzone) { // deadzones
+		// 0x7f is center, 0x3f right, 0xbe left.  0x7f +-10 is noise.
+		if (!(Temp < 0x7f-DeadZone || Temp > 0x7f+DeadZone)) {
+			Temp = 0x7f; // we hit a dead-zone, return mid-range
+		} else {
+			// so we don't jump between 0x7f (center) and next value after deadzone
+			if (Temp < 0x7f-DeadZone) Temp += DeadZone;
+			else if (Temp > 0x7f+DeadZone) Temp -= DeadZone;
+		}
+    }
+
+	if (Temp < 0x3f + DeadZone) Temp = 0x3f + DeadZone; // clamping for happy scalerange()
+	if (Temp > 0xbe - DeadZone) Temp = 0xbe - DeadZone;
+	Temp = scalerange(Temp, 0x3f + DeadZone, 0xbe - DeadZone, scalemin, scalemax);
+
+	return Temp;
 }

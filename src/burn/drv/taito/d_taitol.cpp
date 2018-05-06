@@ -1900,29 +1900,12 @@ static void __fastcall horshoes_main_write(UINT16 address, UINT8 data)
 }
 
 // horshoes trackball stuff
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-static UINT16 ananice(INT16 anaval)
-{
-	if (anaval > 1024) anaval = 1024;
-	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion
-	UINT8 Temp = 0x7f - (anaval >> 4);
-	if (Temp < 0x01) Temp = 0x01;
-	if (Temp > 0xfe) Temp = 0xfe;
-	UINT16 pad = scalerange(Temp, 0x3f, 0xc0, 0x01, 0xff);
-	if (pad > 0xff) pad = 0xff;
-	if (pad > 0x75 && pad < 0x85) pad = 0x7f;
-	return pad;
-}
-
 static void trackball_tick()
 {
-	INT32 padx = ananice(DrvAnalogPort0) - 0x7f;
+	INT32 padx = ProcessAnalog(DrvAnalogPort0, 1, 1, 0x00, 0xff) - 0x80;
 	track_x -= padx/2;  // (-=) reversed :)
 
-	INT32 pady = ananice(DrvAnalogPort1) - 0x7f;
+	INT32 pady = ProcessAnalog(DrvAnalogPort1, 1, 1, 0x00, 0xff) - 0x80;
 	track_y += pady/2;
 }
 
@@ -1938,22 +1921,22 @@ static UINT8 __fastcall horshoes_main_read(UINT16 address)
 			return BurnYM2203Read(0, address & 1);
 
 		case 0xa800:
-			return (track_y - track_y_last) & 0xff; // tracky_lo_r
+			return (track_y - track_y_last) & 0xff;
 
-		case 0xa802: track_y_last = track_y;
-			return 0; // tracky_reset_r
+		case 0xa802: track_y_last = track_y; // reset y
+			return 0;
 
-		case 0xa803: track_x_last = track_x;
-			return 0; // trackx_reset_r
+		case 0xa803: track_x_last = track_x; // reset x
+			return 0;
 
 		case 0xa804:
-			return (track_y - track_y_last) >> 8; // tracky_hi_r
+			return (track_y - track_y_last) >> 8;
 
 		case 0xa808:
-			return (track_x - track_x_last) & 0xff; // trackx_lo_r
+			return (track_x - track_x_last) & 0xff;
 
 		case 0xa80c:
-			return (track_x - track_x_last) >> 8; // trackx_hi_r
+			return (track_x - track_x_last) >> 8;
 	}
 
 	return fhawk_main_read(address);

@@ -350,41 +350,22 @@ static void __fastcall systeme_main_write(UINT16 address, UINT8 data)
 	}
 }
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-
-static UINT8 scale_wheel(UINT32 PaddlePortnum) {
-	UINT8 Temp;
-
-	Temp = 0x7f + (PaddlePortnum >> 4);
-	if (Temp < 0x01) Temp = 0x01;
-	if (Temp > 0xfe) Temp = 0xfe;
-	Temp = scalerange(Temp, 0x3f, 0xbe, 0x20, 0xe0);
-	return Temp;
-}
-
 static UINT8 scale_accel(UINT32 PaddlePortnum) {
-	UINT8 Temp;
-
-	Temp = PaddlePortnum >> 4;
+	UINT8 Temp = PaddlePortnum >> 4;
 	if (Temp < 0x08) Temp = 0x00; // sometimes default for digital button -> analog is "1"
 	if (Temp > 0x30) Temp = 0xff;
 
 	return Temp;
 }
 
-
 static UINT8 __fastcall hangonjr_port_f8_read(UINT8 port)
 {
 	UINT8 temp = 0;
-	//bprintf(0, _T("Wheel %.04X  Accel %.04X\n"), scale_wheel(DrvWheel), scale_accel(DrvAccel));
 
-	if (port_fa_last == 0x08)  /* 0000 1000 */ /* Angle */
-		temp = scale_wheel(DrvWheel);
+	if (port_fa_last == 0x08)
+		temp = ProcessAnalog(DrvWheel, 0, 0, 0x20, 0xe0);
 
-	if (port_fa_last == 0x09)  /* 0000 1001 */ /* Accel */
+	if (port_fa_last == 0x09)
 		temp = scale_accel(DrvAccel);
 
 	return temp;

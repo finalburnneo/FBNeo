@@ -1003,18 +1003,9 @@ static INT32 AnalogClipEx(INT16 p)
 	return p;
 }
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 static UINT8 luckywldsteer()
 {
-	UINT8 Temp = 0x7f + (AnalogClip(DrvAnalogPort0) >> 4);
-	UINT8 Temp2 = 0;
-
-	Temp2 = scalerange(Temp, 0x3f, 0xc0, 0x00, 0xff);
-
-	return Temp2;
+	return ProcessAnalog(DrvAnalogPort0, 0, 0, 0x00, 0xff);
 }
 
 static void mcu_analog_ctrl_write(UINT8 data)

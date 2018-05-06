@@ -1243,18 +1243,9 @@ static struct BurnDIPInfo HcrashDIPList[]=
 
 STDDIPINFO(Hcrash)
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
 static UINT8 konamigt_read_wheel()
 {
-	INT16 Temp = 0x80 + (DrvAnalogPort0 / 16);  // - for reversed, + for normal
-	if (Temp < 0x3f) Temp = 0x3f;       // clamping for happy scalerange()
-	if (Temp > 0xbf) Temp = 0xbf;
-	Temp = scalerange(Temp, 0x3f, 0xbf, 0x00, 0x7f);
-
-	return Temp;
+	return ProcessAnalog(DrvAnalogPort0, 0, 0, 0x00, 0x7f);
 }
 
 static UINT16 konamigt_read_analog(int /*Offset*/)

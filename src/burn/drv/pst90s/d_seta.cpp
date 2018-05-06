@@ -4370,26 +4370,9 @@ UINT8 __fastcall kamenrid_read_byte(UINT32 address)
 //-----------------------------------------------------------------------------------------------------------------------------------
 // krzybowl, madshark
 
-static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-static UINT16 ananice(INT16 anaval)
-{
-	if (anaval > 1024) anaval = 1024;
-	if (anaval < -1024) anaval = -1024; // clamp huge values so don't overflow INT8 conversion
-	UINT8 Temp = 0x7f - (anaval >> 4); // convert to INT8, but store in UINT8
-	if (Temp < 0x01) Temp = 0x01;
-	if (Temp > 0xfe) Temp = 0xfe;
-	UINT16 pad = scalerange_skns(Temp, 0x3f, 0xc0, 0x01, 0xff);
-	if (pad > 0xff) pad = 0xff;
-	if (pad > 0x75 && pad < 0x85) pad = 0x7f; // dead zone
-	return pad;
-}
-
 static void trackball_input_tick() // krzybowl, usclssic
 {
-	INT32 padx = ananice(DrvAnalogPort0) - 0x7f;
+	INT32 padx = ProcessAnalog(DrvAnalogPort0, 1, 1, 0x01, 0xff) - 0x7f;
 
 	if (usclssic) {
 		padx /= 16;
@@ -4405,7 +4388,7 @@ static void trackball_input_tick() // krzybowl, usclssic
 		track_x += padx;
 	}
 
-	INT32 pady = ananice(DrvAnalogPort1) - 0x7f;
+	INT32 pady = ProcessAnalog(DrvAnalogPort1, 1, 1, 0x01, 0xff) - 0x7f;
 
 	if (usclssic) {
 		pady /= 16;

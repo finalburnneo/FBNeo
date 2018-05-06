@@ -66,9 +66,11 @@ static INT32 sprite_kludge_y;
 static UINT8 DrvJoy1[32];
 static UINT8 DrvDips[2];
 static UINT32 DrvInputs[3];
-static INT32 DrvAnalogPort0 = 0;
-static INT32 DrvAnalogPort1 = 0;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
 static UINT8 DrvReset;
+
+static UINT8 PaddleX[2] = { 0, 0 };
 
 static INT32 sixtyhz = 0;
 
@@ -76,7 +78,7 @@ static INT32 nGfxLen0 = 0;
 static INT32 nRedrawTiles = 0;
 static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
-static UINT8 m_region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
+static UINT8 region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
 static UINT32 Vblokbrk = 0;
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
@@ -771,7 +773,7 @@ static void __fastcall suprnova_write_byte(UINT32 address, UINT8 data)
 			//  case 0x01800003:// sengeki writes here... puzzloop complains (security...)
 			{
 				hit.disconnect=1; /* hit2 stuff */
-				switch (m_region) /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
+				switch (region) /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
 				{
 					case 0:
 						if (data == 0) hit.disconnect= 0;
@@ -972,7 +974,7 @@ static INT32 DrvDoReset()
 
 	YMZ280BReset();
 
-	hit.disconnect = (m_region != 2) ? 1 : 0;
+	hit.disconnect = (region != 2) ? 1 : 0;
 
 	suprnova_alt_enable_sprites = 0;
 	bright_spc_g_trans = bright_spc_r_trans = bright_spc_b_trans = 0;
@@ -984,6 +986,8 @@ static INT32 DrvDoReset()
 
 	nRedrawTiles = 1;
 	olddepths[0] = olddepths[1] = 0xff;
+
+	PaddleX[0] = PaddleX[1] = 0;
 
 	HiscoreReset();
 
@@ -1075,7 +1079,7 @@ static INT32 DrvInit(INT32 bios)
 		if (DrvLoad(1)) return 1;
 
 		if (BurnLoadRom(DrvSh2BIOS, 0x00080 + bios, 1)) return 1;	// bios
-		m_region = bios;
+		region = bios;
 		BurnSwapEndian(DrvSh2BIOS, 0x80000);
 		BurnSwapEndian(DrvSh2ROM, 0x200000);
 	}
@@ -1628,22 +1632,11 @@ static INT32 DrvDraw()
 	return 0;
 }
 
-static UINT32 scalerange_skns(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-static UINT8 Paddle_X = 0;
-
-static UINT8 Paddle_incdec(UINT32 PaddlePortnum) {
-	UINT8 Temp;
-
-	Temp = 0x7f + (PaddlePortnum >> 4);
-	if (Temp < 0x01) Temp = 0x01;
-	if (Temp > 0xfe) Temp = 0xfe;
-	Temp = scalerange_skns(Temp, 0x3f, 0xbe, 0x01, 0xfe);
-	if (Temp > 0x90) Paddle_X-=15;
-	if (Temp < 0x70) Paddle_X+=15;
-	return Paddle_X;
+static UINT8 Paddle_incdec(UINT32 PaddlePortnum, UINT32 player) {
+	UINT8 Temp = ProcessAnalog(PaddlePortnum, 0, 1, 0x01, 0xff);
+	if (Temp > 0x90) PaddleX[player]-=15;
+	if (Temp < 0x70) PaddleX[player]+=15;
+	return PaddleX[player];
 }
 
 static INT32 DrvFrame()
@@ -1659,7 +1652,7 @@ static INT32 DrvFrame()
 		}
 
 		DrvInputs[1] = 0x0000ff00 | DrvDips[0];
-		DrvInputs[1] |= Paddle_incdec(DrvAnalogPort0) << 24;
+		DrvInputs[1] |= (Paddle_incdec(DrvAnalogPort0, 0) << 24) | (Paddle_incdec(DrvAnalogPort1, 1) << 16);
 		DrvInputs[2] = 0xffffffff;
 	}
 
@@ -1668,7 +1661,6 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 262;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		//Sh2Run(nTotalCycles / nInterleave);
 		nCyclesDone += Sh2Run(((i + 1) * nTotalCycles / nInterleave) - nCyclesDone);
 
 		if (i == 1) {
@@ -1739,6 +1731,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(bright_v3_b);
 		SCAN_VAR(use_spc_bright);
 		SCAN_VAR(use_v3_bright);
+		SCAN_VAR(PaddleX);
 	}
 
 	if (nAction & ACB_NVRAM) {

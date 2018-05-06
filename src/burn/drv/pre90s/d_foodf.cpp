@@ -173,36 +173,18 @@ static INT32 dip_read(INT32 offset)
 	return ((DrvDips[0] >> (offset & 7))&1) << 7;
 }
 
-static UINT32 scalerange(UINT32 x, UINT32 in_min, UINT32 in_max, UINT32 out_min, UINT32 out_max) {
-	return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
-}
-
-static UINT8 ananice(INT16 anaval)
-{
-	INT16 Temp = 0x7f - (anaval / 16);  // - for reversed, + for normal
-	if (Temp < 0x3f) Temp = 0x3f;       // clamping for happy scalerange()
-	if (Temp > 0xbf) Temp = 0xbf;
-	Temp = scalerange(Temp, 0x3f, 0xbf, 0x00, 0xff);
-
-	// deadzones
-	// 0x7f is center, 0x01 right, 0xfe left.  0x7f +-10 is noise.
-	if (!(Temp < 0x7f-10 || Temp > 0x7f+10)) Temp = 0x7f;
-
-	return Temp;
-}
-
 static UINT16 analog_read()
 {
 	INT32 analog[4] = { DrvAnalogPort0, DrvAnalogPort2, DrvAnalogPort1, DrvAnalogPort3 };
 #if 0
 	switch (analog_select) {
-		case 0: bprintf(0, _T("p1 X: %02X\n"), ananice(analog[analog_select])); break;
-		//case 1: bprintf(0, _T("p2 X: %02X\n"), ananice(analog[analog_select])); break;
-		case 2: bprintf(0, _T("p1 Y: %02X\n"), ananice(analog[analog_select])); break;
-		//case 3: bprintf(0, _T("p2 Y: %02X\n"), ananice(analog[analog_select])); break;
+		case 0: bprintf(0, _T("p1 X: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
+		//case 1: bprintf(0, _T("p2 X: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
+		case 2: bprintf(0, _T("p1 Y: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
+		//case 3: bprintf(0, _T("p2 Y: %02X\n"), ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff)); break;
 	}
 #endif
-	return ananice(analog[analog_select]);
+	return ProcessAnalog(analog[analog_select], 1, 1, 0x00, 0xff);
 }
 
 static UINT8 __fastcall foodf_read_byte(UINT32 address)

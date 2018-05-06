@@ -711,7 +711,8 @@ static void GameInpInitMacros()
 	if ((nPunchx3[0] == 7) && (nKickx3[0] == 7)) {
 		bStreetFighterLayout = true;
 	}
-	if (nFireButtons >= 5 && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) {
+	if (nFireButtons >= 7 && (BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_CAPCOM_CPS2) {
+		// used to be 5 buttons in the above check - now we have volume buttons it is 7
 		bStreetFighterLayout = true;
 	}
 }

@@ -245,10 +245,10 @@ void BurnTimerSetRetrig(INT32 c, UINT64 timer_ticks)
 		return;
 	}
 
-	nTimerStart[c] = nTimerCount[c] = static_cast<uint32_t>(timer_ticks);
+	nTimerStart[c] = nTimerCount[c] = (UINT32)(timer_ticks);
 	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
-	// bprintf(PRINT_NORMAL, L"  - timer %i started, %08X ticks (fires in %lf seconds)\n", c, nTimerCount[c], static_cast<double>(TIMER_TICKS_PER_SECOND) / timer_ticks);
+	// bprintf(PRINT_NORMAL, L"  - timer %i started, %08X ticks (fires in %lf seconds)\n", c, nTimerCount[c], (double)(TIMER_TICKS_PER_SECOND) / timer_ticks);
 }
 
 void BurnTimerSetOneshot(INT32 c, UINT64 timer_ticks)
@@ -263,10 +263,10 @@ void BurnTimerSetOneshot(INT32 c, UINT64 timer_ticks)
 		return;
 	}
 
-	nTimerCount[c] = static_cast<uint32_t>(timer_ticks);
+	nTimerCount[c] = (UINT32)(timer_ticks);
 	nTimerCount[c] += MAKE_TIMER_TICKS(BurnTimerCPUTotalCycles(), BurnTimerCPUClockspeed);
 
-	// bprintf(PRINT_NORMAL, L"  - timer %i started, %08X ticks (fires in %lf seconds)\n", c, nTimerCount[c], static_cast<double>(TIMER_TICKS_PER_SECOND) / timer_ticks);
+	// bprintf(PRINT_NORMAL, L"  - timer %i started, %08X ticks (fires in %lf seconds)\n", c, nTimerCount[c], (double)(TIMER_TICKS_PER_SECOND) / timer_ticks);
 }
 
 // ------------------------------------ ---------------------------------------

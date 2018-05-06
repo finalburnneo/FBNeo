@@ -30,8 +30,8 @@ static struct BurnInputInfo EnmadaioInputList[] = {
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvButton + 0,	"service"	},
-	{"Tilt",			BIT_DIGITAL,	DrvButton + 1,	"tilt"		,
-	{"Fake",  			BIT_DIPSWITCH,	DrvDips + 0  ,	"dip"		},
+	{"Tilt",			BIT_DIGITAL,	DrvButton + 1,	"tilt"		},
+	{"Fake",  			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 };
 
 STDINPUTINFO(Enmadaio)

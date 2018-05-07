@@ -4,6 +4,7 @@
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
+#include "burn_gun.h"
 #include "burn_ym3812.h"
 #include "msm6295.h"
 
@@ -31,8 +32,9 @@ static UINT8 *DrvScroll;
 static UINT8 *soundlatch;
 
 static UINT8 soundbank;
-static INT32 input_x_wobble[2] = { 0, 0 }; 
-
+static INT32 input_x_wobble[2] = { 0, 0 };
+static INT32 input_x[2] = { 0, 0 };
+static INT32 input_y[2] = { 0, 0 };
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -40,26 +42,31 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvDips[2];
 static UINT8 DrvReset;
 
+static INT32 uses_gun = 0;
+static INT16 DrvGun0 = 0;
+static INT16 DrvGun1 = 0;
+static INT16 DrvGun2 = 0;
+static INT16 DrvGun3 = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo OneshotInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 start"	},
+	A("P1 Gun X",    	BIT_ANALOG_REL, &DrvGun0,    "mouse x-axis"	),
+	A("P1 Gun Y",    	BIT_ANALOG_REL, &DrvGun1,    "mouse y-axis"	),
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p1 fire 1"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 4,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p2 start"	},
+	A("P2 Gun X",    	BIT_ANALOG_REL, &DrvGun2,    "p2 x-axis"	),
+	A("P2 Gun Y",    	BIT_ANALOG_REL, &DrvGun3,    "p2 y-axis"	),
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"	},
-
-	// fake analog input placeholders
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 2"	},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 3"	},
-	{"P2 Button 4",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 4"	},
-	{"P2 Button 5",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 5"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Oneshot)
 
 static struct BurnInputInfo MaddonnaInputList[] = {
@@ -99,12 +106,6 @@ static struct BurnDIPInfo OneshotDIPList[]=
 	{0x0b, 0x01, 0x03, 0x00, "1 Coin  1 Credits"	},
 	{0x0b, 0x01, 0x03, 0x01, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Gun X Shift Left"		},
-	{0x0b, 0x01, 0x0c, 0x04, "30"					},
-	{0x0b, 0x01, 0x0c, 0x00, "35"					},
-	{0x0b, 0x01, 0x0c, 0x08, "40"					},
-	{0x0b, 0x01, 0x0c, 0x0c, "50"					},
-
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
 	{0x0b, 0x01, 0x10, 0x00, "Off"					},
 	{0x0b, 0x01, 0x10, 0x10, "On"					},
@@ -123,13 +124,13 @@ static struct BurnDIPInfo OneshotDIPList[]=
 	{0x0c, 0x01, 0x03, 0x00, "3"					},
 	{0x0c, 0x01, 0x03, 0x03, "5"					},
 
-	{0   , 0xfe, 0   ,    0, "Difficulty"			},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
 	{0x0c, 0x01, 0x30, 0x10, "Easy"					},
 	{0x0c, 0x01, 0x30, 0x00, "Normal"				},
 	{0x0c, 0x01, 0x30, 0x20, "Hard"					},
 	{0x0c, 0x01, 0x30, 0x30, "Hardest"				},
 
-	{0   , 0xfe, 0   ,    0, "Round Select"			},
+	{0   , 0xfe, 0   ,    2, "Round Select"			},
 	{0x0c, 0x01, 0x40, 0x40, "Off"					},
 	{0x0c, 0x01, 0x40, 0x00, "On"					},
 
@@ -235,20 +236,20 @@ static UINT8 __fastcall oneshot_main_read_byte(UINT32 address)
 		case 0x190026:
 		case 0x190027:
 			input_x_wobble[0] ^= 1;
-			return 0; // x_p1_r
+			return input_x[0] ^ input_x_wobble[0];
 
 		case 0x19002e:
 		case 0x19002f:
 			input_x_wobble[1] ^= 1;
-			return 0; // x_p2_r
+			return input_x[1] ^ input_x_wobble[1];
 
 		case 0x190036:
 		case 0x190037:
-			return 0; // y_p1_r
+			return input_y[0];
 
 		case 0x19003e:
 		case 0x19003f:
-			return 0; // y_p2_r
+			return input_y[1];
 
 		case 0x19c020:
 		case 0x19c021:
@@ -282,20 +283,18 @@ static UINT16 __fastcall oneshot_main_read_word(UINT32 address)
 			return *soundlatch;
 
 		case 0x190026:
-		case 0x190027:
 			input_x_wobble[0] ^= 1;
-			return 0; // x_p1_r
+			return input_x[0] ^ input_x_wobble[0];
 
 		case 0x19002e:
-		case 0x19002f:
 			input_x_wobble[1] ^= 1;
-			return 0; // x_p2_r
+			return input_x[1] ^ input_x_wobble[1];
 
 		case 0x190036:
-			return 0; // y_p1_r
+			return input_y[0];
 
 		case 0x19003e:
-			return 0; // y_p2_r
+			return input_y[1];
 
 		case 0x19c020:
 			return DrvDips[0];
@@ -520,6 +519,9 @@ static INT32 DrvInit(INT32 game_select)
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
 
+	if (uses_gun)
+		BurnGunInit(2, true);
+
 	DrvDoReset();
 
 	return 0;
@@ -532,6 +534,11 @@ static INT32 DrvExit()
 
 	SekExit();
 	ZetExit();
+
+	if (uses_gun) {
+		BurnGunExit();
+		uses_gun = 0;
+	}
 
 	GenericTilesExit();
 
@@ -592,9 +599,7 @@ static INT32 OneshotDraw()
 		DrvRecalc = 1;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x400;
-	}
+	BurnTransferClear(0x400);
 
 	UINT16 *scroll = (UINT16*)DrvScroll;
 
@@ -608,9 +613,11 @@ static INT32 OneshotDraw()
 	if (nSpriteEnable & 1) draw_sprites();
 	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0);
 
-//	crosshairs
-
 	BurnTransferCopy(DrvPalette);
+
+	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
+		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
+	}
 
 	return 0;
 }
@@ -622,9 +629,7 @@ static INT32 MaddonnaDraw()
 		DrvRecalc = 1;
 	}
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x400;
-	}
+	BurnTransferClear(0x400);
 
 	UINT16 *scroll = (UINT16*)DrvScroll;
 
@@ -656,6 +661,19 @@ static INT32 DrvFrame()
 			DrvInputs[1] ^= DrvJoy2[i] << i;
 			DrvInputs[2] ^= DrvJoy3[i] << i;
 		}
+
+		if (uses_gun) {
+			input_x[0] = ((BurnGunReturnX(0) & 0xff) * 320 / 256) + 30;
+			input_y[0] = ((BurnGunReturnY(0) & 0xff) * 240 / 256) - 10;
+			if (input_y[0] < 0) input_y[0] = 0;
+
+			input_x[1] = ((BurnGunReturnX(1) & 0xff) * 320 / 256) + 20;
+			input_y[1] = ((BurnGunReturnY(1) & 0xff) * 240 / 256) + 00;
+
+			BurnGunMakeInputs(0, (INT16)DrvGun0, (INT16)DrvGun1);
+			BurnGunMakeInputs(1, (INT16)DrvGun2, (INT16)DrvGun3);
+		}
+
 	}
 
 	INT32 nInterleave = 10;
@@ -666,12 +684,10 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nSegment = nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nSegment);
+		nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
 		if (i == (nInterleave - 1)) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		nSegment = nCyclesTotal[1] / nInterleave;
-		BurnTimerUpdateYM3812((1 + i) * nSegment);
+		BurnTimerUpdateYM3812((1 + i) * nCyclesTotal[1] / nInterleave);
 	}
 
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
@@ -691,7 +707,7 @@ static INT32 DrvFrame()
 	return 0;
 }
 
-static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
+static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
 
@@ -699,7 +715,7 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		*pnMin = 0x029707;
 	}
 
-	if (nAction & ACB_VOLATILE) {	
+	if (nAction & ACB_VOLATILE) {
 		memset(&ba, 0, sizeof(ba));
 
 		ba.Data	  = AllRam;
@@ -709,6 +725,10 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 
 		SekScan(nAction);
 		ZetScan(nAction);
+
+		if (uses_gun) {
+			BurnGunScan();
+		}
 
 		BurnYM3812Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
@@ -752,6 +772,8 @@ STD_ROM_FN(oneshot)
 
 static INT32 OneshotInit()
 {
+	uses_gun = 1;
+
 	return DrvInit(0);
 }
 

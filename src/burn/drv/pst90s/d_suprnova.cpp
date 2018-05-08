@@ -8,6 +8,7 @@
 #include "ymz280b.h"
 #include "sknsspr.h"
 #include "sh2_intf.h"
+#include "lowpass2.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -80,6 +81,9 @@ static UINT32 speedhack_address = ~0;
 static UINT32 speedhack_pc[2] = { 0, 0 };
 static UINT8 region = 0; /* 0 Japan, 1 Europe, 2 Asia, 3 USA, 4 Korea */
 static UINT32 Vblokbrk = 0;
+
+static class LowPass2 *LP1 = NULL, *LP2 = NULL;
+
 static struct BurnRomInfo emptyRomDesc[] = {
 	{ "",                    0,          0, 0 },
 };
@@ -282,6 +286,10 @@ static struct BurnDIPInfo CyvernDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Speed Hacks"},
 	{0x14, 0x01, 0x01, 0x00, "No"		},
 	{0x14, 0x01, 0x01, 0x01, "Yes"		},
+
+	{0   , 0xfe, 0   ,    2, "Headache Filter (audio hack)"},
+	{0x14, 0x01, 0x02, 0x00, "No"		},
+	{0x14, 0x01, 0x02, 0x02, "Yes"		},
 };
 
 STDDIPINFO(Cyvern)
@@ -1129,6 +1137,11 @@ static INT32 DrvInit(INT32 bios)
 
 	GenericTilesInit();
 
+	{ // filter (for cyvern)
+		LP1 = new LowPass2(10900, nBurnSoundRate, 0.13, 1.0, 2300, 0.01, 1.0);
+		LP2 = new LowPass2(10900, nBurnSoundRate, 0.13, 1.0, 2300, 0.01, 1.0);
+	}
+
 	DrvDoReset();
 
 	return 0;
@@ -1154,6 +1167,10 @@ static INT32 DrvExit()
 
 	speedhack_address = ~0;
 	memset (speedhack_pc, 0, 2 * sizeof(INT32));
+
+	// de-init cyvern filter
+	delete LP1; LP1 = NULL;
+	delete LP2; LP2 = NULL;
 
 	return 0;
 }
@@ -1681,6 +1698,10 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
+		if (LP1 && LP2 && (DrvDips[1] & 2)) { // Cyvern "Headache Filter" dip
+			LP1->Filter(pBurnSoundOut + 0, nBurnSoundLen); // Left
+			LP2->Filter(pBurnSoundOut + 1, nBurnSoundLen); // Right
+		}
 	}
 
 	if (pBurnDraw) {

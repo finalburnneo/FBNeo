@@ -4909,7 +4909,7 @@ STDROMPICKEXT(thegladpcb, thegladpcb, thegladBIOS) // custom bios
 STD_ROM_FN(thegladpcb)
 
 struct BurnDriver BurnDrvThegladpcb = {
-	"thegladpcb", "theglad", NULL, NULL, "2003",
+	"thegladpcb", "theglad", "pgm", NULL, "2003",
 	"The Gladiator - Road Of The Sword / Shen Jian (V100, Japan, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
 	L"The Gladiator - Road Of The Sword\0\u795E\u5251\u98CE\u4E91\0\u795E\u528D\u98A8\u96F2 (V100, Japan, PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,
@@ -4944,7 +4944,7 @@ STDROMPICKEXT(dmnfrntpcb, dmnfrntpcb, dmnfrntBIOS) // custom bios
 STD_ROM_FN(dmnfrntpcb)
 
 struct BurnDriver BurnDrvDmnfrntpcb = {
-	"dmnfrntpcb", "dmnfrnt", NULL, NULL, "2002",
+	"dmnfrntpcb", "dmnfrnt", "pgm", NULL, "2002",
 	"Demon Front (V107, Korea, Single PCB Version)\0", "Insert coin to get past ERROR", "IGS", "PolyGameMaster",
 	L"Demon Front\0\u9B54\u57DF\u6218\u7EBF\0\u9B54\u57DF\u6230\u7DDA (V107, Korea, Single PCB Version)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_PLATFORM, 0,
@@ -5004,7 +5004,7 @@ static INT32 svgpcbInit()
 }
 
 struct BurnDriver BurnDrvSvgpcb = {
-	"svgpcb", "svg", NULL, NULL, "2005",
+	"svgpcb", "svg", "pgm", NULL, "2005",
 	"S.V.G. - Spectral vs Generation (V100, Japan, Single PCB Version)\0", NULL, "IGS", "PolyGameMaster",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM | HARDWARE_IGS_USE_ARM_CPU, GBF_SCRFIGHT, 0,

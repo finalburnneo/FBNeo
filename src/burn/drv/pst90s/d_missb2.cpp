@@ -483,7 +483,7 @@ static void draw_bg_layer()
 	{
 		if ((offs & 0xf) == 0 || (offs & 0xf) == 0xf) continue;
 
-		RenderCustomTile_Clip(pTransDraw, 256, 16, offs, 0, ((offs & 0xf) * 16) - 16, 0, 8, 0x100, DrvGfxROM1);
+		RenderCustomTile_Clip(pTransDraw, 256, 16, offs&0x1ff, 0, ((offs & 0xf) * 16) - 16, 0, 8, 0x100, DrvGfxROM1);
 	}
 }
 
@@ -585,7 +585,7 @@ static INT32 DrvFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);
@@ -595,12 +595,12 @@ static INT32 DrvFrame()
 		} else {
 			nCyclesDone[1] += ZetRun(nCyclesTotal[1] / nInterleave);
 		}
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(2);
 		BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[2] / nInterleave));
-		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		if (i == nInterleave - 1) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 	}
 

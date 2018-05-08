@@ -10531,7 +10531,7 @@ struct BurnDriver BurnDrvwh2 = {
 };
 
 // World Heroes 2 (ALM-006)(ALH-006)
-/* MVS AND AES VERSION */
+/* AES VERSION */
 
 static struct BurnRomInfo wh2hRomDesc[] = {
 	{ "057-pg1.p1",   0x200000, 0xcde9aff5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC5316200

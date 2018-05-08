@@ -3735,6 +3735,38 @@ static struct BurnRomInfo MshbRomDesc[] = {
 STD_ROM_PICK(Mshb)
 STD_ROM_FN(Mshb)
 
+static struct BurnRomInfo Mshbr1RomDesc[] = {
+	{ "mshb.03b",      0x080000, 0xeb16165b, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "mshb.04b",      0x080000, 0x94fb3c97, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.05",        0x080000, 0x6a091b9e, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.06b",       0x080000, 0x803e3fa4, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.07a",       0x080000, 0xc45f8e27, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.08a",       0x080000, 0x9ca6f12c, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.09a",       0x080000, 0x82ec27af, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+	{ "msh.10b",       0x080000, 0x8d931196, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
+
+	{ "msh.13m",       0x400000, 0x09d14566, CPS2_GFX | BRF_GRA },
+	{ "msh.15m",       0x400000, 0xee962057, CPS2_GFX | BRF_GRA },
+	{ "msh.17m",       0x400000, 0x604ece14, CPS2_GFX | BRF_GRA },
+	{ "msh.19m",       0x400000, 0x94a731e8, CPS2_GFX | BRF_GRA },
+	{ "msh.14m",       0x400000, 0x4197973e, CPS2_GFX | BRF_GRA },
+	{ "msh.16m",       0x400000, 0x438da4a0, CPS2_GFX | BRF_GRA },
+	{ "msh.18m",       0x400000, 0x4db92d94, CPS2_GFX | BRF_GRA },
+	{ "msh.20m",       0x400000, 0xa2b0c6c0, CPS2_GFX | BRF_GRA },
+
+
+	{ "msh.01",        0x020000, 0xc976e6f9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+	{ "msh.02",        0x020000, 0xce67d0d9, CPS2_PRG_Z80 | BRF_ESS | BRF_PRG },
+
+	{ "msh.11m",       0x200000, 0x37ac6d30, CPS2_QSND | BRF_SND },
+	{ "msh.12m",       0x200000, 0xde092570, CPS2_QSND | BRF_SND },
+	
+	{ "mshb.key",      0x000014, 0x92196837, CPS2_ENCRYPTION_KEY },
+};
+
+STD_ROM_PICK(Mshbr1)
+STD_ROM_FN(Mshbr1)
+
 static struct BurnRomInfo MshhRomDesc[] = {
 	{ "mshh.03c",      0x080000, 0x8d84b0fa, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
 	{ "mshh.04c",      0x080000, 0xd638f601, CPS2_PRG_68K | BRF_ESS | BRF_PRG },
@@ -9489,6 +9521,16 @@ struct BurnDriver BurnDrvCpsMshb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
 	NULL, MshbRomInfo, MshbRomName, NULL, NULL, Cps2FightingInputInfo, NULL,
+	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsMshbr1 = {
+	"mshbr1", "msh", NULL, NULL, "1995",
+	"Marvel Super Heroes (951024 Brazil)\0", NULL, "Capcom", "CPS2",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS2, GBF_VSFIGHT, 0,
+	NULL, Mshbr1RomInfo, Mshbr1RomName, NULL, NULL, Cps2FightingInputInfo, NULL,
 	Cps2Init, DrvExit, Cps2Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

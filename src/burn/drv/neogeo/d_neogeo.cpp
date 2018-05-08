@@ -10530,6 +10530,40 @@ struct BurnDriver BurnDrvwh2 = {
 	0x1000,	304, 224, 4, 3
 };
 
+// World Heroes 2 (ALM-006)(ALH-006)
+/* MVS AND AES VERSION */
+
+static struct BurnRomInfo wh2hRomDesc[] = {
+	{ "057-pg1.p1",   0x200000, 0xcde9aff5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code 		/ TC5316200
+
+	{ "057-s1.s1",    0x020000, 0xfcaeb3a4, 2 | BRF_GRA },           //  1 Text layer tiles / TC531000
+
+	{ "057-c1.c1",    0x200000, 0x21c6bb91, 3 | BRF_GRA },           //  2 Sprite data		/ TC5316200
+	{ "057-c2.c2",    0x200000, 0xa3999925, 3 | BRF_GRA },           //  3 					/ TC5316200
+	{ "057-c3.c3",    0x200000, 0xb725a219, 3 | BRF_GRA },           //  4 					/ TC5316200
+	{ "057-c4.c4",    0x200000, 0x8d96425e, 3 | BRF_GRA },           //  5 					/ TC5316200
+	{ "057-c5.c5",    0x200000, 0xb20354af, 3 | BRF_GRA },           //  6 					/ TC5316200
+	{ "057-c6.c6",    0x200000, 0xb13d1de3, 3 | BRF_GRA },           //  7 					/ TC5316200
+
+	{ "057-m1.m1",    0x020000, 0x8fa3bc77, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code			/ TC531001
+
+	{ "057-v1.v1",    0x200000, 0x8877e301, 5 | BRF_SND },           //  9 Sound data		/ TC5316200
+	{ "057-v2.v2",    0x200000, 0xc1317ff4, 5 | BRF_SND },           // 10 					/ TC5316200
+};
+
+STDROMPICKEXT(wh2h, wh2h, neogeo)
+STD_ROM_FN(wh2h)
+
+struct BurnDriver BurnDrvwh2h = {
+	"wh2h", "wh2", "neogeo", NULL, "1993",
+	"World Heroes 2 (ALH-006)\0", NULL, "ADK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SWAPP, GBF_VSFIGHT, 0,
+	NULL, wh2hRomInfo, wh2hRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // World Heroes 2 Jet (ADM-007)(ADH-007)
 /* MVS AND AES VERSION */
 

@@ -107,10 +107,34 @@ static char* CreateKailleraList()
 	pName += sprintf(pName, "* Chat only");
 	pName++;
 
+	// Put games in the Favorites list at the top of the list.
+	{ // (don't check avOk, this should work even if romlist isn't scanned! -dink)
+		LoadFavorites();
+
+		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
+			if (CheckFavorites(BurnDrvGetTextA(DRV_NAME)) != -1) {
+				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
+
+				if (pName + strlen(szDecoratedName) >= pList + nSize) {
+					char* pNewList;
+					nSize <<= 1;
+					pNewList = (char*)realloc(pList, nSize);
+					if (pNewList == NULL) {
+						return NULL;
+					}
+					pName -= (INT_PTR)pList;
+					pList = pNewList;
+					pName += (INT_PTR)pList;
+				}
+				pName += sprintf(pName, "%s", szDecoratedName);
+				pName++;
+			}
+		}
+	}
+
 	if (avOk) {
 		// Add all the driver names to the list
 		for (nBurnDrvActive = 0; nBurnDrvActive < nBurnDrvCount; nBurnDrvActive++) {
-
 			if(BurnDrvGetFlags() & BDF_GAME_WORKING && gameAv[nBurnDrvActive]) {
 				char* szDecoratedName = DecorateGameName(nBurnDrvActive);
 

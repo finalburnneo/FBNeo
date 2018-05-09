@@ -481,8 +481,11 @@ struct ZipSortList {
 static const struct ZipSortList ZipSortListTable[] =
 CPPEND
 
+	my $pos = 0;
+
 	foreach my $name ( @ZipDriverList ) {
-		print ZIPOUTFILE "\t{ \"$Drivers{$name}[1]\", $Drivers{$name}[11]" . " }," . "\x0a";
+		print ZIPOUTFILE "\t{ $pos, $Drivers{$name}[11]" . " }," . " // $Drivers{$name}[1]\x0a";
+		$pos++;
 	}
 	
 	print ZIPOUTFILE << "CPPEND";

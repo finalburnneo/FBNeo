@@ -687,7 +687,7 @@ static struct BurnRomInfo missb2RomDesc[] = {
 	{ "msbub2-u.ic2",		0x80000, 0x694c2783, 5 | BRF_GRA },           // 10
 	{ "msbub2-u.ic4",		0x80000, 0xbe71c9f0, 5 | BRF_GRA },           // 11
 
-	{ "msbub2-u.13",		0x20000, 0x14f07386, 6 | BRF_SND },           // 12 OKI Samples
+	{ "msbub2-u.13",		0x20000, 0x7a4f4272, 6 | BRF_SND },           // 12 OKI Samples
 
 	{ "a71-25.bin",			0x00100, 0x2d0f8545, 7 | BRF_GRA },           // 13 Sprite Control PROM
 };

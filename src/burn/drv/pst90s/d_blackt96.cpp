@@ -451,7 +451,7 @@ static INT32 DrvInit()
 	pic16c5xSetWritePortHandler(blackt96_sound_writeport);
 	
 	MSM6295Init(0, 1000000 / 132, 0);
-	MSM6295Init(1, 1000000 / 132, 1);
+	MSM6295Init(1, 1000000 / 132, 0);
 	MSM6295SetBank(0, DrvSndROM0, 0, 0x3ffff);
 	MSM6295SetBank(1, DrvSndROM1, 0, 0x3ffff);
 	MSM6295SetRoute(0, 0.47, BURN_SND_ROUTE_BOTH);
@@ -620,7 +620,6 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnSoundOut) {
-		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(UINT16) * 2);
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
 	}

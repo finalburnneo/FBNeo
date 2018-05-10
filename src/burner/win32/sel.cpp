@@ -278,6 +278,7 @@ struct NODEINFO {
 };
 
 static NODEINFO* nBurnDrv;
+static NODEINFO* nBurnZipListDrv;
 static unsigned int nTmpDrvCount;
 
 // prototype  -----------------------
@@ -501,11 +502,18 @@ static int DoExtraFilters()
 	return 0;
 }
 
-static int ZipNames_qs_cmp(const void *p0, const void *p1) {
+static int ZipNames_qs_cmp_asc(const void *p0, const void *p1) {
 	struct NODEINFO *ni0 = (struct NODEINFO*) p0;
 	struct NODEINFO *ni1 = (struct NODEINFO*) p1;
 
 	return stricmp(ni0->pszROMName, ni1->pszROMName);
+}
+
+static int ZipNames_qs_cmp_desc(const void *p0, const void *p1) {
+	struct NODEINFO *ni0 = (struct NODEINFO*) p0;
+	struct NODEINFO *ni1 = (struct NODEINFO*) p1;
+
+	return stricmp(ni1->pszROMName, ni0->pszROMName);
 }
 
 static void ZipNameSortCheckForMissingParents()
@@ -619,11 +627,34 @@ static int SelListMake()
 	j = GetDlgItemText(hSelDlg, IDC_SEL_SEARCH, szSearchString, sizeof(szSearchString));
 	for (UINT32 k = 0; k < j; k++)
 		szSearchString[k] = _totlower(szSearchString[k]);
+		
+	// pre-sort the list if using zip names
+	if (nLoadMenuShowY & SHOWSHORT)	{
+		// make a list of everything
+		if (nBurnZipListDrv) {
+			free(nBurnZipListDrv);
+			nBurnZipListDrv = NULL;
+		}
+		nBurnZipListDrv = (NODEINFO*)malloc(nBurnDrvCount * sizeof(NODEINFO));
+		memset(nBurnZipListDrv, 0, nBurnDrvCount * sizeof(NODEINFO));
+		
+		for (i = nBurnDrvCount-1; i >= 0; i--) {
+			nBurnDrvActive = i;		
+			nBurnZipListDrv[i].pszROMName = BurnDrvGetTextA(DRV_NAME);
+			nBurnZipListDrv[i].nBurnDrvNo = i;
+		}
+		
+		// sort it in descending order (we add in descending order)
+		qsort(nBurnZipListDrv, nBurnDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp_desc);
+	}
 
 	// Add all the driver names to the list
 	// 1st: parents
 	for (i = nBurnDrvCount-1; i >= 0; i--) {
 		nBurnDrvActive = i;																// Switch to driver i
+		
+		// if showing zip names get active entry from our sorted list
+		if (nLoadMenuShowY & SHOWSHORT) nBurnDrvActive = nBurnZipListDrv[nBurnDrvCount - 1 - i].nBurnDrvNo;
 
 		if (BurnDrvGetFlags() & BDF_BOARDROM) {
 			continue;
@@ -633,18 +664,18 @@ static int SelListMake()
 			continue;
 		}
 		
-		if(!gameAv[i]) nMissingDrvCount++;
+		if(!gameAv[nBurnDrvActive]) nMissingDrvCount++;
 
 		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || (nHardware & MASKALL) == 0)) {
 			continue;
 		}
 
-		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i]) {						// Skip non-available games if needed
+		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[nBurnDrvActive]) {						// Skip non-available games if needed
 			continue;
 		}
 		
-		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i]) {						// Skip available games if needed
+		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[nBurnDrvActive]) {						// Skip available games if needed
 			continue;
 		}
 		
@@ -677,17 +708,18 @@ static int SelListMake()
 		if (!(nLoadMenuShowY & SHOWSHORT)) { // "Use Zipnames" gets deferred, sorted and then added in the block below
 			nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[nTmpDrvCount].TvItem);
 		}
-		nBurnDrv[nTmpDrvCount].nBurnDrvNo = i;
+		nBurnDrv[nTmpDrvCount].nBurnDrvNo = nBurnDrvActive;
 		nBurnDrv[nTmpDrvCount].pszROMName = BurnDrvGetTextA(DRV_NAME);
 		nBurnDrv[nTmpDrvCount].bIsParent = true;
 		nTmpDrvCount++;
 	}
-
+	
+	// add the parents if showing zip names - check for missing parents first, then sort in ascending order
 	if (nLoadMenuShowY & SHOWSHORT)	{
 		ZipNameSortCheckForMissingParents();
 		
 		// "Use Zipnames", we have to sort since the gamelist is pre-sorted by the game's long name
-		qsort(nBurnDrv, nTmpDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp);
+		qsort(nBurnDrv, nTmpDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp_asc);
 
 		for (i = nTmpDrvCount-1; i >= 0; i--) {
 			nBurnDrvActive = nBurnDrv[i].nBurnDrvNo;
@@ -702,6 +734,9 @@ static int SelListMake()
 		TV_INSERTSTRUCT TvItem;
 
 		nBurnDrvActive = i;																// Switch to driver i
+		
+		// if showing zip names get active entry from our sorted list
+		if (nLoadMenuShowY & SHOWSHORT) nBurnDrvActive = nBurnZipListDrv[nBurnDrvCount - 1 - i].nBurnDrvNo;
 
 		if (BurnDrvGetFlags() & BDF_BOARDROM) {
 			continue;
@@ -711,18 +746,18 @@ static int SelListMake()
 			continue;
 		}
 		
-		if(!gameAv[i]) nMissingDrvCount++;
+		if(!gameAv[nBurnDrvActive]) nMissingDrvCount++;
 
 		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
 		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || ((nHardware & MASKALL) == 0))) {
 			continue;
 		}
 
-		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i]) {						// Skip non-available games if needed
+		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[nBurnDrvActive]) {						// Skip non-available games if needed
 			continue;
 		}
 		
-		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i]) {						// Skip available games if needed
+		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[nBurnDrvActive]) {						// Skip available games if needed
 			continue;
 		}
 		
@@ -792,7 +827,7 @@ static int SelListMake()
 		TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
 		nBurnDrv[nTmpDrvCount].pszROMName = BurnDrvGetTextA(DRV_NAME);
-		nBurnDrv[nTmpDrvCount].nBurnDrvNo = i;
+		nBurnDrv[nTmpDrvCount].nBurnDrvNo = nBurnDrvActive;
 		nTmpDrvCount++;
 	}
 

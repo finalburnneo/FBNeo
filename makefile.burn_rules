@@ -58,7 +58,7 @@ drvsrc	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_twincobr.o d_usgames.o d_vastar.o d_vball.o d_vicdual.o d_vulgus.o d_wallc.o d_warpwarp.o d_warpsped.o \
 			d_wc90.o d_wc90b.o d_wiping.o d_wiz.o d_wrally.o d_wwfsstar.o d_xain.o d_xxmissio.o d_xyonix.o d_zodiack.o \
 			\
-			d_3x3puzzl.o d_1945kiii.o d_20pacgal.o d_aerofgt.o d_airbustr.o d_aquarium.o d_bestleag.o d_bigstrkb.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_cultures.o \
+			d_3x3puzzl.o d_1945kiii.o d_20pacgal.o d_aerofgt.o d_airbustr.o d_aquarium.o d_bestleag.o d_bigstrkb.o d_blackt96.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_cultures.o \
 			d_dcon.o d_ddragon3.o d_deniam.o d_diverboy.o d_dooyong.o d_dreamwld.o d_drgnmst.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_funybubl.o d_fuukifg2.o \
 			d_fuukifg3.o d_gaelco.o d_gaelco2.o d_gaiden.o d_galpanic.o d_galspnbl.o d_glass.o d_gotcha.o d_gumbo.o d_hyperpac.o d_jchan.o d_kaneko16.o d_lordgun.o \
 			d_macrossp.o d_mcatadv.o d_metro.o d_midas.o d_missb2.o d_mosaic.o d_mugsmash.o d_mwarr.o d_namcos2.o d_news.o d_nmg5.o d_nmk16.o d_ohmygod.o d_onetwo.o d_pass.o d_patapata.o \

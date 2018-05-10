@@ -370,7 +370,7 @@ burn.o burn.d:	driverlist.h
 
 $(driverlist.h): $(drvsrc) $(srcdir)dep/scripts/gamelist.pl
 ifdef	PERL
-	@$(srcdir)dep/scripts/gamelist.pl -o $@ -z $(srcdir)dep/generated/driverlist_zip_sorted.h -l gamelist.txt \
+	@$(srcdir)dep/scripts/gamelist.pl -o $@ -l gamelist.txt \
 		$(filter %.cpp,$(foreach file,$(drvsrc:.o=.cpp),$(foreach dir,$(alldir), \
 		$(firstword $(wildcard $(srcdir)$(dir)/$(file))))))
 else

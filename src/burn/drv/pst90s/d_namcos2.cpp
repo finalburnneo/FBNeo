@@ -4607,7 +4607,7 @@ static INT32 ValkyrieInit()
 	INT32 rc = Namcos2Init(NULL, NULL);
 
 	if (!rc) {
-		weird_vbl = 1;
+		weird_vbl = 0; // was 1, but some roz issues with last line (16px) of screen (f.ex namco logo spin-out on title)
 
 		pDrvDrawBegin = DrvDrawBegin; // needs linedraw for some effects (end of boss fight / fall through floor)
 		pDrvDrawLine = DrvDrawLine;

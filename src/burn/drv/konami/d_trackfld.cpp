@@ -1863,7 +1863,7 @@ struct BurnDriver BurnDrvTrackfldc = {
 	"trackfldc", "trackfld", NULL, NULL, "1983",
 	"Track & Field (Centuri)\0", NULL, "Konami (Centuri license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, trackfldcRomInfo, trackfldcRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1904,7 +1904,7 @@ struct BurnDriver BurnDrvHyprolym = {
 	"hyprolym", "trackfld", NULL, NULL, "1983",
 	"Hyper Olympic\0", NULL, "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, hyprolymRomInfo, hyprolymRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1945,7 +1945,7 @@ struct BurnDriver BurnDrvTrackfldnz = {
 	"trackfldnz", "trackfld", NULL, NULL, "1982",
 	"Track & Field (NZ bootleg?)\0", NULL, "bootleg? (Goldberg Enterprizes Inc.)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, trackfldnzRomInfo, trackfldnzRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	TrackfldnzInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1997,7 +1997,7 @@ struct BurnDriver BurnDrvHyprolymb = {
 	"hyprolymb", "trackfld", NULL, NULL, "1983",
 	"Hyper Olympic (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, hyprolymbRomInfo, hyprolymbRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2044,7 +2044,7 @@ struct BurnDriver BurnDrvHyprolymba = {
 	"hyprolymba", "trackfld", NULL, NULL, "1983",
 	"Hyper Olympic (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	0 | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, hyprolymbaRomInfo, hyprolymbaRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2091,7 +2091,7 @@ struct BurnDriver BurnDrvHipoly = {
 	"hipoly", "trackfld", NULL, NULL, "1983",
 	"Hipoly (bootleg of Hyper Olympic)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
+	BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SPORTSMISC, 0,
 	NULL, hipolyRomInfo, hipolyRomName, NULL, NULL, TrackfldInputInfo, TrackfldDIPInfo,
 	bootInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

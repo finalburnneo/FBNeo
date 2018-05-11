@@ -274,11 +274,10 @@ struct NODEINFO {
 	bool bIsParent;
 	char* pszROMName;
 	HTREEITEM hTreeHandle;
-	TV_INSERTSTRUCT TvItem;
 };
 
-static NODEINFO* nBurnDrv;
-static NODEINFO* nBurnZipListDrv;
+static NODEINFO* nBurnDrv = NULL;
+static NODEINFO* nBurnZipListDrv = NULL;
 static unsigned int nTmpDrvCount;
 
 // prototype  -----------------------
@@ -558,6 +557,8 @@ static int SelListMake()
 	// Add all the driver names to the list
 	// 1st: parents
 	for (i = nBurnDrvCount-1; i >= 0; i--) {
+		TV_INSERTSTRUCT TvItem;
+
 		nBurnDrvActive = i;																// Switch to driver i
 		
 		// if showing zip names get active entry from our sorted list
@@ -607,12 +608,12 @@ static int SelListMake()
 			if (!StringFound && !StringFound2 && !StringFound3) continue;
 		}
 
-		memset(&nBurnDrv[nTmpDrvCount].TvItem, 0, sizeof(nBurnDrv[nTmpDrvCount].TvItem));
-		nBurnDrv[nTmpDrvCount].TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-		nBurnDrv[nTmpDrvCount].TvItem.hInsertAfter = TVI_FIRST;
-		nBurnDrv[nTmpDrvCount].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
-		nBurnDrv[nTmpDrvCount].TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
-		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[nTmpDrvCount].TvItem);
+		memset(&TvItem, 0, sizeof(TvItem));
+		TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
+		TvItem.hInsertAfter = TVI_FIRST;
+		TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
+		TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
+		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TvItem);
 		nBurnDrv[nTmpDrvCount].nBurnDrvNo = nBurnDrvActive;
 		nBurnDrv[nTmpDrvCount].pszROMName = BurnDrvGetTextA(DRV_NAME);
 		nBurnDrv[nTmpDrvCount].bIsParent = true;
@@ -680,7 +681,7 @@ static int SelListMake()
 		// Find the parent's handle
 		for (j = 0; j < nTmpDrvCount; j++) {
 			if (nBurnDrv[j].bIsParent) {
-				if (!_stricmp(BurnDrvGetTextA(DRV_PARENT), nBurnDrv[j].pszROMName)) {
+				if (!strcmp(BurnDrvGetTextA(DRV_PARENT), nBurnDrv[j].pszROMName)) {
 					TvItem.hParent = nBurnDrv[j].hTreeHandle;
 					break;
 				}

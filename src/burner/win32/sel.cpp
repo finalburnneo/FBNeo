@@ -808,7 +808,8 @@ static int SelListMake()
 					TV_INSERTSTRUCT TempTvItem;
 					memset(&TempTvItem, 0, sizeof(TempTvItem));
 					TempTvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-					TempTvItem.hInsertAfter = TVI_FIRST;
+					//TempTvItem.hInsertAfter = TVI_FIRST;
+					TempTvItem.hInsertAfter = TVI_SORT; // only use the horribly-slow TVI_SORT for missing parents!
 					TempTvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 					TempTvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
 					nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&TempTvItem);

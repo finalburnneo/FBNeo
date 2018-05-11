@@ -65,6 +65,8 @@ static UINT8 i8751PortData[4] = { 0, 0, 0, 0 };
 
 static INT32 bTimerNullCPU = 0;
 
+static INT32 nExtraCycles[3];
+
 static UINT8 DrvVBlank;
 static UINT8 DrvSoundLatch;
 static UINT8 DrvFlipScreen;
@@ -78,15 +80,7 @@ static INT32 DrvTile2TilemapHeight;
 static UINT8 DrvTileRamBank[3];
 static UINT8 DrvSlyspyProtValue;
 
-typedef void (*Dec0Render)();
-static Dec0Render Dec0DrawFunction;
-static void BaddudesDraw();
-static void BirdtryDraw();
-static void HbarrelDraw();
-static void HippodrmDraw();
-static void MidresDraw();
-static void RobocopDraw();
-static void SlyspyDraw();
+//typedef void (*Dec0Render)();
 
 typedef INT32 (*Dec0LoadRoms)();
 static Dec0LoadRoms LoadRomsFunction;
@@ -1995,6 +1989,8 @@ static INT32 DrvDoReset()
 	DrvPriority = 0;
 	memset(DrvTileRamBank, 0, 3);
 
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
+
 	RotateReset();
 
 	HiscoreReset();
@@ -2417,7 +2413,8 @@ static INT32 DrvMCUScan(INT32 nAction)
 
 static void DrvMCUSync()
 {
-	INT32 todo = ((SekTotalCycles() * 8) / 10) - nCyclesDone[2];
+	INT32 todo = (((SekTotalCycles() * ((double)8/12)) / 10) - nCyclesDone[2]);
+	//bprintf(0, _T("Sek %d\nMCU %d  - todo: %d\n"), SekTotalCycles(), nCyclesDone[2], todo);
 	if (todo > 0) nCyclesDone[2] += DrvMCURun(todo);
 }
 
@@ -3842,7 +3839,6 @@ static INT32 BaddudesInit()
 	
 	BurnFree(DrvTempRom);
 	
-	Dec0DrawFunction = BaddudesDraw;
 	Dec0Game = DEC0_GAME_BADDUDES;
 
 	BaddudesDoReset();
@@ -3895,7 +3891,6 @@ static INT32 BirdtryInit()
 	
 	BurnFree(DrvTempRom);
 	
-	Dec0DrawFunction = BirdtryDraw;
 	Dec0Game = DEC0_GAME_BIRDTRY;
 
 	BaddudesDoReset();
@@ -3950,7 +3945,6 @@ static INT32 Drgninjab2Init()
 	
 	BurnFree(DrvTempRom);
 	
-	Dec0DrawFunction = BaddudesDraw;
 	Dec0Game = DEC0_GAME_BADDUDES;
 
 	BaddudesDoReset();
@@ -4017,7 +4011,6 @@ static INT32 HbarrelInit()
 
 	BurnFree(DrvTempRom);
 
-	Dec0DrawFunction = HbarrelDraw;
 	Dec0Game = DEC0_GAME_HBARREL;
 
 	RotateSetGunPosRAM(Drv68KRam + (0x66+1), Drv68KRam + (0xaa+1), 4);
@@ -4083,8 +4076,6 @@ static INT32 HippodrmInit()
 	DrvH6280Rom[0x1af] = 0x60;
 	DrvH6280Rom[0x1db] = 0x60;
 	DrvH6280Rom[0x21a] = 0x60;
-	
-	Dec0DrawFunction = HippodrmDraw;
 	
 	SekOpen(0);
 	SekMapHandler(1, 0x180000, 0x180fff, MAP_RAM);
@@ -4156,8 +4147,6 @@ static INT32 RobocopInit()
 
 	BurnFree(DrvTempRom);
 	
-	Dec0DrawFunction = RobocopDraw;
-	
 	SekOpen(0);
 	SekMapHandler(1, 0x180000, 0x180fff, MAP_RAM);
 	SekSetReadByteHandler(1, RobocopShared68KReadByte);
@@ -4226,8 +4215,6 @@ static INT32 RobocopbInit()
 	
 	BurnFree(DrvTempRom);
 	
-	Dec0DrawFunction = RobocopDraw;
-
 	BaddudesDoReset();
 
 	return 0;
@@ -4293,7 +4280,6 @@ static INT32 SlyspyDrvInit()
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 	
-	Dec0DrawFunction = SlyspyDraw;
 	DrvSpriteDMABufferRam = DrvSpriteRam;
 	
 	SlyspyDoReset();
@@ -4508,7 +4494,6 @@ static INT32 MidresInit()
 	MSM6295Init(0, 1000000 / 132, 1);
 	MSM6295SetRoute(0, 1.80, BURN_SND_ROUTE_BOTH);
 	
-	Dec0DrawFunction = MidresDraw;
 	DrvSpriteDMABufferRam = DrvSpriteRam;
 	
 	DrvCharPalOffset = 256;
@@ -4552,7 +4537,6 @@ static INT32 DrvExit()
 	memset(DrvTileRamBank, 0, 3);
 	DrvSlyspyProtValue = 0;
 	
-	Dec0DrawFunction = NULL;
 	LoadRomsFunction = NULL;
 	
 	Dec0Game = 0;
@@ -5129,7 +5113,7 @@ static void DrvRenderSprites(INT32 PriorityMask, INT32 PriorityVal)
 	}
 }
 
-static void BaddudesDraw()
+static INT32 BaddudesDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
 	DrvFlipScreen = Control0[0] & 0x80;
@@ -5153,9 +5137,11 @@ static void BaddudesDraw()
 	
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void BirdtryDraw()
+static INT32 BirdtryDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
 	DrvFlipScreen = Control0[0] & 0x80;
@@ -5170,9 +5156,11 @@ static void BirdtryDraw()
 		
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void HbarrelDraw()
+static INT32 HbarrelDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
 	DrvFlipScreen = Control0[0] & 0x80;
@@ -5187,9 +5175,11 @@ static void HbarrelDraw()
 		
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void HippodrmDraw()
+static INT32 HippodrmDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
 	DrvFlipScreen = Control0[0] & 0x80;
@@ -5208,9 +5198,11 @@ static void HippodrmDraw()
 	DrvRenderSprites(0x00, 0x00);
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void MidresDraw()
+static INT32 MidresDraw()
 {
 	INT32 Trans;
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
@@ -5243,9 +5235,11 @@ static void MidresDraw()
 	
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void RobocopDraw()
+static INT32 RobocopDraw()
 {
 	INT32 Trans;
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
@@ -5278,9 +5272,11 @@ static void RobocopDraw()
 	
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void SlyspyDraw()
+static INT32 SlyspyDraw()
 {
 	UINT16 *Control0 = (UINT16*)DrvCharCtrl0Ram;
 	DrvFlipScreen = Control0[0] & 0x80;
@@ -5294,6 +5290,8 @@ static void SlyspyDraw()
 	if (DrvPriority & 0x80) DrvRenderTile1Layer(0, TILEMAP_LAYER0);
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 #undef TILEMAP_BOTH_LAYERS
@@ -5315,11 +5313,10 @@ static INT32 DrvFrame()
 	nCyclesTotal[0] = (INT32)((double)10000000 / 57.41);
 	nCyclesTotal[1] = (INT32)((double)1500000 / 57.41);
 	nCyclesTotal[2] = (INT32)((double)8000000 / 57.41);
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = 0;
+	nCyclesDone[0] = nExtraCycles[0]; nCyclesDone[1] = nExtraCycles[1]; nCyclesDone[2] = nExtraCycles[2];
 
 	if (realMCU) {
 		nCyclesTotal[2] /= 12; // i8751 divider
-		nCyclesTotal[0] = (INT32)((double)12000000 / 57.41); // tweak for hbarrel
 	}
 
 	SekNewFrame();
@@ -5339,15 +5336,13 @@ static INT32 DrvFrame()
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[0] / nInterleave));
 
 		if (bTimerNullCPU)
-			nCyclesDone[0] += SekRun(nCyclesTotal[0] / nInterleave);
-
-		if (realMCU) {
-			INT32 nNext = (i + 1) * nCyclesTotal[2] / nInterleave;
-			INT32 nSegment = nNext - nCyclesDone[2];
-			nCyclesDone[2] += DrvMCURun(nSegment);
-		}
+			nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[1] / nInterleave));
+
+		if (realMCU) {
+			nCyclesDone[2] += DrvMCURun(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+		}
 	}
 
 	BurnTimerEndFrame(nCyclesTotal[0]);
@@ -5359,10 +5354,16 @@ static INT32 DrvFrame()
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = 0; // sound cpu, not needed
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+
 	SekClose();
 	M6502Close();
 
-	if (pBurnDraw && Dec0DrawFunction) Dec0DrawFunction();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	return 0;
 }
@@ -5421,7 +5422,9 @@ static INT32 RobocopFrame()
 	M6502Close();
 	h6280Close();
 	
-	if (pBurnDraw && Dec0DrawFunction) Dec0DrawFunction();
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	return 0;
 }
@@ -5476,8 +5479,10 @@ static INT32 Dec1Frame()
 	
 	SekClose();
 	h6280Close();
-	
-	if (pBurnDraw && Dec0DrawFunction) Dec0DrawFunction();
+
+	if (pBurnDraw) {
+		BurnDrvRedraw();
+	}
 
 	return 0;
 }
@@ -5519,6 +5524,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(nRotateTarget);
 		SCAN_VAR(nRotateTry);
 		SCAN_VAR(nRotateHoldInput);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
@@ -5557,7 +5564,7 @@ struct BurnDriver BurnDrvBaddudes = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, BaddudesRomInfo, BaddudesRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
-	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	BaddudesInit, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5567,7 +5574,7 @@ struct BurnDriver BurnDrvBirdtry = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
 	NULL, birdtryRomInfo, birdtryRomName, NULL, NULL, HbarrelInputInfo, BirdtryDIPInfo,
-	BirdtryInit, BaddudesExit, DrvFrame, NULL, DrvScan,
+	BirdtryInit, BaddudesExit, DrvFrame, BirdtryDraw, DrvScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
 
@@ -5577,7 +5584,7 @@ struct BurnDriver BurnDrvDrgninja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjaRomInfo, DrgninjaRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
-	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	BaddudesInit, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5587,7 +5594,7 @@ struct BurnDriver BurnDrvDrgninjab = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, DrgninjabRomInfo, DrgninjabRomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
-	BaddudesInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	BaddudesInit, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5597,7 +5604,7 @@ struct BurnDriver BurnDrvDrgninjab2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, Drgninjab2RomInfo, Drgninjab2RomName, NULL, NULL, Dec0InputInfo, BaddudesDIPInfo,
-	Drgninjab2Init, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	Drgninjab2Init, BaddudesExit, DrvFrame, BaddudesDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5607,7 +5614,7 @@ struct BurnDriver BurnDrvBouldash = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, BouldashRomInfo, BouldashRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
-	BouldashInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	BouldashInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5617,7 +5624,7 @@ struct BurnDriver BurnDrvBouldashj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, BouldashjRomInfo, BouldashjRomName, NULL, NULL, Dec1InputInfo, BouldashDIPInfo,
-	BouldashInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	BouldashInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5627,7 +5634,7 @@ struct BurnDriver BurnDrvHbarrel = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, HbarrelRomInfo, HbarrelRomName, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
-	HbarrelInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	HbarrelInit, BaddudesExit, DrvFrame, HbarrelDraw, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
 
@@ -5637,7 +5644,7 @@ struct BurnDriver BurnDrvHbarrelw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VERSHOOT, 0,
 	NULL, HbarrelwRomInfo, HbarrelwRomName, NULL, NULL, HbarrelInputInfo, HbarrelDIPInfo,
-	HbarrelInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	HbarrelInit, BaddudesExit, DrvFrame, HbarrelDraw, BaddudesScan,
 	NULL, 0x400, 240, 256, 3, 4
 };
 
@@ -5647,7 +5654,7 @@ struct BurnDriver BurnDrvHippodrm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, HippodrmRomInfo, HippodrmRomName, NULL, NULL, Dec0InputInfo, HippodrmDIPInfo,
-	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5657,7 +5664,7 @@ struct BurnDriver BurnDrvFfantasy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyRomInfo, FfantasyRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
-	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5667,7 +5674,7 @@ struct BurnDriver BurnDrvFfantasyj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyjRomInfo, FfantasyjRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
-	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5677,7 +5684,7 @@ struct BurnDriver BurnDrvFfantasya = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasyaRomInfo, FfantasyaRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
-	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5687,7 +5694,7 @@ struct BurnDriver BurnDrvFfantasyb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_VSFIGHT, 0,
 	NULL, FfantasybRomInfo, FfantasybRomName, NULL, NULL, Dec0InputInfo, FfantasyDIPInfo,
-	HippodrmInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	HippodrmInit, RobocopExit, RobocopFrame, HippodrmDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5697,7 +5704,7 @@ struct BurnDriver BurnDrvMidres = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, MidresRomInfo, MidresRomName, NULL, NULL, MidresInputInfo, MidresDIPInfo,
-	MidresInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5707,7 +5714,7 @@ struct BurnDriver BurnDrvMidresu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, MidresuRomInfo, MidresuRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
-	MidresInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5717,7 +5724,7 @@ struct BurnDriver BurnDrvMidresj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, MidresjRomInfo, MidresjRomName, NULL, NULL, MidresInputInfo, MidresuDIPInfo,
-	MidresInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	MidresInit, SlyspyExit, Dec1Frame, MidresDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5727,7 +5734,7 @@ struct BurnDriver BurnDrvRobocop = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopRomInfo, RobocopRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5737,7 +5744,7 @@ struct BurnDriver BurnDrvRobocopw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopwRomInfo, RobocopwRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5747,7 +5754,7 @@ struct BurnDriver BurnDrvRobocopj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopjRomInfo, RobocopjRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5757,7 +5764,7 @@ struct BurnDriver BurnDrvRobocopu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopuRomInfo, RobocopuRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5767,7 +5774,7 @@ struct BurnDriver BurnDrvRobocopu0 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, Robocopu0RomInfo, Robocopu0RomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopInit, RobocopExit, RobocopFrame, NULL, RobocopScan,
+	RobocopInit, RobocopExit, RobocopFrame, RobocopDraw, RobocopScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5777,7 +5784,7 @@ struct BurnDriver BurnDrvRobocopb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, RobocopbRomInfo, RobocopbRomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopbInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	RobocopbInit, BaddudesExit, DrvFrame, RobocopDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5787,7 +5794,7 @@ struct BurnDriver BurnDrvRobocopb2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_HORSHOOT, 0,
 	NULL, Robocopb2RomInfo, Robocopb2RomName, NULL, NULL, Dec0InputInfo, RobocopDIPInfo,
-	RobocopbInit, BaddudesExit, DrvFrame, NULL, BaddudesScan,
+	RobocopbInit, BaddudesExit, DrvFrame, RobocopDraw, BaddudesScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5797,7 +5804,7 @@ struct BurnDriver BurnDrvSecretag = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, SecretagRomInfo, SecretagRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5807,7 +5814,7 @@ struct BurnDriver BurnDrvSecretagj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, SecretagjRomInfo, SecretagjRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5817,7 +5824,7 @@ struct BurnDriver BurnDrvSlyspy = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, SlyspyRomInfo, SlyspyRomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5827,7 +5834,7 @@ struct BurnDriver BurnDrvSlyspy2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, Slyspy2RomInfo, Slyspy2RomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };
 
@@ -5837,6 +5844,6 @@ struct BurnDriver BurnDrvSlyspy3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, Slyspy3RomInfo, Slyspy3RomName, NULL, NULL, Dec1InputInfo, SlyspyDIPInfo,
-	SlyspyInit, SlyspyExit, Dec1Frame, NULL, SlyspyScan,
+	SlyspyInit, SlyspyExit, Dec1Frame, SlyspyDraw, SlyspyScan,
 	NULL, 0x400, 256, 240, 4, 3
 };

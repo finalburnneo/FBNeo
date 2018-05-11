@@ -36,12 +36,12 @@ static struct BurnInputInfo snowbro2InputList[] = {
 	{"P2 Coin",		BIT_DIGITAL,	DrvButton + 4,	"p2 coin"},
 	{"P2 Start",	BIT_DIGITAL,	DrvButton + 6,	"p2 start"},
 
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 left"},
-	{"P2 Right",	BIT_DIGITAL,	DrvJoy3 + 3,	"p2 right"},
-	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
-	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"},
+	{"P2 Right",	BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"},
+	{"P2 Button 1",	BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"},
+	{"P2 Button 2",	BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"},
 
 	{"P3 Start",	BIT_DIGITAL,	DrvJoy3 + 6,	"p3 start"},
 

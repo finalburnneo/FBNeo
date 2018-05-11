@@ -502,104 +502,11 @@ static int DoExtraFilters()
 	return 0;
 }
 
-static int ZipNames_qs_cmp_asc(const void *p0, const void *p1) {
-	struct NODEINFO *ni0 = (struct NODEINFO*) p0;
-	struct NODEINFO *ni1 = (struct NODEINFO*) p1;
-
-	return stricmp(ni0->pszROMName, ni1->pszROMName);
-}
-
 static int ZipNames_qs_cmp_desc(const void *p0, const void *p1) {
 	struct NODEINFO *ni0 = (struct NODEINFO*) p0;
 	struct NODEINFO *ni1 = (struct NODEINFO*) p1;
 
 	return stricmp(ni1->pszROMName, ni0->pszROMName);
-}
-
-static void ZipNameSortCheckForMissingParents()
-{
-	// this function is to add missing parents to the game list prior to doing the zipname sort
-	// eg, if the list is filtered to CPS-2 then megaman is the parent set (which is CPS-1) - this parent needs to be added to the list prior to the sort
-	
-	for (int i = nBurnDrvCount-1; i >= 0; i--) {
-		int ParentFound = 0;
-
-		nBurnDrvActive = i;																// Switch to driver i
-
-		if (BurnDrvGetFlags() & BDF_BOARDROM) {
-			continue;
-		}
-		
-		if (BurnDrvGetTextA(DRV_PARENT) == NULL || !(BurnDrvGetFlags() & BDF_CLONE)) {	// Skip parents
-			continue;
-		}
-
-		int nHardware = 1 << (BurnDrvGetHardwareCode() >> 24);
-		if ((nHardware & MASKALL) && ((nHardware & nLoadMenuShowX) || ((nHardware & MASKALL) == 0))) {
-			continue;
-		}
-
-		if (avOk && (!(nLoadMenuShowY & UNAVAILABLE)) && !gameAv[i]) {						// Skip non-available games if needed
-			continue;
-		}
-		
-		if (avOk && (!(nLoadMenuShowY & AVAILABLE)) && gameAv[i]) {						// Skip available games if needed
-			continue;
-		}
-		
-		if (DoExtraFilters()) continue;
-		
-		if (szSearchString[0]) {
-			TCHAR *StringFound = NULL;
-			TCHAR *StringFound2 = NULL;
-			TCHAR *StringFound3 = NULL;
-			TCHAR szDriverName[256] = { _T("") };
-			TCHAR szManufacturerName[256] = { _T("") };
-			wcscpy(szDriverName, BurnDrvGetText(DRV_FULLNAME));
-			swprintf(szManufacturerName, _T("%s %s"), BurnDrvGetText(DRV_MANUFACTURER), BurnDrvGetText(DRV_SYSTEM));
-			for (int k =0; k < 256; k++) {
-				szDriverName[k] = _totlower(szDriverName[k]);
-				szManufacturerName[k] = _totlower(szManufacturerName[k]);
-			}
-			StringFound = wcsstr(szDriverName, szSearchString);
-			StringFound2 = wcsstr(BurnDrvGetText(DRV_NAME), szSearchString);
-			StringFound3 = wcsstr(szManufacturerName, szSearchString);
-
-			if (!StringFound && !StringFound2 && !StringFound3) continue;
-		}
-
-		// Find the parent's handle
-		for (int j = 0; j < nTmpDrvCount; j++) {
-			if (nBurnDrv[j].bIsParent) {
-				if (!_stricmp(BurnDrvGetTextA(DRV_PARENT), nBurnDrv[j].pszROMName)) {
-					ParentFound = 1;
-					break;
-				}
-			}
-		}
-		
-		if (!ParentFound) {
-			char szTempName[32];
-			strcpy(szTempName, BurnDrvGetTextA(DRV_PARENT));
-			int nTempBurnDrvSelect = nBurnDrvActive;
-			for (int j = 0; j < nBurnDrvCount; j++) {
-				nBurnDrvActive = j;
-				if (!strcmp(szTempName, BurnDrvGetTextA(DRV_NAME))) {
-					memset(&nBurnDrv[nTmpDrvCount].TvItem, 0, sizeof(nBurnDrv[nTmpDrvCount].TvItem));
-					nBurnDrv[nTmpDrvCount].TvItem.item.mask = TVIF_TEXT | TVIF_PARAM;
-					nBurnDrv[nTmpDrvCount].TvItem.hInsertAfter = TVI_FIRST;
-					nBurnDrv[nTmpDrvCount].TvItem.item.pszText = BurnDrvGetText(DRV_NAME);
-					nBurnDrv[nTmpDrvCount].TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
-					nBurnDrv[nTmpDrvCount].nBurnDrvNo = j;
-					nBurnDrv[nTmpDrvCount].pszROMName = BurnDrvGetTextA(DRV_NAME);
-					nBurnDrv[nTmpDrvCount].bIsParent = true;
-					nTmpDrvCount++;
-					break;
-				}
-			}
-			nBurnDrvActive = nTempBurnDrvSelect;
-		}
-	}
 }
 
 // Make a tree-view control with all drivers
@@ -705,28 +612,11 @@ static int SelListMake()
 		nBurnDrv[nTmpDrvCount].TvItem.hInsertAfter = TVI_FIRST;
 		nBurnDrv[nTmpDrvCount].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
 		nBurnDrv[nTmpDrvCount].TvItem.item.lParam = (LPARAM)&nBurnDrv[nTmpDrvCount];
-		if (!(nLoadMenuShowY & SHOWSHORT)) { // "Use Zipnames" gets deferred, sorted and then added in the block below
-			nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[nTmpDrvCount].TvItem);
-		}
+		nBurnDrv[nTmpDrvCount].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[nTmpDrvCount].TvItem);
 		nBurnDrv[nTmpDrvCount].nBurnDrvNo = nBurnDrvActive;
 		nBurnDrv[nTmpDrvCount].pszROMName = BurnDrvGetTextA(DRV_NAME);
 		nBurnDrv[nTmpDrvCount].bIsParent = true;
 		nTmpDrvCount++;
-	}
-	
-	// add the parents if showing zip names - check for missing parents first, then sort in ascending order
-	if (nLoadMenuShowY & SHOWSHORT)	{
-		ZipNameSortCheckForMissingParents();
-		
-		// "Use Zipnames", we have to sort since the gamelist is pre-sorted by the game's long name
-		qsort(nBurnDrv, nTmpDrvCount, sizeof(NODEINFO), ZipNames_qs_cmp_asc);
-
-		for (i = nTmpDrvCount-1; i >= 0; i--) {
-			nBurnDrvActive = nBurnDrv[i].nBurnDrvNo;
-			nBurnDrv[i].TvItem.item.pszText = (nLoadMenuShowY & SHOWSHORT) ? BurnDrvGetText(DRV_NAME) : RemoveSpace(BurnDrvGetText(DRV_ASCIIONLY | DRV_FULLNAME));
-			nBurnDrv[i].TvItem.item.lParam = (LPARAM)&nBurnDrv[i];
-			nBurnDrv[i].hTreeHandle = (HTREEITEM)SendMessage(hSelList, TVM_INSERTITEM, 0, (LPARAM)&nBurnDrv[i].TvItem);
-		}
 	}
 
 	// 2nd: clones

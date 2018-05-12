@@ -6,6 +6,7 @@
 #include "i8039.h"
 #include "samples.h"
 #include "dac.h"
+#include "resnet.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -34,6 +35,9 @@ static UINT8 DrvJoy3[8];
 static UINT8 DrvDips[1];
 static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
+
+static double color_weights_rg[3];
+static double color_weights_b[2];
 
 static struct BurnInputInfo SpacefbInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 coin"	},
@@ -127,7 +131,7 @@ static void port1_write(UINT8 data)
 
 	soundlatch = data;
 }
-	
+
 static void __fastcall spacefb_main_write_port(UINT16 port, UINT8 data)
 {
 	switch (port & 3)
@@ -186,7 +190,7 @@ static void __fastcall spacefb_i8035_write_port(UINT32 port, UINT8 data)
 	switch (port & 0x1ff)
 	{
 		case I8039_p1:
-			DACSignedWrite(0, data);
+			DACWrite(0, data);
 		return;
 	}
 }
@@ -207,12 +211,12 @@ static UINT8 __fastcall spacefb_i8035_read_port(UINT32 port)
 
 	return 0;
 }
-
+#if 0
 static INT32 DrvSyncDAC()
 {
-	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / (730000.0000 / (nBurnFPS / 100.0000))));
+	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / (400000.0000 / (nBurnFPS / 100.0000))));
 }
-
+#endif
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -231,7 +235,17 @@ static INT32 DrvDoReset()
 	port0_data = 0;
 	port2_data = 0;
 	star_shift_reg = 0x18f89;
-	
+
+	{ // init resnet for colors
+		const INT32 resistances_rg[] = { 1000, 470, 220 };
+		const INT32 resistances_b [] = {       470, 220 };
+
+		compute_resistor_weights(0, 0xff, -1.0,
+								 3, resistances_rg, color_weights_rg, 470, 0,
+								 2, resistances_b,  color_weights_b,  470, 0,
+								 0, NULL, NULL, 0, 0);
+	}
+
 	return 0;
 }
 
@@ -315,7 +329,8 @@ static INT32 DrvInit()
 	BurnSampleInit(0);
 	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
+	DACInit(0, 0, 1, I8039TotalCycles, 400000);
+	//DACInit(0, 0, 1, DrvSyncDAC); // for gamezfan
 	DACSetRoute(0, 0.65, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
@@ -360,11 +375,15 @@ static void get_starfield_pens()
 		UINT8 ra = (((i >> 4) & 0x01) || background_red) && !disable_star_field;
 		UINT8 rb =  ((i >> 5) & 0x01) && color_contrast_r && !disable_star_field;
 
-		UINT32 r = ra * 1000 + rb * 470 + 0 * 220;
-		UINT32 g = ga * 1000 + gb * 470 + 0 * 220; 
-		UINT32 b = ba * 470 + bb * 220;
+		//UINT32 r = ra * 1000 + rb * 470 + 0 * 220;
+		//UINT32 g = ga * 1000 + gb * 470 + 0 * 220;
+		//UINT32 b = ba * 470 + bb * 220;
+		UINT8 r = combine_3_weights(color_weights_rg, 0, rb, ra);
+		UINT8 g = combine_3_weights(color_weights_rg, 0, gb, ga);
+		UINT8 b = combine_2_weights(color_weights_b,     bb, ba);
 
-		DrvPalette[i] = BurnHighCol((r * 255) / 1690, (g * 255) / 1690, (b * 255) / 690, 0);
+		DrvPalette[i] = BurnHighCol(r, g, b, 0);
+		//DrvPalette[i] = BurnHighCol((r * 255) / 1690, (g * 255) / 1690, (b * 255) / 690, 0);
 	}
 }
 
@@ -387,9 +406,12 @@ static void get_sprite_pens()
 		UINT8 b1 = (data >> 6) & 0x01;
 		UINT8 b2 = (data >> 7) & 0x01;
 
-		UINT32 r = r2 * 1000 + r1 * 470 + r0 * 220;
-		UINT32 g = g2 * 1000 + g1 * 470 + g0 * 220;
-		UINT32 b = b2 * 470 + b1 * 220;
+		//UINT32 r = r2 * 1000 + r1 * 470 + r0 * 220;
+		//UINT32 g = g2 * 1000 + g1 * 470 + g0 * 220;
+		//UINT32 b = b2 * 470 + b1 * 220;
+	    UINT8 r = combine_3_weights(color_weights_rg, r0, r1, r2);
+		UINT8 g = combine_3_weights(color_weights_rg, g0, g1, g2);
+		UINT8 b = combine_2_weights(color_weights_b,      b1, b2);
 
 		if (i >> 4)
 		{
@@ -400,7 +422,8 @@ static void get_sprite_pens()
 			b = (UINT8)((b / fade_weight) + 0.5);
 		}
 
-		DrvPalette[i + 0x40] = BurnHighCol((r * 255) / 1690, (g * 255) / 1690, (b * 255) / 690, 0);
+		DrvPalette[i + 0x40] = BurnHighCol(r, g, b, 0);
+		//DrvPalette[i + 0x40] = BurnHighCol((r * 255) / 1690, (g * 255) / 1690, (b * 255) / 690, 0);
 	}
 }
 
@@ -411,9 +434,8 @@ static inline void shift_star_generator()
 
 static void draw_starfield()
 {
-//	if (cliprect.min_y == screen.visible_area().min_y)
 	{
-		INT32 clock_count = 512 * 15; // ? or 16) - 1?
+		INT32 clock_count = 0x200 * 0x10 - 1;
 
 		for (INT32 i = 0; i < clock_count; i++)
 			shift_star_generator();
@@ -441,9 +463,8 @@ static void draw_starfield()
 		}
 	}
 
-//	if (cliprect.max_y == screen.visible_area().max_y)
 	{
-		INT32 clock_count = 512 * 16;
+		INT32 clock_count = 0x200 * (0x100 - 0xf0);
 
 		for (INT32 i = 0; i < clock_count; i++)
 			shift_star_generator();
@@ -610,42 +631,30 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 10;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3000000 / 60, 400000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		if (i == 4) {
+		if (i == 128) {
 			ZetSetVector(0xd7);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-		if (i == 9) {
+		if (i == 240) {
 			ZetSetVector(0xcf);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 
-		nCyclesDone[1] += I8039Run(nCyclesTotal[1] / nInterleave);
-		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
-			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-			nSoundBufferPos += nSegmentLength;
-		}
+		nCyclesDone[1] += I8039Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 	}
 	
 	if (pBurnSoundOut) {
-		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
-		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		if (nSegmentLength) {
-			BurnSampleRender(pSoundBuf, nSegmentLength);
-		}
+		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 

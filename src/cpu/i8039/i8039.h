@@ -73,6 +73,8 @@ extern int N7751Scan(int nAction,int *pnMin);
 extern INT32 I8039TotalCycles();
 extern void I8039NewFrame();
 
+extern void I8035Init(int (*irqcallback)(int));
+
 #define I8035Run                    I8039Run
 #define I8035SetIOReadHandler       I8039SetIOReadHandler
 #define I8035SetIOWriteHandler      I8039SetIOWriteHandler

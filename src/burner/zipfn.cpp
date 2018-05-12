@@ -293,7 +293,7 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 				nRet = unzGetCurrentFileInfo(Zip, &FileInfo, szName, MAX_PATH, NULL, 0, NULL, 0);
 				if (nRet != UNZ_OK) continue;
 
-				if (!strcmp(szName, fileName)) {
+				if (!stricmp(szName, fileName)) {
 					break;
 				}
 			}

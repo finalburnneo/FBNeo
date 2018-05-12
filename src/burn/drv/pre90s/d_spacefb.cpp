@@ -646,6 +646,10 @@ static INT32 DrvFrame()
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		if (i == 240) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+
 			ZetSetVector(0xcf);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
@@ -659,10 +663,6 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }

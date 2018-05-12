@@ -10,7 +10,7 @@
 #include "driver.h"
 
 #define HAS_N7751	1
-#define HAS_I8035	0
+#define HAS_I8035   1
 #define HAS_I8048	0
 #define HAS_I8749	0
 #define HAS_MB8884	0
@@ -72,6 +72,18 @@ extern int N7751Scan(int nAction,int *pnMin);
 
 extern INT32 I8039TotalCycles();
 extern void I8039NewFrame();
+
+#define I8035Run                    I8039Run
+#define I8035SetIOReadHandler       I8039SetIOReadHandler
+#define I8035SetIOWriteHandler      I8039SetIOWriteHandler
+#define I8035SetProgramReadHandler  I8039SetProgramReadHandler
+#define I8035SetProgramWriteHandler I8039SetProgramWriteHandler
+#define I8035SetCPUOpReadHandler    I8039SetCPUOpReadHandler
+#define I8035SetCPUOpReadArgHandler I8039SetCPUOpReadArgHandler
+#define I8035Exit                   I8039Exit
+#define I8035Reset                  I8039Reset
+#define I8035SetIrqState            I8039SetIrqState
+#define I8035Scan                   I8039Scan
 
 /*
  *   Input a UINT8 from given I/O port
@@ -160,7 +172,6 @@ extern void i8039_get_info(UINT32 state, cpuinfo *info);
 
 #define i8035_ICount			i8039_ICount
 
-extern void i8035_get_info(UINT32 state, cpuinfo *info);
 #endif
 
 /**************************************************************************

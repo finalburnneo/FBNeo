@@ -704,6 +704,14 @@ void I8039Init(int (*irqcallback)(int))
 	I8039CPUReadOpArg = I8039DummyReadOpArg;
 }
 
+void I8035Init(int (*irqcallback)(int))
+{
+	I8039Init(irqcallback);
+
+	R.ram_mask = 0x3F;
+	R.int_rom_size = 0x400;
+}
+
 void N7751Init(int (*irqcallback)(int))
 {
 	I8039Init(irqcallback);
@@ -1243,8 +1251,7 @@ void i8039_get_info(UINT32 state, cpuinfo *info)
 }
 
 
-
-#if (HAS_I8035)
+#if 0 //(HAS_I8035)
 /**************************************************************************
  * CPU-specific get_info/set_info
  **************************************************************************/

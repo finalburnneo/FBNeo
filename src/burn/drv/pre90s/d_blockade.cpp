@@ -1,13 +1,10 @@
 // FB Alpha Blockade hardware driver module
 // Based on MAME driver by Frank Palazzolo and Dirk Best
 
-// to do:
-//	discrete sound
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "samples.h"
-#include "dac.h"
+#include <math.h>
 
 static UINT8 *AllMem;
 static UINT8 *AllRam;
@@ -25,6 +22,12 @@ static UINT8 coin_latch;
 static UINT8 coin_inserted;
 
 static INT32 vblank;
+
+// tone generator from crazy baloon w/ dinkmods
+static UINT32 crbaloon_tone_step;
+static UINT32 crbaloon_tone_pos;
+static double crbaloon_tone_freq;
+static double envelope_ctr;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -108,17 +111,17 @@ STDINPUTINFO(Blasto)
 
 static struct BurnInputInfo HustleInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
-	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 3,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 4,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 6,	"p1 down"	},
-	{"P1 Left",			BIT_DIGITAL,	DrvJoy3 + 7,	"p1 left"	},
-	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 right"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy2 + 4,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy2 + 6,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy2 + 7,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 right"	},
 
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 down"	},
-	{"P2 Left",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 left"	},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy1 + 4,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 right"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -178,7 +181,7 @@ STDINPUTINFO(Mineswpr4)
 static struct BurnDIPInfo BlockadeDIPList[]=
 {
 	{0x0a, 0xff, 0xff, 0xff, NULL					},
-	{0x0B, 0xff, 0xff, 0xff, NULL					},
+	{0x0b, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    2, "Boom Switch"			},
 	{0x0a, 0x01, 0x04, 0x00, "Off"					},
@@ -292,6 +295,39 @@ static struct BurnDIPInfo Mineswpr4DIPList[]=
 
 STDDIPINFO(Mineswpr4)
 
+static void sound_tone_render(INT16 *buffer, INT32 len)
+{
+	INT16 square = 0;
+
+	memset(buffer, 0, len * 2 * sizeof(INT16));
+
+	if (crbaloon_tone_step)	{
+		while (len-- > 0) {
+			square = crbaloon_tone_pos & 0x80000000 ? 32767 : -32768;
+			square = (INT16)((double)square * 0.05);        // volume
+			square = (INT16)(square * exp(-envelope_ctr));  // envelope volume
+			envelope_ctr += (crbaloon_tone_freq > 1100.0) ? 0.0008 : 0.0005; // step envelope, treat the higher pitched sounds w/ a faster envelope
+			*buffer++ = square;
+			*buffer++ = square;
+
+			crbaloon_tone_pos += crbaloon_tone_step;
+		}
+	}
+}
+
+static void sound_tone_write(UINT8 data)
+{
+	crbaloon_tone_step = 0;
+	envelope_ctr = 0.0;
+
+	if (data && data != 0xff) {
+		double freq = (13630.0 / (256 - data) + (data >= 0xea ? 13 : 0)) * 0.5;
+
+		crbaloon_tone_freq = freq;
+		crbaloon_tone_step = (UINT32)(freq * 65536.0 * 65536.0 / (double)nBurnSoundRate);
+	}
+}
+
 static void __fastcall blockade_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0x9000) == 0x8000) {
@@ -306,7 +342,7 @@ static void __fastcall blockade_write(UINT16 address, UINT8 data)
 
 static void __fastcall blockade_write_port(UINT16 port, UINT8 data)
 {
-	bprintf (0, _T("%2.2x, %2.2x\n"), port&0xff,data);
+   // bprintf (0, _T("%2.2x, %2.2x\n"), port&0xff,data);
 	
 	switch (port & 0xff)
 	{
@@ -318,7 +354,7 @@ static void __fastcall blockade_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x02:
-			DACWrite(0, data); // sound_freq (discrete, not emulated in FBA)
+			sound_tone_write(data);
 		return;
 
 		case 0x04:
@@ -348,11 +384,6 @@ static UINT8 __fastcall blockade_read_port(UINT16 port)
 	return 0;
 }
 
-static INT32 DrvSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (2007900 / (nBurnFPS / 100.0000))));
-}
-
 static tilemap_callback( layer )
 {
 	TILE_SET_INFO(0, DrvVidRAM[offs], 0, 0);
@@ -366,11 +397,13 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-	DACReset();
 	BurnSampleReset();
 
 	coin_latch   = 0;
 	coin_inserted = 0;
+
+	crbaloon_tone_step = 0;
+	crbaloon_tone_pos = 0;
 
 	return 0;
 }
@@ -509,12 +542,9 @@ static INT32 DrvInit(INT32 game_select)
 	ZetSetInHandler(blockade_read_port);
 	ZetClose();
 
-	BurnSampleInit(0);
-	BurnSampleSetAllRoutesAllSamples(0.40, BURN_SND_ROUTE_BOTH);
+	BurnSampleInit(1);
+	BurnSampleSetAllRoutesAllSamples(0.25, BURN_SND_ROUTE_BOTH);
 
-	DACInit(0, 0, 1, DrvSyncDAC);
-	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
-	
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, layer_map_callback, 8, 8, 32, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM, 1, 8, 8, 0x1000, 0, 0);
@@ -530,7 +560,6 @@ static INT32 DrvExit()
 
 	ZetExit();
 
-	DACExit();
 	BurnSampleExit();
 
 	BurnFree(AllMem);
@@ -588,8 +617,8 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
+		sound_tone_render(pBurnSoundOut, nBurnSoundLen);
 		BurnSampleRender(pBurnSoundOut, nBurnSoundLen);
-	//	DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -617,17 +646,20 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		BurnSampleScan(nAction, pnMin);
-		DACScan(nAction, pnMin);
 
 		SCAN_VAR(coin_latch);
 		SCAN_VAR(coin_inserted);
+		SCAN_VAR(crbaloon_tone_step);
+		SCAN_VAR(crbaloon_tone_pos);
+		SCAN_VAR(crbaloon_tone_freq);
+		SCAN_VAR(envelope_ctr);
 	}
 
 	return 0;
 }
 
 static struct BurnSampleInfo BlockadeSampleDesc[] = {
-	{ "boom", SAMPLE_NOSTORE | SAMPLE_NOLOOP },
+	{ "boom",  SAMPLE_NOLOOP },
 	{ "", 0 }
 };
 

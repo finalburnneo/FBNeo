@@ -4480,7 +4480,7 @@ struct BurnDriver BurnDrvNslasher = {
 	"nslasher", NULL, NULL, NULL, "1994",
 	"Night Slashers (Korea Rev 1.3, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, nslasherRomInfo, nslasherRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasherInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4533,7 +4533,7 @@ struct BurnDriver BurnDrvNslasherj = {
 	"nslasherj", "nslasher", NULL, NULL, "1994",
 	"Night Slashers (Japan Rev 1.2, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, nslasherjRomInfo, nslasherjRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasherjInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4580,7 +4580,7 @@ struct BurnDriver BurnDrvNslashers = {
 	"nslashers", "nslasher", NULL, NULL, "1994",
 	"Night Slashers (Over Sea Rev 1.2, DE-0397-0 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, nslashersRomInfo, nslashersRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasherInit, DrvExit, DrvZ80Frame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3
@@ -4632,7 +4632,7 @@ struct BurnDriver BurnDrvNslasheru = {
 	"nslasheru", "nslasher", NULL, NULL, "1994",
 	"Night Slashers (US Rev 1.2, DE-0395-1 PCB)\0", NULL, "Data East Corporation", "DECO 32",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SCRFIGHT, 0,
 	NULL, nslasheruRomInfo, nslasheruRomName, NULL, NULL, NslasherInputInfo, NslasherDIPInfo,
 	NslasheruInit, DrvExit, DrvFrame, NslasherDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 240, 4, 3

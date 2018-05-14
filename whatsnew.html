@@ -123,12 +123,24 @@
 <li>Fixed Use / Select buttons were swapped in Dungeons &amp; Dragons - shadow over mystara [barbudreadmon]</li>
 <li>DAC: Internalized the stream synchronization, driver callbacks no longer required [dink]</li>
 <li>IREM M72: Improved DAC Synchroniztion, slight sound quality improvement with DAC sounds [dink]</li>
-<li>Added ProcessAnalog() to the joyprocess device, for ez analog hookups and scaling [dink]</li>
+<li>Added ProcessAnalog() to the joyprocess device, for easy analog hookups and scaling during driver development [dink]</li>
 <li>Fixed SCI's analog handling so all the sounds can be selected in service mode [dink]</li>
 <li>Fixed attract mode in Super Hang-on [dink]</li>
 <li>Fixed protection issues (inputs stop responding, etc) after using savestates with Fatal Fury 2 and Super Sidekicks/Tokuten Ou [dink]</li>
 <li>Fixed analog paddle input for Player 2 in VS Block Breaker / Saru-Kani-Hamu-Zou [dink]</li>
 <li>Fixed CPS-2 default button mappings in games with more than 3 buttons [Barry]</li>
+<li>Fixed zipname sort order when parent does not meet filter criteria [Barry]</li>
+<li>Added "headache filter" hack/dip option to Cyvern [dink]</li>
+<li>Make pgm.zip the BIOS set for dmnfrntpcb, svgpcb, thegladpcb [Barry]</li>
+<li>Place favorites at the top of the Kaillera game list for easier game hosting [dink]</li>
+<li>Fixed game list sorting with parent/clone games of different manufacturers when using Hardware checkboxes [dink]</li>
+<li>Fixed roz-glitch on the side of the screen in Valkyrie (Namco System 2) [dink]</li>
+<li>Add support for Neo-Geo Universe BIOS 3.3 [Barry, Razoola]</li>
+<li>Fixed Player 2 Inputs in Snow Bros. 2 [dink]</li>
+<li>Hooked up proper redraw for Data East DEC-0 games to eliminate frame advances when the system requests a window redraw [dink]</li>
+<li>Enable i8035 cpu support in the i8039 core [dink]</li>
+<li>Marked Night Slashers as 3 Players, which can be set in the Game Options in Service Mode.  The game defaults to 2 players [dink]</li>
+<li> []</li>
 </ul>
 <!-- new drivers -->
 <h4>New drivers</h4>
@@ -137,16 +149,26 @@
 <li>Added driver for Espial and Net Wars [iq_132]</li>
 <li>Added driver for Alpine Ski, Bio Attack, Elevator Action, Front Line, Jungle Hunt / Jungle King, Tin Star, Sea Fighter Poseidon, Space Seeker, Space Cruiser, Time Tunnel, Water Ski and Wild Western on Taito's SJ System [iq_132, dink]</li>
 <li>Added driver for One Shot One Kill and Mad Donna [iq_132]</li>
+<li>Added driver for Miss Bubble 2, Bubble Pong Pong [iq_132]</li>
+<li>Added driver for Black Touch '96 [iq_132]</li>
+<li>Added driver for Blockade, Blasto, Hustle, CoMOTION and Mine Sweeper [iq_132, dink]</li>
+<li>Added driver for Space Firebird [iq_132, dink]</li>
+<li>Added driver for Empire City: 1931 / Street Fight [iq_132, dink]</li>
 <li> []</li>
 </ul>
 <!-- new game additions to existing drivers -->
 <h4>New additions / updates to existing drivers</h4>
 <ul>
+<li>Add World Heroes 2 (ALH-006) to the Neo Geo driver [Barry, Razoola]</li>
+<li>Add V-Liner (v0.7a) to Neo Geo driver [Barry, Razoola]</li>
 <li> []</li>
 </ul>
 <!-- clones and updated romsets in drivers -->
 <h4>Clones and updated romsets in existing drivers</h4>
 <ul>
+<li>Added clone of Marvel Super Heroes (951024 Brazil) to the CPS-2 driver [Barry, SHVB, The Dumping Union]</li>
+<li>Added clone of Sengoku 3 / Sengoku Densho 2001 (Set 2) to the Neo Geo driver [Barry, Razoola]</li>
+<li>Added clone of Final Fight (900405 Japan) to the CPS-1 driver [Barry, bonky0013, Manimani, The Dumping Union]</li>
 <li> []</li>
 </ul>
 

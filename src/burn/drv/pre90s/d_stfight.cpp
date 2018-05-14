@@ -1,14 +1,11 @@
+// FB Alpha 1942 driver module
+// Based on MAME driver by Mark McDougall
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "taito_m68705.h"
 #include "burn_ym2203.h"
 #include "msm5205.h"
-
-/*
- 2203 doesnt sound right at 1500000,4500000 ... hmm.
- needs banking(?) 8000-bfff
- other games/clones
-*/
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -41,6 +38,8 @@ static UINT16 *DrvBitmap[2];
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[3];
+
 static UINT8 cpu_to_mcu_data;
 static INT32 cpu_to_mcu_empty;
 static UINT16 sprite_base;
@@ -48,7 +47,6 @@ static UINT8 coin_state;
 static UINT8 soundlatch;
 static UINT8 video_regs[10];
 
-static UINT8 port_c_out;
 static INT32 adpcm_reset;
 static UINT16 adpcm_data_off;
 static UINT8 vck2;
@@ -164,13 +162,6 @@ static void __fastcall stfight_main_write(UINT16 address, UINT8 data)
 
 		case 0xc700:
 			coin_state |= ~data & 3;
-#if 0
-			if (!BIT(data, 0))
-				coin_state |= 1;
-
-			if (!BIT(data, 1))
-				coin_state |= 2;
-#endif
 		return;
 
 		case 0xc804:
@@ -226,6 +217,13 @@ static UINT8 __fastcall stfight_main_read(UINT16 address)
 
 static void __fastcall stfight_sound_write(UINT16 address, UINT8 data)
 {
+#if 0
+	// for debugging fm issue w/prescaler
+	if (address == 0xc000 || address == 0xc800) {
+		if (data >= 0x2d && data <= 0x2f)
+			bprintf(0, _T("ym2203 %X prescale %x.\n"), address, data);
+	}
+#endif
 	switch (address)
 	{
 		case 0xc000:
@@ -272,11 +270,11 @@ static void stfight_m68705_portB_out(UINT8 *data)
 
 static void stfight_m68705_portC_out(UINT8 *data)
 {
-	if ((port_c_out & 1) && !(*data & 1)) coin_state &= ~1;
-	if ((port_c_out & 2) && !(*data & 2)) coin_state &= ~2;
+	if ((portC_out & 1) && !(*data & 1)) coin_state &= ~1;
+	if ((portC_out & 2) && !(*data & 2)) coin_state &= ~2;
 
 	adpcm_reset = *data & 0x04;
-	if (!adpcm_reset && (port_c_out & 4))
+	if (!adpcm_reset && (portC_out & 4))
 		adpcm_data_off = portA_out << 9;
 
 	MSM5205ResetWrite(0, adpcm_reset ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
@@ -285,7 +283,7 @@ static void stfight_m68705_portC_out(UINT8 *data)
 	ZetSetIRQLine(0x20, (*data & 8) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 	ZetClose();
 
-	port_c_out = *data;
+	portC_out = *data;
 }
 
 static void stfight_m68705_portB_in()
@@ -373,6 +371,8 @@ static INT32 DrvDoReset()
 	ZetOpen(1);
 	ZetReset();
 	BurnYM2203Reset();
+	BurnYM2203Write(0, 0, 0x2f); // set prescale (game doesn't do this)
+	BurnYM2203Write(1, 0, 0x2f); // set prescale (game doesn't do this)
 	ZetClose();
 
 	MSM5205Reset();
@@ -385,10 +385,11 @@ static INT32 DrvDoReset()
 	soundlatch = 0;
 	memset (video_regs, 0, 10);
 
-	port_c_out = 0;
 	adpcm_reset = 1;
 	adpcm_data_off = 0;
 	vck2 = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
 
 	return 0;
 }
@@ -397,39 +398,39 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvZ80ROM0		= Next; Next += 0x0100000;
-	DrvZ80OPS0		= Next; Next += 0x0080000;
-	DrvZ80ROM1		= Next; Next += 0x0080000;
+	DrvZ80ROM0		= Next; Next += 0x010000;
+	DrvZ80OPS0		= Next; Next += 0x008000;
+	DrvZ80ROM1		= Next; Next += 0x008000;
 
-	DrvMCUROM		= Next; Next += 0x0008000;
+	DrvMCUROM		= Next; Next += 0x000800;
 
-	DrvGfxROM0		= Next; Next += 0x0080000;
-	DrvGfxROM1		= Next; Next += 0x0400000;
-	DrvGfxROM2		= Next; Next += 0x0400000;
-	DrvGfxROM3		= Next; Next += 0x0400000;
-	DrvGfxROM4		= Next; Next += 0x0100000;
-	DrvGfxROM5		= Next; Next += 0x0100000;
-	DrvGfxROM6		= Next; Next += 0x0001000;
-	DrvGfxROM7		= Next; Next += 0x0002000;
-	DrvGfxROM8		= Next; Next += 0x0002000;
-	DrvGfxROM9		= Next; Next += 0x0002000;
+	DrvGfxROM0		= Next; Next += 0x008000;
+	DrvGfxROM1		= Next; Next += 0x040000;
+	DrvGfxROM2		= Next; Next += 0x040000;
+	DrvGfxROM3		= Next; Next += 0x040000;
+	DrvGfxROM4		= Next; Next += 0x010000;
+	DrvGfxROM5		= Next; Next += 0x010000;
+	DrvGfxROM6		= Next; Next += 0x000100;
+	DrvGfxROM7		= Next; Next += 0x000200;
+	DrvGfxROM8		= Next; Next += 0x000200;
+	DrvGfxROM9		= Next; Next += 0x000200;
 
-	DrvSndROM		= Next; Next += 0x0080000;
+	DrvSndROM		= Next; Next += 0x008000;
 
-	DrvBitmap[0]	= (UINT16*)Next; Next += 256 * 256 * 2;
-	DrvBitmap[1]	= (UINT16*)Next; Next += 256 * 256 * 2;
+	DrvBitmap[0]	= (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
+	DrvBitmap[1]	= (UINT16*)Next; Next += 256 * 256 * sizeof(UINT16);
 
 	DrvPalette		= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvSprRAM		= Next; Next += 0x0010000;
-	DrvTxtRAM		= Next; Next += 0x0008000;
-	DrvPalRAM		= Next; Next += 0x0002000;
-	DrvZ80RAM0		= Next; Next += 0x0010000;
-	DrvZ80RAM1		= Next; Next += 0x0008000;
+	DrvSprRAM		= Next; Next += 0x001000;
+	DrvTxtRAM		= Next; Next += 0x000800;
+	DrvPalRAM		= Next; Next += 0x000200;
+	DrvZ80RAM0		= Next; Next += 0x001000;
+	DrvZ80RAM1		= Next; Next += 0x000800;
 
-	DrvMCURAM		= Next; Next += 0x0000800;
+	DrvMCURAM		= Next; Next += 0x000080;
 
 	RamEnd			= Next;
 
@@ -584,7 +585,7 @@ static INT32 DrvInit()
 	MSM5205Init(0, DrvMSM5205SynchroniseStream, 384000, stfight_adpcm_int, MSM5205_S48_4B, 1);
 	MSM5205SetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
-	BurnYM2203Init(2, 3000000, NULL, 0);
+	BurnYM2203Init(2, 1500000, NULL, 0);
 	BurnTimerAttachZet(3000000);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.15, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.15, BURN_SND_ROUTE_BOTH);
@@ -602,7 +603,9 @@ static INT32 DrvInit()
 	GenericTilemapSetGfx(0, DrvGfxROM2, 4, 16, 16, 0x40000, 0, 0x07);
 	GenericTilemapSetGfx(1, DrvGfxROM1, 4, 16, 16, 0x40000, 0, 0x07);
 	GenericTilemapSetGfx(2, DrvGfxROM0, 2,  8,  8, 0x08000, 0, 0x0f);
-
+	GenericTilemapSetOffsets(0, 0, -16);
+	GenericTilemapSetOffsets(1, 0, -16);
+	GenericTilemapSetOffsets(2, 0, -16);
 	DrvDoReset();
 
 	return 0;
@@ -650,15 +653,15 @@ static void draw_sprites()
 		INT32 sx = DrvSprRAM[offs + 3];
 		if ((sx >= 0xf0) && (attr & 0x80)) sx -= 0x100;
 
-		Draw16x16MaskTile(DrvBitmap[0], DrvSprRAM[offs] + sprite_base, sx, sy, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM3);
+		Draw16x16MaskTile(DrvBitmap[0], DrvSprRAM[offs] + sprite_base, sx, sy-16, flipx, flipy, color, 4, 0xf, 0, DrvGfxROM3);
 	}
 }
 
 static void layer_mixer(UINT16 *srcbitmap, UINT8 *clut, INT32 base, INT32 mask, INT32 condition, INT32 realcheck)
 {
-	for (INT32 y = 16; y < 240; y++)
+	for (INT32 y = 0; y < 224; y++)
 	{
-		UINT16 *dest = pTransDraw + (y - 16) * nScreenWidth; // -16 !!!!
+		UINT16 *dest = pTransDraw + y * nScreenWidth;
 		UINT16 *src = srcbitmap + y * nScreenWidth;
 
 		for (INT32 x = 0; x < nScreenWidth; x++)
@@ -703,7 +706,7 @@ static INT32 DrvDraw()
 
 	if (sprite_enable)
 	{
-		memset (DrvBitmap[0], 0xff, 256 * 256 * 2);
+		memset (DrvBitmap[0], 0xff, 256 * 256 * sizeof(UINT16));
 
 		draw_sprites();
 	}
@@ -713,7 +716,7 @@ static INT32 DrvDraw()
 		GenericTilemapSetScrollX(0, video_regs[4] + (video_regs[5] * 256));
 		GenericTilemapSetScrollY(0, video_regs[6] + (video_regs[8] * 256));
 
-		GenericTilemapDraw(0, DrvBitmap[1], TMAP_FORCEOPAQUE);
+		GenericTilemapDraw(0, DrvBitmap[1], 0);
 		layer_mixer(DrvBitmap[1], DrvGfxROM8, 0x00, 0x000, 0x000, 0);
 	}
 	else
@@ -731,7 +734,7 @@ static INT32 DrvDraw()
 		GenericTilemapSetScrollX(1, video_regs[0] + (video_regs[1] * 256));
 		GenericTilemapSetScrollY(1, video_regs[2] + (video_regs[3] * 256));
 
-		GenericTilemapDraw(1, DrvBitmap[1], TMAP_FORCEOPAQUE);
+		GenericTilemapDraw(1, DrvBitmap[1], 0);
 
 		layer_mixer(DrvBitmap[1], DrvGfxROM7, 0x40, 0x000, 0x000, 0);
 	}
@@ -771,28 +774,28 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 3000000 / 60, 3000000 / 60, 3000000 / 4 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	ZetNewFrame();
 	m6805NewFrame();
-	MSM5205NewFrame(0, 3000000, nInterleave);
+	MSM5205NewFrame(0, 3000000 / 4, nInterleave);
 
 	m6805Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
 		if (i == 240) {
 			ZetSetVector(0xcf);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
+
 		if (i == 255 || i == 127) {
 			ZetSetVector(0xd7);
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
-
 		ZetClose();
 
 		ZetOpen(1);
@@ -803,7 +806,7 @@ static INT32 DrvFrame()
 		}
 		ZetClose();
 
-		nCyclesDone[2] += m6805Run(nCyclesTotal[2] / nInterleave);
+		nCyclesDone[2] += m6805Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
 		MSM5205UpdateScanline(i);
 	}
 
@@ -818,6 +821,10 @@ static INT32 DrvFrame()
 
 	m6805Close();
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = 0; // sound, not critical
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -853,15 +860,15 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(coin_state);
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(video_regs);
-		SCAN_VAR(port_c_out);
 		SCAN_VAR(adpcm_reset);
 		SCAN_VAR(adpcm_data_off);
 		SCAN_VAR(vck2);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	return 0;
 }
-
 
 
 // Empire City: 1931 (bootleg?)
@@ -923,5 +930,379 @@ struct BurnDriver BurnDrvEmpcity = {
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, empcityRomInfo, empcityRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
-	256, 256, 4, 3
+	256, 224, 4, 3
+};
+
+// Empire City: 1931 (US)
+
+static struct BurnRomInfo empcityuRomDesc[] = {
+	{ "cpu.4u",		        0x8000, 0xe2c40ea3, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "cpu.2u",		        0x8000, 0x96ee8b81, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ec_04.rom",		    0x8000, 0xaa3e7d1e, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "empcityu_68705.3j",	0x0800, 0x182f7616, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "vid.2p",		        0x2000, 0x15593793, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+
+	{ "82s123.a7",		    0x0020, 0x93e2d292, 16 | BRF_GRA },           // 30 user1
+};
+
+STD_ROM_PICK(empcityu)
+STD_ROM_FN(empcityu)
+
+struct BurnDriver BurnDrvEmpcityu = {
+	"empcityu", "empcity", NULL, NULL, "1986",
+	"Empire City: 1931 (US)\0", NULL, "Seibu Kaihatsu (Taito / Romstar license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, empcityuRomInfo, empcityuRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Empire City: 1931 (Japan)
+
+static struct BurnRomInfo empcityjRomDesc[] = {
+	{ "1.bin",		        0x8000, 0x8162331c, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.bin",		        0x8000, 0x960edea6, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "ec_04.rom",		    0x8000, 0xaa3e7d1e, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "empcityj_68705.3j",	0x0800, 0x19bdb0a9, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+};
+
+STD_ROM_PICK(empcityj)
+STD_ROM_FN(empcityj)
+
+struct BurnDriver BurnDrvEmpcityj = {
+	"empcityj", "empcity", NULL, NULL, "1986",
+	"Empire City: 1931 (Japan)\0", NULL, "Seibu Kaihatsu (Taito license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, empcityjRomInfo, empcityjRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Empire City: 1931 (Italy)
+
+static struct BurnRomInfo empcityiRomDesc[] = {
+	{ "1.bin",		        0x8000, 0x32378e47, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.bin",		        0x8000, 0xd20010c6, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sf03.bin",		    0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "empcityi_68705.3j",	0x0800, 0xb1817d44, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+};
+
+STD_ROM_PICK(empcityi)
+STD_ROM_FN(empcityi)
+
+struct BurnDriver BurnDrvEmpcityi = {
+	"empcityi", "empcity", NULL, NULL, "1986",
+	"Empire City: 1931 (Italy)\0", NULL, "Seibu Kaihatsu (Eurobed license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, empcityiRomInfo, empcityiRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Street Fight (Germany)
+
+static struct BurnRomInfo stfightRomDesc[] = {
+	{ "a-1.4q",		        0x8000, 0xff83f316, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "sf02.bin",		    0x8000, 0xe626ce9e, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sf03.bin",		    0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "stfight_68705.3j",	0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+};
+
+STD_ROM_PICK(stfight)
+STD_ROM_FN(stfight)
+
+struct BurnDriver BurnDrvStfight = {
+	"stfight", "empcity", NULL, NULL, "1986",
+	"Street Fight (Germany)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, stfightRomInfo, stfightRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Street Fight (bootleg?)
+
+static struct BurnRomInfo stfightaRomDesc[] = {
+	{ "sfight2.bin",	    0x8000, 0x8fb4dfc9, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "sfight1.bin",	    0x8000, 0x983ce746, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "sf03.bin",		    0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "stfight_68705.3j",	0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+};
+
+STD_ROM_PICK(stfighta)
+STD_ROM_FN(stfighta)
+
+struct BurnDriver BurnDrvStfighta = {
+	"stfighta", "empcity", NULL, NULL, "1986",
+	"Street Fight (bootleg?)\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, stfightaRomInfo, stfightaRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
+};
+
+// Street Fight (Germany - Benelux)
+
+static struct BurnRomInfo stfightgbRomDesc[] = {
+	{ "1.4T",		        0x8000, 0x0ce5ca11, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.2T",		        0x8000, 0x936ba873, 1 | BRF_PRG | BRF_ESS }, //  1
+
+	{ "C5",			        0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+
+	{ "stfightgb_68705.3J",	0x0800, 0x3b1b2660, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+
+	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+
+	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+
+	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+
+	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+
+	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+
+	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+
+	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
+
+	{ "82s129.002",		    0x0100, 0xc883d49b, 11 | BRF_GRA },           // 22 stfight_vid:fg_clut
+	{ "82s129.003",		    0x0100, 0xaf81882a, 11 | BRF_GRA },           // 23
+
+	{ "82s129.004",		    0x0100, 0x1831ce7c, 12 | BRF_GRA },           // 24 stfight_vid:bg_clut
+	{ "82s129.005",		    0x0100, 0x96cb6293, 12 | BRF_GRA },           // 25
+
+	{ "82s129.052",		    0x0100, 0x3d915ffc, 13 | BRF_GRA },           // 26 stfight_vid:spr_clut
+	{ "82s129.066",		    0x0100, 0x51e8832f, 13 | BRF_GRA },           // 27
+
+	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
+
+	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+};
+
+STD_ROM_PICK(stfightgb)
+STD_ROM_FN(stfightgb)
+
+struct BurnDriver BurnDrvStfightgb = {
+	"stfightgb", "empcity", NULL, NULL, "1986",
+	"Street Fight (Germany - Benelux)\0", NULL, "Seibu Kaihatsu (Tuning license)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	NULL, stfightgbRomInfo, stfightgbRomName, NULL, NULL, StfightInputInfo, StfightDIPInfo,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	256, 224, 4, 3
 };

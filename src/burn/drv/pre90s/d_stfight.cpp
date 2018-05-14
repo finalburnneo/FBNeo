@@ -114,7 +114,7 @@ static struct BurnDIPInfo StfightDIPList[]=
 	{0x11, 0x01, 0x40, 0x40, "No"					},
 	{0x11, 0x01, 0x40, 0x00, "Yes"					},
 
-	{0   , 0xfe, 0   ,    2, "Bullet Colour"		},
+	{0   , 0xfe, 0   ,    2, "Bullet Color"		    },
 	{0x11, 0x01, 0x80, 0x00, "Red"					},
 	{0x11, 0x01, 0x80, 0x80, "Blue"					},
 
@@ -217,13 +217,6 @@ static UINT8 __fastcall stfight_main_read(UINT16 address)
 
 static void __fastcall stfight_sound_write(UINT16 address, UINT8 data)
 {
-#if 0
-	// for debugging fm issue w/prescaler
-	if (address == 0xc000 || address == 0xc800) {
-		if (data >= 0x2d && data <= 0x2f)
-			bprintf(0, _T("ym2203 %X prescale %x.\n"), address, data);
-	}
-#endif
 	switch (address)
 	{
 		case 0xc000:
@@ -282,18 +275,11 @@ static void stfight_m68705_portC_out(UINT8 *data)
 	ZetOpen(0);
 	ZetSetIRQLine(0x20, (*data & 8) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 	ZetClose();
-
-	portC_out = *data;
 }
 
 static void stfight_m68705_portB_in()
 {
 	portB_in = (DrvInputs[3] << 6) | (cpu_to_mcu_empty ? 0x10 : 0x00) | (cpu_to_mcu_data & 0x0f);
-}
-
-static void stfight_m68705_portA_in()
-{
-	portA_in = cpu_to_mcu_data;
 }
 
 static void stfight_adpcm_int()
@@ -305,9 +291,9 @@ static void stfight_adpcm_int()
 	{
 		UINT8 adpcm_data = DrvSndROM[(adpcm_data_off >> 1) & 0x7fff];
 
-		if (!(adpcm_data_off & 1))
+		if (~adpcm_data_off & 1)
 			adpcm_data >>= 4;
-		++adpcm_data_off;
+		adpcm_data_off++;
 
 		MSM5205DataWrite(0, adpcm_data & 0x0f);
 	}
@@ -316,7 +302,7 @@ static void stfight_adpcm_int()
 static m68705_interface stfight_m68705_interface = {
 	NULL, stfight_m68705_portB_out, stfight_m68705_portC_out,
 	NULL, NULL, NULL,
-	stfight_m68705_portA_in, stfight_m68705_portB_in, NULL
+	NULL, stfight_m68705_portB_in, NULL
 };
 
 static tilemap_scan( bg )
@@ -349,8 +335,6 @@ static tilemap_callback( fg )
 static tilemap_callback( tx )
 {
 	UINT8 attr = DrvTxtRAM[offs+0x400];
-
-//	tileinfo.group = attr & 0xf;
 
 	TILE_SET_INFO(2, DrvTxtRAM[offs] + ((attr & 0x80) << 1), attr, TILE_FLIPYX((attr & 0x60) >> 5));
 }
@@ -823,7 +807,7 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nExtraCycles[1] = 0; // sound, not critical
+	nExtraCycles[1] = 0; // sound cpu, not critical
 	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
 
 	if (pBurnDraw) {

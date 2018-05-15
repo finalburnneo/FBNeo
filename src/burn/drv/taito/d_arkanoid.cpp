@@ -826,8 +826,6 @@ static UINT8 __fastcall arkanoid_read(UINT16 address)
 			return arkanoid_bootleg_f002_read();
 	}
 
-	if (address >= 0xf000) return DrvZ80ROM[address];
-
 	return 0;
 }
 
@@ -842,18 +840,21 @@ static void __fastcall arkanoid_write(UINT16 address, UINT8 data)
 
 		case 0xd008:
 		{
-			arkanoid_mcu_sync();
-			UINT8 last_mcu_on = mcu_on;
 			*flipscreen  = (data >> 0) & 3;
 			*gfxbank     = (data >> 5) & 1;
 			*palettebank = (data >> 6) & 1;
 			*paddleselect= (data >> 2) & 1;
-			mcu_on       = (data >> 7) & 1;
 
-			if (mcu_on && last_mcu_on == 0 && use_mcu) {
-				INT32 tc = m6805TotalCycles();
-				m68705Reset(); // this clears the cycle counter, but we need to preserve it.
-				m6805Idle(tc); // keep arkanoid_mcu_sync() happy. :)
+			if (use_mcu) {
+				arkanoid_mcu_sync();
+				UINT8 last_mcu_on = mcu_on;
+				mcu_on = (data >> 7) & 1;
+
+				if (mcu_on && last_mcu_on == 0 && use_mcu) {
+					INT32 tc = m6805TotalCycles();
+					m68705Reset(); // this clears the cycle counter, but we need to preserve it.
+					m6805Idle(tc); // keep arkanoid_mcu_sync() happy. :)
+				}
 			}
 		}
 		break;
@@ -1207,7 +1208,7 @@ static INT32 DrvInit()
 	ZetMapMemory(DrvZ80RAM,			0xc000, 0xc7ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM,			0xe000, 0xe7ff, MAP_RAM);
 	ZetMapMemory(DrvSprRAM,			0xe800, 0xefff, MAP_RAM);
-	ZetMapMemory(DrvZ80ROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
+
 	if (arkanoid_bootleg_id == HEXA) {
 		ZetSetWriteHandler(hexa_write);
 	} else {

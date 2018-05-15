@@ -13666,12 +13666,39 @@ struct BurnDriver BurnDrvvliner = {
 	0x1000,	304, 224, 4, 3
 };
 
+// V-Liner (v0.7e)
+/* MVS ONLY RELEASE */
+
+static struct BurnRomInfo vliner7eRomDesc[] = {
+	{ "epr_7e.p1",       0x080000, 0x49a94db5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "c-1.c1",       0x080000, 0x5118f7c0, 3 | BRF_GRA },           //  2 Sprite data
+	{ "c-2.c2",       0x080000, 0xefe9b33e, 3 | BRF_GRA },           //  3 
+
+	{ "m-1.m1",       0x010000, 0x9b92b7d1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+};
+
+STDROMPICKEXT(vliner7e, vliner7e, neogeo)
+STD_ROM_FN(vliner7e)
+
+struct BurnDriver BurnDrvvliner7e = {
+	"vliner7e", "vliner", "neogeo", NULL, "2001",
+	"V-Liner (v0.7e)\0", NULL, "Dyna / BreezaSoft", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NEOGEO | HARDWARE_SNK_GAMBLING, GBF_CASINO, 0,
+	NULL, vliner7eRomInfo, vliner7eRomName, NULL, NULL, vlinerInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
 // V-Liner (v0.6e)
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo vliner6eRomDesc[] = {
 	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
-	{ "epr.p1",       0x080000, 0x72a2c043, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "epr_6e.p1",       0x080000, 0x72a2c043, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 	/* P on eprom, correct chip label unknown */
 
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -13720,6 +13747,33 @@ struct BurnDriver BurnDrvvliner54 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NEOGEO | HARDWARE_SNK_GAMBLING, GBF_CASINO, 0,
 	NULL, vliner54RomInfo, vliner54RomName, NULL, NULL, vlinerInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// V-Liner (v0.53)
+/* MVS ONLY RELEASE */
+
+static struct BurnRomInfo vliner53RomDesc[] = {
+	{ "epr_53.p1",    0x080000, 0xe263dce8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "c-1.c1",       0x080000, 0x5118f7c0, 3 | BRF_GRA },           //  2 Sprite data
+	{ "c-2.c2",       0x080000, 0xefe9b33e, 3 | BRF_GRA },           //  3 
+
+	{ "m-1.m1",       0x010000, 0x9b92b7d1, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+};
+
+STDROMPICKEXT(vliner53, vliner53, neogeo)
+STD_ROM_FN(vliner53)
+
+struct BurnDriver BurnDrvvliner53 = {
+	"vliner53", "vliner", "neogeo", NULL, "2001",
+	"V-Liner (v0.53)\0", NULL, "Dyna / BreezaSoft", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SNK_NEOGEO | HARDWARE_SNK_GAMBLING, GBF_CASINO, 0,
+	NULL, vliner53RomInfo, vliner53RomName, NULL, NULL, vlinerInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

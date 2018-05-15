@@ -227,6 +227,7 @@ static INT32 nSoundPrevReply;
 
 INT32 s1945pmode = 0;
 INT32 fatfury2mode = 0; // fatfury2 protection active (fatfury2, ssideki)
+INT32 vlinermode = 0;
 
 static INT32 nInputSelect;
 static UINT8* NeoInputBank;
@@ -1167,7 +1168,7 @@ static void NeoMapActiveCartridge()
 			SekSetReadByteHandler(6,     neogeoReadByteGambling);
 			SekSetReadWordHandler(6,     neogeoReadWordGambling);
 			
-			if (!strcmp(BurnDrvGetTextA(DRV_NAME), "vliner") || !strcmp(BurnDrvGetTextA(DRV_NAME), "vlinero")) {
+			if (vlinermode) {
 				SekMapHandler(7,	0x320000, 0x320001, MAP_READ);
 				SekSetReadByteHandler(7,     vliner_timing);
 			}
@@ -4285,6 +4286,7 @@ INT32 NeoExit()
 
 	s1945pmode = 0;
 	fatfury2mode = 0;
+	vlinermode = 0;
 
 	return 0;
 }

@@ -42,7 +42,7 @@ INT32 GamcMisc(struct GameInp* pgi, char* szi, INT32 nPlayer)
 			}
 			
 			if (strcmp(szi, "op menu" ) == 0) {
-				KEY(FBK_F1);
+				KEY(FBK_F);
 				return 0;
 			}
 			

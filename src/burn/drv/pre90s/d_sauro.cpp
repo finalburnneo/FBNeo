@@ -1,11 +1,10 @@
 // FB Alpha Sauro driver module
 // Based on MAME driver by Zsolt Vasvari
 
-// missing speech (sp0256 core)
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "burn_ym3812.h"
+#include "sp0256.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -34,6 +33,8 @@ static UINT8 bg_scrollx;
 static INT32 palette_bank;
 
 static INT32 watchdog;
+
+static INT32 sp0256_inuse = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
@@ -358,7 +359,7 @@ static void __fastcall sauro_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa000:
-			// m_sp0256->ald_w(space, 0, data);
+			sp0256_ald_write(data);
 		return;
 
 		case 0xe000:
@@ -386,17 +387,6 @@ static UINT8 __fastcall sauro_sound_read(UINT16 address)
 
 	return 0;
 }
-
-inline static INT32 DrvSynchroniseStream1(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 4000000;
-}
-
-inline static INT32 DrvSynchroniseStream2(INT32 nSoundRate)
-{
-	return (INT64)ZetTotalCycles() * nSoundRate / 5000000;
-}
-
 
 static tilemap_callback( background )
 {
@@ -431,7 +421,7 @@ static int DrvDoReset(INT32 clear_mem)
 	ZetOpen(1);
 	ZetReset();
 	BurnYM3812Reset();
-//	SP0256
+	if (sp0256_inuse) sp0256_reset();
 	ZetClose();
 
 	soundlatch = 0;
@@ -455,7 +445,7 @@ static INT32 MemIndex()
 	DrvGfxROM1		= Next; Next += 0x020000;
 	DrvGfxROM2		= Next; Next += 0x040000;
 
-	DrvSndROM		= Next; Next += 0x002000;
+	DrvSndROM		= Next; Next += 0x010000;
 
 	DrvColPROM		= Next; Next += 0x000c00;
 
@@ -504,6 +494,11 @@ static void DrvGfxDecode()
 	}
 }
 
+static void sauro_drq_cb(UINT8 data)
+{
+	ZetSetIRQLine(0x20, data);
+}
+
 static INT32 SauroInit()
 {
 	AllMem = NULL;
@@ -534,7 +529,8 @@ static INT32 SauroInit()
 		if (BurnLoadRom(DrvColPROM + 0x00400, 12, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00800, 13, 1)) return 1;
 
-		BurnLoadRom(DrvSndROM  + 0x00000, 14, 1); // bootleg doesn't have this
+		if ((BurnDrvGetFlags() & BDF_BOOTLEG) == 0)
+			BurnLoadRom(DrvSndROM  + 0x01000, 14, 1);
 
 		DrvGfxDecode();
 	}
@@ -558,11 +554,13 @@ static INT32 SauroInit()
 	ZetSetReadHandler(sauro_sound_read);
 	ZetClose();
 
-	BurnYM3812Init(1, 2500000, NULL, DrvSynchroniseStream1, 0);
+	BurnYM3812Init(1, 2500000, NULL, 0);
 	BurnTimerAttachYM3812(&ZetConfig, 4000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
-//	SP0256
+	sp0256_init(DrvSndROM, 3120000);
+	sp0256_set_drq_cb(sauro_drq_cb);
+	sp0256_inuse = 1;
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, background_map_callback, 8, 8, 32, 32);
@@ -622,8 +620,8 @@ static INT32 TrckydocInit()
 
 	ZetInit(1); // Just here to let us use same reset routine
 
-	BurnYM3812Init(1, 2500000, NULL, DrvSynchroniseStream2, 0);
-	BurnTimerAttachYM3812(&ZetConfig, 4000000);
+	BurnYM3812Init(1, 2500000, NULL, 0);
+	BurnTimerAttachYM3812(&ZetConfig, 5000000);
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -647,9 +645,11 @@ static INT32 DrvExit()
 	ZetExit();
 
 	BurnYM3812Exit();
-//	SP0256
+	if (sp0256_inuse) sp0256_exit();
 
 	BurnFree (AllMem);
+
+	sp0256_inuse = 0;
 
 	return 0;
 }
@@ -830,9 +830,9 @@ static INT32 SauroFrame()
 	
 	BurnTimerEndFrameYM3812(nCyclesTotal[1]);
 
-	if (pBurnSoundOut) {		
+	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-//		SP0256
+		if (sp0256_inuse) sp0256_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -914,7 +914,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		BurnYM3812Scan(nAction, pnMin);
-//		SP0256
+		if (sp0256_inuse) sp0256_scan(nAction, pnMin);
 	}
 
 	if (nAction & ACB_DRIVER_DATA) {
@@ -968,7 +968,7 @@ STD_ROM_FN(sauro)
 
 struct BurnDriver BurnDrvSauro = {
 	"sauro", NULL, NULL, NULL, "1987",
-	"Sauro\0", "Missing speech chip!", "Tecfri", "Miscellaneous",
+	"Sauro\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sauroRomInfo, sauroRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
@@ -1008,7 +1008,7 @@ STD_ROM_FN(saurop)
 
 struct BurnDriver BurnDrvSaurop = {
 	"saurop", "sauro", NULL, NULL, "1987",
-	"Sauro (Philko license)\0", "Missing speech chip!", "Tecfri (Philko license)", "Miscellaneous",
+	"Sauro (Philko license)\0", NULL, "Tecfri (Philko license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, sauropRomInfo, sauropRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
@@ -1048,7 +1048,7 @@ STD_ROM_FN(saurorr)
 
 struct BurnDriver BurnDrvSaurorr = {
 	"saurorr", "sauro", NULL, NULL, "1987",
-	"Sauro (Recreativos Real S.A. license)\0", "Missing speech chip!", "Tecfri (Recreativos Real S.A. license)", "Miscellaneous",
+	"Sauro (Recreativos Real S.A. license)\0", NULL, "Tecfri (Recreativos Real S.A. license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, saurorrRomInfo, saurorrRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,

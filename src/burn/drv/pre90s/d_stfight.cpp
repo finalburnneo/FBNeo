@@ -723,7 +723,7 @@ static INT32 DrvDraw()
 		layer_mixer(DrvBitmap[1], DrvGfxROM7, 0x40, 0x000, 0x000, 0);
 	}
 
-	if (sprite_enable && nSpriteEnable&1)
+	if (sprite_enable && nSpriteEnable&2)
 	{
 		layer_mixer(DrvBitmap[0], DrvGfxROM9, 0x80, 0x100, 0x000, 0);
 	}

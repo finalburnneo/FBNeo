@@ -114,6 +114,7 @@ static struct BurnDIPInfo SpacedemDIPList[]=
 };
 
 STDDIPINFO(Spacedem)
+
 static void port1_write(UINT8 data)
 {
 	I8039SetIrqState((data & 2) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
@@ -217,6 +218,7 @@ static INT32 DrvSyncDAC()
 	return (INT32)(float)(nBurnSoundLen * (I8039TotalCycles() / (400000.0000 / (nBurnFPS / 100.0000))));
 }
 #endif
+
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
@@ -229,12 +231,11 @@ static INT32 DrvDoReset()
 	DACReset();
 
 	BurnSampleReset();
-	
-	port1_write(0);
 
 	port0_data = 0;
 	port2_data = 0;
 	star_shift_reg = 0x18f89;
+	soundlatch = 0;
 
 	{ // init resnet for colors
 		const INT32 resistances_rg[] = { 1000, 470, 220 };
@@ -342,8 +343,6 @@ static INT32 DrvInit()
 
 static INT32 DrvExit()
 {
-	GenericTilesExit();
-
 	ZetExit();
 	I8039Exit();
 

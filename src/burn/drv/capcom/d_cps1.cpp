@@ -3519,6 +3519,69 @@ static struct BurnDIPInfo Sf2bhhDIPList[]=
 
 STDDIPINFO(Sf2bhh)
 
+static struct BurnDIPInfo Sf2levelDIPList[]=
+{
+	// Defaults
+	{0x1b, 0xff, 0xff, 0x00, NULL                     },
+	{0x1c, 0xff, 0xff, 0x03, NULL                     },
+	{0x1d, 0xff, 0xff, 0x60, NULL                     },
+	
+	// Dip A
+	CPS1_COINAGE_1(0x1b)
+
+	{0   , 0xfe, 0   , 2   , "2C to Start, 1 to Cont" },
+	{0x1b, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1b, 0x01, 0x40, 0x40, "On"                     },
+
+	// Dip B
+	CPS1_DIFFICULTY_1(0x1c)
+	
+	{0   , 0xfe, 0   , 16  , "Level"                  },
+	{0x1c, 0x01, 0xf0, 0x00, "0"                      },
+	{0x1c, 0x01, 0xf0, 0x10, "1"                      },
+	{0x1c, 0x01, 0xf0, 0x20, "2"                      },
+	{0x1c, 0x01, 0xf0, 0x30, "3"                      },
+	{0x1c, 0x01, 0xf0, 0x40, "4"                      },
+	{0x1c, 0x01, 0xf0, 0x50, "5"                      },
+	{0x1c, 0x01, 0xf0, 0x60, "6"                      },
+	{0x1c, 0x01, 0xf0, 0x70, "7"                      },
+	{0x1c, 0x01, 0xf0, 0x80, "8"                      },
+	{0x1c, 0x01, 0xf0, 0x90, "9"                      },
+	{0x1c, 0x01, 0xf0, 0xa0, "10"                     },
+	{0x1c, 0x01, 0xf0, 0xb0, "11"                     },
+	{0x1c, 0x01, 0xf0, 0xc0, "12"                     },
+	{0x1c, 0x01, 0xf0, 0xd0, "13"                     },
+	{0x1c, 0x01, 0xf0, 0xe0, "14"                     },
+	{0x1c, 0x01, 0xf0, 0xf0, "15"                     },
+
+	// Dip C
+	{0   , 0xfe, 0   , 2   , "Free Play"              },
+	{0x1d, 0x01, 0x04, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x04, 0x04, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Freeze"                 },
+	{0x1d, 0x01, 0x08, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x08, 0x08, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Flip Screen"            },
+	{0x1d, 0x01, 0x10, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x10, 0x10, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Demo Sound"             },
+	{0x1d, 0x01, 0x20, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x20, 0x20, "On"                     },
+
+	{0   , 0xfe, 0   , 2   , "Allow Continue"         },
+	{0x1d, 0x01, 0x40, 0x00, "Off"                    },
+	{0x1d, 0x01, 0x40, 0x40, "On"                     },
+        
+	{0   , 0xfe, 0   , 2   , "Game Mode"              },
+	{0x1d, 0x01, 0x80, 0x00, "Game"                   },
+	{0x1d, 0x01, 0x80, 0x80, "Test"                   },
+};
+
+STDDIPINFO(Sf2level)
+
 static struct BurnDIPInfo Sf2megaDIPList[]=
 {
 	// Defaults
@@ -11941,6 +12004,34 @@ static struct BurnRomInfo Sf2ceucblRomDesc[] = {
 STD_ROM_PICK(Sf2ceucbl)
 STD_ROM_FN(Sf2ceucbl)
 
+static struct BurnRomInfo Sf2levelRomDesc[] = {
+	{ "rj313.u196.800",     0x0100000, 0x435153d5, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+	{ "ci030.u10.400",      0x0080000, 0xed4186bd, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_NO_BYTESWAP },
+
+	// roms from this set not dumped - Note from dumper: 'GFX is slightly different mask rom layout than others. (2x mask instead of a rack of 010's)'
+	{ "s92_01.3a",          0x0080000, 0x03b0d852, BRF_GRA | CPS1_TILES },
+	{ "s92_02.4a",          0x0080000, 0x840289ec, BRF_GRA | CPS1_TILES },
+	{ "s92_03.5a",          0x0080000, 0xcdb5f027, BRF_GRA | CPS1_TILES },
+	{ "s92_04.6a",          0x0080000, 0xe2799472, BRF_GRA | CPS1_TILES },
+	{ "s92_05.7a",          0x0080000, 0xba8a2761, BRF_GRA | CPS1_TILES },
+	{ "s92_06.8a",          0x0080000, 0xe584bfb5, BRF_GRA | CPS1_TILES },
+	{ "s92_07.9a",          0x0080000, 0x21e3f87d, BRF_GRA | CPS1_TILES },
+	{ "s92_08.10a",         0x0080000, 0xbefc47df, BRF_GRA | CPS1_TILES },
+	{ "s92_10.3c",          0x0080000, 0x960687d5, BRF_GRA | CPS1_TILES },
+	{ "s92_11.4c",          0x0080000, 0x978ecd18, BRF_GRA | CPS1_TILES },
+	{ "s92_12.5c",          0x0080000, 0xd6ec9a0a, BRF_GRA | CPS1_TILES },
+	{ "s92_13.6c",          0x0080000, 0xed2c67f6, BRF_GRA | CPS1_TILES },
+
+	{ "km6264b-10.u191",    0x0010000, 0x6f07d2cb, BRF_PRG | CPS1_Z80_PROGRAM },
+
+	{ "km418c256z-80.u210", 0x0040000, 0x6cfffb11, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	
+	{ "km6264-10.u133",     0x0010000, 0x13ea1c44, BRF_OPT }, // unknown
+};
+
+STD_ROM_PICK(Sf2level)
+STD_ROM_FN(Sf2level)
+
 static struct BurnRomInfo Sf2tlonaRomDesc[] = {
 	// There is a set known as sf2tlond and sf2turyu which contains the same data, but has double-size program roms
 	{ "tl4mt.1",       0x080000, 0x158635ca, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -13910,6 +14001,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "sf2ceuab8"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceuab9"   , HACK_B_1    , mapper_S9263B, 0, NULL                },
 	{ "sf2ceucbl"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
+	{ "sf2level"    , HACK_B_2    , mapper_S9263B, 0, NULL                },
 	{ "sf2cebltw"   , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2sl73a"    , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
 	{ "sf2hf"       , CPS_B_21_DEF, mapper_S9263B, 0, NULL                },
@@ -20521,6 +20613,16 @@ struct BurnDriver BurnDrvCpsSf2ceucbl = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
 	NULL, Sf2ceucblRomInfo, Sf2ceucblRomName, NULL, NULL, Sf2InputInfo, Sf2DIPInfo,
 	Sf2ceucblInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsSf2level = {
+	"sf2level", "sf2ce", NULL, NULL, "1992",
+	"Street Fighter II' - Champion Edition (Level Select bootleg, 920322  USA)\0", NULL, "bootleg", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2,HARDWARE_CAPCOM_CPS1, GBF_VSFIGHT, FBF_SF,
+	NULL, Sf2levelRomInfo, Sf2levelRomName, NULL, NULL, Sf2ceuablInputInfo, Sf2levelDIPInfo,
+	Sf2ceuablInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

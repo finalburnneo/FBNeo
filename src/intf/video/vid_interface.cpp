@@ -180,8 +180,6 @@ INT32 VidInit()
 				if (!_tcsicmp(p+1, _T("png"))) {
 					FILE *fp = _tfopen(szPlaceHolder, _T("rb"));
 					if (fp) {
-						char szTemp[MAX_PATH];
-						sprintf(szTemp, _TtoA(szPlaceHolder));
 						hbitmap = PNGLoadBitmap(hScrnWnd, fp, 0, 0, 0);
 						fclose(fp);
 					}

@@ -364,7 +364,7 @@ static UINT8 ay8910_1_read_B(UINT32)
 
 static void sp0256_drq_callback(UINT8 data)
 {
-	ZetSetIRQLine(0x20, data);
+	ZetSetIRQLine(0x20, (data) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static tilemap_callback( holeland )
@@ -385,10 +385,11 @@ static INT32 DrvDoReset(INT32 clear_mem)
 
 	ZetOpen(0);
 	ZetReset();
-	if (game_select == 0) sp0256_reset();
 	ZetClose();
 
 	AY8910Reset(0);
+	AY8910Reset(1);
+	sp0256_reset();
 
 	BurnWatchdogReset();
 
@@ -779,7 +780,6 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 16);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(pSoundBuf, nSegmentLength);
-			if (game_select == 0) sp0256_update(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -790,15 +790,10 @@ static INT32 DrvFrame()
 		if (nSegmentLength) {
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(pSoundBuf, nSegmentLength);
-			ZetOpen(0);
-			if (game_select == 0) sp0256_update(pSoundBuf, nSegmentLength);
-			ZetClose();
 		}
-#if 0
 		ZetOpen(0);
 		if (game_select == 0) sp0256_update(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
-#endif
 	}
 
 	return 0;

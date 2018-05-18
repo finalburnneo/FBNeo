@@ -26,7 +26,7 @@
 #include "burnint.h"
 #include "sp0256.h"
 
-#define READY_TIMER     0x0010
+#define READY_TIMER     (0x0010)
 #define CLOCK_DIVIDER   (7*6*8)
 #define HIGH_QUALITY
 
@@ -114,29 +114,6 @@ static UINT32           m_fifo_tail;       /* FIFO tail pointer (where data come
 static UINT32           m_fifo_bitp;       /* FIFO bit-pointer (for partial decles).       */
 static UINT16           m_fifo[64];        /* The 64-decle FIFO.                           */
 
-/* ======================================================================== */
-/*  qtbl  -- Coefficient Quantization Table.  This comes from a             */
-/*              SP0250 data sheet, and should be correct for SP0256.        */
-/* ======================================================================== */
-static const INT16 qtbl[128] =
-{
-	0,      9,      17,     25,     33,     41,     49,     57,
-	65,     73,     81,     89,     97,     105,    113,    121,
-	129,    137,    145,    153,    161,    169,    177,    185,
-	193,    201,    209,    217,    225,    233,    241,    249,
-	257,    265,    273,    281,    289,    297,    301,    305,
-	309,    313,    317,    321,    325,    329,    333,    337,
-	341,    345,    349,    353,    357,    361,    365,    369,
-	373,    377,    381,    385,    389,    393,    397,    401,
-	405,    409,    413,    417,    421,    425,    427,    429,
-	431,    433,    435,    437,    439,    441,    443,    445,
-	447,    449,    451,    453,    455,    457,    459,    461,
-	463,    465,    467,    469,    471,    473,    475,    477,
-	479,    481,    482,    483,    484,    485,    486,    487,
-	488,    489,    490,    491,    492,    493,    494,    495,
-	496,    497,    498,    499,    500,    501,    502,    503,
-	504,    505,    506,    507,    508,    509,    510,    511
-};
 
 //-------------------------------------------------
 //  device_start - device-specific startup
@@ -188,19 +165,17 @@ void sp0256_init(UINT8 *rom, INT32 clock)
 	/* -------------------------------------------------------------------- */
 	/*  Allocate a scratch buffer for generating ~10kHz samples.             */
 	/* -------------------------------------------------------------------- */
-	m_scratch = (INT16 *)malloc(SCBUF_SIZE * sizeof(INT16));
+	m_scratch = (INT16 *)BurnMalloc(SCBUF_SIZE * sizeof(INT16));
 
 	// Init Re-sampler buffer
-	mixer_buffer = (INT16 *)malloc(nBurnSoundRate * sizeof(INT16));
+	mixer_buffer = (INT16 *)BurnMalloc(nBurnSoundRate * sizeof(INT16));
 	sp0256_set_clock(clock);
-
-	m_sc_head = m_sc_tail = 0;
 }
 
 void sp0256_exit()
 {
-	free(m_scratch);
-	free(mixer_buffer);
+	BurnFree(m_scratch);
+	BurnFree(mixer_buffer);
 }
 
 //-------------------------------------------------
@@ -211,8 +186,11 @@ void sp0256_reset()
 {
 	// reset FIFO and SP0256
 	m_fifo_head = m_fifo_tail = m_fifo_bitp = 0;
+	m_sc_head = m_sc_tail = 0;
 
+	memset(m_scratch, 0, SCBUF_SIZE * sizeof(INT16));
 	memset(&m_filt, 0, sizeof(m_filt));
+	memset(&m_fifo, 0, sizeof(m_fifo));
 	m_halted   = 1;
 	m_filt.rpt = -1;
 	m_filt.rng = 1;
@@ -224,9 +202,9 @@ void sp0256_reset()
 	m_mode     = 0;
 	m_page     = 0x1000 << 3;
 	m_silent   = 1;
-	m_sby_line = 0;
-	m_drq_cb(1);
-	SET_SBY(1)
+	m_sby_line = 1;
+	//m_drq_cb(1);
+	//SET_SBY(1)
 }
 
 
@@ -376,8 +354,29 @@ static INT32 lpc12_update(struct lpc12_t *f, INT32 num_samp, INT16 *out, UINT32 
 /* ======================================================================== */
 static void lpc12_regdec(struct lpc12_t *f)
 {
-	static const INT32 stage_map[6] = { 0, 1, 2, 3, 4, 5 };
-	INT32 i;
+	/* ======================================================================== */
+	/*  qtbl  -- Coefficient Quantization Table.  This comes from a             */
+	/*              SP0250 data sheet, and should be correct for SP0256.        */
+	/* ======================================================================== */
+	static const INT16 qtbl[128] =
+	{
+		0,      9,      17,     25,     33,     41,     49,     57,
+		65,     73,     81,     89,     97,     105,    113,    121,
+		129,    137,    145,    153,    161,    169,    177,    185,
+		193,    201,    209,    217,    225,    233,    241,    249,
+		257,    265,    273,    281,    289,    297,    301,    305,
+		309,    313,    317,    321,    325,    329,    333,    337,
+		341,    345,    349,    353,    357,    361,    365,    369,
+		373,    377,    381,    385,    389,    393,    397,    401,
+		405,    409,    413,    417,    421,    425,    427,    429,
+		431,    433,    435,    437,    439,    441,    443,    445,
+		447,    449,    451,    453,    455,    457,    459,    461,
+		463,    465,    467,    469,    471,    473,    475,    477,
+		479,    481,    482,    483,    484,    485,    486,    487,
+		488,    489,    490,    491,    492,    493,    494,    495,
+		496,    497,    498,    499,    500,    501,    502,    503,
+		504,    505,    506,    507,    508,    509,    510,    511
+	};
 
 	/* -------------------------------------------------------------------- */
 	/*  Decode the Amplitude and Period registers.  Force the 'cnt' to 0    */
@@ -391,12 +390,12 @@ static void lpc12_regdec(struct lpc12_t *f)
 	/* -------------------------------------------------------------------- */
 	/*  Decode the filter coefficients from the quant table.                */
 	/* -------------------------------------------------------------------- */
-	for (i = 0; i < 6; i++)
+	for (INT32 i = 0; i < 6; i++)
 	{
 		#define IQ(x) (((x) & 0x80) ? qtbl[0x7F & -(x)] : -qtbl[(x)])
 
-		f->b_coef[stage_map[i]] = IQ(f->r[2 + 2*i]);
-		f->f_coef[stage_map[i]] = IQ(f->r[3 + 2*i]);
+		f->b_coef[i] = IQ(f->r[2 + 2*i]);
+		f->f_coef[i] = IQ(f->r[3 + 2*i]);
 	}
 
 	/* -------------------------------------------------------------------- */
@@ -1363,7 +1362,7 @@ void sp0256_update(INT16 *sndbuff, INT32 samples_len)
 				for (INT32 x = 0; x < do_samp; x++)
 					m_scratch[y++ & SCBUF_MASK] = 0;
 				m_sc_head += do_samp;
-				did_samp    += do_samp;
+				did_samp  += do_samp;
 			}
 			else
 			{

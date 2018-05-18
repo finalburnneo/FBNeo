@@ -1220,6 +1220,11 @@ BEGIN
         MENUITEM "Configure ROM paths...",				MENU_ROMDIRS
         MENUITEM "Configure support file paths...",			MENU_SUPPORTDIRS
         MENUITEM SEPARATOR
+		POPUP    "UI skin"
+        	BEGIN
+        		MENUITEM "Select skin...",						MENU_SELECTPLACEHOLDER
+        		MENUITEM "Set skin to default",					MENU_DISABLEPLACEHOLDER
+        	END
        	POPUP    "UI language"
        	BEGIN
        		MENUITEM "Select UI language...",				MENU_LANGUAGE_SELECT

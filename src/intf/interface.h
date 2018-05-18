@@ -230,6 +230,8 @@ extern INT32 nVidImageDepth;
 
 extern "C" UINT32 (__cdecl *VidHighCol) (INT32 r, INT32 g, INT32 b, INT32 i);
 
+extern TCHAR szPlaceHolder[MAX_PATH];
+
 // vid_directx_support.cpp
 
 INT32 VidSNewTinyMsg(const TCHAR* pText, INT32 nRGB = 0, INT32 nDuration = 0, INT32 nPriority = 5);

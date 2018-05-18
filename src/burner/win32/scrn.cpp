@@ -2017,6 +2017,18 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 			SupportDirCreate(hScrnWnd);
 			break;
 			
+		case MENU_SELECTPLACEHOLDER: 
+			if (UseDialogs()) {
+				SelectPlaceHolder();
+				POST_INITIALISE_MESSAGE;
+			}
+			break;
+			
+		case MENU_DISABLEPLACEHOLDER:
+			ResetPlaceHolder();
+			POST_INITIALISE_MESSAGE;
+			break;
+			
 		case MENU_LANGUAGE_SELECT:
 			if (UseDialogs()) {
 				FBALocaliseLoadTemplate();

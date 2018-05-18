@@ -135,6 +135,8 @@ static UINT8* pVidTransImage = NULL;
 static UINT32* pVidTransPalette = NULL;
 static INT32 bSkipNextFrame = 0;
 
+TCHAR szPlaceHolder[MAX_PATH] = _T("");
+
 static UINT32 __cdecl HighCol15(INT32 r, INT32 g, INT32 b, INT32  /* i */)
 {
 	UINT32 t;
@@ -170,8 +172,26 @@ INT32 VidInit()
 
 #if defined (BUILD_WIN32) && defined (ENABLE_PREVIEW)
 	if (!bDrvOkay) {
-		//hbitmap = (HBITMAP)LoadImage(hAppInst, _T("BMP_SPLASH"), IMAGE_BITMAP, 304, 224, 0);
-		hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+		if (_tcslen(szPlaceHolder)) {
+			LPTSTR p = _tcsrchr(szPlaceHolder, '.');
+			if (!_tcsicmp(p+1, _T("bmp"))) {
+				hbitmap = (HBITMAP)LoadImage(hAppInst, szPlaceHolder, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+			} else {
+				if (!_tcsicmp(p+1, _T("png"))) {
+					FILE *fp = _tfopen(szPlaceHolder, _T("rb"));
+					if (fp) {
+						char szTemp[MAX_PATH];
+						sprintf(szTemp, _TtoA(szPlaceHolder));
+						hbitmap = PNGLoadBitmap(hScrnWnd, fp, 0, 0, 0);
+						fclose(fp);
+					}
+				}
+			}
+		} else {
+			hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
+		}
+		
+		if (!hbitmap) hbitmap = (HBITMAP)LoadImage(hAppInst, MAKEINTRESOURCE(BMP_SPLASH), IMAGE_BITMAP, 304, 224, 0);
 		
 		GetObject(hbitmap, sizeof(BITMAP), &bitmap);
 

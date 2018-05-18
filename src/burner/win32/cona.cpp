@@ -165,6 +165,7 @@ int ConfigAppLoad()
 		VAR(nAudDSPModule[1]);
 
 		// Other
+		STR(szPlaceHolder);
 		STR(szLocalisationTemplate);
 		STR(szGamelistLocalisationTemplate);
 		VAR(nGamelistLocalisationActive);
@@ -506,6 +507,9 @@ int ConfigAppSave()
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- UI ---------------------------------------------------------------------\n"));
+	
+	_ftprintf(h, _T("\n// The filename of the placeholder image to use (empty filename = use built-in)\n"));
+	STR(szPlaceHolder);
 
 	_ftprintf(h, _T("\n// Filename of the active UI translation template\n"));
 	STR(szLocalisationTemplate);

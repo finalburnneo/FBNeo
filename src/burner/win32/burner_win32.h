@@ -472,6 +472,10 @@ int LocaliseDownloadCreate(HWND hParentWND);
 // choose_monitor.cpp
 int ChooseMonitorCreate();
 
+// placeholder.cpp
+int SelectPlaceHolder();
+void ResetPlaceHolder();
+
 // Misc
 #define _TtoA(a)	TCHARToANSI(a, NULL, 0)
 #define _AtoT(a)	ANSIToTCHAR(a, NULL, 0)

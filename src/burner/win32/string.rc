@@ -294,6 +294,8 @@ BEGIN
 	IDS_GAMEINFO_HISTORY		"History"
 	IDS_GAMEINFO_SAMPLES		"Sample Info"
 	
+	IDS_PLACEHOLDER_LOAD		"Select Skin"
+	
 	IDS_CLONE_OF				" (clone of %s"
 	IDS_ROMS_FROM_1				", uses ROMs from %s"
 	IDS_ROMS_FROM_2				"%suses ROMs from %s"

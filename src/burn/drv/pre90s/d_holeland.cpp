@@ -152,6 +152,10 @@ static struct BurnDIPInfo Holeland2DIPList[]=
 	{0x0d, 0xff, 0xff, 0x9c, NULL				},
 	{0x0e, 0xff, 0xff, 0xc4, NULL				},
 
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0d, 0x01, 0x01, 0x00, "Off"				},
+	{0x0d, 0x01, 0x01, 0x01, "On"				},
+
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x0d, 0x01, 0x02, 0x02, "Off"				},
 	{0x0d, 0x01, 0x02, 0x00, "On"				},
@@ -211,8 +215,12 @@ STDDIPINFO(Holeland2)
 
 static struct BurnDIPInfo CrzrallyDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0x70, NULL				},
+	{0x0d, 0xff, 0xff, 0x71, NULL				},
 	{0x0e, 0xff, 0xff, 0xc0, NULL				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x0d, 0x01, 0x01, 0x01, "Off"				},
+	{0x0d, 0x01, 0x01, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
 	{0x0d, 0x01, 0x02, 0x02, "Off"				},
@@ -276,12 +284,12 @@ static void __fastcall holeland_write(UINT16 address, UINT8 data)
 		case 0xa000:
 			sp0256_ald_write(data);
 		return;
-		
+
 		case 0xc000:
 		case 0xf800: // crzrally
 			palette_offset = (palette_offset & 2) | (data & 1);
 		return;
-		
+
 		case 0xc001:
 		case 0xf801:
 			palette_offset = (palette_offset & 1) | ((data & 1) << 1);
@@ -291,7 +299,7 @@ static void __fastcall holeland_write(UINT16 address, UINT8 data)
 		case 0xf005: // crzrally
 			// coin counter
 		return;
-		
+
 		case 0xc006:
 			flipscreen[0] = data & 1; // x
 		return;
@@ -299,7 +307,7 @@ static void __fastcall holeland_write(UINT16 address, UINT8 data)
 		case 0xc007:
 			flipscreen[1] = data & 1; // y
 		return;
-		
+
 		case 0xf000: // crzrally
 			scrollx = data;
 		return;
@@ -374,7 +382,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	if (clear_mem) {
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
-	
+
 	ZetOpen(0);
 	ZetReset();
 	if (game_select == 0) sp0256_reset();
@@ -383,12 +391,12 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	AY8910Reset(0);
 
 	BurnWatchdogReset();
-	
+
 	scrollx = 0;
 	flipscreen[0] = 0;
 	flipscreen[1] = 0;
 	palette_offset = 0;
-	
+
 	return 0;
 }
 
@@ -401,8 +409,8 @@ static INT32 MemIndex()
 	DrvGfxROM0		= Next; Next += 0x040000;
 	DrvGfxROM1		= Next; Next += 0x020000;
 
-	DrvColPROM		= Next; Next += 0x0003000;
-	
+	DrvColPROM		= Next; Next += 0x000300;
+
 	DrvSndROM		= Next; Next += 0x010000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x100 * sizeof(UINT32);
@@ -459,21 +467,21 @@ static INT32 DrvGfxDecode()
 	if (game_select == 0)
 	{
 		GfxDecode(0x0400, 2, 16, 16, Plane0, XOffs0, YOffs0, 0x080, tmp, DrvGfxROM0);
-		
+
 		memcpy (tmp, DrvGfxROM1, 0x8000);
-		
+
 		GfxDecode(0x0080, 2, 32, 32, Plane2, XOffs2, YOffs2, 0x200, tmp, DrvGfxROM1);
 	}
 	else
 	{
 
 		GfxDecode(0x0400, 2, 8, 8, Plane1, XOffs1, YOffs1, 0x080, tmp, DrvGfxROM0);
-		
+
 		memcpy (tmp, DrvGfxROM1, 0x8000);
-		
+
 		GfxDecode(0x0200, 2, 16, 16, Plane3, XOffs3, YOffs3, 0x080, tmp, DrvGfxROM1);
 	}
-	
+
 	BurnFree(tmp);
 
 	return 0;
@@ -489,7 +497,7 @@ static INT32 DrvInit(INT32 game)
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
-	
+
 	memset (DrvNVRAM, 0xff, 0x800);
 
 	if (game == 0)
@@ -499,10 +507,10 @@ static INT32 DrvInit(INT32 game)
 		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  2, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x06000,  3, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x0a000,  4, 1)) return 1;
-		
+
 		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x02000,  6, 1)) return 1;
-		
+
 		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  7, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x02000,  8, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x04000,  9, 1)) return 1;
@@ -511,7 +519,7 @@ static INT32 DrvInit(INT32 game)
 		if (BurnLoadRom(DrvColPROM + 0x00000, 11, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00100, 12, 1)) return 1;
 		if (BurnLoadRom(DrvColPROM + 0x00200, 13, 1)) return 1;
-		
+
 		if (BurnLoadRom(DrvSndROM  + 0x01000, 14, 1)) return 1;
 	}
 	else
@@ -519,10 +527,10 @@ static INT32 DrvInit(INT32 game)
 		if (BurnLoadRom(DrvZ80ROM0 + 0x00000,  0, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x04000,  1, 1)) return 1;
 		if (BurnLoadRom(DrvZ80ROM0 + 0x08000,  2, 1)) return 1;
-		
+
 		if (BurnLoadRom(DrvGfxROM0 + 0x00000,  3, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM0 + 0x02000,  4, 1)) return 1;
-		
+
 		if (BurnLoadRom(DrvGfxROM1 + 0x00000,  5, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x02000,  6, 1)) return 1;
 		if (BurnLoadRom(DrvGfxROM1 + 0x04000,  7, 1)) return 1;
@@ -534,7 +542,7 @@ static INT32 DrvInit(INT32 game)
 	}
 
 	DrvGfxDecode();
-	
+
 	ZetInit(0);
 	ZetOpen(0);
 	ZetMapMemory(DrvZ80ROM0,			0x0000, 0xbfff, MAP_ROM);
@@ -552,7 +560,7 @@ static INT32 DrvInit(INT32 game)
 	ZetSetOutHandler(holeland_write_port);
 	ZetSetInHandler(holeland_read_port);
 	ZetClose();
-	
+
 	AY8910Init(0, game ? 1250000 : 625000, 0);
 	AY8910Init(1, 1250000, 1);
 	AY8910SetPorts(0, &ay8910_0_read_A, &ay8910_0_read_B, NULL, NULL);
@@ -566,14 +574,23 @@ static INT32 DrvInit(INT32 game)
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	GenericTilesInit();
-	
+
 	if (game == 0)
 	{
+		// foreground layer
 		GenericTilemapInit(0, TILEMAP_SCAN_ROWS, holeland_map_callback, 16, 16, 32, 32);
 		GenericTilemapSetGfx(0, DrvGfxROM0, 2, 16, 16, 0x40000, 0, 0x3f);
 		GenericTilemapSetOffsets(0, 0, -32);
 		GenericTilemapCategoryConfig(0, 2);
-		GenericTilemapSetTransMask(0, 1, 0xff); // <- wrong!!!
+		GenericTilemapSetTransMask(0, 0, 0xff);
+		GenericTilemapSetTransMask(0, 1, 0x01);
+
+		// background layer (same thing, different transmasks)
+		GenericTilemapInit(1, TILEMAP_SCAN_ROWS, holeland_map_callback, 16, 16, 32, 32);
+		GenericTilemapSetOffsets(1, 0, -32);
+		GenericTilemapCategoryConfig(1, 2);
+		GenericTilemapSetTransMask(1, 0, 0x00);
+		GenericTilemapSetTransMask(1, 1, 0xfe);
 	}
 	else
 	{
@@ -660,14 +677,14 @@ static INT32 HolelandDraw()
 	}
 
 	GenericTilemapSetFlip(0, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
-	
-	BurnTransferClear(); // debug! kill later
-	
-	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWOPAQUE);
-	
+
+	BurnTransferClear();
+
+	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0); // background layer
+
 	if (nSpriteEnable & 1) holeland_draw_sprites();
-	
-//	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TILE_GROUP(1));
+
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0); // foreground layer
 
 	BurnTransferCopy(DrvPalette);
 
@@ -707,14 +724,16 @@ static INT32 CrzrallyDraw()
 		DrvPaletteInit();
 		DrvRecalc = 0;
 	}
-	
+
 	GenericTilemapSetFlip(0, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
 
 	GenericTilemapSetScrollX(0, scrollx);
 
-	GenericTilemapDraw(0, pTransDraw, 0);
+	BurnTransferClear();
 
-	crzrally_draw_sprites();
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+
+	if (nSpriteEnable & 1) crzrally_draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 
@@ -731,7 +750,7 @@ static INT32 DrvFrame()
 
 	{
 		memset (DrvInputs, 0xff, 2);
-		
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -749,6 +768,10 @@ static INT32 DrvFrame()
 		nCyclesDone += ZetRun((nCyclesTotal * (i + 1) / nInterleave) - nCyclesDone);
 
 		if (i == 240) {
+			if (pBurnDraw) {
+				BurnDrvRedraw();
+			}
+
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 
@@ -776,10 +799,6 @@ static INT32 DrvFrame()
 		if (game_select == 0) sp0256_update(pBurnSoundOut, nBurnSoundLen);
 		ZetClose();
 #endif
-	}
-
-	if (pBurnDraw) {
-		BurnDrvRedraw();
 	}
 
 	return 0;
@@ -811,7 +830,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(scrollx);
 	}
 
-	if (nAction & ACB_NVRAM) {
+	if (nAction & ACB_NVRAM && game_select == 1) {
 		ba.Data		= DrvNVRAM;
 		ba.nLen		= 0x01000;
 		ba.nAddress	= 0;
@@ -822,9 +841,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	return 0;
 }
 
-
-//	MCFG_SCREEN_SIZE(32*16, 32*16)
-//	MCFG_SCREEN_VISIBLE_AREA(0*16, 32*16-1, 2*16, 30*16-1)
 
 // Hole Land (Japan)
 
@@ -944,7 +960,7 @@ static INT32 CrzrallyInit()
 
 struct BurnDriver BurnDrvCrzrally = {
 	"crzrally", NULL, NULL, NULL, "1985",
-	"Crazy Rally (set 1)\0", NULL, "Tecfri", "Miscellaneous",
+	"Crazy Rally (set 1)\0", "Graphics issues on some levels", "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, crzrallyRomInfo, crzrallyRomName, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
@@ -985,7 +1001,7 @@ STD_ROM_FN(crzrallya)
 
 struct BurnDriver BurnDrvCrzrallya = {
 	"crzrallya", "crzrally", NULL, NULL, "1985",
-	"Crazy Rally (set 2)\0", NULL, "Tecfri", "Miscellaneous",
+	"Crazy Rally (set 2)\0", "Graphics issues on some levels", "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, crzrallyaRomInfo, crzrallyaRomName, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,
@@ -1026,7 +1042,7 @@ STD_ROM_FN(crzrallyg)
 
 struct BurnDriver BurnDrvCrzrallyg = {
 	"crzrallyg", "crzrally", NULL, NULL, "1985",
-	"Crazy Rally (Gecas license)\0", NULL, "Tecfri (Gecas license)", "Miscellaneous",
+	"Crazy Rally (Gecas license)\0", "Graphics issues on some levels", "Tecfri (Gecas license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, crzrallygRomInfo, crzrallygRomName, NULL, NULL, CrzrallyInputInfo, CrzrallyDIPInfo,

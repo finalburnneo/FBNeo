@@ -3181,6 +3181,11 @@ int ScrnSize()
 	} else {
 		if (nWindowSize) {
 			nMaxSize = nWindowSize;
+			if (bDrvOkay && nWindowSize == 2 && nBmapWidth == 512 && nBmapHeight >= 400) {
+				// For Popeye, Hole Land and Syvalion when running Windowed: Double Size
+				bprintf(PRINT_NORMAL, _T("  * Game is double-sized to begin with.\n"));
+				nMaxSize = 1;
+			}
 		} else {
 			if (nBmapWidth < nBmapHeight) {
 				if (SystemWorkArea.bottom - SystemWorkArea.top <= 600) {

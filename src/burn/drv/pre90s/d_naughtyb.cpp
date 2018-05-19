@@ -711,7 +711,7 @@ struct BurnDriver BurnDrvNaughtyb = {
 };
 
 
-// Naughty Boy (bootleg)
+// Naughty Boy (bootleg, set 1)
 
 static struct BurnRomInfo naughtybaRomDesc[] = {
 	{ "91",			0x0800, 0x42b14bc7, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
@@ -742,10 +742,50 @@ STD_ROM_FN(naughtyba)
 
 struct BurnDriver BurnDrvNaughtyba = {
 	"naughtyba", "naughtyb", NULL, NULL, "1982",
-	"Naughty Boy (bootleg)\0", NULL, "bootleg", "Miscellaneous",
+	"Naughty Boy (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, naughtybaRomInfo, naughtybaRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
+	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 288, 3, 4
+};
+
+
+// Naughty Boy (bootleg, set 2)
+
+static struct BurnRomInfo naughtybbRomDesc[] = {
+	{ "1.bin",		0x0800, 0x31d27637, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "2.bin",		0x0800, 0xa24674b4, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.bin",		0x0800, 0x004d0ba7, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.bin",		0x0800, 0x3c7bcac6, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "5.bin",		0x0800, 0xe282f1b8, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "6.bin",		0x0800, 0x61178ff2, 1 | BRF_PRG | BRF_ESS }, //  5
+	{ "7.bin",		0x0800, 0xba4079f0, 1 | BRF_PRG | BRF_ESS }, //  6
+	{ "8.bin",		0x0800, 0x17c3b6fb, 1 | BRF_PRG | BRF_ESS }, //  7
+
+	{ "105.bin",	0x0800, 0xd692f9c7, 2 | BRF_GRA },           //  8 Background Tiles
+	{ "106.bin",	0x0800, 0xd3ba8b27, 2 | BRF_GRA },           //  9
+	{ "103.bin",	0x0800, 0xc1669cd5, 2 | BRF_GRA },           // 10
+	{ "104.bin",	0x0800, 0xeef2c8e5, 2 | BRF_GRA },           // 11
+
+	{ "101.bin",	0x0800, 0x75ec9710, 3 | BRF_GRA },           // 12 Foreground Tiles
+	{ "102.bin",	0x0800, 0x0802d460, 3 | BRF_GRA },           // 13
+	{ "99.bin",		0x0800, 0x8c8db764, 3 | BRF_GRA },           // 14
+	{ "100.bin",	0x0800, 0xc97c97b9, 3 | BRF_GRA },           // 15
+
+	{ "am27s1.2",		0x0100, 0x98ad89a1, 4 | BRF_GRA },           // 16 Color Proms
+	{ "am27s1.1",		0x0100, 0x909107d4, 4 | BRF_GRA },           // 17
+};
+
+STD_ROM_PICK(naughtybb)
+STD_ROM_FN(naughtybb)
+
+struct BurnDriver BurnDrvNaughtybb = {
+	"naughtybb", "naughtyb", NULL, NULL, "1982",
+	"Naughty Boy (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, naughtybbRomInfo, naughtybbRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
 };

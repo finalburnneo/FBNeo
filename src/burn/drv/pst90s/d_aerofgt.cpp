@@ -3059,24 +3059,40 @@ struct BurnDriver BurnDrvSonicwi = {
 };
 
 
+/*
+
+Karate Blazers regions known to exist but not dumped or not verified:
+
+Toushin Blazers title:
+  4V2 with 1V1   Tecmo license??
+   V2 with 1V1   "original" non Tecmo verions??
+
+Karate Blazers title
+  1V2 with V1   US??
+  3V2 with 1V1  Euro, current parent??
+
+Note: It's unknown what if any difference there is between V1 and 1V1 ROMs
+
+*/
+
 // Karate Blazers (World, set 1)
 
 static struct BurnRomInfo karatblzRomDesc[] = {
-	{ "rom2v3",    	  0x040000, 0x01f772e1, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
+	{ "rom2v3.u14",   0x040000, 0x01f772e1, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "v1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
 
 	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
 	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
 	
 	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
-	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "v3.u44",       0x020000, 0x34bdead2, BRF_GRA },
 	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
-	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	{ "v4.u45",       0x020000, 0xbe4d487d, BRF_GRA },
 	
 	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
 	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
 
-	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	{ "v5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
 	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
@@ -3099,21 +3115,21 @@ struct BurnDriver BurnDrvKaratblz = {
 // Karate Blazers (World, set 2)
 
 static struct BurnRomInfo karatblaRomDesc[] = {
-	{ "v2.u14",    	  0x040000, 0x7a78976e, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "v1.u15",    	  0x040000, 0x47e410fe, BRF_ESS | BRF_PRG },
+	{ "_v2.u14",      0x040000, 0x7a78976e, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "_v1.u15",      0x040000, 0x47e410fe, BRF_ESS | BRF_PRG },
 
 	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
 	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
 	
 	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
-	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "v3.u44",       0x020000, 0x34bdead2, BRF_GRA },
 	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
-	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	{ "v4.u45",       0x020000, 0xbe4d487d, BRF_GRA },
 	
 	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
 	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
 
-	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	{ "v5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
 	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
@@ -3136,21 +3152,21 @@ struct BurnDriver BurnDrvKaratbla = {
 // Karate Blazers (US)
 
 static struct BurnRomInfo karatbluRomDesc[] = {
-	{ "2.u14",    	  0x040000, 0x202e6220, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
+	{ "v2.u14",    	  0x040000, 0x202e6220, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "v1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
 
 	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
 	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
 	
 	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
-	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "v3.u44",       0x020000, 0x34bdead2, BRF_GRA },
 	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
-	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	{ "v4.u45",       0x020000, 0xbe4d487d, BRF_GRA },
 	
 	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
 	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
 
-	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	{ "v5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
 	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
@@ -3170,24 +3186,24 @@ struct BurnDriver BurnDrvKaratblu = {
 };
 
 
-// Karate Blazers (Tecmo license)
+// Karate Blazers (World, Tecmo license)
 
 static struct BurnRomInfo karatbltRomDesc[] = {
 	{ "2v2.u14",      0x040000, 0x7ae17b7f, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
+	{ "v1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
 
 	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
 	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
 	
 	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
-	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "v3.u44",       0x020000, 0x34bdead2, BRF_GRA },
 	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
-	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	{ "v4.u45",       0x020000, 0xbe4d487d, BRF_GRA },
 	
 	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
 	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
 
-	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	{ "v5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
 	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
@@ -3198,7 +3214,7 @@ STD_ROM_FN(karatblt)
 
 struct BurnDriver BurnDrvKaratblt = {
 	"karatblzt", "karatblz", NULL, NULL, "1991",
-	"Karate Blazers (Tecmo license)\0", NULL, "Video System Co. (Tecmo license)", "Video System",
+	"Karate Blazers (World, Tecmo license)\0", NULL, "Video System Co. (Tecmo license)", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatbltRomInfo, karatbltRomName, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
@@ -3207,24 +3223,24 @@ struct BurnDriver BurnDrvKaratblt = {
 };
 
 
-// Karate Blazers (Japan)
+// Toushin Blazers (Japan, Tecmo license)
 
 static struct BurnRomInfo karatbljRomDesc[] = {
 	{ "2tecmo.u14",   0x040000, 0x57e52654, BRF_ESS | BRF_PRG }, // 68000 code swapped
-	{ "1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
+	{ "v1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
 
 	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
 	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
 	
 	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
-	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "v3.u44",       0x020000, 0x34bdead2, BRF_GRA },
 	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
-	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	{ "v4.u45",       0x020000, 0xbe4d487d, BRF_GRA },
 	
 	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
 	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
 
-	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	{ "v5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
 	
 	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
 	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
@@ -3235,7 +3251,7 @@ STD_ROM_FN(karatblj)
 
 struct BurnDriver BurnDrvKaratblj = {
 	"karatblzj", "karatblz", NULL, NULL, "1991",
-	"Karate Blazers (Japan)\0", NULL, "Video System Co.", "Video System",
+	"Toushin Blazers (Japan, Tecmo license)\0", NULL, "Video System Co. (Tecmo license)", "Video System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatbljRomInfo, karatbljRomName, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,

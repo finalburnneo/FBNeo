@@ -3133,6 +3133,8 @@ struct BurnDriver BurnDrvKaratbla = {
 };
 
 
+// Karate Blazers (US)
+
 static struct BurnRomInfo karatbluRomDesc[] = {
 	{ "2.u14",    	  0x040000, 0x202e6220, BRF_ESS | BRF_PRG }, // 68000 code swapped
 	{ "1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
@@ -3163,6 +3165,43 @@ struct BurnDriver BurnDrvKaratblu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
 	NULL, karatbluRomInfo, karatbluRomName, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
+	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
+	352,240,4,3
+};
+
+
+// Karate Blazers (Tecmo license)
+
+static struct BurnRomInfo karatbltRomDesc[] = {
+	{ "2v2.u14",      0x040000, 0x7ae17b7f, BRF_ESS | BRF_PRG }, // 68000 code swapped
+	{ "1.u15",    	  0x040000, 0xd16ee21b, BRF_ESS | BRF_PRG },
+
+	{ "gha.u55",   	  0x080000, 0x3e0cea91, BRF_GRA },			 // gfx1
+	{ "gh9.u61",  	  0x080000, 0x5d1676bd, BRF_GRA },			 // gfx2
+	
+	{ "u42",          0x100000, 0x65f0da84, BRF_GRA },			 // gfx3
+	{ "3.u44",        0x020000, 0x34bdead2, BRF_GRA },
+	{ "u43",          0x100000, 0x7b349e5d, BRF_GRA },			
+	{ "4.u45",        0x020000, 0xbe4d487d, BRF_GRA },
+	
+	{ "u59.ghb",      0x080000, 0x158c9cde, BRF_GRA },			 // gfx4
+	{ "ghd.u60",      0x080000, 0x73180ae3, BRF_GRA },
+
+	{ "5.u92",    	  0x020000, 0x97d67510, BRF_ESS | BRF_PRG }, // Sound CPU
+	
+	{ "u105.gh8",     0x080000, 0x7a68cb1b, BRF_SND },			 // samples
+	{ "u104",         0x100000, 0x5795e884, BRF_SND },	
+};
+
+STD_ROM_PICK(karatblt)
+STD_ROM_FN(karatblt)
+
+struct BurnDriver BurnDrvKaratblt = {
+	"karatblzt", "karatblz", NULL, NULL, "1991",
+	"Karate Blazers (Tecmo license)\0", NULL, "Video System Co. (Tecmo license)", "Video System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	NULL, karatbltRomInfo, karatbltRomName, NULL, NULL, karatblzInputInfo, karatblzDIPInfo,
 	karatblzInit,DrvExit,DrvFrame,karatblzDraw,DrvScan,&DrvRecalc,0x400,
 	352,240,4,3
 };

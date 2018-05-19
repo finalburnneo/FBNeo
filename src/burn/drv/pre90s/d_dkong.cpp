@@ -2931,6 +2931,89 @@ struct BurnDriver BurnDrvDkongjr = {
 };
 
 
+// Donkey Kong Junior. (US, bootleg?)
+
+static struct BurnRomInfo dkongjr2RomDesc[] = {
+	{ "0",			0x2000, 0xdc1f1d12, 1 }, //  0 maincpu
+	{ "1",			0x2000, 0xf1f286d0, 1 }, //  1
+	{ "2",			0x2000, 0x4cb856c4, 1 }, //  2
+
+	{ "8",			0x1000, 0x715da5f8, 2 }, //  3 soundcpu
+
+	{ "9",			0x1000, 0x8d51aca9, 3 }, //  4 gfx1
+	{ "10",			0x1000, 0x4ef64ba5, 3 }, //  5
+
+	{ "v_7c.bin",	0x0800, 0xdc7f4164, 4 }, //  6 gfx2
+	{ "v_7d.bin",	0x0800, 0x0ce7dcf6, 4 }, //  7
+	{ "v_7e.bin",	0x0800, 0x24d1ff17, 4 }, //  8
+	{ "v_7f.bin",	0x0800, 0x0f8c083f, 4 }, //  9
+
+	{ "c-2e.bpr",	0x0100, 0x463dc7ad, 5 }, // 10 proms
+	{ "c-2f.bpr",	0x0100, 0x47ba0042, 5 }, // 11
+	{ "v-2n.bpr",	0x0100, 0xdbf185bf, 5 }, // 12
+	
+	{ "diag.bin",	0x1000, 0x00000000, 0 | BRF_OPT },
+};
+
+STD_ROM_PICK(dkongjr2)
+STD_ROM_FN(dkongjr2)
+
+static INT32 dkongjr2RomLoad()
+{
+	if (BurnLoadRom(DrvZ80ROM  + 0x0000,  0, 1)) return 1;
+	if (BurnLoadRom(DrvZ80ROM  + 0x2000,  1, 1)) return 1;
+	if (BurnLoadRom(DrvZ80ROM  + 0x4000,  2, 1)) return 1;
+	
+	if (BurnLoadRom(DrvSndROM0 + 0x0000,  3, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM0 + 0x0000,  4, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM0 + 0x1000,  5, 1)) return 1;
+
+	if (BurnLoadRom(DrvGfxROM1 + 0x0000,  6, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x1000,  7, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x2000,  8, 1)) return 1;
+	if (BurnLoadRom(DrvGfxROM1 + 0x3000,  9, 1)) return 1;
+
+	if (BurnLoadRom(DrvColPROM + 0x0000, 10, 1)) return 1;
+	if (BurnLoadRom(DrvColPROM + 0x0100, 11, 1)) return 1;
+	if (BurnLoadRom(DrvColPROM + 0x0200, 12, 1)) return 1;
+
+	ZetOpen(0);
+	ZetSetWriteHandler(dkongjr_main_write);
+	ZetClose();
+
+	return 0;
+}
+
+static INT32 dkongjr2Init()
+{
+	INT32 rc = DrvInit(dkongjr2RomLoad, dkongPaletteInit, 0);
+	if (!rc) {
+		dkongjrsamplevol(1, 0.35); // land
+		dkongjrsamplevol(2, 0.35); // roar
+		dkongjrsamplevol(3, 0.25); // climb
+		dkongjrsamplevol(4, 0.25);
+		dkongjrsamplevol(5, 0.25);
+		dkongjrsamplevol(6, 0.25); // death
+		dkongjrsamplevol(7, 0.35); // fall
+		dkongjrsamplevol(8, 0.20); // walk
+		dkongjrsamplevol(9, 0.20);
+		dkongjrsamplevol(10, 0.20);
+	}
+	return rc;
+}
+
+struct BurnDriver BurnDrvDkongjr2 = {
+	"dkongjr2", "dkongjr", NULL, "dkongjr", "1982",
+	"Donkey Kong Junior (US, bootleg?)\0", NULL, "Nintendo", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, dkongjr2RomInfo, dkongjr2RomName, DkongjrSampleInfo, DkongjrSampleName, DkongInputInfo, DkongDIPInfo,
+	dkongjr2Init, DrvExit, DrvFrame, dkongDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Donkey Kong Jr. (Japan)
 
 static struct BurnRomInfo dkongjrjRomDesc[] = {

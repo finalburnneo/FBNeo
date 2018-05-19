@@ -627,7 +627,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				INT32 sx = x;
 				INT32 col = ((x + scrollx) % (cur_map->mwidth * cur_map->twidth)) / cur_map->twidth;
 
-				INT32 code, color, group, gfxnum, category;
+				INT32 code, color, group, gfxnum, category = 0;
 				UINT32 flags;
 
 				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
@@ -733,7 +733,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 			{
 				INT32 sxx = (x + scrollx) % (cur_map->twidth * cur_map->mwidth);
 
-				INT32 code, color, group, gfxnum, category;
+				INT32 code, color, group, gfxnum, category = 0;
 				UINT32 flags;
 			
 				cur_map->pTile(cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight), &gfxnum, &code, &color, &flags, &category);
@@ -902,7 +902,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		INT32 col = offs % cur_map->mwidth; //x
 		INT32 row = offs / cur_map->mwidth; //y
 
-		INT32 code, color, group, gfxnum, category;
+		INT32 code, color, group, gfxnum, category = 0;
 		UINT32 flags;
 
 		cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
@@ -1167,7 +1167,7 @@ void GenericTilemapDumpToBitmap()
 				for (UINT32 col = 0; col < cur_map->mwidth; col++)
 				{
 					INT32 sx = col * cur_map->twidth;
-					INT32 code, color, gfxnum, category;
+					INT32 code, color, gfxnum, category = 0;
 					UINT32 flags;
 
 					cur_map->pTile(cur_map->pScan(col, row), &gfxnum, &code, &color, &flags, &category);

@@ -59,7 +59,6 @@
 
 // Pass the tilemap callback variables using this macro (looks nice)
 #define TILE_SET_INFO(ttgfx, ttcode, ttcolor, ttflags)	\
-	*category = 0;		\
 	*tile_gfx = (ttgfx);	\
 	*tile_code = (ttcode);	\
 	*tile_color = (ttcolor);	\

@@ -45,13 +45,13 @@ void Draw8x8PrioMaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT
 
 void Draw16x16Tile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile);
 void Draw16x16MaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile);
-void Draw16X16PrioTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
-void Draw16X16PrioMaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
+void Draw16x16PrioTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
+void Draw16x16PrioMaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
 
 void Draw32x32Tile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile);
 void Draw32x32MaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile);
-void Draw32X32PrioTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
-void Draw32X32PrioMaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
+void Draw32x32PrioTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
+void Draw32x32PrioMaskTile(UINT16 *pDestDraw, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, INT32 nPriority, UINT8 *pTile);
 
 void DrawCustomTile(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nPaletteOffset, UINT8 *pTile);
 void DrawCustomMaskTile(UINT16 *pDestDraw, INT32 nWidth, INT32 nHeight, INT32 NTileNumber, INT32 StartX, INT32 StartY, INT32 FlipX, INT32 FlipY, INT32 nTilePalette, INT32 nColourDepth, INT32 nMaskColour, INT32 nPaletteOffset, UINT8 *pTile);

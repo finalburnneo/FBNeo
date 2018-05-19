@@ -1062,7 +1062,7 @@ static UINT8 __fastcall heiankyo_read_port(UINT16 port)
 			return (DrvInputs[1] & ~0x0c) | get_composite_blank_comp(8);
 
 		case 0x02:
-			return (DrvInputs[2] & ~0x2e) | get_timer_value(8);
+			return (DrvInputs[2] & ~0x2a) | get_timer_value(8);
 
 		case 0x03:
 			return (DrvInputs[3] & ~0x0c) | (DrvDips[1] & 0x04) | get_coin_status(8);
@@ -1543,7 +1543,6 @@ static INT32 DrvLoadRoms()
 
 			if (BurnLoadRom(zLoad, i, 1)) return 1;
 			zLoad += ri.nLen;
-			if (ri.nType & 8) zLoad += 0x800; // heiankyo has a gap
 			continue;
 		}
 
@@ -2124,7 +2123,7 @@ static struct BurnRomInfo heiankyoRomDesc[] = {
 	{ "ha8.u8",				0x0400, 0x6cc64878, 1 | BRF_PRG | BRF_ESS }, //  8
 	{ "ha7.u7",				0x0400, 0x6d2f9527, 1 | BRF_PRG | BRF_ESS }, //  9
 	{ "ha6.u6",				0x0400, 0xe467c353, 1 | BRF_PRG | BRF_ESS }, // 10
-	{ "ha3.u3",				0x0400, 0x6a55eda8, 1 | 8 | BRF_PRG | BRF_ESS }, // 11 (0x800-sized gap)
+	{ "ha3.u3",				0x0400, 0x6a55eda8, 1 | BRF_PRG | BRF_ESS }, // 11 (0x800-sized gap)
 	{ "ha2.u2",				0x0400, 0x056b3b8b, 1 | BRF_PRG | BRF_ESS }, // 12
 	{ "ha1.u1",				0x0400, 0xb8da2b5e, 1 | BRF_PRG | BRF_ESS }, // 13
 
@@ -2139,6 +2138,10 @@ STD_ROM_FN(heiankyo)
 
 static void heiankyo_callback()
 {
+	// gap after .u3 of 0x800
+	memmove (DrvZ80ROM + 0x3800, DrvZ80ROM + 0x3000, 0x0800);
+	memset (DrvZ80ROM + 0x3000, 0, 0x800);
+	
 	// halves of color prom are swapped, only first bank used
 	memcpy (DrvColPROM, DrvColPROM + 0x10, 0x0008);
 }

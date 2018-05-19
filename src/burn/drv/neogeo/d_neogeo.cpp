@@ -7173,9 +7173,7 @@ static struct BurnRomInfo sengoku3RomDesc[] = {
 	/* also found AES set with P1 on maskrom on PROG board NEO-AEG PROGBK1F; chip label is 261-PH1
 	and CHA board NEO-AEG CHAFIO (1999.8.10) (NEO-CMC 7042)	*/
 	{ "261-ph1.p1",   0x200000, 0xe0d4bc0a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* also found MVS set with P1 on maskrom on PROG board NEO-MVS PROGBK1; chip label is 261-PG1
-	and CHA board NEO-MVS CHAFIO (1999.6.14) (NEO-CMC 7042) */
-		
+			
 	{ "261-c1.c1",    0x800000, 0xded84d9c, 3 | BRF_GRA },           //  1 Sprite data
 	{ "261-c2.c2",    0x800000, 0xb8eb4348, 3 | BRF_GRA },           //  2 
 	{ "261-c3.c3",    0x800000, 0x84e2034a, 3 | BRF_GRA },           //  3 
@@ -13643,6 +13641,7 @@ struct BurnDriver BurnDrvjockeygpa = {
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo vlinerRomDesc[] = {
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "epr_7a.p1",    0x080000, 0x052f93ed, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
@@ -13677,7 +13676,8 @@ struct BurnDriver BurnDrvvliner = {
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo vliner7eRomDesc[] = {
-	{ "epr_7e.p1",       0x080000, 0x49a94db5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
+	{ "epr_7e.p1",    0x080000, 0x49a94db5, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
 
@@ -13705,9 +13705,8 @@ struct BurnDriver BurnDrvvliner7e = {
 
 static struct BurnRomInfo vliner6eRomDesc[] = {
 	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
-	{ "epr_6e.p1",       0x080000, 0x72a2c043, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* P on eprom, correct chip label unknown */
-
+	{ "epr_6e.p1",    0x080000, 0x72a2c043, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "c-1.c1",       0x080000, 0x5118f7c0, 3 | BRF_GRA },           //  2 Sprite data
@@ -13735,8 +13734,7 @@ struct BurnDriver BurnDrvvliner6e = {
 static struct BurnRomInfo vliner54RomDesc[] = {
 	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "epr_54.p1",    0x080000, 0x172efc18, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	/* P on eprom, correct chip label unknown */
-
+	
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles
 
 	{ "c-1.c1",       0x080000, 0x5118f7c0, 3 | BRF_GRA },           //  2 Sprite data
@@ -13762,6 +13760,7 @@ struct BurnDriver BurnDrvvliner54 = {
 /* MVS ONLY RELEASE */
 
 static struct BurnRomInfo vliner53RomDesc[] = {
+	/* Officially licensed? Cart has a holographic 'SNK' sticker applied */
 	{ "epr_53.p1",    0x080000, 0xe263dce8, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
 
 	{ "s-1.s1",       0x020000, 0x972d8c31, 2 | BRF_GRA },           //  1 Text layer tiles

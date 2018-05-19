@@ -37,24 +37,22 @@ static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
+static INT16 DrvAnalogPort0 = 0;
+static UINT8 PaddleX = 0;
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo GoindolInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 start"	},
-	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	// analog placeholder
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 3"	},
+	A("P1 Paddle",      BIT_ANALOG_REL, &DrvAnalogPort0,"p1 z-axis" ),
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy2 + 7,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 start"	},
-	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
@@ -64,69 +62,70 @@ static struct BurnInputInfo GoindolInputList[] = {
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
+#undef A
 
 STDINPUTINFO(Goindol)
 
 static struct BurnDIPInfo GoindolDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xce, NULL					},
-	{0x13, 0xff, 0xff, 0xc7, NULL					},
+	{0x0e, 0xff, 0xff, 0xce, NULL					},
+	{0x0f, 0xff, 0xff, 0xc7, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Lives"				},
-	{0x12, 0x01, 0x03, 0x03, "2"					},
-	{0x12, 0x01, 0x03, 0x02, "3"					},
-	{0x12, 0x01, 0x03, 0x01, "4"					},
-	{0x12, 0x01, 0x03, 0x00, "5"					},
+	{0x0e, 0x01, 0x03, 0x03, "2"					},
+	{0x0e, 0x01, 0x03, 0x02, "3"					},
+	{0x0e, 0x01, 0x03, 0x01, "4"					},
+	{0x0e, 0x01, 0x03, 0x00, "5"					},
 
 	{0   , 0xfe, 0   ,    8, "Difficulty"			},
-	{0x12, 0x01, 0x1c, 0x1c, "Easiest"				},
-	{0x12, 0x01, 0x1c, 0x18, "Very Very Easy"		},
-	{0x12, 0x01, 0x1c, 0x14, "Very Easy"			},
-	{0x12, 0x01, 0x1c, 0x10, "Easy"					},
-	{0x12, 0x01, 0x1c, 0x0c, "Normal"				},
-	{0x12, 0x01, 0x1c, 0x08, "Difficult"			},
-	{0x12, 0x01, 0x1c, 0x04, "Hard"					},
-	{0x12, 0x01, 0x1c, 0x00, "Very Hard"			},
+	{0x0e, 0x01, 0x1c, 0x1c, "Easiest"				},
+	{0x0e, 0x01, 0x1c, 0x18, "Very Very Easy"		},
+	{0x0e, 0x01, 0x1c, 0x14, "Very Easy"			},
+	{0x0e, 0x01, 0x1c, 0x10, "Easy"					},
+	{0x0e, 0x01, 0x1c, 0x0c, "Normal"				},
+	{0x0e, 0x01, 0x1c, 0x08, "Difficult"			},
+	{0x0e, 0x01, 0x1c, 0x04, "Hard"					},
+	{0x0e, 0x01, 0x1c, 0x00, "Very Hard"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
-	{0x12, 0x01, 0x20, 0x20, "Off"					},
-	{0x12, 0x01, 0x20, 0x00, "On"					},
+	{0x0e, 0x01, 0x20, 0x20, "Off"					},
+	{0x0e, 0x01, 0x20, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Invulnerability"		},
-	{0x12, 0x01, 0x40, 0x40, "Off"					},
-	{0x12, 0x01, 0x40, 0x00, "On"					},
+	{0x0e, 0x01, 0x40, 0x40, "Off"					},
+	{0x0e, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x12, 0x01, 0x80, 0x80, "Off"					},
-	{0x12, 0x01, 0x80, 0x00, "On"					},
+	{0x0e, 0x01, 0x80, 0x80, "Off"					},
+	{0x0e, 0x01, 0x80, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    8, "Bonus Life"			},
-	{0x13, 0x01, 0x07, 0x04, "30k and every 50k"	},
-	{0x13, 0x01, 0x07, 0x05, "50k and every 100k"	},
-	{0x13, 0x01, 0x07, 0x06, "50k and every 200k"	},
-	{0x13, 0x01, 0x07, 0x07, "100k and every 200k"	},
-	{0x13, 0x01, 0x07, 0x01, "10000 only"			},
-	{0x13, 0x01, 0x07, 0x02, "30000 only"			},
-	{0x13, 0x01, 0x07, 0x03, "50000 only"			},
-	{0x13, 0x01, 0x07, 0x00, "None"					},
+	{0x0f, 0x01, 0x07, 0x04, "30k and every 50k"	},
+	{0x0f, 0x01, 0x07, 0x05, "50k and every 100k"	},
+	{0x0f, 0x01, 0x07, 0x06, "50k and every 200k"	},
+	{0x0f, 0x01, 0x07, 0x07, "100k and every 200k"	},
+	{0x0f, 0x01, 0x07, 0x01, "10000 only"			},
+	{0x0f, 0x01, 0x07, 0x02, "30000 only"			},
+	{0x0f, 0x01, 0x07, 0x03, "50000 only"			},
+	{0x0f, 0x01, 0x07, 0x00, "None"					},
 
 	{0   , 0xfe, 0   ,    8, "Coinage"				},
-	{0x13, 0x01, 0x38, 0x28, "3 Coins 1 Credits"	},
-	{0x13, 0x01, 0x38, 0x20, "2 Coins 1 Credits"	},
-	{0x13, 0x01, 0x38, 0x00, "1 Coin  1 Credits"	},
-	{0x13, 0x01, 0x38, 0x08, "1 Coin  2 Credits"	},
-	{0x13, 0x01, 0x38, 0x10, "1 Coin  3 Credits"	},
-	{0x13, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
-	{0x13, 0x01, 0x38, 0x30, "1 Coin  5 Credits"	},
-	{0x13, 0x01, 0x38, 0x38, "1 Coin  6 Credits"	},
+	{0x0f, 0x01, 0x38, 0x28, "3 Coins 1 Credits"	},
+	{0x0f, 0x01, 0x38, 0x20, "2 Coins 1 Credits"	},
+	{0x0f, 0x01, 0x38, 0x00, "1 Coin  1 Credits"	},
+	{0x0f, 0x01, 0x38, 0x08, "1 Coin  2 Credits"	},
+	{0x0f, 0x01, 0x38, 0x10, "1 Coin  3 Credits"	},
+	{0x0f, 0x01, 0x38, 0x18, "1 Coin  4 Credits"	},
+	{0x0f, 0x01, 0x38, 0x30, "1 Coin  5 Credits"	},
+	{0x0f, 0x01, 0x38, 0x38, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Cabinet"				},
-	{0x13, 0x01, 0x40, 0x40, "Upright"				},
-	{0x13, 0x01, 0x40, 0x00, "Cocktail"				},
+	{0x0f, 0x01, 0x40, 0x40, "Upright"				},
+	{0x0f, 0x01, 0x40, 0x00, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
-	{0x13, 0x01, 0x80, 0x80, "Off"					},
-	{0x13, 0x01, 0x80, 0x00, "On"					},
+	{0x0f, 0x01, 0x80, 0x80, "Off"					},
+	{0x0f, 0x01, 0x80, 0x00, "On"					},
 };
 
 STDDIPINFO(Goindol)
@@ -188,7 +187,7 @@ static UINT8 __fastcall goindol_main_read(UINT16 address)
 			return 0;
 
 		case 0xc820:
-			return 0; // dial
+			return PaddleX;
 
 		case 0xc830:
 			return DrvInputs[0];
@@ -266,6 +265,7 @@ static INT32 DrvDoReset()
 	scrolly = 0;
 	soundlatch = 0;
 	prot_toggle = 0;
+	PaddleX = 0;
 
 	return 0;
 }
@@ -465,6 +465,7 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
+	GenericTilemapSetFlip(TMAP_GLOBAL, (flipscreen) ? TMAP_FLIPXY : 0);
 	GenericTilemapSetScrollX(1, scrollx);
 	GenericTilemapSetScrollY(1, scrolly);
 
@@ -489,12 +490,30 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	{
+		static UINT8 lastcoin0 = 0;
+		static UINT8 lastcoin1 = 0;
+
+		DrvJoy1[4] |= DrvJoy2[4]; // shared controls - game only responds to player 1 inputs.
+		DrvJoy1[5] |= DrvJoy2[5];
+
 		memset (DrvInputs, 0xff, 3);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		// only 1 coin impulse per coin button
+		if (!lastcoin0 && !(DrvInputs[0]&0x80)) { DrvInputs[0] |= 0x80; };
+		lastcoin0 = DrvJoy1[7]^1;
+
+		if (!lastcoin1 && !(DrvInputs[1]&0x80)) { DrvInputs[1] |= 0x80; };
+		lastcoin1 = DrvJoy2[7]^1;
+
+		UINT8 Temp = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x01, 0xff);
+		if (Temp > 0x90 || (DrvJoy1[3] | DrvJoy2[3])) PaddleX+=8;
+		if (Temp < 0x70 || (DrvJoy1[2] | DrvJoy2[2])) PaddleX-=8;
+
 	}
 
 	INT32 nInterleave = 4;
@@ -507,7 +526,6 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
-
 
 		ZetOpen(1);
 		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
@@ -554,18 +572,18 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 
-		SCAN_VAR(bankdata);
+		SCAN_VAR(bankdata); // charbank & flipscreen bits in here
 		SCAN_VAR(soundlatch);
 		SCAN_VAR(prot_toggle);
 		SCAN_VAR(scrollx);
 		SCAN_VAR(scrolly);
+		SCAN_VAR(PaddleX);
 	}
 
 	if (nAction & ACB_WRITE) {
 		ZetOpen(0);
 		bankswitch(bankdata);
 		ZetClose();
-
 	}
 
 	return 0;

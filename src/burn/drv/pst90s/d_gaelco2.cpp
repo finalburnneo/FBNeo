@@ -2086,8 +2086,8 @@ struct BurnDriver BurnDrvTouchgo = {
 // Touch & Go (Non North America)
 
 static struct BurnRomInfo touchgonRomDesc[] = {
-	{ "tg56.bin",		0x080000, 0xfd3b4642, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tg57.bin",		0x080000, 0xee891835, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.ic63",			0x080000, 0xfd3b4642, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "2.ic64",			0x080000, 0xee891835, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "tg_ic69.ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
 	{ "tg_ic65.ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3
@@ -2115,8 +2115,8 @@ struct BurnDriver BurnDrvTouchgon = {
 // Touch & Go (earlier revision)
 
 static struct BurnRomInfo touchgoeRomDesc[] = {
-	{ "tg56",		0x080000, 0x6d0f5c65, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
-	{ "tg57",		0x080000, 0x845787b5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "tg56.ic63",		0x080000, 0x6d0f5c65, 1 | BRF_PRG | BRF_ESS }, //  0 68k Code
+	{ "tg57.ic64",		0x080000, 0x845787b5, 1 | BRF_PRG | BRF_ESS }, //  1
 
 	{ "tg_ic69.ic69",	0x200000, 0x18bb12d4, 2 | BRF_GRA },           //  2 Graphics & Samples
 	{ "tg_ic65.ic65",	0x400000, 0x91b89c7c, 2 | BRF_GRA },           //  3

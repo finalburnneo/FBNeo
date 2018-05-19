@@ -2075,19 +2075,12 @@ struct BurnDriver BurnDrvMeikyuha = {
 };
 
 
-
-
-
-
-
 static void m6809_bankswitch(INT32 data)
 {
 	RomBank = (data & 0x0f) * 0x4000;
 	
 	M6809MapMemory(DrvMainROM + 0x10000 + RomBank, 0x4000, 0x7fff, MAP_ROM); // bank
 }
-
-
 
 static void cobra_main_write(UINT16 address, UINT8 data)
 {
@@ -2164,7 +2157,6 @@ static INT32 CobraDoReset()
 
 	return 0;
 }
-
 
 static INT32 CobraGfxDecode()
 {
@@ -2923,7 +2915,6 @@ static INT32 SrdarwinGfxDecode()
 	return 0;
 }
 
-
 static INT32 SrdarwinInit()
 {
 	AllMem = NULL;
@@ -3173,7 +3164,6 @@ static INT32 SrdarwinDraw()
 	return 0;
 }
 
-
 static INT32 SrdarwinFrame()
 {
 	if (DrvReset) {
@@ -3308,10 +3298,6 @@ struct BurnDriver BurnDrvSrdarwnj = {
 	SrdarwinInit, CobraExit, SrdarwinFrame, SrdarwinDraw, CobraScan, &DrvRecalc, 0x100,
 	240, 256, 3, 4
 };
-
-
-
-
 
 static void gondo_i8751_write(INT32 offset, UINT8 data)
 {
@@ -3525,8 +3511,6 @@ static INT32 GondoDoReset()
 
 	return 0;
 }
-
-
 
 static INT32 GondoGfxDecode()
 {
@@ -4057,12 +4041,6 @@ struct BurnDriver BurnDrvGaryoret = {
 	256, 240, 4, 3
 };
 
-
-
-
-
-
-
 static UINT8 oscar_main_read(UINT16 address)
 {
 	switch (address)
@@ -4133,7 +4111,6 @@ static void oscar_main_write(UINT16 address, UINT8 data)
 		return;
 	}
 }
-
 
 static void oscar_sub_write(UINT16 address, UINT8 )
 {
@@ -4582,11 +4559,6 @@ struct BurnDriver BurnDrvOscarj2 = {
 	256, 240, 4, 3
 };
 
-
-
-
-
-
 static void lastmiss_i8751_write(INT32 offset, INT32 data)
 {
 	static INT32 coin, latch = 0, snd;
@@ -4651,7 +4623,6 @@ static void shackled_i8751_write(INT32 offset, INT32 data)
 	if (i8751_value == 0x8101) i8751_return = ((coin2 / 10) << 4) | (coin2 % 10) |
 			((((coin1 / 10) << 4) | (coin1 % 10)) << 8); /* Coins */
 }
-
 
 static INT32 stopsubcpu = 0;
 static INT32 nLastMiss = 0;
@@ -5172,31 +5143,31 @@ static INT32 LastmissScan(INT32 nAction, INT32 *pnMin)
 }
 
 
-// Last Mission (US revision 6)
+// Last Mission (World revision 8)
 
 static struct BurnRomInfo lastmisnRomDesc[] = {
-	{ "dl03-6.13h",		0x08000, 0x47751a5e, 1 }, //  0 maincpu
-	{ "lm_dl04.7h",		0x10000, 0x7dea1552, 1 }, //  1
+	{ "last_mission_dl03-8.13h",	0x08000, 0xa4f8d54b, 1 }, //  0 maincpu
+	{ "last_mission_dl04-5.7h",		0x10000, 0x7dea1552, 1 }, //  1
 
-	{ "lm_dl02.18h",	0x10000, 0xec9b5daf, 2 }, //  2 sub
+	{ "last_mission_dl02-5.18h",	0x10000, 0xec9b5daf, 2 }, //  2 sub
 
-	{ "dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
+	{ "last_mission_dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
 
-	{ "dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
+	{ "last_mission_dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
 
-	{ "dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
-	{ "dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
-	{ "dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
-	{ "dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
+	{ "last_mission_dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
+	{ "last_mission_dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
+	{ "last_mission_dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
+	{ "last_mission_dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
 
-	{ "dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
-	{ "dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
-	{ "dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
-	{ "dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
+	{ "last_mission_dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
+	{ "last_mission_dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
+	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
+	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_d100-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
-	{ "dl-14.9c",		0x00100, 0x2e55aa12, 8 }, // 14 proms
+	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
 
 STD_ROM_PICK(lastmisn)
@@ -5204,7 +5175,7 @@ STD_ROM_FN(lastmisn)
 
 struct BurnDriver BurnDrvLastmisn = {
 	"lastmisn", NULL, NULL, NULL, "1986",
-	"Last Mission (US revision 6)\0", NULL, "Data East USA", "DEC8",
+	"Last Mission (World revision 8)\0", NULL, "Data East Corporation", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, lastmisnRomInfo, lastmisnRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
@@ -5213,42 +5184,83 @@ struct BurnDriver BurnDrvLastmisn = {
 };
 
 
-// Last Mission (US revision 5)
+// Last Mission (US revision 6)
 
-static struct BurnRomInfo lastmsnoRomDesc[] = {
-	{ "lm_dl03.13h",	0x08000, 0x357f5f6b, 1 }, //  0 maincpu
-	{ "lm_dl04.7h",		0x10000, 0x7dea1552, 1 }, //  1
+static struct BurnRomInfo lastmsnu6RomDesc[] = {
+	{ "last_mission_dl03-6.13h",	0x08000, 0x47751a5e, 1 }, //  0 maincpu
+	{ "last_mission_dl04-5.7h",		0x10000, 0x7dea1552, 1 }, //  1
 
-	{ "lm_dl02.18h",	0x10000, 0xec9b5daf, 2 }, //  2 sub
+	{ "last_mission_dl02-5.18h",	0x10000, 0xec9b5daf, 2 }, //  2 sub
 
-	{ "dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
+	{ "last_mission_dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
 
-	{ "dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
+	{ "last_mission_dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
 
-	{ "dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
-	{ "dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
-	{ "dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
-	{ "dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
+	{ "last_mission_dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
+	{ "last_mission_dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
+	{ "last_mission_dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
+	{ "last_mission_dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
 
-	{ "dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
-	{ "dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
-	{ "dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
-	{ "dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
+	{ "last_mission_dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
+	{ "last_mission_dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
+	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
+	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_d100-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
-	{ "dl-14.9c",		0x00100, 0x2e55aa12, 8 }, // 14 proms
+	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
 
-STD_ROM_PICK(lastmsno)
-STD_ROM_FN(lastmsno)
+STD_ROM_PICK(lastmsnu6)
+STD_ROM_FN(lastmsnu6)
 
-struct BurnDriver BurnDrvLastmsno = {
-	"lastmisno", "lastmisn", NULL, NULL, "1986",
+struct BurnDriver BurnDrvLastmsnu6 = {
+	"lastmisnu6", "lastmisn", NULL, NULL, "1986",
+	"Last Mission (US revision 6)\0", NULL, "Data East USA", "DEC8",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
+	NULL, lastmsnu6RomInfo, lastmsnu6RomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
+	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
+	240, 256, 3, 4
+};
+
+
+// Last Mission (US revision 5)
+
+static struct BurnRomInfo lastmsnu5RomDesc[] = {
+	{ "last_mission_dl03-5.13h",	0x08000, 0x357f5f6b, 1 }, //  0 maincpu
+	{ "last_mission_dl04-5.7h",		0x10000, 0x7dea1552, 1 }, //  1
+
+	{ "last_mission_dl02-5.18h",	0x10000, 0xec9b5daf, 2 }, //  2 sub
+
+	{ "last_mission_dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
+
+	{ "last_mission_dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
+
+	{ "last_mission_dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
+	{ "last_mission_dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
+	{ "last_mission_dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
+	{ "last_mission_dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
+
+	{ "last_mission_dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
+	{ "last_mission_dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
+	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
+	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
+
+	{ "last_mission_d100-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+
+	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
+};
+
+STD_ROM_PICK(lastmsnu5)
+STD_ROM_FN(lastmsnu5)
+
+struct BurnDriver BurnDrvLastmsnu5 = {
+	"lastmisnu5", "lastmisn", NULL, NULL, "1986",
 	"Last Mission (US revision 5)\0", NULL, "Data East USA", "DEC8",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
-	NULL, lastmsnoRomInfo, lastmsnoRomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
+	NULL, lastmsnu5RomInfo, lastmsnu5RomName, NULL, NULL, LastmisnInputInfo, LastmisnDIPInfo,
 	LastmissInit, LastmissExit, LastmissFrame, LastmissDraw, LastmissScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4
 };
@@ -5257,28 +5269,28 @@ struct BurnDriver BurnDrvLastmsno = {
 // Last Mission (Japan)
 
 static struct BurnRomInfo lastmsnjRomDesc[] = {
-	{ "dl03-.13h",		0x08000, 0x4be5e7e1, 1 }, //  0 maincpu
-	{ "dl04-.7h",		0x10000, 0xf026adf9, 1 }, //  1
+	{ "dl03-.13h",					0x08000, 0x4be5e7e1, 1 }, //  0 maincpu
+	{ "dl04-.7h",					0x10000, 0xf026adf9, 1 }, //  1
 
-	{ "dl02-.18h",		0x10000, 0xd0de2b5d, 2 }, //  2 sub
+	{ "dl02-.18h",					0x10000, 0xd0de2b5d, 2 }, //  2 sub
 
-	{ "dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
+	{ "last_mission_dl05-.5h",		0x08000, 0x1a5df8c0, 3 }, //  3 audiocpu
 
-	{ "dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
+	{ "last_mission_dl01-.2a",		0x08000, 0xf3787a5d, 4 }, //  4 gfx1
 
-	{ "dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
-	{ "dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
-	{ "dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
-	{ "dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
+	{ "last_mission_dl11-.13f",		0x08000, 0x36579d3b, 5 }, //  5 gfx2
+	{ "last_mission_dl12-.9f",		0x08000, 0x2ba6737e, 5 }, //  6
+	{ "last_mission_dl13-.8f",		0x08000, 0x39a7dc93, 5 }, //  7
+	{ "last_mission_dl10-.16f",		0x08000, 0xfe275ea8, 5 }, //  8
 
-	{ "dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
-	{ "dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
-	{ "dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
-	{ "dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
+	{ "last_mission_dl09-.12k",		0x10000, 0x6a5a0c5d, 6 }, //  9 gfx3
+	{ "last_mission_dl08-.14k",		0x10000, 0x3b38cfce, 6 }, // 10
+	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
+	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "id8751h.mcu",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "id8751h.mcu",				0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
-	{ "dl-14.9c",		0x00100, 0x2e55aa12, 8 }, // 14 proms
+	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
 
 STD_ROM_PICK(lastmsnj)

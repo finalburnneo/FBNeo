@@ -5172,7 +5172,7 @@ static INT32 Macross2Draw()
 	return 0;
 }
 
-static INT32 GunnailDraw() 
+static INT32 GunnailDraw()
 {
 	DrvPaletteRecalc();
 
@@ -5209,7 +5209,7 @@ static INT32 GunnailDraw()
 	return 0;
 }
 
-static INT32 RapheroDraw() 
+static INT32 RapheroDraw()
 {
 	DrvPaletteRecalc();
 
@@ -5222,12 +5222,9 @@ static INT32 RapheroDraw()
 		case 0x10: draw_gunnail_background(DrvBgRAM1); break;
 		case 0x20: draw_gunnail_background(DrvBgRAM2); break;
 		case 0x30: draw_gunnail_background(DrvBgRAM3); break;
-	}	
+	}
 
-	draw_sprites(0, 0x100, 0x1f, 3);
-	draw_sprites(0, 0x100, 0x1f, 2);
-	draw_sprites(0, 0x100, 0x1f, 1);
-	draw_sprites(0, 0x100, 0x1f, 0);
+	draw_sprites_tdragon2(0, 0x100, 0x1f);
 
 	draw_macross_text_layer(-64, 0, 1, 0x300);
 

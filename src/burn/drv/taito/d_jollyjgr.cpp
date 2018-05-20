@@ -27,6 +27,12 @@ static UINT8 tilemap_bank;
 static UINT8 bitmap_disable;
 static UINT8 nmi_enable;
 
+static INT16 *dcbuf; // for dc offset removal, fspiderb has a huge dc offset (ay8910)
+static INT16 dc_lastin;
+static INT16 dc_lastout;
+
+static INT32 jollyjgrmode = 0;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvDips[2];
@@ -285,6 +291,9 @@ static INT32 DrvDoReset()
 	bitmap_disable = 0;
 	nmi_enable = 0;
 
+	dc_lastin = 0;
+	dc_lastout = 0;
+
 	return 0;
 }
 
@@ -309,6 +318,8 @@ static INT32 MemIndex()
 	DrvBmpRAM		= Next; Next += 0x006000;
 
 	RamEnd			= Next;
+
+	dcbuf          = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	MemEnd			= Next;
 
@@ -407,7 +418,7 @@ static INT32 DrvInit(INT32 game)
 	ZetClose();
 
 	AY8910Init(0, 1789772, 0);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, (jollyjgrmode) ? 0.20 : 0.30, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -428,6 +439,8 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 
 	BurnFree(AllMem);
+
+	jollyjgrmode = 0;
 
 	return 0;
 }
@@ -539,7 +552,7 @@ static void common_draw()
 
 	if (priority != 0 && bitmap_disable == 0 && (nBurnLayer & 1)) draw_bitmap();
 
-	if (nBurnLayer & 1)GenericTilemapDraw(0, pTransDraw, 0);
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
 	if (priority == 0 && bitmap_disable == 0 && (nBurnLayer & 4)) draw_bitmap();
 
@@ -586,6 +599,21 @@ static INT32 FspiderbDraw()
 	return 0;
 }
 
+static void dcfilter()
+{
+	for (INT32 i = 0; i < nBurnSoundLen; i++) {
+		INT16 r = dcbuf[i*2+0]; // stream is mono, ignore 'l'.
+		//INT16 l = dcbuf[i*2+1];
+
+		INT16 out = r - dc_lastin + 0.995 * dc_lastout;
+
+		dc_lastin = r;
+		dc_lastout = out;
+		pBurnSoundOut[i*2+0] = out;
+		pBurnSoundOut[i*2+1] = out;
+	}
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) {
@@ -600,6 +628,11 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		if (jollyjgrmode) {
+			ProcessJoystick(&DrvInputs[0], 0, 0,1,3,2, INPUT_4WAY);
+			ProcessJoystick(&DrvInputs[0], 1, 4,5,7,6, INPUT_4WAY);
+		}
 	}
 
 	ZetOpen(0);
@@ -608,7 +641,8 @@ static INT32 DrvFrame()
 	ZetClose();
 
 	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		AY8910Render(dcbuf, nBurnSoundLen);
+		dcfilter();
 	}
 
 	if (pBurnDraw) {
@@ -642,6 +676,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(tilemap_bank);
 		SCAN_VAR(bitmap_disable);
 		SCAN_VAR(nmi_enable);
+
+		SCAN_VAR(dc_lastin);
+		SCAN_VAR(dc_lastout);
 	}
 
 	return 0;
@@ -674,6 +711,8 @@ STD_ROM_FN(jollyjgr)
 
 static INT32 JollyjgrInit()
 {
+	jollyjgrmode = 1;
+
 	return DrvInit(0);
 }
 

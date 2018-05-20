@@ -1145,7 +1145,8 @@ static INT32 LoadRoms()
 		}
 	}
 
-	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "omega"))
+	if (!strcmp(BurnDrvGetTextA(DRV_NAME), "omega") ||
+	    !strcmp(BurnDrvGetTextA(DRV_NAME), "gigas"))
 	{
 		if (BurnLoadRom(DrvMainROM,  rom_number++, 1)) return 1;
 		if (BurnLoadRom(DrvMainROM + 0x04000,  rom_number++, 1)) return 1;
@@ -1835,31 +1836,31 @@ static struct BurnRomInfo gigasRomDesc[] = {
 	{ "8.8n",			0x04000, 0x34ea8262, BRF_ESS | BRF_PRG }, //  0 maincpu
 	{ "7.8r",			0x08000, 0x43653909, BRF_ESS | BRF_PRG }, //  1
 
-	{ "4.3k",			0x04000, 0x8ed78981, BRF_GRA }, 		  //  2 gfx1
-	{ "5.3h",			0x04000, 0x0645ec2d, BRF_GRA }, 		  //  3
-	{ "6.3g",			0x04000, 0x99e9cb27, BRF_GRA }, 		  //  4
+	{ "317-5002.key",	0x02000, 0x86a7e5f6, BRF_ESS | BRF_PRG }, //  2
 
-	{ "1.3p",			0x04000, 0xd78fae6e, BRF_GRA }, 		  //  5 gfx2
-	{ "3.3l",			0x04000, 0x37df4a4c, BRF_GRA }, 		  //  6
-	{ "2.3n",			0x04000, 0x3a46e354, BRF_GRA }, 		  //  7
+	{ "4.3k",			0x04000, 0x8ed78981, BRF_GRA }, 		  //  3 gfx1
+	{ "5.3h",			0x04000, 0x0645ec2d, BRF_GRA }, 		  //  4
+	{ "6.3g",			0x04000, 0x99e9cb27, BRF_GRA }, 		  //  5
 
-	{ "tbp24s10n.3a",	0x00100, 0xa784e71f, BRF_OPT }, 	 	  //  8 proms
-	{ "tbp24s10n.4d",	0x00100, 0x376df30c, BRF_OPT }, 		  //  9
-	{ "tbp24s10n.4a",	0x00100, 0x4edff5bd, BRF_OPT }, 		  // 10
-	{ "tbp24s10n.3d",	0x00100, 0xfe201a4e, BRF_OPT }, 		  // 11
-	{ "tbp24s10n.3b",	0x00100, 0x5796cc4a, BRF_OPT }, 	  	  // 12
-	{ "tbp24s10n.3c",	0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 13
+	{ "1.3p",			0x04000, 0xd78fae6e, BRF_GRA }, 		  //  6 gfx2
+	{ "3.3l",			0x04000, 0x37df4a4c, BRF_GRA }, 		  //  7
+	{ "2.3n",			0x04000, 0x3a46e354, BRF_GRA }, 		  //  8
 
-	{ "317-5002.key",	0x02000, 0x86a7e5f6, BRF_ESS | BRF_PRG }, // 14
+	{ "tbp24s10n.3a",	0x00100, 0xa784e71f, BRF_OPT }, 	 	  //  9 proms
+	{ "tbp24s10n.4d",	0x00100, 0x376df30c, BRF_OPT }, 		  // 10
+	{ "tbp24s10n.4a",	0x00100, 0x4edff5bd, BRF_OPT }, 		  // 11
+	{ "tbp24s10n.3d",	0x00100, 0xfe201a4e, BRF_OPT }, 		  // 12
+	{ "tbp24s10n.3b",	0x00100, 0x5796cc4a, BRF_OPT }, 	  	  // 13
+	{ "tbp24s10n.3c",	0x00100, 0x28b5ee4c, BRF_OPT }, 		  // 14
 };
 STD_ROM_PICK(gigas)
 STD_ROM_FN(gigas)
 
 struct BurnDriver BurnDrvGigas = {
 	"gigas", NULL, NULL, NULL, "1986",
-	"Gigas (MC-8123, 317-5002)\0", "Please use gigasb instead!", "SEGA", "Miscellaneous",
+	"Gigas (MC-8123, 317-5002)\0", NULL, "SEGA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, gigasRomInfo, gigasRomName, NULL, NULL, GigasInputInfo, GigasDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

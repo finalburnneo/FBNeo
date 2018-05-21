@@ -4005,7 +4005,7 @@ static INT32 MemIndex()
 	DrvBgRAM2		= Next; Next += 0x004000;
 	DrvBgRAM3		= Next; Next += 0x004000;
 	DrvTxRAM		= Next; Next += 0x001000;
-	DrvScrollRAM		= Next; Next += 0x001000;
+	DrvScrollRAM	= Next; Next += 0x001000;
 
 	DrvSprBuf		= Next; Next += 0x001000;
 	DrvSprBuf2		= Next; Next += 0x001000;
@@ -4620,7 +4620,7 @@ static void DrvPaletteRecalc()
 
 static void draw_sprites(INT32 flip, INT32 coloff, INT32 coland, INT32 priority)
 {
-	UINT16 *sprram = (Tharriermode) ? (UINT16*)DrvSprBuf3 : (UINT16*)DrvSprBuf2;
+	UINT16 *sprram = (UINT16*)DrvSprBuf3;
 
 	if (Tharriermode && TharrierShakey && nCurrentFrame & 1) {
 		sprram = (UINT16*)DrvSprBuf2;
@@ -4707,7 +4707,7 @@ static void draw_sprites_tdragon2(INT32 flip, INT32 coloff, INT32 coland)
 	for (INT32 i = 0; i < 0x100; i++)
 	{
 		INT32 spr = BITSWAP08(i, bittbl[0], bittbl[1], bittbl[2], bittbl[3], bittbl[4], bittbl[5], bittbl[6], bittbl[7]);
-		sprram = (UINT16*)DrvSprBuf2 + ((spr << 4) >> 1);
+		sprram = (UINT16*)DrvSprBuf3 + ((spr << 4) >> 1);
 
 		if (BURN_ENDIAN_SWAP_INT16(sprram[0]) & 0x0001)
 		{
@@ -5311,6 +5311,12 @@ static INT32 Bubl2000Draw()
 	return 0;
 }
 
+static void NMK16BufferSpriteRam()
+{
+	memcpy (DrvSprBuf3, DrvSprBuf2, 0x1000);
+	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000 + (Strahlmode * 0x7000), 0x1000); // Strahl @ 0xf000
+}
+
 static INT32 DrvFrame() // tharrier, manybloc
 {
 	if (DrvReset) {
@@ -5366,8 +5372,7 @@ static INT32 DrvFrame() // tharrier, manybloc
 		if (i == 240-1) SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
 		if (i == 241-1) { //sprdma
-			memcpy (DrvSprBuf3, DrvSprBuf2, 0x1000);
-			memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+			NMK16BufferSpriteRam();
 		}
 
 		BurnTimerUpdate((i + 1) * (nTotalCycles[1] / nInterleave));
@@ -5519,7 +5524,7 @@ static INT32 SsmissinFrame()
 		BurnDrvRedraw();
 	}
 
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	NMK16BufferSpriteRam();
 
 	return 0;
 }
@@ -5583,7 +5588,7 @@ static INT32 Macross2Frame()
 		BurnDrvRedraw();
 	}
 
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	NMK16BufferSpriteRam();
 
 	return 0;
 }
@@ -5652,7 +5657,7 @@ static INT32 AfegaFrame()
 		BurnDrvRedraw();
 	}
 
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	NMK16BufferSpriteRam();
 
 	return 0;
 }
@@ -5704,7 +5709,7 @@ static INT32 BjtwinFrame()
 		BurnDrvRedraw();
 	}
 
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	NMK16BufferSpriteRam();
 
 	return 0;
 }
@@ -5768,7 +5773,7 @@ static INT32 SeibuSoundFrame()
 		BurnDrvRedraw();
 	}
 
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	NMK16BufferSpriteRam();
 
 	return 0;
 }
@@ -5798,9 +5803,8 @@ static INT32 NMK004Frame()
 	SekNewFrame();
 	tlcs90NewFrame();
 
-	INT32 nSegment;
 	INT32 nInterleave = 256;
-	UINT32 nTotalCycles[2] = { nNMK004CpuSpeed / 56, 8000000 / 56 };
+	UINT32 nCyclesTotal[2] = { nNMK004CpuSpeed / 56, 8000000 / 56 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
@@ -5808,33 +5812,26 @@ static INT32 NMK004Frame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		nSegment = nTotalCycles[0] / nInterleave;
+		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 
-		nCyclesDone[0] += SekRun(nSegment);
-
-		if (i == 237) { // 241 in MAME (see i == 235 comment)
-			if (Strahlmode) {
-				memcpy (DrvSprBuf2, Drv68KRAM + 0xf000, 0x1000);
-			} else {
-				memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
-			}
+		if (i == 255) {
+			NMK16BufferSpriteRam();
 		}
 
-		if (i == 25 || i == 148) { // 25, 153 in MAME
+		if (i == 25 || i == 153) {
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 		if (i == 0) {
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 		}
-		if (i == 235) { // 240 in MAME, but causes a missing life-bar in VanDyke.  236 causes a little flicker in the life-bar, 235 = perfect.
+		if (i == 254) {
 			SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 		}
 
-		nSegment = i * (nTotalCycles[1] / nInterleave);
-		BurnTimerUpdate(nSegment);
+		BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 	}
 
-	BurnTimerEndFrame(nTotalCycles[1]);
+	BurnTimerEndFrame(nCyclesTotal[1]);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
@@ -10132,7 +10129,7 @@ static INT32 RapheroFrame()
 		BurnDrvRedraw();
 	}
 
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	NMK16BufferSpriteRam();
 
 	return 0;
 }

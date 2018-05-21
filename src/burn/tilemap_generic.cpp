@@ -389,10 +389,6 @@ void GenericTilemapSetScrollCols(INT32 which, UINT32 cols)
 		cur_map->scrolly_table = (INT32*)BurnMalloc(cols * sizeof(INT32));
 
 		memset (cur_map->scrolly_table, 0, cols * sizeof(INT32));
-
-		if (cols > cur_map->mwidth) {
-			bprintf (0, _T("GenericTilemapSetScrollCols(%d, %d) line scroll not supported at this time (cols).\n"), which, cols);
-		}
 	}
 }
 
@@ -595,8 +591,100 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 	INT32 tgroup = (priority >> 8) & 0xff;
 	priority &= 0xff;
 
-	// line / column scroll
-	if ((cur_map->scrollx_table != NULL) && (cur_map->scroll_rows > cur_map->mheight))
+	// column (less than tile size) and line scroll
+	if ((cur_map->scrolly_table != NULL) && (cur_map->scroll_cols > (cur_map->mwidth / cur_map->twidth)))
+	{
+		INT32 bitmap_width = maxx - minx;
+		INT32 scrymod = (cur_map->mheight * cur_map->theight);
+		INT32 scrxmod = (cur_map->mwidth * cur_map->twidth);
+
+		for (INT32 y = miny; y < maxy; y++)
+		{
+			for (INT32 x = 0; x < bitmap_width; x++)
+			{
+				INT32 sx;
+				if (cur_map->scrollx_table != NULL)
+					sx = (x + cur_map->scrollx_table[(y * cur_map->scroll_rows) / scrymod] - cur_map->xoffset) % scrxmod;
+				else
+					sx = (x + cur_map->scrolly - cur_map->xoffset) % scrxmod;
+
+				INT32 sy = (y + cur_map->scrolly_table[(sx * cur_map->scroll_cols) / scrxmod] - cur_map->yoffset) % scrymod;
+
+				INT32 row = sy / cur_map->theight;
+				INT32 col = sx / cur_map->twidth;
+
+				INT32 by = sy;
+				if (cur_map->flags & TMAP_FLIPY) {
+					by = (bitmap_width - cur_map->theight) - by;
+				}
+
+				INT32 bx = sx;
+				if (cur_map->flags & TMAP_FLIPX) {
+					bx = (bitmap_width - cur_map->twidth) - bx;
+				}
+
+				INT32 code, color, group, gfxnum, category = 0;
+				UINT32 flags;
+
+				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
+
+				category |= category_or;
+				
+				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
+					if (cur_map->transparent[category] == NULL) {
+						category = 0;
+					}
+				}
+
+				if (opaque == 0)
+				{
+					if (flags & TILE_SKIP) continue; // skip this tile
+
+					if (flags & TILE_GROUP_ENABLE) {
+						group = (flags >> 16) & 0xff;
+
+						if (group != tgroup) {
+						continue;
+						}
+					}
+				}
+
+				GenericTilemapGfx *gfx = &gfxdata[gfxnum];
+
+				if (gfx->gfxbase == NULL) {
+					bprintf (0,_T("GenericTilemapDraw(%d) gfx[%d] not initialized!\n"), which, gfxnum);
+					continue;
+				}
+
+				color = ((color & gfx->color_mask) << gfx->depth) + gfx->color_offset;
+				code %= gfx->code_mask;
+
+				INT32 flipx = flags & TILE_FLIPX; 
+				INT32 flipy = flags & TILE_FLIPY;
+				if (cur_map->flags & TMAP_FLIPY) flipy ^= TILE_FLIPY;
+				if (cur_map->flags & TMAP_FLIPX) flipy ^= TILE_FLIPX;
+
+				INT32 goffs = 0;
+				if (flipy) { goffs += (cur_map->theight - 1) - (sy % cur_map->theight); } else { goffs += (sy % cur_map->theight); }
+				goffs *= cur_map->twidth;
+				if (flipx) { goffs += (cur_map->twidth  - 1) - (sx % cur_map->twidth);  } else { goffs += (sx % cur_map->twidth); }
+
+				UINT8 *gfxsrc = gfx->gfxbase + (code * cur_map->twidth * cur_map->theight) + goffs;
+
+				UINT8 *trans_ptr = cur_map->transparent[category];
+
+				if (trans_ptr[*gfxsrc] == 0)
+				{
+					Bitmap[y * bitmap_width + x] = *gfxsrc + color;
+					pPrioDraw[y * bitmap_width + x] = priority;
+				}
+			}
+		}
+		
+		return;
+	}
+	// line scroll
+	else if ((cur_map->scrollx_table != NULL) && (cur_map->scroll_rows > cur_map->mheight))
 	{
 		INT32 bitmap_width = maxx - minx;
 		UINT16 *dest = Bitmap;

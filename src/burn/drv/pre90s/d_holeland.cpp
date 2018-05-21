@@ -582,16 +582,11 @@ static INT32 DrvInit(INT32 game)
 		GenericTilemapInit(0, TILEMAP_SCAN_ROWS, holeland_map_callback, 16, 16, 32, 32);
 		GenericTilemapSetGfx(0, DrvGfxROM0, 2, 16, 16, 0x40000, 0, 0x3f);
 		GenericTilemapSetOffsets(0, 0, -32);
-		GenericTilemapCategoryConfig(0, 2);
+		GenericTilemapCategoryConfig(0, 4);
 		GenericTilemapSetTransMask(0, 0, 0xff);
 		GenericTilemapSetTransMask(0, 1, 0x01);
-
-		// background layer (same thing, different transmasks)
-		GenericTilemapInit(1, TILEMAP_SCAN_ROWS, holeland_map_callback, 16, 16, 32, 32);
-		GenericTilemapSetOffsets(1, 0, -32);
-		GenericTilemapCategoryConfig(1, 2);
-		GenericTilemapSetTransMask(1, 0, 0x00);
-		GenericTilemapSetTransMask(1, 1, 0xfe);
+		GenericTilemapSetTransMask(0, 2, 0x00);
+		GenericTilemapSetTransMask(0, 3, 0xfe);
 	}
 	else
 	{
@@ -681,11 +676,11 @@ static INT32 HolelandDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0); // background layer
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1); // background layer
 
 	if (nSpriteEnable & 1) holeland_draw_sprites();
 
-	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, 0); // foreground layer
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0); // foreground layer
 
 	BurnTransferCopy(DrvPalette);
 

@@ -25,9 +25,13 @@
 // set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask)
 #define TMAP_TRANSMASK		(1 << 10)
 
+// set tilemap to use layer 0 or layer 1 (category |= 2 for layer1 |= 0 for layer 0)
+#define TMAP_DRAWLAYER0		(0)
+#define TMAP_DRAWLAYER1		(1 << 26)
+
 // select which group to use in the tilemap (group is set in the tilemap_callback)
 // pass this in the priority variable in GenericTilemapDraw.
-#define TMAP_SET_GROUP(x)	((x) <<8)
+#define TMAP_SET_GROUP(x)	((x) << 8)
 
 // Tile defines (used in tilemap_callback)
 

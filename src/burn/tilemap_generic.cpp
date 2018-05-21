@@ -589,6 +589,7 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		if (maxy >= nScreenHeight) maxy = nScreenHeight;
 	}
 
+	INT32 category_or = (priority & TMAP_DRAWLAYER1) ? 2 : 0;
 	INT32 opaque = priority & TMAP_FORCEOPAQUE;
 	INT32 opaque2 = priority & TMAP_DRAWOPAQUE;
 	INT32 tgroup = (priority >> 8) & 0xff;
@@ -632,6 +633,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 
 				cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
 
+				category |= category_or;
+				
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
 						category = 0;
@@ -737,6 +740,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 				UINT32 flags;
 			
 				cur_map->pTile(cur_map->pScan(sxx/cur_map->twidth,syy/cur_map->theight), &gfxnum, &code, &color, &flags, &category);
+
+				category |= category_or;
 
 				if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 					if (cur_map->transparent[category] == NULL) {
@@ -906,6 +911,8 @@ void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority)
 		UINT32 flags;
 
 		cur_map->pTile(cur_map->pScan(col,row), &gfxnum, &code, &color, &flags, &category);
+
+		category |= category_or;
 
 		if (category && (cur_map->flags & TMAP_TRANSMASK)) {
 			if (cur_map->transparent[category] == NULL) {

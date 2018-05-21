@@ -1,17 +1,17 @@
 // Tilemap defines
 
-// use this when in place of "which" to have this apply to all initialized tilemaps
-// works for: GenericTilemapSetEnable, GenericTilemapSetFlip, GenericTilemapSetOffsets
-#define TMAP_GLOBAL		-1
+// use in place of "which" to have this applied to all initialized tilemaps
+// works for: GenericTilemapSetEnable(), GenericTilemapSetFlip(), GenericTilemapSetOffsets()
+#define TMAP_GLOBAL		    -1
 
-// flip the tilemap on the screen horizontally (used with GenericTilemapSetFlip )
-#define TMAP_FLIPX		(1 <<  0)
+// flip the tilemap on the screen horizontally, vertically or both.
+// used with GenericTilemapSetFlip()
+#define TMAP_FLIPX		    (1 <<  0)
+#define TMAP_FLIPY		    (1 <<  1)
+#define TMAP_FLIPXY		    (TMAP_FLIPX | TMAP_FLIPY)
 
-// flip the tilemap on the screen vertically (used with GenericTilemapSetFlip )
-#define TMAP_FLIPY		(1 <<  1)
 
-// flip the tilemap on the screen vertically and horizontally (used with GenericTilemapSetFlip )
-#define TMAP_FLIPXY		(TMAP_FLIPX | TMAP_FLIPY)
+// Drawing flags, these are passed in the priority field of GenericTilemapDraw()
 
 // force the tilemap to ignore any transparency settings and any tile skipping
 #define TMAP_FORCEOPAQUE	(1 << 24)
@@ -19,10 +19,10 @@
 // force the tilemap to ignore transparency, but do not skip tiles
 #define TMAP_DRAWOPAQUE		(1 << 25)
 
-// set tilemap to use transparent color (is set when using GenericTilemapSetTransparent)
+// set tilemap to use transparent color (is set when using GenericTilemapSetTransparent())
 #define TMAP_TRANSPARENT	(1 <<  9)
 
-// set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask)
+// set tilemap to use a transparency mask (is set when using GenericTilemapSetTransMask())
 #define TMAP_TRANSMASK		(1 << 10)
 
 // set tilemap to use layer 0 or layer 1 (category |= 2 for layer1 |= 0 for layer 0)
@@ -30,29 +30,27 @@
 #define TMAP_DRAWLAYER1		(1 << 26)
 
 // select which group to use in the tilemap (group is set in the tilemap_callback)
-// pass this in the priority variable in GenericTilemapDraw.
 #define TMAP_SET_GROUP(x)	((x) << 8)
+
 
 // Tile defines (used in tilemap_callback)
 
-// flip this tile horizontally
-#define TILE_FLIPX		TMAP_FLIPX
-
-// flip this tile vertically
-#define TILE_FLIPY		TMAP_FLIPY
-
-// ignore transparency for this tile only
-#define TILE_OPAQUE		(1 <<  2)
-
-// skip drawing this tile (can be used for speedups)
-#define TILE_SKIP		(1 <<  3)
-
-// enabled in TILE_GROUP to show that the group is enabled
-#define TILE_GROUP_ENABLE	(1 <<  4)
+// flip this tile horizontally or vertically
+#define TILE_FLIPX		    TMAP_FLIPX
+#define TILE_FLIPY		    TMAP_FLIPY
 
 // set flipping (pass variable through these to set them as a pair)
 #define TILE_FLIPXY(x)		((((x) & 2) >> 1) | (((x) & 1) << 1))
 #define TILE_FLIPYX(x)		((x) & 3)
+
+// ignore transparency for this tile only
+#define TILE_OPAQUE		    (1 <<  2)
+
+// skip drawing this tile (can be used for speedups)
+#define TILE_SKIP		    (1 <<  3)
+
+// enabled in TILE_GROUP to show that the group is enabled
+#define TILE_GROUP_ENABLE	(1 <<  4)
 
 // set group, pass this as a flag
 #define TILE_GROUP(x)		(((x) << 16) | TILE_GROUP_ENABLE)
@@ -62,11 +60,11 @@
 #define tilemap_scan( xname )		INT32 xname##_map_scan(INT32 col, INT32 row)
 
 // Pass the tilemap callback variables using this macro (looks nice)
-#define TILE_SET_INFO(ttgfx, ttcode, ttcolor, ttflags)	\
-	if (*category) {}	\
-	*tile_gfx = (ttgfx);	\
-	*tile_code = (ttcode);	\
-	*tile_color = (ttcolor);	\
+#define TILE_SET_INFO(ttgfx, ttcode, ttcolor, ttflags)  \
+	if (*category) {}       \
+	*tile_gfx = (ttgfx);    \
+	*tile_code = (ttcode);  \
+	*tile_color = (ttcolor);\
 	*tile_flags = (ttflags)
 
 // The tilemap scan calculates the offset of the current tile information in the video ram
@@ -115,10 +113,8 @@ void GenericTilemapSetCategoryEntry(INT32 which, INT32 category, INT32 entry, IN
 // Set a mask for transparent colors, only works with 4bpp or less tiles (configure categories first!)
 void GenericTilemapSetTransMask(INT32 which, INT32 category, UINT16 transmask);
 
-// Set scroll x (horizontal) for the tilemap
+// Set scroll x (horizontal) or y (vertical) for the tilemap
 void GenericTilemapSetScrollX(INT32 which, INT32 scrollx);
-
-// Set scroll y (vertical) for the tile map
 void GenericTilemapSetScrollY(INT32 which, INT32 scrolly);
 
 // Set how many columns there are to scroll. Used in conjunction with TilemapSetScrollCol...
@@ -147,7 +143,7 @@ void GenericTilemapSetEnable(INT32 which, INT32 enable);
 // Actually draw the tilemap.
 // which 	- select which tilemap to draw
 // Bitmap	- pointer to the bitmap to draw the tilemap
-// priority	- this will be used to set priority data, group is data passed in this variable using TILE_GROUP(x)
+// priority	- this will be used to set priority data, and/or draw flags
 void GenericTilemapDraw(INT32 which, UINT16 *Bitmap, INT32 priority);
 
 // Dump all tilemaps to bitmap files

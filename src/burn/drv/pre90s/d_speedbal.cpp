@@ -442,27 +442,21 @@ static INT32 DrvInit(INT32 game)
 	BurnYM3812SetRoute(0, BURN_SND_YM3812_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
-	// foreground fglayer mask
+	// foreground
 	GenericTilemapInit(0,  TILEMAP_SCAN_COLS, fg_map_callback,  8,  8, 32, 32);
-	GenericTilemapCategoryConfig(0, 2);
-	GenericTilemapSetTransMask(0, 0, 0xffff);
-	GenericTilemapSetTransMask(0, 1, 0x0001);
-	// foreground bglayer mask
-	GenericTilemapInit(1,  TILEMAP_SCAN_COLS, fg_map_callback,  8,  8, 32, 32);
-	GenericTilemapCategoryConfig(1, 2);
-	GenericTilemapSetTransMask(1, 0, 0x0001);
-	GenericTilemapSetTransMask(1, 1, 0x0001);
+	GenericTilemapCategoryConfig(0, 4);
+	GenericTilemapSetTransMask(0, 0, 0xffff); // fg
+	GenericTilemapSetTransMask(0, 1, 0x0001); // fg
+	GenericTilemapSetTransMask(0, 2, 0x0001); // bg
+	GenericTilemapSetTransMask(0, 3, 0x0001); // bg
 
-	// background fglayer mask
-	GenericTilemapInit(2,  TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 16, 16);
-	GenericTilemapCategoryConfig(2, 2);
-	GenericTilemapSetTransMask(2, 0, 0xffff);
-	GenericTilemapSetTransMask(2, 1, 0x00f7);
-	// background bglayer mask
-	GenericTilemapInit(3,  TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 16, 16);
-	GenericTilemapCategoryConfig(3, 2);
-	GenericTilemapSetTransMask(3, 0, 0x0000);
-	GenericTilemapSetTransMask(3, 1, 0x0000);
+	// background
+	GenericTilemapInit(1,  TILEMAP_SCAN_COLS, bg_map_callback, 16, 16, 16, 16);
+	GenericTilemapCategoryConfig(1, 4);
+	GenericTilemapSetTransMask(1, 0, 0xffff); // fg
+	GenericTilemapSetTransMask(1, 1, 0x00f7); // fg
+	GenericTilemapSetTransMask(1, 2, 0x0000); // bg
+	GenericTilemapSetTransMask(1, 3, 0x0000); // bg
 
 	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -16);
 
@@ -531,11 +525,11 @@ static INT32 DrvDraw()
 
 	BurnTransferClear();
 
-	if (nBurnLayer & 1) GenericTilemapDraw(3, pTransDraw, 0); // bg bg_mask
-	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0); // fg bg_mask
+	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, TMAP_DRAWLAYER1); // bg bg_mask
+	if (nBurnLayer & 2) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER1); // fg bg_mask
 	if (nSpriteEnable & 1) draw_sprites();
-	if (nBurnLayer & 4) GenericTilemapDraw(2, pTransDraw, 0); // bg fg_mask
-	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0); // fg fg_mask
+	if (nBurnLayer & 4) GenericTilemapDraw(1, pTransDraw, TMAP_DRAWLAYER0); // bg fg_mask
+	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, TMAP_DRAWLAYER0); // fg fg_mask
 
 	BurnTransferCopy(DrvPalette);
 

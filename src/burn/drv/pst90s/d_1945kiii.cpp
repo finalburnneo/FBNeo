@@ -478,14 +478,15 @@ static void DrawSprites()
 		INT32 sy	 =  BURN_ENDIAN_SWAP_INT16(RamSpr0[i]) & 0xff;
 		INT32 code	 = (BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) & 0x7ffe) >> 1;
 		sx 		|= (BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) & 0x0001) << 8;
+		INT32 color = BURN_ENDIAN_SWAP_INT16(RamSpr1[i]) >> 15;
 
 		if (sx >= 336) sx -= 512;
 		if (sy >= 240) sy -= 256;
 			
 		if (sx >= 0 && sx <= 304 && sy > 0 && sy <= 208) {
-			Render16x16Tile_Mask(pTransDraw, code, sx, sy, 0, 8, 0, 0x100, RomSpr);
+			Render16x16Tile_Mask(pTransDraw, code, sx, sy, color, 8, 0, 0x100, RomSpr);
 		} else if (sx >= -16 && sx < nScreenWidth && sy >= -16 && sy < nScreenHeight) {
-			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, 0, 8, 0, 0x100, RomSpr);
+			Render16x16Tile_Mask_Clip(pTransDraw, code, sx, sy, color, 8, 0, 0x100, RomSpr);
 		}
 	}
 }

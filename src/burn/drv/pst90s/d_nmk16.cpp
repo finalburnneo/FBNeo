@@ -5313,8 +5313,12 @@ static INT32 Bubl2000Draw()
 
 static void NMK16BufferSpriteRam()
 {
-	memcpy (DrvSprBuf3, DrvSprBuf2, 0x1000);
-	memcpy (DrvSprBuf2, Drv68KRAM + 0x8000 + (Strahlmode * 0x7000), 0x1000); // Strahl @ 0xf000
+	if (Strahlmode) {
+		memcpy (DrvSprBuf3, Drv68KRAM + 0xf000, 0x1000);
+	} else {
+		memcpy (DrvSprBuf3, DrvSprBuf2, 0x1000);
+		memcpy (DrvSprBuf2, Drv68KRAM + 0x8000, 0x1000);
+	}
 }
 
 static INT32 DrvFrame() // tharrier, manybloc

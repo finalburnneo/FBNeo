@@ -2002,7 +2002,7 @@ struct BurnDriver BurnDrvSyvalionu = {
 	"syvalionu", "syvalion", NULL, NULL, "1988",
 	"Syvalion (US, PS2 Taito Legends 2)\0", NULL, "Taito America Corporation", "Taito H System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_HORSHOOT, 0,
 	NULL, syvalionuRomInfo, syvalionuRomName, NULL, NULL, SyvalionInputInfo, SyvalionDIPInfo,
 	SyvalionInit, DrvExit, DrvFrame, SyvalionDraw, DrvScan, NULL, 0x210,
 	512, 400, 4, 3

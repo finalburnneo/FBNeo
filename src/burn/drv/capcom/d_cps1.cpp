@@ -14539,6 +14539,7 @@ static INT32 Wonder3bInit()
 static INT32 ChikiInit()
 {
 	bCps1UpdateAtVblank = 1;
+	nCpsNumScanlines = 262;
 
 	return DrvInit();
 }

@@ -4468,6 +4468,25 @@ struct BurnDriver BurnDrvmd_battlyui = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Battle Golfer Yui (Hack, English)
+// Source : http://www.romhacking.net/translations/3364/
+static struct BurnRomInfo md_battlyuieRomDesc[] = {
+	{ "battle golfer yui (english translation).md", 0x100000, 0x2d7e868c, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_battlyuie)
+STD_ROM_FN(md_battlyuie)
+
+struct BurnDriver BurnDrvmd_battlyuie = {
+	"md_battlyuie", "md_battlyui", NULL, NULL, "2017",
+	"Battle Golfer Yui (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_battlyuieRomInfo, md_battlyuieRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Battle Mania Daiginjou (Jpn, Kor)
 static struct BurnRomInfo md_btlmanidRomDesc[] = {
 	{ "battle mania daiginjou (jpn, kor).bin", 0x100000, 0x312fa0f2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -20224,6 +20243,25 @@ struct BurnDriver BurnDrvmd_nadia = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Fushigi no Umi no Nadia (Hack, English)
+// Source : http://www.romhacking.net/translations/1630/
+static struct BurnRomInfo md_nadiaeRomDesc[] = {
+	{ "fushigi no umi no nadia (english translation).md", 0x180000, 0x8dec9c35, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_nadiae)
+STD_ROM_FN(md_nadiae)
+
+struct BurnDriver BurnDrvmd_nadiae = {
+	"md_nadiae", "md_nadia", NULL, NULL, "2011",
+	"Fushigi no Umi no Nadia (Hack, English)\0", NULL, "Namcot", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_nadiaeRomInfo, md_nadiaeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Nakajima Satoru Kanshuu F1 Grand Prix (Jpn)
 static struct BurnRomInfo md_nakaf1gpRomDesc[] = {
 	{ "nakajima satoru kanshuu f1 grand prix (jpn).bin", 0x100000, 0x93be47cf, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -24969,6 +25007,25 @@ struct BurnDriver BurnDrvmd_psyoblad = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Psy-O-Blade (Hack, English)
+// Source : http://www.romhacking.net/translations/2308/
+static struct BurnRomInfo md_psyobladeRomDesc[] = {
+	{ "psy-o-blade (english translation).md", 0x0bfb20, 0x427f95cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_psyoblade)
+STD_ROM_FN(md_psyoblade)
+
+struct BurnDriver BurnDrvmd_psyoblade = {
+	"md_psyoblade", "md_psyoblad", NULL, NULL, "2015",
+	"Psy-O-Blade (Hack, English)\0", NULL, "Sigma", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_psyobladeRomInfo, md_psyobladeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Puggsy (Euro)
 static struct BurnRomInfo md_puggsyRomDesc[] = {
 	{ "puggsy (euro).bin", 0x100000, 0x5d5c9ade, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -25866,6 +25923,25 @@ struct BurnDriver BurnDrvmd_renthero = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_rentheroRomInfo, md_rentheroRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Rent a Hero (Hack, English)
+// Source : http://www.romhacking.net/translations/2309/
+static struct BurnRomInfo md_rentheroeRomDesc[] = {
+	{ "rent a hero (english translation).bin", 0x1368a0, 0x820dac90, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rentheroe)
+STD_ROM_FN(md_rentheroe)
+
+struct BurnDriver BurnDrvmd_rentheroe = {
+	"md_rentheroe", "md_renthero", NULL, NULL, "2015",
+	"Rent a Hero (Hack, English)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_rentheroeRomInfo, md_rentheroeRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -26982,6 +27058,25 @@ struct BurnDriver BurnDrvmd_sailormn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sailormnRomInfo, md_sailormnRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bishoujo Senshi Sailor Moon (Hack, English)
+// Source : https://www.romhacking.net/translations/3544/
+static struct BurnRomInfo md_sailormneRomDesc[] = {
+	{ "bishoujo senshi sailor moon (english translation).md", 0x400000, 0x48778add, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sailormne)
+STD_ROM_FN(md_sailormne)
+
+struct BurnDriver BurnDrvmd_sailormne = {
+	"md_sailormne", "md_sailormn", NULL, NULL, "2018",
+	"Bishoujo Senshi Sailor Moon (Hack, English)\0", NULL, "Ma-Ba", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sailormneRomInfo, md_sailormneRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -30083,6 +30178,25 @@ struct BurnDriver BurnDrvmd_starcrus = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Star Cruiser (Hack, English)
+// Source : https://www.romhacking.net/translations/2776/
+static struct BurnRomInfo md_starcruseRomDesc[] = {
+	{ "star cruiser (english translation).md", 0x0C0000, 0x53d8b33e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_starcruse)
+STD_ROM_FN(md_starcruse)
+
+struct BurnDriver BurnDrvmd_starcruse = {
+	"md_starcruse", "md_starcrus", NULL, NULL, "2016",
+	"Star Cruiser (Hack, English)\0", NULL, "NCS", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_starcruseRomInfo, md_starcruseRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Star Trek - Deep Space Nine - Crossroads of Time (Euro)
 static struct BurnRomInfo md_stds9RomDesc[] = {
 	{ "star trek - deep space nine - crossroads of time (euro).bin", 0x100000, 0xd4b122f9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -30781,6 +30895,25 @@ struct BurnDriver BurnDrvmd_sor2usw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_sor2uswRomInfo, md_sor2uswRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 Puyo Wars (Hack)
+// Source : https://www.romhacking.net/hacks/3063/
+static struct BurnRomInfo md_sor2upwRomDesc[] = {
+	{ "sor2u_pw.md", 0x3ce448, 0xf618ec40, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2upw)
+STD_ROM_FN(md_sor2upw)
+
+struct BurnDriver BurnDrvmd_sor2upw = {
+	"md_sor2upw", "md_sor2", NULL, NULL, "2014",
+	"Streets of Rage 2 Puyo Wars (Hack)\0", NULL, "Candra Software", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_sor2upwRomInfo, md_sor2upwRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -35301,6 +35434,25 @@ struct BurnDriver BurnDrvmd_vixen357 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
 	MegadriveGetZipName, md_vixen357RomInfo, md_vixen357RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Vixen 357 (Hack, English)
+// Source : https://www.romhacking.net/translations/2738/
+static struct BurnRomInfo md_vixen357eRomDesc[] = {
+	{ "vixen 357 (english translation).bin", 0x140000, 0xf8ce2e43, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_vixen357e)
+STD_ROM_FN(md_vixen357e)
+
+struct BurnDriver BurnDrvmd_vixen357e = {
+	"md_vixen357e", "md_vixen357", NULL, NULL, "2016",
+	"Vixen 357 (Hack, English)\0", NULL, "NCS", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_vixen357eRomInfo, md_vixen357eRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -42790,4 +42942,22 @@ struct BurnDriver BurnDrvmd_euro2004 = {
 	MegadriveGetZipName, md_euro2004RomInfo, md_euro2004RomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Star Chaser
+static struct BurnRomInfo md_starchaserRomDesc[] = {
+	{ "starchaser-20140705.bin", 0x00b240, 0xfadd25a3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_starchaser)
+STD_ROM_FN(md_starchaser)
+
+struct BurnDriver BurnDrvmd_starchaser = {
+	"md_starchaser", NULL, NULL, NULL, "2014",
+	"Star Chaser\0", NULL, "Sik", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER, GBF_MISC, 0,
+	MegadriveGetZipName, md_starchaserRomInfo, md_starchaserRomName, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+ 	MegadriveInit, MegadriveExit, MegadriveFrame, NULL, MegadriveScan,
+ 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };

@@ -14536,6 +14536,13 @@ static INT32 Wonder3bInit()
 	return nRet;
 }
 
+static INT32 ChikiInit()
+{
+	bCps1UpdateAtVblank = 1;
+
+	return DrvInit();
+}
+
 static INT32 CaptcommbInit()
 {
 	CpsLayer1XOffs = -8;
@@ -14545,7 +14552,7 @@ static INT32 CaptcommbInit()
 	Cps1DetectEndSpriteList8000 = 1;
 	Cps1GfxLoadCallbackFunction = CpsLoadTilesCaptcommb;
 	
-	return DrvInit();
+	return ChikiInit();
 }
 
 static INT32 Captcommb2Init()
@@ -14559,7 +14566,7 @@ static INT32 Captcommb2Init()
 	CpsRWSoundCommandCallbackFunction = Sf2mdtSoundCommand;
 	CpsMemScanCallbackFunction = Sf2mdtScanSound;
 	
-	return DrvInit();
+	return ChikiInit();
 }
 
 UINT8 __fastcall CawingblInputReadByte(UINT32 a)
@@ -18254,13 +18261,6 @@ static INT32 WofbInit()
 	return nRet;
 }
 
-static INT32 ChikiInit()
-{
-	bCps1UpdateAtVblank = 1;
-
-	return DrvInit();
-}
-
 // Driver Definitions
 
 struct BurnDriver BurnDrvCps1941 = {
@@ -18379,7 +18379,7 @@ struct BurnDriver BurnDrvCpsCaptcomm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptcommRomInfo, CaptcommRomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -18389,7 +18389,7 @@ struct BurnDriver BurnDrvCpsCaptcommr1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommr1RomInfo, Captcommr1RomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -18399,7 +18399,7 @@ struct BurnDriver BurnDrvCpsCaptcommu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptcommuRomInfo, CaptcommuRomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -18409,7 +18409,7 @@ struct BurnDriver BurnDrvCpsCaptcommj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, CaptcommjRomInfo, CaptcommjRomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -18419,7 +18419,7 @@ struct BurnDriver BurnDrvCpsCaptcommjr1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Captcommjr1RomInfo, Captcommjr1RomName, NULL, NULL, CaptcommInputInfo, CaptcommDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

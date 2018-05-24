@@ -191,6 +191,7 @@ extern UINT8 fFakeDip;
 extern INT32 nIrqLine50, nIrqLine52;								// The scanlines at which the interrupts are triggered
 extern INT32 nCpsNumScanlines;
 extern INT32 Cps1VBlankIRQLine;
+extern INT32 bCps1UpdateAtVblank;
 extern INT32 CpsDrawSpritesInReverse;
 INT32 CpsRunInit();
 INT32 CpsRunExit();

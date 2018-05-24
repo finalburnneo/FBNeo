@@ -18251,7 +18251,14 @@ static INT32 WofbInit()
 	// scroll3 ram offset
 	*((UINT16*)(CpsReg + 0x06)) = BURN_ENDIAN_SWAP_INT16(0x9100);
 	
-	return nRet;	
+	return nRet;
+}
+
+static INT32 ChikiInit()
+{
+	bCps1UpdateAtVblank = 1;
+
+	return DrvInit();
 }
 
 // Driver Definitions
@@ -19342,7 +19349,7 @@ struct BurnDriver BurnDrvCpsMtwins = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, MtwinsRomInfo, MtwinsRomName, NULL, NULL, MtwinsInputInfo, MtwinsDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 
@@ -19352,7 +19359,7 @@ struct BurnDriver BurnDrvCpsChikij = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, ChikijRomInfo, ChikijRomName, NULL, NULL, MtwinsInputInfo, MtwinsDIPInfo,
-	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	ChikiInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };
 

@@ -2112,6 +2112,7 @@ INT32 CpsExit()
 	nCPS68KClockspeed = 0;
 	Cps = 0;
 	nCpsNumScanlines = 259;
+	bCps1UpdateAtVblank = 0;
 
 	return 0;
 }

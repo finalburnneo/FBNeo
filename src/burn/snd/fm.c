@@ -2618,8 +2618,8 @@ typedef YM2610 YM2608;
 
 
 /**** YM2610 ADPCM defines ****/
-#define ADPCM_SHIFT    (16)      /* frequency step rate   */
-#define ADPCMA_ADDRESS_SHIFT 8   /* adpcm A address shift */
+static const unsigned ADPCM_SHIFT          = 16;  /* frequency step rate   */
+static const unsigned ADPCMA_ADDRESS_SHIFT = 8;   /* adpcm A address shift */
 
 static UINT8 *pcmbufA;
 static UINT32 pcmsizeA;
@@ -2628,7 +2628,7 @@ static UINT32 pcmsizeA;
 /* Algorithm and tables verified on real YM2608 and YM2610 */
 
 /* usual ADPCM table (16 * 1.1^N) */
-static int steps[49] =
+static const int steps[49] =
 {
 	 16,  17,   19,   21,   23,   25,   28,
 	 31,  34,   37,   41,   45,   50,   55,
@@ -2640,7 +2640,7 @@ static int steps[49] =
 };
 
 /* different from the usual ADPCM table */
-static int step_inc[8] = { -1*16, -1*16, -1*16, -1*16, 2*16, 5*16, 7*16, 9*16 };
+static int const step_inc[8] = { -1*16, -1*16, -1*16, -1*16, 2*16, 5*16, 7*16, 9*16 };
 
 /* speedup purposes only */
 static int jedi_table[ 49*16 ];
@@ -2704,7 +2704,7 @@ INLINE void ADPCMA_calc_chan( YM2610 *F2610, ADPCM_CH *ch )
 			ch->adpcm_acc += jedi_table[ch->adpcm_step + data];
 
 			/* extend 12-bit signed int */
-			if (ch->adpcm_acc & 0x800)
+			if (ch->adpcm_acc & ~0x7ff)
 				ch->adpcm_acc |= ~0xfff;
 			else
 				ch->adpcm_acc &= 0xfff;
@@ -2739,7 +2739,7 @@ static void FM_ADPCMAWrite(YM2610 *F2610,int r,int v)
 				if( (v>>c)&1 )
 				{
 					/**** start adpcm ****/
-					adpcm[c].step      = (UINT32)((float)(1<<ADPCM_SHIFT)*((float)F2610->OPN.ST.freqbase)/3.0);
+					adpcm[c].step      = (UINT32)((float)(1<<ADPCM_SHIFT)*((float)F2610->OPN.ST.freqbase)/3.0f);
 					adpcm[c].now_addr  = adpcm[c].start<<1;
 					adpcm[c].now_step  = 0;
 					adpcm[c].adpcm_acc = 0;
@@ -4011,7 +4011,7 @@ void YM2610ResetChip(int num)
 	for(i = 0x26 ; i >= 0x20 ; i-- ) OPNWriteReg(OPN,i,0);
 	/**** ADPCM work initial ****/
 	for( i = 0; i < 6 ; i++ ){
-		F2610->adpcm[i].step      = (UINT32)((float)(1<<ADPCM_SHIFT)*((float)F2610->OPN.ST.freqbase)/3.0);
+		F2610->adpcm[i].step      = (UINT32)((float)(1<<ADPCM_SHIFT)*((float)F2610->OPN.ST.freqbase)/3.0f);
 		F2610->adpcm[i].now_addr  = 0;
 		F2610->adpcm[i].now_step  = 0;
 		F2610->adpcm[i].start     = 0;

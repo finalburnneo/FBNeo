@@ -835,12 +835,12 @@ static INT32 MemIndex()
 	Taito68KRom1			= Next; Next += 0x080000;
 	TaitoZ80Rom1			= Next; Next += 0x010000;
 
-	TaitoChars			= Next; Next += 0x800000;
+	TaitoChars			    = Next; Next += 0x800000;
 
 	TaitoYM2610BRom			= Next; Next += 0x080000;
 	TaitoYM2610ARom			= Next; Next += 0x080000;
 
-	transparent_tile_lut		= Next; Next += 0x800000 / 0x100;
+	transparent_tile_lut	= Next; Next += 0x800000 / 0x100;
 
 	TaitoPalette			= (UINT32*)Next; Next += 0x0220 * sizeof(UINT32);
 
@@ -856,11 +856,11 @@ static INT32 MemIndex()
 	TaitoVideoRam			= Next; Next += 0x021000;
 
 	TaitoZ80Ram1			= Next; Next += 0x002000;
-	TaitoCharsB			= Next; Next += 0x004000;
+	TaitoCharsB			    = Next; Next += 0x004000;
 
-	TaitoRamEnd			= Next;
+	TaitoRamEnd			    = Next;
 
-	TaitoMemEnd			= Next;
+	TaitoMemEnd			    = Next;
 
 	return 0;
 }
@@ -1761,23 +1761,16 @@ static INT32 DrvFrame()
 
 	SekOpen(0);
 
-	INT32 SekSpeed = (INT32)((INT64)12000000 * nBurnCPUSpeedAdjust / 0x100);
-	INT32 ZetSpeed = (INT32)((INT64)4000000 * nBurnCPUSpeedAdjust / 0x100);
-
 	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[2] = { SekSpeed / 60, ZetSpeed / 60 };
+	INT32 nCyclesTotal[2] = { 12000000 / 60, 4000000 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
-	INT32 nNext[2] = { 0, 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		nNext[0] += nCyclesTotal[0] / nInterleave;
-		nCyclesDone[0] += SekRun(nNext[0] - nCyclesDone[0]);
+		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 		if (i == (nInterleave / 1) - 1) SekSetIRQLine(irq_config, CPU_IRQSTATUS_AUTO);
-		nNext[1] += nCyclesTotal[1] / nInterleave;
 
 		ZetOpen(0);
-		BurnTimerUpdate(nNext[1]);
-		nCyclesDone[1] += nNext[1];
+		BurnTimerUpdate((i + 1) * nCyclesTotal[1] / nInterleave);
 		ZetClose();
 	}
 

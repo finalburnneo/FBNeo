@@ -1166,7 +1166,7 @@ static void rd2_cop_write(UINT16 offset, UINT8 data)
 	if ((offset & 1) == 0) return; // necessary??
 
 	UINT16 *copram = (UINT16*)DrvMainRAM;
-	UINT16 dataword = copram[(offset & 0x7fe)/2];
+	UINT16 dataword = BURN_ENDIAN_SWAP_INT16(copram[(offset & 0x7fe)/2]);
 
 	switch (offset & 0x7fe)
 	{
@@ -1333,7 +1333,7 @@ static void rd2_cop_write(UINT16 offset, UINT8 data)
 static UINT8 rd2_cop_read(UINT16 offset)
 {
 	UINT16 *copram = (UINT16*)DrvMainRAM;
-	UINT16 ret = copram[offset/2];
+	UINT16 ret = BURN_ENDIAN_SWAP_INT16(copram[offset/2]);
 
 	if ((offset & 0xfffe0) == 0x00700) {
 		return seibu_main_word_read((offset & 0x1f)/2);
@@ -1404,7 +1404,7 @@ static UINT8 rd2_cop_read(UINT16 offset)
 
 static inline void palette_update_entry(INT32 entry)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + entry));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + entry)));
 
 	UINT8 r = (p >> 0) & 0x1f;
 	UINT8 g = (p >> 5) & 0x1f;
@@ -1475,7 +1475,7 @@ static void __fastcall raidendx_main_write(UINT32 address, UINT8 data)
 		case 0x0470:
 		case 0x0471: {
 			DrvMainRAM[address] = data;
-			cop_bank = *((UINT16*)(DrvMainRAM + 0x470));
+			cop_bank = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMainRAM + 0x470)));
 			if (address & 1) {
 				raidendx_bankswitch(cop_bank);
 			}
@@ -1580,7 +1580,7 @@ static void palettedma()
 {
 	for (INT32 i = 0; i < 0x1000 / 2; i++)
 	{
-		UINT16 palval = *((UINT16*)(DrvMainRAM + 0x1f000 + i * 2));
+		UINT16 palval = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvMainRAM + 0x1f000 + i * 2)));
 
 		UINT8 r = palval & 0x1f;
 		UINT8 g = (palval >> 5) & 0x1f;
@@ -1602,7 +1602,7 @@ static void __fastcall nzeroteam_main_write(UINT32 address, UINT8 data)
 	}
 
 	UINT16 *copram = (UINT16*)DrvMainRAM;
-	UINT16 dataword = copram[(address & 0x7fe)/2];
+	UINT16 dataword = BURN_ENDIAN_SWAP_INT16(copram[(address & 0x7fe)/2]);
 
 	if (address >= 0x600 && address <= 0x64f) {
 		raiden2_crtc_write(address & 0xff, data);
@@ -1774,7 +1774,7 @@ static void __fastcall r2dx_main_write(UINT32 address, UINT8 data)
 	}
 
 	UINT16 *copram = (UINT16*)DrvMainRAM;
-	UINT16 dataword = copram[(address & 0x7fe)/2];
+	UINT16 dataword = BURN_ENDIAN_SWAP_INT16(copram[(address & 0x7fe)/2]);
 
 	if ((address & 1) == 0 && address < 0x700) return; // necessary
 
@@ -3035,7 +3035,7 @@ static void draw_layer(UINT8 *ram, INT32 scr, UINT32 color_base, INT32 bank)
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 attr = vram[offs];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = attr >> 12;
 		INT32 code = (attr & 0xfff) + (bank << 12);
 
@@ -3084,7 +3084,7 @@ static void draw_txt_layer()
 
 		if (sy >= nScreenHeight || sx >= nScreenWidth) continue;
 
-		INT32 attr = vram[offs];
+		INT32 attr = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = attr >> 12;
 		INT32 code = (attr & 0xfff) + (tx_bank * 0x1000);
 
@@ -3163,9 +3163,9 @@ static void draw_sprites(INT32 priority)
 	UINT16 *source = sprites + sprites_cur_start/2;
 
 	while( source >= sprites ){
-		INT32 tile_number = source[1];
-		INT32 sx = source[2];
-		INT32 sy = source[3];
+		INT32 tile_number = BURN_ENDIAN_SWAP_INT16(source[1]);
+		INT32 sx = BURN_ENDIAN_SWAP_INT16(source[2]);
+		INT32 sy = BURN_ENDIAN_SWAP_INT16(source[3]);
 		INT32 colr;
 		INT32 xtiles, ytiles;
 		INT32 ytlim, xtlim;
@@ -3173,15 +3173,15 @@ static void draw_sprites(INT32 priority)
 		INT32 xstep, ystep;
 		INT32 pri;
 
-		ytlim = (source[0] >> 12) & 0x7;
-		xtlim = (source[0] >> 8 ) & 0x7;
+		ytlim = (BURN_ENDIAN_SWAP_INT16(source[0]) >> 12) & 0x7;
+		xtlim = (BURN_ENDIAN_SWAP_INT16(source[0]) >> 8 ) & 0x7;
 
-		xflip = (source[0] >> 15) & 0x1;
-		yflip = (source[0] >> 11) & 0x1;
+		xflip = (BURN_ENDIAN_SWAP_INT16(source[0]) >> 15) & 0x1;
+		yflip = (BURN_ENDIAN_SWAP_INT16(source[0]) >> 11) & 0x1;
 
-		colr = source[0] & 0x3f;
+		colr = BURN_ENDIAN_SWAP_INT16(source[0]) & 0x3f;
 
-		pri = (source[0] >> 6) & 3;
+		pri = (BURN_ENDIAN_SWAP_INT16(source[0]) >> 6) & 3;
 
 		if (pri != priority) {
 			source -= 4;

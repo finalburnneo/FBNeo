@@ -188,7 +188,7 @@ static void __fastcall ppmast93_sound_write_port(UINT16 port, UINT8 data)
 		return;
 
 		case 0x0002:
-			DACWrite(0, data);
+			DACSignedWrite(0, data);
 		return;
 	}
 }
@@ -342,6 +342,7 @@ static INT32 DrvExit()
 	ZetExit();
 
 	BurnYM2413Exit();
+	DACExit();
 
 	BurnFree(AllMem);
 
@@ -417,7 +418,7 @@ static INT32 DrvFrame()
 	{
 		ZetOpen(0);
 		nCyclesDone[0] += ZetRun(nCyclesTotal[0] / nInterleave);
-		if (i == 255) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == (nInterleave-1)) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		ZetOpen(1);

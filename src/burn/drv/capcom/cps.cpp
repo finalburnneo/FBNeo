@@ -1990,10 +1990,10 @@ INT32 CpsInit()
 	INT32 nMemLen, i;
 	
 	if (Cps == 1) {
-		BurnSetRefreshRate(59.61);
+		BurnSetRefreshRate(59.63);
 	} else {
 		if (Cps == 2) {
-			BurnSetRefreshRate(59.629403);
+			BurnSetRefreshRate(59.63);
 		}
 	}
 
@@ -2111,8 +2111,7 @@ INT32 CpsExit()
 
 	nCPS68KClockspeed = 0;
 	Cps = 0;
-	nCpsNumScanlines = 259;
-	bCps1UpdateAtVblank = 0;
+	nCpsNumScanlines = 262;
 
 	return 0;
 }

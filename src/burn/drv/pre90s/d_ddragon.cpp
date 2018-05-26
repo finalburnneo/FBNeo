@@ -77,6 +77,9 @@ static INT32 DrvVidHardwareType;
 #define DD_GAME_DARKTOWR		1
 static INT32 DrvGameType;
 
+static UINT8 DrvSubStatus = 0;
+static UINT8 DrvLastSubPort = 0;
+
 static struct BurnInputInfo DrvInputList[] =
 {
 	{"P1 Coin"           , BIT_DIGITAL  , DrvInputPort1 + 6, "p1 coin"   },
@@ -1038,14 +1041,50 @@ static INT32 DrvDoReset()
 	DrvADPCMEnd[1] = 0;
 	DrvADPCMData[0] = -1;
 	DrvADPCMData[1] = -1;
-	
+
+	DrvSubStatus = 0;
+	DrvLastSubPort = 0;
+
 	return 0;
+}
+
+static void DrvDdragonSubNMI()
+{
+	if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
+		HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
+	}
+
+	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
+		HD6309Close();
+		HD6309Open(1);
+		HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
+		HD6309Close();
+		HD6309Open(0);
+	}
+
+	if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
+		M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
+	}
+
+	if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
+		ZetOpen(0);
+		ZetSetIRQLine(0x20, CPU_IRQSTATUS_ACK);
+		ZetClose();
+	}
 }
 
 UINT8 DrvDdragonHD6309ReadByte(UINT16 Address)
 {
-	if (Address >= 0x2000 && Address <= 0x2fff) {
-		if (Address == 0x2049 && HD6309GetPC(0) == 0x6261 && DrvSpriteRam[0x0049] == 0x1f) return 0x01;
+	if (Address >= 0x3810 && Address <= 0x3bff) {
+		return 0; // ddragon2 unmapped reads (lots of them when playing)
+	}
+
+	if (Address >= 0x2000 && Address <= 0x27ff) { // 0x2000 - 0x21ff (mirror bits: 0x600) = main<->sub comm. ram
+		if (!DrvSubStatus) return 0xff;
+		return DrvSpriteRam[Address & 0x1ff];
+	}
+
+	if (Address >= 0x2800 && Address <= 0x2fff) {
 		return DrvSpriteRam[Address - 0x2000];
 	}
 	
@@ -1066,7 +1105,7 @@ UINT8 DrvDdragonHD6309ReadByte(UINT16 Address)
 		}
 		
 		case 0x3802: {
-			return DrvInput[2] | ((DrvVBlank) ? 0x08 : 0) | (DrvSubCPUBusy ? 0x10 : 0);
+			return (DrvInput[2] & ~0x18) | ((DrvVBlank) ? 0x08 : 0) | (DrvSubStatus ? 0 : 0x10);
 		}
 		
 		case 0x3803: {
@@ -1076,11 +1115,33 @@ UINT8 DrvDdragonHD6309ReadByte(UINT16 Address)
 		case 0x3804: {
 			return DrvDip[1];
 		}
-		
-		case 0x380a:
-		case 0x380b: {
-			// ???
+
+		case 0x3807:
+		case 0x3808:
+		case 0x3809:
+		case 0x380a: {
+			// ??? ddragon2 unmapped reads
 			return 0;
+		}
+
+		case 0x380b: {
+			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
+			return 0xff;
+		}
+		
+		case 0x380c: {
+			HD6309SetIRQLine(HD6309_FIRQ_LINE, CPU_IRQSTATUS_NONE);
+			return 0xff;
+		}
+
+		case 0x380d: {
+			HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_NONE);
+			return 0xff;
+		}
+		
+		case 0x380f: {
+			DrvDdragonSubNMI();
+			return 0xff;
 		}
 	}
 	
@@ -1091,6 +1152,13 @@ UINT8 DrvDdragonHD6309ReadByte(UINT16 Address)
 
 void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 {
+	if (Address >= 0x2000 && Address <= 0x27ff) { // 0x2000 - 0x21ff (mirror bits: 0x600) = main<->sub comm. ram
+		if (!DrvSubStatus) return;
+		DrvSpriteRam[Address & 0x1ff] = Data;
+	}
+	if (Address >= 0x2800 && Address <= 0x2fff) {
+		DrvSpriteRam[Address - 0x2000] = Data;
+	}
 	if (DrvGameType == DD_GAME_DARKTOWR && Address >= 0x4000 && Address <= 0x7fff) {
 		UINT32 Offset = Address - 0x4000;
 		
@@ -1102,41 +1170,41 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 	
 	switch (Address) {
 		case 0x3808: {
+			static UINT8 lastdata = 0;
 			UINT8 DrvOldRomBank = DrvRomBank;
 			DrvRomBank = (Data & 0xe0) >> 5;
 			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 			
 			DrvScrollXHi = (Data & 0x01) << 8;
 			DrvScrollYHi = (Data & 0x02) << 7;
-			
-			if (Data & 0x10) {
-				DrvSubCPUBusy = 0;
-			} else {
-				if (DrvSubCPUBusy == 0) {
-					if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
-						HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
-					}
-				
-					if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
-						HD6309Close();
-						HD6309Open(1);
-						HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
-						HD6309Close();
-						HD6309Open(0);
-					}
-				
-					if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
-						M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
-					}
-				
-					if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
-						ZetOpen(0);
-						ZetNmi();
-						ZetClose();
-					}
+			if (Data & 0x08 && ~lastdata & 0x08) { // Reset on rising edge
+				if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
+					HD63701Reset();
 				}
+
+				if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
+					HD6309Close();
+					HD6309Open(1);
+					HD6309Reset();
+					HD6309Close();
+					HD6309Open(0);
+				}
+
+				if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
+					M6803Reset();
+				}
+
+				if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
+					ZetOpen(0);
+					ZetReset();
+					ZetClose();
+				}
+				//bprintf(0, _T("Resetting ddragon sub!\n"));
 			}
-			
+			DrvSubStatus = ((~Data&0x08) | (Data&0x10)); // 0x08(low) reset, 0x10(high) halted
+			//bprintf(0, _T("DrvSubStatus = %X\n"), DrvSubStatus);
+			lastdata = Data;
+
 			if (DrvGameType == DD_GAME_DARKTOWR) {
 				if (DrvRomBank == 4 && DrvOldRomBank != 4) {
 					HD6309MemCallback(0x4000, 0x7fff, MAP_RAM);
@@ -1145,9 +1213,9 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 						HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 					}
 				}
-			}			
+			}
 			
-			return;			
+			return;
 		}
 		
 		case 0x3809: {
@@ -1192,7 +1260,7 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 		}
 		
 		case 0x380f: {
-			// ???
+			DrvDdragonSubNMI();
 			return;
 		}
 	}	
@@ -1206,9 +1274,8 @@ UINT8 DrvDdragonHD63701ReadByte(UINT16 Address)
 		return DrvSubCPURam[Address - 0x0020];
 	}
 	
-	if (Address >= 0x8000 && Address <= 0x8fff) {
-		if (Address == 0x8049 && HD63701GetPC(0) == 0x6261 && DrvSpriteRam[0x0049] == 0x1f) return 0x01;
-		return DrvSpriteRam[Address - 0x8000];
+	if (Address >= 0x8000 && Address <= 0x81ff) {
+		return DrvSpriteRam[Address & 0x1ff];
 	}
 	
 	bprintf(PRINT_NORMAL, _T("M6800 Read Byte -> %04X\n"), Address);
@@ -1220,13 +1287,16 @@ void DrvDdragonHD63701WriteByte(UINT16 Address, UINT8 Data)
 {
 	if (Address <= 0x001f) {
 		if (Address == 0x17) {
-			if (Data & 3) {
+			if (~Data & 1) {
+				HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
+			}
+			if (Data & 2 && ~DrvLastSubPort & 2) {
 				HD6309Open(0);
 				HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_ACK);
 				HD6309Close();
 				
-				HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			}
+			DrvLastSubPort = Data;
 		}
 		return;
 	}
@@ -1236,9 +1306,8 @@ void DrvDdragonHD63701WriteByte(UINT16 Address, UINT8 Data)
 		return;
 	}
 	
-	if (Address >= 0x8000 && Address <= 0x8fff) {
-		if (Address == 0x8000) DrvSubCPUBusy = 1;
-		DrvSpriteRam[Address - 0x8000] = Data;
+	if (Address >= 0x8000 && Address <= 0x81ff) {
+		DrvSpriteRam[Address & 0x1ff] = Data;
 		return;
 	}
 	
@@ -1251,8 +1320,8 @@ UINT8 DrvDdragonbSubHD6309ReadByte(UINT16 Address)
 		return DrvSubCPURam[Address - 0x0020];
 	}
 	
-	if (Address >= 0x8000 && Address <= 0x8fff) {
-		return DrvSpriteRam[Address - 0x8000];
+	if (Address >= 0x8000 && Address <= 0x81ff) {
+		return DrvSpriteRam[Address & 0x1ff];
 	}
 	
 	bprintf(PRINT_NORMAL, _T("Sub HD6309 Read Byte -> %04X\n"), Address);
@@ -1264,16 +1333,17 @@ void DrvDdragonbSubHD6309WriteByte(UINT16 Address, UINT8 Data)
 {
 	if (Address <= 0x001f) {
 		if (Address == 0x17) {
-			if (Data & 3) {
+			if (~Data & 1) {
+				HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
+			}
+			if (Data & 2 && ~DrvLastSubPort & 2) {
 				HD6309Close();
-				
 				HD6309Open(0);
 				HD6309SetIRQLine(HD6309_IRQ_LINE, CPU_IRQSTATUS_ACK);
 				HD6309Close();
-				
 				HD6309Open(1);
-				HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_NONE);
 			}
+			DrvLastSubPort = Data;
 		}
 		return;
 	}
@@ -1283,12 +1353,16 @@ void DrvDdragonbSubHD6309WriteByte(UINT16 Address, UINT8 Data)
 		return;
 	}
 	
-	if (Address >= 0x8000 && Address <= 0x8fff) {
-		if (Address == 0x8000) DrvSubCPUBusy = 1;
-		DrvSpriteRam[Address - 0x8000] = Data;
+	if (Address >= 0x8000 && Address <= 0x81ff) {
+		DrvSpriteRam[Address & 0x1ff] = Data;
 		return;
 	}
-	
+
+	if (Address >= 0xc7fe && Address <= 0xc8ff) {
+		// unmapped writes
+		return;
+	}
+
 	bprintf(PRINT_NORMAL, _T("Sub HD6309 Write Byte -> %04X, %02X\n"), Address, Data);
 }
 
@@ -1298,8 +1372,8 @@ UINT8 DrvDdragonbaM6803ReadByte(UINT16 Address)
 		return DrvSubCPURam[Address - 0x0020];
 	}
 	
-	if (Address >= 0x8000 && Address <= 0x8fff) {
-		return DrvSpriteRam[Address - 0x8000];
+	if (Address >= 0x8000 && Address <= 0x81ff) {
+		return DrvSpriteRam[Address & 0x1ff];
 	}
 	
 	bprintf(PRINT_NORMAL, _T("M6803 Read Byte -> %04X\n"), Address);
@@ -1314,9 +1388,8 @@ void DrvDdragonbaM6803WriteByte(UINT16 Address, UINT8 Data)
 		return;
 	}
 	
-	if (Address >= 0x8000 && Address <= 0x8fff) {
-		if (Address == 0x8000) DrvSubCPUBusy = 1;
-		DrvSpriteRam[Address - 0x8000] = Data;
+	if (Address >= 0x8000 && Address <= 0x81ff) {
+		DrvSpriteRam[Address & 0x1ff] = Data;
 		return;
 	}
 	
@@ -1340,14 +1413,13 @@ void DrvDdragonbaM6803WritePort(UINT16, UINT8)
 void __fastcall Ddragon2SubZ80Write(UINT16 Address, UINT8 Data)
 {
 	if (Address >= 0xc000 && Address <= 0xc3ff) {
-		if (Address == 0xc000) DrvSubCPUBusy = 1;
 		DrvSpriteRam[Address - 0xc000] = Data;
 		return;
 	}
 	
 	switch (Address) {
 		case 0xd000: {
-			// Lower NMI
+			ZetSetIRQLine(0x20, CPU_IRQSTATUS_NONE);
 			return;
 		}
 		
@@ -1948,7 +2020,7 @@ static INT32 DrvMachineInit()
 	HD6309MapMemory(DrvPaletteRam1       , 0x1000, 0x11ff, MAP_RAM);
 	HD6309MapMemory(DrvPaletteRam2       , 0x1200, 0x13ff, MAP_RAM);
 	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, MAP_RAM);
-	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE);
+	//HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE); // handler
 	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, MAP_RAM);
 	HD6309MapMemory(DrvHD6309Rom + 0x8000, 0x4000, 0x7fff, MAP_ROM);
 	HD6309MapMemory(DrvHD6309Rom         , 0x8000, 0xffff, MAP_ROM);
@@ -2026,7 +2098,7 @@ static INT32 Drv2MachineInit()
 	HD6309Open(0);
 	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x17ff, MAP_RAM);
 	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, MAP_RAM);
-	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE);
+	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE); // handler
 	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, MAP_RAM);
 	HD6309MapMemory(DrvPaletteRam1       , 0x3c00, 0x3dff, MAP_RAM);
 	HD6309MapMemory(DrvPaletteRam2       , 0x3e00, 0x3fff, MAP_RAM);
@@ -2361,7 +2433,7 @@ static void DrvRenderSpriteLayer()
 				Colour = (Src[i + 2] >> 4) & 0x07;
 				Code = Src[i + 3] + ((Src[i + 2] & 0x0f) << 8);
 			}
-			
+
 			Code &= ~Size;
 			
 			switch (Size) {
@@ -2424,20 +2496,24 @@ static void DrvRenderCharLayer()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
-	DrvRenderBgLayer();
-	DrvRenderSpriteLayer();
-	DrvRenderCharLayer();
+	if (nBurnLayer & 1) DrvRenderBgLayer();
+	if (nBurnLayer & 2) DrvRenderSpriteLayer();
+	if (nBurnLayer & 4) DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
 {
 	INT32 nInterleave = 272;
-	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) nInterleave = MSM5205CalcInterleave(0, (INT32)(nCyclesTotal[0] * 57.444853));
+
+	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205NewFrame(0, (INT32)(nCyclesTotal[0] * 57.444853), nInterleave);
+
 	INT32 nSoundBufferPos = 0;
 	
 	INT32 VBlankSlice = (INT32)((double)(nInterleave * 240) / 272);
@@ -2473,7 +2549,7 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += HD6309Run(nCyclesSegment);
-		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205Update();
+		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205UpdateScanline(i);
 		HD6309Close();
 		
 		if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
@@ -2538,14 +2614,7 @@ static INT32 DrvFrame()
 			nCyclesSegment = m6805Run(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
 		}
-		
-		if (i == VBlankSlice) {
-			DrvVBlank = 1;
-			HD6309Open(0);
-			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
-			HD6309Close();
-		}
-		
+
 		for (INT32 j = 0; j < 16; j++) {
 			if (i == FIRQFireSlice[j]) {
 				HD6309Open(0);
@@ -2554,8 +2623,15 @@ static INT32 DrvFrame()
 			}
 		}
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (i == VBlankSlice) {
+			DrvVBlank = 1;
+			HD6309Open(0);
+			HD6309SetIRQLine(HD6309_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
+			HD6309Close();
+		}
+
+		if (pBurnSoundOut && i&1) { // ym2151 does not like high interleave, so run it every other
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			
 			if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
@@ -2656,16 +2732,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 			HD6309Open(0);
 			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 			HD6309Close();
-			
-			if (DrvSubCPUBusy == 0) {
-				if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
-					HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
-				}
-				
-				if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
-					M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
-				}
-			}
 		}
 	}
 
@@ -2678,7 +2744,7 @@ struct BurnDriver BurnDrvDdragon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2688,7 +2754,7 @@ struct BurnDriver BurnDrvDdragonw = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvwRomInfo, DrvwRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2698,7 +2764,7 @@ struct BurnDriver BurnDrvDdragnw1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drvw1RomInfo, Drvw1RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2708,7 +2774,7 @@ struct BurnDriver BurnDrvDdragonu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2718,7 +2784,7 @@ struct BurnDriver BurnDrvDdragoua = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvuaRomInfo, DrvuaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2728,7 +2794,7 @@ struct BurnDriver BurnDrvDdragoub = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvubRomInfo, DrvubRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2738,7 +2804,7 @@ struct BurnDriver BurnDrvDdragob2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2748,7 +2814,7 @@ struct BurnDriver BurnDrvDdragonb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvbInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2758,7 +2824,7 @@ struct BurnDriver BurnDrvDdragnba = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvbaRomInfo, DrvbaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvbaInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvbaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2768,7 +2834,7 @@ struct BurnDriver BurnDrvDdragon2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drv2RomInfo, Drv2RomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
-	Drv2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2778,7 +2844,7 @@ struct BurnDriver BurnDrvDdragon2u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drv2uRomInfo, Drv2uRomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
-	Drv2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Drv2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2788,7 +2854,7 @@ struct BurnDriver BurnDrvDdragon2b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drv2bRomInfo, Drv2bRomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
-	Drv2bInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Drv2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2798,7 +2864,7 @@ struct BurnDriver BurnDrvDdragon2b2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Drv2b2RomInfo, Drv2b2RomName, NULL, NULL, DrvInputInfo, Drv2DIPInfo,
-	Drv2bInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Drv2bInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2808,7 +2874,7 @@ struct BurnDriverD BurnDrvDdungeon = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DdungeonRomInfo, DdungeonRomName, NULL, NULL, DrvInputInfo, DdungeonDIPInfo,
-	DdungeonInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DdungeonInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };
 
@@ -2818,6 +2884,6 @@ struct BurnDriver BurnDrvDarktowr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DarktowrRomInfo, DarktowrRomName, NULL, NULL, DrvInputInfo, DarktowrDIPInfo,
-	DarktowrInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DarktowrInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x180, 256, 240, 4, 3
 };

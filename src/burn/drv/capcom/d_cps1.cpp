@@ -7079,6 +7079,45 @@ static struct BurnRomInfo Kodr1RomDesc[] = {
 STD_ROM_PICK(Kodr1)
 STD_ROM_FN(Kodr1)
 
+static struct BurnRomInfo Kodr2RomDesc[] = {
+	{ "kde_30.11e",    0x020000, 0xf8dc4ce3, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kde_37.11f",    0x020000, 0xd1276c1c, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kde_31.12e",    0x020000, 0x309debd8, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kde_38.12f",    0x020000, 0x76cd5738, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kd_28.9e",      0x020000, 0x9367bcd9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kd_35.9f",      0x020000, 0x4ca6a48a, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kd_29.10e",     0x020000, 0x0360fa72, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+	{ "kd_36.10f",     0x020000, 0x3c66c32b, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
+
+	{ "kd-5m.4a",      0x080000, 0xe45b8701, BRF_GRA | CPS1_TILES },
+	{ "kd-7m.6a",      0x080000, 0xa7750322, BRF_GRA | CPS1_TILES },
+	{ "kd-1m.3a",      0x080000, 0x5f74bf78, BRF_GRA | CPS1_TILES },
+	{ "kd-3m.5a",      0x080000, 0x5e5303bf, BRF_GRA | CPS1_TILES },
+	{ "kd-6m.4c",      0x080000, 0x113358f3, BRF_GRA | CPS1_TILES },
+	{ "kd-8m.6c",      0x080000, 0x38853c44, BRF_GRA | CPS1_TILES },
+	{ "kd-2m.3c",      0x080000, 0x9ef36604, BRF_GRA | CPS1_TILES },
+	{ "kd-4m.5c",      0x080000, 0x402b9b4f, BRF_GRA | CPS1_TILES },
+
+	{ "kd_9.12a",  	   0x010000, 0xbac6ec26, BRF_PRG | CPS1_Z80_PROGRAM }, 
+
+	{ "kd_18.11c", 	   0x020000, 0x4c63181d, BRF_SND | CPS1_OKIM6295_SAMPLES }, 
+	{ "kd_19.12c",     0x020000, 0x92941b80, BRF_SND | CPS1_OKIM6295_SAMPLES }, 
+	
+	A_BOARD_PLDS
+	
+#if !defined (ROM_VERIFY)
+	{ "kd29b.1a",      0x000117, 0xcc4866ff, BRF_OPT }, // b-board PLDs
+#else
+	{ "kd29b.1a",      0x000117, 0x00000000, BRF_OPT | BRF_NODUMP }, // b-board PLDs
+#endif
+	{ "iob1.11d",      0x000117, 0x3abc0700, BRF_OPT },
+	{ "ioc1.ic7",      0x000104, 0xa399772d, BRF_OPT },	// c-board PLDs
+	{ "c632.ic1",      0x000117, 0x0fbd9270, BRF_OPT },
+};
+
+STD_ROM_PICK(Kodr2)
+STD_ROM_FN(Kodr2)
+
 static struct BurnRomInfo KoduRomDesc[] = {
 	{ "kdu_30b.11e",   0x020000, 0x825817f9, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
 	{ "kdu_37b.11f",   0x020000, 0xd2422dfb, BRF_ESS | BRF_PRG | CPS1_68K_PROGRAM_BYTESWAP },
@@ -13891,6 +13930,7 @@ static const struct GameConfig ConfigTable[] =
 	{ "knightsh2"   , CPS_B_21_DEF, mapper_KR63B , 0, NULL                },
 	{ "kod"         , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
 	{ "kodr1"       , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
+	{ "kodr2"       , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
 	{ "kodu"        , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
 	{ "kodj"        , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
 	{ "kodja"       , CPS_B_21_BT2, mapper_KD29B , 0, NULL                },
@@ -19162,6 +19202,16 @@ struct BurnDriver BurnDrvCpsKodr1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
 	NULL, Kodr1RomInfo, Kodr1RomName, NULL, NULL, KodInputInfo, Kodr1DIPInfo,
+	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
+	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvCpsKodr2 = {
+	"kodr2", "kod", NULL, NULL, "1991",
+	"The King of Dragons (910731 etc)\0", NULL, "Capcom", "CPS1",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_CAPCOM_CPS1, GBF_SCRFIGHT, 0,
+	NULL, Kodr2RomInfo, Kodr2RomName, NULL, NULL, KodInputInfo, Kodr1DIPInfo,
 	DrvInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3
 };

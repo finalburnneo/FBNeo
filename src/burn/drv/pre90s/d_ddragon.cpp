@@ -43,7 +43,7 @@ static UINT8 *DrvChars            = NULL;
 static UINT8 *DrvTiles            = NULL;
 static UINT8 *DrvSprites          = NULL;
 static UINT8 *DrvTempRom          = NULL;
-static UINT32 *DrvPalette          = NULL;
+static UINT32 *DrvPalette         = NULL;
 
 static UINT8 DrvRomBank;
 static UINT8 DrvVBlank;
@@ -79,6 +79,7 @@ static INT32 DrvGameType;
 
 static UINT8 DrvSubStatus = 0;
 static UINT8 DrvLastSubPort = 0;
+static UINT8 DrvLast3808Data = 0;
 
 static struct BurnInputInfo DrvInputList[] =
 {
@@ -1044,6 +1045,7 @@ static INT32 DrvDoReset()
 
 	DrvSubStatus = 0;
 	DrvLastSubPort = 0;
+	DrvLast3808Data = 0;
 
 	return 0;
 }
@@ -1170,14 +1172,13 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 
 	switch (Address) {
 		case 0x3808: {
-			static UINT8 lastdata = 0;
 			UINT8 DrvOldRomBank = DrvRomBank;
 			DrvRomBank = (Data & 0xe0) >> 5;
 			HD6309MapMemory(DrvHD6309Rom + 0x8000 + (DrvRomBank * 0x4000), 0x4000, 0x7fff, MAP_ROM);
 
 			DrvScrollXHi = (Data & 0x01) << 8;
 			DrvScrollYHi = (Data & 0x02) << 7;
-			if (Data & 0x08 && ~lastdata & 0x08) { // Reset on rising edge
+			if (Data & 0x08 && ~DrvLast3808Data & 0x08) { // Reset on rising edge
 				if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
 					HD63701Reset();
 				}
@@ -1203,7 +1204,7 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 			}
 			DrvSubStatus = ((~Data&0x08) | (Data&0x10)); // 0x08(low) reset, 0x10(high) halted
 			//bprintf(0, _T("DrvSubStatus = %X\n"), DrvSubStatus);
-			lastdata = Data;
+			DrvLast3808Data = Data;
 
 			if (DrvGameType == DD_GAME_DARKTOWR) {
 				if (DrvRomBank == 4 && DrvOldRomBank != 4) {
@@ -1600,30 +1601,17 @@ static INT32 Dd2SpritePlaneOffsets[4]     = { 0x300000, 0x300004, 0, 4 };
 
 static void DrvYM2151IrqHandler(INT32 Irq)
 {
-	if (Irq) {
-		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_ACK);
-#if 1
-		// This fixes music tempo but breaks MSM5205 sound if we use the M6809 for the MSM5205 timing,
-		// because the interleave run count is 190 cycles
-		nCyclesDone[2] += M6809Run(1000);
-#endif
-	} else {
-		M6809SetIRQLine(M6809_FIRQ_LINE, CPU_IRQSTATUS_NONE);
-	}
+	M6809SetIRQLine(M6809_FIRQ_LINE, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static void Ddragon2YM2151IrqHandler(INT32 Irq)
 {
-	if (Irq) {
-		ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
-	} else {
-		ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
-	}
+	ZetSetIRQLine(0, (Irq) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 inline static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)((double)HD6309TotalCycles() * nSoundRate / ((INT32)(nCyclesTotal[0] * 57.444853)));
+	return (INT64)((double)M6809TotalCycles() * nSoundRate / 1500000);
 }
 
 static void DrvMSM5205Vck0()
@@ -2064,6 +2052,7 @@ static INT32 DrvMachineInit()
 		BurnYM2151Init(3579545);
 		BurnYM2151SetIrqHandler(&DrvYM2151IrqHandler);
 		BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
+		BurnYM2151SetInterleave((272/2) + 1); // "BurnYM2151Render()" called this many times per frame
 
 		MSM5205Init(0, DrvSynchroniseStream, 375000, DrvMSM5205Vck0, MSM5205_S48_4B, 1);
 		MSM5205Init(1, DrvSynchroniseStream, 375000, DrvMSM5205Vck1, MSM5205_S48_4B, 1);
@@ -2098,7 +2087,7 @@ static INT32 Drv2MachineInit()
 	HD6309Open(0);
 	HD6309MapMemory(DrvHD6309Ram         , 0x0000, 0x17ff, MAP_RAM);
 	HD6309MapMemory(DrvFgVideoRam        , 0x1800, 0x1fff, MAP_RAM);
-	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE); // handler
+	HD6309MapMemory(DrvSpriteRam         , 0x2000, 0x2fff, MAP_WRITE); // handler?
 	HD6309MapMemory(DrvBgVideoRam        , 0x3000, 0x37ff, MAP_RAM);
 	HD6309MapMemory(DrvPaletteRam1       , 0x3c00, 0x3dff, MAP_RAM);
 	HD6309MapMemory(DrvPaletteRam2       , 0x3e00, 0x3fff, MAP_RAM);
@@ -2131,6 +2120,7 @@ static INT32 Drv2MachineInit()
 	BurnYM2151Init(3579545);
 	BurnYM2151SetIrqHandler(&Ddragon2YM2151IrqHandler);
 	BurnYM2151SetAllRoutes(0.60, BURN_SND_ROUTE_BOTH);
+	BurnYM2151SetInterleave((272/2) + 1); // "BurnYM2151Render()" called this many times per frame
 
 	MSM6295Init(0, 1056000 / 132, 1);
 	MSM6295SetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
@@ -2140,7 +2130,7 @@ static INT32 Drv2MachineInit()
 	nCyclesTotal[0] = (INT32)((double)4000000 / 57.44853);
 	nCyclesTotal[1] = (INT32)((double)4000000 / 57.44853);
 	nCyclesTotal[2] = (INT32)((double)3579545 / 57.44853);
-	nCyclesTotal[3] = (INT32)((double)4000000 / 57.44853);
+	nCyclesTotal[3] = (INT32)((double)4000000 / 57.44853); // darktower
 
 	GenericTilesInit();
 
@@ -2512,7 +2502,7 @@ static INT32 DrvFrame()
 {
 	INT32 nInterleave = 272;
 
-	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205NewFrame(0, (INT32)(nCyclesTotal[0] * 57.444853), nInterleave);
+	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205NewFrame(0, 1500000, nInterleave);
 
 	INT32 nSoundBufferPos = 0;
 
@@ -2549,7 +2539,6 @@ static INT32 DrvFrame()
 		nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += HD6309Run(nCyclesSegment);
-		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205UpdateScanline(i);
 		HD6309Close();
 
 		if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
@@ -2594,6 +2583,7 @@ static INT32 DrvFrame()
 			nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesDone[nCurrentCPU] += M6809Run(nCyclesSegment);
+			if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205UpdateScanline(i);
 			M6809Close();
 		}
 
@@ -2670,13 +2660,13 @@ static INT32 DrvFrame()
 				MSM6295Render(0, pSoundBuf, nSegmentLength);
 			}
 		}
-	}
 
-	if (DrvSoundCPUType == DD_CPU_TYPE_M6809 && pBurnSoundOut) {
-		M6809Open(0);
-		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
-		M6809Close();
+		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
+			M6809Open(0);
+			MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
+			MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
+			M6809Close();
+		}
 	}
 
 	if (pBurnDraw) DrvDraw();
@@ -2714,7 +2704,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (DrvSoundCPUType == DD_CPU_TYPE_M6809) MSM5205Scan(nAction, pnMin);
 
 		SCAN_VAR(DrvRomBank);
-		SCAN_VAR(DrvVBlank);
 		SCAN_VAR(DrvSubCPUBusy);
 		SCAN_VAR(DrvSoundLatch);
 		SCAN_VAR(DrvScrollXHi);
@@ -2727,6 +2716,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvADPCMData);
 		SCAN_VAR(DrvSubStatus);
 		SCAN_VAR(DrvLastSubPort);
+		SCAN_VAR(DrvLast3808Data);
 
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);

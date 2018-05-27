@@ -18278,6 +18278,27 @@ struct BurnDriver BurnDrvgg_lunar = {
 };
 
 
+// Lunar - Sanposuru Gakuen (Hack, English)
+// Source : https://www.romhacking.net/translations/1454/
+
+static struct BurnRomInfo gg_lunareRomDesc[] = {
+	{ "lunar - sanposuru gakuen (english translation).gg",	0x100000, 0x19f3f168, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_lunare)
+STD_ROM_FN(gg_lunare)
+
+struct BurnDriver BurnDrvgg_lunare = {
+	"gg_lunare", "gg_lunar", NULL, NULL, "2009",
+	"Lunar - Sanposuru Gakuen (Hack, English)\0", NULL, "Game Arts", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_lunareRomInfo, gg_lunareRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
 // Madden NFL '95 (USA)
 
 static struct BurnRomInfo gg_madden95RomDesc[] = {
@@ -18353,6 +18374,27 @@ struct BurnDriver BurnDrvgg_madoumon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_madoumonRomInfo, gg_madoumonRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
+// Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)
+// Source : https://www.romhacking.net/translations/1502/
+
+static struct BurnRomInfo gg_madoumoneRomDesc[] = {
+	{ "madou monogatari i - 3-tsu no madoukyuu (english translation).gg",	0x80000, 0xb289011d, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_madoumone)
+STD_ROM_FN(gg_madoumone)
+
+struct BurnDriver BurnDrvgg_madoumone = {
+	"gg_madoumone", "gg_madoumon", NULL, NULL, "2010",
+	"Madou Monogatari I - 3-Tsu no Madoukyuu (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_madoumoneRomInfo, gg_madoumoneRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
@@ -18653,6 +18695,27 @@ struct BurnDriver BurnDrvgg_lastbibs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_lastbibsRomInfo, gg_lastbibsRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
+// Megami Tensei Gaiden - Last Bible S (Hack, English)
+// Source : https://www.romhacking.net/translations/3160/
+
+static struct BurnRomInfo gg_lastbibseRomDesc[] = {
+	{ "megami tensei gaiden - last bible s (english translation).gg",	0x80000, 0x8a44108b, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_lastbibse)
+STD_ROM_FN(gg_lastbibse)
+
+struct BurnDriver BurnDrvgg_lastbibse = {
+	"gg_lastbibse", "gg_lastbibs", NULL, NULL, "2017",
+	"Megami Tensei Gaiden - Last Bible S (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_lastbibseRomInfo, gg_lastbibseRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
@@ -21178,6 +21241,27 @@ struct BurnDriver BurnDrvgg_pstargdn = {
 };
 
 
+// Phantasy Star Gaiden (Hack, English)
+// Source : https://www.romhacking.net/translations/63/
+
+static struct BurnRomInfo gg_pstargdneRomDesc[] = {
+	{ "phantasy star gaiden (english translation).gg",	0x40000, 0x1c98154a, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_pstargdne)
+STD_ROM_FN(gg_pstargdne)
+
+struct BurnDriver BurnDrvgg_pstargdne = {
+	"gg_pstargdne", "gg_pstargdn", NULL, NULL, "1999",
+	"Phantasy Star Gaiden (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_pstargdneRomInfo, gg_pstargdneRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
 // Phantom 2040 (Euro, USA)
 
 static struct BurnRomInfo gg_phantomRomDesc[] = {
@@ -22433,6 +22517,27 @@ struct BurnDriver BurnDrvgg_shinfrgf = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_shinfrgfRomInfo, gg_shinfrgfRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
+// Shining Force Gaiden - Final Conflict (Hack, English)
+// Source : https://www.romhacking.net/translations/876/
+
+static struct BurnRomInfo gg_shinfrgfeRomDesc[] = {
+	{ "shining force gaiden - final conflict (english translation).gg",	0x80000, 0x23bac434, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_shinfrgfe)
+STD_ROM_FN(gg_shinfrgfe)
+
+struct BurnDriver BurnDrvgg_shinfrgfe = {
+	"gg_shinfrgfe", "gg_shinfrgf", NULL, NULL, "2006",
+	"Shining Force Gaiden - Final Conflict (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_shinfrgfeRomInfo, gg_shinfrgfeRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
@@ -25233,6 +25338,27 @@ struct BurnDriver BurnDrvgg_sylvan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
 	GGGetZipName, gg_sylvanRomInfo, gg_sylvanRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
+// Sylvan Tale (Hack, English)
+// Source : https://www.romhacking.net/translations/67/
+
+static struct BurnRomInfo gg_sylvaneRomDesc[] = {
+	{ "sylvan tale (english translation).gg",	0x80000, 0x5d803486, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_sylvane)
+STD_ROM_FN(gg_sylvane)
+
+struct BurnDriver BurnDrvgg_sylvane = {
+	"gg_sylvane", "gg_sylvan", NULL, NULL, "2001",
+	"Sylvan Tale (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_sylvaneRomInfo, gg_sylvaneRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };

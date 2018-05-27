@@ -27963,6 +27963,25 @@ struct BurnDriver BurnDrvmd_shinfrc2u = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Shining Tactics Absolute Final Edition (Hack)
+// Source : http://www.romhacking.net/hacks/1736/
+static struct BurnRomInfo md_shinfrc2tRomDesc[] = {
+	{ "shining tactics absolute final edition (hack).bin", 0x400000, 0x49d556e2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrc2t)
+STD_ROM_FN(md_shinfrc2t)
+
+struct BurnDriver BurnDrvmd_shinfrc2t = {
+	"md_shinfrc2t", "md_shinfrc2", NULL, NULL, "2014",
+	"Shining Tactics Absolute Final Edition (Hack)\0", NULL, "Dark Claw", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_MISC, 0,
+	MegadriveGetZipName, md_shinfrc2tRomInfo, md_shinfrc2tRomName, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shining in the Darkness (Euro, USA)
 static struct BurnRomInfo md_shindarkRomDesc[] = {
 	{ "shining in the darkness (euro, usa).bin", 0x100000, 0x4d2785bc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

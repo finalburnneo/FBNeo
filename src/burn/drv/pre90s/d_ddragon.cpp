@@ -59,8 +59,9 @@ static UINT16 DrvScrollYHi;
 static UINT8  DrvScrollXLo;
 static UINT8  DrvScrollYLo;
 
-static INT32 nCyclesDone[4], nCyclesTotal[4];
+static INT32 nCyclesTotal[4];
 static INT32 nCyclesSegment;
+static INT32 nExtraCycles[4];
 
 #define DD_CPU_TYPE_NONE		0
 #define DD_CPU_TYPE_HD63701		1
@@ -1046,6 +1047,8 @@ static INT32 DrvDoReset()
 	DrvSubStatus = 0;
 	DrvLastSubPort = 0;
 	DrvLast3808Data = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = nExtraCycles[3] = 0;
 
 	return 0;
 }
@@ -2068,8 +2071,8 @@ static INT32 DrvMachineInit()
 		m6805SetWriteHandler(DrvMCUWriteByte);
 	}
 
-	nCyclesTotal[0] = (INT32)((double)4000000 / 57.44853);
-	nCyclesTotal[1] = (INT32)((double)4000000 / 57.44853);
+	nCyclesTotal[0] = (INT32)((double)3000000 / 57.44853);
+	nCyclesTotal[1] = (INT32)((double)1500000 / 57.44853);
 	nCyclesTotal[2] = (INT32)((double)1500000 / 57.44853);
 
 	GenericTilesInit();
@@ -2127,7 +2130,7 @@ static INT32 Drv2MachineInit()
 
 	BurnSetRefreshRate(57.444853);
 
-	nCyclesTotal[0] = (INT32)((double)4000000 / 57.44853);
+	nCyclesTotal[0] = (INT32)((double)3000000 / 57.44853);
 	nCyclesTotal[1] = (INT32)((double)4000000 / 57.44853);
 	nCyclesTotal[2] = (INT32)((double)3579545 / 57.44853);
 	nCyclesTotal[3] = (INT32)((double)4000000 / 57.44853); // darktower
@@ -2160,8 +2163,6 @@ static INT32 DrvbInit()
 	if (DrvMemInit()) return 1;
 	if (DrvLoadRoms()) return 1;
 	if (DrvMachineInit()) return 1;
-
-	nCyclesTotal[1] = (INT32)((double)1500000 / 57.44853);
 
 	return 0;
 }
@@ -2516,11 +2517,11 @@ static INT32 DrvFrame()
 
 	DrvMakeInputs();
 
-	UINT32 nCyclesToDo[2];
-	nCyclesToDo[0] = (INT32)((double)nCyclesTotal[0] * nBurnCPUSpeedAdjust / 0x0100);
-	nCyclesToDo[1] = (INT32)((double)nCyclesTotal[1] * nBurnCPUSpeedAdjust / 0x0100);
+	INT32 nCyclesToDo[2] = {
+		(INT32)((double)nCyclesTotal[0] * nBurnCPUSpeedAdjust / 0x0100),
+		(INT32)((double)nCyclesTotal[1] * nBurnCPUSpeedAdjust / 0x0100) };
 
-	nCyclesDone[0] = nCyclesDone[1] = nCyclesDone[2] = nCyclesDone[3] = 0;
+	INT32 nCyclesDone[4] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2], nExtraCycles[3] };
 
 	HD6309NewFrame();
 	if (DrvSubCPUType == DD_CPU_TYPE_HD63701) HD63701NewFrame();
@@ -2669,6 +2670,11 @@ static INT32 DrvFrame()
 		}
 	}
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+	nExtraCycles[2] = nCyclesDone[2] - nCyclesTotal[2];
+	nExtraCycles[3] = nCyclesDone[3] - nCyclesTotal[3];
+
 	if (pBurnDraw) DrvDraw();
 
 	return 0;
@@ -2717,6 +2723,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(DrvSubStatus);
 		SCAN_VAR(DrvLastSubPort);
 		SCAN_VAR(DrvLast3808Data);
+
+		SCAN_VAR(nExtraCycles);
 
 		if (nAction & ACB_WRITE) {
 			HD6309Open(0);

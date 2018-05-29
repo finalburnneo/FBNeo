@@ -200,7 +200,7 @@ UINT8 __fastcall master_read(UINT32 address)
 
 static inline void palette_update_entry(INT32 entry)
 {
-	UINT16 p = *((UINT16*)(DrvPalRAM + (entry * 2)));
+	UINT16 p = BURN_ENDIAN_SWAP_INT16(*((UINT16*)(DrvPalRAM + (entry * 2))));
 
 	INT32 r = (p >> 0) & 0x0f;
 	INT32 g = (p >> 4) & 0x0f;
@@ -495,10 +495,10 @@ static void draw_sprites(INT32 pri)
 
 	for (INT32 offs = 0x800-4; offs >= 0; offs -= 4)
 	{
-		INT32 attr  = spr[offs + 0];
-		INT32 code  = spr[offs + 1];
-		INT32 sx    = spr[offs + 2];
-		INT32 skip  = spr[offs + 3];
+		INT32 attr  = BURN_ENDIAN_SWAP_INT16(spr[offs + 0]);
+		INT32 code  = BURN_ENDIAN_SWAP_INT16(spr[offs + 1]);
+		INT32 sx    = BURN_ENDIAN_SWAP_INT16(spr[offs + 2]);
+		INT32 skip  = BURN_ENDIAN_SWAP_INT16(spr[offs + 3]);
 
 		INT32 prio  = (sx >> 13) & 3;
 
@@ -552,8 +552,8 @@ static void draw_bg_layer(INT32 priority)
 	UINT16 *scrl = (UINT16*)DrvScrRAM;
 	UINT16 *vram = (UINT16*)DrvBgRAM;
 
-	INT32 scrolly = (((scrl[0x01] & 0x30) << 4) | ((scrl[0x02] & 0x7f) << 1) | ((scrl[0x02] & 0x80) >> 7)) & 0x1ff;
-	INT32 scrollx = (((scrl[0x09] & 0x30) << 4) | ((scrl[0x0a] & 0x7f) << 1) | ((scrl[0x0a] & 0x80) >> 7)) & 0x1ff;	
+	INT32 scrolly = (((BURN_ENDIAN_SWAP_INT16(scrl[0x01]) & 0x30) << 4) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x02]) & 0x7f) << 1) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x02]) & 0x80) >> 7)) & 0x1ff;
+	INT32 scrollx = (((BURN_ENDIAN_SWAP_INT16(scrl[0x09]) & 0x30) << 4) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x0a]) & 0x7f) << 1) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x0a]) & 0x80) >> 7)) & 0x1ff;
 
 	UINT16 *dest = pTransDraw;
 
@@ -567,7 +567,7 @@ static void draw_bg_layer(INT32 priority)
 
 			INT32 offs = ((scrollx_0 >> 4) << 5) | (scrolly_0 >> 4);
 
-			INT32 code = vram[offs];
+			INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 			INT32 color = code >> 12;
 			code = (code & 0x0fff) | (*bg_bankbase * 0x1000);
 
@@ -606,8 +606,8 @@ static void draw_fg_layer()
 	UINT16 *scrl = (UINT16*)DrvScrRAM;
 	UINT16 *vram = (UINT16*)DrvFgRAM;
 
-	INT32 scrolly = (((scrl[0x11] & 0x30) << 4) | ((scrl[0x12] & 0x7f) << 1) | ((scrl[0x12] & 0x80) >> 7)) & 0x1ff;
-	INT32 scrollx = (((scrl[0x19] & 0x30) << 4) | ((scrl[0x1a] & 0x7f) << 1) | ((scrl[0x1a] & 0x80) >> 7)) & 0x1ff;	
+	INT32 scrolly = (((BURN_ENDIAN_SWAP_INT16(scrl[0x11]) & 0x30) << 4) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x12]) & 0x7f) << 1) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x12]) & 0x80) >> 7)) & 0x1ff;
+	INT32 scrollx = (((BURN_ENDIAN_SWAP_INT16(scrl[0x19]) & 0x30) << 4) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x1a]) & 0x7f) << 1) | ((BURN_ENDIAN_SWAP_INT16(scrl[0x1a]) & 0x80) >> 7)) & 0x1ff;
 
 	scrolly += 16;
 
@@ -623,7 +623,7 @@ static void draw_fg_layer()
 
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
 
-		INT32 code = vram[offs];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = code >> 12;
 		code = (code & 0xfff) | (*fg_bankbase * 0x1000);
 
@@ -640,7 +640,7 @@ static void draw_tx_layer()
 		INT32 sx = (offs & 0x1f) << 3;
 		INT32 sy = ((offs >> 5) << 3) - 16;
 
-		INT32 code = vram[offs];
+		INT32 code = BURN_ENDIAN_SWAP_INT16(vram[offs]);
 		INT32 color = (code >> 8) & 0x0f;
 		code = (code & 0x00ff) | ((code & 0xc000) >> 6);
 		if (sx >= nScreenWidth || sy >= nScreenHeight) continue;
@@ -714,8 +714,6 @@ static INT32 DrvFrame()
 		if (i == 240) VezSetIRQLineAndVector(0, 0xc8/4, CPU_IRQSTATUS_ACK);
 		VezClose();
 
-		//nSegment = nCyclesTotal[2] / nInterleave;
-		//nCyclesDone[2] += nSegment;
 		BurnTimerUpdateYM3812((i + 1) * (nCyclesTotal[2] / nInterleave));
 	}
 

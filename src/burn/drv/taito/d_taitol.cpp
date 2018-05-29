@@ -3478,7 +3478,7 @@ struct BurnDriver BurnDrvRaimais = {
 	"raimais", NULL, NULL, NULL, "1988",
 	"Raimais (World)\0", NULL, "Taito Corporation Japan", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, raimaisRomInfo, raimaisRomName, NULL, NULL, FhawkInputInfo, RaimaisDIPInfo,
 	RaimaisInit, DrvExit, Z80x3Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
@@ -3508,7 +3508,7 @@ struct BurnDriver BurnDrvRaimaisj = {
 	"raimaisj", "raimais", NULL, NULL, "1988",
 	"Raimais (Japan)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, raimaisjRomInfo, raimaisjRomName, NULL, NULL, FhawkInputInfo, RaimaisjDIPInfo,
 	RaimaisInit, DrvExit, Z80x3Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3
@@ -3538,7 +3538,7 @@ struct BurnDriver BurnDrvRaimaisjo = {
 	"raimaisjo", "raimais", NULL, NULL, "1988",
 	"Raimais (Japan, first revision)\0", NULL, "Taito Corporation", "Taito L System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, raimaisjoRomInfo, raimaisjoRomName, NULL, NULL, FhawkInputInfo, RaimaisjDIPInfo,
 	RaimaisInit, DrvExit, Z80x3Frame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	320, 224, 4, 3

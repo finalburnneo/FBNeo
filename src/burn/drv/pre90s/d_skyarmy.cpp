@@ -715,7 +715,7 @@ struct BurnDriver BurnDrvSkyarmy = {
 	"skyarmy", NULL, NULL, NULL, "1982", // set name, parent name, bios name, publish date
 	"Sky Army\0", NULL, "Shoei", "Miscellaneous", // title, notes, developer, hardware name 
 	NULL, NULL, NULL, NULL, // unicode title, unicode notes, unicode developer, unicode hardware name
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0, // orientation vertical | flipped -> ROT90, number of players, hardware type, game category, series?
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0, // orientation vertical | flipped -> ROT90, number of players, hardware type, game category, series?
 	NULL, skyarmyRomInfo, skyarmyRomName, NULL, NULL, SkyarmyInputInfo, SkyarmyDIPInfo, // extra rom load routine (usually not used), rom info, rom name, input def, dip def
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32, // 32 = palette size // pointers to init, exit, frame, draw, savestate, jukebox, drvrecalc (palette), number of palette colors
 	240, 256, 3, 4 // MDRV_SCREEN_VISIBLE_AREA(0*8,32*8-1,1*8,31*8-1) switch x & y because of ROT90 // screen width, screen width, aspect ration x, y

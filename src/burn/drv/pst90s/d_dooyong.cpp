@@ -3810,7 +3810,7 @@ struct BurnDriver BurnDrvSadari = {
 	"sadari", NULL, NULL, NULL, "1993",
 	"Sadari\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, sadariRomInfo, sadariRomName, NULL, NULL, BluehawkInputInfo, PrimellaDIPInfo,
 	SadariInit, Z80YM2151Exit, FlytigerFrame, PrimellaDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
 	384, 256, 4, 3
@@ -3852,7 +3852,7 @@ struct BurnDriver BurnDrvGundl94 = {
 	"gundl94", NULL, NULL, NULL, "1994",
 	"Gun Dealer '94\0", NULL, "Dooyong", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, gundl94RomInfo, gundl94RomName, NULL, NULL, BluehawkInputInfo, PrimellaDIPInfo,
 	PrimellaInit, Z80YM2151Exit, FlytigerFrame, PrimellaDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
 	384, 256, 4, 3
@@ -3884,7 +3884,7 @@ struct BurnDriver BurnDrvPrimella = {
 	"primella", "gundl94", NULL, NULL, "1994",
 	"Primella\0", NULL, "Dooyong (NTC license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, primellaRomInfo, primellaRomName, NULL, NULL, BluehawkInputInfo, PrimellaDIPInfo,
 	PrimellaInit, Z80YM2151Exit, FlytigerFrame, PrimellaDraw, Z80YM2151Scan, &DrvRecalc, 0x400,
 	384, 256, 4, 3

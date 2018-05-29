@@ -675,7 +675,7 @@ struct BurnDriver BurnDrvDrmicro = {
 	"drmicro", NULL, NULL, NULL, "1983",
 	"Dr. Micro\0", NULL, "Sanritsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, drmicroRomInfo, drmicroRomName, NULL, NULL, DrmicroInputInfo, DrmicroDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

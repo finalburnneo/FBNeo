@@ -743,7 +743,7 @@ struct BurnDriver BurnDrvMsisaac = {
 	"msisaac", NULL, NULL, NULL, "1985",
 	"Metal Soldier Isaac II\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_TAITO, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_TAITO, GBF_SHOOT, 0,
 	NULL, msisaacRomInfo, msisaacRomName, NULL, NULL, MsisaacInputInfo, MsisaacDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 256, 3, 4

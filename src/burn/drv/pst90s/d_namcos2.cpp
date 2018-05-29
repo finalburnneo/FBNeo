@@ -3859,7 +3859,7 @@ struct BurnDriver BurnDrvAssaultj = {
 	"assaultj", "assault", NULL, NULL, "1988",
 	"Assault (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, assaultjRomInfo, assaultjRomName, NULL, NULL, AssaultInputInfo, AssaultDIPInfo,
 	AssaultInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
@@ -4415,7 +4415,7 @@ struct BurnDriver BurnDrvPheliosj = {
 	"pheliosj", "phelios", NULL, NULL, "1988",
 	"Phelios (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, pheliosjRomInfo, pheliosjRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	PheliosInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
@@ -6044,7 +6044,7 @@ struct BurnDriver BurnDrvMetlhawk = {
 	"metlhawk", NULL, NULL, NULL, "1988",
 	"Metal Hawk (Rev C)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, metlhawkRomInfo, metlhawkRomName, NULL, NULL, MetlhawkInputInfo, MetlhawkDIPInfo,
 	MetlhawkInit, Namcos2Exit, DrvFrame, MetlhawkDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
@@ -6114,7 +6114,7 @@ struct BurnDriver BurnDrvMetlhawkj = {
 	"metlhawkj", "metlhawk", NULL, NULL, "1988",
 	"Metal Hawk (Japan, Rev F)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, metlhawkjRomInfo, metlhawkjRomName, NULL, NULL, MetlhawkInputInfo, MetlhawkDIPInfo,
 	MetlhawkInit, Namcos2Exit, DrvFrame, MetlhawkDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4

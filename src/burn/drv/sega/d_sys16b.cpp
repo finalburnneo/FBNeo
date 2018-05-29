@@ -8799,7 +8799,7 @@ struct BurnDriver BurnDrvAtomicp = {
 	"atomicp", NULL, NULL, NULL, "1990",
 	"Atomic Point (Korea)\0", NULL, "Philco", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_PUZZLE, 0,
 	NULL, AtomicpRomInfo, AtomicpRomName, NULL, NULL, AtomicpInputInfo, AtomicpDIPInfo,
 	AtomicpInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9459,7 +9459,7 @@ struct BurnDriver BurnDrvLockonph = {
 	"lockonph", NULL, NULL, NULL, "1991",
 	"Lock On (Philko)\0", NULL, "Philco", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B, GBF_HORSHOOT, 0,
 	NULL,LockonphRomInfo, LockonphRomName, NULL, NULL, LockonphInputInfo, LockonphDIPInfo,
 	LockonphInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

@@ -1182,7 +1182,7 @@ struct BurnDriver BurnDrvMplanets = {
 	"mplanets", NULL, NULL, NULL, "1983",
 	"Mad Planets\0", NULL, "Gottlieb", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mplanetsRomInfo, mplanetsRomName, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
 	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4
@@ -1217,7 +1217,7 @@ struct BurnDriver BurnDrvMplanetsuk = {
 	"mplanetsuk", "mplanets", NULL, NULL, "1983",
 	"Mad Planets (UK)\0", NULL, "Gottlieb (Taitel license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, mplanetsukRomInfo, mplanetsukRomName, NULL, NULL, MplanetsInputInfo, MplanetsDIPInfo,
 	DrvInitMplanets, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
 	240, 256, 3, 4

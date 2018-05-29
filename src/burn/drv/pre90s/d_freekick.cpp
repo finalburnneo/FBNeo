@@ -1490,7 +1490,7 @@ struct BurnDriver BurnDrvPbillrd = {
 	"pbillrd", NULL, NULL, NULL, "1987",
 	"Perfect Billiard\0", NULL, "Nihon System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pbillrdRomInfo, pbillrdRomName, NULL, NULL, PbillrdInputInfo, PbillrdDIPInfo,
 	pbillrdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1528,7 +1528,7 @@ struct BurnDriver BurnDrvPbillrds = {
 	"pbillrdsa", "pbillrd", NULL, NULL, "1987",
 	"Perfect Billiard (MC-8123, 317-5008)\0", NULL, "Nihon System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSMISC, 0,
 	NULL, pbillrdsaRomInfo, pbillrdsaRomName, NULL, NULL, PbillrdInputInfo, PbillrdDIPInfo,
 	pbillrdInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -1934,7 +1934,7 @@ struct BurnDriver BurnDrvOmega = {
 	"omega", NULL, NULL, NULL, "1986",
 	"Omega\0", NULL, "Nihon System", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, omegaRomInfo, omegaRomName, NULL, NULL, GigasInputInfo, OmegaDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

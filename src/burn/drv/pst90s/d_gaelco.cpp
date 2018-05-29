@@ -1509,7 +1509,7 @@ struct BurnDriver BurnDrvLastkm = {
 	"lastkm", NULL, NULL, NULL, "1995",
 	"Last KM (Ver 1.0.0275)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, lastkmRomInfo, lastkmRomName, NULL, NULL, LastkmInputInfo, LastkmDIPInfo,
 	ManiacspInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

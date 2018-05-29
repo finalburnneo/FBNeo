@@ -2076,7 +2076,7 @@ struct BurnDriver BurnDrvTouchgo = {
 	"touchgo", NULL, NULL, NULL, "1995",
 	"Touch & Go (World)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoRomInfo, touchgoRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
@@ -2105,7 +2105,7 @@ struct BurnDriver BurnDrvTouchgon = {
 	"touchgon", "touchgo", NULL, NULL, "1995",
 	"Touch & Go (Non North America)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgonRomInfo, touchgonRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
@@ -2134,7 +2134,7 @@ struct BurnDriver BurnDrvTouchgoe = {
 	"touchgoe", "touchgo", NULL, NULL, "1995",
 	"Touch & Go (earlier revision)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgoeRomInfo, touchgoeRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
@@ -2160,7 +2160,7 @@ struct BurnDriver BurnDrvTouchgok = {
 	"touchgok", "touchgo", NULL, NULL, "1995",
 	"Touch & Go (Korea, unprotected)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_POST90S, GBF_SPORTSMISC, 0,
 	NULL, touchgokRomInfo, touchgokRomName, NULL, NULL, TouchgoInputInfo, TouchgoDIPInfo,
 	touchgoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	480, 240, 4, 3
@@ -2207,7 +2207,7 @@ struct BurnDriver BurnDrvBang = {
 	"bang", NULL, NULL, NULL, "1998",
 	"Bang!\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bangRomInfo, bangRomName, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3
@@ -2243,7 +2243,7 @@ struct BurnDriver BurnDrvBangj = {
 	"bangj", "bang", NULL, NULL, "1998",
 	"Gun Gabacho (Japan)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, bangjRomInfo, bangjRomName, NULL, NULL, BangInputInfo, NULL,
 	bangInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10000,
 	320, 240, 4, 3

@@ -2694,7 +2694,7 @@ struct BurnDriver BurnDrvBrubber = {
 	"brubber", NULL, NULL, NULL, "1982",
 	"Burnin' Rubber\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, brubberRomInfo, brubberRomName, NULL, NULL, BnjInputInfo, BnjDIPInfo,
 	brubberInit, DrvExit, BtimeFrame, BnjDraw, DrvScan, &DrvRecalc, 16,
 	240, 256, 3, 4
@@ -2728,7 +2728,7 @@ struct BurnDriver BurnDrvBnj = {
 	"bnj", "brubber", NULL, NULL, "1982",
 	"Bump 'n' Jump\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, bnjRomInfo, bnjRomName, NULL, NULL, BnjInputInfo, BnjDIPInfo,
 	BnjInit, DrvExit, BtimeFrame, BnjDraw, DrvScan, &DrvRecalc, 16,
 	240, 256, 3, 4
@@ -2825,7 +2825,7 @@ struct BurnDriver BurnDrvLnc = {
 	"lnc", NULL, NULL, NULL, "1981",
 	"Lock'n'Chase\0", NULL, "Data East Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, lncRomInfo, lncRomName, NULL, NULL, LncInputInfo, LncDIPInfo,
 	LncInit, DrvExit, BtimeFrame, LncDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
@@ -2869,7 +2869,7 @@ struct BurnDriver BurnDrvZoar = {
 	"zoar", NULL, NULL, NULL, "1982",
 	"Zoar\0", NULL, "Data East USA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, zoarRomInfo, zoarRomName, NULL, NULL, ZoarInputInfo, ZoarDIPInfo,
 	ZoarInit, DrvExit, BtimeFrame, ZoarDraw, DrvScan, &DrvRecalc, 64,
 	240, 256, 3, 4

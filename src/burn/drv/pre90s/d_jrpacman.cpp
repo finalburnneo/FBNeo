@@ -638,7 +638,7 @@ struct BurnDriver BurnDrvJrpacman = {
 	"jrpacman", NULL, NULL, NULL, "1983",
 	"Jr. Pac-Man (11/9/83)\0", NULL, "Bally Midway", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, jrpacmanRomInfo, jrpacmanRomName, NULL, NULL, JrpacmanInputInfo, JrpacmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
@@ -672,7 +672,7 @@ struct BurnDriver BurnDrvJrpacmanf = {
 	"jrpacmanf", "jrpacman", NULL, NULL, "1983",
 	"Jr. Pac-Man (speedup hack)\0", NULL, "hack", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, jrpacmanfRomInfo, jrpacmanfRomName, NULL, NULL, JrpacmanInputInfo, JrpacmanDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4

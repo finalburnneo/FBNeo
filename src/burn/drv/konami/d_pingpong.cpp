@@ -844,7 +844,7 @@ struct BurnDriver BurnDrvPingpong = {
 	"pingpong", NULL, NULL, NULL, "1985",
 	"Konami's Ping-Pong\0", NULL, "Konami", "GX555",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_BALLPADDLE, 0,
 	NULL, pingpongRomInfo, pingpongRomName, NULL, NULL, PingpongInputInfo, PingpongDIPInfo,
 	PingpongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -872,7 +872,7 @@ struct BurnDriver BurnDrvMerlinmm = {
 	"merlinmm", NULL, NULL, NULL, "1986",
 	"Merlins Money Maze\0", NULL, "Zilec-Zenitone", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 1, HARDWARE_PREFIX_KONAMI, GBF_MAZE, 0,
 	NULL, merlinmmRomInfo, merlinmmRomName, NULL, NULL, MerlinmmInputInfo, MerlinmmDIPInfo,
 	MerlinmmInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

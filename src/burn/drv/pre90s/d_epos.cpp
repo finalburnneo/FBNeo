@@ -996,7 +996,7 @@ struct BurnDriver BurnDrvRevngr84 = {
 	"revngr84", NULL, NULL, NULL, "1984",
 	"Revenger '84 (set 1)\0", NULL, "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, revngr84RomInfo, revngr84RomName, NULL, NULL, Revngr84InputInfo, Revngr84DIPInfo,
 	DealerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4
@@ -1021,7 +1021,7 @@ struct BurnDriver BurnDrvRevenger = {
 	"revenger", "revngr84", NULL, NULL, "1984",
 	"Revenger '84 (set 2)\0", "Bad dump", "Epos Corporation", "EPOS Tristar",
 	NULL, NULL, NULL, NULL,
-	BDF_ORIENTATION_VERTICAL | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_ORIENTATION_VERTICAL | BDF_CLONE, 1, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, revengerRomInfo, revengerRomName, NULL, NULL, Revngr84InputInfo, Revngr84DIPInfo,
 	DealerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	236, 272, 3, 4

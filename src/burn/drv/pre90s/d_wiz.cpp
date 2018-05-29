@@ -1201,7 +1201,7 @@ struct BurnDriver BurnDrvWiz = {
 	"wiz", NULL, NULL, NULL, "1985",
 	"Wiz\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wizRomInfo, wizRomName, NULL, NULL, WizInputInfo, WizDIPInfo,
 	WizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1236,7 +1236,7 @@ struct BurnDriver BurnDrvWizt = {
 	"wizt", "wiz", NULL, NULL, "1985",
 	"Wiz (Taito, set 1)\0", NULL, "[Seibu] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wiztRomInfo, wiztRomName, NULL, NULL, WizInputInfo, WizDIPInfo,
 	WizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1272,7 +1272,7 @@ struct BurnDriver BurnDrvWizta = {
 	"wizta", "wiz", NULL, NULL, "1985",
 	"Wiz (Taito, set 2)\0", NULL, "[Seibu] (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, wiztaRomInfo, wiztaRomName, NULL, NULL, WizInputInfo, WizDIPInfo,
 	WizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, 
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1313,7 +1313,7 @@ struct BurnDriver BurnDrvKungfut = {
 	"kungfut", NULL, NULL, NULL, "1984",
 	"Kung-Fu Taikun\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutRomInfo, kungfutRomName, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
 	KungfutInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
 	&DrvRecalc, 0x100, 256, 224, 4, 3
@@ -1348,7 +1348,7 @@ struct BurnDriver BurnDrvKungfuta = {
 	"kungfuta", "kungfut", NULL, NULL, "1984",
 	"Kung-Fu Taikun (alt)\0", NULL, "Seibu Kaihatsu Inc.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, kungfutaRomInfo, kungfutaRomName, NULL, NULL, KungfutInputInfo, KungfutDIPInfo,
 	KungfutInit, DrvExit, DrvFrame, KungfutDraw, DrvScan,
 	&DrvRecalc, 0x100, 256, 224, 4, 3
@@ -1425,7 +1425,7 @@ struct BurnDriver BurnDrvStinger = {
 	"stinger", NULL, NULL, "stinger", "1983",
 	"Stinger\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stingerRomInfo, stingerRomName, stingerSampleInfo, stingerSampleName, StingerInputInfo, StingerDIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1462,7 +1462,7 @@ struct BurnDriver BurnDrvStinger2 = {
 	"stinger2", "stinger", NULL, "stinger", "1983",
 	"Stinger (prototype?)\0", NULL, "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, stinger2RomInfo, stinger2RomName, stingerSampleInfo, stingerSampleName, StingerInputInfo, Stinger2DIPInfo,
 	StingerInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 224, 256, 3, 4
@@ -1506,7 +1506,7 @@ struct BurnDriver BurnDrvScion = {
 	"scion", NULL, NULL, "stinger", "1984",
 	"Scion\0", "Music horribly broken, use scionc instead!", "Seibu Denshi", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, scionRomInfo, scionRomName, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
 	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 240, 224, 4, 3
@@ -1543,7 +1543,7 @@ struct BurnDriver BurnDrvScionc = {
 	"scionc", "scion", NULL, "stinger", "1984",
 	"Scion (Cinematronics)\0", NULL, "Seibu Denshi (Cinematronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, scioncRomInfo, scioncRomName, stingerSampleInfo, stingerSampleName, ScionInputInfo, ScionDIPInfo,
 	ScionInit, DrvExit, DrvFrame, StingerDraw, DrvScan,
 	&DrvRecalc, 0x100, 240, 224, 4, 3

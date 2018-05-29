@@ -4133,7 +4133,7 @@ struct BurnDriver BurnDrvKeithlcy = {
 	"keithlcy", NULL, NULL, NULL, "1993",
 	"Dramatic Adventure Quiz Keith & Lucy (Japan)\0", NULL, "Visco", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_QUIZ, 0,
 	NULL, keithlcyRomInfo, keithlcyRomName, NULL, NULL, KeithlcyInputInfo, KeithlcyDIPInfo,
 	KeithlcyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 238, 4, 3

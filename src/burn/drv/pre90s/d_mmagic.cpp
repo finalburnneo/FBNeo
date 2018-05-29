@@ -424,7 +424,7 @@ struct BurnDriver BurnDrvMmagic = {
 	"mmagic", NULL, NULL, "mmagic", "1979",
 	"Monkey Magic\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_BREAKOUT, 0,
 	NULL, mmagicRomInfo, mmagicRomName, MmagicSampleInfo, MmagicSampleName, MmagicInputInfo, MmagicDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 8,
 	192, 256, 3, 4

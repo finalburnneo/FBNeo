@@ -1550,7 +1550,7 @@ struct BurnDriver BurnDrvJumpcoas = {
 	"jumpcoas", NULL, NULL, NULL, "1983",
 	"Jump Coaster\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, jumpcoasRomInfo, jumpcoasRomName, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
 	jumpcoasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1763,7 +1763,7 @@ struct BurnDriver BurnDrvImago = {
 	"imago", NULL, NULL, NULL, "1984",
 	"Imago (cocktail set)\0", NULL, "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, imagoRomInfo, imagoRomName, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
 	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -1807,7 +1807,7 @@ struct BurnDriver BurnDrvImagoa = {
 	"imagoa", "imago", NULL, NULL, "1983",
 	"Imago (no cocktail set)\0", NULL, "Acom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, imagoaRomInfo, imagoaRomName, NULL, NULL, ImagoInputInfo, ImagoDIPInfo,
 	imagoInit, DrvExit, DrvFrame, ImagoDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

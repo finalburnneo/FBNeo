@@ -806,7 +806,7 @@ struct BurnDriver BurnDrvCanvas = {
 	"canvas", NULL, NULL, NULL, "1985",
 	"Canvas Croquis\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, canvasRomInfo, canvasRomName, NULL, NULL, CanvasInputInfo, CanvasDIPInfo,
 	DrvInitcanvas, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	288, 216, 4, 3

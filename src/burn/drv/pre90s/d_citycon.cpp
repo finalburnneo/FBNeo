@@ -616,7 +616,7 @@ struct BurnDriver BurnDrvCitycon = {
 	"citycon", NULL, NULL, NULL, "1985",
 	"City Connection (set 1)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, cityconRomInfo, cityconRomName, NULL, NULL, CityconInputInfo, CityconDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	240, 224, 4, 3

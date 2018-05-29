@@ -3676,7 +3676,7 @@ struct BurnDriver BurnDrvCocean1a = {
 	"cocean1a", NULL, "decocass", NULL, "1981",
 	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.1,Japan)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
 	NULL, cocean1aRomInfo, cocean1aRomName, NULL, NULL, DecocassInputInfo, Cocean1aDIPInfo,
 	Cocean1aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -3698,7 +3698,7 @@ struct BurnDriver BurnDrvCocean6b = {
 	"cocean6b", "cocean1a", "decocass", NULL, "1981",
 	"Ocean to Ocean (Medal) (DECO Cassette MD) (No.10/Ver.6,US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_CASINO, 0,
 	NULL, cocean6bRomInfo, cocean6bRomName, NULL, NULL, DecocassInputInfo, Cocean6bDIPInfo,
 	Cocean1aInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4081,7 +4081,7 @@ struct BurnDriver BurnDrvCexplore = {
 	"cexplore", NULL, "decocass", NULL, "1982",
 	"Explorer (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, cexploreRomInfo, cexploreRomName, NULL, NULL, DecocassInputInfo, CexploreDIPInfo,
 	CexploreInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4110,7 +4110,7 @@ struct BurnDriver BurnDrvCdiscon1 = {
 	"cdiscon1", NULL, "decocass", NULL, "1982",
 	"Disco No.1 (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, cdiscon1RomInfo, cdiscon1RomName, NULL, NULL, DecocassInputInfo, Cdiscon1DIPInfo,
 	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4132,7 +4132,7 @@ struct BurnDriver BurnDrvCsweetht = {
 	"csweetht", "cdiscon1", "decocass", NULL, "1982",
 	"Sweet Heart (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_CLONE, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, csweethtRomInfo, csweethtRomName, NULL, NULL, DecocassInputInfo, CsweethtDIPInfo,
 	Cdiscon1Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4159,7 +4159,7 @@ struct BurnDriver BurnDrvCtornado = {
 	"ctornado", NULL, "decocass", NULL, "1982",
 	"Tornado (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_SHOOT, 0,
 	NULL, ctornadoRomInfo, ctornadoRomName, NULL, NULL, DecocassInputInfo, CtornadoDIPInfo,
 	CtornadoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4
@@ -4752,7 +4752,7 @@ struct BurnDriver BurnDrvCzeroize = {
 	"czeroize", NULL, "decocass", NULL, "1983",
 	"Zeroize (DECO Cassette) (US)\0", NULL, "Data East Corporation", "Cassette System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_PREFIX_DATAEAST, GBF_MAZE, 0,
 	NULL, czeroizeRomInfo, czeroizeRomName, NULL, NULL, DecocassInputInfo, CzeroizeDIPInfo,
 	CzeroizeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	240, 256, 3, 4

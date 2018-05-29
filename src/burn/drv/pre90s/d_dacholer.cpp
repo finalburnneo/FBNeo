@@ -886,7 +886,7 @@ struct BurnDriver BurnDrvDacholer = {
 	"dacholer", NULL, NULL, NULL, "1983",
 	"Dacholer\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, dacholerRomInfo, dacholerRomName, NULL, NULL, DacholerInputInfo, DacholerDIPInfo,
 	DacholerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
@@ -929,7 +929,7 @@ struct BurnDriver BurnDrvKickboy = {
 	"kickboy", NULL, NULL, NULL, "1983",
 	"Kick Boy\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, kickboyRomInfo, kickboyRomName, NULL, NULL, DacholerInputInfo, KickboyDIPInfo,
 	KickboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3
@@ -978,7 +978,7 @@ struct BurnDriver BurnDrvItaten = {
 	"itaten", NULL, NULL, NULL, "1984",
 	"Itazura Tenshi (Japan)\0", NULL, "Nichibutsu / Alice", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, itatenRomInfo, itatenRomName, NULL, NULL, ItatenInputInfo, ItatenDIPInfo,
 	ItatenInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	256, 224, 4, 3

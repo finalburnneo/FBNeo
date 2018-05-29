@@ -2335,10 +2335,10 @@ static void raiden2_decrypt_sprites()
 {
 	UINT32 *data = (UINT32 *)DrvGfxROM2;
 
-	for(INT32 i=0; i<0x800000/4; i++)
+	for (INT32 i=0; i<0x800000/4; i++)
 	{
-		data[i] = core_decrypt(data[i],	(i&0xff) ^ BIT(i,15) ^ (BIT(i,20)<<8), (i&0xff) ^ BIT(i,15),
-			(i>>8) & 0xff, (i>>16) & 0xf, rotate_r2, x5_r2, x11_r2, 0x60860000, 0x176c91a8, 0x0f488000);
+		data[i] = BURN_ENDIAN_SWAP_INT32(core_decrypt(BURN_ENDIAN_SWAP_INT32(data[i]),	(i&0xff) ^ BIT(i,15) ^ (BIT(i,20)<<8), (i&0xff) ^ BIT(i,15),
+			(i>>8) & 0xff, (i>>16) & 0xf, rotate_r2, x5_r2, x11_r2, 0x60860000, 0x176c91a8, 0x0f488000));
 	}
 }
 
@@ -2346,11 +2346,10 @@ static void zeroteam_decrypt_sprites()
 {
 	UINT32 *data = (UINT32 *)DrvGfxROM2;
 
-	for(INT32 i=0; i<0x400000/4; i++)
+	for (INT32 i=0; i<0x400000/4; i++)
 	{
-		data[i] = core_decrypt(data[i], i & 0xff, i & 0xff, (i>>7) & 0x1ff, (i>>16) & 0xf,
-			rotate_zt, x5_zt, x11_zt, 0xa5800000, 0x7b67b7b9, 0xf1412ea8
-		);
+		data[i] = BURN_ENDIAN_SWAP_INT32(core_decrypt(BURN_ENDIAN_SWAP_INT32(data[i]), i & 0xff, i & 0xff, (i>>7) & 0x1ff, (i>>16) & 0xf,
+			rotate_zt, x5_zt, x11_zt, 0xa5800000, 0x7b67b7b9, 0xf1412ea8));
 	}
 }
 

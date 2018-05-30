@@ -227,6 +227,57 @@ static struct BurnInputInfo NzeroteaInputList[] = {
 
 STDINPUTINFO(Nzerotea)
 
+static struct BurnInputInfo Zerotm2kInputList[] = {
+	{"P1 Coin",		BIT_DIGITAL,	DrvJoy4 + 0,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
+	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
+	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
+	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"	},
+
+	{"P2 Coin",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
+	{"P2 Up",		BIT_DIGITAL,	DrvJoy1 + 8,	"p2 up"		},
+	{"P2 Down",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 down"	},
+	{"P2 Left",		BIT_DIGITAL,	DrvJoy1 + 10,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy1 + 11,	"p2 right"	},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"p2 fire 1"	},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
+
+	{"P3 Coin",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 2,	"p3 start"	},
+	{"P3 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
+	{"P3 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
+	{"P3 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p3 right"	},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p3 fire 1"	},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy2 + 6,	"p3 fire 3"	},
+
+	{"P4 Coin",		BIT_DIGITAL,	DrvJoy4 + 3,	"p4 coin"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoy3 + 3,	"p4 start"	},
+	{"P4 Up",		BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
+	{"P4 Down",		BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
+	{"P4 Left",		BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
+	{"P4 Right",		BIT_DIGITAL,	DrvJoy2 + 11,	"p4 right"	},
+	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy2 + 12,	"p4 fire 1"	},
+	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy2 + 13,	"p4 fire 2"	},
+	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy2 + 14,	"p4 fire 3"	},
+
+	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",		BIT_DIGITAL,	DrvJoy3 + 4,	"service"	},
+	{"Service Mode",    BIT_DIGITAL,	DrvJoy3 + 5,	"diag"	},
+	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+};
+
+STDINPUTINFO(Zerotm2k)
+
 static struct BurnDIPInfo Raiden2DIPList[]=
 {
 	{0x12, 0xff, 0xff, 0xff, NULL			},
@@ -1292,7 +1343,7 @@ static void rd2_cop_write(UINT16 offset, UINT8 data)
 
 		case 0x6c6:
 			dst1 = dataword;
-			copram[0x762/2] = dst1;
+			copram[0x762/2] = BURN_ENDIAN_SWAP_INT16(dst1);
 		return;
 
 		case 0x6ca:
@@ -1829,7 +1880,7 @@ static void __fastcall r2dx_main_write(UINT32 address, UINT8 data)
 
 		case 0x6c6:
 			dst1 = dataword;
-			copram[0x762/2] = dst1;
+			copram[0x762/2] = BURN_ENDIAN_SWAP_INT16(dst1);
 		return;
 
 		case 0x6d8:
@@ -2015,7 +2066,7 @@ static INT32 MemIndex()
 	DrvPalette		= (UINT32*)Next; Next += 0x0800 * sizeof(UINT32);
 
 	bitmap32		= (UINT32*)Next; Next += 320 * 256 * sizeof(UINT32);
-	DrvAlphaTable		= Next; Next += 0x000800;
+	DrvAlphaTable	= Next; Next += 0x000800;
 
 	AllRam			= Next;
 
@@ -5025,7 +5076,7 @@ struct BurnDriver BurnDrvZerotm2k = {
 	"Zero Team 2000\0", NULL, "Seibu Kaihatsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
-	NULL, zerotm2kRomInfo, zerotm2kRomName, NULL, NULL, ZeroteamInputInfo, NULL,
+	NULL, zerotm2kRomInfo, zerotm2kRomName, NULL, NULL, Zerotm2kInputInfo, NULL,
 	Zerotm2kInit, DrvExit, ZeroteamFrame, ZeroteamDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3
 };

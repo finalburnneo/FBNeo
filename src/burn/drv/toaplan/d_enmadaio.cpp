@@ -530,23 +530,23 @@ static INT32 DrvInit()
 // Enma Daio (Japan)
 
 static struct BurnRomInfo enmadaioRomDesc[] = {
-	{ "03N_U53.C8",		0x080000, 0x1a6ca2ee, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
+	{ "03n_u53.c8",		0x080000, 0x1a6ca2ee, BRF_PRG | BRF_ESS }, //  0 CPU #0 code
 
-	{ "ROM4_U30.C19",	0x100000, 0x7a012d8b, BRF_GRA },           //  1 GP9001 Tile data
-	{ "ROM5_U31.C18",	0x100000, 0x60b127ab, BRF_GRA },           //  2
+	{ "rom4_u30.c19",	0x100000, 0x7a012d8b, BRF_GRA },           //  1 GP9001 Tile data
+	{ "rom5_u31.c18",	0x100000, 0x60b127ab, BRF_GRA },           //  2
 
-	{ "ROM6_U65.A1",	0x200000, 0xf33c6c0b, BRF_SND },           //  3 MSM6295 ADPCM data
-	{ "ROM7_U66.A3",	0x200000, 0x1306f8b3, BRF_SND },           //  4
-	{ "ROM8_U61.A4",	0x200000, 0x4f211c00, BRF_SND },           //  5
-	{ "ROM9_U62.A6",	0x200000, 0x292d3ef6, BRF_SND },           //  6
-	{ "ROM10_U67.A8",	0x200000, 0x5219bf86, BRF_SND },           //  7
-	{ "ROM11_U68.A10",	0x200000, 0x56fe4b1d, BRF_SND },           //  8
-	{ "ROM12_U63.A11",	0x200000, 0xcc48ff18, BRF_SND },           //  9
-	{ "ROM13_U64.A13",	0x200000, 0xa3cd181a, BRF_SND },           // 10
-	{ "ROM14_U69.A14",	0x200000, 0x5d8cddec, BRF_SND },           // 11
-	{ "ROM15_U70.A16",	0x200000, 0xc75012f5, BRF_SND },           // 12
-	{ "ROM16_U71.A18",	0x200000, 0xefd02b0d, BRF_SND },           // 13
-	{ "ROM17_U72.A19",	0x200000, 0x6b8717c3, BRF_SND },           // 14
+	{ "rom6_u65.a1",	0x200000, 0xf33c6c0b, BRF_SND },           //  3 MSM6295 ADPCM data
+	{ "rom7_u66.a3",	0x200000, 0x1306f8b3, BRF_SND },           //  4
+	{ "rom8_u61.a4",	0x200000, 0x4f211c00, BRF_SND },           //  5
+	{ "rom9_u62.a6",	0x200000, 0x292d3ef6, BRF_SND },           //  6
+	{ "rom10_u67.a8",	0x200000, 0x5219bf86, BRF_SND },           //  7
+	{ "rom11_u68.a10",	0x200000, 0x56fe4b1d, BRF_SND },           //  8
+	{ "rom12_u63.a11",	0x200000, 0xcc48ff18, BRF_SND },           //  9
+	{ "rom13_u64.a13",	0x200000, 0xa3cd181a, BRF_SND },           // 10
+	{ "rom14_u69.a14",	0x200000, 0x5d8cddec, BRF_SND },           // 11
+	{ "rom15_u70.a16",	0x200000, 0xc75012f5, BRF_SND },           // 12
+	{ "rom16_u71.a18",	0x200000, 0xefd02b0d, BRF_SND },           // 13
+	{ "rom17_u72.a19",	0x200000, 0x6b8717c3, BRF_SND },           // 14
 };
 
 STD_ROM_PICK(enmadaio)

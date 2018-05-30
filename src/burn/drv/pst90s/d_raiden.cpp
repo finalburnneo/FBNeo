@@ -960,6 +960,8 @@ static struct BurnRomInfo raidenRomDesc[] = {
 	
 	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd003b.u0168",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd006b.u0365",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raiden)
@@ -1003,6 +1005,8 @@ static struct BurnRomInfo raidenaRomDesc[] = {
 	
 	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd003b.u0168",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd006b.u0365",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidena)
@@ -1042,6 +1046,8 @@ static struct BurnRomInfo raidentRomDesc[] = {
 	
 	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd003b.u0168",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd006b.u0365",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raident)
@@ -1081,6 +1087,8 @@ static struct BurnRomInfo raidenuRomDesc[] = {
 	
 	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd003b.u0168",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd006b.u0365",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenu)
@@ -1120,6 +1128,8 @@ static struct BurnRomInfo raidenkRomDesc[] = {
 	
 	{ "rd010.u087",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
 	{ "rd012.u094",		0x000100, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd003b.u0168",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
+	{ "rd006b.u0365",	0x000884, 0x00000000, BRF_OPT | BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenk)
@@ -1207,8 +1217,7 @@ static struct BurnRomInfo raidenbRomDesc[] = {
 
 	{ "7.u203",     		0x010000, 0x8f927822, BRF_SND },        	// Sound
 
-	{ "ep910pc-1.bin",  	0x000884, 0x00000000, BRF_NODUMP },
-	{ "ep910pc-2.bin",  	0x000884, 0x00000000, BRF_NODUMP },
+	{ "jj3010.u0116", 	 	0x000100, 0x00000000, BRF_NODUMP },
 };
 
 STD_ROM_PICK(raidenb)

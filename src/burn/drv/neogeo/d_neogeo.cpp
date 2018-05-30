@@ -1208,6 +1208,58 @@ struct BurnDriver BurnDrvNeoGeoMVS = {
 	0x1000, 320, 224, 4, 3
 };
 
+#if defined ROM_VERIFY
+struct BurnDriver BurnDrvNeoGeoMV1 = {
+	"ng_mv1", NULL, "neogeo", NULL, "1990",
+	"Neo Geo (MV-1)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 0, HARDWARE_SNK_NEOGEO, 0, 0,
+	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvNeoGeoMV1F = {
+	"ng_mv1f", "ng_mv1", NULL, NULL, "1990",
+	"Neo Geo (MV-1F)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 0, HARDWARE_SNK_NEOGEO, 0, 0,
+	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvNeoGeoMV1FZ = {
+	"ng_mv1fz", "ng_mv1", NULL, NULL, "1990",
+	"Neo Geo (MV-1FZ)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 0, HARDWARE_SNK_NEOGEO, 0, 0,
+	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvNeoGeoMV2F = {
+	"ng_mv2f", NULL, "neogeo", NULL, "1990",
+	"Neo Geo (MV-2F)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 0, HARDWARE_SNK_NEOGEO, 0, 0,
+	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+
+struct BurnDriver BurnDrvNeoGeoMV4F = {
+	"ng_mv4f", NULL, "neogeo", NULL, "1990",
+	"Neo Geo (MV-4F)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 0, HARDWARE_SNK_NEOGEO, 0, 0,
+	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 320, 224, 4, 3
+};
+#endif
+
 // ----------------------------------------------------------------------------
 // Neo Geo CDZ system
 

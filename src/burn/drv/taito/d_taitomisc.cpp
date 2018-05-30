@@ -2212,6 +2212,8 @@ static struct BurnRomInfo TopspeedRomDesc[] = {
 	{ "b14-29.109",    0x10000, 0x7ad983e7, BRF_SND | TAITO_MSM5205 },
 	
 	{ "b14-31.90",     0x02000, 0x5c6b013d, BRF_OPT },
+	
+	{ "27c256.ic17",   0x08000, 0xe52dfee1, BRF_OPT },
 };
 
 STD_ROM_PICK(Topspeed)
@@ -2241,6 +2243,8 @@ static struct BurnRomInfo TopspeeduRomDesc[] = {
 	{ "b14-29.109",    0x10000, 0x7ad983e7, BRF_SND | TAITO_MSM5205 },
 	
 	{ "b14-31.90",     0x02000, 0x5c6b013d, BRF_OPT },
+	
+	{ "27c256.ic17",   0x08000, 0xe52dfee1, BRF_OPT },
 };
 
 STD_ROM_PICK(Topspeedu)
@@ -2270,6 +2274,8 @@ static struct BurnRomInfo FullthrlRomDesc[] = {
 	{ "b14-29.109",    0x10000, 0x7ad983e7, BRF_SND | TAITO_MSM5205 },
 	
 	{ "b14-31.90",     0x02000, 0x5c6b013d, BRF_OPT },
+	
+	{ "27c256.ic17",   0x08000, 0xe52dfee1, BRF_OPT },
 };
 
 STD_ROM_PICK(Fullthrl)

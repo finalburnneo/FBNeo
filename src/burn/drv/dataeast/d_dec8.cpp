@@ -5165,7 +5165,7 @@ static struct BurnRomInfo lastmisnRomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_d100-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_dl00-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5206,7 +5206,7 @@ static struct BurnRomInfo lastmsnu6RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_d100-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_dl00-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };
@@ -5247,7 +5247,7 @@ static struct BurnRomInfo lastmsnu5RomDesc[] = {
 	{ "last_mission_dl07-.15k",		0x10000, 0x1b60604d, 6 }, // 11
 	{ "last_mission_dl06-.17k",		0x10000, 0xc43c26a7, 6 }, // 12
 
-	{ "last_mission_d100-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
+	{ "last_mission_dl00-e.18a",	0x01000, 0x00000000, 7 | BRF_NODUMP }, // 13 mcu
 
 	{ "dl-14.9c",					0x00100, 0x2e55aa12, 8 }, // 14 proms
 };

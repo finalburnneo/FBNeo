@@ -2165,6 +2165,8 @@ static struct BurnRomInfo ChasehqRomDesc[] = {
 	
 	{ "b52-116.70",    0x80000, 0xad46983c, BRF_SND | TAITO_YM2610B },
 	
+	{ "27c256.ic17",   0x08000, 0xe52dfee1, BRF_OPT },
+	
 	{ "b52-01.7",      0x00100, 0x89719d17, BRF_OPT },
 	{ "b52-03.135",    0x00400, 0xa3f8490d, BRF_OPT },
 	{ "b52-06.24",     0x00100, 0xfbf81f30, BRF_OPT },
@@ -2234,6 +2236,8 @@ static struct BurnRomInfo ChasehqjRomDesc[] = {
 	{ "b52-39.73",     0x80000, 0xac9cbbd3, BRF_SND | TAITO_YM2610A },
 	
 	{ "b52-42.70",     0x80000, 0x6e617df1, BRF_SND | TAITO_YM2610B },
+	
+	{ "27c256.ic17",   0x08000, 0xe52dfee1, BRF_OPT },
 	
 	{ "b52-01.7",      0x00100, 0x89719d17, BRF_OPT },
 	{ "b52-03.135",    0x00400, 0xa3f8490d, BRF_OPT },
@@ -2374,6 +2378,8 @@ static struct BurnRomInfo ChasehquRomDesc[] = {
 	{ "b52-113.73",    0x80000, 0x2c6a3a05, BRF_SND | TAITO_YM2610A },
 	
 	{ "b52-116.70",    0x80000, 0xad46983c, BRF_SND | TAITO_YM2610B },
+	
+	{ "27c256.ic17",   0x08000, 0xe52dfee1, BRF_OPT },
 	
 	{ "b52-01.7",      0x00100, 0x89719d17, BRF_OPT },
 	{ "b52-03.135",    0x00400, 0xa3f8490d, BRF_OPT },

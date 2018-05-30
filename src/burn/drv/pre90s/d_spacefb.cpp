@@ -698,12 +698,10 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 }
 
 static struct BurnSampleInfo SpacefbSampleDesc[] = {
-#if !defined (ROM_VERIFY)
 	{ "ekilled",		SAMPLE_NOLOOP },
 	{ "shipfire",		SAMPLE_NOLOOP },
 	{ "explode1",		SAMPLE_NOLOOP },
 	{ "explode2",		SAMPLE_NOLOOP },
-#endif
 	{ "", 0 }
 };
 

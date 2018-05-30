@@ -1557,7 +1557,7 @@ static struct BurnRomInfo mchampdxRomDesc[] = {
 	{ "rom.fu35",			0x200000, 0xba46f3dc, 4 | BRF_GRA },			//  6 - Tiles
 	{ "rom.fu34",			0x200000, 0x2895cf09, 4 | BRF_GRA },			//  7
 
-	{ "ver0106_esd4.su10", 	0x040000, 0xac8ae009, 5 | BRF_SND },			//  8 - OKI Samples
+	{ "esd4.su10", 			0x040000, 0x2fbe94ab, 5 | BRF_SND },			//  8 - OKI Samples
 	
 	{ "eeprom",				0x000080, 0x646b2f53, 0 | BRF_OPT },
 };

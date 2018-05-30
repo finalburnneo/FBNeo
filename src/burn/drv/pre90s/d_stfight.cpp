@@ -865,28 +865,28 @@ static struct BurnRomInfo empcityRomDesc[] = {
 
 	{ "empcityu_68705.3j",	0x0800, 0x182f7616, 3 | BRF_PRG | BRF_ESS }, //  3 M68705 MCU Code
 
-	{ "17.2N",				0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 Character Tiles
+	{ "17.2n",				0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 Character Tiles
 
-	{ "7.4C",				0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 Foreground Tiles
-	{ "8.5C",				0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",				0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",				0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",				0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 Foreground Tiles
+	{ "8.5c",				0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",				0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",				0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",				0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 Background Tiles
-	{ "14.5J",				0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",				0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",				0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",				0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 Background Tiles
+	{ "14.5j",				0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",				0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",				0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",				0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 Sprites
-	{ "21.9W",				0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",				0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",				0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",				0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 Sprites
+	{ "21.9w",				0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",				0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",				0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",				0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 Foreground Tilemap
-	{ "10.8C",				0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",				0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 Foreground Tilemap
+	{ "10.8c",				0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",				0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 Background Tilemap
-	{ "16.8J",				0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",				0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 Background Tilemap
+	{ "16.8j",				0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",			0x0100, 0xf9424b5b, 10 | BRF_GRA },          // 21 Text Layer Color Look-up Table
 
@@ -901,7 +901,7 @@ static struct BurnRomInfo empcityRomDesc[] = {
 
 	{ "82s129.015",			0x0100, 0x0eaf5158, 14 | BRF_OPT },          // 28 Unknown PROM
 
-	{ "5J",					0x8000, 0x1b8d0c07, 15 | BRF_SND },          // 29 MSM5205 Samples
+	{ "5j",					0x8000, 0x1b8d0c07, 15 | BRF_SND },          // 29 MSM5205 Samples
 };
 
 STD_ROM_PICK(empcity)
@@ -929,26 +929,26 @@ static struct BurnRomInfo empcityuRomDesc[] = {
 
 	{ "vid.2p",		        0x2000, 0x15593793, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
-	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
-	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
-	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
-	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
-	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
-	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
 
@@ -963,7 +963,7 @@ static struct BurnRomInfo empcityuRomDesc[] = {
 
 	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
 
-	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+	{ "5j",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
 
 	{ "82s123.a7",		    0x0020, 0x93e2d292, 16 | BRF_GRA },           // 30 user1
 };
@@ -991,28 +991,28 @@ static struct BurnRomInfo empcityjRomDesc[] = {
 
 	{ "empcityj_68705.3j",	0x0800, 0x19bdb0a9, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
-	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
-	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
-	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
-	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
-	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
-	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
-	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
 
@@ -1027,7 +1027,7 @@ static struct BurnRomInfo empcityjRomDesc[] = {
 
 	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
 
-	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+	{ "5j",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
 };
 
 STD_ROM_PICK(empcityj)
@@ -1053,28 +1053,28 @@ static struct BurnRomInfo empcityiRomDesc[] = {
 
 	{ "empcityi_68705.3j",	0x0800, 0xb1817d44, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
-	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
-	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
-	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
-	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
-	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
-	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
-	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
 
@@ -1089,7 +1089,7 @@ static struct BurnRomInfo empcityiRomDesc[] = {
 
 	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
 
-	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+	{ "5j",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
 };
 
 STD_ROM_PICK(empcityi)
@@ -1115,28 +1115,28 @@ static struct BurnRomInfo stfightRomDesc[] = {
 
 	{ "stfight_68705.3j",	0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
-	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
-	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
-	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
-	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
-	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
-	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
-	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
 
@@ -1151,7 +1151,7 @@ static struct BurnRomInfo stfightRomDesc[] = {
 
 	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
 
-	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+	{ "5j",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
 };
 
 STD_ROM_PICK(stfight)
@@ -1177,28 +1177,28 @@ static struct BurnRomInfo stfightaRomDesc[] = {
 
 	{ "stfight_68705.3j",	0x0800, 0xf4cc50d6, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
-	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
-	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
-	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
-	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
-	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
-	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
-	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
 
@@ -1213,7 +1213,7 @@ static struct BurnRomInfo stfightaRomDesc[] = {
 
 	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
 
-	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+	{ "5j",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
 };
 
 STD_ROM_PICK(stfighta)
@@ -1232,35 +1232,35 @@ struct BurnDriver BurnDrvStfighta = {
 // Street Fight (Germany - Benelux)
 
 static struct BurnRomInfo stfightgbRomDesc[] = {
-	{ "1.4T",		        0x8000, 0x0ce5ca11, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "2.2T",		        0x8000, 0x936ba873, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "1.4t",		        0x8000, 0x0ce5ca11, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.2t",		        0x8000, 0x936ba873, 1 | BRF_PRG | BRF_ESS }, //  1
 
-	{ "C5",			        0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
+	{ "c5",			        0x8000, 0x6a8cb7a6, 2 | BRF_PRG | BRF_ESS }, //  2 audiocpu
 
-	{ "stfightgb_68705.3J",	0x0800, 0x3b1b2660, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
+	{ "stfightgb_68705.3j",	0x0800, 0x3b1b2660, 3 | BRF_PRG | BRF_ESS }, //  3 mcu
 
-	{ "17.2N",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
+	{ "17.2n",		        0x2000, 0x1b3706b5, 4 | BRF_GRA },           //  4 stfight_vid:tx_gfx
 
-	{ "7.4C",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
-	{ "8.5C",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
-	{ "5.2C",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
-	{ "6.3C",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
+	{ "7.4c",		        0x8000, 0x2c6caa5f, 5 | BRF_GRA },           //  5 stfight_vid:fg_gfx
+	{ "8.5c",		        0x8000, 0xe11ded31, 5 | BRF_GRA },           //  6
+	{ "5.2c",		        0x8000, 0x0c099a31, 5 | BRF_GRA },           //  7
+	{ "6.3c",		        0x8000, 0x3cc77c31, 5 | BRF_GRA },           //  8
 
-	{ "13.4C",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
-	{ "14.5J",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
-	{ "11.2J",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
-	{ "12.3J",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
+	{ "13.4c",		        0x8000, 0x0ae48dd3, 6 | BRF_GRA },           //  9 stfight_vid:bg_gfx
+	{ "14.5j",		        0x8000, 0xdebf5d76, 6 | BRF_GRA },           // 10
+	{ "11.2j",		        0x8000, 0x8261ecfe, 6 | BRF_GRA },           // 11
+	{ "12.3j",		        0x8000, 0x71137301, 6 | BRF_GRA },           // 12
 
-	{ "20.8W",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
-	{ "21.9W",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
-	{ "18.6W",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
-	{ "19.7W",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
+	{ "20.8w",		        0x8000, 0x8299f247, 7 | BRF_GRA },           // 13 stfight_vid:spr_gfx
+	{ "21.9w",		        0x8000, 0xb57dc037, 7 | BRF_GRA },           // 14
+	{ "18.6w",		        0x8000, 0x68acd627, 7 | BRF_GRA },           // 15
+	{ "19.7w",		        0x8000, 0x5170a057, 7 | BRF_GRA },           // 16
 
-	{ "9.7C",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
-	{ "10.8C",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
+	{ "9.7c",		        0x8000, 0x8ceaf4fe, 8 | BRF_GRA },           // 17 stfight_vid:fg_map
+	{ "10.8c",		        0x8000, 0x5a1a227a, 8 | BRF_GRA },           // 18
 
-	{ "15.7J",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
-	{ "16.8J",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
+	{ "15.7j",		        0x8000, 0x27a310bc, 9 | BRF_GRA },           // 19 stfight_vid:bg_map
+	{ "16.8j",		        0x8000, 0x3d19ce18, 9 | BRF_GRA },           // 20
 
 	{ "82s129.006",		    0x0100, 0xf9424b5b, 10 | BRF_GRA },           // 21 stfight_vid:tx_clut
 
@@ -1275,7 +1275,7 @@ static struct BurnRomInfo stfightgbRomDesc[] = {
 
 	{ "82s129.015",		    0x0100, 0x0eaf5158, 14 | BRF_GRA },           // 28 proms
 
-	{ "5J",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
+	{ "5j",			        0x8000, 0x1b8d0c07, 15 | BRF_SND },           // 29 adpcm
 };
 
 STD_ROM_PICK(stfightgb)

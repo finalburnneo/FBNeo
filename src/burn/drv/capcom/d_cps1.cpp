@@ -6027,8 +6027,8 @@ static struct BurnRomInfo Ffightj3RomDesc[] = {
 
 	{ "ff_23.13b",     0x010000, 0xb8367eb5, BRF_PRG | CPS1_Z80_PROGRAM },
 
-	{ "ff_30.12c",     0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
-	{ "ff_31.13c",     0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ffj_30.12e",    0x020000, 0x375c66e7, BRF_SND | CPS1_OKIM6295_SAMPLES },
+	{ "ffj_31.13e",    0x020000, 0x1ef137f9, BRF_SND | CPS1_OKIM6295_SAMPLES },
 	
 	A_BOARD_PLDS
 	

@@ -1209,6 +1209,7 @@ struct BurnDriver BurnDrvNeoGeoMVS = {
 };
 
 #if defined ROM_VERIFY
+/*
 struct BurnDriver BurnDrvNeoGeoMV1 = {
 	"ng_mv1", NULL, "neogeo", NULL, "1990",
 	"Neo Geo (MV-1)\0", NULL, "SNK", "Neo Geo MVS",
@@ -1257,7 +1258,7 @@ struct BurnDriver BurnDrvNeoGeoMV4F = {
 	NULL, neogeoRomInfo, neogeoRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000, 320, 224, 4, 3
-};
+};*/
 #endif
 
 // ----------------------------------------------------------------------------

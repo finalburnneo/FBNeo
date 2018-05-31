@@ -657,7 +657,7 @@ static INT32 DrvInit(INT32 nGame)
 		K052109AdjustScroll(8, -8);
 
 		K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x3fffff, VendettaK053247Callback, 1);
-		K053247SetSpriteOffset(-11, -14);
+		K053247SetSpriteOffset(-20, -14);
 
 		bankoffset = 0x6000;
 	} else {
@@ -731,6 +731,7 @@ static INT32 DrvExit()
 static INT32 DrvDraw()
 {
 	KonamiRecalcPalette(DrvPalRAM, DrvPalette, 0x1000);
+	KonamiClearBitmaps(0);
 
 	K052109UpdateScroll();
 
@@ -1269,10 +1270,10 @@ struct BurnDriver BurnDrvEsckids = {
 	"esckids", NULL, NULL, NULL, "1991",
 	"Escape Kids (Asia, 4 Players)\0", NULL, "Konami", "GX975",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, esckidsRomInfo, esckidsRomName, NULL, NULL, EsckidsInputInfo, NULL,
-	EsckidsInit, DrvExit, DrvFrame, DrvDraw, NULL, &DrvRecalc, 0x800,
-	288, 240, 4, 3
+	EsckidsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
+	288, 224, 4, 3
 };
 
 
@@ -1303,7 +1304,7 @@ struct BurnDriver BurnDrvEsckidsj = {
 	"esckidsj", "esckids", NULL, NULL, "1991",
 	"Escape Kids (Japan, 2 Players)\0", NULL, "Konami", "GX975",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_RACING, 0,
 	NULL, esckidsjRomInfo, esckidsjRomName, NULL, NULL, EsckidsjInputInfo, NULL,
 	EsckidsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	288, 240, 4, 3

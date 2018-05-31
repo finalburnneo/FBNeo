@@ -698,7 +698,7 @@ struct BurnDriver BurnDrvDodgeman = {
 	"dodgeman", NULL, NULL, NULL, "1983",
 	"Dodge Man\0", NULL, "Omori Electric Co., Ltd.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, dodgemanRomInfo, dodgemanRomName, NULL, NULL, DodgemanInputInfo, DodgemanDIPInfo,
 	dodgemanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

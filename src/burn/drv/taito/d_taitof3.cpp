@@ -2104,7 +2104,7 @@ struct BurnDriver BurnDrvCommandw = {
 	"commandw", NULL, NULL, NULL, "1992",
 	"Command War - Super Special Battle & War Game (Ver 0.0J) (Prototype)\0", NULL, "Taito Corporation", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_PROTOTYPE, 2, HARDWARE_TAITO_MISC, GBF_MAZE, 0,
 	NULL, commandwRomInfo, commandwRomName, NULL, NULL, F3InputInfo, NULL,
 	commandwInit, DrvExit, DrvFrame, DrvDraw224B, DrvScan, &TaitoF3PalRecalc, 0x2000,
 	320, 224, 4, 3

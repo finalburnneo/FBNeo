@@ -2659,7 +2659,7 @@ struct BurnDriver BurnDrvMmonkey = {
 	"mmonkey", NULL, NULL, NULL, "1982",
 	"Minky Monkey\0", NULL, "Technos Japan / Roller Tron", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, mmonkeyRomInfo, mmonkeyRomName, NULL, NULL, MmonkeyInputInfo, MmonkeyDIPInfo,
 	MmonkeyInit, DrvExit, BtimeFrame, eggsDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4

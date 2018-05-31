@@ -647,7 +647,7 @@ struct BurnDriver BurnDrvGlass = {
 	"glass", NULL, NULL, NULL, "1994",
 	"Glass (Ver 1.1, Break Edition, Version 1994)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, glassRomInfo, glassRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvGlass10 = {
 	"glass10", "glass", NULL, NULL, "1993",
 	"Glass (Ver 1.0, Break Edition) (set 1)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, glass10RomInfo, glass10RomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
@@ -707,7 +707,7 @@ struct BurnDriver BurnDrvGlass10a = {
 	"glass10a", "glass", NULL, NULL, "1993",
 	"Glass (Ver 1.0, Break Edition) (set 2)\0", NULL, "OMK / Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, glass10aRomInfo, glass10aRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3
@@ -735,7 +735,7 @@ struct BurnDriver BurnDrvGlasskr = {
 	"glasskr", "glass", NULL, NULL, "1994",
 	"Glass (Ver 1.1, Break Edition, Version 1994) (censored, unprotected)\0", NULL, "OMK / Gaelco (Promat license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, glasskrRomInfo, glasskrRomName, NULL, NULL, GlassInputInfo, GlassDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	368, 240, 4, 3

@@ -21271,7 +21271,7 @@ struct BurnDriver BurnDrvCpsCps1frog = {
 	"cps1frog", NULL, NULL, NULL, "2006",
 	"Frog Feast (CPS-1)\0", NULL, "Rastersoft (Homebrew)", "CPS1",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CAPCOM_CPS1, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_CAPCOM_CPS1, GBF_PLATFORM, 0,
 	NULL, Cps1frogRomInfo, Cps1frogRomName, NULL, NULL, FfightInputInfo, FfightDIPInfo,
 	Cps1demoInit, DrvExit, Cps1Frame, CpsRedraw, CpsAreaScan,
 	&CpsRecalcPal, 0x1000, 384, 224, 4, 3

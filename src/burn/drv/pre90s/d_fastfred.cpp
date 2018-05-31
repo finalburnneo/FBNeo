@@ -1334,7 +1334,7 @@ struct BurnDriver BurnDrvFastfred = {
 	"fastfred", "flyboy", NULL, NULL, "1982",
 	"Fast Freddie\0", NULL, "Kaneko (Atari license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, fastfredRomInfo, fastfredRomName, NULL, NULL, CommonInputInfo, FastfredDIPInfo,
 	fastfredInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1467,7 +1467,7 @@ struct BurnDriver BurnDrvFlyboy = {
 	"flyboy", NULL, NULL, NULL, "1982",
 	"Fly-Boy\0", NULL, "Kaneko", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, flyboyRomInfo, flyboyRomName, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
 	flyboyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4
@@ -1512,7 +1512,7 @@ struct BurnDriver BurnDrvFlyboyb = {
 	"flyboyb", "flyboy", NULL, NULL, "1982",
 	"Fly-Boy (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
 	NULL, flyboybRomInfo, flyboybRomName, NULL, NULL, CommonInputInfo, FlyboyDIPInfo,
 	fastfredInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

@@ -274,6 +274,18 @@ TCHAR* DecorateGenreInfo()
 			_stprintf(szDecoratedGenre, _T("%s%s, "), szDecoratedGenre, FBALoadStringEx(hAppInst, IDS_GENRE_SHOOT, true));
 		}
 		
+		if (nGenre & GBF_ACTION) {
+			_stprintf(szDecoratedGenre, _T("%s%s, "), szDecoratedGenre, FBALoadStringEx(hAppInst, IDS_GENRE_ACTION, true));
+		}
+		
+		if (nGenre & GBF_RUNGUN) {
+			_stprintf(szDecoratedGenre, _T("%s%s, "), szDecoratedGenre, FBALoadStringEx(hAppInst, IDS_GENRE_RUNGUN, true));
+		}
+		
+		if (nGenre & GBF_STRATEGY) {
+			_stprintf(szDecoratedGenre, _T("%s%s, "), szDecoratedGenre, FBALoadStringEx(hAppInst, IDS_GENRE_STRATEGY, true));
+		}
+		
 		szDecoratedGenre[_tcslen(szDecoratedGenre) - 2] = _T('\0');
 	}
 	

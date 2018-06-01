@@ -152,6 +152,9 @@ HTREEITEM hFilterMisc				= NULL;
 HTREEITEM hFilterMahjong			= NULL;
 HTREEITEM hFilterRacing				= NULL;
 HTREEITEM hFilterShoot				= NULL;
+HTREEITEM hFilterRungun 			= NULL;
+HTREEITEM hFilterAction				= NULL;
+HTREEITEM hFilterStrategy   		= NULL;
 HTREEITEM hFilterOtherFamily		= NULL;
 HTREEITEM hFilterMslug				= NULL;
 HTREEITEM hFilterSf					= NULL;
@@ -258,7 +261,7 @@ static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 |
 #define MASKBOARDTYPEGENUINE	(1)
 #define MASKFAMILYOTHER			0x10000000
 
-#define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT)
+#define MASKALLGENRE			(GBF_HORSHOOT | GBF_VERSHOOT | GBF_SCRFIGHT | GBF_VSFIGHT | GBF_BIOS | GBF_BREAKOUT | GBF_CASINO | GBF_BALLPADDLE | GBF_MAZE | GBF_MINIGAMES | GBF_PINBALL | GBF_PLATFORM | GBF_PUZZLE | GBF_QUIZ | GBF_SPORTSMISC | GBF_SPORTSFOOTBALL | GBF_MISC | GBF_MAHJONG | GBF_RACING | GBF_SHOOT | GBF_ACTION | GBF_RUNGUN | GBF_STRATEGY)
 #define MASKALLFAMILY			(MASKFAMILYOTHER | FBF_MSLUG | FBF_SF | FBF_KOF | FBF_DSTLK | FBF_FATFURY | FBF_SAMSHO | FBF_19XX | FBF_SONICWI | FBF_PWRINST)
 #define MASKALLBOARD			(MASKBOARDTYPEGENUINE | BDF_BOOTLEG | BDF_DEMO | BDF_HACK | BDF_HOMEBREW | BDF_PROTOTYPE)
 
@@ -497,6 +500,9 @@ static int DoExtraFilters()
 	if ((nLoadMenuGenreFilter & GBF_MAHJONG)				&& (BurnDrvGetGenreFlags() & GBF_MAHJONG))			return 1;
 	if ((nLoadMenuGenreFilter & GBF_RACING)					&& (BurnDrvGetGenreFlags() & GBF_RACING))			return 1;
 	if ((nLoadMenuGenreFilter & GBF_SHOOT)					&& (BurnDrvGetGenreFlags() & GBF_SHOOT))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_ACTION)					&& (BurnDrvGetGenreFlags() & GBF_ACTION))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_RUNGUN)					&& (BurnDrvGetGenreFlags() & GBF_RUNGUN))			return 1;
+	if ((nLoadMenuGenreFilter & GBF_STRATEGY)				&& (BurnDrvGetGenreFlags() & GBF_STRATEGY))			return 1;
 	
 	return 0;
 }
@@ -1174,13 +1180,16 @@ static void CreateFilters()
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_PINBALL		, hFilterPinball		, nLoadMenuGenreFilter & GBF_PINBALL				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_PLATFORM	, hFilterPlatform		, nLoadMenuGenreFilter & GBF_PLATFORM				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_PUZZLE		, hFilterPuzzle			, nLoadMenuGenreFilter & GBF_PUZZLE					);
+	_TVCreateFiltersA(hGenre		, IDS_GENRE_ACTION		, hFilterAction			, nLoadMenuGenreFilter & GBF_ACTION					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_QUIZ		, hFilterQuiz			, nLoadMenuGenreFilter & GBF_QUIZ					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_RACING		, hFilterRacing			, nLoadMenuGenreFilter & GBF_RACING					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_HORSHOOT	, hFilterHorshoot		, nLoadMenuGenreFilter & GBF_HORSHOOT				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SHOOT		, hFilterShoot			, nLoadMenuGenreFilter & GBF_SHOOT					);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_VERSHOOT	, hFilterVershoot		, nLoadMenuGenreFilter & GBF_VERSHOOT				);
+	_TVCreateFiltersA(hGenre		, IDS_GENRE_RUNGUN		, hFilterRungun			, nLoadMenuGenreFilter & GBF_RUNGUN 				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SPORTSMISC	, hFilterSportsmisc		, nLoadMenuGenreFilter & GBF_SPORTSMISC				);
 	_TVCreateFiltersA(hGenre		, IDS_GENRE_SPORTSFOOTBALL, hFilterSportsfootball, nLoadMenuGenreFilter & GBF_SPORTSFOOTBALL		);
+	_TVCreateFiltersA(hGenre		, IDS_GENRE_STRATEGY	, hFilterStrategy   	, nLoadMenuGenreFilter & GBF_STRATEGY   			);
 
 	_TVCreateFiltersB(hRoot			, IDS_SEL_HARDWARE, hHardware			);
 	
@@ -1653,6 +1662,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMahjong, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterRacing, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterShoot, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterAction, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterRungun, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterStrategy, FALSE);
 				
 				nLoadMenuGenreFilter = MASKALLGENRE;
 			} else {
@@ -1678,6 +1690,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterMahjong, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterRacing, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterShoot, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterAction, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterRungun, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterStrategy, TRUE);
 				
 				nLoadMenuGenreFilter = 0;
 			}
@@ -1751,6 +1766,9 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterMahjong)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_MAHJONG);
 		if (hItemChanged == hFilterRacing)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_RACING);
 		if (hItemChanged == hFilterShoot)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_SHOOT);
+		if (hItemChanged == hFilterAction)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_ACTION);
+		if (hItemChanged == hFilterRungun)			_ToggleGameListing(nLoadMenuGenreFilter, GBF_RUNGUN);
+		if (hItemChanged == hFilterStrategy)		_ToggleGameListing(nLoadMenuGenreFilter, GBF_STRATEGY);
 		
 		RebuildEverything();
 	}

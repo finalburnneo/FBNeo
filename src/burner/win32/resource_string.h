@@ -225,6 +225,9 @@
 #define IDS_GENRE_MAHJONG				(IDS_STRING +  686)
 #define IDS_GENRE_RACING				(IDS_STRING +  688)
 #define IDS_GENRE_SHOOT					(IDS_STRING +  690)
+#define IDS_GENRE_RUNGUN                (IDS_STRING +  691)
+#define IDS_GENRE_STRATEGY              (IDS_STRING +  692)
+#define IDS_GENRE_ACTION                (IDS_STRING +  693)
 
 #define IDS_FAMILY						(IDS_STRING +  740)
 #define IDS_FAMILY_MSLUG				(IDS_STRING +  742)

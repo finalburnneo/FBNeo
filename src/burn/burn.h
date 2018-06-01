@@ -626,6 +626,9 @@ void IpsApplyPatches(UINT8* base, char* rom_name);
 #define GBF_MAHJONG										(1 << 17)
 #define GBF_RACING										(1 << 18)
 #define GBF_SHOOT										(1 << 19)
+#define GBF_ACTION  									(1 << 20)
+#define GBF_RUNGUN  									(1 << 21)
+#define GBF_STRATEGY									(1 << 22)
 
 // flags for the family member
 #define FBF_MSLUG										(1 << 0)

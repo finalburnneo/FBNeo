@@ -226,6 +226,9 @@ BEGIN
 	IDS_GENRE_MAHJONG			"Mahjong"
 	IDS_GENRE_RACING			"Racing"
 	IDS_GENRE_SHOOT				"Shooter - Other"
+	IDS_GENRE_RUNGUN                        "Run and Gun"
+        IDS_GENRE_STRATEGY                      "Strategy"
+        IDS_GENRE_ACTION                        "Action  (Classic)"
 
 	IDS_FAMILY					"Family"
 	IDS_FAMILY_MSLUG			"Metal Slug"

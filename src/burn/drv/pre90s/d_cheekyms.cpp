@@ -569,7 +569,7 @@ struct BurnDriver BurnDrvCheekyms = {
 	"cheekyms", NULL, NULL, "cheekyms", "1980",
 	"Cheeky Mouse\0", NULL, "Universal", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, cheekymsRomInfo, cheekymsRomName, CheekymsSampleInfo, CheekymsSampleName, CheekymsInputInfo, CheekymsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	192, 256, 3, 4

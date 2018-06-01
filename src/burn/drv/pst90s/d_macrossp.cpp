@@ -1268,7 +1268,7 @@ struct BurnDriverD BurnDrvQuizmoon = {
 	"quizmoon", NULL, NULL, NULL, "1997",
 	"Quiz Bisyoujo Senshi Sailor Moon - Chiryoku Tairyoku Toki no Un\0", NULL, "Banpresto", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, quizmoonRomInfo, quizmoonRomName, NULL, NULL, MacrosspInputInfo, MacrosspDIPInfo, //QuizmoonInputInfo, QuizmoonDIPInfo,
 	quizmoonInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	384, 224, 4, 3

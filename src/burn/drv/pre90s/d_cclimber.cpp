@@ -2100,7 +2100,7 @@ struct BurnDriver BurnDrvRpatrol = {
 	"rpatrol", NULL, NULL, NULL, "1981",
 	"River Patrol (Orca)\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rpatrolRomInfo, rpatrolRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2136,7 +2136,7 @@ struct BurnDriver BurnDrvRpatrolb = {
 	"rpatrolb", "rpatrol", NULL, NULL, "1981",
 	"River Patrol (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, rpatrolbRomInfo, rpatrolbRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	rpatrolbInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
@@ -2173,7 +2173,7 @@ struct BurnDriver BurnDrvSilvland = {
 	"silvland", "rpatrol", NULL, NULL, "1981",
 	"Silver Land\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, silvlandRomInfo, silvlandRomName, NULL, NULL, RpatrolInputInfo, RpatrolDIPInfo,
 	silvlandInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

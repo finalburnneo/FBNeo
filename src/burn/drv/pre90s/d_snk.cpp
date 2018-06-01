@@ -7420,7 +7420,7 @@ struct BurnDriver BurnDrvGwar = {
 	"gwar", NULL, NULL, NULL, "1987",
 	"Guerrilla War (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwarRomInfo, gwarRomName, NULL, NULL, GwarInputInfo, GwarDIPInfo,
 	GwarInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
@@ -7474,7 +7474,7 @@ struct BurnDriver BurnDrvGwarj = {
 	"gwarj", "gwar", NULL, NULL, "1987",
 	"Guevara (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwarjRomInfo, gwarjRomName, NULL, NULL, GwarInputInfo, GwarDIPInfo,
 	GwarInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
@@ -7525,7 +7525,7 @@ struct BurnDriver BurnDrvGwarb = {
 	"gwarb", "gwar", NULL, NULL, "1987",
 	"Guerrilla War (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwarbRomInfo, gwarbRomName, NULL, NULL, GwarbInputInfo, GwarbDIPInfo,
 	GwarbInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
@@ -7579,7 +7579,7 @@ struct BurnDriver BurnDrvGwara = {
 	"gwara", "gwar", NULL, NULL, "1987",
 	"Guerrilla War (Version 1)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, gwaraRomInfo, gwaraRomName, NULL, NULL, GwarInputInfo, GwarDIPInfo,
 	GwaraInit, DrvExit, GwarFrame, GwarDraw, DrvScan, &DrvRecalc, 0x400,
 	224, 400, 3, 4
@@ -7621,7 +7621,7 @@ struct BurnDriver BurnDrvTnk3 = {
 	"tnk3", NULL, NULL, NULL, "1985",
 	"T.N.K III (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tnk3RomInfo, tnk3RomName, NULL, NULL, Tnk3InputInfo, Tnk3DIPInfo,
 	Tnk3Init, DrvExit, Tnk3Frame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
@@ -7663,7 +7663,7 @@ struct BurnDriver BurnDrvTnk3j = {
 	"tnk3j", "tnk3", NULL, NULL, "1985",
 	"T.A.N.K (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, tnk3jRomInfo, tnk3jRomName, NULL, NULL, Tnk3InputInfo, Tnk3DIPInfo,
 	Tnk3Init, DrvExit, Tnk3Frame, Tnk3Draw, DrvScan, &DrvRecalc, 0x400,
 	224, 288, 3, 4
@@ -8138,7 +8138,7 @@ struct BurnDriver BurnDrvIkari = {
 	"ikari", NULL, NULL, NULL, "1986",
 	"Ikari Warriors (US JAMMA)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikariRomInfo, ikariRomName, NULL, NULL, IkariInputInfo, IkariDIPInfo,
 	IkariInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8187,7 +8187,7 @@ struct BurnDriver BurnDrvIkaria = {
 	"ikaria", "ikari", NULL, NULL, "1986",
 	"Ikari Warriors (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikariaRomInfo, ikariaRomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
 	IkariaInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8241,7 +8241,7 @@ struct BurnDriver BurnDrvIkarinc = {
 	"ikarinc", "ikari", NULL, NULL, "1986",
 	"Ikari Warriors (US No Continues)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikarincRomInfo, ikarincRomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
 	IkariInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8295,7 +8295,7 @@ struct BurnDriver BurnDrvIkarijp = {
 	"ikarijp", "ikari", NULL, NULL, "1986",
 	"Ikari (Japan No Continues)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikarijpRomInfo, ikarijpRomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
 	IkariaInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8344,7 +8344,7 @@ struct BurnDriver BurnDrvIkarijpb = {
 	"ikarijpb", "ikari", NULL, NULL, "1986",
 	"Ikari (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikarijpbRomInfo, ikarijpbRomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
 	IkarijoyInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8395,7 +8395,7 @@ struct BurnDriver BurnDrvIkariram = {
 	"ikariram", "ikari", NULL, NULL, "1986",
 	"Rambo 3 (bootleg of Ikari, Joystick hack)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, ikariramRomInfo, ikariramRomName, NULL, NULL, IkariaInputInfo, IkariDIPInfo,
 	IkarijoyInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8449,7 +8449,7 @@ struct BurnDriver BurnDrvVictroad = {
 	"victroad", NULL, NULL, NULL, "1986",
 	"Victory Road\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, victroadRomInfo, victroadRomName, NULL, NULL, VictroadInputInfo, VictroadDIPInfo,
 	VictroadInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8498,7 +8498,7 @@ struct BurnDriver BurnDrvDogosoke = {
 	"dogosoke", "victroad", NULL, NULL, "1986",
 	"Dogou Souken\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, dogosokeRomInfo, dogosokeRomName, NULL, NULL, VictroadInputInfo, VictroadDIPInfo,
 	VictroadInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4
@@ -8547,7 +8547,7 @@ struct BurnDriver BurnDrvDogosokb = {
 	"dogosokb", "victroad", NULL, NULL, "1986",
 	"Dogou Souken (Joystick hack bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, dogosokbRomInfo, dogosokbRomName, NULL, NULL, VictroadInputInfo, VictroadDIPInfo,
 	VictroadInit, DrvExit, AthenaFrame, IkariDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4

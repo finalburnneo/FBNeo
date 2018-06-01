@@ -671,7 +671,7 @@ struct BurnDriver BurnDrvBishi = {
 	"bishi", NULL, NULL, NULL, "1996",
 	"Bishi Bashi Championship Mini Game Senshuken (ver JAA, 3 Players)\0", "Imperfect gfx (one gfx rom bad, bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, bishiRomInfo, bishiRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -702,7 +702,7 @@ struct BurnDriver BurnDrvSbishi = {
 	"sbishi", NULL, NULL, NULL, "1998",
 	"Super Bishi Bashi Championship (ver JAA, 2 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, sbishiRomInfo, sbishiRomName, NULL, NULL, Bishi2pInputInfo, Bishi2pDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -733,7 +733,7 @@ struct BurnDriver BurnDrvSbishik = {
 	"sbishik", "sbishi", NULL, NULL, "1998",
 	"Super Bishi Bashi Championship (ver KAB, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, sbishikRomInfo, sbishikRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3
@@ -764,7 +764,7 @@ struct BurnDriver BurnDrvSbishika = {
 	"sbishika", "sbishi", NULL, NULL, "1998",
 	"Super Bishi Bashi Championship (ver KAA, 3 Players)\0", "Imperfect gfx (bad priorities)", "Konami", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_MINIGAMES, 0,
 	NULL, sbishikaRomInfo, sbishikaRomName, NULL, NULL, BishiInputInfo, BishiDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x2000,
 	288, 224, 4, 3

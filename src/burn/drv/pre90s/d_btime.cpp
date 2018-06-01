@@ -2659,7 +2659,7 @@ struct BurnDriver BurnDrvMmonkey = {
 	"mmonkey", NULL, NULL, NULL, "1982",
 	"Minky Monkey\0", NULL, "Technos Japan / Roller Tron", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, mmonkeyRomInfo, mmonkeyRomName, NULL, NULL, MmonkeyInputInfo, MmonkeyDIPInfo,
 	MmonkeyInit, DrvExit, BtimeFrame, eggsDraw, DrvScan, &DrvRecalc, 16,
 	240, 242, 3, 4
@@ -2756,7 +2756,7 @@ struct BurnDriver BurnDrvDisco = {
 	"disco", NULL, NULL, NULL, "1982",
 	"Disco No.1\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, discoRomInfo, discoRomName, NULL, NULL, DiscoInputInfo, DiscoDIPInfo,
 	DiscoInit, DrvExit, BtimeFrame, DiscoDraw, DrvScan, &DrvRecalc, 32,
 	240, 242, 3, 4
@@ -2785,7 +2785,7 @@ struct BurnDriver BurnDrvDiscof = {
 	"discof", "disco", NULL, NULL, "1982",
 	"Disco No.1 (Rev.F)\0", NULL, "Data East", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, discofRomInfo, discofRomName, NULL, NULL, DiscoInputInfo, DiscoDIPInfo,
 	DiscoInit, DrvExit, BtimeFrame, DiscoDraw, DrvScan, &DrvRecalc, 32,
 	240, 242, 3, 4

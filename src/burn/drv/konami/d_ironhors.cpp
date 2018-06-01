@@ -677,7 +677,7 @@ struct BurnDriver BurnDrvIronhors = {
 	"ironhors", NULL, NULL, NULL, "1986",
 	"Iron Horse\0", NULL, "Konami", "GX560",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, ironhorsRomInfo, ironhorsRomName, NULL, NULL, IronhorsInputInfo, IronhorsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	240, 224, 4, 3
@@ -711,7 +711,7 @@ struct BurnDriver BurnDrvDairesya = {
 	"dairesya", "ironhors", NULL, NULL, "1986",
 	"Dai Ressya Goutou (Japan)\0", NULL, "Konami (Kawakusu license)", "GX560",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, dairesyaRomInfo, dairesyaRomName, NULL, NULL, DairesyaInputInfo, IronhorsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	240, 224, 4, 3
@@ -749,7 +749,7 @@ struct BurnDriverD BurnDrvFarwest = {
 	"farwest", "ironhors", NULL, NULL, "1986",
 	"Far West\0", NULL, "bootleg?", "GX560",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_HORSHOOT, 0,
+	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, farwestRomInfo, farwestRomName, NULL, NULL, IronhorsInputInfo, IronhorsDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	240, 224, 4, 3

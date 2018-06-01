@@ -1741,7 +1741,7 @@ struct BurnDriver BurnDrvNova2001 = {
 	"nova2001", NULL, NULL, NULL, "1983",
 	"Nova 2001 (Japan)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nova2001RomInfo, nova2001RomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
@@ -1773,7 +1773,7 @@ struct BurnDriver BurnDrvNova2001h = {
 	"nova2001h", "nova2001", NULL, NULL, "1983",
 	"Nova 2001 (Japan, hack?)\0", NULL, "UPL", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nova2001hRomInfo, nova2001hRomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3
@@ -1803,7 +1803,7 @@ struct BurnDriver BurnDrvNova2001u = {
 	"nova2001u", "nova2001", NULL, NULL, "1983",
 	"Nova 2001 (US)\0", NULL, "UPL (Universal license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, nova2001uRomInfo, nova2001uRomName, NULL, NULL, Nova2001InputInfo, Nova2001DIPInfo,
 	NovaInit, DrvExit, NovaFrame, NovaDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 192, 4, 3

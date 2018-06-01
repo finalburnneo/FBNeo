@@ -907,7 +907,7 @@ struct BurnDriver BurnDrvLiblrabl = {
 	"liblrabl", NULL, NULL, NULL, "1983",
 	"Libble Rabble\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, liblrablRomInfo, liblrablRomName, NULL, NULL, LiblrablInputInfo, LiblrablDIPInfo,
 	LiblrablInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x320,
 	288, 224, 4, 3

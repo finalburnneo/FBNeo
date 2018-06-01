@@ -1,4 +1,4 @@
- // FB Alpha Popper driver module
+// FB Alpha Popper driver module
 // Based on MAME driver by Dirk Best
 
 #include "tiles_generic.h"
@@ -633,7 +633,7 @@ struct BurnDriver BurnDrvPopper = {
 	"popper", NULL, NULL, NULL, "1983",
 	"Popper\0", NULL, "Omori", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popperRomInfo, popperRomName, NULL, NULL, PopperInputInfo, PopperDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 280, 3, 4

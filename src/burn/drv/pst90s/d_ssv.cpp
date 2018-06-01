@@ -5200,7 +5200,7 @@ struct BurnDriver BurnDrvSxyreact = {
 	"sxyreact", NULL, NULL, NULL, "1998",
 	"Pachinko Sexy Reaction (Japan)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_CASINO, 0,
 	NULL, sxyreactRomInfo, sxyreactRomName, NULL, NULL, SxyreactInputInfo, SxyreactDIPInfo,
 	SxyreactInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	338, 240, 4, 3
@@ -5236,7 +5236,7 @@ struct BurnDriver BurnDrvSxyreac2 = {
 	"sxyreac2", NULL, NULL, NULL, "1999",
 	"Pachinko Sexy Reaction 2 (Japan)\0", NULL, "Sammy", "SSV",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SETA_SSV, GBF_CASINO, 0,
 	NULL, sxyreac2RomInfo, sxyreac2RomName, NULL, NULL, SxyreactInputInfo, SxyreactDIPInfo,
 	Sxyreac2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x8000,
 	336, 240, 4, 3

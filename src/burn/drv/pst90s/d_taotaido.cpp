@@ -981,7 +981,7 @@ struct BurnDriver BurnDrvTaotaido = {
 	"taotaido", NULL, NULL, NULL, "1993",
 	"Tao Taido (set 1)\0", NULL, "Video System Co.", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_VSFIGHT, 0,
 	NULL, taotaidoRomInfo, taotaidoRomName, NULL, NULL, TaotaidoInputInfo, TaotaidoDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 224, 4, 3

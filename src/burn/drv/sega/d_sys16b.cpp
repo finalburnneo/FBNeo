@@ -9759,7 +9759,7 @@ struct BurnDriver BurnDrvSnapper = {
 	"snapper", NULL, NULL, NULL, "1990",
 	"Snapper (Korea)\0", NULL, "Philko", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_MISC, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_YM2413, GBF_MAZE, 0,
 	NULL, SnapperRomInfo, SnapperRomName, NULL, NULL, SnapperInputInfo, SnapperDIPInfo,
 	SnapperInit, System16Exit, System16BFrame, NULL, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

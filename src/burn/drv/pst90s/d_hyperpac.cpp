@@ -4140,7 +4140,7 @@ struct BurnDriver BurnDrvPzlbreak = {
 	"pzlbreak", NULL, NULL, NULL, "1997",
 	"Puzzle Break\0", NULL, "SemiCom", "Kaneko Pandora based",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_BREAKOUT, 0,
 	NULL, PzlbreakRomInfo, PzlbreakRomName, NULL, NULL, HyperpacInputInfo, MoremoreDIPInfo,
 	PzlbreakInit, HyperpacExit, PzlbreakFrame, NULL, HyperpacScan,
 	NULL, 0x200, 256, 224, 4, 3

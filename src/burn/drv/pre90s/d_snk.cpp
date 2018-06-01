@@ -6733,7 +6733,7 @@ struct BurnDriver BurnDrvMarvins = {
 	"marvins", NULL, NULL, NULL, "1983",
 	"Marvin's Maze\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, marvinsRomInfo, marvinsRomName, NULL, NULL, MarvinsInputInfo, MarvinsDIPInfo,
 	MarvinsInit, DrvExit, MarvinsFrame, MarvinsDraw, DrvScan, &DrvRecalc, 0x400,
 	216, 288, 3, 4

@@ -652,7 +652,7 @@ struct BurnDriver BurnDrvCircusc = {
 	"circusc", NULL, NULL, NULL, "1984",
 	"Circus Charlie (level select, set 1)\0", NULL, "Konami", "GX380",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
 	NULL, circuscRomInfo, circuscRomName, NULL, NULL, CircuscInputInfo, CircuscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -693,7 +693,7 @@ struct BurnDriver BurnDrvCircusc2 = {
 	"circusc2", "circusc", NULL, NULL, "1984",
 	"Circus Charlie (level select, set 2)\0", NULL, "Konami", "GX380",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
 	NULL, circusc2RomInfo, circusc2RomName, NULL, NULL, CircuscInputInfo, CircuscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -734,7 +734,7 @@ struct BurnDriver BurnDrvCircusc3 = {
 	"circusc3", "circusc", NULL, NULL, "1984",
 	"Circus Charlie (level select, set 3)\0", NULL, "Konami", "GX380",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
 	NULL, circusc3RomInfo, circusc3RomName, NULL, NULL, CircuscInputInfo, CircuscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -775,7 +775,7 @@ struct BurnDriver BurnDrvCircusc4 = {
 	"circusc4", "circusc", NULL, NULL, "1984",
 	"Circus Charlie (no level select)\0", NULL, "Konami", "GX380",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
 	NULL, circusc4RomInfo, circusc4RomName, NULL, NULL, CircuscInputInfo, CircuscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -816,7 +816,7 @@ struct BurnDriver BurnDrvCircuscc = {
 	"circuscc", "circusc", NULL, NULL, "1984",
 	"Circus Charlie (Centuri)\0", NULL, "Konami (Centuri license)", "GX380",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
 	NULL, circusccRomInfo, circusccRomName, NULL, NULL, CircuscInputInfo, CircuscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -857,7 +857,7 @@ struct BurnDriver BurnDrvCircusce = {
 	"circusce", "circusc", NULL, NULL, "1984",
 	"Circus Charlie (Centuri, earlier)\0", NULL, "Konami (Centuri license)", "GX380",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PREFIX_KONAMI, GBF_ACTION, 0,
 	NULL, circusceRomInfo, circusceRomName, NULL, NULL, CircuscInputInfo, CircuscDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4

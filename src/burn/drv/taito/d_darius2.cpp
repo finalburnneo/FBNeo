@@ -2087,7 +2087,7 @@ struct BurnDriver BurnDrvNinjaw1 = {
 	"ninjaw1", "ninjaw", NULL, NULL, "1987",
 	"The Ninja Warriors (World, earlier version)\0", NULL, "Taito Corporation Japan", "Taito Misc",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, Ninjaw1RomInfo, Ninjaw1RomName, NULL, NULL, Darius2InputInfo, NinjawDIPInfo,
 	NinjawInit, Darius2Exit, Darius2Frame, NULL, Darius2Scan,
 	NULL, 0x3000, 864, 224, 12, 3

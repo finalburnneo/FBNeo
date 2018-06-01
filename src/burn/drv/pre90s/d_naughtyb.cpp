@@ -704,7 +704,7 @@ struct BurnDriver BurnDrvNaughtyb = {
 	"naughtyb", NULL, NULL, NULL, "1982",
 	"Naughty Boy\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, naughtybRomInfo, naughtybRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -744,7 +744,7 @@ struct BurnDriver BurnDrvNaughtyba = {
 	"naughtyba", "naughtyb", NULL, NULL, "1982",
 	"Naughty Boy (bootleg, set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, naughtybaRomInfo, naughtybaRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -784,7 +784,7 @@ struct BurnDriver BurnDrvNaughtybb = {
 	"naughtybb", "naughtyb", NULL, NULL, "1982",
 	"Naughty Boy (bootleg, set 2)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, naughtybbRomInfo, naughtybbRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -824,7 +824,7 @@ struct BurnDriver BurnDrvNaughtybc = {
 	"naughtybc", "naughtyb", NULL, NULL, "1982",
 	"Naughty Boy (Cinematronics)\0", NULL, "Jaleco (Cinematronics license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, naughtybcRomInfo, naughtybcRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -861,7 +861,7 @@ struct BurnDriver BurnDrvPopflame = {
 	"popflame", NULL, NULL, NULL, "1982",
 	"Pop Flamer (protected)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popflameRomInfo, popflameRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	popflameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -893,7 +893,7 @@ struct BurnDriver BurnDrvPopflamea = {
 	"popflamea", "popflame", NULL, NULL, "1982",
 	"Pop Flamer (not protected)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popflameaRomInfo, popflameaRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	popflameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -925,7 +925,7 @@ struct BurnDriver BurnDrvPopflameb = {
 	"popflameb", "popflame", NULL, NULL, "1982",
 	"Pop Flamer (hack?)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popflamebRomInfo, popflamebRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	popflameInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4
@@ -967,7 +967,7 @@ struct BurnDriver BurnDrvPopflamen = {
 	"popflamen", "popflame", NULL, NULL, "1982",
 	"Pop Flamer (bootleg on Naughty Boy PCB)\0", NULL, "Jaleco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, popflamenRomInfo, popflamenRomName, NULL, NULL, NaughtybInputInfo, NaughtybDIPInfo,
 	naughtybInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 288, 3, 4

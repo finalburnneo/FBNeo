@@ -496,7 +496,7 @@ static INT32 DrvFrame()
 		DrvJoy1[4] |= DrvJoy2[4]; // shared controls - game only responds to player 1 inputs.
 		DrvJoy1[5] |= DrvJoy2[5];
 
-		memset (DrvInputs, 0xff, 3);
+		memset (DrvInputs, 0xff, 2);
 
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;

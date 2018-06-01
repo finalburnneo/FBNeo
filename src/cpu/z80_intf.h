@@ -50,7 +50,22 @@ INT32 ZetNmi();
 INT32 ZetIdle(INT32 nCycles);
 INT32 ZetSegmentCycles();
 INT32 ZetTotalCycles();
+void ZetSetAF(INT32 n, UINT16 value);
+void ZetSetAF2(INT32 n, UINT16 value);
+void ZetSetBC(INT32 n, UINT16 value);
+void ZetSetBC2(INT32 n, UINT16 value);
+void ZetSetDE(INT32 n, UINT16 value);
+void ZetSetDE2(INT32 n, UINT16 value);
 void ZetSetHL(INT32 n, UINT16 value);
+void ZetSetHL2(INT32 n, UINT16 value);
+void ZetSetI(INT32 n, UINT16 value);
+void ZetSetIFF1(INT32 n, UINT16 value);
+void ZetSetIFF2(INT32 n, UINT16 value);
+void ZetSetIM(INT32 n, UINT16 value);
+void ZetSetIX(INT32 n, UINT16 value);
+void ZetSetIY(INT32 n, UINT16 value);
+void ZetSetPC(INT32 n, UINT16 value);
+void ZetSetR(INT32 n, UINT16 value);
 void ZetSetSP(INT32 n, UINT16 value);
 
 //#define ZetRaiseIrq(n) ZetSetIRQLine(n, ZET_IRQSTATUS_AUTO)

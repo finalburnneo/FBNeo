@@ -3714,6 +3714,11 @@ int ActiveZ80GetIM()
 	return Z80.im;
 }
 
+int ActiveZ80GetSP()
+{
+	return Z80.sp.w.l;
+}
+
 int ActiveZ80GetPrevPC()
 {
 	return Z80.prvpc.d;

@@ -650,6 +650,20 @@ INT32 ZetI(INT32 n)
 	}
 }
 
+INT32 ZetSP(INT32 n)
+{
+#if defined FBA_DEBUG
+	if (!DebugCPU_ZetInitted) bprintf(PRINT_ERROR, _T("ZetSP called without init\n"));
+	if (nOpenedCPU == -1 && n < 0) bprintf(PRINT_ERROR, _T("ZetSP called when no CPU open\n"));
+#endif
+
+	if (n < 0) {
+		return ActiveZ80GetSP();
+	} else {
+		return ZetCPUContext[n]->reg.sp.w.l;
+	}
+}
+
 INT32 ZetScan(INT32 nAction)
 {
 #if defined FBA_DEBUG

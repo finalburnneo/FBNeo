@@ -40,6 +40,7 @@ INT32 ZetBc(INT32 n);
 INT32 ZetDe(INT32 n);
 INT32 ZetHL(INT32 n);
 INT32 ZetI(INT32 n);
+INT32 ZetSP(INT32 n);
 INT32 ZetScan(INT32 nAction);
 INT32 ZetRun(INT32 nCycles);
 void ZetRunEnd();

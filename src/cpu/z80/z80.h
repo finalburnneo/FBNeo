@@ -96,6 +96,7 @@ int ActiveZ80GetDE();
 int ActiveZ80GetHL();
 int ActiveZ80GetI();
 int ActiveZ80GetIM();
+int ActiveZ80GetSP();
 int ActiveZ80GetPrevPC();
 void ActiveZ80SetIRQHold();
 int ActiveZ80GetVector();

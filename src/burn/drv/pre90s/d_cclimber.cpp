@@ -1936,7 +1936,7 @@ struct BurnDriver BurnDrvYamato2 = {
 	"yamato2", "yamato", NULL, NULL, "1983",
 	"Yamato (World?)\0", NULL, "Sega", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, yamato2RomInfo, yamato2RomName, NULL, NULL, YamatoInputInfo, YamatoDIPInfo,
 	yamatoInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 256, 3, 4
@@ -2027,7 +2027,7 @@ struct BurnDriver BurnDrvSwimmer = {
 	"swimmer", NULL, NULL, NULL, "1982",
 	"Swimmer (set 1)\0", NULL, "Tehkan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_RACING, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_ACTION, 0,
 	NULL, swimmerRomInfo, swimmerRomName, NULL, NULL, SwimmerInputInfo, SwimmerDIPInfo,
 	guzzlerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3

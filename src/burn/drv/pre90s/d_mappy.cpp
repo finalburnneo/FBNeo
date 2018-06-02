@@ -2230,7 +2230,7 @@ struct BurnDriver BurnDrvTodruaga = {
 	"todruaga", NULL, NULL, NULL, "1984",
 	"The Tower of Druaga (New Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, todruagaRomInfo, todruagaRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
@@ -2264,7 +2264,7 @@ struct BurnDriver BurnDrvTodruagao = {
 	"todruagao", "todruaga", NULL, NULL, "1984",
 	"The Tower of Druaga (Old Ver.)\0", NULL, "Namco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, todruagaoRomInfo, todruagaoRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4
@@ -2298,7 +2298,7 @@ struct BurnDriver BurnDrvTodruagas = {
 	"todruagas", "todruaga", NULL, NULL, "1984",
 	"The Tower of Druaga (Sidam)\0", NULL, "bootleg? (Sidam)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, todruagasRomInfo, todruagasRomName, NULL, NULL, TodruagaInputInfo, TodruagaDIPInfo,
 	Digdug2Init, DrvExit, DrvFrame, MappyDraw, DrvScan, &DrvRecalc, 0x500,
 	224, 288, 3, 4

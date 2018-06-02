@@ -1846,7 +1846,7 @@ struct BurnDriver BurnDrvAmazon = {
 	"amazon", NULL, NULL, NULL, "1986",
 	"Soldier Girl Amazon\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, AmazonRomInfo, AmazonRomName, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
 	AmazonInit, DrvExit, DrvFrame, NULL, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
@@ -1856,7 +1856,7 @@ struct BurnDriver BurnDrvAmatelas = {
 	"amatelas", "amazon", NULL, NULL, "1986",
 	"Sei Senshi Amatelass\0", NULL, "Nichibutsu", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, AmatelasRomInfo, AmatelasRomName, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
 	AmatelasInit, DrvExit, DrvFrame, NULL, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4

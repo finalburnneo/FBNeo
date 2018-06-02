@@ -2490,7 +2490,7 @@ struct BurnDriver BurnDrvSranger = {
 	"sranger", NULL, NULL, NULL, "1988",
 	"Super Ranger (v2.0)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, srangerRomInfo, srangerRomName, NULL, NULL, DrvInputInfo, RrangerDIPInfo,
 	RrangerInit, RrangerExit, RrangerFrame, RrangerDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3
@@ -2566,7 +2566,7 @@ struct BurnDriver BurnDrvSparkman = {
 	"sparkman", NULL, NULL, NULL, "1989",
 	"Spark Man (v2.0, set 1)\0", NULL, "SunA", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, sparkmanRomInfo, sparkmanRomName, NULL, NULL, SparkmanInputInfo, SparkmanDIPInfo,
 	SparkmanInit, HardheadExit, SparkmanFrame, SparkmanDraw, DrvScan, &DrvRecalc, 0x100,
 	256, 224, 4, 3

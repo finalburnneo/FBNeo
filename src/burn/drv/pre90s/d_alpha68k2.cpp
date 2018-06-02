@@ -2222,7 +2222,7 @@ struct BurnDriver BurnDrvTimesold = {
 	"timesold", NULL, NULL, NULL, "1987",
 	"Time Soldiers (US Rev 3)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, timesoldRomInfo, timesoldRomName, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
 	TimesoldInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -2279,7 +2279,7 @@ struct BurnDriver BurnDrvTimesold1 = {
 	"timesold1", "timesold", NULL, NULL, "1987",
 	"Time Soldiers (US Rev 1)\0", NULL, "Alpha Denshi Co. (SNK/Romstar license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, timesold1RomInfo, timesold1RomName, NULL, NULL, TimesoldInputInfo, TimesoldDIPInfo,
 	Timesold1Init, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -2365,7 +2365,7 @@ struct BurnDriver BurnDrvBtlfield = {
 	"btlfield", "timesold", NULL, NULL, "1987",
 	"Battle Field (Japan)\0", NULL, "Alpha Denshi Co. (SNK license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, btlfieldRomInfo, btlfieldRomName, NULL, NULL, BtlfieldInputInfo, BtlfieldDIPInfo,
 	BtlfieldInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4
@@ -2472,7 +2472,7 @@ struct BurnDriver BurnDrvBtlfieldb = {
 	"btlfieldb", "timesold", NULL, NULL, "1987",
 	"Battle Field (bootleg)\0", "no-rotation joystick ver", "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, btlfieldbRomInfo, btlfieldbRomName, NULL, NULL, BtlfieldbInputInfo, BtlfieldbDIPInfo,
 	BtlfieldbInit, DrvExit, DrvFrame, Alpha68KIIDraw, DrvScan, &DrvRecalc, 0x800,
 	224, 256, 3, 4

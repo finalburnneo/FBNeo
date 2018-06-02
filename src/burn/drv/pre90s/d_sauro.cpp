@@ -1125,7 +1125,7 @@ struct BurnDriver BurnDrvTrckydoc = {
 	"trckydoc", NULL, NULL, NULL, "1987",
 	"Tricky Doc (set 1)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, trckydocRomInfo, trckydocRomName, NULL, NULL, TecfriInputInfo, TecfriDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3
@@ -1160,7 +1160,7 @@ struct BurnDriver BurnDrvTrckydoca = {
 	"trckydoca", "trckydoc", NULL, NULL, "1987",
 	"Tricky Doc (set 2)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, trckydocaRomInfo, trckydocaRomName, NULL, NULL, TecfriInputInfo, TrckydocaDIPInfo,
 	TrckydocInit, DrvExit, TrckydocFrame, TrckydocDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3

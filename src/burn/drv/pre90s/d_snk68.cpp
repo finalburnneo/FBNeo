@@ -1728,7 +1728,7 @@ struct BurnDriver BurnDrvsearchar = {
 	"searchar", NULL, NULL, NULL, "1989",
 	"SAR - Search And Rescue (World)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, searcharRomInfo, searcharRomName, NULL, NULL, IkariInputInfo, SarDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 224, 256, 3, 4
@@ -1765,7 +1765,7 @@ struct BurnDriver BurnDrvsercharu = {
 	"searcharu", "searchar", NULL, NULL, "1989",
 	"SAR - Search And Rescue (US)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, sercharuRomInfo, sercharuRomName, NULL, NULL, IkariInputInfo, SarDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 224, 256, 3, 4
@@ -1802,7 +1802,7 @@ struct BurnDriver BurnDrvsercharj = {
 	"searcharj", "searchar", NULL, NULL, "1989",
 	"SAR - Search And Rescue (Japan)\0", NULL, "SNK", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, sercharjRomInfo, sercharjRomName, NULL, NULL, IkariInputInfo, SarDIPInfo,
 	searcharInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x800, 224, 256, 3, 4

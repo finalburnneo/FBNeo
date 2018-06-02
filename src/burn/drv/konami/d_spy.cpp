@@ -749,7 +749,7 @@ struct BurnDriver BurnDrvSpy = {
 	"spy", NULL, NULL, NULL, "1989",
 	"S.P.Y. - Special Project Y (World ver. N)\0", NULL, "Konami", "GX857",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, spyRomInfo, spyRomName, NULL, NULL, SpyInputInfo, SpyDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	304, 216, 4, 3
@@ -784,7 +784,7 @@ struct BurnDriver BurnDrvSpyu = {
 	"spyu", "spy", NULL, NULL, "1989",
 	"S.P.Y. - Special Project Y (US ver. M)\0", NULL, "Konami", "GX857",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
 	NULL, spyuRomInfo, spyuRomName, NULL, NULL, SpyInputInfo, SpyDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	304, 216, 4, 3

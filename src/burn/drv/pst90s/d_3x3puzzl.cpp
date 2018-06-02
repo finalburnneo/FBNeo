@@ -601,7 +601,7 @@ struct BurnDriver BurnDrvPuzzl3x3a = {
 	"3x3puzzla", "3x3puzzl", NULL, NULL, "1998",
 	"3X3 Puzzle (Normal)\0", NULL, "Ace Enterprise", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, puzzl3x3aRomInfo, puzzl3x3aRomName, NULL, NULL, Puzzle3x3InputInfo, Puzzle3x3DIPInfo,
 	Puzzl3x3Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 240, 4, 3

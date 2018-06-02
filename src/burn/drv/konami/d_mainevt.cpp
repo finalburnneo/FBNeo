@@ -1112,7 +1112,7 @@ struct BurnDriver BurnDrvDevstors = {
 	"devstors", NULL, NULL, NULL, "1988",
 	"Devastators (ver. Z)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstorsRomInfo, devstorsRomName, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
@@ -1146,7 +1146,7 @@ struct BurnDriver BurnDrvDevstors2 = {
 	"devstors2", "devstors", NULL, NULL, "1988",
 	"Devastators (ver. X)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstors2RomInfo, devstors2RomName, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
@@ -1180,7 +1180,7 @@ struct BurnDriver BurnDrvDevstors3 = {
 	"devstors3", "devstors", NULL, NULL, "1988",
 	"Devastators (ver. V)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, devstors3RomInfo, devstors3RomName, NULL, NULL, DevstorsInputInfo, DevstorsDIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4
@@ -1214,7 +1214,7 @@ struct BurnDriver BurnDrvGaruka = {
 	"garuka", "devstors", NULL, NULL, "1988",
 	"Garuka (Japan ver. W)\0", "Minor Video glitches in level 2.", "Konami", "GX890",
 	L"\u9913\u6D41\u798D (Japan ver. W)\0Garuka\0", NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_KONAMI, GBF_RUNGUN, 0,
 	NULL, garukaRomInfo, garukaRomName, NULL, NULL, DevstorsInputInfo, Devstors2DIPInfo,
 	devstorsInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 304, 3, 4

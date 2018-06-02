@@ -1166,7 +1166,7 @@ struct BurnDriver BurnDrvBygone = {
 	"bygone", NULL, NULL, NULL, "1985",
 	"Bygone\0", "Imperfect sound", "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
 	NULL, bygoneRomInfo, bygoneRomName, NULL, NULL, LkageInputInfo, BygoneDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	240, 224, 4, 3

@@ -5147,7 +5147,7 @@ struct BurnDriver BurnDrvYoujyudn = {
 	"youjyudn", NULL, NULL, NULL, "1986",
 	"Youjyuden (Japan)\0", NULL, "Irem", "Irem M62",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M62, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_IREM_M62, GBF_RUNGUN, 0,
 	NULL, YoujyudnRomInfo, YoujyudnRomName, NULL, NULL, M62InputInfo, YoujyudnDIPInfo,
 	YoujyudnInit, M62Exit, M62Frame, YoujyudnDraw, M62Scan,
 	NULL, 0x200, 256, 256, 3, 4

@@ -479,7 +479,36 @@ static int DoExtraFilters()
 															&& (!(BurnDrvGetFamilyFlags() & FBF_19XX)) 
 															&& (!(BurnDrvGetFamilyFlags() & FBF_SONICWI)) 
 															&& (!(BurnDrvGetFamilyFlags() & FBF_PWRINST)))		return 1;
-	
+
+	// This filter supports multiple genre's per game
+	int bGenreOk = 0;
+	if ((~nLoadMenuGenreFilter & GBF_HORSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_HORSHOOT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_VERSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_VERSHOOT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_SCRFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_SCRFIGHT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_VSFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_VSFIGHT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_BIOS)					&& (BurnDrvGetGenreFlags() & GBF_BIOS))				bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_BREAKOUT)				&& (BurnDrvGetGenreFlags() & GBF_BREAKOUT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_CASINO)				&& (BurnDrvGetGenreFlags() & GBF_CASINO))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_BALLPADDLE)			&& (BurnDrvGetGenreFlags() & GBF_BALLPADDLE))		bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_MAZE)					&& (BurnDrvGetGenreFlags() & GBF_MAZE))				bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_MINIGAMES)				&& (BurnDrvGetGenreFlags() & GBF_MINIGAMES))		bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_PINBALL)				&& (BurnDrvGetGenreFlags() & GBF_PINBALL))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_PLATFORM)				&& (BurnDrvGetGenreFlags() & GBF_PLATFORM))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_PUZZLE)				&& (BurnDrvGetGenreFlags() & GBF_PUZZLE))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_QUIZ)					&& (BurnDrvGetGenreFlags() & GBF_QUIZ))				bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_SPORTSMISC)			&& (BurnDrvGetGenreFlags() & GBF_SPORTSMISC))		bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_SPORTSFOOTBALL) 		&& (BurnDrvGetGenreFlags() & GBF_SPORTSFOOTBALL))	bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_MISC)					&& (BurnDrvGetGenreFlags() & GBF_MISC))				bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_MAHJONG)				&& (BurnDrvGetGenreFlags() & GBF_MAHJONG))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_RACING)				&& (BurnDrvGetGenreFlags() & GBF_RACING))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_SHOOT)					&& (BurnDrvGetGenreFlags() & GBF_SHOOT))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_ACTION)				&& (BurnDrvGetGenreFlags() & GBF_ACTION))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_RUNGUN)				&& (BurnDrvGetGenreFlags() & GBF_RUNGUN))			bGenreOk = 1;
+	if ((~nLoadMenuGenreFilter & GBF_STRATEGY)				&& (BurnDrvGetGenreFlags() & GBF_STRATEGY))			bGenreOk = 1;
+	if (bGenreOk == 0) return 1;
+
+#if 0
+	// This (old) filter does not support multiple genre's per game
 	if ((nLoadMenuGenreFilter & GBF_HORSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_HORSHOOT))			return 1;
 	if ((nLoadMenuGenreFilter & GBF_VERSHOOT)				&& (BurnDrvGetGenreFlags() & GBF_VERSHOOT))			return 1;
 	if ((nLoadMenuGenreFilter & GBF_SCRFIGHT)				&& (BurnDrvGetGenreFlags() & GBF_SCRFIGHT))			return 1;
@@ -503,7 +532,7 @@ static int DoExtraFilters()
 	if ((nLoadMenuGenreFilter & GBF_ACTION)					&& (BurnDrvGetGenreFlags() & GBF_ACTION))			return 1;
 	if ((nLoadMenuGenreFilter & GBF_RUNGUN)					&& (BurnDrvGetGenreFlags() & GBF_RUNGUN))			return 1;
 	if ((nLoadMenuGenreFilter & GBF_STRATEGY)				&& (BurnDrvGetGenreFlags() & GBF_STRATEGY))			return 1;
-	
+#endif
 	return 0;
 }
 

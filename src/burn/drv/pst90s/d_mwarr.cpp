@@ -1136,7 +1136,7 @@ struct BurnDriver BurnDrvStlforce = {
 	"stlforce", NULL, NULL, NULL, "1994",
 	"Steel Force\0", NULL, "Electronic Devices Italy / Ecogames S.L. Spain", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, stlforceRomInfo, stlforceRomName, NULL, NULL, StlforceInputInfo, NULL,
 	StlforceInit, DrvExit, stlforceFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	368, 240, 4, 3

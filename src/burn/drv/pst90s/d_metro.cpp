@@ -5440,7 +5440,7 @@ struct BurnDriver BurnDrvLastfort = {
 	"lastfort", NULL, NULL, NULL, "1994",
 	"Last Fortress - Toride\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, lastfortRomInfo, lastfortRomName, NULL, NULL, SkyalertInputInfo, LastfortDIPInfo,
 	lastfortInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
@@ -5470,7 +5470,7 @@ struct BurnDriver BurnDrvLastfortg = {
 	"lastfortg", "lastfort", NULL, NULL, "1994",
 	"Last Fortress - Toride (German)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, lastfortgRomInfo, lastfortgRomName, NULL, NULL, LadykillInputInfo, LadykillDIPInfo,
 	lastforgInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
@@ -5504,7 +5504,7 @@ struct BurnDriver BurnDrvLastforte = {
 	"lastforte", "lastfort", NULL, NULL, "1994",
 	"Last Fortress - Toride (Erotic, Rev C)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, lastforteRomInfo, lastforteRomName, NULL, NULL, SkyalertInputInfo, LastferoDIPInfo,
 	lastfortInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
@@ -5538,7 +5538,7 @@ struct BurnDriver BurnDrvLastfortea = {
 	"lastfortea", "lastfort", NULL, NULL, "1994",
 	"Last Fortress - Toride (Erotic, Rev A)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, lastforteaRomInfo, lastforteaRomName, NULL, NULL, SkyalertInputInfo, LastferoDIPInfo,
 	lastfortInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
@@ -5572,7 +5572,7 @@ struct BurnDriver BurnDrvLastfortk = {
 	"lastfortk", "lastfort", NULL, NULL, "1994",
 	"Last Fortress - Toride (Korea)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, lastfortkRomInfo, lastfortkRomName, NULL, NULL, SkyalertInputInfo, LastferoDIPInfo,
 	lastfortInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	360, 224, 4, 3
@@ -5930,7 +5930,7 @@ struct BurnDriver BurnDrv_3kokushi = {
 	"3kokushi", NULL, NULL, NULL, "1996",
 	"Sankokushi (Japan)\0", "Graphics corruption on score/bonus screen is normal", "Mitchell", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, _3kokushiRomInfo, _3kokushiRomName, NULL, NULL, PuzzliInputInfo, _3kokushiDIPInfo,
 	kokushiInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 240, 4, 3
@@ -5990,7 +5990,7 @@ struct BurnDriver BurnDrvToride2g = {
 	"toride2g", NULL, NULL, NULL, "1994",
 	"Toride II Adauchi Gaiden\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, toride2gRomInfo, toride2gRomName, NULL, NULL, PuzzliInputInfo, Toride2gDIPInfo,
 	toride2gInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -6020,7 +6020,7 @@ struct BurnDriver BurnDrvToride2gg = {
 	"toride2gg", "toride2g", NULL, NULL, "1994",
 	"Toride II Adauchi Gaiden (German)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, toride2ggRomInfo, toride2ggRomName, NULL, NULL, PuzzliInputInfo, Toride2gDIPInfo,
 	toride2gInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -6050,7 +6050,7 @@ struct BurnDriver BurnDrvToride2gk = {
 	"toride2gk", "toride2g", NULL, NULL, "1994",
 	"Toride II Bok Su Oi Jeon Adauchi Gaiden (Korea)\0", NULL, "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, toride2gkRomInfo, toride2gkRomName, NULL, NULL, PuzzliInputInfo, Toride2gDIPInfo,
 	toride2gInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3
@@ -6080,7 +6080,7 @@ struct BurnDriver BurnDrvToride2j = {
 	"toride2j", "toride2g", NULL, NULL, "1994",
 	"Toride II (Japan)\0", "No sound", "Metro", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_MAHJONG, 0,
 	NULL, toride2jRomInfo, toride2jRomName, NULL, NULL, PuzzliInputInfo, Toride2gDIPInfo,
 	toride2gInit, DrvExit, NoZ80Frame, DrvDraw, DrvScan, &DrvRecalc, 0x1000,
 	320, 224, 4, 3

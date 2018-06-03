@@ -1321,7 +1321,7 @@ struct BurnDriver BurnDrvBiomtoy = {
 	"biomtoy", NULL, NULL, NULL, "1995",
 	"Biomechanical Toy (Ver. 1.0.1885)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, biomtoyRomInfo, biomtoyRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -1355,7 +1355,7 @@ struct BurnDriver BurnDrvBiomtoya = {
 	"biomtoya", "biomtoy", NULL, NULL, "1995",
 	"Biomechanical Toy (Ver. 1.0.1884)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, biomtoyaRomInfo, biomtoyaRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -1389,7 +1389,7 @@ struct BurnDriver BurnDrvBiomtoyb = {
 	"biomtoyb", "biomtoy", NULL, NULL, "1995",
 	"Biomechanical Toy (Ver. 1.0.1878)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, biomtoybRomInfo, biomtoybRomName, NULL, NULL, DrvInputInfo, BiomtoyDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -1423,7 +1423,7 @@ struct BurnDriver BurnDrvBioplayc = {
 	"bioplayc", "biomtoy", NULL, NULL, "1995",
 	"Bioplaything Cop (Ver. 1.0.1823, prototype)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, bioplaycRomInfo, bioplaycRomName, NULL, NULL, DrvInputInfo, BioplaycDIPInfo,
 	BiomtoyInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -1481,7 +1481,7 @@ struct BurnDriver BurnDrvThoop = {
 	"thoop", NULL, NULL, NULL, "1992",
 	"Thunder Hoop (Ver. 1)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoopRomInfo, thoopRomName, NULL, NULL, DrvInputInfo, ThoopDIPInfo,
 	ThoopInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

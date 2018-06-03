@@ -4697,7 +4697,7 @@ struct BurnDriver BurnDrvRthun2 = {
 	"rthun2", NULL, NULL, NULL, "1990",
 	"Rolling Thunder 2\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, rthun2RomInfo, rthun2RomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	Rthun2Init, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3
@@ -4746,7 +4746,7 @@ struct BurnDriver BurnDrvRthun2j = {
 	"rthun2j", "rthun2", NULL, NULL, "1990",
 	"Rolling Thunder 2 (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, rthun2jRomInfo, rthun2jRomName, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	Rthun2Init, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

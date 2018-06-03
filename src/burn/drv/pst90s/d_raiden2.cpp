@@ -4896,7 +4896,7 @@ struct BurnDriverD BurnDrvXsedae = {
 	"xsedae", NULL, NULL, NULL, "1993",
 	"X Se Dae Quiz (Korea)\0", NULL, "Dream Island", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_POST90S, GBF_MISC, 0,
+	0, 2, HARDWARE_MISC_POST90S, GBF_QUIZ, 0,
 	NULL, xsedaeRomInfo, xsedaeRomName, NULL, NULL, Raiden2InputInfo, XsedaeDIPInfo,
 	XsedaeInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x800,
 	320, 256, 4, 3

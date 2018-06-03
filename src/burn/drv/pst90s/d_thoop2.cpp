@@ -693,7 +693,7 @@ struct BurnDriver BurnDrvThoop2 = {
 	"thoop2", NULL, NULL, NULL, "1994",
 	"TH Strikes Back (Non North America, Version 1.0, Checksum 020E0867)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoop2RomInfo, thoop2RomName, NULL, NULL, Thoop2InputInfo, Thoop2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3
@@ -722,7 +722,7 @@ struct BurnDriver BurnDrvThoop2a = {
 	"thoop2a", "thoop2", NULL, NULL, "1994",
 	"TH Strikes Back (Non North America, Version 1.0, Checksum 020EB356)\0", NULL, "Gaelco", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RUNGUN, 0,
 	NULL, thoop2aRomInfo, thoop2aRomName, NULL, NULL, Thoop2InputInfo, Thoop2DIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x400,
 	320, 240, 4, 3

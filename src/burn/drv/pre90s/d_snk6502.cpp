@@ -2257,7 +2257,7 @@ struct BurnDriver BurnDrvNibbler = {
 	"nibbler", NULL, NULL, NULL, "1982",
 	"Nibbler (rev 9)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibblerRomInfo, nibblerRomName, NULL, NULL, NibblerInputInfo, NibblerDIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -2294,7 +2294,7 @@ struct BurnDriver BurnDrvNibbler8 = {
 	"nibbler8", "nibbler", NULL, NULL, "1982",
 	"Nibbler (rev 8)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibbler8RomInfo, nibbler8RomName, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -2331,7 +2331,7 @@ struct BurnDriver BurnDrvNibbler7 = {
 	"nibbler7", "nibbler", NULL, NULL, "1982",
 	"Nibbler (rev 7)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibbler7RomInfo, nibbler7RomName, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -2368,7 +2368,7 @@ struct BurnDriver BurnDrvNibbler6 = {
 	"nibbler6", "nibbler", NULL, NULL, "1982",
 	"Nibbler (rev 6)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibbler6RomInfo, nibbler6RomName, NULL, NULL, NibblerInputInfo, Nibbler6DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -2405,7 +2405,7 @@ struct BurnDriver BurnDrvNibblera = {
 	"nibblera", "nibbler", NULL, NULL, "1982",
 	"Nibbler (rev 9, alternate set)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibbleraRomInfo, nibbleraRomName, NULL, NULL, NibblerInputInfo, NibblerDIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -2443,7 +2443,7 @@ struct BurnDriver BurnDrvNibblerp = {
 	"nibblerp", "nibbler", NULL, NULL, "1982",
 	"Nibbler (Pioneer Balloon conversion - rev 6)\0", NULL, "Rock-Ola", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibblerpRomInfo, nibblerpRomName, NULL, NULL, NibblerInputInfo, Nibbler6DIPInfo,
 	NibblerpInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
@@ -2480,7 +2480,7 @@ struct BurnDriver BurnDrvNibblero = {
 	"nibblero", "nibbler", NULL, NULL, "1983",
 	"Nibbler (Olympia - rev 8)\0", NULL, "Rock-Ola (Olympia license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, nibbleroRomInfo, nibbleroRomName, NULL, NULL, NibblerInputInfo, Nibbler8DIPInfo,
 	NibblerInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4

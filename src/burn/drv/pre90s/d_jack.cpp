@@ -1625,7 +1625,7 @@ struct BurnDriver BurnDrvZzyzzyxx = {
 	"zzyzzyxx", NULL, NULL, NULL, "1982",
 	"Zzyzzyxx (set 1)\0", NULL, "Cinematronics / Advanced Microcomputer Systems", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, zzyzzyxxRomInfo, zzyzzyxxRomName, NULL, NULL, ZzyzzyxxInputInfo, ZzyzzyxxDIPInfo,
 	ZzyzzyxxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
@@ -1660,7 +1660,7 @@ struct BurnDriver BurnDrvZzyzzyxx2 = {
 	"zzyzzyxx2", "zzyzzyxx", NULL, NULL, "1982",
 	"Zzyzzyxx (set 2)\0", NULL, "Cinematronics / Advanced Microcomputer Systems", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, zzyzzyxx2RomInfo, zzyzzyxx2RomName, NULL, NULL, ZzyzzyxxInputInfo, ZzyzzyxxDIPInfo,
 	ZzyzzyxxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
@@ -1695,7 +1695,7 @@ struct BurnDriver BurnDrvBrix = {
 	"brix", "zzyzzyxx", NULL, NULL, "1982",
 	"Brix\0", NULL, "Cinematronics / Advanced Microcomputer Systems", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, brixRomInfo, brixRomName, NULL, NULL, ZzyzzyxxInputInfo, ZzyzzyxxDIPInfo,
 	ZzyzzyxxInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x20,
 	224, 256, 3, 4
@@ -2024,7 +2024,7 @@ struct BurnDriver BurnDrvUnclepoo = {
 	"unclepoo", NULL, NULL, NULL, "1983",
 	"Uncle Poo\0", NULL, "Diatec", "Jack the Giantkiller",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_ACTION, 0,
 	NULL, unclepooRomInfo, unclepooRomName, NULL, NULL, UnclepooInputInfo, UnclepooDIPInfo,
 	JoinemInit, DrvExit, JoinemFrame, JoinemDraw, DrvScan, &DrvRecalc, 0x100,
 	224, 256, 3, 4

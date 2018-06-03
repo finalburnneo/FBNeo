@@ -520,7 +520,7 @@ static INT32 DrvInit()
 
 struct BurnDriver BurnDrvAtetris = {
 	"atetris", NULL, NULL, NULL, "1988",
-	"Tetris (set 1)\0", "No sound", "Atari Games", "Miscellaneous",
+	"Tetris (set 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisRomInfo, atetrisRomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
@@ -542,7 +542,7 @@ STD_ROM_FN(atetrisa)
 
 struct BurnDriver BurnDrvAtetrisa = {
 	"atetrisa", "atetris", NULL, NULL, "1988",
-	"Tetris (set 2)\0", "No sound", "Atari Games", "Miscellaneous",
+	"Tetris (set 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisaRomInfo, atetrisaRomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
@@ -566,7 +566,7 @@ STD_ROM_FN(atetrisb)
 
 struct BurnDriver BurnDrvAtetrisb = {
 	"atetrisb", "atetris", NULL, NULL, "1988",
-	"Tetris (bootleg set 1)\0", "No sound", "bootleg", "Miscellaneous",
+	"Tetris (bootleg set 1)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisbRomInfo, atetrisbRomName, NULL, NULL, AtetrisInputInfo, AtetrisDIPInfo,
@@ -622,7 +622,7 @@ STD_ROM_FN(atetrisc)
 
 struct BurnDriver BurnDrvAtetrisc = {
 	"atetrisc", "atetris", NULL, NULL, "1989",
-	"Tetris (cocktail set 1)\0", "No sound", "Atari Games", "Miscellaneous",
+	"Tetris (cocktail set 1)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetriscRomInfo, atetriscRomName, NULL, NULL, AtetrisInputInfo, AtetriscDIPInfo,
@@ -644,7 +644,7 @@ STD_ROM_FN(atetrisc2)
 
 struct BurnDriver BurnDrvAtetrisc2 = {
 	"atetrisc2", "atetris", NULL, NULL, "1989",
-	"Tetris (cocktail set 2)\0", "No sound", "Atari Games", "Miscellaneous",
+	"Tetris (cocktail set 2)\0", NULL, "Atari Games", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, atetrisc2RomInfo, atetrisc2RomName, NULL, NULL, AtetrisInputInfo, AtetriscDIPInfo,

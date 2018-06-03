@@ -2670,7 +2670,7 @@ struct BurnDriver BurnDrvJunglek = {
 	"junglek", NULL, NULL, NULL, "1982",
 	"Jungle King (Japan)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglekRomInfo, junglekRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2713,7 +2713,7 @@ struct BurnDriver BurnDrvJunglekas = {
 	"junglekas", "junglek", NULL, NULL, "1982",
 	"Jungle King (alternate sound)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglekasRomInfo, junglekasRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2756,7 +2756,7 @@ struct BurnDriver BurnDrvJungleby = {
 	"jungleby", "junglek", NULL, NULL, "1982",
 	"Jungle Boy (bootleg)\0", NULL, "bootleg", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglebyRomInfo, junglebyRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2799,7 +2799,7 @@ struct BurnDriver BurnDrvJunglekj2 = {
 	"junglekj2", "junglek", NULL, NULL, "1982",
 	"Jungle King (Japan, earlier)\0", NULL, "Taito Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglekj2RomInfo, junglekj2RomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2842,7 +2842,7 @@ struct BurnDriver BurnDrvJungleh = {
 	"jungleh", "junglek", NULL, NULL, "1982",
 	"Jungle Hunt (US)\0", NULL, "Taito America Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglehRomInfo, junglehRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2887,7 +2887,7 @@ struct BurnDriver BurnDrvJunglehbr = {
 	"junglehbr", "junglek", NULL, NULL, "1983",
 	"Jungle Hunt (Brazil)\0", NULL, "Taito do Brasil", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, junglehbrRomInfo, junglehbrRomName, NULL, NULL, OneButtonInputInfo, JunglekDIPInfo,
 	junglehbrInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3
@@ -2929,7 +2929,7 @@ struct BurnDriver BurnDrvPiratpet = {
 	"piratpet", "junglek", NULL, NULL, "1982",
 	"Pirate Pete\0", NULL, "Taito America Corporation", "Taito SJ System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM | GBF_ACTION, 0,
 	NULL, piratpetRomInfo, piratpetRomName, NULL, NULL, OneButtonInputInfo, PiratpetDIPInfo,
 	junglekInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	256, 224, 4, 3

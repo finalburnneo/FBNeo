@@ -867,7 +867,7 @@ struct BurnDriver BurnDrvHoleland = {
 	"holeland", NULL, NULL, NULL, "1984",
 	"Hole Land (Japan)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, holelandRomInfo, holelandRomName, NULL, NULL, HolelandInputInfo, HolelandDIPInfo,
 	HolelandInit, DrvExit, DrvFrame, HolelandDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 448, 4, 3
@@ -905,7 +905,7 @@ struct BurnDriver BurnDrvHoleland2 = {
 	"holeland2", "holeland", NULL, NULL, "1984",
 	"Hole Land (Spain)\0", NULL, "Tecfri", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, holeland2RomInfo, holeland2RomName, NULL, NULL, HolelandInputInfo, Holeland2DIPInfo,
 	HolelandInit, DrvExit, DrvFrame, HolelandDraw, DrvScan, &DrvRecalc, 0x100,
 	512, 448, 4, 3

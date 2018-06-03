@@ -1735,7 +1735,7 @@ struct BurnDriver BurnDrvMarineb = {
 	"marineb", NULL, NULL, NULL, "1982",
 	"Marine Boy\0", NULL, "Orca", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT | GBF_ACTION, 0,
 	NULL, MarinebRomInfo, MarinebRomName, NULL, NULL, MarinebInputInfo, MarinebDIPInfo,
 	MarinebInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPalette, 0x100, 256, 224, 4, 3

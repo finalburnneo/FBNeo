@@ -1071,7 +1071,7 @@ struct BurnDriver BurnDrvPopeye = {
 	"popeye", NULL, NULL, NULL, "1982",
 	"Popeye (revision D)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyeRomInfo, popeyeRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInitPopeye, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
@@ -1106,7 +1106,7 @@ struct BurnDriver BurnDrvPopeyeu = {
 	"popeyeu", "popeye", NULL, NULL, "1982",
 	"Popeye (revision D not protected)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyeuRomInfo, popeyeuRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInitPopeye, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
@@ -1142,7 +1142,7 @@ struct BurnDriver BurnDrvPopeyef = {
 	"popeyef", "popeye", NULL, NULL, "1982",
 	"Popeye (revision F)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyefRomInfo, popeyefRomName, NULL, NULL, PopeyeInputInfo, PopeyefDIPInfo,
 	DrvInitPopeye, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
@@ -1185,7 +1185,7 @@ struct BurnDriver BurnDrvPopeyebl = {
 	"popeyebl", "popeye", NULL, NULL, "1982",
 	"Popeye (bootleg)\0", NULL, "bootleg", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyeblRomInfo, popeyeblRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInitPopeyebl, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
@@ -1231,7 +1231,7 @@ struct BurnDriver BurnDrvPopeyej = {
 	"popeyej", "popeye", NULL, NULL, "1981",
 	"Popeye (Japan, Sky Skipper hardware)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyejRomInfo, popeyejRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInitPopeyej, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3
@@ -1273,7 +1273,7 @@ struct BurnDriver BurnDrvPopeyejo = {
 	"popeyejo", "popeye", NULL, NULL, "1981",
 	"Popeye (Japan, Sky Skipper hardware, Older)\0", NULL, "Nintendo", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_ACTION | GBF_PLATFORM, 0,
 	NULL, popeyejoRomInfo, popeyejoRomName, NULL, NULL, PopeyeInputInfo, PopeyeDIPInfo,
 	DrvInitPopeyej, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x300,
 	512, 448, 4, 3

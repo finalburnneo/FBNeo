@@ -509,7 +509,7 @@ struct BurnDriver BurnDrvHigemaru = {
 	"higemaru", NULL, NULL, NULL, "1984",
 	"Pirate Ship Higemaru\0", NULL, "Capcom", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARWARE_CAPCOM_MISC, GBF_ACTION, 0,
 	NULL, higemaruRomInfo, higemaruRomName, NULL, NULL, HigemaruInputInfo, HigemaruDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x180,
 	256, 224, 4, 3

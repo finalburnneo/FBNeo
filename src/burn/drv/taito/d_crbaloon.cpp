@@ -638,7 +638,7 @@ struct BurnDriver BurnDrvCrbaloon = {
 	"crbaloon", NULL, NULL, NULL, "1980",
 	"Crazy Balloon (set 1)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crbaloonRomInfo, crbaloonRomName, NULL, NULL, CrbaloonInputInfo, CrbaloonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32,
 	224, 256, 3, 4
@@ -667,7 +667,7 @@ struct BurnDriver BurnDrvCrbaloon2 = {
 	"crbaloon2", "crbaloon", NULL, NULL, "1980",
 	"Crazy Balloon (set 2)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PREFIX_TAITO, GBF_MAZE | GBF_ACTION, 0,
 	NULL, crbaloon2RomInfo, crbaloon2RomName, NULL, NULL, CrbaloonInputInfo, CrbaloonDIPInfo,
 	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 32,
 	224, 256, 3, 4

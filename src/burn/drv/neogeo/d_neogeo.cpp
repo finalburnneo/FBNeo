@@ -2556,6 +2556,57 @@ struct BurnDriver BurnDrvGpilotsh = {
 	0x1000, 304, 224, 4, 3
 };
 
+// Ghost Pilots (prototype)
+
+static struct BurnRomInfo gpilotspRomDesc[] = {
+	{ "p1",           0x080000, 0xc42125b4, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "p2",           0x080000, 0x5a4db1f3, 1 | BRF_ESS | BRF_PRG }, //  1
+
+	{ "s1",           0x020000, 0xa6d83d53, 2 | BRF_GRA },           //  2 Text layer tiles
+
+	{ "c11",          0x080000, 0x7a5158b3, 3 | BRF_GRA },           //  3 Sprite data
+	{ "c12",          0x080000, 0x41e67a5a, 3 | BRF_GRA },           //  4
+	{ "c13",          0x080000, 0x5f80c0d0, 3 | BRF_GRA },           //  5
+	{ "c14",          0x080000, 0x61227b93, 3 | BRF_GRA },           //  6
+	{ "c15",          0x080000, 0x96de9bb5, 3 | BRF_GRA },           //  7
+	{ "c16",          0x080000, 0x2b904c85, 3 | BRF_GRA },           //  8
+	{ "c17",          0x080000, 0xc0d7517d, 3 | BRF_GRA },           //  9
+	{ "c18",          0x080000, 0x75569e35, 3 | BRF_GRA },           //  10
+
+	{ "m1",           0x020000, 0x32a108cf, 4 | BRF_ESS | BRF_PRG }, //  11 Z80 code
+
+	{ "v11",          0x080000, 0x8cc44140, 5 | BRF_SND },           //  12 Sound data
+	{ "v12",          0x080000, 0x415c61cd, 5 | BRF_SND },           //  13
+	{ "v13",          0x080000, 0x4a9e6f03, 5 | BRF_SND },           //  14
+	{ "v21",          0x080000, 0x7abf113d, 6 | BRF_SND },           //  15
+};
+
+STDROMPICKEXT(gpilotsp, gpilotsp, neogeo)
+STD_ROM_FN(gpilotsp)
+
+static void GpilotspCallback()
+{
+	BurnLoadRom(Neo68KROMActive + 0x000000, 0, 2);
+	BurnLoadRom(Neo68KROMActive + 0x000001, 1, 2);
+}
+
+static INT32 GpilotspInit()
+{
+	NeoCallbackActive->pInitialise = GpilotspCallback;
+	
+	return NeoInit();
+}
+
+struct BurnDriver BurnDrvGpilotsp = {
+	"gpilotsp", "gpilots", "neogeo", NULL, "1991",
+	"Ghost Pilots (prototype)\0", NULL, "SNK", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_SPRITE32, GBF_VERSHOOT, 0,
+	NULL, gpilotspRomInfo, gpilotspRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	GpilotspInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
 // Puzzled / Joy Joy Kid (NGM-021)(NGH-021)
 /* MVS AND AES VERSION */
 

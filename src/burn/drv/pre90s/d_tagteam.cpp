@@ -104,19 +104,17 @@ static struct BurnDIPInfo TagteamDIPList[]=
 	{0x11, 0xff, 0xff, 0x0f, NULL						},
 	{0x12, 0xff, 0xff, 0x01, NULL						},
 
-	{0   , 0xfe, 0   ,    5, "Coin A"					},
+	{0   , 0xfe, 0   ,    4, "Coin A"					},
 	{0x11, 0x01, 0x03, 0x00, "2 Coins 1 Credits"		},
 	{0x11, 0x01, 0x03, 0x03, "1 Coin  1 Credits"		},
 	{0x11, 0x01, 0x03, 0x02, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin  3 Credits"		},
-	{0x11, 0x01, 0x03, 0x01, "1 Coin  6 Credits"		},
+	{0x11, 0x01, 0x03, 0x01, "1 Coin  3/6 Credits"		},
 
-	{0   , 0xfe, 0   ,    5, "Coin B"					},
+	{0   , 0xfe, 0   ,    4, "Coin B"					},
 	{0x11, 0x01, 0x0c, 0x00, "2 Coins 1 Credits"		},
 	{0x11, 0x01, 0x0c, 0x0c, "1 Coin  1 Credits"		},
 	{0x11, 0x01, 0x0c, 0x08, "1 Coin  2 Credits"		},
-	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3 Credits"		},
-	{0x11, 0x01, 0x0c, 0x04, "1 Coin  6 Credits"		},
+	{0x11, 0x01, 0x0c, 0x04, "1 Coin  3/6 Credits"		},
 
 	{0   , 0xfe, 0   ,    2, "Unused"					},
 	{0x11, 0x01, 0x10, 0x00, "Off"						},
@@ -172,10 +170,10 @@ static void tagteam_main_write(UINT16 address, UINT8 data)
 		case 0x2002:
 			soundlatch = data;
 			M6502Close();
-			M6502Open(0);
-			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
-			M6502Close();
 			M6502Open(1);
+			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
+			M6502Close();
+			M6502Open(0);
 		return;
 
 		case 0x2003:
@@ -226,11 +224,12 @@ static void tagteam_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x2002:
+		case 0x2003:
 			AY8910Write(1, ~address & 1, data);
 		return;
 
 		case 0x2004:
-			DACWrite(0, data);
+			DACSignedWrite(0, data);
 		return;
 
 		case 0x2005:
@@ -244,7 +243,6 @@ static UINT8 tagteam_sound_read(UINT16 address)
 	switch (address)
 	{
 		case 0x2007:
-			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -392,7 +390,7 @@ static INT32 DrvInit()
 	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
 
 	DACInit(0, 0, 1, M6502TotalCycles, 1000000);
-	DACSetRoute(0, 1.0, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -512,10 +510,10 @@ static INT32 DrvFrame()
 			M6502Open(0);
 			M6502SetIRQLine(0x20, ((DrvInputs[0] & 0xc0) == 0xc0) ? CPU_IRQSTATUS_NONE : CPU_IRQSTATUS_ACK);
 			M6502Close();
-		}			
+		}
 	}
 
-	INT32 nInterleave = 17;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 1500000 / 57, 1000000 / 57 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
@@ -523,16 +521,18 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		if (i == 16) vblank = 1; // ????
+		if (i == 240) vblank = 1;
 
 		M6502Open(0);
 		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
-		M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if ((i%16) == 15) {
+			M6502SetIRQLine(0, CPU_IRQSTATUS_ACK);
+		}
 		M6502Close();
 
 		M6502Open(1);
 		nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
-		if (sound_nmi_mask) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+		if (sound_nmi_mask && (i%16) == 15) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 		M6502Close();
 	}
 

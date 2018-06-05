@@ -2,8 +2,9 @@
 // based on MAME driver by Nicola Salmoria
 
 /*
-	Squaitsa analog inputs
-	speech
+    fix palette
+	fix random invulnerability/lockups (pal? timing?)
+    Squaitsa analog inputs
 	verify default dip values
 	bug test
 */
@@ -11,6 +12,7 @@
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
+#include "tms5110.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -37,6 +39,9 @@ static UINT8 video_enable;
 static UINT8 m_andmap[64];
 static UINT8 m_columnvalue[32];
 static UINT8 m_outvalue[8];
+
+static INT32 speech_rom_address;
+static UINT8 ls259_buf[8];
 
 static INT32 botanic_input_xor = 0;
 
@@ -427,6 +432,54 @@ static void pal16r6_reset()
 	update_pal();
 }
 
+static void speech_start()
+{
+	speech_rom_address = 0x0;
+
+	tms5110_CTL_set(TMS5110_CMD_SPEAK);
+	tms5110_PDC_set(0);
+	tms5110_PDC_set(1);
+	tms5110_PDC_set(0);
+}
+
+static void speech_reset()
+{
+	tms5110_CTL_set(TMS5110_CMD_RESET);
+	tms5110_PDC_set(0);
+	tms5110_PDC_set(1);
+	tms5110_PDC_set(0);
+
+	tms5110_PDC_set(0);
+	tms5110_PDC_set(1);
+	tms5110_PDC_set(0);
+
+	tms5110_PDC_set(0);
+	tms5110_PDC_set(1);
+	tms5110_PDC_set(0);
+
+	speech_rom_address = 0x0;
+}
+
+static INT32 bagman_TMS5110_M0_cb()
+{
+	UINT8 *ROM = DrvTMSPROM;
+	INT32 bit_no = (ls259_buf[0] << 2) | (ls259_buf[1] << 1) | (ls259_buf[2] << 0);
+	UINT8 byte = 0;
+
+	if (ls259_buf[4] == 0) {
+		byte |= ROM[ speech_rom_address + 0x0000 ];
+	}
+
+	if (ls259_buf[5] == 0 ) {
+		byte |= ROM[ speech_rom_address + 0x1000 ];
+	}
+
+	speech_rom_address++;
+	speech_rom_address &= 0x0fff;
+
+	return (byte >> (bit_no ^ 0x7)) & 1;
+}
+
 static void __fastcall bagman_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xfc00) == 0x9c00) return; // nop
@@ -435,8 +488,8 @@ static void __fastcall bagman_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xa000:
 			irq_mask = data & 1;
-			if (irq_mask == 0)
-				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			//if (irq_mask == 0) // this doesn't work right - timing?
+			//	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xa001:
@@ -468,7 +521,18 @@ static void __fastcall bagman_main_write(UINT16 address, UINT8 data)
 		case 0xa806:
 		case 0xa807:
 			pal16r6_write(address & 7, data);
-			// m_tmslatch->write_bit(offset, data & 1);
+
+			if (ls259_buf[address & 7] != (data & 1)) {
+				ls259_buf[address & 7] = data & 1;
+
+				if ((address & 0x03) == 0x03) {
+					if (ls259_buf[3] == 0) {
+						speech_reset();
+					} else {
+						speech_start();
+					}
+				}
+			}
 		return;
 	}
 }
@@ -569,6 +633,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	AY8910Reset(0);
+	tms5110_reset();
 
 	pal16r6_reset();
 
@@ -576,6 +641,9 @@ static INT32 DrvDoReset()
 	irq_mask = 0;
 	flipscreen[0] = 0;
 	flipscreen[1] = 0;
+
+	speech_rom_address = 0;
+	memset(&ls259_buf, 0, sizeof(ls259_buf));
 
 	return 0;
 }
@@ -663,8 +731,8 @@ static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 
 				if (BurnLoadRom(DrvCtrlPROM + 0x000, 12, 1)) return 1;
 
-				if (BurnLoadRom(DrvTMSPROM + 0x0020, 13, 1)) return 1;
-				if (BurnLoadRom(DrvTMSPROM + 0x0020, 14, 1)) return 1;
+				if (BurnLoadRom(DrvTMSPROM + 0x0000, 13, 1)) return 1;
+				if (BurnLoadRom(DrvTMSPROM + 0x1000, 14, 1)) return 1;
 			}
 			break;
 
@@ -701,8 +769,8 @@ static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 
 				if (BurnLoadRom(DrvCtrlPROM + 0x000, 16, 1)) return 1;
 
-				if (BurnLoadRom(DrvTMSPROM + 0x0020, 17, 1)) return 1;
-				if (BurnLoadRom(DrvTMSPROM + 0x0020, 18, 1)) return 1;
+				if (BurnLoadRom(DrvTMSPROM + 0x0000, 17, 1)) return 1;
+				if (BurnLoadRom(DrvTMSPROM + 0x1000, 18, 1)) return 1;
 			}
 			break;
 
@@ -806,8 +874,11 @@ static INT32 BagmanCommonInit(INT32 game, INT32 memmap)
 	AY8910Init(0, 1500000, 0);
 	AY8910Init(1, 1500000, 0);
 	AY8910SetPorts(0, &ay8910_read_A, &ay8910_read_B, NULL, NULL);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
+
+	tms5110_init(640000);
+	tms5110_M0_callback(bagman_TMS5110_M0_cb);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -825,6 +896,7 @@ static INT32 DrvExit()
 
 	ZetExit();
 	AY8910Exit(0);
+	tms5110_exit();
 
 	BurnFree(AllMem);
 	
@@ -920,7 +992,7 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 32;
+	INT32 nInterleave = 264;
 	INT32 nCyclesTotal = 3072000 / 60;
 	INT32 nCyclesDone = 0;
 
@@ -930,13 +1002,14 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone += ZetRun(nCyclesTotal / nInterleave);
 
-		if (i == 30 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 	}
 
 	ZetClose();
 
 	if (pBurnSoundOut) {
 		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		tms5110_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -964,11 +1037,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
+		tms5110_scan(nAction, pnMin);
 
 		SCAN_VAR(irq_mask);
 		SCAN_VAR(flipscreen[0]);
 		SCAN_VAR(flipscreen[1]);
 		SCAN_VAR(video_enable);
+		SCAN_VAR(speech_rom_address);
+		SCAN_VAR(ls259_buf);
 	}
 
 	return 0;

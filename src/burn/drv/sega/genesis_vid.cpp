@@ -513,9 +513,9 @@ static void drawline_tiles(UINT32 *tiles, UINT16 *bmap, UINT32 pri, INT32 offset
 
 			/* vertical flipping */
 			if (!(tile & 0x1000))
-				mytile = tp[tile >> 16];
+				mytile = BURN_ENDIAN_SWAP_INT32(tp[tile >> 16]);
 			else
-				mytile = tp[(tile >> 16) ^ 7];
+				mytile = BURN_ENDIAN_SWAP_INT32(tp[(tile >> 16) ^ 7]);
 
 			/* skip if all-transparent */
 			if (!mytile)
@@ -586,7 +586,7 @@ static void drawline_tiles(UINT32 *tiles, UINT16 *bmap, UINT32 pri, INT32 offset
 
 static void draw8pixs(UINT16 *bmap, INT32 patno, INT32 /*priority*/, INT32 colbase, INT32 patline)
 {
-	UINT32 tile = *(UINT32 *)&VDP_VRAM_BYTE(patno * 32 + 4 * patline);
+	UINT32 tile = BURN_ENDIAN_SWAP_INT32(*(UINT32 *)&VDP_VRAM_BYTE(patno * 32 + 4 * patline));
 	INT32 col;
 
 	/* skip if all-transparent */
@@ -664,7 +664,7 @@ static void draw8pixs(UINT16 *bmap, INT32 patno, INT32 /*priority*/, INT32 colba
 /* draw a horizontally-flipped section of a sprite */
 static void draw8pixs_hflip(UINT16 *bmap, INT32 patno, INT32 /*priority*/, INT32 colbase, INT32 patline)
 {
-	UINT32 tile = *(UINT32 *)&VDP_VRAM_BYTE(patno * 32 + 4 * patline);
+	UINT32 tile = BURN_ENDIAN_SWAP_INT32(*(UINT32 *)&VDP_VRAM_BYTE(patno * 32 + 4 * patline));
 	INT32 col;
 
 	/* skip if all-transparent */

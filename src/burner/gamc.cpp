@@ -185,6 +185,208 @@ INT32 GamcMisc(struct GameInp* pgi, char* szi, INT32 nPlayer)
 				KEY(FBK_5);
 				return 0;
 			}
+			
+			// keyboard keys
+			if (strcmp(szi, "keyb_enter" ) == 0) {
+				KEY(FBK_RETURN);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_left_shift" ) == 0) {
+				KEY(FBK_LSHIFT);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_right_shift" ) == 0) {
+				KEY(FBK_RSHIFT);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_space" ) == 0) {
+				KEY(FBK_SPACE);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_0" ) == 0) {
+				KEY(FBK_0);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_1" ) == 0) {
+				KEY(FBK_1);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_2" ) == 0) {
+				KEY(FBK_2);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_3" ) == 0) {
+				KEY(FBK_3);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_4" ) == 0) {
+				KEY(FBK_4);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_5" ) == 0) {
+				KEY(FBK_5);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_6" ) == 0) {
+				KEY(FBK_6);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_7" ) == 0) {
+				KEY(FBK_7);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_8" ) == 0) {
+				KEY(FBK_8);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_9" ) == 0) {
+				KEY(FBK_9);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_A" ) == 0) {
+				KEY(FBK_A);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_B" ) == 0) {
+				KEY(FBK_B);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_C" ) == 0) {
+				KEY(FBK_C);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_D" ) == 0) {
+				KEY(FBK_D);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_E" ) == 0) {
+				KEY(FBK_E);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_F" ) == 0) {
+				KEY(FBK_F);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_G" ) == 0) {
+				KEY(FBK_G);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_H" ) == 0) {
+				KEY(FBK_H);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_I" ) == 0) {
+				KEY(FBK_I);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_J" ) == 0) {
+				KEY(FBK_J);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_K" ) == 0) {
+				KEY(FBK_K);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_L" ) == 0) {
+				KEY(FBK_L);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_M" ) == 0) {
+				KEY(FBK_M);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_N" ) == 0) {
+				KEY(FBK_N);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_O" ) == 0) {
+				KEY(FBK_O);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_P" ) == 0) {
+				KEY(FBK_P);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_Q" ) == 0) {
+				KEY(FBK_Q);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_R" ) == 0) {
+				KEY(FBK_R);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_S" ) == 0) {
+				KEY(FBK_S);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_T" ) == 0) {
+				KEY(FBK_T);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_U" ) == 0) {
+				KEY(FBK_U);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_V" ) == 0) {
+				KEY(FBK_V);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_W" ) == 0) {
+				KEY(FBK_W);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_X" ) == 0) {
+				KEY(FBK_X);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_Y" ) == 0) {
+				KEY(FBK_Y);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_Z" ) == 0) {
+				KEY(FBK_Z);
+				return 0;
+			}
+			
 			break;
 		case 1:
 			if (strcmp(szi, "p2 start") == 0) {

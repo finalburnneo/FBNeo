@@ -20,41 +20,6 @@ static INT32 ParentExit()
 	return 0;
 }
 
-static struct BurnRomInfo BagmanRomDesc[] = {
-	{ "e9_b05.bin",         0x01000, 0xe0156191, BRF_ESS | BRF_PRG },
-	{ "f9_b06.bin",         0x01000, 0x7b758982, BRF_ESS | BRF_PRG },
-	{ "f9_b07.bin",         0x01000, 0x302a077b, BRF_ESS | BRF_PRG },
-	{ "k9_b08.bin",         0x01000, 0xf04293cb, BRF_ESS | BRF_PRG },
-	{ "m9_b09s.bin",        0x01000, 0x68e83e4f, BRF_ESS | BRF_PRG },
-	{ "n9_b10.bin",         0x01000, 0x1d6579f7, BRF_ESS | BRF_PRG },
-	
-	{ "e1_b02.bin",         0x01000, 0x4a0a6b55, BRF_ESS | BRF_PRG },
-	{ "j1_b04.bin",         0x01000, 0xc680ef04, BRF_ESS | BRF_PRG },
-	
-	{ "c1_b01.bin",         0x01000, 0x705193b2, BRF_ESS | BRF_PRG },
-	{ "f1_b03s.bin",        0x01000, 0xdba1eda7, BRF_ESS | BRF_PRG },
-
-	{ "p3.bin",             0x00020, 0x2a855523, BRF_GRA },
-	{ "r3.bin",             0x00020, 0xae6f1019, BRF_GRA },
-	{ "r6.bin",             0x00020, 0xc58a4f6a, BRF_GRA },
-	
-	{ "r9_b11.bin",         0x01000, 0x2e0057ff, BRF_SND },
-	{ "t9_b12.bin",         0x01000, 0xb2120edd, BRF_SND },
-};
-
-STD_ROM_PICK(Bagman)
-STD_ROM_FN(Bagman)
-
-struct BurnDriver BurnDrvBagman = {
-	"bagman", NULL, NULL, NULL, "1982",
-	"Bagman\0", "Parent set for working drivers", "Valadon Automation", "Miscellaneous",
-	NULL, NULL, NULL, NULL,
-	0, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
-	NULL, BagmanRomInfo, BagmanRomName, NULL, NULL, ParentInputInfo, NULL,
-	ParentInit, ParentExit, NULL, NULL, NULL,
-	NULL, 0, 224, 256, 3, 4
-};
-
 static struct BurnRomInfo EightballactRomDesc[] = {
 	{ "8b-dk.5e",           0x01000, 0x166c1c9b, BRF_ESS | BRF_PRG },
 	{ "8b-dk.5c",           0x01000, 0x9ec87baa, BRF_ESS | BRF_PRG },

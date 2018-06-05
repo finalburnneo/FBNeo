@@ -38,7 +38,7 @@ static UINT8 m_andmap[64];
 static UINT8 m_columnvalue[32];
 static UINT8 m_outvalue[8];
 
-statc INT32 botanic_input_xor = 0;
+static INT32 botanic_input_xor = 0;
 
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];

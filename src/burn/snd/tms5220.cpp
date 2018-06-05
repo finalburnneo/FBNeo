@@ -73,9 +73,6 @@ struct tms5220
 	UINT8 buffer_empty;		/* FIFO is empty*/
 	UINT8 irq_pin;			/* state of the IRQ pin (output) */
 
-	void (*irq_func)(INT32 state); /* called when the state of the IRQ pin changes */
-
-
 	/* these contain data describing the current and previous voice frames */
 	UINT16 old_energy;
 	UINT16 old_pitch;
@@ -114,6 +111,7 @@ struct tms5220
 	INT32 (*read_callback)(INT32 count);
 	void (*load_address_callback)(INT32 data);
 	void (*read_and_branch_callback)(void);
+	void (*irq_func)(INT32 state); /* called when the state of the IRQ pin changes */
 
 
 	/* flag for tms0285 emulation */

@@ -754,7 +754,7 @@ static void SuperchsRenderSpriteList(INT32 SpritePriorityLevel)
 	}
 }
 
-static void SuperchsDraw()
+static INT32 SuperchsDraw()
 {
 	UINT8 Layer[4];
 	UINT16 Priority = TC0480SCPGetBgPriority();
@@ -780,6 +780,8 @@ static void SuperchsDraw()
 	if (nSpriteEnable & 8) SuperchsRenderSpriteList(3);
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
+
+	return 0;
 }
 
 static INT32 SuperchsFrame()
@@ -863,7 +865,7 @@ struct BurnDriver BurnDrvSuperchs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, SuperchsRomInfo, SuperchsRomName, NULL, NULL, SuperchsInputInfo, NULL,
-	SuperchsInit, SuperchsExit, SuperchsFrame, NULL, SuperchsScan,
+	SuperchsInit, SuperchsExit, SuperchsFrame, SuperchsDraw, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
@@ -873,7 +875,7 @@ struct BurnDriver BurnDrvSuperchsu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, SuperchsuRomInfo, SuperchsuRomName, NULL, NULL, SuperchsInputInfo, NULL,
-	SuperchsInit, SuperchsExit, SuperchsFrame, NULL, SuperchsScan,
+	SuperchsInit, SuperchsExit, SuperchsFrame, SuperchsDraw, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
@@ -883,7 +885,7 @@ struct BurnDriver BurnDrvSuperchsj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_RACING, 0,
 	NULL, SuperchsjRomInfo, SuperchsjRomName, NULL, NULL, SuperchsInputInfo, NULL,
-	SuperchsInit, SuperchsExit, SuperchsFrame, NULL, SuperchsScan,
+	SuperchsInit, SuperchsExit, SuperchsFrame, SuperchsDraw, SuperchsScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 

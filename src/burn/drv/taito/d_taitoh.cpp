@@ -2087,7 +2087,7 @@ struct BurnDriver BurnDrvRecordbr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, recordbrRomInfo, recordbrRomName, NULL, NULL, RecordbrInputInfo, RecordbrDIPInfo,
-	SyvalionInit, DrvExit, DrvFrame, RecordbrDraw, NULL, NULL, 0x210,
+	SyvalionInit, DrvExit, DrvFrame, RecordbrDraw, DrvScan, NULL, 0x210,
 	320, 240, 4, 3
 };
 
@@ -2127,7 +2127,7 @@ struct BurnDriver BurnDrvGogold = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, gogoldRomInfo, gogoldRomName, NULL, NULL, RecordbrInputInfo, GogoldDIPInfo,
-	SyvalionInit, DrvExit, DrvFrame, RecordbrDraw, NULL, NULL, 0x210,
+	SyvalionInit, DrvExit, DrvFrame, RecordbrDraw, DrvScan, NULL, 0x210,
 	320, 240, 4, 3
 };
 
@@ -2165,7 +2165,7 @@ struct BurnDriver BurnDrvTetristh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PUZZLE, 0,
 	NULL, tetristhRomInfo, tetristhRomName, NULL, NULL, TetristhInputInfo, TetristhDIPInfo,
-	TetristhInit, DrvExit, DrvFrame, RecordbrDraw, NULL, NULL, 0x210,
+	TetristhInit, DrvExit, DrvFrame, RecordbrDraw, DrvScan, NULL, 0x210,
 	320, 224, 4, 3
 };
 
@@ -2208,7 +2208,7 @@ struct BurnDriver BurnDrvDleague = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleagueRomInfo, dleagueRomName, NULL, NULL, DleagueInputInfo, DleagueDIPInfo,
-	DleagueInit, DrvExit, DrvFrame, DleagueDraw, NULL, NULL, 0x210,
+	DleagueInit, DrvExit, DrvFrame, DleagueDraw, DrvScan, NULL, 0x210,
 	320, 240, 4, 3
 };
 
@@ -2250,6 +2250,6 @@ struct BurnDriver BurnDrvDleaguej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSMISC, 0,
 	NULL, dleaguejRomInfo, dleaguejRomName, NULL, NULL, DleagueInputInfo, DleaguejDIPInfo,
-	DleagueInit, DrvExit, DrvFrame, DleagueJDraw, NULL, NULL, 0x210,
+	DleagueInit, DrvExit, DrvFrame, DleagueJDraw, DrvScan, NULL, 0x210,
 	320, 240, 4, 3
 };

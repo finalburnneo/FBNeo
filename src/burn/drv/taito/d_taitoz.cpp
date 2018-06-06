@@ -19,16 +19,6 @@ static INT32 bUseGun = 0;
 static double TaitoZYM2610Route1MasterVol;
 static double TaitoZYM2610Route2MasterVol;
 
-static void AquajackDraw();
-static void BsharkDraw();
-static void ChasehqDraw();
-static void ContcircDraw();
-static void DblaxleDraw();
-static void EnforceDraw();
-static void RacingbDraw();
-static void SciDraw();
-static void SpacegunDraw();
-
 #ifdef BUILD_A68K
 static bool bUseAsm68KCoreOldValue = false;
 #endif
@@ -4862,7 +4852,6 @@ static INT32 AquajackInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = AquajackMakeInputs;
-	TaitoDrawFunction = AquajackDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 500;
 
@@ -4956,7 +4945,6 @@ static INT32 BsharkInit()
 	BurnYM2610SetRoute(BURN_SND_YM2610_AY8910_ROUTE, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	TaitoMakeInputsFunction = BsharkMakeInputs;
-	TaitoDrawFunction = BsharkDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 271;
 	TaitoFlipScreenX = 1;
@@ -5070,7 +5058,6 @@ static INT32 ChasehqInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = ChasehqMakeInputs;
-	TaitoDrawFunction = ChasehqDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 100;
 
@@ -5171,7 +5158,6 @@ static INT32 ContcircInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = ContcircMakeInputs;
-	TaitoDrawFunction = ContcircDraw;
 	TaitoIrqLine = 6;
 	TaitoFrameInterleave = 100;
 
@@ -5269,7 +5255,6 @@ static INT32 DblaxleInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = DblaxleMakeInputs;
-	TaitoDrawFunction = DblaxleDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 100;
 
@@ -5373,7 +5358,6 @@ static INT32 EnforceInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = EnforceMakeInputs;
-	TaitoDrawFunction = EnforceDraw;
 	TaitoIrqLine = 6;
 	TaitoFrameInterleave = 100;
 
@@ -5480,7 +5464,6 @@ static INT32 NightstrInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = NightstrMakeInputs;
-	TaitoDrawFunction = ChasehqDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 100;
 
@@ -5577,7 +5560,6 @@ static INT32 RacingbInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = DblaxleMakeInputs;
-	TaitoDrawFunction = RacingbDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 100;
 
@@ -5680,7 +5662,6 @@ static INT32 SciInit()
 	bYM2610UseSeperateVolumes = 1;
 	
 	TaitoMakeInputsFunction = SciMakeInputs;
-	TaitoDrawFunction = SciDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 100;
 
@@ -5777,7 +5758,6 @@ static INT32 SpacegunInit()
 	if (!EEPROMAvailable()) EEPROMFill(spacegun_default_eeprom, 0, 128);
 	
 	TaitoMakeInputsFunction = SpacegunMakeInputs;
-	TaitoDrawFunction = SpacegunDraw;
 	TaitoIrqLine = 4;
 	TaitoFrameInterleave = 100;
 	TaitoFlipScreenX = 1;
@@ -6540,7 +6520,7 @@ static void SpacegunRenderSprites(INT32 PriorityDraw)
 	}
 }
 
-static void AquajackDraw()
+static INT32 AquajackDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	BurnTransferClear();
@@ -6563,9 +6543,11 @@ static void AquajackDraw()
 	
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TC0110PCRPalette);
+
+	return 0;
 }
 
-static void BsharkDraw()
+static INT32 BsharkDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
@@ -6588,9 +6570,11 @@ static void BsharkDraw()
 	
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TaitoPalette);
+
+	return 0;
 }
 
-static void ChasehqDraw()
+static INT32 ChasehqDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
@@ -6614,9 +6598,11 @@ static void ChasehqDraw()
 
 	BurnTransferCopy(TC0110PCRPalette);
 	if (bUseShifter) BurnShiftRender();
+
+	return 0;
 }
 
-static void ContcircDraw()
+static INT32 ContcircDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
@@ -6640,9 +6626,11 @@ static void ContcircDraw()
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TC0110PCRPalette);
 	BurnShiftRender();
+
+	return 0;
 }
 
-static void EnforceDraw()
+static INT32 EnforceDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
@@ -6665,9 +6653,11 @@ static void EnforceDraw()
 	
 	if (!(Disable & 0x04)) TC0100SCNRenderCharLayer(0);
 	BurnTransferCopy(TC0110PCRPalette);
+
+	return 0;
 }
 
-static void DblaxleDraw()
+static INT32 DblaxleDraw()
 {
 	UINT8 Layer[4];
 	UINT16 Priority = TC0480SCPGetBgPriority();
@@ -6695,9 +6685,11 @@ static void DblaxleDraw()
 	TC0480SCPRenderCharLayer();
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
+
+	return 0;
 }
 
-static void RacingbDraw()
+static INT32 RacingbDraw()
 {
 	UINT8 Layer[4];
 	UINT16 Priority = TC0480SCPGetBgPriority();
@@ -6720,9 +6712,11 @@ static void RacingbDraw()
 	TC0480SCPRenderCharLayer();
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
+
+	return 0;
 }
 
-static void SciDraw()
+static INT32 SciDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
@@ -6747,9 +6741,11 @@ static void SciDraw()
 	
 	BurnTransferCopy(TaitoPalette);
 	BurnShiftRender();
+
+	return 0;
 }
 
-static void SpacegunDraw()
+static INT32 SpacegunDraw()
 {
 	INT32 Disable = TC0100SCNCtrl[0][6] & 0xf7;
 	
@@ -6774,6 +6770,8 @@ static void SpacegunDraw()
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
 		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
 	}
+
+	return 0;
 }
 
 static INT32 TaitoZFrame()
@@ -6841,7 +6839,7 @@ static INT32 TaitoZFrame()
 		SekClose();
 	}
 	
-	if (pBurnDraw) TaitoDrawFunction();
+	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
 }
@@ -6907,7 +6905,7 @@ struct BurnDriver BurnDrvAquajack = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackRomInfo, AquajackRomName, NULL, NULL, AquajackInputInfo, AquajackDIPInfo,
-	AquajackInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	AquajackInit, TaitoZExit, TaitoZFrame, AquajackDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6917,7 +6915,7 @@ struct BurnDriver BurnDrvAquajackj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackjRomInfo, AquajackjRomName, NULL, NULL, AquajackInputInfo, AquajackjDIPInfo,
-	AquajackInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	AquajackInit, TaitoZExit, TaitoZFrame, AquajackDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6927,7 +6925,7 @@ struct BurnDriver BurnDrvAquajacku = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, AquajackuRomInfo, AquajackuRomName, NULL, NULL, AquajackInputInfo, AquajackjDIPInfo,
-	AquajackInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	AquajackInit, TaitoZExit, TaitoZFrame, AquajackDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6937,7 +6935,7 @@ struct BurnDriver BurnDrvBshark = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, BsharkRomInfo, BsharkRomName, NULL, NULL, BsharkInputInfo, BsharkDIPInfo,
-	BsharkInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	BsharkInit, TaitoZExit, TaitoZFrame, BsharkDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6947,7 +6945,7 @@ struct BurnDriver BurnDrvBsharkj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, BsharkjRomInfo, BsharkjRomName, NULL, NULL, BsharkInputInfo, BsharkjDIPInfo,
-	BsharkInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	BsharkInit, TaitoZExit, TaitoZFrame, BsharkDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6957,7 +6955,7 @@ struct BurnDriver BurnDrvBsharkjjs = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, BsharkjjsRomInfo, BsharkjjsRomName, NULL, NULL, BsharkjjsInputInfo, BsharkjjsDIPInfo,
-	BsharkInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	BsharkInit, TaitoZExit, TaitoZFrame, BsharkDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6967,7 +6965,7 @@ struct BurnDriver BurnDrvBsharku = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, BsharkuRomInfo, BsharkuRomName, NULL, NULL, BsharkInputInfo, BsharkuDIPInfo,
-	BsharkInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	BsharkInit, TaitoZExit, TaitoZFrame, BsharkDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6977,7 +6975,7 @@ struct BurnDriver BurnDrvChasehq = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehqRomInfo, ChasehqRomName, NULL, NULL, ChasehqInputInfo, ChasehqDIPInfo,
-	ChasehqInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ChasehqInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6987,7 +6985,7 @@ struct BurnDriver BurnDrvChasehqj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehqjRomInfo, ChasehqjRomName, NULL, NULL, ChasehqInputInfo, ChasehqjDIPInfo,
-	ChasehqInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ChasehqInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -6997,7 +6995,7 @@ struct BurnDriver BurnDrvChasehqju = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehqjuRomInfo, ChasehqjuRomName, NULL, NULL, ChasehqInputInfo, ChasehqjDIPInfo,
-	ChasehqInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ChasehqInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7007,7 +7005,7 @@ struct BurnDriver BurnDrvChasehqu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ChasehquRomInfo, ChasehquRomName, NULL, NULL, ChasehqInputInfo, ChasehqDIPInfo,
-	ChasehqInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ChasehqInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7017,7 +7015,7 @@ struct BurnDriver BurnDrvContcirc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircRomInfo, ContcircRomName, NULL, NULL, ContcircInputInfo, ContcircDIPInfo,
-	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ContcircInit, TaitoZExit, TaitoZFrame, ContcircDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7027,7 +7025,7 @@ struct BurnDriver BurnDrvContcircu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircuRomInfo, ContcircuRomName, NULL, NULL, ContcircInputInfo, ContcircuDIPInfo,
-	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ContcircInit, TaitoZExit, TaitoZFrame, ContcircDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7037,7 +7035,7 @@ struct BurnDriver BurnDrvContcircua = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircuaRomInfo, ContcircuaRomName, NULL, NULL, ContcircInputInfo, ContcircjDIPInfo,
-	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ContcircInit, TaitoZExit, TaitoZFrame, ContcircDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7047,7 +7045,7 @@ struct BurnDriver BurnDrvContcircj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ContcircjRomInfo, ContcircjRomName, NULL, NULL, ContcircInputInfo, ContcircjDIPInfo,
-	ContcircInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	ContcircInit, TaitoZExit, TaitoZFrame, ContcircDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7057,7 +7055,7 @@ struct BurnDriver BurnDrvDblaxle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, DblaxleRomInfo, DblaxleRomName, NULL, NULL, DblaxleInputInfo, DblaxleDIPInfo,
-	DblaxleInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7067,7 +7065,7 @@ struct BurnDriver BurnDrvDblaxleu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, DblaxleuRomInfo, DblaxleuRomName, NULL, NULL, DblaxleInputInfo, DblaxleDIPInfo,
-	DblaxleInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7077,7 +7075,7 @@ struct BurnDriver BurnDrvPwheelsj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, PwheelsjRomInfo, PwheelsjRomName, NULL, NULL, DblaxleInputInfo, PwheelsjDIPInfo,
-	DblaxleInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	DblaxleInit, TaitoZExit, TaitoZFrame, DblaxleDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7087,7 +7085,7 @@ struct BurnDriver BurnDrvEnforce = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, EnforceRomInfo, EnforceRomName, NULL, NULL, EnforceInputInfo, EnforceDIPInfo,
-	EnforceInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	EnforceInit, TaitoZExit, TaitoZFrame, EnforceDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7097,7 +7095,7 @@ struct BurnDriver BurnDrvEnforcej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, EnforcejRomInfo, EnforcejRomName, NULL, NULL, EnforceInputInfo, EnforcejDIPInfo,
-	EnforceInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	EnforceInit, TaitoZExit, TaitoZFrame, EnforceDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7107,7 +7105,7 @@ struct BurnDriver BurnDrvEnforceja = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, EnforcejaRomInfo, EnforcejaRomName, NULL, NULL, EnforceInputInfo, EnforcejaDIPInfo,
-	EnforceInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	EnforceInit, TaitoZExit, TaitoZFrame, EnforceDraw, TaitoZScan,
 	NULL, 0x1000, 320, 224, 4, 3
 };
 
@@ -7117,7 +7115,7 @@ struct BurnDriver BurnDrvNightstr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, NightstrRomInfo, NightstrRomName, NULL, NULL, NightstrInputInfo, NightstrDIPInfo,
-	NightstrInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NightstrInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7127,7 +7125,7 @@ struct BurnDriver BurnDrvNightstrj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, NightstrjRomInfo, NightstrjRomName, NULL, NULL, NightstrInputInfo, NightstrjDIPInfo,
-	NightstrInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NightstrInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7137,7 +7135,7 @@ struct BurnDriver BurnDrvNightstru = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, NightstruRomInfo, NightstruRomName, NULL, NULL, NightstrInputInfo, NightstruDIPInfo,
-	NightstrInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	NightstrInit, TaitoZExit, TaitoZFrame, ChasehqDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7147,7 +7145,7 @@ struct BurnDriver BurnDrvRacingb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, RacingbRomInfo, RacingbRomName, NULL, NULL, RacingbInputInfo, RacingbDIPInfo,
-	RacingbInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	RacingbInit, TaitoZExit, TaitoZFrame, RacingbDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7157,7 +7155,7 @@ struct BurnDriver BurnDrvRacingbj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, RacingbjRomInfo, RacingbjRomName, NULL, NULL, RacingbInputInfo, RacingbDIPInfo,
-	RacingbInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	RacingbInit, TaitoZExit, TaitoZFrame, RacingbDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7167,7 +7165,7 @@ struct BurnDriver BurnDrvSci = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, SciRomInfo, SciRomName, NULL, NULL, SciInputInfo, SciDIPInfo,
-	SciInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7177,7 +7175,7 @@ struct BurnDriver BurnDrvScia = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, SciaRomInfo, SciaRomName, NULL, NULL, SciInputInfo, SciDIPInfo,
-	SciInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7187,7 +7185,7 @@ struct BurnDriver BurnDrvScij = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ScijRomInfo, ScijRomName, NULL, NULL, SciInputInfo, ScijDIPInfo,
-	SciInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7197,7 +7195,7 @@ struct BurnDriver BurnDrvSciu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, SciuRomInfo, SciuRomName, NULL, NULL, SciInputInfo, SciuDIPInfo,
-	SciInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7207,7 +7205,7 @@ struct BurnDriver BurnDrvScinegro = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_TAITO_TAITOZ, GBF_RACING, 0,
 	NULL, ScinegroRomInfo, ScinegroRomName, NULL, NULL, SciInputInfo, SciDIPInfo,
-	SciInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SciInit, TaitoZExit, TaitoZFrame, SciDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7217,7 +7215,7 @@ struct BurnDriver BurnDrvSpacegun = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, SpacegunRomInfo, SpacegunRomName, NULL, NULL, SpacegunInputInfo, SpacegunDIPInfo,
-	SpacegunInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SpacegunInit, TaitoZExit, TaitoZFrame, SpacegunDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7227,7 +7225,7 @@ struct BurnDriver BurnDrvSpacegunj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, SpacegunjRomInfo, SpacegunjRomName, NULL, NULL, SpacegunInputInfo, SpacegunjDIPInfo,
-	SpacegunInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SpacegunInit, TaitoZExit, TaitoZFrame, SpacegunDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };
 
@@ -7237,6 +7235,6 @@ struct BurnDriver BurnDrvSpacegunu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_TAITOZ, GBF_SHOOT, 0,
 	NULL, SpacegunuRomInfo, SpacegunuRomName, NULL, NULL, SpacegunInputInfo, SpacegunuDIPInfo,
-	SpacegunInit, TaitoZExit, TaitoZFrame, NULL, TaitoZScan,
+	SpacegunInit, TaitoZExit, TaitoZFrame, SpacegunDraw, TaitoZScan,
 	NULL, 0x1000, 320, 240, 4, 3
 };

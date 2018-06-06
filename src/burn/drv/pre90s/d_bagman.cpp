@@ -2,14 +2,13 @@
 // based on MAME driver by Nicola Salmoria
 
 /*
-    fix palette
-	fix random invulnerability/lockups (pal? timing?)
     Squaitsa analog inputs
 	verify default dip values
 	bug test
 */
 
 #include "tiles_generic.h"
+#include "resnet.h"
 #include "z80_intf.h"
 #include "ay8910.h"
 #include "tms5110.h"
@@ -36,9 +35,9 @@ static UINT8 flipscreen[2];
 static UINT8 irq_mask;
 static UINT8 video_enable;
 
-static UINT8 m_andmap[64];
-static UINT8 m_columnvalue[32];
-static UINT8 m_outvalue[8];
+static UINT8 pal16r6_andmap[64];
+static UINT8 pal16r6_columnvalue[32];
+static UINT8 pal16r6_outvalue[8];
 
 static INT32 speech_rom_address;
 static UINT8 ls259_buf[8];
@@ -366,65 +365,68 @@ static void update_pal()
 		{
 			INT32 z = (fusemap[row] >> column) & 1;
 			if ( z == 0 )
-				val &= m_columnvalue[column];
+				val &= pal16r6_columnvalue[column];
 		}
-		m_andmap[row] = val;
+		pal16r6_andmap[row] = val;
 	}
 
 	for (row = 1, val = 0; row < 8; row++)
-		val |= m_andmap[row];
-	if (m_andmap[0] == 1)
+		val |= pal16r6_andmap[row];
+	if (pal16r6_andmap[0] == 1)
 	{
-		m_columnvalue[2] = 1-val;
-		m_columnvalue[3] = val;
-		m_outvalue[0]    = 1-val;
+		pal16r6_columnvalue[2] = 1-val;
+		pal16r6_columnvalue[3] = val;
+		pal16r6_outvalue[0]    = 1-val;
 	}
 	else
 	{
-		m_columnvalue[2] = 0;
-		m_columnvalue[3] = 1;
+		pal16r6_columnvalue[2] = 0;
+		pal16r6_columnvalue[3] = 1;
 	}
 
-	for (INT32 i = 0; i < 7; i++)
+	for (INT32 i = 0; i < 6; i++)
 	{
-		for (row = (8 + i), val = 0; row < (16 + i); row++)
-			val |= m_andmap[row];
-		m_columnvalue[6 + (i * 4)] = 1-val;
-		m_columnvalue[7 + (i * 4)] = val;
-		m_outvalue[1 + i] = 1-val;
+		for (row = 8, val = 0; row < 16; row++)
+			val |= pal16r6_andmap[row + (8 * i)];
+		pal16r6_columnvalue[6 + (i * 4)] = 1-val;
+		pal16r6_columnvalue[7 + (i * 4)] = val;
+		pal16r6_outvalue[1 + i] = 1-val;
 	}
 
 	for (row = 57, val = 0; row < 64; row++)
-		val |= m_andmap[row];
-	if (m_andmap[56] == 1)
+		val |= pal16r6_andmap[row];
+	if (pal16r6_andmap[56] == 1)
 	{
-		m_columnvalue[30] = 1-val;
-		m_columnvalue[31] = val;
-		m_outvalue[7]     = 1-val;
+		pal16r6_columnvalue[30] = 1-val;
+		pal16r6_columnvalue[31] = val;
+		pal16r6_outvalue[7]     = 1-val;
 	}
 	else
 	{
-		m_columnvalue[30] = 0;
-		m_columnvalue[31] = 1;
+		pal16r6_columnvalue[30] = 0;
+		pal16r6_columnvalue[31] = 1;
 	}
 }
 
 static void pal16r6_write(UINT8 offset, UINT8 data)
 {
 	UINT8 line = offset * 4;
-	m_columnvalue[line    ] = data & 1;
-	m_columnvalue[line + 1] = 1 - (data & 1);
+	pal16r6_columnvalue[line + 0] = data & 1;
+	pal16r6_columnvalue[line + 1] = 1 - (data & 1);
 }
 
 static UINT8 pal16r6_read()
 {
 	update_pal();
-	return  (m_outvalue[6]) + (m_outvalue[5] << 1) + (m_outvalue[4] << 2) +
-		(m_outvalue[3] << 3) + (m_outvalue[2] << 4) + (m_outvalue[1] << 5);
+
+	return (pal16r6_outvalue[6]) + (pal16r6_outvalue[5] << 1) + (pal16r6_outvalue[4] << 2) +
+		(pal16r6_outvalue[3] << 3) + (pal16r6_outvalue[2] << 4) + (pal16r6_outvalue[1] << 5);
 }
 
 static void pal16r6_reset()
 {
+	memset(&pal16r6_columnvalue, 0, sizeof(pal16r6_columnvalue));
+
 	for (INT32 i = 0; i < 8; i++) {
 		pal16r6_write(i, 1);
 	}
@@ -488,8 +490,8 @@ static void __fastcall bagman_main_write(UINT16 address, UINT8 data)
 	{
 		case 0xa000:
 			irq_mask = data & 1;
-			//if (irq_mask == 0) // this doesn't work right - timing?
-			//	ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			if (irq_mask == 0)
+				ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		return;
 
 		case 0xa001:
@@ -907,21 +909,30 @@ static INT32 DrvExit()
 
 static void DrvPaletteInit()
 {
+	static const INT32 resistances_rg[3] = { 1000, 470, 220 };
+	static const INT32 resistances_b[2] = { 470, 220 };
+	double weights_r[3], weights_g[3], weights_b[2];
+
+	compute_resistor_weights(0, 255,    -1.0,
+							 3, resistances_rg, weights_r, 470, 0,
+							 3, resistances_rg, weights_g, 470, 0,
+							 2, resistances_b, weights_b, 470, 0);
+
 	for (INT32 i = 0; i < 0x40; i++)
 	{
 		INT32 bit0 = (DrvColPROM[i] >> 0) & 0x01;
 		INT32 bit1 = (DrvColPROM[i] >> 1) & 0x01;
 		INT32 bit2 = (DrvColPROM[i] >> 2) & 0x01;
-		INT32 r = (((bit0 * 1000) + (bit1 * 470) + (bit2 * 220)) * 255) / 1690;
+		INT32 r = combine_3_weights(weights_r, bit0, bit1, bit2);
 
 		bit0 = (DrvColPROM[i] >> 3) & 0x01;
 		bit1 = (DrvColPROM[i] >> 4) & 0x01;
 		bit2 = (DrvColPROM[i] >> 5) & 0x01;
-		INT32 g = (((bit0 * 1000) + (bit1 * 470) + (bit2 * 220)) * 255) / 1690;
+		INT32 g = combine_3_weights(weights_g, bit0, bit1, bit2);
 
 		bit0 = (DrvColPROM[i] >> 6) & 0x01;
 		bit1 = (DrvColPROM[i] >> 7) & 0x01;
-		INT32 b = (((bit0 * 470) + (bit1 * 220)) * 255) / 690;
+		INT32 b = combine_2_weights(weights_b, bit0, bit1);
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
@@ -968,7 +979,9 @@ static INT32 DrvDraw()
 		GenericTilemapSetFlip(0, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
 		GenericTilemapDraw(0, pTransDraw, 0);
 
+		GenericTilesSetClip(-1, nScreenWidth - 16, -1, -1);
 		draw_sprites();
+		GenericTilesClearClip();
 	}
 
 	BurnTransferCopy(DrvPalette);
@@ -1002,7 +1015,7 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone += ZetRun(nCyclesTotal / nInterleave);
 
-		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 	}
 
 	ZetClose();

@@ -610,12 +610,14 @@ INT32 OhmygodCalcPalette()
 	return 0;
 }
 
-void OhmygodDraw()
+INT32 OhmygodDraw()
 {
 	OhmygodCalcPalette();
 	OhmygodRenderCharLayer();
 	OhmygodRenderSpriteLayer();
 	BurnTransferCopy(OhmygodPalette);
+
+	return 0;
 }
 
 INT32 OhmygodFrame()
@@ -682,7 +684,7 @@ struct BurnDriver BurnDrvOhmygod = {
 	L"Oh my God! (Japan)\0Oh my god! \u30AA\u30FC\u30DE\u30A4\u30AC\u30A1\u30FC\uFF01\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, OhmygodRomInfo, OhmygodRomName, NULL, NULL, OhmygodInputInfo, OhmygodDIPInfo,
-	OhmygodInit, OhmygodExit, OhmygodFrame, NULL, OhmygodScan,
+	OhmygodInit, OhmygodExit, OhmygodFrame, OhmygodDraw, OhmygodScan,
 	NULL, 0x800, 320, 240, 4, 3
 };
 
@@ -692,6 +694,6 @@ struct BurnDriver BurnDrvNaname = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, NanameRomInfo, NanameRomName, NULL, NULL, OhmygodInputInfo, NanameDIPInfo,
-	OhmygodInit, OhmygodExit, OhmygodFrame, NULL, OhmygodScan,
+	OhmygodInit, OhmygodExit, OhmygodFrame, OhmygodDraw, OhmygodScan,
 	NULL, 0x800, 320, 240, 4, 3
 };

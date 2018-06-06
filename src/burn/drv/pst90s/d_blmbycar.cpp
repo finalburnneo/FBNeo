@@ -747,7 +747,7 @@ static void DrawSprites(INT32 RenderPriority)
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -758,6 +758,8 @@ static void DrvDraw()
 	if (nBurnLayer & 0x08) DrvRenderFgLayer(1);
 	if (nSpriteEnable & 0x02) DrawSprites(1);
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -821,7 +823,7 @@ struct BurnDriver BurnDrvBlmbycar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	BlmbycarInit, DrvExit, DrvFrame, NULL, DrvScan,
+	BlmbycarInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x300, 384, 256, 4, 3
 };
 
@@ -831,7 +833,7 @@ struct BurnDriver BurnDrvBlmbycaru = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_RACING, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x300, 384, 256, 4, 3
 };
 
@@ -841,6 +843,6 @@ struct BurnDriver BurnDrvWatrball = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_PUZZLE, 0,
 	NULL, WatrballRomInfo, WatrballRomName, NULL, NULL, DrvInputInfo, WatrballDIPInfo,
-	WatrballInit, DrvExit, DrvFrame, NULL, DrvScan,
+	WatrballInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x300, 384, 240, 4, 3
 };

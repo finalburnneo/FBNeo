@@ -2935,7 +2935,7 @@ static void drawgfxN(UINT32,UINT32,INT32,INT32,INT32,INT32)
 
 typedef void (*pDrawgfx)(UINT32,UINT32,INT32,INT32,INT32,INT32);
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	if (bRecalcPalette) {
 		for (INT32 i=0;i<0x08000; i++)
@@ -2948,7 +2948,7 @@ static void DrvDraw()
 
 	if (BURN_ENDIAN_SWAP_INT16(RamVReg[0x30/2]) & 1) { // Blank Screen
 		memcpy(RamSprBak, RamSpr, 0x040000);
-		return;
+		return 0;
 	}
 
 	UINT16 *s1  = RamSprBak + 0x3000 / 2;
@@ -3113,6 +3113,8 @@ static void DrvDraw()
 	BurnTransferCopy(CurPal);
 
 	memcpy(RamSprBak, RamSpr, 0x040000);
+
+	return 0;
 }
 
 
@@ -3319,7 +3321,7 @@ struct BurnDriver BurnDrvGrdians = {
 	L"Guardians\0\u96FB\u795E\u9B54\u584A \uFF29\uFF29\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SCRFIGHT, 0,
 	NULL, grdiansRomInfo, grdiansRomName, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	grdiansInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	grdiansInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	304, 232, 4, 3
 };
 
@@ -3329,7 +3331,7 @@ struct BurnDriver BurnDrvMj4simai = {
 	L"\u82E5\u8349\u7269\u8A9E \u9EBB\u96C0\u56DB\u59C9\u59B9 (Japan)\0Wakakusamonogatari Mahjong Yonshimai\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA2, GBF_MAHJONG, 0,
 	NULL, mj4simaiRomInfo, mj4simaiRomName, NULL, NULL, mj4simaiInputInfo, mj4simaiDIPInfo,
-	mj4simaiInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	mj4simaiInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	384, 240, 4, 3
 };
 
@@ -3339,7 +3341,7 @@ struct BurnDriver BurnDrvMyangel = {
 	L"\u5B50\u80B2\u3066\u30AF\u30A4\u30BA \u30DE\u30A4 \u30A8\u30F3\u30B8\u30A7\u30EB (Japan)\0Kosodate Quiz My Angel\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_QUIZ, 0,
 	NULL, myangelRomInfo, myangelRomName, NULL, NULL, myangelInputInfo, myangelDIPInfo,
-	myangelInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	myangelInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	376, 240, 4, 3
 };
 
@@ -3349,7 +3351,7 @@ struct BurnDriver BurnDrvMyangel2 = {
 	L"\u5B50\u80B2\u3066\u30AF\u30A4\u30BA \u30DE\u30A4 \u30A8\u30F3\u30B8\u30A7\u30EB \uFF12 (Japan)\0Kosodate Quiz My Angel 2\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_QUIZ, 0,
 	NULL, myangel2RomInfo, myangel2RomName, NULL, NULL, myangelInputInfo, myangel2DIPInfo,
-	myangel2Init, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	myangel2Init, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	376, 240, 4, 3
 };
 
@@ -3359,7 +3361,7 @@ struct BurnDriver BurnDrvPzlbowl = {
 	L"Puzzle De Bowling\0\u30D1\u30BA\u30EB \uFF24\uFF25 \u30DC\u30FC\u30EA\u30F3\u30B0\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
 	NULL, pzlbowlRomInfo, pzlbowlRomName, NULL, NULL, grdiansInputInfo, pzlbowlDIPInfo,
-	pzlbowlInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	pzlbowlInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	384, 240, 4, 3
 };
 
@@ -3369,7 +3371,7 @@ struct BurnDriver BurnDrvPenbros = {
 	L"\u30DA\u30F3\u30AE\u30F3 \u30D6\u30E9\u30B6\u30FC\u30BA (Japan)\0Penguin Brothers\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_PLATFORM, 0,
 	NULL, penbrosRomInfo, penbrosRomName, NULL, NULL, penbrosInputInfo, penbrosDIPInfo,
-	penbrosInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	penbrosInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 224, 4, 3
 };
 
@@ -3379,7 +3381,7 @@ struct BurnDriver BurnDrvAblast = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_PLATFORM, 0,
 	NULL, ablastRomInfo, ablastRomName, NULL, NULL, penbrosInputInfo, penbrosDIPInfo,
-	penbrosInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	penbrosInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 224, 4, 3
 };
 
@@ -3389,7 +3391,7 @@ struct BurnDriver BurnDrvGundamex = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_VSFIGHT, 0,
 	NULL, gundamexRomInfo, gundamexRomName, NULL, NULL, GundamexInputInfo, GundamexDIPInfo,
-	gundamexInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	gundamexInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	384, 224, 4, 3
 };
 
@@ -3399,7 +3401,7 @@ struct BurnDriver BurnDrvDeerhunt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuntRomInfo, deerhuntRomName, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3409,7 +3411,7 @@ struct BurnDriver BurnDrvDeerhuna = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhunaRomInfo, deerhunaRomName, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3419,7 +3421,7 @@ struct BurnDriver BurnDrvDeerhunb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhunbRomInfo, deerhunbRomName, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3429,7 +3431,7 @@ struct BurnDriver BurnDrvDeerhunc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuncRomInfo, deerhuncRomName, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3439,7 +3441,7 @@ struct BurnDriver BurnDrvDeerhund = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhundRomInfo, deerhundRomName, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3449,7 +3451,7 @@ struct BurnDriver BurnDrvDeerhune = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, deerhuneRomInfo, deerhuneRomName, NULL, NULL, DeerhuntInputInfo, DeerhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3459,7 +3461,7 @@ struct BurnDriver BurnDrvTurkhunt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, turkhuntRomInfo, turkhuntRomName, NULL, NULL, DeerhuntInputInfo, TurkhuntDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3469,7 +3471,7 @@ struct BurnDriver BurnDrvWschamp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampRomInfo, wschampRomName, NULL, NULL, WschampInputInfo, WschampDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3479,7 +3481,7 @@ struct BurnDriver BurnDrvWschampa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampaRomInfo, wschampaRomName, NULL, NULL, WschampInputInfo, WschampDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3489,7 +3491,7 @@ struct BurnDriver BurnDrvWschampb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, wschampbRomInfo, wschampbRomName, NULL, NULL, WschampInputInfo, WschampDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3499,7 +3501,7 @@ struct BurnDriver BurnDrvTrophyh = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, trophyhRomInfo, trophyhRomName, NULL, NULL, WschampInputInfo, TrophyhDIPInfo,
-	samshootInit, grdiansExit, samshootFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	samshootInit, grdiansExit, samshootFrame, samshootDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3514,7 +3516,7 @@ struct BurnDriverD BurnDrvFuncube2 = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
 	NULL, funcube2RomInfo, funcube2RomName, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	funcubeInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	funcubeInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };
 
@@ -3524,6 +3526,6 @@ struct BurnDriverD BurnDrvFuncube4 = {
 	NULL, NULL, NULL, NULL,
 	0, 2, HARDWARE_SETA2, GBF_PUZZLE, 0,
 	NULL, funcube4RomInfo, funcube4RomName, NULL, NULL, grdiansInputInfo, grdiansDIPInfo,
-	funcubeInit, grdiansExit, grdiansFrame, NULL, grdiansScan, &bRecalcPalette, 0x8000,
+	funcubeInit, grdiansExit, grdiansFrame, DrvDraw, grdiansScan, &bRecalcPalette, 0x8000,
 	320, 240, 4, 3
 };

@@ -43,10 +43,10 @@ static UINT8 DrvSoundLatch;
 static UINT8 DrvOkiBank;
 static UINT8 DrvVBlank;
 
-typedef void (*Render)();
+typedef INT32 (*Render)();
 static Render DrawFunction;
-static void DrvDraw();
-static void CtribeDraw();
+static INT32 DrvDraw();
+static INT32 CtribeDraw();
 
 static INT32 nCyclesDone[2], nCyclesTotal[2];
 static INT32 nCyclesSegment;
@@ -1898,7 +1898,7 @@ static void DrvRenderSprites()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1918,9 +1918,11 @@ static void DrvDraw()
 	}
 	
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void CtribeDraw()
+static INT32 CtribeDraw()
 {
 	BurnTransferClear();
 	CtribeCalcPalette();
@@ -1932,10 +1934,12 @@ static void CtribeDraw()
 	} else {
 		DrvRenderBgLayer(1);
 		DrvRenderFgLayer(0);
-		DrvRenderSprites();		
+		DrvRenderSprites();
 	}
 	
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -2062,7 +2066,7 @@ struct BurnDriver BurnDrvDdragon3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2072,7 +2076,7 @@ struct BurnDriver BurnDrvDdrago3j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2082,7 +2086,7 @@ struct BurnDriver BurnDrvDdrago3p = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvpRomInfo, DrvpRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvpInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvpInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2092,7 +2096,7 @@ struct BurnDriver BurnDrvDdrago3b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvbDIPInfo,
-	DrvbInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvbInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2102,7 +2106,7 @@ struct BurnDriver BurnDrvCtribe = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, CtribeRomInfo, CtribeRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
-	CtribeInit, DrvExit, DrvFrame, NULL, DrvScan,
+	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2112,7 +2116,7 @@ struct BurnDriver BurnDrvCtribe1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Ctribe1RomInfo, Ctribe1RomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
-	CtribeInit, DrvExit, DrvFrame, NULL, DrvScan,
+	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2122,7 +2126,7 @@ struct BurnDriver BurnDrvCtribeo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, CtribeoRomInfo, CtribeoRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
-	CtribeInit, DrvExit, DrvFrame, NULL, DrvScan,
+	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2132,7 +2136,7 @@ struct BurnDriver BurnDrvCtribej = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, CtribejRomInfo, CtribejRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
-	CtribeInit, DrvExit, DrvFrame, NULL, DrvScan,
+	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2142,7 +2146,7 @@ struct BurnDriver BurnDrvCtribeb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, CtribebRomInfo, CtribebRomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
-	CtribeInit, DrvExit, DrvFrame, NULL, DrvScan,
+	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };
 
@@ -2152,6 +2156,6 @@ struct BurnDriver BurnDrvCtribeb2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_TECHNOS, GBF_SCRFIGHT, 0,
 	NULL, Ctribeb2RomInfo, Ctribeb2RomName, NULL, NULL, DrvInputInfo, CtribeDIPInfo,
-	CtribeInit, DrvExit, DrvFrame, NULL, DrvScan,
+	CtribeInit, DrvExit, DrvFrame, DrawFunction, DrvScan,
 	NULL, 0x600, 320, 240, 4, 3
 };

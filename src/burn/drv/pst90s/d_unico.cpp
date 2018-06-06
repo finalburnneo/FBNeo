@@ -1675,7 +1675,7 @@ static void Zeropnt2CalcPalette()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1697,9 +1697,11 @@ static void DrvDraw()
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
 		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
 	}
+
+	return 0;
 }
 
-static void Zeropnt2Draw()
+static INT32 Zeropnt2Draw()
 {
 	BurnTransferClear();
 	Zeropnt2CalcPalette();
@@ -1721,6 +1723,8 @@ static void Zeropnt2Draw()
 	for (INT32 i = 0; i < nBurnGunNumPlayers; i++) {
 		BurnGunDrawTarget(i, BurnGunX[i] >> 8, BurnGunY[i] >> 8);
 	}
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1887,7 +1891,7 @@ struct BurnDriver BurnDrvBurglarx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_MAZE, 0,
 	NULL, BurglarxRomInfo, BurglarxRomName, NULL, NULL, BurglarxInputInfo, BurglarxDIPInfo,
-	BurglarxInit, DrvExit, DrvFrame, NULL, BurglarxScan,
+	BurglarxInit, DrvExit, DrvFrame, DrvDraw, BurglarxScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
 
@@ -1897,7 +1901,7 @@ struct BurnDriver BurnDrvZeropnt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntRomInfo, ZeropntRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
-	ZeropntInit, DrvExit, DrvFrame, NULL, ZeropntScan,
+	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
 
@@ -1907,7 +1911,7 @@ struct BurnDriver BurnDrvZeropntj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntjRomInfo, ZeropntjRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
-	ZeropntInit, DrvExit, DrvFrame, NULL, ZeropntScan,
+	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
 
@@ -1917,7 +1921,7 @@ struct BurnDriver BurnDrvZeropnta = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, ZeropntaRomInfo, ZeropntaRomName, NULL, NULL, ZeropntInputInfo, ZeropntDIPInfo,
-	ZeropntInit, DrvExit, DrvFrame, NULL, ZeropntScan,
+	ZeropntInit, DrvExit, DrvFrame, DrvDraw, ZeropntScan,
 	NULL, 0x2000, 384, 224, 4, 3
 };
 
@@ -1927,6 +1931,6 @@ struct BurnDriver BurnDrvZeropnt2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, Zeropnt2RomInfo, Zeropnt2RomName, NULL, NULL, ZeropntInputInfo, Zeropnt2DIPInfo,
-	Zeropnt2Init, Zeropnt2Exit, Zeropnt2Frame, NULL, Zeropnt2Scan,
+	Zeropnt2Init, Zeropnt2Exit, Zeropnt2Frame, Zeropnt2Draw, Zeropnt2Scan,
 	NULL, 0x2000, 384, 224, 4, 3
 };

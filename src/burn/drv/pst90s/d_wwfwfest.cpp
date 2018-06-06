@@ -1048,7 +1048,7 @@ static void DrvRenderCharLayer()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1072,9 +1072,11 @@ static void DrvDraw()
 		DrvRenderBg0Layer(0);
 		DrvRenderSprites();
 		DrvRenderCharLayer();
-	}	
+	}
 	
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1202,7 +1204,7 @@ struct BurnDriver BurnDrvWwfwfest = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
@@ -1212,7 +1214,7 @@ struct BurnDriver BurnDrvWwfwfestu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
@@ -1222,7 +1224,7 @@ struct BurnDriver BurnDrvWwfwfestb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
@@ -1232,7 +1234,7 @@ struct BurnDriver BurnDrvWwfwfestj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };
 
@@ -1242,6 +1244,6 @@ struct BurnDriver BurnDrvWwfwfestk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_TECHNOS, GBF_VSFIGHT, 0,
 	NULL, DrvkRomInfo, DrvkRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x2000, 320, 240, 4, 3
 };

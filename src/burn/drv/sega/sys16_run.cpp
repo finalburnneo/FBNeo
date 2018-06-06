@@ -2917,6 +2917,8 @@ INT32 System16BFrame()
 	if (Simulate8751) Simulate8751();
 	
 	if (pBurnDraw) {
+		BurnDrvRedraw();
+#if 0
 		if (System16BTileAlt) {
 			System16BAltRender();
 		} else {
@@ -2926,6 +2928,7 @@ INT32 System16BFrame()
 				System16BRender();
 			}
 		}
+#endif
 	}
 
 	return 0;
@@ -3094,7 +3097,7 @@ INT32 HangonFrame()
 	SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 	SekClose();
 	
-	if (Simulate8751) Simulate8751();	
+	if (Simulate8751) Simulate8751();
 
 	if (pBurnDraw) {
 		HangonRender();
@@ -3162,11 +3165,14 @@ INT32 HangonYM2203Frame()
 	if (Simulate8751) Simulate8751();
 
 	if (pBurnDraw) {
+		BurnDrvRedraw();
+#if 0
 		if (Hangon) {
 			HangonAltRender();
 		} else {
 			HangonRender();
 		}
+#endif
 	}
 
 	return 0;
@@ -3256,11 +3262,14 @@ INT32 OutrunFrame()
 	}	
 	
 	if (pBurnDraw) {
+		BurnDrvRedraw();
+#if 0
 		if (!Shangon) {
 			OutrunRender();
 		} else {
 			ShangonRender();
 		}
+#endif
 	}
 
 	return 0;

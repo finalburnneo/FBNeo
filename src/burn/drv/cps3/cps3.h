@@ -27,6 +27,7 @@ INT32 cps3Init();
 INT32 cps3Exit();
 INT32 cps3Frame();
 INT32 cps3Scan(INT32 nAction,INT32 *pnMin);
+INT32 DrvCps3Draw();
 
 // sound 
 

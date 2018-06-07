@@ -837,7 +837,7 @@ static void DrawSprites()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -845,6 +845,8 @@ static void DrvDraw()
 	if (nSpriteEnable & 0x02) DrawSprites();
 	if (nBurnLayer & 0x04) DrvRenderBgLayer(1);
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -931,7 +933,7 @@ struct BurnDriver BurnDrvSidepckt = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	SidepcktInit, DrvExit, DrvFrame, NULL, DrvScan,
+	SidepcktInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
@@ -941,7 +943,7 @@ struct BurnDriver BurnDrvSidepcktj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvjDIPInfo,
-	SidepcktjInit, DrvExit, DrvFrame, NULL, DrvScan,
+	SidepcktjInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
@@ -951,7 +953,7 @@ struct BurnDriver BurnDrvSidepcktb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, DrvbRomInfo, DrvbRomName, NULL, NULL, DrvInputInfo, DrvbDIPInfo,
-	SidepcktbInit, DrvExit, DrvFrame, NULL, DrvScan,
+	SidepcktbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };
 
@@ -961,6 +963,6 @@ struct BurnDriver BurnDrvSidepcktb2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 3, HARDWARE_PREFIX_DATAEAST, GBF_SPORTSMISC, 0,
 	NULL, Drvb2RomInfo, Drvb2RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	SidepcktbInit, DrvExit, DrvFrame, NULL, DrvScan,
+	SidepcktbInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x100, 256, 224, 4, 3
 };

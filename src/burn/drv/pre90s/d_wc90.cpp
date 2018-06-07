@@ -953,7 +953,7 @@ static INT32 Wc90CalcPalette()
 	return 0;
 }
 
-static void Wc90Draw()
+static INT32 Wc90Draw()
 {
 	Wc90CalcPalette();
 	Wc90RenderBgLayer();
@@ -963,9 +963,11 @@ static void Wc90Draw()
 	Wc90RenderCharLayer();
 	Wc90RenderSprites(0);
 	BurnTransferCopy(Wc90Palette);
+
+	return 0;
 }
 
-static void Wc90tDraw()
+static INT32 Wc90tDraw()
 {
 	Wc90CalcPalette();
 	Wc90tRenderBgLayer();
@@ -975,14 +977,9 @@ static void Wc90tDraw()
 	Wc90RenderCharLayer();
 	Wc90RenderSprites(0);
 	BurnTransferCopy(Wc90Palette);
+
+	return 0;
 }
-
-typedef void (*drawscreen_procdef)(void);
-
-static drawscreen_procdef drawscreen_proc[2] = {
-	Wc90Draw,
-	Wc90tDraw,
-};
 
 static INT32 Wc90Frame()
 {
@@ -1032,7 +1029,7 @@ static INT32 Wc90Frame()
 	}
 	ZetClose();
 
-	if (pBurnDraw) (*(drawscreen_proc[nTileType]))();
+	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
 }
@@ -1283,7 +1280,7 @@ struct BurnDriver BurnDrvWc90 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90RomInfo, Wc90RomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
-	Wc90Init, Wc90Exit, Wc90Frame, NULL, Wc90Scan,
+	Wc90Init, Wc90Exit, Wc90Frame, Wc90Draw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
 
@@ -1293,7 +1290,7 @@ struct BurnDriver BurnDrvWc90a = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90aRomInfo, Wc90aRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
-	Wc90Init, Wc90Exit, Wc90Frame, NULL, Wc90Scan,
+	Wc90Init, Wc90Exit, Wc90Frame, Wc90Draw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
 
@@ -1303,7 +1300,7 @@ struct BurnDriver BurnDrvWc90b = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90bRomInfo, Wc90bRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
-	Wc90Init, Wc90Exit, Wc90Frame, NULL, Wc90Scan,
+	Wc90Init, Wc90Exit, Wc90Frame, Wc90Draw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };
 
@@ -1313,6 +1310,6 @@ struct BurnDriver BurnDrvWc90t = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SPORTSFOOTBALL, 0,
 	NULL, Wc90tRomInfo, Wc90tRomName, NULL, NULL, Wc90InputInfo, Wc90DIPInfo,
-	Wc90tInit, Wc90Exit, Wc90Frame, NULL, Wc90Scan,
+	Wc90tInit, Wc90Exit, Wc90Frame, Wc90tDraw, Wc90Scan,
 	NULL, 0x400, 256, 224, 4, 3
 };

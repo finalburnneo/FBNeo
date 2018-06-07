@@ -971,7 +971,7 @@ static void DrvRenderSprites()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	if (DrvRecalc) {
 		DrvRecalcPalette();
@@ -1037,6 +1037,8 @@ static void DrvDraw()
 	
 		BurnTransferCopy(DrvPalette);
 	}
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1147,7 +1149,7 @@ struct BurnDriver BurnDrvPsychic5 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x300, 224, 256, 3, 4
 };
 
@@ -1157,7 +1159,7 @@ struct BurnDriver BurnDrvPsychic5j = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, Psychic5jRomInfo, Psychic5jRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x300, 224, 256, 3, 4
 };
 

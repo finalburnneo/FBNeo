@@ -1688,7 +1688,7 @@ static void DrawSprites()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	if (DrvRecalcPal) DrvCalcPalette();
@@ -1696,6 +1696,8 @@ static void DrvDraw()
 	if (nSpriteEnable & 0x01) DrawSprites();
 	if (nBurnLayer & 0x02) DrvRenderFgLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1808,7 +1810,7 @@ struct BurnDriver BurnDrvTerracre = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	TerracreInit, DrvExit, DrvFrame, NULL, DrvScan,
+	TerracreInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1818,7 +1820,7 @@ struct BurnDriver BurnDrvTerracreo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, DrvoRomInfo, DrvoRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	TerracreoInit, DrvExit, DrvFrame, NULL, DrvScan,
+	TerracreoInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1828,7 +1830,7 @@ struct BurnDriver BurnDrvTerracrea = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, DrvaRomInfo, DrvaRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	TerracreoInit, DrvExit, DrvFrame, NULL, DrvScan,
+	TerracreoInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1838,7 +1840,7 @@ struct BurnDriver BurnDrvTerracren = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, DrvnRomInfo, DrvnRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	TerracrenInit, DrvExit, DrvFrame, NULL, DrvScan,
+	TerracrenInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1848,7 +1850,7 @@ struct BurnDriver BurnDrvAmazon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, AmazonRomInfo, AmazonRomName, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
-	AmazonInit, DrvExit, DrvFrame, NULL, DrvScan,
+	AmazonInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1858,7 +1860,7 @@ struct BurnDriver BurnDrvAmatelas = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, AmatelasRomInfo, AmatelasRomName, NULL, NULL, AmazonInputInfo, AmazonDIPInfo,
-	AmatelasInit, DrvExit, DrvFrame, NULL, DrvScan,
+	AmatelasInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1868,7 +1870,7 @@ struct BurnDriver BurnDrvHorekid = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, HorekidRomInfo, HorekidRomName, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
-	HorekidInit, DrvExit, DrvFrame, NULL, DrvScan,
+	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1878,7 +1880,7 @@ struct BurnDriver BurnDrvHorekidb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, HorekidbRomInfo, HorekidbRomName, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
-	HorekidInit, DrvExit, DrvFrame, NULL, DrvScan,
+	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };
 
@@ -1888,6 +1890,6 @@ struct BurnDriver BurnDrvBoobhack = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, BoobhackRomInfo, BoobhackRomName, NULL, NULL, HorekidInputInfo, HorekidDIPInfo,
-	HorekidInit, DrvExit, DrvFrame, NULL, DrvScan,
+	HorekidInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalcPal, 0x1110, 224, 256, 3, 4
 };

@@ -790,7 +790,7 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-void calculate_star_field(); // forward..
+static void calculate_star_field(); // forward..
 
 static INT32 JunglerDoReset()
 {
@@ -815,7 +815,7 @@ static INT32 JunglerDoReset()
 	return 0;
 }
 
-UINT8 __fastcall RallyxZ80ProgRead(UINT16 a)
+static UINT8 __fastcall RallyxZ80ProgRead(UINT16 a)
 {
 	switch (a) {
 		case 0xa000: {
@@ -838,7 +838,7 @@ UINT8 __fastcall RallyxZ80ProgRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
+static void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 {
 	if (a >= 0xa100 && a <= 0xa11f) {
 		NamcoSoundWrite(a - 0xa100, d);
@@ -932,12 +932,12 @@ void __fastcall RallyxZ80ProgWrite(UINT16 a, UINT8 d)
 		}
 		
 		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 Write %04x, %02x\n"), a, d);
+			//bprintf(PRINT_NORMAL, _T("Z80 Write %04x, %02x\n"), a, d); // rallyx makes spurious writes to 0000, a010 - a1ff
 		}
 	}
 }
 
-UINT8 __fastcall RallyxZ80PortRead(UINT16 a)
+static UINT8 __fastcall RallyxZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -950,7 +950,7 @@ UINT8 __fastcall RallyxZ80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall RallyxZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall RallyxZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
@@ -968,7 +968,7 @@ void __fastcall RallyxZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall JunglerZ80ProgRead1(UINT16 a)
+static UINT8 __fastcall JunglerZ80ProgRead1(UINT16 a)
 {
 	switch (a) {
 		case 0xa000: {
@@ -1001,7 +1001,7 @@ UINT8 __fastcall JunglerZ80ProgRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
+static void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 {
 	switch (a) {
 		case 0xa100: {
@@ -1100,7 +1100,7 @@ void __fastcall JunglerZ80ProgWrite1(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall JunglerZ80PortRead1(UINT16 a)
+static UINT8 __fastcall JunglerZ80PortRead1(UINT16 a)
 {
 	a &= 0xff;
 	
@@ -1113,57 +1113,13 @@ UINT8 __fastcall JunglerZ80PortRead1(UINT16 a)
 	return 0;
 }
 
-void __fastcall JunglerZ80PortWrite1(UINT16 a, UINT8 d)
+static void __fastcall JunglerZ80PortWrite1(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	
 	switch (a) {
 		default: {
 			bprintf(PRINT_NORMAL, _T("Z80 #1 Port Write => %02X, %02X\n"), a, d);
-		}
-	}
-}
-
-UINT8 __fastcall JunglerZ80ProgRead2(UINT16 a)
-{
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #2 Read %04x\n"), a);
-		}
-	}
-	
-	return 0;
-}
-
-void __fastcall JunglerZ80ProgWrite2(UINT16 a, UINT8 d)
-{
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #2 Write %04x, %02x\n"), a, d);
-		}
-	}
-}
-
-UINT8 __fastcall JunglerZ80PortRead2(UINT16 a)
-{
-	a &= 0xff;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #2 Port Read => %02X\n"), a);
-		}
-	}
-
-	return 0;
-}
-
-void __fastcall JunglerZ80PortWrite2(UINT16 a, UINT8 d)
-{
-	a &= 0xff;
-	
-	switch (a) {
-		default: {
-			bprintf(PRINT_NORMAL, _T("Z80 #2 Port Write => %02X, %02X\n"), a, d);
 		}
 	}
 }
@@ -1859,23 +1815,6 @@ static void DrvRenderBullets()
 
 		if (x >= nScreenWidth || y >= nScreenHeight) continue;
 		
-//		if (flip_screen_get(machine))
-//			x -= 3;
-
-//		if (transpen)
-//			drawgfx_transpen(bitmap,cliprect,machine->gfx[2],
-//					((state->radarattr[offs & 0x0f] & 0x0e) >> 1) ^ 0x07,
-//					0,
-//					0,0,
-//					x,y,
-//					3);
-//		else
-//			drawgfx_transtable(bitmap,cliprect,machine->gfx[2],
-//					((state->radarattr[offs & 0x0f] & 0x0e) >> 1) ^ 0x07,
-//					0,
-//					0,0,
-//					x,y,
-///					state->drawmode_table,machine->shadow_table);
 		if (Flip) {
 			RenderCustomTile_Mask_FlipXY_Clip(pTransDraw, 4, 4, Code, x, y, 0, 2, 3, 0x100, DrvDots);
 		} else {
@@ -1884,7 +1823,7 @@ static void DrvRenderBullets()
 	}
 }
 
-void calculate_star_field()
+static void calculate_star_field()
 {
 	INT32 generator;
 
@@ -1919,7 +1858,7 @@ void calculate_star_field()
 	}
 }
 
-void plot_star(INT32 x, INT32 y, INT32 color)
+static void plot_star(INT32 x, INT32 y, INT32 color)
 {
 	if (junglerflip) {
 		x = 255 - x;
@@ -1933,7 +1872,7 @@ void plot_star(INT32 x, INT32 y, INT32 color)
 	}
 }
 
-void draw_stars()
+static void draw_stars()
 {
 	for (INT32 offs = 0; offs < total_stars; offs++) {
 		INT32 x = j_stars[offs].x;
@@ -1944,7 +1883,7 @@ void draw_stars()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1954,9 +1893,11 @@ static void DrvDraw()
 	if (nBurnLayer & 8) DrvRender8x32Layer();
 	if (nBurnLayer & 8) DrvRenderBullets();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void DrvDrawJungler()
+static INT32 DrvDrawJungler()
 {
 	BurnTransferClear();
 	DrvCalcPaletteJungler();
@@ -1970,6 +1911,8 @@ static void DrvDrawJungler()
 		draw_stars();
 
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -2113,6 +2056,14 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (rallyx) {
 			NamcoSoundScan(nAction, pnMin);
 		}
+
+		SCAN_VAR(DrvCPUFireIRQ);
+		SCAN_VAR(last_sound_irq);
+		SCAN_VAR(DrvCPUIRQVector);
+		SCAN_VAR(xScroll);
+		SCAN_VAR(yScroll);
+		SCAN_VAR(DrvLastBang);
+		SCAN_VAR(stars_enable);
 	}
 	
 	return 0;
@@ -2124,7 +2075,7 @@ struct BurnDriver BurnDrvRallyx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxRomInfo, RallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2134,7 +2085,7 @@ struct BurnDriver BurnDrvRallyxa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxaRomInfo, RallyxaRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2144,7 +2095,7 @@ struct BurnDriver BurnDrvRallyxm = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmRomInfo, RallyxmRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2154,7 +2105,7 @@ struct BurnDriver BurnDrvRallyxmr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, RallyxmrRomInfo, RallyxmrRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
-	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2164,7 +2115,7 @@ struct BurnDriver BurnDrvDngrtrck = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, DngrtrckRomInfo, DngrtrckRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DngrtrckDIPInfo,
-	DrvaInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvaInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2174,7 +2125,7 @@ struct BurnDriver BurnDrvNrallyx = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, NrallyxRomInfo, NrallyxRomName, RallyxSampleInfo, RallyxSampleName, DrvInputInfo, DrvDIPInfo,
-	NrallyxInit, DrvExit, DrvFrame, NULL, DrvScan,
+	NrallyxInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 260, 288, 224, 4, 3
 };
 
@@ -2184,7 +2135,7 @@ struct BurnDriver BurnDrvJungler = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, JunglerRomInfo, JunglerRomName, NULL, NULL, JunglerInputInfo, JunglerDIPInfo,
-	JunglerInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	JunglerInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
 
@@ -2225,7 +2176,7 @@ struct BurnDriver BurnDrvTactcian = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, tactcianRomInfo, tactcianRomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
-	TactcianDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	TactcianDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
 
@@ -2262,7 +2213,7 @@ struct BurnDriver BurnDrvTactcian2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, tactcian2RomInfo, tactcian2RomName, NULL, NULL, TactcianInputInfo, TactcianDIPInfo,
-	TactcianDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	TactcianDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 288, 3, 4
 };
 
@@ -2302,7 +2253,7 @@ struct BurnDriver BurnDrvLocomotn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, locomotnRomInfo, locomotnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
-	LocomotnDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	LocomotnDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
 
@@ -2342,7 +2293,7 @@ struct BurnDriver BurnDrvGutangtn = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, gutangtnRomInfo, gutangtnRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
-	GutangtnDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	GutangtnDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
 
@@ -2383,7 +2334,7 @@ struct BurnDriver BurnDrvCottong = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, cottongRomInfo, cottongRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
-	CottongDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	CottongDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
 
@@ -2423,7 +2374,7 @@ struct BurnDriver BurnDrvLocoboot = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, locobootRomInfo, locobootRomName, NULL, NULL, LocomotnInputInfo, LocomotnDIPInfo,
-	LocobootDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	LocobootDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
 
@@ -2465,7 +2416,7 @@ struct BurnDriver BurnDrvCommsega = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, commsegaRomInfo, commsegaRomName, NULL, NULL, CommsegaInputInfo, CommsegaDIPInfo,
-	CommsegaDrvInit, DrvExit, JunglerFrame, NULL, DrvScan,
+	CommsegaDrvInit, DrvExit, JunglerFrame, DrvDrawJungler, DrvScan,
 	NULL, 324, 224, 256, 3, 4
 };
 

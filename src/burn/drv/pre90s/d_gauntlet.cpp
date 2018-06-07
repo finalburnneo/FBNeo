@@ -2510,7 +2510,7 @@ static void DrvRenderCharLayer()
 	}
 }
 
-static void DrvDraw()
+static INT32 DrvDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -2521,6 +2521,8 @@ static void DrvDraw()
 	DrvRenderCharLayer();
 	
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -2675,7 +2677,7 @@ struct BurnDriver BurnDrvGauntlet = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletRomInfo, GauntletRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2685,7 +2687,7 @@ struct BurnDriver BurnDrvGauntlets = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletsRomInfo, GauntletsRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2695,7 +2697,7 @@ struct BurnDriver BurnDrvGauntletj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletjRomInfo, GauntletjRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2705,7 +2707,7 @@ struct BurnDriver BurnDrvGauntletg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, GauntletgRomInfo, GauntletgRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2715,7 +2717,7 @@ struct BurnDriver BurnDrvGauntletj12 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletj12RomInfo, Gauntletj12RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2725,7 +2727,7 @@ struct BurnDriver BurnDrvGauntletr9 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr9RomInfo, Gauntletr9RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2735,7 +2737,7 @@ struct BurnDriver BurnDrvGauntletgr8 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletgr8RomInfo, Gauntletgr8RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2745,7 +2747,7 @@ struct BurnDriver BurnDrvGauntletr7 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr7RomInfo, Gauntletr7RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2755,7 +2757,7 @@ struct BurnDriver BurnDrvGauntletgr6 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletgr6RomInfo, Gauntletgr6RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2765,7 +2767,7 @@ struct BurnDriver BurnDrvGauntletr5 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr5RomInfo, Gauntletr5RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2775,7 +2777,7 @@ struct BurnDriver BurnDrvGauntletr4 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr4RomInfo, Gauntletr4RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2785,7 +2787,7 @@ struct BurnDriver BurnDrvGauntletgr3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletgr3RomInfo, Gauntletgr3RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2795,7 +2797,7 @@ struct BurnDriver BurnDrvGauntletr2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr2RomInfo, Gauntletr2RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2805,7 +2807,7 @@ struct BurnDriver BurnDrvGauntletr1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntletr1RomInfo, Gauntletr1RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	DrvInit, DrvExit, DrvFrame, NULL, DrvScan,
+	DrvInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2815,7 +2817,7 @@ struct BurnDriver BurnDrvGauntlet2p = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pRomInfo, Gauntlet2pRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2825,7 +2827,7 @@ struct BurnDriver BurnDrvGauntlet2pj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pjRomInfo, Gauntlet2pjRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2835,7 +2837,7 @@ struct BurnDriver BurnDrvGauntlet2pg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pgRomInfo, Gauntlet2pgRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2845,7 +2847,7 @@ struct BurnDriver BurnDrvGauntlet2pr3 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pr3RomInfo, Gauntlet2pr3RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2855,7 +2857,7 @@ struct BurnDriver BurnDrvGauntlet2pj2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pj2RomInfo, Gauntlet2pj2RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2865,7 +2867,7 @@ struct BurnDriver BurnDrvGauntlet2pg1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gauntlet2pg1RomInfo, Gauntlet2pg1RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2pInit, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2pInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2875,7 +2877,7 @@ struct BurnDriver BurnDrvGaunt2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt2RomInfo, Gaunt2RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2885,7 +2887,7 @@ struct BurnDriver BurnDrvGaunt2g = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt2gRomInfo, Gaunt2gRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2895,7 +2897,7 @@ struct BurnDriver BurnDrvGaunt22p = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt22pRomInfo, Gaunt22pRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2905,7 +2907,7 @@ struct BurnDriver BurnDrvGaunt22p1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt22p1RomInfo, Gaunt22p1RomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };
 
@@ -2915,6 +2917,6 @@ struct BurnDriver BurnDrvGaunt22pg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Gaunt22pgRomInfo, Gaunt22pgRomName, NULL, NULL , GauntletInputInfo, DrvDIPInfo,
-	Gaunt2Init, DrvExit, DrvFrame, NULL, DrvScan,
+	Gaunt2Init, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	NULL, 0x400, 336, 240, 4, 3
 };

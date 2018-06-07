@@ -360,7 +360,7 @@ static INT32 SpritePlaneOffsets[4] = { 0, 131072, 262144, 393216 };
 static INT32 SpriteXOffsets[16]    = { 0, 1, 2, 3, 4, 5, 6, 7, 64, 65, 66, 67, 68, 69, 70, 71 };
 static INT32 SpriteYOffsets[16]    = { 0, 8, 16, 24, 32, 40, 48, 56, 128, 136, 144, 152, 160, 168, 176, 184 };
 
-INT32 SolomonInit()
+static INT32 SolomonInit()
 {
 	INT32 nRet = 0, nLen;
 
@@ -467,7 +467,7 @@ INT32 SolomonInit()
 	return 0;
 }
 
-INT32 SolomonExit()
+static INT32 SolomonExit()
 {
 	ZetExit();
 
@@ -482,7 +482,7 @@ INT32 SolomonExit()
 	return 0;
 }
 
-void SolomonRenderBgLayer()
+static void SolomonRenderBgLayer()
 {
 	for (INT32 Offs = 0; Offs < 0x400; Offs++) {
 		INT32 sx, sy, Attr, Code, Colour, FlipX, FlipY;
@@ -538,7 +538,7 @@ void SolomonRenderBgLayer()
 	}
 }
 
-void SolomonRenderFgLayer()
+static void SolomonRenderFgLayer()
 {
 	for (INT32 Offs = 0x400 - 1; Offs >= 0; Offs--) {
 		INT32 sx, sy, Code, Colour;
@@ -573,7 +573,7 @@ void SolomonRenderFgLayer()
 	}
 }
 
-void SolomonRenderSpriteLayer()
+static void SolomonRenderSpriteLayer()
 {
 	for (INT32 Offs = 0x80 - 4; Offs >= 0; Offs -= 4) {
 		INT32 sx, sy, Attr, Code, Colour, FlipX, FlipY;
@@ -642,7 +642,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-INT32 SolomonCalcPalette()
+static INT32 SolomonCalcPalette()
 {
 	for (INT32 i = 0; i < 0x200; i++) {
 		SolomonPalette[i / 2] = CalcCol(SolomonPaletteRam[i & ~1] | (SolomonPaletteRam[i | 1] << 8));
@@ -651,7 +651,7 @@ INT32 SolomonCalcPalette()
 	return 0;
 }
 
-void SolomonDraw()
+static INT32 SolomonDraw()
 {
 	BurnTransferClear();
 	SolomonCalcPalette();
@@ -659,9 +659,11 @@ void SolomonDraw()
 	SolomonRenderFgLayer();
 	SolomonRenderSpriteLayer();
 	BurnTransferCopy(SolomonPalette);
+
+	return 0;
 }
 
-INT32 SolomonFrame()
+static INT32 SolomonFrame()
 {
 	INT32 nInterleave = 2;
 	INT32 nSoundBufferPos = 0;
@@ -755,7 +757,7 @@ struct BurnDriver BurnDrvSolomon = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, SolomonRomInfo, SolomonRomName, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
-	SolomonInit, SolomonExit, SolomonFrame, NULL, SolomonScan,
+	SolomonInit, SolomonExit, SolomonFrame, SolomonDraw, SolomonScan,
 	NULL, 0x200, 256, 224, 4, 3
 };
 
@@ -765,6 +767,6 @@ struct BurnDriver BurnDrvSolomonj = {
 	L"Solomon's Key (Japan)\0Solomon's Key \u30BD\u30ED\u30E2\u30F3\u306E\u9375\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_PUZZLE, 0,
 	NULL, SolomonjRomInfo, SolomonjRomName, NULL, NULL, SolomonInputInfo, SolomonDIPInfo,
-	SolomonInit, SolomonExit, SolomonFrame, NULL, SolomonScan,
+	SolomonInit, SolomonExit, SolomonFrame, SolomonDraw, SolomonScan,
 	NULL, 0x200, 256, 224, 4, 3
 };

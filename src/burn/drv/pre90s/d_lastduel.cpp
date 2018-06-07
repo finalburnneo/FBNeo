@@ -1656,7 +1656,7 @@ static void DrvRenderFgLayer(INT32 BackLayer)
 	}
 }
 
-static void DrvDraw()  // madgear / ledstorm
+static INT32 DrvDraw()  // madgear / ledstorm
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1676,9 +1676,11 @@ static void DrvDraw()  // madgear / ledstorm
 	if (nSpriteEnable & 2) DrvRenderSprites(1);
 	DrvRenderCharLayer();
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void LastduelDraw()
+static INT32 LastduelDraw()
 {
 	BurnTransferClear();
 	DrvCalcPalette();
@@ -1690,6 +1692,8 @@ static void LastduelDraw()
 	if (nBurnLayer & 8) DrvRenderCharLayer();
 
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1851,7 +1855,7 @@ struct BurnDriver BurnDrvLastduel = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, LastduelRomInfo, LastduelRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
-	LastduelInit, DrvExit, LastduelFrame, NULL, DrvScan,
+	LastduelInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1861,7 +1865,7 @@ struct BurnDriver BurnDrvLastduelo = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, LastdueloRomInfo, LastdueloRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
-	LastduelInit, DrvExit, LastduelFrame, NULL, DrvScan,
+	LastduelInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1871,7 +1875,7 @@ struct BurnDriver BurnDrvLastduelj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, LastdueljRomInfo, LastdueljRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
-	LastduelInit, DrvExit, LastduelFrame, NULL, DrvScan,
+	LastduelInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1881,7 +1885,7 @@ struct BurnDriver BurnDrvLsstduelb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_BOOTLEG, 2, HARWARE_CAPCOM_MISC, GBF_VERSHOOT, 0,
 	NULL, LastduelbRomInfo, LastduelbRomName, NULL, NULL, LastduelInputInfo, LastduelDIPInfo,
-	LastduelbInit, DrvExit, LastduelFrame, NULL, DrvScan,
+	LastduelbInit, DrvExit, LastduelFrame, LastduelDraw, DrvScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1891,7 +1895,7 @@ struct BurnDriver BurnDrvMadgear = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, DrvRomInfo, DrvRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, MadgearExit, DrvFrame, NULL, MadgearScan,
+	DrvInit, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1901,7 +1905,7 @@ struct BurnDriver BurnDrvMadgearj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, DrvjRomInfo, DrvjRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, MadgearExit, DrvFrame, NULL, MadgearScan,
+	DrvInit, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1911,7 +1915,7 @@ struct BurnDriver BurnDrvMadgearu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, DrvuRomInfo, DrvuRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	DrvInit, MadgearExit, DrvFrame, NULL, MadgearScan,
+	DrvInit, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1921,7 +1925,7 @@ struct BurnDriver BurnDrvLeds2011 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, Leds2011RomInfo, Leds2011RomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	Leds2011Init, MadgearExit, DrvFrame, NULL, MadgearScan,
+	Leds2011Init, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };
 
@@ -1931,6 +1935,6 @@ struct BurnDriver BurnDrvLeds2011u = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARWARE_CAPCOM_MISC, GBF_RACING, 0,
 	NULL, Leds2011uRomInfo, Leds2011uRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	Leds2011Init, MadgearExit, DrvFrame, NULL, MadgearScan,
+	Leds2011Init, MadgearExit, DrvFrame, DrvDraw, MadgearScan,
 	NULL, 0x800, 240, 384, 3, 4
 };

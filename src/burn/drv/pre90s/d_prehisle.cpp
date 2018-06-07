@@ -289,7 +289,7 @@ STD_ROM_PICK(Prehislb)
 STD_ROM_FN(Prehislb)
 
 // Misc Driver Functions and Memory Handlers
-INT32 PrehisleDoReset()
+static INT32 PrehisleDoReset()
 {
 	ControlsInvert = 0;
 	SoundLatch = 0;
@@ -343,7 +343,7 @@ inline UINT16 PrehisleVBlankRegister()
 	return 0x00;
 }
 
-UINT16 __fastcall PrehisleReadWord(UINT32 a)
+static UINT16 __fastcall PrehisleReadWord(UINT32 a)
 {
 	switch (a) {
 		case 0x0e0010: {
@@ -370,7 +370,7 @@ UINT16 __fastcall PrehisleReadWord(UINT32 a)
 	return 0;
 }
 
-void __fastcall PrehisleWriteWord(UINT32 a, UINT16 d)
+static void __fastcall PrehisleWriteWord(UINT32 a, UINT16 d)
 {
 	switch (a) {
 		case 0x0f0000: {
@@ -421,7 +421,7 @@ void __fastcall PrehisleWriteWord(UINT32 a, UINT16 d)
 	}
 }
 
-UINT8 __fastcall PrehisleZ80PortRead(UINT16 a)
+static UINT8 __fastcall PrehisleZ80PortRead(UINT16 a)
 {
 	a &= 0xff;
 	switch (a) {
@@ -433,7 +433,7 @@ UINT8 __fastcall PrehisleZ80PortRead(UINT16 a)
 	return 0;
 }
 
-void __fastcall PrehisleZ80PortWrite(UINT16 a, UINT8 d)
+static void __fastcall PrehisleZ80PortWrite(UINT16 a, UINT8 d)
 {
 	a &= 0xff;
 	switch (a) {
@@ -461,7 +461,7 @@ void __fastcall PrehisleZ80PortWrite(UINT16 a, UINT8 d)
 	}
 }
 
-UINT8 __fastcall PrehisleZ80Read(UINT16 a)
+static UINT8 __fastcall PrehisleZ80Read(UINT16 a)
 {
 	switch (a) {
 		case 0xf800: {
@@ -511,7 +511,7 @@ static INT32 TileXOffsets[16]      = { 0, 4, 8, 12, 16, 20, 24, 28, 512, 516, 52
 static INT32 TileYOffsets[16]      = { 0, 32, 64, 96, 128, 160, 192, 224, 256, 288, 320, 352, 384, 416, 448, 480 };
 
 // Driver Init and Exit Functions
-INT32 PrehisleInit()
+static INT32 PrehisleInit()
 {
 	INT32 nRet = 0, nLen;
 
@@ -602,7 +602,7 @@ INT32 PrehisleInit()
 	return 0;
 }
 
-INT32 PrehislebInit()
+static INT32 PrehislebInit()
 {
 	INT32 nRet = 0, nLen;
 
@@ -710,7 +710,7 @@ INT32 PrehislebInit()
 	return 0;
 }
 
-INT32 PrehisleExit()
+static INT32 PrehisleExit()
 {
 	BurnYM3812Exit();
 	UPD7759Exit();
@@ -726,7 +726,7 @@ INT32 PrehisleExit()
 }
 
 // Graphics Emulation
-void PrehisleRenderBack2TileLayer()
+static void PrehisleRenderBack2TileLayer()
 {
 	INT32 TileBase, mx, my, Tile, Colour, Scrollx, Scrolly, x, y, Flipx;
 
@@ -764,7 +764,7 @@ void PrehisleRenderBack2TileLayer()
 	}
 }
 
-void PrehisleRenderBack1TileLayer()
+static void PrehisleRenderBack1TileLayer()
 {
 	INT32 TileBase, mx, my, Tile, Colour, Scrollx, Scrolly, x, y, Flipy;
 
@@ -802,7 +802,7 @@ void PrehisleRenderBack1TileLayer()
 	}
 }
 
-void PrehisleRenderSpriteLayer()
+static void PrehisleRenderSpriteLayer()
 {
 	INT32 offs;
 
@@ -855,7 +855,7 @@ void PrehisleRenderSpriteLayer()
 	}
 }
 
-void PrehisleRenderTextLayer()
+static void PrehisleRenderTextLayer()
 {
 	INT32 offs, mx, my, Colour, Tile, x, y;
 
@@ -896,7 +896,7 @@ inline static UINT32 CalcCol(UINT16 nColour)
 	return BurnHighCol(r, g, b, 0);
 }
 
-INT32 PrehisleCalcPalette()
+static INT32 PrehisleCalcPalette()
 {
 	INT32 i;
 	UINT16* ps;
@@ -909,7 +909,7 @@ INT32 PrehisleCalcPalette()
 	return 0;
 }
 
-void PrehisleDraw()
+static INT32 PrehisleDraw()
 {
 	PrehisleCalcPalette();
 	PrehisleRenderBack2TileLayer();
@@ -917,10 +917,12 @@ void PrehisleDraw()
 	PrehisleRenderSpriteLayer();
 	PrehisleRenderTextLayer();
 	BurnTransferCopy(PrehislePalette);
+
+	return 0;
 }
 
 // Frame Function
-INT32 PrehisleFrame()
+static INT32 PrehisleFrame()
 {
 	INT32 nInterleave = 1;
 	
@@ -988,11 +990,9 @@ static INT32 PrehisleScan(INT32 nAction,INT32 *pnMin)
 		UPD7759Scan(nAction, pnMin);
 
 		// Scan critical driver variables
-		SCAN_VAR(PrehisleInput);
-		SCAN_VAR(PrehisleDip);
 		SCAN_VAR(ControlsInvert);
 		SCAN_VAR(VidControl);
-		SCAN_VAR(nCyclesDone);
+		SCAN_VAR(SoundLatch);
 	}
 
 	return 0;
@@ -1005,7 +1005,7 @@ struct BurnDriver BurnDrvPrehisle = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehisleRomInfo, PrehisleRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
+	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -1015,7 +1015,7 @@ struct BurnDriver BurnDrvPrehislu = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehisluRomInfo, PrehisluRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
+	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -1025,7 +1025,7 @@ struct BurnDriver BurnDrvPrehislk = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehislkRomInfo, PrehislkRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
+	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -1035,7 +1035,7 @@ struct BurnDriver BurnDrvGensitou = {
 	L"Genshi-Tou 1930's (Japan)\0\u539F\u59CB\u5CF6 1930's\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, GensitouRomInfo, GensitouRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehisleInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
+	PrehisleInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
 	NULL, 0x800, 256, 224, 4, 3
 };
 
@@ -1045,6 +1045,6 @@ struct BurnDriver BurnDrvPrehislb = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_HORSHOOT, 0,
 	NULL, PrehislbRomInfo, PrehislbRomName, NULL, NULL, PrehisleInputInfo, PrehisleDIPInfo,
-	PrehislebInit, PrehisleExit, PrehisleFrame, NULL, PrehisleScan,
+	PrehislebInit, PrehisleExit, PrehisleFrame, PrehisleDraw, PrehisleScan,
 	NULL, 0x800, 256, 224, 4, 3
 };

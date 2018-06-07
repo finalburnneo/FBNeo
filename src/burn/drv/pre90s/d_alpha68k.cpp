@@ -49,11 +49,6 @@ static INT32 nCyclesSegment;
 static INT32 nDrvTotal68KCycles = 0;
 static INT32 nDrvTotalZ80Cycles = 0;
 
-typedef void (*DrvRender)();
-static DrvRender DrvDrawFunction = NULL;
-static void SstingryDraw();
-static void KyrosDraw();
-
 static struct BurnInputInfo SstingryInputList[] =
 {
 	{"Coin 1"            , BIT_DIGITAL  , DrvInputPort2 + 0, "p1 coin"   },
@@ -762,7 +757,6 @@ static INT32 SstingryInit()
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
-	DrvDrawFunction = SstingryDraw;
 	
 	DrvMicroControllerID = 0x00ff;
 	DrvCoinID = 0x22 | (0x22 << 8);
@@ -876,7 +870,6 @@ static INT32 KyrosInit()
 	DACSetRoute(0, 0.75, BURN_SND_ROUTE_BOTH);
 	
 	GenericTilesInit();
-	DrvDrawFunction = KyrosDraw;
 	
 	DrvMicroControllerID = 0x0012;
 	DrvCoinID = 0x22 | (0x22 << 8);
@@ -909,8 +902,6 @@ static INT32 DrvExit()
 	DrvFlipScreen = 0;
 	DrvSoundLatch = 0;
 	
-	DrvDrawFunction = NULL;
-
 	return 0;
 }
 
@@ -1095,7 +1086,7 @@ static void KyrosDrawSprites(INT32 c, INT32 d)
 	}
 }
 
-static void SstingryDraw()
+static INT32 SstingryDraw()
 {
 	BurnTransferClear();
 	KyrosCalcPalette();
@@ -1106,9 +1097,11 @@ static void SstingryDraw()
 	SstingryDrawSprites(3, 0x0c00);
 	SstingryDrawSprites(1, 0x0400);
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
-static void KyrosDraw()
+static INT32 KyrosDraw()
 {
 	BurnTransferClear();
 	KyrosCalcPalette();
@@ -1119,6 +1112,8 @@ static void KyrosDraw()
 	KyrosDrawSprites(3, 0x0c00);
 	KyrosDrawSprites(1, 0x0400);
 	BurnTransferCopy(DrvPalette);
+
+	return 0;
 }
 
 static INT32 DrvFrame()
@@ -1161,7 +1156,7 @@ static INT32 DrvFrame()
 	SekClose();
 	ZetClose();
 	
-	if (pBurnDraw) DrvDrawFunction();
+	if (pBurnDraw) BurnDrvRedraw();
 
 	return 0;
 }
@@ -1169,7 +1164,7 @@ static INT32 DrvFrame()
 static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 {
 	struct BurnArea ba;
-	
+
 	if (pnMin != NULL) {
 		*pnMin = 0x029735;
 	}
@@ -1181,13 +1176,22 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ba.szName = "All Ram";
 		BurnAcb(&ba);
 	}
-	
+
 	if (nAction & ACB_DRIVER_DATA) {
 		SekScan(nAction);
 		ZetScan(nAction);
 
+		SCAN_VAR(DrvCredits);
+		SCAN_VAR(DrvTrigState);
+		SCAN_VAR(DrvDeposits1);
+		SCAN_VAR(DrvDeposits2);
+		SCAN_VAR(DrvCoinValue);
+		SCAN_VAR(DrvMicroControllerData);
+		SCAN_VAR(DrvLatch);
+		SCAN_VAR(DrvFlipScreen);
+		SCAN_VAR(DrvSoundLatch);
 	}
-	
+
 	return 0;
 }
 
@@ -1197,7 +1201,7 @@ struct BurnDriver BurnDrvSstingry = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, SstingryRomInfo, SstingryRomName, NULL, NULL, SstingryInputInfo, SstingryDIPInfo,
-	SstingryInit, DrvExit, DrvFrame, NULL, DrvScan,
+	SstingryInit, DrvExit, DrvFrame, SstingryDraw, DrvScan,
 	NULL, 0x101, 224, 256, 3, 4
 };
 
@@ -1207,7 +1211,7 @@ struct BurnDriver BurnDrvKyros = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosRomInfo, KyrosRomName, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
-	KyrosInit, DrvExit, DrvFrame, NULL, DrvScan,
+	KyrosInit, DrvExit, DrvFrame, KyrosDraw, DrvScan,
 	NULL, 0x101, 224, 256, 3, 4
 };
 
@@ -1217,6 +1221,6 @@ struct BurnDriver BurnDrvKyrosj = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_VERSHOOT, 0,
 	NULL, KyrosjRomInfo, KyrosjRomName, NULL, NULL, SstingryInputInfo, KyrosDIPInfo,
-	KyrosInit, DrvExit, DrvFrame, NULL, DrvScan,
+	KyrosInit, DrvExit, DrvFrame, KyrosDraw, DrvScan,
 	NULL, 0x101, 224, 256, 3, 4
 };

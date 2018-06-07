@@ -271,7 +271,7 @@ void GalSoundInit()
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_KINGBALLDAC) {
 		DACInit(0, 0, 1, KingballSyncDAC);
-		DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+		DACSetRoute(0, 0.25, BURN_SND_ROUTE_BOTH);
 	}
 	
 	if (GalSoundType == GAL_SOUND_HARDWARE_TYPE_HEXPOOLASN76496) {

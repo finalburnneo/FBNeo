@@ -14349,7 +14349,7 @@ void __fastcall KingballSoundZ80PortWrite(UINT16 a, UINT8 d)
 	
 	switch (a) {
 		case 0x00: {
-			DACWrite(0, d ^ 0xff);
+			DACSignedWrite(0, d ^ 0xff);
 			return;
 		}
 		

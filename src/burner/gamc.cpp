@@ -387,6 +387,86 @@ INT32 GamcMisc(struct GameInp* pgi, char* szi, INT32 nPlayer)
 				return 0;
 			}
 			
+			if (strcmp(szi, "keyb_insert" ) == 0) {
+				KEY(FBK_INSERT);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_caps_lock" ) == 0) {
+				KEY(FBK_CAPITAL);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_home" ) == 0) {
+				KEY(FBK_HOME);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_end" ) == 0) {
+				KEY(FBK_END);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_left" ) == 0) {
+				KEY(FBK_LEFTARROW);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_right" ) == 0) {
+				KEY(FBK_RIGHTARROW);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_up" ) == 0) {
+				KEY(FBK_UPARROW);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_down" ) == 0) {
+				KEY(FBK_DOWNARROW);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_backspace" ) == 0) {
+				KEY(FBK_BACK);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_left_alt" ) == 0) {
+				KEY(FBK_LALT);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_pause" ) == 0) {
+				KEY(FBK_PAUSE);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_left_ctrl" ) == 0) {
+				KEY(FBK_LCONTROL);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_apost" ) == 0) {
+				KEY(FBK_APOSTROPHE);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_colon" ) == 0) {
+				KEY(FBK_COLON);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_stop" ) == 0) {
+				KEY(FBK_PERIOD);
+				return 0;
+			}
+			
+			if (strcmp(szi, "keyb_comma" ) == 0) {
+				KEY(FBK_COMMA);
+				return 0;
+			}
+			
 			break;
 		case 1:
 			if (strcmp(szi, "p2 start") == 0) {

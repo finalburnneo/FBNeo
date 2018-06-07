@@ -1138,10 +1138,10 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 	ZetMapArea(0x8000, 0xbfff, 2, DrvZ80Ram + (2 << 14) );
 	ZetClose();
 	
-	DACInit(0, 0, 0, DrvSyncDAC);
+	DACInit(0, 0, 1, DrvSyncDAC);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
-	AY8910Init(0, 17734475 / 10, 1);
+	AY8910Init(0, 17734475 / 10, 0);
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 	
 	BurnSetRefreshRate(50.0);
@@ -1331,6 +1331,7 @@ static INT32 DrvFrame()
 	if (pBurnDraw) DrvCalcPalette();
 	
 	nCyclesDone = 0;
+	INT32 nSoundBufferPos = 0;
 	
 	ZetNewFrame();
 	ZetOpen(0);
@@ -1359,16 +1360,27 @@ static INT32 DrvFrame()
 		}
 		
 		spectrum_UpdateScreenBitmap(false);
+
+		if (DrvIsSpec128 && pBurnSoundOut && (nScanline & 1)) {
+			INT32 nSegmentLength = nBurnSoundLen / (DrvNumScanlines / 2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 	
 	if (pBurnDraw) BurnTransferCopy(DrvPalette);
 	
 	if (pBurnSoundOut) {
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
-		
-		if (DrvIsSpec128) {
-			AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		if (DrvIsSpec128 && pBurnSoundOut) {
+			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			if (nSegmentLength) {
+				AY8910Render(pSoundBuf, nSegmentLength);
+			}
 		}
+
+		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	ZetClose();

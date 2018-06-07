@@ -165,7 +165,7 @@ void MoonwarDrawBullets(INT32, INT32 x, INT32 y);
 void MshuttleDrawBullets(INT32, INT32 x, INT32 y);
 void DarkplntDrawBullets(INT32, INT32 x, INT32 y);
 void DambustrDrawBullets(INT32 Offs, INT32 x, INT32 y);
-void GalDraw();
+INT32 GalDraw();
 void DkongjrmRenderFrame();
 void DambustrRenderFrame();
 void FantastcRenderFrame();

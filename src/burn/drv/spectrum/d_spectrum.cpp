@@ -1005,7 +1005,7 @@ struct BurnDriver BurnSpecSpectrumBIOS = {
 };
 
 struct BurnDriver BurnSpecSpectrum = {
-	"spec_spectrum", NULL, NULL, NULL, "1984",
+	"spec_spec48k", NULL, NULL, NULL, "1984",
 	"ZX Spectrum\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
@@ -1025,7 +1025,7 @@ struct BurnDriver BurnSpecSpec128BIOS = {
 };
 
 struct BurnDriver BurnSpecSpec128 = {
-	"spec_spec128", NULL, NULL, NULL, "1984",
+	"spec_spec128k", NULL, NULL, NULL, "1984",
 	"ZX Spectrum 128\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,

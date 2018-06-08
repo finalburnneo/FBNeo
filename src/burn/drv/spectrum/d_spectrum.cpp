@@ -1044,7 +1044,7 @@ STD_ROM_FN(S48180)
 
 struct BurnDriver BurnSpecS48180 = {
 	"spec_180", NULL, "spec_spectrum", NULL, "1986",
-	"180 (1986)(Mastertronic)\0", NULL, "Mastertronic", "ZX Spectrum",
+	"180 (48K)\0", NULL, "Mastertronic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48180RomInfo, S48180RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1061,7 +1061,7 @@ STD_ROM_FN(S48ATVSim)
 
 struct BurnDriver BurnSpecS48ATVSimRomDesc = {
 	"spec_atvsim", NULL, "spec_spectrum", NULL, "1987",
-	"ATV Simulator - All Terrain Vehicle\0", NULL, "Code Masters", "ZX Spectrum",
+	"ATV Simulator - All Terrain Vehicle (48K)\0", NULL, "Code Masters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48ATVSimRomInfo, S48ATVSimRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1078,7 +1078,7 @@ STD_ROM_FN(S48Blinkys)
 
 struct BurnDriver BurnSpecS48Blinkys = {
 	"spec_blinkys", NULL, "spec_spectrum", NULL, "1990",
-	"Blinky's Scary School\0", NULL, "Zeppelin Games", "ZX Spectrum",
+	"Blinky's Scary School (48K)\0", NULL, "Zeppelin Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48BlinkysRomInfo, S48BlinkysRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1095,7 +1095,7 @@ STD_ROM_FN(S48BruceLee)
 
 struct BurnDriver BurnSpecS48BruceLee = {
 	"spec_brucelee", NULL, "spec_spectrum", NULL, "1984",
-	"Bruce Lee\0", NULL, "US Gold", "ZX Spectrum",
+	"Bruce Lee (48K)\0", NULL, "US Gold", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48BruceLeeRomInfo, S48BruceLeeRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1146,7 +1146,7 @@ STD_ROM_FN(S48Chuckie)
 
 struct BurnDriver BurnSpecS48Chuckie = {
 	"spec_chuckie", NULL, "spec_spectrum", NULL, "1983",
-	"Chuckie Egg\0", NULL, "A & F Software", "ZX Spectrum",
+	"Chuckie Egg (48K)\0", NULL, "A & F Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48ChuckieRomInfo, S48ChuckieRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1163,7 +1163,7 @@ STD_ROM_FN(S48Chuckie2)
 
 struct BurnDriver BurnSpecS48Chuckie2 = {
 	"spec_chuckie2", NULL, "spec_spectrum", NULL, "1985",
-	"Chuckie Egg 2 - Choccy Egg\0", NULL, "A & F Software", "ZX Spectrum",
+	"Chuckie Egg 2 - Choccy Egg (48K)\0", NULL, "A & F Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Chuckie2RomInfo, S48Chuckie2RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1180,7 +1180,7 @@ STD_ROM_FN(S48Commando)
 
 struct BurnDriver BurnSpecS48Commando = {
 	"spec_commando", NULL, "spec_spectrum", NULL, "1985",
-	"Commando\0", NULL, "Elite Systems", "ZX Spectrum",
+	"Commando (48K)\0", NULL, "Elite Systems", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48CommandoRomInfo, S48CommandoRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1197,7 +1197,7 @@ STD_ROM_FN(S48Dizzy)
 
 struct BurnDriver BurnSpecS48Dizzy = {
 	"spec_dizzy", NULL, "spec_spectrum", NULL, "1987",
-	"Dizzy - The Ultimate Cartoon Adventure\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy - The Ultimate Cartoon Adventure (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48DizzyRomInfo, S48DizzyRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1214,7 +1214,7 @@ STD_ROM_FN(S48Dizzy2)
 
 struct BurnDriver BurnSpecS48Dizzy2 = {
 	"spec_dizzy2", NULL, "spec_spectrum", NULL, "1988",
-	"Dizzy II - Treasure Island Dizzy\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy II - Treasure Island Dizzy (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Dizzy2RomInfo, S48Dizzy2RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1231,7 +1231,7 @@ STD_ROM_FN(S48Dizzy3)
 
 struct BurnDriver BurnSpecS48Dizzy3 = {
 	"spec_dizzy3", NULL, "spec_spectrum", NULL, "1989",
-	"Dizzy III - Fantasy World Dizzy\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy III - Fantasy World Dizzy (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Dizzy3RomInfo, S48Dizzy3RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1248,7 +1248,7 @@ STD_ROM_FN(S48Dizzy4)
 
 struct BurnDriver BurnSpecS48Dizzy4 = {
 	"spec_dizzy4", NULL, "spec_spectrum", NULL, "1989",
-	"Dizzy IV - Magicland Dizzy\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy IV - Magicland Dizzy (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Dizzy4RomInfo, S48Dizzy4RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1265,7 +1265,7 @@ STD_ROM_FN(S48Dizzy5)
 
 struct BurnDriver BurnSpecS48Dizzy5 = {
 	"spec_dizzy5", NULL, "spec_spectrum", NULL, "1991",
-	"Dizzy V - Spellbound Dizzy\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy V - Spellbound Dizzy (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Dizzy5RomInfo, S48Dizzy5RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1282,7 +1282,7 @@ STD_ROM_FN(S48Dizzy6)
 
 struct BurnDriver BurnSpecS48Dizzy6 = {
 	"spec_dizzy6", NULL, "spec_spectrum", NULL, "1991",
-	"Dizzy VI - Prince Of The Yolkfolk\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy VI - Prince Of The Yolkfolk (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Dizzy6RomInfo, S48Dizzy6RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1299,7 +1299,7 @@ STD_ROM_FN(S48Dizzy7)
 
 struct BurnDriver BurnSpecS48Dizzy7 = {
 	"spec_dizzy7", NULL, "spec_spectrum", NULL, "1992",
-	"Dizzy VII - Crystal Kingdom Dizzy\0", NULL, "Codemasters", "ZX Spectrum",
+	"Dizzy VII - Crystal Kingdom Dizzy (48K)\0", NULL, "Codemasters", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Dizzy7RomInfo, S48Dizzy7RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1316,7 +1316,7 @@ STD_ROM_FN(S48Feud)
 
 struct BurnDriver BurnSpecS48Feud = {
 	"spec_feud", NULL, "spec_spectrum", NULL, "1987",
-	"Feud\0", NULL, "Mastertronic", "ZX Spectrum",
+	"Feud (48K)\0", NULL, "Mastertronic", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48FeudRomInfo, S48FeudRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1333,7 +1333,7 @@ STD_ROM_FN(S48FootDir)
 
 struct BurnDriver BurnSpecS48FootDir = {
 	"spec_footdir", NULL, "spec_spectrum", NULL, "1989",
-	"Football Director\0", NULL, "Addictive Games", "ZX Spectrum",
+	"Football Director (48K)\0", NULL, "Addictive Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48FootDirRomInfo, S48FootDirRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1350,7 +1350,7 @@ STD_ROM_FN(S48Footman)
 
 struct BurnDriver BurnSpecS48Footman = {
 	"spec_footman", NULL, "spec_spectrum", NULL, "1982",
-	"Football Manager\0", NULL, "Addictive Games", "ZX Spectrum",
+	"Football Manager (48K)\0", NULL, "Addictive Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48FootmanRomInfo, S48FootmanRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1367,7 +1367,7 @@ STD_ROM_FN(S48Footman2)
 
 struct BurnDriver BurnSpecS48Footman2 = {
 	"spec_footman2", NULL, "spec_spectrum", NULL, "1988",
-	"Football Manager 2\0", NULL, "Addictive Games", "ZX Spectrum",
+	"Football Manager 2 (48K)\0", NULL, "Addictive Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Footman2RomInfo, S48Footman2RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1384,7 +1384,7 @@ STD_ROM_FN(S48Footman3)
 
 struct BurnDriver BurnSpecS48Footman3 = {
 	"spec_footman3", NULL, "spec_spectrum", NULL, "1991",
-	"Football Manager 3\0", NULL, "Addictive Games", "ZX Spectrum",
+	"Football Manager 3 (48K)\0", NULL, "Addictive Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Footman3RomInfo, S48Footman3RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1401,7 +1401,7 @@ STD_ROM_FN(S48Foty)
 
 struct BurnDriver BurnSpecS48Foty = {
 	"spec_foty", NULL, "spec_spectrum", NULL, "1986",
-	"Footballer Of The Year\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	"Footballer Of The Year (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48FotyRomInfo, S48FotyRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1418,7 +1418,7 @@ STD_ROM_FN(S48Foty2)
 
 struct BurnDriver BurnSpecS48Foty2 = {
 	"spec_foty2", NULL, "spec_spectrum", NULL, "1986",
-	"Footballer Of The Year 2\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	"Footballer Of The Year 2 (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Foty2RomInfo, S48Foty2RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1435,7 +1435,7 @@ STD_ROM_FN(S48Glhotsht)
 
 struct BurnDriver BurnSpecS48Glhotsht = {
 	"spec_glhotsht", NULL, "spec_spectrum", NULL, "1988",
-	"Gary Lineker's Hot Shot\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	"Gary Lineker's Hot Shot (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48GlhotshtRomInfo, S48GlhotshtRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1452,7 +1452,7 @@ STD_ROM_FN(S48Glssocc)
 
 struct BurnDriver BurnSpecS48Glssocc = {
 	"spec_glssocc", NULL, "spec_spectrum", NULL, "1987",
-	"Gary Lineker's Superstar Soccer\0", NULL, "Gremlin Graphics", "ZX Spectrum",
+	"Gary Lineker's Superstar Soccer (48K)\0", NULL, "Gremlin Graphics", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48GlssoccRomInfo, S48GlssoccRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1469,7 +1469,7 @@ STD_ROM_FN(S48Howbstd)
 
 struct BurnDriver BurnSpecS48Howbstd = {
 	"spec_howbstd", NULL, "spec_spectrum", NULL, "1987",
-	"How To Be A Complete Bastard\0", NULL, "Virgin Games", "ZX Spectrum",
+	"How To Be A Complete Bastard (48K)\0", NULL, "Virgin Games", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48HowbstdRomInfo, S48HowbstdRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1486,7 +1486,7 @@ STD_ROM_FN(S48Hunchbk)
 
 struct BurnDriver BurnSpecS48Hunchbk = {
 	"spec_hunchbk", NULL, "spec_spectrum", NULL, "1983",
-	"Hunchback\0", NULL, "Ocean Software", "ZX Spectrum",
+	"Hunchback (48K)\0", NULL, "Ocean Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48HunchbkRomInfo, S48HunchbkRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1503,7 +1503,7 @@ STD_ROM_FN(S48Jetpac)
 
 struct BurnDriver BurnSpecS48Jetpac = {
 	"spec_jetpac", NULL, "spec_spectrum", NULL, "1983",
-	"Jetpac\0", NULL, "Ultimate Play the Game", "ZX Spectrum",
+	"Jetpac (48K)\0", NULL, "Ultimate Play the Game", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48JetpacRomInfo, S48JetpacRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1520,7 +1520,7 @@ STD_ROM_FN(S48Matchday)
 
 struct BurnDriver BurnSpecS48Matchday = {
 	"spec_matchday", NULL, "spec_spectrum", NULL, "1987",
-	"Match Day\0", NULL, "Ocean Software", "ZX Spectrum",
+	"Match Day (48K)\0", NULL, "Ocean Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48MatchdayRomInfo, S48MatchdayRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1537,7 +1537,7 @@ STD_ROM_FN(S48Matchdy2)
 
 struct BurnDriver BurnSpecS48Matchday2 = {
 	"spec_matchdy2", NULL, "spec_spectrum", NULL, "1987",
-	"Match Day 2\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	"Match Day 2 (48K)\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48Matchdy2RomInfo, S48Matchdy2RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1554,7 +1554,7 @@ STD_ROM_FN(S48Micrsocc)
 
 struct BurnDriver BurnSpecS48Micrsocc = {
 	"spec_micrsocc", NULL, "spec_spectrum", NULL, "1989",
-	"Microprose Soccer\0", NULL, "Microprose", "ZX Spectrum",
+	"Microprose Soccer (48K)\0", NULL, "Microprose", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48MicrsoccRomInfo, S48MicrsoccRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1571,7 +1571,7 @@ STD_ROM_FN(S48Handbmar)
 
 struct BurnDriver BurnSpecS48Handbmar = {
 	"spec_handbmar", NULL, "spec_spectrum", NULL, "1986",
-	"Peter Shilton's Handball Maradona\0", NULL, "Grandslam Entertainment", "ZX Spectrum",
+	"Peter Shilton's Handball Maradona (48K)\0", NULL, "Grandslam Entertainment", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48HandbmarRomInfo, S48HandbmarRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1588,7 +1588,7 @@ STD_ROM_FN(S48Pippo)
 
 struct BurnDriver BurnSpecS48Pippo = {
 	"spec_pippo", NULL, "spec_spectrum", NULL, "1986",
-	"Pippo\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
+	"Pippo (48K)\0", NULL, "Sinclair Research Limited", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48PippoRomInfo, S48PippoRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1605,7 +1605,7 @@ STD_ROM_FN(S48Renegade)
 
 struct BurnDriver BurnSpecS48Renegade = {
 	"spec_renegade", NULL, "spec_spectrum", NULL, "1987",
-	"Renegade\0", NULL, "Ocean Software", "ZX Spectrum",
+	"Renegade (48K)\0", NULL, "Ocean Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48RenegadeRomInfo, S48RenegadeRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
@@ -1639,7 +1639,7 @@ STD_ROM_FN(S48Theboss)
 
 struct BurnDriver BurnSpecS48Theboss = {
 	"spec_theboss", NULL, "spec_spectrum", NULL, "1984",
-	"The Boss\0", NULL, "Peaksoft", "ZX Spectrum",
+	"The Boss (48K)\0", NULL, "Peaksoft", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S48ThebossRomInfo, S48ThebossRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,

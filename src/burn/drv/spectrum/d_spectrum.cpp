@@ -186,7 +186,7 @@ static inline void SpecMakeInputs()
 static struct BurnDIPInfo SpecDIPList[]=
 {
 	// Default Values
-	{72, 0xff, 0xff, 0x00, NULL                     },
+	{72, 0xff, 0xff, 0x80, NULL                     }, // Blinky's Scary School requires issue 3
 	
 	{0 , 0xfe, 0   , 2   , "Hardware Version"       },
 	{72, 0x01, 0x80, 0x00, "Issue 2"                },

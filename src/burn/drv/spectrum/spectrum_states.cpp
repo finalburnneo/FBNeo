@@ -346,10 +346,10 @@ void SpecLoadZ80Snapshot()
 //		if ((z80_type == SPEC_Z80_SNAPSHOT_128K) || ((z80_type == SPEC_Z80_SNAPSHOT_TS2068) && !strcmp(machine().system().name,"ts2068")))
 		if (z80_type == SPEC_Z80_SNAPSHOT_128K) {
 			for (INT32 i = 0; i < 16; i++) {
-				AY8910Write(0, 1, i);
-				AY8910Write(0, 0, SpecSnapshotData[39 + i]);
+				AY8910Write(0, 0, i);
+				AY8910Write(0, 1, SpecSnapshotData[39 + i]);
 			}
-			AY8910Write(0, 1, SpecSnapshotData[38]);
+			AY8910Write(0, 0, SpecSnapshotData[38]);
 		}
 
 		pSource = SpecSnapshotData + header_size;

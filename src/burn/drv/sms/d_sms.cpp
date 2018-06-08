@@ -22182,6 +22182,27 @@ struct BurnDriver BurnDrvgg_royalstn = {
 };
 
 
+// Royal Stone - Hirakareshi Toki no Tobira (Hack, English)
+// Source : http://www.romhacking.net/translations/2076/
+
+static struct BurnRomInfo gg_royalstneRomDesc[] = {
+	{ "royal stone - hirakareshi toki no tobira (english translation).gg",	0x80000, 0xe4677b07, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_royalstne)
+STD_ROM_FN(gg_royalstne)
+
+struct BurnDriver BurnDrvgg_royalstne = {
+	"gg_royalstne", "gg_royalstn", NULL, NULL, "2013",
+	"Royal Stone - Hirakareshi Toki no Tobira (Hack, English)\0", NULL, "Sega", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MISC, 0,
+	GGGetZipName, gg_royalstneRomInfo, gg_royalstneRomName, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+
+
 // Ryuukyuu (Jpn)
 
 static struct BurnRomInfo gg_ryukyuRomDesc[] = {

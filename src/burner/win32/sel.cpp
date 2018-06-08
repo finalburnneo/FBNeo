@@ -3,9 +3,9 @@
 #include "burner.h"
 #include <process.h>
 
-// reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx)
+// reduce the total number of sets by this number - (isgsm, neogeo, nmk004, pgm, skns, ym2608, coleco, msx_msx, spectrum, spec128)
 // don't reduce for these as we display them in the list (neogeo, neocdz)
-#define REDUCE_TOTAL_SETS_BIOS		8
+#define REDUCE_TOTAL_SETS_BIOS		10
 
 UINT_PTR nTimer					= 0;
 UINT_PTR nInitPreviewTimer		= 0;
@@ -126,6 +126,7 @@ HTREEITEM hFilterSms				= NULL;
 HTREEITEM hFilterGg					= NULL;
 HTREEITEM hFilterSg1000				= NULL;
 HTREEITEM hFilterColeco				= NULL;
+HTREEITEM hFilterSpectrum			= NULL;
 HTREEITEM hFilterBootleg			= NULL;
 HTREEITEM hFilterDemo				= NULL;
 HTREEITEM hFilterHack				= NULL;
@@ -249,8 +250,10 @@ static int ColecoValue			= HARDWARE_PREFIX_COLECO >> 24;
 static int MASKCOLECO			= 1 << ColecoValue;
 static int MsxValue				= HARDWARE_PREFIX_MSX >> 24;
 static int MASKMSX				= 1 << MsxValue;
+static int SpecValue			= HARDWARE_PREFIX_SPECTRUM >> 24;
+static int MASKSPECTRUM			= 1 << SpecValue;
 
-static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX; // | MASKSNES
+static int MASKALL				= MASKCAPMISC | MASKCAVE | MASKCPS | MASKCPS2 | MASKCPS3 | MASKDATAEAST | MASKGALAXIAN | MASKIREM | MASKKANEKO | MASKKONAMI | MASKNEOGEO | MASKPACMAN | MASKPGM | MASKPSIKYO | MASKSEGA | MASKSETA | MASKTAITO | MASKTECHNOS | MASKTOAPLAN | MASKMISCPRE90S | MASKMISCPOST90S | MASKMEGADRIVE | MASKPCENGINE | MASKSMS | MASKGG | MASKSG1000 | MASKCOLECO | MASKMSX | MASKSPECTRUM; // | MASKSNES
 
 #define UNAVAILABLE				(1 << 27)
 #define AVAILABLE				(1 << 28)
@@ -1251,6 +1254,7 @@ static void CreateFilters()
 	_TVCreateFiltersA(hHardware		, IDS_SEL_SG1000		, hFilterSg1000			, nLoadMenuShowX & MASKSG1000						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_COLECO		, hFilterColeco			, nLoadMenuShowX & MASKCOLECO						);
 	_TVCreateFiltersA(hHardware		, IDS_SEL_MSX			, hFilterMsx			, nLoadMenuShowX & MASKMSX							);
+	_TVCreateFiltersA(hHardware		, IDS_SEL_SPECTRUM		, hFilterSpectrum		, nLoadMenuShowX & MASKSPECTRUM						);
 	
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hRoot);
 	SendMessage(hFilterList	, TVM_EXPAND,TVE_EXPAND, (LPARAM)hHardware);
@@ -1267,7 +1271,8 @@ enum {
 	ICON_COLECO = 3,
 	ICON_SMS = 4,
 	ICON_GG = 5,
-	ICON_MSX = 6
+	ICON_MSX = 6,
+	ICON_SPECTRUM = 6
 };
 
 static HICON hConsDrvIcon[ICON_MAXCONSOLES];
@@ -1310,6 +1315,9 @@ void LoadDrvIcons()
 
 		_stprintf(szIcon, _T("%smsx_icon.ico"), szAppIconsPath);
 		hConsDrvIcon[ICON_MSX] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
+		
+		_stprintf(szIcon, _T("%spectrum_icon.ico"), szAppIconsPath);
+		hConsDrvIcon[ICON_SPECTRUM] = (HICON)LoadImage(hAppInst, szIcon, IMAGE_ICON, nIconsSizeXY, nIconsSizeXY, LR_LOADFROMFILE);
 	}
 
 	unsigned int nOldDrvSel = nBurnDrvActive;
@@ -1327,6 +1335,7 @@ void LoadDrvIcons()
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MASTER_SYSTEM)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_GAME_GEAR)
 			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX)
+			 || ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM)
 			)) {
 			continue; // Skip everything but arcade
 		}
@@ -1365,6 +1374,11 @@ void LoadDrvIcons()
 
 		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_MSX) {
 			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_MSX];
+			continue;
+		}
+		
+		if ((BurnDrvGetHardwareCode() & HARDWARE_PUBLIC_MASK) == HARDWARE_SPECTRUM) {
+			hDrvIcon[nDrvIndex] = hConsDrvIcon[ICON_SPECTRUM];
 			continue;
 		}
 
@@ -1410,7 +1424,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 	if (Msg == WM_INITDIALOG) {
 
 		InitCommonControls();
-
+		
 		hSelDlg = hDlg;
 		
 		SendDlgItemMessage(hDlg, IDC_SCREENSHOT_H, STM_SETIMAGE, IMAGE_BITMAP, (LPARAM)NULL);
@@ -1556,6 +1570,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, FALSE);
 				_TreeView_SetCheckState(hFilterList, hFilterMsx, FALSE);
+				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, FALSE);
 				
 				nLoadMenuShowX |= MASKALL;
 			} else {
@@ -1590,6 +1605,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 				_TreeView_SetCheckState(hFilterList, hFilterSg1000, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterColeco, TRUE);
 				_TreeView_SetCheckState(hFilterList, hFilterMsx, TRUE);
+				_TreeView_SetCheckState(hFilterList, hFilterSpectrum, TRUE);
 				
 				nLoadMenuShowX &= (0xFFFFFFFF - MASKALL); //0xf8000000; make this dynamic for future hardware additions -dink
 			}
@@ -1756,6 +1772,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 		if (hItemChanged == hFilterSg1000)			_ToggleGameListing(nLoadMenuShowX, MASKSG1000);
 		if (hItemChanged == hFilterColeco)			_ToggleGameListing(nLoadMenuShowX, MASKCOLECO);
 		if (hItemChanged == hFilterMsx)				_ToggleGameListing(nLoadMenuShowX, MASKMSX);
+		if (hItemChanged == hFilterSpectrum)		_ToggleGameListing(nLoadMenuShowX, MASKSPECTRUM);
 		
 		if (hItemChanged == hFilterBootleg)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_BOOTLEG);
 		if (hItemChanged == hFilterDemo)			_ToggleGameListing(nLoadMenuBoardTypeFilter, BDF_DEMO);

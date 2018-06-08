@@ -202,7 +202,8 @@ BEGIN
 	IDS_SEL_SG1000				"SG-1000"
 	IDS_SEL_COLECO				"ColecoVision"
 	IDS_SEL_GG					"Game Gear"
-	IDS_SEL_MSX				"MSX"
+	IDS_SEL_MSX					"MSX"
+	IDS_SEL_SPECTRUM			"ZX Spectrum"
 	
 	IDS_FAVORITES					"Favorites"
 	IDS_GENRE					"Genre"

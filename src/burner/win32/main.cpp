@@ -818,6 +818,11 @@ int ProcessCmdLine()
 			return 1;
 		}
 		
+		if (_tcscmp(szName, _T("-listinfospectrumonly")) == 0) {
+			write_datfile(DAT_SPECTRUM_ONLY, stdout);
+			return 1;
+		}
+		
 		if (_tcscmp(szName, _T("-listextrainfo")) == 0) {
 			int nWidth;
 			int nHeight;

@@ -2200,7 +2200,7 @@ static INT_PTR CALLBACK DialogProc(HWND hDlg, UINT Msg, WPARAM wParam, LPARAM lP
 						// Display the short name if needed
 						if (nLoadMenuShowY & SHOWSHORT) {
 							DrawText(lplvcd->nmcd.hdc, BurnDrvGetText(DRV_NAME), -1, &rect, DT_NOPREFIX | DT_SINGLELINE | DT_LEFT | DT_VCENTER);
-							rect.left += 16 + 40 + 20 + 10;
+							rect.left += 16 + 40 + 20 + 20;
 						}
 
 						{

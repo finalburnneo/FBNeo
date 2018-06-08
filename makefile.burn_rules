@@ -1,7 +1,7 @@
 alldir	= 	burn burn/devices burn/snd burn/drv burn/drv/capcom burn/drv/cave burn/drv/coleco burn/drv/cps3 burn/drv/dataeast \
 			burn/drv/galaxian burn/drv/irem burn/drv/konami burn/drv/megadrive burn/drv/midway burn/drv/pce burn/drv/pst90s burn/drv/pre90s \
-			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/sg1000 burn/drv/sms burn/drv/msx burn/drv/snes burn/drv/taito \
-			burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 \
+			burn/drv/neogeo burn/drv/pgm burn/drv/psikyo burn/drv/sega burn/drv/sg1000 burn/drv/sms burn/drv/msx burn/drv/snes burn/drv/spectrum \
+			burn/drv/taito 	burn/drv/toaplan cpu cpu/a68k cpu/arm cpu/arm7 cpu/h6280 cpu/hd6309 cpu/i8039 cpu/i8x41 cpu/i8051 cpu/konami cpu/m68k cpu/m6502 cpu/m6800 \
 			cpu/m6805 cpu/m6809 cpu/nec cpu/pic16c5x cpu/s2650 cpu/tlcs90 cpu/sh2 cpu/tms32010 cpu/upd7725 cpu/upd7810 cpu/v60 cpu/z80 cpu/z180
 
 drvsrc	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwange.o d_hotdogst.o d_korokoro.o d_mazinger.o \
@@ -142,7 +142,9 @@ depobj	= 	burn.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o bur
 			\
 			sms.o smspio.o smssystem.o smsvdp.o smsfmintf.o smsrender.o smssound.o smstms.o \
 			\
-			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o
+			snes_65816.o snes_io.o snes_main.o snes_ppu.o snes_spc700.o \
+			\
+			spectrum_states.o
 			
 			
 ifdef	DEBUG

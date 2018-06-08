@@ -325,6 +325,7 @@ int CreateDatfileWindows(int bType)
 	if (bType == DAT_MASTERSYSTEM_ONLY) _sntprintf(szConsoleString, 64, _T(", Master System only"));
 	if (bType == DAT_GAMEGEAR_ONLY) _sntprintf(szConsoleString, 64, _T(", Game Gear only"));
 	if (bType == DAT_MSX_ONLY) _sntprintf(szConsoleString, 64, _T(", MSX 1 Games only"));
+	if (bType == DAT_SPECTRUM_ONLY) _sntprintf(szConsoleString, 64, _T(", ZX Spectrum Games only"));
 
 	TCHAR szProgramString[25];	
 	_sntprintf(szProgramString, 25, _T("ClrMame Pro XML"));
@@ -419,6 +420,9 @@ int CreateAllDatfilesWindows()
 	
 	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", MSX 1 Games only"));
 	create_datfile(szFilename, DAT_MSX_ONLY);
+	
+	_sntprintf(szFilename, MAX_PATH, _T("%s") _T(APP_TITLE) _T(" v%.20s (%s%s).dat"), buffer, szAppBurnVer, szProgramString, _T(", ZX Spectrum Games only"));
+	create_datfile(szFilename, DAT_SPECTRUM_ONLY);
 	
 	return nRet;
 }
@@ -2235,6 +2239,12 @@ static void OnCommand(HWND /*hDlg*/, int id, HWND /*hwndCtl*/, UINT codeNotify)
 		case MENU_CLRMAME_PRO_XML_MSX_ONLY:
 			if (UseDialogs()) {
 				CreateDatfileWindows(DAT_MSX_ONLY);
+			}
+			break;
+			
+		case MENU_CLRMAME_PRO_XML_SPECTRUM_ONLY:
+			if (UseDialogs()) {
+				CreateDatfileWindows(DAT_SPECTRUM_ONLY);
 			}
 			break;
 			

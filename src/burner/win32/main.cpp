@@ -913,7 +913,7 @@ int ProcessCmdLine()
 
 static void CreateSupportFolders()
 {
-	TCHAR szSupportDirs[32][MAX_PATH] = {
+	TCHAR szSupportDirs[33][MAX_PATH] = {
 		{_T("support/")},
 		{_T("support/previews/")},
 		{_T("support/titles/")},
@@ -947,9 +947,10 @@ static void CreateSupportFolders()
 		{_T("sms/")},
 		{_T("gamegear/")},
 		{_T("msx/")},
+		{_T("spectrum/")},
 	};
 	
-	for(int x = 0; x < 32; x++) {
+	for(int x = 0; x < 33; x++) {
 		CreateDirectory(szSupportDirs[x], NULL);
 	}
 }

@@ -1923,7 +1923,7 @@ static struct BurnRomInfo S48RenegadeRomDesc[] = {
 	{ "renegade_48.z80",     0x0a2d7, 0x9faf0d9e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(S48Renegade, S48Renegade, Spec128)
+STDROMPICKEXT(S48Renegade, S48Renegade, Spectrum)
 STD_ROM_FN(S48Renegade)
 
 struct BurnDriver BurnSpecS48Renegade = {

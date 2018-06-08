@@ -27570,3 +27570,22 @@ struct BurnDriver BurnDrvsms_silvervalley = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
+
+// ZXALL
+
+static struct BurnRomInfo sms_zexallRomDesc[] = {
+	{ "zexall.sms",	0x8000, 0x7CE4CEDA, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_zexall)
+STD_ROM_FN(sms_zexall)
+
+struct BurnDriverD BurnDrvsms_zexall = {
+	"sms_zexall", NULL, NULL, NULL, "2018",
+	"ZEXALL\0", NULL, "Homebrew", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_zexallRomInfo, sms_zexallRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};

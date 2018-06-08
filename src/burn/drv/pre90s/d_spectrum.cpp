@@ -81,6 +81,9 @@ static UINT8 nPortFEData = 0;
 static INT32 DrvIsSpec128 = 0;
 static INT32 nPort7FFDData = -1;
 
+static INT32 ay_table[312];
+static INT32 ay_table_initted = 0;
+
 static void spectrum_UpdateScreenBitmap(bool);
 static void spectrum_UpdateBorderBitmap();
 static void spectrum_128_update_memory();
@@ -728,7 +731,9 @@ static INT32 DrvDoReset()
 	
 	if (nActiveSnapshotType == SPEC_SNAPSHOT_SNA) DrvLoadSNASnapshot();
 	if (nActiveSnapshotType == SPEC_SNAPSHOT_Z80) DrvLoadZ80Snapshot();
-
+	
+	ay_table_initted = 0;
+	
 	return 0;
 }
 
@@ -1322,6 +1327,26 @@ static void spectrum_UpdateBorderBitmap()
 	while (!((nPreviousBorderX == x) && (nPreviousBorderY == y)));
 }
 
+static void DrvMakeAYUpdateTable()
+{ // sample update table for ay-dac at any soundrate, must be called in DrvFrame()!
+	if (ay_table_initted) return;
+
+	if (DrvNumScanlines > 312) {
+		bprintf(PRINT_ERROR, _T(" !!! make_ay_updatetable(): uhoh, ay_table[] too small!\n"));
+		return;
+	}
+
+	INT32 p = 0;
+	memset(&ay_table, 0, sizeof(ay_table));
+
+	for (INT32 i = 0; i < 312; i++) {
+		ay_table[i] = ((i * nBurnSoundLen) / 312) - p;
+		p = (i * nBurnSoundLen) / 312;
+	}
+
+	ay_table_initted = 1;
+}
+
 static INT32 DrvFrame()
 {
 	if (DrvReset) DrvDoReset();
@@ -1332,6 +1357,7 @@ static INT32 DrvFrame()
 	
 	nCyclesDone = 0;
 	INT32 nSoundBufferPos = 0;
+	DrvMakeAYUpdateTable(); // _must_ be called in-frame since nBurnSoundLen is pre-calculated @ 60hz in DrvDoReset() @ init.
 	
 	ZetNewFrame();
 	ZetOpen(0);
@@ -1360,9 +1386,9 @@ static INT32 DrvFrame()
 		}
 		
 		spectrum_UpdateScreenBitmap(false);
-
-		if (DrvIsSpec128 && pBurnSoundOut && (nScanline & 1)) {
-			INT32 nSegmentLength = nBurnSoundLen / (DrvNumScanlines / 2);
+		
+		if (DrvIsSpec128 && pBurnSoundOut) {
+			INT32 nSegmentLength = ay_table[nScanline];
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;

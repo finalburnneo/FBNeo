@@ -1540,37 +1540,37 @@ struct BurnDriver BurnDrvS48BruceLee = {
 	&DrvRecalc, 0x10, 352, 296, 4, 3
 };
 
-static struct BurnRomInfo S48ChasehqRomDesc[] = {
-	{ "chasehq.z80",     0x0a6f7, 0x5e684c1f, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(S48Chasehq, S48Chasehq, Spectrum)
-STD_ROM_FN(S48Chasehq)
-
-struct BurnDriver BurnDrvS48Chasehq = {
-	"spec_chasehq48", NULL, "spec_spectrum", NULL, "1989",
-	"Chase HQ (48K)\0", NULL, "Ocean Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, S48ChasehqRomInfo, S48ChasehqRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
-	Z80SnapshotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
-	&DrvRecalc, 0x10, 352, 296, 4, 3
-};
-
 static struct BurnRomInfo S128ChasehqRomDesc[] = {
-	{ "chasehq_128.z80",     0x1c04f, 0xbb5ae933, BRF_ESS | BRF_PRG },
+	{ "chasehq.z80",     0x1c04f, 0xbb5ae933, BRF_ESS | BRF_PRG },
 };
 
 STDROMPICKEXT(S128Chasehq, S128Chasehq, Spec128)
 STD_ROM_FN(S128Chasehq)
 
 struct BurnDriver BurnDrvS128Chasehq = {
-	"spec_chasehq", "spec_chasehq48", "spec_spec128", NULL, "1989",
+	"spec_chasehq", NULL, "spec_spec128", NULL, "1989",
 	"Chase HQ (128K)\0", NULL, "Ocean Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, S128ChasehqRomInfo, S128ChasehqRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
 	Z80128KSnapshotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
+	&DrvRecalc, 0x10, 352, 296, 4, 3
+};
+
+static struct BurnRomInfo S48ChasehqRomDesc[] = {
+	{ "chasehq_48.z80",     0x0a6f7, 0x5e684c1f, BRF_ESS | BRF_PRG },
+};
+
+STDROMPICKEXT(S48Chasehq, S48Chasehq, Spectrum)
+STD_ROM_FN(S48Chasehq)
+
+struct BurnDriver BurnDrvS48Chasehq = {
+	"spec_chasehq48", "spec_chasehq", "spec_spectrum", NULL, "1989",
+	"Chase HQ (48K)\0", NULL, "Ocean Software", "ZX Spectrum",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	SpectrumGetZipName, S48ChasehqRomInfo, S48ChasehqRomName, NULL, NULL, DrvInputInfo, DrvDIPInfo,
+	Z80SnapshotInit, DrvExit, DrvFrame, DrvDraw, DrvScan,
 	&DrvRecalc, 0x10, 352, 296, 4, 3
 };
 

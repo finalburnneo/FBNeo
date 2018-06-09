@@ -27589,3 +27589,25 @@ struct BurnDriverD BurnDrvsms_zexall = {
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
 	256, 192, 4, 3
 };
+
+
+// VDP TEST
+
+
+static struct BurnRomInfo sms_vdptestRomDesc[] = {
+	{ "vdptest.sms",	0x8000, 0x2f7d2cea, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_vdptest)
+STD_ROM_FN(sms_vdptest)
+
+struct BurnDriverD BurnDrvsms_vdptest = {
+	"sms_vdptest", NULL, NULL, NULL, "20??",
+	"SMS VDP Test\0", NULL, "Homebrew", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_MISC, 0,
+	SMSGetZipName, sms_vdptestRomInfo, sms_vdptestRomName, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1000,
+	256, 192, 4, 3
+};
+

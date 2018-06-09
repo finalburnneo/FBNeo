@@ -418,8 +418,8 @@ static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 				spectrum_UpdateBorderBitmap();
 			}
 			
-			if ((Changed & (1 << 4)) != 0) {
-				DACWrite(0, BIT(d, 4) * 0x80);
+			if ((Changed & (1 << 4)) !=0 ) {
+				DACSignedWrite(0, BIT(d, 4) * 0x20);
 			}
 
 			if ((Changed & (1 << 3)) != 0) {
@@ -578,8 +578,8 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 			spectrum_UpdateBorderBitmap();
 		}
 		
-		if ((Changed & (1 << 4)) != 0) {
-			DACWrite(0, BIT(d, 4) * 0x80);
+		if ((Changed & (1 << 4)) !=0 ) {
+			DACSignedWrite(0, BIT(d, 4) * 0x20);
 		}
 
 		if ((Changed & (1 << 3)) != 0) {
@@ -924,9 +924,10 @@ static INT32 SpecFrame()
 		
 		if (nScanline == SpecVBlankScanline) {
 			// VBlank
-			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			
-			nCyclesDone += ZetRun(((nScanline + 1) * SpecNumCylesPerScanline) - nCyclesDone);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			nCyclesDone += ZetRun(32);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
+			nCyclesDone += ZetRun(SpecNumCylesPerScanline - 32);
 			
 			spectrum_UpdateBorderBitmap();
 			spectrum_UpdateScreenBitmap(true);
@@ -938,7 +939,7 @@ static INT32 SpecFrame()
 				SpecFlashInvert = !SpecFlashInvert;
 			}
 		} else {
-			nCyclesDone += ZetRun(((nScanline + 1) * SpecNumCylesPerScanline) - nCyclesDone);
+			nCyclesDone += ZetRun(SpecNumCylesPerScanline);
 		}
 		
 		spectrum_UpdateScreenBitmap(false);

@@ -899,6 +899,9 @@ static UINT8 __fastcall omegaf_main_read(UINT16 address)
 		case 0xc002:
 		case 0xc003:
 			return omegaf_protection_read(address - 0xc001);
+
+		case 0xc1e7: // more prot
+		    return 0xff;
 	}
 
 	return 0;

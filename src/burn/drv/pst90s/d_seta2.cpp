@@ -3457,7 +3457,7 @@ struct BurnDriver BurnDrvDeerhune = {
 
 struct BurnDriver BurnDrvTurkhunt = {
 	"turkhunt", NULL, NULL, NULL, "2001",
-	"Turkey Hunting USA V1.0\0", NULL, "Sammy USA Corporation", "Newer Seta",
+	"Turkey Hunting USA V1.00\0", NULL, "Sammy USA Corporation", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 1, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, turkhuntRomInfo, turkhuntRomName, NULL, NULL, DeerhuntInputInfo, TurkhuntDIPInfo,
@@ -3497,7 +3497,7 @@ struct BurnDriver BurnDrvWschampb = {
 
 struct BurnDriver BurnDrvTrophyh = {
 	"trophyh", NULL, NULL, NULL, "2002",
-	"Trophy Hunting - Bear & Moose V1.0\0", "Hangs are normal, just wait it out.", "Sammy USA Corporation", "Newer Seta",
+	"Trophy Hunting - Bear & Moose V1.00\0", "Hangs are normal, just wait it out.", "Sammy USA Corporation", "Newer Seta",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_SETA2, GBF_SHOOT, 0,
 	NULL, trophyhRomInfo, trophyhRomName, NULL, NULL, WschampInputInfo, TrophyhDIPInfo,

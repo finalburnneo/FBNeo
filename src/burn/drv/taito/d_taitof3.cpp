@@ -4933,6 +4933,44 @@ struct BurnDriver BurnDrvBubblem = {
 };
 
 
+// Bubble Memories: The Story Of Bubble Bobble III (Ver 2.5A 1996/02/21)
+
+static struct BurnRomInfo bubblemuRomDesc[] = {
+	{ "e21-17.20",		0x080000, 0x0b72e8f1, TAITO_68KROM1_BYTESWAP32 }, //  0 68ec20 Code
+	{ "e21-16.19",		0x080000, 0xb47354cc, TAITO_68KROM1_BYTESWAP32 }, //  1
+	{ "e21-15.18",		0x080000, 0x64bf2c24, TAITO_68KROM1_BYTESWAP32 }, //  2
+	{ "e21-14.17",		0x080000, 0x48aecd47, TAITO_68KROM1_BYTESWAP32 }, //  3
+
+	{ "e21-02.rom",		0x200000, 0xb7cb9232, TAITO_SPRITESA_BYTESWAP },  //  4 Sprites
+	{ "e21-01.rom",		0x200000, 0xa11f2f99, TAITO_SPRITESA_BYTESWAP },  //  5
+
+	{ "e21-07.rom",		0x100000, 0x7789bf7c, TAITO_CHARS_BYTESWAP },     //  6 Layer Tiles
+	{ "e21-06.rom",		0x100000, 0x997fc0d7, TAITO_CHARS_BYTESWAP },     //  7
+	{ "e21-05.rom",		0x100000, 0x07eab58f, TAITO_CHARS },              //  8
+
+	{ "e21-12.32",		0x040000, 0x34093de1, TAITO_68KROM2_BYTESWAP },   //  9 68k Code
+	{ "e21-13.33",		0x040000, 0x9e9ec437, TAITO_68KROM2_BYTESWAP },   // 10
+
+	{ "e21-03.rom",		0x200000, 0x54c5f83d, TAITO_ES5505_BYTESWAP },    // 11 Ensoniq Samples
+	{ "e21-04.rom",		0x200000, 0xe5af2a2d, TAITO_ES5505_BYTESWAP },    // 12
+
+	{ "bubblemu.nv",	0x000080, 0xa503276c, TAITO_DEFAULT_EEPROM },     // 13 eeprom
+};
+
+STD_ROM_PICK(bubblemu)
+STD_ROM_FN(bubblemu)
+
+struct BurnDriver BurnDrvBubblemu = {
+	"bubblemu", "bubblem", NULL, NULL, "1995",
+	"Bubble Memories: The Story Of Bubble Bobble III (Ver 2.5A 1996/02/21)\0", NULL, "Taito America Corporation", "Taito F3 System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_PLATFORM, 0,
+	NULL, bubblemuRomInfo, bubblemuRomName, NULL, NULL, F3InputInfo, NULL,
+	bubblemInit, DrvExit, DrvFrame, DrvDraw224A, DrvScan, &TaitoF3PalRecalc, 0x2000,
+	320, 224, 4, 3
+};
+
+
 // Bubble Memories: The Story Of Bubble Bobble III (Ver 2.3J 1996/02/07)
 
 static struct BurnRomInfo bubblemjRomDesc[] = {

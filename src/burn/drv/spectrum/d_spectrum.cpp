@@ -66,8 +66,12 @@ INT32 nPort7FFDData = -1;
 
 static INT32 SpecIsSpec128 = 0;
 
-static INT32 ay_table[312];
+static INT32 ay_table[312]; // special stuff for syncing ay across the frame
 static INT32 ay_table_initted = 0;
+
+static INT16 *dacbuf; // for dc offset removal & sinc filter
+static INT16 dac_lastin;
+static INT16 dac_lastout;
 
 static struct BurnInputInfo SpecInputList[] =
 {
@@ -257,7 +261,8 @@ static INT32 MemIndex()
 	RamEnd                 = Next;
 	
 	SpecPalette             = (UINT32*)Next; Next += 0x00010 * sizeof(UINT32);
-
+	dacbuf                  = (INT16*)Next; Next += 0x800 * 2 * sizeof(INT16);
+	
 	MemEnd                 = Next;
 
 	return 0;
@@ -291,12 +296,10 @@ static INT32 SpecDoReset()
 	
 	ay_table_initted = 0;
 	
+	dac_lastin = 0;
+	dac_lastout = 0;
+	
 	return 0;
-}
-
-static INT32 SpecSyncDAC()
-{
-	return (INT32)(float)(nBurnSoundLen * (ZetTotalCycles() / (3500000.0000 / (nBurnFPS / 100.0000))));
 }
 
 static UINT8 __fastcall SpecZ80Read(UINT16 a)
@@ -418,8 +421,8 @@ static void __fastcall SpecZ80PortWrite(UINT16 a, UINT8 d)
 				spectrum_UpdateBorderBitmap();
 			}
 			
-			if ((Changed & (1 << 4)) !=0 ) {
-				DACSignedWrite(0, BIT(d, 4) * 0x20);
+			if ((Changed & (1 << 4)) != 0) {
+				DACWrite(0, BIT(d, 4) * 0x80);
 			}
 
 			if ((Changed & (1 << 3)) != 0) {
@@ -578,8 +581,8 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 			spectrum_UpdateBorderBitmap();
 		}
 		
-		if ((Changed & (1 << 4)) !=0 ) {
-			DACSignedWrite(0, BIT(d, 4) * 0x20);
+		if ((Changed & (1 << 4)) != 0) {
+			DACWrite(0, BIT(d, 4) * 0x80);
 		}
 
 		if ((Changed & (1 << 3)) != 0) {
@@ -643,7 +646,7 @@ static INT32 SpectrumInit(INT32 nSnapshotType)
 	ZetMapArea(0x4000, 0xffff, 2, SpecZ80Ram             );
 	ZetClose();
 	
-	DACInit(0, 0, 0, SpecSyncDAC);
+	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	BurnSetRefreshRate(50.0);
@@ -700,7 +703,7 @@ static INT32 Spectrum128Init(INT32 nSnapshotType)
 	ZetMapArea(0x8000, 0xbfff, 2, SpecZ80Ram + (2 << 14) );
 	ZetClose();
 	
-	DACInit(0, 0, 1, SpecSyncDAC);
+	DACInit(0, 0, 0, ZetTotalCycles, 3500000);
 	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 	
 	AY8910Init(0, 17734475 / 10, 0);
@@ -904,6 +907,39 @@ static void SpecMakeAYUpdateTable()
 	ay_table_initted = 1;
 }
 
+static void sinc_flt_plus_dcblock(INT16 *inbuf, INT16 *outbuf, INT32 sample_nums)
+{
+	static INT16 delayLine[8] = { 0, 0, 0, 0, 0, 0, 0, 0 };
+	const double filterCoef[8] = { 0.841471, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
+	double result, ampsum;
+	INT16 out;
+
+	for (int sample = 0; sample < sample_nums; sample++)
+	{
+		// sinc filter
+		for (INT32 i = 6; i >= 0; i--) {
+			delayLine[i + 1] = delayLine[i];
+		}
+		delayLine[0] = inbuf[sample * 2 + 0];
+
+		result = ampsum = 0;
+		for (INT32 i = 0; i < 8; i++) {
+			result += delayLine[i] * filterCoef[i];
+			ampsum += filterCoef[i];
+		}
+		result /= ampsum;
+
+		// dc block
+		out = result - dac_lastin + 0.995 * dac_lastout;
+		dac_lastin = result;
+		dac_lastout = out;
+
+		// add to stream (+include ay if Spec128)
+		outbuf[sample * 2 + 0] = (SpecIsSpec128) ? BURN_SND_CLIP(outbuf[sample * 2 + 0] + out) : BURN_SND_CLIP(out);
+		outbuf[sample * 2 + 1] = (SpecIsSpec128) ? BURN_SND_CLIP(outbuf[sample * 2 + 1] + out) : BURN_SND_CLIP(out);
+	}
+}
+
 static INT32 SpecFrame()
 {
 	if (SpecReset) SpecDoReset();
@@ -955,7 +991,7 @@ static INT32 SpecFrame()
 	if (pBurnDraw) BurnTransferCopy(SpecPalette);
 	
 	if (pBurnSoundOut) {
-		if (SpecIsSpec128 && pBurnSoundOut) {
+		if (SpecIsSpec128) {
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
@@ -963,7 +999,8 @@ static INT32 SpecFrame()
 			}
 		}
 
-		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		DACUpdate(dacbuf, nBurnSoundLen);
+		sinc_flt_plus_dcblock(dacbuf, pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	ZetClose();

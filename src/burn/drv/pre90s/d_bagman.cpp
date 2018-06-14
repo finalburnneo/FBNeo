@@ -1,12 +1,6 @@
 // FB Alpha Bagman driver module
 // based on MAME driver by Nicola Salmoria
 
-/*
-    Squaitsa analog inputs
-	verify default dip values
-	bug test
-*/
-
 #include "tiles_generic.h"
 #include "resnet.h"
 #include "z80_intf.h"
@@ -44,11 +38,20 @@ static UINT8 ls259_buf[8];
 
 static INT32 botanic_input_xor = 0;
 
+static INT32 squaitsamode = 0;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
+static UINT8 DrvJoy3[8]; // paddle squaitsa
 static UINT8 DrvDips[1];
 static UINT8 DrvInputs[2];
 static UINT8 DrvReset;
+
+static UINT8 PaddleX[2] = { 0, 0 }; // squaitsa paddle sheitsa
+static UINT8 m_p1_res;
+static UINT8 m_p2_res;
+static INT32 m_p1_old_val;
+static INT32 m_p2_old_val;
 
 static struct BurnInputInfo BagmanInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
@@ -99,19 +102,19 @@ STDINPUTINFO(Sbagman)
 static struct BurnInputInfo SquaitsaInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy3 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy3 + 1,	"p1 down"	},
 	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 1"	},
-//ANALOG PLACEHOLDER
-	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 2"	},
 
 	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"	},
 	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7,	"p2 fire 1"	},
-//ANALOG PLACEHOLDER
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 6,	"p2 fire 2"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -153,6 +156,7 @@ static struct BurnDIPInfo BagmanDIPList[]=
 };
 
 STDDIPINFO(Bagman)
+
 static struct BurnDIPInfo BagmansDIPList[]=
 {
 	{0x0f, 0xff, 0xff, 0xfe, NULL				},
@@ -173,9 +177,9 @@ static struct BurnDIPInfo BagmansDIPList[]=
 	{0x0f, 0x01, 0x18, 0x08, "Hard"				},
 	{0x0f, 0x01, 0x18, 0x00, "Hardest"			},
 
-	{0   , 0xfe, 0   ,    2, "SW1:4,5"			},
-	{0x0f, 0x01, 0x20, 0x00, "SW1:4,5"			},
-	{0x0f, 0x01, 0x20, 0x20, "SW1:4,5"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
+	{0x0f, 0x01, 0x20, 0x00, "Off"  			},
+	{0x0f, 0x01, 0x20, 0x20, "On"   			},
 
 	{0   , 0xfe, 0   ,    2, "Bonus Life"		},
 	{0x0f, 0x01, 0x40, 0x40, "30000"			},
@@ -310,35 +314,35 @@ STDDIPINFO(Botanici)
 
 static struct BurnDIPInfo SquaitsaDIPList[]=
 {
-	{0x0d, 0xff, 0xff, 0x7f, NULL				},
+	{0x0f, 0xff, 0xff, 0x5f, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Coinage"			},
-	{0x0d, 0x01, 0x01, 0x00, "2 Coins 1 Credits"},
-	{0x0d, 0x01, 0x01, 0x01, "1 Coin  1 Credits"},
+	{0x0f, 0x01, 0x01, 0x00, "2 Coins 1 Credits"},
+	{0x0f, 0x01, 0x01, 0x01, "1 Coin  1 Credits"},
 
 	{0   , 0xfe, 0   ,    4, "Max Points"		},
-	{0x0d, 0x01, 0x06, 0x06, "7"				},
-	{0x0d, 0x01, 0x06, 0x04, "11"				},
-	{0x0d, 0x01, 0x06, 0x02, "15"				},
-	{0x0d, 0x01, 0x06, 0x00, "21"				},
+	{0x0f, 0x01, 0x06, 0x06, "7"				},
+	{0x0f, 0x01, 0x06, 0x04, "11"				},
+	{0x0f, 0x01, 0x06, 0x02, "15"				},
+	{0x0f, 0x01, 0x06, 0x00, "21"				},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x0d, 0x01, 0x18, 0x00, "Level 1"			},
-	{0x0d, 0x01, 0x18, 0x08, "Level 2"			},
-	{0x0d, 0x01, 0x18, 0x10, "Level 3"			},
-	{0x0d, 0x01, 0x18, 0x18, "Level 4"			},
+	{0x0f, 0x01, 0x18, 0x00, "Level 1"			},
+	{0x0f, 0x01, 0x18, 0x08, "Level 2"			},
+	{0x0f, 0x01, 0x18, 0x10, "Level 3"			},
+	{0x0f, 0x01, 0x18, 0x18, "Level 4"			},
 
 	{0   , 0xfe, 0   ,    2, "Language"			},
-	{0x0d, 0x01, 0x20, 0x20, "Spanish"			},
-	{0x0d, 0x01, 0x20, 0x00, "English"			},
+	{0x0f, 0x01, 0x20, 0x20, "Spanish"			},
+	{0x0f, 0x01, 0x20, 0x00, "English"			},
 
 	{0   , 0xfe, 0   ,    2, "Body Fault"		},
-	{0x0d, 0x01, 0x40, 0x40, "Off"				},
-	{0x0d, 0x01, 0x40, 0x00, "On"				},
+	{0x0f, 0x01, 0x40, 0x40, "Off"				},
+	{0x0f, 0x01, 0x40, 0x00, "On"				},
 
 	{0   , 0xfe, 0   ,    2, "Protection?"		},
-	{0x0d, 0x01, 0x80, 0x80, "Off"				},
-	{0x0d, 0x01, 0x80, 0x00, "On"				},
+	{0x0f, 0x01, 0x80, 0x80, "Off"				},
+	{0x0f, 0x01, 0x80, 0x00, "On"				},
 };
 
 STDDIPINFO(Squaitsa)
@@ -618,12 +622,46 @@ static tilemap_callback( bg )
 
 static UINT8 ay8910_read_A(UINT32)
 {
-	return DrvInputs[0];
+	if (squaitsamode) {
+		UINT8 dial_val = PaddleX[0];
+
+		if(m_p1_res != 0x60)
+			m_p1_res = 0x60;
+		else if(dial_val > m_p1_old_val)
+			m_p1_res = 0x40;
+		else if(dial_val < m_p1_old_val)
+			m_p1_res = 0x20;
+		else
+			m_p1_res = 0x60;
+
+		m_p1_old_val = dial_val;
+
+		return (DrvInputs[0] & 0x9f) | (m_p1_res);
+	} else {
+		return DrvInputs[0];
+	}
 }
 
 static UINT8 ay8910_read_B(UINT32)
 {
-	return DrvInputs[1];
+	if (squaitsamode) {
+		UINT8 dial_val = PaddleX[1];
+
+		if(m_p2_res != 0x60)
+			m_p2_res = 0x60;
+		else if(dial_val > m_p2_old_val)
+			m_p2_res = 0x40;
+		else if(dial_val < m_p2_old_val)
+			m_p2_res = 0x20;
+		else
+			m_p2_res = 0x60;
+
+		m_p2_old_val = dial_val;
+
+		return (DrvInputs[1] & 0x9f) | (m_p2_res);
+	} else {
+		return DrvInputs[1];
+	}
 }
 
 static INT32 DrvDoReset()
@@ -646,6 +684,10 @@ static INT32 DrvDoReset()
 
 	speech_rom_address = 0;
 	memset(&ls259_buf, 0, sizeof(ls259_buf));
+
+	PaddleX[0] = PaddleX[1] = 0;
+	m_p1_old_val = m_p2_old_val = 0;
+	m_p1_res = 0;
 
 	return 0;
 }
@@ -903,6 +945,7 @@ static INT32 DrvExit()
 	BurnFree(AllMem);
 	
 	botanic_input_xor = 0;
+	squaitsamode = 0;
 
 	return 0;
 }
@@ -944,7 +987,7 @@ static void draw_sprites()
 	{
 		INT32 sx = DrvSprRAM[offs + 3];
 		INT32 sy = DrvSprRAM[offs + 2];
-		if ((sx | sy) == 0) continue;
+		if ((sx && sy) == 0) continue;
 
 		INT32 color = DrvSprRAM[offs + 1] & 0x1f;
 		INT32 code  =(DrvSprRAM[offs] & 0x3f) | ((DrvSprRAM[offs + 1] & 0x20) << 1);
@@ -977,10 +1020,18 @@ static INT32 DrvDraw()
 //	if (video_enable)
 	{
 		GenericTilemapSetFlip(0, (flipscreen[0] ? TMAP_FLIPX : 0) | (flipscreen[1] ? TMAP_FLIPY : 0));
-		GenericTilemapDraw(0, pTransDraw, 0);
+		if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-		GenericTilesSetClip(-1, nScreenWidth - 16, -1, -1);
-		draw_sprites();
+#if 0 // if ((sx && sy) == 0) fixes the need for this in draw_sprites. maybe
+		if (!squaitsamode) {
+			if (BurnDrvGetFlags() & BDF_ORIENTATION_FLIPPED) {
+				GenericTilesSetClip(16, -1, -1, -1);
+			} else {
+				GenericTilesSetClip(-1, nScreenWidth - 16, -1, -1);
+			}
+		}
+#endif
+		if (nBurnLayer & 2) draw_sprites();
 		GenericTilesClearClip();
 	}
 
@@ -1003,11 +1054,17 @@ static INT32 DrvFrame()
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
 		}
+
+		if (DrvJoy3[0]) PaddleX[0] += 5;
+		if (DrvJoy3[1]) PaddleX[0] -= 5;
+		if (DrvJoy3[2]) PaddleX[1] += 5;
+		if (DrvJoy3[3]) PaddleX[1] -= 5;
 	}
 
 	INT32 nInterleave = 264;
 	INT32 nCyclesTotal = 3072000 / 60;
 	INT32 nCyclesDone = 0;
+	INT32 nSoundBufferPos = 0;
 
 	ZetOpen(0);
 
@@ -1016,12 +1073,26 @@ static INT32 DrvFrame()
 		nCyclesDone += ZetRun(nCyclesTotal / nInterleave);
 
 		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+
+		// Render Sound Segment
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
 	ZetClose();
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(pSoundBuf, nSegmentLength);
+		}
+
 		tms5110_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
@@ -1058,6 +1129,11 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(video_enable);
 		SCAN_VAR(speech_rom_address);
 		SCAN_VAR(ls259_buf);
+		SCAN_VAR(PaddleX);
+		SCAN_VAR(m_p1_old_val);
+		SCAN_VAR(m_p2_old_val);
+		SCAN_VAR(m_p1_res);
+		SCAN_VAR(m_p2_res);
 	}
 
 	return 0;
@@ -1567,13 +1643,18 @@ static struct BurnRomInfo botanicfRomDesc[] = {
 STD_ROM_PICK(botanicf)
 STD_ROM_FN(botanicf)
 
+static INT32 BotanicfInit()
+{
+	return BagmanCommonInit(4, 1);
+}
+
 struct BurnDriver BurnDrvBotanicf = {
 	"botanicf", "botanic", NULL, NULL, "1984",
 	"Botanic (French)\0", NULL, "Itisa (Valadon Automation license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, botanicfRomInfo, botanicfRomName, NULL, NULL, BagmanInputInfo, BotanicfDIPInfo,
-	BotanicInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
+	BotanicfInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x40,
 	224, 256, 3, 4
 };
 
@@ -1599,6 +1680,7 @@ STD_ROM_FN(squaitsa)
 
 static INT32 SquaitsaInit()
 {
+	squaitsamode = 1;
 	return BagmanCommonInit(5, 1);
 }
 

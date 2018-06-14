@@ -24,6 +24,7 @@
 #include "i8039.h"
 #include "dac.h"
 #include "nes_apu.h"
+#include "resnet.h"
 #include <math.h> // for exp()
 
 static UINT8 *AllMem;
@@ -1279,6 +1280,42 @@ static INT32 MemIndex()
 	return 0;
 }
 
+static void dkongnewPaletteInit()
+{
+	static const res_net_decode_info dkong_decode_info = {
+		2, 0, 255,
+		{ 256,  256,    0,    0,    0,    0},
+		{   1,   -2,    0,    0,    2,    0},
+		{0x07, 0x04, 0x03, 0x00, 0x03, 0x00}
+	};
+
+	static const res_net_info dkong_net_info = {
+		RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 |  RES_NET_MONITOR_SANYO_EZV20,
+		{ { RES_NET_AMP_DARLINGTON, 470, 0, 3, { 1000, 470, 220 } },
+		  { RES_NET_AMP_DARLINGTON, 470, 0, 3, { 1000, 470, 220 } },
+		  { RES_NET_AMP_EMITTER,    680, 0, 2, {  470, 220,   0 } } }
+	};
+
+	static const res_net_info dkong_net_bg_info = {
+		RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_MB7052 |  RES_NET_MONITOR_SANYO_EZV20,
+		{ { RES_NET_AMP_DARLINGTON, 470, 0, 0, { 0 } },
+		  { RES_NET_AMP_DARLINGTON, 470, 0, 0, { 0 } },
+		  { RES_NET_AMP_EMITTER,    680, 0, 0, { 0 } } }
+	};
+
+	compute_res_net_all(DrvPalette, DrvColPROM, dkong_decode_info, dkong_net_info);
+
+	for (INT32 i = 0; i < 256; i++) {
+		if (!(i & 0x03)) {
+			INT32 r = compute_res_net(1, 0, dkong_net_bg_info);
+			INT32 g = compute_res_net(1, 1, dkong_net_bg_info);
+			INT32 b = compute_res_net(1, 2, dkong_net_bg_info);
+
+			DrvPalette[i] = BurnHighCol(r, g, b, 0);
+		}
+	}
+}
+
 static void dkongPaletteInit()
 {
 	for (INT32 i = 0; i < 256; i++)
@@ -2341,7 +2378,7 @@ static INT32 dkongRomLoad()
 
 static INT32 dkongInit()
 {
-	return DrvInit(dkongRomLoad, dkongPaletteInit, 0);
+	return DrvInit(dkongRomLoad, dkongnewPaletteInit, 0);
 }
 
 struct BurnDriver BurnDrvDkong = {

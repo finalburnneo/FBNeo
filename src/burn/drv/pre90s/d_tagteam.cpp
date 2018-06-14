@@ -5,6 +5,7 @@
 #include "m6502_intf.h"
 #include "ay8910.h"
 #include "dac.h"
+#include "resnet.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -418,6 +419,24 @@ static INT32 DrvExit()
 
 static void DrvPaletteInit()
 {
+	static const res_net_info tagteam_net_info = {
+		RES_NET_VCC_5V | RES_NET_VBIAS_5V | RES_NET_VIN_TTL_OUT,
+		{{ RES_NET_AMP_EMITTER, 4700, 0, 3, { 4700, 3300, 1500 } },
+		 { RES_NET_AMP_EMITTER, 4700, 0, 3, { 4700, 3300, 1500 } },
+		 { RES_NET_AMP_EMITTER, 4700, 0, 2, {       3300, 1500 } }}
+	};
+
+	static const res_net_decode_info tagteam_decode_info = {
+		1,
+		0x000, 0x01f,
+		{  0x00, 0x00, 0x00 },
+		{  0x00, 0x03, 0x06 },
+		{  0x07, 0x07, 0x03 }
+	};
+
+	compute_res_net_all(DrvPalette, DrvColPROM, tagteam_decode_info, tagteam_net_info);
+
+#if 0
 	for (INT32 i = 0; i < 0x20; i++)
 	{
 		INT32 bit0 = (DrvColPROM[i] >> 0) & 1;
@@ -439,6 +458,7 @@ static void DrvPaletteInit()
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
 	}
+#endif
 }
 
 static void draw_sprites()

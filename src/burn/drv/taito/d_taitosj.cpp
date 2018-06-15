@@ -2523,7 +2523,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(busreq);
 		SCAN_VAR(sound_irq_timer);
 		SCAN_VAR(kikstart_gears);
-		SCAN_VAR(spriteram_bank);
 	}
 
 	if (nAction & ACB_WRITE) {

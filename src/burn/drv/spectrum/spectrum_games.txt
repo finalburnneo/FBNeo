@@ -293,10 +293,10 @@ STDROMPICKEXT(Spec180_48, Spec180_48, Spectrum)
 STD_ROM_FN(Spec180_48)
 
 struct BurnDriver BurnSpec180_48 = {
-	"spec_180_48", NULL, "spec_spectrum", NULL, "1986",
+	"spec_180_48", "spec_180", "spec_spectrum", NULL, "1986",
 	"180 (48K)\0", NULL, "Mastertronic Added Dimension", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
 	SpectrumGetZipName, Spec180_48RomInfo, Spec180_48RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
 	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
 	&SpecRecalc, 0x10, 352, 296, 4, 3

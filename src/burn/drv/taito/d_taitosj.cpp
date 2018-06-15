@@ -2523,6 +2523,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(busreq);
 		SCAN_VAR(sound_irq_timer);
 		SCAN_VAR(kikstart_gears);
+		SCAN_VAR(spriteram_bank);
 	}
 
 	if (nAction & ACB_WRITE) {
@@ -2530,7 +2531,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		bankswitch(rom_bank);
 		ZetClose();
 
-		for (INT32 i = 0; i < 0x800; i++) {
+		for (INT32 i = 0; i < 0x3000; i++) {
 			ram_decode(i);
 		}
 	}

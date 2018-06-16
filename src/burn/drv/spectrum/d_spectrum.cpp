@@ -602,6 +602,7 @@ static void __fastcall SpecSpec128Z80PortWrite(UINT16 a, UINT8 d)
 			break;
 		}
 		
+		case 0xfefd:
 		case 0xfffd: {
 			AY8910Write(0, 0, d);
 			break;

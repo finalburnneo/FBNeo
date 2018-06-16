@@ -40307,7 +40307,7 @@ STDROMPICKEXT(Specgberet, Specgberet, Spectrum)
 STD_ROM_FN(Specgberet)
 
 struct BurnDriver BurnSpecgberet = {
-	"spec_gberet", "spec_gberet", "spec_spec128", NULL, "1986",
+	"spec_gberet", NULL, "spec_spec128", NULL, "1986",
 	"Green Beret (128K)\0", NULL, "Imagine Software", "ZX Spectrum",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,

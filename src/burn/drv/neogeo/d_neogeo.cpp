@@ -16041,13 +16041,13 @@ struct BurnDriver BurnDrvSamShoa = {
 
 // Samurai Shodown II / Shin Samurai Spirits - Haohmaru jigokuhen (Special 2017, hack)
 // Modified by: GSC2007	
-// Version number: Ver 1.0.0320
+// Version number: Ver 1.1
 
 static struct BurnRomInfo samsho2spRomDesc[] = {
-	{ "063-p1sp.p1",  0x100000, 0x19260a9a, 1 | BRF_ESS | BRF_PRG }, //  0 68k code 
-	{ "063-p2sp.p2",  0x100000, 0x6e1aef70, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "063-p3sp.p3",  0x020000, 0x8fabd043, 0 | BRF_ESS | BRF_PRG }, //  2
-		
+	{ "063sp5.p1",    0x100000, 0xed466b3d, 1 | BRF_ESS | BRF_PRG }, //  0 68k code
+	{ "063sp.p2",     0x100000, 0x6e1aef70, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "063sp5.p3",    0x020000, 0xf9079ea3, 0 | BRF_ESS | BRF_PRG }, //  2
+
 	{ "063-s1sp.s1",  0x020000, 0x1951a907, 2 | BRF_GRA },           //  3 Text layer tiles / TC531000
 
 	{ "063-c1.c1",    0x200000, 0x86cd307c, 3 | BRF_GRA },           //  4 Sprite data		/ TC5316200

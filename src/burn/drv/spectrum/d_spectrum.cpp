@@ -1073,25 +1073,6 @@ struct BurnDriver BurnSpecSpec128 = {
 
 // games
 
-// 180 (Micro-Gen) (48K)
-
-static struct BurnRomInfo Spec180mgen_48RomDesc[] = {
-	{ "180 (1983)(Mikro-Gen).z80", 0x03a00, 0x03cad5e0, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Spec180mgen_48, Spec180mgen_48, Spectrum)
-STD_ROM_FN(Spec180mgen_48)
-
-struct BurnDriver BurnSpec180mgen_48 = {
-	"spec_180mgen_48", "spec_180", "spec_spectrum", NULL, "1983",
-	"180 (Micro-Gen) (48K)\0", NULL, "Mikro-Gen", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Spec180mgen_48RomInfo, Spec180mgen_48RomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 352, 296, 4, 3
-};
-
 // 180 (48K)
 
 static struct BurnRomInfo Spec180_48RomDesc[] = {

@@ -15680,12 +15680,12 @@ struct BurnDriver BurnDrvlastblada = {
 
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
 // Modified by: GSC2007	
-// Version number: Ver 1.0.0701 
+// Version number: Ver 1.1-FINAL
 
 static struct BurnRomInfo lastbladspRomDesc[] = {
-	{ "234-p1sp.p1",  0x100000, 0xb902e73e, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "234-p2sp.sp2", 0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1 
-	{ "234-p3sp.sp2", 0x020000, 0xfbd011f7, 0 | BRF_ESS | BRF_PRG }, //  1 
+	{ "234sp2.p1",    0x100000, 0xf8adc621, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "234sp.p2",     0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "234sp2.p3",    0x020000, 0x3c1770df, 0 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "234-s1.s1",    0x020000, 0x95561412, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -15711,10 +15711,10 @@ static UINT8 *lastbladspExtraROM;
 
 static INT32 LastbladspInit()
 {
- 	INT32 nRet = NeoInit();
+	INT32 nRet = NeoInit();
 
 	if (nRet == 0) {
-        	lastbladspExtraROM = (UINT8*)BurnMalloc(0x20000);
+		lastbladspExtraROM = (UINT8*)BurnMalloc(0x20000);
 
 		if (BurnLoadRom(lastbladspExtraROM, 2, 1)) return 1;
 
@@ -15723,6 +15723,8 @@ static INT32 LastbladspInit()
 			if (rom[i] == 0x4e7d) rom[i] = 0x4e71;
 			if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
 		}
+
+		rom[0x11036/2] = 0x4e75; // lbsp v1.1 fix, thanks HBMAME :)
 
 		rom = (UINT16*)Neo68KROMActive;
 
@@ -15736,9 +15738,9 @@ static INT32 LastbladspInit()
 		rom[0x69c14/2] = 0x323c; // 03c4
 		rom[0x69c16/2] = 0x0013; // 4e7d
 
-        	SekOpen(0);
-        	SekMapMemory(lastbladspExtraROM, 0x900000, 0x91ffff, MAP_ROM);
-        	SekClose();
+		SekOpen(0);
+		SekMapMemory(lastbladspExtraROM, 0x900000, 0x91ffff, MAP_ROM);
+		SekClose();
 	}
 
 	return nRet;
@@ -15752,7 +15754,7 @@ static INT32 LastbladspExit()
 }
 struct BurnDriver BurnDrvlastbladsp = {
 	"lastbladsp", "lastblad", "neogeo", NULL, "2017",
-	"The Last Soldier (Special 2017, hack)\0", NULL, "SNK", "Neo Geo MVS",
+	"The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)\0", NULL, "SNK", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
 	NULL, lastbladspRomInfo, lastbladspRomName, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,

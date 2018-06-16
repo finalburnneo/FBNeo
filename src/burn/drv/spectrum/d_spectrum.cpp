@@ -1117,7 +1117,7 @@ static struct BurnRomInfo Spec180RomDesc[] = {
 	{ "180 (1986)(Mastertronic Added Dimension)[128K].z80", 0x0d536, 0xc4937cba, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spec180, Spec180, Spectrum)
+STDROMPICKEXT(Spec180, Spec180, Spec128)
 STD_ROM_FN(Spec180)
 
 struct BurnDriver BurnSpec180 = {
@@ -1231,7 +1231,7 @@ static struct BurnRomInfo SpecafighterRomDesc[] = {
 	{ "Action Fighter (1989)(Firebird Software)[128K].z80", 0x0a81a, 0x55f30b2a, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specafighter, Specafighter, Spectrum)
+STDROMPICKEXT(Specafighter, Specafighter, Spec128)
 STD_ROM_FN(Specafighter)
 
 struct BurnDriver BurnSpecafighter = {
@@ -1250,7 +1250,7 @@ static struct BurnRomInfo SpecadichafoRomDesc[] = {
 	{ "Adidas Championship Football (1990)(Ocean)[128K].z80", 0x17369, 0x89364845, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specadichafo, Specadichafo, Spectrum)
+STDROMPICKEXT(Specadichafo, Specadichafo, Spec128)
 STD_ROM_FN(Specadichafo)
 
 struct BurnDriver BurnSpecadichafo = {
@@ -1269,7 +1269,7 @@ static struct BurnRomInfo Specadvlawn2RomDesc[] = {
 	{ "Advanced Lawnmower Simulator II (1990)(JA Software)[128K].z80", 0x021e0, 0x9f4e38e2, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specadvlawn2, Specadvlawn2, Spectrum)
+STDROMPICKEXT(Specadvlawn2, Specadvlawn2, Spec128)
 STD_ROM_FN(Specadvlawn2)
 
 struct BurnDriver BurnSpecadvlawn2 = {
@@ -1345,7 +1345,7 @@ static struct BurnRomInfo SpecaliensynRomDesc[] = {
 	{ "Alien Syndrome (1987)(ACE Software)[t +2][128K].z80", 0x0f7bc, 0x11c4832e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specaliensyn, Specaliensyn, Spectrum)
+STDROMPICKEXT(Specaliensyn, Specaliensyn, Spec128)
 STD_ROM_FN(Specaliensyn)
 
 struct BurnDriver BurnSpecaliensyn = {
@@ -1364,7 +1364,7 @@ static struct BurnRomInfo SpecaltbeastRomDesc[] = {
 	{ "Altered Beast (1988)(Activision)[128K].z80", 0x0b8b5, 0x8c27eb15, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specaltbeast, Specaltbeast, Spectrum)
+STDROMPICKEXT(Specaltbeast, Specaltbeast, Spec128)
 STD_ROM_FN(Specaltbeast)
 
 struct BurnDriver BurnSpecaltbeast = {
@@ -1383,7 +1383,7 @@ static struct BurnRomInfo SpecandycappRomDesc[] = {
 	{ "Andy Capp (1988)(Mirrorsoft)[128K].z80", 0x0ad39, 0x77f3f490, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specandycapp, Specandycapp, Spectrum)
+STDROMPICKEXT(Specandycapp, Specandycapp, Spec128)
 STD_ROM_FN(Specandycapp)
 
 struct BurnDriver BurnSpecandycapp = {
@@ -1402,7 +1402,7 @@ static struct BurnRomInfo SpecapbRomDesc[] = {
 	{ "APB - All Points Bulletin (1989)(Domark)[128K].z80", 0x12d7d, 0x6fb0235f, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specapb, Specapb, Spectrum)
+STDROMPICKEXT(Specapb, Specapb, Spec128)
 STD_ROM_FN(Specapb)
 
 struct BurnDriver BurnSpecapb = {
@@ -1459,7 +1459,7 @@ static struct BurnRomInfo Specarkanoid2RomDesc[] = {
 	{ "Arkanoid II - Revenge of Doh (1988)(Imagine Software)[128K].z80", 0x0cd16, 0x0fa0ffb5, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specarkanoid2, Specarkanoid2, Spectrum)
+STDROMPICKEXT(Specarkanoid2, Specarkanoid2, Spec128)
 STD_ROM_FN(Specarkanoid2)
 
 struct BurnDriver BurnSpecarkanoid2 = {
@@ -1516,7 +1516,7 @@ static struct BurnRomInfo SpecatvsimRomDesc[] = {
 	{ "ATV Simulator - All Terrain Vehicle (1987)(Codemasters)[128K].z80", 0x0a8ef, 0xe1fc4bb9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specatvsim, Specatvsim, Spectrum)
+STDROMPICKEXT(Specatvsim, Specatvsim, Spec128)
 STD_ROM_FN(Specatvsim)
 
 struct BurnDriver BurnSpecatvsim = {
@@ -1687,7 +1687,7 @@ static struct BurnRomInfo SpecbarbarnRomDesc[] = {
 	{ "Barbarian (1988)(Melbourne House)[128K].z80", 0x0a624, 0x4d0607de, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbarbarn, Specbarbarn, Spectrum)
+STDROMPICKEXT(Specbarbarn, Specbarbarn, Spec128)
 STD_ROM_FN(Specbarbarn)
 
 struct BurnDriver BurnSpecbarbarn = {
@@ -1706,7 +1706,7 @@ static struct BurnRomInfo Specbarbarn2RomDesc[] = {
 	{ "Barbarian II - The Dungeon of Drax (1988)(Palace Software)[128K].z80", 0x1ac6c, 0x2215c3b7, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbarbarn2, Specbarbarn2, Spectrum)
+STDROMPICKEXT(Specbarbarn2, Specbarbarn2, Spec128)
 STD_ROM_FN(Specbarbarn2)
 
 struct BurnDriver BurnSpecbarbarn2 = {
@@ -1763,7 +1763,7 @@ static struct BurnRomInfo SpecbatmanmvRomDesc[] = {
 	{ "Batman - The Movie (1989)(Ocean)[128K].z80", 0x1b872, 0x17ed3d84, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbatmanmv, Specbatmanmv, Spectrum)
+STDROMPICKEXT(Specbatmanmv, Specbatmanmv, Spec128)
 STD_ROM_FN(Specbatmanmv)
 
 struct BurnDriver BurnSpecbatmanmv = {
@@ -1820,7 +1820,7 @@ static struct BurnRomInfo SpecbatmanRomDesc[] = {
 	{ "Batman (1986)(Ocean)[128K].z80", 0x0b90a, 0x48ec8253, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbatman, Specbatman, Spectrum)
+STDROMPICKEXT(Specbatman, Specbatman, Spec128)
 STD_ROM_FN(Specbatman)
 
 struct BurnDriver BurnSpecbatman = {
@@ -1877,7 +1877,7 @@ static struct BurnRomInfo SpecbioniccRomDesc[] = {
 	{ "Bionic Commando (1988)(Go!)[128K].z80", 0x166f5, 0x8eb507eb, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbionicc, Specbionicc, Spectrum)
+STDROMPICKEXT(Specbionicc, Specbionicc, Spec128)
 STD_ROM_FN(Specbionicc)
 
 struct BurnDriver BurnSpecbionicc = {
@@ -1915,7 +1915,7 @@ static struct BurnRomInfo SpecblktigerRomDesc[] = {
 	{ "Black Tiger (1989)(U.S. Gold)[128K].z80", 0x0a1a1, 0xc9b3da9b, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specblktiger, Specblktiger, Spectrum)
+STDROMPICKEXT(Specblktiger, Specblktiger, Spec128)
 STD_ROM_FN(Specblktiger)
 
 struct BurnDriver BurnSpecblktiger = {
@@ -1972,7 +1972,7 @@ static struct BurnRomInfo SpecbmxfreesRomDesc[] = {
 	{ "BMX Freestyle Simulator (1989)(Codemasters)[128K].z80", 0x0b736, 0x58d28848, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbmxfrees, Specbmxfrees, Spectrum)
+STDROMPICKEXT(Specbmxfrees, Specbmxfrees, Spec128)
 STD_ROM_FN(Specbmxfrees)
 
 struct BurnDriver BurnSpecbmxfrees = {
@@ -2010,7 +2010,7 @@ static struct BurnRomInfo SpecbombjackRomDesc[] = {
 	{ "Bomb Jack (1986)(Elite Systems)[128K].z80", 0x0a345, 0x71a84d84, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbombjack, Specbombjack, Spectrum)
+STDROMPICKEXT(Specbombjack, Specbombjack, Spec128)
 STD_ROM_FN(Specbombjack)
 
 struct BurnDriver BurnSpecbombjack = {
@@ -2181,7 +2181,7 @@ static struct BurnRomInfo SpecbubothadRomDesc[] = {
 	{ "Bubble Bobble - The Adventure (1993)(AP's Adventures)[128K].z80", 0x0d387, 0xcfa03eec, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbubothad, Specbubothad, Spectrum)
+STDROMPICKEXT(Specbubothad, Specbubothad, Spec128)
 STD_ROM_FN(Specbubothad)
 
 struct BurnDriver BurnSpecbubothad = {
@@ -2219,7 +2219,7 @@ static struct BurnRomInfo SpecbublboblRomDesc[] = {
 	{ "Bubble Bobble (1987)(Firebird Software)[128K].z80", 0x0b5c8, 0x7919a50e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbublbobl, Specbublbobl, Spectrum)
+STDROMPICKEXT(Specbublbobl, Specbublbobl, Spec128)
 STD_ROM_FN(Specbublbobl)
 
 struct BurnDriver BurnSpecbublbobl = {
@@ -2257,7 +2257,7 @@ static struct BurnRomInfo SpecbubbdizzRomDesc[] = {
 	{ "Bubble Dizzy (1991)(Codemasters)[128K].z80", 0x0d9eb, 0xb9086f44, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specbubbdizz, Specbubbdizz, Spectrum)
+STDROMPICKEXT(Specbubbdizz, Specbubbdizz, Spec128)
 STD_ROM_FN(Specbubbdizz)
 
 struct BurnDriver BurnSpecbubbdizz = {
@@ -2333,7 +2333,7 @@ static struct BurnRomInfo SpeccabalRomDesc[] = {
 	{ "Cabal (1988)(Ocean)[128K].z80", 0x1757e, 0x6174d654, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccabal, Speccabal, Spectrum)
+STDROMPICKEXT(Speccabal, Speccabal, Spec128)
 STD_ROM_FN(Speccabal)
 
 struct BurnDriver BurnSpeccabal = {
@@ -2466,7 +2466,7 @@ static struct BurnRomInfo SpecchasehqRomDesc[] = {
 	{ "Chase H.Q. (1989)(Ocean)[128K].z80", 0x1c04f, 0xbb5ae933, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specchasehq, Specchasehq, Spectrum)
+STDROMPICKEXT(Specchasehq, Specchasehq, Spec128)
 STD_ROM_FN(Specchasehq)
 
 struct BurnDriver BurnSpecchasehq = {
@@ -2485,7 +2485,7 @@ static struct BurnRomInfo Specchasehq2RomDesc[] = {
 	{ "Chase H.Q. II - Special Criminal Investigations (1990)(Ocean)[128K].z80", 0x19035, 0x83ac9fea, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specchasehq2, Specchasehq2, Spectrum)
+STDROMPICKEXT(Specchasehq2, Specchasehq2, Spec128)
 STD_ROM_FN(Specchasehq2)
 
 struct BurnDriver BurnSpecchasehq2 = {
@@ -2580,7 +2580,7 @@ static struct BurnRomInfo SpeccschoolRomDesc[] = {
 	{ "Combat School (1987)(Ocean)[128K].z80", 0x19dd1, 0xe66e39b5, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccschool, Speccschool, Spectrum)
+STDROMPICKEXT(Speccschool, Speccschool, Spec128)
 STD_ROM_FN(Speccschool)
 
 struct BurnDriver BurnSpeccschool = {
@@ -2656,7 +2656,7 @@ static struct BurnRomInfo SpeccontcircRomDesc[] = {
 	{ "Continental Circus (1989)(Virgin Mastertronic)[128K].z80", 0x0fcb0, 0xf95c5332, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccontcirc, Speccontcirc, Spectrum)
+STDROMPICKEXT(Speccontcirc, Speccontcirc, Spec128)
 STD_ROM_FN(Speccontcirc)
 
 struct BurnDriver BurnSpeccontcirc = {
@@ -2694,7 +2694,7 @@ static struct BurnRomInfo SpeccryscastRomDesc[] = {
 	{ "Crystal Castles (1986)(U.S. Gold)[128K].z80", 0x0a752, 0xff640ca8, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speccryscast, Speccryscast, Spectrum)
+STDROMPICKEXT(Speccryscast, Speccryscast, Spec128)
 STD_ROM_FN(Speccryscast)
 
 struct BurnDriver BurnSpeccryscast = {
@@ -2751,7 +2751,7 @@ static struct BurnRomInfo SpecdatholchRomDesc[] = {
 	{ "Daley Thompson's Olympic Challenge (1988)(Ocean)[128K].z80", 0x1d5dc, 0xfc2d513f, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdatholch, Specdatholch, Spectrum)
+STDROMPICKEXT(Specdatholch, Specdatholch, Spec128)
 STD_ROM_FN(Specdatholch)
 
 struct BurnDriver BurnSpecdatholch = {
@@ -2808,7 +2808,7 @@ static struct BurnRomInfo SpecdtsprtstRomDesc[] = {
 	{ "Daley Thompson's Supertest (1985)(Ocean)[128K].z80", 0x190ba, 0xc6bbb38c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdtsprtst, Specdtsprtst, Spectrum)
+STDROMPICKEXT(Specdtsprtst, Specdtsprtst, Spec128)
 STD_ROM_FN(Specdtsprtst)
 
 struct BurnDriver BurnSpecdtsprtst = {
@@ -2922,7 +2922,7 @@ static struct BurnRomInfo SpecdizdowraRomDesc[] = {
 	{ "Dizzy - Down the Rapids (1991)(Codemasters)[128K].z80", 0x0a17e, 0x426abaa3, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizdowra, Specdizdowra, Spectrum)
+STDROMPICKEXT(Specdizdowra, Specdizdowra, Spec128)
 STD_ROM_FN(Specdizdowra)
 
 struct BurnDriver BurnSpecdizdowra = {
@@ -2941,7 +2941,7 @@ static struct BurnRomInfo SpecdizzyrRomDesc[] = {
 	{ "Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters)(ru)[128K].z80", 0x0c83c, 0x27b9e86c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzyr, Specdizzyr, Spectrum)
+STDROMPICKEXT(Specdizzyr, Specdizzyr, Spec128)
 STD_ROM_FN(Specdizzyr)
 
 struct BurnDriver BurnSpecdizzyr = {
@@ -2979,7 +2979,7 @@ static struct BurnRomInfo SpecdizzyRomDesc[] = {
 	{ "Dizzy - The Ultimate Cartoon Adventure (1987)(Codemasters)[128K].z80", 0x0b82d, 0x30bb57e1, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy, Specdizzy, Spectrum)
+STDROMPICKEXT(Specdizzy, Specdizzy, Spec128)
 STD_ROM_FN(Specdizzy)
 
 struct BurnDriver BurnSpecdizzy = {
@@ -2998,7 +2998,7 @@ static struct BurnRomInfo Specdizzy2rRomDesc[] = {
 	{ "Dizzy II - Treasure Island Dizzy (1988)(Codemasters)(ru)[128K].z80", 0x0e0a4, 0xccc7f01b, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy2r, Specdizzy2r, Spectrum)
+STDROMPICKEXT(Specdizzy2r, Specdizzy2r, Spec128)
 STD_ROM_FN(Specdizzy2r)
 
 struct BurnDriver BurnSpecdizzy2r = {
@@ -3036,7 +3036,7 @@ static struct BurnRomInfo Specdizzy2RomDesc[] = {
 	{ "Dizzy II - Treasure Island Dizzy (1988)(Codemasters)[128K].z80", 0x0da56, 0x3d2e194d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy2, Specdizzy2, Spectrum)
+STDROMPICKEXT(Specdizzy2, Specdizzy2, Spec128)
 STD_ROM_FN(Specdizzy2)
 
 struct BurnDriver BurnSpecdizzy2 = {
@@ -3055,7 +3055,7 @@ static struct BurnRomInfo Specdizzy3rRomDesc[] = {
 	{ "Dizzy III - Fantasy World Dizzy (1989)(Codemasters)(ru)[128K].z80", 0x0f2bd, 0x1ae2c460, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy3r, Specdizzy3r, Spectrum)
+STDROMPICKEXT(Specdizzy3r, Specdizzy3r, Spec128)
 STD_ROM_FN(Specdizzy3r)
 
 struct BurnDriver BurnSpecdizzy3r = {
@@ -3093,7 +3093,7 @@ static struct BurnRomInfo Specdizzy3RomDesc[] = {
 	{ "Dizzy III - Fantasy World Dizzy (1989)(Codemasters)[128K].z80", 0x0f172, 0xef716059, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy3, Specdizzy3, Spectrum)
+STDROMPICKEXT(Specdizzy3, Specdizzy3, Spec128)
 STD_ROM_FN(Specdizzy3)
 
 struct BurnDriver BurnSpecdizzy3 = {
@@ -3131,7 +3131,7 @@ static struct BurnRomInfo Specdizzy4RomDesc[] = {
 	{ "Dizzy IV - Magicland Dizzy (1989)(Codemasters)[128K].z80", 0x0e107, 0x94e8903f, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy4, Specdizzy4, Spectrum)
+STDROMPICKEXT(Specdizzy4, Specdizzy4, Spec128)
 STD_ROM_FN(Specdizzy4)
 
 struct BurnDriver BurnSpecdizzy4 = {
@@ -3169,7 +3169,7 @@ static struct BurnRomInfo Specdizzy5RomDesc[] = {
 	{ "Dizzy V - Spellbound Dizzy (1991)(Codemasters)[128K].z80", 0x15e6f, 0x6769bc2e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy5, Specdizzy5, Spectrum)
+STDROMPICKEXT(Specdizzy5, Specdizzy5, Spec128)
 STD_ROM_FN(Specdizzy5)
 
 struct BurnDriver BurnSpecdizzy5 = {
@@ -3207,7 +3207,7 @@ static struct BurnRomInfo Specdizzy6RomDesc[] = {
 	{ "Dizzy VI - Prince of the Yolkfolk (1991)(Codemasters)[128K].z80", 0x0b6d2, 0x84574abf, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy6, Specdizzy6, Spectrum)
+STDROMPICKEXT(Specdizzy6, Specdizzy6, Spec128)
 STD_ROM_FN(Specdizzy6)
 
 struct BurnDriver BurnSpecdizzy6 = {
@@ -3245,7 +3245,7 @@ static struct BurnRomInfo Specdizzy7RomDesc[] = {
 	{ "Dizzy VII - Crystal Kingdom Dizzy (1992)(Codemasters)[128K].z80", 0x0b91d, 0x16fb82f0, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy7, Specdizzy7, Spectrum)
+STDROMPICKEXT(Specdizzy7, Specdizzy7, Spec128)
 STD_ROM_FN(Specdizzy7)
 
 struct BurnDriver BurnSpecdizzy7 = {
@@ -3264,7 +3264,7 @@ static struct BurnRomInfo Specdizzy7rRomDesc[] = {
 	{ "Dizzy VII - Crystal Kingdom Dizzy (1993)(Codemasters)(ru)[128K].z80", 0x0f132, 0xd6b0801d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdizzy7r, Specdizzy7r, Spectrum)
+STDROMPICKEXT(Specdizzy7r, Specdizzy7r, Spec128)
 STD_ROM_FN(Specdizzy7r)
 
 struct BurnDriver BurnSpecdizzy7r = {
@@ -3321,7 +3321,7 @@ static struct BurnRomInfo SpecdoomdemoRomDesc[] = {
 	{ "Doom (demo) (1996)(Digital Reality)[128K].z80", 0x11d9a, 0xb310b6f1, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdoomdemo, Specdoomdemo, Spectrum)
+STDROMPICKEXT(Specdoomdemo, Specdoomdemo, Spec128)
 STD_ROM_FN(Specdoomdemo)
 
 struct BurnDriver BurnSpecdoomdemo = {
@@ -3340,7 +3340,7 @@ static struct BurnRomInfo Specddragon3RomDesc[] = {
 	{ "Double Dragon III - The Rosetta Stone (1991)(Storm Software)[128K].z80", 0x1366a, 0x63257333, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specddragon3, Specddragon3, Spectrum)
+STDROMPICKEXT(Specddragon3, Specddragon3, Spec128)
 STD_ROM_FN(Specddragon3)
 
 struct BurnDriver BurnSpecddragon3 = {
@@ -3378,7 +3378,7 @@ static struct BurnRomInfo SpecdninjaRomDesc[] = {
 	{ "Dragon Ninja (1988)(Imagine Software)[128K].z80", 0x186ff, 0xf7171c64, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specdninja, Specdninja, Spectrum)
+STDROMPICKEXT(Specdninja, Specdninja, Spec128)
 STD_ROM_FN(Specdninja)
 
 struct BurnDriver BurnSpecdninja = {
@@ -3435,7 +3435,7 @@ static struct BurnRomInfo SpecenduroRomDesc[] = {
 	{ "Enduro Racer (1987)(Activision)[128K].z80", 0x0a738, 0xf9d78fc5, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specenduro, Specenduro, Spectrum)
+STDROMPICKEXT(Specenduro, Specenduro, Spec128)
 STD_ROM_FN(Specenduro)
 
 struct BurnDriver BurnSpecenduro = {
@@ -3454,7 +3454,7 @@ static struct BurnRomInfo Specfntzone2RomDesc[] = {
 	{ "Fantasy Zone 2, The (19xx)(-)[128K].z80", 0x05c6c, 0xe09d79d8, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specfntzone2, Specfntzone2, Spectrum)
+STDROMPICKEXT(Specfntzone2, Specfntzone2, Spec128)
 STD_ROM_FN(Specfntzone2)
 
 struct BurnDriver BurnSpecfntzone2 = {
@@ -3492,7 +3492,7 @@ static struct BurnRomInfo SpecffdizzyRomDesc[] = {
 	{ "Fast Food Dizzy (1989)(Codemasters)[128K].z80", 0x0bb12, 0x83608e22, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specffdizzy, Specffdizzy, Spectrum)
+STDROMPICKEXT(Specffdizzy, Specffdizzy, Spec128)
 STD_ROM_FN(Specffdizzy)
 
 struct BurnDriver BurnSpecffdizzy = {
@@ -3530,7 +3530,7 @@ static struct BurnRomInfo SpecfeudRomDesc[] = {
 	{ "Feud (1987)(Bulldog)[128K].z80", 0x09d6f, 0x71ccae18, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specfeud, Specfeud, Spectrum)
+STDROMPICKEXT(Specfeud, Specfeud, Spec128)
 STD_ROM_FN(Specfeud)
 
 struct BurnDriver BurnSpecfeud = {
@@ -3758,7 +3758,7 @@ static struct BurnRomInfo SpecforgottnRomDesc[] = {
 	{ "Forgotten Worlds (1989)(U.S. Gold)[128K].z80", 0x0e045, 0x33ef767e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specforgottn, Specforgottn, Spectrum)
+STDROMPICKEXT(Specforgottn, Specforgottn, Spec128)
 STD_ROM_FN(Specforgottn)
 
 struct BurnDriver BurnSpecforgottn = {
@@ -3834,7 +3834,7 @@ static struct BurnRomInfo SpecglssRomDesc[] = {
 	{ "Gary Lineker's Super Skills (1988)(Gremlin Graphics Software)[128K].z80", 0x12e6f, 0xfcb98fd1, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specglss, Specglss, Spectrum)
+STDROMPICKEXT(Specglss, Specglss, Spec128)
 STD_ROM_FN(Specglss)
 
 struct BurnDriver BurnSpecglss = {
@@ -3910,7 +3910,7 @@ static struct BurnRomInfo SpecghostbRomDesc[] = {
 	{ "Ghostbusters (1984)(Activision)[128K].z80", 0x110f7, 0x2b3f6071, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specghostb, Specghostb, Spectrum)
+STDROMPICKEXT(Specghostb, Specghostb, Spec128)
 STD_ROM_FN(Specghostb)
 
 struct BurnDriver BurnSpecghostb = {
@@ -3948,7 +3948,7 @@ static struct BurnRomInfo SpecgngRomDesc[] = {
 	{ "Ghouls 'n' Ghosts (1989)(U.S. Gold)[128K].z80", 0x1a8d2, 0x1b626fe8, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specgng, Specgng, Spectrum)
+STDROMPICKEXT(Specgng, Specgng, Spec128)
 STD_ROM_FN(Specgng)
 
 struct BurnDriver BurnSpecgng = {
@@ -3967,7 +3967,7 @@ static struct BurnRomInfo SpecglocRomDesc[] = {
 	{ "G-LOC (1992)(U.S. Gold)[128K].z80", 0x16f39, 0xeeae7278, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specgloc, Specgloc, Spectrum)
+STDROMPICKEXT(Specgloc, Specgloc, Spec128)
 STD_ROM_FN(Specgloc)
 
 struct BurnDriver BurnSpecgloc = {
@@ -4024,7 +4024,7 @@ static struct BurnRomInfo SpecgberetRomDesc[] = {
 	{ "Green Beret (1986)(Imagine Software)[128K].z80", 0x0b5b3, 0x1b61d4ab, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specgberet, Specgberet, Spectrum)
+STDROMPICKEXT(Specgberet, Specgberet, Spec128)
 STD_ROM_FN(Specgberet)
 
 struct BurnDriver BurnSpecgberet = {
@@ -4062,7 +4062,7 @@ static struct BurnRomInfo SpecgryzorRomDesc[] = {
 	{ "Gryzor (1987)(Ocean)[128K].z80", 0x19b7d, 0x1c8c9d01, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specgryzor, Specgryzor, Spectrum)
+STDROMPICKEXT(Specgryzor, Specgryzor, Spec128)
 STD_ROM_FN(Specgryzor)
 
 struct BurnDriver BurnSpecgryzor = {
@@ -4081,7 +4081,7 @@ static struct BurnRomInfo SpecharddrivRomDesc[] = {
 	{ "Hard Drivin' (1989)(Domark)[128K].z80", 0x0adaa, 0xafe65244, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specharddriv, Specharddriv, Spectrum)
+STDROMPICKEXT(Specharddriv, Specharddriv, Spec128)
 STD_ROM_FN(Specharddriv)
 
 struct BurnDriver BurnSpecharddriv = {
@@ -4119,7 +4119,7 @@ static struct BurnRomInfo SpecheadheelRomDesc[] = {
 	{ "Head over Heels (1987)(Ocean)[128K].z80", 0x0c5a5, 0x9f148037, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specheadheel, Specheadheel, Spectrum)
+STDROMPICKEXT(Specheadheel, Specheadheel, Spec128)
 STD_ROM_FN(Specheadheel)
 
 struct BurnDriver BurnSpecheadheel = {
@@ -4214,7 +4214,7 @@ static struct BurnRomInfo SpechowbastRomDesc[] = {
 	{ "How to be a Complete Bastard (1987)(Virgin Games)[128K].z80", 0x0e728, 0x7460da43, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spechowbast, Spechowbast, Spectrum)
+STDROMPICKEXT(Spechowbast, Spechowbast, Spec128)
 STD_ROM_FN(Spechowbast)
 
 struct BurnDriver BurnSpechowbast = {
@@ -4328,7 +4328,7 @@ static struct BurnRomInfo SpecironmanRomDesc[] = {
 	{ "Ivan 'Ironman' Stewart's Super Off Road Racer (1990)(Virgin Games)[128K].z80", 0x0932d, 0x1b98e2aa, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specironman, Specironman, Spectrum)
+STDROMPICKEXT(Specironman, Specironman, Spec128)
 STD_ROM_FN(Specironman)
 
 struct BurnDriver BurnSpecironman = {
@@ -4461,7 +4461,7 @@ static struct BurnRomInfo Speckickoff2RomDesc[] = {
 	{ "Kick Off 2 (1990)(Anco Software)[128K].z80", 0x0be06, 0xc6367c82, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speckickoff2, Speckickoff2, Spectrum)
+STDROMPICKEXT(Speckickoff2, Speckickoff2, Spec128)
 STD_ROM_FN(Speckickoff2)
 
 struct BurnDriver BurnSpeckickoff2 = {
@@ -4480,7 +4480,7 @@ static struct BurnRomInfo SpeckickoffwRomDesc[] = {
 	{ "Kick Off World Cup Edition (1990)(Anco Software)[128K].z80", 0x09ba6, 0x2a01e70e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speckickoffw, Speckickoffw, Spectrum)
+STDROMPICKEXT(Speckickoffw, Speckickoffw, Spec128)
 STD_ROM_FN(Speckickoffw)
 
 struct BurnDriver BurnSpeckickoffw = {
@@ -4613,7 +4613,7 @@ static struct BurnRomInfo SpecksdizzyRomDesc[] = {
 	{ "Kwik Snax Dizzy (1990)(Codemasters)[128K].z80", 0x1508b, 0x7e358203, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specksdizzy, Specksdizzy, Spectrum)
+STDROMPICKEXT(Specksdizzy, Specksdizzy, Spec128)
 STD_ROM_FN(Specksdizzy)
 
 struct BurnDriver BurnSpecksdizzy = {
@@ -4632,7 +4632,7 @@ static struct BurnRomInfo Speclninja2RomDesc[] = {
 	{ "Last Ninja 2 (1988)(System 3 Software)[128K].z80", 0x0aac9, 0x35afe78a, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Speclninja2, Speclninja2, Spectrum)
+STDROMPICKEXT(Speclninja2, Speclninja2, Spec128)
 STD_ROM_FN(Speclninja2)
 
 struct BurnDriver BurnSpeclninja2 = {
@@ -4708,7 +4708,7 @@ static struct BurnRomInfo SpecloderunnRomDesc[] = {
 	{ "Lode Runner (1984)(Software Projects)[128K].z80", 0x0fab1, 0x937fee1b, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specloderunn, Specloderunn, Spectrum)
+STDROMPICKEXT(Specloderunn, Specloderunn, Spec128)
 STD_ROM_FN(Specloderunn)
 
 struct BurnDriver BurnSpecloderunn = {
@@ -4784,7 +4784,7 @@ static struct BurnRomInfo SpecmanutdeuRomDesc[] = {
 	{ "Manchester United Europe (1991)(Krisalis Software)(M5)[128K].z80", 0x0fb26, 0xb4146de0, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specmanutdeu, Specmanutdeu, Spectrum)
+STDROMPICKEXT(Specmanutdeu, Specmanutdeu, Spec128)
 STD_ROM_FN(Specmanutdeu)
 
 struct BurnDriver BurnSpecmanutdeu = {
@@ -4936,7 +4936,7 @@ static struct BurnRomInfo SpecmtchotdRomDesc[] = {
 	{ "Match of the Day (1992)(Zeppelin Games)[128K].z80", 0x0cd0a, 0xeb11c05c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specmtchotd, Specmtchotd, Spectrum)
+STDROMPICKEXT(Specmtchotd, Specmtchotd, Spec128)
 STD_ROM_FN(Specmtchotd)
 
 struct BurnDriver BurnSpecmtchotd = {
@@ -4974,7 +4974,7 @@ static struct BurnRomInfo SpecmicrsoccRomDesc[] = {
 	{ "Microprose Soccer (1989)(Microprose Software)[128K].z80", 0x09c19, 0x432ea0b4, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specmicrsocc, Specmicrsocc, Spectrum)
+STDROMPICKEXT(Specmicrsocc, Specmicrsocc, Spec128)
 STD_ROM_FN(Specmicrsocc)
 
 struct BurnDriver BurnSpecmicrsocc = {
@@ -5012,7 +5012,7 @@ static struct BurnRomInfo SpecmresistRomDesc[] = {
 	{ "Midnight Resistance (1990)(Ocean)[128K].z80", 0x1b641, 0x614f8f38, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specmresist, Specmresist, Spectrum)
+STDROMPICKEXT(Specmresist, Specmresist, Spec128)
 STD_ROM_FN(Specmresist)
 
 struct BurnDriver BurnSpecmresist = {
@@ -5145,7 +5145,7 @@ static struct BurnRomInfo SpecnvysealsRomDesc[] = {
 	{ "Navy SEALs (1991)(Ocean)(Part 1 of 2)[128K].z80", 0x18df5, 0x40156d33, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specnvyseals, Specnvyseals, Spectrum)
+STDROMPICKEXT(Specnvyseals, Specnvyseals, Spec128)
 STD_ROM_FN(Specnvyseals)
 
 struct BurnDriver BurnSpecnvyseals = {
@@ -5164,7 +5164,7 @@ static struct BurnRomInfo Specnvyseals2RomDesc[] = {
 	{ "Navy SEALs (1991)(Ocean)(Part 2 of 2)[128K].z80", 0x1820a, 0x78ab2c33, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specnvyseals2, Specnvyseals2, Spectrum)
+STDROMPICKEXT(Specnvyseals2, Specnvyseals2, Spec128)
 STD_ROM_FN(Specnvyseals2)
 
 struct BurnDriver BurnSpecnvyseals2 = {
@@ -5241,7 +5241,7 @@ static struct BurnRomInfo SpecnbreedRomDesc[] = {
 	{ "Night Breed (1990)(Ocean)[128K].z80", 0x05f72, 0x95a8d043, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specnbreed, Specnbreed, Spectrum)
+STDROMPICKEXT(Specnbreed, Specnbreed, Spec128)
 STD_ROM_FN(Specnbreed)
 
 struct BurnDriver BurnSpecnbreed = {
@@ -5279,7 +5279,7 @@ static struct BurnRomInfo SpecothunderRomDesc[] = {
 	{ "Operation Thunderbolt (1989)(Ocean)[128K].z80", 0x1c4e4, 0xcb2c92d8, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specothunder, Specothunder, Spectrum)
+STDROMPICKEXT(Specothunder, Specothunder, Spec128)
 STD_ROM_FN(Specothunder)
 
 struct BurnDriver BurnSpecothunder = {
@@ -5317,7 +5317,7 @@ static struct BurnRomInfo SpecopwolfRomDesc[] = {
 	{ "Operation Wolf (1988)(Ocean)[128K].z80", 0x1da84, 0xa7cd683f, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specopwolf, Specopwolf, Spectrum)
+STDROMPICKEXT(Specopwolf, Specopwolf, Spec128)
 STD_ROM_FN(Specopwolf)
 
 struct BurnDriver BurnSpecopwolf = {
@@ -5336,7 +5336,7 @@ static struct BurnRomInfo SpecoutrunRomDesc[] = {
 	{ "Out Run (1988)(U.S. Gold)[128K].z80", 0x07bcc, 0x7cc211cf, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specoutrun, Specoutrun, Spectrum)
+STDROMPICKEXT(Specoutrun, Specoutrun, Spec128)
 STD_ROM_FN(Specoutrun)
 
 struct BurnDriver BurnSpecoutrun = {
@@ -5374,7 +5374,7 @@ static struct BurnRomInfo SpecpaclandRomDesc[] = {
 	{ "Pac-Land (1989)(Grandslam Entertainments)[128K].z80", 0x0b9d7, 0x78fe5d59, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpacland, Specpacland, Spectrum)
+STDROMPICKEXT(Specpacland, Specpacland, Spec128)
 STD_ROM_FN(Specpacland)
 
 struct BurnDriver BurnSpecpacland = {
@@ -5430,7 +5430,7 @@ static struct BurnRomInfo SpecpacmaniaRomDesc[] = {
 	{ "Pac-Mania (1988)(Grandslam Entertainments)[128K].z80", 0x0a813, 0x938c60ff, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpacmania, Specpacmania, Spectrum)
+STDROMPICKEXT(Specpacmania, Specpacmania, Spec128)
 STD_ROM_FN(Specpacmania)
 
 struct BurnDriver BurnSpecpacmania = {
@@ -5449,7 +5449,7 @@ static struct BurnRomInfo SpecpangRomDesc[] = {
 	{ "Pang (1990)(Ocean)[128K][incomplete].z80", 0x12130, 0xc7016b68, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpang, Specpang, Spectrum)
+STDROMPICKEXT(Specpang, Specpang, Spec128)
 STD_ROM_FN(Specpang)
 
 struct BurnDriver BurnSpecpang = {
@@ -5487,7 +5487,7 @@ static struct BurnRomInfo SpecpandizzyRomDesc[] = {
 	{ "Panic Dizzy (1991)(Codemasters)[128K].z80", 0x0b637, 0x4b087391, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpandizzy, Specpandizzy, Spectrum)
+STDROMPICKEXT(Specpandizzy, Specpandizzy, Spec128)
 STD_ROM_FN(Specpandizzy)
 
 struct BurnDriver BurnSpecpandizzy = {
@@ -5563,7 +5563,7 @@ static struct BurnRomInfo SpecpassshotRomDesc[] = {
 	{ "Passing Shot (1989)(Image Works)[128K].z80", 0x098ac, 0xf34e8359, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpassshot, Specpassshot, Spectrum)
+STDROMPICKEXT(Specpassshot, Specpassshot, Spec128)
 STD_ROM_FN(Specpassshot)
 
 struct BurnDriver BurnSpecpassshot = {
@@ -5658,7 +5658,7 @@ static struct BurnRomInfo SpecplatoonRomDesc[] = {
 	{ "Platoon (1988)(Ocean)[128K].z80", 0x1a121, 0xaa4d4d13, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specplatoon, Specplatoon, Spectrum)
+STDROMPICKEXT(Specplatoon, Specplatoon, Spec128)
 STD_ROM_FN(Specplatoon)
 
 struct BurnDriver BurnSpecplatoon = {
@@ -5696,7 +5696,7 @@ static struct BurnRomInfo SpecplottingRomDesc[] = {
 	{ "Plotting (1990)(Ocean)[128K].z80", 0x09fb3, 0xdd65a0b5, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specplotting, Specplotting, Spectrum)
+STDROMPICKEXT(Specplotting, Specplotting, Spec128)
 STD_ROM_FN(Specplotting)
 
 struct BurnDriver BurnSpecplotting = {
@@ -5753,7 +5753,7 @@ static struct BurnRomInfo SpecpdriftRomDesc[] = {
 	{ "Power Drift (1989)(Activision)[128K].z80", 0x160f6, 0x34a7f74a, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpdrift, Specpdrift, Spectrum)
+STDROMPICKEXT(Specpdrift, Specpdrift, Spec128)
 STD_ROM_FN(Specpdrift)
 
 struct BurnDriver BurnSpecpdrift = {
@@ -5791,7 +5791,7 @@ static struct BurnRomInfo SpecpuzznicRomDesc[] = {
 	{ "Puzznic (1990)(Ocean)[128K].z80", 0x11c44, 0x138fe09d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specpuzznic, Specpuzznic, Spectrum)
+STDROMPICKEXT(Specpuzznic, Specpuzznic, Spec128)
 STD_ROM_FN(Specpuzznic)
 
 struct BurnDriver BurnSpecpuzznic = {
@@ -5867,7 +5867,7 @@ static struct BurnRomInfo SpecrbislandRomDesc[] = {
 	{ "Rainbow Islands - The Story of Bubble Bobble 2 (1990)(Ocean)[128K].z80", 0x161bb, 0x0211cd1d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrbisland, Specrbisland, Spectrum)
+STDROMPICKEXT(Specrbisland, Specrbisland, Spec128)
 STD_ROM_FN(Specrbisland)
 
 struct BurnDriver BurnSpecrbisland = {
@@ -5905,7 +5905,7 @@ static struct BurnRomInfo Specrambo3RomDesc[] = {
 	{ "Rambo III (1988)(Ocean)[128K].z80", 0x1b487, 0xf2b6d24f, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrambo3, Specrambo3, Spectrum)
+STDROMPICKEXT(Specrambo3, Specrambo3, Spec128)
 STD_ROM_FN(Specrambo3)
 
 struct BurnDriver BurnSpecrambo3 = {
@@ -5943,7 +5943,7 @@ static struct BurnRomInfo SpecrastanRomDesc[] = {
 	{ "Rastan (1988)(Imagine Software)[128K].z80", 0x1441f, 0x0440b5e8, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrastan, Specrastan, Spectrum)
+STDROMPICKEXT(Specrastan, Specrastan, Spec128)
 STD_ROM_FN(Specrastan)
 
 struct BurnDriver BurnSpecrastan = {
@@ -5981,7 +5981,7 @@ static struct BurnRomInfo SpecrenegadeRomDesc[] = {
 	{ "Renegade (1987)(Imagine Software)[128K].z80", 0x16f0d, 0xcd930d9a, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrenegade, Specrenegade, Spectrum)
+STDROMPICKEXT(Specrenegade, Specrenegade, Spec128)
 STD_ROM_FN(Specrenegade)
 
 struct BurnDriver BurnSpecrenegade = {
@@ -6000,7 +6000,7 @@ static struct BurnRomInfo Specrenegad2RomDesc[] = {
 	{ "Renegade II - Target Renegade (1988)(Imagine Software)[128K].z80", 0x1a950, 0x25d57e2c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrenegad2, Specrenegad2, Spectrum)
+STDROMPICKEXT(Specrenegad2, Specrenegad2, Spec128)
 STD_ROM_FN(Specrenegad2)
 
 struct BurnDriver BurnSpecrenegad2 = {
@@ -6019,7 +6019,7 @@ static struct BurnRomInfo Specrenegad3RomDesc[] = {
 	{ "Renegade III - The Final Chapter (1989)(Imagine Software)[128K].z80", 0x18519, 0x45f783f9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrenegad3, Specrenegad3, Spectrum)
+STDROMPICKEXT(Specrenegad3, Specrenegad3, Spec128)
 STD_ROM_FN(Specrenegad3)
 
 struct BurnDriver BurnSpecrenegad3 = {
@@ -6057,7 +6057,7 @@ static struct BurnRomInfo SpecrobocopRomDesc[] = {
 	{ "Robocop (1988)(Ocean)[128K].z80", 0x1cbf8, 0xdcc4bf16, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrobocop, Specrobocop, Spectrum)
+STDROMPICKEXT(Specrobocop, Specrobocop, Spec128)
 STD_ROM_FN(Specrobocop)
 
 struct BurnDriver BurnSpecrobocop = {
@@ -6076,7 +6076,7 @@ static struct BurnRomInfo Specrobocop2RomDesc[] = {
 	{ "Robocop 2 (1990)(Ocean)[128K].z80", 0x1c73e, 0xe9b44bc7, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrobocop2, Specrobocop2, Spectrum)
+STDROMPICKEXT(Specrobocop2, Specrobocop2, Spec128)
 STD_ROM_FN(Specrobocop2)
 
 struct BurnDriver BurnSpecrobocop2 = {
@@ -6095,7 +6095,7 @@ static struct BurnRomInfo Specrobocop3RomDesc[] = {
 	{ "Robocop 3 (1992)(Ocean)[128K].z80", 0x1ac8a, 0x21b5c6b7, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrobocop3, Specrobocop3, Spectrum)
+STDROMPICKEXT(Specrobocop3, Specrobocop3, Spec128)
 STD_ROM_FN(Specrobocop3)
 
 struct BurnDriver BurnSpecrobocop3 = {
@@ -6114,7 +6114,7 @@ static struct BurnRomInfo SpecrockshamRomDesc[] = {
 	{ "Rock Star Ate my Hamster (1989)(Codemasters)[t][128K].z80", 0x0ffbd, 0xcf617748, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrocksham, Specrocksham, Spectrum)
+STDROMPICKEXT(Specrocksham, Specrocksham, Spec128)
 STD_ROM_FN(Specrocksham)
 
 struct BurnDriver BurnSpecrocksham = {
@@ -6171,7 +6171,7 @@ static struct BurnRomInfo SpecrungauntRomDesc[] = {
 	{ "Run the Gauntlet (1989)(Ocean)[128K].z80", 0x18211, 0xc3aef7d9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrungaunt, Specrungaunt, Spectrum)
+STDROMPICKEXT(Specrungaunt, Specrungaunt, Spec128)
 STD_ROM_FN(Specrungaunt)
 
 struct BurnDriver BurnSpecrungaunt = {
@@ -6209,7 +6209,7 @@ static struct BurnRomInfo SpecrygarRomDesc[] = {
 	{ "Rygar (1987)(U.S. Gold)[128K].z80", 0x076cc, 0x260afb11, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specrygar, Specrygar, Spectrum)
+STDROMPICKEXT(Specrygar, Specrygar, Spec128)
 STD_ROM_FN(Specrygar)
 
 struct BurnDriver BurnSpecrygar = {
@@ -6285,7 +6285,7 @@ static struct BurnRomInfo SpecscrspirtRomDesc[] = {
 	{ "Scramble Spirits (1990)(Grandslam Entertainments)[128K].z80", 0x14309, 0xf293694e, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specscrspirt, Specscrspirt, Spectrum)
+STDROMPICKEXT(Specscrspirt, Specscrspirt, Spec128)
 STD_ROM_FN(Specscrspirt)
 
 struct BurnDriver BurnSpecscrspirt = {
@@ -6304,7 +6304,7 @@ static struct BurnRomInfo SpecshadwarrRomDesc[] = {
 	{ "Shadow Warriors (1990)(Ocean)[128K].z80", 0x1c463, 0x8a034e94, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specshadwarr, Specshadwarr, Spectrum)
+STDROMPICKEXT(Specshadwarr, Specshadwarr, Spec128)
 STD_ROM_FN(Specshadwarr)
 
 struct BurnDriver BurnSpecshadwarr = {
@@ -6323,7 +6323,7 @@ static struct BurnRomInfo SpecshinobiRomDesc[] = {
 	{ "Shinobi (1989)(Virgin Games)[128K].z80", 0x0d8b0, 0x3ca7a9e7, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specshinobi, Specshinobi, Spectrum)
+STDROMPICKEXT(Specshinobi, Specshinobi, Spec128)
 STD_ROM_FN(Specshinobi)
 
 struct BurnDriver BurnSpecshinobi = {
@@ -6342,7 +6342,7 @@ static struct BurnRomInfo SpecsilkwormRomDesc[] = {
 	{ "Silkworm (1989)(Virgin Games)[128K].z80", 0x174d9, 0xeb973e1c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specsilkworm, Specsilkworm, Spectrum)
+STDROMPICKEXT(Specsilkworm, Specsilkworm, Spec128)
 STD_ROM_FN(Specsilkworm)
 
 struct BurnDriver BurnSpecsilkworm = {
@@ -6418,7 +6418,7 @@ static struct BurnRomInfo SpecslapfighRomDesc[] = {
 	{ "Slap Fight (1987)(Imagine Software)[128K].z80", 0x0a08e, 0x4b9c236b, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specslapfigh, Specslapfigh, Spectrum)
+STDROMPICKEXT(Specslapfigh, Specslapfigh, Spec128)
 STD_ROM_FN(Specslapfigh)
 
 struct BurnDriver BurnSpecslapfigh = {
@@ -6456,7 +6456,7 @@ static struct BurnRomInfo SpecslightmgRomDesc[] = {
 	{ "Slightly Magic (1990)(Codemasters)[128K].z80", 0x11bed, 0x12aaa197, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specslightmg, Specslightmg, Spectrum)
+STDROMPICKEXT(Specslightmg, Specslightmg, Spec128)
 STD_ROM_FN(Specslightmg)
 
 struct BurnDriver BurnSpecslightmg = {
@@ -6475,7 +6475,7 @@ static struct BurnRomInfo SpecsmashtvRomDesc[] = {
 	{ "Smash TV (1991)(Ocean)[128K].z80", 0x0e6c1, 0x2f90973d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specsmashtv, Specsmashtv, Spectrum)
+STDROMPICKEXT(Specsmashtv, Specsmashtv, Spec128)
 STD_ROM_FN(Specsmashtv)
 
 struct BurnDriver BurnSpecsmashtv = {
@@ -6665,7 +6665,7 @@ static struct BurnRomInfo SpecstriderRomDesc[] = {
 	{ "Strider (1989)(U.S. Gold)[128K].z80", 0x199f5, 0xf7390779, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specstrider, Specstrider, Spectrum)
+STDROMPICKEXT(Specstrider, Specstrider, Spec128)
 STD_ROM_FN(Specstrider)
 
 struct BurnDriver BurnSpecstrider = {
@@ -6703,7 +6703,7 @@ static struct BurnRomInfo SpecstrikerRomDesc[] = {
 	{ "Striker (1989)(Cult Games)[128K].z80", 0x090e9, 0xf7144c4d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specstriker, Specstriker, Spectrum)
+STDROMPICKEXT(Specstriker, Specstriker, Spec128)
 STD_ROM_FN(Specstriker)
 
 struct BurnDriver BurnSpecstriker = {
@@ -6741,7 +6741,7 @@ static struct BurnRomInfo SpecstuntcarRomDesc[] = {
 	{ "Stunt Car Racer (1989)(Micro Style)[128K].z80", 0x0ae97, 0xb3abb3a6, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specstuntcar, Specstuntcar, Spectrum)
+STDROMPICKEXT(Specstuntcar, Specstuntcar, Spec128)
 STD_ROM_FN(Specstuntcar)
 
 struct BurnDriver BurnSpecstuntcar = {
@@ -6779,7 +6779,7 @@ static struct BurnRomInfo SpecsubbuetoRomDesc[] = {
 	{ "Subbuteo - The Computer Game (1990)(Electronic Zoo)[128K].z80", 0x0eb1e, 0x37c72d4c, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specsubbueto, Specsubbueto, Spectrum)
+STDROMPICKEXT(Specsubbueto, Specsubbueto, Spec128)
 STD_ROM_FN(Specsubbueto)
 
 struct BurnDriver BurnSpecsubbueto = {
@@ -6874,7 +6874,7 @@ static struct BurnRomInfo SpecsmgpRomDesc[] = {
 	{ "Super Monaco GP (1991)(U.S. Gold)[128K].z80", 0x0e08c, 0x6a1dcc87, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specsmgp, Specsmgp, Spectrum)
+STDROMPICKEXT(Specsmgp, Specsmgp, Spec128)
 STD_ROM_FN(Specsmgp)
 
 struct BurnDriver BurnSpecsmgp = {
@@ -6912,7 +6912,7 @@ static struct BurnRomInfo SpecswivRomDesc[] = {
 	{ "SWIV (1991)(Storm Software)[128K].z80", 0x1949b, 0xedc341d5, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specswiv, Specswiv, Spectrum)
+STDROMPICKEXT(Specswiv, Specswiv, Spec128)
 STD_ROM_FN(Specswiv)
 
 struct BurnDriver BurnSpecswiv = {
@@ -6969,7 +6969,7 @@ static struct BurnRomInfo SpectmhtRomDesc[] = {
 	{ "Teenage Mutant Hero Turtles (1990)(Image Works)[128K].z80", 0x0c0b6, 0x66d86001, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spectmht, Spectmht, Spectrum)
+STDROMPICKEXT(Spectmht, Spectmht, Spec128)
 STD_ROM_FN(Spectmht)
 
 struct BurnDriver BurnSpectmht = {
@@ -7007,7 +7007,7 @@ static struct BurnRomInfo SpecterracrsRomDesc[] = {
 	{ "Terra Cresta (1986)(Imagine Software)[128K].z80", 0x09496, 0x6f15fad6, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specterracrs, Specterracrs, Spectrum)
+STDROMPICKEXT(Specterracrs, Specterracrs, Spec128)
 STD_ROM_FN(Specterracrs)
 
 struct BurnDriver BurnSpecterracrs = {
@@ -7026,7 +7026,7 @@ static struct BurnRomInfo SpecthndrbldRomDesc[] = {
 	{ "Thunder Blade (1988)(U.S. Gold)[128K].z80", 0x09abe, 0xb6773249, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specthndrbld, Specthndrbld, Spectrum)
+STDROMPICKEXT(Specthndrbld, Specthndrbld, Spec128)
 STD_ROM_FN(Specthndrbld)
 
 struct BurnDriver BurnSpecthndrbld = {
@@ -7064,7 +7064,7 @@ static struct BurnRomInfo SpectigeroadRomDesc[] = {
 	{ "Tiger Road (1988)(Go!)[128K].z80", 0x0b726, 0xede04afd, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spectigeroad, Spectigeroad, Spectrum)
+STDROMPICKEXT(Spectigeroad, Spectigeroad, Spec128)
 STD_ROM_FN(Spectigeroad)
 
 struct BurnDriver BurnSpectigeroad = {
@@ -7102,7 +7102,7 @@ static struct BurnRomInfo SpectotrcallRomDesc[] = {
 	{ "Total Recall (1991)(Ocean)[128K].z80", 0x17197, 0xab3503be, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Spectotrcall, Spectotrcall, Spectrum)
+STDROMPICKEXT(Spectotrcall, Spectotrcall, Spec128)
 STD_ROM_FN(Spectotrcall)
 
 struct BurnDriver BurnSpectotrcall = {
@@ -7178,7 +7178,7 @@ static struct BurnRomInfo SpecvindtheRomDesc[] = {
 	{ "Vindicator, The (1988)(Imagine Software)[128K].z80", 0x1b692, 0x57c8a81d, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specvindthe, Specvindthe, Spectrum)
+STDROMPICKEXT(Specvindthe, Specvindthe, Spec128)
 STD_ROM_FN(Specvindthe)
 
 struct BurnDriver BurnSpecvindthe = {
@@ -7197,7 +7197,7 @@ static struct BurnRomInfo SpecvindicatRomDesc[] = {
 	{ "Vindicators (1989)(Domark)[128K].z80", 0x0aa60, 0x6c4dbbe3, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specvindicat, Specvindicat, Spectrum)
+STDROMPICKEXT(Specvindicat, Specvindicat, Spec128)
 STD_ROM_FN(Specvindicat)
 
 struct BurnDriver BurnSpecvindicat = {
@@ -7273,7 +7273,7 @@ static struct BurnRomInfo SpecweclemanRomDesc[] = {
 	{ "WEC Le Mans (1988)(Imagine Software)[128K].z80", 0x0d90e, 0xa77096e2, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specwecleman, Specwecleman, Spectrum)
+STDROMPICKEXT(Specwecleman, Specwecleman, Spec128)
 STD_ROM_FN(Specwecleman)
 
 struct BurnDriver BurnSpecwecleman = {
@@ -7292,7 +7292,7 @@ static struct BurnRomInfo SpecwboyRomDesc[] = {
 	{ "Wonder Boy (1987)(Activision)[128K].z80", 0x11193, 0xb492a055, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specwboy, Specwboy, Spectrum)
+STDROMPICKEXT(Specwboy, Specwboy, Spec128)
 STD_ROM_FN(Specwboy)
 
 struct BurnDriver BurnSpecwboy = {
@@ -7368,7 +7368,7 @@ static struct BurnRomInfo SpecyiarkufuRomDesc[] = {
 	{ "Yie Ar Kung-Fu (1985)(Imagine Software)[128K].z80", 0x157f7, 0xf7c52002, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specyiarkufu, Specyiarkufu, Spectrum)
+STDROMPICKEXT(Specyiarkufu, Specyiarkufu, Spec128)
 STD_ROM_FN(Specyiarkufu)
 
 struct BurnDriver BurnSpecyiarkufu = {
@@ -7387,7 +7387,7 @@ static struct BurnRomInfo Specyiarkuf2RomDesc[] = {
 	{ "Yie Ar Kung-Fu II (1986)(Imagine Software).z80", 0x08f6e, 0xef420fe9, BRF_ESS | BRF_PRG },
 };
 
-STDROMPICKEXT(Specyiarkuf2, Specyiarkuf2, Spectrum)
+STDROMPICKEXT(Specyiarkuf2, Specyiarkuf2, Spec128)
 STD_ROM_FN(Specyiarkuf2)
 
 struct BurnDriver BurnSpecyiarkuf2 = {

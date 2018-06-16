@@ -1130,25 +1130,6 @@ struct BurnDriver BurnSpec1942 = {
 	&SpecRecalc, 0x10, 352, 296, 4, 3
 };
 
-// 1942 Mission (48K)
-
-static struct BurnRomInfo Spec1942misnRomDesc[] = {
-	{ "1942 Mission (1985)(Tartan Software).z80", 0x0aade, 0xf75e184c, BRF_ESS | BRF_PRG },
-};
-
-STDROMPICKEXT(Spec1942misn, Spec1942misn, Spectrum)
-STD_ROM_FN(Spec1942misn)
-
-struct BurnDriver BurnSpec1942misn = {
-	"spec_1942misn", NULL, "spec_spectrum", NULL, "1985",
-	"1942 Mission (48K)\0", NULL, "Tartan Software", "ZX Spectrum",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 1, HARDWARE_SPECTRUM, GBF_MISC, 0,
-	SpectrumGetZipName, Spec1942misnRomInfo, Spec1942misnRomName, NULL, NULL, SpecInputInfo, SpecDIPInfo,
-	Z80SnapshotInit, SpecExit, SpecFrame, SpecDraw, SpecScan,
-	&SpecRecalc, 0x10, 352, 296, 4, 3
-};
-
 // 1943 - The Battle of Midway (48K)
 
 static struct BurnRomInfo Spec1943RomDesc[] = {

@@ -2739,9 +2739,9 @@ STD_ROM_PICK(Ssanchan)
 STD_ROM_FN(Ssanchan)
 
 static struct BurnRomInfo StarjackRomDesc[] = {
-	{ "epr5320b.129",      0x002000, 0x7ab72ecd, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "epr5321a.130",      0x002000, 0x38b99050, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "epr5322a.131",      0x002000, 0x103a595b, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "epr-5320b.129",     0x002000, 0x7ab72ecd, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "epr-5321a.130",     0x002000, 0x38b99050, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "epr-5322a.131",     0x002000, 0x103a595b, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
 	{ "epr-5323.132",      0x002000, 0x46af0d58, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
 	{ "epr-5324.133",      0x002000, 0x1e89efe2, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
 	{ "epr-5325.134",      0x002000, 0xd6e379a1, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
@@ -2765,26 +2765,26 @@ STD_ROM_PICK(Starjack)
 STD_ROM_FN(Starjack)
 
 static struct BurnRomInfo StarjacksRomDesc[] = {
-	{ "a1_ic29.129",       0x002000, 0x59a22a1f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
-	{ "a1_ic30.130",       0x002000, 0x7f4597dc, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
-	{ "a1_ic31.131",       0x002000, 0x6074c046, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
-	{ "a1_ic32.132",       0x002000, 0x1c48a3fa, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
-	{ "a1_ic33.133",       0x002000, 0x7598bd51, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
-	{ "a1_ic34.134",       0x002000, 0xf66fa604, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
+	{ "star_jacker_a1_ic29.129",       	0x002000, 0x59a22a1f, BRF_ESS | BRF_PRG }, //  0	Z80 #1 Program Code
+	{ "star_jacker_a1_ic30.130",       	0x002000, 0x7f4597dc, BRF_ESS | BRF_PRG }, //  1	Z80 #1 Program Code
+	{ "star_jacker_a1_ic31.131",       	0x002000, 0x6074c046, BRF_ESS | BRF_PRG }, //  2	Z80 #1 Program Code
+	{ "star_jacker_a1_ic32.132",       	0x002000, 0x1c48a3fa, BRF_ESS | BRF_PRG }, //  3	Z80 #1 Program Code
+	{ "star_jacker_a1_ic33.133",       	0x002000, 0x7598bd51, BRF_ESS | BRF_PRG }, //  4	Z80 #1 Program Code
+	{ "star_jacker_a1_ic34.134",       	0x002000, 0xf66fa604, BRF_ESS | BRF_PRG }, //  5	Z80 #1 Program Code
 	
-	{ "epr-5332.3",        0x002000, 0x7a72ab3d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
+	{ "star_jacker_a1_ic3.3",          	0x002000, 0x7a72ab3d, BRF_ESS | BRF_PRG }, //  6	Z80 #2 Program Code
 	
-	{ "epr-5331.82",       0x002000, 0x251d898f, BRF_GRA },		  //  7 Tiles
-	{ "a1_ic65.65",        0x002000, 0x0ab1893c, BRF_GRA },		  //  8 Tiles
-	{ "epr-5329.81",       0x002000, 0x3e8bcaed, BRF_GRA },		  //  9 Tiles
-	{ "a1_ic64.64",        0x002000, 0x7f628ae6, BRF_GRA },		  //  10 Tiles
-	{ "epr-5327.80",       0x002000, 0x79e92cb1, BRF_GRA },		  //  11 Tiles
-	{ "a1_ic63.63",        0x002000, 0x5bcb253e, BRF_GRA },		  //  12 Tiles
+	{ "star_jacker_a1_ic82.82",       	0x002000, 0x251d898f, BRF_GRA },		  //  7 Tiles
+	{ "star_jacker_a1_ic65.65",         0x002000, 0x0ab1893c, BRF_GRA },		  //  8 Tiles
+	{ "epr-5456.81",       				0x002000, 0x3e8bcaed, BRF_GRA },		  //  9 Tiles
+	{ "epr-5455.64",        			0x002000, 0x7f628ae6, BRF_GRA },		  //  10 Tiles
+	{ "epr-5455.80",       				0x002000, 0x79e92cb1, BRF_GRA },		  //  11 Tiles
+	{ "epr-5453.63",        			0x002000, 0x5bcb253e, BRF_GRA },		  //  12 Tiles
 	
-	{ "a1_ic86.86",        0x004000, 0x6f2e1fd3, BRF_GRA },		  //  13 Sprites
-	{ "a1_ic93.93",        0x004000, 0x07987244, BRF_GRA },		  //  14 Sprites
+	{ "star_jacker_a1_ic86.86",        	0x004000, 0x6f2e1fd3, BRF_GRA },		  //  13 Sprites
+	{ "epr-5446.93",        			0x004000, 0x07987244, BRF_GRA },		  //  14 Sprites
 
-	{ "pr-5317.106",       0x000100, 0x648350b8, BRF_OPT },		  //  15 Timing PROM
+	{ "pr-5317.106",       				0x000100, 0x648350b8, BRF_OPT },		  //  15 Timing PROM
 };
 
 STD_ROM_PICK(Starjacks)

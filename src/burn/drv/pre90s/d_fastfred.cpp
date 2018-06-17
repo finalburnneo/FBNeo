@@ -1519,21 +1519,22 @@ struct BurnDriver BurnDrvFlyboyb = {
 };
 
 
-// Jump Coaster
+// Jump Coaster (World)
+/* Kaneko FB-100A PCB, ROMs simply labeled 1 through 7 */
 
 static struct BurnRomInfo jumpcoasRomDesc[] = {
-	{ "jumpcoas.001",	0x2000, 0x0778c953, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "jumpcoas.002",	0x2000, 0x57f59ce1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "jumpcoas.003",	0x2000, 0xd9fc93be, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "jumpcoas.004",	0x2000, 0xdc108fc1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.d1",				0x2000, 0x418b4b3d, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.d2",				0x2000, 0x4bba794b, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.d3",				0x2000, 0x6383c0b0, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.d5",				0x2000, 0x340f4c3c, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "jumpcoas.005",	0x1000, 0x2dce6b07, 4 | BRF_GRA },           //  4 gfx1
-	{ "jumpcoas.006",	0x1000, 0x0d24aa1b, 4 | BRF_GRA },           //  5
-	{ "jumpcoas.007",	0x1000, 0x14c21e67, 4 | BRF_GRA },           //  6
+	{ "5.h10",				0x1000, 0x2dce6b07, 4 | BRF_GRA },           //  4 gfx1
+	{ "6.h11",				0x1000, 0x0d24aa1b, 4 | BRF_GRA },           //  5
+	{ "7.h12",				0x1000, 0x14c21e67, 4 | BRF_GRA },           //  6
 
-	{ "jumpcoas.red",	0x0100, 0x13714880, 5 | BRF_GRA },           //  7 proms
-	{ "jumpcoas.gre",	0x0100, 0x05354848, 5 | BRF_GRA },           //  8
-	{ "jumpcoas.blu",	0x0100, 0xf4662db7, 5 | BRF_GRA },           //  9
+	{ "tbp24s10n_r.e10",	0x0100, 0x13714880, 5 | BRF_GRA },           //  7 proms
+	{ "tbp24s10n_g.e11",	0x0100, 0x05354848, 5 | BRF_GRA },           //  8
+	{ "tbp24s10n_b.e12",	0x0100, 0xf4662db7, 5 | BRF_GRA },           //  9
 };
 
 STD_ROM_PICK(jumpcoas)
@@ -1548,7 +1549,7 @@ static INT32 jumpcoasInit()
 
 struct BurnDriver BurnDrvJumpcoas = {
 	"jumpcoas", NULL, NULL, NULL, "1983",
-	"Jump Coaster\0", NULL, "Kaneko", "Miscellaneous",
+	"Jump Coaster (World)\0", NULL, "Kaneko Elc. Co", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, jumpcoasRomInfo, jumpcoasRomName, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
@@ -1557,21 +1558,54 @@ struct BurnDriver BurnDrvJumpcoas = {
 };
 
 
+// Jump Coaster
+/* Kaneko FB-100A PCB, ROMs simply labeled 1 through 7 */
+
+static struct BurnRomInfo jumpcoasaRomDesc[] = {
+	{ "1.d1",				0x2000, 0x0778c953, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.d2",				0x2000, 0x57f59ce1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.d3",				0x2000, 0xd9fc93be, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.d5",				0x2000, 0xdc108fc1, 1 | BRF_PRG | BRF_ESS }, //  3
+
+	{ "5.h10",				0x1000, 0x2dce6b07, 4 | BRF_GRA },           //  4 gfx1
+	{ "6.h11",				0x1000, 0x0d24aa1b, 4 | BRF_GRA },           //  5
+	{ "7.h12",				0x1000, 0x14c21e67, 4 | BRF_GRA },           //  6
+
+	{ "tbp24s10n_r.e10",	0x0100, 0x13714880, 5 | BRF_GRA },           //  7 proms
+	{ "tbp24s10n_g.e11",	0x0100, 0x05354848, 5 | BRF_GRA },           //  8
+	{ "tbp24s10n_b.e12",	0x0100, 0xf4662db7, 5 | BRF_GRA },           //  9
+};
+
+STD_ROM_PICK(jumpcoasa)
+STD_ROM_FN(jumpcoasa)
+
+struct BurnDriver BurnDrvJumpcoasa = {
+	"jumpcoasa", "jumpcoas", NULL, NULL, "1983",
+	"Jump Coaster\0", NULL, "Kaneko", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	NULL, jumpcoasaRomInfo, jumpcoasaRomName, NULL, NULL, CommonInputInfo, JumpcoasDIPInfo,
+	jumpcoasInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x100,
+	224, 256, 3, 4
+};
+
+
 // Jump Coaster (Taito)
+/* Kaneko FB-100A PCB, ROMs simply labeled 1 through 7 */
 
 static struct BurnRomInfo jumpcoastRomDesc[] = {
-	{ "1.d1",		    0x2000, 0x8ac220c5, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
-	{ "jumpcoas.002",	0x2000, 0x57f59ce1, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "3.d3",		    0x2000, 0x17e4deba, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "jumpcoas.004",	0x2000, 0xdc108fc1, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "1.d1",		    	0x2000, 0x8ac220c5, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+	{ "2.d2",				0x2000, 0x57f59ce1, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "3.d3",		    	0x2000, 0x17e4deba, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "4.d5",				0x2000, 0xdc108fc1, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "jumpcoas.005",	0x1000, 0x2dce6b07, 4 | BRF_GRA },           //  4 gfx1
-	{ "jumpcoas.006",	0x1000, 0x0d24aa1b, 4 | BRF_GRA },           //  5
-	{ "jumpcoas.007",	0x1000, 0x14c21e67, 4 | BRF_GRA },           //  6
+	{ "5.h10",				0x1000, 0x2dce6b07, 4 | BRF_GRA },           //  4 gfx1
+	{ "6.h11",				0x1000, 0x0d24aa1b, 4 | BRF_GRA },           //  5
+	{ "7.h12",				0x1000, 0x14c21e67, 4 | BRF_GRA },           //  6
 
-	{ "jumpcoas.red",	0x0100, 0x13714880, 5 | BRF_GRA },           //  7 proms
-	{ "jumpcoas.gre",	0x0100, 0x05354848, 5 | BRF_GRA },           //  8
-	{ "jumpcoas.blu",	0x0100, 0xf4662db7, 5 | BRF_GRA },           //  9
+	{ "tbp24s10n_r.e10",	0x0100, 0x13714880, 5 | BRF_GRA },           //  7 proms
+	{ "tbp24s10n_g.e11",	0x0100, 0x05354848, 5 | BRF_GRA },           //  8
+	{ "tbp24s10n_b.e12",	0x0100, 0xf4662db7, 5 | BRF_GRA },           //  9
 };
 
 STD_ROM_PICK(jumpcoast)

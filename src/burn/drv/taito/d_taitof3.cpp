@@ -4099,7 +4099,7 @@ STD_ROM_FN(hthero95a)
 
 struct BurnDriver BurnDrvHthero95a = {
 	"hthero95a", "pwrgoal", NULL, NULL, "1994",
-	"Hat Trick Hero '95 (Ver 2.6Asia 1994/11/17)\0", NULL, "Taito America Japan", "Taito F3 System",
+	"Hat Trick Hero '95 (Ver 2.6Asia 1994/11/17)\0", NULL, "Taito Corporation Japan", "Taito F3 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_TAITO_MISC, GBF_SPORTSFOOTBALL, 0,
 	NULL, hthero95aRomInfo, hthero95aRomName, NULL, NULL, F3InputInfo, NULL,

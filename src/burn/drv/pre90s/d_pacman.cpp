@@ -5351,19 +5351,19 @@ struct BurnDriver BurnDrveggor = {
 // Piranha
 
 static struct BurnRomInfo piranhaRomDesc[] = {
-	{ "pir1.bin",     0x0800, 0x69a3e6ea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "pir5.bin",     0x0800, 0x245e753f, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "pir2.bin",     0x0800, 0x62cb6954, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "pir6.bin",     0x0800, 0xcb0700bc, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "pir3.bin",     0x0800, 0x843fbfe5, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "pir7.bin",     0x0800, 0x73084d5e, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "pir4.bin",     0x0800, 0x4cdf6704, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "pir8.bin",     0x0800, 0xb86fedb3, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "pir1.7e",      0x0800, 0x69a3e6ea, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "pir5.6e",      0x0800, 0x245e753f, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pir2.7f",      0x0800, 0x62cb6954, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pir6.6f",      0x0800, 0xcb0700bc, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pir3.7h",      0x0800, 0x843fbfe5, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pir7.6h",      0x0800, 0x73084d5e, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "pir4.7j",      0x0800, 0x4cdf6704, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "pir8.6j",      0x0800, 0xb86fedb3, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "pir9.bin",     0x0800, 0x0f19eb28, 2 | BRF_GRA },			//  8 Graphics
-	{ "pir11.bin",    0x0800, 0x5f8bdabe, 2 | BRF_GRA },			//  9
-	{ "pir10.bin",    0x0800, 0xd19399fb, 2 | BRF_GRA },			// 10
-	{ "pir12.bin",    0x0800, 0xcfb4403d, 2 | BRF_GRA },			// 11
+	{ "pir9.5e",      0x0800, 0x0f19eb28, 2 | BRF_GRA },			//  8 Graphics
+	{ "pir11.5h",     0x0800, 0x5f8bdabe, 2 | BRF_GRA },			//  9
+	{ "pir10.5f",     0x0800, 0xd19399fb, 2 | BRF_GRA },			// 10
+	{ "pir12.5j",     0x0800, 0xcfb4403d, 2 | BRF_GRA },			// 11
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Prom
 	{ "piranha.4a",   0x0100, 0x08c9447b, 3 | BRF_GRA },			// 13
@@ -5394,19 +5394,19 @@ struct BurnDriver BurnDrvpiranha = {
 // Piranha (older)
 
 static struct BurnRomInfo piranhaoRomDesc[] = {
-	{ "p1.bin",       0x0800, 0xc6ce1bfc, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "p5.bin",       0x0800, 0xa2655a33, 1 | BRF_ESS | BRF_PRG },	//  1
-	{ "pir2.bin",     0x0800, 0x62cb6954, 1 | BRF_ESS | BRF_PRG },	//  2
-	{ "pir6.bin",     0x0800, 0xcb0700bc, 1 | BRF_ESS | BRF_PRG },	//  3
-	{ "pir3.bin",     0x0800, 0x843fbfe5, 1 | BRF_ESS | BRF_PRG },	//  4
-	{ "pir7.bin",     0x0800, 0x73084d5e, 1 | BRF_ESS | BRF_PRG },	//  5
-	{ "p4.bin",       0x0800, 0x9363a4d1, 1 | BRF_ESS | BRF_PRG },	//  6
-	{ "p8.bin",       0x0800, 0x2769979c, 1 | BRF_ESS | BRF_PRG },	//  7
+	{ "p1.7e",        0x0800, 0xc6ce1bfc, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "p5.6e",        0x0800, 0xa2655a33, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "pir2.7f",      0x0800, 0x62cb6954, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "pir6.6f",      0x0800, 0xcb0700bc, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "pir3.7h",      0x0800, 0x843fbfe5, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "pir7.6h",      0x0800, 0x73084d5e, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "p4.7j",        0x0800, 0x9363a4d1, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "p8.6j",        0x0800, 0x2769979c, 1 | BRF_ESS | BRF_PRG },	//  7
 
-	{ "p9.bin",       0x0800, 0x94eb7563, 2 | BRF_GRA },			//  8 Graphics
-	{ "p11.bin",      0x0800, 0xa3606973, 2 | BRF_GRA },			//  9
-	{ "p10.bin",      0x0800, 0x84165a2c, 2 | BRF_GRA },			// 10
-	{ "p12.bin",      0x0800, 0x2699ba9e, 2 | BRF_GRA },			// 11
+	{ "p9.5e",        0x0800, 0x94eb7563, 2 | BRF_GRA },			//  8 Graphics
+	{ "p11.5h",       0x0800, 0xa3606973, 2 | BRF_GRA },			//  9
+	{ "p10.5f",       0x0800, 0x84165a2c, 2 | BRF_GRA },			// 10
+	{ "p12.5j",       0x0800, 0x2699ba9e, 2 | BRF_GRA },			// 11
 
 	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
 	{ "piranha.4a",   0x0100, 0x08c9447b, 3 | BRF_GRA },			// 13
@@ -5459,6 +5459,44 @@ struct BurnDriver BurnDrvpiranhah = {
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, piranhahRomInfo, piranhahRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	puckmanInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Titan (Pac-Man hack)
+
+static struct BurnRomInfo titanpacRomDesc[] = {
+	{ "t101.7e",      0x0800, 0x5538c288, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+	{ "t105.6e",      0x0800, 0x095f5a5f, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "t102.7f",      0x0800, 0x8117a6a2, 1 | BRF_ESS | BRF_PRG },	//  2
+	{ "t106.6f",      0x0800, 0xcb0700bc, 1 | BRF_ESS | BRF_PRG },	//  3
+	{ "t103.7h",      0x0800, 0x060e514e, 1 | BRF_ESS | BRF_PRG },	//  4
+	{ "t107.6h",      0x0800, 0x9209882a, 1 | BRF_ESS | BRF_PRG },	//  5
+	{ "t104.7j",      0x0800, 0x2c8c7299, 1 | BRF_ESS | BRF_PRG },	//  6
+	{ "t108.6j",      0x0800, 0xff943d70, 1 | BRF_ESS | BRF_PRG },	//  7
+
+	{ "t109.5e",      0x0800, 0x412e723e, 2 | BRF_GRA },			//  8 Graphics
+	{ "t111.5h",      0x0800, 0x87d28931, 2 | BRF_GRA },			//  9
+	{ "t110.5f",      0x0800, 0x3be1601b, 2 | BRF_GRA },			// 10
+	{ "t112.5j",      0x0800, 0xf773cb8b, 2 | BRF_GRA },			// 11
+
+	{ "82s123.7f",    0x0020, 0x2fc650bd, 3 | BRF_GRA },			// 12 Color Proms
+	{ "titan.4a",     0x0100, 0xb67a0c10, 3 | BRF_GRA },			// 13
+
+	{ "82s126.1m",    0x0100, 0xa9cc86bf, 4 | BRF_SND },			// 14 Sound Prom
+	{ "82s126.3m",    0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	// 15 Timing Prom (not used)
+};
+
+STD_ROM_PICK(titanpac)
+STD_ROM_FN(titanpac)
+
+struct BurnDriver BurnDrvtitanpac = {
+	"titanpac", "puckman", NULL, NULL, "1981",
+	"Titan (Pac-Man hack)\0", NULL, "hack", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, titanpacRomInfo, titanpacRomName, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	piranhaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
 

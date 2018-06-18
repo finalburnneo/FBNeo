@@ -47,6 +47,8 @@ static INT32 game_kabukiz = 0;
 static INT32 cpu1_reset;
 static INT32 tnzs_banks[3];
 
+static INT32 system_type;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvJoy2[8];
 static UINT8 DrvJoy3[8];
@@ -1099,6 +1101,8 @@ static INT32 Type1Init(INT32 mcutype)
 	memset(AllMem, 0, nLen);
 	MemIndex();
 
+	system_type = 1;
+
 	switch (mcutype)
 	{
 		case MCU_CHUKATAI:
@@ -1345,6 +1349,7 @@ static INT32 Type1Init(INT32 mcutype)
 	} else {
 		BurnYM2203Init(1, 3000000, NULL, 0);
 		BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
+		BurnTimerAttachZet(6000000);
 
 		if (mcutype == MCU_EXTRMATN || mcutype == MCU_DRTOPPEL) {
 			BurnYM2203SetPSGVolume(0, 0.10);
@@ -1379,6 +1384,8 @@ static INT32 Type2Init()
 	if ((AllMem = (UINT8 *)BurnMalloc(nLen)) == NULL) return 1;
 	memset(AllMem, 0, nLen);
 	MemIndex();
+
+	system_type = 2;
 
 	game_kabukiz = (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0);
 
@@ -1802,8 +1809,12 @@ static INT32 DrvFrame()
 		// Run Z80 #1
 		nCurrentCPU = 1;
 		ZetOpen(nCurrentCPU);
-		if (!cpu1_reset)
-			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+		if (!cpu1_reset) {
+			if (system_type == 1 && tnzs_mcu_type() != MCU_NONE_JPOPNICS)
+				BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+			else
+				ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+		}
 		if (i == nInterleave - 1)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
@@ -1830,6 +1841,12 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
+	ZetOpen(1);
+	if (!cpu1_reset) {
+		if (system_type == 1 && tnzs_mcu_type() != MCU_NONE_JPOPNICS)
+			BurnTimerEndFrame(nCyclesTotal[1]);
+	}
+	ZetClose();
 
 	ZetOpen(2);
 	if (tnzs_mcu_type() == MCU_NONE) {

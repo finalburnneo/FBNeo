@@ -36,7 +36,7 @@ static UINT8 *soundlatch;
 static UINT8 *tnzs_bg_flag;
 
 static INT32  kageki_csport_sel;
-static double kageki_sample_pos;
+static INT32  kageki_sample_pos;
 static INT32  kageki_sample_select;
 static INT16 *kageki_sample_data[0x30];
 static INT32  kageki_sample_size[0x30];
@@ -612,7 +612,7 @@ static struct BurnDIPInfo KabukizjDIPList[]=
 
 STDDIPINFO(Kabukizj)
 
-void __fastcall bankswitch0(UINT8 data)
+static void __fastcall bankswitch0(UINT8 data)
 {
 	// CPU #0 expects CPU #1 to be stopped while reset line is triggered.
 	if ((~data & 0x10) != cpu1_reset) {
@@ -644,7 +644,7 @@ void __fastcall bankswitch0(UINT8 data)
 	}
 }
 
-void __fastcall bankswitch1(UINT8 data)
+static void __fastcall bankswitch1(UINT8 data)
 {
 	tnzs_banks[1] = data & ~0x04;
 
@@ -652,13 +652,13 @@ void __fastcall bankswitch1(UINT8 data)
 		tnzs_mcu_reset();
 	}
 
-	*coin_lockout = ~data & 0x30; 
+	*coin_lockout = ~data & 0x30;
 
 	ZetMapArea(0x8000, 0x9fff, 0, DrvZ80ROM1 + 0x08000 + 0x2000 * (data & 3));
 	ZetMapArea(0x8000, 0x9fff, 2, DrvZ80ROM1 + 0x08000 + 0x2000 * (data & 3));
 }
 
-void __fastcall tnzs_cpu0_write(UINT16 address, UINT8 data)
+static void __fastcall tnzs_cpu0_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -677,23 +677,16 @@ void __fastcall tnzs_cpu0_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall tnzs_cpu0_read(UINT16 address)
+static UINT8 __fastcall tnzs_cpu0_read(UINT16 address)
 {
-	// This is a hack to keep tnzs & clones from freezing.  The sub cpu
-	// writes back 0xff to shared ram as an acknowledge and the main
-	// cpu doesn't expect it so soon. This can be fixed by an extremely 
-	// high sync, but this hack is much less costly.
 	if ((address & 0xf000) == 0xe000) {
-		if (address == 0xef10 && DrvShareRAM[0x0f10] == 0xff) {
-			return 0;
-		}
 		return DrvShareRAM[address & 0xfff];
 	}
 
 	return 0;
 }
 
-void __fastcall tnzsb_cpu1_write(UINT16 address, UINT8 data)
+static void __fastcall tnzsb_cpu1_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -706,14 +699,14 @@ void __fastcall tnzsb_cpu1_write(UINT16 address, UINT8 data)
 			ZetClose();
 			ZetOpen(2);
 			ZetSetVector(0xff);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			ZetClose();
 			ZetOpen(1);
 		break;
 	}
 }
 
-UINT8 __fastcall tnzsb_cpu1_read(UINT16 address)
+static UINT8 __fastcall tnzsb_cpu1_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -738,7 +731,7 @@ UINT8 __fastcall tnzsb_cpu1_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall tnzs_cpu1_write(UINT16 address, UINT8 data)
+static void __fastcall tnzs_cpu1_write(UINT16 address, UINT8 data)
 {
 	switch (address)
 	{
@@ -769,7 +762,7 @@ void __fastcall tnzs_cpu1_write(UINT16 address, UINT8 data)
 	}
 }
 
-UINT8 __fastcall tnzs_cpu1_read(UINT16 address)
+static UINT8 __fastcall tnzs_cpu1_read(UINT16 address)
 {
 	switch (address)
 	{
@@ -812,7 +805,7 @@ UINT8 __fastcall tnzs_cpu1_read(UINT16 address)
 	return 0;
 }
 
-void __fastcall tnzs_cpu2_out(UINT16 port, UINT8 data)
+static void __fastcall tnzs_cpu2_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
@@ -826,7 +819,7 @@ void __fastcall tnzs_cpu2_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall tnzs_cpu2_in(UINT16 port)
+static UINT8 __fastcall tnzs_cpu2_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -834,7 +827,6 @@ UINT8 __fastcall tnzs_cpu2_in(UINT16 port)
 			return BurnYM2203Read(0, 0);
 
 		case 0x02:
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return *soundlatch;
 	}
 
@@ -843,7 +835,7 @@ UINT8 __fastcall tnzs_cpu2_in(UINT16 port)
 
 static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 {
-	if (data != 0xff) {
+	if (game_kabukiz && data != 0xff) {
 		tnzs_banks[2] = data;
 
 		if (ZetGetActive() == -1) return;
@@ -855,7 +847,7 @@ static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 
 static void kabukiz_dac_write(UINT32, UINT32 data)
 {
-	if (data != 0xff) {
+	if (game_kabukiz && data != 0xff) {
 		DACWrite(0, data);
 	}
 }
@@ -878,19 +870,19 @@ static UINT8 kageki_ym2203_portA(UINT32)
 
 	switch (kageki_csport_sel & 3)
 	{
-		case	0x00:
+		case 0x00:
 			dsw = (((dsw2 & 0x10) >> 1) | ((dsw2 & 0x01) << 2) | ((dsw1 & 0x10) >> 3) | ((dsw1 & 0x01) >> 0));
 			break;
 
-		case	0x01:
+		case 0x01:
 			dsw = (((dsw2 & 0x40) >> 3) | ((dsw2 & 0x04) >> 0) | ((dsw1 & 0x40) >> 5) | ((dsw1 & 0x04) >> 2));
 			break;
 
-		case	0x02:
+		case 0x02:
 			dsw = (((dsw2 & 0x20) >> 2) | ((dsw2 & 0x02) << 1) | ((dsw1 & 0x20) >> 4) | ((dsw1 & 0x02) >> 1));
 			break;
 
-		case	0x03:
+		case 0x03:
 			dsw = (((dsw2 & 0x80) >> 4) | ((dsw2 & 0x08) >> 1) | ((dsw1 & 0x80) >> 6) | ((dsw1 & 0x08) >> 3));
 			break;
 	}
@@ -934,13 +926,13 @@ static INT32 DrvDoReset()
 	}
 
 	tnzs_mcu_reset();
-	
+
 	if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
 		BurnYM2151Reset();
 	} else {
 		BurnYM2203Reset();
 	}
-	
+
 	DACReset();
 
 	kageki_sample_pos = 0;
@@ -966,7 +958,7 @@ static INT32 MemIndex()
 	DrvSndROM		= Next; Next += 0x010000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
-	
+
 	SampleBuffer    = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	AllRam			= Next;
@@ -976,16 +968,16 @@ static INT32 MemIndex()
 	DrvPalRAM		= Next; Next += 0x000400;
 	DrvSprRAM		= Next; Next += 0x002000;
 	DrvShareRAM		= Next; Next += 0x001000;
-	DrvScrollRAM		= Next; Next += 0x000100;
+	DrvScrollRAM	= Next; Next += 0x000100;
 	DrvVidRAM		= Next; Next += 0x000200;
 
 	DrvZ80RAM0		= Next; Next += 0x008000;
 	DrvZ80RAM1		= Next; Next += 0x001000;
 	DrvZ80RAM2		= Next; Next += 0x002000;
 
-	coin_lockout		= Next; Next += 0x000001;
+	coin_lockout	= Next; Next += 0x000001;
 	soundlatch		= Next; Next += 0x000001;
-	tnzs_bg_flag		= Next; Next += 0x000001;
+	tnzs_bg_flag	= Next; Next += 0x000001;
 
 	RamEnd			= Next;
 
@@ -1024,15 +1016,9 @@ static void kageki_sample_init()
 			*dest++ = ((*scan++) ^ 0x80) << 8;
 		}
 	}
-	
+
 	kageki_sample_gain = 0.45;
 	kageki_sample_output_dir = BURN_SND_ROUTE_BOTH;
-}
-
-void kageki_sample_set_route(double nVolume, INT32 nRouteDir)
-{
-	kageki_sample_gain = nVolume;
-	kageki_sample_output_dir = nRouteDir;
 }
 
 static void kageki_sample_exit()
@@ -1110,7 +1096,7 @@ static INT32 Type1Init(INT32 mcutype)
 			if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  0, 1)) return 1;
 			memcpy (DrvZ80ROM0 + 0x00000, DrvZ80ROM0 + 0x10000, 0x08000);
 			if (BurnLoadRom(DrvZ80ROM0 + 0x20000,  1, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  2, 1)) return 1;
 
 			if (BurnLoadRom(DrvGfxROM + 0x000000,  4, 1)) return 1;
@@ -1131,7 +1117,7 @@ static INT32 Type1Init(INT32 mcutype)
 			if (BurnLoadRom(DrvZ80ROM0 + 0x10000, 0, 1)) return 1;
 			memcpy (DrvZ80ROM0 + 0x00000, DrvZ80ROM0 + 0x10000, 0x08000);
 			if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 1, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM + 0x000000,  3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x020000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x080000,  5, 1)) return 1;
@@ -1152,7 +1138,7 @@ static INT32 Type1Init(INT32 mcutype)
 			if (BurnLoadRom(DrvZ80ROM0 + 0x20000, 1, 1)) return 1;
 
 			if (BurnLoadRom(DrvZ80ROM1 + 0x00000, 2, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM + 0x000000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x020000,  5, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x080000,  6, 1)) return 1;
@@ -1259,9 +1245,9 @@ static INT32 Type1Init(INT32 mcutype)
 			if (BurnLoadRom(DrvZ80ROM0 + 0x10000,  0, 1)) return 1;
 			memcpy (DrvZ80ROM0 + 0x00000, DrvZ80ROM0 + 0x10000, 0x08000);
 			if (BurnLoadRom(DrvZ80ROM0 + 0x20000,  1, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvZ80ROM1 + 0x00000,  2, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvGfxROM + 0x000000,  3, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x020000,  4, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x080000,  5, 1)) return 1;
@@ -1270,7 +1256,7 @@ static INT32 Type1Init(INT32 mcutype)
 			if (BurnLoadRom(DrvGfxROM + 0x120000,  8, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x180000,  9, 1)) return 1;
 			if (BurnLoadRom(DrvGfxROM + 0x1a0000, 10, 1)) return 1;
-	
+
 			if (BurnLoadRom(DrvSndROM + 0x000000, 11, 1)) return 1;
 
 			if (tnzs_gfx_decode()) return 1;
@@ -1364,10 +1350,10 @@ static INT32 Type1Init(INT32 mcutype)
 		} else {
 			BurnYM2203SetPorts(0, &tnzs_ym2203_portA, &tnzs_ym2203_portB, NULL, NULL);
 		}
-	}	
+	}
 
 	DACInit(0, 0, 1, ZetTotalCycles, 6000000); // kabukiz
-	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1386,8 +1372,6 @@ static INT32 Type2Init()
 	MemIndex();
 
 	system_type = 2;
-
-	game_kabukiz = (strncmp(BurnDrvGetTextA(DRV_NAME), "kabukiz", 7) == 0);
 
 	{
 		if (BurnLoadRom(DrvZ80ROM0 + 0x10000, 0, 1)) return 1;
@@ -1475,7 +1459,7 @@ static INT32 Type2Init()
 	BurnYM2203SetPorts(0, NULL, NULL, &kabukiz_sound_bankswitch, &kabukiz_dac_write);
 	BurnTimerAttachZet(6000000);
 	BurnYM2203SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
-	
+
 	if (game_kabukiz || strncmp(BurnDrvGetTextA(DRV_NAME), "tnzs", 5) == 0) {
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 2.00, BURN_SND_ROUTE_BOTH);
 		BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 1.00, BURN_SND_ROUTE_BOTH);
@@ -1484,7 +1468,7 @@ static INT32 Type2Init()
 	}
 
 	DACInit(0, 0, 1, ZetTotalCycles, 6000000); // kabukiz
-	DACSetRoute(0, 0.10, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.50, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
@@ -1510,43 +1494,46 @@ static INT32 DrvExit()
 	}
 
 	tnzs_mcu_init(0);
+
 	game_kabukiz = 0;
 
 	return 0;
 }
 
-// Stolen from TMNT. Thanks to Barry. :) 
 static void kageki_sample_render(INT16 *pSoundBuf, INT32 nLength)
 {
-	memset(pSoundBuf, 0, nLength * sizeof(INT16) * 2);
 	if (kageki_sample_select == -1) return;
 
-	double Addr = kageki_sample_pos;
-	double Step = (double)7000 / nBurnSoundRate;
+	INT32 offset = kageki_sample_pos;
+	INT32 step = (7000 << 16) / nBurnSoundRate;
 
-	double size = kageki_sample_size[kageki_sample_select];
-	INT16 *ptr  = kageki_sample_data[kageki_sample_select];
+	INT32 size = kageki_sample_size[kageki_sample_select];
+	INT16 *ptr = kageki_sample_data[kageki_sample_select];
 
-	for (INT32 i = 0; i < nLength; i += 2) {
-		if (Addr >= size) break;
-		INT16 Sample = ptr[(INT32)Addr];
+	for (INT32 i = 0; i < nLength; i++) {
+		if ((offset >> 16) >= size) {
+			kageki_sample_select = -1;
+			break;
+		}
+		INT16 Sample = ptr[(offset >> 16)];
+
+		offset += step;
+
 		INT16 nLeftSample = 0, nRightSample = 0;
-		
+
 		if ((kageki_sample_output_dir & BURN_SND_ROUTE_LEFT) == BURN_SND_ROUTE_LEFT) {
 			nLeftSample += (INT32)(Sample * kageki_sample_gain);
 		}
 		if ((kageki_sample_output_dir & BURN_SND_ROUTE_RIGHT) == BURN_SND_ROUTE_RIGHT) {
 			nRightSample += (INT32)(Sample * kageki_sample_gain);
 		}
-		
-		pSoundBuf[i + 0] += nLeftSample;
-		pSoundBuf[i + 1] += nRightSample;
 
-		Addr += Step;
+		pSoundBuf[i * 2 + 0] += nLeftSample;
+		pSoundBuf[i * 2 + 1] += nRightSample;
 	}
 
-	kageki_sample_pos = Addr;
-	if (Addr >= size) kageki_sample_select = -1;
+	kageki_sample_pos = offset;
+	if ((offset >> 16) >= size) kageki_sample_select = -1;
 }
 
 static void draw_16x16(INT32 sx, INT32 sy, INT32 code, INT32 color, INT32 flipx, INT32 flipy, INT32 transp)
@@ -1683,29 +1670,29 @@ static inline void DrvRecalcPalette()
 	if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
 		for (INT32 i = 0; i < 0x400; i+=2) {
 			UINT16 pal = (DrvPalRAM[i] << 8) | DrvPalRAM[i | 1];
-	
+
 			r = (pal >>  4) & 0x0f;
 			g = (pal >> 12) & 0x0f;
 			b = (pal >>  8) & 0x0f;
-	
+
 			r |= r << 4;
 			g |= g << 4;
 			b |= b << 4;
-	
+
 			DrvPalette[i / 2] = BurnHighCol(r, g, b, 0);
 		}
 	} else {
 		for (INT32 i = 0; i < 0x400; i+=2) {
 			UINT16 pal = (DrvPalRAM[i | 1] << 8) | DrvPalRAM[i];
-	
+
 			r = (pal >> 10) & 0x1f;
 			g = (pal >>  5) & 0x1f;
 			b = (pal >>  0) & 0x1f;
-	
+
 			r = (r << 3) | (r >> 2);
 			g = (g << 3) | (g >> 2);
 			b = (b << 3) | (b >> 2);
-	
+
 			DrvPalette[i / 2] = BurnHighCol(r, g, b, 0);
 		}
 	}
@@ -1781,14 +1768,8 @@ static INT32 DrvFrame()
 	assemble_inputs();
 
 	INT32 nInterleave = 256;
-	if (tnzs_mcu_type() == MCU_NONE_KAGEKI) nInterleave = nBurnSoundLen;
 	INT32 nSoundBufferPos = 0;
-
-	INT32 nCyclesTotal[3];
-
-	nCyclesTotal[0] = 6000000 / 60;
-	nCyclesTotal[1] = 6000000 / 60;
-	nCyclesTotal[2] = 6000000 / 60;
+	INT32 nCyclesTotal[3] = { 6000000 / 60, 6000000 / 60, 6000000 / 60 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU;
@@ -1827,16 +1808,14 @@ static INT32 DrvFrame()
 			BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
 			ZetClose();
 		}
-		
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-			INT16* pSoundBuf2 = SampleBuffer + (nSoundBufferPos << 1);
 			ZetOpen(2);
 			if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 			}
-			kageki_sample_render(pSoundBuf2, nSegmentLength);
 			ZetClose();
 			nSoundBufferPos += nSegmentLength;
 		}
@@ -1852,26 +1831,21 @@ static INT32 DrvFrame()
 	if (tnzs_mcu_type() == MCU_NONE) {
 		BurnTimerEndFrame(nCyclesTotal[2]);
 	}
-	
+
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
-		INT16* pSoundBuf2 = SampleBuffer + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			if (tnzs_mcu_type() == MCU_NONE_JPOPNICS) {
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
 			}
-			kageki_sample_render(pSoundBuf2, nSegmentLength);
 		}
-	}
-	
-	if (tnzs_mcu_type() != MCU_NONE_JPOPNICS) {
-		if (pBurnSoundOut) {
+
+		if (tnzs_mcu_type() != MCU_NONE_JPOPNICS) {
 			BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
-			for (INT32 i = 0; i < nBurnSoundLen; i++) {
-				pBurnSoundOut[(i << 1) + 0] += SampleBuffer[(i << 1) + 0];
-				pBurnSoundOut[(i << 1) + 1] += SampleBuffer[(i << 1) + 1];
+			if (tnzs_mcu_type() == MCU_NONE_KAGEKI) {
+				kageki_sample_render(pBurnSoundOut, nBurnSoundLen);
 			}
 		}
 	}
@@ -1964,12 +1938,12 @@ static struct BurnRomInfo plumppopRomDesc[] = {
 
 	{ "a98-13.15f",				0x00200, 0x7cde2da5, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "a98-12.17f",				0x00200, 0x90dc9da7, 5 | BRF_GRA },	      	  // 13
-	
+
 	/* pals on plumppop are the same set as arkanoid2/extrmatn/drtoppel/chukataio/etc with the exception of d9? */
 	{ "b06-10-1.pal16l8a.d9.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
-	{ "b06-11.pal16l8a.d6.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-11.pal16l8a.d6.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15
 	{ "b06-12.pal16l8a.c3.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
-	{ "b06-13.pal16l8a.c2.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17 	
+	{ "b06-13.pal16l8a.c2.jed", 	0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
 
 STD_ROM_PICK(plumppop)
@@ -2008,12 +1982,12 @@ static struct BurnRomInfo extrmatnRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
-	
+
 	/* these are shared with several other games on this hardware */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
-	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13 	
+	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
 
 STD_ROM_PICK(extrmatn)
@@ -2052,10 +2026,10 @@ static struct BurnRomInfo extrmatuRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
-	
+
 	/* these are shared with several other games on this hardware */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
@@ -2091,10 +2065,10 @@ static struct BurnRomInfo extrmaturRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
-	
+
 	/* these are shared with several other games on this hardware */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
@@ -2130,10 +2104,10 @@ static struct BurnRomInfo extrmatjRomDesc[] = {
 
 	{ "b06-09.15f",		0x00200, 0xf388b361, 5 | BRF_GRA },	      	  //  8 Color PROMs
 	{ "b06-08.17f",		0x00200, 0x10c9aac3, 5 | BRF_GRA },	      	  //  9
-	
+
 	/* these are shared with several other games on this hardware */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 13
 };
@@ -2168,10 +2142,10 @@ static struct BurnRomInfo arknoid2RomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
@@ -2211,10 +2185,10 @@ static struct BurnRomInfo arknid2uRomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
@@ -2249,10 +2223,10 @@ static struct BurnRomInfo arknid2jRomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
@@ -2288,10 +2262,10 @@ static struct BurnRomInfo arknid2bRomDesc[] = {
 
 	{ "b08-08.15f",		0x00200, 0xa4f7ebd9, 5 | BRF_GRA },	      	  //  7 Color PROMs
 	{ "b08-07.16f",		0x00200, 0xea34d9f7, 5 | BRF_GRA },	      	  //  8
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, //  9 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 10
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 11
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 12
 };
@@ -2332,10 +2306,10 @@ static struct BurnRomInfo drtoppelRomDesc[] = {
 
 	{ "b19-13.am27s29.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "b19-12.am27s29.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
@@ -2419,10 +2393,10 @@ static struct BurnRomInfo drtoppluRomDesc[] = {
 
 	{ "b19-13.am27s29.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "b19-12.am27s29.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
@@ -2462,10 +2436,10 @@ static struct BurnRomInfo drtoppljRomDesc[] = {
 
 	{ "b19-13.am27s29.15f",		0x00200, 0x6a547980, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "b19-12.am27s29.16f",		0x00200, 0x5754e9d8, 5 | BRF_GRA },	      	  // 13
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 14 Pal
-	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-11.pal16l8a.d6.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 15
 	{ "b06-12.pal16l8a.c3.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 16
 	{ "b06-13.pal16l8a.c2.jed", 0x01000, 0x00000000, 6 | BRF_OPT | BRF_NODUMP }, // 17
 };
@@ -2502,10 +2476,10 @@ static struct BurnRomInfo kagekiRomDesc[] = {
 	{ "b35__08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-15.98g",		0x10000, 0xe6212a0f, 6 | BRF_SND },	      	  // 11 Samples
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2547,10 +2521,10 @@ static struct BurnRomInfo kagekiuRomDesc[] = {
 	{ "b35__08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-15.98g",		0x10000, 0xe6212a0f, 6 | BRF_SND },	      	  // 11 Samples
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2587,10 +2561,10 @@ static struct BurnRomInfo kagekijRomDesc[] = {
 	{ "b35-08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-12.98g",		0x10000, 0x184409f1, 6 | BRF_SND },	      	  // 11 Samples
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2627,10 +2601,10 @@ static struct BurnRomInfo kagekihRomDesc[] = {
 	{ "b35-08.2a",		0x20000, 0xdeb2268c, 4 | BRF_GRA },	      	  // 10
 
 	{ "b35-12.98g",		0x10000, 0x184409f1, 6 | BRF_SND },	      	  // 11 Samples
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 7 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2668,10 +2642,10 @@ static struct BurnRomInfo chukataiRomDesc[] = {
 	{ "b44-06.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-07.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-08.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2715,10 +2689,10 @@ static struct BurnRomInfo chukatauRomDesc[] = {
 	{ "b44-06.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-07.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-08.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2756,10 +2730,10 @@ static struct BurnRomInfo chukatajRomDesc[] = {
 	{ "b44-06.a05",		0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-07.a04",		0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-08.a02",		0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
-	
+
 	/* these are shared with extermination except d9 */
 	{ "b06-101.pal16l8a.d9.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 };
@@ -2797,13 +2771,13 @@ static struct BurnRomInfo chukatajaRomDesc[] = {
 	{ "b44-26.rom2h",	0x20000, 0x269978a8, 4 | BRF_GRA },	      	  //  9
 	{ "b44-27.rom1l",	0x20000, 0x3e0e737e, 4 | BRF_GRA },	      	  // 10
 	{ "b44-28.rom1h",	0x20000, 0x6cb1e8fc, 4 | BRF_GRA },	      	  // 11
-	
+
 	{ "b44-30.15f",		0x00200, 0xb3de8312, 5 | BRF_GRA },	      	  // 12 Color PROMs
 	{ "b44-29.17f",		0x00200, 0xae44b8fb, 5 | BRF_GRA },	      	  // 13
-	
+
 	/* these are shared with extermination */
 	{ "b06-10.pal16l8a.d9.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 Pal
-	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15 
+	{ "b06-11.pal16l8a.d6.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 15
 	{ "b06-12.pal16l8a.c3.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 16
 	{ "b06-13.pal16l8a.c2.jed",  0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 17
 };
@@ -2844,10 +2818,10 @@ static struct BurnRomInfo tnzsRomDesc[] = {
 	{ "b53-23.ic13",	0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
 	{ "b53-20.ic12",	0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-21.ic14",	0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* these are shared with extermination except for the subpcb pal */
 	{ "b06-13.pal16l8a.f2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-101.pal16l8a.i2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-101.pal16l8a.i2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 on sub pcb
 };
 
@@ -2882,10 +2856,10 @@ static struct BurnRomInfo tnzsjRomDesc[] = {
 	{ "b53-23.ic13",	0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
 	{ "b53-20.ic12",	0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-21.ic14",	0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* these are shared with extermination except for the subpcb pal */
 	{ "b06-13.pal16l8a.f2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-101.pal16l8a.i2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-101.pal16l8a.i2.jed", 		0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b53-15.pal16l8a.subpcb.ic6.jed", 0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 on sub pcb
 };
 
@@ -2920,12 +2894,12 @@ static struct BurnRomInfo tnzsjoRomDesc[] = {
 	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
 	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* these are probably shared with extermination except for u35 */
 	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
 
 STD_ROM_PICK(tnzsjo)
@@ -2964,12 +2938,12 @@ static struct BurnRomInfo tnzsuoRomDesc[] = {
 	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
 	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* these are probably shared with extermination except for u35 */
 	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 	
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
 
 STD_ROM_PICK(tnzsuo)
@@ -3003,12 +2977,12 @@ static struct BurnRomInfo tnzsoRomDesc[] = {
 	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
 	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* these are probably shared with extermination except for u35 */
 	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
 
 STD_ROM_PICK(tnzso)
@@ -3042,13 +3016,13 @@ static struct BurnRomInfo tnzsoaRomDesc[] = {
 	{ "b53-03.u3",					0x20000, 0x74acfb9b, 4 | BRF_GRA },	      	  //  8
 	{ "b53-02.u2",					0x20000, 0x095d0dc0, 4 | BRF_GRA },	      	  //  9
 	{ "b53-01.u1",					0x20000, 0x9800c54d, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* PALS not directly observed on this board but assumed to exist */
 	/* these are probably shared with extermination except for u35 */
 	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "b53-12.pal16l8a.u35.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13
-	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14 
+	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
 
 STD_ROM_PICK(tnzsoa)
@@ -3088,10 +3062,10 @@ static struct BurnRomInfo tnzsopRomDesc[] = {
 	{ "a05__662a.d27c1000d-15.a5",			0x20000, 0x6e762e20, 4 | BRF_GRA },	      	  //  8
 	{ "a04__0c21.d27c1000d-15.a4",			0x20000, 0xe1fd1b9d, 4 | BRF_GRA },	      	  //  9
 	{ "a02__904f.d27c1000d-15.a2",			0x20000, 0x2ab06bda, 4 | BRF_GRA },	      	  // 10
-	
+
 	/* these are probably shared with extermination except for u35 */
 	{ "b06-12.pal16l8a.u26.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 11 Pal
-	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12 
+	{ "b06-13.pal16l8a.u25.jed",  	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 12
 	{ "st-6.pal16l8a.u35.jed",    	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 13 // likely has a different name on the proto pcb...
 	{ "b06-101.pal16l8a.u36.jed", 	0x01000, 0x00000000, 5 | BRF_OPT | BRF_NODUMP }, // 14
 };
@@ -3109,6 +3083,13 @@ struct BurnDriver BurnDrvTnzsop = {
 	256, 224, 4, 3
 };
 
+
+static INT32 kabukizInit()
+{
+	game_kabukiz = 1;
+
+	return Type2Init();
+}
 
 // Kabuki-Z (World)
 
@@ -3128,13 +3109,13 @@ static struct BurnRomInfo kabukizRomDesc[] = {
 STD_ROM_PICK(kabukiz)
 STD_ROM_FN(kabukiz)
 
-struct BurnDriverD BurnDrvKabukiz = {
+struct BurnDriver BurnDrvKabukiz = {
 	"kabukiz", NULL, NULL, NULL, "1988",
 	"Kabuki-Z (World)\0", NULL, "Taito Corporation Japan", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kabukizRomInfo, kabukizRomName, NULL, NULL, CommonInputInfo, KabukizDIPInfo,
-	Type2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	kabukizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 
@@ -3157,13 +3138,13 @@ static struct BurnRomInfo kabukizjRomDesc[] = {
 STD_ROM_PICK(kabukizj)
 STD_ROM_FN(kabukizj)
 
-struct BurnDriverD BurnDrvKabukizj = {
+struct BurnDriver BurnDrvKabukizj = {
 	"kabukizj", "kabukiz", NULL, NULL, "1988",
 	"Kabuki-Z (Japan)\0", NULL, "Taito Corporation", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_TAITO_MISC, GBF_SCRFIGHT, 0,
 	NULL, kabukizjRomInfo, kabukizjRomName, NULL, NULL, CommonInputInfo, KabukizjDIPInfo,
-	Type2Init, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	kabukizInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	256, 224, 4, 3
 };
 

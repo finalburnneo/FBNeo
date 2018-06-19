@@ -10,12 +10,7 @@
 #include "ay8910.h"
 
 /*
-	The samples do really sound that bad. Compare to MAME (sparkman has most obvious samples)
-
-	Needs cleaned. Badly.
 	Missing Brick Zone
-	Bugs:
-	  Star Fighter (v1) - the first boss has some broken tiles
 */
 
 static UINT8 *AllMem;

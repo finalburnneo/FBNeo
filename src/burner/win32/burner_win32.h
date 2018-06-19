@@ -251,6 +251,7 @@ int ActivateChat();
 void DeActivateChat();
 int BurnerLoadDriver(TCHAR *szDriverName);
 int StartFromReset(TCHAR *szDriverName);
+void PausedRedraw(void);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)

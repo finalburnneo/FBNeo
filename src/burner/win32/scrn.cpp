@@ -679,7 +679,7 @@ static void OnActivateApp(HWND hwnd, BOOL fActivate, DWORD /* dwThreadId */)
 
 extern HWND hSelDlg;
 
-static void PausedRedraw(void)
+void PausedRedraw(void)
 {
     if (bVidOkay && bRunPause && bDrvOkay && (hSelDlg == NULL)) { // Redraw the screen to show certain messages while paused. - dink
         INT16 *pBtemp = pBurnSoundOut;

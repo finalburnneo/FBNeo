@@ -57,9 +57,9 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static UINT16 DrvAxis[2];
-static INT32 nAnalogAxis[2] = {0,0};
+static INT32 nAnalogAxis[2] = { 0, 0 };
 
-static INT16 *SampleBuffer = NULL;
+static INT32 nExtraCycles[3];
 
 #define A(a, b, c, d) { a, b, (UINT8*)(c), d }
 
@@ -679,7 +679,14 @@ static void __fastcall tnzs_cpu0_write(UINT16 address, UINT8 data)
 
 static UINT8 __fastcall tnzs_cpu0_read(UINT16 address)
 {
+	// This is a hack to keep tnzs & clones from freezing.  The sub cpu
+	// writes back 0xff to shared ram as an acknowledge and the main
+	// cpu doesn't expect it so soon. This can be fixed by an extremely 
+	// high sync, but this hack is much less costly.
 	if ((address & 0xf000) == 0xe000) {
+		if (address == 0xef10 && DrvShareRAM[0x0f10] == 0xff) {
+			return 0;
+		}
 		return DrvShareRAM[address & 0xfff];
 	}
 
@@ -848,7 +855,7 @@ static void kabukiz_sound_bankswitch(UINT32, UINT32 data)
 static void kabukiz_dac_write(UINT32, UINT32 data)
 {
 	if (game_kabukiz && data != 0xff) {
-		DACWrite(0, data);
+		DACSignedWrite(0, data);
 	}
 }
 
@@ -938,6 +945,8 @@ static INT32 DrvDoReset()
 	kageki_sample_pos = 0;
 	kageki_sample_select = -1;
 
+	nExtraCycles[0] = nExtraCycles[1] = nExtraCycles[2] = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -958,8 +967,6 @@ static INT32 MemIndex()
 	DrvSndROM		= Next; Next += 0x010000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
-
-	SampleBuffer    = (INT16*)Next; Next += nBurnSoundLen * 2 * sizeof(INT16);
 
 	AllRam			= Next;
 
@@ -1715,15 +1722,6 @@ static void sprite_buffer(INT32 ctrl)
 	}
 }
 
-static void bgsprite_buffer_kabukiz(INT32 ctrl)
-{
-	if (~ctrl & 0x20)
-	{
-		memcpy (DrvSprRAM + 0x0400, DrvSprRAM + 0x0c00, 0x0400);
-		memcpy (DrvSprRAM + 0x1400, DrvSprRAM + 0x1c00, 0x0400);
-	}
-}
-
 static INT32 DrvDraw()
 {
 	DrvRecalcPalette();
@@ -1731,9 +1729,7 @@ static INT32 DrvDraw()
 	INT32 flip =  DrvObjCtrl[0] & 0x40;
 	INT32 ctrl = (DrvObjCtrl[1] & 0x60) ^ 0x20;
 
-	for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-		pTransDraw[i] = 0x1f0;
-	}
+	BurnTransferClear(0x1f0);
 
 	draw_background(ctrl, flip);
 	draw_foreground(ctrl, flip);
@@ -1770,43 +1766,44 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[3] = { 6000000 / 60, 6000000 / 60, 6000000 / 60 };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], nExtraCycles[2] };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nCurrentCPU;
-
-		if (game_kabukiz && i == 1)
-			bgsprite_buffer_kabukiz(DrvObjCtrl[1]);
-
 		// Run Z80 #0
-		nCurrentCPU = 0;
-		ZetOpen(nCurrentCPU);
-		ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
-		if (i == nInterleave - 1) {
+		ZetOpen(0);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		if (i == 240) {
 			tnzs_mcu_interrupt();
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		// Run Z80 #1
-		nCurrentCPU = 1;
-		ZetOpen(nCurrentCPU);
+		ZetOpen(1);
 		if (!cpu1_reset) {
 			if (system_type == 1 && tnzs_mcu_type() != MCU_NONE_JPOPNICS)
-				BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+				BurnTimerUpdate((i + 1) * (nCyclesTotal[1] / nInterleave));
 			else
-				ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
+				nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 		}
-		if (i == nInterleave - 1)
+		if (i == 240)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		ZetClose();
 
 		// Run Z80 #2
 		if (tnzs_mcu_type() == MCU_NONE)
 		{
-			nCurrentCPU = 2;
-			ZetOpen(nCurrentCPU);
-			BurnTimerUpdate((i + 1) * (nCyclesTotal[nCurrentCPU] / nInterleave));
+			ZetOpen(2);
+			BurnTimerUpdate((i + 1) * (nCyclesTotal[2] / nInterleave));
 			ZetClose();
+		}
+
+		if (i == 240) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+
+			sprite_buffer(DrvObjCtrl[1]);
 		}
 
 		if (pBurnSoundOut) {
@@ -1852,11 +1849,8 @@ static INT32 DrvFrame()
 
 	ZetClose();
 
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	sprite_buffer(DrvObjCtrl[1]);
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	return 0;
 }
@@ -1895,6 +1889,8 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SCAN_VAR(kageki_csport_sel);
 		SCAN_VAR(kageki_sample_pos);
 		SCAN_VAR(kageki_sample_select);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

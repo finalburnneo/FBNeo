@@ -28,6 +28,7 @@ typedef struct
 	UINT8	wai_state;		/* WAI opcode state ,(or sleep opcode state) */
 	UINT8	nmi_state;		/* NMI line state */
 	UINT8	irq_state[2];	/* IRQ line state [IRQ1,TIN] */
+	UINT8	irq_hold[2];
 	UINT8	ic_eddge;		/* InputCapture eddge , b.0=fall,b.1=raise */
 
 	INT32 	extra_cycles;	/* cycles used for interrupts */

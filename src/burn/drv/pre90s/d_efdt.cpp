@@ -1,7 +1,10 @@
 // FB Alpha El Fin Del Tiempo driver module
 // Based on MAME driver by El Semi and Roberto Fresca
 
-// sound not working - help!
+//
+// EFDT Trivia: clearing the soundlatch/soundcontrol after AY8910Reset()
+// Kills the soundcpu!
+//
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -83,17 +86,12 @@ STDDIPINFO(Efdt)
 
 static void __fastcall efdt_main_write(UINT16 address, UINT8 data)
 {
-	//if ((address & 0xfffc) == 0x8800) {
-	if (address >= 0x8800 && address <= 0x8803) {
+	if ((address & 0xfffc) == 0x8800) {
 		UINT8 offset = address & 3;
 		DrvSoundRegs[offset] = data;
 
-		if (offset == 0) {
-			soundlatch = data;
-			bprintf(0, _T("w SL %X.\n"), soundlatch);
-		}
+		if (offset == 0) soundlatch = data;
 		if (offset == 1 && (data & 8)) soundcontrol |= 2;
-		//bprintf (0, _T("SREG: %d, %2.2x, %2.2x, %2.2x\n"), address, data, soundlatch, soundcontrol);
 		return;
 	}
 
@@ -106,28 +104,19 @@ static void __fastcall efdt_main_write(UINT16 address, UINT8 data)
 		DrvVidRegs[1][address & 0xf] = data;
 		return;
 	}
-	bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 __fastcall efdt_main_read(UINT16 address)
 {
-	//if ((address & 0xfffc) == 0x8800) {
-	if (address >= 0x8800 && address <= 0x8803) {
+	if ((address & 0xfffc) == 0x8800) {
 		return DrvSoundRegs[address & 3];
 	}
 
-   /* if ((address & 0xfc00) == 0x9000) {
+	if ((address & 0xfc00) == 0x9000) {
 		return DrvInputs[0];
 	}
 
 	if ((address & 0xfc00) == 0x9400) {
-		return DrvInputs[1];
-		}*/
-	if (address >= 0x9000 && address <= 0x93ff) {
-		return DrvInputs[0];
-	}
-
-	if (address >= 0x9400 && address <= 0x97ff) {
 		return DrvInputs[1];
 	}
 
@@ -138,21 +127,12 @@ static UINT8 __fastcall efdt_main_read(UINT16 address)
 	if ((address & 0xfff0) == 0xb800) {
 		return DrvVidRegs[1][address & 0xf];
 	}
-	if (address != 0xb000)
-		bprintf (0, _T("MR: %4.4x\n"), address);
+
 	return 0xff;
 }
 
 static void efdt_sound_write(UINT16 address, UINT8 data)
 {
-	if (address <= 0x7f) {
-		DrvM6802RAM0[address&0x7f] = data;
-		return;
-	}
-	if (address >= 0x8000 && address <= 0x83ff) {
-		DrvM6802RAM1[address&0x3ff] = data;
-		return;
-	}
 	switch (address)
 	{
 		case 0x9000:
@@ -171,22 +151,10 @@ static void efdt_sound_write(UINT16 address, UINT8 data)
 			AY8910Write(1, 0, data);
 		return;
 	}
-	bprintf (0, _T("SW: %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 efdt_sound_read(UINT16 address)
 {
-	//bprintf (0, _T("SR: %4.4x\n"), address);
-	if (address >= 0 && address <= 0x7f) {
-		return DrvM6802RAM0[address&0x7f];
-	}
-	if (address >= 0x8000 && address <= 0x83ff) {
-		return DrvM6802RAM1[address&0x3ff];
-	}
-	if (address >= 0xe000 && address <= 0xffff) {
-		return DrvM6802ROM[address&0x1fff];
-	}
-	
 	switch (address)
 	{
 		case 0x9000:
@@ -213,7 +181,7 @@ static tilemap_callback( layer1 )
 }
 
 static UINT8 ay8910_soundlatch_read(UINT32)    // 0
-{   bprintf(0, _T("r:SL(%X).\n"), soundlatch);
+{
 	return soundlatch;
 }
 
@@ -222,43 +190,19 @@ static UINT8 ay8910_soundcontrol_read(UINT32)  // 1
 	return soundcontrol;
 }
 
-static void ay8910_0_write_A(UINT32, UINT32 data)
-{
-	bprintf(0, _T("ay0_write_A: %X.\n"), data);
-}
-static void ay8910_1_write_A(UINT32, UINT32 data)
-{
-	bprintf(0, _T("ay1_write_A: %X.\n"), data);
-}
-
 static void ay8910_0_write_B(UINT32, UINT32 data)
 {
-	if (!(data == 0xfd || data == 0xf5))
-	{
-//		int a = 1;
-	}
-
-	if(data & 4)
-		soundcontrol &= ~2;
-
-//	if (data & 8)
- //   	soundcontrol &= ~1;
-	//if (data==0xff) return;
-   // if (data & 0x04) soundcontrol &= ~2; //0xfd;
+	if (data & 0x04) soundcontrol &= ~2;
 }
 
 static void ay8910_1_write_B(UINT32, UINT32 data)
 {
-    //if (data==0xff) return;
 	soundcontrol = data;
 }
 
 static INT32 DrvDoReset()
 {
 	memset (AllRam, 0, RamEnd - AllRam);
-
-	memset(DrvJoy1, 0, sizeof(DrvJoy1));
-	memset(DrvJoy2, 0, sizeof(DrvJoy2));
 
 	ZetOpen(0);
 	ZetReset();
@@ -268,11 +212,11 @@ static INT32 DrvDoReset()
 	M6800Reset();
 	M6800Close();
 
+	soundlatch = 0;   // AY8910Reset() fills them in - keep above!
+	soundcontrol = 0;
+
 	AY8910Reset(0);
 	AY8910Reset(1);
-
-	soundlatch = 0xff;
-	soundcontrol = 0xff;
 
 	return 0;
 }
@@ -380,23 +324,21 @@ static INT32 DrvInit()
 
 	M6800Init(1); // M6802!
 	M6800Open(0);
-	//M6800MapMemory(DrvM6802RAM0,		0x0000, 0x00ff, MAP_RAM);
-	//M6800MapMemory(DrvM6802RAM1,		0x8000, 0x83ff, MAP_RAM);
-	//M6800MapMemory(DrvM6802ROM,			0xe000, 0xffff, MAP_ROM);
+	M6800MapMemory(DrvM6802RAM0,		0x0000, 0x00ff, MAP_RAM);
+	M6800MapMemory(DrvM6802RAM1,		0x8000, 0x83ff, MAP_RAM);
+	M6800MapMemory(DrvM6802ROM,			0xe000, 0xffff, MAP_ROM);
 	M6800SetWriteHandler(efdt_sound_write);
 	M6800SetReadHandler(efdt_sound_read);
-	M6800SetReadOpHandler(efdt_sound_read);
-	M6800SetReadOpArgHandler(efdt_sound_read);
 	M6800Close();
 
 	AY8910Init(0, 1789750, 0);
 	AY8910SetPorts(0, &ay8910_soundlatch_read,   &ay8910_soundcontrol_read,
-				      ay8910_0_write_A,          &ay8910_0_write_B);
+				      NULL,                      &ay8910_0_write_B);
 	AY8910SetAllRoutes(0, 0.55, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(1, 1789750, 1);
 	AY8910SetPorts(1, &ay8910_soundcontrol_read, &ay8910_soundcontrol_read,
-				      ay8910_1_write_A,          &ay8910_1_write_B);
+				      NULL,                      &ay8910_1_write_B);
 	AY8910SetAllRoutes(1, 0.55, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
@@ -534,9 +476,8 @@ static INT32 DrvFrame()
 
 	}
 
-	INT32 MULT = 4;
-	INT32 nInterleave = 256*MULT;
-	INT32 m68H = nInterleave / 7;
+	INT32 nInterleave = 256;
+	INT32 m6800I = nInterleave / 7;
 
 	INT32 nCyclesTotal[2] = { 3072000 / 60, 3579500 / 4 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
@@ -549,32 +490,30 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 
-		if (i == 240*MULT) ZetNmi();
+		if (i == 240) ZetNmi();
 
 		nCyclesDone[1] += M6800Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
-		if (i%m68H == m68H-1) {
-			M6800SetIRQLine(0, CPU_IRQSTATUS_HOLD); // 7.27 per frame
+		if (i%m6800I == m6800I-1) {
+			M6800SetIRQLine(0, CPU_IRQSTATUS_HOLD); // should be 7.27 per frame (we do 7.)
 		}
 
-	 /*   // Render Sound Segment
-		if (pBurnSoundOut && (i%16)==15) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/16);
+		// Render Sound Segment
+		if (pBurnSoundOut && (i%8)==7) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			AY8910Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
-		}*/
+		}
 	}
 
-/*	// Make sure the buffer is entirely filled.
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			AY8910Render(pSoundBuf, nSegmentLength);
 		}
-		}*/
-	if (pBurnSoundOut)
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+	}
 
 	M6800Close();
 	ZetClose();

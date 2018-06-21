@@ -86,7 +86,6 @@ void m6801_init();
 void nsc8105_init();
 
 void m6800_reset(void);
-void m6800_reset_hard(void);
 int m6800_get_pc();
 void m6800_get_context(void *dst);
 void m6800_set_context(void *src);

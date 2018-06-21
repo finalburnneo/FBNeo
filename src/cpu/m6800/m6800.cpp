@@ -231,7 +231,6 @@ static m6800_Regs m6800;
 #define CLR_HNZC	CC&=0xd2
 #define CLR_NZVC	CC&=0xf0
 #define CLR_Z		CC&=0xfb
-#define CLR_NZC 	CC&=0xf2
 #define CLR_ZC		CC&=0xfa
 #define CLR_C		CC&=0xfe
 
@@ -564,18 +563,6 @@ void m6800_reset(void)
 	m6800.ram_ctrl |= 0x40;
 }
 
-void m6800_reset_hard(void)
-{
-	// save pointers, clear context, restore pointers
-	void (* const * insn)(void) = m6800.insn;
-	const UINT8 *cycles = m6800.cycles;
-	//memset(&m6800, 0, sizeof(m6800));
-	m6800.insn = insn;
-	m6800.cycles = cycles;
-
-	m6800_reset();
-}
-
 int m6800_get_pc()
 {
 	return PC;
@@ -676,7 +663,7 @@ int m6800_execute(int cycles)
 
 	do
 	{
-		if( m6800.wai_state & M6800_WAI )
+		if( m6800.wai_state & (M6800_WAI|M6800_SLP) )
 		{
 			EAT_CYCLES;
 		}

@@ -107,8 +107,6 @@ M6800_INLINE void eorb_di(void);
 M6800_INLINE void eorb_ex(void);
 M6800_INLINE void eorb_im(void);
 M6800_INLINE void eorb_ix(void);
-//M6800_INLINE void illegal(void);
-static void illegal(void);
 static void illegl1(void);
 static void illegl2(void);
 static void illegl3(void);

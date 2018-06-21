@@ -16,22 +16,23 @@ HNZVC
 
 #define OP_HANDLER(_name) static void _name ()
 
+//OP_HANDLER( illegl1 )
 OP_HANDLER( illegl1 )
 {
-	//logerror("m6800: illegal 1-byte opcode: address %04X, op %02X\n",PC-1,(int) M6800_RDOP_ARG(PC-1)&0xFF);
+	//logerror("m6800: illegal 1-byte opcode: address %04X, op %02X\n",PC-1,(int) M_RDOP_ARG(PC-1)&0xFF);
 }
 
 //OP_HANDLER( illegl2 )
 OP_HANDLER( illegl2 )
 {
-	//logerror("m6800: illegal 2-byte opcode: address %04X, op %02X\n",PC-1,(int) M6800_RDOP_ARG(PC-1)&0xFF);
+	//logerror("m6800: illegal 2-byte opcode: address %04X, op %02X\n",PC-1,(int) M_RDOP_ARG(PC-1)&0xFF);
 	PC++;
 }
 
 //OP_HANDLER( illegl3 )
 OP_HANDLER( illegl3 )
 {
-	//logerror("m6800: illegal 3-byte opcode: address %04X, op %02X\n",PC-1,(int) M6800_RDOP_ARG(PC-1)&0xFF);
+	//logerror("m6800: illegal 3-byte opcode: address %04X, op %02X\n",PC-1,(int) M_RDOP_ARG(PC-1)&0xFF);
 	PC += 2;
 }
 
@@ -39,7 +40,7 @@ OP_HANDLER( illegl3 )
 //OP_HANDLER( trap )
 OP_HANDLER( trap )
 {
-	//logerror("m6800: illegal opcode: address %04X, op %02X\n",PC-1,(int) M6800_RDOP_ARG(PC-1)&0xFF);
+	//logerror("m6800: illegal opcode: address %04X, op %02X\n",PC-1,(int) M_RDOP_ARG(PC-1)&0xFF);
 	TAKE_TRAP;
 }
 
@@ -219,7 +220,7 @@ OP_HANDLER( daa )
 OP_HANDLER( slp )
 {
 	/* wait for next IRQ (same as waiting of wai) */
-	m6808.wai_state |= M6800_SLP;
+	m6800.wai_state |= M6800_SLP;
 	EAT_CYCLES;
 }
 
@@ -368,13 +369,13 @@ OP_HANDLER( ins )
 /* $32 PULA inherent ----- */
 OP_HANDLER( pula )
 {
-	PULLBYTE(m6808.d.b.h);
+	PULLBYTE(m6800.d.b.h);
 }
 
 /* $33 PULB inherent ----- */
 OP_HANDLER( pulb )
 {
-	PULLBYTE(m6808.d.b.l);
+	PULLBYTE(m6800.d.b.l);
 }
 
 /* $34 DES inherent ----- */
@@ -392,13 +393,13 @@ OP_HANDLER( txs )
 /* $36 PSHA inherent ----- */
 OP_HANDLER( psha )
 {
-	PUSHBYTE(m6808.d.b.h);
+	PUSHBYTE(m6800.d.b.h);
 }
 
 /* $37 PSHB inherent ----- */
 OP_HANDLER( pshb )
 {
-	PUSHBYTE(m6808.d.b.l);
+	PUSHBYTE(m6800.d.b.l);
 }
 
 /* $38 PULX inherent ----- */
@@ -453,14 +454,14 @@ OP_HANDLER( wai )
 	 * WAI stacks the entire machine state on the
 	 * hardware stack, then waits for an interrupt.
 	 */
-	m6808.wai_state |= M6800_WAI;
+	m6800.wai_state |= M6800_WAI;
 	PUSHWORD(pPC);
 	PUSHWORD(pX);
 	PUSHBYTE(A);
 	PUSHBYTE(B);
 	PUSHBYTE(CC);
 	CHECK_IRQ_LINES();
-	if (m6808.wai_state & M6800_WAI) EAT_CYCLES;
+	if (m6800.wai_state & M6800_WAI) EAT_CYCLES;
 }
 
 /* $3f SWI absolute indirect ----- */
@@ -1116,7 +1117,7 @@ OP_HANDLER( bsr )
 /* $8e LDS immediate -**0- */
 OP_HANDLER( lds_im )
 {
-	IMMWORD(m6808.s);
+	IMMWORD(m6800.s);
 	CLR_NZV;
 	SET_NZ16(S);
 }
@@ -1127,7 +1128,7 @@ OP_HANDLER( sts_im )
 	CLR_NZV;
 	SET_NZ16(S);
 	IMM16;
-	WM16(EAD,&m6808.s);
+	WM16(EAD,&m6800.s);
 }
 
 /* $90 SUBA direct ?**** */
@@ -1283,7 +1284,7 @@ OP_HANDLER( jsr_di )
 /* $9e LDS direct -**0- */
 OP_HANDLER( lds_di )
 {
-	DIRWORD(m6808.s);
+	DIRWORD(m6800.s);
 	CLR_NZV;
 	SET_NZ16(S);
 }
@@ -1294,7 +1295,7 @@ OP_HANDLER( sts_di )
 	CLR_NZV;
 	SET_NZ16(S);
 	DIRECT;
-	WM16(EAD,&m6808.s);
+	WM16(EAD,&m6800.s);
 }
 
 /* $a0 SUBA indexed ?**** */
@@ -1458,7 +1459,7 @@ OP_HANDLER( jsr_ix )
 /* $ae LDS indexed -**0- */
 OP_HANDLER( lds_ix )
 {
-	IDXWORD(m6808.s);
+	IDXWORD(m6800.s);
 	CLR_NZV;
 	SET_NZ16(S);
 }
@@ -1469,7 +1470,7 @@ OP_HANDLER( sts_ix )
 	CLR_NZV;
 	SET_NZ16(S);
 	INDEXED;
-	WM16(EAD,&m6808.s);
+	WM16(EAD,&m6800.s);
 }
 
 /* $b0 SUBA extended ?**** */
@@ -1635,7 +1636,7 @@ OP_HANDLER( jsr_ex )
 /* $be LDS extended -**0- */
 OP_HANDLER( lds_ex )
 {
-	EXTWORD(m6808.s);
+	EXTWORD(m6800.s);
 	CLR_NZV;
 	SET_NZ16(S);
 }
@@ -1646,7 +1647,7 @@ OP_HANDLER( sts_ex )
 	CLR_NZV;
 	SET_NZ16(S);
 	EXTENDED;
-	WM16(EAD,&m6808.s);
+	WM16(EAD,&m6800.s);
 }
 
 /* $c0 SUBB immediate ?**** */
@@ -1779,7 +1780,7 @@ OP_HANDLER( addb_im )
 /* $CC LDD immediate -**0- */
 OP_HANDLER( ldd_im )
 {
-	IMMWORD(m6808.d);
+	IMMWORD(m6800.d);
 	CLR_NZV;
 	SET_NZ16(D);
 }
@@ -1791,13 +1792,13 @@ OP_HANDLER( std_im )
 	IMM16;
 	CLR_NZV;
 	SET_NZ16(D);
-	WM16(EAD,&m6808.d);
+	WM16(EAD,&m6800.d);
 }
 
 /* $ce LDX immediate -**0- */
 OP_HANDLER( ldx_im )
 {
-	IMMWORD(m6808.x);
+	IMMWORD(m6800.x);
 	CLR_NZV;
 	SET_NZ16(X);
 }
@@ -1808,7 +1809,7 @@ OP_HANDLER( stx_im )
 	CLR_NZV;
 	SET_NZ16(X);
 	IMM16;
-	WM16(EAD,&m6808.x);
+	WM16(EAD,&m6800.x);
 }
 
 /* $d0 SUBB direct ?**** */
@@ -1940,7 +1941,7 @@ OP_HANDLER( addb_di )
 /* $dc LDD direct -**0- */
 OP_HANDLER( ldd_di )
 {
-	DIRWORD(m6808.d);
+	DIRWORD(m6800.d);
 	CLR_NZV;
 	SET_NZ16(D);
 }
@@ -1951,13 +1952,13 @@ OP_HANDLER( std_di )
 	DIRECT;
 	CLR_NZV;
 	SET_NZ16(D);
-	WM16(EAD,&m6808.d);
+	WM16(EAD,&m6800.d);
 }
 
 /* $de LDX direct -**0- */
 OP_HANDLER( ldx_di )
 {
-	DIRWORD(m6808.x);
+	DIRWORD(m6800.x);
 	CLR_NZV;
 	SET_NZ16(X);
 }
@@ -1968,7 +1969,7 @@ OP_HANDLER( stx_di )
 	CLR_NZV;
 	SET_NZ16(X);
 	DIRECT;
-	WM16(EAD,&m6808.x);
+	WM16(EAD,&m6800.x);
 }
 
 /* $e0 SUBB indexed ?**** */
@@ -2100,7 +2101,7 @@ OP_HANDLER( addb_ix )
 /* $ec LDD indexed -**0- */
 OP_HANDLER( ldd_ix )
 {
-	IDXWORD(m6808.d);
+	IDXWORD(m6800.d);
 	CLR_NZV;
 	SET_NZ16(D);
 }
@@ -2124,13 +2125,13 @@ OP_HANDLER( std_ix )
 	INDEXED;
 	CLR_NZV;
 	SET_NZ16(D);
-	WM16(EAD,&m6808.d);
+	WM16(EAD,&m6800.d);
 }
 
 /* $ee LDX indexed -**0- */
 OP_HANDLER( ldx_ix )
 {
-	IDXWORD(m6808.x);
+	IDXWORD(m6800.x);
 	CLR_NZV;
 	SET_NZ16(X);
 }
@@ -2141,7 +2142,7 @@ OP_HANDLER( stx_ix )
 	CLR_NZV;
 	SET_NZ16(X);
 	INDEXED;
-	WM16(EAD,&m6808.x);
+	WM16(EAD,&m6800.x);
 }
 
 /* $f0 SUBB extended ?**** */
@@ -2273,7 +2274,7 @@ OP_HANDLER( addb_ex )
 /* $fc LDD extended -**0- */
 OP_HANDLER( ldd_ex )
 {
-	EXTWORD(m6808.d);
+	EXTWORD(m6800.d);
 	CLR_NZV;
 	SET_NZ16(D);
 }
@@ -2297,13 +2298,13 @@ OP_HANDLER( std_ex )
 	EXTENDED;
 	CLR_NZV;
 	SET_NZ16(D);
-	WM16(EAD,&m6808.d);
+	WM16(EAD,&m6800.d);
 }
 
 /* $fe LDX extended -**0- */
 OP_HANDLER( ldx_ex )
 {
-	EXTWORD(m6808.x);
+	EXTWORD(m6800.x);
 	CLR_NZV;
 	SET_NZ16(X);
 }
@@ -2314,7 +2315,7 @@ OP_HANDLER( stx_ex )
 	CLR_NZV;
 	SET_NZ16(X);
 	EXTENDED;
-	WM16(EAD,&m6808.x);
+	WM16(EAD,&m6800.x);
 }
 
 /* NSC8105 specific, guessed opcodes (tested by Night Gal Summer) */
@@ -2322,8 +2323,8 @@ OP_HANDLER( stx_ex )
 OP_HANDLER( btst_ix )
 {
 	UINT8 val;
-	UINT8 mask = M6800_RDOP_ARG(PCD);
-	{EA=X+(M6800_RDOP_ARG(PCD+1));PC+=2;}
+	UINT8 mask = M_RDOP_ARG(PCD);
+	{EA=X+(M_RDOP_ARG(PCD+1));PC+=2;}
 	val = RM(EAD) & mask;
 	CLR_NZVC; SET_NZ8(val);
 }

@@ -1373,7 +1373,7 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	HD63701Reset();
 	if (clear_mem) {
 		HD63701MapMemory(NULL, 0x4000, 0xbfff, MAP_ROM);
-		m6800_reset_hard(); // HD63701
+		//m6800_reset_hard(); // HD63701
 	}
 //	HD63701Close();
 

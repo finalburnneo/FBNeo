@@ -2375,7 +2375,7 @@ static INT32 BtimeFrame()
 		nSegment = ((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1];
 		nCyclesDone[1] += M6502Run(nSegment);
 
-		if ((i+1)%8 == 7)
+		if ((i%8) == 7)
 		{
 			audio_nmi_state = (i+1) & 8;
 			M6502SetIRQLine(0x20, (audio_nmi_enable && audio_nmi_state) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);

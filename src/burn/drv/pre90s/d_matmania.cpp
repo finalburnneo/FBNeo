@@ -75,7 +75,7 @@ STDINPUTINFO(Matmania)
 
 static struct BurnDIPInfo MatmaniaDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xdf, NULL					},
+	{0x11, 0xff, 0xff, 0x5f, NULL					},
 	{0x12, 0xff, 0xff, 0xfe, NULL					},
 	
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
@@ -119,7 +119,7 @@ STDDIPINFO(Matmania)
 
 static struct BurnDIPInfo ManiachDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0xdf, NULL					},
+	{0x11, 0xff, 0xff, 0x5f, NULL					},
 	{0x12, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
@@ -163,7 +163,6 @@ STDDIPINFO(Maniach)
 
 static void matmania_main_write(UINT16 address, UINT8 data)
 {
-//	bprintf (0, _T("mw: %4.4x, %2.2x\n"), address, data);
 	if (address >= 0x3050 && address <= 0x307f) {
 		DrvPalRAM[address - 0x3050] = data;
 		return;
@@ -179,12 +178,12 @@ static void matmania_main_write(UINT16 address, UINT8 data)
 			soundlatch = data;
 			if (maniach) {
 				M6809Open(0);
-				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				M6809Close();
 			} else {
 				M6502Close();
 				M6502Open(1);
-				M6502SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 				M6502Close();
 				M6502Open(0);
 			}
@@ -206,8 +205,6 @@ static void matmania_main_write(UINT16 address, UINT8 data)
 
 static UINT8 matmania_main_read(UINT16 address)
 {
-//	if (address!=0x3030)bprintf (0, _T("mr: %4.4x\n"), address);
-	
 	switch (address)
 	{
 		case 0x3000:
@@ -237,7 +234,6 @@ static UINT8 matmania_main_read(UINT16 address)
 
 static void matmania_sound_write(UINT16 address, UINT8 data)
 {
-	bprintf (0, _T("SW: %4.4x, %2.2x\n"), address, data);
 	switch (address)
 	{
 		case 0x2000:
@@ -257,14 +253,13 @@ static void matmania_sound_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0x2004:
-			DACWrite(0, data);
+			DACSignedWrite(0, data);
 		return;
 	}
 }
 
 static void maniach_sound_write(UINT16 address, UINT8 data)
 {
-	bprintf (0, _T("SW: %4.4x, %2.2x\n"), address, data);
 	switch (address)
 	{
 		case 0x2000:
@@ -272,24 +267,18 @@ static void maniach_sound_write(UINT16 address, UINT8 data)
 			BurnYM3526Write(address & 1, data);
 		return;
 
-		case 0x2004:
-			DACWrite(0, data);
+		case 0x2002:
+			DACSignedWrite(0, data);
 		return;
 	}
 }
 
 static UINT8 matmania_sound_read(UINT16 address)
 {
-	bprintf (0, _T("SR: %4.4x sl: %2.2x\n"), address, soundlatch);
-	
 	switch (address)
 	{
 		case 0x2004:
-			M6809SetIRQLine(0, CPU_IRQSTATUS_NONE);
-			return soundlatch;
-
 		case 0x2007:
-			M6502SetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 
@@ -298,12 +287,7 @@ static UINT8 matmania_sound_read(UINT16 address)
 
 inline static void DrvYM3526IRQHandler(INT32, INT32 nStatus)
 {
-	M6809SetIRQLine(1/*FIRQ*/, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);	
-}
-
-static INT32 SynchroniseStream(INT32 nSoundRate)
-{
-	return (INT64)M6809TotalCycles() * nSoundRate / 1500000;
+	M6809SetIRQLine(1/*FIRQ*/, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static tilemap_callback( maniach_bg0 )
@@ -311,7 +295,7 @@ static tilemap_callback( maniach_bg0 )
 	offs ^= 0x1e0;
 	INT32 attr = DrvColRAM0[offs];
 	INT32 code = DrvVidRAM0[offs] + ((attr & 0x03) << 8);
-	INT32 color = (attr & 0x30) >> 4; // & 3
+	INT32 color = attr >> 4; // & 3
 	INT32 flipy = offs & 0x10;
 
 	TILE_SET_INFO(0, code, color, flipy ? TILE_FLIPY : 0);
@@ -322,7 +306,7 @@ static tilemap_callback( maniach_bg1 )
 	offs ^= 0x1e0;
 	INT32 attr = DrvColRAM2[offs];
 	INT32 code = DrvVidRAM2[offs] + ((attr & 0x03) << 8);
-	INT32 color = (attr & 0x30) >> 4; // & 3
+	INT32 color = attr >> 4; // & 3
 	INT32 flipy = offs & 0x10;
 
 	TILE_SET_INFO(0, code, color, flipy ? TILE_FLIPY : 0);
@@ -593,7 +577,7 @@ static INT32 DrvInit(INT32 game)
 
 	M6502Init(0, TYPE_M6502);
 	M6502Open(0);
-	M6502MapMemory(DrvMainRAM,			0x0000, 0x07ff, MAP_RAM); // sparram = 0x780 - 0x7df
+	M6502MapMemory(DrvMainRAM,			0x0000, 0x07ff, MAP_RAM); // spriteram = 0x780 - 0x7df
 	M6502MapMemory(DrvVidRAM1,			0x1000, 0x13ff, MAP_RAM);
 	M6502MapMemory(DrvColRAM1,			0x1400, 0x17ff, MAP_RAM);
 	M6502MapMemory(DrvVidRAM0,			0x2000, 0x21ff, MAP_RAM);
@@ -633,13 +617,13 @@ static INT32 DrvInit(INT32 game)
 	M6809Close();
 
 	// maniach
-	BurnYM3526Init(3600000, DrvYM3526IRQHandler, &SynchroniseStream, 0);
+	BurnYM3526Init(3600000, DrvYM3526IRQHandler, 0);
 	BurnTimerAttachYM3526(&M6809Config, 1500000);
 	BurnYM3526SetRoute(BURN_SND_YM3526_ROUTE, 1.00, BURN_SND_ROUTE_BOTH);
 
 	// both
 	DACInit(0, 0, 1, (maniach) ? M6809TotalCycles : M6502TotalCycles, (maniach) ? 1500000 : 1200000);
-	DACSetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
+	DACSetRoute(0, 0.40, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_COLS, (maniach) ? maniach_bg0_map_callback : bg0_map_callback, 16, 16, 16, 32);
@@ -786,7 +770,8 @@ static INT32 DrvFrame()
 		if (maniach)
 		{
 			M6809Open(0);
-			nCyclesDone[1] += M6809Run(nCyclesTotal[0] / nInterleave);
+			BurnTimerUpdateYM3526((i + 1) * (nCyclesTotal[0] / nInterleave));
+
 			M6809Close();
 
 			m6805Open(0);
@@ -800,6 +785,11 @@ static INT32 DrvFrame()
 			if ((i & 15) == 15) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
 		}
+	}
+	if (maniach) {
+		M6809Open(0);
+		BurnTimerEndFrameYM3526(nCyclesTotal[0]);
+		M6809Close();
 	}
 
 	if (pBurnSoundOut) {

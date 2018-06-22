@@ -75,7 +75,7 @@ STDINPUTINFO(Matmania)
 
 static struct BurnDIPInfo MatmaniaDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x9f, NULL					},
+	{0x11, 0xff, 0xff, 0xdf, NULL					},
 	{0x12, 0xff, 0xff, 0xfe, NULL					},
 	
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
@@ -99,8 +99,8 @@ static struct BurnDIPInfo MatmaniaDIPList[]=
 	{0x11, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x40, 0x00, "Off"					},
-	{0x11, 0x01, 0x40, 0x40, "On"					},
+	{0x11, 0x01, 0x40, 0x40, "Off"					},
+	{0x11, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
 	{0x12, 0x01, 0x03, 0x03, "Easy"					},
@@ -119,7 +119,7 @@ STDDIPINFO(Matmania)
 
 static struct BurnDIPInfo ManiachDIPList[]=
 {
-	{0x11, 0xff, 0xff, 0x9f, NULL					},
+	{0x11, 0xff, 0xff, 0xdf, NULL					},
 	{0x12, 0xff, 0xff, 0xff, NULL					},
 
 	{0   , 0xfe, 0   ,    4, "Coin A"				},
@@ -143,8 +143,8 @@ static struct BurnDIPInfo ManiachDIPList[]=
 	{0x11, 0x01, 0x20, 0x20, "Cocktail"				},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x11, 0x01, 0x40, 0x00, "Off"					},
-	{0x11, 0x01, 0x40, 0x40, "On"					},
+	{0x11, 0x01, 0x40, 0x40, "Off"					},
+	{0x11, 0x01, 0x40, 0x00, "On"					},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"			},
 	{0x12, 0x01, 0x03, 0x03, "Easy"					},
@@ -311,7 +311,7 @@ static tilemap_callback( maniach_bg0 )
 	offs ^= 0x1e0;
 	INT32 attr = DrvColRAM0[offs];
 	INT32 code = DrvVidRAM0[offs] + ((attr & 0x03) << 8);
-	INT32 color = attr >> 4; // & 3
+	INT32 color = (attr & 0x30) >> 4; // & 3
 	INT32 flipy = offs & 0x10;
 
 	TILE_SET_INFO(0, code, color, flipy ? TILE_FLIPY : 0);
@@ -322,7 +322,7 @@ static tilemap_callback( maniach_bg1 )
 	offs ^= 0x1e0;
 	INT32 attr = DrvColRAM2[offs];
 	INT32 code = DrvVidRAM2[offs] + ((attr & 0x03) << 8);
-	INT32 color = attr >> 4; // & 3
+	INT32 color = (attr & 0x30) >> 4; // & 3
 	INT32 flipy = offs & 0x10;
 
 	TILE_SET_INFO(0, code, color, flipy ? TILE_FLIPY : 0);
@@ -797,7 +797,7 @@ static INT32 DrvFrame()
 		{
 			M6502Open(1);
 			nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
-			if ((i & 15) == 15) M6502SetIRQLine(0x20, CPU_IRQSTATUS_HOLD);
+			if ((i & 15) == 15) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
 		}
 	}
@@ -912,10 +912,10 @@ struct BurnDriver BurnDrvMatmania = {
 	"matmania", NULL, NULL, NULL, "1985",
 	"Mat Mania\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, matmaniaRomInfo, matmaniaRomName, NULL, NULL, MatmaniaInputInfo, MatmaniaDIPInfo,
 	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
-	256, 240, 4, 3
+	240, 256, 3, 4
 };
 
 
@@ -972,10 +972,10 @@ struct BurnDriver BurnDrvExcthour = {
 	"excthour", "matmania", NULL, NULL, "1985",
 	"Exciting Hour\0", NULL, "Technos Japan (Taito license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, excthourRomInfo, excthourRomName, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	MatmaniaInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
-	256, 240, 4, 3
+	240, 256, 3, 4
 };
 
 
@@ -996,8 +996,8 @@ static struct BurnRomInfo maniachRomDesc[] = {
 	{ "mc-m70.bin",		0x2000, 0x553f0780, 4 | BRF_GRA },           //  8
 	{ "mc-m80.bin",		0x2000, 0x9392ecb7, 4 | BRF_GRA },           //  9
 
-	{ "mc-m10.bin",		0x8000, 0x619a02f8, 5 | BRF_GRA },           // 10 Tiles
-	{ "mc-m01.bin",		0x8000, 0xda558e4d, 5 | BRF_GRA },           // 11
+	{ "mc-m01.bin",		0x8000, 0xda558e4d, 5 | BRF_GRA },           // 10 Tiles
+	{ "mc-m10.bin",		0x8000, 0x619a02f8, 5 | BRF_GRA },           // 11
 	{ "mc-m20.bin",		0x8000, 0xa617c6c1, 5 | BRF_GRA },           // 12
 	
 	{ "mc-mq0.bin",		0x4000, 0x102a1666, 6 | BRF_GRA },           // 13 Sprites
@@ -1045,10 +1045,10 @@ struct BurnDriver BurnDrvManiach = {
 	"maniach", NULL, NULL, NULL, "1986",
 	"Mania Challenge (set 1)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, maniachRomInfo, maniachRomName, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
-	256, 240, 4, 3
+	240, 256, 3, 4
 };
 
 
@@ -1113,8 +1113,8 @@ struct BurnDriver BurnDrvManiach2 = {
 	"maniach2", "maniach", NULL, NULL, "1986",
 	"Mania Challenge (set 2)\0", NULL, "Technos Japan (Taito America license)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_VSFIGHT, 0,
 	NULL, maniach2RomInfo, maniach2RomName, NULL, NULL, MatmaniaInputInfo, ManiachDIPInfo,
 	ManiachInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x50,
-	256, 240, 4, 3
+	240, 256, 3, 4
 };

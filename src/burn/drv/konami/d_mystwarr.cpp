@@ -2844,8 +2844,10 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 60;
+	//INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
 	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606), (INT32)((double)8000000 / 59.185606) };
 	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 drawn = 0;
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -2857,15 +2859,10 @@ static INT32 DrvFrame()
 			{
 				if (i == 0)
 					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
-
-				if (i == ((nInterleave * 240)/256)) {
+				// note: mystwarr is really picky.
+				// draw @ vbl: weird flickers between scene transitions in attract sequence, so we draw at end of frame instead.
+				if (i == ((nInterleave * (240+10))/256)) { // +10 otherwise flickers on char.selection screen (mystwarr)
 					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
-				}
-			}
-
-			if (i == ((nInterleave * 240)/256)) {
-				if (pBurnDraw) {
-					DrvDraw();
 				}
 			}
 		}
@@ -2883,7 +2880,9 @@ static INT32 DrvFrame()
 					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
 
 				if (pBurnDraw) {
+					// draw here to fix flickery and missing text in service mode
 					DrvDraw();
+					drawn = 1;
 				}
 			}
 		}
@@ -2902,6 +2901,7 @@ static INT32 DrvFrame()
 			if (i == ((nInterleave * 247) / 256)) {
 				if (pBurnDraw) {
 					DrvDraw();
+					drawn = 1;
 				}
 			}
 		}
@@ -2913,6 +2913,7 @@ static INT32 DrvFrame()
 
 				if (pBurnDraw) {
 					DrvDraw();
+					drawn = 1;
 				}
 			}
 		}
@@ -2933,6 +2934,12 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
+
+	if (!drawn) {
+		if (pBurnDraw) {
+			DrvDraw();
+		}
+	}
 
 	return 0;
 }

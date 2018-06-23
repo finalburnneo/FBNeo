@@ -989,7 +989,7 @@ void DisplayReplayProperties(HWND hDlg, bool bClear)
 		sprintf(szFramesString, "%d", nFrames);
 		sprintf(szLengthString, "%02d:%02d:%02d", nHours, nMinutes % 60, nSeconds % 60);
 		sprintf(szUndoCountString, "%d", nUndoCount);
-		sprintf(szRecordedFrom, "v%x.%x.%x.%02x, %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, (bStartFromReset) ? "Power-On" : "Savestate");
+		sprintf(szRecordedFrom, "v%x.%x.%x.%02x, %s", nFileVer >> 20, (nFileVer >> 16) & 0x0F, (nFileVer >> 8) & 0xFF, nFileVer & 0xFF, (bStartFromReset) ? "Power-On" : "Savestate");
 
 		SetDlgItemTextA(hDlg, IDC_LENGTH, szLengthString);
 		SetDlgItemTextA(hDlg, IDC_FRAMES, szFramesString);

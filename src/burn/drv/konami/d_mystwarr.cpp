@@ -2844,15 +2844,13 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 60;
-	INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606), (INT32)((double)8000000 / 59.185606) };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		INT32 nNext, nCyclesSegment;
-
 		if (nGame == 1)
 		{
 			if (mw_irq_control & 1)
@@ -2860,8 +2858,15 @@ static INT32 DrvFrame()
 				if (i == 0)
 					SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-				if (i == ((nInterleave * (240+10))/256)) // +10 otherwise flickers on char.selection screen (mystwarr)
+				if (i == ((nInterleave * 240)/256)) {
 					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
+				}
+			}
+
+			if (i == ((nInterleave * 240)/256)) {
+				if (pBurnDraw) {
+					DrvDraw();
+				}
 			}
 		}
 
@@ -2873,8 +2878,14 @@ static INT32 DrvFrame()
 			if (i == ((nInterleave *  24) / 256))
 				SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 
-			if (i == ((nInterleave * 248) / 256) && K053246_is_IRQ_enabled())
-				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+			if (i == ((nInterleave * 248) / 256)) {
+				if (K053246_is_IRQ_enabled())
+					SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+
+				if (pBurnDraw) {
+					DrvDraw();
+				}
+			}
 		}
 
 		if (nGame == 4) // martchmp
@@ -2884,27 +2895,30 @@ static INT32 DrvFrame()
 				if (i == ((nInterleave *  23) / 256))
 					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
-				if (i == ((nInterleave *  47) / 256) && K053246_is_IRQ_enabled())
+				if (i == ((nInterleave * 247) / 256) && K053246_is_IRQ_enabled())
 					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
+			}
+
+			if (i == ((nInterleave * 247) / 256)) {
+				if (pBurnDraw) {
+					DrvDraw();
+				}
 			}
 		}
 
 		if (nGame == 5 || nGame == 6)
 		{
-			if (i == (nInterleave - 1))
+			if (i == (nInterleave - 1)) {
 				SekSetIRQLine(5, CPU_IRQSTATUS_AUTO);
+
+				if (pBurnDraw) {
+					DrvDraw();
+				}
+			}
 		}
 
-		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[0];
-		nCyclesSegment = SekRun(nCyclesSegment);
-		nCyclesDone[0] += nCyclesSegment;
-
-
-		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
-		nCyclesSegment = nNext - nCyclesDone[1];
-		nCyclesSegment = ZetRun(nCyclesSegment);
-		nCyclesDone[1] += nCyclesSegment;
+		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
 		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {// && sound_nmi_enable && sound_control) { // iq_132
 			ZetNmi();
@@ -2919,10 +2933,6 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
 
 	return 0;
 }

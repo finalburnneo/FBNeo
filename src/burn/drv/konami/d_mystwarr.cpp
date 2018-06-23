@@ -79,6 +79,7 @@ static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
 static UINT8 DrvJoy4[16];
 static UINT8 DrvJoy5[16];
+static UINT8 DrvService[1];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[6];
 static UINT8 DrvDips[2];
@@ -92,292 +93,289 @@ static INT32 z80_bank;
 static INT32 nGame = 0;
 
 static struct BurnInputInfo MystwarrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy3 + 8,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
 
-	{"P3 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"},
+	{"P3 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p3 coin"},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
+	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
+	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
+	{"P3 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
 
-	{"P4 Coin",		BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
+	{"P4 Coin",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p4 coin"},
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
+	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
+	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
+	{"P4 Left",		    BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip B",		    BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
 };
 
 STDINPUTINFO(Mystwarr)
 
 static struct BurnInputInfo MetamrphInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
 
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"},
+	{"P3 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
+	{"P3 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
+	{"P3 Left",		    BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 right"},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p3 fire 1"},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
 
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
+	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
+	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
+	{"P4 Left",		    BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service 1",	BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
-	{"Service 2",	BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
+	{"Service 1",	    BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
+	{"Service 2",	    BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(Metamrph)
 
 static struct BurnInputInfo ViostormInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
 
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"},
+	{"P3 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
+	{"P3 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
+	{"P3 Left",		    BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 right"},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p3 fire 1"},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
 
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
+	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
+	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
+	{"P4 Left",		    BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(Viostorm)
 
 static struct BurnInputInfo DadandrnInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 8,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy1 + 2,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 9,	"p2 coin"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 9,	"p2 coin"},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p2 left"},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 right"},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p2 fire 1"},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p2 fire 2"},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p2 fire 3"},
 
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
+	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
+	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
+	{"P3 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
 	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
 	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
 	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
 
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy5 + 7,	"p4 start"},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy5 + 2,	"p4 up"},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy5 + 3,	"p4 down"},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy5 + 0,	"p4 left"},
+	{"P4 Up",		    BIT_DIGITAL,	DrvJoy5 + 2,	"p4 up"},
+	{"P4 Down",		    BIT_DIGITAL,	DrvJoy5 + 3,	"p4 down"},
+	{"P4 Left",		    BIT_DIGITAL,	DrvJoy5 + 0,	"p4 left"},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy5 + 1,	"p4 right"},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy5 + 4,	"p4 fire 1"},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy5 + 5,	"p4 fire 2"},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy5 + 6,	"p4 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 12,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(Dadandrn)
 
 static struct BurnInputInfo MartchmpInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
+	{"P1 Coin",		    BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 7,	"p1 start"},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
+	{"P1 Up",		    BIT_DIGITAL,	DrvJoy3 + 2,	"p1 up"},
+	{"P1 Down",		    BIT_DIGITAL,	DrvJoy3 + 3,	"p1 down"},
+	{"P1 Left",		    BIT_DIGITAL,	DrvJoy3 + 0,	"p1 left"},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy3 + 1,	"p1 right"},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy3 + 4,	"p1 fire 1"},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy3 + 5,	"p1 fire 2"},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy3 + 6,	"p1 fire 3"},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
-	{"P2 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p2 start"},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 up"},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy4 + 3,	"p2 down"},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy4 + 0,	"p2 left"},
-	{"P2 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 right"},
-	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p2 fire 1"},
-	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p2 fire 2"},
-	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p2 fire 3"},
+	{"P2 Coin",		    BIT_DIGITAL,	DrvJoy1 + 1,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p2 start"},
+	{"P2 Up",		    BIT_DIGITAL,	DrvJoy3 + 10,	"p2 up"},
+	{"P2 Down",		    BIT_DIGITAL,	DrvJoy3 + 11,	"p2 down"},
+	{"P2 Left",		    BIT_DIGITAL,	DrvJoy3 + 8,	"p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p2 right"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p2 fire 1"},
+	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p2 fire 2"},
+	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p2 fire 3"},
 
-	{"P3 Start",		BIT_DIGITAL,	DrvJoy3 + 15,	"p3 start"},
-	{"P3 Up",		BIT_DIGITAL,	DrvJoy3 + 10,	"p3 up"},
-	{"P3 Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p3 down"},
-	{"P3 Left",		BIT_DIGITAL,	DrvJoy3 + 8,	"p3 left"},
-	{"P3 Right",		BIT_DIGITAL,	DrvJoy3 + 9,	"p3 right"},
-	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy3 + 12,	"p3 fire 1"},
-	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy3 + 13,	"p3 fire 2"},
-	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy3 + 14,	"p3 fire 3"},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoy4 + 7,	"p3 start"},
+	{"P3 Up",		    BIT_DIGITAL,	DrvJoy4 + 2,	"p3 up"},
+	{"P3 Down",		    BIT_DIGITAL,	DrvJoy4 + 3,	"p3 down"},
+	{"P3 Left",		    BIT_DIGITAL,	DrvJoy4 + 0,	"p3 left"},
+	{"P3 Right",		BIT_DIGITAL,	DrvJoy4 + 1,	"p3 right"},
+	{"P3 Button 1",		BIT_DIGITAL,	DrvJoy4 + 4,	"p3 fire 1"},
+	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy4 + 5,	"p3 fire 2"},
+	{"P3 Button 3",		BIT_DIGITAL,	DrvJoy4 + 6,	"p3 fire 3"},
 
 	{"P4 Start",		BIT_DIGITAL,	DrvJoy4 + 15,	"p4 start"},
-	{"P4 Up",		BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
-	{"P4 Down",		BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
-	{"P4 Left",		BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
+	{"P4 Up",		    BIT_DIGITAL,	DrvJoy4 + 10,	"p4 up"},
+	{"P4 Down",		    BIT_DIGITAL,	DrvJoy4 + 11,	"p4 down"},
+	{"P4 Left",		    BIT_DIGITAL,	DrvJoy4 + 8,	"p4 left"},
 	{"P4 Right",		BIT_DIGITAL,	DrvJoy4 + 9,	"p4 right"},
 	{"P4 Button 1",		BIT_DIGITAL,	DrvJoy4 + 12,	"p4 fire 1"},
 	{"P4 Button 2",		BIT_DIGITAL,	DrvJoy4 + 13,	"p4 fire 2"},
 	{"P4 Button 3",		BIT_DIGITAL,	DrvJoy4 + 14,	"p4 fire 3"},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Reset",		    BIT_DIGITAL,	&DrvReset,	    "reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvService + 0,	"diag"},
 	{"Service 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"service"},
 	{"Service 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"service"},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
+	{"Dip A",		    BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
 };
 
 STDINPUTINFO(Martchmp)
 
 static struct BurnDIPInfo MystwarrDIPList[]=
 {
-	{0x25, 0xff, 0xff, 0xe4, NULL			},
-	{0x26, 0xff, 0xff, 0x00, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x25, 0x01, 0x04, 0x04, "Off"			},
-	{0x25, 0x01, 0x04, 0x00, "On"			},
+	{0x26, 0xff, 0xff, 0xe0, NULL			},
+	{0x27, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x25, 0x01, 0x10, 0x10, "Mono"			},
-	{0x25, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x26, 0x01, 0x10, 0x10, "Mono"			},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x25, 0x01, 0x20, 0x20, "Common"		},
-	{0x25, 0x01, 0x20, 0x00, "Independent"		},
+	{0x26, 0x01, 0x20, 0x20, "Common"		},
+	{0x26, 0x01, 0x20, 0x00, "Independent"		},
 
 	{0   , 0xfe, 0   ,    2, "Number of Players"	},
-	{0x25, 0x01, 0x40, 0x00, "4"			},
-	{0x25, 0x01, 0x40, 0x40, "2"			},
+	{0x26, 0x01, 0x40, 0x00, "4"			},
+	{0x26, 0x01, 0x40, 0x40, "2"			},
 
 	{0   , 0xfe, 0   ,    2, "Debug Alpha Mode (debug console/logfile)"		},
-	{0x26, 0x01, 0x01, 0x00, "Off"			},
-	{0x26, 0x01, 0x01, 0x01, "On"			},
+	{0x27, 0x01, 0x01, 0x00, "Off"			},
+	{0x27, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Mystwarr)
 
 static struct BurnDIPInfo MetamrphDIPList[]=
 {
-	{0x25, 0xff, 0xff, 0xe8, NULL				},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"			},
-	{0x25, 0x01, 0x08, 0x08, "Off"				},
-	{0x25, 0x01, 0x08, 0x00, "On"				},
+	{0x26, 0xff, 0xff, 0xe0, NULL				},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"			},
-	{0x25, 0x01, 0x10, 0x10, "Mono"				},
-	{0x25, 0x01, 0x10, 0x00, "Stereo"			},
+	{0x26, 0x01, 0x10, 0x10, "Mono"				},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"		},
-	{0x25, 0x01, 0x20, 0x20, "Common"			},
-	{0x25, 0x01, 0x20, 0x00, "Independent"			},
+	{0x26, 0x01, 0x20, 0x20, "Common"			},
+	{0x26, 0x01, 0x20, 0x00, "Independent"			},
 
 	{0   , 0xfe, 0   ,    2, "Number of Players"		},
-	{0x25, 0x01, 0x40, 0x00, "4"				},
-	{0x25, 0x01, 0x40, 0x40, "2"				},
+	{0x26, 0x01, 0x40, 0x00, "4"				},
+	{0x26, 0x01, 0x40, 0x40, "2"				},
 
 	{0   , 0xfe, 0   ,    2, "Continuous Energy Increment"	},
-	{0x25, 0x01, 0x80, 0x80, "No"				},
-	{0x25, 0x01, 0x80, 0x00, "Yes"				},
+	{0x26, 0x01, 0x80, 0x80, "No"				},
+	{0x26, 0x01, 0x80, 0x00, "Yes"				},
 };
 
 STDDIPINFO(Metamrph)
@@ -385,65 +383,53 @@ STDDIPINFO(Metamrph)
 
 static struct BurnDIPInfo ViostormDIPList[]=
 {
-	{0x25, 0xff, 0xff, 0xe8, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x25, 0x01, 0x08, 0x08, "Off"			},
-	{0x25, 0x01, 0x08, 0x00, "On"			},
+	{0x26, 0xff, 0xff, 0xe0, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x25, 0x01, 0x10, 0x10, "Mono"			},
-	{0x25, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x26, 0x01, 0x10, 0x10, "Mono"			},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x25, 0x01, 0x20, 0x20, "Off"			},
-	{0x25, 0x01, 0x20, 0x00, "On"			},
+	{0x26, 0x01, 0x20, 0x20, "Off"			},
+	{0x26, 0x01, 0x20, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Coin Mechanism"	},
-	{0x25, 0x01, 0x40, 0x40, "Common"		},
-	{0x25, 0x01, 0x40, 0x00, "Independent"		},
+	{0x26, 0x01, 0x40, 0x40, "Common"		},
+	{0x26, 0x01, 0x40, 0x00, "Independent"		},
 
 	{0   , 0xfe, 0   ,    2, "Number of Players"	},
-	{0x25, 0x01, 0x80, 0x00, "3"			},
-	{0x25, 0x01, 0x80, 0x80, "2"			},
+	{0x26, 0x01, 0x80, 0x00, "3"			},
+	{0x26, 0x01, 0x80, 0x80, "2"			},
 };
 
 STDDIPINFO(Viostorm)
 
 static struct BurnDIPInfo DadandrnDIPList[]=
 {
-	{0x25, 0xff, 0xff, 0xe8, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x25, 0x01, 0x08, 0x08, "Off"			},
-	{0x25, 0x01, 0x08, 0x00, "On"			},
+	{0x26, 0xff, 0xff, 0xe0, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x25, 0x01, 0x10, 0x10, "Mono"			},
-	{0x25, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x26, 0x01, 0x10, 0x10, "Mono"			},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x25, 0x01, 0x20, 0x20, "Off"			},
-	{0x25, 0x01, 0x20, 0x00, "On"			},
+	{0x26, 0x01, 0x20, 0x20, "Off"			},
+	{0x26, 0x01, 0x20, 0x00, "On"			},
 };
 
 STDDIPINFO(Dadandrn)
 
 static struct BurnDIPInfo MartchmpDIPList[]=
 {
-	{0x25, 0xff, 0xff, 0xe4, NULL			},
-
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x25, 0x01, 0x04, 0x04, "Off"			},
-	{0x25, 0x01, 0x04, 0x00, "On"			},
+	{0x26, 0xff, 0xff, 0xe0, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Sound Output"		},
-	{0x25, 0x01, 0x10, 0x10, "Mono"			},
-	{0x25, 0x01, 0x10, 0x00, "Stereo"		},
+	{0x26, 0x01, 0x10, 0x10, "Mono"			},
+	{0x26, 0x01, 0x10, 0x00, "Stereo"		},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x25, 0x01, 0x20, 0x20, "Off"			},
-	{0x25, 0x01, 0x20, 0x00, "On"			},
+	{0x26, 0x01, 0x20, 0x20, "Off"			},
+	{0x26, 0x01, 0x20, 0x00, "On"			},
 };
 
 STDDIPINFO(Martchmp)
@@ -600,7 +586,7 @@ static UINT16 __fastcall mystwarr_main_read_word(UINT32 address)
 			return DrvInputs[0] & 0xff;
 
 		case 0x496002:
-			return (DrvInputs[1] & 0xf4) | 2 | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf0) | 2 | ((DrvService[0]^1) << 0x2) | (EEPROMRead() ? 0x01 : 0);
 	}
 
 	return 0;
@@ -634,10 +620,10 @@ static UINT8 __fastcall mystwarr_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x496002:
-			return DrvInputs[1] >> 8;
+			return 0;
 
 		case 0x496003:
-			return ((DrvInputs[1]) & 0xf4) | 2 | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf0) | 2 | ((DrvService[0]^1) << 0x2) | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x498015:
 			if ((*soundlatch3 & 0xf) == 0xe) return *soundlatch3 | 1;
@@ -981,20 +967,16 @@ static UINT16 __fastcall metamrph_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0x274000:
-		case 0x274001:
 			return DrvInputs[2];
 
 		case 0x274002:
-		case 0x274003:
 			return DrvInputs[3];
 
 		case 0x278000:
-		case 0x278001:
 			return DrvInputs[0];
 
 		case 0x278002:
-		case 0x278003:
-			return (DrvInputs[1] & 0xfff8) | 2 | (EEPROMRead() ? 0x0001 : 0);
+			return (DrvInputs[1] & 0xf0) | ((DrvService[0]^1) << 0x3) | 2 | (EEPROMRead() ? 0x0001 : 0);
 	}
 
 	return 0;
@@ -1011,7 +993,7 @@ static UINT8 __fastcall metamrph_main_read_byte(UINT32 address)
 	}
 
 	if ((address & 0xffffe0) == 0x260000) {
-		bprintf (0, _T("k053252 word ro: %5.5x\n"), address);
+		//bprintf (0, _T("k053252 word ro: %5.5x\n"), address);
 		return 0;
 	}
 
@@ -1057,10 +1039,10 @@ static UINT8 __fastcall metamrph_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x278002:
-			return DrvInputs[1] >> 8;
+			return 0;
 
 		case 0x278003:
-			return (DrvInputs[1] & 0xfff8) | 2 | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf0) | ((DrvService[0]^1) << 0x3) | 2 | (EEPROMRead() ? 0x0001 : 0);
 	}
 
 	return 0;
@@ -1316,7 +1298,7 @@ static UINT16 __fastcall martchmp_main_read_word(UINT32 address)
 			return DrvInputs[0] & 0xff;
 
 		case 0x416002:
-			return (DrvInputs[1] & 0xf4) | 2 | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf0) | ((DrvService[0]^1) << 0x2) | 2 | (EEPROMRead() ? 0x01 : 0);
 	}
 
 	return 0;
@@ -1352,10 +1334,10 @@ static UINT8 __fastcall martchmp_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0x416002:
-			return DrvInputs[1] >> 8;
+			return 0;
 
 		case 0x416003:
-			return ((DrvInputs[1]) & 0xf4) | 2 | (EEPROMRead() ? 0x01 : 0);
+			return (DrvInputs[1] & 0xf0) | ((DrvService[0]^1) << 0x2) | 2 | (EEPROMRead() ? 0x01 : 0);
 
 		case 0x418015:
 			if ((*soundlatch3 & 0xf) == 0xe) return *soundlatch3 | 1;
@@ -1576,7 +1558,7 @@ static UINT16 __fastcall dadandrn_main_read_word(UINT32 address)
 			return *soundlatch3;
 
 		case 0x48e000:
-			return DrvInputs[0];
+			return ((DrvInputs[0] & ~0x0800) | ((DrvService[0]^1) << 0xb)) >> 8;
 
 		case 0x48e020:
 			return (DrvInputs[1] << 8) | (DrvInputs[2] & 0xff); // ????
@@ -1607,7 +1589,7 @@ static UINT8 __fastcall dadandrn_main_read_byte(UINT32 address)
 			return *soundlatch3;
 
 		case 0x48e000:
-			return DrvInputs[0] >> 8;
+			return ((DrvInputs[0] & ~0x0800) | ((DrvService[0]^1) << 0xb)) >> 8;
 
 		case 0x48e001:
 			return DrvInputs[0];
@@ -1616,7 +1598,7 @@ static UINT8 __fastcall dadandrn_main_read_byte(UINT32 address)
 			return (DrvInputs[1] & 0xf8) | 2 | (EEPROMRead() ? 0x0001 : 0);
 
 		case 0x48e021:
-			return (DrvInputs[2] >> 8);
+			return (DrvInputs[2] & 0xff);
 	}
 
 	return 0;
@@ -2330,7 +2312,7 @@ static INT32 MartchmpInit()
 	K056832SetLayerOffsets(3,  3-4, 0);
 
 	K053247Init(DrvGfxROM1, DrvGfxROMExp1, 0x7fffff, martchmp_sprite_callback, 3);
-	K053247SetSpriteOffset((-23-58-9), (-16-23-14));
+	K053247SetSpriteOffset((-23-58-9), (-16-23-14)+0xd);
 	K053247SetBpp(5);
 
 	konamigx_mixer_init(0);

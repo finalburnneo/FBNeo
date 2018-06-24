@@ -685,8 +685,14 @@ void PausedRedraw(void)
         INT16 *pBtemp = pBurnSoundOut;
         pBurnSoundOut = NULL; // Mute the sound as VidRedraw() draws the frame (if no driver Redraw function is available)
 
-        VidRedraw();
-        VidPaint(0);
+		// silly kludge for dx9 blitters w/ triple buffer:
+		// switching to fullscreen while paused results in a black screen until unpaused.  Let's fill up the backbuffers with the current screen.
+		INT32 nDrawCnt = (bVidTripleBuffer && nVidFullscreen && nVidSelect >= 3) ? 3 : 1;
+
+		for (INT32 i = 0; i < nDrawCnt; i++) {
+			VidRedraw();
+			VidPaint(0);
+		}
 
         pBurnSoundOut = pBtemp;
     }

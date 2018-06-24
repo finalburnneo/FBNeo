@@ -378,30 +378,30 @@ static INT32 MemIndex()
 {
 	UINT8 *Next; Next = AllMem;
 
-	DrvMainROM		= Next; Next += 0x0100000;
-	DrvSndROM		= Next; Next += 0x0100000;
-	DrvMCUROM		= Next; Next += 0x0008000;
+	DrvMainROM		= Next; Next += 0x010000;
+	DrvSndROM		= Next; Next += 0x010000;
+	DrvMCUROM		= Next; Next += 0x000800;
 
-	DrvGfxROM0		= Next; Next += 0x0100000;
-	DrvGfxROM1		= Next; Next += 0x0400000;
-	DrvGfxROM2		= Next; Next += 0x1000000;
+	DrvGfxROM0		= Next; Next += 0x010000;
+	DrvGfxROM1		= Next; Next += 0x040000;
+	DrvGfxROM2		= Next; Next += 0x100000;
 
-	DrvColPROM		= Next; Next += 0x0000c00;
+	DrvColPROM		= Next; Next += 0x0000c0;
 
-	DrvPalette		= (UINT32*)Next; Next += 0x00500 * sizeof(UINT32);
+	DrvPalette		= (UINT32*)Next; Next += 0x0050 * sizeof(UINT32);
 
 	AllRam			= Next;
 
-	DrvMainRAM		= Next; Next += 0x0008000;
-	DrvSndRAM		= Next; Next += 0x0010000;
-	DrvMCURAM		= Next; Next += 0x0008000;
-	DrvVidRAM0		= Next; Next += 0x0002000;
-	DrvVidRAM1		= Next; Next += 0x0004000;
-	DrvVidRAM2		= Next; Next += 0x0002000;
-	DrvColRAM0		= Next; Next += 0x0002000;
-	DrvColRAM1		= Next; Next += 0x0004000;
-	DrvColRAM2		= Next; Next += 0x0002000;
-	DrvPalRAM		= Next; Next += 0x0000300;
+	DrvMainRAM		= Next; Next += 0x000800;
+	DrvSndRAM		= Next; Next += 0x001000;
+	DrvMCURAM		= Next; Next += 0x000800;
+	DrvVidRAM0		= Next; Next += 0x000200;
+	DrvVidRAM1		= Next; Next += 0x000400;
+	DrvVidRAM2		= Next; Next += 0x000200;
+	DrvColRAM0		= Next; Next += 0x000200;
+	DrvColRAM1		= Next; Next += 0x000400;
+	DrvColRAM2		= Next; Next += 0x000200;
+	DrvPalRAM		= Next; Next += 0x000030;
 
 	RamEnd			= Next;
 
@@ -632,6 +632,7 @@ static INT32 DrvInit(INT32 game)
 	GenericTilemapSetGfx(0, DrvGfxROM1, 3, 16, 16, 0x20000 << maniach, 0x20, 3);
 	GenericTilemapSetGfx(1, DrvGfxROM0, 3,  8,  8, 0x10000, 0x00, 3);
 	GenericTilemapSetTransparent(2, 0);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, 0, -8);
 
 	DrvDoReset();
 
@@ -699,7 +700,7 @@ static void draw_sprites()
 			INT32 flipx = attr & 0x04;
 			INT32 flipy = attr & 0x02;
 
-			Draw16x16MaskTile(pTransDraw, code, sx, sy, flipx, flipy, color, 3, 0, 0x40, DrvGfxROM2);
+			Draw16x16MaskTile(pTransDraw, code, sx, sy-8, flipx, flipy, color, 3, 0, 0x40, DrvGfxROM2);
 		}
 	}
 }
@@ -751,9 +752,10 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 128;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[3] = { 1500000 / 60, 1200000 / 60, 3000000 / 4 / 60 };
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nSoundBufferPos = 0;
 
 	vblank = 0;
 
@@ -761,7 +763,7 @@ static INT32 DrvFrame()
 	{
 		M6502Open(0);
 		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
-		if (i == (240/2)) {
+		if (i == 248) {
 			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
 		}
@@ -782,8 +784,16 @@ static INT32 DrvFrame()
 		{
 			M6502Open(1);
 			nCyclesDone[1] += M6502Run(nCyclesTotal[1] / nInterleave);
-			if ((i & 15) == 15) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
+			if ((i % 17) == 0) M6502SetIRQLine(0x20, CPU_IRQSTATUS_AUTO);
 			M6502Close();
+
+			// Render Sound Segment
+			if (pBurnSoundOut && (i%8)==7) {
+				INT32 nSegmentLength = nBurnSoundLen / (nInterleave/8);
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				AY8910Render(pSoundBuf, nSegmentLength);
+				nSoundBufferPos += nSegmentLength;
+			}
 		}
 	}
 	if (maniach) {
@@ -799,10 +809,15 @@ static INT32 DrvFrame()
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
 			M6809Close();
 		} else {
-			M6502Open(1);
-			AY8910Render(pBurnSoundOut, nBurnSoundLen);
+			// Make sure the buffer is entirely filled.
+			if (pBurnSoundOut) {
+				INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+				if (nSegmentLength) {
+					AY8910Render(pSoundBuf, nSegmentLength);
+				}
+			}
 			DACUpdate(pBurnSoundOut, nBurnSoundLen);
-			M6502Close();
 		}
 	}
 
@@ -834,6 +849,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		m68705_taito_scan(nAction);
 		AY8910Scan(nAction, pnMin);
 		DACScan(nAction,pnMin);
+		BurnYM3526Scan(nAction,pnMin);
 
 		SCAN_VAR(pageselect);
 		SCAN_VAR(scroll);

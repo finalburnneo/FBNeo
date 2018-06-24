@@ -128,7 +128,7 @@ static UINT8 __fastcall efdt_main_read(UINT16 address)
 		return DrvVidRegs[1][address & 0xf];
 	}
 
-	return 0xff;
+	return 0x00;
 }
 
 static void efdt_sound_write(UINT16 address, UINT8 data)
@@ -164,7 +164,7 @@ static UINT8 efdt_sound_read(UINT16 address)
 			return AY8910Read(1);
 	}
 
-	return 0xff;
+	return 0x00;
 }
 
 static tilemap_callback( layer0 )
@@ -334,12 +334,12 @@ static INT32 DrvInit()
 	AY8910Init(0, 1789750, 0);
 	AY8910SetPorts(0, &ay8910_soundlatch_read,   &ay8910_soundcontrol_read,
 				      NULL,                      &ay8910_0_write_B);
-	AY8910SetAllRoutes(0, 0.55, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.15, BURN_SND_ROUTE_BOTH);
 
 	AY8910Init(1, 1789750, 1);
 	AY8910SetPorts(1, &ay8910_soundcontrol_read, &ay8910_soundcontrol_read,
 				      NULL,                      &ay8910_1_write_B);
-	AY8910SetAllRoutes(1, 0.55, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.15, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, layer0_map_callback, 8, 8, 32, 32);

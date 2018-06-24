@@ -2336,7 +2336,7 @@ int vidPaint(int bValidate)
 //	if(bVidVSync && !nVidFullscreen) { pDD->WaitForVerticalBlank(DDWAITVB_BLOCKEND, NULL); }
 
 	// Display final image
-	if (bUsePageflip) {
+	if (bUsePageflip && !bRunPause) { // Ignore flipping when paused / frame advance (prevents jitter)
 		if (bUseTriplebuffer) {
 			if (FAILED(pPrimarySurf->Flip(NULL, DDFLIP_WAIT))) {
 				return 1;

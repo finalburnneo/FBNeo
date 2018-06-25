@@ -757,13 +757,14 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[3] = { 0, 0, 0 };
 	INT32 nSoundBufferPos = 0;
 
-	vblank = 0;
+	vblank = 1;
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
+		if (i == 7) vblank = 0;
 		M6502Open(0);
 		nCyclesDone[0] += M6502Run(nCyclesTotal[0] / nInterleave);
-		if (i == 248) {
+		if (i == nInterleave-1) {
 			M6502SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			vblank = 1;
 		}

@@ -469,7 +469,7 @@ static void draw_sprites()
 		INT32 spritebank = (attr & 0x30) << 4;
 		INT32 code = DrvVidRAM[offs + 0x01] + spritebank;
 		INT32 sx = 240 - DrvVidRAM[offs + 3];
-		INT32 sy = 240 - DrvVidRAM[offs + 2];
+		INT32 sy = 240 - DrvVidRAM[offs + 2] - 8;
 		INT32 flipx = attr & 0x04;
 		INT32 flipy = attr & 0x02;
 
@@ -499,9 +499,11 @@ static INT32 DrvDraw()
 		DrvRecalc = 0;
 	}
 
-	GenericTilemapDraw(0, pTransDraw, 0);
+	BurnTransferClear();
 
-	draw_sprites();
+	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
+
+	if (nSpriteEnable & 1) draw_sprites();
 
 	BurnTransferCopy(DrvPalette);
 

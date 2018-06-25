@@ -6659,7 +6659,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		if (game_select == 1 || game_select == 2 || game_select == 3 || game_select == 6 || game_select == 9)
 			BurnY8950Scan(nAction, pnMin);
 
-		if (game_select == 9)
+		if (game_select == 7 || game_select == 9)
 			BurnYM3812Scan(nAction, pnMin);
 
 		if (game_select == 5)

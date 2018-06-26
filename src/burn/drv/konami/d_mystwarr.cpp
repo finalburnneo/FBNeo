@@ -11,10 +11,11 @@
 		    background in lava level is too fast. (irq?)
 
 		martial champ
-		1: missing graphics in intro & title screens. On blank screens
+ *FIXED*1: missing graphics in intro & title screens. On blank screens
 		   disable layer#2 to see what it should look like.
 		2: missing some sounds. (watch the first attract mode)
-
+		3: end of fight "fade-outs" are flickery _sometimes_ (panda scene, whitehouse scene)
+		   only thing that seems to fix this is upping the cycles by 10mhz(!!)  eww.
 	unkown bugs.
 		probably a lot! go ahead and fix it!
 
@@ -83,6 +84,8 @@ static UINT8 DrvService[1];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[6];
 static UINT8 DrvDips[2];
+
+static INT32 nExtraCycles[2];
 
 static INT32 sound_nmi_enable = 0;
 static UINT8 sound_control = 0;
@@ -1190,6 +1193,7 @@ static void __fastcall martchmp_main_write_word(UINT32 address, UINT16 data)
 		K056832RamWriteWord(address & 0x1fff, data);
 		return;
 	}
+	bprintf(0, _T("ww %X %x.\n"), address, data);
 }
 
 static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
@@ -1252,11 +1256,12 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 	switch (address)
 	{
 		case 0x410000:
+			mw_irq_control = data & 0x40; // & 0x40
 			EEPROMWrite((data & 0x04), (data & 0x02), (data & 0x01));
 		return;
 
 		case 0x412000:
-			mw_irq_control = data;
+			//mw_irq_control = data; // & 0x02 (moved above)
 		return;
 
 		case 0x412001:
@@ -1278,6 +1283,7 @@ static void __fastcall martchmp_main_write_byte(UINT32 address, UINT8 data)
 			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
 		return;
 	}
+	bprintf(0, _T("wb %X %x.\n"), address, data);
 }
 
 static UINT16 __fastcall martchmp_main_read_word(UINT32 address)
@@ -1300,6 +1306,7 @@ static UINT16 __fastcall martchmp_main_read_word(UINT32 address)
 		case 0x416002:
 			return (DrvInputs[1] & 0xf0) | ((DrvService[0]^1) << 0x2) | 2 | (EEPROMRead() ? 0x01 : 0);
 	}
+	bprintf(0, _T("rw %X.\n"), address);
 
 	return 0;
 }
@@ -1343,6 +1350,7 @@ static UINT8 __fastcall martchmp_main_read_byte(UINT32 address)
 			if ((*soundlatch3 & 0xf) == 0xe) return *soundlatch3 | 1;
 			return *soundlatch3;
 	}
+	bprintf(0, _T("rb %X.\n"), address);
 
 	return 0;
 }
@@ -1798,6 +1806,8 @@ static INT32 DrvDoReset()
 
 	EEPROMReset();
 
+	BurnRandomSetSeed(0x0eadabae0);
+
 	if (EEPROMAvailable() == 0) {
 		EEPROMFill(DrvEeprom, 0, 128);
 	}
@@ -1817,6 +1827,8 @@ static INT32 DrvDoReset()
 	superblend = 0; // for mystwarr alpha tile count
 	oldsuperblend = 0;
 	superblendoff = 0;
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -2737,7 +2749,7 @@ static INT32 DrvDraw()
 		layer_colorbase[i] = K055555GetPaletteIndex(i)<<4;
 	}
 
-	INT32 blendmode = 0, enable_sub = 0;
+	INT32 blendmode = 0, enable_sub = 0, sub_flags = 0;
 
 	if (nGame == 1) { // mystwarr
 		blendmode = 0;
@@ -2777,22 +2789,17 @@ static INT32 DrvDraw()
 		}
 
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
-		konamigx_mixer(enable_sub, 0, 0, 0, blendmode, 0, 0);
-		KonamiBlendCopy(DrvPalette);
-
-		return 0;
 	}
 
 	if (nGame == 2 || nGame == 3) { // viostorm / metamrph
-		blendmode = GXSUB_K053250 | GXSUB_4BPP;
+		sub_flags = GXSUB_K053250 | GXSUB_4BPP;
 		sprite_colorbase = K055555GetPaletteIndex(4)<<4;
 	}
 
 	if (nGame == 4) { // mtlchamp
 		cbparam = K055555ReadRegister(K55_PRIINP_8);
 		oinprion = K055555ReadRegister(K55_OINPRI_ON);
-
-		blendmode = (oinprion==0xef && K054338_read_register(K338_REG_PBLEND)) ? ((1<<16|GXMIX_BLEND_FORCE)<<2) : 0;
+		blendmode = (oinprion==0xef && K054338_read_register(K338_REG_PBLEND)) ? ((1 << 16 | GXMIX_BLEND_FORCE) << 2) : 0;
 		sprite_colorbase = K055555GetPaletteIndex(4)<<5;
 	}
 
@@ -2800,7 +2807,7 @@ static INT32 DrvDraw()
 	{
 		sprite_colorbase = (K055555GetPaletteIndex(4)<<4)&0x7f;
 		sub1_colorbase = (K055555GetPaletteIndex(5)<<8)&0x700;
-		blendmode = GXSUB_4BPP;
+		sub_flags = GXSUB_4BPP;
 		K053936GP_set_colorbase(0, sub1_colorbase);
 		enable_sub = 1;
 	}
@@ -2809,12 +2816,12 @@ static INT32 DrvDraw()
 	{
 		sprite_colorbase = (K055555GetPaletteIndex(4)<<3)&0x7f;
 		sub1_colorbase = (K055555GetPaletteIndex(5)<<8)&0x700;
-		blendmode = GXSUB_8BPP;
+		sub_flags = GXSUB_8BPP;
 		K053936GP_set_colorbase(0, sub1_colorbase);
 		enable_sub = 1;
 	}
 
-	konamigx_mixer(enable_sub, blendmode, 0, 0, 0, 0, 0);
+	konamigx_mixer(enable_sub, sub_flags, 0, 0, blendmode, 0, 0);
 
 	KonamiBlendCopy(DrvPalette);
 
@@ -2844,9 +2851,11 @@ static INT32 DrvFrame()
 	ZetNewFrame();
 
 	INT32 nInterleave = 60;
-	//INT32 nCyclesTotal[2] = { 16000000 / 60, 8000000 / 60 };
-	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606), (INT32)((double)8000000 / 59.185606) };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606 + 0.5), (INT32)((double)8000000 / 59.185606) };
+	if (nGame == 4) { // martchmp
+		//nCyclesTotal[0] = 25000000 / 60; // fix flickers & gfx corruption at end of fight.  only affects martchmp.
+	}
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 	INT32 drawn = 0;
 
 	SekOpen(0);
@@ -2889,16 +2898,16 @@ static INT32 DrvFrame()
 
 		if (nGame == 4) // martchmp
 		{
-			if (mw_irq_control & 2)
+			if (mw_irq_control)
 			{
 				if (i == ((nInterleave *  23) / 256))
 					SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 
-				if (i == ((nInterleave * 247) / 256) && K053246_is_IRQ_enabled())
+				if (i == ((nInterleave *  247) / 256) && K053246_is_IRQ_enabled())
 					SekSetIRQLine(6, CPU_IRQSTATUS_AUTO);
 			}
 
-			if (i == ((nInterleave * 247) / 256)) {
+			if (i == ((nInterleave *  247) / 256)) {
 				if (pBurnDraw) {
 					DrvDraw();
 					drawn = 1;
@@ -2934,6 +2943,9 @@ static INT32 DrvFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (!drawn) {
 		if (pBurnDraw) {
@@ -2980,6 +2992,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(superblend);
 		SCAN_VAR(oldsuperblend);
 		SCAN_VAR(superblendoff);
+
+		SCAN_VAR(nExtraCycles);
 
 		BurnRandomScan(nAction);
 	}
@@ -3687,7 +3701,7 @@ STD_ROM_FN(mtlchamp)
 
 struct BurnDriver BurnDrvMtlchamp = {
 	"mtlchamp", NULL, NULL, NULL, "1993",
-	"Martial Champion (ver EAB)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
+	"Martial Champion (ver EAB)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampRomInfo, mtlchampRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3728,7 +3742,7 @@ STD_ROM_FN(mtlchamp1)
 
 struct BurnDriver BurnDrvMtlchamp1 = {
 	"mtlchamp1", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver EAA)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
+	"Martial Champion (ver EAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchamp1RomInfo, mtlchamp1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3769,7 +3783,7 @@ STD_ROM_FN(mtlchampa)
 
 struct BurnDriver BurnDrvMtlchampa = {
 	"mtlchampa", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver AAA)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
+	"Martial Champion (ver AAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampaRomInfo, mtlchampaRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3810,7 +3824,7 @@ STD_ROM_FN(mtlchampj)
 
 struct BurnDriver BurnDrvMtlchampj = {
 	"mtlchampj", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver JAA)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
+	"Martial Champion (ver JAA)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampjRomInfo, mtlchampjRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3851,7 +3865,7 @@ STD_ROM_FN(mtlchampu)
 
 struct BurnDriver BurnDrvMtlchampu = {
 	"mtlchampu", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver UAE)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
+	"Martial Champion (ver UAE)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampuRomInfo, mtlchampuRomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,
@@ -3892,7 +3906,7 @@ STD_ROM_FN(mtlchampu1)
 
 struct BurnDriver BurnDrvMtlchampu1 = {
 	"mtlchampu1", "mtlchamp", NULL, NULL, "1993",
-	"Martial Champion (ver UAD)\0", "Missing Graphics on Intro/Title screens", "Konami", "GX234",
+	"Martial Champion (ver UAD)\0", NULL, "Konami", "GX234",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_PREFIX_KONAMI, GBF_VSFIGHT, 0,
 	NULL, mtlchampu1RomInfo, mtlchampu1RomName, NULL, NULL, MartchmpInputInfo, MartchmpDIPInfo,

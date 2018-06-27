@@ -1,11 +1,6 @@
 // FB Alpha Super Duck driver module
 // Based on MAME driver by David Haywood
 
-/*
-	bug-fix
-*/
-
-
 #include "tiles_generic.h"
 #include "m68000_intf.h"
 #include "z80_intf.h"
@@ -129,7 +124,7 @@ static void __fastcall supduck_main_write_word(UINT32 address, UINT16 data)
 		case 0xfe4002:
 		case 0xfe4003:
 			soundlatch = data >> 8;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xfe8000:
@@ -161,7 +156,7 @@ static void __fastcall supduck_main_write_byte(UINT32 address, UINT8 data)
 		case 0xfe4002:
 		case 0xfe4003:
 			soundlatch = data;
-			ZetSetIRQLine(0, CPU_IRQSTATUS_ACK);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		return;
 
 		case 0xfe8000:
@@ -187,16 +182,13 @@ static UINT16 __fastcall supduck_main_read_word(UINT32 address)
 	switch (address)
 	{
 		case 0xfe4000:
-		case 0xfe4001:
 			return DrvInputs[0];
 
 		case 0xfe4002:
-		case 0xfe4003:
 			return (DrvInputs[1] & ~0x0400) | (vblank ? 0x0400 : 0);
 
 		case 0xfe4004:
-		case 0xfe4005:
-			return (DrvDips[0] * 256) + DrvDips[1];
+			return (DrvDips[1] * 256) + DrvDips[0];
 	}
 
 	return 0;
@@ -251,7 +243,6 @@ static UINT8 __fastcall supduck_sound_read(UINT16 address)
 			return MSM6295Read(0);
 
 		case 0xa000:
-			ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			return soundlatch;
 	}
 

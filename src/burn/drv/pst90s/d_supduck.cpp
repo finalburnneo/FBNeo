@@ -185,7 +185,7 @@ static UINT16 __fastcall supduck_main_read_word(UINT32 address)
 			return DrvInputs[0];
 
 		case 0xfe4002:
-			return (DrvInputs[1] & ~0x0400) | (vblank ? 0x0400 : 0);
+			return (DrvInputs[1] & ~0x0400) | (vblank ? 0 : 0x0400);
 
 		case 0xfe4004:
 			return (DrvDips[1] * 256) + DrvDips[0];
@@ -205,7 +205,7 @@ static UINT8 __fastcall supduck_main_read_byte(UINT32 address)
 			return DrvInputs[0];
 
 		case 0xfe4002:
-			return ((DrvInputs[1] >> 8) & ~0x04) | (vblank ? 0x04 : 0);
+			return ((DrvInputs[1] >> 8) & ~0x04) | (vblank ? 0 : 0x04);
 
 		case 0xfe4003:
 			return 0xff;
@@ -560,6 +560,12 @@ static INT32 DrvFrame()
 	{
 		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 		if (i == 240) {
+			if (pBurnDraw) {
+				DrvDraw();
+			}
+
+			memcpy (DrvSprBuf, DrvSprRAM, 0x2000);
+
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			vblank = 1;
 		}
@@ -573,12 +579,6 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
 	}
-
-	if (pBurnDraw) {
-		DrvDraw();
-	}
-
-	memcpy (DrvSprBuf, DrvSprRAM, 0x2000);
 
 	return 0;
 }

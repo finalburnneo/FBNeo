@@ -6,6 +6,9 @@
 		violent storm:
 			background layer #2 on intro (bad guy on motorcycle), bottom clipped??
 
+		mystwarr:
+			missing some sounds due to sound irq timing too slow. (wip)
+
 		metamorphic force
 			level 1 boss "fire" circle around boss priority issue
 		    background in lava level is too fast. (irq?)
@@ -15,7 +18,7 @@
 		   disable layer#2 to see what it should look like.
 		2: missing some sounds. (watch the first attract mode)
 		3: end of fight "fade-outs" are flickery _sometimes_ (panda scene, whitehouse scene)
-		   only thing that seems to fix this is upping the cycles by 10mhz(!!)  eww.
+		   only thing that seems to fix this is upping the cycles by 6mhz.
 	unkown bugs.
 		probably a lot! go ahead and fix it!
 
@@ -2853,7 +2856,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 60;
 	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606 + 0.5), (INT32)((double)8000000 / 59.185606) };
 	if (nGame == 4) { // martchmp
-		//nCyclesTotal[0] = 25000000 / 60; // fix flickers & gfx corruption at end of fight.  only affects martchmp.
+		nCyclesTotal[0] = 22000000 / 60; // fix flickers & gfx corruption at end of fight.  only affects martchmp.
 	}
 	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 	INT32 drawn = 0;
@@ -2862,7 +2865,7 @@ static INT32 DrvFrame()
 	ZetOpen(0);
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-		if (nGame == 1)
+		if (nGame == 1) // mystwarr
 		{
 			if (mw_irq_control & 1)
 			{
@@ -2876,7 +2879,7 @@ static INT32 DrvFrame()
 			}
 		}
 
-		if (nGame == 2 || nGame == 3)
+		if (nGame == 2 || nGame == 3) // metamrph, viostorm
 		{
 			if (i == 0) // otherwise service mode doesn't work!
 				SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);

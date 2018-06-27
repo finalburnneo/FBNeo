@@ -5467,7 +5467,7 @@ struct BurnDriver BurnDrvpiranhah = {
 
 static struct BurnRomInfo titanpacRomDesc[] = {
 	{ "t101.7e",      0x0800, 0x5538c288, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
-	{ "t105.6e",      0x0800, 0x095f5a5f, 1 | BRF_ESS | BRF_PRG },	//  1
+	{ "t105.7e",      0x0800, 0x095f5a5f, 1 | BRF_ESS | BRF_PRG },	//  1
 	{ "t102.7f",      0x0800, 0x8117a6a2, 1 | BRF_ESS | BRF_PRG },	//  2
 	{ "t106.6f",      0x0800, 0xcb0700bc, 1 | BRF_ESS | BRF_PRG },	//  3
 	{ "t103.7h",      0x0800, 0x060e514e, 1 | BRF_ESS | BRF_PRG },	//  4

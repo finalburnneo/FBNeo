@@ -2778,7 +2778,7 @@ static struct BurnRomInfo StarjacksRomDesc[] = {
 	{ "star_jacker_a1_ic65.65",         0x002000, 0x0ab1893c, BRF_GRA },		  //  8 Tiles
 	{ "epr-5456.81",       				0x002000, 0x3e8bcaed, BRF_GRA },		  //  9 Tiles
 	{ "epr-5455.64",        			0x002000, 0x7f628ae6, BRF_GRA },		  //  10 Tiles
-	{ "epr-5455.80",       				0x002000, 0x79e92cb1, BRF_GRA },		  //  11 Tiles
+	{ "epr-5454.80",       				0x002000, 0x79e92cb1, BRF_GRA },		  //  11 Tiles
 	{ "epr-5453.63",        			0x002000, 0x5bcb253e, BRF_GRA },		  //  12 Tiles
 	
 	{ "star_jacker_a1_ic86.86",        	0x004000, 0x6f2e1fd3, BRF_GRA },		  //  13 Sprites

@@ -2799,7 +2799,7 @@ struct BurnDriver BurnDrvKov2p202 = {
 // Knights of Valour 2 Plus - Nine Dragons (VM200XX)
 
 static struct BurnRomInfo kov2p200RomDesc[] = {
-	{ "v200_32m.ic8.bin",   0x400000, 0x9a09fd61, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
+	{ "v200_32m.ic8",   	0x400000, 0x9a09fd61, 1 | BRF_PRG | BRF_ESS },  //  0 68K Code
 
 	{ "t1200.rom",	   		0x800000, 0xd7e26609, 2 | BRF_GRA },			//  1 Tile data
 

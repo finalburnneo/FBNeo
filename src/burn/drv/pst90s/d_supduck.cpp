@@ -2,7 +2,6 @@
 // Based on MAME driver by David Haywood
 
 /*
-	palette (correct?)
 	bug-fix
 */
 
@@ -520,11 +519,8 @@ static void draw_sprites()
 }
 
 static INT32 DrvDraw()
-{	
-	if (DrvRecalc) {
-		DrvPaletteUpdate();
-		DrvRecalc = 0;
-	}
+{
+	DrvPaletteUpdate();
 
 	GenericTilemapSetScrollX(2, DrvScroll[0]);
 	GenericTilemapSetScrollY(2, -DrvScroll[1] - 256);
@@ -571,15 +567,13 @@ static INT32 DrvFrame()
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
-		INT32 nSegment = (nCyclesTotal[0] - nCyclesDone[0]) / (nInterleave - i);
-		nCyclesDone[0] += SekRun(nSegment);
+		nCyclesDone[0] += SekRun((nCyclesTotal[0] * (i + 1) / nInterleave) - nCyclesDone[0]);
 		if (i == 240) {
 			SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 			vblank = 1;
 		}
 
-		nSegment = (nCyclesTotal[1] - nCyclesDone[1]) / (nInterleave - i);
-		nCyclesDone[1] += ZetRun(nSegment);
+		nCyclesDone[1] += ZetRun((nCyclesTotal[1] * (i + 1) / nInterleave) - nCyclesDone[1]);
 	}
 
 	ZetClose();

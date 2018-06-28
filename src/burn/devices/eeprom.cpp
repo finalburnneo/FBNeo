@@ -194,8 +194,7 @@ static void eeprom_write(INT32 bit)
 			else
 				eeprom_data[address] = 0xff;
 		}
-		else
-			serial_count = 0;
+		serial_count = 0;
 	}
 	else if ( (serial_count > (intf->address_bits + intf->data_bits)) &&
 	           eeprom_command_match((char*)serial_buffer,intf->cmd_write,strlen((char*)serial_buffer)-(intf->address_bits + intf->data_bits)) )
@@ -225,8 +224,7 @@ static void eeprom_write(INT32 bit)
 			else
 				eeprom_data[address] = data;
 		}
-		else
-			serial_count = 0;
+		serial_count = 0;
 	}
 	else if ( eeprom_command_match((char*)serial_buffer,intf->cmd_lock,strlen((char*)serial_buffer)) )
 	{

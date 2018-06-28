@@ -2853,7 +2853,7 @@ static INT32 DrvFrame()
 	SekNewFrame();
 	ZetNewFrame();
 
-	INT32 nInterleave = 60;
+	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { (INT32)((double)16000000 / 59.185606 + 0.5), (INT32)((double)8000000 / 59.185606) };
 	if (nGame == 4) { // martchmp
 		nCyclesTotal[0] = 22000000 / 60; // fix flickers & gfx corruption at end of fight.  only affects martchmp.
@@ -2933,7 +2933,7 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += SekRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
 		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
 
-		if ((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) {// && sound_nmi_enable && sound_control) { // iq_132
+		if (((i % (nInterleave / 8)) == ((nInterleave / 8) - 1)) || (nCurrentFrame&1 && i==0)) {// && sound_nmi_enable && sound_control) { // iq_132
 			ZetNmi();
 		}
 	}

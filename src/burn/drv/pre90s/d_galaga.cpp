@@ -1,6 +1,8 @@
 // Galaga & Dig-Dug driver for FB Alpha, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
 // Dig Dug added July 27, 2015
 
+// notes: freeplay in galaga causes the game to crash before fully booting
+
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "namco_snd.h"
@@ -232,7 +234,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x0d, 0x01, 0x80, 0x00, "Cocktail"               },
 	
 	// Dip 3	
-	{0   , 0xfe, 0   , 8   , "Coinage"                },
+	{0   , 0xfe, 0   , 7   , "Coinage"                },
 	{0x0e, 0x01, 0x07, 0x04, "4 Coins 1 Play"         },
 	{0x0e, 0x01, 0x07, 0x02, "3 Coins 1 Play"         },
 	{0x0e, 0x01, 0x07, 0x06, "2 Coins 1 Play"         },
@@ -240,7 +242,7 @@ static struct BurnDIPInfo DrvDIPList[]=
 	{0x0e, 0x01, 0x07, 0x01, "2 Coins 3 Plays"        },
 	{0x0e, 0x01, 0x07, 0x03, "1 Coin  2 Plays"        },
 	{0x0e, 0x01, 0x07, 0x05, "1 Coin  3 Plays"        },
-	{0x0e, 0x01, 0x07, 0x00, "Freeplay"               },	
+  //  {0x0e, 0x01, 0x07, 0x00, "Freeplay"               },  // causes crash in cpu 2?
 	
 	{0   , 0xfe, 0   , 8   , "Bonus Life"             },
 	{0x0e, 0x01, 0x38, 0x20, "20k  60k  60k"          },

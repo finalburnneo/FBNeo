@@ -646,7 +646,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 
 		SCAN_VAR(nBankAddress0);
 		SCAN_VAR(nBankAddress1);

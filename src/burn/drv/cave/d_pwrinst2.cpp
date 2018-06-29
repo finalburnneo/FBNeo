@@ -741,7 +741,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 		NMK112_Scan(nAction);
 
 		SCAN_VAR(nVideoIRQ);

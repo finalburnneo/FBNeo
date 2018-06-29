@@ -198,7 +198,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		SekScan(nAction);				// scan 68000 states
 
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 
 		ToaScanGP9001(nAction, pnMin);
 

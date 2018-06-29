@@ -1027,7 +1027,6 @@ static INT32 DrvScan(int nAction,int *pnMin)
 		SekScan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
-		if (game_select == 0) //MSM6295Scan(1, nAction);
 
 		SCAN_VAR(sprite_command_switch);
 		SCAN_VAR(bright);

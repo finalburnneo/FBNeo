@@ -7502,7 +7502,6 @@ static INT32 GtmrScan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 		SCAN_VAR(ToyboxMCUCom);
 		SCAN_VAR(MSM6295Bank0);
 		SCAN_VAR(MSM6295Bank1);
@@ -7538,7 +7537,6 @@ static INT32 ShogwarrScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 		SCAN_VAR(MSM6295Bank0);
 		SCAN_VAR(MSM6295Bank1);
 	}

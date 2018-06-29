@@ -1875,7 +1875,6 @@ static INT32 Zeropnt2Scan(INT32 nAction, INT32 *pnMin)
 	
 	if (nAction & ACB_DRIVER_DATA) {
 		BurnYM2151Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 	}
 	
 	if (nAction & ACB_WRITE) {

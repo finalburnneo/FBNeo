@@ -597,7 +597,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 		K051649Scan(nAction, pnMin);
 
 		SCAN_VAR(cpubank);

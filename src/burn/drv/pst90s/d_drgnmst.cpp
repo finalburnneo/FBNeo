@@ -974,7 +974,6 @@ static INT32 DrvScan(INT32 nAction,INT32 *pnMin)
 		pic16c5xScan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 
 		SCAN_VAR(pic16c5x_port0);
 		SCAN_VAR(drgnmst_oki_control);

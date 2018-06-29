@@ -1131,7 +1131,6 @@ static INT32 powerinsScan(INT32 nAction,INT32 *pnMin)
 		if ( game_drv == GAME_POWERINS ) BurnYM2203Scan(nAction, pnMin);
 
 		MSM6295Scan(nAction, pnMin);
-		if ( game_drv != GAME_POWERINA ) //MSM6295Scan(1, nAction);
 
 		SCAN_VAR(soundlatch);
 		if ( game_drv == GAME_POWERINA ) SCAN_VAR(oki_bank);

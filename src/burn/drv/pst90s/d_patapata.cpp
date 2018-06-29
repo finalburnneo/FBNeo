@@ -413,7 +413,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SekScan(nAction);
 
 		MSM6295Scan(nAction, pnMin);
-		//MSM6295Scan(1, nAction);
 
 		NMK112_Scan(nAction);
 

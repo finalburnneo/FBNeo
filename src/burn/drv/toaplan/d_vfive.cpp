@@ -403,7 +403,7 @@ UINT8 __fastcall vfive_v25_read_port(UINT32 port)
 			return DrvInput[4]^0xff;
 
 		case V25_PORT_P1:
-			return DrvInput[5]^0xff;
+			return (DrvInput[5] << 4)^0xff; // hehe.
 	}
 
 	return 0;

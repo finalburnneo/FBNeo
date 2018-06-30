@@ -1398,6 +1398,17 @@ static void supernova_draw(INT32 *offs, UINT16 *bitmap, UINT8 *flags, UINT16 *db
 	INT32 incxx,incxy,incyx,incyy;
 	INT32 columnscroll;
 
+	if (!enable) {
+		// clear the speedup & pri buffer for disabled layers
+		if (layer == 0) {
+			memset(DrvTmpScreenBuf + 0x0000, 0xff, 0x4000);
+			memset(DrvTmpFlagA2, 0, 320 * 240);
+		} else {
+			memset(DrvTmpScreenBuf + 0x4000, 0xff, 0x4000);
+			memset(DrvTmpFlagB2, 0, 320 * 240);
+		}
+	}
+
 	if (enable && suprnova_alt_enable_background)
 	{
 		if (layer == 0) draw_layer(DrvVidRAM + 0x0000, DrvTmpScreenBuf + 0x0000, DrvTmpScreenA, DrvTmpFlagA, DrvGfxROM1, 0);

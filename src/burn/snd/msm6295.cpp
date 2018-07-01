@@ -122,6 +122,17 @@ void MSM6295Reset(INT32 nChip)
 	}
 }
 
+void MSM6295Reset()
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Reset called without init\n"));
+#endif
+	for (INT32 nChip = 0; nChip <= nLastMSM6295Chip; nChip++)
+	{
+		MSM6295Reset(nChip);
+	}
+}
+
 void MSM6295Scan(INT32 , INT32 *)
 {
 #if defined FBA_DEBUG
@@ -343,7 +354,7 @@ static void MSM6295Render_Cubic(INT32 nChip, INT32* pLeftBuf, INT32 *pRightBuf, 
 	}
 }
 
-INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength)
+INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength) // render per-chip
 {
 #if defined FBA_DEBUG
 	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Render called without init\n"));
@@ -372,6 +383,20 @@ INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmentLength)
 			}
 			pSoundBuf += 2;
 		}
+	}
+
+	return 0;
+}
+
+INT32 MSM6295Render(INT16* pSoundBuf, INT32 nSegmentLength) // render all chips
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Render called without init\n"));
+#endif
+
+    for (INT32 nChip = 0; nChip <= nLastMSM6295Chip; nChip++)
+	{
+		MSM6295Render(nChip, pSoundBuf, nSegmentLength);
 	}
 
 	return 0;
@@ -471,6 +496,17 @@ void MSM6295Exit(INT32 nChip)
 	}
 	
 	if (nChip == nLastMSM6295Chip) DebugSnd_MSM6295Initted = 0;
+}
+
+void MSM6295Exit()
+{
+#if defined FBA_DEBUG
+	if (!DebugSnd_MSM6295Initted) bprintf(PRINT_ERROR, _T("MSM6295Exit called without init\n"));
+#endif
+	for (INT32 nChip = 0; nChip <= nLastMSM6295Chip; nChip++)
+	{
+		MSM6295Exit(nChip);
+	}
 }
 
 void MSM6295SetSamplerate(INT32 nChip, INT32 nSamplerate)

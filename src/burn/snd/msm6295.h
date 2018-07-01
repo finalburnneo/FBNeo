@@ -9,7 +9,10 @@ void MSM6295SetSamplerate(INT32 nChip, INT32 nSamplerate);
 void MSM6295SetRoute(INT32 nChip, double nVolume, INT32 nRouteDir);
 void MSM6295Reset(INT32 nChip);
 void MSM6295Exit(INT32 nChip);
+void MSM6295Reset(); // reset all
+void MSM6295Exit(); // exit all
 
+INT32 MSM6295Render(INT16* pSoundBuf, INT32 nSegmenLength); // render all
 INT32 MSM6295Render(INT32 nChip, INT16* pSoundBuf, INT32 nSegmenLength);
 void MSM6295Write(INT32 nChip, UINT8 nCommand);
 void MSM6295Scan(INT32 nAction, INT32 *pnMin);

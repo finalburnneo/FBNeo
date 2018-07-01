@@ -1915,8 +1915,8 @@ STD_ROM_FN(gutsn)
 
 static INT32 GutsnInit()
 {
-	sprite_kludge_x = 0;
-	sprite_kludge_y = 0;
+	sprite_kludge_x = -1;
+	sprite_kludge_y = 1;
 	speedhack_address = 0x600c780;
 	speedhack_pc[0] = 0x4022070; //number from mame + 0x02
 

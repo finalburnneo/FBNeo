@@ -587,7 +587,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 	
-	MSM6295Reset(0);
+	MSM6295Reset();
 	
 	if (game_drv != GAME_POWERINA) {
 		ZetOpen(0);
@@ -596,9 +596,7 @@ static INT32 DrvDoReset()
 		
 		if (game_drv == GAME_POWERINS) BurnYM2203Reset();
 
-		MSM6295Reset(1);
-
-		NMK112Reset();		
+		NMK112Reset();
 	}
 
 	return 0;
@@ -873,11 +871,9 @@ static INT32 powerinsExit()
 	GenericTilesExit();
 
 	SekExit();
-	MSM6295Exit(0);
+	MSM6295Exit();
 
 	if (game_drv != GAME_POWERINA) {
-		MSM6295Exit(1);
-
 		if (game_drv == GAME_POWERINS)
 			BurnYM2203Exit();
 
@@ -1036,7 +1032,7 @@ static INT32 powerinsFrame()
 		SekRun(nCyclesTotal[0]);
 		SekSetIRQLine(4, CPU_IRQSTATUS_AUTO);
 
-		if (pBurnSoundOut) MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		if (pBurnSoundOut) MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	if (game_drv == GAME_POWERINS) {
@@ -1082,8 +1078,7 @@ static INT32 powerinsFrame()
 	
 		if (pBurnSoundOut) {
 			BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-			MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
 		
 		ZetClose();
@@ -1094,8 +1089,7 @@ static INT32 powerinsFrame()
 	
 		if (pBurnSoundOut) {
 			memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-			MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);				
+			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
 		
 		ZetClose();

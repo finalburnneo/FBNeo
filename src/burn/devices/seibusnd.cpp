@@ -430,8 +430,7 @@ void seibu_sound_reset()
 		break;
 	}
 
-	if ((seibu_snd_type & 8) == 0) MSM6295Reset(0);
-	if (seibu_snd_type & 4) MSM6295Reset(1);
+	if ((seibu_snd_type & 8) == 0) MSM6295Reset();
 
 	memset (main2sub, 0, 2);
 	memset (sub2main, 0, 2);
@@ -533,8 +532,7 @@ void seibu_sound_exit()
 
 	ZetExit();
 
-	if ((seibu_snd_type & 8) == 0) MSM6295Exit(0);
-	if (seibu_snd_type & 4) MSM6295Exit(1);
+	if ((seibu_snd_type & 8) == 0) MSM6295Exit();
 
 	MSM6295ROM = NULL;
 
@@ -661,10 +659,7 @@ void seibu_sound_update(INT16 *pbuf, INT32 nLen)
 	}
 
 	if ((seibu_snd_type & 8) == 0) {
-		MSM6295Render(0, pbuf, nLen);
-
-		if (seibu_snd_type & 4) 
-			MSM6295Render(1, pbuf, nLen);
+		MSM6295Render(pbuf, nLen); // (seibu_snd_type & 4) included under &8 == 0! (see init)
 	}
 }
 

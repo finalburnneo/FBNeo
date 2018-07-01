@@ -331,8 +331,7 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	mermaidReset();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	return 0;
 }
@@ -498,8 +497,7 @@ static INT32 DrvExit()
 	ZetExit();
 	mermaidExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	BurnYM2203Exit();
 
 	BurnFree(AllMem);
@@ -612,8 +610,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();

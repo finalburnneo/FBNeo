@@ -3176,7 +3176,7 @@ static INT32 BerlwallDoReset()
 		AY8910Reset(i);
 	}
 	
-	MSM6295Reset(0);
+	MSM6295Reset();
 	MSM6295Bank0 = 0;
 	
 	Kaneko16Bg15Reg = 0;
@@ -3210,7 +3210,7 @@ static INT32 WingforcDoReset()
 	
 	BurnYM2151Reset();
 
-	MSM6295Reset(0);
+	MSM6295Reset();
 	MSM6295Bank0 = 0;
 	
 	Kaneko16SoundLatch = 0;
@@ -3230,7 +3230,7 @@ static INT32 ExplbrkrDoReset()
 		EEPROMReset();
 	}
 	
-	MSM6295Reset(0);
+	MSM6295Reset();
 	MSM6295Bank0 = 0;
 
 	return nRet;
@@ -3240,8 +3240,7 @@ static INT32 GtmrDoReset()
 {
 	INT32 nRet = Kaneko16DoReset();
 	
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 	MSM6295Bank0 = 0;
 	MSM6295Bank1 = 0;
 	
@@ -3269,8 +3268,7 @@ static INT32 ShogwarrDoReset()
 		ShogwarrConfigSoundBank(1, 0, 0x20000, 0x20000);
 	}
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	Kaneko16SpriteFlipX = 0;
 	Kaneko16SpriteFlipY = 0;
@@ -5869,7 +5867,7 @@ static INT32 BerlwallExit()
 {
 	AY8910Exit(0);
 	AY8910Exit(1);
-	MSM6295Exit(0);
+	MSM6295Exit();
 	
 	return Kaneko16Exit();
 }
@@ -5886,16 +5884,15 @@ static INT32 WingforcExit()
 {
 	ZetExit();
 	BurnYM2151Exit();
-	MSM6295Exit(0);
+	MSM6295Exit();
 	
 	return Kaneko16Exit();
 }
 
 static INT32 GtmrMachineExit()
 {
-	MSM6295Exit(0);
-	MSM6295Exit(1);
-		
+	MSM6295Exit();
+
 	return Kaneko16Exit();
 }
 
@@ -5903,8 +5900,8 @@ static INT32 ExplbrkrExit()
 {
 	AY8910Exit(0);
 	AY8910Exit(1);
-	MSM6295Exit(0);
-		
+	MSM6295Exit();
+
 	return Kaneko16Exit();
 }
 
@@ -7174,7 +7171,7 @@ static INT32 ExplbrkrFrame()
 			AY8910Render(pSoundBuf, nSegmentLength);
 		}
 		
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) Kaneko16FrameRender();
@@ -7301,7 +7298,7 @@ static INT32 WingforcFrame()
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			ZetClose();
 		}
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) Kaneko16FrameRender();
@@ -7329,8 +7326,7 @@ static INT32 GtmrFrame()
 	SekClose();
 	
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) Kaneko16FrameRender();
@@ -7377,8 +7373,7 @@ static INT32 ShogwarrFrame()
 	
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) Kaneko16FrameRender();

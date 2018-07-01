@@ -484,13 +484,9 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	MSM6295Reset(0);
+	MSM6295Reset();
 
-	if (game_select == 0)
-	{
-		MSM6295Reset(1);
-	}
-	else
+	if (game_select != 0)
 	{
 		EEPROMReset();
 
@@ -749,7 +745,7 @@ static INT32 TwinbratInit()
 {
 	INT32 nRet = CommonInit(2, 16);
 
-		GenericTilemapSetOffsets(TMAP_GLOBAL, -global_x_offset, 1);
+	GenericTilemapSetOffsets(TMAP_GLOBAL, -global_x_offset, 1);
 	GenericTilemapSetOffsets(3, -32, 0);
 
 	global_x_offset = 24+3;
@@ -763,10 +759,9 @@ static INT32 DrvExit()
 
 	SekExit();
 
-	MSM6295Exit(0);
-	if (game_select == 0)
-		MSM6295Exit(1);
-	else
+	MSM6295Exit();
+
+	if (game_select != 0)
 		EEPROMExit();
 
 	BurnFree (AllMem);
@@ -923,14 +918,14 @@ static INT32 stlforceFrame()
 		nCycleSegment = nBurnSoundLen / nInterleave;
 
 		if (pBurnSoundOut) {
-			MSM6295Render(0, pBurnSoundOut + nSoundBufferPos, nCycleSegment);
+			MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 			nSoundBufferPos += (nCycleSegment << 1);
 		}
 	}
 
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {
-		MSM6295Render(0, pBurnSoundOut + nSoundBufferPos, nCycleSegment);
+		MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 	}
 
 	SekClose();
@@ -984,8 +979,7 @@ static INT32 DrvFrame()
 
 		if (pBurnSoundOut) {
 			memset (pBurnSoundOut + nSoundBufferPos, 0, nCycleSegment * 2 * sizeof(INT16));
-			MSM6295Render(0, pBurnSoundOut + nSoundBufferPos, nCycleSegment);
-			MSM6295Render(1, pBurnSoundOut + nSoundBufferPos, nCycleSegment);
+			MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 			nSoundBufferPos += (nCycleSegment << 1);
 		}
 	}
@@ -993,8 +987,7 @@ static INT32 DrvFrame()
 	nCycleSegment = nBurnSoundLen - (nSoundBufferPos>>1);
 	if (pBurnSoundOut && nCycleSegment > 0) {
 		memset (pBurnSoundOut + nSoundBufferPos, 0, nCycleSegment * 2 * sizeof(INT16));
-		MSM6295Render(0, pBurnSoundOut + nSoundBufferPos, nCycleSegment);
-		MSM6295Render(1, pBurnSoundOut + nSoundBufferPos, nCycleSegment);
+		MSM6295Render(pBurnSoundOut + nSoundBufferPos, nCycleSegment);
 	}
 
 	SekClose();

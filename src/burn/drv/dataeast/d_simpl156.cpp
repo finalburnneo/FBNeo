@@ -284,8 +284,7 @@ static INT32 DrvDoReset()
 	ArmReset();
 	ArmClose();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	EEPROMReset();
 
@@ -411,8 +410,7 @@ static INT32 DrvExit()
 
 	ArmExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	MSM6295ROM = NULL;
 
 	GenericTilesExit();
@@ -558,8 +556,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

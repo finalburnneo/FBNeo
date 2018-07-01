@@ -423,8 +423,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1); // dreamwld
+	MSM6295Reset();
 
 	protindex = 0;
 
@@ -657,8 +656,7 @@ static INT32 DrvExit()
 {
 	SekExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	GenericTilesExit();
 
@@ -847,8 +845,7 @@ static INT32 DrvFrame()
 	
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * sizeof(INT16) * 2);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

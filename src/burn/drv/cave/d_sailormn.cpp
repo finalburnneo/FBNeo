@@ -440,8 +440,7 @@ static INT32 DrvExit()
 {
 	EEPROMExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	BurnYM2151Exit();
 
 	CaveTileExit();
@@ -491,8 +490,7 @@ static INT32 DrvDoReset()
 
 	nCaveCyclesDone[0] = nCaveCyclesDone[1] = 0;
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 	BurnYM2151Reset();
 
 	return 0;
@@ -623,8 +621,7 @@ static INT32 DrvFrame()
 				INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 				INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				MSM6295Render(0, pSoundBuf, nSegmentLength);
-				MSM6295Render(1, pSoundBuf, nSegmentLength);
+				MSM6295Render(pSoundBuf, nSegmentLength);
 				nSoundBufferPos += nSegmentLength;
 			}
 		}
@@ -647,8 +644,7 @@ static INT32 DrvFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				MSM6295Render(0, pSoundBuf, nSegmentLength);
-				MSM6295Render(1, pSoundBuf, nSegmentLength);
+				MSM6295Render(pSoundBuf, nSegmentLength);
 			}
 		}
 	}

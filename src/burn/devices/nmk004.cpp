@@ -115,8 +115,7 @@ void NMK004_reset()
 	BurnYM2203Reset();
 	tlcs90Close();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	oki_bankswitch(0,0);
 	oki_bankswitch(1,0);
@@ -174,8 +173,7 @@ void NMK004_exit()
 
 	tlcs90Exit();
 	BurnYM2203Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 }
 
 INT32 NMK004Scan(INT32 nAction, INT32 *pnMin)

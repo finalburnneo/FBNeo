@@ -315,8 +315,7 @@ static INT32 DrvDoReset()
 
 	pic16c5xReset();
 	
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	oki_bank(0);
 	
@@ -472,8 +471,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	SekExit();
 	pic16c5xExit();
@@ -620,8 +618,7 @@ static INT32 DrvFrame()
 	SekClose();
 
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

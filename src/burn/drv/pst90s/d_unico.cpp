@@ -502,7 +502,7 @@ static INT32 DrvDoReset()
 	SekClose();
 	
 	BurnYM3812Reset();
-	MSM6295Reset(0);
+	MSM6295Reset();
 	
 	DrvScrollX0 = 0;
 	DrvScrollY0 = 0;
@@ -524,8 +524,7 @@ static INT32 Zeropnt2DoReset()
 	EEPROMReset();
 	
 	BurnYM2151Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 	
 	DrvOkiBank = 0;
 	
@@ -1307,7 +1306,7 @@ static INT32 CommonExit()
 {
 	SekExit();
 	
-	MSM6295Exit(0);
+	MSM6295Exit();
 	
 	GenericTilesExit();
 	if (nBurnGunNumPlayers) BurnGunExit();
@@ -1342,7 +1341,6 @@ static INT32 Zeropnt2Exit()
 	INT32 nRet = CommonExit();
 	
 	BurnYM2151Exit();
-	MSM6295Exit(1);
 	
 	EEPROMExit();
 	
@@ -1743,7 +1741,7 @@ static INT32 DrvFrame()
 	SekSetIRQLine(2, CPU_IRQSTATUS_AUTO);
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	SekClose();
 	
@@ -1782,8 +1780,7 @@ static INT32 Zeropnt2Frame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}	
 	}
@@ -1794,8 +1791,7 @@ static INT32 Zeropnt2Frame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 		}
 	}
 	

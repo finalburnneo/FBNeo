@@ -359,8 +359,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	nPreviousOkiBank = -1;
 	oki_set_bank(0);
@@ -438,8 +437,7 @@ static INT32 DrvExit()
 	ToaExitGP9001();
 	SekExit();				// Deallocate 68000s
 	
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	BurnFree(Mem);
 
@@ -532,8 +530,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	SekClose();

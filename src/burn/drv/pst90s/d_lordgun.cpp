@@ -691,8 +691,7 @@ static INT32 DrvDoReset()
 
 	BurnYMF278BReset(); // aliencha
 	BurnYM3812Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1); // aliencha
+	MSM6295Reset();
 
 	*okibank = -1;
 	set_oki_bank(0); // lordgun
@@ -929,8 +928,7 @@ static INT32 DrvExit()
 
 	BurnYMF278BExit(); // aliencha
 	BurnYM3812Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1); // aliencha
+	MSM6295Exit();
 
 	ppi8255_exit();
 	BurnGunExit();
@@ -1355,7 +1353,7 @@ static INT32 lordgunFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM3812Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -1403,8 +1401,7 @@ static INT32 alienchaFrame()
 
 	if (pBurnSoundOut) {
 		BurnYMF278BUpdate(nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -1426,9 +1423,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 	}
 
 	if (nAction & ACB_VOLATILE) {
-
 		memset(&ba, 0, sizeof(ba));
-    		ba.Data		= AllRam;
+		ba.Data		= AllRam;
 		ba.nLen		= RamEnd - AllRam;
 		ba.szName	= "All RAM";
 		BurnAcb(&ba);

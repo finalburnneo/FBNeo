@@ -485,8 +485,7 @@ static INT32 DrvDoReset()
 	set_oki_bank0(0);
 	set_oki_bank1(0);
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	return 0;
 }
@@ -614,8 +613,7 @@ static INT32 DrvExit()
 
 	SekExit();
 	pic16c5xExit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	BurnFree (AllMem);
 
@@ -925,8 +923,7 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		//	memset (pSoundBuf, 0, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -940,8 +937,7 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 		//	memset (pSoundBuf, 0, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

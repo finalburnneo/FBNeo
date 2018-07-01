@@ -360,8 +360,7 @@ static INT32 DrvExit()
 {
 	EEPROMExit();
 	
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 #ifdef USE_SAMPLE_HACK
 	BurnSampleExit();
 #endif
@@ -393,8 +392,7 @@ static INT32 DrvDoReset()
 
 	nCyclesExtra = 0;
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 	NMK112Reset();
 #ifdef USE_SAMPLE_HACK
 	DrvSampleReset();
@@ -495,8 +493,7 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
-				MSM6295Render(0, pSoundBuf, nSegmentLength);
-				MSM6295Render(1, pSoundBuf, nSegmentLength);
+				MSM6295Render(pSoundBuf, nSegmentLength);
 #ifdef USE_SAMPLE_HACK
 				BurnSampleRender(pSoundBuf, nSegmentLength);
 #endif

@@ -387,8 +387,7 @@ static INT32 DrvExit()
 {
 	EEPROMExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	CaveTileExit();
 	CaveSpriteExit();
@@ -418,8 +417,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 	
 	BurnYM2203Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	EEPROMReset();
 
@@ -566,8 +564,7 @@ static INT32 DrvFrame()
 	
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	ZetClose();

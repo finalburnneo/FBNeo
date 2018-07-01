@@ -247,7 +247,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-	MSM6295Reset(0);
+	MSM6295Reset();
 
 	memset (scroll, 0, 2 * 2 * sizeof(UINT16));
 
@@ -402,8 +402,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	SekExit();
 
 	BurnFree (AllMem);
@@ -484,8 +483,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

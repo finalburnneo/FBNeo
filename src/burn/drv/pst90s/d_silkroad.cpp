@@ -323,8 +323,7 @@ static INT32 DrvDoReset()
 
 	BurnYM2151Reset();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	return 0;
 }
@@ -430,8 +429,7 @@ static INT32 DrvExit()
 	SekExit();
 
 	BurnYM2151Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	GenericTilesExit();
 
@@ -616,8 +614,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM2151Render(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {

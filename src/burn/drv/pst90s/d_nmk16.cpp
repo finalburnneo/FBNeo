@@ -3869,8 +3869,7 @@ static INT32 DrvDoReset()
 	ZetClose();
 
 	BurnYM2203Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	MSM6295SetInitialBanks(2);
 
@@ -3892,7 +3891,7 @@ static INT32 SmissinDoReset()
 	ZetReset();
 	ZetClose();
 
-	MSM6295Reset(0);
+	MSM6295Reset();
 
 	return 0;
 }
@@ -3910,8 +3909,7 @@ static INT32 AfegaDoReset()
 	ZetClose();
 
 	BurnYM2151Reset();
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	MSM6295SetInitialBanks(2);
 
@@ -3926,8 +3924,7 @@ static INT32 BjtwinDoReset()
 	SekReset();
 	SekClose();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	NMK112Reset();
 	MSM6295SetInitialBanks(2);
@@ -4520,8 +4517,7 @@ static INT32 DrvExit()
 {
 	ZetExit();
 	BurnYM2203Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	MSM6295ROM = NULL;
 	NMK112_enabled = 0;
 	Tharriermode = 0;
@@ -4536,7 +4532,7 @@ static INT32 DrvExit()
 static INT32 MSM6295x1Exit()
 {
 	ZetExit();
-	MSM6295Exit(0);
+	MSM6295Exit();
 	MSM6295ROM = NULL;
 	MSM6295x1_only = 0;
 
@@ -4564,8 +4560,7 @@ static INT32 AfegaExit()
 {
 	ZetExit();
 	BurnYM2151Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	MSM6295ROM = NULL;
 	AFEGA_SYS = 0;
 
@@ -4574,8 +4569,7 @@ static INT32 AfegaExit()
 
 static INT32 BjtwinExit()
 {
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	MSM6295ROM = NULL;
 	MSM6295x2_only = 0;
 	no_z80 = 0;
@@ -5386,8 +5380,7 @@ static INT32 DrvFrame() // tharrier, manybloc
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -5516,7 +5509,7 @@ static INT32 SsmissinFrame()
 	}
 
 	if (pBurnSoundOut) {
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -5579,8 +5572,7 @@ static INT32 Macross2Frame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	ZetClose();
@@ -5635,8 +5627,7 @@ static INT32 AfegaFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -5647,8 +5638,7 @@ static INT32 AfegaFrame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 		}
 	}
 
@@ -5701,8 +5691,7 @@ static INT32 BjtwinFrame()
 
 	if (pBurnSoundOut) {
 		memset (pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	SekClose();
@@ -5837,8 +5826,7 @@ static INT32 NMK004Frame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	tlcs90Close();
@@ -9963,8 +9951,7 @@ static INT32 RapheroDoReset()
 
 	BurnYM2203Reset();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	MSM6295SetInitialBanks(2);
 
@@ -10063,8 +10050,7 @@ static INT32 RapheroInit()
 static INT32 RapheroExit()
 {
 	BurnYM2203Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	MSM6295ROM = NULL;
 
 	NMK004_enabled = 0;
@@ -10120,8 +10106,7 @@ static INT32 RapheroFrame()
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	tlcs90Close();

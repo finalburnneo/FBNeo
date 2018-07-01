@@ -310,8 +310,7 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 	
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	m6295bank[0] = 1;
 	m6295bank[1] = 1;
@@ -437,8 +436,7 @@ static INT32 DrvExit()
 
 	SekExit();
 	
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	nGameSelect = 0;
 
@@ -535,8 +533,7 @@ static INT32 DrvFrame()
 
 	if (pBurnSoundOut) {
 		memset(pBurnSoundOut, 0, nBurnSoundLen * 2 * sizeof(INT16));
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
 	
 	if (pBurnDraw) {

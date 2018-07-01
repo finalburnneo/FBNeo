@@ -385,8 +385,7 @@ static INT32 DrvDoReset()
 	{
 		set_oki0_bank(0);
 		set_oki1_bank(0);
-		MSM6295Reset(0);
-		MSM6295Reset(1);
+		MSM6295Reset();
 	}
 
 	EEPROMReset();
@@ -578,8 +577,7 @@ static INT32 DrvExit()
 		YMZ280BExit();
 		YMZ280BROM = NULL;
 	} else {
-		MSM6295Exit(0);
-		MSM6295Exit(1);
+		MSM6295Exit();
 	}
 
 	MSM6295ROM = NULL;
@@ -735,8 +733,7 @@ static INT32 DrvFrame()
 			YMZ280BRender(pBurnSoundOut, nBurnSoundLen);
 		} else {
 			memset (pBurnSoundOut, 0, nBurnSoundLen * 4);
-			MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
-			MSM6295Render(1, pBurnSoundOut, nBurnSoundLen);
+			MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 		}
 	}
 

@@ -279,8 +279,7 @@ static INT32 DrvDoReset()
 
 	K051649Reset();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	cpubank = 0;
 	bankctrl = 0;
@@ -430,8 +429,7 @@ static INT32 DrvExit()
 {
 	GenericTilesExit();
 
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	K051649Exit();
 
 	ZetExit();
@@ -547,8 +545,7 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			if (is_bootleg == 0) {
 				K051649Update(pSoundBuf, nSegmentLength);
 			}
@@ -562,8 +559,7 @@ static INT32 DrvFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			memset (pSoundBuf, 0, nSegmentLength * 2 * 2);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			if (is_bootleg == 0) {
 				K051649Update(pSoundBuf, nSegmentLength);
 			}

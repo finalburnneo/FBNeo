@@ -696,8 +696,7 @@ static INT32 drvDoReset()
 	ZetReset();
 	ZetClose();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 	BurnYM2151Reset();
 	NMK112Reset();
 
@@ -794,8 +793,7 @@ static INT32 drvInit()
 
 static INT32 drvExit()
 {
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 	BurnYM2151Exit();
 
 	ToaPalExit();
@@ -897,8 +895,7 @@ static INT32 drvFrame()
 			INT32 nSegmentLength = (nBurnSoundLen * i / nInterleave) - nSoundBufferPos;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -912,8 +909,7 @@ static INT32 drvFrame()
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			if (nSegmentLength) {
 				BurnYM2151Render(pSoundBuf, nSegmentLength);
-				MSM6295Render(0, pSoundBuf, nSegmentLength);
-				MSM6295Render(1, pSoundBuf, nSegmentLength);
+				MSM6295Render(pSoundBuf, nSegmentLength);
 			}
 		}
 	}

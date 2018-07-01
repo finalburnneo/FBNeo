@@ -1,7 +1,7 @@
 // Galaga & Dig-Dug driver for FB Alpha, based on the MAME driver by Nicola Salmoria & previous work by Martin Scragg, Mirko Buffoni, Aaron Giles
 // Dig Dug added July 27, 2015
 
-// notes: freeplay in galaga causes the game to crash before fully booting
+// notes: galaga freeplay mode doesn't display "freeplay" - need to investigate.
 
 #include "tiles_generic.h"
 #include "z80_intf.h"
@@ -234,7 +234,7 @@ static struct BurnDIPInfo GalagaDIPList[]=
 	{0x0d, 0x01, 0x80, 0x00, "Cocktail"               },
 	
 	// Dip 3	
-	{0   , 0xfe, 0   , 7   , "Coinage"                },
+	{0   , 0xfe, 0   , 8   , "Coinage"                },
 	{0x0e, 0x01, 0x07, 0x04, "4 Coins 1 Play"         },
 	{0x0e, 0x01, 0x07, 0x02, "3 Coins 1 Play"         },
 	{0x0e, 0x01, 0x07, 0x06, "2 Coins 1 Play"         },
@@ -242,7 +242,7 @@ static struct BurnDIPInfo GalagaDIPList[]=
 	{0x0e, 0x01, 0x07, 0x01, "2 Coins 3 Plays"        },
 	{0x0e, 0x01, 0x07, 0x03, "1 Coin  2 Plays"        },
 	{0x0e, 0x01, 0x07, 0x05, "1 Coin  3 Plays"        },
-	//{0x0e, 0x01, 0x07, 0x00, "Freeplay"               },  // causes crash in cpu 2?
+	{0x0e, 0x01, 0x07, 0x00, "Freeplay"               },
 	
 	{0   , 0xfe, 0   , 8   , "Bonus Life"             },
 	{0x0e, 0x01, 0x38, 0x20, "20k  60k  60k"          },
@@ -252,7 +252,7 @@ static struct BurnDIPInfo GalagaDIPList[]=
 	{0x0e, 0x01, 0x38, 0x38, "30k  80k"               },
 	{0x0e, 0x01, 0x38, 0x08, "30k 100k 100k"          },
 	{0x0e, 0x01, 0x38, 0x28, "30k 120k 120k"          },
-	{0x0e, 0x01, 0x38, 0x00, "None"                   },	
+	{0x0e, 0x01, 0x38, 0x00, "None"                   },
 	
 	{0   , 0xfe, 0   , 4   , "Lives"                  },
 	{0x0e, 0x01, 0xc0, 0x00, "2"                      },
@@ -2069,6 +2069,9 @@ static void DrvMakeInputs()
 		DrvInput[1] -= (DrvInputPort1r[i] & 1) << i;
 		DrvInput[2] -= (DrvInputPort2r[i] & 1) << i;
 	}
+
+	if (!digdugmode) // galaga only - service mode
+		DrvInput[0] = (DrvInput[0] & ~0x80) | (DrvDip[0] & 0x80);
 }
 
 static INT32 DrvFrame()
@@ -2117,7 +2120,8 @@ static INT32 DrvFrame()
 			nCurrentCPU = 2;
 			ZetOpen(nCurrentCPU);
 			ZetRun(nCyclesTotal[nCurrentCPU] / nInterleave);
-			if ((i == (nInterleave / 2)-3 || i == (nInterleave-1-3)) && DrvCPU3FireIRQ) {
+			if (((i == ((64 + 000) * nInterleave) / 272) ||
+				 (i == ((64 + 128) * nInterleave) / 272)) && DrvCPU3FireIRQ) {
 				ZetNmi();
 			}
 			ZetClose();

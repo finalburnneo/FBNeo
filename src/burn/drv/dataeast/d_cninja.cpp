@@ -994,8 +994,7 @@ static INT32 DrvDoReset()
 		ZetReset();
 		ZetClose();
 		
-		MSM6295Reset(0);
-		MSM6295Reset(1);
+		MSM6295Reset();
 		BurnYM2151Reset();
 	} else {
 		deco16SoundReset();
@@ -1779,8 +1778,7 @@ static INT32 DrvExit()
 	if (has_z80) {
 		ZetExit();
 		has_z80 = 0;
-		MSM6295Exit(0);
-		MSM6295Exit(1);
+		MSM6295Exit();
 		BurnYM2151Exit();
 	} else {
 		deco16SoundExit();
@@ -2575,8 +2573,7 @@ static INT32 StoneageFrame()
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -2588,8 +2585,7 @@ static INT32 StoneageFrame()
 		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			MSM6295Render(0, pSoundBuf, nSegmentLength);
-			MSM6295Render(1, pSoundBuf, nSegmentLength);
+			MSM6295Render(pSoundBuf, nSegmentLength);
 		}
 	}
 

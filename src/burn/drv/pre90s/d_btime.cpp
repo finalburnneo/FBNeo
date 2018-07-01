@@ -1736,9 +1736,9 @@ static INT32 BnjInit()
 	filter_rc_set_route(0, 0.20, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(1, 0.20, BURN_SND_ROUTE_BOTH);
 	filter_rc_set_route(2, 0.20, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(3, 0.25, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(4, 0.25, BURN_SND_ROUTE_BOTH);
-	filter_rc_set_route(5, 0.25, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(3, 0.45, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(4, 0.45, BURN_SND_ROUTE_BOTH);
+	filter_rc_set_route(5, 0.45, BURN_SND_ROUTE_BOTH);
 
 	DrvDoReset();
 

@@ -943,8 +943,8 @@ void deco16SoundReset()
 
 	if (deco16_sound_enable[0]) BurnYM2151Reset();
 	if (deco16_sound_enable[1]) BurnYM2203Reset();
-	if (deco16_sound_enable[2]) MSM6295Reset(0);
-	if (deco16_sound_enable[3]) MSM6295Reset(1);
+	if (deco16_sound_enable[2] ||
+		deco16_sound_enable[3]) MSM6295Reset();
 
 	deco16_soundlatch = 0;
 }
@@ -1004,8 +1004,8 @@ void deco16SoundExit()
 
 	if (deco16_sound_enable[0]) BurnYM2151Exit();
 	if (deco16_sound_enable[1]) BurnYM2203Exit();
-	if (deco16_sound_enable[2]) MSM6295Exit(0);
-	if (deco16_sound_enable[3]) MSM6295Exit(1);
+	if (deco16_sound_enable[2] ||
+		deco16_sound_enable[3]) MSM6295Exit();
 
 	MSM6295ROM = NULL;
 
@@ -1022,8 +1022,8 @@ void deco16SoundUpdate(INT16 *buf, INT32 len)
 {
 	if (deco16_sound_enable[0]) BurnYM2151Render(buf, len);
 //	if (deco16_sound_enable[1]) BurnYM2203Update(buf, len);
-	if (deco16_sound_enable[2]) MSM6295Render(0, buf, len);
-	if (deco16_sound_enable[3]) MSM6295Render(1, buf, len);
+	if (deco16_sound_enable[2] ||
+		deco16_sound_enable[3]) MSM6295Render(buf, len);
 }
 
 void deco16SoundScan(INT32 nAction, INT32 *pnMin)

@@ -493,8 +493,7 @@ void deco32_z80_sound_reset()
 	BurnYM2151Reset();
 	ZetClose();
 
-	MSM6295Reset(0);
-	MSM6295Reset(1);
+	MSM6295Reset();
 
 	deco32_sound_irq = 0;
 	deco16_soundlatch = 0xff;
@@ -533,8 +532,7 @@ void deco32_z80_sound_exit()
 	ZetExit();
 
 	BurnYM2151Exit();
-	MSM6295Exit(0);
-	MSM6295Exit(1);
+	MSM6295Exit();
 
 	MSM6295ROM = NULL;
 	use_z80 = 0;
@@ -543,8 +541,7 @@ void deco32_z80_sound_exit()
 void deco32_z80_sound_update(INT16 *buf, INT32 len)
 {
 	BurnYM2151Render(buf, len);
-	MSM6295Render(0, buf, len);
-	MSM6295Render(1, buf, len);
+	MSM6295Render(buf, len);
 }
 
 void deco32_z80_sound_scan(INT32 nAction, INT32 *pnMin)
@@ -1389,8 +1386,6 @@ static INT32 DrvDoReset()
 	}
 
 	if (game_select != 3) DrvYM2151WritePort(0, 0);
-
-	if (game_select == 4) MSM6295Reset(2);
 
 	EEPROMReset();
 
@@ -2247,8 +2242,6 @@ static INT32 DrvExit()
 	EEPROMExit();
 
 	ArmExit();
-
-	if (game_select == 4) MSM6295Exit(2);
 
 	if (uses_gun) {
 		BurnGunExit();
@@ -3398,7 +3391,6 @@ static INT32 DrvFrame()
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			if (game_select == 4) MSM6295Render(2, pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -3409,7 +3401,6 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 			deco16SoundUpdate(pSoundBuf, nSegmentLength);
-			if (game_select == 4) MSM6295Render(2, pSoundBuf, nSegmentLength);
 		}
 	}
 

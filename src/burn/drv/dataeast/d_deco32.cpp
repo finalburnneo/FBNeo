@@ -40,6 +40,9 @@ static UINT8 *DrvAceRAM;
 static UINT8 *DrvJackRAM;
 static UINT8 *DrvTMSRAM;
 
+static UINT8 *DrvDVIRAM0; // dragngun
+static UINT8 *DrvDVIRAM1;
+
 static UINT16 *pTempDraw[4];
 
 static UINT32 *DrvPalette;
@@ -373,6 +376,7 @@ static struct BurnInputInfo DragngunInputList[] = {
 	{"Service",		BIT_DIGITAL,	DrvJoy2 + 2,	"service"	},
 	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 3,	"dip"	}, // + 3!
+	{"Dip C",		BIT_DIPSWITCH,	DrvDips + 4,	"dip"	},
 };
 
 STDINPUTINFO(Dragngun)
@@ -382,6 +386,7 @@ static struct BurnDIPInfo DragngunDIPList[]=
 {
 	{0x0e, 0xff, 0xff, 0xfe, NULL			},
 	{0x0f, 0xff, 0xff, 0x00, NULL			},
+	{0x10, 0xff, 0xff, 0x04, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Reset"		},
 	{0x0e, 0x01, 0x01, 0x00, "Off"			},
@@ -398,6 +403,10 @@ static struct BurnDIPInfo DragngunDIPList[]=
 	{0   , 0xfe, 0   ,    2, "Speed Hacks"			},
 	{0x0f, 0x01, 0x01, 0x00, "Off"				},
 	{0x0f, 0x01, 0x01, 0x01, "On"				},
+
+	{0   , 0xfe, 0   ,    2, "Service Mode"		},
+	{0x10, 0x01, 0x04, 0x04, "Off"			},
+	{0x10, 0x01, 0x04, 0x00, "On"			},
 };
 
 STDDIPINFO(Dragngun)
@@ -1273,6 +1282,7 @@ static void dragngun_write_long(UINT32 address, UINT32 data)
 			sprite_ctrl = data;
 		return;
 	}
+	//if ((address & 0xfff0000) != 0x170000) bprintf (0, _T("WL: %5.5x, %8.8x\n"), address, data);
 }
 
 static UINT8 dragngun_read_byte(UINT32 address)
@@ -1284,10 +1294,20 @@ static UINT8 dragngun_read_byte(UINT32 address)
 	switch (address)
 	{
 		case 0x440000:
-			return (deco16_vblank ? 0xff : 0xfe); // service & 4
+			return (deco16_vblank ? 0xfb : 0xfa) | (DrvDips[4] & 0x04); // service & 4
+
+		case 0x438000:
+			switch (lightgun_port) {
+				case 4: return BurnGunReturnX(0);
+				case 5: return BurnGunReturnX(1);
+				case 6: return BurnGunReturnY(0);
+				case 7: return BurnGunReturnY(1);
+			}
+
+			return 0;
 	}
 
-	bprintf (0, _T("RB: %5.5x\n"), address);
+	//bprintf (0, _T("RB: %5.5x\n"), address);
 
 	return 0;
 }
@@ -1319,8 +1339,11 @@ static UINT32 dragngun_read_long(UINT32 address)
 		case 0x12800c:
 			return deco_irq_read((address / 4) & 3);
 
+		case 0x138000: // nop
+			return 0;
+
 		case 0x420000:
-			return (EEPROMRead() & 1) ? 0xff : 0xfe;
+			return 0xfffffffe | (EEPROMRead() & 1);
 
 		case 0x400000:
 			return MSM6295Read(2);
@@ -1333,17 +1356,17 @@ static UINT32 dragngun_read_long(UINT32 address)
 				case 7: return BurnGunReturnY(1);
 			}
 
-			//bprintf(0, _T("x{%X} "), address);
-			return 0; // analog
+			return 0;
 
 		case 0x440000:
-			return (deco16_vblank ? 0xff : 0xfe); // service & 4
+			return (deco16_vblank ? 0xfb : 0xfa) | (DrvDips[4] & 0x04); // service & 4
 
 		case 0x1000000:
 		case 0x1000004:
 			return BurnRandom();
 
 	}
+	//bprintf (0, _T("RL: %5.5x\n"), address);
 	return 0;
 }
 
@@ -1445,6 +1468,8 @@ static INT32 MemIndex()
 	DrvSprBuf2	= Next; Next += 0x001000;
 	DrvTMSRAM	= Next; Next += 0x000100;
 	DrvJackRAM	= Next; Next += 0x001000;
+	DrvDVIRAM0  = Next; Next += 0x008000;
+	DrvDVIRAM1  = Next; Next += 0x000200;
 
 	RamEnd		= Next;
 
@@ -2158,6 +2183,11 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	ArmMapMemory(DrvSysRAM,			0x100000, 0x11ffff, MAP_RAM); // 32-bit
 	ArmMapMemory(DrvPalRAM,			0x130000, 0x131fff, MAP_RAM); // 32-bit
 	ArmMapMemory(DrvSprRAM,			0x200000, 0x2283ff, MAP_RAM);
+
+	ArmMapMemory(DrvAceRAM,			0x0204800, 0x0204fff, MAP_RAM);
+	ArmMapMemory(DrvDVIRAM0,    	0x1000100, 0x1007fff, MAP_RAM);
+	ArmMapMemory(DrvDVIRAM1,    	0x10b0000, 0x10b01ff, MAP_RAM);
+
 	ArmMapMemory(DrvARMROM + 0x100000,	0x300000, 0x3fffff, MAP_ROM);
 	ArmSetWriteByteHandler(dragngun_write_byte);
 	ArmSetWriteLongHandler(dragngun_write_long);
@@ -2197,9 +2227,9 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
 
 	MSM6295Init(2, (32220000/32) / 132, 1);
-	MSM6295SetBank(2, DrvSndROM2, 0, 0x3ffff);
+	MSM6295SetBank(2, DrvSndROM2 + ((DrvARMROM[0] == 0x5f) ? 0x00000 : 0x40000), 0, 0x3ffff);
 
-	MSM6295SetRoute(2, 0.35, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 

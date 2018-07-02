@@ -3622,7 +3622,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		}
 
 		SCAN_VAR(DrvOkiBank);
-
 		SCAN_VAR(global_priority);
 		SCAN_VAR(DrvOkiBank);
 		SCAN_VAR(raster_irq_target);
@@ -3632,6 +3631,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(lightgun_irq);
 		SCAN_VAR(raster_irq_scanline);
 		SCAN_VAR(lightgun_latch);
+		SCAN_VAR(sprite_ctrl);
+		SCAN_VAR(lightgun_port);
 	}
 
 	if (nAction & ACB_WRITE) {

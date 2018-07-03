@@ -42,6 +42,7 @@ static UINT8 *DrvTMSRAM;
 
 static UINT8 *DrvDVIRAM0; // dragngun
 static UINT8 *DrvDVIRAM1;
+static UINT32 *pTempSprite;
 
 static UINT16 *pTempDraw[4];
 
@@ -1473,12 +1474,17 @@ static INT32 MemIndex()
 
 	RamEnd		= Next;
 
-	if (game_select == 2 || game_select == 3)
+	if (game_select == 2 || game_select == 3) // nslasher, tattass
 	{
 		pTempDraw[0]	= (UINT16*)Next; Next += nScreenWidth * nScreenHeight * sizeof(INT16);
 		pTempDraw[1]	= (UINT16*)Next; Next += nScreenWidth * nScreenHeight * sizeof(INT16);
 		pTempDraw[2]	= (UINT16*)Next; Next += nScreenWidth * nScreenHeight * sizeof(INT16);
 		pTempDraw[3]	= (UINT16*)Next; Next += nScreenWidth * nScreenHeight * sizeof(INT16);
+	}
+
+	if (game_select == 4) // dragngun
+	{
+		pTempSprite    = (UINT32*)Next; Next += nScreenWidth * nScreenHeight * sizeof(UINT32);
 	}
 
 	MemEnd		= Next;
@@ -2110,6 +2116,8 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	game_select = 4;
 	speedhack_address = speedhack;
 
+	GenericTilesInit(); // for allocating memory for pTempSprite
+
 	gfxlen[0] = 0x40000;
 	gfxlen[1] = 0x400000;
 	gfxlen[2] = 0x400000;
@@ -2230,8 +2238,6 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	MSM6295SetBank(2, DrvSndROM2 + ((DrvARMROM[0] == 0x5f) ? 0x00000 : 0x40000), 0, 0x3ffff);
 
 	MSM6295SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
-
-	GenericTilesInit();
 
 	{	// disable service mode lockout (what is this??)
 		if (DrvARMROM[0] == 0x5f) { // japan
@@ -3060,7 +3066,7 @@ static INT32 NslasherDraw()
 }
 
 static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 flipy,INT32 sx,INT32 sy,
-		INT32 scalex, INT32 scaley, INT32 sprite_screen_width, INT32  sprite_screen_height, UINT8 alpha,INT32 priority)
+		INT32 scalex, INT32 scaley, INT32 sprite_screen_width, INT32 sprite_screen_height, UINT8 alpha, INT32 priority, INT32 depth)
 {
 	if (!scalex || !scaley) return;
 
@@ -3068,23 +3074,6 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 fli
 
 	color = (color & 0x1f) * 16;
 	UINT32 *pal = DrvPalette + color;
-
-	INT32 depth = BurnHighCol(0,0xff,0,0);
-
-	switch (depth)
-	{
-		case 0x00ff00:
-			depth = nBurnBpp * 8;
-		break;
-
-		case 0x007e0:
-			depth = 16;
-		break;
-
-		case 0x003e0:
-			depth = 15;
-		break;
-	}
 
 	const UINT8 *code_base = DrvGfxROM3 + ((code & 0x7fff) * 0x100);
 
@@ -3135,13 +3124,13 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 fli
 
 		if( ex > nScreenWidth )
 		{
-			INT32 pixels = ex-(nScreenWidth-1)-1;
+			INT32 pixels = ex-nScreenWidth;
 			ex -= pixels;
 		}
 
 		if( ey > nScreenHeight )
 		{
-			INT32 pixels = ey-(nScreenHeight-1)-1;
+			INT32 pixels = ey-nScreenHeight;
 			ey -= pixels;
 		}
 
@@ -3151,81 +3140,105 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 fli
 			{
 				if (depth == 32)
 				{
-						const UINT8 *source = code_base + (y_index >> 16) * 16;
-						UINT32 *dest = ((UINT32*)pBurnDraw) + (y * nScreenWidth);
-						UINT8 *pri = deco16_prio_map + (y * 512);
-		
-						INT32 x_index = x_index_base;
-						for (INT32 x = sx; x < ex; x++)
+					const UINT8 *source = code_base + (y_index >> 16) * 16;
+					UINT32 *dest_tmap = ((UINT32*)pBurnDraw) + (y * nScreenWidth);
+					UINT32 *dest = pTempSprite + (y * nScreenWidth);
+					UINT8 *pri = deco16_prio_map + (y * 512);
+
+					INT32 x_index = x_index_base;
+					for (INT32 x = sx; x < ex; x++)
+					{
+						INT32 c = (source[x_index >> 16] >> shift) & 0xf;
+						if (c != 0xf)
 						{
-							INT32 c = (source[x_index >> 16] >> shift) & 0xf;
-							if (c != 0xf)
+							if (priority >= pri[x])
 							{
-								if (priority >= pri[x])
-								{
-									if (alpha == 0xff) {
-										dest[x] = pal[c];
-									} else {
-										dest[x] = alphablend32(dest[x], pal[c], 0x80);
-									}
+								if (alpha == 0xff) { // no alpha
+									dest[x] = pal[c];
+									dest[x] |= 0xff000000;
+								} else { // alpha
+									if ((dest[x] & 0xff000000) == 0x00000000)
+										dest[x] = alphablend32(dest_tmap[x] & 0x00ffffff, pal[c] & 0x00ffffff, alpha);
+									else
+										dest[x] = alphablend32(dest[x] & 0x00ffffff, pal[c] & 0x00ffffff, alpha);
+
+									dest[x] |= 0xff000000;
 								}
-								pri[x] |= 0x80;
+							} else {
+								dest[x] = 0x00000000;
 							}
-		
-							x_index += dx;
 						}
+
+						x_index += dx;
+					}
 				}
 				else if (depth == 16)
 				{
-						const UINT8 *source = code_base + (y_index >> 16) * 16;
-						UINT16 *dest = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
-						UINT8 *pri = deco16_prio_map + (y * 512);
-		
-						INT32 x_index = x_index_base;
-						for (INT32 x = sx; x < ex; x++)
+					const UINT8 *source = code_base + (y_index >> 16) * 16;
+					UINT16 *dest_tmap = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
+					UINT32 *dest = pTempSprite + (y * nScreenWidth);
+					UINT8 *pri = deco16_prio_map + (y * 512);
+
+					INT32 x_index = x_index_base;
+					for (INT32 x = sx; x < ex; x++)
+					{
+						INT32 c = (source[x_index >> 16] >> shift) & 0xf;
+						if (c != 0xf)
 						{
-							INT32 c = (source[x_index >> 16] >> shift) & 0xf;
-							if (c != 0xf)
+							if (priority >= pri[x])
 							{
-								if (priority >= pri[x])
-								{
-									if (alpha == 0xff) {
-										dest[x] = pal[c];
-									} else {
-										dest[x] = alphablend16(dest[x], pal[c], 0x80);
-									}
+								if (alpha == 0xff) { // no alpha
+									dest[x] = pal[c];
+									dest[x] |= 0xff000000;
+								} else { // alpha
+									if ((dest[x] & 0xff000000) == 0x00000000)
+										dest[x] = alphablend16(dest_tmap[x] & 0x00ffffff, pal[c] & 0x00ffffff, alpha);
+									else
+										dest[x] = alphablend16(dest[x] & 0x00ffffff, pal[c] & 0x00ffffff, alpha);
+
+									dest[x] |= 0xff000000;
 								}
-								pri[x] |= 0x80;
+							} else {
+								dest[x] = 0x00000000;
 							}
-		
-							x_index += dx;
 						}
+
+						x_index += dx;
+					}
 				}
 				else if (depth == 15)
 				{
-						const UINT8 *source = code_base + (y_index >> 16) * 16;
-						UINT16 *dest = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
-						UINT8 *pri = deco16_prio_map + (y * 512);
-		
-						INT32 x_index = x_index_base;
-						for (INT32 x = sx; x < ex; x++)
+					const UINT8 *source = code_base + (y_index >> 16) * 16;
+					UINT16 *dest_tmap = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
+					UINT32 *dest = pTempSprite + (y * nScreenWidth);
+					UINT8 *pri = deco16_prio_map + (y * 512);
+
+					INT32 x_index = x_index_base;
+					for (INT32 x = sx; x < ex; x++)
+					{
+						INT32 c = (source[x_index >> 16] >> shift) & 0xf;
+						if (c != 0xf)
 						{
-							INT32 c = (source[x_index >> 16] >> shift) & 0xf;
-							if (c != 0xf)
+							if (priority >= pri[x])
 							{
-								if (priority >= pri[x])
-								{
-									if (alpha == 0xff) {
-										dest[x] = pal[c];
-									} else {
-										dest[x] = alphablend15(dest[x], pal[c], 0x80);
-									}
+								if (alpha == 0xff) { // no alpha
+									dest[x] = pal[c];
+									dest[x] |= 0xff000000;
+								} else { // alpha
+									if ((dest[x] & 0xff000000) == 0x00000000)
+										dest[x] = alphablend15(dest_tmap[x] & 0x00ffffff, pal[c] & 0x00ffffff, alpha);
+									else
+										dest[x] = alphablend15(dest[x] & 0x00ffffff, pal[c] & 0x00ffffff, alpha);
+
+									dest[x] |= 0xff000000;
 								}
-								pri[x] |= 0x80;
+							} else {
+								dest[x] = 0x00000000;
 							}
-		
-							x_index += dx;
 						}
+
+						x_index += dx;
+					}
 				}
 
 				y_index += dy;
@@ -3233,6 +3246,8 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 fli
 		}
 	}
 }
+
+//extern int counter;
 
 static void dragngun_draw_sprites()
 {
@@ -3244,8 +3259,26 @@ static void dragngun_draw_sprites()
 	const UINT32 *layout_ram;
 	const UINT32 *lookup_ram;
 
-	//for (INT32 offs = 0;offs < 0x800;offs += 8)
-	for (INT32 offs = 0x800-8; offs >= 0; offs -= 8)
+	memset(pTempSprite, 0x00, nScreenWidth * nScreenHeight * sizeof(UINT32));
+
+	INT32 depth = BurnHighCol(0,0xff,0,0);
+
+	switch (depth)
+	{
+		case 0x00ff00:
+			depth = nBurnBpp * 8;
+		break;
+
+		case 0x007e0:
+			depth = 16;
+		break;
+
+		case 0x003e0:
+			depth = 15;
+		break;
+	}
+
+	for (INT32 offs = 0;offs < 0x800;offs += 8)
 	{
 		INT32 xpos,ypos;
 
@@ -3276,7 +3309,10 @@ static void dragngun_draw_sprites()
 
 		INT32 color = spritedata[offs+6]&0x1f;
 
-		INT32 priority = 7; //(spritedata[offs + 6] & 0x60) >> 5;
+		INT32 priority = (spritedata[offs + 6] & 0x60) >> 5;
+		INT32 priority_orig = priority;
+		// pri hacking: follow priority_orig
+		priority = 7;
 
 		INT32 alpha = (spritedata[offs+6] & 0x80) ? 0x80 : 0xff;
 
@@ -3313,9 +3349,13 @@ static void dragngun_draw_sprites()
 
 				if ((sprite & 0xc000) == 0x0000 || (sprite & 0xc000) == 0xc000)
 					sprite ^= 0xc000;
+				//if (counter) bprintf(0, _T("%X, "), sprite);
+
+				if (sprite >= 0x3e44 && sprite <= 0x3f03 && priority_orig == 1) // dragon-fire masking effect for titlescreen
+					priority = 1; else priority = 7;
 
 				dragngun_drawgfxzoom(sprite,color,fx,fy,xpos>>16,(ypos>>16)-8,zoomx,zoomy,
-						((xpos+(zoomx<<4))>>16) - (xpos>>16), ((ypos+(zoomy<<4))>>16) - (ypos>>16), alpha,priority);
+						((xpos+(zoomx<<4))>>16) - (xpos>>16), ((ypos+(zoomy<<4))>>16) - (ypos>>16), alpha, priority, depth);
 
 				if (fx)
 					xpos-=zoomx<<4;
@@ -3326,6 +3366,49 @@ static void dragngun_draw_sprites()
 				ypos-=zoomy<<4;
 			else
 				ypos+=zoomy<<4;
+		}
+	}
+	//if (counter) bprintf(0, _T("\n-------\n"));
+
+	switch (depth) {
+		case 32: {
+			for (INT32 y = 0; y < nScreenHeight; y++)
+			{
+				UINT32 *src = pTempSprite + (y * nScreenWidth);
+				UINT32 *dst = ((UINT32*)pBurnDraw) + (y * nScreenWidth);
+
+				for (INT32 x = 0; x < nScreenWidth; x++)
+				{
+					UINT32 srcpix = src[x];
+
+					if ((srcpix & 0xff000000) == 0xff000000)
+					{
+						dst[x] = srcpix & 0x00ffffff;
+					}
+				}
+
+			}
+			break;
+		}
+		case 15:
+		case 16: {
+			for (INT32 y = 0; y < nScreenHeight; y++)
+			{
+				UINT32 *src = pTempSprite + (y * nScreenWidth);
+				UINT16 *dst = ((UINT16*)pBurnDraw) + (y * nScreenWidth);
+
+				for (INT32 x = 0; x < nScreenWidth; x++)
+				{
+					UINT32 srcpix = src[x];
+
+					if ((srcpix & 0xff000000) == 0xff000000)
+					{
+						dst[x] = srcpix & 0x0000ffff;
+					}
+				}
+
+			}
+			break;
 		}
 	}
 }
@@ -3345,16 +3428,9 @@ static INT32 DragngunDraw()
 	if (nBurnLayer & 4) deco16_draw_layer(1, pTransDraw, 4);
 	if (nBurnLayer & 8) deco16_draw_layer(0, pTransDraw, 8);
 
-//	if (cliprect.max_y == 247)
-//	{
-//		rectangle clip(cliprect.min_x, cliprect.max_x, 8, 247);
-//
-//		m_sprgenzoom->dragngun_draw_sprites(bitmap,clip,m_spriteram->buffer(), m_sprite_layout_0_ram, m_sprite_layout_1_ram, m_sprite_lookup_0_ram, m_sprite_lookup_1_ram, m_sprite_ctrl, screen.priority(), m_temp_render_bitmap );
-//	}
-
 	BurnTransferCopy(DrvPalette);
 
-	dragngun_draw_sprites();
+	if (nSpriteEnable & 1) dragngun_draw_sprites();
 
 	return 0;
 }

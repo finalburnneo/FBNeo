@@ -28,6 +28,7 @@ static UINT8 *DrvSndROM0;
 static UINT8 *DrvSndROM1;
 static UINT8 *DrvSndROM2;
 static UINT8 *DrvTMSROM;
+static UINT8 *DrvDVIROM; // dragngun
 static UINT8 *DrvSysRAM;
 static UINT8 *DrvHucRAM;
 static UINT8 *DrvSprRAM;
@@ -1208,13 +1209,16 @@ static UINT32 lockload_read_long(UINT32 address)
 
 static void dragngun_write_byte(UINT32 address, UINT8 data)
 {
+	if (address >= 0x1000000 && address <= 0x1001000) {
+		*((UINT32*)(DrvDVIRAM0 + ((address & 0xfff) ^ 3))) = data;
+		return;
+	}
+
 	bprintf (0, _T("WB: %5.5x, %2.2x\n"), address, data);
 }
 
 static void dragngun_write_long(UINT32 address, UINT32 data)
 {
-//	if ((address & 0xfff0000) != 0x170000) bprintf (0, _T("WL: %5.5x, %8.8x\n"), address, data);
-
 	if (address >= 0x120000 && address <= 0x127fff) {
 		deco146_104_prot_ww(0, (address & 0x7ffc) >> 1, data);
 		return;
@@ -1231,6 +1235,11 @@ static void dragngun_write_long(UINT32 address, UINT32 data)
 	Write16Long(deco16_pf_rowscroll[2],		0x1e0000, 0x1e3fff) // 16-bit
 	Write16Long(deco16_pf_rowscroll[3],		0x1e4000, 0x1e5fff) // 16-bit
 
+	if (address >= 0x1000000 && address <= 0x1001000) {
+		*((UINT32*)(DrvDVIRAM0 + ((address & 0xfff) / 4))) = data;
+		return;
+	}
+
 	switch (address & ~3)
 	{
 		case 0x128000:
@@ -1241,6 +1250,21 @@ static void dragngun_write_long(UINT32 address, UINT32 data)
 		return;
 
 		case 0x138000:
+		case 0x13800c:
+		case 0x140200:
+		case 0x140400:
+		case 0x140800:
+		case 0x140a00:
+		case 0x140c00:
+		case 0x150000:
+		case 0x158000:
+		case 0x160000:
+		case 0x280000:
+		case 0x280004:
+		case 0x280008:
+		case 0x28000c:
+		case 0x234000:
+		case 0x408000:
 		return; // nop
 
 		case 0x138008:
@@ -1283,7 +1307,9 @@ static void dragngun_write_long(UINT32 address, UINT32 data)
 			sprite_ctrl = data;
 		return;
 	}
-	//if ((address & 0xfff0000) != 0x170000) bprintf (0, _T("WL: %5.5x, %8.8x\n"), address, data);
+	if ((address & 0xfff0000) == 0x170000) return; // more nops
+
+	bprintf (0, _T("WL: %5.5x, %8.8x\n"), address, data);
 }
 
 static UINT8 dragngun_read_byte(UINT32 address)
@@ -1308,15 +1334,13 @@ static UINT8 dragngun_read_byte(UINT32 address)
 			return 0;
 	}
 
-	//bprintf (0, _T("RB: %5.5x\n"), address);
+	bprintf (0, _T("RB: %5.5x\n"), address);
 
 	return 0;
 }
 
 static UINT32 dragngun_read_long(UINT32 address)
 {
-//	bprintf (0, _T("RL: %5.5x\n"), address);
-
 	if (address >= 0x120000 && address <= 0x127fff) {
 		return deco146_104_prot_rw(0, (address & 0x7ffc) >> 1);
 	}
@@ -1331,6 +1355,10 @@ static UINT32 dragngun_read_long(UINT32 address)
 	Read16Long(deco16_pf_ram[3],			0x1d4000, 0x1d5fff) // 16-bit
 	Read16Long(deco16_pf_rowscroll[2],		0x1e0000, 0x1e3fff) // 16-bit
 	Read16Long(deco16_pf_rowscroll[3],		0x1e4000, 0x1e5fff) // 16-bit
+
+	if (address >= 0x1000008 && address <= 0x1001000) {
+		return *((UINT32*)(DrvDVIRAM0 + (address & 0xfff)));
+	}
 
 	switch (address & ~3)
 	{
@@ -1367,7 +1395,7 @@ static UINT32 dragngun_read_long(UINT32 address)
 			return BurnRandom();
 
 	}
-	//bprintf (0, _T("RL: %5.5x\n"), address);
+	bprintf (0, _T("RL: %5.5x\n"), address);
 	return 0;
 }
 
@@ -1452,6 +1480,11 @@ static INT32 MemIndex()
 	DrvSndROM2	= Next; Next += sndlen[2];
 
 	DrvTMSROM	= Next; Next += 0x002000;
+
+	if (game_select == 4)
+	{
+		DrvDVIROM   = Next; Next += 0x1000000;
+	}
 
 	DrvPalette	= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
 
@@ -2167,6 +2200,19 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 		if (BurnLoadRom(DrvGfxROM3 + 0x000000,	 23, 4)) return 1;
 		if (BurnLoadRom(DrvGfxROM3 + 0x400000,	 24, 4)) return 1;
 
+		if (BurnLoadRom(DrvDVIROM + (0x000000^3),    25, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x000001^3),    26, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x000002^3),    27, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x000003^3),    28, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x400000^3),    29, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x400001^3),    30, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x400002^3),    31, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x400003^3),    32, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x800000^3),    33, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x800001^3),    34, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x800002^3),    35, 4)) return 1;
+		if (BurnLoadRom(DrvDVIROM + (0x800003^3),    36, 4)) return 1;
+
 		if (BurnLoadRom(DrvSndROM0 + 0x000000,	 37, 1)) return 1;
 
 		if (BurnLoadRom(DrvSndROM1 + 0x000000,	 38, 1)) return 1;
@@ -2187,14 +2233,15 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 
 	ArmInit(0);
 	ArmOpen(0);	
-	ArmMapMemory(DrvARMROM,			0x000000, 0x0fffff, MAP_ROM);
-	ArmMapMemory(DrvSysRAM,			0x100000, 0x11ffff, MAP_RAM); // 32-bit
-	ArmMapMemory(DrvPalRAM,			0x130000, 0x131fff, MAP_RAM); // 32-bit
-	ArmMapMemory(DrvSprRAM,			0x200000, 0x2283ff, MAP_RAM);
+	ArmMapMemory(DrvARMROM,			    0x000000, 0x0fffff, MAP_ROM);
+	ArmMapMemory(DrvSysRAM,			    0x100000, 0x11ffff, MAP_RAM); // 32-bit
+	ArmMapMemory(DrvPalRAM,			    0x130000, 0x131fff, MAP_RAM); // 32-bit
+	ArmMapMemory(DrvSprRAM,			    0x200000, 0x2283ff, MAP_RAM);
+	ArmMapMemory(DrvAceRAM,			    0x0204800, 0x0204fff, MAP_RAM);
 
-	ArmMapMemory(DrvAceRAM,			0x0204800, 0x0204fff, MAP_RAM);
-	ArmMapMemory(DrvDVIRAM0,    	0x1000100, 0x1007fff, MAP_RAM);
-	ArmMapMemory(DrvDVIRAM1,    	0x10b0000, 0x10b01ff, MAP_RAM);
+	ArmMapMemory(DrvDVIROM,    	        0x1400000, 0x1ffffff, MAP_ROM); // DVI needed to beat the final boss
+	ArmMapMemory(DrvDVIRAM0 + 0x1000,   0x1001000, 0x1007fff, MAP_RAM);
+	ArmMapMemory(DrvDVIRAM1,            0x10b0000, 0x10b01ff, MAP_RAM);
 
 	ArmMapMemory(DrvARMROM + 0x100000,	0x300000, 0x3fffff, MAP_ROM);
 	ArmSetWriteByteHandler(dragngun_write_byte);
@@ -2230,14 +2277,14 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	deco16_set_bank_callback(3, dragngun_bank_callback);
 
 	use_z80 = 0;
-	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 0, DrvYM2151WritePort, 0.42, 1006875, 1.00, 2013750, 0.35);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.80, BURN_SND_ROUTE_LEFT);
-	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.80, BURN_SND_ROUTE_RIGHT);
+	deco16SoundInit(DrvHucROM, DrvHucRAM, 4027500, 0, DrvYM2151WritePort, 0.42, 1006875, 0.50, 2013750, 0.18);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.40, BURN_SND_ROUTE_LEFT);
+	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.40, BURN_SND_ROUTE_RIGHT);
 
 	MSM6295Init(2, (32220000/32) / 132, 1);
 	MSM6295SetBank(2, DrvSndROM2 + ((DrvARMROM[0] == 0x5f) ? 0x00000 : 0x40000), 0, 0x3ffff);
 
-	MSM6295SetRoute(2, 1.00, BURN_SND_ROUTE_BOTH);
+	MSM6295SetRoute(2, 0.50, BURN_SND_ROUTE_BOTH);
 
 	{	// disable service mode lockout (what is this??)
 		if (DrvARMROM[0] == 0x5f) { // japan

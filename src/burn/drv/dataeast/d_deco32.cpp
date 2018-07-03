@@ -3354,6 +3354,9 @@ static void dragngun_draw_sprites()
 				if (sprite >= 0x3e44 && sprite <= 0x3f03 && priority_orig == 1) // dragon-fire masking effect for titlescreen
 					priority = 1; else priority = 7;
 
+				if (sprite >= 0xfe4f55 && sprite <= 0xfe4fcc)
+					zoomx=(scalex+1) * 0x10000 / (w*16);
+
 				dragngun_drawgfxzoom(sprite,color,fx,fy,xpos>>16,(ypos>>16)-8,zoomx,zoomy,
 						((xpos+(zoomx<<4))>>16) - (xpos>>16), ((ypos+(zoomy<<4))>>16) - (ypos>>16), alpha, priority, depth);
 

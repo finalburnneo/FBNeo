@@ -74,6 +74,9 @@ static INT32 use_z80 = 0;
 static INT32 use_bsmt = 0;
 static INT32 speedhack_address = 0;
 
+static INT32 (*pStartDraw)() = NULL;
+static INT32 (*pDrawScanline)(INT32) = NULL;
+
 static struct BurnInputInfo CaptavenInputList[] = {
 	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 start"	},
@@ -2340,6 +2343,9 @@ static INT32 DrvExit()
 	has_ace = 0;
 	speedhack_address = 0;
 
+	pStartDraw = NULL;
+	pDrawScanline = NULL;
+
 	return 0;
 }
 
@@ -3463,24 +3469,46 @@ static void dragngun_draw_sprites()
 	}
 }
 
-static INT32 DragngunDraw()
+static INT32 DragngunStartDraw()
 {
 	DrvPaletteUpdate();
 
-	deco16_pf12_update();
-	deco16_pf34_update();
+	lastline = 0;
+
 	deco16_clear_prio_map();
 
 	BurnTransferClear(0x800);
 
-	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, 1 | DECO16_LAYER_8BITSPERPIXEL);
-	if (nBurnLayer & 2) deco16_draw_layer(2, pTransDraw, 2 | DECO16_LAYER_8BITSPERPIXEL);
-	if (nBurnLayer & 4) deco16_draw_layer(1, pTransDraw, 4);
-	if (nBurnLayer & 8) deco16_draw_layer(0, pTransDraw, 8);
+	return 0;
+}
+
+static INT32 DragngunDraw()
+{
+	if (DrvRecalc) {
+		DrvPaletteUpdate();
+		DrvRecalc = 0;
+	}
 
 	BurnTransferCopy(DrvPalette);
 
 	if (nSpriteEnable & 1) dragngun_draw_sprites();
+
+	return 0;
+}
+
+static INT32 DragngunDrawScanline(INT32 line)
+{
+	if (line > nScreenHeight) return 0;
+
+	deco16_pf12_update();
+	deco16_pf34_update();
+
+	if (nBurnLayer & 1) deco16_draw_layer_by_line(lastline, line, 3, pTransDraw, 1 | DECO16_LAYER_8BITSPERPIXEL);
+	if (nBurnLayer & 2) deco16_draw_layer_by_line(lastline, line, 2, pTransDraw, 2 | DECO16_LAYER_8BITSPERPIXEL);
+	if (nBurnLayer & 4) deco16_draw_layer_by_line(lastline, line, 1, pTransDraw, 4);
+	if (nBurnLayer & 8) deco16_draw_layer_by_line(lastline, line, 0, pTransDraw, 8);
+
+	lastline = line;
 
 	return 0;
 }
@@ -3523,8 +3551,8 @@ static INT32 DrvFrame()
 
 	deco16_vblank = 1;
 
-	if (game_select == 0)
-		CaptavenStartDraw();
+	if (pStartDraw != NULL)
+		pStartDraw();
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3533,12 +3561,12 @@ static INT32 DrvFrame()
 
 		deco_irq_scanline_callback(i); // iq_132 - ok?
 
-		if (game_select == 0 && i>=8 && raster_irq) CaptavenDrawScanline(i-8);
+		if (pDrawScanline != NULL && i>=7 && raster_irq) pDrawScanline(i-7);
 
 		if (i == 8) deco16_vblank = 0;
 
 		if (i == 248) {
-			if (game_select == 0) CaptavenDrawScanline(i-8);
+			if (pDrawScanline != NULL) pDrawScanline(i-8);
 			if (game_select == 1 || game_select == 2) irq_callback(1);
 			deco16_vblank = 1;
 		}
@@ -3812,6 +3840,9 @@ STD_ROM_FN(captaven)
 
 static INT32 CaptavenInit()
 {
+	pStartDraw = CaptavenStartDraw;
+	pDrawScanline = CaptavenDrawScanline;
+
 	return CaptavenCommonInit(0, 0x39e8);
 }
 
@@ -5014,6 +5045,9 @@ STD_ROM_FN(dragngun)
 
 static INT32 DragngunInit()
 {
+	pStartDraw = DragngunStartDraw;
+	pDrawScanline = DragngunDrawScanline;
+
 	return DragngunCommonInit(0, 0x628c);
 }
 

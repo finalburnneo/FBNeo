@@ -54,6 +54,7 @@ UINT8 *deco16_sprite_prio_map; // boogwing
 INT32 deco16_vblank;
 
 INT32 deco16_music_tempofix; // set after deco16SoundInit(), fixes tempo issues in darkseal, vaportrail, and cbuster
+INT32 deco16_dragngun_kludge;
 
 void deco16ProtScan();
 void deco16ProtReset();
@@ -584,6 +585,8 @@ void deco16Init(INT32 no_pf34, INT32 split, INT32 full_width)
 	deco16_global_y_offset = 0;
 
 	deco16_priority = 0;
+
+	deco16_dragngun_kludge = 0;
 }
 
 void deco16Reset()
@@ -675,12 +678,25 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 		INT32 rsize = rownum / rows;
 
+		// Dragon Gun st.3 boss scene bug kludge
+		INT32 roffset = 0; // for dragngun's silly bug @ st.3 boss
+
+		if (deco16_dragngun_kludge && tmap == 2 && rsize == 1) {
+			UINT16 *vram	= (UINT16 *)deco16_pf_ram[tmap];
+
+			if (vram[2] == 0x1076 && vram[3] == 0x1076) { // this is our scene!
+				roffset = 0x20;
+				//bprintf(0, _T("dgk,"));
+			}
+		}
+		// end of kludge.
+
 		deco16_scroll_rows[tmap] = rsize;
 
 		INT32 xscroll = scrollx + deco16_global_x_offset + deco16_scroll_offset[tmap][size/16][0];
 
 		for (INT32 r = 0; r < rows; r++) {
-			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r]);
+			deco16_scroll_x[tmap][r & 0x1ff] = xscroll + BURN_ENDIAN_SWAP_INT16(rowscroll[r + roffset]);
 		}
 
 		if (~control1 & 0x20) {

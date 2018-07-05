@@ -2266,6 +2266,7 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	deco_146_104_set_interface_scramble_reverse();
 
 	deco16Init(0, 0, 1);
+	deco16_dragngun_kludge = 1; // st.3 boss blank tile fix
 	deco16_set_graphics(DrvGfxROM0, 0x020000 * 2, DrvGfxROM1, 0x120000 * 2, DrvGfxROM2, 0x400000 * 1);
 	deco16_set_color_base(0, 0x200);
 	deco16_set_color_base(1, 0x300);
@@ -3566,7 +3567,13 @@ static INT32 DrvFrame()
 		if (i == 8) deco16_vblank = 0;
 
 		if (i == 248) {
-			if (pDrawScanline != NULL) pDrawScanline(i-8);
+			if (pDrawScanline != NULL) {
+				pDrawScanline(i-8);
+
+				if (pBurnDraw) {
+					BurnDrvRedraw();
+				}
+			}
 			if (game_select == 1 || game_select == 2) irq_callback(1);
 			deco16_vblank = 1;
 		}
@@ -3591,7 +3598,7 @@ static INT32 DrvFrame()
 	h6280Close();
 	ArmClose();
 
-	if (pBurnDraw) {
+	if (pBurnDraw && pDrawScanline == NULL) {
 		BurnDrvRedraw();
 	}
 

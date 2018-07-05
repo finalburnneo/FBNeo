@@ -88,6 +88,7 @@ void deco16_palette_recalculate(UINT32 *palette, UINT8 *pal);
 extern INT32 deco16_sound_cpuclock;
 extern INT32 deco16_soundlatch;
 extern INT32 deco16_music_tempofix;
+extern INT32 deco16_dragngun_kludge;
 
 void deco16SoundReset();
 void deco16SoundInit(UINT8 *rom, UINT8 *ram, INT32 huc_clock, INT32 ym2203, void (ym2151_port)(UINT32,UINT32), double ym2151vol, INT32 msmclk0, double msmvol0, INT32 msmclk1, double msmvol1);

@@ -417,6 +417,8 @@ static INT32 DrvDoReset(INT32 full_reset)
 
 	MSM6295Reset();
 
+	BurnRandomSetSeed(0x4192462313);
+
 	BurnWatchdogReset();
 	BurnWatchdogRead(); // Turn ON the Watchdog.
 

@@ -1,8 +1,5 @@
 // FB Alpha Air Buster: Trouble Specialty Raid Unit driver module
 // Based on MAME driver by Luca Elia
-//
-// Todo: fix slowdowns (starts @ 3 green machine-gun sub-bosses in first level)
-//       -without- fudging cpu speed in DrvFrame
 
 #include "tiles_generic.h"
 #include "m68000_intf.h"
@@ -10,11 +7,12 @@
 #include "msm6295.h"
 #include "burn_ym2203.h"
 #include "pandora.h"
+#include "watchdog.h"
 
 static UINT8 *AllMem;
-static UINT8 *RamEnd;
 static UINT8 *MemEnd;
 static UINT8 *AllRam;
+static UINT8 *RamEnd;
 static UINT8 *DrvZ80ROM0;
 static UINT8 *DrvZ80ROM1;
 static UINT8 *DrvZ80ROM2;
@@ -41,9 +39,10 @@ static UINT8 *sound_status;
 static UINT8 *sound_status2;
 static UINT8 *coin_lockout;
 static UINT8 *flipscreen;
+static UINT8 *bankdata;
 
-static INT32 interrupt_vectors[2];
-static INT32 watchdog;
+static INT32 nExtraCycles[2];
+
 static INT32 is_bootleg;
 
 static UINT8 DrvJoy1[8];
@@ -54,50 +53,50 @@ static UINT8 DrvInputs[3];
 static UINT8 DrvReset;
 
 static struct BurnInputInfo AirbustrInputList[] = {
-	{"P1 Coin",		BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy3 + 0,	"p1 start"	},
-	{"P1 Up",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
-	{"P1 Down",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
-	{"P1 Left",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 down"	},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 2,	"p1 left"	},
 	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 right"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	{"P2 Coin",		BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p2 coin"	},
 	{"P2 Start",		BIT_DIGITAL,	DrvJoy3 + 1,	"p2 start"	},
-	{"P2 Up",		BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
-	{"P2 Down",		BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
-	{"P2 Left",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 down"	},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p2 left"	},
 	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 3,	"p2 right"	},
 	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4,	"p2 fire 1"	},
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p2 fire 2"	},
 
-	{"Reset",		BIT_DIGITAL,	&DrvReset,	"reset"		},
-	{"Service",		BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
-	{"Dip A",		BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
-	{"Dip B",		BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,	"reset"		},
+	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
+	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 };
 
 STDINPUTINFO(Airbustr)
 
 static struct BurnDIPInfo AirbustrDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x12, 0xff, 0xff, 0xff, NULL					},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x12, 0x01, 0x02, 0x02, "Off"			},
-//	{0x12, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x12, 0x01, 0x02, 0x02, "Off"					},
+	{0x12, 0x01, 0x02, 0x00, "On"					},
+	
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x12, 0x01, 0x04, 0x04, "Off"					},
+	{0x12, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x04, 0x04, "Off"			},
-	{0x12, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Coin Mode"			},
+	{0x12, 0x01, 0x08, 0x08, "Mode 1"				},
+	{0x12, 0x01, 0x08, 0x00, "Mode 2"				},
 
-	{0   , 0xfe, 0   ,    2, "Coin Mode"		},
-	{0x12, 0x01, 0x08, 0x08, "Mode 1"		},
-	{0x12, 0x01, 0x08, 0x00, "Mode 2"		},
-
-	{0   , 0xfe, 0   ,    8, "Coin A"		},
+	{0   , 0xfe, 0   ,    8, "Coin A"				},
 	{0x12, 0x01, 0x30, 0x20, "2 Coins 1 Credits"	},
 	{0x12, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x12, 0x01, 0x30, 0x10, "1 Coin  2 Credits"	},
@@ -117,43 +116,43 @@ static struct BurnDIPInfo AirbustrDIPList[]=
 	{0x12, 0x01, 0xc0, 0x40, "1 Coin  3 Credits"	},
 	{0x12, 0x01, 0xc0, 0x00, "1 Coin  4 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x03, 0x02, "Easy"			},
-	{0x13, 0x01, 0x03, 0x03, "Normal"		},
-	{0x13, 0x01, 0x03, 0x01, "Difficult"		},
-	{0x13, 0x01, 0x03, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x13, 0x01, 0x03, 0x02, "Easy"					},
+	{0x13, 0x01, 0x03, 0x03, "Normal"				},
+	{0x13, 0x01, 0x03, 0x01, "Difficult"			},
+	{0x13, 0x01, 0x03, 0x00, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"			},
-	{0x13, 0x01, 0x08, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Freeze"				},
+	{0x13, 0x01, 0x08, 0x08, "Off"					},
+	{0x13, 0x01, 0x08, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x30, 0x30, "3"			},
-	{0x13, 0x01, 0x30, 0x20, "4"			},
-	{0x13, 0x01, 0x30, 0x10, "5"			},
-	{0x13, 0x01, 0x30, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x13, 0x01, 0x30, 0x30, "3"					},
+	{0x13, 0x01, 0x30, 0x20, "4"					},
+	{0x13, 0x01, 0x30, 0x10, "5"					},
+	{0x13, 0x01, 0x30, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x40, 0x00, "Off"			},
-	{0x13, 0x01, 0x40, 0x40, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x13, 0x01, 0x40, 0x00, "Off"					},
+	{0x13, 0x01, 0x40, 0x40, "On"					},
 };
 
 STDDIPINFO(Airbustr)
 
 static struct BurnDIPInfo AirbustjDIPList[]=
 {
-	{0x12, 0xff, 0xff, 0xff, NULL			},
-	{0x13, 0xff, 0xff, 0xff, NULL			},
+	{0x12, 0xff, 0xff, 0xff, NULL					},
+	{0x13, 0xff, 0xff, 0xff, NULL					},
 
-//	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-//	{0x12, 0x01, 0x02, 0x02, "Off"			},
-//	{0x12, 0x01, 0x02, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Flip Screen"			},
+	{0x12, 0x01, 0x02, 0x02, "Off"					},
+	{0x12, 0x01, 0x02, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    2, "Service Mode"		},
-	{0x12, 0x01, 0x04, 0x04, "Off"			},
-	{0x12, 0x01, 0x04, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
+	{0x12, 0x01, 0x04, 0x04, "Off"					},
+	{0x12, 0x01, 0x04, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Coin A"		},
+	{0   , 0xfe, 0   ,    4, "Coin A"				},
 	{0x12, 0x01, 0x30, 0x10, "2 Coins 1 Credits"	},
 	{0x12, 0x01, 0x30, 0x30, "1 Coin  1 Credits"	},
 	{0x12, 0x01, 0x30, 0x00, "2 Coins 3 Credits"	},
@@ -165,104 +164,81 @@ static struct BurnDIPInfo AirbustjDIPList[]=
 	{0x12, 0x01, 0xc0, 0x00, "2 Coins 3 Credits"	},
 	{0x12, 0x01, 0xc0, 0x80, "1 Coin  2 Credits"	},
 
-	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x13, 0x01, 0x03, 0x02, "Easy"			},
-	{0x13, 0x01, 0x03, 0x03, "Normal"		},
-	{0x13, 0x01, 0x03, 0x01, "Difficult"		},
-	{0x13, 0x01, 0x03, 0x00, "Very Difficult"	},
+	{0   , 0xfe, 0   ,    4, "Difficulty"			},
+	{0x13, 0x01, 0x03, 0x02, "Easy"					},
+	{0x13, 0x01, 0x03, 0x03, "Normal"				},
+	{0x13, 0x01, 0x03, 0x01, "Difficult"			},
+	{0x13, 0x01, 0x03, 0x00, "Very Difficult"		},
 
-	{0   , 0xfe, 0   ,    2, "Freeze"		},
-	{0x13, 0x01, 0x08, 0x08, "Off"			},
-	{0x13, 0x01, 0x08, 0x00, "On"			},
+	{0   , 0xfe, 0   ,    2, "Freeze"				},
+	{0x13, 0x01, 0x08, 0x08, "Off"					},
+	{0x13, 0x01, 0x08, 0x00, "On"					},
 
-	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x13, 0x01, 0x30, 0x30, "3"			},
-	{0x13, 0x01, 0x30, 0x20, "4"			},
-	{0x13, 0x01, 0x30, 0x10, "5"			},
-	{0x13, 0x01, 0x30, 0x00, "7"			},
+	{0   , 0xfe, 0   ,    4, "Lives"				},
+	{0x13, 0x01, 0x30, 0x30, "3"					},
+	{0x13, 0x01, 0x30, 0x20, "4"					},
+	{0x13, 0x01, 0x30, 0x10, "5"					},
+	{0x13, 0x01, 0x30, 0x00, "7"					},
 
-	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x13, 0x01, 0x40, 0x00, "Off"			},
-	{0x13, 0x01, 0x40, 0x40, "On"			},
+	{0   , 0xfe, 0   ,    2, "Demo Sounds"			},
+	{0x13, 0x01, 0x40, 0x00, "Off"					},
+	{0x13, 0x01, 0x40, 0x40, "On"					},
 };
 
 STDDIPINFO(Airbustj)
 
-static inline void DrvRecalcPalette()
+static void bankswitch(INT32 cpu, INT32 data)
 {
-	UINT8 r,g,b;
+	UINT8 *rom[3] = { DrvZ80ROM0, DrvZ80ROM1, DrvZ80ROM2 };
 
-	for (INT32 i = 0; i < 0x600; i+=2) {
-		INT32 d = DrvPalRAM[i + 1] * 256 + DrvPalRAM[i + 0];
+	bankdata[cpu] = data;
 
-		r = (d >>  5) & 0x1f;
-		g = (d >> 10) & 0x1f;
-		b = (d >>  0) & 0x1f;
-
-		r = (r << 3) | (r >> 2);
-		g = (g << 3) | (g >> 2);
-		b = (b << 3) | (b >> 2);
-
-		DrvPalette[i / 2] = BurnHighCol(r, g, b, 0);
-	}
+	ZetMapMemory(rom[cpu] + 0x4000 * (data & 0x07), 0x8000, 0xbfff, MAP_ROM);
 }
 
-static void airbustr_bankswitch(UINT8 *rom, INT32 data)
-{
-	ZetMapArea(0x8000, 0xbfff, 0, rom + 0x4000 * (data & 0x07));
-	ZetMapArea(0x8000, 0xbfff, 2, rom + 0x4000 * (data & 0x07));
-}
-
-void __fastcall airbustr_main_write(UINT16 address, UINT8 data)
+static void __fastcall airbustr_main_write(UINT16 address, UINT8 data)
 {
 	if ((address & 0xf000) == 0xc000) { // pandora
-
 		DrvSprRAM[address & 0xfff] = data;
-
 		address = (address & 0x800) | ((address & 0xff) << 3) | ((address & 0x700) >> 8);
-
 		DrvPandoraRAM[address] = data;
-
 		return;
 	}
 }
 
-UINT8 __fastcall airbustr_main_read(UINT16 address)
+static UINT8 __fastcall airbustr_main_read(UINT16 address)
 {
-	if ((address & 0xf000) == 0xe000) {
+	switch (address)
+	{
+		case 0xefe0:
+			return BurnWatchdogRead();
 
-		INT32 offset = address & 0xfff;
-		switch (offset)
+		case 0xeff2:
+		case 0xeff3:
 		{
-			case 0xfe0:
-				watchdog = 180;
-				return 0;
-	
-			case 0xff2:
-			case 0xff3:
-			{
-				INT32 r = (DrvDevRAM[0xff0] + DrvDevRAM[0xff1] * 256) * (DrvDevRAM[0xff2] + DrvDevRAM[0xff3] * 256);
-	
-				if (offset & 1) return r >> 8;
-				return r;
-			}
-	
-			case 0xff4:
-				return BurnRandom();
+			INT32 r = (DrvDevRAM[0xff0] + DrvDevRAM[0xff1] * 256) * (DrvDevRAM[0xff2] + DrvDevRAM[0xff3] * 256);
+
+			if (address & 1) return r >> 8;
+			return r;
 		}
-	
-		return DrvDevRAM[offset];
+
+		case 0xeff4:
+			return BurnRandom();
+	}
+
+	if ((address & 0xf000) == 0xe000) {
+		return DrvDevRAM[address & 0xfff];
 	}
 
 	return 0;
 }
 
-void __fastcall airbustr_main_out(UINT16 port, UINT8 data)
+static void __fastcall airbustr_main_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
 		case 0x00:
-			airbustr_bankswitch(DrvZ80ROM0, data);
+			bankswitch(0, data);
 		return;
 
 		case 0x01:
@@ -280,21 +256,19 @@ void __fastcall airbustr_main_out(UINT16 port, UINT8 data)
 	}
 }
 
-void __fastcall airbustr_sub_out(UINT16 port, UINT8 data)
+static void __fastcall airbustr_sub_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
 		case 0x00:
 		{
-			airbustr_bankswitch(DrvZ80ROM1, data);
-
+			bankswitch(1, data);
 			*flipscreen = data & 0x10;
-
 			pandora_set_clear(data & 0x20);
 		}
 		return;
 
-		case 0x02: // soundcommand_w
+		case 0x02:
 		{
 			*soundlatch = data;
 			*sound_status = 1;
@@ -316,7 +290,7 @@ void __fastcall airbustr_sub_out(UINT16 port, UINT8 data)
 
 		case 0x28:
 			*coin_lockout = ~data & 0x0c;
-			// coINT32 counter also (0x03)
+			// coin counter also (0x03)
 		return;
 
 		case 0x38:
@@ -324,7 +298,7 @@ void __fastcall airbustr_sub_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall airbustr_sub_in(UINT16 port)
+static UINT8 __fastcall airbustr_sub_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
@@ -348,20 +322,17 @@ UINT8 __fastcall airbustr_sub_in(UINT16 port)
 	return 0;
 }
 
-void __fastcall airbustr_sound_out(UINT16 port, UINT8 data)
+static void __fastcall airbustr_sound_out(UINT16 port, UINT8 data)
 {
 	switch (port & 0xff)
 	{
 		case 0x00:
-			airbustr_bankswitch(DrvZ80ROM2, data);
+			bankswitch(2, data);
 		return;
 
 		case 0x02:
-			BurnYM2203Write(0, 0, data);
-		return;
-
 		case 0x03:
-			BurnYM2203Write(0, 1, data);
+			BurnYM2203Write(0, port & 1, data);
 		return;
 
 		case 0x04:
@@ -375,15 +346,13 @@ void __fastcall airbustr_sound_out(UINT16 port, UINT8 data)
 	}
 }
 
-UINT8 __fastcall airbustr_sound_in(UINT16 port)
+static UINT8 __fastcall airbustr_sound_in(UINT16 port)
 {
 	switch (port & 0xff)
 	{
 		case 0x02:
-			return BurnYM2203Read(0, 0);
-
 		case 0x03:
-			return BurnYM2203Read(0, 1);
+			return BurnYM2203Read(0, port & 1);
 
 		case 0x04:
 			return MSM6295Read(0);
@@ -406,30 +375,52 @@ static UINT8 DrvYM2203PortB(UINT32)
 	return DrvDips[1];
 }
 
+static tilemap_callback( airbustr0 )
+{
+	INT32 attr = DrvVidRAM0[offs + 0x400];
+
+	TILE_SET_INFO(0, DrvVidRAM0[offs] + ((attr & 0x0f) << 8), (attr >> 4) + 0x10, 0);
+}
+
+static tilemap_callback( airbustr1 )
+{
+	INT32 attr = DrvVidRAM1[offs + 0x400];
+
+	TILE_SET_INFO(0, DrvVidRAM1[offs] + ((attr & 0x0f) << 8), (attr >> 4), 0);
+}
+
 static INT32 DrvDoReset(INT32 full_reset)
 {
+	// Notes:
+	// On fresh boot: game sets up banking and loads up the interrupt vectors.
+	// Then its the watchdog's turn to come in and reboot the game into game-mode.
+
 	if (full_reset) {
 		memset (AllRam, 0, RamEnd - AllRam);
 	}
 
-//	UINT8 *rom[3] = { DrvZ80ROM0, DrvZ80ROM1, DrvZ80ROM2 };
+	ZetOpen(0);
+//	bankswitch(0,0);
+	ZetReset();
+	ZetClose();
 
-	for (INT32 i = 0; i < 3; i++) {
-		ZetOpen(i);
-		ZetReset();
-//		if (full_reset) airbustr_bankswitch(rom[i], 2);
-		ZetClose();
-	}
+	ZetOpen(1);
+//	bankswitch(1,0);
+	ZetReset();
+	ZetClose();
 
-	MSM6295Reset(0);
 	ZetOpen(2);
+//	bankswitch(2,0);
+	ZetReset();
 	BurnYM2203Reset();
 	ZetClose();
 
-	interrupt_vectors[0] = 0xff;
-	interrupt_vectors[1] = 0xfd;
+	MSM6295Reset();
 
-	watchdog = 180;
+	BurnWatchdogReset();
+	BurnWatchdogRead(); // Turn ON the Watchdog.
+
+	nExtraCycles[0] = nExtraCycles[1] = 0;
 
 	return 0;
 }
@@ -462,19 +453,21 @@ static INT32 MemIndex()
 	DrvShareRAM		= Next; Next += 0x001000;
 	DrvDevRAM		= Next; Next += 0x001000;
 
-	DrvPandoraRAM		= Next; Next += 0x001000;
+	DrvPandoraRAM	= Next; Next += 0x001000;
 	DrvSprRAM		= Next; Next += 0x001000;
 	DrvPalRAM		= Next; Next += 0x001000;
 
-	DrvScrollRegs		= Next; Next += 0x000006;
+	DrvScrollRegs	= Next; Next += 0x000008;
 
 	soundlatch		= Next; Next += 0x000001;
 	soundlatch2		= Next; Next += 0x000001;
-	sound_status		= Next; Next += 0x000001;
-	sound_status2		= Next; Next += 0x000001;
+	sound_status	= Next; Next += 0x000001;
+	sound_status2	= Next; Next += 0x000001;
 
-	coin_lockout		= Next; Next += 0x000001;
+	coin_lockout	= Next; Next += 0x000001;
 	flipscreen		= Next; Next += 0x000001;
+
+	bankdata		= Next; Next += 0x000004;
 
 	RamEnd			= Next;
 
@@ -485,11 +478,9 @@ static INT32 MemIndex()
 
 static INT32 DrvGfxDecode()
 {
-	static INT32 Plane[4]  = { 0, 1, 2, 3 };
-	static INT32 XOffs[16] = { 0*4, 1*4, 2*4, 3*4, 4*4, 5*4, 6*4, 7*4,
-	  0*4+32*8, 1*4+32*8, 2*4+32*8, 3*4+32*8, 4*4+32*8, 5*4+32*8, 6*4+32*8, 7*4+32*8 };
-	static INT32 YOffs[16] = { 0*32, 1*32, 2*32, 3*32, 4*32, 5*32, 6*32, 7*32,
-	  0*32+64*8, 1*32+64*8, 2*32+64*8, 3*32+64*8, 4*32+64*8, 5*32+64*8, 6*32+64*8, 7*32+64*8 };
+	static INT32 Plane[4]  = { STEP4(0,1) };
+	static INT32 XOffs[16] = { STEP8(0,4), STEP8(256,4) };
+	static INT32 YOffs[16] = { STEP8(0,32), STEP8(512,32) };
 
 	UINT8 *tmp = (UINT8*)BurnMalloc(0x100000);
 	if (tmp == NULL) {
@@ -509,20 +500,6 @@ static INT32 DrvGfxDecode()
 	BurnFree (tmp);
 
 	return 0;
-}
-
-static tilemap_callback( airbustr0 )
-{
-	INT32 attr = DrvVidRAM0[offs + 0x400];
-
-	TILE_SET_INFO(0, DrvVidRAM0[offs] + ((attr & 0x0f) << 8), (attr >> 4) + 0x10, 0);
-}
-
-static tilemap_callback( airbustr1 )
-{
-	INT32 attr = DrvVidRAM1[offs + 0x400];
-
-	TILE_SET_INFO(0, DrvVidRAM1[offs] + ((attr & 0x0f) << 8), (attr >> 4), 0);
 }
 
 static INT32 DrvInit()
@@ -561,7 +538,7 @@ static INT32 DrvInit()
 		}
 		else
 		{
-			// mcu...
+		//	if (BurnLoadRom(DrvMCUROM  + 0x000000,  3, 2)) return 1;.
 
 			if (BurnLoadRom(DrvGfxROM0 + 0x000000,  4, 1)) return 1;
 
@@ -576,20 +553,11 @@ static INT32 DrvInit()
 
 	ZetInit(0);
 	ZetOpen(0);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM0);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM0);
-	ZetMapArea(0xc000, 0xcfff, 0, DrvSprRAM);
-//	ZetMapArea(0xc000, 0xcfff, 1, DrvSprRAM); // handler
-	ZetMapArea(0xc000, 0xcfff, 2, DrvSprRAM);
-	ZetMapArea(0xd000, 0xdfff, 0, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xdfff, 1, DrvZ80RAM0);
-	ZetMapArea(0xd000, 0xdfff, 2, DrvZ80RAM0);
-	if (is_bootleg) ZetMapArea(0xe000, 0xefff, 0, DrvDevRAM);
-	ZetMapArea(0xe000, 0xefff, 1, DrvDevRAM);
-	ZetMapArea(0xe000, 0xefff, 2, DrvDevRAM);
-	ZetMapArea(0xf000, 0xffff, 0, DrvShareRAM);
-	ZetMapArea(0xf000, 0xffff, 1, DrvShareRAM);
-	ZetMapArea(0xf000, 0xffff, 2, DrvShareRAM);
+	ZetMapMemory(DrvZ80ROM0,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvSprRAM,			0xc000, 0xcfff, MAP_ROM); // handler
+	ZetMapMemory(DrvZ80RAM0,		0xd000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvDevRAM,			0xe000, 0xefff, (is_bootleg) ? MAP_RAM : (MAP_WRITE|MAP_FETCH));
+	ZetMapMemory(DrvShareRAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetWriteHandler(airbustr_main_write);
 	ZetSetReadHandler(airbustr_main_read);
 	ZetSetOutHandler(airbustr_main_out);
@@ -597,57 +565,45 @@ static INT32 DrvInit()
 
 	ZetInit(1);
 	ZetOpen(1);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM1);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM1);
-	ZetMapArea(0xc000, 0xc7ff, 0, DrvVidRAM1);
-	ZetMapArea(0xc000, 0xc7ff, 1, DrvVidRAM1);
-	ZetMapArea(0xc000, 0xc7ff, 2, DrvVidRAM1);
-	ZetMapArea(0xc800, 0xcfff, 0, DrvVidRAM0);
-	ZetMapArea(0xc800, 0xcfff, 1, DrvVidRAM0);
-	ZetMapArea(0xc800, 0xcfff, 2, DrvVidRAM0);
-	ZetMapArea(0xd000, 0xdfff, 0, DrvPalRAM);
-	ZetMapArea(0xd000, 0xdfff, 1, DrvPalRAM);
-	ZetMapArea(0xd000, 0xdfff, 2, DrvPalRAM);
-	ZetMapArea(0xe000, 0xefff, 0, DrvZ80RAM1);
-	ZetMapArea(0xe000, 0xefff, 1, DrvZ80RAM1);
-	ZetMapArea(0xe000, 0xefff, 2, DrvZ80RAM1);
-	ZetMapArea(0xf000, 0xffff, 0, DrvShareRAM);
-	ZetMapArea(0xf000, 0xffff, 1, DrvShareRAM);
-	ZetMapArea(0xf000, 0xffff, 2, DrvShareRAM);
+	ZetMapMemory(DrvZ80ROM1,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvVidRAM1,		0xc000, 0xc7ff, MAP_RAM);
+	ZetMapMemory(DrvVidRAM0,		0xc800, 0xcfff, MAP_RAM);
+	ZetMapMemory(DrvPalRAM,			0xd000, 0xdfff, MAP_RAM);
+	ZetMapMemory(DrvZ80RAM1,		0xe000, 0xefff, MAP_RAM);
+	ZetMapMemory(DrvShareRAM,		0xf000, 0xffff, MAP_RAM);
 	ZetSetOutHandler(airbustr_sub_out);
 	ZetSetInHandler(airbustr_sub_in);
 	ZetClose();
 
 	ZetInit(2);
 	ZetOpen(2);
-	ZetMapArea(0x0000, 0x7fff, 0, DrvZ80ROM2);
-	ZetMapArea(0x0000, 0x7fff, 2, DrvZ80ROM2);
-	ZetMapArea(0xc000, 0xdfff, 0, DrvZ80RAM2);
-	ZetMapArea(0xc000, 0xdfff, 1, DrvZ80RAM2);
-	ZetMapArea(0xc000, 0xdfff, 2, DrvZ80RAM2);
+	ZetMapMemory(DrvZ80ROM2,		0x0000, 0x7fff, MAP_ROM);
+	ZetMapMemory(DrvZ80RAM2,		0xc000, 0xdfff, MAP_RAM);
 	ZetSetOutHandler(airbustr_sound_out);
 	ZetSetInHandler(airbustr_sound_in);
 	ZetClose();
 
+	BurnWatchdogInit(DrvDoReset, 180);
+
 	BurnYM2203Init(1, 3000000, NULL, 0);
 	BurnYM2203SetPorts(0, &DrvYM2203PortA, &DrvYM2203PortB, NULL, NULL);
-	BurnTimerAttachZet(6000000);
-	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE, 0.50, BURN_SND_ROUTE_BOTH);
+	BurnYM2203SetRoute(0, BURN_SND_YM2203_YM2203_ROUTE,   0.50, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_1, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_2, 0.25, BURN_SND_ROUTE_BOTH);
 	BurnYM2203SetRoute(0, BURN_SND_YM2203_AY8910_ROUTE_3, 0.25, BURN_SND_ROUTE_BOTH);
+	BurnTimerAttach(&ZetConfig, 6000000);
 
 	MSM6295Init(0, 3000000 / 132, 1);
 	MSM6295SetRoute(0, 0.80, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 
-	pandora_init(DrvPandoraRAM, DrvGfxROM1, (0x400000/0x100)-1, 0x200, 0, -16);
-
-	GenericTilemapInit(0, scan_rows_map_scan, airbustr0_map_callback, 16, 16, 32, 32);
-	GenericTilemapInit(1, scan_rows_map_scan, airbustr1_map_callback, 16, 16, 32, 32);
-	GenericTilemapSetTransparent(1, 0);
+	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, airbustr0_map_callback, 16, 16, 32, 32);
+	GenericTilemapInit(1, TILEMAP_SCAN_ROWS, airbustr1_map_callback, 16, 16, 32, 32);
 	GenericTilemapSetGfx(0, DrvGfxROM0, 4, 16, 16, 0x100000, 0, 0x1f);
+	GenericTilemapSetTransparent(1, 0);
+
+	pandora_init(DrvPandoraRAM, DrvGfxROM1, (0x400000/0x100)-1, 0x200, 0, -16);
 
 	DrvDoReset(1);
 
@@ -661,13 +617,31 @@ static INT32 DrvExit()
 	GenericTilesExit();
 
 	ZetExit();
-	MSM6295Exit(0);
+	MSM6295Exit();
 
 	BurnYM2203Exit();
 
 	BurnFree(AllMem);
 
 	return 0;
+}
+
+static inline void DrvRecalcPalette()
+{
+	for (INT32 i = 0; i < 0x600; i+=2)
+	{
+		UINT16 d = DrvPalRAM[i + 1] * 256 + DrvPalRAM[i + 0];
+
+		UINT8 r = (d >>  5) & 0x1f;
+		UINT8 g = (d >> 10) & 0x1f;
+		UINT8 b = (d >>  0) & 0x1f;
+
+		r = (r << 3) | (r >> 2);
+		g = (g << 3) | (g >> 2);
+		b = (b << 3) | (b >> 2);
+
+		DrvPalette[i / 2] = BurnHighCol(r, g, b, 0);
+	}
 }
 
 static void draw_layer(INT32 layer, INT32 r0, INT32 r1, INT32 r2, INT32 r3)
@@ -710,15 +684,15 @@ static INT32 DrvFrame()
 		DrvDoReset(1);
 	}
 
-	if (watchdog == 0 && is_bootleg == 0) {
-		DrvDoReset(0);
+	if (is_bootleg == 0) {
+		BurnWatchdogUpdate();
 	}
-	watchdog--;
 
 	ZetNewFrame();
 
 	{
 		memset (DrvInputs, 0xff, 3);
+
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -726,53 +700,53 @@ static INT32 DrvFrame()
 		}
 	}
 
-	INT32 nInterleave = 100;
-	INT32 nCyclesTotal[3] =  { 6000000 * 2 / 60, 6000000 * 2 / 60, 6000000 / 60 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nInterleave = 256;
+	INT32 nCyclesTotal[3] =  { (INT32)((double)6000000 / 57.40), (INT32)((double)6000000 / 57.40), (INT32)((double)6000000 / 57.40) };
+	INT32 nCyclesDone[3] = { nExtraCycles[0], nExtraCycles[1], 0 };
 
 	for (INT32 i = 0; i < nInterleave; i++) {
-
-		INT32 nSegment = (nCyclesTotal[0] / nInterleave) * (i + 1);
-
 		ZetOpen(0);
-		nCyclesDone[0] += ZetRun(nSegment - nCyclesDone[0]);
-		if (i == 49 || i == 99) {
-			interrupt_vectors[0] ^= 2;
-			ZetSetVector(interrupt_vectors[0]);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[0] += ZetRun(((i + 1) * nCyclesTotal[0] / nInterleave) - nCyclesDone[0]);
+		if (i == 240) {
+			ZetSetVector(0xff);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
+		}
+		if (i == 64) {
+			ZetSetVector(0xfd);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(1);
-		nCyclesDone[1] += ZetRun(nSegment - nCyclesDone[1]);
-		if (i == 49 || i == 99) {
-			interrupt_vectors[1] ^= 2;
-			ZetSetVector(interrupt_vectors[1]);
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		nCyclesDone[1] += ZetRun(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		if (i == 240) {
+			ZetSetVector(0xfd);
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 
 		ZetOpen(2);
-		BurnTimerUpdate(nCyclesDone[1] /*sync with sub cpu*/);
-		if (i == 99) {
-			ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		BurnTimerUpdate((i + 1) * nCyclesTotal[2] / nInterleave);
+		if (i == 240) {
+			ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 		}
 		ZetClose();
 	}
 
 	ZetOpen(2);
-
 	BurnTimerEndFrame(nCyclesTotal[2]);
 
 	if (pBurnSoundOut) {
 		BurnYM2203Update(pBurnSoundOut, nBurnSoundLen);
-		MSM6295Render(0, pBurnSoundOut, nBurnSoundLen);
+		MSM6295Render(pBurnSoundOut, nBurnSoundLen);
 	}
-
 	ZetClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 	
 	if (pBurnDraw) {
-		DrvDraw();
+		BurnDrvRedraw();
 	}
 
 	pandora_buffer_sprites();
@@ -801,9 +775,21 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnYM2203Scan(nAction, pnMin);
 		MSM6295Scan(nAction, pnMin);
 
-		SCAN_VAR(interrupt_vectors);
-
 		BurnRandomScan(nAction);
+
+		BurnWatchdogScan(nAction);
+
+		SCAN_VAR(nExtraCycles);
+	}
+
+	if (nAction & ACB_WRITE)
+	{
+		for (INT32 i = 0; i < 3; i++)
+		{
+			ZetOpen(i);
+			bankswitch(i, bankdata[i]);
+			ZetClose();
+		}
 	}
 
 	return 0;
@@ -819,7 +805,7 @@ static struct BurnRomInfo airbustrRomDesc[] = {
 
 	{ "pr-21.bin",	0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "i80c51",	0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
+	{ "i80c51",		0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
 
 	{ "pr-000.bin",	0x80000, 0x8ca68f0d, 5 | BRF_GRA }, 	      //  4 Tiles
 
@@ -852,7 +838,7 @@ static struct BurnRomInfo airbustrjRomDesc[] = {
 
 	{ "pr-21.bin",	0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "i80c51",	0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
+	{ "i80c51",		0x01000, 0x00000000, 4 | BRF_NODUMP },	      //  3 80c51 MCU
 
 	{ "pr-000.bin",	0x80000, 0x8ca68f0d, 5 | BRF_GRA }, 	      //  4 Tiles
 
@@ -879,25 +865,25 @@ struct BurnDriver BurnDrvAirbustrj = {
 // Air Buster: Trouble Specialty Raid Unit (bootleg)
 
 static struct BurnRomInfo airbustrbRomDesc[] = {
-	{ "5.bin",	0x20000, 0x9e4216a2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
+	{ "5.bin",		0x20000, 0x9e4216a2, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 #0 Code
 
-	{ "1.bin",	0x20000, 0x85464124, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
+	{ "1.bin",		0x20000, 0x85464124, 2 | BRF_PRG | BRF_ESS }, //  1 Z80 #1 Code
 
-	{ "2.bin",	0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
+	{ "2.bin",		0x20000, 0x6e0a5df0, 3 | BRF_PRG | BRF_ESS }, //  2 Z80 #2 Code
 
-	{ "7.bin",	0x20000, 0x2e3bf0a2, 4 | BRF_GRA }, 	      //  3 Tiles
-	{ "9.bin",	0x20000, 0x2c23c646, 4 | BRF_GRA }, 	      //  4
-	{ "6.bin",	0x20000, 0x0d6cd470, 4 | BRF_GRA }, 	      //  5
-	{ "8.bin",	0x20000, 0xb3372e51, 4 | BRF_GRA }, 	      //  6
+	{ "7.bin",		0x20000, 0x2e3bf0a2, 4 | BRF_GRA }, 	      //  3 Tiles
+	{ "9.bin",		0x20000, 0x2c23c646, 4 | BRF_GRA }, 	      //  4
+	{ "6.bin",		0x20000, 0x0d6cd470, 4 | BRF_GRA }, 	      //  5
+	{ "8.bin",		0x20000, 0xb3372e51, 4 | BRF_GRA }, 	      //  6
 
-	{ "13.bin",	0x20000, 0x75dee86d, 5 | BRF_GRA }, 	      //  7 Sprites
-	{ "12.bin",	0x20000, 0xc98a8333, 5 | BRF_GRA }, 	      //  8
-	{ "11.bin",	0x20000, 0x4e9baebd, 5 | BRF_GRA }, 	      //  9
-	{ "10.bin",	0x20000, 0x63dc8cd8, 5 | BRF_GRA }, 	      // 10
-	{ "14.bin",	0x10000, 0x6bbd5e46, 5 | BRF_GRA }, 	      // 11
+	{ "13.bin",		0x20000, 0x75dee86d, 5 | BRF_GRA }, 	      //  7 Sprites
+	{ "12.bin",		0x20000, 0xc98a8333, 5 | BRF_GRA }, 	      //  8
+	{ "11.bin",		0x20000, 0x4e9baebd, 5 | BRF_GRA }, 	      //  9
+	{ "10.bin",		0x20000, 0x63dc8cd8, 5 | BRF_GRA }, 	      // 10
+	{ "14.bin",		0x10000, 0x6bbd5e46, 5 | BRF_GRA }, 	      // 11
 
-	{ "4.bin",	0x20000, 0x21d9bfe3, 6 | BRF_SND }, 	      // 12 OKI M6295
-	{ "3.bin",	0x20000, 0x58cd19e2, 6 | BRF_SND }, 	      // 13
+	{ "4.bin",		0x20000, 0x21d9bfe3, 6 | BRF_SND }, 	      // 12 OKI M6295
+	{ "3.bin",		0x20000, 0x58cd19e2, 6 | BRF_SND }, 	      // 13
 };
 
 STD_ROM_PICK(airbustrb)

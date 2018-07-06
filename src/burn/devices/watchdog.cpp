@@ -63,11 +63,9 @@ void BurnWatchdogUpdate()
 #if defined FBA_DEBUG
 			bprintf (0, _T("BurnWatchdogUpdate - Watchdog triggered!\n"));
 #endif
-			
+
 		}
 	}
-
-	Watchdog = 0;
 }
 
 INT32 BurnWatchdogScan(INT32 nAction)

@@ -38,6 +38,8 @@ static UINT8 *DrvPrioBitmap;
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
 
+static INT32 nExtraCycles[2];
+
 static UINT16 scrollx[3];
 static UINT16 scrolly[3];
 static UINT16 scroll_flag[3];
@@ -2353,6 +2355,8 @@ static INT32 DrvDoReset()
 
 	oki_bank = 0xff;
 
+	nExtraCycles[0] = nExtraCycles[1] = 0;
+
 	return 0;
 }
 
@@ -3291,7 +3295,7 @@ static INT32 System1ZFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6000000 / 56, 3000000 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
@@ -3316,6 +3320,8 @@ static INT32 System1ZFrame()
 
 	ZetClose();
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3347,7 +3353,7 @@ static INT32 System1AFrame()
 	INT32 nInterleave = 262;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { ((tshingen) ? 8000000 : 6000000) / 56, 7000000 / 56 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3391,6 +3397,9 @@ static INT32 System1AFrame()
 
 	SekClose();
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -3421,7 +3430,7 @@ static INT32 System1BFrame()
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 8000000 / 60, 7000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3464,6 +3473,9 @@ static INT32 System1BFrame()
 	}
 
 	SekClose();
+
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3495,7 +3507,7 @@ static INT32 System1CFrame()
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
 	INT32 nCyclesTotal[2] = { 12000000 / 60, 7000000 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles[0], nExtraCycles[1] };
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3539,6 +3551,9 @@ static INT32 System1CFrame()
 
 	SekClose();
 
+	nExtraCycles[0] = nCyclesDone[0] - nCyclesTotal[0];
+	nExtraCycles[1] = nCyclesDone[1] - nCyclesTotal[1];
+
 	if (pBurnDraw) {
 		DrvDraw();
 	}
@@ -3548,7 +3563,7 @@ static INT32 System1CFrame()
 	return 0;
 }
 
-static INT32 System1DFrame()
+static INT32 System1DFrame() // peekaboo
 {
 	if (DrvReset) {
 		DrvDoReset();
@@ -3627,6 +3642,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(sound_cpu_reset);
 		SCAN_VAR(oki_bank);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

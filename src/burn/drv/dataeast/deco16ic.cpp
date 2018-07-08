@@ -686,7 +686,6 @@ static void pf_update(INT32 tmap, INT32 scrollx, INT32 scrolly, UINT16 *rowscrol
 
 			if (vram[2] == 0x1076 && vram[3] == 0x1076) { // this is our scene!
 				roffset = 0x20;
-				//bprintf(0, _T("dgk,"));
 			}
 		}
 		// end of kludge.

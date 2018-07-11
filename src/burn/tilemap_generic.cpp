@@ -265,7 +265,7 @@ void GenericTilemapCategoryConfig(INT32 which, INT32 categories)
 		return;
 	}
 
-	if (categories < 0 || categories >= 256) {
+	if (categories < 0 || categories > 256) {
 		bprintf (0, _T("GenericTilemapCategoryConfig(%d, %d); called with invalid category number (<0 or >255)!\nForcing to 0!\n"), which, categories);
 		categories = 0;
 	}
@@ -295,7 +295,7 @@ void GenericTilemapSetCategoryEntry(INT32 which, INT32 category, INT32 entry, IN
 		return;
 	}
 
-	if (category < 0 || category >= 256) {
+	if (category < 0 || category > 256) {
 		bprintf (0, _T("GenericTilemapSetCategoryEntry(%d, %d, %d, %d); called with invalid category number (<0 or >255)!\nForcing to 0!\n"), which, category, entry, trans);
 		category = 0;
 	}

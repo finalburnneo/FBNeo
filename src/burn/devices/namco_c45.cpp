@@ -9,6 +9,7 @@ static UINT8 *c45RoadTiles = NULL;
 static UINT16 *c45RoadBitmap = NULL;
 static UINT8 *c45RoadClut = NULL;
 static UINT8 c45_temp_clut[0x100];
+static INT32 c45_transparent_color = 0x7fffffff;
 
 void c45RoadReset()
 {
@@ -16,7 +17,7 @@ void c45RoadReset()
 	if (c45RoadTiles != NULL) memset (c45RoadTiles, 0, 0x40000);
 }
 
-void c45RoadInit(UINT32 , UINT8 *clut)
+void c45RoadInit(UINT32 transparent_color, UINT8 *clut)
 {
 	c45RoadRAM = (UINT8*)BurnMalloc(0x20000);
 	c45RoadTiles = (UINT8*)BurnMalloc(0x40000);
@@ -24,6 +25,8 @@ void c45RoadInit(UINT32 , UINT8 *clut)
 	c45RoadClut = clut;
 	c45RoadBitmap = (UINT16*)BurnMalloc(0x400 * sizeof(UINT16));
 
+	c45_transparent_color = transparent_color;
+	
 	if (c45RoadClut == NULL) {
 		c45RoadClut = c45_temp_clut;
 		for (INT32 i = 0; i < 0x100; i++) c45RoadClut[i] = i;
@@ -193,8 +196,12 @@ void c45RoadDraw()
 
 		while (numpixels-- > 0)
 		{
-			if (pdest[screenx] <= pri) {
-				dest[screenx] = source_gfx[sourcex >> 16];
+			INT32 pixel = pdest[screenx];
+			
+			if (pixel <= pri ) {
+				if (pixel != c45_transparent_color) {
+					dest[screenx] = source_gfx[sourcex >> 16];
+				}
 				pdest[screenx] = pri;
 			}
 			screenx++;

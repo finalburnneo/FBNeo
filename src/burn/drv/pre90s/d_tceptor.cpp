@@ -133,7 +133,7 @@ static struct BurnDIPInfo TceptorDIPList[]=
 	{0x0b, 0x01, 0x04, 0x00, "2D"					},
 //	{0x0b, 0x01, 0x04, 0x04, "3D"					},
 
-	{0   , 0xfe, 0   ,    2, "Test Mode"			},
+	{0   , 0xfe, 0   ,    2, "Service Mode"			},
 	{0x0c, 0x01, 0x04, 0x00, "On"					},
 	{0x0c, 0x01, 0x04, 0x04, "Off"					},
 };
@@ -955,7 +955,11 @@ static INT32 DrvDraw()
 	if (nBurnLayer & 2) GenericTilemapDraw(2, pTransDraw, 0);
 	GenericTilesClearClip();
 
-	if (nBurnLayer & 4) c45RoadDraw();
+	if (nBurnLayer & 4) {
+		GenericTilesSetClip(-1, nScreenWidth-1, -1, -1); // c45 uses namcos2-style (0 based) clipping. we need to account for that.
+		c45RoadDraw();
+		GenericTilesClearClip();
+	}
 
 	for (INT32 i = 7; i >=0; i--) draw_sprites(i);
 	

@@ -2,11 +2,11 @@
 // Based on MAME driver by BUT
 
 // to do:
-//	analog inputs
-//	c45 seems to overflow one pixel from the right to the left side?
+//  audio cpu dies around 0x0f sound test. hrmf.
+//	*analog inputs: done, but needs a digital accel button.
+//	c45 road wrong colors
 //	in mame the graphics are -16 to the left?
-//	pretty sure the dac isn't correct
-//	play test!
+//	play test! ( after all fixed :P -dink )
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -67,16 +67,22 @@ static UINT8 DrvInputs[2];
 static UINT8 DrvDips[3];
 static UINT8 DrvReset;
 
+static INT32 DrvAnalogPort0 = 0;
+static INT32 DrvAnalogPort1 = 0;
+static INT32 DrvAnalogPort2 = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo TceptorInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy2 + 1,	"p1 coin"	},
+
+	A("P1 X Axis",      BIT_ANALOG_REL, &DrvAnalogPort0, "mouse x-axis"),
+	A("P1 Y Axis",      BIT_ANALOG_REL, &DrvAnalogPort1, "mouse y-axis"),
+	A("P1 Accelerator", BIT_ANALOG_REL, &DrvAnalogPort2, "p1 x-axis"),
+
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 1,	"p1 fire 2"	},
 	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 3"	},
 	{"P1 Button 4",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 fire 4"	},
-//	analog input placeholders
-	{"P1 Button 5",		BIT_DIGITAL,	DrvJoy1 + 4,	"p1 fire 5"	},
-	{"P1 Button 6",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 6"	},
-	{"P1 Button 7",		BIT_DIGITAL,	DrvJoy1 + 6,	"p1 fire 7"	},
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Service",			BIT_DIGITAL,	DrvJoy2 + 3,	"service"	},
@@ -84,7 +90,7 @@ static struct BurnInputInfo TceptorInputList[] = {
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
 };
-
+#undef A
 STDINPUTINFO(Tceptor)
 
 static struct BurnDIPInfo TceptorDIPList[]=
@@ -192,14 +198,14 @@ static UINT8 tceptor_m6809_read(UINT16 address)
 		case 0x4f00:
 			return 0; // nop
 
-		case 0x4f01:
-			return 0; // pedal
+		case 0x4f01: // pedal (accel)
+			return ProcessAnalog(DrvAnalogPort2, 0, 0, 0x00, 0xd6);
 
-		case 0x4f02:
-			return 0; // stickx
+		case 0x4f02: // x
+			return ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0xfe);
 
-		case 0x4f03:
-			return 0; // sticky
+		case 0x4f03: // y
+			return ProcessAnalog(DrvAnalogPort1, 0, 1, 0x00, 0xfe);
 	}
 
 	return 0;
@@ -234,10 +240,11 @@ static UINT8 tceptor_m6502_0_read(UINT16 address)
 
 static void tceptor_m6502_1_write(UINT16 address, UINT8 data)
 {
+//	if (data!=0 && data !=0x7f) bprintf(0, _T("dac cpu %X %x\n"), address, data);
 	switch (address)
 	{
 		case 0x4000:
-			DACWrite(0, data);
+			DACWrite16(0, data ? (data + 1) * 0x10 : 0x0000);
 		return;
 
 		case 0x5000:
@@ -734,7 +741,7 @@ static INT32 DrvInit(INT32 game)
 	M6809SetReadHandler(tceptor_m6809_read);
 	M6809Close();
 
-	M6502Init(0, TYPE_M6502);
+	M6502Init(0, TYPE_M65C02);
 	M6502Open(0);
 	M6502MapMemory(DrvShareRAM1,			0x0000, 0x00ff, MAP_RAM);
 	M6502MapMemory(DrvM6502RAM0,			0x0100, 0x03ff, MAP_RAM); // 100-30f
@@ -744,7 +751,7 @@ static INT32 DrvInit(INT32 game)
 	M6502SetReadHandler(tceptor_m6502_0_read);
 	M6502Close();
 
-	M6502Init(1, TYPE_M6502);
+	M6502Init(1, TYPE_M65C02);
 	M6502Open(1);
 	M6502MapMemory(DrvShareRAM1,			0x0000, 0x00ff, MAP_RAM);
 	M6502MapMemory(DrvM6502RAM1,			0x0100, 0x01ff, MAP_RAM);
@@ -800,7 +807,7 @@ static INT32 DrvInit(INT32 game)
 	GenericTilemapSetGfx(0, DrvGfxROM0 + 0x00000, 2,  8,  8, 0x04000, 0x000, 0xff);
 	GenericTilemapSetGfx(1, DrvGfxROM1 + 0x00000, 3,  8,  8, 0x10000, 0x800, 0x3f);
 	GenericTilemapSetGfx(2, DrvGfxROM1 + 0x10000, 3,  8,  8, 0x10000, 0x800, 0x3f);
-	GenericTilemapCategoryConfig(0, 0xff);
+	GenericTilemapCategoryConfig(0, 0x100);
 	for (INT32 i = 0; i < 0x100 * 4; i++) {
 		GenericTilemapSetCategoryEntry(0, i/4, i & 3, (DrvColPROM[0xc00 + i] == 7) ? 1 : 0);
 	}
@@ -995,44 +1002,48 @@ static INT32 DrvFrame()
 		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
 		if (i == (nInterleave - 1)) {
 			if (m6809_irq_enable) {
-				M6809SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				M6809SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
 				m6809_irq_enable = 1;
 			}
 		}
 
 		M6502Open(0);
-		nNext = (M6809TotalCycles() * 24) / 32;
+		//nNext = (M6809TotalCycles() * 24) / 32;
+		nNext = ((i + 1) * nCyclesTotal[1]) / nInterleave;
 		nCyclesDone[1] += M6502Run(nNext - nCyclesDone[1]);
 		M6502Close();
 
 		M6502Open(1);
+		nNext = ((i + 1) * nCyclesTotal[2]) / nInterleave;
 		nCyclesDone[2] += M6502Run(nNext - nCyclesDone[2]);
 		M6502Close();
 
-		nNext = (M6809TotalCycles() * 8);
+		//nNext = (M6809TotalCycles() * 8);
+		nNext = ((i + 1) * nCyclesTotal[3]) / nInterleave;
 		nCyclesDone[3] += SekRun(nNext - nCyclesDone[3]);
 		if (i == (nInterleave - 1) && m68000_irq_enable) {
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
 	//	HD63701Open(0);
-		nNext = M6809TotalCycles();
+		//nNext = M6809TotalCycles();
+		nNext = ((i + 1) * nCyclesTotal[4]) / nInterleave;
 		nCyclesDone[4] += HD63701Run(nNext - nCyclesDone[4]);
 		if (i == (nInterleave - 1)) {
 			if (mcu_irq_enable) {
-				HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+				HD63701SetIRQLine(0, CPU_IRQSTATUS_HOLD);
 			} else {
 				mcu_irq_enable = 1;
 			}
 		}
 		//	HD63701Close();
 		
-		if (pBurnSoundOut) {
-			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
+			NamcoSoundUpdateStereo(pSoundBuf, nSegmentLength);
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
@@ -1043,7 +1054,7 @@ static INT32 DrvFrame()
 
 		if (nSegmentLength) {
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
-			NamcoSoundUpdate(pSoundBuf, nSegmentLength);
+			NamcoSoundUpdateStereo(pSoundBuf, nSegmentLength);
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}

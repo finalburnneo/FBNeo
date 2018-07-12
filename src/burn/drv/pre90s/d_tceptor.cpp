@@ -2,11 +2,15 @@
 // Based on MAME driver by BUT
 
 // to do:
-//  audio cpu dies around 0x0f sound test. hrmf.
-//	*analog inputs: done, but needs a digital accel button.
-//	c45 road wrong colors
+//  right side background is jerky and scrolls kinda weird(?)
+//	c45 road wrong colors.  palette is correct.  <- wtf?
 //	in mame the graphics are -16 to the left?
 //	play test! ( after all fixed :P -dink )
+
+// for later (dink):
+//  audio cpu (hd63701) needs 100khz cycles p/s more otherwise it dies around 0xe in the soundtest.
+//  -> verify the m6803_internal_registers & timers internal to the m680x in the core.
+
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -276,7 +280,7 @@ static void __fastcall tceptor_68k_write_word(UINT32 address, UINT16 data)
 
 static void __fastcall tceptor_68k_write_byte(UINT32 address, UINT8 data)
 {
-	if ((address & 0xffc000) == 0x700000) {
+	if ((address & 0xffc000) == 0x700000) { // probably not used
 		DrvShareRAM0[(address / 2) & 0x1fff] = data;
 		return;
 	}
@@ -306,7 +310,7 @@ static UINT16 __fastcall tceptor_68k_read_word(UINT32 address)
 
 static UINT8 __fastcall tceptor_68k_read_byte(UINT32 address)
 {
-	if ((address & 0xffc000) == 0x700000) {
+	if ((address & 0xffc000) == 0x700000) { // probably not used
 		return DrvShareRAM0[(address / 2) & 0x1fff];
 	}
 
@@ -994,7 +998,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nSoundBufferPos = 0;
-	INT32 nCyclesTotal[5] = { 1536000 / 60, 2048000 / 60, 2048000 / 60, 12288000 / 60, 1536000 / 60 };
+	INT32 nCyclesTotal[5] = { 1536000 / 60, 2048000 / 60, 2048000 / 60, 12288000 / 60, (1536000+100000) / 60 };
 	INT32 nCyclesDone[5] = { 0, 0, 0, 0, 0 };
 
 	M6809Open(0);

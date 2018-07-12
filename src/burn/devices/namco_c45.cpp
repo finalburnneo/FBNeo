@@ -185,7 +185,7 @@ void c45RoadDraw()
 		}
 
 		// crop right
-		clip_pixels = (screenx + numpixels) - (max_x);
+		clip_pixels = (screenx + numpixels) - (max_x + 1);
 		if (clip_pixels > 0)
 			numpixels -= clip_pixels;
 

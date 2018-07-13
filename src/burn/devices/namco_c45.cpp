@@ -224,10 +224,15 @@ void c45RoadState(INT32 nAction)
 
 	if (nAction & ACB_WRITE)
 	{
+		for (INT32 i = 0x10000; i < 0x1fa00; i++) {
+			update_tile_pixel(i / 2);
+		}
+#if 0
 		INT32 Planes[2] = { 0, 8 };
 		INT32 XOffs[16] = { STEP8(0, 1), STEP8(16, 1) };
 		INT32 YOffs[16] = { STEP16(0, 32) };
 
 		GfxDecode(0x0400, 2, 16, 16, Planes, XOffs, YOffs, 0x200, c45RoadRAM + 0x10000, c45RoadTiles);
+#endif
 	}
 }

@@ -3,7 +3,6 @@
 
 // to do:
 //  right side background is jerky and scrolls kinda weird(?)
-//	c45 road wrong colors.  palette is correct.  <- wtf?
 //	in mame the graphics are -16 to the left?
 //	play test! ( after all fixed :P -dink )
 
@@ -60,7 +59,7 @@ static UINT8 DrvRecalc;
 
 static UINT8 *sprite_mask_enable;
 
-static UINT16 scroll[4];
+static INT16 scroll[4];
 static UINT16 m68000_irq_enable;
 static UINT8 m6809_irq_enable;
 static UINT8 mcu_irq_enable;
@@ -861,7 +860,8 @@ static void DrvPaletteInit()
 		DrvPalette[i + 0x000] = tab[DrvColPROM[0x0c00 + i]];
 		DrvPalette[i + 0x400] = tab[DrvColPROM[0x1000 + i] | 0x300];
 		DrvPalette[i + 0x800] = tab[i & 0x1ff];
-		DrvPalette[i + 0xc00] = tab[DrvColPROM[0x1400 + (i & 0xff)] | 0x200];
+		DrvPalette[i + 0xc00] = tab[(i & 0xff) | 0x200];
+		//DrvPalette[i + 0xc00] = tab[DrvColPROM[0x1400 + (i & 0xff)] | 0x200];
 		
 		if (DrvColPROM[0x1000 + i] == 0xfe) {
 			sprite_mask_enable[i / 16] = 1;

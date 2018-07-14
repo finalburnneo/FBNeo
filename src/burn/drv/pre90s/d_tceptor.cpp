@@ -3,7 +3,7 @@
 
 // to do:
 //  right side background is jerky and scrolls kinda weird(?)
-//	in mame the graphics are -16 to the left?
+//	in mame the graphics are -8 to the left?
 //	play test! ( after all fixed :P -dink )
 
 // for later (dink):
@@ -202,7 +202,8 @@ static UINT8 tceptor_m6809_read(UINT16 address)
 			return 0; // nop
 
 		case 0x4f01: // pedal (accel)
-			return ProcessAnalog(DrvAnalogPort2, 0, 0, 0x00, 0xd6);
+			if (DrvAnalogPort2 == 0xffff) DrvAnalogPort2 = 0xfc04; // digital button -> accel
+			return ProcessAnalog(DrvAnalogPort2, 0, 1, 0x00, 0xd6);
 
 		case 0x4f02: // x
 			return ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0xfe);
@@ -810,6 +811,8 @@ static INT32 DrvInit(INT32 game)
 	GenericTilemapSetGfx(0, DrvGfxROM0 + 0x00000, 2,  8,  8, 0x04000, 0x000, 0xff);
 	GenericTilemapSetGfx(1, DrvGfxROM1 + 0x00000, 3,  8,  8, 0x10000, 0x800, 0x3f);
 	GenericTilemapSetGfx(2, DrvGfxROM1 + 0x10000, 3,  8,  8, 0x10000, 0x800, 0x3f);
+	GenericTilemapSetOffsets(1, -8, 0); // should be -8 for both, but causes continuity problems between the 2 halves.
+	GenericTilemapSetOffsets(2, -8, 0);
 	GenericTilemapCategoryConfig(0, 0x100);
 	for (INT32 i = 0; i < 0x100 * 4; i++) {
 		GenericTilemapSetCategoryEntry(0, i/4, i & 3, (DrvColPROM[0xc00 + i] == 7) ? 1 : 0);
@@ -945,15 +948,15 @@ static INT32 DrvDraw()
 	// back up previous bitmap
 	memcpy (DrvBitmap, pTransDraw, nScreenWidth * nScreenHeight * sizeof(UINT16));
 
-	if ((nBurnLayer & 1) == 0) BurnTransferClear();
+	if (nBurnLayer != 0xff) BurnTransferClear();
 
-	GenericTilesSetClip(-1, bg_center, -1, -1);
+	GenericTilesSetClip(-1, ((bg_center + 8) < nScreenWidth) ? bg_center + 8 : bg_center, -1, -1); // hacky
 	GenericTilemapSetScrollX(1, scroll[0] + 12);
 	GenericTilemapSetScrollY(1, scroll[1] + 20);
 	if (nBurnLayer & 1) GenericTilemapDraw(1, pTransDraw, 0);
 	GenericTilesClearClip();
 
-	GenericTilesSetClip(bg_center, -1, -1, -1);
+	GenericTilesSetClip((bg_center > 8) ? bg_center - 8 : 0, -1, -1, -1); // hacky sack
 	GenericTilemapSetScrollX(2, scroll[2] + 20);
 	GenericTilemapSetScrollY(2, scroll[3] + 20);
 	if (nBurnLayer & 2) GenericTilemapDraw(2, pTransDraw, 0);
@@ -965,7 +968,7 @@ static INT32 DrvDraw()
 		GenericTilesClearClip();
 	}
 
-	for (INT32 i = 7; i >=0; i--) draw_sprites(i);
+	for (INT32 i = 7; i >=0; i--) if (nSpriteEnable & (i << 1)) draw_sprites(i);
 	
 	if (nBurnLayer & 8) GenericTilemapDraw(0, pTransDraw, 0);
 	

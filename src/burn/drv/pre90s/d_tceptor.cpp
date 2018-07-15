@@ -859,7 +859,7 @@ static void DrvPaletteInit()
 		DrvPalette[i + 0x000] = tab[DrvColPROM[0x0c00 + i]];
 		DrvPalette[i + 0x400] = tab[DrvColPROM[0x1000 + i] | 0x300];
 		DrvPalette[i + 0x800] = tab[i & 0x1ff];
-		DrvPalette[i + 0xc00] = tab[(i & 0xff) | 0x200];
+		DrvPalette[i + 0xc00] = tab[(i & 0xff) | 0x200]; // road
 
 		if (DrvColPROM[0x1000 + i] == 0xfe) {
 			sprite_mask_enable[i / 16] = 1;
@@ -922,7 +922,7 @@ static void draw_sprites(INT32 sprite_priority)
 	if (need_mask)
 	{
 		for (INT32 i = 0; i < nScreenWidth * nScreenHeight; i++) {
-			if (pTransDraw[i] == 0x3fe) {
+			if (pTransDraw[i] == 0x063f) { //should be 0x3fe.  0x63f??
 				pTransDraw[i] = DrvBitmap[i];
 			}
 		}
@@ -939,9 +939,6 @@ static INT32 DrvDraw()
 	INT32 bg_center = 144 - ((((scroll[0] + scroll[2]) & 0x1ff) - 288) / 2);
 
 	if (bg_center == 288) bg_center = nScreenWidth;
-
-	// back up previous bitmap
-	memcpy (DrvBitmap, pTransDraw, nScreenWidth * nScreenHeight * sizeof(UINT16));
 
 	if (nBurnLayer != 0xff) BurnTransferClear();
 
@@ -962,6 +959,9 @@ static INT32 DrvDraw()
 		c45RoadDraw();
 		GenericTilesClearClip();
 	}
+
+	// back up previous bitmap
+	memcpy (DrvBitmap, pTransDraw, nScreenWidth * nScreenHeight * sizeof(UINT16));
 
 	for (INT32 i = 7; i >=0; i--) if (nSpriteEnable & (i << 1)) draw_sprites(i);
 	

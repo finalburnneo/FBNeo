@@ -44,6 +44,8 @@ void c45RoadExit()
 	c45RoadBitmap = NULL;
 
 	c45RoadClut = NULL;
+
+	c45_transparent_color = 0x7fffffff;
 }
 
 static inline void update_tile_pixel(INT32 offset)
@@ -196,11 +198,12 @@ void c45RoadDraw()
 
 		while (numpixels-- > 0)
 		{
-			INT32 pixel = pdest[screenx];
-			
-			if (pixel <= pri ) {
+			INT32 destpri = pdest[screenx];
+			INT32 pixel = source_gfx[sourcex >> 16];
+
+			if (destpri <= pri ) {
 				if (pixel != c45_transparent_color) {
-					dest[screenx] = source_gfx[sourcex >> 16];
+					dest[screenx] = pixel;
 				}
 				pdest[screenx] = pri;
 			}

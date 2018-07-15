@@ -2,14 +2,11 @@
 // Based on MAME driver by BUT
 
 // to do:
-//  right side background is jerky and scrolls kinda weird(?)
-//	in mame the graphics are -8 to the left?
-//	play test! ( after all fixed :P -dink )
+//  right side background is jerky and scrolls kinda weird - fixed with kludge in tilemap_generic
 
 // for later (dink):
-//  audio cpu (hd63701) needs 100khz cycles p/s more otherwise it dies around 0xe in the soundtest.
+//  audio cpu (hd63701) needs 100khz cycles p/s more otherwise it dies at 0xe in the soundtest.
 //  -> verify the m6803_internal_registers & timers internal to the m680x in the core.
-
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
@@ -59,8 +56,8 @@ static UINT8 DrvRecalc;
 
 static UINT8 *sprite_mask_enable;
 
-static INT16 scroll[4];
-static UINT16 m68000_irq_enable;
+static UINT16 scroll[4];
+static UINT8 m68000_irq_enable;
 static UINT8 m6809_irq_enable;
 static UINT8 mcu_irq_enable;
 
@@ -244,11 +241,10 @@ static UINT8 tceptor_m6502_0_read(UINT16 address)
 
 static void tceptor_m6502_1_write(UINT16 address, UINT8 data)
 {
-//	if (data!=0 && data !=0x7f) bprintf(0, _T("dac cpu %X %x\n"), address, data);
 	switch (address)
 	{
 		case 0x4000:
-			DACWrite16(0, data ? (data + 1) * 0x10 : 0x0000);
+			DACWrite16(0, (data ? (data + 1) * 0x100 : 0x8000) - 0x8000);
 		return;
 
 		case 0x5000:
@@ -864,8 +860,7 @@ static void DrvPaletteInit()
 		DrvPalette[i + 0x400] = tab[DrvColPROM[0x1000 + i] | 0x300];
 		DrvPalette[i + 0x800] = tab[i & 0x1ff];
 		DrvPalette[i + 0xc00] = tab[(i & 0xff) | 0x200];
-		//DrvPalette[i + 0xc00] = tab[DrvColPROM[0x1400 + (i & 0xff)] | 0x200];
-		
+
 		if (DrvColPROM[0x1000 + i] == 0xfe) {
 			sprite_mask_enable[i / 16] = 1;
 		}
@@ -957,7 +952,7 @@ static INT32 DrvDraw()
 	GenericTilesClearClip();
 
 	GenericTilesSetClip((bg_center > 8) ? bg_center - 8 : 0, -1, -1, -1); // hacky sack
-	GenericTilemapSetScrollX(2, scroll[2] + 20);
+	GenericTilemapSetScrollX(2, scroll[2] + 20 - 4);
 	GenericTilemapSetScrollY(2, scroll[3] + 20);
 	if (nBurnLayer & 2) GenericTilemapDraw(2, pTransDraw, 0);
 	GenericTilesClearClip();
@@ -1020,7 +1015,6 @@ static INT32 DrvFrame()
 		}
 
 		M6502Open(0);
-		//nNext = (M6809TotalCycles() * 24) / 32;
 		nNext = ((i + 1) * nCyclesTotal[1]) / nInterleave;
 		nCyclesDone[1] += M6502Run(nNext - nCyclesDone[1]);
 		M6502Close();
@@ -1030,15 +1024,13 @@ static INT32 DrvFrame()
 		nCyclesDone[2] += M6502Run(nNext - nCyclesDone[2]);
 		M6502Close();
 
-		//nNext = (M6809TotalCycles() * 8);
 		nNext = ((i + 1) * nCyclesTotal[3]) / nInterleave;
 		nCyclesDone[3] += SekRun(nNext - nCyclesDone[3]);
 		if (i == (nInterleave - 1) && m68000_irq_enable) {
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
-	//	HD63701Open(0);
-		//nNext = M6809TotalCycles();
+		//	HD63701Open(0);
 		nNext = ((i + 1) * nCyclesTotal[4]) / nInterleave;
 		nCyclesDone[4] += HD63701Run(nNext - nCyclesDone[4]);
 		if (i == (nInterleave - 1)) {
@@ -1108,7 +1100,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		DACScan(nAction,pnMin);
 
 		c45RoadState(nAction);
-		
+
 		SCAN_VAR(scroll);
 		SCAN_VAR(m68000_irq_enable);
 		SCAN_VAR(m6809_irq_enable);

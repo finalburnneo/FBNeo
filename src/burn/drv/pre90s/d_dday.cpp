@@ -263,8 +263,10 @@ static UINT8 __fastcall dday_read(UINT16 address)
 			return DrvDips[1];
 
 		case 0x7800:
-			INT32 timer = (nCurrentFrame / 60) % 99;
-			return (timer % 10) + (((timer / 10) % 10) * 16);
+			{
+				INT32 timer = (nCurrentFrame / 60) % 99;
+				return (timer % 10) + (((timer / 10) % 10) * 16);
+			}
 
 		case 0x7c00:
 			return 0; // paddle

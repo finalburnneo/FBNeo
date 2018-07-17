@@ -912,7 +912,7 @@ static void draw_sprites(INT32 sprite_priority)
 			scalex += 0x800;
 			scaley += 0x800;
 
-			x -= 64;
+			x -= (64+16);
 			y -= 78;
 
 			RenderZoomedPrioTranstabSprite(pTransDraw, gfx, code, (color*16)+0x400, 0xff, x, y, flipx, flipy, tsize, tsize, scalex, scaley, DrvColPROM + 0xc00, 1 << pri);

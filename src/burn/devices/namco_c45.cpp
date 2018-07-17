@@ -172,7 +172,7 @@ void c45RoadDraw()
 			screenx |= ~0x7ff;
 
 		// adjust the horizontal placement
-		screenx -= 64; // needs adjustment to left
+		screenx -= (64+16); // needs adjustment to left
 
 		INT32 numpixels = (44 * ROAD_TILE_SIZE << 16) / dsourcex;
 		UINT32 sourcex = 0;

@@ -5,6 +5,7 @@
 #include "z80_intf.h"
 #include "ay8910.h"
 #include "burn_pal.h"
+#include "burn_gun.h"
 
 static UINT8 *AllMem;
 static UINT8 *MemEnd;
@@ -30,18 +31,23 @@ static UINT8 sl_image;
 static UINT8 sl_enable;
 static UINT8 sl_control;
 
+static INT32 countdown60fps;
+static INT32 countdown;
+
 static UINT8 DrvJoy1[8];
 static UINT8 DrvDips[2];
 static UINT8 DrvInputs[1];
 static UINT8 DrvReset;
 
+static INT32 DrvAnalogPort0 = 0;
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo DdayInputList[] = {
 	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 coin"	},
 	{"P1 Start",		BIT_DIGITAL,	DrvJoy1 + 3,	"p1 start"	},
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 
-	// analog placeholder
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
+	A("P1 X Axis",      BIT_ANALOG_REL, &DrvAnalogPort0, "mouse x-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -56,8 +62,7 @@ static struct BurnInputInfo DdaycInputList[] = {
 	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 fire 1"	},
 	{"P1 Button 2",		BIT_DIGITAL,	DrvJoy1 + 5,	"p1 fire 2"	},
 
-	// analog placeholder
-	{"P1 Button 3",		BIT_DIGITAL,	DrvJoy1 + 7,	"p1 fire 3"	},
+	A("P1 X Axis",      BIT_ANALOG_REL, &DrvAnalogPort0, "mouse x-axis"),
 
 	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
@@ -65,6 +70,7 @@ static struct BurnInputInfo DdaycInputList[] = {
 };
 
 STDINPUTINFO(Ddayc)
+#undef A
 
 static struct BurnDIPInfo DdayDIPList[]=
 {
@@ -218,12 +224,12 @@ static void __fastcall dday_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xfff0) == 0x6400) address &= ~0x000e;
+	if ((address & 0xfff0) == 0x6400) address &= ~0x000e; // ay0 mirror
 
 	switch (address)
 	{
-		case 0x4800:
-			sl_image = data & 7;
+		case 0x4000:
+			sl_image = data;
 		return;
 
 		case 0x6400:
@@ -263,13 +269,10 @@ static UINT8 __fastcall dday_read(UINT16 address)
 			return DrvDips[1];
 
 		case 0x7800:
-			{
-				INT32 timer = (nCurrentFrame / 60) % 99;
-				return (timer % 10) + (((timer / 10) % 10) * 16);
-			}
+			return ((countdown / 10) * 16) | (countdown % 10);
 
 		case 0x7c00:
-			return 0; // paddle
+			return (BurnGunReturnX(0) * 0xbf) / 0x100;
 	}
 
 	return 0;
@@ -311,6 +314,9 @@ static INT32 DrvDoReset()
 	sl_image = 0;
 	sl_enable = 0;
 	sl_control = 0;
+
+	countdown60fps = 0;
+	countdown = 99;
 
 	return 0;
 }
@@ -357,7 +363,6 @@ static INT32 DrvGfxDecode()
 	if (tmp == NULL) {
 		return 1;
 	}
-
 	memcpy (tmp, DrvGfxROM0, 0x1800);
 
 	GfxDecode(0x0100, 3, 8, 8, Plane, XOffs, YOffs, 0x040, tmp, DrvGfxROM0);
@@ -373,7 +378,7 @@ static INT32 DrvGfxDecode()
 	memcpy (tmp, DrvGfxROM3, 0x0800);
 
 	GfxDecode(0x0040, 1, 8, 8, Plane, XOffs, YOffs, 0x040, tmp, DrvGfxROM3);
-
+	
 	BurnFree(tmp);
 
 	return 0;
@@ -429,8 +434,8 @@ static INT32 DrvInit()
 
 	AY8910Init(0, 1000000, 0);
 	AY8910Init(1, 1000000, 1);
-	AY8910SetAllRoutes(0, 0.30, BURN_SND_ROUTE_BOTH);
-	AY8910SetAllRoutes(1, 0.30, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(0, 0.20, BURN_SND_ROUTE_BOTH);
+	AY8910SetAllRoutes(1, 0.20, BURN_SND_ROUTE_BOTH);
 
 	GenericTilesInit();
 	GenericTilemapInit(0, TILEMAP_SCAN_ROWS, bg_map_callback, 8, 8, 32, 32);
@@ -445,6 +450,8 @@ static INT32 DrvInit()
 	GenericTilemapSetTransparent(1, 0);
 	GenericTilemapSetTransparent(2, 0);
 
+	BurnGunInit(1, false);
+
 	DrvDoReset();
 
 	return 0;
@@ -457,6 +464,8 @@ static INT32 DrvExit()
 	ZetExit();
 	AY8910Exit(0);
 	AY8910Exit(1);
+
+	BurnGunExit();
 
 	BurnFree(AllMem);
 
@@ -488,11 +497,11 @@ static void DrvPaletteInit()
 static void sl_draw()
 {
 	if (sl_enable == 0) return;
-	
-	INT32 bank  = (sl_image & 0x07) * 0x200;
-	INT32 sl_flipx = (sl_image & 0x08) << 1;
 
-	for (INT32 offs = 0; offs < 32 * 28; offs++)
+	INT32 bank  = (sl_image & 0x07) * 0x200;
+	INT32 sl_flipx = (sl_image & 0x08) ? 7 : 0;
+
+	for (INT32 offs = 0; offs < 32 * 32; offs++)
 	{
 		INT32 sx = (offs & 0x1f) * 8;
 		INT32 sy = (offs / 0x20) * 8;
@@ -512,9 +521,11 @@ static void sl_draw()
 
 			for (INT32 y = 0; y < 8; y++)
 			{
+				if (sy+y >= nScreenHeight) return;
 				for (INT32 x = 0; x < 8; x++)
 				{
-					if (gfx[(y * 8) + (x ^ flipx)]);
+					if (sx+x >= nScreenWidth) return;
+					if (gfx[(y * 8) + (x ^ flipx)])
 					{
 						dst[x] += 0x100;
 					}
@@ -560,6 +571,21 @@ static INT32 DrvFrame()
 		for (INT32 i = 0; i < 8; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 		}
+
+		BurnGunMakeInputs(0, DrvAnalogPort0, 0);
+
+		// countdown timer
+		countdown60fps++;
+
+		if (countdown60fps >= 60) {
+			countdown60fps = 0;
+
+			countdown--;
+
+			if (countdown < 0)
+				countdown = 99;
+		}
+
 	}
 
 	ZetOpen(0);
@@ -601,10 +627,13 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		ZetScan(nAction);
 		AY8910Scan(nAction, pnMin);
 
+		BurnGunScan();
+
 		SCAN_VAR(sl_image);
 		SCAN_VAR(sl_enable);
 		SCAN_VAR(sl_control);
-		SCAN_VAR(nCurrentFrame);
+		SCAN_VAR(countdown60fps);
+		SCAN_VAR(countdown);
 	}
 
 	return 0;

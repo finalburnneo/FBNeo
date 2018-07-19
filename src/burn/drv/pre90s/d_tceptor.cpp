@@ -906,6 +906,10 @@ static void draw_sprites(INT32 sprite_priority)
 
 			if (sprite_mask_enable[color])
 			{
+				if (!need_mask) {
+					// back up previous bitmap
+					memcpy (DrvBitmap, pTransDraw, nScreenWidth * nScreenHeight * sizeof(UINT16));
+				}
 				need_mask = 1;
 			}
 
@@ -940,7 +944,7 @@ static INT32 DrvDraw()
 
 	if (bg_center == 288) bg_center = nScreenWidth;
 
-	if (nBurnLayer != 0xff) BurnTransferClear();
+	BurnTransferClear();
 
 	GenericTilesSetClip(-1, ((bg_center + 8) < nScreenWidth) ? bg_center + 8 : bg_center, -1, -1); // hacky
 	GenericTilemapSetScrollX(1, scroll[0] + 12);
@@ -959,9 +963,6 @@ static INT32 DrvDraw()
 		c45RoadDraw();
 		GenericTilesClearClip();
 	}
-
-	// back up previous bitmap
-	memcpy (DrvBitmap, pTransDraw, nScreenWidth * nScreenHeight * sizeof(UINT16));
 
 	for (INT32 i = 7; i >=0; i--) if (nSpriteEnable & (i << 1)) draw_sprites(i);
 	
@@ -1042,8 +1043,8 @@ static INT32 DrvFrame()
 		}
 		//	HD63701Close();
 		
-		if (pBurnSoundOut && i&1) {
-			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 2);
+		if (pBurnSoundOut && (i%4)==3) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
 			BurnYM2151Render(pSoundBuf, nSegmentLength);
 			NamcoSoundUpdateStereo(pSoundBuf, nSegmentLength);

@@ -1,10 +1,6 @@
 // Crazy Climber FBA Driver
 // Based on MAME driver by Nicola Salmoria
 
-// Todo:
-// 1: hook up samples
-// 2: fix Crazy Kong pt. II offsets and bigsprite flipping issues
-
 #include "tiles_generic.h"
 #include "z80_intf.h"
 #include "ay8910.h"
@@ -29,6 +25,7 @@ static UINT8 *DrvBGSprRAM;
 static UINT8 *DrvSprRAM;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvColRAM;
+static INT16 *samplebuf;
 
 static UINT32 *DrvPalette;
 static UINT8 DrvRecalc;
@@ -56,9 +53,12 @@ static UINT8 DrvDips[2];
 // per-game constants
 static INT32 game_select;
 static INT32 silvland = 0;
+static INT32 ckong = 0;
 static INT32 gfx0_cont800 = 0;
 static INT32 uses_sub;
 static UINT8 bigsprite_index;
+
+static INT32 uses_samples = 0;
 
 static struct BurnInputInfo CclimberInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL  , DrvJoy3 + 0, "p1 coin"  },
@@ -477,6 +477,76 @@ static struct BurnDIPInfo SwimmerDIPList[]=
 
 STDDIPINFO(Swimmer)
 
+// cclimber sample player
+static INT32 sample_num = 0;
+static INT32 sample_freq = 0;
+static INT32 sample_vol = 0;
+
+static INT32 sample_len = 0;
+static INT32 sample_pos = -1; // -1 not playing, 0 start
+
+static void cclimber_render(INT16 *buffer, INT32 nLen)
+{
+	if (sample_pos < 0) return; // stopped
+
+	if ((sample_pos >> 16) >= 0x10000 ) {
+		sample_pos = -1; // stop
+		return;
+	}
+
+	INT32 step = (sample_freq << 16) / nBurnSoundRate;
+	INT32 pos = 0;
+	INT16 *rom = samplebuf;
+
+	while (pos < nLen)
+	{
+		INT32 sample = (INT32)(rom[(sample_pos >> 16)] * 0.2);
+
+		buffer[0] = BURN_SND_CLIP((INT32)(buffer[0] + sample));
+		buffer[1] = BURN_SND_CLIP((INT32)(buffer[1] + sample));
+
+		sample_pos += step;
+
+		buffer+=2;
+		pos++;
+
+		if (sample_pos >= 0xfff0000 || (sample_pos >> 16) >= sample_len) {
+			sample_pos = -1; // stop
+			break;
+		}
+	}
+}
+
+// 4bit decoder from mame
+#define SAMPLE_CONV4(a) (0x1111*((a&0x0f))-0x8000)
+
+static void sample_start()
+{
+	const UINT8 *rom = DrvSndROM;
+
+	if (!rom || !uses_samples) return;
+
+	INT32 len = 0;
+	INT32 start = 32 * sample_num;
+
+	while (start + len < 0x2000 && rom[start+len] != 0x70)
+	{
+		INT32 sample;
+
+		sample = (rom[start + len] & 0xf0) >> 4;
+		samplebuf[2*len] = SAMPLE_CONV4(sample) * sample_vol / 31;
+
+		sample = rom[start + len] & 0x0f;
+		samplebuf[2*len + 1] = SAMPLE_CONV4(sample) * sample_vol / 31;
+
+		len++;
+	}
+	sample_len = len * 2;
+	sample_pos = 0;
+}
+
+// end sample player
+
 static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 {
 	if (address >= 0x9c00 && address <= 0x9fff) {
@@ -498,20 +568,20 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xa003:
-			// cclimber_sample_trigger_w
 			if (game_select == 6) {
 				swimmer_sidebg = data;
 			}
 		return;
 
 		case 0xa004:
+			if (data != 0) sample_start();
 			if (game_select == 6) {
 				swimmer_palettebank = data;
 			}
 		return;
 
 		case 0xa800:
-			// cclimber_sample_rate_W
+			sample_freq = 3072000 / 4 / (256 - data);
 			if (game_select == 6) {
 				soundlatch = data;
 				ZetClose();
@@ -524,7 +594,7 @@ static void __fastcall cclimber_write(UINT16 address, UINT8 data)
 		return;
 
 		case 0xb000:
-			// cclimber_sample_volume_w
+			sample_vol = data & 0x1f;
 		return;
 
 		case 0xb800:
@@ -692,8 +762,9 @@ static INT32 DrvDoReset()
 	return 0;
 }
 
-static void cclimber_sample_select_w(UINT32, UINT32)
+static void cclimber_sample_select_w(UINT32, UINT32 data)
 {
+	sample_num = data;
 }
 
 static INT32 MemIndex()
@@ -710,6 +781,9 @@ static INT32 MemIndex()
 	DrvColPROM		= Next; Next += 0x0000300;
 
 	DrvSndROM		= Next; Next += 0x0012000;
+
+	samplebuf       = (INT16*)Next; Next += 0x0010000 * sizeof(INT16); //decoded sample
+
 	DrvUser1		= Next; Next += 0x0010000;
 
 	DrvPalette		= (UINT32*)Next; Next += 0x0200 * sizeof(UINT32);
@@ -719,7 +793,7 @@ static INT32 MemIndex()
 	DrvZ80RAM0		= Next; Next += 0x0000c00;
 	DrvZ80RAM1		= Next; Next += 0x0000800;
 	DrvZ80RAM2		= Next; Next += 0x0000800;
-	DrvZ80RAM1_0  		= Next; Next += 0x0001000;
+	DrvZ80RAM1_0  	= Next; Next += 0x0001000;
 	DrvBGSprRAM		= Next; Next += 0x0000100;
 	DrvSprRAM		= Next; Next += 0x0000400;
 	DrvColRAM		= Next; Next += 0x0000400;
@@ -988,6 +1062,7 @@ static INT32 GetRoms()
 	UINT8 *LoadU = DrvUser1;
 	DrvGfxROM0Len = 0;
 	DrvGfxROM1Len = 0;
+	INT32 samples_romlen = 0;
 
 	for (INT32 i = 0; !BurnDrvGetRomName(&pRomName, i, 0); i++) {
 
@@ -1044,9 +1119,14 @@ static INT32 GetRoms()
 		if ((ri.nType & 7) == 7) {
 			if (BurnLoadRom(Loads, i, 1)) return 1;
 			Loads += ri.nLen;
-
+			samples_romlen += ri.nLen;
 			continue;
 		}
+	}
+
+	if (samples_romlen == 0x2000) {
+		bprintf(0, _T(" *  Game has built-in rom samples.\n"));
+		uses_samples = 1;
 	}
 
 	return 0;
@@ -1090,7 +1170,7 @@ static INT32 DrvInit()
 	}
 	ZetMapMemory(DrvVidRAM,		    0x9000, 0x93ff, MAP_RAM);
 	ZetMapMemory(DrvVidRAM,		    0x9400, 0x97ff, MAP_RAM); // mirror
-	ZetMapMemory(DrvSprRAM,		    0x9800, 0x9bff, MAP_RAM);
+	ZetMapMemory(DrvSprRAM,		    0x9800, 0x9bff, MAP_RAM); // 9800 - 981f colscroll, 9880 989f sprram, 98dc - 98df bigspritecontrol
 	ZetMapMemory(DrvColRAM,		    0x9c00, 0x9fff, MAP_READ); // special write in handler
 
 	ZetSetWriteHandler(cclimber_write);
@@ -1144,7 +1224,9 @@ static INT32 DrvExit()
 	game_select = 0;
 	uses_sub = 0;
 	silvland = 0;
+	ckong = 0;
 	gfx0_cont800 = 0;
+	uses_samples = 0;
 
 	return 0;
 }
@@ -1158,7 +1240,7 @@ static void cclimber_draw_bigsprite()
 	INT32 bits = (game_select == 6) ? 3 : 2;
 	INT32 palindex = (game_select == 6) ? 0x100 : 0x40;
 
-	if (flipscreen[0]) { // flipx
+	if (flipscreen[0] && !ckong) { // flipx
 		flipx = !flipx;
 	}
 
@@ -1219,7 +1301,7 @@ static void draw_playfield()
 		INT32 sy = (offs >> 5) << 3;
 
 		sy -= DrvSprRAM[sx >> 3]; // col scroll
-		sy -= 16; //offsets
+		if (ckong) sy += 16; else sy -= 16; //offsets
 		if (sy < -7) sy += 256;
 		if (sx < -7) sx += 256;
 
@@ -1286,7 +1368,8 @@ static void draw_sprites()
 	{
 		INT32 x = DrvSprRAM[offs + 3];
 		INT32 y = 240 - DrvSprRAM[offs + 2];
-		y -= 16; //offsets
+
+		if (ckong) y += 16; else y -= 16; //offsets
 
 		INT32 code = ((DrvSprRAM[offs + 1] & 0x10) << 3) |
 				   ((DrvSprRAM[offs + 1] & 0x20) << 1) |
@@ -1439,6 +1522,7 @@ static INT32 DrvFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 3072000 / 60, ((game_select == 6) ? 2000000 : 3072000) / 60 };
+	INT32 nSoundBufferPos = 0;
 
 	for (INT32 i = 0; i < nInterleave; i++) {
 		ZetOpen(0);
@@ -1454,10 +1538,24 @@ static INT32 DrvFrame()
 				ZetNmi();
 			ZetClose();
 		}
+
+		// Render Sound Segment
+		if (pBurnSoundOut && i&1) {
+			INT32 nSegmentLength = nBurnSoundLen / (nInterleave/2);
+			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+			AY8910Render(pSoundBuf, nSegmentLength);
+			nSoundBufferPos += nSegmentLength;
+		}
 	}
 
+	// Make sure the buffer is entirely filled.
 	if (pBurnSoundOut) {
-		AY8910Render(pBurnSoundOut, nBurnSoundLen);
+		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;
+		INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
+		if (nSegmentLength) {
+			AY8910Render(pSoundBuf, nSegmentLength);
+		}
+		cclimber_render(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	if (pBurnDraw) {
@@ -1682,15 +1780,10 @@ struct BurnDriver BurnDrvCclimberj = {
 static INT32 ckongInit()
 {
 	game_select = 2;
+	ckong = 1;
 	uses_sub = 0;
 
-	INT32 rc = DrvInit();
-
-	if (rc == 0) {
-		//save for later maybe
-	}
-
-	return rc;
+	return DrvInit();
 }
 
 // Crazy Kong Part II (set 1)
@@ -1726,7 +1819,7 @@ struct BurnDriverD BurnDrvCkongpt2 = {
 	"ckongpt2", NULL, NULL, NULL, "1981",
 	"Crazy Kong Part II (set 1)\0", NULL, "Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	/*BDF_GAME_WORKING*/ 0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongpt2RomInfo, ckongpt2RomName, NULL, NULL, CkongInputInfo, CkongDIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
@@ -1765,7 +1858,7 @@ struct BurnDriver BurnDrvCkong = {
 	"ckong", NULL, NULL, NULL, "1981",
 	"Crazy Kong\0", NULL, "Kyoei / Falcon", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
-	/*BDF_GAME_WORKING*/ 0 | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_PLATFORM, 0,
 	NULL, ckongRomInfo, ckongRomName, NULL, NULL, CkongInputInfo, CkongDIPInfo,
 	ckongInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x60,
 	224, 256, 3, 4
@@ -1947,13 +2040,7 @@ static INT32 guzzlerInit()
 	game_select = 6;
 	uses_sub = 1;
 
-	INT32 rc = DrvInit();
-
-	if (rc == 0) {
-		//save for later maybe
-	}
-
-	return rc;
+	return DrvInit();
 }
 
 // Guzzler
@@ -2057,9 +2144,7 @@ static INT32 rpatrolbInit()
 	game_select = 1;
 	uses_sub = 0;
 
-	INT32 rc = DrvInit();
-
-	return rc;
+	return DrvInit();
 }
 
 static INT32 silvlandInit()
@@ -2068,9 +2153,7 @@ static INT32 silvlandInit()
 	uses_sub = 0;
 	silvland = 1;
 
-	INT32 rc = DrvInit();
-
-	return rc;
+	return DrvInit();
 }
 
 // River Patrol (Orca)

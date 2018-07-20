@@ -2,27 +2,9 @@
 
 #include "burnint.h"
 #include "8255ppi.h"
+#include <stddef.h>
 
-#define MAX_PPIS		3
-
-PPIPortRead PPI0PortReadA;
-PPIPortRead PPI0PortReadB;
-PPIPortRead PPI0PortReadC;
-PPIPortWrite PPI0PortWriteA;
-PPIPortWrite PPI0PortWriteB;
-PPIPortWrite PPI0PortWriteC;
-PPIPortRead PPI1PortReadA;
-PPIPortRead PPI1PortReadB;
-PPIPortRead PPI1PortReadC;
-PPIPortWrite PPI1PortWriteA;
-PPIPortWrite PPI1PortWriteB;
-PPIPortWrite PPI1PortWriteC;
-PPIPortRead PPI2PortReadA;
-PPIPortRead PPI2PortReadB;
-PPIPortRead PPI2PortReadC;
-PPIPortWrite PPI2PortWriteA;
-PPIPortWrite PPI2PortWriteB;
-PPIPortWrite PPI2PortWriteC;
+#define MAX_PPIS        10
 
 typedef struct
 {
@@ -42,11 +24,14 @@ typedef struct
 	UINT8 inte_a;
 	UINT8 inte_b;
 
-	UINT8 in_mask[3];		/* input mask */
+	UINT8 in_mask[3];	/* input mask */
 	UINT8 out_mask[3];	/* output mask */
 	UINT8 read[3];		/* data read from ports */
 	UINT8 latch[3];		/* data written to ports */
 	UINT8 output[3];	/* actual output data */
+
+	PPIPortRead PortRead[3];
+	PPIPortWrite PortWrite[3];
 } ppi8255;
 
 static ppi8255 chips[MAX_PPIS];
@@ -114,42 +99,8 @@ static void ppi8255_write_port(ppi8255 *chip, INT32 port, INT32 chipnum)
 		ppi8255_get_handshake_signals(chip, &write_data);
 
 	chip->output[port] = write_data;
-	
-	if (chipnum == 0 && port == 0) {
-		if (PPI0PortWriteA) PPI0PortWriteA(write_data);
-	}
-	
-	if (chipnum == 0 && port == 1) {
-		if (PPI0PortWriteB) PPI0PortWriteB(write_data);
-	}
-	
-	if (chipnum == 0 && port == 2) {
-		if (PPI0PortWriteC) PPI0PortWriteC(write_data);
-	}
-	
-	if (chipnum == 1 && port == 0) {
-		if (PPI1PortWriteA) PPI1PortWriteA(write_data);
-	}
-	
-	if (chipnum == 1 && port == 1) {
-		if (PPI1PortWriteB) PPI1PortWriteB(write_data);
-	}
-	
-	if (chipnum == 1 && port == 2) {
-		if (PPI1PortWriteC) PPI1PortWriteC(write_data);
-	}
-	
-	if (chipnum == 2 && port == 0) {
-		if (PPI2PortWriteA) PPI2PortWriteA(write_data);
-	}
-	
-	if (chipnum == 2 && port == 1) {
-		if (PPI2PortWriteB) PPI2PortWriteB(write_data);
-	}
-	
-	if (chipnum == 2 && port == 2) {
-		if (PPI2PortWriteC) PPI2PortWriteC(write_data);
-	}
+
+	if (chip->PortWrite[port]) chip->PortWrite[port](write_data);
 }
 
 static void ppi8255_input(ppi8255 *chip, INT32 port, UINT8 data, INT32 which)
@@ -192,41 +143,7 @@ static UINT8 ppi8255_read_port(ppi8255 *chip, INT32 port, INT32 chipnum)
 
 	if (chip->in_mask[port])
 	{
-		if (chipnum == 0 && port == 0) {
-			ppi8255_input(chip, port, (PPI0PortReadA) ? PPI0PortReadA() : 0, chipnum);
-		}
-		
-		if (chipnum == 0 && port == 1) {
-			ppi8255_input(chip, port, (PPI0PortReadB) ? PPI0PortReadB() : 0, chipnum);
-		}
-		
-		if (chipnum == 0 && port == 2) {
-			ppi8255_input(chip, port, (PPI0PortReadC) ? PPI0PortReadC() : 0, chipnum);
-		}
-		
-		if (chipnum == 1 && port == 0) {
-			ppi8255_input(chip, port, (PPI1PortReadA) ? PPI1PortReadA() : 0, chipnum);
-		}
-		
-		if (chipnum == 1 && port == 1) {
-			ppi8255_input(chip, port, (PPI1PortReadB) ? PPI1PortReadB() : 0, chipnum);
-		}
-		
-		if (chipnum == 1 && port == 2) {
-			ppi8255_input(chip, port, (PPI1PortReadC) ? PPI1PortReadC() : 0, chipnum);
-		}
-		
-		if (chipnum == 2 && port == 0) {
-			ppi8255_input(chip, port, (PPI2PortReadA) ? PPI2PortReadA() : 0, chipnum);
-		}
-		
-		if (chipnum == 2 && port == 1) {
-			ppi8255_input(chip, port, (PPI2PortReadB) ? PPI2PortReadB() : 0, chipnum);
-		}
-		
-		if (chipnum == 2 && port == 2) {
-			ppi8255_input(chip, port, (PPI2PortReadC) ? PPI2PortReadC() : 0, chipnum);
-		}
+		ppi8255_input(chip, port, (chip->PortRead[port]) ? chip->PortRead[port]() : 0, chipnum);
 
 		result |= chip->read[port] & chip->in_mask[port];
 	}
@@ -237,6 +154,62 @@ static UINT8 ppi8255_read_port(ppi8255 *chip, INT32 port, INT32 chipnum)
 		ppi8255_get_handshake_signals(chip, &result);
 
 	return result;
+}
+
+void ppi8255_set_read_port(INT32 which, INT32 port, PPIPortRead pr)
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_read_port called without init\n"));
+	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_read_port called with invalid chip %x\n"), which);
+#endif
+	ppi8255 *chip = &chips[which];
+
+	if (port >= 0xa && port <= 0xc) {
+		port -= 0xa;
+	}
+
+	chip->PortRead[port&3] = pr;
+}
+
+void ppi8255_set_read_ports(INT32 which, PPIPortRead a, PPIPortRead b, PPIPortRead c)
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_read_ports called without init\n"));
+	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_read_ports called with invalid chip %x\n"), which);
+#endif
+	ppi8255 *chip = &chips[which];
+
+	chip->PortRead[0] = a;
+	chip->PortRead[1] = b;
+	chip->PortRead[2] = c;
+}
+
+void ppi8255_set_write_port(INT32 which, INT32 port, PPIPortWrite pw)
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_write_port called without init\n"));
+	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_write_port called with invalid chip %x\n"), which);
+#endif
+	ppi8255 *chip = &chips[which];
+
+	if (port >= 0xa && port <= 0xc) {
+		port -= 0xa;
+	}
+
+	chip->PortWrite[port&3] = pw;
+}
+
+void ppi8255_set_write_ports(INT32 which, PPIPortWrite a, PPIPortWrite b, PPIPortWrite c)
+{
+#if defined FBA_DEBUG
+	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_set_write_ports called without init\n"));
+	if (which > nNumChips) bprintf(PRINT_ERROR, _T("ppi8255_set_write_ports called with invalid chip %x\n"), which);
+#endif
+	ppi8255 *chip = &chips[which];
+
+	chip->PortWrite[0] = a;
+	chip->PortWrite[1] = b;
+	chip->PortWrite[2] = c;
 }
 
 UINT8 ppi8255_r(INT32 which, INT32 offset)
@@ -414,18 +387,29 @@ void ppi8255_w(INT32 which, INT32 offset, UINT8 data)
 	}
 }
 
+void ppi8255_reset()
+{
+	for (INT32 i = 0; i < nNumChips; i++) {
+		ppi8255 *chip = &chips[i];
+
+		memset(chip, 0, STRUCT_SIZE_HELPER(ppi8255, output)); // clear everything but the handlers.
+
+		set_mode(i, 0x1b, 0);
+	}
+}
+
 void ppi8255_init(INT32 num)
 {
 	DebugDev_8255PPIInitted = 1;
-	
+
 	for (INT32 i = 0; i < num; i++) {
 		ppi8255 *chip = &chips[i];
-	
+
 		memset(chip, 0, sizeof(*chip));
-	
+
 		set_mode(i, 0x1b, 0);
 	}
-	
+
 	nNumChips = num;
 }
 
@@ -437,29 +421,10 @@ void ppi8255_exit()
 
 	for (INT32 i = 0; i < MAX_PPIS; i++) {
 		ppi8255 *chip = &chips[i];
-	
+
 		memset(chip, 0, sizeof(*chip));
 	}
-	
- 	PPI0PortReadA = NULL;
-	PPI0PortReadB = NULL;
-	PPI0PortReadC = NULL;
-	PPI0PortWriteA = NULL;
-	PPI0PortWriteB = NULL;
-	PPI0PortWriteC = NULL;
-	PPI1PortReadA = NULL;
-	PPI1PortReadB = NULL;
-	PPI1PortReadC = NULL;
-	PPI1PortWriteA = NULL;
-	PPI1PortWriteB = NULL;
-	PPI1PortWriteC = NULL;
-	PPI2PortReadA = NULL;
-	PPI2PortReadB = NULL;
-	PPI2PortReadC = NULL;
-	PPI2PortWriteA = NULL;
-	PPI2PortWriteB = NULL;
-	PPI2PortWriteC = NULL;
-	
+
 	DebugDev_8255PPIInitted = 0;
 	nNumChips = 0;
 }
@@ -470,7 +435,9 @@ void ppi8255_scan()
 	if (!DebugDev_8255PPIInitted) bprintf(PRINT_ERROR, _T("ppi8255_scan called without init\n"));
 #endif
 
-	SCAN_VAR(chips);
+	for (INT32 i = 0; i < nNumChips; i++) {
+		ScanVar(&chips[i], STRUCT_SIZE_HELPER(ppi8255, output), "ppi8255 Chip");
+	}
 }
 
 void ppi8255_set_portC( INT32 which, UINT8 data )

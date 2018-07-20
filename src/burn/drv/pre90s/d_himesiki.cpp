@@ -535,12 +535,9 @@ static INT32 DrvInit(INT32 nGame)
 	ZetClose();
 
 	ppi8255_init(2);
-	PPI0PortReadA = ppi8255_0_portA_r;
-	PPI0PortReadB = ppi8255_0_portB_r;
-	PPI0PortReadC = ppi8255_0_portC_r;
-	PPI1PortReadA = ppi8255_1_portA_r;
-	PPI1PortReadB = ppi8255_1_portB_r;
-	PPI1PortWriteC = ppi8255_1_portC_w;
+	ppi8255_set_read_ports(0, ppi8255_0_portA_r, ppi8255_0_portB_r, ppi8255_0_portC_r);
+	ppi8255_set_read_ports(1, ppi8255_1_portA_r, ppi8255_1_portB_r, NULL);
+	ppi8255_set_write_ports(1, NULL, NULL, ppi8255_1_portC_w);
 
 	BurnYM2203Init(1, 3000000, &DrvFMIRQHandler, 0);
 	BurnTimerAttachZet(4000000);

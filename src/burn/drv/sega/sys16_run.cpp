@@ -1938,12 +1938,15 @@ INT32 System16Init()
 			ZetSetOutHandler(System16Z80PortWrite);
 			ZetClose();
 		}
-		
+#if 0
 		if (PPI0PortWriteA == NULL) PPI0PortWriteA = System16APPI0WritePortA;
 		if (PPI0PortWriteB == NULL) PPI0PortWriteB = System16APPI0WritePortB;
 		if (PPI0PortWriteC == NULL) PPI0PortWriteC = System16APPI0WritePortC;
+#endif
+
 		ppi8255_init(1);
-		
+		ppi8255_set_write_ports(0, System16APPI0WritePortA, System16APPI0WritePortB, System16APPI0WritePortC);
+
 		BurnYM2151Init(4000000);
 		BurnYM2151SetAllRoutes(1.00, BURN_SND_ROUTE_BOTH);
 		
@@ -2189,14 +2192,18 @@ INT32 System16Init()
 				ZetClose();
 			}
 		}
-		
+#if 0
 		if (PPI0PortWriteA == NULL) PPI0PortWriteA = HangonPPI0WritePortA;
 		if (PPI0PortWriteB == NULL) PPI0PortWriteB = HangonPPI0WritePortB;
 		if (PPI0PortWriteC == NULL) PPI0PortWriteC = HangonPPI0WritePortC;
 		if (PPI1PortReadC == NULL) PPI1PortReadC = HangonPPI1ReadPortC;
 		if (PPI1PortWriteA == NULL) PPI1PortWriteA = HangonPPI1WritePortA;
+#endif
 		ppi8255_init(2);
-		
+		ppi8255_set_write_ports(0, HangonPPI0WritePortA, HangonPPI0WritePortB, HangonPPI0WritePortC);
+		ppi8255_set_read_ports(1, NULL, NULL, HangonPPI1ReadPortC);
+		ppi8255_set_write_ports(1, HangonPPI1WritePortA, NULL, NULL);
+
 		if (BurnDrvGetHardwareCode() & HARDWARE_SEGA_YM2203) {
 			BurnYM2203Init(1, 4000000, &System1xFMIRQHandler, 0);
 			BurnTimerAttachZet(4000000);
@@ -2269,10 +2276,12 @@ INT32 System16Init()
 			ZetSetOutHandler(System16Z80PortWrite);
 			ZetClose();
 		}
-		
+#if 0
 		if (PPI0PortWriteC == NULL) PPI0PortWriteC = OutrunPPI0WritePortC;
+#endif
 		ppi8255_init(1);
-		
+		ppi8255_set_write_ports(0, NULL, NULL, OutrunPPI0WritePortC);
+
 		BurnYM2151Init(4000000);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.43, BURN_SND_ROUTE_LEFT);
 		BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_2, 0.43, BURN_SND_ROUTE_RIGHT);

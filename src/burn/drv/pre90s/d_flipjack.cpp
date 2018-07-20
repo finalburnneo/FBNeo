@@ -345,9 +345,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	ppi8255_init(1);
-	PPI0PortReadA	= ppiportAread;
-	PPI0PortReadB	= ppiportBread;
-	PPI0PortReadC	= ppiportCread;
+	ppi8255_set_read_ports(0, ppiportAread, ppiportBread, ppiportCread);
 
 	AY8910Init(0, 2000000, 0);
 	AY8910Init(1, 2000000, 1);

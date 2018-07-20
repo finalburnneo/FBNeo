@@ -1231,13 +1231,9 @@ static INT32 DrvFreeKickInit()
 
 	ppi8255_init(2);
 
-	PPI0PortReadC  = freekick_ppiread_1_c;
-	PPI0PortWriteA = freekick_ppi_write_1_a;
-	PPI0PortWriteB = freekick_ppi_write_1_b;
-
-	PPI1PortReadA = freekick_ppiread_2_a;
-	PPI1PortReadB = freekick_ppiread_2_b;
-	PPI1PortReadC = freekick_ppiread_2_c;
+	ppi8255_set_read_ports(0, NULL, NULL, freekick_ppiread_1_c);
+	ppi8255_set_write_ports(0, freekick_ppi_write_1_a, freekick_ppi_write_1_b, NULL);
+	ppi8255_set_read_ports(1, freekick_ppiread_2_a, freekick_ppiread_2_b, freekick_ppiread_2_c);
 
 	ZetSetReadHandler(freekick_read);
 	ZetSetWriteHandler(freekick_write);

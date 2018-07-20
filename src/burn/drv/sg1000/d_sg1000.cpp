@@ -262,10 +262,8 @@ static INT32 DrvInit()
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
 
 	ppi8255_init(1);
-	PPI0PortReadA	= sg1000_ppi8255_portA_read;
-	PPI0PortReadB	= sg1000_ppi8255_portB_read;
-	PPI0PortReadC	= sg1000_ppi8255_portC_read;
-	PPI0PortWriteC	= sg1000_ppi8255_portC_write;
+	ppi8255_set_read_ports(0, sg1000_ppi8255_portA_read, sg1000_ppi8255_portB_read, sg1000_ppi8255_portC_read);
+	ppi8255_set_write_ports(0, NULL, NULL, sg1000_ppi8255_portC_write);
 
 	DrvDoReset();
 

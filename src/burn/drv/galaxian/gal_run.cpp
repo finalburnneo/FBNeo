@@ -393,12 +393,18 @@ UINT8 KonamiPPIReadIN3()
 void KonamiPPIInit()
 {
 	ppi8255_init(2);
+	ppi8255_set_read_ports(0, KonamiPPIReadIN0, KonamiPPIReadIN1, KonamiPPIReadIN2);
+	ppi8255_set_read_ports(1, NULL, NULL, KonamiPPIReadIN3);
+	ppi8255_set_write_ports(1, KonamiSoundLatchWrite, KonamiSoundControlWrite, NULL);
+#if 0
 	PPI0PortReadA = KonamiPPIReadIN0;
 	PPI0PortReadB = KonamiPPIReadIN1;
 	PPI0PortReadC = KonamiPPIReadIN2;
+
 	PPI1PortReadC = KonamiPPIReadIN3;
 	PPI1PortWriteA = KonamiSoundLatchWrite;
 	PPI1PortWriteB = KonamiSoundControlWrite;
+#endif
 }
 
 // Galaxian Memory Map

@@ -1312,7 +1312,7 @@ static INT32 DrvDoReset()
 
 	msxinit(CurRomSizeA);
 
-	ppi8255_init(1); // there is no reset, so use this.
+	ppi8255_reset();
 
 	ZetOpen(0);
 	ZetReset();
@@ -1459,9 +1459,8 @@ static INT32 DrvInit()
 	TMS9928AInit(TMS99x8A, 0x4000, 0, 0, vdp_interrupt);
 
 	ppi8255_init(1);
-	PPI0PortReadB	= msx_ppi8255_portB_read;
-	PPI0PortWriteA	= msx_ppi8255_portA_write;
-	PPI0PortWriteC	= msx_ppi8255_portC_write;
+	ppi8255_set_read_ports(0, NULL, msx_ppi8255_portB_read, NULL);
+	ppi8255_set_write_ports(0, msx_ppi8255_portA_write, NULL, msx_ppi8255_portC_write);
 
 	DrvDoReset();
 

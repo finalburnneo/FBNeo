@@ -897,19 +897,14 @@ static INT32 DrvInit(INT32 (*pInitCallback)(), INT32 lordgun)
 
 	ppi8255_init(2);
 	if (lordgun) {
-		PPI0PortReadA	= lordgun_dip_read;
-		PPI0PortWriteB	= lordgun_eeprom_write;
-		PPI0PortReadC	= lordgun_service_read;
+		ppi8255_set_read_ports(0, lordgun_dip_read, NULL, lordgun_service_read);
+		ppi8255_set_write_ports(0, NULL, lordgun_eeprom_write, NULL);
 	} else {
-		PPI0PortReadA	= aliencha_dip_read;
-		PPI0PortReadC	= aliencha_service_read;
-		PPI0PortWriteB	= aliencha_eeprom_write;
-		PPI0PortWriteC	= aliencha_dip_select;
+		ppi8255_set_read_ports(0, aliencha_dip_read, NULL, aliencha_service_read);
+		ppi8255_set_write_ports(0, NULL, aliencha_eeprom_write, aliencha_dip_select);
 	}
 
-	PPI1PortReadA	= lordgun_start1_read;
-	PPI1PortReadB	= lordgun_start2_read;
-	PPI1PortReadC	= lordgun_coin_read;
+	ppi8255_set_read_ports(1, lordgun_start1_read, lordgun_start2_read, lordgun_coin_read);
 
 	EEPROMInit(&eeprom_interface_93C46);
 

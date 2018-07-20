@@ -622,8 +622,8 @@ static INT32 DealerInit()
 	AY8910SetAllRoutes(0, 0.25, BURN_SND_ROUTE_BOTH);
 
 	ppi8255_init(1);
-	PPI0PortReadA = DealerPPIReadA;
-	PPI0PortWriteC = DealerPPIWriteC;
+	ppi8255_set_read_ports(0, DealerPPIReadA, NULL, NULL);
+	ppi8255_set_write_ports(0, NULL, NULL, DealerPPIWriteC);
 
 	GenericTilesInit();
 
@@ -641,7 +641,7 @@ static INT32 DrvExit()
 	AY8910Exit(0);
 	ZetExit();
 
-	if (PPI0PortReadA) {
+	if (dealer_hw) {
 		ppi8255_exit();
 	}
 
@@ -732,7 +732,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		AY8910Scan(nAction, pnMin);
 
-		if (PPI0PortReadA) {
+		if (dealer_hw) {
 			ppi8255_scan();
 
 			if (nAction & ACB_WRITE) {

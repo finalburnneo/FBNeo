@@ -259,6 +259,11 @@ static INT32 DrvInit()
 	BurnWatchdogInit(DrvDoReset, 180);
 
 	ppi8255_init(2);
+	ppi8255_set_read_ports(0, dsr_read, input_mux_read, NULL);
+	ppi8255_set_read_ports(1, NULL, NULL, coin_read);
+	ppi8255_set_write_ports(0, NULL, NULL, misc_write);
+	ppi8255_set_write_ports(1, sound_write, pb_write, shr_write);
+#if 0
 	PPI0PortReadA = dsr_read;
 	PPI0PortReadB = input_mux_read;
 	PPI0PortWriteC = misc_write;
@@ -266,7 +271,7 @@ static INT32 DrvInit()
 	PPI1PortWriteA = sound_write;
 	PPI1PortWriteB = pb_write;
 	PPI1PortWriteC = shr_write;
-
+#endif
 	GenericTilesInit();
 
 	DrvDoReset(1);

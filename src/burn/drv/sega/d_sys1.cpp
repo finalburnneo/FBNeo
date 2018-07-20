@@ -5006,8 +5006,7 @@ static INT32 System1Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 
 	if (Sys1UsePPI) { // Regulus uses the PPI for sound
 		ppi8255_init(1);
-		PPI0PortWriteA = System2PPI0WriteA;
-		PPI0PortWriteC = System2PPI0WriteC;
+		ppi8255_set_write_ports(0, System2PPI0WriteA, NULL, System2PPI0WriteC);
 	}
 	
 	memset(SpriteOnScreenMap, 255, 256 * 256);
@@ -5202,9 +5201,7 @@ static INT32 System2Init(INT32 nZ80Rom1Num, INT32 nZ80Rom1Size, INT32 nZ80Rom2Nu
 	ZetClose();
 
 	ppi8255_init(1);
-	PPI0PortWriteA = System2PPI0WriteA;
-	PPI0PortWriteB = System2PPI0WriteB;
-	PPI0PortWriteC = System2PPI0WriteC;
+	ppi8255_set_write_ports(0, System2PPI0WriteA, System2PPI0WriteB, System2PPI0WriteC);
 
 	System1Draw = System2Render;
 	memset(System1VideoRam, 0x00, 0x4000); // mapped through bank_latch

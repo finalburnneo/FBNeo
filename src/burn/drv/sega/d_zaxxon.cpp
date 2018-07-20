@@ -1013,9 +1013,7 @@ static INT32 DrvInit()
 	ZetClose();
 
 	ppi8255_init(1);
-	PPI0PortWriteA = ZaxxonPPIWriteA;
-	PPI0PortWriteB = ZaxxonPPIWriteB;
-	PPI0PortWriteC = ZaxxonPPIWriteC;
+	ppi8255_set_write_ports(0, ZaxxonPPIWriteA, ZaxxonPPIWriteB, ZaxxonPPIWriteC);
 
 	BurnSampleInit(0);
 
@@ -1116,10 +1114,8 @@ static INT32 CongoInit()
 	ZetClose();
 
 	ppi8255_init(1);
-	PPI0PortReadA = CongoPPIReadA;
-	PPI0PortWriteA = NULL;
-	PPI0PortWriteB = CongoPPIWriteB;
-	PPI0PortWriteC = CongoPPIWriteC;
+	ppi8255_set_write_ports(0, NULL, CongoPPIWriteB, CongoPPIWriteC);
+	ppi8255_set_read_ports(0, CongoPPIReadA, NULL, NULL);
 
 	BurnSampleInit(1);
 	BurnSampleSetAllRoutesAllSamples(0.10, BURN_SND_ROUTE_BOTH);

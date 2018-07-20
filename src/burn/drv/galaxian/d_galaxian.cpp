@@ -16975,10 +16975,14 @@ static INT32 ScrambleInit()
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
 	KonamiPPIInit();
+	ppi8255_set_read_port(0, 0xc, ScramblePPIReadIN2);
+	ppi8255_set_read_port(1, 0xc, ScrambleProtectionRead);
+	ppi8255_set_write_port(1, 0xc, ScrambleProtectionWrite);
+#if 0
 	PPI0PortReadC = ScramblePPIReadIN2;
 	PPI1PortReadC = ScrambleProtectionRead;
 	PPI1PortWriteC = ScrambleProtectionWrite;
-	
+#endif
 	return nRet;
 }
 
@@ -17951,9 +17955,15 @@ static INT32 TriplepInit()
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
 	KonamiPPIInit();
+
+	ppi8255_set_write_port(1, 0xa, NULL);
+	ppi8255_set_write_port(1, 0xb, NULL);
+
+#if 0
 	PPI1PortWriteA = NULL;
 	PPI1PortWriteB = NULL;
-	
+#endif
+
 	return nRet;
 }
 
@@ -17991,8 +18001,14 @@ static INT32 MarinerInit()
 	GalExtendTileInfoFunction = MarinerExtendTileInfo;
 	
 	KonamiPPIInit();
+
+	ppi8255_set_write_port(1, 0xa, NULL);
+	ppi8255_set_write_port(1, 0xb, NULL);
+
+#if 0
 	PPI1PortWriteA = NULL;
 	PPI1PortWriteB = NULL;
+#endif
 	
 	return nRet;
 }
@@ -18363,9 +18379,14 @@ static INT32 ScorpionInit()
 	GalExtendSpriteInfoFunction = UpperExtendSpriteInfo;
 	
 	KonamiPPIInit();
+
+	ppi8255_set_read_port(1, 0xc, ScorpionProtectionRead);
+	ppi8255_set_write_port(1, 0xc, ScorpionProtectionWrite);
+
+#if 0
 	PPI1PortReadC = ScorpionProtectionRead;
 	PPI1PortWriteC = ScorpionProtectionWrite;
-	
+#endif
 	return nRet;
 }
 
@@ -18887,6 +18908,11 @@ static INT32 SfxInit()
 	GalExtendTileInfoFunction = UpperExtendTileInfo;
 	
 	ppi8255_init(3);
+	ppi8255_set_read_ports(0, KonamiPPIReadIN0, KonamiPPIReadIN1, KonamiPPIReadIN2);
+	ppi8255_set_read_ports(1, NULL, NULL, KonamiPPIReadIN3);
+	ppi8255_set_read_ports(2, SfxSoundLatch2Read, NULL, NULL);
+	ppi8255_set_write_ports(1, KonamiSoundLatchWrite, KonamiSoundControlWrite, NULL);
+#if 0
 	PPI0PortReadA = KonamiPPIReadIN0;
 	PPI0PortReadB = KonamiPPIReadIN1;
 	PPI0PortReadC = KonamiPPIReadIN2;
@@ -18894,7 +18920,7 @@ static INT32 SfxInit()
 	PPI1PortWriteA = KonamiSoundLatchWrite;
 	PPI1PortWriteB = KonamiSoundControlWrite;
 	PPI2PortReadA = SfxSoundLatch2Read;
-	
+#endif
 	SfxTilemap = 1;
 	GalOrientationFlipX = 1;
 	
@@ -18950,6 +18976,11 @@ static INT32 SkelagonInit()
 	GalExtendTileInfoFunction = UpperExtendTileInfo;
 	
 	ppi8255_init(3);
+	ppi8255_set_read_ports(0, KonamiPPIReadIN0, KonamiPPIReadIN1, KonamiPPIReadIN2);
+	ppi8255_set_read_ports(1, NULL, NULL, KonamiPPIReadIN3);
+	ppi8255_set_read_ports(2, SfxSoundLatch2Read, NULL, NULL);
+	ppi8255_set_write_ports(1, KonamiSoundLatchWrite, KonamiSoundControlWrite, NULL);
+#if 0
 	PPI0PortReadA = KonamiPPIReadIN0;
 	PPI0PortReadB = KonamiPPIReadIN1;
 	PPI0PortReadC = KonamiPPIReadIN2;
@@ -18957,7 +18988,7 @@ static INT32 SkelagonInit()
 	PPI1PortWriteA = KonamiSoundLatchWrite;
 	PPI1PortWriteB = KonamiSoundControlWrite;
 	PPI2PortReadA = SfxSoundLatch2Read;
-	
+#endif
 	SfxTilemap = 1;
 	GalOrientationFlipX = 1;
 
@@ -19012,6 +19043,11 @@ static INT32 MonsterzInit()
 	GalExtendTileInfoFunction = UpperExtendTileInfo;
 	
 	ppi8255_init(3);
+	ppi8255_set_read_ports(0, KonamiPPIReadIN0, KonamiPPIReadIN1, KonamiPPIReadIN2);
+	ppi8255_set_read_ports(1, NULL, NULL, KonamiPPIReadIN3);
+	ppi8255_set_read_ports(2, SfxSoundLatch2Read, NULL, NULL);
+	ppi8255_set_write_ports(1, KonamiSoundLatchWrite, KonamiSoundControlWrite, NULL);
+#if 0
 	PPI0PortReadA = KonamiPPIReadIN0;
 	PPI0PortReadB = KonamiPPIReadIN1;
 	PPI0PortReadC = KonamiPPIReadIN2;
@@ -19019,7 +19055,7 @@ static INT32 MonsterzInit()
 	PPI1PortWriteA = KonamiSoundLatchWrite;
 	PPI1PortWriteB = KonamiSoundControlWrite;
 	PPI2PortReadA = SfxSoundLatch2Read;
-	
+#endif
 	SfxTilemap = 1;
 	GalOrientationFlipX = 1;
 
@@ -20818,10 +20854,12 @@ static INT32 MoonwarInit()
 	GalDrawBulletsFunction = MoonwarDrawBullets;
 	
 	KonamiPPIInit();
-	
+	ppi8255_set_read_port(0, 0xa, MoonwarPPIReadIN0);
+	ppi8255_set_write_port(0, 0xc, MoonwarPortSelectWrite);
+#if 0
 	PPI0PortReadA = MoonwarPPIReadIN0;
 	PPI0PortWriteC = MoonwarPortSelectWrite;
-	
+#endif
 	filter_rc_set_src_gain(0, 0.20);
 	filter_rc_set_src_gain(1, 0.20);
 	filter_rc_set_src_gain(2, 0.20);
@@ -20904,9 +20942,11 @@ static INT32 DarkplntInit()
 	GalCalcPaletteFunction = DarkplntCalcPalette;
 	GalDrawBulletsFunction = DarkplntDrawBullets;
 	
-	KonamiPPIInit();	
+	KonamiPPIInit();
+	ppi8255_set_read_port(0, 0xb, DarkplntPPIReadIN1);
+#if 0
 	PPI0PortReadB = DarkplntPPIReadIN1;
-	
+#endif
 	filter_rc_set_src_gain(0, 0.20);
 	filter_rc_set_src_gain(1, 0.20);
 	filter_rc_set_src_gain(2, 0.20);
@@ -23106,8 +23146,10 @@ static INT32 HunchbksInit()
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
 	KonamiPPIInit();
+	ppi8255_set_write_port(1, 0xb, HunchbksSoundControlWrite);
+#if 0
 	PPI1PortWriteB = HunchbksSoundControlWrite;
-	
+#endif
 	return nRet;
 }
 
@@ -23142,7 +23184,10 @@ static INT32 HncholmsInit()
 	nGalCyclesTotal[0] = (18432000 / 6 / 2 / 2) / 60;
 	
 	KonamiPPIInit();
+	ppi8255_set_write_port(1, 0xb, HunchbksSoundControlWrite);
+#if 0
 	PPI1PortWriteB = HunchbksSoundControlWrite;
+#endif
 	
 	return nRet;
 }

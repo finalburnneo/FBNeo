@@ -1938,11 +1938,6 @@ INT32 System16Init()
 			ZetSetOutHandler(System16Z80PortWrite);
 			ZetClose();
 		}
-#if 0
-		if (PPI0PortWriteA == NULL) PPI0PortWriteA = System16APPI0WritePortA;
-		if (PPI0PortWriteB == NULL) PPI0PortWriteB = System16APPI0WritePortB;
-		if (PPI0PortWriteC == NULL) PPI0PortWriteC = System16APPI0WritePortC;
-#endif
 
 		ppi8255_init(1);
 		ppi8255_set_write_ports(0, System16APPI0WritePortA, System16APPI0WritePortB, System16APPI0WritePortC);
@@ -2192,13 +2187,7 @@ INT32 System16Init()
 				ZetClose();
 			}
 		}
-#if 0
-		if (PPI0PortWriteA == NULL) PPI0PortWriteA = HangonPPI0WritePortA;
-		if (PPI0PortWriteB == NULL) PPI0PortWriteB = HangonPPI0WritePortB;
-		if (PPI0PortWriteC == NULL) PPI0PortWriteC = HangonPPI0WritePortC;
-		if (PPI1PortReadC == NULL) PPI1PortReadC = HangonPPI1ReadPortC;
-		if (PPI1PortWriteA == NULL) PPI1PortWriteA = HangonPPI1WritePortA;
-#endif
+
 		ppi8255_init(2);
 		ppi8255_set_write_ports(0, HangonPPI0WritePortA, HangonPPI0WritePortB, HangonPPI0WritePortC);
 		ppi8255_set_read_ports(1, NULL, NULL, HangonPPI1ReadPortC);
@@ -2276,9 +2265,7 @@ INT32 System16Init()
 			ZetSetOutHandler(System16Z80PortWrite);
 			ZetClose();
 		}
-#if 0
-		if (PPI0PortWriteC == NULL) PPI0PortWriteC = OutrunPPI0WritePortC;
-#endif
+
 		ppi8255_init(1);
 		ppi8255_set_write_ports(0, NULL, NULL, OutrunPPI0WritePortC);
 

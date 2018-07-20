@@ -263,15 +263,7 @@ static INT32 DrvInit()
 	ppi8255_set_read_ports(1, NULL, NULL, coin_read);
 	ppi8255_set_write_ports(0, NULL, NULL, misc_write);
 	ppi8255_set_write_ports(1, sound_write, pb_write, shr_write);
-#if 0
-	PPI0PortReadA = dsr_read;
-	PPI0PortReadB = input_mux_read;
-	PPI0PortWriteC = misc_write;
-	PPI1PortReadC = coin_read;
-	PPI1PortWriteA = sound_write;
-	PPI1PortWriteB = pb_write;
-	PPI1PortWriteC = shr_write;
-#endif
+
 	GenericTilesInit();
 
 	DrvDoReset(1);

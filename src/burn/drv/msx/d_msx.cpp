@@ -27,9 +27,7 @@ INT32 nReplayExternalDataCount = 0;
 UINT8 *ReplayExternalData = NULL;
 #endif
 
-extern "C" {
-	#include "ay8910.h"
-}
+#include "ay8910.h"
 
 static UINT8 *AllMem	= NULL;
 static UINT8 *MemEnd	= NULL;

@@ -156,13 +156,10 @@ static void __fastcall pbaction_main_write(UINT16 address, UINT8 data)
 static UINT8 __fastcall pbaction_main_read(UINT16 address)
 {
 	if (address >= 0xc000 && address <= 0xcfff) { // pbaction3 prot
-		if (address == 0xc000) bprintf(0, _T("pc = %X ppc = %X\n"), ZetGetPC(-1), ZetGetPrevPC(-1));
 		if (address == 0xc000 && (ZetGetPC(-1) == 0xab80)) {
-			bprintf(0, _T("prot hit.\n"));
 			return 0;
 		}
-		return DrvZ80RAM0[address&0xfff];
-		//ZetMapMemory(DrvZ80RAM0,			0xc000, 0xcfff, (type == 3) ? MAP_WRITE : MAP_RAM);
+		return DrvZ80RAM0[address & 0xfff];
 	}
 
 	switch (address)
@@ -333,7 +330,6 @@ static void sega_decode(UINT8 *rom, UINT8 *dec, INT32 length, const UINT8 convta
 	if (length > 0x8000)
 	{
 		INT32 bytes = ((length - 0x8000) >= 0x4000) ? 0x4000 : (length - 0x8000);
-		bprintf(0, _T("copying over %X bytes.\n"), bytes);
 		memcpy(&dec[0x8000], &rom[0x8000], bytes);
 	}
 }

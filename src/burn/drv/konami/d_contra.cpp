@@ -722,8 +722,8 @@ static INT32 DrvDraw()
 
 	INT32 base_color0 = (k007121_ctrl_read(0, 6) & 0x30) << 1;
 	INT32 base_color1 = (k007121_ctrl_read(1, 6) & 0x30) << 1;
-	k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, pDrvSprRAM0, base_color0, 40, 16, 0, -1);
-	k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, pDrvSprRAM1, base_color1, 40, 16, 0, -1);
+	k007121_draw(0, pTransDraw, DrvGfxROM0, DrvColTable, pDrvSprRAM0, base_color0, 40, 16, 0, -1, 0x0000);
+	k007121_draw(1, pTransDraw, DrvGfxROM1, DrvColTable, pDrvSprRAM1, base_color1, 40, 16, 0, -1, 0x0800);
 
 	draw_tx();
 

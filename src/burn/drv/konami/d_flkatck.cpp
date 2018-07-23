@@ -533,8 +533,8 @@ static INT32 DrvDraw()
 
 	if (nBurnLayer & 1) GenericTilemapDraw(0, pTransDraw, 0);
 
-	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 0);
-	if (nSpriteEnable & 2) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 1);
+	if (nSpriteEnable & 1) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 0, 0x0000);
+	if (nSpriteEnable & 2) k007121_draw(0, pTransDraw, DrvGfxROM, NULL, DrvSprBUF, 0, 40, 16, 0, 1, 0x0000);
 
 	GenericTilesSetClip(-1, 40, -1, -1);
 	if (nBurnLayer & 2) GenericTilemapDraw(1, pTransDraw, 0);

@@ -25,7 +25,7 @@ void k007121_ctrl_write(INT32 chip, UINT8 offset, UINT8 data)
 extern int counter;
 #endif
 
-void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *source, INT32 base_color, INT32 xoffs, INT32 yoffs, INT32 bank_base, INT32 pri_mask)
+void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *source, INT32 base_color, INT32 xoffs, INT32 yoffs, INT32 bank_base, INT32 pri_mask, INT32 color_offset)
 {
 	INT32 flipscreen = k007121_flipscreen[chip];
 	INT32 num, inc, offs[5];
@@ -73,7 +73,7 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 		INT32 attr = source[offs[4]];
 		INT32 xflip = source[offs[4]] & 0x10;
 		INT32 yflip = source[offs[4]] & 0x20;
-		INT32 color = ((source[offs[1]] & 0xf0) >> 4);
+		INT32 color = base_color + ((source[offs[1]] & 0xf0) >> 4);
 		INT32 width, height;
 		static const INT32 x_offset[4] = { 0x0, 0x1, 0x4, 0x5 };
 		static const INT32 y_offset[4] = { 0x0, 0x2, 0x8, 0xa };
@@ -144,19 +144,19 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 					if (pri_mask != -1)
 					{
 						if (ctable != NULL) {
-							RenderPrioMaskTranstabSprite(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable, pri_mask);
+							RenderPrioMaskTranstabSpriteOffset(dest, gfx, code, (color * 16), 0, destx, desty, flipx, flipy, 8, 8, ctable, color_offset, pri_mask);
 						} else {
 							if (flipy) {
 								if (flipx) {
-									Render8x8Tile_Prio_Mask_FlipXY_Clip(dest, code, destx, desty, color, 4, 0, base_color, pri_mask, gfx);
+									Render8x8Tile_Prio_Mask_FlipXY_Clip(dest, code, destx, desty, color, 4, 0, color_offset, pri_mask, gfx);
 								} else {
-									Render8x8Tile_Prio_Mask_FlipY_Clip(dest, code, destx, desty, color, 4, 0, base_color, pri_mask, gfx);
+									Render8x8Tile_Prio_Mask_FlipY_Clip(dest, code, destx, desty, color, 4, 0, color_offset, pri_mask, gfx);
 								}
 							} else {
 								if (flipx) {
-									Render8x8Tile_Prio_Mask_FlipX_Clip(dest, code, destx, desty, color, 4, 0, base_color, pri_mask, gfx);
+									Render8x8Tile_Prio_Mask_FlipX_Clip(dest, code, destx, desty, color, 4, 0, color_offset, pri_mask, gfx);
 								} else {
-									Render8x8Tile_Prio_Mask_Clip(dest, code, destx, desty, color, 4, 0, base_color, pri_mask, gfx);
+									Render8x8Tile_Prio_Mask_Clip(dest, code, destx, desty, color, 4, 0, color_offset, pri_mask, gfx);
 								}
 							}
 						}
@@ -164,19 +164,19 @@ void k007121_draw(INT32 chip, UINT16 *dest, UINT8 *gfx, UINT8 *ctable, UINT8 *so
 					else
 					{
 						if (ctable != NULL) {
-							RenderTileTranstab(dest, gfx, code, (color * 16) + base_color, 0, destx, desty, flipx, flipy, 8, 8, ctable);
+							RenderTileTranstabOffset(dest, gfx, code, (color * 16), 0, destx, desty, flipx, flipy, 8, 8, ctable, color_offset);
 						} else {
 							if (flipy) {
 								if (flipx) {
-									Render8x8Tile_Mask_FlipXY_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
+									Render8x8Tile_Mask_FlipXY_Clip(dest, code, destx, desty, color, 4, 0, color_offset, gfx);
 								} else {
-									Render8x8Tile_Mask_FlipY_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
+									Render8x8Tile_Mask_FlipY_Clip(dest, code, destx, desty, color, 4, 0, color_offset, gfx);
 								}
 							} else {
 								if (flipx) {
-									Render8x8Tile_Mask_FlipX_Clip(dest, code, destx, desty, color, 4, 0, base_color,gfx);
+									Render8x8Tile_Mask_FlipX_Clip(dest, code, destx, desty, color, 4, 0, color_offset,gfx);
 								} else {
-									Render8x8Tile_Mask_Clip(dest, code, destx, desty, color, 4, 0, base_color, gfx);
+									Render8x8Tile_Mask_Clip(dest, code, destx, desty, color, 4, 0, color_offset, gfx);
 								}
 							}
 						}

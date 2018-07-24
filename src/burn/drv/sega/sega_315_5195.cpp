@@ -49,6 +49,8 @@ typedef struct
 	UINT32 road_ctrl_start, road_ctrl_end;
 	UINT32 road_ctrl_start_mirror[MAX_MIRRORS], road_ctrl_end_mirror[MAX_MIRRORS];
 	UINT32 road_ctrl_num_mirrors;
+
+	UINT32 ignore_write_start, ignore_write_end;
 } sega_315_5195_struct;
 
 static sega_315_5195_struct chip;
@@ -168,7 +170,8 @@ static void update_mapping()
 	chip.bank_5987_start = chip.bank_5987_end = 0x000000;
 	chip.bank_7525_start = chip.bank_7525_end = 0x000000;
 	chip.road_ctrl_start = chip.road_ctrl_end = 0x000000;
-	
+	chip.ignore_write_start = chip.ignore_write_end = 0x000000;
+
 	chip.tile_ram_num_mirrors = 0;
 	chip.io_num_mirrors = 0;
 	chip.bank_5704_num_mirrors = 0;
@@ -662,7 +665,11 @@ static void update_mapping()
 					if (((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_171_5874) || ((BurnDrvGetHardwareCode() & HARDWARE_SEGA_PCB_MASK) == HARDWARE_SEGA_171_SHADOW)) {
 						compute_region(index, 0x080000, 0xf80000, 0x000000);
 						SekMapMemory(System16Rom, region_start, region_end, MAP_READ);
-						
+
+						// shadow dancer (shdancer) fix lev.2-4 boss crash - catch writes to the romspace
+						chip.ignore_write_start = region_start;
+						chip.ignore_write_end = region_end;
+
 						if (LOG_MAPPER) bprintf(PRINT_NORMAL, _T("ROM 0: %x, %x, %x, %x\n"), index, region_start, region_end, region_mirror);
 						
 						map_mirrors(System16Rom, region_start, region_end, region_mirror, MAP_READ);
@@ -854,6 +861,7 @@ static UINT16 open_bus_read()
 	if (open_bus_recurse) return 0xffff;
 	
 	open_bus_recurse = true;
+	if (SekGetPC(0) > System16RomSize) return 0xffff; // prevent crash
 	UINT16 result = (System16Rom[SekGetPC(0) + 1] << 8) | System16Rom[SekGetPC(0) + 0];
 	open_bus_recurse = false;
 	return result;
@@ -1343,6 +1351,12 @@ UINT16 __fastcall sega_315_5195_read_word(UINT32 a)
 
 void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d)
 {
+	if (chip.ignore_write_end > 0) {
+		if (a >= chip.ignore_write_start && a <= chip.ignore_write_end) {
+			return;
+		}
+	}
+
 	if (chip.tile_ram_start > 0) {
 		if (a >= chip.tile_ram_start && a <= chip.tile_ram_end) {
 			System16BTileByteWrite((a - chip.tile_ram_start) ^ 1, d);
@@ -1538,6 +1552,12 @@ void __fastcall sega_315_5195_write_byte(UINT32 a, UINT8 d)
 
 void __fastcall sega_315_5195_write_word(UINT32 a, UINT16 d)
 {
+	if (chip.ignore_write_end > 0) {
+		if (a >= chip.ignore_write_start && a <= chip.ignore_write_end) {
+			return;
+		}
+	}
+
 	if (chip.tile_ram_start > 0) {
 		if (a >= chip.tile_ram_start && a <= chip.tile_ram_end) {
 			System16BTileWordWrite(a - chip.tile_ram_start, d);

@@ -461,7 +461,7 @@ static void draw_sprites()
 			flipx ^= 0x80;
 		}
 
-		RenderTileTranstab(pTransDraw, DrvGfxROM1, code, 0x100 + (color << 2), 0x1f, sx - 40, sy, flipx, flipy, 16, 16, DrvTransTab);
+		RenderTileTranstabOffset(pTransDraw, DrvGfxROM1, code, (color << 2), 0x1f, sx - 40, sy, flipx, flipy, 16, 16, DrvTransTab + 0x100, 0x100);
 	}
 }
 

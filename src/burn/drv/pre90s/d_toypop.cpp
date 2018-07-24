@@ -723,7 +723,7 @@ static void draw_sprites()
 			{
 				UINT16 code = tile + (xi ^ ((width - 1) & fx)) + yi * 2;
 
-				RenderTileTranstab(pTransDraw, DrvGfxROM1, code, (color << 2) + 0x200, 0xff, x + xi*16, y + yi *16, fx, fy, 16, 16, DrvColPROM + 0x300); // sprites starts at DrvColPROM + 0x200, but must deduct the color offset in this case.
+				RenderTileTranstabOffset(pTransDraw, DrvGfxROM1, code, (color << 2), 0xff, x + xi*16, y + yi *16, fx, fy, 16, 16, DrvColPROM + 0x500, 0x200);
 			}
 		}
 	}

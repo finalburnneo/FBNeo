@@ -1472,7 +1472,10 @@ static void wizdfire_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 coloff, INT32 mo
 
 		while (multi >= 0)
 		{
-			deco16_draw_prio_sprite(pTransDraw, gfx, sprite - multi * inc, (colour << 4) + coloff, x, y + mult * multi, fx, fy, -1);
+			if (prio >= 0x20)
+				deco16_draw_prio_sprite_nitrobal(pTransDraw, gfx, sprite - multi * inc, (colour << 4) + coloff, x, y + mult * multi, fx, fy, 0xf0, 1);
+			else
+				deco16_draw_prio_sprite(pTransDraw, gfx, sprite - multi * inc, (colour << 4) + coloff, x, y + mult * multi, fx, fy, -1);
 #if 0
 			drawgfx_alpha(bitmap,cliprect,machine->gfx[bank],
 					sprite - multi * inc,
@@ -1708,6 +1711,33 @@ static INT32 SchmeisrDraw()
 	return 0;
 }
 
+static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
+{
+	INT32 a = 256 - p;
+
+	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
+		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) / 256;
+}
+
+static void mix_alpha_tilemap()
+{
+	UINT16 *src0 = tempdraw[0];
+	UINT32 *dest = (UINT32*)pBurnDraw;
+	UINT8 *prio = deco16_prio_map;
+
+	for (INT32 y = 0; y < nScreenHeight; y++) {
+		for (INT32 x = 0; x < nScreenWidth; x++) {
+			if (prio[x] < 0xf0 && src0[x] != 0x00)
+				dest[x] = alpha_blend(dest[x], DrvPalette[src0[x]], 0x80);
+		}
+		src0 += nScreenWidth;
+		dest += nScreenWidth;
+		prio += 512;
+	}
+
+	memset(tempdraw[0], 0, 320 * 240 * sizeof(UINT16));
+}
+
 static INT32 WizdfireDraw()
 {
 //	if (DrvRecalc) {
@@ -1722,6 +1752,8 @@ static INT32 WizdfireDraw()
 		pTransDraw[i] = 0x200;
 	}
 
+	deco16_clear_prio_map();
+
 	if (nBurnLayer & 1) deco16_draw_layer(3, pTransDraw, DECO16_LAYER_OPAQUE);
 
 	if (nSpriteEnable & 1) wizdfire_draw_sprites(DrvSprBuf, DrvGfxROM3, 0x400, 4, 3);
@@ -1730,19 +1762,17 @@ static INT32 WizdfireDraw()
 
 	if (nSpriteEnable & 2) wizdfire_draw_sprites(DrvSprBuf, DrvGfxROM3, 0x400, 3, 3);
 
-	if ((deco16_priority & 0x1f) == 0x1f) {
-		if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 0); // tilemap draw alpha 0x80...
-	} else {
-		if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 0); 
-	}
+	if (nBurnLayer & 4) deco16_draw_layer(2, ((deco16_priority & 0x1f) == 0x1f && nBurnBpp == 4) ? tempdraw[0] : pTransDraw, 0); // tilemap draw alpha 0x80...
 
 	if (nSpriteEnable & 4) wizdfire_draw_sprites(DrvSprBuf, DrvGfxROM3, 0x400, 0, 3);
 	if (nSpriteEnable & 8) wizdfire_draw_sprites(DrvSprBuf2, DrvGfxROM4, 0x600, 2, 4);
 	if (nSpriteEnable & 16) wizdfire_draw_sprites(DrvSprBuf2, DrvGfxROM4, 0x600, 1, 4);
 
-	if (nBurnLayer & 8) deco16_draw_layer(0, pTransDraw, 0); 
+	if (nBurnLayer & 8) deco16_draw_layer(0, pTransDraw, DECO16_LAYER_PRIORITY(0xff));
 
 	BurnTransferCopy(DrvPalette);
+
+	if ((deco16_priority & 0x1f) == 0x1f && nBurnBpp == 4) mix_alpha_tilemap();
 
 	return 0;
 }

@@ -1472,8 +1472,8 @@ static void wizdfire_draw_sprites(UINT8 *ram, UINT8 *gfx, INT32 coloff, INT32 mo
 
 		while (multi >= 0)
 		{
-			if (prio >= 0x20)
-				deco16_draw_prio_sprite_nitrobal(pTransDraw, gfx, sprite - multi * inc, (colour << 4) + coloff, x, y + mult * multi, fx, fy, 0xf0, 1);
+			if (prio >= 0x20) // "over alpha" solid sprites.  see mix_alpha_tilemap()
+				deco16_draw_prio_sprite_dumb(pTransDraw, gfx, sprite - multi * inc, (colour << 4) + coloff, x, y + mult * multi, fx, fy, 0xf0, -1);
 			else
 				deco16_draw_prio_sprite(pTransDraw, gfx, sprite - multi * inc, (colour << 4) + coloff, x, y + mult * multi, fx, fy, -1);
 #if 0

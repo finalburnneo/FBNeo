@@ -167,11 +167,10 @@ void deco16_draw_prio_sprite_dumb(UINT16 *dest, UINT8 *gfx, INT32 code, INT32 co
 
 			if (!pxl) continue;
 
-			if (pri != -1) {
-				dest[sy * nScreenWidth + sx] = pxl | color;
-				deco16_prio_map[sy * 512 + sx] |= pri; // right?
-				if (spri != -1) deco16_sprite_prio_map[sy * 512 + sx] |= spri;
-			}
+			dest[sy * nScreenWidth + sx] = pxl | color;
+
+			if (pri  != -1) deco16_prio_map[sy * 512 + sx] |= pri; // right?
+			if (spri != -1) deco16_sprite_prio_map[sy * 512 + sx] |= spri;
 		}
 
 		sx -= 16;
@@ -191,7 +190,14 @@ static inline UINT32 alpha_blend(UINT32 d, UINT32 s, UINT32 p)
 		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) / 256;
 }
 
+// normal
 void deco16_draw_alphaprio_sprite(UINT32 *palette, UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 pri, INT32 spri, INT32 alpha)
+{
+	deco16_draw_alphaprio_sprite(palette, gfx, code, color, sx, sy, flipx, flipy, pri, spri, alpha, 0);
+}
+
+// w/dumb-mode parameter for wizdfire
+void deco16_draw_alphaprio_sprite(UINT32 *palette, UINT8 *gfx, INT32 code, INT32 color, INT32 sx, INT32 sy, INT32 flipx, INT32 flipy, INT32 pri, INT32 spri, INT32 alpha, INT32 dumb_mode)
 {
 	if (alpha == 0) return;
 
@@ -219,13 +225,21 @@ void deco16_draw_alphaprio_sprite(UINT32 *palette, UINT8 *gfx, INT32 code, INT32
 
 			INT32 bpriority = deco16_prio_map[(sy * 512) + sx];
 
-			if (spri == -1) {
-				if ((pri & (1 << (bpriority & 0x1f))) || (bpriority & 0x80)) continue;
-				deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
+			if (dumb_mode) { // used by wizdfire
+				if (pri  != -1) {
+					if (bpriority == 0xff) continue;
+					deco16_prio_map[sy * 512 + sx] |= pri;
+				}
+				//if (spri != -1) deco16_sprite_prio_map[sy * 512 + sx] |= spri;
 			} else {
-				if (pri <= bpriority || spri <= deco16_sprite_prio_map[sy * 512 + sx]) continue;
-				deco16_sprite_prio_map[sy * 512 + sx] = spri;
-				deco16_prio_map[sy * 512 + sx] = pri; // right?
+				if (spri == -1) {
+					if ((pri & (1 << (bpriority & 0x1f))) || (bpriority & 0x80)) continue;
+					deco16_prio_map[sy * 512 + sx] |= 0x80; // right?
+				} else {
+					if (pri <= bpriority || spri <= deco16_sprite_prio_map[sy * 512 + sx]) continue;
+					deco16_sprite_prio_map[sy * 512 + sx] = spri;
+					deco16_prio_map[sy * 512 + sx] = pri;
+				}
 			}
 
 			if (alpha == 0xff) {

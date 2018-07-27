@@ -645,7 +645,7 @@ static void adpcm_update(INT32 chip, INT16 *pbuf, INT32 samples)
 			adpcmcurrsampl[chip] = (INT32)((double)(adpcm_clock(chip, val) << 4) * 0.40);
 		} else
 			if (adpcmending[chip]) { // ramp down, to get rid of clicks -dink
-				adpcmcurrsampl[chip] *= (double)0.997;
+				adpcmcurrsampl[chip] *= (double)0.997; // coefficient created with "exp(- log(2) * (1.0/8000) / 0.01)" and slightly tweaked.
 				if (adpcmcurrsampl[chip] == 0)
 					adpcmending[chip] = 0;
 			}

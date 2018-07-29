@@ -10,18 +10,19 @@
 //  Colony 7
 //  Mayday
 //  Jin
+//  Splat
+//  Alien Area - no sound (there is none)
+//  Sinistar
 
-//  Alien Area - no sound, is there any?
-//  Sinistar - no boot
-//  Splat - no boot
 //  Speed Ball - inputs
-
-// fix scanline timer
+//  Blaster - ? spiffing/finishing. +etc
+//  Lottofun - memory protect sw. error
 
 #include "tiles_generic.h"
 #include "m6809_intf.h"
 #include "m6800_intf.h"
 #include "dac.h"
+#include "hc55516.h"
 #include "watchdog.h"
 #include "6821pia.h"
 
@@ -73,8 +74,12 @@ static UINT8 DrvJoy7[8];
 static UINT8 DrvInputs[7];
 static UINT8 DrvDips[3] = { 0, 0, 0 };
 static UINT8 DrvReset;
+static INT16 DrvAnalogPort0 = 0;
+static INT16 DrvAnalogPort1 = 0;
 
 static INT32 mayday = 0;
+static INT32 splat = 0;
+static INT32 uses_hc55516 = 0;
 
 // dc-blocking filter for DAC
 static INT16 dac_lastin;
@@ -243,10 +248,10 @@ static struct BurnInputInfo SplatInputList[] = {
 	{"P1 Left Stick Down",		BIT_DIGITAL,	DrvJoy5 + 1,	"p1 down"	},
 	{"P1 Left Stick Left",		BIT_DIGITAL,	DrvJoy5 + 2,	"p1 left"	},
 	{"P1 Left Stick Right",     BIT_DIGITAL,	DrvJoy5 + 3,	"p1 right"	},
-	{"P1 Right Stick Up",		BIT_DIGITAL,	DrvJoy7 + 0,	"p3 up"		},
-	{"P1 Right Stick Down",		BIT_DIGITAL,	DrvJoy7 + 1,	"p3 down"	},
-	{"P1 Right Stick Left",		BIT_DIGITAL,	DrvJoy7 + 2,	"p3 left"	},
-	{"P1 Right Stick Right",	BIT_DIGITAL,	DrvJoy7 + 3,	"p3 right"	},
+	{"P1 Right Stick Up",		BIT_DIGITAL,	DrvJoy5 + 6,	"p3 up"		},
+	{"P1 Right Stick Down",		BIT_DIGITAL,	DrvJoy5 + 7,	"p3 down"	},
+	{"P1 Right Stick Left",		BIT_DIGITAL,	DrvJoy7 + 0,	"p3 left"	},
+	{"P1 Right Stick Right",	BIT_DIGITAL,	DrvJoy7 + 1,	"p3 right"	},
 
 	{"P2 Coin",					BIT_DIGITAL,	DrvJoy3 + 5,	"p2 coin"	},
 	{"P2 Start",				BIT_DIGITAL,	DrvJoy1 + 5,	"p2 start"	},
@@ -254,10 +259,10 @@ static struct BurnInputInfo SplatInputList[] = {
 	{"P2 Left Stick Down",		BIT_DIGITAL,	DrvJoy4 + 1,	"p2 down"	},
 	{"P2 Left Stick Left",		BIT_DIGITAL,	DrvJoy4 + 2,	"p2 left"	},
 	{"P2 Left Stick Right",	    BIT_DIGITAL,	DrvJoy4 + 3,	"p2 right"	},
-	{"P2 Right Stick Up",		BIT_DIGITAL,	DrvJoy6 + 0,	"p4 up"		},
-	{"P2 Right Stick Down",		BIT_DIGITAL,	DrvJoy6 + 1,	"p4 down"	},
-	{"P2 Right Stick Left",		BIT_DIGITAL,	DrvJoy6 + 2,	"p4 left"	},
-	{"P2 Right Stick Right",	BIT_DIGITAL,	DrvJoy6 + 3,	"p4 right"	},
+	{"P2 Right Stick Up",		BIT_DIGITAL,	DrvJoy4 + 6,	"p4 up"		},
+	{"P2 Right Stick Down",		BIT_DIGITAL,	DrvJoy4 + 7,	"p4 down"	},
+	{"P2 Right Stick Left",		BIT_DIGITAL,	DrvJoy6 + 0,	"p4 left"	},
+	{"P2 Right Stick Right",	BIT_DIGITAL,	DrvJoy6 + 1,	"p4 right"	},
 
 	{"P3 Coin",					BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
 
@@ -356,13 +361,15 @@ static struct BurnInputInfo AlienarInputList[] = {
 
 STDINPUTINFO(Alienar)
 
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
 static struct BurnInputInfo SinistarInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
 	{"P1 Start",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
 	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 1"	},
 	{"P1 Button 2",				BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 2"	},
 
-	// analog inputs!!!!
+	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
 
 	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
 	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
@@ -370,6 +377,7 @@ static struct BurnInputInfo SinistarInputList[] = {
 	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
 	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
 };
+#undef A
 
 STDINPUTINFO(Sinistar)
 
@@ -455,10 +463,10 @@ enum
 
 static void blit_pixel(INT32 dstaddr, INT32 srcdata, INT32 controlbyte)
 {
-	int curpix = (dstaddr < 0xc000) ? DrvVidRAM[dstaddr] : M6809CheatRead(dstaddr);   //current pixel values at dest
+	INT32 curpix = (dstaddr < 0xc000) ? DrvVidRAM[dstaddr] : M6809CheatRead(dstaddr);   //current pixel values at dest
 
-	int solid = DrvBlitRAM[1];
-	unsigned char keepmask = 0xff; 
+	INT32 solid = DrvBlitRAM[1];
+	UINT8 keepmask = 0xff;
 
 	if((controlbyte & WMS_BLITTER_CONTROLBYTE_FOREGROUND_ONLY) && !(srcdata & 0xf0))
 	{
@@ -497,10 +505,10 @@ static void blit_pixel(INT32 dstaddr, INT32 srcdata, INT32 controlbyte)
 
 static INT32 blitter_core(UINT16 sstart, UINT16 dstart, UINT8 w, UINT8 h, UINT8 controlbyte)
 {
-	int source, sxadv, syadv;
-	int dest, dxadv, dyadv;
-	int x, y;
-	int accesses = 0;
+	INT32 source, sxadv, syadv;
+	INT32 dest, dxadv, dyadv;
+	INT32 x, y;
+	INT32 accesses = 0;
 	UINT8 *remap_ptr = blitter_remap + blitter_remap_index * 256;
 
 	sxadv = (controlbyte & WMS_BLITTER_CONTROLBYTE_SRC_STRIDE_256) ? 0x100 : 1;
@@ -508,7 +516,7 @@ static INT32 blitter_core(UINT16 sstart, UINT16 dstart, UINT8 w, UINT8 h, UINT8 
 	dxadv = (controlbyte & WMS_BLITTER_CONTROLBYTE_DST_STRIDE_256) ? 0x100 : 1;
 	dyadv = (controlbyte & WMS_BLITTER_CONTROLBYTE_DST_STRIDE_256) ? 1 : w;
 
-	int pixdata=0;
+	INT32 pixdata=0;
 
 	for (y = 0; y < h; y++)
 	{
@@ -549,8 +557,8 @@ static void williams_blitter_write(INT32 offset, UINT8 data)
 {
 	offset &= 7;
 
-	int sstart, dstart, w, h, accesses;
-	int estimated_clocks_at_4MHz;
+	INT32 sstart, dstart, w, h, accesses;
+	INT32 estimated_clocks_at_4MHz;
 
 	DrvBlitRAM[offset] = data;
 
@@ -770,7 +778,9 @@ static void williams_main_write(UINT16 address, UINT8 data)
 			}
 		return;
 	}
-	if (address != 0xcbff) bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
+
+	// sinistar debug derp spew writes @ 0xe000 - 0xffff
+	if ((address & 0xe000) != 0xe000) bprintf (0, _T("MW: %4.4x, %2.2x\n"), address, data);
 }
 
 static UINT8 williams_main_read(UINT16 address)
@@ -798,6 +808,13 @@ static UINT8 williams_main_read(UINT16 address)
 	if ((address & 0xff00) == 0xcb00) {
 		return (scanline < 0x100) ? (scanline & 0xfc) : 0xfc;
 	}
+
+	if ((address & 0xfc00) == 0xc000) { // palette read, maybe? (sinistar)
+		return DrvPalRAM[address & 0xf];
+	}
+
+	if (address == 0xc900) return 0; // NOP
+	//if (address == 0xc000) return 0; // NOP (sinistar)?
 
 	bprintf (0, _T("MR: %4.4x\n"), address);
 
@@ -915,8 +932,9 @@ static UINT8 pia0_muxed_in_b(UINT16 )
 static UINT8 pia0_49way_in_a(UINT16 )
 {
 	static const UINT8 translate49[7] = { 0x0, 0x4, 0x6, 0x7, 0xb, 0x9, 0x8 };
-
-	return (translate49[0 >> 4] << 4) | translate49[0 >> 4];  // x, y - iq_132!!!!!!!!!!!!!!!!!!!!!!!!!
+	INT16 x = ProcessAnalog(DrvAnalogPort0, 0, 1, 0x00, 0x6f);
+	INT16 y = ProcessAnalog(DrvAnalogPort1, 1, 1, 0x00, 0x6f);
+	return (translate49[x >> 4] << 4) | translate49[y >> 4];
 }
 
 static void pia1_out_b(UINT16 , UINT8 data)
@@ -929,6 +947,18 @@ static void pia1_out_b(UINT16 , UINT8 data)
 static void pia2_out_b(UINT16 , UINT8 data)
 {
 	DACWrite(0, data);
+}
+
+static void hc55516_digit_out(UINT16 , UINT8 data)
+{
+	//bprintf(0, _T("d: %X, "), data);
+	hc55516_digit_w(data);
+}
+
+static void hc55516_clock_out(UINT16 , UINT8 data)
+{
+	//bprintf(0, _T("c: %X, "), data);
+	hc55516_clock_w(data);
 }
 
 static void pia1_main_irq(INT32 state)
@@ -983,6 +1013,13 @@ static pia6821_interface pia_2 = {
 	pia2_sound_irq, pia2_sound_irq
 };
 
+static pia6821_interface pia_2_sinistar = {
+	NULL, NULL,
+	NULL, NULL, NULL, NULL,
+	pia2_out_b, NULL, hc55516_digit_out, hc55516_clock_out,
+	pia2_sound_irq, pia2_sound_irq
+};
+
 static UINT8 pia3_in_a(UINT16 )
 {
 	return DrvInputs[3];
@@ -1017,6 +1054,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	BurnWatchdogReset();
 
 	DACReset();
+
+	if (uses_hc55516)
+		hc55516_reset();
 
 	cocktail = 0;
 	bankselect = 0;
@@ -1138,6 +1178,8 @@ static void blitter_init(INT32 blitter_config, UINT8 *prom)
 {
 	static UINT8 dummy_table[16] = { STEP16(0,1) };
 
+	if (splat) prom = NULL;
+
 	blitter_window_enable = 0;
 	blitter_xor = (blitter_config == 1) ? 4 : 0;
 	blitter_remap_index = 0;
@@ -1150,7 +1192,7 @@ static void blitter_init(INT32 blitter_config, UINT8 *prom)
 			blitter_remap[i * 256 + j] = (table[j >> 4] << 4) | table[j & 0x0f];
 	}
 }
-
+//DrvInit(1, 4, 6, 1, 0x7400);
 static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitter_config, INT32 blitter_clip_addr)
 {
 	AllMem = NULL;
@@ -1241,11 +1283,16 @@ static INT32 DrvExit()
 
 	DACExit();
 
+	if (uses_hc55516)
+		hc55516_exit();
+
 	BurnFree(AllMem);
 
 	memset (DrvDips, 0, 3);
 
 	mayday = 0;
+	splat = 0;
+	uses_hc55516 = 0;
 
 	pStartDraw = NULL;
 	pDrawScanline = NULL;
@@ -1324,7 +1371,7 @@ static void blaster_draw_bitmap()
 
 		for (INT32 x = 0 & ~1; x < nScreenWidth; x += 2)
 		{
-			int pix = source[(x/2) * 256];
+			INT32 pix = source[(x/2) * 256];
 
 			if (erase_behind)
 				source[(x/2) * 256] = 0;
@@ -1469,6 +1516,8 @@ static INT32 DrvFrame()
 	if (pBurnSoundOut) {
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		dcfilter_dac();
+		if (uses_hc55516)
+			hc55516_update(pBurnSoundOut, nBurnSoundLen);
 	}
 
 	M6809Close();
@@ -1503,6 +1552,8 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		M6800Scan(nAction);
 
 		DACScan(nAction, pnMin);
+		if (uses_hc55516)
+			hc55516_scan(nAction, pnMin);
 
 		SCAN_VAR(cocktail);
 		SCAN_VAR(bankselect);
@@ -2716,11 +2767,15 @@ STD_ROM_FN(splat)
 
 static INT32 SplatInit()
 {
+	splat = 1;
+
 	INT32 nRet = DrvInit(1, 0, 6, 2, 0xc000);
 
 	if (nRet == 0)
 	{
 		pia_config(0, 0, &pia_muxed_joust_0);
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = DrvDrawLine;
 	}
 
 	return nRet;
@@ -2812,7 +2867,7 @@ static INT32 AlienarInit()
 
 struct BurnDriver BurnDrvAlienar = {
 	"alienar", NULL, NULL, NULL, "1985",
-	"Alien Arena\0", NULL, "Duncan Brown", "6809 System",
+	"Alien Arena\0", "Game has no sound", "Duncan Brown", "6809 System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MAZE, 0,
 	NULL, alienarRomInfo, alienarRomName, NULL, NULL, AlienarInputInfo, NULL,
@@ -2887,14 +2942,20 @@ STD_ROM_FN(sinistar)
 
 static INT32 SinistarInit()
 {
-	INT32 nRet = DrvInit(1, 4, 6, 2, 0x7400);
+	INT32 nRet = DrvInit(1, 4, 6, 1, 0x7400);
 
 	if (nRet == 0)
 	{
+		hc55516_init(M6800TotalCycles, 894886);
+		uses_hc55516 = 1;
+
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = DrvDrawLine;
+
 		pia_init();
 		pia_config(0, 0, &pia_49way_0);
 		pia_config(1, 0, &pia_1);
-		pia_config(2, 0, &pia_2);
+		pia_config(2, 0, &pia_2_sinistar);
 		pia_config(3, 0, &pia_3);
 
 		M6809Open(0);
@@ -2909,10 +2970,10 @@ struct BurnDriver BurnDrvSinistar = {
 	"sinistar", NULL, NULL, NULL, "1982",
 	"Sinistar (revision 3)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sinistarRomInfo, sinistarRomName, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
-	292, 240, 4, 3
+	240, 292, 3, 4
 };
 
 
@@ -2948,10 +3009,10 @@ struct BurnDriver BurnDrvSinistar1 = {
 	"sinistar1", "sinistar", NULL, NULL, "1982",
 	"Sinistar (prototype version)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sinistar1RomInfo, sinistar1RomName, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
-	292, 240, 4, 3
+	240, 292, 3, 4
 };
 
 
@@ -2987,10 +3048,10 @@ struct BurnDriver BurnDrvSinistar2 = {
 	"sinistar2", "sinistar", NULL, NULL, "1982",
 	"Sinistar (revision 2)\0", NULL, "Williams", "6809 System",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL, 2, HARDWARE_MISC_PRE90S, GBF_SHOOT, 0,
 	NULL, sinistar2RomInfo, sinistar2RomName, NULL, NULL, SinistarInputInfo, NULL,
 	SinistarInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x10,
-	292, 240, 4, 3
+	240, 292, 3, 4
 };
 
 

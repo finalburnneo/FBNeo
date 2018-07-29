@@ -56,7 +56,7 @@ drvsrc	= 	d_dodonpachi.o d_donpachi.o d_esprade.o d_feversos.o d_gaia.o d_guwang
 			d_route16.o d_rpunch.o d_safarir.o d_sauro.o d_scregg.o d_seicross.o d_sf.o d_sidearms.o d_skyarmy.o d_skyfox.o d_skykid.o d_snk.o d_snk6502.o \
 			d_snk68.o d_solomon.o d_sonson.o d_spacefb.o d_speedbal.o d_sprcros2.o d_srumbler.o d_ssozumo.o d_sstrangr.o d_stfight.o d_sub.o d_suna8.o d_tagteam.o d_tail2nose.o d_tbowl.o d_tceptor.o \
 			d_tecmo.o d_terracre.o d_thedeep.o d_thepit.o d_tigeroad.o d_timelimt.o d_toki.o d_toypop.o d_travrusa.o d_tsamurai.o d_twincobr.o d_usgames.o d_vastar.o d_vball.o d_vicdual.o d_vulgus.o \
-			d_wallc.o d_warpwarp.o d_warpsped.o d_wc90.o d_wc90b.o d_wiping.o d_wiz.o d_wrally.o d_wwfsstar.o d_xain.o d_xxmissio.o d_xyonix.o d_zodiack.o \
+			d_wallc.o d_warpwarp.o d_warpsped.o d_wc90.o d_wc90b.o d_williams.o d_wiping.o d_wiz.o d_wrally.o d_wwfsstar.o d_xain.o d_xxmissio.o d_xyonix.o d_zodiack.o \
 			\
 			d_3x3puzzl.o d_1945kiii.o d_20pacgal.o d_aerofgt.o d_airbustr.o d_aquarium.o d_bestleag.o d_bigstrkb.o d_blackt96.o d_blmbycar.o d_bloodbro.o d_crospang.o d_crshrace.o d_cultures.o \
 			d_dcon.o d_ddragon3.o d_deniam.o d_diverboy.o d_dooyong.o d_dreamwld.o d_drgnmst.o d_drtomy.o d_egghunt.o d_esd16.o d_f1gp.o d_funybubl.o d_fuukifg2.o \
@@ -96,7 +96,7 @@ depobj	= 	burn.o burn_gun.o burn_led.o burn_shift.o burn_memory.o burn_pal.o bur
 			watchdog.o \
 			\
 			ay8910.o burn_y8950.o burn_ym2151.o burn_ym2203.o burn_ym2413.o burn_ym2608.o burn_ym2610.o burn_ym2612.o burn_md2612.o \
-			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o ics2115.o iremga20.o \
+			burn_ym3526.o burn_ym3812.o burn_ymf278b.o c6280.o dac.o es5506.o es8712.o flower.o flt_rc.o fm.o fmopl.o ym2612.o gaelco.o hc55516.o ics2115.o iremga20.o \
 			k005289.o k007232.o k051649.o k053260.o k054539.o msm5205.o msm5232.o msm6295.o namco_snd.o c140.o nes_apu.o tms5110.o tms5220.o tms36xx.o phoenixsound.o \
 			pleiadssound.o pokey.o rf5c68.o saa1099.o samples.o segapcm.o sn76477.o sn76496.o upd7759.o vlm5030.o wiping.o x1010.o ym2151.o ym2413.o \
 			ymdeltat.o ymf278b.o ymz280b.o snk6502_sound.o sp0256.o \

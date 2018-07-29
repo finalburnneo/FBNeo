@@ -13,9 +13,9 @@
 //  Splat
 //  Alien Area - no sound (there is none)
 //  Sinistar
+//  Blaster - needs second soundcpu emulated for stereo. (m6800 only supports 1 cpu!)
 
 //  Speed Ball - inputs
-//  Blaster - ? spiffing/finishing. +etc
 //  Lottofun - memory protect sw. error
 
 #include "tiles_generic.h"
@@ -380,6 +380,27 @@ static struct BurnInputInfo SinistarInputList[] = {
 #undef A
 
 STDINPUTINFO(Sinistar)
+
+#define A(a, b, c, d) {a, b, (UINT8*)(c), d}
+static struct BurnInputInfo BlasterInputList[] = {
+	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
+	{"P1 Start",				BIT_DIGITAL,	DrvJoy2 + 4,	"p1 start"	},
+	{"P1 Button 1",				BIT_DIGITAL,	DrvJoy2 + 1,	"p1 fire 1"	},
+	{"P1 Button 2",				BIT_DIGITAL,	DrvJoy2 + 0,	"p1 fire 2"	},
+	{"P1 Button 3",				BIT_DIGITAL,	DrvJoy2 + 2,	"p1 fire 3"	},
+
+	A("P1 Stick X",             BIT_ANALOG_REL, &DrvAnalogPort0,"p1 x-axis"),
+	A("P1 Stick Y",             BIT_ANALOG_REL, &DrvAnalogPort1,"p1 y-axis"),
+
+	{"Reset",					BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Auto Up / Manual Down",	BIT_DIGITAL,	DrvJoy3 + 0,	"service"	},
+	{"Advance",					BIT_DIGITAL,	DrvJoy3 + 1,	"service2"	},
+	{"High Score Reset",		BIT_DIGITAL,	DrvJoy3 + 3,	"service3"	},
+	{"Tilt",					BIT_DIGITAL,	DrvJoy3 + 6,	"tilt"		},
+};
+#undef A
+
+STDINPUTINFO(Blaster)
 
 static struct BurnInputInfo LottofunInputList[] = {
 	{"P1 Coin",					BIT_DIGITAL,	DrvJoy3 + 4,	"p1 coin"	},
@@ -911,24 +932,6 @@ static UINT8 pia0_muxed_joust_in_b(UINT16 )
 	return (DrvInputs[1] & 0xfc) | ((port_select == 0) ? (DrvInputs[5] & 0x3) : (DrvInputs[6] & 0x3));
 }
 
-/*static UINT8 pia0_muxed_in_a(UINT16 )
-{
-	if (port_select == 0) {
-		return (DrvInputs[3] & 0xf) | (DrvInputs[0] & 0x30) | (DrvInputs[5] << 6);
-	} else {
-		return (DrvInputs[5] >> 2) & 3;
-	}
-}
-
-static UINT8 pia0_muxed_in_b(UINT16 )
-{
-	if (port_select == 0) {
-		return (DrvInputs[4] & 0xf) | (DrvInputs[0] & 0x30) | (DrvInputs[6] << 6);
-	} else {
-		return (DrvInputs[6] >> 2) & 3;
-	}
-}*/
-
 static UINT8 pia0_49way_in_a(UINT16 )
 {
 	static const UINT8 translate49[7] = { 0x0, 0x4, 0x6, 0x7, 0xb, 0x9, 0x8 };
@@ -951,13 +954,11 @@ static void pia2_out_b(UINT16 , UINT8 data)
 
 static void hc55516_digit_out(UINT16 , UINT8 data)
 {
-	//bprintf(0, _T("d: %X, "), data);
 	hc55516_digit_w(data);
 }
 
 static void hc55516_clock_out(UINT16 , UINT8 data)
 {
-	//bprintf(0, _T("c: %X, "), data);
 	hc55516_clock_w(data);
 }
 
@@ -984,13 +985,6 @@ static pia6821_interface pia_muxed_joust_0 = {
 	NULL, NULL, NULL, pia0_muxed_out_b2,
 	NULL, NULL
 };
-
-/*static pia6821_interface pia_muxed_0 = {
-	pia0_muxed_in_a, pia0_muxed_in_b,
-	NULL, NULL, NULL, NULL,
-	NULL, NULL, NULL, pia0_muxed_out_b2,
-	NULL, NULL
-};*/
 
 static pia6821_interface pia_49way_0 = {
 	pia0_49way_in_a, pia0_in_b,
@@ -1105,7 +1099,7 @@ static INT32 MemIndex()
 	return 0;
 }
 
-static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinistar
+static INT32 DrvRomLoad(INT32 type) // 1-defender, 2-mysticm, 3-tshoot, 4-sinistar, 0-blaster
 {
 	char* pRomName;
 	struct BurnRomInfo ri;
@@ -1192,7 +1186,7 @@ static void blitter_init(INT32 blitter_config, UINT8 *prom)
 			blitter_remap[i * 256 + j] = (table[j >> 4] << 4) | table[j & 0x0f];
 	}
 }
-//DrvInit(1, 4, 6, 1, 0x7400);
+
 static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitter_config, INT32 blitter_clip_addr)
 {
 	AllMem = NULL;
@@ -1210,8 +1204,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 	{
 		M6809Init(1);
 		M6809Open(0);
-		M6809MapMemory(DrvVidRAM,				0x0000, 0x3fff, MAP_WRITE);
-		M6809MapMemory(DrvM6809RAM0,			0x9000, 0xbfff, MAP_RAM);
+		M6809MapMemory(DrvVidRAM,				0x0000, 0xbfff, MAP_RAM); // banked
 		M6809MapMemory(DrvNVRAM,				0xcc00, 0xcfff, MAP_ROM);
 		M6809MapMemory(DrvM6809ROM0 + 0xd000,	0xd000, 0xffff, MAP_ROM);
 		M6809SetWriteHandler(blaster_main_write);
@@ -1351,25 +1344,27 @@ static void draw_bitmap(INT32 starty, INT32 endy)
 	}
 }
 
-static void blaster_draw_bitmap()
+static void blaster_draw_bitmap(INT32 starty, INT32 endy)
 {
 	INT32 color0 = 0;
-	UINT8 *palette_control = DrvM6809ROM0 + 0x2b00;
-	UINT8 *scanline_control = DrvM6809ROM0 + 0x2c00;
+	UINT8 *palette_control = DrvVidRAM + 0xbb00;
+	UINT8 *scanline_control = DrvVidRAM + 0xbc00;
 	
-//	if (cliprect.min_y == screen.visible_area().min_y || !(m_blaster_video_control & 1))
+	if (starty == 0 || !(blaster_video_control & 1))
 		color0 = palette_control[0] ^ 0xff;
 
-	for (INT32 y = 0; y < nScreenHeight; y++)
+	for (INT32 y = starty; y < endy; y++)
 	{
 		INT32 erase_behind = blaster_video_control & scanline_control[y] & 2;
 		UINT8 *source = DrvVidRAM + y;
 		UINT16 *dest = pTransDraw + (y * nScreenWidth);
 
+		if (y >= 240) return;
+
 		if (blaster_video_control & scanline_control[y] & 1)
 			color0 = palette_control[y] ^ 0xff;
 
-		for (INT32 x = 0 & ~1; x < nScreenWidth; x += 2)
+		for (INT32 x = 0; x < nScreenWidth; x += 2)
 		{
 			INT32 pix = source[(x/2) * 256];
 
@@ -1406,6 +1401,17 @@ static void DrvDrawLine()
 	lastline = scanline;
 }
 
+static void BlasterDrawLine()
+{
+	if (scanline > nScreenHeight || !pBurnDraw) return;
+
+	DrvPaletteUpdate();
+
+	blaster_draw_bitmap(lastline, scanline);
+
+	lastline = scanline;
+}
+
 static void DrvDrawEnd()
 {
 	if (!pBurnDraw) return;
@@ -1437,7 +1443,7 @@ static INT32 BlasterDraw()
 
 	DrvPaletteUpdate();
 
-	blaster_draw_bitmap();
+	blaster_draw_bitmap(0, nScreenHeight);
 
 	BurnTransferCopy(DrvPalette);
 
@@ -3118,9 +3124,9 @@ static struct BurnRomInfo blasterRomDesc[] = {
 
 	{ "18.sb10",			0x1000, 0xc33a3145, 3 | BRF_PRG | BRF_ESS }, // 18 M6800 #1 Code
 
-	{ "4.u42",				0x0200, 0xe6631c23, 0 | BRF_GRA },           // 19 proms
-	{ "6.u23",				0x0200, 0x83faf25e, 0 | BRF_GRA },           // 20
-	{ "blaster.col",		0x0800, 0xbac50bc4, 0 | BRF_GRA },           // 21
+	{ "4.u42",				0x0200, 0xe6631c23, 0 | BRF_OPT },           // 19 proms
+	{ "6.u23",				0x0200, 0x83faf25e, 0 | BRF_OPT },           // 20
+	{ "blaster.col",		0x0800, 0xbac50bc4, 4 | BRF_GRA },           // 21
 };
 
 STD_ROM_PICK(blaster)
@@ -3128,7 +3134,21 @@ STD_ROM_FN(blaster)
 
 static INT32 BlasterInit()
 {
-	return DrvInit(2, 0, 6, 2, 0x9700);
+	INT32 nRet = DrvInit(2, 0, 6, 2, 0x9700);
+
+	if (nRet == 0)
+	{
+		pia_init();
+		pia_config(0, 0, &pia_49way_0);
+		pia_config(1, 0, &pia_1);
+		pia_config(2, 0, &pia_2_sinistar);
+		pia_config(3, 0, &pia_3);
+
+		pStartDraw = DrvDrawBegin;
+		pDrawScanline = BlasterDrawLine;
+	}
+
+	return nRet;
 }
 
 struct BurnDriver BurnDrvBlaster = {
@@ -3136,7 +3156,7 @@ struct BurnDriver BurnDrvBlaster = {
 	"Blaster\0", NULL, "Williams / Vid Kidz", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,
-	NULL, blasterRomInfo, blasterRomName, NULL, NULL, LottofunInputInfo, NULL, //BlasterInputInfo, BlasterDIPInfo,
+	NULL, blasterRomInfo, blasterRomName, NULL, NULL, BlasterInputInfo, NULL,
 	BlasterInit, DrvExit, DrvFrame, BlasterDraw, DrvScan, &DrvRecalc, 0x10,
 	292, 240, 4, 3
 };

@@ -351,9 +351,9 @@ static INT32 DrvDoReset(INT32 full_reset)
 	M6809Reset();
 	M6809Close();
 
-	// open
+	HD63701Open(0);
 	HD63701Reset();
-	// close
+	HD63701Close();
 
 	NamcoSoundReset();
 
@@ -502,8 +502,8 @@ static INT32 DrvInit()
 	M6809SetReadHandler(pacland_main_read);
 	M6809Close();
 
-	HD63701Init(1);
-	// Open
+	HD63701Init(0);
+	HD63701Open(0);
 	HD63701MapMemory(DrvMCUROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
 	HD63701MapMemory(DrvMCURAM,		0xc000, 0xc7ff, MAP_RAM);
 	HD63701MapMemory(DrvMCUROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
@@ -511,7 +511,7 @@ static INT32 DrvInit()
 	HD63701SetReadPortHandler(pacland_mcu_read_port);
 	HD63701SetWriteHandler(pacland_mcu_write);
 	HD63701SetReadHandler(pacland_mcu_read);
-	// Close
+	HD63701Close();
 
 	NamcoSoundInit(49152000/2/1024, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
@@ -768,6 +768,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2]  = { 0, 0 };
 
 	M6809Open(0);
+	HD63701Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -795,6 +796,7 @@ static INT32 DrvFrame()
 		}
 	}
 
+	HD63701Close();
 	M6809Close();
 
 	if (pBurnSoundOut) {

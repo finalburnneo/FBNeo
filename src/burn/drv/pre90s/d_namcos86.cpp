@@ -1061,9 +1061,9 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6809Reset();
 	M6809Close();
 
-//	HD63701Open(0);
+	HD63701Open(0);
 	HD63701Reset();
-//	HD63701Close();
+	HD63701Close();
 
 	BurnYM2151Reset();
 
@@ -1313,8 +1313,8 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 	M6809SetWriteHandler(namcos86_cpu0_write);
 	M6809Close();
 
-	HD63701Init(1);
-//	HD63701Open(0);
+	HD63701Init(0);
+	HD63701Open(0);
 //	HD63701MapMemory(DrvMCURAM + 0x0000,	0x1000, 0x13ff, MAP_RAM);
 	HD63701MapMemory(DrvMCURAM + 0x0400,	0x1400, 0x1fff, MAP_RAM);
 	HD63701MapMemory(DrvMCUROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
@@ -1324,7 +1324,7 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 	HD63701SetWriteHandler(namcos86_mcu_write);
 	HD63701SetWritePortHandler(namcos86_mcu_write_port);
 	HD63701SetReadPortHandler(namcos86_mcu_read_port);
-//	HD63701Close();
+	HD63701Close();
 
 	set_tile_offsets(4, 2, 5, 3); // rthunder
 
@@ -1355,9 +1355,9 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 			M6809SetWriteHandler(roishtar_cpu1_write);
 			M6809Close();
 
-		//	HD6370Open(0);
+			HD63701Open(0);
 			HD63701MapMemory(DrvMCUROM + 0x2000,	0x2000, 0x3fff, MAP_ROM);
-		//	HD63701Close();
+			HD63701Close();
 		}
 		break;
 
@@ -1372,9 +1372,9 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 			M6809SetWriteHandler(genpeitd_cpu1_write);
 			M6809Close();
 
-		//	HD6370Open(0);
+			HD63701Open(0);
 			HD63701MapMemory(DrvMCUROM + 0x4000,	0x4000, 0x7fff, MAP_ROM);
-		//	HD63701Close();
+			HD63701Close();
 		}
 		break;
 
@@ -1389,9 +1389,9 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 			M6809SetWriteHandler(rthunder_cpu1_write);
 			M6809Close();
 
-		//	HD6370Open(0);
+			HD63701Open(0);
 			HD63701MapMemory(DrvMCUROM + 0x4000,	0x4000, 0x7fff, MAP_ROM);
-		//	HD63701Close();
+			HD63701Close();
 		}
 		break;
 
@@ -1405,10 +1405,10 @@ static INT32 CommonInit(INT32 nSubCPUConfig, INT32 pcmdata)
 			M6809MapMemory(DrvSubROM + 0x8000,	0x8000, 0xffff, MAP_ROM);
 			M6809SetWriteHandler(wndrmomo_cpu1_write);
 			M6809Close();
-		
-		//	HD6370Open(0);
+
+			HD63701Open(0);
 			HD63701MapMemory(DrvMCUROM + 0x4000,	0x4000, 0x7fff, MAP_ROM);
-		//	HD63701Close();
+			HD63701Close();
 		}
 		break;
 	}
@@ -1647,8 +1647,10 @@ static INT32 DrvFrame()
 		if (i == 725) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		M6809Close();
 
-		nCyclesDone[2] += HD63701Run(nSegment - M6800TotalCycles());
+		HD63701Open(0);
+		nCyclesDone[2] += HD63701Run(nSegment - HD63701TotalCycles());
 		if (i == 725) HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
+		HD63701Close();
 
 		if ((i % 8) == 7) {
 			if (pBurnSoundOut) {

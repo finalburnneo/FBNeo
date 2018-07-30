@@ -365,7 +365,7 @@ static void ay8910_write_B(UINT32, UINT32 data)
 
 static INT32 syncronize_dac()
 {
-	return (INT32)(float)(nBurnSoundLen * (nM6800CyclesTotal / (3072000.000 / 60)));
+	return (INT32)(float)(nBurnSoundLen * (NSC8105TotalCycles() / (3072000.000 / 60)));
 }
 
 static INT32 DrvDoReset(INT32 full_reset)
@@ -378,10 +378,12 @@ static INT32 DrvDoReset(INT32 full_reset)
 	ZetReset();
 	ZetClose();
 
+	NSC8105Open(0);
 	NSC8105Reset();
 	mcu_halt = 1;
+	AY8910Reset(0); // NSC8105Reset() in ay8910_write_B
+	NSC8105Close();
 
-	AY8910Reset(0);
 	DACReset();
 
 	static const UINT8 nvram_data[32] = {
@@ -504,7 +506,8 @@ static INT32 DrvInit(INT32 select)
 	ZetSetInHandler(seicross_main_read_port);
 	ZetClose();
 
-	NSC8105Init(1);
+	NSC8105Init(0);
+	NSC8105Open(0);
 	NSC8105MapMemory(DrvMCURAM,	0x0000, 0x00ff, MAP_RAM); // 0-7f
 	if (game_select < 2)
 		NSC8105MapMemory(DrvNVRAM,	0x1000, 0x10ff, MAP_RAM);
@@ -514,6 +517,7 @@ static INT32 DrvInit(INT32 select)
 	NSC8105MapMemory(DrvShareRAM,	0xf800, 0xffff, MAP_RAM);
 	NSC8105SetWriteHandler(seicross_mcu_write);
 	NSC8105SetReadHandler(seicross_mcu_read);
+	NSC8105Close();
 
 	AY8910Init(0, 1536000, 0);
 	AY8910SetPorts(0, NULL, &ay8910_read_B, NULL, &ay8910_write_B);
@@ -712,6 +716,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ZetOpen(0);
+	NSC8105Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -721,10 +726,9 @@ static INT32 DrvFrame()
 		if (i == 240 && irq_mask) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
 
 		if (mcu_halt) {
-			nCyclesDone[1] = ZetTotalCycles();
-			nM6800CyclesTotal += ZetTotalCycles() - nM6800CyclesTotal;
+			nCyclesDone[1] += NSC8105Idle(ZetTotalCycles() - NSC8105TotalCycles());
 		} else {
-			nCyclesDone[1] += NSC8105Run(ZetTotalCycles() - nM6800CyclesTotal);
+			nCyclesDone[1] += NSC8105Run(ZetTotalCycles() - NSC8105TotalCycles());
 		}
 
 		if (pBurnSoundOut) {
@@ -746,6 +750,7 @@ static INT32 DrvFrame()
 		}
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 	}
+	NSC8105Close(); // after dacupdate
 
 	if (pBurnDraw) {
 		DrvDraw();

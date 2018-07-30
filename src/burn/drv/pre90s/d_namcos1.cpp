@@ -951,7 +951,9 @@ static void subres_callback(INT32 state)
 
 		M6809Open(0);
 
+		HD63701Open(0);
 		HD63701Reset();
+		HD63701Close();
 	}
 }
 
@@ -1300,7 +1302,7 @@ static UINT8 mcu_read_port(UINT16 port)
 
 static INT32 DrvDACSync() // sync to hd63701 (m6800 core)
 {
-	return (INT32)(float)(nBurnSoundLen * (M6800TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000) - dac_kludge))));
+	return (INT32)(float)(nBurnSoundLen * (HD63701TotalCycles() / (1536000.0000 / ((nBurnFPS / 100.0000) - dac_kludge))));
 }
 
 static void YM2151IrqHandler(INT32 status)
@@ -1369,13 +1371,12 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	reset_dacs();
 	M6809Close();
 
-//	HD63701Open(0);
+	HD63701Open(0);
 	HD63701Reset();
 	if (clear_mem) {
 		HD63701MapMemory(NULL, 0x4000, 0xbfff, MAP_ROM);
-		//m6800_reset_hard(); // HD63701
 	}
-//	HD63701Close();
+	HD63701Close();
 
 	HiscoreReset();
 
@@ -1603,8 +1604,8 @@ static INT32 DrvInit()
 	M6809SetReadHandler(sound_read);
 	M6809Close();
 
-	HD63701Init(1);
-//	HD63701Open(0);
+	HD63701Init(0);
+	HD63701Open(0);
 	HD63701MapMemory(DrvTriRAM,		0xc000, 0xc7ff, MAP_ROM);
 	HD63701MapMemory(DrvNVRAM,		0xc800, 0xcfff, MAP_RAM);
 	HD63701MapMemory(DrvMCUROM + 0x0000,	0xf000, 0xffff, MAP_ROM);
@@ -1614,7 +1615,7 @@ static INT32 DrvInit()
 	HD63701SetWriteHandler(mcu_write);
 	HD63701SetWritePortHandler(mcu_write_port);
 	HD63701SetReadPortHandler(mcu_read_port);
-//	HD63701Close();
+	HD63701Close();
 
 	BurnYM2151Init(3579580);
 	BurnYM2151SetIrqHandler(&YM2151IrqHandler);
@@ -1970,8 +1971,10 @@ static INT32 DrvFrame()
 			if (i == S1VBL) M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 			M6809Close();
 
+			HD63701Open(0);
 			nCyclesDone[3] += HD63701Run(nSegment - nCyclesDone[3]);
 			if (i == S1VBL) HD63701SetIRQLine(0, CPU_IRQSTATUS_ACK);
+			HD63701Close();
 		}
 		else
 		{
@@ -1983,8 +1986,9 @@ static INT32 DrvFrame()
 			nCyclesDone[2] += M6809Idle(nSegment - M6809TotalCycles());
 			M6809Close();
 
-			// HD63701
-			nCyclesDone[3] += M6800Idle(nSegment - M6800TotalCycles());
+			HD63701Open(0);
+			nCyclesDone[3] += HD63701Idle(nSegment - HD63701TotalCycles());
+			HD63701Close();
 		}
 
 		if (i == S1VBL) {
@@ -2018,7 +2022,9 @@ static INT32 DrvFrame()
 		}
 		NamcoSoundUpdateStereo(pBurnSoundOut , nBurnSoundLen);
 
+		HD63701Open(0);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
+		HD63701Close();
 	}
 
 	M6809Close();

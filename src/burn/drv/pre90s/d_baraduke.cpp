@@ -314,9 +314,9 @@ static INT32 DrvDoReset(INT32 ClearRAM)
 	M6809Reset();
 	M6809Close();
 
-//	HD63701Open(0);
+	HD63701Open(0);
 	HD63701Reset();
-//	HD63701Close();
+	HD63701Close();
 
 	NamcoSoundReset();
 
@@ -380,16 +380,16 @@ static void DrvPaletteInit()
 		INT32 bit3 = (DrvColPROM[0x800 + i] >> 3) & 0x01;
 		INT32 r = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		    bit0 = (DrvColPROM[0x000 + i] >> 0) & 0x01;
-		    bit1 = (DrvColPROM[0x000 + i] >> 1) & 0x01;
-		    bit2 = (DrvColPROM[0x000 + i] >> 2) & 0x01;
-		    bit3 = (DrvColPROM[0x000 + i] >> 3) & 0x01;
+		bit0 = (DrvColPROM[0x000 + i] >> 0) & 0x01;
+		bit1 = (DrvColPROM[0x000 + i] >> 1) & 0x01;
+		bit2 = (DrvColPROM[0x000 + i] >> 2) & 0x01;
+		bit3 = (DrvColPROM[0x000 + i] >> 3) & 0x01;
 		INT32 g = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
-		    bit0 = (DrvColPROM[0x000 + i] >> 4) & 0x01;
-		    bit1 = (DrvColPROM[0x000 + i] >> 5) & 0x01;
-		    bit2 = (DrvColPROM[0x000 + i] >> 6) & 0x01;
-		    bit3 = (DrvColPROM[0x000 + i] >> 7) & 0x01;
+		bit0 = (DrvColPROM[0x000 + i] >> 4) & 0x01;
+		bit1 = (DrvColPROM[0x000 + i] >> 5) & 0x01;
+		bit2 = (DrvColPROM[0x000 + i] >> 6) & 0x01;
+		bit3 = (DrvColPROM[0x000 + i] >> 7) & 0x01;
 		INT32 b = 0x0e * bit0 + 0x1f * bit1 + 0x43 * bit2 + 0x8f * bit3;
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
@@ -495,8 +495,8 @@ static INT32 DrvInit(INT32 type)
 	M6809SetReadHandler(baraduke_main_read);
 	M6809Close();
 
-	HD63701Init(1);
-//	HD63701Open(0);
+	HD63701Init(0);
+	HD63701Open(0);
 	HD63701MapMemory(DrvHD63701ROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
 	HD63701MapMemory(DrvHD63701RAM,			0xc000, 0xc7ff, MAP_RAM);
 	HD63701MapMemory(DrvHD63701ROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
@@ -504,7 +504,7 @@ static INT32 DrvInit(INT32 type)
 	HD63701SetWriteHandler(baraduke_mcu_write);
 	HD63701SetReadPortHandler(baraduke_mcu_read_port);
 	HD63701SetWritePortHandler(baraduke_mcu_write_port);
-//	HD63701Close();
+	HD63701Close();
 
 	NamcoSoundInit(49152000/2048, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH);
@@ -748,13 +748,13 @@ static INT32 DrvFrame()
 		}
 		M6809Close();
 
-		//	HD63701Open(0);
+		HD63701Open(0);
 		nNext = (i + 1) * nCyclesTotal[1] / nInterleave;
 		nCyclesDone[1] += HD63701Run(nNext - nCyclesDone[1]);
 		if (i == (nInterleave - 1)) {
 			HD63701SetIRQLine(0, CPU_IRQSTATUS_AUTO);
 		}
-		//	HD63701Close();
+		HD63701Close();
 
 		// Render Sound Segment
 		if (pBurnSoundOut) {

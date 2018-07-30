@@ -489,9 +489,9 @@ static INT32 DrvDoReset()
 	SekReset();
 	SekClose();
 
-//	HD63701Open(0);
+	HD63701Open(0);
 	HD63701Reset();
-//	HD63701Close();
+	HD63701Close();
 
 	c45RoadReset();
 
@@ -776,8 +776,8 @@ static INT32 DrvInit(INT32 game)
 	c45RoadMap68k(0x500000); // road ram mapped here
 	SekClose();
 
-	HD63701Init(1);
-//	HD63701Open(0);
+	HD63701Init(0);
+	HD63701Open(0);
 	HD63701MapMemory(DrvHD63701RAM2,			0x1400, 0x17ff, MAP_RAM);
 	HD63701MapMemory(DrvShareRAM2,				0x2000, 0x20ff, MAP_RAM);
 	HD63701MapMemory(DrvHD63701ROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
@@ -788,7 +788,7 @@ static INT32 DrvInit(INT32 game)
 	HD63701SetWriteHandler(tceptor_mcu_write);
 	HD63701SetReadPortHandler(tceptor_mcu_read_port);
 	HD63701SetWritePortHandler(tceptor_mcu_write_port);
-//	HD63701Close();
+	HD63701Close();
 
 	BurnYM2151Init(3579545);
 	BurnYM2151SetRoute(BURN_SND_YM2151_YM2151_ROUTE_1, 0.55, BURN_SND_ROUTE_LEFT);
@@ -1031,7 +1031,7 @@ static INT32 DrvFrame()
 			SekSetIRQLine(1, CPU_IRQSTATUS_AUTO);
 		}
 
-		//	HD63701Open(0);
+		HD63701Open(0);
 		nNext = ((i + 1) * nCyclesTotal[4]) / nInterleave;
 		nCyclesDone[4] += HD63701Run(nNext - nCyclesDone[4]);
 		if (i == (nInterleave - 1)) {
@@ -1041,8 +1041,8 @@ static INT32 DrvFrame()
 				mcu_irq_enable = 1;
 			}
 		}
-		//	HD63701Close();
-		
+		HD63701Close();
+
 		if (pBurnSoundOut && (i%4)==3) {
 			INT32 nSegmentLength = nBurnSoundLen / (nInterleave / 4);
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);

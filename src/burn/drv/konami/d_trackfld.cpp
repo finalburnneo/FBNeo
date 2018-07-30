@@ -786,10 +786,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	}
 
 	if (game_select == 4) {
-	//	M6800Open(0);
+		M6800Open(0);
 		M6800Reset();
 		wizzquiz_bank(0);
-	//	M6800Close();
+		M6800Close();
 	}
 
 	if (game_select == 3) {
@@ -966,7 +966,7 @@ static INT32 DrvInit()
 		M6809Decode();
 	}
 
-	M6809Init(1);
+	M6809Init(0);
 	M6809Open(0);
 	M6809MapMemory(DrvSprRAM1,		0x1800, 0x1bff, MAP_RAM);
 	// spr2 00-3f, scroll 40-5f
@@ -1261,8 +1261,8 @@ static INT32 WizzquizInit()
 		DrvGfxDecode();
 	}
 
-	M6800Init(1);
-//	M6800Open(0);
+	M6800Init(0);
+	M6800Open(0);
 	M6800MapMemory(DrvM6800RAM,		0x0000, 0x00ff, MAP_RAM);
 	M6800MapMemory(DrvSprRAM1,		0x1800, 0x1bff, MAP_RAM);
 	M6800MapMemory(DrvSprRAM0,		0x1c00, 0x1fff, MAP_RAM);
@@ -1273,7 +1273,7 @@ static INT32 WizzquizInit()
 	M6800MapMemory(DrvM6809ROM,		0xe000, 0xffff, MAP_ROM);
 	M6800SetWriteHandler(wizzquiz_main_write);
 	M6800SetReadHandler(wizzquiz_main_read);
-//	M6800Close();
+	M6800Close();
 
 	ZetInit(0); // reaktor
 
@@ -1377,10 +1377,10 @@ static INT32 DrvExit()
 
 	if (game_select == 4) M6800Exit();
 	if (game_select == 1 || game_select == 2) M6809Exit();
-	if (game_select == 1 || game_select == 3) ZetExit();
+	if (game_select == 1 || game_select == 3 || game_select == 4) ZetExit();
 
 	vlm5030Exit();
-	if (game_select == 1 || game_select == 3) DACExit();
+	if (game_select == 1 || game_select == 3 || game_select == 4) DACExit();
 	SN76496Exit();
 
 	nowatchdog = 0;
@@ -1722,7 +1722,7 @@ static INT32 WizzquizFrame()
 	INT32 nCyclesTotal[2] = { 2048000 / 60, 3579545 / 60 };
 	INT32 nCyclesDone[2] = { 0, 0 };
 
-//	M6800Open(0);
+	M6800Open(0);
 	ZetOpen(1);
 
 	for (INT32 i = 0; i < nInterleave; i++)
@@ -1741,7 +1741,7 @@ static INT32 WizzquizFrame()
 	}
 
 	ZetClose();
-//	M6800Close();
+	M6800Close();
 
 	if (pBurnDraw) {
 		DrvDraw();

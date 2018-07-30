@@ -985,7 +985,9 @@ static INT32 DrvDoReset()
 	HD6309Close();
 
 	if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
+		HD63701Open(0);
 		HD63701Reset();
+		HD63701Close();
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
@@ -995,7 +997,9 @@ static INT32 DrvDoReset()
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
+		M6803Open(0);
 		M6803Reset();
+		M6803Close();
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
@@ -1056,7 +1060,9 @@ static INT32 DrvDoReset()
 static void DrvDdragonSubNMI()
 {
 	if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
+		HD63701Open(0);
 		HD63701SetIRQLine(HD63701_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
+		HD63701Close();
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
@@ -1068,7 +1074,9 @@ static void DrvDdragonSubNMI()
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
+		M6803Open(0);
 		M6803SetIRQLine(M6803_INPUT_LINE_NMI, CPU_IRQSTATUS_ACK);
+		M6803Close();
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
@@ -1183,7 +1191,9 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 			DrvScrollYHi = (Data & 0x02) << 7;
 			if (Data & 0x08 && ~DrvLast3808Data & 0x08) { // Reset on rising edge
 				if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
+					HD63701Open(0);
 					HD63701Reset();
+					HD63701Close();
 				}
 
 				if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
@@ -1195,7 +1205,9 @@ void DrvDdragonHD6309WriteByte(UINT16 Address, UINT8 Data)
 				}
 
 				if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
+					M6803Open(0);
 					M6803Reset();
+					M6803Close();
 				}
 
 				if (DrvSubCPUType == DD_CPU_TYPE_Z80) {
@@ -2020,10 +2032,12 @@ static INT32 DrvMachineInit()
 	HD6309Close();
 
 	if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
-		HD63701Init(1);
+		HD63701Init(0);
+		HD63701Open(0);
 		HD63701MapMemory(DrvSubCPURom        , 0xc000, 0xffff, MAP_ROM);
 		HD63701SetReadHandler(DrvDdragonHD63701ReadByte);
 		HD63701SetWriteHandler(DrvDdragonHD63701WriteByte);
+		HD63701Close();
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
@@ -2036,11 +2050,13 @@ static INT32 DrvMachineInit()
 	}
 
 	if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
-		M6803Init(1);
+		M6803Init(0);
+		M6803Open(0);
 		M6803MapMemory(DrvSubCPURom        , 0xc000, 0xffff, MAP_ROM);
 		M6803SetReadHandler(DrvDdragonbaM6803ReadByte);
 		M6803SetWriteHandler(DrvDdragonbaM6803WriteByte);
 		M6803SetWritePortHandler(DrvDdragonbaM6803WritePort);
+		M6803Close();
 	}
 
 	if (DrvSoundCPUType == DD_CPU_TYPE_M6809) {
@@ -2544,10 +2560,12 @@ static INT32 DrvFrame()
 
 		if (DrvSubCPUType == DD_CPU_TYPE_HD63701) {
 			nCurrentCPU = 1;
+			HD63701Open(0);
 			nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesSegment = HD63701Run(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
+			HD63701Close();
 		}
 
 		if (DrvSubCPUType == DD_CPU_TYPE_HD6309) {
@@ -2562,10 +2580,12 @@ static INT32 DrvFrame()
 
 		if (DrvSubCPUType == DD_CPU_TYPE_M6803) {
 			nCurrentCPU = 1;
+			M6803Open(0);
 			nNext = (i + 1) * nCyclesToDo[nCurrentCPU] / nInterleave;
 			nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 			nCyclesSegment = M6803Run(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
+			M6803Close();
 		}
 
 		if (DrvSubCPUType == DD_CPU_TYPE_Z80) {

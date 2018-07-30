@@ -1817,7 +1817,9 @@ static INT32 M62DoReset()
 	ZetReset();
 	ZetClose();
 
+	M6803Open(0);
 	M6803Reset();
+	M6803Close();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -3388,12 +3390,14 @@ static void M62MachineInit()
 	ZetMapArea(0xe000, 0xefff, 2, M62Z80Ram   );
 	ZetClose();
 
-	M6803Init(1);
+	M6803Init(0);
+	M6803Open(0);
 	M6803MapMemory(M62M6803Rom, 0x4000, 0xffff, MAP_ROM);
 	M6803SetReadHandler(M62M6803ReadByte);
 	M6803SetWriteHandler(M62M6803WriteByte);
 	M6803SetReadPortHandler(M62M6803ReadPort);
 	M6803SetWritePortHandler(M62M6803WritePort);
+	M6803Close();
 
 	MSM5205Init(0, M62SynchroniseStream, 384000, M62MSM5205Vck0, MSM5205_S96_4B, 1);
 	MSM5205Init(1, M62SynchroniseStream, 384000, NULL, MSM5205_SEX_4B, 1);
@@ -4759,16 +4763,16 @@ static INT32 M62Frame()
 	ZetNewFrame();
 	M6803NewFrame();
 
+	ZetOpen(0);
+	M6803Open(0);
 	for (INT32 i = 0; i < nInterleave; i++) {
 		INT32 nCurrentCPU, nNext;
 
 		nCurrentCPU = 0;
-		ZetOpen(0);
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
 		nCyclesSegment = nNext - nCyclesDone[nCurrentCPU];
 		nCyclesDone[nCurrentCPU] += ZetRun(nCyclesSegment);
 		if (i == (nInterleave - 1)) ZetSetIRQLine(0, CPU_IRQSTATUS_AUTO);
-		ZetClose();
 
 		nCurrentCPU = 1;
 		nNext = (i + 1) * nCyclesTotal[nCurrentCPU] / nInterleave;
@@ -4787,14 +4791,12 @@ static INT32 M62Frame()
 			nSoundBufferPos += nSegmentLength;
 		}
 
-		ZetOpen(0);
 		MSM5205Update();
 		if (M62SlaveMSM5205VClckReset) {
 			MSM5205VCLKWrite(1, 1);
 			MSM5205VCLKWrite(1, 0);
 			M62SlaveMSM5205VClckReset = 0;
 		}
-		ZetClose();
 	}
 
 	if (pBurnSoundOut) {
@@ -4808,11 +4810,12 @@ static INT32 M62Frame()
 #endif
 		}
 
-		ZetOpen(0);
 		MSM5205Render(0, pBurnSoundOut, nBurnSoundLen);
 		MSM5205Render(1, pBurnSoundOut, nBurnSoundLen);
-		ZetClose();
 	}
+
+	M6803Close();
+	ZetClose();
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();

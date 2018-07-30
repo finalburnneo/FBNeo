@@ -511,9 +511,9 @@ static INT32 DrvDoReset(INT32 ClearRAM)
 	m6809Bankswitch(0);
 	M6809Close();
 
-//	HD63701Open(0);
+	HD63701Open(0);
 	HD63701Reset();
-//	HD63701Close();
+	HD63701Close();
 
 	NamcoSoundReset();
 
@@ -611,8 +611,8 @@ static INT32 DrvInit()
 	M6809SetReadHandler(skykid_main_read);
 	M6809Close();
 
-	HD63701Init(1);
-//	HD63701Open(0);
+	HD63701Init(0);
+	HD63701Open(0);
 	HD63701MapMemory(DrvHD63701ROM + 0x8000,	0x8000, 0xbfff, MAP_ROM);
 	HD63701MapMemory(DrvHD63701RAM,			0xc000, 0xc7ff, MAP_RAM);
 	HD63701MapMemory(DrvHD63701ROM + 0xf000,	0xf000, 0xffff, MAP_ROM);
@@ -620,7 +620,7 @@ static INT32 DrvInit()
 	HD63701SetWriteHandler(skykid_mcu_write);
 	HD63701SetReadPortHandler(skykid_mcu_read_port);
 	HD63701SetWritePortHandler(skykid_mcu_write_port);
-//	HD63701Close();
+	HD63701Close();
 
 	NamcoSoundInit(49152000/2048, 8, 0);
 	NacmoSoundSetAllRoutes(0.50, BURN_SND_ROUTE_BOTH); // MAME uses 1.00, which is way too loud
@@ -808,19 +808,19 @@ static INT32 DrvFrame()
 	INT32 nCyclesTotal[2] = { 1536000 / 60, 1536000 / 60 };
 	nCyclesDone[0] = nCyclesDone[1] = 0;
 
+	M6809Open(0);
+	HD63701Open(0);
+
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
 		INT32 nNext;
 
-		M6809Open(0);
 		nNext = (i + 1) * nCyclesTotal[0] / nInterleave;
 		nCyclesDone[0] += M6809Run(nNext - nCyclesDone[0]);
 		if (i == (nInterleave - 1) && interrupt_enable[0]) {
 			M6809SetIRQLine(0, CPU_IRQSTATUS_ACK);
 		}
-		M6809Close();
 
-	//	HD63701Open(0);
 		if (hd63701_in_reset == 0) {
 			sync_HD63701(1);
 
@@ -830,8 +830,7 @@ static INT32 DrvFrame()
 		} else {
 			sync_HD63701(0);
 		}
-		//	HD63701Close();
-		
+
 		if (pBurnSoundOut) {
 			INT32 nSegmentLength = nBurnSoundLen / nInterleave;
 			INT16* pSoundBuf = pBurnSoundOut + (nSoundBufferPos << 1);
@@ -839,6 +838,9 @@ static INT32 DrvFrame()
 			nSoundBufferPos += nSegmentLength;
 		}
 	}
+
+	HD63701Close();
+	M6809Close();
 
 	if (pBurnSoundOut) {
 		INT32 nSegmentLength = nBurnSoundLen - nSoundBufferPos;

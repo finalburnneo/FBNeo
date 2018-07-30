@@ -1301,7 +1301,9 @@ static INT32 DrvDoReset()
 	}
 	
 	if (DrvMCUInUse == 1) {
+		M6801Open(0);
 		M6801Reset();
+		M6801Close();
 	} else if (DrvMCUInUse == 2) {
 		m67805_taito_reset();
 	}
@@ -1418,7 +1420,9 @@ void __fastcall BublboblWrite1(UINT16 a, UINT8 d)
 				if (DrvMCUInUse == 2) {
 					 m67805_taito_reset();
 				} else {
+					M6801Open(0);
 					M6801Reset();
+					M6801Close();
 				}
 				DrvMCUActive = 0;
 			} else {
@@ -2046,6 +2050,7 @@ UINT8 __fastcall TokioSoundRead3(UINT16 a)
 
 inline static void DrvYM2203IRQHandler(INT32, INT32 nStatus)
 {
+	if (ZetGetActive() == -1) return;
 	ZetSetIRQLine(0, (nStatus) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
@@ -2112,10 +2117,12 @@ static INT32 MachineInit()
 	ZetClose();
 	
 	if (DrvMCUInUse == 1) {
-		M6801Init(1);
+		M6801Init(0);
+		M6801Open(0);
 		M6801MapMemory(DrvMcuRom, 0xf000, 0xffff, MAP_ROM);
 		M6801SetReadHandler(BublboblMcuReadByte);
 		M6801SetWriteHandler(BublboblMcuWriteByte);
+		M6801Close();
 	} else if (DrvMCUInUse == 2) {
 
 		m67805_taito_init(DrvMcuRom, DrvMcuRam, &bub68705_m68705_interface);
@@ -2657,7 +2664,7 @@ static INT32 DrvExit()
 	ZetExit();
 	BurnYM2203Exit();
 		
-	if (DrvMCUInUse == 1) M6800Exit();
+	if (DrvMCUInUse == 1) M6801Exit();
 	if (DrvMCUInUse == 2) m6805Exit();
 	
 	GenericTilesExit();
@@ -2845,7 +2852,6 @@ static INT32 DrvFrame()
 		ZetOpen(nCurrentCPU);
 		BurnTimerUpdateYM3526(i * (nCyclesTotal[nCurrentCPU] / nInterleave));
 		if (i == 94 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-		//if (i == 99 && !DrvMCUInUse) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 		ZetClose();
 
 		// Run Z80 #2
@@ -2857,10 +2863,9 @@ static INT32 DrvFrame()
 			nCyclesSegment = ZetRun(nCyclesSegment);
 			nCyclesDone[nCurrentCPU] += nCyclesSegment;
 			if (i == 94) ZetSetIRQLine(0, CPU_IRQSTATUS_HOLD);
-			//if (i == 99) ZetSetIRQLine(0, CPU_IRQSTATUS_NONE);
 			ZetClose();
 		}
-	
+
 		// Run Z80 #3
 		if (DrvSoundCPUActive) {
 			nCurrentCPU = 2;
@@ -2885,10 +2890,12 @@ static INT32 DrvFrame()
 					if (i == 49) m68705SetIrqLine(0, 1 /*ASSERT_LINE*/); // weird, but coinage issues when ack'd at 94
 					if (i == 95) m68705SetIrqLine(0, 0 /*CLEAR_LINE*/);
 				} else {
+					M6801Open(0);
 					nCyclesSegment = M6801Run(nCyclesSegment);
 					if (i == 94) M6801SetIRQLine(0, CPU_IRQSTATUS_ACK);
 					if (i == 95) M6801SetIRQLine(0, CPU_IRQSTATUS_NONE);
-				} 
+					M6801Close();
+				}
 
 				nCyclesDone[nCurrentCPU] += nCyclesSegment;
 			}

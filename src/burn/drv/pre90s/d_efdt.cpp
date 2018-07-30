@@ -322,7 +322,7 @@ static INT32 DrvInit()
 	ZetSetReadHandler(efdt_main_read);
 	ZetClose();
 
-	M6800Init(1); // M6802!
+	M6800Init(0); // M6802!
 	M6800Open(0);
 	M6800MapMemory(DrvM6802RAM0,		0x0000, 0x00ff, MAP_RAM);
 	M6800MapMemory(DrvM6802RAM1,		0x8000, 0x83ff, MAP_RAM);

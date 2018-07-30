@@ -389,7 +389,7 @@ static void adpcm_int()
 
 static INT32 DrvSynchroniseStream(INT32 nSoundRate)
 {
-	return (INT64)(double)M6800TotalCycles() * nSoundRate / 3579545;
+	return (INT64)(double)M6803TotalCycles() * nSoundRate / 3579545;
 }
 
 static INT32 DrvDoReset()
@@ -400,9 +400,9 @@ static INT32 DrvDoReset()
 	ZetReset();
 	ZetClose();
 
-//	M6803Open(0);
+	M6803Open(0);
 	M6803Reset();
-//	M6803Close();
+	M6803Close();
 
 	AY8910Reset(0);
 	AY8910Reset(1);
@@ -598,15 +598,15 @@ static INT32 DrvInit(void (*pRomCallback)(), INT32 sndromsmall, INT32 gfxtype)
 	ZetSetInHandler(travrusa_main_read_port);
 	ZetClose();
 
-	M6803Init(1);
-//	M6803Open(0);
+	M6803Init(0);
+	M6803Open(0);
 	M6803MapMemory(DrvSndROM,	0x6000, 0x7fff, MAP_ROM);
 	M6803MapMemory(DrvSndROM,	0xe000, 0xffff, MAP_ROM);
 	M6803SetWriteHandler(m6803_write);
 	M6803SetReadHandler(m6803_read);
 	M6803SetWritePortHandler(m6803_write_port);
 	M6803SetReadPortHandler(m6803_read_port);
-//	M6803Close();
+	M6803Close();
 
 	MSM5205Init(0, DrvSynchroniseStream, 384000, adpcm_int, MSM5205_S96_4B, 1);
 	MSM5205SetRoute(0, 1.00, BURN_SND_ROUTE_BOTH);
@@ -772,7 +772,7 @@ static INT32 DrvFrame()
 	INT32 nCyclesDone[2] = { 0, 0 };
 
 	ZetOpen(0);
-//	M6803Open(0);
+	M6803Open(0);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -789,7 +789,7 @@ static INT32 DrvFrame()
 	}
 
 	ZetClose();
-//	M6803Close();
+	M6803Close();
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -815,7 +815,7 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		BurnAcb(&ba);
 
 		ZetScan(nAction);
-		M6800Scan(nAction);
+		M6803Scan(nAction);
 
 		AY8910Scan(nAction, pnMin);
 		MSM5205Scan(nAction, pnMin);

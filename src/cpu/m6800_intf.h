@@ -19,7 +19,8 @@ struct M6800Ext {
 	pReadOpArgHandler ReadOpArg;
 	pReadPortHandler ReadPort;
 	pWritePortHandler WritePort;
-	
+
+	INT32 nCpuType;
 	INT32 nCyclesTotal;
 	INT32 nCyclesSegment;
 	INT32 nCyclesLeft;
@@ -157,6 +158,10 @@ inline static INT32 M6800TotalCycles()
 
 	return nM6800CyclesTotal;
 }
+#define HD63701TotalCycles		M6800TotalCycles
+#define M6803TotalCycles		M6800TotalCycles
+#define M6801TotalCycles		M6800TotalCycles
+#define NSC8105TotalCycles		M6800TotalCycles
 
 inline static INT32 M6800Idle(INT32 cycles)
 {
@@ -168,12 +173,31 @@ inline static INT32 M6800Idle(INT32 cycles)
 
 	return cycles;
 }
+#define HD63701Idle		M6800Idle
+#define M6803Idle		M6800Idle
+#define M6801Idle		M6800Idle
+#define NSC8105Idle		M6800Idle
 
 void M6800WriteRom(UINT32 Address, UINT8 Data); // cheat core
 UINT8 M6800CheatRead(UINT32 Address);
-void M6800Open(INT32 ); // does nothing
-void M6800Close(); // ""
-INT32 M6800GetActive(); // ""
+
+void M6800Open(INT32 num);
+#define HD63701Open		M6800Open
+#define M6803Open		M6800Open
+#define M6801Open		M6800Open
+#define NSC8105Open		M6800Open
+
+void M6800Close();
+#define HD63701Close	M6800Close
+#define M6803Close		M6800Close
+#define M6801Close		M6800Close
+#define NSC8105Close	M6800Close
+
+INT32 M6800GetActive();
+#define HD63701GetActive	M6800GetActive
+#define M6803GetActive		M6800GetActive
+#define M6801GetActive		M6800GetActive
+#define NSC8105GetActive	M6800GetActive
 
 extern struct cpu_core_config M6800Config;
 extern struct cpu_core_config HD63701Config;

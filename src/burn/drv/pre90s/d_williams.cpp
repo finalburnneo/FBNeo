@@ -5,7 +5,7 @@
 //  Defender
 //  Stargate
 //  Joust
-//  Robotron 2084
+//  Robotron 2084 - missing boot-up sound
 //  Bubbles
 //  Colony 7
 //  Mayday
@@ -13,7 +13,10 @@
 //  Splat
 //  Alien Area - no sound (there is none)
 //  Sinistar
-//  Blaster - needs second soundcpu emulated for stereo. (m6800 only supports 1 cpu!)
+//  Blaster - missing boot-up sound
+//            sometimes misses sound command?
+//			  sometimes crap at top of screen
+
 
 //  Speed Ball - inputs
 //  Lottofun - memory protect sw. error
@@ -38,6 +41,7 @@ static UINT8 *DrvColPROM;
 static UINT8 *DrvNVRAM;
 static UINT8 *DrvM6809RAM0;
 static UINT8 *DrvM6800RAM0;
+static UINT8 *DrvM6800RAM1;
 static UINT8 *DrvVidRAM;
 static UINT8 *DrvPalRAM;
 
@@ -79,11 +83,14 @@ static INT16 DrvAnalogPort1 = 0;
 
 static INT32 mayday = 0;
 static INT32 splat = 0;
+static INT32 blaster = 0;
 static INT32 uses_hc55516 = 0;
 
 // dc-blocking filter for DAC
-static INT16 dac_lastin;
-static INT16 dac_lastout;
+static INT16 dac_lastin_r;
+static INT16 dac_lastout_r;
+static INT16 dac_lastin_l;
+static INT16 dac_lastout_l;
 
 // raster update helpers
 static INT32 lastline;
@@ -776,7 +783,7 @@ static void williams_main_write(UINT16 address, UINT8 data)
 		return;
 	}
 
-	if ((address & 0xff0c) == 0xc808) {
+	if ((address & 0xff0c) == 0xc808) { // spdball
 		pia_write(3, address & 0x3, data);
 		return;
 	}
@@ -814,8 +821,8 @@ static UINT8 williams_main_read(UINT16 address)
 		return pia_read(0, address & 3);
 	}
 
-	if ((address & 0xff0c) == 0xc808) {
-		return pia_read(2, address & 3);
+	if ((address & 0xff0c) == 0xc808) { // spdball
+		return pia_read(3, address & 3);
 	}
 
 	if ((address & 0xff0c) == 0xc80c) {
@@ -835,6 +842,7 @@ static UINT8 williams_main_read(UINT16 address)
 	}
 
 	if (address == 0xc900) return 0; // NOP
+	if (address == 0xc940) return 0; // NOP
 	//if (address == 0xc000) return 0; // NOP (sinistar)?
 
 	bprintf (0, _T("MR: %4.4x\n"), address);
@@ -902,6 +910,23 @@ static UINT8 defender_sound_read(UINT16 address)
 	return 0;
 }
 
+static void blaster_sound_write(UINT16 address, UINT8 data)
+{
+	if ((address & 0x7ffc) == 0x0400) {
+		pia_write(4, address & 0x3, data);
+		return;
+	}
+}
+
+static UINT8 blaster_sound_read(UINT16 address)
+{
+	if ((address & 0x7ffc) == 0x0400) {
+		return pia_read(4, address & 3);
+	}
+
+	return 0;
+}
+
 static UINT8 pia0_in_a(UINT16 )
 {
 	return DrvInputs[0];
@@ -942,14 +967,36 @@ static UINT8 pia0_49way_in_a(UINT16 )
 
 static void pia1_out_b(UINT16 , UINT8 data)
 {
-	data |= 0xc0;
-	pia_set_input_b(2, data);
-	pia_set_input_cb1(2, (data == 0xff) ? 0 : 1);
+	if (!blaster) { // defender, williams HW
+		M6800Open(0);
+		data |= 0xc0;
+		pia_set_input_b(2, data);
+		pia_set_input_cb1(2, (data == 0xff) ? 0 : 1);
+		M6800Close();
+	} else {        // Blaster HW
+		UINT8 l_data = data | 0x80;
+		UINT8 r_data = (data >> 1 & 0x40) | (data & 0x3f) | 0x80;
+
+		M6800Open(0);
+		pia_set_input_b(2, l_data);
+		pia_set_input_cb1(2, (l_data == 0xff) ? 0 : 1);
+		M6800Close();
+
+		M6800Open(1);
+		pia_set_input_b(4, r_data);
+		pia_set_input_cb1(4, (r_data == 0xff) ? 0 : 1);
+		M6800Close();
+	}
 }
 
 static void pia2_out_b(UINT16 , UINT8 data)
 {
 	DACWrite(0, data);
+}
+
+static void pia2_out_b2(UINT16 , UINT8 data)
+{
+	DACWrite(1, data);
 }
 
 static void hc55516_digit_out(UINT16 , UINT8 data)
@@ -969,7 +1016,9 @@ static void pia1_main_irq(INT32 state)
 
 static void pia2_sound_irq(INT32 state)
 {
-	M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
+	if (state)
+		M6800SetIRQLine(M6800_IRQ_LINE, CPU_IRQSTATUS_HOLD);
+		//M6800SetIRQLine(M6800_IRQ_LINE, state ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
 }
 
 static pia6821_interface pia_0 = {
@@ -1007,6 +1056,13 @@ static pia6821_interface pia_2 = {
 	pia2_sound_irq, pia2_sound_irq
 };
 
+static pia6821_interface pia_2_2 = { // blaster 2nd soundchip
+	NULL, NULL,
+	NULL, NULL, NULL, NULL,
+	pia2_out_b2, NULL, NULL, NULL,
+	pia2_sound_irq, pia2_sound_irq
+};
+
 static pia6821_interface pia_2_sinistar = {
 	NULL, NULL,
 	NULL, NULL, NULL, NULL,
@@ -1041,7 +1097,15 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	M6809Reset();
 	M6809Close();
 
+	M6800Open(0);
 	M6800Reset();
+	M6800Close();
+
+	if (blaster) {
+		M6800Open(1);
+		M6800Reset();
+		M6800Close();
+	}
 
 	pia_reset();
 
@@ -1059,8 +1123,10 @@ static INT32 DrvDoReset(INT32 clear_mem)
 	rom_bank = 0;
 	blaster_video_control = 0;
 
-	dac_lastin = 0;
-	dac_lastout = 0;
+	dac_lastin_r = 0;
+	dac_lastout_r = 0;
+	dac_lastin_l = 0;
+	dac_lastout_l = 0;
 
 	return 0;
 }
@@ -1088,6 +1154,7 @@ static INT32 MemIndex()
 
 	DrvM6809RAM0		= Next; Next += 0x004000;
 	DrvM6800RAM0		= Next; Next += 0x000100;
+	DrvM6800RAM1		= Next; Next += 0x000100;
 	DrvVidRAM			= Next; Next += 0x00c000;
 	DrvPalRAM			= Next; Next += 0x000010;
 	DrvBlitRAM			= Next; Next += 0x000008;
@@ -1200,9 +1267,18 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		if (DrvRomLoad(loadtype)) return 1;
 	}
 
+	// sound HW
+	M6800Init(0);
+	M6800Open(0);
+	M6800MapMemory(DrvM6800RAM0,				0x0000, 0x00ff, MAP_RAM);
+	M6800MapMemory(DrvM6800ROM0 + 0xb000,		0xb000, 0xffff, MAP_ROM);
+	M6800SetWriteHandler(defender_sound_write);
+	M6800SetReadHandler(defender_sound_read);
+	M6800Close();
+
 	if (maptype == 2) // blaster
 	{
-		M6809Init(1);
+		M6809Init(0);
 		M6809Open(0);
 		M6809MapMemory(DrvVidRAM,				0x0000, 0xbfff, MAP_RAM); // banked
 		M6809MapMemory(DrvNVRAM,				0xcc00, 0xcfff, MAP_ROM);
@@ -1210,10 +1286,18 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		M6809SetWriteHandler(blaster_main_write);
 		M6809SetReadHandler(williams_main_read);
 		M6809Close();
+
+		M6800Init(1);
+		M6800Open(1);
+		M6800MapMemory(DrvM6800RAM1,				0x0000, 0x00ff, MAP_RAM);
+		M6800MapMemory(DrvM6800ROM1 + 0xb000,		0xb000, 0xffff, MAP_ROM);
+		M6800SetWriteHandler(blaster_sound_write);
+		M6800SetReadHandler(blaster_sound_read);
+		M6800Close();
 	}
 	else if (maptype == 1) // williams
 	{
-		M6809Init(1);
+		M6809Init(0);
 		M6809Open(0);
 		M6809MapMemory(DrvVidRAM,				0x0000, 0xbfff, MAP_RAM); // banked
 		M6809MapMemory(DrvNVRAM,				0xcc00, 0xcfff, MAP_ROM); // handler
@@ -1224,7 +1308,7 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 	}
 	else if (maptype == 0) // defender
 	{
-		M6809Init(1);
+		M6809Init(0);
 		M6809Open(0);
 		if (mayday) {
 			M6809MapMemory(DrvVidRAM,				0x0000, 0xbfff, MAP_WRITE); // read -> handler
@@ -1237,12 +1321,6 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 		M6809Close();
 	}
 
-	M6800Init(1);
-	M6800MapMemory(DrvM6800RAM0,				0x0000, 0x00ff, MAP_RAM);
-	M6800MapMemory(DrvM6800ROM0 + 0xb000,		0xb000, 0xffff, MAP_ROM);
-	M6800SetWriteHandler(defender_sound_write);
-	M6800SetReadHandler(defender_sound_read);
-
 	pia_init();
 	pia_config(0, 0, &pia_0);
 	pia_config(1, 0, &pia_1);
@@ -1253,6 +1331,21 @@ static INT32 DrvInit(INT32 maptype, INT32 loadtype, INT32 x_adjust, INT32 blitte
 
 	DACInit(0, 0, 0, M6800TotalCycles, 894886);
 	DACSetRoute(0, 0.35, BURN_SND_ROUTE_BOTH);
+
+	if (maptype == 2) // blaster, pia config & l+r dac
+	{
+		pia_init();
+		pia_config(0, 0, &pia_49way_0);
+		pia_config(1, 0, &pia_1);
+		pia_config(2, 0, &pia_2);
+		pia_config(3, 0, &pia_3);
+		pia_config(4, 0, &pia_2_2); // 2nd soundboard
+
+		DACSetRoute(0, 0.35, BURN_SND_ROUTE_LEFT);
+
+		DACInit(1, 0, 0, M6800TotalCycles, 894886);
+		DACSetRoute(1, 0.35, BURN_SND_ROUTE_RIGHT);
+	}
 
 	blitter_clip_address = blitter_clip_addr;
 	blitter_init(blitter_config, (blitter_config > 1) ? DrvColPROM : NULL);
@@ -1285,6 +1378,8 @@ static INT32 DrvExit()
 
 	mayday = 0;
 	splat = 0;
+	blaster = 0;
+
 	uses_hc55516 = 0;
 
 	pStartDraw = NULL;
@@ -1356,7 +1451,7 @@ static void blaster_draw_bitmap(INT32 starty, INT32 endy)
 	for (INT32 y = starty; y < endy; y++)
 	{
 		INT32 erase_behind = blaster_video_control & scanline_control[y] & 2;
-		UINT8 *source = DrvVidRAM + y;
+		UINT8 *source = DrvVidRAM + y + 7;
 		UINT16 *dest = pTransDraw + (y * nScreenWidth);
 
 		if (y >= 240) return;
@@ -1371,9 +1466,8 @@ static void blaster_draw_bitmap(INT32 starty, INT32 endy)
 			if (erase_behind)
 				source[(x/2) * 256] = 0;
 
-			// iq_132!!
-			dest[x+0] = (pix & 0xf0) ? (pix >> 4) : color0; //rgb_t(m_blaster_color0 | pens[0]);
-			dest[x+1] = (pix & 0x0f) ? (pix & 0x0f) : color0; //rgb_t(m_blaster_color0 | pens[0]);
+			dest[x+0] = (pix & 0xf0) ? (pix >> 4) : color0;
+			dest[x+1] = (pix & 0x0f) ? (pix & 0x0f) : color0;
 		}
 	}
 }
@@ -1454,14 +1548,17 @@ static void dcfilter_dac()
 {
 	for (INT32 i = 0; i < nBurnSoundLen; i++) {
 		INT16 r = pBurnSoundOut[i*2+0]; // dac is mono, ignore 'l'.
-		//INT16 l = dacbuf[i*2+1];
+		INT16 l = pBurnSoundOut[i*2+1];
 
-		INT16 out = r - dac_lastin + 0.995 * dac_lastout;
+		INT16 outr = r - dac_lastin_r + 0.995 * dac_lastout_r;
+		INT16 outl = l - dac_lastin_l + 0.995 * dac_lastout_l;
 
-		dac_lastin = r;
-		dac_lastout = out;
-		pBurnSoundOut[i*2+0] = out;
-		pBurnSoundOut[i*2+1] = out;
+		dac_lastin_r = r;
+		dac_lastout_r = outr;
+		dac_lastin_l = l;
+		dac_lastout_l = outl;
+		pBurnSoundOut[i*2+0] = outr;
+		pBurnSoundOut[i*2+1] = outl;
 	}
 }
 
@@ -1495,8 +1592,8 @@ static INT32 DrvFrame()
 	}
 
 	INT32 nInterleave = 256;
-	INT32 nCyclesTotal[2] = { 1000000 / 60, 894886 / 60 };
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesTotal[3] = { 1000000 / 60, 894886 / 60, 894886 / 60 };
+	INT32 nCyclesDone[3] = { 0, 0, 0 };
 
 	M6809Open(0);
 
@@ -1516,14 +1613,24 @@ static INT32 DrvFrame()
 		if (scanline == 0 || scanline == 240)
 			pia_set_input_ca1(1, scanline >= 240 ? 1 : 0);
 
+		M6800Open(0);
 		nCyclesDone[1] += M6800Run(((i + 1) * nCyclesTotal[1] / nInterleave) - nCyclesDone[1]);
+		M6800Close();
+
+		if (blaster) {
+			M6800Open(1);
+			nCyclesDone[2] += M6800Run(((i + 1) * nCyclesTotal[2] / nInterleave) - nCyclesDone[2]);
+			M6800Close();
+		}
 	}
 
 	if (pBurnSoundOut) {
+		M6800Open(0);
 		DACUpdate(pBurnSoundOut, nBurnSoundLen);
 		dcfilter_dac();
 		if (uses_hc55516)
 			hc55516_update(pBurnSoundOut, nBurnSoundLen);
+		M6800Close();
 	}
 
 	M6809Close();
@@ -3134,16 +3241,12 @@ STD_ROM_FN(blaster)
 
 static INT32 BlasterInit()
 {
+	blaster = 1;
+
 	INT32 nRet = DrvInit(2, 0, 6, 2, 0x9700);
 
 	if (nRet == 0)
 	{
-		pia_init();
-		pia_config(0, 0, &pia_49way_0);
-		pia_config(1, 0, &pia_1);
-		pia_config(2, 0, &pia_2_sinistar);
-		pia_config(3, 0, &pia_3);
-
 		pStartDraw = DrvDrawBegin;
 		pDrawScanline = BlasterDrawLine;
 	}
